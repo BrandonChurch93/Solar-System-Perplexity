@@ -2662,3 +2662,42 @@ READ FIRST AFTER A COMPACTION: the order of work is (1) the disc name of MAIL 12
 4. Relief with edges, code detail and filaments, the two sheets higher.
 5. The Builder's two views (60 a second whole; 3060 against 3239 with the camera taken out), then the share of detail by code per frame, then the proofs and the NAMED mail in MAIL 508's order with the differences of (g).
 6. Then the disc, then the pit fill as its own commit.
+
+
+## 25 Nov, 21:34 to 21:45 UTC: MAIL 1307 (the page is taken, with two numbers changed and d329), my date, the design of stage 1
+
+READ FIRST AFTER A COMPACTION: the cure is ordered and is the only work until it is named. Order: flow, guide and code detail first, then light and shadows, then the edges, then the sheets; a picture pushed at each step, bad ones too. Promised: the first 3150 at draft on the new ground by 23:45 UTC, with the share of detail by code for 3060, 3150 and 3239.
+
+### MAIL 1307, 21:34 UTC, word for word
+
+> MAIL 1307 from the Builder (/root), 21:34 UTC. To jupiter_coder. Your page on the cure is taken. (a) to (d) are the cure: build it. Rulings, by your letters.
+>
+> (a) FLOW. The form stands (one stream function, no divergence, steady, no rigid body anywhere, carried fields read where their matter stood at 3150, no reset). Two numbers do not stand.
+> 1. Speed. His first word is "spinning". The line spoken over this view is "That storm is wider than our whole world": a thing that size does not turn like a drain, and 3.7 degrees a second at the peak is still 22 degrees in the view. Default: the fastest matter at 1.2 degrees a second (V about 0.0165 units a second), jets and eddies in your ratios to it. Keep V one number, and draw the same 60 frames at 60 a second at your V beside it for my eye; I rule on the pair.
+> 2. Life. Nothing forms or dissolves faster than the view lasts: a billow lives 10 seconds or more, a filament longer. At 2 to 4 seconds a field the size of a continent boils like a pot. What he should see move is the shear drawing matter out, slowly.
+> The guide may be carried: it holds nothing finer than its cut, so it is the matter's colour and not the picture. Your reading stands.
+>
+> (b) COLOUR. As written. Print the share of detail by code for 3150 and both ends with every state; 0.8 is your aim, the number is what I log.
+>
+> (c) LIGHT and (d) DEPTH. As written. The cast shadows owed since MAIL 1050 are part of this name. Your edge numbers are design; when built, measure them on frames (an edge against what stands behind it, px a film frame, at 1.5, 2.5 and 4 units).
+>
+> (e) LENS. Not closed. 64 degrees is the tall angle, so the frame spans about 96 across; Saturn's skim runs at 41.8. "Warped by like a fisheye" may be the painted ground alone, as you read it, or the lens with it: what passes a frame's edge at 96 degrees stretches. Show it in motion, not as stills: the same 20 frames round 3150 at draft on the new ground at 64, 50 and 40, same eye point and aim. I rule after it. If the lens changes, 3150's framing against the approved picture is mine to own.
+>
+> (g) d296 AT 3150. I own your four departures by d310 (5), as you list them: his note asks for a ground made by code, and a ground made by code cannot hold the approved picture's fine detail at its places. For 3150 of this name the plain number is replaced by three lines, logged as d329: (i) the low band (your frame and the approved picture both cut at your 16 px) matches no worse than main's own low band; (ii) the detail's strength by band, the bands of MAIL 479, within 0.7 and 1.4 of the approved picture's in every band; (iii) composition, palette, the Sun's side, limb and sky kept, judged by me at 1 to 1. Do not thin the detail for a number.
+>
+> ORDER AND DATES. Flow, guide and code detail first (that is what he reads as an image), then light and shadows, then the edges, then the sheets. A picture pushed at each step, bad ones too. Say by 22:00 when the first 3150 at draft on the new ground comes. The disc follows, as ruled.
+
+### Sent 21:38: the date
+
+> The first 3150 at draft on the new ground comes by 23:45 UTC: no eye, the guide, the flow at V 0.0165 (fastest matter 1.2 degrees a second, jets and eddies in my ratios, lives 10 seconds and more), code detail carried; light still as today. Pushed to the looks as it is, with the share of detail by code for 3150 and both ends.
+
+With it I asked for the bands of MAIL 479 (they are not in this notebook nor in my copy of PROGRESS) and promised main's own low band at 16 px, measured on its final still of 3150, with the first state.
+
+### Stage 1 as designed (nothing coded at 21:45)
+
+- V = 0.0165 units a second, one number in `deck.json` under `life`. The storm's speed is V 2s^2/(1+s^4), s = r/0.9; its largest angular speed is V times 1.1397 over 0.9 at r 0.68, which is 1.2 degrees a second. Jets U = 0.8 V: stream function psi = -U (L / 2 pi) cos(2 pi eta / L) + U L / (2 pi), eta the chart's north through the storm's centre, L = 6 units, times m(r) = smoothstep(2.5, 5, r) so the jets part round the oval; velocity is z cross grad psi. The storm's stream function is windowed to zero by r 8. Eddies: the same profile at the places of `deck.json`, both signs.
+- The carried place: where the matter of a point stood at 3150, by the midpoint rule over the whole time (g - t vel(g - 0.5 t vel(g))); the time is `state.time - terrainMid`, the same clock the old turn used.
+- Wound coordinates for filaments: the ages are named by the fastest matter's turn (55, 148 and 370 degrees), so the pattern at 3150 does not depend on V. True back maps are baked by a tool (planned `assets-src/jupiter/deck/wound.py`), since a closed form shift faded by m(r) can fold; outside the baked box the zonal shift in closed form.
+- Guide for stage 1: the low band of the plates in scene light times tone and calm (the painted light is still in it), cut at sigma 0.08 units near the storm; half float bins, 8 bit would band. Stage 2 divides the model's own shading out with an albedo floor.
+- The dark lee and the lower left must then come from the scene: tall rough relief seen against the light, shadows, openness, deeper is darker and bluer. d329 (i) needs those regions dark at 3150, the hold needs them lit: a red there is named, not hidden.
+- Code detail: octaves from about 0.5 units down to the footprint; billows cellular, filaments noise in the wound coordinates; lives 10 seconds and more.
