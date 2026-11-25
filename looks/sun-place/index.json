@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T22:08:30.487Z",
- "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
- "note": "candidate frozen: arcade T4 with three laws, limb L3, glow from inside; 60 draft whole 38.7760 top 14.4987; 360 final 11.9851; sun-near 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "pushed": "2026-11-25T22:34:25.808Z",
+ "head": "42958a0033dcc92df77ce8202620b578bc848f61",
+ "note": "harness slice 380 to 400 with carry running on the merge with main 172e7bcd (40 of 54 frames at 22:34); the merge changes no pixel at draft 0, 60, 90, 221, 247, 360; 495 review equals the name's; sun-near 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T22:34:25.142Z",
+   "file": "20261125223425142-note-F2-c.jpg",
+   "source": "../../../../tmp/v/F2-c.jpg",
+   "kind": "note",
+   "label": "candidate (local commit d377db96 on merge 42958a00 of main 172e7bcd), draft film frames 221 to 256",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T22:08:29.811Z",
    "file": "20261125220829811-note-T3-360z.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/J1-360z.png",
    "kind": "note",
    "label": "frame 360 draft, the arcade's place four times: named state left, trial J1 right: two pale blobs at the feet, a fault of the trial, cause found (the least width multiplied by the sheath)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T21:24:52.751Z",
-   "file": "20261125212452751-note-J1-crop.jpg",
-   "source": "../../../../tmp/v/J1-crop.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, approved over trial J1 (arcade and limb numbers, sheath by the clamped light); not named",
    "stop": "sun"
   }
  ]
