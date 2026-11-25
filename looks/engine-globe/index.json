@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T04:03:57.773Z",
+ "pushed": "2026-11-25T04:32:45.071Z",
  "head": "7b482c078a340454ff8fe1bbb7ce9b842d437e15",
- "note": "Cull of the cap's patches by the lens, not yet committed. The picture is the same to the byte in 14 of 14 Mars draft frames, so the look is a plot of seconds: 3.4 to 6.8 s less per draft frame where the cap is drawn (2444 to 2459, 2690 to 2705), nothing at 2325, 2427, 2478, 2726, 2782. Less than hoped; the cause is being measured.",
+ "note": "cap.cull (the cap's patches sifted by the lens), proof run in progress: Mars 2400 to 2488 step 8 and 2580 are byte equal on against off, seconds fall by a quarter where the cap is drawn; the rate 2 half frames 2440 to 2460 with the option off are still rendering",
  "looks": [
+  {
+   "time": "2026-11-25T04:32:44.371Z",
+   "file": "20261125043244371-note-cull-proof-1.jpg",
+   "source": "../m835/cull-proof-1.png",
+   "kind": "note",
+   "label": "cap cull on against off, Mars draft: whole frames done 14 of 14 byte equal, half frames running",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T04:03:57.169Z",
    "file": "20261125040357169-note-cull-seconds.jpg",
@@ -58,14 +66,6 @@
    "source": "../m835/moon-look.png",
    "kind": "note",
    "label": "Mars pairs 4780:4796, 4800:4816, 4806:4822: first frame, later frame, later carried back by the record with two bodies, pixels the record gives to the moon",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T01:22:13.585Z",
-   "file": "20261125012213585-note-moon-crop.jpg",
-   "source": "../m835/moon-crop.png",
-   "kind": "note",
-   "label": "Mars moon carried by its own place and turn: top hold pair 4780 to 4796 (first frame, later frame carried back, difference times 3), bottom dive pair 4800 to 4816 where the shape lands and the moon's light changes",
    "stop": "mars"
   }
  ]
