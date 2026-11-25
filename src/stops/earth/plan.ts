@@ -6,9 +6,10 @@ import { forward, lookAt, mix, ramp, slerpDir, smooth } from '../../director/rig
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import fit from './fit.json'
 import placeJson from './place.json'
+import { descent, moon, shape as figure } from './look'
 import { side, twin } from './place'
 
-export interface Leg { ease: number[]; round: number[]; hold: number; bank?: { deg: number } }
+export interface Leg { ease: number[]; round: number[]; hold: number; bank?: { deg: number }; land?: number }
 export interface Path { handover: NonNullable<MoveParams['handover']>; dive: Leg; rise: Leg; bend: { frames: number; acrossDeg: number[]; turnDeg: number }; rewind: number }
 
 export const path: Path = placeJson.path
@@ -33,6 +34,7 @@ export const params: MoveParams = {
 interface Law { frames: number; total: number; at: (x: number) => number; rate: (x: number) => number }
 
 const STEPS = 64
+const END_STEPS = 8
 
 function shape(u: number, c: number): number {
   const x = Math.min(Math.max(u, 0), 1)
@@ -50,20 +52,21 @@ function area(u: number, c: number): number {
   return x - 0.5 + (h * (1 - x) * (1 - x) * (1 - x)) / (6 * c)
 }
 
-function law(frames: number, ease: number[], round: number[], total: number, last: number): Law {
+function law(frames: number, ease: number[], round: number[], total: number, last: number, slope = 0): Law {
   const a = ease[0]!
   const b = ease[1]!
   const ca = round[0]!
   const cb = round[1]!
-  const cruise = (total - 0.5 * last * b) / (frames - 0.5 * (a + b))
-  const rate = (x: number): number => (x < a ? cruise * shape(x / a, ca) : cruise + (last - cruise) * shape((x - (frames - b)) / b, cb))
+  const cruise = (total - 0.5 * last * b + (slope * b * b) / 12) / (frames - 0.5 * (a + b))
+  const tail = (x: number): number => Math.min(Math.max((x - (frames - b)) / b, 0), 1)
+  const rate = (x: number): number => (x < a ? cruise * shape(x / a, ca) : cruise + (last - cruise) * shape((x - (frames - b)) / b, cb) + slope * (x - frames) * tail(x) * tail(x))
   const at = (x: number): number => {
     if (x <= 0) return 0
     if (x >= frames) return total + last * (x - frames)
     const head = cruise * a * area(x / a, ca)
     const body = cruise * Math.max(x - a, 0)
-    const tail = (last - cruise) * b * area((x - (frames - b)) / b, cb)
-    return head + body + tail
+    const u = tail(x)
+    return head + body + (last - cruise) * b * area((x - (frames - b)) / b, cb) - slope * b * b * u * u * u * (1 / 3 - u / 4)
   }
   return { frames, total, at, rate }
 }
@@ -82,6 +85,17 @@ export class Plan extends StopPlan {
 
   private handoverTime(kind: 'dive' | 'rise'): number {
     return handoverOf(this.id, kind)!.time
+  }
+
+  drawnShape(view: ViewKind, eye: THREE.Vector3): { shape: number[] } {
+    const low = view === 'orbit' ? 1 - smooth((Math.log(Math.max(eye.length() - 1, 1e-4)) - Math.log(descent.low)) / (Math.log(descent.high) - Math.log(descent.low))) : 1
+    return { shape: figure.flatMap((row, i) => row.map((v, j) => v + ((i === j ? 1 : 0) - v) * low)) }
+  }
+
+  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
+    if (view !== 'orbit') return []
+    const home = this.hold(this.holdMid - this.seg.hold.start).position.lerp(new THREE.Vector3().fromArray(moon.center), moon.near)
+    return [{ id: 'moon', place: home.applyAxisAngle(this.axis, THREE.MathUtils.degToRad(this.p.moonDegPerSecond) * (this.clock(time) - this.holdMid)).toArray(), turn: moon.quaternion, reach: moon.radius * moon.near * 1.25 }]
   }
 
   clock(time: number): number {
@@ -125,7 +139,12 @@ export class Plan extends StopPlan {
     const sign = kind === 'dive' ? -1 : 1
     const h = 0.5 / fps
     const lift = (t: number): number => Math.log((this.far(kind, t).position.length() - 1) / (this.twin(this.low(t), t).position.length() - 1))
-    const made = law(Math.abs(end - at) * fps, this.way[kind].ease, this.way[kind].round, lift(end), (sign * (lift(end + h) - lift(end - h))) / (2 * h * fps))
+    const pulled = kind === 'rise' && this.pullBack(end - h) > 0
+    const d = h / END_STEPS
+    const step = d * fps
+    const made = pulled
+      ? law(Math.abs(end - at) * fps, this.way[kind].ease, this.way[kind].round, lift(end), (3 * lift(end) - 4 * lift(end - d) + lift(end - 2 * d)) / (2 * step), (lift(end) - 2 * lift(end - d) + lift(end - 2 * d)) / (step * step))
+      : law(Math.abs(end - at) * fps, this.way[kind].ease, this.way[kind].round, lift(end), (sign * (lift(end + h) - lift(end - h))) / (2 * h * fps))
     this.laws[kind] = made
     return made
   }
@@ -154,6 +173,13 @@ export class Plan extends StopPlan {
     return from.clone().slerp(to, u).multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), bank * Math.sin(Math.PI * u) ** 2))
   }
 
+  private landed(leg: Leg, l: Law, x: number): number {
+    const k = l.at(x) / l.total
+    if (!leg.land) return k
+    const u = ramp(l.frames - leg.land, l.frames, x)
+    return k + (l.rate(l.frames) / l.total) * leg.land * u * u * (1 - u)
+  }
+
   private fly(kind: 'dive' | 'rise', time: number): Pose {
     const leg = this.way[kind]
     const l = this.lawOf(kind)
@@ -161,7 +187,7 @@ export class Plan extends StopPlan {
     const anchor = this.twin(this.low(time), time)
     const lift = l.at(x)
     if (lift <= 0) return anchor
-    const k = lift / l.total
+    const k = this.landed(leg, l, x)
     const far = this.far(kind, time)
     const axis = forward(anchor.quaternion)
     const b = anchor.position.dot(axis)
