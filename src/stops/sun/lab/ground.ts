@@ -623,7 +623,8 @@ void main() {
   float ridge = 1.0 - abs(2.0 * fc - 1.0);
   float ridgeB = 1.0 - abs(2.0 * fb - 1.0);
   float bunch = smoothstep(0.3, 0.7, 0.6 * mix(0.5, fb, kb) + 0.4 * mix(0.5, fa, ka));
-  float thread = clamp(mix(0.3, max(ridge * ridge * ridge, 0.7 * ridgeB * ridgeB * ridgeB * ridgeB), kc) * (0.45 + 0.9 * bunch), 0.0, 1.0);
+  float ridgeA = 1.0 - abs(2.0 * fa - 1.0);
+  float thread = clamp(mix(0.3, max(max(ridge * ridge * ridge, 0.7 * ridgeB * ridgeB * ridgeB * ridgeB), ${lab.fibre.thick.toFixed(2)} * mix(0.5, ridgeA * ridgeA, ka)), kc) * (0.45 + 0.9 * bunch), 0.0, 1.0);
 #ifdef LAB_MAP
   vec4 pn = vec4(0.0, 0.0, 1.0, 1.0);
 #else
@@ -666,8 +667,11 @@ void main() {
   
   float edgeD = 1.0 - plan;
   float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
-  float veins = labLobes(d, seed, 0.05 + 0.3 * rho) * smoothstep(0.1, 0.6, rho);
-  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), max(1.0 - fall, 0.0)));
+  // an old cell's rim breaks: the dark threads between its lobes grow from the rim to the middle and darken, so it
+  // falls into pieces before it fades
+  float old = smoothstep(${lab.heat.breaks[0]!.toFixed(2)}, ${lab.heat.breaks[1]!.toFixed(2)}, age);
+  float veins = labLobes(d, seed, 0.05 + 0.3 * rho + 0.12 * old) * smoothstep(mix(0.1, 0.0, old), mix(0.6, 0.2, old), rho);
+  cell *= (1.0 - mix(${lab.heat.vein.toFixed(2)}, ${lab.heat.breaks[2]!.toFixed(2)}, old) * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), max(1.0 - fall, 0.0)));
   // the folds between the streams that run from the middle to each lane: dark threads toward the places where
   // three cells meet
   cell *= 1.0 - ${lab.heat.fold[0]!.toFixed(2)} * smoothstep(${lab.heat.fold[1]!.toFixed(2)}, 1.0, vCorner + 0.08 * (fan - 0.5)) * smoothstep(0.15, 0.6, plan);
@@ -683,7 +687,7 @@ void main() {
   float lit = step(${lab.heat.points.toFixed(2)}, h1(gi + 17.0)) * (1.0 - smoothstep(0.1, 0.16 + 0.26 * h1(gi + 3.0), length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
   heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.02, 0.2, edgeD)) * (1.0 - pen);
   // thin hot threads stand in the bottom of the lane, here and there
-  heat += ${lab.heat.thin[0]!.toFixed(2)} * (1.0 - smoothstep(0.0, ${lab.heat.thin[1]!.toFixed(3)}, abs(edgeD))) * smoothstep(0.5, 0.7, vn(vG * ${lab.heat.thin[2]!.toFixed(1)} + 11.0)) * (1.0 - pen);
+  heat += ${lab.heat.thin[0]!.toFixed(2)} * (1.0 - smoothstep(0.0, ${lab.heat.thin[1]!.toFixed(3)}, abs(edgeD))) * smoothstep(0.58, 0.78, vn(vG * ${lab.heat.thin[2]!.toFixed(1)} + 11.0)) * (1.0 - pen);
   heat *= pn.z;
   // (b) the angle of view: the ground has no lamp. A look that meets the surface aslant meets shallower, cooler gas:
   // the heat times a darkening by the angle between the surface's normal and the eye (heat.graze: at a look along
