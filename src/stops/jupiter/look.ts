@@ -13,9 +13,9 @@ export const night = (fitted.night as number[]).map((v) => v * nightGain) as [nu
 export const nightAlbedo: [number, number, number, number] = [0.43, 0.32, 0.24, 0.2]
 
 export const shadeKnee: [number, number] = [2.4, 3.4]
-export const shadow: [number, number, number] = [0.87, 1.01, 1.0]
+export const shadow: [number, number, number] = [0.76, 1.12, 1.0]
 export const shadowFade: [number, number] = [0.0, 0.1]
-export const shadowTip: [number, number, number, number] = [0.845, 1.03, 0.6, 1.1]
+export const shadowTip: [number, number, number, number] = [0.72, 1.155, 0.6, 1.1]
 export const shadowToe: [number, number, number] = [0.92, 1.12, 0.1]
 export const shadowHaze: [number, number] = [1.0, 0.27]
 export const shadowCap = { stretch: 0.35, from: 0.12, to: 0.36 }

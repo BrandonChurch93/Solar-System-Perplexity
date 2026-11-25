@@ -89,14 +89,23 @@ def build():
     far = mi[0]
     num = ((mi - far[None]) * (mp - far[None])).sum(1)
     den = ((mp - far[None]) ** 2).sum(1)
-    t = np.clip(num / np.maximum(den, 1e-9), 0, 1)
-    t[0] = 0
-    t = np.maximum.accumulate(t, axis=0)
-    one = np.clip(np.log(np.exp(np.linspace(np.log(s0), np.log(s1), ns)) / a['clear'][0]) / np.log(a['clear'][1] / a['clear'][0]), 0, 1)
+    measured = np.clip(num / np.maximum(den, 1e-9), 0, 1)
+    measured[0] = 0
+    measured = np.maximum.accumulate(measured, axis=0)
+    sines = np.exp(np.linspace(np.log(s0), np.log(s1), ns))
+    lay = a['layer']
+    thick = float(v['eye'][2])
+    path = -geom.R * sines + np.sqrt((geom.R * sines) ** 2 + 2 * geom.R * thick + thick * thick)
+    t = np.repeat(np.exp(-lay['per'] * path)[:, None], 3, 1)
+    one = np.clip(np.log(sines / a['clear'][0]) / np.log(a['clear'][1] / a['clear'][0]), 0, 1)
     t = t * (1 - one[:, None]) + one[:, None]
     add = np.maximum(mi - t[:, None, :] * mp, 0) * (1 - one[:, None, None])
     add = cv2.GaussianBlur(add, (0, 0), a['smooth'], borderType=cv2.BORDER_REPLICATE)
-    add[0] = far
+    low = int(np.argmax(sines >= lay['flat']))
+    add[:low] = add[low]
+    t[:low] = t[low]
+    print('layer: thickness', round(thick, 4), 'path through it at the knots', np.round(path, 2))
+    print('share that comes through as measured on the approved view, green', np.round(measured[:, 1], 3))
     resid = np.abs(mi - (t[:, None, :] * mp + add))[have].mean(0)
     print('air table', ns, 'x', nd, 'cells with data', int(have.sum()), 'mean abs residual of the cell means', np.round(resid, 4))
     np.set_printoptions(linewidth=220, precision=3, suppress=True)

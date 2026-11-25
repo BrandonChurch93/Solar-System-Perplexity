@@ -4,16 +4,19 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import deck from './deck.json'
 import fields from './deck-fields.json'
 import { frameUniform } from '../../core/frame'
+import curve from './curve.json'
 import place from './place.json'
 
 const OCTAVES = 10
 const ABOVE_KNOTS = deck.above.gain.length
+const CURVE_KNOTS = curve.curve.length
 const FLASHES = deck.life.flash.sites.length
+const HAZE_TAPS = deck.life.haze.thick.taps
 
 export const EDDIES = deck.life.eddies.length
 export const SEAMS = deck.life.storm.rings.length
 
-export const CALM_GLSL = /* glsl */ `
+const CALM_GLSL = /* glsl */ `
 uniform vec4 uEddy[${EDDIES}];
 uniform float uEddyTurn[${EDDIES}];
 uniform vec3 uSeam[${SEAMS}];
@@ -47,7 +50,7 @@ vec2 calm(vec2 g, out vec2 cs) {
 }
 `
 
-export const ABOVE_GLSL = /* glsl */ `float above(vec3 p) {
+const ABOVE_GLSL = /* glsl */ `float above(vec3 p) {
   float n = dot(p, p) + 2.0 * uRadius * p.z;
   return n / (sqrt(uRadius * uRadius + n) + uRadius);
 }
@@ -62,7 +65,7 @@ vec3 levels(vec2 g) {
 }
 `
 
-export const STORED_GLSL = /* glsl */ `float stored(vec2 g, vec3 w) {
+const STORED_GLSL = /* glsl */ `float stored(vec2 g, vec3 w) {
   float h = 0.0;
   for (int k = 0; k < (w.x > 0.0 ? 1 : 0); k++) h += w.x * textureLod(uHeightFore, (g - uForeMap.xy) * uForeMap.z + 0.5, 0.0).r;
   for (int k = 0; k < (w.y > 0.0 ? 1 : 0); k++) h += w.y * textureLod(uHeightNear, (g - uNear.xy) * uNear.z + 0.5, 0.0).r;
@@ -71,7 +74,7 @@ export const STORED_GLSL = /* glsl */ `float stored(vec2 g, vec3 w) {
 }
 `
 
-export const DETAIL_GLSL = /* glsl */ `
+const DETAIL_GLSL = /* glsl */ `
 vec2 spot(ivec2 p) {
   uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u;
   h ^= h >> 15;
@@ -174,7 +177,6 @@ uniform float uFrame;
 uniform vec4 uDetail;
 uniform vec4 uDetailLook;
 uniform float uDetailTone;
-uniform float uDetailHigh;
 uniform vec3 uFoot;
 uniform vec2 uSunAz;
 uniform sampler2D uLimb;
@@ -184,18 +186,20 @@ uniform sampler2D uAir;
 uniform sampler2D uAirThrough;
 uniform vec4 uAirKnots;
 uniform vec2 uAirTurn;
-uniform float uAirLift;
+uniform vec2 uAirLift;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform vec2 uAboveMix;
 uniform sampler2D uTone;
 uniform vec4 uToneBox;
-uniform vec3 uToneLift;
+uniform float uToneEdge;
 uniform vec4 uCalmBox;
-uniform vec2 uToneRim;
-uniform vec4 uToneRimNoise;
-uniform vec3 uExpose;
+uniform vec2 uSeenReach;
+uniform vec3 uSunCurve[${CURVE_KNOTS}];
+uniform vec3 uSunChart;
 uniform vec3 uLayer;
+uniform vec3 uRim;
+uniform vec3 uDepth;
 uniform vec4 uStorm;
 uniform float uStormTurn;
 uniform vec4 uJet;
@@ -281,12 +285,7 @@ vec4 seenAt(vec3 p, vec3 D, vec3 n, float foot, vec2 dx, vec2 dy, out vec2 size,
   float near = 1.0 / max(-q.z, 1e-6);
   vec2 at = uFitWindow.x * q.xy * near;
   float edge = q.z < 0.0 ? smoothstep(uFitWindow.w, uTrust.w, min(uFitWindow.y - abs(at.x), uFitWindow.z - abs(at.y))) : 0.0;
-  float toned = smoothstep(uToneLift.x, uToneLift.y, above(vEye));
-  for (int i = 0; i < (toned > 0.0 && edge > 0.0 ? 1 : 0); i++) {
-    vec2 inner = atan(uFitWindow.yz / uFitWindow.x) - atan(abs(at) / uFitWindow.x);
-    float moved = (vnoise(p.xy / uToneRimNoise.x) - 0.5) * uToneRimNoise.y + (vnoise(p.xy / uToneRimNoise.z + 37.0) - 0.5) * uToneRimNoise.w;
-    edge *= mix(1.0, smoothstep(uToneRim.x, uToneRim.y, min(inner.x, inner.y) + moved), toned);
-  }
+  edge *= 1.0 - smoothstep(uSeenReach.x, uSeenReach.y, d);
   for (int i = 0; i < (inside && edge > 0.0 ? 1 : 0); i++) {
     vec2 spot = at + vec2(0.5, -0.5);
     vec2 cell = (uFitWindow.yz + spot) / uRangeShape.x - 0.5;
@@ -326,33 +325,48 @@ ${STORED_GLSL}vec4 plateAt(vec2 g, vec2 dx, vec2 dy, out float size) {
   size = exp2(wf * log2(uTexel.x) + wn * log2(uTexel.y) + wm * log2(uTexel.z) + wr * log2(uTexel.w));
   return c;
 }
-float layered(vec2 p, int octaves, float size) {
+vec2 layered(vec2 p, int octaves, float size) {
   float f = 0.0;
   float total = 0.0;
   float gain = 1.0;
+  float lost = 0.0;
   for (int n = 0; n < octaves; n++) {
-    f += gain * (0.5 + (1.0 - smoothstep(uHazeFade.x, uHazeFade.y, size)) * (vnoise(p + uHazeOctave.xy * float(n)) - 0.5));
+    float keep = 1.0 - smoothstep(uHazeFade.x, uHazeFade.y, size);
+    float v = 0.5;
+    for (int m = 0; m < (keep > 0.0 ? 1 : 0); m++) v += keep * (vnoise(p + uHazeOctave.xy * float(n)) - 0.5);
+    f += gain * v;
+    lost += gain * gain * (1.0 - keep * keep);
     total += gain;
     p *= uHazeOctave.z;
     size *= uHazeOctave.z;
     gain *= uHazeOctave.w;
   }
-  return f / total;
+  return vec2(f / total, lost / (total * total));
 }
-float hazeAt(vec2 g, int k, float foot) {
+float hazeOne(vec2 g, int k, float foot, vec2 stride) {
   vec2 o = g - uStorm.xy;
   float across = dot(o, uJet.zw);
-  float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o))) * (1.0 - smoothstep(uHazeFine.y, uHazeFine.z, foot * uFrame / uHazeFibre.y));
+  float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o)));
   float dense = 0.0;
   for (int i = 0; i < (w > 0.0 ? 1 : 0); i++) {
+    vec2 lie = vec2(dot(stride, uJet.xy), dot(stride, uJet.zw));
+    float coarse = max(foot * uFrame / uHazeShape.y, length(lie / uHazeShape.xy));
     vec2 at = vec2(dot(o, uJet.xy) - uHazeBand[k].z, across);
     vec2 p = at / uHazeShape.xy + uHazeSeed[k].xy;
-    vec2 q = vec2(layered(p + uHazeWarp.xy, 2, 0.0), layered(p + uHazeWarp.zw, 2, 0.0)) - 0.5;
-    float bank = layered(p + uHazeFine.x * q, 3, 0.0);
-    float fibre = layered((at + uHazeFine.w * q * uHazeShape.xy) / uHazeFibre.xy + uHazeSeed[k].yx, int(uHazeFibre.z), foot / uHazeFibre.y);
-    dense = w * smoothstep(uHazeShape.z, uHazeShape.w, mix(bank, fibre, uHazeFibre.w));
+    vec2 q = vec2(layered(p + uHazeWarp.xy, 2, coarse).x, layered(p + uHazeWarp.zw, 2, coarse).x) - 0.5;
+    vec2 bank = layered(p + uHazeFine.x * q, 3, coarse);
+    vec2 fibre = layered((at + uHazeFine.w * q * uHazeShape.xy) / uHazeFibre.xy + uHazeSeed[k].yx, int(uHazeFibre.z), max(foot / uHazeFibre.y, length(lie / uHazeFibre.xy)));
+    float lost = (1.0 - uHazeFibre.w) * (1.0 - uHazeFibre.w) * bank.y + uHazeFibre.w * uHazeFibre.w * fibre.y;
+    float wide = 0.5 * sqrt((uHazeShape.w - uHazeShape.z) * (uHazeShape.w - uHazeShape.z) + uHazeSeed[k].w * lost);
+    float mid = 0.5 * (uHazeShape.z + uHazeShape.w);
+    dense = w * smoothstep(mid - wide, mid + wide, mix(bank.x, fibre.x, uHazeFibre.w));
   }
   return dense;
+}
+float hazeAt(vec2 g, int k, float foot, vec2 run) {
+  float dense = 0.0;
+  for (int j = 0; j < ${HAZE_TAPS}; j++) dense += hazeOne(g + run * ((float(j) + 0.5) / ${HAZE_TAPS}.0 - 0.5), k, foot, run);
+  return dense / ${HAZE_TAPS}.0;
 }
 vec2 flashAt(vec2 g, vec3 c) {
   float s = 0.0;
@@ -367,11 +381,11 @@ vec2 flashAt(vec2 g, vec3 c) {
   return vec2(s * smoothstep(uFlashLook.x, uFlashLook.y, (c.b - c.r) / max(c.b + c.r, uFlashCore.z)) * mix(uFlashShare, 1.0, smoothstep(uFlashLook.z, uFlashLook.w, lum)), (t + uFlashCore.y * s) * sqrt(max(lum, 0.0)));
 }
 vec3 toneAt(vec2 g) {
-  vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0);
+  vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneEdge, 1.0 - uToneEdge) * vec2(0.5, 1.0);
   return uToneBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
 }
 vec3 calmAt(vec2 g) {
-  vec2 uv = clamp(vec2(g.x - uCalmBox.x, uCalmBox.y - g.y) * uCalmBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0) + vec2(0.5, 0.0);
+  vec2 uv = clamp(vec2(g.x - uCalmBox.x, uCalmBox.y - g.y) * uCalmBox.z + 0.5, uToneEdge, 1.0 - uToneEdge) * vec2(0.5, 1.0) + vec2(0.5, 0.0);
   return uCalmBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
 }
 vec4 sunAt(vec2 g) {
@@ -435,7 +449,7 @@ void main() {
     vec3 V = vec3(cs.x * D.x - cs.y * D.y, cs.y * D.x + cs.x * D.y, D.z);
     vec2 sunAz = vec2(cs.x * uSunAz.x - cs.y * uSunAz.y, cs.y * uSunAz.x + cs.x * uSunAz.y);
     float foot = t * pix;
-    float hs = max(foot, mix(uTexel.y, uForeMap.w, w.x));
+    float hs = max(foot, mix(uNear.w, uForeMap.w, w.x));
     vec2 slope = vec2(stored(g + vec2(hs, 0.0), w) - stored(g - vec2(hs, 0.0), w), stored(g + vec2(0.0, hs), w) - stored(g - vec2(0.0, hs), w)) / (2.0 * hs);
     vec3 n = normalize(vec3(g / uRadius - slope, 1.0));
     float facing = min(dot(V, n), -uFoot.x);
@@ -477,7 +491,8 @@ void main() {
       through = vec3(texture(uAirThrough, vec2(0.5, row)).r, texture(uAirThrough, vec2(0.5, row + 1.0 / 3.0)).r, texture(uAirThrough, vec2(0.5, row + 2.0 / 3.0)).r);
       added = vec3(texture(uAir, vec2(column, row)).r, texture(uAir, vec2(column, row + 1.0 / 3.0)).r, texture(uAir, vec2(column, row + 2.0 / 3.0)).r);
     }
-    float thin = uAirLift;
+    vec2 out2 = abs(there.xy - uFar.xy) * (2.0 * uFar.z);
+    float thin = smoothstep(uAirLift.x, uAirLift.y, max(out2.x, out2.y));
     vec3 throughLow = through;
     vec3 addedLow = added;
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
@@ -488,14 +503,18 @@ void main() {
     int taps = int(clamp(ceil(major / (uFoot.y * minor)), 1.0, uFoot.z));
     float span = max(minor, major / float(taps));
     float cut = uDetail.z * size;
-    float toned = smoothstep(uToneLift.x, uToneLift.y, above(E));
-    float least = mix(uDetail.w, uDetailHigh, toned) * span;
+    float least = uDetail.w * span;
     float on = smoothstep(least, 2.0 * least, cut);
     vec3 fineSum = vec3(0.0);
     for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(g + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
     float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, sunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
-    vec3 ground = unfilm(plate.rgb);
-    for (int i = 0; i < (toned > 0.0 && seen.a < 1.0 ? 1 : 0); i++) ground *= mix(vec3(1.0), toneAt(g) * calmAt(g), toned);
+    float ndl = dot(normalize(there + vec3(0.0, 0.0, uRadius)), uSunChart);
+    float knotAt = clamp(sign(ndl) * sqrt(abs(ndl)) * 0.5 + 0.5, 0.0, 1.0) * ${CURVE_KNOTS - 1}.0;
+    int knotLow = int(min(floor(knotAt), ${CURVE_KNOTS - 2}.0));
+    vec3 lit = mix(uSunCurve[knotLow], uSunCurve[knotLow + 1], knotAt - float(knotLow));
+    seen.rgb *= lit;
+    vec3 ground = unfilm(plate.rgb) * lit;
+    for (int i = 0; i < (seen.a < 1.0 ? 1 : 0); i++) ground *= toneAt(g) * calmAt(g);
     col = mix(ground * shade * through + added, seen.rgb * fine * shade, seen.a);
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
@@ -515,7 +534,7 @@ void main() {
     for (int i = 0; i < (uHazeLit.z > 0.0 ? 1 : 0); i++) {
       float zg = above(there);
       float shadow = 0.0;
-      for (int b = 0; b < 2; b++) shadow += uHazeSeed[b].z * smoothstep(0.0, uHazeFade.z, uHazeBand[b].x - zg) * hazeAt(there.xy + uSunAz * (max(uHazeBand[b].x - zg, 0.0) * uHazeLight.x), b, major);
+      for (int b = 0; b < 2; b++) shadow += uHazeSeed[b].z * smoothstep(0.0, uHazeFade.z, uHazeBand[b].x - zg) * hazeAt(there.xy + uSunAz * (max(uHazeBand[b].x - zg, 0.0) * uHazeLight.x), b, major, uSunAz * (uHazeLight.y * uHazeLight.x));
       for (int j = 0; j < (shadow > 0.0 ? 1 : 0); j++) col *= 1.0 - uHazeLit.z * sunAt(there.xy).a * (1.0 - exp(-shadow)) * uHazeShade;
       for (int b = 0; b < 2; b++) {
         float hb = uHazeBand[b].x;
@@ -525,7 +544,13 @@ void main() {
         for (int j = 0; j < (cb > 0.0 && db > 0.0 && tb > 0.0 && tb < t ? 1 : 0); j++) {
           vec3 pb = E + D * tb;
           float cosine = max(-dot(D, normalize(pb + vec3(0.0, 0.0, uRadius))), uHazeLight.z);
-          float dense = hazeAt(pb.xy, b, tb * pix / cosine);
+          float ha = hb + 0.5 * uHazeLight.y;
+          float ca = high - 2.0 * uRadius * ha - ha * ha;
+          float ta = ca > 0.0 ? max(-bD - sqrt(max(bD * bD - ca, 0.0)), 0.0) : 0.0;
+          float hc = hb - 0.5 * uHazeLight.y;
+          float dc = bD * bD - high + 2.0 * uRadius * hc + hc * hc;
+          float tc = dc > 0.0 ? min(-bD - sqrt(dc), t) : t;
+          float dense = hazeAt(E.xy + D.xy * (0.5 * (ta + tc)), b, tb * pix / cosine, D.xy * (tc - ta));
           for (int m = 0; m < (dense > 0.0 ? 1 : 0); m++) {
             vec4 sun = sunAt(pb.xy);
             float toward = min(uHazeForward.y * pow((1.0 - uHazeForward.x) * inversesqrt(max(1.0 + uHazeForward.x * uHazeForward.x - 2.0 * uHazeForward.x * dot(D, normalize(vec3(uSunAz * uHazeLight.x, 1.0))), 1e-4)), 3.0), 1.0);
@@ -536,11 +561,10 @@ void main() {
     }
     float kept = mix(major / sizePlate, countView, seen.a) / uGrad;
     texels = max(kept, on * 2.0 * span / (uGrad * 1.6 * least));
-    col *= uExpose;
     alpha = 1.0;
     for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
       vec2 r = abs(there.xy - uFar.xy) * (2.0 * uFar.z);
-      alpha = uLayer.x * (1.0 - smoothstep(uJoin.x, uJoin.y, max(r.x, r.y)));
+      alpha = smoothstep(uDepth.x, uDepth.y, uDepth.z / (t * uPixel * uFrame)) * (1.0 - smoothstep(uJoin.x, uJoin.y, max(r.x, r.y)));
       col *= alpha;
     }
     tint.b = seen.a;
@@ -552,14 +576,17 @@ void main() {
     vec3 level = normalize(D - dot(D, up) * up);
     float u = dot(E.xy + level.xy * sqrt(max(high, 0.0)), uSunAz);
     vec2 at = vec2(clamp((u - uLimbKnots.x) * uLimbKnots.y, uLimbShape.y, 1.0 - uLimbShape.y), clamp(sqrt(rise * uLimbShape.x), 0.0, 1.0) * uLimbKnots.z + uLimbKnots.w);
-    for (int i = 0; i < (rise < 1.0 / uLimbShape.x ? 1 : 0); i++) col = vec3(texture(uLimb, at).r, texture(uLimb, at + vec2(0.0, 1.0 / 3.0)).r, texture(uLimb, at + vec2(0.0, 2.0 / 3.0)).r) * uExpose;
+    for (int i = 0; i < (rise < 1.0 / uLimbShape.x ? 1 : 0); i++) col = vec3(texture(uLimb, at).r, texture(uLimb, at + vec2(0.0, 1.0 / 3.0)).r, texture(uLimb, at + vec2(0.0, 2.0 / 3.0)).r);
     alpha = 1.0 - smoothstep(uLimbShape.z, uLimbShape.w, rise);
     for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
-      col *= uLayer.y;
-      alpha *= uLayer.y;
+      vec3 q = E + D * max(-bD, 0.0) + vec3(0.0, 0.0, uRadius);
+      float stands = 1.0 - smoothstep(uLayer.x, uLayer.y, length(q * (uRadius / length(q)) - vec3(uFar.xy, sqrt(max(uRadius * uRadius - dot(uFar.xy, uFar.xy), 0.0)))));
+      stands *= smoothstep(uRim.x, uRim.y, uRim.z / max(max(-bD, 0.0) * uPixel * uFrame, 1e-9));
+      col *= stands;
+      alpha *= stands;
     }
   }
-  outColor = diagOut(vec4(col * uGain * vig, alpha), texels, 1.0, tint, vec2(0.0), t);
+  outColor = diagOut(vec4(col * uGain * vig, alpha), texels, 1.0, tint, vec2(0.0), t / uRadius);
   if (!hit && (uDiag >= 2 || alpha + col.r + col.g + col.b <= 0.0)) discard;
 }`
 
@@ -622,7 +649,7 @@ export class CloudDeck {
     for (const [name, key] of [['fore', 'Fore'], ['near', 'Near'], ['mid', 'Mid'], ['far', 'Far']] as const) {
       const m = plates[name]!
       uniforms['uPlate' + key] = { value: await ctx.texture(base + 'plate-' + name + '.png', { srgb: true, anisotropy: l.anisotropy }) }
-      texel.push(m.size[0]! / m.pixels[ctx.assets]![0]!)
+      texel.push(m.size[0]! / m.pixels.full![0]!)
       uniforms['u' + key] = { value: new THREE.Vector4(m.centre[0], m.centre[1], 1 / m.size[0]!, name === 'fore' ? 1 / m.size[1]! : m.size[0]! / m.pixels[ctx.assets]![0]!) }
     }
     const c = fields.chart
@@ -680,12 +707,12 @@ export class CloudDeck {
       uRadius: { value: c.radius },
       uHeightRange: { value: new THREE.Vector2(fields.heightRange[0]!, fields.heightRange[1]! - fields.heightRange[0]!) },
       uShell: { value: new THREE.Vector2().fromArray(l.shell) },
+      uDepth: { value: new THREE.Vector3(place.scene.depth[0], place.scene.depth[1], l.shell[1]! - l.shell[0]!) },
       uMarch: { value: new THREE.Vector4().fromArray(l.march) },
       uPixel: { value: 0.001 },
       uDetail: { value: new THREE.Vector4().fromArray(l.detail) },
       uDetailLook: { value: new THREE.Vector4().fromArray(l.detailLook) },
       uDetailTone: { value: l.detailTone },
-      uDetailHigh: { value: l.detailHigh },
       uFoot: { value: new THREE.Vector3().fromArray(l.foot) },
       uSunAz: { value: new THREE.Vector2(Math.cos(az), Math.sin(az)) },
       uLimb: { value: ctx.floatTexture(glow, lk[2]!, 3 * lr) },
@@ -695,17 +722,17 @@ export class CloudDeck {
       uAirThrough: { value: ctx.floatTexture(through, 1, 3 * as) },
       uAirKnots: { value: new THREE.Vector4(air.sinRange[0]!, 1 / Math.log(air.sinRange[1]! / air.sinRange[0]!), air.sinRange[1]!, (ad - 1) / (ad * Math.PI)) },
       uAirTurn: { value: new THREE.Vector2((as - 1) / (3 * as), 0.5 / (3 * as)) },
-      uAirLift: { value: 0 },
+      uAirLift: { value: new THREE.Vector2().fromArray(place.scene.air) },
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveMix: { value: new THREE.Vector2(deck.above.even, deck.above.floor) },
       uTone: { value: ctx.floatTexture(tone, 2 * tn.pixels, 3 * tn.pixels) },
       uCalmBox: { value: new THREE.Vector4(cm.centre[0]!, cm.centre[1]!, 1 / cm.size, cm.scale) },
       uToneBox: { value: new THREE.Vector4(tn.centre[0]!, tn.centre[1]!, 1 / tn.size, tn.scale) },
-      uToneLift: { value: new THREE.Vector3(tn.lift[0]!, tn.lift[1]!, 0.5 / tn.pixels) },
-      uToneRim: { value: new THREE.Vector2(THREE.MathUtils.degToRad(tn.rim[0]!), THREE.MathUtils.degToRad(tn.rim[1]!)) },
-      uToneRimNoise: { value: new THREE.Vector4(tn.rimNoise[0]!, THREE.MathUtils.degToRad(tn.rimNoise[1]!), tn.rimNoise[2]!, THREE.MathUtils.degToRad(tn.rimNoise[3]!)) },
-      uExpose: { value: new THREE.Vector3(1, 1, 1) },
+      uToneEdge: { value: 0.5 / tn.pixels },
+      uSeenReach: { value: new THREE.Vector2().fromArray(tn.known) },
+      uSunCurve: { value: curve.curve.map((c) => new THREE.Vector3(c[0]! / place.solved.light[0]!, c[1]! / place.solved.light[1]!, c[2]! / place.solved.light[2]!)) },
+      uSunChart: { value: new THREE.Vector3().fromArray(place.solved.sun) },
       uStorm: { value: new THREE.Vector4(deck.life.storm.centre[0]!, deck.life.storm.centre[1]!, deck.life.storm.coreUnits, deck.life.storm.rimUnits) },
       uStormTurn: { value: 0 },
       uEddy: { value: deck.life.eddies.map((e) => new THREE.Vector4(e.centre[0]!, e.centre[1]!, e.coreUnits, e.rimUnits)) },
@@ -713,10 +740,10 @@ export class CloudDeck {
       uSeam: { value: deck.life.storm.rings.map((s) => new THREE.Vector3(s.edgeUnits[0]!, s.edgeUnits[1]!, 0)) },
       uJet: { value: new THREE.Vector4(jet.x, jet.y, -jet.y, jet.x) },
       uHazeBand: { value: hz.bands.map((b) => new THREE.Vector4(b.heightUnits, b.side, 0, b.depth)) },
-      uHazeSeed: { value: hz.bands.map((b) => new THREE.Vector4(b.seed[0]!, b.seed[1]!, b.shadowDepth, 0)) },
+      uHazeSeed: { value: hz.bands.map((b) => new THREE.Vector4(b.seed[0]!, b.seed[1]!, b.shadowDepth, 20 * hz.thick.spread * hz.thick.spread)) },
       uHazeShape: { value: new THREE.Vector4(hz.bankUnits[0]!, hz.bankUnits[1]!, hz.cover[0]!, hz.cover[1]!) },
       uHazeFibre: { value: new THREE.Vector4(hz.fibreUnits[0]!, hz.fibreUnits[1]!, hz.fibreOctaves, hz.fibreShare) },
-      uHazeFine: { value: new THREE.Vector4(hz.warp, hz.footprint[0]!, hz.footprint[1]!, hz.fibreWarp) },
+      uHazeFine: { value: new THREE.Vector4(hz.warp, 0, 0, hz.fibreWarp) },
       uHazeWarp: { value: new THREE.Vector4().fromArray(hz.warpSeed) },
       uHazeOctave: { value: new THREE.Vector4(hz.octaveShift[0]!, hz.octaveShift[1]!, hz.lacunarity, hz.octaveGain) },
       uHazeFade: { value: new THREE.Vector3(hz.octaveFade[0]!, hz.octaveFade[1]!, hz.softUnits) },
@@ -727,11 +754,11 @@ export class CloudDeck {
       uFlashGlow: { value: new THREE.Vector3().fromArray(fl.glow) },
       uFlashCore: { value: new THREE.Vector3(fl.core.tight, fl.core.spill, fl.core.floor) },
       uHazeSpan: { value: hz.bands.map((b) => new THREE.Vector4(b.edgeUnits[0]!, b.edgeUnits[1]!, b.reachUnits[0]!, b.reachUnits[1]!)) },
-      uHazeLight: { value: new THREE.Vector4(1 / Math.tan(THREE.MathUtils.degToRad(hz.sunElevationDeg)), 0, hz.minCosine, Math.log2(hz.lightBlurUnits / texel[2]!)) },
-      uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 0) },
+      uHazeLight: { value: new THREE.Vector4(Math.hypot(place.solved.sun[0]!, place.solved.sun[1]!) / place.solved.sun[2]!, hz.thick.units, hz.minCosine, Math.log2(hz.lightBlurUnits / texel[2]!)) },
+      uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 1) },
       uHazeGlow: { value: new THREE.Vector3().fromArray(hz.glow) },
       uHazeShade: { value: new THREE.Vector3().fromArray(hz.shadowTint) },
-      uOwn: { value: 0 }, uEye: { value: new THREE.Vector3() }, uAxes: { value: new THREE.Matrix3() }, uLayer: { value: new THREE.Vector3(1, 1, 0) }, uToChart: { value: new THREE.Matrix3() },
+      uOwn: { value: 0 }, uEye: { value: new THREE.Vector3() }, uAxes: { value: new THREE.Matrix3() }, uLayer: { value: new THREE.Vector3(1, 1, 0) }, uRim: { value: new THREE.Vector3(0, 1, 1) }, uToChart: { value: new THREE.Matrix3() },
       uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
     })
     return new CloudDeck(uniforms)
