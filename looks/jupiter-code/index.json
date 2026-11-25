@@ -1,9 +1,67 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T06:25:42.374Z",
- "head": "c48bddc93fa6638407fa9e102efd8bff11ed8360",
- "note": "06:26 UTC: handover on the merge of main passes at the draft tier (dive and rise), parity green, tests running; next the NAMED commit, then the air and the far ground",
+ "pushed": "2026-11-25T06:37:57.244Z",
+ "head": "b79d375ebfc18ad36f3c18260c8830c707952f22",
+ "note": "06:39 UTC: second named commit of round 2 is b79d375e (red by my own run: pattern line in both moves, level of 3287 + 1/2); experiment shows the air table as the cause of most of it; next: another law of the air",
  "looks": [
+  {
+   "time": "2026-11-25T06:37:56.666Z",
+   "file": "20261125063756666-note-trio-3150.jpg",
+   "source": "../work/r10/trio-3150.jpg",
+   "kind": "note",
+   "label": "3150: approved close image, round 46, now (match 7.358 at 1400 by 788; far strip still too smooth)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:37:56.046Z",
+   "file": "20261125063756046-note-v0-sheet.jpg",
+   "source": "../work/r11/v0-sheet.jpg",
+   "kind": "note",
+   "label": "EXPERIMENT, not in the commit: 3029, 3037, 3252, 3260 as they are (left) and with the deck's air table off (right); the table makes most of the pattern line of both moves",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:36:09.918Z",
+   "file": "20261125063609918-frame-back-3150.jpg",
+   "source": "out/work/jupiter/p1/back-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T06:34:49.124Z",
+   "file": "20261125063449124-frame-v0-3260.jpg",
+   "source": "out/work/jupiter/p1/v0-3260.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3260, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3260,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T06:33:28.287Z",
+   "file": "20261125063328287-frame-v0-3037.jpg",
+   "source": "out/work/jupiter/p1/v0-3037.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3037, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3037,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T06:25:38.271Z",
    "file": "20261125062538271-note-trio-3150.jpg",
@@ -27,34 +85,6 @@
    "kind": "note",
    "label": "rise handover draft, frames 3240 to 3245 across the change of view, on the merge of main",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:13:07.148Z",
-   "file": "20261125061307148-frame-f3012-uhd-web.jpg",
-   "source": "out/work/jupiter/d253d/f3012-uhd-web.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3012, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3012,
-   "tier": "draft",
-   "format": "uhd",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T06:10:07.350Z",
-   "file": "20261125061007350-frame-n4-3150.jpg",
-   "source": "out/work/jupiter/final/n4-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   },
   {
    "time": "2026-11-25T06:06:53.853Z",
@@ -212,30 +242,6 @@
    "source": "../work/r10/slices/jupiter-rise-k6500-6506-changes.png",
    "kind": "note",
    "label": "rise 3250 to 3253 on the merge, the tool's change picture (rows equal to the whole run)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:36:16.166Z",
-   "file": "20261125053616166-note-jupiter-dive-k6056-6064-changes.jpg",
-   "source": "../work/r10/slices/jupiter-dive-k6056-6064-changes.png",
-   "kind": "note",
-   "label": "dive 3028 to 3032 on the merge, the tool's change picture (rows equal to the whole run)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:24:27.305Z",
-   "file": "20261125052427305-note-pair-3150-final.jpg",
-   "source": "../work/r9/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final tier beside the approved close image",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:24:26.047Z",
-   "file": "20261125052426047-note-storm-equal.jpg",
-   "source": "../work/r9/storm-equal.png",
-   "kind": "note",
-   "label": "the storm at equal ground 2895 to 3024 on the frames of e41572b: one storm; the rings round it arrive at 2988 to 2994 (named)",
    "stop": "jupiter"
   }
  ]
