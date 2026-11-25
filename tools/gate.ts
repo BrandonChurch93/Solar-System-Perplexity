@@ -1,9 +1,10 @@
 import { execFileSync, spawnSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { DIST, ROOT, WORK, args, ensureBuild, formatId, linkDist, loadConfig, readRecord } from './lib/common'
 import { computeHashes } from './lib/hashes'
+import { type Units, unitNote } from './gate/units'
 import { DETERMINISM, WARM_SELF, determinismFrames, keptDeterminism, keptWarm, pinnedBrowser, readKept, toolHash, warmSelfFrames } from './gate/kept'
 import { openCapture, renderPng } from './lib/browser'
 import { decodePng } from './lib/frames'
@@ -276,9 +277,17 @@ const checks: Record<string, () => Promise<Result> | Result> = {
     return { id: 'G1', pass: r.ok, note: r.ok ? 'build clean' : r.out.slice(-600) }
   },
   G2: () => {
-    const r = run('npx', ['vitest', 'run', '--reporter=dot'])
-    const m = /Tests\s+(.*)/.exec(r.out)
-    return { id: 'G2', pass: r.ok, note: r.ok ? (m?.[1] ?? 'tests pass').trim() : r.out.slice(-600) }
+    const file = join(WORK, 'gate-units.json')
+    mkdirSync(WORK, { recursive: true })
+    rmSync(file, { force: true })
+    const r = run('npx', ['vitest', 'run', '--reporter=json', '--outputFile=' + file])
+    let report: Units | null = null
+    try {
+      report = JSON.parse(readFileSync(file, 'utf8')) as Units
+    } catch {
+      report = null
+    }
+    return { id: 'G2', ...unitNote(report, r.ok, r.out, ROOT) }
   },
   G3: () => {
     const h = computeHashes(ROOT)
