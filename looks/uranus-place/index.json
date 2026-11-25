@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T16:52:33.231Z",
+ "pushed": "2026-11-25T17:20:06.011Z",
  "head": "9c8a46df4b0a760960ed3dfa2d62cb3a31146915",
- "note": "pinned table trial: dive 4170 + 1/2 pattern 0.47 against 1.32; rise 4414 + 1/2 0.98 against 1.05 and paler; not committed",
+ "note": "report of 17:30 sent; pin trial in two forms, not committed; 4416 control next",
  "looks": [
+  {
+   "time": "2026-11-25T17:20:05.359Z",
+   "file": "20261125172005359-note-r-4290.jpg",
+   "source": "../../../../tmp/n57/r-4290.jpg",
+   "kind": "note",
+   "label": "final 4290: approved, main (3.849), 9c8a46df (3.225): the white band on the horizon is gone",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T17:20:04.745Z",
+   "file": "20261125172004745-note-s-pin2-w1.jpg",
+   "source": "../../../../tmp/n57/s-pin2-w1.jpg",
+   "kind": "note",
+   "label": "trial, not committed: dive 4152 to 4170, same form: the pale wedge over the place and its edge, the cost of the pin",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T17:20:03.863Z",
+   "file": "20261125172003863-note-s-pin2-dive.jpg",
+   "source": "../../../../tmp/n57/s-pin2-dive.jpg",
+   "kind": "note",
+   "label": "trial, not committed: dive 4170 to 4200, the place's table read from the eye of the dive's last frame in both views (4185 pattern 0.29, 4170 + 1/2 0.63)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T16:52:32.169Z",
    "file": "20261125165232169-note-s-pin-rise.jpg",
@@ -225,36 +249,6 @@
    "kind": "note",
    "label": "new tree: chain panel dive 4170 + 1/2, pattern 1.35 (82140079 1.29), red along the lower edge of the lit band, not cured",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T13:50:13.879Z",
-   "file": "20261125135013879-note-p-N1-8829.jpg",
-   "source": "../../../../tmp/n55/p-N1-8829.jpg",
-   "kind": "note",
-   "label": "new tree: chain panel rise 4414 + 1/2, pattern 1.03 (limit 0.45), not cured",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T13:50:13.244Z",
-   "file": "20261125135013244-note-crop-4416.jpg",
-   "source": "../../../../tmp/n55/crop-4416.jpg",
-   "kind": "note",
-   "label": "4416 full size crop: main, 82140079, new tree; thin blue and green streaks on the white clouds, cause not named",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T13:50:12.993Z",
-   "file": "20261125135012993-frame-N1-4035.jpg",
-   "source": "out/work/u/fin/N1-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f200e17ad0e70237"
   }
  ]
 }
