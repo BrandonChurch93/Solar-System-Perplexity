@@ -10,7 +10,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, afterRise, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
-import { GROUND, groundLaw, groundLine, groundOf } from '../tools/smooth/maps'
+import { GROUND, groundLaw, groundLine, groundOf, groundRuns, groundUnread, groundUnreadLine } from '../tools/smooth/maps'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
 import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
@@ -625,6 +625,31 @@ describe('the largest ground pop of a move', () => {
     expect(groundOf([row(1, null)])).toBeNull()
     expect(groundOf([{ k: 1, frame: 0 }])).toBeNull()
     expect(groundLine(groundOf(a)!, '5 + 1/2')).toBe('1.100 from frame 5 + 1/2 to the next; 0 of 2 rows read over 1.3')
+  })
+
+  it('names every row it does not read, by frame and with why, so that an unread row is not taken for a quiet one', () => {
+    const rows = [
+      row(10, null, { groundShare: 0.004, groundLeft: null }),
+      row(11, null, { groundShare: 0.019, groundLeft: null }),
+      row(12, null, { groundShare: 0.03, groundLeft: 0.41 }),
+      row(13, 1.02, { groundShare: 0.03, groundLeft: 0.42 }),
+      row(14, null, { groundShare: null, groundLeft: null }),
+      row(15, 1.1, { groundShare: 0.2, groundLeft: 0.5 }),
+      row(16, null, { groundShare: 0.001, groundLeft: null }),
+      row(17, null, { groundShare: null, groundLeft: null }),
+    ]
+    const unread = groundUnread(rows, 17)
+    expect(unread.map((x) => [x.k, x.frame, x.code])).toEqual([[10, 5, 'share'], [11, 5, 'share'], [12, 6, 'near'], [14, 7, 'pair'], [16, 8, 'share'], [17, 8, 'end']])
+    expect(unread.length + groundOf(rows)!.rows).toBe(rows.length)
+    expect(unread[0]!.why).toBe('ground on 0.004 of the frame, under ' + GROUND.share)
+    expect(unread[0]!.share).toBe(0.004)
+    expect(unread[2]!.share).toBeNull()
+    expect(groundRuns(unread).map((run) => run.map((x) => x.k))).toEqual([[10, 11], [12], [14], [16], [17]])
+    const from = (k: number): string => String(Math.floor(k / 2)) + (k % 2 ? ' + 1/2' : '')
+    expect(groundUnreadLine(unread, rows.length, from)).toBe('Ground pop NOT READ on 6 of 8 rows, which says nothing of them, quiet or not: frames 5 to 5 + 1/2 (2 rows): ground on 0.004 to 0.019 of the frame, under 0.02; frame 6: fewer than 2 of its 4 nearest rows have a count in its run of frames; frame 7: the pair with the next frame is not read (the frames drawn end there or a break follows); frame 8: ground on 0.001 of the frame, under 0.02; frame 8 + 1/2: the last frame of the window, no next frame to carry onto it.')
+    expect(groundUnreadLine([], 4, from)).toBe('Ground pop: every one of the 4 rows is read.')
+    expect(groundUnread([row(1, null, { groundShare: 0.5, groundLeft: 0.4 })], 1)[0]!.code).toBe('end')
+    expect(groundUnread([{ k: 1, frame: 0 }], 9)[0]!.code).toBe('pair')
   })
 })
 

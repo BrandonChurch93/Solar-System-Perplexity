@@ -14,7 +14,7 @@ import type { Pose } from '../src/core/types'
 import { plans } from '../src/director/plans'
 import { LANDING_FROM, MIN_POINTS, SEAM_OWN, SEAM_REACH, afterRise, carriedCamera, curves, eyeCurves, landingCurves, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, sphereHit, type Kind, type Plane, type Ring } from './smooth/camera'
 import { IN_PLACE } from './lib/steps'
-import { BLOOM, GROUND, type GroundMost, NOT_CARRIED, apart, bounded, besideFull, byFlow, carriedFull, chained, flowJudges, glowPx, groundLaw, groundLine, groundOf, look, mapFaults, mapOf, moving, outrun, shownRows } from './smooth/maps'
+import { BLOOM, GROUND, type GroundMost, NOT_CARRIED, apart, bounded, besideFull, byFlow, carriedFull, chained, flowJudges, glowPx, groundLaw, groundLine, groundOf, groundUnread, groundUnreadLine, type GroundUnread, look, mapFaults, mapOf, moving, outrun, shownRows } from './smooth/maps'
 import { placeReadings } from './smooth/place'
 import { missing, partOwn, popContext, sliceName, sliceNeed, type Span } from './smooth/slice'
 import { MOVES, PIECES, buildFault, differ, gather, gatherFaults, pieceStem, runFacts, type Facts, type Given } from './smooth/whole'
@@ -362,8 +362,8 @@ interface Most { k: number; frame: number; value: number }
 type FullKey = 'residual' | 'base' | 'popAll' | 'popCarried' | 'pop' | 'motionPx' | 'unsure' | 'popBlock' | 'popBlockAt' | 'change' | 'changeTop' | 'changeAt' | 'changeShare'
 type FullNumbers = Pick<PictureNumbers, FullKey> & GroundNumbers
 type FullRow = Pick<PictureRow, 'k' | 'frame' | FullKey> & GroundRow
-interface FullKind { rows: FullRow[]; groundPop?: GroundMost | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pass: boolean; why: string[] }
-interface FullVerdict { pass: boolean; why: string[]; groundPop?: (GroundMost & { kind: string }) | null }
+interface FullKind { rows: FullRow[]; groundPop?: GroundMost | null; groundUnread?: GroundUnread[]; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pass: boolean; why: string[] }
+interface FullVerdict { pass: boolean; why: string[]; groundPop?: (GroundMost & { kind: string }) | null; groundUnread?: (GroundUnread & { kind: string })[]; groundRows?: number }
 interface PictureKind { segment: string; firstFrame: number; endFrame: number; window: [number, number]; rate: number; frames: number; rows: PictureRow[]; levelStep: Most | null; pop: Most | null; popBlock: (Most & { at: [number, number] | null }) | null; change: (Most & { at: [number, number] | null }) | null; pattern: (Most & { at: [number, number] | null }) | null; changeFrames: number; silent: { frames: number; first: number; last: number; body: number } | null; ground: { value: number; pattern: number | null; first: number; last: number } | null; panel: string | null; changePanel: string | null; why: string[]; context?: [number, number]; lead?: string[]; tail?: string[]; mapPanel?: string; lookPanel?: string; lookRow?: number; lookSheets?: { k: number; name: string }[]; mapGlow?: [number, number]; mapSource?: 'range' | 'made'; mapLimits?: MapLimits; assets?: string; carriedFull?: true; full?: FullKind }
 interface SliceInfo { name: string; part: number | null; of: number | null; total: number; own: [number, number]; need: [number, number]; pops: number[]; changes: number[] }
 let slice: SliceInfo | null = null
@@ -437,7 +437,7 @@ function fullOf(kind: Kind, seg: { firstFrame: number; endFrame: number }, first
   const by = new Map(full.map((x) => [x.k, x]))
   const sums = sumsOf(kind, seg, first, r, total, rows.map((row) => ({ ...row, ...by.get(row.k)! })))
   const at = <T extends 'popBlockAt' | 'changeAt'>(m: Most | null, key: T): (Most & { at: [number, number] | null }) | null => (m ? { ...m, at: by.get(m.k)![key] } : null)
-  return { rows: full, ...(full.some((x) => x.groundPop !== undefined) ? { groundPop: groundOf(full) } : {}), pop: sums.pop, popBlock: at(sums.block, 'popBlockAt'), change: at(sums.change, 'changeAt'), pass: sums.why.length === 0, why: sums.why }
+  return { rows: full, ...(full.some((x) => x.groundPop !== undefined) ? { groundPop: groundOf(full), groundUnread: groundUnread(full, first * r + total - 1) } : {}), pop: sums.pop, popBlock: at(sums.block, 'popBlockAt'), change: at(sums.change, 'changeAt'), pass: sums.why.length === 0, why: sums.why }
 }
 
 const fullOver = (kinds: Record<string, PictureKind | null>): { full?: FullVerdict } => {
@@ -446,7 +446,7 @@ const fullOver = (kinds: Record<string, PictureKind | null>): { full?: FullVerdi
   const why = have.flatMap(([kind, p]) => p.full!.why.map((w) => kind + ': ' + w))
   const grounds = have.flatMap(([kind, p]) => (p.full!.groundPop ? [{ ...p.full!.groundPop, kind }] : []))
   const top = grounds.length ? { ...grounds.reduce((a, b) => (b.value > a.value ? b : a)), over: grounds.reduce((sum, g) => sum + g.over, 0), rows: grounds.reduce((sum, g) => sum + g.rows, 0) } : null
-  return { full: { pass: why.length === 0, why, ...(have.some(([, p]) => p.full!.groundPop !== undefined) ? { groundPop: top } : {}) } }
+  return { full: { pass: why.length === 0, why, ...(have.some(([, p]) => p.full!.groundPop !== undefined) ? { groundPop: top, groundUnread: have.flatMap(([kind, p]) => (p.full!.groundUnread ?? []).map((x) => ({ ...x, kind }))), groundRows: have.reduce((sum, [, p]) => sum + (p.full!.groundPop !== undefined ? p.full!.rows.length : 0), 0) } : {}) } }
 }
 
 const LOOK_EDGE = 1400
@@ -869,12 +869,13 @@ function picturesText(kind: Kind, p: PictureKind | null): string[] {
     if (f.popBlock) lines.push('Largest pop score of one block: ' + shown(f.popBlock.value, 2, P.maxPopBlock) + ' from frame ' + position(f.popBlock.k, p.rate) + ' to the next' + (f.popBlock.at ? ', block column ' + f.popBlock.at[0] + ' row ' + f.popBlock.at[1] + ' from the top left' : '') + ', ' + (P.maxPopBlock === null ? 'shown, not judged' : 'limit ' + P.maxPopBlock) + '.')
     if (f.change) lines.push('Largest change in place: ' + shown(f.change.value, 1, CHANGE.max) + ' from frame ' + position(f.change.k, p.rate) + ' to ' + p.changeFrames + ' film frames later' + (f.change.at ? ', most at pixel ' + f.change.at.join(', ') : '') + ', ' + (CHANGE.max === null ? 'shown, not judged' : 'limit ' + CHANGE.max) + '.')
     if (f.groundPop) lines.push('Largest ground pop: ' + groundLine(f.groundPop, position(f.groundPop.k, p.rate)) + ', no limit, ' + GROUND.named + ' named as the limit to come.')
+    if (f.groundUnread) lines.push(groundUnreadLine(f.groundUnread, f.rows.length, (k) => position(k, p.rate)))
     lines.push('', f.pass ? 'With the carry at the full size the ' + kind + ' has no number over its limit.' : 'With the carry at the full size the ' + kind + ' has ' + f.why.length + ' number' + (f.why.length === 1 ? '' : 's') + ' over the limit or not measured.', '')
     if (f.why.length) lines.push(...f.why.map((w) => '- FULL SIZE RED ' + w), '')
     const grounded = f.groundPop !== undefined
     if (grounded) lines.push(groundLaw(P.popFloor), '')
     lines.push('| frame | motion px | left | median round it | pop, every pixel | pop, carried only | pop | not carried | pop of one block | block | change in place | its largest | judged | pop by the reader above |' + (grounded ? ' left on the ground | median of its nearest rows | ground pop | ground, share of the frame | its place | its patch |' : ''), '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|' + (grounded ? '---|---|---|---|---|---|' : ''))
-    for (const row of f.rows) lines.push('| ' + [position(row.k, p.rate), cell(row.motionPx, 1), cell(row.residual, 2), cell(row.base, 2), cell(row.popAll, 2), cell(row.popCarried, 2), cell(row.pop, 2, P.maxPop), cell(row.unsure, 3), cell(row.popBlock, 2), row.popBlockAt ? row.popBlockAt.join(',') : '', cell(row.change, 1, CHANGE.max), cell(row.changeTop, 1), cell(row.changeShare, 2), cell(above.get(row.k) ?? null, 2, P.maxPop), ...(grounded ? [cell(row.groundLeft, 3), cell(row.groundBase, 3), cell(row.groundPop, 3), cell(row.groundShare, 3), row.groundAt ? row.groundAt.join(',') : '', row.groundSize ? row.groundSize.join(' by ') : ''] : [])].join(' | ') + ' |')
+    for (const row of f.rows) lines.push('| ' + [position(row.k, p.rate), cell(row.motionPx, 1), cell(row.residual, 2), cell(row.base, 2), cell(row.popAll, 2), cell(row.popCarried, 2), cell(row.pop, 2, P.maxPop), cell(row.unsure, 3), cell(row.popBlock, 2), row.popBlockAt ? row.popBlockAt.join(',') : '', cell(row.change, 1, CHANGE.max), cell(row.changeTop, 1), cell(row.changeShare, 2), cell(above.get(row.k) ?? null, 2, P.maxPop), ...(grounded ? [cell(row.groundLeft, 3), cell(row.groundBase, 3), (row.groundPop ?? null) === null ? 'not read' : cell(row.groundPop, 3), cell(row.groundShare, 3), row.groundAt ? row.groundAt.join(',') : '', row.groundSize ? row.groundSize.join(' by ') : ''] : [])].join(' | ') + ' |')
     lines.push('')
   }
   return lines
@@ -1352,7 +1353,7 @@ async function main(): Promise<void> {
   const fullWhy = beside ? Object.entries(parts).flatMap(([name, p]) => (name === 'pictures' ? beside.why : p.why)) : null
   const made = all ? { commit: all.commit, engineHash: all.engineHash, stopHash: all.stopHash, machine: all.machine } : joined ? { commit: joined.commit, engineHash: joined.engineHash, stopHash: joined.stopHash, machine: joined.machine } : { commit: commit(), engineHash: hashes?.engine ?? null, stopHash: hashes?.stops[stop!] ?? null, machine: machineId() }
   const took = Number(((Date.now() - started) / 1000).toFixed(1))
-  const out = { stop, ...made, rate, calibrate, ...(unchanged ? { unchanged: true } : {}), kinds, only, limits: S, pass, why, ...(fullWhy ? { full: { carry: 'full size', pass: fullWhy.length === 0, why: fullWhy, ...(beside!.groundPop !== undefined ? { groundPop: beside!.groundPop === null ? null : { ...beside!.groundPop, limitToCome: GROUND.named } } : {}) } } : {}), parts, ...(slice ? { slice: { ...slice, rendered, seconds: Number(renderSeconds.toFixed(2)) } } : {}), ...(joining ? {} : { seconds: took }), ...(joined ? { joined: joined.files.map((x) => ({ file: x.name, machine: x.machine, ...x.slice })) } : {}), ...(all ? { joined: all.files } : {}) }
+  const out = { stop, ...made, rate, calibrate, ...(unchanged ? { unchanged: true } : {}), kinds, only, limits: S, pass, why, ...(fullWhy ? { full: { carry: 'full size', pass: fullWhy.length === 0, why: fullWhy, ...(beside!.groundPop !== undefined ? { groundPop: beside!.groundPop === null ? null : { ...beside!.groundPop, limitToCome: GROUND.named }, groundUnread: beside!.groundUnread ?? [], groundRows: beside!.groundRows ?? 0 } : {}) } } : {}), parts, ...(slice ? { slice: { ...slice, rendered, seconds: Number(renderSeconds.toFixed(2)) } } : {}), ...(joining ? {} : { seconds: took }), ...(joined ? { joined: joined.files.map((x) => ({ file: x.name, machine: x.machine, ...x.slice })) } : {}), ...(all ? { joined: all.files } : {}) }
   json(join(dir, stem + '.json'), out)
   const lines = ['# smooth: ' + stop, '', 'Commit ' + out.commit + '. Capture rate ' + rate + '. Parts: ' + only.join(', ') + '.' + (calibrate ? ' A calibration run: every number is written, the exit code is 0.' : ''), '']
   if (unchanged) lines.push('A CONTROL, not a reading of the film (--unchanged): in every pair of the pattern rows the later frame is not the rendered one but the first frame drawn again as the later frame sees the same ground, by the camera\'s map (the pose records and the sphere or the range picture; off the bodies and where the first frame does not show the ground the later frame stands). Nothing changes between the two by construction, so every number of the pattern here is what the reader itself makes: its floor. Pop and level are of the rendered frames as ever.', '')
@@ -1365,7 +1366,8 @@ async function main(): Promise<void> {
   }
   lines.push(pass ? 'VERDICT: green. No number is over its limit.' : 'VERDICT: red. ' + why.length + ' number' + (why.length === 1 ? '' : 's') + ' over the limit or not measured.', '')
   if (fullWhy) lines.push('VERDICT BESIDE IT, the pictures read with the carry at the full size (the verdict above is the one that counts and makes the exit code): ' + (fullWhy.length === 0 ? 'green. No number is over its limit.' : 'red. ' + fullWhy.length + ' number' + (fullWhy.length === 1 ? '' : 's') + ' over the limit or not measured.'), '')
-  if (beside?.groundPop) lines.push('GROUND POP BESIDE IT, a number without a limit that makes no verdict (' + GROUND.named + ' is named as the limit to come), read with the carry at the full size on the ground both frames show: largest ' + groundLine(beside.groundPop, position(beside.groundPop.k, rate)) + ' (pictures of the ' + beside.groundPop.kind + ').', '')
+  if (beside?.groundPop) lines.push('GROUND POP BESIDE IT, a number without a limit that makes no verdict (' + GROUND.named + ' is named as the limit to come), read with the carry at the full size on the ground both frames show: largest ' + groundLine(beside.groundPop, position(beside.groundPop.k, rate)) + ' (pictures of the ' + beside.groundPop.kind + '). ' + groundUnreadLine(beside.groundUnread ?? [], beside.groundRows ?? beside.groundPop.rows, (k) => position(k, rate)), '')
+  else if (beside?.groundUnread) lines.push('GROUND POP BESIDE IT, a number without a limit that makes no verdict (' + GROUND.named + ' is named as the limit to come): no row is read. ' + groundUnreadLine(beside.groundUnread, beside.groundRows ?? beside.groundUnread.length, (k) => position(k, rate)), '')
   for (const [name, p] of Object.entries(parts)) {
     lines.push('## ' + name, '')
     if (!p.measured) {
@@ -1392,7 +1394,8 @@ async function main(): Promise<void> {
   for (const w of why.slice(0, 12)) console.log('  ' + w)
   if (why.length > 12) console.log('  and ' + (why.length - 12) + ' more, see the report')
   if (fullWhy) console.log('smooth ' + stop + ': beside it, with the carry at the full size: ' + (fullWhy.length === 0 ? 'green' : 'red, ' + fullWhy.length + ' over the limit or not measured'))
-  if (beside?.groundPop) console.log('smooth ' + stop + ': ground pop, no limit: largest ' + groundLine(beside.groundPop, position(beside.groundPop.k, rate)) + ' (' + beside.groundPop.kind + ')')
+  if (beside?.groundPop) console.log('smooth ' + stop + ': ground pop, no limit: largest ' + groundLine(beside.groundPop, position(beside.groundPop.k, rate)) + ' (' + beside.groundPop.kind + '); ' + (beside.groundUnread?.length ?? 0) + ' of ' + (beside.groundRows ?? beside.groundPop.rows) + ' rows not read')
+  else if (beside?.groundUnread) console.log('smooth ' + stop + ': ground pop, no limit: no row read of ' + (beside.groundRows ?? beside.groundUnread.length))
   process.exit(joined && !parts.pictures!.measured ? 2 : pass || calibrate ? 0 : 1)
 }
 
