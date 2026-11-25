@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T22:39:43.224Z",
- "head": "6a0e74bb2f3472ec8ae201fea1922bc1dab673ba",
- "note": "rise 4399 cause: air light band over the far ground; plain ground reads 0.06, made case with exact air 0.71; rim trial at 4035 final beside main and approved",
+ "pushed": "2026-11-25T23:05:01.446Z",
+ "head": "c6d698667a691dfb1c8cb7d4d5e4f70c062e2cc4",
+ "note": "rim as light of the air on merged main reads 1.05 from 4399 (B1 1.60); coloured streaks at 4399 come from the hand layers, cause being split",
  "looks": [
+  {
+   "time": "2026-11-25T23:05:00.877Z",
+   "file": "20261125230500877-note-rc-4290-horizon.jpg",
+   "source": "../../../../tmp/n62/rc-4290-horizon.jpg",
+   "kind": "note",
+   "label": "4290 horizon at 2x, draft: B1 above, rim trial below",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T23:05:00.358Z",
+   "file": "20261125230500358-note-speckle-ctl.jpg",
+   "source": "../../../../tmp/n62/speckle-ctl.jpg",
+   "kind": "note",
+   "label": "4399 mid ground at 2x, draft: B1, hand layers off (image, shade, veil, tops), map only. Coloured vertical streaks in B1, none without the layers. Cause not yet split.",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T23:04:59.777Z",
+   "file": "20261125230459777-note-rd-pair-limb.jpg",
+   "source": "../../../../tmp/n62/rd-pair-limb.jpg",
+   "kind": "note",
+   "label": "4399 and 4407 under the limb, draft, B1 left, the rim as light of the air right (state not committed yet)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T22:39:42.098Z",
    "file": "20261125223942098-note-pat-PL-8798.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n58/p-B1-8774.jpg",
    "kind": "note",
    "label": "B1 chain read from 4387 (rise handover): 1.35 on the back side near the horizon, not cured",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T19:42:45.153Z",
-   "file": "20261125194245153-note-p-B1-8836.jpg",
-   "source": "../../../../tmp/n58/p-B1-8836.jpg",
-   "kind": "note",
-   "label": "B1 chain read from 4418: onward 0.26 (name 0.82), back strip at the left limb 0.86 (name 1.16)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T19:42:44.471Z",
-   "file": "20261125194244471-note-b1-rise-b.jpg",
-   "source": "../../../../tmp/n58/b1-rise-b.jpg",
-   "kind": "note",
-   "label": "name against B1, 4422 to 4426 draft: equal within 7 codes from 4424",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T19:42:43.784Z",
-   "file": "20261125194243784-note-b1-rise-a.jpg",
-   "source": "../../../../tmp/n58/b1-rise-a.jpg",
-   "kind": "note",
-   "label": "name against B1, 4418 to 4421 draft",
    "stop": "uranus"
   }
  ]
