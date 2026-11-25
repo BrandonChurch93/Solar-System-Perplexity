@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T20:08:17.092Z",
+ "pushed": "2026-11-25T20:14:01.631Z",
  "head": "f1d9217084f274313761854db08e637cea68c1c1",
- "note": "20:10 2a pairs at draft tier, layers at 2475, wall trials 11 and 12 bad from above",
+ "note": "20:16 2a corners where plates are drawn, wall weight against the take, trials bad",
  "looks": [
+  {
+   "time": "2026-11-25T20:14:00.506Z",
+   "file": "20261125201400506-note-v03-c.jpg",
+   "source": "out/work/place/w12/v03-c.jpg",
+   "kind": "note",
+   "label": "BAD from above, 0.3 plate x 1250 y 250 at 1 to 1: before, take 10 (fur), trial 12 (speckle), rock without grain (no form)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:13:59.715Z",
+   "file": "20261125201359715-note-whole-mask-0p7.jpg",
+   "source": "out/work/place/w12/whole-mask-0p7.jpg",
+   "kind": "note",
+   "label": "0.7 plate before the walls beside its wall weight",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:13:58.787Z",
+   "file": "20261125201358787-note-whole-mask.jpg",
+   "source": "out/work/place/w12/whole-mask.jpg",
+   "kind": "note",
+   "label": "0.3 plate before the walls beside its wall weight: the heights' wall band lies on ground the take paints as a plain of boulders",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:13:57.978Z",
+   "file": "20261125201357978-note-corner2684.jpg",
+   "source": "out/work/place/t1/corner2684.jpg",
+   "kind": "note",
+   "label": "MAIL 1266 2a: rise 2684 lower corners at 1 to 1: state, main, layers",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:13:56.866Z",
+   "file": "20261125201356866-note-corner2683.jpg",
+   "source": "out/work/place/t1/corner2683.jpg",
+   "kind": "note",
+   "label": "MAIL 1266 2a: rise 2683 lower corners times 2, where the plates are drawn (blue in the layers): state, main (another eye), layers. Straight border of the set at lower right in the state",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T20:08:16.112Z",
    "file": "20261125200816112-note-lay2475.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/place/t1/foot2475.jpg",
    "kind": "note",
    "label": "MAIL 1266 2a: dive 2475 foot of frame at 1 to 1, draft, state 74dca647 beside main",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:08:14.023Z",
-   "file": "20261125200814023-note-v03-e2.jpg",
-   "source": "out/work/place/w12/v03-e2.jpg",
-   "kind": "note",
-   "label": "BAD the same at times 2, x 560 y 900: before the walls, take 10, trial 12, rock without grain",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:08:13.075Z",
-   "file": "20261125200813075-note-v03-e.jpg",
-   "source": "out/work/place/w12/v03-e.jpg",
-   "kind": "note",
-   "label": "BAD trials 11 and 12 of the wall rock from above, 0.3 plate x 380 y 820 at 1 to 1: take 10 (hair), trial 12 (speckle), the rock without its grain (no form), before the walls",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:41:42.087Z",
-   "file": "20261125194142087-note-crest-src.jpg",
-   "source": "out/work/place/c2s/crest-src.jpg",
-   "kind": "note",
-   "label": "the crest of C2 in the files: colour, alpha, distance of L2 before the cut, L2 now, C2, L0. L0 holds a near blob (9.2) under L2 that L2's pushed back fill (11.55) now stands behind",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:41:41.556Z",
-   "file": "20261125194141556-note-lay2477.jpg",
-   "source": "out/work/place/c2s/lay2477.jpg",
-   "kind": "note",
-   "label": "2477 times 8, beauty and layers: red wedge is L0 between L2 (yellow) and C2 (blue)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:41:41.029Z",
-   "file": "20261125194141029-note-e1.jpg",
-   "source": "out/work/place/c2s/e1.jpg",
-   "kind": "note",
-   "label": "trace of the ledge at 2477 times 8: the state, and L0 painted magenta in the box: the slab is L0 seen through L2",
    "stop": "mars"
   }
  ]
