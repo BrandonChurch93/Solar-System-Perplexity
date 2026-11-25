@@ -1859,6 +1859,63 @@ and plan.ts back by hash.
   dive: the way is fed, 3.6 px) and 2000 (a frame of the hold: no way) at review for the proof by sha256 that the patch changes no byte
   there. To stop it for the suite: kill the chain and `cp /tmp/trial/globe.orig.ts t-c2a/src/stops/earth/globe.ts`.
 
+## 18:35 to 19:00, the name's merge, the lookup trial's first pass, design (c) begun
+
+- THE NAME'S MERGE. Main at 18:37 was 08e8793c (status 326, d318); the second cut a1032553 is NOT in it. Merged it into
+  agent/engine-flight as M cdd5de66342c0a2b16b37d2b28a5fa43b414ddc8 (tree 23a7e1d8dfed7a4b164bfb98e72cac012e5b74fa; against N only
+  kit/PROGRESS.md), pushed 18:38. Export t-m. Whole suite and build on M started 18:45:04 (log /tmp/name/suite-m.run, .json, build-m.log).
+  The mail is made by /tmp/name/fill.py TIME SUITE BUILD SPAN from /tmp/name/named-draft.txt into /tmp/name/named.txt.
+- Final tier on main without the cut, Earth's end of the rise: 2173 10.21 px 0.27, 2174 9.70 px 0.22 (main 0.5), 2175 9.44 px 0.20
+  (main none), 2176 0.19, 2177 0.15, 2178 0.11, 2179 8.20 px 0.09, 2180 0.14, 2181 0.33, 2182 15.17 px 0.5 (main none, a box).
+- THE LOOKUP TRIAL, first pass (gate 6 to 14 px as the law's numbers). Part 0 (as it is): 1857 final sha 6f02180d..., 1916 review
+  3efa2b4a..., 2000 review 40fb719c.... Part B (two reads, 0.2887): 1857 final sha b917603f... (440 s), 1916 and 2000 THE SAME BYTES as
+  part 0. But B moved almost nothing at 1857: 50279 pixels of the frame differ (largest step 27), in the crop 15472 (largest 7);
+  amplitudes across in the crop 8.473, 12.501, 13.215, 9.518, 10.990, 8.209, 8.319, 7.687, 4.643, 2.445 (0.97 to 0.99 of as it is),
+  along unchanged. Reason: the gate is by the point's own way and the points of the crop move about 8 px, so the weight there is about
+  0.14. The frame's 15.59 px is its fastest point only. So the pair is drawn again with the gate at 1 to 3 px: /tmp/trial/chain2.sh
+  (labels t-finB13, t-revB13 with 2000 and 1916, t-finA13). At that gate 1916 will no longer keep its bytes; the hold must.
+- Why the hatch is there at all (my reading): the samples of a moving point are spread along its way, so along the way the blur
+  filters; across the way the jitter still fills the pixel, so across the way a moving frame has the detail a still frame has. The
+  hatch is the map's own finest detail seen on one axis only. Reading wider across (B) can take 0.80 at 2 px, 0.87 at 2.5, 0.91 at 3 at
+  the most; the review tier reads at 1.0 both ways and stands at 0.67 to 0.79 of the final.
+- Disk: removed t-c2a/out/work/blur/p-today, p-12, p-pair (the Phobos probe, answered 18:03) and repo/out/work/handover. 3666 MB free.
+- mars_place_builder 18:52 (notice): about 19:30 it commits the wall rock by code on agent/mars-place (merge with main 62a03dd0): only
+  land-*.jpg and patch-*.jpg under public/assets/mars and tools under assets-src/mars. Its airLaw sha is another matter (about 19:00).
+
+### Design (c), the crests, as it is being built (worktree crest-wt, branch agent/engine-crest on 4bae298b, local only so far)
+
+- src/terrain/crest.ts (pure): crestField(dist, w, h, cell, { step, walk, under }): inverse distance; range in a window of half a
+  cell less the least range within a walk (what the ground does anyway) over step makes the zone; the way across is the evened slope;
+  from every zone texel a walk both ways to the first even texel gives the near end and the far end (dropped if the walk is too long
+  or the ends differ by less than step). Fields: near and far distance (own to the bit on the texel's own side, the end's on the other),
+  share (cut at the ramp's middle), the way to the far end, away (texels from the nearest ramp). crestTexels packs share and way into
+  bytes; crestCells names the cells: 1 sheets in place of the cell, 2 the far sheet under a near cell (within under), 0 left.
+- src/terrain/relief.ts: ReliefMotion.crest?: { layer, step, walk, under }[]. In load the kind 1 cells become one vertex six times in
+  the layer's index (no triangle, no mark in the shield) and one more mesh, the sheets, is added after the layer's (same renderOrder,
+  later id, so it draws after): far cells first, then near cells; vertices by the mesh's own sampler from the far and near fields.
+  The sheets' material has the layer's shaders through withSheets and the layer's uniforms object itself, so update needs nothing;
+  presence, edge, law, eye scale and dispose go over skins(l). uCut is a window of the map (uCutBox), uCutMap the map's size and scale.
+  The cut in the shader is one pixel soft (fwidth), the far sheet goes over to the far end's texel with the share.
+- Order: both sheets AFTER the layer's mesh. Far before the mesh would show through part alpha of near cells from the picture's eye.
+- From the picture's eye the picture comes back but for the pixel of the cut (at most a quarter of the far ground's colour there).
+- Cells the ridge has a hand in stay in the mesh. Apron cells are never sheets.
+- Tests: tests/crest.test.ts (finding, cells, meshes, shaders), tests/crest-gl.test.ts (pixels in the browser). Not yet run at 18:55.
+- Open: depth of the far sheet under near cells where the step is small (the stop's step keeps it apart; watch in the frames); the
+  colour rule and a cut file are a second step; Mars's numbers are the stop's (trial numbers in scratch only).
+
+### 18:59 UTC, 25 Nov: NAMED sent to /root (the flight line and Earth by the law, with Mercury and Mars under the law)
+
+- Whole suite on M (tree as pushed, nothing else running): 919 passed, 0 failed, 81 files (18:45:04 to 18:56:54); npm run build exit 0
+  (18:57:05). Main read again at 18:57: 66912fc1bff264fb93744fd455494e7026c9dc21 (status 327, d319), against 08e8793c only
+  kit/PROGRESS.md, still no cut. NOT merged (a suite is 12 minutes; a status file a round); said so in the mail.
+- The mail is /tmp/name/named.txt (6893 chars): tip cdd5de66, commits A B C D N M, the two range lists (565 frames a tier without the
+  cut, 553 with), my test lines, the finals' plans (Mercury 717 17.8 px, 721 21.7, 1012 21.1; Mars 2440 41.3 px 69 samples, 2470 32.8:
+  all ends 0.5 where main has a box; Earth 2174 0.22 where main has 0.5, 2175 0.20 where main has none), three open points (city
+  lights streaks at 2166 to 2168, the hatch, the near body's 24 frames: /root's to rule).
+- AFTER THE NAME, in this order: the trial pair at 1857 with the gate 1 to 3 px (chain2 started 18:58:04, about 21 min), design (c)
+  (tests first, then scratch numbers for Mars and frames 2477, 2668, 2672 at review with /tmp/law/teeth.py, 2580 against the picture
+  without it), the five judged finals of Mars (MAIL 1137), the state of (c) to /root at 20:00.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
