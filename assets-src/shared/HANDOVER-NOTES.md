@@ -1916,6 +1916,85 @@ and plan.ts back by hash.
   (tests first, then scratch numbers for Mars and frames 2477, 2668, 2672 at review with /tmp/law/teeth.py, 2580 against the picture
   without it), the five judged finals of Mars (MAIL 1137), the state of (c) to /root at 20:00.
 
+## 19:00 to 19:20, design (c) green in its tests, the finding on Mars's maps, the trial's second pass
+
+- CREST TESTS GREEN (crest-wt, uncommitted): tests/crest.test.ts 10 of 10, tests/crest-gl.test.ts 2 of 2; with relief.test.ts,
+  relief-gl.test.ts, air-law-relief.test.ts 75 of 75 in 5 files (19:08, beside a render); tsc clean.
+- Two fixes in crest.ts on the way: (1) the walk leaves the map only beyond half a texel (px <= -0.5 or >= width - 0.5), else a crest
+  at the map's rim lost its ends; (2) a ramp is taken only if inv[a] - inv[b] - way * (range[a] + range[b]) / (4 r) > step: the step
+  beyond what ground as even as the two ends does over the same way. Without (2) the knee of a wide slope was taken for a crest.
+- MEASURED in the browser test (64 by 48 texels, a step from 20 to 5, 4 px a texel). From the picture's own eye the sheets give the
+  painting back but for one column (130 pixels, largest 0.013 of the border's step). THE MESH ALONE DOES NOT: its wall cell lays the
+  painting out in the wall's own measure, the painted border sits 10 px (2.5 texels) off, 2688 pixels differ by up to a full step.
+  So a crest switched on changes frames at the picture's own eye too, toward the painting. From eyes 0.5 to either side the sheets'
+  border lies within 0.26 and 0.40 px of a point rigid with the near ground (0.2: 0.30, 0.37; 1: 0.21, 0.49); the mesh alone is off
+  by 25.0 and 3.35 px (0.2: 16.5, 5.2; 1: 39.1, 11.75). No cleared colour in the gap. Distances are along the ray (the test corrects
+  at the rim). Seen at side -1: a one pixel trace of a few percent of the near colour on the far sheet's own cut line; at the
+  picture's rim the far sheet shows beyond the near ground's end (edge case, the painting ends there).
+- Decided: no test holds the mesh's defect except as teeth on the opening side (more than 4 texels).
+- THE FINDING ON MARS'S OWN MAPS (crest-wt/out/work/tmp/field.mts LAYER STEP WALK UNDER [MESH] writes /tmp/crest/mars/TAG-*.u8, .f32;
+  /tmp/crest/overlay.py TAG LAYER OUT [box scale]; /tmp/crest/cover.py TAGS against /tmp/saw/res.npy, the cells' tear on the path).
+  The finding takes 0.6 to 1.7 s a layer. L1 (2460 x 1234 texels, 420 x 211 cells, cell 5.86 texels, r 3; walk 12, under 24):
+  step 0.001: 5555 sheet cells; of the cells torn 2 px or more on the path 78 percent are covered, 4 px 75, 8 px 77; folded 90 of 116;
+  3239 sheet cells with a tear under 1 px. 0.0015: 4209; 85, 89, 100; 99 of 116; 2187. 0.002: 3018; 79, 95, 100; 106 of 116; 1397.
+  0.003: 1683; 58, 94, 100; 98; 690. 0.004: 937; 34, 69, 98; 63; 384. 0.008: 176; 6, 12, 48; 23; 69.
+  L0 (3492 x 1774, 420 x 213, cell 8.33, r 4; walk 16, under 48): 0.001: 7357; 61, 62, 62; folded 28 of 84; 4290. 0.002: 5705; 68, 76,
+  84; 44 of 84; 2766. 0.004: 2524; 40, 62, 86; 56 of 84; 1044.
+- The teeth crest (L1, full px x 2405..2768, y 1770..2098, distance 4.59 to 5.04, pulled apart 12.8 px at 2672, folded 2477 to 2480)
+  has jumps of 0.0057 to 0.0145 in inverse distance over ramps of 6 to 8 texels on ground sloping 0 to 0.00045 a texel. Step 0.004
+  finds only its lower part, 0.002 traces it whole (pictures /tmp/crest/mars/L1-004-*.png, L1-002-*.png, looked at).
+- TRIAL NUMBERS FOR THE PROOF (scratch in t-c2a/src/stops/mars/look.ts after "mesh: 420,", never committed, the stop's to choose):
+  crest: [{ layer: 'L1', step: 0.002, walk: 12, under: 24 }]; second candidate 0.0015; L0 step 0.002, walk 16, under 48 as a second
+  trial.
+- THE LOOKUP TRIAL, second pass (gate 1 to 3 px, chain2). B13 (two reads, 0.2887): 1857 final sha b2df4369... (485 s). In the crop
+  (330, 860, 650, 1080), amplitudes across by period (16-12 | 12-8 | 8-6 | 6-5 | 5-4 | 4-3.5 | 3.5-3 | 3-2.5 | 2.5-2.2 | 2.2-2):
+  8.421, 12.386, 12.996, 9.276, 10.600, 7.798, 7.757, 6.999, 4.074, 2.094 (as it is 8.493, 12.530, 13.272, 9.577, 11.104, 8.311,
+  8.462, 7.857, 4.774, 2.515: 0.99 at 12 px down to 0.83 at 2 px); along 11.221, 11.475, 5.619, 1.528, 1.706, 1.177, 0.784, 0.918,
+  1.142, 1.075 (unchanged). Against as it is 529462 pixels of the frame differ (largest 36; 24855 over 2 steps; 688 over 8), in the
+  crop 41601 of 70400 (largest 13, mean 0.43). The hold 2000 at review keeps its bytes (sha 40fb719c...). 1916 at review (its points
+  move up to 3.63 px): sha cc0215cc..., 10 pixels differ from as it is by 1 step.
+  A13 (one read with the pair of derivatives) started 19:13:18.
+
+## 19:20 to 19:40, the trial mailed, design (c) on Mars: the teeth go, two defects, their causes
+
+- THE LOOKUP TRIAL ENDED AND MAILED (19:38 to /root, with sheet-1to1.png, pair-3x.jpg, sheet-3x.jpg from /tmp/trial). A13 (one read
+  with the pair of derivatives, gate 1 to 3 px): 1857 final sha e030213a... (392 s; as it is 399 s; B13 485 s). Across: 8.339, 12.211,
+  12.678, 8.967, 10.079, 7.336, 7.121, 6.211, 3.429, 1.741 (0.98, 0.975, 0.955, 0.936, 0.908, 0.883, 0.842, 0.790, 0.718, 0.692 of as
+  it is); along 11.131, 11.357, 5.533, 1.497, 1.646, 1.130, 0.765, 0.894, 1.078, 1.018. 582925 pixels differ (largest 33; 49179 over 2;
+  2679 over 8), crop 53337 of 70400 (largest 22, mean 0.89). The hold 2000 at review with A: sha 40fb719c..., the same bytes as without
+  and as with B (chain3, 19:35). Control, one sample: across 7.433, 10.880, 10.526, 8.143, 8.998, 7.024, 7.156, 6.389, 3.683, 2.321;
+  along 14.004, 21.030, 22.164, 20.646, 22.485, 17.868, 13.763, 12.425, 8.076, 4.893. My reading as mailed: the final holds 1.08 to
+  1.30 times the one sample's detail across the way (it reads at the sharp count), the shutter takes all under 6 px along it, that
+  is the hatch; A takes 2 to 31 percent by period and is not the cure of 1857; the rest is the map's own detail at 3 to 12 px.
+  earth_builder's globe.ts in t-c2a is restored (sha256 43e631fd...). The scratch is /tmp/trial/apply.py ROOT A|B FROM TO [TAP].
+- DESIGN (c), FIRST FRAMES ON MARS (draft, t-c2a/out/work/blur/): k0-draft (base engine) and ke-draft (crest engine, no numbers) are
+  the same bytes at 2668 (d53e7a37...) and 2477 (99455ba7...). k1-draft (L1 step 0.002 walk 12 under 24) against k0: 2668 132503 px
+  differ (largest 218, 38557 over 8), 2477 46022 (201, 13590), 2580 50938 (167, 9609), 2672 132007 (219, 38590). k2-draft (L1 and L0)
+  rendered, not looked at. kx-under0 (under 0): the blocks go, a few dark specks stay.
+- SEEN at 2668: the teeth of the lit crest are gone, the near silhouette is clean. DEFECT 1: opaque blocks with a grid above the
+  plateau's rim (frame x 340..600, y 380..460 and smaller ones). DEFECT 2: a thin lit outline on the far sheet a few px beside the
+  near silhouette, which also breaks the teeth measure.
+- CAUSE OF 1, measured on the maps: L1's dist map outside its matte is fill (3.56 to 6.36) with steps of its own, partly nearer than
+  the rim; a crest is found between a transparent near side and the opaque rim as far end; the far sheet under those transparent
+  cells draws the far end's opaque texel where the layer is transparent, from any eye. 6.6 percent of the near side and 5.7 percent
+  of the far side of L1's 47129 ramp texels lie outside the matte. Also a band texel's side is taken by its distance value, not by
+  its place.
+- CAUSE OF 2, measured (19:33): on the teeth crest the distance ramp is 3 to 4 texels of real change (row 385: 4.59, 4.70, 4.84,
+  4.89, 4.92), but the zone is found 9 to 16 texels wide toward the NEAR side (t 0.99 to 0.80 over 9 texels of near ground that
+  slopes), and the painted colour border lies 1 to 3 texels to the near side of the ramp's middle: row 385 luma 208 176 154 | 50 103
+  172 | 31 19 (dist 4.55 4.56 4.57 | 4.59 4.70 4.84 | 4.89 4.92): lit paint reaches to the texel at t 0.21, the cut at the middle
+  (t 0.5) leaves two lit texels on the far sheet. Row 425: lit (159, 184, 74) at t 0.86, 0.61, 0.34, dark from t 0.11. By place on
+  the ramp (0 far end, 1 near end) the luma change across is largest at t 0.1 to 0.5 on the teeth crest (34, 43, 48, 42, 33 against
+  27 near the near end and 7 at the far end). So the paint's border sits on the FAR half of the ramp: the cut belongs near the far
+  end, and the far sheet's fill must not take anything from within the ramp.
+- THE CURE I BUILD NEXT: (i) the cut at the ramp's far end (a number from the stop, 0 the near end to 1 the far end, the middle is
+  what it was), so the near sheet keeps the painted crest whole and the far sheet shows only the far end's texel there; (ii) the far
+  sheet draws its fill only where the layer's own texel is opaque (a gate on the own alpha), so nothing appears outside the matte;
+  (iii) a ramp whose near end or far end lies outside the matte is no crest (the stop's matte, read from the colour's alpha, given to
+  the finding), so the fill never comes from the fill of the dist map; (iv) tests for a crest lying flat (the y sign of the way to
+  the far end), a near side outside the matte, a far end outside the matte.
+- Looks pushed 19:36 (8ab60b15 on the looks branch). No answer from /root to the NAMED of 18:59 yet.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
