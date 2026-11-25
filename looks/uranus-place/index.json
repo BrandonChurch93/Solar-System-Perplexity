@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T01:49:12.247Z",
- "head": "b2c5537863863bcc48e0e5abc3deec45297d29c0",
- "note": "trials while the named commit 9172cc84 is with the Builder: limb pixels cured in trial, light by height slower in trial, ring brightness at the rise's end in trial; nothing committed",
+ "pushed": "2026-11-25T02:10:17.869Z",
+ "head": "0d67e2957ef3ab04c43d6eaae1face0ca7981838",
+ "note": "step 3 0d67e295 local, dive with the surface light handed over 0.06 to 0.8 R, named left; rise sheet follows when its frames are rendered",
  "looks": [
+  {
+   "time": "2026-11-25T02:10:16.621Z",
+   "file": "20261125021016621-note-dive-c.jpg",
+   "source": "../../../../tmp/parC/dive-c.jpg",
+   "kind": "note",
+   "label": "dive 4168 to 4176, named left, step 3 right",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T02:10:15.532Z",
+   "file": "20261125021015532-note-dive-b.jpg",
+   "source": "../../../../tmp/parC/dive-b.jpg",
+   "kind": "note",
+   "label": "dive 4158 to 4166, named left, step 3 right",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T02:10:14.359Z",
+   "file": "20261125021014359-note-dive-a.jpg",
+   "source": "../../../../tmp/parC/dive-a.jpg",
+   "kind": "note",
+   "label": "dive 4140 to 4156, named left, step 3 right",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T01:49:11.620Z",
    "file": "20261125014911620-note-r1.jpg",
@@ -265,42 +289,6 @@
    "kind": "note",
    "label": "rise 4386 to 4409 every frame at draft, tree of the second commit (white tops fixed on the ground)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:02:19.489Z",
-   "file": "20261125000219489-sheet-uranus-rise-draft-after.jpg",
-   "source": "out/work/handover/uranus-rise-draft-after.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4392 to 4403 (after T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4392,
-   "last": 4403,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T00:02:17.731Z",
-   "file": "20261125000217731-sheet-uranus-rise-draft-before.jpg",
-   "source": "out/work/handover/uranus-rise-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4380 to 4390 (before T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4380,
-   "last": 4390,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T00:02:16.052Z",
-   "file": "20261125000216052-sheet-uranus-rise-draft-across.jpg",
-   "source": "out/work/handover/uranus-rise-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus rise, every frame 4385 to 4396 (across T, frame 4391), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "first": 4385,
-   "last": 4396,
-   "tier": "draft"
   }
  ]
 }
