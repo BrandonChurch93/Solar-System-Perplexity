@@ -94,6 +94,7 @@ export class FilmDirector implements Director {
   private readonly sunSwapSpan: [number, number] = SUN_SWAP
   private readonly openRef = new Map<number, number>()
   private readonly comingRef = new Map<number, number>()
+  private near?: [number, number, [number, number]]
   private readonly settled = new Map<number, [number, number]>()
   private readonly skyFloors = new Map<string, SkyFloor>()
   // E6: the share of the film's shutter a frame keeps, as this film's own shots measure it. The film that is asked for a shot hands it to the
@@ -692,7 +693,7 @@ export class FilmDirector implements Director {
     return index === 0 ? (u < SUN_LEAVE && globeShare(position.distanceTo(this.frames[0]!.origin)) > 0 ? 1 : 0) : u < Math.max(this.clear[index + 1]!, hand > SUN_HAND.span[0] ? hand : 0) ? 1 : 0
   }
 
-  private bright(index: number, at: number, coming = false): number {
+  private bright(index: number, at: number): [number, number] {
     const seg = this.plans[index]!.seg.travel!
     const time = Math.min(Math.max(at, seg.start), seg.end)
     const u = (time - seg.start) / (seg.end - seg.start)
@@ -708,13 +709,10 @@ export class FilmDirector implements Director {
     const sun = discShare(this.sunWorld.clone().applyQuaternion(inv), Math.sin(Math.min(radius, 1.5)), pose.vfov, aspect)
     const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
     const weight = index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : this.leaveWeight(index, u, pose.position)
-    if (coming) {
-      const to = this.frames[index + 1]!.origin.clone().sub(pose.position)
-      const sin = Math.min(1 / to.length(), 0.999999)
-      const r = sin / Math.sqrt(1 - sin * sin) / Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
-      return Math.min((Math.PI * r * r) / (4 * aspect), 1) * 0.5 * (1 - to.normalize().dot(this.sunWorld))
-    }
-    return Math.min(weight * body(index) + body(index + 1) + glow * sun, 1)
+    const to = this.frames[index + 1]!.origin.clone().sub(pose.position)
+    const sin = Math.min(1 / to.length(), 0.999999)
+    const r = sin / Math.sqrt(1 - sin * sin) / Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    return [Math.min(weight * body(index) + body(index + 1) + glow * sun, 1), Math.min((Math.PI * r * r) / (4 * aspect), 1) * 0.5 * (1 - to.normalize().dot(this.sunWorld))]
   }
 
   private sunSeen(index: number, time: number): number {
@@ -727,30 +725,37 @@ export class FilmDirector implements Director {
     return Math.max(near(time) - Math.max(near(seg.start), near(seg.end)), 0)
   }
 
-  private brightNear(index: number, time: number, coming = false): number {
-    let sum = 0
-    for (let k = -OPEN_TAPS; k <= OPEN_TAPS; k++) sum += this.bright(index, time + (k / OPEN_TAPS) * OPEN.window, coming)
-    return sum / (2 * OPEN_TAPS + 1)
+  private brightNear(index: number, time: number): [number, number] {
+    if (this.near && this.near[0] === index && this.near[1] === time) return this.near[2]
+    let sun = 0
+    let lit = 0
+    for (let k = -OPEN_TAPS; k <= OPEN_TAPS; k++) {
+      const share = this.bright(index, time + (k / OPEN_TAPS) * OPEN.window)
+      sun += share[0]
+      lit += share[1]
+    }
+    this.near = [index, time, [sun / (2 * OPEN_TAPS + 1), lit / (2 * OPEN_TAPS + 1)]]
+    return this.near[2]
   }
 
   openOf(index: number, time: number): number {
     const seg = this.plans[index]!.seg.travel!
     let ref = this.openRef.get(index)
     if (ref === undefined) {
-      ref = Math.min(OPEN.brightShare, this.brightNear(index, seg.start + 1 / config.fps), this.brightNear(index, seg.end - 1 / config.fps))
+      ref = Math.min(OPEN.brightShare, this.brightNear(index, seg.start + 1 / config.fps)[0], this.brightNear(index, seg.end - 1 / config.fps)[0])
       this.openRef.set(index, ref)
     }
-    return openSky(this.brightNear(index, time), ref)
+    return openSky(this.brightNear(index, time)[0], ref)
   }
 
   private comingOpen(index: number, time: number): number {
     const seg = this.plans[index]!.seg.travel!
     let ref = this.comingRef.get(index)
     if (ref === undefined) {
-      ref = this.brightNear(index, seg.end, true)
+      ref = this.brightNear(index, seg.end)[1]
       this.comingRef.set(index, ref)
     }
-    return openSky(Math.max(this.brightNear(index, time, true) - COMING_FLOOR * ref, 0), (1 - COMING_FLOOR) * ref)
+    return openSky(Math.max(this.brightNear(index, time)[1] - COMING_FLOOR * ref, 0), (1 - COMING_FLOOR) * ref)
   }
 
   patchSpanOf(index: number): [number, number] {
