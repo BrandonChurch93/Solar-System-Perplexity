@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T03:52:40.703Z",
+ "pushed": "2026-11-25T04:17:48.023Z",
  "head": "75564ca06092159f628bb32683165712183ac36f",
- "note": "03:53 UTC pairs main beside state t at 2440 to 2476 and rise 2684, 2688; gap count tried and turned off (ribbons); red glow and limb slab named",
+ "note": "04:18 UTC state x pairs at native size: sides at T pass both (0.008, 0.006); red glow, east slab, flat sand behind the mesa still wrong",
  "looks": [
   {
-   "time": "2026-11-25T03:52:39.548Z",
-   "file": "20261125035239548-note-glow-2448.jpg",
-   "source": "out/work/place/see/glow-2448.png",
+   "time": "2026-11-25T04:17:47.401Z",
+   "file": "20261125041747401-note-pair-x-2684.jpg",
+   "source": "out/work/place/see/pair-x-2684.jpg",
    "kind": "note",
-   "label": "2448 native, north of the canyon: main, first state, state t: the red glow of the takes on lit slopes still stands (under cure: takes give up light and hue on steep ground)",
+   "label": "04:18 pair main beside x, frame 2684 whole",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:52:38.480Z",
-   "file": "20261125035238480-note-limb-2476.jpg",
-   "source": "out/work/place/see/limb-2476.png",
+   "time": "2026-11-25T04:17:46.813Z",
+   "file": "20261125041746813-note-pair-x-2474.jpg",
+   "source": "out/work/place/see/pair-x-2474.jpg",
    "kind": "note",
-   "label": "2476 native, far left limb: main, first state, state t: with the texel term by the longer axis a pale striped slab of cap stands at the limb where the picture's margin is drawn out (under cure)",
+   "label": "04:18 pair main beside x, frame 2474 whole",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:52:37.571Z",
-   "file": "20261125035237571-note-s-2476-77.jpg",
-   "source": "out/work/place/see/s-2476-77.jpg",
+   "time": "2026-11-25T04:17:46.172Z",
+   "file": "20261125041746172-note-pair-x-2459.jpg",
+   "source": "out/work/place/see/pair-x-2459.jpg",
    "kind": "note",
-   "label": "BAD 2476 with the gap count on (left) beside 2477 (right): ribbons along every outline of the picture's layers one frame before T",
+   "label": "04:18 pair main beside x, frame 2459 whole",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:52:36.615Z",
-   "file": "20261125035236615-note-rs-2464.jpg",
-   "source": "out/work/place/see/rs-2464.png",
+   "time": "2026-11-25T04:17:45.579Z",
+   "file": "20261125041745579-note-pair-x-2456.jpg",
+   "source": "out/work/place/see/pair-x-2456.jpg",
    "kind": "note",
-   "label": "BAD 2464 native crop: first state left, gap count on right: ribbon at the foot of the mesa, slab at the east",
+   "label": "04:18 pair main beside x, frame 2456 whole",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:52:35.674Z",
-   "file": "20261125035235674-note-rs-2456.jpg",
-   "source": "out/work/place/see/rs-2456.png",
+   "time": "2026-11-25T04:17:44.968Z",
+   "file": "20261125041744968-note-pair-x-2448.jpg",
+   "source": "out/work/place/see/pair-x-2448.jpg",
    "kind": "note",
-   "label": "BAD 2456 native crop: first state left, gap count on right (share nil where cap and relief stand over one pixel apart): ribbons of cap through the picture",
+   "label": "04:18 pair main beside x, frame 2448 whole",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:52:34.515Z",
-   "file": "20261125035234515-note-pair-t-2688.jpg",
-   "source": "out/work/place/see/pair-t-2688.jpg",
+   "time": "2026-11-25T04:17:44.343Z",
+   "file": "20261125041744343-note-wx-2456.jpg",
+   "source": "out/work/place/see/wx-2456.png",
    "kind": "note",
-   "label": "pair 2688: main 63cf4b21 left, state t right (one ground: fitted heights, takes with the heights' light and the picture's tone, texel term by the longer axis, gap count off), draft",
+   "label": "04:18 state x (fitted cap, takes with held light, law with the seen angle term) wx-2456: main left, x right, native; bad: red glow 2440 2448, east slab with a straight side 2464, flat sand behind the mesa 2470",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:52:33.451Z",
-   "file": "20261125035233451-note-pair-t-2684.jpg",
-   "source": "out/work/place/see/pair-t-2684.jpg",
+   "time": "2026-11-25T04:17:43.713Z",
+   "file": "20261125041743713-note-wx-2464.jpg",
+   "source": "out/work/place/see/wx-2464.png",
    "kind": "note",
-   "label": "pair 2684: main 63cf4b21 left, state t right (one ground: fitted heights, takes with the heights' light and the picture's tone, texel term by the longer axis, gap count off), draft",
+   "label": "04:18 state x (fitted cap, takes with held light, law with the seen angle term) wx-2464: main left, x right, native; bad: red glow 2440 2448, east slab with a straight side 2464, flat sand behind the mesa 2470",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:52:32.252Z",
-   "file": "20261125035232252-note-pair-t-2476.jpg",
-   "source": "out/work/place/see/pair-t-2476.jpg",
+   "time": "2026-11-25T04:17:43.107Z",
+   "file": "20261125041743107-note-glow-x-2448.jpg",
+   "source": "out/work/place/see/glow-x-2448.png",
    "kind": "note",
-   "label": "pair 2476: main 63cf4b21 left, state t right (one ground: fitted heights, takes with the heights' light and the picture's tone, texel term by the longer axis, gap count off), draft",
+   "label": "04:18 state x (fitted cap, takes with held light, law with the seen angle term) glow-x-2448: main left, x right, native; bad: red glow 2440 2448, east slab with a straight side 2464, flat sand behind the mesa 2470",
    "stop": "mars"
   }
  ]
