@@ -9,7 +9,7 @@ import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
 import { framePlan, frameWay } from './motion'
 import { captureFrames, captureRate, shutterSeconds, spanMid, wholeFrame } from './clock'
-import { samplesFor } from './sampler'
+import { samplesFor, type Sample } from './sampler'
 import { SetLoader } from './sets'
 import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
 import { floorRing, sharedSkyWeight } from './skyfloor'
@@ -40,6 +40,8 @@ export interface Sanity { invalid: number; coverage: number }
 const STAR_COUNT = 900000
 const DUST_COUNT = 12000
 const GRAD_FLOOR = 0.5
+// The one sample of a frame that is drawn at once: in the middle of the pixel, with all of the light.
+const ONE_SAMPLE: Sample = { jitterX: 0, jitterY: 0, timeOffset: 0, weight: 1 }
 
 export class Engine {
   readonly renderer: THREE.WebGLRenderer
@@ -272,10 +274,14 @@ export class Engine {
     // The way of each point across the open shutter, for the lookups a stop reads by it (gradAt): fed only where the plan has a cover.
     const wayOf = still || samples.length === 1 ? null : frameWay(this.director, f, plan, mid)
     this.accumulator.begin()
+    // The weights of the samples go to the sets only where they differ: under a shutter with ends (RenderView.weights).
+    const weights = !still && (plan.ends ?? 0) > 0 ? samples.map((s) => s.weight) : undefined
     samples.forEach((s, i) => {
-      const shot = samples.length === 1 || still ? mid : this.director!.shotAt(f, (f + s.timeOffset) / config.fps)
+      // A frame of two views names the view of each sample where its samples do not weigh alike (FramePlan.sides); elsewhere the
+      // sample takes the view of its time.
+      const shot = samples.length === 1 || still ? mid : this.director!.shotAt(f, (f + s.timeOffset) / config.fps, plan.sides?.[i])
       this.way = wayOf ? wayOf(shot) : null
-      this.renderSample(shot, midOf(shot), s.jitterX, s.jitterY, i, samples.length)
+      this.renderSample(shot, midOf(shot), s, i, samples.length, weights)
       this.accumulator.add(this.renderer, this.sampleTarget.texture, s.weight)
     })
     this.way = null
@@ -293,15 +299,17 @@ export class Engine {
     this.way = null
     this.shutter = 1
     this.accumulator.begin()
-    this.renderSample(shot, shot, 0, 0, 0, 1)
+    this.renderSample(shot, shot, ONE_SAMPLE, 0, 1)
     this.accumulator.add(this.renderer, this.sampleTarget.texture, 1)
     this.post.render(this.renderer, this.accumulator.texture, shot.post, shot.frame, this.probe.view)
     this.lastShot = shot
     this.sampleCount = 1
   }
 
-  private renderSample(shot: Shot, mid: Shot, jx: number, jy: number, index: number, count: number): void {
+  private renderSample(shot: Shot, mid: Shot, sample: Sample, index: number, count: number, weights?: number[]): void {
     const { width, height } = this.format
+    const jx = sample.jitterX
+    const jy = sample.jitterY
     const cam = this.camera
     cam.fov = shot.camera.vfov
     cam.near = shot.near
@@ -373,7 +381,7 @@ export class Engine {
       this.sky.setStarLift(shot.skyStars ?? 0, config.raw.travel.sky.starLevel / Math.max(shot.skyExposure, 1e-3), config.raw.travel.sky.flightStars.level)
       this.sky.setBandLook(shot.skyLook ?? 0)
     }
-    const base: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter, shutterSeconds: shutterSeconds() }
+    const base: RenderView = { camera: cam, diag, format: this.format, sample: index, samples: count, cameraPosition: shot.camera.position, farLight: shot.farLight, shutter: this.shutter, shutterSeconds: shutterSeconds(), jitterX: jx, jitterY: jy, weight: sample.weight, ...(weights ? { weights } : {}) }
     const held = this.held
     const trims = this.trims
     const sky = (open: Tiles | null): void => {

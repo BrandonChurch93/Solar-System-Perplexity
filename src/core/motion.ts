@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../config'
-import { forcedWord, handoverOf, type Handover } from '../director/handover'
+import { dissolveWeight, forcedWord, handoverOf, sideForced, type Handover } from '../director/handover'
 import { handoverChanges, segmentAtFrame } from '../director/timeline'
 import { clockStamp, shutterSpan, spanMid, wholeFrame } from './clock'
-import { sampleCount, shutterOffset } from './sampler'
+import { sampleCount, shutterOffset, shutterWeights, splitSides } from './sampler'
 import type { NearBody, SetState, Shot, ViewKind } from './types'
 
 export interface ShotSource { shotAt(frame: number, time: number, side?: ViewKind): Shot }
@@ -179,9 +179,14 @@ export function sampleStep(plan: { samples: number; seen: number; near?: number 
 // sharp is there only in a dive or a rise of a stop that hands over and that handover.sharpCover names with a cover above 0: the count that
 // sharpens the lookups of a sample in place of the count of the whole frame (sharpCount).
 // cover is there with sharp: the cover itself, for the count by the way of each point (frameWay).
-// ends is there only in a dive or a rise of a stop that hands over and that handover.shutterEnds names with a share above 0: the share of
-// its time over which the shutter of the frame opens, and closes (samplesFor).
-export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number; sharp?: number; cover?: number; ends?: number }
+// ends is there only where the shutter of the frame opens and closes over a share of its time above 0 (samplesFor), and is that share:
+// in a dive or a rise of a stop that hands over and that handover.shutterEnds names with a number, and in any frame of a stop it names
+// with a law, where the frame moves by more than the law's fromPx (endsLawOf).
+// sides is there only in a frame that has ends by a law, draws both views (split) and takes more than one sample: the view of each
+// sample, by the light the samples bring and not by their count (splitSides). The surface view has the share of the frame's light that
+// the handover gives it (dissolveWeight); without the key a sample takes its view by its time (sideAt), as it did. A view that the
+// harness forces leaves the key out: then every sample is the forced view's.
+export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number; sharp?: number; cover?: number; ends?: number; sides?: ViewKind[] }
 
 // The samples that see one pixel of the path. In a frame that stands still all samples of the frame lie over one another, each at its own
 // place inside the pixel. In a frame that moves they are spread along the path: a point of the picture that moves by seen px across the open
@@ -210,10 +215,32 @@ export function sharpCoverOf(stop: string): number {
   return (config.raw.handover.sharpCover as Record<string, number>)[stop] ?? 0
 }
 
-// The ends of the shutter of a stop: handover.shutterEnds names the stops whose shutter opens and closes over a share of its time in their
-// dive and rise (samplesFor of core/sampler.ts). A stop it does not name has a shutter that is open at once and shut at once, as it was.
+// The ends of the shutter of a stop: handover.shutterEnds names the stops whose shutter opens and closes over a share of its time
+// (samplesFor of core/sampler.ts). A stop it does not name has a shutter that is open at once and shut at once, as it was.
+// Named with a number, the stop has that share in every frame of its dive and of its rise and in no other frame: this function.
+// Named with {share, fromPx, toPx}, it has a law of the frame's own motion (endsLawOf), and this function answers 0.
 export function shutterEndsOf(stop: string): number {
-  return (config.raw.handover.shutterEnds as Record<string, number>)[stop] ?? 0
+  const own = (config.raw.handover.shutterEnds as Record<string, number | EndsLaw>)[stop]
+  return typeof own === 'number' ? own : 0
+}
+
+// The ends of the shutter as a law of the frame's own motion: handover.shutterEnds names a stop with {share, fromPx, toPx}. Every frame
+// of the stop, its hold, its dive, its surface view and its rise alike, opens and closes its shutter over share times a smooth step of
+// the motion the frame shows across its open shutter (FramePlan.seen, in px of the master), from fromPx, where the step leaves 0, to
+// toPx, where it is whole (endsBy). The motion is the only thing the share reads: not the time, not the segment, not the tier. So two
+// frames that move alike have the same ends on whichever side of a change of view they lie, and a border of the stop steps only where
+// the motion itself does. Under fromPx the shutter is open at once and the frame is the frame it was, to the bit; a slow border never
+// sees the law. The flight that follows a stop is not the stop's: its frames have no ends.
+export interface EndsLaw { share: number; fromPx: number; toPx: number }
+
+export function endsLawOf(stop: string): EndsLaw | null {
+  const own = (config.raw.handover.shutterEnds as Record<string, number | EndsLaw>)[stop]
+  return typeof own === 'object' && own !== null ? own : null
+}
+
+export function endsBy(law: EndsLaw, px: number): number {
+  const x = Math.min(Math.max((px - law.fromPx) / (law.toPx - law.fromPx), 0), 1)
+  return law.share * x * x * (3 - 2 * x)
 }
 
 const SIDES: ViewKind[] = ['orbit', 'terrain']
@@ -376,14 +403,19 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
     const near = split || !(body > 0) ? body : body * seenShare(at(spanMid()))
     const samples = cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near))
     const cover = sharpCoverOf(segment.stop)
-    const ends = shutterEndsOf(segment.stop)
-    return { samples, raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}), ...(cover > 0 ? { sharp: sharpCount({ samples, seen }, cover), cover } : {}), ...(ends > 0 ? { ends } : {}) }
+    const law = endsLawOf(segment.stop)
+    const ends = law ? endsBy(law, seen) : shutterEndsOf(segment.stop)
+    const sides = law && split && ends > 0 && samples > 1 && !sideForced() ? splitSides(shutterWeights(samples, ends), dissolveWeight(h, segment.kind as 'dive' | 'rise', wholeFrame(frame))) : null
+    return { samples, raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}), ...(cover > 0 ? { sharp: sharpCount({ samples, seen }, cover), cover } : {}), ...(ends > 0 ? { ends } : {}), ...(sides ? { sides: sides.map((close): ViewKind => (close ? 'terrain' : 'orbit')) } : {}) }
   }
   const mid = at(spanMid())
   const raw = rawMotion(at(0), mid, at(shutterSpan()))
   const seen = raw * seenShare(mid)
   const near = nearOver(source, frame, false, 0, shutterSpan()) * seenShare(mid)
-  return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft: softness(raw), split: false, shutter: 1, ...(near > 0 ? { near } : {}) }
+  // A flight is no stop's: the law of the stop it leaves ends with the stop's last frame.
+  const law = segment.kind === 'travel' ? null : endsLawOf(segment.stop)
+  const ends = law ? endsBy(law, seen) : 0
+  return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft: softness(raw), split: false, shutter: 1, ...(near > 0 ? { near } : {}), ...(ends > 0 ? { ends } : {}) }
 }
 
 // Where the lens of one end of the shutter sees a point of a sample: the matrix that takes the point from the view space of the sample

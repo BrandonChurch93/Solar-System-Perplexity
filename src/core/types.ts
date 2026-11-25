@@ -190,7 +190,13 @@ export interface SetContext {
 // under: set in the two updates of a sample that draws the globe under the surface view (Shot.under), and in no other. 'globe': this
 // update is for the first part, the state is the globe view's and camera is the twin; the set shows what stands under the place.
 // 'relief': this update is for the second part, the state is the surface view's as ever; the set shows what lies over the globe.
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number; under?: 'globe' | 'relief' }
+// jitterX, jitterY: where inside the pixel this sample is drawn, in px of the format, as the engine shifts the lens for it. 0 or absent:
+// the middle. A set that shifts something of its own by the sample's place reads it here and not from a list it makes itself.
+// weight: this sample's share of the frame's light; the weights of a frame add up to 1. Absent: 1 / samples.
+// weights: the weight of every sample of the frame, in the order of their times (index sample is this one's). It is there only where
+// the shutter of the frame has ends (FramePlan.ends), so the samples do not weigh alike; a set that spreads something over the samples
+// by their count then spreads it by the light instead (sampleOrder of core/sampler.ts). Absent, every sample weighs 1 / samples.
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number; under?: 'globe' | 'relief'; jitterX?: number; jitterY?: number; weight?: number; weights?: number[] }
 
 export interface SkyPatch {
   view: ViewKind

@@ -254,6 +254,12 @@ export function forceSide(view: ViewKind | null): void {
   forced = view
 }
 
+// The view the harness has forced, null on the film's own path: who names the view of a sample by any other rule than sideAt asks here
+// first and leaves the forced view alone.
+export function sideForced(): ViewKind | null {
+  return forced
+}
+
 // The top down view of the harness (E4, the check of S2): the globe camera of a dive or a rise is put straight above the place, at the height and
 // with the field it has on the film's path. Like forceSide it is for the harness only and must not be reachable from the film path.
 export function forceTop(on: boolean): void {

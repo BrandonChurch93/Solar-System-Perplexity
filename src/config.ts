@@ -173,7 +173,14 @@ export function buildConfig(input: unknown, approvedExists?: (path: string) => b
   const covers = r.handover.sharpCover as unknown
   if (typeof covers !== 'object' || covers === null || Array.isArray(covers) || !Object.entries(covers as Record<string, unknown>).every(([id, cover]) => r.stops.some((s: { id: string }) => s.id === id) && typeof cover === 'number' && cover >= 0 && cover <= 4)) fail('handover.sharpCover must name stops, each with a cover of 0 (off) to 4')
   const ends = r.handover.shutterEnds as unknown
-  if (typeof ends !== 'object' || ends === null || Array.isArray(ends) || !Object.entries(ends as Record<string, unknown>).every(([id, share]) => r.stops.some((s: { id: string }) => s.id === id) && typeof share === 'number' && share >= 0 && share <= 0.5)) fail('handover.shutterEnds must name stops, each with a share of 0 (off) to 0.5')
+  // A stop is named with a share (its dive and its rise have it) or with a law of the frame's motion, {share, fromPx, toPx} (endsLawOf).
+  const endsLaw = (own: unknown): boolean => {
+    if (typeof own !== 'object' || own === null || Array.isArray(own)) return false
+    const law = own as Record<string, unknown>
+    const num = (key: string): number => (typeof law[key] === 'number' && Number.isFinite(law[key]) ? (law[key] as number) : NaN)
+    return Object.keys(law).every((key) => key === 'share' || key === 'fromPx' || key === 'toPx') && num('share') > 0 && num('share') <= 0.5 && num('fromPx') >= 0 && num('toPx') > num('fromPx')
+  }
+  if (typeof ends !== 'object' || ends === null || Array.isArray(ends) || !Object.entries(ends as Record<string, unknown>).every(([id, share]) => r.stops.some((s: { id: string }) => s.id === id) && ((typeof share === 'number' && share >= 0 && share <= 0.5) || endsLaw(share)))) fail('handover.shutterEnds must name stops, each with a share of 0 (off) to 0.5 or with {share, fromPx, toPx}: a share above 0 and at most 0.5, fromPx 0 or more, toPx above fromPx')
   const hl = r.handover.limits as Record<string, number>
   for (const [key, value] of Object.entries(hl)) if (!(value > 0)) fail('handover.limits.' + key + ' must be above 0')
   if (!(hl.earlyShare! < 1) || !(hl.placeMiddle! <= 1) || !(hl.flatShare! <= 1) || !(hl.bodyShare! <= 1) || !(hl.flowStepFrames! <= 1)) fail('handover.limits.earlyShare must be under 1, handover.limits.placeMiddle, handover.limits.flatShare, handover.limits.bodyShare and handover.limits.flowStepFrames at most 1')
