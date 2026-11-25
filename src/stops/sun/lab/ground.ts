@@ -834,8 +834,8 @@ void main() {
   vec3 up = normalize(vPos - ST_CENTRE);
   vec3 toEye = normalize(uLabEye - vPos);
   vec3 nn = normalize(mix(vN, up, max(smoothstep(${lab.dome.soft[0]!.toFixed(2)}, ${lab.dome.soft[1]!.toFixed(2)}, plan), vSink)));
-  float law = mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, clamp(abs(dot(nn, toEye)) / ${lab.heat.graze[1]!.toFixed(2)}, 0.0, 1.0));
   float lawFar = mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, clamp(abs(dot(up, toEye)) / ${lab.heat.graze[1]!.toFixed(2)}, 0.0, 1.0));
+  float law = mix(lawFar, mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, clamp(abs(dot(nn, toEye)) / ${lab.heat.graze[1]!.toFixed(2)}, 0.0, 1.0)), ${(lab.heat.graze[2] ?? 1).toFixed(2)});
 #endif
   heat = uLabHeat.x + heat * law;
 #ifdef LAB_MAP

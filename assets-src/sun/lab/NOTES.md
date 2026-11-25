@@ -932,3 +932,58 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   cells have darker mottled tops, light at the rims where two cells touch with a thin dark line between, fine
   sparkle, one sheet. Next for the form: tubes' relief and heat contrast down (less satin), mottle on the top that
   rides with the flow (labWell), light rims, lanes thinner.
+- MAIL 1296 from /root, 20:56 UTC (read 21:00). RULED: (1) tone: my way, both sides carry the same share, the bake
+  with the share at 0, the globe gives the level's low band the same share; prove on my branch, hand sun_builder
+  the lines. (2) the live ground wholly in its far form before it leaves, then far form against bake alone.
+  (3) THE NEAR FIELD AT 0, 60, 90 COMES FIRST, the swing second. Brandon: "still looks unbelievable like it's an
+  image doesn't look like it's really plasma".
+  What the Builder sees: (a) my cells are LIT (a highlight on one side, a sheen over the folds, a metal shell under
+  a lamp). Every part of the brightness that depends on a light's or the eye's direction other than the limb law
+  has to go or be so small that no cell shows a lit and a shaded side. SAY which terms depend on a direction and
+  what share of the brightness they carry at frame 90. (b) brightness across a cell runs the wrong way: the
+  approved's cell is darker and mottled on top, lightest in a rim where it meets its neighbour, then a thin dark
+  line. MEASURE: mean brightness against the distance from a cell's middle to its edge, 0 to 1, over at least 30
+  cells of the near field, approved and mine, and the lane's width in px. Aim: inside 0.05 of the approved's at
+  every tenth, lanes within 1.5 px. (c) sizes: many small cells between the large; count cells in one window on
+  both, give the share under half the median size. (d) fine sparkle (points of 1 to 3 px, lighter than the rim):
+  heat seen through the lanes' edges and on the tops' mottle, rides with the flow, does not twinkle faster than
+  the cells live.
+  LIMITS: frame 90 against the approved by d296 (mean absolute RGB, no worse than main's); the reader's rows for
+  the rise no worse than main's on any line (d311); flicker of point 6 no worse than now. Cost of a frame no limit.
+  SEND when b and c are measured: the two curves, the counts, frame 90 draft and final, the strip at 1 to 1, and
+  what a, b, c, d each cost in the d296 number. No name before that. Say plainly if a point cannot be reached.
+- 21:00 to 21:20 UTC. TOOLS: cells.py (the cells of a picture read from the picture alone, same way on the approved
+  and on a render: lanes = dark lines by the Hessian of brightness over its 25 px mean at 3 and 5 px, over 0.3
+  grown to 0.15, pieces under 120 px dropped; a cell = the ground that climbs to one top of the distance from
+  the lanes, tops joined where the neck is wider than 0.75 of the smaller; box 100 800 1720 280 of 1920 by 1080;
+  brightness = largest channel). It gives: count, sizes, the curve middle to border at every tenth, the spread
+  inside a ring, the share of cells lightest in their outer half, side to side slope of a cell and whether all
+  cells lean one way, lane width at half depth and depth, the mean lane profile. match.py: mean absolute RGB of
+  a frame 90 against the approved in levels of 255 (my reading of d296; whole frame, and rows from 0.72).
+  watershed_ift of scipy gave square floods (ties), so the flood is my own steepest climb.
+  MEASURED (draft tier, frame 90):
+    approved: 129 cells in the box (244 a box wholly counted), median width 34.7 px, 10/50/90 18.2/34.7/76.8,
+      share under half the median 0.085; curve 0.667 0.662 0.657 0.647 0.619 0.586 0.547 0.496 0.433 0.369
+      0.324; spread 0.146 at the half; lightest in the outer half 14 percent of cells; side to side 0.323, one
+      direction 0.10; lane 7.08 px wide, 0.234 deep.
+    standing ground (main's, on my branch): 119 cells (186), median 35.6; curve 0.59 0.591 0.582 0.568 0.55
+      0.523 0.488 0.439 0.382 0.318 0.276; side 0.387, one direction 0.25; lane 6.47, 0.225. match 30.286 / 53.294.
+    u24: 61 cells (127), median 50.7, under half 0.148; curve 0.713 0.704 0.692 0.672 0.654 0.626 0.587 0.533
+      0.473 0.383 0.311 (largest gap to the approved 0.046); side 0.281, one direction 0.40 (lighter toward the
+      top of the screen); lane 6.13, 0.296. match 30.467 / 51.282. h14: match 31.27 / 52.894.
+    So the mean curve and the lane width were inside the Builder's aims already; what differs is the count (half
+    as many cells), the common lean, and the texture (mine smooth sheen and long ribs, approved mottle).
+    The approved's cells are NOT lightest at a rim on the mean: flat from the middle to 0.3, then falling.
+  (a) THE TERMS THAT DEPEND ON A DIRECTION: one only, the eye law on the dome's own normal (heat.graze 0.6 to 1).
+    heat.graze[2] = its share; at 0 the law is the limb law alone (the ball's normal). Its cost at frame 90: mean
+    absolute change of the box 0.011 of a mean 0.561 (2 percent), 99th percentile 0.055. With it gone (a1) the
+    common lean is 0.52, not less: the lean comes from the relief (the hot crown stands high and is seen shifted
+    up the screen by about a quarter of the cell's radius at a look 54 to 67 degrees down), not from a lamp.
+    match a1 30.384 / 51.061.
+  (c) sim.radius [0.025, 0.075], slots 2056 (was [0.035, 0.1], 1123): 118 cells (238), median 39.7, 10/50/90
+    22.8/39.7/71.3, under half 0.085. Draft frame 67 s (was 38). match c1 29.884 / 49.65. THE BAKE IS STALE
+    from here until it is baked again (the cells are other cells).
+  (b) first trial b1: mottle that rides with the cell (heat.spread[3] 1, scale 4), cool 1.8, patch [0.3, 0.7],
+    rim 0.3, wide 3.2, tubes.heat [0.8, 1.08], lump 0.2, thread [0.2, 0.6], tubes.depth 0.3: 135 cells, curve
+    0.707 0.701 0.687 0.673 0.647 0.608 0.567 0.506 0.43 0.35 0.301, side 0.327, one direction 0.32, lane 5.75,
+    0.313; match 30.043 / 50.043. SEEN: dark blobs on the tops, reads as marbled stone; outlines still crisp.
