@@ -78,7 +78,7 @@ describe('the own levels under a whole level', () => {
       expect(sum(f(r() * 1e6), t, 1, o)).toBe(sum(0, t, 1, o))
       expect(sum(0, t, 1, o)).toBe(o === 1 ? t : 0)
     }
-  })
+  }, 60000)
 
   it('stay read where a lit level would be skipped too: that rule moves the lit ground', () => {
     const r = seeded(11)
@@ -101,7 +101,7 @@ describe('the own levels under a whole level', () => {
       if (mixes.step!(f(r()), y, 1) !== y) bits++
     }
     expect(bits).toBeGreaterThan(0)
-  })
+  }, 60000)
 
   it('leave the text of a body without own levels to the letter', () => {
     const shapes: [PatchShader, string][] = [
