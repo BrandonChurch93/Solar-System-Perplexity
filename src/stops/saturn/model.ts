@@ -6,7 +6,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
-import { duskAt, dustAt, gradeShare, hazeDayAt } from './grade'
+import { duskAt, dustAt, gradeShare, hazeDayAt, innerShare, zoneShare } from './grade'
 import { Grains, type Lens } from './grains'
 import { iceField } from './ice'
 import * as look from './look'
@@ -210,8 +210,8 @@ export const createModel: SetFactory = async (ctx) => {
       ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
       field.set(close, foot)
       field.far(farW, Math.max(farW, 1 - closeGlobe))
-      sheet.set(close)
-      sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), 1 - poseW.value, 1, spinRate, elapsed, gradeShare(camL.y))
+      sheet.set(close, innerShare(camL.y))
+      sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), 1 - poseW.value, 1, spinRate, elapsed, gradeShare(camL.y), zoneShare(camL.y))
       ;(ru.uFlatten!.value as THREE.Vector4).set(tune.flatten.pivot, THREE.MathUtils.lerp(tune.flatten.power[0]!, tune.flatten.power[1]!, close), tune.flatten.width, tune.flatten.reach)
       ;(ru.uEven!.value as THREE.Vector3).set(THREE.MathUtils.lerp(tune.flatten.bands[0]!, tune.flatten.bands[1]!, close), tune.flatten.bandReach, tune.flatten.band)
       ;(ru.uTintDense!.value as THREE.Vector3).fromArray(tune.tint.far.dense).lerp(tintDense, close)

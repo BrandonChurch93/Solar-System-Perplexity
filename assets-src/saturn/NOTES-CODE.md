@@ -4685,3 +4685,333 @@ Main moved at 21:10 to 8e06f69 (take batch 4). What it changes for this stop:
   set), src/space/farsun (the strand loop), src/core/warm.json.
 - The proof job r54 runs on the worktree at a34beaa, whose engine is that of c6d87bc. After it the
   worktree goes to 8e06f69 and the finals, the path, the gate and the handover run again there.
+
+## 2026-11-24, 21:22 UTC: MAIL 761 from the Builder (verbatim)
+
+"MAIL 761 from the Builder (/root), 21:22 UTC. For your named commit due at 22:30 UTC: take batch 4 is on
+main as the merge 952628367d1fdb87acac0f0e782f169d86fe01cd; its hashed files are those of the batch tip.
+Your leave line passes (0.375 against the floor 0.07), so the pull back is not an item for you. Your frame
+3720 of 20:45 UTC was shown to Brandon in status 259 as work in progress beside the approved ring view,
+with what you named as still open: the dark band across the globe's foot too tall and too hard, the near
+ring coarser, the shadow side wider. If a push fails with "could not read Username", try it again first:
+the login came back by itself on other machines between 21:00 and 21:13 UTC. Only if it still fails, send
+your looks as pictures and your commits as a bundle by mail. No answer needed."
+
+Checked at 21:31: 9526283 is an ancestor of 8e06f69, which is merged here (3859178), and src, tools,
+config and public do not differ between the two. Main stood at b890fee by then (kit/PROGRESS.md alone
+against 8e06f69); it is merged again at the commit that is named.
+
+## 2026-11-24, 21:42 to 22:35 UTC: r54 red on the pattern line in the dive and in the rise; cause and cure
+
+r54 (the tree of 2087f8e, engine of c6d87bc) read, the pictures part:
+- Dive: "VERDICT: red". Largest change of the pattern alone 0.54 (limit 0.45), 17 capture frames over it,
+  first 3588; two episodes, 3588 to 3593 at pixels (800, 816) to (704, 752), and 3605 to 3608 at (628, 600).
+  Level step 0.02 at 3601 (limit 1.3), pop 1.07 at 3568 + 1/2 (limit 1.2). The named tree before this round
+  read pattern 0.29, pop 1.04.
+- Rise: "VERDICT: red". Pattern 0.70 from 3822 + 1/2 (20 capture frames over it, first 3822), at (672, 568),
+  then (1332, 892), (1676, 980) and from 3831 + 1/2 at (1072, 936). Level step 0.05 at 3875 + 1/2, pop 1.196
+  from 3872 + 1/2 (limit 1.2; the sheet shows the residual there mostly on the stars of the sky and on the
+  thin arcs at the inner ring). The named tree before this round read pattern 0.25, pop 1.15.
+- Finals, path, G5 and G17 of r54 are in the entry above and in the NAMED list below.
+
+What the measure is (tools/img/smooth.py pattern(), read): both pictures are reduced to their detail between
+8 and 40 px, the local mean out, divided by the local contrast; the number is one minus their local
+correlation over a 40 px neighbourhood, frame against the frame 8 film frames later carried back along the
+flows; the 99th percentile on the body. A plain gain counts little; a pattern that is replaced counts in
+full. My own reading of it, /tmp/v/t19/pat.py (the tool's functions, the body by brightness), on r54's
+frames: at capture frame 7181 a gap of 16 capture frames gives 0.399, 8 gives 0.102, 4 gives 0.034; at 7213
+0.803, 0.169, 0.034. So the number falls about with the square of the pace of a change: a change that comes
+by height is cured by a law that is slower where the lens falls or climbs fast.
+
+The cause, two things this round added, both by the height of the lens and both too fast:
+1. The tone of the rings by radius (iceZone: the table light.grade.radial and the thin inner ring by the
+   view, light.grade.low) came in with the share of the grade, a smooth step in the logarithm of the height
+   from 2.2 to 0.6. The thin inner ring gains up to 4.5 times its light by it, with bands of its own (the
+   knots of the table), so over the globe it went from dark with fine ringlets to pale with broad bands
+   within about 10 frames, in the dive still in the kept set (heights 1.38 to 1.19).
+2. The dust inside the inner rim (sheetInner) had its depth by the nearness of the lens, which runs from 0
+   to 1 between the heights 0.93 and 0.6 (handover.kept.far): 17 frames in the dive, 11 in the rise. It
+   filled the gap and covered the underside of the globe within 8 to 12 frames.
+3. Found after the first cure (rise slice, below): the dust band on the foot of the globe (inner.foot,
+   dustAt) had its depth by the share of the grade too. It reaches both sides of the plane, so it also lies
+   on the strip of the globe seen through the gap under the equator; in the climb it thinned fastest
+   between 3832 and 3841, and that strip grew in place.
+
+The lens over the plane (out/scratch/h2.ts; height in planet radii): the rise climbs through every height
+about one and a half times as fast as the dive falls through it. Change of the logarithm of the height in 8
+film frames: dive at most 0.217 (3600 to 3606), rise at most 0.318 (3834 to 3840). The rise passes the
+heights 0.365 to 2.2 in 71.6 frames (3792.3 to 3863.9) and 0.40 to 0.93 in 32.8 frames (3802.2 to 3835.0).
+No law by height can do better in the rise than an even pace over those frames, so that is how the two
+laws are set: tables of height against share in skim.json, made by /tmp/v/t20/knots.py from the rise's
+heights (the frame at which the rise passes a height gives the share there). They are functions of the
+height alone: the same way down and up, at any capture rate, no state.
+
+The cure, by file:
+- grade.ts: byHeight (straight lines in the logarithm of the height between knots); zoneShare (skim.json
+  light.grade.by: 30 knots, 0 at 2.2 and above, 1 at 0.365 and under, even in the rise); innerShare
+  (skim.json inner.by: 16 knots, 0 at 0.93 and above, 1 at 0.40 and under, set so that the opacity of a
+  sheet of depth 2.5 on the view changes evenly in the rise); iceZone applies its factor to the power of
+  its own share (uGradeLow.w), and is the factor itself at share 1, so a frame low in the skim keeps its
+  values; dustAt takes innerShare (one dust, one law).
+- sheet.ts: set(near, inner): the depth of the dust inside the rim is its full depth times inner (was the
+  nearness to the power inner.grow, which is gone from skim.json); far(..., grade, zone) sets uGradeLow.w.
+- model.ts and kept/set.ts: set the zone share wherever the share of the grade is set; model.ts passes
+  innerShare to the sheet. The kept set has no dust inside the rim and now no dust band on the foot at its
+  heights either (innerShare is 0 above 0.93), so the two scenes still hold one picture at the handing over.
+- skim.json: light.grade.by, inner.by, inner.grow removed, the notes.
+
+What the laws do in numbers (knots.py): largest change of the zone share in 8 film frames 0.115 in the rise
+(from 3814), 0.081 in the dive (from 3584); with the factor to the power of the share the thin inner ring
+changes by at most 4.5 to the power 0.115, 19 percent, in 8 frames (before: about 41 percent in the dive).
+The opacity of the dust at depth 2 changes by at most 0.25 in 8 frames in the rise and 0.12 in the dive
+(before: nearly all of it in 11 frames). Shares through the dive: zone 0.14 at 3576, 0.37 at 3600, 0.58 at
+3624, 0.68 at 3660, 0.85 at 3696, 1 at 3720; dust 0.06 at 3610, 0.22 at 3630, 0.33 at 3660, 0.72 at 3690, 1
+from 3700. So through the first 70 frames of the skim the thin inner ring still brightens and the dust
+still closes as the lens sinks: by height, slowly, and all of it is there at 3720 (shares 1, 1, 1).
+
+Slices on the first cure (zone share and dust in the plane; the dust band still on the grade's share), on
+main 7026711 with this stop folder, `npm run smooth -- --stop saturn --only pictures --kind K --frames A-B`:
+- Dive, capture frames 7176 to 7232: green, largest pattern 0.28 at 3608 (was 0.54); 3588 to 3594 0.19 to
+  0.21 (was 0.45 to 0.54).
+- Rise, capture frames 7640 to 7690: red, pattern 0.67 from 3832 + 1/2 at pixel (1044, 936), 10 capture
+  frames over, first 3830; 3820 to 3829 0.21 to 0.36 (was 0.42 to 0.70); pop at most 1.10. The tool's detail
+  maps round that pixel (/tmp/v/t19/patdbg.py, in the looks as the zoom) show cause 3.
+
+Second cure and the full run r55 (22:32 to 23:18; main 7026711 with the stop folder of that minute):
+- dustAt took innerShare in place of the share of the grade (cause 3).
+- r55 rise: "VERDICT: red". Pattern 0.46 from 3816 + 1/2 at pixel (1188, 840), limit 0.45, 2 capture frames
+  over it, first 3816; rows 3806 0.18, 3810 0.27, 3812 0.32, 3814 0.39, 3816 0.45, 3818 0.41, 3820 0.37, 3824
+  0.32, 3826 0.23, 3830 0.31, 3834 0.31, 3838 0.23. Level step 0.05 at 3875 + 1/2, pop 1.196 from 3872 + 1/2
+  (the same number as r54: those frames lie above every height my laws touch), change in place 27.6, the
+  ground beside it change 26.1 and pattern 0.20 (before the dust: 11.8 and 0.13).
+- What it is (the report's changes sheet and my crops of 3808, 3816, 3824, 3832, in the looks): the band of
+  dust between the inner rim and the foot of the globe, pale olive with dark streaks, thins and goes within
+  about 24 frames; the hot band of the measure lies along it from x 1150 to 1700.
+
+Third cure, the table inner.by set from the measure (/tmp/v/t21/retime.py): the states of the dust under the
+table of r55 are passed again, at a pace that is even in the measured change of the pattern (the square root
+of the row's pattern less a floor of 0.17, never under the root of 0.06, the row taken for the middle of its
+8 frames; past row 3826 other places lead the measure and the floor is taken), over the rise's frames from
+the height 0.38 (frame 3797.0) to 0.93 (3835.1): 28 knots. The dust is then whole from 3710 to 3797 (it was
+whole from 3700 to 3802). Shares in the rise: 3798 0.86, 3802 0.57, 3806 0.39, 3810 0.30, 3814 0.24, 3818 0.20,
+3822 0.16, 3826 0.11, 3830 0.07, 3834 0.01; in the dive: 3610 0.07, 3620 0.13, 3630 0.17, 3650 0.21, 3670 0.25,
+3680 0.30, 3690 0.42, 3700 0.62, 3710 1.0. Across the red window (3816 + 1/2 to 3824 + 1/2) the share now
+changes by 0.085 where it changed by 0.145. What the model of the measure expects: about 0.26 to 0.31 at the
+old peak. Not measured yet when this was written.
+
+## 2026-11-24, 22:45 UTC: MAIL 785 from the Builder (verbatim)
+
+"MAIL 785 from the Builder (/root), 22:45 UTC. One ruling for every stop, for your awareness and your next
+commit. It changes no due time.
+Four builders (Neptune, Sun, Jupiter, Earth) read their dives and rises frame by frame tonight and each
+found the same cause behind what Brandon's third note calls an image that pops up, a flat smudge that turns
+into the canyon and a moment where things load in: two pictures of one ground weighed against each other by
+the camera's height, or a region that takes another look by a share of the height. So: nothing is cured by
+such a weight. A stop has one ground at every height; what the surface view needs at the place is a
+permanent thing of the planet at its true size, drawn by one law; detail comes by distance (the size of a
+pixel on the ground), haze and tone by the length of the path through the air. Where that thing is in view
+at the hold, the hold may change inside a small disc round the place and keeps its bytes outside it; the
+hold beside the approved hero at 1 to 1 comes to me before such a commit is named.
+Allowed, and not meant by this: a grade that follows the camera's height slowly through the whole move, as
+an eye adapts, if no frame shows it as a thing arriving (the pattern line green, and by eye). Not allowed:
+a picture, a layer or a region that comes in or goes out by height.
+Answer in two lines, with your next mail and not before: which laws of your stop still weigh two pictures
+or two looks by height, at which frames they show, and whether your commit in hand removes them."
+
+## 2026-11-24, 23:16 UTC: MAIL 797 from the Builder (verbatim)
+
+"MAIL 797 from the Builder (/root), 23:16 UTC. Attached: range-saturn-globe.patch by globe_engineer. It gives
+your globe (and the kept globe) the carry range the smooth tool needs. It applies with `git apply` on
+e51dd9f1 and on 86184412; if it does not apply on your branch, port its lines by hand and say so. Put it into
+your next named commit. The smooth proving jobs of Saturn (4 jobs) are held until a commit of yours carries
+it. Law for every stop from today (decision d253), after mercury_builder MEASURED that b0b87889 exchanged its
+globe and place by the real pixel, so its capture at 3840 by 2160 was not the picture of its render at 1920
+by 1080: (a) every term that counts screen pixels (a level picked by texels per pixel, a presence by size on
+screen, an exchange between two grounds, a width or a feather in pixels, fwidth and its kin) goes through
+the frame factor, `frameUniform` of `src/core/frame.ts`, `uFrame` in shaders, so that a capture at 3840 by
+2160 is the same picture as a render at 1920 by 1080; (b) the asset set must not move the moment at which a
+level, a patch or an exchange arrives: count the full set's texels in both sets, the web set is only
+softer. Say in your next NAMED mail that both hold for your stop, with one dive frame drawn at both sizes
+and in both sets as proof (the mean difference of each pair, 0 to 255)."
+
+Attachment: /home/user/.perplexity/attachments/9ecef59465be4b5ea4d86a1d728fb8ba/range-saturn-globe.patch (26
+lines: the last argument of diagOut in globe.ts and kept/globe.ts, the range of the point drawn, becomes the
+range to the surface of the globe where the limb is drawn inflated). `git apply --check` passes on this
+branch as it stands.
+
+## 2026-11-24, 23:17 to 23:45 UTC: r55 read whole, the dark inner zone, d253 measured, the frame factor
+
+r55 (main 7026711 plus the tree of 22:32, cures 1 and 2, the old table inner.by), what it measured before it
+was stopped at 23:22 (its later steps would have had to run again on the tree that is named):
+- Rise: "VERDICT: red", pattern 0.46 from 3816 + 1/2, limit 0.45, 2 capture frames over (see above).
+- Dive: "VERDICT: green". Pattern 0.33 from 3576 at pixel (1404, 428); level step 0.02 at 3601; pop 1.07
+  from 3568 + 1/2; change in place 16.4 from 3598 + 1/2 at (1564, 624); ground 3630 to 3641 + 1/2 change
+  6.2, pattern 0.05.
+- Finals on the engine of 7026711: 3465 4077873a1a2005c40bed0e9f225e2ebbe3cf153ee06f75b93a2c3a4735002f0f,
+  3720 ee1aec39c955a54d5808b20638bfdd21094ac2e1b05402a210b1352a9fdd14a5: both the bytes of r54 (the
+  older engine), so the engine of 7026711 draws these two frames as the one before did.
+- Path: "VERDICT: green. No number is over its limit."
+Main moved to cc9015f by 23:18: kit/PROGRESS.md alone against 7026711 (src, tools, tests, config, cut and
+package.json do not differ), so a proof on the worktree at 7026711 is a proof on the engine of cc9015f.
+
+Mail to the Builder at 23:20 (STATUS): the red and its cause, the cure in the tree, the patch of mail 797,
+the two lines for mail 785 and the ruling I need on the dust (see below), NAMED about 01:30 UTC.
+
+The answer to mail 785 as sent. Still by the lens's height in Saturn: (a) the scene change kept set to model,
+1.03 to 0.93 (dive 3600 to 3604, the same far look on both sides); (b) the model's nearness, 0.93 to 0.6
+(dive 3604 to 3622, rise 3823 to 3835): the ice past the outer rim, the globe's near look, the grain field;
+(c) new this round: the dust inside the inner rim with its band on the globe's foot, 0.93 to 0.38 (dive 3604
+to 3710, rise 3797 to 3835), and the rings' tone by radius, 2.2 to 0.365 (dive 3561 to 3718, rise 3792 to
+3864); (d) grade, dusk and haze, 2.2 to 0.6. The rings' far look against their close look is by distance per
+pixel (0.6 to 1.3 radii from the lens); the height overrides it only between 0.6 and 0.70. The commit in hand
+removes none of them: it slows (c) until the pattern line is green. The ruling asked for: by the length of
+the view's path alone the dust cannot be absent from the hold (the path through a sheet at the foot is 2.4
+times longer at 3720 than at the hold, view cosine 0.22 against 0.53, so a sheet deep enough to close the
+foot at 3720 is a veil of about 0.4 of that depth in the hold): by height as mail 729 ruled, or permanent
+and seen in the hold, or none. The tone by radius can go by the path through the ring per pixel.
+
+The dark inner zone (item 1 of mail 720, "give the ring model its dark inner part"). Seen on 3720 beside the
+approved image: my inner zone was pale and grainy where the approved has a dark grey band with ringlets at
+the foot and a dark arc left of the globe. Cause: the dust's light was 0.9 and 0.7 of the thin inner ring's,
+and the table of the tone by radius multiplies it by about 4 at these radii (its knots under the inner rim
+were measured before there was dust, against black). Two trials at 3720, draft, no grain
+(/tmp/v/t17/run2g.sh): dk1 inner.light [0.3, 0.12]; dk2 the same light 0.25 and 0.1 with twice the depth
+(0.7 and 1.4). Both give the dark band at the foot and the dark arc; dk2 is no better and changes how the
+share by height maps to what is seen, so dk1 stands: inner.light [0.3, 0.12]. Not cured by it and named:
+the dust is still grainy (the sand of the sheet on a thin depth: the globe shows through it in specks)
+where the approved has clean ringlets; the band on the globe's foot is still broad and brown; the lit ring
+at the right edge begins lower than in the approved (the globe's shadow on the sheet, true to the Sun).
+
+Mail 797 (d253), measured before any change (/tmp/v/job_u.sh step sizes, /tmp/v/t21/sizes.py: stills at
+the draft tier with grain, the 3840 by 2160 picture brought to 1920 by 1080 by the mean of each 2 by 2
+block; mean absolute difference 0 to 255; "broad": after both are evened over 16 px):
+- 3567 (kept set): sizes, full set, mean 1.787, broad mean 0.672, broad most 7.2 at (642, 473); sizes, web
+  set, mean 1.655; sets at 1920, mean 2.181, broad mean 0.492; sets at 3840, mean 2.904.
+- 3612 (model, all of it the far look): sizes, full set, mean 2.468, broad mean 0.655, broad most 13.1 at
+  (970, 747); sets at 1920, mean 0.156; sets at 3840, mean 0.190.
+What the differences are, seen on the difference pictures: (1) the ringlets differ between the sizes in
+bands (15 of 255 at (970, 747) of 3612): the level of the kept profile and the octaves of my ladder were
+picked by the real pixel, so the larger frame showed ringlets the smaller one had filtered away. That is
+the fault of d253 and it is mine. (2) At 3567 the sky in the gap between the inner ring edge and the globe
+reads (27, 27, 29) at 1920 and (16, 22, 26) at 3840, a warm veil that falls away from the lit limb, and
+3612 has the same faint halo left of the lit limb. My stop draws nothing there by pixels. Read in
+src/post/chain.ts: the film's bloom is a pyramid of 6 levels (LEVELS) from the frame's own size, so in
+the larger frame it reaches half as far in angle. Not proven by a render and not mine to change: reported.
+(3) Between the sets the model differs by 0.16 (the globe's map and the sky); the kept set by 2.2 (its
+pictures are softer in the web set); no patch or exchange stands out in either difference picture.
+
+The cure of (1), /tmp/v/t21/frame_edits.py (13 places, each a factor that is 1 at 1920 by 1080):
+- sheet.ts: the footprint the ladder is filtered with is the look's pixel (ringLookPixel, uRfFoot); the
+  texels of the far look, its fillet, the feathers of the globe's shadow (kMw) and outline (bw) too.
+- grains.ts: the grains read the ladder with the same footprint.
+- globe.ts: the shadow of the ringlets on the globe (ringShadowAt) and the rate of the fine structure of
+  the bands (bandRate).
+- kept/rings.ts: the level of the profile (lodP), of the strands (sl), the feathers bw, mw and fw
+  (uFoot.x).
+What stays by the real pixel, as the engine's own planet reads its map (src/bodies/planet.ts,
+equirectGrad with the engine's grad): the levels of the picture maps (the globe's map, the takes of the
+kept set: textureGrad with the pixel's own gradients). The presences of the takes were through the factor
+and the full set's texels already (uFoot.y, uFoot.z), as were the grains, the sand and the look's widths.
+The kept set's shadow of the rings on the globe (kept/profile.ts ringShadowAt) keeps the real pixel under
+its soft floor: the kept globe has no factor uniform, and the floor is wider than a pixel in hold and dive.
+
+## 2026-11-24, 23:45 UTC: the frame factor proven on two frames (s2), main at b5849a3, proof r56 started
+
+s2 (/tmp/v/s2, the same eight stills as s1 on the tree with the 13 factors):
+- The four stills at 1920 by 1080 (3567 and 3612, full and web set) have the sha256 of s1: the factors
+  are 1 at the master and change no byte there.
+- 3612, sizes, full set: mean 2.468 to 1.629, broad mean 0.655 to 0.459, broad most 13.1 to 6.6; counted
+  as the Builder counts (status 267: cells of 10 by 10 px, 20736 of them, the mean difference of a cell):
+  cells over 12: 55 to 0, the most 16.1 to 6.9. The web set the same (1.624, 0 cells).
+- 3567, sizes, full set: mean 1.787 to 1.753, cells over 12: 0 before and after, the most 7.5; web set
+  1.620, 0 cells.
+- Sets at 1920: 3567 mean 2.181, 111 cells over 12 (the most 18.5 at pixel (895, 1075)); 3612 mean 0.156,
+  0 cells. Sets at 3840: 3567 mean 2.826 (2.151 after halving, 73 cells); 3612 mean 0.190 (0.159, 0).
+What the rest is, seen at full size (/tmp/v/t21/e3612_all.png, e3567_c1.png, e3567_sets.png, all three in
+the looks): at 3612 thin lines on the edges of the ringlets (one sample a pixel at the draft tier, the
+film's sharpen of one real pixel), the film's grain, a moire of the draft tier at the lower right, and the
+warm halo by the lit limb (bloom). At 3567 the same ringlets stand in the same places at both sizes; the
+kept takes are sharper at 3840 (their maps are read at the level of the real pixel) and the gap by the
+globe is warmer at 1920 (bloom). Between the sets at 3567 the picture is one picture, the web set softer
+and with the grain of its smaller files; the 111 cells are the near ring at the lower edge where the
+ringlets are finest. No patch, level or exchange arrives at another moment in either pair.
+Tools: /tmp/v/t21/sizes.py, cells.py (the Builder's count), dview.py, dcrop.py, scrop.py.
+
+origin/main at 23:45: b5849a3 (status 267, d254). Against 7026711 nothing differs under src, tools, tests,
+config, cut or in package.json: kit/PROGRESS.md, Neptune's web assets and scorecards alone. So the proof
+on the worktree at 7026711 is a proof on the engine of b5849a3.
+
+Read in d253 and d254 (kit/PROGRESS.md of b5849a3): the frame law as mail 797 gives it; Mercury's fault
+was an exchange of globe and place by the real pixel (frame 717: mean 5.04, block 135.8). d254 (4), a
+ruling for Jupiter and Neptune: a place may show in the hold and on the way down under four conditions
+(one Sun; through the globe's own filter by the pixel's foot; no light of its own and no law by height or
+clock; its tones at the hold inside what the hero has within about 200 px, or a curve from the hold to T
+with no step). It is not addressed to Saturn; my question on the dust inside the inner rim (mail of 23:20)
+is of the same kind and has no answer yet.
+
+Proof r56 started 23:46:29 on main 7026711 plus the tree as it stands (cures 1 and 2, the table inner.by
+re-timed, inner.light 0.3 and 0.12, the patch of mail 797, the 13 factors): steps rise, finals, dive, path,
+g13, parity, gate, handover, place, sizes, g17. From here on no file of the picture path is touched until
+the proof is read: the committed tree must be the proven tree.
+
+## 2026-11-25, 00:09 to 00:15 UTC: r56 red in the rise by one line, the cause, the table stretched, r57
+
+r56 (main 7026711 plus the tree of 23:46), the rise alone was read, then the job was stopped:
+- "VERDICT: red. 1 number over the limit": "the pattern of the picture changes in place by 0.46 from frame
+  3801 + 1/2 to 8 film frames later, limit 0.45 (3 frames over it, first 3800 + 1/2)", most at pixel (852,
+  732). The ground line (3798 to 3809 + 1/2): change 36.8, pattern 0.46. Level step 0.05 at 3875 + 1/2; pop
+  1.196 from 3872 + 1/2 (limit 1.2); change in place 36.8 from 3798 (shown, not judged).
+- The rows of the pattern, every second one: 3798 0.39, 3800 0.44, 3802 0.45, 3804 0.43, 3806 0.41, 3808
+  0.39, 3810 0.41, 3812 0.44, 3814 0.43, 3816 0.40, 3817 0.20, 3820 0.20, 3824 0.17, 3828 0.26, 3832 0.31,
+  3836 0.28, 3840 0.20, 3842 0.33, 3848 0.23, 3856 0.23, 3864 0.16, 3868 0.27, 3872 0.15, 3880 0.13.
+- What it is, seen on the report's sheet (saturn-rise-changes.png, kept as /tmp/v/r56a): the dust in front
+  of the foot of the globe. The band along the lower limb of the lit globe gets lighter from frame to frame
+  and the pattern there goes over from the band's own edge to the limb and the globe's bands under it. The
+  table inner.by did what it was made for, an even pace (0.39 to 0.46 on every row from 3798 to 3816), but
+  at a level one hundredth over the limit. The fall to 0.20 at 3817 is the measure's own rule ("only where
+  both have detail over 1"): from there the later frame has too little of the band left to count.
+- What I take from it: the measure counts how fast one structure is exchanged for another, whatever the
+  tone. A whole exchange over N frames reads about 0.17 plus 0.28 times 38 over N. The climb gives 38
+  frames between the heights 0.38 and 0.93 and 48 between 0.35 and 0.93; under 0.35 the lens has not begun
+  to climb.
+- My early check (/tmp/v/t19/pat.py, the body by brightness) read 0.448 at its largest and the fall at
+  3817 too: it follows the report within 0.02 on these rows. /tmp/v/t21/pat_rows.py gives all rows at once.
+
+The cure (/tmp/v/t21/stretch.py 0.35): the same states of the dust in the same order, passed later in the
+climb by one factor (0.792), so the dust begins to thin at 0.35 in place of 0.38 and is gone at 0.93 as
+before. Expected from the rows above: 0.34 to 0.40. What it costs: with the lens at the height of the
+approved close image (0.362) the dust has 0.652 of its depth, and all of it only from 3728 to 3787 (the
+lens under 0.35). Seen at 3720, draft, no grain (/tmp/v/t17/st1_3720.png against dk1_3720.png, mean
+difference 0.54 of 255; the foot crop of both beside the approved: /tmp/v/t21/st1_foot3.png): the band on
+the foot is a little lighter, the dust lets a little more of the globe through; no worse, and as far from
+the approved's dark ringlets as before. Scaling the depths up to keep 3720 as it was would pass the thin
+states of the dust faster than now (reckoned from the table: 1.2 to 1.8 times from the share 0.22 down),
+so the depths stay. The table of r56 is kept as /tmp/v/t21/inner_by_r56.json.
+
+Not taken, thought through: a foot band with a softer upper end (its edge then holds less detail between 8
+and 40 px, which is what the measure reads); a band of less depth. Both change the look at 3720 and need
+trials. The true cure is the one mail 785 asks for: the dust by the path of the view and nothing by height.
+That needs the Builder's ruling on the hold (asked 23:20, no answer yet).
+
+Proof r57 started 00:14:00 on main 7026711 plus this tree, rise first. Mail to the Builder 00:15 (STATUS):
+the red, the cause, the cure, d253 in numbers, the bloom reading, NAMED about 01:50 UTC if the rise is green.
+
+## 2026-11-25, 00:19 UTC: MAIL 821 from the Builder (verbatim), the answer to my STATUS of 00:15
+
+"MAIL 821 from the Builder (/root) to saturn_coder, 00:19 UTC by my date -u. Answer to your STATUS of 00:15.
+
+1. NAMED at about 01:50 UTC is noted. Say at once if the rise is not green at 00:40.
+2. Ruling on the levels of the picture maps (the globe's map, the takes of the kept set): they stay by the
+real pixel. A plain filtered read of a picture is not a choice under the frame law (d253); at 3840 by 2160
+it takes the finer level, and that is what the capture is for. What goes through the factor is every choice
+of what is drawn or when it changes, which is what you moved in the 13 places. Good.
+3. The bloom of src/post/chain.ts (6 halvings of the frame's own size, so half the reach in angle at 3840)
+is not yours and goes to the engine's owner today with your reading; the warm veil by the lit limb at 3567
+is the picture to prove it on. Do not work round it in your stop.
+4. Your question of 23:20 on the dust stands as you say; the law by height in the rise is judged when the
+proof is in."
+
+What follows from it: the picture maps stay as they are (nothing to do); the bloom is left alone; the
+ruling on the dust comes with the proof, so the NAMED mail must give the rise's rows plainly and say again
+that the dust and the tone by radius are laws by height. If the rise is not green at 00:40: one line to
+the Builder at once.

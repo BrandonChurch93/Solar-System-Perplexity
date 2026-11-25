@@ -94,7 +94,7 @@ void main() {
   vec2 er = q / r;
   vec2 fd = ray.xz / max(length(ray.xz), 1e-6);
   float pixel = dist / uGrainView.x * length(vec2(dot(er, fd) / mu, er.x * fd.y - er.y * fd.x));
-  float fp = max(ringFootprint(pixel, uGrad), uGrainFoot.x * aGrain.x);
+  float fp = max(ringFootprint(ringLookPixel(pixel), uGrad), uGrainFoot.x * aGrain.x);
   float fpl = max(ringFootprint(ringLookPixel(pixel), uGrad), uGrainFoot.x * aGrain.x);
   float tau;
   float lum;

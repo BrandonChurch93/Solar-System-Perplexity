@@ -22,6 +22,34 @@ const [lo, hi] = skimJson.sky.heights as [number, number]
 export const gradeShare = (height: number): number =>
   1 - smooth(Math.log(Math.max(Math.abs(height), 1e-6) / lo) / Math.log(hi / lo))
 
+// A share by the height of the lens over the ring plane from knots (heights, planet radii, rising; the share at
+// each): straight lines in the logarithm of the height between the knots, the first share under the first
+// height and the last over the last.
+const byHeight = (heights: number[], shares: number[], height: number): number => {
+  const h = Math.max(Math.abs(height), 1e-6)
+  const last = heights.length - 1
+  if (h <= heights[0]!) return shares[0]!
+  if (h >= heights[last]!) return shares[last]!
+  let i = 0
+  while (i < last - 1 && h >= heights[i + 1]!) i++
+  return THREE.MathUtils.lerp(shares[i]!, shares[i + 1]!, Math.log(h / heights[i]!) / Math.log(heights[i + 1]! / heights[i]!))
+}
+
+// How much of the tone of the rings by radius and of the thin inner ring by the view (iceZone) shows with the
+// lens at this height (skim.json light.grade.by): none at the upper height of the air of the stop and above,
+// all at the height of the approved close image and under. That tone is the largest change of the grade (the
+// thin inner ring gains several times its light), so it comes in over the whole way down and not over the
+// heights of the grade alone, and its knots are set so that the lens passes equal shares of it in equal times
+// on the fastest way through these heights (the rise): the pattern of the rings then changes slowly on every
+// frame of the dive and of the rise. It follows the height alone.
+export const zoneShare = (height: number): number => byHeight(grade.by.heights, grade.by.share, height)
+
+// How much of its depth the dust inside the inner rim has with the lens at this height (skim.json inner.by):
+// none at the height over which the model draws the far look alone and above, all with the lens low in the
+// skim. Its knots are set so that the dust closes at an even pace on the fastest way through these heights (the
+// rise). It follows the height alone.
+export const innerShare = (height: number): number => byHeight(skimJson.inner.by.heights, skimJson.inner.by.depth, height)
+
 // The dusk of the globe by the same share (skim.json light.dusk): with the lens high the globe keeps the light
 // of the hold; as the lens comes down to the plane its twilight zone narrows and its night side sinks and loses
 // its colour, as in the approved close image. Sets uDusk (the two cosines of the Sun's angle between which the
@@ -46,18 +74,21 @@ export const hazeDayAt = (height: number, far: THREE.Vector2, into: THREE.Vector
   into.set(THREE.MathUtils.lerp(far.x, halo.day[0]!, w), THREE.MathUtils.lerp(far.y, halo.day[1]!, w))
 }
 
-// The dust in front of the foot of the globe by the same share (skim.json inner.foot): the dust inside the
-// inner rim of the rings is a layer with a soft thickness, and with the lens low over the plane the view runs
-// a long way through it in front of the foot of the globe, so a soft dark band lies along the foot and the
-// dark inner ring runs into the planet, as in the approved close image. With the lens high the view crosses
-// the layer steeply and nothing of it shows. Sets uDust: the depth of the dust on the view at the plane, and
-// the two heights over the plane (planet radii) between which it ends. The kept set and the model both call
-// it with the height of the lens, so the two scenes hold one globe at every height.
+// The dust in front of the foot of the globe (skim.json inner.foot): the dust inside the inner rim of the rings
+// is a layer with a soft thickness, and with the lens low over the plane the view runs a long way through it
+// in front of the foot of the globe, so a soft dark band lies along the foot and the dark inner ring runs into
+// the planet, as in the approved close image. It is the same dust as that of the sheet inside the rim, so it
+// has the same share of its depth at every height of the lens (innerShare): none where the sheet has none.
+// Sets uDust: the depth of the dust on the view at the plane, and the two heights over the plane (planet
+// radii) between which it ends. The kept set and the model both call it with the height of the lens, so the
+// two scenes hold one globe at every height.
 export const dustAt = (height: number, into: THREE.Vector4): void => {
-  into.set(foot.depth * gradeShare(height), foot.height[0]!, foot.height[1]!, 0)
+  into.set(foot.depth * innerShare(height), foot.height[0]!, foot.height[1]!, 0)
 }
 
-// uGrade: the share, one over the pivot, the power of the toe, one over the ceiling. uGradeZone: the two radii
+// uGrade: the share, one over the pivot, the power of the toe, one over the ceiling. uGradeLow: the cosine, the
+// power and the least of the thin inner ring by the view, and the share of iceZone (zoneShare; the callers set
+// it wherever they set the share of the grade). uGradeZone: the two radii
 // between which the thin zones begin, the share of its colour the ice of the dense ring loses and the share
 // the ice of the thin zones loses. uGradeView: the factor on the far look of the dense ring, and for the thin
 // zones the cosine of the view from which they gain, the power of that gain and the most it gives.
@@ -87,13 +118,15 @@ uniform vec2 uGradeSpan;
 uniform vec4 uGradeLow;
 uniform vec2 uGradeLowZone;
 // iceZone: the tone of the rings by radius (skim.json light.grade.radial) and the thin inner ring by the angle
-// of the view (light.grade.low; mu: the cosine of the view to the normal of the plane), by the share of the
-// grade
+// of the view (light.grade.low; mu: the cosine of the view to the normal of the plane), by its own share
+// (uGradeLow.w): the factor to the power of the share, so equal steps of the share are equal steps of the tone,
+// and the factor itself at the share 1
 vec3 iceZone(float r, float mu) {
   float x = clamp((r - uGradeSpan.x) * uGradeSpan.y, 0.0, ${(grade.radial.gain.length - 1).toFixed(1)});
   int i = int(min(floor(x), ${(grade.radial.gain.length - 2).toFixed(1)}));
   float low = mix(1.0, max(pow(clamp(mu / uGradeLow.x, 0.0, 1.0), uGradeLow.y), uGradeLow.z), 1.0 - smoothstep(uGradeLowZone.x, uGradeLowZone.y, r));
-  return mix(vec3(1.0), mix(uGradeRadial[i], uGradeRadial[i + 1], x - float(i)) * low, uGrade.x);
+  vec3 full = mix(uGradeRadial[i], uGradeRadial[i + 1], x - float(i)) * low;
+  return uGradeLow.w < 1.0 ? pow(full, vec3(uGradeLow.w)) : full;
 }
 vec3 iceHeld(vec3 c) {
   float high = dot(c, vec3(0.2126, 0.7152, 0.0722)) * uGrade.w;

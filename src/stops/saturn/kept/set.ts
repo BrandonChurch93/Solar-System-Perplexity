@@ -4,7 +4,7 @@ import { bufferFrame } from '../../../core/frame'
 import type { SetFactory } from '../../../core/types'
 import { smooth } from '../../../director/rig'
 import { Globe, Shell } from './globe'
-import { duskAt, dustAt, gradeShare, hazeDayAt } from '../grade'
+import { duskAt, dustAt, gradeShare, hazeDayAt, zoneShare } from '../grade'
 import { Ice } from './ice'
 import * as look from './look'
 import { plan } from './plan'
@@ -240,6 +240,7 @@ export const createKept: SetFactory = async (ctx) => {
       ru.uSeam!.value = window.seam
       ;(ru.uCamL!.value as THREE.Vector3).copy(camL)
       ;(ru.uGrade!.value as THREE.Vector4).x = gradeShare(camL.y)
+      ;(ru.uGradeLow!.value as THREE.Vector4).w = zoneShare(camL.y)
       rings.cull(camL, close.value)
       ;(ru.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(ru.uShadowL!.value as THREE.Vector3).copy(shadowL.copy(sunL).applyQuaternion(shadowTurn).lerp(shadowClose.copy(lightL).applyAxisAngle(UP, THREE.MathUtils.degToRad(look.rings.shadowClose[0])).setY(Math.sin(THREE.MathUtils.degToRad(look.rings.shadowClose[1]))), close.value).normalize())

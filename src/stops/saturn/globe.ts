@@ -41,7 +41,8 @@ export const RING_SHADOW_GLSL = /* glsl */ `
 float ringShadowAt(vec3 P, vec3 sunL, vec3 soft, float grad) {
   float t = -P.y / (abs(sunL.y) > 1e-4 ? sunL.y : 1e-4);
   float rho = length(P.xz + sunL.xz * t);
-  float fp = max(length(vec2(dFdx(rho), dFdy(rho))) * grad, soft.x + soft.y * max(t, 0.0));
+  // the pixel is a pixel of the master (ringLookPixel), so a frame of any size casts the same shadow
+  float fp = max(ringLookPixel(length(vec2(dFdx(rho), dFdy(rho)))) * grad, soft.x + soft.y * max(t, 0.0));
   float tau = ringDepth(rho, fp);
   float own = t > 0.0 ? 1.0 - exp(-tau * soft.z / max(abs(sunL.y), 0.02)) : 0.0;
   // with the far look of the sheet its shadow is the kept set's: from the opacity of the kept profile
@@ -220,11 +221,12 @@ void main() {
   float mapTexels = texels;
   // near the lens the bands get their fine structure from functions: it comes with the nearness of the surface
   // to the lens, and where it is whole the texels view counts its finest cells, as the ring sheet does
-  // the change of the longitude and the latitude of the spun direction over one pixel, in radians
+  // the change of the longitude and the latitude of the spun direction over one pixel of the master, in
+  // radians (uRfFoot, the film's own factor: a frame of any size draws the same structure)
   vec3 dRight = dFdx(d);
   vec3 dUp = dFdy(d);
   float eq = max(d.x * d.x + d.z * d.z, 1e-6);
-  vec4 bandRate = vec4((d.x * dRight.z - d.z * dRight.x) / eq, dFdx(lat), (d.x * dUp.z - d.z * dUp.x) / eq, dFdy(lat));
+  vec4 bandRate = vec4((d.x * dRight.z - d.z * dRight.x) / eq, dFdx(lat), (d.x * dUp.z - d.z * dUp.x) / eq, dFdy(lat)) * uRfFoot;
   float bandNear = 0.0;
   for (int k = 0; k < (uBandFine.x > 0.0 ? 1 : 0); k++) {
     bandNear = 1.0 - smoothstep(uBandFine.y, uBandFine.z, log(max(length(p - uCam), 1e-6)));
@@ -280,7 +282,7 @@ void main() {
   }
   float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView));
+  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView) * (uLimbW > 0.0 && rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vLocal - uCam) : 1.0));
   if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
 }`
 
