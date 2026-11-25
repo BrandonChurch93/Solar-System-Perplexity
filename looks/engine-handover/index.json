@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T14:41:40.557Z",
+ "pushed": "2026-11-25T15:11:22.432Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "air law with the light by height is pushed (agent/engine-air d6bebf0c); timing the knots on Mars draft frames: plus 1.2 to 1.5 s a sample, looking for the cure",
+ "note": "air law knots: the cheaper share at the vertices against the law by the fragment, draft pairs; the merge of main into engine-air under test",
  "looks": [
+  {
+   "time": "2026-11-25T14:58:54.402Z",
+   "file": "20261125145854402-note-al-topright.jpg",
+   "source": "../../../../tmp/air/sheets/al-topright.png",
+   "kind": "note",
+   "label": "engine-air smoke, top right of 2481 at 1 to 1: law off, knots per fragment (d6bebf0c), knots at the vertices (the cost cure). The two lower rows differ by 1 level of 255 on 0.21 percent of the pixels"
+  },
+  {
+   "time": "2026-11-25T14:58:53.713Z",
+   "file": "20261125145853713-note-al-offb-pair.jpg",
+   "source": "../../../../tmp/air/sheets/al-offb-pair.png",
+   "kind": "note",
+   "label": "engine-air smoke, NOT a fitted set: Mars 2481 and 2668 at draft, law off against the law with mars_place_builder's first fitted numbers and the knots at the mesh's vertices. The painting's own air is not baked out and the stop's old sky is still drawn: the dark band over the glow and the bright stars are the scratch, not a claim"
+  },
   {
    "time": "2026-11-25T14:41:28.315Z",
    "file": "20261125144128315-note-al-knots-2477-left.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/air/sheets/al-02668-off-on.png",
    "kind": "note",
    "label": "Mars 2668 at draft, air law smoke test: top the law off, bottom on with made up numbers (light 0.27 0.19 0.14, density 45, scale height 0.0045). Ground stays, the sky band far too thick and flat, stars gone. The numbers are the stop's to fit"
-  },
-  {
-   "time": "2026-11-25T13:10:12.241Z",
-   "file": "20261125131012241-note-saw-depth-8x.jpg",
-   "source": "../../../../tmp/law/sheets/saw-depth-8x.png",
-   "kind": "note",
-   "label": "Mars 2668 draft, distance view at 8 to 1, x 650..740 y 545..690: the mesh's cells show as blocks of 4.5 to 5 px, the step between the near crest and the ground behind runs across them"
-  },
-  {
-   "time": "2026-11-25T13:10:11.600Z",
-   "file": "20261125131011600-note-saw-diag-4way.jpg",
-   "source": "../../../../tmp/law/sheets/saw-diag-4way.png",
-   "kind": "note",
-   "label": "Mars 2668 draft, layer view (mesh 420, mesh 840, other diagonal) and distance view at 4 to 1: the layers' border is the same in all three, the teeth lie inside one layer"
   }
  ]
 }
