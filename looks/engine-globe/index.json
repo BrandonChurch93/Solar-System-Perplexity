@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T06:51:31.491Z",
- "head": "3fc99fe5cbfe3795da6f581c151787bcf1b690a8",
- "note": "Cost table of the Mars cap at draft (scratch switches, no commit): of 23.5 s at 2464 the cap is 17.4 s: 7.1 s triangles (5.7 million for 2.0 million pixels), 1.1 s height reads, 8.0 s the 8 colour levels per pixel, 1.2 s the rest per pixel. Not reading colour levels whose value is multiplied by 0 left every PNG byte in place (12 of 12) and took 1.9 to 7.2 s off.",
+ "pushed": "2026-11-25T07:32:47.141Z",
+ "head": "687be0be4fc34780ffbac6855e3ef092c52c8fd2",
+ "note": "MAIL 954 row 1 built on take/b10e 8cfc71f2 (local commit, not named yet). Picture: frame 2436 of Mars's dive with the row on, draft. The side with the row off is rendering now; the hashes of 12 frames at two sizes are compared after it. Nothing is claimed yet.",
  "looks": [
+  {
+   "time": "2026-11-25T07:32:46.197Z",
+   "file": "20261125073246197-note-on-2436.jpg",
+   "source": "out/work/m954/on-2436.png",
+   "kind": "note",
+   "label": "Mars 2436 draft 1920 x 1080, own levels under a whole level not read, scratch merge of take/b10e with mars-place e53c76b7",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T06:51:30.876Z",
    "file": "20261125065130876-note-cap-cost.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "Jupiter 6580 to 6596, flow left with the range patch (points on the unit shape)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:40:34.991Z",
-   "file": "20261125024034991-note-mars-5364.jpg",
-   "source": "../m835/mars-5364.png",
-   "kind": "note",
-   "label": "Mars 5364 against 5380 after the carry: the close ground and the globe's ground are two pictures of one place",
-   "stop": "mars"
   }
  ]
 }
