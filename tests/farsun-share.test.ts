@@ -3,7 +3,8 @@ import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
 import * as THREE from 'three'
-import { faceLaw, holdFrame } from '../src/space/farsun/farsun'
+import { setsForFrame } from '../src/director/timeline'
+import { faceLaw, holdFrame, wornAt } from '../src/space/farsun/farsun'
 import { HOLD } from '../src/space/farsun/hold'
 import look from '../src/space/farsun/look.json'
 import { globeShare, spans, swapDistance, wearShare } from '../src/space/farsun/share'
@@ -63,15 +64,35 @@ describe('the handover and the wear of the far Sun', () => {
     }
   })
 
-  it('has worn out where the globe of the Sun stop has gone, so no frame hangs on what is loaded', () => {
-    expect(wearSpan[1]).toBeLessThanOrEqual(handoverSpan[1])
-    expect(handoverSpan[1]).toBeGreaterThan(handoverSpan[0])
-    for (let k = 0; k <= 400; k++) {
-      const d = handoverSpan[0] + ((swapDistance * 1.5 - handoverSpan[0]) * k) / 400
-      if (globeShare(d) === 0) expect(wearShare(d), String(d)).toBe(0)
+  it('wears by the burn alone: the far Sun is the face of the Sun stop at burn 0 and its own body at burn 1, with no step on the way, and the wear is out before the set of the Sun stop leaves, so no frame hangs on what is loaded', () => {
+    expect(wornAt(0)).toBe(1)
+    expect(wornAt(1)).toBe(0)
+    expect(look.burn.worn.end[1]).toBeLessThan(1)
+    expect(wornAt(look.burn.worn.end[1]!)).toBe(0)
+    expect(look.burn.worn.at - look.burn.worn.fall[0]! - look.burn.worn.fall[1]!).toBeGreaterThan(0)
+    for (let k = 0; k < 4000; k++) expect(wornAt((k + 1) / 4000), String(k)).toBeLessThanOrEqual(wornAt(k / 4000))
+    const seg = config.segments.find((s) => s.id === 'sun.travel')!
+    const first = seg.start * config.fps
+    const count = (seg.end - seg.start) * config.fps * 16
+    let step = 0
+    for (let k = 0; k < count - 1; k++) {
+      const a = wornAt(far(first + k / 16).burn)
+      const b = wornAt(far(first + (k + 1) / 16).burn)
+      step = Math.max(step, Math.abs(b - a))
+      if (a > 0) expect(setsForFrame(Math.floor(first + k / 16)), String(k)).toContain(config.stopIds[0])
     }
+    expect(step).toBeLessThan(0.02)
+    for (let k = count - 5 * 16; k < count; k++) expect(wornAt(far(first + k / 16).burn), String(k)).toBe(0)
     expect(globeShare(swapDistance)).toBe(0)
     expect(wearShare(swapDistance)).toBe(0)
+  })
+
+  it('holds the face of the Sun stop whole while the globe is in the frame alone, and has let go of no more than the look says where the pull ends', () => {
+    expect(handoverSpan[1]).toBeGreaterThan(handoverSpan[0])
+    expect(wearSpan[0]).toBeLessThanOrEqual(handoverSpan[0])
+    expect(wearSpan[1]).toBeGreaterThanOrEqual(handoverSpan[1])
+    for (const frame of [450, 455, 460]) expect(wornAt(far(frame).burn), String(frame)).toBe(1)
+    for (const frame of [489, 495, 499]) expect(wornAt(far(frame).burn), String(frame)).toBeCloseTo(look.burn.worn.at, 3)
   })
 
   it('has no step in the share or in the burn at any sixteenth of a frame of the way out of the Sun', () => {

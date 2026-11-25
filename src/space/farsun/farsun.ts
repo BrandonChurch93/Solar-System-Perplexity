@@ -5,7 +5,7 @@ import { FARSUN_FRAG, FARSUN_VERT, MAX_KNOTS, MAX_LOBES, MAX_LOOPS, MAX_STREAMER
 import look from './look.json'
 import { FACE } from './face'
 import { HOLD } from './hold'
-import { loopsOff, wearShare } from './share'
+import { loopsOff } from './share'
 
 export { discShare, globeShare, wearShare } from './share'
 
@@ -81,6 +81,14 @@ export function holdFrame(spin: number): { eye: THREE.Vector3; axis: THREE.Vecto
   const x = axis.clone().cross(new THREE.Vector3(0, 1, 0)).normalize()
   const y = x.clone().cross(axis)
   return { eye: turn(eye), axis: turn(axis), x: turn(x.divideScalar(limb)), y: turn(y.divideScalar(limb)) }
+}
+
+export function wornAt(burn: number): number {
+  const { split, worn } = look.burn
+  const b = Math.min(Math.max(burn, 0), 1)
+  const held = b <= split ? 1 - (1 - worn.at) * Math.pow(b / split, worn.ease[0]!) : worn.at - worn.fall[0]! * Math.pow((b - split) / (1 - split), worn.ease[1]!) - worn.fall[1]! * Math.pow((b - split) / (1 - split), worn.ease[2]!)
+  const t = Math.min(Math.max((b - worn.end[0]!) / (worn.end[1]! - worn.end[0]!), 0), 1)
+  return held * (1 - t * t * (3 - 2 * t))
 }
 
 export function faceLaw(burn: number): { flat: number; power: number; plage: number } {
@@ -270,7 +278,7 @@ export class FarSun {
     u.uSpin!.value = view.spin
     u.uTime!.value = view.time
     u.uHoldTime!.value = view.holdTime
-    const worn = u.uMapOn!.value > 0 ? wearShare(distance) : 0
+    const worn = u.uMapOn!.value > 0 ? wornAt(view.burn) : 0
     u.uWear!.value = worn
     u.uOpacity!.value = opacity
     u.uGain!.value = 1 / view.exposure
@@ -278,9 +286,14 @@ export class FarSun {
     const master = bufferFrame()
     u.uMaster!.value = master
     u.uPixel!.value = (2 * master) / (p[5]! * view.height)
-    const far = 1 - wearShare(distance)
+    const far = 1 - worn
+    const from = (near: number, own: number): number => (far < 1 ? near + (own - near) * far : own)
+    const gasWorn = look.corona.worn
+    ;(u.uCorona!.value as THREE.Vector4).set(look.corona.steps, from(gasWorn.gain, look.corona.gain), from(gasWorn.scale[0]!, look.corona.scale[0]!), from(gasWorn.scale[1]!, look.corona.scale[1]!))
+    ;(u.uCoronaNear!.value as THREE.Vector3).set(from(gasWorn.near[0]!, look.corona.near[0]!), from(gasWorn.near[1]!, look.corona.near[1]!), from(gasWorn.near[2]!, look.corona.near[2]!))
+    ;(u.uCoronaWide!.value as THREE.Vector3).set(from(gasWorn.wide[0]!, look.corona.wide[0]!), from(gasWorn.wide[1]!, look.corona.wide[1]!), from(gasWorn.wide[2]!, look.corona.wide[2]!))
     const burnt = Math.pow(look.burn.gain, Math.min(Math.max(view.burn, 0), 1))
-    u.uBright!.value = (look.body.bright[0]! + (look.body.bright[1]! - look.body.bright[0]!) * far) * burnt
+    u.uBright!.value = (look.body.bright[0]! + (look.body.bright[1]! - look.body.bright[0]!) * Math.min(Math.max(view.burn, 0) / look.burn.split, 1)) * burnt
     ;(u.uBurn!.value as THREE.Vector4).set(Math.pow(burnt, look.burn.gas), (look.burn.glow * (burnt - 1)) / (look.burn.gain - 1), look.burn.fall, Math.min(Math.max(view.burn, 0) * 2, 1) * far)
     const burn = Math.min(Math.max(view.burn, 0), 1)
     ;(u.uDesat!.value as THREE.Vector3).z = burn
@@ -296,11 +309,12 @@ export class FarSun {
     const sheath = u.uLoopSheath!.value as THREE.Vector3[]
     look.loops.slice(0, MAX_LOOPS).forEach((l, i) => {
       const by = l as { gain?: number; burn?: number; ragged?: number; sheath?: number[] }
-      gains[i] = (by.gain ?? 1) * Math.pow(burnt, by.burn ?? look.prominence.burn)
+      gains[i] = (by.gain ?? 1) * Math.pow(burnt, by.burn ?? look.prominence.burn) * from(look.prominence.worn[0]!, 1)
       ragged[i] = (by.ragged ?? 0) * burn
       sheath[i]!.set((by.sheath?.[0] ?? 0) * burn, by.sheath?.[1] ?? 1, by.sheath?.[2] ?? 1)
     })
-    ;(u.uLoopLook!.value as THREE.Vector3).set(1 - (1 - look.prominence.thin) * burn, look.prominence.broken * burn, look.prominence.paleBy * burn)
+    ;(u.uPromHot!.value as THREE.Vector3).set(from(look.prominence.wornHot[0]!, look.prominence.hot[0]!), from(look.prominence.wornHot[1]!, look.prominence.hot[1]!), from(look.prominence.wornHot[2]!, look.prominence.hot[2]!))
+    ;(u.uLoopLook!.value as THREE.Vector3).set((1 - (1 - look.prominence.thin) * burn) * from(look.prominence.worn[1]!, 1), look.prominence.broken * burn, look.prominence.paleBy * burn)
     const knotBy = u.uKnotBy!.value as THREE.Vector4[]
     look.knot.at.slice(0, MAX_KNOTS).forEach((k, i) => {
       knotBy[i]!.x = (k.gain * (burnt - 1)) / (look.burn.gain - 1)
