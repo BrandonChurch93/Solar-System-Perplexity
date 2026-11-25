@@ -8365,3 +8365,48 @@ All pair numbers are my proxy (the report's own path on my preview frames, 960 w
   streamer's gap, and the streamer's own edges there carry pink and cyan; mean of 24 px at the place: approved 40, 70,
   106; the tree 68, 128, 175; main 57, 100, 152. No control yet.
 - Next: the tests on 985341693, then the deck's own shadow, the teal blots, (c), (d).
+
+## Lab log 20:08 to 20:39 UTC: the disk ran full; where G17 at 4860 is lost; controls F, G, H on the deck's own fine texture
+
+- 20:13 THE DISK RAN FULL (ENOSPC in the vite build of a render; no frame was written, nothing of the repo was hurt).
+  Removed: 107 old trial folders in `out/work/nep/weave` and the old work folders deep, flow, terrain, ring, end35, end34,
+  s4 to s21, d1, e1, l1, m605, m609 (all frames of rounds long closed; their numbers are in this notebook). Kept: MAIN,
+  N8 to N11 and their pair folders, K1, T1, V0 to V6, ev. Free after: 1.9 GB, at 20:36 3.0 GB of 25; the repo's `.git`
+  alone is 9.2 GB. I watch `df` before every batch now.
+- G17 AT 4860 IS A CONDITION OF THE NAME (MAIL 1270: "G17 is no worse"). By my draft reader (STATED): main 0.934 / p25
+  0.549, the tree (N11) 0.426 / 0.230. Tool `/tmp/g17grid.py` prints the 12 by 8 tiles. Main's 20 sky tiles all read
+  0.93 to 1.10 (its sky is the plate, the approved's own pixels); mine read 0.43 to 1.70. The ground rows (2 to 6):
+  main's median 0.696, mine 0.327. My worst tiles: row 2, columns 2 to 6 (0.04 to 0.14; the far deck under the limb;
+  main 0.15 to 0.62), row 3, columns 4 to 8 (0.07 to 0.31; the eye and the plain; main 0.45 to 0.97).
+- CONTROLS AT 4860, 1920, draft, about 90 s a frame (G17 median / p25 | ground rows' median | ground part against the
+  approved; N11: 0.426 / 0.230 | 0.327 | 17.527; main 0.934 / 0.549 | 0.696 | 19.759):
+  F1 the sheet's depth 0: 0.549 / 0.193 | 0.333 | 23.092.
+  F2 the sheet and the low haze 0: 0.751 / 0.264 | 0.367 | 27.918. So the air does not hide the grain of the ground:
+  with no air at all the ground rows stay at 0.37. The fine grain is missing in the deck itself (MAIL 941 point 2 said
+  so; now measured).
+  G1 wisp.light 0.14 to 0.4: 0.506 / 0.293 | 0.375 | 17.626. G2 storm.rings 0.2 to 0.7: 0.426 / 0.238 | 0.341 |
+  17.708. G3 deck.gain 0.5 to 0.62: 0.604 / 0.392 | 0.495 | 17.400. G4 deck.contrast 1.4 to 2.4: 0.488 / 0.227 |
+  0.344 | 17.692.
+  H2 deck.lump 0.7 to 0.35: 0.435 / 0.224 | 0.298 | 17.978. H3 lump 0.35 and gain 0.62: 0.588 / 0.377 | 0.444 |
+  17.794. H4 gain 0.62 and relief 0.05 to 0.025: 0.492 / 0.293 | 0.363 | 17.291.
+- READ BY EYE (`/tmp/h-eye.jpg`, `/tmp/h-near.jpg`: approved, N11, G3, H3, H4, H2 at full size; `/tmp/band-eye.jpg`,
+  `/tmp/band-near.jpg`: G17's own band signal of approved, main, N11, G3, H3, H4): the approved's fine band is three
+  things: (1) long thin pale streaks at every fine size that curl round the oval, the strongest as bright thin wisps
+  hugging the oval's rim; (2) a grain at one to two pixels over all of the ground, inside the dark oval too; (3) the
+  edges of the cirrus. Main gets its number by ripples (rings 0.7, arms 0.6) and thin air. N11 is smooth. G3 (gain
+  alone) reads as chop, like water, with a crackle of thin dark creases on the plain (the relief's fine slopes under
+  the Sun's threshold; a hairline is not accepted, MAIL 955). H3 (lump 0.35 with it) turns the chop into long streaks
+  round the oval: the nearest in kind to the approved's band picture, still weaker. H4 shows that half the gain's
+  grain is the relief's shading, not the tone. H2: long streaks alone, without more of the fine sizes, lose.
+- TEAL BLOTS MEASURED (`/tmp/tealm.py`: green over the mean of red and blue, a place against its surround, blur 6 px
+  minus blur 40 px, ground without the cirrus): approved largest 7.7 (at the frame's edge), at (1168, 752) 0.6, at
+  (1564, 849) 0.2; main 0.9 and 1.1; N11 15.7 and 7.5 (3638 px over 6; approved 149, main 0). With the sheet's depth
+  0 (F1): 2.6 and 2.5; G3 11.4 and 6.4; H3 8.4 and 3.0. So the blots are the SHEET's light, not the deck's colour.
+  Lead: the sheet's light takes the deck's detail as one number for the three channels and then the fall's power by
+  channel (2.6, 3.1, 3.7), which turns a pale place green against its surround. No cure tried yet.
+- 20:20:39 looks pushed (01ec85df): 4 minutes over the 30 (the disk's cleanup). 20:36:54 looks pushed (13c0d334, 8
+  looks, the first try failed three times, the second went): 4860 beside the approved on control H3 (G17 0.588, 90 s
+  a frame), the eye and the near plain of the six.
+- Tests on 985341693: NOT yet run (named red until they are).
+- Next: the hold and 4707 under gain 0.62 and under lump 0.35 (d302: the hold may lose at most 0.01, G17 there may
+  not fall); then a tone of the fine sizes that does not go through the relief (so no creases), in code.
