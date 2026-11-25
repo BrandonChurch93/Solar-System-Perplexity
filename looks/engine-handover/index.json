@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T17:07:44.729Z",
+ "pushed": "2026-11-25T17:31:04.127Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "The flight line and Earth by the law: suites run, then the merge of main's second cut, then the name. Pairs of 1857 and 2156 box against ends",
+ "note": "flight line and Earth by the law on a trial merge with the second cut: my own look at consecutive frames 2179 to 2184 at review; pairs against main's number follow",
  "looks": [
+  {
+   "time": "2026-11-25T17:30:58.932Z",
+   "file": "20261125173058932-note-sheet-law-flight-moon.jpg",
+   "source": "../../../../tmp/name/sheet-law-flight-moon.png",
+   "kind": "note",
+   "label": "trial merge with the second cut, law, review: flight 2179 to 2183, the Moon at 2 times (ends none, none, 0.14, 0.5, 0.5)"
+  },
+  {
+   "time": "2026-11-25T17:30:57.641Z",
+   "file": "20261125173057641-note-sheet-law-flight-stars.jpg",
+   "source": "../../../../tmp/name/sheet-law-flight-stars.png",
+   "kind": "note",
+   "label": "trial merge with the second cut, law, review: flight 2179 to 2183, the sky left of Earth at 1 to 1 (stars stand, the globe leaves)"
+  },
   {
    "time": "2026-11-25T17:00:51.524Z",
    "file": "20261125170051524-note-triple-1857-hatch-3x.jpg",
@@ -45,22 +59,6 @@
    "source": "../../../../tmp/ends/pair-1857-hatch-3x.png",
    "kind": "note",
    "label": "Earth 1857 final, 64 samples, crop 330,860,650,1080 at 3 times: box left, cosine ends right. Bars become lozenges; a hatch along the motion stays in both"
-  },
-  {
-   "time": "2026-11-25T16:16:08.765Z",
-   "file": "20261125161608765-note-earth-1857-review-ends-ll-3x.jpg",
-   "source": "../../../../tmp/ends/earth-1857-review-ends-ll-3x.png",
-   "kind": "note",
-   "label": "Earth 1857 review with the ends 0.5, part of the lower left at 3 times",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T16:16:08.210Z",
-   "file": "20261125161608210-note-earth-1857-review-ends-ll-1to1.jpg",
-   "source": "../../../../tmp/ends/earth-1857-review-ends-ll-1to1.png",
-   "kind": "note",
-   "label": "Earth 1857 review with the shutter's ends 0.5 (this morning, 7e3da15a), lower left at 1 to 1",
-   "stop": "earth"
   }
  ]
 }
