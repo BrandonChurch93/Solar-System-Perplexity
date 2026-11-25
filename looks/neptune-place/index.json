@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T03:32:34.127Z",
- "head": "fdebc88a38dc80ba5432e9b66d5de023aa79df23",
- "note": "one sky for both views (carry 0 at every frame), the hold's sky plate gone; 1920 proof of 4716 to 4762 and 4945 to 5030 renders now",
+ "pushed": "2026-11-25T03:52:40.488Z",
+ "head": "78ee1951b8ffdd7793dfd21d0fd5703f18a362ab",
+ "note": "1920 proof of the one sky, 4716 to 4747 every frame: no flash at 4722 to 4724, one rigid star field; 4748 to 4762 render now",
  "looks": [
+  {
+   "time": "2026-11-25T03:52:39.227Z",
+   "file": "20261125035239227-note-p1-corner-4732.jpg",
+   "source": "out/work/nep/weave/ev/p1-corner-4732.jpg",
+   "kind": "note",
+   "label": "proof (a), 1920 draft: the upper right corner every frame 4732 to 4747, lifted 2x: dark sky, the same stars sliding, the limb sinks out; nothing comes or goes",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T03:52:37.302Z",
+   "file": "20261125035237302-note-p1-corner-4716.jpg",
+   "source": "out/work/nep/weave/ev/p1-corner-4716.jpg",
+   "kind": "note",
+   "label": "proof (a), 1920 draft, fdebc88a: the upper right corner (480 by 270 px native, lifted 2x) every frame 4716 to 4731. One rigid sky, the star field shifts 55 to 47 px a frame by the camera's turn; the engine's Milky Way haze slides out with it from 4716 to 4719; no field comes; 25 to 37 s a frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T03:32:33.290Z",
    "file": "20261125033233290-note-sky-k2b.jpg",
@@ -51,25 +67,6 @@
    "kind": "note",
    "label": "sky, upper right corner 4721 to 4732 at preview: top the head (Milky Way crosses at 4724 to 4726, red), bottom a diagnostic with the stars' carry off",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:05:46.270Z",
-   "file": "20261125030546270-note-4860-h2.jpg",
-   "source": "out/work/nep/weave/ev/4860-h2.jpg",
-   "kind": "note",
-   "label": "4860 at 70318876 beside the approved close picture: G17 median 0.956 p25 0.358 (proxy), right plain 24 58 99 against 90 134 176, the haze is not built; 22 s per draft frame at preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T02:24:13.182Z",
-   "file": "20261125022413182-compare-neptune-dive-sides.jpg",
-   "source": "out/work/handover/neptune-dive-sides.png",
-   "kind": "compare",
-   "label": "neptune dive, both sides at T (frame 4758) and their difference times 8",
-   "stop": "neptune",
-   "segment": "neptune.dive",
-   "frame": 4758,
-   "tier": "draft"
   }
  ]
 }
