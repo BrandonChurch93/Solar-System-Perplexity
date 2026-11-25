@@ -3,7 +3,7 @@ import { config, type Segment } from '../../config'
 import type { Pose, ViewKind } from '../../core/types'
 import type { HandoverParams, SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
-import { smooth } from '../../director/rig'
+import { drift, smooth } from '../../director/rig'
 import deck from './deck.json'
 import fields from './deck-fields.json'
 import fit from './fit.json'
@@ -183,6 +183,8 @@ export function flashNow(site: number, seconds: number): number {
 }
 
 export class JupiterPlan extends StopPlan {
+  private aim: THREE.Quaternion | null = null
+
   constructor(id: string, f: Fit, p: MoveParams) {
     super(id, f, p)
     this.terrainFrame.copy(toGlobe)
@@ -218,7 +220,15 @@ export class JupiterPlan extends StopPlan {
 
   override terrain(tRel: number): Pose {
     const dur = this.seg.terrain.end - this.seg.terrain.start
-    return flight(deck.life.proof.cameraHeld ? 0 : tRel - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov)
+    const half = config.shutterFraction / (2 * config.fps)
+    const pose = flight(deck.life.proof.cameraHeld ? 0 : tRel - dur / 2 - half, this.p.terrain.vfov)
+    if (!this.aim) {
+      const [right, up] = deck.flight.aimPx as [number, number]
+      const lens = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, -1), new THREE.Vector3(right, up, -fields.view.focalPx).normalize())
+      this.aim = lens.multiply(drift(this.seg.terrain.start + dur / 2 + half).invert())
+    }
+    pose.quaternion.multiply(this.aim)
+    return pose
   }
 
   override twin(local: Pose, time: number): Pose {

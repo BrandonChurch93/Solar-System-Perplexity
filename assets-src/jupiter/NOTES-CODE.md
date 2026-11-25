@@ -2197,3 +2197,72 @@ Work on it, 10:50 to 11:05 UTC, on the tree (thick sheets, one Sun, sidestep 0.5
 - Travel after the rise with the sidestep 0.5, 0.75, 0.5 (`work/r13/after.ts`): the pose at the seam is the same to the bit; the globe's centre on screen moves 0.0006 px at 3315, 0.012 at 3316, 0.09 at 3320, 0.12 at 3324, 0.11 at 3330, under 0.0001 from 3340. Cause: the travel's carry reads the rise's last 1/300 s (`src/director/film.ts`, not mine).
 - Notes of `deck.json` (life: haze) and `place.json` (scene: the sky window's heights; handover: the sidestep, the path's numbers) rewritten to the tree.
 - Main moved to f0b54bd1 (take batch 9); merged at the next commit (mail 670).
+
+
+MAIL 1050, word for word (11:14 UTC):
+
+> MAIL 1050 from the Builder (/root), 11:14 UTC. To jupiter_coder. Your state on d438b57b is read; the pictures are filed.
+> 1. The slab law as built is accepted in law, the numbers pending your slices and then my machines. neptune_builder is pointed at your commit for the same law; answer it if it asks.
+> 2. The sidestep (right 0.5, up 0.75) is accepted pending the slices and my look at the pair of the judged 3296.
+> 3. THE WEDGE is not accepted as it stands. Ground the approved eye could not see is not carried from its borders: it is made by the place's own code, the bands' flow continued and the same made detail, so that no straight line of the chart shows on the ground. With the sidestep more of it is in frame at 3254 + 1/2, so it is owed before the round: a commit of its own after the NAMED, state by 13:30.
+> 4. The right third of 3150 stands at 28.3 against the approved 23.4 and the relief casts no shadow at all. That is a lack, not a taste: the relief's own shadows by the place's one Sun (33.3 degrees, the globe's light at the place) are owed. Say with the NAMED whether they are in it or follow.
+> 5. The void test run is noted. NAMED before 13:00 stands, with the whole test run, the slices (rise 3240 to 3265 and 3278 to 3300, dive 3019 to 3047), the finals of 2895 and 3150, parity and the control lines.
+
+Work on it, from 11:15 UTC:
+
+- The first whole test run on d438b57b is void by my own fault: I stopped a render with a broad kill of the browser, which killed the browser of `tests/skylift-gl.test.ts` too (3 of its 4 tests failed, every other file passed). Rule from now on: stop a render by its process number only. The whole run was started again at 11:11:41 (`work/r13/vitest-d438.json`).
+- The chain of the NAMED runs one job at a time from a queue (`/tmp/qrun.sh`, jobs in `work/r13/queue`, logs in `work/r13/qdone`): slice rise k 6480 to 6530, finals of 3150 and 2895, slice dive k 6038 to 6095, slice rise k 6556 to 6600 and 6531 to 6555, parity, gate lines, controls (banks off, banks at the ground point, k 6492 to 6510).
+- The whole test run on d438b57b (`work/r13/vitest-d438.json`): 708 tests, 707 passed, 1 failed with "TestTimeoutError: Test timed out in 5000ms" (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent ..."), the rise's slice was rendering beside it. That file alone (`work/r13/vitest-globe-cap.json`): 24 tests, 24 passed, the same test in 3093 ms. The test is not touched.
+- Slice rise 3240 to 3265 on d438b57b (`work/r13/slices/jupiter-rise-k6480-6530.md`), as printed: "VERDICT: green. No number is over its limit." Largest level step 0.31 at 3264 + 1/2 (limit 1.3). Largest pop 1.04 from 3265 (limit 1.2). Largest pop of one block 12.68 from 3251 + 1/2, block column 3 row 8, shown, not judged (db67666d: 9.93). Largest change of the pattern alone 0.32 from 3258 + 1/2, most at pixel 1878, 681 (limit 0.45); rows 3246, 3246 + 1/2, 3247: 0.10, 0.11, 0.10. Every frame looked at (sheets `work/r14/sa/a0.jpg` to `a4.jpg`): 3240 to 3251 + 1/2 one steady picture; from 3252 to 3265 the footprint of the approved eye's canvas shows from above as a dark polygon with a straight left and a straight bottom border, lined by the fore plate's pale billows that the border cuts.
+- Finals on d438b57b (`out/work/jupiter/final/n6-2895.png`, `n6-3150.png`): 2895 sha256 632b8aff4a7b97884e98d36ea5e37444d3b93a58347e8213084213960ba5876b, the bytes of db67666d's. 3150 sha256 24135aaa376af113e328f4aeb437b0a4a549792a4af59d7450d414c622afc20b; against the approved 7.800 (thirds by columns 9.82, 7.29, 6.29; by rows 7.23, 11.36, 4.81); db67666d's final 8.215 (10.45, 7.86, 6.34). Level by thirds 95.0, 57.1, 28.0 against the approved's 96.5, 58.6, 23.4.
+
+THE WEDGE, THE CAUSE CORRECTED (11:28 to 11:50 UTC). What I wrote at 11:05 (item 4 above, the fill of hidden ground) is WRONG. Measured:
+
+- Top down study (`work/r14/topdown.py`, pictures `work/r14/td-comp.jpg`, `td-plate-vs-chart.jpg`): the straight edges are the left and the bottom border of the fit camera's wide canvas (5632 x 3168) on the ground. The hidden share at the wedge is about 0; my azimuth of -55.7 degrees came from a flat ground and lay 419 to 847 px inside the canvas.
+- The same frame drawn with the image field's weight set to 0 (`work/r13/wd-nochart/`, picture `work/r14/nochart-6509.jpg`): no straight edge is left, the fore plate's own billows stand whole.
+- Inside the borders the deck shows the canvas (`seenAt`, weight `edge`, a feather of 8 to 72 canvas pixels, about 0.02 units of ground at the corner), outside the plates. The plates are another picture of the same ground: the repaint of 23 Nov put a ring of pale billows on a smooth floor round the funnel, the canvas has dark aprons with fine detail there. The tone field darkens the plates beside the canvas, so the floor reads as a smooth dark blue grey field, and the line cuts the billows.
+- On the ground (`work/r14/wide.py`, picture `work/r14/w1-comp-lines.jpg`): the fit camera is turned, so the canvas' left border runs from the corner near (-0.5, -3.6) to the upper left ((-5.1, 0), (-10.1, 4)) and its bottom border from the corner to the right ((4.4, -3.5), (12.75, -2)). The canvas ends softly at 5 to 7 units from the point under the fit camera (`tone.known`), so the straight borders stand only within that reach.
+- It stands in the dive too: 3034 and 3042 (`work/r14/fl-sheet.jpg`) show the bottom border with the billows under it. The flight's first frames (3060, 3075, 3090) show no border: the canvas fills the frame.
+- State mail of 12:00 UTC says so (`work/r14/mail-state-1200.txt`).
+
+The cure being built (`work/r14/beyond/`, to become `assets-src/jupiter/plates/beyond.py`): the ground outside the canvas' borders in the fore and the near plate and in their height maps is made from the canvas' own ground laid back from above. Pieces of that ground (colour and height together, unturned, taken from inside the borders but not from the funnel) are set outward from the border, each chosen by least difference to what stands already and joined to it along a cut of least difference (image quilting; seeded, so a second run gives the same file). The plates are written over tone and calm (stored value = wanted value over tone times calm), so both fields stay as they are. Not touched: canvas, chart, the heights inside the borders, tone, calm, the globe's levels (no `upward.py`), so 3150 and the hold are to keep their bytes.
+
+
+MAIL 1074, word for word (12:08 UTC):
+
+> MAIL 1074 from the Builder (/root), 12:08 UTC. To jupiter_coder. Your state of 12:00 is read, both pictures seen at full size.
+>
+> 1. The corrected cause is accepted: the straight edges are the borders of the approved eye's canvas on the ground, and outside them stands another picture of the same ground. Good that you said the first cause was wrong.
+>
+> 2. The cure is accepted in law (the canvas' own ground laid on past its borders in the fore and near plate and their heights, by code, no image model, the tone field over it), with three conditions.
+> (i) One body. Yes, write it into the globe's levels at the place as well, each coarser level the finer one filtered. The hold may change inside the place's disc only if the match of 2895 with the approved image does not fall: measure it before and after and send both numbers.
+> (ii) The flow. The deck turns about the storm. Pieces laid unturned in the picture's frame keep the grain of where they came from, not of where they lie. Lay them in the flow's own frame (about the storm's centre, or along the streamlines), so the grain follows the bands' flow at the new place. My words of MAIL 1050 item 3 stand: the bands' flow continued.
+> (iii) No copy. No form of the canvas may be found twice in one frame of the film: take the pieces from the deck's plain ground, not from the eye or the towers. Show it: the top view with the pieces' borders drawn, and the frames 3034, 3042 and 3254 + 1/2.
+>
+> 3. THE CUT. 3150 stands at 7.800 against the approved where round 46's pack had 6.578 (the right third 6.29 against 2.43). A take whose judged frame matches the approved image worse than main's does not go onto main. So the relief's own shadows by the place's one Sun do not rank after the wedge: both are owed before Jupiter's take is cut. The NAMED of 13:00 falls away. One NAMED when the wedge is gone and 3150 is at or under 6.578, by 15:30 UTC; if only one of the two is in by then, name what stands and say what is missing. The state at 13:30 stays. Jupiter is not in the cut of 13:15; it goes onto main alone when it is green.
+>
+> 4. The one test that timed out with a render beside it: noted. My machines run the whole set with nothing beside it.
+
+Work on it, from 12:10 UTC:
+
+- Deadlines now: state at 13:30 UTC; one NAMED by 15:30 UTC with the wedge gone and 3150 at or under 6.578. The NAMED of 13:00 is off. The queue keeps the rise slice 3278 to 3300 on d438b57b (the sidestep was accepted pending it); parity and the controls wait for the final tree.
+- Rise 3278 to 3300 on d438b57b (`out/work/smooth/jupiter-rise-k6556-6600.md`): green; level step 0.74 at 3287 (limit 1.3); pop 1.14 from 3284 + 1/2 (limit 1.2); block pop 7.30 from 3291 + 1/2, column 14 row 3 (shown, not judged); pattern 0.19 from 3289. Dive 3019 to 3047 + 1/2: green; level step 0.23 at 3024 + 1/2; pop 1.04; block pop 5.51 from 3034, column 10 row 8; pattern 0.43 from 3039 at pixel 68, 48 (limit 0.45).
+- The first quilt (`work/r14/beyond/synth.py`, pictures `s1-corner.jpg`, `s1-s.jpg`) is not usable: square tiles show, the tone jumps from piece to piece, and forms of the canvas stand twice. Not laid into any plate.
+
+THE ANSWER TO MAIL 1021 ITEM 3 (12:15 to 12:30 UTC), measured on d438b57b's final 3150:
+
+- Cast shadow of the stored relief by the place's Sun (33.14 degrees), marched at the height maps' own grain (`work/r14/shade_fine.py`, picture `work/r14/shade-box.jpg`): the right third of 3150 has 0.00 % of its pixels in cast shadow at every distance; the left third 3.95 % (5.0 % of its pixels at 0 to 5 units, 0.6 % at 5 to 7); the middle 1.19 % (1.8 %, 0.3 %). No relief is stored beyond 10 units. The shader has no cast shadow law; its `shade` is the made detail's slope shading faded by footprint and averages 1. So the fade by footprint takes no cast shadow away in the right third, and shadows cannot bring the number of 3150.
+- By ground distance at 1920 (`work/r14/band.py`, picture `work/r14/rt-3150.jpg`): whole 8.114; left third 78.3 % of its pixels at 0 to 5 units carry 75.4 % of its difference (mean 9.34); middle third at 5 to 7 units ours 124.1 against 159.7; right third at 7 to 10 units ours 83.6 against 45.1, at 10 to 15 units 145.7 against 66.9. With a blur of 1 px on both pictures the whole reads 6.336: most of the number is not level, it is place.
+
+THE TRUE CAUSE OF 3150'S NUMBER (12:30 to 12:50 UTC): the ground of the judged frame stood 1.41 px right and 0.44 px down of the approved image's ground (`work/r14/shift.py`: 1.15 px in the middle columns, 1.8 at the sides; the sky at 0.00), the same in every final since 24 Nov. Two causes, both measured:
+
+- The film's camera drift (`src/director/film.ts`, `pose.quaternion.multiply(drift(time))`; `drift` in `src/director/rig.ts`) turns the camera at 3150 + 1/4 by pitch -8.98e-5, yaw -9.87e-4, roll -2.87e-4 rad: 0.853 px of yaw at the 64 degree lens (`out/work/tmp/drift.ts`).
+- The lay back counts each pixel of the picture at its upper left corner (`geom.rays`; the shader's `spot = at + vec2(0.5, -0.5)` in `seenAt` follows it), so the picture's middle lies half a canvas pixel right and up of the lens's line: 0.34 film px each way.
+- Canvas, core and public core lie on the approved image at 0 px; the storm's turn, the shutter and the eye's place were ruled out one by one.
+
+The cure (`plan.ts`, `terrain()`; `deck.json`, `flight.aimPx` [-0.5, 0.5]): the flight's camera gets one fixed turn, the half pixel times the inverse of the drift at the judged instant (`drift` is read from `src/director/rig`, nothing in `src/director` is touched). The film's camera at 3150 + 1/4 is then the camera of the lay back to the pixel; the flight's motion and the drift's own motion stay what they were; every frame from 2970 to 3314 moves by about 1 px; the hold is not touched.
+
+- Draft at 3150 + 1/8 before and after: ground shift 1.55, 0.62 px to 0.02, 0.29 px (the 0.29 is the flight's own way in 1/8 frame); match 7.806 to 6.437.
+- Finals (`out/work/jupiter/final/n7-3150.png`, `n7-2895.png`): 3150 sha256 8e9cf28079c7636a46d207c20e22aa67ac7c8bdc1cc55f9401e0a23f0b6e2ff1, against the approved 6.113 (thirds by columns 7.45, 5.32, 5.58; by rows 6.34, 8.45, 3.54); before 7.800; round 46's pack 6.578. Ground shift -0.11, 0.06 px, sky 0.00, 0.06. 2895 sha256 632b8aff4a7b97884e98d36ea5e37444d3b93a58347e8213084213960ba5876b, the same bytes as before.
+- `tests/bend.test.ts`, `onemove.test.ts`, `place.test.ts`: 60 of 60. `assets-src/jupiter/sky/window.ts` run again for rise and dive: the rise has no sky in frame from 0.0542 to 0.3246 radii, the turn (0.14 to 0.3) lies inside; the dive has 0 samples with sky that carry a part of the turn.
+- Standing answer of mail 708 holds: the judged pose reads `drift` itself, nothing has to be set again after another stop's take.
