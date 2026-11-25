@@ -718,16 +718,75 @@ export function nameSkyLook(id: string, look: SkyLook, weight = 1): void {
 }
 
 const HOLD = config.raw.travel.sky.bandHold as Record<string, number[]>
+const spans = new Map<string, [number, number]>()
+const GRID = [49, 29]
+
+export function bandClear(shot: { skyQuaternion: THREE.Quaternion; skyTurn: THREE.Quaternion; camera: { vfov: number } }, frame: THREE.Quaternion, aspect = 16 / 9): number {
+  const rot = new THREE.Matrix4().makeRotationFromQuaternion(shot.skyQuaternion)
+  const turn = new THREE.Matrix4().makeRotationFromQuaternion(shot.skyTurn.clone().invert().premultiply(frame))
+  const gal = galactic()
+  const th = Math.tan(THREE.MathUtils.degToRad(shot.camera.vfov) / 2)
+  const v = new THREE.Vector3()
+  let min = 90
+  for (let j = 0; j < GRID[1]!; j++) for (let i = 0; i < GRID[0]!; i++) {
+    v.set((i / (GRID[0]! - 1) * 2 - 1) * th * aspect, (j / (GRID[1]! - 1) * 2 - 1) * th, -1).normalize().applyMatrix4(rot).applyMatrix4(turn).applyMatrix3(gal)
+    min = Math.min(min, Math.abs(THREE.MathUtils.radToDeg(Math.asin(Math.min(Math.max(v.z, -1), 1)))))
+  }
+  return min
+}
+
+export function bandSpan(clear: number[], limit: number, least: number): [number, number] | null {
+  let end = clear.length - 1
+  while (end >= 0) {
+    while (end >= 0 && clear[end]! < limit) end--
+    let start = end
+    while (start > 0 && clear[start - 1]! >= limit) start--
+    if (end >= 0 && start > 0 && end - start + 1 >= least) return [start - 1, end]
+    end = start - 1
+  }
+  return null
+}
+
+export const setBandSpan = (id: string, span: [number, number] | null): void => { if (span) spans.set(id, span); else spans.delete(id) }
 
 export const bandHeld = (id: string, u: number): number => {
-  const span = HOLD[id]
+  const span = spans.get(id)
   if (!span) return 0
-  const t = Math.min(Math.max((u - span[0]!) / (span[1]! - span[0]!), 0), 1)
+  const t = Math.min(Math.max((u - span[0]) / (span[1] - span[0]), 0), 1)
   return 1 - t * t * (3 - 2 * t)
 }
 
 export function holdBand(id: string, u: number): void {
-  nameSkyLook(id + ' hold', { hold: 1, band: HOLD[id]?.[2] ?? 1 }, bandHeld(id, u))
+  nameSkyLook(id + ' hold', { hold: 1, band: HOLD[id]?.[1] ?? 1 }, bandHeld(id, u))
+}
+
+export function readBandSpan(id: string, film: { sky: { frame: THREE.Quaternion }; shotAt(frame: number, time: number): { u: number; skyQuaternion: THREE.Quaternion; skyTurn: THREE.Quaternion; camera: { vfov: number } } }): [number, number] | null {
+  const seg = config.segments.find((x) => x.stop === id && x.kind === 'rise')
+  const rule = HOLD[id]
+  if (!seg || !rule) return null
+  const first = Math.ceil(seg.start * config.fps)
+  const last = Math.ceil(seg.end * config.fps) - 1
+  const clear: number[] = []
+  const us: number[] = []
+  for (let f = first; f <= last; f++) {
+    const shot = film.shotAt(f, f / config.fps)
+    clear.push(bandClear(shot, film.sky.frame))
+    us.push(shot.u)
+  }
+  const run = bandSpan(clear, rule[0]!, config.raw.travel.sky.bandHoldLeast)
+  return run ? [us[run[0]]!, us[run[1]]!] : null
+}
+
+let film: Promise<Parameters<typeof readBandSpan>[1]> | null = null
+
+export async function bandHold(id: string): Promise<(u: number) => void> {
+  film ??= (async () => {
+    const { FilmDirector } = await import('../director/film')
+    const { plans } = await import('../director/plans')
+    return new FilmDirector(plans)
+  })()
+  setBandSpan(id, readBandSpan(id, await film))
+  return (u: number) => holdBand(id, u)
 }
 
 export const flightSwap = (lift: number, power: number): number => 1 - Math.pow(1 - Math.min(Math.max(lift, 0), 1), power)
