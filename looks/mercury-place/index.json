@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T09:42:12.466Z",
+ "pushed": "2026-11-25T10:02:03.912Z",
  "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "way C take s7 (not committed): place bodies in level 1 styled to the hero, broad band capped; 615 cream mark gone, hero ring crater at pit 1 replaced by the smaller pit: still red against main 615",
+ "note": "way C take s9 (not committed yet): 615 with the hero's light on the disc and the hero's own bands on the place; cream mark gone; two pits remain, one is the hero's ring crater painted smaller; rate 2 dive rendering",
  "looks": [
+  {
+   "time": "2026-11-25T10:01:58.319Z",
+   "file": "20261125100158319-note-s9-717.jpg",
+   "source": "../../../../tmp/m/s9-717.png",
+   "kind": "note",
+   "label": "717: the mark, take s7, take s9",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T10:01:57.153Z",
+   "file": "20261125100157153-note-s9-box615.jpg",
+   "source": "../../../../tmp/m/s9-box615.png",
+   "kind": "note",
+   "label": "615 the place's box: main beside take s9",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T10:01:55.883Z",
+   "file": "20261125100155883-note-s9-615-twice.jpg",
+   "source": "../../../../tmp/m/s9-615-twice.png",
+   "kind": "note",
+   "label": "615 twice: the hero (main) beside take s9",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T10:01:54.427Z",
+   "file": "20261125100154427-note-s9-615-native.jpg",
+   "source": "../../../../tmp/m/s9-615-native.png",
+   "kind": "note",
+   "label": "615 native: the hero (main) beside take s9",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T09:42:11.775Z",
    "file": "20261125094211775-note-s7-725-735.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/s7-615-twice.png",
    "kind": "note",
    "label": "615 twice: approved hero, way C take s7",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:42:08.361Z",
-   "file": "20261125094208361-note-s7-615-native.jpg",
-   "source": "../../../../tmp/m/s7-615-native.png",
-   "kind": "note",
-   "label": "615 native: approved hero, main, way C take s7 (not committed)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:25:13.701Z",
-   "file": "20261125092513701-note-s1s5-735.jpg",
-   "source": "../../../../tmp/m/s1s5-735.png",
-   "kind": "note",
-   "label": "735 at 1 to 1, x 160 y 540: the mark, way C take s1 (RED: the hero's rims as blots outside the disc), way C take s5",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:25:13.031Z",
-   "file": "20261125092513031-note-disc3-16.jpg",
-   "source": "../../../../tmp/m/disc3-16.png",
-   "kind": "note",
-   "label": "16 degrees round the spot at the first level: the mark's patch-1, the mark's patch-2, take s1's patch-1, take s5's patch-1 (s5: noise patches and grey ground from the key map, which goes out)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:25:12.223Z",
-   "file": "20261125092512223-note-t4-717x2.jpg",
-   "source": "../../../../tmp/m/rs/t4-717x2.png",
-   "kind": "note",
-   "label": "trial on the texture alone, not a frame: the disc at 20 px a degree twice. Left the mark's first level, right the place's bodies restyled to the hero's light (bands 0.04 to 0.6 degrees matched by rank). Top unlit, bottom a made up terminator",
    "stop": "mercury"
   }
  ]
