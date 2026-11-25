@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T16:26:42.213Z",
+ "pushed": "2026-11-25T16:58:23.243Z",
  "head": "e1c18f468aadbc38e87d273844f31305eccd3bfc",
- "note": "16:26 UTC, NAMED e1c18f46 on main baf5473f. Frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145. 360 final same bytes as f906d2ec, match 11.9804.",
+ "note": "trial sheets a and b of the gas seated in the close view, not committed; stars batch rendering",
  "looks": [
+  {
+   "time": "2026-11-25T16:58:22.607Z",
+   "file": "20261125165822607-note-hb-b.jpg",
+   "source": "../../../../tmp/v/hb-b.jpg",
+   "kind": "note",
+   "label": "trial sheet b: share by the eye's height, 231 to 261",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:58:21.991Z",
+   "file": "20261125165821991-note-hb-a.jpg",
+   "source": "../../../../tmp/v/hb-a.jpg",
+   "kind": "note",
+   "label": "trial sheet b: share by the eye's height, equal steps of light, 60 and 196 to 226. frame 60 (named ground, unchanged by the gas table): dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:58:21.383Z",
+   "file": "20261125165821383-note-ha-b.jpg",
+   "source": "../../../../tmp/v/ha-b.jpg",
+   "kind": "note",
+   "label": "trial sheet a: full share, 231 to 261",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:58:20.718Z",
+   "file": "20261125165820718-note-ha-a.jpg",
+   "source": "../../../../tmp/v/ha-a.jpg",
+   "kind": "note",
+   "label": "trial sheet a: rays and prominences at full share at every height, 60 and 196 to 226. frame 60 (named ground, unchanged by the gas table): dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T16:26:41.617Z",
    "file": "20261125162641617-note-h1-block.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/r4-360-pair.jpg",
    "kind": "note",
    "label": "360 at final before (f906d2ec) and after (e1c18f46): the same bytes, match 11.9804",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:08:32.799Z",
-   "file": "20261125160832799-note-h1-c.jpg",
-   "source": "../../../../tmp/v/h1-c.jpg",
-   "kind": "note",
-   "label": "218 to 221 + 1/2 at every capture: the dense stars and the first rays come in",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:08:31.703Z",
-   "file": "20261125160831703-note-h1-b.jpg",
-   "source": "../../../../tmp/v/h1-b.jpg",
-   "kind": "note",
-   "label": "way up 236, 241, 243 + 1/2, the same frames",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:08:30.651Z",
-   "file": "20261125160830651-note-h1-a.jpg",
-   "source": "../../../../tmp/v/h1-a.jpg",
-   "kind": "note",
-   "label": "way up 196 to 231 every 5th, the harness's own draft frames at film size, eccae657 ground on main baf5473f",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:33:52.396Z",
-   "file": "20261125153352396-note-r3-stills.jpg",
-   "source": "../../../../tmp/v/r3-stills.jpg",
-   "kind": "note",
-   "label": "frames 0, 60, 90, 247 at draft with the lab's eccae657 ground, one sky, sky turn by height",
    "stop": "sun"
   }
  ]
