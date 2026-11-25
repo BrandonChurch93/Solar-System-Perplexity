@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T23:03:22.350Z",
+ "pushed": "2026-11-25T23:36:13.371Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests: three faults of a cut crest's end cured in the browser test (0 open pixels at every eye tried); the map's rim found to be no end (the painting's own eye, 453 px), being mended; no new renders yet",
+ "note": "crests: the finding mended (a steady slope beside a plain was a ramp without end), the crest of Mars L1 is found whole; drafts of 2668, 2477, 2580, 2672 rendering",
  "looks": [
+  {
+   "time": "2026-11-25T23:36:12.624Z",
+   "file": "20261125233612624-note-ov-n2-wide.jpg",
+   "source": "../../../../tmp/crest/ov-n2-wide.png",
+   "kind": "note",
+   "label": "Mars L1 map, the new finding (even ground by its own side): the crest in one piece from 1548,348 to 1815,562"
+  },
+  {
+   "time": "2026-11-25T23:36:11.939Z",
+   "file": "20261125233611939-note-ov-a4-wide.jpg",
+   "source": "../../../../tmp/crest/ov-a4-wide.png",
+   "kind": "note",
+   "label": "Mars L1 map, the old finding (walk 2): the crest is broken at 1643..1671, 470..483, near half green, far half red, cut white"
+  },
+  {
+   "time": "2026-11-25T23:36:11.259Z",
+   "file": "20261125233611259-note-s-2668-b.jpg",
+   "source": "../../../../tmp/crest/s-2668-b.png",
+   "kind": "note",
+   "label": "the same at 8 to 1: the break and a dark notch at 765..775, 726..730 that the old finding made (a false ramp on the near slope)"
+  },
+  {
+   "time": "2026-11-25T23:36:10.580Z",
+   "file": "20261125233610580-note-s-2668-a.jpg",
+   "source": "../../../../tmp/crest/s-2668-a.png",
+   "kind": "note",
+   "label": "crests v7 on the fourth cut, 2668 at 4 to 1: base against the first trial with the old finding; the lower right still toothed (the break)"
+  },
   {
    "time": "2026-11-25T22:01:36.916Z",
    "file": "20261125220136916-note-v4-2668-z3.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/crest/v4-2668-over.png",
    "kind": "note",
    "label": "crests v4 draft, frame 2668, over: base, out 0.35, out 0.5, tinted"
-  },
-  {
-   "time": "2026-11-25T21:48:42.853Z",
-   "file": "20261125214842853-note-f02325.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-vs/f02325.png",
-   "kind": "note",
-   "label": "Mars final tier f02325, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
-  },
-  {
-   "time": "2026-11-25T21:48:41.959Z",
-   "file": "20261125214841959-note-f02668.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-vs/f02668.png",
-   "kind": "note",
-   "label": "Mars final tier f02668, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
-  },
-  {
-   "time": "2026-11-25T21:48:40.969Z",
-   "file": "20261125214840969-note-f02580.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-vs/f02580.png",
-   "kind": "note",
-   "label": "Mars final tier f02580, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
-  },
-  {
-   "time": "2026-11-25T21:48:39.985Z",
-   "file": "20261125214839985-note-f02477.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-vs/f02477.png",
-   "kind": "note",
-   "label": "Mars final tier f02477, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
   }
  ]
 }
