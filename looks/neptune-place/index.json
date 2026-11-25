@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T07:59:19.432Z",
- "head": "c2edd61bacab922cd9de7297bb397b7be94a1d4d",
- "note": "08:00 far streak rebuilt as the body filtered (soft, falls with width, breaks by the heaps); rise 4987 to 5003 named: the grade of the fall, not cured",
+ "pushed": "2026-11-25T08:24:38.639Z",
+ "head": "f33f2d72e08ea57a9352f2aca7e3907db8ded233",
+ "note": "two of my own statements corrected: half frames were whole frames (tool mended, rate 2: rise 4992 to 5000 0.79, grade whole 0.33); light ratio of the far level void. 5 to 10 s the preview draft frame, 4860 23 s",
  "looks": [
+  {
+   "time": "2026-11-25T08:24:38.092Z",
+   "file": "20261125082438092-note-4860-S6p.jpg",
+   "source": "out/work/nep/weave/ev/4860-S6p.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image, tree c2edd61ba unchanged since 07:59: G17 proxy at the preview median 0.508, p25 0.128; 23.0 s the draft frame at the preview",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T08:24:37.565Z",
+   "file": "20261125082437565-note-far31-box.jpg",
+   "source": "out/work/nep/weave/ev/far31-box.jpg",
+   "kind": "note",
+   "label": "control that voids my light ratio: 4729 far level cover 0.26, 0.31, what changed, 4737; the boxes lay beside the far level",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T08:24:36.994Z",
+   "file": "20261125082436994-note-chain-4992-rate2.jpg",
+   "source": "out/work/nep/weave/ev/chain-4992-rate2.jpg",
+   "kind": "note",
+   "label": "rise 4992 to 5000 at rate 2 (true half frames), my copy of the reader: 4992, 5000 carried back, pattern 0.79; with the grade whole 0.33",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T07:59:18.491Z",
    "file": "20261125075918491-note-crops-964.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/weave/ev/4860-S6p.jpg",
    "kind": "note",
    "label": "4860 beside the approved, the tree as it stands at the preview (draft, 23 s the frame). G17 proxy median 0.508, p25 0.128. The deck is still not the approved one: plain too dark, no fine curl, no dark oval",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T07:27:29.983Z",
-   "file": "20261125072729983-note-4860-S5.jpg",
-   "source": "out/work/nep/weave/ev/4860-S5.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, ac408e47 at the preview (draft, 39 s the frame at worst). G17 proxy median 0.508, p25 0.128. The deck is not yet the approved one: plain too dark, no fine curl",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T07:27:29.368Z",
-   "file": "20261125072729368-note-rise-4992-grade.jpg",
-   "source": "out/work/nep/weave/ev/rise-4992-grade.jpg",
-   "kind": "note",
-   "label": "rise 4992 to 5000: as named above, the fall grade held constant below (control). Pattern 0.66 against 0.26 by my copy of the reader at the preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T07:00:38.056Z",
-   "file": "20261125070038056-note-s4-dive.jpg",
-   "source": "out/work/nep/weave/ev/s4-dive.jpg",
-   "kind": "note",
-   "label": "ac408e47 at 1920, draft: 4692, 4704, 4714, 4722: hairlines low left of the storm, heaps on the upper third of the line at 4722",
    "stop": "neptune"
   }
  ]
