@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T04:36:14.263Z",
+ "pushed": "2026-11-25T05:00:12.317Z",
  "head": "9fc760b3bdbce8f547340e88ba97f39f45fa719f",
- "note": "relief 9fc760b3 first picture: 700 to 760 and 985 to 1005 every 4th frame beside cdc5d515; frames between follow",
+ "note": "relief 9fc760b3 against cdc5d515, dive every 2nd frame 700 to 746 (draft). Red, own estimate: pattern 1.03 at 716 on BOTH sides; the relief alone does not move the dive's red. Way C draft is next",
  "looks": [
+  {
+   "time": "2026-11-25T05:00:10.952Z",
+   "file": "20261125050010952-note-lev12x2.jpg",
+   "source": "../../../../tmp/m/lev12x2.png",
+   "kind": "note",
+   "label": "levels panel: patch 1 (the map's ground) against plate 2 (the place's lit picture as a disc to 10 to 15 degrees, with its night half), same ground, twice size",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:00:09.807Z",
+   "file": "20261125050009807-note-fp2-c.jpg",
+   "source": "../../../../tmp/m/fp2-c.jpg",
+   "kind": "note",
+   "label": "dive 732 to 746 in pairs: left cdc5d515 (the commit batch 9 brings to main), right relief 9fc760b3; draft, master, full set, every 2nd frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:00:08.714Z",
+   "file": "20261125050008714-note-fp2-b.jpg",
+   "source": "../../../../tmp/m/fp2-b.jpg",
+   "kind": "note",
+   "label": "dive 716 to 730 in pairs: left cdc5d515 (the commit batch 9 brings to main), right relief 9fc760b3; draft, master, full set, every 2nd frame. Both sides: the place's grey pitted plain comes up as a disc inside the hero's ground from 716 to 728; the relief does not cure it",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:00:07.585Z",
+   "file": "20261125050007585-note-fp2-a.jpg",
+   "source": "../../../../tmp/m/fp2-a.jpg",
+   "kind": "note",
+   "label": "dive 700 to 714 in pairs: left cdc5d515 (the commit batch 9 brings to main), right relief 9fc760b3; draft, master, full set, every 2nd frame",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T04:36:13.682Z",
    "file": "20261125043613682-note-t717b.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/fp-720-724.jpg",
    "kind": "note",
    "label": "720 and 724 larger: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:36:11.244Z",
-   "file": "20261125043611244-note-fp-rise-p1.jpg",
-   "source": "../../../../tmp/m/fp-rise-p1.jpg",
-   "kind": "note",
-   "label": "rise 985 to 1005: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:36:10.657Z",
-   "file": "20261125043610657-note-fp-dive-p1b.jpg",
-   "source": "../../../../tmp/m/fp-dive-p1b.jpg",
-   "kind": "note",
-   "label": "dive 732 to 760: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:36:10.037Z",
-   "file": "20261125043610037-note-fp-dive-p1a.jpg",
-   "source": "../../../../tmp/m/fp-dive-p1a.jpg",
-   "kind": "note",
-   "label": "dive 700 to 728: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:22:26.484Z",
-   "file": "20261125042226484-note-t1016.jpg",
-   "source": "../../../../tmp/m/t1016.png",
-   "kind": "note",
-   "label": "relief way, 1016 crop 560,200 640x640: set law tree, state A (dropped), state B",
    "stop": "mercury"
   }
  ]
