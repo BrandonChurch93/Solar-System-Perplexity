@@ -1,9 +1,39 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T16:27:06.600Z",
- "head": "74aac3d2ed9a0c0580cf0564a739b58cf9002315",
- "note": "16:28 UTC: the wedge is named (001113e7); rise slice a runs; next the far band's left third (air's share), the wedge's ground, the mid plate, the cast shadows",
+ "pushed": "2026-11-25T16:52:20.837Z",
+ "head": "91aa7c4ba61446238f86bbce9da83b3217f7c351",
+ "note": "16:58 UTC: trials of the air's share for the far band's left third; the path line of MAIL 1208 under work",
  "looks": [
+  {
+   "time": "2026-11-25T16:52:20.132Z",
+   "file": "20261125165220132-note-k006300-r2-draft.jpg",
+   "source": "../work/r15/air/s015/k006300-r2-draft.png",
+   "kind": "note",
+   "label": "3150 draft, trial: air share 0.15 (left third relief 12.43 against 13.86 approved; match 7.096 draft against 6.437 draft at share 1)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:52:19.217Z",
+   "file": "20261125165219217-note-thirds.jpg",
+   "source": "../work/r15/air/thirds.jpg",
+   "kind": "note",
+   "label": "far band thirds at 3150, drafts: approved, kept still, air share 1, 0.3, 0.15 (trial, not committed)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:42:54.577Z",
+   "file": "20261125164254577-frame-x8-2895.jpg",
+   "source": "out/work/jupiter/final/x8-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "85549898b0c9b369"
+  },
   {
    "time": "2026-11-25T16:27:05.363Z",
    "file": "20261125162705363-note-look-3150.jpg",
@@ -51,20 +81,6 @@
    "kind": "note",
    "label": "3042 on the named tree 001113e7 beside the tree before: the canvas' ground laid on past its borders",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T16:18:06.405Z",
-   "file": "20261125161806405-frame-n9b-2895.jpg",
-   "source": "out/work/jupiter/final/n9b-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
   },
   {
    "time": "2026-11-25T16:02:13.265Z",
@@ -190,22 +206,6 @@
    "source": "../work/r14/n7-3150-trio.jpg",
    "kind": "note",
    "label": "3150 on 7c0b8675 beside the approved image",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:28:02.720Z",
-   "file": "20261125142802720-note-p2-wide.jpg",
-   "source": "../work/r14/beyond/p2-wide.jpg",
-   "kind": "note",
-   "label": "wedge take p2 from above",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:28:01.632Z",
-   "file": "20261125142801632-note-p2-pieces.jpg",
-   "source": "../work/r14/beyond/p2-pieces.jpg",
-   "kind": "note",
-   "label": "wedge take p2 from above, the pieces' borders yellow, the source's border green",
    "stop": "jupiter"
   }
  ]
