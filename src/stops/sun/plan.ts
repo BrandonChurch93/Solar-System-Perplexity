@@ -12,7 +12,7 @@ import { stage } from './stage'
 
 export const params: MoveParams = {
   hold: { orbitDeg: 6, axis: [0, 1, 0], push: 0 },
-  spot: { x: 0.57, y: 0.39 },
+  spot: { x: 0.569554, y: 0.396149 },
   dive: { headingDeg: 0, altitude: 0.7, back: 0.05, ahead: 0.12, bow: 0.15, rollDeg: 0 },
   terrain: { vfov: 55, gather: -0.5, forward: 2.0, rise: -0.1, side: 0.7, yawDeg: 8, pitchDeg: 8, horizonDeg: 3.2, dipDeg: 17.5, entryHeight: 0.9, entryBack: 1.1, entryPitchDeg: 4.8, exitHeight: 1.6, exitForward: -0.6, exitPitchDeg: -12, ground: 0.6 },
   rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.6, offset: [0, 0], driftSpeed: 0.05, rollDeg: 0, settle: 2 },
@@ -206,6 +206,15 @@ export class SunPlan extends StopPlan {
     if (seg.kind !== 'rise') return null
     const [from, to] = place.onGlobe.heights.sky as [number, number]
     return { low: 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to)) }
+  }
+
+  // The sky's turn from the close view's frame to the hold's is read from the height of the lens as well (place.json
+  // onGlobe.heights.carry, a smooth step in the logarithm of the height), not from the clock (MAIL 1146 point 3):
+  // 1 is the close view's sky, 0 the hold's
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    if (seg.kind !== 'rise') return null
+    const [from, to] = place.onGlobe.heights.carry as [number, number]
+    return 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to))
   }
 }
 

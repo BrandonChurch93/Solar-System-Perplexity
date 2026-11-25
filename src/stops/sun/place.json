@@ -32,35 +32,35 @@
       -2.447574
     ],
     "toBody": [
-      0.52156164,
-      0.09735748,
-      -0.05269083,
-      0.84600157
+      0.52684854,
+      0.09583326,
+      -0.05272437,
+      0.84289189
     ],
     "note": "a stage point p is the body point toBody * (p - centre) / radius; body axes are the world axes of the orbit view at the middle of the hold, the globe turns about its axis from there"
   },
   "globe": {
     "spot": [
-      0.23800208,
-      0.21349373,
-      0.94751013
+      0.23625665,
+      0.2013716,
+      0.95059575
     ],
     "north": [
-      -0.0520111,
-      0.97694443,
-      -0.20706139
+      -0.04857035,
+      0.97951492,
+      -0.19542631
     ],
     "mapSpot": [
-      0.23879979,
-      0.21355341,
-      0.94729594
+      0.23705697,
+      0.20143148,
+      0.95038379
     ],
     "mapNorth": [
-      -0.05218545,
-      0.97693139,
-      -0.20707907
+      -0.04873491,
+      0.97950261,
+      -0.19544706
     ],
-    "patchNorthOffDeg": 0.0009,
+    "patchNorthOffDeg": 0.00089,
     "note": "spot and north in body axes; mapSpot and mapNorth in the axes of the globe map (the mesh turned back by its fit), where the patch levels are laid: east = Y x mapSpot, north = mapSpot x east"
   },
   "plates": {
@@ -71,6 +71,7 @@
     "featherDeg": 0.25,
     "matchDeg": 1.5,
     "feather": 0.12,
+    "fineDeg": 0.55,
     "fade": [
       1.1,
       1.7
@@ -79,15 +80,15 @@
   },
   "twin": {
     "position": [
-      0.24851743,
-      0.11356079,
-      1.0122525
+      0.24631051,
+      0.10063652,
+      1.01415754
     ],
     "quaternion": [
-      0.52156164,
-      0.09735748,
-      -0.05269083,
-      0.84600157
+      0.52684854,
+      0.09583326,
+      -0.05272437,
+      0.84289189
     ],
     "vfovDeg": 55,
     "note": "the camera of the approved image on the unit sphere, body axes; the terrain view passes through it at frame 90"
@@ -102,7 +103,7 @@
       1.7
     ],
     "lowLod": 3,
-    "note": "on the globe's side of the rise the ground of the close view lies on the globe's own ball and the ball is drawn under it. away: the ground gives way to the globe's own face by the distance from the eye (radii of the ball, even steps in the logarithm), the far side of the ball first and the place under the eye last; it begins where the map is about 1.4 times enlarged in the picture. red: before it leaves, the light of the far ground is reddened by the way to the eye toward the colour of the globe's face (tint at the most, over these distances in radii). heights are heights of the eye in radii, each a smooth step in the logarithm of the height during the rise: surface only takes the ground's pass away once away has let all but a hundredth of it go under the eye; (the arcade, the jets and the glow at the limb leave by distances, see far); corona and sky are where the corona, the prominences and the far sky come in: the corona is a law of the sky's plane (corona.ts reads its picture by the distance at which a look passes the ball's centre), under a height of about 0.3 it shows a band and arcs, so it begins there and takes the rest of the rise; tidy, spot, field and haze (and capDeg, fade, lowLod, spotKeep) belong to the globe's own drawing of the place, which is switched off (globe.place is called with 0): they drive nothing in the picture",
+    "note": "on the globe's side of the rise the ground of the close view lies on the globe's own ball and the ball is drawn under it. away: the ground gives way to the globe's own face by the distance from the eye (radii of the ball, even steps in the logarithm), the far side of the ball first and the place under the eye last; it begins where the map is about 1.4 times enlarged in the picture. red: before it leaves, the light of the far ground is reddened by the way to the eye toward the colour of the globe's face (tint at the most, over these distances in radii). heights are heights of the eye in radii, each a smooth step in the logarithm of the height during the rise: surface only takes the ground's pass away once away has let all but a hundredth of it go under the eye; (the arcade, the jets and the glow at the limb leave by distances, see far); corona and sky are where the corona, the prominences and the far sky come in: the corona is a law of the sky's plane (corona.ts reads its picture by the distance at which a look passes the ball's centre), under a height of about 0.3 it shows a band and arcs, so it begins there and takes the rest of the rise; tidy, spot, field and haze (and capDeg, fade, lowLod, spotKeep) belong to the globe's own drawing of the place, which is switched off (globe.place is called with 0): they drive nothing in the picture; carry is the turn of the film's sky from the close view's frame to the hold's (plan.ts skyCarryShare hands it to the engine): whole close view's below the first height, whole hold's above the second, which is the height the rise ends at; the first lies above the height of the change of view (0.118 at frame 205), so both sides of it show the same sky",
     "heights": {
       "tidy": [
         0.3,
@@ -115,6 +116,10 @@
       "sky": [
         0.3,
         3.2
+      ],
+      "carry": [
+        0.12,
+        3.57
       ],
       "spot": [
         2.2,
@@ -129,7 +134,7 @@
         0.17
       ],
       "surface": [
-        3.0,
+        3,
         3.2
       ]
     },
@@ -148,7 +153,7 @@
         1.4
       ],
       "tint": [
-        1.0,
+        1,
         0.72,
         0.5
       ]
@@ -218,8 +223,8 @@
   "bend": {
     "from": 3.2,
     "acrossDeg": [
-      90.0,
-      10.0
+      90,
+      10
     ],
     "turnDeg": 156.5,
     "hold": 1,
