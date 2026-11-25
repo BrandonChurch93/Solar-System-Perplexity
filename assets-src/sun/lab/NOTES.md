@@ -82,3 +82,44 @@ floor with fine dark threads over its edge. 6 far domes foreshorten into fine gr
   dark rim, threads strong only in the shell and in the penumbra.
 - 07:05 still o: near ground max channel percentiles 5 25 50 75 95 = 0.27 0.44 0.63 0.79 0.94 against the approved
   0.23 0.40 0.58 0.76 0.91. Frames 0 and 179 hold (stills n).
+- 07:13 MAIL 956: direction right (heat alone, sunk spot). Asked: (1) one sheet, not pebbles: crease depth varies along
+  a border down to nothing by a field of the place, bright patches cross borders, veins as thin dark threads that leave
+  a lane and die inside a cell; (2) not polished: the top streaked by the fibre field at full strength, many small
+  bright points; (3) spot: torn umbra edge with bright tongues, penumbra threads 2 to 3 times as long, dark and bright
+  in turn, each of its own length and bend, ending among the cells with no ring, no row of bulges. Lanes darker and
+  browner locally without moving the median. Order: fibres, veins, merging; then the life clip 120 to 179 at 60 a
+  second with my own proxy number (the reader knows only dive and rise); then the far end and handover plan. Next mail
+  by 08:30.
+- 07:15 to 07:28 stills s to y. Failed: fibres as a fan from inside the dome with few fibres a turn (monstera leaves,
+  scallops); cells with footprint 1.0 (holes). Held (commit 9119c72, still y): labJoin(place) lifts both sides of a
+  border to one level (uLabMore.w, 0.007 units) so the crease is gone there and the dark rim and flank cooling go with
+  it; the heat of the place (vn of the chart place, scale 8 a unit) crosses borders; fibres from the root at the foot
+  with counts 14, 34, 80 a radian and the pattern cut along the fibre (4, 8, 14 a dome length) so they are streaks;
+  veins: 4.5 a radian from the root, 45 percent drawn, each with its own reach; penumbra as threads in the polar
+  chart about the spot (55, 120, 260 a radian), the same for all cells they cross, reach 2.9 umbra radii give or take
+  by the thread; umbra edge by discard with tongues.
+- One page renders a second frame in 9 s (the first 23 s holds the load and life()). assets-src/sun/lab/clip.ts renders
+  capture frames on one page (query rate=2). clipstat.py and est.py: my proxy of the pattern reading. Calibration:
+  standing ground 170 to 178 reads 0.38 by est.py where the judged reader says 0.47 to 0.52, so the proxy reads about
+  a quarter low. Lab still o (no flow in the shader) 0.02, still p 0.10: far under the limit, there is room for more
+  life.
+
+## Far end and rise: the plan (07:35, not built)
+
+Everything by place, eye distance, angle and pixel size. Nothing by the clock.
+1. A dome is drawn as geometry while its width in the picture is over about 5 px of a 1080 frame (three densities by
+   size, as now). Between 12 and 5 px its height sinks to the level of the floor and its heat goes to the mean heat
+   of the ground at its place, so at 5 px it is the floor and can be left out without a step.
+2. The floor under the domes carries the same ground as grain: a cell field of the chart place in its shader (cheap,
+   two octaves), with the same heat law and haze, weighted by pixel size: full where a cell is 5 px, the mean heat
+   alone under about 1.5 px. So the horizon of the surface view and the first part of the rise are domes near, grain
+   behind them, a glowing limb last.
+3. On the rise the group lies on the globe's ball as the standing ground does. As the eye climbs every cell shrinks in
+   the picture, so the domes hand to the grain and the grain to its mean by pixel size alone, the far side first and
+   the place under the eye last. Where a cell is under about 1.2 px the floor lets the globe's own face through
+   (its alpha by pixel size), which is the standing law "away" expressed in pixels.
+4. Count: at an eye height h (stage units) the frame holds about 1.9 h^2 / 0.008 cells at 0.1 / h * 1037 px. With the
+   dome limit at 5 px (h about 20 units, 1 radius) that would be far too many, so the limit rises with the count:
+   domes above 12 px only once more than 16000 are in the frame (h about 8 units), all of it by pixel size.
+5. The chart about the place stretches sideways by sin(a)/a at the angle a from the place (0.64 at 90 degrees): grain
+   only there, accepted.
