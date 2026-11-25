@@ -232,6 +232,9 @@ vec3 dome(vec3 s) {
   float groove = labLobes(u * (a / uLabDome.x), seed, 0.3) * (1.0 - smoothstep(0.6, 1.0, a / uLabDome.x));
   float top = 1.0 - pow(max(1.0 - f, 0.0), uLabDome.w);
   vec2 place = mid + u * (r * wide * uLabMore.x);
+  // the borders are no straight lines: the ground itself is pushed about a little by a field of the place, the
+  // same for both sides of a border
+  place += ${lab.join.wobble.toFixed(4)} * (vec2(vn(place * 13.0 + 3.1) + 0.5 * vn(place * 29.0 - 7.0), vn(place * 13.0 - 21.7) + 0.5 * vn(place * 29.0 + 15.3)) - 0.75);
   vG = place;
 #ifdef LAB_MAP
   vec2 g = place;
@@ -423,7 +426,7 @@ void main() {
   float kb = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.y);
   float kc = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.z);
   // the fibres are rays of the fan: hot threads with cooler matter between them, three sizes
-  float thread = smoothstep(0.42, 0.68, 0.15 * mix(0.5, fa, ka) + 0.45 * mix(0.5, fb, kb) + 0.4 * mix(0.5, fc, kc));
+  float thread = smoothstep(0.46, 0.62, 0.15 * mix(0.5, fa, ka) + 0.45 * mix(0.5, fb, kb) + 0.4 * mix(0.5, fc, kc));
 #ifdef LAB_MAP
   vec4 pn = vec4(0.0, 0.0, 1.0, 1.0);
 #else
@@ -439,7 +442,7 @@ void main() {
   float wide = 0.6 * vn(vG * uLabJoin.w + 5.3) + 0.4 * vn(vG * uLabJoin.w * 2.3 - 17.1);
   float mott = 0.45 * vn(vG * uLabJoin.w * 3.7 + 9.1) + 0.35 * vn(vG * uLabJoin.w * 8.3 - 4.7) + 0.2 * vn(vG * uLabJoin.w * 19.0 + 2.9);
   float comb = vnp(vec2(turn * floor(per.x * 0.5) + floor(seed * 53.0), (along - flow) * 2.5 + seed * 3.0), floor(per.x * 0.5));
-  float blot = smoothstep(0.4, 0.7, 0.6 * mott + 0.4 * comb);
+  float blot = smoothstep(0.3, 0.74, 0.6 * mott + 0.4 * comb);
   float plan = sin(a) / sin(uLabDome.x);
   float bulge = mix(1.0 - plan * plan, 1.0, 0.7 * join);
   float top = mix(uLabHeatB.w, 1.0, pow(bulge, uLabHeatB.x)) * (0.7 + 0.6 * wide) * (uLabHeat.z + (1.0 - uLabHeat.z) * blot);
@@ -451,7 +454,7 @@ void main() {
   // the dark between the cells is a wide soft band of its own width from place to place, gone where two cells
   // are of one piece; the hot fibres of the top reach into it and end there, each at its own place
   float meet = smoothstep(0.7, 1.0, vCorner);
-  float band = smoothstep(mix(0.72, 0.36, meet) - 0.14 * vn(vG * uLabJoin.w * 2.9 + 41.0), 1.0, plan) * (1.0 - 0.8 * join * (1.0 - meet));
+  float band = smoothstep(mix(0.8, 0.45, meet) - 0.14 * vn(vG * uLabJoin.w * 2.9 + 41.0), 0.94, plan) * (1.0 - 0.8 * join * (1.0 - meet));
   float rim = band;
   float shade = mix(0.02, 1.0, smoothstep(0.03, 0.4, vDeep)) * mix(1.0, mix(0.012, 0.28, thread * thread), band);
   cell *= mix(1.0 - uLabTime.w, 1.0, root) * (1.0 - 0.2 * groove * (1.0 - join)) * shade;
@@ -460,7 +463,7 @@ void main() {
   // small hard points of light on the rim of a dome, against the dark of the crease
   vec2 gq = vG * 230.0;
   vec2 gi = floor(gq);
-  float lit = step(0.84, h1(gi + 17.0)) * (1.0 - smoothstep(0.08, 0.3, length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
+  float lit = step(0.76, h1(gi + 17.0)) * (1.0 - smoothstep(0.08, 0.3, length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
   heat += uLabHeatMore.w * lit * smoothstep(0.03, 0.14, vDeep) * (1.0 - smoothstep(0.3, 0.55, vDeep)) * (1.0 - pen);
   heat *= pn.z;
   // matter that wells up is hot where it comes up and cools as it turns over: the flanks of a dome and of its
