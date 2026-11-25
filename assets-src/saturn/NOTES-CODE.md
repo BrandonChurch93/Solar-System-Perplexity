@@ -6068,3 +6068,83 @@ After a break in the session (00:53 to 00:57) the job was found running as left;
     the run that read 0.98 at 3830. Answered 10:52: ab362641b9d9a924f577d3ad73df9d28231e3ebd on
     agent/saturn-code, the rise at rate 2 at draft, slice frames 7596 to 7680.
   - Branch pushed at 10:52 (7755294..5df42e1).
+
+### 10:57 UTC: MAIL 1045 from the Builder, verbatim
+
+"MAIL 1045 from the Builder (/root), 10:57 UTC. To saturn_coder. Your state of 10:11 is read. Your answer to
+MAIL 1023 went to handover_engineer; Saturn stays out of its list until a measure is taken on what is drawn
+over both bodies.
+On ab36264: the two severe faults cured in your pictures is accepted as stated, to be seen by me in the
+NAMED's pairs. The rise is red by your own lines. (1) The pop of 1.21 at 3872 + 1/2 sits in the stars: by
+sky_builder's control the reader itself swings between 0.16 and 1.31 on one picture slid against itself, so
+no star and no ring is to be changed for it. Do not chase it. (2) The pattern of 0.98 at 3830, from the
+foot's cover going out at 3812 to 3822, is yours: by d253 the cover goes by the eye's height, never by the
+clock, and what it uncovers is there under it before it goes. Cure it by that law before 12:00 if it can be
+done by cause; if not, name the best committed tree and list it.
+NAMED at 12:00 UTC stands; it goes into Saturn's round 3 of 3, your last."
+
+  - Where this stands at 10:58: the cover of v3 (d567cfd) goes by the lens's height alone; the true globe,
+    the true sky and the true ice are drawn under it at every height, the cover only weighs how much of
+    them shows. Main f0b54bd merged as 74dfa6b (tree: main's outside the three folders, the branch's
+    inside; tsc clean), pushed. Proof r68: final 3465 sha256
+    4077873a1a2005c40bed0e9f225e2ebbe3cf153ee06f75b93a2c3a4735002f0f, byte identical to the named
+    88ba2385. The proof's engine is main at 64c4ccb; main f0b54bd differs from it outside the stops in the
+    far sun (farsun.ts, look.json, shader.ts, share.ts), src/core/warm.json, three tests, kit and
+    scorecards. State mail to the Builder at 10:58.
+
+### 11:00 to 11:18 UTC: v3 reads red too by the early reading; the pace is not the cause
+
+  - Early reading of r68's rise (v3, the tool's python on the draft frames, whole frame, no body mask, pairs
+    8 frames apart carried along the flow of every half frame between; not the tool's line): 0.09 to 0.13 at
+    3790 to 3798, then 0.20 at 3799 + 1/2, 0.41 at 3803, 0.48 at 3804, 0.61 at 3806 + 1/2 (pixel 916, 740),
+    0.66 at 3808 to 3809, 0.80 at 3812, 0.86 at 3813 and at 3817 (pixel 1056, 808), 0.70 at 3818, 0.46 at
+    3819, 0.29 at 3820, 0.16 to 0.28 from 3820 + 1/2 to 3825. Red from 3804 to 3819: worse than v2 as far
+    as v2 was read (0.54 at 3811; v2 was stopped at about 3820, so its frames after 3812 were never read).
+  - So the model of 10:50 (an even pace of the odds keeps a pure crossing under about 0.23) does not hold
+    here. What the frames show (strip3 crops of 3802, 3806 + 1/2, 3810, 3814 + 1/2 at twice size, x 780 to
+    1100, y 660 to 800): in the band in front of the lit globe two fine patterns lie over each other, the
+    faint streaks of the dust and of the thin inner ring, which move with the ring plane, and the mottled
+    fine texture of the globe behind, which moves with the globe. Between two frames 8 apart they slide
+    against each other by more than their own size. The tool carries the picture along one flow, so the
+    other pattern is unrelated after the carry. With D the share of the detail's energy that is carried
+    and G the share that slid, the number is about G / (D + G): about 0.1 while the sheet's streaks rule
+    (to 3798), about 0.2 once the globe rules (from 3820), and up to 0.86 while the two change places
+    within the 8 frames. A slower pace only stretches the red span: two sliding patterns of the same
+    strength read about 0.5 standing still.
+  - A direct reading of two stills 8 frames apart (pairread.py, no chain of flows) gives 0.04 to 0.08 for
+    v2 and v3 alike: it does not see this, so it is no measure of it. Only consecutive frames do.
+  - Why round 51's tree was green here, by my reading of its code, not measured: the globe's foot was
+    painted on the globe itself as a smooth band (the fault of severe 2), so the sheet's dust thinned over
+    a strip of the globe without detail. Every tree that
+    hides a lit, detailed globe behind a detailed sheet at 3720 and shows it through that sheet in the hold
+    has this crossing somewhere on the way; by cause it is cured only if one of the two carries no detail
+    while the sheet lets the globe through, or if the change happens where they do not slide (far from the
+    plane). Neither is built: it is not a change of numbers, and what is left of the time (40 minutes) does
+    not hold a proof of it.
+  - To the eye (strips of 3792 to 3806 and 3808 to 3836, crop x 560 to 1180, y 470 to 830): the band over
+    the globe opens from dark brown to clear with no step; the gap goes from dust to stars through a veil;
+    the globe's outline shows through the sheet as a soft upright edge at x about 800 from 3796 on.
+  - Decision: v3 is named as the best committed tree (the cover goes by the lens's height alone and what
+    it uncovers is drawn under it at every height; MAIL 1045), with the rise's pattern line named red and
+    its cause said. The proof r68 runs on for the tool's own lines.
+
+### 11:27 UTC: the tool's own lines of the rise on v3 (r68): RED on the pattern and on the pop
+
+  - /tmp/v/r68/saturn-rise.md (draft, rate 2, window 3798 to 3896, 198 frames; engine main 64c4ccb with the
+    stop folder of d567cfd, which is the stop folder of the head): VERDICT red, 2 numbers.
+  - Largest level step 0.05 at 3875 + 1/2, limit 1.3: green.
+  - RED pop score 1.21 from 3872 + 1/2 to the next, limit 1.2. The same line as on ab36264: the frames over
+    0.93 radii are the same pictures. In the stars by MAIL 1045 item 1; not chased.
+  - RED the pattern changes in place by 1.03 from 3812 + 1/2 to 8 film frames later, most at pixel 1024,
+    732, band 8 px, limit 0.45, 35 half frames over it, first 3802. By whole frames: 0.17 at 3798, 0.31 at
+    3800, 0.49 at 3802, 0.67 at 3804, 0.82 at 3806, 0.89 at 3808, 0.99 at 3811, 1.03 at 3813, 0.96 at 3814
+    to 3817, 0.80 at 3818, 0.51 at 3819, 0.35 at 3820, 0.17 to 0.36 from 3821 to 3843, 0.23 at most from
+    3850 on. Largest change in place 52.8 from 3805 (shown, not judged), at pixel 1176, 752.
+  - Beside ab36264 (r66): there 0.98 at 3830, 35 half frames over the limit in two spans (3809 + 1/2 to
+    3821, peak 0.95 at 3814; 3830 to 3835). v3 has one span, 3802 to 3819: the second span, the dust in
+    the gap going over to stars, is green on v3 (0.36 at most); the first, the band in front of the lit
+    globe, is as red as before and starts 7 frames earlier.
+  - The tool's sheet (saturn-rise-changes.png) puts both the change in place and the change of the pattern
+    on the band in front of the lit globe right of the globe's outline: the band goes from brown with
+    streaks to the pale globe within the 8 frames.
+  - The rise's pattern line is not cured. Named red, with its cause as found at 11:18.
