@@ -5015,3 +5015,127 @@ What follows from it: the picture maps stay as they are (nothing to do); the blo
 ruling on the dust comes with the proof, so the NAMED mail must give the rise's rows plainly and say again
 that the dust and the tone by radius are laws by height. If the rise is not green at 00:40: one line to
 the Builder at once.
+
+## 2026-11-25, 00:15 to 00:40 UTC: local commit 5e094e5, the rise of r57 is green
+
+- 00:17: the tree under proof committed locally as 5e094e5 (not pushed). Checked before: the stop folder in
+  mainref and in the repo are equal file by file (diff -rq), tsc passes, no forbidden character.
+- r57 rise (report of the tool, engine 7026711, 198 draft frames at rate 2, 5.5 s a frame):
+  "VERDICT: green. No number is over its limit."
+  Pattern 0.40 from 3813 + 1/2 at pixel 1136, 792 (limit 0.45). Level step 0.05 at 3875 + 1/2 (limit 1.3).
+  Pop 1.196 from 3872 + 1/2 (limit 1.2). Change in place 24.1 from 3831 at 1108, 896. The ground beside it
+  (3798 to 3809 + 1/2): change 17.0, pattern 0.35.
+  Rows of the pattern: 3798 0.35, 3800 0.32, 3802 0.29, 3804 0.29, 3806 0.31, 3808 0.33, 3810 0.37, 3812
+  0.39, 3813 + 1/2 0.40, 3814 0.40, 3816 0.38, 3817 0.21, 3820 0.20, 3824 0.17, 3828 0.26, 3832 0.31, 3836
+  0.28, 3840 0.20, 3842 0.33, 3846 0.24, 3850 0.17, 3856 0.23, 3862 0.13, 3868 0.27, 3874 0.14, 3880 0.13.
+  One row over 0.40, nine over 0.38. The six largest pops: 1.145, 1.161, 1.175, 1.194, 1.194, 1.196, all
+  at 3872 to 3874, on the stars of the sky (the sheet of the pops: what is left without the motion is the
+  star field and thin arcs where the stars show through the ring by the globe's shadow).
+- The stretch did what the rule of thumb said (an exchange over N frames reads about 0.17 + 0.28 x 38 / N:
+  0.39 for 48 frames; read 0.40). The hot place is the dust in front of the foot of the globe at the upper
+  edge of the rings, x 1136, y 792 (crop of the frames 3802 to 3822 in the looks).
+- A correction to my own instrument (/tmp/v/t21/pat_rows.py, the body taken by brightness): against the
+  report of r56 it reads between 0.076 lower and 0.021 higher (not "within 0.02" as I wrote): lower where
+  the dark dust lies under its brightness floor (3800 to 3802: 0.38 and 0.39 against 0.44 and 0.45), and it
+  reads a false red where the glow of the limb comes in over the starry gap (r57, 3838 + 1/2 to 3842: 0.35
+  to 0.72 where the report reads 0.20 to 0.33), because the stars of the gap then count as body. It is good
+  for an early warning on the foot, not for a number to report. Only the report's numbers go into mails.
+- Mail to the Builder 00:37 (STATUS, low): the rise's lines, NAMED about 02:10 in place of 01:50 (the rest
+  of the job ends near 02:00 by the paces measured). Looks pushed 00:29 (15019d5b).
+
+## 2026-11-25, 00:40 to 00:50 UTC: finals of r57, the globe and the foot measured against the approved image
+
+Finals of r57 (final tier, engine 7026711, the tree of 5e094e5):
+- 3465 4077873a1a2005c40bed0e9f225e2ebbe3cf153ee06f75b93a2c3a4735002f0f: the bytes of the named tree, of
+  r54 and of r55. The hold is the same picture.
+- 3720 631f3cf203bc7ed84f841e909dae67cf604d51f1e96f87062860a2977ba4a55b (was ee1aec39... in r55 before the
+  dark dust, the factors and the stretch; 33bb2086... on the named tree 2d54c49).
+Pictures (in the looks): /tmp/v/t21/f57_whole.png (3720 beside the approved, half size), f57_foot.png (the
+foot at full size, x 900 to 1660, y 480 to 900), f57_ll.png (lower left at full size).
+
+A new instrument, /tmp/v/t22/globe_meas.py FILM (to go into assets-src/saturn/code with the next commit):
+on the fitted pose of skim.json it gives every pixel of the globe its latitude and the cosine of the Sun's
+angle, and prints the middle display colour of the approved image and of the film per bin.
+By the cosine of the Sun (latitudes 12 to 55), approved against the final 3720:
+  -0.10: 14,14,13 | 19,18,17     0.00: 114,94,61 | 123,92,67    0.05: 157,126,82 | 174,133,90
+   0.10: 189,155,105 | 200,160,111   0.20: 218,187,140 | 217,183,133   0.30: 231,204,162 | 228,196,150
+   0.50: 243,224,193 | 241,216,176   0.70: 250,241,218 | 250,236,207
+  Scene luma at 0.5: 0.965 against 0.802. So over these latitudes the light by the Sun's angle is close; the
+  film is redder in the twilight (red over green 1.37 against 1.23) and less pale in the day (blue 176
+  against 193 at 0.5), and about 17 percent darker in scene light on the day side.
+By latitude on the day side (cosine over 0.45), approved against film:
+  6 to 18: 251,244,224 to 248,233,204 | 248,231,201 to 248,230,193 (saturation 0.11 to 0.18 | 0.19 to 0.22)
+  21: 249,237,210 | 246,221,176 (0.16 | 0.28)     24 to 42: 245,225,187 to 237,221,192 | 245,221,184 to
+  234,211,172 (0.19 to 0.26 | 0.25 to 0.27)       45: 224,212,190 | 238,220,186    48: 217,209,195 |
+  236,223,199    51: 209,205,197 | 231,215,190    54: 204,201,197 | 231,210,176 (0.03 | 0.24)
+  So the grey band near the top limb of the approved image lies above latitude 44 and the film has none;
+  everywhere else the film is 0.05 to 0.10 more saturated.
+Along the rows of the picture the terminator of the approved image does not lie on the model's line of the
+Sun: at y 150 it is about 70 px further left (half light at cosine 0.10, grey blue: 103,104,92 at x 1604
+where the film has 166,141,111), at y 450 about 30 px further right. Item 3 is therefore a table of
+factors by latitude and by the cosine of the Sun, measured like the tone of the rings by radius, with a
+slow share by height, plus less fine contrast. Not in this commit.
+
+The foot, by the same instrument (day side, latitude bins of 3 degrees, approved | final 3720 | the trial
+dk1 with the dust whole at 3720):
+  -6: 194,176,157 | 196,166,138 | 171,152,128     -3: 159,143,125 | 166,135,104 | 127,105,85
+   0: 120,111,98  | 192,155,118 | 154,125,99       3: 196,171,134 | 234,203,161 | 222,184,141
+Along x 1250 the band between the foot of the lit globe and the bright rings reads 137 to 148 (tan) in the
+final 3720, 116 to 140 in dk1, 89 to 127 (grey) in the approved image; the film's lit globe ends at y 604
+there, the approved's at 572; the film's bright rings begin at 724, the approved's at 652.
+What this says, plainly: the stretch of the table (dust whole at 0.35 and under, 0.65 of it at the height
+of 3720) bought the green rise and cost the judged frame about 38 display values on the dark band of the
+foot (192 against 154 at latitude 0 to 3, where the approved has 120). With the dust whole at 3720 the rise
+has 43 frames for the exchange and reads about 0.42 to 0.43 by the rule of thumb, too near the limit to
+stake a proof of 100 minutes on. Named as not cured in the mail; the ways out to weigh in the next commit:
+(a) the band on the globe's foot as a slow tone by the whole move (the zone share, 72 frames in the rise,
+whole at 3720), which shows as a faint dark belt at the ring plane at middle heights; (b) a dust without
+structure of its own between 8 and 40 px, so that its exchange is a change of tone and not of pattern;
+(c) a slower climb between the heights 0.35 and 0.93, which is the path's and needs the gate again.
+
+## 2026-11-25, 01:03 UTC: the dive and the path of r57 are green
+
+After a break in the session (00:53 to 00:57) the job was found running as left; nothing was started twice.
+- r57 dive (228 draft frames at rate 2, 4.84 s a frame): "VERDICT: green. No number is over its limit."
+  Level step 0.02 at 3601 (limit 1.3). Pop 1.07 from 3568 + 1/2 (limit 1.2); the four largest 1.051 to
+  1.067, all at 3567 to 3569. Change in place 16.5 from 3601 + 1/2 at pixel 940, 752. Pattern 0.33 from
+  3576 at pixel 1404, 428 (limit 0.45). The ground beside it (3630 to 3641 + 1/2): change 6.1, pattern 0.05.
+  Rows of the pattern: 3540 0.05, 3552 0.08, 3560 0.16, 3567 0.17, 3576 0.33, 3584 0.29, 3588 0.20, 3592
+  0.15, 3596 0.10, 3600 0.09, 3604 0.11, 3608 0.13, 3612 0.14, 3616 0.14, 3620 0.11, 3624 0.03, 3630 0.03.
+  Against r55 (the pale dust on the first table), read from both json files: the head lines are equal
+  within 0.01; the rows of the pattern differ by up to 0.054, all between 3609 + 1/2 and 3623, and r57 is
+  the lower one there (3612 0.16 to 0.14, 3616 0.19 to 0.14, 3618 0.18 to 0.13, 3620 0.15 to 0.11): the
+  dust comes in more slowly through the last frames of the dive. The largest pop differs by 0.011.
+- r57 path: "VERDICT: green. No number is over its limit." Whole frames, dive: rate step 0.066 at 3544, turn
+  0.062 at 3573, speed 0.066 over 8 at 3543; seams in and out 0.009 and 0.008, 0.000 and 0.001, 0.009 and
+  0.020. Rise: rate 0.053 at 3816, turn 0.072 at 3838, speed 0.055 over 8 at 3840; seams 0.004 and 0.019,
+  0.002 and 0.003, 0.036 and 0.047; fall before 0.010 over 6, climb after 0.029 over 6 (limit 0.03). At rate
+  2: dive 0.067, 0.062, 0.068 over 8; rise 0.053, 0.073, 0.055 over 8; climb after 0.028 over 6. The eye
+  against the near ground: dive lowest 1.00 at 3638 + 1/2 (limit 0.87), rise lowest 1.00 at 3794, inside
+  the rise 1.02 at 3810 + 1/2, largest step between capture frames 0.07 at 3815 (shown). Rest between the
+  rise and the travel: lowest 3.34 px at 3889, 0.373 of the slower end (limit 0.07). The path is the path
+  of r54: this commit changes no pace.
+- A new measuring tool in my folder: assets-src/saturn/code/globe_tone.py FILM (the instrument of the entry
+  before, with the repo's own paths). It makes no pixel of the film.
+- Looks: a first push at 01:03 failed three times, the second went through (616e0af2): the report's sheets
+  of the rise and the dive.
+
+## 2026-11-25, 01:07 to 01:12 UTC: main moved to af6ba5f (take batch 5), r57 stopped after G13, r58 on the new engine
+
+- r57 G13 (engine 7026711): "PASS G13 saturn: 0 of 83 frames over 0.02 soft (every 6th frame); worst frame
+  3390 0.00%, frame 3396 0.00%, frame 3402 0.00%".
+- Fetched at 01:07: origin/main is af6ba5f8b41cbc49658ca580acdda035717efa9f. Against 7026711 the engine
+  differs in src/director/film.ts (the dim of the open sky while the Sun stands in a travel's frame, the
+  Sun's own leg), src/space/farsun (farsun.ts, look.json, shader.ts: the far Sun near Mercury) and
+  tests/pass.test.ts; 43 files in all, the rest notes, scorecards and Neptune's web patches.
+- My rule: the proof is on the engine of the main that is merged. So at 01:11 I stopped r57 between its
+  steps (parity had run one minute; nothing of it is used), put the worktree mainref on af6ba5f and
+  started r58 there with the same stop folder (the tree of 5e094e5), finals first.
+  What r57 holds on the engine of 7026711: rise, finals, dive, path, G13 (all green, numbers above).
+  r57's frames of the rise are kept in /tmp/v/r57/old/frames (the dive's were deleted for the disk:
+  3583 MB free with them, 4677 without).
+- The plan by what the finals say. If 3465 and 3720 on af6ba5f have the bytes of r57 (4077873a... and
+  631f3cf2...), the engine does not touch the stop's frames: then the steps not yet run (parity, gate,
+  handover, place, the two sizes, G5 and G17) run on af6ba5f, and the end of the rise with the travel's
+  first frames (3868 to 3896) is drawn again there and compared with r57's frames byte by byte. If the
+  finals differ, rise, dive, path and G13 run again on af6ba5f, and NAMED moves by about 50 minutes.
