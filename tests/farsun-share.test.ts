@@ -185,4 +185,27 @@ describe('the handover and the wear of the far Sun', () => {
     expect(Math.abs(held.y.dot(held.axis))).toBeLessThan(1e-9)
     expect(HOLD.data.length).toBe(Math.ceil((HOLD.width * HOLD.height * 2) / 3) * 4)
   })
+
+  it('stands in the direction of the Sun of the film at every half frame of every dive and rise of the eight planets, with its body unturned, and never rides with the turn of the sky', () => {
+    const ids = plans.slice(1, 9).map((p) => p.id)
+    const legs = config.segments.filter((s) => (s.kind === 'dive' || s.kind === 'rise') && ids.includes(s.stop))
+    expect(legs).toHaveLength(16)
+    let turned = 0
+    for (const leg of legs) {
+      const mid = config.segments.find((s) => s.id === leg.stop + '.hold')!
+      const at = ((mid.start + mid.end) / 2) * config.fps
+      const body = film.shotAt(at, at / config.fps).sun.far!.body.clone().normalize()
+      const first = film.shotAt(leg.firstFrame, leg.firstFrame / config.fps).skyTurn
+      for (let frame = leg.firstFrame; frame < leg.endFrame; frame += 0.5) {
+        const shot = film.shotAt(frame, frame / config.fps)
+        const f = shot.sun.far
+        if (!f) throw new Error('no far Sun at ' + frame)
+        expect(f.centre, leg.id + ' ' + frame).toBeUndefined()
+        expect((f.dir ?? shot.sun.dir).angleTo(shot.sun.dir), leg.id + ' ' + frame).toBeLessThan(1e-6)
+        expect(f.body.clone().normalize().angleTo(body), leg.id + ' ' + frame).toBeLessThan(1e-6)
+        turned = Math.max(turned, shot.skyTurn.angleTo(first))
+      }
+    }
+    expect(turned).toBeGreaterThan(0.5)
+  })
 })
