@@ -104,7 +104,7 @@ uniform vec3 uSkyLight;
 uniform vec3 uCloudLight;
 uniform vec4 uLightMake;
 uniform vec4 uShade;
-uniform float uCirrusFar;
+uniform vec3 uCirrusFar;
 uniform vec3 uThrough;
 uniform mat3 uToBody;
 uniform vec4 uFar;
@@ -449,56 +449,6 @@ vec3 cirrusBend(vec3 p, float least, float t) {
   }
   return vec3(q.x + uCirrusWind.x * t, q.y, q.z);
 }
-// The far level of the streamers. A streamer narrower than the foot it is read with is not marched (uShade.zw, cirrusBody), so
-// its heaps came up out of nothing where the eye came near: none at 4716, the first piece at 4720, whole by 4736, and the same
-// backward on the rise (MAIL 941, the pattern red of the dive and of the rise; assets-src/neptune/NOTES.md, 25 Nov 06:25 to
-// 06:37, control K1). The share of it that the march leaves out is drawn here as what the heaps come to seen from far: a pale
-// line on the streamer's own middle line (the same line, ends, widths and bend, read where the ray meets the middle height of
-// its body, so it stands where the marched heaps stand), as wide as the body or as the foot if that is wider and then as much
-// thinner, of the cover uCirrusFar (deep.json cirrus.far) where the heaps would fill the crest and of none where they would not. The law between the two is the foot against the width, the one the
-// march has: nothing of it is by the clock or by the eye's height.
-float cirrusFlat(vec3 oc, vec3 rd, float b, float rt2, float pix, float t) {
-  float cover = 0.0;
-  float ride = uCirrusWind.x * t;
-  for (int i = 0; i < ${STREAMERS}; i++) {
-    vec4 line = uStreamLine[i];
-    vec4 body = uStreamBody[i];
-    vec4 make = uStreamMake[i];
-    float rMid = uRadius + body.y + 0.5 * body.z;
-    float dMid = rMid * rMid - rt2;
-    float tMid = -b - sqrt(max(dMid, 0.0));
-    if (dMid <= 0.0 || tMid <= 0.0) continue;
-    vec3 straight = bandOf(oc + rd * tMid);
-    float foot = 2.0 * tMid * pix;
-    float ac = clamp((straight.x - ride - line.x) / (line.y - line.x), 0.0, 1.0);
-    float room = 3.0 * max(body.x * max(uStreamWide[i].x, uStreamWide[i].y), 0.5 * foot) + 3.0 * uCirrusWarp.x;
-    if (straight.x - ride < line.x - room || straight.x - ride > line.y + room) continue;
-    if (abs(straight.y - mix(line.z, line.w, ac) - uStreamWide[i].z * 4.0 * ac * (1.0 - ac)) > room) continue;
-    vec3 p = mix(straight, cirrusBend(straight, max(foot, uCirrusWind.z), t), uStreamBend[i]);
-    float along = (p.x - ride - line.x) / (line.y - line.x);
-    if (along <= 0.0 || along >= 1.0) continue;
-    float off = p.y - mix(line.z, line.w, along) - uStreamWide[i].z * 4.0 * along * (1.0 - along);
-    float semi = body.x * mix(uStreamWide[i].x, uStreamWide[i].y, along);
-    float ends = smoothstep(0.0, make.x / (line.y - line.x), along) * (1.0 - smoothstep(1.0 - make.x / (line.y - line.x), 1.0, along));
-    // Its thick and thin parts as the march has them, through the same filter by the foot.
-    float lump = vnoise(vec3((p.x - ride) / make.y + make.w, make.w * 1.7, 0.5));
-    float lump2 = vnoise(vec3((p.x - ride) / (make.y * 0.37) + make.w * 2.3, make.w, 3.5));
-    lump = mix(0.5, lump, 1.0 - smoothstep(uShade.z, uShade.w, foot / make.y));
-    lump2 = mix(0.5, lump2, 1.0 - smoothstep(uShade.z, uShade.w, foot / (make.y * 0.37)));
-    float strength = body.w * ends * mix(1.0 - make.z, 1.0, smoothstep(0.25, 0.75, lump));
-    float width = semi * (0.65 + 0.7 * lump2);
-    float y = off - 0.6 * semi * (lump2 - 0.5);
-    // Narrower than the foot it is drawn as wide as the foot and as much thinner, so it is a soft streak and never a ruled line.
-    float wide = max(width, foot);
-    float crest = strength * exp(-(y * y) / (wide * wide)) - uCirrusStep.w;
-    // How much of the place the heaps fill: the noise that eats the crest stands over what a heap needs here (cirrusInside,
-    // needHeap) at this share of the places.
-    float fill = 1.0 - smoothstep(0.3, 0.8, 1.0 - crest / (uCirrusMake.x * (1.0 - uCirrusBend.z * crest)));
-    float left = smoothstep(uShade.z, uShade.w, foot / width);
-    cover = max(cover, uCirrusFar * left * fill * (width / wide));
-  }
-  return cover;
-}
 // The noise that tears the cirrus, 0 to 1: octaves in rows across the wind as on the deck (rows by rowY, the place before the bend),
 // drawn out along the sweep and upward. On the crest every octave keeps heaps between creases, so the body billows like cumulus;
 // on the side away from the Sun (lee) the finer ones are drawn out far and keep ridges, so it frays into fibres.
@@ -541,6 +491,65 @@ float cirrusNoise(vec3 q, float rowY, float lee, float least, float t, int most,
     if (top < need - 1e-4) return 0.0;
   }
   return clamp(0.5 + sum * (1.0 - uCirrusWave.w) * 2.2, 0.0, 1.0);
+}
+// The far level of the streamers. A streamer narrower than the foot it is read with is not marched (uShade.zw, cirrusBody), so
+// its heaps came up out of nothing where the eye came near: none at 4716, the first piece at 4720, whole by 4736, and the same
+// backward on the rise (MAIL 941, the pattern red of the dive and of the rise; assets-src/neptune/NOTES.md, 25 Nov 06:25 to
+// 06:37, control K1). The share of it that the march leaves out is drawn here as the same body filtered (MAIL 955, a level of
+// detail by the size of a pixel on the body alone, nothing by the clock or by the eye's height): the same middle line, ends,
+// widths and bend, read where the ray meets the middle height of the body, so it stands where the marched heaps stand.
+// What a pixel sees of it:
+//   its thick and thin parts along its length for as long as they are longer than the foot (the filter the noise has: whole at
+//   two feet, the mean under one), and the heaps of the noise itself for as long as an octave of it is: where the noise stands
+//   under what a heap needs there the streak breaks, as the marched body does;
+//   an edge as soft as the map's own cloud: a bell of the body's own width and uCirrusFar.y pixels together;
+//   its light summed across the width is the body's own (uCirrusFar.x where the heaps fill the crest, times the true width), so
+//   a body thinner than a pixel is as much fainter and goes out into the map's cloud; there is no least width in pixels.
+float cirrusFlat(vec3 oc, vec3 rd, float b, float rt2, float pix, float t) {
+  float cover = 0.0;
+  float ride = uCirrusWind.x * t;
+  for (int i = 0; i < ${STREAMERS}; i++) {
+    vec4 line = uStreamLine[i];
+    vec4 body = uStreamBody[i];
+    vec4 make = uStreamMake[i];
+    float rMid = uRadius + body.y + 0.5 * body.z;
+    float dMid = rMid * rMid - rt2;
+    float tMid = -b - sqrt(max(dMid, 0.0));
+    if (dMid <= 0.0 || tMid <= 0.0) continue;
+    vec3 straight = bandOf(oc + rd * tMid);
+    float foot = 2.0 * tMid * pix;
+    float soft = uCirrusFar.y * tMid * pix;
+    float ac = clamp((straight.x - ride - line.x) / (line.y - line.x), 0.0, 1.0);
+    float room = 3.0 * max(body.x * max(uStreamWide[i].x, uStreamWide[i].y), soft) + 3.0 * uCirrusWarp.x;
+    if (straight.x - ride < line.x - room || straight.x - ride > line.y + room) continue;
+    if (abs(straight.y - mix(line.z, line.w, ac) - uStreamWide[i].z * 4.0 * ac * (1.0 - ac)) > room) continue;
+    vec3 p = mix(straight, cirrusBend(straight, max(foot, uCirrusWind.z), t), uStreamBend[i]);
+    float along = (p.x - ride - line.x) / (line.y - line.x);
+    if (along <= 0.0 || along >= 1.0) continue;
+    float off = p.y - mix(line.z, line.w, along) - uStreamWide[i].z * 4.0 * along * (1.0 - along);
+    float semi = body.x * mix(uStreamWide[i].x, uStreamWide[i].y, along);
+    float ends = smoothstep(0.0, make.x / (line.y - line.x), along) * (1.0 - smoothstep(1.0 - make.x / (line.y - line.x), 1.0, along));
+    float lump = vnoise(vec3((p.x - ride) / make.y + make.w, make.w * 1.7, 0.5));
+    float lump2 = vnoise(vec3((p.x - ride) / (make.y * 0.37) + make.w * 2.3, make.w, 3.5));
+    lump = mix(0.5, lump, smoothstep(foot, 2.0 * foot, make.y));
+    lump2 = mix(0.5, lump2, smoothstep(foot, 2.0 * foot, make.y * 0.37));
+    float strength = body.w * ends * mix(1.0 - make.z, 1.0, smoothstep(0.25, 0.75, lump));
+    float width = semi * (0.65 + 0.7 * lump2);
+    float y = off - 0.6 * semi * (lump2 - 0.5);
+    float wide = sqrt(width * width + soft * soft);
+    float bell = exp(-(y * y) / (wide * wide));
+    if (bell < 0.003) continue;
+    // How much of the crest the heaps fill: the noise that eats the crest stands over what a heap needs on the middle line
+    // (cirrusInside, needHeap) at this share of the places, and where the noise is still read, by the noise there.
+    float crest = strength - uCirrusStep.w;
+    float need = 1.0 - crest / (uCirrusMake.x * (1.0 - uCirrusBend.z * crest));
+    float finest;
+    float n = cirrusNoise(p, straight.y, 0.0, foot, t, 5, -2.0, finest);
+    float fill = 1.0 - smoothstep(0.3, 0.8, need + uCirrusFar.z * (0.5 - n));
+    float left = smoothstep(uShade.z, uShade.w, foot / width);
+    cover = max(cover, uCirrusFar.x * left * fill * bell * (width / wide));
+  }
+  return cover;
 }
 // cirrusInside: the density at a place the caller knows to lie in a streamer's room (cirrusFar is 0 there). away (out): how far
 // the bent place stands outside every body.
@@ -1120,7 +1129,7 @@ export class Deep {
         uFanMake: { value: v4(fan.veil.wave, fan.veil.long, fan.veil.contrast, fan.veil.layers) },
         uVeil: { value: new THREE.Vector2(fan.veil.height[0], fan.veil.height[1]) }, uVeilFall: { value: veilFall(fan.veil.fall) }, uVeilLight: { value: v3(fan.veil.light) },
         uStreamBend: { value: ci.streamers.map((x) => x.bend ?? 1) },
-        uCirrusFar: { value: ci.far },
+        uCirrusFar: { value: new THREE.Vector3(ci.far[0]!, ci.far[1]!, ci.far[2]!) },
         uNear: { value: new THREE.Vector3(d.near[0]!, d.near[1]!, d.wisp.near) },
         uWisp: { value: v4(d.wisp.from, d.wisp.power, d.wisp.gain, d.wisp.light) },
         uDeckFine: { value: v4(d.limit, d.wisp.mean, d.wisp.where[0]!, d.wisp.where[1]!) },
