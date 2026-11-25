@@ -6247,3 +6247,52 @@ NAMED at 12:00 UTC stands; it goes into Saturn's round 3 of 3, your last."
   - What I expect, said before the reading: the same red on the rise. Each place still goes from streaks
     to the globe within about 20 frames, the pace the lens sets, and three paces of the share have read
     red already. It is rendered only if the control turns green, as MAIL 1061 says.
+- 12:13 UTC. The control of MAIL 1061 item 3 is measured (r69, the tool's own line, slice 3798 to 3840,
+  engine 64c4ccb, draft, rate 2; report /tmp/v/r69/saturn-rise-k7596-7680.md, table of every frame
+  /tmp/v/r69/control_lines.txt, the tool's sheet ctl_changes.png).
+  - Pattern, limit 0.45, named 6e96b4cb against the control (cover share held at 0.7037, dust depth share
+    at 0.02): 3798 0.17 / 0.14; 3800 0.31 / 0.14; 3802 0.49 / 0.15; 3804 0.67 / 0.16; 3806 0.82 / 0.21;
+    3808 0.89 / 0.28; 3810 0.93 / 0.34; 3812 1.00 / 0.40; 3813 1.03 / 0.42; 3814 0.96 / 0.44; 3816 0.95 /
+    0.18; 3818 0.80 / 0.23; 3820 0.35 / 0.21; 3822 0.20 / 0.18; 3824 0.18 / 0.33; 3826 0.21 / 0.47; 3828
+    0.28 / 0.70; 3830 0.30 / 0.46; 3832 0.31 / 0.49; 3834 0.33 / 0.29; 3836 0.25 / 0.22; 3840 0.17 / 0.15.
+    The tool's verdict on the control: red, 0.70 from 3828, 10 half frames over the limit, first 3826.
+    Pop 1.10 at 3814 + 1/2, level step 0.02.
+  - Reading a: where the named tree is red (3802 to 3819) the control is under the limit (0.15 to 0.44).
+    That red is the pace of the cover. It is mine.
+  - Reading b: it is under the limit by 0.01 only. With the share held the line climbs 0.21 at 3806, 0.34
+    at 3810, 0.44 at 3814, always at the foot (pixel 896, 724 at 3806 to 944, 764 at 3814), where the
+    streaks of the sheet lie in front of the lower globe with 30 in 100 of the globe showing. At 3816 the
+    place leaves the judged part (judged share of the body 0.50 to 0.45) and the line falls to 0.18; the
+    picture does not get calmer there. So the two patterns sliding under the moving lens take nearly the
+    whole limit by themselves at 3810 to 3814: the reader's share, and no room for a cover to change in
+    those frames.
+  - Reading c: the control's red at 3826 to 3833 is the control's own. With the share held at 0.70 the
+    near look gives way to the far look by height 0.6 to 0.93 (3824 to 3835), the far look carries the
+    cover weaker (the ring's own opacity raised by the path, at most 8 times, against 1 minus exp of the
+    depth over the sine in the near look) and the kept set has none. Seen in ctl_four.png (veil, shadow
+    band and stars change from 3824 to 3836); not measured apart. The named tree reads 0.18 to 0.33 there.
+  - My rough early reading (/tmp/v/x/early.py, whole frame) gave the same shape lower: 0.09 to 0.12 at
+    3798 to 3805, 0.30 at 3811, 0.39 at 3814, 0.13 at 3816, 0.50 at 3828, 0.53 at 3832. The tool's line
+    runs 1.1 to 1.4 times the early reading.
+  - How the reader reads (tools/img/smooth.py, pattern): 1 minus the local correlation of the detail
+    between widths 8 and 40 px of frame f and of frame f + 8 carried back along the chained flow; 0 the
+    same pattern, 1 an unrelated one; only where both have detail over 1 level; the 99th percentile on
+    the body. It reads the pace at each place, so a law that sweeps across the picture gains nothing.
+  - The pace table from my three laws of the share by height (share that goes in 8 frames, the tool's
+    line): 0.10 reads 0.17; 0.145 reads 0.31; 0.19 reads 0.49. Green needs about 0.10 in 8 frames or
+    less: a swing of 80 frames or more.
+  - Why the per ray law is not named: by the ray each place still goes from closed to open in 20 to 24
+    frames (radius 1.25: sine 0.30 at 3808, 0.42 at 3832); the lens is at the skim's height (0.364) at
+    3792 and the kept set takes over by height 0.93 to 1.03 at 3835 to 3838, 43 frames; no law of height
+    or of angle between those two has 80 frames. On the dive the kept set gives way at 3600 to 3604 where
+    the rays to the sheet in front of the globe stand at 0.34 to 0.37, so the cover by the ray would stand
+    half closed against a kept set that has none: a step over 4 frames.
+  - The one cure the numbers point to, not built: the cover carried on through the kept set up to a lens
+    height of about 2.2 (rise 3792 to 3864, 73 frames, about 0.11 of the share in 8 frames, at the edge).
+    It needs the cover in kept/rings.ts with the hold byte identical, it moves the judged frames 3567
+    (height 2.048) and 3866 (2.282), and both moves must be proven again. Not a whole state by 13:10.
+  - Decision: no third NAMED. 6e96b4cb stands. Mailed 12:12 with the report, the table, the sheet and two
+    strips. The per ray trial stays a patch (/tmp/v/x/ray_trial.patch, tree /tmp/v/ray/saturn) and is
+    rendered on the rise's slice only on the Builder's word.
+  - Running since 12:11: the dive's own lines on the named tree (r68, frames to k7218 reused by stamp).
+    After it: finals 3567 and 3866, place, handover, G13, gate, parity, path, then vitest alone.
