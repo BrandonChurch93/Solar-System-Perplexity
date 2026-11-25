@@ -451,6 +451,10 @@ describe('the pop score at the two ends of a window, on a made run whose residua
 })
 
 describe('the pattern measure on made pictures, a judged area with a limb, a frame edge and a hole', () => {
+  beforeAll(() => {
+    made()
+  }, 240_000)
+
   it('reads the same pattern at contrast 2, 3, 5 and 10 under 0.01', () => {
     const p = made().patterns
     expect(p.judged).toBeGreaterThan(0.4)

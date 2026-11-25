@@ -1,4 +1,4 @@
-export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null; patternMapAlone?: number | null; patternMapMoves?: number | null; patternMapMoved?: number | null }
+export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null; patternMapAlone?: number | null; patternMapMoves?: number | null; patternMapMoved?: number | null; patternMapBound?: number | null }
 
 export const NOT_CARRIED = 'the range does not carry the pattern'
 
@@ -18,17 +18,32 @@ export const NOT_FOLLOWED = 'the picture\'s own flow is not measured on a body w
 // A moving body whose own flow is not measured: nothing says that the surface stays within what its drawer names, or no reading follows it.
 export const unfollowed = (row: Read): boolean => moving(row) && !outrun(row) && ((row.patternMapMoved ?? null) === null || row.pattern === null)
 
+// A row read by geometry: the flow on what the map leaves is taken on the detail of the pair and bounded (patternMapBound, px of the frame),
+// so that it cannot follow a light. A row of a run before that has no bound.
+export const bounded = (row: Read): boolean => (row.patternMapBound ?? null) !== null
+
 // The number of a row under the map's reader. In place is at the same point of the matter: on a rigid body the map alone says where that
-// is, and the reading is the map's alone; on a body whose surface moves by itself it is the reading by the picture's own flow, main's
+// is, and the reading is the map's alone, or by geometry (the map and then the bounded flow on what is left) where the row has it; on a body whose surface moves by itself it is the reading by the picture's own flow, main's
 // reader's, as long as that flow stays within what the drawer names of the map, and the map's alone where it does not. A row of a run
 // that did not read the map alone has the reading after the map and one flow.
-export const mapOf = (row: Read): number | null | undefined => (row.patternMapAlone === undefined ? flowed(row) : !moving(row) || outrun(row) ? row.patternMapAlone : row.pattern)
+export const mapOf = (row: Read): number | null | undefined => (row.patternMapAlone === undefined ? flowed(row) : !moving(row) ? (bounded(row) ? flowed(row) : row.patternMapAlone) : outrun(row) ? row.patternMapAlone : row.pattern)
 
 // A row the map refuses because the range does not carry the pattern is judged by main's reader, by the flow.
 export const byFlow = (row: Read): boolean => row.patternMapNo === NOT_CARRIED
 
+// The rows main's reader judges, on the pattern by the flow: every row the map has no word on, every row it refuses because the range does not
+// carry the pattern, and every row read by geometry, so that a report with the map is red wherever the run without it is red.
+export const flowJudges = (row: Read): boolean => !worded(row) || byFlow(row) || (bounded(row) && !moving(row))
+
 // Main's red line on a row read beside the camera's map names how its later frame was carried, and how far that carry lies from the map. A
 // row read without the map (the flag off) keeps main's words as they are.
+export const FULL = { softPx: 1, settlePx: 8, edge: 4 }
+
+export const carriedFull = (scale: number): string[] => [
+  'Read with --carry-full. What is left of a frame in the next, the pop, the pop of one block and the change in place take the later frame onto the first at the full size and reduce after: both frames through the same filter of ' + FULL.softPx + ' px, the way of the flows taken to the full size and set right once by the flow at half the full size, smoothed over ' + FULL.settlePx + ' px, then both reduced the same way. Carried at the reduced size, a picture that only slides by a part of a pixel leaves a difference that is the reader\'s and not the film\'s (a reduced picture is not the reduced picture of the same ground a part of a pixel on); carried so, it leaves nothing. Not counted in what is left: the outermost ' + 1 / scale + ' px of either frame and what arrives within ' + FULL.edge / scale + ' px of the edge from farther inside, where the picture enters. The pattern keeps its own carry.',
+  'The limits are the config\'s, and they were set while the reader counted its own resampling into every median: a pop is read against a smaller median here, so it stands higher where the film changes and lower where only the slide changed.',
+]
+
 export const chained = (row: Read, flows: number): string => (row.patternMap === undefined ? '' : ', the later frame carried by the chain of the ' + flows + ' flows from frame to frame' + ((row.patternMapMoved ?? null) !== null ? ' (that chain parts from the camera\'s map on the body by ' + row.patternMapMoved!.toFixed(1) + ' px)' : ''))
 
 export interface Apart { first: number; last: number; rows: number; k: number; main: number; map: number; red: 'main' | 'map'; no?: string }
