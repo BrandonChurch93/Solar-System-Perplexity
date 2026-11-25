@@ -5498,3 +5498,85 @@ After a break in the session (00:53 to 00:57) the job was found running as left;
   grade by height runs, finals of 3465, 3567, 3720 and 3866, path, parity, place, gate G11 and G15, G5,
   G17, G13, handover. (2) Merge main, tsc, the unit tests, push, NAMED mail. (3) Item 4 with the hold
   lifted, in the order of mail 905, as a second commit. (4) Item 2 further.
+
+## 25 Nov, 05:35 to 06:20 UTC: the pace of the dust over the night side (commits 06d73b4, d8723c6), item 4 begun
+
+- Proof r60 of f7991ad: red in the dive slice (pattern 0.65 at 3612), killed. Commit 06d73b4: the dust inside
+  the rim back to the values of the tree the round took (skim.json inner, with rings.amount 0, air.depth 0 and
+  the new inner.shade 0), the palette of the globe by latitude smoothed (lat_tone.py smooth, the raw knots kept
+  as assets-src/saturn/code/lat_tone_raw.json).
+- Proof r61 of 06d73b4: dive slice 3600 to 3630 red, pattern 0.65 at 3603 (pair 3603 and 3611), most at
+  pixel 1388, 700; rows 3600 to 3604 0.41 to 0.65; rows 3608 to 3616 0.11 to 0.15 (the cure of the dust works
+  there); pop 1.02, level step 0.02. Killed.
+- CAUSE, seen in the frames: the dust inside the rim, lit, lies as a pale band over the night side of the
+  globe from the equator's near arc to the rim, ending at the globe's shadow. With the night side sunk by the
+  grade (dusk.night 0.45 by gradeShare, a share of 0.65 already at height 0.93) and the map calmed, the faint
+  night clouds went out just as the dust came in, so the pattern there changed within 8 frames. The tree the
+  round took read 0.09 to 0.12 on these rows.
+- Cure 1 (E3): grade.ts nightShare, skim.json light.dusk.nightHeights [0.36, 0.6]: the fall of the night side
+  follows heights of its own, under those of the grade, so over 0.6 radii the night side keeps the hold's light.
+  Mini slice: 0.453 at 3603 (limit 0.45), most at pixel 1404, 716. Still red by a hair.
+- MODEL that fits these readings: the report reads a pair of frames 8 apart as 1 less the cosine of the angle
+  between their patterns. With the night clouds a and the dust d times its share s (inner.by), the pattern's
+  angle is atan(s d / a), and d / a is about 25 at the night spot (the dust equals the clouds at a share of
+  0.04). The old knots (0 at 0.93, 0.02 at 0.866, 0.04 at 0.806, 0.061 at 0.751) turned that angle by 57
+  degrees in the frames 3603 to 3611: 1 less cos 57 is 0.455, the reading.
+- Cure 2: assets-src/saturn/code/inner_onset.py (input rise_heights.json, the lens height by frame on the
+  rise, printed from the flight) sets the knots of inner.by from 0.519 radii up so the angle runs straight
+  with the frames of the rise, the faster of the two flights through these heights: 37.6 degrees in 8 frames
+  there (1 less cos is 0.21). New shares: 0.548 0.0918, 0.58 0.0641, 0.616 0.0473, 0.657 0.0351, 0.701 0.0261,
+  0.751 0.0185, 0.806 0.0118, 0.866 0.0058, 0.93 0. The knots under 0.519 are as they were (3720 keeps 0.652).
+- Commit d8723c6 holds both cures. Proof r62 on it (engine 64c4ccb, draft, rate 2): dive slice 3600 to 3630
+  GREEN: pattern 0.12 at 3615 + 1/2, most at pixel 680, 644; pop 1.02; level step 0.02. Rise slice, finals
+  and the other checks running as I write.
+- Item 4, the moon (mail 905: bands, haze, limb first). FOUND in titan.ts: the stepped limb comes from the
+  rim term, rim colour 1.9, 1.15, 0.6 times (1 less z) to the power 4, a line of light under a pixel wide at
+  the very limb and 2.5 times as bright as the ground, cut by the cover to the power 1.5; no count of samples
+  holds such a line still, and after the tone curve each pixel on it is either near white or dark. The bands
+  were two sines of the latitude: regular stripes, the plastic look. There was no air but a faint halo.
+- The new moon (titan.ts, titan.json; look.ts and kept/look.ts read the one file; model.ts and kept/set.ts
+  pass the size of the frame as uFoot): the cover eased over 1.3 px with the limb in the middle; the rim a
+  bell 0.025 radii wide, never under 0.7 px, by the Sun's angle at the limb; no limb darkening (the fit left
+  none); the south pale, the north hooded; irregular belts from value noise of the latitude bent by the
+  mottle, a mottle of two sizes and a fine grain, all from the integer hash of kept/rings.ts (the same on any
+  machine, the old sine hash was not); a thin haze over the lit limb that adds light; a high haze of the
+  north where the Sun grazes it, mauve to violet, as the approved moon has at its top right. The smooth part
+  is a least squares fit in numpy to the approved moon (rms 16.9 to 9.6 display values over the crop), the
+  moon's radius by that fit 30.6 px in the approved picture against 31.7 of the older look: size 0.943.
+  NOT YET RENDERED by the film: the first render follows when the proof is through.
+- Item 4, the sunlit limb over the inner ring gap (frame 3465, crop 672,560 to 732,630): the approved edge
+  goes from the gap to the ground over 3 pixels in pale tones (85,58,30 then 124,95,63 then 200,168,132 then
+  244,212,174); mine over 2 with one orange pixel (89,55,35 then 184,112,67 then 230,187,132 then
+  244,217,177), and no glow below the ring plane where the approved keeps a soft one. In my shaders: the
+  globe writes its colour times the cover squared (kept/globe.ts, globe.ts uEdgeLin 0) over a ramp of 2.6 px
+  that lies wholly inside the limb. The cause of the missing glow is not found yet (the shine of
+  kept/rings.ts and the shell are the two that draw there); diagnostic renders when the machine is free.
+
+## 25 Nov, 06:20 to 06:45 UTC: the rise red on d8723c6, the cause is the unshaded foot dust
+
+- Proof r62 on d8723c6: the rise slice 3798 to 3840 is RED: pattern 0.89 at 3827 (pair 3827 and 3835), most
+  at pixel 1856, 876, limit 0.45, 21 frames over it, first 3821 + 1/2 (rows 3819 0.30, 3821 0.41, 3823 0.58,
+  3825 0.78, 3827 0.89, 3829 0.63, 3831 0.52, 3833 0.40, 3840 0.17); pop 1.07 at 3814 + 1/2, level step 0.03.
+  The dive slice was green (0.12). Killed at 06:28, no finals. Status mail to the Builder 06:38: the NAMED
+  slips, earliest about 08:30.
+- CAUSE, shown by three stills of 3819 lifted 4 times (/tmp/v/x/dust_cause_3819.png, in the looks): as is,
+  a pale band lies over the night side at the foot (display 58 to 62 over a night side of 20 to 22); with
+  inner.foot.depth 0 the band is gone; with inner.depth [0, 0] (the sheet's dust off) it stays. So the band is
+  the dust in front of the foot of the globe (globe.ts, uDust and uDustInk): its light is the ink times
+  dustAir, and dustAir is 1 everywhere when inner.air.depth is 0 (so since 06d73b4). The dust stood lit in
+  full inside the globe's shadow. In the tree the round took it was lit there too, but the night clouds were
+  bright and busy enough to carry the pattern. The cure of the timing in d8723c6 (inner_onset.py) treated the
+  wrong thing, and its knots had a kink between 0.519 and 0.548 radii that the lens crosses in a frame and a
+  half of the rise.
+- Cure in test (tree: d8723c6 with skim.json alone changed): inner.air.depth 0.15 again (height 0.04), so the
+  dust in the shadow returns no sunlight and only dims the night side behind it (display 22 to 12 at 3819,
+  no band left to see at 3827); inner.by back to the smooth knots of the tree the round took (0.136, 0.123,
+  0.109, 0.095, 0.079, 0.061, 0.04, 0.02 from 0.548 to 0.866); the note of inner says so. Mini slice r63 of the
+  rise (capture frames 7636 to 7680) running.
+- If the slice is still red: the dust in the shadow would have to return what the night clouds behind it
+  return (ring shine on both alike), a number in skim.json inner.foot, so that no band shows over the night
+  side at all. Physically the dust in the plane sees the rings edge on and should be darker than the clouds,
+  so the dim band is the truer picture; decide by the report.
+- The moon edits of item 4 are set aside in /tmp/v/moonsrc (titan.ts, titan.json, look.ts, model.ts,
+  kept/look.ts, kept/set.ts, and moon_tracked.patch) so the proof tree holds the cures of items 1, 3 and 5
+  alone. assets-src/saturn/code/moon_fit.py stays in the tree (a tool, no pixel path).
