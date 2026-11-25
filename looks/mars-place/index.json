@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T01:27:02.601Z",
+ "pushed": "2026-11-25T01:53:52.137Z",
  "head": "88d4f309548622f39a1f3de85bc015c83317c8a9",
- "note": "88d4f309: third state of the round, picture equal to d6c01889; the edge trial is not committed",
+ "note": "02:00 trial of the law by a local patch, not committed: bad ones, a white fan of the far layers at 2456 and 2464",
  "looks": [
+  {
+   "time": "2026-11-25T01:53:51.574Z",
+   "file": "20261125015351574-note-n56-2474-left.jpg",
+   "source": "out/work/place/see/n56-2474-left.jpg",
+   "kind": "note",
+   "label": "pair native size 2474 lower left: left 88d4f309 (apron), right trial (cap where the apron stood)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:53:51.045Z",
+   "file": "20261125015351045-note-n56-2470-right.jpg",
+   "source": "out/work/place/see/n56-2470-right.jpg",
+   "kind": "note",
+   "label": "pair native size 2470 right: left 88d4f309, right trial (edge feather takes the slab, a pale wedge stays)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:53:50.511Z",
+   "file": "20261125015350511-note-n56-2464-fan.jpg",
+   "source": "out/work/place/see/n56-2464-fan.jpg",
+   "kind": "note",
+   "label": "TRIAL native size 2464 right half: fan with scalloped top edge",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:53:49.961Z",
+   "file": "20261125015349961-note-n56-2456-fan.jpg",
+   "source": "out/work/place/see/n56-2456-fan.jpg",
+   "kind": "note",
+   "label": "TRIAL native size 2456: the far layers of the approved picture stand as a white fan over the cap (texel law alone lets an upright far sheet through)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:53:49.322Z",
+   "file": "20261125015349322-note-n56-a.jpg",
+   "source": "out/work/place/see/n56-a.jpg",
+   "kind": "note",
+   "label": "TRIAL not committed, law by texel size 1 to 3 px alone, left 88d4f309 right trial: 2440, 2456, 2464 (trial only), 2470, 2474. BAD: white fan of the far layers 2456 and 2464",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T01:27:02.027Z",
    "file": "20261125012702027-note-n55-four.jpg",
@@ -26,52 +66,6 @@
    "source": "out/work/place/see/n55-T-rise.jpg",
    "kind": "note",
    "label": "88d4f309 draft: every frame 2671 to 2685 (T 2681), bytes equal to d6c01889",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T01:27:00.313Z",
-   "file": "20261125012700313-note-n55-level.jpg",
-   "source": "out/work/place/see/n55-level.jpg",
-   "kind": "note",
-   "label": "88d4f309 draft: 2411, 2412, 2413 (each drawn twice): Phobos, lit, leaves the frame at the right edge; that bends the level at 2412 + 1/2",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T01:17:26.110Z",
-   "file": "20261125011726110-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T01:16:53.853Z",
-   "file": "20261125011653853-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T01:00:37.210Z",
-   "file": "20261125010037210-note-n54-sides96-rise.jpg",
-   "source": "out/work/place/see/n54-sides96-rise.png",
-   "kind": "note",
-   "label": "trial, not committed: the two sides at T of the rise with the same edge: mean 0.747, 99th percentile 30",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T01:00:36.348Z",
-   "file": "20261125010036348-note-n54-sides96-dive.jpg",
-   "source": "out/work/place/see/n54-sides96-dive.png",
-   "kind": "note",
-   "label": "trial, not committed: the two sides at T of the dive with the close ground ending at its picture's sides on the globe side only (feather 96 px): mean 1.517, 99th percentile 45",
    "stop": "mars"
   }
  ]
