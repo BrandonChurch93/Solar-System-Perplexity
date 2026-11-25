@@ -20,7 +20,7 @@ export interface TravelLook {
   passRound: number
   passStart: [number, number]
   carry: number
-  ahead: [number, number, number, number]
+  ahead: [number, number, number, number, number?, number?, number?]
   follow: number
   cruise: number
   early: number
@@ -44,7 +44,7 @@ const BASE: TravelLook = { pan: [2, 2], panSpan: [0, 0.97], lead: [0, 1], roll: 
 
 export const TRAVEL: Record<string, Partial<TravelLook>> = {
   sun: { panSpan: [0, 1], rollSpan: [0, 1], cruise: 0, window: 41, patchEnd: 0.7, disc: [0.31, 0.136, 0.1] },
-  mercury: { land: 0.68, landTurn: [60, 0.052, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.2818, 0.2, 0.3], point: 0.0015, early: 0.0933, passBy: 0.32, passPower: 3, passKnee: 0.6, passStart: [0.03, 1], ahead: [0.6, 0.04, 0.5, 0.15], pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200], herald: 2, disc: [0.42, 0.231, 0.076] },
+  mercury: { land: 0.68, landTurn: [60, 0.052, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.2818, 0.2, 0.3], point: 0.0015, early: 0.0933, passBy: 0.32, passPower: 3, passKnee: 0.6, passStart: [0.03, 1], ahead: [0.6, 0.021, 0.5, 0.0625, 1, 3, 0.21], pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200], herald: 2, disc: [0.42, 0.231, 0.076] },
   venus: { land: 0.68, landTurn: [60, 0.052, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3672, 0.2, 0.3], point: 0.0015, early: 0.115, passBy: 0.275, passPower: 3, passKnee: 0.6, passStart: [0.03, 1], pin: [0, 1], pinEase: [2, 9], turnRun: [0.35, 0.35], panSpan: [0, 1], window: 51, pinFrames: 2, steady: [60, 200], disc: [0.107, 0.19, 0.254] },
   earth: { land: 0.68, landTurn: [60, 0.04, 0.107, 30, 58], landGrow: [70, 0.3, 0.07, 40, 58], growRun: [0.3351, 0.2, 0.3], point: 0.0015, early: 0.15, passBy: 0.31, passPower: 3, pin: [0, 1], pinEase: [2, 9], turnRun: [0.4, 0.36], panSpan: [0, 1], window: 48, pinFrames: 2, steady: [60, 200], disc: [0.16, 0.067, 0.045], ahead: [0.6, 0.002, 0.5, 0] },
   mars: { land: 0.68, landTurn: [60, 0.058, 0.107, 24, 58], landGrow: [95, 0.41, 0.07, 50, 58], growRun: [0.3, 0.2, 0.3], point: 0.0015, early: 0.1, pin: [0, 1], pinEase: [2, 9], turnRun: [0.36, 0.36], panSpan: [0, 1], window: 33, disc: [0.16, 0.072, 0.035] },
@@ -320,11 +320,25 @@ export class TravelShape {
     const by = this.look.passBy
     const own = this.passRun(Math.max(u, 0) / by)
     if (!(this.lead > 0) || u >= by || u <= -this.lead) return own
-    const [, part, share, late] = this.look.ahead
+    const [, part, share, late, crest, kick, kickBy] = this.look.ahead
     const way = (s: number): number => s * s * s * s * (2.5 + s * (s - 3))
     const soft = (s: number): number => s * s * s * (10 + s * (6 * s - 15))
     const span = share * by
     const peak = late * by
+    if (crest !== undefined && crest > 0) {
+      const up = crest * this.lead
+      const top = (kickBy ?? late) * by
+      const lift = top - peak
+      const more = lift > 0 ? (kick ?? 1) - 1 : 0
+      const climbed = (s: number): number => s * s * s * (10 / 3 + s * (s * (3 - (2 * s) / 3) - 5))
+      const held = (v: number): number => (v < up - this.lead ? up * climbed((v + this.lead) / up) : (2 * up) / 3 + v + this.lead - up)
+      const lifted = (v: number): number => held(v) + (lift > 0 && v > peak ? more * lift * way(Math.min((v - peak) / lift, 1)) + more * Math.max(v - top, 0) : 0)
+      const speed = part / held(0)
+      const all = lifted(top) + ((1 + more) * (span - top)) / 2
+      if (u < top) return own + speed * lifted(u)
+      if (u < span) return own + speed * (lifted(top) + (1 + more) * (span - top) * ((u - top) / (span - top) - way((u - top) / (span - top))))
+      return own + speed * all * (1 - soft((u - span) / (by - span)))
+    }
     const rise = this.lead + peak
     const back = -peak / (span - peak)
     const top = part / (peak > 0 ? rise * way(this.lead / rise) : rise / 2 + (span - peak) * (back - way(back)))
