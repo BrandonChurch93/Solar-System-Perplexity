@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T09:30:43.395Z",
- "head": "53a0ee4e235bb59257f69df781f9de694c68817e",
- "note": "09:31 UTC: rise reds of the reader traced (pattern 3246 on, level 3287 + 1/2); controls rendering; ray law of the air only in the working tree",
+ "pushed": "2026-11-25T10:00:09.289Z",
+ "head": "fa33e867991dacc386b60b868b4b5a6ae44f70c4",
+ "note": "10:00 UTC: cause of the rise's pattern measured (the banks' parallax), cures of thickness and sidestep being built",
  "looks": [
+  {
+   "time": "2026-11-25T10:00:07.775Z",
+   "file": "20261125100007775-note-n5-3150.jpg",
+   "source": "out/work/jupiter/final/n5-3150.png",
+   "kind": "note",
+   "label": "3150 as named, final tier",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T10:00:06.582Z",
+   "file": "20261125100006582-note-limb-enters.jpg",
+   "source": "../work/r13/off/limb-enters.jpg",
+   "kind": "note",
+   "label": "rise 3286 to 3288 by halves: the limb comes in along the left edge",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T10:00:05.399Z",
+   "file": "20261125100005399-note-ctrl-b.jpg",
+   "source": "../work/r13/off/ctrl-b.jpg",
+   "kind": "note",
+   "label": "rise 3246 to 3247, what makes the pattern: as it is, banks off, banks read at the ground point",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T09:30:42.391Z",
    "file": "20261125093042391-note-ray015-3150-pair.jpg",
@@ -176,30 +200,6 @@
    "source": "../work/r12/parity/jupiter-parity.png",
    "kind": "note",
    "label": "parity on 2ad37054, 1920 by 1080 against 3840 by 2160: green; one thin line along the limb at 3038, 3150, 3259 (block 15,4 at 3150: 7.187 levels, limit 12)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:43:30.135Z",
-   "file": "20261125074330135-note-trio-3150.jpg",
-   "source": "../work/r12/trio-3150.jpg",
-   "kind": "note",
-   "label": "3150 final tier: approved pack, second named commit, this commit (match 6.578, 7.358, 8.215)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:43:28.908Z",
-   "file": "20261125074328908-note-limb-3260.jpg",
-   "source": "../work/r12/limb-3260.jpg",
-   "kind": "note",
-   "label": "limb at 3260, 1 to 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:43:27.937Z",
-   "file": "20261125074327937-note-rise-pair.jpg",
-   "source": "../work/r12/rise-pair.jpg",
-   "kind": "note",
-   "label": "rise pair, second named commit against this one",
    "stop": "jupiter"
   }
  ]
