@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T10:44:56.838Z",
+ "pushed": "2026-11-25T11:02:37.646Z",
  "head": "55392321c0452e1bddc72911bc23b771e20c87a4",
- "note": "study for the next bake: the approved far band's own cloud laid into the map, previews only, nothing committed",
+ "note": "MAIL 1040: deck taken out, bake running; study picture of the dropped layer",
  "looks": [
+  {
+   "time": "2026-11-25T11:02:36.700Z",
+   "file": "20261125110236700-note-pv-z1-band.jpg",
+   "source": "../../../../tmp/gl/k12/pv-z1-band.jpg",
+   "kind": "note",
+   "label": "study only, numpy preview, not a frame and not built: cloud of the approved far band laid into the map; dropped after MAIL 1040 (no deck in the map)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T10:44:56.259Z",
    "file": "20261125104456259-note-pv-lb0-above.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/k11/d1/s-hold.jpg",
    "kind": "note",
    "label": "ac5c5c1b 1755, 1836, 1848, 1857: the deck is there from the hold on, nothing arrives",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T10:00:10.155Z",
-   "file": "20261125100010155-note-h-crop.jpg",
-   "source": "../../../../tmp/gl/k11/d1/h-crop.jpg",
-   "kind": "note",
-   "label": "1755 ba479450 against ac5c5c1b, 2 px for 1: the deck is in the hold now (changed on purpose); whiter and plainer than the map's cloud, hides Yucatan",
    "stop": "earth"
   }
  ]
