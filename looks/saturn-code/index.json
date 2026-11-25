@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T02:47:20.346Z",
- "head": "88ba2385ea8a0e9f2bb77ba8dd5eefabf071fe5e",
- "note": "named 88ba238: finals beside the approved image, the open faults 21 to 24 in crops; own run of the rise on the newest engine goes on",
+ "pushed": "2026-11-25T03:04:08.652Z",
+ "head": "7755294aa70875d7406a3a89a2a51744cbb9a8ac",
+ "note": "round 44 items 5, 1, 2: item 5 cured in the tree with the hold's bytes kept; first trial of the foot at 3720",
  "looks": [
+  {
+   "time": "2026-11-25T03:04:08.094Z",
+   "file": "20261125030408094-note-n1_foot.jpg",
+   "source": "../../../../tmp/v/x/n1_foot.png",
+   "kind": "note",
+   "label": "3720 draft foot at full size: approved, named tree, trial n1"
+  },
+  {
+   "time": "2026-11-25T03:04:07.560Z",
+   "file": "20261125030407560-note-n1_whole.jpg",
+   "source": "../../../../tmp/v/x/n1_whole.png",
+   "kind": "note",
+   "label": "3720 draft: approved, named tree, trial n1 (night side to near black by height, thinner foot band, inner dust greyer)"
+  },
+  {
+   "time": "2026-11-25T03:04:06.980Z",
+   "file": "20261125030406980-note-s1_hold_edge.jpg",
+   "source": "../../../../tmp/v/x/s1_hold_edge.png",
+   "kind": "note",
+   "label": "3465 final, inner ring edge at 3x, named left, with the item 5 change right: same bytes"
+  },
+  {
+   "time": "2026-11-25T03:04:06.361Z",
+   "file": "20261125030406361-note-s1_hold_pair.jpg",
+   "source": "../../../../tmp/v/x/s1_hold_pair.png",
+   "kind": "note",
+   "label": "3465 final, named tree left and with the item 5 change right, full size: same bytes (max difference 0)"
+  },
+  {
+   "time": "2026-11-25T03:04:05.721Z",
+   "file": "20261125030405721-note-s1_gap.jpg",
+   "source": "../../../../tmp/v/x/s1_gap.png",
+   "kind": "note",
+   "label": "3567 draft, gap between globe and inner ring at 2x: named tree left, shade solid over the whole thin inner ring right (item 5)"
+  },
   {
    "time": "2026-11-25T02:47:19.417Z",
    "file": "20261125024719417-note-r59_ll.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/r59_whole.png",
    "kind": "note",
    "label": "approved close image beside final 3720 of the named tree (88ba238), whole frame"
-  },
-  {
-   "time": "2026-11-25T02:47:16.750Z",
-   "file": "20261125024716750-note-limbs_final.jpg",
-   "source": "../../../../tmp/v/r58/limbs_final.png",
-   "kind": "note",
-   "label": "limbs of the finals 3465, 3567, 3720 at six times: no row of dots at the final tier"
-  },
-  {
-   "time": "2026-11-25T02:27:16.440Z",
-   "file": "20261125022716440-note-crop_3885.jpg",
-   "source": "../../../../tmp/v/r58c/crop_3885.png",
-   "kind": "note",
-   "label": "3885 draft, three times, upper limb: main's stop folder (left) against mine (right); 57 pixels of the outline differ by more than 4 levels, cause not traced (my number 25)"
-  },
-  {
-   "time": "2026-11-25T02:27:15.384Z",
-   "file": "20261125022715384-note-pair_3866.jpg",
-   "source": "../../../../tmp/v/r58c/pair_3866.png",
-   "kind": "note",
-   "label": "3866 draft: main's stop folder (left) against the tree to be named (right), both on the engine of af6ba5f"
-  },
-  {
-   "time": "2026-11-25T02:27:13.898Z",
-   "file": "20261125022713898-note-pair_3567.jpg",
-   "source": "../../../../tmp/v/r58c/pair_3567.png",
-   "kind": "note",
-   "label": "3567 draft: main's stop folder (left) against the tree to be named (right), both on the engine of af6ba5f"
-  },
-  {
-   "time": "2026-11-25T02:06:09.829Z",
-   "file": "20261125020609829-note-f3866_right.jpg",
-   "source": "../../../../tmp/v/t22/f3866_right.png",
-   "kind": "note",
-   "label": "3866 final, x 900 to 1700, y 560 to 1080 at full size: the Milky Way in the gap ends hard at the inner ring inside the globe's shadow"
   }
  ]
 }
