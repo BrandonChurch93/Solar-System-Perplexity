@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T10:50:19.654Z",
+ "pushed": "2026-11-25T11:19:04.398Z",
  "head": "bf7752dbd1a2b4c275fc06d469c7da3707acfb97",
- "note": "way C first numbers: pairs 4992-5000 0.33 and 4704-4712 0.31 (proxy), 4605 same bytes, dive inside the air green, rise inside the air red by the dot",
+ "note": "G13 cause by control: the hold's count was the scene's quad, not the picture; terrain near ground truly soft (47.6 percent), named red",
  "looks": [
+  {
+   "time": "2026-11-25T11:19:03.823Z",
+   "file": "20261125111903823-note-c-4860-C8.jpg",
+   "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
+   "kind": "note",
+   "label": "way C at 4860 beside the approved, G17 proxy 0.412 (bar 0.8, RED); 31 s the draft frame at preview, 78 s the texel view at 1920",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T11:19:03.159Z",
+   "file": "20261125111903159-note-g13-views.jpg",
+   "source": "out/work/nep/weave/ev/g13-views.jpg",
+   "kind": "note",
+   "label": "G13 texel view (red is texels a pixel, yellow 2, green under 1): left as named, right the control. Top 4530: 89.9 percent soft becomes 0.000 (the scene's count was written where it draws nothing). Bottom 4860: 71.2 becomes 47.6 percent soft, RED, the near ground by code",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T10:50:18.781Z",
    "file": "20261125105018781-note-chain-4962.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
    "kind": "note",
    "label": "way C at 4860 (left) beside the approved (middle); right is the trial before. One curve at every height, the air as shares of the hold's light: white streamer, dark navy near, paler far, pale limb, no hard specks. Far plain still darker than the approved. G17 proxy median 0.412 p25 0.091 (c2edd61b 0.508, bar 0.8: red before and after). Preview draft 23 to 39 s per frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T10:08:08.043Z",
-   "file": "20261125100808043-note-c-4860-C5.jpg",
-   "source": "out/work/nep/weave/ev/c-4860-C5.jpg",
-   "kind": "note",
-   "label": "way C trial 5 at 4860 (left) beside the approved and c2edd61b: stronger air. BAD: olive and purple patches where blue runs out before red. G17 proxy 0.578 p25 0.225. Not kept",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T10:08:07.410Z",
-   "file": "20261125100807410-note-c-4860-C4.jpg",
-   "source": "out/work/nep/weave/ev/c-4860-C4.jpg",
-   "kind": "note",
-   "label": "way C trial 4 at 4860 (left) beside the approved (middle) and c2edd61b (right): one curve at every height, a thin blue veil of air taken off by the path. G17 proxy median 0.522 p25 0.228 (c2edd61b 0.508). Preview draft 23 to 39 s per frame. Near ground still too blue, not yet dark navy",
    "stop": "neptune"
   }
  ]
