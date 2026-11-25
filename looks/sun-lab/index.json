@@ -1,9 +1,69 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T17:03:05.290Z",
- "head": "e3d00e95bd24d2903bc510006792d6ab1ccd68d2",
- "note": "sun lab e4: form sheet against the approved, motion sheet, frames 0 60 90",
+ "pushed": "2026-11-25T18:36:53.265Z",
+ "head": "f5a268bf21b500936a42087ba3dfff55af506f2d",
+ "note": "18:40 UTC: map cure d8, the red row of part 2 is the globe's face over living cells, d9",
  "looks": [
+  {
+   "time": "2026-11-25T18:36:52.663Z",
+   "file": "20261125183652663-note-lab-cmp247.jpg",
+   "source": "../../../../tmp/lab-cmp247.jpg",
+   "kind": "note",
+   "label": "frame 247: away 0.6 to 3.3 (left), 2.0 to 3.0 (right, d9)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T18:36:52.013Z",
+   "file": "20261125183652013-note-lab-p2-frames.jpg",
+   "source": "../../../../tmp/lab-p2-frames.jpg",
+   "kind": "note",
+   "label": "d8 frames 217, 221, 225, 229 of the standing reader's part 2",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T18:36:51.434Z",
+   "file": "20261125183651434-note-lab-x-crop.jpg",
+   "source": "../../../../tmp/lab-x-crop.jpg",
+   "kind": "note",
+   "label": "frame 229 one place: d8, cells not sinking, ground held against the globe's face",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T18:36:50.797Z",
+   "file": "20261125183650797-note-lab-strip-t3.jpg",
+   "source": "../../../../tmp/lab-strip-t3.jpg",
+   "kind": "note",
+   "label": "tubes t3, frame 90 near ground: approved, t2, t3 (not a state)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T18:35:41.303Z",
+   "file": "20261125183541303-frame-lab-247-b.jpg",
+   "source": "out/work/sun/lab/lab-247-b.png",
+   "kind": "frame",
+   "label": "sun.rise frame 247, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 247,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T17:23:35.521Z",
+   "file": "20261125172335521-frame-lab-90-t3.jpg",
+   "source": "out/work/sun/lab/lab-90-t3.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T17:03:04.715Z",
    "file": "20261125170304715-note-strip-e4.jpg",
@@ -18,60 +78,6 @@
    "source": "../v/four-e4.jpg",
    "kind": "note",
    "label": "sun lab e4 four-e4",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:03:03.548Z",
-   "file": "20261125170303548-note-motion-e4.jpg",
-   "source": "../v/motion-e4.jpg",
-   "kind": "note",
-   "label": "sun lab e4 motion-e4",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:03:02.981Z",
-   "file": "20261125170302981-note-form-e4.jpg",
-   "source": "../v/form-e4.jpg",
-   "kind": "note",
-   "label": "sun lab e4 form-e4",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:02:19.095Z",
-   "file": "20261125170219095-frame-lab-60-e4.jpg",
-   "source": "out/work/sun/lab/lab-60-e4.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 60, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 60,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T16:14:08.874Z",
-   "file": "20261125161408874-note-four-d4.jpg",
-   "source": "../v/four-d4.jpg",
-   "kind": "note",
-   "label": "d4 frames 0, 60, 90 and the approved, small (not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:14:08.309Z",
-   "file": "20261125161408309-note-strip-d4.jpg",
-   "source": "../v/strip-d4.jpg",
-   "kind": "note",
-   "label": "d4 frame 90 lower third at 1 to 1: approved, d2, d4 (not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:58:25.826Z",
-   "file": "20261125155825826-note-motion-c4.jpg",
-   "source": "../v/motion-c4.jpg",
-   "kind": "note",
-   "label": "c4 five captures 12 film frames apart, eye held (not named)",
    "stop": "sun"
   }
  ]
