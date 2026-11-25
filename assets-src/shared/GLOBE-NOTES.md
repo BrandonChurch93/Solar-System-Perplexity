@@ -1311,6 +1311,53 @@ for (const [name, mode, level, ks] of jobs) {
 await session.close()
 ```
 
+## 25. The one air law on the globe (`airLaw`, MAIL 1092, d253 and MAIL 1071 point 2): off by default
+
+The law, ruled: what the eye gets from a point behind air is the point times the path's factor plus the air's light times one minus that factor. The chunk is handover_engineer's (`src/terrain/air.ts`, `AIR_LAW_GLSL` and its twins in TypeScript; laid here byte for byte as blob 9bc89825 from agent/engine-air 0e403777, commit 36778670, and never changed in this branch); the globe's programs take it word for word and hold no formula of their own for it. The light is one colour times the day term. A second version of the file with a light by height (`airLawGather` and others) is announced and not laid; the option does not use it.
+
+**How a stop turns it on.** Three numbers and a day edge in the stop's own params, the same numbers for the planet and for its shell:
+
+```ts
+const law: AirLaw = { light: [r, g, b], density, scaleHeight, dayFrom, dayTo }
+new Planet({ ..., airLaw: law })            // no `grazing` and no `limbAir` beside it: the constructor refuses a second air
+new HazeShell(shellHaze, diagUniform, law)  // `shellHaze.top * shellHaze.scaleHeight` is still the height of the shell's mesh
+```
+
+- `light`: the air's light, linear rgb. `density`: optical depth per radius of level path at the datum. `scaleHeight`: in radii. The body's radius is 1 (as for the haze today).
+- The day term: `smoothstep(dayFrom, dayTo, dot(up at the point, uSunW))`, times `light`. On the ground the point is the ground point; in the shell it is the lowest point of the sight line when that lies ahead of the eye, else the eye's own up. At the horizon the two are the same point.
+- Ground (globe and cap): `col = airLaw(col, light * day, airLawFactor(airLawDepth(uCam, point, scaleHeight), density))`, with `point` the unit direction of the fragment on the globe and that direction times `1 + vCapH` on the cap. It stands where the haze line and the grazing block stood; with the law on neither is in the text, and `haze.depth`, `haze.day`, `haze.extinction` and `setAir({ haze })` reach nothing on the ground. The gain, the weight and the vignette come after it, as before.
+- Shell: `through = 1 - airLawFactor(airLawDepthOut(uCam, dir, scaleHeight), density)`; the fragment is `(light * day * through * uGain, through)` and the blend is one times the fragment plus `1 - through` times what stands in the target; the target's alpha is left as it was. So the sky, the stars and every body drawn before the shell are dimmed by the factor of the whole path. The engine draws the sky before the world's see-through meshes in each of its three orders (read in `src/core/engine.ts`: `sky(open)` then `renderWorld(cam, this.solid)`, or `sky` then `r.render(this.world)`, or under a set `sky(null)` then `r.render(this.world, twin)`).
+- `uGain` scales the light and not the dimming: a shell faded by its gain still dims. A stop takes the shell away with `mesh.visible`.
+- The eye's height is in `uCam` and nowhere else. Nothing in `src/bodies` reads a height for the law, and the option has no setter: the numbers are given once.
+- Sight lines that meet the ball more than 0.005 radii under the datum are not drawn by the shell (the same cut as today), so the chunk is never asked for a line deep in the ball.
+
+**Off.** Without `airLaw` the text of the planet, of the cap and of the shell, the uniforms and the blend are what they were (`tests/globe-law.test.ts`: the frozen hashes of `tests/globe-air.test.ts`, no `uAir` uniform, additive blend).
+
+**What the globe does not take from the law, and the stop must decide.** The glow of the haze (`glow: true`), the halo and the glint are further `HazeShell` and haze terms that add light with no dimming; a stop that wants one air hides them or gives them the law too. The tint, the gain and the vignette of the planet come after the law line. A shell's `uSunW` is whatever the stop writes into it: for the same day term on the ground and in the shell it must be the planet's light direction. The sky's air is drawn once (handover_engineer, 13:55): a shell under the law and the set's own law dome over the same sky give the factor twice, so the stop gives the dome the share 0 where the shell draws, or hides the shell. Mars today fades the shell's gain by `1 - there`; under the law the gain fades the light and not the dimming, so that line no longer takes the shell away.
+
+**Measured (`tests/globe-law.test.ts`, software GL of the harness browser, against the chunk of blob 9bc89825, agent/engine-air 0e403777).** The numbers are written by the test into `out/work/globe-law-test/measured.txt`. Limit of every row 2e-3.
+
+| what | rows | factor | worst error against the twin |
+|---|---|---|---|
+| the chunk in a card, `airLawDepth` | 87 | | 8.63e-5 of the depth plus 0.001 radii |
+| the chunk in a card, `airLawDepthOut`, lines that clear the ball | 63 of the 87 | | 1.08e-4 of the depth plus 0.001 radii |
+| ground of the globe under the law | 63 pixels | 0.181 to 0.373 | 1.16e-3 |
+| shell, eye 0.002 radii up | 63 pixels | 0.710 to 0.860 | 6.02e-4 |
+| shell, eye 0.008 radii up | 63 pixels | 0.500 to 0.728 | 6.30e-4 |
+| shell, eye 2 radii up | 4032 pixels | 0.109 to 0.966 | 5.87e-4 |
+
+- The shell rows read the dimming of a known colour behind the shell and the light added, both against the twin.
+- Every one of the 87 rows of `airLawDepthOut` is finite in the card, also the 24 lines whose lowest point lies within 0.995 radii of the centre (the chunk holds the height's term deeper than 60 scale heights).
+- The scale heights of the card: 0.0045, 0.0204, 0.1. `airLawUniforms` refuses a scale height outside the file's `AIR_LAW_SCALE_HEIGHT` (0.0005 to 0.1 radii), as the twins do; the error of the chunk against the true integral is the file's (`airLawError`: 0.003 + 0.7 times the scale height, of the depth) and is not measured here.
+- Not measured: the cap's law line in a test of its own (it is proved by its text, the same call with `n * (1.0 + vCapH)`, and seen on the Mars scratch stills only); any frame at final, and so the seconds at 16 samples.
+- Seconds a draft frame (one sample a pixel, one run each) on the Mars scratch with the law on against the same frames as they are, two runs each side: 2427 8.4 and 8.2 against 8.1 and 7.9, 2455 19.6 and 20.1 against 19.8 and 19.9, 2464 24.7 and 25.0 against 24.7 and 25.1. No difference beyond the spread of the runs.
+- A limit of the test, not of the law: a card snapped by a part of a pixel moves the factor at the limb by up to 3.6e-3 where the limb is 9 pixels across 0.3 degrees, so the browser cases draw 72 by 56 pixels.
+- Before the file came the globe's side was written and tested against a stand-in made from the design's ten lines (7 of 7 there too). The stand-in is not in the repository. The four Mars scratch stills with the real chunk differ from those with the stand-in by at most 3 of 255.
+
+**Off, on the film (draft, 1920 by 1080, full set).** Frames 615, 717, 1185, 1287, 1857, 2325, 2427, 2455, 2464, 3465, 4707 at 9ed56019 (the chunk laid and the option in) against the same frames at 69cf3448: 11 of 11 byte equal (sha256 of the PNG; 217.2 s against 215.9 s for the 11). The same 11 were equal before, with the stand-in in the tree.
+
+**On, on Mars (scratch tree, never committed; the Mars stop is its builder's).** `src/stops/mars/set.ts` with `airLaw` in place of `grazing`, the shell built from `look.haze` with the same law, the shell's `uSunW` set to the planet's light, halo and glint hidden. Numbers of the scratch, not a proposal for the look: light 0.5 0.42 0.34, density 0.066 / 0.0045 a radius (the vertical depth of `haze.json` over its scale height), scale height 0.0045, day edge -0.3 to 0.95. Draft stills of 2325, 2427, 2455, 2464 are in looks (`engine-globe`; the pictures there are with the stand-in, at most 3 of 255 from the real chunk). Seen, not measured: at the hold the blue rim is gone and a pale warm band lies on the limb; at 2464 the pale band at the horizon is wider and greyer than today. The stars at 2464 (the horizon is at the top of the frame): the 12 strongest points in the top 300 rows keep 0.23 to 0.92 of their excess over the local median (8 bit levels after the tone curve, so not a factor of light), and the points over 12 levels fall from 1081 to 545. They are dimmed and they stand. The twin with the scratch numbers gives the whole path's factor on a level line as 0.453 for an eye 0.002 radii up, 0.602 at 0.004, 0.722 at 0.006, 0.811 at 0.008, 0.917 at 0.012, and more above the horizon (0.700 at 5 degrees from 0.002): with a vertical depth of 0.066 no path through this air takes a star away. Not known: which of the points are stars and which the close view's own; the eye's height at 2464 was not read here.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -1366,5 +1413,7 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - MAIL 954 ruling 3 and MAIL 978: the triangles of the cap that reach no pixel, counted on five frames of Mars at two sizes, and the seconds with them left out (a part of section 23). Scratch only; nothing in the code. The 12 Mars pairs of section 23 again on `agent/mars-place` 00c41dcd: 12 of 12 byte equal at both sizes. On `take/b10e` b1721d2c.
 - MAIL 1005 and MAIL 1032: the pattern reader at a limb and low over relief (section 24). Measurement only; nothing in the code. Mercury's limb at 716 to 726, Mars's dive at 2456 to 2474, the limb at Venus and Mars beside Mercury. The readers went to harness_builder by mail.
 - MAIL 1072: Mars's dive with the air off on the Mars owner's control 9fd1b410 (a part of section 24). Measurement only.
-- MAIL 1094: the cap's browser tests carry their pixels from the page as base64 (69cf3448, `tests/globe-cap.test.ts` alone). Nothing asserted is changed. The whole run on that commit: 258 files, 831 tests, 831 passed.
+- MAIL 1094: the cap's browser tests carry their pixels from the page as base64 (69cf3448, `tests/globe-cap.test.ts` alone). Nothing asserted is changed. The whole run on that commit: 76 files (258 suites; the mail said 258 files), 831 tests, 831 passed.
 - MAIL 1063 point d: the own level rule on against off and the triangles of the cap for all 12 Mars frames at both sizes (the table in section 23). Scratch only; nothing in the code. One run a number.
+- MAIL 1092 (d253, MAIL 1071 point 2): the one air law on the globe (`airLaw`, section 25). Commits 36778670 (the chunk `src/terrain/air.ts`, handover_engineer's file, blob 9bc89825, byte for byte) and 9ed56019: `src/bodies/air.ts` (`AirLaw`, `airLawUniforms`), `src/bodies/planet.ts` (`PlanetOptions.airLaw`, `PatchShader.law`), `src/bodies/haze.ts` (the third argument of `HazeShell`), `tests/globe-law.test.ts` (7 tests). Off: 11 of 11 draft frames byte equal to 69cf3448. On 9ed56019: tsc clean; `npx vitest run` 77 files, 838 tests, 838 passed, 611 s. Not shown: a film frame with the option on in a stop's own tree (Mars in a scratch only), a frame at final.
+- MAIL 1102 item 2e (asked by harness_builder): the two differences between its true carry and column E of section 24, closed on the same files. Mercury 716: 0.52 was the limb sector alone; on the whole body column E reads 0.996 and the harness 1.003, at 676, 784. Mars 2462 onward (1.405 against 1.515): the carried pictures agree (rms 0.69 grey); the difference is the mask given to `pattern()`: column E drops a pixel whose place in the later frame lies off the later body less 20 px, the harness keeps it (974 of the 1277 pixels only the harness judges, a strip under the horizon); with those pixels in the mask column E reads 1.531. Measurement only, one run each.
