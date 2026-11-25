@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T02:09:08.527Z",
- "head": "a4f61cec0f74ae07e84f050530e4f9cf5e2907c3",
- "note": "Sun commit a4f61cec pushed: 11.69 deg at (1925.7, 46.0); globe unchanged; reds named: far Sun wear range, tests/pass.test.ts 239",
+ "pushed": "2026-11-25T02:29:41.734Z",
+ "head": "33b45f67c04328643d3b168cec6dd0a72be0d2d3",
+ "note": "one cause behind the three reds: two crater fields at one place; diagnostic with the plates' own light off is rendering",
  "looks": [
+  {
+   "time": "2026-11-25T02:29:40.366Z",
+   "file": "20261125022940366-note-d717-whole.jpg",
+   "source": "../../../../tmp/m/d717-whole.jpg",
+   "kind": "note",
+   "label": "dive 712 to 726 every second frame, round 2 state: the place's disc comes in from 720 and reaches into the globe's dusk as a bay of flat light",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T02:09:07.955Z",
    "file": "20261125020907955-note-sm-state.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/mercury/place/sheets/sn-rise.jpg",
    "kind": "note",
    "label": "Sun commit: rise 980 to 1020 before and after",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T01:30:46.311Z",
-   "file": "20261125013046311-note-sn-dive1.jpg",
-   "source": "out/work/mercury/place/sheets/sn-dive1.jpg",
-   "kind": "note",
-   "label": "Sun commit: dive 720 to 750 before and after",
    "stop": "mercury"
   }
  ]
