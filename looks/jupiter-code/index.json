@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T19:55:12.108Z",
+ "pushed": "2026-11-25T20:16:16.739Z",
  "head": "b660882b510fd8ac4ea3608fd0872db217139894",
- "note": "19:57 UTC: design of the lit body of the storm's lee, tested as pictures before building; nothing in the tree has changed yet",
+ "note": "jupiter_coder 20:17 UTC: design tests of the hold's disc by simulation, nothing built yet. The lee lit by the globe's light, the rings cured by keeping each level's own picture beyond the painted disc, the left dash kept as the globe's own lane.",
  "looks": [
+  {
+   "time": "2026-11-25T20:16:15.952Z",
+   "file": "20261125201615952-note-p1-3150.jpg",
+   "source": "out/work/jupiter/final/p1-3150.png",
+   "kind": "note",
+   "label": "surface view 3150 of the named tree at the final tier, unchanged by this design work (6.1102 against the approved close image)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:16:15.384Z",
+   "file": "20261125201615384-note-lane2-0.06.jpg",
+   "source": "../work/r20/lane2-0.06.jpg",
+   "kind": "note",
+   "label": "design test, not built: the place from above, the west border of the painted body. Left the lit body, middle with the globe's own tan lane let through, right the lane's outline in red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:16:14.775Z",
+   "file": "20261125201614775-note-sim5-a.jpg",
+   "source": "../work/r20/sim5-a.png",
+   "kind": "note",
+   "label": "design test, not built: the hold's disc at 8 times, simulated. Left the approved hero, middle main, right the simulated hold with the storm's lee lit and the globe's own tan lane kept at the painted body's west border (simulated cost 0.0016 against 0.0203 of the named tree; the left dash still reads weaker than on main)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T19:55:06.783Z",
    "file": "20261125195506783-note-p1-3150.jpg",
@@ -182,30 +206,6 @@
    "source": "../work/r16/band-right.jpg",
    "kind": "note",
    "label": "3150 far band, right third: approved above, named below (still wrong: stands lit, pale streaks to the limb)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:45:09.969Z",
-   "file": "20261125174509969-note-band-left.jpg",
-   "source": "../work/r16/band-left.jpg",
-   "kind": "note",
-   "label": "3150 far band, left third: approved above, named below (still wrong: smooth wash, flat pale band under the limb)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:45:09.359Z",
-   "file": "20261125174509359-note-rise-a-changes.jpg",
-   "source": "../work/r15/sheets/rise-a-changes.jpg",
-   "kind": "note",
-   "label": "1c5b75f rise slice a: the reader's changes picture (pattern 0.32 from 3255 + 1/2, limit 0.45)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:45:08.641Z",
-   "file": "20261125174508641-note-rise-a-d.jpg",
-   "source": "../work/r15/sheets/rise-a-d.jpg",
-   "kind": "note",
-   "label": "1c5b75f rise 3232 to 3273 + 1/2, every drawn frame, sheet d (draft, rate 2): green by my reader",
    "stop": "jupiter"
   }
  ]
