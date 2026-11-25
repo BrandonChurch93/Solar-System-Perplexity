@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T01:50:17.744Z",
- "head": "d1be1ff329436b786dd366d481adb4e2fbedf01e",
- "note": "commit 3 in work: bulbs with height, trials 1 and 3 beside the approved at 1 to 1, near crop 60 66 72",
+ "pushed": "2026-11-25T02:09:57.844Z",
+ "head": "b6906952bd77d84b231d64dfb2ed966485660755",
+ "note": "commit 3 in proof: frame 60 and frame 90 beside the approved at 1 to 1 (near ground, far ground, spot)",
  "looks": [
+  {
+   "time": "2026-11-25T02:09:56.772Z",
+   "file": "20261125020956772-note-c3-90-s.jpg",
+   "source": "../../../../tmp/v/c3-90-s.jpg",
+   "kind": "note",
+   "label": "State of commit 3, frame 90 at 1 to 1 beside the approved, the spot (your box x 1000 to 2100, y 780 to 1200): not a funnel. Long bulbs lean toward a small umbra; no thick lip, no hanging strands. Point 3d is not done in this commit.",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:09:55.627Z",
+   "file": "20261125020955627-note-c3-90-b.jpg",
+   "source": "../../../../tmp/v/c3-90-b.jpg",
+   "kind": "note",
+   "label": "State of commit 3, frame 90 at 1 to 1 beside the approved, the far ground and the horizon (your box x 0 to 1100, y 700 to 1120): the far ground is amber and keeps its cells as flat lenses. Wrong: softer and of less contrast than the approved, no dark creases far off; the jets are not changed in this commit (point 3e is not done).",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:09:54.428Z",
+   "file": "20261125020954428-note-c3-90-a.jpg",
+   "source": "../../../../tmp/v/c3-90-a.jpg",
+   "kind": "note",
+   "label": "State of commit 3, frame 90 at 1 to 1 beside the approved, the near ground and the spot's near lip (your box x 900 to 2000, y 1000 to 1560 of the approved): bulbs with height, silhouettes of near domes before the valleys, tongues on the flanks, mottled tops. Wrong: the outlines are still angular in plan, the tongues are thin pale hairs more than broad gold strokes, the pits are small, the tops are flatter and duller than the approved's.",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:09:53.196Z",
+   "file": "20261125020953196-note-c3-60-a.jpg",
+   "source": "../../../../tmp/v/c3-60-a.jpg",
+   "kind": "note",
+   "label": "State of commit 3 (in proof, not yet committed), frame 60 at 1 to 1 beside the approved, crop at 630 650. sun-near of this frame 60: share by band 0.1 .. 0.9 : 0.199 0.209 0.189 0.130 0.097 0.072 0.047 0.043 0.009 / dark (under 0.15) 0.205 | body (0.15 to 0.55) 0.624 | pale (0.65 to 0.85) 0.091 | white (over 0.85) 0.009 / brightest 15 percent: half width 9.6 px, 677 shapes | fine detail 0.0252 | mean 0.337",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T01:50:17.078Z",
    "file": "20261125015017078-note-b3-life.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/hero-pair.png",
    "kind": "note",
    "label": "MAIL 775 (a): the globe's map cut round the place (top down, 40 degrees wide left, 10 degrees right; assets-src/sun/place/hero.py). The place stands on the map at u 0.5393, v 0.5685 from the bottom (x 4418, y 1767 of 8192 by 4096) and the map has a spot there",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T01:17:37.126Z",
-   "file": "20261125011737126-note-m830-half.jpg",
-   "source": "../../../../tmp/v/m830-half.png",
-   "kind": "note",
-   "label": "MAIL 830, on d1be1ff3: capture frames 484 to 491 at rate 2 (film 242 to 245 + 1/2), 1 to 1, the two blocks marked (columns 2 and 3 of row 2). Only sky is drawn there. The sky moves as one piece by 8, minus 47 px a half frame; carried by that, what is left in block column 2 is 7.47, 7.81, 8.14, 8.50, 8.15, 8.02, 7.44 of 255 over the seven steps and in column 3 8.64, 9.26, 9.18, 9.85, 10.21, 11.58, 11.58: no step stands out. Not carried, column 3 goes 9.92, 11.59, 14.60, 26.93, 39.55, 37.48, 25.00 as two bright star clouds of the hold's sky card pass through it. Nothing appears, fades or changes at once; the block pop is the sky card's bright clouds sweeping through. Frame 60 of this commit: share by band 0.1 .. 0.9 : 0.173 0.220 0.183 0.141 0.099 0.066 0.048 0.053 0.015 / dark (under 0.15) 0.175 | body (0.15 to 0.55) 0.643 | pale (0.65 to 0.85) 0.101 | white (over 0.85) 0.015 / brightest 15 percent: half width 7.8 px, 1326 shapes | fine detail 0.0344 | mean 0.351",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:59:15.456Z",
-   "file": "20261125005915456-note-c2-sets.jpg",
-   "source": "../../../../tmp/v/c2-sets.jpg",
-   "kind": "note",
-   "label": "d253 (b) with commit 2: frame 60 and frame 231, the full set left and the web set right, 1 to 1. Frame 60 mean difference 1.309 of 255, share over 16: 0.0052; frame 231 mean 0.938, share over 16: 0.0016. Frame 60 of this commit: share by band 0.1 .. 0.9 : 0.173 0.220 0.183 0.141 0.099 0.066 0.048 0.053 0.015 / dark (under 0.15) 0.175 | body (0.15 to 0.55) 0.643 | pale (0.65 to 0.85) 0.101 | white (over 0.85) 0.015 / brightest 15 percent: half width 7.8 px, 1326 shapes | fine detail 0.0344 | mean 0.351",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:59:14.873Z",
-   "file": "20261125005914873-note-c2-sizes.jpg",
-   "source": "../../../../tmp/v/c2-sizes.jpg",
-   "kind": "note",
-   "label": "d253 (a) with commit 2, one frame of the rise at both sizes: frame 225 at 1080 beside 2160 halved, 1 to 1. Mean difference 2.463 of 255, share of pixels over 16: 0.0109",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:59:14.248Z",
-   "file": "20261125005914248-note-c2-rise.jpg",
-   "source": "../../../../tmp/v/c2-rise.jpg",
-   "kind": "note",
-   "label": "Commit 2: frames 217, 225, 231, 247 of the rise at one half. 247 keeps its draft bytes c22922926c09eb0d. Still wrong: the cell field on the ball is a pale patch of packed cells with a border against the globe's own map (one Sun is not built in this commit)",
    "stop": "sun"
   }
  ]
