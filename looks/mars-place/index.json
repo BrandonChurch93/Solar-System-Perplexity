@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T10:06:21.934Z",
+ "pushed": "2026-11-25T10:20:43.256Z",
  "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "facet controls at 2692: not the set, not the detail, not the cells",
+ "note": "far wall facets traced to the paint of the 0.7 degree plate",
  "looks": [
+  {
+   "time": "2026-11-25T10:20:42.672Z",
+   "file": "20261125102042672-note-plate-0p7.jpg",
+   "source": "out/work/place/k6/plate-0p7.jpg",
+   "kind": "note",
+   "label": "the 0.7 degree plate whole: a slanted painting, not a top view",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T10:20:42.137Z",
+   "file": "20261125102042137-note-Y2692-half.jpg",
+   "source": "out/work/place/k6/Y2692-half.jpg",
+   "kind": "note",
+   "label": "2692 with the plates tinted: 0.3 red, 0.7 green, 1.6 blue, 3.8 yellow (control)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T10:20:41.575Z",
+   "file": "20261125102041575-note-facet-paint.jpg",
+   "source": "out/work/place/k6/facet-paint.jpg",
+   "kind": "note",
+   "label": "facets at 2692: as it stands and with the 0.7 degree plate low passed (control): the facets are painted in the plate",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T10:06:21.378Z",
    "file": "20261125100621378-note-facet-2692-lift.jpg",
@@ -48,30 +72,6 @@
    "source": "out/work/place/k7/native-2.jpg",
    "kind": "note",
    "label": "8.5 level repainted, before (9cb92e38) and after: native-2",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:40:56.096Z",
-   "file": "20261125094056096-note-native-1.jpg",
-   "source": "out/work/place/k7/native-1.jpg",
-   "kind": "note",
-   "label": "8.5 level repainted, before (9cb92e38) and after: native-1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:40:55.239Z",
-   "file": "20261125094055239-note-pair-5.jpg",
-   "source": "out/work/place/k7/pair-5.jpg",
-   "kind": "note",
-   "label": "8.5 level repainted, before (9cb92e38) and after: pair-5",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:40:54.433Z",
-   "file": "20261125094054433-note-pair-4.jpg",
-   "source": "out/work/place/k7/pair-4.jpg",
-   "kind": "note",
-   "label": "8.5 level repainted, before (9cb92e38) and after: pair-4",
    "stop": "mars"
   }
  ]
