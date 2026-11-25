@@ -6,6 +6,7 @@ import look from './deep.json'
 import patches from './patches.json'
 import { ground } from './band'
 import { FALL_GLSL, MAP_DECL, MAP_UNIFORMS, mapGlsl } from './planet'
+import { COUNT_GLSL } from './count'
 
 // The surface view of Neptune as one scene made by functions: a cloud deck with height (rolls, the storm as a bowl with walls and arms),
 // cirrus as a volume above it that is marched and lit by a march toward the Sun (the same density casts the shadow on the deck), a wind
@@ -120,7 +121,8 @@ ${DIAG_GLSL}
 
 const float PI = 3.14159265358979;
 ${globe(mapGlsl(patches.place.shownFrom))}
-${FALL_GLSL}// The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
+${FALL_GLSL}
+${COUNT_GLSL}// The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
 float gWisp = 0.0;
 // The foot the cirrus is read with at this place (two pixels on the ground or in the air), set by who asks for the cirrus.
 float gFoot = 0.0;
@@ -808,6 +810,7 @@ void main() {
   vec3 lookUp = deckHit && farW < 1.0 ? normalize(mix(farUp, normalize(oc + rd * tDeck), 1.0 - farW)) : farUp;
   vec3 farLook = vec3(0.0);
   float farCover = 0.0;
+  float farTexels = 0.0;
   {
     vec3 pb = uToBody * lookUp;
     vec3 sunB = uToBody * uSun;
@@ -834,6 +837,7 @@ void main() {
       deepen = 1.0 + uGCirrus.x * uGCirrus.z * (1.0 - smoothstep(0.9, 1.0, far.b));
     }
     vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode;
+    farTexels = tx;
     float mapCloud = layerAt(dcl, max(uGCloudSoft, uGCirrusPx), 0.0, tx).a;
     float mapShadow = 0.6 * min(layerAt(dsa, uGShadow.y, 0.0, tx).a, 1.0) + 0.4 * min(layerAt(dsb, uGShadow.y * 1.8, 0.0, tx).a, 1.0);
     for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
@@ -1034,8 +1038,10 @@ void main() {
   }
 
   float tSeen = cloudClear < 0.5 ? tMean : tDeck;
-  float made = cloudClear < 0.5 ? cloudFinest : deckFinest;
-  float texels = deckHit || cloudClear < 0.5 ? 4.0 * tSeen * uPix / max(made, 1e-6) : 0.0;
+  // The texel view counts what is drawn, each layer by its share of the pixel's light (count.ts): the map's own count where
+  // the map is the deck's colour, the finer of the map and the code where the code has its share, the cirrus by its cover.
+  float texels = drawnCount(farTexels, 4.0 * tDeck * uPix / max(deckFinest, 1e-6), farW, 4.0 * tMean * uPix / max(cloudFinest, 1e-6), 1.0 - cloudClear, deckHit);
+  if (!deckHit && cloudClear >= 0.5) texels = 0.0;
   vec3 layer = mix(vec3(0.95, 0.95, 0.9), deckHit ? vec3(0.1, 0.3, 0.85) : vec3(0.05, 0.1, 0.3), cloudClear);
   // The same tool for measures: grid 2 writes u, grid 3 writes v of the deck under each pixel into the layers view (48 units over two bytes).
   if (uGridShow > 1.5) {
@@ -1044,6 +1050,9 @@ void main() {
     layer = vec3(floor(gx) / 255.0, fract(gx), deckHit ? 1.0 : 0.0);
   }
   outColor = diagOut(vec4(col, alpha) * (whole * inside), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0) / uRadius);
+  // The count is written by the scene's share of the pixel, as its picture is: where the scene draws nothing (the hold, far
+  // from the place) the count of the globe under it stands.
+  if (uDiag == 2) outColor *= whole * inside;
 }`
 
 const v4 = (a: number, b: number, c: number, d: number): THREE.Vector4 => new THREE.Vector4(a, b, c, d)
