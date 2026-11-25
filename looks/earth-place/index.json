@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T03:26:01.793Z",
+ "pushed": "2026-11-25T03:42:26.445Z",
  "head": "3a136a1a415c2b86419fa67dd9d1a4dfec123746",
- "note": "3a136a1a named (handover cure); K4 state 1 in work: low picture gone, haze by the air path; far ground pale 1866 to 1882, strip on the limb still there",
+ "note": "K4 state 1 on 3a136a1a: square of haze at 1857 found and cured (1857 byte equal again), haze share cap 3.5 to 8; tool run and proofs running",
  "looks": [
+  {
+   "time": "2026-11-25T03:42:25.676Z",
+   "file": "20261125034225676-note-p-1857.jpg",
+   "source": "../../../../tmp/gl/k5/p-1857.jpg",
+   "kind": "note",
+   "label": "K4 state 1 as first laid: pale square of the haze at the judged 1857 (cured, 1857 keeps its bytes)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:42:24.723Z",
+   "file": "20261125034224723-note-n4b.jpg",
+   "source": "../../../../tmp/gl/k5/n4b.jpg",
+   "kind": "note",
+   "label": "K4 haze share cap 3.5 beside cap 8, 1886 to 1898",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:42:23.602Z",
+   "file": "20261125034223602-note-n4a.jpg",
+   "source": "../../../../tmp/gl/k5/n4a.jpg",
+   "kind": "note",
+   "label": "K4 haze share cap 3.5 beside cap 8, 1870 to 1882",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:42:22.692Z",
+   "file": "20261125034222692-note-n3.jpg",
+   "source": "../../../../tmp/gl/k5/n3.jpg",
+   "kind": "note",
+   "label": "K4 beside 3a136a1a, dive 1866 to 1882, haze cap 3.5 (before the change to 8)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T03:26:01.185Z",
    "file": "20261125032601185-note-hz-seam.jpg",
@@ -34,44 +66,6 @@
    "source": "../../../../tmp/gl/k5/n-1890.jpg",
    "kind": "note",
    "label": "1890 draft: K4 state 1 in work (top) over 3a136a1a (bottom)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:25:54.921Z",
-   "file": "20261125032554921-compare-earth-dive-sides.jpg",
-   "source": "out/work/handover/earth-dive-sides.png",
-   "kind": "compare",
-   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T03:18:47.053Z",
-   "file": "20261125031847053-compare-earth-rise-sides.jpg",
-   "source": "out/work/handover/earth-rise-sides.png",
-   "kind": "compare",
-   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T03:00:14.438Z",
-   "file": "20261125030014438-note-sh-rv-2112.jpg",
-   "source": "../../../../tmp/gl/ho/p/sh-rv-2112.jpg",
-   "kind": "note",
-   "label": "rise 2112 to 2123 with the cure, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:00:13.379Z",
-   "file": "20261125030013379-note-sh-rv-2100.jpg",
-   "source": "../../../../tmp/gl/ho/p/sh-rv-2100.jpg",
-   "kind": "note",
-   "label": "rise 2100 to 2111 with the cure, draft",
    "stop": "earth"
   }
  ]
