@@ -20,6 +20,11 @@ parent layer keeps the ground behind it:
   what the crest uncovers is the ground behind it, no hole and no second copy
   of the crest. Between there and the end of C's whole alpha the distance goes
   back to the layer's own; that wall is always behind C.
+- the layers behind the parent: where the parent is pushed back and hides a
+  layer, that layer is moved back to at least the parent's new distance times
+  (1 + `behind`), widened by one cell of its grid. The layers test depth
+  against each other; without this a layer that stood hidden behind the parent
+  shows through it where the cut layer moves off (the ledge of C2).
 
 The files draw a step over a few texels; within `soft` texels of the other
 side a texel belongs to neither, and both sides are carried on from beyond.
@@ -88,7 +93,7 @@ def parent(k):
                    'c': Image.open(os.path.join(a.src, 'full', 'relief-%s-color.jpg' % k)),
                    'al': np.asarray(Image.open(os.path.join(a.src, 'full', 'relief-%s-alpha.png' % k)).convert('L')),
                    'cut': np.load(os.path.join(a.src, 'cut-%s.npy' % k))}
-        work[k]['c'].load(); work[k]['rgb'] = np.asarray(work[k]['c']).copy(); work[k]['patches'] = []
+        work[k]['c'].load(); work[k]['rgb'] = np.asarray(work[k]['c']).copy(); work[k]['patches'] = []; work[k]['d0'] = work[k]['d'].copy()
     return work[k]
 made = []
 for n, cr in enumerate(crests):
@@ -192,6 +197,36 @@ for n, cr in enumerate(crests):
     made.append({'id': cid, 'parent': k, 'crest': cr['box'], 'parallaxPx': cr['parallaxPx'], 'cellPx': cr['cellPx'], 'frame': cr['frame'], 'fillPx': round(wa, 1), 'wholePx': round(wt, 1), 'endPx': round(wf, 1)})
     print(cid, k, box, 'parallax in picture px %.1f, fill %.1f, whole to %.1f, ends %.1f; near texels %d' % (par, wa, wt, wf, int(near.sum())), flush=True)
     work.setdefault('view', []).append((cid, rgb, caF, prgb, d0, d.copy(), cd))
+# What stood behind a parent stays behind it. The layers test depth against each other. Where a parent's ground is pushed back to the
+# far side's distance and the parent hides another layer there (its own alpha whole), that layer must not come to stand in front of
+# it: its distance is at least the parent's new one times (1 + behind). The need is widened by one cell of that layer's grid, so
+# that the meshes obey it and not only the texels. Only ground the parent hides in the picture's own view is moved, and only back.
+for k in sorted({m['parent'] for m in made}):
+    pw = work[k]; b = R0['layers'][k]['box']; dh, dw = pw['d'].shape; sx = b['w'] / dw
+    up = pw['d'] > pw['d0'] * (1 + 1e-6)
+    if not up.any(): continue
+    ys, xs = np.nonzero(up)
+    for q, lq in R0['layers'].items():
+        if q == k: continue
+        qq = parent(q); qb = lq['box']; qh, qw = qq['d'].shape; sq = qb['w'] / qw
+        nq = a.mesh if qb['w'] >= qb['h'] else round(a.mesh * qb['w'] / qb['h'])
+        c = int(np.ceil(qb['w'] / nq / sq))                 # one cell of that layer's grid, in its texels
+        i0 = max(0, int((b['x'] + xs.min() * sx - qb['x']) / sq) - 2 * c); i1 = min(qw, int((b['x'] + (xs.max() + 1) * sx - qb['x']) / sq) + 2 * c + 1)
+        j0 = max(0, int((b['y'] + ys.min() * sx - qb['y']) / sq) - 2 * c); j1 = min(qh, int((b['y'] + (ys.max() + 1) * sx - qb['y']) / sq) + 2 * c + 1)
+        if i1 <= i0 or j1 <= j0: continue
+        cx = qb['x'] + (np.arange(i0, i1) + 0.5) * sq; cy = qb['y'] + (np.arange(j0, j1) + 0.5) * sq
+        u = np.floor((cx - b['x']) / sx).astype(int); v = np.floor((cy - b['y']) / sx).astype(int)
+        ok = ((v >= 0) & (v < dh))[:, None] & ((u >= 0) & (u < dw))[None, :]
+        uu = np.clip(u, 0, dw - 1); vv = np.clip(v, 0, dh - 1)
+        new = pw['d'][vv][:, uu]; old = pw['d0'][vv][:, uu]
+        ax = np.clip((cx - b['x']).astype(int), 0, b['w'] - 1); ay = np.clip((cy - b['y']).astype(int), 0, b['h'] - 1)
+        dq = qq['d'][j0:j1, i0:i1]
+        hid = ok & (pw['al'][ay][:, ax] == 255) & (dq > old)
+        need = ndimage.maximum_filter(np.where(up[vv][:, uu] & hid, new * (1 + V['behind']), 0).astype(np.float32), size=2 * c + 1)
+        ch = hid & (dq < need)
+        if ch.any():
+            print('behind %s: %s moved back on %d texels, most by %.3f (in front of the pushed back ground before: %d)' % (k, q, int(ch.sum()), float((need - dq)[ch].max()), int((up[vv][:, uu] & hid & (dq < new)).sum())), flush=True)
+            dq[ch] = need[ch]
 for k, pw in work.items():
     if k == 'view': continue
     im = pw['c']

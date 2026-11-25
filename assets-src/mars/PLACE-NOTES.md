@@ -2588,3 +2588,142 @@ after the forms on the five land plates, and on the levels above by the share of
   stays out: G17's median is lower than main's. Public restored to HEAD's plate. Numbers sent to /root.
   Pictures: out/work/place/skyfill/pair-2325-sky.jpg (x 150 y 0, 400 px, 1 to 1), pair-2325-sky-x4.jpg (x 251 y 12,
   times 4, the box with the most px over 4 codes: 568), pair-2325-whole.jpg.
+
+### 19:26 to 19:38 UTC, the ledge of C2: the prepared cure does NOT cure, reverted
+- handover_engineer 19:31: the probe of the dive's line past the moon went to /root at 18:04 (sidestep alone clears
+  4.3 moon radii green; 12 radii is red in the path part and comes only with the orbit's speed); the ruling is
+  /root's and is not out. So no moon work yet, the two lights of Phobos wait (MAIL 1236).
+- The prepared cure (out/work/place/c2fix/cutlayers.py: a cut layer keeps only the nearest of its connected parts)
+  run and put into the working tree: C0, C1, C3, L0, L1 byte equal; C2's box y 896 to 916, h 236 to 216, far end of
+  its distance 10.993 to 9.8023; L2's colour and distance change. Drafts against the state (px over 8 levels): 2468
+  114, 2476 85, 2477 65, 2490 17, 2520 6, 2640 27, 2668 70, 2672 79, 2678 60, 2684 120, 2688 83, 2692 0; all at the
+  far crest. Final 2325 ba09dc63 (equal), final 2580 match 7.21269, 14.25713, 0.9448605 (state 7.21272, 14.25716,
+  0.9448602).
+- BUT the ledge stays (c2s/ledge-three.jpg, N1, state, cured, times 6): against N1 in the ledge's box widened by 20
+  px, px over 30 levels: 2476 state 31, cured 25; 2477 26, 23; 2490 5, 4. The dark slab with the straight top is in
+  the cured frame as in the state. So the cause named at 15:10 (two surfaces in one layer) is not the cause of the
+  slab, or not the whole of it. NOT committed; working tree back to HEAD (cutlayers.py, relief.json, public).
+- Trace, first step (c2s/lay2477.jpg, diag layers at 2477, times 8; tints by the draw order L0, C0, L2, C2, L1, C1,
+  C3 are red, green, yellow, blue, red, green, yellow): the slab is a wedge of RED between L2 (yellow, the crest's
+  tip and the ridge) above and C2 (blue, the cliff) below. So neither C2 nor L2 draws there: a layer behind shows
+  through a gap between the parent's alpha and the cut layer (L0 or L1, both red), and it shows the picture's dark
+  cliff pixels at its own distance. To trace next: which of L0 and L1, and why L2's fill does not stand there.
+- Also seen at times 5 in state and cured alike (c2s/ledge-pairs.jpg): a green patch at 2684 about x 955, y 282 and a
+  blue streak at 2468 (x 1033, y 278) and at 2688 (x 897, y 250). New to me, not traced: reds.
+- 19:38 to 19:41 UTC, the ledge TRACED (not yet cured): L0 painted magenta in the box (c2s/e1.jpg): the slab is L0.
+  The layers test depth against each other (relief.ts depthTest, depthWrite). The cut pushed L2's ground under C2
+  back to the far side's distance (11.55), and L0, which stood hidden behind L2 there, holds a near blob (9.2 to
+  11.5, the cliff's top as the first depth had it). Measured over the texels the cut raised: C2 on L2: 602 texels
+  of L0 that were behind L2 are now in front of it (largest by 2.39 units), 135 more behind by under 2 percent; C0,
+  C1, C3: 0. So where C2 moves off its picture place, L0's dark fill shows instead of L2's carried on far side.
+  Cure to build (cutlayers.py, value cuts.behind in relief.json): what stood behind a parent stays behind it: where
+  the parent is pushed back and hides a layer, that layer's distance is at least the parent's new one times
+  (1 + behind), widened by one cell of that layer's grid so that the meshes obey, not only the texels.
+  Looks pushed 19:42 (the bad pair, the trace).
+
+### MAIL 1266 (19:40 UTC), two rulings and an order
+1. The filled sky plate stays out (G17 median 1.1674 to 1.1455 is worse; a better match does not lift it). One more
+   try is open, own commit, both numbers: fill the rings with the sky's own grain at the amplitude the sky has
+   between the stars, not a smooth level. Median no lower than main's and match no worse: on. Else closed.
+2. The wall by code (74dca647): (a) name the dive and rise frames where the finest plate stands at 1 texel a pixel
+   or closer, show those at the final tier beside main's. (b) where the mask is between 0 and 1 the image's grain
+   and the code's grain are not both drawn: one hands over to the other by the same weight, so the code grain never
+   lies over the take's blocks at part strength. (c) from straight above (v03-e) the step reads as hair, shown to
+   Brandon as bad (status 329): flutes need beds broken by joints, flutes of several widths and lengths that end,
+   talus at the foot. Parallel strands of one width are hair.
+3. Then the ledge of C2 as I go. Send back: the frames of 2 (a) with pictures, what 2 (b) and (c) changed at 1 to 1.
+- 19:43 UTC, 2 (a) MEASURED by geometry (out/work/place/texel138.ts: the film's eye per frame, rays to the sphere of
+  the planet, relief not counted; the finest plate is 0.3 degrees on 2176 texels, 8.16 m a texel; a pixel's ground
+  size across the sight): at 1 texel a pixel or closer stand dive 2475 (1.03 px a texel, 1.1 percent of the frame)
+  and 2476 (1.08, 3.3 percent), rise 2682 (1.22, 12.4 percent), 2683 (1.12, 6.0 percent), 2684 (1.02, 0.6 percent),
+  each at the frame's foot (y 1076, x 844 to 940). 2474 stands at 0.98, 2685 at 0.92. Along the sight no pixel is
+  that close (0 percent both ways). From 2477 to 2681 the set stands. Finals of the five frames on the state and on
+  main's two folders (same engine: main 2f1fdfb5 differs from HEAD outside kit only in my folders) run detached
+  (fin138.sh, log fin138.log, out/work/place/t1/S*.png and M*.png).
+- 19:48 UTC, 2 (b) and (c) written into walls.py in the working tree (take 10's file kept at /tmp/walls-take10.py),
+  trial values in out/work/place/w11/plates.json, not in plates.json yet:
+  (b) hand: the rock stands where the wall's weight passes a half, the line roughened by ground noise of handTexels
+  texels (handRough of the weight), soft over handSoft of the weight; res = take (with talus) times (1 - hand) plus
+  rock times hand. So the take's grain and the code's grain are never both drawn except across that line.
+  (c) flutes and grain are broken by beds: every octave's strands end at uneven beds of fluteBeds times its size
+  (read at level0 = heights plus wander, moved per joint column), over the upper fluteEnd of a bed the field goes
+  over into the next bed's so the heights stay whole, and a bed's hardness (fluteSoft to 1) is the strength of its
+  flutes; the grain is half the ground's noise as it is (grainIso) and half strands of grainLen 1.5 cells broken by
+  beds of grainBedTexels texels; two finer bed thicknesses (0.06, 0.025 km).
+- 19:55 UTC, the finals of 2 (a) were KILLED: the final tier takes 16 samples a frame and up to 256 on fast frames
+  (config/showcase.json); after 11 minutes the first frame (2475) was not done. Ten such frames are a long measure
+  and belong on /root's machines (MAIL 357). I send the pairs at the draft tier (dr138.sh, t1/S*.png the state,
+  t1/M*.png main's two folders on the same engine) and say so.
+- 19:56 UTC, trial 11 SEEN on the 0.3 plate (w11/v03-e.jpg, v03-e2.jpg): BAD, not to name. The hair is gone but
+  the rock is a salt and pepper speckle with no beds and no flutes that read, it stands where a well painted blocky
+  slope stood, and the line of the hand is ragged with islands. Numbers: grain of the take beside 0.2166, rock
+  without its grain 0.0606, with it 0.2098; beds seen 1.00 0.93 0.00 0.00. Causes: the grain is matched to an rms
+  that holds the take's boulders and is drawn on one cell of a texel; the form under it is too weak to read at this
+  scale; handRough makes islands.
+- 19:57 UTC, trial 12 (w12): grain of three cell sizes (1, 2, 4 texels, shares 1, 0.8, 0.6), each its own strands
+  and beds; bedTexels 1.5, beds 0.45, 0.16, 0.08, 0.04 km; look file -rock0.jpg (rock before its grain).
+- 20:15 UTC, 2 (a) again, counting what is drawn (layers picture of each frame, plates = ground that is not a layer
+  of the set; out/work/place/texel139.ts and seen139.py, table seen139.txt): at the frame's foot where the sphere
+  measure put the finest plate at 1 px a texel the SET is drawn (it covers 97.8 to 99.9 percent of the ground at
+  2474 to 2476 and 99.0, 96.2, 90.7 at 2682 to 2684); the plates show in the two lower corners. Where the finest
+  plate is drawn, px a texel at most: dive 2456 0.17, 2460 0.29, 2464 0.48, 2468 0.68, 2472 0.88, 2474 0.97,
+  2475 0.83, 2476 0.84; rise 2682 1.06 (median 1.00, 0.46 percent of the frame), 2683 1.04 (0.94, 1.53 percent),
+  2684 0.98, 2686 0.83, 2690 0.52, 2694 0.28. So the frames of 2 (a) are rise 2682 and 2683. The coarser plates
+  stand closer: 0.7 plate 1.33 at 2682, 1.6 plate 1.24 at 2464, 3.8 plate 1.19 at 2456, 8.5 plate to 1.32.
+  Drafts t1/S*.png (state) and M*.png (main's folders); in the rise the state's eye is not main's (place.json rise
+  pace, turn, pullBack; plan.ts), so the pair there is not aligned. Sent to /root 20:15 with the pictures.
+- Seen in them: 2683 lower right, the border between set and plate as a straight slanted edge, dark on dark (red,
+  not traced, MAIL 771); 2475 left foot, streaks down the wall are the SET's, same in main; 2683 and 2684 lower
+  left, the plate at 1 px a texel reads as a net of blocks (the take's paving).
+- 20:12 UTC, CAUSE of the bad look from above that is not the rock (w12/whole-mask.jpg, whole-mask-0p7.jpg, -1p6):
+  the wall weight of the heights lies as a band on ground the takes paint as a level plain of boulders (0.3 plate:
+  12.7 percent wall; the south band on 0.7 and 1.6 too). The takes do not paint the canyon's wall where the heights
+  have it. From above any rock there replaces a plain that looks right; from the side the plain is drawn down a wall.
+- 20:13 UTC, LEDGE: the cure "what stood behind a parent stays behind it" run on scratch (out/work/place/c2b, relief
+  copy with cuts.behind 0.02): "behind L2: L0 moved back on 1673 texels, most by 2.718 (in front of the pushed back
+  ground before: 602)". Only relief-L0-dist.bin differs from the state, full and web. behind139.py: picture pixels
+  of L0 in front of L2's pushed back ground before 2408 by the texels, 2751 by the meshes; after 0 and 0, least
+  share behind 0.022. The two files are copied into public (uncommitted) and frames render (c2b/B*.png).
+- 20:18 UTC, MAIL 1284 from /root (task of the hour): (1) send the final tier job as a text (sha, frames, command),
+  (2) order: (a) trace the straight border of set and plate at 2683 lower right and list every frame of dive and
+  rise where a plate shows inside the picture, with its share; (b) the set's ground drawn down the wall at 2475,
+  whose it is and what cures it by cause; (c) the net of blocks; (3) the wall band painted as a plain: heights or
+  paint wrong, and what the take would have to paint; (4) the ledge's frames before and after; (5) one line on why
+  the branch has its own rise eye and whether the cure can be read on main's.
+- 20:20 UTC, LEDGE drafts with the cure seen (c2b/ledge-b.jpg, ledge-b2.jpg, in looks 20:25 bca5c479): the dark
+  slab on the crest is gone at 2476, 2477, 2490, 2684. Cure against state, draft: 2468 0 px; 2476 401 (124 over 8
+  levels, 8 over 30); 2477 341 (105, 9); 2490 81 (13, 1); 2520 34 (3, 0); 2640, 2668, 2688, 2692: 0; 2684 913
+  (216, 8). Finals with the cure: 2325 ba09dc63...a4cc byte equal; 2580 one pixel by one code (x 1198 y 319), match
+  7.21272 / 14.25716 / 0.9448602 unchanged. Still there in state and cure: a dark dot with a blue pixel left of the
+  crest (2476, 2477 x 1135 y 306) and a yellow green speck at 2683 (x 973 y 311) and 2684 (x 957 y 304), the speck
+  also before the cut. Not traced. relief.json has "behind": 0.02 and RECIPE step 2 a sentence; NOT committed.
+- Note: dist/ asset files are hard links of public/: cp in place changes both; git restore makes new files and the
+  next run of mystills builds again.
+- 20:24 UTC, trial 12's look files seen (w12/dbg-c.jpg): the streak tone is whorls about points where the fall line
+  turns, the lift shows the flat facets of the heights' own grid, the rock without grain has no form (sd of the
+  streak tone on the wall 21 of 255). Not a state.
+- 20:28 UTC, ITEM 3 measured (out/work/place/band140.py; takes before the walls in n1/a against the heights):
+  Sun azimuth 309.7 from north clockwise, 22.4 up.
+  0.3 plate: band (weight over 0.5) 15.6 percent, slope median 59.6 deg (p10 54.8, p90 64.0), 97.3 percent faces
+  the Sun, heights ask 2.37 times level ground's light, the take paints 1.51 times the ground beside.
+  0.7: band 11.9 percent, slope 60.1, 53.8 percent toward the Sun (asks 2.26, paints 1.21), away 46.2 (13.7
+  against 30 to 37 beside). 1.6: band 3.9 percent, slope 59.3, asks 2.30, paints 1.19.
+  Reading: the heights hold one 60 degree wall at all three levels; the shadowed north wall is painted as a wall,
+  the sunlit south wall as plateau with boulders. The paint is wrong there. Foot under top 4.6 to 5.3 km (rough).
+- 20:31 UTC, mail to /root: items 1 (job: 74dca647, frames 2682, 2683, 2474, 2475, npm run still -- --frame N
+  --tier final), 3, 4, 5 (rise eye: north up end of MAIL 794 and 850; main has the level end; the place's cure can
+  be read on main's eye, a state with main's rise only on /root's word). Item 2 open: lay140 runs.
+- 20:29 UTC, MAIL 1288 from /root: (1) the four final frames go out on two machines, pictures come back; (3) the
+  wall band: the heights stand, the paint gives way, the code draws the wall as listed (item 2 (c)); (4) the ledge:
+  commit it as its own commit and name it after telling handover_engineer, with the dark dot and the speck as open
+  items; (5) name a state with main's rise (place.json rise block and plan.ts rise line as on main) so the place is
+  read alone; the north up end comes after as a rise take of its own; tell travel_builder which end. Brandon's
+  fourth note (kit/PROGRESS.md, plans O to R) names nothing of Mars; the third note's words on the dive stand.
+- 20:31 UTC: handover_engineer and travel_builder told (ledge files; rise back on main's end). Merge of main
+  ce8cb68b made (62a9b2aa, kit/PROGRESS.md only). Trial 12's walls.py is kept in out/work/place/w12/
+  walls-trial12.py; the tree has take 10's again. takes/p06-lead.png leaves the tree to pay for the ledge commit.
+- 20:32 UTC, ITEM 2 (a) first trace (out/work/place/border140.py on the layers pictures): the border of set and
+  plate is not the reach circle: along it the angle from the place runs 0.048 to 0.365 deg at 2683 (reach is 0.75
+  at that height). It is a straight line: fit rms 1.0 px at 2682 right, 11.7 at 2683 right (540 px long), 0.3 px
+  at 2475 in both lower corners. So it is where the set's meshes end (an apron's outer side) or where count 3 of
+  the law (the field, close.json law.edge) lets go. Which strip: tint test next.

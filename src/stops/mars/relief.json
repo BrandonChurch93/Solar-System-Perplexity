@@ -429,12 +429,13 @@
   "taps": [1, 4, 6, 4, 1]
  },
  "cuts": {
-  "note": "The sheet is cut where the surface is cut (assets-src/mars/place/cutlayers.py over the list of crests.py). bias: how much nearer the cut layer stands than its parent, as a share of the distance. fill: under the near side the parent holds the far side carried on as far as this many times the crest's largest parallax over the surface view. band: cells of the parent's grid over which the parent goes back to its own distance, under the cut layer's whole alpha. feather: cells over which the cut layer's alpha ends beyond that. soft: texels of the distance file over which the file draws a step; within that many of the other side a texel is neither side's and takes the carried on distance. made: written by the tool, one row per cut layer with the crest's box in the picture, its largest parallax and the cell there in px of the 1080 line frame, and the frame of it.",
+  "note": "The sheet is cut where the surface is cut (assets-src/mars/place/cutlayers.py over the list of crests.py). bias: how much nearer the cut layer stands than its parent, as a share of the distance. fill: under the near side the parent holds the far side carried on as far as this many times the crest's largest parallax over the surface view. band: cells of the parent's grid over which the parent goes back to its own distance, under the cut layer's whole alpha. feather: cells over which the cut layer's alpha ends beyond that. soft: texels of the distance file over which the file draws a step; within that many of the other side a texel is neither side's and takes the carried on distance. behind: the layers test depth against each other, so where a parent is pushed back and hides another layer that layer stands at least the parent's new distance times 1 plus this, widened by a cell of its grid. made: written by the tool, one row per cut layer with the crest's box in the picture, its largest parallax and the cell there in px of the 1080 line frame, and the frame of it.",
   "bias": 0.005,
   "fill": 1.5,
   "band": 2,
   "feather": 2,
   "soft": 2,
+  "behind": 0.02,
   "made": [
    {
     "id": "C0",
