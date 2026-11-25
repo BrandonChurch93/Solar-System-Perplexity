@@ -251,6 +251,232 @@ def near_sea(img, w, spec, per):
     return img * (1 - w) + (img * land[..., None] + tone * (1 - land[..., None])) * w
 
 
+def sea_tone(img, spec, per, dot):
+    from calm import land_of, SPEC as CALM
+    lo = img.min(axis=2)
+    lit = step(spec['grey'][0], spec['grey'][1], lo / np.maximum(img.max(axis=2), 1)) * step(spec['bright'][0], spec['bright'][1], lo)
+    k = 2 * int(round(spec['landDeg'] * per)) + 1
+    land = land_of(img, {**CALM, **CALM['plate']}, dot)
+    land = cv2.GaussianBlur(cv2.dilate(land, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))), (0, 0), spec['landDeg'] * per / 2)
+    return lit, land
+
+
+def mean_over(img, w, s, least):
+    return cv2.GaussianBlur(img * w[..., None], (0, 0), s) / np.maximum(cv2.GaussianBlur(w, (0, 0), s), least)[..., None]
+
+
+LUM = np.float32([0.114, 0.587, 0.299])
+
+
+def sums(img, w, s, f=4):
+    n = img.shape[0] // f
+    a = cv2.GaussianBlur(cv2.resize(img * w[..., None], (n, n), interpolation=cv2.INTER_AREA), (0, 0), s / f)
+    c = cv2.GaussianBlur(cv2.resize(w, (n, n), interpolation=cv2.INTER_AREA), (0, 0), s / f)
+    size = (img.shape[1], img.shape[0])
+    return cv2.resize(a, size, interpolation=cv2.INTER_LINEAR), cv2.resize(c, size, interpolation=cv2.INTER_LINEAR)
+
+
+def whole(w, lit, dr, spec):
+    k = 2 * spec['join'] + 1
+    count, lab = cv2.connectedComponents(cv2.dilate((lit > 0.5).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))), connectivity=8)
+    flat = lab.ravel()
+    px = np.maximum(np.bincount(flat, minlength=count), 1)
+    stays = (np.bincount(flat, weights=(dr.ravel() == 0), minlength=count) > 0) | (np.bincount(flat, weights=w.ravel(), minlength=count) / px < 0.5)
+    stays[0] = False
+    goes = ~stays
+    goes[0] = False
+    k = 2 * spec['halo'] + 1
+    ring = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))
+    kept = cv2.GaussianBlur(cv2.dilate(stays[lab].astype(np.uint8), ring).astype(np.float32), (0, 0), spec['halo'] / 3)
+    gone = cv2.GaussianBlur(cv2.dilate(goes[lab].astype(np.uint8), ring).astype(np.float32), (0, 0), spec['halo'] / 3)
+    part = (w > 0.02) & (w < 0.98)
+    print('skirt, clouds of the map whole:', int(stays.sum()), 'stay,', int(goes.sum()), 'go; of them', len(np.unique(lab[part & goes[lab]])), 'go and', len(np.unique(lab[part & stays[lab]])), 'stay where the field thins out', flush=True)
+    return np.maximum(w, gone * (dr > 0)) * (1 - kept), kept
+
+
+def bodies(g12, inside, lit, spec, per):
+    b = spec['bodies']
+    e = spec['soft']
+    found = []
+    s = spec['sigmaDeg'] * per
+    pad = int(round(3 * s))
+    m = b['marginPx']
+    for x0, y0, x1, y1 in b['from']:
+        X0, Y0, X1, Y1 = max(x0 - pad, 0), max(y0 - pad, 0), min(x1 + pad, g12.shape[1]), min(y1 + pad, g12.shape[0])
+        img = g12[Y0:Y1, X0:X1]
+        on = (inside[Y0:Y1, X0:X1] > 0.99).astype(np.float32)
+        sea = (1 - lit[Y0:Y1, X0:X1]) * on
+        tone = mean_over(img, sea, s, spec['least'])
+        a = step(b['cloud'][0], b['cloud'][1], (img - tone) @ LUM)
+        tone = mean_over(img, sea * (1 - a), s, spec['least'])
+        a = cv2.GaussianBlur(step(b['cloud'][0], b['cloud'][1], (img - tone) @ LUM), (0, 0), b['edgePx'] / 2)
+        ratio = np.clip((img + e) / (tone + e), 0, 1)
+        dark = (1 - step(b['shade'][0], b['shade'][1], cv2.GaussianBlur(ratio @ LUM, (0, 0), b['smoothPx']))) * (a < 0.05)
+        r = 1 - dark[..., None] * (1 - cv2.GaussianBlur(ratio, (0, 0), b['edgePx']))
+        known = (a < 0.05).astype(np.float32)
+        r = np.where(known[..., None] > 0, r, mean_over(r, known, b['fillPx'], 1e-3))
+        solid = step(0.5, 0.9, a)
+        c = img * solid[..., None] + mean_over(img, solid, b['fillPx'] / 2, 1e-3) * (1 - solid[..., None])
+        seen = (np.maximum(a, dark) > b['least']).astype(np.uint8)
+        for join, least in ((b['joinPx'][0], b['areaPx'][0]), (b['joinPx'][1], b['areaPx'][1])):
+            k = 2 * join + 1
+            joined = cv2.morphologyEx(seen, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+            count, lab, stats, _ = cv2.connectedComponentsWithStats(joined, connectivity=8)
+            for i in range(1, count):
+                bx, by, bw, bh, area = stats[i]
+                if area < least or area > b['areaPx'][2]:
+                    continue
+                if bx + X0 - m < x0 or by + Y0 - m < y0 or bx + bw + X0 + m > x1 or by + bh + Y0 + m > y1:
+                    continue
+                sl = (slice(by - m, by + bh + m), slice(bx - m, bx + bw + m))
+                mine = ((lab[sl] == i) & (seen[sl] > 0)).astype(np.uint8)
+                if not (on[sl] > 0)[mine > 0].all():
+                    continue
+                w = cv2.GaussianBlur(cv2.dilate(mine, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (m + 1, m + 1))).astype(np.float32), (0, 0), m / 4)
+                aa = a[sl] * w
+                if float(aa.sum()) < b['cloudPx'] or any(f['at'] == (bx + X0, by + Y0) and f['a'].shape == aa.shape for f in found):
+                    continue
+                found.append({'c': c[sl].astype(np.float32), 'a': aa.astype(np.float32), 'r': (1 - w[..., None] * (1 - r[sl])).astype(np.float32), 'px': float(np.maximum(aa, dark[sl] * w).sum()), 'at': (bx + X0, by + Y0), 'group': area > b['areaPx'][1], 'light': (c[sl] * aa[..., None]).sum(axis=(0, 1)) / float(aa.sum())})
+    return found
+
+
+def placed(body, scale, mirror, axis):
+    h, w = body['a'].shape
+    m = np.eye(2) * scale
+    if mirror:
+        ux, uy = axis
+        m = m @ np.array([[2 * ux * ux - 1, 2 * ux * uy], [2 * ux * uy, 2 * uy * uy - 1]])
+    ext = np.abs(m) @ np.array([w, h])
+    W, H = int(np.ceil(ext[0])) + 2, int(np.ceil(ext[1])) + 2
+    t = np.array([(W - 1) / 2, (H - 1) / 2]) - m @ np.array([(w - 1) / 2, (h - 1) / 2])
+    M = np.hstack([m, t[:, None]]).astype(np.float64)
+    blur = 0.5 * np.sqrt(max(1 / scale ** 2 - 1, 0))
+
+    def warp(x, border):
+        if blur > 0.05:
+            x = cv2.GaussianBlur(x, (0, 0), blur)
+        return cv2.warpAffine(x, M, (W, H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=border)
+
+    return warp(body['c'], (0, 0, 0)), warp(body['a'], 0), warp(body['r'], (1, 1, 1))
+
+
+def sown(out, found, axis, allowed, density, light, spec, per):
+    b = spec['bodies']
+    rng = np.random.default_rng(b['seed'])
+    n = out.shape[0]
+    grain = cv2.GaussianBlur(rng.standard_normal((n // 8, n // 8)).astype(np.float32), (0, 0), b['clumpDeg'] * per / 8)
+    grain = cv2.resize(grain / grain.std(), (n, n), interpolation=cv2.INTER_CUBIC)
+    want = density * step(b['clump'][0], b['clump'][1], grain) * allowed
+    del grain
+    cdf = np.cumsum(cv2.resize(want, (n // 4, n // 4), interpolation=cv2.INTER_AREA).ravel().astype(np.float64))
+    goal = b['cover'] * float(want.sum())
+    del want
+    shade = np.ones_like(out)
+    colour = np.zeros_like(out)
+    alpha = np.zeros((n, n), np.float32)
+    taken = np.zeros((n, n), np.uint8)
+    used = [[] for _ in found]
+    groups = np.array([i for i, f in enumerate(found) if f['group']], np.int64)
+    singles = np.array([i for i, f in enumerate(found) if not f['group']], np.int64)
+    k = 2 * b['apartPx'] + 1
+    laid = 0.0
+    for _ in range(b['tries']):
+        if laid >= goal:
+            break
+        i = int(np.searchsorted(cdf, rng.uniform(0, cdf[-1])))
+        y, x = (i // (n // 4)) * 4 + int(rng.integers(0, 4)), (i % (n // 4)) * 4 + int(rng.integers(0, 4))
+        kind = groups if len(groups) and rng.uniform() < b['groups'] else singles
+        pick = rng.choice(kind, size=min(b['choose'], len(kind)), replace=False)
+        j = int(min(pick, key=lambda p: (len(used[p]), p)))
+        if any(np.hypot(x - ux, y - uy) < b['twinDeg'] * per for ux, uy in used[j]) or (found[j]['group'] and len(used[j]) >= b['again']):
+            continue
+        c, a, r = placed(found[j], float(np.exp(rng.uniform(np.log(b['scale'][0]), np.log(b['scale'][1])))), bool(rng.integers(0, 2)), axis)
+        c = c * np.clip(light[y, x] / np.maximum(found[j]['light'], 1), b['gain'][0], b['gain'][1])
+        h, w = a.shape
+        x0, y0 = x - w // 2, y - h // 2
+        if x0 < 0 or y0 < 0 or x0 + w > n or y0 + h > n:
+            continue
+        sl = (slice(y0, y0 + h), slice(x0, x0 + w))
+        body = np.maximum(a, 1 - r.min(axis=2))
+        hit = body > b['least']
+        if not hit.any() or float(allowed[sl][body > 0.002].min()) < 0.999 or taken[sl][hit].any():
+            continue
+        a = a * allowed[sl]
+        r = 1 - (1 - r) * allowed[sl][..., None]
+        shade[sl] = np.minimum(shade[sl], r)
+        colour[sl] = colour[sl] * (1 - a[..., None]) + c * a[..., None]
+        alpha[sl] = 1 - (1 - alpha[sl]) * (1 - a)
+        taken[sl] |= cv2.dilate(hit.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+        used[j].append((x, y))
+        laid += float(body.sum())
+    print('skirt field:', len(found), 'bodies of the canvas (', len(groups), 'groups ), laid', sum(len(u) for u in used), 'times, most', max(len(u) for u in used), 'for one body, cover laid', round(laid), 'of', round(goal), 'wanted', flush=True)
+    return out * shade * (1 - alpha[..., None]) + colour
+
+
+def skirt(g12, under, inside, dist, spec, per):
+    from calm import SPEC as CALM
+    n = g12.shape[0]
+    b = spec['bodies']
+    dr, lab = cv2.distanceTransformWithLabels((inside < 0.99).astype(np.uint8), cv2.DIST_L2, 5, labelType=cv2.DIST_LABEL_PIXEL)
+    dr = dr / per
+    s = spec['sigmaDeg'] * per
+    dot = CALM['dotPx']['12']
+    lit, land = sea_tone(g12, spec, per, dot)
+    sea = (1 - lit) * (1 - land)
+    del land
+    own = mean_over(g12, sea * (dr > 0), s, spec['least'])
+    k = 2 * int(round(spec['landDeg'] * per)) + 1
+    green = cv2.dilate(((g12[..., 1] > g12[..., 2] + spec['green']) & (g12[..., 1] > g12[..., 0] + spec['green'])).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))).astype(np.float32)
+    calmed = (1 - lit) * (1 - green) * (dr == 0)
+    a, c = sums(g12, calmed, s)
+    tone = a / np.maximum(c, spec['least'])[..., None]
+    calmed = calmed * (1 - step(b['cloud'][0], b['cloud'][1], (g12 - tone) @ LUM))
+    del tone
+    a, c = sums(g12, calmed, s)
+    rim = (cv2.GaussianBlur(g12 * calmed[..., None], (0, 0), spec['rimDeg'] * per) + spec['fill'] * a) / (cv2.GaussianBlur(calmed, (0, 0), spec['rimDeg'] * per) + spec['fill'] * c + 1e-6)[..., None]
+    del a, c, calmed
+    land = cv2.GaussianBlur(green, (0, 0), spec['landDeg'] * per / 2)
+    zy, zx = np.nonzero(dr == 0)
+    at = np.zeros(lab.max() + 1, np.int64)
+    at[lab[zy, zx]] = zy * n + zx
+    at = at[lab]
+    del lab, zy, zx, green
+    outside = (dr > 0).astype(np.float32)
+    rim = mean_over(rim.reshape(-1, 3)[at].reshape(n, n, 3), outside, spec['carryDeg'] * per, 1e-3)
+    cu, lu = sea_tone(under, spec, per, dot)
+    far = mean_over(under, (1 - cu) * (1 - lu), s, spec['least'])
+    del cu, lu
+    u = step(0, spec['toneDeg'], dr)[..., None]
+    want = rim * (1 - u) + far * u
+    del rim, far
+    e = spec['soft']
+    zone = (step(0, spec['enterDeg'], dr) * sea)[..., None]
+    out = g12 * (1 - zone) + np.maximum((g12 + e) * (want + e) / (own + e) - e, 0) * zone
+    del own
+    w = step(0, spec['calmDeg'], dr) * (1 - step(spec['fieldDeg'][0], spec['fieldDeg'][1], dr)) * (1 - step(MEND['far']['fromDeg'][0], MEND['far']['fromDeg'][1], dist)) * (1 - land)
+    w, kept = whole(w, lit, dr, spec['whole'])
+    out = out * (1 - kept[..., None]) + g12 * kept[..., None]
+    out = out * (1 - w[..., None]) + want * w[..., None]
+    del want
+    found = bodies(g12, inside, lit, spec, per)
+    bright = ((lit > 0.9) & (dr == 0)).astype(np.float32)
+    light = mean_over(g12, bright, b['lightDeg'] * per, 1e-4)
+    light = mean_over(light.reshape(-1, 3)[at].reshape(n, n, 3), outside, spec['carryDeg'] * per, 1e-3)
+    light = light * (1 - u) + np.mean([f['light'] for f in found], axis=0) * u
+    del at, u, bright, outside
+    north, east, up = g.frame_at(P)
+    sun = g.unit(np.array(PLATES['stand']['sun']) @ g.TO_BODY.T)
+    axis = g.unit(np.array([-(sun @ east), sun @ up]))
+    allowed = ((dr > b['fromDeg']) & (land < 0.02) & (kept < 0.02)).astype(np.float32)
+    del kept
+    density = (1 - step(spec['fieldDeg'][0], spec['fieldDeg'][1], dr)) * (1 - step(MEND['far']['fromDeg'][0], MEND['far']['fromDeg'][1], dist)) * (1 + b['rim'][0] * (1 - step(0, b['rim'][1], dr)))
+    res = sown(out, found, axis, allowed, density, light, spec, per)
+    px = (dr > 0) & (dr < spec['toneDeg'])
+    print('skirt: shadows fall along', np.round(axis, 3), 'of the plate (x east, y south); share of the plate that gives way to the field', round(float(w.mean()), 4), 'with the tone law', round(float(zone.mean()), 4), 'sea outside the canvas to toneDeg, mean before (BGR)', np.round(g12[px & (sea > 0.5)].mean(axis=0), 1), 'after', np.round(res[px & (sea > 0.5)].mean(axis=0), 1), 'largest change inside the canvas', round(float(np.abs(res - g12)[dr == 0].max()), 3), flush=True)
+    cv2.imwrite(str(WORK / 'skirt-look.jpg'), cv2.resize(np.clip(np.hstack([g12, res]), 0, 255).astype(np.uint8), (2048, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 90])
+    return res, w
+
+
 def rim_line(rg):
     a, b = 0.5 - FEATHER, 0.5
     for _ in range(48):
@@ -314,7 +540,7 @@ def wiped(img, spec):
     return img * (1 - w) + fixed * w
 
 
-def veil(hz, cover, vl, md, deg, from_nadir):
+def veil(hz, cover, base, vl, md, deg, from_nadir):
     n, t = vl['size'], vl['times']
     k = n // t
     o = (n - k) // 2
@@ -346,7 +572,8 @@ def veil(hz, cover, vl, md, deg, from_nadir):
     near = cv2.GaussianBlur(cv, (0, 0), md['spreadDeg'] * per)
     carried = cv2.GaussianBlur(num - e * cv[..., None], (0, 0), md['spreadDeg'] * per) / np.maximum(near, 1e-6)[..., None] * step(0, 0.5, near)[..., None]
     out = cv2.GaussianBlur(num + (e + carried) * (1 - cv[..., None]), (0, 0), vl['sigmaDeg'] * per)
-    return out.astype(np.float32), cv2.copyMakeBorder(cv[o:o + k, o:o + k], o, o, o, o, cv2.BORDER_REPLICATE).astype(np.float32)
+    broad = cv2.GaussianBlur(cv2.copyMakeBorder(cv2.resize(base, (k, k), interpolation=cv2.INTER_AREA), o, o, o, o, cv2.BORDER_REPLICATE).astype(np.float64), (0, 0), vl['sigmaDeg'] * per) + out
+    return out.astype(np.float32), cv2.copyMakeBorder(cv[o:o + k, o:o + k], o, o, o, o, cv2.BORDER_REPLICATE).astype(np.float32), broad.astype(np.float32)
 
 
 def main():
@@ -400,7 +627,8 @@ def main():
     back, ok = rep(held[12], Win(SPOT, 12, size), whole)
     far, _ = rep(held[24], Win(SPOT, 24, size), whole)
     r = inward(ok, MEND['strip']['blendPx'])
-    g12 = g12 * (1 - wd) + graded(back * r + far * (1 - r), sea) * wd
+    under12 = graded(back * r + far * (1 - r), sea)
+    g12 = g12 * (1 - wd) + under12 * wd
     print('plate, share that gives way to the hold', round(float(wd.mean()), 4), flush=True)
     del far, back, r, wd, dens
     nr = cv2.imread(str(WORK / 'field-near.png'), 0).astype(np.float32) / 255
@@ -409,7 +637,15 @@ def main():
     zone = rim(step(rg['wipe'][0], rg['wipe'][1], np.clip(nr, 0, 1) * ok), g12, {**MEND['nearSea'], **MEND['nearSea']['rim']}, size / deg, rim_line(rg) * size)
     g12 = near_sea(g12, zone[..., None], MEND['nearSea'], size / deg)
     del nr, ok, zone
+    g12, laid = skirt(g12, under12, inside12, dist, {**MEND['nearSea'], **MEND['skirt']}, size / deg)
+    del under12
     fl = field()
+    keep, ok = rep(1 - laid, whole, fl['win'], signed=True)
+    keep = np.where(ok, np.clip(keep, 0, 1), 1).astype(np.float32)
+    fl['colour'] *= keep[..., None]
+    fl['both'][..., 0] *= keep
+    fl['both'][..., 1] = 1 - (1 - fl['both'][..., 1]) * keep
+    del keep, laid, ok
     lay12 = cv2.imread(str(WORK / 'q12-lay.png')).astype(np.float32)
     fs = MEND['field']
     a = fl['both'][..., 0]
@@ -432,12 +668,14 @@ def main():
         raise SystemExit('the lay back reaches past the window of the low plate')
     cv2.imwrite(str(WORK / lw['file']), np.clip(cv2.resize((f12 * (1 - cover) + (lay12 + detail) * cover)[int(lwin.y0):int(lwin.y0) + lwin.n, int(lwin.x0):int(lwin.x0) + lwin.n], (lw['size'], lw['size']), interpolation=cv2.INTER_AREA) + 0.5, 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 94])
     vl = PLATES['haze']
-    haze, share = veil((lay12 + detail - f12) * cover, cover[..., 0], vl, MEND['veil'], deg, from_nadir)
+    haze, share, broad = veil((lay12 + detail - f12) * cover, cover[..., 0], f12, vl, MEND['veil'], deg, from_nadir)
     for s in ('full', 'web'):
         (PUBLIC / s / vl['file']).write_bytes(np.concatenate([haze[..., ::-1] / 255, share[..., None]], axis=2)[::-1].astype(np.float16).tobytes())
+        (PUBLIC / s / vl['broad']).write_bytes(np.concatenate([broad[..., ::-1] / 255, np.ones_like(share)[..., None]], axis=2)[::-1].astype(np.float16).tobytes())
+    print('broad lay back of the low plate (the plate smoothed as the veil is, plus the veil), from', round(float(broad.min()), 1), 'to', round(float(broad.max()), 1), 'mean (BGR)', np.round(broad.reshape(-1, 3).mean(axis=0), 1), flush=True)
     cv2.imwrite(str(WORK / 'veil-look.png'), np.clip(128 + haze / 2, 0, 255).astype(np.uint8))
     print('veil of the low plate', vl['size'], 'px,', vl['times'], 'plates wide, sigma', vl['sigmaDeg'], 'degrees, from', round(float(haze.min()), 1), 'to', round(float(haze.max()), 1), 'mean (BGR)', np.round(haze.reshape(-1, 3).mean(axis=0), 1), 'at the corners', np.round(haze[[0, 0, -1, -1], [0, -1, 0, -1]].mean(axis=1), 1), flush=True)
-    del haze, share
+    del haze, share, broad
     cv2.imwrite(str(WORK / 'f12-look.jpg'), cv2.resize(np.clip(np.hstack([f12, f12 * (1 - cover) + (lay12 + detail) * cover]), 0, 255).astype(np.uint8), (2048, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 90])
     cv2.imwrite(str(WORK / 'f12-native.jpg'), np.clip(np.hstack([f12[1850:2350, 2800:3500], f12[2950:3450, 1450:2150], f12[504:1004, 2298:2998]]), 0, 255).astype(np.uint8), [cv2.IMWRITE_JPEG_QUALITY, 90])
     print('low plate done, lay back share', round(float(cover.mean()), 4), 'field cover on the plate', round(float(a.mean()), 4), 'detail rms', round(float(np.sqrt((detail ** 2).mean())), 2), flush=True)

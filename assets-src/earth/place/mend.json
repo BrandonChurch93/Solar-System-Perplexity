@@ -605,5 +605,86 @@
    "edgeDeg": 0.04,
    "softDeg": 0.3
   }
+ },
+ "skirt": {
+  "how": "The ground round the canvas on the plate. The lay back ends at the canvas's rim (the frame of the close picture laid on the ground); outside it the plate was bare calm sea out to the hold's own sea, so the dive showed the canvas by its outline. Here the same kind of ground goes on past the rim, made of the canvas's own bodies and of nothing else. Bodies: inside the boxes of bodies.from (px of the plate, open sea of the canvas, clear of the glint and of land) a cloud is what stands over the sea's own local tone (bodies.cloud, code values of light over the mean of the sea alone within sigmaDeg degrees) and a shadow is sea darker than that tone (bodies.shade, share of the tone, smoothed over smoothPx px). Cloud and shadow that touch within joinPx[0] px are one body, and those that touch within joinPx[1] px are one group; a body is kept from areaPx[0] px, a group from areaPx[1] px, none over areaPx[2] px, none that the box or the rim cuts, none with less than cloudPx px of cloud. A body carries the cloud's own colour and cover and the shadow as the share of light it leaves (never over 1), with a soft border of marginPx px. Field: bodies are laid outside the rim by a seeded draw (seed), whole, never across the rim (nearest fromDeg degrees), never on land, never on each other (apartPx px apart). Where: as dense as cover says, denser by bodies.rim[0] of that at the rim (back to cover over rim[1] degrees, as the canvas's own specks stand closest in its near part), thinning to none between fieldDeg[0] and fieldDeg[1] degrees from the rim and where the plate gives way to the hold (far.fromDeg), in clumps with open water between (a seeded smooth field of clumpDeg degrees through the step clump). Which: a group with the chance groups, else a single body, of choose drawn the one laid least so far; no body nearer than twinDeg degrees to itself and a group at most again times. How: at a size between scale[0] and scale[1] of its own, as it is or mirrored about the line the shadows fall along, so every shadow keeps the canvas's own Sun (the direction is the Sun of plates.stand on the ground of the place). Light: a cloud outside the rim is lit as the canvas's clouds just inside the rim (their mean within lightDeg degrees, carried outward and smoothed as the sea's tone is) and runs out to the bodies' own mean light over toneDeg degrees; the gain stays within gain. Shadows darken the sea under them by their own share, the darkest where two meet. Under the field the sea is its tone alone: between the rim (whole from calmDeg degrees outside it) and fieldDeg the hold's own soft cloud, its shoals and its drawn relief give way to the wanted tone, since a body of another kind beside the canvas's own shows the border. A cloud of the map gives way whole or stays whole, never in part (whole): the lit cloud of nearSea, joined within whole.join px, is one cloud; one that reaches into the canvas stays (the rim does not cut a cloud), any other goes when the mean of the weight over it is a half or more and stays else, with its soft border of whole.halo px; no body of the field is laid on a cloud that stays. Land stays, and land here is green land alone (green: code values of green over red and over blue, widened by landDeg), because the land of calm.py also takes pale shoals and soft cloud for land. The field of deck.py is taken off by the same weight. Inside the canvas the plate keeps its pixels. Tone: one law for the open sea outside the canvas. At the rim the sea has the tone the plate's sea has just inside the rim (its mean over open sea alone: not over the lit cloud, not over what stands over the local tone as a cloud of bodies.cloud does and not over green land; shadow and the picture's own dark near edge count, since the tone outside has to be the tone the rim has; within rimDeg degrees, and where that little of open sea is left the mean within sigmaDeg degrees fills in with the weight fill, so a cloud at the rim does not throw its light outward as a pale wedge; carried outward from the nearest point of the rim and smoothed over carryDeg degrees among the points outside the rim alone, so the brighter sea further inside does not lift the tone at the rim), and it runs out into the tone of the hold's own sea as the plate shows it unveiled (the hold times seaGain, mean over sea alone within sigmaDeg degrees) by the smooth step of the distance from the rim over toneDeg degrees. A sea texel is moved from its own local tone to that tone as (value + soft) (wanted + soft) / (own + soft) - soft, so ripple, relief and shadows keep their depth in proportion; cloud (grey, bright of nearSea) and land keep their values. No round about the point under the close camera is left: the only line the tone knows is the rim, and there both sides are equal.",
+  "bodies": {
+   "from": [
+    [
+     1380,
+     2440,
+     2780,
+     3090
+    ]
+   ],
+   "cloud": [
+    10,
+    36
+   ],
+   "shade": [
+    0.6,
+    0.8
+   ],
+   "smoothPx": 2.0,
+   "edgePx": 1.5,
+   "fillPx": 6,
+   "joinPx": [
+    3,
+    12
+   ],
+   "areaPx": [
+    12,
+    1500,
+    60000
+   ],
+   "cloudPx": 6,
+   "marginPx": 6,
+   "least": 0.2,
+   "seed": 1305,
+   "clumpDeg": 0.22,
+   "clump": [
+    -0.2,
+    0.5
+   ],
+   "cover": 0.12,
+   "tries": 40000,
+   "choose": 3,
+   "groups": 0.4,
+   "again": 2,
+   "twinDeg": 1.2,
+   "scale": [
+    0.65,
+    1.15
+   ],
+   "apartPx": 4,
+   "fromDeg": 0.005,
+   "gain": [
+    0.45,
+    1.3
+   ],
+   "lightDeg": 0.4,
+   "rim": [
+    3.0,
+    0.4
+   ]
+  },
+  "green": 6,
+  "enterDeg": 0.12,
+  "calmDeg": 0.03,
+  "fieldDeg": [
+   1.8,
+   2.8
+  ],
+  "toneDeg": 3.0,
+  "sigmaDeg": 0.3,
+  "rimDeg": 0.06,
+  "carryDeg": 0.12,
+  "soft": 6,
+  "least": 0.002,
+  "fill": 0.05,
+  "whole": {
+   "join": 4,
+   "halo": 14
+  }
  }
 }

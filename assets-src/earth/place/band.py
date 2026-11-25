@@ -258,8 +258,9 @@ def main():
     half = times * np.tan(np.radians(PLACE_WIDE) / 2)
     old = np.frombuffer(src_veil.read_bytes(), np.float16).reshape(n, n, 4)[::-1].astype(np.float32)
     approved = np.asarray(Image.open(src_ground).convert('RGB')).astype(np.float32) / 255
-    k = cover_of(grid(PC, half, n)).astype(np.float32)
-    veil = np.concatenate([old[..., :3] * (1 - k[..., None]) + air_light(approved, grid(PC, half, n), k, old), k[..., None]], axis=2).astype(np.float16)
+    on = bool(BAND['on'])
+    k = cover_of(grid(PC, half, n)).astype(np.float32) * on
+    veil = np.concatenate([old[..., :3] * (1 - k[..., None]) + (air_light(approved, grid(PC, half, n), k, old) if on else 0), k[..., None]], axis=2).astype(np.float16)
     for s in ('full', 'web'):
         (PUB / s / HAZE['file']).write_bytes(veil[::-1].tobytes())
     veil = veil.astype(np.float32)
@@ -267,6 +268,11 @@ def main():
     print('veil with the cover of the air, by degrees from the point under the close camera (cover, colour):', ', '.join('%g %.2f %s' % (a, k[(ring >= a) & (ring < a + 0.5)].mean(), np.round(veil[(ring >= a) & (ring < a + 0.5)][:, :3].mean(0), 2).tolist()) for a in (4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 18)), flush=True)
 
     field = stand_field()
+    if not on:
+        shutil.copyfile(src_ground, PUB / 'full' / GROUND['file'])
+        shutil.copyfile(src_web, PUB / 'web' / GROUND['file'])
+        print('band off: the sea layer is the approved picture\'s own (relief/build.py), the veil carries no cover', flush=True)
+        return
     sun = g.unit(np.array(STAND['sun']) @ g.TO_BODY.T)
     gain = np.array(PLATES['seaGain'][::-1], np.float32)
     full = np.clip(np.round(approved * 255), 0, 255).astype(np.uint8)

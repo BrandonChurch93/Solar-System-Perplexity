@@ -30,7 +30,7 @@ export interface GroundLook {
   plain: [number, number]
 }
 
-export interface GroundOnGlobe { farDeg: number[]; mapDeg: number[]; rim: number[]; rimNear: number[]; arrive: number[]; share: number[]; level: number[]; toneTimes: number; light: Record<string, THREE.IUniform>; veil: { map: THREE.Texture; plane: THREE.Matrix3; fromDeg: number[] } }
+export interface GroundOnGlobe { farDeg: number[]; mapDeg: number[]; rim: number[]; rimNear: number[]; arrive: number[]; share: number[]; level: number[]; toneTimes: number; light: Record<string, THREE.IUniform>; veil: { map: THREE.Texture; broad: THREE.Texture; plane: THREE.Matrix3; fromDeg: number[]; times: number } }
 
 function unpack(buffer: ArrayBuffer, size: number, file: string): Float32Array {
   const count = new Uint32Array(buffer, 0, 1)[0]!
@@ -124,8 +124,16 @@ uniform vec4 uOwn;
 uniform vec2 uRimNear;
 uniform vec4 uCanvas;
 uniform sampler2D uVeil;
+uniform sampler2D uVeilBroad;
 uniform mat3 uVeilPlane;
 uniform vec2 uVeilFrom;
+uniform float uVeilTimes;
+uniform float uFeather;
+uniform vec4 uGlint;
+uniform vec2 uGlintSeen;
+uniform vec4 uGlintCloud;
+uniform vec3 uGlintGlow;
+uniform sampler2D uGlintSea;
 uniform vec4 uArrive;
 uniform vec3 uShare;
 uniform vec4 uCome;
@@ -177,14 +185,29 @@ vec4 thin(vec4 c, float deck) {
   vec3 up = normalize(at - uSea.xyz);
   vec3 q = uVeilPlane * up;
   vec2 on = q.xy / max(q.z, 0.05);
-  float less = 1.0 - shareAt(at);
-  vec4 air = textureLod(uVeil, on + 0.5, 0.0);
+  float share = shareAt(at);
+  vec3 air = textureLod(uVeil, on + 0.5, 0.0).rgb;
   vec3 code = toCode(c.rgb / c.a);
-  code = max(code - less * deck * (1.0 - smoothstep(uVeilFrom.x, uVeilFrom.y, dot(up, normalize(-uSea.xyz)))) * (air.rgb - air.a * clamp((code - air.rgb) / max(1.0 - air.a, 0.15), 0.0, 1.0)), 0.0);
+  vec3 back = (1.0 - share) * deck * (1.0 - smoothstep(uVeilFrom.x, uVeilFrom.y, dot(up, normalize(-uSea.xyz)))) * air;
+  vec3 less = code - back;
+  vec3 part = code * (1.0 - back / max(textureLod(uVeilBroad, on + 0.5, 0.0).rgb, 1e-3));
+  code = max(mix(min(less, part), max(less, part), step(0.0, air)), 0.0);
+  vec2 qp = on * uVeilTimes;
+  float inside = step(0.3, q.z) * smoothstep(0.5, 0.5 - uFeather, max(abs(qp.x), abs(qp.y)));
+  vec2 gq = (qp - uGlint.xy) * uGlint.z;
+  float unseen = inside * smoothstep(0.5, 0.5 - uGlint.w, max(abs(gq.x), abs(gq.y))) * (1.0 - smoothstep(uGlintSeen.x, uGlintSeen.y, dot(normalize(uEye - at), normalize(-at))));
+  for (int j = 0; j < (unseen > 0.0 ? 1 : 0); j++) {
+    vec3 still = textureLod(uGlintSea, gq + 0.5, 0.0).rgb;
+    float water = 1.0 - smoothstep(uGlintCloud.x, uGlintCloud.y, min(code.r, min(code.g, code.b))) * (1.0 - smoothstep(uGlintCloud.z, uGlintCloud.w, code.r - code.b));
+    float glow = smoothstep(uGlintGlow.x, uGlintGlow.y, (code.r - still.r) / max(code.g - still.g, uGlintGlow.z));
+    code -= unseen * glow * water * max(code - still, 0.0);
+  }
   float top = max(code.r, max(code.g, code.b));
   float least = min(code.r, min(code.g, code.b));
   float sea = (1.0 - smoothstep(uToneCloud.x, uToneCloud.y, least)) * smoothstep(uToneGrey.x, uToneGrey.y, (top - least) / max(top, 1e-3));
-  code = code * mix(vec3(1.0), mix(vec3(1.0), uAirGain, unveiled(length(uEye - at) / uSea.w)) / uAirGain, sea);
+  vec3 held = code - inside * textureLod(uTone, on * uToneK + 0.5, 0.0).rgb;
+  vec3 own = inside * (code - held * uAirGain);
+  code = mix(code, (code - own) * mix(vec3(1.0), uAirGain, unveiled(length(uEye - at) / uSea.w)) / uAirGain + share * own, sea);
   return vec4(fromCode(code) * c.a, c.a);
 }
 vec3 lightOn() {
@@ -415,7 +438,7 @@ export class Ground {
           uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uPerLine: frameUniform, uBias: biasUniform,
           uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
           uShow: { value: new THREE.Vector4(0, 0, 1, 1) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uRimNear: { value: new THREE.Vector2(globe.rimNear[0]!, globe.rimNear[1]!) }, uOwn: { value: new THREE.Vector4(2, 3, 2, 3) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) },
-          uVeil: { value: globe.veil.map }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, uArrive: { value: new THREE.Vector4(globe.arrive[0]!, 1 / Math.log(globe.arrive[0]! / globe.arrive[1]!), 1, 1) }, uShare: { value: new THREE.Vector3().fromArray(globe.share) }, uCome: { value: new THREE.Vector4(globe.share[3]!, globe.share[4]!, globe.share[5]!, globe.share[6]!) }, uAir: { value: new THREE.Vector3(globe.share[7]!, globe.share[8]!, globe.share[9]!) }, uAirGain: { value: new THREE.Vector3(globe.share[10]!, globe.share[11]!, globe.share[12]!) }, uLevel: { value: new THREE.Vector3().fromArray(globe.level) }, uToneK: { value: globe.toneTimes }, uSunAt: { value: new THREE.Vector3(0, 1, 0) }, ...globe.light, ...extra,
+          uVeil: { value: globe.veil.map }, uVeilBroad: { value: globe.veil.broad }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, uVeilTimes: { value: globe.veil.times }, uArrive: { value: new THREE.Vector4(globe.arrive[0]!, 1 / Math.log(globe.arrive[0]! / globe.arrive[1]!), 1, 1) }, uShare: { value: new THREE.Vector3().fromArray(globe.share) }, uCome: { value: new THREE.Vector4(globe.share[3]!, globe.share[4]!, globe.share[5]!, globe.share[6]!) }, uAir: { value: new THREE.Vector3(globe.share[7]!, globe.share[8]!, globe.share[9]!) }, uAirGain: { value: new THREE.Vector3(globe.share[10]!, globe.share[11]!, globe.share[12]!) }, uLevel: { value: new THREE.Vector3().fromArray(globe.level) }, uToneK: { value: globe.toneTimes }, uSunAt: { value: new THREE.Vector3(0, 1, 0) }, ...globe.light, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,
