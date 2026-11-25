@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T10:28:30.358Z",
- "head": "dfe0aa905683a93feed947cdf6915379e7b01757",
- "note": "draft frames by hash on commit 4 and on the naming commit are rendering, 54 frames each, beside the whole suite on the naming tree",
+ "pushed": "2026-11-25T10:51:12.465Z",
+ "head": "c0d04d4c88f335d1fc6ccee5de64752d773caab4",
+ "note": "the measure of the naming commit proved against the motion of drawn frames; second whole suite and draft hash list running",
  "looks": [
+  {
+   "time": "2026-11-25T10:51:10.802Z",
+   "file": "20261125105110802-note-measure-mercury-a.jpg",
+   "source": "../../../../tmp/law/measure-mercury-a.png",
+   "kind": "note",
+   "label": "The motion measure against the drawn pictures, Mercury's surface view, three pairs of consecutive draft frames: before the naming (plane, red) the measure reads a third to a half under the motion of the pictures, after it (the globe as drawn, green) within 4 percent",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T10:28:28.061Z",
    "file": "20261125102828061-note-c4-draft-merc-a.jpg",
@@ -52,13 +60,6 @@
    "source": "out/work/looks-extra/jup3027-box-ends-ll.png",
    "kind": "note",
    "label": "Jupiter 3027 review at 1 to 1, lower left: box shutter above, ends 0.5 (trial build) below; the doubled outlines of the puffs under the box become one soft shape"
-  },
-  {
-   "time": "2026-11-25T08:13:49.014Z",
-   "file": "20261125081349014-note-f03027.jpg",
-   "source": "out/work/blur/bx-review/f03027.png",
-   "kind": "note",
-   "label": "Jupiter 3027 review, box shutter, 70 samples (take state 7e3da15a), the row for the queued table"
   }
  ]
 }
