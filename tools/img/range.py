@@ -35,10 +35,23 @@ def rays(record, shape):
     return turned(c['q'], v)
 
 
+def form(body):
+    """The drawn shape of a body at its frame as a matrix of the pose frame, None where the record names none: a point g of the turned body
+    stands at place + shape g."""
+    return np.array(body['shape'], dtype=np.float64).reshape(3, 3) if body.get('shape') else None
+
+
+def plain(body, x):
+    """A point of the pose frame about the body's place with its drawn shape taken out."""
+    s = form(body)
+    v = x - np.array(body['place'], dtype=np.float64)
+    return v if s is None else v @ np.linalg.inv(s).T
+
+
 def shaped(record, x):
     """A point of the pose frame in the body's own frame with its scale taken out: there the body is the unit sphere."""
     b = record['bodies'][0]
-    return turned(back(b['axes']), x - np.array(b['place'], dtype=np.float64)) / np.array(b['scale'], dtype=np.float64)
+    return turned(back(b['axes']), plain(b, x)) / np.array(b['scale'], dtype=np.float64)
 
 
 def points(d, record):
@@ -64,10 +77,12 @@ def points(d, record):
 
 def carried(x, here, there, shape=None):
     """Where the points x of the body in the frame of the record here stand in the picture of the record there (pixel places x, y, the
-    pixel's middle at whole numbers) and their range there in pose units; the body's turn between the two times is taken with them."""
+    pixel's middle at whole numbers) and their range there in pose units; the body's turn between the two times is taken with them, and its
+    drawn shape at each of the two where the record names one."""
     a, b = here['bodies'][0], there['bodies'][0]
-    g = turned(back(a['turn']), x - np.array(a['place'], dtype=np.float64))
-    y = turned(b['turn'], g) + np.array(b['place'], dtype=np.float64)
+    g = turned(b['turn'], turned(back(a['turn']), plain(a, x)))
+    s = form(b)
+    y = (g if s is None else g @ s.T) + np.array(b['place'], dtype=np.float64)
     c = there['camera']
     h, w = shape if shape else (c['height'], c['width'])
     k = h / 2 / np.tan(np.radians(c['vfov']) / 2)

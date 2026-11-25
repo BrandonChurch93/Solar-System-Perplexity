@@ -5,7 +5,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { segmentAtFrame } from '../src/director/timeline'
-import { poseRecord } from '../tools/smooth/pose'
+import { poseRecord, type Shaped } from '../tools/smooth/pose'
 
 const film = new FilmDirector(plans)
 const size = { width: 1920, height: 1080 }
@@ -48,5 +48,26 @@ describe('the pose record of a capture frame', () => {
     expect(degrees(q(rise.bodies[0]!.turn), mercury.turn(rise.time))).toBeGreaterThan(4)
     const mars = poseRecord(film, plan('mars'), 4814, 2, 30, size)
     expect(apartBy(q(mars.bodies[0]!.turn), plan('mars').turn(mars.time))).toBeLessThan(1e-12)
+  })
+
+  it('names the drawn shape of a body where its plan hands one, with the view, the eye and the time of the frame, and nothing where it hands none', () => {
+    const mars = plan('mars')
+    const before = poseRecord(film, mars, 4814, 2, 30, size)
+    expect('shape' in before.bodies[0]!).toBe(false)
+    const seen: { view: string; eye: number[]; time: number }[] = []
+    const squashed = [1.004, -0.004, 0, -0.004, 0.99, 0, 0, 0, 0.9975]
+    const shaped = Object.assign(Object.create(mars) as typeof mars, {
+      drawnShape: (view, eye, time) => {
+        seen.push({ view, eye: eye.toArray(), time })
+        return { shape: squashed, place: [0.01, 0, 0] }
+      },
+    } satisfies Shaped)
+    const r = poseRecord(film, shaped, 4814, 2, 30, size)
+    expect(r.bodies[0]!.shape).toEqual(squashed)
+    expect(r.bodies[0]!.place).toEqual([0.01, 0, 0])
+    expect(seen).toEqual([{ view: r.view, eye: r.camera.p, time: r.time }])
+    expect({ ...r, bodies: [{ ...r.bodies[0]!, shape: undefined, place: [0, 0, 0] }] }).toEqual({ ...before, bodies: [{ ...before.bodies[0]!, shape: undefined }] })
+    const none = Object.assign(Object.create(mars) as typeof mars, { drawnShape: () => null } satisfies Shaped)
+    expect(JSON.stringify(poseRecord(film, none, 4814, 2, 30, size))).toBe(JSON.stringify(before))
   })
 })

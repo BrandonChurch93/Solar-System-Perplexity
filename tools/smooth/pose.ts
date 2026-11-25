@@ -8,7 +8,9 @@ import type { StopPlan } from '../../src/director/moves'
 import { segmentAtFrame } from '../../src/director/timeline'
 import { carriedCamera } from './camera'
 
-export interface PoseBody { id: string; place: number[]; turn: number[]; scale: number[]; axes: number[] }
+export interface PoseBody { id: string; place: number[]; turn: number[]; scale: number[]; axes: number[]; shape?: number[] }
+
+export interface Shaped { drawnShape(view: ViewKind, eye: THREE.Vector3, time: number): { shape: number[]; place?: number[] } | null }
 
 export interface PoseRecord {
   k: number
@@ -31,6 +33,7 @@ export function poseRecord(film: FilmDirector, plan: StopPlan, k: number, rate: 
   const close = plan.twinFrame(time).scale
   const globe = plan.fit.globe
   const drawn = (plan as { drawn?: (time: number) => THREE.Quaternion }).drawn
+  const form = (plan as Partial<Shaped>).drawnShape?.call(plan, c.side, c.pose.position, time) ?? null
   return {
     k,
     rate,
@@ -39,6 +42,6 @@ export function poseRecord(film: FilmDirector, plan: StopPlan, k: number, rate: 
     camera: { p: c.pose.position.toArray(), q: c.pose.quaternion.toArray(), vfov: c.pose.vfov, width: size.width, height: size.height },
     sky: { q: shot.skyTurn.clone().invert().multiply(shot.skyQuaternion).toArray() },
     range: { low: RANGE_LOW, octaves: RANGE_OCTAVES, units: Number.isFinite(close) && close > 0 ? [1, close] : [1] },
-    bodies: [{ id: plan.id, place: [0, 0, 0], turn: (drawn ? drawn.call(plan, time) : plan.turn(time)).toArray(), scale: globe?.scale ?? [1, 1, 1], axes: globe?.quaternion ?? [0, 0, 0, 1] }],
+    bodies: [{ id: plan.id, place: form?.place ?? [0, 0, 0], turn: (drawn ? drawn.call(plan, time) : plan.turn(time)).toArray(), scale: globe?.scale ?? [1, 1, 1], axes: globe?.quaternion ?? [0, 0, 0, 1], ...(form ? { shape: form.shape } : {}) }],
   }
 }

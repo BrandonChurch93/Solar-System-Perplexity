@@ -568,9 +568,9 @@ For a pair of capture frames of a dive or a rise the reader first carries one pi
 
 **The units.** A layer hands its range in its own units. The globe hands radii of the body. A layer of the close view hands the close view's units, also where it is drawn on the globe side: Jupiter's cloud layer at 3261 (view `orbit`) reads 332 times the sphere's range, sphere over picture median 0.0030107, the plan's twin scale 0.0030101. So the record names the units a layer may use, `[1, close]` with `close = plan.twinFrame(time).scale` (`[1]` where the twin has none: Saturn), and `points` of `tools/img/range.py` takes for each pixel the one that puts the point nearest the body's surface. The two lie 60 to 970 times apart by stop (close: sun 0.08088, mercury 0.016218, venus 0.018407, earth 0.030751, mars 0.0010305, jupiter 0.0030101, uranus 0.015133, neptune 0.023924). The pick is a guess where a layer stands far off the surface; the cure at the root is that every close layer hands radii (MAIL 752: one token a stop, patches to the Builder, after this commit).
 
-**The record.** `poseRecord(film, plan, k, rate, fps, size)` in `tools/smooth/pose.ts` (harness_builder's folder, written here for it to lift; no page and no engine change, it calls `carriedCamera`, `film.shotAt` and the plan's turn). Per capture frame: `k`, `rate`, `time` (middle of the shutter), `view`; `camera` `p`, `q`, `vfov`, `width`, `height` in the frame of the stop's set, radius 1, the close view through the plan's twin, so both sides of the change of view stand in one frame; `sky.q`, the sky as the film draws it, `inverse(shot.skyTurn) * shot.skyQuaternion` (not the camera's turn: the sky has its own camera and its frame turns by `skyTurn`); `range` `low`, `octaves`, `units`; `bodies`, one entry: `id`, `place`, `turn` (`plan.drawn(time)` where the plan has one, as Mercury's, whose globe is drawn with it; `plan.turn(time)` elsewhere), `scale` and `axes` (the globe's fit, an oblate body).
+**The record.** `poseRecord(film, plan, k, rate, fps, size)` in `tools/smooth/pose.ts` (harness_builder's folder, written here for it to lift; no page and no engine change, it calls `carriedCamera`, `film.shotAt` and the plan's turn). Per capture frame: `k`, `rate`, `time` (middle of the shutter), `view`; `camera` `p`, `q`, `vfov`, `width`, `height` in the frame of the stop's set, radius 1, the close view through the plan's twin, so both sides of the change of view stand in one frame; `sky.q`, the sky as the film draws it, `inverse(shot.skyTurn) * shot.skyQuaternion` (not the camera's turn: the sky has its own camera and its frame turns by `skyTurn`); `range` `low`, `octaves`, `units`; `bodies`, one entry: `id`, `place`, `turn` (`plan.drawn(time)` where the plan has one, as Mercury's, whose globe is drawn with it; `plan.turn(time)` elsewhere), `scale` and `axes` (the globe's fit, an oblate body), and `shape` where the plan hands one (section 16; the key is absent elsewhere).
 
-**The rule.** A point X of frame i stands in frame j at `place_j + turn_j (turn_i^-1 (X - place_i))`. `tools/img/range.py`, pure functions with the picture and the record as inputs: `ranges` (the picture to ranges), `rays`, `points` (the point of each pixel in the pose frame and the unit taken), `carried` (the pixel place and the range in the other frame), `sky` (the same for what has no range, by the rotation alone), `read`.
+**The rule.** A point X of frame i stands in frame j at `place_j + S_j turn_j (turn_i^-1 (S_i^-1 (X - place_i)))`, S the `shape` of the record as a 3 by 3 matrix, the unit where the record names none. `tools/img/range.py`, pure functions with the picture and the record as inputs: `ranges` (the picture to ranges), `rays`, `points` (the point of each pixel in the pose frame and the unit taken), `carried` (the pixel place and the range in the other frame), `sky` (the same for what has no range, by the rotation alone), `read`.
 
 **How a tool asks.** `openCapture({ dist, format, assets, diag: 'range' })` and a render of the capture frame at the draft tier, the same call as for the beauty; `npm run still -- --frame F --tier draft --diag range` for a film frame.
 
@@ -646,6 +646,57 @@ Measured (draft tier, `npm run still`, Mars's patch in a scratch tree only):
 
 Not known: what the remaining unequal pixels of the texels view are (by the eye the place's own layers and the cap's cliff). Not done: no final tier frame, no web film render, three dive frames only, no frame at 3840 by 2160.
 
+## 16. The drawn shape of a body in the pose record (MAIL 812.5): Earth's rise
+
+Asked by harness_builder: rows of Earth's rise that the pattern reader refuses (capture 4223 to 4259, rate 2, k against k + 16), first by "two grounds" (apart 0.53 to 0.83), then by "the range does not carry the pattern" (bulk 8.5 to 30.2 px). Two causes, both MEASURED on draft captures of 4215, 4223, 4230, 4231, 4239, 4245, 4246, 4261, 4274, 4290 on b6a8d201.
+
+**Cause A, the range picture of Earth's ground on the globe (the stop's file, not mine).** `src/stops/earth/relief.ts` draws its ground on the globe in three passes (a dim pass, then sea and towers blended under by the alpha that stands there). In the raw views the dim pass leaves the globe's code times one minus the ground's cover, and the ground's code is added on top, so a pixel where the cover is between 0.5 and 1 holds the sum of two codes and decodes 1.3 to 630 times too far. Share of the body's pixels more than 0.02 farther than the unit sphere, as it is and with the patch:
+
+| capture | 4215 | 4223 | 4230 | 4231 | 4239 | 4245 | 4246 | 4261 | 4274 | 4290 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| as it is | 0.009 | 0.035 | 0.087 | 0.094 | 0.448 | 0.573 | 0.576 | 0.248 | 0.019 | 0.002 |
+| with the patch | 0.000 | 0.000 | 0.000 | 0.000 | 0.001 | 0.002 | 0.003 | 0.010 | 0.007 | 0.002 |
+
+The patch, one line of `GROUND_FRAG` (the dim pass clears the pixel whole in a raw view where the ground is kept; the beauty is byte equal on 4230, 4245, 4274):
+
+```
+-  if (uDim > 0.5) outColor = vec4(0.0, 0.0, 0.0, ground * on);
++  if (uDim > 0.5) outColor = vec4(0.0, 0.0, 0.0, uDiag >= 2 ? 1.0 : ground * on);
+```
+
+Apart of the pairs 4215:4231, 4223:4239, 4230:4246, 4245:4261 (rebuilt with my own script, not the harness reader): as it is 0.008, 0.537, 0.830, 0.658; with the patch 0.002, 0.001, 0.001, 0.001.
+
+**Cause B, the shape of the drawn globe (the record's, mine).** `src/stops/earth/set.ts` draws the globe, its air and the ground on the globe in a group `shape` whose matrix is `shape.json` (x 1.0043409, y 0.9907715, z 0.9975241, shear -0.0042483) mixed to the unit by `low`: a sphere where the eye stands under 0.05 radii, the whole shape over 0.7, between them by the log of the height (capture 4216 to 4290 of the rise). The group sits in the set's frame outside the globe's turn, so a point g of the turned body is drawn at `S g`. The record held no shape, so the rule of section 13 carried a point of a sphere.
+
+What is in the record now. `bodies[0].shape`: nine numbers, the matrix by rows in the pose frame, as drawn at that frame. `poseRecord` asks the plan for `drawnShape(view, eye, time)` (type `Shaped` in `tools/smooth/pose.ts`; `eye` the record's camera place, `time` the record's time) and writes what it hands: `{ shape, place? }` or null. A plan without the member, or one that hands null, gives a record with no `shape` key, byte equal to the record before. `place` goes into `bodies[0].place` where given (a shape about a centre off the body's middle). `tools/img/range.py`: `carried` and `shaped` take the shape out before the turn and lay the other frame's shape on after it (`form`, `plain`).
+
+How a stop turns it on: a method on its plan. For Earth (`src/stops/earth/plan.ts`, the builder's file; the same rule as lines 169 and 175 of its `set.ts`):
+
+```
++import { descent, shape as figure } from './look'
+...
++  drawnShape(view: ViewKind, eye: THREE.Vector3): { shape: number[] } {
++    const low = view === 'orbit' ? 1 - smooth((Math.log(Math.max(eye.length() - 1, 1e-4)) - Math.log(descent.low)) / (Math.log(descent.high) - Math.log(descent.low))) : 1
++    return { shape: figure.flatMap((row, i) => row.map((v, j) => v + ((i === j ? 1 : 0) - v) * low)) }
++  }
+```
+
+MEASURED (range pictures with patch A, records written by the patched plan, beauty frames of b6a8d201; the carried frame against the first by a flow of my own at quarter size, median and 90th part of the flow left in px, pairs as above):
+
+| | 4215:4231 | 4223:4239 | 4230:4246 | 4245:4261 |
+|---|---|---|---|---|
+| as it is (no patch) | 0.1 | 1.0 | 3.4 | 21.5 |
+| patch A, record without shape | 0.1, 1.6 | 1.0, 2.0 | 3.3, 5.0 | 7.7, 11.4 |
+| patch A, record with shape | 0.1, 1.6 | 0.1, 2.0 | 0.3, 2.3 | 0.8, 3.8 |
+
+The shape of the records: the unit at 4215 to 4231; at 4245 x 1.0003124, y 0.9993359, shear -0.0003057; at 4261 x 1.0017539, y 0.9962713; at 4290 the whole of `shape.json`. All other keys of the ten records are byte equal to the records before.
+
+STATED from the code, not measured: in the terrain view the record says the unit (the place's ground is not in the group). In the film's ending (`set.ts`, `ending`) the set uses the whole shape whatever the height; the plan's method does not know the ending, and no record is written there today.
+
+UNKNOWN: what the harness reader (`carry.py` of agent/harness-prove) says on these rows with both patches; the numbers above are my flow, not its bulk. Uranus draws its globe in a shape with a turn, two scales and a centre (`src/stops/uranus/set.ts`, `plan.ts` `shaped`); its plan hands no `drawnShape`, and whether that is part of the bulk on its rise is not measured. Sun and Mars rows of the same mail: not looked at.
+
+Tests: `tests/globe-pose.test.ts` (the plan's shape and place reach the record with the view, the eye and the time of the frame; no key where there is none), `tests/globe-range.test.ts` (a made body in two shapes and two turns: the carried place equals the rule to 1e-9 px, the point lands on the body of the other frame, and the record without shape carries it elsewhere).
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -691,3 +742,4 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
 - MAIL 710 (d236): the first patch not taken; the cure that keeps the band (section 12, rewritten). Merged main dfdc58cf. `tools/img/smooth.py` (`carry`, `finer`, `sharper`, `band`, `readings`, `reading`; `matched` removed), `tools/smooth.ts` (`patternBand` printed), `tools/smooth/made.py` (`carried` on full size films), `tests/smooth.test.ts`. Nothing in `src/` is touched, so the frames of every stop stand. `npx tsc --noEmit` clean. `npx vitest run` on the merge 4516efa8: 565 tests, 564 green, one red: `tests/globe-cap.test.ts` "brings a colour level in by the texels of its parent" ran 5018 ms against its limit of 5000 in the whole run; that file alone: 24 of 24, the same test in 3343 ms. `tests/smooth.test.ts` 69 of 69 in 92 s in the whole run, `tests/weights.test.ts` 9 of 9. One report printed by `tools/smooth.ts` with these tools on main 2bc36ce6 in a scratch tree (`--stop venus --kind rise --only pictures --frames 3086-3086`): the row of frame 1543 reads 0.76 at 159, 355, `band 8 px` in the red line, in the line of the largest change of the pattern and in the column `band px` (8.0); the panel of the changes has the second row for the reading on the later frame.
 - MAIL 744 B (b): the pale air beyond the edge (`limbAir`, section 14), `src/bodies/limb.ts`, one option of `Planet`, `tests/globe-limb.test.ts` (5 tests). Merged main 7346c598 (0ed3b250). On the merge with the change: tsc clean; `npx vitest run` 58 files, 621 tests, 1 red (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent", 5002 ms against its limit of 5000; the file alone: 24 passed, that test 3791 ms; the test was not touched). With the option off the 47 judged frames at draft have the hashes of 767f8d11, 47 of 47. Looked at on Mars 2325 final only, in a scratch copy of Mars's set; no stop turns it on.
 - MAIL 795 item 4 (d253): the audit of what counts pixels and what counts loaded texels (section 15). (a) none without the frame factor on a pixel path of `src/bodies`, `src/terrain`, `src/core/sets.ts`. (b) two terms counted the loaded set, both in the shared globe: cured by `patches.counts` (`src/bodies/planet.ts`) and `count` of a cap level (`src/bodies/cap.ts`), off by default, `tests/globe-count.test.ts` (5 tests). Merged main cc9015f2 (a76f725c). The pose record corrected after harness_builder measured it (section 13): the sky is `inverse(skyTurn) * skyQuaternion`, the body's turn is `plan.drawn` where a plan has it; `tests/globe-pose.test.ts` (3 tests). Over 8 film frames the sky stands apart from the camera by 8.39 degrees at Mercury 1434, 1.61 at Mars 4814, 1.20 at Earth 3680, 0.04 at Venus 2516; Mercury's drawn turn stands apart from `plan.turn` by 4.92 degrees at capture 2032 and 2.52 at 1740. The test runs and the proof are in the mail of the commit and in section 15.
+- MAIL 812.5 (asked by harness_builder): Earth's rise, rows 4223 to 4259 refused by the pattern reader (section 16). Cause A, the range picture of Earth's ground on the globe holds the sum of two codes where its cover is partial (one line of `src/stops/earth/relief.ts`, a patch, the builder's file). Cause B, the drawn shape of the globe was not in the pose record: `bodies[0].shape` from the plan's `drawnShape` (`tools/smooth/pose.ts`), taken by `carried` and `shaped` of `tools/img/range.py`, one test more in `tests/globe-pose.test.ts` and one in `tests/globe-range.test.ts`; Earth's plan hands it by a patch (the builder's file). Nothing in `src/` is touched. Flow left with both, median px at four pairs: 0.1, 0.1, 0.3, 0.8 (before 0.1, 1.0, 3.4, 21.5).

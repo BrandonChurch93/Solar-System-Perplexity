@@ -123,6 +123,76 @@ describe('the range picture as points of the body', () => {
   })
 })
 
+const FORMED = `
+import json, sys
+import numpy as np
+sys.path.insert(0, sys.argv[1])
+import range as R
+
+def matrix(q):
+    x, y, z, w = q
+    return np.array([[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)], [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)], [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]])
+
+def record(p, q, turn, shape):
+    q = list(np.array(q) / np.linalg.norm(q))
+    body = {'id': 'made', 'place': [0.02, -0.01, 0.0], 'turn': turn, 'scale': [1, 1, 1], 'axes': [0, 0, 0, 1]}
+    if shape is not None:
+        body['shape'] = shape
+    return {'camera': {'p': p, 'q': q, 'vfov': 50.0, 'width': 96, 'height': 54}, 'sky': {'q': q}, 'range': {'low': -20, 'octaves': 32, 'units': [1]}, 'bodies': [body]}
+
+def picture(rec):
+    ray = R.rays(rec, (54, 96))
+    p = np.array(rec['camera']['p'])
+    rs, ps = R.shaped(rec, p + ray) - R.shaped(rec, p), R.shaped(rec, p)
+    a, b = (rs * rs).sum(-1), (rs * ps).sum(-1)
+    disc = b * b - a * (ps @ ps - 1)
+    t = np.where(disc > 0, (-b - np.sqrt(np.maximum(disc, 0))) / a, np.nan)
+    n = np.where(np.isfinite(t), 1 + np.floor(np.clip((np.log2(np.maximum(t, 1e-30)) + 20) / 32, 0, 1) * R.TOP), 0).astype(np.int64)
+    return np.stack([n >> 16, (n >> 8) & 255, n & 255], axis=-1), t
+
+sa = [1.001, -0.001, 0.0, -0.001, 0.998, 0.0, 0.0, 0.0, 0.9994]
+sb = [1.0043409, -0.0042483, 0.0, -0.0042483, 0.9907715, 0.0, 0.0, 0.0, 0.9975241]
+ta, tb = [0.0199987, 0, 0, 0.9998], [0, 0.0499792, 0, 0.9987503]
+a = record([0.1, 0.05, 1.08], [-0.05, 0.1, 0.02, 0.9935], ta, sa)
+b = record([0.12, 0.06, 1.2], [-0.04, 0.11, 0.01, 0.9931], tb, sb)
+rgb, t = picture(a)
+hit = np.isfinite(t)
+x, _ = R.points(R.ranges(rgb, a), a)
+px, py, far = R.carried(x, a, b)
+place = np.array([0.02, -0.01, 0.0])
+A, B = np.array(sa).reshape(3, 3), np.array(sb).reshape(3, 3)
+y = (x - place) @ np.linalg.inv(A).T @ matrix(ta) @ matrix(tb).T @ B.T + place
+c = b['camera']
+k = 54 / 2 / np.tan(np.radians(50.0) / 2)
+r = (y - np.array(c['p'])) @ matrix(c['q'])
+ex, ey = r[..., 0] / -r[..., 2] * k + 96 / 2 - 0.5, 54 / 2 - 0.5 - r[..., 1] / -r[..., 2] * k
+plain_a = {**a, 'bodies': [{k2: v for k2, v in a['bodies'][0].items() if k2 != 'shape'}]}
+plain_b = {**b, 'bodies': [{k2: v for k2, v in b['bodies'][0].items() if k2 != 'shape'}]}
+qx, qy, qfar = R.carried(x, plain_a, plain_b)
+gone = R.carried(x, plain_a, plain_a)
+same = R.carried(x, {**a, 'bodies': [{**a['bodies'][0], 'shape': sa}]}, {**a, 'bodies': [{**a['bodies'][0], 'shape': sa}]})
+json.dump({
+    'surface': float(hit.mean()),
+    'place': float(np.nanmax(np.hypot(px - ex, py - ey)[hit])),
+    'far': float(np.nanmax(np.abs(far - np.linalg.norm(y - np.array(c['p']), axis=-1))[hit])),
+    'onBody': float(np.nanmax(np.abs(np.linalg.norm(R.shaped(b, y), axis=-1) - 1)[hit])),
+    'rigid': float(np.nanmedian(np.hypot(px - qx, py - qy)[hit])),
+    'unit': float(np.nanmax(np.hypot(gone[0] - same[0], gone[1] - same[1])[hit])),
+}, sys.stdout)
+`
+
+describe('the drawn shape of a body in the pose record', () => {
+  it('carries a point through the shape of its own frame and into the shape of the other, and not at all where the record names none', () => {
+    const n = JSON.parse(execFileSync('python3', ['-c', FORMED, resolve(ROOT, 'tools/img')], { encoding: 'utf8' })) as Record<string, number>
+    expect(n.surface).toBeGreaterThan(0.3)
+    expect(n.place).toBeLessThan(1e-9)
+    expect(n.far).toBeLessThan(1e-12)
+    expect(n.onBody).toBeLessThan(5e-6)
+    expect(n.rigid).toBeGreaterThan(0.2)
+    expect(n.unit).toBeLessThan(1e-9)
+  })
+})
+
 const PAGE = `
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, setDiag } from ${at('src/diagnostics/diag.ts')}
