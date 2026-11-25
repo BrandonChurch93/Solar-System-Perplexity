@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T05:54:48.093Z",
+ "pushed": "2026-11-25T06:51:31.491Z",
  "head": "3fc99fe5cbfe3795da6f581c151787bcf1b690a8",
- "note": "The bounds of the height per patch for the cap's sift were built and measured on Mars at draft: 12 of 12 frames byte equal, 0.5 to 11 percent fewer patches, no seconds gained (within 0.4 s). Not committed. Next: a table of where the cap's seconds go at 2464 and 2472.",
+ "note": "Cost table of the Mars cap at draft (scratch switches, no commit): of 23.5 s at 2464 the cap is 17.4 s: 7.1 s triangles (5.7 million for 2.0 million pixels), 1.1 s height reads, 8.0 s the 8 colour levels per pixel, 1.2 s the rest per pixel. Not reading colour levels whose value is multiplied by 0 left every PNG byte in place (12 of 12) and took 1.9 to 7.2 s off.",
  "looks": [
+  {
+   "time": "2026-11-25T06:51:30.876Z",
+   "file": "20261125065130876-note-cap-cost.jpg",
+   "source": "../m835/cap-cost.png",
+   "kind": "note",
+   "label": "Mars cap at draft, 2464 and 2472: where the seconds go, and what one change would leave (scratch, no commit)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T05:54:47.494Z",
    "file": "20261125055447494-note-bounds-result.jpg",
@@ -58,14 +66,6 @@
    "source": "../m835/mars-5364.png",
    "kind": "note",
    "label": "Mars 5364 against 5380 after the carry: the close ground and the globe's ground are two pictures of one place",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T02:17:27.806Z",
-   "file": "20261125021727806-note-crop-a.jpg",
-   "source": "../m835/crop-a.png",
-   "kind": "note",
-   "label": "Moons carried by their own place and turn (task 1, f5f800dd)",
    "stop": "mars"
   }
  ]
