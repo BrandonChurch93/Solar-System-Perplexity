@@ -6427,3 +6427,30 @@ Seconds per draft frame: preview 4 to 39 (4956 39.2, 4736 9.7); 1920: 4722 27.1 
 Next, in your order: the report's number along flows for layer 2 (one pair each way), its cure; then the deck at 4860.
 
 - After it: merge ac408e47 (main 9d53040b, kit/PROGRESS.md only), tests 62 of 62 ok 06:53 to 07:00, G11 PASS, net 63.347 MB against 80.827, looks pushed 07:00 (76f5ad5a). The 4740 and 4744 pairs of the dive are measured with streamers only (1.09, 1.06); the mail says so.
+
+## MAIL 955 from the Builder, received 25 Nov 07:13 UTC, word for word
+
+MAIL 955 from the Builder (/root), 07:13 UTC. Your NAMED ac408e47 (07:01) is logged as your fifth named state. Batch 10 does not take it as it stands (your reds 1 and 2). Its cause finding is good work: a streamer that was not marched under 6 px is exactly a thing that comes with the clock.
+
+RULING on cirrusFlat. It is NOT a dissolve under MAIL 772. That mail forbade a second picture of the place laid over the first and crossed with it (a decal, a cover that hides a swap). A level of detail of the same body at the same place, chosen by the size of a pixel on it alone, is what the globe's own levels do, and it is lawful under the frame law. Three conditions:
+1. One body. The far level is the marched streamer filtered, not a drawing beside it: same middle line, and its light summed across its width equals what the march gives at the foot where they cross, so that neither is the brighter one there.
+2. The crossing leaves no trace in my reader: pattern under 0.45 in the dive and in the rise on the frames where the foot crosses.
+3. It reads as cloud and never as a drawn line, at any height.
+As named it breaks 3. I see the hairlines in your own s4-dive, low left of the storm in all four frames, and the two streaks at 4605: even width, even light, they read as scratches on the picture. Cure by cause: a streamer seen from far is not a line. Give the far level the body the march has: breaks along its length where the heaps are thin; an edge as soft as the map's own cloud at that foot; a width that follows the streamer's own widths, and under one pixel of true width let the light fall with the width until it is gone into the map's cloud (what a pixel sees of a thing thinner than itself), not a floor of two even pixels; a level no brighter than the map's thin cloud beside it. If a faint broken streak is then still seen from orbit where the approved hero has none, that is accepted: the place exists from far, and the match rubric allows small differences in cloud shapes. A hairline is not accepted.
+
+NUMBERS of my reader on 02ca4d9f (rate 2; the report files of four parts are attached):
+- dive part 1 of 4: RED, pattern 0.58 from 4694 (7 frames over 0.45, first 4693). Main reads 0.72.
+- dive part 2 of 4: RED, 1.16 from 4710 + 1/2 (57 frames over, first 4696 + 1/2). Main 1.15.
+- rise part 2 of 4: RED, 0.83 from 4972 (37 frames over, first 4962 + 1/2).
+- rise part 3 of 4: RED, pop 1.30 from 4999 (5 over, first 4998 + 1/2) and pattern 1.40 from 4995 (31 over, first 4987 + 1/2). Main 1.17.
+- rise part 4 of 4: green. Path, place and parity: green.
+- dive parts 3 and 4, rise part 1 and the counts are still out; you get them when they are back.
+Your proxy and my reader agree on the dive (4693 to 4720) and on the rise low down. They do not agree on 4987 to 5003: your proxy finds nothing there, my reader finds its worst number of the stop. Open the attached changes picture of rise part 3 before you call it open: the whole lit crescent changes its pattern at once. That is a body the two poses on the smooth planet do carry, so trust the reader there and find what turns on or off across the crescent between 4987 and 5003 (the far look of the map's cloud, the term, or the deck's own level).
+
+CHECKS on ac408e47, out now on four machines (nq3): dive parts 1 and 2, rise parts 1 and 2 of 4. Numbers to you as they come back.
+
+ORDER, unchanged: (1) the far streak as above; (2) layer 2 with the reader's own number (the line is: npm run smooth -- --stop neptune --kind dive --only pictures --part 3/4, and the same with --kind rise); (3) the rise 4987 to 5003; (4) the deck at 4860. Your next NAMED by 08:30 UTC with the same list of reds, each with its frame.
+
+Attachments: neptune-dive-p1of4.md, neptune-dive-p1of4-changes.png, neptune-dive-p2of4.md, neptune-dive-p2of4-changes.png, neptune-rise-p2of4.md, neptune-rise-p2of4-changes.png, neptune-rise-p3of4.md, neptune-rise-p3of4-changes.png, neptune-rise-p3of4-pops.png (under /home/user/.perplexity/attachments/ac8582309930418a96b13ded14dbd089/).
+
+- Read: cirrusFlat is lawful as a level of detail by the pixel foot, on three conditions: (1) one body, same middle line, the light summed across the width equal to the march's at the crossing foot; (2) no trace in his reader on the frames where the foot crosses; (3) it reads as cloud, never as a drawn line. As named it breaks 3. Its cure: breaks along the length where the heaps are thin; an edge as soft as the map's cloud at that foot; the streamer's own widths, and under one pixel of true width the light falls with the width until it is gone (no floor of two even pixels); no brighter than the map's thin cloud beside it. A faint broken streak from orbit is accepted, a hairline is not. His reader on 02ca4d9f: dive part 1 0.58 from 4694; dive part 2 1.16 from 4710 + 1/2 (57 over, first 4696 + 1/2); rise part 2 0.83 from 4972 (37 over, first 4962 + 1/2); rise part 3 pop 1.30 from 4999 and pattern 1.40 from 4995 (31 over, first 4987 + 1/2): the whole lit crescent changes its pattern at once; my proxy finds nothing there, trust the reader. Order: (1) the far streak; (2) layer 2 with the reader's own number (npm run smooth -- --stop neptune --kind dive --only pictures --part 3/4, and the same with --kind rise: he gives me the line, so that one part each is mine to run); (3) the rise 4987 to 5003; (4) the deck at 4860. Next NAMED by 08:30 UTC.
