@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T20:40:05.389Z",
+ "pushed": "2026-11-25T21:03:40.735Z",
  "head": "6a0e74bb2f3472ec8ae201fea1922bc1dab673ba",
- "note": "B1 6a0e74bb: final 4186 beside main; cover on against globe alone 4416 to 4422; tool rows rendering (rise 2 of 2 first), B2 trial queued",
+ "note": "B1 6a0e74bb: rise 2 of 2 row 0.90 from 4422 + 1/2 (name 1.16, main 0.88); B2 trial removes the clock's shear between cover and globe; three rows still rendering",
  "looks": [
+  {
+   "time": "2026-11-25T21:03:39.725Z",
+   "file": "20261125210339725-note-b2-diff.jpg",
+   "source": "../../../../tmp/n60/b2-diff.jpg",
+   "kind": "note",
+   "label": "B2 trial (the deck's ground follows the band clock): difference from the globe alone, cover off, x6. Share over 6 codes at 4420, 4422, 4424: B1 8.4, 7.5, 3.2 percent; B2 4.7, 2.0, 0.2 percent",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T20:52:34.142Z",
+   "file": "20261125205234142-note-r2-changes.jpg",
+   "source": "../../../../tmp/n59/r2-changes.jpg",
+   "kind": "note",
+   "label": "B1 6a0e74bb tool row rise 2 of 2: pattern 0.90 from 4422 + 1/2 on a sliver at the left limb (judged 3 to 4 percent of the frame); name 1.16 from 4418, main 0.88 from 4422",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T20:40:04.317Z",
    "file": "20261125204004317-note-cover-diff.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n57/r-4290.jpg",
    "kind": "note",
    "label": "final 4290: approved, main (3.849), 9c8a46df (3.225): the white band on the horizon is gone",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T17:20:04.745Z",
-   "file": "20261125172004745-note-s-pin2-w1.jpg",
-   "source": "../../../../tmp/n57/s-pin2-w1.jpg",
-   "kind": "note",
-   "label": "trial, not committed: dive 4152 to 4170, same form: the pale wedge over the place and its edge, the cost of the pin",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T17:20:03.863Z",
-   "file": "20261125172003863-note-s-pin2-dive.jpg",
-   "source": "../../../../tmp/n57/s-pin2-dive.jpg",
-   "kind": "note",
-   "label": "trial, not committed: dive 4170 to 4200, the place's table read from the eye of the dive's last frame in both views (4185 pattern 0.29, 4170 + 1/2 0.63)",
    "stop": "uranus"
   }
  ]
