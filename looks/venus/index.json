@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T12:58:51.933Z",
- "head": "5c4140d4c15166c87ca7c7ccb096cf07d2ba5032",
- "note": "cF names the fine forms in the far band; first trial of release by the line of sight (rPd); fifth state rise band",
+ "pushed": "2026-11-25T13:36:03.306Z",
+ "head": "2983ba43478c13ae854d5a0960146a370f30c135",
+ "note": "cHl names the hold look for red 1; trials of leave by distance, fine forms by slant, release by line of sight: reds move, not cured",
  "looks": [
+  {
+   "time": "2026-11-25T13:36:02.055Z",
+   "file": "20261125133602055-note-Bd-venus-dive-k2636-2672-changes.jpg",
+   "source": "../../../../tmp/v/probe/Bd-venus-dive-k2636-2672-changes.png",
+   "kind": "note",
+   "label": "trial Bd (release by the angle and by the size against T, 1 to 3), dive rows 1318 to 1336: 19 rows over, largest 0.82; not taken",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T13:36:01.049Z",
+   "file": "20261125133601049-note-band.jpg",
+   "source": "../../../../tmp/v/sh/cmbR/band.jpg",
+   "kind": "note",
+   "label": "trial cmbR (the same three), rise, the band y 180 to 470 every second frame 1539 to 1557: 3 rows over of 23 on the reader, but from 1549 a pale smeared sheet with hard edges where the picture of T is held on the far deck; not taken",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T13:36:00.158Z",
+   "file": "20261125133600158-note-cmbD-venus-dive-k2532-2640-changes.jpg",
+   "source": "../../../../tmp/v/probe/cmbD-venus-dive-k2532-2640-changes.png",
+   "kind": "note",
+   "label": "trial cmbD (leave by the eye's distance at each ground point 1.9 to 3.4, fine forms by the sine of the elevation, release by the angle), dive rows 1266 to 1320: red 1 moved to 1277 + 1/2 to 1280 (0.58), new red 1303 to 1304 (0.55), 1309 to 1313 at or under 0.45",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T13:35:58.876Z",
+   "file": "20261125133558876-note-cHl-venus-dive-k2546-2556-changes.jpg",
+   "source": "../../../../tmp/v/probe/cHl-venus-dive-k2546-2556-changes.png",
+   "kind": "note",
+   "label": "control cHl (the hold look kept on the body), dive rows 1273 to 1278: green, largest 0.30; the layer of red 1 is the hold look going out at the lower right limb",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T12:58:50.457Z",
    "file": "20261125125850457-note-band.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/probe/cF-venus-dive-k2618-2626-changes.png",
    "kind": "note",
    "label": "control cF (the plates' fine forms weighted by the longer side of a pixel on the ground), dive rows 1309 to 1313: green, largest 0.43; names the fine forms in the far band for 1310 + 1/2 to 1312",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T12:31:14.989Z",
-   "file": "20261125123114989-note-limb.jpg",
-   "source": "../../../../tmp/v/sh/a8/limb.jpg",
-   "kind": "note",
-   "label": "fifth state, lower right limb 1273 to 1287 at 2 to 1: the band with fine radial hatching and an orange rim fades to a flat tan band by about 1281",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T12:31:13.784Z",
-   "file": "20261125123113784-note-cB-venus-rise-k3084-3094-changes.jpg",
-   "source": "../../../../tmp/v/probe/cB-venus-rise-k3084-3094-changes.png",
-   "kind": "note",
-   "label": "control cB (ground.bandHeights 0.5 to 0.6), rise rows 1542 to 1547: 11 rows, 1.00, not the cause",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T12:31:12.518Z",
-   "file": "20261125123112518-note-cR-venus-rise-k3084-3094-changes.jpg",
-   "source": "../../../../tmp/v/probe/cR-venus-rise-k3084-3094-changes.png",
-   "kind": "note",
-   "label": "control cR (ground.release 0.5 to 0.6), rise rows 1542 to 1547: 6 rows over, 0.58, a cause in part",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T12:31:11.785Z",
-   "file": "20261125123111785-note-d2-venus-dive-k2618-2626-changes.jpg",
-   "source": "../../../../tmp/v/probe/d2-venus-dive-k2618-2626-changes.png",
-   "kind": "note",
-   "label": "fifth state dive rows 1309 to 1313: 4 rows over, 0.54 at 1311, the upper left far band",
    "stop": "venus"
   }
  ]
