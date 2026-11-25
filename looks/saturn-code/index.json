@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T19:15:18.502Z",
- "head": "958925d48e7d69de09e82dcdb2513c2dc3f441d9",
- "note": "scan of the thin sheet's depth and ice at both judged frames running; rings and globe refit reads 28.05 at 3720 against main 27.80",
+ "pushed": "2026-11-25T19:38:32.319Z",
+ "head": "965f6227d4a3b8d7081bcd60867eb5fbdd6fb408",
+ "note": "table for the ruling on the thin sheet sent; the judge's slice of 3824 to 3832 on the working tree is rendering",
  "looks": [
+  {
+   "time": "2026-11-25T19:38:06.805Z",
+   "file": "20261125193806805-note-b_d0_3720.jpg",
+   "source": "../../../../tmp/v/cure/b_d0_3720.png",
+   "kind": "note",
+   "label": "3720 final at the foot: dark sheet 0.05, no sheet, approved"
+  },
+  {
+   "time": "2026-11-25T19:38:06.086Z",
+   "file": "20261125193806086-note-foot3.jpg",
+   "source": "../../../../tmp/v/cure/foot3.png",
+   "kind": "note",
+   "label": "3720 at the globe's foot, full size: approved, main, working tree"
+  },
+  {
+   "time": "2026-11-25T19:38:04.807Z",
+   "file": "20261125193804807-note-rule_hold.jpg",
+   "source": "../../../../tmp/v/cure/rule_hold.png",
+   "kind": "note",
+   "label": "hold 3465 final, the gap at 4 times: hero, main 4.7807, dark sheet 4.7784, no sheet 4.7768, bright sheet 4.9556"
+  },
+  {
+   "time": "2026-11-25T19:38:03.581Z",
+   "file": "20261125193803581-note-rule_skim.jpg",
+   "source": "../../../../tmp/v/cure/rule_skim.png",
+   "kind": "note",
+   "label": "3720 final: approved, main 27.80, dark sheet 28.05, bright sheet 27.79 (the table for the ruling)"
+  },
   {
    "time": "2026-11-25T19:13:46.062Z",
    "file": "20261125191346062-note-pat_spot.jpg",
@@ -32,34 +60,6 @@
    "source": "../../../../tmp/v/c1/changes_top.png",
    "kind": "note",
    "label": "paced share, the judge's sheet of the rise: largest changes of pattern and place (pop 1.21 at 3874 as main, level step 0.13)"
-  },
-  {
-   "time": "2026-11-25T18:51:59.896Z",
-   "file": "20261125185159896-note-pat_3827.jpg",
-   "source": "../../../../tmp/v/c1/pat_3827.png",
-   "kind": "note",
-   "label": "paced share, rise 3823 to 3837 every 2 at full size, crop at 892,716: the terminator at the foot, where the pattern number reads 0.44995 at 3827 (limit 0.45; the name 0.29 there)"
-  },
-  {
-   "time": "2026-11-25T18:23:14.889Z",
-   "file": "20261125182314889-note-rise_a_paced.jpg",
-   "source": "../../../../tmp/v/c1/rise_a_paced.png",
-   "kind": "note",
-   "label": "rise 3790 to 3816 every second frame, draft, the paced share (one share by the logarithm of height, paced so the twilight moves under 2 levels a frame)"
-  },
-  {
-   "time": "2026-11-25T17:50:33.333Z",
-   "file": "20261125175033333-note-rise_b.jpg",
-   "source": "../../../../tmp/v/dark/rise_b.png",
-   "kind": "note",
-   "label": "the name 114ad7e, rise 3803 to 3813, the foot at full size (the outline through the ring under the left limb, named)"
-  },
-  {
-   "time": "2026-11-25T17:50:32.039Z",
-   "file": "20261125175032039-note-rise_e.jpg",
-   "source": "../../../../tmp/v/dark/rise_e.png",
-   "kind": "note",
-   "label": "the name 114ad7e, rise 3844 to 3872 every second frame"
   }
  ]
 }
