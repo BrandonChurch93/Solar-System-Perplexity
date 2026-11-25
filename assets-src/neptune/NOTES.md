@@ -6334,3 +6334,65 @@ Order from here: the pattern reds of the dive and of the rise first (name the la
 
 - Read: 02ca4d9f goes into batch 10 unless his 20 stills show something broken. The curve of the clouds stays (ruling on point 4; C4's knots are in the lab log above: knots 15 to 19 of `cloud`: [0.03, 0.033, 0.035], [0.068, 0.07, 0.067], [0.0965, 0.1134, 0.135], [0.215, 0.266, 0.382], [0.36, 0.468, 0.783], not taken, by his ruling: the hero has these clouds and high cloud lit past the deck's terminator is true to a real sky). The air's law stays and is not to be thinned for G17. Order: (a) the pattern reds, name the layer that changes places at 4692 to 4740 and 4960 to 5009 by frame before a cure; (b) the deck's tone and grain at 4860 (pale steel blue plain, fine streaks that curl round the oval, the oval dark inside them); (c) the dark ovals; (d) the white patch and the slab. Next NAMED by 07:47 UTC, whole or not.
 - Correction of my fourth NAMED mail, red 4: I called the soft dark ovals new. They are not: on 121f3ade at 1920 the same ovals lie at the same places (blue of 60 px blocks: 11 to 13 inside against about 25 round them; now 22 against about 38). The air lifts their surround and they show more. Stated before its control was back; the control is `ev/ovals.jpg`.
+
+## 25 Nov, 06:17 to 06:41 UTC: lab log. MAIL 941 (a): the layers that change places on the dive and on the rise, named by frame and by control, before any cure
+
+All numbers here are MY PROXY, not the Builder's report: `assets-src/neptune/check/weave.py` carries the later frame of a pair 8 frames apart onto the earlier by the two cameras' poses on the smooth planet and reads the report's pattern number (40 px, limit 0.45) on it. It is at the preview (960 by 540), draft tier, one sample, whole frames only (the report reads half frames along flows). It cannot follow anything that stands over the smooth planet (the map's cloud sheet, the cirrus, the relief), so low down and toward the horizon it reads red where the report may not. Poses: `out/work/nep/weave/poses-now.json`, made fresh (the old file was of the path before the one turn).
+
+Heights (radii) by frame: 4684 2.043, 4688 1.947, 4692 1.791, 4696 1.592, 4700 1.365, 4704 1.130, 4708 0.902, 4712 0.693, 4716 0.520, 4720 0.388, 4724 0.288, 4728 0.214, 4732 0.158, 4736 0.116, 4740 0.086, 4744 0.063, 4748 0.047, 4752 0.037; rise: 4956 0.027, 4960 0.031, 4964 0.038, 4968 0.051, 4972 0.072, 4976 0.107, 4980 0.157, 4984 0.232, 4988 0.343, 4992 0.507, 4996 0.749, 5000 1.108, 5004 1.634, 5008 2.281, 5012 2.963, 5016 3.579.
+
+Tree 02ca4d9f (Q1). Pattern of the pair that begins at the frame, largest place of 1920 by 1080, mean:
+
+| pair from | dive Q1 | K1 no streamers | K3 scene whole at every height | K4 deck the map alone |
+|---|---|---|---|---|
+| 4684 | 0.12 | | | |
+| 4688 | 0.31 | | | |
+| 4692 | 0.51 at (644, 180) | | | |
+| 4696 | 0.59 at (620, 144) | | | |
+| 4700 | 0.26 | | | |
+| 4704 | 0.29 | | | |
+| 4708 | 0.35 | 0.35 | 0.71 at (1272, 92) | |
+| 4712 | 0.63 at (844, 616) | 0.13 | 0.66 | |
+| 4716 | 1.03 at (836, 620), mean 0.13 | 0.20 | 1.04 | |
+| 4720 | 0.84 at (852, 636) | 0.36 | 0.84 | |
+| 4724 | 0.71 at (1020, 712) | 0.54 at (552, 80) | 0.71 | 0.98 |
+| 4728 | 1.02 at (1028, 704), mean 0.25 | 0.75 at (512, 40) | 1.02 | 1.02 |
+| 4732 | 1.20 at (492, 0), mean 0.31 | 1.21 | 1.20 | 1.21 |
+| 4736 | 1.28 at (892, 88), mean 0.28 | 1.29 | 1.28 | 1.31 |
+| 4740 | 1.09 | | | |
+| 4744 | 1.06, mean 0.22 | | | |
+
+| pair from | rise Q1 | K1 no streamers | K4 deck the map alone |
+|---|---|---|---|
+| 4956 | 1.22, mean 0.36 | 0.88 at (288, 712), mean 0.04 | |
+| 4960 | 1.12, mean 0.33 | 0.86 at (504, 720), mean 0.06 | |
+| 4964 | 0.98, mean 0.27 | 0.77 at (624, 696), mean 0.07 | |
+| 4968 | 0.87, mean 0.25 | 0.85 at (288, 148), mean 0.10 | |
+| 4972 | 1.27 at (84, 88), mean 0.28 | 1.27, mean 0.17 | 1.29, mean 0.36 |
+| 4976 | 1.19 at (64, 908), mean 0.34 | 1.18, mean 0.28 | 1.21, mean 0.40 |
+| 4980 | 0.81, mean 0.31 | 0.81, mean 0.27 | 1.15 |
+| 4984 | 0.78 at (64, 520), mean 0.26 | 0.78, mean 0.24 | 1.21 |
+| 4988 | 0.49, mean 0.16 | 0.49 | |
+| 4992 | 0.23 | | |
+| 4996 | 0.17 | | |
+| 5000 | 0.09 | | |
+| 5004 | 0.28 | | |
+| 5008 | 0.38 | | |
+
+Controls (one text of deep.json each, the file restored after): K1 `cirrus.thin` [0.00001, 0.00002] (no streamer is drawn at any distance); K3 `globe.height` [30, 20] (the scene as a whole is over the globe at every height of these frames); K4 `far.on` 2 (the deck is the map alone at every distance, the cirrus is still marched).
+
+NAMED, layer 1, PROVEN by K1: the streamers of the place under `cirrus.thin`. A streamer narrower than 6 px is not marched and one wider than 20 px is whole, by the pixel foot against its width. So on the dive the long streamer is not in the picture at 4716 (0.520 radii), its first piece stands at 4720 (0.388) at its widest end, and it grows along its length until 4736 (0.116), white heaps out of nothing; the second, thinner one comes at 4736. On the rise the same backward: whole at 4960, thinner and shorter at 4972, a few white dots at 4984, gone by 4988. Pictures: `ev/carry-4720.jpg` (frames 4700 to 4736 carried onto the camera of 4720, in colour), `ev/q1-pairs.jpg`, `ev/q1-pairs-b.jpg`, `ev/q1-pairs-rise.jpg`. K1 takes the dive's pairs 4712 to 4720 from 0.63, 1.03, 0.84 to 0.13, 0.20, 0.36 and the mean of the rise's pairs 4956 to 4968 from 0.36, 0.33, 0.27, 0.25 to 0.04, 0.06, 0.07, 0.10. This is my own cure of MAIL 840 point 1 (the row of dashes): it took the dashes away and put a streamer that comes up out of nothing in their place.
+
+NOT the layer, by control: `uShow` (K3 changes nothing from 4712 on, and makes 4708 worse, 0.71 at the far limb: the law by height is what keeps the scene's limb off the globe's up there). NOT the layer: the place's own deck, its detail and its relief (K4 changes nothing, the map alone reads the same or higher).
+
+NOT NAMED yet, layer 2: what is left with no streamers: the dive's pairs 4724 to 4744 at the top of the frame, (552, 80), (512, 40), (492, 0), (892, 88), which is the far cloud band of the map toward the horizon, and the rise's pairs 4972 to 4984 at the frame's left edge with a wide mean of 0.17 to 0.28. K4 says it is in the map's far look or in my proxy. The map's clouds are read on a sheet over the deck (`uGCloudHeight`), which the poses on the smooth planet cannot carry: at a grazing ray the sheet's place slides against the deck as the eye sinks, by my sum about 15 px at 1920 over 8 frames at 4732 to 4740. So this part may be the proxy's own; I do not know, and it needs the report's own number along flows (`chain.py` on half frames) before I call it either way. The dive's pairs 4692 and 4696 (0.51, 0.59) lie on the limb at the upper left (the hump known since 121f3ade); not looked into in this round.
+
+## 25 Nov, 06:38 to 06:53 UTC: lab log. The cure of layer 1: the streamer's far level (deep.ts `cirrusFlat`, deep.json `cirrus.far`)
+
+- Thought: the dashes of MAIL 840 came from marching a body thinner than the foot, and the thin law cured them by not drawing it. The law is by place and foot, so it is no clock, but a streamer that is not there and then is there is exactly an image that pops up. What a chain of white heaps is from far is a pale streak. So the share that `thin` takes from the heaps is drawn as that streak: on the streamer's own middle line (line, bow, widths, ends, lumps and bend from the same uniforms as the march), read where the ray meets the middle height of its body (so it stands where the heaps stand and not under them on the deck), as wide as the body or as two pixels if that is wider and then as much thinner, of cover `cirrus.far` where the heaps would fill the crest (the same need the march has for a heap, against the noise's spread 0.3 to 0.8) and of none where they would not. It lies on the map as the map's own cloud does (same colour, same curve, hides the place's deck detail under it). Nothing of it is by the clock or by the eye's height. It is a second drawing of the same streamer and the two cross by the foot: I name it as that for the Builder to rule on (MAIL 772: no decal, no dissolve).
+- S1 (first form: a bell of the body's width or one pixel, cover 0.5 times density times ends): dive pairs by my proxy 4708 0.35, 4712 0.14, 4716 0.22, 4720 0.35, 4724 0.54, 4728 0.75: the same as with no streamers at all (K1), so layer 1 is out of the proxy from 4712 to 4720. `ev/carry-S1.jpg`, looked at: the streamer lies there from 4708 as a pale line and its heaps stand up on it from 4720 to 4736. But the line is as bright as the heaps and ruled like chalk, two of them, and at 4605 at 1920 (`ev/s2-4605.jpg`, 4 times enlarged, cover 0.35) three ruled pale lines stand by the storm from orbit: 941 pixels changed by more than 6 levels, the most 107. A drawn line from orbit: wrong (MAIL 840 point 2 (2)).
+- S3 (cover 0.35): dive 4708 0.35, 4712 0.15, 4716 0.25, 4720 0.35, 4724 0.54, 4728 0.75, 4732 1.20, 4736 1.28; rise 4956 1.22, 4960 1.12, 4964 0.97, 4968 0.82, 4972 1.27, 4976 1.18, 4980 0.81, 4984 0.78, 4988 0.49. The rise low down does not move: there the streamer is whole and near, it stands over the smooth planet and my proxy cannot carry it (K1 took the mean away because it took the streamer away), so the rise from 4956 to 4968 cannot be judged by this proxy at all. Said so.
+- S4 (second form, the one kept: lumps as the march has them, at least two pixels wide, cover by the heaps' fill): 4605 at 1920 against 02ca4d9f: 464 pixels changed by more than 6 levels, the most 76; `ev/s4-4605.jpg` (4 times enlarged): one faint streak about 60 px long with a slight wave and a shorter one over it, where the long streamer and the second stand. `ev/s4-dive.jpg` (4692, 4704, 4714, 4722 at 1920): hairlines low left of the storm at 4692 to 4714, the heaps on the upper third of the line at 4722 and a hairline tail below them. Still to be seen as thin lines when enlarged. RED, named: the streamers show from orbit as thin pale streaks. They are the streamers of the approved close image at their own place, about a pixel wide and 60 long at the hold, and the approved hero has no streak there.
+- S5 (the kept form, preview): dive pairs by my proxy 4708 0.35, 4712 0.22, 4716 0.31, 4720 0.35 (on 02ca4d9f 0.35, 0.63, 1.03, 0.84), 4724 0.54, 4728 0.75 (layer 2, as with no streamers); rise 4976 1.18, 4980 0.81, 4984 0.78 (unchanged, layer 2 and the proxy's own). `ev/carry-S5.jpg`, looked at: the long streamer and the second lie there from 4708 as thin pale lines, the heaps of the long one stand up on its line from 4720 at its widest end and reach its other end at 4736, the second one's at 4736. No white comes out of nothing any more; the lines themselves are thin and even, which is the red named above.
+- 4860 at the preview against 02ca4d9f: 48 pixels changed by more than 6 levels, the most 24, all in the box (773 to 888, 259 to 294), the thin far streamer. The close view is otherwise the same picture, so its numbers stand as measured on 02ca4d9f (G17 proxy 0.359 at 1920, not measured again at 1920 on this tree).
+- Seconds per draft frame with the far level: preview 4722 about 10, 4860 not timed alone; 1920: 4722 27.1 (29 before).
