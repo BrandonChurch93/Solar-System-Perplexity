@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T08:50:13.797Z",
+ "pushed": "2026-11-25T09:13:49.746Z",
  "head": "f33f2d72e08ea57a9352f2aca7e3907db8ded233",
- "note": "Neptune 08:52: the cover cure tried, the rise pair stays red (0.78); the grade by height itself is the cause; not laid",
+ "note": "09:13 UTC: controls, nothing laid. No grade at any height: rise 4992 to 5000 0.34 and dive 4704 to 4712 0.30 on my copy of the reader (base 0.79 and 0.40), but 4860 goes pale cyan and the hold changes. Red at 4962: one hard fleck on the near deck, layer not yet named",
  "looks": [
+  {
+   "time": "2026-11-25T09:13:30.803Z",
+   "file": "20261125091330803-note-chain-4962-base.jpg",
+   "source": "out/work/nep/weave/ev/chain-4962-base.jpg",
+   "kind": "note",
+   "label": "c2edd61ba 4962 | 4970 carried back | pattern map: my copy of the reader, rate 2, 480 wide: 0.87 at (464, 1076) of 1920",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T09:13:30.237Z",
+   "file": "20261125091330237-note-fleck-4960.jpg",
+   "source": "out/work/nep/weave/ev/fleck-4960.jpg",
+   "kind": "note",
+   "label": "c2edd61ba rise 4960 to 4967, preview crops x4: one hard pale fleck on the dark near deck comes in over the lower edge at 4961 and rides up; it is the hot place of the red at 4962 (my copy of the reader 0.87 at 464, 1076). Draft rate 2, 18 s per frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T09:13:29.674Z",
+   "file": "20261125091329674-note-4605-NG.jpg",
+   "source": "out/work/nep/weave/ev/4605-NG.jpg",
+   "kind": "note",
+   "label": "4605 at 1920, the place: CONTROL no grade at any height (left) against c2edd61ba (right): 88934 px differ, 24425 over 8 levels, most 72. Draft, 29.9 s per frame. Not laid",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T09:13:29.048Z",
+   "file": "20261125091329048-note-4860-NGp.jpg",
+   "source": "out/work/nep/weave/ev/4860-NGp.jpg",
+   "kind": "note",
+   "label": "4860 CONTROL no grade at any height (left) | approved | c2edd61ba (right). G17 proxy 0.445 p25 0.212 against 0.508 p25 0.128. Draft, preview, 23.3 s per frame. Not laid",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T08:50:13.233Z",
    "file": "20261125085013233-note-4605-cover-diff.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/nep/weave/ev/4860-C6p.jpg",
    "kind": "note",
    "label": "4860 beside the approved image: left the cover cure (not laid), middle approved, right c2edd61ba. G17 proxy at the preview 0.577 against 0.508 (p25 0.129 against 0.128). 23.6 s the draft frame at the preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T08:24:38.092Z",
-   "file": "20261125082438092-note-4860-S6p.jpg",
-   "source": "out/work/nep/weave/ev/4860-S6p.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved image, tree c2edd61ba unchanged since 07:59: G17 proxy at the preview median 0.508, p25 0.128; 23.0 s the draft frame at the preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T08:24:37.565Z",
-   "file": "20261125082437565-note-far31-box.jpg",
-   "source": "out/work/nep/weave/ev/far31-box.jpg",
-   "kind": "note",
-   "label": "control that voids my light ratio: 4729 far level cover 0.26, 0.31, what changed, 4737; the boxes lay beside the far level",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T08:24:36.994Z",
-   "file": "20261125082436994-note-chain-4992-rate2.jpg",
-   "source": "out/work/nep/weave/ev/chain-4992-rate2.jpg",
-   "kind": "note",
-   "label": "rise 4992 to 5000 at rate 2 (true half frames), my copy of the reader: 4992, 5000 carried back, pattern 0.79; with the grade whole 0.33",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T07:59:18.491Z",
-   "file": "20261125075918491-note-crops-964.jpg",
-   "source": "out/work/nep/weave/ev/crops-964.jpg",
-   "kind": "note",
-   "label": "1 to 1 crops at the two pixels of MAIL 964: 656, 140 at 4694 and 4702; 1030, 749 at 4729 and 4737",
    "stop": "neptune"
   }
  ]
