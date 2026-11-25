@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T22:27:15.979Z",
- "head": "266b299ff64a59160e9bc4be3d599e26d3800529",
- "note": "rigid body trial: three stills at 3465 (as now, shapes off with light kept, light off); chain renders the dive of C",
+ "pushed": "2026-11-25T22:51:51.687Z",
+ "head": "2f89bcbb37768172903374b868d9742d98112493",
+ "note": "ruling 1323: rigid shapes stand, the hold's light gets baked into two body maps; the dive of C with the reader is on the machine",
  "looks": [
+  {
+   "time": "2026-11-25T22:51:50.821Z",
+   "file": "20261125225150821-note-polar_right.jpg",
+   "source": "../../../../tmp/v/rigid/polar_right.png",
+   "kind": "note",
+   "label": "the ring map at azimuth -25 to -5: where the mottled patch comes from"
+  },
+  {
+   "time": "2026-11-25T22:51:49.597Z",
+   "file": "20261125225149597-note-soft_right_3465.jpg",
+   "source": "../../../../tmp/v/rigid/soft_right_3465.png",
+   "kind": "note",
+   "label": "3465 right ansa with the bend off: the mottled patch on the B ring's outer margin, in the ring map, mine to cure"
+  },
+  {
+   "time": "2026-11-25T22:51:48.415Z",
+   "file": "20261125225148415-note-prof_now_dive.jpg",
+   "source": "../../../../tmp/v/rigid/prof_now_dive.png",
+   "kind": "note",
+   "label": "ring profile by frame 3560 to 3612 on the tree's dive: the hero's ring pixels give way to the code's rings by height, 3578 to 3600"
+  },
   {
    "time": "2026-11-25T22:27:07.277Z",
    "file": "20261125222707277-note-globe_rigid_now.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/rigid/three_3465_now.jpg",
    "kind": "note",
    "label": "3465 final, as now (tree under proof), d296 4.7669"
-  },
-  {
-   "time": "2026-11-25T21:52:37.442Z",
-   "file": "20261125215237442-note-edges_dive_now.jpg",
-   "source": "../../../../tmp/v/rigid/edges_dive_now.png",
-   "kind": "note",
-   "label": "saturn tree under proof, by the ring edge reader: px by which the ring edges leave true circles, by frame through the dive (the warp that the rigid body takes out)"
-  },
-  {
-   "time": "2026-11-25T21:29:54.866Z",
-   "file": "20261125212954866-note-holdmap.jpg",
-   "source": "../../../../tmp/v/rigid/light/holdmap.png",
-   "kind": "note",
-   "label": "saturn hold light map as a gain in stops (study for the rigid body: what the hold light is made of)"
-  },
-  {
-   "time": "2026-11-25T21:03:28.974Z",
-   "file": "20261125210328974-note-approved_hero_true_circles_3465.jpg",
-   "source": "../../../../tmp/v/warp/approved_hero_true_circles_3465.jpg",
-   "kind": "note",
-   "label": "warp study: the approved hero with true circles (green: 1.53, 1.948, 2.3394 radii) and the true limb (blue) through the lens of 3465"
   }
  ]
 }
