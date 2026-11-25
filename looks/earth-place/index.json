@@ -1,9 +1,16 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T15:57:13.335Z",
- "head": "4c4ae28cd41d8d873d8d51f86ff54b7bf14f6800",
- "note": "cause A not found: open shutter makes the blocks at 1857 and 2156, a plain blur model does not; reading of 15:39 withdrawn",
+ "pushed": "2026-11-25T16:03:43.515Z",
+ "head": "ef622fbdadd16bad4ea0a3b3180c7a11963f8e5c",
+ "note": "cause A: the box shutter of the capped frames; request for soft ends sent to the handover engineer; not cured",
  "looks": [
+  {
+   "time": "2026-11-25T16:03:42.910Z",
+   "file": "20261125160342910-note-1857-model3.jpg",
+   "source": "../../../../tmp/gl/k15/A/1857-model3.jpg",
+   "kind": "note",
+   "label": "cause A found, 1857 lower left: the open render beside MODELS with the motion measured between crisp frames at both ends of the shutter: the box of today makes the render's blocks (3.52 levels from it, closed frame 16.06); soft ends make dabs; the look of 15:57 that withdrew this reading was the faulty model"
+  },
   {
    "time": "2026-11-25T15:57:12.133Z",
    "file": "20261125155712133-note-1857-model.jpg",
@@ -55,14 +62,6 @@
    "source": "../../../../tmp/gl/k15/pv-all.jpg",
    "kind": "note",
    "label": "far band of 2010, a preview outside the film (band.py's own law on the approved layer): approved, committed, and three trials of the height law for small bodies (not baked)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T15:07:19.442Z",
-   "file": "20261125150719442-note-d-c2.jpg",
-   "source": "../../../../tmp/gl/k15/d-c2.jpg",
-   "kind": "note",
-   "label": "caaa727d dive 1870, 1875, 1880 at 1 to 1 west of the disc: the wedge's specks read as small clouds with shadows; the dark blue spot north of the streak stands",
    "stop": "earth"
   }
  ]
