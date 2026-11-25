@@ -7534,3 +7534,370 @@ Eighth NAMED by 16:00 with the full sha. Neptune's round 1 of 3 starts on what s
 > NEXT, toward 17:00 if it holds and else 20:00: the far plain's level from the light and the air of the place, the eye's pale spiral and the streaks from the flow, the second streamer as one kind at every distance.
 
 - 15:54:24 the whole test run on the tip started (npx vitest run --reporter=tap, alone, /tmp/vitest-tip.log).
+
+## 25 Nov, 15:55 UTC: after the eighth; toward a ninth
+
+- 15:55:51 looks pushed (8e58642c, 8 looks): 4860 and 4605 beside the approved and main, the rise pairs' causes.
+- WHERE THE SUN OF THE PLACE STANDS AT 4860 (out/work/nep/weave/sunview.ts; plan.lightDir through the set's rotation into the
+  eye's frame; x right, y up, -z forward): 4750 (0.832, 0.289, -0.474), 4968 (0.578, 0.432, -0.692); 11.4 and 11.6 degrees
+  over the horizon of the place. So in the terrain the Sun stands low, forward and to the RIGHT, 45 to 60 degrees off the
+  eye's line. (The film's far Sun, shot.sun.dir, is another direction and is not the light of the place: at 4605 it
+  projects to (1717, 155), the star's place.) The right edge of the frame looks about 30 degrees past the Sun, the left
+  edge about 60. The air's lobe toward the Sun (haze.forward 0.5, 0.7) reads 3.49 at 30 degrees and 0.73 at 60, the
+  mix with the even part 2.4 and 0.83. A lead for the pale right plain, not yet tried: the weight of the lobe.
+- G17 AT 4860 BY TILES (N8, 12 by 8, film over approved; a dot: not kept): 24 of 75 tiles at 0.8 or more, 38 are needed.
+     .     .     .     .    1.27  0.96  0.50  0.97  1.41  1.70  0.84  0.88
+   1.22  0.54  0.54  0.87  1.21  0.74  0.90  1.27  1.62  0.57  0.43  0.59
+   1.54  0.50  0.05  0.08  0.16  0.10  0.06  0.36  0.39  0.65  0.41  0.38
+   0.22  1.27  1.11  0.68  0.08  0.05  0.05  0.12  0.56  0.63  0.67  0.25
+    .    0.25  0.17  1.07  1.27  0.42  0.07  0.07  0.10  0.17  0.77  0.81
+    .     .     .    0.34  0.42  1.00  0.64  0.69  0.32  0.18  0.11  0.08
+    .     .     .     .     .     .    0.28  0.64  0.55  0.33  0.21  0.13
+    .     .    0.15   .     .     .     .     .    4.93  4.69  3.06  1.75
+  The approved plain's tiles carry 10 to 60 (in 1e-5 of the band's mean square), mine 1 to 8: the band's swing is about
+  3.6 levels in the approved plain and about 1 in mine.
+- THE PLAIN AT 2 TIMES BESIDE THE APPROVED (/tmp/plain-2x.jpg, x 640 to 1600, y 280 to 560): the approved has (1) a broad
+  near white sheet of cloud with fine threads under the limb, widening to the right; (2) between it and the eye a mid blue
+  plain with a fine grain drawn out along the flow; (3) the eye as a dark oval with a firm rim and white threads curling
+  round its left end; (4) under the second streamer a dark navy stroke, its shadow on the deck. Mine: a smooth navy plain,
+  the eye a soft dark blur, a thin pale band at the limb, no thread and no grain, no shadow under the second streamer.
+- 16:06:36 THE WHOLE TEST RUN ON THE TIP (66c70ae73 with the notes commit 485d58075 on it; npx vitest run --reporter=tap,
+  alone, 15:54:24 to 16:06:36): 81 files ok, 0 not ok. GREEN. No mail (as promised: only if red).
+
+## MAIL 1182 (16:08 UTC by its head; read 16:07 by my clock), word for word
+
+> MAIL 1182 from the Builder (/root), 16:08 UTC. To neptune_builder, on NAMED 66c70ae7.
+>
+> 1. A stands: the knots in plan.ts as lowSky, read through airAt. A stop may not turn a shared unit red, and you cured it on your side. They move to params.air in one step once the engine's air law reads air.sky and is on main; I say when.
+> 2. B stands as STATED until my machines read it. Out on 66c70ae7 since 16:01: units and gate, G3, the eight line parts, the stills, handover, warm; G13 and G17 follow as machines come free (jobs nq5).
+> 3. MEASURED by me today on main's first cut 53025569 (draft frames from a machine, mean absolute RGB against the approved pictures): 4605 2.931, 4860 22.986. Main's 4605 carries the star with its wide glow and eight spikes and the blue grey sparse sky. So on main they are there, with the same engine your tip stands on. Your line "both are the engine's sky and far Sun, not my folder" cannot be whole: something main's hold reads is not read by your tip. Say in one line by 16:45 where main's star and sky at 4605 come from (a laid picture, a sprite, a sky file of the stop, a look handed to the far Sun) and which of your commits drops it. Main's two PNG frames are attached.
+> 4. d296 keeps a take off main whose judged frame matches the approved worse than main's. At 4860 yours reads 28.439 by your reader against main's 22.986. So 66c70ae7 does not go into the second cut of 17:00. Nothing of it is thrown away.
+> 5. RULED (d310), for 4605: main's hold there is the approved picture nearly to the level (2.93). A body drawn by code cannot read under a copy of the picture, and Brandon's third note names the copy at your stop ("you can actually see the image pop up both entering and leaving"). So at 4605 your take is not held to main's number. It is held to this: (i) my machines' checks on it green, or main's own rows; (ii) by my eye beside the approved the same subject, framing and light, and every difference a reader can name has an owner and a date; (iii) your round on it: if R1 falls under your last closed round's, the stop's folders go back in a new commit. At 4860, where main is no copy, d296 stands as it is.
+> 6. For the third cut, name by 19:15, in this order: at 4860 the far plain's level and the eye's pale spiral (the 5.5 your frame lacks against main's); the second streamer as one kind at every distance (rise 4968 to 4976); G13's soft share at 4860. For the dive parts wait for my machines' rows on 66c70ae7; I send them as they land.
+>
+> Attached: f04605-draft.png, f04860-draft.png (main's two frames; /home/user/.perplexity/attachments/9eaf4220dfe04329b4ea46a580cd13e9/).
+
+## 16:09 UTC: my answer to MAIL 1182 point 3 (word for word; sent 16:08:40 by my clock, I wrote 16:09 in its head)
+
+- Found by: git diff --stat origin/main HEAD -- public/assets/neptune (main has full/sky-hold.webp 6962270 bytes, web
+  2190470, and sky-terrain.webp and the place-*.webp, my branch has none); git log --diff-filter=D on the file
+  (277b45e5c); git log on src/stops/neptune/sky.json (fdebc88a3); main's assets-src/neptune/RECIPE.md line 37 on (the
+  patch is "the hero's own sky"); this notebook under "25 Nov, 03:18 to 03:35 UTC".
+
+> ANSWER to MAIL 1182 point 3 (16:09 UTC). Main's star and sky at 4605 are a laid picture, a sky file of the stop: public/assets/neptune/<set>/sky-hold.webp (4928 by 2772, web 2464 by 1386; by its recipe on main the approved hero's own sky from 1.07 radii out, so the far Sun's wide glow and eight spikes and the blue grey sparse stars are the hero's pixels), named in src/stops/neptune/sky.json under "orbit" (vfov 30, margin 0.375, gain 1.538) and laid by the engine's sky patch at the hold's aim. My commit fdebc88a38dc80ba5432e9b66d5de023aa79df23 (25 Nov 03:32 UTC, "the hold's sky plate goes": sky.json to {}) drops it; 277b45e5c2d6e3cbd1b70ef73afff0d081759fe3 of the same minute deletes the two files and solves skyAim.orbit anew for the one sky turn. Cause then: MAIL 878 (a) and MAIL 774, after a control (at 4707 the plate's feathered edge stood in frame beside the engine's Milky Way, 41235 px differed); the commit's message named the cost ("4605 shows the engine's sky and the engine's Sun (a point, no flare), not the hero's"), and MAIL 1078 point 5 and MAIL 1126 point 2 ruled no plate. So my line was not whole, as you say: what the engine itself draws there is the small disc and the gold brown band; the flare and the blue grey sky of main are the plate's.
+>
+> One more fact, closing red 7 of my NAMED mail: the whole test run on the tip (15:54 to 16:06 UTC, tap reporter, alone): 81 files ok, 0 not ok.
+>
+> Working on point 6 in its order; next NAMED by 19:15.
+
+- WHAT MAIL 1182 CHANGES FOR MY WORK: the eighth is not in the second cut (d296: 4860 at 28.439 against main's 22.986).
+  At 4605 my take is held to d310 (the checks green, the same subject, framing and light by his eye, every difference
+  named with an owner and a date), not to main's number. Third cut: NAMED BY 19:15, in this order: (1) at 4860 the far
+  plain's level and the eye's pale spiral ("the 5.5 your frame lacks against main's"); (2) the second streamer as one
+  kind at every distance (rise 4968 to 4976); (3) G13's soft share at 4860. The dive parts wait for his machines' rows.
+  Main's two frames: /home/user/.perplexity/attachments/9eaf4220dfe04329b4ea46a580cd13e9/f04605-draft.png and
+  f04860-draft.png.
+
+## 25 Nov, 16:06 to 16:20 UTC: main's two frames read; where the 5.5 lie; trials P0 to P5 on the far plain (preview, 4860)
+
+- MY READER ON MAIN'S FRAMES (the Builder's draft PNGs, copied to out/work/nep/weave/MAIN): 4605 MAD 2.931, 4860 22.986:
+  the very numbers of MAIL 1182. So my reader of the mean absolute level is his. G17 by my reader on main's frames:
+  4605 median 0.856 p25 0.720 (65 tiles); 4860 median 0.934 p25 0.549 (75 tiles).
+- WHERE THE TIP LOSES AGAINST MAIN AT 4860 (tiles of 160 by 135; mean absolute level against the approved, tip minus main;
+  plus: the tip is worse):
+     +9   +4   +3   +7  +13  +10  +23  +19  +12   +9   +8   +6
+     -8   +3   -4   -8   +1  +15  +16  +13  +10   +6   +4   +6
+     -8   -7   -3  -39  -18   -2  +18  +22  +27  +18  +12   +5
+     +1   +0   -1  -14  -26   -4  +11  +21  +37  +41  +30  +22
+     +7   +9   -0   -1   -7   -6   +3   -2  +22  +27  +33  +35
+     -1   -3  +12   +9   -2   -1   -3   +3  -15   +7  +50  +53
+     +3   +2   +0   +1   +2   +0   +2   -0  -14   -4  +16  +25
+    -10   -7   -5   -2   -1   +1   -2   -4   -9  -17  -15  +12
+  In sums over the frame: the plain on the right (rows 2 to 6, columns 6 to 11) 5.2; the sky (rows 0 and 1) 1.8; the tip
+  is better by 1.0 at the left by the bank (rows 2, 3, columns 3, 4) and by 0.6 in the bottom row. Main's sky there is its
+  plate (sky-terrain.webp, the approved's own sky): its top quarter costs main 3.00, mine 4.94 (at the preview).
+- Boxes (1920; approved | main | tip): far plain right (1300..1800, 330..480) 123,156,186 | 116,154,190 | 99,127,166;
+  mid right (1200..1900, 480..760) 94,133,172 | 89,133,179 | 46,74,115; the eye 24,54,90 | 33,66,108 | 25,50,86; near deck
+  lower right (1300..1800, 800..1000) 44,75,110 | 86,114,150 | 56,73,100; left mid 79,91,106 | 78,90,110 | 68,87,117;
+  sky top right 12,17,23 | 12,17,24 | 8,11,11. THE GAP IS THE MID RIGHT PLAIN: in linear light the approved's is 4.1, 3.5,
+  2.4 times mine (red, green, blue).
+- TRIALS (preview 960 by 540, 4860, about 64 s each with the build; /tmp/pm.py; MAD | its sky part | its ground part | far
+  right | eye | mid right | near right):
+  P0 the tip:                             28.430 | 4.94 | 23.495 | 99,127,166 | 25,50,86 | 46,74,115 | 56,73,100
+  P1 haze.forward 0.5 to 0.9:             28.023 | 4.82 | 23.198 | 105,133,170 | 24,50,85 | 48,77,117 | 57,73,100
+  P2 P1 and haze.share 0.45 to 0.7:       26.806 | 5.08 | 21.729 | 123,150,183 | 27,53,89 | 59,86,125 | 61,77,103
+  P3 P1 and haze.low.depth 0.065 to 0.13: 27.159 | 5.27 | 21.888 | 116,142,175 | 37,64,99 | 60,86,123 | 62,78,104
+  P4 air.top 0 (way C's air off, a tool): 46.926 | 5.92 | 41.001 | 120,159,196 | 49,107,165 | 77,138,192 | 94,142,189
+  P5 far.on 2 (the map alone, a tool):    29.936 | 4.99 | 24.946 | 88,117,156 | 25,55,94 | 41,70,109 | 55,70,96
+  main (halved by area):                  22.790 | 3.00 | 19.789 | 116,155,190 | 34,66,109 | 89,133,179 | 87,114,151
+- READ: (1) without the air the eye stands in (P4) the mid plain has the approved's green and blue (138, 192 against 133,
+  172) but is too blue: the level is there, the paleness is not. (2) The air's law takes the near deck and the mid plain
+  down by the same share (linear green 0.25 and 0.27 of P4) and the far plain by 0.61: between 2.2 units (near right) and
+  2.8 to 4.9 units (mid right; from the angles under the horizon, eye 1.0 unit up, horizon 9.1 units off) it makes no
+  difference, and the approved's mid plain is 3.3 times its near deck. (3) The air's light of the low layer (the haze)
+  is multiplied by the same gain as the ground, though that layer lies UNDER the eye and all of it stands between the eye
+  and the ground: of everything in the picture it is the thing the eye inside the air sees whole. That is an error of
+  my law of 10 h, not a level to tune. (4) More low air (P3) veils the eye, which the approved keeps dark at the same
+  distance as the pale plain: there the pale sheet has a hole.
+- BUILT (uncommitted, 16:17): deep.ts, deep.json: haze.low.eye (the share of the low air the storm's eye clears where the
+  ray ends on its floor: eyeShade, the one eye of both shaders) and haze.own (the share of its own light in what the hold
+  shows of the low air; the air law's airGain with it, as air.cirrus for a cirrus; 0: the old law, col * gain, to the bit).
+  Both 0 in the file for the control Q0 against P0. tsc clean.
+
+## 25 Nov, 16:20 to 16:35 UTC: the low air's own light and its hole at the eye; trials Q0 to Q3
+
+- 16:17 to 16:23 A SLIP OF MINE: the first run of the Q trials wrote no frame. The shader did not build ("uEyeMake:
+  undeclared identifier"): in the scene's shader the globe's uniforms carry the prefix uG (deep.ts line 19), so it is
+  uGEyeMake. Six minutes lost; the log's tail hid it (grep called the output binary). Cured, run again 16:25 to 16:29.
+- Q0 (the code with haze.low.eye 0 and haze.own 0): THE SAME BYTES AS P0. The change is neutral at 0.
+- TRIALS (preview, 4860; MAD | sky part | ground part | far right | eye | mid right | near right | left mid):
+  approved                               0      |      |        | 123,156,186 | 24,54,90 | 94,133,172 | 44,75,110 | 79,91,106
+  P0 the tip                             28.430 | 4.94 | 23.495 | 99,127,166 | 25,50,86 | 46,74,115 | 56,73,100 | 68,87,117
+  Q1 eye 1, own 1                        28.617 | 5.49 | 23.124 | 111,145,182 | 21,51,89 | 66,106,151 | 71,97,132 | 78,105,141
+  Q2 Q1, lobe 0.9, share 0.7             28.355 | 5.71 | 22.645 | 137,169,199 | 22,54,92 | 87,126,167 | 82,108,143 | 79,106,143
+  Q3 eye 1, own 0.5                      27.205 | 5.19 | 22.017 | 105,136,175 | 17,44,80 | 56,91,134 | 64,85,116 | 73,95,129
+- READ: the hole holds the eye dark under any amount of low air (Q2: 22,54,92 against the approved 24,54,90). With its own
+  light whole, the low air brings the mid plain to the approved's level (Q2: 87,126,167 against 94,133,172), but it
+  lifts the near deck as much (82,108,143 against 44,75,110): an even sheet gives the near deck (the sight line 26
+  degrees on the deck) half of what it gives the mid plain (11 to 14 degrees), and the approved has a quarter of the
+  mid plain's level there. So an even sheet cannot be the whole of it: the approved's pale sheet begins beyond the
+  storm and the bank. The stop already has that thing: fan.veil, "a thin sheet of ice haze over the deck, laid and
+  ended by place on the ground, where the approved close image has its pale far deck", with bands along the flow. It
+  lies under the eye as the low air does, and its light is multiplied by the ground's gain too. Next: where the veil
+  lies in the frame (the grid tool G1), what it gives now (R1, veil off), then its own light by the same law.
+- 16:26:03 looks pushed (4d6ad37c, 8 looks): the P trials beside the approved and main; the plain at 2 times.
+
+## MAIL 1202 from the Builder (/root), 16:39 UTC (word for word)
+
+MAIL 1202 from the Builder (/root), 16:39 UTC. Returns on your NAMED 66c70ae7 so far.
+
+1. Path part of the standing reader, run here on its tree: the rise's four red lines of the speed are main's own, a little smaller (climbs again by 0.218 for main's 0.233 at whole frames, 0.302 for 0.320 at rate 2; step 0.128 for 0.127 at 5024 + 1/2). They are cured by the travel's commit (its check tree has no red line on Neptune), which goes into the second cut. Not yours to cure.
+2. Small proofs (nq5-09): red on those four lines only; place and parity have no line.
+3. Dive part 1 of 4 (nq5-01): RED, one number: the pattern of the picture changes in place by 0.51 from frame 4694 to 8 film frames later, band 8 px, limit 0.45, 5 frames over it, first 4693 + 1/2. Report and the two panels attached. Say what changes in place there (the dive has barely begun at 4694) and cure it at the cause.
+4. Rise part 3 of 4 (nq5-07) and part 4 of 4 (nq5-08): GREEN. The other parts run on slow machines, the last about 18:10; I pass each on.
+5. Your next NAMED stays due 19:15; the second cut is built about 18:30 from what is green.
+
+Attachments: neptune-dive-p1of4.md, neptune-dive-p1of4-changes.png, neptune-dive-p1of4-pops.png
+(/home/user/.perplexity/attachments/4c70024ec5b445dfa647c9086d89bc62/).
+
+## 25 Nov, 16:36 to 16:47 UTC: the veil's own light (trials V0 to V4); where main's sky at 4860 comes from; my mail of 16:45
+
+- The grid tool G1 (globe.grid 1, preview 4860): the bank lies on v = 0, the storm at (-1.44, 0.94) between the lines u -1 and
+  -2 just under v 1; the mid right plain is u -1 to 0.5, v 0.5 to 2.5; the far right is v 2 to 9. The veil's zone
+  (vt = v + 0.235 u from 1.3 to 3.0, u over -2.4 whole) began beyond the mid plain.
+- R1 (veil depth 0): 29.648 against P0 28.430. The veil gave 1.2 as it stood (far right 85,115,156 without it).
+- CODE: fan.veil.own, the veil's own light in the air's law (deep.ts: veilOnly, thingGain). The veil's share of the thing's
+  light takes airGain with its own share, the rest the ground's gain. Own 0: the old law.
+- V0 (own 0): THE SAME BYTES AS P0 (5cb9af036a4f11b3). The change is neutral at 0.
+- TRIALS (preview 4860; MAD | sky part | ground part | far right | eye | mid right | near right):
+  approved                                       |      |        | 123,156,186 | 24,54,90 | 94,133,172 | 44,75,110
+  main                                    22.790 | 3.00 | 19.789 | 116,155,190 | 34,66,109 | 89,133,179 | 87,114,151
+  P0 the tip                              28.430 | 4.94 | 23.495 | 99,127,166 | 25,50,86 | 46,74,115 | 56,73,100
+  V1 veil own 1                           26.213 | 4.88 | 21.335 | 115,152,189 | 25,50,86 | 53,85,126 | 56,73,100
+  V2 V1, from 0.5, to 1.5                 24.799 | 5.05 | 19.754 | 121,157,192 | 39,70,111 | 95,135,177 | 57,73,100
+  V3 V2, depth 0.3                        26.078 | 5.12 | 20.959 | 129,163,195 | 43,77,117 | 110,148,185 | 57,74,101
+  V4 V2, haze.own 0.5, low.eye 1          24.981 | 5.28 | 19.697 | 119,155,192 | 25,57,99 | 93,135,179 | 64,85,117
+- READ: V2 brings the mid and the far plain to the approved's level and keeps the near deck dark: the pale plain is a thing
+  by place. It veils the eye (39,70,111 against 24,54,90): the sheet needs its hole there. It is smooth: no streak shows in
+  it (owed, MAIL 1049). Its near edge shows as a soft line along the bank. By tiles V2 is level with main on the ground and
+  2.1 behind in the two top rows.
+- WHERE THE REST LIES, MEASURED (1920, split at the approved's own limb: sky above it 22.8 percent of the frame, a band of
+  24 px each side 4.5, ground 72.6): main sky 1.619, band 1.607, ground 19.759 (22.986); the tip N8 sky 3.482, band 2.568,
+  ground 22.389 (28.439). At 960: V2 sky 3.480, band 2.579, ground 18.741 (24.799); main ground 19.622 (22.790). Mean level
+  off in the sky: main 7.1, mine 15.3, a black sky 21.6.
+- MAIN'S SKY AT 4860 IS A COPY: main's sky.json "terrain" names sky-terrain.webp; main's assets-src/neptune/RECIPE.md lines
+  177 to 179: close-glow.png "is the blue glow above the horizon of the approved close image", sky-terrain.webp "is the sky
+  of the approved close image without that glow". In the column at x 840 of the preview main reads the approved to one level
+  (12,17,25 against 12,17,26). So "At 4860, where main is no copy" (MAIL 1182 point 5) does not hold for the sky.
+- My limb stands about 9 px of 960 higher than the approved's across the frame (main's 4): the low air's bright band over
+  the deck's limb. And the far left plain under it is 20 to 40 levels too pale. Both are in the band and the rows under it.
+- 16:37:10 looks pushed (01140938, 8 looks): the three frames approved, main, tip; the Q trials.
+
+### My mail to the Builder, 16:45 UTC (word for word)
+
+neptune_builder, BLOCKER on d296 at 4860 (16:45 UTC), with proof; and a first answer to MAIL 1202 point 3.
+
+1. Your premise in MAIL 1182 point 5, "At 4860, where main is no copy", does not hold for the sky. Main's sky at the terrain is the plate sky-terrain.webp (main's src/stops/neptune/sky.json, "terrain") and its limb glow is close-glow.png. Main's own assets-src/neptune/RECIPE.md, lines 177 to 179, says what they are: "the blue glow above the horizon of the approved close image" and "the sky of the approved close image without that glow". It is the same construct as sky-hold.webp at 4605, which d310 names a copy.
+
+2. MEASURED by my reader at 1920 by 1080 (on the whole frame it reads your numbers to the digit: main 22.986), split at the approved's own limb: sky above it (22.8 percent of the frame), a band of 24 px each side of the limb (4.5), ground under it (72.6). Parts of the whole number:
+   main 53025569:   sky 1.619, band 1.607, ground 19.759, whole 22.986
+   my 66c70ae7:     sky 3.482, band 2.568, ground 22.389, whole 28.439
+   Mean level off in the sky alone: main 7.1, mine 15.3, a black sky 21.6. No sky of the film's own stars can read 7.
+
+3. So of the 5.45 between us 1.86 is the copied sky, 0.96 the copied glow at the limb, and 2.63 is ground. The ground is mine to cure and I have its cause: a trial of this hour (the place's veil of ice haze with its own light in the air's law, by place; one preview frame, STATED, not committed, its control is the tip to the byte) reads ground 18.741 against main's 19.622 at 960 by 540, whole 24.799 against main's 22.790.
+
+4. I ASK for a ruling: d310 at 4860 as at 4605. The take held at 4860 to main's number on the ground part (under the approved's limb), the sky and the glow by your eye. As d296 stands, no take with the film's own sky (MAIL 1078 point 5, no plate) can pass it at 4860.
+
+5. MAIL 1202 point 3, what I know and what I do not: the hot spot (652, 140) is on the limb at the upper edge of the body. My measured cause of earlier (notebook, hump 1): the bright rim of the limb is fixed to the eye's view and stands on other ground 8 frames later, so the later frame carried back lays the rim on ground the earlier frame shows without it; with 40 px more margin inside the limb my proxy read 0.06 where it read 0.46. Not yet proven by a control: which light makes that rim. The control (the globe's limb veil off, then the air's glow off, pair 4694 to 4702) runs after the trials on 4860; I name the cause with its number in the NAMED of 19:15, not before.
+
+I go on with the ground, the eye's spiral and the second streamer and name by 19:15 either way.
+
+## MAIL 1207 from the Builder (/root), 16:47 UTC (word for word)
+
+MAIL 1207 from the Builder (/root), 16:47 UTC. On your blocker of 16:45: RULED as you ask, it is no blocker. It goes into PROGRESS as d312.
+
+1. Your proof holds: main's sky at the terrain is a plate made from the approved close picture and its limb glow another, so main's 4860 is a copy above the limb as 4605 is. d310 at 4860 as at 4605: the take is held at 4860 to main's number ON THE GROUND PART (under the approved's own limb, your split: main 19.759 at full size); the sky above the limb and the band of 24 px each side of it are judged by my eye beside the approved, with the differences owned by you in a list. No plate comes back (the film's one sky, as ruled).
+2. So 66c70ae7 stands at ground 22.389 against 19.759 and does not go onto main yet; your trial with the place's veil of ice haze (ground 18.741 against 19.622 at 960 by 540) is the way. With the NAMED of 19:15: the three parts at full size for main and the name, the pair beside the approved at full size, and the list for the sky and the band.
+3. More returns on 66c70ae7: units and gate GREEN from a machine (917 of 917, ten gate lines pass), G3 PASS. Dive part 2 of 4 (nq5-02): RED, one number: the pattern changes in place by 0.64 from frame 4706 to 8 film frames later, band 8 px, limit 0.45, 5 frames over, first 4705 + 1/2. Report and panels attached. With part 1 (0.51 from 4694) that is one family along the dive's first third; your reading of the rim fixed to the eye's view is taken as the lead, the control names it. A rim that stands on other ground 8 frames later is light that goes with the view and not with the body: cure it so that it lies on the body (the limb's veil lit by the Sun at its place) and say what it costs the hold.
+4. The harness reads the same place at 4693 + 1/2 to 4702 with its three columns; I pass it on.
+
+Attachments: neptune-dive-p2of4.md, neptune-dive-p2of4-changes.png, neptune-dive-p2of4-pops.png
+(/home/user/.perplexity/attachments/896a86ad33d0417986b5a8308c3daedf/).
+
+## MAIL 1214 from the Builder (/root), 16:57 UTC (word for word)
+
+MAIL 1214 from the Builder (/root), 16:57 UTC. My eye on your 66c70ae7, from the 20 draft pictures a machine drew on the name and on its base (nq5-11); the sheet of 4860 is attached (approved, main, the name, and the name at 4740).
+
+1. What is won and stays: 4720 and 4740 are one body now. On the base 4720 is the globe with stretched white streaks laid over it; on the name the storm and its streamer stand on the globe and come nearer. That is what the review note asks for.
+2. What 4860 lacks against the approved picture, in the order of what the eye sees first:
+ (a) the eye. The approved has a dark oval with soft spiral arms winding into it; main has it stronger still; the name has a faint dark oval and no arm. It is the subject of the frame.
+ (b) the deck's own texture. The approved ground is full of fine swirls and wave trains, lit from the right; the name's ground at 4860 is a flat dark blue with little in it, while the same name at 4740 shows a fine texture. So the detail is there higher up and goes missing on the way down: say where it goes (a level of the map, the haze, the light) and keep it.
+ (c) the streamer's body. The approved streamer is a soft braided band with grey shadow in it; the name's is whiter and blockier with hard lumps at the lower right.
+ (d) the limb's haze on the lit side is wider and paler than the approved's.
+3. The sky: the film's own Milky Way stands brown and bright at the upper left where the approved has a cool faint band. It is the film's one sky, so the stars stay where they are; what is yours is the level: a lens set for a sunlit cloud deck sees the sky dimmer. Say which law dims the sky by the light of the ground at Neptune and that it is the same law the other stops use; put the hue in the owned list.
+4. All of it with the NAMED of 19:15 as ruled in mail 1207: the three parts at full size for main and the name, the pair beside the approved, the owned list for sky and band. The eye (a) and the texture (b) decide whether the ground part passes; do them first.
+
+Attachment: n4860.jpg (/home/user/.perplexity/attachments/49d1b6e7b1a6463c88d357e6ca3f24f8/).
+
+## MAIL 1221 from the Builder (/root), 17:09 UTC (word for word)
+
+MAIL 1221 from the Builder (/root), 17:09 UTC. Two returns for your name 66c70ae7 and one line on main.
+
+1. nq5-06, rise part 2 of 4 (render_18, 66 min): RED by one number: "rise: the pattern of the picture changes in place by 0.46 from frame 4970 + 1/2 to 8 film frames later, band 8 px, limit 0.45". Main's own row there (take/tr2's run of the same part): 1.48 from 4993, 30 frames over. So the rise stands at 0.01 over the limit against main's 1.03 over; parts 3 and 4 are green, part 1 is out.
+2. MAIN'S OWN DIVE ROW, measured today on main's pictures by the harness builder's tree (job cf1-14, standing reader and the full carry alike): "dive: the pattern of the picture changes in place by 1.26 from frame 4721 + 1/2 to 8 film frames later, band 8 px, limit 0.45 (75 frames over it, first 4692 + 1/2)". Your name's dive reads 0.51 from 4694 and 0.64 from 4706 (5 frames over). By the reader the name is better than main on every row read so far; what holds it off main is the judged frame alone (ground part 22.389 against main's 19.759, mail 1207).
+3. So the order for your next name of 19:15 stays: the ground part at 4860 under 19.759 first, then the three rows that are still over (4694, 4706, 4970 + 1/2), each cured at its cause; say for each what changes in place there.
+
+## Lab log 16:54 to 17:10 UTC (after MAIL 1202, 1207, 1214, 1221)
+
+- Limb controls on the pair 4694 to 4702 by my proxy (chainm.py, preview, rate 2; STATED, a proxy of the Builder's reader):
+  L0 the tree: pattern 0.45 (limit 0.45), largest at 672, 140 of 1920 (his reader: 0.51 at 652, 140, the same place).
+  L1 limb veilAmount 0.81 to 0: 0.45, same place. L2 L1 and limb dark 0.95 to 0: 0.45, same bytes as L1.
+  So the limb's veil is NOT the cause, and the dark is no control here: set.ts gives uLimbDark.x = dark * home * (1 - deep),
+  and deep (look.ts diving from 2.06 to 1.8 radii) is whole by 4694 (height 1.696), so the dark is already 0 in both frames.
+- What the hot blob is, SEEN (first, moved, pattern, difference, 6 times enlarged): a blob of pattern up to 0.97 about 15 px
+  of 480 wide, from the limb's line to about 15 px of 480 under it, at the upper edge of the judged body. About 1 percent of
+  the frame is over 0.3, so the 99th percentile sits on this one blob.
+- The eye's pose there, MEASURED (out/work/nep/weave/home2.ts): height 1.696 at 4694, 1.247 at 4702, 1.014 at 4706, 0.794 at
+  4710, 0.601 at 4714; off the hold's axis 3.62, 4.00, 4.72, 5.62, 6.52 degrees. holdness runs from 6 to 26 degrees, so home
+  is 1 through 4708: the hold's own layer (held map, edge line, cut, field) does NOT change in these pairs.
+- Trials X1 to X5 at 4860, preview (fan.veil.storm with a fourth number, the sheet's share round the storm):
+  X1 storm [1, 1, 1.3, 0.8]: ground 18.472 (W5 17.359); the eye's box reads 50, 88, 133 against the approved 24, 54, 90, so
+  the patch veils the eye itself. X2 X1 and storm.arms.light 0.2: 18.552. X3 X1 and light.wrap 0.05: 18.474. X4 X1 and
+  deck.contrast 2.0: 18.447. X5 X1 and deck.relief 0.08: 18.540. None of the deck's knobs moves the fine texture.
+- The fine texture by number (/tmp/tex.py: detail between 2 and 10 px of 960, standard deviation in display levels):
+  mid right plain: approved 11.77, main 7.98, W5 6.19, X1 6.15. near left: approved 1.93, main 0.78, W5 1.09.
+  near right: approved 7.71, main 14.07, W5 13.67. bank at the left: approved 13.47, main 14.88, W5 13.24.
+  So against the approved the mid right plain has half the detail and the near right (the streamer) nearly twice.
+
+## MAIL 1225 from the Builder (/root), 17:22 UTC (word for word)
+
+MAIL 1225 from the Builder (/root), 17:22 UTC. CORRECTION of my mail 1221, point 2, and two returns.
+
+1. CORRECTION. The line "main's own dive row 1.26 at 4721 + 1/2, 75 frames over" is NOT main's row. The tree that read it (the harness builder's b017b57b) is not main's code: its merge base with main 53025569 is 87c574be and 33 files of src, public and tools differ, src/stops/neptune/set.ts, the engine, the handover and the moves among them. It is the code before the first cut. So main's own rows for Neptune's dive and rise are not measured yet; "better than main on every row" is withdrawn until they are. Jobs mb1-03 (rise part 2 of 2) and mb1-05 to 08 (dive parts 1 to 4 of 4) read main 53025569 itself; you get the rows as they land. The same holds for the 1.48 I gave as main's rise row: that was take/tr2's run, and whether the travel's cure changes those frames is being probed.
+2. nq5-03, dive part 3 of 4 on 66c70ae7: RED by one line: "the pattern of the picture changes in place by 0.52 from frame 4753 to 8 film frames later, band 8 px, limit 0.45 (3 frames over it, first 4751)". With 0.51 from 4694 and 0.64 from 4706 that is three places on the dive; part 4 is out.
+3. G13 parts 1 to 4 of 6 on the name ran to their end (part 2: 34 of 83 frames over 0.02 soft; part 4: 33 of 82 over, first 4767); parts 5 and 6 are out, the join gives the verdict.
+4. Nothing changes in the order for your next name: the ground part at 4860 first, then the rows at 4694, 4706, 4753 and 4970 + 1/2, each cured at its cause.
+
+## MAIL 1234 from the Builder (/root), 17:35 UTC (word for word)
+
+MAIL 1234 from the Builder (/root), 17:35 UTC. The first of main's own rows for your dive, read on main 53025569 itself (job mb1-05, dive part 1 of 4): "the pattern of the picture changes in place by 0.72 from frame 4696 to 8 film frames later, band 8 px, limit 0.45 (8 frames over it, first 4692 + 1/2)". Your name 66c70ae7 reads 0.51 from 4694 there, so on part 1 it is better than main. Parts 2 to 4 of main's dive and main's rise part 2 of 2 are out; you get each as it lands. The six parts of the sharpness measure on your name are all back and I join them next.
+
+## Lab log 17:10 to 17:38 UTC (Nov 25): the eye by the veil, the texture's lever, the limb's cause by control
+
+All at the preview (960 by 540), draft tier, 64 to 75 s a frame at 4860; numbers are my proxies and STATED.
+Three parts at 4860 (`/tmp/pg.py`): whole | sky | band | ground. Main 22.790 | 1.537 | 1.630 | 19.622.
+
+- 17:03 to 17:10, storm patch (fan.veil.storm, 4th number: the share of the sheet round the storm). X1 [1, 1, 1.3, 0.8]:
+  ground 18.472, the eye veiled (box 50,88,133 against the approved's 24,54,90). X2 to X5 on X1 (arms.light 0.2,
+  light.wrap 0.05, deck.contrast 2.0, deck.relief 0.08): 18.552, 18.474, 18.447, 18.540. X6 (X1 and lowSky 0.27): sky
+  3.583, ground the same.
+- 17:13 to 17:20, fan.veil.arms [count factor, power] and the per streamer flat coded. Y1 storm [1, 1, 1.8, 0.45], arms
+  [1, 1]: ground 16.596. Y2 arms [2, 2]: 22.493 | 3.421 | 2.666 | 16.406, the eye 33,61,100: a dark oval with pale arms
+  winding in. Y3, Y4 (deck.gain 0.65, 0.75): 16.390, 16.404. Y5 (wisp light 0.3, near 0.6): 16.433. Y6 (storm [1, 1, 1.3,
+  0.6], arms [2, 3]): 17.162. Y2 is the base for the eye. G17 of Y2 at the preview: median 0.612, p25 0.210.
+- 17:25:07 looks pushed (4eaa9018, 8 looks): 4860 Y2 beside the approved.
+- 17:24 to 17:31, the deck's own texture by its extremes on Y2 (`/tmp/tex2.py`: detail as a share of the level in the
+  bands 1 to 5, 3 to 10, 6 to 20 px; near left | mid right; approved 0.079 0.095 0.116 | 0.089 0.097 0.109; main 0.023
+  0.032 0.052 | 0.059 0.062 0.075; Y2 0.038 0.042 0.060 | 0.047 0.053 0.068):
+  D1 deck.contrast 6.0: 0.041 0.049 0.059 | 0.048 0.054 0.070, ground 16.186.
+  D2 deck.relief 0.3: 0.048 0.051 0.074 | 0.051 0.056 0.071, ground 16.962; the far plain and the ring round the eye show
+  fine wave trains lit from the right, and the near ground shows thin dark cracks (too much).
+  D3 far.wave 3.0: no change (16.418).
+  E1 relief 0.12: 16.587, near left 0.039 0.044 0.063. E2 relief 0.18: 16.726, 0.043 0.047 0.067.
+  Reading: the relief under the Sun is the only knob of the deck that the eye sees; contrast, gain, wave and the wisps
+  change the fine bands by under 0.01.
+- 17:20 to 17:35, the limb at 4694 by controls (pair 4694 to 4702, my proxy at step 2, limit 0.45):
+  K0 the tree: 0.49 (largest at 648, 140 of 1920; the Builder's row 0.51 at 652, 140).
+  K1 the bright edge line off (haze.json limb.edge.amount 0): 0.50. NOT the cause.
+  K2 every limb term off (edge, veil, twilight, cut, melt, forward, rim, and the held field): 0.04.
+  K3 the held field alone off (look.ts field.amount 0): 0.05. THE CAUSE.
+  K4 twilight and cut off, the field on: 0.22 (they give the field its band to work on).
+  The pair 4706 to 4714 reads 0.11 (K0), 0.09 (K1) in my proxy: it does not see the Builder's 0.64 at 4706 (the flows
+  agree on 0.51 of the body only at step 2).
+  What changes in place: the held field is a gain by (mu, ndl), fitted for the hold; mu is the angle of the VIEW. As the
+  eye sinks the horizon closes over the body (68.2 degrees from the point under the eye at 4694, 63.6 at 4702), so the
+  field's bands near mu 0 run inward over the ground: the ground that showed plain cloud at 4694 carries the limb's
+  dark band and pale rim 8 frames later.
+- MY ERROR at 17:34: I started the next batch (trials10) before the batch of controls had said DONE; for about 40 s two
+  renders ran, and the second one's clean up took the first one's saved haze.json, so K4 could not restore it. Found by
+  the "cp: cannot stat" line; I stopped the second batch, restored deep.json from its saved copy and haze.json from git
+  (the diff was K4's two numbers only), and checked the tree (M NOTES.md, deep.json, deep.ts). K4's own frames were drawn
+  from its own build. Rule kept from here: no batch starts before the last one's DONE line is read.
+- 17:37 the cure coded (planet.ts uFieldEye, set.ts): in the dive the held field is read by the angle of the eye the dive
+  began at, carried with the body (plan.turn); in the hold by the view as before (w = 0: the hold's bytes cannot move);
+  the rise has no field (home is 0 there). tsc clean. Control M1 running.
+
+## Mail from /root/harness_builder, 17:42 UTC (word for word)
+
+From /root/harness_builder, 17:42 UTC by date -u, on the Builder's word (MAIL 1209.3: "send him and me the three columns"). NEPTUNE'S DIVE on your tree 66c70ae73355030cb2898126a5daa06ddbda54a9, the standing reader as it stands, draft tier, rows 4694, 4694 + 1/2, 4705 + 1/2, 4706, drawn on my machine. A message, not a question. The standing reader stays the judge (d310); nothing here changes it.
+
+1. Rows as drawn here: 4694: 0.513 at pixel 652, 140. 4694 + 1/2: 0.477 at 648, 136. 4705 + 1/2: 0.520 at 1416, 256. 4706: 0.643 at 1496, 248. Earlier to later 0.51, 0.48, 0.52, 0.64; later to earlier 0.09, 0.09, 0.07, 0.06.
+
+2. WHERE: on the globe just inside the limb, at the edge of what the reader judges. 4694: the top of the globe under the upper limb, largest at 652, 140, over 0.45 on 0.005 of the frame. 4706: upper right under the right limb, x 1292 to 1612, y 172 to 388, 0.011 of the frame.
+
+3. Three columns for a pattern row. The standing reader judges the deep globe only (of the band of 40 px inside the limb it judges 0.00; of the deep globe 0.66 at 4694, 0.48 at 4706); ring and sky carry no pattern row.
+row | deep globe: standing, the camera's map as carry on the same pixels, the map wherever it holds | band of 40 px inside the limb by the map
+4694 | 0.513, 0.869, 1.281 | 1.538
+4694 + 1/2 | 0.477, 0.859, 1.363 | 1.533
+4705 + 1/2 | 0.520, 0.297, 1.469 | 1.602
+4706 | 0.643, 0.324, 1.491 | 1.464
+
+4. WHAT, by the frames: your lead holds at both places. The ground is the same, the light over it is not.
+- 4694, ground at 652, 140: the map puts it at 574, 20 eight film frames later (the chain at 593, 29). Same cloud wisps beside it in both crops. Level in 40 px round it 93.9, then 77.8; detail's spread 10.3 and 10.6. Under the limb's bright rim at 4694, at the frame's top edge with a dimmer rim at 4702. The true carry reads more than the standing reader there (0.87 against 0.51): a true change in place.
+- 4706, ground at 1496, 248: the map puts it at 1659, 210 (the chain at 1691, 239). About 100 px inside the limb, then about 45 px inside, right under the bright rim: level 158.6 to 171.6, spread 19.9 to 22.8. On the standing reader's pixels the true carry reads 0.30 to 0.32, under the limit: the 0.64 there is the reader's chain losing the ground (12.7 px off the map where it is over). Right beside it toward the limb the true carry reads 1.46 to 1.60.
+- Not parted by me: how much of the 1.3 to 1.6 in the band is the rim's light on other ground and how much is the ground's own squeeze toward the limb.
+
+5. What follows for a cure: tying the rim's light to the ground (or slowing its change over the ground) should move 4694 by both carries. 4706 may stay over in the standing reader even after a true cure because it is the chain's own there; the Builder then wants it with its panels (MAIL 927).
+
+Pictures attached: n-dive-9388.jpg, n-dive-9412.jpg (frames, the later one carried by the chain and by the map, the pattern maps), p-neptune-dive-4694.jpg, p-neptune-dive-4706.jpg (the ground at 2 to 1 in both frames). Paths: /home/user/.perplexity/attachments/e167efdc1e7240e79fa502c2d8d2a0d7/
+
+## Lab log 17:38 to 17:46 UTC: the field on the body (M1), where the texture goes (F1 to F3)
+
+- M1, the held field read by the eye the dive began at (planet.ts uFieldEye, set.ts), my proxy at step 2, limit 0.45:
+  4694 to 4702: 0.05 (the tree before: 0.49). 4706 to 4714: 0.05 (before: 0.11). I looked at every frame: 4680, 4684,
+  4688, 4690, 4694 to 4702, 4706 to 4714, 4720 beside the tree before: the globe, its limb and its storm read the same
+  to the eye; no step at the dive's first frame.
+- The harness builder's three columns (17:42, above) agree with the lead: at 4694 a true change in place (the true
+  carry 0.87), at 4706 the 0.64 is the reader's chain losing the ground (the true carry 0.30 to 0.32 on its pixels).
+- The row at 4753 (0.52, MAIL 1225): my proxy on the name's own frames (W/N8v, half steps) reads 0.23 from 4750, 0.22 from
+  4751, 0.26 from 4752 (largest at 1716, 600 and at 852, 860 of 1920; the eye stands 0.042 to 0.026 radii up). My proxy
+  does not see that row; I have no cause for it by a control of my own.
+- Where the deck's texture goes at 4860 (controls on Y2, `/tmp/tex2.py`, mid right box: level, then detail as a share of
+  the level in the bands 1 to 5, 3 to 10, 6 to 20 px; approved 133.0: 0.089 0.097 0.109):
+  Y2: 135.0: 0.047 0.053 0.068.
+  F1 fan.veil.sizes 9: the same picture as Y2 (the finer sizes of the sheet are under a pixel's footprint at the preview).
+  F2 the veil off (fan.veil.depth 0): 75.1: 0.117 0.117 0.119; ground 23.087.
+  F3 the veil and the low haze off: 57.3: 0.179 0.183 0.209; eye ring 57.9: 0.090 0.125 0.177 (approved 99.2: 0.079 0.095
+  0.163); ground 27.912.
+  So the detail is in the deck (12 to 18 percent of the level, more than the approved holds) and it goes under the
+  sheet of ice haze and the low haze: they bring the plain from level 57 to 135 with a smooth light, which divides the
+  detail's share by 2.4 and more. Not a level of the map and not the light.
+- The cure tried (17:45): the sheet lies on the deck and is lit from it as well as by the Sun: fan.veil.below [share of
+  the sheet's light that comes up from the deck under it, the most the deck's detail may give it]; that share carries
+  the deck's own detail (deckDetail, the number the deck itself is drawn with). Trials G1 to G3 running.
+
+## MAIL 1244 from the Builder (/root), 17:50 UTC (word for word)
+
+MAIL 1244 from the Builder (/root), 17:50 UTC. Copy to harness_builder. MAIN'S OWN ROW of Neptune's rise, part 2 of 2, read on main 53025569 itself (job mb1-03): "the pattern of the picture changes in place by 1.48 from frame 4993 to 8 film frames later, band 8 px, limit 0.45 (31 frames over it, first 4987 + 1/2)". That is the same row the travel's first cure read (1.48 from 4993, 30 over), so the travel's change did not move it. Your name 66c70ae7 reads green on rise parts 3 and 4 and red by 0.01 on part 2 in its own four part split, so on the rise your name is far better than main.
+
+The harness's reading of your dive (17:41, sent to you both) is taken as the lead: at 4694 the same ground loses 16 levels in eight film frames as the limb's bright rim passes over it, and the band of 40 px under the limb reads 1.46 to 1.60 by the camera's map on all four rows. The cure asked: the rim's light is tied to the ground it lies on, or changes over that ground no faster than the ground's own light does, at every height of the dive alike (no window, no clock). The row at 4706 may stay over in the standing reader by its own chain; it is then shown with its panels before it counts. Dive parts 2 to 4 of main's own rows are still out.
