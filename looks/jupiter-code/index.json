@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T04:36:19.072Z",
+ "pushed": "2026-11-25T04:50:04.688Z",
  "head": "e41572b266f5705f8b14f5f0895f6b5b8fa1f94a",
- "note": "e41572b: dive pictures red (pattern 1.24 from 3031 + 1/2 by the reader's chain; 0.23 there by the ground's true map; by the true map over the limit only 3028 + 1/2 to 3029 + 1/2, most 0.67, far ground at the top edge going into the horizon's haze). Rise pictures running.",
+ "note": "04:50 UTC, e41572b: the rise of the tool's own frames 3240 to 3267 (still drawing, 3268 to 3339 follow); dive read red by the reader's carry (true map 0.67 at 3029, cause the air table by angle); chain goes on to the merge of main 5179b43",
  "looks": [
+  {
+   "time": "2026-11-25T04:49:53.149Z",
+   "file": "20261125044953149-note-pair-3150-final.jpg",
+   "source": "../work/r9/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final tier beside the approved close image, e41572b, match 7.784",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:49:43.150Z",
+   "file": "20261125044943150-note-f3259-ll.jpg",
+   "source": "../work/r9/f3259-ll.png",
+   "kind": "note",
+   "label": "rise 3259 lower left at 1 to 1, e41572b: the near plate's cumulus over the dark smooth ground beside the fit camera",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:49:42.277Z",
+   "file": "20261125044942277-note-rise-d.jpg",
+   "source": "../work/r9/rise-d.jpg",
+   "kind": "note",
+   "label": "rise 3262 to 3267, e41572b, tool frames",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:49:33.328Z",
+   "file": "20261125044933328-note-rise-c.jpg",
+   "source": "../work/r9/rise-c.jpg",
+   "kind": "note",
+   "label": "rise 3256 to 3261, e41572b, tool frames: pale mounds over a dark smooth field at the lower left, known red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:49:31.635Z",
+   "file": "20261125044931635-note-rise-b.jpg",
+   "source": "../work/r9/rise-b.jpg",
+   "kind": "note",
+   "label": "rise 3248 to 3255, e41572b, tool frames",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:49:29.891Z",
+   "file": "20261125044929891-note-rise-a.jpg",
+   "source": "../work/r9/rise-a.jpg",
+   "kind": "note",
+   "label": "rise 3240 to 3247 at half size, e41572b, tool frames",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T04:36:09.991Z",
    "file": "20261125043609991-note-pair-3150-final.jpg",
@@ -171,54 +219,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T03:43:48.312Z",
-   "file": "20261125034348312-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final beside the approved image (pair of the first named commit; the new plate moves 461 pixels of the draft by at most 4 levels, new pair with the NAMED mail)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:43:47.779Z",
-   "file": "20261125034347779-note-f2-dive-c.jpg",
-   "source": "../work/r8/f1/f2-dive-c.jpg",
-   "kind": "note",
-   "label": "3046 and 3052 whole, commit cddb41f",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:43:47.163Z",
-   "file": "20261125034347163-note-f2-ul.jpg",
-   "source": "../work/r8/f1/f2-ul.png",
-   "kind": "note",
-   "label": "3046 3052 3058 upper left: the brown line of the plate's rim above the limb's glow (left) is gone (right)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:43:46.537Z",
-   "file": "20261125034346537-note-f2-3043.jpg",
-   "source": "../work/r8/f1/f2-3043.png",
-   "kind": "note",
-   "label": "3043 upper right: left first repaint, right as committed in cddb41f, lower row lifted three times",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:43:45.894Z",
-   "file": "20261125034345894-note-f2-3037.jpg",
-   "source": "../work/r8/f1/f2-3037.png",
-   "kind": "note",
-   "label": "3037 upper right: the strip without stars and its hard line (left) are gone (right), lower row lifted three times",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:43:45.262Z",
-   "file": "20261125034345262-note-f2-3031.jpg",
-   "source": "../work/r8/f1/f2-3031.png",
-   "kind": "note",
-   "label": "3031 upper right: first repaint (left) against the plate with its own stars carried under its horizon (right), lower row lifted three times; the orange cloud near the limb is the film's sky under the plate's horizon",
-   "stop": "jupiter"
   }
  ]
 }
