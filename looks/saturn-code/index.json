@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T02:27:17.467Z",
- "head": "7359286c9cfa43401d5e7dcc989b1ce41f1ca07d",
- "note": "draft pairs main against the tree to be named at 3567, 3866 and 3885; the hold 3389 and 3539 are equal in every pixel; merging batch 6 and running its tests before I name",
+ "pushed": "2026-11-25T02:47:20.346Z",
+ "head": "88ba2385ea8a0e9f2bb77ba8dd5eefabf071fe5e",
+ "note": "named 88ba238: finals beside the approved image, the open faults 21 to 24 in crops; own run of the rise on the newest engine goes on",
  "looks": [
+  {
+   "time": "2026-11-25T02:47:19.417Z",
+   "file": "20261125024719417-note-r59_ll.jpg",
+   "source": "../../../../tmp/v/r59_ll.png",
+   "kind": "note",
+   "label": "approved beside final 3720, lower left near field at full size (open 23)"
+  },
+  {
+   "time": "2026-11-25T02:47:18.674Z",
+   "file": "20261125024718674-note-r59_right.jpg",
+   "source": "../../../../tmp/v/r59_right.png",
+   "kind": "note",
+   "label": "approved beside final 3720, right foot region at full size: foot band, shadow on the rings, dark gap (open 21, 22, 24)"
+  },
+  {
+   "time": "2026-11-25T02:47:17.792Z",
+   "file": "20261125024717792-note-r59_whole.jpg",
+   "source": "../../../../tmp/v/r59_whole.png",
+   "kind": "note",
+   "label": "approved close image beside final 3720 of the named tree (88ba238), whole frame"
+  },
+  {
+   "time": "2026-11-25T02:47:16.750Z",
+   "file": "20261125024716750-note-limbs_final.jpg",
+   "source": "../../../../tmp/v/r58/limbs_final.png",
+   "kind": "note",
+   "label": "limbs of the finals 3465, 3567, 3720 at six times: no row of dots at the final tier"
+  },
   {
    "time": "2026-11-25T02:27:16.440Z",
    "file": "20261125022716440-note-crop_3885.jpg",
@@ -31,35 +59,6 @@
    "source": "../../../../tmp/v/t22/f3866_right.png",
    "kind": "note",
    "label": "3866 final, x 900 to 1700, y 560 to 1080 at full size: the Milky Way in the gap ends hard at the inner ring inside the globe's shadow"
-  },
-  {
-   "time": "2026-11-25T02:06:08.848Z",
-   "file": "20261125020608848-note-final_3866.jpg",
-   "source": "../../../../tmp/v/r58/final_3866.png",
-   "kind": "note",
-   "label": "3866 rise, final tier, the tree to be named on main's engine. Not cured: the near ring at the lower left soft under the shutter (my item 16), the shadow on the rings near black, the stars end hard at the inner ring"
-  },
-  {
-   "time": "2026-11-25T02:06:07.658Z",
-   "file": "20261125020607658-note-final_3567.jpg",
-   "source": "../../../../tmp/v/r58/final_3567.png",
-   "kind": "note",
-   "label": "3567 dive, final tier, the tree to be named on main's engine. Not cured: the globe's shadow on the rings near black, the night side brown, the stars in the gap end hard at the inner ring (round item 5), the blue white rim on the outer edge (item 4)"
-  },
-  {
-   "time": "2026-11-25T01:43:16.693Z",
-   "file": "20261125014316693-note-saturn-parity.jpg",
-   "source": "../../../../tmp/v/r58/saturn-parity.png",
-   "kind": "note",
-   "label": "parity on main's engine, tree 5e094e5: green, mean 2.180 at 3720 (limit 12), level -0.831 at 3720 (limit 2.2)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T01:43:15.338Z",
-   "file": "20261125014315338-note-d253_sheet.jpg",
-   "source": "../../../../tmp/v/r58/d253_sheet.png",
-   "kind": "note",
-   "label": "d253 proof, tree 5e094e5 on main's engine: dive frames 3567 and 3612 at 1920 and 3840 in the full and the web set, half size. Mean differences 0 to 255: 3567 sizes 1.753 full, 1.620 web, sets 2.181 at 1920; 3612 sizes 1.629 full, 1.625 web, sets 0.156 at 1920"
   }
  ]
 }
