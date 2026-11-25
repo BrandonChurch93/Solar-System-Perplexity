@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T13:55:19.386Z",
- "head": "0025b0b5b7007c550a021474ae60f67fc08b515b",
- "note": "one law of cover (law2): whole rise green by the tool, dive slice 3596 to 3608 rendering, state mail next",
+ "pushed": "2026-11-25T14:17:42.603Z",
+ "head": "ccedab575f501a9c96d8baabc3dcbea413066508",
+ "note": "star window at the foot closed in the kept set; next the thin inner sheet inside the rim by the one law of cover, fitted to both approved pictures",
  "looks": [
+  {
+   "time": "2026-11-25T14:17:41.965Z",
+   "file": "20261125141741965-note-d_block2.jpg",
+   "source": "../../../../tmp/v/law2/d_block2.png",
+   "kind": "note",
+   "label": "saturn dive 3600 and a half: the block the tool names, a window of stars at the globe's foot (before it was closed)"
+  },
+  {
+   "time": "2026-11-25T14:17:41.325Z",
+   "file": "20261125141741325-note-foot_cmp.jpg",
+   "source": "../../../../tmp/v/law3/t/foot_cmp.png",
+   "kind": "note",
+   "label": "saturn dive 3594 3600 3601 right foot: the cure above, the cure with the star window closed below (draft)"
+  },
   {
    "time": "2026-11-25T13:55:18.782Z",
    "file": "20261125135518782-note-d_foot.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/ctl2/skim_3720_foot.png",
    "kind": "note",
    "label": "3720 foot, finals: approved close, one law, dark inner ring control"
-  },
-  {
-   "time": "2026-11-25T13:21:29.649Z",
-   "file": "20261125132129649-note-skim_3720_whole.jpg",
-   "source": "../../../../tmp/v/ctl2/skim_3720_whole.png",
-   "kind": "note",
-   "label": "3720 final: approved close, one law, control with the inner ring dark as the hold has it (reads worse: 34.659 against 28.611)"
-  },
-  {
-   "time": "2026-11-25T13:21:28.894Z",
-   "file": "20261125132128894-note-skim_3720_foot.jpg",
-   "source": "../../../../tmp/v/law2/skim_3720_foot.png",
-   "kind": "note",
-   "label": "3720 foot, finals: approved close, named, one law (no dark foot, the gap is open)"
   }
  ]
 }
