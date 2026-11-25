@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T01:14:43.011Z",
+ "pushed": "2026-11-25T01:30:52.297Z",
  "head": "d9cddae560cfbc19131d1bf4cc48f420d3b2bbe7",
- "note": "615 final before the Sun order; the Sun's size and direction render now",
+ "note": "Sun commit in work: hold Sun 11.69 deg at the approved place, globe unchanged; far Sun shows its map look where the Sun set is loaded (shared wear range, named)",
  "looks": [
   {
-   "time": "2026-11-25T01:14:41.638Z",
-   "file": "20261125011441638-note-f615.jpg",
-   "source": "out/work/mercury/place/c1f/f615.png",
+   "time": "2026-11-25T01:30:51.010Z",
+   "file": "20261125013051010-note-sn-out1.jpg",
+   "source": "out/work/mercury/place/sheets/sn-out1.jpg",
    "kind": "note",
-   "label": "d9cddae5 (round 2 state) hold 615 at the final tier, before the Sun order of mail 820",
+   "label": "Sun commit: 1100, 530, 870 before and after",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T00:46:04.034Z",
-   "file": "20261125004604034-note-a1-t.jpg",
-   "source": "out/work/mercury/place/sheets/a1-t.jpg",
+   "time": "2026-11-25T01:30:49.899Z",
+   "file": "20261125013049899-note-sn-out.jpg",
+   "source": "out/work/mercury/place/sheets/sn-out.jpg",
    "kind": "note",
-   "label": "A1 rise T 976 + 1/2: 966 + 1/2 to 980 + 1/2 every half frame, draft",
+   "label": "Sun commit: flight out 1036 to 1080 before and after",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T00:46:03.208Z",
-   "file": "20261125004603208-note-a1-s2.jpg",
-   "source": "out/work/mercury/place/sheets/a1-s2.jpg",
+   "time": "2026-11-25T01:30:48.724Z",
+   "file": "20261125013048724-note-sn-rise1.jpg",
+   "source": "out/work/mercury/place/sheets/sn-rise1.jpg",
    "kind": "note",
-   "label": "A1 rise 964 to 991, draft, every whole frame",
+   "label": "Sun commit: rise 1028 to 1035 before and after",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T00:46:02.192Z",
-   "file": "20261125004602192-note-a1-s1.jpg",
-   "source": "out/work/mercury/place/sheets/a1-s1.jpg",
+   "time": "2026-11-25T01:30:47.461Z",
+   "file": "20261125013047461-note-sn-rise.jpg",
+   "source": "out/work/mercury/place/sheets/sn-rise.jpg",
    "kind": "note",
-   "label": "A1 rise 952 to 963, draft",
+   "label": "Sun commit: rise 980 to 1020 before and after",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T00:46:01.404Z",
-   "file": "20261125004601404-note-a1-s0.jpg",
-   "source": "out/work/mercury/place/sheets/a1-s0.jpg",
+   "time": "2026-11-25T01:30:46.311Z",
+   "file": "20261125013046311-note-sn-dive1.jpg",
+   "source": "out/work/mercury/place/sheets/sn-dive1.jpg",
    "kind": "note",
-   "label": "A1 rise 940 to 951, draft, every whole frame",
+   "label": "Sun commit: dive 720 to 750 before and after",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T00:19:25.991Z",
-   "file": "20261125001925991-note-a1-r2.jpg",
-   "source": "out/work/mercury/place/sheets/a1-r2.jpg",
+   "time": "2026-11-25T01:30:45.102Z",
+   "file": "20261125013045102-note-sn-dive0.jpg",
+   "source": "out/work/mercury/place/sheets/sn-dive0.jpg",
    "kind": "note",
-   "label": "round 2 state, rise 1016 to 1029 every whole frame",
+   "label": "Sun commit: 689 to 710 before and after",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-25T00:19:24.594Z",
-   "file": "20261125001924594-note-a1-r1z.jpg",
-   "source": "out/work/mercury/place/sheets/a1-r1z.jpg",
+   "time": "2026-11-25T01:30:43.963Z",
+   "file": "20261125013043963-note-sn-flight-in.jpg",
+   "source": "out/work/mercury/place/sheets/sn-flight-in.jpg",
    "kind": "note",
-   "label": "round 2 state, rise 1004 to 1011.5 every half frame at the place: b0's exchange back (the ruled red's twin)",
+   "label": "Sun commit: flight in 490 to 530 before and after",
    "stop": "mercury"
   },
   {
-   "time": "2026-11-24T23:55:29.745Z",
-   "file": "20261124235529745-note-b0a1-e08.jpg",
-   "source": "out/work/mercury/place/sheets/b0a1-e08.jpg",
+   "time": "2026-11-25T01:30:42.716Z",
+   "file": "20261125013042716-note-sn-seam-in.jpg",
+   "source": "out/work/mercury/place/sheets/sn-seam-in.jpg",
    "kind": "note",
-   "label": "b0b87889 on top, round 2 state below, half frames, sheet e08",
+   "label": "Sun commit: seam in 538 to 540, 1 to 1 at the Sun (orange look: shared far Sun wear fault)",
    "stop": "mercury"
   }
  ]
