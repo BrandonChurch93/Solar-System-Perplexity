@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T14:32:33.525Z",
- "head": "1e4c32a81295bf5614aed410cb2856eef871bf7b",
- "note": "14:33 UTC. Second version of the air law's file laid at 1e4c32a8, first chunk the same string, off frames 11 of 11 byte equal. No picture changed.",
+ "pushed": "2026-11-25T14:59:35.877Z",
+ "head": "ba0d1fc8f3800d8029117d78e79db73ce3b03e44",
+ "note": "14:59 UTC. The globe gathers the light by height (airLaw.knots, ba0d1fc8, local). Scratch numbers on Mars, not the stop's. Cost at draft about 1 s a frame in the dive.",
  "looks": [
+  {
+   "time": "2026-11-25T14:59:34.264Z",
+   "file": "20261125145934264-note-mars-knots-sheet.jpg",
+   "source": "../m1140/mars-knots-sheet.jpg",
+   "kind": "note",
+   "label": "Mars 2325 and 2464, draft, scratch numbers: as it is, the law without knots, the light by height with knots over the datum, with knots under the datum (airLaw.knots at ba0d1fc8)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T14:32:32.810Z",
    "file": "20261125143232810-note-mars-law-real-sheet.jpg",
@@ -58,14 +66,6 @@
    "source": "../m1032/mars-2412-carry.png",
    "kind": "note",
    "label": "Mars 2412 right limb: carry.py with the ball carries the moon as sky",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:45:41.223Z",
-   "file": "20261125114541223-note-mars-4824-maps.jpg",
-   "source": "../m1032/mars-4824-maps.jpg",
-   "kind": "note",
-   "label": "Mars 2412 limb: frame, 8 frames later, reader, real pair, carry.py with the ball (the moon), reader by the sphere",
    "stop": "mars"
   }
  ]
