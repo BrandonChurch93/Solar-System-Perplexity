@@ -14,6 +14,7 @@ full set), OUT-look.jpg (heights as grey, shaded from the Sun's side, with the h
 """
 import argparse
 import json
+import os
 import cv2
 import numpy as np
 import geom
@@ -29,8 +30,11 @@ ap.add_argument('--most', type=int, default=512, help='the most a cell is split 
 ap.add_argument('--frame', type=int, default=-1, help='instead of the plate: the meshes seen by the film camera of this dive or rise frame (geometry.json), 1920 by 1080; nearest wins')
 ap.add_argument('--horizon', type=float, default=0.93, help='cells farther than this share of the horizon distance are haze on the sky, left out')
 ap.add_argument('--picture-only', action='store_true', help='leave out the margins round the picture (painted on, drawn out from its border): only ground the approved picture itself shows')
+ap.add_argument('--band', type=float, default=0.0, help='with --picture-only: the margins within this many full set px of the picture count as the picture (a trial of MAIL 1071 point 4, 0 in the recipe of the tree)')
+ap.add_argument('--files', default='', help='folder with files of the set that take the place of those in public (colour and distance files of the layers, used by trials; without it the files of public/assets/mars/full are read)')
 ap.add_argument('--aprons', action='store_true', help='the aprons of the layers too (relief.json apron: the ground drawn on beyond the boxes for the glide of the surface view), as relief.ts builds them')
 ap.add_argument('--apron-step', type=float, default=4.0, help='full set px between the points of an apron grid (its distance file has one sample per 4)')
+ap.add_argument('--kinds', action='store_true', help='with --frame: instead of the colour, what each pixel of the frame is: the picture (white), a margin (green), an apron (red)')
 ap.add_argument('--out', required=True)
 a = ap.parse_args()
 
@@ -90,9 +94,12 @@ class Skirt:
         if not e:
             return
         base = 'public/assets/mars/%s/' % a.set
-        atlas = cv2.imread(base + e['atlas'], cv2.IMREAD_UNCHANGED)
+        def alt(name):
+            other = os.path.join(a.files, name) if a.files else ''
+            return other if other and os.path.exists(other) else base + name
+        atlas = cv2.imread(alt(e['atlas']), cv2.IMREAD_UNCHANGED)
         ah, aw = atlas.shape[0] // 2, atlas.shape[1] // 2
-        self.dist = np.fromfile(base + e['depth'], np.float32).reshape(ah, aw)
+        self.dist = np.fromfile(alt(e['depth']), np.float32).reshape(ah, aw)
         small = cv2.resize(atlas, (aw, ah), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
         self.colour, self.alpha = small[..., :3], small[..., 3]
         # cells of the distance grid per full set px
@@ -155,7 +162,7 @@ def lay(name, X, Y, dist, alpha, colour, step, apron):
     ok = (hi / lo < a.jump) & (np.minimum.reduce(corners(alpha)) > 0.5) & (np.minimum.reduce(corners(dn)) > 0.2)
     ok &= hi < a.horizon * R['camera']['horizonDistance']
     if a.picture_only:
-        inpic = ((X >= 0) & (X <= W))[None, :] & ((Y >= 0) & (Y <= H))[:, None]
+        inpic = ((X >= -a.band) & (X <= W + a.band))[None, :] & ((Y >= 0) & (Y <= H + a.band))[:, None]
         ok &= np.minimum.reduce(corners(inpic.astype(np.float32))) > 0.5
     # what a nearer layer covers in the picture the eye never saw in this one: its distances there are made up
     for other in R['drawOrder'][R['drawOrder'].index(name) + 1:]:
@@ -225,15 +232,22 @@ def lay(name, X, Y, dist, alpha, colour, step, apron):
 for name in R['drawOrder']:
     L = R['layers'][name]
     dw, dh = L['distSize'][a.set]
-    dist = np.fromfile(L['files'][a.set]['dist'], np.float32).reshape(dh, dw)
+    def own(path):
+        other = os.path.join(a.files, os.path.basename(path)) if a.files else ''
+        return other if other and os.path.exists(other) else path
+    dist = np.fromfile(own(L['files'][a.set]['dist']), np.float32).reshape(dh, dw)
     b = L['box']
     # the grid of the distance file: its sample centres, as shares of the layer's box
     fx = (np.arange(dw) + 0.5) / dw
     fy = (np.arange(dh) + 0.5) / dh
     alpha = cv2.imread(L['files'][a.set]['alpha'], cv2.IMREAD_GRAYSCALE)
     alpha = cv2.resize(alpha, (dw, dh), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
-    colour = cv2.imread(L['files'][a.set]['color'], cv2.IMREAD_COLOR)
+    colour = cv2.imread(own(L['files'][a.set]['color']), cv2.IMREAD_COLOR)
     colour = cv2.resize(colour, (dw, dh), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
+    if a.kinds:
+        gx_, gy_ = b['x'] + fx * b['w'], b['y'] + fy * b['h']
+        inp = ((gx_ >= 0) & (gx_ <= W))[None, :] & ((gy_ >= 0) & (gy_ <= H))[:, None]
+        colour = np.where(inp[..., None], np.array([1, 1, 1], np.float32), np.array([0, 1, 0], np.float32)).astype(np.float32)
     kept, cells = lay(name, b['x'] + fx * b['w'], b['y'] + fy * b['h'], dist, alpha, colour, b['w'] / dw, False)
     print('%s: %d of %d cells laid (sheets and cut cells left out), distance %.2f to %.2f eye heights' % (name, kept, cells, dist.min(), dist.max()))
     K = skirt(name) if a.aprons and not a.picture_only else None
@@ -259,13 +273,22 @@ for name in R['drawOrder']:
         d2 = np.where(inn, bil(dist, bx, by), bil(K.dist, ax, ay)).astype(np.float32)
         a2 = np.where(inn, bil(alpha, bx, by), bil(K.alpha, ax, ay)).astype(np.float32)
         c2 = np.where(inn[..., None], bil(colour, bx, by), bil(K.colour, ax, ay)).astype(np.float32)
+        if a.kinds:
+            c2 = np.where(inn[..., None], bil(colour, bx, by), np.array([0, 0, 1], np.float32)).astype(np.float32)
         kept, cells = lay(name, b['x'] + gx, b['y'] + gy, d2, a2, c2, g, True)
         print('%s apron %s: %d of %d cells laid, distance %.2f to %.2f eye heights' % (name, side, kept, cells, d2.min(), d2.max()))
 
 if cam:
     seen = np.isfinite(zbuf).reshape(NY, NX)
     img = np.clip(col.reshape(NY, NX, 3), 0, 1)
-    img[~seen] = [0.45, 0.2, 0.1]
+    if a.kinds:
+        img[~seen] = 0
+        pic = img.min(-1) > 0.5
+        mar = ~pic & (img[..., 1] > 0.5)
+        apr = ~pic & (img[..., 2] > 0.5)
+        print('frame %d kinds: picture %.4f, margin %.4f, apron %.4f of the frame' % (a.frame, pic.mean(), mar.mean(), apr.mean()))
+    else:
+        img[~seen] = [0.45, 0.2, 0.1]
     cv2.imwrite(a.out + '.png', np.round(img * 255).astype(np.uint8))
     np.save(a.out + '-depth.npy', np.where(seen, -zbuf.reshape(NY, NX), np.inf).astype(np.float32))
     print('frame %d: the meshes cover %.4f of the frame' % (a.frame, seen.mean()))

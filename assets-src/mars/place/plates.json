@@ -743,6 +743,7 @@
    4.0
   ],
   "brightest": 0.25,
-  "regionMost": 0.25
+  "regionMost": 0.25,
+  "bodyFull": {"note": "bodyfull.py, ONE BODY (MAIL 1056): the approved picture seen from straight above (the picture alone: heights.py --picture-only, no margin and no apron) is the plates' ground over the picture's own field. airKm: within the first distance from the picture's eye the plate is the picture's ground itself, from the second on it holds the picture's forms on the take's broad tone (the limit of takes.body, measured). softTexels: the inward feather at the border of what the set shows. air: the picture's air by the distance from its eye, measured on the top view of measureDeg at measureSize texels in bins of binsKm as the darkest `percentile` of the ground's linear light; leastPass: the least share of ground light the picture is trusted to hold. forms: broadKm, the ground length over which the take's tone stands and under which the set's forms do; most: the most a form lifts or lowers the light. split: the take's grain is kept under sigmaPerReach times the ground one picture pixel covers (in texels, from `from` to `to` texels of sigma), over `octaves` blurs from leastSigma texels, the grain's ratio held in clip.", "airKm": [16, 25], "softTexels": 3, "air": {"measureDeg": 3.8, "measureSize": 4096, "binsKm": [6, 8, 10, 13, 16, 20, 25, 30, 40, 60, 90, 140], "percentile": 2, "farShare": 0.02, "leastPass": 0.3}, "forms": {"broadKm": 3.0, "most": 3.0}, "split": {"sigmaPerReach": 0.5, "from": 0.5, "to": 1.0, "leastSigma": 0.5, "octaves": 8, "clip": [0.6, 1.6]}}
  }
 }
