@@ -222,6 +222,12 @@ export class StopPlan {
     return new THREE.Quaternion().setFromAxisAngle(this.axis, THREE.MathUtils.degToRad(this.p.spinDegPerSecond) * (time - this.holdMid))
   }
 
+  // The turn the stop draws its body by at a time. It is the plan's turn, unless a stop draws another one (a spin that comes to rest over
+  // the place) and says so here. The measure of a stop that handover.drawnMeasure names carries it in the state of the globe side.
+  drawn(time: number): THREE.Quaternion {
+    return this.turn(time)
+  }
+
   spin(time: number): number {
     return THREE.MathUtils.degToRad(this.p.spinDegPerSecond) * (time - this.holdMid)
   }
@@ -738,6 +744,17 @@ export class StopPlan {
     const unit = this.twin({ position: new THREE.Vector3(1, 0, 0), quaternion: new THREE.Quaternion(), vfov: globe.vfov }, time)
     const back = zero.quaternion.clone().invert()
     return { position: globe.position.clone().sub(zero.position).applyQuaternion(back).multiplyScalar(1 / unit.position.distanceTo(zero.position)), quaternion: back.multiply(globe.quaternion), vfov: globe.vfov }
+  }
+
+  // Where the unit sphere of the body lies in the surface set at a time, in the set's own frame and units: the twin undone for the centre
+  // of the body and for a point of its surface. The twin places the globe's picture and its air in the surface view at the handover, so
+  // this is the globe as the surface view has it, whatever the set draws on it. The measure of a stop that handover.drawnMeasure names
+  // reads it (SetState.ball). terrain.ground is not asked: beside the measure of a stop that is not named it feeds the twin of the engine
+  // (twinFrame), where it places the globe side of a dive and a rise, so it is no number to tune a measure with.
+  ballIn(time: number): { centre: THREE.Vector3; radius: number } {
+    const at = (x: number): THREE.Vector3 => this.untwin({ position: new THREE.Vector3(x, 0, 0), quaternion: new THREE.Quaternion(), vfov: this.p.terrain.vfov }, time).position
+    const centre = at(0)
+    return { centre, radius: at(1).distanceTo(centre) }
   }
 
   // The law of a dive or a rise on the one move, three things. pace: the flanks of the bell the height runs on. turn: the flanks of the
