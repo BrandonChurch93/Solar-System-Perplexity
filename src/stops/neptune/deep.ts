@@ -60,6 +60,7 @@ uniform vec4 uCollar;
 uniform vec4 uArmIn;
 uniform float uVeilSizes;
 uniform float uVeilOwn;
+uniform vec2 uVeilBelow;
 uniform vec4 uVeilStorm;
 uniform vec2 uVeilArms;
 uniform vec4 uWind;
@@ -1118,6 +1119,11 @@ void main() {
   // It lies low on the deck, under the cirrus, so the shadow a streamer casts on the deck lies on it too.
   float veilClear = farW < 1.0 ? mix(exp(-veilDepth(oc, rd, b, rt2, !deckHit, pix, t)), 1.0, farW) : 1.0;
   vec3 veilLight = uLight.x * uVeilLight * (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) * mix(1.0, (1.0 - uLight.z * uLight.z) / pow(1.0 + uLight.z * uLight.z - 2.0 * uLight.z * sunView, 1.5), uLight.y);
+  // The sheet lies on the deck and is lit from it as well as by the Sun (deep.json, fan.veil.below: the share of its light that
+  // comes up from the deck under it, and the most the deck's own detail may give it). That share carries the deck's own detail
+  // (deckDetail: the deck of the place over the same deck made of the map's waves alone), so the pale sheet does not lay a smooth
+  // light over the fine structure of the ground and hide it. Where the ray ends on no deck the sheet has the Sun's light alone.
+  veilLight *= mix(1.0, min(mix(deckDetail.x, 1.0, max(farW, farCover)), uVeilBelow.y), deckHit ? uVeilBelow.x : 0.0);
   vec3 veiled = underAir(deckLight, toHold(veilLight) * (1.0 - veilClear), vec3(veilClear));
   // What of that sum is the veil's own light, and not the deck seen through it (for the air's law below).
   vec3 veilOnly = uVeilOwn > 0.0 ? max(veiled - underAir(deckLight, vec3(0.0), vec3(veilClear)), vec3(0.0)) : vec3(0.0);
@@ -1280,7 +1286,7 @@ export class Deep {
         uSpin: { value: v4(THREE.MathUtils.degToRad(s.spin.degPerSecond), s.spin.halfRadius, s.spin.pattern, 0) },
         uCollar: { value: v4(s.collar[0]!, s.collar[1]!, s.collar[2]!, s.collar[3]!) },
         uArmIn: { value: v4(s.arms.from[0]!, s.arms.from[1]!, 0, 0) },
-        uVeilSizes: { value: fan.veil.sizes }, uVeilOwn: { value: fan.veil.own }, uVeilStorm: { value: v4(fan.veil.storm[0]!, fan.veil.storm[1]!, fan.veil.storm[2]!, fan.veil.storm[3]!) }, uVeilArms: { value: new THREE.Vector2(fan.veil.arms[0]!, fan.veil.arms[1]!) },
+        uVeilSizes: { value: fan.veil.sizes }, uVeilOwn: { value: fan.veil.own }, uVeilBelow: { value: new THREE.Vector2(fan.veil.below[0]!, fan.veil.below[1]!) }, uVeilStorm: { value: v4(fan.veil.storm[0]!, fan.veil.storm[1]!, fan.veil.storm[2]!, fan.veil.storm[3]!) }, uVeilArms: { value: new THREE.Vector2(fan.veil.arms[0]!, fan.veil.arms[1]!) },
         uWind: { value: v4(w.deck.speed, w.deck.jet, 1 / w.deck.jetWidth, w.deck.phase) },
         uCirrusWind: { value: v4(w.cirrus.speed, w.cirrus.shear, ci.castWave, look.steps.cirrusLimit) },
         uDeckWave: { value: v4(d.wave, d.stretch, d.relief, d.lump) },
