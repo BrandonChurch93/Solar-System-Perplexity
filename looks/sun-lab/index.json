@@ -1,9 +1,55 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T16:14:09.470Z",
- "head": "772d28def4b0dcdb01291cc3b986cdcbb3072ea5",
- "note": "d4 form",
+ "pushed": "2026-11-25T17:03:05.290Z",
+ "head": "e3d00e95bd24d2903bc510006792d6ab1ccd68d2",
+ "note": "sun lab e4: form sheet against the approved, motion sheet, frames 0 60 90",
  "looks": [
+  {
+   "time": "2026-11-25T17:03:04.715Z",
+   "file": "20261125170304715-note-strip-e4.jpg",
+   "source": "../v/strip-e4.jpg",
+   "kind": "note",
+   "label": "sun lab e4 strip-e4",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T17:03:04.147Z",
+   "file": "20261125170304147-note-four-e4.jpg",
+   "source": "../v/four-e4.jpg",
+   "kind": "note",
+   "label": "sun lab e4 four-e4",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T17:03:03.548Z",
+   "file": "20261125170303548-note-motion-e4.jpg",
+   "source": "../v/motion-e4.jpg",
+   "kind": "note",
+   "label": "sun lab e4 motion-e4",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T17:03:02.981Z",
+   "file": "20261125170302981-note-form-e4.jpg",
+   "source": "../v/form-e4.jpg",
+   "kind": "note",
+   "label": "sun lab e4 form-e4",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T17:02:19.095Z",
+   "file": "20261125170219095-frame-lab-60-e4.jpg",
+   "source": "out/work/sun/lab/lab-60-e4.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 60, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 60,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T16:14:08.874Z",
    "file": "20261125161408874-note-four-d4.jpg",
@@ -21,57 +67,11 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T16:13:33.834Z",
-   "file": "20261125161333834-frame-lab-60-d4.jpg",
-   "source": "out/work/sun/lab/lab-60-d4.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 60, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 60,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
    "time": "2026-11-25T15:58:25.826Z",
    "file": "20261125155825826-note-motion-c4.jpg",
    "source": "../v/motion-c4.jpg",
    "kind": "note",
    "label": "c4 five captures 12 film frames apart, eye held (not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:58:25.178Z",
-   "file": "20261125155825178-note-strip-c4.jpg",
-   "source": "../v/strip-c4.jpg",
-   "kind": "note",
-   "label": "c4 frame 90 lower third at 1 to 1: approved, c3, c4 (not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:41:12.407Z",
-   "file": "20261125154112407-note-n432.jpg",
-   "source": "../v/n432.jpg",
-   "kind": "note",
-   "label": "lab b5 (not named) n432.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:41:11.830Z",
-   "file": "20261125154111830-note-b5-0-60.jpg",
-   "source": "../v/b5-0-60.jpg",
-   "kind": "note",
-   "label": "lab b5 (not named) b5-0-60.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:41:11.273Z",
-   "file": "20261125154111273-note-mid-b5.jpg",
-   "source": "../v/mid-b5.jpg",
-   "kind": "note",
-   "label": "lab b5 (not named) mid-b5.jpg",
    "stop": "sun"
   }
  ]
