@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T04:21:31.866Z",
+ "pushed": "2026-11-25T04:36:19.072Z",
  "head": "e41572b266f5705f8b14f5f0895f6b5b8fa1f94a",
- "note": "04:21 UTC: proofs of e41572b running (dive pictures at 220 of 260 frames); dive frames of this commit as the tool draws them",
+ "note": "e41572b: dive pictures red (pattern 1.24 from 3031 + 1/2 by the reader's chain; 0.23 there by the ground's true map; by the true map over the limit only 3028 + 1/2 to 3029 + 1/2, most 0.67, far ground at the top edge going into the horizon's haze). Rise pictures running.",
  "looks": [
+  {
+   "time": "2026-11-25T04:36:09.991Z",
+   "file": "20261125043609991-note-pair-3150-final.jpg",
+   "source": "../work/r9/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final: approved close image, this commit",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:36:08.785Z",
+   "file": "20261125043608785-note-dive-sheet.jpg",
+   "source": "../work/r9/dive-sheet.jpg",
+   "kind": "note",
+   "label": "dive e41572b at the frames of the sheet",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:36:08.013Z",
+   "file": "20261125043608013-note-curve.jpg",
+   "source": "../work/r9/curve.png",
+   "kind": "note",
+   "label": "condition (a): darkest and brightest 5 by 5 mean in the storm, 2895 to 3058, this commit",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:36:01.925Z",
+   "file": "20261125043601925-note-true-3029.jpg",
+   "source": "../work/r9/tm/true-3029.png",
+   "kind": "note",
+   "label": "3029 against 3037 by the true map: pattern 0.67 at the top edge, far ground going into the horizon's haze",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:35:58.565Z",
+   "file": "20261125043558565-note-carry-3031h.jpg",
+   "source": "../work/r9/carry-3031h.jpg",
+   "kind": "note",
+   "label": "3031 + 1/2 against 3039 + 1/2: top the ground's true map from the poses (pattern 0.23), bottom the reader's chain (1.43 at quarter size): frame, later frame carried back, pattern",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:35:57.675Z",
+   "file": "20261125043557675-note-jupiter-dive-changes.jpg",
+   "source": "../work/r9/dive/jupiter-dive-changes.png",
+   "kind": "note",
+   "label": "dive e41572b the tool's own picture of the changes in place: red, pattern 1.24 from 3031 + 1/2",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T04:21:31.195Z",
    "file": "20261125042131195-note-pair-3150-final.jpg",
@@ -170,54 +218,6 @@
    "source": "../work/r8/f1/f2-3031.png",
    "kind": "note",
    "label": "3031 upper right: first repaint (left) against the plate with its own stars carried under its horizon (right), lower row lifted three times; the orange cloud near the limb is the film's sky under the plate's horizon",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:37:22.503Z",
-   "file": "20261125033722503-note-rise-b.jpg",
-   "source": "../work/r8/f1/rise-b.jpg",
-   "kind": "note",
-   "label": "rise with the pace set again: 3256 3262 3268 3274",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:37:21.692Z",
-   "file": "20261125033721692-note-rise-a.jpg",
-   "source": "../work/r8/f1/rise-a.jpg",
-   "kind": "note",
-   "label": "rise with the pace set again (path green): 3241 3244 3247 3250",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:37:20.624Z",
-   "file": "20261125033720624-note-dive-ur-b.jpg",
-   "source": "../work/r8/f1/dive-ur-b.jpg",
-   "kind": "note",
-   "label": "dive, upper right, 3034 3037 3040 3043 after the haze fill left the sky plate: a strip without stars and a hard line at the plate's horizon are left, being cured now",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:23:30.112Z",
-   "file": "20261125032330112-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final beside the approved image (kept first)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:23:28.944Z",
-   "file": "20261125032328944-note-rise-cause-3272h.jpg",
-   "source": "../work/r8/rise-cause-3272h.png",
-   "kind": "note",
-   "label": "03:00 rise 3272 + 1/2: the tool's flow chain reads 0.741, the true map from the cameras 0.049",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:23:27.841Z",
-   "file": "20261125032327841-note-plate-before-after.jpg",
-   "source": "../work/r8/floor/plate-before-after.jpg",
-   "kind": "note",
-   "label": "03:24 sky plate of the surface view, lifted: left as it was (haze fill under its horizon, the floating band), right with the plate's own sky level carried under the horizon by code",
    "stop": "jupiter"
   }
  ]
