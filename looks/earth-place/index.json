@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T11:40:57.836Z",
- "head": "9b637af7f935a7767b049bce08c6d59dbd15b29e",
- "note": "9b637af7: deck out, 1755 to the byte; dive strip; control says the darker field is the tone plate, bad",
+ "pushed": "2026-11-25T12:06:08.483Z",
+ "head": "b506ed95d5d1e96b4503740aef9628c8f3fa1b57",
+ "note": "work state: tone by the air's length, first draft; the place's look arrives with the level as a patch (red, named)",
  "looks": [
+  {
+   "time": "2026-11-25T12:06:07.008Z",
+   "file": "20261125120607008-note-f1-arrive-crop.jpg",
+   "source": "../../../../tmp/gl/k14/f1-arrive-crop.jpg",
+   "kind": "note",
+   "label": "work state, not committed: sea tone by the length of air (one gain for all), crops 1 to 1 of 1850 1854 1857 above, old 1857 then 1862 1866 below; the place's own look now comes with the level and shows as a patch",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T11:40:57.081Z",
    "file": "20261125114057081-note-s-ctl-b.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/k12/pv-z1-band.jpg",
    "kind": "note",
    "label": "study only, numpy preview, not a frame and not built: cloud of the approved far band laid into the map; dropped after MAIL 1040 (no deck in the map)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T10:44:56.259Z",
-   "file": "20261125104456259-note-pv-lb0-above.jpg",
-   "source": "../../../../tmp/gl/k12/pv-lb0-above.jpg",
-   "kind": "note",
-   "label": "study, not a frame: the map from above before and after the approved band's cloud is laid in as bodies (15 px a degree)",
    "stop": "earth"
   }
  ]
