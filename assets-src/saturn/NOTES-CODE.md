@@ -7382,3 +7382,60 @@ LENS STUDY (no render; /tmp/v/warp/lenslaw.py, lawcmp.py, lawtab.py, lawdive.py,
 - One power through 5.4761 and 2.7122 (k 0.503): the skim breathes 38.03 (3630), 43.76 (3773), 42.15 (3810).
 21:12 MAIL to /root (low): these facts; I build the law for the dive, the rise keeps its lens, with a switch
 in skim.json that puts the rise on the same law, for the look at 60 frames a second.
+
+MAIL 1301 (21:14), verbatim: "Your page on the lens of 21:12 is read. RULED: build it as you say. 1. The dive on
+b: 30.00 at the hold's last distance, 41.77 at the skim's first, both from the path, the power between, the
+two eases with their numbers in skim.json. The term it is held to is the one you measured: the disc grows at
+every frame of the dive, and its rate never changes by more than today's 0.035 from frame to frame. 2. The
+skim 3630 to 3809 keeps its bytes, the judged 3720 its fit. Not a or c. 3. The rise keeps its lens, with your
+switch in skim.json. I take back "the same law dive and rise" from 1298 for now: your numbers show the law of
+d stalls the rise's disc for 33 frames with a jump at each end, and that would be a new fault. I order the
+rise both ways at 60 frames a second once the dive is named, and rule on what I see. 4. With the name: the
+table by frame as asked in 1298 (lens, distance, disc px, rate) for 3540 to 3640, today beside b."
+
+TRIAL COPY /tmp/v/rigid/saturn (not in the repo until its proof; differs in kept/look.ts, kept/rings.ts,
+kept/set.ts, plan.ts, skim.json):
+- kept/rings.ts: one uniform uPolarBend for every push of shape (table, outer fit, arc, fillet, edge cut);
+  uPolarShape stays for the terms of look. kept/set.ts: poseW.value = look.heroLight (a constant, the
+  heroRange formula is gone), bendW = poseW * look.shapeShow, uLimbW = poseW * limbShow. kept/look.ts:
+  shapeShow 0, limbShow 0, heroLight 1 or 0, heroRange removed.
+- skim.json: top level block lens (before handover): ease [0.045, 0.004] (ring end, hold end, in ln of the
+  distance), moves { dive: "distance", rise: "pace" }. plan.ts: move(law, a, b, u, lens), lensAt(distance)
+  with the span read from the path: hold's last frame and the skim's first.
+- Node tree for the trial's own math and type check: /tmp/v/rigid/t (tsc clean).
+- CHECKED on the trial plan by the engine's own shots (/tmp/v/warp/lenscheck.py, lenstable.py): eye and turn
+  equal to today's at every frame; the lens differs only at 3540 to 3629: 30.007 (3543), 32.398 (3567),
+  38.520 (3603), 41.405 (3620), 41.769 (3629), 41.770 exact from 3630. Disc 374.3 (3540), 387.3 (3567),
+  418.5 (3603), 446.9 (3630): grows at every frame, least +0.0259 percent at 3541 (the hold drifts at
+  0.021), 0.17 (3560), 0.22 (3580 to 3612), 0.29 (3624 on); largest change of rate 0.0309 at 3620 (today
+  0.035). Table for the mail: /tmp/v/rigid/lens_table.txt.
+
+THE HOLD'S LIGHT, what it is made of (hold-light.bin, /tmp/v/rigid/light/holdmap.py, holdfit.py): the ratio
+approved over film on the globe, blurred 5 px, laid from the hero's camera, weighted by the pose. As a gain:
+median 0.976, 5 percent 0.796, 95 percent 1.087, rms 0.146 stops. The latitude alone explains 29 percent of
+it, the latitude with the Sun's angle 41 percent, the rest (rms 0.112 stops) is local streaks. Also weighted
+by the pose in the kept set: the rings' terms of look (thin, through, bout and wedge, sheet glow, shine,
+overtone, bare and gone), the globe's fine detail (1 - pose), the shade's soft edge, the streaks. The model
+has none of it (model.ts sets the pose weight 0), so: light kept at every frame of the kept set means the
+kept set and the model differ at the handover 3599 to 3603 unless the model takes the same light, and that
+changes the skim's bytes. Light off leaves every frame from 3594 on as it is.
+
+THE TIME OF A FRAME (src/core/clock.ts, engine.ts 265): a frame is drawn at (f + spanMid()) / fps, spanMid =
+shutter share / capture rate / 2. The film (rate 1, 180 degrees): f + 0.25. THE READER'S FRAMES (the seam
+reader draws at twice the rate): f + 0.125. A lens file for stills is made with off 0.25, one for the
+reader's frames with off 0.125 (out/scratch/warp.ts OUT A B OFF; /tmp/v/warp/lens.json and lens_r2.json,
+trial /tmp/v/rigid/lens_trial.json and lens_trial_r2.json). With the wrong quarter the rings read up to 5 px
+off in the rise, because the camera turns.
+
+RING EDGE READER /tmp/v/warp/edge4.py LENS REF|find A B STEP SRC [OUT.json] (to be copied into
+assets-src/saturn/code with the name): every pixel laid back on the ring plane through the frame's own lens;
+by sector of azimuth the profile of luma by radius; SHAPE = the shift in radius that lays a sector's profile
+on the middle of all sectors (correlation of slopes), in px on screen; SIZE = the edge's radius less the
+body's, in px. Zones: B inner 1.40 to 1.66, B outer 1.84 to 2.06, outer 2.20 to 2.46.
+- The model alone in the rise of the tree (must be true circles): 3860, 3876: 0.0 to 0.2 px at every
+  sector, the three edges. 3844: to 1.6 px. 3812 (eye 0.45 radii over the plane): to 5.0 px, smooth by
+  azimuth; reading at a plane 0.0012 radii higher takes it away at 3812 and at 3828 alike (PLANE_H test), so
+  it is parallax of the plane's own thickness or of its height in the model, one number, not a change of
+  shape.
+- The tree's hold final 3465 (the warp that is ruled out): B inner +9.3 px (az -180); B outer -15.7 (-10),
+  +14.7 (170); outer +17.8 (100), -16.8 (-10).
