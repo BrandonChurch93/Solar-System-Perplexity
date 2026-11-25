@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T05:21:57.199Z",
+ "pushed": "2026-11-25T05:46:12.233Z",
  "head": "9fc760b3bdbce8f547340e88ba97f39f45fa719f",
- "note": "way C step 1 as a draft (not committed): own pattern estimate at 716 falls 1.03 to 0.73 against 0.45, still red; the core is a grey patch in golden ground 724 to 748; step 2 (hero's painted craters calmed inside the core, the place's craters by relief from the hold on) is next",
+ "note": "05:46 draft only, nothing named: three severe items open on 9fc760b3 (pattern 1.13 dive and rise, pop 1.32 in the leaving, soft share 26 percent at 779); causes being named, cures not built yet",
  "looks": [
+  {
+   "time": "2026-11-25T05:46:11.555Z",
+   "file": "20261125054611555-note-lk-779-low-native.jpg",
+   "source": "../../../../tmp/m/lk-779-low-native.png",
+   "kind": "note",
+   "label": "9fc760b3 frame 779 draft, native size, the lower part (x 480 to 1440, y 700 to 1080): the near ground that the texels view counts as soft.",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:46:10.910Z",
+   "file": "20261125054610910-note-lk-texels-770-779-970.jpg",
+   "source": "../../../../tmp/m/lk-texels-770-779-970.jpg",
+   "kind": "note",
+   "label": "9fc760b3 texels view 770, 779, 970 (draft, master): red is under 1 texel a pixel (soft share 21.3, 26.1, 15.8 percent, limit 2), green 1 to 2, blue not counted. Not cured.",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:46:10.319Z",
+   "file": "20261125054610319-note-lk-mail918-before-after.jpg",
+   "source": "../../../../tmp/m/lk-mail918-before-after.jpg",
+   "kind": "note",
+   "label": "MAIL 918 line on my tree (main's director): top row turnDeg 78, bottom row 111.27; frames 1016, 1064, 1072 draft. The sky behind turns, the bodies stand. Not committed.",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:46:09.631Z",
+   "file": "20261125054609631-note-lk-pop-1043-1046.jpg",
+   "source": "../../../../tmp/m/lk-pop-1043-1046.jpg",
+   "kind": "note",
+   "label": "9fc760b3 draft: the leaving 1043 to 1046 + 1/2 (crop x 1200 to 1560, y 60 to 560), below each the difference to the next times 6. No layer changes; the body starts across the frame from rest. The pop red of MAIL 916 lies here.",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T05:21:56.632Z",
    "file": "20261125052156632-note-c1-728.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/c1-c.jpg",
    "kind": "note",
    "label": "DRAFT way C step 1: dive 732 to 744, relief left, step 1 right: the grey core stands in the hero's golden ground as a patch of another character",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:21:54.454Z",
-   "file": "20261125052154454-note-c1-a.jpg",
-   "source": "../../../../tmp/m/c1-a.jpg",
-   "kind": "note",
-   "label": "DRAFT, working tree only, nothing committed: dive 716 to 728, relief 9fc760b3 left, way C step 1 right (hero's own finer ground kept outside a core of 4.5 to 6.5 degrees)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:21:53.896Z",
-   "file": "20261125052153896-note-fp2-f.jpg",
-   "source": "../../../../tmp/m/fp2-f.jpg",
-   "kind": "note",
-   "label": "rise 997 to 1005, pairs: cdc5d515 left, relief 9fc760b3 right: both show the grey disc of the place going out against the hero's ground",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:21:53.313Z",
-   "file": "20261125052153313-note-fp2-d.jpg",
-   "source": "../../../../tmp/m/fp2-d.jpg",
-   "kind": "note",
-   "label": "dive 748 to 760, pairs: cdc5d515 left, relief 9fc760b3 right (draft stills, rate 2 keys)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:00:10.952Z",
-   "file": "20261125050010952-note-lev12x2.jpg",
-   "source": "../../../../tmp/m/lev12x2.png",
-   "kind": "note",
-   "label": "levels panel: patch 1 (the map's ground) against plate 2 (the place's lit picture as a disc to 10 to 15 degrees, with its night half), same ground, twice size",
    "stop": "mercury"
   }
  ]
