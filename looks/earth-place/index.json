@@ -1,9 +1,65 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-24T23:51:24.677Z",
+ "pushed": "2026-11-25T00:12:00.589Z",
  "head": "d00366598a0f0e83b0e47f6a8671cabe3355b9b3",
- "note": "d0036659 named",
+ "note": "K4 first pictures: the close ground at every height is a dark blot at the hold, haze by the air path law derived offline, review 2130",
  "looks": [
+  {
+   "time": "2026-11-25T00:11:59.994Z",
+   "file": "20261125001159994-note-rv-2130-b.jpg",
+   "source": "../../../../tmp/gl/s21/rv-2130-b.jpg",
+   "kind": "note",
+   "label": "review tier 2130, native crop b",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T00:11:59.427Z",
+   "file": "20261125001159427-note-rv-2130-a.jpg",
+   "source": "../../../../tmp/gl/s21/rv-2130-a.jpg",
+   "kind": "note",
+   "label": "review tier 2130, native crop a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T00:11:58.778Z",
+   "file": "20261125001158778-note-k4-plate-and-low.jpg",
+   "source": "../../../../tmp/gl/k4/k4-plate-and-low.jpg",
+   "kind": "note",
+   "label": "K4: the plate's file and the low picture's file",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T00:11:58.159Z",
+   "file": "20261125001158159-note-k4-haze-law.jpg",
+   "source": "../../../../tmp/gl/k4/k4-haze-law.jpg",
+   "kind": "note",
+   "label": "K4 derived: haze by the air path law, mixed offline from two trial renders, 1870 to 1910",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T00:11:57.448Z",
+   "file": "20261125001157448-note-k4-b1-dive-b.jpg",
+   "source": "../../../../tmp/gl/k4/k4-b1-dive-b.jpg",
+   "kind": "note",
+   "label": "K4 trial b1, dive 1876 to 1912, d0036659 left, trial right",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T00:11:56.836Z",
+   "file": "20261125001156836-note-k4-b1-dive-a.jpg",
+   "source": "../../../../tmp/gl/k4/k4-b1-dive-a.jpg",
+   "kind": "note",
+   "label": "K4 trial b1, dive 1830 to 1870, d0036659 left, trial right",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T00:11:56.247Z",
+   "file": "20261125001156247-note-k4-1755-hold-and-b1.jpg",
+   "source": "../../../../tmp/gl/k4/k4-1755-hold-and-b1.jpg",
+   "kind": "note",
+   "label": "K4 trial b1, 1755: the hold and the close ground held at every height (a dark blot, not wanted)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-24T23:51:14.315Z",
    "file": "20261124235114315-note-sg-sizes-1866.jpg",
@@ -42,62 +98,6 @@
    "source": "../../../../tmp/gl/s20/sh-1892-1903.jpg",
    "kind": "note",
    "label": "811a5089 draft dive 1892-1903, every frame: the place still comes as a region (bad, K4)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:35:19.182Z",
-   "file": "20261124233519182-note-sh-2160-2176.jpg",
-   "source": "../../../../tmp/gl/s20/sh-2160-2176.jpg",
-   "kind": "note",
-   "label": "811a5089 draft rise 2160-2176, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:35:18.617Z",
-   "file": "20261124233518617-note-sh-2148-2159.jpg",
-   "source": "../../../../tmp/gl/s20/sh-2148-2159.jpg",
-   "kind": "note",
-   "label": "811a5089 draft rise 2148-2159, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:35:17.913Z",
-   "file": "20261124233517913-note-sh-2136-2147.jpg",
-   "source": "../../../../tmp/gl/s20/sh-2136-2147.jpg",
-   "kind": "note",
-   "label": "811a5089 draft rise 2136-2147, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:35:17.139Z",
-   "file": "20261124233517139-note-sh-2124-2135.jpg",
-   "source": "../../../../tmp/gl/s20/sh-2124-2135.jpg",
-   "kind": "note",
-   "label": "811a5089 draft rise 2124-2135, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:35:16.471Z",
-   "file": "20261124233516471-note-sh-2112-2123.jpg",
-   "source": "../../../../tmp/gl/s20/sh-2112-2123.jpg",
-   "kind": "note",
-   "label": "811a5089 draft rise 2112-2123, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:35:15.552Z",
-   "file": "20261124233515552-note-sh-2100-2111.jpg",
-   "source": "../../../../tmp/gl/s20/sh-2100-2111.jpg",
-   "kind": "note",
-   "label": "811a5089 draft rise 2100-2111, every frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:15:45.351Z",
-   "file": "20261124231545351-note-sh-1880-1891.jpg",
-   "source": "../../../../tmp/gl/s20/sh-1880-1891.jpg",
-   "kind": "note",
-   "label": "811a5089 draft dive 1880-1891, every frame",
    "stop": "earth"
   }
  ]
