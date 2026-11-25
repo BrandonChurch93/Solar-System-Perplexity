@@ -1,11 +1,17 @@
 {
  "ground": "lab",
- "note": "ground: lab draws the ground of this folder (cells as real domes from a baked life), standing draws the ground of convect.ts. sim: the life of the cells, a power diagram of sites on a tile that repeats (tile and radius in stage units, times in seconds). dome: the shape of a cell (arc: the angle of its profile from crown to foot in degrees, more than 90 hangs over the foot; height: of the cell's mean radius). lod: a dome is drawn with the finest mesh above the first size in pixels of a 1080 frame, the middle above the second. spot: the warp that combs the cells toward the spot (pull, wide in stage units) and the funnel of its pit.",
+ "note": "ground: lab draws the ground of this folder (cells as real domes from a baked life), standing draws the ground of convect.ts. sim: the life of the cells, a power diagram of sites on a tile that repeats (tile and radius in stage units, times in seconds). dome: the shape of a cell (arc: the angle of its profile from crown to foot in degrees, more than 90 hangs over the foot; height: of the cell's mean radius; flat: how flat the top is, 1 a round arc). lod: a dome is drawn with the finest mesh above the first size in pixels of a 1080 frame, the middle above the second. spot: the warp that combs the cells toward the spot (pull, wide in stage units), the funnel of its pit and the umbra (of the approved umbra's half width). fibre.counts: threads a radian of the fan from the root, three sizes. heat: the temperature of the matter (floor: the coldest, body: the dome's own, cool and hot: a cool and a hot thread, knot: a knot of rising matter, edge: what is left on a steep flank, pen: in the penumbra, bloom: how much brighter than white a heat over 1 is). haze: the thin glowing haze low over the ground (amount, scale: the height it thins by, level and tint: its light, power: how fast it thickens as the look flattens). dome.over: the footprint of a dome over its cell, more than 1 cuts into its neighbours; lobe: how deep the creases between the lobes of a top are; pen: the height left in the penumbra. fibre.root: how far the dark of the root reaches along the fibres. heat.core: how far from the crown the hot patch reaches, rim: the heat of the cooler matter round it, thread: how strong the threads are in the patch and round it, glint: the small points on a rim.",
  "sim": {
-  "tile": 8,
-  "slots": 2800,
-  "radius": [0.055, 0.165],
-  "life": [16, 38],
+  "tile": 4,
+  "slots": 3600,
+  "radius": [
+   0.026,
+   0.075
+  ],
+  "life": [
+   16,
+   38
+  ],
   "step": 0.25,
   "warm": 30,
   "from": -0.5,
@@ -14,26 +20,75 @@
   "split": 0.5
  },
  "dome": {
-  "arc": 112,
-  "height": 0.55,
+  "arc": 86,
+  "height": 0.32,
   "young": 0.5,
-  "round": 6
+  "round": 10,
+  "flat": 2.2,
+  "over": 1.06,
+  "lobe": 0.12,
+  "pen": 0.3
  },
  "lod": {
-  "px": [70, 16],
-  "rings": [36, 14, 6],
-  "sectors": [96, 40, 16]
+  "px": [
+   70,
+   16
+  ],
+  "rings": [
+   36,
+   14,
+   6
+  ],
+  "sectors": [
+   96,
+   40,
+   16
+  ]
  },
  "spot": {
   "pull": 0.45,
   "wide": 0.55,
-  "depth": 0.14,
-  "wall": [0.12, 0.75]
+  "depth": 0.12,
+  "wall": [
+   0.9,
+   2.6
+  ],
+  "umbra": 1.0
  },
  "fibre": {
-  "counts": [9, 31, 97],
-  "tilt": 12,
-  "sheen": 60,
-  "lightUp": 0.12
+  "counts": [
+   9,
+   22,
+   50
+  ],
+  "root": 0.42
+ },
+ "heat": {
+  "floor": 0.012,
+  "body": 0.84,
+  "cool": 0.2,
+  "hot": 1.2,
+  "knot": 0.5,
+  "edge": 0.75,
+  "pen": 0.6,
+  "bloom": 2.5,
+  "glint": 0.8,
+  "core": 0.5,
+  "thread": [
+   0.15,
+   0.9
+  ],
+  "rim": 0.3
+ },
+ "haze": {
+  "amount": 0.0015,
+  "scale": 0.02,
+  "level": 1.0,
+  "power": 2.0,
+  "tint": [
+   1.0,
+   0.8,
+   0.45
+  ]
  }
 }

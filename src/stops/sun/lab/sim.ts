@@ -43,7 +43,7 @@ export function newDiagram(): Diagram {
   return { on: new Uint8Array(SLOTS), mid: new Float64Array(SLOTS * 2), area: new Float64Array(SLOTS), edges: new Float32Array(SLOTS * EDGES * 2), count: new Uint8Array(SLOTS) }
 }
 
-const NG = Math.floor(TILE / 0.32)
+const NG = Math.floor(TILE / (S.radius[1]! * 2))
 const GS = TILE / NG
 const binStart = new Int32Array(NG * NG + 1)
 const binItem = new Int32Array(SLOTS)
@@ -59,7 +59,10 @@ const by = new Float64Array(MAXV)
 const bnx = new Float64Array(MAXV)
 const bny = new Float64Array(MAXV)
 const bd = new Float64Array(MAXV)
-const START = 0.7
+const START = S.radius[1]! * 4.2
+const RING: number[] = []
+for (let r = 0; r <= 2; r++) for (let oy = -2; oy <= 2; oy++) for (let ox = -2; ox <= 2; ox++) if (Math.max(Math.abs(ox), Math.abs(oy)) === r) RING.push(ox, oy)
+const WMOST = S.radius[1]! * S.radius[1]!
 
 /** The power diagram of the sites (x, y, weight w) that live (w above gone), on the tile that repeats. */
 export function diagram(x: Float64Array, y: Float64Array, w: Float64Array, live: Uint8Array, out: Diagram): void {
@@ -90,9 +93,10 @@ export function diagram(x: Float64Array, y: Float64Array, w: Float64Array, live:
     const wi = w[i]!
     const gx = binOf[i]! % NG
     const gy = (binOf[i]! - gx) / NG
-    for (let oy = -2; oy <= 2 && n > 0; oy++) {
-      for (let ox = -2; ox <= 2 && n > 0; ox++) {
-        const b = ((gy + oy + NG) % NG) * NG + ((gx + ox + NG) % NG)
+    for (let q = 0; q < 25 && n > 0; q++) {
+      {
+        if (q === 9 && GS / 2 - (WMOST - wi) / (2 * GS) >= far) break
+        const b = ((gy + RING[q * 2 + 1]! + NG) % NG) * NG + ((gx + RING[q * 2]! + NG) % NG)
         for (let k = binStart[b]!; k < binStart[b + 1]! && n > 0; k++) {
           const j = binItem[k]!
           if (j === i) continue
