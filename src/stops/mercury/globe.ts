@@ -43,6 +43,7 @@ export interface GlobePatches {
   nearDeg: number
   place?: { from: number; ownDeg: [number, number]; gain: number; fade?: [number, number]; light?: [number, number, number]; hold?: [number, number] }
   tilt?: GlobeTilt
+  tone?: { map: THREE.Texture; floor: number; most: number; dark: number }
 }
 
 export interface GlobeTilt {
@@ -210,6 +211,9 @@ uniform float uPlaceEarly;
 uniform sampler2D uTilt;
 uniform vec4 uTiltCode;
 uniform vec3 uTiltSun;
+uniform sampler2D uTone;
+uniform vec4 uToneSet;
+uniform float uToneDark;
 uniform sampler2D uClose;
 uniform mat3 uCloseCam;
 uniform vec3 uCloseUp;
@@ -425,6 +429,8 @@ void main() {
   float placeDrive = 0.0;
   float ring = 0.0;
   float tilt = 0.0;
+  vec3 toneOwn = vec3(0.0);
+  float core = 0.0;
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
     vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
@@ -443,13 +449,15 @@ void main() {
     float parent = diagTexelsDir(d, uMapFull) * uFrame;
     float thin = parent;
     float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
+    core = uPlace.y * front * (1.0 - smoothstep(uPlace.z, uPlace.w, ring));
     vec2 tq = g * uTiltCode.x;
     float code = uTiltCode.y / 255.0;
     for (int k = 0; k < (uTiltCode.w * front > 0.0 && max(abs(tq.x), abs(tq.y)) < 0.5 ? 1 : 0); k++) {
       code = textureGrad(uTilt, tq + 0.5, gx * uTiltCode.x, gy * uTiltCode.x).r;
       for (int j = 0; j < (uSmear > 0.0 && bare ? 1 : 0); j++) code = streak(uTilt, tq + 0.5, sx * uTiltCode.x, sy * uTiltCode.x, along, lat).r;
     }
-    tilt = (code * 255.0 - uTiltCode.y) * uTiltCode.z * max(dot(d, uTiltSun) + uWrap, 0.06);
+    tilt = (code * 255.0 - uTiltCode.y) * uTiltCode.z * max(dot(d, uTiltSun) + uWrap, 0.06) * mix(1.0, uToneSet.x, uToneSet.y);
+    for (int k = 0; k < (uToneSet.y * front > 0.0 && max(abs(tq.x), abs(tq.y)) < 0.5 ? 1 : 0); k++) toneOwn = inverseFilmic(textureGrad(uTone, tq + 0.5, gx * uTiltCode.x, gy * uTiltCode.x).rgb);
 ${PATCH_LEVELS}
 ${FINE}
   }
@@ -505,7 +513,13 @@ ${FINE}
   vec3 dim = mix(vec3(uNightFlat.x), calm, uNightFlat.y) + max(ground - uDuskFrom, vec3(0.0)) * (band * (1.0 - uNightFlat.y));
   vec3 col = (ground * lit + dim * uNight * uNightDim * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
   col = mix(col, dot(col, vec3(0.2126, 0.7152, 0.0722)) * uPlain, uCarry.z);
-  col = mix(col, baked * uPlace.x, pm);
+  vec3 plate = baked * uPlace.x;
+  for (int k = 0; k < (core * uToneSet.y * (1.0 - uToneSet.x) > 0.0 ? 1 : 0); k++) {
+    float grade = mix(1.0, uToneSet.x, core);
+    vec3 worn = col * min((dot(baked, vec3(0.2126, 0.7152, 0.0722)) + uToneSet.z) / (dot(toneOwn, vec3(0.2126, 0.7152, 0.0722)) + uToneSet.z), uToneSet.w);
+    plate = pow(worn + uToneDark, vec3(1.0 - grade)) * pow(plate + uToneDark, vec3(grade)) - uToneDark;
+  }
+  col = mix(col, plate, pm);
   col *= uCarry.x / (1.0 + max(col.r, max(col.g, col.b)) * (uCarry.x - 1.0) * uCarry.y);
   col *= 1.0 / (1.0 + uShoulder.y * max(max(col.r, max(col.g, col.b)) - uShoulder.x, 0.0));
   col *= 1.0 / (1.0 + uKnee.y * max(max(col.r, max(col.g, col.b)) - uKnee.x, 0.0));
@@ -516,9 +530,10 @@ ${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float hole = smoothstep(uHole.x, uHole.y, acos(clamp(dot(dc, uCloseUp), -1.0, 1.0)));
-  vec4 beauty = vec4((col * cov + rim) * k, cov) * (uShow * (uHole.w > 1.5 ? 1.0 - hole : 1.0 - uHole.w * (1.0 - uHole.z * hole)));
+  float shown = uHole.w > 1.5 ? 1.0 - hole : 1.0 - uHole.w * (1.0 - uHole.z * hole);
+  vec4 beauty = vec4((col * cov + rim) * k, cov) * (uShow * shown);
   outColor = diagOut(beauty, texels, 1.0, vec3(0.55, 0.5, 0.45), vec2(0.0), t);
-  if (uDiag >= 2 ? cov < 0.5 : cov <= 0.0 && dot(rim, vec3(1.0)) < 1e-6) discard;
+  if (uDiag >= 2 ? min(cov, shown) < 0.5 : cov <= 0.0 && dot(rim, vec3(1.0)) < 1e-6) discard;
 }`
 
 export class Globe {
@@ -577,6 +592,7 @@ export class Globe {
         uTilt: { value: p?.tilt?.map ?? o.map },
         uTiltCode: { value: new THREE.Vector4(p?.tilt ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.tilt.widthDeg) / 2)) : 1, p?.tilt?.zero ?? 0, p?.tilt?.step ?? 0, p?.tilt ? 1 : 0) },
         uTiltSun: { value: new THREE.Vector3(...(p?.tilt?.sun ?? [0, 0, 1])).normalize() },
+        uTone: { value: p?.tone?.map ?? o.map }, uToneSet: { value: new THREE.Vector4(0, p?.tone ? 1 : 0, p?.tone?.floor ?? 1, p?.tone?.most ?? 1) }, uToneDark: { value: p?.tone?.dark ?? 1 },
         uFineMap: { value: f?.texture ?? o.map }, uFine: { value: new THREE.Vector2(f && p ? 1 : 0, f?.top ?? 1) },
         uFineScale: { value: Array.from({ length: FINE_LEVELS }, (_, i) => (f && p ? (2 ** (i + 1) * scale(p.textures.length - 1) * size(p.textures.length - 1)) / f.period : 1)) },
         uFineSize: { value: f?.period ?? 1 }, uFineFull: { value: f?.full ?? f?.period ?? 1 }, uFineShift: { value: new THREE.Vector2(f?.shift[0] ?? 0, f?.shift[1] ?? 0) },
@@ -611,6 +627,10 @@ export class Globe {
   plates(levels: readonly number[], textures: readonly THREE.Texture[], early = false): void {
     levels.forEach((level, i) => { this.material.uniforms['uPatch' + level]!.value = textures[i]! })
     this.material.uniforms.uPlaceEarly!.value = early ? 1 : 0
+  }
+
+  tone(grade: number): void {
+    ;(this.material.uniforms.uToneSet!.value as THREE.Vector4).x = grade
   }
 
   place(gain: number, on: number): void {

@@ -30,7 +30,7 @@ def make(spec):
     m = (1 - P.step(math.tan(math.radians(own['deg'][0])), math.tan(math.radians(own['deg'][1])), np.hypot(gx, gy))).astype(np.float32)
     part = (plate * ((1 - m[..., None]) * gain + m[..., None] * own['gain']) - (1 - m[..., None]) * gain * a) / own['gain']
     lum = np.maximum(part @ LUMA, 0).astype(np.float32)
-    del plate, a, gain, part
+    del plate, a, gain
     sigma = math.radians(t['sigmaDeg']) * px
     soft = lambda x, s=sigma: cv2.GaussianBlur(x, (0, 0), s)
     inside = m > t['least']
@@ -38,6 +38,9 @@ def make(spec):
     day = (P.step(t['lit'][0], t['lit'][1], soft(own_lum, sigma / 6)) * inside).astype(np.float32)
     low = soft(lum * day) / np.maximum(soft(m * day), 1e-4)
     seen = P.step(t['seen'][0], t['seen'][1], soft(day, math.radians(t['seenDeg']) * px) / np.maximum(soft(inside.astype(np.float32), math.radians(t['seenDeg']) * px), 1e-3))
+    fine = math.radians(t['tone']['sigmaDeg']) * px if t.get('tone') else sigma
+    tone = soft(part, fine) / np.maximum(soft(m, fine), 1e-4)[..., None]
+    del part
     weight = (m * seen).astype(np.float32)
     ratio = np.where(inside, own_lum / np.maximum(low, 1e-4) - 1, 0).astype(np.float32)
     lo, hi = -t['zero'] * t['step'], (255 - t['zero']) * t['step']
@@ -51,6 +54,12 @@ def make(spec):
         code = np.clip(np.rint(cv2.resize(lean, (n, n), interpolation=cv2.INTER_AREA) / t['step'] + t['zero']), 0, 255).astype(np.uint8)
         Image.fromarray(code, 'L').save(OUT / key / t['file'], optimize=True)
         print(key, t['file'], n, (OUT / key / t['file']).stat().st_size)
+    if t.get('tone'):
+        n = t['tone']['size']
+        coded = (M.srgb(P.filmic(cv2.resize(tone, (n, n), interpolation=cv2.INTER_AREA))) * 255 + 0.5).astype(np.uint8)
+        for key in ('full', 'web'):
+            Image.fromarray(coded).save(OUT / key / t['tone']['file'], optimize=True)
+            print(key, t['tone']['file'], n, (OUT / key / t['tone']['file']).stat().st_size)
     view = np.clip((lean / t['step'] + t['zero']) / 255, 0, 1)
     Image.fromarray((cv2.resize(view, (1024, 1024), interpolation=cv2.INTER_AREA) * 255).astype(np.uint8), 'L').save(OUT / 'tilt-view.png')
     Image.fromarray((cv2.resize(weight, (1024, 1024), interpolation=cv2.INTER_AREA) * 255).astype(np.uint8), 'L').save(OUT / 'weight-view.png')
@@ -64,8 +73,9 @@ def make(spec):
 def install(spec):
     t = json.loads(Path(spec).read_text())
     for key in ('full', 'web'):
-        (PUBLIC / key / t['file']).write_bytes((OUT / key / t['file']).read_bytes())
-        print('installed', key, t['file'], (PUBLIC / key / t['file']).stat().st_size)
+        for name in [t['file']] + ([t['tone']['file']] if t.get('tone') else []):
+            (PUBLIC / key / name).write_bytes((OUT / key / name).read_bytes())
+            print('installed', key, name, (PUBLIC / key / name).stat().st_size)
 
 
 if __name__ == '__main__':

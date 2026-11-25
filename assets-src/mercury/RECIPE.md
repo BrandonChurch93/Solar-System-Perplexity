@@ -103,6 +103,14 @@ What it is: the place's craters on the globe at every height. The globe shows th
 
 Work files: `out/work/mercury/place/tilt/` (not committed). The tool needs `out/work/mercury/place/tiles/cameras.json` (the Sun of the lit picture, written by `tilepatch.py`) as `plates.py` does; the same Sun stands in `tilt.json` `sun` for the globe.
 
+## The body of the place's ground: tone.png
+
+Files, both sets: `public/assets/mercury/full/tone.png` and `public/assets/mercury/web/tone.png` (1024 square, three channels, 8 bit, 1110583 bytes, the same file in both sets so that the two sets show the same thing at the same height).
+
+What it is: the place's own lit picture over the square of `tilt.json` (`widthDeg` 38 about the spot, north up, gnomonic), taken back out of level 2 of the plates as for the relief, under a Gaussian of `tone.sigmaDeg` (0.1 degrees, about two texels of the map's level 1), written through the film curve and sRGB. The globe reads it as the body of the place's ground: a plate's picture over it is the plate's fine detail, which comes with the plate's texels; the body itself comes by the eye's height (`src/stops/mercury/own.json`, `tone`; the law is described in that file's `about`).
+
+How it is made: `python3 assets-src/mercury/place/tilt.py make` writes it beside `tilt.png` when `tilt.json` has the entry `tone` (`file`, `size`, `sigmaDeg`); `python3 assets-src/mercury/place/tilt.py install` copies both. The same run gives `tilt.png` to the byte of the committed file.
+
 ## The two sets and the levels: one law (`src/stops/mercury/wrap.json` `plates`, `fine.json` `size.full`)
 
 The web set holds every picture at half the full set's width. Which level of the map, of the plates and of the fine ground a pixel shows, and with what weight, is counted in the full set's texels in both sets: `uMapFull` (the map's width in the full set, `wrap.json` `color.full`), `uPatchFull` (the plates' width in the full set, `wrap.json` `plates.full`), `uFineFull` (`fine.json` `size.full`). So the web set shows the same level at the same weight on every pixel as the full set, from its own half width picture, and a level never comes in later in the web set than in the full set. Only the level of detail inside a picture (the sampler's own filter) and the fine ground's own fade against its texels use the set's own width. The full set's picture is the same bytes as before the law.
