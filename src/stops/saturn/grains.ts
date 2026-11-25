@@ -3,6 +3,7 @@ import { DIAG_GLSL } from '../../diagnostics/diag'
 import { RING_FIELD_GLSL } from './field'
 import { bufferFrame } from '../../core/frame'
 import { GRAIN_LEVELS, ICE_GLSL, pcg, type Ice } from './ice'
+import { ICE_GRADE_GLSL } from './grade'
 import { GLOBE_SHADOW_GLSL, SHEET_AT_GLSL, SHEET_LAW_GLSL, SHEET_OUTER_GLSL, sheetDepth } from './sheet'
 import spec from './grains.json'
 import model from './ringfield.json'
@@ -44,6 +45,7 @@ uniform vec4 uGrainShape2;
 uniform vec4 uGrainFoot;
 uniform float uGrainMean[9];
 uniform float uGrainLift[${GRAIN_LEVELS}];
+uniform vec2 uGrainMatte[${GRAIN_LEVELS}];
 flat out vec4 vTone;
 flat out vec3 vWay;
 flat out vec4 vSun;
@@ -58,6 +60,7 @@ ${ICE_GLSL}
 ${SHEET_OUTER_GLSL}
 ${SHEET_LAW_GLSL}
 ${SHEET_AT_GLSL}
+${ICE_GRADE_GLSL}
 // One ball of the grain: where its centre lies along and across the way of the grain over the screen, and
 // its radius, in pixels. k is the number of the ball, apart how far the balls stand apart (0: all in the
 // middle, the grain is round), radius the radius of the grain in pixels, e the direction of the way.
@@ -91,7 +94,7 @@ void main() {
   vec2 er = q / r;
   vec2 fd = ray.xz / max(length(ray.xz), 1e-6);
   float pixel = dist / uGrainView.x * length(vec2(dot(er, fd) / mu, er.x * fd.y - er.y * fd.x));
-  float fp = max(ringFootprint(pixel, uGrad), uGrainFoot.x * aGrain.x);
+  float fp = max(ringFootprint(ringLookPixel(pixel), uGrad), uGrainFoot.x * aGrain.x);
   float fpl = max(ringFootprint(ringLookPixel(pixel), uGrad), uGrainFoot.x * aGrain.x);
   float tau;
   float lum;
@@ -123,10 +126,20 @@ void main() {
   lit *= mix(1.0, exp(-left / mu0), below);
   alpha *= mix(1.0, exp(-left / mu), below);
   float bright = mix(uOuter2.w * sheetLaw(0.0, mu, mu0, deg), lum / max(ringSat(tau * uRfLight.x), 1e-6) * law, counted);
+  // the thin zones by the view, as the sheet they lie in (grade.ts); nothing of it at the heights of the hold
+  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) bright *= mix(1.0, iceView(mu, r), counted);
   bright *= 1.0 + uGrainLift[level] * grainShown(level, dist);
   uint seed = uint(aGrain.w * 16777216.0);
   vec3 own = ringBits(ringPcg(seed + 11u));
-  vec3 col = mix(tone, vec3(1.0), look.z) * under * (bright * (1.0 + mu / mu0) * lit * look.w * (1.0 + uGrainLit.w * (own.x * 2.0 - 1.0)));
+  // a grain is ice in full light, 1 + mu / mu0 times what a sheet too deep to see through returns; a matte
+  // level (uGrainMatte: its share and its gain) is the grain of the sheet itself and no light on it: as bright
+  // as the whole sheet at its place, on dense and on thin ice alike, so it shows by its own spread alone
+  float full = mix((1.0 + mu / mu0) * look.w, ringSat(tau * (1.0 / mu0 + 1.0 / mu)) * uGrainMatte[level].y, uGrainMatte[level].x * counted);
+  vec3 col = mix(tone, vec3(1.0), look.z) * (bright * full * lit);
+  // the brightest ice under the ceiling of the grade and the tone of the rings by radius, as the sheet the
+  // grain lies in (grade.ts), so a grain of a counted level is no brighter than its sheet
+  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) col = mix(col, iceHeld(col) * iceZone(r, mu), counted);
+  col *= under * (1.0 + uGrainLit.w * (own.x * 2.0 - 1.0));
   vec2 vq = clip.xy / clip.w * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   // the way of the grain over the screen during one take, in pixels: it rides its orbit and the lens moves
@@ -332,6 +345,7 @@ export class Grains {
         uGrainFoot: { value: new THREE.Vector4(spec.foot, spec.soft, lit.layer, b.tumble) },
         uGrainMean: { value: lightMeans() },
         uGrainLift: { value: l.lift.slice() },
+        uGrainMatte: { value: l.name.map((_, k) => new THREE.Vector2(l.matte[k], l.matteGain[k])) },
         uGrainLayer: { value: new THREE.Vector3().fromArray(spec.layer) },
       },
       transparent: true, depthWrite: false, depthTest: true, premultipliedAlpha: true, side: THREE.DoubleSide,
