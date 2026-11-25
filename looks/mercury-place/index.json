@@ -1,9 +1,49 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T06:30:00.719Z",
+ "pushed": "2026-11-25T06:55:31.810Z",
  "head": "2931e023cd473fb9b2ecc0367b88bba6a4ba0b0e",
- "note": "way C drafts D and E beside the mark",
+ "note": "way C state F drafts beside the mark at 717 to 741, whole frame and 1 to 1, with its named fault at 733 to 741",
  "looks": [
+  {
+   "time": "2026-11-25T06:55:18.115Z",
+   "file": "20261125065518115-note-ch-1482-s.jpg",
+   "source": "../../../../tmp/m/ch-1482-s.png",
+   "kind": "note",
+   "label": "DRAFT, state F at 741, 1 to 1 beside the mark. Named fault, the worst of F: the hero's rim highlights lie on the crisp ground as soft pale blots with colour fringes (share 0.2, gone by 754). The mark is clean here",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T06:55:16.866Z",
+   "file": "20261125065516866-note-ch-1466-s.jpg",
+   "source": "../../../../tmp/m/ch-1466-s.png",
+   "kind": "note",
+   "label": "DRAFT, state F at 733, 1 to 1 beside the mark: crisp craters, the hero's rims over them begin to go soft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T06:55:15.677Z",
+   "file": "20261125065515677-note-ch-1450-s.jpg",
+   "source": "../../../../tmp/m/ch-1450-s.png",
+   "kind": "note",
+   "label": "DRAFT, state F at 725, 1 to 1 beside the mark: the hero's ground goes on (dusk, golden rims), the place's small craters crisp in it",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T06:55:14.546Z",
+   "file": "20261125065514546-note-ch-full-741.jpg",
+   "source": "../../../../tmp/m/ch-full-741.jpg",
+   "kind": "note",
+   "label": "DRAFT, not a final: dive 741 whole frame, the mark, 9fc760b3, state F. Named fault of F: pale streaks on the left, the hero's rim highlights enlarged past their texels at a share of 0.2",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T06:55:13.348Z",
+   "file": "20261125065513348-note-ch-full-a.jpg",
+   "source": "../../../../tmp/m/ch-full-a.jpg",
+   "kind": "note",
+   "label": "DRAFT, not a final: dive 717, 725, 733 whole frame. Left the build b0b87889 (the mark), middle 9fc760b3 (relief step, not named), right way C state F: one ground, the place's fine craters come by their texels as detail on the hero's own lit ground, the craters' bodies and the place's light come by the eye's height (717 to 754). 717 is the mark; no grey disc at 725",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T06:29:43.800Z",
    "file": "20261125062943800-note-ce-1466-s.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/m/ce-full-733.jpg",
    "kind": "note",
    "label": "DRAFT, not a final: dive 733 whole frame. The mark, state D, state E. On the mark the place is a grey ground from 725 on; on E it stays in the hero's light and turns to its own by 749",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:29:39.715Z",
-   "file": "20261125062939715-note-ce-full-b.jpg",
-   "source": "../../../../tmp/m/ce-full-b.jpg",
-   "kind": "note",
-   "label": "DRAFT, not a final: dive 725 and 741 whole frame. Left the build b0b87889 (the mark), middle way C state D (the place's disc comes by eye height: no disc at 725 but soft from 727 to 741, not taken), right way C state E (the place's craters come by their texels as on the mark, only their light is graded by eye height from the hero's to their own)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:12:45.073Z",
-   "file": "20261125061245073-note-c3A-717s.jpg",
-   "source": "../../../../tmp/m/c3A-717s.png",
-   "kind": "note",
-   "label": "DRAFT, NOT TAKEN: 717 at native size round the place: build b0b87889 (the mark), 9fc760b3, way C with the place's ground held from the hold. A grey soft disc in the judged frame: refused by me. The next state brings the core in by eye height below 717",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:09:33.854Z",
-   "file": "20261125060933854-note-c2-615-native.jpg",
-   "source": "../../../../tmp/m/c2-615-native.png",
-   "kind": "note",
-   "label": "DRAFT, NOT TAKEN: 615 at native size: approved hero, main, way C with the place's ground held from the hold (calm disc and relief pits). The hero's ring crater at the spot is lost and the disc is soft and dark: worse than main, so the hold stays main's bytes",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T06:09:32.778Z",
-   "file": "20261125060932778-note-g13-sheet.jpg",
-   "source": "../../../../tmp/m/g13-sheet.jpg",
-   "kind": "note",
-   "label": "G13 at 779: picture, texels view before (count of the hidden main globe mesh, red is under one texel), texels view after (each layer counted where it is seen). No pixel of the picture changed",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:46:11.555Z",
-   "file": "20261125054611555-note-lk-779-low-native.jpg",
-   "source": "../../../../tmp/m/lk-779-low-native.png",
-   "kind": "note",
-   "label": "9fc760b3 frame 779 draft, native size, the lower part (x 480 to 1440, y 700 to 1080): the near ground that the texels view counts as soft.",
    "stop": "mercury"
   }
  ]
