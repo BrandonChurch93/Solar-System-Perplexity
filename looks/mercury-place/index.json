@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T22:32:14.134Z",
+ "pushed": "2026-11-25T22:56:12.490Z",
  "head": "6591d862db3bc824abcce8ddf9fabd3611294bda",
- "note": "22:33 the crater's turn on master frames 997 to 1007 (rate 2); whole frame rows 981 to 998 at most 0.20; chain tn at 55 of 207",
+ "note": "22:57 rise 1009 to 1020 whole frames on the merged tree; chain tn at 85 of 207; local reading inside the crater's box: law 0.26, name 0.61, set light alone 0.20",
  "looks": [
+  {
+   "time": "2026-11-25T22:56:11.157Z",
+   "file": "20261125225611157-note-tn-rise-1009.jpg",
+   "source": "../../../../tmp/m/tn-rise-1009.jpg",
+   "kind": "note",
+   "label": "rise 1009 to 1020 whole master frames on merged main 172e7bcd under the law (every second K): steady, the far Sun comes in at the top right; rate 2 rows of this stretch follow with the name",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T22:32:12.837Z",
    "file": "20261125223212837-note-tn-rise-cr1b.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/m/rise-s15-a.jpg",
    "kind": "note",
    "label": "s15 scratch proof: rise 981 to 986 whole frames, the set's light at every height (not named: ring lost at 615)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T20:22:39.578Z",
-   "file": "20261125202239578-note-crat8-s15.jpg",
-   "source": "../../../../tmp/m/crat8-s15.png",
-   "kind": "note",
-   "label": "615 crater at 8 times, below with gain 2.5: approved, main, name s14, s15: s15 loses the ring and the floor peaks",
    "stop": "mercury"
   }
  ]
