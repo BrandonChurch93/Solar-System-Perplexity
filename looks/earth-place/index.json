@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T11:23:58.508Z",
- "head": "55392321c0452e1bddc72911bc23b771e20c87a4",
- "note": "deck taken out after MAIL 1040: 1755 back to the byte; study of cloud share hold against close set",
+ "pushed": "2026-11-25T11:40:57.836Z",
+ "head": "9b637af7f935a7767b049bce08c6d59dbd15b29e",
+ "note": "9b637af7: deck out, 1755 to the byte; dive strip; control says the darker field is the tone plate, bad",
  "looks": [
+  {
+   "time": "2026-11-25T11:40:57.081Z",
+   "file": "20261125114057081-note-s-ctl-b.jpg",
+   "source": "../../../../tmp/gl/k13/s-ctl-b.jpg",
+   "kind": "note",
+   "label": "control 1890 to 1894: state above, path share 0 below",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T11:40:56.520Z",
+   "file": "20261125114056520-note-s-ctl-a.jpg",
+   "source": "../../../../tmp/gl/k13/s-ctl-a.jpg",
+   "kind": "note",
+   "label": "control 1883 to 1889: state above, path share 0 below (the darker field is the tone plate)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T11:40:55.969Z",
+   "file": "20261125114055969-note-s-dive-b.jpg",
+   "source": "../../../../tmp/gl/k13/s-dive-b.jpg",
+   "kind": "note",
+   "label": "9b637af7 dive 1888 to 1894 draft, deck out",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T11:40:55.416Z",
+   "file": "20261125114055416-note-s-dive-a.jpg",
+   "source": "../../../../tmp/gl/k13/s-dive-a.jpg",
+   "kind": "note",
+   "label": "9b637af7 dive 1876 to 1887 draft, deck out",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T11:23:57.703Z",
    "file": "20261125112357703-note-share-pair.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/k12/pv-lb0-above.jpg",
    "kind": "note",
    "label": "study, not a frame: the map from above before and after the approved band's cloud is laid in as bodies (15 px a degree)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T10:44:55.585Z",
-   "file": "20261125104455585-note-pv-y1-band.jpg",
-   "source": "../../../../tmp/gl/k12/pv-y1-band.jpg",
-   "kind": "note",
-   "label": "study, not a frame: approved sea layer (top) against a numpy preview of the far band with the approved band's cloud laid into the map (bottom), tints not cured",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T10:23:37.644Z",
-   "file": "20261125102337644-note-tw-s.jpg",
-   "source": "../../../../tmp/gl/k12/tw-s.jpg",
-   "kind": "note",
-   "label": "towers' footprints from above on place-12: plate now, with footprints, marks (study, not in the state)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T10:17:22.114Z",
-   "file": "20261125101722114-note-s-rise-3.jpg",
-   "source": "../../../../tmp/gl/k11/s-rise-3.jpg",
-   "kind": "note",
-   "label": "ac5c5c1b rise 2130 to 2138 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T10:17:21.578Z",
-   "file": "20261125101721578-note-s-rise-2.jpg",
-   "source": "../../../../tmp/gl/k11/s-rise-2.jpg",
-   "kind": "note",
-   "label": "ac5c5c1b rise 2118 to 2129 draft",
    "stop": "earth"
   }
  ]
