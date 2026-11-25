@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T00:11:33.140Z",
- "head": "d6c0188905e13b5842f73fbb7befe02a4a19be00",
- "note": "00:12 d6c01889: 2427, 2469, 2689, 2726 first; frames about T, crops, full against web",
+ "pushed": "2026-11-25T00:38:37.603Z",
+ "head": "f0f0ebb0345aae227415742491409cee74b8833a",
+ "note": "trial of the edge at the sides of the close picture: slab at the right edge goes, a black box in the sky appears, not committed",
  "looks": [
+  {
+   "time": "2026-11-25T00:38:36.893Z",
+   "file": "20261125003836893-note-n54-edge.jpg",
+   "source": "out/work/place/see/n54-edge.jpg",
+   "kind": "note",
+   "label": "trial, not committed: 2470, 2684, 2686 before (top) and with the close ground ending at the sides of its picture (bottom); a black box in the sky top right is new and being looked into",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T00:11:32.575Z",
    "file": "20261125001132575-note-n52-fullweb.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/place/see/n52-T-dive.jpg",
    "kind": "note",
    "label": "d6c01889 draft: every frame 2467 to 2481 (T 2477)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:11:28.411Z",
-   "file": "20261125001128411-note-n52-four.jpg",
-   "source": "out/work/place/see/n52-four.jpg",
-   "kind": "note",
-   "label": "d6c01889 draft: 2427, 2469, 2689, 2726",
    "stop": "mars"
   }
  ]
