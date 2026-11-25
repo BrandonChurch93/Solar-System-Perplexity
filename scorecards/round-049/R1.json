@@ -1,0 +1,42 @@
+{
+ "critic": "R1",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "foreground and midground solar surface (pair-04-b.png crops D, E, F, G)",
+   "what": "convective granules look like hard-edged, sculpted bronze/metallic Voronoi polygons with sharp dark creases, brushed radial striations, and specular surface shading instead of turbulent, self-luminous plasma; intergranular lanes lack deep black-brown contrast and granule centers lack incandescent orange-white cores and bright filigree points",
+   "fix": "replace faceted polygonal cells and specular surface shading with soft, boiling, self-emissive plasma granulation featuring hot orange-white glowing centers, bright intergranular points, deep dark convective lanes, and warm volumetric bloom"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "central sunspot umbra and penumbra (pair-04-b.png crops A, E, F)",
+   "what": "the sunspot sits lower and wider than in -a and reads as a flat radial spoke decal with straight, uniform geometric rays ending in a hard circular seam against the granules rather than a recessed 3D magnetic funnel of tangled, glowing filaments",
+   "fix": "shift the sunspot slightly higher and narrower to match -a, shape it into a recessed curved depression, replace rigid straight spokes with irregular curved incandescent plasma fibrils with hot bright tips, and blend the outer penumbra organically into elongated surrounding granules"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "near foreground along bottom third (pair-04-b.png crops D, F, G)",
+   "what": "foreground granules remain razor-sharp CG geometry right to the bottom frame edge, losing the shallow depth-of-field softness and warm optical halation of -a",
+   "fix": "apply shallow camera depth-of-field blur across the near foreground and add soft warm halation on bright foreground plasma highlights"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "horizon limb, spicules, and left footpoint flare (pair-04-b.png crops A, B, I)",
+   "what": "limb spicules look like repetitive spiky sawtooth grass along a harder horizon edge, the small low magnetic arches on the right limb and the horizontal flare streak left of the left footpoint are missing, and the warm amber atmospheric glow falls off too quickly toward the left and right edges",
+   "fix": "break up limb spicules into fine, varied hair-like plasma jets, restore the low magnetic arches on the right limb, widen and soften the warm amber chromospheric haze along the full horizon, and restore the subtle horizontal flare streak extending from the left footpoint"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "distant photosphere near horizon and loop footpoints (pair-04-b.png crops A, E, I)",
+   "what": "the receding photosphere toward the limb is washed-out yellow-tan with crisp noisy mini-polygons rather than warm foreshortened fiery orange haze, and the bright coronal loop footpoints sit as tight patches over bumpy cells instead of blooming broadly into the surrounding surface",
+   "fix": "shift the distant horizon photosphere toward deeper fiery orange with smooth foreshortened atmospheric glow, and widen the intense white-orange emissive bloom where both magnetic loop footpoints meet the terrain"
+  }
+ ]
+}
