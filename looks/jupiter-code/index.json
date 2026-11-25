@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T18:34:23.315Z",
+ "pushed": "2026-11-25T19:07:28.128Z",
  "head": "1c5b75fa8f007ab95b2fc0e6425350ec0cf7a256",
- "note": "Tip 1c5b75fa: dive 3011 to 3055 + 1/2 every half frame (slice green: pop 1.03, pattern 0.43), rise 3296 at the final tier, the hold 2895 at the place beside the approved picture and main (the storm on the globe costs the match 0.0203, Io's soft edge 0.0036), terrain 3150 last",
+ "note": "19:10 UTC: 1c5b75fa named as the proof of the path; the angles of the storm's dark side measured and mailed; next the lit body and the shade field",
  "looks": [
+  {
+   "time": "2026-11-25T19:07:27.546Z",
+   "file": "20261125190727546-note-p1-3150.jpg",
+   "source": "../work/r15/p1-3150.jpg",
+   "kind": "note",
+   "label": "jupiter 3150 final on 1c5b75fa, the named bytes",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T19:07:27.002Z",
+   "file": "20261125190727002-note-rise-b-d.jpg",
+   "source": "../work/r15/sheets/rise-b-d.jpg",
+   "kind": "note",
+   "label": "jupiter rise 3300 to 3308 and a half on 1c5b75fa, every drawn frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T19:07:25.982Z",
+   "file": "20261125190725982-note-plates-top.jpg",
+   "source": "../work/r18/plates-top.jpg",
+   "kind": "note",
+   "label": "jupiter ground from above, near and mid plate, with the eye of 3150, its lens axis and the way to the Sun",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T18:34:01.573Z",
    "file": "20261125183401573-note-p1-3150.jpg",
@@ -188,30 +212,6 @@
    "source": "../work/r15/sheets/rise-b-d.jpg",
    "kind": "note",
    "label": "Rise 3300 to 3308 + 1/2 on 1c5b75f, every half frame, draft (slice green: level step 0.85, pop 1.13, pattern 0.16)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:25:29.927Z",
-   "file": "20261125172529927-note-rise-b-c.jpg",
-   "source": "../work/r15/sheets/rise-b-c.jpg",
-   "kind": "note",
-   "label": "Rise 3290 to 3299 + 1/2 on 1c5b75f, every half frame, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:25:28.952Z",
-   "file": "20261125172528952-note-rise-b-b.jpg",
-   "source": "../work/r15/sheets/rise-b-b.jpg",
-   "kind": "note",
-   "label": "Rise 3280 to 3289 + 1/2 on 1c5b75f, every half frame, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:25:28.232Z",
-   "file": "20261125172528232-note-rise-b-a.jpg",
-   "source": "../work/r15/sheets/rise-b-a.jpg",
-   "kind": "note",
-   "label": "Rise 3270 to 3279 + 1/2 on the tree 1c5b75f (path cure), every half frame, draft",
    "stop": "jupiter"
   }
  ]
