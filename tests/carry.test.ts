@@ -7,7 +7,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { apart, shownRows } from '../tools/smooth/maps'
 
 interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null; body: number | null; sky: number | null }
-interface SkyFlow { value: number | null; share: number; covered: number; coveredOnBody: number }
+interface SkyFlow { value: number | null; share: number; far: number | null; farShare: number; limb: (number | null)[]; covered: number; coveredOnBody: number }
 interface Way { clean: Reading; exchange: Reading; untold: Reading }
 interface Made {
   rise: Way
@@ -129,6 +129,10 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.skyFlow.exchange.value!).toBeGreaterThan(0.45)
     expect(made.skyFlow.clean.covered).toBeGreaterThan(0.02)
     expect(made.skyFlow.clean.coveredOnBody).toBe(0)
+    expect(made.skyFlow.clean.farShare).toBeGreaterThan(0.02)
+    expect(made.skyFlow.clean.farShare).toBeLessThanOrEqual(made.skyFlow.clean.share)
+    expect(made.skyFlow.clean.far!).toBeLessThan(0.283)
+    expect(made.skyFlow.clean.limb[0]!).toBeCloseTo(0.15 * (135 / 2 / Math.tan(Math.PI / 9)) / Math.sqrt(25 - 1), 6)
   })
 
   it('gives the reading on the bodies and the reading off them beside the row\'s own', () => {
@@ -153,7 +157,7 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.tool.mainSame).toBe(true)
     expect(made.tool.plainKeys).toContain('pattern')
     expect(made.tool.plainKeys.some((k) => k.startsWith('patternMap'))).toBe(false)
-    expect(made.tool.more).toEqual(['patternMap', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyTurn', 'patternMapUnits'])
+    expect(made.tool.more).toEqual(['patternMap', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyShare', 'patternMapSkyTurn', 'patternMapUnits'])
     expect(made.tool.limits).toEqual({ bulkPx: 8, apart: 0.5 })
     expect(made.tool.clean.patternMapUnits).toHaveLength(1)
     expect((made.tool.clean.patternMapUnits as number[])[0]!).toBeGreaterThan(0.5)

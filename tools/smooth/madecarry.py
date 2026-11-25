@@ -246,9 +246,10 @@ def main():
         frames = [f['grey'] for f in seen]
         fw = [S.motion(frames[j], frames[j + 1]) for j in range(2)]
         bw = [S.motion(frames[j + 1], frames[j]) for j in range(2)]
-        value, share = S.unbodied(frames, fw, bw, 0, 2, seen[0]['which'] > 0, seen[2]['which'] > 0, C.rim, MARGIN, WIDE, FLOOR)
+        limb = [S.limb_px(seen[j]['pose'], frames[0].shape) for j in (0, 2)]
+        sky = S.unbodied(frames, fw, bw, 0, 2, seen[0]['which'] > 0, seen[2]['which'] > 0, C.rim, MARGIN, WIDE, FLOOR, limb)
         covered = C.hidden(*[C.carry(seen[0]['depth'], seen[0]['which'], seen[0]['pose'], seen[2]['pose'])[j] for j in (0, 1, 3)], seen[0]['which'], seen[2]['depth'], seen[2]['which'])
-        out['skyFlow'][name] = {'value': value, 'share': share, 'covered': float(covered.mean()), 'coveredOnBody': float((covered & (seen[0]['which'] > 0)).mean())}
+        out['skyFlow'][name] = {'value': sky['value'], 'share': sky['share'], 'far': sky['far'], 'farShare': sky['farShare'], 'limb': limb, 'covered': float(covered.mean()), 'coveredOnBody': float((covered & (seen[0]['which'] > 0)).mean())}
     form = {'low': -20, 'octaves': 32, 'units': [330.0]}
     depth = np.exp(np.random.default_rng(4).uniform(-6, 6, FULL))
     depth[:60] = np.nan
