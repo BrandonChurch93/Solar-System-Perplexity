@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T22:48:27.058Z",
+ "pushed": "2026-11-25T23:11:13.373Z",
  "head": "573431fb53a875f5a78cb152a458f82656ac6bb7",
- "note": "22:50 UTC: third state of the ground by code at 3150, before and after the first albedo solve. Both bad, pushed as ruled. Next: sheared plateaus in the wound coordinates for the spiral bands, then the solve again.",
+ "note": "state k: the guide solved by range; low band 5.547 against main 3.539; the limit is the lower right",
  "looks": [
+  {
+   "time": "2026-11-25T23:11:12.621Z",
+   "file": "20261125231112621-note-k-3150.jpg",
+   "source": "../work/r23/t/k-3150.png",
+   "kind": "note",
+   "label": "3150 draft state k: guide solved by range in four damped rounds, low band 5.547 (main 3.539), plain 15.9608, bands 1.00 0.99 0.93 0.86 (under 1 px 1.29), 138.9 s; limb ragged, far field lumpy, lower right 30 against 8",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T23:11:12.009Z",
+   "file": "20261125231112009-note-j1-3150.jpg",
+   "source": "../work/r23/t/j1-3150.png",
+   "kind": "note",
+   "label": "3150 preview state j1: the plain guide with no solve, relief from the plain guide, low band 17.42 at preview size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T23:11:11.318Z",
+   "file": "20261125231111318-note-i-3150.jpg",
+   "source": "../work/r23/t/i-3150.png",
+   "kind": "note",
+   "label": "3150 draft state i, BAD: blotches and teal (old solve through the fit camera, two rounds), low band 14.7885, plain 23.3755, bands 1.08 1.09 1.11 1.21",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T22:48:26.320Z",
    "file": "20261125224826320-note-d-3150.jpg",
@@ -167,30 +191,6 @@
   {
    "time": "2026-11-25T20:16:15.952Z",
    "file": "20261125201615952-note-p1-3150.jpg",
-   "source": "out/work/jupiter/final/p1-3150.png",
-   "kind": "note",
-   "label": "surface view 3150 of the named tree at the final tier, unchanged by this design work (6.1102 against the approved close image)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:16:15.384Z",
-   "file": "20261125201615384-note-lane2-0.06.jpg",
-   "source": "../work/r20/lane2-0.06.jpg",
-   "kind": "note",
-   "label": "design test, not built: the place from above, the west border of the painted body. Left the lit body, middle with the globe's own tan lane let through, right the lane's outline in red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:16:14.775Z",
-   "file": "20261125201614775-note-sim5-a.jpg",
-   "source": "../work/r20/sim5-a.png",
-   "kind": "note",
-   "label": "design test, not built: the hold's disc at 8 times, simulated. Left the approved hero, middle main, right the simulated hold with the storm's lee lit and the globe's own tan lane kept at the painted body's west border (simulated cost 0.0016 against 0.0203 of the named tree; the left dash still reads weaker than on main)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T19:55:06.783Z",
-   "file": "20261125195506783-note-p1-3150.jpg",
    "source": "out/work/jupiter/final/p1-3150.png",
    "kind": "note",
    "label": "surface view 3150 of the named tree at the final tier, unchanged by this design work (6.1102 against the approved close image)",
