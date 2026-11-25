@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T22:57:32.621Z",
+ "pushed": "2026-11-25T23:06:13.953Z",
  "head": "ef1bbb3a14fd518810e596aa9c975e88fd5c84ff",
- "note": "22:57 trial 17 plain at 1 to 1 is bad beside the parent's ground; 0.3 plain from the parent running",
+ "note": "23:08 trial 19: 0.3 plain from its parent's ground, no border to the 0.7 ring from above; wall chutes still read smooth",
  "looks": [
+  {
+   "time": "2026-11-25T23:06:13.205Z",
+   "file": "20261125230613205-note-t19-ring.jpg",
+   "source": "../../../../tmp/t19-ring.jpg",
+   "kind": "note",
+   "label": "trial 19, 0.3 plate inside the 0.7 ring from above (0.6 degrees wide): the wall strip by code runs on across the border",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T23:06:12.612Z",
+   "file": "20261125230612612-note-t19-borderA.jpg",
+   "source": "../../../../tmp/t19-borderA.jpg",
+   "kind": "note",
+   "label": "trial 19, the 0.3 plate laid in its 0.7 parent as the pyramid lays it: east border and north border at the 0.3 texel: no border to see",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T23:06:12.059Z",
+   "file": "20261125230612059-note-t19-wall.jpg",
+   "source": "../../../../tmp/t19-wall.jpg",
+   "kind": "note",
+   "label": "wall at 1 to 1 (1250,150): the name's plate (hair) | trial 17 (smoke on the plain) | trial 19",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T23:06:11.494Z",
+   "file": "20261125230611494-note-t19-cropsB.jpg",
+   "source": "../../../../tmp/t19-cropsB.jpg",
+   "kind": "note",
+   "label": "trial 19 at 1 to 1, crops 700,1500 and 1500,1500: take | parent | trial 19",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T23:06:10.922Z",
+   "file": "20261125230610922-note-t19-cropsA.jpg",
+   "source": "../../../../tmp/t19-cropsA.jpg",
+   "kind": "note",
+   "label": "trial 19 at 1 to 1, crops 200,200 and 1300,300: take | parent | trial 19. Plain reads as the parent's ground, no net of blocks. The wall by code at 1300,300 is smooth chutes between spurs: still wrong, reads as paint",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T23:06:10.103Z",
+   "file": "20261125230610103-note-t19-whole.jpg",
+   "source": "../../../../tmp/t19-whole.jpg",
+   "kind": "note",
+   "label": "0.3 plate from above, whole: take | parent (0.7 take) enlarged 1.55 | trial 19 (plain = parent's ground plus only what is finer by code; walls by code with chutes)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T22:57:01.739Z",
    "file": "20261125225701739-note-parent-crops.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/parent-whole.jpg",
    "kind": "note",
    "label": "0.3 plate from above: the take (net of blocks) | its parent, the 0.7 take enlarged 1.55 | trial 17 plain by code (reads as smoke at 1 to 1: BAD)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T22:49:41.031Z",
-   "file": "20261125224941031-note-rings.jpg",
-   "source": "out/work/place/w17/rings.jpg",
-   "kind": "note",
-   "label": "BAD, trial 17 on the coarser plates: in each plate's own ring the take's ground (left, the name) is replaced by a flat felt, at 3.8 degrees with a weave (streaks finer than 2 texels). Not taken: the plain by code stays on the 0.3 plate alone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T22:42:27.478Z",
-   "file": "20261125224227478-note-lv-07-38.jpg",
-   "source": "out/work/place/w17/lv-07-38.jpg",
-   "kind": "note",
-   "label": "trial 17 on the 0.7 and 3.8 degree plates from above at 1 to 1, beside the name's plates (before the pyramid)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T22:10:54.118Z",
-   "file": "20261125221054118-note-quad.jpg",
-   "source": "out/work/place/pt1/quad.jpg",
-   "kind": "note",
-   "label": "name 47b75341, drafts 2708 and 2716 with layers and texels pictures: the worst pattern pixel of rise part 2 lies on the 8.5 degree plate under the air",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T22:10:53.524Z",
-   "file": "20261125221053524-note-panel-name-p1.jpg",
-   "source": "../../../../tmp/panel-name-p1.jpg",
-   "kind": "note",
-   "label": "the NAME 47b75341's reader panel, rise part 1 (from /root, mx2-03): at 2685 to 2693 the ground holds its pattern, white only in the band under the horizon; BAD at 2693 to 2701 and 2706 to 2714: white blobs on the plates where main has none",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T22:10:52.664Z",
-   "file": "20261125221052664-note-panel-main-p1.jpg",
-   "source": "../../../../tmp/panel-main-p1.jpg",
-   "kind": "note",
-   "label": "MAIN's reader panel, rise part 1 (from /root, row mb1-09): pattern white over large parts of the ground at 2687 to 2695",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T21:49:21.119Z",
-   "file": "20261125214921119-note-cmpA.jpg",
-   "source": "out/work/place/w17/cmpA.png",
-   "kind": "note",
-   "label": "0.3 plate from above at 1 to 1, crop A: trials 15, 16, 17 (wall with chutes, plain by code)",
    "stop": "mars"
   }
  ]
