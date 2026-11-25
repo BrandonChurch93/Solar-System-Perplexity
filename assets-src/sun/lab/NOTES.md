@@ -756,3 +756,20 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   (npx tsx tools/smooth.ts --stop sun --kind rise --only pictures --part 2/4, log v/p2-d8.log, out/work/smooth).
 - New tools (17:35): flicker.py (a cell's mean light over captures 12 film frames apart), band.ts and band.py (the
   low band's share by frame and the largest change of a fixed place it makes). Not yet run.
+- 18:23 to 18:37 UTC, THE RED ROW OF PART 2 (MAIL 1243). MEASURED: the standing reader's part 2 on d8 here reads the
+  same red as the Builder's on d7 (0.62 from frame 221, 17 frames over, first 216 + 1/2): the map's cure does not
+  touch it. MISTAKE FOUND: my reader's runs (h14 to d7) were on pictures of 960 by 540 (clip.ts was given --format
+  preview in the chain), where the band of 8 to 40 px is another size on the ground; on the standing tool's own
+  pictures (out/work/smooth/sun/frames, master) my reader reads 0.625 at capture 442. FROM NOW ON: clip.ts
+  --format master for every proof (about 13 s a frame on the globe's side here). The reader cannot be fed a pair
+  with filler frames: it carries along the flows of every frame between.
+  SEEN by one layer at a time at frame 229 (v/x-crop.jpg): cells held from sinking (far.px [1, 2]) changes nothing;
+  the ground held against the globe's face (onGlobe.away [3.0, 3.3]) keeps the living cells of 221. So the layer
+  is the globe's face (my far twin: still cells from above, 11 texels a cell) coming over living cells of 12 to 25
+  px by place.json onGlobe.away [0.6, 3.3]. d7's cells are 1.6 times h20's (far.cell 0.125 against 0.079), so the
+  swap came into the band.
+  CURE, d9 f5a268bf: lab.json far.away [2.0, 3.0] is the lab ground's own law (ground.ts update() reads it in
+  place of place.onGlobe.away; place.json untouched): the face takes the place where a cell is under about 6 px,
+  under the eye over frames about 241 to 256. Frame 247 looks the same with both (v/cmp247.jpg). Clip 425 to 528
+  at master started 18:36 (out/work/sun/lab/rise-d9, v/rise-d9.log). The tubes copy in v/tubes has both cures.
+  Eye heights hold: frame 247 is 2.6 radii up, the globe about half the frame's height.
