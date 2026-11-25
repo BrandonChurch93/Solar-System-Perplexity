@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T15:07:22.071Z",
+ "pushed": "2026-11-25T15:39:07.204Z",
  "head": "caaa727dac0700ca06512860cdbb6faba2855888",
- "note": "caaa727d: tool's dive lines running (frame 1880 of 1919); wedge specks read as clouds at 1 to 1; far band of 2010 still not the approved shot, height law for small bodies on trial outside the film",
+ "note": "caaa727d: cause A measured at 1857 (blocks go with the shutter closed); dive lines stopped at frame 1892 for it; 2156 rendering",
  "looks": [
+  {
+   "time": "2026-11-25T15:39:06.447Z",
+   "file": "20261125153906447-note-d-s4.jpg",
+   "source": "../../../../tmp/gl/k15/d-s4.jpg",
+   "kind": "note",
+   "label": "caaa727d dive 1881 to 1889, draft, whole frames: bad: the place reads as a disc with an outline and a fringe of specks; dark blue spot north of the streak",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T15:39:05.735Z",
+   "file": "20261125153905735-note-1857-gulf-1to1.jpg",
+   "source": "../../../../tmp/gl/k15/A/1857-gulf-1to1.jpg",
+   "kind": "note",
+   "label": "caaa727d 1857 at final, Gulf and Caribbean at 1 to 1, shutter open and closed: more specks than main (the wedge), each a small cloud when the shutter is closed",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T15:39:04.984Z",
+   "file": "20261125153904984-note-1857-ll-1to1.jpg",
+   "source": "../../../../tmp/gl/k15/A/1857-ll-1to1.jpg",
+   "kind": "note",
+   "label": "caaa727d 1857 at final, lower left at 1 to 1: shutter open (blocks, as in the judged frame) beside shutter closed (none): cause A is the half shutter's blur on marks 1 to 2 px thin",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T15:07:20.692Z",
    "file": "20261125150720692-note-pv-all.jpg",
@@ -43,36 +67,6 @@
    "kind": "note",
    "label": "2010 final at caaa727d whole: approved, main, now (red: far band not the approved shot)",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T14:46:34.333Z",
-   "file": "20261125144634333-note-1755-whole.jpg",
-   "source": "../../../../tmp/gl/k15/named/1755-whole.jpg",
-   "kind": "note",
-   "label": "1755 final at caaa727d whole: approved, main, now",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T14:46:33.722Z",
-   "file": "20261125144633722-note-1755-wedge-4for1.jpg",
-   "source": "../../../../tmp/gl/k15/named/1755-wedge-4for1.jpg",
-   "kind": "note",
-   "label": "1755 final at caaa727d, wedge at 4 px for 1: approved, main, now (red: denser than the hero)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T14:44:18.566Z",
-   "file": "20261125144418566-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
   }
  ]
 }
