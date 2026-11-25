@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T15:30:46.497Z",
- "head": "6617c15f0777b4b5f07be68e545511ded73b4853",
- "note": "proof of 6617c15f: dive green, rise rendering; dark ice sheet and the dusk cure are written, not rendered yet",
+ "pushed": "2026-11-25T15:47:32.200Z",
+ "head": "61c276a8a11b7fdf15965be1b0ad723d70385506",
+ "note": "proof of 6617c15f: dive green, rise rendering; second name in the working tree: dusk one value at every height, dark ice sheet, join at the rim",
  "looks": [
+  {
+   "time": "2026-11-25T15:47:30.363Z",
+   "file": "20261125154730363-note-wedge_6617_c.jpg",
+   "source": "../../../../tmp/v/dark/wedge_6617_c.png",
+   "kind": "note",
+   "label": "6617c15f rise 3826 to 3840, gap in front of the night side, levels lifted: band comes in toward the rim as the kept look comes in, night side goes grey green to brown"
+  },
   {
    "time": "2026-11-25T15:30:41.789Z",
    "file": "20261125153041789-note-dive_whole.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/law2/d_block2.png",
    "kind": "note",
    "label": "saturn dive 3600 and a half: the block the tool names, a window of stars at the globe's foot (before it was closed)"
-  },
-  {
-   "time": "2026-11-25T14:17:41.325Z",
-   "file": "20261125141741325-note-foot_cmp.jpg",
-   "source": "../../../../tmp/v/law3/t/foot_cmp.png",
-   "kind": "note",
-   "label": "saturn dive 3594 3600 3601 right foot: the cure above, the cure with the star window closed below (draft)"
   }
  ]
 }
