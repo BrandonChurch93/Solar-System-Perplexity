@@ -1,9 +1,65 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T11:26:19.715Z",
+ "pushed": "2026-11-25T11:45:03.152Z",
  "head": "d438b57b3312eda5d94a8c3f8bf6d74d1bbbf2a6",
- "note": "d438b57b: slices running; rise 3240 to 3247 from the commit's frames",
+ "note": "rise slice A green on d438b57b; the straight borders are the left and bottom borders of the approved eye's canvas on the ground",
  "looks": [
+  {
+   "time": "2026-11-25T11:45:02.485Z",
+   "file": "20261125114502485-note-s1-3150.jpg",
+   "source": "../work/r13/off/s1-3150.jpg",
+   "kind": "note",
+   "label": "3150 as named, now, approved",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:45:01.863Z",
+   "file": "20261125114501863-note-diag-6509.jpg",
+   "source": "../work/r14/diag-6509.jpg",
+   "kind": "note",
+   "label": "3254 and a half lower left, as built, ground grid, weight of the canvas",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:45:01.216Z",
+   "file": "20261125114501216-note-nochart-6509.jpg",
+   "source": "../work/r14/nochart-6509.jpg",
+   "kind": "note",
+   "label": "3254 and a half lower left, as built beside the approved eye's canvas left out",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:45:00.535Z",
+   "file": "20261125114500535-note-td-plate-vs-chart.jpg",
+   "source": "../work/r14/td-plate-vs-chart.jpg",
+   "kind": "note",
+   "label": "top down, plates beside the approved eye's canvas on the ground",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:44:59.860Z",
+   "file": "20261125114459860-note-f3258-ll.jpg",
+   "source": "../work/r14/f3258-ll.jpg",
+   "kind": "note",
+   "label": "rise 3258 lower left full size, the straight borders",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:44:59.249Z",
+   "file": "20261125114459249-note-a3.jpg",
+   "source": "../work/r14/sa/a3.jpg",
+   "kind": "note",
+   "label": "rise 3255 to 3260 as built on d438b57b, every capture frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:44:58.607Z",
+   "file": "20261125114458607-note-a2.jpg",
+   "source": "../work/r14/sa/a2.jpg",
+   "kind": "note",
+   "label": "rise 3250 to 3255 as built on d438b57b, every capture frame",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T11:26:18.015Z",
    "file": "20261125112618015-note-s1-3150.jpg",
@@ -138,62 +194,6 @@
    "source": "../work/r13/off/th10-cmp.jpg",
    "kind": "note",
    "label": "rise 3246 to 3254 upper left: as named, sheets 0.1 thick (not enough: 0.716 at 3246 + 1/2), banks off",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:00:07.775Z",
-   "file": "20261125100007775-note-n5-3150.jpg",
-   "source": "out/work/jupiter/final/n5-3150.png",
-   "kind": "note",
-   "label": "3150 as named, final tier",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:00:06.582Z",
-   "file": "20261125100006582-note-limb-enters.jpg",
-   "source": "../work/r13/off/limb-enters.jpg",
-   "kind": "note",
-   "label": "rise 3286 to 3288 by halves: the limb comes in along the left edge",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:00:05.399Z",
-   "file": "20261125100005399-note-ctrl-b.jpg",
-   "source": "../work/r13/off/ctrl-b.jpg",
-   "kind": "note",
-   "label": "rise 3246 to 3247, what makes the pattern: as it is, banks off, banks read at the ground point",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:30:42.391Z",
-   "file": "20261125093042391-note-ray015-3150-pair.jpg",
-   "source": "../work/r13/ray015-3150-pair.jpg",
-   "kind": "note",
-   "label": "3150, working tree with the air by the ray alone at 0.15 (not committed) beside the approved",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:30:41.610Z",
-   "file": "20261125093041610-note-limb-enters.jpg",
-   "source": "../work/r13/off/limb-enters.jpg",
-   "kind": "note",
-   "label": "rise 3286 to 3288 + 1/2: the limb comes in along the whole left edge within one capture frame (level step 1.36 at 3287 + 1/2)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:30:41.024Z",
-   "file": "20261125093041024-note-crop-far-6493-6501-6509.jpg",
-   "source": "../work/r13/off/crop-far-6493-6501-6509.jpg",
-   "kind": "note",
-   "label": "rise, the same far ground at 3246 + 1/2, 3250 + 1/2, 3254 + 1/2: pale veil with streaks first, pink and brown patches 8 frames later",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:30:40.295Z",
-   "file": "20261125093040295-note-view-back-6493.jpg",
-   "source": "../work/r13/off/view-back-6493.jpg",
-   "kind": "note",
-   "label": "rise 3246 + 1/2: where the reader reads the pattern change in place, 0.85 (the far ground under the limb, upper left)",
    "stop": "jupiter"
   }
  ]
