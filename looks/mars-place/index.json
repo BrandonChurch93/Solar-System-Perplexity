@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T20:52:38.781Z",
- "head": "10c72f63d59e26694dc4a3eefecf245fa06bb988",
- "note": "rise 2683, 2684 on main's eye (bad: net and streaks at the corners); wall trial 13 against take 10 from above at 1 to 1",
+ "pushed": "2026-11-25T21:14:15.973Z",
+ "head": "47b7534197a50175cdfd682dbfa8b46e9ff5487e",
+ "note": "rise state 47b75341 proofs green but sides; wall trial 14 plain by code is bad (contour lines), retuning",
  "looks": [
+  {
+   "time": "2026-11-25T21:14:14.844Z",
+   "file": "20261125211414844-note-rise-sheet.jpg",
+   "source": "out/work/place/t3/rise-sheet.jpg",
+   "kind": "note",
+   "label": "rise state 47b75341 (ledge, main's eye): rise drafts 2682 to 2744",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T21:14:14.071Z",
+   "file": "20261125211414071-note-cmpB.jpg",
+   "source": "out/work/place/w14/cmpB.png",
+   "kind": "note",
+   "label": "BAD wall trial 14, 0.3 plate from above 1 to 1 at x 1000 y 560: before walls, trial 13, trial 14",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T21:14:12.941Z",
+   "file": "20261125211412941-note-cmpA.jpg",
+   "source": "out/work/place/w14/cmpA.png",
+   "kind": "note",
+   "label": "BAD wall trial 14, 0.3 plate from above 1 to 1 at x 1400 y 200: before walls, trial 13, trial 14 (plain by code reads as contour lines and corduroy)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T20:52:28.411Z",
    "file": "20261125205228411-note-cmpB.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/t2/net-plate.jpg",
    "kind": "note",
    "label": "BAD: the 0.3 and 0.7 plates at 1 to 1.5: the take's cracked slabs and boulders 40 to 300 m across (the net of blocks) and the code wall beside it as hair",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:36:57.019Z",
-   "file": "20261125203657019-note-tint-corners.jpg",
-   "source": "out/work/place/t2/tint-corners.jpg",
-   "kind": "note",
-   "label": "BORDER TRACE 1 to 1: the straight border at 2683 and 2475 lower right is the outer end of L0's apron (right and bottom strip), at 2474 and 2475 lower left the outer end of L1's apron; beyond it the plate",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:36:56.420Z",
-   "file": "20261125203656420-note-tint-sheet.jpg",
-   "source": "out/work/place/t2/tint-sheet.jpg",
-   "kind": "note",
-   "label": "BORDER TRACE: the set's aprons tinted (L1 yellow, L0 bottom magenta, L0 right cyan, L0 left green, L2 white) at 2468, 2474, 2476 and rise 2682, 2683 on main's eye: at T the aprons fill the left, the foot and the right of the frame",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:25:14.479Z",
-   "file": "20261125202514479-note-dbg-c.jpg",
-   "source": "out/work/place/w12/dbg-c.jpg",
-   "kind": "note",
-   "label": "trial 12 look files, 0.3 plate x 1100 y 150: streak tone (whorls), relief, lift (flat facets of the heights), rock without grain",
    "stop": "mars"
   }
  ]
