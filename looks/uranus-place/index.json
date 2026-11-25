@@ -1,9 +1,29 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T00:03:12.207Z",
- "head": "e9e2c3a72b60ef94a56fb30619383372aa28eab1",
- "note": "second commit in proof: rise sheets first (4380 to 4439), dive sheets, the four judged finals as pairs",
+ "pushed": "2026-11-25T00:13:35.199Z",
+ "head": "45f989100869dbc2c216814e93effed450162b7a",
+ "note": "second commit pushed as 45f98910 (not yet NAMED, proofs running): rise 4440 to 4454 every frame; open and seen: hoops brighter than the hold's rings",
  "looks": [
+  {
+   "time": "2026-11-25T00:09:51.825Z",
+   "file": "20261125000951825-note-rise-2.jpg",
+   "source": "../../../../tmp/parA/rise-2.jpg",
+   "kind": "note",
+   "label": "rise 4440 to 4454 every frame, draft, second commit (open: the hoops are brighter than the hold's rings)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T00:04:01.970Z",
+   "file": "20261125000401970-sheet-uranus-rise-top.jpg",
+   "source": "out/work/handover/uranus-rise-top.png",
+   "kind": "sheet",
+   "label": "uranus rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 4391), place picture off, draft tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "first": 4391,
+   "last": 4454,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T00:03:11.421Z",
    "file": "20261125000311421-note-dive-2.jpg",
@@ -282,22 +302,6 @@
    "source": "../../../../tmp/y2/dive-1.jpg",
    "kind": "note",
    "label": "dive 4140 to 4169 every frame, draft: the engine's own band crosses the gap left of the limb at 4141 to 4148 (named, open)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:16:21.810Z",
-   "file": "20261124231621810-note-dive-0.jpg",
-   "source": "../../../../tmp/y2/dive-0.jpg",
-   "kind": "note",
-   "label": "dive 4110 to 4139 every frame, draft, tree of the second commit (hold's picture kept): the hold's band slides off at the lower right, last pixels at 4139",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:16:20.723Z",
-   "file": "20261124231620723-note-rise-w.jpg",
-   "source": "../../../../tmp/y2/rise-w.jpg",
-   "kind": "note",
-   "label": "rise 4386 to 4401 every frame at 640 px, draft, tops law by lane only: the white field is on the ground from the first rise frame and spreads as the eye climbs and tips down",
    "stop": "uranus"
   }
  ]
