@@ -12,7 +12,7 @@ import { eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSk
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
-import { CARRY, TravelShape, carryBend, carryWay, inFrame, outsideFrame, travelLook } from '../space/travel/path'
+import { CARRY, TravelShape, WORLD_ANSWER, WORLD_MISS, carryBend, carryWay, inFrame, outsideFrame, travelLook, worldCosts, worldLead } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
 import { globeShare, wearShare } from '../space/farsun/share'
 import farLook from '../space/farsun/look.json'
@@ -79,6 +79,7 @@ export class FilmDirector implements Director {
   readonly plans: StopPlan[]
   readonly frames: StopFrame[] = []
   readonly sunWorld = new THREE.Vector3()
+  readonly placed: { id: string; taken: number; missDeg: number; leadDeg: number; bareLeadDeg: number; opens: boolean }[] = []
   private readonly approach: THREE.Vector3[] = []
   private readonly reach: number[] = []
   private readonly begin: number[] = []
@@ -441,18 +442,23 @@ export class FilmDirector implements Director {
     const fr = forward(from.quaternion)
     const camUp = Y.clone().applyQuaternion(from.quaternion)
     const want = THREE.MathUtils.degToRad(a.p.travel.turnDeg)
-    const tries: { r: THREE.Quaternion; cost: number }[] = []
+    const answer = i === 0 ? 'least' : (WORLD_ANSWER[a.id] ?? 'least')
+    const turns: THREE.Quaternion[] = []
+    const angles: number[] = []
+    const bare: number[] = []
     for (let k = 0; k < 720; k++) {
       const r = new THREE.Quaternion().setFromAxisAngle(this.sunWorld, (k / 720) * Math.PI * 2).multiply(r0)
       const d = dLocal.clone().applyQuaternion(r)
-      let cost: number
-      if (i === 0) cost = from.quaternion.angleTo(r.clone().multiply(first.quaternion))
+      turns.push(r)
+      angles.push(fr.angleTo(d))
+      if (i === 0) bare.push(from.quaternion.angleTo(r.clone().multiply(first.quaternion)))
       else {
         const side = new THREE.Vector3().crossVectors(fr, d).dot(camUp)
-        cost = Math.abs(fr.angleTo(d) - want) + (side * a.p.travel.side < 0 ? 0.6 : 0)
+        bare.push(Math.abs(fr.angleTo(d) - want) + (side * a.p.travel.side < 0 ? 0.6 : 0))
       }
-      tries.push({ r, cost })
     }
+    const costs = worldCosts(angles, bare, answer)
+    const tries = turns.map((r, k) => ({ r, cost: costs[k]! }))
     let best = tries[0]!
     for (const t of tries) if (t.cost < best.cost) best = t
     const least = best.cost
@@ -461,6 +467,13 @@ export class FilmDirector implements Director {
       const t = tries[k]!
       if (t.cost > least + PLACE_TIE || t.cost > tries[(k + 719) % 720]!.cost || t.cost >= tries[(k + 1) % 720]!.cost) continue
       if (t.r.angleTo(last) < best.r.angleTo(last)) best = t
+    }
+    if (i > 0) {
+      const taken = tries.indexOf(best)
+      const miss = THREE.MathUtils.radToDeg(Math.abs(angles[taken]! - want))
+      const [low, high] = [THREE.MathUtils.radToDeg(Math.min(...angles)), THREE.MathUtils.radToDeg(Math.max(...angles))]
+      if (answer !== 'corner' && (a.p.travel.turnDeg < low - WORLD_MISS || a.p.travel.turnDeg > high + WORLD_MISS)) throw new Error(a.id + ': travel.turnDeg ' + a.p.travel.turnDeg + ' cannot be reached from the end of its rise, which reaches ' + low.toFixed(2) + ' to ' + high.toFixed(2) + ' degrees')
+      this.placed.push({ id: a.id, taken, missDeg: miss, leadDeg: THREE.MathUtils.radToDeg(worldLead(costs, taken)), bareLeadDeg: THREE.MathUtils.radToDeg(worldLead(bare, taken)), opens: angles[(taken + 1) % 720]! > angles[(taken + 719) % 720]! })
     }
     const begin = i === 0 ? SUN_APPROACH_START : this.clearAt(i, best.r, seg)
     this.begin.push(begin)
