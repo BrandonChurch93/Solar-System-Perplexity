@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T16:58:23.243Z",
+ "pushed": "2026-11-25T17:02:59.438Z",
  "head": "e1c18f468aadbc38e87d273844f31305eccd3bfc",
- "note": "trial sheets a and b of the gas seated in the close view, not committed; stars batch rendering",
+ "note": "stars sheets: close card off with one aim (S1) and with the present aim (S0), trial, not committed",
  "looks": [
+  {
+   "time": "2026-11-25T17:02:58.780Z",
+   "file": "20261125170258780-note-s0.jpg",
+   "source": "../../../../tmp/v/s0.jpg",
+   "kind": "note",
+   "label": "trial S0: close card off, present aim: 0, 60, 216, 221 at draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T17:02:58.155Z",
+   "file": "20261125170258155-note-s1-b.jpg",
+   "source": "../../../../tmp/v/s1-b.jpg",
+   "kind": "note",
+   "label": "trial S1: close card off, one aim: 221, 226, 236, 247 at draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T17:02:57.498Z",
+   "file": "20261125170257498-note-s1-a.jpg",
+   "source": "../../../../tmp/v/s1-a.jpg",
+   "kind": "note",
+   "label": "trial S1: close card off, the film's sky, one aim: 0, 60, 90, 196, 206, 216 at draft. frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T16:58:22.607Z",
    "file": "20261125165822607-note-hb-b.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/h1-block.jpg",
    "kind": "note",
    "label": "captures 468 to 471, upper left: the sky slides behind the standing rays (pop of one block 3.22 at 469, shown)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:26:41.000Z",
-   "file": "20261125162641000-note-r4-247-sky.jpg",
-   "source": "../../../../tmp/v/r4-247-sky.png",
-   "kind": "note",
-   "label": "247: sky before the merge of main baf5473f (left) and on it (right), two crops",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:26:40.435Z",
-   "file": "20261125162640435-note-r4-stills.jpg",
-   "source": "../../../../tmp/v/r4-stills.jpg",
-   "kind": "note",
-   "label": "frames 0, 60, 90, 247 at draft on e1c18f46",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:26:39.836Z",
-   "file": "20261125162639836-note-r4-360-pair.jpg",
-   "source": "../../../../tmp/v/r4-360-pair.jpg",
-   "kind": "note",
-   "label": "360 at final before (f906d2ec) and after (e1c18f46): the same bytes, match 11.9804",
    "stop": "sun"
   }
  ]
