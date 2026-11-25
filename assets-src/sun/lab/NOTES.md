@@ -1214,3 +1214,21 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   CAUSE of the worse flicker: labWell (blob's swell, patches, grain) grows by e^2 = 7.4 times in one generation
   of 3 s (heat.spread [3, 2]), far faster than the gas crosses a cell in its life. h23 = h19 with spread
   [4.0, 1.0]: 2.7 times in 4 s.
+- 23:34 to 23:53 UTC. h23 (= h19 + heat.spread [4.0, 1.0]), curve refit. MEASURED frame 90: draft plain 30.7666
+  low64 7.6989 bands [1.76 1.18 1.02 1.01 1.03 0.94 0.90]; final plain 31.1683 low64 7.6814 bands [1.68 1.22 1.04
+  1.02 1.03 0.95 0.92]; parts draft ground 52.5422 strip 50.3973 sky 8.5442, final 52.701, 50.6059, 9.1614
+  (standing final sky 9.0457: 0.116 over). Curve final [0.743 0.737 0.722 0.709 0.683 0.645 0.598 0.538 0.466
+  0.394 0.346]: 0.076 too light in the middle, OUTSIDE 0.05 at the first seven tenths (h19 was inside). Lane 6.24.
+  MOTION h23: film-h23 (frames 60 to 120, every second, preview size), v/film-h23.mp4, v/sheet-h23.jpg; held clip
+  mo-h23 (12 frames apart) and mh-h23 (captures 180 to 204 step 4, 2 film frames apart, v/held7-h23.jpg).
+  FLICKER h23 (h18; b7): near box disc 26 px 0.387 (0.287; 0.211), 81.2 percent over a tenth (53.3; 37.5); band
+  disc 26 0.387 (0.397; 0.255), 63.0 (46.4; 34.2); ellipse 90 by 45 0.141 (0.106; 0.080), 18.2 (6.7); ellipse 70
+  by 35 0.179 (0.138; 0.119), 24.1 (16; 4). The slower swell did NOT help; my cause was wrong or not the main one.
+  Mean absolute change of the near rows (800 to 1080), eye held: 14 levels in 2 film frames, 36 in 12 frames (b7
+  38, u24 31 in 12). Farneback flow of the near rows in 2 film frames: median 1.46 px, 90th percentile 3.48.
+  SEEN in held7: cells keep their place, borders creep, patches on the tops change smoothly, nothing slides as
+  one picture. SEEN at 2 times in the umbra (v/pen-h23.jpg): stair steps on the umbra's side edges at draft, a
+  small knot of cells at the umbra's near edge.
+  SEEN in half-h23f: my cells in the middle distance (rows 680 to 800) are about half as wide as the approved's;
+  my penumbra's near side is about twice as long as the approved's and pale; the whole reads as gold pebbles,
+  light all over with dark gaps, where the approved is darker amber with a thin net of lanes and lit rims.
