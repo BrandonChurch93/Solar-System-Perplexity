@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T07:38:42.648Z",
- "head": "00c41dcdb30195a4a8fba5dfedebef6b505e6e84",
- "note": "00c41dcd odd frames 2441 to 2475 and 2677 to 2709 looked at: knob at 2697, hot rim line 2708, strokes, east side 2471; no cure yet",
+ "pushed": "2026-11-25T08:00:46.504Z",
+ "head": "100af532c9ff84ef23d5aaa107d1e9c425148a13",
+ "note": "08:02 knob traced: it is the close set's nearest ground drawn whole by the law; K composite test did not cure it (bad pairs included)",
  "looks": [
+  {
+   "time": "2026-11-25T08:00:45.928Z",
+   "file": "20261125080045928-note-f2697.jpg",
+   "source": "out/work/place/k1/f2697.jpg",
+   "kind": "note",
+   "label": "k1 f2697: test, knob stands on K; H is the set off; f is the set seen at 2697",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T08:00:45.338Z",
+   "file": "20261125080045338-note-h2697.jpg",
+   "source": "out/work/place/k1/h2697.jpg",
+   "kind": "note",
+   "label": "k1 h2697: test, knob stands on K; H is the set off; f is the set seen at 2697",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T08:00:44.810Z",
+   "file": "20261125080044810-note-c2452.jpg",
+   "source": "out/work/place/k1/c2452.jpg",
+   "kind": "note",
+   "label": "k1 c2452: test, knob stands on K; H is the set off; f is the set seen at 2697",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T08:00:44.206Z",
+   "file": "20261125080044206-note-c2697.jpg",
+   "source": "out/work/place/k1/c2697.jpg",
+   "kind": "note",
+   "label": "k1 c2697: test, knob stands on K; H is the set off; f is the set seen at 2697",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T07:38:42.081Z",
    "file": "20261125073842081-note-o-2705.jpg",
@@ -35,44 +67,6 @@
    "kind": "note",
    "label": "00c41dcd draft native crop 2457 and 2459: dark blob with upright wall edge (BAD)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:38:39.900Z",
-   "file": "20261125073839900-note-n-2708-2709.jpg",
-   "source": "out/work/place/eng60/n-2708-2709.jpg",
-   "kind": "note",
-   "label": "00c41dcd draft native crop 2708 and 2709: hot line on the rim of the grey arm, blunt west end of the arm (BAD)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:38:39.276Z",
-   "file": "20261125073839276-note-n-2697-2699.jpg",
-   "source": "out/work/place/eng60/n-2697-2699.jpg",
-   "kind": "note",
-   "label": "00c41dcd draft native crop 2697 and 2699: the place as a dark round knob, country combed outward (BAD)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:20:09.068Z",
-   "file": "20261125072009068-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T07:19:21.214Z",
-   "file": "20261125071921214-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
   }
  ]
 }
