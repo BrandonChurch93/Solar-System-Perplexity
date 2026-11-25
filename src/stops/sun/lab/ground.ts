@@ -162,7 +162,7 @@ vec4 labPen(vec2 chartPlace, float real, float flow, vec2 fine) {
   float pen = 1.0 - smoothstep(-0.5, 0.5, rs - uLabJoin.y - uLabJoin.z * (pb - 0.5) - 0.5 * uLabJoin.z * (vn(chartPlace * 23.0 + 1.7) - 0.5));
   float tongue = smoothstep(0.62, 0.8, pa) * smoothstep(0.5, 0.7, pc);
   float bundle = uLabHeatMore.z * mix(0.05 + 0.22 * bed, 1.15, strand) * mix(0.5, 1.1, smoothstep(0.3, 0.7, pa)) * mix(0.25, 1.0, smoothstep(1.0, 3.0, rs));
-  return vec4(pen, bundle, mix(0.08, 1.0, max(smoothstep(0.95, 2.2, rs), 0.8 * tongue)), rs - 0.84 - 0.2 * pb - 0.12 * pc + 0.4 * tongue);
+  return vec4(pen, bundle, mix(0.08, 1.0, max(smoothstep(0.9, 1.5, rs), 0.8 * tongue)), rs - 0.84 - 0.2 * pb - 0.12 * pc + 0.4 * tongue);
 }
 #endif
 // the width of a mean cell at a place in pixels of a 1080 frame
@@ -418,6 +418,7 @@ void main() {
   vec2 d = u * rho;
   float groove = labLobes(d, seed, 0.3);
   float join = labJoin(vG);
+  float vein = labLobes(d, seed, 0.09) * smoothstep(0.2, 0.6, rho) * smoothstep(0.3, 0.55, vn(vG * uLabJoin.w * 4.3 + 77.0));
   float flow = uLabTime.x * uLabTime.y;
   // the fibres fan out from a root at the foot of the dome and bend a little on their way; the matter runs along
   // them from the root, so their pattern moves that way with the time
@@ -425,7 +426,7 @@ void main() {
   vec2 v = d + vAxis * off;
   float along = length(v) / (1.0 + off);
   float ang = atan(vAxis.x * v.y - vAxis.y * v.x, dot(vAxis, v));
-  ang += 0.15 * sin(along * 4.0 + seed) * along + 0.5 * (vn(vG * uLabJoin.w * 2.5 + 3.3) - 0.5) * along;
+  ang += 0.15 * sin(along * 4.0 + seed) * along + ${lab.fibre.bend.toFixed(2)} * (vn(vG * uLabJoin.w * 2.5 + 3.3) + 0.5 * vn(vG * uLabJoin.w * 6.1 - 8.7) - 0.75) * along;
   float turn = ang / 6.2831853 + 0.5;
   vec3 per = floor(uLabCount.xyz * 6.2831853 + 0.5);
   float wa = length(fwidth(v)) / max(length(v), 1e-4);
@@ -459,7 +460,6 @@ void main() {
   float amp = mix(uLabHeatB.z, uLabHeatB.y, smoothstep(0.15, 0.8, rho)) * smoothstep(0.1, 0.45, along);
   float cell = top * mix(1.0, mix(0.42, uLabHeat.w, thread), amp);
   float points = smoothstep(0.72, 0.9, vnp(vec2(turn * per.z + floor(seed * 41.0), (along - flow) * 22.0 + seed * 5.7), per.z)) * thread * kc;
-  cell += uLabHeatMore.x * points * top;
   float root = smoothstep(0.02, uLabCount.w, along + 0.1 * (fa - 0.5));
   // the dark between the cells is the depth of the crease itself: two domes meet at a height of their own from
   // place to place, lowest where three meet, so the dark is wide and soft there, thin along a border and gone
@@ -467,10 +467,16 @@ void main() {
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} + ${lab.heat.crease[2]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0) - 0.75);
   float open = smoothstep(c0, c0 + ${lab.heat.crease[1]!.toFixed(3)}, vDeep);
   float rim = 1.0 - open;
-  float shade = mix(0.02, 1.0, smoothstep(c0 - 0.03, c0 + 0.1, vDeep)) * mix(0.3, 1.0, open) * mix(mix(0.5, 1.0, thread), 1.0, open);
-  cell *= mix(1.0 - uLabTime.w, 1.0, root) * (1.0 - 0.2 * groove * (1.0 - join)) * shade;
+  float shade = mix(0.02, 1.0, smoothstep(c0 - 0.02, c0 + 0.06, vDeep)) * mix(0.55, 1.0, open) * mix(mix(0.5, 1.0, thread), 1.0, open);
+  cell *= mix(1.0 - uLabTime.w, 1.0, root) * (1.0 - 0.2 * groove * (1.0 - join)) * (1.0 - ${lab.heat.vein.toFixed(2)} * vein) * shade;
   float bundle = pn.y * (1.0 - 0.25 * rim);
-  float heat = uLabHeat.y * mix(cell * life, bundle, pen);
+  float warm = uLabHeat.y * cell * life;
+  warm = warm < ${lab.heat.knee[0]!.toFixed(2)} ? warm : ${lab.heat.knee[0]!.toFixed(2)} + ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)} * (1.0 - exp(-(warm - ${lab.heat.knee[0]!.toFixed(2)}) / ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)}));
+  warm += uLabHeatMore.x * points * top * shade;
+  // the hot threads end bright where the dome turns down into the crease: a thin broken line of small hot ends
+  float lip = smoothstep(c0 + 0.03, c0 + 0.08, vDeep) * (1.0 - smoothstep(c0 + 0.1, c0 + 0.24, vDeep));
+  warm += ${lab.heat.lip.toFixed(2)} * lip * thread * smoothstep(0.35, 0.65, vn(vG * uLabJoin.w * 6.7 - 23.0)) * (1.0 - 0.7 * join);
+  float heat = mix(warm, uLabHeat.y * bundle, pen);
   // small hard points of light on the rim of a dome, against the dark of the crease
   vec2 gq = vG * 230.0;
   vec2 gi = floor(gq);
@@ -536,7 +542,7 @@ void main() {
   vec2 gx = dFdx(chartPlace);
   vec2 gy = dFdy(chartPlace);
   // between the threads of the penumbra the floor is the same threads, a little deeper and cooler
-  if (pn.w > 0.0) heat = mix(heat, uLabHeat.x + 0.55 * uLabHeat.y * pn.y * pn.z, pn.x);
+  if (pn.w > 0.0) heat = mix(heat, uLabHeat.x + 0.9 * uLabHeat.y * pn.y * pn.z, pn.x);
   if (far > 0.0 && pn.w > 0.0) heat = mix(heat, labFar(chartPlace, r, flow, pn, gx, gy), far);
   outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, length(vG - uLabSpot.xy)), vPos, vClip, vView);
 }`
