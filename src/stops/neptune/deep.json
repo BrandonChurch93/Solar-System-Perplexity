@@ -121,7 +121,7 @@
     "top": 2.2
   },
   "light": {
-    "how": "sun: the strength of the far Sun (linear light before exposure). sky: what the deck gets from above without the Sun. cloud: what the cirrus gets from the deck below and from the air. forward: weight and sharpness of the cirrus's lobe toward the Sun. wrap: how far the deck's light wraps past the edge of the Sun's reach. through: what the cirrus lets down to the deck beside the straight beam, light scattered on through the cloud: its share and how fast it dies with the cloud's depth, so the shadow of a streamer is dark and not black. cirrus: the share of the Sun the cirrus sends on. deep: light that reaches the inside of a cloud by scattering, twice a share and how fast it dies with the depth toward the Sun. shadow: how soft the shade of the deck's own relief is.",
+    "how": "sun: the strength of the far Sun (linear light before exposure). sky: what the deck gets from above without the Sun. cloud: what the cirrus gets from the deck below and from the air. forward: weight and sharpness of the cirrus's lobe toward the Sun. wrap: how far the deck's light wraps past the edge of the Sun's reach. through: what the cirrus lets down to the deck beside the straight beam, light scattered on through the cloud: its share and how fast it dies with the cloud's depth, so the shadow of a streamer is dark and not black. cirrus: the share of the Sun the cirrus sends on. deep: light that reaches the inside of a cloud by scattering, twice a share and how fast it dies with the depth toward the Sun. shadow: how soft the shade of the deck's own relief is. shade: how dark the deck's own shadow is at its darkest, as the share of the Sun it takes (1 took all of it and the grade of the fall drew the rest as navy chunks, MAIL 840 point 1; 0.25). shadeFoot: the height over which that shadow sets in for each unit of the foot a pixel has on the ground, so its edge is never cut sharper than the pixel that shows it; the relief that casts is read no finer than that foot (deep.ts).",
     "sun": 3.0,
     "sky": [0.002, 0.005, 0.012],
     "cloud": [0.03, 0.055, 0.1],
@@ -130,6 +130,8 @@
     "forward": [0.55, 0.6],
     "wrap": 0.25,
     "shadow": 0.12,
+    "shade": 0.25,
+    "shadeFoot": 0.5,
     "through": [0.14, 0.12]
   }
 }

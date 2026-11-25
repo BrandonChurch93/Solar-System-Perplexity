@@ -101,6 +101,7 @@ uniform vec4 uLight;
 uniform vec3 uSkyLight;
 uniform vec3 uCloudLight;
 uniform vec4 uLightMake;
+uniform vec4 uShade;
 uniform vec3 uThrough;
 uniform mat3 uToBody;
 uniform vec4 uFar;
@@ -644,17 +645,25 @@ void main() {
     vec3 nrm = normalize(up - east * ((hE - h0) / e) - north * ((hN - h0) / e));
     float sunUp = dot(up, uSun);
     float ndl = clamp((dot(nrm, uSun) + uLight.w) / (1.0 + uLight.w), 0.0, 1.0);
-    // Its own shadow: toward the Sun over the relief the march follows.
+    // Its own shadow: toward the Sun over the relief the march follows. It goes through the filter by the pixel's foot like the
+    // deck itself: the relief that casts is read no finer than the foot the pixel has on the ground, and the edge of the shadow
+    // is at least as wide as that foot (uShade.y: the height over which the shadow sets in for each unit of the foot), so a
+    // shadow is never cut sharper than the pixel that shows it. uShade.x: how dark the shadow is at its darkest (1: no Sun at
+    // all). MAIL 840 point 1: this was the term of the navy chunks with stepped edges at 4705 to 4713, found by switching the
+    // terms off one at a time at 4709; it read the relief at deck.march whatever the pixel covered, cut its edge within two
+    // pixels and took all of the Sun, which the grade of the fall then drew as navy.
     float shade = 1.0;
     float reach = 0.9;
+    float foot = max(fine.x, fine.y);
     for (int i = 0; i < int(uLightMake.y); i++) {
       float s = reach * (float(i) + 0.6) / uLightMake.y;
       s *= s / reach;
       vec3 qs = q + uSun * (s + 0.004);
       vec3 gs = bandOf(qs);
-      float clear = gs.z - deckHeight(gs.xy, vec3(max(uDeckTone.w, 0.5 * s)), t, p1, f1);
-      shade = min(shade, clamp(0.5 + clear / (uLightMake.w * s + 0.004), 0.0, 1.0));
+      float clear = gs.z - deckHeight(gs.xy, vec3(max(max(uDeckTone.w, 0.5 * s), foot)), t, p1, f1);
+      shade = min(shade, clamp(0.5 + clear / (uLightMake.w * s + 0.004 + uShade.y * foot), 0.0, 1.0));
     }
+    shade = 1.0 - uShade.x * (1.0 - shade);
     // The cirrus between it and the Sun.
     float veil = 0.0;
     float castGap = (uShell.y - uShell.x) / max(sunUp, 0.05) / uLightMake.z;
@@ -1034,7 +1043,7 @@ export class Deep {
         uHazeMake: { value: v4(h.forward[0]!, h.forward[1]!, h.top, h.share) },
         uLight: { value: v4(l.sun, l.forward[0]!, l.forward[1]!, l.wrap) },
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
-        uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
+        uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uShade: { value: v4(l.shade, l.shadeFoot, 0, 0) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
         uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
