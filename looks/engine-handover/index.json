@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T04:17:49.653Z",
- "head": "690afebef51deca42701692d9a18810593b2ad90",
- "note": "sharpCover by stop (Earth 2): proof in (drafts equal, Mars 2427 review equal, Earth 2156 and 1857 review move), the suite runs; next the picture of a shutter that opens and closes",
+ "pushed": "2026-11-25T04:36:43.100Z",
+ "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
+ "note": "the shutter that opens and closes (ends by stop): scratch pairs of Earth 1857 and 2156 at review; the real commit is being proven",
  "looks": [
+  {
+   "time": "2026-11-25T04:36:42.446Z",
+   "file": "20261125043642446-note-win-1857-wide.jpg",
+   "source": "../../../../tmp/law/dots/win-1857-wide.png",
+   "kind": "note",
+   "label": "Earth 1857 review at full size: box above, ends 0.5 below (scratch)"
+  },
+  {
+   "time": "2026-11-25T04:36:41.869Z",
+   "file": "20261125043641869-note-win-1857.jpg",
+   "source": "../../../../tmp/law/dots/win-1857.png",
+   "kind": "note",
+   "label": "Earth 1857 review, clouds at 3 times: box beside ends 0.5 (scratch)"
+  },
+  {
+   "time": "2026-11-25T04:36:41.275Z",
+   "file": "20261125043641275-note-win25-lr-2156.jpg",
+   "source": "../../../../tmp/law/dots/win25-lr-2156.png",
+   "kind": "note",
+   "label": "Earth 2156 review, lower right at 3 times: box, ends 0.25, ends 0.5 (scratch)"
+  },
+  {
+   "time": "2026-11-25T04:36:40.632Z",
+   "file": "20261125043640632-note-win25-land-2156.jpg",
+   "source": "../../../../tmp/law/dots/win25-land-2156.png",
+   "kind": "note",
+   "label": "Earth 2156 review, Brazil at 2 times: box, ends 0.25, ends 0.5 (scratch)"
+  },
+  {
+   "time": "2026-11-25T04:36:39.917Z",
+   "file": "20261125043639917-note-win-land-2156.jpg",
+   "source": "../../../../tmp/law/dots/win-land-2156.png",
+   "kind": "note",
+   "label": "Earth 2156 review, Brazil at 2 times: box shutter beside a shutter that opens and closes (ends 0.5), scratch"
+  },
   {
    "time": "2026-11-25T03:58:45.587Z",
    "file": "20261125035845587-note-ps-1857-draft.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/law/dots/ps-mid-2156.png",
    "kind": "note",
    "label": "sharpCover Earth 2: 2156 review, the still middle x 760..1120 y 400..640 at 2 times, take batch 8 beside cover 2: softer with the cover (footprint 1.0 against 0.5)"
-  },
-  {
-   "time": "2026-11-25T03:58:43.078Z",
-   "file": "20261125035843078-note-ps-land-2156.jpg",
-   "source": "../../../../tmp/law/dots/ps-land-2156.png",
-   "kind": "note",
-   "label": "sharpCover Earth 2 (9d86d6d1 on take batch 8): 2156 review, Brazil x 1240..1600 y 700..1060 at 2 times, take batch 8 beside cover 2. The rows of white dots become faint streaks; the orange bars with hard ends stay"
-  },
-  {
-   "time": "2026-11-25T03:50:32.590Z",
-   "file": "20261125035032590-note-sh-lr-2156.jpg",
-   "source": "../../../../tmp/law/dots/sh-lr-2156.png",
-   "kind": "note",
-   "label": "2156 lower right, 2 times: review 24 samples at footprint 0.5 (old main) beside cover 2 (footprint 1.0); below the final tier 0.5 beside cover 2 (0.67). The dotted rows go at review, the orange blocks stay"
-  },
-  {
-   "time": "2026-11-25T03:32:26.555Z",
-   "file": "20261125033226555-note-c-right.jpg",
-   "source": "../../../../tmp/law/q/c-right.png",
-   "kind": "note",
-   "label": "under pass, condition c, right edge of the relief at full size: 2477 and 2478, off beside under on (stand in); x 1440 to 1920, y 380 to 1080; the stand in's cap is near black here, the feather itself has no step"
-  },
-  {
-   "time": "2026-11-25T03:32:25.944Z",
-   "file": "20261125033225944-note-c-left.jpg",
-   "source": "../../../../tmp/law/q/c-left.png",
-   "kind": "note",
-   "label": "under pass, condition c, left edge of the relief at full size: 2477 and 2478, take batch 8 (off) beside under on with a local Mars stand in; x 0 to 480, y 380 to 1080"
-  },
-  {
-   "time": "2026-11-25T03:04:04.209Z",
-   "file": "20261125030404209-note-f02580.jpg",
-   "source": "out/work/blur/proof2-on/f02580.png",
-   "kind": "note",
-   "label": "under pass ON, stand in, 2580 draft: the relief covers the frame"
   }
  ]
 }
