@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T18:33:20.815Z",
+ "pushed": "2026-11-25T18:56:09.151Z",
  "head": "9c8a46df4b0a760960ed3dfa2d62cb3a31146915",
- "note": "tool on the trial, rise part 2 of 2: 0.83 from 4421, 21 over (name 1.16, main 0.88, 16 over); handover frames rendering",
+ "note": "rim control on the rise: limb light is the globe table read at the view cosine; trial T1 handover reads; plate G17 running",
  "looks": [
+  {
+   "time": "2026-11-25T18:56:07.999Z",
+   "file": "20261125185607999-note-p-T1b-8352.jpg",
+   "source": "../../../../tmp/n57/p-T1b-8352.jpg",
+   "kind": "note",
+   "label": "trial T1 chain read from 4176: 1.59, back read in the far ground at the horizon",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T18:56:07.052Z",
+   "file": "20261125185607052-note-t1-hand2.jpg",
+   "source": "../../../../tmp/n57/t1-hand2.jpg",
+   "kind": "note",
+   "label": "trial T1 (border 10.9 to 13.8 degrees), handovers: 4389 to 4392 above, 4184 to 4187 below",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T18:56:05.988Z",
+   "file": "20261125185605988-note-rim-control.jpg",
+   "source": "../../../../tmp/n57/rim-control.jpg",
+   "kind": "note",
+   "label": "4418 and 4426 draft: the name above, control below with the globe light table read at view cosine 1 (rim off). The limb light is the table's rim",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T18:33:20.139Z",
    "file": "20261125183320139-note-t1-tool-changes.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n57/diff-4290-main.jpg",
    "kind": "note",
    "label": "4290 main's final against the approved: approved, ours, luma difference, signed difference times 3: red excess along the limb band and on the white clouds",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T14:52:29.529Z",
-   "file": "20261125145229529-note-blur-4150.jpg",
-   "source": "../../../../tmp/n57/blur-4150.jpg",
-   "kind": "note",
-   "label": "blur 4150: draft (one sample) left, review tier right on main's engine after the first cut: ring arcs about 10 px wide against 2 px, limb smeared, stars points",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T14:27:49.359Z",
-   "file": "20261125142749359-note-p-P1-8370.jpg",
-   "source": "../../../../tmp/n55/p-P1-8370.jpg",
-   "kind": "note",
-   "label": "trial P1 (not committed, dropped): chain panel 4185, pattern 1.35, onward 1.33 on 30 percent; the band's edge sweeps up over the ground",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T14:27:48.753Z",
-   "file": "20261125142748753-note-p-Cdeck-8341.jpg",
-   "source": "../../../../tmp/n55/p-Cdeck-8341.jpg",
-   "kind": "note",
-   "label": "control: only the glow's table at view cosine 1, chain panel 4170 + 1/2: pattern 0.33, back 0.13 (commit 1.35): the body of the dive's red is the place's lit band read by the view cosine",
    "stop": "uranus"
   }
  ]
