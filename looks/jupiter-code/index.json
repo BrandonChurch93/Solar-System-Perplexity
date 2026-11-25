@@ -1,9 +1,73 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T01:22:32.158Z",
+ "pushed": "2026-11-25T01:39:00.436Z",
  "head": "4797a5807360f50339cc3f075a5cd3e20b0c8f23",
- "note": "01:28 UTC: all cures of this commit built, proofs running (finals keep their bytes; smooth, tests, gate until about 03:35). Unfinished: limb pattern 3031 to 3035, rings arriving 2986 to 2991, rise lower left.",
+ "note": "01:40 UTC 25 Nov. Proof chain of the commit to be named still runs (smooth pictures dive, then rise, path, parity, tests, handover, gate). Known reds in view: rings arriving in place 2988 to 2994 (wrap to patch-wide exchange), floating band above the limb 3031 to 3041 (haze painted in the surface view's sky plate), rise's lower left 3250 to 3257. Curve of the storm has no step from 2895 to 3059.",
  "looks": [
+  {
+   "time": "2026-11-25T01:38:49.960Z",
+   "file": "20261125013849960-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image (bytes kept)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:38:47.026Z",
+   "file": "20261125013847026-note-c1-dive.jpg",
+   "source": "../work/r8/c1-dive.jpg",
+   "kind": "note",
+   "label": "dive 2983, 2997, 3012, 3030, 3050, 3056, set c1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:38:40.808Z",
+   "file": "20261125013840808-note-c1-rise-a.jpg",
+   "source": "../work/r8/c1-rise-a.jpg",
+   "kind": "note",
+   "label": "rise 3250, 3256, 3262, 3268, set c1 (lower left 3250 to 3257 still red)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:38:38.020Z",
+   "file": "20261125013838020-note-c1-rise-b.jpg",
+   "source": "../work/r8/c1-rise-b.jpg",
+   "kind": "note",
+   "label": "rise 3274, 3282, 3296, set c1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:38:36.593Z",
+   "file": "20261125013836593-note-curve-c1.jpg",
+   "source": "../work/r8/curve-c1.png",
+   "kind": "note",
+   "label": "curve of the storm 2895 to 3059, darkest and brightest 5 by 5 mean, with equal ground",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:38:32.005Z",
+   "file": "20261125013832005-note-c1-3054.jpg",
+   "source": "../work/r8/c1-3054.jpg",
+   "kind": "note",
+   "label": "dive 3054, set c1, full frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:38:26.456Z",
+   "file": "20261125013826456-note-c1-sky-lift.jpg",
+   "source": "../work/r8/c1-sky-lift.png",
+   "kind": "note",
+   "label": "floating band above the limb 3031 to 3041 at 4 times the exposure (red, cause known: haze painted in the surface view's sky plate)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:38:25.565Z",
+   "file": "20261125013825565-note-c1-rings.jpg",
+   "source": "../work/r8/c1-rings.png",
+   "kind": "note",
+   "label": "rings arriving in place 2988 to 2994 round the storm (red, cause known: wrap to patch-wide exchange)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T01:22:31.217Z",
    "file": "20261125012231217-note-pair-3150-final.jpg",
@@ -148,70 +212,6 @@
    "source": "../work/r6/pair-3150-final.jpg",
    "kind": "note",
    "label": "3150 final beside the approved image",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:43:00.519Z",
-   "file": "20261125004300519-note-y1-limb.jpg",
-   "source": "../work/r8/y1-limb.png",
-   "kind": "note",
-   "label": "dive 3020 to 3030 limb at full size, draft: rim gone, deck glow arriving by place",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:42:59.846Z",
-   "file": "20261125004259846-note-y1-sheet.jpg",
-   "source": "../work/r8/y1-sheet.jpg",
-   "kind": "note",
-   "label": "dive 3008 to 3030, draft: limb by two laws, rim by size on screen, deck glow by place (unfinished)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:20:47.671Z",
-   "file": "20261125002047671-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "close view 3150 beside the approved image (match 7.97, unchanged since 23:18)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:20:47.051Z",
-   "file": "20261125002047051-note-nodeck-check.jpg",
-   "source": "../work/r7/nodeck-check.png",
-   "kind": "note",
-   "label": "dive 2983, 2990, 2997 with the deck and with the deck off: the storm stands on the same spot in both",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:20:46.477Z",
-   "file": "20261125002046477-note-pair-2895-final-1to1.jpg",
-   "source": "../work/r7/pair-2895-final-1to1.png",
-   "kind": "note",
-   "label": "hold 2895 at 1 to 1: kept still left, now right (unfinished)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:20:45.888Z",
-   "file": "20261125002045888-note-pair-2895-final-6x.jpg",
-   "source": "../work/r7/pair-2895-final-6x.png",
-   "kind": "note",
-   "label": "hold 2895 round the place at 6 times: kept still left, now right (storm through the wrap's own point spread, unfinished)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:41:25.810Z",
-   "file": "20261124234125810-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "close view 3150 final beside the approved image",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:41:25.249Z",
-   "file": "20261124234125249-note-pair-2895-final-1to1.jpg",
-   "source": "../work/r6/pair-2895-final-1to1.png",
-   "kind": "note",
-   "label": "hold 2895 final, kept beside new, 1 to 1",
    "stop": "jupiter"
   }
  ]
