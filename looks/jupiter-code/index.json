@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T12:50:54.240Z",
+ "pushed": "2026-11-25T13:21:22.280Z",
  "head": "7c0b8675839b1fc66617635ef42a34f30e3417f5",
- "note": "3150 at 6.113 after the registration cure (drift and half pixel); wedge rework next",
+ "note": "13:22 UTC: far band cause pictures, wedge first take top view (working), 3150 last",
  "looks": [
+  {
+   "time": "2026-11-25T13:21:20.439Z",
+   "file": "20261125132120439-note-n7-3150-trio.jpg",
+   "source": "../work/r14/n7-3150-trio.jpg",
+   "kind": "note",
+   "label": "3150 final on 7c0b8675: approved, before, now (6.113)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T13:21:18.631Z",
+   "file": "20261125132118631-note-wedge-s1-top.jpg",
+   "source": "../work/r14/wedge-s1-top.jpg",
+   "kind": "note",
+   "label": "top view, first take of the wedge: canvas tone carried out, canvas plain ground laid turned about the storm (working picture, not in the tree)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T13:21:16.533Z",
+   "file": "20261125132116533-note-wedge-s0-top.jpg",
+   "source": "../work/r14/wedge-s0-top.jpg",
+   "kind": "note",
+   "label": "top view of the ground at the canvas borders, before (plates beyond the borders)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T13:21:14.326Z",
+   "file": "20261125132114326-note-farband-terms.jpg",
+   "source": "../work/r14/farband-terms.jpg",
+   "kind": "note",
+   "label": "3150 top 470 rows: approved, now, air off, haze sheets off, both off, plates alone (far band, cause)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T12:50:53.121Z",
    "file": "20261125125053121-note-n7-3150-trio.jpg",
@@ -174,38 +206,6 @@
    "source": "../work/r13/off/d438-rise-3240-3247.jpg",
    "kind": "note",
    "label": "d438b57b rise 3240 to 3247, the commit's own slice frames (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:04:23.490Z",
-   "file": "20261125110423490-note-s1-3150.jpg",
-   "source": "../work/r13/off/s1-3150.jpg",
-   "kind": "note",
-   "label": "3150 as named, now (thick sheets, one Sun) and the approved, with difference maps (draft); match 8.129 as named, 7.806 now",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:04:22.404Z",
-   "file": "20261125110422404-note-viewchart-hidden.jpg",
-   "source": "../work/r13/off/viewchart-hidden.jpg",
-   "kind": "note",
-   "label": "item 4, the polar view chart about the wedge: colour and local detail; the smooth striped field at the lower left is the fill of ground the approved eye could not see, its side border a column of the chart",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:04:21.692Z",
-   "file": "20261125110421692-note-s1-3296.jpg",
-   "source": "../work/r13/off/s1-3296.jpg",
-   "kind": "note",
-   "label": "judged 3296 as named and now with the sidestep (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:04:20.754Z",
-   "file": "20261125110420754-note-s1-rise-late.jpg",
-   "source": "../work/r13/off/s1-rise-late.jpg",
-   "kind": "note",
-   "label": "rise 3280 to 3300 now, whole frames small (draft)",
    "stop": "jupiter"
   }
  ]
