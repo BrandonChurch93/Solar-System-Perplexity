@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T19:41:42.764Z",
+ "pushed": "2026-11-25T20:08:17.092Z",
  "head": "f1d9217084f274313761854db08e637cea68c1c1",
- "note": "ledge of C2: the prepared cure does not cure (bad pair shown); traced: 602 texels of L0 stand in front of L2's pushed back ground under C2",
+ "note": "20:10 2a pairs at draft tier, layers at 2475, wall trials 11 and 12 bad from above",
  "looks": [
+  {
+   "time": "2026-11-25T20:08:16.112Z",
+   "file": "20261125200816112-note-lay2475.jpg",
+   "source": "out/work/place/t1/lay2475.jpg",
+   "kind": "note",
+   "label": "2475 state beside its layers picture: the set (red, yellow) covers all ground but the two lower corners (plates, blue)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:08:15.406Z",
+   "file": "20261125200815406-note-foot2682.jpg",
+   "source": "out/work/place/t1/foot2682.jpg",
+   "kind": "note",
+   "label": "MAIL 1266 2a: rise 2682 foot of frame at 1 to 1, draft, state beside main (the eye differs)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:08:14.723Z",
+   "file": "20261125200814723-note-foot2475.jpg",
+   "source": "out/work/place/t1/foot2475.jpg",
+   "kind": "note",
+   "label": "MAIL 1266 2a: dive 2475 foot of frame at 1 to 1, draft, state 74dca647 beside main",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:08:14.023Z",
+   "file": "20261125200814023-note-v03-e2.jpg",
+   "source": "out/work/place/w12/v03-e2.jpg",
+   "kind": "note",
+   "label": "BAD the same at times 2, x 560 y 900: before the walls, take 10, trial 12, rock without grain",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:08:13.075Z",
+   "file": "20261125200813075-note-v03-e.jpg",
+   "source": "out/work/place/w12/v03-e.jpg",
+   "kind": "note",
+   "label": "BAD trials 11 and 12 of the wall rock from above, 0.3 plate x 380 y 820 at 1 to 1: take 10 (hair), trial 12 (speckle), the rock without its grain (no form), before the walls",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T19:41:42.087Z",
    "file": "20261125194142087-note-crest-src.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/place/c2s/e1.jpg",
    "kind": "note",
    "label": "trace of the ledge at 2477 times 8: the state, and L0 painted magenta in the box: the slab is L0 seen through L2",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:41:40.469Z",
-   "file": "20261125194140469-note-ledge-three.jpg",
-   "source": "out/work/place/c2s/ledge-three.jpg",
-   "kind": "note",
-   "label": "ledge of C2 at 2476, 2477, 2490 times 6: N1 before the cut, the state, the prepared cure (keeps only the nearest part): the dark slab stays, NOT cured, not committed",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:24:53.887Z",
-   "file": "20261125192453887-note-pair-2325-sky-x4.jpg",
-   "source": "out/work/place/skyfill/pair-2325-sky-x4.jpg",
-   "kind": "note",
-   "label": "2325 final, sky times 4 where the fill does most, main beside fill",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:24:53.337Z",
-   "file": "20261125192453337-note-pair-2325-sky.jpg",
-   "source": "out/work/place/skyfill/pair-2325-sky.jpg",
-   "kind": "note",
-   "label": "2325 final, sky at 1 to 1, main's plate beside the pit fill (held out: G17 median 1.167 to 1.145)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:16:47.744Z",
-   "file": "20261125191647744-note-v03-c.jpg",
-   "source": "out/work/place/w10/v03-c.jpg",
-   "kind": "note",
-   "label": "MAIL 1247: v03-c state, take 10, mask, 1 to 1 (fur from above: BAD)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:16:47.171Z",
-   "file": "20261125191647171-note-proof-d-plates.jpg",
-   "source": "out/work/place/w10/proof-d-plates.jpg",
-   "kind": "note",
-   "label": "MAIL 1034: the plates whole, state and take 10",
    "stop": "mars"
   }
  ]
