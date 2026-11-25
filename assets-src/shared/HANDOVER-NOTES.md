@@ -1819,6 +1819,25 @@ Frames for (3): `/tmp/probe/frames.sh '{"right":-1.12,"up":0,"by":0.22}' '{"righ
 (2400 to 2414, 2416, 2418, 2420, 2425, 2430) on three lines in the trial tree t-c2a (labels p-today, p-12, p-pair) and puts place.json
 and plan.ts back by hash.
 
+### The probe's answer (sent to /root at 18:04 UTC) and the state at 18:05
+
+- Sent: (1) NO, with the numbers above; the globe's centre slides left 28 px a frame at 2410 to 2412 on the 12 radii line (today 5)
+  and stands 283 px farther left at 2420. (2) the path part: today green, the 12 radii line red, right -0.37 green at 0.079. (3) 20
+  draft frames a line on three lines (t-c2a/out/work/blur/p-today, p-12, p-pair), sheets /tmp/probe/eight-a, eight-b, run-2403-2412,
+  pair-eight (in the looks folder). The pairing table by the orbit's speed went with it. Open on /root's side: which speed it pairs.
+  Not mine to change: place.json and plan.ts are mars_place_builder's.
+- Earth under the law on the trial merge, seen at review: flight 2179 to 2184 (stars stand, limb sharp where the motion is along it);
+  2182 and 2183 against main's box: bars become soft lozenges, the Moon's blur is shorter; rise end 2164 to 2170: no step from frame to
+  frame at 2 times. 2166 to 2168 against main (ends 0.5 on main; 0.40, 0.28, 0.18 under the law): clouds alike at 3 times (largest
+  step 18, 37, 79 of 255), the city lights on the night side are longer streaks under the law at 2168 (the frame moves 9.3 px and the
+  ends are nearly a box): to say in the NAMED.
+- The NAMED waits for main: at 18:00 main is faf21943 (status notes), the cut a1032553 is not in it. Rehearsal while waiting: the trial
+  tree t-c2a with N laid on it (python3 /tmp/name/commentfix.py t-c2a; originals in /tmp/name/c2a.motion.orig.ts and
+  c2a.shutter-ends.orig.ts): the two shutter files 44 of 44, tsc clean; the whole suite runs from 18:05 into /tmp/name/suite-n-trial.json.
+- N's test change: in "give the first frame of a flight the ends of the last frame of its rise ..." the count of borders above fromPx
+  (which the cut made 1: only Uranus 4454 and 4455, 11.00 and 9.80 px) is replaced by: the first frame of each flight that moves by more
+  than fromPx has exactly endsBy(LAW, seen) and more than 0. The comment of the law in src/core/motion.ts gets the present numbers.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
