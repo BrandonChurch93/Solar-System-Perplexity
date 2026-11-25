@@ -11,6 +11,7 @@ const OCTAVES = 10
 const ABOVE_KNOTS = deck.above.gain.length
 const CURVE_KNOTS = curve.curve.length
 const FLASHES = deck.life.flash.sites.length
+const HAZE_TAPS = deck.life.haze.thick.taps
 
 export const EDDIES = deck.life.eddies.length
 export const SEAMS = deck.life.storm.rings.length
@@ -324,33 +325,48 @@ ${STORED_GLSL}vec4 plateAt(vec2 g, vec2 dx, vec2 dy, out float size) {
   size = exp2(wf * log2(uTexel.x) + wn * log2(uTexel.y) + wm * log2(uTexel.z) + wr * log2(uTexel.w));
   return c;
 }
-float layered(vec2 p, int octaves, float size) {
+vec2 layered(vec2 p, int octaves, float size) {
   float f = 0.0;
   float total = 0.0;
   float gain = 1.0;
+  float lost = 0.0;
   for (int n = 0; n < octaves; n++) {
-    f += gain * (0.5 + (1.0 - smoothstep(uHazeFade.x, uHazeFade.y, size)) * (vnoise(p + uHazeOctave.xy * float(n)) - 0.5));
+    float keep = 1.0 - smoothstep(uHazeFade.x, uHazeFade.y, size);
+    float v = 0.5;
+    for (int m = 0; m < (keep > 0.0 ? 1 : 0); m++) v += keep * (vnoise(p + uHazeOctave.xy * float(n)) - 0.5);
+    f += gain * v;
+    lost += gain * gain * (1.0 - keep * keep);
     total += gain;
     p *= uHazeOctave.z;
     size *= uHazeOctave.z;
     gain *= uHazeOctave.w;
   }
-  return f / total;
+  return vec2(f / total, lost / (total * total));
 }
-float hazeAt(vec2 g, int k, float foot) {
+float hazeOne(vec2 g, int k, float foot, vec2 stride) {
   vec2 o = g - uStorm.xy;
   float across = dot(o, uJet.zw);
-  float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o))) * (1.0 - smoothstep(uHazeFine.y, uHazeFine.z, foot * uFrame / uHazeFibre.y));
+  float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o)));
   float dense = 0.0;
   for (int i = 0; i < (w > 0.0 ? 1 : 0); i++) {
+    vec2 lie = vec2(dot(stride, uJet.xy), dot(stride, uJet.zw));
+    float coarse = max(foot * uFrame / uHazeShape.y, length(lie / uHazeShape.xy));
     vec2 at = vec2(dot(o, uJet.xy) - uHazeBand[k].z, across);
     vec2 p = at / uHazeShape.xy + uHazeSeed[k].xy;
-    vec2 q = vec2(layered(p + uHazeWarp.xy, 2, 0.0), layered(p + uHazeWarp.zw, 2, 0.0)) - 0.5;
-    float bank = layered(p + uHazeFine.x * q, 3, 0.0);
-    float fibre = layered((at + uHazeFine.w * q * uHazeShape.xy) / uHazeFibre.xy + uHazeSeed[k].yx, int(uHazeFibre.z), foot / uHazeFibre.y);
-    dense = w * smoothstep(uHazeShape.z, uHazeShape.w, mix(bank, fibre, uHazeFibre.w));
+    vec2 q = vec2(layered(p + uHazeWarp.xy, 2, coarse).x, layered(p + uHazeWarp.zw, 2, coarse).x) - 0.5;
+    vec2 bank = layered(p + uHazeFine.x * q, 3, coarse);
+    vec2 fibre = layered((at + uHazeFine.w * q * uHazeShape.xy) / uHazeFibre.xy + uHazeSeed[k].yx, int(uHazeFibre.z), max(foot / uHazeFibre.y, length(lie / uHazeFibre.xy)));
+    float lost = (1.0 - uHazeFibre.w) * (1.0 - uHazeFibre.w) * bank.y + uHazeFibre.w * uHazeFibre.w * fibre.y;
+    float wide = 0.5 * sqrt((uHazeShape.w - uHazeShape.z) * (uHazeShape.w - uHazeShape.z) + uHazeSeed[k].w * lost);
+    float mid = 0.5 * (uHazeShape.z + uHazeShape.w);
+    dense = w * smoothstep(mid - wide, mid + wide, mix(bank.x, fibre.x, uHazeFibre.w));
   }
   return dense;
+}
+float hazeAt(vec2 g, int k, float foot, vec2 run) {
+  float dense = 0.0;
+  for (int j = 0; j < ${HAZE_TAPS}; j++) dense += hazeOne(g + run * ((float(j) + 0.5) / ${HAZE_TAPS}.0 - 0.5), k, foot, run);
+  return dense / ${HAZE_TAPS}.0;
 }
 vec2 flashAt(vec2 g, vec3 c) {
   float s = 0.0;
@@ -518,7 +534,7 @@ void main() {
     for (int i = 0; i < (uHazeLit.z > 0.0 ? 1 : 0); i++) {
       float zg = above(there);
       float shadow = 0.0;
-      for (int b = 0; b < 2; b++) shadow += uHazeSeed[b].z * smoothstep(0.0, uHazeFade.z, uHazeBand[b].x - zg) * hazeAt(there.xy + uSunAz * (max(uHazeBand[b].x - zg, 0.0) * uHazeLight.x), b, major);
+      for (int b = 0; b < 2; b++) shadow += uHazeSeed[b].z * smoothstep(0.0, uHazeFade.z, uHazeBand[b].x - zg) * hazeAt(there.xy + uSunAz * (max(uHazeBand[b].x - zg, 0.0) * uHazeLight.x), b, major, uSunAz * (uHazeLight.y * uHazeLight.x));
       for (int j = 0; j < (shadow > 0.0 ? 1 : 0); j++) col *= 1.0 - uHazeLit.z * sunAt(there.xy).a * (1.0 - exp(-shadow)) * uHazeShade;
       for (int b = 0; b < 2; b++) {
         float hb = uHazeBand[b].x;
@@ -528,7 +544,13 @@ void main() {
         for (int j = 0; j < (cb > 0.0 && db > 0.0 && tb > 0.0 && tb < t ? 1 : 0); j++) {
           vec3 pb = E + D * tb;
           float cosine = max(-dot(D, normalize(pb + vec3(0.0, 0.0, uRadius))), uHazeLight.z);
-          float dense = hazeAt(pb.xy, b, tb * pix / cosine);
+          float ha = hb + 0.5 * uHazeLight.y;
+          float ca = high - 2.0 * uRadius * ha - ha * ha;
+          float ta = ca > 0.0 ? max(-bD - sqrt(max(bD * bD - ca, 0.0)), 0.0) : 0.0;
+          float hc = hb - 0.5 * uHazeLight.y;
+          float dc = bD * bD - high + 2.0 * uRadius * hc + hc * hc;
+          float tc = dc > 0.0 ? min(-bD - sqrt(dc), t) : t;
+          float dense = hazeAt(E.xy + D.xy * (0.5 * (ta + tc)), b, tb * pix / cosine, D.xy * (tc - ta));
           for (int m = 0; m < (dense > 0.0 ? 1 : 0); m++) {
             vec4 sun = sunAt(pb.xy);
             float toward = min(uHazeForward.y * pow((1.0 - uHazeForward.x) * inversesqrt(max(1.0 + uHazeForward.x * uHazeForward.x - 2.0 * uHazeForward.x * dot(D, normalize(vec3(uSunAz * uHazeLight.x, 1.0))), 1e-4)), 3.0), 1.0);
@@ -718,10 +740,10 @@ export class CloudDeck {
       uSeam: { value: deck.life.storm.rings.map((s) => new THREE.Vector3(s.edgeUnits[0]!, s.edgeUnits[1]!, 0)) },
       uJet: { value: new THREE.Vector4(jet.x, jet.y, -jet.y, jet.x) },
       uHazeBand: { value: hz.bands.map((b) => new THREE.Vector4(b.heightUnits, b.side, 0, b.depth)) },
-      uHazeSeed: { value: hz.bands.map((b) => new THREE.Vector4(b.seed[0]!, b.seed[1]!, b.shadowDepth, 0)) },
+      uHazeSeed: { value: hz.bands.map((b) => new THREE.Vector4(b.seed[0]!, b.seed[1]!, b.shadowDepth, 20 * hz.thick.spread * hz.thick.spread)) },
       uHazeShape: { value: new THREE.Vector4(hz.bankUnits[0]!, hz.bankUnits[1]!, hz.cover[0]!, hz.cover[1]!) },
       uHazeFibre: { value: new THREE.Vector4(hz.fibreUnits[0]!, hz.fibreUnits[1]!, hz.fibreOctaves, hz.fibreShare) },
-      uHazeFine: { value: new THREE.Vector4(hz.warp, hz.footprint[0]!, hz.footprint[1]!, hz.fibreWarp) },
+      uHazeFine: { value: new THREE.Vector4(hz.warp, 0, 0, hz.fibreWarp) },
       uHazeWarp: { value: new THREE.Vector4().fromArray(hz.warpSeed) },
       uHazeOctave: { value: new THREE.Vector4(hz.octaveShift[0]!, hz.octaveShift[1]!, hz.lacunarity, hz.octaveGain) },
       uHazeFade: { value: new THREE.Vector3(hz.octaveFade[0]!, hz.octaveFade[1]!, hz.softUnits) },
@@ -732,7 +754,7 @@ export class CloudDeck {
       uFlashGlow: { value: new THREE.Vector3().fromArray(fl.glow) },
       uFlashCore: { value: new THREE.Vector3(fl.core.tight, fl.core.spill, fl.core.floor) },
       uHazeSpan: { value: hz.bands.map((b) => new THREE.Vector4(b.edgeUnits[0]!, b.edgeUnits[1]!, b.reachUnits[0]!, b.reachUnits[1]!)) },
-      uHazeLight: { value: new THREE.Vector4(1 / Math.tan(THREE.MathUtils.degToRad(hz.sunElevationDeg)), 0, hz.minCosine, Math.log2(hz.lightBlurUnits / texel[2]!)) },
+      uHazeLight: { value: new THREE.Vector4(Math.hypot(place.solved.sun[0]!, place.solved.sun[1]!) / place.solved.sun[2]!, hz.thick.units, hz.minCosine, Math.log2(hz.lightBlurUnits / texel[2]!)) },
       uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 1) },
       uHazeGlow: { value: new THREE.Vector3().fromArray(hz.glow) },
       uHazeShade: { value: new THREE.Vector3().fromArray(hz.shadowTint) },
