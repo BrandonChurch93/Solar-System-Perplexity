@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T05:45:59.110Z",
+ "pushed": "2026-11-25T05:59:52.841Z",
  "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
- "note": "gradAt proof: Earth's callers on a scratch read the footprint by each point's own way, 2156 and 1857 at review beside the cover by frame and take/b8; next the table of all stops for the shutter ends",
+ "note": "gradAt named (09cfadcd): the row 2155 to 2157 with Earth's callers on a scratch; now drawing the table of all stops for the shutter ends: borders and fast frames, box against ends",
  "looks": [
+  {
+   "time": "2026-11-25T05:59:52.218Z",
+   "file": "20261125055952218-note-we-andes6-2156.jpg",
+   "source": "../../../../tmp/law/dots/we-andes6-2156.png",
+   "kind": "note",
+   "label": "gradAt for Earth: 2156 review, the Andes at 6 times: take/b8, cover by frame, gradAt"
+  },
+  {
+   "time": "2026-11-25T05:59:51.609Z",
+   "file": "20261125055951609-note-we-comb6-2156.jpg",
+   "source": "../../../../tmp/law/dots/we-comb6-2156.png",
+   "kind": "note",
+   "label": "gradAt for Earth: 2156 review, the Andes ridge x 960..1080 y 740..850 at 6 times: take/b8, cover by frame with ends, gradAt with ends: each highlight one short streak"
+  },
+  {
+   "time": "2026-11-25T05:59:51.015Z",
+   "file": "20261125055951015-note-we-row-andes.jpg",
+   "source": "../../../../tmp/law/dots/we-row-andes.png",
+   "kind": "note",
+   "label": "gradAt for Earth: 2155, 2156, 2157 at review in a row, the Andes x 960..1160 y 740..1000 at 3 times"
+  },
+  {
+   "time": "2026-11-25T05:59:50.449Z",
+   "file": "20261125055950449-note-we-row-mid.jpg",
+   "source": "../../../../tmp/law/dots/we-row-mid.png",
+   "kind": "note",
+   "label": "gradAt for Earth: 2155, 2156, 2157 at review in a row, the still middle x 760..1120 y 400..640 at 2 times"
+  },
+  {
+   "time": "2026-11-25T05:59:49.813Z",
+   "file": "20261125055949813-note-we-row-brazil.jpg",
+   "source": "../../../../tmp/law/dots/we-row-brazil.png",
+   "kind": "note",
+   "label": "gradAt for Earth: 2155, 2156, 2157 at review in a row, Brazil x 1240..1600 y 700..1060 at 2 times"
+  },
   {
    "time": "2026-11-25T05:45:57.968Z",
    "file": "20261125054557968-note-mars-2427-b8-rim.jpg",
@@ -25,41 +60,6 @@
    "source": "../../../../tmp/law/dots/we-clouds-1857.png",
    "kind": "note",
    "label": "gradAt for Earth: 1857, clouds x 1000..1240 y 780..1000 at 3 times: draft, review take/b8, cover by frame with ends, gradAt with ends (mean gradient there 7.45, 7.62, 8.44)"
-  },
-  {
-   "time": "2026-11-25T05:33:46.719Z",
-   "file": "20261125053346719-note-we-andes3-2156.jpg",
-   "source": "../../../../tmp/law/dots/we-andes3-2156.png",
-   "kind": "note",
-   "label": "gradAt for Earth: 2156, the Andes x 960..1160 y 740..1000 at 3 times: draft, review take/b8, cover by frame with ends, gradAt with ends"
-  },
-  {
-   "time": "2026-11-25T05:33:45.863Z",
-   "file": "20261125053345863-note-we-dots4-2156.jpg",
-   "source": "../../../../tmp/law/dots/we-dots4-2156.png",
-   "kind": "note",
-   "label": "gradAt for Earth: 2156 review x 1400..1560 y 790..900 at 4 times: take/b8 rows of dots, cover by frame with ends, gradAt with ends"
-  },
-  {
-   "time": "2026-11-25T05:33:44.707Z",
-   "file": "20261125053344707-note-we-land-2156.jpg",
-   "source": "../../../../tmp/law/dots/we-land-2156.png",
-   "kind": "note",
-   "label": "gradAt for Earth: 2156 review, Brazil at 2 times: take/b8, cover by frame with ends, gradAt with ends: the fast corner stays smooth"
-  },
-  {
-   "time": "2026-11-25T05:33:43.497Z",
-   "file": "20261125053343497-note-we-mid-2156.jpg",
-   "source": "../../../../tmp/law/dots/we-mid-2156.png",
-   "kind": "note",
-   "label": "gradAt for Earth (scratch of Earth's callers on 09cfadcd, never pushed): 2156 review, the middle x 760..1120 y 400..640 at 2 times: take/b8, cover by frame box, cover by frame ends, gradAt ends: the middle is as fine as take/b8 again (mean gradient 10.70, 8.96, 9.42, 11.36)"
-  },
-  {
-   "time": "2026-11-25T05:29:48.738Z",
-   "file": "20261125052948738-note-bd3-sea.jpg",
-   "source": "../../../../tmp/law/dots/bd3-sea.png",
-   "kind": "note",
-   "label": "shutterEnds, the border of Earth's rise at review, sea x 520..760 y 640..790 at 3 times: 2099 (hold), 2100 box, 2100 ends, 2101 box"
   }
  ]
 }
