@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T05:00:12.317Z",
+ "pushed": "2026-11-25T05:21:57.199Z",
  "head": "9fc760b3bdbce8f547340e88ba97f39f45fa719f",
- "note": "relief 9fc760b3 against cdc5d515, dive every 2nd frame 700 to 746 (draft). Red, own estimate: pattern 1.03 at 716 on BOTH sides; the relief alone does not move the dive's red. Way C draft is next",
+ "note": "way C step 1 as a draft (not committed): own pattern estimate at 716 falls 1.03 to 0.73 against 0.45, still red; the core is a grey patch in golden ground 724 to 748; step 2 (hero's painted craters calmed inside the core, the place's craters by relief from the hold on) is next",
  "looks": [
+  {
+   "time": "2026-11-25T05:21:56.632Z",
+   "file": "20261125052156632-note-c1-728.jpg",
+   "source": "../../../../tmp/m/c1-728.jpg",
+   "kind": "note",
+   "label": "DRAFT way C step 1: 728 at native size, relief left, step 1 right",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:21:56.092Z",
+   "file": "20261125052156092-note-c1-e.jpg",
+   "source": "../../../../tmp/m/c1-e.jpg",
+   "kind": "note",
+   "label": "DRAFT way C step 1: rise 993 to 1005, relief left, step 1 right: at 1001 and 1005 the lower left no longer exchanges, the core still does; at 993 the hero's ground at the left is of another character",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:21:55.552Z",
+   "file": "20261125052155552-note-c1-d.jpg",
+   "source": "../../../../tmp/m/c1-d.jpg",
+   "kind": "note",
+   "label": "DRAFT way C step 1: dive 748 to 760, relief left, step 1 right: far wedge at the limb is the hero's ground, streaked",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:21:55.007Z",
+   "file": "20261125052155007-note-c1-c.jpg",
+   "source": "../../../../tmp/m/c1-c.jpg",
+   "kind": "note",
+   "label": "DRAFT way C step 1: dive 732 to 744, relief left, step 1 right: the grey core stands in the hero's golden ground as a patch of another character",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:21:54.454Z",
+   "file": "20261125052154454-note-c1-a.jpg",
+   "source": "../../../../tmp/m/c1-a.jpg",
+   "kind": "note",
+   "label": "DRAFT, working tree only, nothing committed: dive 716 to 728, relief 9fc760b3 left, way C step 1 right (hero's own finer ground kept outside a core of 4.5 to 6.5 degrees)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:21:53.896Z",
+   "file": "20261125052153896-note-fp2-f.jpg",
+   "source": "../../../../tmp/m/fp2-f.jpg",
+   "kind": "note",
+   "label": "rise 997 to 1005, pairs: cdc5d515 left, relief 9fc760b3 right: both show the grey disc of the place going out against the hero's ground",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T05:21:53.313Z",
+   "file": "20261125052153313-note-fp2-d.jpg",
+   "source": "../../../../tmp/m/fp2-d.jpg",
+   "kind": "note",
+   "label": "dive 748 to 760, pairs: cdc5d515 left, relief 9fc760b3 right (draft stills, rate 2 keys)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T05:00:10.952Z",
    "file": "20261125050010952-note-lev12x2.jpg",
    "source": "../../../../tmp/m/lev12x2.png",
    "kind": "note",
    "label": "levels panel: patch 1 (the map's ground) against plate 2 (the place's lit picture as a disc to 10 to 15 degrees, with its night half), same ground, twice size",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:00:09.807Z",
-   "file": "20261125050009807-note-fp2-c.jpg",
-   "source": "../../../../tmp/m/fp2-c.jpg",
-   "kind": "note",
-   "label": "dive 732 to 746 in pairs: left cdc5d515 (the commit batch 9 brings to main), right relief 9fc760b3; draft, master, full set, every 2nd frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:00:08.714Z",
-   "file": "20261125050008714-note-fp2-b.jpg",
-   "source": "../../../../tmp/m/fp2-b.jpg",
-   "kind": "note",
-   "label": "dive 716 to 730 in pairs: left cdc5d515 (the commit batch 9 brings to main), right relief 9fc760b3; draft, master, full set, every 2nd frame. Both sides: the place's grey pitted plain comes up as a disc inside the hero's ground from 716 to 728; the relief does not cure it",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T05:00:07.585Z",
-   "file": "20261125050007585-note-fp2-a.jpg",
-   "source": "../../../../tmp/m/fp2-a.jpg",
-   "kind": "note",
-   "label": "dive 700 to 714 in pairs: left cdc5d515 (the commit batch 9 brings to main), right relief 9fc760b3; draft, master, full set, every 2nd frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:36:13.682Z",
-   "file": "20261125043613682-note-t717b.jpg",
-   "source": "../../../../tmp/m/t717b.png",
-   "kind": "note",
-   "label": "717 at the place: cdc5d515, state A (dropped), relief 9fc760b3",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:36:13.101Z",
-   "file": "20261125043613101-note-h615.jpg",
-   "source": "../../../../tmp/m/h615.png",
-   "kind": "note",
-   "label": "615 at the place: approved hero, cdc5d515, relief 9fc760b3, own pixels; 615 does not stay main's bytes inside the place (12052 px over 8 codes), ruling of MAIL 633 asked",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:36:12.542Z",
-   "file": "20261125043612542-note-fp-728-732.jpg",
-   "source": "../../../../tmp/m/fp-728-732.jpg",
-   "kind": "note",
-   "label": "728 and 732 larger: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:36:11.983Z",
-   "file": "20261125043611983-note-fp-720-724.jpg",
-   "source": "../../../../tmp/m/fp-720-724.jpg",
-   "kind": "note",
-   "label": "720 and 724 larger: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
    "stop": "mercury"
   }
  ]
