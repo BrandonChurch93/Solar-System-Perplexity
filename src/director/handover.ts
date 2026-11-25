@@ -254,6 +254,12 @@ export function forceSide(view: ViewKind | null): void {
   forced = view
 }
 
+// The view the harness has forced, null on the film's own path: who names the view of a sample by any other rule than sideAt asks here
+// first and leaves the forced view alone.
+export function sideForced(): ViewKind | null {
+  return forced
+}
+
 // The top down view of the harness (E4, the check of S2): the globe camera of a dive or a rise is put straight above the place, at the height and
 // with the field it has on the film's path. Like forceSide it is for the harness only and must not be reachable from the film path.
 export function forceTop(on: boolean): void {
@@ -294,6 +300,22 @@ export function noSkyForced(): boolean {
 // What the harness has forced, as one word: whoever keeps a measure of the film's own path (the capped shutter) drops it when this changes.
 export function forcedWord(): string {
   return (forced ?? 'film') + (above ? '|top' : '') + (oneMove ? '|onemove' : '')
+}
+
+// The measure reads what the stop draws: handover.drawnMeasure names the stops. In the surface view of a named stop the measure takes its
+// points on the globe as the plan's twin places it in the set (SetState.ball, StopPlan.ballIn) in place of the plane y = -ground, and on
+// the globe side of its dive and its rise the state carries the turn the stop draws its body by (StopPlan.drawn) in place of the plan's
+// turn. Why: the plane lies across the set's own y axis at a height one number in a plan names, while the ground of a surface view is the
+// globe, tilted against that axis and curved, so the surface side of a handover read up to twice and down to half the motion the globe side
+// read for the same picture, and the count and the shutter of a frame stepped at the border between them. A stop that is not named is
+// measured as before.
+export function drawnMeasured(stop: string): boolean {
+  return (config.raw.handover.drawnMeasure as string[]).includes(stop)
+}
+
+// The stops the measure is named for, as one word: whoever keeps a measure of the film's own path drops it when this changes.
+export function drawnWord(): string {
+  return (config.raw.handover.drawnMeasure as string[]).join(',')
 }
 
 export function handoverFrame(h: Handover): number {

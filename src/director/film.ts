@@ -8,7 +8,7 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, lookbackLight, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSkyForced, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
+import { drawnMeasured, eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSkyForced, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -808,8 +808,11 @@ export class FilmDirector implements Director {
       const origin = view === 'terrain' ? p.spot.clone().applyQuaternion(p.turn(time)).applyQuaternion(f.rotation).add(f.origin) : f.origin.clone()
       const turns = view === 'orbit' && p.handsOver && p.id === segment.stop && (segment.kind === 'dive' || segment.kind === 'rise')
       const bodies = view === 'orbit' ? p.nearBodies(time) : []
+      // The measure of a stop that handover.drawnMeasure names reads what the stop draws: the globe as the twin places it in the surface
+      // set, and the turn the stop draws its body by.
+      const drawn = drawnMeasured(p.id)
       const lit = i === this.plans.length - 1 ? this.lookbackLit(time) : undefined
-      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, height: 0, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}), ...(bodies.length ? { near: bodies } : {}), ...(lit !== undefined ? { lookback: lit } : {}) }
+      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, height: 0, ground: p.ground, ...(drawn && view === 'terrain' ? { ball: p.ballIn(time) } : {}), ...(turns ? { turn: drawn ? p.drawn(time) : p.turn(time) } : {}), ...(bodies.length ? { near: bodies } : {}), ...(lit !== undefined ? { lookback: lit } : {}) }
     }
     const inSet = (s: SetState, p: Pose): Pose => ({ position: p.position.clone().applyQuaternion(s.rotation).add(s.origin), quaternion: s.rotation.clone().multiply(p.quaternion), vfov: p.vfov })
 
