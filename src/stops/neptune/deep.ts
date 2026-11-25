@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
+import { bufferFrame } from '../../core/frame'
 import fit from './close.json'
 import look from './deep.json'
 import patches from './patches.json'
@@ -38,6 +39,7 @@ uniform vec3 uAxis;
 uniform vec3 uSun;
 uniform float uTime;
 uniform float uPix;
+uniform float uFoot;
 uniform float uGrad;
 uniform float uGain;
 uniform float uVignette;
@@ -569,7 +571,10 @@ void main() {
   float b = dot(oc, rd);
   float rt2 = dot(oc, oc) - b * b;
   float rt = sqrt(max(rt2, 0.0));
-  float pix = uPix * uGrad;
+  // Frame law (MAIL 801 a, 878 c): every foot in this scene is a length on the body, the distance times the angle of one pixel
+  // of the master frame (uFoot), never of the canvas. So the deck's filter, the march, the shadow's foot and the thin streamer
+  // law keep and drop the same detail at every size of the frame. uPix, the canvas pixel, is left to the texel count alone.
+  float pix = uFoot * uGrad;
   float t = uTime;
   float sunView = dot(rd, uSun);
 
@@ -1014,7 +1019,7 @@ export class Deep {
       uniforms: {
         uCentre: { value: this.centre }, uCam: { value: new THREE.Vector3() }, uRadius: { value: radius },
         uE0: { value: e0 }, uE1: { value: e1 }, uAxis: { value: axis }, uSun: { value: new THREE.Vector3(0, 1, 0) },
-        uTime: { value: 0 }, uPix: { value: 0.0005 }, uGrad: gradUniform, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uShow: { value: 1 }, uFallPivot: { value: new THREE.Vector3().fromArray(look.globe.fall.pivot) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uPlaceUp: { value: this.up.clone() }, uGridShow: { value: look.globe.grid },
+        uTime: { value: 0 }, uPix: { value: 0.0005 }, uFoot: { value: 0.0005 }, uGrad: gradUniform, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uShow: { value: 1 }, uFallPivot: { value: new THREE.Vector3().fromArray(look.globe.fall.pivot) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uPlaceUp: { value: this.up.clone() }, uGridShow: { value: look.globe.grid },
         uCap: { value: v4(Math.cos(THREE.MathUtils.degToRad(look.globe.border[0]!)), Math.cos(THREE.MathUtils.degToRad(look.globe.border[1]!)), laid ? 1 : 0, 0) },
         uStorm: { value: v4(s.at[0]!, s.at[1]!, s.eye, s.reach) },
         uBowl: { value: v4(s.depth, s.wall[0]!, s.wall[1]!, s.ragged) },
@@ -1078,7 +1083,7 @@ export class Deep {
   // camera: the eye in the frame of the close scene. sun: the direction to the globe's Sun in that frame. It is the one Sun of
   // everything here: the map, the deck's relief, the clouds, the air.
   // time: seconds from the middle of the
-  // surface view. pixel: the angle one pixel of the frame covers, in radians.
+  // surface view. pixel: the angle one pixel of the canvas covers, in radians (the scene's feet take it times the frame factor).
   // body: the turn from this scene's frame to the globe's own (the body the map lies on).
   update(camera: THREE.Vector3, sun: THREE.Vector3, time: number, pixel: number, gain: number, vignette: number, aspect: number, body: THREE.Quaternion): void {
     const u = this.material.uniforms
@@ -1087,6 +1092,7 @@ export class Deep {
     ;(u.uSun!.value as THREE.Vector3).copy(sun).normalize()
     u.uTime!.value = time
     u.uPix!.value = pixel
+    u.uFoot!.value = pixel * bufferFrame()
     u.uGain!.value = gain
     u.uVignette!.value = vignette
     u.uAspect!.value = aspect
