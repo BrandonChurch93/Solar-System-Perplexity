@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T02:06:10.782Z",
- "head": "a9545ffae0453e7727d110e34bb1d65f3a351153",
- "note": "the tree to be named: G5 and G17 pass on main's engine (3720 median 0.971), path green there, finals of 3567 and 3866; tests running, then the frames outside the dive and the rise",
+ "pushed": "2026-11-25T02:27:17.467Z",
+ "head": "7359286c9cfa43401d5e7dcc989b1ce41f1ca07d",
+ "note": "draft pairs main against the tree to be named at 3567, 3866 and 3885; the hold 3389 and 3539 are equal in every pixel; merging batch 6 and running its tests before I name",
  "looks": [
+  {
+   "time": "2026-11-25T02:27:16.440Z",
+   "file": "20261125022716440-note-crop_3885.jpg",
+   "source": "../../../../tmp/v/r58c/crop_3885.png",
+   "kind": "note",
+   "label": "3885 draft, three times, upper limb: main's stop folder (left) against mine (right); 57 pixels of the outline differ by more than 4 levels, cause not traced (my number 25)"
+  },
+  {
+   "time": "2026-11-25T02:27:15.384Z",
+   "file": "20261125022715384-note-pair_3866.jpg",
+   "source": "../../../../tmp/v/r58c/pair_3866.png",
+   "kind": "note",
+   "label": "3866 draft: main's stop folder (left) against the tree to be named (right), both on the engine of af6ba5f"
+  },
+  {
+   "time": "2026-11-25T02:27:13.898Z",
+   "file": "20261125022713898-note-pair_3567.jpg",
+   "source": "../../../../tmp/v/r58c/pair_3567.png",
+   "kind": "note",
+   "label": "3567 draft: main's stop folder (left) against the tree to be named (right), both on the engine of af6ba5f"
+  },
   {
    "time": "2026-11-25T02:06:09.829Z",
    "file": "20261125020609829-note-f3866_right.jpg",
@@ -39,30 +60,6 @@
    "source": "../../../../tmp/v/r58/d253_sheet.png",
    "kind": "note",
    "label": "d253 proof, tree 5e094e5 on main's engine: dive frames 3567 and 3612 at 1920 and 3840 in the full and the web set, half size. Mean differences 0 to 255: 3567 sizes 1.753 full, 1.620 web, sets 2.181 at 1920; 3612 sizes 1.629 full, 1.625 web, sets 0.156 at 1920"
-  },
-  {
-   "time": "2026-11-25T01:18:57.559Z",
-   "file": "20261125011857559-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r57/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "r57 tree 5e094e5 engine 7026711: rise, the changes in place (pattern 0.40, limit 0.45)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T01:18:56.845Z",
-   "file": "20261125011856845-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r57/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "r57 tree 5e094e5 engine 7026711: dive, the changes in place (pattern 0.33, limit 0.45)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T01:18:55.745Z",
-   "file": "20261125011855745-note-saturn-dive-pops.jpg",
-   "source": "../../../../tmp/v/r57/saturn-dive-pops.png",
-   "kind": "note",
-   "label": "r57 tree 5e094e5 engine 7026711: dive, the largest pops (pop 1.07, limit 1.2)",
-   "stop": "saturn"
   }
  ]
 }
