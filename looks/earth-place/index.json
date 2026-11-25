@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T07:35:14.063Z",
+ "pushed": "2026-11-25T08:02:34.976Z",
  "head": "29eea607c472653f103f2b80e74a26608cf8d6b9",
- "note": "layers alone: the sea layer carries the pattern number; globe alone 0.17",
+ "note": "way a first take: far band of the sea layer is the map through air, 2010 pair and T pair",
  "looks": [
+  {
+   "time": "2026-11-25T08:02:33.561Z",
+   "file": "20261125080233561-note-step-T.jpg",
+   "source": "../../../../tmp/gl/k9/step-T.jpg",
+   "kind": "note",
+   "label": "1919 and 1920 and their difference times 4, first take of way a, no step on the band",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T08:02:32.311Z",
+   "file": "20261125080232311-note-p2010-middle.jpg",
+   "source": "../../../../tmp/gl/k9/p2010-middle.png",
+   "kind": "note",
+   "label": "2010 far band, approved, before 29eea607, after way a: band is the map through air, flat specks, towers stand, deck lost",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T07:35:04.934Z",
    "file": "20261125073504934-note-like-e2-1876-1890.jpg",
@@ -50,24 +66,6 @@
    "source": "../../../../tmp/gl/k8/look-0606.jpg",
    "kind": "note",
    "label": "trial tree, smooth frames 1876, 1879, 1883 (draft), pattern slice in flight",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T05:50:52.777Z",
-   "file": "20261125055052777-compare-earth-dive-step-in-place.jpg",
-   "source": "out/work/handover/earth-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "earth dive, the largest step of the level in place (1.98): frame 1867, frame 1868, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1868
-  },
-  {
-   "time": "2026-11-25T05:41:28.897Z",
-   "file": "20261125054128897-note-sh-a-s1.jpg",
-   "source": "../../../../tmp/gl/k7/sh-a-s1.jpg",
-   "kind": "note",
-   "label": "b9908e03 draft dive 1860 to 1868 for the pair",
    "stop": "earth"
   }
  ]
