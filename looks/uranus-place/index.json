@@ -1,9 +1,49 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T14:52:32.793Z",
+ "pushed": "2026-11-25T15:09:51.017Z",
  "head": "da6587c3cdb89d5e8f042233f66d7becef5b6d73",
- "note": "answer on blur: rings and limb blur at review tier on the first cut; 4290 red excess mapped; trial of the ground's band rendering",
+ "note": "15:10 trial G1: table of the place read at the ground point; reader windows 4170 + 1/2 1.35 to 0.35, 4185 1.27 to 0.19; white tops cost 0.63 of the 4290 match at draft",
  "looks": [
+  {
+   "time": "2026-11-25T15:09:50.355Z",
+   "file": "20261125150950355-note-tops-crop.jpg",
+   "source": "../../../../tmp/n57/tops-crop.jpg",
+   "kind": "note",
+   "label": "4290 clouds at native: approved, now, white tops off",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T15:09:49.766Z",
+   "file": "20261125150949766-note-tops3.jpg",
+   "source": "../../../../tmp/n57/tops3.jpg",
+   "kind": "note",
+   "label": "4290: approved, now, white tops off (draft)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T15:09:49.096Z",
+   "file": "20261125150949096-note-pair-g1c.jpg",
+   "source": "../../../../tmp/n57/pair-g1c.jpg",
+   "kind": "note",
+   "label": "trial G1 (right) against e14bb1e4 (left) at 4186 and 4290",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T15:09:48.475Z",
+   "file": "20261125150948475-note-pair-g1a.jpg",
+   "source": "../../../../tmp/n57/pair-g1a.jpg",
+   "kind": "note",
+   "label": "trial G1 (right) against e14bb1e4 (left) at 4170 + 1/2 and 4176",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T15:09:47.858Z",
+   "file": "20261125150947858-note-pair-g1b.jpg",
+   "source": "../../../../tmp/n57/pair-g1b.jpg",
+   "kind": "note",
+   "label": "trial G1 (right) against e14bb1e4 (left) at 4160 and 4168: the place's table read at the ground point, not at the eye",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T14:52:31.809Z",
    "file": "20261125145231809-note-hold-disc.jpg",
@@ -220,46 +260,6 @@
    "source": "../../../../tmp/n54/p-R1-8305.jpg",
    "kind": "note",
    "label": "control for the rim (ruling 2d), 4152.5 to 4160.5, the limb's falloff by view angle off: 0.56 on 2.1 percent against 0.72 on 7.2 percent",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T12:14:28.763Z",
-   "file": "20261125121428763-note-p-E1-8341.jpg",
-   "source": "../../../../tmp/n54/p-E1-8341.jpg",
-   "kind": "note",
-   "label": "chain 4170.5 to 4178.5 on law 2a: 1.29 where band and ground meet",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T12:14:27.634Z",
-   "file": "20261125121427634-note-p-E1-8305.jpg",
-   "source": "../../../../tmp/n54/p-E1-8305.jpg",
-   "kind": "note",
-   "label": "chain 4152.5 to 4160.5 on law 2a: 0.72 at the left rim",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T12:14:26.414Z",
-   "file": "20261125121426414-note-e1-c.jpg",
-   "source": "../../../../tmp/n54/e1-c.jpg",
-   "kind": "note",
-   "label": "state (left) against law 2a (right) at 4137, 4416, 4436",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:53:14.022Z",
-   "file": "20261125115314022-note-a1-cover.jpg",
-   "source": "../../../../tmp/n54/a1-cover.jpg",
-   "kind": "note",
-   "label": "4156.5 crop x 640 to 1340, y 260 to 560: cover off, cover without grain (a), cover with grain (b)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:53:13.351Z",
-   "file": "20261125115313351-note-e1-a.jpg",
-   "source": "../../../../tmp/n54/e1-a.jpg",
-   "kind": "note",
-   "label": "4176, 4186, 4200: air by the path (b, left) against the glow by the same number as the dimming (MAIL 1060 2a, right), draft",
    "stop": "uranus"
   }
  ]
