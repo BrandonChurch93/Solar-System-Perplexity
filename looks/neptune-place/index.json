@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T22:55:41.534Z",
+ "pushed": "2026-11-25T23:16:39.652Z",
  "head": "badc407aa9e73fb6d270476a9ed9fcb523618a9d",
- "note": "Dive last part at 4760: cause is the first streamer's thick and thin parts standing in its shadow as a streak that slides over the deck; cure under proof, my pattern 0.78 to 0.11",
+ "note": "Dive last part cured in the tree: pattern 0.16 to 0.24 at every half step 4753 to 4761 (before up to 0.78); 4605, 4707, 5006 byte equal; 4860 22.420; rise and dive start drawing",
  "looks": [
+  {
+   "time": "2026-11-25T23:16:38.360Z",
+   "file": "20261125231638360-note-end-frames-after.jpg",
+   "source": "../../../../tmp/end-frames-after.jpg",
+   "kind": "note",
+   "label": "Every frame 4752 to 4769 in the knot's place on the cure's tree (levels times 2.5). My pattern at every half step 4753 to 4761: 0.16 to 0.24 (before 0.25 to 0.78), limit 0.45",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T23:16:37.381Z",
+   "file": "20261125231637381-note-n14-4860.jpg",
+   "source": "../../../../tmp/n14-4860.jpg",
+   "kind": "note",
+   "label": "4860: last proof, the cure, difference times 8. Only the first streamer's shadow on the near deck changes (up to 14 levels): its blots lie at their mean. The far streamer's shadow line is untouched",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T23:16:36.139Z",
+   "file": "20261125231636139-note-shadow-N14e.jpg",
+   "source": "../../../../tmp/shadow-N14e.jpg",
+   "kind": "note",
+   "label": "Cause panel, dive's last part: the first streamer's shadow alone at 4760 carried onto 4768, at 4768, their difference. Above the tree before (streak up to 12.5 levels), below the cure (7.9). My pattern 4760 to 4768: 0.78 before, 0.17 after",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T23:16:35.332Z",
+   "file": "20261125231635332-note-pair-N14.jpg",
+   "source": "../../../../tmp/pair-N14.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, the cure's tree (thick and thin parts read at twice castWave in the shadow): whole 22.420 (main 22.986, last proof 22.446), G17 median 0.507 p25 0.232 as before; 90.7 s per draft frame at 1920",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T22:55:36.651Z",
    "file": "20261125225536651-note-u1-4860.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/end-shadow.jpg",
    "kind": "note",
    "label": "MAIL 1313, the dive's last part: the knot at 4760 to 4768 (my copy of the reader 0.78, limit 0.45) is the first streamer's shadow on the dark near deck: top row the shadow alone (cast off minus on, times 8) at 4760 carried, at 4768, their difference times 16: a sharp streak and a comb that slide over the deck; middle the two frames (times 4) and the reader's pattern; bottom the same with the shadow off (0.09)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T22:33:04.304Z",
-   "file": "20261125223304304-note-pair-N13.jpg",
-   "source": "../../../../tmp/pair-N13.jpg",
-   "kind": "note",
-   "label": "4860 on the merge beside the approved image (unchanged since 22:04): whole 22.446 (main 22.986), G17 0.507, 90.7 s the draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T22:04:04.139Z",
-   "file": "20261125220404139-note-pair-N13.jpg",
-   "source": "../../../../tmp/pair-N13.jpg",
-   "kind": "note",
-   "label": "4860 on the merge of main's fourth cut (c825c8d3f) beside the approved image: the limb's cure stands, bytes equal to before the merge; my reader whole 22.446 (main 22.986), sky 3.203 (main 1.619, the film's sky against the plate), band 1.616, ground 17.627; G17 0.507; 90.7 s the draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T21:54:20.665Z",
-   "file": "20261125215420665-note-n12-rise.jpg",
-   "source": "../../../../tmp/n12-rise.jpg",
-   "kind": "note",
-   "label": "the rise 4960 to 4978 on the cured limb (preview, every second frame): pairs 0.25, 0.33, 0.35, 0.25 (limit 0.45; before 0.22, 0.23, 0.32, 0.24): the thinner haze shows more of the far plain and costs up to a tenth",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T21:54:20.104Z",
-   "file": "20261125215420104-note-n12-dive.jpg",
-   "source": "../../../../tmp/n12-dive.jpg",
-   "kind": "note",
-   "label": "the low dive 4744 to 4760 on the cured limb (preview, every second frame): one place, the limb a thin line; pairs 0.39, 0.30, 0.29, 0.27 (limit 0.45; before 0.31, 0.29, 0.27, 0.26)",
    "stop": "neptune"
   }
  ]
