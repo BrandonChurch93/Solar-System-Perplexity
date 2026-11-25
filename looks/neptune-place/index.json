@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T12:10:15.971Z",
+ "pushed": "2026-11-25T12:40:05.006Z",
  "head": "1808b13e729122b7a0873cffbef0d835ecf279d1",
- "note": "seventh NAMED sent, red named as red: G13 on the terrain 48.7 percent soft, G17 at 4860 under the bar; next the cure of the near ground (octaves to the pixel's width, the mean along the run)",
+ "note": "trial of the deck's run: soft 48.66 to 2.06 percent at 4860 by my reading, picture moved at most 5 levels, 4605 moved by 1 level (not in until it stays to the bit); 100.8 s per draft frame",
  "looks": [
+  {
+   "time": "2026-11-25T12:40:03.671Z",
+   "file": "20261125124003671-note-r1-soft.jpg",
+   "source": "../../../../tmp/r1-soft.png",
+   "kind": "note",
+   "label": "4860 texel view, soft pixels of the same trial: 2.059 percent (48.66 before), all on the cirrus bank's thick heaps",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T12:40:02.377Z",
+   "file": "20261125124002377-note-look-r1.jpg",
+   "source": "../../../../tmp/look-r1.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, trial: the deck's octaves run on to the pixel's width as the mean along the run (not committed: it moves 4605 by one level on 3781 pixels inside the place's disc, being cured). G17 draft 1920 median 0.254, unchanged. 100.8 s the draft frame at 1920 (79 before)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T12:10:15.209Z",
    "file": "20261125121015209-note-g13-count-before-after.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/ev/g13-views.jpg",
    "kind": "note",
    "label": "G13 texel view (red is texels a pixel, yellow 2, green under 1): left as named, right the control. Top 4530: 89.9 percent soft becomes 0.000 (the scene's count was written where it draws nothing). Bottom 4860: 71.2 becomes 47.6 percent soft, RED, the near ground by code",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T10:50:18.781Z",
-   "file": "20261125105018781-note-chain-4962.jpg",
-   "source": "out/work/nep/weave/C8q/chain-4962.jpg",
-   "kind": "note",
-   "label": "RED: rise inside the air 4962 to 4970 pattern 0.68 (limit 0.45): the dot of the map's cloud layer, cure under test",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T10:50:17.713Z",
-   "file": "20261125105017713-note-c-dive-C8-b.jpg",
-   "source": "out/work/nep/weave/ev/c-dive-C8-b.jpg",
-   "kind": "note",
-   "label": "way C, dive 4752 4756 4760 then 4860; 9 s the draft frame at rate 2",
    "stop": "neptune"
   }
  ]
