@@ -362,7 +362,7 @@ ${PLATE_LEVELS}
   for (int k = 0; k < (topShare > 0.0 ? 1 : 0); k++) tops = topsLight(topShare, dot(pD, uTopSun), topsSeen(uDeckCentre + uDeckRadius * pD, pD));
   col = own;
   for (int k = 0; k < (dim.a < 1.0 ? 1 : 0); k++) col = own * (base + airGlow(sunlit, muD, psiD, plain)) / base;
-  col += uNear * tops;
+  col += uNear * tops * dim.rgb;
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));
 }`
