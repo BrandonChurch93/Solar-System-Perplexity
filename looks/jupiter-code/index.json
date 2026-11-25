@@ -1,9 +1,123 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T03:23:31.191Z",
- "head": "f274287d7d14492b70130208bd7812a07da7d288",
- "note": "03:24 UTC: patches of MAIL 861 in (four draft hashes equal), rise path green with liftPower 0.55, haze fill out of the sky plate; stills of dive and rise rendering",
+ "pushed": "2026-11-25T03:43:48.943Z",
+ "head": "e41572b266f5705f8b14f5f0895f6b5b8fa1f94a",
+ "note": "03:44 UTC: sky plate without haze under its horizon and with its own stars carried there (cddb41f, merged with main as e41572b); rise pace green; proof chain running on e41572b",
  "looks": [
+  {
+   "time": "2026-11-25T03:43:48.312Z",
+   "file": "20261125034348312-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image (pair of the first named commit; the new plate moves 461 pixels of the draft by at most 4 levels, new pair with the NAMED mail)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:43:47.779Z",
+   "file": "20261125034347779-note-f2-dive-c.jpg",
+   "source": "../work/r8/f1/f2-dive-c.jpg",
+   "kind": "note",
+   "label": "3046 and 3052 whole, commit cddb41f",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:43:47.163Z",
+   "file": "20261125034347163-note-f2-ul.jpg",
+   "source": "../work/r8/f1/f2-ul.png",
+   "kind": "note",
+   "label": "3046 3052 3058 upper left: the brown line of the plate's rim above the limb's glow (left) is gone (right)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:43:46.537Z",
+   "file": "20261125034346537-note-f2-3043.jpg",
+   "source": "../work/r8/f1/f2-3043.png",
+   "kind": "note",
+   "label": "3043 upper right: left first repaint, right as committed in cddb41f, lower row lifted three times",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:43:45.894Z",
+   "file": "20261125034345894-note-f2-3037.jpg",
+   "source": "../work/r8/f1/f2-3037.png",
+   "kind": "note",
+   "label": "3037 upper right: the strip without stars and its hard line (left) are gone (right), lower row lifted three times",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:43:45.262Z",
+   "file": "20261125034345262-note-f2-3031.jpg",
+   "source": "../work/r8/f1/f2-3031.png",
+   "kind": "note",
+   "label": "3031 upper right: first repaint (left) against the plate with its own stars carried under its horizon (right), lower row lifted three times; the orange cloud near the limb is the film's sky under the plate's horizon",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:43:16.071Z",
+   "file": "20261125034316071-frame-d3040.jpg",
+   "source": "out/work/jupiter/frames/f2/d3040.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3040, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3040,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
+  {
+   "time": "2026-11-25T03:42:00.129Z",
+   "file": "20261125034200129-frame-d3062.jpg",
+   "source": "out/work/jupiter/frames/f2/d3062.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3062, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3062,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
+  {
+   "time": "2026-11-25T03:37:22.503Z",
+   "file": "20261125033722503-note-rise-b.jpg",
+   "source": "../work/r8/f1/rise-b.jpg",
+   "kind": "note",
+   "label": "rise with the pace set again: 3256 3262 3268 3274",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:37:21.692Z",
+   "file": "20261125033721692-note-rise-a.jpg",
+   "source": "../work/r8/f1/rise-a.jpg",
+   "kind": "note",
+   "label": "rise with the pace set again (path green): 3241 3244 3247 3250",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:37:20.624Z",
+   "file": "20261125033720624-note-dive-ur-b.jpg",
+   "source": "../work/r8/f1/dive-ur-b.jpg",
+   "kind": "note",
+   "label": "dive, upper right, 3034 3037 3040 3043 after the haze fill left the sky plate: a strip without stars and a hard line at the plate's horizon are left, being cured now",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:36:35.511Z",
+   "file": "20261125033635511-frame-r3247.jpg",
+   "source": "out/work/jupiter/frames/f1/r3247.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3247, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3247,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
   {
    "time": "2026-11-25T03:23:30.112Z",
    "file": "20261125032330112-note-pair-3150-final.jpg",
@@ -27,48 +141,6 @@
    "kind": "note",
    "label": "03:24 sky plate of the surface view, lifted: left as it was (haze fill under its horizon, the floating band), right with the plate's own sky level carried under the horizon by code",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:07:26.994Z",
-   "file": "20261125030726994-frame-after-3296.jpg",
-   "source": "out/work/jupiter/h4/after-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T03:06:53.493Z",
-   "file": "20261125030653493-frame-after-3150.jpg",
-   "source": "out/work/jupiter/h4/after-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T03:06:14.973Z",
-   "file": "20261125030614973-frame-after-2997.jpg",
-   "source": "out/work/jupiter/h4/after-2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
   },
   {
    "time": "2026-11-25T03:05:39.906Z",
@@ -146,78 +218,6 @@
    "source": "../work/r6/pair-3150-final.jpg",
    "kind": "note",
    "label": "3150 final beside the approved image (bytes unchanged in this commit, match 7.974)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:08:24.395Z",
-   "file": "20261125020824395-note-map-rise.jpg",
-   "source": "../work/r8/sky/map-rise.jpg",
-   "kind": "note",
-   "label": "the same for the rise (3241 magenta to 3271 red): the limb sinks 18 degrees under the plate's horizon",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:08:23.514Z",
-   "file": "20261125020823514-note-map-dive.jpg",
-   "source": "../work/r8/sky/map-dive.jpg",
-   "kind": "note",
-   "label": "work in progress, cure of the band: the surface sky plate lifted 3.5 times with the dive's limb drawn on it frame by frame (3022 red to 3058 magenta): under its horizon the plate holds a haze fill, that fill is the band",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:56:06.821Z",
-   "file": "20261125015606821-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final beside the approved image (bytes unchanged in this commit, match 7.974)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:56:06.082Z",
-   "file": "20261125015606082-note-c1-limb-3028.jpg",
-   "source": "../work/r8/c1-limb-3028.png",
-   "kind": "note",
-   "label": "upper right limb 3028 to 3043 frame by frame: grey band above the limb, parted by a dark gap, comes down by 3042 (cause: the sky plate's fill under its horizon)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:56:04.970Z",
-   "file": "20261125015604970-note-jupiter-dive-changes.jpg",
-   "source": "../work/r8/jupiter-dive-changes.png",
-   "kind": "note",
-   "label": "smooth tool, dive, commit e97f7d7e: red, pattern 1.23 from 3031 at the upper right limb (the floating band)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:56:03.709Z",
-   "file": "20261125015603709-note-levels-at-place.jpg",
-   "source": "../work/r8/levels-at-place.jpg",
-   "kind": "note",
-   "label": "the four levels at the place at equal scale: wrap alone, with wide, with mid, all (the rings are patch-wide's own imagery, the wrap is softer)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:38:49.960Z",
-   "file": "20261125013849960-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final beside the approved image (bytes kept)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:38:47.026Z",
-   "file": "20261125013847026-note-c1-dive.jpg",
-   "source": "../work/r8/c1-dive.jpg",
-   "kind": "note",
-   "label": "dive 2983, 2997, 3012, 3030, 3050, 3056, set c1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:38:40.808Z",
-   "file": "20261125013840808-note-c1-rise-a.jpg",
-   "source": "../work/r8/c1-rise-a.jpg",
-   "kind": "note",
-   "label": "rise 3250, 3256, 3262, 3268, set c1 (lower left 3250 to 3257 still red)",
    "stop": "jupiter"
   }
  ]
