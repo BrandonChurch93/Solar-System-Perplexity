@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T03:21:48.082Z",
+ "pushed": "2026-11-25T03:45:11.804Z",
  "head": "7755294aa70875d7406a3a89a2a51744cbb9a8ac",
- "note": "round 44 items 1 and 3: foot trial n4 beside the approved, then the globe's tone by latitude",
+ "note": "trial n5 of the foot at 3720: thinner soft band on the globe, twilight on the dust, dust ringlets; the diagonal step is a known fault of the trial; next the continuous twilight and the globe tone by latitude",
  "looks": [
+  {
+   "time": "2026-11-25T03:45:11.216Z",
+   "file": "20261125034511216-note-n5_foot2.jpg",
+   "source": "../../../../tmp/v/x/n5_foot2.png",
+   "kind": "note",
+   "label": "saturn-code 3720 trial n5 foot at 2x (top approved, bottom mine, mine 78 rows lower): a hard diagonal step in the dust is a fault of this trial (twilight not continuous at the terminator plane), being cured"
+  },
+  {
+   "time": "2026-11-25T03:45:10.624Z",
+   "file": "20261125034510624-note-n5_whole.jpg",
+   "source": "../../../../tmp/v/x/n5_whole.png",
+   "kind": "note",
+   "label": "saturn-code 3720 draft trial n5 under the approved image (top approved, bottom mine): foot layer thinner, dust twilight"
+  },
   {
    "time": "2026-11-25T03:21:47.506Z",
    "file": "20261125032147506-note-n4_foot.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/x/s1_hold_pair.png",
    "kind": "note",
    "label": "3465 final, named tree left and with the item 5 change right, full size: same bytes (max difference 0)"
-  },
-  {
-   "time": "2026-11-25T03:04:05.721Z",
-   "file": "20261125030405721-note-s1_gap.jpg",
-   "source": "../../../../tmp/v/x/s1_gap.png",
-   "kind": "note",
-   "label": "3567 draft, gap between globe and inner ring at 2x: named tree left, shade solid over the whole thin inner ring right (item 5)"
-  },
-  {
-   "time": "2026-11-25T02:47:19.417Z",
-   "file": "20261125024719417-note-r59_ll.jpg",
-   "source": "../../../../tmp/v/r59_ll.png",
-   "kind": "note",
-   "label": "approved beside final 3720, lower left near field at full size (open 23)"
   }
  ]
 }
