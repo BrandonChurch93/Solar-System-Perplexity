@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T10:21:21.725Z",
+ "pushed": "2026-11-25T10:47:57.138Z",
  "head": "d69b8640fb1f481dbb58cf26cb831f3bd2ecd392",
- "note": "MAIL 1005 measurement only, nothing built: at Mercury's lower right limb the reader reads 0.5 to 0.77 with its own flows, 0.54 to 0.68 on one picture foreshortened where nothing changes, and 0.04 to 0.25 when the real pair is carried by the sphere. Softer map controls do not lower it.",
+ "note": "MAIL 1032: measurement only. Mars dive 2456 to 2474 on 22820b17 is rendering for columns A, C, E, F, G with the way taken from range pictures; no numbers yet.",
  "looks": [
+  {
+   "time": "2026-11-25T10:47:56.167Z",
+   "file": "20261125104756167-note-mars-pair.jpg",
+   "source": "../m1032/mars-pair.jpg",
+   "kind": "note",
+   "label": "MAIL 1032 a: Mars dive on 22820b17, film 2448 and 2456 at draft, the pair the reader carries (slice 2456 to 2474 rendering)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T10:21:21.134Z",
    "file": "20261125102121134-note-chart-limb.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/m954/on-2436.png",
    "kind": "note",
    "label": "Mars 2436 draft 1920 x 1080, own levels under a whole level not read, scratch merge of take/b10e with mars-place e53c76b7",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:51:30.876Z",
-   "file": "20261125065130876-note-cap-cost.jpg",
-   "source": "../m835/cap-cost.png",
-   "kind": "note",
-   "label": "Mars cap at draft, 2464 and 2472: where the seconds go, and what one change would leave (scratch, no commit)",
    "stop": "mars"
   }
  ]
