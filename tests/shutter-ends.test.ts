@@ -475,9 +475,11 @@ describe('the ends as a law of the motion of the frame', () => {
     numbers.shutterEnds = kept
   }, LONG)
   it('give the first frame of a flight the ends of the last frame of its rise where the two move alike, at every stop that has a flight', () => {
-    // A rise does not come to rest before its flight: the two are one move. With the flight outside the law the look stepped there in
-    // one frame wherever the border moved by more than fromPx (Earth 2174 and 2175: 9.70 and 9.44 px, the one with ends, the other a box).
-    let above = 0
+    // A rise does not come to rest before its flight: the two are one move. With the flight outside the law the look stepped in one
+    // frame wherever the border moved by more than fromPx, the one side with ends, the other a box. How fast a border is belongs to
+    // the travel (a slower end of the rises takes most borders under fromPx), and the flight speeds up after it all the same: so the
+    // first frame of each flight that moves by more than fromPx is held to its own px too. Of the path the test asks only that a
+    // flight moves.
     for (const s of config.segments.filter((x) => x.kind === 'travel')) {
       numbers.shutterEnds = { [s.stop]: LAW }
       const [rise, flight] = planOf([s.firstFrame - 1, s.firstFrame], 'review')
@@ -485,10 +487,11 @@ describe('the ends as a law of the motion of the frame', () => {
       expect(rise!.ends ?? 0, s.id).toBe(endsBy(LAW, rise!.seen))
       expect(flight!.ends ?? 0, s.id).toBe(endsBy(LAW, flight!.seen))
       expect(Math.abs((flight!.ends ?? 0) - (rise!.ends ?? 0)), s.id).toBeLessThanOrEqual((1.5 * LAW.share * Math.abs(flight!.seen - rise!.seen)) / (LAW.toPx - LAW.fromPx) + 1e-12)
-      if (rise!.seen > LAW.fromPx && flight!.seen > LAW.fromPx) above++
+      const fast = planOf(Array.from({ length: s.endFrame - s.firstFrame }, (_, i) => s.firstFrame + i), 'review').find((p) => p.seen > LAW.fromPx)
+      expect(fast, s.id).toBeDefined()
+      expect(fast!.ends, s.id).toBe(endsBy(LAW, fast!.seen))
+      expect(fast!.ends, s.id).toBeGreaterThan(0)
     }
-    // The film has such borders: without them the flight would not need the law.
-    expect(above).toBeGreaterThan(0)
     numbers.shutterEnds = kept
   }, LONG)
   it('reach from the first frame of a stop to the last frame of its flight, and are at 0 at both for every law the film names', () => {

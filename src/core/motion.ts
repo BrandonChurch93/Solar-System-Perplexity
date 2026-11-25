@@ -252,9 +252,11 @@ export function shutterEndsOf(stop: string): number {
 // segment, not the tier. So two frames that move alike have the same ends on whichever side of a change of view they lie, and a border
 // of the stop steps only where the motion itself does. Under fromPx the shutter is open at once and the frame is the frame it was, to
 // the bit; a slow border never sees the law. The flight is the stop's it leaves (its segment names that stop): a rise does not come to
-// rest before its flight, the two are one move, and the last frame of the rise and the first of the flight show the same px (Earth
-// 2174 and 2175: 9.70 and 9.44). A flight slows down into the hold of the next stop, so the law is at 0 long before the next stop's
-// first frame, whether that stop is named or not (held for the film's own laws by tests/shutter-ends.test.ts).
+// rest before its flight, the two are one move, and the last frame of the rise and the first of the flight show nearly the same px
+// (the test holds the step of the ends between the two to the step of their px, at every stop). How fast that border is belongs to
+// the travel: where it is slow the flight speeds up past fromPx a few frames later, and those frames are the stop's as well. A flight
+// slows down into the hold of the next stop, so the law is at 0 long before the next stop's first frame, whether that stop is named
+// or not (held for the film's own laws by tests/shutter-ends.test.ts).
 export interface EndsLaw { share: number; fromPx: number; toPx: number }
 
 export function endsLawOf(stop: string): EndsLaw | null {
