@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T00:51:34.201Z",
- "head": "81ec3adc20f19942fea262b0ceb6ccb552d69bc3",
- "note": "00:52 UTC commit 2 state: frame 60 distance 0.047, half width 7.8 px, fine 0.0344, white 0.015; consecutive frames 60 to 62; MAIL 830 blocks at 242 to 245 hold sky only",
+ "pushed": "2026-11-25T01:00:26.091Z",
+ "head": "af7ed5698798fe98323b6a7526bfc75b78f87659",
+ "note": "01:01 UTC commit 2 d9c797a1 merged on main 12bfd7d5 as af7ed569: frames 0, 90, the rise, d253 (a) frame 225 at both sizes 2.463, d253 (b) frames 60 and 231 in both sets 1.309 and 0.938. Tests run now",
  "looks": [
+  {
+   "time": "2026-11-25T00:59:15.456Z",
+   "file": "20261125005915456-note-c2-sets.jpg",
+   "source": "../../../../tmp/v/c2-sets.jpg",
+   "kind": "note",
+   "label": "d253 (b) with commit 2: frame 60 and frame 231, the full set left and the web set right, 1 to 1. Frame 60 mean difference 1.309 of 255, share over 16: 0.0052; frame 231 mean 0.938, share over 16: 0.0016. Frame 60 of this commit: share by band 0.1 .. 0.9 : 0.173 0.220 0.183 0.141 0.099 0.066 0.048 0.053 0.015 / dark (under 0.15) 0.175 | body (0.15 to 0.55) 0.643 | pale (0.65 to 0.85) 0.101 | white (over 0.85) 0.015 / brightest 15 percent: half width 7.8 px, 1326 shapes | fine detail 0.0344 | mean 0.351",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:59:14.873Z",
+   "file": "20261125005914873-note-c2-sizes.jpg",
+   "source": "../../../../tmp/v/c2-sizes.jpg",
+   "kind": "note",
+   "label": "d253 (a) with commit 2, one frame of the rise at both sizes: frame 225 at 1080 beside 2160 halved, 1 to 1. Mean difference 2.463 of 255, share of pixels over 16: 0.0109",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:59:14.248Z",
+   "file": "20261125005914248-note-c2-rise.jpg",
+   "source": "../../../../tmp/v/c2-rise.jpg",
+   "kind": "note",
+   "label": "Commit 2: frames 217, 225, 231, 247 of the rise at one half. 247 keeps its draft bytes c22922926c09eb0d. Still wrong: the cell field on the ball is a pale patch of packed cells with a border against the globe's own map (one Sun is not built in this commit)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:59:13.599Z",
+   "file": "20261125005913599-note-c2-90.jpg",
+   "source": "../../../../tmp/v/c2-90.jpg",
+   "kind": "note",
+   "label": "Commit 2: frame 90, draft tier, the whole frame at 3 quarters. Draft bytes be1188af65d2db50",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:59:12.803Z",
+   "file": "20261125005912803-note-c2-0.jpg",
+   "source": "../../../../tmp/v/c2-0.jpg",
+   "kind": "note",
+   "label": "Commit 2 (d9c797a1, merged as af7ed569): frame 0, draft tier, the whole frame at 3 quarters. Draft bytes 562242a12d92c1d0",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T00:51:32.896Z",
    "file": "20261125005132896-note-pop-blocks.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/c2-near.png",
    "kind": "note",
    "label": "Commit 2: frames 60, 61, 62 at 3 times, the near ground at 880, 900 (consecutive frames at 30 a second; the frames tool draws no half frames, 242 + 1/2 came out equal to 242). No stipple. Still wrong: faint upright streaks one pixel wide inside the cells; the fibres change their shape visibly from one frame to the next",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:51:30.308Z",
-   "file": "20261125005130308-note-c2-60-spot.jpg",
-   "source": "../../../../tmp/v/c2-60-spot.jpg",
-   "kind": "note",
-   "label": "Commit 2: frame 60 beside the approved at 1 to 1, the spot. One diagram drawn long toward the spot, no ring; the pit is shallower and each fibre goes down at a place of its own. Still wrong: the penumbra is rows of long cells and not the approved's long bright fibres over dark, the umbra is smaller, the ground behind the spot is a smooth band",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:51:29.453Z",
-   "file": "20261125005129453-note-c2-60.jpg",
-   "source": "../../../../tmp/v/c2-60.jpg",
-   "kind": "note",
-   "label": "Commit 2 as it will be named (tree on 81ec3adc, proof frames render now): frame 60 beside the approved at 1 to 1, the ground. share by band 0.1 .. 0.9 : 0.173 0.220 0.183 0.141 0.099 0.066 0.048 0.053 0.015 / dark (under 0.15) 0.175 | body (0.15 to 0.55) 0.643 | pale (0.65 to 0.85) 0.101 | white (over 0.85) 0.015 / brightest 15 percent: half width 7.8 px, 1326 shapes | fine detail 0.0344 | mean 0.351. Distance of the band tables 0.047",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:29:31.314Z",
-   "file": "20261125002931314-note-p5-far.jpg",
-   "source": "../../../../tmp/v/p5-far.png",
-   "kind": "note",
-   "label": "Trial p5: frames 60 and 61 at 3 times, the far ground at 300, 500. The cells go on toward the horizon; the lower third still shows short upright dashes where the fibres set in (cured next by fading them by the long side of a pixel)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:29:30.730Z",
-   "file": "20261125002930730-note-p6-stip.jpg",
-   "source": "../../../../tmp/v/p6-stip.png",
-   "kind": "note",
-   "label": "Trial p6: frames 60 and 61 at 3 times, the near ground at 880, 900. The stipple of commit 1 is gone; faint upright streaks remain where a fibre runs toward the eye. Consecutive frames at 30 a second: the frames tool draws no half frames",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:29:30.143Z",
-   "file": "20261125002930143-note-p6-60-spot.jpg",
-   "source": "../../../../tmp/v/p6-60-spot.jpg",
-   "kind": "note",
-   "label": "Trial p6: frame 60 beside the approved at 1 to 1, the spot. One diagram, drawn long toward the spot by the chart; no ring and no second layer. Still wrong: the umbra's rim is a clean line, the fibres read as rows of long cells and not as the approved's long bright fibres",
    "stop": "sun"
   }
  ]
