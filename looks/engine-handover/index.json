@@ -1,64 +1,65 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T05:19:42.127Z",
+ "pushed": "2026-11-25T05:45:59.110Z",
  "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
- "note": "shutterEnds for Earth (7e3da15a, local): pairs of 1857 and 2156 at review, box against ends, three frames in a row; border frames 2099 to 2101 rendering; gradAt for Earth built (09cfadcd, local), proof chain queued",
+ "note": "gradAt proof: Earth's callers on a scratch read the footprint by each point's own way, 2156 and 1857 at review beside the cover by frame and take/b8; next the table of all stops for the shutter ends",
  "looks": [
   {
-   "time": "2026-11-25T05:14:27.520Z",
-   "file": "20261125051427520-note-en-1857-sea4.jpg",
-   "source": "../../../../tmp/law/dots/en-1857-sea4.png",
+   "time": "2026-11-25T05:45:57.968Z",
+   "file": "20261125054557968-note-mars-2427-b8-rim.jpg",
+   "source": "../../../../tmp/law/dots/mars-2427-b8-rim.png",
    "kind": "note",
-   "label": "1857 review, sea at 4 times, box and ends: a fine diagonal hatch in both (the sea's fine texture drawn along the motion), not from the shutter"
+   "label": "Mars 2427 review on take/b8 (the box): bright specks at the rim are bars with blunt ends, what the ends would turn into ovals; not drawn with the ends yet",
+   "stop": "mars"
   },
   {
-   "time": "2026-11-25T05:14:26.289Z",
-   "file": "20261125051426289-note-en3-1856-58-cloud.jpg",
-   "source": "../../../../tmp/law/dots/en3-1856-58-cloud.png",
+   "time": "2026-11-25T05:45:56.737Z",
+   "file": "20261125054556737-note-we-sea-1857.jpg",
+   "source": "../../../../tmp/law/dots/we-sea-1857.png",
    "kind": "note",
-   "label": "shutterEnds Earth 0.5: 1856, 1857, 1858 review with ends, clouds x 420..620 y 820..940 at 3 times"
+   "label": "gradAt for Earth: 1857 review, sea x 420..620 y 820..940 at 4 times: take/b8, cover box, cover ends, gradAt ends: the fine hatch over the sea is in all four"
   },
   {
-   "time": "2026-11-25T05:14:25.223Z",
-   "file": "20261125051425223-note-en3-2155-57-brazil.jpg",
-   "source": "../../../../tmp/law/dots/en3-2155-57-brazil.png",
+   "time": "2026-11-25T05:45:55.062Z",
+   "file": "20261125054555062-note-we-clouds-1857.jpg",
+   "source": "../../../../tmp/law/dots/we-clouds-1857.png",
    "kind": "note",
-   "label": "shutterEnds Earth 0.5: 2155, 2156, 2157 review with ends, Brazil at 2 times: three frames in a row, soft ovals in all three"
+   "label": "gradAt for Earth: 1857, clouds x 1000..1240 y 780..1000 at 3 times: draft, review take/b8, cover by frame with ends, gradAt with ends (mean gradient there 7.45, 7.62, 8.44)"
   },
   {
-   "time": "2026-11-25T05:14:23.969Z",
-   "file": "20261125051423969-note-en-1857-cloud3.jpg",
-   "source": "../../../../tmp/law/dots/en-1857-cloud3.png",
+   "time": "2026-11-25T05:33:46.719Z",
+   "file": "20261125053346719-note-we-andes3-2156.jpg",
+   "source": "../../../../tmp/law/dots/we-andes3-2156.png",
    "kind": "note",
-   "label": "shutterEnds Earth 0.5: 1857, clouds x 1000..1240 y 780..1000 at 3 times: draft of one sample (what the cloud is), review box (7b3f4567: blocks with hard edges), review ends 0.5 (7e3da15a: soft)"
+   "label": "gradAt for Earth: 2156, the Andes x 960..1160 y 740..1000 at 3 times: draft, review take/b8, cover by frame with ends, gradAt with ends"
   },
   {
-   "time": "2026-11-25T05:10:36.586Z",
-   "file": "20261125051036586-note-en-pairs-2155-57-brazil.jpg",
-   "source": "../../../../tmp/law/dots/en-pairs-2155-57-brazil.png",
+   "time": "2026-11-25T05:33:45.863Z",
+   "file": "20261125053345863-note-we-dots4-2156.jpg",
+   "source": "../../../../tmp/law/dots/we-dots4-2156.png",
    "kind": "note",
-   "label": "shutterEnds Earth 0.5: 2155, 2156, 2157 review, Brazil x 1240..1600 y 700..1060 at 2 times: box (7b3f4567) above, ends 0.5 (7e3da15a) below: bars with hard ends above, soft ovals below, on three frames in a row"
+   "label": "gradAt for Earth: 2156 review x 1400..1560 y 790..900 at 4 times: take/b8 rows of dots, cover by frame with ends, gradAt with ends"
   },
   {
-   "time": "2026-11-25T04:44:04.550Z",
-   "file": "20261125044404550-note-en-1857-wide.jpg",
-   "source": "../../../../tmp/law/dots/en-1857-wide.png",
+   "time": "2026-11-25T05:33:44.707Z",
+   "file": "20261125053344707-note-we-land-2156.jpg",
+   "source": "../../../../tmp/law/dots/we-land-2156.png",
    "kind": "note",
-   "label": "shutterEnds Earth 0.5: 1857 review at full size x 200..1160 y 560..1080, box above, ends below"
+   "label": "gradAt for Earth: 2156 review, Brazil at 2 times: take/b8, cover by frame with ends, gradAt with ends: the fast corner stays smooth"
   },
   {
-   "time": "2026-11-25T04:44:03.846Z",
-   "file": "20261125044403846-note-en-1857-land.jpg",
-   "source": "../../../../tmp/law/dots/en-1857-land.png",
+   "time": "2026-11-25T05:33:43.497Z",
+   "file": "20261125053343497-note-we-mid-2156.jpg",
+   "source": "../../../../tmp/law/dots/we-mid-2156.png",
    "kind": "note",
-   "label": "shutterEnds Earth 0.5: 1857 review, the Andes x 1000..1400 y 560..1000 at 2 times, box beside ends: the ridges are less dragged"
+   "label": "gradAt for Earth (scratch of Earth's callers on 09cfadcd, never pushed): 2156 review, the middle x 760..1120 y 400..640 at 2 times: take/b8, cover by frame box, cover by frame ends, gradAt ends: the middle is as fine as take/b8 again (mean gradient 10.70, 8.96, 9.42, 11.36)"
   },
   {
-   "time": "2026-11-25T04:44:03.113Z",
-   "file": "20261125044403113-note-en-1857.jpg",
-   "source": "../../../../tmp/law/dots/en-1857.png",
+   "time": "2026-11-25T05:29:48.738Z",
+   "file": "20261125052948738-note-bd3-sea.jpg",
+   "source": "../../../../tmp/law/dots/bd3-sea.png",
    "kind": "note",
-   "label": "shutterEnds Earth 0.5: 1857 review, clouds x 420..620 y 820..940 at 3 times, box beside ends: the bricks are soft specks"
+   "label": "shutterEnds, the border of Earth's rise at review, sea x 520..760 y 640..790 at 3 times: 2099 (hold), 2100 box, 2100 ends, 2101 box"
   }
  ]
 }
