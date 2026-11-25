@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T10:23:38.271Z",
+ "pushed": "2026-11-25T10:44:56.838Z",
  "head": "55392321c0452e1bddc72911bc23b771e20c87a4",
- "note": "study for the next bake: 36 towers stand 1.8 to 7.3 degrees out, 20 of them past 5 degrees over the map's flat cloud; footprints not in the field yet",
+ "note": "study for the next bake: the approved far band's own cloud laid into the map, previews only, nothing committed",
  "looks": [
+  {
+   "time": "2026-11-25T10:44:56.259Z",
+   "file": "20261125104456259-note-pv-lb0-above.jpg",
+   "source": "../../../../tmp/gl/k12/pv-lb0-above.jpg",
+   "kind": "note",
+   "label": "study, not a frame: the map from above before and after the approved band's cloud is laid in as bodies (15 px a degree)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T10:44:55.585Z",
+   "file": "20261125104455585-note-pv-y1-band.jpg",
+   "source": "../../../../tmp/gl/k12/pv-y1-band.jpg",
+   "kind": "note",
+   "label": "study, not a frame: approved sea layer (top) against a numpy preview of the far band with the approved band's cloud laid into the map (bottom), tints not cured",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T10:23:37.644Z",
    "file": "20261125102337644-note-tw-s.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k11/d1/h-crop.jpg",
    "kind": "note",
    "label": "1755 ba479450 against ac5c5c1b, 2 px for 1: the deck is in the hold now (changed on purpose); whiter and plainer than the map's cloud, hides Yucatan",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T09:43:03.936Z",
-   "file": "20261125094303936-note-c-1857.jpg",
-   "source": "../../../../tmp/gl/k10/c1/c-1857.png",
-   "kind": "note",
-   "label": "1857 ba479450 against now: the deck shows as a white patch that the hold does not have (1755 0 px): red, not cured",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T09:43:02.798Z",
-   "file": "20261125094302798-note-p-right-1to1.jpg",
-   "source": "../../../../tmp/gl/k10/c1/p-right-1to1.png",
-   "kind": "note",
-   "label": "2010 far band right 1 to 1: approved, ba479450, now",
    "stop": "earth"
   }
  ]
