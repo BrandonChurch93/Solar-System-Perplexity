@@ -3,8 +3,9 @@ import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
+import { StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
-import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook } from '../src/space/travel/path'
+import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook, worldCosts, worldLead } from '../src/space/travel/path'
 
 const looks = ['base', ...Object.keys(TRAVEL)].map((id) => ({ id, look: travelLook(id) }))
 
@@ -440,4 +441,56 @@ describe('the carry of a rise into its travel', () => {
       expect(film.frames.map((f) => [...f.origin.toArray(), ...f.rotation.toArray()])).toEqual(real.frames.map((f) => [...f.origin.toArray(), ...f.rotation.toArray()]))
     })
   }
+})
+
+describe('the world a travel lands in', () => {
+  const LEAD = 2
+  const least = (costs: number[]): number => costs.reduce((b, c, k) => (c < costs[b]! ? k : b), 0)
+  const turned = (id: string, by: number, to?: number): StopPlan[] => plans.map((p) => (p.id === id ? new StopPlan(p.id, p.fit, { ...p.p, travel: { ...p.p.travel, turnDeg: to ?? p.p.travel.turnDeg + by } }) : p))
+  const real = new FilmDirector(plans)
+
+  it('hangs on a hair between its two answers until a key says which, and then never changes the answer', () => {
+    const n = 720
+    const angles = Array.from({ length: n }, (_, k) => 1 + 0.5 * Math.cos((2 * Math.PI * (k + 0.3)) / n))
+    const sides = { open: 0, close: 0 }
+    for (let j = 0; j < 400; j++) {
+      const want = 0.6 + (0.8 * j) / 400
+      const bare = angles.map((a) => Math.abs(a - want))
+      const k = least(bare)
+      sides[angles[(k + 1) % n]! > angles[(k + n - 1) % n]! ? 'open' : 'close']++
+      expect(worldLead(bare, k), 'least at ' + want).toBeLessThan(0.005)
+      for (const answer of ['open', 'close'] as const) {
+        const costs = worldCosts(angles, bare, answer)
+        const t = least(costs)
+        expect(angles[(t + 1) % n]! > angles[(t + n - 1) % n]!, answer + ' at ' + want).toBe(answer === 'open')
+        expect(costs[t]!).toBeLessThan(0.005)
+        expect(worldLead(costs, t)).toBe(Infinity)
+      }
+      expect(worldCosts(angles, bare, 'least')).toBe(bare)
+    }
+    expect(sides.open).toBeGreaterThan(50)
+    expect(sides.close).toBeGreaterThan(50)
+  })
+
+  it('leads every other answer by ' + LEAD + ' degrees at every stop of the film', () => {
+    expect(real.placed.map((p) => p.id)).toEqual(plans.slice(1, -1).map((p) => p.id))
+    for (const p of real.placed) expect(p.leadDeg, p.id).toBeGreaterThan(LEAD)
+    for (const id of ['earth', 'jupiter']) expect(real.placed.find((p) => p.id === id)!.bareLeadDeg, id).toBeLessThan(0.2)
+  })
+
+  for (const p of plans.slice(1, -1)) {
+    it('keeps the world after ' + p.id + ' when the turn of its travel moves by a quarter of a degree', () => {
+      const i = plans.indexOf(p)
+      for (const by of [-0.25, 0.25]) {
+        const film = new FilmDirector(turned(p.id, by))
+        expect(THREE.MathUtils.radToDeg(film.frames[i + 1]!.rotation.angleTo(real.frames[i + 1]!.rotation)), p.id + ' by ' + by).toBeLessThan(2)
+      }
+    }, 60000)
+  }
+
+  it('refuses a turn that the end of the rise cannot reach, and a corner that is none', () => {
+    expect(() => new FilmDirector(turned('jupiter', 0, 170))).toThrow('jupiter: travel.turnDeg 170 cannot be reached from the end of its rise')
+    expect(() => new FilmDirector(turned('mercury', 0, 130))).toThrow('mercury: its travel takes the corner, but travel.turnDeg 130 can be reached')
+    expect(real.placed.find((p) => p.id === 'mercury')!.missDeg).toBeGreaterThan(1)
+  }, 60000)
 })
