@@ -738,3 +738,21 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   alone, after 60, after 360, after 0 then 60: all four files the same bytes (543ac4c2bfe3871e), 0 pixels differ.
   G3 itself (tools/determinism.ts: review tier, preview format, forward 360, 495, 735, 90; backward; 90 alone)
   started 17:28 on the same tree, log v/det-tubes.log.
+- 17:40 to 17:58 UTC, THE MAP KEPT EARLIER FRAMES (MAIL 1238, found by engine_profiler). LabGround.pick drew the
+  map of the tile (this.map, depth and mipmaps) with no clear while the engine holds autoClear false. MEASURED at
+  preview, review tier (pure.ts, pure.py): d7 5a8c028a frame 90 alone 26495988d11a058a, 60 then 90 d4749e64fbafd470,
+  228 pixels differ, most 16 levels. My test at draft and 1920 by 1080 read four equal files and is NOT to be
+  trusted: THE PROOF IS AT THE GATE'S SETTINGS (--format preview --tier review). CURE: the map is cleared (colour,
+  depth, stencil, to 0 0 0 0) before every draw and the clear colour put back; update() wipes the whole record of a
+  slot that is off. Same as sun_builder's cure of 17:47. Proof on the cured tubes tree: alone, 30, 60, 120, 495 then
+  90: five equal (png d9f7749704c2e76e, pixels 229e83efad0aa6e2). Pushed as d8 f24e0aa8 = d7's ground and json plus
+  the cure (lab.json is d7's again; the tubes trial lives in /home/user/workspace/v/tubes/ until it reads).
+  The standing determinism tool (tools/determinism.ts) takes over 13 minutes here; killed unread.
+- 17:50 UTC, MAIL 1243: the standing reader on d7: rise parts 1, 3, 4 green, part 2 RED: pattern 0.62 from frame
+  221 to 8 film frames later, band 8 px, 17 frames over, first 216 + 1/2 (captures 433 to 449). e1c18f46 (earlier
+  ground) was green on all four. My own reader on d7 read 0.18 to 0.22 there and its hump at 419 to 429: both runs
+  are on one page, so both saw the map's heap of earlier frames; suspect the same cause. Order: the hashes, this
+  row, then the tubes' sheet (slips to about 19:25, said). Standing reader part 2 on d8 started 17:57
+  (npx tsx tools/smooth.ts --stop sun --kind rise --only pictures --part 2/4, log v/p2-d8.log, out/work/smooth).
+- New tools (17:35): flicker.py (a cell's mean light over captures 12 film frames apart), band.ts and band.py (the
+  low band's share by frame and the largest change of a fixed place it makes). Not yet run.
