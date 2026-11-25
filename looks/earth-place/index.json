@@ -1,9 +1,55 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T00:58:09.300Z",
+ "pushed": "2026-11-25T01:21:59.811Z",
  "head": "dc790c7aad5909a665e0447c4d0fa09d47921834",
- "note": "K4 state 1 in work, not committed: low picture out of the globe, haze and tone by the air path per ground point; first trial bad (blot), second trial shown",
+ "note": "handover sides red at T: the limb's line and glow, the left edge and the bottom rows differ, cause in work",
  "looks": [
+  {
+   "time": "2026-11-25T01:21:59.226Z",
+   "file": "20261125012159226-note-hz-c2.jpg",
+   "source": "../../../../tmp/gl/k4/hz-c2.jpg",
+   "kind": "note",
+   "label": "horizon at 1894 to 1920, native crops, K4 trial c2 (not committed)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T01:21:58.673Z",
+   "file": "20261125012158673-note-crops-b.jpg",
+   "source": "../../../../tmp/gl/ho/b/crops-b.jpg",
+   "kind": "note",
+   "label": "handover dive at T (frame 1919, draft), close side, globe side, difference times 8, native crops of the bottom rows and a tower twice, commit dc790c7a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T01:21:58.042Z",
+   "file": "20261125012158042-note-crops-limb.jpg",
+   "source": "../../../../tmp/gl/ho/b/crops-limb.jpg",
+   "kind": "note",
+   "label": "handover dive at T (frame 1919, draft), close side, globe side, difference times 8, native crops at the limb and the left edge, commit dc790c7a",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T01:17:58.776Z",
+   "file": "20261125011758776-compare-earth-rise-sides.jpg",
+   "source": "out/work/handover/earth-rise-sides.png",
+   "kind": "compare",
+   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T01:16:55.626Z",
+   "file": "20261125011655626-compare-earth-dive-sides.jpg",
+   "source": "out/work/handover/earth-dive-sides.png",
+   "kind": "compare",
+   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T00:57:43.926Z",
    "file": "20261125005743926-note-c2-rise2.jpg",
@@ -58,46 +104,6 @@
    "source": "../../../../tmp/gl/s21/rv-2126-a.jpg",
    "kind": "note",
    "label": "review tier 2126 on d0036659",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:32:33.298Z",
-   "file": "20261125003233298-note-S-b.jpg",
-   "source": "../../../../tmp/gl/k4/S-b.jpg",
-   "kind": "note",
-   "label": "K4 state 1 plan: the share by air path, derived on the poses",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:32:32.594Z",
-   "file": "20261125003232594-note-k4-shares-at-0.jpg",
-   "source": "../../../../tmp/gl/k4/k4-shares-at-0.jpg",
-   "kind": "note",
-   "label": "K4 trials: each share at 0 on d0036659",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:11:59.994Z",
-   "file": "20261125001159994-note-rv-2130-b.jpg",
-   "source": "../../../../tmp/gl/s21/rv-2130-b.jpg",
-   "kind": "note",
-   "label": "review tier 2130, native crop b",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:11:59.427Z",
-   "file": "20261125001159427-note-rv-2130-a.jpg",
-   "source": "../../../../tmp/gl/s21/rv-2130-a.jpg",
-   "kind": "note",
-   "label": "review tier 2130, native crop a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:11:58.778Z",
-   "file": "20261125001158778-note-k4-plate-and-low.jpg",
-   "source": "../../../../tmp/gl/k4/k4-plate-and-low.jpg",
-   "kind": "note",
-   "label": "K4: the plate's file and the low picture's file",
    "stop": "earth"
   }
  ]
