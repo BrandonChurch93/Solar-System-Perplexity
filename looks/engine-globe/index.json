@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T09:06:57.221Z",
- "head": "09cf73c73f13f2639b20bcdebc4db149bd155d32",
- "note": "09:10 UTC: a measurement only. Of the cap's kept triangles 62 to 76 percent reach no pixel at 1080 rows and 43 to 60 percent at 2160. Leaving all of them out would save 2.5 to 5.8 s a frame at 1080; every PNG stayed equal. Nothing is built on it.",
+ "pushed": "2026-11-25T09:33:19.123Z",
+ "head": "d69b8640fb1f481dbb58cf26cb831f3bd2ecd392",
+ "note": "MAIL 1005 in work: the reader's limb number against an exact carry of the same pair, frame 710 only so far; the red frames 716 to 726 are still rendering",
  "looks": [
+  {
+   "time": "2026-11-25T09:33:17.450Z",
+   "file": "20261125093317450-note-sheet-1420.jpg",
+   "source": "../m1005/sheet-1420.png",
+   "kind": "note",
+   "label": "MAIL 1005 first look, Mercury dive k 1420 (film 710): pattern change by the reader, by an exact carry, and the reader on one picture foreshortened",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T09:06:56.646Z",
    "file": "20261125090656646-note-tri-uhd.jpg",
@@ -58,14 +66,6 @@
    "source": "../m835/cull-proof-2.png",
    "kind": "note",
    "label": "cap.cull on against off, Mars draft seconds: left rate 1 (14 of 14 byte equal), right rate 2 by halves 2440 to 2460 (41 of 41 byte equal)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T04:32:44.371Z",
-   "file": "20261125043244371-note-cull-proof-1.jpg",
-   "source": "../m835/cull-proof-1.png",
-   "kind": "note",
-   "label": "cap cull on against off, Mars draft: whole frames done 14 of 14 byte equal, half frames running",
    "stop": "mars"
   }
  ]
