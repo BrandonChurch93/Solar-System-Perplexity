@@ -1,9 +1,37 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T10:47:02.239Z",
- "head": "1081ea251cc8c798231beab13d2604ae6e1a6bdb",
- "note": "state c7: no lamp, blotch heat, funnel pit, clip 120 to 150",
+ "pushed": "2026-11-25T11:23:49.760Z",
+ "head": "e361ec9e174609bcd42c35e62b3e4d00648c7955",
+ "note": "lab ground e3 to f2: pressed sheet of cells with narrow lanes, tongues in the penumbra; f1 is the gas march test (switched off)",
  "looks": [
+  {
+   "time": "2026-11-25T11:18:20.474Z",
+   "file": "20261125111820474-frame-lab-240-e13.jpg",
+   "source": "out/work/sun/lab/lab-240-e13.png",
+   "kind": "frame",
+   "label": "sun.rise frame 240, draft tier",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 240,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T11:17:59.159Z",
+   "file": "20261125111759159-frame-lab-90-f2.jpg",
+   "source": "out/work/sun/lab/lab-90-f2.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T10:47:01.641Z",
    "file": "20261125104701641-note-clip-c7.mp4.jpg",
@@ -50,22 +78,6 @@
    "source": "../v/c7r-far.jpg",
    "kind": "note",
    "label": "sun lab state c7 c7r-far",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:46:58.480Z",
-   "file": "20261125104658480-note-c7r-spot.jpg",
-   "source": "../v/c7r-spot.jpg",
-   "kind": "note",
-   "label": "sun lab state c7 c7r-spot",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:46:57.946Z",
-   "file": "20261125104657946-note-c7r-near.jpg",
-   "source": "../v/c7r-near.jpg",
-   "kind": "note",
-   "label": "sun lab state c7 c7r-near",
    "stop": "sun"
   }
  ]
