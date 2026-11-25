@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T23:18:00.393Z",
+ "pushed": "2026-11-25T23:36:00.431Z",
  "head": "2f89bcbb37768172903374b868d9742d98112493",
- "note": "rigid body trial: dive drawn and read; rings by code alone at the hold tried (softer); globe light map baked, stills next",
+ "note": "baked globe light map holds at 3465 and 3720 in drafts; rings by code alone at the hold are poorer than the hero ring pixels, working on the ring profile",
  "looks": [
+  {
+   "time": "2026-11-25T23:35:59.726Z",
+   "file": "20261125233559726-note-v_d1f_near.jpg",
+   "source": "../../../../tmp/v/rigid/v_d1f_near.jpg",
+   "kind": "note",
+   "label": "3465 near rings at the final tier: hero, C, D1 (rings by code alone)"
+  },
+  {
+   "time": "2026-11-25T23:35:59.108Z",
+   "file": "20261125233559108-note-v_d1f_left.jpg",
+   "source": "../../../../tmp/v/rigid/v_d1f_left.jpg",
+   "kind": "note",
+   "label": "3465 left ansa at the final tier: hero, C (hero ring pixels on true circles), D1 (rings by code alone): D1 is poorer, not adopted as is"
+  },
+  {
+   "time": "2026-11-25T23:35:58.384Z",
+   "file": "20261125233558384-note-v_e_globe.jpg",
+   "source": "../../../../tmp/v/rigid/v_e_globe.jpg",
+   "kind": "note",
+   "label": "3465 globe crops: hero, B (rigid, projector light), E (rigid, baked globe light map), C (rigid, no hold light)"
+  },
+  {
+   "time": "2026-11-25T23:35:57.664Z",
+   "file": "20261125233557664-note-v_3720_four.jpg",
+   "source": "../../../../tmp/v/rigid/v_3720_four.jpg",
+   "kind": "note",
+   "label": "3720: approved close, tree final, E draft (baked globe light map in both sets), D3 draft (model alone with the projector light)"
+  },
   {
    "time": "2026-11-25T23:17:57.840Z",
    "file": "20261125231757840-note-Cd_a_3540.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/bake/out/globe-light-vis.png",
    "kind": "note",
    "label": "trial: the hold's light on the globe baked by latitude and longitude from the Sun (not in the tree yet)"
-  },
-  {
-   "time": "2026-11-25T22:51:50.821Z",
-   "file": "20261125225150821-note-polar_right.jpg",
-   "source": "../../../../tmp/v/rigid/polar_right.png",
-   "kind": "note",
-   "label": "the ring map at azimuth -25 to -5: where the mottled patch comes from"
-  },
-  {
-   "time": "2026-11-25T22:51:49.597Z",
-   "file": "20261125225149597-note-soft_right_3465.jpg",
-   "source": "../../../../tmp/v/rigid/soft_right_3465.png",
-   "kind": "note",
-   "label": "3465 right ansa with the bend off: the mottled patch on the B ring's outer margin, in the ring map, mine to cure"
-  },
-  {
-   "time": "2026-11-25T22:51:48.415Z",
-   "file": "20261125225148415-note-prof_now_dive.jpg",
-   "source": "../../../../tmp/v/rigid/prof_now_dive.png",
-   "kind": "note",
-   "label": "ring profile by frame 3560 to 3612 on the tree's dive: the hero's ring pixels give way to the code's rings by height, 3578 to 3600"
-  },
-  {
-   "time": "2026-11-25T22:27:07.277Z",
-   "file": "20261125222707277-note-globe_rigid_now.jpg",
-   "source": "../../../../tmp/v/rigid/globe_rigid_now.png",
-   "kind": "note",
-   "label": "cloud tops against the rigid map at 3530, 3600, 3640, 1 to 1"
   }
  ]
 }
