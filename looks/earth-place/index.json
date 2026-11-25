@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T06:35:43.419Z",
+ "pushed": "2026-11-25T07:03:47.193Z",
  "head": "b9908e0352a26912e1440587e32e2a69343167d4",
- "note": "E1 trial frames, pattern still red at 0.81 from 1890 on the far band, next trial spreads the arrival by distance",
+ "note": "E2 state: red on the pattern in both moves, the far band's deck comes with the air in ten frames; next trial keeps the towers' colour",
  "looks": [
+  {
+   "time": "2026-11-25T07:03:46.400Z",
+   "file": "20261125070346400-note-e2r-b.jpg",
+   "source": "../../../../tmp/gl/k8/e2r-b.jpg",
+   "kind": "note",
+   "label": "E2 rise 2122 to 2137, draft; pattern red 0.81 from 2125",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T07:03:45.795Z",
+   "file": "20261125070345795-note-e2-b.jpg",
+   "source": "../../../../tmp/gl/k8/e2-b.jpg",
+   "kind": "note",
+   "label": "E2 dive 1874 to 1889, draft: presence by the way of the distance; pattern still red 0.90 from 1882",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T06:35:42.696Z",
    "file": "20261125063542696-note-e1-look.jpg",
@@ -52,22 +68,6 @@
    "source": "out/work/earth/place/k3/take/cmp-p24-r1c2-t1-c.jpg",
    "kind": "note",
    "label": "K3 first take: patch-24 tile at true size, left as shipped, right the take",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T05:17:05.278Z",
-   "file": "20261125051705278-note-review-1884.jpg",
-   "source": "../../../../tmp/gl/k6/review-1884.jpg",
-   "kind": "note",
-   "label": "3a136a1a review tier 1884",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T04:51:08.001Z",
-   "file": "20261125045108001-note-r-1857-1920.jpg",
-   "source": "../../../../tmp/gl/k6/r-1857-1920.jpg",
-   "kind": "note",
-   "label": "3a136a1a review tier 1857 (for the by frame answer on softness)",
    "stop": "earth"
   }
  ]
