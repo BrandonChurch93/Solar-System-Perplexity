@@ -35,6 +35,7 @@ export interface PatchSet {
   ownGain?: boolean
   fadeMinor?: boolean
   centresDeg?: [number, number][]
+  counts?: number[]
 }
 
 export interface StormParams {
@@ -339,7 +340,8 @@ export class Planet {
       const w = p?.widthsDeg[i]
       return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
     }
-    const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    if (p?.counts && (p.counts.length !== p.textures.length || p.counts.some((n) => !(n > 0)))) throw new Error('counts needs one width above 0 per patch level')
+    const size = (i: number): number => p?.counts?.[i] ?? (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
     const slots = patchSlots(p?.textures.length ?? 0)
     const levels = Array.from({ length: slots }, (_, i) => i)
     if (p?.own && p.own.length !== p.textures.length) throw new Error('own needs one entry per patch level')
