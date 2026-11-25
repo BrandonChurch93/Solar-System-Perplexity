@@ -3952,3 +3952,22 @@ Attached: both reports and the two panels of wc1-06 (copied to /tmp/m/r1168/).
 - Second form X2 9ee7de118b5e464343c5ca10f573fa52c0a050ca (on main 53025569, 3 lines in, 1 out): `sunShown` takes the ride by `shot.skyShare` (`sunRide.identity().slerp(sunTurn, shot.skyShare ?? 0)`); the low branch is main's line untouched. So from 690 to 733 and 998 to 1034 it is the first form to the bit (slerp at 0 returns the identity), in the low view it is main to the bit, and the two meet at the view switch with the whole ride on both sides.
 - Way C carries the same edit (E2), merged with X2 (M2); the branch also holds the first form (E efe65687, M 7a40a269 with X as second parent) underneath. Main's `plan.ts` line `turnDeg: 108` (73680079) came in with the merge of 53025569.
 - Film's, seen by the probe, not mine: the far Sun's share is 0 at 759 + 1/2 and 1 at 760 (skyShare undefined in the low view), all through 760 to 977.
+
+## MAIL 1179 from the Builder, 15:53 UTC (word for word)
+
+RETURN wc1-03, way C 34632eb, the dive's first part (frames 678 to 734 + 1/2), 90 minutes on machine 12: RED on one line. The pattern changes in place by 0.52 from frame 721 + 1/2 to 8 film frames later, band 8.1 px, limit 0.45, 6 frames over it, the first 720; most at pixel 1376, 836. Pop 1.02 against 1.2 and level step 0.07 against 1.3 are green. The five files are attached.
+SEEN by me in the changes panel: the bright part of the pattern's change at 721 + 1/2 lies along the lower right edge of the carried field, where Mercury's limb meets the frame's side, and the row read on the later frame shows nothing there. Say whether this is the ground itself (the relief coming in near the limb at 720 to 726) or the reader's field at the limb; if the reader's, harness_builder gets the pair from you with one line.
+So way C stands: dive part 1 red on this line, dive part 2 green, rise part 2 red on two lines (MAIL 1168), rise part 1 and the finals still out. Your set.ts name 2a0fafb8 for the 17:00 cut is due by 16:15 UTC.
+
+Attachments copied to /tmp/m/r1179/ (mercury-dive-p1of2.md, .json, wc1-03-tail.txt, -pops.png, -changes.png).
+
+## 16:05 UTC: 9ee7de11 measured, the merge measured
+
+- Stills on take/ts1 6dd77c6b with 9ee7de11's set.ts (`/tmp/b0`, folder `ts1e`): 765 and 970 are the same files as before (`ts1d`, main's set on take/ts1; `cmp` equal). View change: the peak of the top 30 rows (the warm pillar on the horizon) stands at x 579, 575, 570 at 759 + 1/2, 760, 760 + 1/2 and at 554, 558 at 977 + 1/2, 978: no jump. 745 and 990 read sound.
+- The quaternion at share 0 and 1 (`sun/sl2.mjs`, 400 turns of 1 to 58 degrees, 80000 vectors): share 0 gives the vector itself in 80000 of 80000; share 1 gives the turn itself in 399 of 400 (the one that differs is under 3.6 degrees, where three's slerp takes its small angle branch and normalizes; the film's ride at share 1 is 27 to 53 degrees).
+- Units on 9ee7de11 itself in `/tmp/b0` (sparse tree): tsc clean, 81 files, 917 tests passed, 728 s (15:46 to 15:58).
+- Smooth path on 9ee7de11 against main 53025569 (same tree with main's set.ts): the printed lines equal byte for byte, the 5 red lines of the rise's speed that d309 names as the first cut's (1022 to 1034).
+- Origin main 733be555 merged at 15:49 (status and scorecards only, nothing under src, public, tools, tests, config): head acd76b3e.
+- On the merge acd76b3e: gate `PASS G11  every asset has a row or a recipe`, `PASS G15  at most 2 sets per frame; finished stops: mercury/web 353 MB, mercury/full 1397 MB`; tsc clean; `npx vitest run --exclude tests/skylift-gl.test.ts` 80 files, 911 tests passed, 241 s; `tests/skylift-gl.test.ts` alone started 16:05.
+- Net of my three folders against origin main: +3.021 MB (way C); 9ee7de11 against main: +103 bytes.
+- MAIL 1179's line (dive pattern 0.52 at 721 + 1/2, pixel 1376, 836) is the place read at 13:33 (above, "Dive 720 to 722 + 1/2"): the same craters squeezed toward the limb (1 px becomes 0.77 px across), the mark b0b87889 reads the same there. Not relief coming in.
