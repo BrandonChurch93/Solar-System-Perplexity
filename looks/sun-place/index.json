@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T17:34:50.564Z",
+ "pushed": "2026-11-25T17:57:26.411Z",
  "head": "e1c18f468aadbc38e87d273844f31305eccd3bfc",
- "note": "gas seated with the smooth step, light added 0.75 at 196 to 30.78 at 241; hold's card adds 0 pixels at 226, 3327 at 231; G3 red on the name, hunting the state at 90; frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "G3 cure in the tree: the arcade is taken into the stop's group at the top of every frame; the lab's far map is cleared before its draw; 60 then 90 the same bytes as 90 alone (a06e0f96b68dd742), 495 and 735 then 90 are drawing. Arcade trials not taken. frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T17:57:25.069Z",
+   "file": "20261125175725069-note-arc-trials.jpg",
+   "source": "../../../../tmp/v/arc-trials.jpg",
+   "kind": "note",
+   "label": "arcade at 60, draft: approved, as named, trial T2 (thicker, sheath, larger feet), trial T3 (T2 and more light). Not taken: top 30 percent 18.5749 named, 19.7265 T2, 20.7996 T3",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T17:34:49.272Z",
    "file": "20261125173449272-note-band-crops.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/hb-b.jpg",
    "kind": "note",
    "label": "trial sheet b: share by the eye's height, 231 to 261",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:58:21.991Z",
-   "file": "20261125165821991-note-hb-a.jpg",
-   "source": "../../../../tmp/v/hb-a.jpg",
-   "kind": "note",
-   "label": "trial sheet b: share by the eye's height, equal steps of light, 60 and 196 to 226. frame 60 (named ground, unchanged by the gas table): dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
    "stop": "sun"
   }
  ]
