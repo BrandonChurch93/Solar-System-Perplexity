@@ -1700,3 +1700,6 @@ Plan: (A) h with the start found from geometry, mercury leg only; (B) hand over 
 - 18:49 NAMED 0d13e4216a0c1f0a4220aa8716dbdf9b1c8d73de (on 4d123219), pushed to origin agent/travel-b10; bundle out-travel/travel-b10-0d13e421.bundle and the readings out-travel/venus-rise/ sent. Said plainly: a place in a swing, not a margin; neighbours read over main; row by row two pattern rows and one level step row are over main's. Full vitest started after naming (/tmp/vt-full-C1.json); mail only if red.
 - A slip: typed `git stash list` once at 18:38 (a listing only, nothing stashed, count 0). The rule is never to type it at all.
 - OPEN, for later if asked: what happens on Venus between the capture times 1610 + 1/2 and 1611 (clouds and limb dots; on every line at the same time); a pass start that brings the pattern rows 1607 + 1/2 to 1608 + 1/2 under 0.45 would need another shape of the pass (passStart, passKnee), not the lend.
+
+## 25 Nov 19:01 UTC
+Full vitest on 0d13e4216a0c1f0a4220aa8716dbdf9b1c8d73de (json reporter, alone): 917 of 917, no failed file. Not mailed (green needs no mail by MAIL 520). Waiting for the machine reading of 0d13e421 and the cut of 20:00. If the rule is row by row no known setting passes; fallback 4d123219 is in take/c2b.
