@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T01:08:33.735Z",
- "head": "7e4f4e6beb012ee495c1456c4a0a7ac26c762257",
- "note": "mail 824: step commit 7e4f4e6b pushed; 2156 at review shows dotted rows at 0.6 px a sample: the lookups are read finer than the samples of a moving frame can add up to; candidate renders",
+ "pushed": "2026-11-25T01:18:09.777Z",
+ "head": "0d33056e0cdc6d0e6227cfb2911b4bf25745a72f",
+ "note": "mail 824: the step commit is proven byte equal at draft and review; the dots at 2156 and 1857 at review are still there at 0.6 px a sample; the candidate for the cause renders",
  "looks": [
+  {
+   "time": "2026-11-25T01:18:09.085Z",
+   "file": "20261125011809085-note-1857-review-ll-z6.jpg",
+   "source": "../../../../tmp/law/1857-review-ll-z6.png",
+   "kind": "note",
+   "label": "Earth 1857 on main, review tier, x 420 to 620, y 820 to 940 at 6 times: rows of dots along the motion inside the streaks"
+  },
+  {
+   "time": "2026-11-25T01:18:08.333Z",
+   "file": "20261125011808333-note-1857-review-ll.jpg",
+   "source": "../../../../tmp/law/1857-review-ll.png",
+   "kind": "note",
+   "label": "Earth 1857 on main, review tier (26 samples, 0.60 px a sample), lower left at full size: the bright cloud specks are streaks made of dots"
+  },
   {
    "time": "2026-11-25T01:08:32.358Z",
    "file": "20261125010832358-note-f02156.jpg",
@@ -45,22 +59,6 @@
    "source": "../../../../tmp/law/m805/earth1857-land-four.png",
    "kind": "note",
    "label": "Earth 1857 lower right quarter (land) four times: film rate as it is and whole shutter, rate 2 as it is and whole shutter, final tier",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:15:51.446Z",
-   "file": "20261125001551446-note-mars2427-four.jpg",
-   "source": "../../../../tmp/law/m805/mars2427-four.png",
-   "kind": "note",
-   "label": "Mars 2427 lower right quarter four times: film rate as it is and whole shutter, rate 2 as it is and whole shutter, final tier",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:15:50.359Z",
-   "file": "20261125001550359-note-earth1857-r2-whole.jpg",
-   "source": "../../../../tmp/law/m805/earth1857-r2-whole.png",
-   "kind": "note",
-   "label": "Earth 1857 (capture frame 3714) lower left quarter, final tier, rate 2 with the whole shutter of the capture frame: blur 15.5 px, 31.4 px to the next drawn frame",
    "stop": "earth"
   }
  ]
