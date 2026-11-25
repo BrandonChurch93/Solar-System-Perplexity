@@ -2,6 +2,9 @@ import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
+import * as THREE from 'three'
+import { faceLaw, holdFrame } from '../src/space/farsun/farsun'
+import { HOLD } from '../src/space/farsun/hold'
 import look from '../src/space/farsun/look.json'
 import { globeShare, spans, swapDistance, wearShare } from '../src/space/farsun/share'
 
@@ -92,5 +95,34 @@ describe('the handover and the wear of the far Sun', () => {
       expect(a.share, String(frame)).toBe(1)
       expect(a.burn, String(frame)).toBeCloseTo(b.burn, 6)
     }
+  })
+
+  it('keeps the face of the Sun stop through the handover: the spots and the fields go out with the exposure after it and never before', () => {
+    for (const frame of [471, 475, 480, 484, 485, 495, 500]) {
+      const law = faceLaw(far(frame).burn)
+      expect(law.flat, String(frame)).toBeLessThan(1e-6)
+      expect(law.power, String(frame)).toBeCloseTo(look.spots.power[0]!, 6)
+      expect(law.plage, String(frame)).toBeCloseTo(look.plage.gain[0]!, 6)
+    }
+    const full = faceLaw(1)
+    expect(full).toEqual({ flat: look.spots.flat[0], power: look.spots.power[1], plage: look.plage.gain[1] })
+    let step = 0
+    for (let k = 0; k < 400; k++) step = Math.max(step, Math.abs(faceLaw((k + 1) / 400).flat - faceLaw(k / 400).flat))
+    expect(step).toBeLessThan(0.004)
+  })
+
+  it('reads the map of place from the eye of the middle of the hold of the first stop after the Sun, as the film stands there', () => {
+    const seg = config.segments.find((s) => s.id === plans[1]!.id + '.hold')!
+    const frame = ((seg.start + seg.end) / 2) * config.fps
+    const shot = film.shotAt(frame, frame / config.fps)
+    const f = shot.sun.far
+    if (!f) throw new Error('no far Sun at ' + frame)
+    const eye = shot.sun.dir.clone().normalize().multiplyScalar(-1 / Math.sin(shot.sun.angularRadius)).applyQuaternion(f.body.clone().invert())
+    const held = holdFrame(f.spin)
+    expect(held.eye.distanceTo(eye)).toBeLessThan(2e-3)
+    expect(new THREE.Vector3().fromArray(HOLD.eye).length()).toBeCloseTo(swapDistance, 3)
+    expect(Math.abs(held.x.dot(held.axis))).toBeLessThan(1e-9)
+    expect(Math.abs(held.y.dot(held.axis))).toBeLessThan(1e-9)
+    expect(HOLD.data.length).toBe(Math.ceil((HOLD.width * HOLD.height * 2) / 3) * 4)
   })
 })

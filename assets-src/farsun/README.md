@@ -420,7 +420,8 @@ What changed in the body's law, each by an angle or a radius and none by the pix
 
 - The face is flattened before its mottle is drawn (`spots.flat`: amount, level of the face table, mean).
   The fine heat is divided by the face table read at a coarse level, so the broad fields of the table no
-  longer come back as yellow patches and the mottle stands on an even ground. `plage.gain` is 0,
+  longer come back as yellow patches and the mottle stands on an even ground. `plage.gain` is 0 (both at
+  full burn only, see "One body at the seam"),
   `keep.warm` is off, `keep.coarse` is weaker (0.25), `keep.gain` 0.14 over a floor of 0.8.
 - A dark knot shades with a colour and not with grey (`knot.shadeColour`, `knot.shade`: share of the colour,
   strength). MEASURED on the approved image: where its face is darker, red falls 0.09 and green 0.36 of
@@ -519,6 +520,117 @@ The far Sun at 717, 870 and 1016, MEASURED at draft against the folder of 33cc23
 - 870 differs in 17 pixels by one level each.
 - 60, 360 and 1200 keep their bytes.
 
+## hold.ts, the map of place (MAIL 979)
+
+A law that does not place each ray stops near 4.3 at frame 615. `src/space/farsun/hold.ts` is a small
+table that says where a patch of the face and a ray of the gas stand and how strong, in the frame of the far
+Sun as Mercury's hold sees it. The law keeps every grain: the table is read between its texels and holds
+nothing finer than its pitch. It is in code, as `face.ts` is, so no frame waits for a file.
+
+`python3 assets-src/farsun/make_hold.py` writes it; the script's head says what the two channels hold and
+which inputs it reads (the approved Mercury image, read only, and renders of frame 615 of this folder at
+the draft tier, `npm run still -- --frame 615 --tier draft`). `fit/holdframe.mts` prints the eye and the
+axes of that frame from the film (`npx tsx assets-src/farsun/fit/holdframe.mts 615`), which is the
+`--frame` file of the script.
+
+- The frame. The eye of the middle of Mercury's hold, in the body's frame at the turn `spinAt`: 4.9354
+  radii from the centre, which is the film's swap distance. `tests/farsun-share.test.ts` holds the table's
+  eye to the film's within 0.002 radii, so a hold that moves turns the test red.
+- The face (channel 0) is read on the sphere at the place the hold's eye sees a point of the surface,
+  across the hold's line to the centre with the limb at radius 1. It is added to the mark of the knots:
+  over 0 a glint toward white, under 0 the knots' peach shade. It fades where the surface turns away from
+  the hold's eye (`hold.edge`, the cosine from and to), so nothing of it is smeared along the body.
+- The gas (channel 1) is read in space by the turn about the hold's line and the distance from the centre:
+  a ray of the table is a sheet that stands on the body along a radius, and it fades with the lean of a
+  point out of the hold's plane of sky (`hold.depth`, the sine of the lean at which it has fallen to 1 / e).
+  It is a gain in stops on the corona, the fringe, the hair, the tongue, the rays of the knots and the
+  chromosphere. The loops take `hold.loops` of it and this look sets 0: with the gain on them the loop of
+  the lower limb lost its strands where the approved loop stands a few pixels beside them (MEASURED at
+  615, draft: 2.21 with the loops under the gain and 2.30 without, and the loop is wire again).
+- Both go with the exposure as the knots do (the share of the burn's gain above 1), and the gas also with
+  one minus the wear. So the table is nothing at burn 0: the Sun stop's views and the start of the
+  handover keep their bytes, and the map grows in with the burn along the flight from 474 on.
+- It belongs to the body. Its frame turns with the body's spin, and no term of it reads the clock.
+- `hold.face` and `hold.gas` are the strengths. The table was fitted at 1 and 1; `hold.gas` is 1.35 so
+  the rays of the upper left have the approved image's contrast (MEASURED at 615, draft: spike contrast
+  9.3 at 1.0, 10.3 at 1.2, 11.1 at 1.35, the approved image 11.0; the box 2.30, 2.37, 2.55).
+
+The takes (`assets.maxTakesPerAsset` is 6, and 6 were made in this phase; the rejected ones stay under
+`out/work/farsun-hold/`). Each take is one pass of `make_hold.py step` on the render of the take before,
+so a finer pitch starts from the coarser table. Four renders with flat tables (face +0.5 and -0.5, gas +1
+and -1) gave the slopes; they measure and are no takes. MEASURED at 615, draft tier, the box x 1240 to
+1920, y 0 to 700, blur 12 px:
+
+| take | pitch | box | face | limb | gas 1.0 to 1.1 | 1.1 to 1.3 | 1.3 to 1.6 | beyond 1.6 |
+|------|-------|-----|------|------|----------------|------------|------------|------------|
+| none (96a7a7ee) | | 4.33 | 2.7 | 3.4 | 7.0 | 7.6 | 4.3 | 2.8 |
+| 1 | 40 px | 3.35 | 2.5 | 2.8 | 4.6 | 4.9 | 3.5 | 2.7 |
+| 2 | 40 px | 3.00 | 2.4 | 2.4 | 3.7 | 4.1 | 3.2 | 2.6 |
+| 3 | 20 px | 2.64 | 2.1 | 1.9 | 2.8 | 3.5 | 3.0 | 2.6 |
+| 4 | 20 px | 2.45 | 1.9 | 1.7 | 2.3 | 3.2 | 3.0 | 2.5 |
+| 5 | 12 px | 2.29 | 1.6 | 1.4 | 2.0 | 3.1 | 2.9 | 2.5 |
+| 6 | 12 px, kept | 2.21 | 1.5 | 1.3 | 1.8 | 3.0 | 2.9 | 2.5 |
+
+So the floor with two takes at each pitch is 3.00 at 40 px, 2.45 at 20 px and 2.21 at 12 px. The table of
+12 px gains 0.79 on the table of 40 px and is kept (93 by 89 texels, two bytes each).
+
+MEASURED at 615, final tier, with `hold.gas` 1.35 and `hold.loops` 0: the box 2.57 (96a7a7ee 4.34); the
+face 1.5, the limb 1.3, the gas 3.0, 3.7 and 3.5, beyond 1.6 radii 2.5; spike contrast of the upper left
+11.1 (the approved image 11.0, 96a7a7ee 7.9).
+
+What the table can not do: it is one number for the face and one for the gas, so it moves no hue. The gas
+from 1.1 to 1.3 radii stays 3 to 4 levels short of red and the gas from 1.3 to 1.6 radii 2 levels over in
+red and green; the face stays 1.5 to 2 levels over in red and green. Where the gain met its end (3 stops
+down, 799 texels of 8277, most of them under the lower limb beyond 1.5 radii) the light that is left is
+the lens's and not the gas's.
+
+## One body at the seam (MAIL 1002)
+
+The flight away from the Sun stop shows the stop's own globe until the far Sun stands in for it: the far
+Sun's share is 0 up to frame 470, 0.18 at 474, 0.89 at 480 and 1 from 483 on, and the stop's globe has
+gone at 484 (shares of the way by distance, never frames; the frames are where the film's path puts
+them). 96a7a7ee had made three laws of the far look's face flat for the burnt face of frame 615 and for
+every exposure: `spots.flat` (the broad fields of the face table divided out), `spots.power` 0.3 where
+it was 0.85, and `plage.gain` 0 where it was 0.2. So from 471 to 484 the spots and the bright regions of
+the stop's globe went out while the eye watched, and at 495 the face was pale and even. That was a body
+changing in view.
+
+Cured: the three laws go with the exposure after the handover, not before. `faceLaw` in `farsun.ts`
+takes the burn; up to `burn.split` (0.2, the exposure the film reaches where the handover ends) the
+face is the stop's (`spots.power[0]`, `plage.gain[0]`, no flattening), and from there to burn 1 it goes
+evenly to the burnt look (`spots.power[1]`, `plage.gain[1]`, `spots.flat[0]`). At burn 1 the numbers are
+the ones 96a7a7ee had, so 615 and every later view keep their bytes against the state before the cure
+(MEASURED at 615, draft). `tests/farsun-share.test.ts` holds it: at 471, 475, 480, 484, 485, 495 and 500
+the flattening is 0 and the power and the plage are the stop's.
+
+MEASURED on previews of 960 by 540 of this tree, the face inside 0.75 radii, luminance in levels; the
+bands are the spread of the difference of two blurs (8 and 40 px, 40 and 160 px, in pixels of the master
+frame):
+
+| frame | far Sun's share | burn | mean | R G B | band 8 to 40 | band 40 to 160 |
+|-------|-----------------|------|------|-------|--------------|----------------|
+| 440 to 470 | 0 | 0 | 121.6 to 120.6 | 188 109 48 | 18.8 to 19.0 | 14.0 to 14.2 |
+| 472 | 0.03 | 0.017 | 121.4 | 188 109 49 | 18.9 | 14.2 |
+| 474 | 0.18 | 0.043 | 125.4 | 190 114 52 | 18.0 | 13.5 |
+| 476 | 0.42 | 0.074 | 141.8 | 200 132 66 | 15.0 | 11.2 |
+| 478 | 0.69 | 0.109 | 170.5 | 216 165 94 | 10.8 | 8.1 |
+| 480 | 0.89 | 0.143 | 196.3 | 229 194 126 | 7.8 | 5.9 |
+| 482 | 0.98 | 0.173 | 211.8 | 237 211 149 | 6.1 | 4.7 |
+| 484 | 1 | 0.199 | 219.9 | 241 219 164 | 5.3 | 4.0 |
+| 485 to 500 | 1 | 0.2 | 219.7 to 217.5 | 240 218 162 | 5.3 to 5.6 | 4.1 to 4.2 |
+
+96a7a7ee at 485, the same measure on its draft: mean 216.5, bands 1.4 and 1.1. So the cure brings back
+the features (5.3 and 4.1), in the places they have at the stop.
+
+NOT CURED here, and owed: the face still goes from the stop's exposure to the far look's between 471 and
+484, as it did before 96a7a7ee. The largest change in one film frame is 15.0 levels of the mean (477 to
+478). The law is `burn.split` times one minus the wear (the film calls `wearShare` of `share.ts`), and
+with it the brightness of the body from `body.bright[0]` to `body.bright[1]`; both end with the wear,
+because the far Sun wears the stop's map only while the Sun stop is drawn. The far look without the wear
+and at the stop's exposure is no orange globe yet (SEEN on previews of 484 to 495 with the exposure held
+down: a dull tan body), so the law can not simply be moved later: the far look at low exposure has to be
+made the stop's first.
+
 ## The cost
 
 MEASURED on a machine of four cores with nothing else running, software GL, draft tier, frame 615, a fresh
@@ -561,3 +673,8 @@ tools of the recipe and no part of a frame.
 The lines the far Sun needs in files that belong to other owners, one patch per owner, made by
 `sh assets-src/farsun/wiring/make.sh` against the commit of main the branch started from. Each patch starts
 with the reason for every hunk. They reach main through their owners.
+
+The patches of the travel, the Sun and Mercury are in main and are no longer kept (MEASURED on the merge
+of main dac56ef3: 44 of 45, 17 of 17 and all of their added lines stand in the tree as they are). Their
+reasons stay beside (`travel.txt`, `sun.txt`, `mercury.txt`) and the history has the patches.
+`film-sunstart.patch` is not in main yet and stays.

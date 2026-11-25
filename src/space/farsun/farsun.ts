@@ -4,6 +4,7 @@ import { bufferFrame } from '../../core/frame'
 import { FARSUN_FRAG, FARSUN_VERT, MAX_KNOTS, MAX_LOBES, MAX_LOOPS, MAX_STREAMERS, MAX_TONGUES } from './shader'
 import look from './look.json'
 import { FACE } from './face'
+import { HOLD } from './hold'
 import { loopsOff, wearShare } from './share'
 
 export { discShare, globeShare, wearShare } from './share'
@@ -54,6 +55,38 @@ function faceTexture(): THREE.DataTexture {
   tex.unpackAlignment = 1
   tex.needsUpdate = true
   return tex
+}
+
+function holdTexture(): THREE.DataTexture {
+  const raw = atob(HOLD.data)
+  const data = new Uint8Array(raw.length)
+  for (let i = 0; i < raw.length; i++) data[i] = raw.charCodeAt(i)
+  const tex = new THREE.DataTexture(data, HOLD.width, HOLD.height, THREE.RGFormat, THREE.UnsignedByteType)
+  tex.colorSpace = THREE.NoColorSpace
+  tex.wrapS = THREE.ClampToEdgeWrapping
+  tex.wrapT = THREE.ClampToEdgeWrapping
+  tex.generateMipmaps = false
+  tex.minFilter = THREE.LinearFilter
+  tex.magFilter = THREE.LinearFilter
+  tex.unpackAlignment = 1
+  tex.needsUpdate = true
+  return tex
+}
+
+export function holdFrame(spin: number): { eye: THREE.Vector3; axis: THREE.Vector3; x: THREE.Vector3; y: THREE.Vector3 } {
+  const turn = (v: THREE.Vector3): THREE.Vector3 => v.applyAxisAngle(new THREE.Vector3(0, 1, 0), spin - look.spinAt)
+  const eye = new THREE.Vector3().fromArray(HOLD.eye)
+  const limb = 1 / Math.sqrt(eye.lengthSq() - 1)
+  const axis = eye.clone().normalize().negate()
+  const x = axis.clone().cross(new THREE.Vector3(0, 1, 0)).normalize()
+  const y = x.clone().cross(axis)
+  return { eye: turn(eye), axis: turn(axis), x: turn(x.divideScalar(limb)), y: turn(y.divideScalar(limb)) }
+}
+
+export function faceLaw(burn: number): { flat: number; power: number; plage: number } {
+  const late = Math.min(Math.max((burn - look.burn.split) / (1 - look.burn.split), 0), 1)
+  const between = (ends: number[]): number => (late < 1 ? ends[0]! + (ends[1]! - ends[0]!) * late : ends[1]!)
+  return { flat: look.spots.flat[0]! * late, power: between(look.spots.power), plage: between(look.plage.gain) }
 }
 
 function strandLobes(by: THREE.Vector4[]): number[] {
@@ -184,14 +217,16 @@ export class FarSun {
         uReach: { value: look.reach }, uLimbU: { value: new THREE.Vector3().fromArray(look.limb.u) }, uLimbV: { value: new THREE.Vector3().fromArray(look.limb.v) },
         uColour: { value: new THREE.Vector3().fromArray(look.body.colour) }, uBright: { value: 1 }, uHeat: { value: new THREE.Vector3().fromArray(look.body.heat) },
         uGrainScale: { value: new THREE.Vector3().fromArray(look.grain.scale) }, uGrainDepth: { value: new THREE.Vector3().fromArray(look.grain.depth) }, uGrainLife: { value: new THREE.Vector3().fromArray(look.grain.life) },
-        uFace: { value: faceTexture() }, uFaceSize: { value: new THREE.Vector2(FACE.width, FACE.scale) }, uSpots: { value: new THREE.Vector4(look.spots.flat[0]!, look.spots.flat[1]!, look.spots.power, look.spots.gain) }, uSpotLook: { value: new THREE.Vector4(look.spots.bright[0]!, look.spots.bright[1]!, look.spots.limb, look.spots.flat[2]!) },
+        uFace: { value: faceTexture() }, uFaceSize: { value: new THREE.Vector2(FACE.width, FACE.scale) }, uSpots: { value: new THREE.Vector4(look.spots.flat[0]!, look.spots.flat[1]!, look.spots.power[1]!, look.spots.gain) }, uSpotLook: { value: new THREE.Vector4(look.spots.bright[0]!, look.spots.bright[1]!, look.spots.limb, look.spots.flat[2]!) },
         uChromo: { value: new THREE.Vector4(look.chromosphere.height, look.chromosphere.gain, 0, 0) }, uChromoColour: { value: new THREE.Vector3().fromArray(look.chromosphere.colour) }, uSpicules: { value: new THREE.Vector2().fromArray(look.chromosphere.spicules) },
         uCorona: { value: new THREE.Vector4(look.corona.steps, look.corona.gain, look.corona.scale[0]!, look.corona.scale[1]!) }, uCoronaRays: { value: new THREE.Vector3(look.corona.rays[0]!, look.corona.rays[1]!, look.corona.far) },
         uCoronaFront: { value: look.corona.front }, uBurn: { value: new THREE.Vector4(1, 0, look.burn.fall, 0) }, uIrrColour: { value: new THREE.Vector3().fromArray(look.burn.colour) }, uHide: { value: new THREE.Vector2().fromArray(look.burn.hide) }, uWhite: { value: new THREE.Vector3(look.body.ceiling, look.body.ceiling, look.body.ceiling) }, uDesat: { value: new THREE.Vector3(look.burn.desat[0]!, look.burn.desat[1]!, 0) }, uHalo: { value: new THREE.Vector2(0, look.burn.tightFall) }, uHaloColour: { value: new THREE.Vector3().fromArray(look.burn.tightColour) },
-        uFringe: { value: new THREE.Vector4(look.fringe.steps, look.fringe.top, look.fringe.gain, 0) }, uFringeShape: { value: new THREE.Vector4(look.fringe.height[0]!, look.fringe.height[1]!, look.fringe.scale, look.fringe.lean) }, uFringeColour: { value: new THREE.Vector3().fromArray(look.fringe.colour) }, uFringeLobe: { value: lobes }, uFringeLobeBy: { value: lobesBy }, uStrandLobe: { value: strandLobes(lobesBy) }, uStrandLobes: { value: lobesBy.filter((l) => l.w !== 0).length }, uTongueFoot: { value: tongueFoot }, uTongueAxis: { value: tongueAxis }, uTongueBy: { value: tongueBy }, uTongueStrand: { value: tongueStrand }, uTongues: { value: look.fringe.tongues.length }, uStreamer: { value: streamer }, uStreamerBy: { value: streamerBy }, uStreamers: { value: look.corona.streamers.length }, uStreamerRays: { value: look.corona.streamerRays }, uLoopGain: { value: loopGain }, uLoopRagged: { value: new Array<number>(MAX_LOOPS).fill(0) }, uLoopSheath: { value: Array.from({ length: MAX_LOOPS }, () => new THREE.Vector3(0, 1, 1)) }, uLoopRope: { value: Array.from({ length: MAX_LOOPS }, (_, i) => { const r = (look.loops[i] as { rope?: number[] } | undefined)?.rope; return new THREE.Vector3(r?.[0] ?? 1, r?.[1] ?? 0, r?.[2] ?? 0) }) }, uHaloEdge: { value: look.burn.edge }, uKeep: { value: new THREE.Vector4(0, 0, 0, look.burn.keep.top) }, uKeepFloor: { value: (look.burn.keep as { floor?: number }).floor ?? 0 }, uKeepSoft: { value: 1 }, uKeepWarm: { value: new THREE.Vector4().fromArray((look.burn.keep as { warm?: number[] }).warm ?? [0, 1, 0, 0]) }, uKeepWarmAt: { value: new THREE.Vector2().fromArray((look.burn.keep as { warmAt?: number[] }).warmAt ?? [0.35, 0.65]) }, uKeepCoarse: { value: new THREE.Vector3().fromArray((look.burn.keep as { coarse?: number[] }).coarse ?? [0, 1, 1]) }, uLimbGlow: { value: new THREE.Vector3(0, look.burn.limb[1]!, look.burn.limb[2] ?? 0) }, uHeatFloor: { value: look.spots.floor[0]! }, uPlage: { value: new THREE.Vector2(look.plage.gain, look.plage.scale) }, uLoopLook: { value: new THREE.Vector3(1, 0, 0) }, uPromPale: { value: new THREE.Vector3().fromArray(look.prominence.pale) }, uFringeKnot: { value: knots }, uKnot: { value: knotAt }, uKnotBy: { value: knotBy }, uKnotRay: { value: knotRay }, uKnotOut: { value: knotOut }, uKnotLimb: { value: knotLimb }, uKnotAxis: { value: knotAxis }, uKnotShade: { value: new THREE.Vector2().fromArray((look.knot as { shade?: number[] }).shade ?? [0, 0]) }, uKnotShadeColour: { value: new THREE.Vector3().fromArray(look.knot.shadeColour) }, uKnotClump: { value: new THREE.Vector3().fromArray((look.knot as { clump?: number[] }).clump ?? [0, 0.2, 0]) }, uKnotLight: { value: new THREE.Vector4(look.knot.colour[0]!, look.knot.colour[1]!, look.knot.colour[2]!, look.knot.steps) }, uCoronaRim: { value: new THREE.Vector4(look.corona.rim[0]!, look.corona.rim[1]!, look.corona.rim[2]!, look.corona.rimTop) }, uChromoBurn: { value: look.chromosphere.burn }, uFringeFan: { value: new THREE.Vector3(look.fringe.strand.fan, look.fringe.strand.fine, look.fringe.strand.sharp) }, uFringeSheet: { value: sheet }, uFringeHair: { value: hair }, uFringeHairBy: { value: new THREE.Vector4(hairBy?.fine ?? 60, hairBy?.sharp ?? 10, hairBy?.thick ?? 0, hairBy?.fan ?? 0) }, uFringeHairCurl: { value: new THREE.Vector3().fromArray(hairBy?.curl ?? [0, 6, 3]) }, uFringeHairTop: { value: new THREE.Vector3(hairBy?.steps ?? 1, hairBy?.top ?? 0.1, hairBy?.way ?? 0) }, uFringeHairAll: { value: new THREE.Vector2().fromArray(hairBy?.all ?? [0, 0.1]) }, uFringeHairTuft: { value: new THREE.Vector3().fromArray(hairBy?.tuft ?? [0, 1, 1]) }, uFringeHairColour: { value: new THREE.Vector3().fromArray(hairBy?.colour ?? look.fringe.colour) }, uGlareEnd: { value: (look.glare as { end?: number }).end ?? 0 }, uGlareSpread: { value: (look.glare as { spread?: number }).spread ?? 1.5 }, uFringeWay: { value: new THREE.Vector2().fromArray((look.fringe as { way?: number[] }).way ?? [0, 0]) }, uFringeSpike: { value: new THREE.Vector3().fromArray((look.fringe as { spike?: number[] }).spike ?? [40, 24, 8]) }, uFringeCurl: { value: new THREE.Vector3(look.fringe.strand.curl[0]!, look.fringe.strand.curl[1]!, look.fringe.strand.curl[2]!) }, uGlareInside: { value: look.glare.inside }, uCoronaNear: { value: new THREE.Vector3().fromArray(look.corona.near) }, uCoronaWide: { value: new THREE.Vector3().fromArray(look.corona.wide) },
+        uFringe: { value: new THREE.Vector4(look.fringe.steps, look.fringe.top, look.fringe.gain, 0) }, uFringeShape: { value: new THREE.Vector4(look.fringe.height[0]!, look.fringe.height[1]!, look.fringe.scale, look.fringe.lean) }, uFringeColour: { value: new THREE.Vector3().fromArray(look.fringe.colour) }, uFringeLobe: { value: lobes }, uFringeLobeBy: { value: lobesBy }, uStrandLobe: { value: strandLobes(lobesBy) }, uStrandLobes: { value: lobesBy.filter((l) => l.w !== 0).length }, uTongueFoot: { value: tongueFoot }, uTongueAxis: { value: tongueAxis }, uTongueBy: { value: tongueBy }, uTongueStrand: { value: tongueStrand }, uTongues: { value: look.fringe.tongues.length }, uStreamer: { value: streamer }, uStreamerBy: { value: streamerBy }, uStreamers: { value: look.corona.streamers.length }, uStreamerRays: { value: look.corona.streamerRays }, uLoopGain: { value: loopGain }, uLoopRagged: { value: new Array<number>(MAX_LOOPS).fill(0) }, uLoopSheath: { value: Array.from({ length: MAX_LOOPS }, () => new THREE.Vector3(0, 1, 1)) }, uLoopRope: { value: Array.from({ length: MAX_LOOPS }, (_, i) => { const r = (look.loops[i] as { rope?: number[] } | undefined)?.rope; return new THREE.Vector3(r?.[0] ?? 1, r?.[1] ?? 0, r?.[2] ?? 0) }) }, uHaloEdge: { value: look.burn.edge }, uKeep: { value: new THREE.Vector4(0, 0, 0, look.burn.keep.top) }, uKeepFloor: { value: (look.burn.keep as { floor?: number }).floor ?? 0 }, uKeepSoft: { value: 1 }, uKeepWarm: { value: new THREE.Vector4().fromArray((look.burn.keep as { warm?: number[] }).warm ?? [0, 1, 0, 0]) }, uKeepWarmAt: { value: new THREE.Vector2().fromArray((look.burn.keep as { warmAt?: number[] }).warmAt ?? [0.35, 0.65]) }, uKeepCoarse: { value: new THREE.Vector3().fromArray((look.burn.keep as { coarse?: number[] }).coarse ?? [0, 1, 1]) }, uLimbGlow: { value: new THREE.Vector3(0, look.burn.limb[1]!, look.burn.limb[2] ?? 0) }, uHeatFloor: { value: look.spots.floor[0]! }, uPlage: { value: new THREE.Vector2(look.plage.gain[1]!, look.plage.scale) }, uLoopLook: { value: new THREE.Vector3(1, 0, 0) }, uPromPale: { value: new THREE.Vector3().fromArray(look.prominence.pale) }, uFringeKnot: { value: knots }, uKnot: { value: knotAt }, uKnotBy: { value: knotBy }, uKnotRay: { value: knotRay }, uKnotOut: { value: knotOut }, uKnotLimb: { value: knotLimb }, uKnotAxis: { value: knotAxis }, uKnotShade: { value: new THREE.Vector2().fromArray((look.knot as { shade?: number[] }).shade ?? [0, 0]) }, uKnotShadeColour: { value: new THREE.Vector3().fromArray(look.knot.shadeColour) }, uKnotClump: { value: new THREE.Vector3().fromArray((look.knot as { clump?: number[] }).clump ?? [0, 0.2, 0]) }, uKnotLight: { value: new THREE.Vector4(look.knot.colour[0]!, look.knot.colour[1]!, look.knot.colour[2]!, look.knot.steps) }, uCoronaRim: { value: new THREE.Vector4(look.corona.rim[0]!, look.corona.rim[1]!, look.corona.rim[2]!, look.corona.rimTop) }, uChromoBurn: { value: look.chromosphere.burn }, uFringeFan: { value: new THREE.Vector3(look.fringe.strand.fan, look.fringe.strand.fine, look.fringe.strand.sharp) }, uFringeSheet: { value: sheet }, uFringeHair: { value: hair }, uFringeHairBy: { value: new THREE.Vector4(hairBy?.fine ?? 60, hairBy?.sharp ?? 10, hairBy?.thick ?? 0, hairBy?.fan ?? 0) }, uFringeHairCurl: { value: new THREE.Vector3().fromArray(hairBy?.curl ?? [0, 6, 3]) }, uFringeHairTop: { value: new THREE.Vector3(hairBy?.steps ?? 1, hairBy?.top ?? 0.1, hairBy?.way ?? 0) }, uFringeHairAll: { value: new THREE.Vector2().fromArray(hairBy?.all ?? [0, 0.1]) }, uFringeHairTuft: { value: new THREE.Vector3().fromArray(hairBy?.tuft ?? [0, 1, 1]) }, uFringeHairColour: { value: new THREE.Vector3().fromArray(hairBy?.colour ?? look.fringe.colour) }, uGlareEnd: { value: (look.glare as { end?: number }).end ?? 0 }, uGlareSpread: { value: (look.glare as { spread?: number }).spread ?? 1.5 }, uFringeWay: { value: new THREE.Vector2().fromArray((look.fringe as { way?: number[] }).way ?? [0, 0]) }, uFringeSpike: { value: new THREE.Vector3().fromArray((look.fringe as { spike?: number[] }).spike ?? [40, 24, 8]) }, uFringeCurl: { value: new THREE.Vector3(look.fringe.strand.curl[0]!, look.fringe.strand.curl[1]!, look.fringe.strand.curl[2]!) }, uGlareInside: { value: look.glare.inside }, uCoronaNear: { value: new THREE.Vector3().fromArray(look.corona.near) }, uCoronaWide: { value: new THREE.Vector3().fromArray(look.corona.wide) },
         uProm: { value: new THREE.Vector4(look.prominence.steps, look.prominence.shell, look.prominence.gain, look.prominence.flow) }, uPromColour: { value: new THREE.Vector3().fromArray(look.prominence.colour) }, uPromHot: { value: new THREE.Vector3().fromArray(look.prominence.hot) },
         uLoopMid: { value: mid }, uLoopAlong: { value: along }, uLoopUp: { value: up }, uLoopShape: { value: shape }, uLoops: { value: Math.min(look.loops.length, MAX_LOOPS) },
         uGlare: { value: new THREE.Vector4(0, 0, look.glare.tight, look.glare.wide) }, uGlareColour: { value: new THREE.Vector3().fromArray(look.glare.colour) }, uParts: { value: PARTS.all },
+        uHold: { value: holdTexture() }, uHoldEye: { value: new THREE.Vector3(0, 0, 5) }, uHoldAxis: { value: new THREE.Vector3(0, 0, -1) }, uHoldX: { value: new THREE.Vector3(1, 0, 0) }, uHoldY: { value: new THREE.Vector3(0, 1, 0) },
+        uHoldBox: { value: new THREE.Vector4(HOLD.box[0], HOLD.box[1], 1 / (HOLD.box[2] - HOLD.box[0]), 1 / (HOLD.box[3] - HOLD.box[1])) }, uHoldBy: { value: new THREE.Vector4(0, 0, look.hold.edge[0]!, look.hold.edge[1]!) }, uHoldDepth: { value: look.hold.depth }, uHoldLoops: { value: look.hold.loops },
       },
     })
     this.mesh = new THREE.Mesh(tri, this.material)
@@ -251,6 +286,11 @@ export class FarSun {
     ;(u.uDesat!.value as THREE.Vector3).z = burn
     const keep = look.burn.keep.gain * burn
     u.uHeatFloor!.value = look.spots.floor[0]! + (look.spots.floor[1]! - look.spots.floor[0]!) * burn
+    const face = faceLaw(burn)
+    const spots = u.uSpots!.value as THREE.Vector4
+    spots.x = face.flat
+    spots.z = face.power
+    ;(u.uPlage!.value as THREE.Vector2).x = face.plage
     const gains = u.uLoopGain!.value as number[]
     const ragged = u.uLoopRagged!.value as number[]
     const sheath = u.uLoopSheath!.value as THREE.Vector3[]
@@ -274,6 +314,13 @@ export class FarSun {
     ;(u.uWhite!.value as THREE.Vector3).set(look.body.ceiling + (look.burn.white[0]! - look.body.ceiling) * burn, look.body.ceiling + (look.burn.white[1]! - look.body.ceiling) * burn, look.body.ceiling + (look.burn.white[2]! - look.body.ceiling) * burn)
     ;(u.uHalo!.value as THREE.Vector2).x = (look.burn.tight * (burnt - 1)) / (look.burn.gain - 1)
     ;(u.uGlare!.value as THREE.Vector4).x = look.glare.gain[0]! + (look.glare.gain[1]! - look.glare.gain[0]!) * far
+    const frame = holdFrame(view.spin)
+    ;(u.uHoldEye!.value as THREE.Vector3).copy(frame.eye)
+    ;(u.uHoldAxis!.value as THREE.Vector3).copy(frame.axis)
+    ;(u.uHoldX!.value as THREE.Vector3).copy(frame.x)
+    ;(u.uHoldY!.value as THREE.Vector3).copy(frame.y)
+    const marked = ((burnt - 1) / (look.burn.gain - 1)) * far
+    ;(u.uHoldBy!.value as THREE.Vector4).set((look.hold.face * marked) / HOLD.face, (look.hold.gas * marked) / HOLD.gas, look.hold.edge[0]!, look.hold.edge[1]!)
     u.uParts!.value = this.parts
     u.uDepth!.value = depth
     return distance
