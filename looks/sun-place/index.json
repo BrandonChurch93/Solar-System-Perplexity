@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T12:05:30.488Z",
- "head": "e6428c506544b946a205a4b3467a32fe1edc0119",
- "note": "arcade as bodies in space, uncommitted take a10: one stable arch 0 to 179, standing small on the body from 229 to 360; paler and more even than the approved. Frame 60: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310; distance 0.081",
+ "pushed": "2026-11-25T12:14:14.210Z",
+ "head": "b93d2aa86e81f8dd413d1f16df2d032312192429",
+ "note": "2f60135f arcade as bodies (merge b93d2aa8 on main a27b5e9d, chain running): final 360 pair, rise and terrain chains. Frame 60: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310; distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-25T12:14:13.626Z",
+   "file": "20261125121413626-note-a10-chain-t.jpg",
+   "source": "../../../../tmp/v/a10-chain-t.jpg",
+   "kind": "note",
+   "label": "2f60135f, 174 + 1/2 to 182 + 1/2: nine frames, one arch",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:14:13.046Z",
+   "file": "20261125121413046-note-a10-chain-r-place.jpg",
+   "source": "../../../../tmp/v/a10-chain-r-place.jpg",
+   "kind": "note",
+   "label": "2f60135f, rise 218 + 1/2 to 226 + 1/2, the place 2 times: the arch stands on the globe and shrinks with it",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:14:12.466Z",
+   "file": "20261125121412466-note-pair-360-a10.jpg",
+   "source": "../../../../tmp/v/pair-360-a10.jpg",
+   "kind": "note",
+   "label": "final tier frame 360, before (e6428c50) and after (2f60135f): whole frames, then the place 6 times; the arcade stands as thin arcs over the spot",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T12:05:29.175Z",
    "file": "20261125120529175-note-a10-place.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/a4-six.jpg",
    "kind": "note",
    "label": "arcade as bodies in space, first take, draft frames 0 33 49 65 90 179 (uncommitted)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T11:16:19.606Z",
-   "file": "20261125111619606-note-wrap-place.jpg",
-   "source": "../../../../tmp/v/wrap-place.jpg",
-   "kind": "note",
-   "label": "the globe's map at the place, 28 by 17.6 degrees",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T11:16:18.942Z",
-   "file": "20261125111618942-note-m5c-p4.jpg",
-   "source": "../../../../tmp/v/m5c-p4.jpg",
-   "kind": "note",
-   "label": "named merge, 250 + 1/2 to 258 + 1/2, every film frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T11:16:18.321Z",
-   "file": "20261125111618321-note-m5c-p3.jpg",
-   "source": "../../../../tmp/v/m5c-p3.jpg",
-   "kind": "note",
-   "label": "named merge, 240 + 1/2 to 248 + 1/2, every film frame",
    "stop": "sun"
   }
  ]
