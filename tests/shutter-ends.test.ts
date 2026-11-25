@@ -228,7 +228,11 @@ describe('the ends handover.shutterEnds', () => {
     for (const s of config.stops) if (!named.includes(s.id)) expect(shutterEndsOf(s.id), s.id).toBe(0)
     expect(shutterEndsOf('nowhere')).toBe(0)
   })
-  it('give every frame of every dive and rise of a named stop its ends, and no frame of any other stop, at both rates and at every tier', () => {
+  it('give every frame of every dive and rise of a stop named with a share its ends, and no frame of any other stop, at both rates and at every tier', () => {
+    // The film may name every stop with a law (those have their own tests, below), so the test names one itself: the first stop
+    // that hands over in its dive, with a share of a half, and no other.
+    const own = moving.find((s) => s.kind === 'dive')!.stop
+    numbers.shutterEnds = { [own]: 0.5 }
     let named = 0
     let plain = 0
     let weighed = 0
@@ -236,9 +240,8 @@ describe('the ends handover.shutterEnds', () => {
       setCapture(rate)
       for (const tier of ['draft', 'review', 'final']) {
         for (const s of moving) {
-          // A stop named with a law has its own tests, below.
-          if (endsLawOf(s.stop)) continue
           const ends = shutterEndsOf(s.stop)
+          expect(ends, s.id).toBe(s.stop === own ? 0.5 : 0)
           for (let i = 0; i < (s.endFrame - s.firstFrame) * rate; i++) {
             const f = s.firstFrame + i / rate
             const plan = framePlan(film, f, tier)
@@ -265,6 +268,7 @@ describe('the ends handover.shutterEnds', () => {
     // The law acts: frames of more than one sample are weighed.
     expect(weighed).toBeGreaterThan(0)
     setCapture(1)
+    numbers.shutterEnds = kept
   }, LONG)
   it('change nothing else of the plan of a frame: with the ends emptied every other number is the one it is with them', () => {
     const frames = moving.flatMap((s) => [s.firstFrame, Math.floor((s.firstFrame + s.endFrame) / 2), s.endFrame - 1])
@@ -281,7 +285,8 @@ describe('the ends handover.shutterEnds', () => {
   }, LONG)
   it('follow the stop that is named: another stop named in its place gets the ends, and with no stop named no plan has them', () => {
     const sample = (s: (typeof moving)[number]): number[] => [s.firstFrame, Math.floor((s.firstFrame + s.endFrame) / 2), s.endFrame - 1]
-    const first = moving.find((s) => !(shutterEndsOf(s.stop) > 0) && !endsLawOf(s.stop))
+    // Any stop will do: the test names it alone, whatever the film names.
+    const first = moving[0]
     expect(first).toBeDefined()
     numbers.shutterEnds = { [first!.stop]: 0.25 }
     for (const s of moving) {
@@ -406,7 +411,7 @@ describe('the ends as a law of the motion of the frame', () => {
     const want = config.segments.filter((s) => moving.includes(s) && (shares[s.stop] ?? 0) > 0).reduce((n, s) => n + s.endFrame - s.firstFrame, 0)
     expect(withEnds).toBe(3 * want)
   }, LONG)
-  it('give every frame of a stop named with a law its ends by the px the frame shows, in its hold, its dive, its surface view and its rise, and none in the flight after it', () => {
+  it('give every frame of a stop named with a law its ends by the px the frame shows, in its hold, its dive, its surface view, its rise and the flight that leaves it', () => {
     numbers.shutterEnds = {}
     const bare = planOf(everyFrame, 'review')
     for (const law of [LAW, LOW]) {
@@ -417,7 +422,8 @@ describe('the ends as a law of the motion of the frame', () => {
       let part = 0
       everyFrame.forEach((f) => {
         const s = segmentAtFrame(f)
-        const mine = s.stop === NAMED && s.kind !== 'travel'
+        // The flight is the stop's it leaves: its segment names that stop.
+        const mine = s.stop === NAMED
         const want = mine ? endsBy(law, bare[f]!.seen) : 0
         const { ends, sides: _sides, ...rest } = now[f]!
         // Every other number of the plan is the one it was, in every frame of the film.
@@ -428,29 +434,31 @@ describe('the ends as a law of the motion of the frame', () => {
           if (want === law.share) whole++
           else part++
         } else {
-          // Under fromPx, in the flight, and at every other stop: the plan is the plan it was, key for key.
+          // Under fromPx and at every other stop: the plan is the plan it was, key for key.
           expect(now[f], s.id + ' ' + f).toStrictEqual(bare[f])
         }
       })
-      // The slow law reaches every kind of frame of the stop, the film's own px its dive and its rise; the flight has none under either.
+      // The slow law reaches every kind of frame of the stop, the film's own px its dive, its rise and its flight.
       expect(got.dive).toBeGreaterThan(0)
       expect(got.rise).toBeGreaterThan(0)
+      expect(got.travel).toBeGreaterThan(0)
       if (law === LOW) {
         expect(got.hold).toBeGreaterThan(0)
         expect(got.terrain).toBeGreaterThan(0)
       }
-      expect(got.travel).toBeUndefined()
       expect(whole).toBeGreaterThan(0)
       expect(part).toBeGreaterThan(0)
     }
     numbers.shutterEnds = kept
   }, LONG)
   it('step from one frame to the next only as far as the px steps, across every border of the stop as inside its parts', () => {
-    const segs = config.segments.filter((s) => s.stop === NAMED && s.kind !== 'travel')
+    // The hold, the dive, the surface view, the rise and the flight: four borders, the last one between the rise and its flight.
+    const segs = config.segments.filter((s) => s.stop === NAMED)
+    expect(segs[segs.length - 1]!.kind).toBe('travel')
     const first = segs[0]!.firstFrame
     const end = segs[segs.length - 1]!.endFrame
     const borders = segs.slice(1).map((s) => s.firstFrame)
-    expect(borders.length).toBe(3)
+    expect(borders.length).toBe(4)
     for (const law of [LAW, LOW]) {
       numbers.shutterEnds = { [NAMED]: law }
       const frames = Array.from({ length: end - first }, (_, i) => first + i)
@@ -462,7 +470,43 @@ describe('the ends as a law of the motion of the frame', () => {
         expect(step, String(frames[i])).toBeLessThanOrEqual((1.5 * law.share * px) / (law.toPx - law.fromPx) + 1e-12)
         if (borders.includes(frames[i]!)) crossed++
       }
-      expect(crossed).toBe(3)
+      expect(crossed).toBe(4)
+    }
+    numbers.shutterEnds = kept
+  }, LONG)
+  it('give the first frame of a flight the ends of the last frame of its rise where the two move alike, at every stop that has a flight', () => {
+    // A rise does not come to rest before its flight: the two are one move. With the flight outside the law the look stepped there in
+    // one frame wherever the border moved by more than fromPx (Earth 2174 and 2175: 9.70 and 9.44 px, the one with ends, the other a box).
+    let above = 0
+    for (const s of config.segments.filter((x) => x.kind === 'travel')) {
+      numbers.shutterEnds = { [s.stop]: LAW }
+      const [rise, flight] = planOf([s.firstFrame - 1, s.firstFrame], 'review')
+      expect(segmentAtFrame(s.firstFrame - 1).stop, s.id).toBe(s.stop)
+      expect(rise!.ends ?? 0, s.id).toBe(endsBy(LAW, rise!.seen))
+      expect(flight!.ends ?? 0, s.id).toBe(endsBy(LAW, flight!.seen))
+      expect(Math.abs((flight!.ends ?? 0) - (rise!.ends ?? 0)), s.id).toBeLessThanOrEqual((1.5 * LAW.share * Math.abs(flight!.seen - rise!.seen)) / (LAW.toPx - LAW.fromPx) + 1e-12)
+      if (rise!.seen > LAW.fromPx && flight!.seen > LAW.fromPx) above++
+    }
+    // The film has such borders: without them the flight would not need the law.
+    expect(above).toBeGreaterThan(0)
+    numbers.shutterEnds = kept
+  }, LONG)
+  it('reach from the first frame of a stop to the last frame of its flight, and are at 0 at both for every law the film names', () => {
+    // A law is one stop's. The stop before it and the stop after it may have none, or another: where the first frame of the stop and
+    // the last frame of its flight move under fromPx, the law is at 0 on both sides of both borders and nothing steps there.
+    const laws = Object.entries(kept).filter(([, own]) => typeof own === 'object') as [string, EndsLaw][]
+    for (const [stop, law] of [...laws, [NAMED, LAW] as [string, EndsLaw]]) {
+      const segs = config.segments.filter((s) => s.stop === stop)
+      const first = segs[0]!.firstFrame
+      const last = segs[segs.length - 1]!.endFrame - 1
+      // A border is there where the film has a frame on its other side.
+      const borders = [[first - 1, first], [last, last + 1]].filter(([a, b]) => a! >= 0 && b! < config.frameCount)
+      expect(borders.length, stop).toBeGreaterThan(0)
+      numbers.shutterEnds = { [stop]: law }
+      for (const plan of planOf(borders.flat() as number[], 'review')) {
+        expect(plan.seen, stop).toBeLessThan(law.fromPx)
+        expect('ends' in plan, stop).toBe(false)
+      }
     }
     numbers.shutterEnds = kept
   }, LONG)

@@ -202,7 +202,7 @@ export function sampleStep(plan: { samples: number; seen: number; near?: number 
 // cover is there with sharp: the cover itself, for the count by the way of each point (frameWay).
 // ends is there only where the shutter of the frame opens and closes over a share of its time above 0 (samplesFor), and is that share:
 // in a dive or a rise of a stop that hands over and that handover.shutterEnds names with a number, and in any frame of a stop it names
-// with a law, where the frame moves by more than the law's fromPx (endsLawOf).
+// with a law, the flight that leaves the stop included, where the frame moves by more than the law's fromPx (endsLawOf).
 // sides is there only in a frame that has ends by a law, draws both views (split) and takes more than one sample: the view of each
 // sample, by the light the samples bring and not by their count (splitSides). The surface view has the share of the frame's light that
 // the handover gives it (dissolveWeight); without the key a sample takes its view by its time (sideAt), as it did. A view that the
@@ -246,12 +246,15 @@ export function shutterEndsOf(stop: string): number {
 }
 
 // The ends of the shutter as a law of the frame's own motion: handover.shutterEnds names a stop with {share, fromPx, toPx}. Every frame
-// of the stop, its hold, its dive, its surface view and its rise alike, opens and closes its shutter over share times a smooth step of
-// the motion the frame shows across its open shutter (FramePlan.seen, in px of the master), from fromPx, where the step leaves 0, to
-// toPx, where it is whole (endsBy). The motion is the only thing the share reads: not the time, not the segment, not the tier. So two
-// frames that move alike have the same ends on whichever side of a change of view they lie, and a border of the stop steps only where
-// the motion itself does. Under fromPx the shutter is open at once and the frame is the frame it was, to the bit; a slow border never
-// sees the law. The flight that follows a stop is not the stop's: its frames have no ends.
+// of the stop, its hold, its dive, its surface view, its rise and the flight that leaves it alike, opens and closes its shutter over
+// share times a smooth step of the motion the frame shows across its open shutter (FramePlan.seen, in px of the master), from fromPx,
+// where the step leaves 0, to toPx, where it is whole (endsBy). The motion is the only thing the share reads: not the time, not the
+// segment, not the tier. So two frames that move alike have the same ends on whichever side of a change of view they lie, and a border
+// of the stop steps only where the motion itself does. Under fromPx the shutter is open at once and the frame is the frame it was, to
+// the bit; a slow border never sees the law. The flight is the stop's it leaves (its segment names that stop): a rise does not come to
+// rest before its flight, the two are one move, and the last frame of the rise and the first of the flight show the same px (Earth
+// 2174 and 2175: 9.70 and 9.44). A flight slows down into the hold of the next stop, so the law is at 0 long before the next stop's
+// first frame, whether that stop is named or not (held for the film's own laws by tests/shutter-ends.test.ts).
 export interface EndsLaw { share: number; fromPx: number; toPx: number }
 
 export function endsLawOf(stop: string): EndsLaw | null {
@@ -433,8 +436,8 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
   const raw = rawMotion(at(0), mid, at(shutterSpan()))
   const seen = raw * seenShare(mid)
   const near = nearOver(source, frame, false, 0, shutterSpan()) * seenShare(mid)
-  // A flight is no stop's: the law of the stop it leaves ends with the stop's last frame.
-  const law = segment.kind === 'travel' ? null : endsLawOf(segment.stop)
+  // The flight has the law of the stop it leaves: its segment names that stop, and its first frame moves as the rise's last one does.
+  const law = endsLawOf(segment.stop)
   const ends = law ? endsBy(law, seen) : 0
   const soft = surfaceDrawn(mid) ? 0 : softness(raw)
   return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft, split: false, shutter: 1, ...(near > 0 ? { near } : {}), ...(ends > 0 ? { ends } : {}) }
