@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T22:09:31.094Z",
+ "pushed": "2026-11-25T22:32:14.134Z",
  "head": "6591d862db3bc824abcce8ddf9fabd3611294bda",
- "note": "22:10 master proof of the crater's turn by height running (tn, 207 stills); 615 and 870 the name's bytes, 717 and 1016 crops beside the name and main",
+ "note": "22:33 the crater's turn on master frames 997 to 1007 (rate 2); whole frame rows 981 to 998 at most 0.20; chain tn at 55 of 207",
  "looks": [
+  {
+   "time": "2026-11-25T22:32:12.837Z",
+   "file": "20261125223212837-note-tn-rise-cr1b.jpg",
+   "source": "../../../../tmp/m/tn-rise-cr1b.jpg",
+   "kind": "note",
+   "label": "rise 997 to 1007 at rate 2, master, the crater at 1.1 times under the law hero.height 3.1 to 0.3: the set's pale terraces fade into the hold's thin ring over 999 to 1006 while the crater shrinks; no step between neighbours; rows 981 to 998 read 0.20 at most (name 0.49)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T22:09:29.625Z",
    "file": "20261125220929625-note-turn-717-1016.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/m/crat8-s15.png",
    "kind": "note",
    "label": "615 crater at 8 times, below with gain 2.5: approved, main, name s14, s15: s15 loses the ring and the floor peaks",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T20:22:38.739Z",
-   "file": "20261125202238739-note-disc4-s15.jpg",
-   "source": "../../../../tmp/m/disc4-s15.png",
-   "kind": "note",
-   "label": "615 disc at 4 times: approved, main, name s14, s15 (the set light at every height): the gold ring reads lost in s15",
    "stop": "mercury"
   }
  ]
