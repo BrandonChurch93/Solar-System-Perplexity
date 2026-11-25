@@ -83,7 +83,8 @@ def read(paths, a, own, **more):
     return S.pictures({**JOB, 'paths': paths, 'first': FIRST + a, 'own': [FIRST + own[0], FIRST + own[1]], **more})
 
 
-KEYS = ('residual', 'base', 'popAll', 'popCarried', 'pop', 'motionPx', 'unsure', 'popBlock', 'popBlockAt', 'change', 'changeTop', 'changeAt', 'changeShare')
+GROUND = ('groundLeft', 'groundBase', 'groundPop', 'groundShare', 'groundAt', 'groundSize')
+KEYS = ('residual', 'base', 'popAll', 'popCarried', 'pop', 'motionPx', 'unsure', 'popBlock', 'popBlockAt', 'change', 'changeTop', 'changeAt', 'changeShare') + GROUND
 
 
 def pops():
@@ -93,13 +94,14 @@ def pops():
         whole = read(film(None, 0, 0, N - 1), 0, (a, b + 1), both=True)
         rows = range(a, b + 1)
         still = {'ks': [K0 + i for i in rows], 'standing': [whole['pop'][i] for i in rows], 'full': [whole['full']['pop'][i] for i in rows],
-                 'fullAll': [whole['full']['popAll'][i] for i in rows], 'fullCarried': [whole['full']['popCarried'][i] for i in rows]}
+                 'fullAll': [whole['full']['popAll'][i] for i in rows], 'fullCarried': [whole['full']['popCarried'][i] for i in rows], 'ground': [whole['full']['groundPop'][i] for i in rows], 'groundShare': [whole['full']['groundShare'][i] for i in rows]}
         lo, hi = FOOT - K0 - REACH, TOP - K0 + REACH + 1
         part = film(None, 0, lo, hi)
         own = (FOOT - K0, TOP - K0 + 1)
         plain, full, both = read(part, lo, own), read(part, lo, own, carryFull=True), read(part, lo, own, both=True)
         same = {'standing': all(plain[key] == both[key] for key in plain), 'full': all(full[key] == both['full'][key] for key in KEYS),
-                'rest': all(full[key] == both[key] for key in full if key not in KEYS), 'whole': all(whole['full'][key][lo + i] == both['full'][key][i] for key in ('pop', 'popAll', 'popCarried') for i in range(own[0] - lo, own[1] - lo)),
+                'rest': all(full[key] == both[key] for key in full if key not in KEYS), 'whole': all(whole['full'][key][lo + i] == both['full'][key][i] for key in ('pop', 'popAll', 'popCarried') + GROUND for i in range(own[0] - lo, own[1] - lo)),
+                'ground': [key for key in plain if key.startswith('ground')] == [] and list(full)[-len(GROUND):] == list(GROUND) and list(both['full'])[-len(GROUND):] == list(GROUND),
                 'rows': own[1] - own[0], 'keys': len(plain)}
         events = {}
         for case in EVENTS:
@@ -108,7 +110,7 @@ def pops():
                 i = at - 1 - K0
                 lo, hi = i - REACH, i + REACH + 1
                 r = read(film(case, at, lo, hi), lo, (i, i + 1), both=True)
-                events[case][name] = {'k': K0 + i, 'standing': r['pop'][i - lo], 'full': r['full']['pop'][i - lo], 'fullAll': r['full']['popAll'][i - lo], 'fullCarried': r['full']['popCarried'][i - lo], 'still': whole['full']['pop'][i]}
+                events[case][name] = {'k': K0 + i, 'standing': r['pop'][i - lo], 'full': r['full']['pop'][i - lo], 'fullAll': r['full']['popAll'][i - lo], 'fullCarried': r['full']['popCarried'][i - lo], 'still': whole['full']['pop'][i], 'ground': r['full']['groundPop'][i - lo], 'groundAt': r['full']['groundAt'][i - lo], 'groundSize': r['full']['groundSize'][i - lo]}
         return {'still': still, 'same': same, 'events': events}
 
 

@@ -10,6 +10,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, afterRise, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
+import { GROUND, groundLaw, groundLine, groundOf } from '../tools/smooth/maps'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
 import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
@@ -450,8 +451,8 @@ describe('the pop score at the two ends of a window, on a made run whose residua
   })
 })
 
-interface MadeEvent { k: number; standing: number; full: number; fullAll: number; fullCarried: number; still: number }
-interface MadeFull { still: { ks: number[]; standing: (number | null)[]; full: (number | null)[]; fullAll: (number | null)[]; fullCarried: (number | null)[] }; same: { standing: boolean; full: boolean; rest: boolean; whole: boolean; rows: number; keys: number }; events: Record<string, Record<'top' | 'foot', MadeEvent>> }
+interface MadeEvent { k: number; standing: number; full: number; fullAll: number; fullCarried: number; still: number; ground: number; groundAt: [number, number]; groundSize: [number, number] }
+interface MadeFull { still: { ks: number[]; standing: (number | null)[]; full: (number | null)[]; fullAll: (number | null)[]; fullCarried: (number | null)[]; ground: (number | null)[]; groundShare: (number | null)[] }; same: { standing: boolean; full: boolean; rest: boolean; whole: boolean; ground: boolean; rows: number; keys: number }; events: Record<string, Record<'top' | 'foot', MadeEvent>> }
 
 describe('the pop score with the carry at the full size, on a made still that only slides and on the same film with a true event planted', () => {
   const limit = config.raw.smooth.pictures.maxPop
@@ -491,6 +492,139 @@ describe('the pop score with the carry at the full size, on a made still that on
     expect(p.same.full).toBe(true)
     expect(p.same.rest).toBe(true)
     expect(p.same.whole).toBe(true)
+  })
+
+  it('reads the ground pop of the still, which has no pose record, on the whole frame: every row near 1, the layer and the steps over the named ' + GROUND.named + ', each at its square', () => {
+    for (const [i, v] of p.still.ground.entries()) {
+      expect(v!).toBeGreaterThan(0.97)
+      expect(v!).toBeLessThan(1.03)
+      expect(p.still.groundShare[i]!).toBeGreaterThan(0.9)
+    }
+    for (const at of ['top', 'foot'] as const) {
+      for (const name of ['layer', 'step2', 'step4', 'step8']) expect(p.events[name]![at].ground).toBeGreaterThan(GROUND.named)
+      expect(p.events.step4![at].ground).toBeGreaterThan(p.events.step2![at].ground)
+      expect(p.events.step8![at].ground).toBeGreaterThan(p.events.step4![at].ground)
+      expect(p.events.layer![at].ground).toBeGreaterThan(p.events.step8![at].ground)
+      for (const side of p.events.step8![at].groundSize) {
+        expect(side).toBeGreaterThan(140)
+        expect(side).toBeLessThan(200)
+      }
+    }
+    expect(p.same.ground).toBe(true)
+  })
+})
+
+interface MadePlate { box: [number, number, number, number]; pop: number; left: number; base: number; at: [number, number]; size: [number, number]; popAll: number; popFull: number; popStanding: number; read: number }
+interface GroundKeys { groundLeft: (number | null)[]; groundBase: (number | null)[]; groundPop: (number | null)[]; groundShare: (number | null)[]; groundAt: ([number, number] | null)[]; groundSize: ([number, number] | null)[] }
+interface MadeGround { rows: number; row: number; clean: GroundKeys; popFull: (number | null)[]; motionPx: (number | null)[]; plainKeys: string[]; standingKeys: string[]; alone: { [K in keyof GroundKeys]: GroundKeys[K][number] }; aloneAt: number; plates: Record<'whole' | 'faint', Record<string, MadePlate>>; masks: { apart: number; round: number; body: number; ground: number; outside: number; covered: number; ringsOnGround: number; rings: number; noPose: number; pixels: number }; near: Record<string, number[]>; law: { insidePx: number; near: number; share: number; blurPx: number } }
+
+describe('the ground pop beside the pop, on a made ground that moves under a rising camera and on the same film with a plate planted on the ground', () => {
+  const sizes = [40, 80, 160]
+  let g: MadeGround
+  beforeAll(() => {
+    g = (JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/madeground.py', import.meta.url))], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as { grounds: MadeGround }).grounds
+  }, 900_000)
+
+  it('reads every row of the clean moving ground under 1.2, the ground moving over 5 px from frame to frame', () => {
+    expect(g.rows).toBe(16)
+    for (let i = 0; i < g.rows; i++) {
+      expect(g.motionPx[i]!).toBeGreaterThan(5)
+      expect(g.clean.groundPop[i]!).toBeLessThan(1.2)
+      expect(g.clean.groundPop[i]!).toBeGreaterThan(0.85)
+      expect(g.clean.groundShare[i]!).toBeGreaterThan(0.1)
+    }
+    expect(g.clean.groundPop[g.rows]).toBeNull()
+  })
+
+  it('reads a plate of another pattern of 40, 80 and 160 px over the named ' + GROUND.named + ', more with its size, where the pop score of both carries stays under its limit at 40 and 80 px', () => {
+    const p = sizes.map((size) => g.plates.whole[String(size)]!)
+    for (const [i, plate] of p.entries()) {
+      expect(plate.box[2] - plate.box[0]).toBe(sizes[i])
+      expect(plate.box[3] - plate.box[1]).toBe(sizes[i])
+      expect(plate.read).toBe(1)
+      expect(plate.pop).toBeGreaterThan(GROUND.named)
+      expect(plate.popStanding).toBeLessThan(config.raw.smooth.pictures.maxPop)
+    }
+    expect(p[0]!.pop).toBeGreaterThan(1.4)
+    expect(p[1]!.pop).toBeGreaterThan(2 * p[0]!.pop - 1)
+    expect(p[2]!.pop).toBeGreaterThan(2 * p[1]!.pop)
+    expect(p[0]!.popFull).toBeLessThan(config.raw.smooth.pictures.maxPop)
+    expect(p[1]!.popFull).toBeLessThan(config.raw.smooth.pictures.maxPop)
+  })
+
+  it('reads the same plates at a fifth of their strength as it reads them: 40 px under the named ' + GROUND.named + ', 80 and 160 px over it', () => {
+    const p = sizes.map((size) => g.plates.faint[String(size)]!)
+    expect(p[0]!.pop).toBeLessThan(GROUND.named)
+    expect(p[0]!.pop).toBeGreaterThan(1)
+    expect(p[1]!.pop).toBeGreaterThan(GROUND.named)
+    expect(p[2]!.pop).toBeGreaterThan(2)
+    for (const plate of p) expect(plate.pop).toBeLessThan(g.plates.whole[String(plate.box[2] - plate.box[0])]!.pop)
+  })
+
+  it('puts its place in the plate and its patch between the plate and 40 px more, whole and faint', () => {
+    for (const plate of [...Object.values(g.plates.whole), ...Object.values(g.plates.faint)]) {
+      const side = plate.box[2] - plate.box[0]
+      expect(plate.at[0]).toBeGreaterThanOrEqual(plate.box[0])
+      expect(plate.at[0]).toBeLessThan(plate.box[2])
+      expect(plate.at[1]).toBeGreaterThanOrEqual(plate.box[1])
+      expect(plate.at[1]).toBeLessThan(plate.box[3])
+      for (const s of plate.size) {
+        expect(s).toBeGreaterThanOrEqual(side)
+        expect(s).toBeLessThanOrEqual(side + 40)
+      }
+    }
+  })
+
+  it('counts the ground by the globe as the stop draws it, flattened, inside its edge, without the rings and what they cover; without a pose record the frame', () => {
+    expect(g.masks.apart).toBeLessThan(g.masks.body / 400)
+    expect(g.masks.round).toBeGreaterThan(g.masks.body / 20)
+    expect(g.masks.outside).toBe(0)
+    expect(g.masks.ground).toBeLessThan(g.masks.body)
+    expect(g.masks.ground).toBeGreaterThan(g.masks.body / 2)
+    expect(g.masks.rings).toBeGreaterThan(0)
+    expect(g.masks.covered).toBeGreaterThan(0)
+    expect(g.masks.ringsOnGround).toBe(0)
+    expect(g.masks.noPose).toBe(g.masks.pixels)
+  })
+
+  it('takes the two rows before and the two after in the same run of frames that have a count, and has too few with one', () => {
+    expect(g.near).toEqual({ middle: [2, 3, 5, 6], first: [1, 2], second: [0, 2, 3], last: [5, 6], beforeBreak: [0, 1], afterBreak: [5, 6], holed: [2, 4], alone: [1] })
+    expect(g.law.near).toBe(2)
+  })
+
+  it('adds nothing to a reply without the carry at the full size, stands in the full size reading alone, and reads the same with that carry alone', () => {
+    expect(g.plainKeys).toEqual([])
+    expect(g.standingKeys).toEqual([])
+    expect(g.aloneAt).toBe(-6)
+    for (const key of ['groundLeft', 'groundBase', 'groundPop', 'groundShare', 'groundAt', 'groundSize'] as const) expect(g.alone[key]).toEqual(g.clean[key][g.row])
+  })
+
+  it('tells its law in the report as the reader has it', () => {
+    expect(g.law).toEqual({ insidePx: GROUND.insidePx, near: GROUND.near, share: GROUND.share, blurPx: GROUND.blurPx })
+    const law = groundLaw(0.25)
+    expect(law).toContain('has no limit')
+    expect(law).toContain(GROUND.named + ' is named as the limit to come')
+    expect(law).toContain('floor 0.25')
+    expect(law).not.toMatch(/[\u2014!]/)
+  })
+})
+
+describe('the largest ground pop of a move', () => {
+  const row = (k: number, groundPop: number | null, more: object = {}): { k: number; frame: number; groundPop: number | null } => ({ k, frame: Math.floor(k / 2), groundPop, ...more })
+
+  it('is the largest row read, with its place and its patch, and counts the rows over the named limit', () => {
+    const most = groundOf([row(10, 1.02), row(11, null), row(12, 1.44, { groundAt: [640, 330], groundSize: [84, 88] }), row(13, 1.31), row(14, 1.3)])
+    expect(most).toEqual({ k: 12, frame: 6, value: 1.44, at: [640, 330], size: [84, 88], over: 2, rows: 4 })
+    expect(groundLine(most!, '6')).toBe('1.440 from frame 6 to the next, most at pixel 640, 330, a patch of 84 by 88 px; 2 of 4 rows read over 1.3')
+  })
+
+  it('is the same from the rows of two parts as from the rows of one, and none where no row is read', () => {
+    const a = [row(10, 1.02), row(11, 1.1)]
+    const b = [row(12, 1.25, { groundAt: [5, 6], groundSize: [56, 56] }), row(13, null)]
+    expect(groundOf([...a, ...b])).toEqual({ k: 12, frame: 6, value: 1.25, at: [5, 6], size: [56, 56], over: 0, rows: 3 })
+    expect(groundOf([row(1, null)])).toBeNull()
+    expect(groundOf([{ k: 1, frame: 0 }])).toBeNull()
+    expect(groundLine(groundOf(a)!, '5 + 1/2')).toBe('1.100 from frame 5 + 1/2 to the next; 0 of 2 rows read over 1.3')
   })
 })
 

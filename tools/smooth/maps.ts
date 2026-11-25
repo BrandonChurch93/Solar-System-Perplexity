@@ -52,6 +52,21 @@ export const besideFull = (scale: number): string[] => [
   'The level step and the pattern are one reading and stand in both. The reader above is the one that counts: its lines in red make the verdict and the exit code. The lines in red here make the verdict beside it.',
 ]
 
+export const GROUND = { named: 1.3, insidePx: 20, near: 2, share: 0.02, blurPx: 20 }
+
+export const groundLaw = (floor: number): string => 'The ground pop stands beside these and has no limit: it makes no verdict and no exit code; ' + GROUND.named + ' is named as the limit to come. It is what is left of a frame in the next on every pixel of the ground both frames show, with the carry at the full size, over the median of the same count in the ' + GROUND.near + ' rows before and the ' + GROUND.near + ' after (floor ' + floor + '). The ground is the globe by the pose record, flattened as the stop draws it, ' + GROUND.insidePx + ' px inside its edge, the rings and what they cover left out; without a pose record it is the frame. A row is not read with fewer than ' + GROUND.near + ' such rows in its run of frames or with ground on less than ' + GROUND.share + ' of the frame. Its place is where the row has most more than those rows at the same pixel, smoothed over ' + GROUND.blurPx + ' px; its patch is what stays over half of that round the place.'
+
+export interface GroundMost { k: number; frame: number; value: number; at: [number, number] | null; size: [number, number] | null; over: number; rows: number }
+
+export function groundOf(rows: { k: number; frame: number; groundPop?: number | null; groundAt?: [number, number] | null; groundSize?: [number, number] | null }[]): GroundMost | null {
+  const read = rows.filter((x) => (x.groundPop ?? null) !== null)
+  if (read.length === 0) return null
+  const top = read.reduce((a, b) => (b.groundPop! > a.groundPop! ? b : a))
+  return { k: top.k, frame: top.frame, value: top.groundPop!, at: top.groundAt ?? null, size: top.groundSize ?? null, over: read.filter((x) => x.groundPop! > GROUND.named).length, rows: read.length }
+}
+
+export const groundLine = (g: GroundMost, from: string): string => g.value.toFixed(3) + ' from frame ' + from + ' to the next' + (g.at ? ', most at pixel ' + g.at.join(', ') : '') + (g.size ? ', a patch of ' + g.size.join(' by ') + ' px' : '') + '; ' + g.over + ' of ' + g.rows + ' rows read over ' + GROUND.named
+
 export const chained = (row: Read, flows: number): string => (row.patternMap === undefined ? '' : ', the later frame carried by the chain of the ' + flows + ' flows from frame to frame' + ((row.patternMapMoved ?? null) !== null ? ' (that chain parts from the camera\'s map on the body by ' + row.patternMapMoved!.toFixed(1) + ' px)' : ''))
 
 export interface Apart { first: number; last: number; rows: number; k: number; main: number; map: number; red: 'main' | 'map'; no?: string }
