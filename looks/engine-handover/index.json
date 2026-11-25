@@ -1,6 +1,6 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T05:19:34.288Z",
+ "pushed": "2026-11-25T05:19:42.127Z",
  "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
  "note": "shutterEnds for Earth (7e3da15a, local): pairs of 1857 and 2156 at review, box against ends, three frames in a row; border frames 2099 to 2101 rendering; gradAt for Earth built (09cfadcd, local), proof chain queued",
  "looks": [
