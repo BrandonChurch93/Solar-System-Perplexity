@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T05:32:21.761Z",
+ "pushed": "2026-11-25T05:54:11.084Z",
  "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
- "note": "Trial T5 in render (not named): layer law, hand by pixel size and by angle, geometric mix. First four frames 4150 to 4153 main beside T5; no measure yet for T5. Main read by the same reader is over 0.45 on 4152 to 4169 + 1/2 (1.03 to 1.44).",
+ "note": "dive wip 4148 to 4156 still red 1.1 to 1.5 on two more forms of the hand; synthetic level change x2 over 8 frames on own light reads 0.69, so level alone is not the cause; looking at detail change next",
  "looks": [
+  {
+   "time": "2026-11-25T05:54:10.383Z",
+   "file": "20261125055410383-note-same-cv0-x3.jpg",
+   "source": "../../../../tmp/n49/same-cv0-x3.jpg",
+   "kind": "note",
+   "label": "same pose 4160 4168 4176: layer light full against own light, pattern difference; red only in the far band under the limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T05:54:09.506Z",
+   "file": "20261125055409506-note-pm-T6nc-4152.jpg",
+   "source": "../../../../tmp/n49/pm-T6nc-4152.jpg",
+   "kind": "note",
+   "label": "dive 4152 wip: frame, carried frame, pattern map; top onward bottom back; hand as factor on own light, cover off; reads 1.15, not cured",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T05:32:14.162Z",
    "file": "20261125053214162-note-t5-pair-a.jpg",
@@ -250,22 +266,6 @@
    "source": "../../../../tmp/parA/h1-pairs.jpg",
    "kind": "note",
    "label": "trial, not committed: the rise 4408 to 4420, top as named, bottom with the surface light handed to the globe's own over 0.06 to 0.8 R (was 0.06 to 0.25): the pop at 4411 to 4413 reads 0.92 to 1.01 (was 1.24 to 1.31), the frame's mean level climbs over 18 frames (was 10); the pattern number rises from 0.70 to 0.80",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T01:49:10.423Z",
-   "file": "20261125014910423-note-j2-4404.jpg",
-   "source": "../../../../tmp/parA/j2-4404.png",
-   "kind": "note",
-   "label": "trial, not committed: the dark pixels on the limb at 4404 (126 of them as named) are gone when the sky glow is drawn before the cover; frame 4391 and 4404 + 1/2 stay equal to the byte",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T01:27:46.987Z",
-   "file": "20261125012746987-note-travel-b.jpg",
-   "source": "../../../../tmp/parA/travel-b.jpg",
-   "kind": "note",
-   "label": "travel 4503 to 4530 every third frame at draft, on the named tree 9172cc84 (4503 to 4515 equal to the byte to those before the merge of 12bfd7d5)",
    "stop": "uranus"
   }
  ]
