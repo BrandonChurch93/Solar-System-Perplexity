@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T02:17:28.383Z",
+ "pushed": "2026-11-25T02:40:36.145Z",
  "head": "f5f800dd5adb4a30849162f2b91847d418115249",
- "note": "Task 1 named f5f800dd: every further body in the pose record. Task 2 so far: Uranus's shape is not the bulk on its rise. Sun rows: a wrong unit in the record, cure next.",
+ "note": "MAIL 835 tasks 3 and 4: Mars rise exchange of two grounds, Jupiter flow left with the range on the traced sphere",
  "looks": [
+  {
+   "time": "2026-11-25T02:40:35.583Z",
+   "file": "20261125024035583-note-flow-6580.jpg",
+   "source": "../m835/flow-6580.png",
+   "kind": "note",
+   "label": "Jupiter 6580 to 6596, flow left with the range patch (points on the unit shape)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:40:34.991Z",
+   "file": "20261125024034991-note-mars-5364.jpg",
+   "source": "../m835/mars-5364.png",
+   "kind": "note",
+   "label": "Mars 5364 against 5380 after the carry: the close ground and the globe's ground are two pictures of one place",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T02:17:27.806Z",
    "file": "20261125021727806-note-crop-a.jpg",
@@ -50,22 +66,6 @@
    "source": "../m752/count/beauty-2427-crop.png",
    "kind": "note",
    "label": "Mars 2427 draft beauty crop: full, web before, web with counts",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:00:02.189Z",
-   "file": "20261125000002189-note-texels-panel.jpg",
-   "source": "../m752/count/texels-panel.png",
-   "kind": "note",
-   "label": "Mars dive 2400, 2427, 2450, draft, texels view: full set, web set before, web set with counts (levels arrive where the full set brings them)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:29:37.947Z",
-   "file": "20261124222937947-note-limb-2325-film-1to1.jpg",
-   "source": "../m752/limb-2325-film-1to1.png",
-   "kind": "note",
-   "label": "Mars 2325 final, lit limb at full size: off, 0.0005, 0.001, 0.002, 0.004",
    "stop": "mars"
   }
  ]
