@@ -218,6 +218,23 @@ float endHash(vec2 p) {
   h ^= h >> 16u;
   return float(h >> 8u) / 16777216.0;
 }
+// A run (a step of the map's direction from dd) in footprints of a read at dd: its length over the length of that read's
+// footprint along it, from the same derivatives the read uses. Both are measured in the map's texels (u counts twice v).
+// The scene from code asks it for the ray's run through the cloud layer (deep.ts); the globe does not.
+float runFeet(vec3 dd, float soft, vec3 run) {
+  float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
+  float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
+  float u2 = fract(u + 0.5) - 0.5;
+  vec2 mx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v)) * uGrad * soft;
+  vec2 my = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v)) * uGrad * soft;
+  float level = max(dd.x * dd.x + dd.z * dd.z, 1e-8);
+  vec2 r = vec2((dd.z * run.x - dd.x * run.z) / (PI * level), run.y / (PI * sqrt(level)));
+  float len = length(r);
+  vec2 e = r / max(len, 1e-12);
+  float ax = dot(vec2(2.0 * mx.x, mx.y), e);
+  float ay = dot(vec2(2.0 * my.x, my.y), e);
+  return len / max(sqrt(ax * ax + ay * ay), 1e-12);
+}
 vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
   float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
   float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;

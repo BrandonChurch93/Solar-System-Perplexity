@@ -110,6 +110,7 @@ uniform vec3 uCirrusFar;
 uniform vec3 uThrough;
 uniform mat3 uToBody;
 uniform vec4 uFar;
+uniform vec2 uSlab;
 uniform vec3 uFarTone;
 uniform vec3 uFarPower;
 uniform vec2 uOwn;
@@ -860,6 +861,7 @@ void main() {
     float tx;
     vec3 dd = deckDir(pb);
     vec3 dcl = cloudDir(uToBody * sheetUp);
+    vec3 dclEnd = cloudDir(uToBody * farUp);
     float reach = uGCloudHeight / max(ndlFar, uGShadow.z);
     vec3 dsa = cloudDir(normalize(pb + sunB * reach));
     vec3 dsb = cloudDir(normalize(pb + sunB * reach * 1.6));
@@ -872,6 +874,7 @@ void main() {
     for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
       float turn = uGCirrus.x * uGCirrus.y * (textureGrad(uGFarMap, cq, cx, cy).g * (255.0 / 127.0) - 1.0) * sqrt(max(1.0 - dcl.y * dcl.y, 0.0));
       dcl = bend(dcl, turn);
+      dclEnd = bend(dclEnd, turn);
       dsa = bend(dsa, turn);
       dsb = bend(dsb, turn);
       vec4 far = textureGrad(uGFarMap, cq + vec2(0.0, turn / PI), cx, cy);
@@ -880,7 +883,25 @@ void main() {
     }
     vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode;
     farTexels = tx;
-    float mapCloud = layerAt(dcl, max(uGCloudSoft, uGCirrusPx), 0.0, tx).a;
+    float softCloud = max(uGCloudSoft, uGCirrusPx);
+    float mapCloud = layerAt(dcl, softCloud, 0.0, tx).a;
+    // ONE BODY (MAIL 1049, 1078): the map's cloud layer is a slab between the deck's sphere and the sheet's, which the eye's ray
+    // runs through from dcl (where it enters) to dclEnd (where it meets the deck's sphere, or passes it nearest). The ray shows
+    // the mean of the map at uSlab.x points along that run, and each point is read with a footprint as much wider as the run is
+    // long against what one read stands for (uSlab.y of its own footprints along the run), so every level of the map fades
+    // where the run is long against it and the mean cover is kept: what is smaller than the run goes into the mean, it is
+    // neither a flat picture on a sheet nor a streak. Only the part of the run beyond what the one read stands for is spread
+    // (slabShare): where the read holds the whole run it stands as it was, to the bit (the hold, the eye far off: the layer
+    // is thinner there than a read resolves). By the place and the path alone; nothing reads the clock.
+    vec3 slabRun = dclEnd - dcl;
+    float slabFeet = runFeet(dcl, softCloud, slabRun) / max(uSlab.y, 1e-6);
+    float slabShare = max(1.0 - 1.0 / max(slabFeet, 1e-6), 0.0);
+    float slabSum = 0.0;
+    for (int j = 0; j < 8; j++) {
+      if (float(j) >= uSlab.x) break;
+      slabSum += layerAt(normalize(dcl + slabRun * (slabShare * (float(j) + 0.5) / uSlab.x)), softCloud * max(slabFeet, 1.0), 0.0, tx).a;
+    }
+    mapCloud = slabShare > 0.0 && uSlab.x > 0.5 ? slabSum / uSlab.x : mapCloud;
     float mapShadow = 0.6 * min(layerAt(dsa, uGShadow.y, 0.0, tx).a, 1.0) + 0.4 * min(layerAt(dsb, uGShadow.y * 1.8, 0.0, tx).a, 1.0);
     for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
       mapCloud *= keep;
@@ -1230,7 +1251,7 @@ export class Deep {
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
         uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uShade: { value: v4(l.shade, l.shadeFoot, ci.thin[0]!, ci.thin[1]!) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
-        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
+        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uSlab: { value: new THREE.Vector2(look.far.slab[0]!, look.far.slab[1]!) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
         uAirLaw: { value: v4(look.air.top, look.air.scale, look.air.foot, look.air.cirrus) }, uAirDepth: { value: v3(look.air.depth) }, uAirSun: { value: v3(look.air.sun) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
         uDiag: diagUniform,
