@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T20:14:01.631Z",
+ "pushed": "2026-11-25T20:25:15.479Z",
  "head": "f1d9217084f274313761854db08e637cea68c1c1",
- "note": "20:16 2a corners where plates are drawn, wall weight against the take, trials bad",
+ "note": "20:30 ledge of C2 before and after the behind cure, wall weight on the 1.6 plate",
  "looks": [
+  {
+   "time": "2026-11-25T20:25:14.479Z",
+   "file": "20261125202514479-note-dbg-c.jpg",
+   "source": "out/work/place/w12/dbg-c.jpg",
+   "kind": "note",
+   "label": "trial 12 look files, 0.3 plate x 1100 y 150: streak tone (whorls), relief, lift (flat facets of the heights), rock without grain",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:25:13.573Z",
+   "file": "20261125202513573-note-over-1p6.jpg",
+   "source": "out/work/place/w12/over-1p6.jpg",
+   "kind": "note",
+   "label": "1.6 plate before the walls with the outline of the heights' wall weight: the south wall (facing the Sun) lies on ground painted as plateau",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:25:12.603Z",
+   "file": "20261125202512603-note-ledge-b2.jpg",
+   "source": "out/work/place/c2b/ledge-b2.jpg",
+   "kind": "note",
+   "label": "LEDGE of C2 times 6 at 2477 and 2684: before the cut, state, behind cure. A yellow green speck stays at 2684 x 957 y 304 (also before the cut)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:25:11.698Z",
+   "file": "20261125202511698-note-ledge-b.jpg",
+   "source": "out/work/place/c2b/ledge-b.jpg",
+   "kind": "note",
+   "label": "LEDGE of C2 times 8 at 2476, 2477, 2490: before the cut, state 74dca647 (dark slab on the crest), with the behind cure (slab gone)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T20:14:00.506Z",
    "file": "20261125201400506-note-v03-c.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/t1/corner2684.jpg",
    "kind": "note",
    "label": "MAIL 1266 2a: rise 2684 lower corners at 1 to 1: state, main, layers",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:13:56.866Z",
-   "file": "20261125201356866-note-corner2683.jpg",
-   "source": "out/work/place/t1/corner2683.jpg",
-   "kind": "note",
-   "label": "MAIL 1266 2a: rise 2683 lower corners times 2, where the plates are drawn (blue in the layers): state, main (another eye), layers. Straight border of the set at lower right in the state",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:08:16.112Z",
-   "file": "20261125200816112-note-lay2475.jpg",
-   "source": "out/work/place/t1/lay2475.jpg",
-   "kind": "note",
-   "label": "2475 state beside its layers picture: the set (red, yellow) covers all ground but the two lower corners (plates, blue)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:08:15.406Z",
-   "file": "20261125200815406-note-foot2682.jpg",
-   "source": "out/work/place/t1/foot2682.jpg",
-   "kind": "note",
-   "label": "MAIL 1266 2a: rise 2682 foot of frame at 1 to 1, draft, state beside main (the eye differs)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:08:14.723Z",
-   "file": "20261125200814723-note-foot2475.jpg",
-   "source": "out/work/place/t1/foot2475.jpg",
-   "kind": "note",
-   "label": "MAIL 1266 2a: dive 2475 foot of frame at 1 to 1, draft, state 74dca647 beside main",
    "stop": "mars"
   }
  ]
