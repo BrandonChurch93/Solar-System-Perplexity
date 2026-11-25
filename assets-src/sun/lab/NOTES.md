@@ -303,3 +303,28 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
 - e9: tongues in the penumbra (labTongue: n drops side by side about the spot in ranks along log radius, head
   toward the umbra, own length, bend and heat; two layers 72 and 46), umbra edge by the lot of the column, pit
   shallower (depth 0.07, wall [0.85, 1.9]).
+- e10 to e13 (commit 45c6206): tongues [110, 70] in ranks [2.2, 1.7], hot 1.8; dome.round 8, flat 1.5, wobble 0.03;
+  shade [0.22, 0.4] with a width of (0.4 + 1.2 smoothstep(0.3, 0.8, crease field)); lane [0.03, 0.12, 0.6]; rim 0.5,
+  patch [0, 0.9], body 1.12. e11 (round 6, flat 1.3) was nuggets with gaps. Whole frame reads as a pressed sheet of
+  golden cells with a tongue spot; near pair still cobbles: lanes brown and soft, not thin and black; too smooth.
+- f1: the gas march (labGas in TAIL_GLSL: 20 steps from the place to the eye through a layer to gas.top, the ground
+  under each step read from the map, which now holds the height in g; a skin on the domes and a pool in the low
+  places; glow by the mean heat of the ground under the path). First try (skin [5, 0.005], pool [2, 0.012]): glow
+  far too weak, lanes black, far field pebbles on black, limb dark; a draft still 66.8 s against 27 s. Behind the
+  switch gas.steps (0: the analytic haze as before). Not tuned yet.
+- f2 (commit d26bc8a): labWell: the heat lumps of a cell are born small about its middle, spread outward with the
+  gas and fade at the rim (two generations cross faded, period heat.spread[0] 4 s, growth e^1.2 a period, size 3 a
+  dome radius, share 0.8 against the still mottle of the place); heat.well 0.3. Chain 3 runs on f2: still 90, hold
+  clip (capture 0 to 120 with the eye of capture 0), film clip 0 to 120, rise stills 185 to 240, G17 0, 60, 90.
+- Mail of sun_builder 11:15 and MAIL 1051: the globe wants a baked level of my ground: gnomonic about the spot,
+  W 40 degrees, N 4096 (2048 enough if the ground stays to 0.37 to 0.72 radii), 8 bit sRGB, seen from straight
+  above, no view law, no gas, no flare lights, clock 0; files public/assets/sun/full/place-far-0.jpg and web at
+  half size, the bake script, a recipe for G11 (FAR-TWIN.md in
+  /home/user/.perplexity/attachments/fee7a78ca7f14731b42b9170441488b0/). RULED: my ground takes its large tone
+  (over about 3 degrees) from the globe's map inside the level and outside; my spot is the map's dark knot (1.9 to
+  2.0 degrees wide as a disc of equal area, box 2.2 to 2.5 by 3.0 to 3.25, middle 0.08 west and 0.32 south of the
+  spot's coordinate; standing ground's umbra 1.82 wide, penumbra 3.82). If mine differs by more than a fifth say
+  so with both numbers before baking. Owed in the 12:30 mail: spot width in degrees, far hand over law and reach,
+  whether my pass can give the level.
+- Life span law (sim.ts): span = 2.5 + 11.5 q^2 s with q even in 0 to 1: shortest 75 film frames, median 5.4 s
+  (161 frames), longest 420; 36 percent under 4 s. A cell grows over the first 38 percent and shrinks over the last.
