@@ -2371,3 +2371,16 @@ MAIL 1154, word for word:
 - NAMED sent 16:19 UTC (`work/r14/named/NAMED-sent-001113e7.txt`; attached the top view with the pieces' borders, the three frame pairs, the far band in thirds, 2895's disc, the dive slice in four sheets). Not read on the commit at that time: rise slices (running), parity, path.
 - Looks pushed 16:02 UTC.
 - Next, for the cut of 20:00: the read behind the 17 pixels; the air's share for the left third; the cast shadows as lanes behind the rows of tops; the control lines of MAIL 1021; a richer laid ground at the lower left if a cause is found for its plainness.
+
+## 25 Nov, 16:27 UTC: MAIL 1196, the order for the cut of 20:00
+
+MAIL 1196, word for word:
+
+> MAIL 1196 from the Builder (/root), 16:25 UTC.
+> 1. NAMED 001113e7 is taken in place of 0e5c0362 (whose check tree was green on all seven jobs: 917 of 917 tests, gate, determinism, four parts with pop at most 1.17 and pattern at most 0.43, same bytes outside 2745 to 3389). Seven jobs are queued on 001113e7 itself, since against main it changes your three folders only: tests and gate, determinism, the four parts, same bytes against main on 36 frames. The newer name goes into the cut if it is green when the cut is built, else 0e5c0362 does and the wedge follows.
+> 2. The 17 pixels at 2895, RULED: taken as you read it. Condition (i) is read as: no pixel outside the place's disc moves by more than 1 level, and the count is named. The cause in the lens (the bloom's share in src/post/chain.ts) is plausible and stays unproven until your two finals with the share at 0; put the result into the next NAMED. No shared code is committed for it.
+> 3. Jupiter's round starts on the newest green name once it is on main, not on a name already replaced.
+> 4. For the cut of 20:00, worst first as you list them: the far band (right third 83.5 against 45.2, left third relief 7.02 against 13.86), then the wedge's ground (dark and plain lower left of 3042 and 3254 + 1/2, the half puff of 3034, the rough bits on the sunlit left), the mid plate under the near plate with the tone field fit again, the cast shadows as lanes behind the rows, the control lines. Mail a red of your rise slices at once.
+
+- The short mail of 16:22 UTC to the NAMED (`work/r14/named/add-17px.txt`, picture `work/r14/w/strays-2895.jpg`): against the kept still, 0e5c0362's final 2895 differs in 2769 pixels outside the disc's box (x 891 to 950, y 694 to 750), every one by exactly 1 level, thinning with the distance from the place (median 81 px, 95 in 100 within 184 px); the wedge's commit in 2772. My lines before counted only pixels over 1 level. Cause in kind, read in code: the engine's lens, `src/post/chain.ts` (`hdr = mix(hdr, bloom, uBloomStrength)`, the grade's default 0.08, Jupiter's stop sets no other). Owed: two finals of 2895 with that share at 0 in the working tree only (0e5c0362's assets and the named ones), shared code not committed; the result goes into the next NAMED.
+- Order for the cut of 20:00 (MAIL 1196 item 4): the far band (left third: the air's share; right third: no cause in the scene found, nothing darkened by place or table), the wedge's ground, the mid plate under the near plate with the tone field fit again, the cast shadows as lanes behind the rows, the control lines. A red of my rise slices is mailed at once.
