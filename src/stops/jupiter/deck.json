@@ -135,7 +135,7 @@
     "detailTone": 0.12
   },
   "air": {
-    "note": "The air between the camera and the deck, measured by deck/air.py on the approved view: for the plates, which hold the deck as it is from straight above, it gives the share of their light that comes through (by the sine of the angle between the ray and the ground) and the light the air adds (by that sine and by the turn of the ray away from the Sun's azimuth, mirrored). sinRange: the sines of the first and last knot, spaced by ratio. knots: count over the sine, count over the turn from 0 to 180 degrees. clear: between these sines the air ends, so a steep ray sees the plates as they are. minTexels: texels of the view chart a cell needs. smooth: blur of the added light in cells. The weight by which the air is gone is not kept here: it is read from the place on the ground (place.json scene.air), the same at every height of the camera, so the ground the approved view saw keeps the air it was painted in from the first frame of the dive and nothing comes in as the camera sinks. assets-src/jupiter/deck/lift.py and lift-measure.json are the history of the weight solved by film time (the largest level step was 4.84 a frame then).",
+    "note": "The air between the camera and the deck, written by deck/air.py: one layer of haze over the deck, as thick as the eye of the approved view stands high (deck-fields.json view.eye) and equally dense everywhere. The share of the plates' light that comes through is exp(-layer.per times the length of the ray's path through the layer). From an eye at or above the layer's top that length follows from the sine of the angle between the ray and the ground at the point alone, and the eye is never under it (the surface view flies at that height or above), so the table is kept by that sine. The light the air adds (by that sine and by the turn of the ray away from the Sun's azimuth, mirrored) is what the cell means of the approved view have over that share of the plates' cell means, never less than 0. layer.per: the layer's strength for one unit of path. layer.flat: from the first knot at or over this sine downwards both tables are held. At every height those sines lie in the last pixels under the limb (at frame 3037 every sine under 0.056 lies within 10 px of it), and a table that still changes there draws its own profile over the far ground. sinRange: the sines of the first and last knot, spaced by ratio. knots: count over the sine, count over the turn from 0 to 180 degrees. clear: between these sines the air ends, so a steep ray sees the plates as they are. minTexels: texels of the view chart a cell needs. smooth: blur of the added light in cells. The weight by which the air is gone is not kept here: it is read from the place on the ground (place.json scene.air), the same at every height of the camera, so the ground the approved view saw keeps the air it was painted in from the first frame of the dive and nothing comes in as the camera sinks. assets-src/jupiter/deck/lift.py and lift-measure.json are the history of the weight solved by film time (the largest level step was 4.84 a frame then). History of the share: up to the second named commit of round 2 it was the one measured on the approved view (green 0.14 from sine 0.063 down and 0 under 0.02), which is not a share of light but how little of the plates' far field the approved view shows; a ground point crossed its step in 8 frames of the dive. air.py still prints it.",
     "sinRange": [
       0.002,
       0.4
@@ -148,6 +148,10 @@
       0.16,
       0.3
     ],
+    "layer": {
+      "per": 0.014,
+      "flat": 0.05
+    },
     "minTexels": 200,
     "smooth": 0.8
   },
