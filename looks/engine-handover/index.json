@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T10:51:12.465Z",
+ "pushed": "2026-11-25T11:17:33.788Z",
  "head": "c0d04d4c88f335d1fc6ccee5de64752d773caab4",
- "note": "the measure of the naming commit proved against the motion of drawn frames; second whole suite and draft hash list running",
+ "note": "MAIL 1041: the soft of a surface view measured on its globe is none (naming commit amended, local); before pictures of Uranus 4290 and 4259 at final; the suite runs on the cured tree",
  "looks": [
+  {
+   "time": "2026-11-25T11:17:31.390Z",
+   "file": "20261125111731390-note-f04259.jpg",
+   "source": "out/work/blur/nu-final/f04259.png",
+   "kind": "note",
+   "label": "Uranus 4259 final on the first local form of the naming (c0d04d4c, soft 0.045, 19 samples): the form that was not pushed, drawn to state what the soft did"
+  },
+  {
+   "time": "2026-11-25T11:17:28.658Z",
+   "file": "20261125111728658-note-f04259.jpg",
+   "source": "out/work/blur/c4-final/f04259.png",
+   "kind": "note",
+   "label": "Uranus 4259 final, before the naming (commit 4 dfe0aa90): 16 samples, 7.18 px read on the plane"
+  },
+  {
+   "time": "2026-11-25T11:17:25.954Z",
+   "file": "20261125111725954-note-f04290.jpg",
+   "source": "out/work/blur/c4-final/f04290.png",
+   "kind": "note",
+   "label": "Uranus 4290 final, before the naming (commit 4 dfe0aa90): 16 samples, 6.26 px read on the plane, G17 median 1.126 p25 1.024"
+  },
   {
    "time": "2026-11-25T10:51:10.802Z",
    "file": "20261125105110802-note-measure-mercury-a.jpg",
@@ -39,27 +60,6 @@
    "source": "../../../../tmp/law/m-rise-in-b.png",
    "kind": "note",
    "label": "Mars rise in at 1 to 1 (crop 0,600 to 480,920), frames 2671 to 2673: top the box (1c85affe), bottom the shutter law 6 to 14 px (scratch, Mars alone): 2671 equal by sha, the streak's spread 1.83, 2.24, 2.53 px for 1.83, 3.05, 4.04"
-  },
-  {
-   "time": "2026-11-25T09:27:43.120Z",
-   "file": "20261125092743120-note-c1-nine.jpg",
-   "source": "../../../../tmp/law/c1-nine.png",
-   "kind": "note",
-   "label": "commit 1 of the shutter law (1c85affe): nine frames at review, one a stop, each equal by sha256 to the base b1721d2c"
-  },
-  {
-   "time": "2026-11-25T08:27:54.399Z",
-   "file": "20261125082754399-note-jup3027-box-ends-lr.jpg",
-   "source": "out/work/looks-extra/jup3027-box-ends-lr.png",
-   "kind": "note",
-   "label": "Jupiter 3027 review at 1 to 1, lower right: box shutter above, ends 0.5 (trial build) below; the doubled dark veins under the box are single under the ends"
-  },
-  {
-   "time": "2026-11-25T08:27:52.411Z",
-   "file": "20261125082752411-note-jup3027-box-ends-ll.jpg",
-   "source": "out/work/looks-extra/jup3027-box-ends-ll.png",
-   "kind": "note",
-   "label": "Jupiter 3027 review at 1 to 1, lower left: box shutter above, ends 0.5 (trial build) below; the doubled outlines of the puffs under the box become one soft shape"
   }
  ]
 }
