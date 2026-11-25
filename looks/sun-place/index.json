@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T02:17:18.008Z",
- "head": "b6906952bd77d84b231d64dfb2ed966485660755",
- "note": "commit 3 proof: life strip 60 to 90, frames 0 and 90, near pairs beside the approved, rise",
+ "pushed": "2026-11-25T02:41:15.176Z",
+ "head": "0988d75a16e313393841e1cca1a31fc6c42317d3",
+ "note": "commit 3 named 0988d75a: frame 0 far ground and spot beside the approved; commit 4 starts with the funnel",
  "looks": [
+  {
+   "time": "2026-11-25T02:41:14.591Z",
+   "file": "20261125024114591-note-c3-0-spot.jpg",
+   "source": "../../../../tmp/v/c3-0-spot.jpg",
+   "kind": "note",
+   "label": "commit 3 (0988d75a), draft: approved (left) beside frame 0 spot at 1 to 1, box x 700 y 470 of 1920; the spot is no funnel yet (3d), the work of commit 4 that starts here",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:41:14.034Z",
+   "file": "20261125024114034-note-c3-0-far.jpg",
+   "source": "../../../../tmp/v/c3-0-far.jpg",
+   "kind": "note",
+   "label": "commit 3 (0988d75a), draft: approved (left) beside frame 0 far ground at 1 to 1, box x 15 y 420 of 1920. sun-near.py frame 60: share by band 0.1 .. 0.9 : 0.199 0.209 0.189 0.130 0.097 0.072 0.047 0.043 0.009 / dark (under 0.15) 0.205 | body (0.15 to 0.55) 0.624 | pale (0.65 to 0.85) 0.091 | white (over 0.85) 0.009 / brightest 15 percent: half width 9.6 px, 677 shapes | fine detail 0.0252 | mean 0.337",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T02:17:16.776Z",
    "file": "20261125021716776-note-c3-rise-b.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c3-life.png",
    "kind": "note",
    "label": "commit 3 proof, draft tier: near crop 318 by 420 at x 820 y 640, native size, frames 60 66 72 78 84 90 side by side (the life strip of MAIL 836 point 5 iii). sun-near.py frame 60: share by band 0.1 .. 0.9 : 0.199 0.209 0.189 0.130 0.097 0.072 0.047 0.043 0.009 / dark (under 0.15) 0.205 | body (0.15 to 0.55) 0.624 | pale (0.65 to 0.85) 0.091 | white (over 0.85) 0.009 / brightest 15 percent: half width 9.6 px, 677 shapes | fine detail 0.0252 | mean 0.337",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:09:56.772Z",
-   "file": "20261125020956772-note-c3-90-s.jpg",
-   "source": "../../../../tmp/v/c3-90-s.jpg",
-   "kind": "note",
-   "label": "State of commit 3, frame 90 at 1 to 1 beside the approved, the spot (your box x 1000 to 2100, y 780 to 1200): not a funnel. Long bulbs lean toward a small umbra; no thick lip, no hanging strands. Point 3d is not done in this commit.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:09:55.627Z",
-   "file": "20261125020955627-note-c3-90-b.jpg",
-   "source": "../../../../tmp/v/c3-90-b.jpg",
-   "kind": "note",
-   "label": "State of commit 3, frame 90 at 1 to 1 beside the approved, the far ground and the horizon (your box x 0 to 1100, y 700 to 1120): the far ground is amber and keeps its cells as flat lenses. Wrong: softer and of less contrast than the approved, no dark creases far off; the jets are not changed in this commit (point 3e is not done).",
    "stop": "sun"
   }
  ]
