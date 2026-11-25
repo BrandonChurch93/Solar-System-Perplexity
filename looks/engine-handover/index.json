@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T18:02:44.594Z",
+ "pushed": "2026-11-25T18:37:35.433Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Probe of Mars's dive line past Phobos (draft pairs, nothing committed); Earth's rise end 2166 to 2168 under the law against main",
+ "note": "flight line and Earth by the law stand ready for the name; lookup trial at 1857 renders; the crest sheets are being written",
  "looks": [
+  {
+   "time": "2026-11-25T18:37:33.870Z",
+   "file": "20261125183733870-note-f01857.jpg",
+   "source": "../t-c2a/out/work/blur/t-fin0/f01857.png",
+   "kind": "note",
+   "label": "Earth 1857 final as it is, control of the lookup trial"
+  },
   {
    "time": "2026-11-25T18:02:43.832Z",
    "file": "20261125180243832-note-pair-eight.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/name/strip-law-2164-2170-storm-2x.png",
    "kind": "note",
    "label": "Earth rise end 2164 to 2170 at review under the law, clouds at 2 times: consecutive frames"
-  },
-  {
-   "time": "2026-11-25T17:48:23.863Z",
-   "file": "20261125174823863-note-sheet-law-2164-2170-whole.jpg",
-   "source": "../../../../tmp/name/sheet-law-2164-2170-whole.png",
-   "kind": "note",
-   "label": "Earth rise end 2164 to 2170 at review under the law, whole frames (seen 14.0 to 6.6 px, the ends' share 0.5 falling to 0.008)"
   }
  ]
 }
