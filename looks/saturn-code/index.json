@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T14:52:22.412Z",
+ "pushed": "2026-11-25T15:15:02.006Z",
  "head": "6617c15f0777b4b5f07be68e545511ded73b4853",
- "note": "thin sheet at the largest depth the hold allows: finals, the foot stays far from the approved; proof of the commit running",
+ "note": "proof of 6617c15f renders (dive at 180 of 260); measuring row 4 by latitude, writing the dark ice sheet",
  "looks": [
+  {
+   "time": "2026-11-25T15:15:00.805Z",
+   "file": "20261125151500805-note-row4_lines.jpg",
+   "source": "../../../../tmp/v/thin/row4_lines.png",
+   "kind": "note",
+   "label": "3720 foot at 2 times, approved, main, mine (6617c15f): left as it is, right with my plane drawn: red radius 1.0, green inner rim, blue 4 N, yellow 8 N"
+  },
   {
    "time": "2026-11-25T14:52:21.040Z",
    "file": "20261125145221040-note-foot_final_016.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/law2/d_3596.jpg",
    "kind": "note",
    "label": "cure law2, dive slice 3596 to 3603, draft, half size"
-  },
-  {
-   "time": "2026-11-25T13:32:39.130Z",
-   "file": "20261125133239130-note-g17_tiles.jpg",
-   "source": "../../../../tmp/v/law2/g17_tiles.png",
-   "kind": "note",
-   "label": "3720 final, box 1120 600 to 1920 1000, darks lifted: approved close, named 6e96b4cb, cure law2 (no dark foot, open gap)"
   }
  ]
 }
