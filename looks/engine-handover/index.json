@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T20:44:27.067Z",
+ "pushed": "2026-11-25T21:01:22.040Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the five judged finals of Mars, first half done (the law by the fragment); design (c) the crests: off by default gives the same bytes on 2668, 2477, 2580, 2672 at draft, the first drafts with the cure render now",
+ "note": "crests: first drafts of the cure. The teeth crest is cured at 2668 and 2672; four small faults found (pixels at the cut, crumbs at 2477, a wall between close crests, the under sheet past a rim); reworking the cut. The second half of the five judged finals renders",
  "looks": [
+  {
+   "time": "2026-11-25T21:01:21.074Z",
+   "file": "20261125210121074-note-q-2580-pts-1.jpg",
+   "source": "../../../../tmp/crest/q-2580-pts-1.png",
+   "kind": "note",
+   "label": "crests, first drafts: 2580 at 10x at four of the 19 pixels that differ from the base by more than 32 codes: base, out 2, out 3, 4 x difference. Single pixels along the cuts: a fault"
+  },
+  {
+   "time": "2026-11-25T21:01:20.088Z",
+   "file": "20261125210120088-note-qt-2477-20x.jpg",
+   "source": "../../../../tmp/crest/qt-2477-20x.png",
+   "kind": "note",
+   "label": "crests, first drafts: the teeth crest at 2477 at 20x: base, cure out 2, out 3, out 2 tinted. Single pale pixels beside the cut: the cut is not smoothed where a texel is half a pixel: a fault"
+  },
+  {
+   "time": "2026-11-25T21:01:19.204Z",
+   "file": "20261125210119204-note-qt-2668-rim.jpg",
+   "source": "../../../../tmp/crest/qt-2668-rim.png",
+   "kind": "note",
+   "label": "crests, first drafts: the plateau rim at 2668 at 8x, cure out 2 plain and tinted (red near sheet, green far sheet own texel, blue far sheet fill, magenta far sheet under kept ground). The magenta line right of the rim is the far sheet showing past the layer's rim: a fault"
+  },
+  {
+   "time": "2026-11-25T21:01:18.120Z",
+   "file": "20261125210118120-note-q-2668-teeth.jpg",
+   "source": "../../../../tmp/crest/q-2668-teeth.png",
+   "kind": "note",
+   "label": "crests, first drafts of the cure on Mars 2668 (draft tier), the teeth crest at 3x: base, cure out 2, cure out 3. The teeth are gone (0 jumps against 5); new small faults remain (a zigzag of 10 px where two crests lie close, lower left of the lit slope)"
+  },
   {
    "time": "2026-11-25T20:43:36.704Z",
    "file": "20261125204336704-note-f02325.jpg",
@@ -31,34 +59,6 @@
    "source": "../t-c2a/out/work/blur/fin5-c3/f02668.png",
    "kind": "note",
    "label": "Mars 2668 at the final tier (16 samples), the law by the fragment"
-  },
-  {
-   "time": "2026-11-25T20:23:00.806Z",
-   "file": "20261125202300806-note-f02477.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-c3/f02477.png",
-   "kind": "note",
-   "label": "Mars 2477 at the final tier (64 samples), the law by the fragment: the first of the five judged finals for the count against the share at the vertices"
-  },
-  {
-   "time": "2026-11-25T20:22:59.910Z",
-   "file": "20261125202259910-note-gl-sheets.jpg",
-   "source": "../../../../tmp/crest/gl-sheets.png",
-   "kind": "note",
-   "label": "crests, the cure in the browser test (6 of 6 pass): a step of two flat colours seen from an eye half a unit to the side; mesh alone against the sheets, standing and flat; the paint beyond the middle with the cut on the middle (a strip of near colour left on the far ground) and with the cut 2 texels out; a rim rides with the far side; a near ground before no ground"
-  },
-  {
-   "time": "2026-11-25T20:07:36.539Z",
-   "file": "20261125200736539-note-cure-whole-field-o2.jpg",
-   "source": "../../../../tmp/crest/cure-whole-field-o2.jpg",
-   "kind": "note",
-   "label": "crests, the cure: all of Mars L1 at the map's size with the field (step 0.002, walk 12, under 24, out 2); blue: band texels whose near end is outside the matte (3644 of 47129 ramp texels), which the sheets now treat as a rim and not as a crest"
-  },
-  {
-   "time": "2026-11-25T20:07:35.743Z",
-   "file": "20261125200735743-note-cure-teeth-zoom-b.jpg",
-   "source": "../../../../tmp/crest/cure-teeth-zoom-b.png",
-   "kind": "note",
-   "label": "crests, the cure: the same at 9x (texels x 1610..1675 y 400..465); measured on 298 points of this crest the paint's light falls off at 0.12 texels beyond the middle in the median, 1.88 at 95 percent, 3.15 at 99 percent"
   }
  ]
 }
