@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T18:59:43.100Z",
- "head": "9b54c18f38b71768534a57e8e0563ce5f98cb0ac",
- "note": "the filled hold sky plate measured at final 1185 beside main's: stays out (G17 and match worse); MAIL 1256 read, point 2 in work",
+ "pushed": "2026-11-25T19:29:31.773Z",
+ "head": "6106df930b0fff05dccb46a7626f8289567b43b6",
+ "note": "control sheet: the close picture's share held at 0 on dive 1290 to 1299, the ground by height shows as the dark form at the centre",
  "looks": [
+  {
+   "time": "2026-11-25T19:29:30.975Z",
+   "file": "20261125192930975-note-cG0-venus-dive-k2580-2598-changes.jpg",
+   "source": "../../../../tmp/v/probe/cG0-venus-dive-k2580-2598-changes.png",
+   "kind": "note",
+   "label": "control, the globe's picture alone (share of the close picture 0) on dive rows 1290 to 1299: the ground comes in by height at the frame's centre, reads up to 0.65",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T18:59:42.454Z",
    "file": "20261125185942454-note-sky-crop3.jpg",
@@ -64,14 +72,6 @@
    "source": "../../../../tmp/v/sh/L5r-2.jpg",
    "kind": "note",
    "label": "54480b0c whole rise, every half frame 1540 to 1554 and a half",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T17:55:06.774Z",
-   "file": "20261125175506774-note-L5d-4.jpg",
-   "source": "../../../../tmp/v/sh/L5d-4.jpg",
-   "kind": "note",
-   "label": "54480b0c whole dive, every half frame 1300 to 1314 and a half",
    "stop": "venus"
   }
  ]
