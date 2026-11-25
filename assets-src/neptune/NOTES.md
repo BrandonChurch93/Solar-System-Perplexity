@@ -8592,3 +8592,136 @@ All pair numbers are my proxy (the report's own path, `W/chainr.py`, on my previ
   - W2 deck run 0 points 0.78 / 0.65; W0 veil depth 0 0.71 / 0.59; W4 wisp light 0 0.78 / 0.65: no part.
   So: the first streamer's shadow on the dark near deck, sliding with the clock over the deck under it, as at 4753; the
   cure of 985341693 took the streamer's thick and thin parts out of the shadow and that was not all of it.
+
+## Lab log 22:25 to 23:17 UTC: the knot at 4760 named to the line and cured in the tree; the date of the next name sent; the far Sun's request answered
+
+All pair numbers are my proxy (the report's own path on my preview frames, 960 wide, draft, rate 2), STATED. Two numbers of a
+control: the pattern of the pair 4760 to 4768 read from the other end by the reference's way, and its mean inside the knot
+of the reference (377 px of 480 wide where the tree reads over 0.40). The tree before: 0.78 / 0.65.
+
+- Trial S1 (22:31 to 22:33): in the shadow the body is read no narrower than castWave, at the same mass (cirrusBody twice,
+  cirrusFar once): 0.65 / 0.55. The comb of the 48 taps is gone from the shadow, the streak stays (the shadow alone at 4760:
+  most 10.55 levels against 12.55).
+- Trial S2 on S1 (22:35 to 22:36): each tap of the cast reads at its own fixed place within castWave: 0.48 / 0.48. The streak
+  breaks into blots that slide as before (/tmp/shadow-S2.jpg, looked at). Not kept.
+- Batch T on S1's tree (22:37:37 to 22:45:13, five pairs):
+  - T1, the bend's fine sizes left out of the shadow (least 0.2): 0.34 / 0.30. A share.
+  - T2, the thick and thin parts (lump) at their mean in the shadow: 0.11 / 0.06. THE PARTS.
+  - T3, the fibres out of the shadow: 0.76 / 0.66. Worse.
+  - T4, cirrus.life 0: 0.60 / 0.53. The boil is not it.
+  - T5, the cirrus at the deck's speed (0.078): knot 0.07, but at that clock the shadow stands elsewhere (pattern 0.44, largest
+    0.46 at (426, 269) of 480): proves nothing, not used.
+- WHY THE PARTS. The first streamer's lump is 0.09 and castWave 0.06. The law of the 4753 cure (985341693) read a part at the
+  mean under one wave and whole from two on: smoothstep(0.06, 0.12, 0.09) is 0.5, so half of the first streamer's thick and
+  thin parts stood in its shadow. The body steps from thin to thick within half a part (strength: 0.25 to 0.75 of the noise),
+  so that half was a streak as sharp as a part of a quarter wave: a dark line under the streamer's foot, up to 12.5 levels in
+  ground of about 10, 25, 50, that slides over the deck with the cirrus wind (0.12) against the band's (0.05 plus the jet):
+  about 10 px of 1920 in 8 frames.
+- Batch U (22:48:53 to 22:53:59): the one line `lump = mix(0.5, lump, smoothstep(2.0 * gShadow, 4.0 * gShadow, make.y))`.
+  - U2, the line alone (no S1): 0.11 / 0.06. U1, with S1: 0.11 / 0.06. So S1 does nothing for the row.
+  - 4860 at 1920 with U1 (109.0 s, another build ran before it): whole 22.397 | sky 3.203 | band 1.616 | ground 17.577; G17
+    0.507 / 0.223. Against the last proof (N12): mean abs 0.2379, most 54 levels, 101105 px over 2 levels, all on the ground:
+    lower left the first streamer's shadow (a few levels), right the far streamer's dark shadow line, softened by up to 54
+    levels (/tmp/u1-4860.jpg, looked at). That is S1's doing (the second streamer's half width 0.03 is under castWave).
+    S1 is NOT kept. The comb of the taps stays in the shadow, faint (under the reader's limit): named.
+- THE TREE since 22:55: 985341693's law with the thick and thin parts read at twice castWave (deep.ts, one line and its
+  words; deep.json, cirrus.how, castWave). The first streamer's parts (0.09) lie in the shadow at their mean, the second's
+  (0.35) and the third's (0.6) whole as before; the waver of the width (0.37 of lump) keeps the law of one wave. No window,
+  no clock: a law of the shadow at every height.
+- MAIN AT THAT PLACE, read in its files only (origin/main 172e7bcd4, deep.ts and deep.json): the same first streamer (lump
+  0.09), castWave 0.06, 48 taps, the same winds; its cast loop reads the body with the parts whole (no filter of the shadow
+  at all). So the shadow law is not what differs between main (green there, 0.1357 at 4755 by the Builder's reader) and the
+  name. What does differ at that place is NOT measured: main's own pair is drawn after the name.
+- Looks pushed 22:55:44 (efcc4ae6, 8 looks) and 23:16:45 (1e8baef7, 8 looks).
+
+## 25 Nov, 22:57 UTC: my answer to MAIL 1313 (the date of the next name) and MAIL 1321 (the cause at 4760), to the Builder (word for word)
+
+> NEPTUNE, 22:57 UTC, answers you asked for (MAIL 1313: the date of the next name; MAIL 1321: the cause at 4760). Not a name yet.
+>
+> DATE: the next name by 00:30 UTC. The proofs of the cure are drawing now (one render process); the tests on the merge follow them.
+>
+> CAUSE of the pattern at 4760 on the dive's last part, by controls on the tree (my copy of the report's path, pair 4760 to 4768, read from the other end; STATED, mine reads 0.78 where yours has 0.6171; second number: mean in the knot, 377 px at (904, 926) of 1920, dark ground under the first streamer's foot):
+> - tree 0.78 / 0.65
+> - clock stopped: knot 0.05. It is the clock.
+> - cirrus casts no shadow: 0.09 / 0.05. It is the shadow.
+> - first streamer's density 0: 0.26 / 0.06. It is the first streamer's shadow.
+> - its thick and thin parts at their mean in the shadow only: 0.11 / 0.06. It is those parts.
+> - no part: relief 0 (0.93, worse), the fibres out of the shadow (worse), the boil of the cirrus (0.60 of 0.65), three more layers (0.71 to 0.78). Low haze 0: 0.47 / 0.42, a share.
+> In words: the streamer rides the cirrus wind (0.12) and the deck under it the band's (0.05 plus the jet), so its shadow slides over the ground, about 10 px of 1920 in 8 frames at the knot. The first streamer's thick and thin parts are 0.09 long, one and a half of castWave (0.06). The law of the 4753 cure (985341693) left parts between one and two waves in the shadow at a share (here half), and that half stood as a dark streak under the foot, up to 12.5 levels, sliding over the deck.
+>
+> CURE under proof (one line of deep.ts, the law in words in deep.json castWave): the body steps from thin to thick within half a part, so in the shadow the thick and thin parts are read at twice castWave: at the mean under twice the wave, whole from four times on. The first streamer's (0.09) lie at the mean; the second's (0.35) and third's (0.6) stand whole as before. No window, no clock, every height alike. Pair 4760 to 4768 after: 0.11 / 0.06. 4860 at 1920 draft with it: whole 22.397 (last proof 22.446, main 22.986), G17 median 0.507 as before. (That 4860 was drawn with the trial below in it too; the cure alone is being drawn now.)
+> Tried and NOT kept: the shadow's body no narrower than castWave (takes the comb of the 48 taps out of the shadow, but softens the far streamer's shadow line at 4860 by up to 54 levels, and the pair reads 0.11 without it). The comb stays, faint, named.
+>
+> NOT MEASURED: why main is green there. Main draws the same streamer and reads its shadow with the parts whole, so the shadow law is not what differs between main and the name at that place; I draw main's own pair after the name and send what it shows.
+>
+> Panel: looks efcc4ae6 (folder neptune-place): the shadow alone at 4760 and 4768 with and without the streak; 4860 beside the approved.
+> Drawing now: 4752 to 4769 at half steps, the judged frames with the reader's parts and G17, the low dive, the rise 4960 to 4978 (must stay as it is), the dive's start 4690 to 4714. Then the whole tests on the merge, then the name.
+
+## 25 Nov, 22:59 UTC: my request to handover_engineer for the far Sun of the hold, MAIL 1295 (b) (word for word)
+
+> NEPTUNE (neptune_builder), 22:59 UTC. Request for shared code, short and exact. It answers the Builder's MAIL 1295 (b); he decides whether it is wanted for every stop, I only name the lever I lack.
+>
+> WHAT: at Neptune's hold (frame 4605, 1920 by 1080) the approved image (references/approved/neptune-hero.png) carries the Sun as a star with a wide glow and eight spikes, about 120 px across. The engine's far Sun stands at the same place ((1716, 153) against the approved's (1709, 158)) as a soft ball about 12 px across.
+>
+> WHERE: src/space/sky.ts, the small Sun (uSunSmall, uSunPoint: `tight = uSunPoint.x * exp(-p2 / uSunPoint.y) + uSunPoint.z * pow(1.0 + p2 / uSunPoint.w, -0.9)`), with its numbers in config/showcase.json (the sky's flightStrip, sun: radiusPx, glare). A core and a halo, no spikes.
+>
+> WHY NOT IN MY FOLDERS: the stop's levers are light.sunRadiusDeg, light.sunGlare and light.flare (src/stops/neptune/plan.ts). Control at 4605: sunGlare 0.6 to 2.0 makes the ball smaller (pixels over 200: 124 to 28); flare is the film's streak. No plate is allowed here (MAIL 1078 point 5, MAIL 1126).
+>
+> ASK: a law of the engine for the Sun where its disc is under radiusPx: a wider glow and diffraction spikes (count, length in px of a frame 1080 high, strength), set by numbers a stop's light can give and 0 where a stop does not name them, so no other stop's bytes change. With it I set Neptune's to the approved hero's (about 120 px, eight spikes) and prove 4605 beside it.
+>
+> I change nothing outside my folders. Noted in assets-src/neptune/NOTES.md. Tell me the commit or the no; I tell the Builder the owner and the date as you give them.
+
+## Mail from handover_engineer, 23:03 UTC (read 23:03 by my clock, during the proofs of the cure; word for word)
+
+> HANDOVER (handover_engineer), 23:03 UTC. Answer to your 22:59: no from me, and why.
+> 1. src/space/sky.ts is not in my folders (src/space is the sky's; my folders are src/director, src/core, src/terrain, src/post, src/diagnostics, tools, tests). I do not write the small Sun's law.
+> 2. The far Sun is being moved right now: the Builder's MAIL 1314 (21:56) lists as next onto main "take batch 14, the far Sun by the kit's law of the frame (take/fm3 7f1fd98d)". A glow and spikes belong on top of that, by its owner, on the Builder's word.
+> 3. My part, if he says yes and the sky's owner writes the law: the way of the new numbers from a stop's light to the sky where it runs through src/director or src/core, absent meaning 0 so no other stop's bytes move. I lay that on request from the sky's owner or the Builder; no date before my open name (the crests) is out.
+> So for your note: owner of the law = the owner of src/space (sky_builder) with the Builder; owner of the plumbing = me, on request; date = none from me today.
+
+Read: the law of the small Sun is the sky's (src/space, sky_builder) on the Builder's word; the way of a stop's numbers to it
+is handover_engineer's on request; no date from him today. I do not write to sky_builder myself: the Builder decides whether
+it is wanted for every stop (MAIL 1078 point 5), and I put owner and date to him in the NAMED mail.
+
+## Lab log 23:17 to 23:45 UTC: the cure's proofs: the dive's end, the judged frames, the low dive, the rise, the dive's start
+
+All pair numbers are my proxy (the report's own path on my preview frames, 960 wide, draft, rate 2), STATED. Limit 0.45.
+Chain `/tmp/proofs7.sh N14` on the tree with the one line (22:55:21 to 23:35:16, one process), then `/tmp/rise0.sh N14`.
+
+- THE DIVE'S END, every half step 4753 to 4761, each against 8 frames later (N14e; before: N13w, the same reader):
+  4753 0.24 (0.25), 4753.5 0.24 (0.50), 4754 0.23 (0.25), 4754.5 0.22 (0.29), 4755 0.22 (0.40), 4755.5 0.24 (0.26), 4756 0.22
+  (0.34), 4756.5 0.21 (0.37), 4757 0.20 (0.33), 4757.5 0.20 (0.35), 4758 0.19 (0.30), 4758.5 0.18 (0.41), 4759 0.17 (0.46),
+  4759.5 0.17 (0.69), 4760 0.17 (0.78), 4760.5 0.16 (0.64), 4761 0.16 (0.29). The reading from the other end, which carried
+  the knot, is 0.08 to 0.11 at every step; what leads now is the onward reading far right ((1536, 360) to (1756, 436)).
+  The shadow alone at 4760 (cast off minus on, in the knot's place): most 7.94 levels (before 12.55), mean 0.98 (1.30).
+  Sheets: /tmp/shadow-N14e.jpg (the shadow alone, before above, after below), /tmp/end-frames-before.jpg and
+  /tmp/end-frames-after.jpg (every whole frame 4752 to 4769 in the knot's place, levels times 2.5), N14e/rchain-*.jpg; all
+  looked at. In the frames themselves the two sets look alike at that size: the streak was 12 levels in dark ground.
+- THE JUDGED FRAMES at 1920 (23:10:12 to 23:13:17): 4605 ffd936903e9f95d9, 4707 02f91b12e6079bf8, 5006 27b759fae37df1a2:
+  the last proof's bytes (N12, N13). 4860 9467c68c421b1678 (90.7 s): whole 22.420 | sky 3.203 | band 1.616 | ground 17.601
+  (last proof 22.446 | 3.203 | 1.616 | 17.627; main 22.986 | 1.619 | 1.607 | 19.759). By thirds: top 22.3 24.3 10.7, middle
+  33.8 29.6 26.4, bottom 8.8 18.3 27.6. G17 0.507 / 0.232, ground rows 0.343, as before. 4605 MAD 7.605, G17 0.675 / 0.436
+  (36.5 s). Teal blots unchanged (15.7 at (1168, 752), 7.5 at (1564, 849)).
+  4860 against the last proof: mean abs 0.1652, most 14 levels, 82485 px over 2 levels, 4687 over 8, all in x 0 to 1176,
+  y 486 to 1079: the first streamer's shadow on the near deck, whose blots now lie at their mean (0.16 levels lighter in
+  that box). The far streamer's dark shadow line is untouched (/tmp/n14-4860.jpg, /tmp/pair-N14.jpg, both looked at).
+  THE COST, named: the approved image has dark blots under the near streamer; the place's shadow there is now even.
+- THE LOW DIVE: 4744 0.39 at (1196, 284) (before 0.39), 4750 0.30 (0.30), 4751 0.29 (0.29), 4752 0.26 (0.27). What stands at
+  4744 is on the pale far plain toward the limb, right of the storm (N14e/rchain-4744.jpg, looked at); its layer is not
+  named by a control.
+- THE RISE, 4960 to 4978 (N14q; before: N12q): 4960 0.30 at (1752, 488) (0.25 at (1704, 476)), 4962 0.28 (0.33), 4968 0.33
+  at (1788, 672) (0.35 at (1572, 564)), 4970 0.25 (0.25). The rise's frames do change: the first streamer's shadow lies in
+  them too (960 wide, against N12q: 4960 22774 px over 2 levels, most 17; 4968 15224, most 22; 4976 3674, most 24; 4978
+  2298, most 21). Sheets N14q/rchain-4960.jpg and rchain-4968.jpg looked at: calm, the largest at the right edge by the limb.
+- THE DIVE'S START, 4690 to 4714 (N14s; the first run of these pairs on the limb's cure): 4690 0.14, 4692 0.15, 4694 0.11,
+  4696 0.11, 4698 0.12, 4700 0.21, 4702 0.41 at (356, 176), 4704 0.16, 4706 0.44 at (1508, 244) (on 27624e6f4: 0.42, 0.16,
+  0.43 at (1492, 248)). So 4706 stands 0.01 higher than on the name the Builder's reader read at 0.4653: it will read red
+  there again by about the same 0.02 to 0.03. It is where the limb leaves the frame and the chain loses the ground (the
+  flows agree on about half of the body there, lab log 18:15).
+- THE RISE'S FIRST PAIRS, 4950 to 4959 + 1/2 drawn into N14q (23:35:24 to 23:44:16, about 26 s a frame; poses
+  `W/poses-rise0.json`, equal to poses-n9 where both have a frame): 4950 0.19 at (984, 1072), 4952 0.15, 4954 0.18, 4956
+  0.22, 4958 0.23, 4964 0.18, 4966 0.19. Never drawn by me before, so no number of mine from before the cure; the Builder's
+  row on the name 27624e6f has its largest there, 0.3572 at 4950.
+- Main fetched 23:26: 9f153844d (Status 341 and decision d333); against the merge it differs in kit/PROGRESS.md only. It is
+  merged before the tests.
+- Looks pushed 23:16:45 (1e8baef7, 8 looks). Disk 2.3 GB free at 23:35.
