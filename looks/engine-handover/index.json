@@ -1,9 +1,51 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T21:22:57.242Z",
+ "pushed": "2026-11-25T21:48:43.902Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests v4: distance cut, two lines a pixel apart, crests named by points; tests green, finals second half rendering",
+ "note": "five judged finals of Mars: vertices against fragment at most 1 step on all five; second drafts of the crests (v4) render",
  "looks": [
+  {
+   "time": "2026-11-25T21:48:42.853Z",
+   "file": "20261125214842853-note-f02325.jpg",
+   "source": "../t-c2a/out/work/blur/fin5-vs/f02325.png",
+   "kind": "note",
+   "label": "Mars final tier f02325, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
+  },
+  {
+   "time": "2026-11-25T21:48:41.959Z",
+   "file": "20261125214841959-note-f02668.jpg",
+   "source": "../t-c2a/out/work/blur/fin5-vs/f02668.png",
+   "kind": "note",
+   "label": "Mars final tier f02668, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
+  },
+  {
+   "time": "2026-11-25T21:48:40.969Z",
+   "file": "20261125214840969-note-f02580.jpg",
+   "source": "../t-c2a/out/work/blur/fin5-vs/f02580.png",
+   "kind": "note",
+   "label": "Mars final tier f02580, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
+  },
+  {
+   "time": "2026-11-25T21:48:39.985Z",
+   "file": "20261125214839985-note-f02477.jpg",
+   "source": "../t-c2a/out/work/blur/fin5-vs/f02477.png",
+   "kind": "note",
+   "label": "Mars final tier f02477, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
+  },
+  {
+   "time": "2026-11-25T21:48:39.146Z",
+   "file": "20261125214839146-note-f02476.jpg",
+   "source": "../t-c2a/out/work/blur/fin5-vs/f02476.png",
+   "kind": "note",
+   "label": "Mars final tier f02476, the air's mean share at the mesh's vertices (fin5-vs); against the law by the fragment at most 1 step of 255"
+  },
+  {
+   "time": "2026-11-25T21:48:38.342Z",
+   "file": "20261125214838342-note-ov4-at2b.jpg",
+   "source": "../../../../tmp/crest/ov4-at2b.png",
+   "kind": "note",
+   "label": "crests v4: Mars L1 map, the teeth crest named by two points, the far sheet under the near side only along the ramp's own lines (233 sheet cells, 0 texels before the kept ground)"
+  },
   {
    "time": "2026-11-25T21:22:56.364Z",
    "file": "20261125212256364-note-ov4-at2.jpg",
@@ -17,48 +59,6 @@
    "source": "../../../../tmp/crest/ov3-teeth.png",
    "kind": "note",
    "label": "design (c) rework: Mars L1 map around the teeth crest, left the paint, right every ramp found on the whole layer (green near half, red far half, white the cut, yellow cells drawn as sheets, cyan cells with the far sheet under): three crests within a few cells, the cut lines between them are the zigzag fault"
-  },
-  {
-   "time": "2026-11-25T21:01:21.074Z",
-   "file": "20261125210121074-note-q-2580-pts-1.jpg",
-   "source": "../../../../tmp/crest/q-2580-pts-1.png",
-   "kind": "note",
-   "label": "crests, first drafts: 2580 at 10x at four of the 19 pixels that differ from the base by more than 32 codes: base, out 2, out 3, 4 x difference. Single pixels along the cuts: a fault"
-  },
-  {
-   "time": "2026-11-25T21:01:20.088Z",
-   "file": "20261125210120088-note-qt-2477-20x.jpg",
-   "source": "../../../../tmp/crest/qt-2477-20x.png",
-   "kind": "note",
-   "label": "crests, first drafts: the teeth crest at 2477 at 20x: base, cure out 2, out 3, out 2 tinted. Single pale pixels beside the cut: the cut is not smoothed where a texel is half a pixel: a fault"
-  },
-  {
-   "time": "2026-11-25T21:01:19.204Z",
-   "file": "20261125210119204-note-qt-2668-rim.jpg",
-   "source": "../../../../tmp/crest/qt-2668-rim.png",
-   "kind": "note",
-   "label": "crests, first drafts: the plateau rim at 2668 at 8x, cure out 2 plain and tinted (red near sheet, green far sheet own texel, blue far sheet fill, magenta far sheet under kept ground). The magenta line right of the rim is the far sheet showing past the layer's rim: a fault"
-  },
-  {
-   "time": "2026-11-25T21:01:18.120Z",
-   "file": "20261125210118120-note-q-2668-teeth.jpg",
-   "source": "../../../../tmp/crest/q-2668-teeth.png",
-   "kind": "note",
-   "label": "crests, first drafts of the cure on Mars 2668 (draft tier), the teeth crest at 3x: base, cure out 2, cure out 3. The teeth are gone (0 jumps against 5); new small faults remain (a zigzag of 10 px where two crests lie close, lower left of the lit slope)"
-  },
-  {
-   "time": "2026-11-25T20:43:36.704Z",
-   "file": "20261125204336704-note-f02325.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-c3/f02325.png",
-   "kind": "note",
-   "label": "Mars 2325 final tier, the law by the fragment: first half of the five judged finals"
-  },
-  {
-   "time": "2026-11-25T20:43:35.912Z",
-   "file": "20261125204335912-note-f02476.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-c3/f02476.png",
-   "kind": "note",
-   "label": "Mars 2476 final tier, the law by the fragment (4bae298b with the cut and the shutter's ends, the fitted numbers by scratch): first half of the five judged finals"
   }
  ]
 }
