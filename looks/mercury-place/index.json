@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T21:22:52.111Z",
+ "pushed": "2026-11-25T21:52:48.532Z",
  "head": "80d99af4c573b0875f794e6a9e1b4b22a4a8ab6d",
- "note": "MAIL 1289: the two ends of the crater's turn on the rise; laws by height being read (earlier label on 717 said the ring is faint there: wrong, the rim is bright at 717 on the name)",
+ "note": "MAIL 1289: the crater's turn by height, first law read on the preview: adds 0.03 at most on the rise, nothing on the dive; master proof next",
  "looks": [
+  {
+   "time": "2026-11-25T21:52:47.547Z",
+   "file": "20261125215247547-note-law-a-rise.jpg",
+   "source": "../../../../tmp/m/law-a-rise.jpg",
+   "kind": "note",
+   "label": "rise 998 to 1025, the crater at 3 times (preview, mixed from the two ends): the crater's own turn by height, top 3.1 radii, bottom 0.3; the white and blue ground that comes in at 1009 to 1012 is the other, older red",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T21:22:50.897Z",
    "file": "20261125212250897-note-cr-two.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/m/disc4-e1.jpg",
    "kind": "note",
    "label": "615 disc at 3 times: approved, main, the name 33314fb8, trial e1 with the crater light held (a pale disc, not named)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T19:31:52.070Z",
-   "file": "20261125193152070-note-optics-check.jpg",
-   "source": "../../../../tmp/m/gh/optics-check.jpg",
-   "kind": "note",
-   "label": "ghosts as optics, groundwork: the approved's ghost plate against 9 images of the opening on the Sun to centre line (not in the tree)",
    "stop": "mercury"
   }
  ]
