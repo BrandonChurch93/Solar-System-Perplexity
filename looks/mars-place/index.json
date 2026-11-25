@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T12:51:15.458Z",
- "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "trial 3 with wall law judged worse near T; (i) and (ii) traced; candidate N1 renders",
+ "pushed": "2026-11-25T13:05:04.693Z",
+ "head": "54760fe797b03685084af1e018dad0f96c354278",
+ "note": "N1: the picture's own ground on the plates, pairs and tracks; set and plate from above; crops of (i) and (ii)",
  "looks": [
   {
-   "time": "2026-11-25T12:51:14.483Z",
-   "file": "20261125125114483-note-far-1260.jpg",
-   "source": "out/work/place/m9/far-1260.jpg",
+   "time": "2026-11-25T13:05:03.607Z",
+   "file": "20261125130503607-note-track-ii.jpg",
+   "source": "out/work/place/n1/track-ii.jpg",
    "kind": "note",
-   "label": "far ground (i): state 2460, 2468, trial 2460, 2468 at pixel 1260, 80, times 3",
+   "label": "ground (ii) 2460 to 2476: state over N1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:51:13.640Z",
-   "file": "20261125125113640-note-plate-ii.jpg",
-   "source": "out/work/place/m9/plate-ii.jpg",
+   "time": "2026-11-25T13:05:02.703Z",
+   "file": "20261125130502703-note-track-c.jpg",
+   "source": "out/work/place/n1/track-c.jpg",
    "kind": "note",
-   "label": "the 0.3 plate at ground (ii), 1 to 1, state left, trial right: the take's blocky terrace",
+   "label": "ground (c) 2460 to 2476: state over N1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:51:12.795Z",
-   "file": "20261125125112795-note-track-ii.jpg",
-   "source": "out/work/place/m9/track-ii.jpg",
+   "time": "2026-11-25T13:05:01.851Z",
+   "file": "20261125130501851-note-track-b.jpg",
+   "source": "out/work/place/n1/track-b.jpg",
    "kind": "note",
-   "label": "ground (ii) of MAIL 1095 followed 2464 to 2476: state, trial W, trial Y",
+   "label": "ground (b) 2460 to 2476: state over N1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:51:11.920Z",
-   "file": "20261125125111920-note-h03.jpg",
-   "source": "out/work/place/m9/h03.jpg",
+   "time": "2026-11-25T13:05:00.775Z",
+   "file": "20261125130500775-note-pair-2468.jpg",
+   "source": "out/work/place/n1/pair-2468.jpg",
    "kind": "note",
-   "label": "heights of the 0.3 level about the eye and their slope: a ramp made from the old aprons",
+   "label": "2468 state over N1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:51:11.124Z",
-   "file": "20261125125111124-note-walls-0p3.jpg",
-   "source": "out/work/place/m9/walls-0p3.jpg",
+   "time": "2026-11-25T13:04:59.814Z",
+   "file": "20261125130459814-note-pair-2464.jpg",
+   "source": "out/work/place/n1/pair-2464.jpg",
    "kind": "note",
-   "label": "0.3 plate from above, trial left, with the wall law right: pale contour bands",
+   "label": "2464 state over N1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:51:10.091Z",
-   "file": "20261125125110091-note-x-sheet.jpg",
-   "source": "out/work/place/m9/x-sheet.jpg",
+   "time": "2026-11-25T13:04:58.980Z",
+   "file": "20261125130458980-note-pair-2460.jpg",
+   "source": "out/work/place/n1/pair-2460.jpg",
    "kind": "note",
-   "label": "trial 3 new aprons: 2478 2480 2484 2489 2670 2676 2681 2684",
+   "label": "2460 state over N1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:51:09.132Z",
-   "file": "20261125125109132-note-y-sheet.jpg",
-   "source": "out/work/place/m9/y-sheet.jpg",
+   "time": "2026-11-25T13:04:58.011Z",
+   "file": "20261125130458011-note-crops-i-ii.jpg",
+   "source": "out/work/place/n1/crops-i-ii.jpg",
    "kind": "note",
-   "label": "trial 3 with the wall law: 2472, 2476, 2477, 2468",
+   "label": "MAIL 1095 (i) and (ii): state, trial 3 with wall law, N1; earlier and 8 frames later",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T12:51:07.991Z",
-   "file": "20261125125107991-note-y-pair-2477.jpg",
-   "source": "out/work/place/m9/y-pair-2477.jpg",
+   "time": "2026-11-25T13:04:56.819Z",
+   "file": "20261125130456819-note-above-n1.jpg",
+   "source": "out/work/place/n1/above-n1.jpg",
    "kind": "note",
-   "label": "trial 3 with the wall law at 2477, state above: the mesa stands cut along the picture's sides, worse",
+   "label": "set from above, picture alone, plate of the state, plate of N1 at the five plates, 1 to 1",
    "stop": "mars"
   }
  ]
