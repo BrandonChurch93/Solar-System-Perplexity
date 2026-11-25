@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T17:25:04.117Z",
+ "pushed": "2026-11-25T17:50:01.545Z",
  "head": "485d5807546cb45e3e66e3de6679c5b1bc182e50",
- "note": "17:25 UTC: 4860 trial Y2 beside the approved: the eye with arms by the veil of the one body; ground 16.406 against main 19.622 at 960, G17 0.612/0.210; limb controls: the edge line and the veil are not the cause of 4694; 70 s a draft frame",
+ "note": "17:50 UTC: 4860 trial G3 beside the approved: the texture comes back under the veil (G17 0.705/0.490 at preview, ground 17.731 against main 19.622 at 960); the limb's row at 4694 by control: the held field went with the view, now on the body (proxy 0.49 to 0.05); 67 s a draft frame",
  "looks": [
+  {
+   "time": "2026-11-25T17:50:00.929Z",
+   "file": "20261125175000929-note-m1-two.jpg",
+   "source": "../../../../tmp/m1-two.jpg",
+   "kind": "note",
+   "label": "dive 4694 and 4706: the tree before (top) and with the held field on the body (bottom); my proxy 4694 to 4702 falls from 0.49 to 0.05",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T17:50:00.334Z",
+   "file": "20261125175000334-note-g-zoom.jpg",
+   "source": "../../../../tmp/g-zoom.jpg",
+   "kind": "note",
+   "label": "4860 round the eye at 2 times: approved, G1 (below 0.7), G2 (below 1), G3 (below 1, relief 0.12)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T17:49:59.749Z",
+   "file": "20261125174959749-note-look-g3.jpg",
+   "source": "../../../../tmp/look-g3.jpg",
+   "kind": "note",
+   "label": "4860: approved (left) beside trial G3 (right, preview 960): the sheet of ice haze lit from the deck under it, so the deck's fine swirls show in the pale plain; G17 0.705 / 0.490 at preview (Y2 0.612 / 0.210); ground part 17.731 against main 19.622 at 960; 67 s a draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T17:25:03.491Z",
    "file": "20261125172503491-note-y-sheet2.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/pm-P0-Q1-Q2-Q3.jpg",
    "kind": "note",
    "label": "4860 preview: approved, main, tip P0, trials Q1 to Q3 (low air's own light, hole at the eye); G17 of the tip 0.544/0.194; 64 s a draft preview frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T16:25:55.911Z",
-   "file": "20261125162555911-note-plain-2x.jpg",
-   "source": "../../../../tmp/plain-2x.jpg",
-   "kind": "note",
-   "label": "4860 the plain at 2 times: approved above, tip below (G17 0.544 draft proxy; 90.7 s a draft frame at 1920, 28 s at the preview)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T16:25:54.634Z",
-   "file": "20261125162554634-note-pm-P0-P1-P2-P3-P4-P5.jpg",
-   "source": "../../../../tmp/pm-P0-P1-P2-P3-P4-P5.jpg",
-   "kind": "note",
-   "label": "4860 preview trials on the far plain beside approved and main: P0 tip, P1 lobe 0.9, P2 and share 0.7, P3 depth 0.13, P4 air law off (tool), P5 map alone (tool)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T15:55:38.738Z",
-   "file": "20261125155538738-note-n8-pairs.jpg",
-   "source": "../../../../tmp/n8-pairs.jpg",
-   "kind": "note",
-   "label": "rise pairs still over: second streamer changes kind 4968 to 4976, lower left wisps 4960 to 4970",
    "stop": "neptune"
   }
  ]
