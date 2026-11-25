@@ -21,6 +21,24 @@ export interface CapOptions {
   reachDeg?: number
   fine?: number
   light?: { relief: number; own: number; from?: number }
+  detail?: CapDetail
+}
+
+export interface CapDetail {
+  text: string
+  uniforms: Record<string, THREE.IUniform>
+}
+
+export function capDetail(d: CapDetail): string {
+  if (!/\bvec4\s+groundDetail\s*\(\s*vec3\s+\w+\s*,\s*float\s+\w+\s*,\s*vec3\s+\w+\s*,\s*float\s+\w+\s*\)\s*\{/.test(d.text)) throw new Error('the detail of a cap defines vec4 groundDetail(vec3 dir, float height, vec3 normal, float texelPx)')
+  for (const [word, found] of [['void main', /\bvoid\s+main\b/], ['discard', /\bdiscard\b/], ['outColor', /\boutColor\b/], ['gl_FragDepth', /\bgl_FragDepth\b/], ['a sampler', /sampler/]] as [string, RegExp][]) if (found.test(d.text)) throw new Error('the detail of a cap may not hold ' + word)
+  const declared = [...d.text.matchAll(/\buniform\s+(?:(?:highp|mediump|lowp)\s+)?\w+\s+([^;]+);/g)].flatMap((m) => m[1]!.split(',').map((n) => n.replace(/\[[^\]]*\]/g, '').trim()))
+  const given = Object.keys(d.uniforms)
+  for (const n of [...declared, ...given]) if (!/^uDetail\w+$/.test(n)) throw new Error('a uniform of the detail of a cap is named uDetail and its own name, not ' + n)
+  for (const n of declared) if (!given.includes(n)) throw new Error('the detail of a cap declares ' + n + ' and is not given it')
+  for (const n of given) if (!declared.includes(n)) throw new Error('the detail of a cap is given ' + n + ' and does not declare it')
+  if (new Set(declared).size !== declared.length) throw new Error('the detail of a cap declares a uniform twice')
+  return d.text
 }
 
 export const CAP_PATCHES = 64
@@ -287,7 +305,7 @@ export class ReliefCap {
     geometry.setAttribute('aCell', this.cells)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
-      vertexShader: capVert(masks, scales.length, o.light !== undefined, counted),
+      vertexShader: capVert(masks, scales.length, o.light !== undefined || o.detail !== undefined, counted),
       fragmentShader,
       uniforms: {
         ...shared,
@@ -310,6 +328,7 @@ export class ReliefCap {
         uCapPixel: { value: o.pixel },
         uCapOn: { value: 0 },
         ...(o.light ? { uCapLight: { value: new THREE.Vector2(o.light.relief, o.light.own) } } : {}),
+        ...(o.detail ? { ...o.detail.uniforms, uFrame: { value: 1 } } : {}),
       },
     })
     this.mesh = new THREE.Mesh(geometry, this.material)

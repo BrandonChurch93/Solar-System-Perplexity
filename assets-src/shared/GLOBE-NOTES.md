@@ -861,6 +861,50 @@ drawnLight(view: ViewKind, eye: THREE.Vector3, time: number): number | null
 
 Test: `tests/globe-pose.test.ts` (both reach the record with the view, the eye, the time and the lens of the frame; nothing else changes; no key for null, 0, a negative, NaN, infinity; a further body keeps its own).
 
+## 21. Detail from the stop's own code on the cap (`cap.detail`, asked by mars_place_builder, MAIL 866 item 5): off by default
+
+**What it does.** A stop hands the cap a piece of shader text with one function, and the cap's fragment program reads it at every fragment of the cap: a factor on the colour of the ground and a small height that only the light sees. The place of the surface, its depth, its edge and the range picture do not change. The sphere outside the cap gets nothing of it.
+
+**How a stop turns it on.**
+
+```
+new Planet({ ..., cap: { ..., detail: { text, uniforms } } })
+```
+
+`text` must define
+
+```
+vec4 groundDetail(vec3 dir, float height, vec3 normal, float texelPx)
+```
+
+- `dir`: unit direction of the fragment in the frame of the map (the turn of the body taken out).
+- `height`: radii above the sphere, the cap's own height at the fragment.
+- `normal`: the cap's smooth normal in the same frame.
+- `texelPx`: the longest width of one texel of the finest plate drawn there, in pixels of the master. The finest plate drawn is the last level whose weight is at least 0.5, the wrap map where there is none. It goes through the frame factor (`uFrame`, set from `bufferFrame()` in `Planet.update`), so a draft and a final give the same number at the same place. Sizes are the ones the levels count by (`patches.counts`, section 15).
+- returns `rgb`, a factor on the linear colour of the ground before the light (the map after `inverseFilmic` and the own levels alike), and `a`, a height in radii for the light only.
+
+The text is laid after the helpers and before `main`, so `PI`, `dFdx`, `dFdy`, `fwidth` and the helpers above it can be used. Its uniforms are named `uDetail` and a name of the stop's own; every one declared must be given in `uniforms` and none else. `capDetail` (exported from `src/bodies/cap.ts`) refuses a text without the function, a text that holds `void main`, `discard`, `outColor`, `gl_FragDepth` or any sampler, a uniform with another name, one declared and not given, one given and not declared, and one declared twice. A sampler is refused because no texture unit is counted for it against the 16 of `src/core/caps.ts`.
+
+**How the light reads the height.** Three reads: at the fragment, one pixel of the buffer to the right, one up (`normalize(dir + dFdx(dir))`, `height + dFdx(height)`, `normalize(normal + dFdx(normal))`, the same with `dFdy`). With `p = dir * (1 + height)` and its two steps `sx`, `sy`, the slope of the returned height along the surface is `(bx * cross(sy, normal) + by * cross(normal, sx)) / dot(sx, cross(sy, normal))`; its negative is added to the normal before the normalize that the light already does, at full weight whatever `light.relief` and `light.from` are. With `light` on the own levels get the same tilt beside `light.own`; without it they get the light factor of the tilted normal and exactly 1 where the tilt is zero.
+
+**Limits.**
+
+- The two neighbours are one pixel of the buffer apart, not of the master. A height finer than a pixel aliases, and the same text gives a different tilt at draft and at final where it is not smooth over a pixel. The stop fades its own height by `texelPx` or by its own measure.
+- The cap is drawn only inside its border and its `from` band. The detail ends where the cap ends. A text that gives `rgb` 1 and height 0 where `texelPx` is at or under 1 leaves no step there; that is the stop's to keep.
+- Three calls of the stop's function for each fragment of the cap. The time on a film frame is not measured.
+- No film frame with the option on was drawn in this branch. The stop's builder shows it.
+
+**What was measured** (test page of `tests/globe-cap.test.ts`, float target, the harness browser):
+
+- Hook absent: `planetFrag` gives the same string with `detail` undefined as without the key, for four option sets; the text of the globe hashes to the kept value; a cap built without `detail` has no `uFrame` and no `uDetail` uniform, and its vertex text is the one of before (`tests/globe-detail.test.ts`).
+- A text that returns `vec4(1.0, 1.0, 1.0, 0.0)`: four views of 96 by 96 over a mesa of the cap's own heights (with `light` and own levels, with `light` and no own levels, without `light`, without `light` and with `exactSpin` and a turn of 0.3): 0 values of the float picture differ from the same view without `detail`.
+- A factor `uDetailTint` of 0.5, 0.25, 0.75, with `light`, with and without own levels: at every pixel of full alpha the linear value is the value without times the factor within 1 part in 10000; no alpha changes.
+- A height `2e-4 * sin(60 * dir.x)` on a flat cap, 192 by 96: the change of the light at columns 40 to 151 of the middle row is the one of the forward difference over one pixel counted by hand, within 5 percent of the largest swing (asserted); at the 17 columns printed inside the cap the two differ by at most 0.00002 against a swing of 0.0086. Columns off the cap change by 0.
+- A height `5e-4 * sin(300 * height)` over a mesa seen from above: the light changes on the two ramps only (up to 0.077 of the value), by less than 1e-5 on the flat top and on the floor.
+- `texelPx` at the centre, plate of 8 texels over 6 degrees, from 2 radii above with a field of 4 degrees: 8.975 at 96 rows and frame 1, 8.975 at 192 rows and frame 2, 8.975 at 48 rows and frame 0.5 (the three agree to 4 parts in a million); counted by hand 9.005. The 0.33 percent between the drawn and the hand count is not explained; the test allows 1 percent.
+
+**The clock test** (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent", limit 5000 ms, MAIL 866 item 3). Cause: each of its five shots disposed its planet before the next was built, so each shot compiled the program anew. Cure: the page keeps the planet of the last shot until the next shot has drawn, so shots with the same shader text use one program. The limit is not touched.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -910,3 +954,4 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
   On the merge of main 6af0b7e4 (62ae7720): tsc clean; `npx vitest run` 60 files, 631 tests, 630 passed, 1 red (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent", 5063 ms against its limit of 5000, while the whole set ran; the file alone 24 of 24, that test 2749 ms; the test is not touched), 405 s. Options off, draft, frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997: 8 of 8 byte equal to the list of 86184412; engine hash 7de408a91944bdb0.
 - MAIL 835 task 1 (the moon, asked by harness_builder): every body a stop draws in its dive, rise and hold, in the pose record (section 17). `tools/smooth/pose.ts` (`drawnBodies`, `drawnSeat`, the fallback from `nearBodies`), `tools/img/range.py` (`beyond`, `owner`, `off`, `moved`, `HOLD`), `tests/globe-pose.test.ts` (3 tests more), `tests/globe-range.test.ts` (1 more). Only `tools/`, `tests/` and this notebook change, nothing under `src/`. Six patches for the plans of Earth, Mars, Jupiter, Saturn, Uranus and Neptune went to the Builder, none is in the repository. Before the merge: tsc clean; `npx vitest run` 60 files, 635 tests, 635 passed, 397 s; options off, draft, frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997: 8 of 8 byte equal to the list of 86184412. On the merge of main 9f603521 (5be4706c): tsc clean; `npx vitest run` 60 files, 639 tests, 639 passed, 400 s. The 8 frames were not rendered again on the merge (main changed `src/director/film.ts` and `src/space/farsun`; this commit changes no file under `src/`).
 - MAIL 835 tasks 2, 3 and 4, and the two keys asked by harness_builder (sections 18, 19, 20). `tools/smooth/pose.ts` (the close unit is the plan's own twin, `camera.near`, `drawnFlow` and `drawnLight` to `bodies[0].flows` and `bodies[0].light`), `tools/img/range.py` (`points` takes no unit in front of the near plane), `tests/globe-pose.test.ts` (2 tests more), `tests/globe-range.test.ts` (1 more). Nothing under `src/` changes. Patches for the builders' files went to the Builder, none is in the repository: the range of the traced ball for Jupiter's globe and Io and for Saturn's two globes; Uranus's `drawnShape` went with section 17. Merged main 63cf4b21 (6381d7ef; main changed `kit/` and `scorecards/` alone). On the merge with the changes: tsc clean; `npx vitest run` 60 files, 642 tests, 641 passed, 1 red (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent", 5003 ms against its limit of 5000 while the whole set ran; the file alone 24 of 24, that test 2586 ms; the test is not touched), 399 s. Options off, draft, frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997: 6 of 8 byte equal to the list of 86184412; 615 and 717 (Mercury) are 90038bb5cfadf649 and 4d8319ccbe410fd2, not 5646f2965e4fecff and 41586877bcd3191d. This tree differs from main 63cf4b21 in `tools/`, `tests/` and this notebook alone (`git diff --stat origin/main`), and main changed `src/space/farsun` and `src/director/film.ts` after 86184412; the two frames were not rendered at main apart.
+- MAIL 866 items 3 and 5 (the hook asked by mars_place_builder): the detail of a cap from the stop's own code (section 21). `src/bodies/cap.ts` (`detail`, `capDetail`), `src/bodies/planet.ts` (`PatchShader.detail`, `uFrame` on the cap), `tests/globe-detail.test.ts` (4 tests), `tests/globe-cap.test.ts` (5 tests more in the browser; the page keeps the last planet until the next has drawn, the cure of the clock test). Hook absent, draft, full set, 1920 by 1080, the 115 frames of the Builder's list of main 63cf4b21 (MAIL 867), full sha256 of the png, one session for every 20 frames: 115 back, 115 byte equal; drawn on the tree before the merge of main 4bc15f82, which brings `kit/PROGRESS.md` only; engine hash 6a5237758f4b4713. On the merge: tsc clean; `npx vitest run` 61 files, 651 tests, 651 passed, 395 s; the clock test 3511 ms in that whole run against its limit of 5000 (5003 before the cure), 2021 and 2030 ms with its file alone (2586 before). Not shown: a film frame with the option on; the time of the three calls on a film frame.
