@@ -1140,3 +1140,10 @@ State when this came: agent/travel-pin = 32a0d67, 8319d7e (pinned earth, pinEase
 - Probes new in out/work/tmp: roll.ts FROM TO N EVERY [STOP], twist.ts, compose.ts FRAMES [grid], camdump.ts, polew.ts; /tmp/scan.py.
 - NEXT: the NAMED mail for 2b91ffd7 with the bundle and a patch; MAIL 875 point 3 (the disc at 449 and 450); Venus's rise with speed when it comes.
 
+## 03:45 to 03:57 UTC (Nov 25): NAMED 2b91ffd7 sent, the disc at 449 and 450 shows in no pixel
+- NAMED 2b91ffd73f25f7cf8962f4a824a19ab9ceb2d960 (agent/travel-mars) sent to the Builder 03:49 with bundle, patch, sheet, roll table, three smooth reports. On the merge: tsc 0, vitest 635 of 635 in 60 files, build 0, shaderaudit 32 lines same bytes as main. mars_place_builder and belt_builder told 03:50 (belt: nothing owed for place or size; the light is turned about the view axis by 103.1, 101.9, 75.3, 41.9 degrees at 2766, 2769, 2782, 2793).
+- MAIL 875 point 3, MEASURED on d30ce24a (same code as ce1faae8): sun.angularRadius steps 0.08727 to 0.22040 at 450, but the Sun's glare is exactly 0 from 449 to 455 and the far Sun's share exactly 0 (disc.ts). Every reader of the radius is gated: the sky's disc by glare over 0, the dust's disc by glare over 0, the far Sun by its share over 0. Proof by stills at draft, the disc's law swapped in a build never committed (449 drawn with the travel's radius, 450 with the hold's; engine hash 4f65fa7cb45bf7f7 against ee785742acc8b67e): 449 is 5bd8bd0ffccda6c1 with both laws, 450 is 0b7fb06a35315061 with both. No pixel shows the step; nothing to cure.
+- The disk ran full (25 G, 5 MB free) while building a second worktree: removed /tmp/wt-notes, /tmp/wb21, /tmp/wb20 and old still folders. /tmp/wt-main now sits on agent/travel. Keep one spare worktree at most.
+- Probe new: out/work/tmp/disc.ts.
+- NEXT: Venus's rise with speed when it comes; answers to what the Builder's machines find on agent/travel-b9 and agent/travel-mars.
+
