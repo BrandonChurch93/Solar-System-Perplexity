@@ -190,11 +190,11 @@ float labPart(vec4 tb, float edge, float age, float seed) {
 }
 // the height of the body at a place as a share of the smooth dome's: the tube's round back, its grooves, the
 // swellings that ride outward along it, the dimple where the gas wells up
-float labTubeBody(vec4 tb, float rho, float edge, float age, float seed, float q) {
+float labTubeBody(vec4 tb, float rho, float edge, float age, float seed, float q, float fit) {
   float x = abs(tb.x) / labTubeWide(edge);
   float crest = sqrt(max(1.0 - x * x, 0.0));
   float bump = 1.0 + ${T.bump[0]!.toFixed(2)} * (2.0 * vnq(vec2(tb.y + floor(seed * 91.0), q * ${T.bump[1]!.toFixed(2)} + seed * 13.0), tb.z) - 1.0) * smoothstep(0.1, 0.4, rho);
-  float depth = ${T.depth.toFixed(2)} * mix(${T.crown.toFixed(2)}, 1.0, smoothstep(${T.from[0]!.toFixed(2)}, ${T.from[1]!.toFixed(2)}, rho)) * smoothstep(0.03, 0.2, rho) + ${((1 - T.depth) * T.finger[2]!).toFixed(3)} * smoothstep(${T.finger[0]!.toFixed(2)}, 1.05, edge);
+  float depth = ${T.depth.toFixed(2)} * mix(${T.crown.toFixed(2)}, 1.0, smoothstep(${T.from[0]!.toFixed(2)}, ${T.from[1]!.toFixed(2)}, rho)) * smoothstep(0.03, 0.2, rho) * fit + ${((1 - T.depth) * T.finger[2]!).toFixed(3)} * smoothstep(${T.finger[0]!.toFixed(2)}, 1.05, edge);
   float f = 1.0 - depth + depth * crest * bump;
   f *= 1.0 - labPart(tb, edge, age, seed);
   return f * (1.0 - ${T.dimple[0]!.toFixed(2)} * exp(-rho * rho / ${(T.dimple[1]! * T.dimple[1]!).toFixed(4)}));
@@ -294,6 +294,7 @@ const DOME_VERT = /* glsl */ `
 precision highp float;
 uniform sampler2D uLabCells;
 uniform sampler2D uLabList;
+uniform vec2 uLabMesh;
 uniform vec4 uLabDome;
 uniform vec4 uLabMore;
 uniform vec4 uLabTime;
@@ -391,7 +392,9 @@ vec3 dome(vec3 s) {
 #if ${T.on ? 1 : 0}
   float run = -${lab.fibre.slow.toFixed(2)} * log(1.0 - min(rho, ${(lab.fibre.slow * 0.95).toFixed(3)}) / ${lab.fibre.slow.toFixed(2)});
   float q = run - uLabTime.x * uLabTime.y;
-  shape *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), length(labFan(u * rho, seed)), edge, age, seed, q), tubes);
+  float tr = length(labFan(u * rho, seed));
+  float tn = floor(${T.count[0]!.toFixed(1)} + ${(T.count[1]! - T.count[0]! + 1).toFixed(1)} * fract(seed * 5.317));
+  shape *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), tr, edge, age, seed, q, smoothstep(2.0, 4.0, 6.2831853 * tr / (tn * max(uLabMesh.x, uLabMesh.y * rho)))), tubes);
 #endif
   float h = edge <= 1.0 ? base + max(high * low - base, ${CU ? (CU[9] ?? 0).toFixed(2) : '0.0'} * base) * shape : base * max(1.0 - ${CU ? CU[6]!.toFixed(1) : '1.0'} * (edge - 1.0), 0.0);
   deep = shape;
@@ -401,7 +404,9 @@ vec3 dome(vec3 s) {
 #if ${T.on ? 1 : 0}
   float run = -${lab.fibre.slow.toFixed(2)} * log(1.0 - min(rho, ${(lab.fibre.slow * 0.95).toFixed(3)}) / ${lab.fibre.slow.toFixed(2)});
   float q = run - uLabTime.x * uLabTime.y;
-  body *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), length(labFan(u * rho, seed)), edge, age, seed, q), tubes);
+  float tr = length(labFan(u * rho, seed));
+  float tn = floor(${T.count[0]!.toFixed(1)} + ${(T.count[1]! - T.count[0]! + 1).toFixed(1)} * fract(seed * 5.317));
+  body *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), tr, edge, age, seed, q, smoothstep(2.0, 4.0, 6.2831853 * tr / (tn * max(uLabMesh.x, uLabMesh.y * rho)))), tubes);
 #endif
   float soft = 0.35 * high * low + 1e-6;
   float t = clamp(0.5 + 0.5 * (body - level) / soft, 0.0, 1.0);
@@ -725,9 +730,9 @@ void main() {
   float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (run - flow) * ${lab.fibre.along[0]!.toFixed(2)} + seed), per.x);
   float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (run - flow) * ${lab.fibre.along[1]!.toFixed(2)} - seed), per.y);
   float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (run - flow) * ${lab.fibre.along[2]!.toFixed(2)} + seed * 2.0), per.z);
-  float ka = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.x);
-  float kb = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.y);
-  float kc = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.z);
+  float ka = 1.0 - smoothstep(0.17, 0.33, wa * uLabCount.x);
+  float kb = 1.0 - smoothstep(0.17, 0.33, wa * uLabCount.y);
+  float kc = 1.0 - smoothstep(0.17, 0.33, wa * uLabCount.z);
   // the fibres are rays of the fan: hot threads with cooler matter between them, three sizes
   float ridge = 1.0 - abs(2.0 * fc - 1.0);
   float ridgeB = 1.0 - abs(2.0 * fb - 1.0);
@@ -808,8 +813,6 @@ void main() {
   cell *= 1.0 - ${lab.heat.fold[0]!.toFixed(2)} * smoothstep(${lab.heat.fold[1]!.toFixed(2)}, 1.0, vCorner + 0.08 * (fan - 0.5)) * smoothstep(0.15, 0.6, plan);
   cell *= 1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc;
   float bundle = pn.y;
-  float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (run - flow) * 17.0 + seed), per.z)) * kc * middle;
-  cell += 0.6 * uLabHeatMore.w * spark;
   float warm = uLabHeat.y * cell * life * mix(${lab.heat.near.toFixed(2)}, 1.0, smoothstep(2.4, 4.0, vReal / uLabPit.w));
   warm = warm < ${lab.heat.knee[0]!.toFixed(2)} ? warm : ${lab.heat.knee[0]!.toFixed(2)} + ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)} * (1.0 - exp(-(warm - ${lab.heat.knee[0]!.toFixed(2)}) / ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)}));
   float heat = pen > 0.999 ? uLabHeat.y * bundle : mix(warm, uLabHeat.y * bundle, pen);
@@ -1139,7 +1142,7 @@ export class LabGround {
       list.minFilter = THREE.NearestFilter
       list.magFilter = THREE.NearestFilter
       geometry.instanceCount = 0
-      const material = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: DOME_VERT, fragmentShader: DOME_FRAG, uniforms: { ...all, uLabList: { value: list } }, side: THREE.DoubleSide })
+      const material = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: DOME_VERT, fragmentShader: DOME_FRAG, uniforms: { ...all, uLabList: { value: list }, uLabMesh: { value: new THREE.Vector2(1 / rings, (Math.PI * 2) / sectors) } }, side: THREE.DoubleSide })
       const laid = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: DOME_VERT, fragmentShader: DOME_FRAG, uniforms: material.uniforms, side: THREE.DoubleSide, transparent: true, forceSinglePass: true, ...WEIGHED })
       const mesh = new THREE.Mesh(geometry, material)
       mesh.frustumCulled = false
@@ -1156,7 +1159,7 @@ export class LabGround {
         flat.instanceCount = 0
         this.mapList.minFilter = THREE.NearestFilter
         this.mapList.magFilter = THREE.NearestFilter
-        const drawn = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: DOME_VERT, fragmentShader: DOME_FRAG, defines: { LAB_MAP: 1 }, uniforms: { ...all, uLabList: { value: this.mapList }, uLabMap: { value: null } }, side: THREE.DoubleSide })
+        const drawn = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: DOME_VERT, fragmentShader: DOME_FRAG, defines: { LAB_MAP: 1 }, uniforms: { ...all, uLabList: { value: this.mapList }, uLabMesh: { value: new THREE.Vector2(1 / rings, (Math.PI * 2) / sectors) }, uLabMap: { value: null } }, side: THREE.DoubleSide })
         const over = new THREE.Mesh(flat, drawn)
         over.frustumCulled = false
         this.mapScene.add(over)
@@ -1276,7 +1279,7 @@ export class LabGround {
     const band = (globalThis as { labBand?: number }).labBand
     ;(this.uniforms.uLabToneFar!.value as THREE.Vector4).w = band ?? smooth(Math.log(hs[0]!), Math.log(hs[1]!), Math.log(over))
     if (keep <= 0) return
-    const now = (globalThis as { labBake?: Bake }).labBake ? this.start : time + this.start + ((globalThis as { labAhead?: number }).labAhead ?? 0)
+    const now = time + this.start + ((globalThis as { labAhead?: number }).labAhead ?? 0)
     ;(this.uniforms.uLabTime!.value as THREE.Vector4).x = now
     cellsAt(now, this.cells)
     const c = this.cells

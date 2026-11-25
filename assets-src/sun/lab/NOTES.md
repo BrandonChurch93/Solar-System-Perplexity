@@ -896,3 +896,18 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   STILL WRONG (u18, seen): no thin bright rim where two cells touch, no sparkle, the strands are evenly fluted
   (satin), dark gaps with debris where small low cells sit between large ones, the middle distance is beads, the
   penumbra's threads are light where the approved's are dark.
+- 20:06 to 20:20 UTC. sun_builder MEASURED (his 20:06): the stage's ground and the map do not part over 90 to 269
+  (0.00000 degrees); his first level is whole everywhere in frame at 225 to 233, at the anchor until 245 (1.436
+  radii from the eye to the anchor), gone at 256; eye to anchor in ball radii: 199 0.158, 221 0.395, 225 0.485,
+  229 0.600, 233 0.745, 237 0.926, 241 1.152, 245 1.436, 248 1.693, 252 2.110, 256 2.624. My old frames for
+  far.away [2.0, 3.0] (241 to 256) were wrong: that was 251 and later, the live ground left AFTER his level (d9's
+  red rows). NEW LAW: far.away [0.6, 0.93] (anchor: leaves 229 to 237); bake at film frame 233 (far.level.frame),
+  axes N = globe.mapSpot, E = Y x N, U = N x E (in lab.json). ground.ts: `now` is the frame's time under labBake
+  too. Told him 20:08. Sheet chain of u19 killed at the final frame (the state changed).
+  THE SCALY PATCH (frame 90, x 283 to 323, y 927 to 943): found by debug outputs of the fragment's terms (one
+  cell only, so no two surfaces; not the law, not the height; in the heat before the tubes): it was the BEADS
+  (fibre.beads 0.45, value noise of 31 round by 9 along the run, times the strands: a lattice of diamonds near
+  the fan's centre). Not it: the strands' filter (now 0.17 to 0.33 strands a px, kept), spark (removed, kept
+  out), tube relief finer than the mesh (now faded by the tube's width over the mesh's spacing, uLabMesh, kept),
+  heat.fine. u24: fibre.beads [0.0, 9]: the patch is gone (v/glitch-u24.png).
+  How to debug a term: add `outColor = vec4(a, b, c, 1.0);` after labOut in DOME_FRAG's main, render, crop.

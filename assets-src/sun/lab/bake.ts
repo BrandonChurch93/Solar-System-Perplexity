@@ -1,5 +1,5 @@
 // The far twin of the lab's ground for the globe (FAR-TWIN.md of the Sun's builder): the ground where its cells are
-// no things, from straight above every point, at the clock's 0, as a square picture laid gnomonic about the spot.
+// no things, from straight above every point, with the cells as they stand at the film frame far.level.frame, as a square picture laid gnomonic about the spot.
 // The page draws it with the film's own shader (LabGround.bake) and this script fetches the bytes.
 //   npx tsx assets-src/sun/lab/bake.ts && python3 assets-src/sun/lab/level.py
 import { mkdirSync, writeFileSync } from 'node:fs'
@@ -16,7 +16,7 @@ ensureBuild()
 mkdirSync(out, { recursive: true })
 const session = await openCapture({ dist: DIST, format: formatId(cfg, a.format), assets: 'full', diag: 'beauty' })
 await session.page.evaluate((b) => { (globalThis as { labBake?: Bake }).labBake = b }, { deg: lab.far.level.deg, size })
-await renderPng(session.page, 90, 'draft')
+await renderPng(session.page, lab.far.level.frame, 'draft')
 const axes = await session.page.evaluate(() => (globalThis as { labBake?: Bake }).labBake?.axes)
 if (!axes) throw new Error('the page baked nothing')
 const bytes = Buffer.alloc(size * size * 4)
