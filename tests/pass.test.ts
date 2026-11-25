@@ -262,12 +262,17 @@ describe('the dim of the sky while the Sun comes into the frame of a travel', ()
   })
 
   it('dims by the depth of a Sun that passes through the frame and gives it back by the same depth, whatever the clock says', () => {
-    const index = legs.findIndex((s) => s.id === 'uranus.travel')
-    const seg = legs[index]!
     const open = config.raw.travel.sky.openExposure
-    // The open flight of the leg: the frames from its first on whose sky is the open sky and nothing else.
-    let openTo = seg.firstFrame
-    while (openTo < seg.endFrame && Math.abs(level(openTo) - open) < 1e-12 && Math.abs(level(openTo + 0.5) - open) < 1e-12) openTo++
+    // The open flight of a leg: the frames from its first on whose sky is the open sky and nothing else. The leg asked is the one whose
+    // open flight is the longest.
+    const flight = (s: (typeof legs)[number]): number => {
+      let to = s.firstFrame
+      while (to < s.endFrame && Math.abs(level(to) - open) < 1e-12 && Math.abs(level(to + 0.5) - open) < 1e-12) to++
+      return to
+    }
+    const index = legs.reduce((best, s, i) => (flight(s) - s.firstFrame > flight(legs[best]!) - legs[best]!.firstFrame ? i : best), 0)
+    const seg = legs[index]!
+    const openTo = flight(seg)
     // The Sun crosses the middle of the frame from below to above at the frame "middle", by a pitch of rate degrees a frame. Half the
     // height of the frame is half the lens' angle, so at a pitch of deg the Sun stands that half less deg inside the upper or lower edge.
     const middle = seg.firstFrame + 32
