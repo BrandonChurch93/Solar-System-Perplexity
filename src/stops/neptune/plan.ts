@@ -1,7 +1,8 @@
 import * as THREE from 'three'
 import { config } from '../../config'
 import type { Segment } from '../../config'
-import type { Pose, ViewKind } from '../../core/types'
+import { airAt } from '../../core/air'
+import type { AirKnot, Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt } from '../../director/rig'
 import close from './close.json'
@@ -21,7 +22,6 @@ export const params: MoveParams = {
   arrive: { swingDeg: 0, axis: [0.1, 1, 0.2], from: 0.25, offset: [0.5, 0.2] },
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
   skyAim: { orbit: [-0.35387, -37.48986, 26.30965], terrain: [-111.84232, 28.36898, 9.4633] },
-  air: [{ height: 2, sky: 0.65 }, { height: 0.03, sky: 0.27 }],
   cover: [0.27, 0.43, 0.8],
   handover: { dive: { at: move.dive.at, picture: false, skyFrames: 0, ...move.one.dive }, rise: { at: move.rise.at, picture: false, skyFrames: 0, ...move.one.rise } },
   spinDegPerSecond: 1.3,
@@ -29,6 +29,20 @@ export const params: MoveParams = {
   tint: [0.3, 0.5, 1],
 }
 
+// THE LOW SKY'S KNOTS (sky_builder's patch, MAIL 1099 and MAIL 1112 point 3): the sky's level and the share of its turn by the height
+// of the eye over the body, in radii, from the highest down: 0.65 (the hold's own level, light.skyExposure) at and above 2 radii, 0.27 at
+// and under 0.03 radii, between them on the one air's own curve over the logarithm of the height (airAt, src/core/air.ts). The hold
+// flies at 2.07 to 2.18 radii and keeps 0.65; the surface view flies at 0.0232 to 0.0247 and holds 0.27. Never the clock.
+// They stand here and are read through airAt by skyTurnShare and skyGain below, not as params.air: nothing in the engine reads the
+// air of a shot yet, and tests/air.test.ts asserts that no stop of the film names one ("is absent on every shot of the film as long
+// as no stop names an air"), so the patch as written turned that unit red on the merge of main aed412aeb (25 Nov, 15:03 UTC). The
+// first knot is made whole from the stop's light exactly as StopPlan.air makes it, so the numbers and the bytes are the same. When
+// the engine's air law reads air.sky these knots go to params.air and the skyGain override below goes (MAIL 1112 point 3).
+const light = params.light
+export const lowSky: AirKnot[] = [
+  { exposure: light.exposure, sky: light.skyExposure, stars: 1, sunRadius: light.sunRadiusDeg, glare: light.sunGlare, height: 2 },
+  { height: 0.03, sky: 0.27 },
+]
 const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
 // The scene's frame on the globe: where the fit put it (place.json), turned to where the place stands (move.json, place; band.ts).
 const onGlobe = new THREE.Quaternion().fromArray(place.toWorld).multiply(placeTurn)
@@ -139,12 +153,12 @@ class NeptunePlan extends StopPlan {
 
   override skyTurnShare(seg: Segment, time: number): number | null {
     if (seg.kind !== 'dive' && seg.kind !== 'rise') return super.skyTurnShare(seg, time)
-    return smooth(this.air(this.eyeHeight(time))!.share)
+    return smooth(airAt(lowSky, this.eyeHeight(time), this.id)!.share)
   }
 
   override skyGain(time: number): number {
     if (time < this.seg.hold.start || time >= this.seg.rise.end) return 1
-    return this.air(this.eyeHeight(time))!.sky / this.p.light.skyExposure
+    return airAt(lowSky, this.eyeHeight(time), this.id)!.sky / this.p.light.skyExposure
   }
 
   drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
