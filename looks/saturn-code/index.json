@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T14:42:32.559Z",
- "head": "ccedab575f501a9c96d8baabc3dcbea413066508",
- "note": "thin sheet inside the inner rim under the one law of cover: draft scan of three depths, finals running",
+ "pushed": "2026-11-25T14:52:22.412Z",
+ "head": "6617c15f0777b4b5f07be68e545511ded73b4853",
+ "note": "thin sheet at the largest depth the hold allows: finals, the foot stays far from the approved; proof of the commit running",
  "looks": [
+  {
+   "time": "2026-11-25T14:52:21.040Z",
+   "file": "20261125145221040-note-foot_final_016.jpg",
+   "source": "../../../../tmp/v/thin/foot_final_016.png",
+   "kind": "note",
+   "label": "3720 final, the foot, box 700 380 to 1920 900, seven tiles outlined: approved, main, thin sheet depth 0.016, cure without the sheet"
+  },
   {
    "time": "2026-11-25T14:42:20.066Z",
    "file": "20261125144220066-note-skim4.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/law2/g17_tiles.png",
    "kind": "note",
    "label": "3720 final, box 1120 600 to 1920 1000, darks lifted: approved close, named 6e96b4cb, cure law2 (no dark foot, open gap)"
-  },
-  {
-   "time": "2026-11-25T13:32:38.137Z",
-   "file": "20261125133238137-note-c_3806.jpg",
-   "source": "../../../../tmp/v/law2/c_3806.jpg",
-   "kind": "note",
-   "label": "cure law2, draft, frames 3806 to 3814, box 700 560 to 1340 920: the sheet in front of the lit globe, the outline of the globe through it stays"
   }
  ]
 }
