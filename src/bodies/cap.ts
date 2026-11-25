@@ -3,6 +3,7 @@ import * as THREE from 'three'
 export interface CapLevel {
   height: THREE.DataTexture
   size: number
+  count?: number
   widthDeg: number
   low: number
   high: number
@@ -129,10 +130,10 @@ export function capFinest(cellG: number[], halfG: number[], fine: number, pixel:
   return k
 }
 
-const levelRead = (j: number, mask: boolean): string => `  {
+const levelRead = (j: number, mask: boolean, count: boolean): string => `  {
     vec2 q = g * uCapScale[${j}];
     float w = 1.0 - smoothstep(0.5 - uCapFeather, 0.5, max(abs(q.x), abs(q.y)));${j > 0 ? `
-    w *= 1.0 - smoothstep(uCapFade.x, uCapFade.y, foot * uCapScale[${j - 1}] * uCapSize[${j - 1}]);` : ''}
+    w *= 1.0 - smoothstep(uCapFade.x, uCapFade.y, foot * uCapScale[${j - 1}] * ${count ? 'uCapCount' : 'uCapSize'}[${j - 1}]);` : ''}
     if (w > 0.0) {
       float lod = log2(max(max(foot, cell) * uCapScale[${j}] * uCapSize[${j}], 1.0));
       float t = uCapLow[${j}] + capRead(uCapH${j}, vec2(q.x + 0.5, 0.5 - q.y), lod) * uCapSpan[${j}];${mask ? `
@@ -141,11 +142,12 @@ const levelRead = (j: number, mask: boolean): string => `  {
     }
   }`
 
-export const capVert = (masks: boolean[], grids: number, normal = false): string => /* glsl */ `
+export const capVert = (masks: boolean[], grids: number, normal = false, count = false): string => /* glsl */ `
 in vec3 aCell;
 ${masks.map((m, j) => 'uniform highp usampler2D uCapH' + j + ';' + (m ? '\nuniform sampler2D uCapM' + j + ';' : '')).join('\n')}
 uniform float uCapScale[${masks.length}];
-uniform float uCapSize[${masks.length}];
+uniform float uCapSize[${masks.length}];${count ? `
+uniform float uCapCount[${masks.length}];` : ''}
 uniform float uCapLow[${masks.length}];
 uniform float uCapSpan[${masks.length}];
 uniform float uCapGrid[${grids}];
@@ -191,7 +193,7 @@ float capRead(highp usampler2D t, vec2 uv, float lod) {
 float capRaw(vec2 g, float foot, float cell, float sunk) {
   float h = 0.0;
   float sink = sunk * uCapSink.x * (1.0 - smoothstep(0.8 * uCapSink.y, uCapSink.y, length(g - uCapFoot)));
-${masks.map((m, j) => levelRead(j, m)).join('\n')}
+${masks.map((m, j) => levelRead(j, m, count)).join('\n')}
   return h;
 }
 void main() {
@@ -245,6 +247,8 @@ export class ReliefCap {
     if (levels.length === 0) throw new Error('a cap needs a height level')
     for (let j = 1; j < levels.length; j++) if (!(levels[j]!.widthDeg < levels[j - 1]!.widthDeg)) throw new Error('the height levels of a cap go coarse to fine')
     const masks = levels.map((l) => l.mask !== undefined)
+    const counted = levels.some((l) => l.count !== undefined)
+    if (levels.some((l) => l.count !== undefined && !(l.count > 0))) throw new Error('the count of a height level is a width above 0')
     if (levels.length + masks.filter((m) => m).length > CAP_SAMPLERS) throw new Error('too many height levels and masks for a cap')
     if (!(o.from[0] > o.from[1] && o.from[1] > 0)) throw new Error('a cap comes in between two heights, the higher first')
     if (!(o.border[1] > o.border[0])) throw new Error('the border of a cap is [inner, outer]')
@@ -283,7 +287,7 @@ export class ReliefCap {
     geometry.setAttribute('aCell', this.cells)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
-      vertexShader: capVert(masks, scales.length, o.light !== undefined),
+      vertexShader: capVert(masks, scales.length, o.light !== undefined, counted),
       fragmentShader,
       uniforms: {
         ...shared,
@@ -291,6 +295,7 @@ export class ReliefCap {
         ...Object.fromEntries(levels.flatMap((l, j) => (l.mask ? [['uCapM' + j, { value: l.mask }]] : []))),
         uCapScale: { value: levels.map((l) => scaleOf(l.widthDeg)) },
         uCapSize: { value: levels.map((l) => l.size) },
+        ...(counted ? { uCapCount: { value: levels.map((l) => l.count ?? l.size) } } : {}),
         uCapLow: { value: levels.map((l) => l.low) },
         uCapSpan: { value: levels.map((l) => (l.high - l.low) / 65535) },
         uCapGrid: { value: scales },
