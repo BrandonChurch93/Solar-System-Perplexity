@@ -59,6 +59,9 @@ uniform vec4 uSpin;
 uniform vec4 uCollar;
 uniform vec4 uArmIn;
 uniform float uVeilSizes;
+uniform float uVeilOwn;
+uniform vec4 uVeilStorm;
+uniform vec2 uVeilArms;
 uniform vec4 uWind;
 uniform vec4 uCirrusWind;
 uniform vec4 uDeckWave;
@@ -94,7 +97,7 @@ uniform vec2 uVeil;
 uniform vec2 uVeilFall;
 uniform vec3 uVeilLight;
 uniform float uStreamBend[${STREAMERS}];
-uniform vec2 uStreamVeil[${STREAMERS}];
+uniform vec3 uStreamVeil[${STREAMERS}];
 uniform vec4 uDeckFine;
 uniform vec2 uDeckRun;
 uniform vec4 uHazeLow;
@@ -190,6 +193,11 @@ float wind(float v) {
 float veilAt(vec2 uv, float least, float t) {
   float vt = uv.y + uFanBand.x * uv.x;
   float shape = smoothstep(uFanBand.y, uFanBand.z, vt) * smoothstep(uFanWest.x, uFanWest.y, uv.x);
+  // Round the storm the sheet stands too (fan.veil.storm, its fourth number: the share at the storm's middle, falling with the
+  // storm's reach), so the whirl is whole round the eye and not on its far side alone.
+  vec2 ds = uv - uStorm.xy;
+  float rs = length(ds);
+  shape = max(shape, uVeilStorm.w * exp(-(rs * rs) / (uStorm.w * uStorm.w)));
   if (shape <= 0.0) return 0.0;
   float sum = 0.0;
   float lam = uFanMake.x;
@@ -199,6 +207,17 @@ float veilAt(vec2 uv, float least, float t) {
     sum += amp * keep * (vnoise(vec3(vt / lam + 7.3 * float(k), (uv.x - wind(uv.y) * t) / (lam * uFanMake.y), 4.5 + 5.0 * float(k))) - 0.5);
     amp *= 0.62;
     lam *= 0.41;
+  }
+  // The storm in the sheet (deep.json, fan.veil.storm: hole, arms, reach of the hole in eye radii, share round the storm). The eye
+  // is a clearing in the sheet, and round it the sheet is wound into the storm's own arms (the deck's: count, pitch, core, spin;
+  // left out before a pixel's footprint holds an arm), so the eye stands as a dark oval in a pale spiral. By the place of the
+  // sheet alone.
+  if (uVeilStorm.x > 0.0 || uVeilStorm.y > 0.0) {
+    shape *= 1.0 - uVeilStorm.x * (1.0 - smoothstep(uBowl.y * uVeilStorm.z, uBowl.z * uVeilStorm.z, rs / uStorm.z));
+    // fan.veil.arms: how many arms of the sheet stand for one of the deck's, and the power that draws them thin.
+    float armWave = 6.2831853 * (rs + uArms.w) / (uArms.x * uVeilArms.x * sqrt(1.0 + uArms.y * uArms.y));
+    float turn = atan(ds.y, ds.x) + uArms.y * log(rs + uArms.w) - uSpin.x * uSpin.z * t;
+    shape *= mix(1.0, pow(0.5 + 0.5 * cos(uArms.x * uVeilArms.x * turn), uVeilArms.y), uVeilStorm.y * exp(-(rs * rs) / (uStorm.w * uStorm.w)) * smoothstep(least, 2.0 * least, armWave));
   }
   return shape * mix(1.0 - uFanBand.w, 1.0, clamp(0.5 + uFanMake.z * sum, 0.0, 1.0));
 }
@@ -601,7 +620,7 @@ float cirrusFlat(vec3 oc, vec3 rd, float b, float rt2, float pix, float t) {
     float n = cirrusNoise(p, straight.y, 0.0, foot, t, 5, -2.0, finest);
     float fill = 1.0 - smoothstep(0.3, 0.8, need + uCirrusFar.z * (0.5 - n));
     float left = smoothstep(uShade.z, uShade.w, foot / width);
-    cover = max(cover, uCirrusFar.x * left * fill * bell * (width / wide));
+    cover = max(cover, min(uCirrusFar.x * uStreamVeil[i].z * left * fill * bell * (width / wide), 1.0));
   }
   return cover;
 }
@@ -1067,6 +1086,11 @@ void main() {
     float ma = dot(rd, qa) / length(qa);
     float mb = dot(rd, qb) / length(qb);
     float lowAll = uHazeLow.x / uHazeLow.y * between(ha, ma, hb, mb, hp, uHazeLow.y);
+    // The low air is the pale sheet that lies on the deck, and the storm's eye is a clearing in it (deep.json, haze.low.eye): where
+    // the ray ends on the eye's floor the low air in front of it is thinner by that share of the eye's own shade (planet.ts,
+    // eyeShade: the one eye of both shaders, with the wall the deck's structure moves). So the air may veil the plain and the eye
+    // stays the dark oval in it. By the place the ray meets alone.
+    if (deckHit && uHazeLow.z > 0.0) lowAll *= 1.0 - uHazeLow.z * (1.0 - eyeShade(uToBody * normalize(qb), gEyeField)) / max(uGEyeMake.x, 1e-6);
     float highAll = uHazeHigh.x / uHazeHigh.y * between(ha, ma, hb, mb, hp, uHazeHigh.y);
     // Where the light that reaches the camera is scattered: the lowest point of the ray, or the deck it ends on.
     vec3 qm = deckHit ? qb + normalize(qb) * uHazeLow.y : oc + rd * clamp(-b, ta, tb);
@@ -1095,6 +1119,8 @@ void main() {
   float veilClear = farW < 1.0 ? mix(exp(-veilDepth(oc, rd, b, rt2, !deckHit, pix, t)), 1.0, farW) : 1.0;
   vec3 veilLight = uLight.x * uVeilLight * (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) * mix(1.0, (1.0 - uLight.z * uLight.z) / pow(1.0 + uLight.z * uLight.z - 2.0 * uLight.z * sunView, 1.5), uLight.y);
   vec3 veiled = underAir(deckLight, toHold(veilLight) * (1.0 - veilClear), vec3(veilClear));
+  // What of that sum is the veil's own light, and not the deck seen through it (for the air's law below).
+  vec3 veilOnly = uVeilOwn > 0.0 ? max(veiled - underAir(deckLight, vec3(0.0), vec3(veilClear)), vec3(0.0)) : vec3(0.0);
   // The air is light ADDED along the path (MAIL 840 point 4, MAIL 914): L = L0 * T + S * (1 - T), T one number for the three
   // channels, S the lit air's own colour. It is added in the light the film shows at this height: what lies under it and the
   // air's own colour each take the end's grade of the fall alone, and the sum is made after it. Under the grade (a power by
@@ -1107,7 +1133,8 @@ void main() {
   // The air behind the cirrus lies low on the deck, as the veil does, so the shadow a streamer casts on the deck lies on it too.
   float airShade = deckHit ? (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) : 1.0;
   float airShare = airBefore + airShade * cloudClear * max(airAll - airBefore, 0.0);
-  vec3 col = fallEnd(bare * outGain) * clearAll + fallEnd(airLight * outGain) * airShare;
+  vec3 airCol = fallEnd(airLight * outGain) * airShare;
+  vec3 col = fallEnd(bare * outGain) * clearAll + airCol;
   float seen = deckHit ? 1.0 : 1.0 - cloudClear * dot(clearDeck, vec3(0.3333)) * veilClear;
   float alpha = clamp(seen, 0.0, 1.0);
   // The air the eye stands in (deep.json, air; the Builder's MAIL 1011, way C). The film shows every thing of the place by one
@@ -1133,6 +1160,7 @@ void main() {
     vec3 kc = uAirDepth / whole;
     float behind = airPath(uAirLaw.x, mIn, he, me, hp);
     vec3 gain = vec3(0.0);
+    float thingAir = 0.0;
     float cloudPart = cloudWeight > 0.0 ? 1.0 - cloudClear : 0.0;
     for (int k = 0; k < (cloudWeight > 0.0 ? 1 : 0); k++) {
       vec3 qc = oc + rd * tMean;
@@ -1142,11 +1170,22 @@ void main() {
     if (deckHit) {
       vec3 qd = oc + rd * tDeck;
       float hd = length(qd) - uRadius;
-      gain += (1.0 - cloudPart) * airGain(kc, airPath(he, me, hd, dot(rd, qd) / length(qd), hp), behind, exp(-uAirSun * airPath(hd, 1.0, uAirLaw.x, 1.0, 0.0) / whole));
+      thingAir = airPath(he, me, hd, dot(rd, qd) / length(qd), hp);
+      gain += (1.0 - cloudPart) * airGain(kc, thingAir, behind, exp(-uAirSun * airPath(hd, 1.0, uAirLaw.x, 1.0, 0.0) / whole));
     } else {
-      gain += (1.0 - cloudPart) * airGain(kc, airPath(he, me, uAirLaw.x, mOut, hp), behind, vec3(0.0));
+      thingAir = airPath(he, me, uAirLaw.x, mOut, hp);
+      gain += (1.0 - cloudPart) * airGain(kc, thingAir, behind, vec3(0.0));
     }
-    col *= gain;
+    // The low air's own light (deep.json, haze.own). The low air lies on the deck, under the eye of the terrain: all of it stands
+    // between the eye and the ground, so what the hold shows of it is its own light by that share (as a cirrus' is, air.cirrus)
+    // and only the rest is the light of the air over it, of which an eye inside has a part. Own 0: it takes the ground's gain,
+    // the law till 25 Nov, 16 h, which left the plain at mid distance at a quarter of the level it has without this air's law
+    // and navy where the approved plain is pale. The same law for it as for every thing (airGain), by the path alone.
+    // The veil's own light (deep.json, fan.veil.own): the same for the sheet of ice haze. It lies on the deck by place, beyond the
+    // storm and the bank, so the plain there is pale and the near deck, where no sheet lies, stays dark. Its share of the thing's
+    // light takes its own gain, the rest the ground's. Own 0: the law till 25 Nov, 16 h, to the bit.
+    vec3 thingGain = uVeilOwn > 0.0 ? mix(gain, airGain(kc, thingAir, behind, vec3(uVeilOwn)), clamp(cloudClear * veilOnly / max(bare, vec3(1e-9)), 0.0, 1.0)) : gain;
+    col = uHazeLow.w > 0.0 ? (col - airCol) * thingGain + airCol * airGain(kc, thingAir, behind, vec3(uHazeLow.w)) : col * thingGain;
   }
   // On the globe the scene ends at a border on the ground: by the angle from the place of what the ray meets (or passes nearest).
   vec3 met = normalize(deckHit ? oc + rd * tDeck : oc + rd * max(-b, 0.0));
@@ -1241,7 +1280,7 @@ export class Deep {
         uSpin: { value: v4(THREE.MathUtils.degToRad(s.spin.degPerSecond), s.spin.halfRadius, s.spin.pattern, 0) },
         uCollar: { value: v4(s.collar[0]!, s.collar[1]!, s.collar[2]!, s.collar[3]!) },
         uArmIn: { value: v4(s.arms.from[0]!, s.arms.from[1]!, 0, 0) },
-        uVeilSizes: { value: fan.veil.sizes },
+        uVeilSizes: { value: fan.veil.sizes }, uVeilOwn: { value: fan.veil.own }, uVeilStorm: { value: v4(fan.veil.storm[0]!, fan.veil.storm[1]!, fan.veil.storm[2]!, fan.veil.storm[3]!) }, uVeilArms: { value: new THREE.Vector2(fan.veil.arms[0]!, fan.veil.arms[1]!) },
         uWind: { value: v4(w.deck.speed, w.deck.jet, 1 / w.deck.jetWidth, w.deck.phase) },
         uCirrusWind: { value: v4(w.cirrus.speed, w.cirrus.shear, ci.castWave, look.steps.cirrusLimit) },
         uDeckWave: { value: v4(d.wave, d.stretch, d.relief, d.lump) },
@@ -1267,13 +1306,13 @@ export class Deep {
         uFanWest: { value: v4(fan.veil.west[0]!, fan.veil.west[1]!, fan.veil.shade, fan.veil.depth / (fan.veil.height[1]! - fan.veil.height[0]!)) },
         uFanMake: { value: v4(fan.veil.wave, fan.veil.long, fan.veil.contrast, fan.veil.layers) },
         uVeil: { value: new THREE.Vector2(fan.veil.height[0], fan.veil.height[1]) }, uVeilFall: { value: veilFall(fan.veil.fall) }, uVeilLight: { value: v3(fan.veil.light) },
-        uStreamBend: { value: ci.streamers.map((x) => x.bend ?? 1) }, uStreamVeil: { value: ci.streamers.map((x) => new THREE.Vector2(x.veil ?? 0, x.veilFibre ?? 0)) },
+        uStreamBend: { value: ci.streamers.map((x) => x.bend ?? 1) }, uStreamVeil: { value: ci.streamers.map((x) => new THREE.Vector3(x.veil ?? 0, x.veilFibre ?? 0, x.flat ?? 1)) },
         uCirrusFar: { value: new THREE.Vector3(ci.far[0]!, ci.far[1]!, ci.far[2]!) },
         uNear: { value: new THREE.Vector3(d.near[0]!, d.near[1]!, d.wisp.near) },
         uWisp: { value: v4(d.wisp.from, d.wisp.power, d.wisp.gain, d.wisp.light) },
         uDeckFine: { value: v4(d.limit, d.wisp.mean, d.wisp.where[0]!, d.wisp.where[1]!) },
         uDeckRun: { value: new THREE.Vector2(d.run[0]!, d.run[1]!) },
-        uHazeLow: { value: v4(h.low.depth, h.low.scale, 0, 0) }, uHazeHigh: { value: v4(h.high.depth, h.high.scale, 0, 0) },
+        uHazeLow: { value: v4(h.low.depth, h.low.scale, h.low.eye, h.own) }, uHazeHigh: { value: v4(h.high.depth, h.high.scale, 0, 0) },
         uHazeLowColour: { value: v3(h.low.colour) }, uHazeHighColour: { value: v3(h.high.colour) },
         uHazeMake: { value: v4(h.forward[0]!, h.forward[1]!, h.top, h.share) },
         uLight: { value: v4(l.sun, l.forward[0]!, l.forward[1]!, l.wrap) },
