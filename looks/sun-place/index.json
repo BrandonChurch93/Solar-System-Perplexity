@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T07:56:36.742Z",
+ "pushed": "2026-11-25T08:20:23.380Z",
  "head": "705444897fa41f6743de1402262513bd60a3a69e",
- "note": "commit 5 in work, f1: frame 60 dark 0.242 body 0.604 pale 0.076 white 0.016; half width 6.5 px, 1286 shapes; fine detail 0.0381; mean 0.325; distance 0.069",
+ "note": "point 3 test on 4b (my chain, preview, capture 437 to 453): 4b 0.495; onGlobe.away off 0.662; heights.loops off 0.499; heights.strands off 0.410; red off 0.471; fringe off 0.497; corona and sky off 0.494; arcade hidden 0.273 at another place. sun-near frame 60 of 4b: dark 0.223 body 0.616 pale 0.084 white 0.023 | brightest 15 percent: half width 8.2 px, 546 shapes, fine detail 0.0291, mean 0.326 | distance 0.070",
  "looks": [
+  {
+   "time": "2026-11-25T08:20:06.834Z",
+   "file": "20261125082006834-note-p3-limb-master.jpg",
+   "source": "../../../../tmp/v/p3-limb-master.png",
+   "kind": "note",
+   "label": "4b master 217 and 225 at the limb, 3 to 1: the far ground gives way to the globe's map",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:20:06.262Z",
+   "file": "20261125082006262-note-p3-arc.jpg",
+   "source": "../../../../tmp/v/p3-arc.jpg",
+   "kind": "note",
+   "label": "point 3 test on 4b, preview, capture 437 to 453 at 2 to 1: top 4b; middle heights.strands off (no trim, the haze card shows); bottom heights.loops off",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T07:56:35.715Z",
    "file": "20261125075635715-note-f1-90b.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/4b-90-full.jpg",
    "kind": "note",
    "label": "frame 90 whole at half size: take batch 9 Sun files, commit 4b",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:33:54.522Z",
-   "file": "20261125073354522-note-4b-spot90.jpg",
-   "source": "../../../../tmp/v/4b-spot90.jpg",
-   "kind": "note",
-   "label": "commit 4b (da619571), frame 90 at the master, 1 to 1, top to bottom: approved, take batch 9 Sun files, commit 4b, commit 4 (d91c0f63)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:26:28.436Z",
-   "file": "20261125072628436-note-rise-D.jpg",
-   "source": "../../../../tmp/v/rise-D.jpg",
-   "kind": "note",
-   "label": "where the pattern of d91c0f63 changes most from 218 + 1/2 to 226 + 1/2 (my chain at preview, own body): behind the top of the arcade at the limb",
    "stop": "sun"
   }
  ]
