@@ -5,7 +5,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { segmentAtFrame } from '../src/director/timeline'
-import { poseRecord, type Bodied, type Seated, type Shaped } from '../tools/smooth/pose'
+import { poseRecord, type Bodied, type Flowing, type Lit, type PoseLens, type Seated, type Shaped } from '../tools/smooth/pose'
 
 const film = new FilmDirector(plans)
 const size = { width: 1920, height: 1080 }
@@ -159,5 +159,38 @@ describe('the pose record of a capture frame', () => {
     expect(mars.camera.near).toBe(shotOf('mars', 5364, mars.time).near)
     expect(mars.camera.near).toBeGreaterThan(0)
     expect(mars.camera.near).toBeLessThan(Math.hypot(...mars.camera.p) - 1)
+  })
+
+  it('names how fast a body moves by itself and how far its own light reaches where its plan hands them, and nothing where it hands none', () => {
+    const sun = plan('sun')
+    const before = poseRecord(film, sun, 368, 2, 30, size)
+    expect('flows' in before.bodies[0]!).toBe(false)
+    expect('light' in before.bodies[0]!).toBe(false)
+    const seen: { view: string; eye: number[]; time: number; lens?: PoseLens }[] = []
+    const alive = Object.assign(Object.create(sun) as typeof sun, {
+      drawnFlow: (view, eye, time, lens) => {
+        seen.push({ view, eye: eye.toArray(), time, lens })
+        return 0.75
+      },
+      drawnLight: (view, eye, time) => {
+        seen.push({ view, eye: eye.toArray(), time })
+        return 2.5
+      },
+    } satisfies Flowing & Lit)
+    const r = poseRecord(film, alive, 368, 2, 30, size)
+    expect(r.bodies[0]!.flows).toBe(0.75)
+    expect(r.bodies[0]!.light).toBe(2.5)
+    expect(seen).toEqual([
+      { view: r.view, eye: r.camera.p, time: r.time, lens: { vfov: r.camera.vfov, width: 1920, height: 1080 } },
+      { view: r.view, eye: r.camera.p, time: r.time },
+    ])
+    expect({ ...r, bodies: [{ ...r.bodies[0]!, flows: undefined, light: undefined }] }).toEqual({ ...before, bodies: [{ ...before.bodies[0]! }] })
+    for (const off of [null, 0, -1, Number.NaN, Number.POSITIVE_INFINITY]) {
+      const none = Object.assign(Object.create(sun) as typeof sun, { drawnFlow: () => off, drawnLight: () => off } satisfies Flowing & Lit)
+      expect(JSON.stringify(poseRecord(film, none, 368, 2, 30, size))).toBe(JSON.stringify(before))
+    }
+    const venus = plan('venus')
+    const cloud = Object.assign(Object.create(venus) as typeof venus, { drawnBodies: () => [{ id: 'deck', place: [0, 0, 0], reach: 1.01, flows: 0.2, light: 1.5 }] } satisfies Bodied)
+    expect(poseRecord(film, cloud, Math.round(venus.holdMid * 60), 2, 30, size).bodies[1]).toEqual({ id: 'deck', place: [0, 0, 0], reach: 1.01, flows: 0.2, light: 1.5 })
   })
 })

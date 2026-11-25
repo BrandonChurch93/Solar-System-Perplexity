@@ -8,15 +8,21 @@ import type { StopPlan } from '../../src/director/moves'
 import { segmentAtFrame } from '../../src/director/timeline'
 import { carriedCamera } from './camera'
 
-export interface PoseBody { id: string; place: number[]; turn: number[]; scale: number[]; axes: number[]; shape?: number[] }
+export interface PoseBody { id: string; place: number[]; turn: number[]; scale: number[]; axes: number[]; shape?: number[]; flows?: number; light?: number }
 
-export interface PoseNear { id: string; place: number[]; turn?: number[]; reach: number; sheet?: { normal: number[]; inner: number; thick: number } }
+export interface PoseNear { id: string; place: number[]; turn?: number[]; reach: number; sheet?: { normal: number[]; inner: number; thick: number }; flows?: number; light?: number }
 
 export interface Bodied { drawnBodies(view: ViewKind, eye: THREE.Vector3, time: number): PoseNear[] }
 
 export interface Seated { drawnSeat(time: number): THREE.Quaternion }
 
 export interface Shaped { drawnShape(view: ViewKind, eye: THREE.Vector3, time: number): { shape: number[]; place?: number[] } | null }
+
+export interface PoseLens { vfov: number; width: number; height: number }
+
+export interface Flowing { drawnFlow(view: ViewKind, eye: THREE.Vector3, time: number, lens: PoseLens): number | null }
+
+export interface Lit { drawnLight(view: ViewKind, eye: THREE.Vector3, time: number): number | null }
 
 export interface PoseRecord {
   k: number
@@ -45,6 +51,9 @@ export function poseRecord(film: FilmDirector, plan: StopPlan, k: number, rate: 
   const lens = seat ? c.pose.quaternion.clone().multiply(seat.call(plan, time).invert()) : c.pose.quaternion
   const form = (plan as Partial<Shaped>).drawnShape?.call(plan, c.side, c.pose.position, time) ?? null
   const named = (plan as Partial<Bodied>).drawnBodies
+  const flows = (plan as Partial<Flowing>).drawnFlow?.call(plan, c.side, c.pose.position, time, { vfov: c.pose.vfov, width: size.width, height: size.height }) ?? null
+  const light = (plan as Partial<Lit>).drawnLight?.call(plan, c.side, c.pose.position, time) ?? null
+  const some = (v: number | null): v is number => v !== null && Number.isFinite(v) && v > 0
   const others: PoseNear[] = named ? named.call(plan, c.side, c.pose.position, time) : c.side === 'orbit' ? plan.nearBodies(time).map((n, i) => ({ id: plan.id + '.near.' + i, place: n.centre.toArray(), reach: n.radius })) : []
   return {
     k,
@@ -54,6 +63,6 @@ export function poseRecord(film: FilmDirector, plan: StopPlan, k: number, rate: 
     camera: { p: c.pose.position.toArray(), q: lens.toArray(), vfov: c.pose.vfov, near: shot.near * (c.side === 'terrain' && two ? close : 1), width: size.width, height: size.height },
     sky: { q: shot.skyTurn.clone().invert().multiply(shot.skyQuaternion).toArray() },
     range: { low: RANGE_LOW, octaves: RANGE_OCTAVES, units: two ? [1, close] : [1] },
-    bodies: [{ id: plan.id, place: form?.place ?? [0, 0, 0], turn: (drawn ? drawn.call(plan, time) : plan.turn(time)).toArray(), scale: globe?.scale ?? [1, 1, 1], axes: globe?.quaternion ?? [0, 0, 0, 1], ...(form ? { shape: form.shape } : {}) }, ...others],
+    bodies: [{ id: plan.id, place: form?.place ?? [0, 0, 0], turn: (drawn ? drawn.call(plan, time) : plan.turn(time)).toArray(), scale: globe?.scale ?? [1, 1, 1], axes: globe?.quaternion ?? [0, 0, 0, 1], ...(form ? { shape: form.shape } : {}), ...(some(flows) ? { flows } : {}), ...(some(light) ? { light } : {}) }, ...others],
   }
 }
