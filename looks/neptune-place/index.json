@@ -1,9 +1,49 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T07:27:30.565Z",
- "head": "19a98ef7fba3f258ea996015c884dc45c580efa9",
- "note": "07:30 rise 4987 to 5003: control says the fall grade (tone curve by height) lifting is what turns the crescent on; far streak rebuild next",
+ "pushed": "2026-11-25T07:59:19.432Z",
+ "head": "c2edd61bacab922cd9de7297bb397b7be94a1d4d",
+ "note": "08:00 far streak rebuilt as the body filtered (soft, falls with width, breaks by the heaps); rise 4987 to 5003 named: the grade of the fall, not cured",
  "looks": [
+  {
+   "time": "2026-11-25T07:59:18.491Z",
+   "file": "20261125075918491-note-crops-964.jpg",
+   "source": "out/work/nep/weave/ev/crops-964.jpg",
+   "kind": "note",
+   "label": "1 to 1 crops at the two pixels of MAIL 964: 656, 140 at 4694 and 4702; 1030, 749 at 4729 and 4737",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:59:17.546Z",
+   "file": "20261125075917546-note-s6-dive-b.jpg",
+   "source": "out/work/nep/weave/ev/s6-dive-b.jpg",
+   "kind": "note",
+   "label": "dive 4714 and 4722 at 1920: the line beside the far level rebuilt, broken where the heaps are thin",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:59:16.388Z",
+   "file": "20261125075916388-note-s6-dive-a.jpg",
+   "source": "out/work/nep/weave/ev/s6-dive-a.jpg",
+   "kind": "note",
+   "label": "dive 4692 and 4704 at 1920, 1 to 1: the line of ac408e47 beside the far level rebuilt",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:59:15.212Z",
+   "file": "20261125075915212-note-s6-4605.jpg",
+   "source": "out/work/nep/weave/ev/s6-4605.jpg",
+   "kind": "note",
+   "label": "4605 at 1920, 3 times enlarged: no far level, the line of ac408e47, the far level rebuilt. A soft pale band, the most 45 levels over the deck, not broken from orbit",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:59:13.465Z",
+   "file": "20261125075913465-note-4860-S6p.jpg",
+   "source": "out/work/nep/weave/ev/4860-S6p.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, the tree as it stands at the preview (draft, 23 s the frame). G17 proxy median 0.508, p25 0.128. The deck is still not the approved one: plain too dark, no fine curl, no dark oval",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T07:27:29.983Z",
    "file": "20261125072729983-note-4860-S5.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/nep/weave/ev/s4-dive.jpg",
    "kind": "note",
    "label": "ac408e47 at 1920, draft: 4692, 4704, 4714, 4722: hairlines low left of the storm, heaps on the upper third of the line at 4722",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T07:00:37.501Z",
-   "file": "20261125070037501-note-s4-4605.jpg",
-   "source": "out/work/nep/weave/ev/s4-4605.jpg",
-   "kind": "note",
-   "label": "RED named: 4605 at 1920, 4 times enlarged, left 02ca4d9f, right ac408e47: the streamers show from orbit as two thin pale streaks (464 pixels changed by more than 6 levels, the most 76)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T07:00:36.917Z",
-   "file": "20261125070036917-note-carry-before-after.jpg",
-   "source": "out/work/nep/weave/ev/carry-before-after.jpg",
-   "kind": "note",
-   "label": "Dive, the named layer and its cure: above 02ca4d9f (the streamer's heaps out of nothing from 4720), below ac408e47 (the streamers lie there as thin pale streaks from 4708, the heaps stand up on them); pattern by my pose proxy 4712, 4716, 4720: 0.63, 1.03, 0.84 before, 0.22, 0.31, 0.35 now",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T07:00:36.347Z",
-   "file": "20261125070036347-note-4860-S5.jpg",
-   "source": "out/work/nep/weave/ev/4860-S5.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, commit ac408e47: the close view is the picture of 02ca4d9f (48 pixels of the preview changed by more than 6 levels, the thin far streamer); G17 proxy preview median 0.508, p25 0.128 (1920 on 02ca4d9f: 0.359, 0.090, not measured again); 38.5 s the draft frame at the preview, 92 s at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T06:35:48.240Z",
-   "file": "20261125063548240-note-q1-pairs-rise.jpg",
-   "source": "out/work/nep/weave/ev/q1-pairs-rise.jpg",
-   "kind": "note",
-   "label": "RED named, rise: pairs 8 frames apart 4956, 4964, 4972, 4976, 4984 (left the frame, middle the later frame carried by poses, right the pattern proxy): the streamer thins away between 4972 and 4988",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T06:35:47.581Z",
-   "file": "20261125063547581-note-carry-4720.jpg",
-   "source": "out/work/nep/weave/ev/carry-4720.jpg",
-   "kind": "note",
-   "label": "RED named, dive: frames 4700 to 4736 carried onto the camera of 4720 (proxy by poses): the streamer is not there at 4716 and comes in piece by piece from 4720 to 4736 (cirrus.thin, by the pixel foot against its width); control without streamers: pattern proxy 4716 to 4724 falls from 1.03 to 0.20",
    "stop": "neptune"
   }
  ]
