@@ -1,72 +1,78 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T18:23:41.088Z",
- "head": "71688463139ea30327a39c48d8cde7719c152345",
- "note": "wall rock take 9 from above: code grain on walls matches the take's strength, reads as fur at 1 to 1; a wall band at the 0.3 north border traced to the heights, take 10 running",
+ "pushed": "2026-11-25T19:16:48.307Z",
+ "head": "74dca6470c2b50a4c808c2f1d8995d032dd5b922",
+ "note": "NAMED 74dca647 take 10 wall rock by code: proof pictures; fur from above at 1 to 1 is BAD, film frames calm",
  "looks": [
   {
-   "time": "2026-11-25T18:23:40.334Z",
-   "file": "20261125182340334-note-v03-dark-gain5.jpg",
-   "source": "out/work/place/w9/v03-dark-gain5.jpg",
+   "time": "2026-11-25T19:16:47.744Z",
+   "file": "20261125191647744-note-v03-c.jpg",
+   "source": "out/work/place/w10/v03-c.jpg",
    "kind": "note",
-   "label": "take 9 fault, 0.3 plate north border at gain 5: wall streaks where the 0.7 level has no wall; cured in the tool for take 10",
+   "label": "MAIL 1247: v03-c state, take 10, mask, 1 to 1 (fur from above: BAD)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T18:23:39.747Z",
-   "file": "20261125182339747-note-v07-c.jpg",
-   "source": "out/work/place/w9/v07-c.jpg",
+   "time": "2026-11-25T19:16:47.171Z",
+   "file": "20261125191647171-note-proof-d-plates.jpg",
+   "source": "out/work/place/w10/proof-d-plates.jpg",
    "kind": "note",
-   "label": "take 9, 0.7 plate from above at 1 to 1 on a wall: state, take 9, mask",
+   "label": "MAIL 1034: the plates whole, state and take 10",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T18:23:39.155Z",
-   "file": "20261125182339155-note-v03-whole.jpg",
-   "source": "out/work/place/w9/v03-whole.jpg",
+   "time": "2026-11-25T19:16:46.628Z",
+   "file": "20261125191646628-note-proof-c-pairs.jpg",
+   "source": "out/work/place/w10/proof-c-pairs.jpg",
    "kind": "note",
-   "label": "take 9, 0.3 plate whole: state, take 9; walls read as brushed patches",
+   "label": "MAIL 1034: pairs at 2458 and 2688, state and take 10",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T18:23:38.345Z",
-   "file": "20261125182338345-note-v03-c.jpg",
-   "source": "out/work/place/w9/v03-c.jpg",
+   "time": "2026-11-25T19:16:46.077Z",
+   "file": "20261125191646077-note-proof-b-above.jpg",
+   "source": "out/work/place/w10/proof-b-above.jpg",
    "kind": "note",
-   "label": "take 9 of the wall rock, 0.3 plate from above at 1 to 1: state, take 9 with the rock's own code grain, wall mask",
+   "label": "MAIL 1034: the same wall from above at 1 to 1, state and take 10",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T17:54:59.927Z",
-   "file": "20261125175459927-note-proof-b-above.jpg",
-   "source": "out/work/place/w7/proof-b-above.jpg",
+   "time": "2026-11-25T19:16:45.552Z",
+   "file": "20261125191645552-note-proof-a-2692-wall.jpg",
+   "source": "out/work/place/w10/proof-a-2692-wall.jpg",
    "kind": "note",
-   "label": "wall take 7 from above, 0.7 x 860 y 420 at 1 to 1, the shadowed wall of 2692",
+   "label": "MAIL 1034: wall crop of 2692 at 1 to 1, state and take 10",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T17:54:59.336Z",
-   "file": "20261125175459336-note-v16-a.jpg",
-   "source": "out/work/place/w7/v16-a.jpg",
+   "time": "2026-11-25T19:16:44.990Z",
+   "file": "20261125191644990-note-pairs-1247.jpg",
+   "source": "out/work/place/w10/pairs-1247.jpg",
    "kind": "note",
-   "label": "wall take 7 from above, 1.6 x 1300 y 1080 at 1 to 1",
+   "label": "MAIL 1247: the wall of v03-c in the film's eye, 2460 and 2697, state and take 10, draft, 1 to 1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T17:54:58.674Z",
-   "file": "20261125175458674-note-v07-whole.jpg",
-   "source": "out/work/place/w7/v07-whole.jpg",
-   "kind": "note",
-   "label": "wall take 7 from above, 0.7 plate whole, state left: tones as the take; the ridge top right fluted",
-   "stop": "mars"
+   "time": "2026-11-25T19:15:26.751Z",
+   "file": "20261125191526751-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
   },
   {
-   "time": "2026-11-25T17:54:58.000Z",
-   "file": "20261125175458000-note-v03-c.jpg",
-   "source": "out/work/place/w7/v03-c.jpg",
-   "kind": "note",
-   "label": "wall take 7 from above, 0.3 x 1500 y 60 at 1 to 1: BAD: ghost outlines of the take's boulders (its grain under 2.5 texels) flat on fluted rock",
-   "stop": "mars"
+   "time": "2026-11-25T19:14:56.108Z",
+   "file": "20261125191456108-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
   }
  ]
 }
