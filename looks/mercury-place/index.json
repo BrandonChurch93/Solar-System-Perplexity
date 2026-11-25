@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T14:17:07.440Z",
+ "pushed": "2026-11-25T14:40:28.031Z",
  "head": "dfa29d819f78f34d4473a4d5bad13e746e5ce143",
- "note": "MAIL 1075: 1055 at rate 1 review tier as it stands is rendering (12 min a frame at film size here); the Sun there is the far Sun, not Mercury's plate; control suncap under test, local only",
+ "note": "14:41 crater measured on files: hero ring and first pit are one crater; next the far Sun ride out of sunShown on main 53025569",
  "looks": [
+  {
+   "time": "2026-11-25T14:40:27.066Z",
+   "file": "20261125144027066-note-crat3s.jpg",
+   "source": "../../../../tmp/m/crat3s.png",
+   "kind": "note",
+   "label": "crater on files: map ring, place pit, hero light on the body",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T13:49:37.494Z",
    "file": "20261125134937494-note-g13-779.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/m/n-615-x4.png",
    "kind": "note",
    "label": "615 times 4 on the disc: approved image, merged main d72a1199 rendered here, way C on the commit (still tier). The hero's gold ring crater is gone, two grey pits stand there; main's crater lower left is gone",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T12:41:31.904Z",
-   "file": "20261125124131904-note-h-692-708-1to1.jpg",
-   "source": "../../../../tmp/m/h-692-708-1to1.png",
-   "kind": "note",
-   "label": "692, 700, 708 at 1 to 1, the mark beside way C: the disc is greyer than the ground round it, the first pit dark where the hero has its gold ring",
    "stop": "mercury"
   }
  ]
