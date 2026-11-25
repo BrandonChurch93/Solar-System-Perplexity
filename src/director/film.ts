@@ -879,8 +879,9 @@ export class FilmDirector implements Director {
       const arriving = state(index + 1, 'orbit')
       if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
       const herald = this.shapes[index]!
+      if (index === 0) farLight = 1
+      if (herald.look.disc[0] > 0) farDisc = herald.look.disc
       if (index > 0 && herald.look.herald > 0 && herald.look.pin[1] > 0) {
-        if (herald.look.disc[0] > 0) farDisc = herald.look.disc
         if (herald.pinned(u) < 1) {
           const to = arriving.origin.clone().sub(position)
           const r = new THREE.Quaternion().setFromUnitVectors(to.clone().normalize(), this.heroTo(index, time, pose.quaternion))
