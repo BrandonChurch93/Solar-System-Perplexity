@@ -153,6 +153,7 @@ export const createSet: SetFactory = async (ctx) => {
   const ringUnit = look.place.ringMove.match[1] / look.place.ringMove.match[0]
   const hoops = look.place.ringMove.hoops
   const glow = new Glow(deckHalo, 2000 / deckJson.radius)
+  glow.mesh.renderOrder = 3.5
   glow.material.uniforms.uUnder!.value = look.place.under
   const over = new THREE.Group()
   over.add(deck.cover, glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
@@ -303,7 +304,7 @@ export const createSet: SetFactory = async (ctx) => {
       const ringed = low ? (rising ? handed : 1 - reach(look.place.rings.dive, altitude)) : 1
       const settling = (!mine && kind === 'travel') || (mine && kind === 'hold') ? smooth(ramp(Math.log(look.arrival.rings[0]), Math.log(look.arrival.rings[1]), Math.log(distance))) : 1
       rings.update(sun, gain * state.weight * settling * ringed)
-      const lifted = mine && left ? look.departing.rings[2] + (1 - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
+      const lifted = mine && left ? look.departing.rings[2] + (look.departing.rings[3] - look.departing.rings[2]) * smooth(ramp(look.departing.rings[0], look.departing.rings[1], altitude)) : 1
       farRings.update(sun, gain * state.weight * lifted * ringed)
       const mid = moving ? 1 - handed : 0
       riseRings.update(sun, gain * state.weight * lifted * mid)
