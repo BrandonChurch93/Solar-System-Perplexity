@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T18:52:13.106Z",
- "head": "defa4f2658436952dd0a06e1d781a81274f11500",
- "note": "paced share: whole rise measured (largest 1.71 levels a frame); pop at 3874 traced; rings' tone refit rendering at 3720",
+ "pushed": "2026-11-25T19:15:11.186Z",
+ "head": "958925d48e7d69de09e82dcdb2513c2dc3f441d9",
+ "note": "scan of the thin sheet's depth and ice at both judged frames running; rings and globe refit reads 28.05 at 3720 against main 27.80",
  "looks": [
+  {
+   "time": "2026-11-25T19:13:46.062Z",
+   "file": "20261125191346062-note-pat_spot.jpg",
+   "source": "../../../../tmp/v/c1/pat_spot.png",
+   "kind": "note",
+   "label": "rise 3825 to 3835 at the terminator's foot, twice size, paced share: the place where the pattern line reads 0.44995 at 3827"
+  },
+  {
+   "time": "2026-11-25T19:13:45.305Z",
+   "file": "20261125191345305-note-four_3720.jpg",
+   "source": "../../../../tmp/v/cure/four_3720.png",
+   "kind": "note",
+   "label": "3720 final at half size: approved, main, the last name, the working tree with the rings and the globe refit (28.05 against main 27.80)"
+  },
   {
    "time": "2026-11-25T18:52:01.774Z",
    "file": "20261125185201774-note-saturn-rise-pops.jpg",
@@ -46,20 +60,6 @@
    "source": "../../../../tmp/v/dark/rise_e.png",
    "kind": "note",
    "label": "the name 114ad7e, rise 3844 to 3872 every second frame"
-  },
-  {
-   "time": "2026-11-25T17:50:30.816Z",
-   "file": "20261125175030816-note-rise_3829_3843.jpg",
-   "source": "../../../../tmp/v/dark/rise_3829_3843.png",
-   "kind": "note",
-   "label": "the name 114ad7e, rise 3829 to 3843 every frame"
-  },
-  {
-   "time": "2026-11-25T17:50:29.793Z",
-   "file": "20261125175029793-note-rise_3814_3828.jpg",
-   "source": "../../../../tmp/v/dark/rise_3814_3828.png",
-   "kind": "note",
-   "label": "the name 114ad7e, rise 3814 to 3828 every frame (draft, main's engine): the dusk under the one share"
   }
  ]
 }
