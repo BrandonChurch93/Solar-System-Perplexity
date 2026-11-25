@@ -1,0 +1,116 @@
+{
+ "how": "The maps of the full set are made from the hero enlarged 2 times by the upscale tool. One px of the hero is 1.49 texels of the 8192 map at the middle of the disc and more everywhere else, so the hero itself holds no period under 2.98 texels. What the map holds under that is the enlargement's making, and the dive and the rise show it at periods of 2 to 3 px as fine strokes along the motion. finest.py takes it out of the map itself, so it is the same at every height: periods of keepTexels and more stay whole, periods of goneTexels and less go, with a smooth step between them in frequency. The hold draws one film px over 2.19 texels at the middle of the disc: its finest period is 4.38 texels, above keepTexels, so the hold is not read softer. The web set is the full set averaged 2 by 2 and holds nothing under the hero's px; it is not touched. probe is a window of the map (rows, columns) and bands the periods the tool prints for it.",
+ "maps": {
+  "wrap-surface.jpg": {
+   "set": "full",
+   "keepTexels": 4.0,
+   "goneTexels": 2.6,
+   "pad": 32,
+   "quality": 92,
+   "probe": [
+    1400,
+    2424,
+    1700,
+    2724
+   ],
+   "bands": [
+    [
+     2.0,
+     2.6
+    ],
+    [
+     2.6,
+     3.0
+    ],
+    [
+     3.0,
+     4.0
+    ],
+    [
+     4.0,
+     6.0
+    ],
+    [
+     6.0,
+     12.0
+    ]
+   ],
+   "roundTheGlobe": true,
+   "doneUnder": 0.12
+  },
+  "wrap-cloud.webp": {
+   "set": "full",
+   "keepTexels": 4.0,
+   "goneTexels": 2.6,
+   "pad": 32,
+   "quality": 90,
+   "probe": [
+    1400,
+    2424,
+    1700,
+    2724
+   ],
+   "bands": [
+    [
+     2.0,
+     2.6
+    ],
+    [
+     2.6,
+     3.0
+    ],
+    [
+     3.0,
+     4.0
+    ],
+    [
+     4.0,
+     6.0
+    ],
+    [
+     6.0,
+     12.0
+    ]
+   ],
+   "roundTheGlobe": true,
+   "doneUnder": 0.12
+  },
+  "patch-96.jpg": {
+   "set": "full",
+   "keepTexels": 7.5,
+   "goneTexels": 4.9,
+   "pad": 64,
+   "quality": 94,
+   "roundTheGlobe": false,
+   "doneUnder": 0.12,
+   "probe": [
+    400,
+    1424,
+    400,
+    1424
+   ],
+   "bands": [
+    [
+     3.8,
+     4.9
+    ],
+    [
+     4.9,
+     5.6
+    ],
+    [
+     5.6,
+     7.5
+    ],
+    [
+     7.5,
+     11.3
+    ],
+    [
+     11.3,
+     22.6
+    ]
+   ]
+  }
+ }
+}

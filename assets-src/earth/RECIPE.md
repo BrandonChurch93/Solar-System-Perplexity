@@ -91,6 +91,12 @@ The place is the approved close image `references/approved/earth-close.jpg` laid
 - Coding: RGB = cloud colour times alpha (premultiplied, tone coded), A = cloud alpha.
 - The hero's clouds are laid on the map through the inverse of the cloud motion at the middle of the hold (`motion.unwarp`), so the moving layer shows the hero exactly at that moment. Far-side clouds come from the whiteness of the VIIRS guide, recoloured to the hero's cloud tone. The same hero residual as for the surface runs to the limb.
 
+### The finest detail of the full maps (`finest.py`, values in `finest.json`)
+
+- Why: the maps are made from the hero enlarged 2 times by `tools/ml/upscale.py`, and `patch-96.jpg` is that picture enlarged once more. One px of the hero is 1.49 texels of the 8192 map at the middle of the disc, so the hero holds no period under 2.98 texels; what the maps hold under that is the enlargement's making. The dive and the rise showed it at periods of 2 to 3 px as a fine hatch along the motion (NOTES, 25 November, 16:55 to 17:20 UTC).
+- What: every period under `goneTexels` is taken out of the file, every period of `keepTexels` and more stays whole, with a smooth step between them in frequency. `wrap-surface.jpg` and `wrap-cloud.webp` of the full set: 4.0 and 2.6 texels. `patch-96.jpg` of the full set: 7.5 and 4.9 px of its raster, the same sizes on the ground. The hold's finest period is 4.38 texels, so the hold is not read softer. The web set is not touched.
+- Commands: `python3 assets-src/earth/finest.py public wrap-surface.jpg wrap-cloud.webp` once after `wrap.py` (41 s); `python3 assets-src/earth/finest.py public patch-96.jpg` after every run of `place/levels.py`, which writes `patch-96.jpg` from its kept input (2 s). The tool prints the amplitudes of its probe window before and after and does not write a map that is cut already (`doneUnder`). The place's bakes (`wedge.py`, `deck.py`, `levels.py`, `band.py`, `above.py`) read the cut wrap maps.
+
 ### `public/assets/earth/<set>/wrap-emissive.webp` (4096 x 2048 and 2048 x 1024, RGBA)
 
 - Tool: `split.py`, `wrap.py`.
