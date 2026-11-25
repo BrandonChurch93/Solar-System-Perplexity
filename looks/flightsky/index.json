@@ -1,9 +1,30 @@
 {
  "folder": "flightsky",
- "pushed": "2026-11-25T02:34:07.308Z",
- "head": "53f71331f0ca91e2d4a35fb0160828b360a7cec8",
- "note": "terrain law by weight",
+ "pushed": "2026-11-25T05:00:20.098Z",
+ "head": "49af92ea67ff45d4b8d5a2799fe5b9c29e4dbb66",
+ "note": "MAIL 904: Venus 1319 in three states, main, MAIL 732's cure alone, the tip 49af92ea",
  "looks": [
+  {
+   "time": "2026-11-25T04:50:21.531Z",
+   "file": "20261125045021531-note-1319-crop-tip.jpg",
+   "source": "../scratch/tw/1319-crop-tip.png",
+   "kind": "note",
+   "label": "Venus 1319, upper left, twice the size: the tip (MAIL 732's cure and the terrain law by the share of the sky)"
+  },
+  {
+   "time": "2026-11-25T04:50:20.408Z",
+   "file": "20261125045020408-note-1319-crop-m732.jpg",
+   "source": "../scratch/tw/1319-crop-m732.png",
+   "kind": "note",
+   "label": "Venus 1319, upper left, twice the size: MAIL 732's cure alone (cloud and generated star points, terrain law still by threshold)"
+  },
+  {
+   "time": "2026-11-25T04:50:17.861Z",
+   "file": "20261125045017861-note-1319-crop-main.jpg",
+   "source": "../scratch/tw/1319-crop-main.png",
+   "kind": "note",
+   "label": "Venus 1319, upper left, twice the size: main 8a6d457f (band of the model's strip, terrain law whole from share 0.08)"
+  },
   {
    "time": "2026-11-25T02:34:06.453Z",
    "file": "20261125023406453-note-1318-pair-half.jpg",
@@ -17,6 +38,27 @@
    "source": "../scratch/tw/step-crop.png",
    "kind": "note",
    "label": "terrain weight: venus dive k 168512 and 168513 at rate 128, top before, bottom after"
+  },
+  {
+   "time": "2026-11-24T21:40:58.389Z",
+   "file": "20261124214058389-note-3866-pair-half.jpg",
+   "source": "../scratch/m732/3866-pair-half.png",
+   "kind": "note",
+   "label": "m732 3866 half size, before left, after right"
+  },
+  {
+   "time": "2026-11-24T21:40:55.834Z",
+   "file": "20261124214055834-note-2726-after.jpg",
+   "source": "../scratch/m732/2726-after.png",
+   "kind": "note",
+   "label": "m732 2726 full after"
+  },
+  {
+   "time": "2026-11-24T21:40:53.386Z",
+   "file": "20261124214053386-note-2726-before.jpg",
+   "source": "../scratch/m732/2726-before.png",
+   "kind": "note",
+   "label": "m732 2726 full before"
   }
  ]
 }
