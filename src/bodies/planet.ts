@@ -6,7 +6,7 @@ import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 import { GROUND_AIR_GLSL, hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
 import { setHazeAir, type GlobeAir } from './air'
-import { ReliefCap, type CapOptions } from './cap'
+import { ReliefCap, capDetail, type CapOptions } from './cap'
 import { LimbAir, type LimbAirParams } from './limb'
 
 export interface PlanetLight {
@@ -106,7 +106,7 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean; turn?: boolean }
+export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean; turn?: boolean; detail?: string }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
@@ -125,7 +125,8 @@ const patchLevels = (o: PatchShader): string => Array.from({ length: o.slots }, 
       float cap = gd / uPatchAniso[${i}] * uPatchScale[${i}] * uPatchSize[${i}];
       fine = max(thin, cap);
       drawn = mix(drawn, thin / max(cap, 1.0), step(0.5, w));` : ''}
-      texels = mix(texels, parent, step(0.5, w));
+      texels = mix(texels, parent, step(0.5, w));${o.detail ? `
+      seen = mix(seen, gm * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w));` : ''}
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
 
@@ -187,9 +188,10 @@ in vec3 vLocal;
 in vec3 vWorldN;
 in vec3 vPos;
 in vec3 vView;${o.cap ? `
-in float vCapH;` : ''}${o.capLight ? `
-in vec3 vCapN;
-uniform vec2 uCapLight;` : ''}
+in float vCapH;` : ''}${o.capLight || o.detail ? `
+in vec3 vCapN;` : ''}${o.capLight ? `
+uniform vec2 uCapLight;` : ''}${o.detail ? `
+uniform float uFrame;` : ''}
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
@@ -214,7 +216,7 @@ vec3 curveAt(float ndl) {
   float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
   int i = int(min(floor(x), 31.0));
   return mix(uCurve[i], uCurve[i + 1], x - float(i));
-}
+}${o.detail ? '\n' + o.detail : ''}
 void main() {
   vec3 d = ${o.turn ? 'spinBy(normalize(vLocal), uSpinTurn)' : 'spinY(normalize(vLocal), uSpin)'};
   vec3 dc = d;
@@ -235,7 +237,10 @@ void main() {
   vec3 albedo = equirectGrad(uMap, dc, uGrad * (1.0 + uGrazingDetail.z * detail)).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(d, uSpotN);
-  float near = 0.0;${o.own ? `
+  float near = 0.0;${o.detail ? `
+  vec3 kx = dFdx(d);
+  vec3 ky = dFdy(d);
+  float seen = length(cross(kx, ky)) / max(sqrt(max(dot(kx, kx), dot(ky, ky))), 1e-20) * uMapWidth / (2.0 * PI);` : ''}${o.own ? `
   float own = 0.0;
   vec3 ownSum = vec3(0.0);` : ''}${o.minor ? `
   float drawn = 0.0;` : ''}
@@ -244,7 +249,8 @@ void main() {
     vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
     vec2 gx = dFdx(g);
     vec2 gy = dFdy(g);
-    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));${o.minor ? `
+    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));${o.detail ? `
+    float gm = abs(gx.x * gy.y - gx.y * gy.x) / max(gd, 1e-20);` : ''}${o.minor ? `
     float ga = abs(gx.x * gy.y - gx.y * gy.x) / max(gd, 1e-20);
     vec3 wx = dFdx(d);
     vec3 wy = dFdy(d);
@@ -268,21 +274,35 @@ ${patchLevels(o)}
   float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
   vec3 slope = (east * hE + north * hN) / (2.0 * e);
   vec3 slopeW = uBodyToWorld * ${o.turn ? 'spinBy(slope, vec2(uSpinTurn.x, -uSpinTurn.y))' : 'spinY(slope, -uSpin)'};
-  float strength = mix(uRelief, uReliefNear, near) * (1.0 - detail);
-  vec3 np = normalize(n - slopeW * strength);${o.capLight ? `
+  float strength = mix(uRelief, uReliefNear, near) * (1.0 - detail);${o.detail ? `
+  vec3 nb = ${o.turn ? 'spinBy(transpose(uBodyToWorld) * normalize(vCapN), uSpinTurn)' : 'spinY(transpose(uBodyToWorld) * normalize(vCapN), uSpin)'};
+  float texelPx = 1.0 / max(seen * uFrame, 1e-20);
+  vec4 ground = groundDetail(d, vCapH, nb, texelPx);
+  float bx = groundDetail(normalize(d + kx), vCapH + dFdx(vCapH), normalize(nb + dFdx(nb)), texelPx).a - ground.a;
+  float by = groundDetail(normalize(d + ky), vCapH + dFdy(vCapH), normalize(nb + dFdy(nb)), texelPx).a - ground.a;
+  vec3 sp = d * (1.0 + vCapH);
+  vec3 sx = dFdx(sp);
+  vec3 sy = dFdy(sp);
+  vec3 r1 = cross(sy, nb);
+  vec3 r2 = cross(nb, sx);
+  float det = dot(sx, r1);
+  vec3 tilt = abs(det) > 0.0 ? (bx * r1 + by * r2) * (-sign(det) / abs(det)) : vec3(0.0);
+  vec3 nt = uBodyToWorld * ${o.turn ? 'spinBy(tilt, vec2(uSpinTurn.x, -uSpinTurn.y))' : 'spinY(tilt, -uSpin)'};` : ''}
+  vec3 np = normalize(n - slopeW * strength${o.detail && !o.capLight ? ' + nt' : ''});${o.capLight ? `
   vec3 nc = normalize(vCapN) - n;
-  np = normalize(np + nc * uCapLight.x);` : ''}
+  np = normalize(np + nc * uCapLight.x${o.detail ? ' + nt' : ''});` : ''}
   float ndl = dot(np, uSunW);
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6);
   vec3 shade = max(curveAt(ndl0) - uNight, vec3(0.0)) * (1.0 + lift) * mix(1.0, pow(mu, 0.35), uLimb) + uNight;
-  vec3 lin = inverseFilmic(albedo);
+  vec3 lin = inverseFilmic(albedo);${o.detail ? `
+  lin *= ground.rgb;` : ''}
   if (uNightFlat.x > 0.0) {
     float dark = 1.0 - smoothstep(uNightFlat.y, uNightFlat.z, ndl0);
     float l = dot(lin, vec3(0.2126, 0.7152, 0.0722));
     lin *= mix(1.0, 2.0 / (1.0 + l / uNightFlat.x), dark);
   }
   vec3 col = lin * shade * uTint;${o.own ? `
-  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}${o.capLight ? ' * (1.0 + clamp((dot(normalize(n + nc * uCapLight.y), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))' : ''}, own);` : ''}${o.cap ? `
+  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}${o.detail ? ' * ground.rgb' : ''}${o.capLight ? ` * (1.0 + clamp((dot(normalize(n + nc * uCapLight.y${o.detail ? ' + nt' : ''}), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))` : o.detail ? ' * (nt == vec3(0.0) ? 1.0 : 1.0 + clamp((dot(normalize(n + nt), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))' : ''}, own);` : ''}${o.cap ? `
   float tau = airDepth(length(uCam) - 1.0, dot(dir, normalize(uCam)), vCapH, dot(dir, n), uHazeH, uHazeTau);` : `
   vec3 at;
   float tau = hazeDepth(dir, true, at);`}
@@ -400,7 +420,8 @@ export class Planet {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
     if (o.cap) {
       const { uCapCut: _, ...shared } = this.material.uniforms
-      this.cap = new ReliefCap(planetFrag({ ...text, cap: true, ...(o.cap.light ? { capLight: true } : {}) }), shared, o.cap)
+      this.cap = new ReliefCap(planetFrag({ ...text, cap: true, ...(o.cap.light ? { capLight: true } : {}), ...(o.cap.detail ? { detail: capDetail(o.cap.detail) } : {}) }), shared, o.cap)
+      if (this.cap.lens) this.mesh.add(this.cap.lens)
       this.mesh.add(this.cap.mesh)
     }
     if (o.limbAir) {
@@ -427,6 +448,8 @@ export class Planet {
       const dn = Math.max(d.dot(u.uSpotN!.value as THREE.Vector3), 0.05)
       this.foot.set(d.dot(u.uSpotE!.value as THREE.Vector3) / dn, d.dot(u.uSpotU!.value as THREE.Vector3) / dn)
       u.uCapCut!.value = this.cap.update(camera.length() / this.mesh.scale.x - 1, this.foot) ? this.cap.cut : 0
+      const f = this.cap.material.uniforms.uFrame
+      if (f) f.value = frame
     }
   }
 
