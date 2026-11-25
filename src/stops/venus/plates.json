@@ -177,7 +177,8 @@
     "soft": 0.012,
     "toneSigma": {"w": 0.003, "a": 0.004, "b": 0.006, "c": 0.008, "d": 0.008},
     "ratio": [0.4, 2.5],
-    "floor": 0.01
+    "floor": 0.01,
+    "far": {"note": "tlay.py far, the far deck of T: where the camera of T sees the ground under trustSinElevation and over coverSinElevation the plate of the film takes the picture of T itself, times the plate over the plate as the camera of T sees it (the forms finer than a pixel of T stay, within ratio). rays: the rays of one pixel of T down and across the frame for that view. least: the smallest share that counts as far deck. The film reads none of it.", "rays": [32, 2], "least": 0.003}
   },
   "build": {
     "note": "Values of assets-src/venus/place/build.py. views: the check renders of the globe from straight above the plate centre with the plates off and the full dusk gain (check.ts --tops), from which the plates take the look of the globe at their rim. toGlobeDeg: arc from the plate centre over which the painted part goes from the tones of the close image to the tones of the globe.",
