@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T03:50:39.743Z",
+ "pushed": "2026-11-25T04:10:42.174Z",
  "head": "0988d75a16e313393841e1cca1a31fc6c42317d3",
- "note": "h3: rise with the ground leaving by distance, bulbs with mottle and lit lanes, beside the approved",
+ "note": "proof frames of commit 4 beside the approved, rise strip beside commit 3",
  "looks": [
+  {
+   "time": "2026-11-25T04:10:41.595Z",
+   "file": "20261125041041595-note-c4-rise-c3c4.jpg",
+   "source": "../../../../tmp/v/c4-rise-c3c4.jpg",
+   "kind": "note",
+   "label": "Rise 217, 225, 231, 247 draft: commit 3 above, commit 4 in the tree below. The ground leaves by distance from the eye, far side first; corona and far sky by height 0.3 to 3.2",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T04:10:41.047Z",
+   "file": "20261125041041047-note-c4-90-spot.jpg",
+   "source": "../../../../tmp/v/c4-90-spot.jpg",
+   "kind": "note",
+   "label": "Proof of commit 4, draft, frame 90 spot at 1 to 1, approved left. Still wrong: umbra small, lip thin, sides brushed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T04:10:40.520Z",
+   "file": "20261125041040520-note-c4-60-far.jpg",
+   "source": "../../../../tmp/v/c4-60-far.jpg",
+   "kind": "note",
+   "label": "Proof of commit 4, draft, frame 60 far ground and horizon at 1 to 1, approved left. Still wrong: far cells read as pebbles, a band of fine dots under the horizon",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T04:10:39.938Z",
+   "file": "20261125041039938-note-c4-60-near.jpg",
+   "source": "../../../../tmp/v/c4-60-near.jpg",
+   "kind": "note",
+   "label": "Proof of commit 4 in the tree, draft, frame 60 near ground at 1 to 1, approved left. sun-near frame 60: dark (under 0.15) 0.242 | body (0.15 to 0.55) 0.583 | pale (0.65 to 0.85) 0.094 | white (over 0.85) 0.021 ;; colour by band: 0.23 0.08 0.03 | 0.39 0.15 0.06 | 0.53 0.25 0.08 | 0.64 0.35 0.12 | 0.73 0.46 0.17 | 0.80 0.57 0.24 | 0.87 0.69 0.36 | 0.91 0.80 0.52 | 0.94 0.87 0.66 ;; brightest 15 percent: half width 7.7 px, 545 shapes | fine detail 0.0299 | mean 0.331; distance 0.085",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T03:50:39.164Z",
    "file": "20261125035039164-note-h3-rise.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/g4-60-near.jpg",
    "kind": "note",
    "label": "trial g4 draft frame 60, approved left, mine right, native size. Still wrong: bulbs dark and separate like pebbles, strokes too few.   share by band 0.1 .. 0.9 : 0.251 0.203 0.176 0.118 0.083 0.055 0.040 0.043 0.020   dark (under 0.15) 0.262 | body (0.15 to 0.55) 0.580 | pale (0.65 to 0.85) 0.083 | white (over 0.85) 0.020   brightest 15 percent: half width 8.5 px, 360 shapes | fine detail 0.0237 | mean 0.320 distance of the two band tables (half the sum of the differences, 0 is equal): 0.098 ",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:59:06.511Z",
-   "file": "20261125025906511-note-f6-90-far.jpg",
-   "source": "../../../../tmp/v/f6-90-far.jpg",
-   "kind": "note",
-   "label": "Commit 4 trial f6 (uncommitted), frame 90 draft, far ground and horizon beside the approved at native size. Jets now by the place of the root: groups, gaps, a few tall. Wrong: too few and too thin, the far ground under them is a flat orange band with a hard upper edge, far cells pale tan.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:59:05.925Z",
-   "file": "20261125025905925-note-f6-90-spot.jpg",
-   "source": "../../../../tmp/v/f6-90-spot.jpg",
-   "kind": "note",
-   "label": "Commit 4 trial f6 (uncommitted), frame 90 draft, the spot as a funnel beside the approved at native size. In: strands with dark gaps that bend over the lip and hang down the far wall to own depths, no line to the cells. Wrong: sides of the penumbra show rows of dots, strands too few and too dark at the sides, umbra smaller than the approved, lip not thick. Frame 60 of this trial: share by band 0.1 .. 0.9 : 0.224 0.207 0.179 0.121 0.093 0.069 0.045 0.043 0.009 / dark (under 0.15) 0.234 | body (0.15 to 0.55) 0.601 | pale (0.65 to 0.85) 0.088 | white (over 0.85) 0.009 / brightest 15 percent: half width 9.3 px, 558 shapes | fine detail 0.0237 | mean 0.328",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:41:14.591Z",
-   "file": "20261125024114591-note-c3-0-spot.jpg",
-   "source": "../../../../tmp/v/c3-0-spot.jpg",
-   "kind": "note",
-   "label": "commit 3 (0988d75a), draft: approved (left) beside frame 0 spot at 1 to 1, box x 700 y 470 of 1920; the spot is no funnel yet (3d), the work of commit 4 that starts here",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:41:14.034Z",
-   "file": "20261125024114034-note-c3-0-far.jpg",
-   "source": "../../../../tmp/v/c3-0-far.jpg",
-   "kind": "note",
-   "label": "commit 3 (0988d75a), draft: approved (left) beside frame 0 far ground at 1 to 1, box x 15 y 420 of 1920. sun-near.py frame 60: share by band 0.1 .. 0.9 : 0.199 0.209 0.189 0.130 0.097 0.072 0.047 0.043 0.009 / dark (under 0.15) 0.205 | body (0.15 to 0.55) 0.624 | pale (0.65 to 0.85) 0.091 | white (over 0.85) 0.009 / brightest 15 percent: half width 9.6 px, 677 shapes | fine detail 0.0252 | mean 0.337",
    "stop": "sun"
   }
  ]
