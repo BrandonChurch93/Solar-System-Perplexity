@@ -1,9 +1,83 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T02:23:23.234Z",
+ "pushed": "2026-11-25T03:00:15.030Z",
  "head": "dc790c7aad5909a665e0447c4d0fa09d47921834",
- "note": "handover red: sides at T pass (mean 0.003 and 0.002), limb one gradient 1906 to 1919, bad: darker strip on the limb 1902 to 1905",
+ "note": "handover tool: both moves pass (sides, flow, every frame); bad: stepped darker strip on the limb 1902 to 1905 and 2105 to 2114, cause measured, not cured",
  "looks": [
+  {
+   "time": "2026-11-25T03:00:14.438Z",
+   "file": "20261125030014438-note-sh-rv-2112.jpg",
+   "source": "../../../../tmp/gl/ho/p/sh-rv-2112.jpg",
+   "kind": "note",
+   "label": "rise 2112 to 2123 with the cure, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:00:13.379Z",
+   "file": "20261125030013379-note-sh-rv-2100.jpg",
+   "source": "../../../../tmp/gl/ho/p/sh-rv-2100.jpg",
+   "kind": "note",
+   "label": "rise 2100 to 2111 with the cure, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:00:12.344Z",
+   "file": "20261125030012344-note-tr-a.jpg",
+   "source": "../../../../tmp/gl/ho/tr/tr-a.jpg",
+   "kind": "note",
+   "label": "the strip 1902 to 1905 by trial: d0036659, cure, no cut of the ball's rim, shell of air kept full",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:00:11.173Z",
+   "file": "20261125030011173-note-hz-rv-zoom.jpg",
+   "source": "../../../../tmp/gl/ho/p/hz-rv-zoom.jpg",
+   "kind": "note",
+   "label": "rise horizon 2110, 2112, 2114 at 3 times, d0036659 left, cure right: bad, a stepped darker strip on the limb",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:00:09.959Z",
+   "file": "20261125030009959-note-hz-rv-a.jpg",
+   "source": "../../../../tmp/gl/ho/p/hz-rv-a.jpg",
+   "kind": "note",
+   "label": "rise horizon 2100 to 2111 at native size, cure: 2100 to 2104 one gradient, bad: thin dark line 2107 and 2108, stepped strip 2110 and 2111",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T02:41:42.423Z",
+   "file": "20261125024142423-sheet-earth-rise-top.jpg",
+   "source": "out/work/handover/earth-rise-top.png",
+   "kind": "sheet",
+   "label": "earth rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2100), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2174,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T02:39:12.849Z",
+   "file": "20261125023912849-compare-earth-rise-step-in-place.jpg",
+   "source": "out/work/handover/earth-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "earth rise, the largest step of the level in place (2.28): frame 2137, frame 2138, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2138
+  },
+  {
+   "time": "2026-11-25T02:24:24.531Z",
+   "file": "20261125022424531-sheet-earth-dive-top.jpg",
+   "source": "out/work/handover/earth-dive-top.png",
+   "kind": "sheet",
+   "label": "earth dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1919), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1830,
+   "last": 1919,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T02:23:22.150Z",
    "file": "20261125022322150-note-hz-zoom-b.jpg",
@@ -34,83 +108,6 @@
    "source": "../../../../tmp/gl/ho/p/hz-dv-a.jpg",
    "kind": "note",
    "label": "horizon 1896 to 1907 at native size, cure: bad, a darker strip on the limb 1902 to 1905",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T02:23:17.926Z",
-   "file": "20261125022317926-note-sh-dv-1906.jpg",
-   "source": "../../../../tmp/gl/ho/p/sh-dv-1906.jpg",
-   "kind": "note",
-   "label": "dive 1906 to 1919 with the cure, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T02:23:17.280Z",
-   "file": "20261125022317280-note-sh-dv-1890.jpg",
-   "source": "../../../../tmp/gl/ho/p/sh-dv-1890.jpg",
-   "kind": "note",
-   "label": "dive 1890 to 1905 with the cure of the handover red, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T02:21:37.213Z",
-   "file": "20261125022137213-compare-earth-dive-step-in-place.jpg",
-   "source": "out/work/handover/earth-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "earth dive, the largest step of the level in place (1.94): frame 1875, frame 1876, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1876
-  },
-  {
-   "time": "2026-11-25T02:11:33.842Z",
-   "file": "20261125021133842-sheet-earth-dive-draft-before.jpg",
-   "source": "out/work/handover/earth-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1907,
-   "last": 1918,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T02:11:31.953Z",
-   "file": "20261125021131953-sheet-earth-dive-draft-across.jpg",
-   "source": "out/work/handover/earth-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1913,
-   "last": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T01:53:39.109Z",
-   "file": "20261125015339109-compare-earth-rise-sides.jpg",
-   "source": "out/work/handover/earth-rise-sides.png",
-   "kind": "compare",
-   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T01:49:18.006Z",
-   "file": "20261125014918006-note-limb-layers.jpg",
-   "source": "../../../../tmp/gl/ho/L/limb-layers.jpg",
-   "kind": "note",
-   "label": "layer switches on the globe side at T, the limb",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T01:49:17.202Z",
-   "file": "20261125014917202-note-tow-dive.jpg",
-   "source": "../../../../tmp/gl/ho/c1/tow-dive.jpg",
-   "kind": "note",
-   "label": "what remains at T of the dive, lit rims of the cloud towers",
    "stop": "earth"
   }
  ]
