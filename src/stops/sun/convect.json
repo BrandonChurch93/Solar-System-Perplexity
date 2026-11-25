@@ -115,8 +115,8 @@
   "yield": 0.5,
   "apart": 0.2,
   "life": [
-   3.5,
-   6
+   7,
+   12
   ],
   "parts": 0.6,
   "laneIn": 0.6,
@@ -171,7 +171,7 @@
   "thread": {
    "round": 10,
    "out": 2.5,
-   "speed": 0.45,
+   "speed": 0.9,
    "off": 0.1,
    "curl": [
     0.35,
@@ -179,7 +179,8 @@
     0.05
    ],
    "thin": 2.0,
-   "locks": 0.8
+   "locks": 0.8,
+   "ride": 1
   },
   "sizes": 0.5,
   "tight": {
@@ -319,8 +320,10 @@
   },
   "boil": {
    "scale": 9,
-   "rate": 0.25,
-   "amount": 0.8
+   "rate": 0.5,
+   "amount": 0.8,
+   "borne": 1,
+   "round": 0.35
   },
   "fall": {
    "amount": 0.07,
@@ -353,12 +356,20 @@
    "power": 0.5,
    "most": 1.2,
    "texels": 2,
-   "note": "the light and dark of the globe own map under the cells, at the place on the ball where the globe shows it (the ground is the globe own ground). Two parts. cell: each cell takes the map light at its own middle over the map mean round it (region, texels of the map wide), by one law at every height and distance: share is how far the sample is drawn from the point to the middle of its cell (1: each cell one light), power how it is read, least and most its bounds. The region part, that mean: amount is the share of it the ground takes, level the light of the map that leaves the ground as it is, power how it is read, most the most it adds, where a pixel is small on the ground; far is the same four where a pixel holds the map as the globe shows it, band the texels of the map to a pixel (in 1080ths of the frame height) between which the one gives way to the other. texels: the least width of a sample in texels of the map",
+   "note": "the light and dark of the globe own map under the cells, at the place on the ball where the globe shows it (the ground is the globe own ground). Two parts. cell: each cell takes the map light at its own middle over the map mean round it (region, texels of the map wide), by one law at every height and distance: share is how far the sample is drawn from the point to the middle of its cell (1: each cell one light), power how it is read, least and most its bounds. The region part, that mean: amount is the share of it the ground takes, level the light of the map that leaves the ground as it is, power how it is read, most the most it adds, where a pixel is small on the ground; far is the same four where a pixel holds the map as the globe shows it, band the texels of the map to a pixel (in 1080ths of the frame height) between which the one gives way to the other. texels: the least width of a sample in texels of the map. cell.open: where a pixel holds between over[0] and over[1] texels of the map, the cell part's bounds open from least and most above to these, so the far ground carries the map's light and dark in the same place as the globe's face before it gives way to it",
    "cell": {
     "share": 1.0,
     "least": 0.85,
     "most": 1.2,
-    "power": 0.75
+    "power": 0.75,
+    "open": {
+     "over": [
+      0.6,
+      1.6
+     ],
+     "least": 0.45,
+     "most": 2.2
+    }
    },
    "far": {
     "amount": 1.0,
@@ -377,7 +388,7 @@
    "fall": 1.0,
    "tongue": 0.9,
    "scale": 6,
-   "note": "the heat of a cell: its top is one heat with a mottle that the flow carries outward (tongue: how strong; scale: the size of the mottle), it falls toward the lane by (1 - way^out)^fall and is lost in the crease over the share seam of a lattice unit, wide here and a hair there (uneven)",
+   "note": "the heat of a cell: its top is one heat with a mottle that the flow carries outward (tongue: how strong; scale: the size of the mottle), it falls toward the lane by (1 - way^out)^fall and is lost in the crease over the share seam of a lattice unit, wide here and a hair there (uneven); light.boil.borne: the share of the mottle that lies in the cell's own chart and is carried outward with the threads' matter instead of changing in place (1: all of it is carried as a body), light.boil.round: how many of its patches lie round a cell; cells.thread.ride: the share by which the locks of a cell's threads travel with the threads' bright stretches (1: locks and stretches move as one)",
    "seam": 0.035,
    "uneven": 0.7,
    "flank": 0,

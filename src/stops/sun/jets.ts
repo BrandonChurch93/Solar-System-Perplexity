@@ -3,6 +3,7 @@ import { diagUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { STAGE_GLSL } from './stage'
 import data from './convect.json'
+import place from './place.json'
 
 /**
  * What stands over the ground of the close view: a forest of jets as geometry and the glow of the thin hot layer
@@ -27,6 +28,7 @@ uniform vec4 uJet;
 uniform vec4 uJetMore;
 uniform vec4 uJetLife;
 uniform vec4 uJetGroup;
+uniform vec2 uJetAway;
 out vec3 vJet;
 out vec3 vClip;
 ${STAGE_GLSL}
@@ -74,7 +76,10 @@ void main() {
   float wide = uJet.y * (0.6 + 0.8 * h2.z) * (1.0 - 0.75 * a);
   vec3 foot = ST_CENTRE + dir * ST_RADIUS;
   float graze = dot(normalize(foot - uCam), dir);
-  vJet = vec3(position.x, a, (1.0 - 0.5 * x) * (0.5 + 0.5 * h.z) * smoothstep(uJetLife.w - 0.1, uJetLife.w, graze));
+  // a jet leaves by the distance from the eye to its own foot (radii of the ball, even steps in the logarithm): the
+  // far ones first; the close view holds no jet as far away as the range begins
+  float left = 1.0 - smoothstep(log(uJetAway.x), log(uJetAway.y), log(max(length(foot - uCam) / ST_RADIUS, 1e-5)));
+  vJet = vec3(position.x, a, (1.0 - 0.5 * x) * (0.5 + 0.5 * h.z) * smoothstep(uJetLife.w - 0.1, uJetLife.w, graze) * left);
   gl_Position = projectionMatrix * modelViewMatrix * vec4(c + across * (position.x * wide), 1.0);
   vClip = gl_Position.xyw;
 }`
@@ -183,6 +188,8 @@ export class Jets {
         uJetGroup: { value: new THREE.Vector4(j.group.scale, j.group.gaps, j.group.tall, j.group.spread) },
         uJetHot: { value: tint(j.hot) },
         uJetCool: { value: tint(j.cool) },
+        uJetAway: { value: new THREE.Vector2(place.onGlobe.far.jets[0]!, place.onGlobe.far.jets[1]!) },
+        uKeep: { value: 1 },
       },
       side: THREE.DoubleSide,
       ...added,
@@ -233,11 +240,12 @@ export class Jets {
     this.glow.renderOrder = -5
   }
 
-  /** keep: how much of the jets and of the glow is left as the camera of the rise climbs (by height, not by time). */
-  update(time: number, keep: number): void {
+  /** keep: how much of the glow at the limb is left, by the distance from the eye to the limb (set.ts). jets: whether a
+   * jet can still be within its range; each jet leaves by the distance from the eye to its own foot (uJetAway). */
+  update(time: number, keep: number, jets = true): void {
     this.time.value = time
     this.keep.value = keep
-    this.mesh.visible = keep > 0
+    this.mesh.visible = jets
     this.glow.visible = keep > 0
   }
 

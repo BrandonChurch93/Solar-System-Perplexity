@@ -275,7 +275,7 @@ vec2 cvPetal(vec2 rel, float key, float t) {
   vec2 u = r > 1e-5 ? bent / r : vec2(1.0, 0.0);
   float n3 = vnoise(vec3(u * uCvThread.x, r * uCvThread.y - t * uCvThread.z) + vec3(key * 41.0, 9.0, 0.0));
   // the threads stand in locks: a few broad strands of many fine ones, with dark gaps between the locks
-  float n4 = vnoise(vec3(u * uCvThread.x * 0.4 + 5.7, r * uCvThread.y * 0.5 - t * uCvThread.z * 0.7) + vec3(key * 23.0, 3.0, 0.0));
+  float n4 = vnoise(vec3(u * uCvThread.x * 0.4 + 5.7, r * uCvThread.y * 0.5 - t * uCvThread.z * mix(0.7, 0.5, uCvTravel.y)) + vec3(key * 23.0, 3.0, 0.0));
   // (uCvCurl.w: how dark the gaps between the locks are; uCvTight.w: how thin a thread is against the dark
   // beside it)
   float thread = pow(1.0 - abs(2.0 * n3 - 1.0), uCvTight.w) * mix(1.0 - uCvCurl.w, 1.0, smoothstep(0.2, 0.7, n4)) * 1.35;
@@ -615,6 +615,8 @@ uniform vec3 uCvRayY;
 uniform vec4 uCvHeat;
 uniform vec4 uCvTone;
 uniform vec4 uCvGrain;
+uniform vec4 uCvTravel;
+uniform vec4 uCvWideOpen;
 uniform vec4 uCvWell;
 uniform vec4 uCvFarMore;
 uniform vec4 uCvPoints;
@@ -755,7 +757,14 @@ void main() {
   float seamWide = uCvWell.w * (1.0 - uCvBulbMore.z + 2.0 * uCvBulbMore.z * vnoise(vec3(g / L * 0.9 + 3.3, 4.1 + t * 0.05))) * (1.0 + uCvFibreLook.x * spot.w);
   well *= 1.0 - exp(-across / seamWide);
   // (it boils: the heat of a place wavers with a fine field that the time carries)
-  top *= 1.0 + uCvGrain.w * (vnoise(vec3(g / L * uCvGrain.y, t * uCvGrain.z + own.y * 5.0)) + 0.6 * vnoise(vec3(g / L * uCvGrain.y * 3.7 + 9.1, t * uCvGrain.z * 1.6 + own.y * 3.0)) - 0.8) * fine;
+  // (two forms of it. In place: the field stands on the ground and the time changes it. Borne, uCvTravel.z: the
+  // field lies in the cell's own chart round its middle and travels outward with the threads' matter
+  // (uCvTravel.x lattice units a second), so a hot patch wells up at the middle and is carried to the lane as a
+  // body; round the very middle, where a chart round a point has no room, it is its mean)
+  float boilHere = vnoise(vec3(g / L * uCvGrain.y, t * uCvGrain.z + own.y * 5.0)) + 0.6 * vnoise(vec3(g / L * uCvGrain.y * 3.7 + 9.1, t * uCvGrain.z * 1.6 + own.y * 3.0)) - 0.8;
+  float boilOut = (r - t * uCvTravel.x) * uCvGrain.y;
+  float boilBorne = (vnoise(vec3(ur * uCvGrain.y * uCvTravel.w, boilOut + own.y * 5.0)) + 0.6 * vnoise(vec3(ur * uCvGrain.y * uCvTravel.w * 2.3 + 9.1, boilOut * 2.3 + own.y * 3.0)) - 0.8) * smoothstep(0.02, 0.12, r);
+  top *= 1.0 + uCvGrain.w * mix(boilHere, boilBorne, uCvTravel.z) * fine;
   float lum = uCvTone.x + (top - uCvTone.x) * well;
   // where three cells meet the pit is dark (uCvBulbMore.x: by what share)
   float pit3 = exp(-cvNear.y / uCvBulb.z);
@@ -830,7 +839,12 @@ void main() {
     float wideFoot = sqrt(lenX * lenY);
     float cellLum = dot(textureGrad(uCvMap, muvC, mdx * max(1.0, uCvWideMore.x / lenX), mdy * max(1.0, uCvWideMore.x / lenY)).rgb, vec3(0.3, 0.5, 0.2));
     float regionLum = dot(textureGrad(uCvMap, muv, mdx * max(1.0, uCvWideBand.z / lenX), mdy * max(1.0, uCvWideBand.z / lenY)).rgb, vec3(0.3, 0.5, 0.2));
-    float cellTone = clamp(pow(cellLum / max(regionLum, 1e-3), uCvWideCell.w), uCvWideCell.y, uCvWideCell.z);
+    // (the cell's part is held between narrow bounds where a cell is large in the picture, so the near ground is
+    // no map of blotches; where a pixel holds the map as the globe shows it, between uCvWideOpen.x and uCvWideOpen.y
+    // texels of the map to a pixel, the bounds open to uCvWideOpen.zw: there the far ground carries the map's light
+    // and dark as the globe's face does, in the same place, before the one gives way to the other)
+    float openW = smoothstep(uCvWideOpen.x, uCvWideOpen.y, wideFoot);
+    float cellTone = clamp(pow(cellLum / max(regionLum, 1e-3), uCvWideCell.w), mix(uCvWideCell.y, uCvWideOpen.z, openW), mix(uCvWideCell.z, uCvWideOpen.w, openW));
     float nearTone = 1.0 + uCvWide.x * clamp(pow(regionLum / uCvWide.y, uCvWide.z) - 1.0, -1.0, uCvWide.w);
     float farTone = 1.0 + uCvWideFar.x * clamp(pow(regionLum / uCvWideFar.y, uCvWideFar.z) - 1.0, -1.0, uCvWideFar.w);
     lum *= cellTone * mix(nearTone, farTone, smoothstep(uCvWideBand.x, uCvWideBand.y, wideFoot));
@@ -1005,6 +1019,8 @@ export class Surface {
         uCvPull: { value: new THREE.Vector4(s.pull.from * umbra * s.penumbra, s.pull.share, s.pull.sharp, s.pull.turn) },
         uCvStep: { value: new THREE.Vector4(g.cut.texels, g.cut.depth, g.cut.most, g.cut.air) },
         uCvGrain: { value: new THREE.Vector4(0, l.boil.scale, l.boil.rate, l.boil.amount) },
+        uCvTravel: { value: new THREE.Vector4(c.thread.speed / c.thread.out, c.thread.ride, l.boil.borne, l.boil.round) },
+        uCvWideOpen: { value: new THREE.Vector4(l.wide.cell.open.over[0]!, l.wide.cell.open.over[1]!, l.wide.cell.open.least, l.wide.cell.open.most) },
         uCvThread: { value: new THREE.Vector4(c.thread.round, c.thread.out, c.thread.speed, 0) },
         uCvPatch: { value: new THREE.Vector4(l.well.flank, l.well.lobes, 0, l.well.scale) },
         uCvThin: { value: new THREE.Vector4(g.strand.thin[0]!, g.strand.thin[1]!, 0, 0) },
