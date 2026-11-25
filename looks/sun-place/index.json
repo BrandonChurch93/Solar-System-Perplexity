@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T05:13:55.070Z",
- "head": "7bc9ef803c8b4751816db85acbe5bbcb4b8d0f75",
- "note": "trial d9 frame 60 near and far beside the approved, the last of the heat only trials; MAIL 912 takes that way back, the sheen along the fibres comes next",
+ "pushed": "2026-11-25T05:42:44.567Z",
+ "head": "d91c0f63dfdec7bcd7700d55196f3b525ab922d4",
+ "note": "NAMED d91c0f63 sent (commit 4 apart). Commit 5 trial e1, first take of the MAIL 912 ground: wrong, smooth stones, no fibres yet",
  "looks": [
+  {
+   "time": "2026-11-25T05:42:43.986Z",
+   "file": "20261125054243986-note-e1-near.jpg",
+   "source": "../../../../tmp/v/e1-near.jpg",
+   "kind": "note",
+   "label": "Commit 5 trial e1 (not committed), frame 60 near ground at 1 to 1, approved left. First take of the MAIL 912 build: reads as smooth stones with wide dark lanes, fibres hardly seen, no glints. Wrong; the dome's foot meets the lane upright, that is next. sun-near 60: dark 0.211 body 0.608 pale 0.100 white 0.021 | half width 11.3 px, 246 shapes | fine detail 0.0187 | mean 0.340",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T05:13:53.869Z",
    "file": "20261125051353869-note-d9-60-far.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/c4-arc-204-207.jpg",
    "kind": "note",
    "label": "Commit 4, draft, frames 204 205 206 207 across the change of view at 205 (place.rise.at 0.28), a strip of each: whole frame mean difference of 255 21.79, 21.90, 22.01, no step",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:30:16.782Z",
-   "file": "20261125043016782-note-c4-90-far.jpg",
-   "source": "../../../../tmp/v/c4-90-far.jpg",
-   "kind": "note",
-   "label": "Commit 4, draft, frame 90 far ground and horizon at 1 to 1, approved left. Still wrong: jets are straight needles, far cells are pebbles and rows of ticks, not flat lenses",
    "stop": "sun"
   }
  ]
