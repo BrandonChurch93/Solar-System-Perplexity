@@ -37,7 +37,7 @@
     ]
   },
   "sand": {
-    "note": "the sand of the sheet: the grain of the sheet as it is seen from afar, in the hold. It has no strength near the sheet (it fades with the nearness of the lens, by the logarithm of the camera's height as the light does), where the ice is seen grain by grain (grains.json). It has grains of many sizes, from finest by doublings; a size is a pair, across and along the orbit, and each size is a field of smooth noise that lies in the sheet, every row of cells on its own orbit. Seen at a slant a round grain would be a dash, so what a layer shows at a point is the sand whose grains are its number of pixels across and along the orbit there, blended between the sizes next to that; where the sheet is so far that the coarsest sand is finer than that, the sand merges into the sheet. Per layer: pixels; dense and thin: how far it moves the logarithm of the brightness in the dense and in the thin rings; sparks: 1 if its brightest grains are white sparks. hard: a grain's edge takes the share 1 minus twice this of the way to the next grain (0: the smoothest noise). tau: the share of the brightness that also moves the optical depth. far: the share of a layer's strength that the hold shows. spark: how strong the sparks are in the dense and in the thin rings, from the first value of the noise to the second; spark.gain: the brightness of a spark.",
+    "note": "the sand of the sheet: the grain of the sheet as it is seen from afar, in the hold. Near the sheet it is the matte, finely grained face of the ice that lies too far from the lens to be seen grain by grain (grains.json): per layer it has the share near of its strength there (between the hold and the sheet by the nearness of the lens, by the logarithm of the camera's height as the light does, never by the clock). It has grains of many sizes, from finest by doublings; a size is a pair, across and along the orbit, and each size is a field of smooth noise that lies in the sheet, every row of cells on its own orbit. Seen at a slant a round grain would be a dash, so what a layer shows at a point is the sand whose grains are its number of pixels across and along the orbit there, blended between the sizes next to that; where the sheet is so far that the coarsest sand is finer than that, the sand merges into the sheet. Per layer: pixels; dense and thin: how far it moves the logarithm of the brightness in the dense and in the thin rings; sparks: 1 if its brightest grains are white sparks. hard: a grain's edge takes the share 1 minus twice this of the way to the next grain (0: the smoothest noise). tau: the share of the brightness that also moves the optical depth. far: the share of a layer's strength that the hold shows; near: per layer, the share that shows near the sheet. spark: how strong the sparks are in the dense and in the thin rings, from the first value of the noise to the second; spark.gain: the brightness of a spark.",
     "finest": 0.0002,
     "doublings": 7,
     "layers": [
@@ -63,6 +63,10 @@
       "gain": 1.0
     },
     "hard": 0.2,
-    "far": 0.5
+    "far": 0.5,
+    "near": [
+      1.0,
+      2.5
+    ]
   }
 }

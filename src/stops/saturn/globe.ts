@@ -41,7 +41,8 @@ export const RING_SHADOW_GLSL = /* glsl */ `
 float ringShadowAt(vec3 P, vec3 sunL, vec3 soft, float grad) {
   float t = -P.y / (abs(sunL.y) > 1e-4 ? sunL.y : 1e-4);
   float rho = length(P.xz + sunL.xz * t);
-  float fp = max(length(vec2(dFdx(rho), dFdy(rho))) * grad, soft.x + soft.y * max(t, 0.0));
+  // the pixel is a pixel of the master (ringLookPixel), so a frame of any size casts the same shadow
+  float fp = max(ringLookPixel(length(vec2(dFdx(rho), dFdy(rho)))) * grad, soft.x + soft.y * max(t, 0.0));
   float tau = ringDepth(rho, fp);
   float own = t > 0.0 ? 1.0 - exp(-tau * soft.z / max(abs(sunL.y), 0.02)) : 0.0;
   // with the far look of the sheet its shadow is the kept set's: from the opacity of the kept profile
@@ -112,7 +113,9 @@ uniform vec3 uTerm;
 uniform sampler2D uTable;
 uniform float uNightFloor;
 uniform vec4 uDusk;
-uniform float uDuskGrey;
+uniform vec2 uDuskGrey;
+uniform vec4 uDust;
+uniform vec3 uDustInk;
 uniform int uProbe;
 uniform float uVignette;
 uniform float uAspect;
@@ -218,11 +221,12 @@ void main() {
   float mapTexels = texels;
   // near the lens the bands get their fine structure from functions: it comes with the nearness of the surface
   // to the lens, and where it is whole the texels view counts its finest cells, as the ring sheet does
-  // the change of the longitude and the latitude of the spun direction over one pixel, in radians
+  // the change of the longitude and the latitude of the spun direction over one pixel of the master, in
+  // radians (uRfFoot, the film's own factor: a frame of any size draws the same structure)
   vec3 dRight = dFdx(d);
   vec3 dUp = dFdy(d);
   float eq = max(d.x * d.x + d.z * d.z, 1e-6);
-  vec4 bandRate = vec4((d.x * dRight.z - d.z * dRight.x) / eq, dFdx(lat), (d.x * dUp.z - d.z * dUp.x) / eq, dFdy(lat));
+  vec4 bandRate = vec4((d.x * dRight.z - d.z * dRight.x) / eq, dFdx(lat), (d.x * dUp.z - d.z * dUp.x) / eq, dFdy(lat)) * uRfFoot;
   float bandNear = 0.0;
   for (int k = 0; k < (uBandFine.x > 0.0 ? 1 : 0); k++) {
     bandNear = 1.0 - smoothstep(uBandFine.y, uBandFine.z, log(max(length(p - uCam), 1e-6)));
@@ -254,12 +258,19 @@ void main() {
   }
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
   // near the sheet the night side is grey, not the colour of the clouds in the last red light (none in the hold)
-  col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uDuskGrey * (1.0 - smoothstep(uDusk.x, uDusk.y, ndl)));
+  for (int k = 0; k < (uDuskGrey.x > 0.0 ? 1 : 0); k++) col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uDuskGrey.x * pow(1.0 - smoothstep(uDusk.x, uDusk.y, ndl), uDuskGrey.y));
   col += uRim.rgb * exp(-mu * mu / (uRim.w * uRim.w)) * pow(max(ndl, 0.0), uRimPower) * shadow;
   col += uRimNight.rgb * exp(-mu / uRimNight.w);
   vec3 at;
   float tau = hazeDepth(dirS, true, at);
   col = col * exp(-tau * uExtinction) + hazeLight(p, dirS) * (1.0 - exp(-tau)) * mix(1.0, shadow, uHazeShadow);
+  // near the sheet the dust inside the inner rim of the rings stands in front of the foot of the globe: a layer
+  // with a soft thickness on both sides of the plane that takes the light of the globe behind it and returns
+  // a little of the Sun's (grade.ts dustAt; none in the hold)
+  for (int k = 0; k < (uDust.x > 0.0 ? 1 : 0); k++) {
+    float through = exp(-uDust.x * (1.0 - smoothstep(uDust.y, uDust.z, abs(P.y))));
+    col = col * through + uDustInk * ((1.0 - through) * smoothstep(uDusk.x, uDusk.y, ndl));
+  }
   for (int k = 0; k < (uHoldW > 0.0 ? 1 : 0); k++) col *= shotLight(uHoldLight, uHoldM, uHoldCam, uHoldW, P, nL);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -271,7 +282,7 @@ void main() {
   }
   float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView));
+  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView) * (uLimbW > 0.0 && rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vLocal - uCam) : 1.0));
   if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
 }`
 
@@ -289,7 +300,7 @@ export class Globe {
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...hazeUniforms(haze), ...field,
-        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uDusk: { value: new THREE.Vector4(0, 1, 0, 1) }, uDuskGrey: { value: 0 }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
+        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uDusk: { value: new THREE.Vector4(0, 1, 0, 1) }, uDuskGrey: { value: new THREE.Vector2(0, 1) }, uDust: { value: new THREE.Vector4(0, 0, 1, 0) }, uDustInk: { value: new THREE.Vector3().fromArray(skim.inner.foot.ink) }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
         uSpin: { value: 0 }, uDrift: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uCurve: { value: curveUniform(look.curve) }, uLightL: { value: new THREE.Vector3(1, 0, 0) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },
@@ -330,6 +341,7 @@ uniform vec3 uSunL;
 uniform float uPolar;
 uniform float uRingShadow;
 uniform vec3 uRingSoft;
+uniform vec4 uDust;
 uniform vec4 uGlowNorth;
 uniform vec4 uGlowPole;
 uniform vec4 uGlowWide;
@@ -361,7 +373,11 @@ void main() {
   float tight = mix(1.0, uGlowNorth.z, north) * mix(1.0, uGlowPole.z, north * pole);
   vec3 Pa = vec3(at.x, at.y * uPolar, at.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(Pa, uSunL, uRingSoft, 1.0);
-  outColor = vec4((hazeLight(at, dir) * (1.0 - exp(-tau)) * tight + wide) * shadow * uGain, 0.0);
+  // near the sheet the dust in front of the foot of the globe stands in front of the haze of its limb too
+  // (grade.ts dustAt; none in the hold)
+  float through = 1.0;
+  for (int k = 0; k < (uDust.x > 0.0 ? 1 : 0); k++) through = exp(-uDust.x * (1.0 - smoothstep(uDust.y, uDust.z, abs(Pa.y))));
+  outColor = vec4((hazeLight(at, dir) * (1.0 - exp(-tau)) * tight + wide) * shadow * uGain * through, 0.0);
   if (under || uDiag >= 2) discard;
 }`
 
@@ -376,7 +392,7 @@ export class Shell {
         ...hazeUniforms(haze), ...field, uGain: { value: 1 }, uDiag: diagUniform, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
         uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
-        uGlowNorth: { value: new THREE.Vector4().fromArray(look.glowNorth) }, uGlowPole: { value: new THREE.Vector4().fromArray(look.glowPole) }, uGlowWide: { value: new THREE.Vector4().fromArray(look.glowWide) }, uGlowCap: { value: new THREE.Vector3().fromArray(look.glowCap) },
+        uDust: { value: new THREE.Vector4(0, 0, 1, 0) }, uGlowNorth: { value: new THREE.Vector4().fromArray(look.glowNorth) }, uGlowPole: { value: new THREE.Vector4().fromArray(look.glowPole) }, uGlowWide: { value: new THREE.Vector4().fromArray(look.glowWide) }, uGlowCap: { value: new THREE.Vector3().fromArray(look.glowCap) },
       },
       side: THREE.BackSide, blending: THREE.AdditiveBlending, premultipliedAlpha: true, transparent: true, depthWrite: false, depthTest: false,
     })

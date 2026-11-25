@@ -9,6 +9,7 @@ import { formatUniform } from './format'
 import { STAGE_GLSL, stage } from './stage'
 import fieldData from './field.json'
 import lifeData from './life.json'
+import { fullSize, setLod } from './texels'
 
 export interface GroundLook {
   cap: number
@@ -78,6 +79,7 @@ vec3 thrown(vec3 base, vec3 lit) {
   return mix(base, lit, room / (d + room));
 }
 uniform vec2 uSize;
+uniform vec2 uSetLod;
 uniform float uGrad;
 uniform float uFormat;
 uniform float uGain;
@@ -221,7 +223,7 @@ void main() {
     seen = lifeSeen(dx, dy, uSize);
     vec4 s = vec4(alive(uPlate, uCellsPlate, uSwellPlate, arc / uCellSize, uv, dx, dy, cell, 1.0, uTime, seen, spot, inner, moved), 1.0);${seethe ? `
     for (int j = 0; j < (seethe != 0.0 ? 1 : 0); j++) {
-      float lod = log2(max(cell.y * uSize.y * 0.25, 1.0));
+      float lod = max(log2(max(cell.y * uSize.y * 0.25, 1.0)) - uSetLod.x, 0.0);
       s.rgb *= 1.0 + seethe * smoothstep(uCrown.x, uCrown.y, lumAt(uPlate, uv, lod) / max(lumAt(uPlate, uv, lod + 2.0), 1e-3));
     }` : ''}
     vec3 even = mix(vec3(1.0), uEvenTint.rgb, smoothstep(uEven.x, uEven.y, ring)) * mix(1.0, uEvenTint.w, smoothstep(uEven.z, uEven.w, ring));
@@ -250,7 +252,7 @@ void main() {
     float seen2 = lifeSeen(dxB, dyB, uApronSize);
     vec4 s = vec4(alive(uApron, uCellsApron, uSwellApron, arc / uCellSize, uvB, dxB, dyB, cell, uCellSize / uApronCell.x, uTime, seen2, spot, in2, m), 1.0);${seethe ? `
     for (int j = 0; j < (seethe != 0.0 ? 1 : 0); j++) {
-      float lod = log2(max(cell.y * uApronSize.y * 0.25, 1.0));
+      float lod = max(log2(max(cell.y * uApronSize.y * 0.25, 1.0)) - uSetLod.y, 0.0);
       s.rgb *= 1.0 + seethe * smoothstep(uCrown.x, uCrown.y, lumAt(uApron, uvB, lod) / max(lumAt(uApron, uvB, lod + 2.0 + uApronCell.y), 1e-3));
     }` : ''}
     inner = mix(inner, in2, w);
@@ -339,7 +341,7 @@ export class Ground {
       vertexShader: VERT,
       fragmentShader: frag(seethe !== undefined),
       uniforms: {
-        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(second.width, second.height) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, (field.image as unknown as { width: number }).width, look.field.grid, look.field.sharp) }, uFieldFine: { value: new THREE.Vector4(0, look.field.fine.below[0], look.field.fine.below[1], look.field.fine.scale) }, uFieldFineMore: { value: new THREE.Vector2(look.field.fine.gain, look.field.fine.soft) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uGlowPlain: { value: 1 }, uLand: { value: new THREE.Vector4(0, 0, 1, 1) }, uLandOn: { value: 0 }, uKick: { value: new THREE.Vector4(0, 0, 1, 1) }, uKickOn: { value: 0 }, uFlash: { value: new THREE.Vector4(0, 0, 1, 1) }, uFlashOn: { value: new THREE.Vector2() }, uLandVeil: { value: new THREE.Vector3() }, uGroundMost: { value: 0 }, uSize: { value: new THREE.Vector2(img.width, img.height) },
+        uGrade: { value: grade }, uPlate: { value: plate }, uApron: { value: apron }, uApronSize: { value: new THREE.Vector2(...fullSize('apron')) }, uSetLod: { value: new THREE.Vector2(setLod('plate', img), setLod('apron', second)) }, uApronOn: { value: look.apron.amount }, uApronOut: { value: 0 }, uApronEdge: { value: 1 }, uApronCell: { value: new THREE.Vector2(look.apron.cell, look.apron.calm) }, uGlow: { value: glow }, uField: { value: field }, uFieldSize: { value: new THREE.Vector4(fieldData.size, fullSize('field')[0], look.field.grid, look.field.sharp) }, uFieldFine: { value: new THREE.Vector4(0, look.field.fine.below[0], look.field.fine.below[1], look.field.fine.scale) }, uFieldFineMore: { value: new THREE.Vector2(look.field.fine.gain, look.field.fine.soft) }, uOwn: { value: new THREE.Vector4(look.own.ring[0], look.own.ring[1], look.own.side, look.own.near) }, uUp: { value: new THREE.Vector4(look.own.up[0], look.own.up[1], look.own.rough[0], look.own.rough[1]) }, uLift: { value: new THREE.Vector2(...look.lift) }, uEven: { value: new THREE.Vector4(look.even.from[0], look.even.from[1], look.even.far[0], look.even.far[1]) }, uEvenTint: { value: new THREE.Vector4(...look.even.tint, look.even.dim) }, uGlowReach: { value: new THREE.Vector2(...look.glowReach) }, uSite: { value: new THREE.Vector2(...look.site) }, uBox: { value: new THREE.Vector4(...stage.loopsBox) }, uGlowBeat: { value: 1 }, uGlowPlain: { value: 1 }, uLand: { value: new THREE.Vector4(0, 0, 1, 1) }, uLandOn: { value: 0 }, uKick: { value: new THREE.Vector4(0, 0, 1, 1) }, uKickOn: { value: 0 }, uFlash: { value: new THREE.Vector4(0, 0, 1, 1) }, uFlashOn: { value: new THREE.Vector2() }, uLandVeil: { value: new THREE.Vector3() }, uGroundMost: { value: 0 }, uSize: { value: new THREE.Vector2(...fullSize('plate')) },
         uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTime: { value: 0 },
         uCellSize: { value: look.cell },
         ...lifeUniforms(life),
