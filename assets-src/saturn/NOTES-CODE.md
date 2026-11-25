@@ -5139,3 +5139,182 @@ After a break in the session (00:53 to 00:57) the job was found running as left;
   handover, place, the two sizes, G5 and G17) run on af6ba5f, and the end of the rise with the travel's
   first frames (3868 to 3896) is drawn again there and compared with r57's frames byte by byte. If the
   finals differ, rise, dive, path and G13 run again on af6ba5f, and NAMED moves by about 50 minutes.
+
+## 2026-11-25, 01:13 to 01:22 UTC: finals byte equal on af6ba5f, the slices, main at 9c59fe7 merged
+
+- r58 on af6ba5f, the same stop folder: final 3465 sha256 4077873a1a2005c40bed0e9f225e2ebbe3cf153ee06f75b93a2c3a4735002f0f,
+  final 3720 sha256 631f3cf203bc7ed84f841e909dae67cf604d51f1e96f87062860a2977ba4a55b: both the bytes of r57
+  on 7026711. Batch 5 does not touch the stop at these two frames.
+- What batch 5 changes in src/director/film.ts (read in the diff): the dim of the open sky while the Sun
+  stands in a travel's frame now counts only what lies deeper in the frame than at both ends of the leg and
+  lowers the open sky's share, "never a stop's own sky"; the Sun's own leg has its own weight. So the frames
+  of the stop (3390 to 3884) are out of its reach by the code, and of my two windows only the travel's first
+  frames in the rise window (3885 to 3896) can change.
+- So the plan is the short one, with two slices as the check. Job r58b on af6ba5f (script job_v.sh, the
+  steps of job_u.sh plus two slices): the rise's capture frames 7736 to 7792 (film 3868 to 3896: the thin
+  pop line at 3872 + 1/2 and all the travel frames of the window) drawn again and compared pixel for pixel
+  with r57's frames (/tmp/v/t22/cmpdir.py), a slice of the dive 7130 to 7160 (film 3565 to 3580, the rows
+  of its largest pattern and pop) to compare row against row with r57's report, then parity, place, gate,
+  handover, the d253 pairs and G5 with G17. Started 01:18:11.
+- Mail to /root at 01:19 (STATUS): the four green results on 7026711, main's move, the check on af6ba5f,
+  NAMED about 02:20 if the slices are equal, about 02:50 if the whole rise must run again.
+- Looks pushed 01:19 (head 13ad67c0): the dive's pops panel and changes panel and the rise's changes panel
+  of r57. Seen in them: nothing new; the globe's shadow on the rings is black (open), the orange moon stands
+  at the upper right through the dive's start.
+- 01:19:40 fetch: main is 9c59fe7e962cff6328ceb14c574ea7bfe19fac37. Between af6ba5f and it only
+  kit/PROGRESS.md and scorecards/round-049: the engine, the tools and the tests of 9c59fe7 are af6ba5f's.
+- Commit 1f451ea: the notebook through 01:12 and assets-src/saturn/code/globe_tone.py.
+- THE MERGE, and a trap. `git merge origin/main` failed with conflicts in fourteen files (my stop's, the
+  notebook, src/director/film.ts, tests/pass.test.ts, kit/PROGRESS.md). Cause: this clone is shallow
+  (148 cut points in .git/shallow), so git cannot see that the older mains are ancestors of 8e06f69 and
+  finds six merge bases (8e06f69, 2008483, 6884e80, b2ebc62, 3efc31d, f0c67f1) and merges those first.
+  I aborted that merge. The true base is 8e06f69, the main merged here in 3859178. Checked by diff:
+  (a) main did not change my three folders between 8e06f69 and 9c59fe7, (b) my branch changed nothing
+  outside them since 8e06f69. Then the merge with the base named:
+  `git merge-tree --write-tree --merge-base=8e06f69 HEAD origin/main` gave the tree 2c7dadd6 without a
+  conflict, `git commit-tree` with the two parents 1f451ea and 9c59fe7 gave the merge commit
+  a9545ffae0453e7727d110e34bb1d65f3a351153, and `git merge --ff-only` put the branch on it. Checked: the
+  head equals main outside my three folders; src/stops/saturn is the tree 9f71d5a4 of 5e094e5 and
+  public/assets/saturn is 75fa372a as before. No fetch that deepens the clone: the disk has 4.6 GB.
+  For the next merge: the same three commands, with the last merged main as the base.
+- tsc on a9545ff: exit 0.
+
+## 2026-11-25, 01:26 to 01:33 UTC: the two slices on af6ba5f are r57 to the pixel and to the row
+
+- Rise slice, capture frames 7736 to 7792 (film 3868 to 3896 + 1/2) on af6ba5f (engine hash c6c6edca; r57
+  was engine hash 13d9cc75; the stop hash is 73932c17 in both): the tool drew 90 frames, 7720 to 7809
+  (film 3860 to 3904 + 1/2, the slice and the overlap its numbers need). cmpdir.py against r57's frames:
+  "frames in both 90 equal in every pixel 90 different 0". rowcmp.py on the two reports: 57 rows in both,
+  equal in every field 57. The slice's own lines: "VERDICT: green", level step 0.05 at 3875 + 1/2, pop
+  1.196 from 3872 + 1/2, pattern 0.27 from 3868 (the whole run's row at 3868 is 0.27 too).
+  So batch 5 changes no pixel of the rise's last 25 frames and none of the travel's first 20.
+- Dive slice, capture frames 7130 to 7160 (film 3565 to 3580) on af6ba5f: 31 rows in both, equal in every
+  field 31. Its lines: pop 1.07 from 3568 + 1/2, pattern 0.33 from 3576 at 1404, 428: the whole run's two
+  largest. (r57's frames of the dive were deleted for the disk, so here the rows are the check.)
+- What this proves and what not. Proved on af6ba5f: both finals by bytes, 90 frames of the rise window
+  by bytes, 88 rows of the two reports field by field. Not drawn again on af6ba5f: the rise 3798 to 3859
+  and the dive outside 3565 to 3580; they are frames of the stop, which the change in film.ts does not
+  reach by its code. The reports of the whole rise and the whole dive are r57's on 7026711 and are
+  named so in the mail.
+- Net size of my folders against main 9c59fe7 at a9545ff: src/stops/saturn plus 0.039 MB, assets-src/saturn
+  plus 0.117 MB, public/assets/saturn 0. 18 files differ from main, all in my three folders.
+
+## 2026-11-25, 01:33 to 01:39 UTC: parity, place, gate and handover on af6ba5f
+
+- Parity (3.6 min): "VERDICT: green. No number is over its limit." "Largest mean difference: 2.180 at frame
+  3720 (saturn.terrain), limit 12." Coarse mean 0.920 at 3720 (limit 3.2). Block level -6.453 at 3866
+  (limit 12). Level of the whole frame -0.831 at 3720 (limit 2.2). The named tree 2d54c49 read 2.785, 1.257,
+  -6.563 and -1.125: the frame factor on the ring widths took a fifth off the mean and a quarter off the
+  level. Rows (mean, level): 3465 1.671, -0.642; 3563 1.739, -0.627; 3585 1.590, -0.435; 3608 1.616, -0.360;
+  3720 2.180, -0.831; 3829 1.616, -0.400; 3848 1.574, -0.442; 3866 1.674, -0.445; 3923 travel 1.561, -0.026.
+  The level that stays in the hold (-0.64) is the bloom of src/post/chain.ts, not mine (mail 821, point 3).
+  Panel looked at, all nine rows: the same picture in both formats, the difference is fine lines at the
+  ringlets' edges and at the limb.
+- Place (2 s): green. "Note: the stop draws no place picture: there is nothing to switch off." for the dive
+  and for the rise.
+- Gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops:
+  saturn/web 274 MB, saturn/full 747 MB".
+- Handover (draft, sides, flow, path): saturn.dive side difference at T pass, flow gap at T pass, every frame
+  pass; saturn.rise the same three, pass.
+- Still to come in this job: the d253 pairs (3567 and 3612 at both sizes in both sets), G5 and G17. After
+  it: job D (path on af6ba5f, my finals 3567 and 3866), the tests, job C (five draft frames outside the dive
+  and the rise, main's stop folder against mine).
+
+## 2026-11-25, 01:39 to 01:44 UTC: the d253 pairs on the tree to be named (draft tier, af6ba5f)
+
+- Eight stills: 3567 and 3612, master (1920 by 1080) and uhd (3840 by 2160), full set and web set. The uhd
+  picture is halved by the mean of each 2 by 2 block; mean absolute difference 0 to 255 over all pixels and
+  channels (/tmp/v/t21/sizes.py), and cells of 10 by 10 px over 12 as the Builder counts (cells.py).
+  - 3567, the two sizes: full set 1.753 (0 of 20736 cells over 12, most 7.5), web set 1.620 (0 cells).
+  - 3567, the two sets: at 1920 2.181 (111 cells over 12, most 18.5 at px 895, 1075, the near ring at the
+    lower edge: the takes of the kept set are softer in the web set), at 3840 2.826 (halved 2.151, 73 cells).
+  - 3612, the two sizes: full set 1.629 (0 cells, most 6.9), web set 1.625 (0 cells).
+  - 3612, the two sets: at 1920 0.156 (0 cells), at 3840 0.190 (halved 0.159).
+  The same numbers as before the tables were stretched (3612 web 1.624 then). Sheet of the eight looked at:
+  the same picture four times in each row. In the looks (head 3584c77a, pushed 01:43) with the parity panel.
+
+## 2026-11-25, 01:44 to 01:56 UTC: G5 and G17 on af6ba5f, the path again there
+
+- "PASS G5 saturn: 3465 hold invalid 0 coverage 0.514; 3567 dive invalid 0 coverage 0.601; 3720 terrain
+  invalid 0 coverage 0.733; 3866 rise invalid 0 coverage 0.468"
+- "PASS G17 saturn: 3465 median 1.054 p25 0.918 over 71 tiles; 3720 median 0.971 p25 0.557 over 62 tiles"
+  (limit 0.8 on the median). The named tree 2d54c49 read 3720 median 0.945, p25 0.477; r54 read 1.013 and
+  0.567. The quarter of the tiles under 0.557 is the near field under the shutter (open, item 16).
+- Path on af6ba5f (job D, 2 s): "VERDICT: green. No number is over its limit." The report equals r57's
+  from its fifth line on, line for line (diff: 0 lines).
+- Job D goes on with my finals of the judged frames 3567 and 3866. r57's old frames are deleted.
+
+## 2026-11-25, 01:56 to 02:07 UTC: the finals of 3567 and 3866 on the tree to be named, looked at
+
+- Job D on af6ba5f: final 3567 sha256 41415f50e58caa450b4a77b3ed0e16e71f17caf6463fb122947e3425bd07656d
+  (321 s, 64 samples); final 3866 sha256 cece00f8cda26e5893df4372080833fdd8ff4a3a56174f78f7238a47925d0370
+  (238 s). A final of the dive or the rise costs four to five and a half minutes here, not the hundred
+  seconds of the hold: plan with that.
+- Main's stop folder at 9c59fe7 is the tree of 2d54c49 (7f13c953, checked by diff), so "before" in every
+  comparison is the named tree of round 44. Its finals of 3567 and 3866 are not drawn on af6ba5f (ten
+  minutes); both frames change on purpose (the dive's path and paces, the laws by height).
+- Looked at, whole and the lower halves at full size.
+  3567: rich; the kept takes of the hold with the dive begun. Faults I see: the globe's shadow on the rings
+  is near black with faint ringlets; the night side of the globe is brown with a blue rim at the right
+  limb; the stars in the gap between globe and ring end hard at the inner ring where it lies in the
+  shadow (round item 5, not touched); a blue white rim along the outer edge of the rings (item 4).
+  3866: the near ring at the lower left is drawn out by the shutter, its lines stay lines (item 16); the
+  Milky Way in the gap ends hard at the inner ring inside the shadow, more visible than at 3567 because
+  the sky is brighter there.
+- Looks pushed 02:06 (head 0d5e4f0b): both finals and the crop of 3866 with the hard end.
+- 02:05:18: vitest started on the merged head a9545ff, alone.
+
+## 2026-11-25, 02:05 to 02:12 UTC: the tests on the merged head
+
+- vitest on a9545ff (main 9c59fe7 merged), alone, 6.3 minutes: exit 0, 604 tests passed in 56 files, none
+  failed, none pending. tests/globe-cap.test.ts "brings a colour level in by the texels of its parent" ran
+  4.74 s, under the 5 s of mail 670, so it was not run alone.
+- tsc exit 0 on the same head (01:21).
+- 02:11:42: job C started on af6ba5f: draft stills of 3389, 3539, 3567, 3866, 3885 and 3920 with main's
+  stop folder and with mine, to compare by pixels (the frames outside the dive and the rise, and the two
+  judged frames of the moves).
+
+## 2026-11-25, 02:12 to 02:26 UTC: the frames outside the dive and the rise; main moved again (batch 6)
+
+- Job C on af6ba5f, draft tier, main's own stop folder (the tree of 2d54c49) against mine (the tree of
+  5e094e5), pixel for pixel (/tmp/v/t22/cmp2.py, pictures in /tmp/v/r58c):
+  3389 equal in every pixel; 3539 equal in every pixel (the hold is the same picture);
+  3567: 96.68 percent of the pixels differ, mean 15.809 of 255; 3866: 89.13 percent, mean 10.809 (the
+  moves, on purpose);
+  3885: 1.43 percent of the pixels differ (29587), largest 46, mean 0.005 of 255, box x 0 to 1415, y 57 to
+  1079; 148 pixels by more than 1 level, 57 by more than 4 (box x 374 to 891, y 323 to 835: the globe's
+  outline), 9 by more than 16; the largest at pixel 701, 325 on the upper limb, main 128, 115, 92 against
+  mine 174, 161, 135;
+  3920: 134 pixels differ by one level, mean 0.000.
+- The picture of the difference at 3885 (/tmp/v/t22/where.py, diff_3885.png): one level of noise over the
+  whole ring sheet and thin over the globe, bright points all round the globe's outline, 43 pixels on the
+  moon, nothing right of x 1415 where there is only sky. So the lens and the sky stand where they stood.
+- The path part with main's stop folder (job P, one second, /tmp/v/r58c/path_main.json) against mine
+  (/tmp/v/r58/smooth_path.json), both on af6ba5f: the height at 3885 is 5.619 in both; the speed at 3885 is
+  3.7721 against 3.7710; the leave line is 0.3745 for main's folder (lowest 3.3575 at capture frame 7778,
+  film 3889) against 0.3732 for mine (lowest 3.3398). Both green.
+- NOT TRACED: which term moves the outline of the globe at 3885 by a part of a pixel. It is not the lens.
+  New number 25 of the open list. To trace it: draw 3885 at the draft tier with single files of main's
+  folder laid over mine (globe.ts first, then kept/globe.ts, sheet.ts, skim.json), 30 s each.
+- The open list now: 16 to 20 as before; 21 the foot band at 3720; 22 the globe's shadow on the rings near
+  black; 23 the near field reads as pale dashes on grey; 24 the dark gap blacker and wider; 25 the outline
+  at 3885. Next free number: 26.
+- The NAMED mail (the fourth) is written from /tmp/v/mail/named4_draft.md with fill4.py; point 2 is the list
+  above; point 3 says that "before" was drawn on the engine of ed003c7.
+- 02:23 fetch: main stands at 7fd2923ce15a8a7fbbed3193ac979af2f59082b1 (status 275, d262). Since 9c59fe7:
+  take batch 6 (merged on main 01:47 as aeffd51): src/bodies/cap.ts, limb.ts (new), planet.ts,
+  src/diagnostics/diag.ts, nine test files, tools/smooth.ts, tools/smooth/made.py and pose.ts,
+  tools/img/smooth.py and range.py, assets-src/shared/GLOBE-NOTES.md, kit/PROGRESS.md. Nothing in my
+  three folders. By d261 the Builder MEASURED 115 of 115 draft frames of main equal to the byte, "so no
+  picture moves yet", and the proving run of the new reader on main's Saturn pictures was green (dive 4,
+  rise 4). The reader is new: "The pair is read on the nearer of its two frames, the farther one carried
+  from its finer picture", with a band printed for each pattern reading. So the pattern numbers of my rise
+  (0.40) and dive (0.33) are numbers of the old reader.
+- The frames of the smooth tool are kept by a stamp of the engine hash and the stop hashes, so on batch 6's
+  engine every frame is drawn again (rise 23 minutes, dive 21). I do not rewrite stamps.
+- Plan: commit this entry; merge 7fd2923 with the base 9c59fe7 named; on the merge: tsc, vitest (alone),
+  the path part, the finals of 3465 and 3720 by hash and drafts of 3567 and 3866 against those drawn on
+  af6ba5f; then the NAMED mail, saying which numbers are from which engine and that the picture parts by
+  batch 6's reader are running; then that run (rise, dive, parity, place, G13) and a mail with its lines.
+  Batch 7 (the bloom cure, the frame law's steps in the engine, the relief's edge) is cut and in its checks;
+  it moves pictures. I do not wait for it.
