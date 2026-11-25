@@ -3934,3 +3934,21 @@ wc1-01: units and gate green. wc1-02: G3 pass. wc1-05 (rise, part 1 of 2): green
 - With the far Sun as it is on take/ts1 + the small commit: 705 and 717 lifted 6 and 14: covered whole by the far Sun's disc and glare. 719 to 724 lifted 14: the hole's lower rim is the curved upper end of the star wedge by the limb (the wedge is the patch's border fault of round 52, owed for 19:30). From 725 behind the planet. Rise: the hold patch is not drawn at all (engine: orbit patch weight 0 in the rise); 1008 with the far Sun off shows plain catalogue stars.
 - 1034 lifted 6 on take/ts1 + the small commit: a darker round area of sky to the lower left of the planet; cause not found yet, not compared with before.
 - Rate 2 view flip: Mercury's set is terrain at 760, orbit at 760 + 1/2, terrain at 761 (probe `view.ts`); not looked at yet.
+
+## MAIL 1168 from the Builder, 15:32 UTC (verbatim)
+
+Two returns on way C 34632eb9.
+wc1-04, the dive part 2 of 2: GREEN. Level step 0.12, pop 1.04, pattern 0.39 at 744.
+wc1-06, the rise part 2 of 2: RED in 2 lines. (a) Pop 1.34 from 1044 + 1/2 to the next (limit 1.2), rows 1043 to 1045 all over: the panel shows what is left without the motion as a ring on Mercury's limb and a patch on the right flank beside the Sun. It is the base's own line (1.35 on bdefa472 by handover_engineer's table) and lies in the flight after the seam at 1035. (b) Pattern 0.64 from 1012 to 8 film frames later, most at pixel 776, 644, band 8 px (limit 0.45); the base read 0.86 at 1002 + 1/2, so way C brings it down and it is still over.
+ASKED: for (b) the cause at 1012 near [776, 644] and the cure in your 19:30 commit; for (a) say whether the ring on the limb is yours (the globe's edge under the shutter) or the flight's. travel_builder has a red path in Mercury's rise since the first cut (the speed falls to its lowest at 1022 and surges to 1034) and cures it by 16:30; the pop may move with that. Do not tune to it before its cure stands.
+Still out for you: wc1-03 (dive part 1 of 2), the finals wc1-13, and the far Sun's parts ts1-03 to 06. G13 on way C is PASS by my join (0 of 495).
+Attached: both reports and the two panels of wc1-06 (copied to /tmp/m/r1168/).
+
+## 15:42 UTC: the small commit of MAIL 1135 (2), second form (af.. dropped, named: 9ee7de11)
+
+- First form X 2a0fafb8 (on main 53025569): no ride at all, in the high view and in the low view. Units on it in /tmp/b0: 81 files, 917 tests passed (15:39), tsc clean.
+- Found on stills of take/ts1 before and after at 765 and 970 (low view of dive and rise): the first form moves the warm line on the horizon away from under the terrain sky's Sun (765: 8111 px over 2 codes, largest 28, left part 5 codes down, right part 4 up; 970: 11352 px, largest 43, all up to the right). In the low view the Sun in the picture is the terrain sky's own (baked in sky-terrain.webp, at 0.337, 0.138 of the picture), which stands at the ridden place. So the ride IS needed there.
+- Facts of the film (probe `zero.ts`): `shot.skyShare` is exactly 0 from 690 to 733 and from 998 to 1034 + 1/2, between from 733 + 1/2 to 756 + 1/2 and from 978 + 1/2 to 997 + 1/2, exactly 1 from 757 to 759 + 1/2 and from 977 + 1/2 to 978; in the low view it is undefined. The far Sun's share is 1 less that. The high shot's ride at 759 + 1/2 and the low branch's ride at 760 are both 27.29 degrees.
+- Second form X2 9ee7de118b5e464343c5ca10f573fa52c0a050ca (on main 53025569, 3 lines in, 1 out): `sunShown` takes the ride by `shot.skyShare` (`sunRide.identity().slerp(sunTurn, shot.skyShare ?? 0)`); the low branch is main's line untouched. So from 690 to 733 and 998 to 1034 it is the first form to the bit (slerp at 0 returns the identity), in the low view it is main to the bit, and the two meet at the view switch with the whole ride on both sides.
+- Way C carries the same edit (E2), merged with X2 (M2); the branch also holds the first form (E efe65687, M 7a40a269 with X as second parent) underneath. Main's `plan.ts` line `turnDeg: 108` (73680079) came in with the merge of 53025569.
+- Film's, seen by the probe, not mine: the far Sun's share is 0 at 759 + 1/2 and 1 at 760 (skyShare undefined in the low view), all through 760 to 977.

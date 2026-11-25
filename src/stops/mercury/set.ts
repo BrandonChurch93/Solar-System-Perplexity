@@ -148,6 +148,7 @@ export const createSet: SetFactory = async (ctx) => {
   const rimSun = new THREE.Vector3()
   const kick = new THREE.Vector3()
   const sunTurn = new THREE.Quaternion()
+  const sunRide = new THREE.Quaternion()
   const toCamera = new THREE.Quaternion()
   const plateBack = new THREE.Quaternion()
   const limbRay = new THREE.Vector3()
@@ -355,7 +356,7 @@ export const createSet: SetFactory = async (ctx) => {
           const eye = high.camera
           const diving = kind === 'dive'
           toLow.copy(eye.quaternion).invert().premultiply(view.camera.quaternion)
-          sunShown.copy(sunSeen)
+          sunShown.copy(sunSeen).applyQuaternion(skyRide(diving ? skyDive : skyRise, high, eye, sunTurn))
           light.copy(plan.lightDir).applyQuaternion(above.rotation)
           const distance = above.origin.distanceTo(eye.position)
           const offAxis = THREE.MathUtils.radToDeg(sunShown.angleTo(forward.set(0, 0, -1).applyQuaternion(eye.quaternion)))
@@ -378,6 +379,8 @@ export const createSet: SetFactory = async (ctx) => {
       let ghosts = 1
       if (diving || rising) {
         skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn)
+        sunShown.applyQuaternion(sunRide.identity().slerp(sunTurn, shot.skyShare ?? 0))
+        rimSun.copy(sunShown)
         glareSun.copy(carriedSun(state.rotation, shot, view.camera))
         plate = 1 - (shot.skyShare ?? 0)
         if (rising) ghosts = look.flare.after
