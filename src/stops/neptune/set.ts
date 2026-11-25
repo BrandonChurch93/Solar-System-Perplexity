@@ -200,7 +200,7 @@ export const createSet: SetFactory = async (ctx) => {
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
-      const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
+      const lit = state.lookback ?? (ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0)
       const end = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * endLook.blend) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
