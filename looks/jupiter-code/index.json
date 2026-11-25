@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T20:16:16.739Z",
+ "pushed": "2026-11-25T20:40:29.873Z",
  "head": "b660882b510fd8ac4ea3608fd0872db217139894",
- "note": "jupiter_coder 20:17 UTC: design tests of the hold's disc by simulation, nothing built yet. The lee lit by the globe's light, the rings cured by keeping each level's own picture beyond the painted disc, the left dash kept as the globe's own lane.",
+ "note": "20:41 fourth note plan O: my head's surface view at 3060 and 3150, 1 to 1, for the answer on what moves the storm; main's frames follow",
  "looks": [
+  {
+   "time": "2026-11-25T20:40:28.584Z",
+   "file": "20261125204028584-note-k006300-r2-draft.jpg",
+   "source": "../work/r21/mine/k006300-r2-draft.png",
+   "kind": "note",
+   "label": "o1 my head b660882 frame 3150 draft 1 to 1 (surface view, middle)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:40:27.113Z",
+   "file": "20261125204027113-note-k006120-r2-draft.jpg",
+   "source": "../work/r21/mine/k006120-r2-draft.png",
+   "kind": "note",
+   "label": "o1 my head b660882 frame 3060 draft 1 to 1 (surface view, first frame)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T20:16:15.952Z",
    "file": "20261125201615952-note-p1-3150.jpg",
@@ -184,28 +200,6 @@
    "source": "../work/r15/p1-3150.jpg",
    "kind": "note",
    "label": "3150 final on 1c5b75f: equal bytes with the last two names (sha256 8e9cf280), 6.113 against the approved",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:49:19.546Z",
-   "file": "20261125174919546-frame-p1-3150.jpg",
-   "source": "out/work/jupiter/final/p1-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T17:45:10.538Z",
-   "file": "20261125174510538-note-band-right.jpg",
-   "source": "../work/r16/band-right.jpg",
-   "kind": "note",
-   "label": "3150 far band, right third: approved above, named below (still wrong: stands lit, pale streaks to the limb)",
    "stop": "jupiter"
   }
  ]
