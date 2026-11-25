@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T17:12:08.637Z",
+ "pushed": "2026-11-25T17:25:33.409Z",
  "head": "1c5b75fa8f007ab95b2fc0e6425350ec0cf7a256",
- "note": "17:13 UTC: path cure committed (1c5b75fa), chain running; air share and cast shadows trialled, not in",
+ "note": "17:30 UTC: rise slice b (3278 to 3300) on 1c5b75f green, all 78 half frames looked at; chain goes on with rise a, finals, dive",
  "looks": [
+  {
+   "time": "2026-11-25T17:25:31.940Z",
+   "file": "20261125172531940-note-n9-3150.jpg",
+   "source": "out/work/jupiter/final/n9-3150.png",
+   "kind": "note",
+   "label": "3150 final as named (the path cure does not touch it; its bytes are compared in the chain)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T17:25:30.906Z",
+   "file": "20261125172530906-note-rise-b-d.jpg",
+   "source": "../work/r15/sheets/rise-b-d.jpg",
+   "kind": "note",
+   "label": "Rise 3300 to 3308 + 1/2 on 1c5b75f, every half frame, draft (slice green: level step 0.85, pop 1.13, pattern 0.16)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T17:25:29.927Z",
+   "file": "20261125172529927-note-rise-b-c.jpg",
+   "source": "../work/r15/sheets/rise-b-c.jpg",
+   "kind": "note",
+   "label": "Rise 3290 to 3299 + 1/2 on 1c5b75f, every half frame, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T17:25:28.952Z",
+   "file": "20261125172528952-note-rise-b-b.jpg",
+   "source": "../work/r15/sheets/rise-b-b.jpg",
+   "kind": "note",
+   "label": "Rise 3280 to 3289 + 1/2 on 1c5b75f, every half frame, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T17:25:28.232Z",
+   "file": "20261125172528232-note-rise-b-a.jpg",
+   "source": "../work/r15/sheets/rise-b-a.jpg",
+   "kind": "note",
+   "label": "Rise 3270 to 3279 + 1/2 on the tree 1c5b75f (path cure), every half frame, draft",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T17:12:07.866Z",
    "file": "20261125171207866-note-n9-3150.jpg",
@@ -166,46 +206,6 @@
    "source": "../work/r14/named/thirds-m.jpg",
    "kind": "note",
    "label": "far band at 3150 in thirds beside the approved image, level and relief",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T15:34:37.739Z",
-   "file": "20261125153437739-note-pieces-top.jpg",
-   "source": "../work/r14/w/pieces-top.jpg",
-   "kind": "note",
-   "label": "top view of the place: the pieces' borders drawn, the source ground outlined in green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T15:34:36.634Z",
-   "file": "20261125153436634-note-after-3254h.jpg",
-   "source": "../work/r14/w/after-3254h.jpg",
-   "kind": "note",
-   "label": "3254 + 1/2 draft with the ground laid on past the canvas' borders (not yet committed)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T15:34:35.456Z",
-   "file": "20261125153435456-note-pair-3042.jpg",
-   "source": "../work/r14/w/pair-3042.jpg",
-   "kind": "note",
-   "label": "3042 draft: named 0e5c0362 above, with the ground laid on past the canvas' borders below (not yet committed)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T15:34:34.122Z",
-   "file": "20261125153434122-note-pair-3034.jpg",
-   "source": "../work/r14/w/pair-3034.jpg",
-   "kind": "note",
-   "label": "3034 draft: named 0e5c0362 above, with the ground laid on past the canvas' borders below (not yet committed)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:44:58.548Z",
-   "file": "20261125144458548-note-n7-3150-trio.jpg",
-   "source": "../work/r14/n7-3150-trio.jpg",
-   "kind": "note",
-   "label": "3150 on the merge 0e5c0362 (equal bytes to 7c0b8675): approved, before, now",
    "stop": "jupiter"
   }
  ]
