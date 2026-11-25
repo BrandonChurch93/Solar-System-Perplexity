@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T02:08:26.450Z",
+ "pushed": "2026-11-25T02:29:15.847Z",
  "head": "220328cc110b9dfd889615931fa98a68fa085bb7",
- "note": "02:22 UTC: proofs still running (rise report next, then path, parity, tests). Preparing the cure of the dive's band offline: real sky painted under the sky plate's horizon and the floor off, so one sky reaches the limb at every height.",
+ "note": "02:30 UTC: own smooth run on 220328cc red in path (rise rate 0.097, speed climb 0.031), dive pattern 1.23, rise pattern 0.74; chain stopped, cures under way (rise pace for the new place, sky plate without haze under its horizon)",
  "looks": [
+  {
+   "time": "2026-11-25T02:29:15.244Z",
+   "file": "20261125022915244-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image (unchanged bytes at 220328cc)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:29:14.682Z",
+   "file": "20261125022914682-note-lift-right.jpg",
+   "source": "../work/r8/sky2/lift-right.jpg",
+   "kind": "note",
+   "label": "UNFINISHED sky plate for the surface view, lifted 3.5 times: top new (sky carried under the plate's horizon, stars too dense, seam visible), bottom as it is (haze fill under the horizon, the cause of the floating band 3028 to 3041)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:29:13.723Z",
+   "file": "20261125022913723-note-c1-upleft-b.jpg",
+   "source": "../work/r8/c1-upleft-b.jpg",
+   "kind": "note",
+   "label": "dive, upper left at 1.5 times, frames 3036 to 3056 (set c1, commit 220328cc): far deck going into the horizon haze, the tool reads 0.48 at 3038 to 3040 (limit 0.45)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T02:08:25.611Z",
    "file": "20261125020825611-note-pair-3150-final.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r8/curve-c1.png",
    "kind": "note",
    "label": "curve of condition (a): darkest and brightest 5 by 5 mean inside the storm, 2895 to 3058",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:25.221Z",
-   "file": "20261125012225221-note-storm-equal.jpg",
-   "source": "../work/r8/storm-equal.png",
-   "kind": "note",
-   "label": "the storm on equal ground, hold to dive",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:24.224Z",
-   "file": "20261125012224224-note-d253-core.jpg",
-   "source": "../work/r8/d253-core.png",
-   "kind": "note",
-   "label": "frame 3012 at 1920 and at 3840, full and web set, the storm's core (proof asked in MAIL 796)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:23.110Z",
-   "file": "20261125012223110-note-c1-limb-3028.jpg",
-   "source": "../work/r8/c1-limb-3028.png",
-   "kind": "note",
-   "label": "dive 3028 to 3043, upper right at 1 to 1: the limb where my own judge reads a pattern (unfinished, cause being named)",
    "stop": "jupiter"
   }
  ]
