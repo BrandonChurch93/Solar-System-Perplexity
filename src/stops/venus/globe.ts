@@ -561,9 +561,13 @@ ${PLACE_GLSL}
       // How far the camera sees a ground point as the camera at T does (same): by the angle between the two lines of sight, and by the air
       // on the line of sight, which goes with one over the sine of the camera's elevation above the ground point. The pale haze over the far
       // deck of the close view belongs to the low line of sight of T; a camera that stands steeper over that deck sees less air there.
+      // The share by the air leaves the eye of T with no rate: q + q * q - q * q * q of the ratio q of the two sines, the one cubic
+      // that is 1 with no slope at the eye of T and is the ratio itself far from it. The plain ratio stood at 1 for every eye of the
+      // surface view and fell at the full rate of the eye's rise from the first frame past T (MAIL 1181).
       vec3 toEye = -los;
       vec3 toT = normalize(uToneEye - dp);
-      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * pow(clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0), uToneLook.x);
+      float thin = clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0);
+      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * pow(thin * (1.0 + thin * (1.0 - thin)), uToneLook.x);
       vec3 seen = light * uPlaceDusk.xyz;
       for (int t = 0; t < 1; t++) {
         // One ground for every height and every line of sight (plates.json, show). The forms of the ground are, by their size on the

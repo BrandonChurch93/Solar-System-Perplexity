@@ -376,7 +376,8 @@ const TRUE_GLSL = /* glsl */ `
 // The tones of the ground on the globe side, by the law of the plates (globe.ts): the tones of the close view (the far deck pale under
 // its haze, the near towers dark against the Sun) belong to the line of sight of T. They show by the share same: the angle between the
 // line of sight of this eye and the one of T at the point (uToneLook.zw, to the power uToneLive.x) and the air on the line of sight
-// (the sines of the two elevations over the deck, to the power uToneLook.x), as in globe.ts.
+// (the sines of the two elevations over the deck, to the power uToneLook.x), as in globe.ts: the ratio q of the two sines is read as
+// q + q * q - q * q * q, which leaves the eye of T with no rate and is the ratio itself far from it.
 // Seen from elsewhere the ground gives its forms alone over the globe's colour at the place (uToneUnder.rgb, scene light, plates.json):
 // its light over its own light at a coarse level of the picture of the close view (uBroad at the level uToneLive.y, taken at the place
 // in the image, uBroadBox), the luminance to the power uToneLive.w within 1 / uToneLive.z and uToneLive.z, the colour to the power
@@ -387,7 +388,8 @@ const TONE_GLSL = /* glsl */ `
   vec3 out3 = normalize(radial);
   float sT = max(dot(toT, out3), 0.02);
   float sE = max(dot(toEye, out3), 0.02);
-  float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uToneLive.x) * pow(clamp(sT / sE, 0.0, 1.0), uToneLook.x);
+  float thin = clamp(sT / sE, 0.0, 1.0);
+  float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uToneLive.x) * pow(thin * (1.0 + thin * (1.0 - thin)), uToneLook.x);
   for (int t = 0; t < (same < 1.0 ? 1 : 0); t++) {
     vec2 bq = (vImage - uBroadBox.xy) / uBroadBox.zw;
     vec3 own = inverseFilmic(texel.rgb);
