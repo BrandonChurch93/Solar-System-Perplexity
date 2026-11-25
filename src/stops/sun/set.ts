@@ -3,6 +3,8 @@ import { FarPoint } from '../../bodies/farpoint'
 import type { SetFactory } from '../../core/types'
 import { config } from '../../config'
 import { Surface } from './convect'
+import { LabGround } from './lab/ground'
+import lab from './lab/lab.json'
 import { Jets } from './jets'
 import { Corona } from './corona'
 import { Fringe } from './fringe'
@@ -36,9 +38,14 @@ export const createSet: SetFactory = async (ctx) => {
   const lifeMap = (file: string): Promise<THREE.Texture> => ctx.texture(base + file, { srgb: false, anisotropy: 4, mirror: true })
   const life = { cellsPlate: await lifeMap(look.files.cellsPlate), swellPlate: await lifeMap(look.files.swellPlate), cellsApron: await lifeMap(look.files.cellsApron), swellApron: await lifeMap(look.files.swellApron) }
   const ground = new Ground(plate, apron, field, await ctx.texture(base + look.files.loopsGlow, { srgb: true, mips: false, anisotropy: 1 }), grade, look.ground, life, opening.on ? look.opening.seethe : undefined)
-  const plates = place.plates.levels as { file: string; widthDeg: number }[]
+  // the levels of the place on the globe's face. With the lab's ground the first is its far twin: the lab's own bake
+  // of that ground as it reads from far (file and width from the lab's manifest, lab.json far.level). It brings its
+  // bands finer than place.plates.fineDeg only: under it stands the map's low band of that width, so the face keeps
+  // the tones of the map at every distance and the twin comes in, like every level, as the map's texels run out
+  const twin = lab.ground === 'lab' ? [{ file: (lab.far.level.files as Record<string, string>)[ctx.assets]!.replace('public/assets/' + base, ''), widthDeg: lab.far.level.deg, fineDeg: place.plates.fineDeg }] : []
+  const plates = [...twin, ...(place.plates.levels as { file: string; widthDeg: number }[]).map((l) => ({ ...l, fineDeg: 0 }))]
   const levels = await Promise.all(plates.map((l) => ctx.texture(base + l.file, { srgb: true, anisotropy: 16 })))
-  const patches = { textures: levels, widthsDeg: plates.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
+  const patches = { textures: levels, widthsDeg: plates.map((l) => l.widthDeg), fineDeg: plates.map((l) => l.fineDeg), spot: new THREE.Vector3().fromArray(place.globe.mapSpot), feather: place.plates.feather, fade: place.plates.fade as [number, number] }
   const fitTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const mapToStage = new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().fromArray(place.stage.toBody).invert().multiply(fitTurn)))
   const globe = new SunGlobe({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, look: look.globe, patches, place: { ground: ground.material.uniforms, toStage: mapToStage, capDeg: place.onGlobe.capDeg as [number, number], fade: place.onGlobe.fade as [number, number], lowLod: place.onGlobe.lowLod, spotKeep: place.onGlobe.spotKeep as [number, number] } })
@@ -67,7 +74,7 @@ export const createSet: SetFactory = async (ctx) => {
   standing.add(loops.mesh)
   world.add(standing)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
-  const surface = new Surface(ground.material.uniforms, map, mapToStage)
+  const surface = lab.ground === 'lab' ? new LabGround(ground.material.uniforms, map, mapToStage) : new Surface(ground.material.uniforms, map, mapToStage)
   const jets = new Jets(ground.material.uniforms)
   terrain.add(ground.mesh, surface.mesh, fringe.mesh, jets.glow, jets.mesh)
   world.add(backdropTerrain.mesh)

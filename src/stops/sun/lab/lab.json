@@ -1,0 +1,240 @@
+{
+ "ground": "lab",
+ "note": "ground: lab draws the ground of this folder (cells as real domes from a baked life), standing draws the ground of convect.ts. sim: the life of the cells, a power diagram of sites on a tile that repeats (tile and radius in stage units, times in seconds). dome: the shape of a cell (arc: the angle of its profile from crown to foot in degrees, more than 90 hangs over the foot; height: of the cell's mean radius; flat: how flat the top is, 1 a round arc). lod: a dome is drawn with the finest mesh above the first size in pixels of a 1080 frame, the middle above the second. spot: the warp that combs the cells toward the spot (pull, wide in stage units), the funnel of its pit and the umbra (of the approved umbra's half width). fibre.counts: fibres a radian of the fan from the root, three sizes. heat: the temperature of the matter (floor: the coldest, body: the dome's own, cool and hot: a cool and a hot thread, knot: a knot of rising matter, edge: what is left on a steep flank, pen: in the penumbra, bloom: how much brighter than white a heat over 1 is). haze: the thin glowing haze low over the ground (amount, scale: the height it thins by, level and tint: its light, power: how fast it thickens as the look flattens). dome.over: the footprint of a dome over its cell, more than 1 cuts into its neighbours; lobe: how deep the creases between the lobes of a top are; pen: the height left in the penumbra. fibre.root: how far the dark of the root reaches along the fibres. heat.core: how far from the crown the hot patch reaches, rim: the heat of the cooler matter round it, thread: how strong the threads are in the patch and round it, glint: the small points on a rim. heat.well: how fast the pattern of the hot matter spreads from the crown to the rim, in e folds of the distance a second. join: the field of the place that says where two cells stand on one level and have no crease between them (scale: its size, a unit; level: that level in stage units) and how the heat of the place runs over the borders (heat: its size). spot.strand: within how many umbra radii the ground is the threads of the penumbra, and by how much that differs from thread to thread. heat.core: how much the middle of a cell is hotter than its rim, rim: the heat of a cool place, thread[0]: how strong the fibres are, well: how fast the pattern runs along the fibres, in dome lengths a second. fibre.offset: how far from the crown the fibres' root lies, of the dome's radius (more than 1 is outside the foot); fibre.dark: how dark the root is. heat.thread: how much of the fibres shows at the rim and how much of that is left on the crown. far.px: under the first width of a mean cell in pixels of a 1080 frame a cell is no thing but the floor's map of the same cells, from the second down it sinks into it; far.map: the size of that map of the tile. sim.gone: how far below its neighbours the weight of a cell lies at the ends of its life, as a radius in largest radii. join.wobble: how far the field of the place pushes the ground about, so that no border is a straight line (stage units). gas: the thin gas that glows along the path to the eye (steps: of the walk through it; top: the height over the ball where the walk ends; skin: the gas that lies on the domes, its thickness a stage unit of path at the ground and the height it thins by; pool: the gas that fills the low places, the same two; dim: how much of the ground's light it takes). haze.level: the heat of the gas against the heat of the ground under it. haze.own: the light of the haze over the coldest ground against that over the hottest (the gas glows by the heat of the ground under it). spot.floor: the heat of the umbra's floor and of its grain; spot.gap: the heat between the tongues at the umbra and at the penumbra's rim. heat.spread: the lumps of heat that well up in a cell: the seconds of a generation, how much they grow in it (e folds), their size (a dome radius), their share against the still mottle of the place. heat.shade: the heat left at the border of a cell and the width of the fall toward it (of the radius); heat.lane: the narrowest and the widest black lane (of the radius) and how ragged its edge is. spot.tongues, ranks: the tongues of the penumbra side by side round the spot (two layers) and their ranks an octave of the distance; spot.hot: the heat of a tongue's head. far.tone: the large tone of the place from the globe's own map: the width in degrees over which the map is taken (a level of its mips), the map's middle light there (linear, 0.3 0.5 0.2 of red green blue), the power by which the heat follows it and the least and the most it may be. far.level: the far twin baked for the globe: its width in degrees, its size in pixels and how many times finer it is drawn before it is brought down. far.level.files: the far twin's files (web at half the size). haze.air: the thin gas seen past the limb against the sky: the height it thins by (stage units), its depth along a look that grazes the ball, the heat of the ground it glows by. heat.fine: a second, finer welling of heat in a cell: how strong and how many times finer than the first.",
+ "sim": {
+  "tile": 4,
+  "slots": 3000,
+  "radius": [
+   0.03,
+   0.072
+  ],
+  "life": [
+   2.5,
+   14
+  ],
+  "step": 0.25,
+  "warm": 15,
+  "from": -0.5,
+  "to": 10.5,
+  "relax": 0.12,
+  "split": 0.5,
+  "grow": 0.38,
+  "least": 1.4,
+  "ease": 0.3,
+  "solve": 6,
+  "gain": 0.6,
+  "soft": 0.8
+ },
+ "dome": {
+  "arc": 70,
+  "height": 0.3,
+  "young": 0.5,
+  "round": 8,
+  "flat": 1.5,
+  "over": 1.08,
+  "lobe": 0.06,
+  "pen": 0.07
+ },
+ "lod": {
+  "px": [
+   70,
+   16
+  ],
+  "rings": [
+   36,
+   14,
+   6
+  ],
+  "sectors": [
+   96,
+   40,
+   16
+  ]
+ },
+ "spot": {
+  "pull": 0.35,
+  "wide": 0.42,
+  "depth": 0.07,
+  "wall": [
+   0.85,
+   1.9
+  ],
+  "umbra": 1.0,
+  "strand": [
+   2.7,
+   1.6
+  ],
+  "back": 0.14,
+  "tongues": [
+   180,
+   115
+  ],
+  "ranks": [
+   3.6,
+   2.7
+  ],
+  "hot": 2.6,
+  "floor": [
+   0.004,
+   0.02
+  ],
+  "gap": [
+   0.02,
+   0.2
+  ]
+ },
+ "fibre": {
+  "counts": [
+   5,
+   13,
+   30
+  ],
+  "root": 0.12,
+  "offset": 0.45,
+  "dark": 0.0,
+  "bend": 0.15,
+  "cold": 0.3
+ },
+ "heat": {
+  "floor": 0.012,
+  "body": 0.88,
+  "cool": 0.7,
+  "hot": 1.5,
+  "knot": 0.9,
+  "edge": 0.8,
+  "pen": 0.75,
+  "bloom": 2.5,
+  "glint": 0.3,
+  "core": 0.2,
+  "thread": [
+   0.04,
+   0.4
+  ],
+  "rim": 0.48,
+  "well": 0.3,
+  "crease": [
+   0.55,
+   0.25,
+   0.02
+  ],
+  "vein": 0.3,
+  "knee": [
+   0.8,
+   1.3
+  ],
+  "lip": 0.6,
+  "limb": 0.8,
+  "patch": [
+   0.2,
+   1.0
+  ],
+  "points": 0.93,
+  "lie": 0,
+  "near": 0.55,
+  "lane": [
+   0.04,
+   0.13,
+   0.6
+  ],
+  "graze": [
+   1.0,
+   0.4
+  ],
+  "shade": [
+   0.14,
+   0.3
+  ],
+  "groove": 0.6,
+  "spread": [
+   4.0,
+   1.2,
+   3.0,
+   0.8
+  ],
+  "fine": [
+   0.6,
+   4.0
+  ]
+ },
+ "haze": {
+  "amount": 0.0045,
+  "scale": 0.02,
+  "level": 1.1,
+  "power": 1.7,
+  "tint": [
+   1.0,
+   0.85,
+   0.5
+  ],
+  "own": 0.45,
+  "air": [
+   0.04,
+   1.2,
+   0.45
+  ]
+ },
+ "join": {
+  "scale": 9,
+  "heat": 8,
+  "level": 0.004,
+  "wobble": 0.03,
+  "most": 0.6,
+  "merge": 0.3
+ },
+ "far": {
+  "px": [
+   6,
+   10
+  ],
+  "map": 2048,
+  "cell": 0.095,
+  "tone": {
+   "deg": 1.5,
+   "level": 0.245,
+   "power": 0.5,
+   "range": [
+    0.6,
+    1.3
+   ]
+  },
+  "level": {
+   "deg": 40,
+   "size": 1280,
+   "over": 2,
+   "axes": {
+    "spot": [
+     0.23800208,
+     0.21349373,
+     0.94751013
+    ],
+    "east": [
+     0.96987105,
+     0,
+     -0.24361885
+    ],
+    "north": [
+     -0.0520111,
+     0.97694444,
+     -0.20706139
+    ]
+   },
+   "files": {
+    "full": "public/assets/sun/full/lab/place-far-0.jpg",
+    "web": "public/assets/sun/web/lab/place-far-0.jpg"
+   }
+  }
+ },
+ "gas": {
+  "steps": 0,
+  "top": 0.07,
+  "skin": [
+   5.0,
+   0.005
+  ],
+  "pool": [
+   2.0,
+   0.012
+  ],
+  "dim": 0.6
+ }
+}

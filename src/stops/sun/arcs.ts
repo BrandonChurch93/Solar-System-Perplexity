@@ -66,6 +66,7 @@ uniform vec4 uPlasmaMore;
 uniform vec4 uFoot;
 uniform vec3 uCool;
 uniform vec3 uHot;
+uniform float uThick;
 uniform vec2 uTone;
 uniform vec2 uHalo;
 uniform vec2 uThin;
@@ -142,7 +143,11 @@ void main() {
   vec3 col = lit * (vStrand.y * uKeep);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = vec4(col, 0.0);
+  // the thick limit: gas that lies over gas does not add without end. Each layer covers what is behind it, the face
+  // too, by the share its own light has of the most a body of this heat can give (uThick times the white of the heat's
+  // curve), so a bundle burns up to that white and no further, at every distance, and the bloom has no more to spread
+  float cover = min(max(col.r, max(col.g, col.b)) / (inverseFilmic(vec3(uTone.y)).r * uThick), 1.0);
+  outColor = vec4(col, cover);
 }`
 
 /** A whole number and a slot give one fixed value from 0 to 1: the same at every run. */
@@ -385,11 +390,12 @@ export class Arcade {
         uCool: { value: new THREE.Vector3().fromArray(l.cool) },
         uHot: { value: new THREE.Vector3().fromArray(l.hot) },
         uTone: { value: new THREE.Vector2(l.knee, l.most) },
+        uThick: { value: l.thick },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
       blendSrc: THREE.OneFactor,
-      blendDst: THREE.OneFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
       blendSrcAlpha: THREE.ZeroFactor,
       blendDstAlpha: THREE.OneFactor,
       transparent: true,

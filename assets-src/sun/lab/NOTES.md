@@ -1,0 +1,414 @@
+# Sun ground lab, notebook
+
+I am sun_ground_lab (path /root/venus_place_builder). Task: MAIL 936 from the Builder, 25 Nov 2026 06:11 UTC. I build a second,
+independent version of the Sun's near ground on branch agent/sun-lab (from d91c0f63). Looks go to agent/sun-lab-looks
+(`npm run looks -- --push --folder sun-lab`). I never push to agent/sun-place and never write main. Venus is dropped.
+
+After a compaction: read assets-src/shared/STOP-AGENT.md, then this file.
+
+## Rules of MAIL 936 in short
+
+- Folders: src/stops/sun/lab/, assets-src/sun/lab/, public/assets/sun/{web,full}/lab/. At most 3 MB net growth of the tracked
+  tree, counted and said in every mail.
+- Other files of src/stops/sun only by the smallest switch. The standing ground stays reachable by one key in a json of
+  mine: src/stops/sun/lab/lab.json "ground": "lab" or "standing". Edits outside the lab folder are listed in every NAMED mail.
+- Not allowed: way (1) a picture on a relief warped by a flow, way (2) cells drawn by a formula in the fragment shader.
+- Judged: (1) frame 90 draft and final as a pair at 1 to 1 beside the approved crop, approved left; (2) the life, a clip of
+  frames 120 to 179 with every half frame at draft, and the smooth number (limit 0.45, standing 0.51 to 0.52),
+  `npm run smooth -- --stop sun --kind rise --only pictures --frames A-B` in capture frames; (3) the far end, plan in words
+  then built, nothing by the clock; (4) cost of a draft picture by part.
+- Mails to /root: MEASURED, STATED, UNKNOWN apart; a mail at least every 90 minutes with the newest picture attached; a
+  mail that names a commit starts with NAMED and the full sha and ends with my own list of what is still wrong. `date -u`
+  before a time is written. No em dashes, no exclamation points. Trailer on every commit.
+
+## Edits outside the lab folder (what sun_builder would take)
+
+- src/stops/sun/set.ts: two import lines (LabGround, lab.json) and one line: `const surface = lab.ground === 'lab' ? new
+  LabGround(ground.material.uniforms) : new Surface(ground.material.uniforms, map, mapToStage)`.
+
+## Design
+
+- sim.ts: power diagram of sites on a tile that repeats (8 units, 2800 slots). Fixed step 0.25 s, 30 s of warm up before the
+  first frame of the terrain segment, kept from -0.5 s to 10.5 s (45 steps). Only + - * / sqrt and a whole number hash.
+  Weight of a cell by the share u of its life: full radius squared times (3 env(u) - 2), so a cell comes from nothing and
+  goes to nothing. Sites go toward the middle of their cell (relax 0.12 a step), so a growing cell presses its neighbours
+  back. A slot whose life ends is born again: half of them inside the largest of 24 picked cells, 0.55 of the way to an
+  edge (a split: the new cell takes a growing share of its host), the others on an edge of a picked cell.
+  `cellsAt(t)` reads two steps of the table, blends them, and makes the diagram of that time: middle, area and up to 12
+  edges (normal over distance) a cell.
+- ground.ts (state of 07:05, after MAIL 949): one instanced polar mesh a cell in three densities (36 by 96, 14 by 40,
+  6 by 16) picked by size in the picture. The cell data is a float texture (8 texels a cell), the list of drawn cells a
+  float texture a level (read by gl_InstanceID). Radius r(theta) is a p-norm (p 10) of the edges times 1.06, so the
+  pillows press on each other and the lane is the crease where two meet. Profile: an arc of 86 degrees, height 0.32 of
+  the radius, top flattened (power 2.2), a few shallow creases between lobes round 4 sites of the dome's own.
+- Light is heat alone (MAIL 949 point 1: no highlight that moves with the eye). heat 0 to 1 goes through the ramp of
+  convect.json, above 1 it is brighter than white. A hot patch of no even outline in the middle (rho plus noise), a
+  cooler shell round it combed into threads (fan from a root at the foot on the lens side), cold at the rim, at the
+  root and in the creases, knots, small points on the rim. The flank of a dome is cooler than its top by the lie of the
+  surface against the ball's up (not against the eye).
+- Haze: tau = amount exp(-height / scale) / mu^power, mu the cosine between up and the look. Far cells melt into a
+  bright limb, near ones stay sharp.
+- Spot: the cells' chart is drawn in toward the spot (place r on the ground belongs to r + pull exp(-(r/wide)^2) of the
+  chart), so cells become strands. A funnel in height (wall from 2.6 to 0.9 umbra radii, 0.12 deep), domes flatter
+  there. Every thread ends over the pit at its own place (discard by the thread's own noise), so there is no ring of
+  gaps. The floor is a dark mesh under all of it.
+
+## What MAIL 949 asks (06:38)
+
+1 no view bound highlight, heat alone. 2 wide range, knots that bloom, map a temperature. 3 cells half as wide, mixed,
+flatter tops with lobes, lanes uneven with small bright points. 4 depth by a glowing haze. 5 spot a wide flat dark sunk
+floor with fine dark threads over its edge. 6 far domes foreshorten into fine grain; look at 0 and 179 too.
+
+## Measured
+
+- 06:18 d91c0f63 builds (npm ci, build, vitest 62 files 700 tests).
+- Standing ground, frame 90 draft: 51.3 s on this machine (4 CPUs, no GPU).
+- Lab ground, first raw still of frame 90 draft: 22 s. life() takes 4.9 s once at set creation, cellsAt 30 to 70 ms.
+
+## Traps
+
+- three.js uploads changed vertex attributes in projectObject, before any onBeforeRender. An instanced attribute filled in
+  onBeforeRender is one render late (first still was black). The list of cells is a DataTexture now: textures are
+  uploaded at the draw.
+- The read tool cannot open files under out/work; copy pictures to /home/user/workspace/v/ first.
+
+## Log
+
+- 06:36 first raw still with real domes (out/work/sun/lab/lab-90-b.png): cells about twice too large, too yellow and
+  too evenly bright, no umbra.
+- 06:38 to 07:05 stills d to o. What failed on the way: threads as broad bands (satin, shells), a dark root drawn large
+  (reads as an open shell), deep lobes with a term by the eye (gems), dark rim all round a tall dome (beans), veins as
+  thin lines (a drawing). What held: low pillows that press on each other, a hot patch with a soft uneven edge, thin
+  dark rim, threads strong only in the shell and in the penumbra.
+- 07:05 still o: near ground max channel percentiles 5 25 50 75 95 = 0.27 0.44 0.63 0.79 0.94 against the approved
+  0.23 0.40 0.58 0.76 0.91. Frames 0 and 179 hold (stills n).
+- 07:13 MAIL 956: direction right (heat alone, sunk spot). Asked: (1) one sheet, not pebbles: crease depth varies along
+  a border down to nothing by a field of the place, bright patches cross borders, veins as thin dark threads that leave
+  a lane and die inside a cell; (2) not polished: the top streaked by the fibre field at full strength, many small
+  bright points; (3) spot: torn umbra edge with bright tongues, penumbra threads 2 to 3 times as long, dark and bright
+  in turn, each of its own length and bend, ending among the cells with no ring, no row of bulges. Lanes darker and
+  browner locally without moving the median. Order: fibres, veins, merging; then the life clip 120 to 179 at 60 a
+  second with my own proxy number (the reader knows only dive and rise); then the far end and handover plan. Next mail
+  by 08:30.
+- 07:15 to 07:28 stills s to y. Failed: fibres as a fan from inside the dome with few fibres a turn (monstera leaves,
+  scallops); cells with footprint 1.0 (holes). Held (commit 9119c72, still y): labJoin(place) lifts both sides of a
+  border to one level (uLabMore.w, 0.007 units) so the crease is gone there and the dark rim and flank cooling go with
+  it; the heat of the place (vn of the chart place, scale 8 a unit) crosses borders; fibres from the root at the foot
+  with counts 14, 34, 80 a radian and the pattern cut along the fibre (4, 8, 14 a dome length) so they are streaks;
+  veins: 4.5 a radian from the root, 45 percent drawn, each with its own reach; penumbra as threads in the polar
+  chart about the spot (55, 120, 260 a radian), the same for all cells they cross, reach 2.9 umbra radii give or take
+  by the thread; umbra edge by discard with tongues.
+- One page renders a second frame in 9 s (the first 23 s holds the load and life()). assets-src/sun/lab/clip.ts renders
+  capture frames on one page (query rate=2). clipstat.py and est.py: my proxy of the pattern reading. Calibration:
+  standing ground 170 to 178 reads 0.38 by est.py where the judged reader says 0.47 to 0.52, so the proxy reads about
+  a quarter low. Lab still o (no flow in the shader) 0.02, still p 0.10: far under the limit, there is room for more
+  life.
+
+## Far end and rise: the plan (07:35, not built)
+
+Everything by place, eye distance, angle and pixel size. Nothing by the clock.
+1. A dome is drawn as geometry while its width in the picture is over about 5 px of a 1080 frame (three densities by
+   size, as now). Between 12 and 5 px its height sinks to the level of the floor and its heat goes to the mean heat
+   of the ground at its place, so at 5 px it is the floor and can be left out without a step.
+2. The floor under the domes carries the same ground as grain: a cell field of the chart place in its shader (cheap,
+   two octaves), with the same heat law and haze, weighted by pixel size: full where a cell is 5 px, the mean heat
+   alone under about 1.5 px. So the horizon of the surface view and the first part of the rise are domes near, grain
+   behind them, a glowing limb last.
+3. On the rise the group lies on the globe's ball as the standing ground does. As the eye climbs every cell shrinks in
+   the picture, so the domes hand to the grain and the grain to its mean by pixel size alone, the far side first and
+   the place under the eye last. Where a cell is under about 1.2 px the floor lets the globe's own face through
+   (its alpha by pixel size), which is the standing law "away" expressed in pixels.
+4. Count: at an eye height h (stage units) the frame holds about 1.9 h^2 / 0.008 cells at 0.1 / h * 1037 px. With the
+   dome limit at 5 px (h about 20 units, 1 radius) that would be far too many, so the limit rises with the count:
+   domes above 12 px only once more than 16000 are in the frame (h about 8 units), all of it by pixel size.
+5. The chart about the place stretches sideways by sin(a)/a at the angle a from the place (0.64 at 90 degrees): grain
+   only there, accepted.
+
+## 07:36 to 07:50, while the clip of state y renders (no still possible)
+
+- kit/05 read on determinism: a fixed step simulation from the first frame of the segment may cache checkpoints, the
+  cache never changes the result. My table is made at load by the same code on every machine, no file.
+- Looked at approved and state y side by side at 2 to 1 (v/appr-zoom.jpg): the approved top is a SOFT bright blotch
+  mottled at about a third of a cell, the fibres are fine and soft and are strongest toward the rim (dark between
+  them there), the crown is bright, the dark is thin veins with a soft halo and beads of light along them. State y
+  is striped shells: the fan from a dark root at the foot reads as a scallop, the threads are too bold and too white.
+- So state z (written, not yet seen): root of the fan inside the dome (fibre.offset 0.3 of the radius, was 0.92 at
+  the foot), no dark root (fibre.dark 0), periodic noise round the turn (vnp, no seam), the fibres' strength grows
+  from heat.thread[1] on the crown to heat.thread[0] at the rim, a mottle of the place (scale 30 and 66 a unit) on
+  the top, veins now come in from the rim (14 places a turn, half drawn, each of its own reach), rim band thinner
+  (0.8 to 0.98). Penumbra: thread counts 85, 190, 400 a radian (were 55, 120, 260), less white.
+- Far end seen in y-far.jpg: red orange haze with few light patches against the approved's golden grain. The haze
+  power 2.5 makes everything under a look of 4 degrees opaque. To try: power 1.5, amount 0.004, and smaller cells
+  (sim slots 5625, radius 0.021 to 0.06) since the approved cells are about 0.8 of mine in the near pair.
+
+## 07:40 to 08:02: states z to zk (committed d741d77, ac24b9b), and what is written but not yet seen
+
+- The clip of state y was stopped at 59 pictures (240 to 298) to free the machine for the look. Proxy on those 59:
+  pattern over 16 capture frames, largest 99th percentile 0.089, picture to next 0.021 (clipstat.py).
+- z (root inside, soft fibres): flat pavers with a sharp bright top. FAILED as it stood. Cause found: the mesh's own
+  ring coordinate rho is not the plan radius (rho 0.7 is 0.87 of the radius seen from above), so everything written
+  by rho sat in a thin outer band. The heat profile now goes by the plan radius sin(a)/sin(arc).
+- What held (zf on): top = floor + pow(1 - plan^2, heat.core) times the wide field of the place, times a mottle of
+  three octaves (0.45 to 1.35); dark by depth (vDeep, the height of the surface over its foot, from the vertex
+  shader: black where two domes meet low, a soft halo above); flanks cooler by the lie (heat.edge 0.12); veins come
+  in from the rim (14 places a turn, 40 percent drawn); points down (knot 0.3); haze power 1.5 amount 0.004.
+- zi: cells smaller (sim slots 5625, radius 0.021 to 0.06): flat starfish. zj: dome height 0.42, flat 1.9, core 1.4,
+  rim 0.1: plump again. zk: fibre counts 6, 14, 32 a radian for the new size, join level 0.009, more joins.
+  Near ground of zk: mean rgb [0.611 0.369 0.184], percentiles [0.271 0.412 0.616 0.796 0.961 1.0] against the
+  approved [0.231 0.404 0.58 0.761 0.906 0.965].
+- Clip of zk running since 07:56 (out/work/sun/lab/clip-zk, life now 5 to 14 s, well 0.06).
+- Written, not seen: penumbra threads as level lines of the field about the spot (labPen, shared by dome and
+  floor); fibres at 0.9 strength on the crown; wider dark halo by depth.
+- Written, not seen: THE FAR END. A map of the tile (2048, half float, mips, anisotropy 16) is drawn each time the
+  time changes from the same cells with the same dome shader seen from above (define LAB_MAP, heat alone). The
+  floor reads it at the place in the cells' own chart (the comb toward the spot undone in closed form) wherever a
+  mean cell is under far.px[1] = 10 px of a 1080 frame; a dome sinks to the floor and takes the map's heat between
+  10 and 6 px and is left out under 6. So the cells in the map are the same cells at the same places as the domes,
+  and the mips carry them to their mean. In the surface view the horizon is 6.5 units off and a mean cell is 62/d px
+  wide, so every cell up to the horizon stays a real dome; the map is for the rise.
+- Known cost risk: on the rise, cells of 6 px and more can be 70000 and more; level 2 list raised to 512 x 512.
+
+## 08:18 UTC mail sent (not NAMED), state zl 4382e81
+Clip of zk measured: proxy over 16 capture frames largest 0.108, mean 0.081; picture to next mean 0.004, largest 0.064 at k0314 to k0315 (table step boundary 5.25 s, lowest quarter of the picture: a jump, cause open).
+Own verdict: still shells (white star and dark spokes on every cell). Next: heat as a field of the place, not a profile of the cell. Next mail by 09:45 UTC.
+
+## 08:37 UTC states zm to zs (75403e8), MAIL 980 (08:26) taken in
+MAIL 980: verdict shared; wants cells 40 to 160 px mixed, some run together; net wide and soft at triple points, thin to nothing along some borders; tops mid gold with small white glints; LIFE READABLE in 6 s: a share of cells with lives of 2 to 4 s, grain seen to flow from middle to rim; the jump first; table a pure function of seed and config; map drawn per frame time from the frame number alone. Next mail by 09:45: frame 90 pairs, cause of the jump, frames 0, 60, 179, one rise frame.
+THE JUMP, cause found and cured (sim.ts): (1) a cell was live only while live at both steps and its weight at the ends was only twice its own radius squared below nil, so small cells still held ground when they were cut: about 200 cells popped at every step. Now the weight falls to minus (gone times largest radius) squared at both ends, and cellsAt reads the weight off the cell's own age at the time (table holds birth and span, not weight). (2) two sites born in one step in the same host at the same edge lay on one point and ignored each other: births now lean and reach by their own hash, and of two sites on one point the lighter holds nothing. (3) sites that left the tile between steps were binned wrong: wrapped now. Test /tmp/jump2.ts style: area change over 0.0002 across each of 42 step boundaries: 0 (was about 200 each).
+Ramp read: target heat percentiles 5/25/50/75/95 are 0.115 0.21 0.335 0.51 0.71 (from convect.json ramp against the approved near field).
+Failed: fibres as level lines of 2 d noise (marble, agate); root at 0.85 on the far side with low radial frequency (wood grain, tiger eye); tall domes arc 86 height 0.42 flat 1.9: half of what the lens sees is flank (debug picture of the band), so any dark band reads as a dark cap side: now height 0.3 flat 1.5.
+Held (zr): dark band by plan radius, wide at corners (vCorner = second largest over largest edge term), gone where joined; rays 3/7/14 a radian; blot field (place noise and fan noise); lives 2.4 to 11 s squared toward short; well 0.14.
+
+## 08:44 to 09:00 UTC states zt to zv (77693b1), the rise read, state zw written
+zt strong crown, zu milder, zv (committed 77693b1): borders pushed about by a place field (join.wobble 0.022), sharper fibres, more lane points. Near ground of zv: mean rgb [0.625 0.374 0.174], percentiles [0.271 0.451 0.651 0.8 0.937 0.988] against the approved [0.231 0.404 0.58 0.761 0.906 0.965]. Own verdict: tufts or dry leaves with wide flat brown skirts, not plump.
+Clip of zv (frames 120 to 179, 120 pictures) started 08:48, about 10.5 s a picture, log out/work/sun/lab/clip-zv.log. Then /home/user/workspace/v/after.sh clip-zv.
+THE RISE with zv (stills 185, 200, 215, 230): 185 and 200 fine. At 215 a hard seam where the domes end and a bright broken patch over the spot. CAUSE: my materials were opaque with render order -6, so they were drawn BEFORE the globe's ball; the ball (no depth write while placing, depth test on) then drew over everything of mine that lies under the ball's radius: the pit and the whole floor (0.004 under). So the far map on the floor was never seen on the rise. CURE written (not yet seen): on the globe's side every material of mine is a transparent twin with premultiplied blending (WEIGHED, as convect.ts weighed), so it is drawn after the ball; labOut holds the standing law of place.json onGlobe (away 0.6 to 2.4 radii in the logarithm, reddening over 0.32 to 1.4, times keep). In the surface view the plain opaque materials are used as before.
+pick(): mean cell width was computed from all slots (0.06 units); only about 2100 to 2360 of 5625 slots hold ground and the true mean width is 0.095. Now lab.far.cell 0.095.
+WHY THE TUFTS (worked out on paper at 08:57): with dome.over 1.06 the border lies at plan radius 0.943, where the dome still stands at 41 percent of its height (arc 86, flat 1.5). So the dark by depth (smoothstep 0.03 to 0.4 of vDeep) never reached a border, only the pits at triple points, and the dark band by plan radius 0.8 to 0.94 covered the dome from 72 down to 41 percent of its height, which is the whole flank the lens sees: a brown skirt. State zw (written, not seen): band by plan radius removed; the crease is dark by depth from heat.crease[0] 0.36 (plus or minus crease[2] by a place field) over crease[1] 0.2 of the height, so it is thin along a border, wide and soft where three meet (the round footprints leave a deeper pit there) and nothing where joined; flank heat edge 0.5 (was 0.12); height 0.36; body 0.86; well 0.2.
+
+## 09:08 UTC state zzc (committed), what was seen and measured since zv
+- Clip of zv stopped at 44 pictures (k0240 to k0283) to free the machine. Proxy on those: over 16 capture frames largest 0.542, mean 0.481; picture to next largest 0.125, mean 0.041. FAR TOO FAST, and the cause is in the weight law of 08:37: weight = full^2 env - GONE (1 - env) with GONE 0.032 against full^2 of 0.001 to 0.004, so a cell held ground only while env was over about 0.75: visible for 46 percent of its span (1.1 to 5 s), grown in 13 percent of it (0.3 to 1.4 s). Boiling.
+- New weight law (sim.grow 0.38, sim.edge 0.08, sim.under 3): weight = full^2 ((1 + under) env - under) - GONE gate, env rises over the first grow of the life and falls over the last, gate is 1 only in the first and last edge of the life. So a cell grows over about a third of its life and shrinks over a third, and the plunge to nothing happens only at the very ends. jump2 test: 0 area jumps over 42 boundaries. sim.life [2.5, 14] (hash squared: 36 percent under 4 s), sim.slots 3000, radius [0.028, 0.088]: 1932 cells on, widths 5/25/50/75/95 0.021 0.064 0.096 0.124 0.160 units.
+- zw (crease by depth, low domes): flat pads, failed. zx (height 0.62, flat 1.25, crease 0.33 over 0.5, join.level 0.02, cool 0.38, edge 0.6): plump loaves, matte. zy (new life and sizes, fewer lane points): mixed sizes, overlap seen. zz (thread sharper and finer counts 4/9/20, dark between threads 0.42, blot 0.38 to 0.64, cool 0.28, hot 1.4, body 0.95, a thin dark line in the crease, join level at most 0.7 of the own height): satin cushions with radial pleats, the nearest so far. zza: floor in the penumbra carries the threads, dome.pen 0.12, hot 1.25. zzb: penumbra flatter and wider. zzc: thread widths 0.03 to 0.1 (were 0.045 to 0.2: nearly everything was thread), spot.depth 0.04, wall 0.95 to 2.0, umbra dark to 2.2 radii.
+- Near ground of zzc: mean rgb [0.567 0.337 0.168], percentiles [0.224 0.361 0.545 0.769 0.957 0.996] against the approved [0.578 0.338 0.147], [0.231 0.404 0.58 0.761 0.906 0.965].
+- THE RISE: frame 215 with the transparent twins: cells to the limb, spot whole, no seam, no patch. Still to see: 230 and 240 (the away fade into the globe's face).
+- Still wrong: creases soft brown, not thin dark lines; tops clip (p95 0.957); fine speckle and dark veins from dimples missing; spot: umbra a clean flat ellipse, black slits between the petals of the penumbra, threads read as wood grain on the near side.
+
+## 09:20 UTC state zzd (6e9ed56) committed, clip of zzd running, state zze written (not seen)
+- Frame 240 of zzc had a dark ring inside the limb. CAUSE: labOut discarded where the ground had given way (held 0), so nothing wrote depth over the ball (the ball writes none while placing) and what lies behind the ball showed through at the limb. CURE (zzd): discard only when keep is 0 or in the diagnostic views; a ground that has given way still writes its depth, as the standing ground does. Frame 240 clean, frame 222 shows the ground fading into the globe's face toward the limb.
+- Clip of zzd: `npx tsx assets-src/sun/lab/clip.ts --from 240 --to 359 --out out/work/sun/lab/clip-zzd`, started 09:14, about 11 s a picture, ends about 09:37. Then after.sh clip-zzd. Then the test of the frame law: git stash, clip.ts --from 300 --to 300 --out out/work/sun/lab/fresh-zzd, cmp with clip-zzd/k0300.png, git stash pop.
+- Measured on the pair of zzc: the umbra's dark is x 203 to 418, y 178 to 260 in the spot crop against the approved 199 to 420, 172 to 228: same width, same far edge, 32 px too tall on the near side. A flat disc under a look of 24 degrees is 2.4 times as wide as tall; the approved is 3.95 times. So the approved umbra is a real pit whose near lip hides the near part of its floor: a lip of 0.07 units with a steep wall does that. zze: spot.depth 0.07, wall 0.92 to 1.25 umbra radii, dark of the umbra ends at 1.5 radii.
+- The black slits in the penumbra are the floor seen between the low domes there (its threads stood at 0.55 of the domes'): now 0.9.
+- Read off the approved at native size (appr-native-near.jpg): the tops are mottled mid gold, the bright is thin lines and points at the lips of the domes where they turn down into the crease, the dark is pits where three cells meet with the fibres running into them. zze: knee on the heat of the tops (heat.knee 0.6, slope 0.45), points added after the knee, hot ends of the threads at the lip (heat.lip 0.45), veins as the thin creases between the lobes dying toward the crown (heat.vein 0.55), fibres bent by a place field (fibre.bend 1.3), crease shoulder narrower (0.28), dome.lobe 0.18.
+- Cost: life() 3.6 s once at load, cellsAt 20 ms a sample (node, while a clip ran).
+
+## 09:40 UTC mail sent (not NAMED), state zze faca211, clip of zzd
+- Clip of zzd (120 pictures): proxy over 16 capture frames largest 0.406 at k0308, mean 0.287; picture to next largest 0.042 at k0341 (not on a table step), mean 0.010. No jump.
+- Frame law tested: capture frame 300 after 297 to 299 on one page equals 300 on a fresh page, byte for byte (out/work/sun/lab/law-a, law-b).
+- zze near ground: mean rgb [0.592 0.347 0.154], percentiles [0.231 0.412 0.588 0.796 0.914 0.941]: the numbers fit the approved. The look does not: gold foil nuggets, satin swirls (fibre.bend 1.3 swirls too much), a brown gap round each cell, no glints. Spot: pit with wall 0.92 to 1.25 shows a brown cliff with a notched top edge (floor mesh too coarse there, 3 rings on the wall), dark still y 172 to 255 against 172 to 228.
+- Said to the Builder: next mail by 11:05 UTC. Next: one sheet (gap to a line, heat across borders), fibres into the pits, the wall of the pit, then the final tier pair of frame 90, cost by part.
+
+## 10:22 UTC, states a1 to c4 (after MAIL 1018: no lamp, one sheet, no cliff)
+
+All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jpg, NAME-spot.jpg, NAME-zoom.jpg).
+
+- a1 to a9: the lamp went. Heat by plan radius (1 - plan^2), view law on a smoothed normal (heat.lie 0.3; the full
+  local normal read as a headlamp), polygon cells (round 10, over 1.03, flat 1.6, height 0.42), level law
+  min(join.level (0.5 + 0.5 join), join.most high).
+- pit.py (applied, do not rerun): pit centre moved back (spot.back 0.14), a fine pit disc (define LAB_PIT), labPen
+  takes the distance to the pit.
+- b1 to b9: funnel in place of the cliff (spot.wall [0.78, 1.5], depth 0.15), domes end at the lip, fade of fibres by
+  the picture's width ACROSS them (fwidth faded them at grazing view).
+- The black slits and triangles in the penumbra were the FLOOR seen in the gaps at triple points (diag: floor heat 3
+  shows white there). The floor had the haze thinned to 0.1 round the pit and the domes did not, so the domes had an
+  orange wash and the floor none. Cure (c3): one haze law of the place for both
+  (0.1 + 0.9 smoothstep(2u, 3.5u, distance to the pit)), the floor carries the same threads at the same strength.
+  The slits are gone and the penumbra is dark with bright threads.
+- Penumbra threads (c1 on): value noise at N a radian shows threads about 3 lattice steps apart, so 24 a radian gave
+  ribbons 30 px wide. Now the count doubles with each doubling of the distance (octaves of log2(rs), cross faded):
+  52 f0 and 110 f0 a radian, a broad 26 f0 that only weighs them. Along the thread the noise runs on log2(rs).
+- Near field: fibre.offset 1.0 (root outside the cell) read as agate or wood grain (c3). offset 0.45, thread
+  [0.25, 0.8] (c4) reads as shells with ribs. Small hot points along the fibres (spark) added.
+- MEASURED c4 near ground: mean rgb [0.612 0.356 0.156], max channel 5/25/50/75/95/99
+  [0.263 0.427 0.643 0.788 0.918 0.961]; approved [0.578 0.338 0.147], [0.231 0.404 0.58 0.761 0.906 0.965].
+  c3: [0.591 0.336 0.150], [0.263 0.408 0.6 0.761 0.933 0.973].
+- Reader against proxy on one window (zzd clip, capture frames 240 to 300): judged reader largest 0.717 at k0255 at
+  [68, 1072], mean 0.383; proxy largest 0.305 at k0283, mean 0.244. The 0.406 of the 09:40 mail was the proxy.
+  reader.ts is the judged reader's pictures() run on a folder.
+- A draft still is 25 to 27 s on a fresh page now.
+- STATED verdict c4: no lamp, no cliff, no slits. Near field still reads as solid shells, not gas.
+
+## 10:44 UTC, state c7 (commit 5663fa267a0e65784e8111eb86288dfd48fa2cae), MAIL 1030 and sun_builder's mail of 10:33
+
+- MAIL 1030: round 50 closed on the film's standing ground. Decision d290: the lab ground replaces it once proven
+  beside the approved image at 1 to 1. From now the critics' words judge: granules with ridges and narrow dark lanes,
+  bright tops at the approved scale; umbra with depth, penumbra filaments of varied length; G17 at frame 0 was 0.635
+  against 0.8 on the standing ground. Owed in the 11:05 mail: no lamp state, frame 90 pairs at 1 to 1 (whole, cells,
+  spot, limb), my reading of G17 on frame 0, the control for the gold foil, the clip 120 to 150, reader against proxy,
+  one line on whether the ground lays into sun_builder's interface.
+- sun_builder's interface (GROUND.md, eye-path.json in /home/user/.perplexity/attachments/d1add9c365c7465faa1ac6a60ef50c98/):
+  new Surface(shared, map, toStage), mesh, update(time, eye, keep, onGlobe), dispose(). LabGround has the same four
+  (constructor takes shared only) and is switched in set.ts by lab.ground.
+- c5 to c7: the heat of a cell is two blotches of its own (seeded places and sizes in the cell's disc) in place of a
+  ring about the middle, so no rim of even width; the dark by the lane has a width of the place (0.1 + 2 c0);
+  join.level 0.012; counts [2, 5, 11]; rim 0.32, body 1.0, core 0.35, patch [0.15, 0.75], thread [0.25, 0.7],
+  offset 0.45. c6 (rim 0.16, lane dark 0.4) was bright spots in a dark sea.
+- MEASURED c7 frame 90 near ground: mean rgb [0.614 0.349 0.161], max channel [0.337 0.455 0.592 0.773 0.933 0.969].
+- MEASURED G17 (tools/measure/g17.py) frame 0, nograin view, review tier (15 samples): median 0.916, 25th percentile
+  0.629, 79 tiles; worst tiles [6,4] 0.268, [7,4] 0.337, [5,4] 0.393 (the penumbra and the pit). Frame 90 review
+  beauty (with grain): 1.331.
+- Control for the lamp: c7 with heat.lie 30 (view law on the full local normal) against lie 0.3: bright faces toward
+  the eye come back; mean difference of the near ground 0.035, 5.6 percent of pixels over 0.1.
+  /home/user/workspace/v/control-lamp.jpg.
+- STATED verdict c7: scales or leaves of polished amber with marbling; hard polygon silhouettes; flat red level
+  between the cells in the middle field; limb darker and redder than the approved (its far field is a bright haze).
+- NEXT (plan): the gas as a march. The map pass also writes the height of the ground; every fragment marches its
+  sight line through a thin layer over that height field (in the chart, warp undone) and gathers glow with the
+  depth of gas under the line: thick over lanes, thin over tops, most toward the horizon. Also: bend down (the
+  marbling), level lower and over higher (V creases, no flat red), haze up toward the limb.
+- MEASURED clip of c7, capture frames 240 to 300 (film 120 to 150), 61 pictures at 10.3 to 10.8 s: judged reader
+  largest 0.626 at k0259 at [28, 1040] (bottom left corner, one cell event near the lens, rows 254 to 267 over the
+  limit 0.45), mean 0.357; outside that event 0.19 to 0.30. Proxy largest 0.276 at k0282, mean 0.184. zzd on the
+  same window: reader 0.717 and 0.383, proxy 0.305 and 0.244. Files reader-c7.txt, proxy-c7.txt, clip-c7.mp4.
+- 10:48 mail sent (not NAMED, state c7 5663fa2). MAIL 1038 (10:55) from the Builder: c7 not for a critic. Worst
+  first: (1) leaves of amber on a red floor: no floor may be seen, cells one pressed sheet, a lane the crease where
+  two cells meet, 1 to 3 px in the middle field of a 1080 frame, near black; (2) far field and limb redder and darker
+  than the approved, hard horizon; (3) the spot: satin ribbons in a neat round funnel, wanted a ragged umbra outline,
+  needles of mixed length with bright heads, outer edge fraying into the granules. The march: light from the same
+  heat field as the ground under it, a function of place and eye alone, cost by part at the final tier. Owed: the
+  life in three lines (what moves by what law, how many film frames a cell lives) and two clips of film frames 0 to
+  60 at every half frame, one with the eye held still, one with the film's eye. The reader's 0.626 corner: look frame
+  by frame; the cure is in the span law if a cell ends too fast; read the still eye clip too. Decision d292: round 2
+  waits for the lab ground, starts at the first take that holds it and at 15:00 UTC at the latest. NAMED wanted by
+  13:30 UTC. State owed by 12:30 UTC: frame 90 pair, frames 0 and 60, the two clips, G17 on 0, 60, 90, rise stills
+  185 to 240.
+- d1 to d3 (failed): join.level 0.004 and dome.over 1.08 press the cells into one sheet (kept); counts [5, 13, 30]
+  with strong threads were corduroy shells; a thin lane line by plan with haze 0.015 was cracked mud in an orange
+  wash.
+- e1 to e3: lane dark by the distance to the cell's border (edgeD = 1/over - plan) with a ragged edge by the fan
+  noise; veins by labLobes; commit 4078134. Still leaves: a dark rim of 0.3 and a hard patch gave each cell a big
+  dark share.
+- e4 to e8 (the step that worked): the cell is bright all over (rim 0.45 to 0.62) with a soft hotter middle (patch
+  [0.15, 0.75], three seeded blotches), a narrow near black lane (lane [0.035, 0.2, 0.8], crease[2] 0.02) and a
+  shade toward the border (shade [0.12, 0.25]), both with a width by the place (smoothstep(0.4, 0.75) of the crease
+  field) so that some borders are a thin line and others a wide dark valley. Fan threads weak (thread [0.04, 0.5]),
+  cool 0.7, groove 0.6, vein 0.3, edge 0.6, haze 0.008 power 1.5 tint [1, 0.85, 0.5]. Penumbra noise with a higher
+  frequency along (lr 9 and 15) broke the ribbons into dashes: white squiggles on the near side (bad).
+- Corner of the c7 clip (k0250 to k0268, /home/user/workspace/v/corner-c7.jpg): no cell ends or splits in that
+  window; the cells keep their outline and the bright fan pattern inside them flows. So the reader's number there is
+  the bright threads' flow under the lens, not a short life.
+- Control hook: LabGround.update adds globalThis.labAhead (seconds, absent in the film) to its time; clip.ts --hold K
+  draws capture frame K again and again with labAhead = (k - K)/60, so the eye stands still and the ground lives.
+  reader.ts --hold K reads such a folder with the pose of K.
+- e9: tongues in the penumbra (labTongue: n drops side by side about the spot in ranks along log radius, head
+  toward the umbra, own length, bend and heat; two layers 72 and 46), umbra edge by the lot of the column, pit
+  shallower (depth 0.07, wall [0.85, 1.9]).
+- e10 to e13 (commit 45c6206): tongues [110, 70] in ranks [2.2, 1.7], hot 1.8; dome.round 8, flat 1.5, wobble 0.03;
+  shade [0.22, 0.4] with a width of (0.4 + 1.2 smoothstep(0.3, 0.8, crease field)); lane [0.03, 0.12, 0.6]; rim 0.5,
+  patch [0, 0.9], body 1.12. e11 (round 6, flat 1.3) was nuggets with gaps. Whole frame reads as a pressed sheet of
+  golden cells with a tongue spot; near pair still cobbles: lanes brown and soft, not thin and black; too smooth.
+- f1: the gas march (labGas in TAIL_GLSL: 20 steps from the place to the eye through a layer to gas.top, the ground
+  under each step read from the map, which now holds the height in g; a skin on the domes and a pool in the low
+  places; glow by the mean heat of the ground under the path). First try (skin [5, 0.005], pool [2, 0.012]): glow
+  far too weak, lanes black, far field pebbles on black, limb dark; a draft still 66.8 s against 27 s. Behind the
+  switch gas.steps (0: the analytic haze as before). Not tuned yet.
+- f2 (commit d26bc8a): labWell: the heat lumps of a cell are born small about its middle, spread outward with the
+  gas and fade at the rim (two generations cross faded, period heat.spread[0] 4 s, growth e^1.2 a period, size 3 a
+  dome radius, share 0.8 against the still mottle of the place); heat.well 0.3. Chain 3 runs on f2: still 90, hold
+  clip (capture 0 to 120 with the eye of capture 0), film clip 0 to 120, rise stills 185 to 240, G17 0, 60, 90.
+- Mail of sun_builder 11:15 and MAIL 1051: the globe wants a baked level of my ground: gnomonic about the spot,
+  W 40 degrees, N 4096 (2048 enough if the ground stays to 0.37 to 0.72 radii), 8 bit sRGB, seen from straight
+  above, no view law, no gas, no flare lights, clock 0; files public/assets/sun/full/place-far-0.jpg and web at
+  half size, the bake script, a recipe for G11 (FAR-TWIN.md in
+  /home/user/.perplexity/attachments/fee7a78ca7f14731b42b9170441488b0/). RULED: my ground takes its large tone
+  (over about 3 degrees) from the globe's map inside the level and outside; my spot is the map's dark knot (1.9 to
+  2.0 degrees wide as a disc of equal area, box 2.2 to 2.5 by 3.0 to 3.25, middle 0.08 west and 0.32 south of the
+  spot's coordinate; standing ground's umbra 1.82 wide, penumbra 3.82). If mine differs by more than a fifth say
+  so with both numbers before baking. Owed in the 12:30 mail: spot width in degrees, far hand over law and reach,
+  whether my pass can give the level.
+- Life span law (sim.ts): span = 2.5 + 11.5 q^2 s with q even in 0 to 1: shortest 75 film frames, median 5.4 s
+  (161 frames), longest 420; 36 percent under 4 s. A cell grows over the first 38 percent and shrinks over the last.
+- 11:20 to 12:05 UTC, all in the worktree /home/user/workspace/lab2 (at f2) while chain 3 draws in the repo; to be
+  copied into the repo when the chain ends (src/stops/sun/lab/*, set.ts, assets-src/sun/lab/bake.ts, level.py,
+  spans.ts):
+  - Still eye clip of f2 (out/work/sun/lab/clip-f2h, v/clip-f2-still-eye.mp4): reader largest 0.476 at k0016 at
+    [980, 888], mean 0.263 (limit 0.45); proxy largest 0.308. Cause seen in v/spot980.jpg: a large old cell in the
+    middle of the near field is eaten by its neighbours in about 10 film frames. The fault is the span law.
+  - spans.ts (CPU only, about 30 s) measures the table alone. f2 law: half of the largest ground to nothing in a
+    median of 13 film frames, quartile 7, 5 percent in 2.
+  - New span law (sim.ts): every cell is given the ground its age asks for. share(u, span): from nothing to its
+    full ground over max(0.38 of the span, 1.4 s), at most half the span, the ground growing evenly with the time
+    (quadratic ease over the first 0.3). At every step of 0.25 s the weights of the power diagram are moved toward
+    the weights at which each cell holds its share: 6 rounds of 0.6 of the lacking ground over the cell's
+    stiffness (sum over its edges of length over twice the way to the neighbour: the ground gained by a unit of
+    weight); a cell that holds nothing is put by bisection (find) at the weight at which it holds its share. A
+    cell born on a step comes up from the weight at which it holds nothing at that step (find(.., 0)), the cell
+    that ended went down to that weight at its last place. What failed on the way: a closed form weight with a
+    least window (neighbours rule the ends); a start weight of anchor (the cell holds half the host at once);
+    the threshold weight taken at the next step (the gauge of the weights drifts from step to step, so a newborn
+    began with a radius of 0.05 and ate its neighbours for a few frames); find for every cell over 1.5 times its
+    share (jumps: 95th percentile of the share lost in 8 frames up from 0.31 to 0.59).
+  - MEASURED with spans.ts on the new law (solve 6, gain 0.6, soft 0.8, warm 15): cells over 0.06 units of
+    radius: half of the largest ground to nothing in at least 14 film frames (1 percent 16, quartile 22, median
+    29); largest share of the largest ground lost in 8 film frames: median 0.19, 95 percent 0.29, most 0.82. All
+    cells: ends 5 percent in 5 frames, quartile 18, median 24; births 5 percent 6, quartile 20, median 27. Whole
+    lives seen in the 180 frames: least 57 frames, median 86, most 170. Not yet drawn.
+  - Map tone (labTone): heat times clamp((L / 0.245)^0.3, 0.8, 1.2), L the globe's map at about 2.8 degrees (4 taps
+    at the lod of that width); LabGround(shared, map, toStage). Map about the spot (gnomonic 40 degrees, linear
+    light, lod 6): percentiles 1/5/25/50/75/95/99 = 0.129 0.151 0.203 0.244 0.291 0.463 0.632, at the spot 0.283.
+  - Bake of the far twin: globalThis.labBake = {deg, size}; LabGround.bake() draws the floor shader with LAB_BAKE
+    (far 1, mu 1, no haze, no lights, tone on, clock 0) from the ball's centre toward the spot, x mirrored;
+    assets-src/sun/lab/bake.ts writes out/work/sun/lab/level/place-far-0.rgba, level.py makes
+    public/assets/sun/full/lab/place-far-0.jpg (2048) and web (1024), quality 92. Untested.
+  - Look candidates in lab2's lab.json: spot.floor [0.004, 0.02], spot.gap [0, 0.07], heat.lane [0.04, 0.13, 0.6],
+    heat.shade [0.3, 0.2], heat.rim 0.72, heat.body 1.05, heat.patch [0.1, 0.9], heat.thread [0.04, 0.6], haze
+    {amount 0.006, power 2.0, level 1.1, own 0.45}. Untested.
+
+- 12:20 to 12:45 UTC, 25 Nov: state g15 (to be NAMED).
+  - 12:20 state mail sent on f2 (d26bc8a3). MAIL 1088 (12:36) rules: spot width by the hold's measure at final 360
+    (bake laid in at 1.58 and 1.9 degrees, mean absolute difference to references/approved/sun-hero.png, whole and
+    in the place's box; sun_builder reads 11.9772 whole): NOT DONE, needs sun_builder's globe reading my level. Spot
+    onto the knot: if spot.back moves the spot in frame 90 by over a hundredth of the width, sun_builder turns the
+    place's anchor by 0.7 degrees instead. Bake 2048 allowed if not coarser than the map; in my folder: yes. The
+    Builder's eye on f2: cobbles on a brown floor (close the lanes), one sided satin sheen (no lamp), glitter in
+    lanes, umbra level, far field and hard horizon, rise 215 to 225 two bodies (law wanted: map's low band times
+    my fine band). Order for the NAMED of 13:30: span law drawn, both clips under 0.45, a and b, f as far as it
+    stands.
+  - lab2 copied into the repo; worktree lab2 to be removed.
+  - Looks g1 to g15 at frame 90 draft. What helped: heat.body 0.88, rim 0.48, shade [0.14, 0.3], patch [0.2, 1.0],
+    heat.fine [0.6, 4.0] (a finer welling), edge 0.8; spot ranks [3.6, 2.7], tongues [180, 115], hot 2.6, gap
+    [0.02, 0.2]; heat.lie 0 (the view law reads the ball's up alone, no dome normal: the one sided sheen was the
+    0.3 of the dome's normal); glint 0.3 and points 0.93 (glitter in lanes gone); dome.height 0.3 and arc 70 (the
+    near flank of a tall dome showed its dark rim to the eye: boulders; flatter reads as one sheet); haze.amount
+    0.0045 (lanes darker). far.tone deg 1.5, power 0.5, range [0.6, 1.3] (the map's tone stronger).
+  - Air: the gas past the limb. A sphere of radius ST_RADIUS + 8 * air[0], back side, no depth test, in a group of
+    renderOrder 1 (at -5.8 inside my group it did not show: drawn before the sky's later layers). tau = air[1] *
+    exp(-(nearest way of the look past the ball) / air[0]). air [0.1, 3] was a wide orange fog over the stars,
+    [0.03, 1.5] nothing to see, [0.04, 1.2] a soft glow of some 15 px. The limb itself is still a hard pale line.
+  - g15 near ground, frame 90 draft: max channel percentiles 5 25 50 75 95 99 = 0.224 0.353 0.569 0.753 0.949 1.0
+    (approved 0.231 0.404 0.58 0.761 0.906 0.965).
+  - Bake at 1280 (g15): full 1,984,357 bytes, web (640) 549,666 bytes. Texel: 0.0326 degrees at the middle, 0.0288
+    (radial) at the edge; the globe's map (8192 wide) 0.0439 degrees: finer everywhere. Web: 0.065 against 0.088.
+    Umbra on the bake (max channel under 0.15 after a blur of 3 px): disc of equal area 1.55 degrees wide (1.43 at
+    0.1, 1.66 at 0.2), box 1.60 E-W by 1.53 N-S, middle 0.06 east and 0.39 north of S. The map's knot (sun_builder):
+    1.9 to 2.0 wide, 0.08 west and 0.32 south. So: width 0.8 of the knot, middles 0.72 degrees apart.
+  - Still eye and film eye clips on the new span law: see the next entry.
+
+- 13:18 UTC, 25 Nov: NAMED 751af6d0a9ab9d6900f801ffd2dc4710f7532858 (g15) sent to /root with 10 attachments (text in
+  the desk's v/named.txt). Sent to sun_builder at 12:46: the far twin's answers (files, texels, umbra on the bake,
+  laws, the anchor to turn by 0.14 east and 0.71 north, ruling 1 open).
+  - MEASURED on g15: spans.ts: cells over 0.06 units: half of largest ground to nothing in at least 13 film frames
+    (1 percent 16, quartile 22, median 29); all cells ends median 25, 5 percent 5; whole lives least 50, median 87,
+    most 172. Still eye clip (clip-g15h, 121 pictures, 13.3 s each): reader largest 0.161 at capture 45 at
+    [1536, 1020], mean 0.110, share read 0.506; proxy 0.157 and 0.104, picture to next 0.004 (f2 0.054: the flowing
+    grain of the fibres and the points is turned down, so the low number is not the span law alone; whether the eye
+    sees flow outward is UNKNOWN).
+  - Draft still 43 s, of which the table about 13 s.
+  - Growth 2,681,925 bytes in my folders (JPGs 2,534,023, text 147,902).
+  - Owed in a second mail: film eye clip number, G17 at 0, 60, 90, rise stills 185 to 240, all on g15 (chain4.sh in
+    the desk's v folder, log v/chain4.log).
+  - Open: ruling 1 of MAIL 1088 (bake a second level with spot.umbra about 1.2 for an umbra of 1.9 degrees, hand it to
+    sun_builder, or read the hold at final 360 on a tree that reads the level). Law f (the map's low band above
+    about 0.55 degrees at full strength times my fine band; think of it in linear light: my colour times the map's
+    low band over my ground's mean light). Cells too large by about 1.6 against the approved and angular; far
+    cells are tiles; limb a hard line.
