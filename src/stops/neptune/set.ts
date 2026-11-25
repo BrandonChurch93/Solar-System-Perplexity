@@ -212,8 +212,8 @@ export const createSet: SetFactory = async (ctx) => {
       const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
       const kind = state.segment.kind
       const show = deepLook.on && !ending ? 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.height[1]!) / Math.log(deepLook.globe.height[0]! / deepLook.globe.height[1]!)) : 0
-      // The place's own picture begins above the scene as a whole (deep.json far.height, by the eye's height alone): the scene is drawn from there.
-      const placed = deepLook.on && deepLook.far.on === 1 && !ending && high < deepLook.far.height[0]!
+      // The place's own picture is drawn at every height (one field by place alone, MAIL 774): no law by the eye's height stands here.
+      const placed = deepLook.on && deepLook.far.on === 1 && !ending
       const lay = ending || deepLook.on ? 0 : kind === 'dive' ? smooth((state.u - closeLook.lay.dive[0]!) / (closeLook.lay.dive[1]! - closeLook.lay.dive[0]!)) : kind === 'rise' ? 1 - smooth((state.u - closeLook.lay.rise[0]!) / (closeLook.lay.rise[1]! - closeLook.lay.rise[0]!)) : kind === 'terrain' ? 1 : 0
       const settle = ending ? 0 : 1 - smooth((high - closeLook.lay.settle[1]!) / (closeLook.lay.settle[0]! - closeLook.lay.settle[1]!))
       const limb = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.glow[1]!) / Math.log(closeLook.lay.glow[0]! / closeLook.lay.glow[1]!))

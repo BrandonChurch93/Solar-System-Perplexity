@@ -3,7 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import fit from './close.json'
 import look from './deep.json'
 import patches from './patches.json'
-import { ground, placeTurn } from './band'
+import { ground } from './band'
 import { FALL_GLSL, MAP_DECL, MAP_UNIFORMS, mapGlsl } from './planet'
 
 // The surface view of Neptune as one scene made by functions: a cloud deck with height (rolls, the storm as a bowl with walls and arms),
@@ -36,7 +36,6 @@ uniform vec3 uE0;
 uniform vec3 uE1;
 uniform vec3 uAxis;
 uniform vec3 uSun;
-uniform vec3 uFarSun;
 uniform float uTime;
 uniform float uPix;
 uniform float uGrad;
@@ -82,24 +81,15 @@ uniform vec4 uCirrusBend;
 uniform vec3 uCirrusBillow;
 uniform vec4 uCirrusFringe;
 uniform vec3 uFarStreak;
-uniform vec3 uWest;
 uniform vec4 uCirrusDeep;
-uniform vec4 uBand;
 uniform vec4 uWisp;
-uniform vec4 uNear;
-uniform vec4 uZoneEnd;
-uniform vec4 uVortex;
-uniform vec4 uVortexRim;
-uniform vec4 uFanLeft;
-uniform vec4 uFanRight;
-uniform vec4 uFanFar;
+uniform vec3 uNear;
 uniform vec4 uFanBand;
 uniform vec4 uFanWest;
 uniform vec4 uFanMake;
 uniform vec2 uVeil;
 uniform vec2 uVeilFall;
 uniform vec3 uVeilLight;
-uniform float uStreamFan[${STREAMERS}];
 uniform float uStreamBend[${STREAMERS}];
 uniform vec4 uDeckFine;
 uniform vec4 uHazeLow;
@@ -116,8 +106,7 @@ uniform mat3 uToBody;
 uniform vec4 uFar;
 uniform vec3 uFarTone;
 uniform vec3 uFarPower;
-uniform vec4 uFarHigh;
-uniform vec2 uFarLaw;
+uniform vec2 uOwn;
 uniform vec4 uFarFall;
 uniform vec3 uFarCloud;
 ${globe(MAP_DECL)}in vec3 vPos;
@@ -162,15 +151,6 @@ float ease(float f) {
 float blend(float a, float b, float f) {
   return 0.5 + (mix(a, b, f) - 0.5) * inversesqrt(f * f + (1.0 - f) * (1.0 - f));
 }
-// The fan: what the eye of the surface view sees of the deck over its frames, a wedge on the ground (deep.json, fan). 1 inside it,
-// 0 farther outside it than the border: a weight by distance on the ground, never by time or height. fanIn: how far inside the fan
-// a place lies (less than 0 outside).
-float fanIn(vec2 uv) {
-  return min(min(dot(uFanLeft.xy, uv) - uFanLeft.z, dot(uFanRight.xy, uv) - uFanRight.z), uFanFar.z - dot(uFanFar.xy, uv));
-}
-float fanOf(vec2 uv) {
-  return smoothstep(-uFanFar.w, 0.0, fanIn(uv));
-}
 // u along the band, v across it, height over the smooth deck, of a point given from the planet's centre.
 vec3 bandOf(vec3 q) {
   float r = length(q);
@@ -181,13 +161,13 @@ vec3 bandOf(vec3 q) {
 float wind(float v) {
   return uWind.x + uWind.y * sin(v * uWind.z + uWind.w);
 }
-// The veil: a thin sheet of ice haze over the deck inside the fan, where the approved close image has its pale far deck (deep.json,
+// The veil: a thin sheet of ice haze over the deck, laid and ended by place on the ground, where the approved close image has its pale far deck (deep.json,
 // fan.veil). Its density at a place, 0 to 1: it sets in across the flow, ends toward the west and lies in bands along the flow of uVeilSizes
 // sizes (across: uFanMake.x and each next 0.41 of the one before, each uFanMake.y times as long) that ride the wind; a size is left out before a pixel's footprint across
 // the flow (least) holds a wave of it.
 float veilAt(vec2 uv, float least, float t) {
   float vt = uv.y + uFanBand.x * uv.x;
-  float shape = smoothstep(uFanBand.y, uFanBand.z, vt) * smoothstep(uFanWest.x, uFanWest.y, uv.x) * fanOf(uv);
+  float shape = smoothstep(uFanBand.y, uFanBand.z, vt) * smoothstep(uFanWest.x, uFanWest.y, uv.x);
   if (shape <= 0.0) return 0.0;
   float sum = 0.0;
   float lam = uFanMake.x;
@@ -393,7 +373,7 @@ float cirrusBody(vec3 straight, vec3 bent, float t, out float lee, out float cre
     float ends = smoothstep(0.0, make.x / (line.y - line.x), along) * (1.0 - smoothstep(1.0 - make.x / (line.y - line.x), 1.0, along));
     float lump = vnoise(vec3((p.x - ride) / make.y + make.w, make.w * 1.7, 0.5));
     float lump2 = vnoise(vec3((p.x - ride) / (make.y * 0.37) + make.w * 2.3, make.w, 3.5));
-    float strength = body.w * ends * mix(1.0 - make.z, 1.0, smoothstep(0.25, 0.75, lump)) * (1.0 - uStreamFan[i] * fanOf(p.xy));
+    float strength = body.w * ends * mix(1.0 - make.z, 1.0, smoothstep(0.25, 0.75, lump));
     float width = semi * (0.65 + 0.7 * lump2);
     float y = off - 0.6 * semi * (lump2 - 0.5);
     float side = step(y, 0.0);
@@ -429,9 +409,7 @@ float cirrusFar(vec3 p, float t) {
     float dy = max(off - 2.53 * semi, -off - (2.23 * uCirrusMake.z + 0.3) * semi) * uStreamWide[i].w - 0.75 * bent;
     float dz = max(body.y - p.z, p.z - body.y - 1.05 * body.z) - 0.42 * bent;
     float dx = max(line.x + ride - p.x, p.x - ride - line.y);
-    // A streamer of the globe's own map has nothing inside the fan: there its room ends at the fan's border.
-    float dFan = uStreamFan[i] * (fanIn(p.xy) - 0.75 * bent) - (1.0 - uStreamFan[i]) * 1e3;
-    best = min(best, max(max(max(dy, dz), dx), dFan));
+    best = min(best, max(max(dy, dz), dx));
   }
   return max(best, 0.0);
 }
@@ -554,6 +532,23 @@ float toSun(vec3 q, float H, out float lit) {
   return max(2.0 * column(max(hp, 0.0), 0.0, H) - column(h, -mu, H), 0.0);
 }
 
+// Air and veil are light between the eye and the deck, so they are laid on as the film shows the planet from afar, before the grade
+// of the fall, and are graded with what lies under them as the globe's own picture is. This shader works in the colours of the
+// ground (the full grade; its end takes the grade back by the height). toHold: a colour of the ground as the hold shows it, in
+// parts of the pivot; toGround: back. underAir: a colour of the ground under a light of the hold (add) that lets clear of it
+// through. With no light and all let through it gives the colour back to the bit.
+vec3 toHold(vec3 c) {
+  vec3 x = max(c, vec3(0.0)) * uGain / uFallPivot;
+  return mix(pow(x, 1.0 / uFarFall.xyz), x, smoothstep(0.6, 1.2, x));
+}
+vec3 toGround(vec3 y) {
+  return mix(pow(y, uFarFall.xyz), y, smoothstep(0.6, 1.2, y)) * uFallPivot / max(uGain, 1e-6);
+}
+vec3 underAir(vec3 c, vec3 add, vec3 clear) {
+  vec3 y = toHold(c);
+  return max(c + toGround(y * clear + add) - toGround(y), vec3(0.0));
+}
+
 void main() {
   vec3 rd = normalize(vPos - uCam);
   vec3 oc = uCam - uCentre;
@@ -565,74 +560,25 @@ void main() {
   float sunView = dot(rd, uSun);
 
   // The far look: the globe's own map where the ray meets the smooth planet, read by the globe's own lines (its deck as the albedo
-  // under the globe's own curve of light, its cloud layer as a sheet with the shadow the globe gives it). How much of it a pixel shows
-  // is a matter of the ground and of the eye's height, never of the clock. The ground: the scene's own deck and cirrus stand round
-  // the place (whole within uFar.x units of it on the ground, none beyond uFar.y), so no point of the ground changes its picture
-  // because the eye moves over it. The height: from above the place shows the map alone, and the scene's own picture comes in over
-  // it by the eye's height, one law (deep.json, far): from uFarHigh.x radii the map's share of the place falls evenly with the
-  // logarithm of the height (uFarLaw.x a unit of it) down to the knee, uFarHigh.y, and from there as a power of the height
-  // (uFarLaw.y), the two meeting with one slope; the last of it goes between uFarHigh.z and uFarHigh.w. own is the share of the
-  // pixel the place's own picture has by the ground and the height. whole is the share the scene has over the globe: uShow, the
-  // scene as a whole (its air, its limb, the map as its far look; deep.json globe.height), and above the height where that begins
-  // the place's own share alone, so that the place's own picture can begin as high as the storm is first seen as a shape.
+  // under the globe's own curve of light, its cloud layer as a sheet with the shadow the globe gives it). One field, by place alone
+  // (MAIL 774): the map gives the tone and the pattern at every wave it holds, at every height; the scene adds the detail finer
+  // than the map's waves and its objects (the storm, the cirrus), which end by place. Nothing is weighed by the eye's height or by
+  // the distance from a picture's foot. The ground: the scene's own deck and cirrus stand round the place (whole within uFar.x
+  // units of it on the ground, none beyond uFar.y), so no point of the ground changes its picture because the eye moves over it.
+  // own is that share by the ground. whole is the share the scene has over the globe: uShow, the scene as a whole (its air, its
+  // limb, the map as its far look; deep.json globe.height: a law by height that is kept and named), and above it the place's
+  // own share.
   float dSphere = uRadius * uRadius - rt2;
   float tFar = dSphere > 0.0 ? -b - sqrt(dSphere) : max(-b, 0.0);
   vec3 farUp = normalize(oc + rd * tFar);
-  float highNow = max((length(oc) - uRadius) / uRadius, 1e-6);
-  float mapShare = highNow > uFarHigh.y ? 1.0 - uFarLaw.x * log(uFarHigh.x / highNow) : (uFarLaw.x / uFarLaw.y) * pow(highNow / uFarHigh.y, uFarLaw.y);
-  float nearAll = 1.0 - clamp(mapShare, 0.0, 1.0) * clamp((highNow - uFarHigh.w) / (uFarHigh.z - uFarHigh.w), 0.0, 1.0);
   float nearGround = 1.0 - smoothstep(uFar.x, uFar.y, uRadius * length(farUp - uPlaceUp));
-  float own = uFar.z > 0.5 && uFar.z < 1.5 ? nearAll * nearGround : 0.0;
+  float own = uFar.z > 0.5 && uFar.z < 1.5 ? nearGround : 0.0;
   float whole = max(uShow, own);
   // Where the scene has no share of the pixel the map alone is asked, which costs nothing of the code.
   float farW = uFar.z > 1.5 || whole <= 0.0 ? 1.0 : uFar.z * (1.0 - min(own / whole, 1.0));
   float rSheet = uRadius * (1.0 + uGCloudHeight);
   float dSheet = rSheet * rSheet - rt2;
   vec3 sheetUp = normalize(oc + rd * (dSheet > 0.0 ? -b - sqrt(dSheet) : max(-b, 0.0)));
-  vec3 farLook = vec3(0.0);
-  {
-    vec3 pb = uToBody * farUp;
-    vec3 sunB = uToBody * uFarSun;
-    float ndlFar = dot(farUp, uFarSun);
-    float tx;
-    vec3 dd = deckDir(pb);
-    vec3 dcl = cloudDir(uToBody * sheetUp);
-    float reach = uGCloudHeight / max(ndlFar, uGShadow.z);
-    vec3 dsa = cloudDir(normalize(pb + sunB * reach));
-    vec3 dsb = cloudDir(normalize(pb + sunB * reach * 1.6));
-    float keep = 1.0;
-    float deepen = 1.0;
-    vec2 cq = vec2(atan(dcl.x, dcl.z) / (2.0 * PI) + 0.5, asin(clamp(dcl.y, -1.0, 1.0)) / PI + 0.5);
-    float cq2 = fract(cq.x + 0.5) - 0.5;
-    vec2 cx = vec2(abs(dFdx(cq.x)) < abs(dFdx(cq2)) ? dFdx(cq.x) : dFdx(cq2), dFdx(cq.y)) * uGGrad;
-    vec2 cy = vec2(abs(dFdy(cq.x)) < abs(dFdy(cq2)) ? dFdy(cq.x) : dFdy(cq2), dFdy(cq.y)) * uGGrad;
-    for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
-      float turn = uGCirrus.x * uGCirrus.y * (textureGrad(uGFarMap, cq, cx, cy).g * (255.0 / 127.0) - 1.0) * sqrt(max(1.0 - dcl.y * dcl.y, 0.0));
-      dcl = bend(dcl, turn);
-      dsa = bend(dsa, turn);
-      dsb = bend(dsb, turn);
-      vec4 far = textureGrad(uGFarMap, cq + vec2(0.0, turn / PI), cx, cy);
-      keep = mix(1.0, far.r * smoothstep(uGClump.x, uGClump.y, far.b) * mix(uGCirrus.w, 1.0, smoothstep(uGClump.y, uGClump.z, far.b)), uGCirrus.x);
-      deepen = 1.0 + uGCirrus.x * uGCirrus.z * (1.0 - smoothstep(0.9, 1.0, far.b));
-    }
-    vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode;
-    float mapCloud = layerAt(dcl, max(uGCloudSoft, uGCirrusPx), 0.0, tx).a;
-    float mapShadow = 0.6 * min(layerAt(dsa, uGShadow.y, 0.0, tx).a, 1.0) + 0.4 * min(layerAt(dsb, uGShadow.y * 1.8, 0.0, tx).a, 1.0);
-    for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
-      mapCloud *= keep;
-      mapShadow = min(mapShadow * keep * deepen, 1.0);
-    }
-    float ndlSheet = dot(sheetUp, uFarSun);
-    vec3 deckFar = mapDeck * knot(uGDeck, ndlFar) * (1.0 - uGShadow.x * mapShadow * smoothstep(0.0, 0.2, ndlFar) * (1.0 - min(mapCloud, 1.0)));
-    farLook = mix(uFarTone * pow(max(deckFar * uGTint, vec3(0.0)), uFarPower), uFarCloud * knot(uGCloud, ndlSheet) * uGTint, mapCloud * smoothstep(-0.09, -0.03, ndlSheet));
-    // The globe's own grade of the fall (planet.ts, FALL_GLSL, the one text of it; deep.json, globe.fall), on the colour as the film
-    // shows it and at the strength the globe has at this height: uFarFall holds the full powers in xyz and the most blue at this
-    // height in w, uFallPower the globe's power at this height over the full one. The end of this shader raises every channel to
-    // uFallPower (the scene is made at the full grade), so that is undone here beforehand: the far look leaves this shader as the
-    // globe's own picture of the map at every height, and at the ground at the navy the grade ends in.
-    vec3 fallFar = fallGrade(farLook * uGain, uFallPivot, uFarFall.xyz * uFallPower, uFarFall.w) / uFallPivot;
-    farLook = mix(pow(fallFar, 1.0 / uFallPower), fallFar, smoothstep(0.6, 1.2, fallFar)) * uFallPivot / max(uGain, 1e-6);
-  }
 
   // The deck: a march down onto its relief.
   float topR = uRadius + uBounds.x;
@@ -643,6 +589,7 @@ void main() {
   float tDeck = 1e8;
   vec3 deckLight = vec3(0.0);
   float deckUnder = 0.0;
+  vec3 deckDetail = vec3(1.0);
   float deckFinest = 1.0;
   float tGo = max(-b - sqrt(max(dTop, 0.0)), 0.0);
   float tEnd = dBot > 0.0 ? -b - sqrt(dBot) : -b + sqrt(max(dTop, 0.0));
@@ -734,25 +681,86 @@ void main() {
     float lit;
     float airSun = uHazeLow.x / uHazeLow.y * toSun(q, uHazeLow.y, lit) + uHazeHigh.x / uHazeHigh.y * toSun(q, uHazeHigh.y, lit);
     vec3 sunHere = vec3(uLight.x * exp(-airSun) * lit);
-    // The pale deck outside the dark oval, where the globe's own map has it.
-    float liftMap = smoothstep(uVortexRim.x, uVortexRim.y, length((g.xy - uVortex.xy) * uVortex.zw) + uBand.w * p0.x) * smoothstep(uVortexRim.z, uVortexRim.w, g.y) * (1.0 - smoothstep(uZoneEnd.z, uZoneEnd.w, g.y));
+    vec3 sunOpen = sunHere;
     // The veil between it and the Sun takes its share of the light.
     vec3 gv = bandOf(q + uSun * ((0.5 * (uVeil.x + uVeil.y) - g.z) / max(sunUp, 0.05)));
     sunHere *= exp(-uFanWest.z * uFanWest.w * (uVeil.y - uVeil.x) * veilAt(gv.xy, max(fine.x, fine.y * uDeckWave.y), t) / max(sunUp, 0.05));
-    float bright = clamp((uDeckTone.y - uNear.z * (1.0 - smoothstep(uNear.x, uNear.y, g.y)) * smoothstep(uZoneEnd.x, uZoneEnd.y, g.y) - uWest.z * (1.0 - smoothstep(uWest.x, uWest.y, g.x)) * fanOf(g.xy) + uBand.z * liftMap + uDeckTone.x * p0.x * mix(1.0, uArmMake.z, exp(-(p0.w * p0.w) / (uStorm.w * uStorm.w))) + uWisp.w * (wisp - uDeckFine.y) * smoothstep(uDeckFine.z, uDeckFine.w, p0.x) * mix(uNear.w, 1.0, smoothstep(uNear.x, uNear.y, g.y)) * (1.0 + uFarStreak.z * smoothstep(uFarStreak.x, uFarStreak.y, g.y)) + uCollar.z * smoothstep(uBowl.z * 0.5, uBowl.z * 1.7, p0.w / uStorm.z) * (1.0 - smoothstep(uCollar.x, uCollar.y, p0.w)) * mix(1.0, min(wisp / uDeckFine.y, 3.0), uCollar.w) + uArmMake.y * p0.y) * (1.0 - uDeckTone.z * p0.z), 0.0, 1.0);
+    float bright = clamp((uDeckTone.y + uDeckTone.x * p0.x * mix(1.0, uArmMake.z, exp(-(p0.w * p0.w) / (uStorm.w * uStorm.w))) + uWisp.w * (wisp - uDeckFine.y) * smoothstep(uDeckFine.z, uDeckFine.w, p0.x) * mix(uNear.z, 1.0, smoothstep(uNear.x, uNear.y, g.y)) * (1.0 + uFarStreak.z * smoothstep(uFarStreak.x, uFarStreak.y, g.y)) + uCollar.z * smoothstep(uBowl.z * 0.5, uBowl.z * 1.7, p0.w / uStorm.z) * (1.0 - smoothstep(uCollar.x, uCollar.y, p0.w)) * mix(1.0, min(wisp / uDeckFine.y, 3.0), uCollar.w) + uArmMake.y * p0.y) * (1.0 - uDeckTone.z * p0.z), 0.0, 1.0);
     vec3 albedo = bright < 0.5 ? mix(uNight, uBlue, bright * 2.0) : mix(uBlue, uPale, bright * 2.0 - 1.0);
     float hollow = clamp(1.0 + 2.5 * min(h0, 0.0), 0.3, 1.0);
     float under = uCirrusBody.x * uThrough.z * veil;
     deckUnder = under;
     deckLight = albedo * (sunHere * ndl * shade * (exp(-under) + uThrough.x * exp(-uThrough.y * under)) / (1.0 + uThrough.x) + uSkyLight * (0.5 + 0.5 * dot(nrm, up)) * hollow);
+    // What the deck of the place adds to the map: its light over the light of the same deck made of nothing but the waves the map
+    // itself holds (uOwn.x and longer: deep.json, far.wave), flat lit, without the storm, the cirrus over it or its own shadow.
+    // Where a pixel covers such a wave the two are one and the map stands untouched: that is a matter of the distance alone.
+    vec3 coarse = max(fine, vec3(uOwn.x));
+    float em = max(e, 0.25 * uOwn.x);
+    float cm = deckField(g.xy, coarse, t, f1);
+    float cmE = deckField(g.xy + vec2(em, 0.0), coarse, t, f1);
+    float cmN = deckField(g.xy + vec2(0.0, em), coarse, t, f1);
+    vec3 nrmM = normalize(up - east * (uDeckWave.z * (cmE - cm) / em) - north * (uDeckWave.z * (cmN - cm) / em));
+    float brightM = clamp(uDeckTone.y + uDeckTone.x * cm * mix(1.0, uArmMake.z, exp(-(p0.w * p0.w) / (uStorm.w * uStorm.w))), 0.0, 1.0);
+    vec3 albedoM = brightM < 0.5 ? mix(uNight, uBlue, brightM * 2.0) : mix(uBlue, uPale, brightM * 2.0 - 1.0);
+    vec3 lightM = albedoM * (sunOpen * clamp((dot(nrmM, uSun) + uLight.w) / (1.0 + uLight.w), 0.0, 1.0) + uSkyLight * (0.5 + 0.5 * dot(nrmM, up)));
+    // One number for all three colours, so the map keeps its own hue under the detail.
+    deckDetail = vec3(clamp(dot(deckLight, vec3(0.2126, 0.7152, 0.0722)) / max(dot(lightM, vec3(0.2126, 0.7152, 0.0722)), 1e-7), 0.0, uOwn.y));
   }
 
-  // The far look takes the deck's place by its weight, under the scene's own air.
-  for (int once = 0; once < (deckHit && farW > 0.0 ? 1 : 0); once++) {
-    vec3 q = oc + rd * tDeck;
-    float lit;
-    float airSun = uHazeLow.x / uHazeLow.y * toSun(q, uHazeLow.y, lit) + uHazeHigh.x / uHazeHigh.y * toSun(q, uHazeHigh.y, lit);
-    deckLight = mix(deckLight, farLook * exp(-airSun) * lit, farW);
+  // The map is read where the ray meets the deck itself (its relief stands over the smooth planet), so the map lies on the relief
+  // and does not slide under it as the eye moves; toward the end of the place it goes back to the smooth planet.
+  vec3 lookUp = deckHit && farW < 1.0 ? normalize(mix(farUp, normalize(oc + rd * tDeck), 1.0 - farW)) : farUp;
+  vec3 farLook = vec3(0.0);
+  float farCover = 0.0;
+  {
+    vec3 pb = uToBody * lookUp;
+    vec3 sunB = uToBody * uSun;
+    float ndlFar = dot(lookUp, uSun);
+    float tx;
+    vec3 dd = deckDir(pb);
+    vec3 dcl = cloudDir(uToBody * sheetUp);
+    float reach = uGCloudHeight / max(ndlFar, uGShadow.z);
+    vec3 dsa = cloudDir(normalize(pb + sunB * reach));
+    vec3 dsb = cloudDir(normalize(pb + sunB * reach * 1.6));
+    float keep = 1.0;
+    float deepen = 1.0;
+    vec2 cq = vec2(atan(dcl.x, dcl.z) / (2.0 * PI) + 0.5, asin(clamp(dcl.y, -1.0, 1.0)) / PI + 0.5);
+    float cq2 = fract(cq.x + 0.5) - 0.5;
+    vec2 cx = vec2(abs(dFdx(cq.x)) < abs(dFdx(cq2)) ? dFdx(cq.x) : dFdx(cq2), dFdx(cq.y)) * uGGrad;
+    vec2 cy = vec2(abs(dFdy(cq.x)) < abs(dFdy(cq2)) ? dFdy(cq.x) : dFdy(cq2), dFdy(cq.y)) * uGGrad;
+    for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
+      float turn = uGCirrus.x * uGCirrus.y * (textureGrad(uGFarMap, cq, cx, cy).g * (255.0 / 127.0) - 1.0) * sqrt(max(1.0 - dcl.y * dcl.y, 0.0));
+      dcl = bend(dcl, turn);
+      dsa = bend(dsa, turn);
+      dsb = bend(dsb, turn);
+      vec4 far = textureGrad(uGFarMap, cq + vec2(0.0, turn / PI), cx, cy);
+      keep = mix(1.0, far.r * smoothstep(uGClump.x, uGClump.y, far.b) * mix(uGCirrus.w, 1.0, smoothstep(uGClump.y, uGClump.z, far.b)), uGCirrus.x);
+      deepen = 1.0 + uGCirrus.x * uGCirrus.z * (1.0 - smoothstep(0.9, 1.0, far.b));
+    }
+    vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode;
+    float mapCloud = layerAt(dcl, max(uGCloudSoft, uGCirrusPx), 0.0, tx).a;
+    float mapShadow = 0.6 * min(layerAt(dsa, uGShadow.y, 0.0, tx).a, 1.0) + 0.4 * min(layerAt(dsb, uGShadow.y * 1.8, 0.0, tx).a, 1.0);
+    for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
+      mapCloud *= keep;
+      mapShadow = min(mapShadow * keep * deepen, 1.0);
+    }
+    float ndlSheet = dot(sheetUp, uSun);
+    vec3 deckFar = mapDeck * knot(uGDeck, ndlFar) * (1.0 - uGShadow.x * mapShadow * smoothstep(0.0, 0.2, ndlFar) * (1.0 - min(mapCloud, 1.0)));
+    farCover = min(mapCloud, 1.0) * smoothstep(-0.09, -0.03, ndlSheet);
+    farLook = mix(uFarTone * pow(max(deckFar * uGTint, vec3(0.0)), uFarPower), uFarCloud * knot(uGCloud, ndlSheet) * uGTint, mapCloud * smoothstep(-0.09, -0.03, ndlSheet));
+    // The globe's own grade of the fall (planet.ts, FALL_GLSL, the one text of it; deep.json, globe.fall), on the colour as the film
+    // shows it and at the strength the globe has at this height: uFarFall holds the full powers in xyz and the most blue at this
+    // height in w, uFallPower the globe's power at this height over the full one. The end of this shader raises every channel to
+    // uFallPower (the scene is made at the full grade), so that is undone here beforehand: the far look leaves this shader as the
+    // globe's own picture of the map at every height, and at the ground at the navy the grade ends in.
+    vec3 fallFar = fallGrade(farLook * uGain, uFallPivot, uFarFall.xyz * uFallPower, uFarFall.w) / uFallPivot;
+    farLook = mix(pow(fallFar, 1.0 / uFallPower), fallFar, smoothstep(0.6, 1.2, fallFar)) * uFallPivot / max(uGain, 1e-6);
+  }
+
+  // The deck's colour is the map's at every place, as the globe's own lines light it (their Sun and their air are in it already, so
+  // neither is laid on it a second time); the place's own detail lies on it by the place's share.
+  for (int once = 0; once < (deckHit ? 1 : 0); once++) {
+    deckLight = farLook * mix(deckDetail, vec3(1.0), max(farW, farCover));
     deckUnder *= 1.0 - farW;
   }
 
@@ -765,7 +773,7 @@ void main() {
   float outR = uRadius + uShell.y;
   float inR = uRadius + uShell.x;
   float dOut = outR * outR - rt2;
-  for (int once = 0; once < (dOut > 0.0 && farW < 1.0 ? 1 : 0); once++) {
+  for (int once = 0; once < (dOut > 0.0 ? 1 : 0); once++) {
     float camR = length(oc);
     float ta = camR > outR ? -b - sqrt(dOut) : 0.0;
     float dIn = inR * inR - rt2;
@@ -847,18 +855,14 @@ void main() {
       if (cloudClear < uCirrusSkip.z) break;
     }
   }
-  // The scene's own cirrus stands only near: far, the map's sheet is the cloud.
-  cloud *= 1.0 - farW;
-  cloudWeight *= 1.0 - farW;
-  tCloud *= 1.0 - farW;
-  cloudClear = mix(cloudClear, 1.0, farW);
   float tMean = cloudWeight > 0.0 ? tCloud / cloudWeight : 0.0;
 
   // The air: what it takes between the camera and each thing, and what it scatters toward the camera from the Sun.
   float topAir = uRadius + uHazeMake.z;
   float dAir = topAir * topAir - rt2;
-  vec3 air = vec3(0.0);
-  vec3 airBefore = vec3(0.0);
+  vec3 airSource = vec3(0.0);
+  float airAll = 0.0;
+  float airBefore = 0.0;
   vec3 clearDeck = vec3(1.0);
   vec3 clearCloud = vec3(1.0);
   float hp = rt - uRadius;
@@ -885,7 +889,8 @@ void main() {
     vec3 depthAll = vec3(lowAll + highAll);
     vec3 scattered = uLight.x * uHazeMake.w * phase * litLow * exp(-sunLow) * (lowAll * uHazeLowColour + highAll * uHazeHighColour) / max(lowAll + highAll, 1e-5);
     clearDeck = exp(-depthAll);
-    air = scattered * (1.0 - exp(-(lowAll + highAll)));
+    airSource = toHold(scattered);
+    airAll = 1.0 - exp(-(lowAll + highAll));
     if (cloudWeight > 0.0) {
       vec3 qc = oc + rd * clamp(tMean, ta, tb);
       float hc = length(qc) - uRadius;
@@ -893,15 +898,16 @@ void main() {
       float lowTo = uHazeLow.x / uHazeLow.y * between(ha, ma, hc, mc, hp, uHazeLow.y);
       float highTo = uHazeHigh.x / uHazeHigh.y * between(ha, ma, hc, mc, hp, uHazeHigh.y);
       clearCloud = vec3(exp(-(lowTo + highTo)));
-      airBefore = scattered * (1.0 - exp(-(lowTo + highTo)));
+      airBefore = 1.0 - exp(-(lowTo + highTo));
     }
   }
-  // The veil over the deck inside the fan: what it lets through of the deck and what it scatters of the Sun, most toward the Sun.
+  // The veil over the deck: what it lets through of the deck and what it scatters of the Sun, most toward the Sun.
   // It lies low on the deck, under the cirrus, so the shadow a streamer casts on the deck lies on it too.
   float veilClear = farW < 1.0 ? mix(exp(-veilDepth(oc, rd, b, rt2, !deckHit, pix, t)), 1.0, farW) : 1.0;
   vec3 veilLight = uLight.x * uVeilLight * (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) * mix(1.0, (1.0 - uLight.z * uLight.z) / pow(1.0 + uLight.z * uLight.z - 2.0 * uLight.z * sunView, 1.5), uLight.y);
-  vec3 airAfter = max(air - airBefore, 0.0);
-  vec3 col = airBefore + clearCloud * cloud + cloudClear * (airAfter + clearDeck * (veilClear * deckLight + (1.0 - veilClear) * veilLight));
+  vec3 veiled = underAir(deckLight, toHold(veilLight) * (1.0 - veilClear), vec3(veilClear));
+  vec3 behind = underAir(veiled, airSource * max(airAll - airBefore, 0.0), clearDeck);
+  vec3 col = underAir(clearCloud * cloud + cloudClear * behind, airSource * airBefore, vec3(1.0));
   float seen = deckHit ? 1.0 : 1.0 - cloudClear * dot(clearDeck, vec3(0.3333)) * veilClear;
   float alpha = clamp(seen, 0.0, 1.0);
   // On the globe the scene ends at a border on the ground: by the angle from the place of what the ray meets (or passes nearest).
@@ -934,7 +940,7 @@ void main() {
     vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
     col = mix(pow(fallX, uFallPower), fallX, smoothstep(0.6, 1.2, fallX)) * uFallPivot;
   }
-  outColor = diagOut(vec4(col, alpha) * (whole * inside), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0));
+  outColor = diagOut(vec4(col, alpha) * (whole * inside), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0) / uRadius);
 }`
 
 const v4 = (a: number, b: number, c: number, d: number): THREE.Vector4 => new THREE.Vector4(a, b, c, d)
@@ -967,13 +973,6 @@ export class Deep {
     const l = look.light
     const w = look.wind
     const fan = look.fan
-    // An edge of the fan: a point on it and the bearing it runs at from the eye; side 1 keeps what lies to its right, -1 to its left.
-    const fanEdge = (e: number[], side: number): THREE.Vector4 => {
-      const th = THREE.MathUtils.degToRad(e[2]!)
-      const nx = side * Math.sin(th)
-      const ny = -side * Math.cos(th)
-      return v4(nx, ny, nx * e[0]! + ny * e[1]! - fan.margin, 0)
-    }
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
@@ -990,7 +989,7 @@ export class Deep {
       blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
       uniforms: {
         uCentre: { value: this.centre }, uCam: { value: new THREE.Vector3() }, uRadius: { value: radius },
-        uE0: { value: e0 }, uE1: { value: e1 }, uAxis: { value: axis }, uSun: { value: new THREE.Vector3(0, 1, 0) }, uFarSun: { value: new THREE.Vector3(0, 1, 0) },
+        uE0: { value: e0 }, uE1: { value: e1 }, uAxis: { value: axis }, uSun: { value: new THREE.Vector3(0, 1, 0) },
         uTime: { value: 0 }, uPix: { value: 0.0005 }, uGrad: gradUniform, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uShow: { value: 1 }, uFallPivot: { value: new THREE.Vector3().fromArray(look.globe.fall.pivot) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uPlaceUp: { value: this.up.clone() }, uGridShow: { value: look.globe.grid },
         uCap: { value: v4(Math.cos(THREE.MathUtils.degToRad(look.globe.border[0]!)), Math.cos(THREE.MathUtils.degToRad(look.globe.border[1]!)), laid ? 1 : 0, 0) },
         uStorm: { value: v4(s.at[0]!, s.at[1]!, s.eye, s.reach) },
@@ -1019,21 +1018,15 @@ export class Deep {
         uCirrusBody: { value: v4(ci.sigma, look.steps.cirrus, ci.octaves, l.cirrus) },
         uCirrusWarp: { value: v4(ci.warp, ci.warpWave, Math.sin(THREE.MathUtils.degToRad(ci.sweepDeg)), Math.cos(THREE.MathUtils.degToRad(ci.sweepDeg))) },
         uCirrusBend: { value: v4(ci.warpNext[0]!, ci.warpNext[1]!, ci.core, ci.leeErode) },
-        uCirrusBillow: { value: new THREE.Vector3(ci.billow[0], ci.billow[1], ci.leeThin) }, uCirrusFringe: { value: v4(ci.fringe[0]!, ci.fringe[1]!, ci.fringe[2]!, ci.fringe[3]!) }, uFarStreak: { value: v3(d.wisp.far) }, uWest: { value: v3(d.west) },
+        uCirrusBillow: { value: new THREE.Vector3(ci.billow[0], ci.billow[1], ci.leeThin) }, uCirrusFringe: { value: v4(ci.fringe[0]!, ci.fringe[1]!, ci.fringe[2]!, ci.fringe[3]!) }, uFarStreak: { value: v3(d.wisp.far) },
         uCirrusDeep: { value: v4(l.deep[0]!, l.deep[1]!, l.deep[2]!, l.deep[3]!) },
         uCirrusStep: { value: v4(look.steps.cirrusShare, look.steps.lightStep, look.steps.light, ci.floor) }, uCirrusSkip: { value: v4(look.steps.cirrusSkip, look.steps.lightDeep, look.steps.cirrusOpaque, 0) },
-        uBand: { value: v4(0, 0, d.band[0]!, d.vortex.warp) },
-        uVortex: { value: v4(d.vortex.at[0]!, d.vortex.at[1]!, 1 / d.vortex.semi[0]!, 1 / d.vortex.semi[1]!) },
-        uVortexRim: { value: v4(d.vortex.rim[0]!, d.vortex.rim[1]!, d.vortex.south[0]!, d.vortex.south[1]!) },
-        uFanLeft: { value: fanEdge(fan.left, 1) }, uFanRight: { value: fanEdge(fan.right, -1) },
-        uFanFar: { value: v4(Math.cos(THREE.MathUtils.degToRad(fan.far[0]!)), Math.sin(THREE.MathUtils.degToRad(fan.far[0]!)), fan.far[1]!, fan.border) },
         uFanBand: { value: v4(fan.veil.tilt, fan.veil.from, fan.veil.to, fan.veil.share) },
         uFanWest: { value: v4(fan.veil.west[0]!, fan.veil.west[1]!, fan.veil.shade, fan.veil.depth / (fan.veil.height[1]! - fan.veil.height[0]!)) },
         uFanMake: { value: v4(fan.veil.wave, fan.veil.long, fan.veil.contrast, fan.veil.layers) },
         uVeil: { value: new THREE.Vector2(fan.veil.height[0], fan.veil.height[1]) }, uVeilFall: { value: veilFall(fan.veil.fall) }, uVeilLight: { value: v3(fan.veil.light) },
-        uStreamFan: { value: ci.streamers.map((x) => (x.where === 'map' ? 1 : 0)) }, uStreamBend: { value: ci.streamers.map((x) => x.bend ?? 1) },
-        uNear: { value: v4(d.near[0]!, d.near[1]!, d.near[2]!, d.wisp.near) },
-        uZoneEnd: { value: v4(d.near[3]!, d.near[4]!, d.band[1]!, d.band[2]!) },
+        uStreamBend: { value: ci.streamers.map((x) => x.bend ?? 1) },
+        uNear: { value: new THREE.Vector3(d.near[0]!, d.near[1]!, d.wisp.near) },
         uWisp: { value: v4(d.wisp.from, d.wisp.power, d.wisp.gain, d.wisp.light) },
         uDeckFine: { value: v4(d.limit, d.wisp.mean, d.wisp.where[0]!, d.wisp.where[1]!) },
         uHazeLow: { value: v4(h.low.depth, h.low.scale, 0, 0) }, uHazeHigh: { value: v4(h.high.depth, h.high.scale, 0, 0) },
@@ -1043,7 +1036,7 @@ export class Deep {
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
         uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
-        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uFarHigh: { value: v4(look.far.height[0]!, look.far.knee, look.far.last, look.far.height[1]!) }, uFarLaw: { value: new THREE.Vector2(1 / (1 / look.far.tailPower + Math.log(look.far.height[0]! / look.far.knee)), look.far.tailPower) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
+        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
         uDiag: diagUniform,
       },
@@ -1058,8 +1051,8 @@ export class Deep {
     }
   }
 
-  // camera: the eye in the frame of the close scene. sun: the direction to the globe's Sun in that frame (the far look takes it as it
-  // is; the scene's own things keep the Sun they were made in, which is this one turned back by the turn of the place, band.ts).
+  // camera: the eye in the frame of the close scene. sun: the direction to the globe's Sun in that frame. It is the one Sun of
+  // everything here: the map, the deck's relief, the clouds, the air.
   // time: seconds from the middle of the
   // surface view. pixel: the angle one pixel of the frame covers, in radians.
   // body: the turn from this scene's frame to the globe's own (the body the map lies on).
@@ -1067,8 +1060,7 @@ export class Deep {
     const u = this.material.uniforms
     ;(u.uToBody!.value as THREE.Matrix3).setFromMatrix4(this.turned.makeRotationFromQuaternion(body))
     ;(u.uCam!.value as THREE.Vector3).copy(camera)
-    ;(u.uFarSun!.value as THREE.Vector3).copy(sun).normalize()
-    ;(u.uSun!.value as THREE.Vector3).copy(sun).normalize().applyQuaternion(placeTurn)
+    ;(u.uSun!.value as THREE.Vector3).copy(sun).normalize()
     u.uTime!.value = time
     u.uPix!.value = pixel
     u.uGain!.value = gain
