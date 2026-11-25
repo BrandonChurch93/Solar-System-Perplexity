@@ -1,9 +1,16 @@
 {
  "folder": "belt",
- "pushed": "2026-11-25T03:02:34.535Z",
- "head": "26b48f8a50156bd26d6f3fafd8282484823485c1",
- "note": "far Sun 26b48f8a on Mercury a4f61cec: box 615 draft 4.83, spans follow the plan",
+ "pushed": "2026-11-25T03:25:39.254Z",
+ "head": "33cc2353f501a55f139463c64d433e7670cb8c9e",
+ "note": "far Sun 33cc2353 on agent/travel-b9: box 615 final tier 4.83; no step at 499.5",
  "looks": [
+  {
+   "time": "2026-11-25T03:25:38.224Z",
+   "file": "20261125032538224-note-pair615-box-S8fin.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-box-S8fin.jpg",
+   "kind": "note",
+   "label": "615 box final tier, approved left, 33cc2353 right, blur 4.83"
+  },
   {
    "time": "2026-11-25T03:02:32.924Z",
    "file": "20261125030232924-note-row-474-480.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/farsun/out/n-left.jpg",
    "kind": "note",
    "label": "far Sun af2fab0c n-left (draft tier; approved left)"
-  },
-  {
-   "time": "2026-11-25T01:14:42.599Z",
-   "file": "20261125011442599-note-n-lowerleft.jpg",
-   "source": "../../../../tmp/farsun/out/n-lowerleft.jpg",
-   "kind": "note",
-   "label": "far Sun af2fab0c n-lowerleft (draft tier; approved left)"
   }
  ]
 }
