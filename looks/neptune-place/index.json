@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T19:46:46.022Z",
- "head": "b563ec70d7adb66abfbb2524cb2325350b7230eb",
- "note": "trial cure of the row at 4753: 0.47 to 0.26 on my proxy; judged frames 4605, 4707, 5006 unmoved to the byte, 4860 by 9 codes at most; the other rows are rendering",
+ "pushed": "2026-11-25T20:20:34.312Z",
+ "head": "b53b86b9e3f74fc7b64315e41770d06c30b5a95a",
+ "note": "row 4753 cured and committed (985341693, not named yet); now G17 at 4860: the deck's own fine grain is what is missing, controls running",
  "looks": [
+  {
+   "time": "2026-11-25T20:20:32.900Z",
+   "file": "20261125202032900-note-fine-a.jpg",
+   "source": "../../../../tmp/fine-a.jpg",
+   "kind": "note",
+   "label": "4860 at full size under the limb, x 320 to 1120, y 270 to 405, 2 times: the approved, my tree, main; my far deck is smooth (G17 tiles 0.04 to 0.14)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T20:20:31.734Z",
+   "file": "20261125202031734-note-fine-b.jpg",
+   "source": "../../../../tmp/fine-b.jpg",
+   "kind": "note",
+   "label": "4860 at full size, the eye: the approved (top), my tree 985341693 (middle), main (bottom); G17 0.426 / p25 0.230 on my tree (main 0.934 / 0.549 by the same draft reader), 91.8 s the draft frame; the tree's oval and plain are smooth where the approved has fine streaks: G17's tiles on the plain read 0.07 to 0.2; with the sheet and the low haze both off the same tiles still read 0.09 to 0.27, so the fine grain is missing in the deck itself, not hidden by the air",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T19:46:44.616Z",
    "file": "20261125194644616-note-t1-place.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/n10-three.jpg",
    "kind": "note",
    "label": "4860 at full size: the approved (top), main (middle), the ninth name 27624e6f4 (bottom): ground part 17.550 against main 19.759, sky 3.420, band 2.646; G17 median 0.426, p25 0.230 by my draft reader; 89.9 s per draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T18:46:28.392Z",
-   "file": "20261125184628392-note-pair-N10.jpg",
-   "source": "../../../../tmp/pair-N10.jpg",
-   "kind": "note",
-   "label": "4860 at 1920 by 1080 beside the approved (left), the tree to be named: ground part 17.550 (main 19.759), sky 3.420, band 2.646; G17 median 0.426, p25 0.230 by my draft reader; 89.9 s per draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T18:46:26.715Z",
-   "file": "20261125184626715-note-n10-chains-dive.jpg",
-   "source": "../../../../tmp/n10-chains-dive.jpg",
-   "kind": "note",
-   "label": "the low dive on 27624e6f4, pairs 4744, 4750, 4751, 4752: 0.31, 0.29, 0.28, 0.27 (the eighth name 0.40, 0.23, 0.22, 0.26)",
    "stop": "neptune"
   }
  ]
