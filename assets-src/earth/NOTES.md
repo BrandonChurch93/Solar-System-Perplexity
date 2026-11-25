@@ -5690,3 +5690,62 @@ FROM handover_engineer, 16:16 UTC. Your request (the box of the capped frames): 
 4. (b2) for the picture only, in a scratch on that merge, never in a commit: handover.minShutter 0.7071 and handover.maxBlurPx 19.8 (both, so that every capped frame keeps 1.414 times its span).
 5. If the blocks are still there with the ends, tell me at once with the crop: then the cause is not the shutter's shape and I look again here.
 6. Found on the way, told to /root: your rise now ends at speed (2174 shows 9.70 px with the ends, the flight's 2175 9.44 px as a box), so the look steps there in one frame. I asked /root for the law by the frame's own motion with the flight following; nothing for you to do.
+
+### 16:27 UTC (sandbox): MAIL 1191 from /root, received during the final render of 1857 and 2156 on the merge, verbatim
+
+MAIL 1191 from the Builder (/root), 16:25 UTC. A correction of my MAIL 1183, with thanks to handover_engineer who read it from the repo.
+1. Your branch's base with main is 3a136a1a, before take batch 10. Main has soft shutter ends at Earth since the first cut 53025569 at 14:02: config/showcase.json handover.shutterEnds {"earth": 0.5}, src/core/sampler.ts samplesFor(count, shutter, ends); sample i weighs 0.5 minus 0.5 cos(2 pi p) over the sum, in every frame of Earth's dive and rise. So "today's" in your sheets is the box of your tree, not main's. Round 55 was packed on 9d59e699, also without the ends: the critics saw the box, as your sheets do. Your finding of the cause stands; the cure you ask for is on main already, and my ruling (b1) asked for what exists.
+2. So now: merge origin main into your branch (never rebase), build, and draw 1857 and 2156 again at the final tier on the merged tree. Send the lower left at 1 to 1 beside your box frames, and the whole frames at half size. Then list what is left of round 55's three severe and seven major issues on those two frames, each with its cause by a control: the cloud map's own cell size at that height, copies of samples along the motion, the speck layer, the night lights drawn out to dashes, the coast lines. That list is the work, in the order of what the eye sees first.
+3. The step of the look at 2174 into 2175 (the rise's last frame has the ends, the flight's first is a box, both move about 9.5 px) is handover_engineer's and is coming with the ends by motion.
+4. caaa727d stays out of the next cut for the hold (1755 in the new wedge 25.13 against main's 15.95). Order: the hold back to main's number or better; the merge and the two finals above; then the place reading as a disc while it comes in. NAMED by 19:30.
+
+Read: the order is now (1) the hold back to main's number or better, (2) the merge and the two finals with the list of what is left by a control, (3) the disc. NAMED by 19:30 on the Builder's clock (about 19:26 on the sandbox clock).
+
+### 16:17 to 16:27 UTC: the merge with main by hand, and what the disc is made of
+
+The merge. `git fetch --depth 1 origin main` gave 59449dbfb0a50ccc9205f59c794885f90629acef. My branch's history is shallow on main's side, so the merge was made by hand in a second index: main's tree read whole, the three Earth folders (`src/stops/earth`, `assets-src/earth`, `public/assets/earth`) taken out of that index and my head's three folders read in their place, `git commit-tree` with both parents (21d08801 first, 59449dbf second), then `git merge --ff-only`. Result 0b70228bba7ccf609b19d3333313440a4e76b4dd, tree 13fed2e0d6a8d278dc2a2f5335371cfdb25f4fbf. Checks printed: "names that differ from main outside the three folders: 0", "names that differ from my head inside the three folders: 0". Main's own three Earth folders equal my 3a136a1a, an ancestor of my head, so nothing of main's is lost inside them. Not pushed at the time of writing: the final render of 1857 and 2156 runs on it since 16:18:30.
+
+The plan of the shutter on the merge, printed by `plan.ts`: "1857 final samples 64, raw 31.178, seen 15.588, shutter 0.5, ends 0.5"; "2156 final 64, 31.077, 15.537, 0.5, ends 0.5".
+
+What the disc of item 5 is, measured on the level picture `place-12.jpg` (340.1 px a degree; point under the close camera at window px (2372, 2579), plate centre at (1450, 1844)). Median of the open sea in 68 px blocks along the line from the point under the camera toward the plate centre (code values, blue green red): 0.5 degrees 39 8 0; 1.0 degree 38 9 0; 1.25 degrees 44 29 11; 1.5 degrees 57 45 29; 1.75 degrees 64 51 36; then cloud and glint. On the line 1.5 degrees to the left of it: 1.5 degrees 35 20 2; 2.0 degrees 72 50 19; 3.0 degrees 113 83 34; 4.0 degrees 142 118 72; 4.25 degrees 141 120 82; 4.5 degrees 102 59 2. So the pale sea of the lay back of the close picture ends on its near edge within about half a degree against a sea that is 20 to 40 levels darker in green and red, and its cumulus field with the long shadows ends on the same line. Under and behind the camera's point lies the hold's dark sea with the few bodies that stand on the hold's specks. The veil file is nil there (0 to 3 degrees: under 4 levels), so the lighter ground is the level's own picture arriving by the path share (departure 4), not the veil. The outline of item 5 is that edge; the arc the towers end on is the same edge.
+
+### 16:27 to 16:43 UTC: the two finals on the merge (soft ends), the pairs sent, the hold's wedge taken down
+
+Rules read in `kit/PROGRESS.md` before touching the hold: d296 ("a take whose judged frame matches the approved image worse than main's does not go onto main") and d302 (inside the place's disc the hold may cost at most 0.01 of its match with the approved image as the mean absolute level over the frame; G17 may not fall; nothing outside the disc changes; no feature of the approved image inside the disc may be lost, read at 4 times beside it).
+
+THE TWO FINALS ON THE MERGE 0b70228b (`shut.ts final /tmp/gl/k16/A none 1857 2156`, log `/tmp/gl/k16/A/final.log`): "1857 599.4 64", "2156 565.3 64". Paired with my box frames of 15:27 and 15:51 (base 3a136a1a, the same three folders) by `/tmp/gl/k16/A/pair.py`: "1857 box (1080, 1920, 3) soft ends (1080, 1920, 3) mean absolute difference 2.619, px that differ 1507962 of 2073600"; "2156 box (1080, 1920, 3) soft ends (1080, 1920, 3) mean absolute difference 1.837, px that differ 1237755 of 2073600".
+
+SEEN at 1 to 1 (`out/ll-1857.png`, `out/ll-2156.png`) and at 2 for 1 (`out/x2-*.jpg`):
+
+- 1857, lower left: the flat squares and bars with hard edges of the box frame are gone. The small specks between the cloud bands are soft smudges drawn along the motion.
+- 2156, lower left and rim: the same. Where the box frame has flat pale blue squares near the rim, the frame with the ends has soft short dashes.
+- LEFT in both: (1) a fine hatch of repeated strokes inside the large clouds of the lower left, weaker than in the box frame, readable at 1 to 1; (2) small specks with a pale blue or violet cast near the rim; (3) the draw along the motion itself (15.59 and 15.54 px by the plan).
+- Whole frames at half size (`out/half-1857.jpg`, `out/half-2156.jpg`): at that size I cannot tell the two apart except in the lower left.
+
+So cause A as found at 15:56 to 16:04 stands, and the cure was on main. Mailed at 16:40 UTC to /root (answer to MAIL 1191 item 2, first part) and to /root/handover_engineer (his item 3, b1), each with the two lower left pairs and the two whole pairs; (b2) not drawn. The list of what is left by controls is owed.
+
+Looks pushed 16:42 UTC (ff3a3bcc on agent/earth-place-looks): the four pairs.
+
+THE HOLD'S WEDGE (ruling 3, MAIL 1191 item 4). Candidates of `place-wedge.png` at a twentieth and a fortieth of gain 0.7 and cap 0.25 (`/tmp/gl/k16/cand.py`, wedge.py's own `build()`), each as a final of 1755 (`/tmp/gl/k15/trial.sh s20 s40`: "76.7s 16 samples", "74.6s 16 samples"; the committed file put back after). Measured on ONE fixed region for all (`/tmp/gl/k16/m1755c.py`: the px within 4 of a change over 2 between caaa727d and ee321270, from 5 degrees out, 14053 px), mean absolute difference from the approved hero in levels:
+
+| state | wedge region | disc 0 to 5 | ring 5 to 13.5 | whole frame | light px in the region | px that differ from ee321270 beyond 13.5 degrees |
+| --- | --- | --- | --- | --- | --- | --- |
+| hero | | | | | 0.0508 | |
+| main (kept jpg) | 15.95 | 14.49 | 16.80 | 5.3500 | 0.0662 | |
+| ee321270 (no wedge) | 15.13 | 14.50 | 15.87 | 4.9039 | 0.0671 | 0 |
+| caaa727d (gain 0.7) | 25.13 | 14.40 | 18.50 | 4.9711 | 0.1607 | 3806 |
+| half | 20.43 | 14.40 | 17.27 | 4.9393 | 0.1138 | 2023 |
+| quarter | 17.86 | 14.41 | 16.59 | 4.9220 | 0.0894 | 1073 |
+| a twentieth | 15.68 | 14.41 | 16.02 | 4.9072 | 0.0712 | 240 |
+| a fortieth | 15.39 | 14.41 | 15.94 | 4.9053 | 0.0692 | 138 |
+
+(The numbers of half and quarter differ a little from the ones written before because the region is now the same for every row.) A twentieth is the largest tried that is under main's 15.95; between it and a quarter the number crosses main's near a thirteenth by a straight line, which I did not try: the cover a thirteenth adds is as good as none for the band, so the margin is worth more. SET: `plates.wedge.gain` 0.035, `cap` 0.0125 in `src/stops/earth/place.json`, said in its `how`. What the band then lacks is departure (3): wedge.py prints for the fortieth "cover wanted ... 6: 0.004, 7: 0.005, 8: 0.005" against the approved band's 0.363, 0.515, 0.598; the far band of 2010 is then the hold's layer nearly alone.
+
+Line (i) of ruling (b) is still not met to the px: 240 px beyond 13.5 degrees (by my flat measure of 10.4 px a degree) differ from ee321270 at a twentieth.
+
+THE DISC OF ITEM 5, what I built for it (not baked when written; the bakes run since 16:42:23, `/tmp/gl/k16/chain.sh wedge deck levels band above`, log `/tmp/gl/k16/chain.log`):
+
+- Why the edge shows: the tone file is the low pass at `toneSigmaDeg` 0.8 of plate minus hold over open sea, so a step of the sea's level narrower than that is not taken out from far up, and the residue arrives by the path share in the lay back's own shape. `above.py` reads only the cloud of `place-12.jpg`, so the hold's disc changes only by added bodies.
+- `carry` (levels.py `carried()`, values in mend.json `carry`): on a 512 px work raster the open sea's mean on both sides of the lay back's edge, their difference carried outward from the nearest edge point, smoothed, dying over reachDeg 2.2, inside nadirDeg [3.5, 5.0], sea only. Nothing in it reads the time or the camera's height: it is in the level's picture. Preview on a stand-in of `place-12.jpg` at sigma 0.2: "share of the plate with a weight over 0.05 0.1330, mean lift there (BGR) [0.6 3.6 2.1], largest [15.4 18.7 13.2], open sea share there 0.967" (`/tmp/gl/k16/carry-test3.jpg`: the near edge softened, no new line). Sigma 0.5 made a new straight line on the lay back's right side (the teal shelf enters the mean), so 0.2.
+- `fringe` (deck.py `density()` fourth value and its own pass in `main()`, values in mend.json `field.density.fringe`): cover of the smallest bodies past the lay back's edge, thinning over reachDeg 1.8 varied by noise, in clumps, inside nadirDeg [3.6, 4.4], so that the cumulus field does not end on a line. Preview: "fringe zone 6.06 square degrees, mean cover wanted there 0.0241, cloud area 0.150 square degrees = 16.3 px of the hold frame" (`/tmp/gl/k16/fringe-look2.png`).
+- Both are trials until the frames 1860 to 1895 are seen; item 10 (the towers arriving in place 1886 to 1893) and the height of small bodies are not designed.
