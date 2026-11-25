@@ -414,9 +414,9 @@ def main():
     fs = MEND['field']
     a = fl['both'][..., 0]
     near = lay12[(cover[..., 0] > 0.9) & (dist < fs['white']['nearDeg']) & (lay12.min(axis=2) > fs['white']['bright'])]
-    body = np.load(WORK / 'field-white.npy')
-    white = np.clip(near.mean(axis=0) / body, fs['white']['limit'][0], fs['white']['limit'][1]).astype(np.float32)
-    print('field white (BGR): near cloud of the lay back', np.round(near.mean(axis=0), 1), 'of', len(near), 'px, field', np.round(body, 1), 'gain', np.round(white, 3), flush=True)
+    body = fl['colour'][(a > 0.98) & (fl['colour'].min(axis=2) > fs['white']['bright'])]
+    white = np.clip(near.mean(axis=0) / body.mean(axis=0), fs['white']['limit'][0], fs['white']['limit'][1]).astype(np.float32)
+    print('field white (BGR): near cloud of the lay back', np.round(near.mean(axis=0), 1), 'of', len(near), 'px, field', np.round(body.mean(axis=0), 1), 'gain', np.round(white, 3), flush=True)
     del near, body, dist, a
     c, a, s = field_at(fl, whole)
     f12 = g12 * s * (1 - a) + c * white

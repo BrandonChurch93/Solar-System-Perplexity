@@ -165,34 +165,6 @@ def variants(scale, spec=SPEC):
     return out, want
 
 
-def bank(lay, inside, dist, per, bk):
-    lo = lay.astype(np.float32).min(axis=2)
-    warm = lay[..., 2].astype(np.float32) - lay[..., 0].astype(np.float32)
-    ok = inside > 0.99
-    ring = np.floor(dist / bk['ringDeg']).astype(int)
-    count = int(ring.max()) + 1
-    mid = np.full(count, np.nan, np.float32)
-    for i in np.unique(ring[ok]):
-        v = lo[ok & (ring == i)]
-        if v.size >= bk['least']:
-            mid[i] = (np.percentile(v, bk['low']) + np.percentile(v, bk['high'])) / 2
-    have = np.nonzero(~np.isnan(mid))[0]
-    mid = np.interp(np.arange(count), have, mid[have]).astype(np.float32)
-    mid = cv2.GaussianBlur(mid[None, :], (0, 0), bk['ringSmooth'])[0]
-    cloud = (step(-bk['soft'], bk['soft'], lo - mid[ring]) * (1 - step(bk['warm'][0], bk['warm'][1], warm)) * ok).astype(np.float32)
-    gy, gx = np.gradient(dist.astype(np.float32))
-    norm = np.maximum(np.hypot(gx, gy), 1e-9)
-    a = np.radians(dist)
-    rise = np.maximum((np.cos(a) - 1 / (1 + 1 / g.R)) / np.maximum(np.sin(a), 1e-6), bk['graze'])
-    reach = bk['km'] / 111.19 / rise * per
-    ys, xs = np.mgrid[0:lo.shape[0], 0:lo.shape[1]].astype(np.float32)
-    out = cloud
-    for k in range(1, bk['steps'] + 1):
-        s = (reach * k / bk['steps']).astype(np.float32)
-        out = np.minimum(out, cv2.remap(cloud, xs + gx / norm * s, ys + gy / norm * s, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0))
-    return out, cloud
-
-
 def density(spec=SPEC):
     from calm import land_of, SPEC as CALM
     from farin import CANVAS, reach as from_nadir
@@ -239,84 +211,12 @@ def density(spec=SPEC):
     calm = (np.maximum(near, (1 - step(0, 1, out / (rg['calmDeg'] * vary))) * (1 - cover)) * step(rg['plate'][0], rg['plate'][1], footprint(P, deg, n, P, PLATES['levels'][0]['widthDeg']))).astype(np.float32)
     clear = clear + (1 - clear) * step(rg['wipe'][1], 1, calm)
     ring = np.clip(share / rg['top'], 0, 1) ** (1 / rg['power']) * near
-    edge = step(wd['edgeDeg'][0], wd['edgeDeg'][1], rim + wd['edgeVary'] * noise(1.5) * step(0, wd['edgeDeg'][1], rim))
-    dens = np.clip((np.maximum(system, wide) * far + ring) * clear * edge, 0, 1).astype(np.float32)
-    bk = spec['bank']
-    laid, smeared = bank(lay, inside, dist, per, bk)
-    sh = spec['sheet']
-    beyond = cv2.distanceTransform((cover < 0.5).astype(np.uint8), cv2.DIST_L2, 5) / per
-    spread = mblur(laid * seen, seen, sh['spreadDeg'] * per) * (1 - step(0, 1, beyond / (sh['reachDeg'] * vary)))
-    deck = (np.clip(bk['top'] * (laid * cover + spread * (1 - cover)), 0, 1) * step(bk['fromDeg'][0], bk['fromDeg'][1], dist) * clear * edge).astype(np.float32)
-    seen_far = (inside > 0.99) & (dist >= bk['fromDeg'][1])
-    print('bank: cloud share of the approved picture on the seen ground from', bk['fromDeg'][1], 'degrees', round(float(smeared[seen_far].mean()), 3), 'as footprints', round(float(laid[seen_far].mean()), 3), 'share of it the deck takes', round(float(deck[seen_far].mean()), 3), 'mean chance of a cumulus body there', round(float(dens[seen_far].mean()), 3), flush=True)
+    dens = np.clip((np.maximum(system, wide) * far + ring) * clear * step(wd['edgeDeg'][0], wd['edgeDeg'][1], rim + wd['edgeVary'] * noise(1.5) * step(0, wd['edgeDeg'][1], rim)), 0, 1).astype(np.float32)
     print('ring: share of the raster', round(float(near.mean()), 4), 'mean chance where its weight is over 0.9', round(float(dens[near > 0.9].mean()), 3), 'cloud share of the lay back carried there', round(float(share[near > 0.9].mean()), 3), 'calm sea: share of the raster', round(float(calm.mean()), 4), flush=True)
     print('density: mean', round(float(dens.mean()), 4), 'over land inside the cover', round(float(dens[(core > 0.9) & (land > 0.5)].mean()), 3), 'over sea inside the cover', round(float(dens[(core > 0.9) & (land < 0.1)].mean()), 3), 'wide part alone', round(float(wide.mean()), 4), flush=True)
     look = under * (1 - 0.85 * dens[..., None]) + 255 * 0.85 * dens[..., None]
     cv2.imwrite(str(WORK / 'field-density-look.jpg'), cv2.resize(np.clip(look, 0, 255).astype(np.uint8), (1024, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 88])
-    return dens, calm, deck
-
-
-def sheet(deck, alpha, colour, shade, spec):
-    from farin import reach as from_nadir
-    sh = spec['sheet']
-    n = alpha.shape[0]
-    per = deck.shape[0] / spec['widthDeg']
-    km = spec['widthDeg'] * 111.19 / n
-    rng = np.random.default_rng(sh['seed'])
-    dist = from_nadir(P, spec['widthDeg'], deck.shape[0])
-    ny, nx = np.unravel_index(np.argmin(dist), dist.shape)
-    ys, xs = np.nonzero(deck > 0.5)
-    mid = np.arctan2(ys.mean() - ny, xs.mean() - nx)
-    yy, xx = np.mgrid[0:n, 0:n].astype(np.float32)
-    xx -= (nx + 0.5) * n / deck.shape[0]
-    yy -= (ny + 0.5) * n / deck.shape[0]
-    out = (np.hypot(xx, yy) * km).astype(np.float32)
-    along = (((np.arctan2(yy, xx) - mid + np.pi) % (2 * np.pi) - np.pi) * sh['midKm']).astype(np.float32)
-    del xx, yy
-
-    def arcs(sizes):
-        f, total, w = np.zeros((n, n), np.float32), 0.0, 1.0
-        for c in sizes:
-            m = int(np.ceil(max(float(out.max()) / c, 2 * np.pi * sh['midKm'] / (c * sh['stretch'])))) + 8
-            f += w * cv2.remap(rng.standard_normal((m, m)).astype(np.float32), out / c + 2, along / (c * sh['stretch']) + m / 2, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
-            total += w * w
-            w *= sh['gain']
-        return f / np.float32(np.sqrt(total))
-
-    def cells(sizes):
-        f, total, w = np.zeros((n, n), np.float32), 0.0, 1.0
-        for c in sizes:
-            m = max(int(round(n * km / c)), 2)
-            f += w * cv2.resize(rng.standard_normal((m, m)).astype(np.float32), (n, n), interpolation=cv2.INTER_CUBIC)
-            total += w * w
-            w *= sh['gain']
-        return f / np.float32(np.sqrt(total))
-
-    big = cv2.resize(cv2.GaussianBlur(deck, (0, 0), sh['smoothDeg'] * per), (n, n), interpolation=cv2.INTER_CUBIC)
-    body = big + (sh['break'] * arcs(sh['breakKm']) + sh['fringe'] * cells(sh['fringeKm'])) * step(sh['hold'][0], sh['hold'][1], big)
-    del big, out, along
-    a = (step(sh['cut'][0], sh['cut'][1], body) ** sh['thin']).astype(np.float32)
-    top = np.clip((body - sh['cut'][0]) / sh['deep'], 0, 1) ** sh['power']
-    del body
-    top *= 1 + sh['bump'] * cells(sh['bumpKm'])
-    want = sun_image_dir(P)
-    e = sh['slopeKm'] / km
-    slope = (top - cv2.warpAffine(top, np.float32([[1, 0, want[0] * e], [0, 1, want[1] * e]]), (n, n), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)) / sh['slopeKm']
-    del top
-    lit = np.clip(sh['light'][0] + sh['light'][1] * slope, sh['light'][2], 1).astype(np.float32)
-    del slope
-    lit *= np.clip(sh['tone'][0] + sh['tone'][1] * cells(sh['toneKm']), 0, 1)
-    a *= sh['most']
-    reach = sh['km'] / np.tan(np.radians(sh['sunDeg'])) / km
-    cast = cv2.GaussianBlur(cv2.dilate(a, line_kernel(want, reach, 0.0, 1)), (0, 0), sh['softPx'])
-    keep = (1 - a) * (1 - sh['onCloud'] * cast)
-    dim, full = np.array(sh['dim'], np.float32), np.array(sh['lit'], np.float32)
-    for c in range(3):
-        colour[..., c] = colour[..., c] * keep + (dim[c] + (full[c] - dim[c]) * lit) * a
-    del lit, keep
-    shade *= 1 - sh['dark'] * cast
-    alpha[:] = alpha * (1 - a) + a
-    print('sheet: cover of the raster', round(float(a.mean()), 4), 'solid', round(float((a > 0.9).mean()), 4), 'shadow reach px', round(float(reach), 1), 'km a px', round(km, 3), flush=True)
+    return dens, calm
 
 
 def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale):
@@ -397,10 +297,9 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale):
 def main():
     spec = SPEC
     n = spec['raster']
-    dens, calm, deck = density(spec)
+    dens, calm = density(spec)
     cv2.imwrite(str(WORK / 'field-density.png'), (dens * 255).astype(np.uint8))
     cv2.imwrite(str(WORK / 'field-near.png'), (calm * 255 + 0.5).astype(np.uint8))
-    cv2.imwrite(str(WORK / 'field-deck.png'), (np.clip(deck, 0, 1) * 255 + 0.5).astype(np.uint8))
     rng = np.random.default_rng(spec['seed'])
     alpha = np.zeros((n, n), np.float32)
     colour = np.zeros((n, n, 3), np.float32)
@@ -409,10 +308,6 @@ def main():
         tiles, want = variants(scale, spec)
         lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale)
         del tiles
-    solid = (((alpha * 255 + 0.5).astype(np.uint8).astype(np.float32) / 255) > 0.98) & (np.clip(colour + 0.5, 0, 255).astype(np.uint8).min(axis=2) > spec['white']['bright'])
-    np.save(WORK / 'field-white.npy', np.clip(colour + 0.5, 0, 255).astype(np.uint8).astype(np.float32)[solid].mean(axis=0))
-    del solid
-    sheet(deck, alpha, colour, shade, spec)
     big = cv2.resize(dens, (n, n))
     print('cover where the density is over 0.9:', round(float(alpha[big > 0.9].mean()), 3), 'between 0.3 and 0.6:', round(float(alpha[(big > 0.3) & (big < 0.6)].mean()), 3), 'under 0.05:', round(float(alpha[big < 0.05].mean()), 4), flush=True)
     del big

@@ -102,12 +102,11 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       vec2 q = (mix(g, h, at) - uPatchShift[${i}]) * uPatchScale[${i}];
       float w = mix(front, frontH, at) * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, shown * uPerLine));
       w = max(w, ${i === 0 ? 'early' : '0.0'});
-      baked = max(baked, w);
-      w = max(w, ${i === 0 ? 'deck' : '0.0'});
       for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, mix(gx, hx, at) * uPatchScale[${i}], mix(gy, hy, at) * uPatchScale[${i}]).rgb, w);
       float dens${i} = mix(gd, hd, at) * uPatchScale[${i}] * uPatchSize[${i}];
       shown = mix(shown, mix(gl, hl, at) * uPatchScale[${i}] * uPatchFull[${i}] * uPatchReal[${i}], w);
       texels = mix(texels, dens${i}, step(0.5, w));
+      baked = max(baked, w);
       laid += w - laid * w;
     }`).join('\n')
 
@@ -374,8 +373,6 @@ void main() {
     float share = 0.0;
     for (int k = 0; k < (near > 0.0 ? 1 : 0); k++) share = come(length(uEyeBody - d)) * pathShare(dot(d, normalize(uEyeBody - d)), dot(d, normalize(uTwinEye - d)));
     float early = front * frontH * smoothstep(0.5, 0.5 - uFeather, max(abs(qp.x), abs(qp.y)) * uEarlyScale) * near;
-    vec2 qd = h * uStandAt.x;
-    float deck = front * frontH * textureLod(uStand, qd + 0.5, 0.0).g * step(max(abs(qd.x), abs(qd.y)), 0.5);
 ${PATCH_LEVELS}
     for (int k = 0; k < (stand > 0.0 ? 1 : 0); k++) {
       vec3 on = normalize(foot);

@@ -1,9 +1,7 @@
 import sys
-import json
 import shutil
 import numpy as np
 import cv2
-from pathlib import Path
 from PIL import Image
 import geom as g
 
@@ -158,21 +156,8 @@ def stand_field():
     h[:rim] = h[-rim:] = 0
     h[:, :rim] = h[:, -rim:] = 0
     out = np.clip(np.round(h * 255), 0, 255).astype(np.uint8)
-    fs = json.loads((Path(__file__).resolve().parent / 'mend.json').read_text())['field']
-    deck = cv2.imread(str(ROOT / 'out/work/earth/place/field-deck.png'), 0).astype(np.float32) / 255
-    per = deck.shape[0] / fs['widthDeg']
-    on = (cv2.GaussianBlur(deck, (0, 0), fs['sheet']['smoothDeg'] * per) > fs['sheet']['hold'][0]).astype(np.uint8)
-    r = int(round(STAND['deck']['growDeg'] * per))
-    on = cv2.GaussianBlur(cv2.dilate(on, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1))).astype(np.float32), (0, 0), STAND['deck']['softDeg'] * per)
-    at = ((((np.arange(n) + 0.5) / n - 0.5) * half / np.tan(np.radians(fs['widthDeg']) / 2) + 0.5) * deck.shape[0] - 0.5).astype(np.float32)
-    mx, my = np.meshgrid(at, at)
-    always = cv2.remap(on, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
-    always[:rim] = always[-rim:] = 0
-    always[:, :rim] = always[:, -rim:] = 0
-    both = np.dstack([out, np.clip(np.round(always * 255), 0, 255).astype(np.uint8), np.zeros_like(out)])
-    Image.fromarray(both).save(PUB / 'full' / STAND['file'], optimize=True)
-    Image.fromarray(cv2.resize(both, (n // 2, n // 2), interpolation=cv2.INTER_AREA)).save(PUB / 'web' / STAND['file'], optimize=True)
-    print('stand: share of the raster where the deck holds the first level at every distance %.4f, whole on %.4f' % ((always > 0).mean(), (always > 0.99).mean()), flush=True)
+    Image.fromarray(out).save(PUB / 'full' / STAND['file'], optimize=True)
+    Image.fromarray(cv2.resize(out, (n // 2, n // 2), interpolation=cv2.INTER_AREA)).save(PUB / 'web' / STAND['file'], optimize=True)
     print('stand: cloud share of the raster %.4f, km a texel %.3f, mean height over cloud %.2f km, share of the raster that stands %.4f' % ((cloud > 0.5).mean(), km, (h[cloud > 0.5]).mean() * STAND['km'], (out > 0).mean()), flush=True)
     return out.astype(np.float32) / 255
 

@@ -5278,3 +5278,81 @@ SEEN: sheets `/tmp/gl/k11/s-rise-1.jpg`, `s-rise-2.jpg`, `s-rise-3.jpg` (every f
 STATE mail (not NAMED) to /root sent 10:16 sandbox clock (about 10:20 on the Builder's clock), text kept at `/tmp/gl/k11/mail.txt`, with the pair of 2010 (whole, left, middle, right), the pair of 1755 (crop, whole, sheet), the crop of 1857, one sheet of the dive and one of the rise. Its own list of what is still wrong, worst first: 1755 deck as the brightest, plainest cloud hiding Yucatan; 2010 middle too near, right puffy, left from x 350; green covers 0.31 of the stand raster; towers' footprints not in the field; 882 px inside 5 degrees; Sun of the bake against the globe's Sun across the seam at 7.4 degrees not measured; field-deck.png not proved by a full deck.py run; the untouched items. Not run on this state: handover tool, the tool's smooth lines at rate 2, step in place, gate, review tier, finals.
 
 Next bake: the deck's tone and break from above down to the map's own cloud, the middle cleared to row 260, the right crisp, the left from x 100; the green cut to the sheet's own cover; then the towers' footprints into the field.
+
+### 10:18 to 10:55 UTC: study for a next bake (previews in numpy, no frame), not built
+
+Previews with `/tmp/gl/k12/pv3.py` (numpy, 37 s each, not frames). Found: the sheet made from code is not the approved picture's far band (other layout, other tone). Tried: a layer cut from the approved picture's contrast (good from above, flat and hard seen from the close camera); the picture's colour with the air taken off (good from the close camera, coloured noise from above); settled on a neutral cloud with the picture's brightness after the air is taken off, the air's light being the low values of the approved band and not its mean. The violet tint of the far band was traced to the tone of the open sea being added over the air. Three python files were edited for it and not run. Kept at `/tmp/gl/k12/lawz/`. Looks pushed 10:45 with two study pictures.
+
+### 10:57 UTC, MAIL 1040 received (10:55 on the Builder's clock), copied whole
+
+> MAIL 1040 from the Builder (/root), 10:55 UTC. To earth_builder. Your state ac5c5c1b of 10:17 is read; I looked at h-crop (1755 before and after), p-whole (2010) and s-dive-2 myself.
+> RULED: the deck as it stands is not accepted, for two reasons, the first your own. (1) At 1755 it lays a white field over the sea between Yucatan and Cuba, 20 to 30 levels too bright, and hides Yucatan: the hold is Brandon's approved picture and held the match critic's score. (2) It is not one body with the surface view either. The approved surface is open sea with scattered towers: by eye about a tenth to a seventh of the near field is cloud. Seen from the hold's distance such a field is the sea with fine white specks, which is what the approved globe already shows at that place. A solid white field there is another sky.
+> THE LAW: cover is kept through every level. At any distance the light of a patch of the place is its cloud share times the cloud's light plus the rest times the sea's light, the share being that of the bodies that stand there in the surface view. The bodies of the close ground stand ON the specks of the map (cure (a) of MAIL 957), so on the way down a speck grows into a tower at the same coordinates and none is born beside it. The far band of the surface view (the white deck toward the horizon in the approved picture at 2010) is the same law at a grazing view: many towers one behind the other close the gaps by perspective. It needs no deck painted into the map.
+> What I see in s-dive-2 besides: over 1883 to 1894 the close ground lies on the globe as a darker rounded field with its own glint streak. The darker sea toward the Sun is lawful if it is the sea's own answer to the angle of view and of the light, one law at every level, and not lawful as a tone of the level. Say which it is by a control (the close set drawn with the globe's sea law).
+> Round 55, your round 1 of 3 of the third note, started at 10:38 UTC on take batch 9's Earth 3a136a1a (main fb0b4d17, round commit 9d59e699); the critics' words come to you when it closes. Brandon's words for this stop: "Going from the planetary review to the surface view of earth also looks soft. There's like a moment where things load in". Your next NAMED is for round 2. State by 12:15 UTC with 1755 before and after at 2 px for 1 (it must be equal or prove no loss), the dive 1876 to 1894 as a strip, and your reader's lines.
+
+### 10:58 to 11:02 UTC: the deck taken out
+
+Read of MAIL 1040 against the study above: the layer of the study is also cloud laid into the map and shown in the hold, so it falls under the same ruling and is not built. Step for the state of 12:15: the deck goes (mend.json field.bank and field.sheet, deck.py bank and sheet, the green channel of place-stand.png, the shader's deck share for the first level); deck.py, levels.py and mend.json are ba479450's again to the byte; the stand law (the height of the map's own cloud from 5.4 degrees outward, by distance) stays. Bake chain started 11:02 (deck.py, levels.py, band.py; logs `/tmp/gl/k12/deck.log`, `levels.log`, `band.log`).
+
+### 11:02 to 11:16 UTC: the bake without the deck
+
+Chain deck.py, levels.py, band.py (no `--fresh`), "chain exit 0". Every level file of both sets (patch-24, patch-48, patch-96, place-12, place-5, place-glint-light, place-glint-sea, place-tone.bin) equals the blob of ba479450; `place-12-low-veil.bin` equals ba479450 and ac5c5c1b. `relief-ground.webp` and `place-stand.png` differ from both (the stand law's height file is now 8 bit grey, the height only). band.log: "stand: cloud share of the raster 0.0552, km a texel 1.308, mean height over cloud 2.89 km, share of the raster that stands 0.0825"; "sea layer: texel rows 608 to 1920 of 3960 changed texels 3981259".
+
+### 11:16 to 11:29 UTC: draft of the judged frames and of the dive 1872 to 1910 on this state (`/tmp/gl/k13/e1`)
+
+- 1755: sha256 d7d08630443abef8a31d35c4fa416cb108d2c370d7172103940d50b99f3d3d4d, the same file as on ba479450 (`/tmp/gl/k9/a1`), 0 px differ. Against the deck state ac5c5c1b: 65434 px differ, 18329 over 2, largest 239. Pictures at 2 px for 1: `h1755-2x.png` (ba479450 against now), `h1755-deck-2x.png` (ac5c5c1b against now). SEEN on the second: the white field between Yucatan and Cuba is gone, Yucatan and the open sea with its fine specks are back.
+- 2010 against ba479450: 57007 px differ, 15087 over 2, 6569 over 8, largest 73; over 8 in rows 214 to 418, over 2 in rows 212 to 431, rows 450 down largest 1. Inside 5 degrees at the middle (x 800 to 1120, rows 358 down): 640 px differ, 0 over 2, largest 1. Rows 358 down over the whole width: 9527 px, 1657 over 2, 796 over 8, largest 68. sha256 f1d33b8d92821a16893b3e8903ecafc17d6544a1456142b3bb57a21aa329606e.
+- 1857 against ba479450: 136005 px, 19136 over 2, 12360 over 8, largest 228, box (474, 19, 1724, 1019). sha256 a50fbabbfd3eac29058271be6f0a1861196e5c30051cccdd50cee63b72368310.
+- 2156 against ba479450: 94206 px, 12245 over 2, 7675 over 8, largest 226. sha256 5282a52fce42c1a8f799086c64209123e6c54ff28ac980e458743c2204567d66.
+- SEEN on the pair of 2010 (`p2010-whole.jpg`, `p2010-middle.png`): the far band is still flat haze with the map's flat white patches, now with low humps. Not the same shot as the approved picture there (towers seen from the side over glare).
+- Reader (`/tmp/gl/k8/pat.py`, frames 1872 to 1910, saved `/tmp/gl/k13/pat-dive.txt`): "1872:0.07 1873:0.07 1874:0.09 1875:0.12 1876:0.14 1877:0.17 1878:0.19 1879:0.21 1880:0.21 1881:0.20 1882:0.21 1883:0.23 1884:0.26 1885:0.30 1886:0.35 1887:0.39 1888:0.40 1889:0.40 1890:0.44 1891:0.44 1892:0.43 1893:0.31 1894:0.19 1895:0.12 1896:0.11 1897:0.11 1898:0.11 1899:0.12 1900:0.15 1901:0.16 1902:0.14"; "largest 0.44 from 1891, at [748, 100]; frames over 0.45: 0, first None, last None; level step most 0.45, pop most 1.09". On ac5c5c1b the same reader gave largest 0.38 from 1891. So the pattern number is nearer its limit (0.45) without the deck than with it.
+- SEEN, every frame of the sheets `s-dive-a.jpg` (1876 to 1887) and `s-dive-b.jpg` (1888 to 1894): the white field of the deck is gone. The close ground still lies on the globe as a darker rounded field round the glint streak, from 1876 on, deepening to 1894; dark towers with long shadows stand in it from 1886; white bodies over Yucatan and to the left of the field stand where the hold shows land and thin specks.
+
+### 11:20 to 11:36 UTC: cover of the hold against cover of the close set, and whether the bodies stand on the specks (`/tmp/gl/k13/share.py`, `onspeck.py`)
+
+A 28 degree square of the ground round the point under the close camera, 1536 px, 2.07 km a px. The hold is `wrap-surface.jpg` with the live cloud layer `wrap-cloud.webp` over it; the close set is the levels as `band.py` reads them (`the_map`). Cloud by the stand law's own mask (least channel 0.588 to 0.824, less the warm).
+
+    ring | hold: cloud layer alpha mean | hold (surface with cloud layer): cloud share | close map (levels): cloud share | mean level hold | mean level close map
+    0 to 2 | 0.013 | 0.002 | 0.006 | 81.8 | 46.2
+    2 to 4 | 0.035 | 0.005 | 0.011 | 93.2 | 71.9
+    4 to 5 | 0.042 | 0.010 | 0.026 | 102.8 | 92.9
+    5 to 6 | 0.049 | 0.015 | 0.030 | 100.9 | 90.1
+    6 to 7 | 0.045 | 0.007 | 0.013 | 95.5 | 80.2
+    7 to 8 | 0.076 | 0.019 | 0.031 | 92.6 | 86.8
+    8 to 9 | 0.081 | 0.024 | 0.053 | 95.1 | 100.1
+    9 to 10 | 0.097 | 0.042 | 0.082 | 101.1 | 108.2
+    10 to 12 | 0.109 | 0.044 | 0.106 | 101.2 | 112.3
+    12 to 14 | 0.107 | 0.040 | 0.114 | 95.8 | 107.4
+
+By this mask the close set holds about twice the white of the hold in every ring, and its sea is darker than the hold's inside 8 degrees (46.2 against 81.8 at the centre). So the cover is not kept through the levels today.
+
+Hold speck: cloud layer alpha or white of the surface over 0.25. Close cloud: the stand law's mask over 0.5.
+
+    ring | hold speck share | close cloud share | close cloud px within 10 km of a hold speck | within 25 km | hold speck px within 10 km of a close cloud | within 25 km
+    0 to 2.5 | 0.0203 | 0.0070 | 0.37 | 0.49 | 0.16 | 0.23
+    2.5 to 5 | 0.0475 | 0.0157 | 0.58 | 0.71 | 0.36 | 0.64
+    5 to 7.5 | 0.0649 | 0.0204 | 0.75 | 0.90 | 0.39 | 0.62
+    7.5 to 10 | 0.1137 | 0.0604 | 0.93 | 0.97 | 0.64 | 0.78
+    10 to 12 | 0.1456 | 0.1064 | 0.97 | 0.98 | 0.82 | 0.88
+    chance level, share of all px of the ring within 10 km and 25 km of a hold speck:
+    0 to 2.5 | 0.09 | 0.25
+    2.5 to 5 | 0.18 | 0.42
+    5 to 7.5 | 0.20 | 0.42
+    7.5 to 10 | 0.26 | 0.47
+    10 to 12 | 0.28 | 0.45
+
+Read: from 7.5 degrees outward the white bodies of the close set stand on the hold's specks (0.93 and 0.97 within 10 km). Inside 5 degrees they do not: 0.37 and 0.58 within 10 km, and of the hold's specks there only 0.16 and 0.36 have a close cloud within 10 km. Inside 5 degrees the bodies are the towers of the approved picture, which 2010 must keep, and the specks are the hold's, which 1755 must keep. Picture `share-pair.jpg` (hold left, close set right, rings at 5 and 10 degrees). The law of MAIL 1040 can be built from 5 degrees outward (the field of deck.py laid by the hold's specks in place of chance noise). Inside 5 degrees it meets the two kept frames head on; this goes to the Builder as it is.
+
+### 11:29 to 11:33 UTC: the control for the darker field (MAIL 1040), `/tmp/gl/k13/ctl`
+
+Control: the state with `plates.haze.share.footDeg` set to [1e-9, 5e-10] in place.json for the render only, so the path share is 0 at every point: no veil, no light of the place, and the tone of the sea round the place taken off wherever a level is laid, which leaves the levels drawn with the globe's own sea tone. Frames 1883 to 1894, draft. place.json restored and compared equal to the kept copy afterwards ("place.json restored" in ctl.log).
+
+- SEEN on `s-ctl-a.jpg` and `s-ctl-b.jpg` (state above, control below, 1883 1885 1887 1889 and 1890 1891 1892 1894): in the control the darker rounded field is gone in every frame. The sea of the close ground has the tone of the globe's sea round it, the same bodies and the same glint streak stand where they stood, the towers and their shadows stay. Counts state against control: 1883 2052048 px differ, 1658705 over 8, largest 232; 1894 2036540 px, 1886299 over 8, largest 249 (the whole frame, since the veil goes too).
+- So the darker field is not in the levels as drawn and is not an answer of the sea to the eye: it is the plate `place-tone.bin` (the approved picture's sea less the map's, fixed on the ground, 32 degrees wide, blurred 0.8 degrees) laid on by the path share. Its outline and its depth are the plate's. Only its weight reads the view.
+- The weight in numbers (`/tmp/gl/k13/sharenum.py`, poses of the dive, saved `sharenum.txt`): share by distance at the point under the close camera 0.000 at 1857, 0.794 at 1866, 1.000 from 1872 on; share by the path there 0.690 at 1876, 0.807 at 1883, 0.845 at 1889, 0.804 at 1894; at a ground point 4.0 degrees out 0.528 at 1876, 0.719 at 1883, 0.918 at 1889, 1.000 at 1894. Over 1883 to 1894 the distance share is whole, so in those frames the field deepens by the angle of the eye's ray alone.
+- Answer to the Builder: a tone of the level, weighed in by a rule of the angle. Not the sea's own law. Measured for it: at 1830, the first frame after the hold, the eye's ray stands 3.7 degrees from the vertical at the point under the close camera (12.6 at 1857), so the hold sees this sea from above; the ring means of the hold's map inside 5 degrees are 81.8, 93.2, 102.8 where the close set's are 46.2, 71.9, 92.9. My reading, not a measure: a sea seen from above is at its darkest, so a law of the angle of view alone cannot carry the lighter sea of the hold into the darker sea of the approved picture; the difference is one of two paintings.
+
+### 11:32 to 11:40 UTC: tests on this state
+
+tsc exit 0. vitest 52 files, 561 passed. `tests/globe-cap.test.ts` alone: 24 passed, 40.89 s. The three GL files: 15 passed, 348.31 s. Not run on this state: the rise frames, the handover tool, the tool's smooth lines at rate 2, the step in place, the gate, the review tier, the finals, the frames outside 1680 to 2174.
