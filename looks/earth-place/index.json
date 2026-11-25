@@ -1,9 +1,47 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T04:04:06.004Z",
+ "pushed": "2026-11-25T04:24:23.907Z",
  "head": "3a136a1a415c2b86419fa67dd9d1a4dfec123746",
- "note": "K4 state 1: dive drawn, 1857 keeps its bytes, far ground one pale deck from 1886; strip on the limb 1902 to 1904 still there; rise frames and proofs running",
+ "note": "K4 state 1 rise drawn: tool pass, step in place 3.57 into 2145, haze leaves by distance",
  "looks": [
+  {
+   "time": "2026-11-25T04:24:23.247Z",
+   "file": "20261125042423247-note-rise-step-in-place.jpg",
+   "source": "../../../../tmp/gl/k5/rise-step-in-place.png",
+   "kind": "note",
+   "label": "K4 state 1 rise largest step in place 2144 to 2145",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T04:24:22.531Z",
+   "file": "20261125042422531-note-rise-third-1920.jpg",
+   "source": "../../../../tmp/gl/k5/rise-third-1920.jpg",
+   "kind": "note",
+   "label": "K4 state 1 rise every third frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T04:23:42.293Z",
+   "file": "20261125042342293-sheet-earth-rise-top.jpg",
+   "source": "out/work/handover/earth-rise-top.png",
+   "kind": "sheet",
+   "label": "earth rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2100), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2174,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T04:20:55.310Z",
+   "file": "20261125042055310-compare-earth-rise-step-in-place.jpg",
+   "source": "out/work/handover/earth-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "earth rise, the largest step of the level in place (3.57): frame 2144, frame 2145, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2145
+  },
   {
    "time": "2026-11-25T04:04:04.566Z",
    "file": "20261125040404566-note-k4-beside.jpg",
@@ -41,38 +79,6 @@
    "stop": "earth",
    "segment": "earth.dive",
    "frame": 1886
-  },
-  {
-   "time": "2026-11-25T03:42:25.676Z",
-   "file": "20261125034225676-note-p-1857.jpg",
-   "source": "../../../../tmp/gl/k5/p-1857.jpg",
-   "kind": "note",
-   "label": "K4 state 1 as first laid: pale square of the haze at the judged 1857 (cured, 1857 keeps its bytes)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:42:24.723Z",
-   "file": "20261125034224723-note-n4b.jpg",
-   "source": "../../../../tmp/gl/k5/n4b.jpg",
-   "kind": "note",
-   "label": "K4 haze share cap 3.5 beside cap 8, 1886 to 1898",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:42:23.602Z",
-   "file": "20261125034223602-note-n4a.jpg",
-   "source": "../../../../tmp/gl/k5/n4a.jpg",
-   "kind": "note",
-   "label": "K4 haze share cap 3.5 beside cap 8, 1870 to 1882",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:42:22.692Z",
-   "file": "20261125034222692-note-n3.jpg",
-   "source": "../../../../tmp/gl/k5/n3.jpg",
-   "kind": "note",
-   "label": "K4 beside 3a136a1a, dive 1866 to 1882, haze cap 3.5 (before the change to 8)",
-   "stop": "earth"
   }
  ]
 }
