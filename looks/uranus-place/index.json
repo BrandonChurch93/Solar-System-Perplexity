@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T11:30:06.501Z",
- "head": "96f5239b9bad8a5257226361790c95409b8e29d0",
- "note": "b pushed as 96f5239b: air by the path; chain 0.67, 1.38, 1.11, rise 1.02 against 0.45; 4290 moved by at most 20 levels; cover next",
+ "pushed": "2026-11-25T11:53:14.679Z",
+ "head": "350bd0b42e9ce56568cd8be4231eb32bb87dee69",
+ "note": "a pushed as 350bd0b4 (cover without grain over 2.3e-4); ruling 2a of MAIL 1060 in work: glow by one minus the dimming; hold and 4290 keep draft bytes; chain rendering",
  "looks": [
+  {
+   "time": "2026-11-25T11:53:14.022Z",
+   "file": "20261125115314022-note-a1-cover.jpg",
+   "source": "../../../../tmp/n54/a1-cover.jpg",
+   "kind": "note",
+   "label": "4156.5 crop x 640 to 1340, y 260 to 560: cover off, cover without grain (a), cover with grain (b)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T11:53:13.351Z",
+   "file": "20261125115313351-note-e1-a.jpg",
+   "source": "../../../../tmp/n54/e1-a.jpg",
+   "kind": "note",
+   "label": "4176, 4186, 4200: air by the path (b, left) against the glow by the same number as the dimming (MAIL 1060 2a, right), draft",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T11:30:05.635Z",
    "file": "20261125113005635-note-d3-c.jpg",
@@ -244,22 +260,6 @@
    "source": "../../../../tmp/n52/cmp-rise.jpg",
    "kind": "note",
    "label": "rise 4414.5 and 4422.5: place light with the steep rule off (top) against the globe's own light whole (bottom): the pale band under the limb covers the ground's detail at 4414.5 and has left it at 4422.5",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T09:18:21.484Z",
-   "file": "20261125091821484-note-cover-tops.jpg",
-   "source": "../../../../tmp/n52/cover-tops.jpg",
-   "kind": "note",
-   "label": "4156.5, crop x 640 to 1340, y 260 to 560: cover off (left) against cover on (right): the cover's picture is not the globe's where it comes in (whites duller, grain, darker ground)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T09:18:20.409Z",
-   "file": "20261125091820409-note-cmp-s.jpg",
-   "source": "../../../../tmp/n52/cmp-s.jpg",
-   "kind": "note",
-   "label": "state (top) against the steep rule off (bottom), 4152.5 and 4160.5, draft: without the rule the ground under the eye takes the place's light sooner and is darker at 4152.5",
    "stop": "uranus"
   }
  ]
