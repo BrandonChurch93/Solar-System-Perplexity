@@ -1,9 +1,61 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T00:43:01.881Z",
- "head": "d6e04d84d5d3f8e943fe06a86bcddce938a0eabd",
- "note": "00:43 UTC: limb laws of ruling 1 (b) in the dive, drafts; 3150 pair first",
+ "pushed": "2026-11-25T00:57:42.815Z",
+ "head": "28993fbfbf5e133b2aae2b233205de556380a72a",
+ "note": "00:59 UTC: proofs running (every frame 2895 to 3059, then finals, smooth, tests). The storm in the hold after the filter; the fourth height law removed.",
  "looks": [
+  {
+   "time": "2026-11-25T00:57:41.703Z",
+   "file": "20261125005741703-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final (bytes unchanged in this commit) beside the approved image",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:57:40.447Z",
+   "file": "20261125005740447-note-least-test.jpg",
+   "source": "../work/r8/least-test.png",
+   "kind": "note",
+   "label": "the fourth height law gone: with (left) and without, dive 3020 to 3050",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:57:39.537Z",
+   "file": "20261125005739537-note-storm-hold.jpg",
+   "source": "../work/r8/storm-hold.jpg",
+   "kind": "note",
+   "label": "c1 draft: the storm in the hold and the first dive frames, 2895 to 2994, 72 px across shown about 6 times (after the filter by the pixel's foot)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:50:30.210Z",
+   "file": "20261125005030210-frame-r8-2895.jpg",
+   "source": "out/work/jupiter/final/r8-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "13d9cc752b1d9c4e"
+  },
+  {
+   "time": "2026-11-25T00:49:35.597Z",
+   "file": "20261125004935597-frame-r7-3150.jpg",
+   "source": "out/work/jupiter/final/r7-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "13d9cc752b1d9c4e"
+  },
   {
    "time": "2026-11-25T00:43:01.228Z",
    "file": "20261125004301228-note-pair-3150-final.jpg",
@@ -27,20 +79,6 @@
    "kind": "note",
    "label": "dive 3008 to 3030, draft: limb by two laws, rim by size on screen, deck glow by place (unfinished)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:38:29.608Z",
-   "file": "20261125003829608-frame-r7-2895.jpg",
-   "source": "out/work/jupiter/final/r7-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
   },
   {
    "time": "2026-11-25T00:20:47.671Z",
@@ -174,38 +212,6 @@
    "source": "../work/r6/pair-2895-final-whole.jpg",
    "kind": "note",
    "label": "2895 final whole: kept left, new right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:18:50.701Z",
-   "file": "20261124231850701-note-map-2895-changed.jpg",
-   "source": "../work/r6/map-2895-changed.png",
-   "kind": "note",
-   "label": "2895 final, kept against new: where bytes differ (the disc, and a halo of 1 level)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:18:49.389Z",
-   "file": "20261124231849389-note-move-three-b.jpg",
-   "source": "../work/r6/move-three-b.jpg",
-   "kind": "note",
-   "label": "plates alone: the storm's dark side ends as a soft shadow, paint, the same at every height",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:18:48.104Z",
-   "file": "20261124231848104-note-x1-rise-b.jpg",
-   "source": "../work/r6/x1-rise-b.jpg",
-   "kind": "note",
-   "label": "draft, first run before the soft shadow: rise 3274 to 3296, the storm is the dark eye of the hero's oval",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:18:46.839Z",
-   "file": "20261124231846839-note-x1-rise-a.jpg",
-   "source": "../work/r6/x1-rise-a.jpg",
-   "kind": "note",
-   "label": "draft, first run before the soft shadow: rise low, the lower left is NOT cured",
    "stop": "jupiter"
   }
  ]
