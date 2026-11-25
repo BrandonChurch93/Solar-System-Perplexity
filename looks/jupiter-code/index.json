@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T14:04:03.020Z",
- "head": "7c0b8675839b1fc66617635ef42a34f30e3417f5",
- "note": "14:05 UTC: wedge takes m2 and m3 (made detail, no canvas pieces) seen in frames: not good enough, a patch fill in the flow frame is next; chain on 7c0b8675: dive and rise b green, rise a rendering",
+ "pushed": "2026-11-25T14:28:05.516Z",
+ "head": "0e5c0362a8d001e1e0a2d689d74f58d3e83dc45a",
+ "note": "14:30 UTC: wedge take p2 in 3034, 3042, 3254 + 1/2 (work files, not committed); chain running on the merge of main 50387ad",
  "looks": [
+  {
+   "time": "2026-11-25T14:28:03.970Z",
+   "file": "20261125142803970-note-n7-3150-trio.jpg",
+   "source": "../work/r14/n7-3150-trio.jpg",
+   "kind": "note",
+   "label": "3150 on 7c0b8675 beside the approved image",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:28:02.720Z",
+   "file": "20261125142802720-note-p2-wide.jpg",
+   "source": "../work/r14/beyond/p2-wide.jpg",
+   "kind": "note",
+   "label": "wedge take p2 from above",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:28:01.632Z",
+   "file": "20261125142801632-note-p2-pieces.jpg",
+   "source": "../work/r14/beyond/p2-pieces.jpg",
+   "kind": "note",
+   "label": "wedge take p2 from above, the pieces' borders yellow, the source's border green",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:28:00.733Z",
+   "file": "20261125142800733-note-wdp2-pair-3254h.jpg",
+   "source": "../work/r14/wdp2-pair-3254h.jpg",
+   "kind": "note",
+   "label": "wedge take p2, 3254 + 1/2 before above, after below",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:27:59.855Z",
+   "file": "20261125142759855-note-wdp2-pair-3042.jpg",
+   "source": "../work/r14/wdp2-pair-3042.jpg",
+   "kind": "note",
+   "label": "wedge take p2, 3042 before above, after below",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:27:58.769Z",
+   "file": "20261125142758769-note-wdp2-pair-3034.jpg",
+   "source": "../work/r14/wdp2-pair-3034.jpg",
+   "kind": "note",
+   "label": "wedge take p2 (not committed), 3034 before above, after below",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T14:04:02.320Z",
    "file": "20261125140402320-note-n7-3150-trio.jpg",
@@ -158,54 +206,6 @@
    "source": "../work/r14/beyond/s1-corner.jpg",
    "kind": "note",
    "label": "first quilt past the canvas' borders, not usable: square pieces, tone jumps, forms copied",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:28:22.080Z",
-   "file": "20261125122822080-note-shade-box.jpg",
-   "source": "../work/r14/shade-box.jpg",
-   "kind": "note",
-   "label": "top view at 250 px a unit: cast shadows of the stored relief by the place's Sun (white), footprints of the thirds of 3150 to 8 units (red left, green middle, blue right)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:06:43.339Z",
-   "file": "20261125120643339-note-n6-3150-trio.jpg",
-   "source": "../work/r13/off/n6-3150-trio.jpg",
-   "kind": "note",
-   "label": "3150 final tier on d438b57b: approved, d438b57b, db67666d",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:06:42.243Z",
-   "file": "20261125120642243-note-w1-comp-lines.jpg",
-   "source": "../work/r14/w1-comp-lines.jpg",
-   "kind": "note",
-   "label": "ground from above with the canvas borders drawn: the straight lines of rise 3251 to 3265 are the canvas left and bottom border",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:06:41.054Z",
-   "file": "20261125120641054-note-fl-sheet.jpg",
-   "source": "../work/r14/fl-sheet.jpg",
-   "kind": "note",
-   "label": "d438b57b draft: dive 3034, 3042 and flight 3060, 3075, 3090; the canvas border shows in the dive too",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:45:02.485Z",
-   "file": "20261125114502485-note-s1-3150.jpg",
-   "source": "../work/r13/off/s1-3150.jpg",
-   "kind": "note",
-   "label": "3150 as named, now, approved",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:45:01.863Z",
-   "file": "20261125114501863-note-diag-6509.jpg",
-   "source": "../work/r14/diag-6509.jpg",
-   "kind": "note",
-   "label": "3254 and a half lower left, as built, ground grid, weight of the canvas",
    "stop": "jupiter"
   }
  ]
