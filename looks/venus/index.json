@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T23:13:14.726Z",
+ "pushed": "2026-11-25T23:21:10.255Z",
  "head": "b77760d1eaf3cd03db962e4f83c854dc39dc2782",
- "note": "far deck trial on the rise against Bc",
+ "note": "control with main's dive plates; far deck under the limb",
  "looks": [
+  {
+   "time": "2026-11-25T23:21:08.863Z",
+   "file": "20261125232108863-note-limb-1544-1550.jpg",
+   "source": "../../../../tmp/v/sh/limb-1544-1550.jpg",
+   "kind": "note",
+   "label": "far deck under the limb 1544 to 1550: Bc left, far deck trial plates right",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T23:21:08.082Z",
+   "file": "20261125232108082-note-line-bc-cmp.jpg",
+   "source": "../../../../tmp/v/sh/line-bc-cmp.jpg",
+   "kind": "note",
+   "label": "end of the ground 1329 to 1338, values times 2.2: Bc with the plates of trial g1 left, the same code with main's dive plates right",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T23:13:00.358Z",
    "file": "20261125231300358-note-fd-Bc.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/Bc/rtowers-b.jpg",
    "kind": "note",
    "label": "Bc rise 1557 to 1565 at 2 to 1, crops that follow the place's centre: towers single",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T22:41:44.101Z",
-   "file": "20261125224144101-note-Bc-pmap-rise.jpg",
-   "source": "../../../../tmp/v/sh/Bc-pmap-rise.jpg",
-   "kind": "note",
-   "label": "Bc rise 1541, 1545, 1555 + 1/2 with the frame 8 later and the reader's maps: the red is the far deck under the limb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T22:41:43.086Z",
-   "file": "20261125224143086-note-track2-M0Bc.jpg",
-   "source": "../../../../tmp/v/sh/track2-M0Bc.jpg",
-   "kind": "note",
-   "label": "main above, Bc below, crops that follow one ground point under the line, 1328 to 1338",
    "stop": "venus"
   }
  ]
