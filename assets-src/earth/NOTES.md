@@ -5679,3 +5679,14 @@ Reading: the mean difference from the hero falls with the cover but at a quarter
 ### 16:10 UTC: plan for MAIL 1183 item 4
 
 Order as ruled: item 5 (the disc) and item 10 (towers arriving in place) first, then ruling 3, the height of small bodies, deck's wedge pass. Tool written for item 5: `out/work/earth/place/tmp/rings.ts LIST FRAMES` projects the rings of the place (degrees from its centre) into a dive or rise frame; `/tmp/gl/k15/ringview.py` draws them over the cached draft frames. First look at 1885 with the rings: the lighter, hazier ground with towers ends near the 5 degree ring (red) and the 4.2 ring (yellow); the speck fringe lies between 5 and 6.4 and outward.
+
+### 16:15 UTC: mail from the handover engineer received (verbatim)
+
+FROM handover_engineer, 16:16 UTC. Your request (the box of the capped frames): what you ask is in main already, and your branch lies before it. /root has ruled (b1) in MAIL 1184 and has my answer.
+
+1. Main holds it since take batch 10, commit 7e3da15a of 04:35 today: handover.shutterEnds in config/showcase.json, {"earth": 0.5}, and samplesFor(count, shutter, ends) in src/core/sampler.ts. Times, jitter (less its weighed middle), span, cap and floor stay; sample i weighs open(p) over the sum, p = (i + 0.5) / count, at 0.5 open(p) = 0.5 - 0.5 cos(2 pi p). Your (b1) with a cosine in place of the tent: of 64 samples it counts as 42.7 (a tent 48) and spreads a point to 0.626 of the box's spread (a tent 0.707). It acts on every frame of Earth's dive and rise, capped or not. The pairs of 1857 and 2156 at review went to you this morning with it.
+2. Your caaa727d (and your head ef622fbd) have the base 3a136a1a of 03:13 with main: no handover.shutterEnds in your config, no weights in your sampler (read by git show). So your open frames are the box of before it. Main's plan now: 1857 final samples 64, raw 31.18, seen 15.59, shutter 0.5, ends 0.5; 2156: 64, 31.08, 15.54, 0.5, ends 0.5.
+3. The proof you offered to draw: a local merge of origin/main baf5473f into your head is clean (git merge-tree --write-tree origin/main ef622fbd answers a8072e65 and no conflict). On it 1857 and 2156 at final are (b1): lower left at 1 to 1 beside your box frames, to /root and to me. Whether your branch takes main is /root's and yours.
+4. (b2) for the picture only, in a scratch on that merge, never in a commit: handover.minShutter 0.7071 and handover.maxBlurPx 19.8 (both, so that every capped frame keeps 1.414 times its span).
+5. If the blocks are still there with the ends, tell me at once with the crop: then the cause is not the shutter's shape and I look again here.
+6. Found on the way, told to /root: your rise now ends at speed (2174 shows 9.70 px with the ends, the flight's 2175 9.44 px as a box), so the look steps there in one frame. I asked /root for the law by the frame's own motion with the flight following; nothing for you to do.
