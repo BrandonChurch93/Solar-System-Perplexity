@@ -12,7 +12,7 @@ import { eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSk
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
-import { CARRY, TravelShape, WORLD_ANSWER, WORLD_MISS, carryBend, carryWay, inFrame, outsideFrame, travelLook, worldCosts, worldLead } from '../space/travel/path'
+import { CARRY, TravelShape, WORLD_ANSWER, WORLD_CORNER, WORLD_MISS, carryBend, carryWay, inFrame, outsideFrame, travelLook, worldCosts, worldLead } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
 import { globeShare, wearShare } from '../space/farsun/share'
 import farLook from '../space/farsun/look.json'
@@ -547,7 +547,7 @@ export class FilmDirector implements Director {
       const taken = tries.indexOf(best)
       const miss = THREE.MathUtils.radToDeg(Math.abs(angles[taken]! - want))
       const [low, high] = [THREE.MathUtils.radToDeg(Math.min(...angles)), THREE.MathUtils.radToDeg(Math.max(...angles))]
-      if (answer !== 'corner' && (a.p.travel.turnDeg < low - WORLD_MISS || a.p.travel.turnDeg > high + WORLD_MISS)) throw new Error(a.id + ': travel.turnDeg ' + a.p.travel.turnDeg + ' cannot be reached from the end of its rise, which reaches ' + low.toFixed(2) + ' to ' + high.toFixed(2) + ' degrees')
+      if (!WORLD_CORNER.includes(a.id) && (a.p.travel.turnDeg < low - WORLD_MISS || a.p.travel.turnDeg > high + WORLD_MISS)) throw new Error(a.id + ': travel.turnDeg ' + a.p.travel.turnDeg + ' cannot be reached from the end of its rise, which reaches ' + low.toFixed(2) + ' to ' + high.toFixed(2) + ' degrees')
       this.placed.push({ id: a.id, taken, missDeg: miss, leadDeg: THREE.MathUtils.radToDeg(worldLead(costs, taken)), bareLeadDeg: THREE.MathUtils.radToDeg(worldLead(bare, taken)), opens: angles[(taken + 1) % 720]! > angles[(taken + 719) % 720]! })
     }
     const begin = i === 0 ? SUN_APPROACH_START : this.clearAt(i, best.r, seg)

@@ -70,12 +70,14 @@ export function travelLook(id: string): TravelLook {
 
 export const WORLD_MISS = 1
 
-export type WorldAnswer = 'least' | 'open' | 'close' | 'corner'
+export type WorldAnswer = 'least' | 'open' | 'close'
 
 export const WORLD_ANSWER: Record<string, WorldAnswer> = { mercury: 'open', earth: 'open', jupiter: 'close', uranus: 'open' }
 
+export const WORLD_CORNER: readonly string[] = ['mercury']
+
 export function worldCosts(angles: number[], bare: number[], answer: WorldAnswer): number[] {
-  if (answer === 'least' || answer === 'corner') return bare
+  if (answer === 'least') return bare
   const n = angles.length
   return bare.map((c, k) => (angles[(k + 1) % n]! > angles[(k + n - 1) % n]!) === (answer === 'open') ? c : Infinity)
 }

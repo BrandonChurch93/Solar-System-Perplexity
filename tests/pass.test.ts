@@ -5,7 +5,7 @@ import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
 import { StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
-import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook, WORLD_ANSWER, WORLD_MISS, worldCosts, worldLead } from '../src/space/travel/path'
+import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook, WORLD_ANSWER, WORLD_CORNER, WORLD_MISS, worldCosts, worldLead } from '../src/space/travel/path'
 
 const looks = ['base', ...Object.keys(TRAVEL)].map((id) => ({ id, look: travelLook(id) }))
 
@@ -549,8 +549,9 @@ describe('the world a travel lands in', () => {
   it('leads every other answer by ' + LEAD + ' degrees at every stop of the film', () => {
     expect(real.placed.map((p) => p.id)).toEqual(plans.slice(1, -1).map((p) => p.id))
     for (const p of real.placed) expect(p.leadDeg, p.id).toBeGreaterThan(LEAD)
-    for (const p of real.placed) if (WORLD_ANSWER[p.id] !== 'corner') expect(p.missDeg, p.id).toBeLessThan(WORLD_MISS)
-    for (const id of ['mercury', 'earth', 'jupiter']) expect(real.placed.find((p) => p.id === id)!.bareLeadDeg, id).toBeLessThan(0.2)
+    for (const p of real.placed) expect(p.missDeg, p.id).toBeLessThan(WORLD_MISS)
+    for (const id of ['earth', 'jupiter']) expect(real.placed.find((p) => p.id === id)!.bareLeadDeg, id).toBeLessThan(0.2)
+    for (const p of real.placed) if (p.bareLeadDeg <= LEAD) expect(WORLD_ANSWER[p.id] === 'open' || WORLD_ANSWER[p.id] === 'close', p.id).toBe(true)
   })
 
   for (const p of plans.slice(1, -1)) {
@@ -564,17 +565,14 @@ describe('the world a travel lands in', () => {
   }
 
   it('refuses a turn that the end of the rise cannot reach, unless the stop says it takes the corner', () => {
+    expect(WORLD_CORNER).toEqual(['mercury'])
     expect(() => new FilmDirector(turned('jupiter', 0, 170))).toThrow('jupiter: travel.turnDeg 170 cannot be reached from the end of its rise')
-    expect(() => new FilmDirector(turned('mercury', 0, 90))).toThrow('mercury: travel.turnDeg 90 cannot be reached from the end of its rise')
-    expect(real.placed.find((p) => p.id === 'mercury')!.missDeg).toBeLessThan(WORLD_MISS)
-    const answers = WORLD_ANSWER as Record<string, string>
-    const own = answers.mercury!
-    answers.mercury = 'corner'
-    try {
-      const film = new FilmDirector(turned('mercury', 0, 90))
-      expect(film.placed.find((p) => p.id === 'mercury')!.missDeg).toBeGreaterThan(1)
-    } finally {
-      answers.mercury = own
+    for (const to of [90, 175]) {
+      const film = new FilmDirector(turned('mercury', 0, to))
+      const made = film.placed.find((p) => p.id === 'mercury')!
+      expect(made.missDeg, 'mercury at ' + to).toBeGreaterThan(5)
+      expect(made.leadDeg, 'mercury at ' + to).toBeGreaterThan(LEAD)
+      expect(film.placed.map((p) => p.id)).toEqual(real.placed.map((p) => p.id))
     }
   }, 60000)
 })
