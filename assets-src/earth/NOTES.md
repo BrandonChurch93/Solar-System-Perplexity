@@ -5150,3 +5150,103 @@ DEPARTURES from MAIL 965, named:
 TESTS on this tree, 08:13 to 08:21 UTC: `npx tsc --noEmit -p .` exit 0; `npx vitest run` without the three GL files and without globe-cap "Test Files  52 passed (52)", "Tests  561 passed (561)"; `tests/globe-cap.test.ts` alone "Test Files  1 passed (1)", "Tests  24 passed (24)", 44.38 s; the three GL files "Test Files  3 passed (3)", "Tests  15 passed (15)", 363.89 s. NOT RUN: the gate, the handover tool, the tool's smooth lines, the finals, the rise, frames 1830 to 1871 and 1911 to 1918 of the dive, review tier.
 
 NEXT: the specks' height from code as one law in the bake (band.py) and on the globe, with the towers' footprints in the same field; the air's colour as a smooth law; then both moves whole, the handover tool, the tool's smooth lines.
+
+### 08:22 to 08:37 UTC: ba479450 pushed, the rise's slice read, STATE mailed
+
+Commit ba4794504c56c5dfad14d26ab609e6c193dcb696 on 29eea607, pushed to agent/earth-place 08:22 without force. Stands on main b890fee7229d776161ce6de3c756c8d60338c55c. Outside the three folders against that main: 0 lines of diff.
+
+Drawn after the commit on the same tree (draft, `/tmp/gl/k9/a1r`): 1858 to 1870 every second frame, 2106 to 2138 every frame. All looked at on three sheets.
+
+MEASURED, the early dive against 29eea607's draft frames: 1858 0 px differ, 1860 largest difference 2 levels, 1862 largest 32 (93 px over 8 levels), 1864 largest 42, 1866 75, 1868 77, 1870 99. Not read by the pattern reader (every second frame only).
+
+MEASURED, the rise on my reader, frames 2106 to 2130: 2106 0.11, 2107 0.11, 2108 0.09, 2109 0.09, 2110 0.08, 2111 0.13, 2112 0.18, 2113 0.22, 2114 0.22, 2115 0.24, 2116 0.27, 2117 0.28, 2118 0.27, 2119 0.25, 2120 0.27, 2121 0.23, 2122 0.20, 2123 0.17, 2124 0.17, 2125 0.17, 2126 0.25, 2127 0.20, 2128 0.22, 2129 0.20, 2130 0.23. Largest 0.28 from 2117 at film px (776, 264), no frame over 0.45; level step largest 0.56, pop largest 1.04. On 29eea607: 0.81 from 2125, 8 frames over. 2131 to 2138 drawn and seen, not read. 2100 to 2105 and 2139 to 2174 NOT RUN.
+
+SEEN on the rise: the far band is the map going out of the haze, no deck leaves it. The island at the right edge is there from 2119 to 2129. Green and yellow tints of the map under the limb at 2118 to 2120. The pale patch of the streak shrinks in place from 2119 to 2138.
+
+Mailed to /root 08:36 as "STATE, NOT A NAMED: ba4794504c56c5dfad14d26ab609e6c193dcb696" with ten pictures (the pair of 2010 whole and as three crops at 1 to 1, the sheets of the dive and of the rise, the far band at 1 to 1). The mail names three departures from MAIL 965 (the limb's strip from 10 degrees outward is still the approved picture's on the globe side; 2010 changes from 5 degrees, not from 6.4; no standing bodies on the far band yet) and the list of what is still wrong.
+
+Gap of the recipe: band.py bakes over the outputs of relief/build.py (relief-ground.webp) and place/levels.py (place-12-low-veil.bin) and keeps copies of them in out/work/earth/place/band/. From a clean checkout the two have to be built again first, then `python3 band.py --fresh`. RECIPE.md has to say so.
+
+### 08:45 UTC, MAIL 984 received (08:42 on the Builder's clock), copied whole
+
+```
+MAIL 984 from the Builder (/root), 08:42 UTC. Earth, your state ba479450: read, with the pair of 2010 looked at here. Rulings, then the order.
+
+1. Departure 2 (the feather from 5 degrees, not 6.4): RULED YES. Your own numbers decide it: the lay back is like the map's body up to 5.5 degrees (0.715, 0.617) and unlike beyond (0.298, 0.102), so a line at 6.4 keeps a ring of unlike pictures exchanged in both moves, which d251 forbids. The feather starts where the two are alike. Inside 5 degrees 2010 stays as it is (your 368 px over 2 levels, largest 5, are accepted as glare; show them once more on the named commit).
+2. The price is not accepted as an end state. SEEN here on your pair: under the limb the far band is flat haze, the bank with its shadow at the right and the streaks at the left are gone, a green line and a violet tint stand in. R1 gave this frame 9 in round 47 and will judge the pair again as it stands; no threshold moves. So your step 1 (the specks' height from code, one law in two places) is the right next step and has one more term: the map's own cloud between 5 and 10 degrees is laid out as the approved picture has it (a long bank with its shadow at the right, streaks of deck at the left), as bodies in the map that the globe shows from above too. d254 allows it: a place may show in the hold, if 1755 shows it as cloud among cloud and not as a patch. Then the far band of 2010 is the same shot again and nothing is exchanged.
+3. Departure 1 (10 to 11.5 degrees still the approved picture's texels because the limb's glow lives there): accepted for this state, not for the NAMED. The limb's glow is the air's light along a grazing ray and belongs to the air's law (your step 2 and the limb's one law), not to texels. Until then say it in every mail as you did.
+4. Departure 3 falls under ruling 2.
+5. The towers that arrive in place at 1886 to 1893 over the map's flat clouds: cured by your step 1 if the footprints go into the field; say by frame whether it did.
+
+Order: your steps 1 to 4 as you wrote them. A NAMED needs: both moves whole on the tool's own smooth lines at rate 2 (not the quick reader alone), the step in place, the handover tool, 1755, 1857 and 2156 to the byte or said, and the pair of 2010 with the far band back. My reader goes on the NAMED sha at once. Next state from you by 10:30 UTC, sooner if step 1 stands.
+```
+
+### 08:39 to 09:05 UTC: the specks' height from code, the bank's layout, first bakes
+
+Sun printed from the stop's own law (out/work/earth/place/tmp/sun.ts): elevation at the point under the close camera 13.29 degrees at 1880, 12.17 at 1919, 12.14 at 1920, 9.56 at 2010, 7.03 at 2099, 8.20 at 2120; azimuth 3 to 4.6 degrees right of the view, so the far clouds are lit from behind. Sun in the close camera's frame at 2010: (-0.08607, 0.61073, -0.78715).
+
+Bake only trials of the far band of 2010 (`/tmp/gl/k10/stand_try.py`; pictures t0, t1, t2; top approved, middle ba479450, bottom trial). SEEN: t1 (the veil thinned with height) reads as dark blobs; t2 (lumps from noise, no thinning, shade 0.42 0.52 0.68, slope 1.5, shadow 0.7) reads as soft white standing cloud. t2 is the law written into band.py and globe.ts. The bodies stand where the map has specks, not where the approved picture has its bank.
+
+MEASURED, the committed levels.py run to a scratch folder gives every level file of both sets to the byte, and its veil equals out/work/earth/place/band/veil-src.bin. So the order deck.py, levels.py, band.py is the clean way to change the map's cloud.
+
+MEASURED on the approved picture's far band (`/tmp/gl/k10/bankmask.py`), darkest channel by arc, 20th centile / median / 85th: 5 degrees 67 / 127 / 194; 6: 95 / 136 / 211; 7: 141 / 179 / 207; 8: 143 / 179 / 204; 9: 170 / 208 / 228; 10: 139 / 168 / 184. From about 7 degrees outward most of the band is deck.
+
+Written, not yet proved on a film frame:
+- place.json `plates.stand`: one field of heights (place-stand.png) made from the map's own cloud; band.py and globe.ts read the same numbers.
+- globe.ts: the ray is marched from the top of the field down to the first height where the field under its foot stands as high as the ray; the ground is read at that foot; bodies are shaded by their slope toward the Sun and by a shadow march; every loop is gated by the arrival by distance, so the hold reads 0.
+- band.py: the sea layer's band is the same march and the same shade over the map, through the veil.
+- deck.py `bank()` and mend.json `field.bank`: the approved picture's cloud between 5 and 10.5 degrees raises the density of the field (max, no body is taken away), so the bank and the streaks become bodies of the field and the globe shows them from above.
+
+Looks pushed 09:03 (bb054fb5021e1e62140ca652e1e0ddcabfe2f774), two trial pictures, said as trials.
+
+### 09:05 to 09:16 UTC: the shader proved on the present map, the deck written
+
+Draft frames with the uncommitted shader and the present map (`/tmp/gl/k10/b1`: 2010, 1919, 1920, 1755, 1886, 1890, 1895).
+
+MEASURED: 1755 has 0 px that differ from ba479450's (sha256 d7d08630443abef8a31d35c4fa416cb108d2c370d7172103940d50b99f3d3d4d). So the height law alone leaves the hold as it is. 2010 against ba479450: differences over 2 levels only in rows 212 to 433; above and below only differences of 1 level.
+
+SEEN on 2010 (pair sheets `/tmp/gl/k10/b1/p-*.png`): the specks of the far band now stand as soft bodies with a shaded side. The large pale patches look a little embossed. The bank at the right and the streaks at the left are still missing: the bodies stand where the map has specks.
+
+First run of deck.py with the bank as a higher chance of cumulus bodies (deck-1.log): the field look showed a scatter of small cumuli, cover 0.294 where the chance is over 0.9. SEEN: that is no bank. Dropped. It would also have moved the random stream of the whole field.
+
+Now written: `sheet()` in deck.py and `field.sheet` in mend.json. The approved bank's footprints become one deck in the map, broken by noise laid in rings about the point under the close camera (streaks across the close view), carried past the frame of the close picture so it has no edge along that frame, laid over the cumulus bodies, which stay as they were (the chance of a cumulus body is not changed, so the random stream of the field is the committed one). Trial from above `/tmp/gl/k10/sheet-top.jpg`: a white streaky band over Yucatan and the western Caribbean. SEEN: reads as a cloud band; whiter and flatter than the map's own cloud.
+
+Chain started 09:14:38: deck.py, then the committed levels.py, then band.py (logs `/tmp/gl/k10/deck-2.log`, `levels-2.log`, `band-2.log`).
+
+Looks pushed 09:15 (465471a4bd3a2733334b7dce6cceacd42eaf0742).
+
+### 09:18 to 09:23 UTC: the deck moved the tone of every cumulus body, found and cured before any frame
+
+Second run of deck.py (deck-2.log): density as committed (over land inside the cover 0.899, over sea 0.424), deck cover of the raster 0.0585, shadow reach 63.8 px at 0.326 km a px.
+
+MEASURED after levels.py on that field: place-5.jpg differed from the committed one in 276030 px, largest 29, spread over the whole level; a large cumulus near the point under the close camera had changed its tone, not its shape. Cause, read in the logs: levels.py takes the field's white from the mean of its solid bright bodies, and the deck's pixels had entered that mean: gain (BGR) 0.935 1.045 1.1 against the committed 1.001 1.068 1.087. That would have changed the ground inside 5 degrees of 2010, which has to stay.
+
+Cure: deck.py writes the mean of the solid bright cumulus bodies before the deck is laid (`out/work/earth/place/field-white.npy`, same rounding and same mask as levels.py used), levels.py reads it. band.py was stopped; chain started again 09:23:14 (deck-3.log, levels-3.log, band-3.log). To prove on the next levels: the gain line reads 1.001 1.068 1.087 and place-5.jpg differs from the committed file only where the deck or its shadow lies.
+
+### 09:23 to 09:40 UTC: chain 3 and the first frames with the deck
+
+Logs `/tmp/gl/k10/deck-3.log`, `levels-3.log`, `band-3.log`. levels-3: field white gain 1.001 1.068 1.087 as committed; place-5.jpg 0 px against the committed file; place-12.jpg 2301523 px (box x 0 to 0.496, y 0 to 0.554 of the side); patch-24.jpg 1641717 px; place-glint-light.png 9705 px (1658 over 8 levels, largest 101, under the deck); place-glint-sea.png 17230 px (400 over 8, largest 11): `glint_of` measures on the plate with the deck. band-3: "stand: cloud share of the raster 0.1108, km a texel 1.308, mean height over cloud 3.67 km, share of the raster that stands 0.1391", "sea layer: texel rows 608 to 1920 of 3960 changed texels 3992578".
+
+Draft frames `/tmp/gl/k10/c1` against ba479450 (`/tmp/gl/k9/a1`), tool `/tmp/gl/cnt.py`: 1755 0 px; 1857 212826 px, 34952 over 8 levels, largest 241; 2156 162532 px, 24435 over 8, largest 237; 2010 471903 px, 119368 over 8, largest 87, rows 212 to 418 over 8 levels, rows 450 to 1080 mean 0.02 largest 1; 1919 100438 over 8; 1920 100504 over 8.
+
+SEEN on the pair of 2010 (`/tmp/gl/k10/c1/p-whole.jpg`, `p-left-1to1.png`, `p-middle-1to1.png`, `p-right-1to1.png`): the far band has a bank again. Right: a long white bank under the limb with a grey underside, nearer to the approved picture than before, but smooth and puffy where the approved bank is crisp streaks with a dark blue shadow. Middle: a white lumpy sheet from about row 230 to row 330 where the approved picture has a white band only above about row 260 and under it the Sun's glare with small towers: the deck comes too near in the middle. Left: streaks of deck from x 350 on; the approved picture has them from x 100.
+
+SEEN on 1857 (`/tmp/gl/k10/c1/c-1857.png`) and on 1836 to 1864 (`/tmp/gl/k10/c2/s-arrive.jpg`): the deck was a white patch over Yucatan and the Gulf that the hold did not have (1755 0 px). Not on 1836 and 1842, faint on 1848, whole on 1852. It arrived in place with the first level. That is an exchange and against MAIL 957 and MAIL 984 ("as bodies in the map that the globe shows from above too").
+
+Looks pushed 09:43 (ffeca9a9c0adda8a441252b3ff8c0d2cd9830c62).
+
+### 09:44 to 09:52 UTC: the deck is in the globe's picture at every distance
+
+Cause read in globe.ts: the first patch level is drawn only where the map shown so far is too coarse, or early by the share of the arrival; at the hold neither holds, so nothing of the levels shows there.
+
+Cure: `place-stand.png` is now RGB. Red is the height as before. Green holds the deck: deck.py writes its footprint (`out/work/earth/place/field-deck.png`), band.py smooths it as the sheet does, takes what lies over the sheet's `hold[0]`, grows it by `plates.stand.deck.growDeg` (0.4 degrees, the shadow reaches 0.19) and softens it over `softDeg` (0.12). globe.ts draws the first patch level where green is set, at every distance (`deck`, read at the foot of the ray, no distance and no clock in it). The live cloud of the globe is not taken away by it: `baked` is taken before the deck's share, so above the deck the globe's own moving cloud stays and gives way with the arrival of the place as before. The tone that the place's sea carries is taken from the level by `laid`, which includes the deck's share. set.ts loads the file with all channels. No new sampler (the shader stands at 16).
+
+band.py got a short way for this file alone: `python3 band.py stand`. The full run writes the same file. field-deck.png was written by calling `deck.density` alone (62.6 s); deck.py's main writes it at the same place with the same line; a full run of deck.py after this change has NOT been made yet.
+
+MEASURED, draft frames `/tmp/gl/k11/d1`: band.py prints "stand: share of the raster where the deck holds the first level at every distance 0.3125, whole on 0.2001" (the share is larger than the deck one sees: the footprint over 0.02 is wide; to be cut to the sheet's own cover). Against c1 and c2 (the state before the green channel): 1857 0 px, 2010 0 px, 1872 0 px, 1890 0 px, 2156 1106 px (17 over 2 levels, largest 7), 1836 14478 px over 8 levels, 1848 23162 over 8. Against ba479450: 1755 65434 px, 18329 over 2, 13032 over 8, largest 239, box of the px over 8 levels x 853 to 990, y 384 to 540.
+
+SEEN (`/tmp/gl/k11/d1/h-crop.jpg`, `s-hold.jpg`): on 1755, 1836, 1848 and 1857 the deck is there as the same white bank over Yucatan and the Gulf; nothing arrives. On 1755 it is whiter and flatter than the map's own cloud and it hides the Yucatan peninsula and the west end of Cuba: it reads as cloud, but as the brightest and plainest cloud of the frame. Whether that is "cloud among cloud and not a patch" is /root's call; my own reading is that it is not yet.
+
+SEEN on 1872 to 1894 (`/tmp/gl/k11/s-dive-1.jpg`, `s-dive-2.jpg`, frames of c2, which equal this state at 1872 and 1890 to the byte): the deck stays one body from above down into the far band. The towers of the close ground still come in over the map's flat clouds from about 1884 to 1890 (flat on 1883, standing with dark sides on 1887 to 1890): not cured, their footprints are not in the field.
+
+Reader on c2, 1872 to 1886 (`/tmp/gl/k11/pat-dive-a.log`): largest 0.19 from 1878, level step most 0.45, pop most 1.11. The render was stopped at 1894 for the clock.

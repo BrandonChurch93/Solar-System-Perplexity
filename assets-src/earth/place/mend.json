@@ -421,7 +421,100 @@
      0.9
     ]
    ]
-  ]
+  ],
+  "bank": {
+   "how": "The cloud of the approved close picture as bodies in the map (MAIL 984, d254). On the ground the close picture sees, the lay back's darkest channel is split ring by ring (rings of ringDeg degrees about the point under the close camera, with at least least px): the middle between its percentiles low and high, smoothed over ringSmooth rings, is the line between open water through the air and cloud, soft over soft code values to either side; what is warmer than warm (red less blue, code values) is the Sun's streak on the water and no cloud. The lay back carries a standing cloud outward past its foot by its height over the tangent of the ray's angle above the ground (at least graze), so a point is a footprint only where the cloud goes on that far outward for a body of km kilometres (steps samples). From fromDeg degrees on, inside the lay back's cover, top times that footprint is where the deck of field.sheet lies; the chance of the cumulus bodies is not changed by it, so the field elsewhere stays as it was. Read once from the picture; no clock and no height.",
+   "ringDeg": 0.1,
+   "least": 50,
+   "low": 20,
+   "high": 85,
+   "ringSmooth": 3.0,
+   "soft": 14.0,
+   "warm": [
+    6.0,
+    22.0
+   ],
+   "km": 3.0,
+   "steps": 8,
+   "graze": 0.03,
+   "fromDeg": [
+    5.0,
+    6.0
+   ],
+   "top": 1.0
+  },
+  "sheet": {
+   "how": "The deck of the approved close picture as one body in the map (MAIL 984). The bank's footprints (field.bank) are smoothed over smoothDeg degrees and carried past the ground the close picture sees by a mean over spreadDeg degrees that dies within reachDeg degrees, so the deck has no edge along the picture's frame. Noise of cells breakKm kilometres (each next one times gain) breaks the edge where the smoothed footprint is between hold[0] and hold[1] or more; the deck is where the sum passes cut. Its top rises over deep of that sum by power and carries bumps of bumpKm kilometres; the light is light[0] plus light[1] times the top's slope toward the Sun over slopeKm kilometres, not under light[2], between the colours dim and lit (BGR). The shadow on the map lies km kilometres of height long at a Sun sunDeg degrees high, softened over softPx px, dark at most. The break noise is laid in rings about the point under the close camera, its cells stretch times longer along the ring than across (ring length taken at midKm kilometres), so the deck runs in streaks across the close view; the fringe noise fringeKm and the bumps are plain cells. The light is weighed by tone[0] plus tone[1] times noise of toneKm kilometres and the deck covers at most most. The deck is laid over the cumulus bodies, which stay as they were; what lies in its shadow loses onCloud of the shadow's weight.",
+   "seed": 11,
+   "smoothDeg": 0.12,
+   "spreadDeg": 1.5,
+   "reachDeg": 2.0,
+   "break": 0.34,
+   "breakKm": [
+    70,
+    30,
+    12,
+    5
+   ],
+   "hold": [
+    0.02,
+    0.3
+   ],
+   "gain": 0.6,
+   "cut": [
+    0.36,
+    0.78
+   ],
+   "deep": 0.5,
+   "power": 0.7,
+   "bump": 0.2,
+   "bumpKm": [
+    8,
+    3.5,
+    1.5,
+    0.7
+   ],
+   "slopeKm": 1.0,
+   "light": [
+    0.82,
+    0.6,
+    0.5
+   ],
+   "lit": [
+    250,
+    248,
+    246
+   ],
+   "dim": [
+    216,
+    198,
+    184
+   ],
+   "km": 3.5,
+   "sunDeg": 9.56,
+   "dark": 0.4,
+   "softPx": 4,
+   "midKm": 830,
+   "stretch": 3.0,
+   "fringe": 0.05,
+   "fringeKm": [
+    10,
+    4,
+    1.6
+   ],
+   "thin": 1.4,
+   "tone": [
+    0.88,
+    0.12
+   ],
+   "toneKm": [
+    25,
+    10,
+    4
+   ],
+   "most": 0.97,
+   "onCloud": 0.5
+  }
  },
  "calm": {
   "how": "The land of the hold's 12, 24 and 48 degree levels and of the plate carries a regular pattern of pale dots that reads as lights by day. Land is where green or pale ground stands near (green: code values the green channel must lead by; pale: what red and green must lead blue by; sigmaPx, reachPx, share) and the ground is warmer than the sea (warm), away from cloud (cloud: the darkest channel over the first value with red no more than the second above blue, where that stands wider than the disc below, widened by cloudPx). There the picture is its opening by a disc of dotPx radius (per level width in degrees; a level not named stays as it is), which takes away bright marks narrower than the disc and keeps every dark one, then its median over median times that radius (never brighter than the picture was) blurred by softPx, plus keep of what the opening took away. The plate keeps its land as it is only where the lay back covers it inside the window of the fine level, which carries the detail of the close view there; that window gives way to the calm over fineFadeDeg from its edge inward. Land under haze in the plate is bluer than the rule for the levels allows (measured on the land north of the place: blue leads green by -14 to 15 there, by 20 and more over the sea), so the plate has its own values in the block plate: blue is what green must lead blue by where no channel is over top (bright ground bluer than the first rule is the glint or the flank of a cloud, not land), warm as above.",

@@ -46,6 +46,7 @@ export const createSet: SetFactory = async (ctx) => {
   lowVeil.minFilter = THREE.LinearFilter
   lowVeil.magFilter = THREE.LinearFilter
   lowVeil.needsUpdate = true
+  const standMap = await ctx.texture(base + plates.stand.file, { srgb: false, mips: false, anisotropy: 1 })
   const tone = new THREE.DataTexture(new Uint16Array(await ctx.buffer(base + plates.tone.file)), plates.tone.size, plates.tone.size, THREE.RGBAFormat, THREE.HalfFloatType)
   tone.minFilter = THREE.LinearFilter
   tone.magFilter = THREE.LinearFilter
@@ -54,7 +55,7 @@ export const createSet: SetFactory = async (ctx) => {
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, mapFull: wrap.sets.full.surface[0], cloud, emissive, far: farMap, farCloud, look: look.globe,
     sunHold: plan.lightDir.clone().applyQuaternion(new THREE.Quaternion().fromArray(fit.globe.quaternion).invert()),
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), windows: patches.levels.map((l) => (l.raster && l.size && l.offset ? { raster: l.raster, size: l.size, offset: l.offset } : undefined)), made: patches.levels.map((l) => l.made ?? 0), full: patches.levels.map((l) => l.size ?? 0), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, place: { centre: direction(plates.centre.lon, plates.centre.lat), from: patches.placeFrom, tone, toneDeg: plates.tone.widthDeg, toneCloud: plates.tone.cloud, toneGrey: plates.tone.grey, glint: glintOf(plates), earlyDeg: plates.earlyDeg, gain: plates.gain, day: plates.day, twin: direction(placeJson.globe.lon, placeJson.globe.lat).multiplyScalar(1 + placeJson.height), arrive: plates.arrive.footDeg, share: pathShare, veil: { map: lowVeil, times: plates.haze.times } } },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), windows: patches.levels.map((l) => (l.raster && l.size && l.offset ? { raster: l.raster, size: l.size, offset: l.offset } : undefined)), made: patches.levels.map((l) => l.made ?? 0), full: patches.levels.map((l) => l.size ?? 0), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, place: { centre: direction(plates.centre.lon, plates.centre.lat), from: patches.placeFrom, tone, toneDeg: plates.tone.widthDeg, toneCloud: plates.tone.cloud, toneGrey: plates.tone.grey, glint: glintOf(plates), earlyDeg: plates.earlyDeg, gain: plates.gain, day: plates.day, twin: direction(placeJson.globe.lon, placeJson.globe.lat).multiplyScalar(1 + placeJson.height), arrive: plates.arrive.footDeg, share: pathShare, veil: { map: lowVeil, times: plates.haze.times }, stand: { map: standMap, times: plates.stand.times, km: plates.stand.km, graze: plates.stand.graze, bodyKm: plates.stand.bodyKm, slope: plates.stand.slope, slopeKm: plates.stand.slopeKm, shadow: plates.stand.shadow, softKm: plates.stand.softKm, shade: plates.stand.shade, sunFloor: plates.stand.sunFloor, steps: plates.stand.steps, shadowSteps: plates.stand.shadowSteps } } },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
   globe.mesh.scale.fromArray(fit.globe.scale)

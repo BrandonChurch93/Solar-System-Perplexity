@@ -1,4 +1,5 @@
 import sys
+import json
 import shutil
 import numpy as np
 import cv2
@@ -22,6 +23,8 @@ EYE = NADIR * (1 + 1 / g.R)
 SPOT = g.G.T @ g.SPOT
 LEVELS = [(lv, SPOT) for lv in PLATES['under']] + [(lv, PC) for lv in PLATES['levels']]
 PLACE_WIDE = PLATES['levels'][0]['widthDeg']
+STAND = PLATES['stand']
+RADIUS_KM = 6371.0
 
 
 def step(a, b, x):
@@ -130,8 +133,102 @@ def air_colour(approved, d):
     return cv2.remap(field, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
 
 
+def stand_field():
+    n, times = STAND['size'], STAND['times']
+    half = times * np.tan(np.radians(PLACE_WIDE) / 2)
+    d = grid(PC, half, n)
+    code = np.concatenate([the_map(d[r:r + 256]) for r in range(0, n, 256)]).astype(np.float32)
+    lo = code.min(-1)
+    cloud = step(STAND['cloud'][0], STAND['cloud'][1], lo) * (1 - step(STAND['warm'][0], STAND['warm'][1], code[..., 0] - code[..., 2]))
+    km = 2 * half * RADIUS_KM / n
+    dist = cv2.distanceTransform((cloud > 0.5).astype(np.uint8), cv2.DIST_L2, 5) * km
+    rng = np.random.default_rng(STAND['seed'])
+    lumps, total, weight = 0, 0, 1
+    for cell in STAND['lumpKm']:
+        m = max(int(round(n * km / cell)), 2)
+        lumps = lumps + weight * cv2.resize(rng.random((m, m)).astype(np.float32), (n, n), interpolation=cv2.INTER_CUBIC)
+        total += weight
+        weight *= STAND['lumpGain']
+    lumps = lumps / total
+    bright = np.clip((lo - STAND['cloud'][0]) / (1 - STAND['cloud'][0]), 0, 1)
+    h = np.clip(dist / STAND['reachKm'], 0, 1) ** STAND['power'] * np.clip(STAND['lump'][0] + STAND['lump'][1] * (2 * lumps - 1) + STAND['bright'] * (bright - 0.5), 0.05, 2)
+    h = np.minimum(h, 1) * step(STAND['fromDeg'][0], STAND['fromDeg'][1], arc_of(d))
+    h = cv2.GaussianBlur(h.astype(np.float32), (0, 0), STAND['blurPx'])
+    rim = STAND['rimPx']
+    h[:rim] = h[-rim:] = 0
+    h[:, :rim] = h[:, -rim:] = 0
+    out = np.clip(np.round(h * 255), 0, 255).astype(np.uint8)
+    fs = json.loads((Path(__file__).resolve().parent / 'mend.json').read_text())['field']
+    deck = cv2.imread(str(ROOT / 'out/work/earth/place/field-deck.png'), 0).astype(np.float32) / 255
+    per = deck.shape[0] / fs['widthDeg']
+    on = (cv2.GaussianBlur(deck, (0, 0), fs['sheet']['smoothDeg'] * per) > fs['sheet']['hold'][0]).astype(np.uint8)
+    r = int(round(STAND['deck']['growDeg'] * per))
+    on = cv2.GaussianBlur(cv2.dilate(on, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1))).astype(np.float32), (0, 0), STAND['deck']['softDeg'] * per)
+    at = ((((np.arange(n) + 0.5) / n - 0.5) * half / np.tan(np.radians(fs['widthDeg']) / 2) + 0.5) * deck.shape[0] - 0.5).astype(np.float32)
+    mx, my = np.meshgrid(at, at)
+    always = cv2.remap(on, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    always[:rim] = always[-rim:] = 0
+    always[:, :rim] = always[:, -rim:] = 0
+    both = np.dstack([out, np.clip(np.round(always * 255), 0, 255).astype(np.uint8), np.zeros_like(out)])
+    Image.fromarray(both).save(PUB / 'full' / STAND['file'], optimize=True)
+    Image.fromarray(cv2.resize(both, (n // 2, n // 2), interpolation=cv2.INTER_AREA)).save(PUB / 'web' / STAND['file'], optimize=True)
+    print('stand: share of the raster where the deck holds the first level at every distance %.4f, whole on %.4f' % ((always > 0).mean(), (always > 0.99).mean()), flush=True)
+    print('stand: cloud share of the raster %.4f, km a texel %.3f, mean height over cloud %.2f km, share of the raster that stands %.4f' % ((cloud > 0.5).mean(), km, (h[cloud > 0.5]).mean() * STAND['km'], (out > 0).mean()), flush=True)
+    return out.astype(np.float32) / 255
+
+
+def stand_at(field, p):
+    hx, hy, k = plane(p, PC)
+    scale = 1 / (2 * np.tan(np.radians(PLACE_WIDE) / 2) * STAND['times'])
+    u, v = hx * scale + 0.5, hy * scale + 0.5
+    inside = (k >= 0.3) & (np.abs(u - 0.5) < 0.5) & (np.abs(v - 0.5) < 0.5)
+    return read(field, u, v) * inside * (STAND['km'] / RADIUS_KM)
+
+
+def stood(field, d, eye, amount=1.0):
+    to = eye - d
+    v = to / np.linalg.norm(to, axis=-1, keepdims=True)
+    up = (d * v).sum(-1)
+    t = (v - d * up[..., None]) / np.maximum(up, STAND['graze'])[..., None]
+    top = amount * STAND['km'] / RADIUS_KM
+    n = STAND['steps']
+    z = np.zeros(d.shape[:-1], np.float64)
+    done = np.zeros(d.shape[:-1], bool)
+    prev = np.full(d.shape[:-1], -1.0)
+    for i in range(n + 1):
+        zi = top * (1 - i / n)
+        fi = amount * stand_at(field, d + t * zi) - zi
+        now = ~done & (fi >= 0)
+        z = np.where(now, zi + (top / n) * fi / np.maximum(fi - prev, 1e-9), z)
+        done |= now
+        prev = fi
+    return d + t * z[..., None], z
+
+
+def shaded(field, at, z, code, sun, amount=1.0):
+    up = g.unit(at)
+    sd = up @ sun
+    flat = g.unit(sun - up * sd[..., None])
+    rise = np.maximum(sd, STAND['sunFloor']) / np.sqrt(np.maximum(1 - sd * sd, 1e-6))
+    e = STAND['slopeKm'] / RADIUS_KM
+    slope = amount * (stand_at(field, up + flat * e) - stand_at(field, up - flat * e)) / (2 * e)
+    body = np.clip(amount * stand_at(field, up) / (STAND['bodyKm'] / RADIUS_KM), 0, 1)
+    face = np.clip(STAND['slope'] * np.maximum(slope, 0), 0, 1)
+    top = amount * STAND['km'] / RADIUS_KM
+    shadow = np.zeros_like(z)
+    m = STAND['shadowSteps']
+    for j in range(1, m + 1):
+        reach = (j / m) * top / rise
+        shadow = np.maximum(shadow, np.clip((amount * stand_at(field, up + flat * reach[..., None]) - (z + reach * rise)) / (STAND['softKm'] / RADIUS_KM), 0, 1))
+    tone = 1 - np.array(STAND['shade'])
+    return code * (1 - (body * face)[..., None] * tone) * (1 - STAND['shadow'] * shadow[..., None] * tone)
+
+
 def main():
     WORK.mkdir(parents=True, exist_ok=True)
+    if 'stand' in sys.argv[1:]:
+        stand_field()
+        return
     src_veil, src_ground, src_web = WORK / 'veil-src.bin', WORK / 'ground-full.webp', WORK / 'ground-web.webp'
     if '--fresh' in sys.argv or not src_veil.exists():
         shutil.copyfile(PUB / 'full' / HAZE['file'], src_veil)
@@ -153,6 +250,8 @@ def main():
     ring = arc_of(grid(PC, half, n))
     print('veil with the cover of the air, by degrees from the point under the close camera (cover, colour):', ', '.join('%g %.2f %s' % (a, k[(ring >= a) & (ring < a + 0.5)].mean(), np.round(veil[(ring >= a) & (ring < a + 0.5)][:, :3].mean(0), 2).tolist()) for a in (4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 18)), flush=True)
 
+    field = stand_field()
+    sun = g.unit(np.array(STAND['sun']) @ g.TO_BODY.T)
     tone = np.frombuffer((PUB / 'full' / TONE['file']).read_bytes(), np.float16).reshape(TONE['size'], TONE['size'], 4)[::-1].astype(np.float32)
     full = np.clip(np.round(approved * 255), 0, 255).astype(np.uint8)
     del approved
@@ -182,7 +281,8 @@ def main():
             continue
         hx_, hy_, kk = plane(d, PC)
         v = read(veil, hx_ * place / times + 0.5, hy_ * place / times + 0.5)
-        code = np.clip(the_map(d) * (1 - v[..., 3:4]) + v[..., :3], 0, 1)
+        at, z = stood(field, d, EYE)
+        code = np.clip(shaded(field, at, z, the_map(g.unit(at)), sun) * (1 - v[..., 3:4]) + v[..., :3], 0, 1)
         tn = read(tone, hx_ * tone_wide + 0.5, hy_ * tone_wide + 0.5)
         inside = step(0.5, 0.5 - PLATES['feather'], np.maximum(np.abs(hx_ * place), np.abs(hy_ * place)))
         hi, lo = code.max(-1), code.min(-1)
