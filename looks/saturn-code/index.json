@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T00:14:50.047Z",
- "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "rise red by 0.01 on the tree of 23:46 (the dust at the globe's foot); the same states now over 48 frames in place of 38; proof r57 runs",
+ "pushed": "2026-11-25T00:29:31.769Z",
+ "head": "5e094e51d1c61410a3ad2a39c843c76dd9eff2ea",
+ "note": "proof r57 of the tree with the dark dust and the stretched table is running: rise frames arriving, my early reading green so far (0.42 against 0.45), verdict of the report about 00:40",
  "looks": [
+  {
+   "time": "2026-11-25T00:29:26.507Z",
+   "file": "20261125002926507-note-globe_pair.jpg",
+   "source": "../../../../tmp/v/t21/globe_pair.png",
+   "kind": "note",
+   "label": "item 3, not cured: the globe of the approved close image (left) beside mine at 3720, draft tier (right): mine is more orange with a broad brown terminator"
+  },
+  {
+   "time": "2026-11-25T00:29:25.455Z",
+   "file": "20261125002925455-note-rise57_548.jpg",
+   "source": "../../../../tmp/v/t21/rise57_548.png",
+   "kind": "note",
+   "label": "r57 rise, draft tier, crop at 548 544, film frames 3836 to 3850 every second: the globe comes in over the inner ring and the gap"
+  },
+  {
+   "time": "2026-11-25T00:29:24.682Z",
+   "file": "20261125002924682-note-rise57_foot_a.jpg",
+   "source": "../../../../tmp/v/t21/rise57_foot_a.png",
+   "kind": "note",
+   "label": "r57 rise, draft tier, crop at 1136 792, film frames 3802 to 3822 every fourth: the dust in front of the foot thins as the lens climbs (my early reading of the pattern 0.42 at 3813 and a half, limit 0.45)"
+  },
   {
    "time": "2026-11-25T00:14:49.345Z",
    "file": "20261125001449345-note-saturn-rise-changes.jpg",
@@ -39,27 +60,6 @@
    "source": "../../../../tmp/v/t21/e3612_all.png",
    "kind": "note",
    "label": "d253 after the cure, 3612 at 1920 and its difference to 3840 halved, times 8: mean 1.63 (was 2.47), cells over 12 of 20736: 0 (was 55); what is left is the ringlets' edges, the film's grain and a warm halo by the lit limb (the film's bloom, not mine)"
-  },
-  {
-   "time": "2026-11-24T23:40:13.482Z",
-   "file": "20261124234013482-note-d3612_all.jpg",
-   "source": "../../../../tmp/v/t21/d3612_all.png",
-   "kind": "note",
-   "label": "d253, 3612 at 1920 and the difference to 3840 halved, times 8, before the frame factor on the ring levels: ringlets differ by up to 13 of 255 over 16 px"
-  },
-  {
-   "time": "2026-11-24T23:40:12.879Z",
-   "file": "20261124234012879-note-dk1_foot1.jpg",
-   "source": "../../../../tmp/v/t21/dk1_foot1.png",
-   "kind": "note",
-   "label": "3720 the foot at 1 to 1, approved left: the dark dust closes the foot; still grainy where the approved has ringlets, the band on the globe's foot still broad"
-  },
-  {
-   "time": "2026-11-24T23:40:12.162Z",
-   "file": "20261124234012162-note-dk1_whole.jpg",
-   "source": "../../../../tmp/v/t21/dk1_whole.png",
-   "kind": "note",
-   "label": "3720 beside the approved (left), draft, no grain: the dust inside the inner rim dark (inner.light 0.3 and 0.12 where it was 0.9 and 0.7), half size"
   }
  ]
 }
