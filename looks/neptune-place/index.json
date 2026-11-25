@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T05:44:57.883Z",
- "head": "cdb17a08c143f288bf0560440e8463215889fad6",
- "note": "haze as light added at 4860 (plain 49,81,121 vs 90,134,176), storm controls: rings draws the spiral",
+ "pushed": "2026-11-25T06:09:23.103Z",
+ "head": "6a3ee62ccf927ba759d45dfb76f242e4c9dad343",
+ "note": "02ca4d9f: air as light added (plain 49,81,120 vs 90,134,176; G17 proxy 1920 0.359 red), storm lane from orbit lowered, cloud term named",
  "looks": [
+  {
+   "time": "2026-11-25T06:09:22.536Z",
+   "file": "20261125060922536-note-f2-b.jpg",
+   "source": "out/work/nep/weave/ev/f2-b.jpg",
+   "kind": "note",
+   "label": "commit 02ca4d9f, preview draft: 4750, 4757, 4758 (change of view), 4956, 4957, 4975. Soft dark ovals (cirrus shadow on the air) and a faint pink band at the far limb are reds I name.",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T06:09:21.831Z",
+   "file": "20261125060921831-note-night-C4.jpg",
+   "source": "out/work/nep/weave/ev/night-C4.jpg",
+   "kind": "note",
+   "label": "clouds at the terminator, the term named: the cloud curve of light (curve.json) between ndl 0 and 0.2. Left as is, right the control C4 (not taken): the lumps go at 4713 and 4722 (x5), but 4605 leaves the approved hero, which has these clouds (lower row: hero, as is, C4).",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T06:09:21.266Z",
+   "file": "20261125060921266-note-swirl-f2.jpg",
+   "source": "out/work/nep/weave/ev/swirl-f2.jpg",
+   "kind": "note",
+   "label": "storm from orbit: approved hero, 4605 before, 4605 now (rings 0.2, arms.light 0.05); below 4720 before and now. A faint trace is left at 4605.",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T06:09:20.710Z",
+   "file": "20261125060920710-note-4860-F2p.jpg",
+   "source": "out/work/nep/weave/ev/4860-F2p.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image, commit 02ca4d9f (air as light added, storm rings 0.2). G17 proxy RED and lower than before: 1920 median 0.359 p25 0.090 (0.675, 0.280 on 121f3ade), preview 0.508. Plain's box (49, 81, 120) against the approved (90, 134, 176), before (24, 58, 98). Draft frame: 92 s at 1920, 38.5 s at the preview cold.",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T05:44:57.308Z",
    "file": "20261125054457308-note-swirl3.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/nep/weave/ev/swirl2-4605.jpg",
    "kind": "note",
    "label": "4605, the swirl with the dark eye: head, arms off, collar off, storm dark and rings at 0. Cause: the storm block's dark and rings",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T05:04:40.534Z",
-   "file": "20261125050440534-note-r1p-block.jpg",
-   "source": "out/work/nep/weave/ev/r1p-block.jpg",
-   "kind": "note",
-   "label": "Rise at the preview, 4976 to 4988: a bright white patch on the dark deck, lower right. RED",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T05:04:39.071Z",
-   "file": "20261125050439071-note-p1-corner-4945.jpg",
-   "source": "out/work/nep/weave/ev/p1-corner-4945.jpg",
-   "kind": "note",
-   "label": "Rise at 1920, upper right corner across the change of view at 4957: the same stars, nothing comes or goes",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T05:04:37.530Z",
-   "file": "20261125050437530-note-p1-corner-4966.jpg",
-   "source": "out/work/nep/weave/ev/p1-corner-4966.jpg",
-   "kind": "note",
-   "label": "Rise at 1920, upper right corner, every fourth frame 4966 to 5026: the engine's Milky Way core crosses the corner at 4998 to 5006, by the camera, no exchange. RED",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T05:04:35.730Z",
-   "file": "20261125050435730-note-4860-m1.jpg",
-   "source": "out/work/nep/weave/ev/4860-m1.jpg",
-   "kind": "note",
-   "label": "4860 at 1920 on the named commit (left) beside the approved image (right). G17 proxy median 0.675 p25 0.280 at 1920 (preview 1.077, 0.348). Plain (23, 57, 97) against (90, 134, 176): the haze is not built. 97 s the draft frame at 1920, 22 s at the preview",
    "stop": "neptune"
   }
  ]
