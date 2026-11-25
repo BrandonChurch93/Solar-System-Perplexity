@@ -31,7 +31,7 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
   return out
 }
 
-const hazeUnder = (h: number): number => Math.round((1 - Math.exp(-Math.max(h - look.place.air.haze.base, 0) / look.place.air.haze.scale)) * look.place.air.steps) / look.place.air.steps
+const hazeUnder = (h: number): number => Math.round((1 - Math.exp(-Math.max(h, 0) / look.place.air.scale)) * look.place.air.steps) / look.place.air.steps
 
 export const createSet: SetFactory = async (ctx) => {
   const key = ctx.assets === 'full' ? 'full' : 'web'
@@ -66,7 +66,7 @@ export const createSet: SetFactory = async (ctx) => {
   const flight = plan.seg.terrain.end - plan.seg.terrain.start
   const topPath = Array.from({ length: TOP_PATH }, (_, i) => plan.terrain(flight * i / (TOP_PATH - 1)).position.clone())
   const place = {
-    textures: plateTextures, sizes: look.texels.plates, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, air: { ...look.place.air, haze: { ...look.place.air.haze, under: hazeUnder(Math.hypot(...deckJson.centre) / deckJson.radius - 1) } }, topLight: { ...look.place.tops, path: topPath }, feather: platesJson.feather,
+    textures: plateTextures, sizes: look.texels.plates, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, air: { ...look.place.air, under: hazeUnder(Math.hypot(...deckJson.centre) / deckJson.radius - 1) }, topLight: { ...look.place.tops, path: topPath }, feather: platesJson.feather,
     deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, sun: deckJson.sun, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
   }
   const globe = new Globe({ map, mapWidth: look.texels.map, cloud, shadow, light, shade, patches, face, place, ...look.globe })

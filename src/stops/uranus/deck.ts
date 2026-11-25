@@ -151,6 +151,14 @@ ${AIR_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${TOPS_GLSL}
+vec3 plainOver(vec3 n, float mu) {
+  vec3 r = vec3(1.0);
+  for (int k = 0; k < (uHaze.x < 1.0 ? 1 : 0); k++) {
+    float x = (clamp(dot(n, uTopSun) * 0.5 + 0.5, 0.0, 1.0) * (uOwnLightSize.x - 1.0) + 0.5) / uOwnLightSize.x;
+    r = textureLod(uOwnLight, vec2(x, (uOwnLightSize.y - 0.5) / uOwnLightSize.y), 0.0).rgb / max(textureLod(uOwnLight, vec2(x, (clamp(mu, 0.0, 1.0) * (uOwnLightSize.y - 1.0) + 0.5) / uOwnLightSize.y), 0.0).rgb, vec3(1e-6));
+  }
+  return r;
+}
 vec3 ownLight(vec3 n, float mu) {
   vec3 t = n * uPlaceRot;
   float c = cos(uSpin);
@@ -259,7 +267,8 @@ ${FAR_LEVELS}
   vec4 field = textureLod(uPlaceField, q0 + 0.5, 0.0);
   vec3 aS = mix(calm * calm * uPlace.y, aP, smoothstep(0.5, 0.5 - uPlace.x, max(abs(q0.x), abs(q0.y))) * field.a);
   vec3 sunlit = field.rgb * ownLight(n, mu);
-  vec3 lNow = sunlit * bared(mu).rgb + airGlow(sunlit, mu, psi);
+  vec3 plain = plainOver(n, mu);
+  vec3 lNow = sunlit * bared(mu, plain).rgb + airGlow(sunlit, mu, psi, plain);
   vec2 nd = vClip.xy / vClip.z;
   vec2 unit = uBase.x * vec2(uAspect, 1.0) / (uWin.zw - uWin.xy);
   vec2 ka = dFdx(uvT) / max(abs(dFdx(nd.x)), 1e-9) / unit * uLens.x;
@@ -292,7 +301,8 @@ ${FAR_LEVELS}
   float under = clamp(cloudAt(cloudPlace(uCentre + rs * n), 4.0 * uFrame) * uCloudB.x, 0.0, 1.0) * smoothstep(uCloudB.z, uCloudB.w, mu) * lit * grain;
   col *= 1.0 - uCloudB.y * under;
   vec3 sunlitQ = field.rgb * ownLight(n, muQ);
-  vec3 lVeil = sunlitQ * bared(muQ).rgb + airGlow(sunlitQ, muQ, psi);
+  vec3 plainQ = plainOver(n, muQ);
+  vec3 lVeil = sunlitQ * bared(muQ, plainQ).rgb + airGlow(sunlitQ, muQ, psi, plainQ);
   col = col * (1.0 - veilA) + lVeil * uCloudTint * dq;
   float cloudT = diagTexels(gq * uCloudA.y * vec2(uCloudD.y, 1.0) * uCloudWidth);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
