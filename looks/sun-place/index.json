@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T01:00:26.091Z",
- "head": "af7ed5698798fe98323b6a7526bfc75b78f87659",
- "note": "01:01 UTC commit 2 d9c797a1 merged on main 12bfd7d5 as af7ed569: frames 0, 90, the rise, d253 (a) frame 225 at both sizes 2.463, d253 (b) frames 60 and 231 in both sets 1.309 and 0.938. Tests run now",
+ "pushed": "2026-11-25T01:17:38.374Z",
+ "head": "d1be1ff329436b786dd366d481adb4e2fbedf01e",
+ "note": "01:18 UTC MAIL 830 measured at rate 2: the two blocks hold sky only, it moves as one piece 8, minus 47 px a half frame, nothing changes at once. MAIL 775 (a): the place on the map",
  "looks": [
+  {
+   "time": "2026-11-25T01:17:37.754Z",
+   "file": "20261125011737754-note-hero-pair.jpg",
+   "source": "../../../../tmp/v/hero-pair.png",
+   "kind": "note",
+   "label": "MAIL 775 (a): the globe's map cut round the place (top down, 40 degrees wide left, 10 degrees right; assets-src/sun/place/hero.py). The place stands on the map at u 0.5393, v 0.5685 from the bottom (x 4418, y 1767 of 8192 by 4096) and the map has a spot there",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T01:17:37.126Z",
+   "file": "20261125011737126-note-m830-half.jpg",
+   "source": "../../../../tmp/v/m830-half.png",
+   "kind": "note",
+   "label": "MAIL 830, on d1be1ff3: capture frames 484 to 491 at rate 2 (film 242 to 245 + 1/2), 1 to 1, the two blocks marked (columns 2 and 3 of row 2). Only sky is drawn there. The sky moves as one piece by 8, minus 47 px a half frame; carried by that, what is left in block column 2 is 7.47, 7.81, 8.14, 8.50, 8.15, 8.02, 7.44 of 255 over the seven steps and in column 3 8.64, 9.26, 9.18, 9.85, 10.21, 11.58, 11.58: no step stands out. Not carried, column 3 goes 9.92, 11.59, 14.60, 26.93, 39.55, 37.48, 25.00 as two bright star clouds of the hold's sky card pass through it. Nothing appears, fades or changes at once; the block pop is the sky card's bright clouds sweeping through. Frame 60 of this commit: share by band 0.1 .. 0.9 : 0.173 0.220 0.183 0.141 0.099 0.066 0.048 0.053 0.015 / dark (under 0.15) 0.175 | body (0.15 to 0.55) 0.643 | pale (0.65 to 0.85) 0.101 | white (over 0.85) 0.015 / brightest 15 percent: half width 7.8 px, 1326 shapes | fine detail 0.0344 | mean 0.351",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T00:59:15.456Z",
    "file": "20261125005915456-note-c2-sets.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/pop-blocks.png",
    "kind": "note",
    "label": "MAIL 830, state d84379b4 plus the tree: whole frames 242, 243, 244, 245 at 2 times, the two blocks marked (column 2 and 3 of row 2 in the grid of 16 by 9). Only sky is drawn there: the hold's sky card (stars and its bright clouds), the ends of the corona's streamers at the lower right. Mean of block column 3: 44.9, 45.5, 63.0, 54.1 of 255; a bright cloud of the card enters it at 244. Cause of the block pop not proven yet",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:51:32.199Z",
-   "file": "20261125005132199-note-c2-spot3.jpg",
-   "source": "../../../../tmp/v/c2-spot3.png",
-   "kind": "note",
-   "label": "Commit 2: frames 60, 61, 62 at 3 times, the umbra at 900, 560. The lip is ragged now. Still wrong: short white dashes one pixel high on the far lip and stepped ends of the fibres on the right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:51:31.399Z",
-   "file": "20261125005131399-note-c2-near.jpg",
-   "source": "../../../../tmp/v/c2-near.png",
-   "kind": "note",
-   "label": "Commit 2: frames 60, 61, 62 at 3 times, the near ground at 880, 900 (consecutive frames at 30 a second; the frames tool draws no half frames, 242 + 1/2 came out equal to 242). No stipple. Still wrong: faint upright streaks one pixel wide inside the cells; the fibres change their shape visibly from one frame to the next",
    "stop": "sun"
   }
  ]
