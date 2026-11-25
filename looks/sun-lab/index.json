@@ -1,84 +1,78 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T21:04:35.195Z",
- "head": "771f0d86fc7b41d4d90f16f147b98735bf511391",
- "note": "sun lab: measuring the cells of the approved and mine (curve middle to border, lanes, counts), then the form by those numbers",
+ "pushed": "2026-11-25T21:34:38.330Z",
+ "head": "c0c5dac29c06817d0aa948a2d519d010894fb15e",
+ "note": "b7: smaller packed cells, limb law alone, mottle, sparks; trial, not named",
  "looks": [
   {
-   "time": "2026-11-25T21:04:34.621Z",
-   "file": "20261125210434621-note-cells-u24.jpg",
-   "source": "../v/cells-u24.jpg",
+   "time": "2026-11-25T21:33:10.921Z",
+   "file": "20261125213310921-note-motion-b7.jpg",
+   "source": "../v/motion-b7.jpg",
    "kind": "note",
-   "label": "sun lab: the reader of cells on lab u24 frame 90",
+   "label": "b7 motion-b7 (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T21:04:34.062Z",
-   "file": "20261125210434062-note-cells-appr.jpg",
-   "source": "../v/cells-appr.jpg",
+   "time": "2026-11-25T21:33:10.374Z",
+   "file": "20261125213310374-note-lab-90-b7f.jpg",
+   "source": "../v/lab-90-b7f.jpg",
    "kind": "note",
-   "label": "sun lab: the new reader of cells (cells.py) on the approved close image: lanes magenta, cells cyan",
+   "label": "b7 lab-90-b7f (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T21:04:33.516Z",
-   "file": "20261125210433516-note-strip-u27.jpg",
-   "source": "../v/strip-u27.jpg",
+   "time": "2026-11-25T21:33:09.814Z",
+   "file": "20261125213309814-note-x3-b7.jpg",
+   "source": "../v/x3-b7.jpg",
    "kind": "note",
-   "label": "sun lab u27 (trial, not committed): approved on top, u26, u27 at 1 to 1; still shells, softer",
+   "label": "b7 x3-b7 (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T21:04:12.565Z",
-   "file": "20261125210412565-frame-lab-90-standing.jpg",
-   "source": "out/work/sun/lab/lab-90-standing.png",
+   "time": "2026-11-25T21:33:09.241Z",
+   "file": "20261125213309241-note-cells-b7.jpg",
+   "source": "../v/cells-b7.jpg",
+   "kind": "note",
+   "label": "b7 cells-b7 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:33:08.680Z",
+   "file": "20261125213308680-note-four-b7.jpg",
+   "source": "../v/four-b7.jpg",
+   "kind": "note",
+   "label": "b7 four-b7 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:33:08.118Z",
+   "file": "20261125213308118-note-duo-b7.jpg",
+   "source": "../v/duo-b7.jpg",
+   "kind": "note",
+   "label": "b7 duo-b7 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:33:07.559Z",
+   "file": "20261125213307559-note-strip-b7.jpg",
+   "source": "../v/strip-b7.jpg",
+   "kind": "note",
+   "label": "b7 strip-b7 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:32:46.475Z",
+   "file": "20261125213246475-frame-lab-90-b7f.jpg",
+   "source": "out/work/sun/lab/lab-90-b7f.png",
    "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
+   "label": "sun.terrain frame 90, final tier",
    "stop": "sun",
    "segment": "sun.terrain",
    "frame": 90,
-   "tier": "draft",
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T20:44:26.234Z",
-   "file": "20261125204426234-frame-lab-360-u24.jpg",
-   "source": "out/work/sun/lab/lab-360-u24.png",
-   "kind": "frame",
-   "label": "sun.hold frame 360, draft tier",
-   "stop": "sun",
-   "segment": "sun.hold",
-   "frame": 360,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T20:31:51.193Z",
-   "file": "20261125203151193-note-swing-221-x2.jpg",
-   "source": "../v/swing-221-x2.png",
-   "kind": "note",
-   "label": "sun lab: frame 221 at 1 to 1, live cells (left) and their bake of frame 233 on the globe (right), same places after the anchor fix; swing 99th percentile 168 levels",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T20:31:50.574Z",
-   "file": "20261125203150574-note-lab-90-u24.jpg",
-   "source": "../v/lab-90-u24.jpg",
-   "kind": "note",
-   "label": "sun lab u24 frame 90: the scaly patch (beads) gone, 80 sectors at the second level",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T20:01:02.584Z",
-   "file": "20261125200102584-note-duo-u18.jpg",
-   "source": "../v/duo-u18.jpg",
-   "kind": "note",
-   "label": "sun lab u18, frame 90 draft over the approved, lower 60 percent (not named)",
-   "stop": "sun"
   }
  ]
 }
