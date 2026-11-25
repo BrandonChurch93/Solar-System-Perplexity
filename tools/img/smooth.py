@@ -348,18 +348,37 @@ def pictures(job):
     for i in range(n):
         if not inside(i + 1):
             residual[i] = moved[i] = unsure[i] = None
-    more = mapped(job, paths, frames, poses, scale, sigma, wide, low, reach, [i for i in range(n - reach) if own[0] <= i + start < own[1] and inside(i + reach) and not any((j + 1) in marks for j in range(i, i + reach))]) if reach > 0 and job.get('carry') else {}
+    more = mapped(job, paths, frames, poses, scale, sigma, wide, low, reach, fw, bw, [i for i in range(n - reach) if own[0] <= i + start < own[1] and inside(i + reach) and not any((j + 1) in marks for j in range(i, i + reach))]) if reach > 0 and job.get('carry') else {}
     return {**more, 'level': levels, 'levelStep': step, 'residual': residual, 'base': base, 'popAll': plain, 'popCarried': masked, 'pop': pop, 'motionPx': moved, 'unsure': unsure, 'popBlock': block, 'popBlockAt': where, 'grid': [cols, rows],
             'change': shift, 'changeTop': top, 'changeAt': spot, 'changeShare': judged, 'changeFrames': reach,
             'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare}
 
 
-def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, rows):
+def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor):
+    """The pattern of frame i against frame i + n on the pixels off every body, read by the flow alone: the later frame carried back along
+    the flows, where every flow on the way agrees with its way back, the pattern read over all of that, and of it the pixels off the bodies.
+    a and b: the bodies of the two frames by their depth pictures. Sky that the later frame's bodies cover is not counted, nor the rim of
+    either depth picture. Gives the 99th percentile and the share of the frame counted; no number under PATTERN_SHARE of the frame."""
+    xs, ys = places(frames[i].shape)
+    mx, my = xs, ys
+    ok = np.ones(frames[i].shape, bool)
+    for j in range(i, i + n):
+        mx, my, inside, sure = along(fw[j], bw[j], mx, my)
+        ok &= inside & sure
+    take = lambda x: cv2.remap(x.astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) > 0
+    later = cv2.remap(frames[i + n].astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    p = pattern(frames[i].astype(np.float32), later, ok, wide / 5, wide, floor)
+    off = np.isfinite(p) & ~a & ~take(b) & ~rim(a, margin) & ~take(rim(b, margin))
+    share = float(off.mean())
+    return (float(np.percentile(p[off], 99)) if share >= PATTERN_SHARE else None), share
+
+
+def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw, rows):
     """The pattern of each row's pair read a second way, beside the reader above and judging nothing: the pair carried by the camera's own map,
     the flow on the carried pair, the reading after both (carry.py). Keys of their own: patternMap and what belongs to it."""
     import carry as C
     n = len(paths)
-    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky')}
+    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyTurn')}
     held = {}
     depths = job.get('depths') or [None] * n
 
@@ -379,7 +398,10 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, rows):
         keys['patternMap'][i], keys['patternMapAt'][i], keys['patternMapShare'][i] = out['value'], out['at'], out['share']
         keys['patternMapOn'][i], keys['patternMapBy'][i], keys['patternMapRule'][i], keys['patternMapLeft'][i], keys['patternMapUnits'][i] = out['on'], out['by'], out['rule'], out['left'], out['units']
         keys['patternMapBulk'][i], keys['patternMapApart'][i], keys['patternMapNo'][i], keys['patternMapRefused'][i] = out['bulk'], out['apart'], out['no'], out['refused']
-        keys['patternMapBody'][i], keys['patternMapSky'][i] = out['body'], out['sky']
+        keys['patternMapBody'][i], keys['patternMapSkyTurn'][i] = out['body'], out['sky']
+        if all(fw[j] is not None and bw[j] is not None for j in range(i, i + reach)):
+            solid = lambda f: (f['which'] > 0) & np.isfinite(f['depth']) & (f['depth'] > 0)
+            keys['patternMapSky'][i], keys['patternMapSkyShare'][i] = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor)
     keys['patternMapLimits'] = {'bulkPx': C.BULK_PX, 'apart': C.APART}
     return keys
 

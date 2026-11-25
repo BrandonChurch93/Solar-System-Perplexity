@@ -7,6 +7,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { apart, shownRows } from '../tools/smooth/maps'
 
 interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null; body: number | null; sky: number | null }
+interface SkyFlow { value: number | null; share: number; covered: number; coveredOnBody: number }
 interface Way { clean: Reading; exchange: Reading; untold: Reading }
 interface Made {
   rise: Way
@@ -16,6 +17,7 @@ interface Made {
   oblate: { clean: Reading; ballOff: number; ballAgrees: number; asSphere: Reading }
   relief: { clean: Reading; asSphere: Reading }
   sky: { clean: Reading }
+  skyFlow: { clean: SkyFlow; exchange: SkyFlow }
   refusal: { clean: Reading; shell: Reading; grounds: Reading }
   range: { off: number; none: boolean; reduced: number; units: number; picked: boolean; pickedSmall: number[] }
   tool: { plainKeys: string[]; mainSame: boolean; more: string[]; limits: { bulkPx: number; apart: number }; main: number | null; clean: Record<string, unknown>; exchange: Record<string, unknown>; ball: number | null; ballUnits: number[] | null; rows: boolean[] }
@@ -121,6 +123,14 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.sky.clean.body).toBeNull()
   })
 
+  it('reads the pixels off the bodies by the flow alone and leaves out the sky the other frame\'s body covers', () => {
+    expect(made.skyFlow.clean.value!).toBeLessThan(0.283)
+    expect(made.skyFlow.clean.share).toBeGreaterThan(0.5)
+    expect(made.skyFlow.exchange.value!).toBeGreaterThan(0.45)
+    expect(made.skyFlow.clean.covered).toBeGreaterThan(0.02)
+    expect(made.skyFlow.clean.coveredOnBody).toBe(0)
+  })
+
   it('gives the reading on the bodies and the reading off them beside the row\'s own', () => {
     for (const way of [made.rise, made.dive]) {
       expect(way.clean.body!).toBeLessThan(0.05)
@@ -143,7 +153,7 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.tool.mainSame).toBe(true)
     expect(made.tool.plainKeys).toContain('pattern')
     expect(made.tool.plainKeys.some((k) => k.startsWith('patternMap'))).toBe(false)
-    expect(made.tool.more).toEqual(['patternMap', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapUnits'])
+    expect(made.tool.more).toEqual(['patternMap', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyTurn', 'patternMapUnits'])
     expect(made.tool.limits).toEqual({ bulkPx: 8, apart: 0.5 })
     expect(made.tool.clean.patternMapUnits).toHaveLength(1)
     expect((made.tool.clean.patternMapUnits as number[])[0]!).toBeGreaterThan(0.5)
