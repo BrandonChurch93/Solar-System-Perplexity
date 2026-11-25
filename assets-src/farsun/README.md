@@ -52,7 +52,7 @@ rope and no thin arch. A loop with `gain` 0 is skipped. The count of loops in th
 shader's loop over them, as are the counts of lobes and of knots: a look with fewer costs less to build
 and less to draw.
 
-## The handover (look.json, `handover`, `wear`, `sunStart`)
+## The handover (look.json, `handover`, `wear`)
 
 Both are spans of the camera's distance from the Sun's centre, never times, and no end of either is a typed
 distance. Both numbers of each span are shares of the way, by the logarithm of the distance, from the
@@ -63,12 +63,9 @@ film's `sunStart` (4.5741 solar radii, MEASURED). The first share, 0.1314, start
 so the Sun stop's own views keep worn 1 and the globe whole.
 
 The film works `sunStart` out and hands it to this folder by `sunStartsAt` of `share.ts` (MAIL 886 item 1;
-the hunk is in main, its reason in `wiring/film-sunstart.txt`). `look.sunStart` is the typed stand-in for
-the same number where the film has not spoken, and it is owed to go out of the look. When the plan's radius or the Sun stop's last view
-changes, both spans follow, and `spans` never puts an end beyond the swap distance.
-`tests/farsun-share.test.ts` holds it: the stand-in is within 0.005 of the film's `sunStart` (so a change
-of the Sun's last view turns the test red and leaves no step), and the rest stands in the names of its
-tests.
+the hunk is in main, its reason in `wiring/film-sunstart.txt`). The look holds no stand-in for it: `spans`
+throws where the film has not spoken. When the plan's radius or the Sun stop's last view changes, both
+spans follow, and `spans` never puts an end beyond the swap distance (`tests/farsun-share.test.ts`).
 
 Over `handover` the hold's globe gives way to the far Sun. `wear` is the film's law of the first part of
 the burn and nothing else: `sunBurn` of `src/director/film.ts` is `burn.split` times one minus `wearShare`,
@@ -384,6 +381,16 @@ takes the burn; up to `burn.split` (0.2, the exposure the film reaches where the
 face is the stop's (`spots.power[0]`, `plage.gain[0]`, no flattening), and from there to burn 1 it goes
 evenly to the burnt look (`spots.power[1]`, `plage.gain[1]`, `spots.flat[0]`). `tests/farsun-share.test.ts` holds it: at 471, 475, 480, 484, 485, 495 and 500
 the flattening is 0 and the power and the plage are the stop's.
+
+A thing the stop stands on the body (the arcade the set lends in `gas.arcade`) is the stop's drawable and
+is drawn once in a frame: by the stop's globe while the far Sun's share is under 1, by the far Sun from
+there on. The far Sun takes it into `carry`, which sits at the body's place and turn, and `render` draws
+`carry` after the body through the view's camera, with the camera's near and far set round the Sun for
+that one draw (the distance less and plus `look.reach`) and put back after: the film's near plane stands
+behind the Sun's near side for a stretch of the flight (4 against 3.97, read at frames 490 and 500), and a
+drawable cut by it would leave by distance while it can be seen (MAIL 1070). The depth range of that
+draw is 0 to 0, so no depth left in the target stands in front of it. Its strength is the wear's, and it
+is gone with the wear or under its own size, never by a frame. With no arcade lent, nothing of this runs.
 
 ## The wear by the burn (MAIL 1017, 1027 and 1043)
 
