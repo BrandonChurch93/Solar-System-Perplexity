@@ -137,6 +137,9 @@ export const createSet: SetFactory = async (ctx) => {
   const glowGround = new THREE.Vector3(1, 0, 0)
   const glowShell = new THREE.Vector3(1, 0, 0)
   const glowWorld = new THREE.Vector3()
+  // the far ground's veil is lit where the ground lies toward the low Sun of the close view: a direction along the ground in the stop's frame
+  const veilLight = new THREE.Vector3(1, 0, 0)
+  let veilSpin = 0
   const ownGain: [number, number, number] = [1, 1, 1]
   const hasOwn = patches.levels.some((l) => l.own)
   const diveT = handoverOf(plan.id, 'dive')?.time
@@ -153,6 +156,8 @@ export const createSet: SetFactory = async (ctx) => {
     }
     aim(glowGround, nearJson.glow.ground)
     aim(glowShell, nearJson.glow.shell)
+    aim(veilLight, { rightDeg: nearJson.grazing.lightRightDeg, upDeg: 0 })
+    veilSpin = plan.spin(diveT)
   }
   const light = new THREE.Vector3()
   const glow = new THREE.Vector3()
@@ -169,6 +174,7 @@ export const createSet: SetFactory = async (ctx) => {
     fill: (planet.material.uniforms.uGrazingFill!.value as THREE.Vector3).clone(),
     highlight: (planet.material.uniforms.uGrazingHighlight!.value as THREE.Vector3).clone(),
     sideRange: (planet.material.uniforms.uGrazingSideRange!.value as THREE.Vector2).clone(),
+    range: (planet.material.uniforms.uGrazingRange!.value as THREE.Vector2).clone(),
   }
   const shellHome = new THREE.Vector3().fromArray(look.shellDir).normalize().applyQuaternion(holdTurn)
   const glowHome = new THREE.Vector3().fromArray(look.haloDir).normalize().applyQuaternion(holdTurn)
@@ -270,8 +276,12 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uGrazingSideRange!.value as THREE.Vector2).copy(veil ? everywhere : grazingHold.sideRange)
       if (veil) (pu.uGrazingFill!.value as THREE.Vector3).fromArray(ng.fill)
       else (pu.uGrazingFill!.value as THREE.Vector3).copy(grazingHold.fill)
-      if (veil) (pu.uGrazingHighlight!.value as THREE.Vector3).set(0, 0, 0)
+      if (veil) (pu.uGrazingHighlight!.value as THREE.Vector3).fromArray(ng.light)
       else (pu.uGrazingHighlight!.value as THREE.Vector3).copy(grazingHold.highlight)
+      if (veil) (pu.uGrazingRange!.value as THREE.Vector2).set(ng.lightFrom, ng.lightTo)
+      else (pu.uGrazingRange!.value as THREE.Vector2).copy(grazingHold.range)
+      // the lit side of the veil lies on the ground: it turns with the body from where it stood at T of the dive
+      if (veil) (pu.uGrazingSun!.value as THREE.Vector3).copy(veilLight).applyAxisAngle(plan.axis, plan.spin(state.time) - veilSpin).applyQuaternion(state.rotation)
       const gg = n.glow.ground
       const gs = n.glow.shell
       planet.setGlow(glowWorld.copy(glowGround).applyQuaternion(state.rotation), [gg.colour[0]! * near, gg.colour[1]! * near, gg.colour[2]! * near], gg.power)

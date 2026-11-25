@@ -12,7 +12,10 @@ a take of the same land seen from straight above (takes r38, r16, r07, r03 of RE
   tone  = the take follows the broad tone of the laid ground where both are known, less and less with the distance (toneDeg)
   plate = laid * keep + take * tone * (1 - keep)
 
-The border lies on the ground: no height, time or eye is read. pyramid.py and landunder.py run after it.
+  seen  = block seen of plates.json: keep is raised to the laid mask where an eye over the spot at eyeHeight sees the close
+          ground squarely (cosine between the ground's vertical and the sight line, from .. to), at any distance
+
+The border lies on the ground: no height of the camera and no time is read. pyramid.py and landunder.py run after it.
 
   python3 assets-src/mars/place/countrytake.py --dir LAID --laid MASKS --foot FOOT --out OUT
 """
@@ -20,10 +23,14 @@ import argparse
 import json
 import math
 import os
+import sys
 
 import cv2
 import numpy as np
 from PIL import Image, JpegImagePlugin
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import geom  # noqa: E402
 
 Image.MAX_IMAGE_PIXELS = None
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -52,6 +59,22 @@ def reach_mask(K, g=2048):
     return wide, 1 - smooth((deg + fld * K['wanderDeg'] - K['fromDeg']) / (K['toDeg'] - K['fromDeg']))
 
 
+def facing(h, width, eye_height):
+    """How squarely an eye over the spot at eye_height (radii) sees the close ground: the cosine between the ground's own
+    vertical and the sight line, 0 where the ground is seen along itself or from behind, and 0 where no close ground stands."""
+    g = h.shape[0]
+    known = np.isfinite(h)
+    P = geom.patch_dirs(width, g) * (1 + np.where(known, h, 0.0))[..., None]
+    n = -np.cross(np.gradient(P, axis=1), np.gradient(P, axis=0))
+    n /= np.maximum(np.linalg.norm(n, axis=2, keepdims=True), 1e-20)
+    spot, _, _ = geom.patch_frame()
+    v = spot[None, None, :] * (1 + eye_height) - P
+    v /= np.linalg.norm(v, axis=2, keepdims=True)
+    f = np.clip((n * v).sum(2), 0, 1).astype(np.float32)
+    f[cv2.erode(known.astype(np.uint8), np.ones((5, 5), np.uint8)) == 0] = 0
+    return cv2.GaussianBlur(f, (0, 0), 1.0)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--dir', required=True)
@@ -61,9 +84,10 @@ def main():
     ap.add_argument('--takes', default=os.path.join(ROOT, 'assets-src', 'mars', 'place', 'takes'))
     ap.add_argument('--plates', default=os.path.join(ROOT, 'assets-src', 'mars', 'place', 'plates.json'))
     ap.add_argument('--json', default=os.path.join(ROOT, 'src', 'stops', 'mars', 'levels.json'))
+    ap.add_argument('--see', action='store_true', help='also write the facing of each plate as a picture')
     args = ap.parse_args()
     P = json.load(open(args.plates))
-    K, R = P['takes'], P['reach']
+    K, R, S = P['takes'], P['reach'], P.get('seen')
     own = [l for l in json.load(open(args.json))['levels'] if l.get('own')]
     os.makedirs(args.out, exist_ok=True)
     wide, mask = reach_mask(R)
@@ -89,6 +113,11 @@ def main():
         z = c * half(wide) / half(l['widthDeg']) / g
         A = np.float32([[z, 0, c / 2 - z * g / 2 + (z - 1) / 2], [0, z, c / 2 - z * g / 2 + (z - 1) / 2]])
         keep = m * cv2.warpAffine(mask, A, (c, c), flags=cv2.INTER_LINEAR if z > 1 else cv2.INTER_AREA, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+        if S:
+            f = facing(np.load(os.path.join(args.foot, 'a%g-height.npy' % l['widthDeg'])), l['widthDeg'], S['eyeHeight'])
+            if args.see:
+                Image.fromarray((255 * f).astype(np.uint8)).save(os.path.join(args.out, 'facing-%g.png' % l['widthDeg']))
+            keep = np.maximum(keep, m * cv2.resize(smooth((f - S['from']) / (S['to'] - S['from'])), (c, c), interpolation=cv2.INTER_LINEAR))
         # the tone, on a small grid
         t = 512
         small = lambda a: cv2.resize(a, (t, t), interpolation=cv2.INTER_AREA)

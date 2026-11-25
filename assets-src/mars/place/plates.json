@@ -709,5 +709,11 @@
    0.5,
    2.0
   ]
+ },
+ "seen": {
+  "note": "countrytake.py: outside the reach the laid ground is kept as well where an eye over the spot at eyeHeight (radii above the datum, the height of the film's eye in the change of view) sees the close ground squarely: the cosine between the ground's own vertical (from a<width>-height.npy) and the sight line, none under from, whole over to. So the faces that stand toward the eye keep the close view's own picture at any distance, and flat far ground, which that eye saw along itself, keeps the take seen from above. A fixed share on the ground: no height of the camera and no time is read.",
+  "eyeHeight": 0.0025,
+  "from": 0.15,
+  "to": 0.35
  }
 }

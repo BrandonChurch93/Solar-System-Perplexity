@@ -984,3 +984,149 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
   strokes and the stars are short strokes: the disc unrolls 2.6 degrees a frame there.
   Texel pictures 2447, 2470, 2687, 2704, 2720 (`see/t51.jpg`): at 2447 and 2704 the ground left of the sharp
   plate (a straight side) is soft over about a quarter of the frame. Not cured in this commit.
+- 22:08 Sides at T on the committed tree (draft): dive mean 0.005, 99th percentile 0, max 13: pass; rise mean 0.003,
+  99th percentile 0, max 6: pass. COMMIT 7253f5fd7c980a2736f425d68448070c5bb24c7f pushed (on merge 9feabec0, main
+  b890fee7), net of the three folders -10,672,188 bytes. NAMED sent at 22:10. Looks pushed 22:09.
+
+## The stretch from 22:13 UTC (MAIL 771, MAIL 785; after a compaction)
+- 22:13 MAIL 771: 7253f5fd is Mars's round 1 of 3 of the third note if its take check is green and no better one
+  is named before 00:00. Step 96 of 200 for the later stops is accepted if the 115 reference frames keep their
+  bytes. The item that decides: two looks change places by height at 2466 to 2473 and 2684 to 2689; cure it from
+  my side with a share on the ground; the east border of the close set must not be in any frame. Owed with the
+  next NAMED: the review strips and native crops, each looked at, one line a crop.
+- 22:11 Review tier, 2420 (134 s), crop of the place at native size (`see/c51-2420.png`): the place is a paler
+  patch about 150 px wide in the middle of the great canyon, with a thin dark crack and a red speck at its centre.
+  The review strip job was stopped by me at 22:18 (2440 had run over 7 minutes): the strips are owed on the next
+  state, and the machine was needed for the cure.
+- 22:20 to 22:45 TRIAL, east border by the alpha of the aprons (new step `place/apronedge.py`: the alpha of an
+  apron's atlas falls from 1 to 0 with the way beyond the side of the layer's box). L0 and L2, right apron, 0 to
+  400 px: the surface view keeps its bytes at 2490, 2520, 2580, 2609, 2640 and 2671, 2676; on the globe side 2683
+  to 2688 the fan and the slab are gone and the close ground ends softly on the globe's (`see/a1-rise.jpg`), with a
+  glowing orange spot of the globe's ground at the end. BUT the close side changes at 2477 and 2681: a pale wedge at
+  the lower right (`see/a1-dive.jpg`), a hole, because the close side has no ground behind its aprons. MEASURED
+  with hard cuts (`out/work/place/cut.sh`): the close side sees L0's right apron up to between 700 and 900 px of
+  1184 at 2477 and beyond 900 at 2681, L2's up to between 500 and 700 of 960 at 2681; with the aprons painted in a
+  code colour they fill the right fifth of the frame at 2681 (`see/code2681.png`). So there is no room in the
+  files: the aprons are the ground of the change of view on the close side. Not committed; the tree is as 7253f5fd.
+- 22:27 to 22:35 TRIAL, the globe's far ground toward the close set's by the veil of near.json (grazing), judged
+  by the mean difference of the upper half of 2686, globe side alone against close set alone (28.5 as committed):
+  width 0.2: 28.7; width 0.2 fill doubled: 39.9; depth 3 width 0.12 power 3 fill [0.55, 0.38, 0.24]: 27.1; width
+  0.16: 30.1. No cure by these numbers. Not committed.
+- 22:45 TRIAL, the close set present at every height of the dive and the rise (presence band above the hold; the
+  globe's air on its own band): from above it is a fan, a pale sector of haze with blades, at 2440 about 300 px,
+  and its air draws white rays beside the planet at 2420 (`see/e1x.jpg`). It can not be the one ground as built.
+- 22:50 SEEN (`see/HR2686-top.jpg`, 2686, upper half, globe side alone above, close set alone below): the lower
+  two thirds of the frame agree to a few display values (grid of means); the far third does not, and not by tone
+  alone: they are two far worlds. The close set is a fan built for the picture's eye with the picture's horizon
+  (dip 2.6 degrees: an eye 0.00103 radii up by its ground model); the globe side's eye in the presence band stands
+  0.0019 to 0.0034 radii up and sees the globe's limb 3.5 to 4.7 degrees down, so the close set's far sheet ends
+  under the globe's horizon and its air covers the globe's far ground and limb. As the close set leaves, the far
+  canyon wall, the far plateau and the horizon take other places. This is the exchange Brandon sees.
+- 22:51 Draft, the place at native size (`see/n51-crops.jpg`, each looked at): 2420 a paler patch about 150 px
+  wide with a dark crack and a red speck; 2440 the canyon across the frame with relief, and round the place a
+  paler, softer field about 200 px wide with a dark blade pointing to the lower left; 2460 a rock mound in front,
+  behind it cliff faces with stretched soft strokes, a soft dark dome at the right, a pale speck; 2480 the close
+  view, sharp; 2700 the canyon from above, in its dark floor at the right three straight dark bars, a dark block
+  with straight sides at the left edge; 2720 the paler patch about the place with the dark crack and an orange
+  line; 2740 the planet, the place at the lower edge of the crop.
+- 22:45 MAIL 785 (every stop): nothing is cured by a weight by the camera's height; one ground at every height;
+  the surface view's place is a permanent thing of the planet drawn by one law; detail by distance, haze and tone
+  by the length of the path through the air. A slow grade by height through the whole move is allowed. Answer in
+  two lines with the next mail: which laws still weigh two pictures by height, at which frames, and whether the
+  commit in hand removes them.
+- 22:55 MEASURED for the first time: the sides at T with the globe's ground alone on the globe side (close.json
+  presence 0.0002 / 0.0001, `npm run -s handover -- --stop mars --only sides --tier draft`): dive mean 12.47,
+  median 10, 99th percentile 89, max 206; rise mean 14.584, median 12, 99th percentile 94, max 230 (limits 0.5
+  and 4). By rows of the frame (12 bands of 90 rows, mean absolute difference, dive / rise): rows 180 to 450 are
+  24 to 34, rows 450 to 630 are 8 to 16, the lower third 4 to 9. Luminance carries it (12.0 against chroma 3.7);
+  blurred by 64 px the difference is still 5.9, so broad forms and light differ, not only detail. Seen
+  (`see/sidesH.jpg`, `see/far2681.jpg`): the layout agrees (far wall, mesa, plateau stand in the same places), the
+  far wall on the close side is lit and layered and the canyon between is wide and hazy, on the globe's ground the
+  wall is orange and blobby (the take from above stretched over a steep face) and the plateau is saturated orange
+  where the close side has it pale in haze. This is the number by which every step toward one ground is counted.
+- 23:00 Mail to /root (no NAMED): no better commit than 7253f5fd before 00:00; trials 1 to 3 with numbers; MAIL 785
+  answer: the law that weighs two pictures by height is the presence of the close set over the globe's ground
+  (0.0034 to 0.0019 radii), the shell leaving by the same share, and the close view's sky share (0.01 to 0.0019);
+  frames 2466 to 2473 and 2684 to 2689 (sky 2458 to 2473, 2686 to 2696); 7253f5fd does not remove it.
+- 23:00 MY MISTAKE: freeing disk (2.9 GB free, the handover tool refuses under 3) I deleted `out/work/place/view`
+  with the kept final 2580 (`m38-2580.png`). Rebuilt at once from the committed tree 7253f5fd (nothing changed in
+  src or public): final 2580 sha256 starts bc31b1b4bddbca52, the value /root's take check gave for 2580 in MAIL
+  672, copied to `view/m38-2580.png`. So the reference stands again, proven by that sha and not by my copy.
+- 23:03 Where the lens looks in the band (scratch `tilt.ts`): at 2466 to 2474 the eye is 0.0036 to 0.0019 radii
+  up, the lens 30 to 24 degrees under the horizontal, the frame's top ray at or over the horizon, the middle ray
+  meets the ground 0.36 to 0.24 degrees from the eye's foot. So the upper half of every frame of the band holds
+  ground beyond the reach of the laid ground (0.26 to 0.42 degrees): the exchange cannot be hidden by where the
+  lens looks without a tilt of 40 degrees in 10 frames.
+- 23:05 TRIAL s1 (not committed): countrytake.py takes a block `seen` (eyeHeight 0.0025, from 0.15, to 0.35): the
+  laid ground is kept also where an eye over the spot sees the close ground squarely (cosine between the ground's
+  vertical and the sight line), at any distance inside the footprint, so the steep faces that face the eye keep the
+  picture's own face. Laid ground kept on 0.027, 0.140, 0.296, 0.351 of the plates of 3.8, 1.6, 0.7, 0.3 degrees.
+  Seen in the plates (`see/s1-plates.jpg`): the blue streaked patch of the laid ground grows from about 0.2 to 0.35
+  of the 1.6 degree plate. Counted next by the sides with the globe's ground alone and seen from above.
+- 23:10 TRIAL s1 counted. Sides with the globe's ground alone (close.json presence off for the count, restored):
+  dive 11.147 (median 7, p99 83) from 12.47 (p99 89), rise 12.935 (median 8, p99 84) from 14.58 (p99 94). The far
+  wall and the mesa face of the globe side now read as on the close side; from above (2440, 2460) little changes.
+  TRIAL s2 (the tone of the laid ground over the whole footprint) DROPPED: it puts a pale yellow patch and a dark
+  blot into the 3.8 degree plate, which is the haze of the low eye painted into the ground.
+- 23:13 Looks pushed (sidesH, far2681-s1, s1-band, s1-above, s1-plates).
+- 23:15 By rows of the frame at T the difference of the two sides sits in the far band (rows 180 to 450: 24 to 34
+  of 255), the lower third has 4 to 9. The layout agrees there, the light on the faces does not: the close picture
+  has warm lit faces toward its low Sun, the globe's ground under the film's Sun has not. Air trials on s1 (dive /
+  rise mean of the sides with the globe's ground alone): gA, glow.ground colour x 1.5: 10.92 / 12.98, dropped;
+  v0, the new code with light 0: 11.15 / 12.94, so the code is neutral at light 0; v1 light [0.25, 0.18, 0.12],
+  45 degrees right, 0 to 0.02: 10.61 / 12.50, left quarters worse; v2 light [0.4, 0.28, 0.18], 70 degrees right,
+  0.003 to 0.02: 10.17 / 12.01 (upper right quarter 33.0 to 23.6 and 36.5 to 27.5, left unchanged); v3 light
+  [0.6, 0.42, 0.27]: 10.05 / 11.97. Kept: [0.5, 0.33, 0.2], 70 degrees right, 0.003 to 0.02 (`near.json` grazing
+  light, lightRightDeg, lightFrom, lightTo). It is the veil's own grazing term of the planet shader (the hold has
+  it at 0), by height of the eye, set in `set.ts` in the veil case and given back above `descent.low`. The body
+  turns 6.12 degrees between T of the dive and T of the rise, so the direction turns with the body by plan.spin.
+- 23:16 MAIL 794: take check of 7253f5fd red (dive level step 1.32 at 2412 + 1/2, pop 1.42 at 2467 + 1/2, pattern
+  1.32 from 2464; rise pop 1.39 at 2687 + 1/2, pattern 1.01 from 2690 + 1/2). Ruling: bake the close set's own
+  render from the T eye onto the globe's ground weighted by how squarely the T eye sees it (that is s1); the close
+  side may draw the globe's ground behind its aprons (needs the engine: not in this commit); rise.level stays
+  false; laws d253 (a) frame factor, (b) the web set only softer. Next commit due 00:46 UTC.
+- 23:23 MAIL 804: the warm run of 7253f5fd lost the WebGL context at capture frame 2692.5 on render_23. Owed: draw
+  2692.5 and its neighbours at the capture size and say what the page held.
+- 23:24 Final 2325 of the working state: sha256 da436cb0...a99db1, kept. patch-wide differs from the committed one
+  in a box of 80 by 48 px at its centre (the laid ground inside the 0.3 degree plate), which the hold does not draw.
+- 23:27 globe-levels of the plates of s1 beside the committed patches: every pair 0.00 to 0.07 but patch-19 to
+  land-8p5 0.32 (full) and 0.30 (web), limit 0.45: green in both sets.
+- 23:28 handover_engineer READ in src/core/warm.ts: in a rise the warm start asks for this stop's set and the next
+  one (mars/full and jupiter/full) and prepares the belt of the travel, on top of the globe side and the close set
+  both alive from 2692 on. `apronedge.py` (the trial that leaves a hole on the close side) left the tree; it is in
+  scratch.
+- 23:37 MEASURED here for MAIL 804 (scratch `warmmem.ts`: the capture page at 3840 by 2160, draft, full set, the
+  warm start `showcase.ahead(frame, tier, true)` before each frame as the stills form of tools/warmcheck.ts does,
+  then `showcase.memory()`): frames 2549.5, 2692, 2692.5 and 2693 are usable on this machine (software GL, 8 GB of
+  memory, no graphics card), 52 to 54 s a frame. The page holds at each of them: loaded [mars, jupiter], mars
+  1399.4 MB, jupiter 1206.3 MB, 2605.7 MB of textures together (peak the same), sky 335.5 MB. So there are not
+  two sets of the place alive: one set of the place (both sides are in mars/full, 1399 MB of the 1400 allowed)
+  and the next stop's full set, which the warm start loads ahead. The loss on render_23 is not reproduced here; a
+  machine without a graphics card has no such limit to hit, so this proves nothing for theirs.
+- 23:38 Merged origin/main e10dee61 (scorecards and status only; nothing under src, tools, config, tests since
+  b890fee7). The proof (scratch `proof52.sh`) runs on the merge.
+- 23:38 The patches change too, in a box at their middle: `landunder.py` writes the plates under them. Full:
+  patch-19 in 480 by 352 px, patch-42 in 224 by 144, patch-wide in 80 by 48. Web: patch-19 mean 0.14 of 255 (max
+  38 outside its middle box), patch-42 0.03, patch-wide 0.01 (max 4 outside its middle box).
+- 23:47 Pushes fail for the login since about 23:45 (fetch works). Told /root with the look of 23:47 attached.
+- 00:08 PROOF 52 on the merge of main e10dee61 (scratch `proof52.sh`, all MEASURED here at draft unless said):
+  tsc clean; final 2325 sha256 da436cb0...a99db1 (kept), final 2580 equal to the kept final; draft bytes of 2325,
+  2400, 2477, 2480, 2490, 2520, 2580, 2609, 2640 equal to the kept ones; sides at T dive mean 0.008 (p99 0, max
+  13), rise 0.006 (p99 0, max 6); smooth path green; G11 and G15 pass (mars/web 417 MB, mars/full 1399 MB);
+  vitest 795 ok; globe-levels full and web every pair 0.00 to 0.07 but patch-19 to land-8p5 0.32 and 0.30 (limit
+  0.45); soft share 2447 3.32 percent (over 2, as before), 2470 1.18, 2704 0.78; px in view at the shutter floor
+  dive 47.7 at 2456 (over 14 on 2419 to 2479), rise 65.8 at 2701 (over 14 on 2676 to 2726), as on 7253f5fd, the
+  path is not touched. Net of the three folders against main -11,052,177 bytes (this commit -379,989).
+- 00:08 Law d253, one dive frame (2452, draft) in four forms: 1920 full against 3840 full reduced by 2: mean 1.294
+  (p99 5.2); 1920 web against 3840 web: 1.322 (p99 5.8); 1920 full against 1920 web: 2.647 (p99 25.0); 3840 full
+  against 3840 web: 2.641 (p99 24.5). With both blurred by 8 px full against web is still 1.67 (p99 13), so the web
+  set is not only softer in number; by eye it is the same picture with the same levels (`see/n52-fullweb.jpg`).
+  READ in set.ts: one term counts real pixels, the planet is drawn while its radius is over 0.6 px and that reads
+  view.format.height; it acts only where the planet is under a pixel, never in the dive or rise. Not changed in
+  this commit. The cap's pixel is the lens angle over 1080, a constant of the master.
+- 00:08 Mean step between neighbours 2681 to 2692 (draft): 13.6 to 15.4 where 7253f5fd has 13.6 to 16.0; the
+  largest, 2687 to 2688, 15.44 from 16.01. SEEN (`see/n52-T-dive.jpg`, `n52-band.jpg`, `n52-rise.jpg`,
+  `n52-2687.jpg`, `n52-above.jpg`, `n52-crops.jpg`): the far wall and the mesa face stand in the same place and
+  light through 2470 to 2473 and 2686 to 2688; what remains is listed in the NAMED mail of this commit.
+- 00:09 MAIL 817: mars/full is not to be made smaller; the commit comes as a bundle; say which engine call ruling
+  2 needs. READ: 86184412 is limbAir (air beyond the edge), it draws no ground.
