@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T09:43:06.486Z",
+ "pushed": "2026-11-25T09:56:47.035Z",
  "head": "bfd6c3adaacb2fb02b3fac5066a60941256f1c20",
- "note": "MAIL 975 answer: controls for dive part 4 and the rise; steep rule off not taken (darkens the disc's middle at 4137 and 4436); state bfd6c3ad, notes only",
+ "note": "MAIL 1020 in: cover controls done (cloud layer and grain are not the cover's difference), building the air by the path",
  "looks": [
+  {
+   "time": "2026-11-25T09:56:40.126Z",
+   "file": "20261125095640126-note-b-state.jpg",
+   "source": "../../../../tmp/n52/b-state.jpg",
+   "kind": "note",
+   "label": "state bfd6c3ad: dive 4130 to 4290 and the own light control at 4152 + 1/2",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T09:43:05.851Z",
    "file": "20261125094305851-note-pairs-s.jpg",
@@ -234,14 +242,6 @@
    "source": "../../../../tmp/n48/t5-pair-a.jpg",
    "kind": "note",
    "label": "dive 4150 to 4153 main beside trial T5 (layer law, hand by pixel size and angle)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T05:05:20.778Z",
-   "file": "20261125050520778-note-X1-panel.jpg",
-   "source": "../../../../tmp/n48/X1-panel.png",
-   "kind": "note",
-   "label": "ablation X1: globe's own light, cover off, seen straight down (not the film's camera): pattern 0.03 at most",
    "stop": "uranus"
   }
  ]
