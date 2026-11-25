@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T20:43:00.832Z",
- "head": "e08e640c050136195e9341b3cb591a7cbd522b8c",
- "note": "H1 by the eye's distance: reader rows cured, towers double at 2 to 1; control cP0 single; not named",
+ "pushed": "2026-11-25T21:10:59.485Z",
+ "head": "5a508c0d9dfd1c16405944278128ef05edbbf590",
+ "note": "main's dive rows read (25 of 179 over); cure B written (one exchange at a pixel), not yet rendered",
  "looks": [
+  {
+   "time": "2026-11-25T21:10:58.329Z",
+   "file": "20261125211058329-note-glass-1320.jpg",
+   "source": "../../../../tmp/v/sh/glass-1320.jpg",
+   "kind": "note",
+   "label": "1320 at 3 to 1, x 830 to 1070, y 650 to 770: b0b87889, fourth, sixth, H1, control cEnd (line gone), control cP0",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T21:10:56.903Z",
+   "file": "20261125211056903-note-M0H1b0-dive.jpg",
+   "source": "../../../../tmp/v/sh/M0H1b0-dive.jpg",
+   "kind": "note",
+   "label": "dive 1290, 1305, 1320, 1332 at a third: main's Venus folders (a4534656), H1, the build b0b87889",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T20:42:50.895Z",
    "file": "20261125204250895-note-a4H1-1320.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/probe/gc-crops.png",
    "kind": "note",
    "label": "controls on dive 1291 to 1307, crop of 400 px about 1140, 440, lifted: above the close picture's share held at 0 (the ground comes in by height with its own outline), below held at 1 (no outline)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T19:29:30.975Z",
-   "file": "20261125192930975-note-cG0-venus-dive-k2580-2598-changes.jpg",
-   "source": "../../../../tmp/v/probe/cG0-venus-dive-k2580-2598-changes.png",
-   "kind": "note",
-   "label": "control, the globe's picture alone (share of the close picture 0) on dive rows 1290 to 1299: the ground comes in by height at the frame's centre, reads up to 0.65",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T18:59:42.454Z",
-   "file": "20261125185942454-note-sky-crop3.jpg",
-   "source": "../../../../tmp/v/sh/sky-crop3.png",
-   "kind": "note",
-   "label": "hold sky plate at final 1185, no grain, 3 to 1, x 1457 to 1777, y 598 to 798: main's plate left, the filled plate right (not laid in: G17 0.962 to 0.935, match 2.473 to 2.491)",
    "stop": "venus"
   }
  ]
