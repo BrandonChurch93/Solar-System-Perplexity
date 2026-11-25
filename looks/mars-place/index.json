@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T21:40:28.991Z",
+ "pushed": "2026-11-25T21:49:21.907Z",
  "head": "47b7534197a50175cdfd682dbfa8b46e9ff5487e",
- "note": "trial 16 from above: wall holds, plain reads as smoke; trial 17 runs",
+ "note": "trial 17 of wall and plain by code goes to the other levels; plain still soft under the take's broad tone",
  "looks": [
+  {
+   "time": "2026-11-25T21:49:21.119Z",
+   "file": "20261125214921119-note-cmpA.jpg",
+   "source": "out/work/place/w17/cmpA.png",
+   "kind": "note",
+   "label": "0.3 plate from above at 1 to 1, crop A: trials 15, 16, 17 (wall with chutes, plain by code)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T21:49:20.434Z",
+   "file": "20261125214920434-note-C.jpg",
+   "source": "out/work/place/w17/C.png",
+   "kind": "note",
+   "label": "0.3 plate from above at 1 to 1, plain by code, trial 17 (x 900 y 1100): small craters on soft ground; the take's broad tone still reads as cloud shadow",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T21:40:03.995Z",
    "file": "20261125214003995-note-over.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/place/w14/cmpA.png",
    "kind": "note",
    "label": "BAD wall trial 14, 0.3 plate from above 1 to 1 at x 1400 y 200: before walls, trial 13, trial 14 (plain by code reads as contour lines and corduroy)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:52:28.411Z",
-   "file": "20261125205228411-note-cmpB.jpg",
-   "source": "out/work/place/w13/cmpB.png",
-   "kind": "note",
-   "label": "wall by code, trial 13, 0.3 plate from above at 1 to 1 (x 1000 y 560): before walls, take 10, trial 13",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:52:27.386Z",
-   "file": "20261125205227386-note-cmpA.jpg",
-   "source": "out/work/place/w13/cmpA.png",
-   "kind": "note",
-   "label": "wall by code, trial 13, 0.3 plate from above at 1 to 1 (x 1400 y 200): before walls, take 10 (hair), trial 13 (rock with beds between chutes of loose ground). Open: hard border of wall band and the take's boulder plain",
    "stop": "mars"
   }
  ]
