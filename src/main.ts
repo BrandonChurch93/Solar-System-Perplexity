@@ -29,6 +29,7 @@ engine.sky.cull = mode === 'capture'
 for (const id of config.stopIds) engine.sets.register(id, factories[id]!)
 document.getElementById('stage')!.appendChild(engine.canvas)
 const ui = document.getElementById('ui')!
+if (params.get('subs') === '1') await (await import('./subs/mount')).mount(engine)
 
 const frameParam = params.get('frame')
 const startFrame = frameParam === null ? null : Number(frameParam)
