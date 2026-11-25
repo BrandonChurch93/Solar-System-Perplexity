@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T06:37:11.150Z",
- "head": "918883791684652f1101dfe54fafc34d76169f9d",
- "note": "06:37 UTC: the reds of the dive and the rise are being named by controls (the streamer under cirrus.thin is one, proven by the control without streamers); 4860 unchanged, G17 proxy 0.359 at 1920",
+ "pushed": "2026-11-25T07:00:38.668Z",
+ "head": "ac408e47a433a5f9c3b5570c067d1dbe984c4171",
+ "note": "07:00 UTC, ac408e47: the dive's pattern red at 4712 to 4728 named (streamers under cirrus.thin) and cured by their far level; RED: thin streaks from orbit; a second layer at 4724 to 4744 and 4972 to 4988 not named yet",
  "looks": [
+  {
+   "time": "2026-11-25T07:00:38.056Z",
+   "file": "20261125070038056-note-s4-dive.jpg",
+   "source": "out/work/nep/weave/ev/s4-dive.jpg",
+   "kind": "note",
+   "label": "ac408e47 at 1920, draft: 4692, 4704, 4714, 4722: hairlines low left of the storm, heaps on the upper third of the line at 4722",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:00:37.501Z",
+   "file": "20261125070037501-note-s4-4605.jpg",
+   "source": "out/work/nep/weave/ev/s4-4605.jpg",
+   "kind": "note",
+   "label": "RED named: 4605 at 1920, 4 times enlarged, left 02ca4d9f, right ac408e47: the streamers show from orbit as two thin pale streaks (464 pixels changed by more than 6 levels, the most 76)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:00:36.917Z",
+   "file": "20261125070036917-note-carry-before-after.jpg",
+   "source": "out/work/nep/weave/ev/carry-before-after.jpg",
+   "kind": "note",
+   "label": "Dive, the named layer and its cure: above 02ca4d9f (the streamer's heaps out of nothing from 4720), below ac408e47 (the streamers lie there as thin pale streaks from 4708, the heaps stand up on them); pattern by my pose proxy 4712, 4716, 4720: 0.63, 1.03, 0.84 before, 0.22, 0.31, 0.35 now",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:00:36.347Z",
+   "file": "20261125070036347-note-4860-S5.jpg",
+   "source": "out/work/nep/weave/ev/4860-S5.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, commit ac408e47: the close view is the picture of 02ca4d9f (48 pixels of the preview changed by more than 6 levels, the thin far streamer); G17 proxy preview median 0.508, p25 0.128 (1920 on 02ca4d9f: 0.359, 0.090, not measured again); 38.5 s the draft frame at the preview, 92 s at 1920",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T06:35:48.240Z",
    "file": "20261125063548240-note-q1-pairs-rise.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/nep/weave/ev/f2-b.jpg",
    "kind": "note",
    "label": "commit 02ca4d9f, preview draft: 4750, 4757, 4758 (change of view), 4956, 4957, 4975. Soft dark ovals (cirrus shadow on the air) and a faint pink band at the far limb are reds I name.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T06:09:21.831Z",
-   "file": "20261125060921831-note-night-C4.jpg",
-   "source": "out/work/nep/weave/ev/night-C4.jpg",
-   "kind": "note",
-   "label": "clouds at the terminator, the term named: the cloud curve of light (curve.json) between ndl 0 and 0.2. Left as is, right the control C4 (not taken): the lumps go at 4713 and 4722 (x5), but 4605 leaves the approved hero, which has these clouds (lower row: hero, as is, C4).",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T06:09:21.266Z",
-   "file": "20261125060921266-note-swirl-f2.jpg",
-   "source": "out/work/nep/weave/ev/swirl-f2.jpg",
-   "kind": "note",
-   "label": "storm from orbit: approved hero, 4605 before, 4605 now (rings 0.2, arms.light 0.05); below 4720 before and now. A faint trace is left at 4605.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T06:09:20.710Z",
-   "file": "20261125060920710-note-4860-F2p.jpg",
-   "source": "out/work/nep/weave/ev/4860-F2p.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved image, commit 02ca4d9f (air as light added, storm rings 0.2). G17 proxy RED and lower than before: 1920 median 0.359 p25 0.090 (0.675, 0.280 on 121f3ade), preview 0.508. Plain's box (49, 81, 120) against the approved (90, 134, 176), before (24, 58, 98). Draft frame: 92 s at 1920, 38.5 s at the preview cold.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T05:44:57.308Z",
-   "file": "20261125054457308-note-swirl3.jpg",
-   "source": "out/work/nep/weave/ev/swirl3.jpg",
-   "kind": "note",
-   "label": "storm from orbit, controls: left as is, middle dark 0, right rings 0, at 4605 (5x) and 4720 (3x). The spiral lane is drawn by rings, not by dark.",
    "stop": "neptune"
   }
  ]
