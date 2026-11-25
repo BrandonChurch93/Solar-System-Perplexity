@@ -1,9 +1,30 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T15:56:16.632Z",
+ "pushed": "2026-11-25T15:57:13.335Z",
  "head": "4c4ae28cd41d8d873d8d51f86ff54b7bf14f6800",
- "note": "cause A: 1857 and 2156 at final, shutter open beside closed; the open shutter makes blocks, a plain blur model does not; cause not found yet",
+ "note": "cause A not found: open shutter makes the blocks at 1857 and 2156, a plain blur model does not; reading of 15:39 withdrawn",
  "looks": [
+  {
+   "time": "2026-11-25T15:57:12.133Z",
+   "file": "20261125155712133-note-1857-model.jpg",
+   "source": "../../../../tmp/gl/k15/A/1857-model.jpg",
+   "kind": "note",
+   "label": "cause A, 1857 lower left: the open render beside MODELS (closed frame drawn out along the motion, box and soft ends) and the closed render: no model makes the blocks, so my reading of 15:39 (the half shutter's blur on thin marks) is withdrawn; cause not found"
+  },
+  {
+   "time": "2026-11-25T15:57:11.091Z",
+   "file": "20261125155711091-note-2156-coast-aurora.jpg",
+   "source": "../../../../tmp/gl/k15/A/2156-coast-aurora.jpg",
+   "kind": "note",
+   "label": "caaa727d 2156 at final: night coast and aurora, shutter open (lights as dashes, rays run together) beside closed (points, the hold's rays): bad, not cured"
+  },
+  {
+   "time": "2026-11-25T15:57:09.981Z",
+   "file": "20261125155709981-note-2156-ll-1to1.jpg",
+   "source": "../../../../tmp/gl/k15/A/2156-ll-1to1.jpg",
+   "kind": "note",
+   "label": "caaa727d 2156 at final, lower left at 1 to 1: shutter open (smear along the radius and flat bluish squares near the rim) beside shutter closed (crisp): bad, not cured"
+  },
   {
    "time": "2026-11-25T15:39:06.447Z",
    "file": "20261125153906447-note-d-s4.jpg",
@@ -42,30 +63,6 @@
    "source": "../../../../tmp/gl/k15/d-c2.jpg",
    "kind": "note",
    "label": "caaa727d dive 1870, 1875, 1880 at 1 to 1 west of the disc: the wedge's specks read as small clouds with shadows; the dark blue spot north of the streak stands",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T15:07:05.923Z",
-   "file": "20261125150705923-note-d-s3.jpg",
-   "source": "../../../../tmp/gl/k15/d-s3.jpg",
-   "kind": "note",
-   "label": "caaa727d dive 1869 to 1880 from the tool's own frames: the wedge's specks west of the disc read as a sprinkle over the land; the disc's ground with an outline",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T14:46:35.704Z",
-   "file": "20261125144635704-note-2010-band-middle.jpg",
-   "source": "../../../../tmp/gl/k15/named/2010-band-middle.jpg",
-   "kind": "note",
-   "label": "2010 final at caaa727d, band middle 1 to 1: approved, main, now",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T14:46:35.025Z",
-   "file": "20261125144635025-note-2010-whole.jpg",
-   "source": "../../../../tmp/gl/k15/named/2010-whole.jpg",
-   "kind": "note",
-   "label": "2010 final at caaa727d whole: approved, main, now (red: far band not the approved shot)",
    "stop": "earth"
   }
  ]
