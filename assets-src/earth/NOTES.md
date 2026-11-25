@@ -6357,3 +6357,14 @@ Colour at the glint, counted (draft frames, crop x 500 to 1400, y 200 to 800, sm
 - 1878: 20ad27c2 40102 (2928), state 9226 (1265); most 40.3 against 37.9, at 861, 389 and 857, 382, BGR 112/61/50 and 117/62/44
 - 1882: 20ad27c2 51794 (10627), state 13094 (0)
 So the violet's area fell to a quarter and is gone at 1882, but at 1874 and 1878 its core stands with the same colour as before. The share law did not take the core. Not cured.
+
+### 23:05 UTC: the state is pushed and mailed
+
+dd5dd07a55fd40881e08a5c1ef6b438c0c345fa0 on agent/earth-place, mailed to /root at 23:05 as a STATE (MAIL 1305 items 3 and 6) with ten pictures (rim at 1 to 1 at 1886, 1890, 1898; pairs 1874, 1886, 1890, 1898; the glint at 1878; 1755 and its disc at 4 for 1). Reds named there, worst first: the oval by kind (dim clouds in the picture's dark near edge, brighter specks outside); the glint's colour 1870 to 1882; the 5 degree window's edge; towers and rise side not touched.
+
+### 23:06 to 23:09 UTC: origin main c94664b6 merged into the branch (measured)
+
+`git fetch --depth 1 origin main` gave c94664b61705a12e7241d74d464984730f2c64cc ("Status 340 and decision d332"), which is later than the 172e7bcd of MAIL 1314. Against 59449dbf it differs in 30 names, none inside my three folders.
+First try made nothing: `git rm -r --cached` on the three folders in a second index refused without -f, so the tree and the commit were empty and nothing moved.
+Second try, the merge by hand: a second index read from main's tree, the three folders taken out and read in again from dd5dd07a, the tree written and committed with both parents. Merge e3fa3d456fac44200216c49c29c2d2ef9b247e75. Counted on it: 0 names differ from main outside the three folders, 0 names differ from dd5dd07a inside them, 30 names differ from dd5dd07a outside them (main's). Fast forwarded onto it.
+On the merge: tsc exit 0. Draft frames 1858, 1874 and 1890 (rate 8, shutter 0, /tmp/gl/k20/M/merge) against the same frames of the third strip on dd5dd07a: 0 px differ in each. So the numbers stated for the state at draft stand on the merge for these three frames; the finals and the tests are run again on it before the name. Tests started on the merge at 23:08:58.
