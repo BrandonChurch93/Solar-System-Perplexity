@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { config } from '../config'
 import { bufferFrame } from '../core/frame'
 import { Pass } from '../core/pass'
 import { stream } from '../core/random'
@@ -90,6 +91,7 @@ uniform vec4 uSunPoint;
 uniform float uTerrainBand;
 uniform float uTerrain;
 uniform vec2 uNamed;
+uniform vec2 uBandLift;
 uniform vec3 uBandClean;
 uniform vec2 uLens;
 uniform sampler2D uFlightMap;
@@ -288,7 +290,7 @@ void main() {
     }
     band = inverseFilmic(kept);
     bref = band;
-    for (int j = 0; j < (uStopBand.x > 0.0 && uFlightStrip.x < 1.0 ? 1 : 0); j++) {
+    for (int j = 0; j < (uStopBand.x > 0.0 && uBandLift.x < 1.0 ? 1 : 0); j++) {
       vec3 sq = smoothLod(uBandGlow, bc.xy, 0.0);
       vec3 soft = inverseFilmic(sq * sq);
       float sl = max(dot(soft, vec3(0.3, 0.5, 0.2)), 1e-5);
@@ -359,11 +361,11 @@ void main() {
       float gl = dot(glow, vec3(0.3, 0.5, 0.2));
       glow = mix(vec3(gl), glow, uBandTint.w) * uBandTint.rgb * uBandGrade.x * region * pow(max(gl, 1e-5) / 0.05, uBandGrade.y - 1.0);
     }
-    band = mix(band, glow, uFlightStrip.x);
-    bref = mix(bref, glow, uFlightStrip.x);
-    bz = mix(bc.z, fz, uFlightStrip.x);
-    bz0 = mix(bc.z, fz0, uFlightStrip.x);
-    shade = 1.0 - uFlightRough.y * (fz0 - fz) * uFlightStrip.x;
+    band = mix(band, glow, uBandLift.x);
+    bref = mix(bref, glow, uBandLift.x);
+    bz = mix(bc.z, fz, uBandLift.x);
+    bz0 = mix(bc.z, fz0, uBandLift.x);
+    shade = 1.0 - uFlightRough.y * (fz0 - fz) * uBandLift.x;
   }
   if (uTerrain > 0.0) band *= uTerrain < 1.0 ? mix(1.0, uTerrainBand, uTerrain) : uTerrainBand;
   if (uNamed.x != 1.0) band *= uNamed.x;
@@ -372,7 +374,7 @@ void main() {
     float ol = dot(uFlightOff, vec3(0.3, 0.5, 0.2));
     off = mix(off, off * uFlightOff / ol, uFlightLook.x) * mix(1.0, ol, uFlightGlow.w);
     float fl = max(dot(bref, vec3(0.3, 0.5, 0.2)), 1e-5);
-    band = mix(band, band * mix(uFlightDust, uFlightLight, smoothstep(uFlightBand.x, uFlightBand.y, fl)) * uFlightLook.y * pow(fl / uFlightBand.y, uFlightBand.z), uFlightLook.x) * mix(1.0, uFlightBand.w / uFlightLook.y, uFlightGlow.w);
+    band = mix(band, band * mix(uFlightDust, uFlightLight, smoothstep(uFlightBand.x, uFlightBand.y, fl)) * uFlightLook.y * pow(fl / uFlightBand.y, uFlightBand.z), uFlightLook.x) * mix(1.0, uFlightBand.w / uFlightLook.y, uBandLift.y);
   }
   col = (min(mix(off * shade, band, bz), mix(off, band, bz0)) + uFloor) * uGlow * uExposure;
   if (uFlightGlow.w > 0.0) {
@@ -384,7 +386,7 @@ void main() {
       for (int n = 0; n < (fall > 0.004 ? 1 : 0); n++) {
         vec3 hq = vec3(gq.xy, gq.z * 2.0) * uFlightSpread.x;
         float hn = dot(skyNoise(hq).xy, vec2(0.65, 0.35));
-        col += uFlightWarm.rgb * (uFlightStrip.x * uFlightGlow.w * (1.0 - uFlightSpread.z * bz) * fall * (1.0 + uFlightSpread.y * (hn - 0.5)));
+        col += uFlightWarm.rgb * (uBandLift.x * uBandLift.y * (1.0 - uFlightSpread.z * bz) * fall * (1.0 + uFlightSpread.y * (hn - 0.5)));
       }
     }
     vec2 vq = (vUv - 0.5) * vec2(uLens.y, 1.0);
@@ -706,13 +708,85 @@ function catalog(base: number): { pos: Float32Array; star: Float32Array; col: Fl
 
 const shed = (a: THREE.BufferAttribute): THREE.BufferAttribute => a.onUpload(() => { (a as unknown as { array: null }).array = null })
 
-export interface SkyLook { look?: number; band?: number; map?: number; stars?: number; even?: number; cap?: number }
+export interface SkyLook { look?: number; band?: number; map?: number; stars?: number; even?: number; cap?: number; hold?: number }
 
 const named = new Map<string, { look: SkyLook; weight: number }>()
 
 export function nameSkyLook(id: string, look: SkyLook, weight = 1): void {
   if (weight > 0) named.set(id, { look, weight })
   else named.delete(id)
+}
+
+const HOLD = config.raw.travel.sky.bandHold as Record<string, number[]>
+const spans = new Map<string, [number, number]>()
+const GRID = [49, 29]
+
+export function bandClear(shot: { skyQuaternion: THREE.Quaternion; skyTurn: THREE.Quaternion; camera: { vfov: number } }, frame: THREE.Quaternion, aspect = 16 / 9): number {
+  const rot = new THREE.Matrix4().makeRotationFromQuaternion(shot.skyQuaternion)
+  const turn = new THREE.Matrix4().makeRotationFromQuaternion(shot.skyTurn.clone().invert().premultiply(frame))
+  const gal = galactic()
+  const th = Math.tan(THREE.MathUtils.degToRad(shot.camera.vfov) / 2)
+  const v = new THREE.Vector3()
+  let min = 90
+  for (let j = 0; j < GRID[1]!; j++) for (let i = 0; i < GRID[0]!; i++) {
+    v.set((i / (GRID[0]! - 1) * 2 - 1) * th * aspect, (j / (GRID[1]! - 1) * 2 - 1) * th, -1).normalize().applyMatrix4(rot).applyMatrix4(turn).applyMatrix3(gal)
+    min = Math.min(min, Math.abs(THREE.MathUtils.radToDeg(Math.asin(Math.min(Math.max(v.z, -1), 1)))))
+  }
+  return min
+}
+
+export function bandSpan(clear: number[], limit: number, least: number): [number, number] | null {
+  let end = clear.length - 1
+  while (end >= 0) {
+    while (end >= 0 && clear[end]! < limit) end--
+    let start = end
+    while (start > 0 && clear[start - 1]! >= limit) start--
+    if (end >= 0 && start > 0 && end - start + 1 >= least) return [start - 1, end]
+    end = start - 1
+  }
+  return null
+}
+
+export const setBandSpan = (id: string, span: [number, number] | null): void => { if (span) spans.set(id, span); else spans.delete(id) }
+
+export const bandHeld = (id: string, u: number): number => {
+  const span = spans.get(id)
+  if (!span) return 0
+  const t = Math.min(Math.max((u - span[0]) / (span[1] - span[0]), 0), 1)
+  return 1 - t * t * (3 - 2 * t)
+}
+
+export function holdBand(id: string, u: number): void {
+  nameSkyLook(id + ' hold', { hold: 1, band: HOLD[id]?.[1] ?? 1 }, bandHeld(id, u))
+}
+
+export function readBandSpan(id: string, film: { sky: { frame: THREE.Quaternion }; shotAt(frame: number, time: number): { u: number; skyQuaternion: THREE.Quaternion; skyTurn: THREE.Quaternion; camera: { vfov: number } } }): [number, number] | null {
+  const seg = config.segments.find((x) => x.stop === id && x.kind === 'rise')
+  const rule = HOLD[id]
+  if (!seg || !rule) return null
+  const first = Math.ceil(seg.start * config.fps)
+  const last = Math.ceil(seg.end * config.fps) - 1
+  const clear: number[] = []
+  const us: number[] = []
+  for (let f = first; f <= last; f++) {
+    const shot = film.shotAt(f, f / config.fps)
+    clear.push(bandClear(shot, film.sky.frame))
+    us.push(shot.u)
+  }
+  const run = bandSpan(clear, rule[0]!, config.raw.travel.sky.bandHoldLeast)
+  return run ? [us[run[0]]!, us[run[1]]!] : null
+}
+
+let film: Promise<Parameters<typeof readBandSpan>[1]> | null = null
+
+export async function bandHold(id: string): Promise<(u: number) => void> {
+  film ??= (async () => {
+    const { FilmDirector } = await import('../director/film')
+    const { plans } = await import('../director/plans')
+    return new FilmDirector(plans)
+  })()
+  setBandSpan(id, readBandSpan(id, await film))
+  return (u: number) => holdBand(id, u)
 }
 
 export const flightSwap = (lift: number, power: number): number => 1 - Math.pow(1 - Math.min(Math.max(lift, 0), 1), power)
@@ -783,7 +857,7 @@ export class Sky {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunFar: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uPixel: { value: 1 }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uNamed: { value: new THREE.Vector2(1, 1) }, uTerrainBand: { value: skyFrame.band.terrainGain }, uTerrain: { value: 0 }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
       uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold },
-      uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: new THREE.Vector2() }, uFlightDetail: { value: new THREE.Vector4() }, uFlightLane: { value: new THREE.Vector4(1, 2, 0, 0) }, uFlightFill: { value: new THREE.Vector4() }, uFlightOctave: { value: new THREE.Vector3(2, 0.5, 0.5) }, uFlightKnee: { value: new THREE.Vector2(1, 1) }, uFlightRim: { value: new THREE.Vector4() }, uFlightWarm: { value: new THREE.Vector4() }, uFlightSpread: { value: new THREE.Vector3() }, uFlightNoise: { value: this.noise }, uStopBand: { value: new THREE.Vector4(0, 0, 0, 0.7) }, uStopPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uStopGrain: { value: new THREE.Vector4(1, 1, 0, 1) }, uStopLaw: { value: new THREE.Vector4(1, 1, 1, 1) }, uStopTint: { value: new THREE.Vector4(0, 0, 1, 2) }, uStopCalm: { value: new THREE.Vector2(0, 6) },
+      uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uBandLift: { value: new THREE.Vector2() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: new THREE.Vector2() }, uFlightDetail: { value: new THREE.Vector4() }, uFlightLane: { value: new THREE.Vector4(1, 2, 0, 0) }, uFlightFill: { value: new THREE.Vector4() }, uFlightOctave: { value: new THREE.Vector3(2, 0.5, 0.5) }, uFlightKnee: { value: new THREE.Vector2(1, 1) }, uFlightRim: { value: new THREE.Vector4() }, uFlightWarm: { value: new THREE.Vector4() }, uFlightSpread: { value: new THREE.Vector3() }, uFlightNoise: { value: this.noise }, uStopBand: { value: new THREE.Vector4(0, 0, 0, 0.7) }, uStopPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uStopGrain: { value: new THREE.Vector4(1, 1, 0, 1) }, uStopLaw: { value: new THREE.Vector4(1, 1, 1, 1) }, uStopTint: { value: new THREE.Vector4(0, 0, 1, 2) }, uStopCalm: { value: new THREE.Vector2(0, 6) },
       uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
     }, BEHIND)
     const { pos, star, col } = catalog(base)
@@ -1160,6 +1234,7 @@ export class Sky {
     let even = 0
     let cap = 0
     let capped = 0
+    let hold = 0
     for (const n of named.values()) {
       const w = Math.min(Math.max(n.weight, 0), 1)
       if (n.look.look !== undefined) look += (n.look.look - look) * w
@@ -1167,6 +1242,7 @@ export class Sky {
       map *= 1 + ((n.look.map ?? 1) - 1) * w
       stars *= 1 + ((n.look.stars ?? 1) - 1) * w
       even = 1 - (1 - even) * (1 - (n.look.even ?? 0) * w)
+      hold = 1 - (1 - hold) * (1 - (n.look.hold ?? 0) * w)
       if (n.look.cap !== undefined && w >= capped) { cap = n.look.cap; capped = w }
     }
     named.clear()
@@ -1175,6 +1251,8 @@ export class Sky {
     ;((this.stars.material as THREE.ShaderMaterial).uniforms.uNamedStars!.value as THREE.Vector4).set(stars, even, cap, capped)
     const swap = this.stripGlow && this.stripDef ? flightSwap(this.flightLift, this.stripDef.swap) : 0
     ;(u.uFlightStrip!.value as THREE.Vector3).x = swap
+    const bandLift = hold > 0 ? this.flightLift * (1 - hold) : this.flightLift
+    ;(u.uBandLift!.value as THREE.Vector2).set(hold > 0 && swap > 0 ? flightSwap(bandLift, this.stripDef!.swap) : swap, bandLift)
     this.dustRed.w = swap
     for (let i = 0; i < 2; i++) this.patchMode[i]!.x = swap > 0 ? Math.pow(this.patchRaw[i]!, 1 + this.stripDef!.patchHold * this.flightLift) : this.patchRaw[i]!
     this.q.copy(turn).invert().premultiply(this.frame)
