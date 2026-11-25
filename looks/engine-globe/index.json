@@ -1,6 +1,6 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T03:07:33.143Z",
+ "pushed": "2026-11-25T03:07:50.119Z",
  "head": "9c5fafc09846682f533eaef0369e223aeb91c836",
  "note": "Cap detail hook (cap.detail, off by default), not yet committed. A plot of two tests on a 96 row test page, not a film frame: the tilt the hook gives equals the forward difference over one pixel; a height that is a function of the cap own height changes the light on the walls only. No film frame with the hook on yet. The 115 draft frames with the hook absent are being rendered.",
  "looks": [
