@@ -6909,7 +6909,7 @@ MAIL 1049 from the Builder (/root), 11:14 UTC. To neptune_builder. Your state of
   - A slip, mended: taking main's files off, my glob also removed place-tone.webp from the index; restored from HEAD; the tree
     is HEAD plus the control in deep.ts and this notebook (git status checked, 48 tracked assets as before).
 
-## 25 Nov, 11:16 to 11:44 UTC: the count's commit, way C laid on it, the strips of G17, the terrain's rows
+## 25 Nov, 11:16 to 11:42 UTC: the count's commit, way C laid on it, the strips of G17, the terrain's rows
 
 - Order as MAIL 1049 rules (the count apart from way C and before it): way C was a local commit only (bf7752dbd, never pushed), so
   I took it off (reset to the pushed 0971fc1df, its diff and message kept), committed the count on the pushed tip, and laid way C on
@@ -6957,3 +6957,82 @@ MAIL 1049 from the Builder (/root), 11:14 UTC. To neptune_builder. Your state of
     the code's count its width. By the map's way of counting the code would read 4 / (1.5 to 3), that is 1.3 to 2.7.
   - Main's own terrain read 71.2 percent soft by this tool (M1, main's three folders on my tree), where the mail says main passed.
     I cannot see main's record of G13 for 4770 to 4949; said to the Builder as it stands.
+
+## 25 Nov, 11:42 to 12:06 UTC: the merge of main, the tests, the disk, the limit's trial, the seventh NAMED
+
+- A slip of mine, mended: the header above first said "to 11:44"; I wrote it before I read the clock. The true end was 11:42.
+- Merge 27737fef3 of main c1305a223 (no conflict; main brought the far sun, Venus, warm.json, tests; nothing of my folders).
+  tsc clean.
+- MAIL 983's line is not laid. I first read the remote's take branches by their last five and missed take/b10e; it does exist
+  (b1721d2c on the remote). But main does not hold it: b1721d2c is no object of my clone, which holds all of main; status 306
+  says "main with take batch 9"; and FrameState has no lookback on the merged tree, so the line would not compile.
+- The tests, first run (npm test, 11:42 to 11:49): it ended in an error of the reporter, and I had cut its output to the tail,
+  so I could not read it. Second run (npx vitest run --reporter=tap, 11:50:04 to 11:57:06, no render beside it): 63 files ok,
+  1 not ok, tests/smooth.test.ts, its group 11 ("the pattern measure on made films at the full size"), every test of the group
+  skipped. The disk stood at 100 percent, 55 MB free. Cause of the disk: three dead packs in .git/objects/pack (tmp_pack, 1403
+  MB of 11:44, 1123 MB of 11:33, 18 MB of 11:38), left by git's own repack, which starts after a fetch and is killed when my
+  command ends. Removed (no git process was running); gc.auto 0 and maintenance.auto false set in my clone; 2.5 GB free.
+  tests/smooth.test.ts alone after that (11:57:53 to 11:58:52): ok, 0 not ok, exit 0. The whole set was not run a second time.
+  So I say 63 of 64 with the cause, not 64 of 64.
+- My own test: 5 of 5 (npx vitest run --config assets-src/neptune/vitest.config.ts).
+- The judged frames on the merged tree at 1920, draft (dir J3, 11:58:59 to 12:01:46; 31.6, 18.6, 78.8, 20.5 s): 4605
+  cf858a9f835a480f (the same bytes as B6, c2edd61ba), 4707 8983a72bca9831e4 (c2edd61ba: 9dea908ade1083d5; way C moved it),
+  4860 0524ac74acaab1ce (the same bytes as J2, way C before the merge; c2edd61ba: 60cd8d3275f723f2), 5006 6e7db4592a542b0c
+  (the same bytes as c2edd61ba). Main's far sun moved nothing of these.
+- A trial, not in (dir L1, the tree restored after): deck.limit 1.0 in place of 1.5, the texel view of 4860 at 1920: 15.373
+  percent soft of 1570666, mean 1.42 (93 s). Against 48.660 with 1.5. Still far over 2 percent, and neither its beauty nor its
+  motion was looked at. The limit alone is not the cure; the cure is octaves down to the pixel's width with the mean along the
+  pixel's run on the deck.
+- Looks pushed 11:43:36 (622f60b6, 8 looks): the two strips of G17 and 4860 beside the approved.
+- ev/g13-views.jpg is the named state beside the control T2 (not the count's commit); for the mail I made
+  ev/g13-count-before-after.jpg from T1 (c2edd61ba's tree) and J1 (f462b9938), with the reading written on each panel. In the
+  view green is few texels a pixel and yellow many.
+- Main moved twice while I worked (11f2afddd, a27b5e9d1: kit/PROGRESS.md alone). Merge d63d08e2d of main a27b5e9d1 is the
+  named commit; this notebook's commit lies on top of it.
+- G11 PASS (npm run gate -- --phase 6 --only G11; and no file under public/assets/neptune differs from c2edd61ba). Net of my
+  folders at the named commit: 63.458 MB (src 0.332, assets-src 5.682, public 57.444) against main's 80.827.
+
+## The seventh NAMED mail to the Builder (word for word; attachments ev/g17-top-c2edd61b.jpg, ev/g17-top-wayC.jpg, ev/c-4860-C8.jpg, ev/g13-count-before-after.jpg, C8q/chain-4962.jpg)
+
+> NAMED d63d08e2dd5560bba5d02cd926cf85a57573287e (agent/neptune-place; the named commit is the merge of main a27b5e9d1, the pushed tip above it is the notebook alone). My seventh named state, as it stands. It is RED and what is red is named as red, worst first, at the end.
+>
+> WHERE IT STANDS. 27737fef3 is the merge of main c1305a223 (nothing of my folders in it: the far sun, Venus, warm.json, tests); on top of it the merge of main a27b5e9d1 (kit/PROGRESS.md alone), which is the named commit. tsc clean. Tests on 27737fef3 with no render beside them: the whole run 11:50 to 11:57 gave 63 of 64 files ok and 1 not ok, tests/smooth.test.ts group 11 (the films it makes), with my disk full under it: git's own repack had left three dead packs of 2.5 GB in my clone. I removed them and ran that file again alone: ok, 0 not ok (11:57 to 11:58). I did not run the whole set a second time. My own test 5 of 5. G11 PASS; no file under public/assets/neptune changed since c2edd61ba. Net of my folders 63.458 MB (src 0.332, assets-src 5.682, public 57.444) against main's 80.827.
+> MAIL 983's line is NOT in: main at c1305a223 and at a27b5e9d1 holds take batch 9, b1721d2c is not in it and FrameState has no lookback, so the line would not compile. It goes in on the merge that holds b1721d2c.
+> On the named tree at 1920, draft, sha256 first 16: 4605 cf858a9f835a480f (the same bytes as c2edd61ba and as every state since), 4707 8983a72bca9831e4 (way C moved it), 4860 0524ac74acaab1ce (way C moved it; the merge did not), 5006 6e7db4592a542b0c (the same bytes as c2edd61ba). Seconds a draft frame at 1920: 4605 32, 4707 19, 4860 79, 5006 21.
+>
+> 1. THE COUNT, f462b9938, apart from way C and before it (MAIL 1049, 1). The texel view reports at each pixel the count of what is drawn there, each layer by its share of the pixel's light; where the scene draws nothing the map's count stands. The law is one text in src/stops/neptune/count.ts, read by the shader and by its test (assets-src/neptune/count.test.ts, 5 tests; run: npx vitest run --config assets-src/neptune/vitest.config.ts, because the repo's config reads tests/ alone and that folder is not mine: move it if you want it there). The limit and the measure are not touched. The beauty's bytes are equal before and after on the four judged frames at 1920, draft: 4605 cf858a9f835a480f, 4707 9dea908ade1083d5, 4860 60cd8d3275f723f2, 5006 6e7db4592a542b0c. By my reading of the view (a proxy, your machine reads it): 4530 0.000 percent soft of 1058011 pixels, mean 1.82 (before 89.878 percent, mean 0.38); 4860 48.66 percent, mean 1.14 (before 71.199, 0.84): RED.
+> The commit of mine that changed the hold's number: 5a14d56dd (deepLaid.mesh.visible = visible && (show > 0 || placed)): from it on the scene's mesh is laid at the hold where it draws nothing, and the view counted that nothing as soft. Main's own three folders on my tree read 4530 0.000 and 4860 71.232 percent by my tool, which does not agree with "main passed" for the surface view; I cannot see main's record for 4770 to 4949.
+>
+> 2. THE TERRAIN at 4860, stated before anything is changed (MAIL 1049, 2). Nothing is changed. From the layers view and the texel views on the named tree:
+> - Row 630: the deck by code on 91 percent of the pixels, cirrus over the rest. Its finest made wave is 4.4 pixel feet (median; 2.8 to 11.3), count 0.92, 74 percent soft. On 22 percent of the pixels the map reads finer than the code.
+> - Row 800: the deck by code on 93 percent. Finest wave 5.0 feet (2.6 to 7.7), count 0.79, 92 percent soft.
+> - Row 1079: the deck by code on 95 percent. Finest wave 3.2 feet (2.8 to 5.5), count 1.23, 24 percent soft.
+> The foot is the pixel's width at the deck. The cause: an octave is kept while its wave is longer than 1.5 to 3 times what the pixel covers ALONG the sight line on the slanted deck (deep.ts: cover, fine, and leastZ in deckField; deck.limit 1.5), so the made detail stops at the pixel's long side, and against its width the finest wave is 3 to 5 feet. Nothing there reads the clock or the height. The cure by the cause, owed and not built: octaves down to the pixel's width, each shown as its mean along the pixel's run on the deck.
+> A trial of the cheap lever, NOT in: deck.limit 1.0 in place of 1.5 reads 15.4 percent soft at 4860 (mean 1.42; 93 s the frame), still red. Its beauty and its motion were not looked at. The limit alone does not cure it.
+> A fact about the measure, said and not asked for: the map's count takes the longer side of the pixel's foot, the code's count its width. By the map's way the code would read 1.3 to 2.7.
+>
+> 3. G17 AT 4860, the top rows by control (strips at 1 to 1 attached, approved above, ours below). My frames are draft at 1920 read by tools/measure/g17.py's own functions, so they read lower than your final: c2edd61ba's tree median 0.359 (25th 0.090), the named tree 0.254 (25th 0.090).
+> - 13 tiles are SKY in both pictures (row 0 tiles 4 to 11, row 1 tiles 7 to 11). The approved carries a dense bright star field with the Milky Way there: luma 0.044 to 0.130, band energy 35 to 100 e-5. Ours is the engine's one sky with a few faint stars: luma 0.014 to 0.025, energy 0.9 to 15 e-5. Ratios 0.02 to 0.18. Your worst four tiles are these.
+> - Row 1 tiles 1 to 6, the far plain under the limb: the approved has fibrous cirrus and fine streaks (8 to 76 e-5), ours a smooth haze band (1.4 to 4.9 e-5 on c2edd61ba). Ratios 0.06 to 0.17 (the named tree 0.07 to 0.50).
+> - Arithmetic on c2edd61ba's frame: without the 13 sky tiles the median of the other 62 is 0.499; with the sky tiles at ratio 1 the median of all 75 is 0.764. So the sky is the larger part and the far plain is the rest; neither alone reaches 0.8.
+> - The cause of the sky: sky.json is empty since MAIL 774 and 878 (no sky plate of the stop, the engine's one sky at every height); main's Neptune had the plate sky-terrain.webp, painted after the approved image. The sky is not mine to make: yours to rule.
+> - G17 fell with way C (preview proxy 0.508 to 0.412; 1920 draft 0.359 to 0.254). Not accepted as a price by your ruling 3, and so it is RED: the fine streaks and the soft eye of the far plain are owed from the place's flow, by code. Not built.
+>
+> 4. WAY C, 9e3f75c0f (MAIL 1011): one tone curve at every height, the hold's; what differs down there is light and air as things of the place, read from the place and the path. Proofs by my reader at rate 2 (limit 0.45): 4992 to 5000 0.33, 4704 to 4712 0.31; the dive inside the air 0.36, 0.39, 0.26; 4605 the same bytes. 4860 beside the approved attached.
+>
+> 5. THE DOT. It is a body on the map's cloud sheet. The trial cut (far.speck) is NOT in: it moved 4605 in 233 pixels by up to 4 levels, and the pairs stayed red (0.48, 0.57, 0.64). ONE BODY (MAIL 1049, 4): Jupiter's slab law is read (clouds.ts on agent/jupiter-code: hazeAt, hazeOne, layered) and planned for Neptune's map cloud layer: taps along the ray's run through a slab between the deck and the sheet, the footprint widened by max(run / foot, 1) so that the hold stays to the bit. Not built.
+>
+> 6. WARM, as a list, not written by me: 4708, 4758, 4950, 5025. These are the frames main's profiler named (MAIL 995); my shader has changed since and I have not profiled it again.
+>
+> RED, worst first:
+> 1. G13 on the terrain: 48.7 percent soft at 4860 by my reading, the near ground by code (cause in 2). The dive and the rise are not measured under the new count.
+> 2. G17 at 4860: 0.727 on your machine at 70318876, lower with way C (cause in 3).
+> 3. The rise inside the air, 4960 to 4976: 0.56, 0.68, 0.85 by my reader (your nq3-03 named 4962): the map's cloud sheet slides on its sheet as the eye passes it. One body is the cure, not built.
+> 4. The far plain at 4860 is darker than the approved, (37, 80, 133) against (54, 107, 158), with no soft eye and no fine streaks.
+> 5. The air's shares do not follow "red most" (depth 3.9, 2.7, 2.25; sun 3.6, 3.4, 3.4): chosen to hold 4860's color, not from the gas.
+> 6. The dive at the limb, 4693 to 4700 (0.58 at 4694), is not named by cause.
+> 7. Not measured: the far level's light against the march; the rise 4976 to 4988.
+> 8. To the eye, still there: a blurry pale speckle field lower left at 4972 to 4976; hard flecks, a white patch, a slab, a pink band at the limb, a spiral trace, ovals.
+> 9. No review tier proof of anything; every number of mine is draft and a proxy.
+>
+> Attached: the two top strips (c2edd61ba's tree and the named tree), 4860 beside the approved, the texel views before and after the count (green: few texels a pixel, yellow: many), and 4962 of the rise (the frame, the frame before it carried onto it, and where the pattern changed).
