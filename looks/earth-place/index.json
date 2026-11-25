@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T09:15:18.116Z",
+ "pushed": "2026-11-25T09:43:05.333Z",
  "head": "ba4794504c56c5dfad14d26ab609e6c193dcb696",
- "note": "09:16 specks stand by code at 2010 (draft, 1755 unchanged 0 px); deck of the approved bank laid into the map as a trial from above, bake running",
+ "note": "far band of 2010 has a bank again; red: the deck arrives in place on the globe between 1830 and 1857",
  "looks": [
+  {
+   "time": "2026-11-25T09:43:03.936Z",
+   "file": "20261125094303936-note-c-1857.jpg",
+   "source": "../../../../tmp/gl/k10/c1/c-1857.png",
+   "kind": "note",
+   "label": "1857 ba479450 against now: the deck shows as a white patch that the hold does not have (1755 0 px): red, not cured",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T09:43:02.798Z",
+   "file": "20261125094302798-note-p-right-1to1.jpg",
+   "source": "../../../../tmp/gl/k10/c1/p-right-1to1.png",
+   "kind": "note",
+   "label": "2010 far band right 1 to 1: approved, ba479450, now",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T09:43:01.501Z",
+   "file": "20261125094301501-note-p-whole.jpg",
+   "source": "../../../../tmp/gl/k10/c1/p-whole.jpg",
+   "kind": "note",
+   "label": "2010 approved, ba479450, now (deck in the place levels, stand law), draft",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T09:15:16.592Z",
    "file": "20261125091516592-note-sheet-top.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/k10/t2-all.jpg",
    "kind": "note",
    "label": "2010 far band, bake only trial: top approved, middle ba479450, bottom specks standing by code",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T08:42:06.977Z",
-   "file": "20261125084206977-note-t1-m.jpg",
-   "source": "../../../../tmp/gl/k10/t1-m.jpg",
-   "kind": "note",
-   "label": "trial, not built: specks of the map stood up by a march in the bake, 2010 middle; top approved, middle ba479450 flat, bottom trial; reads as blobs, not yet a cloud",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T08:22:36.181Z",
-   "file": "20261125082236181-note-p2010-right.jpg",
-   "source": "../../../../tmp/gl/k9/p2010-right.png",
-   "kind": "note",
-   "label": "2010 right crop, approved, before, after ba479450: the approved bank of cloud is lost, flat patches in haze. Bad, named.",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T08:22:35.603Z",
-   "file": "20261125082235603-note-a1-top.jpg",
-   "source": "../../../../tmp/gl/k9/a1-top.jpg",
-   "kind": "note",
-   "label": "ba479450 far band at 1 to 1, 1886 to 1899: map's shoals and specks stay in place, towers arrive lower right",
    "stop": "earth"
   }
  ]
