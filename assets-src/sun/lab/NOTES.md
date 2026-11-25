@@ -773,3 +773,31 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   under the eye over frames about 241 to 256. Frame 247 looks the same with both (v/cmp247.jpg). Clip 425 to 528
   at master started 18:36 (out/work/sun/lab/rise-d9, v/rise-d9.log). The tubes copy in v/tubes has both cures.
   Eye heights hold: frame 247 is 2.6 radii up, the globe about half the frame's height.
+- 18:41 UTC, MAIL 1258: the Builder's machines read d9 f5a268bf with the standing reader (sd9-01 to 04, rows come to
+  me); my reader at master only is right; the cure by cause is accepted as a trial (he looks at the swap at 241 to
+  256 and at a line between living ground and still face on the far side of the ball); THE STILL FACE is an open
+  point: where a cell of the face is wider than about 3 px in a frame of the hold or the rise it has to live; the
+  tubes' sheet must say at what cell size in pixels the face stands in the whole Sun view (270 to 450).
+- 18:59 UTC, MEASURED on d9 at preview, review tier (pure.ts, pure.py): frame 90 alone, 30, 60, 120, 495 then 90:
+  five equal, file f1c0cd9a4ad7cfa6, pixels f4cb0e50e25ccde2, 0 pixels differ. Mailed in one line to /root and to
+  sun_builder. MISTAKE: the master clip of d9 (started 18:36) was not dead at 18:43 (pkill by SIGTERM does not end
+  clip.ts, it starts its browser again): it ran beside the hashes until 18:52. Kill clip.ts with kill -9 on both
+  node processes and on the browser's processes, and check with pgrep.
+- 19:00 to 19:10 UTC, TUBES t4 to t9 (in the tree, uncommitted until the sheet). t4 (grooves only on the flank, no
+  dimple, lumps): leaves with a star in the middle on a wide dark floor. t5 (threads only on the flank by
+  tubes.silk, lane and shade halved, dome.over 1.6): flat pads, hard rims, gaps as before.
+  CAUSE OF THE GAPS FOUND (stood since d7, "pads float apart on a dark floor"): every dome reached over its border
+  (dome.over) with a height of 0.77 of its own at the border, so a tall cell's skirt lay over a lower neighbour's
+  ground, and the skirt is drawn with the lane's heat (the place is past the cell's own border): the wide dark
+  gaps were skirts. CURE, dome.base [height, share of a field, scale of the field, more where two cells join,
+  two exponents of the cushion, fall of the skirt]: every body stands on the height of the place at its own border
+  (a field of the place, the same for both sides) and rises from there to its own crown as a cushion of the way to
+  the border, the tubes' relief on the part over that height. Two neighbours meet on their border, no body lies
+  over another's ground, the lane is the crease on the border. t6: packed cells, thin lanes. t7 (rounder dome
+  1.8, 1.2; heat swells from lane to crown: heat.patch [0, 1], core 0.8, rim 0.35; tubes depth 0.5, crown 0.2, from
+  [0.2, 0.6]; dome.height 0.5): packed domes of ribs, read as gourds. t8 (count [6, 10], sway [0.5, 1.2, 1.2], lump
+  [0.6, 1.6, 3], tube heat [0.4, 1.2, 0.45]): broad uneven lobes, nearer the approved's bulbs. t9: fibre.counts
+  [2, 5, 9] (the finest thread 6.6 px on a near cell), little change. u1 = t9 with the curve refit (frame 90 near
+  percentiles before: 0.227 0.443 0.616 0.765 0.882 0.918). Sheet chain started 19:09 (v/sheet.sh u1).
+  STILL WRONG, seen: matte, no silk on the flanks, crowns not hot enough against the flanks, lanes lack the dark
+  pits where three cells meet, cells read as gourds or shells more than as melt.
