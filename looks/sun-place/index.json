@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T05:42:44.567Z",
+ "pushed": "2026-11-25T05:58:54.864Z",
  "head": "d91c0f63dfdec7bcd7700d55196f3b525ab922d4",
- "note": "NAMED d91c0f63 sent (commit 4 apart). Commit 5 trial e1, first take of the MAIL 912 ground: wrong, smooth stones, no fibres yet",
+ "note": "Commit 5 trial e7: domes in creases, roots, branching fibres with sheen; still too dark and foil like, being tuned",
  "looks": [
+  {
+   "time": "2026-11-25T05:58:54.264Z",
+   "file": "20261125055854264-note-e7-zoom.jpg",
+   "source": "../../../../tmp/v/e7-zoom.jpg",
+   "kind": "note",
+   "label": "Commit 5 trial e7, the same frame, a box of 300 by 200 px at 3 times, approved left",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T05:58:53.680Z",
+   "file": "20261125055853680-note-e7-near.jpg",
+   "source": "../../../../tmp/v/e7-near.jpg",
+   "kind": "note",
+   "label": "Commit 5 trial e7 (not committed), frame 60 near ground at 1 to 1, approved left. Domes meet in creases, a root low on the lens side of each cell by its own border, fibres branch outward with a sheen fixed on the ground. Wrong still: reads as dark foil, too brown and too dark, highlights too white, few glints. sun-near 60: dark 0.373 body 0.498 pale 0.061 white 0.034 | half width 7.9 px, 1196 shapes | fine detail 0.0371 | mean 0.273",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T05:42:43.986Z",
    "file": "20261125054243986-note-e1-near.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/card-foot.png",
    "kind": "note",
    "label": "The cause of those specks: the loops card (public/assets/sun/full/loops.webp) at 1 to 1 round the left foot holds what was left of a difference against the old ground picture. Not mended yet",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:30:18.979Z",
-   "file": "20261125043018979-note-c4-foot-x8.jpg",
-   "source": "../../../../tmp/v/c4-foot-x8.png",
-   "kind": "note",
-   "label": "Commit 4, draft, frame 60, the ground at the arcade's left foot at 8 times: single pixels of magenta, cyan and green. Commit 3 has them too",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:30:17.930Z",
-   "file": "20261125043017930-note-c4-arc-204-207.jpg",
-   "source": "../../../../tmp/v/c4-arc-204-207.jpg",
-   "kind": "note",
-   "label": "Commit 4, draft, frames 204 205 206 207 across the change of view at 205 (place.rise.at 0.28), a strip of each: whole frame mean difference of 255 21.79, 21.90, 22.01, no step",
    "stop": "sun"
   }
  ]
