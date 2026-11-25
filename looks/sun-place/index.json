@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T18:54:51.167Z",
- "head": "16372d3ee3bcdf19829868a7871df8bdbc7ae502",
- "note": "18:55 UTC. Harness of the rise on merge 16372d3e: RED on one line, the far sky's pattern 1.44 at 196 (limit 0.45, 19 capture frames from 191): the seated gas comes on as broad arcs in the sky. Other lines green (pattern 0.34 at 219, pop 1.03 at 217, level step 0.12). Finals at 60 and 360 render now. Frame 60 at draft (take of 17:49): dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "pushed": "2026-11-25T19:14:10.937Z",
+ "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
+ "note": "19:14 UTC. NAMED 6b6aca66 (not for main: smooth red on the far sky 1.44 at 196, frame 60 at final 40.3061 | 18.6308 | 49.5956). Frame 60 at draft: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T19:14:10.317Z",
+   "file": "20261125191410317-note-r5-sheet.jpg",
+   "source": "../../../../tmp/v/r5-sheet.jpg",
+   "kind": "note",
+   "label": "Name 6b6aca66 at draft: 0, 60, 90, 247",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T19:14:09.777Z",
+   "file": "20261125191409777-note-h5-corners.jpg",
+   "source": "../../../../tmp/v/h5-corners.jpg",
+   "kind": "note",
+   "label": "Top corners at 1 to 1, 220 and 228, 227.5 and 235.5: rays over moving stars",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T19:14:09.221Z",
+   "file": "20261125191409221-note-h5-b.jpg",
+   "source": "../../../../tmp/v/h5-b.jpg",
+   "kind": "note",
+   "label": "Harness, rise 214 to 235, every film frame",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T19:14:08.528Z",
+   "file": "20261125191408528-note-h5-a.jpg",
+   "source": "../../../../tmp/v/h5-a.jpg",
+   "kind": "note",
+   "label": "Harness, rise 190 to 213, every film frame: the gas comes on as arcs from 199",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T19:00:05.095Z",
+   "file": "20261125190005095-note-sun60-name-r5.jpg",
+   "source": "../../../../tmp/v/sun60-name-r5.jpg",
+   "kind": "note",
+   "label": "Frame 60 at final: approved | main (panel of mail 1224) | this name. 40.3061 | 18.6308 | 49.5956 against the approved",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T18:54:50.556Z",
    "file": "20261125185450556-note-h5-190-204.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/limb60.jpg",
    "kind": "note",
    "label": "limb at 60, 1 to 1: approved left, this tree right (left limb above, right limb below). Mine: a clean bright line with a smooth glow, few hairs; not changed in the coming name",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:57:25.069Z",
-   "file": "20261125175725069-note-arc-trials.jpg",
-   "source": "../../../../tmp/v/arc-trials.jpg",
-   "kind": "note",
-   "label": "arcade at 60, draft: approved, as named, trial T2 (thicker, sheath, larger feet), trial T3 (T2 and more light). Not taken: top 30 percent 18.5749 named, 19.7265 T2, 20.7996 T3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:34:49.272Z",
-   "file": "20261125173449272-note-band-crops.jpg",
-   "source": "../../../../tmp/v/band-crops.jpg",
-   "kind": "note",
-   "label": "hold's card at 226, 231, 236 at 1 to 1: card on, gain 3, card off, difference x6",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:34:48.117Z",
-   "file": "20261125173448117-note-g1n-b.jpg",
-   "source": "../../../../tmp/v/g1n-b.jpg",
-   "kind": "note",
-   "label": "gas seated, smooth step: 226 to 253 (draft)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:34:46.978Z",
-   "file": "20261125173446978-note-g1n-a.jpg",
-   "source": "../../../../tmp/v/g1n-a.jpg",
-   "kind": "note",
-   "label": "gas seated, smooth step in the logarithm of the height 0.0571 to 3.2: 196 to 221 (draft)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:02:58.780Z",
-   "file": "20261125170258780-note-s0.jpg",
-   "source": "../../../../tmp/v/s0.jpg",
-   "kind": "note",
-   "label": "trial S0: close card off, present aim: 0, 60, 216, 221 at draft",
    "stop": "sun"
   }
  ]
