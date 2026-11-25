@@ -15,7 +15,7 @@ const FLASHES = deck.life.flash.sites.length
 export const EDDIES = deck.life.eddies.length
 export const SEAMS = deck.life.storm.rings.length
 
-export const CALM_GLSL = /* glsl */ `
+const CALM_GLSL = /* glsl */ `
 uniform vec4 uEddy[${EDDIES}];
 uniform float uEddyTurn[${EDDIES}];
 uniform vec3 uSeam[${SEAMS}];
@@ -49,7 +49,7 @@ vec2 calm(vec2 g, out vec2 cs) {
 }
 `
 
-export const ABOVE_GLSL = /* glsl */ `float above(vec3 p) {
+const ABOVE_GLSL = /* glsl */ `float above(vec3 p) {
   float n = dot(p, p) + 2.0 * uRadius * p.z;
   return n / (sqrt(uRadius * uRadius + n) + uRadius);
 }
@@ -64,7 +64,7 @@ vec3 levels(vec2 g) {
 }
 `
 
-export const STORED_GLSL = /* glsl */ `float stored(vec2 g, vec3 w) {
+const STORED_GLSL = /* glsl */ `float stored(vec2 g, vec3 w) {
   float h = 0.0;
   for (int k = 0; k < (w.x > 0.0 ? 1 : 0); k++) h += w.x * textureLod(uHeightFore, (g - uForeMap.xy) * uForeMap.z + 0.5, 0.0).r;
   for (int k = 0; k < (w.y > 0.0 ? 1 : 0); k++) h += w.y * textureLod(uHeightNear, (g - uNear.xy) * uNear.z + 0.5, 0.0).r;
@@ -73,7 +73,7 @@ export const STORED_GLSL = /* glsl */ `float stored(vec2 g, vec3 w) {
 }
 `
 
-export const DETAIL_GLSL = /* glsl */ `
+const DETAIL_GLSL = /* glsl */ `
 vec2 spot(ivec2 p) {
   uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u;
   h ^= h >> 15;
@@ -176,7 +176,6 @@ uniform float uFrame;
 uniform vec4 uDetail;
 uniform vec4 uDetailLook;
 uniform float uDetailTone;
-uniform float uDetailHigh;
 uniform vec3 uFoot;
 uniform vec2 uSunAz;
 uniform sampler2D uLimb;
@@ -192,12 +191,13 @@ uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform vec2 uAboveMix;
 uniform sampler2D uTone;
 uniform vec4 uToneBox;
-uniform vec3 uToneLift;
+uniform float uToneEdge;
 uniform vec4 uCalmBox;
 uniform vec2 uSeenReach;
 uniform vec3 uSunCurve[${CURVE_KNOTS}];
 uniform vec3 uSunChart;
 uniform vec3 uLayer;
+uniform vec3 uRim;
 uniform vec3 uDepth;
 uniform vec4 uStorm;
 uniform float uStormTurn;
@@ -365,11 +365,11 @@ vec2 flashAt(vec2 g, vec3 c) {
   return vec2(s * smoothstep(uFlashLook.x, uFlashLook.y, (c.b - c.r) / max(c.b + c.r, uFlashCore.z)) * mix(uFlashShare, 1.0, smoothstep(uFlashLook.z, uFlashLook.w, lum)), (t + uFlashCore.y * s) * sqrt(max(lum, 0.0)));
 }
 vec3 toneAt(vec2 g) {
-  vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0);
+  vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneEdge, 1.0 - uToneEdge) * vec2(0.5, 1.0);
   return uToneBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
 }
 vec3 calmAt(vec2 g) {
-  vec2 uv = clamp(vec2(g.x - uCalmBox.x, uCalmBox.y - g.y) * uCalmBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0) + vec2(0.5, 0.0);
+  vec2 uv = clamp(vec2(g.x - uCalmBox.x, uCalmBox.y - g.y) * uCalmBox.z + 0.5, uToneEdge, 1.0 - uToneEdge) * vec2(0.5, 1.0) + vec2(0.5, 0.0);
   return uCalmBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
 }
 vec4 sunAt(vec2 g) {
@@ -487,8 +487,7 @@ void main() {
     int taps = int(clamp(ceil(major / (uFoot.y * minor)), 1.0, uFoot.z));
     float span = max(minor, major / float(taps));
     float cut = uDetail.z * size;
-    float toned = smoothstep(uToneLift.x, uToneLift.y, above(E));
-    float least = mix(uDetail.w, uDetailHigh, toned) * span;
+    float least = uDetail.w * span;
     float on = smoothstep(least, 2.0 * least, cut);
     vec3 fineSum = vec3(0.0);
     for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(g + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
@@ -558,8 +557,11 @@ void main() {
     for (int i = 0; i < (rise < 1.0 / uLimbShape.x ? 1 : 0); i++) col = vec3(texture(uLimb, at).r, texture(uLimb, at + vec2(0.0, 1.0 / 3.0)).r, texture(uLimb, at + vec2(0.0, 2.0 / 3.0)).r);
     alpha = 1.0 - smoothstep(uLimbShape.z, uLimbShape.w, rise);
     for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
-      col *= uLayer.y;
-      alpha *= uLayer.y;
+      vec3 q = E + D * max(-bD, 0.0) + vec3(0.0, 0.0, uRadius);
+      float stands = 1.0 - smoothstep(uLayer.x, uLayer.y, length(q * (uRadius / length(q)) - vec3(uFar.xy, sqrt(max(uRadius * uRadius - dot(uFar.xy, uFar.xy), 0.0)))));
+      stands *= smoothstep(uRim.x, uRim.y, uRim.z / max(max(-bD, 0.0) * uPixel * uFrame, 1e-9));
+      col *= stands;
+      alpha *= stands;
     }
   }
   outColor = diagOut(vec4(col * uGain * vig, alpha), texels, 1.0, tint, vec2(0.0), t / uRadius);
@@ -689,7 +691,6 @@ export class CloudDeck {
       uDetail: { value: new THREE.Vector4().fromArray(l.detail) },
       uDetailLook: { value: new THREE.Vector4().fromArray(l.detailLook) },
       uDetailTone: { value: l.detailTone },
-      uDetailHigh: { value: l.detailHigh },
       uFoot: { value: new THREE.Vector3().fromArray(l.foot) },
       uSunAz: { value: new THREE.Vector2(Math.cos(az), Math.sin(az)) },
       uLimb: { value: ctx.floatTexture(glow, lk[2]!, 3 * lr) },
@@ -706,7 +707,7 @@ export class CloudDeck {
       uTone: { value: ctx.floatTexture(tone, 2 * tn.pixels, 3 * tn.pixels) },
       uCalmBox: { value: new THREE.Vector4(cm.centre[0]!, cm.centre[1]!, 1 / cm.size, cm.scale) },
       uToneBox: { value: new THREE.Vector4(tn.centre[0]!, tn.centre[1]!, 1 / tn.size, tn.scale) },
-      uToneLift: { value: new THREE.Vector3(tn.lift[0]!, tn.lift[1]!, 0.5 / tn.pixels) },
+      uToneEdge: { value: 0.5 / tn.pixels },
       uSeenReach: { value: new THREE.Vector2().fromArray(tn.known) },
       uSunCurve: { value: curve.curve.map((c) => new THREE.Vector3(c[0]! / place.solved.light[0]!, c[1]! / place.solved.light[1]!, c[2]! / place.solved.light[2]!)) },
       uSunChart: { value: new THREE.Vector3().fromArray(place.solved.sun) },
@@ -735,7 +736,7 @@ export class CloudDeck {
       uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 1) },
       uHazeGlow: { value: new THREE.Vector3().fromArray(hz.glow) },
       uHazeShade: { value: new THREE.Vector3().fromArray(hz.shadowTint) },
-      uOwn: { value: 0 }, uEye: { value: new THREE.Vector3() }, uAxes: { value: new THREE.Matrix3() }, uLayer: { value: new THREE.Vector3(1, 1, 0) }, uToChart: { value: new THREE.Matrix3() },
+      uOwn: { value: 0 }, uEye: { value: new THREE.Vector3() }, uAxes: { value: new THREE.Matrix3() }, uLayer: { value: new THREE.Vector3(1, 1, 0) }, uRim: { value: new THREE.Vector3(0, 1, 1) }, uToChart: { value: new THREE.Matrix3() },
       uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
     })
     return new CloudDeck(uniforms)

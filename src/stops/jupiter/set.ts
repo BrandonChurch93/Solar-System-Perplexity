@@ -12,7 +12,7 @@ import { Io } from './io'
 import * as look from './look'
 import { bufferFrame, frameUniform } from '../../core/frame'
 import place from './place.json'
-import { chartAxes, chartEye, closeHeight, eddyTurn, flashNow, hazeDrift, low, plan, ringTurn, stormTurn } from './plan'
+import { chartAxes, chartEye, closeHeight, eddyTurn, flashNow, hazeDrift, plan, ringTurn, stormTurn } from './plan'
 import proof from './proof.json'
 import skyJson from './sky.json'
 
@@ -48,12 +48,11 @@ export const createSet: SetFactory = async (ctx) => {
 
   const globe = new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width,
-    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, shadowFade: look.shadowFade, shadowTip: look.shadowTip, shadowToe: look.shadowToe, shadowHaze: look.shadowHaze, nightRim: look.nightRim, litEdge: look.litEdge, haze: look.haze, edge: { ...look.edge, near: place.limb.nearHeights as [number, number] }, limbLit: look.limbLit,
+    curve: look.curve, limb: look.limb, jet: look.jet, shadeKnee: look.shadeKnee, night: look.night, nightAlbedo: look.nightAlbedo, shadow: look.shadow, shadowFade: look.shadowFade, shadowTip: look.shadowTip, shadowToe: look.shadowToe, shadowHaze: look.shadowHaze, nightRim: look.nightRim, litEdge: look.litEdge, haze: look.haze, edge: { ...look.edge, near: place.limb.near as [number, number] }, limbLit: look.limbLit,
     spot: { center: direction(look.spot.lon, look.spot.lat), axesDeg: look.spot.axesDeg, core: look.spot.core, reach: look.spot.reach },
     wisp: { texture: wispMap, ...look.wisp },
     veil: look.veil,
     pallShell: plan.p.coverShell ?? [1, 1.015],
-    place: { n: place.solved.n, e: place.solved.e, u: place.solved.u, radius: place.solved.radiusUnits, grade: place.solved.light, uniforms: ground.material.uniforms },
     patches: { center: direction(patches.center.lon, patches.center.lat), textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), feather: patches.feather, fade: patches.fade },
   })
   globe.mesh.quaternion.fromArray(fit.globe.quaternion)
@@ -102,6 +101,10 @@ export const createSet: SetFactory = async (ctx) => {
   const eye = new THREE.Vector3()
   const back = new THREE.Quaternion()
   const attitude = new THREE.Quaternion()
+  const zenith = new THREE.Vector3()
+  const level1 = new THREE.Vector3()
+  const level2 = new THREE.Vector3()
+  const middle = new THREE.Vector3()
 
   const sky: SkyPatch[] = []
   for (const [view, def] of Object.entries(skyJson)) {
@@ -131,11 +134,39 @@ export const createSet: SetFactory = async (ctx) => {
       const seams = du.uSeam!.value as THREE.Vector3[]
       for (let i = 0; i < seams.length; i++) seams[i]!.z = ringTurn(i, state.time - terrainMid)
       const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
-      const footLeast = (height * place.solved.radiusUnits - deck.look.shell[1]!) * 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height * frameUniform.value
-      const limbShare = !inOrbit ? 1 : own ? low(height, scene.limb) : 0
-      ground.layer.visible = inOrbit && own && ((deck.look.shell[1]! - deck.look.shell[0]!) / Math.max(footLeast, 1e-9) > scene.depth[0]! || limbShare > 0)
+      const pixel = 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height * frameUniform.value
+      const footLeast = (height * place.solved.radiusUnits - deck.look.shell[1]!) * pixel
+      let limbShare = inOrbit ? 0 : 1
+      let limbMost = limbShare
+      if (inOrbit && own) {
+        const turned = plan.turn(state.time)
+        const at = du.uEye!.value as THREE.Vector3
+        chartEye(turned, eye, at)
+        chartAxes(turned, attitude.copy(back).multiply(shot.camera.quaternion), du.uAxes!.value as THREE.Matrix3)
+        chartAxes(turned, back, du.uToChart!.value as THREE.Matrix3)
+        const radius = place.solved.radiusUnits
+        const centre = du.uFar!.value as THREE.Vector4
+        zenith.set(at.x, at.y, at.z + radius)
+        const reach = Math.acos(Math.min(radius / zenith.length(), 1))
+        zenith.normalize()
+        level1.set(0, 1, 0).cross(zenith).normalize()
+        level2.crossVectors(zenith, level1)
+        middle.set(centre.x, centre.y, Math.sqrt(Math.max(radius * radius - centre.x * centre.x - centre.y * centre.y, 0)))
+        const air = look.edge.air[1]! * radius
+        const along = Math.sqrt(Math.max(at.x * at.x + at.y * at.y + (at.z + radius) * (at.z + radius) - radius * radius, 0))
+        const near = THREE.MathUtils.smoothstep(air / Math.max(along * pixel, 1e-9), place.limb.near[0]!, place.limb.near[1]!)
+        ;(du.uRim!.value as THREE.Vector3).set(place.limb.near[0]!, place.limb.near[1]!, air)
+        for (let i = 0; i < scene.horizon; i++) {
+          const turn = 2 * Math.PI * i / scene.horizon
+          across.copy(zenith).multiplyScalar(Math.cos(reach)).addScaledVector(level1, Math.sin(reach) * Math.cos(turn)).addScaledVector(level2, Math.sin(reach) * Math.sin(turn)).multiplyScalar(radius)
+          const stands = near * (1 - THREE.MathUtils.smoothstep(across.distanceTo(middle), scene.limb[0]!, scene.limb[1]!))
+          limbShare += stands / scene.horizon
+          limbMost = Math.max(limbMost, stands)
+        }
+      }
+      ground.layer.visible = inOrbit && own && ((deck.look.shell[1]! - deck.look.shell[0]!) / Math.max(footLeast, 1e-9) > scene.depth[0]! || limbMost > 0)
       du.uOwn!.value = inOrbit ? 1 : 0
-      ;(du.uLayer!.value as THREE.Vector3).set(1, limbShare, inOrbit ? 1 : 0)
+      ;(du.uLayer!.value as THREE.Vector3).set(scene.limb[0]!, scene.limb[1]!, inOrbit ? 1 : 0)
       if (!inOrbit || own) {
         ground.update(gain * (inOrbit ? state.weight : 1), shot.post.vignette, view)
         if (!inOrbit) (du.uSunChart!.value as THREE.Vector3).fromArray(place.solved.sun)
@@ -145,12 +176,6 @@ export const createSet: SetFactory = async (ctx) => {
         for (let i = 0; i < flashes.length; i++) flashes[i]!.w = flashNow(i, state.time - terrainMid)
       }
       if (!inOrbit) return
-      if (own) {
-        const turned = plan.turn(state.time)
-        chartEye(turned, eye, du.uEye!.value as THREE.Vector3)
-        chartAxes(turned, attitude.copy(back).multiply(shot.camera.quaternion), du.uAxes!.value as THREE.Matrix3)
-        chartAxes(turned, back, du.uToChart!.value as THREE.Matrix3)
-      }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
       const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
@@ -179,6 +204,7 @@ export const createSet: SetFactory = async (ctx) => {
       globe.update(camera, light, plan.spin(state.time), gain, state.weight)
       gu.uVignette!.value = shot.post.vignette
       gu.uAspect!.value = view.format.width / view.format.height
+      ;(gu.uRim!.value as THREE.Vector3).z = pixel
       const along = ioWorld.dot(moonLight)
       const eclipse = along < 0 ? 1 - smooth((across.copy(ioWorld).addScaledVector(moonLight, -along).length() - 0.97) / 0.06) : 0
       toPlanet.copy(ioWorld).negate().normalize()

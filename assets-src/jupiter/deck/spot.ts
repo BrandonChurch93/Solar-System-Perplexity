@@ -5,12 +5,17 @@ import { config } from '../../../src/config'
 import { FilmDirector } from '../../../src/director/film'
 import { plans } from '../../../src/director/plans'
 import { chartEye } from '../../../src/stops/jupiter/plan'
+import * as look from '../../../src/stops/jupiter/look'
+import fit from '../../../src/stops/jupiter/fit.json'
 import place from '../../../src/stops/jupiter/place.json'
 
 // Where the place's storm stands on screen, frame by frame, from the film's own camera.
 //   npx tsx assets-src/jupiter/deck/spot.ts --frames 2895,2970-3059 [--rate 1] --out FILE
 // For each capture frame (film frame times the rate): the pixel of the vortex in the film's format, the pixels one chart unit takes
 // there (the smaller and the larger of two directions on the ground), whether the vortex faces the camera, and the eye's height in radii.
+// The storm is paint in the globe's imagery and rides the globe's band flow: before the flow has come to rest (set.ts flowTime, the
+// first frames of the dive) it stands west or east of the place by the jet at its latitude times the flow time still to run. The
+// tool applies that, with the flow time written out here as set.ts has it up to the middle of the surface view.
 
 const a = args()
 const rate = Number(a.rate ?? 1)
@@ -24,6 +29,20 @@ const list = String(a.frames).split(',').flatMap((s) => {
   return out
 })
 const vortex = place.vortex as number[]
+const dive = plan.seg.dive!
+const freezeAt = dive.start + place.freeze.afterDiveStart
+const settle = (x: number, limit: number): number => x / Math.sqrt(1 + (x / limit) * (x / limit))
+const flowTime = (time: number): number => {
+  if (time <= freezeAt) return settle(time - plan.holdMid, look.flow.settle)
+  const s = Math.min(time - freezeAt, place.freeze.easeSeconds)
+  return settle(freezeAt - plan.holdMid + s - s * s / (2 * place.freeze.easeSeconds), look.flow.settle)
+}
+const jetAt = (lat: number): number => {
+  const x = THREE.MathUtils.clamp(lat / Math.PI + 0.5, 0, 1) * (look.jet.length - 1)
+  const i = Math.min(Math.floor(x), look.jet.length - 2)
+  return look.jet[i]! + (look.jet[i + 1]! - look.jet[i]!) * (x - i)
+}
+const fitGlobe = new THREE.Quaternion().fromArray(fit.globe.quaternion)
 
 function globePoint(turn: THREE.Quaternion, x: number, y: number): THREE.Vector3 {
   const eye = new THREE.Vector3()
@@ -54,8 +73,12 @@ for (const k of list) {
   const turn = plan.turn(time)
   const tan = Math.tan(THREE.MathUtils.degToRad(shot.camera.vfov) / 2)
   const inverse = shot.camera.quaternion.clone().invert()
+  const still = THREE.MathUtils.degToRad(look.flow.bandDegPerSecond) * (place.solved.local - flowTime(time))
+  const frame = turn.clone().multiply(fitGlobe)
   const pixel = (x: number, y: number): { p: THREE.Vector2; front: boolean } => {
-    const g = globePoint(turn, x, y)
+    const g = globePoint(turn, x, y).applyQuaternion(frame.clone().invert())
+    const spin = jetAt(Math.asin(THREE.MathUtils.clamp(g.y / g.length(), -1, 1))) * still
+    g.set(Math.cos(spin) * g.x - Math.sin(spin) * g.z, g.y, Math.sin(spin) * g.x + Math.cos(spin) * g.z).applyQuaternion(frame)
     const w = g.clone().applyQuaternion(set.rotation).add(set.origin)
     const c = w.clone().sub(shot.camera.position).applyQuaternion(inverse)
     const eye = shot.camera.position.clone().sub(set.origin)
