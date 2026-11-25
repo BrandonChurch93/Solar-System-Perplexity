@@ -8154,3 +8154,82 @@ Mars: this answers point 3 of your 18:24. Its own commit after the name, with th
 > MAIL 1251, the filled sky plate of the hold: this branch has no sky plate at the hold or at the terrain (git ls-tree: 0 files named sky under public/assets/neptune, main has 4), by MAIL 1126 and MAIL 1207; the hold's sky here is the film's one sky. So the fill has no plate to replace on this branch. If the plate is to come back at the hold as the ordered change, say so and it comes as its own commit after this name with the numbers of point 3. Until then I lay in nothing.
 >
 > NEXT: the rise at 4960 to 4970 by control, the deck's own shadow so that the rolls can stand higher, the teal blots, then (c) and (d).
+
+## Lab log 18:59 to 19:02 UTC: THE PUSH FAILS after the session's break; the mail as sent
+
+- 18:54 my session came back from a break (the last wait on the tests was cut off; the tests ran on to their end).
+- 18:58:53 git commit failed: "Author identity unknown ... unable to auto-detect email address". /home/user/.gitconfig
+  is gone; git config --list shows the repository's and /etc/gitconfig's lines only. The commits of this branch were
+  made as Brandon Church with his GitHub noreply address until 18:19; I passed that same name and address on the command
+  line (git -c user.name -c user.email) and wrote no config. Commit 411764804 (notebook).
+- 18:59:20 git push origin agent/neptune-place: "fatal: could not read Username for 'https://github.com': No such device
+  or address". Again 18:59:31 twice, 18:59:45 with the GitHub tool as the helper for that one command (it returned
+  nothing), 19:00:15, 19:00:45: the same. The GitHub tool on a plain read says "To get started with GitHub CLI, please
+  run: gh auth login". /home/user/.config/gh does not exist. git ls-remote (a public read) works: the remote tip is
+  485d5807546cb45e3e66e3de6679c5b1bc182e50; the looks branch stands at 7d28da26 (18:46).
+- The platform's check for connections that need renewing names none for GitHub.
+- The environment holds the platform's proxy address and token for git. I did NOT build a git login out of them by
+  hand: the credentials are the platform's to set, and guessing at its scheme with its token is not my work.
+- What I do instead: the NAMED mail goes out on time and says first that the name is not on the remote; a git bundle of
+  the commits from 485d58075 up to the tip goes with it (out/ is not tracked, the bundle lies in /tmp); I keep trying
+  the push and mail one line when it is through.
+- The mail quoted under "25 Nov, 18:59 UTC" above was written before the push was tried and says "pushed". It was
+  never sent in that form. The mail as sent follows.
+
+## 25 Nov, 19:03 UTC: the ninth NAMED mail to the Builder AS SENT (word for word; attached n10-three.jpg, n9s-chains.jpg, rctl.jpg, hold-zoom10.jpg, n10-chains-rise.jpg, neptune-ninth.bundle)
+
+> NAMED 27624e6f44de796d7761c24bd391044558a4cfe4 (agent/neptune-place, NOT PUSHED, see the blocker next; the commits above it are notebook only). Ninth named commit, for MAIL 1207 (d312), 1214, 1221, 1225 and 1244. It stands on the merge of main faf21943c; main is at 66912fc1b now and differs from that merge in kit/PROGRESS.md only. All numbers are my draft proxies and are read as STATED. I did not run your checks.
+>
+> BLOCKER, THE PUSH: the name is not on the remote. My session came back from a break at 18:54 UTC and the sandbox no longer holds its git and GitHub credentials: no global git config (the author's identity was gone too; I passed the branch's own on the command line), and the GitHub tool says it is not logged in. git push fails with "could not read Username for 'https://github.com'", seven tries from 18:59:20 to 19:00:45, as MAIL 621 says to try again first. The remote tip is still 485d58075 (git ls-remote). The platform's own check names no connection to renew. I did not wire the platform's proxy token into git by hand; that is not mine to do. The name is committed here and its hash is final. Attached neptune-ninth.bundle holds every commit from 485d58075 up to the name and the notebook above it: git fetch neptune-ninth.bundle agent/neptune-place gives them on any clone that has 485d58075. Whether you or the handover engineer put it on the remote before my push works is your call. I keep trying and send one line when it is through. The last looks push that went through is 18:46 (7d28da26).
+>
+> WHAT IS IN IT since 66c70ae7, one commit per cause:
+> 1. b39d72322: the limb's held field lies on the body from the dive's first moment (rows 4694 and 4706).
+> 2. 9b41bce06: the sheet of ice haze stands round the storm and is wound into its arms (MAIL 1214 a); the second streamer is one kind at every distance (row 4970 + 1/2).
+> 3. 7e340e51d: the sheet is lit from the deck under it (MAIL 1214 b).
+> 4. 27624e6f4: the deck's rolls back at 0.05. Commit 3 had raised them to 0.12 and their own shadow drew thin dark lines into the rise (red 1).
+>
+> 4860 UNDER d312 (bc656c4928eee5f3, 89.9 s the draft frame at 1920; attached n10-three.jpg: the approved, main, this name, each at full size):
+> - The three parts at full size (mean absolute level against the approved fitted as G17 fits it; split at the approved's own limb, band 24 px each side; shares of the frame 0.228, 0.045, 0.726):
+>   main: whole 22.986, sky 1.619, band 1.607, ground 19.759.
+>   66c70ae7: whole 28.439, sky 3.482, band 2.568, ground 22.389.
+>   this name: whole 23.616, sky 3.420, band 2.646, ground 17.550. The ground part is under main's by 2.209.
+> - G17 at 4860 by my draft reader: median 0.426, p25 0.230, 75 tiles (66c70ae7: 0.544, 0.194; bar 0.8). RED, and its median is lower than the last name's: red 1.
+> - (a) The eye: the sheet of ice haze now has its hole over the storm and is wound into two arms round it, so the dark oval stands in pale rings with soft arms. They read more as rings than as the approved's spiral.
+> - (b) Where the approved's fine texture goes in my picture: it is in the deck, and it is lost under two layers of smooth added light, the sheet of ice haze and the low haze. Not a level of the map, not the light. Detail share in the mid right box (x 620 to 940, y 250 to 370 of 960 by 540; bands 1 to 5, 3 to 10, 6 to 20 px): approved 0.089, 0.097, 0.109 at level 133; main 0.059, 0.062, 0.075; the sheet off 0.117, 0.117, 0.119 at level 75 (ground part 23.087 at the preview); sheet and low haze off 0.179, 0.183, 0.209 at level 57 (27.912). Kept so: the sheet's light is multiplied by the deck's own detail under it (commit 3). This name: 0.055, 0.061, 0.072 at level 138, so main's level and about 0.6 of the approved's. Not met.
+> - (c) the streamer's body and (d) the limb's haze: not touched in this name. RED, in the list below.
+>
+> THE OWNED LIST at 4860, sky and band, for your eye:
+> Sky (3.420; main's 1.619 is the plate cut from the approved):
+> 1. The Milky Way is the film's own. It stands at x 536 to 1519, y 7 to 229 and is brown (mean 62, 50, 41); the approved has a cool faint band, brightest round (1076, 103) at 29, 38, 49. The middle third of the sky reads 21, 21, 20 against 20, 28, 39: the level is met, the blue is not. Place and hue are the engine's sky, not my folder.
+> 2. The left third is brighter (22, 34, 49 against 8, 17, 27): my limb's glow reaches into the corner.
+> 3. The right third is darker (9, 14, 18 against 12, 19, 27).
+> 4. Points more than 40 levels over their surround: 1409 against 1395 (main 1224).
+> Band (2.646; main 1.607):
+> 5. My limb stands 13 to 26 px higher than the approved's (row where the smoothed blue passes 100, at x 240 to 1680 in steps of 240: approved 160, 180, 205, 236, 275, 322, 378; mine 134, 157, 183, 221, 262, 307, 358; main 6 to 12 higher).
+> 6. Its glow is wider and paler, which is (d): above the approved's limb inside the band 75, 107, 142 against 19, 44, 69 (main 32, 61, 97); under it 118, 153, 188 against 65, 112, 153 (main 98, 135, 171).
+>
+> WHICH LAW DIMS THE SKY: the engine draws the stars with light.sky times the stop's skyGain (src/director/film.ts line 1066; the hook in src/director/moves.ts line 957). Neptune's skyGain reads two knots (lowSky in plan.ts) through the engine's one air curve airAt (src/core/air.ts) by the eye's height: the hold's own level at and above 2 radii, 0.38 of it at and under 0.03. Saturn and Venus use the same hook with numbers of their own (saturn/plan.ts line 384, venus/plan.ts line 291). So I can say: the same hook and the same curve. I cannot say: one law that every stop reads, and not: by the measured light of the ground. It goes by the eye's height, and nothing in the engine reads a shot's air yet (tests/air.test.ts). The knots go to params.air when you say (MAIL 1182).
+>
+> THE ROWS, what changes in place at each:
+> - 4694 (0.51 on your machine): CURED AT ITS CAUSE by my copy. What changed in place: the limb's held field, the smooth light the globe keeps toward its edge, was aimed by the eye's view of the moment, so over 8 frames it slid across the ground under it. Controls on my tree of 17:20 (66c70ae7 with the eye's trial in it), pair 4694 to 4702, my copy at steps of 2 frames: as it stood 0.49; the held field alone off 0.05; the edge line off 0.50; twilight and cut off 0.22 (that one rendered while a second batch overlapped for 40 s, my error); the sheet off no change. Now the field is laid by the eye of the dive's first moment and carried with the body's turn: at every height of the dive alike, no window, no clock. By the reader's own chain at half frames (16 steps): 4690 0.14, 4692 0.15, 4694 0.11, 4696 0.11, 4698 0.12. Frames 4680 to 4720 looked at: no step at the dive's start. Not tied: the bright edge line and the twilight, which are the edge of the disc as seen; the control gives the edge line no part in the row.
+> - 4706 (0.64): the same field. The pair 4704 to 4712 reads 0.16 (66c70ae7: 0.29, same reader, same steps). From 4706 my copy reads 0.42 at (1492, 248) and from 4702 0.42 at (356, 176), both where the limb leaves the frame and the flows agree on 0.51 and 0.58 of the body: the chain losing the ground, as the harness wrote. It may stay over on your machine; my panels are attached (n9s-chains.jpg).
+>   These dive start pairs were read on 5baaaad36, one commit before the rolls went back. The rolls move the place on the disc (4707: mean 0.14 levels, all at x 452 to 1432, y 294 to 1079); the places the pairs read largest lie outside that box. Not run again on the name.
+> - 4753 (0.52): NOT CURED, no cause. My copy reads 0.29 from 4750, 0.28 from 4751, 0.27 from 4752 and 0.31 from 4744 on this name (66c70ae7: 0.23, 0.22, 0.26 and 0.40), so it does not see what your reader sees. I need the panels of nq5-03 to find the place.
+> - 4970 + 1/2 (0.46): what changed in place: the second streamer changed its kind with the distance, a marched body of heaps near and a flat thin form far, so the bank at (1512, 588) went from heaps to a line within 8 frames. Now it is the flat form at every distance (deep.json, streamers, flat 1). My copy: 4968 to 4976 0.43 (66c70ae7: 0.55), 4970 to 4978 0.37.
+> - NOT CURED, the rise before it: 4960 to 4968 0.50 and 4962 to 4970 0.59 at the lower left (44 to 144, 756 to 764 of 1920); 0.48 and 0.56 on the last name. Your rise part 1 is still out and may read it. What I see there between 4964 and 4970: the navy ground turns mid blue and short pale streaks of the deck come in. No control yet.
+>
+> THE HOLD: 4605 76b23919e0801bca, 36.6 s. Match 7.621 and G17 0.674, p25 0.436: the same three numbers as 66c70ae7. 69134 pixels differ from the last name's, all inside the disc at x 682 to 1384, y 424 to 1065, 1171 of them by more than 8 levels, the largest 18: the place on the globe, where the eye now shows its arm (attached hold-zoom10.jpg). Nothing outside the disc differs. The limb's cure costs the hold nothing: 4605 on the files of b39d72322 alone has the last name's bytes (ceabf0253c5d1a57). What moves the place on the disc is the sheet round the storm and its light. Under d302: the match costs 0.000 of the 0.01, G17 has not fallen, nothing outside the disc changes, and I see no feature of the approved lost inside it.
+>
+> REDS, worst first:
+> 1. G17 at 4860: 0.426 against the bar 0.8, and under the last name's 0.544. With the rolls at 0.12 it read 0.570 (p25 0.403, ground 17.780), but in the rise their own shadow drew a sheaf of thin dark lines into the lower left between 4966 and 4970. Control at 4970 (attached rctl.jpg): pixels more than 6 levels under their surround: 3411 at 0.12, 1316 at 0.05, 1287 on the last name; the sheet's light from below on or off changes nothing (3413). I took the lines out and paid with the number. Taking them out did not win the pairs: 0.50 and 0.59 now, 0.54 and 0.52 at 0.12. If you rule the other way it is one number (deck.relief in deep.json) and its proofs are those of 5baaaad36: 4860 717b5adc97194606, ground 17.780, sky 3.407, band 2.656; 4605 d163a2eecd0469b8, match 7.623. The cure is the shadow's own; then the rolls can stand higher again.
+> 2. Two faint teal blots on the plain at 4860, round (1168, 752) and (1564, 849). They come with the sheet and grow with its light from below (green over the mean of red and blue, largest: main 3.9, last name 3.0, sheet round the storm 7.9, this name 15.5). Lead, no control: the sheet's blue bends in the tone curve before its green where it is brightest.
+> 3. The rise at 4960 to 4970, above. 4. The row at 4753, above.
+> 5. (c) the streamer is whiter and blockier than the approved's with hard lumps at the lower right; (d) the limb's glow, list points 5 and 6.
+> 6. G13 at 4860: soft 2.643 percent on 5baaaad36, OVER (2.621 on the last name). Not read again after the rolls went back.
+> 7. Not run again on the name: the dive's start pairs, the pair 4736 to 4744, the rise's end 4992 to 5000 (0.33 on the last name).
+>
+> Tests on the name, alone, 18:45:59 to 18:58:09 UTC: the whole run 81 files ok, 0 not ok, exit 0; my own test ok; G11 PASS; tsc clean. Net of my folders: 63.628 MB against main's 80.827. No file under public/assets/neptune changed. Looks pushed 17:59, 18:24 and 18:46 UTC (4860 at full size beside the approved, G17 0.426, 89.9 s the draft frame). Notebook: every mail word for word.
+>
+> MAIL 1251, the filled sky plate of the hold: this branch has no sky plate at the hold or at the terrain (git ls-tree: 0 files named sky under public/assets/neptune, main has 4), by MAIL 1126 and MAIL 1207; the hold's sky here is the film's one sky. So the fill has no plate to replace on this branch. If the plate is to come back at the hold as the ordered change, say so and it comes as its own commit after this name with the numbers of point 3. Until then I lay in nothing.
+>
+> NEXT: the rise at 4960 to 4970 by control, the deck's own shadow so that the rolls can stand higher, the teal blots, then (c) and (d).
