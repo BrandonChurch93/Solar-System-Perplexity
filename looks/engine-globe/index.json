@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T01:22:14.822Z",
- "head": "95fcf00625a322ee84d37d6f103227764c4dedcb",
- "note": "MAIL 835 task 1, the moon in the record: measured on Mars, geometry lands, the moon's baked light goes out in capture 4808 to 4818",
+ "pushed": "2026-11-25T02:17:28.383Z",
+ "head": "f5f800dd5adb4a30849162f2b91847d418115249",
+ "note": "Task 1 named f5f800dd: every further body in the pose record. Task 2 so far: Uranus's shape is not the bulk on its rise. Sun rows: a wrong unit in the record, cure next.",
  "looks": [
+  {
+   "time": "2026-11-25T02:17:27.806Z",
+   "file": "20261125021727806-note-crop-a.jpg",
+   "source": "../m835/crop-a.png",
+   "kind": "note",
+   "label": "Moons carried by their own place and turn (task 1, f5f800dd)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T02:17:27.056Z",
+   "file": "20261125021727056-note-uranus-rise.jpg",
+   "source": "../m835/uranus-rise.png",
+   "kind": "note",
+   "label": "Uranus rise 8818 and 8834 with what the carry leaves: an exchange of pictures, the shape is the unit sphere there",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T01:22:14.228Z",
    "file": "20261125012214228-note-moon-look.jpg",
@@ -51,22 +67,6 @@
    "kind": "note",
    "label": "Mars 2325 final, lit limb at full size: off, 0.0005, 0.001, 0.002, 0.004",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:29:37.196Z",
-   "file": "20261124222937196-note-limb-2325-x4.jpg",
-   "source": "../m752/limb-2325-x4.png",
-   "kind": "note",
-   "label": "Mars 2325 final, lit limb x4: limb air off, heights 0.0005 to 0.004 radii, approved hero (look only, nothing turned on)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T22:01:52.069Z",
-   "file": "20261124220152069-note-look-ju-6476-6488.jpg",
-   "source": "../m741/look-ju-6476-6488.jpg",
-   "kind": "note",
-   "label": "Jupiter across the change of view, 6476 against 6488 carried: 12.55 as it is, 4.98 carried",
-   "stop": "jupiter"
   }
  ]
 }
