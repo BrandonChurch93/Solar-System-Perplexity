@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T03:04:05.523Z",
- "head": "ec364902d2313e4a03faa37a6bec6fef9a2606c8",
- "note": "under pass on take batch 8 (tip 9ea28c24, local): proof drafts with a Mars stand in; counts and the suite run next",
+ "pushed": "2026-11-25T03:32:27.157Z",
+ "head": "beb11bc7804389e83dce0726bf7cf69c5658ba3e",
+ "note": "under pass: edge crops for condition c; cost split measured (globe part 26 of 30 s a sample, 13 s of it the cap's 12.4 M triangles behind a one pixel scissor)",
  "looks": [
+  {
+   "time": "2026-11-25T03:32:26.555Z",
+   "file": "20261125033226555-note-c-right.jpg",
+   "source": "../../../../tmp/law/q/c-right.png",
+   "kind": "note",
+   "label": "under pass, condition c, right edge of the relief at full size: 2477 and 2478, off beside under on (stand in); x 1440 to 1920, y 380 to 1080; the stand in's cap is near black here, the feather itself has no step"
+  },
+  {
+   "time": "2026-11-25T03:32:25.944Z",
+   "file": "20261125033225944-note-c-left.jpg",
+   "source": "../../../../tmp/law/q/c-left.png",
+   "kind": "note",
+   "label": "under pass, condition c, left edge of the relief at full size: 2477 and 2478, take batch 8 (off) beside under on with a local Mars stand in; x 0 to 480, y 380 to 1080"
+  },
   {
    "time": "2026-11-25T03:04:04.209Z",
    "file": "20261125030404209-note-f02580.jpg",
@@ -45,20 +59,6 @@
    "source": "out/work/blur/tone-tip/f02427.png",
    "kind": "note",
    "label": "edge c0cef0c0 (law hook and tone of the relief, off for every stop): draft of Mars 2427, byte equal to the branch before it"
-  },
-  {
-   "time": "2026-11-25T02:16:30.998Z",
-   "file": "20261125021630998-note-b-f2156.jpg",
-   "source": "../../../../tmp/law/dots/b-f2156.png",
-   "kind": "note",
-   "label": "2156 same crop at the final tier 64 samples: main, cover 2, cover 4: main still has one dotted row, cover 4 is soft"
-  },
-  {
-   "time": "2026-11-25T02:16:29.772Z",
-   "file": "20261125021629772-note-b-r2156.jpg",
-   "source": "../../../../tmp/law/dots/b-r2156.png",
-   "kind": "note",
-   "label": "2156 crop x 1484 to 1556, y 972 to 1028, 10 times, gain 6 in linear light: main review 24 samples, K 1, cover 2 (candidate handover.sharpCover): the rows of single dots join at cover 2"
   }
  ]
 }
