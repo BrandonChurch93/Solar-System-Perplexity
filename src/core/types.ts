@@ -48,6 +48,9 @@ export interface SetState {
   // The near bodies the stop names at this time (StopPlan.nearBodies), on the globe side only and only where it names any: the sample count of a
   // frame follows the fastest of them that is in the frame (core/motion nearMotion). Nothing else reads them.
   near?: NearBody[]
+  // The share of the way the light of the last stop has gone to the look back's Sun, from the moment the retreat's glides begin (before the
+  // seam, in the last frames of the rise) to the end of the retreat; absent at every other time. The set draws its light by it.
+  lookback?: number
 }
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }

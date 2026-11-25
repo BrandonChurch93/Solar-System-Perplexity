@@ -34,7 +34,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.12
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { turn: 0.475, phase: 0.425, pull: 0.3, aim: 0.4 }, ahead: 0.25 }
+export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { turn: 0.375, phase: 0.425, pull: 0.3, aim: 0.375 }, ahead: 0.6 }
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -303,19 +303,26 @@ export class FilmDirector implements Director {
     const p = this.plans[this.plans.length - 1]!
     const seg = config.segments.find((s) => s.kind === 'retreat')!
     const ahead = this.retreatAhead()
-    const u = (time - seg.start) / (seg.end - seg.start)
     const v = (time - seg.start + ahead) / (seg.end - seg.start + ahead)
     const a = p.exitPose(time)
     const b = this.lookback(time)
     const end = this.lookbackPlace(time)
     const g = LOOKBACK.glide
     const w = glide(v, g.aim)
-    const lit = p.lightDir.clone().lerp(this.lookbackSun, lookbackLight(Math.max(u, 0))).normalize()
+    const lit = p.lightDir.clone().lerp(this.lookbackSun, lookbackLight(Math.max(v, 0))).normalize()
     const phase = mix(a.position.angleTo(p.lightDir), end.phase, glide(v, g.phase))
     const position = this.nightSide(phase, end.azimuth * glide(v, g.turn), a.position.length() * Math.pow(end.distance / a.position.length(), glide(v, g.pull)), lit)
     const track = (x: THREE.Vector3): THREE.Quaternion => lookAt(x, new THREE.Vector3(), this.lookbackSun)
     const held = track(a.position).invert().multiply(a.quaternion)
     return { position, quaternion: track(position).multiply(held.slerp(track(b.position).invert().multiply(b.quaternion), w)), vfov: mix(a.vfov, b.vfov, w) }
+  }
+
+  private lookbackLit(time: number): number | undefined {
+    const seg = config.segments.find((s) => s.kind === 'retreat')
+    if (!seg) return undefined
+    const ahead = this.retreatAhead()
+    if (time <= seg.start - ahead || time >= seg.end) return undefined
+    return lookbackLight((time - seg.start + ahead) / (seg.end - seg.start + ahead))
   }
 
   private retreatLays(time: number): boolean {
@@ -775,7 +782,8 @@ export class FilmDirector implements Director {
       const origin = view === 'terrain' ? p.spot.clone().applyQuaternion(p.turn(time)).applyQuaternion(f.rotation).add(f.origin) : f.origin.clone()
       const turns = view === 'orbit' && p.handsOver && p.id === segment.stop && (segment.kind === 'dive' || segment.kind === 'rise')
       const bodies = view === 'orbit' ? p.nearBodies(time) : []
-      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, height: 0, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}), ...(bodies.length ? { near: bodies } : {}) }
+      const lit = i === this.plans.length - 1 ? this.lookbackLit(time) : undefined
+      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, height: 0, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}), ...(bodies.length ? { near: bodies } : {}), ...(lit !== undefined ? { lookback: lit } : {}) }
     }
     const inSet = (s: SetState, p: Pose): Pose => ({ position: p.position.clone().applyQuaternion(s.rotation).add(s.origin), quaternion: s.rotation.clone().multiply(p.quaternion), vfov: p.vfov })
 
