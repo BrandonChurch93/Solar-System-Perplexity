@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T01:56:07.586Z",
- "head": "e97f7d7eea254120fbf4a767fbd0d23c4c3c211d",
- "note": "02:00 UTC: chain of proofs still running (rise report next). Tool's dive report is red: pattern 1.23 from 3031 at the upper right limb. Cause found: the surface sky plate's haze fill under its own horizon shows through the floor's feather. Cure designed, comes after naming.",
+ "pushed": "2026-11-25T02:08:26.450Z",
+ "head": "220328cc110b9dfd889615931fa98a68fa085bb7",
+ "note": "02:22 UTC: proofs still running (rise report next, then path, parity, tests). Preparing the cure of the dive's band offline: real sky painted under the sky plate's horizon and the floor off, so one sky reaches the limb at every height.",
  "looks": [
+  {
+   "time": "2026-11-25T02:08:25.611Z",
+   "file": "20261125020825611-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image (bytes unchanged in this commit, match 7.974)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:08:24.395Z",
+   "file": "20261125020824395-note-map-rise.jpg",
+   "source": "../work/r8/sky/map-rise.jpg",
+   "kind": "note",
+   "label": "the same for the rise (3241 magenta to 3271 red): the limb sinks 18 degrees under the plate's horizon",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:08:23.514Z",
+   "file": "20261125020823514-note-map-dive.jpg",
+   "source": "../work/r8/sky/map-dive.jpg",
+   "kind": "note",
+   "label": "work in progress, cure of the band: the surface sky plate lifted 3.5 times with the dive's limb drawn on it frame by frame (3022 red to 3058 magenta): under its horizon the plate holds a haze fill, that fill is the band",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T01:56:06.821Z",
    "file": "20261125015606821-note-pair-3150-final.jpg",
@@ -171,48 +195,6 @@
    "kind": "note",
    "label": "dive 3028 to 3043, upper right at 1 to 1: the limb where my own judge reads a pattern (unfinished, cause being named)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:17:20.709Z",
-   "file": "20261125011720709-frame-f3012-uhd-web.jpg",
-   "source": "out/work/jupiter/d253b/f3012-uhd-web.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3012, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3012,
-   "tier": "draft",
-   "format": "uhd",
-   "diag": "beauty",
-   "engine": "c6c6edcaa80e1e1f"
-  },
-  {
-   "time": "2026-11-25T01:14:06.133Z",
-   "file": "20261125011406133-frame-n2-3150.jpg",
-   "source": "out/work/jupiter/final/n2-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "c6c6edcaa80e1e1f"
-  },
-  {
-   "time": "2026-11-25T01:10:17.146Z",
-   "file": "20261125011017146-frame-n2-2895.jpg",
-   "source": "out/work/jupiter/final/n2-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "c6c6edcaa80e1e1f"
   }
  ]
 }
