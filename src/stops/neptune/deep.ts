@@ -94,6 +94,7 @@ uniform vec2 uVeil;
 uniform vec2 uVeilFall;
 uniform vec3 uVeilLight;
 uniform float uStreamBend[${STREAMERS}];
+uniform vec2 uStreamVeil[${STREAMERS}];
 uniform vec4 uDeckFine;
 uniform vec2 uDeckRun;
 uniform vec4 uHazeLow;
@@ -382,6 +383,8 @@ float cirrusBody(vec3 straight, vec3 bent, float t, out float lee, out float cre
   int holds = 0;
   ivec3 which = ivec3(0);
   for (int i = 0; i < ${STREAMERS}; i++) {
+    // A streamer that is a veil (uStreamVeil, cirrusFlat) has no room: nothing of it is marched.
+    if (uStreamVeil[i].x > 0.0) continue;
     vec4 line = uStreamLine[i];
     vec4 body = uStreamBody[i];
     // Each streamer takes its own share of the bend: a thin far one stays a line.
@@ -452,6 +455,7 @@ float cirrusFar(vec3 p, float t) {
   float best = 1e3;
   float ride = uCirrusWind.x * t;
   for (int i = 0; i < ${STREAMERS}; i++) {
+    if (uStreamVeil[i].x > 0.0) continue;
     vec4 line = uStreamLine[i];
     vec4 body = uStreamBody[i];
     float along = clamp((p.x - ride - line.x) / (line.y - line.x), 0.0, 1.0);
@@ -574,6 +578,21 @@ float cirrusFlat(vec3 oc, vec3 rd, float b, float rt2, float pix, float t) {
     float wide = sqrt(width * width + soft * soft);
     float bell = exp(-(y * y) / (wide * wide));
     if (bell < 0.003) continue;
+    // A THIN STREAMER IS A VEIL OF THE ONE BODY (MAIL 1126 point 4): a sheet at the middle height of its body with its own
+    // optical depth straight through (uStreamVeil at its thick parts on its middle line; the same line, ends, widths, thick
+    // and thin parts and bend as a marched body), seen along the slant path: what it covers is 1 - exp(-tau / |sin e|), e
+    // the angle of the ray against the sheet. No heap, no floor a part must stand over, so nothing of it breaks into pieces;
+    // it is lit as the map's own cloud at the place (it goes into that cover below). By the place and the ray alone.
+    // Its depth is not even: the cirrus' own fibres (cirrusNoise on the side away from the Sun, read as far down as the foot
+    // allows) carry the share uStreamVeil.y of it, so the sheet is drawn out in threads along the sweep and is no line.
+    if (uStreamVeil[i].x > 0.0) {
+      float sinE = abs(dot(rd, normalize(oc + rd * tMid)));
+      float fin;
+      float fibre = cirrusNoise(p, straight.y, 1.0, foot, t, 5, -2.0, fin);
+      float tau = uStreamVeil[i].x * (strength / body.w) * bell * (width / wide) * mix(1.0, 2.0 * fibre, uStreamVeil[i].y);
+      cover = max(cover, 1.0 - exp(-tau / max(sinE, 1e-3)));
+      continue;
+    }
     // How much of the crest the heaps fill: the noise that eats the crest stands over what a heap needs on the middle line
     // (cirrusInside, needHeap) at this share of the places, and where the noise is still read, by the noise there.
     float crest = strength - uCirrusStep.w;
@@ -1248,7 +1267,7 @@ export class Deep {
         uFanWest: { value: v4(fan.veil.west[0]!, fan.veil.west[1]!, fan.veil.shade, fan.veil.depth / (fan.veil.height[1]! - fan.veil.height[0]!)) },
         uFanMake: { value: v4(fan.veil.wave, fan.veil.long, fan.veil.contrast, fan.veil.layers) },
         uVeil: { value: new THREE.Vector2(fan.veil.height[0], fan.veil.height[1]) }, uVeilFall: { value: veilFall(fan.veil.fall) }, uVeilLight: { value: v3(fan.veil.light) },
-        uStreamBend: { value: ci.streamers.map((x) => x.bend ?? 1) },
+        uStreamBend: { value: ci.streamers.map((x) => x.bend ?? 1) }, uStreamVeil: { value: ci.streamers.map((x) => new THREE.Vector2(x.veil ?? 0, x.veilFibre ?? 0)) },
         uCirrusFar: { value: new THREE.Vector3(ci.far[0]!, ci.far[1]!, ci.far[2]!) },
         uNear: { value: new THREE.Vector3(d.near[0]!, d.near[1]!, d.wisp.near) },
         uWisp: { value: v4(d.wisp.from, d.wisp.power, d.wisp.gain, d.wisp.light) },
