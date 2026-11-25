@@ -251,11 +251,11 @@ export class Engine {
     const probe = this.probe
     applyProbe(probe)
     const plan = framePlan(this.director, f, tier)
-    const samples = samplesFor(plan.samples, plan.shutter)
+    const still = probe.shut
+    // A frame drawn with the shutter shut stands still: all of its samples see every pixel and weigh the same.
+    const samples = samplesFor(plan.samples, plan.shutter, still ? 0 : plan.ends ?? 0)
     this.soft = plan.soft
     this.shutter = plan.shutter
-    const still = probe.shut
-    // A frame drawn with the shutter shut stands still: all of its samples see every pixel.
     this.sharp = still ? null : plan.sharp ?? null
     const middle = probe.time ?? (f + spanMid()) / config.fps
     const mid = this.director.shotAt(f, middle)

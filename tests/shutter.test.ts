@@ -378,18 +378,22 @@ describe('the floor of the share (handover.minShutter)', () => {
 
 describe('the cap switched off (handover.maxBlurPx 0)', () => {
   const tiers = ['draft', 'review', 'final']
-  // The cover of a stop (handover.sharpCover) gives the plan of its frames a count for their lookups. It came after the cap and is a law of
-  // its own (tests/sharp.test.ts), so it is emptied here with the cap: the plan is read as it was before both.
-  const covers = numbers as unknown as { sharpCover: Record<string, number> }
+  // The cover of a stop (handover.sharpCover) gives the plan of its frames a count for their lookups, the ends of its shutter
+  // (handover.shutterEnds) the share over which it opens and closes. Both came after the cap and are laws of their own (tests/sharp.test.ts,
+  // tests/shutter-ends.test.ts), so they are emptied here with the cap: the plan is read as it was before all three.
+  const covers = numbers as unknown as { sharpCover: Record<string, number>; shutterEnds: Record<string, number> }
   const coverKept = covers.sharpCover
+  const endsKept = covers.shutterEnds
   const off = (run: () => void): void => {
     try {
       numbers.maxBlurPx = 0
       covers.sharpCover = {}
+      covers.shutterEnds = {}
       run()
     } finally {
       Object.assign(numbers, inFile)
       covers.sharpCover = coverKept
+      covers.shutterEnds = endsKept
     }
   }
   // The plan of a frame as it was before the capped shutter (framePlan of core/motion.ts on main fdf97b8), written out: the motion across the

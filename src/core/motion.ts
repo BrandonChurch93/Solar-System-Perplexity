@@ -178,7 +178,9 @@ export function sampleStep(plan: { samples: number; seen: number; near?: number 
 // follows the larger of seen and near, up to the tier's maxSamplesPerFrame. The cap of the shutter does not read it.
 // sharp is there only in a dive or a rise of a stop that hands over and that handover.sharpCover names with a cover above 0: the count that
 // sharpens the lookups of a sample in place of the count of the whole frame (sharpCount).
-export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number; sharp?: number }
+// ends is there only in a dive or a rise of a stop that hands over and that handover.shutterEnds names with a share above 0: the share of
+// its time over which the shutter of the frame opens, and closes (samplesFor).
+export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number; sharp?: number; ends?: number }
 
 // The samples that see one pixel of the path. In a frame that stands still all samples of the frame lie over one another, each at its own
 // place inside the pixel. In a frame that moves they are spread along the path: a point of the picture that moves by seen px across the open
@@ -205,6 +207,12 @@ export function sharpCount(plan: { samples: number; seen: number }, cover: numbe
 // the count of the whole frame, as they were.
 export function sharpCoverOf(stop: string): number {
   return (config.raw.handover.sharpCover as Record<string, number>)[stop] ?? 0
+}
+
+// The ends of the shutter of a stop: handover.shutterEnds names the stops whose shutter opens and closes over a share of its time in their
+// dive and rise (samplesFor of core/sampler.ts). A stop it does not name has a shutter that is open at once and shut at once, as it was.
+export function shutterEndsOf(stop: string): number {
+  return (config.raw.handover.shutterEnds as Record<string, number>)[stop] ?? 0
 }
 
 const SIDES: ViewKind[] = ['orbit', 'terrain']
@@ -367,7 +375,8 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
     const near = split || !(body > 0) ? body : body * seenShare(at(spanMid()))
     const samples = cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near))
     const cover = sharpCoverOf(segment.stop)
-    return { samples, raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}), ...(cover > 0 ? { sharp: sharpCount({ samples, seen }, cover) } : {}) }
+    const ends = shutterEndsOf(segment.stop)
+    return { samples, raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}), ...(cover > 0 ? { sharp: sharpCount({ samples, seen }, cover) } : {}), ...(ends > 0 ? { ends } : {}) }
   }
   const mid = at(spanMid())
   const raw = rawMotion(at(0), mid, at(shutterSpan()))
