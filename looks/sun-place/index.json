@@ -1,9 +1,57 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T22:58:29.228Z",
+ "pushed": "2026-11-25T23:22:05.310Z",
  "head": "42958a0033dcc92df77ce8202620b578bc848f61",
- "note": "harness slice 190 to 200 with carry GREEN on merge 42958a00: far sky pattern at most 0.24 (limit 0.45; the name read 1.44), pop 1.01, level step 0.08; the whole 380 to 470 run is at 100 of 124 frames; sun-near 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "tree 42958a00 on main 172e7bcd, not pushed: harness body line red 0.63 at 219 (15 capture frames from 217), cause being proven. 60 final against the approved 38.8845, top 14.5772, rest 49.3019. sun-near 60 final: dark 0.140 body 0.589 pale 0.110 white 0.036 | half width 5.5 px, 1409 shapes, fine 0.0527, mean 0.409 | distance 0.154",
  "looks": [
+  {
+   "time": "2026-11-25T23:22:04.342Z",
+   "file": "20261125232204342-note-N1-90.jpg",
+   "source": "../../../../tmp/v/N1-90.jpg",
+   "kind": "note",
+   "label": "frame 90 at final, tree 42958a00 (not pushed yet)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:22:03.644Z",
+   "file": "20261125232203644-note-N1-60.jpg",
+   "source": "../../../../tmp/v/N1-60.jpg",
+   "kind": "note",
+   "label": "frame 60 at final, tree 42958a00 (not pushed yet)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:21:55.409Z",
+   "file": "20261125232155409-note-h2-arc.jpg",
+   "source": "../../../../tmp/v/h2-arc.jpg",
+   "kind": "note",
+   "label": "the arcade at 1 to 1 on film 217 to 227, where the body line of the harness reads red",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:21:54.212Z",
+   "file": "20261125232154212-note-h6-d.jpg",
+   "source": "../../../../tmp/v/h6-d.jpg",
+   "kind": "note",
+   "label": "harness draft frames, film 226 to 235, every frame, tree 42958a00",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:21:53.222Z",
+   "file": "20261125232153222-note-h6-c.jpg",
+   "source": "../../../../tmp/v/h6-c.jpg",
+   "kind": "note",
+   "label": "harness draft frames, film 214 to 225, every frame, tree 42958a00",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:21:52.409Z",
+   "file": "20261125232152409-note-h6-b.jpg",
+   "source": "../../../../tmp/v/h6-b.jpg",
+   "kind": "note",
+   "label": "harness draft frames, film 202 to 213, every frame, tree 42958a00",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T22:58:28.147Z",
    "file": "20261125225828147-note-h6-a.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/v/F2-c.jpg",
    "kind": "note",
    "label": "candidate (local commit d377db96 on merge 42958a00 of main 172e7bcd), draft film frames 221 to 256",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:08:29.811Z",
-   "file": "20261125220829811-note-T3-360z.jpg",
-   "source": "../../../../tmp/v/T3-360z.png",
-   "kind": "note",
-   "label": "frame 360 draft, the arcade far: no blobs, a faint veil",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:08:29.230Z",
-   "file": "20261125220829230-note-F2-b.jpg",
-   "source": "../../../../tmp/v/F2-b.jpg",
-   "kind": "note",
-   "label": "candidate, draft film frames 180 to 221: the arcade is one body through the rise",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:08:28.585Z",
-   "file": "20261125220828585-note-T4-crop.jpg",
-   "source": "../../../../tmp/v/T4-crop.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, approved over the candidate (arcade T4, limb L3, three new laws of the arcade)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T21:51:12.474Z",
-   "file": "20261125215112474-note-T3-360z.jpg",
-   "source": "../../../../tmp/v/T3-360z.png",
-   "kind": "note",
-   "label": "frame 360 draft, the arcade's place four times: named state left, candidate right: no blobs, a faint veil; final match 11.9850 against the name's 11.9804 and main's 11.9772",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T21:51:11.911Z",
-   "file": "20261125215111911-note-L8.jpg",
-   "source": "../../../../tmp/v/L8.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, limb: as it is over a local trial with the lab ground's haze off (not committed, the lab's file): the bright band and the flat glow over the limb are the ground's haze; sent to the lab 21:47",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T21:51:11.298Z",
-   "file": "20261125215111298-note-T4-crop.jpg",
-   "source": "../../../../tmp/v/T4-crop.jpg",
-   "kind": "note",
-   "label": "frame 60 draft, approved over the candidate (not named): arcade as loops of sparks, the far strand drawn by its band's own least width and its pattern by its mean; limb fringe L3",
    "stop": "sun"
   }
  ]
