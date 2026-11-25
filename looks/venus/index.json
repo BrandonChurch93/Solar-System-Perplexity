@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T23:31:46.020Z",
+ "pushed": "2026-11-25T23:40:25.613Z",
  "head": "6b9c2f8993774541e710bb577b616bfa6a6393c5",
- "note": "scale by scale at 1 to 1; the candidate near T",
+ "note": "candidate on the rise: the far deck of T in the plates, scale by scale",
  "looks": [
+  {
+   "time": "2026-11-25T23:40:24.475Z",
+   "file": "20261125234024475-note-cand-rise.jpg",
+   "source": "../../../../tmp/v/sh/cand-rise.jpg",
+   "kind": "note",
+   "label": "candidate stills 1541, 1547, 1555 + 1/2, 1566",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T23:40:23.510Z",
+   "file": "20261125234023510-note-cand-1555.jpg",
+   "source": "../../../../tmp/v/sh/cand-1555.jpg",
+   "kind": "note",
+   "label": "rise 1555 + 1/2 under the limb: state before, far deck trial, scale by scale, candidate (both)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T23:31:44.712Z",
    "file": "20261125233144712-note-cand-dive-end.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/fd-Bc.jpg",
    "kind": "note",
    "label": "far deck 1541 to 1552 Bc",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:12:59.299Z",
-   "file": "20261125231259299-note-fd-fdR.jpg",
-   "source": "../../../../tmp/v/sh/fd-fdR.jpg",
-   "kind": "note",
-   "label": "far deck 1541 to 1552 with trial plates",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:12:57.976Z",
-   "file": "20261125231257976-note-fdR-bc-stills.jpg",
-   "source": "../../../../tmp/v/sh/fdR-bc-stills.jpg",
-   "kind": "note",
-   "label": "rise 1549 to 1566: Bc left, far deck trial plates right",
    "stop": "venus"
   }
  ]
