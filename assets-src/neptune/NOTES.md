@@ -6101,7 +6101,7 @@ Attachment: bw1-neptune.jpg
   Result (ev/speck-a.jpg, both looked at 1:1): no green or red speck in either. Counted: pixels where green or red stands over blue by 25: 0 of 2073600 in the web set, 0 in the full set. The two sets look alike at this frame. So on my head neither the web set nor the draft tier gives them at 4720. Which of the two gave them on main 73809f4b is NOT named: I did not draw main's own picture (no time before 03:20), and main's stop there is my older state with the place picture, which is gone on this branch. A few pale single pixel dots stand on the dark deck in both sets (they are in the scene from code, not in a set): red, with the flecks of MAIL 840 point 5. Seconds per draft frame at 1920: 33.0 (web), 42.8 (full), each the first of its run.
 - 03:15 notebook committed, branch pushed, NAMED mail sent (word for word below once sent).
 
-## MY NAMED MAIL to the Builder (/root), second named commit, sent 03:16 UTC, high priority (word for word). Attachments: ev/4860-h2.jpg, sky-g.jpg, sky-i.jpg, sky-f.jpg, dash-b.jpg, d2-4704.jpg, d2-4713.jpg, spiral-c3.jpg, speck-a.jpg, hold-c5.jpg
+## MY NAMED MAIL to the Builder (/root), second named commit, sent 03:15 UTC, high priority (word for word). Attachments: ev/4860-h2.jpg, sky-g.jpg, sky-i.jpg, sky-f.jpg, dash-b.jpg, d2-4704.jpg, d2-4713.jpg, spiral-c3.jpg, speck-a.jpg, hold-c5.jpg
 
 NAMED 703188766 (branch tip 917b06c5aeb2608292853e40a40c40b5c1e9d82f, notebook only on top). Second named commit of round 1 of 3 of the third note. Clock by my date -u: 03:15 UTC. From /root/neptune_builder.
 
@@ -6128,3 +6128,21 @@ MAIL 871. Specks at 4720: NOT reproduced on my head. Draft at 1920, web set and 
 Not done on this head, all red: no handover table (dive or rise); the rise 4950 to 5024 not drawn or looked at; G15 and the path proof not run; four means, curve and web set sheets not redrawn; 4860 at 1920 not drawn; sky-hold.webp is still in use. Looks pushed 03:06 (788eb4c9).
 
 Notes on this mail, written after it went: the "before" of the hash proof is 5a6c96af (before the merge and the patch), the "after" is 70318876. "Nothing in src/bodies" rests on one diagnostic (far.on 2 at 4709, preview). The sentence on the parity red is a reading and is marked as one.
+
+## MAIL 878 from the Builder (/root), receipt of the second NAMED commit, received 03:18 UTC (word for word)
+
+MAIL 878 from the Builder (/root). Clock by my date -u: 03:16 UTC. Receipt of NAMED 7031887668d08018617884805ddec61df9a4507c, the second named commit of Neptune's round 1 of 3 of the third note.
+
+1. Checks on my machines, on 70318876: nm9 01 and 02 (the dive's and the rise's pictures at rate 2), nm9 03 (path, place, parity), nm9 04 (the warm list made on the tree and the counts), nn9 12 (handover report, both moves), nn9 13 (G5, G13, G17). They go out as machines come free; nk9 12 and 13 on b42850bf are stopped as superseded. You get each result as it comes. Do not run them yourself.
+
+2. By d186 your next NAMED commit is the third: it goes into the round as it stands, with every red number as a severe issue. It is due 90 minutes after the last of the nm9 reports reaches you and not later than 05:30 UTC by my clock.
+
+3. Order of work for it, Brandon's words first ("you can actually see the image pop up both entering and leaving"):
+(a) One sky for both views. You named the cause yourself: the close view's sky stands at another turn than the globe's, and a law that turns one into the other is an exchange (d253). Build it: one sky, one turn, read by both views, so the carry and its share go. Proof: the upper right corner steady from 4716 to 4762 and from 4945 to 5030, frame by frame at 1920, with no frame where the Milky Way comes or goes.
+(b) The rise, 4950 to 5024: draw every frame and look at it. It is half of his sentence and nothing of it is seen on this head. Name what comes or goes in it by frame.
+(c) Frame law (a) for the scene from code: the foot of a pixel is a length on the body, read from the place and the distance, never the canvas pixel. A frame is one picture at every size. Your preview and your 1920 must agree before either proves anything. Cure your two new foot laws in the same way.
+(d) The planet view, his "still looks really bad": the swirl with the dark eye at 4605 and 4720, and the night side. Run the controls you prepared and name the cause before you change a number.
+(e) 4860: the haze.
+What does not fit: say which and why in the NAMED mail, worst first as you did here.
+
+4. Specks at 4720 (MAIL 871): draw main's own picture (origin main, draft, web set, 1920) once and count as you counted your head, so the cause is named and not left open.
