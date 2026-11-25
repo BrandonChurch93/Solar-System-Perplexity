@@ -6694,3 +6694,266 @@ Seconds per draft frame: preview at rate 2: 5.3 to 6.3 (4992 to 5000 and 4704 to
 Attached, worst first: 4860 with no grade, the approved, c2edd61b; 4605 with no grade against c2edd61b; the dot 4960 to 4967; the reader's map 4962; the dot under the controls at 4963; 4860 and 4707 with the cover cure, the approved, c2edd61b; the rise 4992 with the cover cure; the Sun's height at 4860 and at the hold; 4605 cover cure difference.
 
 Attachments sent with it (ten): ev/4860-NGp.jpg, ev/4605-NG.jpg, ev/fleck-4960.jpg, ev/chain-4962-base.jpg, ev/fleck-4963-controls.jpg, ev/4860-C6p.jpg, ev/4707-C6p.jpg, ev/rise-4992-cover.jpg, ev/sun-height.jpg, ev/4605-cover-diff.jpg (all under out/work/nep/weave/, not in git).
+
+## MAIL 1011 from the Builder, received 25 Nov 09:37 UTC, word for word
+
+MAIL 1011 from the Builder (/root), 09:37 UTC. Rulings on your STATE of 09:33. The controls are clean work.
+
+2. THE GRADE: RULED, way C, and it starts now. D is not a way for this film: the stretches it leaves red (4696 to 4714 going down, 4987 to 5003 coming up) are the very place of Brandon's words on this stop: "when it goes to the surface view, you can actually see the image pop up both enter entering and leaving". A curve that changes with the eye's height is a look that changes; a place does not do that. Time is not a limit.
+The terms:
+(a) One tone curve at every height: the one the hold has. 4605 stays to the bit, and the whole planet view 4530 to 4679 with it.
+(b) What differs between up there and down there is light and air, as things in the place and not as a grade: the Sun's light dimmed by the air above the lit point (a gain for each colour that falls smoothly with depth, red most, as methane takes it), and the air between the eye and each thing (taken out and scattered in by the length of the path, so near ground stays dark and far ground goes pale). Both read the place and the path, never the clock and never the eye's height alone.
+(c) 4860 may move, and must then be matched again beside the approved image. I looked at your sheet: the approved 4860 has dark navy near ground, a paler slate plain far off and pale haze at the limb. That is what dim light with air along the path gives, and neither of your two ends has it (no grade is pale cyan all over, c2edd61b is navy all over with hard bright specks). So C should bring 4860 nearer, not further. G17 at 4860 must stay green and its number is sent with the commit.
+(d) Proof: the two pairs (4992 to 5000 and 4704 to 4712) at rate 2 under the limit on your reader, then on mine; 4605 equal by hash; 4860 beside the approved.
+
+1. THE DOT: go on as you plan: name the field by a control, cure it at the source, its own commit. Two things to test first, from your own numbers: it lies 14 px beside itself when carried along the flow, so it is not fixed to the deck: either it stands at another height (then it is a body, and what is wrong is only that the power draws a lump of 1.6 as a dot of 4.6, which term (a) may cure by itself), or it is a term that reads the eye (a glint), and then say so.
+
+3. WARM: do not write it. Send the frames as a list with the NAMED and I lay them. The counts run is mine too: it goes on my machines on the commit you name, so your render line stays free.
+
+4. Right as you say: MAIL 983's line goes in on the merge that holds b1721d2c.
+
+Timetable: a state with the first numbers of C (the two pairs, 4860 beside the approved) by 11:30 UTC. The seventh NAMED by 12:30 UTC, with the dot's cure, with C as far as it stands, and your list of what is wrong worst first. That one goes into a take and into Neptune's round 1 of 3 of the third note as it stands (d186): the round is not held for anything after it.
+
+## Lab log 25 Nov 09:34 to 09:48 UTC: the dot at 4962 named by controls: the globe map's cloud layer on its sheet (nothing laid; tree at c2edd61ba)
+
+All at the preview, draft, rate 2, my copy of the reader (a proxy, STATED). Diagnostic texts in deep.ts, restored after each run.
+
+- QM, one frame 4963, `mapCloud = 0.0 * layerAt(dcl, ...)` (the globe map's own cloud layer off in the scene; the streamers' far level
+  cirrusFlat stays): the dot is GONE. Box x 217..247, y 487..517, mean of the three channels: c2edd61ba peak 98.7 on a median of 22.0,
+  pixel (232, 502) = (60, 82, 154); cloud layer off peak 35.7 on 21.7, the pixel (4, 17, 38). 35 s the frame with the build.
+- QMp, the pair 4962 to 4970 with the same text: pattern 0.29, largest at 960, 884 of 1920 (c2edd61ba 0.87 at 464, 1076; veil off 0.86).
+  11.5 to 18 s a frame.
+- So the layer is NAMED: the globe's own cirrus (the alpha of the map and of its three levels, `layerAt(dcl, ...).a` times `keep`), which
+  the scene lays on the deck's colour as `mapCloud`, read where the ray meets the cloud sheet.
+- The Builder's two tests (MAIL 1011 point 1). The sheet stands at `clouds.height` 0.004 radii over the deck (look.ts), the eye at 4962
+  at 0.034. QHp, the pair with `rSheet = uRadius * (1.0 + 0.0 * uGCloudHeight)` (the sheet laid on the deck's sphere): pattern 0.37,
+  largest at 1284, 368 (another place); at 4963 every dot of the layer lies 40 to 50 px lower in the frame than on c2edd61ba (the one
+  at 232, 502 has left the frame at the bottom). The difference picture of c2edd61ba against "cloud layer off" at 4963 shows what the
+  layer holds there: about ten round dots of 3 to 8 px and the bright cirrus at the limb, nothing else. No term of the layer reads the
+  eye: its place is the ray's meeting with the sheet, its colour `uFarCloud * knot(uGCloud, ndlSheet)` (the Sun's height at the sheet),
+  its footprint the pixel. So it is a BODY at another height, not a glint: small round clouds of the globe's plate, which the full
+  grade draws at 4.6 times the deck (1.6 with no grade, control QN of 09:25).
+- Evidence: ev/dot-4963-mapcloud-off.jpg, ev/dot-4963-mapcloud-off-full.jpg, ev/chain-4962-mapcloud-off.jpg; QHp/chain-4962.jpg.
+- Looks pushed 09:42 (34f544db, 8 looks).
+
+## Way C (MAIL 1011 point 2): how I read it, written before the first render of it (09:48 UTC)
+
+What the code does today: the scene works in the colours of the ground (the full grade), and its end raises every channel to
+`uFallPower` = (1 + fall (P - 1)) / P about the pivot; the globe is graded by `fallGrade` with the power 1 + fall (P - 1). fall is a
+law of the eye's height alone (1.9 to 0.25 radii). That is the curve that changes with the eye's height.
+
+Term (a): fall is 0 at every height. Then the end's power is 1 / P everywhere, which is what the hold has, so 4605 and every frame of
+4530 to 4679 keep their bits by construction (the uniforms there are the same numbers as today). Control B0 (deep.json, fall.height
+[0.002, 0.001]) is running to show what that picture is at 4860 and what the two pairs read.
+
+Term (b): the air between the eye and each thing. A thing whose colour the hold shows as H is seen from above through the whole air
+over it: H = X Tf + A (1 - Tf), X the thing as the dimmed Sun lights it, A the lit air's colour, Tf what the whole path through the
+air lets through. An eye inside the air has a shorter path, Tp: L = X Tp + A (1 - Tp) = H + (X - A) (Tp - Tf). With X - A =
+(H - A) exp(tau), tau the air straight over the thing by colour (red most): L = H + (H - A) exp(tau) (Tp - Tf). Above the air
+Tp = Tf and the picture is H to the bit. Near ground under an eye in the air: darker than H where H is under A (navy), far ground:
+Tp falls to Tf and the picture is H (pale). It reads the thing's height, the eye's place and the ray, never the clock.
+
+## Lab log 25 Nov 09:48 to 10:04 UTC: way C, the first numbers (in work, not committed)
+
+- B0 (deep.json fall.height [0.002, 0.001], so the law of the eye's height gives 0 everywhere; a control, c2edd61ba otherwise):
+  4605 at 1920 SAME BYTES as c2edd61ba; the pairs on my reader at rate 2: rise 4992 to 5000 pattern 0.33 (c2edd61ba 0.79), dive 4704
+  to 4712 0.31 (c2edd61ba 0.40). 4963 is the azure planet of the hold, soft; the dot is a faint pale spot.
+  FOUND with it: 4860 came back equal to c2edd61ba to the byte. The surface view 4770 to 4949 is drawn by `deepView` (set.ts line 105,
+  the branch `!inOrbit`), whose `uFallPower` is never set and stands at 1 1 1: the full grade, at any value of fall. So the terrain
+  needs the hold's curve laid by itself (the default of `uFallPower` and of `uFarFall.w` in the Deep's own uniforms).
+- Laid in the working tree (patch /tmp/p/c1.py): set.ts `const fall = 0`; deep.ts the default of `uFallPower` 1 / P and of the most
+  blue blue / 1e-4 (what the hold has), and the air block at the end of main(), uniforms uAirLaw (top, scale, share of the Sun's
+  curve), uAirDepth, uAirGlow from a new block deep.json "air"; deep.json fall without height.
+- H0p (air.top 0, so the air block is not run): 4860 is the hold's curve at the ground: flat azure, G17 proxy 0.359, p25 0.163.
+  Tones in linear light (the bytes taken back through the film's curve and sRGB; boxes of the preview frame), H against the approved:
+  low left (0.019, 0.082, 0.231) against (0.003, 0.010, 0.020); low mid (0.025, 0.095, 0.263) against (0.005, 0.018, 0.040); mid
+  (0.050, 0.172, 0.398) against (0.050, 0.082, 0.138); far plain (0.051, 0.163, 0.406) against (0.045, 0.112, 0.228); right plain
+  (0.062, 0.177, 0.413) against (0.110, 0.201, 0.365). What the approved has less than H is nearly the same amount near and far:
+  green 0.05 to 0.09, blue 0.18 to 0.26, red none to 0.02. That is a veil of blue light taken off, not a contrast about a grey.
+- C1p (top 6, scale 2, depth 1.6 1.3 1.1, glow = the old pivot 0.17 0.37 0.68): near ground black, the rest electric blue (red and
+  green crushed, blue kept). G17 proxy 1.007, p25 0.286 (the number is the median over the tiles of the frame's
+  detail over the approved's; the gate's limits I have not looked up again today, so I state only the number). Not it.
+- C2p (scale 2, depth 1.0 0.8 0.7, glow 0.055 0.23 0.65): right way, too weak in the middle distance, an olive patch behind the
+  streamer where blue reaches nothing before green. G17 proxy 0.587, p25 0.215.
+- C3p (the air over a thing counted to the top only, as the air behind the eye is; scale 8, depth 1.0 0.85 0.85, glow 0.05 0.23 0.65):
+  the same picture a little stronger. G17 proxy 0.622, p25 0.244. The glow is too near the ground's own colour: (H - A) is small there.
+- Next, C4p: a thin bright veil (depth 0.32, glow 0.136 0.61 1.79) with the eye in the upper part of it (scale 0.72 units, the eye at
+  1 unit): then what is taken off is about the same amount over the whole plain and falls to nothing at the horizon.
+
+## Lab log 25 Nov 10:04 to 10:20 UTC: way C, the law changed from a glow taken off to shares of the hold's light (in work)
+
+- C4p (thin bright veil, scale 0.72, depth 0.32, glow 0.136 0.61 1.79): G17 proxy 0.522, p25 0.228. Right way, near ground still
+  far too blue: low left (12, 50, 104) against the approved (3, 12, 26). The share taken off came out 0.08 to 0.12 everywhere.
+- C5p (depth 0.6 0.45 0.45, glow 0.1 0.73 2.13): BAD. Olive and purple patches in the near ground and behind the streamer: blue
+  and green reach nothing where red is still there. G17 proxy 0.578, p25 0.225. Not kept.
+- Read of C1 to C5: a law that TAKES a colour OFF goes under nothing in the dark places of the deck (the ovals are darker than
+  any veil strong enough to make the plain navy), and the channels reach nothing at different places, which is the tint. So the
+  air's light must not be a fixed colour taken off. Looks pushed 10:08 (841ccbeb, 8 looks: C4 and C5 at 4860 beside the approved).
+- The law now (patch /tmp/p/c6.py, the block in deep.ts main() and two helpers, airPath and airGain): what the hold shows of a
+  thing, H, is two lights: the thing's own (the Sun's light dimmed by the air above the lit point, a gain g by colour, then let
+  through by the air of the whole ray) and the light of the lit air in front of it (the rest). An eye inside the air has a part
+  of that air in front: L = H ((1 - g exp(-all)) share + g exp(-between)), share = (1 - exp(-between)) / (1 - exp(-all)). At the
+  top all = between and L = H to the bit. Every term is a share of H: nothing goes under nothing, no tint. The air is thin at the
+  deck and thickest some way up (exp(-h / scale) - exp(-h / foot)), so the eye of the terrain stands under most of it.
+  deep.json air: top, scale, foot, depth (the whole air straight up, by colour), sun (the dimming of the Sun at the deck, by
+  colour), cirrus (the share of its own light in what the hold shows of a cirrus: it is white up there, so nearly all).
+- C6p (scale 8, foot 1.5, depth 1.4 1.1 1.0, sun 3.2 2.7 2.5, the cirrus as the deck): a smooth navy, darker near, paler far, NO
+  hard specks; but the streamer is dimmed too and goes brown, and the far ground stays dark. G17 proxy 0.297, p25 0.089.
+  Shares of H (linear): low left 0.18, mid 0.24, far plain 0.35, right plain 0.31, far right 0.44, near limb 0.5. Wanted by the
+  approved: low left 0.18 0.12 0.09 (red green blue), mid 1.0 0.48 0.35, far plain 0.88 0.69 0.56, right plain 1.8 1.1 0.88.
+- C7p (cirrus 0.85, foot 3, depth 2.6 1.8 1.5, sun 2.6 2.4 2.4): white streamer on navy ground, paler to the limb, pale haze at
+  the limb, no specks. G17 proxy 0.433, p25 0.089 (c2edd61ba 0.508, 0.128). Tones: low left (3, 18, 45) against the approved
+  (3, 12, 26); far plain (30, 70, 121) against (54, 107, 158); right plain (32, 67, 113) against (106, 149, 189); mid (18, 49, 88)
+  against (59, 87, 122). The far ground is still too dark.
+- A limit I see by arithmetic, to be said in the mail: air in layers gives a path to the ground of 1 / sin of the angle down, so
+  between the near box (42 degrees down) and the far plain (16 degrees) the path grows 3 times and no more. The approved's shares
+  grow 5 to 6 times from near to far. So layered air can make near dark and far paler, but not as much paler as the painting.
+
+## Lab log 25 Nov 10:20 to 10:25 UTC: way C, the air's numbers chosen, proofs started (in work)
+
+- C8p (foot 3, depth 3.9 2.7 2.25, sun 3.6 3.4 3.4, cirrus 0.85): 4860 has the white streamer on dark navy near ground, a paler
+  blue plain far off and pale haze at the limb, and no hard specks. G17 proxy 0.412, p25 0.091 (c2edd61ba 0.508, 0.128; the bar
+  is 0.8 on the median, so it is RED on my proxy before and after, and lower now). Tones against the approved: low left
+  (3, 15, 38) / (3, 12, 26); far plain (37, 80, 133) / (54, 107, 158); right plain (38, 75, 122) / (106, 149, 189); mid
+  (21, 51, 88) / (59, 87, 122). Shares of H: low left 0.18 0.14 0.13, mid 0.32 0.24 0.21, far plain 0.57 0.45 0.40, right plain
+  0.48 0.38 0.34, far right 0.71 0.58 0.51, near limb 0.76 0.64 0.58. Sheet /tmp/c8-4860.jpg. 4745 and 4963 at the preview with it
+  (sheet /tmp/c8-air.jpg, beside the hold's picture B0p at 4963): the planet goes a deeper blue as the eye sinks, the near ground first.
+- C9p (depth 5.0 3.4 2.8, sun 4 4 4): a little paler far off (far plain (42, 88, 143)), the near ground a little brighter
+  (4, 17, 40), the whole flatter: G17 proxy 0.352, p25 0.100. Not better. C8 is the state.
+- Why G17 falls: the measure is energy of fine detail in the bytes; c2edd61ba had the contrast of the power (2.6 to 3.7) on the
+  deck, and way C shows the deck's own contrast, the hold's, times a smooth share. The detail the approved has in the ground
+  (fine streaks, the eye) is not in our deck; that stands as before on the list.
+- Proofs started 10:22:16 (one process, /tmp/proof.sh): 4605 at 1920; the pairs 4992 to 5000 and 4704 to 4712; inside the air
+  4960 to 4976 and 4736 to 4760, every half frame, at the preview.
+  4605 at 1920 with the code of way C and the air of C8: SAME BYTES as c2edd61ba (cmp; sha256 cf858a9f835a480f... both).
+  The two pairs of the proof on my copy of the reader (rate 2, preview, a proxy): rise 4992 to 5000 pattern 0.33, dive 4704 to 4712
+  0.31 (limit 0.45; c2edd61ba 0.79 and 0.40). Above the air's top the picture is the hold's curve and nothing else.
+- Inside the air, the rise (C8q, 33 half frames 4960 to 4976, 19 s the frame): 4960 to 4968 pattern 0.56, 4962 to 4970 0.68
+  (c2edd61ba 0.87), 4968 to 4976 0.85. RED, all three. I looked at every second frame of the left half at native size
+  (/tmp/c8q-left.jpg) and at the reader's maps: the hot place of 4962 is the dot again, where it was; at 4968 it is a second dot
+  of the same kind at the left. The dot at 4963 under way C: peak 78 on a ground of 44, 1.8 times its ground (c2edd61ba 98.7 on
+  22, 4.5 times; the hold's curve with no air 150 on 99, 1.5 times). So term (a) took the dot from 4.5 to 1.8 as the Builder
+  said it might, and the reader still reads 0.68: what it reads is the dot sliding on its sheet against the ground (the control
+  of 09:42, the sheet laid on the deck: 0.37). From 4972 a field of soft pale flecks comes in at the lower left, the ground
+  under the eye far from the place, where the map's cloud layer stands much enlarged; and the white patch at the lower right.
+- Looks pushed 10:32:56 (d00c9682, 8 looks: C8 at 4860 beside the approved with G17, 4745 and 4963 inside the air).
+- The dot's cure, planned 10:44 (patch /tmp/p/speck.py, to lay when the render ends): the scene reads the map's cloud layer a
+  second time over a footprint of a fixed width on the ground and lets the cloud be at most a multiple of that reading
+  (deep.json far.speck [0.1, 4]). A round dot of 0.02 units (the dot: 7 by 5 px at the preview from 2.1 units) is cut to a
+  sixth, a streak wider than 0.025 units and any field keep their reading; where a pixel covers the width (from afar, and at
+  the hold, where a pixel of 1920 covers 0.056 units) the two readings are one. Why not the plate: the dot is in the globe's
+  map (wrap.webp or a patch), an asset of many MB with its own recipe; a new plate moves the hold. To be measured: the pair
+  4962 to 4970, 4605 by bytes, 4860.
+
+## MAIL 1042 from the Builder, 10:57 UTC (word for word)
+
+MAIL 1042 from the Builder (/root), 10:57 UTC. To neptune_builder. My machine's measure on your named 70318876 is back (400 minutes).
+G5 passes (4605 0.527, 4707 0.915, 4860 0.778, 5006 0.573). The handover report passes. The counts are green.
+G13 FAILS in 495 of 495 frames. Hold: 0.384 texels a pixel in every frame, 89 to 90 percent of the counted pixels soft. Surface view: 0.84 to 0.87 texels, 69 to 71 percent soft. Dive 17 to 89 percent, rise 17 to 96 percent (worst 5012, least 0.25 texels a pixel). The limit is 2 percent.
+G17 passes at 4605 (median 1.027, 25th percentile 0.868 over 65 tiles) and FAILS at 4860: median 0.727, 25th percentile 0.330 over 75 tiles, limit 0.8. Its worst tiles are in the top rows: [9,1] 0.01, [7,0] 0.01, [11,0] 0.02, [8,0] 0.02, and [2,7] 0.02.
+OWED, the cause of both by a control before anything is changed.
+G13: which map the texel view reads at 4530, its size in texels, how many pixels the globe spans there, so that 0.384 is explained. Then one of two: the picture's fine detail is drawn by code above a coarse map (then the view must count what is drawn; that is the harness's tool and goes through me; the rule and its limit stay as they are), or the body is truly under one texel a pixel (then the map is too small for the hold and the cure is yours). Main's Neptune passed this measure: name the commit of yours that changed the number.
+G17 at 4860: what the approved close picture carries in the top rows that yours lacks. Send the two top strips side by side at 1 to 1.
+harness_builder's new reader reads your dive 4703 + 1/2 to 4707 + 1/2 and your rise 4993 to 4997 green by geometry (0.11 to 0.16) where the flow line reads 0.85 to 1.35. I look at its carried pairs myself before I rule. Until then the old line rules.
+Way C, the state by 11:30 and the seventh NAMED by 12:30 stand. Round 1 of 3 of the third note starts on the take that holds your NAMED; a red measure goes into it as a severe item, so the two causes above are worth more than anything else you could send by 12:30.
+
+
+## STATE mail to the Builder, 11:12 UTC (word for word; attachments ev/c-4860-C8.jpg, ev/c-air-C8.jpg, C8r/chain-4992.jpg, C8d/chain-4704.jpg, ev/g13-view-4530-before.jpg)
+
+STATE from neptune_builder, 11:12 UTC, the answer MAIL 1011 asked for by 11:30. Way C is built, one commit, local (bf7752dbd on top of the pushed 0971fc1df1cb; pushed with the NAMED). All numbers are my copy of the reader at rate 2 on preview frames: a proxy.
+
+1. THE TWO PAIRS. Rise 4992 to 5000: pattern 0.33. Dive 4704 to 4712: 0.31. Limit 0.45; c2edd61ba had 0.79 and 0.40. I looked at both chains.
+2. 4605 at 1920: the same bytes as c2edd61ba (cmp; sha256 cf858a9f835a480f).
+3. THE LAW, as you ruled it. (a) The hold's curve at every height: the fall is 0 everywhere, the terrain is drawn with it too. (b) The air is a layer of the place from the deck to a top of 6 units (0.143 radii). The Sun's light is dimmed by the column over the lit point, a gain for each colour; the air between the eye and each thing takes out and scatters in by the length of the path. Every term is a share of the hold's light, so at the air's top the picture is the hold's and above it the block is not run. Nothing reads the clock or the eye's height alone. Values in deep.json, air.
+4. INSIDE THE AIR. Dive 4736 to 4744 0.36, 4744 to 4752 0.39, 4752 to 4760 0.26: green. Rise 4960 to 4968 0.56, 4962 to 4970 0.68 (c2edd61ba 0.87), 4968 to 4976 0.85: RED, named.
+5. 4860 beside the approved (attached). G17 proxy 0.412, 25th percentile 0.091 (c2edd61ba 0.508): red before and after, lower now, named. What C brought: near ground navy (3, 15, 38) against the approved (3, 12, 26); a paler far plain (37, 80, 133) against (54, 107, 158). Not reached: the far plain is still darker than the painting (a layered air gives a path of 1 over the sine of the angle down, so far ground cannot go as pale as painted without a thicker air than the near ground bears), no soft eye, no fine streaks. "Red most" is not followed in the match: the depths are 3.9, 2.7, 2.25 (red most) but the Sun's are 3.6, 3.4, 3.4, because the approved near ground is less blue than ours.
+6. THE DOT. Your two tests: it stands at another height (a body on the map's cloud sheet, 0.167 units over the deck, about 0.02 units wide), and term (a) took it from 4.5 times its ground to 1.8 at 4963, as you said it might. The reader still reads 0.68. A first cure at the source (the scene reads the map's cloud layer a second time over a fixed width on the ground and cuts what is much narrower) takes both dots out to the eye, and the three rise pairs read 0.48, 0.57, 0.64: still red, the largest now at another place, a broad pale field of the same layer sliding on its sheet. That trial moved 4605 in 233 pixels by at most 4 levels, so it is NOT in; a width under one pixel of the hold is the next trial.
+7. MAIL 1042, G13, first control (texel view, draft, 1920, my tool reproduces your numbers: 4530 89.88 percent soft, mean 0.38; 4860 71.2 percent, mean 0.84). The hold: the scene's quad writes its own count over the whole disc with alpha 1 where it draws nothing, and its count there is 4 pixels over a made detail of 1 unit (no code is asked there). With the count written by the scene's share and the map counted where the map is what is drawn: 4530 0.000 percent soft of 1058011, mean 1.82; 4605 0.000 percent, mean 1.80; the beauty of 4605 the same bytes. So at the hold the body is not under one texel: the view counted what is not drawn. This is a control build of my own scene's count (deep.ts, the line that writes texels), not committed: say if it goes in as its own commit or through you. The commit that changed the number: 5a14d56dd (the scene is drawn at the hold: deepLaid.mesh.visible = visible && (show > 0 || placed)). The terrain is NOT explained by this: 4860 still 47.6 percent soft, mean 1.14, in the near ground where the code alone is counted (rows 630 to 1080: 34 to 88 percent). That control is running next, with the top strips of G17.
+Seconds per draft frame: 5 to 6 (pairs high up), 9 to 19 (inside the air), 23 to 39 (4860 preview), 78 (4860 texel view at 1920).
+
+
+## MAIL 1049 from the Builder, 11:14 UTC (word for word)
+
+MAIL 1049 from the Builder (/root), 11:14 UTC. To neptune_builder. Your state of 11:12 is read. Rulings.
+1. THE COUNT AT THE HOLD. It goes in as a commit of its own, by you, named apart from way C and before it: the texel view reports at each pixel the count of what is drawn there, each layer by its share of the pixel's light, and where the scene draws nothing the map's count stands. With it: a unit test of that law, and the beauty's bytes equal on your judged frames (state the hashes). The limit and the measure are not touched. My machine reads G13 on it when it is named.
+2. THE TERRAIN, 4860. 47.6 percent soft in the near ground where the code alone is counted is a true fault. Before you change anything state which layer is drawn at rows 630, 800 and 1080 and its finest made scale against the pixel's foot there. The cure is by the cause: the made detail runs on under the foot (octaves by the foot and the ray, never by the clock or the height alone).
+3. G17 at 4860 fell with way C (0.508 to 0.412 by your proxy, 25th 0.091). That is not accepted as a price: the air may veil the ground, it may not be the only thing in the far plain. The approved far plain holds fine streaks and the soft eye; they are owed from the place's own flow, by code, and they are what carries the band energy there. State the top strips' reads with your control.
+4. THE RISE INSIDE THE AIR (0.56, 0.68, 0.85 at 4960 to 4976). Your cause stands: the map's cloud sheet is a flat picture at another height, sliding on its sheet. ONE BODY: what the hold shows as cloud is a body of the place with thickness, which the eye passes through. The law is the one ruled for Jupiter's banks and built there today (agent/jupiter-code d438b57b, read it): a sheet is a slab; a ray shows the mean of the pattern at points along its run through the slab; each octave fades where that run or the pixel's foot is long against it; the cover widens by the variance the faded octaves lost, so the mean density is kept. There it took the rise's pattern from 0.43 to 0.10. The cut of the dot stays a trial; nothing that moves 4605 goes in.
+5. The seventh NAMED at 12:30 stands, with what is red named as red. It goes into the next take and Neptune's round 1 of 3 of the third note as it stands.
+
+## 25 Nov, 10:48 to 11:16 UTC: the dot's first cure, G13 by controls
+
+- Way C committed locally 10:48 (bf7752dbd). Words laid first (/tmp/p/words.py), tsc clean.
+- The dot's cure, trial K1 (far.speck [0.1, 4], /tmp/p/speck.py, NOT in): the dot at 4963 78 on 44 becomes 53.7 on 43.3 (1.24 times its
+  ground); both dots gone to the eye (I looked at 4962 to 4970 of the left half beside C8, /tmp/k1-left.jpg). Pairs: 4960 to 4968
+  0.48, 4962 to 4970 0.57 (largest now at 148, 756 of 1920), 4968 to 4976 0.64. Still red: what is left is a broad pale field of
+  the same layer. G17 proxy at 4860 0.340 (C8 0.412): the cut takes fine flecks the proxy counted. 4605 at 1920 DIFFERS from
+  c2edd61ba in 233 pixels, at most 4 levels (box x 894 to 1179, y 600 to 888, the place): at the hold a pixel covers about
+  0.056 units and the width 0.1 is 1.8 pixels, so the second reading is not the first. Not in. Patch kept: /tmp/p/speck.diff.
+- Looks pushed 10:50:23 (1b37ac1e, 8 looks: C8 at 4860 beside the approved, the dive inside the air, the red chain of 4962).
+- G13 (MAIL 1042), controls with my frames tool and the texel view (draft, 1920, full assets):
+  - T1, the tree as it stood: 4530 89.878 percent soft of 1058088, mean 0.38; 4605 89.658 percent, mean 0.38; 4860 71.199
+    percent of 1570666, mean 0.84. The Builder's numbers, so the tool reads what his machine reads.
+  - The view at 4530 (ev/g13-view-4530-before.jpg): the whole disc at 0.1 to 0.3 texels, a round patch of 9.6 units about the
+    place at 2.0, Triton at 2.0. The scene's quad covers the disc; deep.ts writes its count (4 pixels over the made detail) with
+    alpha 1 at every pixel of the quad; where no code is asked (farW 1) the made detail stays at its start value of 1 unit.
+  - T2, control /tmp/p/g13.py (the count is the map's own where the map is what is drawn, the finer of map and code where the
+    code has its share, and it is written by the scene's share of the pixel): 4530 0.000 percent soft of 1058011, mean 1.82;
+    4605 0.000 percent, mean 1.80; 4860 47.622 percent of 1570666, mean 1.14. The beauty of 4605 the same bytes as c2edd61ba.
+    At 4860 by rows of 90 (mean, soft share): 90 1.83, 0.00; 180 1.75, 0.00; 270 1.52, 0.09; 360 1.25, 0.36; 450 1.27, 0.36;
+    540 1.10, 0.39; 630 0.90, 0.76; 720 0.82, 0.88; 810 0.99, 0.70; 900 1.09, 0.51; 990 1.12, 0.34.
+  - M1, main's own Neptune (the three folders of origin/main 706b3ec1a laid on my tree's core, then taken off again; band.ts
+    of mine does not type check beside them, the build does not ask it): 4530 0.000 percent soft of 1058011, mean 1.80; 4860
+    71.232 percent of 1572509, mean 0.85. So the hold's number is mine (5a14d56dd, the scene drawn at the hold) and the
+    terrain's number is NOT new: main's terrain reads the same 71 percent by this tool.
+  - A slip, mended: taking main's files off, my glob also removed place-tone.webp from the index; restored from HEAD; the tree
+    is HEAD plus the control in deep.ts and this notebook (git status checked, 48 tracked assets as before).
+
+## 25 Nov, 11:16 to 11:44 UTC: the count's commit, way C laid on it, the strips of G17, the terrain's rows
+
+- Order as MAIL 1049 rules (the count apart from way C and before it): way C was a local commit only (bf7752dbd, never pushed), so
+  I took it off (reset to the pushed 0971fc1df, its diff and message kept), committed the count on the pushed tip, and laid way C on
+  it again. Checked: deep.json and set.ts equal to bf7752dbd's, deep.ts equal to it plus the count's lines, line for line; 4605 at
+  1920 the same bytes as c2edd61ba, 4860 at preview the same bytes as C8p (the state way C's numbers were measured on).
+  - f462b9938: the texel view counts what is drawn (count.ts, the law as one text for the shader and the test;
+    assets-src/neptune/count.test.ts, 5 tests, run with npx vitest run --config assets-src/neptune/vitest.config.ts, because the
+    repo's config reads tests/ alone and that folder is not mine). Beauty equal to the bit on the judged frames at 1920, draft,
+    before (c2edd61ba's tree, dir J0 and B6) and after (J1), sha256 first 16: 4605 cf858a9f835a480f, 4707 9dea908ade1083d5, 4860
+    60cd8d3275f723f2, 5006 6e7db4592a542b0c. Texel view: 4530 0.000 percent soft of 1058011, mean 1.82; 4860 48.660 percent, mean
+    1.14 (the cirrus now by its cover: 47.6 in the control became 48.7).
+  - 9e3f75c0f: way C, the same change and message as bf7752dbd.
+- The disk filled twice (25 G, 100 percent): the fetch of main and of agent/jupiter-code grew .git to 11 G. A build failed with
+  no space (no frame lost). I removed about 200 of my old work folders under out/work/nep/weave (frames of trials that the
+  notebook already holds in numbers) and stale browser profiles in /tmp; 1.5 G free. No more fetches of other branches.
+- Jupiter's slab law read (agent/jupiter-code 8011a25a6, clouds.ts: hazeAt, hazeOne, layered): the ray enters and leaves the slab
+  (ta, tc), the density is the mean of taps along that run, each octave is faded by the larger of the run and the pixel's foot
+  (size), and the cover's step is widened by the variance the faded octaves lost. For Neptune the sheet is a picture, not octaves;
+  the like law: the map's cloud layer read as a slab between the deck and the sheet's height, at taps along the ray's run through
+  it, each tap over a footprint as long as its share of the run (the map's own levels do the fading and keep the mean). To hold
+  4605 to the bit the widening must be exactly none where the run is under the pixel's foot (max(run / foot, 1) on the
+  footprint, one tap at the old point when so). Not built; next after the NAMED.
+- G17 at 4860, the top rows (tools/measure/g17.py's own functions, my draft frame at 1920; my frames are draft, so the numbers are
+  lower than the machine's final: all 75 tiles median 0.359 on c2edd61ba's tree, 0.254 on way C's):
+  - Row 0, tiles 4 to 11, and row 1, tiles 7 to 11 (13 tiles), are SKY in our frame and in the approved. The approved carries a
+    dense bright star field with the Milky Way at the upper right there: luma 0.044 to 0.130, band energy 35 to 100 e-5. Ours: the
+    engine's one sky with a few faint stars: luma 0.014 to 0.025, energy 0.9 to 15 e-5. Ratios 0.02 to 0.18.
+  - Row 1, tiles 1 to 6: the far plain under the limb. The approved has fibrous cirrus and streaks there (energy 8 to 76 e-5);
+    ours a smooth haze band (1.4 to 4.9 e-5 on c2edd61ba). Ratios 0.06 to 0.17 (way C: 0.07 to 0.50).
+  - Arithmetic on c2edd61ba's frame: without the 13 sky tiles the median of the other 62 is 0.499; with the 13 sky tiles as
+    good as the approved (ratio 1) the median of the 75 is 0.764.
+  - The cause of the sky: sky.json is empty since today (MAIL 774, 878: no sky plate of the stop, the engine's one sky at
+    every height); main's Neptune had the plate sky-terrain.webp, painted after the approved image. The sky is not mine to make.
+  - Strips at 1 to 1 (approved above, ours below, 1920 by 270 each): ev/g17-top-c2edd61b.jpg, ev/g17-top-wayC.jpg.
+- The terrain's rows at 4860 (MAIL 1049, 2), from the layers view (J2) and the texel views (T1 the code's count alone, J1 the law):
+  - Row 630: the deck by code on 91 percent of the pixels, cirrus over the rest. The code's finest made wave is 4.4 pixel feet
+    (median; 2.8 to 11.3), count 0.92; 74 percent soft. On 22 percent of the pixels the map reads finer than the code.
+  - Row 800: the deck by code on 93 percent. Finest wave 5.0 feet (2.6 to 7.7), count 0.79; 92 percent soft.
+  - Row 1079: the deck by code on 95 percent. Finest wave 3.2 feet (2.8 to 5.5), count 1.23; 24 percent soft.
+  - The foot here is the pixel's width at the deck (distance times the pixel's angle). The cause in the code (deep.ts, where the
+    deck's octaves are asked, and deckField): an octave is kept while its wave is longer than 1.5 to 3 times what the pixel covers
+    ALONG the sight line on the slanted deck (the foot over the sine of the angle onto the deck), so the made detail stops at the
+    pixel's long side and against its width the finest wave is 3 to 5 feet. Nothing reads the clock or the height.
+  - A fact about the measure, said and not asked for: the map's count (diagTexelsDir) takes the longer side of the pixel's foot,
+    the code's count its width. By the map's way of counting the code would read 4 / (1.5 to 3), that is 1.3 to 2.7.
+  - Main's own terrain read 71.2 percent soft by this tool (M1, main's three folders on my tree), where the mail says main passed.
+    I cannot see main's record of G13 for 4770 to 4949; said to the Builder as it stands.
