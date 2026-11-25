@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T04:30:25.358Z",
- "head": "5476485ab97a31c00b8e5928241f912b11c19bfd",
- "note": "Commit 4 (local head 5476485a, checks running): frame 0 near and frame 90 far beside the approved at 1 to 1, the change of view at 205 over four frames, and the colour specks at the arcade's foot with their cause in the loops card",
+ "pushed": "2026-11-25T04:52:23.603Z",
+ "head": "7bc9ef803c8b4751816db85acbe5bbcb4b8d0f75",
+ "note": "trial d5 frame 60 near and far beside the approved; still wrong: flat faces, polygon outlines, too little glow at the horizon",
  "looks": [
+  {
+   "time": "2026-11-25T04:52:18.582Z",
+   "file": "20261125045218582-note-d5-60-far.jpg",
+   "source": "../../../../tmp/v/d5-60-far.jpg",
+   "kind": "note",
+   "label": "trial d5 frame 60 far, approved left, native size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T04:52:17.873Z",
+   "file": "20261125045217873-note-d5-60-near.jpg",
+   "source": "../../../../tmp/v/d5-60-near.jpg",
+   "kind": "note",
+   "label": "trial d5 frame 60 near, approved left, native size",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T04:30:19.641Z",
    "file": "20261125043019641-note-card-foot.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c4-rise-c3c4.jpg",
    "kind": "note",
    "label": "Rise 217, 225, 231, 247 draft: commit 3 above, commit 4 in the tree below. The ground leaves by distance from the eye, far side first; corona and far sky by height 0.3 to 3.2",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:10:41.047Z",
-   "file": "20261125041041047-note-c4-90-spot.jpg",
-   "source": "../../../../tmp/v/c4-90-spot.jpg",
-   "kind": "note",
-   "label": "Proof of commit 4, draft, frame 90 spot at 1 to 1, approved left. Still wrong: umbra small, lip thin, sides brushed",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:10:40.520Z",
-   "file": "20261125041040520-note-c4-60-far.jpg",
-   "source": "../../../../tmp/v/c4-60-far.jpg",
-   "kind": "note",
-   "label": "Proof of commit 4, draft, frame 60 far ground and horizon at 1 to 1, approved left. Still wrong: far cells read as pebbles, a band of fine dots under the horizon",
    "stop": "sun"
   }
  ]
