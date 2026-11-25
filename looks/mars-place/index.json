@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T00:38:37.603Z",
- "head": "f0f0ebb0345aae227415742491409cee74b8833a",
- "note": "trial of the edge at the sides of the close picture: slab at the right edge goes, a black box in the sky appears, not committed",
+ "pushed": "2026-11-25T00:47:55.700Z",
+ "head": "14e4331bd46bad0a9724c407ff29a879ad175d70",
+ "note": "ruling 2 trials: edge with the air whole takes the slab out; every height is still a fan; dome is the globe's ground",
  "looks": [
+  {
+   "time": "2026-11-25T00:47:55.110Z",
+   "file": "20261125004755110-note-n54-dome.jpg",
+   "source": "out/work/place/see/n54-dome.jpg",
+   "kind": "note",
+   "label": "lower right at 2467, 2469, 2470, 2473, 2477, 2684: the dark dome is the globe's own ground, it is not in the surface view at 2477",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T00:47:54.479Z",
+   "file": "20261125004754479-note-n54-eh.jpg",
+   "source": "out/work/place/see/n54-eh.jpg",
+   "kind": "note",
+   "label": "trial not kept: the close ground there at every height (bottom) against the commit before (top) at 2420, 2440, 2460: from above it is a fan, so the presence band stays",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T00:47:53.646Z",
+   "file": "20261125004753646-note-n54-ea.jpg",
+   "source": "out/work/place/see/n54-ea.jpg",
+   "kind": "note",
+   "label": "trial, right half at 2470, 2684, 2687: before (left of each pair) and with the close ground ending at the sides of its picture, its air left whole (right of each pair); the slab and fan at the right edge are out",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T00:38:36.893Z",
    "file": "20261125003836893-note-n54-edge.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/see/n52-2687.jpg",
    "kind": "note",
    "label": "2686 to 2688, top d6c01889, bottom 7253f5fd",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:11:30.302Z",
-   "file": "20261125001130302-note-n52-rise.jpg",
-   "source": "out/work/place/see/n52-rise.jpg",
-   "kind": "note",
-   "label": "d6c01889 draft: rise 2681 to 2692",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:11:29.744Z",
-   "file": "20261125001129744-note-n52-band.jpg",
-   "source": "out/work/place/see/n52-band.jpg",
-   "kind": "note",
-   "label": "d6c01889 draft: 2470 to 2473",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:11:29.170Z",
-   "file": "20261125001129170-note-n52-T-dive.jpg",
-   "source": "out/work/place/see/n52-T-dive.jpg",
-   "kind": "note",
-   "label": "d6c01889 draft: every frame 2467 to 2481 (T 2477)",
    "stop": "mars"
   }
  ]
