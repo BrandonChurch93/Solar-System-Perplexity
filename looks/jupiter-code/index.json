@@ -1,9 +1,65 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T20:40:29.873Z",
+ "pushed": "2026-11-25T20:57:41.220Z",
  "head": "b660882b510fd8ac4ea3608fd0872db217139894",
- "note": "20:41 fourth note plan O: my head's surface view at 3060 and 3150, 1 to 1, for the answer on what moves the storm; main's frames follow",
+ "note": "answer to plan O: main and my head at 3060, 3239, 3150 at 1 to 1 and the storm crops",
  "looks": [
+  {
+   "time": "2026-11-25T20:57:36.190Z",
+   "file": "20261125205736190-note-k006300-r2-draft.jpg",
+   "source": "../work/r21/mine/k006300-r2-draft.png",
+   "kind": "note",
+   "label": "O answer: my head b660882, frame 3150, draft tier, 1 to 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:57:35.494Z",
+   "file": "20261125205735494-note-k006478-r2-draft.jpg",
+   "source": "../work/r21/mine/k006478-r2-draft.png",
+   "kind": "note",
+   "label": "O answer: my head b660882, frame 3239, draft tier, 1 to 1 (the eye inside 0.9 units stands still, the collar is dragged up to 15.2 degrees)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:57:34.831Z",
+   "file": "20261125205734831-note-k006120-r2-draft.jpg",
+   "source": "../work/r21/mine/k006120-r2-draft.png",
+   "kind": "note",
+   "label": "O answer: my head b660882, frame 3060, draft tier, 1 to 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:57:34.159Z",
+   "file": "20261125205734159-note-o-storm-1to1.jpg",
+   "source": "../work/r21/o-storm-1to1.png",
+   "kind": "note",
+   "label": "O answer: the storm at 1 to 1, crops of 3060, 3150, 3239: main above, my head b660882 below",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:57:33.501Z",
+   "file": "20261125205733501-note-k006300-r2-draft.jpg",
+   "source": "../work/r21/mainf/k006300-r2-draft.png",
+   "kind": "note",
+   "label": "O answer: main ce8cb68b, frame 3150, draft tier, 1 to 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:57:32.851Z",
+   "file": "20261125205732851-note-k006478-r2-draft.jpg",
+   "source": "../work/r21/mainf/k006478-r2-draft.png",
+   "kind": "note",
+   "label": "O answer: main ce8cb68b, frame 3239, draft tier, 1 to 1 (against 3060 the eye and its bright crescent have turned 50.7 degrees as rigid rings)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T20:57:32.022Z",
+   "file": "20261125205732022-note-k006120-r2-draft.jpg",
+   "source": "../work/r21/mainf/k006120-r2-draft.png",
+   "kind": "note",
+   "label": "O answer: main ce8cb68b, frame 3060, draft tier, 1 to 1",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T20:40:28.584Z",
    "file": "20261125204028584-note-k006300-r2-draft.jpg",
@@ -138,68 +194,6 @@
    "source": "../work/r18/place-2895.jpg",
    "kind": "note",
    "label": "hold 2895 at the place and Io's shadow: approved, main, the tip, difference times 4",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T18:33:59.086Z",
-   "file": "20261125183359086-note-dive-d.jpg",
-   "source": "../work/r15/sheets/dive-d.jpg",
-   "kind": "note",
-   "label": "dive 3047 to 3055 + 1/2 on the tip, every half frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T18:16:49.023Z",
-   "file": "20261125181649023-note-dive-c.jpg",
-   "source": "../work/r15/sheets/dive-c.jpg",
-   "kind": "note",
-   "label": "dive 3035 to 3046 + 1/2, every drawn frame, draft, on 1c5b75f; the lower left dark and plain from 3037 (the wedge's ground, listed)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T18:16:48.271Z",
-   "file": "20261125181648271-note-dive-b.jpg",
-   "source": "../work/r15/sheets/dive-b.jpg",
-   "kind": "note",
-   "label": "dive 3023 to 3034 + 1/2, every drawn frame, draft, on 1c5b75f",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T18:16:46.873Z",
-   "file": "20261125181646873-note-dive-a.jpg",
-   "source": "../work/r15/sheets/dive-a.jpg",
-   "kind": "note",
-   "label": "dive 3011 to 3022 + 1/2, every drawn frame, draft, on 1c5b75f",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T18:16:45.365Z",
-   "file": "20261125181645365-note-p1-3296.jpg",
-   "source": "../work/r17/p1-3296.jpg",
-   "kind": "note",
-   "label": "3296 final on 1c5b75f (the rise's pull back at 2.4 over 1.75 s): drawn from 1.562 radii, was 1.45",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:56:42.010Z",
-   "file": "20261125175642010-frame-p1-3296.jpg",
-   "source": "out/work/jupiter/final/p1-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T17:50:58.599Z",
-   "file": "20261125175058599-note-p1-3150.jpg",
-   "source": "../work/r15/p1-3150.jpg",
-   "kind": "note",
-   "label": "3150 final on 1c5b75f: equal bytes with the last two names (sha256 8e9cf280), 6.113 against the approved",
    "stop": "jupiter"
   }
  ]
