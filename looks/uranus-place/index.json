@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T05:05:22.566Z",
+ "pushed": "2026-11-25T05:32:21.761Z",
  "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
- "note": "round 3 work, not a proof: ablations of the dive's pattern red. Cover off and light handed by pixel still reads 1.43 at 4153 (RED); the globe's own light alone reads 0.03 seen from straight above. Cure not yet found.",
+ "note": "Trial T5 in render (not named): layer law, hand by pixel size and by angle, geometric mix. First four frames 4150 to 4153 main beside T5; no measure yet for T5. Main read by the same reader is over 0.45 on 4152 to 4169 + 1/2 (1.03 to 1.44).",
  "looks": [
+  {
+   "time": "2026-11-25T05:32:14.162Z",
+   "file": "20261125053214162-note-t5-pair-a.jpg",
+   "source": "../../../../tmp/n48/t5-pair-a.jpg",
+   "kind": "note",
+   "label": "dive 4150 to 4153 main beside trial T5 (layer law, hand by pixel size and angle)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T05:05:20.778Z",
    "file": "20261125050520778-note-X1-panel.jpg",
@@ -258,14 +266,6 @@
    "source": "../../../../tmp/parA/travel-b.jpg",
    "kind": "note",
    "label": "travel 4503 to 4530 every third frame at draft, on the named tree 9172cc84 (4503 to 4515 equal to the byte to those before the merge of 12bfd7d5)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T01:04:05.634Z",
-   "file": "20261125010405634-note-travel-a.jpg",
-   "source": "../../../../tmp/parA/travel-a.jpg",
-   "kind": "note",
-   "label": "travel 4503 to 4515 every third frame, draft, tree before the merge of main 12bfd7d5 (the Sun comes into Neptune's frame at 4515)",
    "stop": "uranus"
   }
  ]
