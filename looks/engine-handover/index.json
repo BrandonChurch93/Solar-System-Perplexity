@@ -1,9 +1,51 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T06:46:56.469Z",
+ "pushed": "2026-11-25T07:44:12.523Z",
  "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
- "note": "MAIL 925 table: borders of Mars, Saturn, Uranus with and without the shutter ends; the sea at 1857; Mercury 730 and Jupiter 3027 are rendering",
+ "note": "The table of MAIL 925: Mercury 730, Mars 2427, flight 2757, Uranus 4130 with and without the shutter's ends; Jupiter 3027 is rendering",
  "looks": [
+  {
+   "time": "2026-11-25T07:41:56.986Z",
+   "file": "20261125074156986-note-ma-2427-pair-1x.jpg",
+   "source": "../../../../tmp/law/dots/ma-2427-pair-1x.png",
+   "kind": "note",
+   "label": "Mars 2427 review (49 samples, 29.0 px), x 1200..1920 y 600..1080 at 1 to 1: box, ends 0.5 (scratch). The painted strokes become land in motion, cliffs and ridges keep their shape"
+  },
+  {
+   "time": "2026-11-25T07:36:17.386Z",
+   "file": "20261125073617386-note-fl-2757-cap-3x.jpg",
+   "source": "../../../../tmp/law/dots/fl-2757-cap-3x.png",
+   "kind": "note",
+   "label": "Flight 2757 review, the white patch x 690..930 y 290..500 at 3 times: box, ends 0.5 (scratch). The fine lines along the way stay, their blunt ends taper"
+  },
+  {
+   "time": "2026-11-25T07:36:16.100Z",
+   "file": "20261125073616100-note-fl-2757-pair-1x.jpg",
+   "source": "../../../../tmp/law/dots/fl-2757-pair-1x.png",
+   "kind": "note",
+   "label": "Flight after Mars, frame 2757 review (79 samples, 47.3 px), x 300..1020 y 60..560 at 1 to 1: box shutter (as it is), and ends 0.5 in the flight (scratch, the ends as built do not reach a flight). No separate copies in either; with the ends the streaks taper and the white patch is more compact"
+  },
+  {
+   "time": "2026-11-25T07:28:49.301Z",
+   "file": "20261125072849301-note-ur-4130-trio.jpg",
+   "source": "../../../../tmp/law/dots/ur-4130-trio.png",
+   "kind": "note",
+   "label": "Uranus 4130 review (26 samples, 15.4 px), the storm x 1040..1280 y 580..760 at 2 times: box, ends 0.5, ends 0.5 with cover 2 (scratch). The blocky white specks stand in all three: they are the cloud picture's own grain, neither the ends nor the cover moves them"
+  },
+  {
+   "time": "2026-11-25T07:27:06.468Z",
+   "file": "20261125072706468-note-me-730-pair-2x.jpg",
+   "source": "../../../../tmp/law/dots/me-730-pair-2x.png",
+   "kind": "note",
+   "label": "Mercury 730 review, x 0..360 y 60..330 at 2 times: box, ends 0.5 (scratch). The bars with fine lines inside become ovals"
+  },
+  {
+   "time": "2026-11-25T07:27:05.813Z",
+   "file": "20261125072705813-note-me-730-pair-1x.jpg",
+   "source": "../../../../tmp/law/dots/me-730-pair-1x.png",
+   "kind": "note",
+   "label": "Mercury 730 review (53 samples, 31.7 px), x 0..720 y 0..480 at 1 to 1: box shutter, and the shutter's ends at 0.5 (scratch). The rows of bars become tapered streaks, the craters keep their shape"
+  },
   {
    "time": "2026-11-25T06:34:44.898Z",
    "file": "20261125063444898-note-ur-4130-clouds.jpg",
@@ -18,51 +60,6 @@
    "kind": "note",
    "label": "Uranus border 4199 to 4200 at review, the rings x 1340..1580 y 400..560 at 3 times: 4199 box, 4199 with ends 0.5 (scratch), 4200: no step seen (box against ends 0.12 of 255)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T06:30:23.318Z",
-   "file": "20261125063023318-note-bd-saturn-3810.jpg",
-   "source": "../../../../tmp/law/dots/bd-saturn-3810.png",
-   "kind": "note",
-   "label": "Saturn border 3809 to 3810 at review, x 0..240 y 500..660 at 3 times: 3809 (box), 3810 box, 3810 with ends 0.5 (scratch): the rings are crisper with the ends, a step at the border",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T06:30:22.285Z",
-   "file": "20261125063022285-note-bd-mars-2670.jpg",
-   "source": "../../../../tmp/law/dots/bd-mars-2670.png",
-   "kind": "note",
-   "label": "Mars border 2669 to 2670 at review, x 500..740 y 640..800 at 3 times: 2669 (box), 2670 box, 2670 with ends 0.5 (scratch): the specks are shorter with the ends, a step at the border",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:26:51.947Z",
-   "file": "20261125062651947-note-sea-1857-3x.jpg",
-   "source": "../../../../tmp/law/dots/sea-1857-3x.png",
-   "kind": "note",
-   "label": "Earth 1857 review, the sea x 300..620 y 880..1000 at 3 times: take batch 8, batch 10, gradAt: the hatch is the sea's fine texture drawn along the motion, in all three"
-  },
-  {
-   "time": "2026-11-25T06:26:50.822Z",
-   "file": "20261125062650822-note-sea-1857-1to1.jpg",
-   "source": "../../../../tmp/law/dots/sea-1857-1to1.png",
-   "kind": "note",
-   "label": "Earth 1857 review, the sea x 300..940 y 760..1000 at 1 to 1: take batch 8, batch 10 (cover by frame, ends), gradAt with Earth's callers"
-  },
-  {
-   "time": "2026-11-25T06:22:47.644Z",
-   "file": "20261125062247644-note-mars-2669-2670-half.jpg",
-   "source": "../../../../tmp/law/dots/mars-2669-2670-half.png",
-   "kind": "note",
-   "label": "Mars 2669 (surface view, 8 samples) beside 2670 (first frame of the rise, 16 samples), box shutter, at half size",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:22:46.984Z",
-   "file": "20261125062246984-note-cz-2099-2100-land.jpg",
-   "source": "../../../../tmp/law/dots/cz-2099-2100-land.png",
-   "kind": "note",
-   "label": "Earth 2099 to 2101 at review, x 500..740 y 600..760 at 2.7 times: 2099 surface view (4 samples), 2100 surface view alone (16), 2100 as it is (8 and 8), 2101 globe (16). The softening is the count"
   }
  ]
 }
