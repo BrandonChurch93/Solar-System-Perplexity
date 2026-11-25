@@ -40,7 +40,12 @@ export const createSet: SetFactory = async (ctx) => {
   const terrain = new THREE.Group()
   world.add(orbit, terrain)
 
+  const counted = (name: string, t: THREE.Texture, full: number): void => {
+    const width = (t.image as unknown as { width: number }).width
+    if (key === 'full' && width !== full) throw new Error('uranus: ' + name + ' is ' + width + ' texels wide in the full set and the look counts ' + full)
+  }
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
+  counted('wrap-color.jpg', map, look.texels.map)
   const cloud = await ctx.texture(base + 'wrap-cloud.png', { srgb: false, channels: 1, anisotropy: 16, repeat: true })
   const shadow = await ctx.texture(base + 'wrap-shadow.png', { srgb: false, channels: 1, anisotropy: 16, repeat: true })
   const light = await ctx.dataTexture(base + 'light.bin', look.globe.lightSize[0], look.globe.lightSize[1], 4)
@@ -48,19 +53,21 @@ export const createSet: SetFactory = async (ctx) => {
   const haloLut = await ctx.dataTexture(base + 'halo.bin', look.halo.size[0], look.halo.size[1], 4)
   const patchTextures: THREE.Texture[] = []
   for (const level of patchJson.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
-  const patches = { textures: patchTextures, widthsDeg: patchJson.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(patchJson.spot), feather: patchJson.feather, fade: patchJson.fade as [number, number] }
+  patchTextures.forEach((t, i) => counted(patchJson.levels[i]!.file, t, look.texels.patches[i]!))
+  const patches = { textures: patchTextures, sizes: look.texels.patches, widthsDeg: patchJson.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(patchJson.spot), feather: patchJson.feather, fade: patchJson.fade as [number, number] }
   const face = { map: await ctx.texture(base + 'face.jpg', { srgb: false, anisotropy: 16 }), ...look.face }
   const deckLight = await ctx.dataTexture(base + 'deck-light.bin', deckJson.lightSize[0]!, deckJson.lightSize[1]!, 4)
   const plateTextures: THREE.Texture[] = []
   for (const level of platesJson.levels) plateTextures.push(await ctx.texture(base + level.file, { srgb: false, anisotropy: 16 }))
+  plateTextures.forEach((t, i) => counted(platesJson.levels[i]!.file, t, look.texels.plates[i]!))
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const flight = plan.seg.terrain.end - plan.seg.terrain.start
   const topPath = Array.from({ length: TOP_PATH }, (_, i) => plan.terrain(flight * i / (TOP_PATH - 1)).position.clone())
   const place = {
-    textures: plateTextures, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, steep: look.place.steep, relitSoft: look.place.light.soft, topLight: { ...look.place.tops, path: topPath }, feather: platesJson.feather,
+    textures: plateTextures, sizes: look.texels.plates, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, steep: look.place.steep, relitSoft: look.place.light.soft, topLight: { ...look.place.tops, path: topPath }, feather: platesJson.feather,
     deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, sun: deckJson.sun, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
   }
-  const globe = new Globe({ map, cloud, shadow, light, shade, patches, face, place, ...look.globe })
+  const globe = new Globe({ map, mapWidth: look.texels.map, cloud, shadow, light, shade, patches, face, place, ...look.globe })
   globe.mesh.quaternion.copy(globeTurn)
   const halo = new Halo(haloLut, look.halo.size, look.halo.range, { map, light, shade, lightSize: look.globe.lightSize, bandRate: look.globe.bandRate, turn: globe.mesh.quaternion, rim: look.halo.rim, rimSun: look.halo.rimSun })
   const shape = new THREE.Group()
@@ -93,6 +100,7 @@ export const createSet: SetFactory = async (ctx) => {
     const tone = look.moons.bodies[m.id]!
     const body = new Moon({
       map: await ctx.texture(base + m.id + '-color.jpg', { srgb: true, anisotropy: 16, repeat: true }),
+      mapWidth: look.texels.moon,
       height: ctx.floatTexture(await heights(ctx, base + m.id + '-height.bin', moonSize[0], moonSize[1]), moonSize[0], moonSize[1], true),
       heightWidth: moonSize[0], bump: look.moons.bump, wrap: look.moons.wrap, seeliger: tone.seeliger, knee: look.moons.knee, rim: tone.rim, sun: tone.sun, ambient: tone.ambient, bounce: look.moons.bounce, air: look.moons.air,
     })
@@ -105,14 +113,20 @@ export const createSet: SetFactory = async (ctx) => {
   orbit.add(far.points)
 
   const deckHalo = await ctx.dataTexture(base + 'deck-halo.bin', deckJson.haloSize[0]!, deckJson.haloSize[1]!, 4)
+  const deckColor = await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 })
+  const deckNear = await ctx.texture(base + 'deck-near.jpg', { srgb: true, anisotropy: 16 })
+  const deckCloud = await ctx.texture(base + 'deck-cloud.jpg', { srgb: false, anisotropy: 16, repeat: true })
+  counted('deck-color.jpg', deckColor, deckJson.imageSize.full[0]!)
+  counted('deck-near.jpg', deckNear, look.texels.near)
+  counted('deck-cloud.jpg', deckCloud, look.texels.cloud)
   const deck = new Deck({
-    color: await ctx.texture(base + 'deck-color.jpg', { srgb: true, anisotropy: 16 }),
-    near: await ctx.texture(base + 'deck-near.jpg', { srgb: true, anisotropy: 16 }),
-    cloud: await ctx.texture(base + 'deck-cloud.jpg', { srgb: false, anisotropy: 16, repeat: true }),
+    color: deckColor,
+    near: deckNear,
+    cloud: deckCloud,
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: deckLight,
     halo: deckHalo,
-  }, key, look.deck, globe.plates(), look.place.deck.calm)
+  }, look.texels, look.deck, globe.plates(), look.place.deck.calm)
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const deckCentre = new THREE.Vector3().fromArray(deckJson.centre)

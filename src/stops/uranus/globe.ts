@@ -73,7 +73,7 @@ export const TOPS_GLSL = /* glsl */ `
 uniform vec2 uTops;
 uniform vec3 uTopWhite;
 uniform vec2 uTopFine;
-uniform vec3 uTopHaze;
+uniform vec3 uTopLane;
 uniform vec3 uTopSun;
 uniform vec3 uTopPath[${TOP_PATH}];
 float topsAt(vec2 pg, vec2 px, vec2 py) {
@@ -105,11 +105,8 @@ float topsSeen(vec3 p, vec3 n) {
   }
   return best;
 }
-vec3 topHaze(float mu) {
-  return exp(-uTopHaze * (1.0 / max(mu, 1e-3) - 1.0));
-}
-vec3 topsLight(float share, float sun, float mu, float seen) {
-  return uTopWhite * (share * smoothstep(uTops.x, uTops.y, sun)) * max(topHaze(mu) - topHaze(seen), vec3(0.0));
+vec3 topsLight(float share, float sun, float seen) {
+  return uTopWhite * (share * smoothstep(uTops.x, uTops.y, sun)) * (1.0 - exp(-uTopLane * (1.0 / max(seen, 1e-3) - 1.0)));
 }`
 
 const FRAG = /* glsl */ `
@@ -309,7 +306,7 @@ ${PLATE_LEVELS}
   vec3 tops = vec3(0.0);
   float topShare = 0.0;
   for (int k = 0; k < (pn > 0.5 ? 1 : 0); k++) topShare = topsAt(pg, px, py);
-  for (int k = 0; k < (topShare > 0.0 ? 1 : 0); k++) tops = topsLight(topShare, dot(pD, uTopSun), muD, topsSeen(uDeckCentre + uDeckRadius * pD, pD));
+  for (int k = 0; k < (topShare > 0.0 ? 1 : 0); k++) tops = topsLight(topShare, dot(pD, uTopSun), topsSeen(uDeckCentre + uDeckRadius * pD, pD));
   col = mix(own, relit, mix(uRelit.y, uRelit.x, smoothstep(-uRelit.z, uRelit.z, lift)) * (1.0 - smoothstep(uSteep.x, uSteep.y, muD))) + uNear * tops;
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));
@@ -329,13 +326,15 @@ export interface GlobeOptions {
   cloudFine: number
   sharp: [number, number]
   wrapSoft: number
-  patches: { textures: THREE.Texture[]; widthsDeg: number[]; spot: THREE.Vector3; feather: number; fade: [number, number] }
+  mapWidth: number
+  patches: { textures: THREE.Texture[]; sizes: number[]; widthsDeg: number[]; spot: THREE.Vector3; feather: number; fade: [number, number] }
   face: { map: THREE.Texture; centre: [number, number, number]; reachDeg: number; fadeDeg: [number, number]; gain: number }
   place: PlaceOptions
 }
 
 export interface PlaceOptions {
   textures: THREE.Texture[]
+  sizes: number[]
   halfTans: number[]
   frame: { n: number[]; e: number[]; u: number[] }
   rot: THREE.Quaternion
@@ -344,7 +343,7 @@ export interface PlaceOptions {
   aMax: number
   steep: [number, number]
   relitSoft: number
-  topLight: { sun: [number, number]; white: [number, number, number]; fine: [number, number]; haze: [number, number, number]; path: THREE.Vector3[] }
+  topLight: { sun: [number, number]; white: [number, number, number]; fine: [number, number]; lane: [number, number, number]; path: THREE.Vector3[] }
   feather: number
   deck: { centre: number[]; radius: number; f0: number[]; r0: number[]; sun: number[]; flow: [number, number, number, number]; flowAngle: number; light: THREE.Texture; lightSize: number[]; psiMax: number }
 }
@@ -371,10 +370,10 @@ export class Globe {
       fragmentShader: FRAG,
       uniforms: {
         uMap: { value: o.map }, uCloud: { value: o.cloud }, uShadow: { value: o.shadow }, uLight: { value: o.light }, uShade: { value: o.shade }, uLightSize: { value: new THREE.Vector2().fromArray(o.lightSize) },
-        uMapWidth: { value: (o.map.image as unknown as { width: number }).width },
+        uMapWidth: { value: o.mapWidth },
         ...Object.fromEntries(p.textures.map((t, i) => ['uPatch' + i, { value: t }])),
         uPatchScale: { value: p.widthsDeg.map((w) => 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2))) },
-        uPatchSize: { value: p.textures.map((t) => (t.image as unknown as { width: number }).width) },
+        uPatchSize: { value: p.sizes },
         uFeather: { value: p.feather }, uPatchRim: { value: new THREE.Vector2(p.feather, 0) }, uPatchFade: { value: new THREE.Vector2().fromArray(p.fade) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uWrapSoft: { value: o.wrapSoft }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 },
@@ -388,8 +387,8 @@ export class Globe {
         uFaceN: { value: faceN }, uFaceE: { value: faceE }, uFaceU: { value: faceN.clone().cross(faceE) },
         ...Object.fromEntries(pl.textures.map((t, i) => ['uPlate' + i, { value: t }])),
         uPlateScale: { value: pl.halfTans.map((t) => 1 / (2 * t)) },
-        uPlateSize: { value: pl.textures.map((t) => (t.image as unknown as { width: number }).width) },
-        uPlace: { value: new THREE.Vector2(pl.feather, pl.aMax) }, uRelit: { value: new THREE.Vector3(0, 0, pl.relitSoft) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopHaze: { value: new THREE.Vector3().fromArray(pl.topLight.haze) }, uTopSun: { value: v3(pl.deck.sun) }, uTopPath: { value: pl.topLight.path }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
+        uPlateSize: { value: pl.sizes },
+        uPlace: { value: new THREE.Vector2(pl.feather, pl.aMax) }, uRelit: { value: new THREE.Vector3(0, 0, pl.relitSoft) }, uSteep: { value: new THREE.Vector2().fromArray(pl.steep) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopLane: { value: new THREE.Vector3().fromArray(pl.topLight.lane) }, uTopSun: { value: v3(pl.deck.sun) }, uTopPath: { value: pl.topLight.path }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
         uPlaceRot: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(pl.rot)) },
         uPlaceN: { value: v3(pl.frame.n) }, uPlaceE: { value: v3(pl.frame.e) }, uPlaceU: { value: v3(pl.frame.u) },
         uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },
@@ -451,7 +450,7 @@ export class Globe {
   plates(): Record<string, THREE.IUniform> {
     const u = this.material.uniforms
     const out: Record<string, THREE.IUniform> = { uPlateScale: u.uPlateScale!, uPlateSize: u.uPlateSize!, uPlace: u.uPlace!, uPlaceField: u.uPlaceField!, uPlaceN: u.uPlaceN!, uPlaceE: u.uPlaceE!, uPlaceU: u.uPlaceU! }
-    for (const name of ['uTops', 'uTopWhite', 'uTopFine', 'uTopHaze', 'uTopSun', 'uTopPath']) out[name] = u[name]!
+    for (const name of ['uTops', 'uTopWhite', 'uTopFine', 'uTopLane', 'uTopSun', 'uTopPath']) out[name] = u[name]!
     for (let i = 0; i < PLATE_COUNT; i++) out['uPlate' + i] = u['uPlate' + i]!
     return out
   }
