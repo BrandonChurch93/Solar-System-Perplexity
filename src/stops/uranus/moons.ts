@@ -82,6 +82,7 @@ void main() {
 
 export interface MoonOptions {
   map: THREE.Texture
+  mapWidth: number
   height: THREE.Texture
   heightWidth: number
   bump: number
@@ -107,7 +108,7 @@ export class Moon {
       vertexShader: SPHERE_VERT,
       fragmentShader: FRAG,
       uniforms: {
-        uMap: { value: o.map }, uHeight: { value: o.height }, uMapWidth: { value: (o.map.image as unknown as { width: number }).width },
+        uMap: { value: o.map }, uHeight: { value: o.height }, uMapWidth: { value: o.mapWidth },
         uStep: { value: (2 * Math.PI) / o.heightWidth }, uBump: { value: o.bump }, uWrap: { value: o.wrap }, uSeeliger: { value: o.seeliger }, uKnee: { value: new THREE.Vector2().fromArray(o.knee) }, uRim: { value: new THREE.Vector2().fromArray(o.rim) }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
         uSunW: { value: new THREE.Vector3(1, 0, 0) }, uSun: { value: new THREE.Vector3().fromArray(o.sun) }, uAmbient: { value: new THREE.Vector3().fromArray(o.ambient) },
         uBounce: { value: new THREE.Vector3().fromArray(o.bounce) }, uBounceW: { value: new THREE.Vector3(0, 0, 1) }, uBodyToWorld: { value: this.bodyToWorld }, uPlanetInv: { value: new THREE.Matrix4() }, uAir: { value: new THREE.Vector2().fromArray(o.air) }, uShine: { value: 1 },

@@ -61,7 +61,7 @@ export const close = { meet: true, shift: [0.09, 0.0] as [number, number], frame
 
 export const under = { top: { dive: 1.05, rise: 1.25 } as Record<'dive' | 'rise', number>, power: 2.2, far: { top: { dive: 2.5, rise: 2.5 }, power: { dive: 1, rise: 1 } }, keep: [7.5, 9], grey: [0.13, 0.115, 0.1] as [number, number, number], gamma: 2.2, height: { dive: [2.9, 6.5], rise: [5.5, 11.5] } as Record<'dive' | 'rise', [number, number]> }
 export const fine = { shift: [0.37, 0.61] as [number, number], edge: [0.03, 0.03] as [number, number], blur: [16, 48] as [number, number], shade: [0.05, 0.22, 0.3] as [number, number, number] }
-export const sky = { height: [0.042, 0.3] as [number, number] }
+export const sky = { height: [0.042, 0.3] as [number, number], carryRest: { soft: 0.006, done: 0.0007 } }
 export const border = { deg: [3, 4.5] as [number, number] }
 export const mend = { lon: 16.36, lat: -5.94, reach: 0.03, from: 1.8 }
 
