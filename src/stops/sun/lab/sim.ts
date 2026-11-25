@@ -26,8 +26,9 @@ const smooth = (x: number): number => {
  * nothing and no step of the table shows. */
 const GONE = S.radius[1]! * S.radius[1]! * S.gone * S.gone
 function weight(u: number, full: number): number {
-  const env = smooth(u / 0.4) * (1 - smooth((u - 0.6) / 0.4))
-  return full * full * env - GONE * (1 - env)
+  const env = smooth(u / S.grow) * (1 - smooth((u - 1 + S.grow) / S.grow))
+  const gate = 1 - smooth(u / S.edge) + smooth((u - 1 + S.edge) / S.edge)
+  return full * full * ((1 + S.under) * env - S.under) - GONE * gate
 }
 
 export interface Diagram {
