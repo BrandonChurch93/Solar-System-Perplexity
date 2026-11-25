@@ -1,9 +1,63 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T14:03:46.363Z",
- "head": "212defeca69aa1e30f374c17d5cb7c9192fa1c3e",
- "note": "h9 and h14 beside g15 and the approved, frame 90",
+ "pushed": "2026-11-25T14:46:20.640Z",
+ "head": "df86fc7a45cad102bd756ffedeb47ef9265d8950",
+ "note": "far filter for the rise: the far ground is the globe's map, reader 0.875 to 0.172",
  "looks": [
+  {
+   "time": "2026-11-25T14:46:19.912Z",
+   "file": "20261125144619912-note-h17-0-60.jpg",
+   "source": "../v/h17-0-60.jpg",
+   "kind": "note",
+   "label": "h17 frames 0 and 60",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:46:19.243Z",
+   "file": "20261125144619243-note-limb-14-17.jpg",
+   "source": "../v/limb-14-17.jpg",
+   "kind": "note",
+   "label": "frame 90 limb at the left, h14 above h17",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:46:18.510Z",
+   "file": "20261125144618510-note-lab-90-h17.jpg",
+   "source": "../v/lab-90-h17.jpg",
+   "kind": "note",
+   "label": "h17 frame 90 with the far filter (near ground as h14)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:46:17.746Z",
+   "file": "20261125144617746-note-rise-h16-four.jpg",
+   "source": "../v/rise-h16-four.jpg",
+   "kind": "note",
+   "label": "h16 and h17: captures 437 445 449 453 of the rise, the far ground now carries the globe's map, reader 0.172",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:46:17.029Z",
+   "file": "20261125144617029-note-rise-pair.jpg",
+   "source": "../v/rise-pair.jpg",
+   "kind": "note",
+   "label": "h15: capture 437 (my ground, even grain) beside 453 (the globe's map): the cause of the rise reading 0.81",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:44:14.601Z",
+   "file": "20261125144414601-frame-lab-60-h17.jpg",
+   "source": "out/work/sun/lab/lab-60-h17.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 60, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 60,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T14:03:45.676Z",
    "file": "20261125140345676-note-rise-g15.jpg",
@@ -19,60 +73,6 @@
    "kind": "note",
    "label": "sun lab lab-90-h9 frame 90, 25 Nov 14:04 UTC",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T14:03:44.282Z",
-   "file": "20261125140344282-note-strip-h14.jpg",
-   "source": "../v/strip-h14.jpg",
-   "kind": "note",
-   "label": "sun lab strip-h14 frame 90, 25 Nov 14:04 UTC",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T14:03:43.451Z",
-   "file": "20261125140343451-note-cmp14-spot.jpg",
-   "source": "../v/cmp14-spot.jpg",
-   "kind": "note",
-   "label": "sun lab cmp14-spot frame 90, 25 Nov 14:04 UTC",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T14:03:42.643Z",
-   "file": "20261125140342643-note-cmp14-far.jpg",
-   "source": "../v/cmp14-far.jpg",
-   "kind": "note",
-   "label": "sun lab cmp14-far frame 90, 25 Nov 14:04 UTC",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T14:03:41.938Z",
-   "file": "20261125140341938-note-cmp14-near.jpg",
-   "source": "../v/cmp14-near.jpg",
-   "kind": "note",
-   "label": "sun lab cmp14-near frame 90, 25 Nov 14:04 UTC",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T14:03:41.276Z",
-   "file": "20261125140341276-note-lab-90-h14.jpg",
-   "source": "../v/lab-90-h14.jpg",
-   "kind": "note",
-   "label": "sun lab lab-90-h14 frame 90, 25 Nov 14:04 UTC",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T14:01:17.314Z",
-   "file": "20261125140117314-frame-lab-90-h14.jpg",
-   "source": "out/work/sun/lab/lab-90-h14.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   }
  ]
 }
