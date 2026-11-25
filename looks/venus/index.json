@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T22:41:56.556Z",
+ "pushed": "2026-11-25T23:00:34.361Z",
  "head": "bf34974ffac1b65a3ac38e0d4b5393d5a79f0188",
- "note": "Bc whole run read: dive red on the slab above the mesh's end 1328 to 1331, rise red on the far deck; towers single in both moves",
+ "note": "the end of the ground at 1329 to 1338 on main and in the tree; control cRh at 1287, 1304, 1320",
  "looks": [
+  {
+   "time": "2026-11-25T23:00:33.649Z",
+   "file": "20261125230033649-note-crh-bc.jpg",
+   "source": "../../../../tmp/v/sh/crh-bc.jpg",
+   "kind": "note",
+   "label": "dive 1287, 1304, 1320: tree state Bc left, control cRh right (the hold's picture read at the footprint of the hold's last eye)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T23:00:32.999Z",
+   "file": "20261125230032999-note-line-m0-bc.jpg",
+   "source": "../../../../tmp/v/sh/line-m0-bc.jpg",
+   "kind": "note",
+   "label": "dive 1329 to 1338 lower left, gain 3: main left, tree state Bc right; the ground ends at a straight line in both, other plates under it",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T22:41:45.004Z",
    "file": "20261125224145004-note-rtowers-b.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/fd/sheet2-rise-w.jpg",
    "kind": "note",
    "label": "far deck trial, widest plate of the rise: film, laid back picture of T alone, with the plate's fine forms",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T22:15:41.539Z",
-   "file": "20261125221541539-note-Bc-M0-ll.jpg",
-   "source": "../../../../tmp/v/sh/Bc-M0-ll.jpg",
-   "kind": "note",
-   "label": "main beside cure B, dive 1323 to 1335, lower left: pale near cloud stands whole in cure B",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T21:44:44.173Z",
-   "file": "20261125214444173-note-B1-1554.jpg",
-   "source": "../../../../tmp/v/sh/B1-1554.jpg",
-   "kind": "note",
-   "label": "1554 at 2 to 1: towers single with cure B",
    "stop": "venus"
   }
  ]
