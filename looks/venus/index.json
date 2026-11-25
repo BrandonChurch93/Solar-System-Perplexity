@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-24T23:56:47.468Z",
+ "pushed": "2026-11-25T00:36:02.332Z",
  "head": "6142ea087329a79c65ac10bc841ed21a62fdeb37",
- "note": "MAIL 802 cure on 6142ea08: pairs of sets and sizes at 1299 and 1323 after the cure",
+ "note": "MAIL 815 (a) in hand: the air as one field by place, trial stills against b0b87889 and the named 6142ea08; dive pictures at rate 2 rendering",
  "looks": [
+  {
+   "time": "2026-11-25T00:36:01.657Z",
+   "file": "20261125003601657-note-d3-1320-limb.jpg",
+   "source": "../../../../tmp/v/cmp/st/d3-1320-limb.jpg",
+   "kind": "note",
+   "label": "Full size, the limb at dive 1320: b0b87889, the field with haze reach 0.12, the field with haze reach 0.06",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T00:36:00.947Z",
+   "file": "20261125003600947-note-e1-rise1.jpg",
+   "source": "../../../../tmp/v/cmp/st/e1-rise1.jpg",
+   "kind": "note",
+   "label": "Trial of MAIL 815 (a): rise 1542 to 1551, same three columns. The orange rim and the cold blue strip at the limb at 1548 and 1551 are stronger than in the named commit",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T00:36:00.266Z",
+   "file": "20261125003600266-note-e1-dive2.jpg",
+   "source": "../../../../tmp/v/cmp/st/e1-dive2.jpg",
+   "kind": "note",
+   "label": "Trial of MAIL 815 (a): dive 1326 to 1335, same three columns",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T00:35:59.590Z",
+   "file": "20261125003559590-note-e1-dive1.jpg",
+   "source": "../../../../tmp/v/cmp/st/e1-dive1.jpg",
+   "kind": "note",
+   "label": "Trial of MAIL 815 (a), 00:34 UTC: dive 1314 to 1323. Left b0b87889 at the equal eye height, middle the named 6142ea08, right the air as one field by place (13 to 22 degrees from the foot of the camera of T) with the haze reach of b0b87889",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-24T23:56:46.428Z",
    "file": "20261124235646428-note-n802-1299-ungraded-block.jpg",
@@ -34,41 +66,6 @@
    "source": "../../../../tmp/v/cmp/st/d802-1299.jpg",
    "kind": "note",
    "label": "MAIL 802, dive 1299 before the cure, differences times 8: top full against web at both sizes, bottom master against 3840 wide in both sets",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T23:45:31.425Z",
-   "file": "20261124234531425-note-c802-1299-tl.jpg",
-   "source": "../../../../tmp/v/cmp/st/c802-1299-tl.jpg",
-   "kind": "note",
-   "label": "MAIL 802, dive 1299 upper left, before the cure: master, 3840 wide reduced, master in the web set; lower row times 3: the glow past the limb is wider at the master size",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T23:39:32.776Z",
-   "file": "20261124233932776-compare-venus-dive-sides.jpg",
-   "source": "out/work/handover/venus-dive-sides.png",
-   "kind": "compare",
-   "label": "venus dive, both sides at T (frame 1343) and their difference times 8",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1343,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T23:25:27.414Z",
-   "file": "20261124232527414-note-q1308.jpg",
-   "source": "../../../../tmp/v/cmp/st/q1308.jpg",
-   "kind": "note",
-   "label": "dive 1308 at 0.22 radii: b0b87889 is the crisper picture",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-24T23:25:26.329Z",
-   "file": "20261124232526329-note-q1335.jpg",
-   "source": "../../../../tmp/v/cmp/st/q1335.jpg",
-   "kind": "note",
-   "label": "dive 1335: b0b87889, main, 5e14f1f2, named; the frame of T shows as straight lines lower right in all but b0",
    "stop": "venus"
   }
  ]
