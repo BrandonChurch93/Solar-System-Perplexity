@@ -1,75 +1,72 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T06:19:13.513Z",
+ "pushed": "2026-11-25T06:41:23.168Z",
  "head": "e53c76b7c4665de823eedefc42e53adc866351e7",
- "note": "06:20 h3 (repainted takes in the plates) and side feather by sight, pairs; new thin orange lines at the foot at 2468 and 2472, dark blob at 2698, glow still there at 2448",
+ "note": "h4 with side feather beside e53c76b7, native halves: block gone at 2456, 2464, 2690, 2692; plate smeared on the walls 2684 to 2694; strokes, foot line and east side still at 2472",
  "looks": [
   {
-   "time": "2026-11-25T06:19:12.911Z",
-   "file": "20261125061912911-note-ph-2448.jpg",
-   "source": "out/work/place/eng58/ph-2448.jpg",
+   "time": "2026-11-25T06:41:07.999Z",
+   "file": "20261125064107999-note-pq-2694-a.jpg",
+   "source": "out/work/place/eng59/pq-2694-a.jpg",
    "kind": "note",
-   "label": "ph-2448: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "label": "e53c76b7 left, h4 with side feather right, native, 2694 left half: soft smeared ground",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T06:19:12.347Z",
-   "file": "20261125061912347-note-hj-2462.jpg",
-   "source": "out/work/place/eng58/hj-2462.jpg",
+   "time": "2026-11-25T06:41:07.184Z",
+   "file": "20261125064107184-note-pq-2692-b.jpg",
+   "source": "out/work/place/eng59/pq-2692-b.jpg",
    "kind": "note",
-   "label": "hj-2462: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "label": "e53c76b7 left, h4 with side feather right, native, 2692 right half: dark wedge gone",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T06:19:11.781Z",
-   "file": "20261125061911781-note-hj-2456.jpg",
-   "source": "out/work/place/eng58/hj-2456.jpg",
+   "time": "2026-11-25T06:41:06.316Z",
+   "file": "20261125064106316-note-pq-2692-a.jpg",
+   "source": "out/work/place/eng59/pq-2692-a.jpg",
    "kind": "note",
-   "label": "hj-2456: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "label": "e53c76b7 left, h4 with side feather right, native, 2692 left half",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T06:19:11.216Z",
-   "file": "20261125061911216-note-pj-2698.jpg",
-   "source": "out/work/place/eng58/pj-2698.jpg",
+   "time": "2026-11-25T06:41:05.465Z",
+   "file": "20261125064105465-note-pq-2690-b.jpg",
+   "source": "out/work/place/eng59/pq-2690-b.jpg",
    "kind": "note",
-   "label": "pj-2698: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "label": "e53c76b7 left, h4 with side feather right, native, 2690 right half: dark block gone, strokes on the walls",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T06:19:10.629Z",
-   "file": "20261125061910629-note-pj-2692.jpg",
-   "source": "out/work/place/eng58/pj-2692.jpg",
+   "time": "2026-11-25T06:41:04.647Z",
+   "file": "20261125064104647-note-pq-2690-a.jpg",
+   "source": "out/work/place/eng59/pq-2690-a.jpg",
    "kind": "note",
-   "label": "pj-2692: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "label": "e53c76b7 left, h4 with side feather right, native, 2690 left half",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T06:19:10.067Z",
-   "file": "20261125061910067-note-pj-2472.jpg",
-   "source": "out/work/place/eng58/pj-2472.jpg",
+   "time": "2026-11-25T06:41:03.660Z",
+   "file": "20261125064103660-note-pq-2686-b.jpg",
+   "source": "out/work/place/eng59/pq-2686-b.jpg",
    "kind": "note",
-   "label": "pj-2472: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "label": "e53c76b7 left, h4 with side feather right, native, 2686 right half: plate smeared on the walls",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T06:19:09.183Z",
-   "file": "20261125061909183-note-pj-2468.jpg",
-   "source": "out/work/place/eng58/pj-2468.jpg",
+   "time": "2026-11-25T06:41:02.395Z",
+   "file": "20261125064102395-note-pq-2684-b.jpg",
+   "source": "out/work/place/eng59/pq-2684-b.jpg",
    "kind": "note",
-   "label": "pj-2468: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "label": "e53c76b7 left, h4 with side feather right, native, 2684 right half: slab gone, plate smeared on the walls instead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T05:59:43.321Z",
-   "file": "20261125055943321-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
+   "time": "2026-11-25T06:41:01.669Z",
+   "file": "20261125064101669-note-pq-2684-a.jpg",
+   "source": "out/work/place/eng59/pq-2684-a.jpg",
+   "kind": "note",
+   "label": "e53c76b7 left, h4 with side feather right, native, 2684 left half: pale strokes and tiles lower left, new against e53c76b7",
+   "stop": "mars"
   }
  ]
 }
