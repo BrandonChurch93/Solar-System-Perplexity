@@ -421,6 +421,7 @@ export class Planet {
     if (o.cap) {
       const { uCapCut: _, ...shared } = this.material.uniforms
       this.cap = new ReliefCap(planetFrag({ ...text, cap: true, ...(o.cap.light ? { capLight: true } : {}), ...(o.cap.detail ? { detail: capDetail(o.cap.detail) } : {}) }), shared, o.cap)
+      if (this.cap.lens) this.mesh.add(this.cap.lens)
       this.mesh.add(this.cap.mesh)
     }
     if (o.limbAir) {
