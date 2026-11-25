@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T06:41:23.168Z",
- "head": "e53c76b7c4665de823eedefc42e53adc866351e7",
- "note": "h4 with side feather beside e53c76b7, native halves: block gone at 2456, 2464, 2690, 2692; plate smeared on the walls 2684 to 2694; strokes, foot line and east side still at 2472",
+ "pushed": "2026-11-25T07:08:42.118Z",
+ "head": "4bea7af9e9c1c225b260e7dffe8f896c8a0720f4",
+ "note": "h5: gamut after the forms takes the red glow patch out (2440, 2448 pairs h4 beside h5 at native size); 2456 and 2688 whole: block gone, blob and strokes stay",
  "looks": [
+  {
+   "time": "2026-11-25T07:08:41.003Z",
+   "file": "20261125070841003-note-o-2688.jpg",
+   "source": "out/work/place/eng60/o-2688.jpg",
+   "kind": "note",
+   "label": "h5 draft rise 2688 and 2690, whole frames at half size: no slab; the east wall carries drawn out strokes with orange rims (bad)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T07:08:39.975Z",
+   "file": "20261125070839975-note-o-2456.jpg",
+   "source": "out/work/place/eng60/o-2456.jpg",
+   "kind": "note",
+   "label": "h5 draft 2456 and 2458, whole frames at half size: no block with straight sides; the picture stands as a dark blob with an upright wall edge right of it (bad)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:55:58.384Z",
+   "file": "20261125065558384-note-qr-2440.jpg",
+   "source": "out/work/place/eng60/qr-2440.jpg",
+   "kind": "note",
+   "label": "2440 draft native crop at x 436 y 0: h4 (left) beside h5 (right), red glow patch",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:55:57.323Z",
+   "file": "20261125065557323-note-qr-2448.jpg",
+   "source": "out/work/place/eng60/qr-2448.jpg",
+   "kind": "note",
+   "label": "2448 draft native crop 700 by 700 at x 449 y 0: h4 (left) beside h5 with the gamut after the forms (right), the red glow patch north of the canyon; the dark blob lower right is the picture, still there",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T06:41:07.999Z",
    "file": "20261125064107999-note-pq-2694-a.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/eng59/pq-2690-b.jpg",
    "kind": "note",
    "label": "e53c76b7 left, h4 with side feather right, native, 2690 right half: dark block gone, strokes on the walls",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:41:04.647Z",
-   "file": "20261125064104647-note-pq-2690-a.jpg",
-   "source": "out/work/place/eng59/pq-2690-a.jpg",
-   "kind": "note",
-   "label": "e53c76b7 left, h4 with side feather right, native, 2690 left half",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:41:03.660Z",
-   "file": "20261125064103660-note-pq-2686-b.jpg",
-   "source": "out/work/place/eng59/pq-2686-b.jpg",
-   "kind": "note",
-   "label": "e53c76b7 left, h4 with side feather right, native, 2686 right half: plate smeared on the walls",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:41:02.395Z",
-   "file": "20261125064102395-note-pq-2684-b.jpg",
-   "source": "out/work/place/eng59/pq-2684-b.jpg",
-   "kind": "note",
-   "label": "e53c76b7 left, h4 with side feather right, native, 2684 right half: slab gone, plate smeared on the walls instead",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:41:01.669Z",
-   "file": "20261125064101669-note-pq-2684-a.jpg",
-   "source": "out/work/place/eng59/pq-2684-a.jpg",
-   "kind": "note",
-   "label": "e53c76b7 left, h4 with side feather right, native, 2684 left half: pale strokes and tiles lower left, new against e53c76b7",
    "stop": "mars"
   }
  ]
