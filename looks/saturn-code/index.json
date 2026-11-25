@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T13:21:31.253Z",
+ "pushed": "2026-11-25T13:32:40.363Z",
  "head": "0025b0b5b7007c550a021474ae60f67fc08b515b",
- "note": "one law finals 3465 and 3720 and the dark inner ring control at 3720; whole rise rendering",
+ "note": "whole rise at rate 2 on the one law of cover (law2) is rendering; frames 3803 to 3814 looked at; control of the dark inner ring reads worse at 3720",
  "looks": [
+  {
+   "time": "2026-11-25T13:32:39.130Z",
+   "file": "20261125133239130-note-g17_tiles.jpg",
+   "source": "../../../../tmp/v/law2/g17_tiles.png",
+   "kind": "note",
+   "label": "3720 final, box 1120 600 to 1920 1000, darks lifted: approved close, named 6e96b4cb, cure law2 (no dark foot, open gap)"
+  },
+  {
+   "time": "2026-11-25T13:32:38.137Z",
+   "file": "20261125133238137-note-c_3806.jpg",
+   "source": "../../../../tmp/v/law2/c_3806.jpg",
+   "kind": "note",
+   "label": "cure law2, draft, frames 3806 to 3814, box 700 560 to 1340 920: the sheet in front of the lit globe, the outline of the globe through it stays"
+  },
+  {
+   "time": "2026-11-25T13:32:37.089Z",
+   "file": "20261125133237089-note-s_3804.jpg",
+   "source": "../../../../tmp/v/law2/s_3804.jpg",
+   "kind": "note",
+   "label": "cure law2, draft rate 2, frames 3803 to 3808 whole at half size: one law of cover, open gap inside the inner rim"
+  },
   {
    "time": "2026-11-25T13:21:30.493Z",
    "file": "20261125132130493-note-skim_3720_foot.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/law1/sheet6.png",
    "kind": "note",
    "label": "one law, first build (view 0.43): drafts 3465 3567 3600 3604 3720 3806 3814 3830 3866"
-  },
-  {
-   "time": "2026-11-25T13:13:17.066Z",
-   "file": "20261125131317066-note-draft_3812.jpg",
-   "source": "../../../../tmp/v/law2/draft_3812.png",
-   "kind": "note",
-   "label": "3812 draft under the one law"
-  },
-  {
-   "time": "2026-11-25T13:13:16.317Z",
-   "file": "20261125131316317-note-tri_3720.jpg",
-   "source": "../../../../tmp/v/law2/tri_3720.png",
-   "kind": "note",
-   "label": "3720: approved close, named final, one law draft (no dark foot: the dust by height is out)"
-  },
-  {
-   "time": "2026-11-25T13:13:15.588Z",
-   "file": "20261125131315588-note-hold_3465_whole.jpg",
-   "source": "../../../../tmp/v/law2/hold_3465_whole.png",
-   "kind": "note",
-   "label": "3465 whole: approved hero, named final, one law final"
   }
  ]
 }
