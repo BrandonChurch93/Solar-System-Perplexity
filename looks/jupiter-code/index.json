@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T12:06:44.558Z",
+ "pushed": "2026-11-25T12:28:24.668Z",
  "head": "d438b57b3312eda5d94a8c3f8bf6d74d1bbbf2a6",
- "note": "d438b57b: finals in (2895 equal bytes, 3150 match 7.800); wedge cause is the canvas border, cure by code in work; dive and rise slices running",
+ "note": "12:30 UTC: shadows of the stored relief measured, first quilt refused by myself, 3150 by thirds",
  "looks": [
+  {
+   "time": "2026-11-25T12:28:24.085Z",
+   "file": "20261125122824085-note-n6-3150-trio.jpg",
+   "source": "../work/r13/off/n6-3150-trio.jpg",
+   "kind": "note",
+   "label": "3150 on d438b57b: ours, approved, difference; match 7.800",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T12:28:23.521Z",
+   "file": "20261125122823521-note-rt-3150.jpg",
+   "source": "../work/r14/rt-3150.jpg",
+   "kind": "note",
+   "label": "3150 right third on d438b57b: ours, approved, difference",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T12:28:22.977Z",
+   "file": "20261125122822977-note-s1-corner.jpg",
+   "source": "../work/r14/beyond/s1-corner.jpg",
+   "kind": "note",
+   "label": "first quilt past the canvas' borders, not usable: square pieces, tone jumps, forms copied",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T12:28:22.080Z",
+   "file": "20261125122822080-note-shade-box.jpg",
+   "source": "../work/r14/shade-box.jpg",
+   "kind": "note",
+   "label": "top view at 250 px a unit: cast shadows of the stored relief by the place's Sun (white), footprints of the thirds of 3150 to 8 units (red left, green middle, blue right)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T12:06:43.339Z",
    "file": "20261125120643339-note-n6-3150-trio.jpg",
@@ -174,38 +206,6 @@
    "source": "../work/r13/off/s1-corner.jpg",
    "kind": "note",
    "label": "rise 3246 to 3255, top left of the frame, now: thick sheets, one Sun, sidestep 0.5 0.75 0.5 (draft); pattern reads 0.10 at 3246 to 3247",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:04:17.148Z",
-   "file": "20261125110417148-note-s1-vs-v3.jpg",
-   "source": "../work/r13/off/s1-vs-v3.jpg",
-   "kind": "note",
-   "label": "rise 3246 + 1/2 to 3254 + 1/2: thick sheets on the old path against thick sheets, one Sun and the sidestep (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:46:36.777Z",
-   "file": "20261125104636777-note-v3-3150.jpg",
-   "source": "../work/r13/off/v3-3150.jpg",
-   "kind": "note",
-   "label": "3150 as named and with sheets 0.1 thick (draft), below each minus banks off times 4; match 8.129 to 7.673",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:46:36.095Z",
-   "file": "20261125104636095-note-v3-3150-ll.jpg",
-   "source": "../work/r13/off/v3-3150-ll.jpg",
-   "kind": "note",
-   "label": "3150 lower left: as named, sheets 0.1 thick, approved",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T10:46:35.511Z",
-   "file": "20261125104635511-note-v3-cmp.jpg",
-   "source": "../work/r13/off/v3-cmp.jpg",
-   "kind": "note",
-   "label": "rise 3246 to 3254, top left: as named, sheets 0.1 thick averaged along the ray, banks off (draft); reader 0.428 0.365 0.376 at 3246 to 3247",
    "stop": "jupiter"
   }
  ]
