@@ -12,6 +12,10 @@ PIT = 1.0
 DEEP = 2.5
 HUE = 0.0
 CLOUD = 0.0
+GRAIN = 0.0
+REACH = 2
+CAP = 2.0
+STEPS = ((37, 0), (0, 37), (-37, 0), (0, -37), (53, 53), (-53, 53), (53, -53), (-53, -53), (91, 17), (-17, 91), (-91, -17), (17, -91))
 W = np.array([0.2126, 0.7152, 0.0722], np.float32)
 
 
@@ -24,7 +28,19 @@ def med(code, k, s):
     return cv2.GaussianBlur(m, (0, 0), s, borderType=cv2.BORDER_REFLECT)
 
 
-def calm(code, hue=HUE, cloud=CLOUD):
+def borrow(dl, noise, shut):
+    rel = np.clip(dl / noise, -CAP, CAP)
+    out = np.zeros_like(dl)
+    need = np.ones(dl.shape, bool)
+    for dx, dy in STEPS:
+        src = np.roll(rel, (dy, dx), (0, 1))
+        ok = need & ~np.roll(shut, (dy, dx), (0, 1))
+        out[ok] = src[ok]
+        need &= ~ok
+    return out * noise, need
+
+
+def calm(code, hue=HUE, cloud=CLOUD, grain=GRAIN):
     a = code.astype(np.float32)
     wide = med(code, WIDE, SOFT)
     near = med(code, NEAR, EVEN)
@@ -41,7 +57,13 @@ def calm(code, hue=HUE, cloud=CLOUD):
         ring = ring * (1 - g * g * (3 - 2 * g))
     lack = np.minimum(Ln, Lw) - L
     t = np.clip((lack - PIT * noise) / ((DEEP - PIT) * noise), 0, 1)
-    L1 = L + lack * t * t * (3 - 2 * t) * ring
+    lift = lack
+    if grain > 0:
+        k2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * REACH + 1, 2 * REACH + 1))
+        own, left = borrow(dl, noise, (cv2.dilate(core, k2) > 0) | (t > 0))
+        lift = np.maximum(lack + grain * own, 0)
+        print(f'grain {grain}: pit pixels {int((t > 0).sum())}, of them with no open sky to borrow from {int((left & (t > 0)).sum())}')
+    L1 = L + lift * t * t * (3 - 2 * t) * ring
     flat = wide * (L1 / np.maximum(Lw, 0.5))[..., None]
     own = a + near * ((L1 - L) / np.maximum(Ln, 0.5))[..., None]
     mix = (hue * (1 - star))[..., None]
@@ -60,8 +82,9 @@ def main():
     src, full, web = sys.argv[1], sys.argv[2], sys.argv[3]
     hue = float(sys.argv[4]) if len(sys.argv) > 4 else HUE
     cloud = float(sys.argv[5]) if len(sys.argv) > 5 else CLOUD
+    grain = float(sys.argv[6]) if len(sys.argv) > 6 else GRAIN
     code = np.asarray(Image.open(src).convert('RGB'))
-    out, core, noise, ring = calm(code, hue, cloud)
+    out, core, noise, ring = calm(code, hue, cloud, grain)
     moved = (out != code).any(axis=2)
     dl = lum(out.astype(np.float32)) - lum(code.astype(np.float32))
     print(f'{src}: {os.path.getsize(src)} bytes, noise median {np.median(noise):.2f} codes, star pixels {int(core.sum())} ({core.mean() * 100:.2f} percent), changed pixels {int(moved.sum())} ({moved.mean() * 100:.1f} percent), star pixels changed {int((moved & core).sum())}, largest change {int(np.abs(out.astype(int) - code.astype(int)).max())} codes, luma raised by over 1 code {int((dl > 1).sum())} ({(dl > 1).mean() * 100:.2f} percent), luma lowered by over 1 code {int((dl < -1).sum())}')
