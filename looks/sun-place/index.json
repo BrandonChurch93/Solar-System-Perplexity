@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T07:34:00.055Z",
- "head": "df6517ea5623ef62a6e59bdaa99ec5f443de1c58",
- "note": "commit 4b da619571 on merge df6517ea: frame 60 dark 0.223 body 0.616 pale 0.084 white 0.023; half width 8.2 px, 546 shapes; fine detail 0.0291; mean 0.326; distance 0.070",
+ "pushed": "2026-11-25T07:56:36.742Z",
+ "head": "705444897fa41f6743de1402262513bd60a3a69e",
+ "note": "commit 5 in work, f1: frame 60 dark 0.242 body 0.604 pale 0.076 white 0.016; half width 6.5 px, 1286 shapes; fine detail 0.0381; mean 0.325; distance 0.069",
  "looks": [
+  {
+   "time": "2026-11-25T07:56:35.715Z",
+   "file": "20261125075635715-note-f1-90b.jpg",
+   "source": "../../../../tmp/v/f1-90b.jpg",
+   "kind": "note",
+   "label": "commit 5 in work (f1), frame 90, 1 to 1 under the approved: near ground. Seen: separate shells with wide black gaps, the approved domes overlap",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:56:34.726Z",
+   "file": "20261125075634726-note-f1-90.jpg",
+   "source": "../../../../tmp/v/f1-90.jpg",
+   "kind": "note",
+   "label": "commit 5 in work (f1: the combed domes with the cured spot of 4b), frame 90 at the master, 1 to 1 under the approved: far field and spot",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T07:33:59.084Z",
    "file": "20261125073359084-note-4b-60.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/rise-D.jpg",
    "kind": "note",
    "label": "where the pattern of d91c0f63 changes most from 218 + 1/2 to 226 + 1/2 (my chain at preview, own body): behind the top of the arcade at the limb",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:26:27.322Z",
-   "file": "20261125072627322-note-4b-217-tight.jpg",
-   "source": "../../../../tmp/v/4b-217-tight.jpg",
-   "kind": "note",
-   "label": "frame 217, 1 to 1: cells.tight.power 0.4 (commit 4) holds the far ground, 1.1 (commit 3) lets it go to the globe's map",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:26:26.256Z",
-   "file": "20261125072626256-note-k1-60.jpg",
-   "source": "../../../../tmp/v/k1-60.jpg",
-   "kind": "note",
-   "label": "frame 60, 1 to 1: approved, commit 4, trial K1 (commit 3 values of threads, tongues, boil, points back): the fibres are gone with the reading, not taken as it stands",
    "stop": "sun"
   }
  ]
