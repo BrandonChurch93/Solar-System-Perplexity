@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T05:27:36.197Z",
+ "pushed": "2026-11-25T05:47:05.775Z",
  "head": "7cebce4ca374ea450423aa4e609bb9ff140d48be",
- "note": "NAMED state: pairs beside main at 2681 and 2745, the two asset sets at 2464 and 2448 (red), G13 texels, the rise 2707 to 2712",
+ "note": "MAIL 913 first state, draft, beside NAMED 7cebce4c at native size: the plates are the takes alone in their painted light, toned by ground distance; the polygon, the smear and the slab are gone, the picture still stands as a dark island at 2448 to 2456 and its east side is a line at 2460 to 2468",
  "looks": [
+  {
+   "time": "2026-11-25T05:45:04.934Z",
+   "file": "20261125054504934-note-look-2468.jpg",
+   "source": "out/work/place/eng58/look-2468.png",
+   "kind": "note",
+   "label": "2468 draft native: NAMED 7cebce4c left, MAIL 913 first state right (takes alone in their painted light, toned by ground distance, cap light own 0)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T05:45:03.524Z",
+   "file": "20261125054503524-note-look-2464.jpg",
+   "source": "out/work/place/eng58/look-2464.png",
+   "kind": "note",
+   "label": "2464 draft native: NAMED 7cebce4c left, MAIL 913 first state right (takes alone in their painted light, toned by ground distance, cap light own 0)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T05:45:00.981Z",
+   "file": "20261125054500981-note-look-2460.jpg",
+   "source": "out/work/place/eng58/look-2460.png",
+   "kind": "note",
+   "label": "2460 draft native: NAMED 7cebce4c left, MAIL 913 first state right (takes alone in their painted light, toned by ground distance, cap light own 0)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T05:44:58.116Z",
+   "file": "20261125054458116-note-look-2456.jpg",
+   "source": "out/work/place/eng58/look-2456.png",
+   "kind": "note",
+   "label": "2456 draft native: NAMED 7cebce4c left, MAIL 913 first state right (takes alone in their painted light, toned by ground distance, cap light own 0)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T05:20:31.881Z",
    "file": "20261125052031881-note-g13-red.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/see57/sets-2464.jpg",
    "kind": "note",
    "label": "d253 at 2464, 1080: full set, web set, difference times 4: the web set shows the picture's near ground lower left, the full set does not. RED",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:19:53.385Z",
-   "file": "20261125051953385-note-pairw-2745.jpg",
-   "source": "out/work/place/see57/pairw-2745.jpg",
-   "kind": "note",
-   "label": "2745 main beside this state: main's globe whole upper left; this state north up, low, cut by the lower edge (travel_builder's bank not laid here)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:19:52.114Z",
-   "file": "20261125051952114-note-pairw-2681.jpg",
-   "source": "out/work/place/see57/pairw-2681.jpg",
-   "kind": "note",
-   "label": "2681 main beside this state: another pose of the rise at T (main has the old rise), both clean",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:00:07.878Z",
-   "file": "20261125050007878-note-rise-2707-2712.jpg",
-   "source": "out/work/place/see57/rise-2707-2712.jpg",
-   "kind": "note",
-   "label": "rise 2707 to 2712: the red glow goes out between 2707 and 2708 (hot share 0.0028 to 0.0004), clouds come over from 2709, the dark piece turns to a grey blot",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:00:06.792Z",
-   "file": "20261125050006792-note-rise.jpg",
-   "source": "out/work/place/see57/rise.jpg",
-   "kind": "note",
-   "label": "state 86808e7d draft, the rise: 2681 to 2744; 2688 slab right and sand at the lower edge, 2692 and 2696 the island, 2700 to 2707 red glow",
    "stop": "mars"
   }
  ]
