@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T09:03:18.471Z",
- "head": "b1721d2ca4f39d06c05498b4f02ffd62beb05e37",
- "note": "Commit 1 of the shutter law is pushed (agent/engine-ends 1c85affe): its nine proof frames at review are being drawn on the base and on the commit",
+ "pushed": "2026-11-25T09:27:44.523Z",
+ "head": "1c85affe752d861f918595746758ce18ad70cf79",
+ "note": "commit 1 of the shutter law is named (nine frames equal to the base); Mars's rows under the law are rendering",
  "looks": [
+  {
+   "time": "2026-11-25T09:27:43.120Z",
+   "file": "20261125092743120-note-c1-nine.jpg",
+   "source": "../../../../tmp/law/c1-nine.png",
+   "kind": "note",
+   "label": "commit 1 of the shutter law (1c85affe): nine frames at review, one a stop, each equal by sha256 to the base b1721d2c"
+  },
   {
    "time": "2026-11-25T08:27:54.399Z",
    "file": "20261125082754399-note-jup3027-box-ends-lr.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/law/dots/ur-4130-trio.png",
    "kind": "note",
    "label": "Uranus 4130 review (26 samples, 15.4 px), the storm x 1040..1280 y 580..760 at 2 times: box, ends 0.5, ends 0.5 with cover 2 (scratch). The blocky white specks stand in all three: they are the cloud picture's own grain, neither the ends nor the cover moves them"
-  },
-  {
-   "time": "2026-11-25T07:27:06.468Z",
-   "file": "20261125072706468-note-me-730-pair-2x.jpg",
-   "source": "../../../../tmp/law/dots/me-730-pair-2x.png",
-   "kind": "note",
-   "label": "Mercury 730 review, x 0..360 y 60..330 at 2 times: box, ends 0.5 (scratch). The bars with fine lines inside become ovals"
   }
  ]
 }
