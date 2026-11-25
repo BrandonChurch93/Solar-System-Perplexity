@@ -8445,3 +8445,114 @@ All pair numbers are my proxy (the report's own path on my preview frames, 960 w
   on the ground is the SHADING of fine slopes, not the tone. So the way to the grain goes through the relief and its
   light, and the creases must be cured there (the slope's reading step and the shadow's threshold), not round it.
   The tree is back at 985341693's files.
+
+## Lab log 20:54 to 21:30 UTC: MAIL 1295: the limb's band at 4860 named by controls and cured in the tree; the hold's four differences measured
+
+- CORRECTION of my line of 20:54 ("the tone alone gives a tenth"): J1 gave 0.460 against 0.426, J3 0.506: the tone's own weights
+  give under a tenth of G17, the lump with them the rest. Not kept either way.
+- MY READER on 985341693 (N11, 4860 at 1920, draft, STATED): whole 23.593 | sky 3.420 | band 2.646 | ground 17.527. Main by the
+  same reader: 22.986 | 1.619 | 1.607 | 19.759. The Builder's quick reader gives 23.70 and 23.02; mine by thirds (/tmp/thirds.py)
+  gives his table to 0.4: name top 27.0 26.2 12.7, middle 33.6 29.5 28.3, bottom 9.3 18.4 27.5; main top 31.2 15.1 4.3, middle
+  29.1 35.0 26.6, bottom 8.1 19.1 38.4; top third mean RGB name 32.5 48.8 67.5 (his 32.7 49.0 67.6), approved 29.0 45.8 63.7.
+- WHAT DRAWS THE SKY AT 4860. Two things. (1) The film's one sky (src/space/sky.ts: stars, the Milky Way band, the far Sun) at the
+  level of my plan: light.skyExposure 0.65 at and above 2 radii, down to 0.38 at the terrain (plan.ts, lowSky, by the height of
+  the eye; the level is all a stop has of it). (2) Over it the scene (deep.ts) adds the air's own light on every ray that misses
+  the deck: the low and the high layer of haze, with cover 1 - exp(-depth) along the slant path, so just above the deck's limb
+  the sky stands behind the low layer's pale light. At the hold the eye is outside the air and the scene draws only inside its
+  cap at the place: the hold's sky is (1) alone and the hold's limb is the globe's own (planet.ts). Main's sky at 4860 is
+  neither: it is the plate sky-terrain.webp, painted after the approved image (this branch has no plate, MAIL 774, 878, 1078
+  point 5, 1126 point 2).
+- THE CAUSE OF THE PALE BAND, by controls at 4860 (1920; whole | sky | band | ground):
+  - F1 (the sheet off): 29.153 | 3.419 | 2.641 | 23.092: the sheet is not it.
+  - F2 (the sheet and haze.low off): 32.268 | 3.025 | 1.326 | 27.918: the band is the low layer of haze, and about 0.4 of the
+    sky's part is its glow over the left corner.
+  - The limb's row (first row from the top where the blue, smoothed 41 px wide, passes 100) at x 360, 600, 840, 1080, 1320,
+    1560, 1800: approved 169 191 221 254 297 349 406; main 158 183 213 248 292 341 396; the name 145 169 202 240 284 332 386
+    (14 to 24 px over the approved's); F2, the bare deck 167 193 226 264 309 360 418 (2 px over to 12 px under it).
+  - Why: haze.low is depth 0.065 straight down with a scale height of 0.028 units (the body's radius is 41.8 units; at the
+    limb of 4860 one unit is about 214 px). Along a ray that grazes the limb the slant depth is the depth times
+    sqrt(2 pi R / H), about 6 at the deck's level, so the layer stays opaque for about 2 scale heights, 12 px, and pale for
+    two more. The approved limb is a thin bright line.
+- THE CURE, trial L (21:00:31 to 21:07:06, 91 s a frame): haze.low.scale alone, the depth straight down unchanged.
+  - L2, 0.016: 22.765 | 3.262 | 1.937 | 17.566; limb 153 179 211 249 294 343 398; G17 0.485 / 0.232.
+  - L1, 0.010: 22.446 | 3.203 | 1.616 | 17.627; limb 158 183 216 254 299 349 405 (on the approved's line to 2 px from x 1080
+    on, 5 to 11 px over it at the left, as main's); G17 0.507 / 0.232 (the name 0.426 / 0.230), ground rows 0.343 (0.327).
+  - L3, 0.010 and the sheet's height 0.05 to 0.02: the same numbers as L1 (the sheet's top does not draw the limb). Not kept.
+  - By thirds, L1: top 22.3 24.3 10.7, middle 33.6 29.6 26.4, bottom 9.1 18.5 27.6; top third mean RGB 28.7 43.9 61.8
+    (approved 29.0 45.8 63.7): no longer lighter, no longer redder in the mean.
+  - Seen (/tmp/pair-L1.jpg, /tmp/top4-L1.jpg, both looked at): the limb is a thin pale line as the approved's; the wide pale
+    glow over the right half of the limb is gone; the glow over the left corner stays, as main's has it; the eye is dark, the
+    far plain pale; the sky is the film's, with its brown band where the approved has a cool grey one further right.
+- WHAT IS LEFT IN THE SKY (3.203 against main's 1.619), by sixths of the width (mean RGB, part of the whole number): approved
+  9,22,36 | 5,9,14 | 12,19,28 | 26,35,47 | 15,22,31 | 10,16,24; L1 23,39,61 0.69 | 14,15,18 0.22 | 23,20,18 0.48 | 19,20,19
+  0.87 | 13,16,18 0.55 | 5,11,17 0.41; main 0.88 | 0.10 | 0.12 | 0.24 | 0.14 | 0.14. The approved's sky is navy with a cool
+  band (its median 9,15,23 at every distance from the limb), the film's is neutral with a brown band (median 6,9,11). Tried
+  on the numbers alone (no render): the film's sky times k plus a flat light c, over the sky's part: k 1 best c (2,2,6) 3.075;
+  k 0.8 c (3,6,9) 2.685; k 0.6 c (3,8,12) 2.365; a flat colour at the approved's mean 2.641; a black sky 4.924. So the number
+  would fall only by dimming the stars under a blue fog, which loses the sky by kind (MAIL 1126 point 2: stars' density and
+  level), and the hue and the place of the band are the engine's (MAIL 1078 point 5, MAIL 1214 point 3). Not done. Named.
+- THE HOLD, MAIL 1295 (a) to (d), measured on 985341693 against main's frame and the approved (4605, 1920):
+  - (a) "the lit globe is narrower": the disc is main's. Of the 7.621, 5.740 is the sky and 1.882 everything else (main
+    1.107 and 1.824). Rows 500, 700, 900 across the right limb carry main's values to the level. What the reach of blue
+    counts beside the limb is the plate's navy sky (blue over 90 and 30 over red: 1494 px right of x 1667 in the approved,
+    881 in main, 113 in mine). Sheet /tmp/hold-right.jpg (approved, main, mine at full size; pushed with the looks of 21:00).
+  - (b) the Sun: approved and main carry a painted Sun with glare and eight spikes, about 120 px across (main's with a dark
+    bite at its middle, where the engine's own Sun is drawn into the plate). Mine is the engine's far Sun, a soft ball 12
+    px across. Control M3, light.sunGlare 0.6 to 2.0 (the stop's one lever beside the radius): the ball gets smaller
+    (px over 200: 124 to 28). light.flare is the film's streak, not spikes. So no value of my folders gives the glare.
+  - (c) the dark spot: at (1023, 661), a disc about 18 px across, least luminance 37.8 on a ring of 81.4 (main 55.6 on 75.9).
+    It is the storm's eye of the place (deep.json storm.dark 0.7, planet.ts eyeShade, since 14 h; MAIL 1126 point 1 let it
+    stand under d302 at 0.003). Controls at 4605 (21:14:01 to 21:17:55): M1 dark 0: the disc is gone, a faint ring stays
+    (61.1 on 81.4); M2 wall 0.3, 1.0 to 0.0, 1.6: a soft whirl, wider (388 px under 0.8 of the ring against 251), least
+    40.5; M4 depth 0: no change. Seen at 4 and 6 times (/tmp/holdm.jpg, /tmp/hold-spot6.jpg): as it stands it is a hard
+    round hole with a pale collar and a straight pale streak beside it (the bank at its far level). BAD: named.
+  - (d) the sky: mean RGB of the sky's part approved 12.2, 26.4, 40.8, main 11.8, 25.8, 40.4, mine 17.8, 28.7, 38.2: not
+    darker in the mean, redder, and laid out otherwise: top left 15,25,36 against my 4,11,19 (the approved's band crosses
+    there), top right 19,35,49 against my 40,49,53 (the film's band stands there as a pale grey brown veil).
+- Looks pushed 21:00:22 (46f3961b, 8 looks) and 21:26:08 (7b98ab57, 8 looks).
+
+## Lab log 21:30 to 22:01 UTC: the limb's cure proven on pairs and committed; the eye's wall tried; main merged; the bytes on the merge
+
+All pair numbers are my proxy (the report's own path on my preview frames, 960 wide, draft, rate 2), STATED.
+
+- Chain `/tmp/proofs6.sh N12` on the tree with haze.low.scale 0.010 (21:19 to 21:46, one process):
+  - Judged frames at 1920: 4605 ffd936903e9f95d9 (MAD 7.605, before 7.621, main 2.931; G17 0.675 / 0.436), 4707
+    02f91b12e6079bf8, 4860 a9981e661bad768d (22.446 | 3.203 | 1.616 | 17.627; G17 0.507 / 0.232; 91.0 s), 5006
+    27b759fae37df1a2.
+  - CORRECTION of what I held before the run (only dive 3, 4 and rise 1 change): every part changes. Against N11: 4605
+    74738 px differ, most 6 levels, none over 8, x 695 to 1384, y 480 to 1057 (inside the disc, the cap of the place, mean
+    1 to 1.5 levels darker); 4707 179170 px, most 4; 5006 32209 px, most 7; the start frames 4700, 4706, 4713 + 1/2 at
+    960 most 4 to 5 levels. So all six reader parts must be drawn again for this cure.
+  - Pairs (limit 0.45; before the cure in brackets): low dive 4744 0.39 at (1196, 284) (0.31), 4750 0.30 (0.29), 4751
+    0.29 (0.27), 4752 0.27 (0.26); rise 4960 0.25 (0.22), 4962 0.33 (0.23), 4968 0.35 (0.32), 4970 0.25 (0.24). Each a
+    little higher: the thinner haze shows more of the far plain near the limb. Consecutive frames looked at
+    (`/tmp/n12-dive.jpg`, `/tmp/n12-rise.jpg`, `/tmp/chains-n12-s.jpg`): one place, the limb a thin line.
+  - The teal blots unchanged (15.7 and 7.5). The dive's start pairs 4690 to 4706 on the cure: NOT drawn yet.
+- Control batch E (21:46 to 21:54), the eye's wall on the cured limb (4605 MAD | 4860 whole, ground, G17): E1 wall
+  [0, 1.6] 7.604 | 21.752, 16.933, 0.513; E2 wall [0, 1.3] 7.605 | 22.261, 17.442, 0.511; E3 wall [0, 1.6] and dark
+  0.55 7.603 | 21.778, 16.958, 0.513. By eye (`/tmp/pair-E1.jpg`) E1 at 4860 turns the eye into a spiral of dark arms
+  where the approved has a bowl with a dark floor: the number is better, the look is not. Not kept.
+- Looks pushed 21:54:24 (ec40e319).
+- 21:54: origin main found at 172e7bcd4 (the fourth cut). The cure committed alone: 8fae85490 (deep.json:
+  haze.low.scale 0.028 to 0.010 and one sentence). Main merged: c825c8d3f (nothing of it in my folders).
+- 21:55:15 to 22:00:33, `/tmp/onmerge.sh N13`, the merge as it stands: 4605, 4707, 4860, 5006 at 1920 and six single
+  frames of the pair sets (4700, 4713 + 1/2, 4750, 4757 + 1/2, 4965, 4972 + 1/2 at 960): ALL TEN equal N12 to the byte
+  (sha256). So the fourth cut moves no pixel of Neptune's frames that I drew, and the proofs of N12 stand for the merge.
+  36.5 s, 23.6 s, 90.7 s, 23.5 s the frame.
+
+## MAIL 1313 from the Builder (/root), 21:56 UTC (read 22:00 by my clock, during the run on the merge; word for word)
+
+> MAIL 1313 from the Builder (/root), 21:56 UTC. To neptune_builder. The reader's rows of your name 27624e6f against main's own rows.
+> Better than main: dive part 1 of 4 green where main is red (pattern 0.2599 against 0.7166); dive part 2 of 4 pattern 0.4653 against 1.3008 (still 0.015 over the limit); dive part 3 of 4 pattern 0.6703 at 4753 against 1.1468; rise part 2 of 2 green where main is red (pattern 0.4040 against 1.4761, pop 1.0777 against 1.1301). The pops that read higher than main's in dive parts 2 and 3 (1.0935, 1.1058) are under the limit 1.2 and are no line.
+> WORSE than main: dive part 4 of 4 (nq6-04). Main is green there (pattern 0.1357 at 4755); the name is red with pattern 0.6171 at 4760, pop 1.0349, level step 0.0414. That is a line by d318, so by d311 the name does not go on as it stands. The report and the panel of changes are attached. Main's own rise part 1 of 2 is back as well (mb5-01): red, pattern 1.34 from 4986 + 1/2, 27 frames over, first 4974; your row for that part (nq6-05, nq8-01) is still drawing.
+> What I ask: find by layers what changes its pattern in place at 4755 to 4768 on the name and not on main (the end of the dive, where the surface view takes over), cure the cause, and name again. The three red parts that are better than main's are welcome as they are; they need not be green for the name to go on, but say what is left in each.
+> MAIN MOVED at 21:41: the fourth cut is on main (merge 6bdd87ec, tip 172e7bcd: the flights' cure of the rises, the air law of the engine, path.plumb, the shutter's ends by the frame's motion). Merge origin main before you name. Give me the date of the next name.
+
+Attached: neptune-dive-p4of4.md, neptune-dive-p4of4-changes.png, neptune-dive-p4of4.json, neptune-rise-p1of2.md (main's own,
+on 53025569) at `/home/user/.perplexity/attachments/912b1552e13f43589b54cd3c6a265f81/`.
+
+Read of the report (the name 27624e6f, rate 2, 82.31 s a frame): rows over the limit 4753 + 1/2 0.60, 4754 + 1/2 0.53,
+4759 0.61, 4759 + 1/2 0.58, 4760 0.62, 4760 + 1/2 0.60; the share judged falls from 0.41 at 4753 + 1/2 to 0.04 at
+4760 + 1/2 and stands at 0.58 from 4761 on (pattern 0.39 falling to 0.16). The place at 4760: pixel (894, 902), on the
+dark near ground at the bottom of the frame under the first streamer. My pairs stopped at 4752 (to 4760); the pairs
+from 4753 to 4761 were never drawn here (named as unproven in every mail).
