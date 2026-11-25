@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T14:53:43.249Z",
- "head": "667e2dcab8ff21428e5d51af0d8220ec1580aa82",
- "note": "fifth state: whole rise sheets, hold crop beside the hero at 1 to 1 and 3 to 1, control cPl",
+ "pushed": "2026-11-25T15:22:51.508Z",
+ "head": "701f7b7262b08e8811202f9bed870b56e19c65eb",
+ "note": "one deck, steps 1 and 2 uncommitted: D1 hold fails in the disc (crop 3.483 against 1.893), outside the disc it is the hero's",
  "looks": [
+  {
+   "time": "2026-11-25T15:22:50.887Z",
+   "file": "20261125152250887-note-D1-hold.jpg",
+   "source": "../../../../tmp/v/sh/D1-hold.jpg",
+   "kind": "note",
+   "label": "D1 hold 1185 beside the hero, steps 1 and 2 in the working tree (crop 3.483, red in the disc)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T14:45:04.241Z",
    "file": "20261125144504241-note-cPl-changes.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/sh/n5/r3.jpg",
    "kind": "note",
    "label": "fifth state rise 1555 to 1569 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T14:44:54.671Z",
-   "file": "20261125144454671-note-r2.jpg",
-   "source": "../../../../tmp/v/sh/n5/r2.jpg",
-   "kind": "note",
-   "label": "fifth state rise 1540 to 1554 + 1/2, every half frame, quarter size",
    "stop": "venus"
   }
  ]
