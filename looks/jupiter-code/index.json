@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T11:04:24.463Z",
- "head": "fa33e867991dacc386b60b868b4b5a6ae44f70c4",
- "note": "MAIL 1021 items 1, 2, 4 on the working tree: thick sheets by the ray, one Sun for the banks' shadows, sidestep in place.json; draft tier, not committed yet",
+ "pushed": "2026-11-25T11:26:19.715Z",
+ "head": "d438b57b3312eda5d94a8c3f8bf6d74d1bbbf2a6",
+ "note": "d438b57b: slices running; rise 3240 to 3247 from the commit's frames",
  "looks": [
+  {
+   "time": "2026-11-25T11:26:18.015Z",
+   "file": "20261125112618015-note-s1-3150.jpg",
+   "source": "../work/r13/off/s1-3150.jpg",
+   "kind": "note",
+   "label": "3150 as named, now (thick sheets, one Sun), approved (draft, same sources as d438b57b)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T11:26:16.284Z",
+   "file": "20261125112616284-note-d438-rise-3240-3247.jpg",
+   "source": "../work/r13/off/d438-rise-3240-3247.jpg",
+   "kind": "note",
+   "label": "d438b57b rise 3240 to 3247, the commit's own slice frames (draft)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T11:04:23.490Z",
    "file": "20261125110423490-note-s1-3150.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r13/off/view-back-6493.jpg",
    "kind": "note",
    "label": "rise 3246 + 1/2: where the reader reads the pattern change in place, 0.85 (the far ground under the limb, upper left)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:02:02.075Z",
-   "file": "20261125090202075-note-ray015-3150-pair.jpg",
-   "source": "../work/r13/ray015-3150-pair.jpg",
-   "kind": "note",
-   "label": "3150: approved, working tree ray law 0.15 (draft), db67666d (final), ray law 0.4 (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T09:02:01.484Z",
-   "file": "20261125090201484-note-ray015-rise.jpg",
-   "source": "../work/r13/ray015-rise.jpg",
-   "kind": "note",
-   "label": "working tree, ray law 0.15: 3252 and 3260 with the change of the pattern",
    "stop": "jupiter"
   }
  ]
