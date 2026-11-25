@@ -7534,3 +7534,48 @@ SLIP: run3.sh stood in the guard of /tmp/v/job_n.sh (pgrep), so its two jobs did
 tree's rise on the new main (Tn) "RISE T DONE"; final 3720 of C (Cs) "SKIM DONE"; flight in of C 3352 to 3400
 (Cin) "FLIGHT IN C DONE"; drafts 3630 3809 3812 3850 3880 of C (Cr) and the tree (Tr) "SEQ5 DONE". Never name a
 chain run2, run3, run4, job_w, job_t, job_u or slice. Free disk is 4.6 GB: renders refuse under 3 GB.
+
+MAIL 1323 (22:40 UTC), RULING on the three stills, the points word for word where they bind:
+"1. Shapes: rigid at every frame, as 1298 ruled. ... The rise of d296 at 3465 from 4.77 to about 12 is accepted
+for this".
+"2. Light: neither B nor C is the state to be named. ... So: bake the hold's light into the body, your second way.
+Two body maps, the rings by radius and by azimuth from the Sun's direction, the globe by latitude and by longitude
+from the Sun, given to both sets at every frame and weighted by nothing. One body in one light from the flight in
+to the rise."
+"3. That lifts point 2 of 1301 (the skim's bytes kept) for this change, on these terms: (a) the skim is still
+drawn by code, no image; (b) frame 3720 is proved again: d296 and bands beside main's, G17 median and lowest
+quarter stated for 3465 and 3720 (the limit is 0.8 of the approved, config detail.minSharpnessRatio; B and C at
+3465 stand at 0.819 and 0.817 in the lowest quarter, which is thin, so watch it); (c) the judged finals 3465 and
+3720 as pictures beside the approved and beside main; (d) the reader's rows for the dive and the rise, both parts
+each, come from my machines when you name it: no line worse than main's own row (d311, d318)."
+"4. The lens law of 1298 and 1301 stands as it is."
+"5. Yours to cure before the name: the mottled patch of about 50 px on the ring's outer margin at the right ansa
+(x 1590 to 1650, y 540 to 620), in the ring map as you say; and the one bright pixel at x 1556, y 748 at 3601.
+One frame alone is a pop, however small: find what makes it (a division or a clamp at grazing light at the
+handover is my guess, not a finding) and cure it at the cause, not with a filter on the frame."
+"6. Order, so that nothing waits on anything: your 23:00 name stays the tree under proof, as said. The baked
+state is the next name after it. If the baked maps turn out not to hold at the skim (a fault you can show in a
+picture), C with the cures of point 5 is the name instead and the baked light follows it, so that the warp does
+not wait for the light. Send with the baked state: the table by frame (ring edges and limb off the true shapes at
+3373, 3379, 3465, 3562, 3572, 3593, 3601), three stills (3465, 3572, 3720) beside main, and say which spans you
+want drawn at 60 frames a second on my machines (the flight in 3360 to 3390 and the way out 3555 to 3605 are my
+guess)."
+"No answer needed but the time you expect the baked state."
+
+22:52 UTC. ANSWERED 1323 WITH THE TIMES (mail, low): tree under proof named about 23:55; baked state named about
+04:30, first three stills about 01:30; C with the cures about 03:30 if the maps do not hold at the skim.
+FOUND FOR THE BAKE (told /root in that mail):
+(a) kept/set.ts line 185 polarW = max(smooth((height - 1.0) / 0.7), smooth((distance - 7) / 2)) * polarShow: the
+    hero's ring pixels are weighted by the pose (1 to 3578, 0.81 at 3584, 0.54 at 3588, 0.28 at 3592, 0 from 3600;
+    back 3838 to 3858). Ring profile by frame on the tree's dive (prof_frames.py, azimuth 110 to 160; frame 3562
+    hero pixels, 3600 code, 3610 code): C ring 133, 156, 161; B inner half 215, 201, 198; B outer half 221, 203,
+    199; Cassini division 41, 19, 15; A 165, 127, 113; A outer 174, 145, 132 (red channel).
+    PLAN: rings = code's rings at every frame times a ring body map M(radius, azimuth from the Sun) = low pass
+    of (hero ring pixels / code's rings drawn at the hold), both sets, weight 1. First picture to make: 3465 of C
+    with polarShow 0 (what the code's rings look like at the hold with no map at all).
+(b) set.ts 229 ring shadow strength lerp by pose: one number. (c) streak.ts screen fixed overlay by pose: out.
+(d) set.ts 259 penumbra softness and 221 fine term by pose: one value each.
+CHAIN NOW: /tmp/v/rigid/seq6.sh (log seq6.log) took over from seq5 at 22:46: waits for the dive of C, then its
+readers ("DIVE C DONE"), the units of the repo's tree ("UNITS DONE", log /tmp/v/rigid/units.log), the tree's rise
+on the new main in /tmp/v/rigid/Tn ("RISE T DONE"). Tn/final_3866.png on the new main: 6d1683433f9faa3b, the
+same bytes as the proof on the old main.
