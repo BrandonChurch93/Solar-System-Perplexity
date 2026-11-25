@@ -19,7 +19,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 0, side: 1 },
   arrive: { swingDeg: 0, axis: [0.1, 1, 0.2], from: 0.25, offset: [0.5, 0.2] },
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
-  skyAim: { orbit: [25.78793, 56.89437, -50.63077], terrain: [180, -12, 40] },
+  skyAim: { orbit: [25.78793, 56.89437, -50.63077] },
   cover: [0.27, 0.43, 0.8],
   handover: { dive: { at: move.dive.at, picture: false, skyFrames: 0, ...move.one.dive }, rise: { at: move.rise.at, picture: false, skyFrames: 0, ...move.one.rise } },
   spinDegPerSecond: 1.3,
