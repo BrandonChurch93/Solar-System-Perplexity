@@ -171,7 +171,7 @@
   "thread": {
    "round": 10,
    "out": 2.5,
-   "speed": 0.9,
+   "speed": 0.45,
    "off": 0.1,
    "curl": [
     0.35,
@@ -208,29 +208,29 @@
   }
  },
  "spot": {
-  "umbra": 0.85,
-  "penumbra": 3.8,
+  "umbra": 1.15,
+  "penumbra": 2.1,
   "drop": [
-   0.035,
-   0.09
+   0.012,
+   0.022
   ],
   "wall": [
-   0.55,
-   1.45
+   0.9,
+   1.15
   ],
   "ragged": 0.5,
   "floor": 0.02,
   "fibres": {
-   "level": 0.9,
-   "edge": 1.2,
+   "level": 0.85,
+   "edge": 1.5,
    "head": 0.3,
    "gap": 2.0,
    "headFrom": 0.1,
    "ends": 0.6,
    "headLong": 0.25,
    "endsDeep": 0.15,
-   "endsAt": 0.92,
-   "cools": 0.5
+   "endsAt": 1.0,
+   "cools": 0.2
   },
   "pull": {
    "from": 0.9,
@@ -240,17 +240,17 @@
   },
   "strands": {
    "note": "the fibres of the sunspot, by place: long strands toward its middle. count: how many lie round the lip, in the field's measure (about 6 strands to 1); along: how soon a strand changes along its way (per umbra radius); lean: how far the strands turn and lean off the straight way in; thin: how thin a strand is against the dark beside it; dark and light: the light left between two strands and the light of a strand's middle, times the cell's own; reach: umbra radii from the middle inside which the strands are whole and beyond which there are none; relief: how high a strand stands over the gap beside it (stage units); flat: the share of a bulb's height gone where the strands are whole; far: the share of a strand's width that a pixel covers across it where the strand begins to merge into the mean, and where it has merged; rate: how fast bends and bright stretches travel along a strand; grains: the length of the bright stretches (per umbra radius); floor: the share of the strands' lie that shows on the wall and the floor; cell: the share of the cell's own light and dark left where the strands are whole; tone: the one tone the strands stand on there; locks: the light left to a strand in the gap between two locks",
-   "count": 26,
+   "count": 30,
    "along": 1.4,
    "lean": 0.22,
-   "thin": 2.2,
-   "dark": 0.08,
-   "light": 3.4,
+   "thin": 4,
+   "dark": 0.25,
+   "light": 3.0,
    "reach": [
-    2.2,
-    3.6
+    1.4,
+    2.2
    ],
-   "relief": 0.006,
+   "relief": 0.002,
    "flat": 0.7,
    "far": [
     0.35,
@@ -259,9 +259,9 @@
    "rate": 0.12,
    "grains": 5,
    "floor": 1.5,
-   "cell": 0.2,
-   "tone": 0.42,
-   "locks": 0.25
+   "cell": 0.35,
+   "tone": 0.6,
+   "locks": 0.4
   }
  },
  "mesh": {
@@ -319,7 +319,7 @@
   },
   "boil": {
    "scale": 9,
-   "rate": 0.5,
+   "rate": 0.25,
    "amount": 0.8
   },
   "fall": {

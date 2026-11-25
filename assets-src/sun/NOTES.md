@@ -2640,3 +2640,51 @@ Full text on disk outside the repo: /home/user/workspace/MAIL-228.md. Read it wh
 - Measured after both (`/tmp/cost2.out`): preview 13.2 s a picture against 33.3 s (first of a run 26.1 against 46.2); master 42.6 s against 51.0 s. Bytes: frames 60, 61, 225 in the d9 state the same with and without the cut (cmp); with commit 4's values 0, 60, 90, 205, 217, 231, 239, 247, 270 keep commit 4's bytes (cmp against `out/work/sun/c4/`; frames in `out/work/sun/t/c4b/`). Cost of those: 60 39.6 s, 90 38.4 s, 205 38.0 s, 217 44.5 s, 231 45.4 s, 239 39.5 s, 247 3.6 s, 270 2.9 s.
 - Not done: at the review and final tiers the bake is drawn again for every sample of a picture; one bake a picture is possible. Not tried: `gas.lid` 0.075 to 0.05 with fewer steps; ending the march where no light is left.
 - New keys: `gas.box` (edge, rim, pad); `light.well.flank` and `light.well.lobes`, both 0 in this commit (the flank's floor of heat and the folds between a dome's lobes, built in the d trials; at 0 the picture is commit 4's to the byte).
+
+## Commit 4b (MAIL 946, 951, 952), 25 Nov
+
+- 05:38 UTC NAMED d91c0f63 sent (commit 4, cost cure of the bake on it).
+- MAIL 929 (05:52): commit 4 rides in batch 10 if no worse in motion than commit 3; the sheen stays fixed on the ground; commit 5 held to MAIL 912 (3) and MAIL 907; owed: one line on the warm step.
+- MAIL 938 (about 06:16): a lab agent (/root/venus_place_builder, branch agent/sun-lab, folders src/stops/sun/lab and assets-src/sun/lab) builds a second ground beside mine; the cost question of MAIL 907 is owed with commit 5.
+- MAIL 946 (06:33): on the ground at 90 to 200 the spot of commit 4 is a ring of thick bright strokes with a small dark centre; asked: name what moved it, cure it in a commit 4b on d91c0f63 (wide flat centre, thin dark threads, darker grain toward the spot), pair of frame 90 at the master beside the approved image and beside take batch 9, frames 217 and 225 again. Next mail within 90 minutes.
+- MAIL 951 (06:40): rise part 1 of d91c0f63 RED, pattern 0.64 from 174 + 1/2 (take batch 8: 0.52), surface view alone 0.63; in the near ground along the picture's foot. Asked: what in commit 4 does it, bring it back to no more than take batch 8's reading without making the life slower.
+- MAIL 952 (06:48): part 2 RED by a hair, 0.454 from 218 + 1/2 (take batch 8: 0.30 to 0.32); the whole ground changes more in 8 frames than before.
+
+### What moved the spot's rim
+Neither the one Sun on the rise nor the bake cure. Commit ead85b2e ("the spot as a funnel") rebuilt the spot on purpose: `spot.drop` [0.012, 0.035] to [0.035, 0.09] (a deep funnel), `spot.wall` [0.65, 1.45] to [0.55, 1.45] (a small floor), and the new block `spot.strands` (count 26, thin 2.2, light 3.4, reach [2.2, 3.6], relief 0.006): few, wide, bright strands that reach 3.6 umbra radii out.
+ Before it (0988d75a) the spot was a shallow bowl with fine fibres. So the ring of thick bright strokes and the small centre were built by that commit's values, not by a side effect.
+
+### The spot's cure (config only, `spot` in `convect.json`)
+- Trials s1 to s3 and K1 at frame 90 (master, draft tier), each seen at 1 to 1 under the approved crop (`/tmp/tri.py`, crop x 560 y 440, 1000 by 330). s3: wide flat dark floor, thin bright filaments with dark threads between, compact penumbra, floor about 200 px wide against about 270 px in the approved. K1 widened it: `spot.umbra` 1.15, `spot.penumbra` 2.1, `spot.strands.reach` [1.4, 2.2].
+- Values taken: `spot.umbra` 1.15, `spot.penumbra` 2.1, `spot.drop` [0.012, 0.022], `spot.wall` [0.9, 1.15], `spot.fibres` level 0.85, edge 1.5, endsAt 1.0, cools 0.2; `spot.strands` count 30, thin 4, light 3.0, dark 0.25, tone 0.6, cell 0.35, reach [1.4, 2.2], relief 0.002, locks 0.4.
+- Still wrong at the spot beside the approved: the approved penumbra is wider and darker with the grain of the cells combed toward the pit over about two floor widths; mine is a compact ring and the cells stand bright right up to it.
+
+### What makes the ground change more in 8 frames (MAIL 951, 952)
+- My report for d91c0f63 had the path part only; I had not measured the pictures. Written after that: `/tmp/chain.py` (the reader's own functions of `tools/img/smooth.py`: motion, carry, change, readings, reading; between capture frames at rate 2, draft tier; no poses, so no body) and `/tmp/chain2.py` (the same with a body of my own: the bright ball, less a margin).
+- Part 1, capture frames 349 to 365 (174 + 1/2 to 182 + 1/2), preview format, read at half size. All figures are my chain's, not the reader's report; the Builder's figures at the master are 0.52 (take batch 8) and 0.64 (d91c0f63).
+
+| state | reading |
+| --- | --- |
+| commit 3 files (0988d75a) | 0.414 |
+| commit 4 values (with the spot of s3) | 0.547 (every capture frame 0.533) |
+| commit 4 code, all ground values of commit 3 (Z3) | 0.415 |
+| only `light.boil` back (Z4) | 0.527 |
+| only threads and tongues back (Z5) | 0.481 |
+| threads, tongues, boil, points back; `cells.round` 30 and `cells.tight.power` 0.4 kept (Z6) | 0.443 |
+| Z6 with `cells.round` 40 and the wider spot (K1) | 0.452 |
+| commit 4 values, `cells.thread.speed` 0.45 and `light.boil.rate` 0.25, cured spot (B1) | 0.471 |
+
+- So it is not the bake cut to the ball's box, not the smaller buffer and not the code (Z3). It is the values of the ground's look that commit 4 took from the bulb trials g4 and h4: the fibres and tongues of the bulbs wider, brighter and hotter (`cells.thread.round` 15 to 10, `thin` 1.6 to 2.0, `light.fibre` 0.9 and 0.6 to 1.15 and 0.85, `light.tongue`), the largest part; the mottle of the tops finer and stronger (`light.boil` scale 5 to 9, amount 0.5 to 0.8); more and brighter points in the lanes; and `cells.tight.power` 1.1 to 0.4, by which the cells near the eye at 174 are drawn larger (about 0.03 to 0.04 of the reading). The fibres travel outward at the pace they had in commit 3 (`cells.thread.speed` 0.9); they are brighter, so their travel reads more.
+- K1 (the commit 3 values back) at frame 60: dark 0.251, body 0.635, pale 0.053, white 0.003; half width 11.1 px, 252 shapes; fine detail 0.0159; mean 0.297; distance 0.072. Seen at 1 to 1: flat stones with no fibres, further from the approved than commit 4 (fine detail 0.0299) and than take batch 9. Not taken.
+- `cells.tight.power` back to 1.1 (X) and a law with two powers (1.1 near, 0.4 past 6.5 stage units, Y1, code in `/tmp/w4b/tightfar.py`, not committed): at 217 the far ground on the left goes from fine cells to the globe's map in both (MAIL 868's fault). With 0.4 the cells reach the limb. Why the far cells let go with the near law at 1.1 is not found. So 0.4 stays.
+- Part 2, capture frames 437 to 453 (218 + 1/2 to 226 + 1/2), preview, every second capture frame, `/tmp/chain2.py` (my own body): d91c0f63 values 0.496, K1 0.525, X 0.581 (every capture frame 0.572), all three at pixel 492, 254 to 260 of the preview, which is 984, 508 to 520 of the master (the reader named 984, 496). That place is behind the top of the arcade at the limb: where the far ground gives way to the globe's face and the arcade shrinks between the two frames. The rest of the ball reads low in the picture of the reading. Without a body the chain reads 1.39 to 1.44 there with 7 to 11 percent of the picture judged: not usable.
+- B1 on part 2 the same way: 0.495 at the same pixel (d91c0f63 0.496). The pace of the fibres does not touch that place. Not cured in this commit.
+
+### What commit 4b is (B1)
+- d91c0f63's code and values, with the spot's values above and two paces halved: `cells.thread.speed` 0.9 to 0.45 (how fast the bright stretches of a bulb's fibres travel outward: 0.36 of a cell's radius a second before, 0.18 now) and `light.boil.rate` 0.5 to 0.25 (the mottle of the tops). `cells.life` [3.5, 6] is not touched: birth, spread, split and fade of the cells keep their pace. This is a slower life of the fibres and is said so in the mail.
+- Part 1 by my chain: 0.471 against 0.547 for commit 4 and 0.414 for commit 3's files. So it is not back to take batch 8's reading. What stands between: the fibres themselves (K1 without them 0.452, a worse picture) and the cells drawn larger near the eye by `cells.tight.power` 0.4 (Z3 with 1.1 reads 0.415, and loses the far ground at 217).
+- Frame 60 (`sun-near.py`): dark 0.223, body 0.616, pale 0.084, white 0.023; half width 8.2 px, 546 shapes; fine detail 0.0291; mean 0.326; distance 0.070 (d91c0f63: 0.242, 0.583, 0.094, 0.021; 7.7 px, 545; 0.0299; 0.331; 0.085).
+- Frames at the master, draft tier, in `out/work/sun/t/B1/`: 60, 90, 217, 225, 270. 270 keeps the bytes of d91c0f63 (cmp; sha256 begins e389016355a705ef). Seen: at 90 the spot has a wide flat dark floor and thin bright filaments with dark threads between; at 217 one ground as in d91c0f63; at 225 the paler patch left of the spot is still there.
+- Not done: a pair of clips at 60 frames a second of the two paces; the reader's own report of the pictures (my figures are the chain's at preview); the master format for the chain; frame 360 at the final tier was not drawn again (nothing of the hold reads these values; 270 keeps its bytes).
+- Looks 58929013 (07:01), 176fae8d (07:27).
+- Commit 5 put aside whole in `/tmp/c5e20/` (trials e10 to e20: fibre fade away from the root, wide sheen along the fibres, glints held to slopes that face the lens; open faults: reads as polished shells, far field at 90 pale loaves, few glints, brown rather than amber).
