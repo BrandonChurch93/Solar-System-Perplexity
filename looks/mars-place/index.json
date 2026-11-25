@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T14:01:57.241Z",
- "head": "5e92bb49042763ee024e693a75e36df8172de9b8",
- "note": "trial cut at four crests (not committed, G15 red), tone fall crops",
+ "pushed": "2026-11-25T14:27:56.409Z",
+ "head": "356f1a2735b18cd392e8909f0257a1132693802c",
+ "note": "the cut in its final design: lossless trimmed cut layers, teeth gone at 2668 and 2676, 2580 equal to the eye, ledge at the far mesa at 2477 named",
  "looks": [
+  {
+   "time": "2026-11-25T14:27:55.670Z",
+   "file": "20261125142755670-note-web-2668-crop.jpg",
+   "source": "out/work/place/saw/d/web-2668-crop.png",
+   "kind": "note",
+   "label": "cut at 2668, web set left, full set right, crop x 630 to 830 times 3",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T14:27:55.039Z",
+   "file": "20261125142755039-note-pair-2477-clusters.jpg",
+   "source": "out/work/place/saw/d/pair-2477-clusters.png",
+   "kind": "note",
+   "label": "cut at 2477, the four clusters, state left, cut right; small dark ledge at the far mesa's upper left corner",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T14:24:07.716Z",
+   "file": "20261125142407716-note-line-others.jpg",
+   "source": "out/work/place/saw/line-others.png",
+   "kind": "note",
+   "label": "old red, not from the cut: dark stepped line on the mesa's left flank in the dive, 2470 and 2472, state before N1 and N1",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T14:24:07.044Z",
+   "file": "20261125142407044-note-pair-2580-crop.jpg",
+   "source": "out/work/place/saw/d/pair-2580-crop.png",
+   "kind": "note",
+   "label": "the cut as it stands, draft 2580 crop times 3, N1 left, cut right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T14:24:06.263Z",
+   "file": "20261125142406263-note-pair-2676-crop.jpg",
+   "source": "out/work/place/saw/d/pair-2676-crop.png",
+   "kind": "note",
+   "label": "the cut as it stands, draft 2676 crop times 3, N1 left, cut right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T14:24:05.425Z",
+   "file": "20261125142405425-note-pair-2668-crop.jpg",
+   "source": "out/work/place/saw/d/pair-2668-crop.png",
+   "kind": "note",
+   "label": "the cut as it stands, draft 2668 crop x 630..830 y 540..750 times 4, N1 left, cut right",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T14:01:56.405Z",
    "file": "20261125140156405-note-web-2668-crop.jpg",
@@ -18,60 +66,6 @@
    "source": "out/work/place/saw/tone-c.png",
    "kind": "note",
    "label": "tone fall 2462 to 2464, the same ground at one scale from N1 drafts",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T14:01:54.742Z",
-   "file": "20261125140154742-note-k3-2676-clusters.jpg",
-   "source": "out/work/place/saw/k3-2676-clusters.png",
-   "kind": "note",
-   "label": "trial cut of the sheet at four crests, draft 2676, state left and cut right at the four clusters",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:53:12.528Z",
-   "file": "20261125135312528-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T13:52:38.197Z",
-   "file": "20261125135238197-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T13:41:29.457Z",
-   "file": "20261125134129457-note-pairA-2668.jpg",
-   "source": "out/work/place/saw/pairA-2668.jpg",
-   "kind": "note",
-   "label": "cut trial: draft 2668 whole, above state, below cut",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:41:27.252Z",
-   "file": "20261125134127252-note-cuts-sheet.jpg",
-   "source": "out/work/place/saw/src/cuts-sheet.jpg",
-   "kind": "note",
-   "label": "cut trial: the four cut layers, alpha and distances",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:41:25.187Z",
-   "file": "20261125134125187-note-k3-2678-crop.jpg",
-   "source": "out/work/place/saw/k3-2678-crop.png",
-   "kind": "note",
-   "label": "cut trial: draft 2678 crop x 480..960 y 440..760 times 3, the frame of largest parallax",
    "stop": "mars"
   }
  ]
