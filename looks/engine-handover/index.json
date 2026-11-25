@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T19:36:17.234Z",
+ "pushed": "2026-11-25T20:07:37.353Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "lookup trial at Earth 1857 done (control, as it is, A and B at 1 to 1 and 3 times); design (c) crest sheets: first Mars drafts, teeth gone, two defects found (blocks at the matte rim, near colour on the far sheet), curing",
+ "note": "20:09 UTC: crest cure coded (matte asked at the near end, cut moved out by the stop's number), 14 of 14 node tests; fields on Mars L1 computed and looked at; the five judged finals of Mars render since 19:51, no frame out yet",
  "looks": [
+  {
+   "time": "2026-11-25T20:07:36.539Z",
+   "file": "20261125200736539-note-cure-whole-field-o2.jpg",
+   "source": "../../../../tmp/crest/cure-whole-field-o2.jpg",
+   "kind": "note",
+   "label": "crests, the cure: all of Mars L1 at the map's size with the field (step 0.002, walk 12, under 24, out 2); blue: band texels whose near end is outside the matte (3644 of 47129 ramp texels), which the sheets now treat as a rim and not as a crest"
+  },
+  {
+   "time": "2026-11-25T20:07:35.743Z",
+   "file": "20261125200735743-note-cure-teeth-zoom-b.jpg",
+   "source": "../../../../tmp/crest/cure-teeth-zoom-b.png",
+   "kind": "note",
+   "label": "crests, the cure: the same at 9x (texels x 1610..1675 y 400..465); measured on 298 points of this crest the paint's light falls off at 0.12 texels beyond the middle in the median, 1.88 at 95 percent, 3.15 at 99 percent"
+  },
+  {
+   "time": "2026-11-25T20:07:34.953Z",
+   "file": "20261125200734953-note-cure-teeth-field.jpg",
+   "source": "../../../../tmp/crest/cure-teeth-field.png",
+   "kind": "note",
+   "label": "crests design (c), the cure, no render yet: Mars L1 at the teeth crest, map texels x 1530..1730 y 335..520 at 3x; left the paint, middle the field with the cut on the step's middle (white), right the cut 2 texels out; green near side of a ramp, red far side; the thin white lines in the open are borders between two crests' bands"
+  },
   {
    "time": "2026-11-25T19:36:16.618Z",
    "file": "20261125193616618-note-kx-under0.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/crest/k-2668-a.png",
    "kind": "note",
    "label": "Mars 2668 draft, as it is, the lit crest at 5 times (teeth)"
-  },
-  {
-   "time": "2026-11-25T19:22:58.457Z",
-   "file": "20261125192258457-note-L1-002-teeth.jpg",
-   "source": "../../../../tmp/crest/mars/L1-002-teeth.png",
-   "kind": "note",
-   "label": "design (c): the teeth crest of L1 as found at step 0.002"
-  },
-  {
-   "time": "2026-11-25T19:22:57.401Z",
-   "file": "20261125192257401-note-L1-002-whole.jpg",
-   "source": "../../../../tmp/crest/mars/L1-002-whole.png",
-   "kind": "note",
-   "label": "design (c): the crests found on Mars layer L1 at step 0.002 (sheet cells and near cells over the layer)"
-  },
-  {
-   "time": "2026-11-25T19:22:56.427Z",
-   "file": "20261125192256427-note-pair-3x.jpg",
-   "source": "../../../../tmp/trial/pair-3x.png",
-   "kind": "note",
-   "label": "lookup trial pair at 3 times: 1857 final as it is, and with reads across the way at the pixel's own size (trial A)"
   }
  ]
 }
