@@ -30,9 +30,12 @@ export const params: MoveParams = {
 }
 
 // THE LOW SKY'S KNOTS (sky_builder's patch, MAIL 1099 and MAIL 1112 point 3): the sky's level and the share of its turn by the height
-// of the eye over the body, in radii, from the highest down: 0.65 (the hold's own level, light.skyExposure) at and above 2 radii, 0.27 at
+// of the eye over the body, in radii, from the highest down: 0.65 (the hold's own level, light.skyExposure) at and above 2 radii, 0.38 at
 // and under 0.03 radii, between them on the one air's own curve over the logarithm of the height (airAt, src/core/air.ts). The hold
-// flies at 2.07 to 2.18 radii and keeps 0.65; the surface view flies at 0.0232 to 0.0247 and holds 0.27. Never the clock.
+// flies at 2.07 to 2.18 radii and keeps 0.65; the surface view flies at 0.0232 to 0.0247 and holds 0.38. Never the clock.
+// The low level was 0.27 on the sky of d63d08e2. Main's take batch 10 (merged 25 Nov, 14:38 UTC) draws the band at a stop anew
+// (sky.ts, stopLayer) and it holds about half the fine energy at the same level: the sky's tiles of G17 at 4860 fell from 0.87 to
+// 1.75 of the approved image's to 0.35 to 1.24. At 0.38 they read 0.50 to 1.70 (median 0.97) on the merged tree.
 // They stand here and are read through airAt by skyTurnShare and skyGain below, not as params.air: nothing in the engine reads the
 // air of a shot yet, and tests/air.test.ts asserts that no stop of the film names one ("is absent on every shot of the film as long
 // as no stop names an air"), so the patch as written turned that unit red on the merge of main aed412aeb (25 Nov, 15:03 UTC). The
@@ -41,7 +44,7 @@ export const params: MoveParams = {
 const light = params.light
 export const lowSky: AirKnot[] = [
   { exposure: light.exposure, sky: light.skyExposure, stars: 1, sunRadius: light.sunRadiusDeg, glare: light.sunGlare, height: 2 },
-  { height: 0.03, sky: 0.27 },
+  { height: 0.03, sky: 0.38 },
 ]
 const deck = new THREE.Vector3().fromArray(close.nadir).multiplyScalar(close.radius + 1)
 // The scene's frame on the globe: where the fit put it (place.json), turned to where the place stands (move.json, place; band.ts).
