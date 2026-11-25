@@ -39,9 +39,17 @@ export const flowJudges = (row: Read): boolean => !worded(row) || byFlow(row) ||
 // row read without the map (the flag off) keeps main's words as they are.
 export const FULL = { softPx: 1, settlePx: 8, edge: 4 }
 
-export const carriedFull = (scale: number): string[] => [
-  'Read with --carry-full. What is left of a frame in the next, the pop, the pop of one block and the change in place take the later frame onto the first at the full size and reduce after: both frames through the same filter of ' + FULL.softPx + ' px, the way of the flows taken to the full size and set right once by the flow at half the full size, smoothed over ' + FULL.settlePx + ' px, then both reduced the same way. Carried at the reduced size, a picture that only slides by a part of a pixel leaves a difference that is the reader\'s and not the film\'s (a reduced picture is not the reduced picture of the same ground a part of a pixel on); carried so, it leaves nothing. Not counted in what is left: the outermost ' + 1 / scale + ' px of either frame and what arrives within ' + FULL.edge / scale + ' px of the edge from farther inside, where the picture enters. The pattern keeps its own carry.',
+const fullLaw = (scale: number): string[] => [
+  'What is left of a frame in the next, the pop, the pop of one block and the change in place take the later frame onto the first at the full size and reduce after: both frames through the same filter of ' + FULL.softPx + ' px, the way of the flows taken to the full size and set right once by the flow at half the full size, smoothed over ' + FULL.settlePx + ' px, then both reduced the same way. Carried at the reduced size, a picture that only slides by a part of a pixel leaves a difference that is the reader\'s and not the film\'s (a reduced picture is not the reduced picture of the same ground a part of a pixel on); carried so, it leaves nothing. Not counted in what is left: the outermost ' + 1 / scale + ' px of either frame and what arrives within ' + FULL.edge / scale + ' px of the edge from farther inside, where the picture enters. The pattern keeps its own carry.',
   'The limits are the config\'s, and they were set while the reader counted its own resampling into every median: a pop is read against a smaller median here, so it stands higher where the film changes and lower where only the slide changed.',
+]
+
+export const carriedFull = (scale: number): string[] => fullLaw(scale).map((line, i) => (i === 0 ? 'Read with --carry-full. ' + line : line))
+
+export const besideFull = (scale: number): string[] => [
+  'The same frames and the same flows read a second time, beside the reader above. ' + fullLaw(scale)[0]!,
+  fullLaw(scale)[1]!,
+  'The level step and the pattern are one reading and stand in both. The reader above is the one that counts: its lines in red make the verdict and the exit code. The lines in red here make the verdict beside it.',
 ]
 
 export const chained = (row: Read, flows: number): string => (row.patternMap === undefined ? '' : ', the later frame carried by the chain of the ' + flows + ' flows from frame to frame' + ((row.patternMapMoved ?? null) !== null ? ' (that chain parts from the camera\'s map on the body by ' + row.patternMapMoved!.toFixed(1) + ' px)' : ''))

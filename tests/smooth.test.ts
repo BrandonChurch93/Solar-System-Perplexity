@@ -450,6 +450,50 @@ describe('the pop score at the two ends of a window, on a made run whose residua
   })
 })
 
+interface MadeEvent { k: number; standing: number; full: number; fullAll: number; fullCarried: number; still: number }
+interface MadeFull { still: { ks: number[]; standing: (number | null)[]; full: (number | null)[]; fullAll: (number | null)[]; fullCarried: (number | null)[] }; same: { standing: boolean; full: boolean; rest: boolean; whole: boolean; rows: number; keys: number }; events: Record<string, Record<'top' | 'foot', MadeEvent>> }
+
+describe('the pop score with the carry at the full size, on a made still that only slides and on the same film with a true event planted', () => {
+  const limit = config.raw.smooth.pictures.maxPop
+  let p: MadeFull
+  beforeAll(() => {
+    p = (JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/madepop.py', import.meta.url))], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as { pops: MadeFull }).pops
+  }, 900_000)
+
+  it('reads no row of the still over the limit, and every row near 1', () => {
+    expect(p.still.ks.length).toBe(61)
+    for (const v of p.still.full) {
+      expect(v!).toBeLessThan(limit)
+      expect(v!).toBeGreaterThan(0.95)
+      expect(v!).toBeLessThan(1.05)
+    }
+  })
+
+  it('reads the swapped layer and the steps of 2, 4 and 8 red, at the top of the hill and at its foot', () => {
+    for (const at of ['top', 'foot'] as const) {
+      for (const name of ['layer', 'step2', 'step4', 'step8']) {
+        const e = p.events[name]![at]
+        expect(e.full).toBeGreaterThan(limit)
+        expect(e.still).toBeLessThan(1.05)
+      }
+      expect(p.events.step4![at].full).toBeGreaterThan(p.events.step2![at].full)
+      expect(p.events.step8![at].full).toBeGreaterThan(p.events.step4![at].full)
+      expect(p.events.layer![at].full).toBeGreaterThan(p.events.step8![at].full)
+    }
+    expect(p.events.layer!.top.k).toBe(7748)
+    expect(p.events.layer!.foot.k).toBe(7737)
+  })
+
+  it('gives both readings from one draw: the standing one as a run without it, the full size one as a run with the carry at the full size, in every number', () => {
+    expect(p.same.rows).toBe(12)
+    expect(p.same.keys).toBeGreaterThan(20)
+    expect(p.same.standing).toBe(true)
+    expect(p.same.full).toBe(true)
+    expect(p.same.rest).toBe(true)
+    expect(p.same.whole).toBe(true)
+  })
+})
+
 describe('the pattern measure on made pictures, a judged area with a limb, a frame edge and a hole', () => {
   beforeAll(() => {
     made()
