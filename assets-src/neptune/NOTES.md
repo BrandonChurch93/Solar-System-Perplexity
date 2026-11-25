@@ -6011,3 +6011,23 @@ NAMED: Neptune, agent/neptune-place b42850bf (notebook) over 8ade670b (merge of 
 - Laws by the eye's height or by angle that I did not delete: globe.height, globe.fall, globe.border, the wisp zone by v, the sky's turn by height.
 - The texels view of my frame tool (preview, full set) reads G13 OVER: soft 89.7 percent of the counted pixels at 4605 (mean 0.56 texels per pixel), 78.1 at 4707, 74.8 at 4709, 65.3 at 4713. Outside the patches it reads 0.15 to 0.19 texels per pixel at 4709. Found at 01:26, not looked into; the same line read OVER on 0b9017c0 at 4757 to 4759 and I named it then.
 - Not run on this commit: the gate G13 itself, parity, any frame at the review tier, the handover's frames on 47ea8855 and in the web set, every frame in the web set.
+
+## MAIL 840 from the Builder (/root), answer to my NAMED mail of 01:36 (word for word)
+
+MAIL 840 from the Builder (/root) to neptune_builder. Clock read with date -u before writing: 01:52 UTC, 25 Nov.
+
+1. NAMED b42850bf (branch tip 2eede047ba12302be80c60773ecb76e1441b5afe) is received and looked at. Against main it differs only in your folders (src/stops/neptune 10 files, public/assets/neptune web 6 and full 6, assets-src/neptune 5). Ruling: not taken and no round on it. It is the first named commit of round 1 of 3 of the third note. By d186 the second is due within 90 minutes of this mail (03:20 UTC by date -u) and a third goes into the round as it stands. My machines are on 2eede047 now: finals (nk9 11), handover (nk9 12), measures (nk9 13), path, place and parity (np9 03). Their numbers follow as they come.
+
+2. What I see on your own pictures, worst first.
+   (1) The dive, 4705 to 4713: navy chunks with stepped edges, the spiral hardening as the eye comes down, and a row of white dashes. A stepped edge is a map read with nearest sampling, floored, or cut by a threshold: none of the three belongs in a cloud. Bisect the globe's terms at 4709 by switching them off one at a time (a diagnostic of your own, not a commit) and name the term. If it lies in src/bodies it is not yours: mail globe_engineer directly with the frame and the term, copy to me. The dashes are a thin streamer read under its own width: it goes through the filter by the pixel's foot like everything else, or it is not drawn at that distance.
+   (2) The spiral shows as a ring at the hold (4605) and hardens in the dive. Condition (b) of MAIL 806 is unmet. (d) has two steps: first the place carries nothing the hold's picture does not have at that size, then its contrast is only what the filter leaves. A feature that can be seen as a drawn ring from orbit is wrong at the source, not at the blend.
+   (3) The sky flashes at 4722 and 4723. The removed patch needed an aim; drop the aim with it.
+   (4) 4860 beside the approved close picture is not the same shot. Yours: navy and electric blue with flecks, a hard white bank, a violet far band. Approved: slate and pale blue, a soft broad deck, a soft eye, fibrous cirrus over it, pale haze far off. Haze is light ADDED along the path: L = L0 * T + S * (1 - T), with T neutral (the same in the three channels, or close) and S the lit air's own pale colour. A T that eats blue gives the orange limb; an S that is violet gives the violet band. Report the mean of the plain's box at 4860 against the approved picture's (90, 134, 176).
+   (5) The flecks: detail from code stays under the knee of the albedo and inside the frame law. A fleck that is brighter than the deck it lies on is a light, not a cloud.
+   (6) Frame law (a) for the scene from code: its cure is a commit of its own (the pixel's angle from the frame factor, not from the canvas). Say which of the preview proofs moved with it and by how much.
+   (7) The night side: lumps and a violet tint. Name the cause with the second commit.
+   (8) Texels at 4605 reading over: my machine's measure (nk9 13) decides, not the eye.
+
+3. Brandon's sentence is the bar for this stop and it is still open on this commit: "you can actually see the image pop up both enter entering and leaving. It looks really bad". Your patch is gone, which is the right cause to remove. What pops now is the list under (1) and (3). The second commit is judged on those two first.
+
+Main is aeffd516c1945f4817fce1a2698e6102153ff06b since 01:47 UTC (take batch 6: the globe engine's limb, the cap's counts, the drawn shape of a body in the pose record). src/bodies/limb.ts and planet.ts changed: merge main before the second commit and look at 4605 and 4709 again after the merge, since your globe draws through them.
