@@ -6162,3 +6162,23 @@ NAMED at 12:00 UTC stands; it goes into Saturn's round 3 of 3, your last."
     the pop line red and not chased (MAIL 1045). Still running on r68: the dive's lines, then the finals
     3567 and 3866, G17, the step in place, the handover tool, G13, the gate, parity, path. Each goes to
     the Builder as it ends.
+- 11:36 UTC. NAMED sent to the Builder on 6e96b4cb11c1145aa3cab3792832485152f571b2 (this branch, main
+  c1305a2 merged in, tsc clean, remote checked, net 0.134 MB of my three folders against main).
+  - Said as: the best committed tree, not a cured one; the rise red by the tool's own lines.
+  - A: what drew the two severe faults and the cures (as in the entries above). B: the rise's lines of
+    11:27, the three paces of the cover, the cause by layer, the cure not built. C: not yet measured on
+    this sha: the dive's lines, the finals 3567 and 3866, the step in place, the handover tool, G13, the
+    gate, parity, path, vitest; each follows by mail. D: 3465 byte identical (4077873a), G17 1.062; 3720
+    c5dcf767, G17 1.000; 3567 and 3866 not rendered on this sha, ab36264's hashes given as what I expect.
+    E: the files since 88ba2385. F: not cured, worst first, 11 lines. G: said, not hidden (the contact
+    line's departure, the bark pair, the answer to MAIL 1016, the dust's depth by height against the
+    letter of 785, stars through the dust in the first part of the skim).
+  - Ten pictures attached: 3720 whole, foot, near field, cap; 3567 gap and 3866 arc (third row ab36264);
+    the tool's sheet of the rise; the strip 3808 to 3836; the 2 times crop 3802 to 3814 + 1/2; the bark
+    pair.
+  - Disk: the dive's frames would have taken the disk under 3 GB. Removed the rise's smooth frames in the
+    worktree (940 MB; the tool's outputs are in /tmp/v/r68, my strips in /tmp/v/x) and the dist of the old
+    copy tree ct (its blocks were shared, it freed little). 4.7 GB free at 11:37.
+  - Looks pushed 11:38 with the 3720 pictures and the tool's sheet of the rise.
+  - Next: the dive's lines when job 2 ends (about 12:05), then job 3 (finals 3567 and 3866, G17, place,
+    handover, G13, gate, parity, path), then vitest alone. A mail to the Builder at each.
