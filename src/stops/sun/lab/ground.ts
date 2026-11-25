@@ -138,6 +138,23 @@ float labJoin(vec2 chartPlace) {
 // the penumbra: threads about the spot, the same for every cell they cross, each of its own length and bend.
 // x: how much of the place is penumbra, y: its heat, z: what the umbra's dark leaves, w: under 0 inside the torn
 // edge of the umbra
+// a rank of tongues round the spot: n side by side, each a drop with its head toward the umbra, of its own length,
+// bend and heat. x: its heat, y: the lot of its column
+vec2 labTongue(float turnS, float lr, float n, float rows, float salt, float flow) {
+  float uu = (turnS / 6.2831853 + 0.5) * n;
+  float col = mod(floor(uu), n);
+  float fu = fract(uu) - 0.5;
+  float lot = h1(vec2(col, salt));
+  float v = lr * rows + 3.0 * lot - flow;
+  float row = floor(v);
+  float fv = fract(v);
+  float id = h1(vec2(col + 17.0 * row, salt + row));
+  float wide = 0.5 * (0.2 + 0.8 * smoothstep(0.0, 0.5, fv)) * (1.0 - 0.5 * smoothstep(0.7, 1.0, fv));
+  float bend = 0.3 * (h1(vec2(col * 1.7 + row, salt + 9.0)) - 0.5) * (fv - 0.4);
+  float x = abs(fu + bend) / max(wide, 1e-3);
+  float body = 1.0 - smoothstep(0.3, 1.0, x);
+  return vec2(body * mix(1.0, 0.45, smoothstep(0.05, 0.95, fv)) * mix(0.5, 1.0, id) * step(0.08, id), lot);
+}
 vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy) {
   vec2 sp = chartPlace - uLabSpot.xy;
   float turnS = atan(sp.y, sp.x);
@@ -149,8 +166,8 @@ vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy
   float oct = floor(lr);
   float mixO = smoothstep(0.25, 0.75, lr - oct);
   float f0 = exp2(oct);
-  float pb = mix(vn(vec2(turnS * 52.0 * f0 + 3.0, lr * 4.3 - flow)), vn(vec2(turnS * 104.0 * f0 + 3.0, lr * 4.3 - flow)), mixO);
-  float pc = mix(vn(vec2(turnS * 110.0 * f0 + 7.0, lr * 7.9 - flow)), vn(vec2(turnS * 220.0 * f0 + 7.0, lr * 7.9 - flow)), mixO);
+  float pb = mix(vn(vec2(turnS * 52.0 * f0 + 3.0, lr * 9.0 - flow)), vn(vec2(turnS * 104.0 * f0 + 3.0, lr * 9.0 - flow)), mixO);
+  float pc = mix(vn(vec2(turnS * 110.0 * f0 + 7.0, lr * 15.0 - flow)), vn(vec2(turnS * 220.0 * f0 + 7.0, lr * 15.0 - flow)), mixO);
   float pd = vn(vec2(turnS * 26.0 * f0, lr * 3.1 - flow));
   // a thread is as wide in the picture as the picture is across it, however flat the look along it
   vec2 across = vec2(-sp.y, sp.x) / max(dot(sp, sp), 1e-8);
@@ -164,11 +181,15 @@ vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy
   float ld = mix(0.5, smoothstep(0.35, 0.65, pd), kpd);
   pb = mix(0.5, pb, kpb);
   pc = mix(0.5, pc, kpc);
-  float strand = max(la, 0.85 * lb) * mix(0.55, 1.0, ld);
+  vec2 t1 = labTongue(turnS, lr, ${lab.spot.tongues[0]!.toFixed(1)}, ${lab.spot.ranks[0]!.toFixed(2)}, 3.0, flow);
+  vec2 t2 = labTongue(turnS, lr, ${lab.spot.tongues[1]!.toFixed(1)}, ${lab.spot.ranks[1]!.toFixed(2)}, 11.0, flow);
+  float kt1 = 1.0 - smoothstep(0.25, 0.6, wp * ${(lab.spot.tongues[0]! / 6.2831853).toFixed(3)});
+  float kt2 = 1.0 - smoothstep(0.25, 0.6, wp * ${(lab.spot.tongues[1]! / 6.2831853).toFixed(3)});
+  float strand = max(mix(0.22, t1.x, kt1), 0.9 * mix(0.22, t2.x, kt2)) * mix(0.7, 1.15, lb) * mix(0.8, 1.1, la);
   float pen = 1.0 - smoothstep(-0.5, 0.5, rs - uLabJoin.y - uLabJoin.z * (pb - 0.5) - 0.5 * uLabJoin.z * (vn(chartPlace * 23.0 + 1.7) - 0.5));
   float tongue = smoothstep(0.62, 0.8, pa) * smoothstep(0.5, 0.7, pc);
-  float bundle = uLabHeatMore.z * mix(mix(0.02, 0.12, smoothstep(1.2, 3.0, rp)), 1.9, strand) * mix(0.6, 1.1, smoothstep(0.3, 0.7, pa)) * mix(0.5, 1.0, smoothstep(1.0, 2.2, rs));
-  return vec4(pen, bundle, mix(0.04, 1.0, max(smoothstep(0.8, 1.25 + 0.5 * pa, rp), 0.7 * tongue * smoothstep(0.6, 0.9, rp))), rp - 1.14 - 0.1 * (pb - 0.5) - 0.06 * (pc - 0.5));
+  float bundle = uLabHeatMore.z * mix(mix(0.02, 0.1, smoothstep(1.2, 3.0, rp)), ${lab.spot.hot.toFixed(2)}, strand) * mix(0.6, 1.1, smoothstep(0.3, 0.7, pa)) * mix(0.5, 1.0, smoothstep(1.0, 2.2, rs));
+  return vec4(pen, bundle, mix(0.04, 1.0, smoothstep(0.72 + 0.3 * t1.y, 0.88 + 0.4 * t1.y, rp + 0.2 * (pa - 0.5))), rp - 1.14 - 0.1 * (pb - 0.5) - 0.06 * (pc - 0.5));
 }
 #endif
 // the width of a mean cell at a place in pixels of a 1080 frame
@@ -476,9 +497,11 @@ void main() {
   float plan = sin(a) / sin(uLabDome.x);
   vec2 b1 = (0.12 + 0.3 * fract(seed * 7.13)) * vec2(cos(6.2831853 * fract(seed * 3.71)), sin(6.2831853 * fract(seed * 3.71)));
   vec2 b2 = (0.25 + 0.35 * fract(seed * 5.37)) * vec2(cos(6.2831853 * fract(seed * 9.19)), sin(6.2831853 * fract(seed * 9.19)));
-  float r1 = 0.3 + 0.25 * fract(seed * 2.31);
-  float r2 = 0.18 + 0.2 * fract(seed * 4.87);
-  float blotch = max(exp(-dot(d - b1, d - b1) / (r1 * r1)), 0.85 * exp(-dot(d - b2, d - b2) / (r2 * r2)));
+  float r1 = 0.24 + 0.2 * fract(seed * 2.31);
+  float r2 = 0.16 + 0.16 * fract(seed * 4.87);
+  vec2 b3 = (0.3 + 0.35 * fract(seed * 6.91)) * vec2(cos(6.2831853 * fract(seed * 1.93)), sin(6.2831853 * fract(seed * 1.93)));
+  float r3 = 0.14 + 0.14 * fract(seed * 8.43);
+  float blotch = max(max(exp(-dot(d - b1, d - b1) / (r1 * r1)), 0.9 * exp(-dot(d - b2, d - b2) / (r2 * r2))), 0.8 * exp(-dot(d - b3, d - b3) / (r3 * r3)));
   float rise = mix(blotch * pow(max(1.0 - plan * plan, 0.0), uLabHeatB.x), 1.0, ${lab.join.merge.toFixed(2)} * smoothstep(0.55, 0.95, join));
   float fan = 0.1 * mix(0.5, fa, ka) + 0.35 * mix(0.5, fb, kb) + 0.55 * mix(0.5, fc, kc);
   float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mott - 0.5);
@@ -490,9 +513,9 @@ void main() {
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
   
   float edgeD = 1.0 / uLabMore.x - plan;
-  float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * c0 / ${lab.heat.crease[0]!.toFixed(3)}) * (1.0 - 0.7 * join);
+  float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
   float veins = labLobes(d, seed, 0.05 + 0.3 * rho) * smoothstep(0.1, 0.6, rho);
-  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - 0.35 * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5)));
+  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.2 + 2.2 * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})), edgeD));
   float bundle = pn.y;
   float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (along - flow) * 17.0 + seed), per.z)) * kc * middle;
   cell += 0.6 * uLabHeatMore.w * spark;
@@ -510,6 +533,10 @@ void main() {
   float mu = 1.0;
 #else
   float mu = abs(dot(normalize(normalize(vPos - ST_CENTRE) + ${lab.heat.lie.toFixed(2)} * vN), normalize(uLabEye - vPos)));
+#endif
+#ifndef LAB_MAP
+  float graze = abs(dot(vN, normalize(uLabEye - vPos)));
+  heat *= mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.graze[1]!.toFixed(2)}, graze));
 #endif
   heat = uLabHeat.x + heat * mix(uLabHeatMore.y, 1.0, pow(mu, ${lab.heat.limb.toFixed(2)}));
 #ifdef LAB_MAP
@@ -838,8 +865,9 @@ export class LabGround {
     for (const lv of this.levels) lv.mesh.material = onGlobe ? lv.laid : lv.plain
     ;(this.uniforms.uLabEye!.value as THREE.Vector3).copy(eye)
     if (keep <= 0) return
-    ;(this.uniforms.uLabTime!.value as THREE.Vector4).x = time + this.start
-    cellsAt(time + this.start, this.cells)
+    const now = time + this.start + ((globalThis as { labAhead?: number }).labAhead ?? 0)
+    ;(this.uniforms.uLabTime!.value as THREE.Vector4).x = now
+    cellsAt(now, this.cells)
     const c = this.cells
     const d = c.diagram
     const px = this.cellData

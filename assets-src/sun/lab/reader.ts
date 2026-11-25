@@ -21,7 +21,9 @@ const film = new FilmDirector(plans)
 setCapture(r)
 const files = readdirSync(dir).filter((f) => /^k\d+\.png$/.test(f)).sort()
 const ks = files.map((f) => Number(f.slice(1, 5)))
-const poses = ks.map((k) => {
+const hold = a.hold === undefined ? undefined : Number(a.hold)
+const poses = ks.map((kk) => {
+  const k = hold ?? kk
   const pose = carriedCamera(film, plan, 'sun', k / r, (k / r + spanMid()) / cfg.fps).pose
   return { p: pose.position.toArray(), q: pose.quaternion.toArray(), vfov: pose.vfov }
 })

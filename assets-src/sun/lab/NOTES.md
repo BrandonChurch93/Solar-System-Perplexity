@@ -270,3 +270,36 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   largest 0.626 at k0259 at [28, 1040] (bottom left corner, one cell event near the lens, rows 254 to 267 over the
   limit 0.45), mean 0.357; outside that event 0.19 to 0.30. Proxy largest 0.276 at k0282, mean 0.184. zzd on the
   same window: reader 0.717 and 0.383, proxy 0.305 and 0.244. Files reader-c7.txt, proxy-c7.txt, clip-c7.mp4.
+- 10:48 mail sent (not NAMED, state c7 5663fa2). MAIL 1038 (10:55) from the Builder: c7 not for a critic. Worst
+  first: (1) leaves of amber on a red floor: no floor may be seen, cells one pressed sheet, a lane the crease where
+  two cells meet, 1 to 3 px in the middle field of a 1080 frame, near black; (2) far field and limb redder and darker
+  than the approved, hard horizon; (3) the spot: satin ribbons in a neat round funnel, wanted a ragged umbra outline,
+  needles of mixed length with bright heads, outer edge fraying into the granules. The march: light from the same
+  heat field as the ground under it, a function of place and eye alone, cost by part at the final tier. Owed: the
+  life in three lines (what moves by what law, how many film frames a cell lives) and two clips of film frames 0 to
+  60 at every half frame, one with the eye held still, one with the film's eye. The reader's 0.626 corner: look frame
+  by frame; the cure is in the span law if a cell ends too fast; read the still eye clip too. Decision d292: round 2
+  waits for the lab ground, starts at the first take that holds it and at 15:00 UTC at the latest. NAMED wanted by
+  13:30 UTC. State owed by 12:30 UTC: frame 90 pair, frames 0 and 60, the two clips, G17 on 0, 60, 90, rise stills
+  185 to 240.
+- d1 to d3 (failed): join.level 0.004 and dome.over 1.08 press the cells into one sheet (kept); counts [5, 13, 30]
+  with strong threads were corduroy shells; a thin lane line by plan with haze 0.015 was cracked mud in an orange
+  wash.
+- e1 to e3: lane dark by the distance to the cell's border (edgeD = 1/over - plan) with a ragged edge by the fan
+  noise; veins by labLobes; commit 4078134. Still leaves: a dark rim of 0.3 and a hard patch gave each cell a big
+  dark share.
+- e4 to e8 (the step that worked): the cell is bright all over (rim 0.45 to 0.62) with a soft hotter middle (patch
+  [0.15, 0.75], three seeded blotches), a narrow near black lane (lane [0.035, 0.2, 0.8], crease[2] 0.02) and a
+  shade toward the border (shade [0.12, 0.25]), both with a width by the place (smoothstep(0.4, 0.75) of the crease
+  field) so that some borders are a thin line and others a wide dark valley. Fan threads weak (thread [0.04, 0.5]),
+  cool 0.7, groove 0.6, vein 0.3, edge 0.6, haze 0.008 power 1.5 tint [1, 0.85, 0.5]. Penumbra noise with a higher
+  frequency along (lr 9 and 15) broke the ribbons into dashes: white squiggles on the near side (bad).
+- Corner of the c7 clip (k0250 to k0268, /home/user/workspace/v/corner-c7.jpg): no cell ends or splits in that
+  window; the cells keep their outline and the bright fan pattern inside them flows. So the reader's number there is
+  the bright threads' flow under the lens, not a short life.
+- Control hook: LabGround.update adds globalThis.labAhead (seconds, absent in the film) to its time; clip.ts --hold K
+  draws capture frame K again and again with labAhead = (k - K)/60, so the eye stands still and the ground lives.
+  reader.ts --hold K reads such a folder with the pose of K.
+- e9: tongues in the penumbra (labTongue: n drops side by side about the spot in ranks along log radius, head
+  toward the umbra, own length, bend and heat; two layers 72 and 46), umbra edge by the lot of the column, pit
+  shallower (depth 0.07, wall [0.85, 1.9]).
