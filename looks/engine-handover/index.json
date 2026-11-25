@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T09:27:44.523Z",
- "head": "1c85affe752d861f918595746758ce18ad70cf79",
- "note": "commit 1 of the shutter law is named (nine frames equal to the base); Mars's rows under the law are rendering",
+ "pushed": "2026-11-25T09:48:34.275Z",
+ "head": "5de1a1142071c1928fc61a87a4185225f59d220a",
+ "note": "Mars under the shutter law, rows across the px where the share comes in; question 4 answered by the twin, commit 4 being built",
  "looks": [
+  {
+   "time": "2026-11-25T09:48:33.219Z",
+   "file": "20261125094833219-note-m-rise-in-a.jpg",
+   "source": "../../../../tmp/law/m-rise-in-a.png",
+   "kind": "note",
+   "label": "Mars rise in at 1 to 1 (crop 480,760 to 960,1080), frames 2671 to 2673: top the box, bottom the shutter law 6 to 14 px"
+  },
+  {
+   "time": "2026-11-25T09:48:32.088Z",
+   "file": "20261125094832088-note-m-rise-in-b.jpg",
+   "source": "../../../../tmp/law/m-rise-in-b.png",
+   "kind": "note",
+   "label": "Mars rise in at 1 to 1 (crop 0,600 to 480,920), frames 2671 to 2673: top the box (1c85affe), bottom the shutter law 6 to 14 px (scratch, Mars alone): 2671 equal by sha, the streak's spread 1.83, 2.24, 2.53 px for 1.83, 3.05, 4.04"
+  },
   {
    "time": "2026-11-25T09:27:43.120Z",
    "file": "20261125092743120-note-c1-nine.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/law/dots/fl-2757-cap-3x.png",
    "kind": "note",
    "label": "Flight 2757 review, the white patch x 690..930 y 290..500 at 3 times: box, ends 0.5 (scratch). The fine lines along the way stay, their blunt ends taper"
-  },
-  {
-   "time": "2026-11-25T07:36:16.100Z",
-   "file": "20261125073616100-note-fl-2757-pair-1x.jpg",
-   "source": "../../../../tmp/law/dots/fl-2757-pair-1x.png",
-   "kind": "note",
-   "label": "Flight after Mars, frame 2757 review (79 samples, 47.3 px), x 300..1020 y 60..560 at 1 to 1: box shutter (as it is), and ends 0.5 in the flight (scratch, the ends as built do not reach a flight). No separate copies in either; with the ends the streaks taper and the white patch is more compact"
-  },
-  {
-   "time": "2026-11-25T07:28:49.301Z",
-   "file": "20261125072849301-note-ur-4130-trio.jpg",
-   "source": "../../../../tmp/law/dots/ur-4130-trio.png",
-   "kind": "note",
-   "label": "Uranus 4130 review (26 samples, 15.4 px), the storm x 1040..1280 y 580..760 at 2 times: box, ends 0.5, ends 0.5 with cover 2 (scratch). The blocky white specks stand in all three: they are the cloud picture's own grain, neither the ends nor the cover moves them"
   }
  ]
 }
