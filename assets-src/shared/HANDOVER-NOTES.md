@@ -2162,6 +2162,41 @@ and plan.ts back by hash.
   look at every frame; (5) commit on agent/engine-crest from crest-wt (the four files), suite and build, push, NAMED; (6) restore
   the scratch trees (list in the entry 19:40 to 20:10).
 
+## 21:15 to 21:30 UTC, 25 Nov: crests are named by points (the key at); the map of Mars L1 around the teeth crest
+
+- WHY: the overlays of L1 (/tmp/crest/ov3-teeth.png, ov4-a.png, ov4-b.png) show that boxes cannot part the teeth crest from its
+  neighbours: it runs on a diagonal and two other crests lie 5 and 18 texels (1 and 3 cells) from it. So a stop NAMES a crest by a
+  point on it. crest.ts: CrestNumbers.at, points [x, y] in texels; the ramp texels within one cell of a point (from the point to
+  the texel's middle) and everything that hangs together with them by a side or a corner are kept, every other ramp texel is
+  dropped (after the box clip, before the band is made). A point with no ramp beside it names nothing (no throw: a stop's maps
+  come at two sizes and a small bit of ramp may be missing at one). relief.ts: ReliefCrest.at as shares of the layer's own box.
+- A FALSE LINE between two named crests, measured in the unit test: on a map with two steps 50 texels apart the ground between
+  them is the near side of one and the far side of the other, and half way the byte of the cut crosses 127.5 (a line that is no
+  crest's). It shows only where sheets are drawn there (cells of a ramp, cells within under of a ramp). This is fault 3 seen from
+  the map; it is why two crests within a few cells are not both named. Kept as a limit, said in the comment of CrestNumbers.
+- MARS L1 (map 2460 x 1234 texels, mesh 420 x 211 cells of 5.857 texels, box (-676, 1080, 4920, 2468) in master pixels; a texel is
+  about 0.68 px at the picture's own eye and half a pixel at 2477): crest A (the teeth) has its cut through (1548,350),
+  (1570,380), (1590,400), (1612,412), (1628,445), (1640,462), is BROKEN at (1643..1671, 470..483), then (1664,480), (1700,497),
+  (1740,517), (1808,562). B (1638..1678, 385..456) lies about 18 texels from A; D (1522..1537, 318..362) 5 texels from A's top;
+  C is the long crest to the left (x 1480..1545); E (1635..1650, 487..500) and F (1663..1680, 500..515) are bits on A's near side;
+  G near (1750, 580). The layer's rim (a lit ridge line) lies about 20 texels above A's top (1556, 330).
+  Whole layer, walk 2, under 4 cells: 44516 ramp texels, 3584 sheet cells, 4707 under cells.
+  One point (0.6545, 0.3387) (map (1610, 418)): A's upper part alone, 1817 ramp texels, 115 sheet cells, 159 under cells, ramp x
+  1548..1643, y 347..475. Two points (and (0.6992, 0.4133), map (1720, 510)): 3584 ramp texels, 233 sheet cells, 296 under cells,
+  ramp x 1548..1812, y 347..565. A third (0.6732, 0.3882), map (1656, 479), takes the bit in the break (3726 texels, 243 cells).
+  Pictures: /tmp/crest/ov4-at.png, ov4-at2.png, ov4-at3.png (in the looks: ov3-teeth, ov4-at2).
+- TOOLS added: crest-wt `npx tsx out/work/tmp/field2.mts LAYER STEP WALK UNDER OUT BOXES AT [MESH]` (cells and shares, "-" for
+  none; dumps to /tmp/crest/mars/TAG-*.u8), `python3 /tmp/crest/ov4.py TAG x0 y0 x1 y1 SCALE OUT` (ramp near half green, far half
+  red, cut white, sheet cells yellow, under cells cyan, a tick every 20 texels). /tmp/crest/setlook.py takes SEVEN words a layer:
+  LAYER STEP WALK UNDER OUT BOXES AT (cells; boxes "l,t,r,b;..." and at "x,y;..." as shares, "-" for none).
+- TESTS at 21:27: tests/crest.test.ts 17 of 17 (new: the crests named by points, alone, both, within a cell and no further, a
+  piece of a ramp the boxes break, a bad point; and through Relief.load the points and boxes as shares give the index of
+  crestCells(crestField(...)) in texels, a point that names nothing gives the relief without the numbers), tests/crest-gl.test.ts
+  7 of 7, tsc clean, chk.py clean. Nothing committed.
+- fin5-vs at 21:27: 2477, 2668, 2580 done, 2476 rendering (64 samples), then 2325. The log stays empty until the end.
+- NEXT: as in the entry before, from (2). Drafts of v4: L1 step 0.002, walk 2, under 4, out 0.35 (and 0.5), at "0.6545,0.3387"
+  alone and with the second point.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
