@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T09:57:44.768Z",
+ "pushed": "2026-11-25T10:28:49.068Z",
  "head": "705444897fa41f6743de1402262513bd60a3a69e",
- "note": "tree toward commit 5, frame 60: dark 0.174 body 0.627 pale 0.108 white 0.026; half width 7.7 px, 558 shapes, fine detail 0.0318, mean 0.360; distance 0.064. Part 2 by my own chain at preview 0.222 (4b 0.495); arcade, jets and glow leave by distance",
+ "note": "commit 5 candidate frame 60 by sun-near: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes; fine detail 0.0287; mean 0.310; distance 0.081 (4b: mean 0.326, distance 0.070)",
  "looks": [
+  {
+   "time": "2026-11-25T10:28:48.381Z",
+   "file": "20261125102848381-note-c5c-0.jpg",
+   "source": "../../../../tmp/v/c5c-0.jpg",
+   "kind": "note",
+   "label": "frame 0: approved over commit 5 candidate",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T10:28:47.727Z",
+   "file": "20261125102847727-note-sp-c5c-90.jpg",
+   "source": "../../../../tmp/v/sp-c5c-90.jpg",
+   "kind": "note",
+   "label": "frame 90 spot: candidate keeps 4b's spot, trial s6 not taken",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T10:28:47.036Z",
+   "file": "20261125102847036-note-near-c5c-60.jpg",
+   "source": "../../../../tmp/v/near-c5c-60.jpg",
+   "kind": "note",
+   "label": "frame 60: approved, commit 5 candidate, 4b",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T09:57:43.581Z",
    "file": "20261125095743581-note-c5a-m1-zoom.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/s4-90s.jpg",
    "kind": "note",
    "label": "Spot trial at frame 90 under the approved: collar about one floor deep, ragged inner edge; strands still smooth and bright, not dense dark and bright fibres",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:32:44.237Z",
-   "file": "20261125093244237-note-tx0.jpg",
-   "source": "../../../../tmp/v/tx0.png",
-   "kind": "note",
-   "label": "Texel view 233 and 234 on 4b: soft pixels (map under 1 texel a pixel) where the ground has let go by distance; my count 2.114 and 6.191 percent, with onGlobe.away 1.0 to 2.4 nil on 231 to 236",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:32:43.375Z",
-   "file": "20261125093243375-note-p2-zoom.jpg",
-   "source": "../../../../tmp/v/p2-zoom.png",
-   "kind": "note",
-   "label": "Rise 218 + 1/2 to 226 + 1/2 at the red pixel (ring), preview at 4 to 1, six pictures in time. Top: the tree. Middle: the arcade not drawn. Bottom: its trim and cut off (the card shows as a pale box). The arch's crown stands 6 px under the pixel and is gone 8 film frames later",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:32:42.275Z",
-   "file": "20261125093242275-note-look-g2-60.jpg",
-   "source": "../../../../tmp/v/look-g2-60.png",
-   "kind": "note",
-   "label": "Tree at 09:10 (not committed), frame 60 near ground at 1 to 1 under the approved. sun-near.py frame 60: dark 0.223 body 0.616 pale 0.084 white 0.023 (approved 0.185 0.642 0.082 0.010); half width 8.2 px, 546 shapes (approved 4.8 px, 1153); fine detail 0.0291, mean 0.326, distance 0.070 (approved 0.0373, 0.338)",
    "stop": "sun"
   }
  ]
