@@ -1,9 +1,51 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T17:48:26.258Z",
+ "pushed": "2026-11-25T18:02:44.594Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Earth under the law on the trial merge with the second cut: flight 2179 to 2184 (2179 moves 4.00 px, not 5.0 as one label says), pairs 2182 and 2183 against main's box, rise end 2164 to 2170; Mars's line past Phobos is being probed",
+ "note": "Probe of Mars's dive line past Phobos (draft pairs, nothing committed); Earth's rise end 2166 to 2168 under the law against main",
  "looks": [
+  {
+   "time": "2026-11-25T18:02:43.832Z",
+   "file": "20261125180243832-note-pair-eight.jpg",
+   "source": "../../../../tmp/probe/pair-eight.png",
+   "kind": "note",
+   "label": "PROBE (MAIL 1235), Mars dive at draft with the orbit at plus 2.25 degrees a second and the sidestep right -0.37: the eight frames 2400 to 2430, no moon in the dive, 12.12 radii at the closest"
+  },
+  {
+   "time": "2026-11-25T18:02:43.097Z",
+   "file": "20261125180243097-note-run-2403-2412.jpg",
+   "source": "../../../../tmp/probe/run-2403-2412.png",
+   "kind": "note",
+   "label": "PROBE (MAIL 1235), Mars dive at draft, consecutive frames 2403 to 2412: rows 1 and 3 today's line, rows 2 and 4 the 12 radii line. The moon leaves as fast and five frames sooner, and the globe swings left"
+  },
+  {
+   "time": "2026-11-25T18:02:42.313Z",
+   "file": "20261125180242313-note-eight-b.jpg",
+   "source": "../../../../tmp/probe/eight-b.png",
+   "kind": "note",
+   "label": "PROBE (MAIL 1235), Mars dive at draft: today's line left, the 12 radii line right, frames 2410, 2412, 2420, 2430"
+  },
+  {
+   "time": "2026-11-25T18:02:41.519Z",
+   "file": "20261125180241519-note-eight-a.jpg",
+   "source": "../../../../tmp/probe/eight-a.png",
+   "kind": "note",
+   "label": "PROBE (MAIL 1235), Mars dive at draft: today's line left, the line that passes Phobos's place of 2415 at 12 radii (sidestep right -1.12) right, frames 2400, 2404, 2406, 2408 with the moon's px a frame under each"
+  },
+  {
+   "time": "2026-11-25T17:56:40.373Z",
+   "file": "20261125175640373-note-pair-2168-lights-4x.jpg",
+   "source": "../../../../tmp/name/pair-2168-lights-4x.png",
+   "kind": "note",
+   "label": "Earth rise end at review, the city lights at 4 times: 2168 main (ends 0.5) and the law (ends 0.18), 2166 main and the law (0.40). Under the law the lights are longer streaks: the frame moves 9.3 px and the ends are nearly a box there"
+  },
+  {
+   "time": "2026-11-25T17:56:39.275Z",
+   "file": "20261125175639275-note-pairs-2166-2168-storm-3x.jpg",
+   "source": "../../../../tmp/name/pairs-2166-2168-storm-3x.png",
+   "kind": "note",
+   "label": "Earth rise end 2166 to 2168 at review, clouds at 3 times: main (ends 0.5) left, the law (ends 0.40, 0.28, 0.18) right; the largest step of 255 between them is 18, 37, 79"
+  },
   {
    "time": "2026-11-25T17:48:24.983Z",
    "file": "20261125174824983-note-strip-law-2164-2170-storm-2x.jpg",
@@ -17,48 +59,6 @@
    "source": "../../../../tmp/name/sheet-law-2164-2170-whole.png",
    "kind": "note",
    "label": "Earth rise end 2164 to 2170 at review under the law, whole frames (seen 14.0 to 6.6 px, the ends' share 0.5 falling to 0.008)"
-  },
-  {
-   "time": "2026-11-25T17:48:22.526Z",
-   "file": "20261125174822526-note-pair-2183-1to1.jpg",
-   "source": "../../../../tmp/name/pair-2183-1to1.png",
-   "kind": "note",
-   "label": "Earth flight 2183 at review at 1 to 1: the law (left) against main's box (right)"
-  },
-  {
-   "time": "2026-11-25T17:48:21.380Z",
-   "file": "20261125174821380-note-pair-2183-clouds-3x.jpg",
-   "source": "../../../../tmp/name/pair-2183-clouds-3x.png",
-   "kind": "note",
-   "label": "Earth flight 2183 at review, clouds at 3 times: the law's soft ends (left) against main's box (right), trial merge with the second cut"
-  },
-  {
-   "time": "2026-11-25T17:35:12.798Z",
-   "file": "20261125173512798-note-strip-law-2179-2184-clouds-2x.jpg",
-   "source": "../../../../tmp/name/strip-law-2179-2184-clouds-2x.png",
-   "kind": "note",
-   "label": "Earth's flight under the law, consecutive 2179 to 2184 review at 2 times (ends none, none, 0.14, 0.5, 0.5, 0.5; px 5.0, 5.6, 8.8, 14.1, 21.7, 31.7)"
-  },
-  {
-   "time": "2026-11-25T17:35:11.811Z",
-   "file": "20261125173511811-note-pair-2182-moon-4x.jpg",
-   "source": "../../../../tmp/name/pair-2182-moon-4x.png",
-   "kind": "note",
-   "label": "Earth's flight 2182 review, the Moon at 4 times: main's box left, the law right"
-  },
-  {
-   "time": "2026-11-25T17:35:10.683Z",
-   "file": "20261125173510683-note-pair-2182-clouds-3x.jpg",
-   "source": "../../../../tmp/name/pair-2182-clouds-3x.png",
-   "kind": "note",
-   "label": "Earth's flight 2182 review, trial merge with the second cut, 3 times: main's box left, the law (ends 0.5 at 14.05 px) right. Bars become lozenges; the fine hatch along the way is in both"
-  },
-  {
-   "time": "2026-11-25T17:30:58.932Z",
-   "file": "20261125173058932-note-sheet-law-flight-moon.jpg",
-   "source": "../../../../tmp/name/sheet-law-flight-moon.png",
-   "kind": "note",
-   "label": "trial merge with the second cut, law, review: flight 2179 to 2183, the Moon at 2 times (ends none, none, 0.14, 0.5, 0.5)"
   }
  ]
 }
