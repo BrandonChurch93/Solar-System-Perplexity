@@ -481,3 +481,18 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   text 163,428). spans.ts on h14: cells that show (614): at least 13 film frames from half of the largest ground
   to nothing (1 percent 16, 5 percent 18, quartile 22, median 29); all ends median 25, 5 percent 6; whole lives
   least 58, median 87, most 172.
+- 14:17 UTC: NAMED 212defeca69aa1e30f374c17d5cb7c9192fa1c3e (h14) sent to /root with 7 attachments. sun_builder told
+  at 14:18 (h14 replaces h9; asked which command reads its rise number).
+  - MEASURED on h14: percentiles as above. Still eye clip (clip-h14h, captures 0 to 40, 15.2 s a picture): reader
+    largest 0.181 at capture 4 at [88, 1072], mean 0.158, share 0.507; proxy 0.177, picture to next largest 0.032
+    at capture 14 (g15 0.004; cause UNKNOWN, look at k0013 to k0015). flow.py: 15 cells found (168 on g15), mean
+    radial -0.003 px a film frame, standard error 0.049, share outward 0.40: no flow by number. Draft still 44 s.
+  - My verdict in the mail: h14 better than g15 in outline, size, tone, far field, limb; not in the cores (dimmer)
+    and the lowest rows can read as lumps side by side. The hard maximum of the depth buffer is not the smooth
+    maximum the Builder asked for in a. The veins follow the borders, not a flow (c not done). f not done.
+  - NOT DONE: G17, film eye clip, rise of h14, rebake at the new place.
+- NEXT (order told to the Builder): 1. the far filter for the rise: labPx is uLabFar.z / distance (width, no
+  foreshortening); the far map (2048, mips, anisotropy 16) is read by textureGrad with the true footprint, so a
+  cell of 1 to 2 px stays a sharp grain. Cure to try: widen gx, gy as the cell's width in px falls (1 at 6 px, 3
+  at 2 px) so a cell under about 3 px fades into the mean; also let the domes sink by the foreshortened size near
+  the limb. Read captures 218.5 to 226.5 at preview. 2. the smooth maximum (a), the flow (c, f).
