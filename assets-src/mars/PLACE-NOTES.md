@@ -1655,3 +1655,218 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
   cap's own light is off. The polygon, the wide smear and the dark slab of 7cebce4c are gone. NOT done: the takes are still
   the high Sun ones (two lights from 2440 to about 2458 and 2692 to 2710), no stretch law (2), the east side of the close
   set is in frame (3), no air (4), path as it was (5).
+- 06:04 pushed e53c76b7 (commit 00956fa8 plus the merge of main 71a573d4), NAMED mail sent to /root with the list, travel_builder told (rise end unchanged). Looks 3e3f5ab8. Red glow measured: more than on 7cebce4c (2448 0.0075 against 0.0047).
+- 06:04 to 06:10 h3: the plates from the four repainted takes (plates.json takes.levels s03-take2, s07-take1, s16-take1,
+  s38-take2; enlarged by Lanczos in countrytake.py, the ML enlargement is not run on them). New takes.levelGain per level
+  (taketone.py --nest: each take's mean scene colour set to the next wider take's over its own ground, 3.8 is the anchor) and
+  takes.tone again from taketone.py. The ML enlargement started beside a render lost the renderer's context at 2690 (the
+  renderer tried again and went on); killed. Never beside a render.
+- 06:16 MAIL 939 from /root: 7cebce4c not in batch 10 (the place a dark block with straight sides at 2456 to 2468 and 2692
+  to 2700, worse than take batch 9); its rise red on /root's machines (pop 1.39 from 2708, pattern in place 1.43 from 2690).
+  Order confirmed: repainted takes with the tone hugging the picture's border, then stretch per texel, then the east side,
+  then air; red glow back to 7cebce4c's shares or under in the same commit; both cures of the 2447 corner measured before
+  one is built; next NAMED within 90 minutes (07:45), whole or not. Answered the one line on the rise path at 06:20
+  (unchanged since 88d4f309, not compared with take batch 9).
+- 06:10 to 06:17 SIDE FEATHER BY SIGHT (law.ts count 3, close.json law.edge [1408, 1408, 792] = a quarter of the picture's
+  width and height): the picture's share falls to nothing toward its own left, right and lower side over that width, and
+  that fall is itself taken off by the sight (past = sine of the angle between the picture's ray and the present sight over
+  that at the eye of T): none at T, whole from about 2470 outward and 2688 on in the rise. Not the clock, not a height.
+  Frames (tag J, beside the state before): 2477 equal by bytes to main. 2456 island shrunk to a dark middle with soft sides;
+  2462 east straight line gone; 2468 and 2472 stepped band, pale wedge and grey block gone, NEW thin bright red orange lines
+  at the picture's foot and right (the take's lit ridges, the cap seen where the picture is taken off); 2692 cut and block
+  gone, orange streaks at the foot; 2698 a small round dark blob where the island was. Looks 9ae3c8fc (06:19).
+- 06:18 the red measured in the sources (share of pixels with red over 200 and red at least twice green; green over red of
+  the pixels with red over 150, 1st percentile): approved picture's ground 0.0000, 0.52. Takes s03 0.0023, 0.43; s07 0.0032,
+  0.43; s16 0.0001, 0.51; s38 0.0010, 0.48. h3 plates: 0.3 degrees 0.0062, 0.38; 0.7 0.0024, 0.42; 8.5 0.0013, 0.24; patch-19
+  0.0049, 0.42. So the takes and the plates are redder than the picture ever is, and the takes' lit ridges reach 0.85 red
+  where the laid picture's 98th percentile on the same ground is 0.43 (0.3 degrees) and 0.62 (0.7 degrees).
+- 06:19 h4 = h3 plus two laws of the plates, both read from the pictures, none set by eye:
+  (a) takecurve.json (taketone.py --curve): per level 0.3 and 0.7 and per colour the take's value at 33 shares of the ground
+      under the picture's reach and the laid picture's value at the same share; countrytake.py reads a take's value through
+      them, between the levels by the log of the ground distance, itself from 0.4 degrees on. The tone hugging the picture.
+  (b) plates.json gamut (taketone.py --gamut): by red value the least green over red and blue over red the approved
+      picture's ground holds (1st percentile); a take is never redder than that.
+  Chain h4 full and web, both sets' levels 0.00 against 0.45.
+- 06:24 h4 with the side feather, frames at draft (tag K) beside the state before (J = h3 with the feather):
+  red glow shares: 2448 0.0039 (7cebce4c 0.0047, e53c76b7 0.0075), 2456 0.0018 (0.0019), 2462 0.0001, 2468 0.0000,
+  2472 0.0000, 2692 0.0005, 2698 0.0028, 2704 0.0045 (0.0055). At or under 7cebce4c on the frames both have.
+  Seen: 2468, 2472 the bright orange lines at the picture's foot are gone but for faint thin ones at 2472 lower right;
+  2462 the streak at the foot is toned down; 2456 and 2698 the picture still stands as a small dark round blob with soft
+  sides in lit country (at native size at 2456 a straight upright edge of a wall, about 160 px long, stands at its
+  right); 2448 the red patch north of the canyon is still there (it lies on the 8.5 degree plate or patch-19, which the
+  red limit does not reach yet: next, the same gamut in landunder.py); 2692 clean of the cut, streaks at the foot softer.
+  The laid plates looked at again (0.3 and 0.7 degrees beside h4): smears with blue streaks, no use as a tone map by place;
+  so the tone hugs the picture by the measured curve and the distance, not by a map of the laid picture.
+- 06:25 THE CAUSE OF 2447 NAMED AGAIN, the earlier naming was wrong for this frame. Measured with corner.ts (the frame's
+  corners on the unit sphere, angle to the spot, ground metres a pixel at draft 1920): at 2447 the lower left corner lies
+  2.24 degrees from the spot at 141 m a pixel, the foot of the frame's middle 1.19 degrees at 116 m, the left side's middle
+  2.54 degrees at 183 m. That is inside the 8.5 degree square (side at 4.25 degrees) and outside the 3.8 degree square (side
+  at 1.9 degrees; the white square of the texel picture T2447 ends there, x 255 of 1430 at the foot). So the soft ground of
+  2447 and 2448 is the 8.5 degree plate (3686 texels, 136 m a texel) under pixels of 103 to 136 m: 0.76 to 1 texel a pixel.
+  At 2440 the corner lies 5.11 degrees out at 325 m a pixel, outside the 8.5 degree square, on patch-19 (275 m a texel):
+  0.85 texels a pixel; that one is as named before. 2444 has neither (corner 3.18 degrees, 201 m a pixel on 136 m).
+  The two cures in texture bytes (4 a texel, times 4/3 for the mips): (a) the 8.5 degree plate at 4096 (123 m a texel): 72 to
+  89 MB, +17; it leaves the pixels of 103 to 123 m soft. (a2) the 8.5 degree plate at one texel a pixel down to 103 m: 4870
+  texels, 126 MB, +54. (b) the 3.8 degree plate wide enough to hold the corner while the pixel is under 136 m (side at 2.3
+  degrees, 4.6 degrees wide at its 54.9 m): 4958 texels, 131 MB, +42. For 2440: patch-19 cannot grow (4096 is its width in
+  texels, twice is 358 MB, +268); the 8.5 degree square out to 5.2 degrees at its 136 m: 4510 texels, 108 MB, +36.
+  mars/full stands at 1400 of 1400 MB by the gate, so none of them fits unless something leaves; not built.
+
+### 06:38 UTC, proof of h4 + side feather (eng59, Q frames), what I see at native halves
+
+Glow shares (red over 200 and red at least twice green): 2440 0.0016, 2442 0.0033, 2444 0.0034, 2446 0.0036, 2448 0.0039,
+2450 0.0040, 2452 0.0036, 2454 0.0028, 2456 0.0018, 2458 0.0008, 2460 0.0002, 2462 to 2466 0.0001, 2468 to 2476 0.0000,
+2676 to 2680 0.0000. At or under 7cebce4c at every frame both have.
+
+Seen, even frames, each as two native halves:
+- 2440 to 2446: lit country, the canyon's west arm with a pale grey flat floor; red glow patch upper right of the left half.
+- 2446 to 2456: a patch of red rectangular tiles top left of the right half.
+- 2448 to 2458: the picture as a small dark round blob with soft sides in lit country, growing; at 2456 and 2458 an upright wall
+  edge beside it. No straight sided block.
+- 2460 to 2470: the picture's walls carry long smeared strokes (stretched faces, cure 2 not built); wormy soft plate texture low
+  in both halves; the low country left of the picture is darker than the lit country above it, soft sided.
+- 2470 right half, bottom (x 200 to 400, y 960 to 1000): thin pale banded lines.
+- 2472 right half: an orange patch with a thin red line running down from it (x 650, y 440 to 800): a stroke. Bottom
+  (x 300 to 600, y 1010 to 1050): a level pale line, the picture's foot. Right edge (x 850 on, y 560 on): rock of another grain
+  with a slanting boundary, the east side.
+- 2474 left half: curled strokes lower left (x 0 to 300, y 560 to 800); a grey cratered patch in the bottom left corner
+  (x 0 to 130, y 930 on): plate against picture, reads as a slab. Right half: faint thin red line (x 690, y 600 to 720), dark
+  corner lower right.
+- 2476 left half: curled strokes lower left (x 0 to 200, y 640 to 900). Right half clean.
+- 2676, 2678, 2680: the surface view, clean.
+
+Cure 2 is written as a scratch patch (out/work/place/cure2.py: law.ts count 6, set.ts uniforms, close.json law.stretch) and is
+NOT applied; it goes in after this state is named. Point under the picture's eye in relief units is (0, -0.9334, -0.3589) times
+the body radius over the scale, that is the spot; the level distance in count 6 is taken about uUpL.
+
+### 06:46 UTC, proof59 continued: the rise at native halves, the pairs against e53c76b7
+
+EVENS DONE at 06:42:43 with "2477 EQUAL to main", "2490 EQUAL to main"; the finals before: 2325 sha da436cb0..., "2580 EQUAL to
+the kept final". Sides (log line 15, rise): mean 0.006, 99th percentile 0, max 6.
+
+Glow, rise: 2676 to 2686 0.0000, 2688 0.0001, 2690 0.0001, 2692 0.0005, 2694 0.0010, 2696 0.0015, 2698 0.0028, 2700 0.0047,
+2702 0.0051, 2704 0.0045, 2706 0.0040, 2708 0.0011, 2710 0.0009. Against 7cebce4c: 2700 0.0059, 2704 0.0055 (under), 2708
+0.0004 (OVER, by 0.0007). Against e53c76b7 (P frames, same measure): 2700 0.0092, 2702 0.0091, 2704 0.0073, 2706 0.0054, 2708
+0.0007, 2710 0.0005.
+
+Seen, even frames, rise:
+- 2682 right half: clean (surface view).
+- 2684: left half bottom left (x 0 to 200, y 560 to 1080): pale wormy strokes and small square tiles, NEW against e53c76b7
+  (which has smooth dark rock there). Right half: the slab and dark wedge of e53c76b7 are gone; in their place the plate lies
+  on the relief's walls as long smeared strokes with bright orange rims (x 380 to 960, y 440 to 1080).
+- 2686, 2688, 2690: the same, the smeared walls wider; the left half's lower third is plate on steep ground, wormy and
+  stroked. 2690 right half: no dark block (e53c76b7 has it), no flare on the sky (e53c76b7 has one at x 640, y 85).
+- 2692, 2694: no dark wedge; soft smeared ground in the left half's left third (x 0 to 350, y 250 to 620); strokes on the
+  walls right of the picture.
+- 2696 to 2702: a dark round blob where the picture's last part stands (left half, about x 880 to 940, y 630 to 700 at 2698
+  and 2700; smaller at 2702; a speck at 2704). Red glow top right of the left half and red tiles top left of the right half
+  (2696 to 2704).
+- 2700 to 2710 right half: the plates end against the globe's map along a line (from x 250 at the top to x 900 at the foot at
+  2700): detailed plate on one side, smooth map on the other. A change of detail, not of tone. MAIL 913 (1) asks for a feather
+  wider than the frame there; it is not.
+- 2704 to 2710: the canyon's west arm is a pale grey flat floor with a pale tip; at 2708 and 2710 its rim is a bright orange
+  line (x 600 to 780, y 450 to 660 of the left half at 2708): this is the glow over 7cebce4c at 2708.
+
+Pairs P (e53c76b7) beside Q at native size, same half: 2448 b, 2456 b, 2464 a and b, 2468 b, 2472 b, 2474 a, 2684 a and b,
+2686 b, 2690 a and b, 2692 a and b, 2694 a. Looks pushed 06:41 (branch agent/mars-place-looks 4ecbab93).
+
+Where the glow is in the plates (h4/c, texels with red over 200 and red at least twice green): land-8p5 0.0012 of its texels, one
+patch west of the place (x 853 to 1615, y 1105 to 2165 of 3686); land-3p8 0.0011, at its west side; patch-19 0.0049, patch-42
+0.0023, patch-wide 0.0007. Under the gamut of the approved picture (green): patch-19 11.6 percent of its texels, patch-wide
+8.6, patch-42 3.7, land-8p5 1.45, land-3p8 0.71, land-1p6 0.10, land-0p7 0.04, land-0p3 0.00. So the takes hold the gamut
+as countrytake.py leaves them and landunder.py lifts them out of it again (the forms multiply all three colours; the gamut
+goes by the red value). Cure being tried in scratch (out/work/place/landunder5.py, plates to out/work/place/h5): the gamut
+after the forms on the five land plates, and on the levels above by the share of the place's forms in them ((1 - w) * near).
+
+### 06:53 UTC, state h5 = h4 + side feather + the gamut after the forms (landunder.py). This is the state to be NAMED
+
+- The sides line of proof59 was NOT a measure of h4: the handover tool refused to start ("refusing to start: 2.6 GB free, need
+  3") and the grep printed the lines of the old report (e53c76b7: dive 0.008, rise 0.006). Measured again in proof60.
+- Odd frames of h4 looked at, each whole at half size, two in a picture (out/work/place/odds59.py): 2441 to 2459. Seen: the red
+  glow patch with square tiles north of the canyon in every one (top middle of the frame), the picture as a dark blob at the
+  canyon's bend from 2445 on, the pale grey west arm. Nothing that the even frames do not show.
+- landunder.py: `in_gamut` after the forms on the five land plates, and on the three levels above by the share of the place's
+  forms in them. Plates of h5 (out/work/place/h5/c and wc, made from h4/b and h4/wb): glow texels land-8p5 0.0012 to 0.0000,
+  land-3p8 0.0011 to 0.0000, land-1p6 0.0002 to 0.0000; under the gamut land-8p5 1.45 to 0.15 percent, land-3p8 0.71 to 0.04.
+  Texels changed by more than 2: land-8p5 2.03 percent, land-3p8 0.93, land-1p6 0.18, patch-19 0.42, patch-42 0.09,
+  patch-wide 0.02, land-0p7 0.02, land-0p3 0.03.
+- proof59 stopped by me at 06:49 in its odd frames (2441 to 2463 done), plates of h5 copied into public/assets/mars/full and
+  web, proof60 started 06:49:38 (out/work/place/proof60.sh, log proof60.log, frames eng60/R<frame>.png): finals, every even
+  frame, 2477, 2490, the web set at 2464 with the texel diagnostic of both sets, the sides, the gate, then every odd frame.
+  06:52:00: 2325 sha256 da436cb070cbe093656e333aacb46bdc00cffc446d11581d06b25e873aa99db1, "2580 EQUAL to the kept final".
+- Net against origin main 5ad1b4f7 before the cure: public +7,482,649, assets-src -5,209,917, src +26,637: sum +2,299,369,
+  over 0. Taken away: assets-src/mars/place/takes/c03-lead1.png (3,044,517 bytes). The command of its RECIPE row
+  (platelead.py on c07-take1.png) remakes it byte for byte: compared by cmp before it left. s16-lead1.png stays: platelead.py
+  does not remake it (18 percent of its pixels differ from my nest), and it is the picture the tool was given.
+  After: public +7,482,649, assets-src -8,254,238, src +26,637: sum -744,952.
+- Told handover_engineer at 06:50 (low) what the commit changes in src/stops/mars and public/assets/mars.
+- The web set at 2464 (h4): full against web mean 3.364 (e53c76b7: 7.993). What differs: a pale haze sheet in the middle of
+  the left half (x 200 to 800, y 540 to 800 of the frame; cells of 320 by 270 there differ by 11.0 and 25.2 in the mean) that
+  the full set does not show. Cause not traced yet; the texel diagnostic of both sets is in proof60.
+
+### 07:12 UTC, proof60 of h5: the even frames are in and looked at
+
+- Committed at 07:03 as 76c65750 (the state), merged origin main 5ad1b4f7 as 4bea7af9 (main adds kit/PROGRESS.md only), not
+  pushed until the proof stands. This notebook goes on top.
+- The unit run started at 06:49 lost its report (its log kept the last lines only, a stack inside the reporter). Started again
+  at 07:11 on the merge with the whole log (out/work/place/tests61.log, tsc61.log).
+- 2477 and 2490 at draft equal by bytes to main. 2476 against 2477 mean 9.67 (e53c76b7 9.69).
+- How the even frames of h5 were looked at: (1) each against the same frame of h4 by numbers (out/work/place/rq.py); (2) every
+  one of 2440 to 2474 and 2684 to 2710 whole at half size, two in a picture (odds59.py on eng60); (3) native crops of 700 by
+  700 of h4 beside h5 where the change is (rqview.py) at 2440, 2448, 2700, 2702, 2708. The native halves of every even frame
+  were looked at on h4 at 06:28 to 06:43; h5 differs from h4 by more than 8 levels on at most 0.0068 of the pixels (2702),
+  all inside the box of the glow patch north of the canyon and the feather; 2476, 2676, 2678, 2680, 2682 differ by at most 2
+  levels, 2474 by 18 at two pixels.
+- Red glow (pixels with red over 200 at twice the green), h5 / h4 / 7cebce4c: 2440 0.0002 / 0.0016 / 0.0023; 2442 0.0011 /
+  0.0033 / 0.0053; 2444 0.0025 / 0.0034; 2446 0.0027 / 0.0036; 2448 0.0014 / 0.0039 / 0.0047; 2450 0.0005 / 0.0040; 2452
+  0.0004 / 0.0036; 2454 0.0004 / 0.0028 / 0.0031; 2456 0.0003 / 0.0018 / 0.0019; 2458 0.0002; 2460 0.0001; 2462 to 2690
+  0.0000; 2692 0.0004; 2694 0.0007; 2696 0.0009; 2698 0.0009; 2700 0.0011 / 0.0047 / 0.0059; 2702 0.0038 / 0.0051; 2704
+  0.0038 / 0.0045 / 0.0055; 2706 0.0013 / 0.0040; 2708 0.0008 / 0.0011 / 0.0004; 2710 0.0008 / 0.0009.
+  So under 7cebce4c at seven of its eight frames and OVER it at 2708 (0.0008 against 0.0004).
+- Seen at 2708 and 2710 (native pair h4 beside h5): what counts there is a thin hot line, yellow in its core, along the west
+  rim of the canyon and at the bend. It is thinner on h5 and still there. Not traced to its plate yet (at that range the rim
+  lies in land-8p5 and patch-19).
+- Seen at 2702 and 2704 (0.0038): the red tiles are gone; what counts is the bright orange country north of the canyon at
+  the top of the frame (median of the counted pixels at x 787, y 114 at 2702).
+- Seen on the whole frames of h5, dive: 2440 to 2446 the country in one light, pale grey west arm of the canyon with a pale
+  tip, the picture as a small dark blob at the bend from 2444; 2448 to 2454 the blob grows, wormy texture lower left; 2456,
+  2458 no block with straight sides, the picture a dark blob with an upright wall edge right of it; 2460 to 2466 the place
+  stands in the country without a slab, the east wall right of it tall with drawn out faces and an orange rim; 2468, 2470 the
+  same wall at the right edge, curled strokes at the foot in the middle; 2472 the east side at the right edge with a thin red
+  line; 2474 curled strokes lower left.
+- Rise: 2684, 2686 no slab, the east wall right with drawn out strokes and orange rims, strokes bottom left; 2688, 2690 the
+  same, the wall in the middle right; 2692, 2694 the wall with strokes, the picture's last part darker than the country;
+  2696, 2698 a dark round blob at the bend; 2700 to 2706 the blob small, pale grey west arm; 2708, 2710 the hot rim line.
+- Looks pushed 07:08 (agent/mars-place-looks 9aa4c313): pairs h4 beside h5 at native size 2440, 2448; whole 2456 with 2458,
+  2688 with 2690.
+
+### 07:21 UTC, proof60: web set, sides, gate, path
+
+- 2464 full against web on h5: mean 3.367, 99th 58, largest 199 (e53c76b7 7.993). Cells of 320 by 270: the two at x 0 to 640,
+  y 540 to 810 carry 11.0 and 25.2, all others under 7. Native crop full beside web (eng60/fw-2464.jpg) and the texel
+  diagnostic of both sets (eng60/DW2464-texels.png, DR2464-texels.png): the web set draws ONE MORE SHEET of the picture,
+  straight sided, lower left (x 0 to 800, y 540 to 960 of the frame at 1080), that the full set does not draw at all. The
+  rest of the picture's outline is the same in both. In the beauty the sheet carries the valley's haze over the cap's dark
+  rock with a hard outline. The law gets the same numbers in both sets (set.ts reads the full picture size and focal for
+  both); what differs is the relief's data (dist and alpha at half size, apron resolution 1 against 0.5). Not traced to the
+  factor. Next: the law's counts one by one on that sheet in both sets.
+- The sides were refused a second time ("2.3 GB free, need 3"): it is the DISK, not the memory (tools/lib/common.ts). Freed
+  1.3 GB inside out/work/place (see, fit, pic, h2, and eng56 but for M2477.png and M2490.png). Then I stopped the odd frames
+  of proof60 (one render at a time), ran the sides alone (out/work/place/after60.sh), and the odd frames start again after
+  the units.
+  Sides at T, draft, 07:20:09: dive mean 0.008, 99th 0, largest 13 (0.208 percent over 1, 0.011 over 4); rise mean 0.006,
+  99th 0, largest 6 (0.161 percent over 1, 0 over 4). Both pass.
+- Gate 07:17: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: mars/web
+  418 MB, mars/full 1400 MB".
+- Path on 4bea7af9: "smooth mars: green." Dive rate step 0.057 at 2410, turn 0.065 at 2419, speed 0.063 at 2415.
+- Units beside the render (07:11 on): two tests went over their 5 seconds (tests/globe-cap.test.ts "brings a colour level in
+  by the texels of its parent..." 5382 ms; tests/pass.test.ts "never takes the level down under a Sun..." 5607 ms). Neither
+  file is mine. Both files run again alone after the render (tests62.log).
+- Units on the merge 4bea7af9, 07:11 to 07:22 beside the render: 63 files, 716 tests listed by the reporter, 2 not ok (the
+  two above, both over 5 seconds); the reporter then fell over its own summary ("Map.groupBy is not a function"), which is
+  why the first run left no report. Both files alone at 07:22 to 07:23: 2 files, 56 of 56 ok (tests/pass.test.ts 27,
+  tests/globe-cap.test.ts 29). tsc exit 0.
+- 07:24: the odd frames 2441 to 2475 and 2677 to 2709 of h5 render (after60.log); they go to /root in a second mail.
+- NAMED mail text: out/work/place/named60.txt. Still wrong, worst first, as written there: strokes on the walls (cure 2 not
+  built), the picture as a dark blob 2444 to 2458 and 2696 to 2706, the east side in frame at 2472, the plates' end against
+  the map without a feather, the wormy plate texture, the glow at 2708 over 7cebce4c, the web sheet at 2464, G13, no air.
