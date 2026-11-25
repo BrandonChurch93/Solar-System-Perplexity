@@ -396,6 +396,7 @@ precision highp float;
 uniform vec4 uLabDome;
 uniform vec4 uLabCount;
 uniform vec4 uLabHeatB;
+uniform vec4 uLabMore;
 uniform vec4 uLabTime;
 in vec3 vS;
 in vec3 vPos;
@@ -444,9 +445,9 @@ void main() {
   vec3 per = floor(uLabCount.xyz * 6.2831853 + 0.5);
   vec2 across = vec2(-v.y, v.x) / max(dot(v, v), 1e-8);
   float wa = length(vec2(dot(dFdx(v), across), dot(dFdy(v), across)));
-  float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (along - flow) * 1.2 + seed), per.x);
-  float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (along - flow) * 2.0 - seed), per.y);
-  float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (along - flow) * 3.0 + seed * 2.0), per.z);
+  float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (along - flow) * 0.7 + seed), per.x);
+  float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (along - flow) * 1.1 - seed), per.y);
+  float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (along - flow) * 1.7 + seed * 2.0), per.z);
   float ka = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.x);
   float kb = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.y);
   float kc = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.z);
@@ -487,8 +488,11 @@ void main() {
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
   float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
-  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * vein) * mix(mix(0.02, ${lab.heat.crease[2]!.toFixed(2)}, join), 1.0, lane);
-  cell *= mix(0.55, 1.0, smoothstep(0.0, 0.1 + 2.0 * c0, deep));
+  
+  float edgeD = 1.0 / uLabMore.x - plan;
+  float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * c0 / ${lab.heat.crease[0]!.toFixed(3)}) * (1.0 - 0.7 * join);
+  float veins = labLobes(d, seed, 0.05 + 0.3 * rho) * smoothstep(0.1, 0.6, rho);
+  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - 0.35 * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5)));
   float bundle = pn.y;
   float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (along - flow) * 17.0 + seed), per.z)) * kc * middle;
   cell += 0.6 * uLabHeatMore.w * spark;
@@ -499,7 +503,7 @@ void main() {
   vec2 gq = vG * 90.0;
   vec2 gi = floor(gq);
   float lit = step(${lab.heat.points.toFixed(2)}, h1(gi + 17.0)) * (1.0 - smoothstep(0.1, 0.16 + 0.26 * h1(gi + 3.0), length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
-  heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.1, 0.45, deep)) * (1.0 - pen);
+  heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.02, 0.2, edgeD)) * (1.0 - pen);
   heat *= pn.z;
   // (b) the angle of view: a look along the surface meets shallower, cooler gas, the law that darkens the limb
 #ifdef LAB_MAP
