@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T00:44:20.145Z",
- "head": "12c5885384337163a364633214d50f1fbad78239",
- "note": "mail 824: edge proof done (10 drafts equal), step law in test, presenceEdge air option pushed for Mars",
+ "pushed": "2026-11-25T01:08:33.735Z",
+ "head": "7e4f4e6beb012ee495c1456c4a0a7ac26c762257",
+ "note": "mail 824: step commit 7e4f4e6b pushed; 2156 at review shows dotted rows at 0.6 px a sample: the lookups are read finer than the samples of a moving frame can add up to; candidate renders",
  "looks": [
+  {
+   "time": "2026-11-25T01:08:32.358Z",
+   "file": "20261125010832358-note-f02156.jpg",
+   "source": "out/work/blur/m-review/f02156.png",
+   "kind": "note",
+   "label": "Earth 2156 on main, review tier, 24 samples, blur 14.3 px, whole frame"
+  },
+  {
+   "time": "2026-11-25T01:08:31.408Z",
+   "file": "20261125010831408-note-2156-review-zoom12.jpg",
+   "source": "../../../../tmp/law/2156-review-zoom12.png",
+   "kind": "note",
+   "label": "Earth 2156 on main at 12 times, draft beside review: a light smaller than a pixel is met by one sample and missed by the next"
+  },
+  {
+   "time": "2026-11-25T01:08:29.327Z",
+   "file": "20261125010829327-note-2156-review-crops.jpg",
+   "source": "../../../../tmp/law/2156-review-crops.png",
+   "kind": "note",
+   "label": "Earth 2156 on main, draft (one sample) beside review (24 samples, 0.60 px a sample), full size: the night lights at review are rows of single dots"
+  },
   {
    "time": "2026-11-25T00:44:19.197Z",
    "file": "20261125004419197-note-f02701.jpg",
@@ -40,30 +61,6 @@
    "source": "../../../../tmp/law/m805/earth1857-r2-whole.png",
    "kind": "note",
    "label": "Earth 1857 (capture frame 3714) lower left quarter, final tier, rate 2 with the whole shutter of the capture frame: blur 15.5 px, 31.4 px to the next drawn frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:15:49.566Z",
-   "file": "20261125001549566-note-earth1857-r2-asis.jpg",
-   "source": "../../../../tmp/law/m805/earth1857-r2-asis.png",
-   "kind": "note",
-   "label": "Earth 1857 (capture frame 3714) lower left quarter, final tier, rate 2 as it is (the cap alone acts): blur 14.0 px, 31.4 px to the next drawn frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:15:48.819Z",
-   "file": "20261125001548819-note-earth1857-r1-whole.jpg",
-   "source": "../../../../tmp/law/m805/earth1857-r1-whole.png",
-   "kind": "note",
-   "label": "Earth 1857 lower left quarter, final tier, film rate with the whole shutter: blur 31.2 px, 64.3 px to the next frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:15:47.983Z",
-   "file": "20261125001547983-note-earth1857-r1-asis.jpg",
-   "source": "../../../../tmp/law/m805/earth1857-r1-asis.png",
-   "kind": "note",
-   "label": "Earth 1857 lower left quarter at full size, final tier, film rate as it is (floor 0.5): blur 15.6 px, 64.3 px to the next frame",
    "stop": "earth"
   }
  ]
