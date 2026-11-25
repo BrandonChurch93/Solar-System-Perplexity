@@ -207,3 +207,33 @@ WHY THE TUFTS (worked out on paper at 08:57): with dome.over 1.06 the border lie
 - Frame law tested: capture frame 300 after 297 to 299 on one page equals 300 on a fresh page, byte for byte (out/work/sun/lab/law-a, law-b).
 - zze near ground: mean rgb [0.592 0.347 0.154], percentiles [0.231 0.412 0.588 0.796 0.914 0.941]: the numbers fit the approved. The look does not: gold foil nuggets, satin swirls (fibre.bend 1.3 swirls too much), a brown gap round each cell, no glints. Spot: pit with wall 0.92 to 1.25 shows a brown cliff with a notched top edge (floor mesh too coarse there, 3 rings on the wall), dark still y 172 to 255 against 172 to 228.
 - Said to the Builder: next mail by 11:05 UTC. Next: one sheet (gap to a line, heat across borders), fibres into the pits, the wall of the pit, then the final tier pair of frame 90, cost by part.
+
+## 10:22 UTC, states a1 to c4 (after MAIL 1018: no lamp, one sheet, no cliff)
+
+All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jpg, NAME-spot.jpg, NAME-zoom.jpg).
+
+- a1 to a9: the lamp went. Heat by plan radius (1 - plan^2), view law on a smoothed normal (heat.lie 0.3; the full
+  local normal read as a headlamp), polygon cells (round 10, over 1.03, flat 1.6, height 0.42), level law
+  min(join.level (0.5 + 0.5 join), join.most high).
+- pit.py (applied, do not rerun): pit centre moved back (spot.back 0.14), a fine pit disc (define LAB_PIT), labPen
+  takes the distance to the pit.
+- b1 to b9: funnel in place of the cliff (spot.wall [0.78, 1.5], depth 0.15), domes end at the lip, fade of fibres by
+  the picture's width ACROSS them (fwidth faded them at grazing view).
+- The black slits and triangles in the penumbra were the FLOOR seen in the gaps at triple points (diag: floor heat 3
+  shows white there). The floor had the haze thinned to 0.1 round the pit and the domes did not, so the domes had an
+  orange wash and the floor none. Cure (c3): one haze law of the place for both
+  (0.1 + 0.9 smoothstep(2u, 3.5u, distance to the pit)), the floor carries the same threads at the same strength.
+  The slits are gone and the penumbra is dark with bright threads.
+- Penumbra threads (c1 on): value noise at N a radian shows threads about 3 lattice steps apart, so 24 a radian gave
+  ribbons 30 px wide. Now the count doubles with each doubling of the distance (octaves of log2(rs), cross faded):
+  52 f0 and 110 f0 a radian, a broad 26 f0 that only weighs them. Along the thread the noise runs on log2(rs).
+- Near field: fibre.offset 1.0 (root outside the cell) read as agate or wood grain (c3). offset 0.45, thread
+  [0.25, 0.8] (c4) reads as shells with ribs. Small hot points along the fibres (spark) added.
+- MEASURED c4 near ground: mean rgb [0.612 0.356 0.156], max channel 5/25/50/75/95/99
+  [0.263 0.427 0.643 0.788 0.918 0.961]; approved [0.578 0.338 0.147], [0.231 0.404 0.58 0.761 0.906 0.965].
+  c3: [0.591 0.336 0.150], [0.263 0.408 0.6 0.761 0.933 0.973].
+- Reader against proxy on one window (zzd clip, capture frames 240 to 300): judged reader largest 0.717 at k0255 at
+  [68, 1072], mean 0.383; proxy largest 0.305 at k0283, mean 0.244. The 0.406 of the 09:40 mail was the proxy.
+  reader.ts is the judged reader's pictures() run on a folder.
+- A draft still is 25 to 27 s on a fresh page now.
+- STATED verdict c4: no lamp, no cliff, no slits. Near field still reads as solid shells, not gas.

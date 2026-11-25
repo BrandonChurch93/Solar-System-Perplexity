@@ -75,6 +75,7 @@ function chart(p: THREE.Vector3, out: THREE.Vector2): THREE.Vector2 {
 const SHAPE_GLSL = /* glsl */ `
 uniform vec4 uLabSpot;
 uniform vec4 uLabPit;
+uniform vec4 uLabPitAt;
 uniform vec4 uLabJoin;
 uniform vec4 uLabFar;
 uniform vec4 uLabHeat;
@@ -95,11 +96,11 @@ vec2 labWarp(vec2 g) {
   return uLabSpot.xy + d * (r / max(s, 1e-6));
 }
 float labPit(vec2 real) {
-  return uLabPit.x * (1.0 - smoothstep(uLabPit.y * uLabPit.w, uLabPit.z * uLabPit.w, length(real - uLabSpot.xy)));
+  return uLabPit.x * (1.0 - smoothstep(uLabPit.y * uLabPit.w, uLabPit.z * uLabPit.w, length(real - uLabPitAt.xy)));
 }
-// the umbra is a pit of its own under the funnel's wall
+// the umbra is the floor of the pit
 float labUmbra(vec2 real) {
-  return 1.0 - smoothstep(0.55 * uLabPit.w, 1.05 * uLabPit.w, length(real - uLabSpot.xy));
+  return 1.0 - smoothstep(0.7 * uLabPit.w, 1.0 * uLabPit.w, length(real - uLabPitAt.xy));
 }
 // the lobes of a dome: its top is broken into a few lobes round sites of its own, 1 in the crease between two
 // lobes, 0 on a lobe. d: the place on the dome, 0 at the crown to 1 at the foot
@@ -137,32 +138,37 @@ float labJoin(vec2 chartPlace) {
 // the penumbra: threads about the spot, the same for every cell they cross, each of its own length and bend.
 // x: how much of the place is penumbra, y: its heat, z: what the umbra's dark leaves, w: under 0 inside the torn
 // edge of the umbra
-vec4 labPen(vec2 chartPlace, float real, float flow, vec2 fine) {
+vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy) {
   vec2 sp = chartPlace - uLabSpot.xy;
   float turnS = atan(sp.y, sp.x);
   float rs = real / uLabPit.w;
+  float rp = pit / uLabPit.w;
   turnS += 0.06 * (vn(vec2(turnS * 7.0, rs * 1.3)) - 0.5) + 0.02 * sin(rs * 5.0 + turnS * 9.0);
-  float pa = vn(vec2(turnS * 13.0, rs * 0.5 - flow));
-  float pb = vn(vec2(turnS * 45.0 + 3.0, rs * 0.9 - flow));
-  float pc = vn(vec2(turnS * 100.0 + 7.0, rs * 1.9 - flow));
-  float pd = vn(vec2(turnS * 220.0, rs * 3.1 - flow));
-  float wp = length(fine) / max(length(sp), 1e-4);
-  float kpb = 1.0 - smoothstep(0.5, 1.1, wp * 45.0);
-  float kpc = 1.0 - smoothstep(0.5, 1.1, wp * 100.0);
-  float kpd = 1.0 - smoothstep(0.5, 1.1, wp * 220.0);
-  // a thread is a level line of the field about the spot: thin near the umbra, wider where it ends among the cells
-  float wl = mix(0.03, 0.1, smoothstep(1.3, 3.4, rs));
-  float la = mix(2.0 * wl, 1.0 - smoothstep(0.3 * wl, wl, abs(pb - 0.5)), kpb);
-  float lb = mix(2.0 * wl, 1.0 - smoothstep(0.3 * wl, wl, abs(pc - 0.47)), kpc);
-  float ld = mix(2.0 * wl, 1.0 - smoothstep(0.3 * wl, wl, abs(pd - 0.53)), kpd);
+  float pa = vn(vec2(turnS * 9.0, rs * 0.5 - flow));
+  float lr = log2(max(rs, 0.6));
+  float oct = floor(lr);
+  float mixO = smoothstep(0.25, 0.75, lr - oct);
+  float f0 = exp2(oct);
+  float pb = mix(vn(vec2(turnS * 52.0 * f0 + 3.0, lr * 4.3 - flow)), vn(vec2(turnS * 104.0 * f0 + 3.0, lr * 4.3 - flow)), mixO);
+  float pc = mix(vn(vec2(turnS * 110.0 * f0 + 7.0, lr * 7.9 - flow)), vn(vec2(turnS * 220.0 * f0 + 7.0, lr * 7.9 - flow)), mixO);
+  float pd = vn(vec2(turnS * 26.0 * f0, lr * 3.1 - flow));
+  // a thread is as wide in the picture as the picture is across it, however flat the look along it
+  vec2 across = vec2(-sp.y, sp.x) / max(dot(sp, sp), 1e-8);
+  float wp = length(vec2(dot(gx, across), dot(gy, across)));
+  float kpb = 1.0 - smoothstep(0.5, 1.1, wp * 52.0 * mix(f0, 2.0 * f0, mixO));
+  float kpc = 1.0 - smoothstep(0.5, 1.1, wp * 110.0 * mix(f0, 2.0 * f0, mixO));
+  float kpd = 1.0 - smoothstep(0.5, 1.1, wp * 26.0 * f0);
+  // the threads lie side by side about the spot, dark and bright by turns, three sizes, each of its own length
+  float la = mix(0.3, smoothstep(0.46, 0.64, pb), kpb);
+  float lb = mix(0.3, smoothstep(0.46, 0.64, pc), kpc);
+  float ld = mix(0.5, smoothstep(0.35, 0.65, pd), kpd);
   pb = mix(0.5, pb, kpb);
   pc = mix(0.5, pc, kpc);
-  float strand = max(la, max(0.8 * lb, 0.55 * ld));
-  float bed = smoothstep(0.35, 0.7, 0.5 * pb + 0.5 * pc);
+  float strand = max(la, 0.85 * lb) * mix(0.55, 1.0, ld);
   float pen = 1.0 - smoothstep(-0.5, 0.5, rs - uLabJoin.y - uLabJoin.z * (pb - 0.5) - 0.5 * uLabJoin.z * (vn(chartPlace * 23.0 + 1.7) - 0.5));
   float tongue = smoothstep(0.62, 0.8, pa) * smoothstep(0.5, 0.7, pc);
-  float bundle = uLabHeatMore.z * mix(0.05 + 0.22 * bed, 1.15, strand) * mix(0.5, 1.1, smoothstep(0.3, 0.7, pa)) * mix(0.25, 1.0, smoothstep(1.0, 3.0, rs));
-  return vec4(pen, bundle, mix(0.08, 1.0, max(smoothstep(0.9, 1.5, rs), 0.8 * tongue)), rs - 0.84 - 0.2 * pb - 0.12 * pc + 0.4 * tongue);
+  float bundle = uLabHeatMore.z * mix(mix(0.02, 0.12, smoothstep(1.2, 3.0, rp)), 1.9, strand) * mix(0.6, 1.1, smoothstep(0.3, 0.7, pa)) * mix(0.5, 1.0, smoothstep(1.0, 2.2, rs));
+  return vec4(pen, bundle, mix(0.04, 1.0, max(smoothstep(0.8, 1.25 + 0.5 * pa, rp), 0.7 * tongue * smoothstep(0.6, 0.9, rp))), rp - 1.14 - 0.1 * (pb - 0.5) - 0.06 * (pc - 0.5));
 }
 #endif
 // the width of a mean cell at a place in pixels of a 1080 frame
@@ -197,6 +203,7 @@ out vec3 vN;
 out vec3 vView;
 out vec3 vClip;
 out float vReal;
+out float vPit;
 out float vDeep;
 out float vCorner;
 out vec2 vG;
@@ -211,6 +218,7 @@ float rad;
 float high;
 float seed;
 float real;
+float pitAway;
 float deep;
 float tall;
 float sink = 0.0;
@@ -240,20 +248,22 @@ vec3 dome(vec3 s) {
 #ifdef LAB_MAP
   vec2 g = place;
   real = 1e3;
+  pitAway = 1e3;
   float low = 1.0;
 #else
   vec2 g = labWarp(place);
   real = length(g - uLabSpot.xy);
+  pitAway = length(g - uLabPitAt.xy);
   float low = mix(uLabMore.z, 1.0, smoothstep(uLabPit.w * 1.7, uLabPit.w * 3.8, real)) * (1.0 - sink);
 #endif
   // where the field of the place joins two cells, both stand on one level there and the crease between them is gone
   float rho = a / uLabDome.x;
-  float level = min(uLabMore.w, 0.7 * high) * low * labJoin(place) * (1.0 - 0.3 * rho * rho * rho * rho);
+  float level = min(uLabMore.w * (0.5 + 0.5 * labJoin(place)), ${lab.join.most.toFixed(2)} * high) * low;
   float body = high * low * (f < 0.0 ? f : top) * (1.0 - uLabMore.y * groove);
   float soft = 0.35 * high * low + 1e-6;
   float t = clamp(0.5 + 0.5 * (body - level) / soft, 0.0, 1.0);
   float h = mix(max(body, level), mix(level, body, t) + soft * t * (1.0 - t), min(level / soft, 1.0));
-  deep = h / max(high * low, 1e-6);
+  deep = (h - level) / max(high * low - level, 1e-5);
   tall = h;
 #ifdef LAB_MAP
   return labBall(g, h);
@@ -299,11 +309,13 @@ void main() {
   vec3 p = dome(s);
   vS = s;
   vPos = p;
-  vN = normalize(cross(p1 - p, p2 - p));
+  vec3 lie = cross(p1 - p, p2 - p);
+  vN = dot(lie, lie) > 1e-24 ? normalize(lie) : normalize(p - ST_CENTRE);
   vAxis = axis;
   vCell = vec4(c1.x, c1.y, rad, high);
   vMore = vec4(ds, 0.0, 0.0, 0.0);
   vReal = real;
+  vPit = pitAway;
   vDeep = deep;
   vCorner = corner;
   vSink = sink;
@@ -391,6 +403,7 @@ in vec3 vN;
 in vec3 vView;
 in vec3 vClip;
 in float vReal;
+in float vPit;
 in float vDeep;
 in float vCorner;
 in vec2 vG;
@@ -420,8 +433,8 @@ void main() {
   float join = labJoin(vG);
   float vein = labLobes(d, seed, 0.09) * smoothstep(0.2, 0.6, rho) * smoothstep(0.3, 0.55, vn(vG * uLabJoin.w * 4.3 + 77.0));
   float flow = uLabTime.x * uLabTime.y;
-  // the fibres fan out from a root at the foot of the dome and bend a little on their way; the matter runs along
-  // them from the root, so their pattern moves that way with the time
+  // the fibres run from the middle of the cell to its lane and bend a little on their way; the gas runs along
+  // them, so their pattern moves that way with the time
   float off = uLabTime.z;
   vec2 v = d + vAxis * off;
   float along = length(v) / (1.0 + off);
@@ -429,7 +442,8 @@ void main() {
   ang += 0.15 * sin(along * 4.0 + seed) * along + ${lab.fibre.bend.toFixed(2)} * (vn(vG * uLabJoin.w * 2.5 + 3.3) + 0.5 * vn(vG * uLabJoin.w * 6.1 - 8.7) - 0.75) * along;
   float turn = ang / 6.2831853 + 0.5;
   vec3 per = floor(uLabCount.xyz * 6.2831853 + 0.5);
-  float wa = length(fwidth(v)) / max(length(v), 1e-4);
+  vec2 across = vec2(-v.y, v.x) / max(dot(v, v), 1e-8);
+  float wa = length(vec2(dot(dFdx(v), across), dot(dFdy(v), across)));
   float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (along - flow) * 1.2 + seed), per.x);
   float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (along - flow) * 2.0 - seed), per.y);
   float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (along - flow) * 3.0 + seed * 2.0), per.z);
@@ -437,63 +451,64 @@ void main() {
   float kb = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.y);
   float kc = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.z);
   // the fibres are rays of the fan: hot threads with cooler matter between them, three sizes
-  float thread = smoothstep(0.45, 0.6, 0.12 * mix(0.5, fa, ka) + 0.38 * mix(0.5, fb, kb) + 0.5 * mix(0.5, fc, kc));
+  float ridge = 1.0 - abs(2.0 * fc - 1.0);
+  float ridgeB = 1.0 - abs(2.0 * fb - 1.0);
+  float bunch = smoothstep(0.3, 0.7, 0.6 * mix(0.5, fb, kb) + 0.4 * mix(0.5, fa, ka));
+  float thread = clamp(mix(0.3, max(ridge * ridge * ridge, 0.7 * ridgeB * ridgeB * ridgeB * ridgeB), kc) * (0.45 + 0.9 * bunch), 0.0, 1.0);
 #ifdef LAB_MAP
   vec4 pn = vec4(0.0, 0.0, 1.0, 1.0);
 #else
-  vec4 pn = labPen(vG, vReal, flow, fwidth(vG));
+  vec4 pn = labPen(vG, vReal, vPit, flow, dFdx(vG), dFdy(vG));
   if (pn.w < 0.0) discard;
 #endif
   float pen = pn.x;
   float age = vCell.y;
   float life = mix(1.15, 0.7, smoothstep(0.3, 0.85, age));
   // the heat of a cell: the heat of the place, which runs over the borders, combed into hot fibres with cooler
-  // matter between them and many small hot points along the fibres; cold at the root, in thin veins that leave
-  // the root and die inside the cell, in the creases and at the rim where the cell does not join its neighbour
+  // matter between them and many small hot points along the fibres
   float wide = 0.6 * vn(vG * uLabJoin.w + 5.3) + 0.4 * vn(vG * uLabJoin.w * 2.3 - 17.1);
-  float mott = 0.45 * vn(vG * uLabJoin.w * 3.7 + 9.1) + 0.35 * vn(vG * uLabJoin.w * 8.3 - 4.7) + 0.2 * vn(vG * uLabJoin.w * 19.0 + 2.9);
-  float comb = vnp(vec2(turn * floor(per.x * 0.5) + floor(seed * 53.0), (along - flow) * 2.5 + seed * 3.0), floor(per.x * 0.5));
-  float blot = smoothstep(0.38, 0.64, 0.6 * mott + 0.4 * comb);
+  float mott = 0.4 * vn(vG * uLabJoin.w * 3.7 + 9.1) + 0.35 * vn(vG * uLabJoin.w * 8.3 - 4.7) + 0.25 * vn(vG * uLabJoin.w * 17.0 + 2.9);
+  // (a) the heat of the sheet: hottest where the gas wells up, in the middle of a cell, falling evenly to the lane
+  // where it sinks. The edge of the hot middle is drawn out into the fibres, bright with dark between them; where
+  // the field of the place joins two cells the heat runs over the border. The lane is where the heat falls: a thin
+  // dark line in the bottom of the valley, wide where three cells meet, gone where two cells are of one piece
   float plan = sin(a) / sin(uLabDome.x);
-  float bulge = mix(1.0 - plan * plan, 1.0, 0.7 * join);
-  float top = mix(uLabHeatB.w, 1.0, pow(bulge, uLabHeatB.x)) * (0.7 + 0.6 * wide) * (uLabHeat.z + (1.0 - uLabHeat.z) * blot);
-  float amp = mix(uLabHeatB.z, uLabHeatB.y, smoothstep(0.15, 0.8, rho)) * smoothstep(0.1, 0.45, along);
-  float cell = top * mix(1.0, mix(0.42, uLabHeat.w, thread), amp);
-  float points = smoothstep(0.72, 0.9, vnp(vec2(turn * per.z + floor(seed * 41.0), (along - flow) * 22.0 + seed * 5.7), per.z)) * thread * kc;
-  float root = smoothstep(0.02, uLabCount.w, along + 0.1 * (fa - 0.5));
-  // the dark between the cells is the depth of the crease itself: two domes meet at a height of their own from
-  // place to place, lowest where three meet, so the dark is wide and soft there, thin along a border and gone
-  // where a field of the place lifts it or where two cells are of one piece
-  float c0 = ${lab.heat.crease[0]!.toFixed(3)} + ${lab.heat.crease[2]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0) - 0.75);
-  float open = smoothstep(c0, c0 + ${lab.heat.crease[1]!.toFixed(3)}, vDeep);
-  float rim = 1.0 - open;
-  float shade = mix(0.02, 1.0, smoothstep(c0 - 0.02, c0 + 0.06, vDeep)) * mix(0.55, 1.0, open) * mix(mix(0.5, 1.0, thread), 1.0, open);
-  cell *= mix(1.0 - uLabTime.w, 1.0, root) * (1.0 - 0.2 * groove * (1.0 - join)) * (1.0 - ${lab.heat.vein.toFixed(2)} * vein) * shade;
-  float bundle = pn.y * (1.0 - 0.25 * rim);
-  float warm = uLabHeat.y * cell * life;
+  float rise = mix(pow(max(1.0 - plan * plan, 0.0), uLabHeatB.x), 1.0, ${lab.join.merge.toFixed(2)} * smoothstep(0.55, 0.95, join));
+  float fan = 0.1 * mix(0.5, fa, ka) + 0.35 * mix(0.5, fb, kb) + 0.55 * mix(0.5, fc, kc);
+  float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mott - 0.5);
+  float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
+  float top = mix(uLabHeatB.w, 1.0, middle) * (0.8 + 0.4 * wide);
+  float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(0.04, 0.4, along));
+  float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
+  float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
+  float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
+  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * vein) * mix(mix(0.02, ${lab.heat.crease[2]!.toFixed(2)}, join), 1.0, lane);
+  float bundle = pn.y;
+  float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (along - flow) * 17.0 + seed), per.z)) * kc * middle;
+  cell += 0.6 * uLabHeatMore.w * spark;
+  float warm = uLabHeat.y * cell * life * mix(${lab.heat.near.toFixed(2)}, 1.0, smoothstep(2.4, 4.0, vReal / uLabPit.w));
   warm = warm < ${lab.heat.knee[0]!.toFixed(2)} ? warm : ${lab.heat.knee[0]!.toFixed(2)} + ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)} * (1.0 - exp(-(warm - ${lab.heat.knee[0]!.toFixed(2)}) / ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)}));
-  warm += uLabHeatMore.x * points * top * shade;
-  // the hot threads end bright where the dome turns down into the crease: a thin broken line of small hot ends
-  float lip = smoothstep(c0 + 0.03, c0 + 0.08, vDeep) * (1.0 - smoothstep(c0 + 0.1, c0 + 0.24, vDeep));
-  warm += ${lab.heat.lip.toFixed(2)} * lip * thread * smoothstep(0.35, 0.65, vn(vG * uLabJoin.w * 6.7 - 23.0)) * (1.0 - 0.7 * join);
-  float heat = mix(warm, uLabHeat.y * bundle, pen);
-  // small hard points of light on the rim of a dome, against the dark of the crease
-  vec2 gq = vG * 230.0;
+  float heat = pen > 0.999 ? uLabHeat.y * bundle : mix(warm, uLabHeat.y * bundle, pen);
+  // small hot points in the lanes
+  vec2 gq = vG * 90.0;
   vec2 gi = floor(gq);
-  float lit = step(0.88, h1(gi + 17.0)) * (1.0 - smoothstep(0.05, 0.12 + 0.3 * h1(gi + 3.0), length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
-  heat += uLabHeatMore.w * lit * smoothstep(0.03, 0.14, vDeep) * (1.0 - smoothstep(0.3, 0.55, vDeep)) * (1.0 - pen);
+  float lit = step(${lab.heat.points.toFixed(2)}, h1(gi + 17.0)) * (1.0 - smoothstep(0.1, 0.16 + 0.26 * h1(gi + 3.0), length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
+  heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.1, 0.45, deep)) * (1.0 - pen);
   heat *= pn.z;
-  // matter that wells up is hot where it comes up and cools as it turns over: the flanks of a dome and of its
-  // lobes are cooler than their tops, by the lie of the surface alone
-  float upward = dot(normalize(vN), normalize(vPos - ST_CENTRE));
-  heat = uLabHeat.x + heat * mix(mix(uLabHeatMore.y, 1.0, max(join, pen)), 1.0, smoothstep(0.15, 0.9, abs(upward)));
+  // (b) the angle of view: a look along the surface meets shallower, cooler gas, the law that darkens the limb
+#ifdef LAB_MAP
+  float mu = 1.0;
+#else
+  float mu = abs(dot(normalize(normalize(vPos - ST_CENTRE) + ${lab.heat.lie.toFixed(2)} * vN), normalize(uLabEye - vPos)));
+#endif
+  heat = uLabHeat.x + heat * mix(uLabHeatMore.y, 1.0, pow(mu, ${lab.heat.limb.toFixed(2)}));
 #ifdef LAB_MAP
   outColor = vec4(heat, 0.0, 0.0, 1.0);
 #else
   vec2 gx = dFdx(vG);
   vec2 gy = dFdy(vG);
   if (vSink > 0.0) heat = mix(heat, labFar(vG, vReal, flow, pn, gx, gy), vSink);
-  outColor = labOut(heat, 1.0, vPos, vClip, vView);
+  outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, vPit), vPos, vClip, vView);
 #endif
 }`
 
@@ -505,7 +520,11 @@ out vec3 vView;
 out vec3 vClip;
 ${SHAPE_GLSL}
 void main() {
+#ifdef LAB_PIT
+  vec2 g = uLabPitAt.xy + position.x * vec2(cos(position.y), sin(position.y));
+#else
   vec2 g = position.x * vec2(cos(position.y), sin(position.y));
+#endif
   vec3 p = labBall(g, -0.004 - labPit(g));
   vG = g;
   vPos = p;
@@ -527,8 +546,13 @@ out vec4 outColor;
 ${SHAPE_GLSL}
 ${TAIL_GLSL}
 void main() {
+#ifdef LAB_PIT
+  if (length(vG - uLabPitAt.xy) > uLabPitAt.z + 0.02) discard;
+#else
+  if (length(vG - uLabPitAt.xy) < uLabPitAt.z) discard;
+#endif
   float um = labUmbra(vG);
-  vec2 q = (vG - uLabSpot.xy) * 26.0;
+  vec2 q = (vG - uLabPitAt.xy) * 26.0;
   float dots = sin(q.x * 1.7 + 2.0 * sin(q.y * 1.3)) * sin(q.y * 2.1 + 1.5 * sin(q.x * 0.9));
   float heat = 0.012 + um * (0.02 + 0.035 * max(dots, 0.0));
   // where the cells are too small to be things the floor is the ground: the place in the cells' own chart (the
@@ -538,13 +562,15 @@ void main() {
   vec2 chartPlace = uLabSpot.xy + ds * ((r + uLabSpot.z * exp(-(r * r) / (uLabSpot.w * uLabSpot.w))) / max(r, 1e-6));
   float flow = uLabTime.x * uLabTime.y;
   float far = 1.0 - smoothstep(uLabFar.x, uLabFar.y, labPx(vPos));
-  vec4 pn = labPen(chartPlace, r, flow, fwidth(chartPlace));
   vec2 gx = dFdx(chartPlace);
   vec2 gy = dFdy(chartPlace);
+  vec4 pn = labPen(chartPlace, r, length(vG - uLabPitAt.xy), flow, gx, gy);
   // between the threads of the penumbra the floor is the same threads, a little deeper and cooler
-  if (pn.w > 0.0) heat = mix(heat, uLabHeat.x + 0.9 * uLabHeat.y * pn.y * pn.z, pn.x);
+  heat = mix(heat, uLabHeat.x + uLabHeat.y * pn.y * pn.z, max(pn.x, 1.0 - smoothstep(uLabPit.w * 1.7, uLabPit.w * 3.8, r)) * smoothstep(0.75, 0.95, length(vG - uLabPitAt.xy) / uLabPit.w));
   if (far > 0.0 && pn.w > 0.0) heat = mix(heat, labFar(chartPlace, r, flow, pn, gx, gy), far);
-  outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, length(vG - uLabSpot.xy)), vPos, vClip, vView);
+  float mu = abs(dot(normalize(vPos - ST_CENTRE), normalize(uLabEye - vPos)));
+  heat = uLabHeat.x + (heat - uLabHeat.x) * mix(uLabHeatMore.y, 1.0, pow(mu, ${lab.heat.limb.toFixed(2)}));
+  outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, length(vG - uLabPitAt.xy)), vPos, vClip, vView);
 }`
 
 type Shared = Record<string, THREE.IUniform>
@@ -566,7 +592,10 @@ export class LabGround {
   private readonly uniforms: Shared
   private readonly floorMaterial: THREE.ShaderMaterial
   private readonly floorLaid: THREE.ShaderMaterial
+  private readonly pitMaterial: THREE.ShaderMaterial
+  private readonly pitLaid: THREE.ShaderMaterial
   private under!: THREE.Mesh
+  private fine!: THREE.Mesh
   private readonly ramp = rampTexture()
   private readonly cells = newCells()
   private readonly cellData = new Float32Array(SLOTS * 8 * 4)
@@ -581,6 +610,7 @@ export class LabGround {
   private readonly ball = new THREE.Sphere()
   private readonly spot = new THREE.Vector2()
   private readonly umbra: number
+  private pitBack = 1
   private readonly order: { d: number; i: number; ox: number; oy: number }[][] = [[], [], []]
   private readonly map = new THREE.WebGLRenderTarget(lab.far.map, lab.far.map, { type: THREE.HalfFloatType, format: THREE.RGBAFormat, minFilter: THREE.LinearMipmapLinearFilter, magFilter: THREE.LinearFilter, wrapS: THREE.RepeatWrapping, wrapT: THREE.RepeatWrapping, depthBuffer: true, stencilBuffer: false, generateMipmaps: true, anisotropy: 16 })
   private readonly mapScene = new THREE.Scene()
@@ -596,6 +626,7 @@ export class LabGround {
     for (const name of keep) uniforms[name] = shared[name]!
     const mid = stage.onGround(stage.spot[0], stage.spot[1])
     chart(mid, this.spot)
+    this.pitBack = 1 + lab.spot.back / this.spot.length()
     this.umbra = stage.onGround(stage.spot[0] + stage.umbra[0], stage.spot[1]).distanceTo(mid) * lab.spot.umbra
     this.cellTexture = new THREE.DataTexture(this.cellData, 8, SLOTS, THREE.RGBAFormat, THREE.FloatType)
     this.cellTexture.minFilter = THREE.NearestFilter
@@ -615,6 +646,7 @@ export class LabGround {
       uLabAwayTint: { value: new THREE.Vector3().fromArray(place.onGlobe.red.tint) },
       uLabDome: { value: new THREE.Vector4(THREE.MathUtils.degToRad(d.arc), d.height, d.round, d.flat) },
       uLabSpot: { value: new THREE.Vector4(this.spot.x, this.spot.y, lab.spot.pull, lab.spot.wide) },
+      uLabPitAt: { value: new THREE.Vector4(this.spot.x * (1 + lab.spot.back / this.spot.length()), this.spot.y * (1 + lab.spot.back / this.spot.length()), 0.5, 0) },
       uLabPit: { value: new THREE.Vector4(lab.spot.depth, lab.spot.wall[0]!, lab.spot.wall[1]!, this.umbra) },
       uLabHeat: { value: new THREE.Vector4(ht.floor, ht.body, ht.cool, ht.hot) },
       uLabHeatMore: { value: new THREE.Vector4(ht.knot, ht.edge, ht.pen, ht.glint) },
@@ -630,8 +662,10 @@ export class LabGround {
     }
     this.uniforms = all
     this.floorMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, uniforms: all, side: THREE.DoubleSide })
+    this.pitMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, defines: { LAB_PIT: 1 }, uniforms: all, side: THREE.DoubleSide })
+    this.pitLaid = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, defines: { LAB_PIT: 1 }, uniforms: all, side: THREE.DoubleSide, transparent: true, forceSinglePass: true, ...WEIGHED })
     this.floorLaid = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, uniforms: all, side: THREE.DoubleSide, transparent: true, forceSinglePass: true, ...WEIGHED })
-    this.parts.push(this.floorMaterial, this.floorLaid)
+    this.parts.push(this.floorMaterial, this.floorLaid, this.pitMaterial, this.pitLaid)
     this.mesh.renderOrder = -6
 
     const none = new THREE.BufferGeometry()
@@ -745,6 +779,40 @@ export class LabGround {
     this.mesh.add(under)
     this.under = under
     this.parts.push(floor)
+    const pr = 128
+    const ps = 256
+    const pp = new Float32Array((pr + 1) * (ps + 1) * 3)
+    for (let i = 0; i <= pr; i++) {
+      for (let j = 0; j <= ps; j++) {
+        const k = (i * (ps + 1) + j) * 3
+        pp[k] = (i / pr) * 0.6
+        pp[k + 1] = (j / ps) * Math.PI * 2
+      }
+    }
+    const pi = new Uint32Array(pr * ps * 6)
+    n = 0
+    for (let i = 0; i < pr; i++) {
+      for (let j = 0; j < ps; j++) {
+        const a = i * (ps + 1) + j
+        const b = a + 1
+        const c = a + ps + 1
+        pi[n++] = a
+        pi[n++] = c
+        pi[n++] = b
+        pi[n++] = b
+        pi[n++] = c
+        pi[n++] = c + 1
+      }
+    }
+    const disc = new THREE.BufferGeometry()
+    disc.setAttribute('position', new THREE.BufferAttribute(pp, 3))
+    disc.setIndex(new THREE.BufferAttribute(pi, 1))
+    const fine = new THREE.Mesh(disc, this.pitMaterial)
+    fine.frustumCulled = false
+    fine.renderOrder = -5.89
+    this.mesh.add(fine)
+    this.fine = fine
+    this.parts.push(disc)
   }
 
   /** time: seconds from the middle of the terrain segment, as the standing ground takes it. eye: the eye in the
@@ -756,6 +824,7 @@ export class LabGround {
     const red = place.onGlobe.red.over
     ;(this.uniforms.uLabAway!.value as THREE.Vector4).set(onGlobe ? away[0]! : 0, onGlobe ? away[1]! : 0, onGlobe ? red[0]! : 0, onGlobe ? red[1]! : 0)
     this.under.material = onGlobe ? this.floorLaid : this.floorMaterial
+    this.fine.material = onGlobe ? this.pitLaid : this.pitMaterial
     for (const lv of this.levels) lv.mesh.material = onGlobe ? lv.laid : lv.plain
     ;(this.uniforms.uLabEye!.value as THREE.Vector3).copy(eye)
     if (keep <= 0) return
@@ -880,7 +949,7 @@ export class LabGround {
           const gx = w.x
           const gy = w.y
           const arc = Math.hypot(gx - ex, gy - ey)
-          if (arc > horizon || Math.hypot(gx - this.spot.x, gy - this.spot.y) < 0.3 * this.umbra) continue
+          if (arc > horizon || Math.hypot(gx - this.spot.x * this.pitBack, gy - this.spot.y * this.pitBack) < 0.3 * this.umbra) continue
           const r = Math.sqrt(d.area[i]! / Math.PI)
           const full = Math.hypot(gx, gy)
           const al = full / stage.radius

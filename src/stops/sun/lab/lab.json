@@ -25,12 +25,12 @@
  },
  "dome": {
   "arc": 86,
-  "height": 0.62,
+  "height": 0.42,
   "young": 0.5,
-  "round": 6,
-  "flat": 1.25,
-  "over": 1.06,
-  "lobe": 0.18,
+  "round": 10,
+  "flat": 1.6,
+  "over": 1.03,
+  "lobe": 0.06,
   "pen": 0.07
  },
  "lod": {
@@ -50,61 +50,71 @@
   ]
  },
  "spot": {
-  "pull": 0.5,
-  "wide": 0.58,
-  "depth": 0.07,
+  "pull": 0.35,
+  "wide": 0.42,
+  "depth": 0.15,
   "wall": [
-   0.92,
-   1.25
+   0.78,
+   1.5
   ],
   "umbra": 1.0,
   "strand": [
-   2.9,
+   2.7,
    1.6
-  ]
+  ],
+  "back": 0.14
  },
  "fibre": {
   "counts": [
-   4,
-   9,
-   20
+   3,
+   8,
+   18
   ],
   "root": 0.12,
-  "offset": 0.25,
+  "offset": 0.45,
   "dark": 0.0,
-  "bend": 1.3
+  "bend": 0.5,
+  "cold": 0.3
  },
  "heat": {
   "floor": 0.012,
   "body": 0.9,
-  "cool": 0.28,
-  "hot": 1.25,
+  "cool": 0.85,
+  "hot": 1.5,
   "knot": 0.9,
-  "edge": 0.75,
-  "pen": 0.8,
+  "edge": 0.35,
+  "pen": 0.75,
   "bloom": 2.5,
-  "glint": 0.95,
-  "core": 0.3,
+  "glint": 0.7,
+  "core": 1.0,
   "thread": [
-   0.8,
-   0.4
+   0.25,
+   0.8
   ],
-  "rim": 0.5,
+  "rim": 0.03,
   "well": 0.2,
   "crease": [
-   0.36,
-   0.28,
-   0.14
+   0.3,
+   0.14,
+   0.3
   ],
-  "vein": 0.55,
+  "vein": 0.6,
   "knee": [
-   0.5,
-   0.9
+   0.8,
+   1.3
   ],
-  "lip": 0.45
+  "lip": 0.6,
+  "limb": 0.8,
+  "patch": [
+   0.05,
+   0.8
+  ],
+  "points": 0.7,
+  "lie": 0.3,
+  "near": 0.55
  },
  "haze": {
-  "amount": 0.004,
+  "amount": 0.006,
   "scale": 0.02,
   "level": 1.0,
   "power": 1.5,
@@ -118,7 +128,9 @@
   "scale": 9,
   "heat": 8,
   "level": 0.02,
-  "wobble": 0.022
+  "wobble": 0.022,
+  "most": 0.6,
+  "merge": 0.3
  },
  "far": {
   "px": [
