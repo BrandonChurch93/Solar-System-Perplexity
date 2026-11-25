@@ -2821,3 +2821,96 @@ after the forms on the five land plates, and on the levels above by the share of
 - 21:11 UTC, tests on head 10c72f63: 81 files, 917 of 917 passed (837 s). The proof of the rise state is whole
   but for the sides measure (machines). The dive in 19 frames (2440 to 2476, every second) is being drawn on the
   head into scratch d140. Wall trial 14 done at 21:09 (11 minutes beside the tests); to be looked at.
+- 21:13 UTC, pushed 47b7534197a50175cdfd682dbfa8b46e9ff5487e (notes on 10c72f63). Net by the blobs of the head
+  against main ce8cb68b: public +8,912,470; assets-src -17,427,324; src +32,711; sum -8,482,143.
+- 21:14 UTC, WALL TRIAL 14 seen from above at 1 to 1 (w14/cmpA.png, cmpB.png; in the looks 21:14, 1ccc0ffc): BAD.
+  The plain by code reads as a map: the scarps, made as beds along the level's heights, are families of parallel
+  contour lines over the whole plain; the ripples stand as corduroy in the hollows, also in cast shadow; the
+  ground between is smooth and without body. What it shows that is right: the hard outline between wall band and
+  boulder plain is gone, the broad tone of the take stands.
+  TRIAL 15 (scratch w15/walls15.py, started 21:15): each scarp is ONE line, where a field of the ground's noise
+  of its own passes a level (a low table on one side, risers 14, 7 and 5 m, 30 m wide), so no family along a
+  height; ripples only where the patch field passes 0.74, crests end by a field long across the wind, height
+  0.03 of the wavelength; roughness slope 0.085 an octave; shadeLift 0.35; grain 0.05.
+- 21:20 UTC, the dive in 19 frames on 10c72f63 (scratch d140, sheet in the looks cadc18e2), by pixels against
+  take 10's drafts: 2440 to 2470 equal (0 px over 8; 1, 2 and 15 px under 8 at 2462, 2464, 2472); 2474 582 px
+  differ, 78 over 8; 2476 401 differ, 124 over 8 (the crest, the ledge). By eye as take 10.
+- 21:22 UTC, NAMED 47b7534197a50175cdfd682dbfa8b46e9ff5487e sent to /root (the rise state, first and alone).
+  travel_builder told 21:21 (main's rise end); handover_engineer told 21:21 with the sha and the shares.
+  Sides not run here: /root orders them on the sha.
+- 21:24 UTC, MAIL 1303 from /root: NAMED 47b75341 logged. (1) On the machines since 21:23: the reader's four rows
+  (mx2-01 to 04, against main's rows, red in all four parts), units and gate (mx3-01), sides at draft (mx3-02),
+  finals 2325, 2580, 2010, 2895 on main's code and on the name (mx3-03). It goes onto main if no reader line is
+  worse than main's, units and gate green, 2580 no worse. (2) Order stands: wall and plain by code judged at 2473
+  to 2476 and the rise corners at 1 to 1, then d299. In the next name ALSO the dark dot (2476, 2477) and the
+  yellow green speck (2684, 2686), cured or traced to the line that makes them. (3) The air law comes with the
+  fourth cut; /root writes the minute it is on main. (4) With the next name: the set's share of the ground by
+  frame for the dive 2440 to 2480, for main, for this name and for the next. (5) Say by 21:50 when the next name
+  comes.
+- 21:24 UTC, WALL TRIAL 15 seen from above (w15/cmpA.png, cmpB.png, over.jpg): the contour lines and the corduroy
+  are gone; the plain reads as soft hummocky ground with small craters. STILL WRONG: the scarps read as thin dark
+  worms (a 14 m riser 30 m wide under a Sun 22 degrees up is a black line), the take's broad tone reads as cloud,
+  and the plain is softer than the picture's own ground beside it (a border of sharpness from above). Numbers:
+  rough rms 6.6 m, tables on 0.233, 0.799, 0.355 of the plate.
+  TRIAL 16 (w16/walls16.py, started 21:27): scarps of 10, 6 and 4 m, risers 60 m wide, each dying out along its
+  line by a field of 0.45 km; roughness slope 0.1; a mottle of darker sand and lighter dust with an edge (fields
+  of 0.5 to 0.035 km, tone 0.1); streak tone 0.14, hollow tone 0.16.
+- 21:26 UTC, DISK FULL again, my doing: to measure main's dive shares (MAIL 1303 item 4) I built main's
+  src/stops/mars and public/assets/mars under the tree (git restore --source=origin/main on the two folders,
+  build, dist moved aside, git restore --source=HEAD, build): the dist is NOT hard links, each is 1.3 GB, and
+  the second build ran the disk to 1 MB. No tracked file harmed (status clean but this notebook); scratch
+  w16/field.npz was cut short and copied again. Now: main's build lies in /home/user/workspace/dist-main
+  (outside the repo), the repo has NO dist until main's 41 layers drafts are done (scratch m1, mainlayers.sh,
+  about 25 minutes from 21:27), then dist-main is deleted and the head is built again. 1.1 GB free.
+- 21:28 UTC, answer to /root (item 5): next name about 02:30 UTC; wall and plain in frames about 23:15, d299
+  about 01:30, proof one hour; (c) alone could be named about 23:45 if /root wants it.
+- 21:30 UTC, MAIL 1304 from /root: (1) YES, name the wall and plain by code ALONE first, about 23:45, with its
+  proof; d299 after it as its own name. (2) RETURN of the sides at draft on 47b75341 (mx3-02): both pass. Dive
+  2477: mean 0.008, 99.9th 2, max 13, no pixel over 16. Rise 2681: mean 0.005, 99.9th 2, max 20, ONE pixel over
+  16: mine to find with the speck; say whether it is the same place. (3) The dive's shares for main and for this
+  name before the next name. (4) Disk: keep main's build beside mine only while drawing from it.
+
+### 21:40 trial 16 seen from above, trial 17 started; apron writer first run
+- Trial 16 (0.3 plate, crops A and B at 1 to 1 and the plate at half size): the wall holds (rock with beds between chutes).
+  BAD: the plain reads as smoke. The mottle (tone 0.1, patches with an edge) lies as soft blobs over the take's broad tone
+  (kept coarser than about 170 m, as the 8.5 plate shows it), and nothing crisp follows the tone. The scarps read better
+  than in trial 15 (they end) but still thin. Looks pushed with the word BAD.
+- Trial 17 (`w17/`, same code as 16, values only): mottleTone 0.03, craterShare [0.08, 0.14, 0.2, 0.26] (more small
+  craters, the crisp thing the plain has at true scale), craterWorn 0.6, hollowTone 0.14. Started 21:39, about 11 min.
+- `apronland.py` first run on L2 (scratch out `ap1/`): rays asked 58752, met 58752; whole on 0.454 of the atlas; the
+  distance moves by up to 1.98 times, median 1.183. Seen: the land's colour is drawn into the atlas but smeared along
+  the ray (plate texels drawn out toward the horizon, as expected at this angle) and the lower right is near black (the
+  plate's shadow ground). Not judged yet in a frame. Not committed.
+
+### 21:50 trial 17 chosen, the other levels run; the dive's shares sent
+- Trial 17 seen from above (crops A, C at 1 to 1, plate at half size): wall as rock between chutes; plain as soft ground
+  with small craters, no net of blocks, no smoke. Still wrong by eye: the take's broad tone (kept coarser than about
+  170 m, which is what the 8.5 plate shows) reads as cloud shadow over evenly lit fine ground; scarps thin. Chosen for
+  the name; looks 7566744a.
+- `chainw.sh w17` started 21:49 (log `w17/chain.log`, ends CHAIN DONE): levels 0.7, then 1.6 and 3.8, 8.5 copied,
+  pyramid, land under, web plates, land under web.
+- `finalplates.py w17` (scratch tool) is ready: splices the walls block and a new `takes.plain` block into
+  `plates.json` (two lines of the file; the file is NOT one line, 750 lines; the rest is checked equal), drops the keys
+  the tool no longer reads (walls.grainCellTexels; plain.scarpKm, scarpNoiseKm, scarpEdge, scarpLateralKm), writes the
+  notes of the new keys, copies the trial's tool to `walls.py`.
+- The dive's shares, main and 47b75341, sent to /root 21:50 (low). Main ce8cb68b by cover: 0 to 2466, then 83.9, 86.3,
+  88.7, 91.0, 93.4, 95.6, 97.6, 99.0, 99.7, 99.98 for 2467 to 2476, 100 from 2477. Main's presence by height (computed
+  from close.json 0.0034 to 0.0019 and the eye's height): 2467 0.02, 2468 0.14, 2469 0.34, 2470 0.54, 2471 0.73, 2472
+  0.88, 2473 0.97, 2474 1. Tool `share141.py DIR TAG A-B`; main's layers drafts in `m1/`.
+- Disk: main's build removed after the drafts (2.3 GB free), old scratch (`saw`, `w11`, `w12`, `w14`, `c2s`) removed.
+
+### 21:57 MAIL 1312 (rows of 47b75341; main moved; one line worse than main)
+- Sides pass. Finals 2325, 2010, 2895 byte equal to main's; 2580 matches the approved image at 7.1140 against main's
+  7.1148 (measured by /root, d296).
+- Reader, dive part 1 of 2: red as main, every number better (pop 1.4720 at 2439, pattern 1.0044 at 2401, level step
+  1.3254 at 2412).
+- Reader, rise part 2 of 2: pop 1.2094 at 2741 (main 1.2944), level step 0.2281 (main 0.2331), but pattern 1.2205 at
+  2708 against main's 1.1095 at 2707: WORSE. By d318 and d311 the name does not go on as it stands. Order: "Find by
+  layers what changes its pattern in place at 2700 to 2716 more than main's does, and bring it to main's 1.1095 or
+  under in the next name." Report: most at pixel 488, 268, band 8 px, 9 frames over 0.45 from 2707 + 1/2.
+- MAIN MOVED 21:41: the fourth cut is on main (merge 6bdd87ec, tip 172e7bcd): the air law of the engine with the
+  globe's light by height, path.plumb, the shutter's ends by the frame's motion. "Build the next name on that main."
+- Dates stand: state with pictures about 23:15, name about 23:45. Still out: dive part 2, rise part 1, units and gate.
+- Speck at 2686 (trace so far): it stands in the nograin and the ungraded picture too (not grain, not grade); the
+  layers picture is C2 there; no yellow green texel in any relief texture of the full set. Along its 5 px only green
+  moves (red about 94, blue about 49, green 67 to 105). Not traced to a line yet.
