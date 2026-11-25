@@ -1,9 +1,55 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T09:14:34.046Z",
- "head": "6e9ed569387903f0ad43d6e9dc1c2b8dee7c537d",
- "note": "sun lab: plump domes, crease by depth, new life law, rise handover by the away law",
+ "pushed": "2026-11-25T09:39:52.893Z",
+ "head": "faca211e6d2e3f23ebb2b88246d4f2e808b08d40",
+ "note": "sun lab zze: mid gold tops, pit with a steep wall, life clip of zzd",
  "looks": [
+  {
+   "time": "2026-11-25T09:39:52.289Z",
+   "file": "20261125093952289-note-clip-zzd.mp4.jpg",
+   "source": "out/work/sun/lab/clip-zzd.mp4",
+   "kind": "note",
+   "label": "sun lab state zze clip-zzd.mp4",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:39:51.771Z",
+   "file": "20261125093951771-note-lab-90-whole.jpg",
+   "source": "out/work/sun/lab/lab-90-whole.jpg",
+   "kind": "note",
+   "label": "sun lab state zze lab-90-whole.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:39:51.260Z",
+   "file": "20261125093951260-note-pair-90-spot.jpg",
+   "source": "out/work/sun/lab/pair-90-spot.jpg",
+   "kind": "note",
+   "label": "sun lab state zze pair-90-spot.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:39:50.716Z",
+   "file": "20261125093950716-note-pair-90-near.jpg",
+   "source": "out/work/sun/lab/pair-90-near.jpg",
+   "kind": "note",
+   "label": "sun lab state zze pair-90-near.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:37:02.371Z",
+   "file": "20261125093702371-frame-lab-90-zze.jpg",
+   "source": "out/work/sun/lab/lab-90-zze.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T09:14:33.477Z",
    "file": "20261125091433477-note-lab-179-whole.jpg",
@@ -27,58 +73,6 @@
    "kind": "note",
    "label": "sun lab state zzc/zzd rise-sheet",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:14:31.764Z",
-   "file": "20261125091431764-note-lab-90-whole.jpg",
-   "source": "out/work/sun/lab/lab-90-whole.jpg",
-   "kind": "note",
-   "label": "sun lab state zzc/zzd lab-90-whole",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:14:31.225Z",
-   "file": "20261125091431225-note-pair-90-spot.jpg",
-   "source": "out/work/sun/lab/pair-90-spot.jpg",
-   "kind": "note",
-   "label": "sun lab state zzc/zzd pair-90-spot",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:14:30.671Z",
-   "file": "20261125091430671-note-pair-90-near.jpg",
-   "source": "out/work/sun/lab/pair-90-near.jpg",
-   "kind": "note",
-   "label": "sun lab state zzc/zzd pair-90-near",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:14:08.777Z",
-   "file": "20261125091408777-frame-lab-222-zzd.jpg",
-   "source": "out/work/sun/lab/lab-222-zzd.png",
-   "kind": "frame",
-   "label": "sun.rise frame 222, draft tier",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 222,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T09:09:47.127Z",
-   "file": "20261125090947127-frame-lab-179-zzc.jpg",
-   "source": "out/work/sun/lab/lab-179-zzc.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 179, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 179,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   }
  ]
 }
