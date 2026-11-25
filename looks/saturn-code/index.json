@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T10:58:01.173Z",
+ "pushed": "2026-11-25T11:17:35.421Z",
  "head": "74dfa6b467975d66dd5a410df6b443f8392bc633",
- "note": "v3 of the cover by the lens's height on proof r68; 3465 final byte identical to the named",
+ "note": "v3 reads red on the pattern by the early reading (0.86 at 3813); cause found: two sliding patterns; naming v3 with the red said",
  "looks": [
+  {
+   "time": "2026-11-25T11:17:34.239Z",
+   "file": "20261125111734239-note-strip3_2x.jpg",
+   "source": "../../../../tmp/v/x/strip3_2x.png",
+   "kind": "note",
+   "label": "v3 rise 3802, 3806.5, 3810, 3814.5 at twice size, x 780 to 1100, y 660 to 800: the sheet's streaks and the globe's mottled texture slide against each other"
+  },
+  {
+   "time": "2026-11-25T11:17:33.320Z",
+   "file": "20261125111733320-note-v3_rise_3808_3836.jpg",
+   "source": "../../../../tmp/v/x/v3_rise_3808_3836.png",
+   "kind": "note",
+   "label": "v3 (d567cfd) rise 3808 to 3836 every 4th, same crop: no step to the eye; early reading of the pattern 0.6 to 0.86 at 3806 to 3818, 0.2 from 3820"
+  },
+  {
+   "time": "2026-11-25T11:17:32.099Z",
+   "file": "20261125111732099-note-v3_rise_3792_3806.jpg",
+   "source": "../../../../tmp/v/x/v3_rise_3792_3806.png",
+   "kind": "note",
+   "label": "v3 (d567cfd) rise 3792 to 3806 every 2nd, draft, crop x 560 to 1180, y 470 to 830: the band over the globe opens; early reading of the pattern 0.1 to 0.6 here"
+  },
   {
    "time": "2026-11-25T10:58:00.397Z",
    "file": "20261125105800397-note-v3_strip.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/x/v1_cmp.png",
    "kind": "note",
    "label": "trial: the cover by the angle switched off (lower row) against ab36264 at 3814, 3818, 3822"
-  },
-  {
-   "time": "2026-11-25T10:29:35.737Z",
-   "file": "20261125102935737-note-rise_gap_strip.jpg",
-   "source": "../../../../tmp/v/x/rise_gap_strip.png",
-   "kind": "note",
-   "label": "rise of ab36264 red: crop x 700 to 1100, y 480 to 780, frames 3806 to 3824, the cover over the globe and the gap goes out in 8 frames"
-  },
-  {
-   "time": "2026-11-25T10:04:44.905Z",
-   "file": "20261125100444905-note-rise_ansa_3870_3877.jpg",
-   "source": "../../../../tmp/v/x/rise_ansa_3870_3877.png",
-   "kind": "note",
-   "label": "rise draft 3870 to 3877 at 1 to 1, left ansa: the rings' fine lines"
-  },
-  {
-   "time": "2026-11-25T10:04:44.198Z",
-   "file": "20261125100444198-note-rise_foot_3830.jpg",
-   "source": "../../../../tmp/v/x/rise_foot_3830.png",
-   "kind": "note",
-   "label": "rise draft 3830, 3834, 3838 at 1 to 1: the night side low in the frame"
   }
  ]
 }
