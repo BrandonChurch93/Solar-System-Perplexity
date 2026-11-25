@@ -119,6 +119,8 @@ const float PI = 3.14159265358979;
 ${globe(mapGlsl(patches.place.shownFrom))}
 ${FALL_GLSL}// The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
 float gWisp = 0.0;
+// The foot the cirrus is read with at this place (two pixels on the ground or in the air), set by who asks for the cirrus.
+float gFoot = 0.0;
 
 float hash3(ivec3 p) {
   uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u ^ uint(p.z) * 0xC2B2AE3Du;
@@ -374,8 +376,16 @@ float cirrusBody(vec3 straight, vec3 bent, float t, out float lee, out float cre
     float ends = smoothstep(0.0, make.x / (line.y - line.x), along) * (1.0 - smoothstep(1.0 - make.x / (line.y - line.x), 1.0, along));
     float lump = vnoise(vec3((p.x - ride) / make.y + make.w, make.w * 1.7, 0.5));
     float lump2 = vnoise(vec3((p.x - ride) / (make.y * 0.37) + make.w * 2.3, make.w, 3.5));
+    // Its thick and thin parts go through the same filter: a part shorter than the foot is drawn at the mean of the parts.
+    lump = mix(0.5, lump, 1.0 - smoothstep(uShade.z, uShade.w, gFoot / make.y));
+    lump2 = mix(0.5, lump2, 1.0 - smoothstep(uShade.z, uShade.w, gFoot / (make.y * 0.37)));
     float strength = body.w * ends * mix(1.0 - make.z, 1.0, smoothstep(0.25, 0.75, lump));
     float width = semi * (0.65 + 0.7 * lump2);
+    // A streamer narrower than the foot it is read with is not drawn at that distance (MAIL 840 point 1, the row of white dashes
+    // at 4705 to 4713: a thin streamer read under its own width, its lumps alone standing over the floor): its strength goes
+    // from whole to none while two pixels grow from uShade.z to uShade.w of its width (deep.json cirrus.thin), so it thins away
+    // and never breaks up.
+    strength *= 1.0 - smoothstep(uShade.z, uShade.w, gFoot / width);
     float y = off - 0.6 * semi * (lump2 - 0.5);
     float side = step(y, 0.0);
     float across = y / (width * mix(1.0, uCirrusMake.z, side));
@@ -682,6 +692,7 @@ void main() {
       float hi = mix(uShell.x, uShell.y, (float(i) + 0.5) / uLightMake.z);
       vec3 gs = bandOf(q + uSun * ((hi - g.z) / max(sunUp, 0.05)));
       float away;
+      gFoot = 2.0 * fp;
       float thick = cirrusInside(gs, max(2.0 * fp, uCirrusWind.z), t, 5, f1, away);
       veil += thick;
       if (thick <= 0.0) i += int(uCirrusSkip.x * away / castGap);
@@ -822,6 +833,7 @@ void main() {
         q = oc + rd * tg;
         g = bandOf(q);
         least = max(2.0 * tg * pix, uCirrusWind.w * len);
+        gFoot = 2.0 * tg * pix;
         float away;
         rho = cirrusInside(g, least, t, int(uCirrusBody.z), fin, away);
         if (rho > 0.0) break;
@@ -1043,7 +1055,7 @@ export class Deep {
         uHazeMake: { value: v4(h.forward[0]!, h.forward[1]!, h.top, h.share) },
         uLight: { value: v4(l.sun, l.forward[0]!, l.forward[1]!, l.wrap) },
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
-        uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uShade: { value: v4(l.shade, l.shadeFoot, 0, 0) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
+        uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uShade: { value: v4(l.shade, l.shadeFoot, ci.thin[0]!, ci.thin[1]!) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
         uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
