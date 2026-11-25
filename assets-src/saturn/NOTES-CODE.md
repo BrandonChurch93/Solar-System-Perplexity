@@ -6148,3 +6148,17 @@ NAMED at 12:00 UTC stands; it goes into Saturn's round 3 of 3, your last."
     on the band in front of the lit globe right of the globe's outline: the band goes from brown with
     streaks to the pale globe within the 8 frames.
   - The rise's pattern line is not cured. Named red, with its cause as found at 11:18.
+- 11:32 UTC. The judged frame 3720 on the head's stop folder (proof r68, engine 64c4ccb, final tier):
+  - sha256 c5dcf7675cef1e39b2555ae7b776480ad8d6bc20ad38545421c7dbbb98b60c6b. G17 by tools/measure/g17.py
+    against references/approved/saturn-close.jpg: median 1.000, p25 0.664 (limit 0.8; the named 88ba2385
+    read 0.974).
+  - Against ab36264's 3720 (r66): 2683 pixels differ, the largest by 7 levels of 255, 76 by more than 4,
+    all of those in x 1152 to 1265, y 1000 to 1078 (the nearest ice at the frame's foot). No pixel differs
+    by more than 12.
+  - Seen at 1 to 1 beside the approved image and the named 88ba2385 (whole frame, foot, near field, cap,
+    lower globe): the picture of ab36264. What was open there is open here.
+  - Main is at c1305a2 (kit/PROGRESS.md only since f0b54bd): merged again before the NAMED.
+  - The NAMED goes out on that merge: the best committed tree, the rise's pattern line red and named,
+    the pop line red and not chased (MAIL 1045). Still running on r68: the dive's lines, then the finals
+    3567 and 3866, G17, the step in place, the handover tool, G13, the gate, parity, path. Each goes to
+    the Builder as it ends.
