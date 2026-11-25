@@ -1,9 +1,24 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T05:59:52.841Z",
- "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
- "note": "gradAt named (09cfadcd): the row 2155 to 2157 with Earth's callers on a scratch; now drawing the table of all stops for the shutter ends: borders and fast frames, box against ends",
+ "pushed": "2026-11-25T06:22:48.307Z",
+ "head": "5708093a3a529023909690378fedc898443a4bfb",
+ "note": "the table of the ends for all nine stops: borders drawn with the box, the ends follow; the cause of the softening at 2099 to 2100 is the count of samples",
  "looks": [
+  {
+   "time": "2026-11-25T06:22:47.644Z",
+   "file": "20261125062247644-note-mars-2669-2670-half.jpg",
+   "source": "../../../../tmp/law/dots/mars-2669-2670-half.png",
+   "kind": "note",
+   "label": "Mars 2669 (surface view, 8 samples) beside 2670 (first frame of the rise, 16 samples), box shutter, at half size",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:22:46.984Z",
+   "file": "20261125062246984-note-cz-2099-2100-land.jpg",
+   "source": "../../../../tmp/law/dots/cz-2099-2100-land.png",
+   "kind": "note",
+   "label": "Earth 2099 to 2101 at review, x 500..740 y 600..760 at 2.7 times: 2099 surface view (4 samples), 2100 surface view alone (16), 2100 as it is (8 and 8), 2101 globe (16). The softening is the count"
+  },
   {
    "time": "2026-11-25T05:59:52.218Z",
    "file": "20261125055952218-note-we-andes6-2156.jpg",
@@ -46,20 +61,6 @@
    "kind": "note",
    "label": "Mars 2427 review on take/b8 (the box): bright specks at the rim are bars with blunt ends, what the ends would turn into ovals; not drawn with the ends yet",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:45:56.737Z",
-   "file": "20261125054556737-note-we-sea-1857.jpg",
-   "source": "../../../../tmp/law/dots/we-sea-1857.png",
-   "kind": "note",
-   "label": "gradAt for Earth: 1857 review, sea x 420..620 y 820..940 at 4 times: take/b8, cover box, cover ends, gradAt ends: the fine hatch over the sea is in all four"
-  },
-  {
-   "time": "2026-11-25T05:45:55.062Z",
-   "file": "20261125054555062-note-we-clouds-1857.jpg",
-   "source": "../../../../tmp/law/dots/we-clouds-1857.png",
-   "kind": "note",
-   "label": "gradAt for Earth: 1857, clouds x 1000..1240 y 780..1000 at 3 times: draft, review take/b8, cover by frame with ends, gradAt with ends (mean gradient there 7.45, 7.62, 8.44)"
   }
  ]
 }
