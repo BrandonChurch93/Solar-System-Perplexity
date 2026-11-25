@@ -48,7 +48,13 @@ const SUN_LEAVE = 0.55
 const SUN_SWAP: [number, number] = [0.42, SUN_LEAVE]
 const SUN_GLOW_FROM = 0.06
 const SUN_HAND = { span: [0.25, 0.8] as [number, number], last: 0.6, reach: 2, behind: 1000 }
-const SUN_DIM = { level: 0.25, nearDeg: [-16, 14] as [number, number], back: [0.8, 1] as [number, number] }
+// The dim of the sky while the Sun stands in the frame of a travel. It reads what the frame holds and no clock: the angle by which the Sun
+// stands inside the frame's edge (nearDeg, from outside to inside), and of that only what lies deeper than at both ends of the leg. The two
+// ends are frames of the stops, the last of the rise and the first of the hold, and each has its sky at its stop's own level with the Sun
+// where it stands there. So a Sun that comes into the frame to stay, or leaves it for good, dims nothing however fast the camera turns, and
+// a Sun that passes through the frame takes the sky down by its depth in the frame and gives it back by the same depth as it leaves. The
+// dim is the open flight's: it lowers the open sky (travel.sky.openExposure) by its share of the level and never a stop's own sky.
+const SUN_DIM = { level: 0.25, nearDeg: [-16, 14] as [number, number] }
 const RETREAT_DUST = 0.045
 const LOCK_PX: [number, number] = [3, 40]
 const PLACE_TIE = 1e-6
@@ -584,7 +590,8 @@ export class FilmDirector implements Director {
     const radius = mix(this.sunFor(index).radius, this.sunFor(index + 1).radius, smooth(ramp(0.25, 0.8, u)))
     const sun = discShare(this.sunWorld.clone().applyQuaternion(inv), Math.sin(Math.min(radius, 1.5)), pose.vfov, aspect)
     const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
-    return Math.min(this.leaveWeight(index, u, pose.position) * body(index) + body(index + 1) + glow * sun, 1)
+    const weight = index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : this.leaveWeight(index, u, pose.position)
+    return Math.min(weight * body(index) + body(index + 1) + glow * sun, 1)
   }
 
   private sunSeen(index: number, time: number): number {
@@ -594,7 +601,7 @@ export class FilmDirector implements Director {
       const pose = this.travelCamera(index, at)
       return ramp(SUN_DIM.nearDeg[0], SUN_DIM.nearDeg[1], -THREE.MathUtils.radToDeg(outsideFrame(pose.quaternion, pose.vfov, master.width / master.height, this.sunWorld)))
     }
-    return Math.max(near(time) - near(seg.start), 0)
+    return Math.max(near(time) - Math.max(near(seg.start), near(seg.end)), 0)
   }
 
   private brightNear(index: number, time: number): number {
@@ -741,8 +748,8 @@ export class FilmDirector implements Director {
       const arrive = smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
       const open = mix(lens + (1 - lens) * mix(OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0), 1 - skyPatch, arrive)
       skyLook = mix(bandLook(a.id), bandLook(b.id), bandLook(b.id) < bandLook(a.id) ? skyPatch : smooth(ramp(Math.min(span[0], OPEN.lookFrom), span[1], u)))
-      light.sky = mix(light.sky, OPEN.openExposure, open)
-      if (index > 0) light.sky *= 1 - SUN_DIM.level * smooth(this.sunSeen(index, time)) * (1 - smoother(ramp(SUN_DIM.back[0], SUN_DIM.back[1], u)))
+      const dim = index > 0 ? SUN_DIM.level * smooth(this.sunSeen(index, time)) : 0
+      light.sky = mix(light.sky, OPEN.openExposure * (1 - dim), open)
       skyStars = open
       const leaveWeight = this.leaveWeight(index, u, position)
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
