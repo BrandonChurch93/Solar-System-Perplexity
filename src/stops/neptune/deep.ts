@@ -447,9 +447,12 @@ float cirrusBody(vec3 straight, vec3 bent, float t, out float lee, out float cre
     lump2 = mix(0.5, lump2, 1.0 - smoothstep(uShade.z, uShade.w, gFoot / (make.y * 0.37)));
     // In the shadow on the deck they are read no finer than the noise is (cirrus.castWave): a part shorter than that wave lies in
     // the shadow at the mean of the parts. The streamer rides its own wind and the deck under it the band's, so its shadow slides
-    // over the ground, and a part that short changed the shadow's edge in place within a few frames (the row at 4753).
+    // over the ground, and a part that short changed the shadow's edge in place within a few frames (the row at 4753). The thick
+    // and thin parts (lump) are read at twice that wave: the body steps from thin to thick within half a part (strength, below,
+    // from 0.25 to 0.75 of the noise), so a part of one and a half waves, the first streamer's, still stood in the shadow as a
+    // dark streak under its foot that slid over the deck (the dive's last part, 4759 to 4760.5).
     if (gShadow > 0.0) {
-      lump = mix(0.5, lump, smoothstep(gShadow, 2.0 * gShadow, make.y));
+      lump = mix(0.5, lump, smoothstep(2.0 * gShadow, 4.0 * gShadow, make.y));
       lump2 = mix(0.5, lump2, smoothstep(gShadow, 2.0 * gShadow, make.y * 0.37));
     }
     float strength = body.w * ends * mix(1.0 - make.z, 1.0, smoothstep(0.25, 0.75, lump));
