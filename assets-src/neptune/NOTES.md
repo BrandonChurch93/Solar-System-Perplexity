@@ -7355,3 +7355,115 @@ Eighth NAMED by 16:00 with the full sha. Neptune's round 1 of 3 starts on what s
   by kind. Streamers: a thin veil of the one body by the slant path law. The far Sun: nothing to do now. Times: named by
   17:00 for the second cut, by 20:00 for a third; each with 4605 and 4860 beside the approved image and main.
 - What it leaves: MAIL 1112's 16:00 for the eighth is not withdrawn. I name the eighth by 16:00 on what stands and go on.
+
+## 25 Nov, 14:34 to 14:50 UTC: the merge, MAIL 983's line, the streamer trial F1, the veil designed
+
+- F0, F1 (14:34 to 14:37; preview; 4968, 4972, 4976 and 4860): the third streamer with lumpShare 0.2 for 0.7 is WORSE: more
+  of the body stands over the floor, a longer row of hard bits (upper left of the three rise frames, and at 4860 a new row at
+  x 0 to 165, y 83 to 140 of 960 by 540). 4860 against the approved close 28.548 to 28.587. NOT TAKEN. The fault is the
+  kind of body (heaps that must stand over a floor), not its values: MAIL 1126 point 4 rules the cure, a veil.
+- 14:37 notes committed (fb464fb07). 14:38 merged origin main aed412aeb by a merge commit (ff206ee3b), no conflict.
+  Main's set.ts brings bandHold on the rise (not mine). b1721d2c is in main, so MAIL 983's one line is laid on the merge as
+  its own commit (a42f77f3d). Types clean. The whole test run on the merge started 14:38:16.
+- THE VEIL, designed while the tests run (/tmp/veil.py, not laid while they run): deep.json cirrus.streamers[i].veil
+  (0: a marched body; over 0: a sheet). deep.ts: uStreamVeil; the march's two loops (cirrusBody's rooms, cirrusFar) pass a
+  veil by; cirrusFlat draws it at every distance: tau = veil times the body's own ends, thick and thin parts and bell
+  across its width (kept in sum across a soft edge), cover 1 - exp(-tau / |sin e|) with e the ray's angle against the
+  sheet at the body's middle height; no heap and no floor; the cover goes into the map's cloud cover, so it is lit as the
+  map's cloud at the place. First value for the third streamer: 0.15.
+
+## 25 Nov, 14:50 to 15:10 UTC: the tests on the merge (one red, cured in the plan), what the merge moved
+
+- THE WHOLE TEST RUN ON THE MERGE ff206ee3b + a42f77f3d. First run (npm test, 14:38:16 to 14:50:35): it ended in the
+  reporter's own error (Map.groupBy, node v20.20.2), which means a test failed; I had kept only the tail again. Second run
+  (npx vitest run --reporter=tap, alone, 14:51:00 to 15:03:12, /tmp/vitest-merge.log): 80 files ok, 1 NOT OK:
+  tests/air.test.ts, "the one air on the shot", "is absent on every shot of the film as long as no stop names an air":
+  "neptune: expected [ { height: 2, sky: 0.65 }, ...(1) ] to be undefined" (line 201). CAUSE: the low sky's patch as
+  sky_builder wrote it names `params.air`; the shared unit asserts that no stop of the film names an air, and nothing in the
+  engine reads the air of a shot yet (rg over src outside the stops: only film.ts 1092 writes it). Its notes
+  (NEPTUNE-1099.md) do not name this unit.
+- THE CURE, in my folder only (967b2a0f9): the two knots stand in plan.ts as `lowSky` and are read by `skyTurnShare` and
+  `skyGain` through the same law (`airAt` of src/core/air.ts), the first knot made whole from the stop's light exactly as
+  `StopPlan.air` makes it. No air is on any shot of the film, so the unit holds; and when the engine's air law comes and
+  reads air.sky, nothing counts twice by itself: moving the knots to `params.air` and taking the skyGain override out is
+  then one deliberate step (MAIL 1112 point 3). CONTROL (out/work/nep/weave/skynum.ts): skyGain, skyTurnShare and the eye's
+  height at 20 frames from 4530 to 5024, with the patch as written and with lowSky: the same numbers to the last digit
+  (cmp of the two prints). E.g. 4605 gain 1 (height 2.127), 4707 gain 0.9541 share 0.0786, 4740 gain 0.5100 share 0.8381,
+  4760 to 4949 gain 0.41538 (0.27 / 0.65), 4975 gain 0.5224, 5006 gain 0.9998. tests/air.test.ts alone after it: no not ok;
+  my own test ok. tsc clean. The whole run was NOT repeated after this commit: it changes plan.ts only, and the one red
+  file is green alone.
+- WHAT THE MERGE OF MAIN MOVED IN MY PICTURES (M1, 1920 draft, 15:04:54 to 15:07:16; 36.1 s and 87.9 s a frame): 4605
+  `91fd0854ffc0dc95` (before the merge `4948d83e0ef7bd07`): 170544 pixels differ, all at x 1132 to 1919, y 0 to 770, the sky
+  at the top right; the disc and the left are the same bytes. 4860 `b22543dc359b0f4f` (before `3c062dba2181cf49`): 316801
+  pixels differ, all at y 0 to 527, the sky and the limb's rim. This is main's own change (take batch 10: sky.ts 191 lines,
+  the far Sun, the Sun's place), not mine: the control above shows my plan gives the sky the same numbers. In the picture:
+  the band's gold cloud at the top right of the hold is dimmer and its stars are finer (main's sky.ts now draws the band at
+  a stop as a soft glow with point and grain layers, stopLayer); at 4860 the band over the limb is dimmer and browner. So every number of 4605 and 4860 is measured again on this tree before the
+  eighth is named.
+- A WRONG LINE OF MINE, CORRECTED. At 14:18 to 14:25 I wrote "the far Sun star is not in it at all (the true Sun is outside
+  the frame at the hold)". That is false. Crop of 4605 at x 1560 to 1860, y 40 to 270 beside the approved (/tmp/m1-sun.jpg):
+  the engine's far Sun stands at (1716, 153) of 1920 by 1080, the approved image's at (1709, 158): the same place within 8
+  pixels, before the merge (K1) and after it (M1). What differs is its kind: mine is a round white disc about 10 pixels
+  across with a soft glow (light.sunRadiusDeg 0.14, sunGlare 0.6, the engine's small Sun), the approved's is a star with a
+  wide glow and eight spikes about 150 pixels across; and the sky round it is gold brown and dense with stars where the
+  approved's is blue grey and sparse. The Sun's look is the engine's (src/space/sky.ts, src/space/farsun), not my folder;
+  `light.flare` is the post chain's level streak (chain.ts line 110), not spikes. So of WANTED 2 the star in its place
+  stands; its flare and the sky's kind do not.
+- My reader on the two trees, 1920 draft PNG, approved fitted as G17 fits it (/tmp/meas.py; a proxy):
+  before the merge (K1): 4605 mean absolute 7.613 (top quarter 17.268), G17 median 0.678 p25 0.443 over 65 tiles;
+  4860 28.583 (top quarter 20.181), G17 median 0.560 p25 0.194 over 75 tiles.
+  on the merge (M1): 4605 7.621 (17.306), G17 0.674 p25 0.436; 4860 28.512 (19.903), G17 0.457 p25 0.194.
+  (The 7.539 and 7.542 I sent at 14:10 were read with another resize of the approved image; the same pair by this reader
+  is not measured, both of those frames being overwritten. The machine read the hold's G17 0.827 on d63d08e2; my draft
+  reader reads lower, so only differences count.) The fall at 4860 is the sky's tiles alone: top row 1.75 1.35 0.90 1.58
+  1.70 1.41 1.28 0.87 before, 0.87 0.65 0.35 0.66 0.98 1.24 0.54 0.59 on the merge; rows 3 to 7 are the same numbers.
+  So main's new band holds about half the fine energy at the level 0.27 that sky_builder set on the old one.
+
+## 25 Nov, 15:08 to 15:16 UTC: the veil (6db76dcd2)
+
+- V0 (veil 0, the marched body as before), V1 (veil 0.15, no fibres, halfWidth 0.07), V2 (veil 0.05, veilFibre 0.7,
+  halfWidth 0.16), each 4860, 4968, 4972, 4976 at preview, 1 min 50 the four (/tmp/v-six.jpg, /tmp/v2-six.jpg, upper left
+  quarter at 2 times, V0 above).
+- V1: the row of flecks is gone, but what stands there is one even pale line 6 to 10 pixels wide with a wiggle: a drawn
+  stroke, which MAIL 1126 point 4 forbids. NOT TAKEN.
+- V2: a faint wide soft veil with threads along the sweep where the row was, in all three rise frames, no fleck and no
+  line; at 4860 a faint mottle at x 0 to 190, y 82 to 144 of 960 by 540 under the limb. TAKEN, committed 6db76dcd2.
+- NOT cured: the small pieces round the end of the first streamer's bank (bottom middle of the same crops); they are
+  the first streamer's thin tail, a marched body.
+
+## 25 Nov, 15:15 to 15:26 UTC: the low sky's level on main's new band (91ada652c), the judged frames of the tip
+
+- L1 (15:15:23 to 15:17:36, 4860 at 1920 draft, the low knot 0.38 for 0.27, with the veil): mean absolute 28.439 (28.512
+  at 0.27), top quarter 19.729 (19.903), G17 median 0.544 (0.457), p25 0.194 (the same). Top row's sky tiles 1.27 0.96 0.50
+  0.97 1.41 1.70 0.84 0.88; from the two levels the tiles go as the level to the power 1.1. TAKEN as its own commit
+  91ada652c. I did not try a higher level: 0.42 would put the highest tile near 1.9 by that law, not measured.
+  This changes a value of sky_builder's patch (its level was set on d63d08e2's sky); named in the mail so it can be ruled.
+- THE JUDGED FRAMES OF THE TIP 91ada652c (N8, 1920 draft, 15:18:03 to 15:23:10; 36.3, 23.1, 90.7, 23.8 s; texel view of
+  4860 104 s): 4605 `ceabf0253c5d1a57`, 4707 `e2503f09256ad5ab`, 4860 `46d435ccbf4cdd43`, 5006 `8d9e6fc1366e4682`.
+  G13 texel view at 4860: soft 2.621 percent of 1570666, mean 1.65, OVER (the cirrus bank's march step, as before).
+  By my reader (/tmp/meas.py): 4605 mean absolute 7.621 (top quarter 17.306), G17 median 0.674 p25 0.436 over 65 tiles;
+  4860 28.439 (19.729), G17 median 0.544 p25 0.194 over 75 tiles.
+- THE HOLD AND THE VEIL (d302): 4605 on the merge before the veil (M1) against the tip (N8): 948 pixels differ, the
+  most 6 levels, 288 over 2, none over 8, all at x 726 to 1068, y 532 to 791 (inside the disc, at the place: the third
+  streamer's far level is now the veil). Mean absolute 7.621 and 7.621, G17 0.674 and 0.674, p25 0.436 and 0.436: no
+  cost at three places and G17 does not fall. Nothing outside the disc differs. Crop at 2 times beside the approved:
+  /tmp/n8-4605-crop.jpg, nothing to see of it.
+- 4707 and 5006 looked at (/tmp/n8-two.jpg): the stars are points, the band stands at the top right; the eye is a
+  small dark spot on the globe at the place.
+- Sheet for the mail: /tmp/n8-beside.jpg (approved, main from the sheet of MAIL 1112, the tip; 4605 above, 4860 below).
+- Looks pushed 15:25:18 (1a1a8535, 8 looks). The note's text says "15:27 UTC": my clock ran two minutes fast there.
+- My test ok, tests/air.test.ts ok (alone, 15:23), G11 PASS. Net of my folders at the tip: 63.523 MB (src 0.346,
+  assets-src 5.733, public 57.444) against main's 80.827 (0.296, 5.269, 75.262).
+- 15:24:20 the pairs' chain started on the tip (/tmp/proofs2.sh N8: rise 4960 to 4976, dive 4736 to 4760, 4704 to 4712,
+  4992 to 5000; preview, capture rate 2).
+- RISE PAIRS ON THE TIP (N8q, done 15:33:59; my reader, a proxy; limit 0.45): 4960 to 4968 0.48 at (52, 768) of 1920
+  (0.48 on the slab's tree, 0.56 on d63d08e2); 4962 to 4970 0.56 at (160, 760) (0.57; 0.68); 4968 to 4976 0.55 at
+  (1512, 588) (0.62; 0.85). Still RED by my reader, each lower than or equal to before.
+  Looked at (/tmp/n8-pairs.jpg, crops at 2 times of the first, two middle and the last frame of each pair):
+  4968 to 4976 at (1512, 588): the SECOND streamer (the thin far bank toward the limb). At 4968 it is a bank of white
+  heaps about 20 preview pixels wide; by 4976 it is one thin pale line: its heaps are narrower than the march's foot there
+  and go over into the far level (cirrusFlat), which is far thinner than the heaps it stands for. A change of kind with
+  the distance that can be seen: a small pop, named, not cured. Lead: the second streamer as a veil too (one kind at
+  every distance), or a far level as wide as the heaps.
+  4960 to 4970 at the lower left (x 0 to 240, y 294 to 474 of the preview): the dark deck's fine structure; between
+  4965 and 4970 short pale streaks (the deck's wisps) and one thin straight dark line come in. Not traced by a control.
