@@ -1,0 +1,63 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "central storm",
+   "what": "the eye is a tighter, more open spiral sitting higher and farther left, not the broad dark oval of the target",
+   "fix": "widen the eye into the same elongated dark oval and put it back on the target's center"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-04-b.png",
+   "where": "tile E 1212,594 and tile I 912,647",
+   "what": "the cloud mass is a different, bulkier shape in a different place, with smeared edges instead of the target's thin diagonal cirrus",
+   "fix": "rebuild those clouds to the target's filament shapes and positions"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "diagonal cloud band",
+   "what": "the band is brighter, smoother, and a different set of lobes, and it has lost the fine shredded edges",
+   "fix": "darken the band, restore the target's lobe layout, and bring back the fine edge detail"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "tile A 732,324 and tile G 456,216",
+   "what": "the storm wall and lower cloud bank are brighter, rounder, and combed into streaks, with the bank sitting higher than the target",
+   "fix": "drop the bank, crush the cyan eyewall, and replace the comb streaks with the target's billow texture"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "sunlit ocean and upper-left limb",
+   "what": "the disk reads lighter and more cyan, and the upper-left horizon sits higher with a harder glow",
+   "fix": "lower the upper-left limb, deepen the navy midtones, and soften the atmospheric falloff"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "tile B 252,54, tile C 1212,54, and tile D 252,594",
+   "what": "mid-level cloud sheets and the faint lights in the dark ocean are gone, and the lower tile is crushed darker",
+   "fix": "restore the missing cloud sheets and pinpoint lights, and lift the crushed lower ocean toward the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "right limb and storm wisps",
+   "what": "the same shot, but the limb glow is a little wider and the finest cloud wisps are slightly softer",
+   "fix": "tighten the limb falloff and restore the fine wisp contrast"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "tile B 252,54 moon",
+   "what": "the moon's lit face is a touch cooler and paler than the target",
+   "fix": "warm the moon highlights slightly toward the target's tan"
+  }
+ ]
+}

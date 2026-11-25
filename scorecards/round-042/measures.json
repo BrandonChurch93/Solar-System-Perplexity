@@ -1,0 +1,5083 @@
+{
+ "stop": "neptune",
+ "commit": "32a8d0017503b920cb1313fc62ffec0c448b6837",
+ "engineHash": "bfe554c9c4ef0dd5",
+ "stopHashes": {
+  "sun": "612e22dfd667fe56",
+  "mercury": "e3ed98d156005a1d",
+  "venus": "f13d2bbd190815dd",
+  "earth": "565581fc0a4955bd",
+  "mars": "618098bb938f57ab",
+  "jupiter": "8e2873a97eea79f8",
+  "saturn": "393272f8717df632",
+  "uranus": "b5671951277a0515",
+  "neptune": "2f1f1d090af75712"
+ },
+ "stopHash": "2f1f1d090af75712",
+ "format": "16x9",
+ "assets": "full",
+ "browser": "147.0.7727.15",
+ "every": 1,
+ "noCover": false,
+ "G13": {
+  "pass": false,
+  "tier": "draft",
+  "view": "texels",
+  "frames": 495,
+  "of": 495,
+  "failed": [
+   4729,
+   4730,
+   4731,
+   4732,
+   4733,
+   4734,
+   4735,
+   4736,
+   4737,
+   4738,
+   4739,
+   4740,
+   4741,
+   4742,
+   4743,
+   4744,
+   4745,
+   4746,
+   4747,
+   4748,
+   4749,
+   4750,
+   4751,
+   4752,
+   4753,
+   4754,
+   4755,
+   4756,
+   4757,
+   4758,
+   4759,
+   4760,
+   4761,
+   4762,
+   4763,
+   4764,
+   4765,
+   4766,
+   4767,
+   4768,
+   4769,
+   4770,
+   4771,
+   4772,
+   4773,
+   4774,
+   4775,
+   4776,
+   4777,
+   4778,
+   4779,
+   4780,
+   4781,
+   4782,
+   4783,
+   4784,
+   4785,
+   4786,
+   4787,
+   4788,
+   4789,
+   4790,
+   4791,
+   4792,
+   4793,
+   4794,
+   4795,
+   4796,
+   4797,
+   4798,
+   4799,
+   4800,
+   4801,
+   4802,
+   4803,
+   4804,
+   4805,
+   4806,
+   4807,
+   4808,
+   4809,
+   4810,
+   4811,
+   4812,
+   4813,
+   4814,
+   4815,
+   4816,
+   4817,
+   4818,
+   4819,
+   4820,
+   4821,
+   4822,
+   4823,
+   4824,
+   4825,
+   4826,
+   4827,
+   4828,
+   4829,
+   4830,
+   4831,
+   4832,
+   4833,
+   4834,
+   4835,
+   4836,
+   4837,
+   4838,
+   4839,
+   4840,
+   4841,
+   4842,
+   4843,
+   4844,
+   4845,
+   4846,
+   4847,
+   4848,
+   4849,
+   4850,
+   4851,
+   4852,
+   4853,
+   4854,
+   4855,
+   4856,
+   4857,
+   4858,
+   4859,
+   4860,
+   4861,
+   4862,
+   4863,
+   4864,
+   4865,
+   4866,
+   4867,
+   4868,
+   4869,
+   4870,
+   4871,
+   4872,
+   4873,
+   4874,
+   4875,
+   4876,
+   4877,
+   4878,
+   4879,
+   4880,
+   4881,
+   4882,
+   4883,
+   4884,
+   4885,
+   4886,
+   4887,
+   4888,
+   4889,
+   4890,
+   4891,
+   4892,
+   4893,
+   4894,
+   4895,
+   4896,
+   4897,
+   4898,
+   4899,
+   4900,
+   4901,
+   4902,
+   4903,
+   4904,
+   4905,
+   4906,
+   4907,
+   4908,
+   4909,
+   4910,
+   4911,
+   4912,
+   4913,
+   4914,
+   4915,
+   4916,
+   4917,
+   4918,
+   4919,
+   4920,
+   4921,
+   4922,
+   4923,
+   4924,
+   4925,
+   4926,
+   4927,
+   4928,
+   4929,
+   4930,
+   4931,
+   4932,
+   4933,
+   4934,
+   4935,
+   4936,
+   4937,
+   4938,
+   4939,
+   4940,
+   4941,
+   4942,
+   4943,
+   4944,
+   4945,
+   4946,
+   4947,
+   4948,
+   4949,
+   4950,
+   4951,
+   4952,
+   4953,
+   4954,
+   4955,
+   4956,
+   4957,
+   4958,
+   4959,
+   4960,
+   4961,
+   4962,
+   4963,
+   4964,
+   4965,
+   4966,
+   4967,
+   4968,
+   4969,
+   4970,
+   4971,
+   4972,
+   4973,
+   4974,
+   4975,
+   4976,
+   4977,
+   4978,
+   4979,
+   4980,
+   4981,
+   4982,
+   4983,
+   4984,
+   4985,
+   4986,
+   4987,
+   5003
+  ],
+  "zeroCounted": [],
+  "worst": [
+   {
+    "frame": 4958,
+    "segment": "neptune.rise",
+    "counted": 1521583,
+    "soft": 1094839,
+    "fraction": 0.71954,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4959,
+    "segment": "neptune.rise",
+    "counted": 1523875,
+    "soft": 1094169,
+    "fraction": 0.71802,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4957,
+    "segment": "neptune.rise",
+    "counted": 1519708,
+    "soft": 1090153,
+    "fraction": 0.71734,
+    "meanTexels": 0.857,
+    "pass": false
+   },
+   {
+    "frame": 4956,
+    "segment": "neptune.rise",
+    "counted": 1518290,
+    "soft": 1082783,
+    "fraction": 0.71316,
+    "meanTexels": 0.86,
+    "pass": false
+   },
+   {
+    "frame": 4869,
+    "segment": "neptune.terrain",
+    "counted": 1565588,
+    "soft": 1115903,
+    "fraction": 0.71277,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4871,
+    "segment": "neptune.terrain",
+    "counted": 1564043,
+    "soft": 1114780,
+    "fraction": 0.71276,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4960,
+    "segment": "neptune.rise",
+    "counted": 1526569,
+    "soft": 1088082,
+    "fraction": 0.71276,
+    "meanTexels": 0.857,
+    "pass": false
+   },
+   {
+    "frame": 4870,
+    "segment": "neptune.terrain",
+    "counted": 1564825,
+    "soft": 1115333,
+    "fraction": 0.71275,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4867,
+    "segment": "neptune.terrain",
+    "counted": 1567121,
+    "soft": 1116955,
+    "fraction": 0.71274,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4868,
+    "segment": "neptune.terrain",
+    "counted": 1566358,
+    "soft": 1116411,
+    "fraction": 0.71274,
+    "meanTexels": 0.846,
+    "pass": false
+   }
+  ],
+  "results": [
+   {
+    "frame": 4530,
+    "segment": "neptune.hold",
+    "counted": 1058011,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.798,
+    "pass": true
+   },
+   {
+    "frame": 4531,
+    "segment": "neptune.hold",
+    "counted": 1058380,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.797,
+    "pass": true
+   },
+   {
+    "frame": 4532,
+    "segment": "neptune.hold",
+    "counted": 1058737,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.797,
+    "pass": true
+   },
+   {
+    "frame": 4533,
+    "segment": "neptune.hold",
+    "counted": 1059082,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.797,
+    "pass": true
+   },
+   {
+    "frame": 4534,
+    "segment": "neptune.hold",
+    "counted": 1059426,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.796,
+    "pass": true
+   },
+   {
+    "frame": 4535,
+    "segment": "neptune.hold",
+    "counted": 1059831,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.796,
+    "pass": true
+   },
+   {
+    "frame": 4536,
+    "segment": "neptune.hold",
+    "counted": 1060226,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.796,
+    "pass": true
+   },
+   {
+    "frame": 4537,
+    "segment": "neptune.hold",
+    "counted": 1060600,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.795,
+    "pass": true
+   },
+   {
+    "frame": 4538,
+    "segment": "neptune.hold",
+    "counted": 1060980,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.795,
+    "pass": true
+   },
+   {
+    "frame": 4539,
+    "segment": "neptune.hold",
+    "counted": 1061348,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.795,
+    "pass": true
+   },
+   {
+    "frame": 4540,
+    "segment": "neptune.hold",
+    "counted": 1061738,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.794,
+    "pass": true
+   },
+   {
+    "frame": 4541,
+    "segment": "neptune.hold",
+    "counted": 1062118,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.794,
+    "pass": true
+   },
+   {
+    "frame": 4542,
+    "segment": "neptune.hold",
+    "counted": 1062517,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.794,
+    "pass": true
+   },
+   {
+    "frame": 4543,
+    "segment": "neptune.hold",
+    "counted": 1062945,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.794,
+    "pass": true
+   },
+   {
+    "frame": 4544,
+    "segment": "neptune.hold",
+    "counted": 1063348,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.793,
+    "pass": true
+   },
+   {
+    "frame": 4545,
+    "segment": "neptune.hold",
+    "counted": 1063767,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.793,
+    "pass": true
+   },
+   {
+    "frame": 4546,
+    "segment": "neptune.hold",
+    "counted": 1064180,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.793,
+    "pass": true
+   },
+   {
+    "frame": 4547,
+    "segment": "neptune.hold",
+    "counted": 1064575,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.792,
+    "pass": true
+   },
+   {
+    "frame": 4548,
+    "segment": "neptune.hold",
+    "counted": 1064990,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.792,
+    "pass": true
+   },
+   {
+    "frame": 4549,
+    "segment": "neptune.hold",
+    "counted": 1065406,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.792,
+    "pass": true
+   },
+   {
+    "frame": 4550,
+    "segment": "neptune.hold",
+    "counted": 1065828,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.791,
+    "pass": true
+   },
+   {
+    "frame": 4551,
+    "segment": "neptune.hold",
+    "counted": 1066278,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.791,
+    "pass": true
+   },
+   {
+    "frame": 4552,
+    "segment": "neptune.hold",
+    "counted": 1066743,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.791,
+    "pass": true
+   },
+   {
+    "frame": 4553,
+    "segment": "neptune.hold",
+    "counted": 1067148,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.79,
+    "pass": true
+   },
+   {
+    "frame": 4554,
+    "segment": "neptune.hold",
+    "counted": 1067570,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.79,
+    "pass": true
+   },
+   {
+    "frame": 4555,
+    "segment": "neptune.hold",
+    "counted": 1067971,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.79,
+    "pass": true
+   },
+   {
+    "frame": 4556,
+    "segment": "neptune.hold",
+    "counted": 1068455,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.79,
+    "pass": true
+   },
+   {
+    "frame": 4557,
+    "segment": "neptune.hold",
+    "counted": 1068906,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.789,
+    "pass": true
+   },
+   {
+    "frame": 4558,
+    "segment": "neptune.hold",
+    "counted": 1069359,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.789,
+    "pass": true
+   },
+   {
+    "frame": 4559,
+    "segment": "neptune.hold",
+    "counted": 1069794,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.789,
+    "pass": true
+   },
+   {
+    "frame": 4560,
+    "segment": "neptune.hold",
+    "counted": 1070223,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.788,
+    "pass": true
+   },
+   {
+    "frame": 4561,
+    "segment": "neptune.hold",
+    "counted": 1070712,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.788,
+    "pass": true
+   },
+   {
+    "frame": 4562,
+    "segment": "neptune.hold",
+    "counted": 1071150,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.788,
+    "pass": true
+   },
+   {
+    "frame": 4563,
+    "segment": "neptune.hold",
+    "counted": 1071630,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.787,
+    "pass": true
+   },
+   {
+    "frame": 4564,
+    "segment": "neptune.hold",
+    "counted": 1072073,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.787,
+    "pass": true
+   },
+   {
+    "frame": 4565,
+    "segment": "neptune.hold",
+    "counted": 1072510,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.787,
+    "pass": true
+   },
+   {
+    "frame": 4566,
+    "segment": "neptune.hold",
+    "counted": 1073013,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.786,
+    "pass": true
+   },
+   {
+    "frame": 4567,
+    "segment": "neptune.hold",
+    "counted": 1073490,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.786,
+    "pass": true
+   },
+   {
+    "frame": 4568,
+    "segment": "neptune.hold",
+    "counted": 1073969,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.786,
+    "pass": true
+   },
+   {
+    "frame": 4569,
+    "segment": "neptune.hold",
+    "counted": 1074416,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.786,
+    "pass": true
+   },
+   {
+    "frame": 4570,
+    "segment": "neptune.hold",
+    "counted": 1074907,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.785,
+    "pass": true
+   },
+   {
+    "frame": 4571,
+    "segment": "neptune.hold",
+    "counted": 1075409,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.785,
+    "pass": true
+   },
+   {
+    "frame": 4572,
+    "segment": "neptune.hold",
+    "counted": 1075896,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.785,
+    "pass": true
+   },
+   {
+    "frame": 4573,
+    "segment": "neptune.hold",
+    "counted": 1076365,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.784,
+    "pass": true
+   },
+   {
+    "frame": 4574,
+    "segment": "neptune.hold",
+    "counted": 1076870,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.784,
+    "pass": true
+   },
+   {
+    "frame": 4575,
+    "segment": "neptune.hold",
+    "counted": 1077339,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.784,
+    "pass": true
+   },
+   {
+    "frame": 4576,
+    "segment": "neptune.hold",
+    "counted": 1077803,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.783,
+    "pass": true
+   },
+   {
+    "frame": 4577,
+    "segment": "neptune.hold",
+    "counted": 1078331,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.783,
+    "pass": true
+   },
+   {
+    "frame": 4578,
+    "segment": "neptune.hold",
+    "counted": 1078844,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.783,
+    "pass": true
+   },
+   {
+    "frame": 4579,
+    "segment": "neptune.hold",
+    "counted": 1079333,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.782,
+    "pass": true
+   },
+   {
+    "frame": 4580,
+    "segment": "neptune.hold",
+    "counted": 1079823,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.782,
+    "pass": true
+   },
+   {
+    "frame": 4581,
+    "segment": "neptune.hold",
+    "counted": 1080308,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.782,
+    "pass": true
+   },
+   {
+    "frame": 4582,
+    "segment": "neptune.hold",
+    "counted": 1080841,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.781,
+    "pass": true
+   },
+   {
+    "frame": 4583,
+    "segment": "neptune.hold",
+    "counted": 1081334,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.781,
+    "pass": true
+   },
+   {
+    "frame": 4584,
+    "segment": "neptune.hold",
+    "counted": 1081854,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.781,
+    "pass": true
+   },
+   {
+    "frame": 4585,
+    "segment": "neptune.hold",
+    "counted": 1082365,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.781,
+    "pass": true
+   },
+   {
+    "frame": 4586,
+    "segment": "neptune.hold",
+    "counted": 1082854,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.78,
+    "pass": true
+   },
+   {
+    "frame": 4587,
+    "segment": "neptune.hold",
+    "counted": 1083398,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.78,
+    "pass": true
+   },
+   {
+    "frame": 4588,
+    "segment": "neptune.hold",
+    "counted": 1083904,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.78,
+    "pass": true
+   },
+   {
+    "frame": 4589,
+    "segment": "neptune.hold",
+    "counted": 1084409,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.779,
+    "pass": true
+   },
+   {
+    "frame": 4590,
+    "segment": "neptune.hold",
+    "counted": 1084931,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.779,
+    "pass": true
+   },
+   {
+    "frame": 4591,
+    "segment": "neptune.hold",
+    "counted": 1085454,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.779,
+    "pass": true
+   },
+   {
+    "frame": 4592,
+    "segment": "neptune.hold",
+    "counted": 1085946,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.778,
+    "pass": true
+   },
+   {
+    "frame": 4593,
+    "segment": "neptune.hold",
+    "counted": 1086492,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.778,
+    "pass": true
+   },
+   {
+    "frame": 4594,
+    "segment": "neptune.hold",
+    "counted": 1086984,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.778,
+    "pass": true
+   },
+   {
+    "frame": 4595,
+    "segment": "neptune.hold",
+    "counted": 1087502,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.777,
+    "pass": true
+   },
+   {
+    "frame": 4596,
+    "segment": "neptune.hold",
+    "counted": 1088025,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.777,
+    "pass": true
+   },
+   {
+    "frame": 4597,
+    "segment": "neptune.hold",
+    "counted": 1088555,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.777,
+    "pass": true
+   },
+   {
+    "frame": 4598,
+    "segment": "neptune.hold",
+    "counted": 1089075,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.777,
+    "pass": true
+   },
+   {
+    "frame": 4599,
+    "segment": "neptune.hold",
+    "counted": 1089588,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.776,
+    "pass": true
+   },
+   {
+    "frame": 4600,
+    "segment": "neptune.hold",
+    "counted": 1090100,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.776,
+    "pass": true
+   },
+   {
+    "frame": 4601,
+    "segment": "neptune.hold",
+    "counted": 1090656,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.776,
+    "pass": true
+   },
+   {
+    "frame": 4602,
+    "segment": "neptune.hold",
+    "counted": 1091179,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 4603,
+    "segment": "neptune.hold",
+    "counted": 1091666,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 4604,
+    "segment": "neptune.hold",
+    "counted": 1092189,
+    "soft": 1,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 4605,
+    "segment": "neptune.hold",
+    "counted": 1092745,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.774,
+    "pass": true
+   },
+   {
+    "frame": 4606,
+    "segment": "neptune.hold",
+    "counted": 1093265,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.774,
+    "pass": true
+   },
+   {
+    "frame": 4607,
+    "segment": "neptune.hold",
+    "counted": 1093794,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.774,
+    "pass": true
+   },
+   {
+    "frame": 4608,
+    "segment": "neptune.hold",
+    "counted": 1094293,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.773,
+    "pass": true
+   },
+   {
+    "frame": 4609,
+    "segment": "neptune.hold",
+    "counted": 1094826,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.773,
+    "pass": true
+   },
+   {
+    "frame": 4610,
+    "segment": "neptune.hold",
+    "counted": 1095362,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.773,
+    "pass": true
+   },
+   {
+    "frame": 4611,
+    "segment": "neptune.hold",
+    "counted": 1095884,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.772,
+    "pass": true
+   },
+   {
+    "frame": 4612,
+    "segment": "neptune.hold",
+    "counted": 1096407,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.772,
+    "pass": true
+   },
+   {
+    "frame": 4613,
+    "segment": "neptune.hold",
+    "counted": 1096923,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.772,
+    "pass": true
+   },
+   {
+    "frame": 4614,
+    "segment": "neptune.hold",
+    "counted": 1097429,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.772,
+    "pass": true
+   },
+   {
+    "frame": 4615,
+    "segment": "neptune.hold",
+    "counted": 1097972,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.771,
+    "pass": true
+   },
+   {
+    "frame": 4616,
+    "segment": "neptune.hold",
+    "counted": 1098487,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.771,
+    "pass": true
+   },
+   {
+    "frame": 4617,
+    "segment": "neptune.hold",
+    "counted": 1098992,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.771,
+    "pass": true
+   },
+   {
+    "frame": 4618,
+    "segment": "neptune.hold",
+    "counted": 1099527,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.771,
+    "pass": true
+   },
+   {
+    "frame": 4619,
+    "segment": "neptune.hold",
+    "counted": 1100044,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4620,
+    "segment": "neptune.hold",
+    "counted": 1100542,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4621,
+    "segment": "neptune.hold",
+    "counted": 1101028,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4622,
+    "segment": "neptune.hold",
+    "counted": 1101566,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.769,
+    "pass": true
+   },
+   {
+    "frame": 4623,
+    "segment": "neptune.hold",
+    "counted": 1102092,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.769,
+    "pass": true
+   },
+   {
+    "frame": 4624,
+    "segment": "neptune.hold",
+    "counted": 1102613,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4625,
+    "segment": "neptune.hold",
+    "counted": 1103072,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4626,
+    "segment": "neptune.hold",
+    "counted": 1103587,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.769,
+    "pass": true
+   },
+   {
+    "frame": 4627,
+    "segment": "neptune.hold",
+    "counted": 1104072,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.769,
+    "pass": true
+   },
+   {
+    "frame": 4628,
+    "segment": "neptune.hold",
+    "counted": 1104577,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.769,
+    "pass": true
+   },
+   {
+    "frame": 4629,
+    "segment": "neptune.hold",
+    "counted": 1105092,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4630,
+    "segment": "neptune.hold",
+    "counted": 1105588,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.769,
+    "pass": true
+   },
+   {
+    "frame": 4631,
+    "segment": "neptune.hold",
+    "counted": 1106056,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4632,
+    "segment": "neptune.hold",
+    "counted": 1106571,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4633,
+    "segment": "neptune.hold",
+    "counted": 1107050,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4634,
+    "segment": "neptune.hold",
+    "counted": 1107520,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4635,
+    "segment": "neptune.hold",
+    "counted": 1108003,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.77,
+    "pass": true
+   },
+   {
+    "frame": 4636,
+    "segment": "neptune.hold",
+    "counted": 1108518,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.771,
+    "pass": true
+   },
+   {
+    "frame": 4637,
+    "segment": "neptune.hold",
+    "counted": 1108975,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.771,
+    "pass": true
+   },
+   {
+    "frame": 4638,
+    "segment": "neptune.hold",
+    "counted": 1109444,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.772,
+    "pass": true
+   },
+   {
+    "frame": 4639,
+    "segment": "neptune.hold",
+    "counted": 1109902,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.772,
+    "pass": true
+   },
+   {
+    "frame": 4640,
+    "segment": "neptune.hold",
+    "counted": 1110416,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.772,
+    "pass": true
+   },
+   {
+    "frame": 4641,
+    "segment": "neptune.hold",
+    "counted": 1110870,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.772,
+    "pass": true
+   },
+   {
+    "frame": 4642,
+    "segment": "neptune.hold",
+    "counted": 1111348,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.773,
+    "pass": true
+   },
+   {
+    "frame": 4643,
+    "segment": "neptune.hold",
+    "counted": 1111776,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.773,
+    "pass": true
+   },
+   {
+    "frame": 4644,
+    "segment": "neptune.hold",
+    "counted": 1112210,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.773,
+    "pass": true
+   },
+   {
+    "frame": 4645,
+    "segment": "neptune.hold",
+    "counted": 1112720,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.774,
+    "pass": true
+   },
+   {
+    "frame": 4646,
+    "segment": "neptune.hold",
+    "counted": 1113196,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 4647,
+    "segment": "neptune.hold",
+    "counted": 1113622,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.774,
+    "pass": true
+   },
+   {
+    "frame": 4648,
+    "segment": "neptune.hold",
+    "counted": 1114036,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.774,
+    "pass": true
+   },
+   {
+    "frame": 4649,
+    "segment": "neptune.hold",
+    "counted": 1114510,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 4650,
+    "segment": "neptune.hold",
+    "counted": 1114925,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 4651,
+    "segment": "neptune.hold",
+    "counted": 1115371,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 4652,
+    "segment": "neptune.hold",
+    "counted": 1115823,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.776,
+    "pass": true
+   },
+   {
+    "frame": 4653,
+    "segment": "neptune.hold",
+    "counted": 1116297,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.776,
+    "pass": true
+   },
+   {
+    "frame": 4654,
+    "segment": "neptune.hold",
+    "counted": 1116715,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.777,
+    "pass": true
+   },
+   {
+    "frame": 4655,
+    "segment": "neptune.hold",
+    "counted": 1117129,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.777,
+    "pass": true
+   },
+   {
+    "frame": 4656,
+    "segment": "neptune.hold",
+    "counted": 1117540,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.776,
+    "pass": true
+   },
+   {
+    "frame": 4657,
+    "segment": "neptune.hold",
+    "counted": 1117967,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.777,
+    "pass": true
+   },
+   {
+    "frame": 4658,
+    "segment": "neptune.hold",
+    "counted": 1118391,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.778,
+    "pass": true
+   },
+   {
+    "frame": 4659,
+    "segment": "neptune.hold",
+    "counted": 1118857,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.778,
+    "pass": true
+   },
+   {
+    "frame": 4660,
+    "segment": "neptune.hold",
+    "counted": 1119267,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.778,
+    "pass": true
+   },
+   {
+    "frame": 4661,
+    "segment": "neptune.hold",
+    "counted": 1119652,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.778,
+    "pass": true
+   },
+   {
+    "frame": 4662,
+    "segment": "neptune.hold",
+    "counted": 1120082,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.778,
+    "pass": true
+   },
+   {
+    "frame": 4663,
+    "segment": "neptune.hold",
+    "counted": 1120512,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.779,
+    "pass": true
+   },
+   {
+    "frame": 4664,
+    "segment": "neptune.hold",
+    "counted": 1120885,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.779,
+    "pass": true
+   },
+   {
+    "frame": 4665,
+    "segment": "neptune.hold",
+    "counted": 1121303,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.779,
+    "pass": true
+   },
+   {
+    "frame": 4666,
+    "segment": "neptune.hold",
+    "counted": 1121720,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.78,
+    "pass": true
+   },
+   {
+    "frame": 4667,
+    "segment": "neptune.hold",
+    "counted": 1122106,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.78,
+    "pass": true
+   },
+   {
+    "frame": 4668,
+    "segment": "neptune.hold",
+    "counted": 1122537,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.781,
+    "pass": true
+   },
+   {
+    "frame": 4669,
+    "segment": "neptune.hold",
+    "counted": 1122919,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.78,
+    "pass": true
+   },
+   {
+    "frame": 4670,
+    "segment": "neptune.hold",
+    "counted": 1123318,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.78,
+    "pass": true
+   },
+   {
+    "frame": 4671,
+    "segment": "neptune.hold",
+    "counted": 1123771,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.781,
+    "pass": true
+   },
+   {
+    "frame": 4672,
+    "segment": "neptune.hold",
+    "counted": 1124156,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.781,
+    "pass": true
+   },
+   {
+    "frame": 4673,
+    "segment": "neptune.hold",
+    "counted": 1124550,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.782,
+    "pass": true
+   },
+   {
+    "frame": 4674,
+    "segment": "neptune.hold",
+    "counted": 1124953,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.782,
+    "pass": true
+   },
+   {
+    "frame": 4675,
+    "segment": "neptune.hold",
+    "counted": 1125336,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.782,
+    "pass": true
+   },
+   {
+    "frame": 4676,
+    "segment": "neptune.hold",
+    "counted": 1125757,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.782,
+    "pass": true
+   },
+   {
+    "frame": 4677,
+    "segment": "neptune.hold",
+    "counted": 1126205,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.782,
+    "pass": true
+   },
+   {
+    "frame": 4678,
+    "segment": "neptune.hold",
+    "counted": 1126626,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.783,
+    "pass": true
+   },
+   {
+    "frame": 4679,
+    "segment": "neptune.hold",
+    "counted": 1127015,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.783,
+    "pass": true
+   },
+   {
+    "frame": 4680,
+    "segment": "neptune.dive",
+    "counted": 1127407,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.784,
+    "pass": true
+   },
+   {
+    "frame": 4681,
+    "segment": "neptune.dive",
+    "counted": 1128329,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.784,
+    "pass": true
+   },
+   {
+    "frame": 4682,
+    "segment": "neptune.dive",
+    "counted": 1131178,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.787,
+    "pass": true
+   },
+   {
+    "frame": 4683,
+    "segment": "neptune.dive",
+    "counted": 1136644,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.791,
+    "pass": true
+   },
+   {
+    "frame": 4684,
+    "segment": "neptune.dive",
+    "counted": 1144735,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.797,
+    "pass": true
+   },
+   {
+    "frame": 4685,
+    "segment": "neptune.dive",
+    "counted": 1155462,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.804,
+    "pass": true
+   },
+   {
+    "frame": 4686,
+    "segment": "neptune.dive",
+    "counted": 1168927,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.815,
+    "pass": true
+   },
+   {
+    "frame": 4687,
+    "segment": "neptune.dive",
+    "counted": 1185026,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.821,
+    "pass": true
+   },
+   {
+    "frame": 4688,
+    "segment": "neptune.dive",
+    "counted": 1203826,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.825,
+    "pass": true
+   },
+   {
+    "frame": 4689,
+    "segment": "neptune.dive",
+    "counted": 1225368,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.826,
+    "pass": true
+   },
+   {
+    "frame": 4690,
+    "segment": "neptune.dive",
+    "counted": 1249783,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.828,
+    "pass": true
+   },
+   {
+    "frame": 4691,
+    "segment": "neptune.dive",
+    "counted": 1277174,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.827,
+    "pass": true
+   },
+   {
+    "frame": 4692,
+    "segment": "neptune.dive",
+    "counted": 1307580,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.821,
+    "pass": true
+   },
+   {
+    "frame": 4693,
+    "segment": "neptune.dive",
+    "counted": 1341131,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.814,
+    "pass": true
+   },
+   {
+    "frame": 4694,
+    "segment": "neptune.dive",
+    "counted": 1377408,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.803,
+    "pass": true
+   },
+   {
+    "frame": 4695,
+    "segment": "neptune.dive",
+    "counted": 1416019,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.79,
+    "pass": true
+   },
+   {
+    "frame": 4696,
+    "segment": "neptune.dive",
+    "counted": 1457522,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.775,
+    "pass": true
+   },
+   {
+    "frame": 4697,
+    "segment": "neptune.dive",
+    "counted": 1502333,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.757,
+    "pass": true
+   },
+   {
+    "frame": 4698,
+    "segment": "neptune.dive",
+    "counted": 1546891,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.737,
+    "pass": true
+   },
+   {
+    "frame": 4699,
+    "segment": "neptune.dive",
+    "counted": 1586874,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.748,
+    "pass": true
+   },
+   {
+    "frame": 4700,
+    "segment": "neptune.dive",
+    "counted": 1628646,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.783,
+    "pass": true
+   },
+   {
+    "frame": 4701,
+    "segment": "neptune.dive",
+    "counted": 1670714,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.796,
+    "pass": true
+   },
+   {
+    "frame": 4702,
+    "segment": "neptune.dive",
+    "counted": 1711698,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.814,
+    "pass": true
+   },
+   {
+    "frame": 4703,
+    "segment": "neptune.dive",
+    "counted": 1750417,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.826,
+    "pass": true
+   },
+   {
+    "frame": 4704,
+    "segment": "neptune.dive",
+    "counted": 1783665,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.824,
+    "pass": true
+   },
+   {
+    "frame": 4705,
+    "segment": "neptune.dive",
+    "counted": 1813333,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.81,
+    "pass": true
+   },
+   {
+    "frame": 4706,
+    "segment": "neptune.dive",
+    "counted": 1840153,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.791,
+    "pass": true
+   },
+   {
+    "frame": 4707,
+    "segment": "neptune.dive",
+    "counted": 1864299,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.768,
+    "pass": true
+   },
+   {
+    "frame": 4708,
+    "segment": "neptune.dive",
+    "counted": 1886952,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.993,
+    "pass": true
+   },
+   {
+    "frame": 4709,
+    "segment": "neptune.dive",
+    "counted": 1905712,
+    "soft": 85,
+    "fraction": 0.00004,
+    "meanTexels": 1.99,
+    "pass": true
+   },
+   {
+    "frame": 4710,
+    "segment": "neptune.dive",
+    "counted": 1921823,
+    "soft": 112,
+    "fraction": 0.00006,
+    "meanTexels": 1.987,
+    "pass": true
+   },
+   {
+    "frame": 4711,
+    "segment": "neptune.dive",
+    "counted": 1935175,
+    "soft": 1389,
+    "fraction": 0.00072,
+    "meanTexels": 1.985,
+    "pass": true
+   },
+   {
+    "frame": 4712,
+    "segment": "neptune.dive",
+    "counted": 1945593,
+    "soft": 1539,
+    "fraction": 0.00079,
+    "meanTexels": 1.983,
+    "pass": true
+   },
+   {
+    "frame": 4713,
+    "segment": "neptune.dive",
+    "counted": 1952918,
+    "soft": 1798,
+    "fraction": 0.00092,
+    "meanTexels": 1.98,
+    "pass": true
+   },
+   {
+    "frame": 4714,
+    "segment": "neptune.dive",
+    "counted": 1958431,
+    "soft": 2095,
+    "fraction": 0.00107,
+    "meanTexels": 1.979,
+    "pass": true
+   },
+   {
+    "frame": 4715,
+    "segment": "neptune.dive",
+    "counted": 1962802,
+    "soft": 2405,
+    "fraction": 0.00123,
+    "meanTexels": 1.977,
+    "pass": true
+   },
+   {
+    "frame": 4716,
+    "segment": "neptune.dive",
+    "counted": 1966053,
+    "soft": 3074,
+    "fraction": 0.00156,
+    "meanTexels": 1.98,
+    "pass": true
+   },
+   {
+    "frame": 4717,
+    "segment": "neptune.dive",
+    "counted": 1968178,
+    "soft": 4039,
+    "fraction": 0.00205,
+    "meanTexels": 1.981,
+    "pass": true
+   },
+   {
+    "frame": 4718,
+    "segment": "neptune.dive",
+    "counted": 1969224,
+    "soft": 6540,
+    "fraction": 0.00332,
+    "meanTexels": 1.977,
+    "pass": true
+   },
+   {
+    "frame": 4719,
+    "segment": "neptune.dive",
+    "counted": 1969252,
+    "soft": 18014,
+    "fraction": 0.00915,
+    "meanTexels": 1.97,
+    "pass": true
+   },
+   {
+    "frame": 4720,
+    "segment": "neptune.dive",
+    "counted": 1968398,
+    "soft": 16150,
+    "fraction": 0.0082,
+    "meanTexels": 1.96,
+    "pass": true
+   },
+   {
+    "frame": 4721,
+    "segment": "neptune.dive",
+    "counted": 1966916,
+    "soft": 12187,
+    "fraction": 0.0062,
+    "meanTexels": 1.948,
+    "pass": true
+   },
+   {
+    "frame": 4722,
+    "segment": "neptune.dive",
+    "counted": 1964812,
+    "soft": 10032,
+    "fraction": 0.00511,
+    "meanTexels": 1.934,
+    "pass": true
+   },
+   {
+    "frame": 4723,
+    "segment": "neptune.dive",
+    "counted": 1961957,
+    "soft": 9998,
+    "fraction": 0.0051,
+    "meanTexels": 1.92,
+    "pass": true
+   },
+   {
+    "frame": 4724,
+    "segment": "neptune.dive",
+    "counted": 1958269,
+    "soft": 10320,
+    "fraction": 0.00527,
+    "meanTexels": 1.905,
+    "pass": true
+   },
+   {
+    "frame": 4725,
+    "segment": "neptune.dive",
+    "counted": 1954112,
+    "soft": 10239,
+    "fraction": 0.00524,
+    "meanTexels": 1.89,
+    "pass": true
+   },
+   {
+    "frame": 4726,
+    "segment": "neptune.dive",
+    "counted": 1949194,
+    "soft": 10081,
+    "fraction": 0.00517,
+    "meanTexels": 1.873,
+    "pass": true
+   },
+   {
+    "frame": 4727,
+    "segment": "neptune.dive",
+    "counted": 1943590,
+    "soft": 9795,
+    "fraction": 0.00504,
+    "meanTexels": 1.853,
+    "pass": true
+   },
+   {
+    "frame": 4728,
+    "segment": "neptune.dive",
+    "counted": 1937342,
+    "soft": 13216,
+    "fraction": 0.00682,
+    "meanTexels": 1.825,
+    "pass": true
+   },
+   {
+    "frame": 4729,
+    "segment": "neptune.dive",
+    "counted": 1930654,
+    "soft": 39369,
+    "fraction": 0.02039,
+    "meanTexels": 1.791,
+    "pass": false
+   },
+   {
+    "frame": 4730,
+    "segment": "neptune.dive",
+    "counted": 1924171,
+    "soft": 72264,
+    "fraction": 0.03756,
+    "meanTexels": 1.755,
+    "pass": false
+   },
+   {
+    "frame": 4731,
+    "segment": "neptune.dive",
+    "counted": 1917565,
+    "soft": 101957,
+    "fraction": 0.05317,
+    "meanTexels": 1.719,
+    "pass": false
+   },
+   {
+    "frame": 4732,
+    "segment": "neptune.dive",
+    "counted": 1910613,
+    "soft": 132100,
+    "fraction": 0.06914,
+    "meanTexels": 1.682,
+    "pass": false
+   },
+   {
+    "frame": 4733,
+    "segment": "neptune.dive",
+    "counted": 1903178,
+    "soft": 172096,
+    "fraction": 0.09043,
+    "meanTexels": 1.642,
+    "pass": false
+   },
+   {
+    "frame": 4734,
+    "segment": "neptune.dive",
+    "counted": 1895378,
+    "soft": 223193,
+    "fraction": 0.11776,
+    "meanTexels": 1.603,
+    "pass": false
+   },
+   {
+    "frame": 4735,
+    "segment": "neptune.dive",
+    "counted": 1887113,
+    "soft": 263268,
+    "fraction": 0.13951,
+    "meanTexels": 1.564,
+    "pass": false
+   },
+   {
+    "frame": 4736,
+    "segment": "neptune.dive",
+    "counted": 1878382,
+    "soft": 304454,
+    "fraction": 0.16208,
+    "meanTexels": 1.526,
+    "pass": false
+   },
+   {
+    "frame": 4737,
+    "segment": "neptune.dive",
+    "counted": 1869250,
+    "soft": 346128,
+    "fraction": 0.18517,
+    "meanTexels": 1.486,
+    "pass": false
+   },
+   {
+    "frame": 4738,
+    "segment": "neptune.dive",
+    "counted": 1860338,
+    "soft": 390031,
+    "fraction": 0.20966,
+    "meanTexels": 1.441,
+    "pass": false
+   },
+   {
+    "frame": 4739,
+    "segment": "neptune.dive",
+    "counted": 1851555,
+    "soft": 440218,
+    "fraction": 0.23776,
+    "meanTexels": 1.393,
+    "pass": false
+   },
+   {
+    "frame": 4740,
+    "segment": "neptune.dive",
+    "counted": 1842388,
+    "soft": 526036,
+    "fraction": 0.28552,
+    "meanTexels": 1.342,
+    "pass": false
+   },
+   {
+    "frame": 4741,
+    "segment": "neptune.dive",
+    "counted": 1832956,
+    "soft": 620301,
+    "fraction": 0.33842,
+    "meanTexels": 1.293,
+    "pass": false
+   },
+   {
+    "frame": 4742,
+    "segment": "neptune.dive",
+    "counted": 1822997,
+    "soft": 712650,
+    "fraction": 0.39092,
+    "meanTexels": 1.247,
+    "pass": false
+   },
+   {
+    "frame": 4743,
+    "segment": "neptune.dive",
+    "counted": 1811965,
+    "soft": 787207,
+    "fraction": 0.43445,
+    "meanTexels": 1.207,
+    "pass": false
+   },
+   {
+    "frame": 4744,
+    "segment": "neptune.dive",
+    "counted": 1799804,
+    "soft": 833903,
+    "fraction": 0.46333,
+    "meanTexels": 1.174,
+    "pass": false
+   },
+   {
+    "frame": 4745,
+    "segment": "neptune.dive",
+    "counted": 1787134,
+    "soft": 861115,
+    "fraction": 0.48184,
+    "meanTexels": 1.147,
+    "pass": false
+   },
+   {
+    "frame": 4746,
+    "segment": "neptune.dive",
+    "counted": 1773871,
+    "soft": 874385,
+    "fraction": 0.49292,
+    "meanTexels": 1.124,
+    "pass": false
+   },
+   {
+    "frame": 4747,
+    "segment": "neptune.dive",
+    "counted": 1760117,
+    "soft": 877888,
+    "fraction": 0.49877,
+    "meanTexels": 1.104,
+    "pass": false
+   },
+   {
+    "frame": 4748,
+    "segment": "neptune.dive",
+    "counted": 1746800,
+    "soft": 873200,
+    "fraction": 0.49989,
+    "meanTexels": 1.087,
+    "pass": false
+   },
+   {
+    "frame": 4749,
+    "segment": "neptune.dive",
+    "counted": 1734066,
+    "soft": 863282,
+    "fraction": 0.49784,
+    "meanTexels": 1.067,
+    "pass": false
+   },
+   {
+    "frame": 4750,
+    "segment": "neptune.dive",
+    "counted": 1721932,
+    "soft": 849316,
+    "fraction": 0.49323,
+    "meanTexels": 1.044,
+    "pass": false
+   },
+   {
+    "frame": 4751,
+    "segment": "neptune.dive",
+    "counted": 1710344,
+    "soft": 861995,
+    "fraction": 0.50399,
+    "meanTexels": 1.021,
+    "pass": false
+   },
+   {
+    "frame": 4752,
+    "segment": "neptune.dive",
+    "counted": 1699354,
+    "soft": 897787,
+    "fraction": 0.52831,
+    "meanTexels": 1.002,
+    "pass": false
+   },
+   {
+    "frame": 4753,
+    "segment": "neptune.dive",
+    "counted": 1688978,
+    "soft": 938542,
+    "fraction": 0.55569,
+    "meanTexels": 0.983,
+    "pass": false
+   },
+   {
+    "frame": 4754,
+    "segment": "neptune.dive",
+    "counted": 1679315,
+    "soft": 976527,
+    "fraction": 0.5815,
+    "meanTexels": 0.965,
+    "pass": false
+   },
+   {
+    "frame": 4755,
+    "segment": "neptune.dive",
+    "counted": 1670456,
+    "soft": 1011225,
+    "fraction": 0.60536,
+    "meanTexels": 0.949,
+    "pass": false
+   },
+   {
+    "frame": 4756,
+    "segment": "neptune.dive",
+    "counted": 1662441,
+    "soft": 1035988,
+    "fraction": 0.62317,
+    "meanTexels": 0.935,
+    "pass": false
+   },
+   {
+    "frame": 4757,
+    "segment": "neptune.dive",
+    "counted": 1655395,
+    "soft": 1053420,
+    "fraction": 0.63636,
+    "meanTexels": 0.921,
+    "pass": false
+   },
+   {
+    "frame": 4758,
+    "segment": "neptune.dive",
+    "counted": 1649293,
+    "soft": 1071889,
+    "fraction": 0.64991,
+    "meanTexels": 0.91,
+    "pass": false
+   },
+   {
+    "frame": 4759,
+    "segment": "neptune.dive",
+    "counted": 1644202,
+    "soft": 1086902,
+    "fraction": 0.66105,
+    "meanTexels": 0.901,
+    "pass": false
+   },
+   {
+    "frame": 4760,
+    "segment": "neptune.dive",
+    "counted": 1640169,
+    "soft": 1097690,
+    "fraction": 0.66925,
+    "meanTexels": 0.892,
+    "pass": false
+   },
+   {
+    "frame": 4761,
+    "segment": "neptune.dive",
+    "counted": 1637172,
+    "soft": 1106418,
+    "fraction": 0.67581,
+    "meanTexels": 0.883,
+    "pass": false
+   },
+   {
+    "frame": 4762,
+    "segment": "neptune.dive",
+    "counted": 1635023,
+    "soft": 1112700,
+    "fraction": 0.68054,
+    "meanTexels": 0.876,
+    "pass": false
+   },
+   {
+    "frame": 4763,
+    "segment": "neptune.dive",
+    "counted": 1633590,
+    "soft": 1117391,
+    "fraction": 0.68401,
+    "meanTexels": 0.87,
+    "pass": false
+   },
+   {
+    "frame": 4764,
+    "segment": "neptune.dive",
+    "counted": 1632722,
+    "soft": 1120665,
+    "fraction": 0.68638,
+    "meanTexels": 0.865,
+    "pass": false
+   },
+   {
+    "frame": 4765,
+    "segment": "neptune.dive",
+    "counted": 1632253,
+    "soft": 1122925,
+    "fraction": 0.68796,
+    "meanTexels": 0.861,
+    "pass": false
+   },
+   {
+    "frame": 4766,
+    "segment": "neptune.dive",
+    "counted": 1632038,
+    "soft": 1124483,
+    "fraction": 0.68901,
+    "meanTexels": 0.858,
+    "pass": false
+   },
+   {
+    "frame": 4767,
+    "segment": "neptune.dive",
+    "counted": 1631894,
+    "soft": 1125530,
+    "fraction": 0.68971,
+    "meanTexels": 0.856,
+    "pass": false
+   },
+   {
+    "frame": 4768,
+    "segment": "neptune.dive",
+    "counted": 1631689,
+    "soft": 1126389,
+    "fraction": 0.69032,
+    "meanTexels": 0.855,
+    "pass": false
+   },
+   {
+    "frame": 4769,
+    "segment": "neptune.dive",
+    "counted": 1631265,
+    "soft": 1127245,
+    "fraction": 0.69103,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4770,
+    "segment": "neptune.terrain",
+    "counted": 1630669,
+    "soft": 1127914,
+    "fraction": 0.69169,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4771,
+    "segment": "neptune.terrain",
+    "counted": 1630088,
+    "soft": 1128641,
+    "fraction": 0.69238,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4772,
+    "segment": "neptune.terrain",
+    "counted": 1629508,
+    "soft": 1129313,
+    "fraction": 0.69304,
+    "meanTexels": 0.853,
+    "pass": false
+   },
+   {
+    "frame": 4773,
+    "segment": "neptune.terrain",
+    "counted": 1628916,
+    "soft": 1129948,
+    "fraction": 0.69368,
+    "meanTexels": 0.853,
+    "pass": false
+   },
+   {
+    "frame": 4774,
+    "segment": "neptune.terrain",
+    "counted": 1628316,
+    "soft": 1130588,
+    "fraction": 0.69433,
+    "meanTexels": 0.853,
+    "pass": false
+   },
+   {
+    "frame": 4775,
+    "segment": "neptune.terrain",
+    "counted": 1627737,
+    "soft": 1131180,
+    "fraction": 0.69494,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4776,
+    "segment": "neptune.terrain",
+    "counted": 1627158,
+    "soft": 1131758,
+    "fraction": 0.69554,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4777,
+    "segment": "neptune.terrain",
+    "counted": 1626564,
+    "soft": 1132325,
+    "fraction": 0.69615,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4778,
+    "segment": "neptune.terrain",
+    "counted": 1625967,
+    "soft": 1132778,
+    "fraction": 0.69668,
+    "meanTexels": 0.851,
+    "pass": false
+   },
+   {
+    "frame": 4779,
+    "segment": "neptune.terrain",
+    "counted": 1625395,
+    "soft": 1133250,
+    "fraction": 0.69722,
+    "meanTexels": 0.851,
+    "pass": false
+   },
+   {
+    "frame": 4780,
+    "segment": "neptune.terrain",
+    "counted": 1624807,
+    "soft": 1133718,
+    "fraction": 0.69776,
+    "meanTexels": 0.851,
+    "pass": false
+   },
+   {
+    "frame": 4781,
+    "segment": "neptune.terrain",
+    "counted": 1624237,
+    "soft": 1134261,
+    "fraction": 0.69833,
+    "meanTexels": 0.85,
+    "pass": false
+   },
+   {
+    "frame": 4782,
+    "segment": "neptune.terrain",
+    "counted": 1623634,
+    "soft": 1134748,
+    "fraction": 0.69889,
+    "meanTexels": 0.85,
+    "pass": false
+   },
+   {
+    "frame": 4783,
+    "segment": "neptune.terrain",
+    "counted": 1623058,
+    "soft": 1135260,
+    "fraction": 0.69946,
+    "meanTexels": 0.85,
+    "pass": false
+   },
+   {
+    "frame": 4784,
+    "segment": "neptune.terrain",
+    "counted": 1622477,
+    "soft": 1135793,
+    "fraction": 0.70004,
+    "meanTexels": 0.85,
+    "pass": false
+   },
+   {
+    "frame": 4785,
+    "segment": "neptune.terrain",
+    "counted": 1621900,
+    "soft": 1136343,
+    "fraction": 0.70062,
+    "meanTexels": 0.85,
+    "pass": false
+   },
+   {
+    "frame": 4786,
+    "segment": "neptune.terrain",
+    "counted": 1621307,
+    "soft": 1136862,
+    "fraction": 0.7012,
+    "meanTexels": 0.849,
+    "pass": false
+   },
+   {
+    "frame": 4787,
+    "segment": "neptune.terrain",
+    "counted": 1620736,
+    "soft": 1137365,
+    "fraction": 0.70176,
+    "meanTexels": 0.849,
+    "pass": false
+   },
+   {
+    "frame": 4788,
+    "segment": "neptune.terrain",
+    "counted": 1620151,
+    "soft": 1137857,
+    "fraction": 0.70232,
+    "meanTexels": 0.849,
+    "pass": false
+   },
+   {
+    "frame": 4789,
+    "segment": "neptune.terrain",
+    "counted": 1619566,
+    "soft": 1138289,
+    "fraction": 0.70284,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4790,
+    "segment": "neptune.terrain",
+    "counted": 1619000,
+    "soft": 1138693,
+    "fraction": 0.70333,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4791,
+    "segment": "neptune.terrain",
+    "counted": 1618413,
+    "soft": 1139147,
+    "fraction": 0.70387,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4792,
+    "segment": "neptune.terrain",
+    "counted": 1617827,
+    "soft": 1139541,
+    "fraction": 0.70437,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4793,
+    "segment": "neptune.terrain",
+    "counted": 1617247,
+    "soft": 1139909,
+    "fraction": 0.70485,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4794,
+    "segment": "neptune.terrain",
+    "counted": 1616663,
+    "soft": 1140250,
+    "fraction": 0.70531,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4795,
+    "segment": "neptune.terrain",
+    "counted": 1616081,
+    "soft": 1140499,
+    "fraction": 0.70572,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4796,
+    "segment": "neptune.terrain",
+    "counted": 1615510,
+    "soft": 1140741,
+    "fraction": 0.70612,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4797,
+    "segment": "neptune.terrain",
+    "counted": 1614914,
+    "soft": 1140858,
+    "fraction": 0.70645,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4798,
+    "segment": "neptune.terrain",
+    "counted": 1614323,
+    "soft": 1140950,
+    "fraction": 0.70677,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4799,
+    "segment": "neptune.terrain",
+    "counted": 1613749,
+    "soft": 1141055,
+    "fraction": 0.70708,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4800,
+    "segment": "neptune.terrain",
+    "counted": 1613157,
+    "soft": 1141085,
+    "fraction": 0.70736,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4801,
+    "segment": "neptune.terrain",
+    "counted": 1612578,
+    "soft": 1141051,
+    "fraction": 0.70759,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4802,
+    "segment": "neptune.terrain",
+    "counted": 1611973,
+    "soft": 1141028,
+    "fraction": 0.70785,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4803,
+    "segment": "neptune.terrain",
+    "counted": 1611398,
+    "soft": 1140975,
+    "fraction": 0.70807,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4804,
+    "segment": "neptune.terrain",
+    "counted": 1610794,
+    "soft": 1140832,
+    "fraction": 0.70824,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4805,
+    "segment": "neptune.terrain",
+    "counted": 1610209,
+    "soft": 1140652,
+    "fraction": 0.70839,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4806,
+    "segment": "neptune.terrain",
+    "counted": 1609621,
+    "soft": 1140419,
+    "fraction": 0.7085,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4807,
+    "segment": "neptune.terrain",
+    "counted": 1609019,
+    "soft": 1140213,
+    "fraction": 0.70864,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4808,
+    "segment": "neptune.terrain",
+    "counted": 1608419,
+    "soft": 1139977,
+    "fraction": 0.70876,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4809,
+    "segment": "neptune.terrain",
+    "counted": 1607806,
+    "soft": 1139764,
+    "fraction": 0.70889,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4810,
+    "segment": "neptune.terrain",
+    "counted": 1607209,
+    "soft": 1139499,
+    "fraction": 0.70899,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4811,
+    "segment": "neptune.terrain",
+    "counted": 1606590,
+    "soft": 1139224,
+    "fraction": 0.70909,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4812,
+    "segment": "neptune.terrain",
+    "counted": 1605984,
+    "soft": 1138867,
+    "fraction": 0.70914,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4813,
+    "segment": "neptune.terrain",
+    "counted": 1605373,
+    "soft": 1138577,
+    "fraction": 0.70923,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4814,
+    "segment": "neptune.terrain",
+    "counted": 1604743,
+    "soft": 1138223,
+    "fraction": 0.70929,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4815,
+    "segment": "neptune.terrain",
+    "counted": 1604114,
+    "soft": 1137878,
+    "fraction": 0.70935,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4816,
+    "segment": "neptune.terrain",
+    "counted": 1603510,
+    "soft": 1137504,
+    "fraction": 0.70938,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4817,
+    "segment": "neptune.terrain",
+    "counted": 1602901,
+    "soft": 1137165,
+    "fraction": 0.70944,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4818,
+    "segment": "neptune.terrain",
+    "counted": 1602244,
+    "soft": 1136732,
+    "fraction": 0.70946,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4819,
+    "segment": "neptune.terrain",
+    "counted": 1601612,
+    "soft": 1136329,
+    "fraction": 0.70949,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4820,
+    "segment": "neptune.terrain",
+    "counted": 1600970,
+    "soft": 1135883,
+    "fraction": 0.7095,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4821,
+    "segment": "neptune.terrain",
+    "counted": 1600350,
+    "soft": 1135450,
+    "fraction": 0.7095,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4822,
+    "segment": "neptune.terrain",
+    "counted": 1599705,
+    "soft": 1134952,
+    "fraction": 0.70948,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4823,
+    "segment": "neptune.terrain",
+    "counted": 1599061,
+    "soft": 1134571,
+    "fraction": 0.70952,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4824,
+    "segment": "neptune.terrain",
+    "counted": 1598404,
+    "soft": 1134197,
+    "fraction": 0.70958,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4825,
+    "segment": "neptune.terrain",
+    "counted": 1597746,
+    "soft": 1133790,
+    "fraction": 0.70962,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4826,
+    "segment": "neptune.terrain",
+    "counted": 1597086,
+    "soft": 1133383,
+    "fraction": 0.70966,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4827,
+    "segment": "neptune.terrain",
+    "counted": 1596432,
+    "soft": 1132909,
+    "fraction": 0.70965,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4828,
+    "segment": "neptune.terrain",
+    "counted": 1595752,
+    "soft": 1132383,
+    "fraction": 0.70962,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4829,
+    "segment": "neptune.terrain",
+    "counted": 1595091,
+    "soft": 1131880,
+    "fraction": 0.7096,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4830,
+    "segment": "neptune.terrain",
+    "counted": 1594417,
+    "soft": 1131369,
+    "fraction": 0.70958,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4831,
+    "segment": "neptune.terrain",
+    "counted": 1593737,
+    "soft": 1130875,
+    "fraction": 0.70957,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4832,
+    "segment": "neptune.terrain",
+    "counted": 1593066,
+    "soft": 1130415,
+    "fraction": 0.70958,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4833,
+    "segment": "neptune.terrain",
+    "counted": 1592383,
+    "soft": 1129863,
+    "fraction": 0.70954,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4834,
+    "segment": "neptune.terrain",
+    "counted": 1591684,
+    "soft": 1129341,
+    "fraction": 0.70953,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4835,
+    "segment": "neptune.terrain",
+    "counted": 1590998,
+    "soft": 1128786,
+    "fraction": 0.70948,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4836,
+    "segment": "neptune.terrain",
+    "counted": 1590296,
+    "soft": 1128267,
+    "fraction": 0.70947,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4837,
+    "segment": "neptune.terrain",
+    "counted": 1589596,
+    "soft": 1127730,
+    "fraction": 0.70944,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4838,
+    "segment": "neptune.terrain",
+    "counted": 1588876,
+    "soft": 1127180,
+    "fraction": 0.70942,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4839,
+    "segment": "neptune.terrain",
+    "counted": 1588174,
+    "soft": 1126781,
+    "fraction": 0.70948,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4840,
+    "segment": "neptune.terrain",
+    "counted": 1587465,
+    "soft": 1126363,
+    "fraction": 0.70954,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4841,
+    "segment": "neptune.terrain",
+    "counted": 1586734,
+    "soft": 1125940,
+    "fraction": 0.7096,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4842,
+    "segment": "neptune.terrain",
+    "counted": 1586028,
+    "soft": 1125628,
+    "fraction": 0.70972,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4843,
+    "segment": "neptune.terrain",
+    "counted": 1585302,
+    "soft": 1125255,
+    "fraction": 0.7098,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4844,
+    "segment": "neptune.terrain",
+    "counted": 1584572,
+    "soft": 1124921,
+    "fraction": 0.70992,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4845,
+    "segment": "neptune.terrain",
+    "counted": 1583831,
+    "soft": 1124584,
+    "fraction": 0.71004,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4846,
+    "segment": "neptune.terrain",
+    "counted": 1583110,
+    "soft": 1124278,
+    "fraction": 0.71017,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4847,
+    "segment": "neptune.terrain",
+    "counted": 1582357,
+    "soft": 1124031,
+    "fraction": 0.71035,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4848,
+    "segment": "neptune.terrain",
+    "counted": 1581612,
+    "soft": 1123782,
+    "fraction": 0.71053,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4849,
+    "segment": "neptune.terrain",
+    "counted": 1580872,
+    "soft": 1123596,
+    "fraction": 0.71074,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4850,
+    "segment": "neptune.terrain",
+    "counted": 1580139,
+    "soft": 1123327,
+    "fraction": 0.7109,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4851,
+    "segment": "neptune.terrain",
+    "counted": 1579373,
+    "soft": 1123012,
+    "fraction": 0.71105,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4852,
+    "segment": "neptune.terrain",
+    "counted": 1578631,
+    "soft": 1122672,
+    "fraction": 0.71117,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4853,
+    "segment": "neptune.terrain",
+    "counted": 1577863,
+    "soft": 1122395,
+    "fraction": 0.71134,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4854,
+    "segment": "neptune.terrain",
+    "counted": 1577101,
+    "soft": 1122114,
+    "fraction": 0.7115,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4855,
+    "segment": "neptune.terrain",
+    "counted": 1576339,
+    "soft": 1121873,
+    "fraction": 0.7117,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4856,
+    "segment": "neptune.terrain",
+    "counted": 1575593,
+    "soft": 1121597,
+    "fraction": 0.71186,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4857,
+    "segment": "neptune.terrain",
+    "counted": 1574812,
+    "soft": 1121176,
+    "fraction": 0.71194,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4858,
+    "segment": "neptune.terrain",
+    "counted": 1574054,
+    "soft": 1120782,
+    "fraction": 0.71204,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4859,
+    "segment": "neptune.terrain",
+    "counted": 1573289,
+    "soft": 1120516,
+    "fraction": 0.71221,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4860,
+    "segment": "neptune.terrain",
+    "counted": 1572509,
+    "soft": 1120134,
+    "fraction": 0.71232,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4861,
+    "segment": "neptune.terrain",
+    "counted": 1571758,
+    "soft": 1119829,
+    "fraction": 0.71247,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4862,
+    "segment": "neptune.terrain",
+    "counted": 1570990,
+    "soft": 1119461,
+    "fraction": 0.71258,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4863,
+    "segment": "neptune.terrain",
+    "counted": 1570215,
+    "soft": 1118966,
+    "fraction": 0.71262,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4864,
+    "segment": "neptune.terrain",
+    "counted": 1569435,
+    "soft": 1118453,
+    "fraction": 0.71265,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4865,
+    "segment": "neptune.terrain",
+    "counted": 1568672,
+    "soft": 1118021,
+    "fraction": 0.71272,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4866,
+    "segment": "neptune.terrain",
+    "counted": 1567895,
+    "soft": 1117472,
+    "fraction": 0.71272,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4867,
+    "segment": "neptune.terrain",
+    "counted": 1567121,
+    "soft": 1116955,
+    "fraction": 0.71274,
+    "meanTexels": 0.845,
+    "pass": false
+   },
+   {
+    "frame": 4868,
+    "segment": "neptune.terrain",
+    "counted": 1566358,
+    "soft": 1116411,
+    "fraction": 0.71274,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4869,
+    "segment": "neptune.terrain",
+    "counted": 1565588,
+    "soft": 1115903,
+    "fraction": 0.71277,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4870,
+    "segment": "neptune.terrain",
+    "counted": 1564825,
+    "soft": 1115333,
+    "fraction": 0.71275,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4871,
+    "segment": "neptune.terrain",
+    "counted": 1564043,
+    "soft": 1114780,
+    "fraction": 0.71276,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4872,
+    "segment": "neptune.terrain",
+    "counted": 1563302,
+    "soft": 1114182,
+    "fraction": 0.71271,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4873,
+    "segment": "neptune.terrain",
+    "counted": 1562537,
+    "soft": 1113586,
+    "fraction": 0.71268,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4874,
+    "segment": "neptune.terrain",
+    "counted": 1561760,
+    "soft": 1112989,
+    "fraction": 0.71265,
+    "meanTexels": 0.846,
+    "pass": false
+   },
+   {
+    "frame": 4875,
+    "segment": "neptune.terrain",
+    "counted": 1561017,
+    "soft": 1112449,
+    "fraction": 0.71264,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4876,
+    "segment": "neptune.terrain",
+    "counted": 1560258,
+    "soft": 1111821,
+    "fraction": 0.71259,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4877,
+    "segment": "neptune.terrain",
+    "counted": 1559524,
+    "soft": 1111236,
+    "fraction": 0.71255,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4878,
+    "segment": "neptune.terrain",
+    "counted": 1558771,
+    "soft": 1110649,
+    "fraction": 0.71252,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4879,
+    "segment": "neptune.terrain",
+    "counted": 1558002,
+    "soft": 1110013,
+    "fraction": 0.71246,
+    "meanTexels": 0.847,
+    "pass": false
+   },
+   {
+    "frame": 4880,
+    "segment": "neptune.terrain",
+    "counted": 1557285,
+    "soft": 1109366,
+    "fraction": 0.71237,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4881,
+    "segment": "neptune.terrain",
+    "counted": 1556552,
+    "soft": 1108666,
+    "fraction": 0.71226,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4882,
+    "segment": "neptune.terrain",
+    "counted": 1555808,
+    "soft": 1107954,
+    "fraction": 0.71214,
+    "meanTexels": 0.848,
+    "pass": false
+   },
+   {
+    "frame": 4883,
+    "segment": "neptune.terrain",
+    "counted": 1555084,
+    "soft": 1107280,
+    "fraction": 0.71204,
+    "meanTexels": 0.849,
+    "pass": false
+   },
+   {
+    "frame": 4884,
+    "segment": "neptune.terrain",
+    "counted": 1554363,
+    "soft": 1106592,
+    "fraction": 0.71193,
+    "meanTexels": 0.85,
+    "pass": false
+   },
+   {
+    "frame": 4885,
+    "segment": "neptune.terrain",
+    "counted": 1553662,
+    "soft": 1105945,
+    "fraction": 0.71183,
+    "meanTexels": 0.85,
+    "pass": false
+   },
+   {
+    "frame": 4886,
+    "segment": "neptune.terrain",
+    "counted": 1552941,
+    "soft": 1105209,
+    "fraction": 0.71169,
+    "meanTexels": 0.85,
+    "pass": false
+   },
+   {
+    "frame": 4887,
+    "segment": "neptune.terrain",
+    "counted": 1552229,
+    "soft": 1104436,
+    "fraction": 0.71152,
+    "meanTexels": 0.851,
+    "pass": false
+   },
+   {
+    "frame": 4888,
+    "segment": "neptune.terrain",
+    "counted": 1551526,
+    "soft": 1103693,
+    "fraction": 0.71136,
+    "meanTexels": 0.851,
+    "pass": false
+   },
+   {
+    "frame": 4889,
+    "segment": "neptune.terrain",
+    "counted": 1550842,
+    "soft": 1102906,
+    "fraction": 0.71117,
+    "meanTexels": 0.851,
+    "pass": false
+   },
+   {
+    "frame": 4890,
+    "segment": "neptune.terrain",
+    "counted": 1550149,
+    "soft": 1102130,
+    "fraction": 0.71098,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4891,
+    "segment": "neptune.terrain",
+    "counted": 1549460,
+    "soft": 1101331,
+    "fraction": 0.71078,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4892,
+    "segment": "neptune.terrain",
+    "counted": 1548788,
+    "soft": 1100592,
+    "fraction": 0.71062,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4893,
+    "segment": "neptune.terrain",
+    "counted": 1548134,
+    "soft": 1099851,
+    "fraction": 0.71044,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4894,
+    "segment": "neptune.terrain",
+    "counted": 1547453,
+    "soft": 1099110,
+    "fraction": 0.71027,
+    "meanTexels": 0.853,
+    "pass": false
+   },
+   {
+    "frame": 4895,
+    "segment": "neptune.terrain",
+    "counted": 1546813,
+    "soft": 1098384,
+    "fraction": 0.71009,
+    "meanTexels": 0.853,
+    "pass": false
+   },
+   {
+    "frame": 4896,
+    "segment": "neptune.terrain",
+    "counted": 1546147,
+    "soft": 1097655,
+    "fraction": 0.70993,
+    "meanTexels": 0.853,
+    "pass": false
+   },
+   {
+    "frame": 4897,
+    "segment": "neptune.terrain",
+    "counted": 1545519,
+    "soft": 1096923,
+    "fraction": 0.70974,
+    "meanTexels": 0.853,
+    "pass": false
+   },
+   {
+    "frame": 4898,
+    "segment": "neptune.terrain",
+    "counted": 1544875,
+    "soft": 1096232,
+    "fraction": 0.70959,
+    "meanTexels": 0.853,
+    "pass": false
+   },
+   {
+    "frame": 4899,
+    "segment": "neptune.terrain",
+    "counted": 1544233,
+    "soft": 1095612,
+    "fraction": 0.70949,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4900,
+    "segment": "neptune.terrain",
+    "counted": 1543623,
+    "soft": 1095012,
+    "fraction": 0.70938,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4901,
+    "segment": "neptune.terrain",
+    "counted": 1542996,
+    "soft": 1094316,
+    "fraction": 0.70922,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4902,
+    "segment": "neptune.terrain",
+    "counted": 1542408,
+    "soft": 1093642,
+    "fraction": 0.70905,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4903,
+    "segment": "neptune.terrain",
+    "counted": 1541809,
+    "soft": 1092958,
+    "fraction": 0.70888,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4904,
+    "segment": "neptune.terrain",
+    "counted": 1541215,
+    "soft": 1092277,
+    "fraction": 0.70871,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4905,
+    "segment": "neptune.terrain",
+    "counted": 1540620,
+    "soft": 1091605,
+    "fraction": 0.70855,
+    "meanTexels": 0.855,
+    "pass": false
+   },
+   {
+    "frame": 4906,
+    "segment": "neptune.terrain",
+    "counted": 1540047,
+    "soft": 1090883,
+    "fraction": 0.70834,
+    "meanTexels": 0.855,
+    "pass": false
+   },
+   {
+    "frame": 4907,
+    "segment": "neptune.terrain",
+    "counted": 1539474,
+    "soft": 1090220,
+    "fraction": 0.70818,
+    "meanTexels": 0.855,
+    "pass": false
+   },
+   {
+    "frame": 4908,
+    "segment": "neptune.terrain",
+    "counted": 1538897,
+    "soft": 1089550,
+    "fraction": 0.70801,
+    "meanTexels": 0.855,
+    "pass": false
+   },
+   {
+    "frame": 4909,
+    "segment": "neptune.terrain",
+    "counted": 1538334,
+    "soft": 1089002,
+    "fraction": 0.70791,
+    "meanTexels": 0.855,
+    "pass": false
+   },
+   {
+    "frame": 4910,
+    "segment": "neptune.terrain",
+    "counted": 1537794,
+    "soft": 1088561,
+    "fraction": 0.70787,
+    "meanTexels": 0.855,
+    "pass": false
+   },
+   {
+    "frame": 4911,
+    "segment": "neptune.terrain",
+    "counted": 1537247,
+    "soft": 1088053,
+    "fraction": 0.70779,
+    "meanTexels": 0.856,
+    "pass": false
+   },
+   {
+    "frame": 4912,
+    "segment": "neptune.terrain",
+    "counted": 1536712,
+    "soft": 1087595,
+    "fraction": 0.70774,
+    "meanTexels": 0.856,
+    "pass": false
+   },
+   {
+    "frame": 4913,
+    "segment": "neptune.terrain",
+    "counted": 1536183,
+    "soft": 1087065,
+    "fraction": 0.70764,
+    "meanTexels": 0.856,
+    "pass": false
+   },
+   {
+    "frame": 4914,
+    "segment": "neptune.terrain",
+    "counted": 1535665,
+    "soft": 1086469,
+    "fraction": 0.70749,
+    "meanTexels": 0.856,
+    "pass": false
+   },
+   {
+    "frame": 4915,
+    "segment": "neptune.terrain",
+    "counted": 1535132,
+    "soft": 1085768,
+    "fraction": 0.70728,
+    "meanTexels": 0.857,
+    "pass": false
+   },
+   {
+    "frame": 4916,
+    "segment": "neptune.terrain",
+    "counted": 1534641,
+    "soft": 1085065,
+    "fraction": 0.70705,
+    "meanTexels": 0.857,
+    "pass": false
+   },
+   {
+    "frame": 4917,
+    "segment": "neptune.terrain",
+    "counted": 1534126,
+    "soft": 1084234,
+    "fraction": 0.70674,
+    "meanTexels": 0.857,
+    "pass": false
+   },
+   {
+    "frame": 4918,
+    "segment": "neptune.terrain",
+    "counted": 1533619,
+    "soft": 1083642,
+    "fraction": 0.70659,
+    "meanTexels": 0.857,
+    "pass": false
+   },
+   {
+    "frame": 4919,
+    "segment": "neptune.terrain",
+    "counted": 1533138,
+    "soft": 1083053,
+    "fraction": 0.70643,
+    "meanTexels": 0.858,
+    "pass": false
+   },
+   {
+    "frame": 4920,
+    "segment": "neptune.terrain",
+    "counted": 1532640,
+    "soft": 1082431,
+    "fraction": 0.70625,
+    "meanTexels": 0.858,
+    "pass": false
+   },
+   {
+    "frame": 4921,
+    "segment": "neptune.terrain",
+    "counted": 1532158,
+    "soft": 1081800,
+    "fraction": 0.70606,
+    "meanTexels": 0.859,
+    "pass": false
+   },
+   {
+    "frame": 4922,
+    "segment": "neptune.terrain",
+    "counted": 1531676,
+    "soft": 1081184,
+    "fraction": 0.70588,
+    "meanTexels": 0.859,
+    "pass": false
+   },
+   {
+    "frame": 4923,
+    "segment": "neptune.terrain",
+    "counted": 1531199,
+    "soft": 1080384,
+    "fraction": 0.70558,
+    "meanTexels": 0.859,
+    "pass": false
+   },
+   {
+    "frame": 4924,
+    "segment": "neptune.terrain",
+    "counted": 1530740,
+    "soft": 1079714,
+    "fraction": 0.70535,
+    "meanTexels": 0.86,
+    "pass": false
+   },
+   {
+    "frame": 4925,
+    "segment": "neptune.terrain",
+    "counted": 1530270,
+    "soft": 1079056,
+    "fraction": 0.70514,
+    "meanTexels": 0.86,
+    "pass": false
+   },
+   {
+    "frame": 4926,
+    "segment": "neptune.terrain",
+    "counted": 1529801,
+    "soft": 1078372,
+    "fraction": 0.70491,
+    "meanTexels": 0.861,
+    "pass": false
+   },
+   {
+    "frame": 4927,
+    "segment": "neptune.terrain",
+    "counted": 1529352,
+    "soft": 1077580,
+    "fraction": 0.7046,
+    "meanTexels": 0.861,
+    "pass": false
+   },
+   {
+    "frame": 4928,
+    "segment": "neptune.terrain",
+    "counted": 1528896,
+    "soft": 1076784,
+    "fraction": 0.70429,
+    "meanTexels": 0.861,
+    "pass": false
+   },
+   {
+    "frame": 4929,
+    "segment": "neptune.terrain",
+    "counted": 1528461,
+    "soft": 1076002,
+    "fraction": 0.70398,
+    "meanTexels": 0.862,
+    "pass": false
+   },
+   {
+    "frame": 4930,
+    "segment": "neptune.terrain",
+    "counted": 1527987,
+    "soft": 1075141,
+    "fraction": 0.70363,
+    "meanTexels": 0.862,
+    "pass": false
+   },
+   {
+    "frame": 4931,
+    "segment": "neptune.terrain",
+    "counted": 1527556,
+    "soft": 1074172,
+    "fraction": 0.7032,
+    "meanTexels": 0.862,
+    "pass": false
+   },
+   {
+    "frame": 4932,
+    "segment": "neptune.terrain",
+    "counted": 1527104,
+    "soft": 1073281,
+    "fraction": 0.70282,
+    "meanTexels": 0.863,
+    "pass": false
+   },
+   {
+    "frame": 4933,
+    "segment": "neptune.terrain",
+    "counted": 1526673,
+    "soft": 1072388,
+    "fraction": 0.70243,
+    "meanTexels": 0.863,
+    "pass": false
+   },
+   {
+    "frame": 4934,
+    "segment": "neptune.terrain",
+    "counted": 1526217,
+    "soft": 1071484,
+    "fraction": 0.70205,
+    "meanTexels": 0.864,
+    "pass": false
+   },
+   {
+    "frame": 4935,
+    "segment": "neptune.terrain",
+    "counted": 1525794,
+    "soft": 1070517,
+    "fraction": 0.70161,
+    "meanTexels": 0.864,
+    "pass": false
+   },
+   {
+    "frame": 4936,
+    "segment": "neptune.terrain",
+    "counted": 1525346,
+    "soft": 1069548,
+    "fraction": 0.70118,
+    "meanTexels": 0.865,
+    "pass": false
+   },
+   {
+    "frame": 4937,
+    "segment": "neptune.terrain",
+    "counted": 1524909,
+    "soft": 1068736,
+    "fraction": 0.70085,
+    "meanTexels": 0.865,
+    "pass": false
+   },
+   {
+    "frame": 4938,
+    "segment": "neptune.terrain",
+    "counted": 1524475,
+    "soft": 1067885,
+    "fraction": 0.70049,
+    "meanTexels": 0.865,
+    "pass": false
+   },
+   {
+    "frame": 4939,
+    "segment": "neptune.terrain",
+    "counted": 1524037,
+    "soft": 1066923,
+    "fraction": 0.70006,
+    "meanTexels": 0.866,
+    "pass": false
+   },
+   {
+    "frame": 4940,
+    "segment": "neptune.terrain",
+    "counted": 1523603,
+    "soft": 1065913,
+    "fraction": 0.6996,
+    "meanTexels": 0.866,
+    "pass": false
+   },
+   {
+    "frame": 4941,
+    "segment": "neptune.terrain",
+    "counted": 1523161,
+    "soft": 1064969,
+    "fraction": 0.69918,
+    "meanTexels": 0.867,
+    "pass": false
+   },
+   {
+    "frame": 4942,
+    "segment": "neptune.terrain",
+    "counted": 1522710,
+    "soft": 1064059,
+    "fraction": 0.69879,
+    "meanTexels": 0.867,
+    "pass": false
+   },
+   {
+    "frame": 4943,
+    "segment": "neptune.terrain",
+    "counted": 1522280,
+    "soft": 1063287,
+    "fraction": 0.69848,
+    "meanTexels": 0.867,
+    "pass": false
+   },
+   {
+    "frame": 4944,
+    "segment": "neptune.terrain",
+    "counted": 1521834,
+    "soft": 1062439,
+    "fraction": 0.69813,
+    "meanTexels": 0.868,
+    "pass": false
+   },
+   {
+    "frame": 4945,
+    "segment": "neptune.terrain",
+    "counted": 1521391,
+    "soft": 1061548,
+    "fraction": 0.69775,
+    "meanTexels": 0.868,
+    "pass": false
+   },
+   {
+    "frame": 4946,
+    "segment": "neptune.terrain",
+    "counted": 1520925,
+    "soft": 1060598,
+    "fraction": 0.69734,
+    "meanTexels": 0.868,
+    "pass": false
+   },
+   {
+    "frame": 4947,
+    "segment": "neptune.terrain",
+    "counted": 1520487,
+    "soft": 1059766,
+    "fraction": 0.69699,
+    "meanTexels": 0.868,
+    "pass": false
+   },
+   {
+    "frame": 4948,
+    "segment": "neptune.terrain",
+    "counted": 1520019,
+    "soft": 1058776,
+    "fraction": 0.69655,
+    "meanTexels": 0.869,
+    "pass": false
+   },
+   {
+    "frame": 4949,
+    "segment": "neptune.terrain",
+    "counted": 1519577,
+    "soft": 1057709,
+    "fraction": 0.69605,
+    "meanTexels": 0.869,
+    "pass": false
+   },
+   {
+    "frame": 4950,
+    "segment": "neptune.rise",
+    "counted": 1519111,
+    "soft": 1056897,
+    "fraction": 0.69573,
+    "meanTexels": 0.869,
+    "pass": false
+   },
+   {
+    "frame": 4951,
+    "segment": "neptune.rise",
+    "counted": 1518553,
+    "soft": 1056565,
+    "fraction": 0.69577,
+    "meanTexels": 0.869,
+    "pass": false
+   },
+   {
+    "frame": 4952,
+    "segment": "neptune.rise",
+    "counted": 1517793,
+    "soft": 1058244,
+    "fraction": 0.69723,
+    "meanTexels": 0.869,
+    "pass": false
+   },
+   {
+    "frame": 4953,
+    "segment": "neptune.rise",
+    "counted": 1517145,
+    "soft": 1061881,
+    "fraction": 0.69992,
+    "meanTexels": 0.868,
+    "pass": false
+   },
+   {
+    "frame": 4954,
+    "segment": "neptune.rise",
+    "counted": 1516977,
+    "soft": 1067374,
+    "fraction": 0.70362,
+    "meanTexels": 0.866,
+    "pass": false
+   },
+   {
+    "frame": 4955,
+    "segment": "neptune.rise",
+    "counted": 1517380,
+    "soft": 1074251,
+    "fraction": 0.70796,
+    "meanTexels": 0.862,
+    "pass": false
+   },
+   {
+    "frame": 4956,
+    "segment": "neptune.rise",
+    "counted": 1518290,
+    "soft": 1082783,
+    "fraction": 0.71316,
+    "meanTexels": 0.86,
+    "pass": false
+   },
+   {
+    "frame": 4957,
+    "segment": "neptune.rise",
+    "counted": 1519708,
+    "soft": 1090153,
+    "fraction": 0.71734,
+    "meanTexels": 0.857,
+    "pass": false
+   },
+   {
+    "frame": 4958,
+    "segment": "neptune.rise",
+    "counted": 1521583,
+    "soft": 1094839,
+    "fraction": 0.71954,
+    "meanTexels": 0.854,
+    "pass": false
+   },
+   {
+    "frame": 4959,
+    "segment": "neptune.rise",
+    "counted": 1523875,
+    "soft": 1094169,
+    "fraction": 0.71802,
+    "meanTexels": 0.852,
+    "pass": false
+   },
+   {
+    "frame": 4960,
+    "segment": "neptune.rise",
+    "counted": 1526569,
+    "soft": 1088082,
+    "fraction": 0.71276,
+    "meanTexels": 0.857,
+    "pass": false
+   },
+   {
+    "frame": 4961,
+    "segment": "neptune.rise",
+    "counted": 1529553,
+    "soft": 1064289,
+    "fraction": 0.69582,
+    "meanTexels": 0.867,
+    "pass": false
+   },
+   {
+    "frame": 4962,
+    "segment": "neptune.rise",
+    "counted": 1532781,
+    "soft": 1030578,
+    "fraction": 0.67236,
+    "meanTexels": 0.881,
+    "pass": false
+   },
+   {
+    "frame": 4963,
+    "segment": "neptune.rise",
+    "counted": 1536160,
+    "soft": 984332,
+    "fraction": 0.64077,
+    "meanTexels": 0.898,
+    "pass": false
+   },
+   {
+    "frame": 4964,
+    "segment": "neptune.rise",
+    "counted": 1539604,
+    "soft": 940981,
+    "fraction": 0.61118,
+    "meanTexels": 0.919,
+    "pass": false
+   },
+   {
+    "frame": 4965,
+    "segment": "neptune.rise",
+    "counted": 1543067,
+    "soft": 929290,
+    "fraction": 0.60224,
+    "meanTexels": 0.942,
+    "pass": false
+   },
+   {
+    "frame": 4966,
+    "segment": "neptune.rise",
+    "counted": 1546485,
+    "soft": 939875,
+    "fraction": 0.60775,
+    "meanTexels": 0.967,
+    "pass": false
+   },
+   {
+    "frame": 4967,
+    "segment": "neptune.rise",
+    "counted": 1549935,
+    "soft": 928539,
+    "fraction": 0.59908,
+    "meanTexels": 0.999,
+    "pass": false
+   },
+   {
+    "frame": 4968,
+    "segment": "neptune.rise",
+    "counted": 1553378,
+    "soft": 902401,
+    "fraction": 0.58093,
+    "meanTexels": 1.038,
+    "pass": false
+   },
+   {
+    "frame": 4969,
+    "segment": "neptune.rise",
+    "counted": 1556620,
+    "soft": 853607,
+    "fraction": 0.54837,
+    "meanTexels": 1.08,
+    "pass": false
+   },
+   {
+    "frame": 4970,
+    "segment": "neptune.rise",
+    "counted": 1559448,
+    "soft": 780853,
+    "fraction": 0.50072,
+    "meanTexels": 1.134,
+    "pass": false
+   },
+   {
+    "frame": 4971,
+    "segment": "neptune.rise",
+    "counted": 1561683,
+    "soft": 677366,
+    "fraction": 0.43374,
+    "meanTexels": 1.198,
+    "pass": false
+   },
+   {
+    "frame": 4972,
+    "segment": "neptune.rise",
+    "counted": 1563825,
+    "soft": 563161,
+    "fraction": 0.36012,
+    "meanTexels": 1.266,
+    "pass": false
+   },
+   {
+    "frame": 4973,
+    "segment": "neptune.rise",
+    "counted": 1566022,
+    "soft": 492829,
+    "fraction": 0.3147,
+    "meanTexels": 1.334,
+    "pass": false
+   },
+   {
+    "frame": 4974,
+    "segment": "neptune.rise",
+    "counted": 1568811,
+    "soft": 431494,
+    "fraction": 0.27505,
+    "meanTexels": 1.393,
+    "pass": false
+   },
+   {
+    "frame": 4975,
+    "segment": "neptune.rise",
+    "counted": 1571923,
+    "soft": 369143,
+    "fraction": 0.23484,
+    "meanTexels": 1.444,
+    "pass": false
+   },
+   {
+    "frame": 4976,
+    "segment": "neptune.rise",
+    "counted": 1575202,
+    "soft": 321300,
+    "fraction": 0.20397,
+    "meanTexels": 1.497,
+    "pass": false
+   },
+   {
+    "frame": 4977,
+    "segment": "neptune.rise",
+    "counted": 1578569,
+    "soft": 277165,
+    "fraction": 0.17558,
+    "meanTexels": 1.55,
+    "pass": false
+   },
+   {
+    "frame": 4978,
+    "segment": "neptune.rise",
+    "counted": 1582395,
+    "soft": 233389,
+    "fraction": 0.14749,
+    "meanTexels": 1.604,
+    "pass": false
+   },
+   {
+    "frame": 4979,
+    "segment": "neptune.rise",
+    "counted": 1586489,
+    "soft": 192356,
+    "fraction": 0.12125,
+    "meanTexels": 1.655,
+    "pass": false
+   },
+   {
+    "frame": 4980,
+    "segment": "neptune.rise",
+    "counted": 1589614,
+    "soft": 154960,
+    "fraction": 0.09748,
+    "meanTexels": 1.701,
+    "pass": false
+   },
+   {
+    "frame": 4981,
+    "segment": "neptune.rise",
+    "counted": 1592616,
+    "soft": 142525,
+    "fraction": 0.08949,
+    "meanTexels": 1.739,
+    "pass": false
+   },
+   {
+    "frame": 4982,
+    "segment": "neptune.rise",
+    "counted": 1594150,
+    "soft": 128047,
+    "fraction": 0.08032,
+    "meanTexels": 1.77,
+    "pass": false
+   },
+   {
+    "frame": 4983,
+    "segment": "neptune.rise",
+    "counted": 1593487,
+    "soft": 118677,
+    "fraction": 0.07448,
+    "meanTexels": 1.799,
+    "pass": false
+   },
+   {
+    "frame": 4984,
+    "segment": "neptune.rise",
+    "counted": 1590407,
+    "soft": 111212,
+    "fraction": 0.06993,
+    "meanTexels": 1.828,
+    "pass": false
+   },
+   {
+    "frame": 4985,
+    "segment": "neptune.rise",
+    "counted": 1585114,
+    "soft": 98046,
+    "fraction": 0.06185,
+    "meanTexels": 1.853,
+    "pass": false
+   },
+   {
+    "frame": 4986,
+    "segment": "neptune.rise",
+    "counted": 1577780,
+    "soft": 71715,
+    "fraction": 0.04545,
+    "meanTexels": 1.875,
+    "pass": false
+   },
+   {
+    "frame": 4987,
+    "segment": "neptune.rise",
+    "counted": 1568103,
+    "soft": 40822,
+    "fraction": 0.02603,
+    "meanTexels": 1.893,
+    "pass": false
+   },
+   {
+    "frame": 4988,
+    "segment": "neptune.rise",
+    "counted": 1555791,
+    "soft": 19994,
+    "fraction": 0.01285,
+    "meanTexels": 1.91,
+    "pass": true
+   },
+   {
+    "frame": 4989,
+    "segment": "neptune.rise",
+    "counted": 1540412,
+    "soft": 11253,
+    "fraction": 0.00731,
+    "meanTexels": 1.922,
+    "pass": true
+   },
+   {
+    "frame": 4990,
+    "segment": "neptune.rise",
+    "counted": 1523056,
+    "soft": 11430,
+    "fraction": 0.0075,
+    "meanTexels": 1.932,
+    "pass": true
+   },
+   {
+    "frame": 4991,
+    "segment": "neptune.rise",
+    "counted": 1505313,
+    "soft": 11826,
+    "fraction": 0.00786,
+    "meanTexels": 1.942,
+    "pass": true
+   },
+   {
+    "frame": 4992,
+    "segment": "neptune.rise",
+    "counted": 1487192,
+    "soft": 5709,
+    "fraction": 0.00384,
+    "meanTexels": 1.952,
+    "pass": true
+   },
+   {
+    "frame": 4993,
+    "segment": "neptune.rise",
+    "counted": 1468730,
+    "soft": 8355,
+    "fraction": 0.00569,
+    "meanTexels": 1.961,
+    "pass": true
+   },
+   {
+    "frame": 4994,
+    "segment": "neptune.rise",
+    "counted": 1449834,
+    "soft": 10964,
+    "fraction": 0.00756,
+    "meanTexels": 1.968,
+    "pass": true
+   },
+   {
+    "frame": 4995,
+    "segment": "neptune.rise",
+    "counted": 1430540,
+    "soft": 13907,
+    "fraction": 0.00972,
+    "meanTexels": 1.974,
+    "pass": true
+   },
+   {
+    "frame": 4996,
+    "segment": "neptune.rise",
+    "counted": 1410988,
+    "soft": 9312,
+    "fraction": 0.0066,
+    "meanTexels": 1.98,
+    "pass": true
+   },
+   {
+    "frame": 4997,
+    "segment": "neptune.rise",
+    "counted": 1391152,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.983,
+    "pass": true
+   },
+   {
+    "frame": 4998,
+    "segment": "neptune.rise",
+    "counted": 1370052,
+    "soft": 16834,
+    "fraction": 0.01229,
+    "meanTexels": 1.794,
+    "pass": true
+   },
+   {
+    "frame": 4999,
+    "segment": "neptune.rise",
+    "counted": 1349666,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.79,
+    "pass": true
+   },
+   {
+    "frame": 5000,
+    "segment": "neptune.rise",
+    "counted": 1328993,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.736,
+    "pass": true
+   },
+   {
+    "frame": 5001,
+    "segment": "neptune.rise",
+    "counted": 1308031,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.654,
+    "pass": true
+   },
+   {
+    "frame": 5002,
+    "segment": "neptune.rise",
+    "counted": 1286001,
+    "soft": 6646,
+    "fraction": 0.00517,
+    "meanTexels": 1.769,
+    "pass": true
+   },
+   {
+    "frame": 5003,
+    "segment": "neptune.rise",
+    "counted": 1261603,
+    "soft": 44907,
+    "fraction": 0.0356,
+    "meanTexels": 1.827,
+    "pass": false
+   },
+   {
+    "frame": 5004,
+    "segment": "neptune.rise",
+    "counted": 1235446,
+    "soft": 13438,
+    "fraction": 0.01088,
+    "meanTexels": 1.817,
+    "pass": true
+   },
+   {
+    "frame": 5005,
+    "segment": "neptune.rise",
+    "counted": 1211714,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.776,
+    "pass": true
+   },
+   {
+    "frame": 5006,
+    "segment": "neptune.rise",
+    "counted": 1187737,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.741,
+    "pass": true
+   },
+   {
+    "frame": 5007,
+    "segment": "neptune.rise",
+    "counted": 1161392,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.731,
+    "pass": true
+   },
+   {
+    "frame": 5008,
+    "segment": "neptune.rise",
+    "counted": 1132004,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.801,
+    "pass": true
+   },
+   {
+    "frame": 5009,
+    "segment": "neptune.rise",
+    "counted": 1096575,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.881,
+    "pass": true
+   },
+   {
+    "frame": 5010,
+    "segment": "neptune.rise",
+    "counted": 1049477,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.936,
+    "pass": true
+   },
+   {
+    "frame": 5011,
+    "segment": "neptune.rise",
+    "counted": 989455,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.971,
+    "pass": true
+   },
+   {
+    "frame": 5012,
+    "segment": "neptune.rise",
+    "counted": 917625,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 1.992,
+    "pass": true
+   },
+   {
+    "frame": 5013,
+    "segment": "neptune.rise",
+    "counted": 843541,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5014,
+    "segment": "neptune.rise",
+    "counted": 777336,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5015,
+    "segment": "neptune.rise",
+    "counted": 721531,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5016,
+    "segment": "neptune.rise",
+    "counted": 674758,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5017,
+    "segment": "neptune.rise",
+    "counted": 635670,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5018,
+    "segment": "neptune.rise",
+    "counted": 603423,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5019,
+    "segment": "neptune.rise",
+    "counted": 577025,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5020,
+    "segment": "neptune.rise",
+    "counted": 556045,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5021,
+    "segment": "neptune.rise",
+    "counted": 539854,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5022,
+    "segment": "neptune.rise",
+    "counted": 528137,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5023,
+    "segment": "neptune.rise",
+    "counted": 520678,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   },
+   {
+    "frame": 5024,
+    "segment": "neptune.rise",
+    "counted": 517226,
+    "soft": 0,
+    "fraction": 0,
+    "meanTexels": 2,
+    "pass": true
+   }
+  ],
+  "rule": "counted when green > 0.5; soft when red byte < 127.5 x detail.minTexelsPerPixel; pass when soft/counted <= detail.maxSoftPixelFraction"
+ },
+ "G5": {
+  "pass": true,
+  "tier": "final",
+  "diag": "nograin",
+  "frames": [
+   {
+    "frame": 4605,
+    "segment": "neptune.hold",
+    "kind": "hold",
+    "invalid": 0,
+    "coverage": 0.52698,
+    "pass": true
+   },
+   {
+    "frame": 4707,
+    "segment": "neptune.dive",
+    "kind": "dive",
+    "invalid": 0,
+    "coverage": 0.89906,
+    "pass": true
+   },
+   {
+    "frame": 4860,
+    "segment": "neptune.terrain",
+    "kind": "terrain",
+    "invalid": 0,
+    "coverage": 0.7666,
+    "pass": true
+   },
+   {
+    "frame": 5006,
+    "segment": "neptune.rise",
+    "kind": "rise",
+    "invalid": 0,
+    "coverage": 0.57279,
+    "pass": true
+   }
+  ]
+ },
+ "G17": {
+  "pass": true,
+  "tier": "final",
+  "diag": "nograin",
+  "minSharpnessRatio": 0.8,
+  "definition": {
+   "name": "dog-band-energy-v1",
+   "luma": "sRGB luma 0.2126 R + 0.7152 G + 0.0722 B on 0..1 values, no linearisation",
+   "band": "difference of Gaussians: blur sigma 0.6 px minus blur sigma 2.0 px, which keeps roughly 0.08 to 0.3 cycles per pixel",
+   "energy": "mean of the squared band signal inside a tile",
+   "grid": [
+    12,
+    8
+   ],
+   "tileMeanLumaFloor": 0.04,
+   "tileEnergyFloor": "max(2e-5, 0.05 x the 90th percentile of approved tile energy)",
+   "ratio": "per tile film energy / approved energy; median and 25th percentile over kept tiles",
+   "resize": "approved image centre cropped to the film aspect, then Lanczos to the film size"
+  },
+  "frames": [
+   {
+    "frame": 4605,
+    "segment": "neptune.hold",
+    "approved": "references/approved/neptune-hero.png",
+    "tiles": 65,
+    "median": 1.0266916126183718,
+    "p25": 0.8677279453163318,
+    "floor": 0.00003326296104271887,
+    "worst": [
+     {
+      "tile": [
+       7,
+       7
+      ],
+      "ratio": 0.5774
+     },
+     {
+      "tile": [
+       3,
+       2
+      ],
+      "ratio": 0.5912
+     },
+     {
+      "tile": [
+       6,
+       6
+      ],
+      "ratio": 0.6623
+     },
+     {
+      "tile": [
+       7,
+       6
+      ],
+      "ratio": 0.7103
+     },
+     {
+      "tile": [
+       8,
+       7
+      ],
+      "ratio": 0.7779
+     }
+    ],
+    "pass": true
+   },
+   {
+    "frame": 4860,
+    "segment": "neptune.terrain",
+    "approved": "references/approved/neptune-close.jpg",
+    "tiles": 75,
+    "median": 1.086414446377408,
+    "p25": 0.5194468741590346,
+    "floor": 0.00002590059134718189,
+    "worst": [
+     {
+      "tile": [
+       2,
+       7
+      ],
+      "ratio": 0.0165
+     },
+     {
+      "tile": [
+       2,
+       2
+      ],
+      "ratio": 0.1504
+     },
+     {
+      "tile": [
+       6,
+       2
+      ],
+      "ratio": 0.1524
+     },
+     {
+      "tile": [
+       3,
+       2
+      ],
+      "ratio": 0.2107
+     },
+     {
+      "tile": [
+       9,
+       3
+      ],
+      "ratio": 0.2502
+     }
+    ],
+    "pass": true
+   }
+  ]
+ },
+ "run": {
+  "joined": [
+   {
+    "file": "neptune-part-1-of-3.json",
+    "part": 1,
+    "parts": 3,
+    "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+    "seconds": 6843.525,
+    "run": {
+     "maxRestarts": 3,
+     "pageFrames": 0,
+     "restarts": [
+      {
+       "frame": 4776,
+       "reason": "the page closed at frame 4776: Error: page.evaluate: Target page, context or browser has been closed"
+      }
+     ],
+     "pages": 2,
+     "takenUp": {
+      "G13": 0,
+      "finals": 0
+     }
+    }
+   },
+   {
+    "file": "neptune-part-2-of-3.json",
+    "part": 2,
+    "parts": 3,
+    "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+    "seconds": 6754.691,
+    "run": {
+     "maxRestarts": 3,
+     "pageFrames": 0,
+     "restarts": [
+      {
+       "frame": 4894,
+       "reason": "the page closed at frame 4894: Error: page.evaluate: Target page, context or browser has been closed"
+      }
+     ],
+     "pages": 2,
+     "takenUp": {
+      "G13": 0,
+      "finals": 0
+     }
+    }
+   },
+   {
+    "file": "neptune-part-3-of-3.json",
+    "part": 3,
+    "parts": 3,
+    "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+    "seconds": 6849.344,
+    "run": {
+     "maxRestarts": 3,
+     "pageFrames": 0,
+     "restarts": [],
+     "pages": 1,
+     "takenUp": {
+      "G13": 0,
+      "finals": 0
+     }
+    }
+   },
+   {
+    "file": "neptune-part-finals.json",
+    "part": "finals",
+    "parts": 1,
+    "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
+    "seconds": 2394.526,
+    "run": {
+     "maxRestarts": 3,
+     "pageFrames": 0,
+     "finalsPage": "first",
+     "restarts": [],
+     "pages": 1,
+     "takenUp": {
+      "G13": 0,
+      "finals": 0
+     }
+    }
+   }
+  ]
+ },
+ "pass": false,
+ "machine": "space-sandbox 2x Intel(R) Xeon(R) Processor @ 2.90GHz",
+ "seconds": 1.553
+}
