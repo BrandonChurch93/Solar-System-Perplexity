@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { smooth } from '../../director/rig'
+import model from './ringfield.json'
 import skimJson from './skim.json'
 
 // The grade of the rings by the height of the lens over the ring plane (skim.json light.grade). The far look
@@ -13,6 +14,7 @@ const grade = skimJson.light.grade
 const dusk = skimJson.light.dusk
 const halo = skimJson.light.halo
 const foot = skimJson.inner.foot
+const tone = skimJson.light.tone
 const [lo, hi] = skimJson.sky.heights as [number, number]
 
 // How much of the grade shows with the lens at this height over the ring plane (planet radii, on either side
@@ -56,9 +58,12 @@ export const innerShare = (height: number): number => byHeight(skimJson.inner.by
 // day ends, how much of that cut shows, the factor on the night floor) and uDuskGrey (the share of its colour
 // the night side loses, and the power of the cut that share follows: above one the colour goes later than the
 // light, so the last light keeps its brown). The kept set and the model both call it with the height of the
-// lens, so the two scenes hold one globe at every height.
-export const duskAt = (height: number, into: THREE.Vector4, grey: THREE.Vector2): void => {
+// lens, so the two scenes hold one globe at every height. uDuskTint: the colour factor on the last light (the
+// clouds between the cosines dusk.tint.from and dusk.tint.to of the Sun's angle take it, whole at the first) and
+// the share of it that shows.
+export const duskAt = (height: number, into: THREE.Vector4, grey: THREE.Vector2, tint: THREE.Vector4): void => {
   const w = gradeShare(height)
+  tint.w = w
   into.set(dusk.from, dusk.to, THREE.MathUtils.lerp(dusk.amount[0]!, dusk.amount[1]!, w), THREE.MathUtils.lerp(dusk.night[0]!, dusk.night[1]!, w))
   grey.set(THREE.MathUtils.lerp(dusk.grey[0]!, dusk.grey[1]!, w), dusk.greyPower)
 }
@@ -74,6 +79,51 @@ export const hazeDayAt = (height: number, far: THREE.Vector2, into: THREE.Vector
   into.set(THREE.MathUtils.lerp(far.x, halo.day[0]!, w), THREE.MathUtils.lerp(far.y, halo.day[1]!, w))
 }
 
+// The tone of the globe by its latitude, by the same share (skim.json light.tone): with the lens high the globe
+// keeps the colours of the hold; as the lens comes down to the plane its bands go over to the palette of the
+// approved close image (paler, a grey blue band toward the pole, its own run of cream and ochre bands), and the
+// small features of the map stand out less: the map is mixed with itself averaged over tone.calm.texels of its
+// texels by tone.calm.amount, and the boost of its small features (look.globe.fine) is taken back by
+// tone.calm.fine. The factors stand in a row of texels, one knot each (they are too many for a list of
+// uniforms), read texel by texel with a straight line between. Sets uLatFit: the share, one over the step of
+// the knots (radians), the share of the averaged map, the texels it is averaged over. The kept set and the
+// model both call it with the height of the lens, so the two scenes hold one globe at every height. It follows
+// the height alone.
+const latToneRow = (): THREE.DataTexture => {
+  const data = new Float32Array(tone.gain.length * 4)
+  tone.gain.forEach((g, i) => data.set([g[0]!, g[1]!, g[2]!, 1], i * 4))
+  const row = new THREE.DataTexture(data, tone.gain.length, 1, THREE.RGBAFormat, THREE.FloatType)
+  row.minFilter = THREE.NearestFilter
+  row.magFilter = THREE.NearestFilter
+  row.generateMipmaps = false
+  row.needsUpdate = true
+  return row
+}
+export const latToneUniforms = (): { uLatTone: { value: THREE.DataTexture }; uLatFit: { value: THREE.Vector4 }; uLatFirst: { value: number } } => ({
+  uLatTone: { value: latToneRow() },
+  uLatFit: { value: new THREE.Vector4(0, 180 / (Math.PI * tone.step), 0, tone.calm.texels) },
+  uLatFirst: { value: (tone.first * Math.PI) / 180 },
+})
+export const latToneAt = (height: number, into: THREE.Vector4): void => {
+  const w = gradeShare(height)
+  into.x = w
+  into.z = tone.calm.amount * w
+}
+// the share of the boost of the small features of the map that is left with the lens at this height
+export const fineShare = (height: number): number => 1 - tone.calm.fine * gradeShare(height)
+
+// latTone: the factor on the colour of the globe at the latitude lat (radians, either side of the equator):
+// straight lines between the knots of skim.json light.tone.gain, flat outside them, to the power of the share.
+export const LAT_TONE_GLSL = /* glsl */ `
+uniform sampler2D uLatTone;
+uniform vec4 uLatFit;
+uniform float uLatFirst;
+vec3 latTone(float lat) {
+  float q = clamp((abs(lat) - uLatFirst) * uLatFit.y, 0.0, float(${tone.gain.length - 1}));
+  float i = min(floor(q), float(${tone.gain.length - 2}));
+  return pow(mix(texelFetch(uLatTone, ivec2(int(i), 0), 0).rgb, texelFetch(uLatTone, ivec2(int(i) + 1, 0), 0).rgb, q - i), vec3(uLatFit.x));
+}`
+
 // The dust in front of the foot of the globe (skim.json inner.foot): the dust inside the inner rim of the rings
 // is a layer with a soft thickness, and with the lens low over the plane the view runs a long way through it
 // in front of the foot of the globe, so a soft dark band lies along the foot and the dark inner ring runs into
@@ -85,6 +135,56 @@ export const hazeDayAt = (height: number, far: THREE.Vector2, into: THREE.Vector
 export const dustAt = (height: number, into: THREE.Vector4): void => {
   into.set(foot.depth * innerShare(height), foot.height[0]!, foot.height[1]!, 0)
 }
+
+// The shade of the dust inside the inner rim on the globe (skim.json inner): where the Sun's light crosses the
+// plane inside the rim on its way to the globe, the dust takes its share of it, so the strip of the globe that
+// shows through the dust on the far side of the plane from the Sun lies in its shade. It is the same dust as
+// that of the sheet (sheet.ts sheetInner): the same depth at the rim and by the globe, with the mean of its
+// ringlets (inner.bands), and the same share of it at every height of the lens (innerShare), so none in the
+// hold. Sets uDustShade: the depth at the rim and by the globe, the rim, the length over which the dust dies
+// away outward of the rim. The kept set and the model both call it with the height of the lens.
+export const dustShadeAt = (height: number, into: THREE.Vector4): void => {
+  const bands = skimJson.inner.bands
+  const share = innerShare(height) * Math.pow(bands.floor + (1 - bands.floor) * (1 - bands.gap), 3)
+  into.set(skimJson.inner.depth[0]! * share, skimJson.inner.depth[1]! * share, model.inner, skimJson.inner.fade)
+}
+
+// dustShade: the share of the Sun's light that reaches the point P (planet radii, the plane of the rings at
+// y 0) through the dust inside the inner rim; 1 where the Sun's ray to P does not cross the plane.
+export const DUST_SHADE_GLSL = /* glsl */ `
+uniform vec4 uDustShade;
+float dustShade(vec3 P, vec3 sun) {
+  float t = -P.y / (abs(sun.y) > 1e-4 ? sun.y : 1e-4);
+  float rq = length(P.xz + sun.xz * max(t, 0.0));
+  float tau = mix(uDustShade.x, uDustShade.y, clamp((uDustShade.z - rq) / (uDustShade.z - 1.0), 0.0, 1.0)) * exp(-max(rq - uDustShade.z, 0.0) / uDustShade.w);
+  return t > 0.0 ? exp(-tau / max(abs(sun.y), 0.02)) : 1.0;
+}`
+
+// dustAir: the share of the Sun's light that reaches the dust at the point p (planet radii, the globe made round,
+// its middle at 0) through the air of the globe, sun the direction of the Sun there. The dust inside the inner
+// rim lies in the long twilight of the globe (skim.json inner.air): the air thins by e over the height uDustAir.y
+// and has the depth uDustAir.x straight up from the ground, and the Sun's ray to p crosses it on a slant: from p
+// outward where the Sun stands over the horizon of p, and past the globe where it stands under it, where the
+// ray that touches the ground gets nothing through. The two cases meet where the Sun stands on the horizon,
+// so the light has no edge anywhere. (The slant of an air that thins by e: the whole ray past the globe
+// crosses sqrt(2 pi x) times the depth straight up at its nearest point, x that point's distance from the
+// middle in heights of the air, and the half ray from p outward the share of it that the scaled error
+// function gives, taken by its upper bound 2 / (sqrt(pi) (y + sqrt(y y + 4 / pi))).) By the place and the angle
+// of the Sun alone. The sheet (sheet.ts) and the dust in front of the foot of the globe (globe.ts) both call it.
+export const DUST_AIR_GLSL = /* glsl */ `
+uniform vec2 uDustAir;
+float dustAirSlant(float x, float c) {
+  float y = sqrt(0.5 * x) * c;
+  return sqrt(2.0 * x) / (y + sqrt(y * y + 4.0 / 3.14159265));
+}
+float dustAir(vec3 p, vec3 sun) {
+  float r = max(length(p), 1.0);
+  float sb = dot(p, sun);
+  float own = exp((1.0 - r) / uDustAir.y) * dustAirSlant(r / uDustAir.y, abs(sb) / r);
+  float d = sqrt(max(r * r - sb * sb, 1e-6));
+  float whole = 2.0 * exp(min((1.0 - d) / uDustAir.y, 30.0)) * sqrt(0.5 * 3.14159265 * d / uDustAir.y);
+  return exp(-uDustAir.x * max(sb < 0.0 ? whole - own : own, 0.0));
+}`
 
 // uGrade: the share, one over the pivot, the power of the toe, one over the ceiling. uGradeLow: the cosine, the
 // power and the least of the thin inner ring by the view, and the share of iceZone (zoneShare; the callers set

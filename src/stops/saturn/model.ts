@@ -6,7 +6,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
-import { duskAt, dustAt, gradeShare, hazeDayAt, innerShare, zoneShare } from './grade'
+import { duskAt, dustAt, dustShadeAt, fineShare, gradeShare, hazeDayAt, innerShare, latToneAt, zoneShare } from './grade'
 import { Grains, type Lens } from './grains'
 import { iceField } from './ice'
 import * as look from './look'
@@ -160,7 +160,7 @@ export const createModel: SetFactory = async (ctx) => {
       const su = shell.material.uniforms
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
       gu.uLimbW!.value = poseW.value * look.limbShow
-      ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - closeGlobe))
+      ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - closeGlobe) * fineShare(camL.y))
       gu.uNightBlur!.value = (look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * closeGlobe) * foot
       gu.uEdgePx!.value = look.globe.edgePx * foot
       su.uLimbW!.value = gu.uLimbW!.value
@@ -183,8 +183,10 @@ export const createModel: SetFactory = async (ctx) => {
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)
       su.uGain!.value = globeGain * state.weight * THREE.MathUtils.lerp(tune.halo.gain[0]!, tune.halo.gain[1]!, closeGlobe)
       su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, closeGlobe)
-      duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2)
+      duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2, gu.uDuskTint!.value as THREE.Vector4)
       dustAt(camL.y, gu.uDust!.value as THREE.Vector4)
+      dustShadeAt(camL.y, gu.uDustShade!.value as THREE.Vector4)
+      latToneAt(camL.y, gu.uLatFit!.value as THREE.Vector4)
       dustAt(camL.y, su.uDust!.value as THREE.Vector4)
       hazeDayAt(camL.y, hazeDayFar, su.uHazeEdge!.value as THREE.Vector2)
 

@@ -5408,3 +5408,93 @@ After a break in the session (00:53 to 00:57) the job was found running as left;
 - Order of work after the rise is read: 22, 21, 24, 23 (round items 1 and 2), each by draft trials at 3720
   with 3465 checked for its bytes; then item 3 (the globe: paler, grey blue band near the top limb, tight
   terminator to a black night side); item 5 under mail 729's condition; item 4 (not found yet).
+
+## 05:03 UTC Nov 25. Round 44's items 5, 1 and 3 in one tree; item 2 in work; mails 855, 862, 897, 905
+
+- Mails since the last entry. 855: the Builder's machines draw the motion report (sa9), I do not draw it;
+  my machine goes on with the cures of round 44's other items, worst first; the flight after the rise: the
+  pairs decide; looks every 30 minutes. 862: sa9 03 green; take range-saturn.patch in the next commit, hold
+  bodies-saturn.patch. 897 (04:36): 88ba2385 is on main with take batch 8 (merge 7ecd813b); round 51,
+  Saturn's round 2 of 3, runs on it since 04:14; its whole smooth report came back green (sa9-04); the
+  critics' words come when the round closes; carry the range patch; write down by frame what the critics
+  will still name. 905 (04:48): the range line stands once in globe.ts and once in kept/globe.ts on main,
+  nothing is laid. The hold is lifted for item 4 under mail 729's condition: the final of 3465 before and
+  after, side by side at full size, with crops of each cured edge, in the looks before the name, and no
+  worse against the hero anywhere (the jury gave the hold 0 of 10, so keeping its bytes protects nothing).
+  Order for item 4: the moon first (bands, haze, limb), then the glow's dip at the sunlit limb, then the
+  orange line on the night limb; the ring's rim line that the hero has too stays. Item 5 is severe and in
+  my tree: commit what stands as soon as its checks are in and NAME it, round 3 of 3 takes it; do not hold
+  a cured severe item back for item 2.
+- Read on main (kit/PROGRESS.md, main 64c4ccb): d264 and d270: take batch 8 with 88ba2385 is on main and
+  round 51 judges it. d271: the range patch needs no laying.
+- By mail 855 the job r59 (my own run of the picture parts) was stopped unread at 02:49:52 and the
+  reference tree was restored at 03:03. Dive, rise, parity, place and G13 of 88ba2385 on the newest engine
+  are the Builder's numbers (all green by d267 and d270: largest pop of the rise 1.196 of 1.2, largest
+  pattern change 0.41 of 0.45).
+- The range patch: its two lines have been in my tree since mail 797 (git apply --check -R passes on the
+  tree, so the patch is whole in it). Nothing to lay. bodies-saturn.patch is held and not applied.
+- FOUND, item 5 (the sky behind the dive at 3567 ends in a hard ellipse at the inner ring edge). Cause:
+  sheet.json shadow.solid. Inside the globe's shadow the shaded sheet lets stars through at its inner edge
+  and grew solid between the radii 1.2458 and 1.27, in the far look and in the kept set alike. So in the
+  shadow the stars stood up to the inner rim and ended within 0.024 radii of it: the hard ellipse. The
+  same edge shows at 3866. Cure: the ramp is now 1.2458 to 1.5, the stars thin out over a quarter of a
+  radius and no edge is left to name. The share of it is 0 in the hold (kept/set.ts uSolid by the dive), so
+  3465 should keep its bytes; the final decides.
+- Item 1 (the close view is not the approved shot), open 21 and 22, the foot and the black wedge. What was
+  wrong: the dust inside the inner rim was thin (depth 0.3 at the rim, 0.6 by the globe), so the lit globe
+  ran down through it to the plane, and under the night side the sheet was a near black wedge. Now:
+  - skim.json inner.depth [1.3, 1.3], inner.light [0.3, 0.3], inner.dark [1.0, 1.2], bands.floor 0.75,
+    foot.depth 4.5, foot.height [0, 0.036], foot.ink [0.19, 0.165, 0.125]: the dust closes the foot, as the
+    grey band under the globe in the approved image.
+  - inner.rings (new): the dust lies in ringlets of its own, three sets of widths 0.027, 0.014 and 0.0075
+    radii, by sheetBandsOf in sheet.ts, the plateaus of the outer rim with their own widths and seed,
+    filtered by the footprint.
+  - inner.air (new) and grade.ts dustAir: the light of the Sun reaches the dust through the globe's air
+    (depth 0.15 straight up, thinning by e over 0.04 radii), on a slant ray, from the place and the angle
+    of the Sun alone. The first trial (n5) had a hard diagonal step in the dust at the terminator plane;
+    the two cases of the slant (Sun over and under the horizon of the point) now meet where the Sun stands
+    on the horizon, so there is no edge. The sheet and the dust in front of the foot (globe.ts) call the
+    same function.
+  - grade.ts dustShadeAt and dustShade: the dust shades the strip of the globe that shows through it
+    behind the plane.
+  - sheet.ts wfar: the far look begins at the rim (it began inward of it), and the sand of the sheet has
+    no strength inside the rim: dust is powder.
+  - light.grade.radial.gain knots 0 to 11 (radii 1.03 to 1.25): one factor [2.97, 3.2085, 3.6], the dust in
+    slate grey as in the approved image (the measured factors there followed the globe's glow).
+  All of it by the share of the dust (innerShare, by the height of the lens), none in the hold.
+- Item 3 (the globe too orange and too busy, a broad brown terminator, painted ribbons), open 18:
+  - skim.json light.tone and grade.ts latTone: a factor on the colour of the clouds by latitude, 81 knots
+    by whole degrees, measured by assets-src/saturn/code/lat_tone.py (the lit globe of the approved close
+    image over the lit globe of frame 3720, two passes), to the power of the share of the grade of the
+    rings (gradeShare, by the height of the lens). The knots stand in a row of float texels read with
+    texelFetch (no filter on a float texture, so nothing beyond the workspace record).
+  - tone.calm: near the sheet the map is mixed by 0.4 with itself averaged over 12 texels and the boost of
+    its small features (look.globe.fine) is taken back by the same share. This is a grade by height on
+    the one map, not a second map; I name it in the mail so the Builder can rule on it against mail 785.
+  - light.dusk.night [1, 0.45] (was [1, 1.3]): the night side is dark near the sheet. dusk.tint: the last
+    light on the clouds is less red and less blue.
+- Item 2 (the near ring field), open 23, in work, not cured. In the tree: grains.json (trial g1: finer
+  grains), ringfine.json from 2 with near.level and near.hue on the octaves 2 to 5 (waves 0.032 to 0.004
+  radii), near.wide.hue 0 and the new key near.wide.first 5 (field.ts uRfWideFirst): the boost of a ringlet
+  that is wide on screen applies from octave 5 on, the octaves 2 to 4 stay soft lanes of colour. Trial g5
+  (review tier, /tmp/v/x/g5_3720.png, in the looks 04:58): wide lanes of rose and grey beige in the lower
+  left as the approved has, but the grains are streaks under the shutter where the approved has a matte
+  fine grain, and the lanes are less blue grey. In the hold these octaves have no strength (level 0, hue 0),
+  so the hold should keep its bytes.
+- FOUND for item 2: at 3720 the ring beyond a distance of 0.6 to 1.3 radii from the lens is the far look
+  (handover.kept.reach, by the logarithm of the distance), which has the kept profile and its mottle but no
+  sand: the bright B ring in the middle of the frame is smooth stripes. A trial with the reach at
+  [1.5, 3.5] (g4) was garish and is not kept. Next idea: sand by distance in the far look, by the same
+  formula in sheet.ts keptSheet and kept/rings.ts, zero at the hold's distances (2.4 and more).
+- What I expect the critics still to name on this tree, by frame (mailed to the Builder about 04:45):
+  3465: the edges of item 4 (the moon's limb, bands and haze in titan.ts; the dip of the glow at the sunlit
+  limb; a thin orange line on the night limb over the bright rings). 3567 and 3866: item 5, cured in this
+  tree. 3720: the near field (item 2) and what is left of item 1 (the composition against the approved,
+  the dark gap, open 24); the globe (item 3) should read cured. 3866: the near ring soft (open 16).
+- Open list (next free 26): 16 near ring at 3866 soft; 17 palette at ringlet scale; 18 night side, cured in
+  this tree; 19 dark grooves; 20 day edge of haze; 21 foot, cured in this tree; 22 black wedge, cured in
+  this tree; 23 near field, in work; 24 dark gap; 25 travel after the rise (the pairs decide).
+- Plan. (1) This commit, then its proof on the committed tree: slices of the dive and the rise where the
+  grade by height runs, finals of 3465, 3567, 3720 and 3866, path, parity, place, gate G11 and G15, G5,
+  G17, G13, handover. (2) Merge main, tsc, the unit tests, push, NAMED mail. (3) Item 4 with the hold
+  lifted, in the order of mail 905, as a second commit. (4) Item 2 further.

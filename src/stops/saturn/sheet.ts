@@ -3,7 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import azimuth from './azimuth.json'
 import { RING_FIELD_GLSL, type RingField } from './field'
-import { ICE_GRADE_GLSL, gradeUniforms } from './grade'
+import { DUST_AIR_GLSL, ICE_GRADE_GLSL, gradeUniforms } from './grade'
 import { ICE_GLSL, type Ice } from './ice'
 import * as keptLook from './kept/look'
 import { HASH_GLSL } from './kept/rings'
@@ -45,20 +45,25 @@ uniform vec4 uOuterWaves;
 uniform vec4 uOuterGaps;
 // (away: how far past the rim, 0 to 1; gap: the share that is a gap there; least: the share of the depth a
 // gap keeps)
-float sheetBands(float r, float fp, float away, float gap, float least) {
-  float at = mix(-uOuterBands.z, gap, away);
+// (waves: the three widths of the sets and their seed; fit: the least softness of a plateau's edge in cells,
+// that softness in footprints, the strength of the thin lines at the edges, the softness of a gap's edge)
+float sheetBandsOf(float r, float fp, float away, float gap, float least, vec4 waves, vec4 fit) {
+  float at = mix(-fit.w, gap, away);
   float mean = least + (1.0 - least) * clamp(1.0 - at, 0.0, 1.0);
   float k = 1.0;
   for (int i = 0; i < 3; i++) {
-    float wave = i == 0 ? uOuterWaves.x : (i == 1 ? uOuterWaves.y : uOuterWaves.z);
+    float wave = i == 0 ? waves.x : (i == 1 ? waves.y : waves.z);
     float seen = clamp(wave / (fp * uRfFine.w) - 1.0, 0.0, 1.0);
     vec2 h;
     float b;
-    vec3 q = ringOctave(r / wave + uOuterGaps.w * float(i), uint(uOuterWaves.w) + uint(i), max(uOuterBands.y, uOuterGaps.z * fp / wave), 0.0, h, b);
-    float open = least + (1.0 - least) * smoothstep(at - uOuterBands.z, at + uOuterBands.z, q.x * 0.5 + 0.5);
-    k *= mix(mean, open * exp(uOuterGaps.y * q.z), seen);
+    vec3 q = ringOctave(r / wave + uOuterGaps.w * float(i), uint(waves.w) + uint(i), max(fit.x, fit.y * fp / wave), 0.0, h, b);
+    float open = least + (1.0 - least) * smoothstep(at - fit.w, at + fit.w, q.x * 0.5 + 0.5);
+    k *= mix(mean, open * exp(fit.z * q.z), seen);
   }
   return k;
+}
+float sheetBands(float r, float fp, float away, float gap, float least) {
+  return sheetBandsOf(r, fp, away, gap, least, uOuterWaves, vec4(uOuterBands.y, uOuterGaps.z, uOuterGaps.y, uOuterBands.z));
 }
 float sheetOuterBands(float r, float fp) {
   return sheetBands(r, fp, clamp((r - uOuter.x) / uOuterBands.w, 0.0, 1.0), uOuterBands.x, uOuterGaps.x);
@@ -107,11 +112,15 @@ float sheetLaw(float thin, float mu, float mu0, float deg) {
 // of the zones (uFlatten.z). Needs RING_FIELD_GLSL and SHEET_OUTER_GLSL. The sheet and the grains near the
 // lens (grains.ts) both read the ice here, so a grain has the colour of the ringlet it lies in.
 export const SHEET_AT_GLSL = /* glsl */ `
+${DUST_AIR_GLSL}
 uniform vec3 uSunL;
 uniform vec4 uFlatten;
 uniform vec3 uEven;
 uniform vec4 uInnerBands;
 uniform vec2 uInnerDark;
+uniform vec4 uInnerRings;
+uniform vec4 uInnerWaves;
+uniform vec4 uInnerFit;
 void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
   vec2 knots = ringKnots(r, fp);
   wide = ringKnots(r, uFlatten.z);
@@ -131,7 +140,16 @@ void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum,
     dust *= sheetBands(r, fp, clamp((uInner.x - r) / uInner2.w, 0.0, 1.0), uInnerBands.x, uInnerBands.y);
     // the stuff of the thin inner ring: what the ice at uInnerBands.w returns where it is too deep to see through
     vec2 like = ringKnots(uInnerBands.w, uFlatten.z);
-    knots += vec2(dust, mix(uInnerBands.z, uInner2.x, smoothstep(uInnerDark.x, uInnerDark.y, r)) * like.y / max(ringSat(like.x * uRfLight.x), 1e-4) * ringSat(dust * uRfLight.x));
+    // the dust lies in ringlets of its own, finer than the plateaus of its depth: darker and lighter ones about
+    // the same mean (uInnerRings: the share that is dark, the share of its light a dark one keeps, how far
+    // they show; uInnerWaves: their three widths and their seed; uInnerFit: their edges, as sheetBandsOf
+    // takes them)
+    float gapMean = uInnerRings.y + (1.0 - uInnerRings.y) * clamp(1.0 - uInnerRings.x, 0.0, 1.0);
+    float rings = mix(1.0, sheetBandsOf(r, fp, 1.0, uInnerRings.x, uInnerRings.y, uInnerWaves, uInnerFit) / (gapMean * gapMean * gapMean), uInnerRings.z);
+    // the dust by the globe lies in the long twilight of the globe, where the Sun's light comes through the
+    // globe's air (grade.ts dustAir, on the globe made round)
+    rings *= dustAir(vec3(q.x, 0.0, q.y), normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z)));
+    knots += vec2(dust, mix(uInnerBands.z, uInner2.x, smoothstep(uInnerDark.x, uInnerDark.y, r)) * like.y / max(ringSat(like.x * uRfLight.x), 1e-4) * ringSat(dust * uRfLight.x) * rings);
   }
   tau = knots.x;
   lum = knots.y;
@@ -314,8 +332,9 @@ void main() {
   // one look from far to near: the sheet keeps the far look wherever it lies far from the lens, and the model's
   // own light, with all it adds, shows only on the part of the sheet the lens has come near (skim.json
   // handover.kept.reach, by the logarithm of the distance), so nothing changes with time alone
-  // (the dust inside the inner rim is no part of the far look: it shows by the nearness of the lens alone)
-  float wfar = max(uRfFar, smoothstep(uRfReach.x, uRfReach.y, log(max(length(ray), 1e-6))) * smoothstep(uInner.x - uInner.w, uInner.x, r));
+  // (the dust inside the inner rim is no part of the far look: it shows by the nearness of the lens alone, so
+  // the far look begins at the rim and is whole where the dust has died away outward of it)
+  float wfar = max(uRfFar, smoothstep(uRfReach.x, uRfReach.y, log(max(length(ray), 1e-6))) * smoothstep(uInner.x, uInner.x + uInner.w, r));
   vec4 farLook = vec4(0.0);
   for (int k = 0; k < ((mine && wfar > 0.0 && kx > 0.0 && kx < 1.0) ? 1 : 0); k++) {
     vec3 on = cs + ds * ((-ob - sqrt(max(od * oa, 0.0))) / oa);
@@ -341,6 +360,8 @@ void main() {
     lum *= pow(clamp(wide.y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));
     // the sand of the sheet and its sparks, as the sheet is seen from afar
     vec2 sand = iceSand(r, turn, 1.0 / max(pixel, 1e-9), length(toPixel * vec2(-q.y, q.x)) / r, thin, sweep);
+    // the dust inside the inner rim is powder with no grain to see (none of it in the hold)
+    for (int j = 0; j < (uInner.y > 0.0 ? 1 : 0); j++) sand *= smoothstep(uInner.x - uInner.w, uInner.x + uInner.w, r);
     lum *= exp(sand.x);
     tau *= exp(sand.x * uIceFit.z);
     float dist = length(ray);
@@ -458,6 +479,10 @@ export class Sheet {
       uOuter2: { value: new THREE.Vector4(skim.outer.length[1], skim.outer.end[0], skim.outer.end[1], rimLum()) },
       uOuterInk: { value: this.outerInk },
       uInner: { value: this.inner }, uInner2: { value: this.inner2 }, uInnerBands: { value: new THREE.Vector4(skim.inner.bands.gap, skim.inner.bands.floor, skim.inner.light[1]!, skim.inner.like) }, uInnerDark: { value: new THREE.Vector2().fromArray(skim.inner.dark) },
+      uInnerRings: { value: new THREE.Vector4(skim.inner.rings.gap, skim.inner.rings.floor, skim.inner.rings.amount, 0) },
+      uInnerWaves: { value: new THREE.Vector4(skim.inner.rings.waves[0], skim.inner.rings.waves[1], skim.inner.rings.waves[2], skim.inner.rings.seed) },
+      uInnerFit: { value: new THREE.Vector4(skim.inner.rings.soft, skim.inner.rings.filter, skim.inner.rings.lines, skim.inner.rings.width) },
+      uDustAir: { value: new THREE.Vector2(skim.inner.air.depth, skim.inner.air.height) },
       uOuterBands: { value: new THREE.Vector4(skim.outer.bands.gap, skim.outer.bands.soft, skim.outer.bands.width, skim.outer.bands.over) },
       uOuterWaves: { value: new THREE.Vector4(skim.outer.bands.waves[0], skim.outer.bands.waves[1], skim.outer.bands.waves[2], skim.outer.bands.seed) },
       uOuterGaps: { value: new THREE.Vector4(skim.outer.bands.floor, skim.outer.bands.lines, skim.outer.bands.filter, skim.outer.bands.shift) },
