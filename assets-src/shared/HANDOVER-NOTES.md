@@ -1838,6 +1838,27 @@ and plan.ts back by hash.
   (which the cut made 1: only Uranus 4454 and 4455, 11.00 and 9.80 px) is replaced by: the first frame of each flight that moves by more
   than fromPx has exactly endsBy(LAW, seen) and more than 0. The comment of the law in src/core/motion.ts gets the present numbers.
 
+### 18:17 to 18:25 UTC, 25 Nov: N is laid and pushed without waiting for main; the trial of the lookups renders
+
+- Main at 18:17 is 62a03dd0 (status 325, d317: the other ending is dropped, Neptune stays the last stop; narration is /root's own work;
+  the second cut's checks c2b are out on the machines). The cut a1032553 is still not in main.
+- THE REHEARSAL: the whole suite on the trial merge with the first wording of N: 988 passed, 0 failed, 87 files (18:05 to 18:16).
+- N REWRITTEN FREE OF THE PATH (`python3 /tmp/name/commentfix2.py ROOT`): the comment of the law in `src/core/motion.ts` names no frame
+  and no px of the film; the test "give the first frame of a flight the ends of the last frame of its rise ..." of
+  `tests/shutter-ends.test.ts` holds the first frame of each flight over fromPx to `endsBy(LAW, seen)` and above 0 in place of the count
+  `above`. So N holds on main without the cut and with it, and /root may merge the two in either order.
+  - COMMIT N db070a4ad700376d005887142600a34a23b538d1 on D, tree 7fe075a4b70a0f6c169eaab20bab6a5e39563120, PUSHED to
+    `agent/engine-flight` at 18:21. Export `t-n` (old main's code): tsc clean, the two shutter files 44 of 44. Its merge with the cut
+    (tree 5243c08ac73cff8b54c85569a6c62fba1802c0a1 by `git merge-tree`, export `t-nc`): the two shutter files 44 of 44. Both ran beside
+    a render.
+  - Still to do for the NAMED: merge main as it is at the time (M), the whole suite (12 min, no render beside it) and `npm run build`
+    on the tip, then the mail. If main has no cut by about 18:45: name on main as it is, say so, and give the trial merge's numbers.
+- THE TRIAL OF MAIL 1210 POINT 2 runs from 18:18 in `t-c2a` (`/tmp/trial/chain.sh`, log `/tmp/trial/chain.log`; the original of
+  earth_builder's file is `/tmp/trial/globe.orig.ts`, sha256 43e631fd..., and the chain puts it back at its end): `t-fin0`, `t-finB`,
+  `t-finA` hold 1857 at final (64 samples, sharp 2.05, so uGrad 0.698); `t-rev0`, `t-revB`, `t-revA` hold 1916 (a slow frame of the
+  dive: the way is fed, 3.6 px) and 2000 (a frame of the hold: no way) at review for the proof by sha256 that the patch changes no byte
+  there. To stop it for the suite: kill the chain and `cp /tmp/trial/globe.orig.ts t-c2a/src/stops/earth/globe.ts`.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
