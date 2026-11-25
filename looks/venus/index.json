@@ -1,9 +1,31 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T18:32:42.668Z",
+ "pushed": "2026-11-25T18:59:43.100Z",
  "head": "9b54c18f38b71768534a57e8e0563ce5f98cb0ac",
- "note": "finals 1287 and 1586 of 54480b0c; the row 1555.5 by control cF2 (footprint of step 2); the hold with no exchange (D2) at 4 to 1",
+ "note": "the filled hold sky plate measured at final 1185 beside main's: stays out (G17 and match worse); MAIL 1256 read, point 2 in work",
  "looks": [
+  {
+   "time": "2026-11-25T18:59:42.454Z",
+   "file": "20261125185942454-note-sky-crop3.jpg",
+   "source": "../../../../tmp/v/sh/sky-crop3.png",
+   "kind": "note",
+   "label": "hold sky plate at final 1185, no grain, 3 to 1, x 1457 to 1777, y 598 to 798: main's plate left, the filled plate right (not laid in: G17 0.962 to 0.935, match 2.473 to 2.491)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T18:48:55.682Z",
+   "file": "20261125184855682-job-frame-01185.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "venus.hold frame 1185, final tier, nograin view, from the running measure job",
+   "stop": "venus",
+   "segment": "venus.hold",
+   "frame": 1185,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-25T18:32:42.074Z",
    "file": "20261125183242074-note-D2-hold4.jpg",
@@ -50,22 +72,6 @@
    "source": "../../../../tmp/v/sh/L5d-4.jpg",
    "kind": "note",
    "label": "54480b0c whole dive, every half frame 1300 to 1314 and a half",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T17:55:06.154Z",
-   "file": "20261125175506154-note-L5-rmid.jpg",
-   "source": "../../../../tmp/v/sh/L5-rmid.jpg",
-   "kind": "note",
-   "label": "54480b0c rise 1564 to 1580 by two at 1 to 1 (x 540 to 1040, y 450 to 850): the new red 1566 to 1568 and a half",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T17:55:05.429Z",
-   "file": "20261125175505429-note-L5p-2.jpg",
-   "source": "../../../../tmp/v/sh/L5p-2.jpg",
-   "kind": "note",
-   "label": "dive 1308 to 1338: b0b87889 left, 54480b0c right",
    "stop": "venus"
   }
  ]
