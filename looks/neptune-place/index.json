@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T00:23:23.292Z",
+ "pushed": "2026-11-25T00:35:15.691Z",
  "head": "7f22b7d9071ad5aa952269178338627a45772cc5",
- "note": "one field at place 5.0: tone trials at 4860 beside the approved close, the hold crop, a rejected grade",
+ "note": "7f22b7d9: one field, web grooves at 4605 named, 4860 beside approved, dive every frame started",
  "looks": [
+  {
+   "time": "2026-11-25T00:35:14.399Z",
+   "file": "20261125003514399-note-dive-4680.jpg",
+   "source": "out/work/nep/weave/ev/dive-4680.jpg",
+   "kind": "note",
+   "label": "dive 4680 to 4691, every frame, full set, draft preview on 7f22b7d9, 6 to 23 s per frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T00:35:13.210Z",
+   "file": "20261125003513210-note-named-4860.jpg",
+   "source": "out/work/nep/weave/named-4860.jpg",
+   "kind": "note",
+   "label": "4860 approved close | full | web on 7f22b7d9; G17 full 1.095 0.482, web 1.023 0.317 (fell when the terrain sky patch went); 38.2 s full, 27.7 s web per draft frame; still bluer than the approved slate",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T00:35:12.025Z",
+   "file": "20261125003512025-note-oval-4605.jpg",
+   "source": "out/work/nep/weave/oval-4605.png",
+   "kind": "note",
+   "label": "4605 oval, full against web on 7f22b7d9: the web set draws grooves in the dark oval (levels count the web texels, so they arrive at twice the height); mean 6.45 of 255 in the box; cure in its own commit next",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T00:23:21.929Z",
    "file": "20261125002321929-note-C1-dive.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/weave/place5-4860.jpg",
    "kind": "note",
    "label": "4860 one field by place beside the approved close: head, place 5.0 full and web, place 1.2 and 3.5; G17 1.462 and 1.124 full; 40 s a draft frame; working tree",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T23:13:06.508Z",
-   "file": "20261124231306508-note-obj-4605-11.jpg",
-   "source": "out/work/nep/weave/obj-4605-11.png",
-   "kind": "note",
-   "label": "22:35 TRIAL the scene's own picture at full weight at the hold as it stood: a pale foreign disc, 1 to 1 (hero | head | trial)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T23:13:05.660Z",
-   "file": "20261124231305660-note-of1-4605.jpg",
-   "source": "out/work/nep/weave/of1-4605.png",
-   "kind": "note",
-   "label": "23:10 TRIAL one field, step 1: 4605 at 1 to 1, hero | head | trial with the objects at full strength at the hold; a white glow at the spiral and a dark chunk are faults to cure",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T23:13:04.856Z",
-   "file": "20261124231304856-note-of1-4860.jpg",
-   "source": "out/work/nep/weave/of1-4860.jpg",
-   "kind": "note",
-   "label": "23:10 TRIAL one field, step 1 (not kept yet): approved close | 4860 head | 4860 with the map as the deck and the scene's detail on it; G17 of the 1920 files head 0.977 and 0.638, trial 1.382 and 0.944; too blue, white sheet at the horizon; 82 s per draft frame",
    "stop": "neptune"
   }
  ]
