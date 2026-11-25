@@ -1,8 +1,8 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T15:39:07.204Z",
- "head": "caaa727dac0700ca06512860cdbb6faba2855888",
- "note": "caaa727d: cause A measured at 1857 (blocks go with the shutter closed); dive lines stopped at frame 1892 for it; 2156 rendering",
+ "pushed": "2026-11-25T15:56:16.632Z",
+ "head": "4c4ae28cd41d8d873d8d51f86ff54b7bf14f6800",
+ "note": "cause A: 1857 and 2156 at final, shutter open beside closed; the open shutter makes blocks, a plain blur model does not; cause not found yet",
  "looks": [
   {
    "time": "2026-11-25T15:39:06.447Z",
