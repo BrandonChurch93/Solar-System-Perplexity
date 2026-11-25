@@ -227,6 +227,7 @@ out float vReal;
 out float vPit;
 out float vDeep;
 out float vCorner;
+out float vTall;
 out vec2 vG;
 flat out float vSink;
 flat out vec2 vAxis;
@@ -339,6 +340,7 @@ void main() {
   vPit = pitAway;
   vDeep = deep;
   vCorner = corner;
+  vTall = tall;
   vSink = sink;
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   vView = mv.xyz;
@@ -365,6 +367,7 @@ uniform vec4 uLabAway;
 uniform vec3 uLabAwayTint;
 uniform vec4 uLabHaze;
 uniform vec4 uLabHazeTint;
+uniform vec4 uLabGas;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${GRADE_GLSL}
@@ -379,14 +382,64 @@ vec3 thrown(vec3 base, vec3 lit) {
 // picture's white (it blooms). A thin glowing haze lies low over the ground: the lower the place and the flatter
 // the look, the more of it is in the way. The lights that the opening throws on the ground, the exposure and the
 // vignette follow as on the standing ground
+// (c) the thin gas over the ground glows along the path to the eye, by the heat of the ground under it: a skin that
+// lies on the domes and a pool that fills the low places between them. The sight line from the place to the eye is
+// walked through the layer in steps (finer near the place); at each step the ground under it is read from the map
+// of the tile (its heat and its height, the comb toward the spot undone). x: the mean heat of the gas that glows,
+// y: how much gas lies in the way. A function of the place and the eye alone
+#if ${lab.gas.steps} > 0
+vec2 labGas(vec3 here) {
+  vec3 toEye = uLabEye - here;
+  float dist = length(toEye);
+  vec3 dir = toEye / max(dist, 1e-6);
+  float mu = max(dot(normalize(here - ST_CENTRE), dir), 0.03);
+  float over0 = length(here - ST_CENTRE) - ST_RADIUS;
+  float span = min(max(${lab.gas.top.toFixed(3)} - over0, 0.0) / mu, dist);
+  float lit = 0.0;
+  float tau = 0.0;
+  float texel = ${(lab.far.map / lab.sim.tile * lab.far.cell).toFixed(3)} / uLabFar.z;
+  for (int k = 0; k < ${lab.gas.steps}; k++) {
+    float t0 = span * float(k * k) / ${(lab.gas.steps * lab.gas.steps).toFixed(1)};
+    float t1 = span * float((k + 1) * (k + 1)) / ${(lab.gas.steps * lab.gas.steps).toFixed(1)};
+    vec3 q = here + dir * (0.5 * (t0 + t1));
+    vec3 dq = q - ST_CENTRE;
+    float lq = length(dq);
+    dq /= lq;
+    vec2 lie = vec2(dot(dq, ST_RIGHT), dot(dq, ST_FWD));
+    float ring = length(lie);
+    vec2 g = ring > 1e-7 ? lie / ring * (atan(ring, -dot(dq, ST_DOWN)) * ST_RADIUS) : vec2(0.0);
+    vec2 ds = g - uLabSpot.xy;
+    float r = length(ds);
+    vec2 cp = uLabSpot.xy + ds * ((r + uLabSpot.z * exp(-(r * r) / (uLabSpot.w * uLabSpot.w))) / max(r, 1e-6));
+    float lod = log2(max(max(distance(q, uLabEye) / mu, t1 - t0) * texel, 1.0));
+    vec4 m = textureLod(uLabMap, cp / uLabFar.w, lod);
+    float away = length(g - uLabPitAt.xy);
+    float thin = 0.05 + 0.95 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, away);
+    float ground = m.g * mix(${lab.dome.pen.toFixed(3)}, 1.0, smoothstep(uLabPit.w * 1.7, uLabPit.w * 3.8, r)) - labPit(g);
+    float up = lq - ST_RADIUS;
+    float dens = uLabGas.x * exp(-max(up - ground, 0.0) / uLabGas.y) + uLabGas.z * exp(-max(up + labPit(g), 0.0) / uLabGas.w);
+    float dt = (t1 - t0) * thin * dens;
+    lit += exp(-tau) * (1.0 - exp(-dt)) * m.r;
+    tau += dt;
+  }
+  return vec2(lit / max(1.0 - exp(-tau), 1e-5), tau);
+}
+#endif
 vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
   vec3 shown = texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb;
   vec3 col = inverseFilmic(grade(shown, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   vec3 upHere = normalize(here - ST_CENTRE);
   float over = length(here - ST_CENTRE) - ST_RADIUS;
   float mu = max(dot(upHere, normalize(uLabEye - here)), 0.0);
+#if ${lab.gas.steps} > 0
+  vec2 gas = labGas(here);
+  float tau = gas.y;
+  vec3 glow = texture(uRamp, vec2(clamp(gas.x * uLabHaze.z, 0.0, 1.0), 0.5)).rgb;
+  col = col * exp(-tau * ${lab.gas.dim.toFixed(2)}) + inverseFilmic(grade(glow, 0.0)) * (1.0 + uLabHazeTint.w * max(gas.x * uLabHaze.z - 1.0, 0.0)) * (1.0 - exp(-tau));
+#else
   float tau = thin * uLabHaze.x * exp(-max(over, 0.0) / uLabHaze.y) / pow(max(mu, 0.02), uLabHaze.w);
   col = col * exp(-tau * 0.6) + inverseFilmic(grade(uLabHazeTint.rgb, 0.0)) * (uLabHaze.z * (1.0 - exp(-tau)));
+#endif
   vec2 gb = stImage(here);
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
   for (int k = 0; k < ((here.z < -0.5 && gb.x > 0.0 && gb.x < 1.0 && gb.y > 0.0 && gb.y < 1.0) ? 1 : 0); k++) {
@@ -428,6 +481,7 @@ in float vReal;
 in float vPit;
 in float vDeep;
 in float vCorner;
+in float vTall;
 in vec2 vG;
 flat in float vSink;
 flat in vec2 vAxis;
@@ -443,6 +497,22 @@ float vnp(vec2 p, float per) {
   float x0 = mod(i.x, per);
   float x1 = mod(i.x + 1.0, per);
   return mix(mix(h1(vec2(x0, i.y)), h1(vec2(x1, i.y)), f.x), mix(h1(vec2(x0, i.y + 1.0)), h1(vec2(x1, i.y + 1.0)), f.x), f.y);
+}
+// the heat that wells up in a cell and spreads: lumps of hotter and cooler gas that are born small about the middle,
+// grow outward with the gas and fade at the rim, two generations at any time, one fading in as the other fades out.
+// d: the place on the dome (0 at the crown, 1 at the foot), t: the time in seconds
+float labWell(vec2 d, float seed, float t) {
+  float sum = 0.0;
+  for (int k = 0; k < 2; k++) {
+    float at = t / ${lab.heat.spread[0]!.toFixed(2)} + 0.5 * float(k) + seed * 7.0;
+    float ph = fract(at);
+    float gen = floor(at);
+    vec2 q = d * exp(-${lab.heat.spread[1]!.toFixed(2)} * (ph - 0.5));
+    vec2 o = vec2(37.0 * fract(gen * 0.6180339 + seed), 91.0 * fract(gen * 0.3819660 + seed * 3.0));
+    float n = 0.6 * vn(q * ${lab.heat.spread[2]!.toFixed(2)} + o) + 0.4 * vn(q * ${(lab.heat.spread[2]! * 2.3).toFixed(2)} - o);
+    sum += n * (1.0 - abs(2.0 * ph - 1.0));
+  }
+  return sum;
 }
 void main() {
   vec3 s = normalize(vS);
@@ -504,7 +574,7 @@ void main() {
   float blotch = max(max(exp(-dot(d - b1, d - b1) / (r1 * r1)), 0.9 * exp(-dot(d - b2, d - b2) / (r2 * r2))), 0.8 * exp(-dot(d - b3, d - b3) / (r3 * r3)));
   float rise = mix(blotch * pow(max(1.0 - plan * plan, 0.0), uLabHeatB.x), 1.0, ${lab.join.merge.toFixed(2)} * smoothstep(0.55, 0.95, join));
   float fan = 0.1 * mix(0.5, fa, ka) + 0.35 * mix(0.5, fb, kb) + 0.55 * mix(0.5, fc, kc);
-  float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mott - 0.5);
+  float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mix(mott, labWell(d, seed, uLabTime.x), ${lab.heat.spread[3]!.toFixed(2)}) - 0.5);
   float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
   float top = mix(uLabHeatB.w, 1.0, middle) * (0.55 + 0.9 * wide);
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(0.04, 0.4, along));
@@ -540,7 +610,7 @@ void main() {
 #endif
   heat = uLabHeat.x + heat * mix(uLabHeatMore.y, 1.0, pow(mu, ${lab.heat.limb.toFixed(2)}));
 #ifdef LAB_MAP
-  outColor = vec4(heat, 0.0, 0.0, 1.0);
+  outColor = vec4(heat, vTall, 0.0, 1.0);
 #else
   vec2 gx = dFdx(vG);
   vec2 gy = dFdy(vG);
@@ -692,6 +762,7 @@ export class LabGround {
       uLabMore: { value: new THREE.Vector4(d.over, d.lobe, d.pen, lab.join.level) },
       uLabJoin: { value: new THREE.Vector4(lab.join.scale, lab.spot.strand[0]!, lab.spot.strand[1]!, lab.join.heat) },
       uLabHaze: { value: new THREE.Vector4(hz.amount, hz.scale, hz.level, hz.power) },
+      uLabGas: { value: new THREE.Vector4(lab.gas.skin[0]!, lab.gas.skin[1]!, lab.gas.pool[0]!, lab.gas.pool[1]!) },
       uLabHazeTint: { value: new THREE.Vector4(hz.tint[0]!, hz.tint[1]!, hz.tint[2]!, ht.bloom) },
       uLabCount: { value: new THREE.Vector4(f.counts[0]!, f.counts[1]!, f.counts[2]!, f.root) },
       uLabFar: { value: new THREE.Vector4(lab.far.px[0]!, lab.far.px[1]!, 1, TILE) },
