@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T23:28:31.157Z",
- "head": "573431fb53a875f5a78cb152a458f82656ac6bb7",
- "note": "state n at 3150: low band 4.801 against main 3.539; v1 shows the same ground with no dark matter",
+ "pushed": "2026-11-25T23:52:57.325Z",
+ "head": "2b862255d34c569d3c81de5974ddf1ecd8a729eb",
+ "note": "23:53 UTC: the q series (terrain to cumulus, no solve) and state r at master. Round tops on all ages plus cast shadows read as cloud; darkness now comes from the Sun's cast shadows. Next: calmer storm, finer heads, then the solve again",
  "looks": [
+  {
+   "time": "2026-11-25T23:52:56.539Z",
+   "file": "20261125235256539-note-r-3150.jpg",
+   "source": "../work/r23/t/r-3150.png",
+   "kind": "note",
+   "label": "3150 master draft, state r: round tops and cast shadows (q6) after three solve rounds with the brightening capped. Low band 11.259 (main 3.539, state n 4.801), bands 1.11 1.05 0.96 0.90. Reads as a cumulus deck; the storm is lumpy and too dark, heads too big",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T23:46:37.571Z",
+   "file": "20261125234637571-note-q6-3150.jpg",
+   "source": "../work/r23/t/q6-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state q6: round tops on every age, softer cast shadows, no solve yet. First state that reads as cumulus",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T23:46:36.929Z",
+   "file": "20261125234636929-note-q4-3150.jpg",
+   "source": "../work/r23/t/q4-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state q4: taller tops with plateaus. Eroded rock, wrong; the cast shadows darken the lower left by the Sun alone",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T23:46:36.273Z",
+   "file": "20261125234636273-note-q3-3150.jpg",
+   "source": "../work/r23/t/q3-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state q3: waves 0.12 units and a flatter spectrum. Finer streaks along the streamlines, still rock",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T23:46:35.588Z",
+   "file": "20261125234635588-note-q1-3150.jpg",
+   "source": "../work/r23/t/q1-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state q1: uncut unrest gates the billows, hue law, no solve yet. Lumps of 100 px and more, reads as terrain",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T23:28:30.330Z",
    "file": "20261125232830330-note-n-3150.jpg",
@@ -154,46 +194,6 @@
    "source": "../work/r21/mine/k006120-r2-draft.png",
    "kind": "note",
    "label": "O answer: my head b660882, frame 3060, draft tier, 1 to 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:57:34.159Z",
-   "file": "20261125205734159-note-o-storm-1to1.jpg",
-   "source": "../work/r21/o-storm-1to1.png",
-   "kind": "note",
-   "label": "O answer: the storm at 1 to 1, crops of 3060, 3150, 3239: main above, my head b660882 below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:57:33.501Z",
-   "file": "20261125205733501-note-k006300-r2-draft.jpg",
-   "source": "../work/r21/mainf/k006300-r2-draft.png",
-   "kind": "note",
-   "label": "O answer: main ce8cb68b, frame 3150, draft tier, 1 to 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:57:32.851Z",
-   "file": "20261125205732851-note-k006478-r2-draft.jpg",
-   "source": "../work/r21/mainf/k006478-r2-draft.png",
-   "kind": "note",
-   "label": "O answer: main ce8cb68b, frame 3239, draft tier, 1 to 1 (against 3060 the eye and its bright crescent have turned 50.7 degrees as rigid rings)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:57:32.022Z",
-   "file": "20261125205732022-note-k006120-r2-draft.jpg",
-   "source": "../work/r21/mainf/k006120-r2-draft.png",
-   "kind": "note",
-   "label": "O answer: main ce8cb68b, frame 3060, draft tier, 1 to 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:40:28.584Z",
-   "file": "20261125204028584-note-k006300-r2-draft.jpg",
-   "source": "../work/r21/mine/k006300-r2-draft.png",
-   "kind": "note",
-   "label": "o1 my head b660882 frame 3150 draft 1 to 1 (surface view, middle)",
    "stop": "jupiter"
   }
  ]
