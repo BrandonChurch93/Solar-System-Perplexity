@@ -97,6 +97,7 @@ uniform vec3 uFringeHairCurl;
 uniform vec3 uFringeHairTop;
 uniform vec2 uFringeHairAll;
 uniform vec3 uFringeHairTuft;
+uniform vec3 uFringeHairColour;
 uniform vec2 uFringeHair[${MAX_LOBES}];
 uniform vec3 uFringeSpike;
 uniform vec2 uFringeWay;
@@ -111,6 +112,8 @@ uniform vec3 uLimbGlow;
 uniform float uKeepFloor;
 uniform vec3 uKeepCoarse;
 uniform float uKeepSoft;
+uniform vec4 uKeepWarm;
+uniform vec2 uKeepWarmAt;
 uniform float uHeatFloor;
 uniform vec2 uPlage;
 uniform vec3 uLoopLook;
@@ -332,6 +335,7 @@ void main() {
         vec3 less = (vec3(0.995) - lit) * -knotLight;
         patched = lit - mix(less, vec3(dot(less, vec3(0.3, 0.6, 0.1))), uKnotShade.x) * uKnotShade.y;
       }
+      for (int w = 0; w < (uKeepWarm.x > 0.0 ? 1 : 0); w++) patched *= 1.0 - vec3(0.0, uKeepWarm.z, uKeepWarm.w) * (uKeepWarm.x * smoothstep(uKeepWarmAt.x, uKeepWarmAt.y, vnoise(d * uKeepWarm.y + 9.0)));
       body += share * inverseFilmic(patched);
     }
     col = body * cover;
@@ -479,7 +483,7 @@ void main() {
       }
       hair *= hd * uFringeHairBy.z;
     }
-    gas += burnWhite(uFringeColour * ((sum * dt + hair) * uFringe.z * uBurn.x));
+    gas += burnWhite((uFringeColour * (sum * dt) + uFringeHairColour * hair) * (uFringe.z * uBurn.x));
   }
   for (int n = 0; n < (cover < 0.5 && (uParts & 4) != 0 ? ${MAX_KNOTS} : 0); n++) {
     if (uKnotBy[n].z <= 0.0) continue;

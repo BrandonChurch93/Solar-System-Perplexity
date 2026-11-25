@@ -109,6 +109,12 @@ one had too little in the wide bands and the face read as washed white. The tint
 of the mottle in the blue and the green, where the approved image has it (cream against white), and the
 ceiling `white` is higher in the green and the blue so the limb can go as white as the approved one.
 The mottle is not laid over the white of a knot: it fades out between 0.6 and 1 of the knot's light.
+`keep.warm` gives the burnt face wide warm zones: where a value noise of the place on the sphere
+(`warm[1]` zones across a radian, fixed to the body) climbs from `keep.warmAt[0]` to `keep.warmAt[1]`,
+the face loses the share `warm[2]` of its green and `warm[3]` of its blue, times `warm[0]` and the burn.
+It is a tint of the mottle that is there and draws no spot: MEASURED on the approved Mercury image the
+darker quarter of the face is orange (red over green by 9.2 to 10.2 levels), where the look before was
+pale (6.1 to 6.5). It is nothing at burn 0, and a look without it pays nothing (a loop of count 0).
 `tight` is 1.0 where it was 2.6 and `tightColour` has less blue: the narrow light just outside the limb
 was too white (MEASURED 6 to 12 levels too much blue from 1.0 to 1.09 radii), which made the limb read
 soft. With less of it the body ends at a limb and the gas outside it is gold.
@@ -211,6 +217,11 @@ lean one way as the approved ones do. Both are angles on the sphere, zero if abs
 
 `spike` is the strength of the two scales of the marched flames and their power (the thinness of the
 places where they stand): lower strengths leave less of a smooth haze just outside the limb.
+In this look the flames are dense and low (`spike` 60 and 40 over a power of 6 where it was 22 and 14 over
+8, `height` 0.02 and 0.07 where it was 0.03 and 0.12): in the approved Mercury image the face runs out
+into dense fine spikes that hide the edge, and the look before read as a clean pale arc with thin threads
+standing off it. The three lobes at the lower left of the hold's view carry more of them (`gain` 8, 4 and
+8 where it was 4, 1.5 and 4).
 
 `hair` is the distinct fine strands of the limb. It is a function of the place in three dimensions,
 fixed in the body's frame, and it is drawn by a short march of its own along the ray: `steps` equal steps
@@ -232,9 +243,13 @@ the hold's view 0.09 and 0.10): MEASURED beside the approved image its flames at
 fewer, longer and more curled than the hair of the look before. The two lobes at the bottom of the hold's
 view carry taller hair and a few strands of the fringe with a longer `reach`, where the approved image
 has tongues of flame; their smooth low glow is halved to make room for them. The lobe that thins the hair
-under the loop is wider (10 degrees, 0.95 of the hair), so the taller hair does not stand in the loop. The hair takes the fringe's
-colour, exposure and share of the far look, so it is absent at the handover and in the Sun stop's own
-views.
+under the loop is wider (10 degrees, 0.95 of the hair), so the taller hair does not stand in the loop. The hair has
+a colour of its own, `hair.colour` (the fringe's if absent): a deeper orange (1, 0.36, 0.06) than the
+fringe's gold, so the tongues at the lower left read orange and not pale. The strands are thicker and
+closer than in the look before (`sharp` 12 where it was 20; `thick` 0.6 where it was 0.85, since strands
+that are thicker sum to more light). The hair takes the fringe's exposure and share of the far look, so
+it is absent at the handover and in the Sun stop's own views. The rays of the knot at the left limb are
+closer too (`fine` 12 where it was 9).
 
 MEASURED, the angle in degrees between the view through the Sun's centre and the direction `at` (the view
 of the hold at Mercury), every 20th frame. It says how far round the body the camera has gone; nothing
@@ -270,8 +285,8 @@ to 1.0), at most 8 in each zone of gas (1.0 to 1.1, 1.1 to 1.3, 1.3 to 1.6, beyo
 reported and not ruled. The box does not move.
 
 MEASURED at the draft tier with `PIL` `GaussianBlur(12)` on both pictures at 1920 by 1080, mean of the
-absolute difference over the three channels: this look gives 4.39 in the box (the looks before it 4.40,
-4.07, 4.13, 4.42 and 4.57), face 3.0, limb 3.3, gas 4.8, 7.6, 4.7 and 4.5. Every zone is inside its bound.
+absolute difference over the three channels: this look gives 4.35 in the box (the looks before it 4.39,
+4.40, 4.07, 4.13, 4.42 and 4.57), face 2.9, limb 3.2, gas 4.8, 7.6, 4.7 and 4.5. Every zone is inside its bound.
 The box is over its 4.0: the rule stands and this look does not meet it. The look of a3df7524 had 4.07
 with a face of 2.0, and its face was washed white beside the approved image: the number went up by 0.33
 because the face now carries mottle, and mottle that does not lie grain for grain where the approved
@@ -283,35 +298,54 @@ levels too dark where it was 17 to 21), the gas from 1.3 to 1.6 radii between po
 (11 levels too little blue), the bloom of the left limb at 1.3 radii (8 to 10 levels too much red and
 green) and the reach of the glare at the upper left.
 
+MEASURED on the approved Mercury image, the circle of its disc (a fit to its limb): centre 1892.1, 63.4,
+radius 443.7 px of the 1920 by 1080 frame, where the sphere the far Sun is handed at the hold draws
+centre 1808.6, 132.1, radius 339.6. As a true sphere in the hold's lens that is 11.69 degrees of radius
+(plus or minus 0.09) where the plan hands 9.2. The far Sun draws the sphere it is handed and fakes no
+circle: the size and the place belong to Mercury's plan. Every number of this section is taken on the
+sphere of 9.2 degrees, with the zones on its circle. When the plan hands the larger sphere the values of
+this look that are lengths beside the disc (the glare, the halo, the heights of the gas) are set again
+with it, and `wear[1]` goes from 6.2546 to one over the sine of the new radius. The rays of the left limb
+are still hazier and fewer than the approved image's: closer and brighter rays (`fine` 14, `gain` 70 to
+110) were tried and cost 0.15 to 0.3 levels in the box and took the gas from 1.1 to 1.3 radii to its
+bound of 8 and over it (8.2 and 8.3 at 110).
+
 MEASURED, the contrast of the face by band (the standard deviation of the luminance, in levels, of the
 picture split into bands of 0 to 2, 2 to 5, 5 to 12 and 12 to 30 px), at 0 to 0.5, 0.5 to 0.8, 0.8 to 0.9
 and 0.9 to 0.97 radii:
 
 | radii | approved | this look | a3df7524 |
 |-------|----------|-----------|-----------------|
-| 0 to 0.5 | 1.23, 1.23, 1.46, 1.77 | 1.24, 1.39, 1.46, 1.36 | 1.23, 1.17, 1.14, 1.35 |
-| 0.5 to 0.8 | 1.23, 1.17, 1.20, 1.43 | 1.26, 1.34, 1.48, 1.39 | 1.42, 1.14, 1.10, 1.23 |
-| 0.8 to 0.9 | 1.46, 1.23, 1.16, 1.40 | 1.18, 1.15, 1.30, 1.46 | 1.58, 1.09, 1.02, 1.37 |
-| 0.9 to 0.97 | 1.45, 1.18, 1.60, 3.96 | 1.12, 1.15, 1.41, 3.21 | 1.34, 0.77, 0.88, 2.71 |
+| 0 to 0.5 | 1.23, 1.23, 1.46, 1.77 | 1.25, 1.40, 1.47, 1.39 | 1.23, 1.17, 1.14, 1.35 |
+| 0.5 to 0.8 | 1.23, 1.17, 1.20, 1.43 | 1.26, 1.34, 1.50, 1.50 | 1.42, 1.14, 1.10, 1.23 |
+| 0.8 to 0.9 | 1.46, 1.23, 1.16, 1.40 | 1.18, 1.14, 1.32, 1.26 | 1.58, 1.09, 1.02, 1.37 |
+| 0.9 to 0.97 | 1.45, 1.18, 1.60, 3.96 | 1.12, 1.14, 1.24, 2.91 | 1.34, 0.77, 0.88, 2.71 |
 
 The face is still short of the approved image in the widest band at the centre and in every band from 0.9
-radii to the limb. Where it is over the approved image's it is over by at most 0.28 levels (the band of 5 to 12 px at 0.5
-to 0.8 radii). The mottle grows toward the limb by `limb[2]` 1.6 where it was 1.2.
+radii to the limb. Where it is over the approved image's it is over by at most 0.30 levels (the band of 5 to 12 px at 0.5
+to 0.8 radii). The mottle grows toward the limb by `limb[2]` 1.6 where it was 1.2. The mottle is not
+pushed further than the approved image's: the warm zones tint what is there.
+
+MEASURED, the colour of the darker quarter of the face (red over green, in levels) at the same four
+ranges of radius: the approved image 9.2, 9.9, 10.2 and 10.2; this look 6.7, 7.9, 7.1 and 7.0; the look
+before 6.1 to 6.5. The face is warmer and still short of the approved image's orange. A stronger tint
+(`warm` 0.034 and 0.06 over 5.5 zones) gave 7.5, 7.7, 6.3 and 7.1 and cost 0.09 levels in the box.
 
 MEASURED, the limb between position angles 110 and 150 (mean colour at a radius, draft tier): at 0.976
-radii the approved image 252, 252, 244, this look 253, 250, 238, a3df7524 252, 248, 236; at 1.011
-radii 249, 240, 211 against 248, 238, 211 (before 251, 244, 227); at 1.029 radii 244, 229, 192 against
-242, 229, 195 (before 246, 236, 213); at 1.064 radii 234, 211, 167 against 231, 212, 171 (before 235, 219,
-184). The step from the face to the gas is now the approved image's within 4 levels, where the look
-before was up to 21 levels too white just outside the limb.
+radii the approved image 252, 252, 244, this look 253, 249, 237, a3df7524 252, 248, 236; at 1.011
+radii 249, 240, 211 against 251, 243, 218 (a3df7524 251, 244, 227); at 1.029 radii 244, 229, 192 against
+247, 235, 202 (a3df7524 246, 236, 213); at 1.047 radii 239, 220, 179 against 243, 229, 189; at 1.082
+radii 227, 202, 154 against 234, 212, 162. The dense flames that hide the edge make the first tenth of a
+radius outside the limb up to 10 levels whiter than the approved image's there (the look of 12b9c5ef was
+within 4 levels and read as a clean arc).
 
 MEASURED, the colour of the loop's strands (the brightest 3 percent of the place of the loop) and of the
-ground under them: the approved image 234, 211, 166 on 193, 163, 116; this look 221, 194, 143 on 178, 151,
-108, as the look before.
+ground under them: the approved image 234, 211, 166 on 193, 163, 116; the look of 12b9c5ef 221, 194, 143
+on 178, 151, 108. The loop's own values are unchanged in this look and it is not measured again.
 
-MEASURED at the final tier on the look before this one (261f6dff, one picture, 587 s with nothing else
-running): 4.40 in the box as at its draft tier, face 3.0, limb 3.3, gas 5.0, 7.6, 4.7 and 4.5; the plain
-number 7.76 (7.69 at the draft tier). This look is measured at the draft tier only (plain 7.71).
+MEASURED at the final tier on the look before this one (12b9c5ef, one picture, 573 s with nothing else
+running): 4.39 in the box as at its draft tier; the plain number 7.77. This look is measured at the draft
+tier only (plain 7.63).
 
 ## The cost
 
