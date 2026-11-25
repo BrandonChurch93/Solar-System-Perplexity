@@ -1,9 +1,47 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T07:35:45.183Z",
- "head": "d8d0df3d7b2374a8fdd40e1a1734734cbd6d68f0",
- "note": "sun lab state y 9119c72: fibres, veins, joins, thread penumbra",
+ "pushed": "2026-11-25T07:56:11.759Z",
+ "head": "ac24b9b8f35fb0dee30f4618290bb567559897be",
+ "note": "sun lab state zk ac24b9b: mottled hot tops, dark by depth, smaller plumper cells",
  "looks": [
+  {
+   "time": "2026-11-25T07:56:11.186Z",
+   "file": "20261125075611186-note-pair-90-near.jpg",
+   "source": "out/work/sun/lab/pair-90-near.jpg",
+   "kind": "note",
+   "label": "lab pair near state zk",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:56:10.652Z",
+   "file": "20261125075610652-note-pair-90-spot.jpg",
+   "source": "out/work/sun/lab/pair-90-spot.jpg",
+   "kind": "note",
+   "label": "lab pair spot state zk",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:56:09.973Z",
+   "file": "20261125075609973-note-lab-90-zk.jpg",
+   "source": "out/work/sun/lab/lab-90-zk.png",
+   "kind": "note",
+   "label": "lab frame 90 state zk ac24b9b",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:55:19.943Z",
+   "file": "20261125075519943-frame-lab-90-zk.jpg",
+   "source": "out/work/sun/lab/lab-90-zk.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T07:35:44.412Z",
    "file": "20261125073544412-note-pair-90-near.jpg",
@@ -29,49 +67,11 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T07:27:52.588Z",
-   "file": "20261125072752588-frame-lab-90-y.jpg",
-   "source": "out/work/sun/lab/lab-90-y.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
    "time": "2026-11-25T07:02:23.190Z",
    "file": "20261125070223190-note-pair-90-near.jpg",
    "source": "out/work/sun/lab/pair-90-near.jpg",
    "kind": "note",
    "label": "lab pair near ground, approved left",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:02:22.650Z",
-   "file": "20261125070222650-note-pair-90-spot.jpg",
-   "source": "out/work/sun/lab/pair-90-spot.jpg",
-   "kind": "note",
-   "label": "lab pair spot, approved left",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:02:21.934Z",
-   "file": "20261125070221934-note-lab-90-o.jpg",
-   "source": "out/work/sun/lab/lab-90-o.png",
-   "kind": "note",
-   "label": "lab ground frame 90 draft, heat alone",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T06:36:22.743Z",
-   "file": "20261125063622743-note-lab-90-b.jpg",
-   "source": "out/work/sun/lab/lab-90-b.png",
-   "kind": "note",
-   "label": "sun lab: first raw still of frame 90 with real dome geometry (too large, too pale, no umbra yet)",
    "stop": "sun"
   }
  ]
