@@ -110,26 +110,7 @@ def extend(value, got, sweeps=40):
 
 
 def grade():
-    path = os.path.join(GEN, 'grade.json')
-    if os.path.exists(path):
-        return np.array(json.load(open(path))['far'], np.float32)
-    work = dict(PL['mid'])
-    work['pixels'] = [768, 768]
-    unit = work['size'][0] / work['pixels'][0]
-    rgb, h, seen, along = image_lay(work)
-    base, _ = cleared_globe(work)
-    k = cv2.erode(seen.astype(np.float32), np.ones((5, 5), np.uint8))
-    s = PL['gradeScale'] / unit
-    img, w = nblur(rgb, k, s)
-    alb, _ = nblur(base, k, s)
-    gx, gy = axes(work)
-    X, Y = np.meshgrid(gx, gy)
-    r = np.hypot(X - PLACE['vortex'][0], Y - PLACE['vortex'][1])
-    sel = (w > 0.5) & (r < PL['gradeRadius'])
-    far = np.median(img[sel] / np.maximum(alb[sel], 1e-6), axis=0)
-    json.dump({'far': [round(float(v), 4) for v in far]}, open(path, 'w'))
-    print('grade', np.round(far, 4), 'pixels', int(sel.sum()))
-    return far.astype(np.float32)
+    return np.array(PLACE['solved']['light'], np.float32)
 
 
 def vblur(field, sigma_px, levels=(0.0, 1.0, 2.0, 4.0, 8.0, 16.0, 32.0, 64.0, 128.0, 256.0)):

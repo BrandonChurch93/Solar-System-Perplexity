@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
-import type { Pose } from '../../core/types'
+import type { Pose, ViewKind } from '../../core/types'
 import type { HandoverParams, SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
-import { smooth } from '../../director/rig'
+import { drift, smooth } from '../../director/rig'
 import deck from './deck.json'
 import fields from './deck-fields.json'
 import fit from './fit.json'
+import { io } from './look'
 import place from './place.json'
 import relief from './relief.json'
 
@@ -18,7 +19,6 @@ export const params: MoveParams = {
   rise: { azimuthDeg: 44, elevationDeg: -12, distance: 5.6, offset: [0.34, 0.1], driftSpeed: 0.08, rollDeg: -6, ahead: 0.03, hug: 1.7, settle: 2, tilt: 0.5 },
   travel: { turnDeg: 74, side: 1 },
   arrive: { swingDeg: 46, axis: [0.2, 1, 0], power: 2.9, offset: [0.7, -0.15] },
-  skyAim: { terrain: [0, -21.8, 31] },
   light: { exposure: 1, skyExposure: 0.5, terrainSkyGlow: 0.35, skyLow: [0.045, 1.0, 0], sunRadiusDeg: 0.5, sunGlare: 0.75, flare: 0.18 },
   cover: [0.42, 0.34, 0.26],
   handover: place.handover as unknown as HandoverParams,
@@ -55,13 +55,6 @@ export function chartAxes(turn: THREE.Quaternion, quaternion: THREE.Quaternion, 
 
 export function low(height: number, range: number[]): number {
   return 1 - smooth(Math.log(Math.max(height, 1e-9) / range[0]!) / Math.log(range[1]! / range[0]!))
-}
-
-export function lowEven(height: number, range: number[], round: number): number {
-  const x = Math.min(Math.max(Math.log(Math.max(height, 1e-9) / range[0]!) / Math.log(range[1]! / range[0]!), 0), 1)
-  if (x < round) return 1 - x * x / (2 * round * (1 - round))
-  if (x > 1 - round) return (1 - x) * (1 - x) / (2 * round * (1 - round))
-  return 1 - (x - round / 2) / (1 - round)
 }
 
 export function closeHeight(position: THREE.Vector3): number {
@@ -189,77 +182,53 @@ export function flashNow(site: number, seconds: number): number {
   return f.gain * sum
 }
 
-interface Pace { film: number[]; path: number[]; slope: number[] }
-
-function paceOf(knots: number[][], end = 1): Pace {
-  const film = knots.map((k) => k[0]!)
-  const path = knots.map((k) => k[1]!)
-  const n = film.length
-  const rate: number[] = []
-  for (let i = 0; i < n - 1; i++) rate.push((path[i + 1]! - path[i]!) / (film[i + 1]! - film[i]!))
-  const slope = new Array<number>(n).fill(end)
-  for (let i = 1; i < n - 1; i++) slope[i] = rate[i - 1]! * rate[i]! <= 0 ? 0 : (2 * rate[i - 1]! * rate[i]!) / (rate[i - 1]! + rate[i]!)
-  for (let i = 0; i < n - 1; i++) {
-    if (rate[i] === 0) continue
-    const a = slope[i]! / rate[i]!
-    const b = slope[i + 1]! / rate[i]!
-    const size = Math.hypot(a, b)
-    if (size > 3) {
-      slope[i] = (3 * a * rate[i]!) / size
-      slope[i + 1] = (3 * b * rate[i]!) / size
-    }
-  }
-  return { film, path, slope }
-}
-
-function along(p: Pace, seconds: number): number {
-  const n = p.film.length
-  let i = 0
-  while (i < n - 2 && seconds > p.film[i + 1]!) i++
-  const span = p.film[i + 1]! - p.film[i]!
-  return hermite((seconds - p.film[i]!) / span, p.path[i]!, p.path[i + 1]!, span * p.slope[i]!, span * p.slope[i + 1]!)
-}
-
-const stops = paceOf(deck.flight.exposureStops, 0)
-
-export function exposure(seconds: number): number {
-  const n = stops.film.length
-  return Math.pow(2, seconds <= stops.film[0]! ? stops.path[0]! : seconds >= stops.film[n - 1]! ? stops.path[n - 1]! : along(stops, seconds))
-}
-
-export function exposed(seconds: number): number {
-  return exposure(deck.life.proof.cameraHeld ? 0 : seconds)
-}
-
-export function heightTable(knots: number[][]): (height: number) => number {
-  const p = paceOf(knots.map((k) => [Math.log(k[0]!), k[1]!]), 0)
-  const n = p.film.length
-  return (height) => {
-    const x = Math.log(Math.max(height, 1e-9))
-    return x <= p.film[0]! ? p.path[0]! : x >= p.film[n - 1]! ? p.path[n - 1]! : along(p, x)
-  }
-}
-
 export class JupiterPlan extends StopPlan {
+  private aim: THREE.Quaternion | null = null
+
+  constructor(id: string, f: Fit, p: MoveParams) {
+    super(id, f, p)
+    this.terrainFrame.copy(toGlobe)
+  }
+
   override spin(time: number): number {
     const dive = this.seg.dive!
     const land = this.seg.terrain
     const rise = this.seg.rise
-    if (time <= dive.start || time >= rise.end) return super.spin(time)
+    if (time <= dive.start) return super.spin(time)
     const rate = THREE.MathUtils.degToRad(this.p.spinDegPerSecond)
-    const still = super.spin((land.start + land.end) / 2)
+    const still = THREE.MathUtils.degToRad(place.solved.spinDeg)
     if (time < land.start) return hermite((time - dive.start) / (land.start - dive.start), super.spin(dive.start), still, rate * (land.start - dive.start), 0)
-    if (time > land.end) return hermite((time - land.end) / (rise.end - land.end), still, super.spin(rise.end), 0, rate * (rise.end - land.end))
-    return still
+    if (time <= land.end) return still
+    const span = rise.end - land.end
+    if (time < rise.end) return hermite((time - land.end) / span, still, still + rate * span / 3, 0, rate * span)
+    return still + rate * span / 3 + rate * (time - rise.end)
   }
 
   override turn(time: number): THREE.Quaternion {
     return new THREE.Quaternion().setFromAxisAngle(this.axis, this.spin(time))
   }
 
+  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
+    if (view !== 'orbit') return []
+    const e = time - this.holdMid
+    const land = this.seg.terrain
+    const rise = this.seg.rise
+    const deg = time < (land.start + land.end) / 2 ? this.p.moonDegPerSecond * e : io.riseDeg + this.p.moonDegPerSecond * (time - (rise.start + rise.end) / 2)
+    const place = new THREE.Vector3().fromArray(io.home).applyAxisAngle(this.axis, THREE.MathUtils.degToRad(deg))
+    return [{ id: 'io', place: place.toArray(), turn: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(io.spinDegPerSecond) * e).toArray(), reach: io.radius * 1.12 }]
+  }
+
   override terrain(tRel: number): Pose {
     const dur = this.seg.terrain.end - this.seg.terrain.start
-    return flight(deck.life.proof.cameraHeld ? 0 : tRel - dur / 2 - config.shutterFraction / (2 * config.fps), this.p.terrain.vfov)
+    const half = config.shutterFraction / (2 * config.fps)
+    const pose = flight(deck.life.proof.cameraHeld ? 0 : tRel - dur / 2 - half, this.p.terrain.vfov)
+    if (!this.aim) {
+      const [right, up] = deck.flight.aimPx as [number, number]
+      const lens = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, -1), new THREE.Vector3(right, up, -fields.view.focalPx).normalize())
+      this.aim = lens.multiply(drift(this.seg.terrain.start + dur / 2 + half).invert())
+    }
+    pose.quaternion.multiply(this.aim)
+    return pose
   }
 
   override twin(local: Pose, time: number): Pose {

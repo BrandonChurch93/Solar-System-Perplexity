@@ -12,6 +12,13 @@ from globe import geom, ROOT, STOP
 OUT = os.path.join(STOP, 'place.json')
 SHOW = json.load(open(os.path.join(ROOT, 'config', 'showcase.json')))
 SPIN_DEG = float(__import__('re').search(r'spinDegPerSecond:\s*([0-9.]+)', open(os.path.join(STOP, 'plan.ts')).read()).group(1))
+CURVE = json.load(open(os.path.join(STOP, 'curve.json')))['curve']
+
+
+def light_at(ndl):
+    x = min(max(np.sign(ndl) * np.sqrt(abs(ndl)) * 0.5 + 0.5, 0.0), 1.0) * (len(CURVE) - 1)
+    i = min(int(np.floor(x)), len(CURVE) - 2)
+    return [float(a + (b - a) * (x - i)) for a, b in zip(CURVE[i], CURVE[i + 1])]
 
 
 def segment(kind):
@@ -25,7 +32,7 @@ def solve(cfg):
     e1 = dive['start'] - hold_mid + freeze['afterDiveStart']
     local = float(G.settle(e1 + freeze['easeSeconds'] / 2, G.FLOW['settle']))
     t = dive['start'] + cfg['handover']['dive']['at'] * (dive['end'] - dive['start'])
-    spin = np.radians(SPIN_DEG) * (t - hold_mid)
+    spin = np.radians(SPIN_DEG) * (dive['start'] - hold_mid + (dive['end'] - dive['start']) / 3)
     n = G.direction(cfg['oval']['lon'], cfg['oval']['lat'])
     n, east, north = G.frame(n)
     sun = G.spin_y(G.FITQ.T @ G.SUN, spin)
@@ -45,7 +52,8 @@ def solve(cfg):
     body = np.stack([ex, ey, n], 1)
     q = body @ close.T
     origin = q @ ((geom.S - geom.CENTRE) / geom.R)
-    return dict(local=local, spinDeg=float(np.degrees(spin)), handoverTime=t, sunAzimuthDeg=float(az), sunElevationDeg=float(el), headingDeg=float(az - light + 90), toSurface=[[float(v) for v in row] for row in q], n=[float(v) for v in origin], e=[float(v) for v in q @ geom.EX], u=[float(v) for v in q @ geom.EY], radiusUnits=float(geom.R), twinHeight=float(1 / geom.R))
+    seen = q.T @ sun
+    return dict(local=local, spinDeg=float(np.degrees(spin)), handoverTime=t, sunAzimuthDeg=float(az), sunElevationDeg=float(el), headingDeg=float(az - light + 90), sun=[float(seen @ geom.EX), float(seen @ geom.EY), float(seen @ geom.EN)], light=light_at(float(sun @ n)), toSurface=[[float(v) for v in row] for row in q], n=[float(v) for v in origin], e=[float(v) for v in q @ geom.EX], u=[float(v) for v in q @ geom.EY], radiusUnits=float(geom.R), twinHeight=float(1 / geom.R))
 
 
 def surface(gx, gy, place):
