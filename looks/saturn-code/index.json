@@ -1,9 +1,51 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T08:50:38.728Z",
- "head": "da021335659e0efa1aafcc4ea362938b640121e3",
- "note": "round 3 state: severe 1 and 2 before and after at 1 to 1; terminator lean and night tone at 3720; the bark of the near field found in the sand",
+ "pushed": "2026-11-25T09:17:01.958Z",
+ "head": "ab362641b9d9a924f577d3ad73df9d28231e3ebd",
+ "note": "round 3 tree committed ab36264 (local), proof r66 runs: finals, whole rise and dive at rate 2; sand trial at the final tier not kept",
  "looks": [
+  {
+   "time": "2026-11-25T09:17:01.224Z",
+   "file": "20261125091701224-note-t8_3866_D.jpg",
+   "source": "../../../../tmp/v/x/t8_3866_D.png",
+   "kind": "note",
+   "label": "3866 crop D: stars on the rings, before and after the cover"
+  },
+  {
+   "time": "2026-11-25T09:17:00.611Z",
+   "file": "20261125091700611-note-t10_3866_TUV.jpg",
+   "source": "../../../../tmp/v/x/t10_3866_TUV.png",
+   "kind": "note",
+   "label": "3866 crops T U V: approved hero, named, working tree draft"
+  },
+  {
+   "time": "2026-11-25T09:16:59.998Z",
+   "file": "20261125091659998-note-t13f_low.jpg",
+   "source": "../../../../tmp/v/x/t13f_low.png",
+   "kind": "note",
+   "label": "3720 lower sunlit globe: approved, named commit, working tree at the final tier"
+  },
+  {
+   "time": "2026-11-25T09:16:59.422Z",
+   "file": "20261125091659422-note-t14f_O.jpg",
+   "source": "../../../../tmp/v/x/t14f_O.png",
+   "kind": "note",
+   "label": "3720 final tier, trial of the sand without the near step: the hatch stays"
+  },
+  {
+   "time": "2026-11-25T09:16:58.849Z",
+   "file": "20261125091658849-note-t15f_zoom2.jpg",
+   "source": "../../../../tmp/v/x/t15f_zoom2.png",
+   "kind": "note",
+   "label": "3720 box 90,900 to 240,1040 at 3x: draft of one take, final named sand, final sand by the shutter"
+  },
+  {
+   "time": "2026-11-25T09:16:58.205Z",
+   "file": "20261125091658205-note-t15f_O.jpg",
+   "source": "../../../../tmp/v/x/t15f_O.png",
+   "kind": "note",
+   "label": "3720 final tier, lower left near field: approved, named sand, sand by the whole shutter (trial, not kept); the hatch stays"
+  },
   {
    "time": "2026-11-25T08:50:37.529Z",
    "file": "20261125085037529-note-t12_ll2.jpg",
@@ -17,48 +59,6 @@
    "source": "../../../../tmp/v/x/t10_skim4.png",
    "kind": "note",
    "label": "working tree drafts 3640, 3680, 3700, 3720 at half size"
-  },
-  {
-   "time": "2026-11-25T08:50:35.399Z",
-   "file": "20261125085035399-note-state2_3720_QR.jpg",
-   "source": "../../../../tmp/v/x/state2_3720_QR.png",
-   "kind": "note",
-   "label": "STATE 08:50, SEVERE 2: 3720 boxes Q and R at 1 to 1: approved, named 88ba2385 final, working tree draft: no lip, no strip, no mirror image, no vertical seam; the terminator leans as the approved's, the night side keeps a trace of tone"
-  },
-  {
-   "time": "2026-11-25T08:50:34.451Z",
-   "file": "20261125085034451-note-state2_3567_gap.jpg",
-   "source": "../../../../tmp/v/x/state2_3567_gap.png",
-   "kind": "note",
-   "label": "STATE 08:50, SEVERE 1: 3567 low right of the globe (1100,440 to 1920,900) at 1 to 1, named final above, working tree draft below: no sky patch, the night limb is the body's ellipse"
-  },
-  {
-   "time": "2026-11-25T08:50:33.496Z",
-   "file": "20261125085033496-note-state2_3567_QR.jpg",
-   "source": "../../../../tmp/v/x/state2_3567_QR.png",
-   "kind": "note",
-   "label": "STATE 08:50, SEVERE 1 after: 3567 boxes Q and R at 1 to 1, named 88ba2385 final above, working tree draft below"
-  },
-  {
-   "time": "2026-11-25T08:24:48.612Z",
-   "file": "20261125082448612-note-t7_leftfoot.jpg",
-   "source": "../../../../tmp/v/x/t7_leftfoot.png",
-   "kind": "note",
-   "label": "3720 left foot at 1 to 1 (820,430 to 1220,700): named final top left, working tree draft top right; the vertical seam at x 932 is gone"
-  },
-  {
-   "time": "2026-11-25T08:24:47.587Z",
-   "file": "20261125082447587-note-state_3720_QR.jpg",
-   "source": "../../../../tmp/v/x/state_3720_QR.png",
-   "kind": "note",
-   "label": "SEVERE 2, 3720 boxes Q and R (912,433 to 1824,866) at 1 to 1: approved, named 88ba2385 final, working tree draft. No layer on the globe, the dust hides the globe by its depth, the far look adds nothing of the globe behind where the view grazes the plane"
-  },
-  {
-   "time": "2026-11-25T08:24:46.497Z",
-   "file": "20261125082446497-note-state_3567_gap.jpg",
-   "source": "../../../../tmp/v/x/state_3567_gap.png",
-   "kind": "note",
-   "label": "SEVERE 1, 3567 box 1100,440 to 1920,900 at 1 to 1: named final above, working tree draft below"
   }
  ]
 }
