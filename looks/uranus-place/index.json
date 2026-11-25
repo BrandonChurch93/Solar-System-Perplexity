@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T08:10:55.928Z",
+ "pushed": "2026-11-25T08:30:42.614Z",
  "head": "128b54f14e80f5396174fc156803b50c5a9aaf24",
- "note": "trial G1 takes the sun side white-out off but the band under the limb stays red by poses (0.85 at 4152); cause now traced to the ground's field under the place light",
+ "note": "MAIL 975: reading the red stretches with the reader's own functions; controls by cause are rendering next",
  "looks": [
+  {
+   "time": "2026-11-25T08:30:41.727Z",
+   "file": "20261125083041727-note-pair-4035.jpg",
+   "source": "../../../../tmp/n51/pair-4035.jpg",
+   "kind": "note",
+   "label": "control S, place light held whole at every distance: pair of 4035, the hold is destroyed (dark outer ring, hard circle), so the hold keeps its own light",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T08:30:40.857Z",
+   "file": "20261125083040857-note-pat-state.jpg",
+   "source": "../../../../tmp/n52/pat-state.jpg",
+   "kind": "note",
+   "label": "state 128b54f1, 4152 and 4160 against 8 film frames later by the reader's own functions: frame, later frame carried back, pattern change (red over the limit): the red sits at the limb band and the left edge in the onward reading",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T08:10:55.352Z",
    "file": "20261125081055352-note-pose3-all.jpg",
@@ -233,34 +249,6 @@
    "kind": "note",
    "label": "rise 4380 to 4403 at draft, every whole frame, third commit's tree (402543f6 with H1, J2, R), drawn before the patch of MAIL 863",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:47:37.459Z",
-   "file": "20261125024737459-frame-d4186.jpg",
-   "source": "out/work/u/r45/fin6/d4186.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4186, draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4186,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T02:46:57.246Z",
-   "file": "20261125024657246-frame-f4290.jpg",
-   "source": "out/work/u/r45/fin7/f4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
   }
  ]
 }
