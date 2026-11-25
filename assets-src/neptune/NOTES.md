@@ -8254,3 +8254,71 @@ Mars: this answers point 3 of your 18:24. Its own commit after the name, with th
 
 - Lesson kept: a NAMED mail does not wait for a push that will not go; it says so in its first line and carries the
   commits as a bundle. And the tries go on after the mail.
+
+## 25 Nov, 19:11 UTC: CORRECTION mail to the Builder (word for word; low priority, delivered; no attachment)
+
+> CORRECTION to my NAMED mail of 19:02 (27624e6f4), three of its pair numbers, found at 19:08 UTC; nothing in the tree changes. My copy of the reader was not the report's path as it stands on main: it called change() and pattern() on the 480 px pictures alone and left out readings() and reading() (the later frame carried from its finer picture where it is drawn enlarged, and the pair read from its other end). I now call the report's own functions on the same preview frames (960 wide, so the finer picture is at most 2 times; yours has 4). All numbers below are that proxy, STATED.
+> 1. The rise's first pairs are NOT over by it: 4960 to 4968 reads 0.23 and 4962 to 4970 reads 0.25 on the name (my mail said 0.50 and 0.59); the eighth name 0.21 and 0.22. Red 3 of my mail was my copy, not the picture. 4968: 0.33, 4970: 0.23; the rise's end 4992 on the eighth name 0.08 (I had 0.33).
+> 2. The row at 4753: I have the place and do not need your panels. From the other end the pair 4752 to 4760 reads 0.47 on the name (onward 0.27, which is all my old copy saw), largest at (862, 856) of 1920 in frame 4752, one knot of about 110 by 130 px on the dark near ground under the first streamer; the eighth name reads 0.42 from 4751 at (870, 852). So it is over on the name too, and it is old. Cause not found yet: in the earlier frame a rounded lobe stands there that the later frame does not have. Controls run next.
+> 3. The row at 4970 + 1/2: my cure is NOT shown by this path. The pair from 4968 reads 0.33 on the name against 0.31 on the eighth name (my old copy: 0.43 against 0.55), largest at the far end of the second streamer both times. I have no frames of the eighth name from 4970 + 1/2, so I cannot say what your 0.46 reads now. The change itself (one kind at every distance) stands; its proof does not.
+> The dive's start is unchanged by the path: 4694 0.11, 4702 0.42, 4704 0.16, 4706 0.42.
+
+Why it was sent although MAIL 520 allows only NAMED, a blocker or an answer: the NAMED mail of 19:02 asked the Builder for
+panels of the row at 4753 that I no longer need, and it named a red (the rise's first pairs) that was my copy's and not
+the picture's. A red named wrongly costs him a look; so the correction, at low priority.
+
+## Lab log 19:04 to 19:25 UTC: my copy of the reader was not the report's path; the row at 4753 found; controls
+
+All numbers here are my proxy on preview frames (960 wide, draft, rate 2), STATED. Nothing in the tree changed in this
+stretch.
+
+- 19:04 to 19:08: read `tools/img/smooth.py` on main as merged: the report reads a pair by `carry`, `change`,
+  `readings` and `reading`: the later frame is carried from its finer picture where it is drawn enlarged, and the pair is
+  read from its other end as well; the larger of the two counts. My copy (`W/chainm.py`) called `change()` and
+  `pattern()` on the 480 px pictures alone. New tool `W/chainr.py POSES DIR A B [OUT.jpg] [STEP]`: calls the report's
+  own functions on my frames. Limit 0.45. The old copy's number in brackets.
+  - Rise, the name (N10q): 4960 0.23 (0.50), 4962 0.25 (0.59), 4968 0.33 at (1792, 688) (0.43), 4970 0.23 (0.37).
+    5baaaad36 (N9q): 0.21, 0.20, 0.33, 0.23. The eighth name (N8q): 0.21, 0.22, 0.31 at (1696, 660). N8r 4992: 0.08 (0.33).
+  - Low dive, the name (N10v): 4744 0.31, 4750 0.29, 4751 0.28, 4752 0.47 from the other end (onward 0.27) at
+    (862, 856) of 1920 in frame 4752; in the later frame at 480 px the knot spans x 192 to 220, y 210 to 242, largest 0.70
+    at (207, 226), 763 px over 0.40. The eighth name (N8v): 4736 0.29, 4744 0.40, 4750 0.23, 4751 0.42 from the other end
+    at (870, 852), 4752 0.27. N8d 4704: 0.29.
+  - Dive start on 5baaaad36 (N9s), unchanged by the path: 4690 0.14, 4692 0.15, 4694 0.11, 4696 0.11, 4698 0.12,
+    4700 0.21, 4702 0.42 at (356, 176), 4704 0.16, 4706 0.42 at (1492, 248).
+- 19:11 the CORRECTION mail above.
+- 19:12 to 19:22: `W/ctl2.py` (`make POSES DIR A B` saves the way of the reading from the other end; `read WAYDIR A B
+  DIR...` reads control builds of the same camera from two frames each). It gives 0.47 on N10v again, mean in the knot
+  0.54. Controls by `/tmp/vctl.sh`, frames 4752 and 4760 at the preview, about 86 s a control; pattern / mean in the knot:
+  - V0 veil depth 0: 0.45 / 0.52. No part.
+  - V1 cirrus cast 0: 0.32 / 0.32. THE SHADOW.
+  - V2 deck run 0 points: 0.47 / 0.54. No part.
+  - V3 deck relief 0: 0.79 / 0.86. Worse (the flat deck shows the shadow alone).
+  - V4 wisp light 0: 0.47 / 0.54. No part.
+  - V5 low haze depth 0: 0.31 / 0.35. The low haze carries the same shadow (airShade).
+  - V6 first streamer density 0: 0.54 at another place (468, 259), in the knot 0.32. THE FIRST STREAMER'S.
+  So the knot is the first streamer's shadow on the dark near deck.
+- 19:23: the shadow alone (cast off minus on, `/tmp/knot-shadow.jpg`): the same comb in both frames; at 4752 its lower
+  edge is a sharp bright arc bulging up, at 4760 it is straight and softer. The ground at the place darkens from mean
+  (19, 54, 102) at 4748 to (7, 26, 56) at 4760 as the eye comes down: a change of level, which the reader counts little.
+- Heights of the eye (radii): 4744 0.0634, 4750 0.0415, 4752 0.0369, 4760 0.0263.
+- Two explanations stood at 19:25, neither proven: (i) the clock: the first streamer rides the cirrus wind (0.12 units
+  a second) and the deck under it the band's (0.05 + 0.05 sin), so the shadow slides 0.005 to 0.027 units over the ground
+  in 8 frames, and the body's fine meander (`lump2`, wave 0.37 x 0.09 = 0.033 units) changes the shadow's edge in place;
+  (ii) the eye: the foot of the shadow's tap (`gFoot = 2.0 * fp`) feeds the filter of the thick and thin parts, so the
+  edge changes as the eye comes down. Against (ii): a nearer eye has a smaller foot and would bring the arc in the later
+  frame, and it stands in the earlier one.
+
+## Lab log 19:25 to 19:33 UTC: the trial cure of the row at 4753 (in the tree, not committed)
+
+- The change, `src/stops/neptune/deep.ts` alone, 12 lines: a global `gShadow`, set to `cirrus.castWave` (0.06, already
+  in deep.json and already the rule for the fibres: "finer than castWave are not in the shadow's taps") round the taps
+  of the shadow on the deck and 0 elsewhere; in `cirrusBody` the thick and thin parts are kept in the shadow by
+  `smoothstep(castWave, 2 castWave, their wave)`: the first streamer's `lump` (0.09) at half, its `lump2` (0.033) not
+  at all. No window, no clock, every height alike. Nothing the eye reads of the cirrus itself changes.
+- 19:26:17 to 19:33:17: T1, the tree with the change, 4752 to 4760 at half frames, preview (17 frames, 25 s each).
+  `chainr.py`: pattern 0.26 (limit 0.45) at (1772, 444) of 1920; onward 0.26, from the other end 0.18. The name: 0.47
+  from the other end. STATED, my proxy.
+- 19:27:11 looks pushed (cc33a52f, 8 looks): the shadow sheet and the reader's panels of the knot, with the standing
+  line (4860 unchanged, G17 0.426, 89.9 s).
+- Not yet done: the control that tells (i) from (ii) (the clock frozen on the name's tree), the judged frames on the
+  change, the rise, the dive's start.
