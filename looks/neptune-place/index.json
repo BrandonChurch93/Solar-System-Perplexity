@@ -1,9 +1,49 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T14:51:31.482Z",
- "head": "a42f77f3d1854ab1c4ddf1d834b176b737a7b17d",
- "note": "14:52 UTC: 4860 beside the approved with the low sky (G17 0.560 proxy, 88.8 s a frame); three trials not taken (air share, lumpShare, hold aim); tests on the merge of main aed412aeb running",
+ "pushed": "2026-11-25T15:25:12.375Z",
+ "head": "91ada652c847245695997361e71f0595cb3317ad",
+ "note": "15:27 UTC: 4860 beside the approved and main (G17 0.544 proxy, 90.7 s a frame); the veil taken; the far Sun stands in its place at the hold; rise and dive pairs rendering",
  "looks": [
+  {
+   "time": "2026-11-25T15:25:10.898Z",
+   "file": "20261125152510898-note-n8-two.jpg",
+   "source": "../../../../tmp/n8-two.jpg",
+   "kind": "note",
+   "label": "4707 and 5006 on this tip: the stars stay points, the eye rides the globe as a small dark spot",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T15:25:09.608Z",
+   "file": "20261125152509608-note-m1-sun.jpg",
+   "source": "../../../../tmp/m1-sun.jpg",
+   "kind": "note",
+   "label": "4605 at x 1560 to 1860, y 40 to 270: approved, before the merge, on the merge. The far Sun stands in its place (1716, 153; approved 1709, 158) as the engine's small disc, without the approved's spiked flare; the sky round it is gold brown and dense, the approved's blue grey and sparse. Main's new band (take batch 10) made it dimmer and finer",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T15:25:08.089Z",
+   "file": "20261125152508089-note-v-six.jpg",
+   "source": "../../../../tmp/v-six.jpg",
+   "kind": "note",
+   "label": "the veil's first try, NOT taken: one even pale line, a drawn stroke",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T15:25:06.810Z",
+   "file": "20261125152506810-note-v2-six.jpg",
+   "source": "../../../../tmp/v2-six.jpg",
+   "kind": "note",
+   "label": "the third streamer as a thin veil by the slant path law (MAIL 1126 point 4): 4968, 4972, 4976 upper left at 2 times, before above, after below: the row of flecks is gone, a faint veil with threads stands there. The pieces at the bank's end (first streamer's tail) are NOT cured. 28 s a preview frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T15:25:05.314Z",
+   "file": "20261125152505314-note-n8-beside.jpg",
+   "source": "../../../../tmp/n8-beside.jpg",
+   "kind": "note",
+   "label": "4605 and 4860: approved, main (from the sheet of MAIL 1112), this tip on the merge of main aed412aeb with the veil and the low sky at 0.38. 4860: G17 median 0.544 by my draft reader, a proxy (bar 0.8, RED and named), mean absolute 28.439 (main 22.947 by the Builder's read): the far plain too dark, the eye without its pale spiral. 90.7 s the draft frame at 1920, 36.3 s the hold",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T14:51:29.570Z",
    "file": "20261125145129570-note-h1-4605.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/a-four.jpg",
    "kind": "note",
    "label": "trial, not taken: the air's share 0.75 (A1) and the low haze depth 0.11 (A2) at 4860 preview beside the approved and the tip: the far plain comes up from 58,85,123 to 70,95,131 (approved 90,128,165) and the eye is veiled; a lead for round 1",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T14:51:23.800Z",
-   "file": "20261125145123800-note-k1-4860.jpg",
-   "source": "../../../../tmp/k1-4860.jpg",
-   "kind": "note",
-   "label": "4860 approved, before, after the low sky (as committed, cb54abd75): G17 median 0.560 by my reader, a proxy (bar 0.8, RED and named); 88.8 s a draft frame at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T14:17:18.092Z",
-   "file": "20261125141718092-note-k1-four.jpg",
-   "source": "../../../../tmp/k1-four.jpg",
-   "kind": "note",
-   "label": "4720, 4745, 4985, 5000 with the low sky: stars stay points, the eye rides the globe",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T14:17:17.508Z",
-   "file": "20261125141717508-note-e4-dive.jpg",
-   "source": "../../../../tmp/e4-dive.jpg",
-   "kind": "note",
-   "label": "4700 and 4740 preview: the storm's eye as one body from the globe down, 8 s and 17 s a frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T14:17:16.928Z",
-   "file": "20261125141716928-note-look-k1.jpg",
-   "source": "../../../../tmp/look-k1.jpg",
-   "kind": "note",
-   "label": "4860 approved, before, after sky_builder's low sky: G17 median 0.216 to 0.560 (my reader), 88.8 s a draft frame; eye as one body",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T13:53:18.525Z",
-   "file": "20261125135318525-note-k3-corner.jpg",
-   "source": "../../../../tmp/k3-corner.jpg",
-   "kind": "note",
-   "label": "Control for the flecks at 4968, 4972, 4976 (upper left corner): left as it stands, right with the third streamer's density 0. The row of flecks is the third streamer; the flecks at the bank's end are the first streamer's tail. Not cured yet",
    "stop": "neptune"
   }
  ]
