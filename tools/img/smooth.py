@@ -18,6 +18,9 @@ PATTERN_STEPS = 2
 SETTLE_ROUNDS = 3
 SLOPE_SHARE = 0.05
 PLANE_RIDGE = 1e-3
+SOFT_PX = 1.0
+SETTLE_PX = 8.0
+EDGE = 4
 
 
 def grey(path):
@@ -67,14 +70,55 @@ def places(shape):
     return np.meshgrid(np.arange(w, dtype=np.float32), np.arange(h, dtype=np.float32))
 
 
-def left(a, b, f=None, g=None, agree=True):
+def soft(g):
+    """A frame at its full size through the filter both frames of a pair pass before one is carried onto the other: SOFT_PX px of the full
+    size, so that the carried frame, taken between its pixels, loses what the other has lost too."""
+    return cv2.GaussianBlur(g.astype(np.float32), (0, 0), SOFT_PX)
+
+
+def whole(a, b, mx, my, scale):
+    """The frame b carried onto the frame a at the full size and reduced after, with a reduced beside it: a and b at their full size, both
+    through soft; mx, my the way in the pictures reduced to scale. A reduced picture is not the reduced picture of the same ground a part of
+    a pixel further (what is finer than its pixels folds into them by where it lies), and the flows are right to a part of a reduced pixel
+    only, so a frame carried at the reduced size keeps a difference that is the reader's and not the film's. Here the way is taken to the
+    full size, set right once by the flow between a and the carried frame at half the full size, smoothed over SETTLE_PX px of the full size
+    (a change smaller than that stays where it is; only where the carried frame holds a picture), and both are reduced the same way."""
+    h, w = mx.shape
+    tall, across = a.shape
+    size = (across, tall)
+    xs, ys = places((h, w))
+    X, Y = places((tall, across))
+    dx = cv2.resize(mx - xs, size, interpolation=cv2.INTER_LINEAR) * (across / w)
+    dy = cv2.resize(my - ys, size, interpolation=cv2.INTER_LINEAR) * (tall / h)
+    taken = lambda: cv2.remap(b, X + dx, Y + dy, cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REPLICATE)
+    mid = (max(across // 2, 16), max(tall // 2, 16))
+    f = cv2.resize(motion(cv2.resize(a, mid, interpolation=cv2.INTER_AREA), cv2.resize(taken(), mid, interpolation=cv2.INTER_AREA)), size, interpolation=cv2.INTER_LINEAR)
+    here = ((X + dx >= 0) & (X + dx <= across - 1) & (Y + dy >= 0) & (Y + dy <= tall - 1)).astype(np.float32)
+    f = cv2.GaussianBlur(f * np.array([across / mid[0], tall / mid[1]], np.float32) * here[..., None], (0, 0), SETTLE_PX) / np.maximum(cv2.GaussianBlur(here, (0, 0), SETTLE_PX), 1e-3)[..., None]
+    dx, dy = (cv2.remap(m, X + f[..., 0], Y + f[..., 1], cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) + f[..., k] for k, m in enumerate((dx, dy)))
+    return small(taken(), scale), small(a, scale)
+
+
+def rim(x, y):
+    """How far the places x, y lie from the edge of the frame, in pixels: from its sides, and from its top and bottom."""
+    h, w = x.shape
+    return np.minimum(x, w - 1 - x), np.minimum(y, h - 1 - y)
+
+
+def left(a, b, f=None, g=None, agree=True, pair=None):
     """What is left of the difference between a and the next frame b once the motion between them is taken out.
-    Pixels that leave the frame are not counted. Pixels where the flow and the flow back do not agree (ground uncovered, content entering) count as nothing left; their share is the third value."""
+    Pixels that leave the frame are not counted. Pixels where the flow and the flow back do not agree (ground uncovered, content entering) count as nothing left; their share is the third value.
+    pair, when given, takes the way and gives b carried at the full size and a beside it (whole); then the outermost pixel of a and of b
+    is not counted either (the filter has one side only there), nor what arrives within EDGE pixels of the edge of b from farther inside a:
+    there the picture enters the frame, and the way has nothing beyond the edge to be set right by."""
     f = motion(a, b) if f is None else f
     g = motion(b, a) if g is None else g
     xs, ys = places(a.shape)
     mx, my, inside, sure = along(f, g, xs, ys)
-    moved = cv2.remap(b.astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    moved, a = pair(mx, my) if pair else (cv2.remap(b.astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), a)
+    if pair:
+        for own, other in zip(rim(xs, ys), rim(mx, my)):
+            inside = inside & (own >= 1) & (other >= 1) & ((other >= EDGE) | (other >= own - 1))
     d = np.abs(moved - a.astype(np.float32))
     unsure = inside & ~sure if agree else np.zeros_like(inside)
     d[unsure] = 0
@@ -144,13 +188,14 @@ def carry(fw, bw, i, n, first=None, last=None, back=False):
     return mx, my, ok
 
 
-def change(frames, fw, bw, i, n, sigma, first=None, last=None, way=None):
+def change(frames, fw, bw, i, n, sigma, first=None, last=None, way=None, pair=None):
     """Frame i against frame i + n carried back along the flows: the signed difference, smoothed, where every flow on the way agrees with its way back.
-    first and last are the body in frame i and in frame i + n: when given, only what starts on the body and arrives on it is judged."""
+    first and last are the body in frame i and in frame i + n: when given, only what starts on the body and arrives on it is judged.
+    pair, when given, takes the way and gives frame i + n carried at the full size and frame i beside it (whole)."""
     mx, my, ok = way or carry(fw, bw, i, n, first, last)
-    moved = cv2.remap(frames[i + n].astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    moved, a = pair(mx, my) if pair else (cv2.remap(frames[i + n].astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), frames[i])
     weight = cv2.GaussianBlur(ok.astype(np.float32), (0, 0), sigma)
-    d = cv2.GaussianBlur((moved - frames[i].astype(np.float32)) * ok, (0, 0), sigma) / np.maximum(weight, 1e-6)
+    d = cv2.GaussianBlur((moved - a.astype(np.float32)) * ok, (0, 0), sigma) / np.maximum(weight, 1e-6)
     d[weight < 0.5] = np.nan
     return d, moved, ok
 
@@ -384,6 +429,16 @@ def pictures(job):
     lead = int(job.get('lead', 0))
     tail = int(job.get('tail', 0))
     inside = lambda i: 0 <= i + start < total
+    held = {}
+
+    def fine(j):
+        if j not in held:
+            for k in [k for k in held if k < j - reach - 1]:
+                del held[k]
+            held[j] = soft(grey(paths[j]))
+        return held[j]
+
+    pair = (lambda i, j: lambda mx, my: whole(fine(i), fine(j), mx, my, scale)) if job.get('carryFull') else (lambda i, j: None)
     fw = [None] * n
     bw = [None] * n
     residual = [None] * n
@@ -397,7 +452,11 @@ def pictures(job):
             continue
         fw[i] = motion(frames[i], frames[i + 1])
         bw[i] = motion(frames[i + 1], frames[i])
-        d, m, u = left(frames[i], frames[i + 1], fw[i], bw[i], False)
+        once = pair(i, i + 1)
+        if once:
+            both = once(*along(fw[i], bw[i], *places(frames[i].shape))[:2])
+            once = lambda mx, my: both
+        d, m, u = left(frames[i], frames[i + 1], fw[i], bw[i], False, once)
         counted = np.isfinite(d)
         if not counted.any():
             continue
@@ -405,7 +464,7 @@ def pictures(job):
         residual[i] = float(np.nanmean(d))
         grids[i] = blocks(d, cols, rows)
         if agree:
-            d, _, u = left(frames[i], frames[i + 1], fw[i], bw[i], True)
+            d, _, u = left(frames[i], frames[i + 1], fw[i], bw[i], True, once)
             carried[i] = float(np.nanmean(d))
             unsure[i] = float(u.sum() / counted.sum())
             d[u] = np.nan
@@ -465,6 +524,8 @@ def pictures(job):
             first, last = (body(poses[j], frames[j].shape, sigma) if poses[j] else None for j in (i, i + reach))
             way = carry(fw, bw, i, reach, first, last)
             d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last, way)
+            if pair(i, i + reach):
+                d = change(frames, fw, bw, i, reach, sigma, first, last, way, pair(i, i + reach))[0]
             shift[i], top[i], at, judged[i] = changed(d)
             spot[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
             weave[i], weaveAt[i], weaveShare[i], weaveBand[i] = reading(*readings(frames, fw, bw, i, reach, scale, sigma, wide, low, first, last, full, way, later), scale)
@@ -533,7 +594,7 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
     the flow on the carried pair, the reading after both (carry.py). Keys of their own: patternMap and what belongs to it."""
     import carry as C
     n = len(paths)
-    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn', 'patternMapAlone', 'patternMapMoves', 'patternMapMoved', 'patternMapLit')}
+    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapSure', 'patternMapBound', 'patternMapGraze', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn', 'patternMapAlone', 'patternMapMoves', 'patternMapMoved', 'patternMapLit')}
     held = {}
     depths = job.get('depths') or [None] * n
 
@@ -556,13 +617,14 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
         keys['patternMapOn'][i], keys['patternMapBy'][i], keys['patternMapRule'][i], keys['patternMapLeft'][i], keys['patternMapUnits'][i] = out['on'], out['by'], out['rule'], out['left'], out['units']
         keys['patternMapBulk'][i], keys['patternMapApart'][i], keys['patternMapNo'][i], keys['patternMapRefused'][i] = out['bulk'], out['apart'], out['no'], out['refused']
         keys['patternMapBody'][i], keys['patternMapSkyTurn'][i] = out['body'], out['sky']
+        keys['patternMapSure'][i], keys['patternMapBound'][i], keys['patternMapGraze'][i] = out['sure'], out['bound'], out['graze']
         if all(fw[j] is not None and bw[j] is not None for j in range(i, i + reach)):
             keys['patternMapMoved'][i] = strayed(fw, bw, i, reach, frame(i), frame(i + reach), margin, scale)
             lit = [C.lit(frame(j)['pose'], frames[j].shape) for j in (i, i + reach)]
             sky = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor, (glow_px(poses[i], scale), glow_px(poses[i + reach], scale)), lit)
             keys['patternMapLit'][i] = any(x is not None for x in lit)
             keys['patternMapSky'][i], keys['patternMapSkyShare'][i], keys['patternMapSkyFar'][i], keys['patternMapSkyFarShare'][i] = sky['value'], sky['share'], sky['far'], sky['farShare']
-    keys['patternMapLimits'] = {'bulkPx': C.BULK_PX, 'apart': C.APART}
+    keys['patternMapLimits'] = {'bulkPx': C.BULK_PX, 'apart': C.APART, 'boundPx': C.BOUND_PX / scale, 'graze': C.GRAZE, 'carried': C.CARRIED_SHARE}
     return keys
 
 
@@ -626,6 +688,8 @@ def changes(job):
         first, last = (body(q, frames[0].shape, sigma) if q else None for q in item.get('poses') or [None, None])
         way = carry(fw, bw, 0, n, first, last)
         d, moved, ok = change(frames, fw, bw, 0, n, sigma, first, last, way)
+        if job.get('carryFull'):
+            d = change(frames, fw, bw, 0, n, sigma, first, last, way, lambda mx, my: whole(soft(grey(item['paths'][0])), soft(grey(item['paths'][n])), mx, my, scale))[0]
         onward, back = readings(frames, fw, bw, 0, n, scale, sigma, wide, low, first, last, lambda j: grey(item['paths'][j]), way, moved)
         size = (frames[0].shape[1], frames[0].shape[0])
         shown = lambda path: np.asarray(Image.open(path).convert('RGB').resize(size, Image.LANCZOS))
@@ -655,7 +719,7 @@ def panel(job):
     for item in job['pairs']:
         a = small(grey(item['a']), scale)
         b = small(grey(item['b']), scale)
-        d, _, _ = left(a, b, agree=job.get('agree', True))
+        d, _, _ = left(a, b, agree=job.get('agree', True), pair=(lambda mx, my: whole(soft(grey(item['a'])), soft(grey(item['b'])), mx, my, scale)) if job.get('carryFull') else None)
         d = np.nan_to_num(d)
         ca = np.asarray(Image.open(item['a']).convert('RGB').resize((a.shape[1], a.shape[0]), Image.LANCZOS))
         cb = np.asarray(Image.open(item['b']).convert('RGB').resize((a.shape[1], a.shape[0]), Image.LANCZOS))

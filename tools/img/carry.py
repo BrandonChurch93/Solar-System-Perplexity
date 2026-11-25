@@ -28,6 +28,10 @@ APART = 0.01
 NOT_CARRIED = 'the range does not carry the pattern'
 TWO_GROUNDS = 'two grounds'
 FLOW_PX = 0.5
+BOUND_PX = 3.0
+SURE_SHARE = 0.1
+CARRIED_SHARE = 0.5
+GRAZE = 0.25
 RULES = ('map', 'sky', 'flow')
 UNIT = [0.0, 0.0, 0.0, 1.0]
 
@@ -234,28 +238,81 @@ def rim(which, margin):
     return (cv2.dilate(solid, box, borderType=cv2.BORDER_CONSTANT, borderValue=0) > 0) & ~(cv2.erode(solid, box, borderType=cv2.BORDER_CONSTANT, borderValue=1) > 0)
 
 
-def pair(a, full, scale, way, same, which, covered=None):
+def detail(g, wide, floor):
+    """A picture reduced to its detail for the flow: what lies between 1 px and the wide window, divided by its local contrast (never by less
+    than the floor), about a middle grey. A light that lies smoothly over the ground is not in it, so a flow on it has only the ground to
+    follow."""
+    soft = lambda x, s: cv2.GaussianBlur(x.astype(np.float32), (0, 0), s)
+    d = soft(g, 1.0) - soft(g, wide)
+    c = np.sqrt(np.maximum(soft(d * d, wide), 0))
+    return np.clip(128 + 48 * d / np.maximum(c, floor), 0, 255)
+
+
+def slant(depth, which, a, b):
+    """How steeply each pixel of a body is seen, in the frame with the pose a and in the frame with the pose b it is carried into: the cosine
+    of the angle between the ray and the line from the body's place through the point (1 straight down, 0 along the ground); nan off the
+    bodies. Under GRAZE the lens looks through GRAZE ** -1 times the depth of whatever lies over the ground, and that is a light bound to the
+    view's angle, not the ground."""
+    h, w = depth.shape
+    ka = lens(a, depth.shape)
+    xs, ys = S.places(depth.shape)
+    cam = np.stack([(xs + 0.5 - w / 2) / ka, (h / 2 - ys - 0.5) / ka, -np.ones(depth.shape, dtype=np.float32)], axis=-1).astype(np.float64)
+    cam /= np.linalg.norm(cam, axis=-1, keepdims=True)
+    here, there = np.full(depth.shape, np.nan), np.full(depth.shape, np.nan)
+    solid = (which > 0) & np.isfinite(depth) & (depth > 0)
+    pa, pb = np.array(a['p'], dtype=np.float64), np.array(b['p'], dtype=np.float64)
+    unit = lambda v: v / np.maximum(np.linalg.norm(v, axis=-1, keepdims=True), 1e-12)
+    for v in np.unique(which[solid]):
+        m = solid & (which == v)
+        ba, bb = a['bodies'][v - 1], b['bodies'][v - 1]
+        ray = spin(a['q'], cam[m])
+        x = pa + ray * depth[m][:, None]
+        here[m] = -(ray * unit(x - np.array(ba['place'], dtype=np.float64))).sum(-1)
+        up = formed(bb, spin(bb['turn'], spin(back(ba['turn']), plain(ba, x))))
+        there[m] = -(unit(np.array(bb['place'], dtype=np.float64) + up - pb) * unit(up)).sum(-1)
+    return here, there
+
+
+def pair(a, full, scale, way, same, which, covered=None, wide=None, floor=1.0, bound=BOUND_PX, skip=None):
     """The frame a against another frame carried onto it: first by the camera's map (way: mx, my, far, held of carry; same: seen), from the
     finer picture of the other frame where the map draws it larger (full() gives it at its full size); then the flow between a and the carried
-    picture finds what is left, and the other frame is carried once more along the map and that flow. Where the flow and its way back do not
-    agree it carries nothing and the map stands alone. Gives the carried picture, where the pair is judged, the rule of each pixel (0 none, 1
-    the map, 2 the sky by the camera's rotation, 3 the flow: what the flow moved by more than FLOW_PX; what the map does not hold and the flow
-    does not move is covered and not judged, and what is covered by the range picture itself is not judged whatever the flow finds), and the
-    size of the flow."""
+    picture finds what is left, and the other frame is carried once more along the map and that flow. The flow is taken on the detail of the
+    two (detail, with the wide window), so that it cannot follow a light, is smoothed over the wide window, weighted by where the flow and its
+    way back agree, and is bounded: no pixel is moved by more than bound px of the reduced picture. Where the flow and its way back do not
+    agree within the wide window it carries nothing and the map stands alone; a pixel within half the wide window of one that does not arrive on the surface it left,
+    or in skip, has no say in it. Gives the carried picture, where the pair is judged, the rule of
+    each pixel (0 none, 1 the map, 2 the sky by the camera's rotation, 3 the flow: what the flow moved by more than FLOW_PX; what the map does
+    not hold and the flow does not move is covered and not judged, and what is covered by the range picture itself is not judged whatever
+    the flow finds), the size of the flow as it was found, before the bound, the picture carried by the map alone, and where the flow and its
+    way back agree."""
     mx, my, far, held = way
     step = stepped(grown(mx, my, held), scale)
     g, levels = full(), {}
     first = np.where(held, drawn(g, scale, mx, my, step, levels), a)
     xs, ys = S.places(a.shape)
-    f, r = S.motion(a, first), S.motion(first, a)
+    wide = wide or 10.0
+    da, db = detail(a, wide, floor), detail(first, wide, floor)
+    f, r = S.motion(da, db), S.motion(db, da)
     nx, ny, inside, agree = S.along(f, r, xs, ys)
     size = np.hypot(f[..., 0], f[..., 1])
     lands = cv2.remap(held.astype(np.float32), nx, ny, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0) > 0.99
-    use = held & inside & agree & lands
-    sx = np.where(use, cv2.remap(mx, nx, ny, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), mx)
-    sy = np.where(use, cv2.remap(my, nx, ny, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), my)
+    sure = held & inside & agree & lands
+    soft = lambda x: cv2.GaussianBlur(x.astype(np.float32), (0, 0), wide)
+    reach = 2 * int(round(wide / 2)) + 1
+    sure &= ~(cv2.dilate((held & ~same).astype(np.uint8), np.ones((reach, reach), np.uint8)) > 0)
+    if skip is not None:
+        sure &= ~skip
+    weight = (sure & (size <= bound)).astype(np.float32)
+    heavy = soft(weight)
+    fx, fy = soft(f[..., 0] * weight) / np.maximum(heavy, 1e-3), soft(f[..., 1] * weight) / np.maximum(heavy, 1e-3)
+    over = np.maximum(np.hypot(fx, fy) / bound, 1)
+    fx, fy = fx / over, fy / over
+    use = held & (heavy >= SURE_SHARE)
+    use &= cv2.remap(held.astype(np.float32), xs + fx, ys + fy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0) > 0.99
+    sx = np.where(use, cv2.remap(mx, xs + fx, ys + fy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), mx)
+    sy = np.where(use, cv2.remap(my, xs + fx, ys + fy, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), my)
     b = drawn(g, scale, sx, sy, step, levels)
-    moved = use & (size > FLOW_PX)
+    moved = use & (np.hypot(fx, fy) > FLOW_PX)
     if covered is not None:
         moved &= ~covered
     still = same & ~moved
@@ -263,7 +320,7 @@ def pair(a, full, scale, way, same, which, covered=None):
     rule[moved] = 3
     rule[still & (which > 0)] = 1
     rule[still & (which == 0)] = 2
-    return b, rule > 0, rule, size, first
+    return b, rule > 0, rule, size, first, sure
 
 
 def block(p, value, rule):
@@ -305,12 +362,16 @@ def lit(pose, shape):
 def read(a, b, margin, scale, wide, floor, span=None):
     """The pattern of a pair of frames by the one law, read on the nearer of the two (the one the camera's map draws the other larger on; the
     first when neither is). a and b: for each frame its reduced picture (grey), full() its picture at full size, its depth picture and bodies
-    at the reduced size (depth, which) and its pose. Nothing is judged on the rim of either depth picture (rim, margin px of the reduced size).
+    at the reduced size (depth, which) and its pose. Nothing is judged on the rim of either depth picture (rim, margin px of the reduced size),
+    nor where either frame sees the body's ground at a cosine under GRAZE (slant).
     span: the film frames between the two. Gives the value (the 99th percentile), the place of the largest in px of the full size of
     the frame read on, the share of the frame judged, which frame it is read on (0 the first, 1 the other), the share of the judged pixels
     under each rule, the rule of the largest block, and the 99th percentile of the flow, in px of the full size, on what the map holds; alone:
     the reading by the map alone, before any flow, on the bodies (the whole frame's where no body holds enough of it); moves: how far the
-    surface may move by itself (own_flow); moved: the 99th percentile of the flow on the body's judged pixels, in px of the full size."""
+    surface may move by itself (own_flow); moved: the 99th percentile of the flow on the body's judged pixels, in px of the full size; bound:
+    the most the flow may move a pixel, in px of the full size (BOUND_PX of the reduced picture and what the surface may move by itself);
+    graze: the share of the body, less its rim, left out for its angle; sure: the share of the body's pixels where the flow and its way back
+    agree, and the flow's numbers (bulk, left, moved) are taken on those alone, bulk none under SURE_SHARE."""
     on = 0
     way = carry(a['depth'], a['which'], a['pose'], b['pose'])
     g = grown(*way[:2], way[3])
@@ -319,13 +380,20 @@ def read(a, b, margin, scale, wide, floor, span=None):
         way = carry(a['depth'], a['which'], a['pose'], b['pose'])
     same = seen(*way, a['which'], b['depth'], b['which'])
     picture = a['grey'].astype(np.float32)
-    later, ok, rule, size, first = pair(picture, b['full'], scale, way, same, a['which'], hidden(way[0], way[1], way[3], a['which'], b['depth'], b['which']))
+    moves = own_flow(a, b, span)
+    bound = BOUND_PX + (moves or 0) * scale
     edge = rim(a['which'], margin) | (cv2.remap(rim(b['which'], margin).astype(np.float32), way[0], way[1], cv2.INTER_NEAREST, borderMode=cv2.BORDER_REPLICATE) > 0.5)
+    here, there = slant(a['depth'], a['which'], a['pose'], b['pose'])
+    with np.errstate(invalid='ignore'):
+        low = (a['which'] > 0) & ((here < GRAZE) | (there < GRAZE))
+    later, ok, rule, size, first, sure = pair(picture, b['full'], scale, way, same, a['which'], hidden(way[0], way[1], way[3], a['which'], b['depth'], b['which']), wide, floor, bound, edge | low)
+    inner = (a['which'] > 0) & ~edge
+    edge |= low
     rule[edge] = 0
     ok &= ~edge
     p = S.pattern(picture, later, ok, wide / 5, wide, floor)
     value, at, share = S.patterned(p)
-    out = {'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'by': None, 'rule': None, 'left': None, 'units': None, 'bulk': None, 'apart': None, 'no': None, 'refused': None, 'body': None, 'sky': None, 'alone': None, 'moves': own_flow(a, b, span), 'moved': None}
+    out = {'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'by': None, 'rule': None, 'left': None, 'units': None, 'bulk': None, 'apart': None, 'no': None, 'refused': None, 'body': None, 'sky': None, 'alone': None, 'moves': moves, 'moved': None, 'bound': bound / scale, 'graze': float((low & inner).sum() / inner.sum()) if inner.any() else None, 'sure': None}
     q = S.pattern(picture, first, same & way[3] & ~edge, wide / 5, wide, floor)
     for part in (np.isfinite(q) & (a['which'] > 0), np.isfinite(q)):
         if out['alone'] is None and part.mean() >= S.PATTERN_SHARE:
@@ -333,10 +401,12 @@ def read(a, b, margin, scale, wide, floor, span=None):
     body = way[3] & (a['which'] > 0) & ~edge
     own, met_at, _ = met(*way, a['which'], b['depth'], b['which'])
     if body.any():
-        out['bulk'] = float(np.median(size[body]) / scale)
+        out['sure'] = float((sure & body).sum() / body.sum())
+        if out['sure'] >= SURE_SHARE:
+            out['bulk'] = float(np.median(size[sure & body]) / scale)
     if (own & ~edge).any():
         out['apart'] = float((own & ~met_at & ~edge).sum() / (own & ~edge).sum())
-    if out['bulk'] is not None and out['bulk'] > BULK_PX + (out['moves'] or 0):
+    if out['bulk'] is not None and out['bulk'] > BULK_PX + (out['moves'] or 0) and out['sure'] >= CARRIED_SHARE:
         out['no'] = NOT_CARRIED
     elif out['apart'] is not None and out['apart'] > APART:
         out['no'] = TWO_GROUNDS
@@ -349,7 +419,7 @@ def read(a, b, margin, scale, wide, floor, span=None):
     counts = np.bincount(rule[judged], minlength=4)[1:]
     out['by'] = {name: float(counts[i] / max(counts.sum(), 1)) for i, name in enumerate(RULES)}
     out['rule'] = block(p, value, rule)
-    held = judged & same & (rule > 0)
+    held = judged & same & (rule > 0) & sure
     out['left'] = float(np.percentile(size[held], 99) / scale) if held.any() else None
     if (held & (a['which'] > 0)).any():
         out['moved'] = float(np.percentile(size[held & (a['which'] > 0)], 99) / scale)

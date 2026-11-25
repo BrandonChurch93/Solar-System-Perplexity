@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { BLOOM, NOT_CARRIED as REFUSED_BY_RANGE, NOT_FOLLOWED, apart, byFlow, chained, flowed, glowPx, look, mapFaults, mapOf, moving, outrun, shownRows, unfollowed, worded } from '../tools/smooth/maps'
 
-interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null; body: number | null; sky: number | null; alone: number | null; moves: number | null; moved: number | null }
+interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null; body: number | null; sky: number | null; alone: number | null; moves: number | null; moved: number | null; sure: number | null; bound: number; graze: number | null }
 interface SkyFlow { value: number | null; share: number; far: number | null; farShare: number; none: [number | null, number | null]; limb: (number | null)[]; covered: number; coveredOnBody: number }
 interface Way { clean: Reading; exchange: Reading; untold: Reading }
 interface Made {
@@ -23,7 +23,7 @@ interface Made {
   skyFlow: { clean: SkyFlow; exchange: SkyFlow }
   refusal: { clean: Reading; shell: Reading; grounds: Reading }
   range: { off: number; none: boolean; reduced: number; units: number; picked: boolean; pickedSmall: number[]; near: number[] }
-  tool: { plainKeys: string[]; mainSame: boolean; more: string[]; limits: { bulkPx: number; apart: number }; main: number | null; clean: Record<string, unknown>; exchange: Record<string, unknown>; ball: number | null; ballUnits: number[] | null; rows: boolean[]; jobs: Record<string, unknown>[] }
+  tool: { plainKeys: string[]; mainSame: boolean; more: string[]; limits: { bulkPx: number; apart: number; boundPx: number; graze: number; carried: number }; main: number | null; clean: Record<string, unknown>; exchange: Record<string, unknown>; ball: number | null; ballUnits: number[] | null; rows: boolean[]; jobs: Record<string, unknown>[] }
 }
 
 const LIMIT = 0.45
@@ -54,25 +54,26 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.dive.clean.on).toBe(1)
   })
 
-  it('gives another pattern on the same body no reading: the map does not carry it, the pair itself an exchange, its largest block under the map', () => {
+  it('reads another pattern on the same body as an exchange and does not refuse it: the flow and its way back agree on less than half the body, so no flow carries the pattern anywhere', () => {
     for (const way of [made.rise, made.dive]) {
-      expect(way.exchange.value).toBeNull()
-      expect(way.exchange.no).toBe(NOT_CARRIED)
-      expect(way.exchange.refused!).toBeGreaterThan(1)
+      expect(way.exchange.no).toBeNull()
+      expect(way.exchange.refused).toBeNull()
+      expect(way.exchange.value!).toBeGreaterThan(1)
+      expect(way.exchange.body!).toBeGreaterThan(1)
+      expect(way.exchange.sure!).toBeLessThan(made.tool.limits.carried)
       expect(way.exchange.rule).toBe('map')
     }
   })
 
-  it('gives a turn the record does not tell no reading, though the flow finds it: the flow left over the body is the evidence', () => {
+  it('gives a turn the record does not tell, farther than the bound, no reading: the flow left over the body, where it agrees with its way back, is the evidence', () => {
     for (const way of [made.rise, made.dive]) {
       expect(way.clean.bulk!).toBeLessThan(0.5)
       expect(way.clean.no).toBeNull()
       expect(way.untold.value).toBeNull()
       expect(way.untold.no).toBe(NOT_CARRIED)
-      expect(way.untold.bulk!).toBeGreaterThan(made.tool.limits.bulkPx)
-      expect(way.untold.refused!).toBeLessThan(LIMIT)
-      expect(way.untold.by!.flow).toBeGreaterThan(0.8)
-      expect(way.untold.rule).toBe('flow')
+      expect(way.untold.bulk!).toBeGreaterThan(made.tool.limits.boundPx)
+      expect(way.untold.sure!).toBeGreaterThan(0.9)
+      expect(way.untold.refused!).toBeGreaterThan(LIMIT)
     }
   })
 
@@ -88,7 +89,8 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(shell.apart!).toBeLessThan(made.tool.limits.apart / 10)
     expect(grounds.value).toBeNull()
     expect(grounds.no).toBe('two grounds')
-    expect(grounds.bulk!).toBeLessThan(0.5)
+    expect(grounds.bulk).toBeNull()
+    expect(grounds.sure).toBe(0)
     expect(grounds.apart!).toBeGreaterThan(made.tool.limits.apart)
   })
 
@@ -236,8 +238,8 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.tool.mainSame).toBe(true)
     expect(made.tool.plainKeys).toContain('pattern')
     expect(made.tool.plainKeys.some((k) => k.startsWith('patternMap'))).toBe(false)
-    expect(made.tool.more).toEqual(['patternMap', 'patternMapAlone', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapLit', 'patternMapMoved', 'patternMapMoves', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyShare', 'patternMapSkyTurn', 'patternMapUnits'])
-    expect(made.tool.limits).toEqual({ bulkPx: 8, apart: 0.01 })
+    expect(made.tool.more).toEqual(['patternMap', 'patternMapAlone', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBound', 'patternMapBulk', 'patternMapBy', 'patternMapGraze', 'patternMapLeft', 'patternMapLimits', 'patternMapLit', 'patternMapMoved', 'patternMapMoves', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyShare', 'patternMapSkyTurn', 'patternMapSure', 'patternMapUnits'])
+    expect(made.tool.limits).toEqual({ bulkPx: 8, apart: 0.01, boundPx: 12, graze: 0.25, carried: 0.5 })
     expect(made.tool.clean.patternMapUnits).toHaveLength(1)
     expect((made.tool.clean.patternMapUnits as number[])[0]!).toBeGreaterThan(0.5)
     expect(made.tool.ballUnits).toBeNull()
@@ -247,9 +249,9 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.tool.clean.patternMapMoves).toBeNull()
     expect(made.tool.clean.patternMapLit).toBe(false)
     expect(made.tool.ball as number).toBeLessThan(0.05)
-    expect(made.tool.exchange.patternMap).toBeNull()
-    expect(made.tool.exchange.patternMapNo).toBe(NOT_CARRIED)
-    expect(made.tool.exchange.patternMapRefused as number).toBeGreaterThan(1)
+    expect(made.tool.exchange.patternMap as number).toBeGreaterThan(1)
+    expect(made.tool.exchange.patternMapNo).toBeNull()
+    expect(made.tool.exchange.patternMapRefused).toBeNull()
     expect(made.tool.exchange.patternMapRule).toBe('map')
   })
 })
