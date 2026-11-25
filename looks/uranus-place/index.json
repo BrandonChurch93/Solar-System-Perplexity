@@ -1,9 +1,57 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T21:30:53.583Z",
+ "pushed": "2026-11-25T21:53:45.829Z",
  "head": "6a0e74bb2f3472ec8ae201fea1922bc1dab673ba",
- "note": "B2 trial: shear between cover and globe gone at 4420 to 4424; a state fault of its first form found at final 4290 and named (not committed); rows 2 to 4 of B1 still rendering",
+ "note": "B1 not named: rise part 1 row 1.60 from 4399 (name 1.29, main 1.60); controls: four deck layers off still 1.05, rim as air 0.94; cause hunt goes on",
  "looks": [
+  {
+   "time": "2026-11-25T21:53:44.844Z",
+   "file": "20261125215344844-note-pat-RIM2-8798.jpg",
+   "source": "../../../../tmp/n60/pat-RIM2-8798.jpg",
+   "kind": "note",
+   "label": "chain read control RIM2 from 4399: 0.94 on 0.10 of the frame (B1 1.60 on 0.13), share over the limit 0.12 (B1 0.29)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T21:53:43.931Z",
+   "file": "20261125215343931-note-rim2-4399-crops.jpg",
+   "source": "../../../../tmp/n60/rim2-4399-crops.jpg",
+   "kind": "note",
+   "label": "far ground under the limb 4399 to 4407, left B1, right control RIM2 (rim as light of the air, in globe and deck): wisps at the limb calmer",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T21:48:15.074Z",
+   "file": "20261125214815074-note-ha-4399-crops.jpg",
+   "source": "../../../../tmp/n60/ha-4399-crops.jpg",
+   "kind": "note",
+   "label": "far ground under the limb 4399 to 4407, left B1, right control HA: same wisps at the limb in both; coloured streak grain in the middle ground of B1 is gone in HA",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T21:48:13.902Z",
+   "file": "20261125214813902-note-pat-HA-8798.jpg",
+   "source": "../../../../tmp/n60/pat-HA-8798.jpg",
+   "kind": "note",
+   "label": "control HA (deck image, billow shade, veil, tops all off) from 4399: still 1.05, so the cause is outside those four layers",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T21:48:12.750Z",
+   "file": "20261125214812750-note-pat-B1-8798.jpg",
+   "source": "../../../../tmp/n60/pat-B1-8798.jpg",
+   "kind": "note",
+   "label": "chain read B1 from 4399: back side 1.60 on 0.13 of the frame, red sits in the far ground under the limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T21:48:11.681Z",
+   "file": "20261125214811681-note-b1-4399-sheet.jpg",
+   "source": "../../../../tmp/n60/b1-4399-sheet.jpg",
+   "kind": "note",
+   "label": "B1 6a0e74bb draft 4399 to 4407, the rise part 1 row 1.60 from 4399",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T21:22:38.554Z",
    "file": "20261125212238554-note-b2-sheet0.jpg",
@@ -200,54 +248,6 @@
    "source": "../../../../tmp/n57/t1-hand2.jpg",
    "kind": "note",
    "label": "trial T1 (border 10.9 to 13.8 degrees), handovers: 4389 to 4392 above, 4184 to 4187 below",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T18:56:05.988Z",
-   "file": "20261125185605988-note-rim-control.jpg",
-   "source": "../../../../tmp/n57/rim-control.jpg",
-   "kind": "note",
-   "label": "4418 and 4426 draft: the name above, control below with the globe light table read at view cosine 1 (rim off). The limb light is the table's rim",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T18:33:20.139Z",
-   "file": "20261125183320139-note-t1-tool-changes.jpg",
-   "source": "../../../../tmp/n57/t1-tool-changes.jpg",
-   "kind": "note",
-   "label": "tool on the trial (border 0.19 to 0.24 rad), rise part 2 of 2: pattern 0.83 from 4421 (name 1.16, main 0.88), 21 frames over; what is left is the back read at the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T18:20:09.782Z",
-   "file": "20261125182009782-note-arc12.jpg",
-   "source": "../../../../tmp/n57/arc12.jpg",
-   "kind": "note",
-   "label": "ground 12 deg north of the place at 4414.5 4418.5 4422.5: name then cover off",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T18:20:08.549Z",
-   "file": "20261125182008549-note-hunt-rise.jpg",
-   "source": "../../../../tmp/n57/hunt-rise.jpg",
-   "kind": "note",
-   "label": "layer hunt rise 4416 and maps from 4418: name, air off, cover off, trial",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T18:06:39.212Z",
-   "file": "20261125180639212-note-p-pair-8836.jpg",
-   "source": "../../../../tmp/n57/p-pair-8836.jpg",
-   "kind": "note",
-   "label": "reader panels from 4418: the name (top two rows, 1.16) and the control with the cover off (bottom two rows, onward 0.26, back 0.74 at the left limb)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T18:06:37.890Z",
-   "file": "20261125180637890-note-t1-4416.jpg",
-   "source": "../../../../tmp/n57/t1-4416.jpg",
-   "kind": "note",
-   "label": "4416 draft: the name (left), trial with the cover's border at the plates' border (middle), control cover off (right); the flat teal is the cover over the map's streaks",
    "stop": "uranus"
   }
  ]
