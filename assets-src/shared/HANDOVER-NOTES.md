@@ -2197,6 +2197,61 @@ and plan.ts back by hash.
 - NEXT: as in the entry before, from (2). Drafts of v4: L1 step 0.002, walk 2, under 4, out 0.35 (and 0.5), at "0.6545,0.3387"
   alone and with the second point.
 
+## 21:30 to 22:02 UTC, 25 Nov: THE FIVE FINALS HOLD (mail 21:50), the air's fourth commit made on the new main, v4 drafts of the crests
+
+- THE FIVE JUDGED FINALS OF MARS (MAIL 1137 point 1), law by the fragment (4bae298b) against the mean share at the vertices, the
+  same tree (second cut a1032553 with the shutter's ends of agent/engine-flight, mars_place_builder's fitted air numbers of 14:50
+  by scratch), final tier, dirs t-c2a/out/work/blur/fin5-c3 and fin5-vs, `python3 /tmp/air/v4/diff2.py fin5-c3 fin5-vs FRAMES`:
+  2325 0 pixels differ (same sha ba09dc63); 2476 4503 px, all by 1; 2477 4267, all by 1; 2580 3090, all by 1; 2668 3576, all by
+  1; alpha equal. Seconds a frame, fragment then vertices: 2476 1859.2, 1825.6; 2477 1066.7, 1029.6; 2580 50.7, 39.3; 2668 49.3,
+  37.7; 2325 28.3, 28.3. MAILED /root about 21:50 (/tmp/mail/root-2149.txt). So the fourth commit is allowed.
+- THE HOP IS DROPPED: "the dome gathering only under the highest knot" alone measured 4.05 to 5.23 s a draft frame against 3.76 to
+  4.95 without it: no gain, not in the commit. So no version of air.ts "with the loop of count 0" comes; globe_engineer is told
+  with the new file.
+- THE AIR TESTS REWRITTEN to the law as built, nothing loosened: tests/air-law-gl.test.ts (constants MESH, NX, NY; helpers vertex,
+  cross, dot, corners; the twin of "from another eye" takes the share at the three corners of the fragment's triangle; a new
+  measure `apart`, the share at the corners of a cell against the gather at the fragment, bounded under 0.01) 7 of 7: "3604
+  pixels, the knots move a pixel by up to 0.188, worst off the twin 2.595e-3 (with the radius 972.27: 9.805e-4), 0.518 of what
+  the ray moved by 0.0625 of a pixel changes; the share at the corners of a cell of 2 pixels stands off the law gathered to the
+  fragment by up to 1.783e-3". tests/air-law-knots.test.ts (a new unit test of airLawPathShare): "3222 paths: from 0.3015 to
+  1.0000, times one minus the factor off the gather by up to 8.127e-14, every share alike off that share by up to 0". The
+  doctype line of the page in the browser test is gone (its exclamation point).
+- MAIL 1314 (/root, 21:56): MAIN MOVED at 21:41, merge 6bdd87ec, tip 172e7bcd42dc4fb3362a65e121c133dd8aab9f3a (the fourth cut: the
+  flights' cure of the rises, the air law with the globe's light by height, path.plumb, the shutter's ends, Mercury's leaving).
+  "merge origin main into your branch before your next NAMED commit, and say so in the name's mail."
+  CHECKED: 4bae298b is an ancestor of main, and main's src/terrain/air.ts, relief.ts and the four air tests are 4bae298b's to the
+  byte. No stop on main gives `airLaw` (grep of src/stops and config: nothing), so the fourth commit moves no frame of main.
+- THE FOURTH COMMIT OF THE AIR, LOCAL: air-wt fast forwarded to 172e7bcd, then commit b75720ab3226bf44e2d749876af689737cda0d0b
+  (src/terrain/air.ts: airLawPathShare in GLSL and JS and the ITS COST comment; src/terrain/relief.ts: AIR_LAW_SHARE_OUT, _IN,
+  AIR_LAW_SHARE, withAirLawShare, AIR_LAW_LAYER_KNOTS reads vAirShare; the two tests). The four air files 56 of 56 (21:59). tsc
+  clean. The whole suite runs in the export tree t-air4 (started 22:00:45, /tmp/air/vt-c4-all.read, .json, .time). THEN: build in
+  air-wt, push `git push origin HEAD:refs/heads/agent/engine-air`, NAMED to /root (say: merged main 172e7bcd by fast forward),
+  the new air.ts with `git rev-parse HEAD:src/terrain/air.ts` to globe_engineer, a line to mars_place_builder.
+- THE V4 DRAFTS OF THE CRESTS (chain4, ended 21:51; t-c2a/out/work/blur: r0-draft no numbers, r35-draft "L1 0.002 2 4 0.35 -
+  0.6545,0.3387;0.6992,0.4133", r50-draft out 0.5, rt-draft tinted):
+  - r0-draft equals k0-draft by sha on all four frames.
+  - teeth3: 2668 cure 0 jumps, rms 0.61 px (base 5 jumps, rms 2.00); 2672 cure 2 jumps of 2 px (rows 641, 667), rms 0.56 (base 4,
+    largest 10, rms 2.04); r35 and r50 give the same edges; 2477 not valid (judge by eye).
+  - 2580 base against r35: differ 1470 px, largest 14, over 2: 220, over 8: 28, all of those on one line from (834, 616) to
+    (879, 676) (v3 was 15329 px, largest 62); r50: 1491, largest 14. k0 against r35: 2668 15572 px, largest 216, box x 448..1061,
+    y 419..972; 2672 15650; 2477 5509, largest 191, box x 711..1189, y 381..852.
+  - LOOKED AT 2668 so far (/tmp/crest/v4-2668-over.png, -z1, -z2, -z3): the teeth are gone, a clean cut edge with dark fill
+    behind. THREE THINGS: (i) a bright dash, r35 at y 626, x 661..664 (40 to 49 steps off the base), r50 at y 625, x 666..668,
+    nearly untinted in the tinted frame, at the top end of the sheets: 4 px = one cell wide, 1 px high, a crack along a border
+    edge between a sheet cell and a plain cell; a like dash with a dark end at (758..768, 721..723) at the break; (ii) the bit in
+    the break (x 733..756, y 712..727) keeps the base's streaks (the third point (0.6732, 0.3882) names it); (iii) a thin orange
+    line along the lower crest's cut edge from about (770, 725) to (850, 760), to compare with the own eye's picture.
+  - Mars L1 with the two points, v4b: 233 sheet cells, 233 under cells, 7161 beneath texels, 0 texels not behind.
+- crest.ts since the last entry: a `beneath` sweep (the texels of the near side under which the far sheet's fill may show),
+  CREST_BEHIND = 1e-3 (the far sheet must lie behind the near ground by that share of the distance), crestCells(field, nx, ny,
+  out). Backups /tmp/crest/crest.v4b.ts (= crest-wt), v4a, v3. Unit 19 of 19, GL 7 of 7 at 21:41.
+- mars_place_builder 21:21 (nothing asked): NAMED agent/mars-place 47b7534197a50175cdfd682dbfa8b46e9ff5487e on main ce8cb68b, no
+  motion.airLaw in it; it sends its list of what limits the width when its (a) to (c) stand.
+- NEXT: (1) the suite of b75720ab, build, push, NAMED; (2) the crests: THE CREST COMMIT GOES ON TOP OF b75720ab (both change
+  relief.ts; merge by hand: the sheets' vertex shader must also be withAirLawShare when the law has knots, a test for it);
+  diagnose and cure the dash (a GL test that fails without the cure), look at 2672, 2477, 2580 at full size, the third point,
+  redraft, review tier, teeth3, cmp, NAMED; (3) the pair with Mars's airLaw when its sha comes.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
