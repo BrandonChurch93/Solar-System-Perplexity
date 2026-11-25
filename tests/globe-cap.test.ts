@@ -423,7 +423,10 @@ async function shot(o) {
   }
   drop()
   loader.freeAll()
-  return { pixels: Array.from(out), bytes, drawn, triangles }
+  const raw = new Uint8Array(out.buffer)
+  let text = ''
+  for (let i = 0; i < raw.length; i += 32768) text += String.fromCharCode.apply(null, raw.subarray(i, i + 32768))
+  return { pixels: btoa(text), bytes, drawn, triangles }
 }
 
 window.cap = { shot }
@@ -448,7 +451,11 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
   let browser: Browser
   let page: Page
   const errors: string[] = []
-  const call = (o: CapShot): Promise<CapRead> => page.evaluate((a) => (window as unknown as { cap: { shot(x: unknown): Promise<unknown> } }).cap.shot(a) as Promise<CapRead>, o)
+  // The pixels cross from the page as base64 of their floats: as a list of numbers a shot of 192 by 192 took 0.8 s to cross.
+  const call = async (o: CapShot): Promise<CapRead> => {
+    const r = await page.evaluate((a) => (window as unknown as { cap: { shot(x: unknown): Promise<unknown> } }).cap.shot(a) as Promise<Omit<CapRead, 'pixels'> & { pixels: string }>, o)
+    return { ...r, pixels: Array.from(new Float32Array(new Uint8Array(Buffer.from(r.pixels, 'base64')).buffer)) }
+  }
 
   beforeAll(async () => {
     const dir = resolve(ROOT, 'out/work/globe-test')

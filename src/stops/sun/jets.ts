@@ -3,6 +3,7 @@ import { diagUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { STAGE_GLSL } from './stage'
 import data from './convect.json'
+import place from './place.json'
 
 /**
  * What stands over the ground of the close view: a forest of jets as geometry and the glow of the thin hot layer
@@ -10,7 +11,9 @@ import data from './convect.json'
  *
  * A jet is a narrow blade rooted at a fixed place on the ground. In each of its turns it shoots up, slows and
  * falls back (a throw), with a length, a lean and a width of that turn; between turns its length is nil. The
- * blade turns about its own axis to face the eye. The glow is worked out for each ray of sight from how far it
+ * blade turns about its own axis to face the eye. The jets are no lawn: by the place of the root alone (a slow
+ * field over the ground) they stand tall here and short there, lean together in groups and leave gaps where none
+ * stands, and a few of them are several times as tall as the rest. The glow is worked out for each ray of sight from how far it
  * passes over the ball.
  */
 
@@ -24,6 +27,8 @@ uniform vec3 uCam;
 uniform vec4 uJet;
 uniform vec4 uJetMore;
 uniform vec4 uJetLife;
+uniform vec4 uJetGroup;
+uniform vec2 uJetAway;
 out vec3 vJet;
 out vec3 vClip;
 ${STAGE_GLSL}
@@ -31,6 +36,17 @@ vec3 jh(vec3 p) {
   p = fract(p * vec3(0.1031, 0.1030, 0.0973));
   p += dot(p, p.yxz + 33.33);
   return fract((p.xxy + p.yxx) * p.zyx);
+}
+// a slow field over the ground, 0 to 1
+float jn(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float a = jh(vec3(i, 7.1)).x;
+  float b = jh(vec3(i + vec2(1.0, 0.0), 7.1)).x;
+  float c = jh(vec3(i + vec2(0.0, 1.0), 7.1)).x;
+  float d = jh(vec3(i + vec2(1.0, 1.0), 7.1)).x;
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
 }
 void main() {
   float alpha = aRoot.x / ST_RADIUS;
@@ -43,9 +59,15 @@ void main() {
   vec3 h = jh(vec3(aRoot.z * 91.7, aRoot.w * 53.3, nth));
   vec3 h2 = jh(vec3(aRoot.w * 17.3, nth, aRoot.z * 61.1));
   float up = 4.0 * x * (1.0 - x);
-  float len = uJet.x * (0.3 + 1.4 * h.x * h.x) * up * step(h2.x, uJetLife.z);
-  float psi = 6.2831853 * h.y;
-  float lean = uJetMore.x * (0.2 + 0.8 * h2.y) + uJetMore.y * sin(uTime * (0.9 + aRoot.z) + aRoot.w * 40.0);
+  // the root's place on the ground (stage units) and the slow fields over it. uJetGroup.x: how many groups lie
+  // in a stage unit; y: the share of the ground that holds no jet; z: how much taller than the rest the few tall
+  // ones are; w: how far a jet's lean may turn off the lean of its group (in turns)
+  vec2 place = aRoot.x * vec2(cos(aRoot.y), sin(aRoot.y)) * uJetGroup.x;
+  float group = jn(place + 3.7);
+  float stands = smoothstep(uJetGroup.y, uJetGroup.y + 0.12, jn(place * 1.7 + 11.3));
+  float len = uJet.x * (0.25 + 0.35 * h.x + uJetGroup.z * pow(h.x, 7.0)) * (0.45 + 1.1 * group) * stands * up * step(h2.x, uJetLife.z);
+  float psi = 6.2831853 * (2.0 * jn(place * 0.6 + 21.9) + uJetGroup.w * (h.y - 0.5));
+  float lean = uJetMore.x * (0.3 + 0.7 * h2.y) + uJetMore.y * sin(uTime * (0.9 + aRoot.z) + aRoot.w * 40.0);
   vec3 side = t1 * cos(psi) + t2 * sin(psi);
   vec3 axis = normalize(dir + side * lean);
   float a = position.y;
@@ -54,7 +76,10 @@ void main() {
   float wide = uJet.y * (0.6 + 0.8 * h2.z) * (1.0 - 0.75 * a);
   vec3 foot = ST_CENTRE + dir * ST_RADIUS;
   float graze = dot(normalize(foot - uCam), dir);
-  vJet = vec3(position.x, a, (1.0 - 0.5 * x) * (0.5 + 0.5 * h.z) * smoothstep(uJetLife.w - 0.1, uJetLife.w, graze));
+  // a jet leaves by the distance from the eye to its own foot (radii of the ball, even steps in the logarithm): the
+  // far ones first; the close view holds no jet as far away as the range begins
+  float left = 1.0 - smoothstep(log(uJetAway.x), log(uJetAway.y), log(max(length(foot - uCam) / ST_RADIUS, 1e-5)));
+  vJet = vec3(position.x, a, (1.0 - 0.5 * x) * (0.5 + 0.5 * h.z) * smoothstep(uJetLife.w - 0.1, uJetLife.w, graze) * left);
   gl_Position = projectionMatrix * modelViewMatrix * vec4(c + across * (position.x * wide), 1.0);
   vClip = gl_Position.xyw;
 }`
@@ -160,8 +185,11 @@ export class Jets {
         uJet: { value: new THREE.Vector4(j.length, j.width, j.gain, 0) },
         uJetMore: { value: new THREE.Vector4(j.lean, j.sway, j.root, j.bend) },
         uJetLife: { value: new THREE.Vector4(j.period[0]!, j.period[1]!, j.share, j.graze) },
+        uJetGroup: { value: new THREE.Vector4(j.group.scale, j.group.gaps, j.group.tall, j.group.spread) },
         uJetHot: { value: tint(j.hot) },
         uJetCool: { value: tint(j.cool) },
+        uJetAway: { value: new THREE.Vector2(place.onGlobe.far.jets[0]!, place.onGlobe.far.jets[1]!) },
+        uKeep: { value: 1 },
       },
       side: THREE.DoubleSide,
       ...added,
@@ -212,11 +240,12 @@ export class Jets {
     this.glow.renderOrder = -5
   }
 
-  /** keep: how much of the jets and of the glow is left as the camera of the rise climbs (by height, not by time). */
-  update(time: number, keep: number): void {
+  /** keep: how much of the glow at the limb is left, by the distance from the eye to the limb (set.ts). jets: whether a
+   * jet can still be within its range; each jet leaves by the distance from the eye to its own foot (uJetAway). */
+  update(time: number, keep: number, jets = true): void {
     this.time.value = time
     this.keep.value = keep
-    this.mesh.visible = keep > 0
+    this.mesh.visible = jets
     this.glow.visible = keep > 0
   }
 

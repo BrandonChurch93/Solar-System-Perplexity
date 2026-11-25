@@ -8,7 +8,7 @@ import { defaultPost } from '../post/chain'
 import { StopPlan, easeInOut, type OrbitShot } from './moves'
 import { arc, drift, forward, lookAt, lookbackLight, mix, ramp, slerpDir, smooth, smoother } from './rig'
 import { coverWindow, segmentAtFrame } from './timeline'
-import { eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSkyForced, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
+import { drawnMeasured, eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSkyForced, placeWeight, shutterScales, skyTurnWeight, skyWeight, topForced } from './handover'
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
@@ -174,6 +174,14 @@ export class FilmDirector implements Director {
           const time = seg.start + (k / steps) * (seg.end - seg.start)
           const place = shape.look.follow > 0 || shape.look.window > 0 ? seen(drifted(this.toWorld(i + 1, plans[i + 1]!.hold(time - seg.end)), time)) : home
           if (seen(drifted(this.travelCamera(i, time), time)).distanceTo(place) > FAR_LIGHT.within) break
+          lit = k / steps
+        }
+      }
+      if (i > 0 && shape.look.herald > 0 && shape.look.pin[1] > 0) {
+        const seg = plans[i]!.seg.travel!
+        const steps = Math.round((seg.end - seg.start) * config.fps) * 8
+        for (let k = Math.floor(lit * steps); k >= 0; k--) {
+          if (this.hidden(i, seg.start + (k / steps) * (seg.end - seg.start), shape.look.herald)) break
           lit = k / steps
         }
       }
@@ -452,6 +460,22 @@ export class FilmDirector implements Director {
 
   clearAtOf(i: number): number {
     return this.clear[i] ?? 0
+  }
+
+  private heroTo(index: number, time: number, q: THREE.Quaternion): THREE.Vector3 {
+    const b = this.plans[index + 1]!
+    const hold = this.toWorld(index + 1, b.hold(time - b.seg.hold.start))
+    return this.frames[index + 1]!.origin.clone().sub(hold.position).normalize().applyQuaternion(hold.quaternion.clone().invert()).applyQuaternion(q)
+  }
+
+  private hidden(index: number, time: number, marginDeg: number): boolean {
+    const pose = this.travelCamera(index, time)
+    const from = this.toWorld(index, this.carried(index, time))
+    const hero = this.heroTo(index, time, pose.quaternion)
+    return this.leavingThings(index, time).some((t) => {
+      const to = t.to.add(from.position).sub(pose.position)
+      return hero.angleTo(to) < Math.asin(Math.min(t.radius / to.length(), 1)) + THREE.MathUtils.degToRad(marginDeg)
+    })
   }
 
   leavingThings(i: number, time: number): { name: string; to: THREE.Vector3; radius: number }[] {
@@ -761,6 +785,7 @@ export class FilmDirector implements Director {
     let under: UnderDraw | undefined
     let dust = 0
     let farLight: number | undefined
+    let farDisc: [number, number, number] | undefined
     let dustLook = 0
     let light = this.sunFor(0)
     let sunWeight = 1
@@ -783,8 +808,11 @@ export class FilmDirector implements Director {
       const origin = view === 'terrain' ? p.spot.clone().applyQuaternion(p.turn(time)).applyQuaternion(f.rotation).add(f.origin) : f.origin.clone()
       const turns = view === 'orbit' && p.handsOver && p.id === segment.stop && (segment.kind === 'dive' || segment.kind === 'rise')
       const bodies = view === 'orbit' ? p.nearBodies(time) : []
+      // The measure of a stop that handover.drawnMeasure names reads what the stop draws: the globe as the twin places it in the surface
+      // set, and the turn the stop draws its body by.
+      const drawn = drawnMeasured(p.id)
       const lit = i === this.plans.length - 1 ? this.lookbackLit(time) : undefined
-      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, height: 0, ground: p.ground, ...(turns ? { turn: p.turn(time) } : {}), ...(bodies.length ? { near: bodies } : {}), ...(lit !== undefined ? { lookback: lit } : {}) }
+      return { id: p.id, origin, rotation, time, local: time - p.firstSegment.start, segment, u, weight, view, height: 0, ground: p.ground, ...(drawn && view === 'terrain' ? { ball: p.ballIn(time) } : {}), ...(turns ? { turn: drawn ? p.drawn(time) : p.turn(time) } : {}), ...(bodies.length ? { near: bodies } : {}), ...(lit !== undefined ? { lookback: lit } : {}) }
     }
     const inSet = (s: SetState, p: Pose): Pose => ({ position: p.position.clone().applyQuaternion(s.rotation).add(s.origin), quaternion: s.rotation.clone().multiply(p.quaternion), vfov: p.vfov })
 
@@ -839,6 +867,16 @@ export class FilmDirector implements Director {
       if (index === 0) sunWeight = smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u))
       const arriving = state(index + 1, 'orbit')
       if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
+      const herald = this.shapes[index]!
+      if (index > 0 && herald.look.herald > 0 && herald.look.pin[1] > 0) {
+        if (herald.look.disc[0] > 0) farDisc = herald.look.disc
+        if (herald.pinned(u) < 1) {
+          const to = arriving.origin.clone().sub(position)
+          const r = new THREE.Quaternion().setFromUnitVectors(to.clone().normalize(), this.heroTo(index, time, pose.quaternion))
+          arriving.origin.copy(to.applyQuaternion(r).add(position))
+          arriving.rotation.premultiply(r)
+        }
+      }
       const midTime = (frame + spanMid()) / config.fps
       if (Math.abs(time - midTime) > 1e-9) {
         const to = arriving.origin.clone().sub(position)
@@ -1048,7 +1086,7 @@ export class FilmDirector implements Director {
       }
       sun.far.share *= 1 - (skyShare ?? 0)
     }
-    const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight, pixel: (2 * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)) / config.raw.formats.master.height }
+    const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight, ...(farDisc ? { farDisc } : {}), pixel: (2 * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)) / config.raw.formats.master.height }
     // PLAN F, the one air: by the height of the lens over the stop's own body, in every segment the stop draws that body alone.
     const own = index >= 0 && (segment.kind === 'hold' || segment.kind === 'dive' || segment.kind === 'terrain' || segment.kind === 'rise') ? sets.find((s) => s.id === segment.stop) : undefined
     const air = own ? this.plans[index]!.air(own.height) : null

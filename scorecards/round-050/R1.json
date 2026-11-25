@@ -1,0 +1,70 @@
+{
+ "critic": "R1",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "foreground photosphere, lower third",
+   "what": "not the same surface: granule cells sit in different places and are rounder and softer, lanes are shallow brown instead of narrow black, and the field is about 15 lum darker with duller crests",
+   "fix": "rebuild this ground from the approved cell layout, put the micro-ridges and inky lanes back, and lift exposure until the crests are golden-white again"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-04-b.png",
+   "where": "tile D, lower-left surface crop",
+   "what": "cells do not correspond to the approved crop; texture is waxy and low-contrast, and fine detail is down by about a third",
+   "fix": "match cell positions, sharpen the ridges inside each granule, and narrow the lanes to near-black"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-04-b.png",
+   "where": "tile E, lower-right surface crop",
+   "what": "fibrils and cells are in the wrong places; the upper-left flow is broad smeared bands instead of needle filaments, and fine detail is down by about 40 percent",
+   "fix": "realign the flow to the approved tracks, split the smears into thin bright filaments, and restore white-gold peaks against black gaps"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "sunspot and mid-surface",
+   "what": "umbra is smaller and rounder, the right penumbra is smeared into thick streaks, surrounding granules do not match, and local contrast is compressed",
+   "fix": "restore the jagged umbra and fine radial fibrils, put the approved granule field back, and open the range so lanes go black and crests go bright"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "tile A, sunspot crop",
+   "what": "penumbra reads as thick blunt spokes, loop threads and the limb are softer, and highlights are dull bronze instead of gold",
+   "fix": "thin the penumbra into needle fibrils, sharpen the umbra edge and loop strands, and lift filament highlights"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "tile I, left limb",
+   "what": "spicules are a regular comb of straight triangular spikes, and the disk below is muddy and low-contrast",
+   "fix": "replace the spike row with irregular soft wisps of varying height and restore granule crests and dark lanes"
+  },
+  {
+   "severity": "major",
+   "file": "pair-04-b.png",
+   "where": "tile H, right horizon",
+   "what": "the faint arcade over the limb is missing, spicules are a rigid picket fence, and the surface is soft",
+   "fix": "put the faint secondary loops back, break the spike row into turbulent wisps, and sharpen the granules"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "both eruption footpoints and the near limb",
+   "what": "surface shading under the loops is flatter than the approved frame, and the spicule fringe is more rigid and less detailed",
+   "fix": "restore crisp granule relief at both footpoints and soften the limb into uneven plasma wisps"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "mid-surface grade",
+   "what": "crests have lost gold-white and the midtones have shifted toward muddy orange",
+   "fix": "warm the highlights back to incandescent gold without lifting the black lanes"
+  }
+ ]
+}

@@ -18,7 +18,8 @@ export function sampleCount(tier: string, kind: SegmentKind): number {
 // mosaic of bars. With ends each sample weighs as far as the shutter is open at its time (shutterOpen), so the bar fades in and out. The
 // times of the samples are the same at every ends. Their places are taken less their weighed middle, as jitterOffsets takes them less
 // their plain mean: the picture sits where it sat, at every count. At 0 every sample weighs 1 / count and the list is the one it always
-// was, to the bit. A set that reads the place of a sample from this list itself must ask with the ends of the frame it draws.
+// was, to the bit. A set that needs the place or the weight of the sample it is drawn for reads them from its view (RenderView.jitterX,
+// jitterY, weight, weights): the list of samplesFor(view.samples) is the frame's own only under a shutter without ends.
 export function samplesFor(count: number, shutter = 1, ends = 0): Sample[] {
   const out: Sample[] = []
   const at = jitterOffsets(count)
@@ -55,6 +56,42 @@ export function shutterWeights(count: number, ends: number): number[] {
   const open = Array.from({ length: count }, (_, i) => shutterOpen((i + 0.5) / count, ends))
   const whole = open.reduce((a, b) => a + b, 0)
   return open.map((w) => w / whole)
+}
+
+// The view of each sample of a frame that draws two views, by the light each sample brings (FramePlan.sides): true where the sample is
+// the first view's, and share is the share of the frame's light the first view is to have. The samples are taken in the order of their
+// times. The first view is owed its share of the weight of each, and takes a sample when it is owed half of that sample's weight or more.
+// So at every time inside the shutter each view has had its share of the light so far to within half a sample, the samples of each view
+// lie over the whole shutter, and what is left owed at the end is worked off by the last samples, which under a shutter that closes
+// weigh next to nothing. At a share of a half every other sample is the first view's; with a count that is even and weights that read
+// the same from both ends the two views then have one half of the light each, to the last bit of the sum.
+export function splitSides(weights: ArrayLike<number>, share: number): boolean[] {
+  const out: boolean[] = []
+  let owed = 0
+  for (let i = 0; i < weights.length; i++) {
+    const w = weights[i]!
+    owed += share * w
+    const first = owed >= w / 2 - OWED
+    if (first) owed -= w
+    out.push(first)
+  }
+  return out
+}
+
+// What a sum of weights may be off by in its last bits: a sample that is owed exactly its half is taken.
+const OWED = 1e-12
+
+// Where a sample stands, 0 to 1, in an order of the samples of a frame that is spread over the shutter: the samples are put in the order
+// of (index * stride) % count, with a stride that shares no factor with the count, and the sample stands at the summed weight of all
+// that come before it there plus half of its own. A set that shows one thing in a share of its samples and another in the rest (order
+// under the share: the one, else the other) then gives each its share of the light of the frame and not of the count of the samples.
+// With samples that weigh alike it is ((index * stride) % count + 0.5) / count.
+export function sampleOrder(weights: ArrayLike<number>, index: number, stride: number): number {
+  const count = weights.length
+  const rank = (index * stride) % count
+  let before = 0
+  for (let i = 0; i < count; i++) if ((i * stride) % count < rank) before += weights[i]!
+  return before + weights[index]! / 2
 }
 
 // The time inside a frame, in frames, of the position 0 to 1 inside a shutter that keeps the given share of the film's shutter around its middle.

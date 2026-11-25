@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 212-237 across solar disk",
+   "what": "the close-up Voronoi granulation, black sunspot, and magnetic arch shrink into a visible circular patch sitting over a blurry mottled globe texture in frames 212-229, then vanish by frame 237 and are replaced by unrelated active regions and sunspots at different positions",
+   "fix": "register the terrain sunspot, arch, and granulation detail to matching coordinates on the solar globe and blend detail frequencies seamlessly so surface features persist across the rise cover"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 212-245 sky, corona, and limb",
+   "what": "sky, corona, limb prominences, and exposure pop across the cover: the diagonal Milky Way disappears into black by frame 220 while bright radial corona streamers and a large red right-limb loop fade in abruptly at frames 220-229, followed by a much brighter differently oriented Milky Way entering at frames 237-245 with a sharp luminance spike",
+   "fix": "keep one world-locked starfield and Milky Way orientation across terrain and globe renders, and carry corona rays, limb prominences, and exposure continuously across the transition"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "frames 211-222 across the full sheet",
+   "what": "the consecutive-frame cover sheet ends at frame 222 while the terrain sunspot decal is still intact, cutting off before the main terrain-to-globe surface swap and sky crossfade that happen across frames 222-237",
+   "fix": "align the cover window and its contact sheet to span the complete visual handoff (through at least frame 237, or tighten the crossfade inside the declared cover range)"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 196-253 solar horizon and globe framing",
+   "what": "after pulling back level in frames 180-196, the camera lurches in frames 212-229 so the solar globe shifts toward the lower-left and the right limb tilts steeply downward before swinging back to a centered globe in frames 237-261",
+   "fix": "use a single continuous eased camera trajectory and aim target from the terrain anchor to the full-globe framing so horizon tilt and disk position evolve smoothly without a mid-rise wobble"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "frames 0-65 coronal arch and camera start",
+   "what": "the magnetic plasma arch balloons near the top border by frame 33, snaps apart at frame 49 leaving two detached vertical strands on the right that pop out by frame 65 before freezing in height through frame 179, while the camera launches at frame 0 at peak lateral speed with no ease-in",
+   "fix": "ease camera motion smoothly from rest at frame 0 and advect plasma steadily along stable loop geometry without an early height snap or subsequent silhouette freeze"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 261-269 into sheet-04.png frame 270",
+   "what": "vertical camera pitch drift in the background starfield (~1.4 px/frame in frames 261-269) stops abruptly at frame 270 when the purely horizontal orbit of the hold segment begins",
+   "fix": "ease vertical pitch velocity to zero before frame 269 and match the horizontal orbital rate across the rise-to-hold boundary"
+  }
+ ]
+}

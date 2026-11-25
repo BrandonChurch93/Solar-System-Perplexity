@@ -70,22 +70,19 @@ number, and it goes out of the look when the hunk is in. When the plan's radius 
 changes, both spans follow, and `spans` never puts an end beyond the swap distance.
 `tests/farsun-share.test.ts` holds it: the stand-in is within 0.005 of the film's `sunStart` (so a change
 of the Sun's last view turns the test red and leaves no step), the swap distance is the film's, both ends
-stand at or before the swap distance of every stop, the wear is 0 wherever the globe's share is 0, and the
+stand at or before the swap distance of every stop, the wear goes by the burn alone, whole at burn 0, with no step and out before the Sun stop's set leaves, and the
 share and the burn have no step at any sixteenth of a frame of the way out of the Sun.
 
-Over `handover` the hold's globe gives way to the far Sun; over `wear` the far Sun goes from the hold's own
-law (the same map, grade, limb factor and motion as `src/stops/sun/globe.ts`) to its own. The wear is
-`(1 - x)` to the power `wear[2]`, with x the distance between the two ends. The first part of the burn (0
-to `burn.split`) follows the same share.
+Over `handover` the hold's globe gives way to the far Sun. `wear` is the film's law of the first part of
+the burn and nothing else: `sunBurn` of `src/director/film.ts` is `burn.split` times one minus `wearShare`,
+which is `(1 - x)` to the power `wear[2]`, x the distance between the two ends, and the ends are the whole
+way from the Sun stop's last view to the swap (shares 0 and 1). What the far Sun wears of the Sun stop
+goes by the burn alone (`wornAt`, see "The wear by the burn").
 
-The far Sun wears the Sun stop's maps only while that stop's set is named for the frame, and the film
-names it while the globe's share is above 0. So the wear ends where the handover ends (both at 0.97 of the
-way), and from there on the picture does not hang on what the loader holds: worn is 0 with the maps in
-memory and without them. The share is under 1 so that the last rounding of the distance at the swap can
-not leave a rest of wear. The power is 0.8 where it was one half: the wear now ends while the camera still
-moves (0.97 of the way, not the standstill at the swap), and a square root is steep at its end. INFERRED
-from the film's path law (the pull is `smoother` over 27 film frames): the largest step of the worn share
-in half a film frame is 0.038 with 0.8 and 0.098 with one half; it was 0.032 on the old span.
+The far Sun wears the Sun stop's maps while that stop's set is there, and the engine holds it for every
+frame of the travel out of the Sun (`setsForFrame`: the stop left and the next one). The wear is out at
+burn `burn.worn.end[1]`, film frame 531.4, and the set leaves at 540, so no frame hangs on what the loader
+holds. The test holds both.
 
 ## The burn (look.json, `burn`)
 
@@ -308,19 +305,10 @@ after a blur of 12 px: at most 4.0 in the box, at most 5 on the face (inside 0.9
 to 1.0), at most 8 in each zone of gas (1.0 to 1.1, 1.1 to 1.3, 1.3 to 1.6, beyond 1.6). The plain number is
 reported and not ruled. The box does not move.
 
-MEASURED at the draft tier with `PIL` `GaussianBlur(12)` on both pictures at 1920 by 1080, mean of the
-absolute difference over the three channels: this look gives 4.35 in the box (the looks before it 4.39,
-4.40, 4.07, 4.13, 4.42 and 4.57), face 2.9, limb 3.2, gas 4.8, 7.6, 4.7 and 4.5. Every zone is inside its bound.
-The box is over its 4.0: the rule stands and this look does not meet it. The look of a3df7524 had 4.07
-with a face of 2.0, and its face was washed white beside the approved image: the number went up by 0.33
-because the face now carries mottle, and mottle that does not lie grain for grain where the approved
-image has its own does not cancel under a blur of 12 px (the face adds 1.01 of the 4.40 levels where it added 0.68 of
-the 4.07). The picture beside the approved image has the last word, so the mottle stays. What is left
-outside the face, by the cells of the difference: the light from 1.2 to 1.3 radii about position angles
-80 to 110 (the approved image has tongues of flame with body there, this look thinner hair, 13 to 16
-levels too dark where it was 17 to 21), the gas from 1.3 to 1.6 radii between position angles 130 and 170
-(11 levels too little blue), the bloom of the left limb at 1.3 radii (8 to 10 levels too much red and
-green) and the reach of the glare at the upper left.
+The measure is `PIL` `GaussianBlur(12)` on both pictures at 1920 by 1080, the mean of the absolute
+difference over the three channels. MEASURED now at the final tier: 2.57 in the box, every zone inside its
+bound (see "hold.ts, the map of place"). The looks before the map stood between 4.07 and 4.57; their
+numbers are in the history of this file.
 
 ## The sphere of 11.69 degrees
 
@@ -368,14 +356,7 @@ MEASURED at 615 on the larger sphere, the zones on the approved circle, the box 
 scaled by the rules above and nothing else: 7.65. This look, draft tier: 4.83 in the box, 7.98 plain; by
 zone the face 3.9, the limb 2.8, the gas from 1.0 to 1.1 radii 7.3, from 1.1 to 1.3 7.7, from 1.3 to 1.6
 4.6, beyond 1.6 2.9 (bounds 5, 5 and 8). Final tier: 4.83 in the box, 8.05 plain, the zones the same to
-a tenth. The aim of 4.0 is not met. What is left, by sector
-(position angle from the right, clockwise, the approved image minus this look, blur 12 px): the gas from
-1.1 to 1.2 radii at 130 to 145 is 11 levels of red short; the first tenth outside the limb at 145 to 160
-is 12 levels of blue short; from 1.2 to 1.6 radii at 145 to 160 the look is 5 to 8 levels too bright;
-under the limb at 85 to 100 it is 6 levels too bright at the limb and 8 to 10 short from 1.05 to 1.2.
-
-The rays of the left limb are still hazier than the approved image's and the tongue of the lower limb is
-streaks where the approved one has body.
+a tenth. The aim of 4.0 was not met on that look.
 
 MEASURED, the contrast of the face by band (the standard deviation of the luminance, in levels, of the
 picture split into bands of 0 to 2, 2 to 5, 5 to 12 and 12 to 30 px), at 0 to 0.5, 0.5 to 0.8, 0.8 to 0.9
@@ -398,21 +379,9 @@ ranges of radius: the approved image 9.2, 9.9, 10.2 and 10.2; this look 6.7, 7.9
 before 6.1 to 6.5. The face is warmer and still short of the approved image's orange. A stronger tint
 (`warm` 0.034 and 0.06 over 5.5 zones) gave 7.5, 7.7, 6.3 and 7.1 and cost 0.09 levels in the box.
 
-MEASURED, the limb between position angles 110 and 150 (mean colour at a radius, draft tier): at 0.976
-radii the approved image 252, 252, 244, this look 253, 249, 237, a3df7524 252, 248, 236; at 1.011
-radii 249, 240, 211 against 251, 243, 218 (a3df7524 251, 244, 227); at 1.029 radii 244, 229, 192 against
-247, 235, 202 (a3df7524 246, 236, 213); at 1.047 radii 239, 220, 179 against 243, 229, 189; at 1.082
-radii 227, 202, 154 against 234, 212, 162. The dense flames that hide the edge make the first tenth of a
-radius outside the limb up to 10 levels whiter than the approved image's there (the look of 12b9c5ef was
-within 4 levels and read as a clean arc).
-
 MEASURED, the colour of the loop's strands (the brightest 3 percent of the place of the loop) and of the
 ground under them: the approved image 234, 211, 166 on 193, 163, 116; the look of 12b9c5ef 221, 194, 143
 on 178, 151, 108. The loop's own values are unchanged in this look and it is not measured again.
-
-MEASURED at the final tier on the look before this one (12b9c5ef, one picture, 573 s with nothing else
-running): 4.39 in the box as at its draft tier; the plain number 7.77. This look is measured at the draft
-tier only (plain 7.63).
 
 ## The look after the final cut of batch 9 (MAIL 882, 886 and 908)
 
@@ -420,7 +389,8 @@ What changed in the body's law, each by an angle or a radius and none by the pix
 
 - The face is flattened before its mottle is drawn (`spots.flat`: amount, level of the face table, mean).
   The fine heat is divided by the face table read at a coarse level, so the broad fields of the table no
-  longer come back as yellow patches and the mottle stands on an even ground. `plage.gain` is 0,
+  longer come back as yellow patches and the mottle stands on an even ground. `plage.gain` is 0 (both at
+  full burn only, see "One body at the seam"),
   `keep.warm` is off, `keep.coarse` is weaker (0.25), `keep.gain` 0.14 over a floor of 0.8.
 - A dark knot shades with a colour and not with grey (`knot.shadeColour`, `knot.shade`: share of the colour,
   strength). MEASURED on the approved image: where its face is darker, red falls 0.09 and green 0.36 of
@@ -459,54 +429,10 @@ degrees kept), the zones on the approved circle, blur 12 px, bound 4.0 in the bo
 
 Every zone is inside its bound. The aim of 4.0 in the box is NOT met.
 
-Why it is not met, MEASURED on this look at the final tier by putting the approved image's own pixels into one zone at a
-time and taking the number again (the zones' shares of the box: face 0.343, limb 0.070, gas 0.077, 0.173,
-0.241, beyond 0.096):
-
-| what is made equal to the approved image | box |
-|------------------------------------------|-----|
-| nothing (this look) | 4.34 |
-| the face's law at 40 px and coarser, this look's mottle kept | 4.05 |
-| the face's law at 20 px and coarser, this look's mottle kept | 3.86 |
-| the face, every pixel | 3.43 |
-| the limb, every pixel | 4.14 |
-| the gas from 1.0 to 1.1 radii, every pixel | 3.82 |
-| the gas from 1.1 to 1.3 radii, every pixel | 3.04 |
-| the gas from 1.3 to 1.6 radii, every pixel | 3.32 |
-| beyond 1.6 radii (Mercury's rim and the sky, not the far Sun's) | 4.08 |
-
-The means of the zones are right to a few levels (signed, red green blue: the face +1.4 +2.0 +0.5, the gas
--0.3 -0.4 -2.4, -3.6 +0.7 +0.9 and +1.9 +1.6 -2.0), and so are the means of the sectors of 15 degrees
-(within 18 levels in every cell, most within 8). What is left is the place of each ray, each strand and
-each patch of the mottle at 12 to 40 px: under a blur of 12 px a ray that stands beside the approved
-image's ray counts twice. A law of the body that does not copy the approved picture ray by ray stops near
-4.3. Trials that moved one law each from 4.41 (MEASURED, draft): the far glow paler 4.38, less of it
-4.33, the narrow light whiter 4.49, the loop and the tongue brighter 4.52, more rays on the burst 4.56, a
-paler fringe 4.91. The picture beside the approved image has the last word, and the number is left where
-the picture is best.
-
-The items of MAIL 816 measured again on this look (final tier, the approved image first):
-
-- (a) the disc: the circle fitted to the limb between position angles 96 and 184 has its centre at 1884.7,
-  67.1 and a radius of 437.4 px on the approved image, 1888.5, 65.3 and 443.9 px on this look (33cc2353:
-  1878.9, 73.3 and 443.1). The fit is loose: the draft tier of the same look gives 1883.7, 68.3 and 438.5,
-  so it holds to about 5 px and no better. The median radius of the visible edge about the approved
-  centre is the steadier measure: 445.0 px against 447.5 at both tiers (33cc2353: 459.2, its tan band
-  stood 14 px outside the limb).
-- (b) the spikes round the limb, in the ring from 1.03 to 1.15 radii: level at the left 214 against 208,
-  at the lower left 185 against 183; contrast of the spikes 11.0 against 7.9 (33cc2353: 8.8; 9.1 with the
-  tongue as a hard cone, which is one spike of that measure and was a thorn at 717 and 1016); peaks per
-  10 degrees 1.3 against 1.3; steepest fall of blue at the limb 4.4 levels a px against 4.6 (33cc2353:
-  3.5). The contrast of the spikes is short of the approved image's and is not met.
-- (c) the tongues at the lower left (position angles 100 to 135, 1.03 to 1.22 radii): strands cover 15.9
-  percent against 16.6, mean width 10.8 px against 9.3, colour 227, 205, 162 against 221, 196, 147; the
-  zone as a whole 175, 146, 105 against 174, 149, 110.
-- (d) the colour of the face: under 0.7 radii 251.0, 246.6, 228.3 against 252.4, 248.3, 227.9; from 0.7 to
-  0.9 radii 251.0, 246.0, 226.8 against 252.4, 248.4, 228.5.
-- (e) the streak at 615: 461 px long with a peak of 80.3 levels on the approved image, 417 px and 59.4 on
-  this frame; its mean from x 1240 to 1420 is 18.4 against 10.7. The streak is drawn by Mercury's set
-  (`src/stops/mercury/`), not by the far Sun; the far Sun gives only the glow it lies on, and that glow is
-  2 levels lower in this look than in 33cc2353 (12.6).
+Why it was not met: a law of the body that does not place each ray stops near 4.3, since under a blur
+of 12 px a ray that stands beside the approved image's ray counts twice. The map of place below is the
+cure. The table of what each zone costs and the items of MAIL 816 measured on that look are in this file
+as 96a7a7ee has it.
 
 The far Sun at 717, 870 and 1016, MEASURED at draft against the folder of 33cc2353 on the same tree:
 
@@ -518,6 +444,164 @@ The far Sun at 717, 870 and 1016, MEASURED at draft against the folder of 33cc23
   by 48 and 50 levels (the face's mottle, the narrow light at the limb, the tongue).
 - 870 differs in 17 pixels by one level each.
 - 60, 360 and 1200 keep their bytes.
+
+## hold.ts, the map of place (MAIL 979)
+
+A law that does not place each ray stops near 4.3 at frame 615. `src/space/farsun/hold.ts` is a small
+table that says where a patch of the face and a ray of the gas stand and how strong, in the frame of the far
+Sun as Mercury's hold sees it. The law keeps every grain: the table is read between its texels and holds
+nothing finer than its pitch. It is in code, as `face.ts` is, so no frame waits for a file.
+
+`python3 assets-src/farsun/make_hold.py` writes it; the script's head says what the two channels hold and
+which inputs it reads (the approved Mercury image, read only, and renders of frame 615 of this folder at
+the draft tier, `npm run still -- --frame 615 --tier draft`). `fit/holdframe.mts` prints the eye and the
+axes of that frame from the film (`npx tsx assets-src/farsun/fit/holdframe.mts 615`), which is the
+`--frame` file of the script.
+
+- The frame. The eye of the middle of Mercury's hold, in the body's frame at the turn `spinAt`: 4.9354
+  radii from the centre, which is the film's swap distance. `tests/farsun-share.test.ts` holds the table's
+  eye to the film's within 0.002 radii, so a hold that moves turns the test red.
+- The face (channel 0) is read on the sphere at the place the hold's eye sees a point of the surface,
+  across the hold's line to the centre with the limb at radius 1. It is added to the mark of the knots:
+  over 0 a glint toward white, under 0 the knots' peach shade. It fades where the surface turns away from
+  the hold's eye (`hold.edge`, the cosine from and to), so nothing of it is smeared along the body.
+- The gas (channel 1) is read in space by the turn about the hold's line and the distance from the centre:
+  a ray of the table is a sheet that stands on the body along a radius, and it fades with the lean of a
+  point out of the hold's plane of sky (`hold.depth`, the sine of the lean at which it has fallen to 1 / e).
+  It is a gain in stops on the corona, the fringe, the hair, the tongue, the rays of the knots and the
+  chromosphere. The loops take `hold.loops` of it and this look sets 0: with the gain on them the loop of
+  the lower limb lost its strands where the approved loop stands a few pixels beside them (MEASURED at
+  615, draft: 2.21 with the loops under the gain and 2.30 without, and the loop is wire again).
+- Both go with the exposure as the knots do (the share of the burn's gain above 1), and the gas also with
+  one minus the wear. So the table is nothing at burn 0: the Sun stop's views and the start of the
+  handover keep their bytes, and the map grows in with the burn along the flight from 474 on.
+- It belongs to the body. Its frame turns with the body's spin, and no term of it reads the clock.
+- `hold.face` and `hold.gas` are the strengths. The table was fitted at 1 and 1; `hold.gas` is 1.35 so
+  the rays of the upper left have the approved image's contrast (MEASURED at 615, draft: spike contrast
+  9.3 at 1.0, 10.3 at 1.2, 11.1 at 1.35, the approved image 11.0; the box 2.30, 2.37, 2.55).
+
+The takes (`assets.maxTakesPerAsset` is 6, and 6 were made in this phase; the rejected ones stay under
+`out/work/farsun-hold/`). Each take is one pass of `make_hold.py step` on the render of the take before,
+so a finer pitch starts from the coarser table. Four renders with flat tables (face +0.5 and -0.5, gas +1
+and -1) gave the slopes; they measure and are no takes. MEASURED at 615, draft tier, the box x 1240 to
+1920, y 0 to 700, blur 12 px:
+
+| take | pitch | box | face | limb | gas 1.0 to 1.1 | 1.1 to 1.3 | 1.3 to 1.6 | beyond 1.6 |
+|------|-------|-----|------|------|----------------|------------|------------|------------|
+| none (96a7a7ee) | | 4.33 | 2.7 | 3.4 | 7.0 | 7.6 | 4.3 | 2.8 |
+| 1 | 40 px | 3.35 | 2.5 | 2.8 | 4.6 | 4.9 | 3.5 | 2.7 |
+| 2 | 40 px | 3.00 | 2.4 | 2.4 | 3.7 | 4.1 | 3.2 | 2.6 |
+| 3 | 20 px | 2.64 | 2.1 | 1.9 | 2.8 | 3.5 | 3.0 | 2.6 |
+| 4 | 20 px | 2.45 | 1.9 | 1.7 | 2.3 | 3.2 | 3.0 | 2.5 |
+| 5 | 12 px | 2.29 | 1.6 | 1.4 | 2.0 | 3.1 | 2.9 | 2.5 |
+| 6 | 12 px, kept | 2.21 | 1.5 | 1.3 | 1.8 | 3.0 | 2.9 | 2.5 |
+
+So the floor with two takes at each pitch is 3.00 at 40 px, 2.45 at 20 px and 2.21 at 12 px. The table of
+12 px gains 0.79 on the table of 40 px and is kept (93 by 89 texels, two bytes each).
+
+MEASURED at 615, final tier, with `hold.gas` 1.35 and `hold.loops` 0: the box 2.57 (96a7a7ee 4.34); the
+face 1.5, the limb 1.3, the gas 3.0, 3.7 and 3.5, beyond 1.6 radii 2.5; spike contrast of the upper left
+11.1 (the approved image 11.0, 96a7a7ee 7.9).
+
+What the table can not do: it is one number for the face and one for the gas, so it moves no hue. The gas
+from 1.1 to 1.3 radii stays 3 to 4 levels short of red and the gas from 1.3 to 1.6 radii 2 levels over in
+red and green; the face stays 1.5 to 2 levels over in red and green. Where the gain met its end (3 stops
+down, 799 texels of 8277, most of them under the lower limb beyond 1.5 radii) the light that is left is
+the lens's and not the gas's.
+
+## One body at the seam (MAIL 1002)
+
+The flight away from the Sun stop shows the stop's own globe until the far Sun stands in for it: the far
+Sun's share is 0 up to frame 470, 0.18 at 474, 0.89 at 480 and 1 from 483 on, and the stop's globe has
+gone at 484 (shares of the way by distance, never frames; the frames are where the film's path puts
+them). 96a7a7ee had made three laws of the far look's face flat for the burnt face of frame 615 and for
+every exposure: `spots.flat` (the broad fields of the face table divided out), `spots.power` 0.3 where
+it was 0.85, and `plage.gain` 0 where it was 0.2. So from 471 to 484 the spots and the bright regions of
+the stop's globe went out while the eye watched, and at 495 the face was pale and even. That was a body
+changing in view.
+
+Cured: the three laws go with the exposure after the handover, not before. `faceLaw` in `farsun.ts`
+takes the burn; up to `burn.split` (0.2, the exposure the film reaches where the handover ends) the
+face is the stop's (`spots.power[0]`, `plage.gain[0]`, no flattening), and from there to burn 1 it goes
+evenly to the burnt look (`spots.power[1]`, `plage.gain[1]`, `spots.flat[0]`). At burn 1 the numbers are
+the ones 96a7a7ee had, so 615 and every later view keep their bytes against the state before the cure
+(MEASURED at 615, draft). `tests/farsun-share.test.ts` holds it: at 471, 475, 480, 484, 485, 495 and 500
+the flattening is 0 and the power and the plage are the stop's.
+
+## The wear by the burn (MAIL 1017, 1027 and 1043)
+
+47c2ef0d still went from the stop's face to the far look's between 471 and 484, with the share: 15.0
+levels of the mean in one film frame (477 to 478), orange with dark mottle to pale cream while the disc
+shrank by 8 percent. Two pictures of one body, and no length of fade between them is a cure.
+
+Now the share shows nothing and the burn does the bleaching.
+
+- At burn 0 the far Sun is the Sun stop's globe. The face is the stop's own map and law (`uWear` 1). The
+  gas goes by `from(near, own)` in `farsun.ts`, which is `own` to the bit where the wear is 0: the corona's
+  gain, scale heights and colours (`corona.worn`), the loops' gain and width (`prominence.worn`) and their
+  colour (`prominence.wornHot`, the red of the stop's prominences where the far look's are pale).
+- `wornAt(burn)` is the wear, by the burn alone: 1 at burn 0, `burn.worn.at` (0.85) at `burn.split`, then
+  down by `fall[0]` with the power `ease[1]` and by `fall[1]` with the power `ease[2]` of the rest of the
+  burn, and out between burns `end[0]` and `end[1]` (0.9 and 0.99). It has no step and never rises (the
+  test walks it in 4000 steps and at every sixteenth of a frame of the way out of the Sun).
+- The burn is the film's (`sunBurn` of `src/director/film.ts`), a law of the place and never of the clock:
+  from 0 to `burn.split` by the distance from the Sun stop's last view to the swap distance (film frames
+  461 to 487), still while the camera turns to Mercury (487 to 503), and from `burn.split` to 1 by the
+  inverse distance to Mercury (504 to 538, the travel's pull). The disc is 424 px at 480 and 417 px from
+  487 on, the sphere of 11.69 degrees that Mercury's hold sees; it does not shrink further on this leg, it
+  slides to the upper right corner.
+- At burn 1 the wear is 0 and every law gives the numbers of 47c2ef0d: MEASURED at draft, frames 60, 360,
+  539, 540, 615, 717, 1016, 1110, 1150 and 1200 keep their bytes, and the previews of 440, 455 and 465 too.
+- No frame hangs on what is loaded: MEASURED on previews, 495 and 520 on a fresh page each are the bytes
+  of the same frames drawn in a run from 440.
+
+MEASURED at 455 (burn 0), drafts of 1920 px, the stop's globe against the far Sun forced to share 1
+(`?farsun=far`), the face inside 0.7 radii, detail as the spread of the level after a blur of 12 px is
+taken out: 186.4 106.0 45.8 and 29.72 against 186.6 106.5 46.3 and 29.57 (0.5 percent less). Any mix of
+the two holds the mean within 0.5 levels a channel and the detail within 0.5 percent, so the share shows
+nothing on the face.
+
+What is NOT the same at burn 0: the gas. The stop's corona and prominences are pictures of the Sun's set
+and the far Sun's are laws of the body. The ring means are close (red green blue, the globe first: 1.0 to
+1.1 radii 179 143 102 and 181 138 99; 1.1 to 1.3 radii 98 82 65 and 105 90 75; 1.3 to 1.6 radii 38 36 34
+and 31 31 29), but the rays do not stand at the same angles and the stop's loops are larger and sharper
+at nearly the same places: the mean difference after a blur of 6 px is 30, 28 and 16 levels in the three
+rings (47c2ef0d: 35, 31 and 16, with the means 20 to 30 levels off). The share crosses that between 471
+and 484: MEASURED against 465 at the same place on the body, the rim and the ring to 1.3 radii differ by
+28 and 27 levels at 480 and by 31 and 31 at 485, the ring to 1.6 radii by 15 and 17 (the flight alone gives
+5, 4 and 3 at 470). No frame steps (at most 0.9 levels a half frame in any ring), but the corona and the
+loops of 485 are not those of 465 seen from further off. The cure is not in this folder: either the far Sun is handed the stop's corona and prominence
+pictures to wear as it wears the face map, or the stop takes the far Sun's laws.
+
+MEASURED on previews of 960 by 540, the face inside 0.75 radii, luminance in levels; the bands are the
+spread of the difference of two blurs (8 and 40 px, 40 and 160 px, in pixels of the master frame):
+
+| frame | far Sun's share | burn | mean | R G B | band 8 to 40 | band 40 to 160 |
+|-------|-----------------|------|------|-------|--------------|----------------|
+| 470 | 0.00 | 0.019 | 121.0 | 187 109 49 | 19.0 | 14.2 |
+| 474 | 0.18 | 0.058 | 121.7 | 188 109 49 | 18.9 | 14.2 |
+| 477 | 0.56 | 0.099 | 126.5 | 191 115 52 | 18.0 | 13.5 |
+| 480 | 0.89 | 0.143 | 139.2 | 199 129 63 | 16.0 | 12.0 |
+| 483 | 1.00 | 0.179 | 152.2 | 207 144 74 | 14.3 | 10.7 |
+| 486 | 1.00 | 0.198 | 158.6 | 210 151 80 | 13.6 | 10.2 |
+| 495 | 1.00 | 0.200 | 160.3 | 211 153 81 | 13.6 | 10.3 |
+| 504 | 1.00 | 0.200 | 163.1 | 213 156 84 | 13.2 | 10.8 |
+| 507 | 1.00 | 0.205 | 166.8 | 215 161 87 | 11.9 | 9.0 |
+| 510 | 1.00 | 0.230 | 174.4 | 219 169 95 | 10.2 | 7.4 |
+| 513 | 1.00 | 0.294 | 187.3 | 225 184 110 | 8.5 | 6.1 |
+| 516 | 1.00 | 0.411 | 203.7 | 233 202 132 | 6.6 | 4.8 |
+| 519 | 1.00 | 0.567 | 219.7 | 240 220 159 | 4.9 | 3.5 |
+| 522 | 1.00 | 0.731 | 232.2 | 245 233 186 | 3.4 | 2.5 |
+| 525 | 1.00 | 0.865 | 240.5 | 248 242 208 | 2.4 | 1.8 |
+| 528 | 1.00 | 0.949 | 247.2 | 252 248 226 | 1.6 | 1.1 |
+| 531 | 1.00 | 0.987 | 248.6 | 253 249 230 | 1.5 | 1.0 |
+| 540 | 1.00 | 1.000 | 248.6 | 253 249 231 | 1.5 | 1.1 |
+
+The largest change of the mean in one film frame is 4.9 levels on the Sun's side (479 to 481) and 5.6 on
+Mercury's side (515 to 517), where 47c2ef0d had 15.0. At twice the film's rate (previews at every half frame
+from 470 to 488, the capture's own shutter) the largest change is 2.50 levels a half frame (479.5 to 480)
+and no neighbours differ by more than their neighbours do: there is no step. The detail of the face (the
+spread after a blur is taken out) goes from 29.0 at 470 to 20.6 at 488 and stays there to 503.
 
 ## The cost
 
@@ -561,3 +645,8 @@ tools of the recipe and no part of a frame.
 The lines the far Sun needs in files that belong to other owners, one patch per owner, made by
 `sh assets-src/farsun/wiring/make.sh` against the commit of main the branch started from. Each patch starts
 with the reason for every hunk. They reach main through their owners.
+
+The patches of the travel, the Sun and Mercury are in main and are no longer kept (MEASURED on the merge
+of main dac56ef3: 44 of 45, 17 of 17 and all of their added lines stand in the tree as they are). Their
+reasons stay beside (`travel.txt`, `sun.txt`, `mercury.txt`) and the history has the patches.
+`film-sunstart.patch` is not in main yet and stays.

@@ -1,0 +1,49 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "sun, upper right (crop C)",
+   "what": "the corona reads as thin, stringy filaments with a mottled, textured disc; the target has broad radial ray spikes and a smoother, blown-out bloom that wraps over the planet's right limb",
+   "fix": "soften the filament detail and bring back the wide radial streaks and heavier bloom spilling toward the planet"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "night hemisphere, left half of the disc (crops B, D, H)",
+   "what": "the dark side is a little more neutral and grainy, and the faint cool blue tint is gone (lower blue, about twice the pixel noise)",
+   "fix": "denoise the night side and push it slightly back toward the cool blue-black of the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "starfield, lower left and right (crops D, E, I)",
+   "what": "the stars are denser, crisper and slightly brighter, so the sky looks busier than the target's softer field",
+   "fix": "reduce the star count or brightness slightly and soften the field to match"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper right limb (crops C, F)",
+   "what": "the atmosphere glow at the limb is a bit thinner and sharper-edged than the target's warm haze",
+   "fix": "widen and soften the limb glow falloff a little"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "foreground terrain and crater walls (crops D, G, H)",
+   "what": "fine surface detail and microcontrast are slightly softer (about 4% less local gradient), and the deepest shadows are slightly lifted",
+   "fix": "add back a little local contrast and sharpening, and lower the shadow floor slightly"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "sky, upper right (crop C)",
+   "what": "the starfield is slightly noisier and denser than the target's",
+   "fix": "denoise the sky slightly and match the star density"
+  }
+ ]
+}
