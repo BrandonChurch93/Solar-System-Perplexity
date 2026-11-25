@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T13:43:56.261Z",
- "head": "8443eb1d74e3e703390d157f707a455af9ada7c7",
- "note": "Air law on the globe, scratch on Mars, crops. Off proof 11 of 11 byte equal. Stars at 2464 are dimmed, not gone: the path's factor on a level line is 0.45 to 0.92 with a vertical depth of 0.066. Not a look, numbers are scratch.",
+ "pushed": "2026-11-25T14:13:16.050Z",
+ "head": "8961dd4f370cab66bc162c21d948c9110a16b93a",
+ "note": "airLaw on the globe at 8961dd4f with the real chunk of handover_engineer. Off: 11 of 11 byte equal. Mars scratch on: halo and glint hidden, numbers are scratch and not a look. Stars under the law are dimmed and stand (vertical depth 0.066).",
  "looks": [
+  {
+   "time": "2026-11-25T14:13:15.468Z",
+   "file": "20261125141315468-note-mars-law-real-sheet.jpg",
+   "source": "../m1092/mars-law-real-sheet.jpg",
+   "kind": "note",
+   "label": "Mars 2325 (top) and 2464 (bottom): as it is (left) against airLaw on with the real chunk (right), scratch numbers, draft",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T13:43:55.172Z",
    "file": "20261125134355172-note-mars-law-crops.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "MAIL 1032 a, Mars dive 2456 to 2474 on 22820b17: reader (A) against the real pair carried by range pictures (E), and by the distance of the ground",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:38:57.600Z",
-   "file": "20261125113857600-note-mercury-722-parts.jpg",
-   "source": "../m1032/mercury-722-parts.png",
-   "kind": "note",
-   "label": "MAIL 1032 b, Mercury dive frame 722, lower right limb: what the real change of 0.2 is made of. Scratch controls, reverted: relief off, limb curve and brim off, patches off, all three off",
-   "stop": "mercury"
   }
  ]
 }
