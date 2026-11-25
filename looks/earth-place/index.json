@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T06:06:07.681Z",
+ "pushed": "2026-11-25T06:35:43.419Z",
  "head": "b9908e0352a26912e1440587e32e2a69343167d4",
- "note": "0606 trial share root 0.55 ends 0.15 on the K4 line: three frames of my own smooth slice 1876 to 1896, not a commit",
+ "note": "E1 trial frames, pattern still red at 0.81 from 1890 on the far band, next trial spreads the arrival by distance",
  "looks": [
+  {
+   "time": "2026-11-25T06:35:42.696Z",
+   "file": "20261125063542696-note-e1-look.jpg",
+   "source": "../../../../tmp/gl/k8/e1-look.jpg",
+   "kind": "note",
+   "label": "E1 trial, not committed: presence by share times level, dive 1866 to 1902",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T06:06:06.865Z",
    "file": "20261125060606865-note-look-0606.jpg",
@@ -60,14 +68,6 @@
    "source": "../../../../tmp/gl/k6/r-1857-1920.jpg",
    "kind": "note",
    "label": "3a136a1a review tier 1857 (for the by frame answer on softness)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T04:24:23.247Z",
-   "file": "20261125042423247-note-rise-step-in-place.jpg",
-   "source": "../../../../tmp/gl/k5/rise-step-in-place.png",
-   "kind": "note",
-   "label": "K4 state 1 rise largest step in place 2144 to 2145",
    "stop": "earth"
   }
  ]
