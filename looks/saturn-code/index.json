@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T16:55:55.645Z",
- "head": "a4af1b589c7bc9d57aaaa9e6feec470c2e62c443",
- "note": "d312: one share of the globe's light by log height in the tree; drafts at 3465 3720 3830 3838; depth trials of the dark ice render",
+ "pushed": "2026-11-25T17:11:20.448Z",
+ "head": "8c5292816e66d20013834900191aeed22710c77f",
+ "note": "second name's tree 8c52928 pushed; finals 3465 and 3720 on main's engine; rise, G13, gate, parity, dive render",
  "looks": [
+  {
+   "time": "2026-11-25T17:11:19.718Z",
+   "file": "20261125171119718-note-p_hold_n2.jpg",
+   "source": "../../../../tmp/v/dark/p_hold_n2.png",
+   "kind": "note",
+   "label": "hold 3465 at 4 times: approved hero, main, 8c52928 (dark ice depth 0.05)"
+  },
+  {
+   "time": "2026-11-25T17:11:18.936Z",
+   "file": "20261125171118936-note-final_3465.jpg",
+   "source": "../../../../tmp/v/n2/final_3465.png",
+   "kind": "note",
+   "label": "8c52928 final 3465 on main's engine: 4.7784 against the hero (main 4.7807)"
+  },
+  {
+   "time": "2026-11-25T17:11:18.184Z",
+   "file": "20261125171118184-note-final_3720.jpg",
+   "source": "../../../../tmp/v/n2/final_3720.png",
+   "kind": "note",
+   "label": "8c52928 final 3720 on main's engine: 28.62 against the approved (main 27.80); rest of the frame 21.89 against main's 22.09"
+  },
+  {
+   "time": "2026-11-25T17:11:17.453Z",
+   "file": "20261125171117453-note-pair_3720_n2.jpg",
+   "source": "../../../../tmp/v/dark/pair_3720_n2.png",
+   "kind": "note",
+   "label": "8c52928 final 3720, the two owned regions at full size: approved, main, the name (clean gap, no band at 0 to 6 N)"
+  },
   {
    "time": "2026-11-25T16:55:54.894Z",
    "file": "20261125165554894-note-draft_3838.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/dark/pair_3720_S1.png",
    "kind": "note",
    "label": "3720 foot region: approved, main (final), the tree with the one share and the dark ice (draft)"
-  },
-  {
-   "time": "2026-11-25T16:28:51.794Z",
-   "file": "20261125162851794-note-final_3866_small.jpg",
-   "source": "../../../../tmp/v/named2/final_3866_small.png",
-   "kind": "note",
-   "label": "6617c15f at 3866, final tier on the old engine (small copy): the kept look after the rise"
-  },
-  {
-   "time": "2026-11-25T16:10:34.860Z",
-   "file": "20261125161034860-note-foot6617_a.jpg",
-   "source": "../../../../tmp/v/dark/foot6617_a.png",
-   "kind": "note",
-   "label": "6617c15f rise at draft, frames 3814 to 3830 every 4: the foot between the globe and the inner ring; no plane stands in the gap, the globe shows through a veil of 2 percent"
-  },
-  {
-   "time": "2026-11-25T16:01:16.587Z",
-   "file": "20261125160116587-note-p_hold_6617.jpg",
-   "source": "../../../../tmp/v/dark/p_hold_6617.png",
-   "kind": "note",
-   "label": "hold 3465 at 4 times, final tier: approved hero, main, 6617c15f (thin sheet at one depth 0.016); top the gap against the sky, under it the gap in front of the lit globe"
-  },
-  {
-   "time": "2026-11-25T15:53:56.351Z",
-   "file": "20261125155356351-note-rise_sheet.jpg",
-   "source": "../../../../tmp/v/named2/rise_sheet.png",
-   "kind": "note",
-   "label": "proof of 6617c15f, rise 3806 to 3860, draft frames of the smooth tool"
   }
  ]
 }
