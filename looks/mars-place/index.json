@@ -1,72 +1,75 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T13:05:04.693Z",
- "head": "54760fe797b03685084af1e018dad0f96c354278",
- "note": "N1: the picture's own ground on the plates, pairs and tracks; set and plate from above; crops of (i) and (ii)",
+ "pushed": "2026-11-25T13:19:17.412Z",
+ "head": "5e92bb49042763ee024e693a75e36df8172de9b8",
+ "note": "N1 named 5e92bb49: plates carry the picture's ground from above; chunks of all frames, pair 2692, web frames",
  "looks": [
   {
-   "time": "2026-11-25T13:05:03.607Z",
-   "file": "20261125130503607-note-track-ii.jpg",
-   "source": "out/work/place/n1/track-ii.jpg",
+   "time": "2026-11-25T13:19:16.811Z",
+   "file": "20261125131916811-note-web-2697.jpg",
+   "source": "out/work/place/n1/web-2697.jpg",
    "kind": "note",
-   "label": "ground (ii) 2460 to 2476: state over N1",
+   "label": "N1 web-2697, named 5e92bb49",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T13:05:02.703Z",
-   "file": "20261125130502703-note-track-c.jpg",
-   "source": "out/work/place/n1/track-c.jpg",
+   "time": "2026-11-25T13:19:16.224Z",
+   "file": "20261125131916224-note-web-2452.jpg",
+   "source": "out/work/place/n1/web-2452.jpg",
    "kind": "note",
-   "label": "ground (c) 2460 to 2476: state over N1",
+   "label": "N1 web-2452, named 5e92bb49",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T13:05:01.851Z",
-   "file": "20261125130501851-note-track-b.jpg",
-   "source": "out/work/place/n1/track-b.jpg",
+   "time": "2026-11-25T13:19:15.634Z",
+   "file": "20261125131915634-note-pair-2692.jpg",
+   "source": "out/work/place/n1/pair-2692.jpg",
    "kind": "note",
-   "label": "ground (b) 2460 to 2476: state over N1",
+   "label": "N1 pair-2692, named 5e92bb49",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T13:05:00.775Z",
-   "file": "20261125130500775-note-pair-2468.jpg",
-   "source": "out/work/place/n1/pair-2468.jpg",
+   "time": "2026-11-25T13:19:15.073Z",
+   "file": "20261125131915073-note-chunk-3.jpg",
+   "source": "out/work/place/n1/chunk-3.jpg",
    "kind": "note",
-   "label": "2468 state over N1",
+   "label": "N1 chunk-3, named 5e92bb49",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T13:04:59.814Z",
-   "file": "20261125130459814-note-pair-2464.jpg",
-   "source": "out/work/place/n1/pair-2464.jpg",
+   "time": "2026-11-25T13:19:14.498Z",
+   "file": "20261125131914498-note-chunk-2.jpg",
+   "source": "out/work/place/n1/chunk-2.jpg",
    "kind": "note",
-   "label": "2464 state over N1",
+   "label": "N1 chunk-2, named 5e92bb49",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T13:04:58.980Z",
-   "file": "20261125130458980-note-pair-2460.jpg",
-   "source": "out/work/place/n1/pair-2460.jpg",
+   "time": "2026-11-25T13:19:13.916Z",
+   "file": "20261125131913916-note-chunk-1.jpg",
+   "source": "out/work/place/n1/chunk-1.jpg",
    "kind": "note",
-   "label": "2460 state over N1",
+   "label": "N1 chunk-1, named 5e92bb49",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T13:04:58.011Z",
-   "file": "20261125130458011-note-crops-i-ii.jpg",
-   "source": "out/work/place/n1/crops-i-ii.jpg",
+   "time": "2026-11-25T13:19:13.308Z",
+   "file": "20261125131913308-note-chunk-0.jpg",
+   "source": "out/work/place/n1/chunk-0.jpg",
    "kind": "note",
-   "label": "MAIL 1095 (i) and (ii): state, trial 3 with wall law, N1; earlier and 8 frames later",
+   "label": "N1 chunk-0, named 5e92bb49",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T13:04:56.819Z",
-   "file": "20261125130456819-note-above-n1.jpg",
-   "source": "out/work/place/n1/above-n1.jpg",
-   "kind": "note",
-   "label": "set from above, picture alone, plate of the state, plate of N1 at the five plates, 1 to 1",
-   "stop": "mars"
+   "time": "2026-11-25T13:18:15.286Z",
+   "file": "20261125131815286-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
   }
  ]
 }
