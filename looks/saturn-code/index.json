@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T05:24:23.971Z",
- "head": "f7991adbd2b5152ea5dfe7d7ec6e2a2ef9bb4044",
- "note": "proof of f7991ad runs; dive slice 3600 to 3630 is red (pattern 0.65 at 3612, the denser dust inside the rim comes in too fast); finding the cure before naming",
+ "pushed": "2026-11-25T05:53:42.694Z",
+ "head": "06d73b4f9a974895fe907b0510a979badca10e07",
+ "note": "proof of the tree in work: rise and dive pattern red, causes found (dust pace, palette table, night side sinking where the dust comes in); cures in test by slices; item 5 stands at 3567",
  "looks": [
+  {
+   "time": "2026-11-25T05:53:42.054Z",
+   "file": "20261125055342054-note-r61_3615_wide.jpg",
+   "source": "../../../../tmp/v/x/r61_3615_wide.png",
+   "kind": "note",
+   "label": "draft 3615, tree in work: the dust inside the rim lit over the night side; with the night side sunk at these heights the report read 0.65 at 3603, cure in work"
+  },
+  {
+   "time": "2026-11-25T05:53:41.458Z",
+   "file": "20261125055341458-note-i5_3567_pair2.jpg",
+   "source": "../../../../tmp/v/x/i5_3567_pair2.png",
+   "kind": "note",
+   "label": "item 5, final 3567 before (left, 88ba2385) and after (right, local tree): the stars in the shadow thin out, no ellipse edge"
+  },
   {
    "time": "2026-11-25T05:24:23.287Z",
    "file": "20261125052423287-note-foot_pair.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/x/g3_whole.png",
    "kind": "note",
    "label": "3720 review tier trial g3 (uncommitted) under the approved: finer grains near the lens, ringlets of two wider octaves with tone and hue of their own near the lens, globe palette by latitude; open: B ring too striped and smooth, near field still brown"
-  },
-  {
-   "time": "2026-11-25T04:11:38.160Z",
-   "file": "20261125041138160-note-n15_globe.jpg",
-   "source": "../../../../tmp/v/x/n15_globe.png",
-   "kind": "note",
-   "label": "3720 globe, approved on top, trial n15 below: band run and palette by latitude measured from the approved, twilight tint"
-  },
-  {
-   "time": "2026-11-25T04:11:37.604Z",
-   "file": "20261125041137604-note-n15_foot2.jpg",
-   "source": "../../../../tmp/v/x/n15_foot2.png",
-   "kind": "note",
-   "label": "3720 foot at 2x, approved on top, trial n15 below: dust zone in slate with soft streaks, the Sun's light through the globe's air; open: jagged contact at the draft tier, zone narrower on the night side"
   }
  ]
 }
