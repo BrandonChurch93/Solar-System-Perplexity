@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T07:22:37.589Z",
- "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
- "note": "round 3: footprint edge at 4160 to 4174 cured by texel size; official report restarted 07:22 UTC",
+ "pushed": "2026-11-25T07:48:46.807Z",
+ "head": "128b54f14e80f5396174fc156803b50c5a9aaf24",
+ "note": "state 128b54f1 pushed as asked in MAIL 962 (not named): main merged, footprint cure; the report runs on it since 07:34; next the haze's input and edge at 4148 to 4156",
  "looks": [
+  {
+   "time": "2026-11-25T07:45:28.291Z",
+   "file": "20261125074528291-note-look-0748.jpg",
+   "source": "../../../../tmp/n50/look-0748.jpg",
+   "kind": "note",
+   "label": "state 128b54f1 (main merged, footprint cure): rise 4396 to 4416 with the fade off, 4416 and 4436 and hold 4035 on the state, then the report's dive frames 4120 to 4160",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T07:22:36.791Z",
    "file": "20261125072236791-note-p3-top.jpg",
@@ -252,14 +260,6 @@
    "source": "../../../../tmp/parC/z3-changes-new.png",
    "kind": "note",
    "label": "dive on this commit, the changes panel of main's reader of 7fd2923c at the four largest rows: the pattern changes along the far ground under the limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:43:25.571Z",
-   "file": "20261125024325571-note-t5.jpg",
-   "source": "../../../../tmp/parC/t5.jpg",
-   "kind": "note",
-   "label": "dive 4162 + 1/2, 4166 + 1/2, 4170 + 1/2: this commit beside the trial with the surface law read at a fixed angle (not taken). The trial has no haze under the limb",
    "stop": "uranus"
   }
  ]
