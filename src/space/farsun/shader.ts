@@ -102,6 +102,7 @@ uniform vec2 uFringeHair[${MAX_LOBES}];
 uniform vec3 uFringeSpike;
 uniform vec2 uFringeWay;
 uniform float uGlareEnd;
+uniform float uGlareSpread;
 uniform float uLoopGain[${MAX_LOOPS}];
 uniform float uLoopRagged[${MAX_LOOPS}];
 uniform vec3 uLoopRope[${MAX_LOOPS}];
@@ -522,7 +523,7 @@ void main() {
   for (int k = 0; k < ((uParts & 8) != 0 ? 1 : 0); k++) {
     float o = max(x, 1.0) - 1.0;
     float inside = 1.0 - smoothstep(0.6, 1.0, x);
-    float glow = uGlare.x * (exp(-o * uGlare.z) + uGlare.w / ((1.0 + o * o * 1.5) * (1.0 + o * o * uGlareEnd))) * (1.0 - uGlareInside * inside) * ahead;
+    float glow = uGlare.x * (exp(-o * uGlare.z) + uGlare.w / ((1.0 + o * o * uGlareSpread) * (1.0 + o * o * uGlareEnd))) * (1.0 - uGlareInside * inside) * ahead;
     col += (uGlareColour * glow + uKnotLight.rgb * knotOut + (uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z)) + uHaloColour * (uHalo.x * exp(-o * uHalo.y))) * ((1.0 - cover) * smoothstep(uHaloEdge, 1.0, x) * ahead)) * ((1.0 - uWear) * dim);
   }
   col *= lens * uOpacity;
