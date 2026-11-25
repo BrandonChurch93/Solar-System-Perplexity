@@ -131,8 +131,14 @@ uniform vec4 uInnerFit;
 uniform float uOnly;
 float sheetThin = 0.0;
 float sheetGlow = 0.0;
+// sheetFine: what the caller sets before it asks for a point, for the ringlets' amplitude by radius (grade.ts
+// iceFine): the power less one, the width of a zone in footprints, the least and the most of the ratio that
+// counts. With the power 0 (the hold, and wherever the amplitude is 1) nothing of it runs
+vec4 sheetFine = vec4(0.0);
 void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
   vec2 knots = ringKnots(r, fp);
+  // the ringlets' amplitude by radius: the light of the model's own profile over the light of its zone
+  for (int k = 0; k < (abs(sheetFine.x) > 0.0 ? 1 : 0); k++) knots.y *= pow(clamp(knots.y / max(ringKnots(r, fp * sheetFine.y).y, 1e-6), sheetFine.z, sheetFine.w), sheetFine.x);
   wide = ringKnots(r, uFlatten.z);
   float rc = sheetInkRadius(r);
   ink = ringInk(rc);
@@ -168,7 +174,8 @@ void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum,
   sheetGlow = glow / max(knots.y, 1e-9);
   tau = knots.x;
   lum = knots.y;
-  ringFine(r, fp, fpl, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
+  // and the ringlets of the ladder by the same amplitude
+  ringFine(r, fp, fpl, ink.a * (1.0 + sheetFine.x), thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
 }`
 
 // The far look of the sheet: the sheet as the set of the kept build draws it once its picture of the hold has
@@ -277,7 +284,13 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
   float inB = smoothstep(1.5, 1.6, r) * (1.0 - smoothstep(1.88, 1.95, r));
   c *= 1.0 - uKMottle.x * inB * smoothstep(0.55, 0.9, vnoise(vec2(tu * 36.0, r * 3.0), 36)) + uKMottle.y * (vnoise(vec2(tu * 640.0, r * 70.0), 640) - 0.5);
   // the grade of the rings by the height of the lens (grade.ts); nothing of it runs at the heights of the hold
-  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) c = iceGrade(c, r) * iceView(mu, r) * iceZone(r, mu);
+  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) {
+    c = iceGrade(c, r) * iceView(mu, r) * iceZone(r, mu);
+    // the ringlets' amplitude by radius (grade.ts iceFine): the light of the profile at the pixel over the
+    // light of its zone, the same in the kept set (kept/rings.ts)
+    float fine = iceFine(r);
+    for (int i = 0; i < (abs(fine) > 0.0 ? 1 : 0); i++) c *= iceRinglets(dot(inverseFilmic(s.rgb), luma), dot(inverseFilmic(keptProf(x, max(texels * grad * uKFit.w, 1.0) * uGradeFine.x).rgb), luma), fine);
+  }
   float lit = keptLit(along, miss, mw);
   // what the globe behind the sheet adds to the look of the ice in front of it (the strands over the globe, the
   // sheet in front of the lit globe and its glow), as the kept set has it at every height of the lens
@@ -417,6 +430,8 @@ void main() {
     vec4 ink;
     vec3 tint;
     vec2 wide;
+    // the ringlets' amplitude by radius, as in the far look (grade.ts iceFine)
+    for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) sheetFine = vec4(iceFine(r), uGradeFine);
     sheetAt(q, r, fp, fpl, tau, lum, thin, ink, tint, wide);
     // the light of the thin sheet inside the inner rim is kept apart from the ring's: nothing the near light of
     // the ring gains or loses by the height of the lens (its gain, its tint, its saturation, the evening of its

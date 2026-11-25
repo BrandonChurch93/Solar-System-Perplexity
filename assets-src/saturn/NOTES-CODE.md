@@ -7105,3 +7105,66 @@ So in front of the lit globe all three looks cover by one law from the kept ring
   and holds more detail. Not proven: a reading, not a measure.
 - RUNNING 19:36: the judge's slice 7648-7664 on the working tree (/tmp/v/p2).
 - Asked of /root: A, B or C. Time said: proof ends about 21:30, name about 21:40 with a ruling by 19:50.
+
+## 19:40 to 20:20: the ruling d323 (mail 1264) and the tree that answers it
+
+- THE RULING (mail 1264, d323): 1. no sheet (B). 2. d296 at 3720 is read by part: the band at 0 to 6 N on the
+  globe and the thin sheet (plane first on the view, radius 1 to 1.2458) are set apart, the masks go with the
+  name; in all the rest the name must be no worse than main; in the two parts nothing may be added that is not
+  the scene's own geometry and light. 3. G17 at 3720 is NOT set apart: the ringlets' amplitude is its own term
+  of the one law by radius, fit so that G17's median at 3720 is no lower than main's with the foot's tiles
+  read apart, and the hold's G17 no lower than main's; read the pattern at 3827 on that tree. 4. the rings'
+  shadow on the globe: say the Sun's elevation, whether it is drawn, what it does to both frames; do not
+  paint a band. 5. the name may come later than 21:40. Send: the masks, the four numbers, then the proof.
+- NO SHEET: skim.json inner.depth [0, 0]; inner.iceNote holds the record of the three finals.
+- G17 READ TILE BY TILE (/tmp/v/g17/tiles.py, apart.py, byr.py, final 3720). Main 0.9739 over 62 tiles, no
+  sheet 0.8427. The nine tiles of the foot (the two parts cover a third or more of each): [5,3] [6,4] [7,4]
+  [8,4] [8,5] [9,5] [10,5] [11,5] [11,6]. Apart from them (53 tiles): main 1.0329, no sheet 1.0205. The rings
+  lost about 10 percent of band energy in every ring tile with the tone refit, also where the level rose (the
+  B ring brighter, pressed into the shoulder of the film's curve). The draft tier is no use for G17 (0.6270
+  against 0.8427 at the final, and the order against main flips): every reading below is a final.
+- THE TERM (grade.ts iceFine, iceRinglets; skim.json light.grade.radial.fine): uGradeRadial is a vec4 table
+  (rgb the tone, a the amplitude); the light of a pixel over the light of its zone (16 footprints along the
+  radius), held inside 0.5 to 2, raised to the power of the table at that radius; share by height as the tone
+  (zoneShare: nothing at the hold). Far look (sheet.ts keptSheet, kept/rings.ts): the kept profile at the
+  pixel over the profile at 16 footprints. Near look (sheet.ts main, grains.ts): global sheetFine set by the
+  caller; the model profile's light over its zone's, and the ladder's amplitude times the power.
+- TRIAL 1.3 at every radius (/tmp/v/g17/u13): G17 62 tiles 1.2675, apart 1.4529; the rest of the frame
+  22.5904 against 21.3247 without (main 22.0921): contrast that does not lie where the approved image has it
+  costs level. The response of the band energy to 1.3: 1.5 to 1.68 times inward of 1.96, 1.38 to 1.42 times in
+  the A ring. The mean level of the parts does not move (177.6 to 178.2, 96.9 to 98.2).
+- THE FIT (assets-src/saturn/code/ring_fine.py; put_table.py now also lays plain lists): G17's own luma and
+  band, where the plane is first on the view from the inner rim out, 6 pixels in from anything else; one free
+  value every 0.06 radii, hat weights; next = now times root of (approved over film), held 1 to 1.6; none in
+  the gap 1.92 to 2.10. Step 1 from the trial (fine1.json, /tmp/v/g17/f1): 62 tiles 1.0070, apart 1.1660,
+  rest 21.8340. Step 2 (fine2.json, /tmp/v/g17/f2, THE TABLE IN THE TREE): 62 tiles 1.0022 (p25 0.6638),
+  apart 1.1537 (p25 0.7684); whole 28.5419 = band 3.3719 + sheet 3.3424 + rest 21.8276 (main 27.7989 =
+  2.9854 + 2.7213 + 22.0921). Step 3 would move no value by more than 0.018: stopped. Over 1: 1.6 at 1.27,
+  1.22 at 1.33, 1.26 at 1.87, 1.24 at 2.17, 1.6 at 2.23 and 2.29.
+- PARTS AND MASKS: assets-src/saturn/code/parts_3720.py [--masks DIR] FILM...: the two parts from the pose
+  alone, the level by part, G17 over all tiles and apart from the foot. Masks in
+  assets-src/saturn/code/parts_3720/ (band, sheet, rest; white is in the part). Shares 0.0381, 0.0333, 0.9286.
+- THE RINGS' SHADOW: the Sun stands 15.781 degrees over the ring plane, on the lens's side (north). The
+  shadow IS drawn in both scenes (ringShadowAt in globe.ts and kept/profile.ts, the rings' opacity by radius
+  along the Sun's direction). It falls SOUTH of the plane (about 4 S to 22 S at the noon meridian), so it
+  cannot make a band at 0 to 6 N; at 3720 it lies behind the near rings (which cover about 1.9 S to 10 S
+  from the lens). Draft trials (/tmp/v/dark/sh_base, sh_S0, sh_H1): without any shadow 3465 4.6931, 3720
+  27.0600 against 4.6866, 27.0647 with it. Main's kept look took three quarters of it back at the pose of
+  the hold (look.ts and kept/look.ts ringShadowHero 0.25, a law by the distance from the hero pose). Now
+  ringShadowHero 1: one shadow at every pose. Hold at the final: 4.7669 against 4.7768 at a quarter (main
+  4.7807); in the pixels it changes (0.4 percent of the frame) 9.53 against 12.23 (draft); G17 of the hold
+  1.06181, p25 0.91934 (main 1.06178, 0.91911). Picture /tmp/v/g17/shadow_hold_final.png (in the looks).
+- RUNNING 20:19: handover and the slice 7648 to 7664 of the rise on this tree (/tmp/v/g17/sl), then ONE proof.
+- 20:20 HANDOVER on this tree (/tmp/v/g17/sl/handover.md): all six lines pass; side difference at T max 6
+  (dive), max 1 (rise), 99.9th percentile 0 at both.
+- 20:26 SLICE 7648 to 7664 of the rise on this tree (/tmp/v/g17/sl): largest change of the pattern 0.22 from
+  3828 at pixel 1876, 616; the tree with the dark sheet read 0.40 from 3824 at 1160, 888 (/tmp/v/p2). So the
+  pattern at the terminator's foot was the sheet sliding over it. Largest pop in the slice 1.03 from 3832,
+  level step 0.02.
+- 20:27 THE ONE PROOF started: /tmp/v/g17/proof_n.sh, stop folder frozen at /tmp/v/nmsrc (tree hash
+  300e6a809eeec1a9, the same as the repo's stop folder), out /tmp/v/pf, log /tmp/v/pf/proof.log. Order: rise
+  with seq2 and resp, dive with seq2 and resp, G13, gate, parity, path, handover, place, finals 3465 3720
+  3567 3866. After PROOF DONE: vitest alone, merge origin/main if it moved, net MB, NAMED mail (d186).
+- 20:28 MAIL to /root (low): the masks, the four numbers, the shadow answer, the slice, the correction, the
+  time (proof ends about 22:40, name about 23:00).
+- Main moved to ce8cb68 by 20:27 (kit/PROGRESS.md only since faf2194).

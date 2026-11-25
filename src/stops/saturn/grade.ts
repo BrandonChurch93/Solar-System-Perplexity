@@ -24,31 +24,6 @@ const [lo, hi] = skimJson.sky.heights as [number, number]
 export const gradeShare = (height: number): number =>
   1 - smooth(Math.log(Math.max(Math.abs(height), 1e-6) / lo) / Math.log(hi / lo))
 
-// The one share of the light of the globe by the height of the lens (skim.json light.body.heights). The two
-// approved pictures show two terminators: the hero's twilight is broad, the close image's is narrow, its night
-// near black and its bands paler. The film keeps both: the globe's own light in the hold, the close image's at
-// the skim. Everything of the globe that differs between the two follows this one share and nothing else: the
-// cut of the twilight zone and its lean, the floor of the night side, its grey, the colour of the last light,
-// the tone of the bands by latitude, the calm of the small features and the day edge of the haze. The share is
-// a step in the logarithm of the height over the whole flight: none at the upper height and above, where every height of the
-// hold lies, all at the lower and under, where frame 3720 lies; flat at both ends, the same on the way down and
-// on the way up. No number of the globe has a window of heights of its own, so the light changes on the body
-// as slowly as the flight allows.
-const body = skimJson.light.body
-// The step itself: a straight line with eased ends (the slope comes in over the first part body.ease of the way
-// and goes out over the last, so there is none at either end). Its largest slope is 1 / (1 - ease), where the
-// cubic step of the rig has 1.5: the light changes at fixed places of the body by the least a frame that a step
-// between the two heights allows.
-const easedLine = (t: number, ease: number): number => {
-  const x = Math.min(Math.max(t, 0), 1)
-  const slope = 1 / (1 - ease)
-  if (x < ease) return (slope * x * x) / (2 * ease)
-  if (x > 1 - ease) return 1 - (slope * (1 - x) * (1 - x)) / (2 * ease)
-  return slope * (x - ease / 2)
-}
-export const bodyShare = (height: number): number =>
-  1 - easedLine(Math.log(Math.max(Math.abs(height), 1e-6) / body.heights[0]!) / Math.log(body.heights[1]! / body.heights[0]!), body.ease)
-
 // A share by the height of the lens over the ring plane from knots (heights, planet radii, rising; the share at
 // each): straight lines in the logarithm of the height between the knots, the first share under the first
 // height and the last over the last.
@@ -61,6 +36,26 @@ const byHeight = (heights: number[], shares: number[], height: number): number =
   while (i < last - 1 && h >= heights[i + 1]!) i++
   return THREE.MathUtils.lerp(shares[i]!, shares[i + 1]!, Math.log(h / heights[i]!) / Math.log(heights[i + 1]! / heights[i]!))
 }
+
+// The one share of the light of the globe by the height of the lens (skim.json light.body). The two approved
+// pictures show two terminators: the hero's twilight is broad, the close image's is narrow, its night near
+// black and its bands paler. The film keeps both: the globe's own light in the hold, the close image's at the
+// skim. Everything of the globe that differs between the two follows this one share and nothing else: the cut
+// of the twilight zone and its lean, the floor of the night side, its grey, the colour of the last light, the
+// tone of the bands by latitude, the calm of the small features and the day edge of the haze. The share is a
+// step in the logarithm of the height over the whole flight: none at the upper height and above, where every
+// height of the hold lies, all at the lower and under, where frame 3720 lies; flat at both ends, the same on
+// the way down and on the way up. No number of the globe has a window of heights of its own.
+//
+// The step is given by knots (light.body.heights and share, made by assets-src/saturn/code/body_pace.py) and
+// not by a formula, because the level on the screen does not follow the share in a straight line: measured on
+// the rise, a place in the twilight at 8 to 16 N makes two fifths of its change in the first sixth of the
+// share. The knots lay the share so that on the fastest passage of the lens through these heights, the rise,
+// the place of the body that changes fastest changes evenly from frame to frame: the light then changes on the
+// body as slowly as the flight allows at every height, and slower on the dive, which passes the same heights
+// in more frames.
+const body = skimJson.light.body
+export const bodyShare = (height: number): number => byHeight(body.heights, body.share, height)
 
 // How much of the tone of the rings by radius and of the thin inner ring by the view (iceZone) shows with the
 // lens at this height (skim.json light.grade.by): none at the upper height of the air of the stop and above,
@@ -222,11 +217,15 @@ float dustAir(vec3 p, vec3 sun) {
 // between which the thin zones begin, the share of its colour the ice of the dense ring loses and the share
 // the ice of the thin zones loses. uGradeView: the factor on the far look of the dense ring, and for the thin
 // zones the cosine of the view from which they gain, the power of that gain and the most it gives.
-export const gradeUniforms = (): { uGrade: { value: THREE.Vector4 }; uGradeZone: { value: THREE.Vector4 }; uGradeView: { value: THREE.Vector4 }; uGradeRadial: { value: THREE.Vector3[] }; uGradeSpan: { value: THREE.Vector2 }; uGradeLow: { value: THREE.Vector4 }; uGradeLowZone: { value: THREE.Vector2 } } => ({
+// uGradeRadial: the tone by radius (red, green, blue) and, in its fourth place, the ringlets' amplitude by
+// radius (light.grade.radial.fine.gain). uGradeFine: the width of a zone in footprints of the pixel, and the
+// least and the most of the light of a pixel over its zone's that counts.
+export const gradeUniforms = (): { uGrade: { value: THREE.Vector4 }; uGradeZone: { value: THREE.Vector4 }; uGradeView: { value: THREE.Vector4 }; uGradeRadial: { value: THREE.Vector4[] }; uGradeFine: { value: THREE.Vector3 }; uGradeSpan: { value: THREE.Vector2 }; uGradeLow: { value: THREE.Vector4 }; uGradeLowZone: { value: THREE.Vector2 } } => ({
   uGrade: { value: new THREE.Vector4(0, 1 / grade.pivot, grade.toe, 1 / grade.ceiling) },
   uGradeZone: { value: new THREE.Vector4(grade.zone[0], grade.zone[1], grade.grey[0], grade.grey[1]) },
   uGradeView: { value: new THREE.Vector4(grade.dense, grade.view.cosine, grade.view.power, grade.view.most) },
-  uGradeRadial: { value: grade.radial.gain.map((g) => new THREE.Vector3().fromArray(g)) },
+  uGradeRadial: { value: grade.radial.gain.map((g, i) => new THREE.Vector4(g[0]!, g[1]!, g[2]!, grade.radial.fine.gain[i]!)) },
+  uGradeFine: { value: new THREE.Vector3(grade.radial.fine.wide, grade.radial.fine.ratio[0]!, grade.radial.fine.ratio[1]!) },
   uGradeSpan: { value: new THREE.Vector2(grade.radial.first, 1 / grade.radial.step) },
   uGradeLow: { value: new THREE.Vector4(grade.low.cosine, grade.low.power, grade.low.least, 0) },
   uGradeLowZone: { value: new THREE.Vector2().fromArray(grade.low.zone) },
@@ -243,7 +242,8 @@ export const ICE_GRADE_GLSL = /* glsl */ `
 uniform vec4 uGrade;
 uniform vec4 uGradeZone;
 uniform vec4 uGradeView;
-uniform vec3 uGradeRadial[${grade.radial.gain.length}];
+uniform vec4 uGradeRadial[${grade.radial.gain.length}];
+uniform vec3 uGradeFine;
 uniform vec2 uGradeSpan;
 uniform vec4 uGradeLow;
 uniform vec2 uGradeLowZone;
@@ -255,8 +255,23 @@ vec3 iceZone(float r, float mu) {
   float x = clamp((r - uGradeSpan.x) * uGradeSpan.y, 0.0, ${(grade.radial.gain.length - 1).toFixed(1)});
   int i = int(min(floor(x), ${(grade.radial.gain.length - 2).toFixed(1)}));
   float low = mix(1.0, max(pow(clamp(mu / uGradeLow.x, 0.0, 1.0), uGradeLow.y), uGradeLow.z), 1.0 - smoothstep(uGradeLowZone.x, uGradeLowZone.y, r));
-  vec3 full = mix(uGradeRadial[i], uGradeRadial[i + 1], x - float(i)) * low;
+  vec3 full = mix(uGradeRadial[i].rgb, uGradeRadial[i + 1].rgb, x - float(i)) * low;
   return uGradeLow.w < 1.0 ? pow(full, vec3(uGradeLow.w)) : full;
+}
+// iceFine: the ringlets' amplitude by radius (skim.json light.grade.radial.fine), a term of the same law by
+// radius as the tone and with its share (uGradeLow.w): the tone moves the level of a zone, this the contrast
+// of the ringlets inside it, so a zone that the tone makes brighter or darker keeps ringlets one can see.
+// Returns the power, less one, on the light of a pixel over the light of its zone (a zone: uGradeFine.x
+// footprints of the pixel along the radius): 0 where the amplitude is 1 and at the share 0, so the callers
+// skip the work there and a frame without it keeps its bytes. iceRinglets: the factor that power puts on the
+// light, from the light of the pixel (fine) and of its zone (wide)
+float iceFine(float r) {
+  float x = clamp((r - uGradeSpan.x) * uGradeSpan.y, 0.0, ${(grade.radial.gain.length - 1).toFixed(1)});
+  int i = int(min(floor(x), ${(grade.radial.gain.length - 2).toFixed(1)}));
+  return pow(mix(uGradeRadial[i].a, uGradeRadial[i + 1].a, x - float(i)), uGradeLow.w) - 1.0;
+}
+float iceRinglets(float fine, float wide, float power) {
+  return pow(clamp(fine / max(wide, 1e-6), uGradeFine.y, uGradeFine.z), power);
 }
 vec3 iceHeld(vec3 c) {
   float high = dot(c, vec3(0.2126, 0.7152, 0.0722)) * uGrade.w;

@@ -11,6 +11,11 @@
 # may change the broad palette of the globe by latitude but no band of it: a table with the measure's steps from
 # one degree to the next repainted the bands while the lens climbed, and the report of the pictures read that
 # as one pattern exchanged for another (0.58 at frame 3834, limit 0.45).
+# lat_tone.py --again MEASURE.json OUT.json SIGMA FIRST: one more pass on a frame drawn with the table the film
+# keeps: MEASURE.json is the plain measure of that frame (lat_tone.py FILM MEASURE.json, no PREV); the new table
+# is the film's table (skim.json light.tone.gain) times that measure smoothed in the same way, so the table
+# stays as smooth as it was and takes only the broad rest of the difference. Put it into skim.json with
+# put_table.py light.tone.gain OUT.json.
 import sys, json, os
 import numpy as np
 from PIL import Image
@@ -19,9 +24,8 @@ REPO = os.path.normpath(os.path.join(HERE, '..', '..', '..'))
 sys.path.insert(0, HERE)
 args = sys.argv[1:]
 sys.argv = ['x']
-if args and args[0] == '--smooth':
-    raw = np.log(np.array(json.load(open(args[1])), float))
-    sigma, first = float(args[3]), int(args[4])
+def even(raw, sigma, first):
+    raw = raw.copy()
     raw[:first] = raw[first]
     n = len(raw)
     at = np.arange(n)
@@ -31,7 +35,18 @@ if args and args[0] == '--smooth':
     for i in range(n):
         w = np.exp(-0.5 * ((where - i) / sigma) ** 2)
         out[i] = (wide * w[:, None]).sum(0) / w.sum()
+    return out
+
+
+if args and args[0] in ('--smooth', '--again'):
+    raw = np.log(np.array(json.load(open(args[1])), float))
+    out = even(raw, float(args[3]), int(args[4]))
+    if args[0] == '--again':
+        kept = json.load(open(os.path.join(REPO, 'src', 'stops', 'saturn', 'skim.json')))['light']['tone']['gain']
+        print('factor on the kept table ' + ' '.join('%d:%.2f/%.2f/%.2f' % (i, *np.exp(out[i])) for i in range(0, len(out), 8)))
+        out = out + np.log(np.array(kept, float))
     out = np.exp(out)
+    n = len(out)
     print('gain', out.min().round(3), 'to', out.max().round(3))
     print(' '.join('%d:%.2f/%.2f/%.2f' % (i, *out[i]) for i in range(0, n, 8)))
     json.dump(np.round(out, 3).tolist(), open(args[2], 'w'))

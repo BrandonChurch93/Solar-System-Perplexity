@@ -512,7 +512,13 @@ void main() {
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), wIn);
   }
   // the grade of the rings by the height of the lens (grade.ts); nothing of it runs at the heights of the hold
-  for (int k = 0; k < (uGrade.x > 0.0 ? 1 : 0); k++) col = iceGrade(col, rq) * iceView(mu, rq) * iceZone(rq, mu);
+  for (int k = 0; k < (uGrade.x > 0.0 ? 1 : 0); k++) {
+    col = iceGrade(col, rq) * iceView(mu, rq) * iceZone(rq, mu);
+    // the ringlets' amplitude by radius (grade.ts iceFine): the light of the profile at the pixel over the
+    // light of its zone, the same in the far look of the model (sheet.ts)
+    float fine = iceFine(rq);
+    for (int j = 0; j < ((abs(fine) > 0.0 && span && !gone) ? 1 : 0); j++) col *= iceRinglets(dot(inverseFilmic(profAt(xo, lodP).rgb), vec3(0.2126, 0.7152, 0.0722)), dot(inverseFilmic(profAt(xo, max(lodP, 1.0) * uGradeFine.x).rgb), vec3(0.2126, 0.7152, 0.0722)), fine);
+  }
 
   float eo = uEdge.y + uOuterFit.w;
   float nearRim = smoothstep(uRimAz.x, uRimAz.y, azd) * (1.0 - smoothstep(uRimAz.z, uRimAz.w, azd));

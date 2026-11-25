@@ -14,7 +14,10 @@ export const globe: GlobeLook = {
   closeCurve: closeFitted.curve.map((c, i) => c.map((v, k) => v * closeGlobe.curveGain[i]![k]!)),
   limb: [0, 0.3],
   ringShadow: 0.94,
-  ringShadowHero: 0.25,
+  // the rings' shadow on the globe is the same at every pose of the lens: the Sun stands 15.8 degrees over the
+  // ring plane, and what the rings take of its light falls on the globe south of the plane, in the hold as
+  // in the skim (1: nothing of it is taken back at the pose of the hold)
+  ringShadowHero: 1,
   ringSoft: [0.003, 0.012],
   ringSlant: 1.7,
   nightFloor: 0.012,
