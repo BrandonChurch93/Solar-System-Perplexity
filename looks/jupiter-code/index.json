@@ -1,9 +1,63 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T08:07:03.654Z",
+ "pushed": "2026-11-25T08:33:40.132Z",
  "head": "040ecece961d4a64ceb3f3aac8e1400024d05706",
- "note": "NAMED db67666d sent 08:01 UTC. After it: dive 3033 to 3042 green (0.43), rise 3254 to 3262 green (0.35), tests 700 of 700 on the named commit. Correction to the mail's STILL WRONG 2: the two crops of the rise's upper left are the same window of the frame, not the same ground (by the true map the ground at 3252 pixel 356, 69 stands on the top border of 3260), so the cause of the 0.61 at that place is open",
+ "note": "08:34 UTC. Round 3 opened by MAIL 972. Measured for its point 4 (no build yet): the scene's Sun stands 33.1 deg over the place at 3150 (31.9 to 34.0 over the right third's far ground); the approved right third's far ground reads 62.6 73.3 76.3 against mine 136.0 129.1 115.2 (8 bit means, ground farther than 10 units); the slab path to that ground is 12.8 units in the median at 3150 (share 0.836) and 1.05 units at 2895 (share 0.985). Probe stills show how far the deck holds away from the fit view: 1 to 2 units ahead and 30 deg round the storm hold, 60 deg does not.",
  "looks": [
+  {
+   "time": "2026-11-25T08:33:39.504Z",
+   "file": "20261125083339504-note-pair-3150-big.jpg",
+   "source": "../work/r13/pair-3150-big.jpg",
+   "kind": "note",
+   "label": "3150: approved above, final of db67666d below (right third: far ground lit where the approved is dark blue)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T08:33:38.937Z",
+   "file": "20261125083338937-note-rise3256-ll.jpg",
+   "source": "../work/r13/rise3256-ll.jpg",
+   "kind": "note",
+   "label": "rise 3256 lower left: the same ground",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T08:33:38.322Z",
+   "file": "20261125083338322-note-dive3048-ll.jpg",
+   "source": "../work/r13/dive3048-ll.jpg",
+   "kind": "note",
+   "label": "dive 3048 lower left: the near plate south of the fore plate",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T08:33:37.722Z",
+   "file": "20261125083337722-note-probes1.jpg",
+   "source": "../work/r13/probes1.jpg",
+   "kind": "note",
+   "label": "probe stills, not in any commit: 3150, 1 unit ahead, 2 units ahead, 30 deg round the storm, 60 deg, minus 30 deg, minus 60 deg, 1 unit higher",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T08:33:37.100Z",
+   "file": "20261125083337100-note-terrain-a.jpg",
+   "source": "../work/r13/terrain-a.jpg",
+   "kind": "note",
+   "label": "surface view of the current commit every 15 frames 3060 to 3239: nearly one picture, a slow push in",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T08:25:53.602Z",
+   "file": "20261125082553602-frame-p-up1.jpg",
+   "source": "out/work/jupiter/t13/p-up1.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T08:07:03.053Z",
    "file": "20261125080703053-note-trio-3150.jpg",
@@ -147,77 +201,11 @@
    "engine": "822cc1bfb7014138"
   },
   {
-   "time": "2026-11-25T07:17:30.210Z",
-   "file": "20261125071730210-frame-n5-3150.jpg",
-   "source": "out/work/jupiter/final/n5-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
    "time": "2026-11-25T07:15:57.580Z",
    "file": "20261125071557580-note-trio-3150-draft.jpg",
    "source": "../work/r12/trio-3150-draft.jpg",
    "kind": "note",
    "label": "3150: approved image, this commit 2ad37054 (slab air, far ground stays lit: match worse), second named commit b79d375e",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:15:56.223Z",
-   "file": "20261125071556223-note-s3-rise.jpg",
-   "source": "../work/r11/s3-rise.png",
-   "kind": "note",
-   "label": "rise pairs, slab air (commit 2ad37054), draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:15:54.950Z",
-   "file": "20261125071554950-note-s3-dive.jpg",
-   "source": "../work/r11/s3-dive.png",
-   "kind": "note",
-   "label": "dive 3029 to 3037 pairs, slab air (commit 2ad37054), draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:14:10.511Z",
-   "file": "20261125071410511-frame-n5-3296.jpg",
-   "source": "out/work/jupiter/p1/n5-3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T07:12:57.551Z",
-   "file": "20261125071257551-frame-n5-2997.jpg",
-   "source": "out/work/jupiter/p1/n5-2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T06:58:24.623Z",
-   "file": "20261125065824623-note-trio-3150.jpg",
-   "source": "../work/r10/trio-3150.jpg",
-   "kind": "note",
-   "label": "3150: approved close image, this commit at final tier, kept still of the first named commit",
    "stop": "jupiter"
   }
  ]
