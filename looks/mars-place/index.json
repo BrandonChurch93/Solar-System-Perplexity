@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T09:30:19.722Z",
+ "pushed": "2026-11-25T09:40:59.557Z",
  "head": "9cb92e38f3e0065a5d7c21655a7b21204e4a5b1f",
- "note": "strips of every frame 2454 to 2473 and 2675 to 2700 on 9cb92e38; the 8.5 level repainted, not rendered yet",
+ "note": "8.5 degree level repainted from the level as laid: pairs 2440 to 2456 and 2700 to 2712, halves and 1 to 1",
  "looks": [
+  {
+   "time": "2026-11-25T09:40:57.710Z",
+   "file": "20261125094057710-note-native-2.jpg",
+   "source": "out/work/place/k7/native-2.jpg",
+   "kind": "note",
+   "label": "8.5 level repainted, before (9cb92e38) and after: native-2",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:40:56.096Z",
+   "file": "20261125094056096-note-native-1.jpg",
+   "source": "out/work/place/k7/native-1.jpg",
+   "kind": "note",
+   "label": "8.5 level repainted, before (9cb92e38) and after: native-1",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:40:55.239Z",
+   "file": "20261125094055239-note-pair-5.jpg",
+   "source": "out/work/place/k7/pair-5.jpg",
+   "kind": "note",
+   "label": "8.5 level repainted, before (9cb92e38) and after: pair-5",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:40:54.433Z",
+   "file": "20261125094054433-note-pair-4.jpg",
+   "source": "out/work/place/k7/pair-4.jpg",
+   "kind": "note",
+   "label": "8.5 level repainted, before (9cb92e38) and after: pair-4",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:40:53.444Z",
+   "file": "20261125094053444-note-pair-3.jpg",
+   "source": "out/work/place/k7/pair-3.jpg",
+   "kind": "note",
+   "label": "8.5 level repainted, before (9cb92e38) and after: pair-3",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:40:52.482Z",
+   "file": "20261125094052482-note-pair-2.jpg",
+   "source": "out/work/place/k7/pair-2.jpg",
+   "kind": "note",
+   "label": "8.5 level repainted, before (9cb92e38) and after: pair-2",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:40:51.410Z",
+   "file": "20261125094051410-note-pair-1.jpg",
+   "source": "out/work/place/k7/pair-1.jpg",
+   "kind": "note",
+   "label": "8.5 level repainted, before (9cb92e38) and after: pair-1",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T09:30:18.785Z",
    "file": "20261125093018785-note-b85-fits2.jpg",
    "source": "out/work/place/b2/b85-fits2.jpg",
    "kind": "note",
    "label": "8.5 degree level repainted with the 3.8 in its middle, two takes after the fit to the map at the rim (right one chosen), not in the tree yet",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:30:18.169Z",
-   "file": "20261125093018169-note-strip-rise-3.jpg",
-   "source": "out/work/place/k6/strip-rise-3.jpg",
-   "kind": "note",
-   "label": "strip-rise-3: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:30:17.531Z",
-   "file": "20261125093017531-note-strip-rise-2.jpg",
-   "source": "out/work/place/k6/strip-rise-2.jpg",
-   "kind": "note",
-   "label": "strip-rise-2: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:30:16.895Z",
-   "file": "20261125093016895-note-strip-rise-1.jpg",
-   "source": "out/work/place/k6/strip-rise-1.jpg",
-   "kind": "note",
-   "label": "strip-rise-1: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:30:16.186Z",
-   "file": "20261125093016186-note-strip-dive-2.jpg",
-   "source": "out/work/place/k6/strip-dive-2.jpg",
-   "kind": "note",
-   "label": "strip-dive-2: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:30:15.379Z",
-   "file": "20261125093015379-note-strip-dive-1.jpg",
-   "source": "out/work/place/k6/strip-dive-1.jpg",
-   "kind": "note",
-   "label": "strip-dive-1: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:14:55.436Z",
-   "file": "20261125091455436-note-set-on-off-2468-2688.jpg",
-   "source": "out/work/place/k6/set-on-off-2468-2688.jpg",
-   "kind": "note",
-   "label": "9cb92e38 draft whole frame halved, left as it stands, right control c (set held off): 2468 above, 2688 below; black jagged line near the top only with the set",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:14:54.876Z",
-   "file": "20261125091454876-note-set-on-off-2460-2464.jpg",
-   "source": "out/work/place/k6/set-on-off-2460-2464.jpg",
-   "kind": "note",
-   "label": "9cb92e38 draft middle crop native, left as it stands, right control c (set held off): 2460 above, 2464 below; the plates alone carry the field",
    "stop": "mars"
   }
  ]
