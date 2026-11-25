@@ -1,71 +1,71 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T11:33:30.735Z",
+ "pushed": "2026-11-25T11:46:44.557Z",
  "head": "9705f87458c73029f98726e8ace500c89d7e550f",
- "note": "fifth state 9705f874 pushed: the place arrives by one weight of the eye's distance; control strips 1278 to 1289; controls for MAIL 1053 and 1054 running",
+ "note": "fifth state 9705f874 arrival strips 1273 to 1302 at 1 to 1 and before beside it at 1286, 1290, 1296; reader on rows 1273 to 1303: 9 rows over at 1273 + 1/2 to 1277 + 1/2 (0.54), rows 1278 to 1303 0.12 to 0.34; not named",
  "looks": [
   {
-   "time": "2026-11-25T11:33:29.642Z",
-   "file": "20261125113329642-note-p02.jpg",
-   "source": "../../../../tmp/v/sh/a5w/p02.jpg",
+   "time": "2026-11-25T11:46:43.483Z",
+   "file": "20261125114643483-note-c1296.jpg",
+   "source": "../../../../tmp/v/sh/a8/c1296.jpg",
    "kind": "note",
-   "label": "the same control, the place at 1 to 1, whole frames 1284 to 1289, draft",
+   "label": "1296 at 2 to 1, box 950 to 1250 by 480 to 700: before, control a5, fifth state (the soft pale lobes beside the pale tower are in before too)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T11:33:28.882Z",
-   "file": "20261125113328882-note-p01.jpg",
-   "source": "../../../../tmp/v/sh/a5w/p01.jpg",
+   "time": "2026-11-25T11:46:42.730Z",
+   "file": "20261125114642730-note-c1290.jpg",
+   "source": "../../../../tmp/v/sh/a8/c1290.jpg",
    "kind": "note",
-   "label": "control of one weight for every form (the fifth state's law read by the side of a pixel), the place at 1 to 1, whole frames 1278 to 1283, draft",
+   "label": "1290 at 2 to 1, same box: before, control a5, fifth state",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T11:33:27.809Z",
-   "file": "20261125113327809-note-a5-1290.jpg",
-   "source": "../../../../tmp/v/sh/a5-1290.jpg",
+   "time": "2026-11-25T11:46:41.806Z",
+   "file": "20261125114641806-note-c1286.jpg",
+   "source": "../../../../tmp/v/sh/a8/c1286.jpg",
    "kind": "note",
-   "label": "1290 at 1 to 1, the place: before 8adf0940, the control of one weight for every form, the fourth state. The control shows before's towers sharp, the fourth state soft blots",
+   "label": "1286 at 2 to 1, box 1050 to 1350 by 330 to 550: before 8adf0940, control a5, fifth state",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T11:10:47.305Z",
-   "file": "20261125111047305-note-lr.jpg",
-   "source": "../../../../tmp/v/sh/w/lr.jpg",
+   "time": "2026-11-25T11:46:40.900Z",
+   "file": "20261125114640900-note-s0.jpg",
+   "source": "../../../../tmp/v/sh/a8/s0.jpg",
    "kind": "note",
-   "label": "fourth state, lower right limb 1273 to 1287 at 1 to 1: where the reader is over 0.45 at 1273 + 1/2 to 1277 + 1/2 (before the same, 0.63)",
+   "label": "fifth state 9705f874 dive 1273 to 1278, same box, 1 to 1 (rows over the reader's limit lie at the lower right limb here)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T11:10:46.626Z",
-   "file": "20261125111046626-note-p02.jpg",
-   "source": "../../../../tmp/v/sh/w/p02.jpg",
+   "time": "2026-11-25T11:46:40.150Z",
+   "file": "20261125114640150-note-s4.jpg",
+   "source": "../../../../tmp/v/sh/a8/s4.jpg",
    "kind": "note",
-   "label": "fourth state 63752893, the place at 1 to 1, whole frames 1284 to 1289, draft: soft blots among sharp streaks, not cured",
+   "label": "fifth state 9705f874 dive 1297 to 1302, same box, 1 to 1",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T11:10:45.843Z",
-   "file": "20261125111045843-note-p01.jpg",
-   "source": "../../../../tmp/v/sh/w/p01.jpg",
+   "time": "2026-11-25T11:46:39.347Z",
+   "file": "20261125114639347-note-s3.jpg",
+   "source": "../../../../tmp/v/sh/a8/s3.jpg",
    "kind": "note",
-   "label": "fourth state 63752893, the place at 1 to 1, whole frames 1278 to 1283, draft: soft blots among sharp streaks, not cured",
+   "label": "fifth state 9705f874 dive 1291 to 1296, same box, 1 to 1",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T10:51:34.093Z",
-   "file": "20261125105134093-note-n0-d.jpg",
-   "source": "../../../../tmp/v/sh/n0-d.jpg",
+   "time": "2026-11-25T11:46:38.257Z",
+   "file": "20261125114638257-note-s2.jpg",
+   "source": "../../../../tmp/v/sh/a8/s2.jpg",
    "kind": "note",
-   "label": "control tone near 0 at 1290 1296: before, fourth state, control",
+   "label": "fifth state 9705f874 dive 1285 to 1290, same box, 1 to 1",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T10:33:17.762Z",
-   "file": "20261125103317762-note-a4-1290.jpg",
-   "source": "../../../../tmp/v/sh/a4-1290.jpg",
+   "time": "2026-11-25T11:46:37.037Z",
+   "file": "20261125114637037-note-s1.jpg",
+   "source": "../../../../tmp/v/sh/a8/s1.jpg",
    "kind": "note",
-   "label": "a4 1290 before, first, a3, fourth",
+   "label": "fifth state 9705f874 dive 1279 to 1284, box 950 to 1500 by 200 to 700, 1 to 1, rate 2 frames",
    "stop": "venus"
   }
  ]
