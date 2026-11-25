@@ -84,11 +84,6 @@ const anchorBody = ((): THREE.Vector3 => {
 
 const probe = (): Probe | undefined => (globalThis as { __venusProbe?: Probe }).__venusProbe
 
-// A survey draw for the plates at T (assets-src/venus/place/survey.ts, plates.json atT.survey): the film's eye of a dive or a rise,
-// turned on the spot (degrees, to the left and up) and with another field. No film frame sets it.
-interface Survey { yaw: number; pitch: number; vfov: number }
-const survey = (): Survey | undefined => (globalThis as { __venusSurvey?: Survey }).__venusSurvey
-
 // The share a blend of the globe side has at a height of the camera over the cloud tops (radii): 1 below the lower height, 0 above the
 // upper one, eased in the logarithm of the height. Every blend of the dive and the rise reads the height, none reads the clock (plan F).
 // A curve of a share takes 0 to 1 onto 0 to 1 and holds what it is given to 0 to 1 first, so only the rounding of its polynomial can
@@ -239,14 +234,6 @@ class VenusPlan extends StopPlan {
     const want = new THREE.Vector3((turned.x / flat) * Math.sin(theta), (turned.y / flat) * Math.sin(theta), -Math.cos(theta))
     const fix = new THREE.Quaternion().setFromUnitVectors(turned, want).multiply(roll)
     return { pose: { position: pose.position, quaternion: pose.quaternion.clone().multiply(fix.invert()), vfov: pose.vfov }, view: 'orbit' }
-  }
-
-  override eyeShot(kind: 'dive' | 'rise', time: number, forced?: 'orbit' | 'terrain'): OrbitShot {
-    const shot = super.eyeShot(kind, time, forced)
-    const s = survey()
-    if (!s) return shot
-    const turn = new THREE.Quaternion().setFromEuler(new THREE.Euler(THREE.MathUtils.degToRad(s.pitch), THREE.MathUtils.degToRad(s.yaw), 0, 'YXZ'))
-    return { pose: { position: shot.pose.position, quaternion: shot.pose.quaternion.clone().multiply(turn), vfov: s.vfov }, view: shot.view }
   }
 
   override rise(time: number): OrbitShot {

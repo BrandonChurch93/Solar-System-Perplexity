@@ -10,6 +10,11 @@ import plates from '../../../src/stops/venus/plates.json'
 // view (layers) and from the globe side (globe: with ground.heights of plates.json set to [1e-9, 2e-9] for that draw only, see RECIPE).
 // npx tsx assets-src/venus/place/survey.ts --kind dive --what close,layers [--names down,left] [--format uhd]
 // With --json FILE the cameras are written in the body fixed frame of the globe, as tcam.ts writes the one of T (run tcam.ts first).
+// THE HOOK: the film draws the eye of StopPlan.eyeShot (src/director/moves.ts), and no stop may define that method
+// (tests/onemove.test.ts, "cannot be replaced by the class of a stop"). So the turn of a survey is not in src/stops/venus/plan.ts. It is
+// kept beside this tool as survey-hook.patch (13 lines of plan.ts: an eyeShot that reads globalThis.__venusSurvey). For survey draws
+// only: git apply assets-src/venus/place/survey-hook.patch, run this tool (it builds), git apply -R the same file, npm run -s build.
+// Never commit plan.ts with the hook in. Without the hook --json and the draws give the plain eye of T for every name.
 const a = args()
 const cfg = loadConfig()
 const kind = a.kind === 'rise' ? 'rise' : 'dive'
