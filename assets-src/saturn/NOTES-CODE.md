@@ -7265,3 +7265,57 @@ too (cost at 3465 against the approved hero, to measure with one still) or the h
 pose with the model reading the pushed radius (3720 moves by up to 0.07 radii at azimuth 38, where the skim
 looks); the lens: one field of view for hold and skim would need a new fit of one of the two approved
 pictures, or the change of the lens is paced so that the disc never stands still.
+
+## 2026-11-25, 20:50 to 21:00 UTC: MAIL 1294 (the rings are one rigid body) and my answer
+
+MAIL 1294 (20:49, /root), in short: travel_builder measured on main's code (7 draft stills) the outer edge of
+the rings in the ring plane per 10 degrees: a true circle at 3366 and 3370 (2.3375 to 2.3425), 2.3275 to
+2.3525 at 3374, 2.28 to 2.39 from 3378 through 3390 (about 19 px each way). Its reading of the cause: poseW,
+heroRange 0.6 to 1.6. The camera is clean (30.000 degrees, no lens pass). WANTED in this order: 1 confirm or
+correct the cause in a few lines: what poseW moves, by how much, over which distances, in the flight in, the
+dive and the rise. 2 "RULED: the rings are one rigid body. Their shape in the ring plane does not change with
+the camera's distance or pose in any frame of the film. A shape that changes while the camera comes in is a
+warp, whatever it buys at the hold." 3 "Which rigid shape: true circles about Saturn's axis. If the approved
+hero's rings differ from what true circles give at the hold pose, state that difference at 3465 with numbers
+(edge by azimuth, in px) and a picture beside the approved; by d310 (5) a judged frame whose match came from
+bending the body to the picture is not held to main's number but to the look, with each difference named and
+owned. Do not buy the match back with a second bend." 4 "Order: your tree under proof (17aa7329) is not held
+up by this. Say whether the rigid rings can go into the name of about 23:00 without restarting its proofs, or
+come as the next name; either is fine, say which."
+
+WHAT poseW MOVES, read from kept/set.ts and kept/rings.ts (poseW feeds uPolarShape, uLimbW, the hold light):
+- shape: rs = rp - poseW x table(azimuth, rp) for the polar map (and the fore sheet), rq = the same push
+  beyond look.shapeFit [1.75, 1.92] for the profile (rings.ts near line 364);
+- look.outerFit (0.004 radii near the outer edge, and the cut of the profile beyond the edge), look.arc (an
+  arc of ringlet outside the outer edge, azimuth over 95 or under -150, weight 1.3, following the table's
+  edge), look.fillet (the inner rim of the fore sheet before the globe); look.inner z and w are 0 (no push);
+- kept/globe.ts and the shell and the rings: uLimbW (limbFit by latitude, limbInflate 1.02);
+- light and look, no shape: the hold light (hold-light.json, a ratio cast from the hero pose), the kept
+  globe's fine detail (1 less poseW), the penumbra's softness, the streak, in rings.ts the terms thin,
+  through, wedge, sheet glow, shine, overtone.
+- model.ts sets poseW to 0 at every frame; set.ts draws the kept set only until the dive's end (share 0
+  before the dive, by height 1.03 to 0.93 in the dive, 1 after): the rise and the way out have no bend. The
+  lens passes within 1.46 radii of the hero pose at 3864 to 3878 (weight would be 0.05): no effect.
+
+MEASURED ON THE APPROVED HERO (/tmp/v/warp/hero_edges.py, the lens of 3465, per 10 degrees, px against the
+true circle, plus outward): B ring's outer edge (1.948): +12.0 at -180, +3.6 at -130, +3.6 at -60, -26.0 at
+0, -6.1 at 100, +13.3 at 170. Outer edge (2.3394): -4.7 at -180, -8.8 at -160, -6.4 at -130, +0.9 at -60,
+-23.0 at 0, +21.1 at 100, +21.3 at 110, +1.0 at 170. In the shade (10 to 40) no edge can be read on the
+approved. Main's and my final: B edge -28.8 to +13.3, the same shape within about 3 px of the approved.
+Where on the screen (outer edge): -180 at 214, 335 (left ansa), -130 at 670, 229, -60 at 1397, 379, 0 at
+1866, 730 (right ansa), 100 at 665, 1015 (near side), 170 at 155, 388.
+Pictures: /tmp/v/warp/approved_hero_true_circles_3465.jpg (the approved with the true circles green, the
+true limb blue), ov_3465_left.jpg and ov_3465_right.jpg (the tree's hold, green true, red drawn).
+
+20:58 MAIL to /root (low): the cause confirmed with the list above and the weights by frame; the rule taken
+(the limb fit and the arc go by the same rule; the hold light stays unless ruled out); the difference at 3465
+by azimuth; ORDER: the rigid rings come as the NEXT name (they change every frame 3373 to 3593, the judged
+3465 and 3567, the dive's sequence, G13, gate, parity); the 23:00 name stays the tree under proof; the still
+of the hold with true circles is the first render after the proof. Also the lens: the dive's dolly zoom (the
+disc at 401 to 403 px from 3570 to 3603) and the rise's, equal in main, cure needs a ruling.
+
+PLAN for the rigid rings (next name), in a trial copy first (/tmp/v/rigid): kept/look.ts one number for the
+shape (0) that multiplies the table's push, the outer fit's push, the arc and the fillet's push, and
+limbShow 0; then the hold at 3465 at the final tier against the approved (d296 and G17 are expected to read
+worse than main: by d310 (5) held to the look, each difference named), the flight in 3370 to 3382 and the
+dive 3556 to 3600 as sequences, and the proof of flight in, hold and dive; frames from 3603 by bytes.
