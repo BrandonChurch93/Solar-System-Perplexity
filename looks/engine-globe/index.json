@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T11:45:49.473Z",
+ "pushed": "2026-11-25T12:36:42.318Z",
  "head": "d69b8640fb1f481dbb58cf26cb831f3bd2ecd392",
- "note": "measurement only: limb at Mars 2412",
+ "note": "MAIL 1072, measurement only: with the air off the red of the Mars dive falls only at 2456 to 2459; the far ground stays red from 2458 and the near ground from 2465. Bad as it stands.",
  "looks": [
+  {
+   "time": "2026-11-25T12:36:41.724Z",
+   "file": "20261125123641724-note-mars-1072-crops.jpg",
+   "source": "../m1072/mars-1072-crops.jpg",
+   "kind": "note",
+   "label": "Mars dive, air off: what stays. Far ground at 2460 and 2464 against 8 frames later, near ground at 2468 against 8 frames later, 1 to 1 times 3",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T12:36:40.860Z",
+   "file": "20261125123640860-note-mars-1072-sheet.jpg",
+   "source": "../m1072/mars-1072-sheet.jpg",
+   "kind": "note",
+   "label": "Mars dive 2458 to 2472, MAIL 1072: 22820b17 against the control with the air off in both frames of each pair; heat is the real pair by the range way",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T11:45:41.874Z",
    "file": "20261125114541874-note-mars-2412-carry.jpg",
@@ -51,22 +67,6 @@
    "kind": "note",
    "label": "Mars dive on 22820b17, frame 2460 against 8 film frames later: reader with its flows (A), real pair carried by the range pictures (E), one picture redrawn (C)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T10:47:56.167Z",
-   "file": "20261125104756167-note-mars-pair.jpg",
-   "source": "../m1032/mars-pair.jpg",
-   "kind": "note",
-   "label": "MAIL 1032 a: Mars dive on 22820b17, film 2448 and 2456 at draft, the pair the reader carries (slice 2456 to 2474 rendering)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T10:21:21.134Z",
-   "file": "20261125102121134-note-chart-limb.jpg",
-   "source": "../m1005/chart-limb.png",
-   "kind": "note",
-   "label": "MAIL 1005 Mercury dive limb 716 to 726: reader with its flows against the same pair carried by the sphere",
-   "stop": "mercury"
   }
  ]
 }
