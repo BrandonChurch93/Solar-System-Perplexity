@@ -1,9 +1,71 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T22:53:31.390Z",
- "head": "82822a4aed6b76368099a1888b4a057867731346",
- "note": "h16: cushions with soft dark patches, net of lanes; three part mask",
+ "pushed": "2026-11-25T23:10:07.826Z",
+ "head": "533cd7c5e6abedd5e774572be46d4c5f9f42f349",
+ "note": "h16 at the final tier, frame 90",
  "looks": [
+  {
+   "time": "2026-11-25T23:10:07.267Z",
+   "file": "20261125231007267-note-lab-90-h16f.jpg",
+   "source": "../v/lab-90-h16f.jpg",
+   "kind": "note",
+   "label": "lab-90-h16f (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:10:06.703Z",
+   "file": "20261125231006703-note-x3-h16f.jpg",
+   "source": "../v/x3-h16f.jpg",
+   "kind": "note",
+   "label": "x3-h16f (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:10:06.142Z",
+   "file": "20261125231006142-note-half-h16f.jpg",
+   "source": "../v/half-h16f.jpg",
+   "kind": "note",
+   "label": "half-h16f (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:10:05.591Z",
+   "file": "20261125231005591-note-fine-h16f.jpg",
+   "source": "../v/fine-h16f.jpg",
+   "kind": "note",
+   "label": "fine-h16f (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:10:05.028Z",
+   "file": "20261125231005028-note-levels-h16f.jpg",
+   "source": "../v/levels-h16f.jpg",
+   "kind": "note",
+   "label": "levels-h16f (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:10:04.467Z",
+   "file": "20261125231004467-note-strip-h16f.jpg",
+   "source": "../v/strip-h16f.jpg",
+   "kind": "note",
+   "label": "strip-h16f (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:09:30.696Z",
+   "file": "20261125230930696-frame-lab-90-standingf.jpg",
+   "source": "out/work/sun/lab/lab-90-standingf.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, final tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T22:53:30.828Z",
    "file": "20261125225330828-note-parts-line.jpg",
@@ -11,68 +73,6 @@
    "kind": "note",
    "label": "parts-line (trial, not named)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:53:30.253Z",
-   "file": "20261125225330253-note-half-h16.jpg",
-   "source": "../v/half-h16.jpg",
-   "kind": "note",
-   "label": "half-h16 (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:53:29.700Z",
-   "file": "20261125225329700-note-x3-h16.jpg",
-   "source": "../v/x3-h16.jpg",
-   "kind": "note",
-   "label": "x3-h16 (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:53:29.134Z",
-   "file": "20261125225329134-note-levels-h16.jpg",
-   "source": "../v/levels-h16.jpg",
-   "kind": "note",
-   "label": "levels-h16 (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:53:28.586Z",
-   "file": "20261125225328586-note-strip-h16.jpg",
-   "source": "../v/strip-h16.jpg",
-   "kind": "note",
-   "label": "strip-h16 (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:53:28.020Z",
-   "file": "20261125225328020-note-strip-h15.jpg",
-   "source": "../v/strip-h15.jpg",
-   "kind": "note",
-   "label": "strip-h15 (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:53:27.409Z",
-   "file": "20261125225327409-note-strip-h13.jpg",
-   "source": "../v/strip-h13.jpg",
-   "kind": "note",
-   "label": "strip-h13 (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T22:52:32.441Z",
-   "file": "20261125225232441-frame-lab-90-h16.jpg",
-   "source": "out/work/sun/lab/lab-90-h16.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   }
  ]
 }
