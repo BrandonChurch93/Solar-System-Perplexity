@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T03:32:27.157Z",
- "head": "beb11bc7804389e83dce0726bf7cf69c5658ba3e",
- "note": "under pass: edge crops for condition c; cost split measured (globe part 26 of 30 s a sample, 13 s of it the cap's 12.4 M triangles behind a one pixel scissor)",
+ "pushed": "2026-11-25T03:50:33.824Z",
+ "head": "690afebef51deca42701692d9a18810593b2ad90",
+ "note": "sharpCover by stop (Earth 2), commit cut, proof chain renders: drafts equal 4 of 4, review 2156 and 1857 in",
  "looks": [
+  {
+   "time": "2026-11-25T03:50:32.590Z",
+   "file": "20261125035032590-note-sh-lr-2156.jpg",
+   "source": "../../../../tmp/law/dots/sh-lr-2156.png",
+   "kind": "note",
+   "label": "2156 lower right, 2 times: review 24 samples at footprint 0.5 (old main) beside cover 2 (footprint 1.0); below the final tier 0.5 beside cover 2 (0.67). The dotted rows go at review, the orange blocks stay"
+  },
   {
    "time": "2026-11-25T03:32:26.555Z",
    "file": "20261125033226555-note-c-right.jpg",
@@ -52,13 +59,6 @@
    "source": "out/work/blur/tone-tip/f02701.png",
    "kind": "note",
    "label": "edge c0cef0c0: draft of Mars 2701, byte equal to the branch before it"
-  },
-  {
-   "time": "2026-11-25T02:36:35.889Z",
-   "file": "20261125023635889-note-f02427.jpg",
-   "source": "out/work/blur/tone-tip/f02427.png",
-   "kind": "note",
-   "label": "edge c0cef0c0 (law hook and tone of the relief, off for every stop): draft of Mars 2427, byte equal to the branch before it"
   }
  ]
 }
