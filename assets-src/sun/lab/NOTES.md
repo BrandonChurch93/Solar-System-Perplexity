@@ -1165,3 +1165,23 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   lanes round cushions that are textured inside (fibres, olive middles, light rims); mine is smooth gold lumps
   in soft dark valleys. Next: lane about 7 px and a net, light nearer the lane, fine fibres over the whole top
   from the finest count, fewer blotches.
+- 22:47 to 22:54 UTC. h14 at the final tier (338 s, 16 samples): low64 7.66, bands [1.56 1.14 1.00 1.04 1.10 1.03
+  0.93], parts ground 52.9182 strip 51.4092 sky 9.1752 (the sky at final reads higher than at draft, 8.5568: the
+  standing ground has to be read at the same tier).
+  h15 lane 0.1, light to 0.9 of the way, fine fibres from 0.1 (rim [0.5, 0.1, 0.4, 0.3, 0.7, 0.5]): a net of thin
+  lanes, cushions clear, tops too even (curve's middle 0.07 over).
+  h16 (commit 82822a4a): patches 0.65 [0.4, 0.7], navel [0.65, 0.3], lane [0.13, 0.06], fold 0.1, thread 0,
+  sparks 0.8 of 3 to 5 px along the seams. MEASURED draft: low64 7.63, bands [1.75 1.16 1.00 0.98 0.99 0.93
+  0.90], parts ground 52.1131 strip 50.2522 sky 8.5419; curve [0.688 0.689 0.689 0.676 0.65 0.621 0.588 0.534
+  0.474 0.407 0.353] (all inside 0.05 of the approved's), lane 5.85 px (approved 7.08; inside 1.5).
+  NOT DONE for h16: frames 0 and 60, motion, flicker, bake, share, hashes, RECIPE (cushion law, mask.py,
+  parts.py, match.py, cells.py).
+- 22:59 UTC. h16 at the final tier (335 s): plain whole 30.9342, low64 7.586, bands [1.67 1.21 1.02 0.99 1.00 0.94
+  0.92]; parts ground 52.2389 strip 50.3887 sky 9.1586; curve [0.693 0.694 0.696 0.683 0.658 0.629 0.597 0.542
+  0.479 0.41 0.356], lane 5.93 px. Finest band by rows (520, 600, 680, 760, 840, 960 to 1080): 1.97, 1.66, 1.57,
+  1.56, 1.57, 2.09; band 1 to 2: 1.53, 1.28, 1.15, 1.18, 1.04, 1.30.
+  SEEN at times 3 beside the approved: mine are smooth lumps with cloudy patches (crumpled satin), thin lanes; the
+  approved's are darker olive tops with bright fibres fanning to the rims, broad dark red lanes with bokeh dots.
+- 23:09 UTC. Standing ground at the final tier (618 s): parts ground 51.4401 strip 40.9655 sky 9.0457 whole
+  30.4864; bands [0.78 0.82 0.86 0.93 1.00 1.04 1.03], low64 10.01. So the sky part of h16 is 0.113 over the
+  standing ground's at final (9.1586) and 0.106 over at draft (8.5419 against 8.4355). Line 2 of mail 1318 not met.

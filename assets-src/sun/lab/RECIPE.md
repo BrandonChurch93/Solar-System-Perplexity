@@ -42,3 +42,17 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   --out FOLDER` (add `--still 437` to hold the ground's time at that capture while the eye moves), then
   `npx tsx assets-src/sun/lab/reader.ts --dir FOLDER --sheet OUT.png` (the sheet draws the first picture, the last
   carried back to it, their difference and the change of the pattern; `--job FILE` keeps the job).
+- The cushion law of a cell's heat (lab.json heat.cushion, ground.ts DOME_FRAG; no baked file): navel (heat at the
+  fan's root, reach), blob (how far the light reaches toward the border, lobes, swell, fan, softness, heat outside
+  the light, lobes round the cell), fibre (fan amplitude, from, to, thread), patch (cooler patches on the top:
+  amplitude, size, two thresholds of the swell field), grain (amplitude, size), seam (the heat of the place on the
+  border: level, change, size of its field), rim (fine fibres of the finest count: amplitude, from, to on the way to
+  the border, two thresholds, mean). dome.base[5] 0.5 makes the body a bell with no slope at its border.
+- Readers of frame 90 against the approved close image (pictures at 1920 by 1080, none of them writes a file the
+  film loads): `python3 assets-src/sun/lab/match.py RENDER.png` (plain match, whole and by rows);
+  `python3 assets-src/sun/lab/cells.py RENDER.png|approved [--box X Y W H] [--out OVERLAY.jpg] [--json FILE]`
+  (curve from a piece's middle to its border, lane width; its count of pieces is no line, it splits cushions at
+  their folds); `python3 assets-src/sun/lab/mask.py OUT.png [OVERLAY.jpg] [--film LAB.png STANDING.png]` (the three
+  part mask: 255 ground, 128 the strip between the film's limb and the approved's, 0 sky; --film reads the film's
+  limb again from a lab frame with haze.air off and a standing ground frame, else the cubic stored in the file);
+  `python3 assets-src/sun/lab/parts.py PARTS.png FRAME.png ...` (plain match on each part).
