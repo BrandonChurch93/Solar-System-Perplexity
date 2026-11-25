@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T03:40:39.346Z",
+ "pushed": "2026-11-25T04:03:35.329Z",
  "head": "cdc5d5151162ae9aeed19f33ebf17bc61f906375",
- "note": "NAMED cdc5d515 sent 03:27; relief way started 03:27, first picture due 05:27; finals 1016 and 870 still rendering",
+ "note": "relief way first state on the globe: 615 and 717 show the place as a soft patch, working on it; main side stills of 700 to 760 render",
  "looks": [
+  {
+   "time": "2026-11-25T04:03:34.348Z",
+   "file": "20261125040334348-note-p1434.jpg",
+   "source": "../../../../tmp/m/p1434.jpg",
+   "kind": "note",
+   "label": "relief way, first state: 717 whole frame, left cdc5d515, right relief",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T04:03:33.296Z",
+   "file": "20261125040333296-note-c1434.jpg",
+   "source": "../../../../tmp/m/c1434.png",
+   "kind": "note",
+   "label": "relief way, first state: 717 crop 560,280 720x680, left cdc5d515, right relief. Soft disc in the judged frame: a fault",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T04:03:31.838Z",
+   "file": "20261125040331838-note-c1230.jpg",
+   "source": "../../../../tmp/m/c1230.png",
+   "kind": "note",
+   "label": "relief way, first state (tone and lean on the globe at all times): 615 crop 780,440 460x500, left cdc5d515, right relief. The place shows as a soft patch: a fault",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T03:40:26.364Z",
    "file": "20261125034026364-note-v-EI.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/mercury/place/sheets/sl-615-sun-ghost.jpg",
    "kind": "note",
    "label": "set law tree, final 615 beside the approved at 1 to 1, the critic's crops C M D P O T: the boom ghost is in the approved too and ours is lighter; the oval blob is heavier in ours (plus 15 percent), open",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T02:51:08.013Z",
-   "file": "20261125025108013-note-sl0-web-full.jpg",
-   "source": "out/work/mercury/place/sheets/sl0-web-full.jpg",
-   "kind": "note",
-   "label": "set law BEFORE: web set (left) beside full set (right) at 615, 717, 735; mean difference 1.082, 4.068, 1.555 of 255; at 717 the web set had the place's disc in where the full set had not",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T02:51:06.777Z",
-   "file": "20261125025106777-note-sl1-web-full.jpg",
-   "source": "out/work/mercury/place/sheets/sl1-web-full.jpg",
-   "kind": "note",
-   "label": "set law AFTER: web set (left) beside full set (right) at 615, 717, 735; mean difference 0.776, 0.909, 1.087 of 255; the full set is equal by pixels to before",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T02:48:32.502Z",
-   "file": "20261125024832502-note-717-draft-BFG.jpg",
-   "source": "../../../../tmp/m/717-draft-BFG.jpg",
-   "kind": "note",
-   "label": "717 at draft (one sample, no shutter), the critic's crops B F G at 1 to 1 on the tip: round craters; the streaks of round 48 are the shutter of the final tier (12 to 28 px over half a film frame there)",
    "stop": "mercury"
   }
  ]
