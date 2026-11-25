@@ -1,9 +1,91 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T13:27:25.195Z",
+ "pushed": "2026-11-25T13:50:20.880Z",
  "head": "82140079267d87735c341f33fe100c369dd89482",
- "note": "13:28 new tree in proof: 4035 draft bytes kept, 4290 draft 3.833 against main 3.824 to the approved image, my chain 4152 + 1/2 0.81 red at the left limb, 4416 still pale; nothing committed yet",
+ "note": "new tree before the commit: rim not cured (4152 + 1/2 0.81), dive 4170 + 1/2 1.35, rise 1.03; 4290 final 3.858 against main 3.849; 4416 still pale, coloured streaks named",
  "looks": [
+  {
+   "time": "2026-11-25T13:50:15.105Z",
+   "file": "20261125135015105-note-two-4170n.jpg",
+   "source": "../../../../tmp/n55/two-4170n.jpg",
+   "kind": "note",
+   "label": "new tree draft: 4170 + 1/2, 4174 + 1/2, 4178 + 1/2, the lit band grows down the screen",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:50:14.489Z",
+   "file": "20261125135014489-note-p-N1-8341.jpg",
+   "source": "../../../../tmp/n55/p-N1-8341.jpg",
+   "kind": "note",
+   "label": "new tree: chain panel dive 4170 + 1/2, pattern 1.35 (82140079 1.29), red along the lower edge of the lit band, not cured",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:50:13.879Z",
+   "file": "20261125135013879-note-p-N1-8829.jpg",
+   "source": "../../../../tmp/n55/p-N1-8829.jpg",
+   "kind": "note",
+   "label": "new tree: chain panel rise 4414 + 1/2, pattern 1.03 (limit 0.45), not cured",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:50:13.244Z",
+   "file": "20261125135013244-note-crop-4416.jpg",
+   "source": "../../../../tmp/n55/crop-4416.jpg",
+   "kind": "note",
+   "label": "4416 full size crop: main, 82140079, new tree; thin blue and green streaks on the white clouds, cause not named",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:50:12.993Z",
+   "file": "20261125135012993-frame-N1-4035.jpg",
+   "source": "out/work/u/fin/N1-4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f200e17ad0e70237"
+  },
+  {
+   "time": "2026-11-25T13:50:12.607Z",
+   "file": "20261125135012607-note-two-4417.jpg",
+   "source": "../../../../tmp/n55/two-4417.jpg",
+   "kind": "note",
+   "label": "82140079 draft: 4417 beside 4422, the smooth sheet goes and the map's streaks stand (rise part 2 red)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:29:42.590Z",
+   "file": "20261125132942590-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-25T13:28:47.071Z",
+   "file": "20261125132847071-frame-N1-4290.jpg",
+   "source": "out/work/u/fin/N1-4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f200e17ad0e70237"
+  },
   {
    "time": "2026-11-25T13:27:24.064Z",
    "file": "20261125132724064-note-p-N1-8305.jpg",
@@ -69,20 +151,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-25T12:28:21.271Z",
-   "file": "20261125122821271-job-frame-04035.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
    "time": "2026-11-25T12:14:28.763Z",
    "file": "20261125121428763-note-p-E1-8341.jpg",
    "source": "../../../../tmp/n54/p-E1-8341.jpg",
@@ -105,34 +173,6 @@
    "kind": "note",
    "label": "state (left) against law 2a (right) at 4137, 4416, 4436",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T12:06:45.751Z",
-   "file": "20261125120645751-frame-E1-4035.jpg",
-   "source": "out/work/u/fin/E1-4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f200e17ad0e70237"
-  },
-  {
-   "time": "2026-11-25T12:05:52.895Z",
-   "file": "20261125120552895-frame-E1-4290.jpg",
-   "source": "out/work/u/fin/E1-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f200e17ad0e70237"
   },
   {
    "time": "2026-11-25T11:53:14.022Z",
@@ -220,46 +260,6 @@
    "source": "../../../../tmp/n53/p-B1-8341.jpg",
    "kind": "note",
    "label": "B1 chain 4170.5: pattern 1.32",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:40:51.821Z",
-   "file": "20261125104051821-note-p-B1-8305.jpg",
-   "source": "../../../../tmp/n53/p-B1-8305.jpg",
-   "kind": "note",
-   "label": "B1 chain 4152.5: pattern 1.26",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:40:50.766Z",
-   "file": "20261125104050766-note-c1-crop290.jpg",
-   "source": "../../../../tmp/n53/c1-crop290.jpg",
-   "kind": "note",
-   "label": "4290 lower part: state, B1, C. Foreground goes to the globe's own light (flat teal), worse than the approved navy",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:40:50.032Z",
-   "file": "20261125104050032-note-c1-b.jpg",
-   "source": "../../../../tmp/n53/c1-b.jpg",
-   "kind": "note",
-   "label": "law C: 4137, 4416, 4436 state left, C right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:40:49.059Z",
-   "file": "20261125104049059-note-c1-a.jpg",
-   "source": "../../../../tmp/n53/c1-a.jpg",
-   "kind": "note",
-   "label": "law C (glow by ray direction, joined to own light): 4035, 4290, 4186, 4200 state left, C right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:40:47.788Z",
-   "file": "20261125104047788-note-b1-c.jpg",
-   "source": "../../../../tmp/n53/b1-c.jpg",
-   "kind": "note",
-   "label": "B1 first build of the air by path: 4416, 4436 state left, B1 right",
    "stop": "uranus"
   }
  ]
