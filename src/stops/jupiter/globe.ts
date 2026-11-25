@@ -312,7 +312,7 @@ ${PATCH_LEVELS}
     col = (cloud.rgb * uGain * uWeight * pa + col * cover * (1.0 - pa)) / max(total, 1e-5);
     cover = total;
   }
-  outColor = diagOut(vec4(col, cover), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), rt < 1.0 ? along - sqrt(max(1.0 - rt * rt, 0.0)) : length(vView));
+  outColor = diagOut(vec4(col, cover), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), length(vView) * (rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vPos) : 1.0));
   if (gone) discard;
 }`
 

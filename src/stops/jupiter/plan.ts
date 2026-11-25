@@ -1,12 +1,13 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
-import type { Pose } from '../../core/types'
+import type { Pose, ViewKind } from '../../core/types'
 import type { HandoverParams, SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { smooth } from '../../director/rig'
 import deck from './deck.json'
 import fields from './deck-fields.json'
 import fit from './fit.json'
+import { io } from './look'
 import place from './place.json'
 import relief from './relief.json'
 
@@ -203,6 +204,16 @@ export class JupiterPlan extends StopPlan {
 
   override turn(time: number): THREE.Quaternion {
     return new THREE.Quaternion().setFromAxisAngle(this.axis, this.spin(time))
+  }
+
+  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
+    if (view !== 'orbit') return []
+    const e = time - this.holdMid
+    const land = this.seg.terrain
+    const rise = this.seg.rise
+    const deg = time < (land.start + land.end) / 2 ? this.p.moonDegPerSecond * e : io.riseDeg + this.p.moonDegPerSecond * (time - (rise.start + rise.end) / 2)
+    const place = new THREE.Vector3().fromArray(io.home).applyAxisAngle(this.axis, THREE.MathUtils.degToRad(deg))
+    return [{ id: 'io', place: place.toArray(), turn: new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(io.spinDegPerSecond) * e).toArray(), reach: io.radius * 1.12 }]
   }
 
   override terrain(tRel: number): Pose {

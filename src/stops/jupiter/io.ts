@@ -94,7 +94,7 @@ void main() {
   vec3 shade = uSun * lit * (1.0 - uEclipse) + uAmbient + uBounce * max(dot(n, uPlanetW), 0.0);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   vec3 col = (albedo * shade + uNight * tone * (1.0 - day) * (1.0 - smoothstep(uNightPhase.x, uNightPhase.y, dot(uSunW, -ray)))) * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = diagOut(vec4(col, alpha), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.95, 0.85, 0.2), vec2(0.0), length(vView));
+  outColor = diagOut(vec4(col, alpha), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.95, 0.85, 0.2), vec2(0.0), length(vView) * (rt < uBall.w ? depth / length(vPos) : 1.0));
   if (gone) discard;
 }`
 
