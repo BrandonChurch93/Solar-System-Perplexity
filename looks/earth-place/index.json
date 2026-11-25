@@ -1,9 +1,102 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T01:49:18.606Z",
+ "pushed": "2026-11-25T02:23:23.234Z",
  "head": "dc790c7aad5909a665e0447c4d0fa09d47921834",
- "note": "handover red of MAIL 833: limb band cured at draft, sides pass, tower rims still open",
+ "note": "handover red: sides at T pass (mean 0.003 and 0.002), limb one gradient 1906 to 1919, bad: darker strip on the limb 1902 to 1905",
  "looks": [
+  {
+   "time": "2026-11-25T02:23:22.150Z",
+   "file": "20261125022322150-note-hz-zoom-b.jpg",
+   "source": "../../../../tmp/gl/ho/p/hz-zoom-b.jpg",
+   "kind": "note",
+   "label": "horizon 1904 to 1906 at 5 times, d0036659 left, cure right",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T02:23:21.203Z",
+   "file": "20261125022321203-note-hz-zoom-a.jpg",
+   "source": "../../../../tmp/gl/ho/p/hz-zoom-a.jpg",
+   "kind": "note",
+   "label": "horizon 1901 to 1903 at 5 times, d0036659 left, cure right",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T02:23:20.068Z",
+   "file": "20261125022320068-note-hz-dv-b.jpg",
+   "source": "../../../../tmp/gl/ho/p/hz-dv-b.jpg",
+   "kind": "note",
+   "label": "horizon 1908 to 1919 at native size, cure: one gradient",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T02:23:19.019Z",
+   "file": "20261125022319019-note-hz-dv-a.jpg",
+   "source": "../../../../tmp/gl/ho/p/hz-dv-a.jpg",
+   "kind": "note",
+   "label": "horizon 1896 to 1907 at native size, cure: bad, a darker strip on the limb 1902 to 1905",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T02:23:17.926Z",
+   "file": "20261125022317926-note-sh-dv-1906.jpg",
+   "source": "../../../../tmp/gl/ho/p/sh-dv-1906.jpg",
+   "kind": "note",
+   "label": "dive 1906 to 1919 with the cure, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T02:23:17.280Z",
+   "file": "20261125022317280-note-sh-dv-1890.jpg",
+   "source": "../../../../tmp/gl/ho/p/sh-dv-1890.jpg",
+   "kind": "note",
+   "label": "dive 1890 to 1905 with the cure of the handover red, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T02:21:37.213Z",
+   "file": "20261125022137213-compare-earth-dive-step-in-place.jpg",
+   "source": "out/work/handover/earth-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "earth dive, the largest step of the level in place (1.94): frame 1875, frame 1876, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1876
+  },
+  {
+   "time": "2026-11-25T02:11:33.842Z",
+   "file": "20261125021133842-sheet-earth-dive-draft-before.jpg",
+   "source": "out/work/handover/earth-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1907 to 1918 (before T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1907,
+   "last": 1918,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T02:11:31.953Z",
+   "file": "20261125021131953-sheet-earth-dive-draft-across.jpg",
+   "source": "out/work/handover/earth-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "earth dive, every frame 1913 to 1919 (across T, frame 1919), draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1913,
+   "last": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T01:53:39.109Z",
+   "file": "20261125015339109-compare-earth-rise-sides.jpg",
+   "source": "out/work/handover/earth-rise-sides.png",
+   "kind": "compare",
+   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T01:49:18.006Z",
    "file": "20261125014918006-note-limb-layers.jpg",
@@ -18,92 +111,6 @@
    "source": "../../../../tmp/gl/ho/c1/tow-dive.jpg",
    "kind": "note",
    "label": "what remains at T of the dive, lit rims of the cloud towers",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T01:49:16.548Z",
-   "file": "20261125014916548-note-crops-rise.jpg",
-   "source": "../../../../tmp/gl/ho/c1/crops-rise.jpg",
-   "kind": "note",
-   "label": "sides at T of the rise with the cure",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T01:49:15.896Z",
-   "file": "20261125014915896-note-crops-dive.jpg",
-   "source": "../../../../tmp/gl/ho/c1/crops-dive.jpg",
-   "kind": "note",
-   "label": "sides at T of the dive with the cure, close, globe, difference times 8",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T01:38:53.260Z",
-   "file": "20261125013853260-compare-earth-rise-sides.jpg",
-   "source": "out/work/handover/earth-rise-sides.png",
-   "kind": "compare",
-   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T01:37:49.926Z",
-   "file": "20261125013749926-compare-earth-dive-sides.jpg",
-   "source": "out/work/handover/earth-dive-sides.png",
-   "kind": "compare",
-   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T01:21:59.226Z",
-   "file": "20261125012159226-note-hz-c2.jpg",
-   "source": "../../../../tmp/gl/k4/hz-c2.jpg",
-   "kind": "note",
-   "label": "horizon at 1894 to 1920, native crops, K4 trial c2 (not committed)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T01:21:58.673Z",
-   "file": "20261125012158673-note-crops-b.jpg",
-   "source": "../../../../tmp/gl/ho/b/crops-b.jpg",
-   "kind": "note",
-   "label": "handover dive at T (frame 1919, draft), close side, globe side, difference times 8, native crops of the bottom rows and a tower twice, commit dc790c7a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T01:21:58.042Z",
-   "file": "20261125012158042-note-crops-limb.jpg",
-   "source": "../../../../tmp/gl/ho/b/crops-limb.jpg",
-   "kind": "note",
-   "label": "handover dive at T (frame 1919, draft), close side, globe side, difference times 8, native crops at the limb and the left edge, commit dc790c7a",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:57:43.926Z",
-   "file": "20261125005743926-note-c2-rise2.jpg",
-   "source": "../../../../tmp/gl/k4/c2-rise2.jpg",
-   "kind": "note",
-   "label": "K4 state 1 rise 2128 to 2174, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:57:43.201Z",
-   "file": "20261125005743201-note-c2-rise1.jpg",
-   "source": "../../../../tmp/gl/k4/c2-rise1.jpg",
-   "kind": "note",
-   "label": "K4 state 1 rise 2100 to 2122, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:57:42.631Z",
-   "file": "20261125005742631-note-cmp-old-new.jpg",
-   "source": "../../../../tmp/gl/k4/cmp-old-new.jpg",
-   "kind": "note",
-   "label": "1878, 1886, 1894 left d0036659, right K4 state 1 second trial, draft",
    "stop": "earth"
   }
  ]
