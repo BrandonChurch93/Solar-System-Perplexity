@@ -4,6 +4,7 @@ import { frameUniform } from '../core/frame'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { MAX_MARK, reach, reachNeeded, uniformCells } from './shield'
+import { AIR_LAW_GLSL, AIR_LAW_SCALE_HEIGHT } from './air'
 
 export interface ReliefLayerDef {
   color: string
@@ -39,12 +40,18 @@ export interface ReliefAir {
   drift?: [number, number, number, number]
 }
 
+// The air law for a set (src/terrain/air.ts): the three numbers, the same as on the globe, and where the planet lies in the relief's
+// frame. radius is the radius of the datum and eyeHeight the height of the picture's eye over it, both in the relief's unit; up is the
+// relief's own (pitchDeg). scaleHeight is in radii, like on the globe. least: what the layers' texels hold of their air at the least
+// (airLawFactorSeen), 0 where it is left out.
+export interface ReliefAirLaw { light: [number, number, number]; density: number; scaleHeight: number; radius: number; eyeHeight: number; least?: number }
+
 export interface ReliefValley { top: number; soft: number; strength: number; color: [number, number, number]; wind: [number, number]; speed: number; scale: number; stretch: number; churn: number; mask: [number, number]; cut: [number, number] }
 
 interface ReliefApron { padding: number; fullWidth: number; mips: boolean; baseAlphaNoMips: string[]; resolution: { full: number; web: number }; layers: { layer: string; atlas: string; depth: string; edges: number[]; bottomColorShear: number[]; rightColorShear: number[] }[] }
 interface ReliefRidge { layer: string; center: number[]; radius: number[]; core: number; slope: number; interval: number[]; taps: number[] }
 
-export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; valley?: ReliefValley; pitchDeg?: number; apron?: ReliefApron; ridge?: ReliefRidge }
+export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; airLaw?: ReliefAirLaw; valley?: ReliefValley; pitchDeg?: number; apron?: ReliefApron; ridge?: ReliefRidge }
 
 export const NOISE_GLSL = /* glsl */ `
 float vhash(vec3 p) {
@@ -424,6 +431,83 @@ const EYE_PLAIN = 1e-9
 export function withEyeScale(source: string): string {
   if (source.split(EYE_OUT).length !== 2 || source.split(EYE).length !== 2 || source.includes('uEyeScale')) throw new Error('the relief shader has no single place for the scale of its eye')
   return source.replace(EYE_OUT, EYE_OUT + '\nuniform float uEyeScale;').replace(EYE, EYE.slice(0, -1) + ' * uEyeScale;')
+}
+
+// The relief under the air law (ReliefMotion.airLaw; the law and its chunk are src/terrain/air.ts). The planet's centre lies straight
+// under the picture's eye, which is the origin of the relief's frame, so a point p of that frame is (p - centre) / radius from the
+// centre in radii, and that is all the law is given. The eye's height is in the eye's place and nowhere else.
+// The layers: their texels hold the picture's far air, so a texel is read as its point seen through the law from the picture's eye and
+// drawn through the law from the present eye (airLawFactorSeen), after the valley's mist. From the picture's eye the factor is 1 at
+// every fragment, so the picture comes back for any numbers. Where the present eye is the nearer one the factor is over 1: the law's
+// floor at black holds, and nothing here cuts what leaves the range upward.
+// The air: with the law the dome draws the law and nothing else, premultiplied: the light times one minus the factor of the whole path
+// from the present eye along the sight line out of the shell, over everything behind it times that factor. A star in the pale band is
+// dim by the same factor. A sight line that enters the ball has the depth of its whole chord, so the band closes under the horizon
+// without a step. The dome's old terms (by the angle, by the clock) are not drawn. The sky's air is drawn once: a set that stands in a
+// scene whose globe draws its own shell under the law gives its own air the share 0 there (presence).
+// Not asked: the shaders above to the letter.
+export const AIR_LAW_UNIFORMS = /* glsl */ `
+uniform vec4 uAirCentre;
+uniform vec3 uAirLight;
+uniform vec3 uAirNumbers;`
+const SOLID = 'if (uDiag >= 2 && alpha < 0.5) discard;'
+export const AIR_LAW_LAYER = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  col = airLaw(col, uAirLight * uGain * vig, airLawFactorSeen(airLawDepth((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y), airLawDepth(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y), uAirNumbers.x, uAirNumbers.z));\n  '
+
+export function withAirLaw(source: string): string {
+  if (source.split(MAIN).length !== 2 || source.split(SOLID).length !== 2 || source.includes('uAirCentre')) throw new Error('the relief shader has no single place for the air law')
+  return source.replace(MAIN, AIR_LAW_UNIFORMS.slice(1) + AIR_LAW_GLSL + '\n' + MAIN).replace(SOLID, AIR_LAW_LAYER + SOLID)
+}
+
+export const AIR_LAW_VERT = AIR_VERT.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vAirEye;\nuniform float uAirEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vAirEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uAirEyeScale;')
+
+export const AIR_LAW_FRAG = /* glsl */ `
+precision highp float;${AIR_LAW_UNIFORMS}
+uniform float uGain;
+uniform float uVignette;
+uniform float uAspect;
+uniform int uDiag;
+in vec3 vDir;
+in vec3 vClip;
+in vec3 vAirEye;
+out vec4 outColor;${AIR_LAW_GLSL}
+void main() {
+  if (uDiag >= 2) discard;
+  vec3 d = normalize(vDir);
+  float cut = 1.0 - airLawFactor(airLawDepthOut((vAirEye - uAirCentre.xyz) * uAirCentre.w, d, uAirNumbers.y), uAirNumbers.x);
+  vec3 glow = uAirLight * cut;
+  vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
+  outColor = vec4(glow * uGain * vig, cut);
+}`
+
+// The planet's centre in the relief's frame and one over its radius: what the shader's uAirCentre holds.
+export function airLawCentre(law: ReliefAirLaw, pitchDeg: number): [number, number, number, number] {
+  const far = -(law.radius + law.eyeHeight)
+  const pitch = THREE.MathUtils.degToRad(pitchDeg)
+  return [0, far * Math.cos(pitch), far * Math.sin(pitch), 1 / law.radius]
+}
+
+// A point of the relief's frame as the law takes it: from the planet's centre, in radii. The shader's own line, for the tests and for
+// whoever fits the law's numbers against a picture.
+export function airLawPoint(p: readonly [number, number, number], law: ReliefAirLaw, pitchDeg: number): [number, number, number] {
+  const c = airLawCentre(law, pitchDeg)
+  return [(p[0] - c[0]) * c[3], (p[1] - c[1]) * c[3], (p[2] - c[2]) * c[3]]
+}
+
+function airLawUniforms(law: ReliefAirLaw, pitchDeg: number): Record<string, THREE.IUniform> {
+  const good = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
+  if (!(Array.isArray(law.light) && law.light.length === 3 && law.light.every((v) => good(v) && v >= 0))) throw new Error('the light of the air law of a relief is three numbers of 0 or more, not ' + JSON.stringify(law.light))
+  if (!(good(law.density) && law.density >= 0)) throw new Error('the density of the air law of a relief is a number of 0 or more, not ' + law.density)
+  if (!(good(law.scaleHeight) && law.scaleHeight >= AIR_LAW_SCALE_HEIGHT[0] && law.scaleHeight <= AIR_LAW_SCALE_HEIGHT[1])) throw new Error('the scale height of the air law of a relief is ' + AIR_LAW_SCALE_HEIGHT[0] + ' to ' + AIR_LAW_SCALE_HEIGHT[1] + ' radii, not ' + law.scaleHeight)
+  if (!(good(law.radius) && law.radius > 0)) throw new Error('the radius of the air law of a relief is a length over 0 in the unit of the relief, not ' + law.radius)
+  if (!good(law.eyeHeight)) throw new Error('the eye height of the air law of a relief is a length in the unit of the relief, not ' + law.eyeHeight)
+  const least = law.least ?? 0
+  if (!(good(least) && least >= 0 && least <= 1)) throw new Error('the least of the air law of a relief is a share from 0 to 1, not ' + law.least)
+  return {
+    uAirCentre: { value: new THREE.Vector4().fromArray(airLawCentre(law, pitchDeg)) },
+    uAirLight: { value: new THREE.Vector3().fromArray(law.light) },
+    uAirNumbers: { value: new THREE.Vector3(law.density, law.scaleHeight, least) },
+  }
 }
 
 interface Grid {
@@ -831,7 +915,30 @@ export class Relief {
     const masks = await ctx.texture(base + def.masks, { srgb: false, mips: false })
     const th = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2)
     const aspect = W / H
-    const a = motion.air
+    const law = motion.airLaw ? airLawUniforms(motion.airLaw, motion.pitchDeg ?? 0) : null
+    const a = law ? undefined : motion.air
+    if (law) {
+      const material = new THREE.ShaderMaterial({
+        glslVersion: THREE.GLSL3,
+        vertexShader: AIR_LAW_VERT,
+        fragmentShader: AIR_LAW_FRAG,
+        uniforms: { ...law, uAirEyeScale: r.eyeScale, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform },
+        transparent: true,
+        blending: THREE.CustomBlending,
+        blendSrc: THREE.OneFactor,
+        blendDst: THREE.OneMinusSrcAlphaFactor,
+        blendSrcAlpha: THREE.OneFactor,
+        blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+        side: THREE.BackSide,
+        depthTest: false,
+        depthWrite: false,
+      })
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 48), material)
+      mesh.frustumCulled = false
+      mesh.renderOrder = -1
+      r.group.add(mesh)
+      r.air = { mesh, material }
+    }
     if (a) {
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3,
@@ -980,8 +1087,9 @@ export class Relief {
         glslVersion: THREE.GLSL3,
         ...(apronTexture ? { defines: { RELIEF_APRON: 1 } } : {}),
         vertexShader: VERT,
-        fragmentShader: FRAG,
+        fragmentShader: law ? withAirLaw(FRAG) : FRAG,
         uniforms: {
+          ...(law ?? {}),
           ...(apron && apronTexture && apronSize ? {
             uApron: { value: apronTexture }, uApronSize: { value: new THREE.Vector2(apronSize.width / apronResolution, apronSize.height / apronResolution) },
             uApronEdges: { value: new THREE.Vector4(left, right, bottom, pad) },
@@ -1060,7 +1168,7 @@ export class Relief {
     if (this.air) {
       const u = this.air.material.uniforms
       const f = m.air?.drift
-      if (f) (u.uDrift!.value as THREE.Vector4).set(f[0], f[1], f[2] * dt + 40, f[3])
+      if (f && u.uDrift) (u.uDrift.value as THREE.Vector4).set(f[0], f[1], f[2] * dt + 40, f[3])
       u.uGain!.value = gain
       u.uVignette!.value = vignette
       u.uAspect!.value = view.format.width / view.format.height
