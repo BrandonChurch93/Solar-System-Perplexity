@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T22:15:56.955Z",
- "head": "833b30b7c88919612af5258dce6107fadffa347d",
- "note": "cure B whole run, dive read red 0.67 at 1330, cause being named; far deck plate trial",
+ "pushed": "2026-11-25T22:41:46.092Z",
+ "head": "bf34974ffac1b65a3ac38e0d4b5393d5a79f0188",
+ "note": "Bc whole run read: dive red on the slab above the mesh's end 1328 to 1331, rise red on the far deck; towers single in both moves",
  "looks": [
+  {
+   "time": "2026-11-25T22:41:45.004Z",
+   "file": "20261125224145004-note-rtowers-b.jpg",
+   "source": "../../../../tmp/v/sh/Bc/rtowers-b.jpg",
+   "kind": "note",
+   "label": "Bc rise 1557 to 1565 at 2 to 1, crops that follow the place's centre: towers single",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T22:41:44.101Z",
+   "file": "20261125224144101-note-Bc-pmap-rise.jpg",
+   "source": "../../../../tmp/v/sh/Bc-pmap-rise.jpg",
+   "kind": "note",
+   "label": "Bc rise 1541, 1545, 1555 + 1/2 with the frame 8 later and the reader's maps: the red is the far deck under the limb",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T22:41:43.086Z",
+   "file": "20261125224143086-note-track2-M0Bc.jpg",
+   "source": "../../../../tmp/v/sh/track2-M0Bc.jpg",
+   "kind": "note",
+   "label": "main above, Bc below, crops that follow one ground point under the line, 1328 to 1338",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T22:41:42.016Z",
+   "file": "20261125224142016-note-Bc-pmap-1330.jpg",
+   "source": "../../../../tmp/v/sh/Bc-pmap-1330.jpg",
+   "kind": "note",
+   "label": "Bc dive 1330: the reader's pattern map, the red is the slab above the line where the ground's mesh ends, read on the later frame",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T22:15:43.745Z",
    "file": "20261125221543745-note-Bc-spot-1329.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/sh/B1-1554.jpg",
    "kind": "note",
    "label": "1554 at 2 to 1: towers single with cure B",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T21:44:43.216Z",
-   "file": "20261125214443216-note-cR0-1320.jpg",
-   "source": "../../../../tmp/v/sh/cR0-1320.jpg",
-   "kind": "note",
-   "label": "1320: sixth, B1, control without the ramp: the dark triangle goes with cure B",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T21:26:36.339Z",
-   "file": "20261125212636339-note-B1-line1326.jpg",
-   "source": "../../../../tmp/v/sh/B1-line1326.jpg",
-   "kind": "note",
-   "label": "Straight line at 1326 still stands in B1 (H1, cEnd, B1, gain 1.8): its cure is not found yet",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T21:26:35.689Z",
-   "file": "20261125212635689-note-B1-dive2.jpg",
-   "source": "../../../../tmp/v/sh/B1-dive2.jpg",
-   "kind": "note",
-   "label": "Cure B draft stills 1296, 1304, 1312: sixth, H1, B1",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T21:26:34.628Z",
-   "file": "20261125212634628-note-B1-1554.jpg",
-   "source": "../../../../tmp/v/sh/B1-1554.jpg",
-   "kind": "note",
-   "label": "Cure B draft still 1554 at 2 to 1: sixth, H1, B1. B1 towers single",
    "stop": "venus"
   }
  ]
