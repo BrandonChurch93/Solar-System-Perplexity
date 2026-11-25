@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops A, C, E and G, across the close-up globe",
+      "what": "The cloud texture becomes soft and directionally smeared over large areas. Even the bright cloud tops in C have little internal definition at native size.",
+      "fix": "Add finer cloud structure at the close-up scale and reduce directional texture blur while preserving the broad atmospheric bands."
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crop Q, center of the large vortex",
+      "what": "The filaments curl into a tight oval around a smooth, horizontally smeared center. The abrupt change in texture makes the eye look pinched rather than naturally resolved.",
+      "fix": "Rework the vortex core so fine filaments taper into the eye without collapsing into flat horizontal streaks."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "crops K and M, sunlit limb",
+      "what": "A nearly white rim and broad glow wash out the cloud detail just inside the illuminated edge.",
+      "fix": "Reduce the bloom peak and preserve the fine cloud contrast immediately inside the limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops V and W, lower-right star field",
+      "what": "Several brighter stars read as soft, slightly elongated blue-white blobs with colored fringes instead of distinct points.",
+      "fix": "Use a tighter star profile and reduce color fringing, reserving larger halos for the brightest stars."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "whole disc, especially upper half (crops J, K, C, O)",
+      "what": "the planet surface is smeared and painterly, with directional streaks that look like motion blur or a brush smudge; cloud tufts are soft blobs with no fine structure, so the disc reads as airbrushed and blurry at native size",
+      "fix": "re-render the atmosphere texture at higher resolution with crisp, layered band and cloud detail; remove the directional smear filter"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower center storm (crops A, P)",
+      "what": "the vortex looks pasted on: a ring of bright, scribbly white strokes around a dark hole, with a different texture and sharpness from the surrounding smeared surface, and no flow of the bands into it",
+      "fix": "blend the storm into the band flow with matching resolution and shading, and give it a spiral structure that pulls the nearby clouds in"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "ring arc endpoints at the limb, left and right (crops J, B, H, Q)",
+      "what": "the rings rise from the horizon and drop back into it like a rainbow, and their strands end in sharp, tapered points right on the limb; nothing shows the ring passing in front of or behind the planet, and there is no ring shadow",
+      "fix": "draw the ring as a full ellipse with a front section crossing the disc, occlusion behind the limb, and a shadow cast on the clouds"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "ring strands across the sky (crops B, C, F, G, K)",
+      "what": "the rings are made of thin scratch-like streaks of uneven brightness that look like brush strokes or long-exposure trails rather than particle bands; some strands split and fade at random points",
+      "fix": "render the rings with a radial density profile and consistent gaps along the whole arc"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "left of the disc (crops B, F, N)",
+      "what": "faint vertical ring lines appear only off the left limb and do not continue around or in front of the planet, so they read as stray hairline marks",
+      "fix": "either remove them or render a coherent ring system that wraps around the planet"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "lower left night side (crops D, N, S, T)",
+      "what": "a large flat, near-black area with no surface detail and faint blotchy gradient steps",
+      "fix": "add faint night-side detail or dither the gradient to remove the blotches"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "middle terrain and clouds (crops A, E, P, V)",
+      "what": "the cloud streaks are soft and slightly smeared, with low fine detail at native size",
+      "fix": "sharpen the cloud layer and add small-scale structure"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "moon, upper left (crops B, J)",
+      "what": "the small crescent moon is soft and has little surface detail",
+      "fix": "render the moon with crisp terminator and surface texture"
+     }
+    ]
+   }
+  }
+ ]
+}
