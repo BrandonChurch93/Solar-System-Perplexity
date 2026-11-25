@@ -1,9 +1,89 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T02:54:34.973Z",
- "head": "220328cc110b9dfd889615931fa98a68fa085bb7",
- "note": "02:56 UTC: finding the cause of the rise's 0.74 at 3272 (MAIL 853 point 2): made detail and relief are ruled out by experiment; pairs of the same ground at 3272 and 3280",
+ "pushed": "2026-11-25T03:23:31.191Z",
+ "head": "f274287d7d14492b70130208bd7812a07da7d288",
+ "note": "03:24 UTC: patches of MAIL 861 in (four draft hashes equal), rise path green with liftPower 0.55, haze fill out of the sky plate; stills of dive and rise rendering",
  "looks": [
+  {
+   "time": "2026-11-25T03:23:30.112Z",
+   "file": "20261125032330112-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image (kept first)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:23:28.944Z",
+   "file": "20261125032328944-note-rise-cause-3272h.jpg",
+   "source": "../work/r8/rise-cause-3272h.png",
+   "kind": "note",
+   "label": "03:00 rise 3272 + 1/2: the tool's flow chain reads 0.741, the true map from the cameras 0.049",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:23:27.841Z",
+   "file": "20261125032327841-note-plate-before-after.jpg",
+   "source": "../work/r8/floor/plate-before-after.jpg",
+   "kind": "note",
+   "label": "03:24 sky plate of the surface view, lifted: left as it was (haze fill under its horizon, the floating band), right with the plate's own sky level carried under the horizon by code",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T03:07:26.994Z",
+   "file": "20261125030726994-frame-after-3296.jpg",
+   "source": "out/work/jupiter/h4/after-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
+  {
+   "time": "2026-11-25T03:06:53.493Z",
+   "file": "20261125030653493-frame-after-3150.jpg",
+   "source": "out/work/jupiter/h4/after-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
+  {
+   "time": "2026-11-25T03:06:14.973Z",
+   "file": "20261125030614973-frame-after-2997.jpg",
+   "source": "out/work/jupiter/h4/after-2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
+  {
+   "time": "2026-11-25T03:05:39.906Z",
+   "file": "20261125030539906-frame-after-2895.jpg",
+   "source": "out/work/jupiter/h4/after-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "ee785742acc8b67e"
+  },
   {
    "time": "2026-11-25T02:54:30.130Z",
    "file": "20261125025430130-note-pair-3150-final.jpg",
@@ -35,20 +115,6 @@
    "kind": "note",
    "label": "rise, same ground lower left: frame 3272 (left) and 3280 carried back onto it (right), the red 0.74 of my own smooth run",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:54:22.776Z",
-   "file": "20261125025422776-frame-ly-3272.jpg",
-   "source": "out/work/jupiter/diag/ly-3272.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3272, draft tier, layers view",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3272,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "layers",
-   "engine": "c6c6edcaa80e1e1f"
   },
   {
    "time": "2026-11-25T02:29:15.244Z",
@@ -152,54 +218,6 @@
    "source": "../work/r8/c1-rise-a.jpg",
    "kind": "note",
    "label": "rise 3250, 3256, 3262, 3268, set c1 (lower left 3250 to 3257 still red)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:38:38.020Z",
-   "file": "20261125013838020-note-c1-rise-b.jpg",
-   "source": "../work/r8/c1-rise-b.jpg",
-   "kind": "note",
-   "label": "rise 3274, 3282, 3296, set c1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:38:36.593Z",
-   "file": "20261125013836593-note-curve-c1.jpg",
-   "source": "../work/r8/curve-c1.png",
-   "kind": "note",
-   "label": "curve of the storm 2895 to 3059, darkest and brightest 5 by 5 mean, with equal ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:38:32.005Z",
-   "file": "20261125013832005-note-c1-3054.jpg",
-   "source": "../work/r8/c1-3054.jpg",
-   "kind": "note",
-   "label": "dive 3054, set c1, full frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:38:26.456Z",
-   "file": "20261125013826456-note-c1-sky-lift.jpg",
-   "source": "../work/r8/c1-sky-lift.png",
-   "kind": "note",
-   "label": "floating band above the limb 3031 to 3041 at 4 times the exposure (red, cause known: haze painted in the surface view's sky plate)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:38:25.565Z",
-   "file": "20261125013825565-note-c1-rings.jpg",
-   "source": "../work/r8/c1-rings.png",
-   "kind": "note",
-   "label": "rings arriving in place 2988 to 2994 round the storm (red, cause known: wrap to patch-wide exchange)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:31.217Z",
-   "file": "20261125012231217-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final tier beside the approved image (same bytes as the kept still)",
    "stop": "jupiter"
   }
  ]
