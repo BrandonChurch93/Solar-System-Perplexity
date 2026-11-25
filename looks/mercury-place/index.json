@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T12:41:32.521Z",
- "head": "58c6e8e750c53c4f94fae18b2597a100ea2d14de",
- "note": "way C on the tree: rise 989 to 1009 green by my reader (0.08 to 0.42), 1009.5 to 1014 red 0.49 to 0.64 as take b9; dive crops against the mark; the disc reads greyer than the ground round it at 700 to 708; merge, tests and NAMED follow",
+ "pushed": "2026-11-25T13:13:26.836Z",
+ "head": "3cc3bba678d2b18c1c1f60d57a4b9686d4677c5b",
+ "note": "merge with main d72a1199: G15 was red (tone.png 2048), cured with tone.png 1024, gate green; 615 beside the approved image and merged main: inside the disc the hero's gold ring crater is replaced by two grey pits; reread of the three stretches on the commit runs",
  "looks": [
+  {
+   "time": "2026-11-25T13:13:25.289Z",
+   "file": "20261125131325289-note-n-615-disc.jpg",
+   "source": "../../../../tmp/m/n-615-disc.png",
+   "kind": "note",
+   "label": "615 at 1 to 1 round the disc: approved image, merged main, way C on the commit",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T13:13:24.142Z",
+   "file": "20261125131324142-note-n-615-whole.jpg",
+   "source": "../../../../tmp/m/n-615-whole.png",
+   "kind": "note",
+   "label": "615 whole at one third: approved image, merged main, way C on the commit (still tier)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T13:13:22.629Z",
+   "file": "20261125131322629-note-n-615-x4.jpg",
+   "source": "../../../../tmp/m/n-615-x4.png",
+   "kind": "note",
+   "label": "615 times 4 on the disc: approved image, merged main d72a1199 rendered here, way C on the commit (still tier). The hero's gold ring crater is gone, two grey pits stand there; main's crater lower left is gone",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T12:41:31.904Z",
    "file": "20261125124131904-note-h-692-708-1to1.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/h-dive-a.png",
    "kind": "note",
    "label": "dive 712, 714, 716 at 1 to 1: way C s9 without the colour law left, the tree 58c6e8e7 right",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T12:14:20.292Z",
-   "file": "20261125121420292-note-h-rise-b.jpg",
-   "source": "../../../../tmp/m/h-rise-b.png",
-   "kind": "note",
-   "label": "rise 1016, 1018, 1020 at 1 to 1 on the tree 58c6e8e7",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T12:14:18.934Z",
-   "file": "20261125121418934-note-h-rise-a.jpg",
-   "source": "../../../../tmp/m/h-rise-a.png",
-   "kind": "note",
-   "label": "rise 1010, 1012, 1014 at 1 to 1 on the tree 58c6e8e7 (the first level leaves, the map comes: reader 0.64 at 1012, as take b9)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T11:23:51.771Z",
-   "file": "20261125112351771-note-pit-zoom-h.jpg",
-   "source": "../../../../tmp/m/pit-zoom-h.png",
-   "kind": "note",
-   "label": "615 at times 20: main's ring crater and way C's first pit (not within 1 px, smaller)",
    "stop": "mercury"
   }
  ]
