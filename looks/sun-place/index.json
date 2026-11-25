@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T07:27:11.385Z",
- "head": "d91c0f63dfdec7bcd7700d55196f3b525ab922d4",
- "note": "work on commit 4b, trial K1 (not the state to be named): frame 60 dark 0.251 body 0.635 pale 0.053 white 0.003; half width 11.1 px, 252 shapes; fine detail 0.0159; mean 0.297; distance 0.072",
+ "pushed": "2026-11-25T07:34:00.055Z",
+ "head": "df6517ea5623ef62a6e59bdaa99ec5f443de1c58",
+ "note": "commit 4b da619571 on merge df6517ea: frame 60 dark 0.223 body 0.616 pale 0.084 white 0.023; half width 8.2 px, 546 shapes; fine detail 0.0291; mean 0.326; distance 0.070",
  "looks": [
+  {
+   "time": "2026-11-25T07:33:59.084Z",
+   "file": "20261125073359084-note-4b-60.jpg",
+   "source": "../../../../tmp/v/4b-60.jpg",
+   "kind": "note",
+   "label": "frame 60, 1 to 1: approved, commit 4b, and not taken: the commit 3 values of threads, tongues, boil and points (reads 0.452 by my chain, the fibres gone)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:33:57.872Z",
+   "file": "20261125073357872-note-4b-225.jpg",
+   "source": "../../../../tmp/v/4b-225.jpg",
+   "kind": "note",
+   "label": "commit 4b, frame 225 at the master: the paler patch left of the spot is still there",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:33:56.995Z",
+   "file": "20261125073356995-note-4b-217.jpg",
+   "source": "../../../../tmp/v/4b-217.jpg",
+   "kind": "note",
+   "label": "frame 217 at half size: commit 4 (d91c0f63), commit 4b: one ground in both",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:33:55.421Z",
+   "file": "20261125073355421-note-4b-90-full.jpg",
+   "source": "../../../../tmp/v/4b-90-full.jpg",
+   "kind": "note",
+   "label": "frame 90 whole at half size: take batch 9 Sun files, commit 4b",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:33:54.522Z",
+   "file": "20261125073354522-note-4b-spot90.jpg",
+   "source": "../../../../tmp/v/4b-spot90.jpg",
+   "kind": "note",
+   "label": "commit 4b (da619571), frame 90 at the master, 1 to 1, top to bottom: approved, take batch 9 Sun files, commit 4b, commit 4 (d91c0f63)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T07:26:28.436Z",
    "file": "20261125072628436-note-rise-D.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/k1-60.jpg",
    "kind": "note",
    "label": "frame 60, 1 to 1: approved, commit 4, trial K1 (commit 3 values of threads, tongues, boil, points back): the fibres are gone with the reading, not taken as it stands",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:26:25.031Z",
-   "file": "20261125072625031-note-4b-spot90.jpg",
-   "source": "../../../../tmp/v/4b-spot90.jpg",
-   "kind": "note",
-   "label": "frame 90 at the master, 1 to 1: approved, take batch 9 Sun files, trial K1 of commit 4b (spot cured), commit 4",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:01:39.199Z",
-   "file": "20261125070139199-note-spot90-s3.jpg",
-   "source": "../../../../tmp/v/spot90-s3.jpg",
-   "kind": "note",
-   "label": "commit 4b in work (s3): frame 90 draft at 1 to 1 under the approved: flat wide floor, thin strands, darker grain toward the spot",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:01:38.589Z",
-   "file": "20261125070138589-note-spot90-a.jpg",
-   "source": "../../../../tmp/v/spot90-a.jpg",
-   "kind": "note",
-   "label": "MAIL 946: frame 90 draft at 1 to 1, the approved, the Sun's files of 0988d75a (take b9), commit 4 d91c0f63",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T06:36:23.099Z",
-   "file": "20261125063623099-note-e20-far-90.jpg",
-   "source": "../../../../tmp/v/e20-far-90.jpg",
-   "kind": "note",
-   "label": "commit 5 in work (e20), frame 90 draft far field, approved left: loaves, not yet melting into glow",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T06:36:22.551Z",
-   "file": "20261125063622551-note-e20-near-90.jpg",
-   "source": "../../../../tmp/v/e20-near-90.jpg",
-   "kind": "note",
-   "label": "commit 5 in work (e20), frame 90 draft, approved left, 1 to 1",
    "stop": "sun"
   }
  ]
