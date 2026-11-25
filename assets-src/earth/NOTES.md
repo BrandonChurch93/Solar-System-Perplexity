@@ -5062,3 +5062,91 @@ Attachments: sea-1857-1to1.png, sea-1857-3x.png (under /home/user/.perplexity/at
 - Rise 2106 to 2148 of E2, draft, same reader (/tmp/gl/k8/pat-e2r.json): largest 0.81 from 2125 at [580, 372], 8 frames over 0.45 (2121 to 2128); level step most 0.64, pop most 1.24. b9908e03's rise on the same reader: 1.04 from 2120, 24 frames over (2116 to 2139), pop most 1.26. 2156 is 0 px from b9908e03's draft frame. Seen on every frame 2106 to 2148: the deck gives way to the map between 2121 and 2130, the same exchange as in the dive, mirrored.
 - Seen in the dive's crop 1876 to 1886: the standing clouds on the far band are dark smudges before they turn light, because `thin()` takes the deck's light out of the towers' texels too. Next trial E3: the towers keep their colour.
 - 07:02 the how texts of place.json (onGlobe, plates.haze.share) say the presence by the way of the distance. Git form of MAIL 940: commit 1 is the tree of 3a136a1a, commit 2 is this state.
+
+## 07:10 NAMED 29eea607 sent 07:18, and trial E3
+
+- Pushed 07:10: 38f02a6a (the three folders back to 3a136a1a, git diff 0 bytes) and 29eea607 (K4 kept, E2). Tests: tsc 0; 52 files 561 tests; globe-cap alone 24 tests 40.62 s; the three GL files 15 tests 346.25 s. NAMED mail sent 07:18 with seven sheets; it says the state is red on the pattern in both moves and that the cause is not found.
+- E3 (not committed): the towers keep their colour, `thin(c, deck)` takes the deck from the sea layer only. Dive 1870 to 1890 on my reader: 0.89 from 1882 at [628, 264], 9 frames over (1879 to 1887). No change against E2 (0.90). So the dark towers are not the cause of the number.
+- Next: name the layer. Draw the globe alone, the sea layer alone and the towers alone on 1878 to 1892 and read each.
+
+### 07:20 MAIL 957 from the Builder (/root), copied whole
+
+MAIL 957 from the Builder (/root), 07:20 UTC. Your NAMED 29eea607 (two commits on b9908e03, the first returns the three folders to 3a136a1a) is logged as a first state, red by your own word. No machine goes on it, as you ask. The git form is right. Thank you for saying the red first.
+
+WHAT I SEE on e2-crop and e2-b, and why I think the number is already explained:
+1. From 1880 to 1890 the far band is not one ground gaining detail. It is two pictures of one place that do not agree: the map says turquoise shoal, a deep blue patch, green coast at the left, flat white specks; the close ground says a grey deck with other clouds at other places and shadows. From 1882 to 1888 both are in the frame at once (at 1884 the map's specks lie as a second layer over the deck's clouds). Nothing of the first is a low form of the second.
+2. Your doubt was that the weights move by only 0.3 in 8 frames. The reader does not read weights, it reads how much of the pattern at a place is still the same pattern. The map's band is weak in pattern (smooth sea, a few specks), the deck is strong (clouds with shadows), so 0.3 of the strong one is already most of what is there. Test it before anything else, it costs minutes: take the band of 1876 laid to the pose of 1890 and read the likeness of its pattern with the band of 1890. If it is near nothing, the cause is named: content, not curve. Your layers drawn alone (step 1) will then show the sea layer carrying the number, and E3 not helping fits that.
+
+RULING, the same I gave Neptune this hour for its far streak: a level that arrives by distance is lawful only when it is ONE BODY with what it replaces, that is, the far level is the near one filtered. Then the exchange is a gain of detail and the reader stays low, as on Mercury and Venus, which Brandon calls seamless. Where the contents differ no curve cures it; a slower curve only stretches the same exchange.
+
+So the cure is in the content of the far band, and you choose the way:
+(a) The far band of the close ground IS the map: its colour and its marks (shoal, deep, coast) come from the map at their places; the grey comes from the air alone (your pathShare, which you have), not from a painted deck; a cloud stands where the map has a speck and nowhere else on that band (the stand law and the specks' height, your point 3, move to the front: they are the cure, not an addition).
+(b) Or the close ground's own picture keeps the band, and then every level of it, filtered to the map's scale, must equal the map there. That means painting, and it moves the judged 2010 more.
+I expect (a). The judged 2010 may change on its far band in the shapes of clouds only: the match rubric allows small differences in exact cloud shapes; its light, its haze, its horizon and its near and middle ground stay. Say what moved at 2010 with a pair.
+Also by cause, as you found: a cloud seen from above is light. A tower that is first dark and then turns light in place is wrong as a picture whatever the reader says; E3 goes in.
+
+ORDER: (1) the likeness test and the layers alone, mailed to me as soon as measured, by 08:00 UTC; (2) the far band as one body, both moves, with the handover tool's step in place and the tool's own smooth lines on your slices; (3) the island that stays the map's (1889 to 1896, 2122 to 2129) and the pale patch of the streak (1867 to 1890) fall under the same law: say for each whether (a) cures it; (4) then K3's softness, the limb's one law, the callers of gradAt (09cfadcd is on take/b10e, not on main yet), MAIL 945. Next NAMED by 08:50 UTC, red or green, with the same list of what is still wrong, each with its frames.
+
+### 07:43 UTC: MAIL 965 from the Builder, copied whole
+
+MAIL 965 from the Builder (/root), 07:43 UTC. Answer to your answer to MAIL 957 (1).
+
+1. Taken: the sea layer carries the number and the towers add nothing to it (globe alone 0.10 to 0.17, likeness 0.948; with the sea layer 0.41 to 0.90, likeness 0.598). Content, not curve. Taken as well: on the band of 8 to 12 degrees the map's detail is the stronger (15.4) and the deck's the weaker (10.1), the other way round from my guess.
+
+2. Go on with (a) as you describe it: the haze takes contrast by the air mass of the close camera's ray as well as adding grey, the sea layer's band takes its texels from the map by the same law at share 1, and the ground on the globe side ends at the plate's cover.
+
+3. One ruling on the judged frame. 2010 holds the match critic's 9 as it stands. Its band from 6.4 degrees outward may change only so that a viewer shown the approved picture and the frame still calls them the same shot: the far field's bodies, their light and the haze over them as the approved picture has them. "Towers on that band go out for now" is a state, not an end state: before the NAMED the far band of 2010 carries standing bodies again where the approved picture has them, as the same bodies the map shows there from above (one body), or the pair shows that nothing of the approved picture's far field is lost. Send the pair of 2010 before and after as the whole frame and as 1 to 1 crops of the band (left, middle, right), beside the approved picture's same parts.
+
+4. Your reach is accepted: by 08:50 UTC the build and the dive's slice with your reader, as a NAMED or as a state that says which it is and what was measured. My reader runs both moves on machines once the sha is pushed.
+
+### 07:36 to 08:03 UTC: way (a) built, first take (not committed yet)
+
+Answer to MAIL 957 (1) was mailed 07:36: on 29eea607 the likeness of the far band (8 to 12 degrees from the point under the close camera, frame 1876 laid to the pose of 1890, detail 8 to 40 px) is 0.567 with the whole ground, 0.948 with the globe alone, 0.598 with the globe and the sea layer without towers. The sea layer carries the number.
+
+MEASURED before building, `/tmp/gl/k9/bandlib.py` (the approved sea layer laid back on the ground against what the globe shows there with every level arrived, detail 2 to 10 px of a 1200 px ground plane of 27 degrees), likeness by arc from the point under the close camera: 0 to 3 degrees 0.846, 3 to 4 0.937, 4 to 5 0.715, 5 to 5.5 0.617, 5.5 to 6 0.298, 6 to 6.4 0.102, 6.4 to 7 0.063, 7 to 8 -0.004, 8 to 10 0.064, 10 to 12 -0.025. So the sea layer is the map's body out to about 5.5 degrees (the lay back's cover) and another picture from about 6 degrees on. Sheet `/tmp/gl/k9/ground-LP.jpg`.
+
+Read in the code before building: the sea layer's texture is in plain image space inside its box (uTop.x is box[1] = 0, the fold only works above the canvas), a texel at image (x, y) sits at ((x + 640) / 4096, y / 1980) of the canvas; the surface view shows the texel as it is (thin() and lightOn() are off there). The globe added the veil to the code value; the veil's fourth value was the lay back's cover and no shader read it.
+
+Built (K9 A1):
+- `assets-src/earth/place/band.py` (new, after relief/build.py and place/levels.py; keeps its sources in out/work/earth/place/band/). Values in `place.json plates.haze.band`.
+  - The cover of the air k at a ground point: (1 - exp(-air (min(mT, cap) - 1))) with mT the air mass of the close camera's ray (the m of share), times the smooth step of the arc over coverDeg [5.0, 6.4], less the smooth step over backDeg [10, 11.5]. air 0.28. It goes into the veil's fourth value. Printed: k 0.06 at 5 degrees, 0.60 at 6, 0.73 at 7, 0.82 at 8, 0.89 at 9, 0.86 at 10, 0.09 at 11, 0 from 12.
+  - The veil's colour: old veil times (1 - k) plus the air's colour times k. The air's colour is read from the approved sea layer as a law of arc and turn about the point under the close camera (rings of 0.05 degrees, turns of 0.5 degrees, blurred 0.1 degrees of arc and 8 degrees of turn; ring mean where the picture has no texel).
+  - The sea layer's texels between texelDeg [5.4, 6.4] and backDeg [10, 11.5]: map (1 - k) + veil, with the tone of the open sea where the plate does not carry it, each texel the mean of 12 samples down its own length on the ground. The map is the globe's own stack of levels (patch-96, 48, 24, place-12, place-5 with their windows and feathers, mixed in linear light as the shader does).
+- `globe.ts`: code (1 - share k) + share veil in place of code + share veil. Where share is 0 the loop does not run, so the hold is the same code path.
+- `relief.ts`: thin() takes back from a texel what the law added: veil - k clamp((code - veil) / max(1 - k, 0.15)); the towers take nothing back (E3 B: a cloud is light from above); the sea layer leaves the band to the globe between mapDeg [6.4, 7.4] and [10, 11.5] degrees on the globe side (uOwn), the towers do not.
+
+First take (the ground ended at the cover everywhere, the texels the map's up to the horizon): frame 2010 had a hard horizon with a dark strip under it on the right, and 1919 had the same; cause: the glow of the limb lives in the sea layer's texels from about 10 degrees on. So the limb's strip stays the sea layer's own (backDeg) and the ground is drawn there on the globe side as before. Frames of the first take: `/tmp/gl/k9/a0`.
+
+SEEN on the second take, frame 2010 against 29eea607 (pair `/tmp/gl/k9/p2010-*.png`): 1755 keeps its sha (d7d08630443abef8a31d35c4fa416cb108d2c370d7172103940d50b99f3d3d4d). 2010 changes on rows 213 to 498 (198564 px by more than 8 levels); mean abs difference by rows: 0 to 190 0.13, 190 to 215 0.79, 215 to 250 5.96, 250 to 290 15.43, 290 to 330 22.14, 330 to 380 14.04, 380 to 450 4.09, below 450 0.04. The broad level of the band stays within a few levels (boxes of 320 px, rows 215 to 320: mostly within 5, largest 17 at x 640 to 960, rows 290 to 320, red). The horizon is the approved one again. What is lost: the cloud deck of the approved far field between about 6.4 and 10 degrees; in its place a pale haze with the map's specks as flat white patches. The towers of the approved picture on that band still stand. This is not an end state (MAIL 965, 3): the map's specks have to stand as bodies there, in the texels and on the globe, by one law from code.
+
+### 08:03 to 08:16 UTC: way (a), the dive's slice read (draft, film frames, my reader)
+
+Frames drawn on this tree at draft: 1755, 1857, 1872 to 1910, 1919, 1920, 2010, 2156 (`/tmp/gl/k9/a1`). Every frame of 1872 to 1910 and 1919 was looked at on three sheets of 16 and one crop of the far band at full size (1886, 1888, 1890, 1891, 1892, 1894, 1896, 1899).
+
+MEASURED, pattern reader (`tools/img/smooth.py pictures` through `/tmp/gl/k8/pat.py`, quarter scale, change over 8 film frames), frames 1872 to 1902:
+1872 0.06, 1873 0.06, 1874 0.08, 1875 0.10, 1876 0.13, 1877 0.15, 1878 0.17, 1879 0.20, 1880 0.20, 1881 0.19, 1882 0.21, 1883 0.23, 1884 0.25, 1885 0.29, 1886 0.34, 1887 0.38, 1888 0.39, 1889 0.42, 1890 0.44, 1891 0.46, 1892 0.45, 1893 0.34, 1894 0.20, 1895 0.13, 1896 0.12, 1897 0.12, 1898 0.12, 1899 0.12, 1900 0.15, 1901 0.15, 1902 0.14.
+Largest 0.46 from 1891 at film px (748, 112); one frame over the limit 0.45 (1891). Level step largest 0.48, pop largest 1.10. On 29eea607 the same reader gave 0.90 from 1882 with 9 frames over. Frames 1903 to 1910 are drawn and seen, not read (the reader needs the frame 8 later).
+
+MEASURED, likeness (`/tmp/gl/k9/like.py`, one frame laid to the pose of the other by the ground point of every pixel, detail 8 to 40 px), 1876 laid to 1890: 0 to 5 degrees 0.868, 5 to 8 0.881, 8 to 12 0.831, 12 to 20 0.886 (29eea607 on 8 to 12: 0.567; 3a136a1a: 0.925). 1891 laid to 1899: 0 to 5 0.939, 5 to 8 0.953, 8 to 12 0.794, 12 to 20 0.876.
+
+MEASURED, judged frames at draft against 29eea607's draft frames: 1755 0 px differ (sha d7d08630443abef8a31d35c4fa416cb108d2c370d7172103940d50b99f3d3d4d); 1857 0 px differ (sha 9ac1caeefea32e19f1e1647571e3562c7a5ca022e9413ab406ee15c5a8859dd6); 2156 0 px differ (sha e8929573c26d67693bfc0c35bc6b7be29782868196962da2a81a9481d467cfbe); 2010 changed on purpose, sha 68998d98458b70472cea27ee7c2796b18be64ad6096a263d3306856b2268547c (before 6faa13186c5f99ba2a0ba8f23601acf1176332caa1d93760d25b76c3fb2f6014).
+
+2010, where it changed (largest channel difference, levels of 255): columns x 0 to 160 rows 301 to 498 hold a px over 8 levels; x 320 to 480 rows 254 to 411; x 640 to 800 rows 224 to 364; x 880 to 1040 rows 214 to 347; x 1200 to 1360 rows 213 to 353; x 1600 to 1760 rows 233 to 401. At the middle (x 800 to 1120) rows 290 to 358, which is 5 to 6.4 degrees there, the mean is 19.84 and the largest 82: the change begins at 5 degrees (coverDeg [5.0, 6.4], texelDeg [5.4, 6.4]) and not at 6.4 as MAIL 965 (3) rules. Inside 5 degrees at the middle (rows 358 down): 368 px over 2 levels, largest 5. Sky and limb (rows 0 to 195): 1918 px over 2 levels, largest 4.
+
+1919 against 1920 on this tree (one frame of motion apart, not laid to one pose): mean abs difference rows 215 to 250 1.74, rows 250 to 290 2.01, rows 290 to 360 2.65. The handover tool's step in place is NOT RUN on this tree.
+
+SEEN on the frames:
+- 1872 to 1899, the far band: the shoals, the green coast and the white specks of the map stay where they are and go grey with the air; no deck arrives over them. That exchange is gone.
+- 1886 to 1893, film x 700 to 950, y 100 to 250 (5.5 to 8 degrees): the standing towers of the close view with their dark sides arrive in place where the map shows its own flat clouds. That is where the reader's largest value sits (748, 112 at 1891; 760, 200 at 1886). The cause is seen, not measured by layer.
+- 2010: the cloud deck of the approved far field between about 5.5 and 10 degrees is lost: the right crop shows flat pale patches where the approved picture has a long bank with a shadow; the left crop shows flat patches where it has streaks of cloud. A green line stands under the limb on the left (the map's coast through the air) and a violet tint on the right (rows 232 to 256, x 1580 to 1808). The towers stand as before. The horizon and the limb are the approved ones.
+- The air's colour is read from the approved sea layer with a blur of 0.1 degrees of arc: that keeps rings of the approved deck in the veil. It is a painted remainder and has to become a smooth law of the arc.
+- 1896 to 1898: the green island at the right edge is still there. 1900 to 1904: the near ground at the foot of the frame is exchanged by `whole` as before.
+
+DEPARTURES from MAIL 965, named:
+- (2) "the ground on the globe side ends at the plate's cover": it does on 7.4 to 10 degrees only. Outside 10 to 11.5 degrees the sea layer is still drawn on the globe side and its texels are the approved picture's, because the limb's glow is in those texels (first take: hard horizon with a dark strip).
+- (3) the change of 2010 begins at 5 degrees, not 6.4.
+- (3) the far band carries no standing bodies from the map yet. This is a state, not a NAMED.
+
+TESTS on this tree, 08:13 to 08:21 UTC: `npx tsc --noEmit -p .` exit 0; `npx vitest run` without the three GL files and without globe-cap "Test Files  52 passed (52)", "Tests  561 passed (561)"; `tests/globe-cap.test.ts` alone "Test Files  1 passed (1)", "Tests  24 passed (24)", 44.38 s; the three GL files "Test Files  3 passed (3)", "Tests  15 passed (15)", 363.89 s. NOT RUN: the gate, the handover tool, the tool's smooth lines, the finals, the rise, frames 1830 to 1871 and 1911 to 1918 of the dive, review tier.
+
+NEXT: the specks' height from code as one law in the bake (band.py) and on the globe, with the towers' footprints in the same field; the air's colour as a smooth law; then both moves whole, the handover tool, the tool's smooth lines.

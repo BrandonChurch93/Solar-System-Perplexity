@@ -97,7 +97,7 @@ export const createSet: SetFactory = async (ctx) => {
   plateEast.applyQuaternion(toGround).multiplyScalar(veilScale)
   plateNorth.applyQuaternion(toGround).multiplyScalar(veilScale)
   const veilPlane = new THREE.Matrix3().set(plateEast.x, plateEast.y, plateEast.z, plateNorth.x, plateNorth.y, plateNorth.z, plateAt.x, plateAt.y, plateAt.z)
-  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground, { farDeg: placeJson.onGlobe.farDeg, rim: placeJson.onGlobe.rim, rimNear: placeJson.onGlobe.near.rim, arrive: plates.arrive.footDeg, share: pathShare, level: [placeJson.onGlobe.level[0]!, placeJson.onGlobe.level[1]!, footDeg(placeJson.vfovDeg)], toneTimes: veilTone, light: Object.fromEntries(['uTone', 'uToneCloud', 'uToneGrey', 'uCurve', 'uTwilight', 'uTwilightAt', 'uTint', 'uPlaceGain', 'uPlaceDay'].map((name) => [name, globe.material.uniforms[name]!])), veil: { map: lowVeil, plane: veilPlane, fromDeg: plates.haze.fromDeg } })
+  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground, { farDeg: placeJson.onGlobe.farDeg, mapDeg: placeJson.onGlobe.mapDeg, rim: placeJson.onGlobe.rim, rimNear: placeJson.onGlobe.near.rim, arrive: plates.arrive.footDeg, share: pathShare, level: [placeJson.onGlobe.level[0]!, placeJson.onGlobe.level[1]!, footDeg(placeJson.vfovDeg)], toneTimes: veilTone, light: Object.fromEntries(['uTone', 'uToneCloud', 'uToneGrey', 'uCurve', 'uTwilight', 'uTwilightAt', 'uTint', 'uPlaceGain', 'uPlaceDay'].map((name) => [name, globe.material.uniforms[name]!])), veil: { map: lowVeil, plane: veilPlane, fromDeg: plates.haze.fromDeg } })
   terrain.add(ground.group)
   const onGlobe = new THREE.Group()
   onGlobe.scale.setScalar(1 / placeRadius)

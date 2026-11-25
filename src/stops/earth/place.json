@@ -136,7 +136,7 @@
       ]
     },
     "haze": {
-      "how": "The broad tone of the close view over the plate: the lay back of the approved close image less the plate over the lay back's cover, carried on past the cover by the recipe of mend.json veil, blurred over sigmaDeg degrees, in code values over 255 as half floats (size px over a square times plates wide on the plate's plane, red green blue and the cover, south row first), made by levels.py. The plate is the one ground at every distance; the lay back is no picture of the film any more (layBack names the work file levels.py makes it from). The globe adds the haze to the ground by the share of the air path at the ground point. Past the edge of that square the value of its border goes on (the border is one value all the way round, so there is no edge on the ground). Nearer than fromDeg[0] degrees of arc to the point under the close camera the close view's ground takes none back (full from fromDeg[1]).",
+      "how": "The broad tone of the close view over the plate: the lay back of the approved close image less the plate over the lay back's cover, carried on past the cover by the recipe of mend.json veil, blurred over sigmaDeg degrees, in code values over 255 as half floats (size px over a square times plates wide on the plate's plane, red green blue and the cover, south row first), made by levels.py. The plate is the one ground at every distance; the lay back is no picture of the film any more (layBack names the work file levels.py makes it from). The globe adds the haze to the ground by the share of the air path at the ground point, and by the same share the air takes the ground's contrast where the fourth value says so (band). Past the edge of that square the value of its border goes on (the border is one value all the way round, so there is no edge on the ground). Nearer than fromDeg[0] degrees of arc to the point under the close camera the close view's ground takes none back (full from fromDeg[1]).",
       "file": "place-12-low-veil.bin",
       "size": 256,
       "sigmaDeg": 0.4,
@@ -145,6 +145,39 @@
         4.2,
         5.0
       ],
+      "band": {
+        "how": "The far band of the close ground is the map, one body with what the globe shows there. Past the lay back's cover the air of the close camera's ray takes the picture's contrast as well as adding grey: with mT the air mass of that ray at the ground point (the m of share), the cover of the air is k = (1 - exp(-air (min(mT, cap of share) - 1))) times the smooth step of the arc from the point under the close camera over coverDeg and less the smooth step over backDeg, where the glow of the limb is the sea layer's own again, kept in the fourth value of the veil; the veil's colour is the old veil times (1 - k) and the air's colour times k. The air's colour (colour) is read from the approved picture's sea layer as a law of the arc and the turn about the point under the close camera: rings of ringDeg from fromDeg to toDeg, turns of turnDeg, the texels more than clearPx under the horizon, blurred over sigmaDeg (arc, turn) and, where the picture has less than trust of a turn, the mean of the ring; past the last ring with leastTurns turns the value is held. The globe shows code (1 - share k) + share veil; the close view's sea layer holds on that band the same law at share 1, texel = map (1 - k) + veil and the tone of the open sea where the plate does not carry it, each texel the mean of lines samples down its own length on the ground, from texelDeg[0] degrees of arc on, whole from texelDeg[1], back to the approved picture's texels over backDeg, and it takes back from a texel what the law added (relief.ts thin). Made by assets-src/earth/place/band.py from the sea layer of relief/build.py and the veil of place/levels.py, after both.",
+        "air": 0.28,
+        "coverDeg": [
+          5.0,
+          6.4
+        ],
+        "texelDeg": [
+          5.4,
+          6.4
+        ],
+        "backDeg": [
+          10.0,
+          11.5
+        ],
+        "lines": 12,
+        "colour": {
+          "fromDeg": 4.0,
+          "toDeg": 14.0,
+          "ringDeg": 0.05,
+          "turnDeg": 0.5,
+          "clearPx": 8,
+          "sigmaDeg": [
+            0.1,
+            8.0
+          ],
+          "trust": [
+            0.3,
+            0.7
+          ],
+          "leastTurns": 40
+        }
+      },
       "share": {
         "how": "The share of the close view's look at a ground point, by the path of the eye's ray through the air there: m(mu) = 1 / (mu + 0.025 exp(-11 mu)) is the air mass of a ray that leaves the ground at the cosine mu from the vertical. With mE for the eye and mT for the close camera of the approved image, the share is eased(((mE - 1) / max(kappa (min(mT, cap) - 1), floor)) to the power root, ends), times a share of the distance alone: the size of one reference line of the frame on the ground at that point (as in plates.arrive), none above footDeg[0], all from footDeg[1] down, smooth along its logarithm between. eased(t, a) runs at an even rate and rounds the first and the last part a of the way, so its rate has no step at either end; it reads the angle of the ray, never the time. Air mass minus 1 grows with the square of the angle from the vertical, so the smooth step of the ratio itself gave a ground point its whole look within about 16 frames; the root spreads that over the dive. footDeg[0] lies under the least value of the frames 1857 and 2156 (0.0417 at 1858, 0.0507 at 2156), so while the whole globe is in the frame its rim, which every eye sees flat, takes no haze. footDeg[1] lies above the largest value in the frame at the handover (0.0108 at 1919). kappa: at the first frame of the rise (2100) the eye stands higher than the close camera (0.03367 against 0.03075 of the radius) and (mE - 1) / (mT - 1) is 0.59 at its least on a 160 x 90 sample of that frame, so the share is whole there. cap is the largest value the law m gives (mu 0): the far ground takes its share last. At cap 8 it was whole on ground the eye sees less than about 15 degrees above its horizon, and the far land turned pale within two frames (1866 to 1868). So ground seen steeply has none, ground seen as flat as the close camera sees it has all. It gives the haze above, the tone of the sea round the place and the place's own light (gain, day). One value per ground point for all of them. The presence of the close view's ground on the globe comes by the distance alone (onGlobe).",
         "kappa": 0.55,
@@ -276,10 +309,16 @@
     ]
   },
   "onGlobe": {
-    "how": "The close view's ground (the sea layer and the towers of relief.ts, the same meshes and texels the surface view draws) stands on the globe as an object of the globe world, placed by the fixed transform of place.ts, so the globe side shows the surface view's own ground and not a copy of it. It is the finest level of the ground and comes by distance alone: at each of its points (read where the close camera's ray through the texel meets the sea) the size of one reference line of the frame on the ground is taken (the eye's distance times the angle of one line in its lens) and set on the way, along its logarithm, from plates.haze.share.footDeg[0] to the size the close camera's own line has at that point. The ground's presence is eased(way / level[0], level[1]): none where the eye's line is as coarse as footDeg[0], whole when the eye has come level[0] of the way to the close camera's fineness, at an even rate between, with the first and the last part level[1] of it rounded so that the rate has no step at either end; no height and no clock is read. So every ground point takes the whole of the dive from 1858 on to arrive (to about 1889 on the far band, to about 1899 under the camera) and not the 16 to 20 frames of a fixed span of the ratio. It ends on the ground between farDeg[0] and farDeg[1] degrees of arc from the point under the close camera, and inside the edge of the picture's canvas over rim[0] of its width at the sides and rim[1] of its height at the near edge. Beyond the camera's own horizon it is not drawn. On the globe the mesh is not bent to the limb (look.ground.lock is off) and the push and the shimmer of the surface view stand still at the value they have at the change of view. Its look follows the same laws as the plate under it, by the share of the air path at the point (plates.haze.share): the part of the haze and of the sea's tone that the share does not show yet is taken from each texel, and its light goes from the globe's own curve of the Sun's height to the picture as it is by that share, as on the plate. So the ground and the plate under it differ in their detail only. In the surface view nothing is taken.",
+    "how": "The close view's ground (the sea layer and the towers of relief.ts, the same meshes and texels the surface view draws) stands on the globe as an object of the globe world, placed by the fixed transform of place.ts, so the globe side shows the surface view's own ground and not a copy of it. It is the finest level of the ground and comes by distance alone: at each of its points (read where the close camera's ray through the texel meets the sea) the size of one reference line of the frame on the ground is taken (the eye's distance times the angle of one line in its lens) and set on the way, along its logarithm, from plates.haze.share.footDeg[0] to the size the close camera's own line has at that point. The ground's presence is eased(way / level[0], level[1]): none where the eye's line is as coarse as footDeg[0], whole when the eye has come level[0] of the way to the close camera's fineness, at an even rate between, with the first and the last part level[1] of it rounded so that the rate has no step at either end; no height and no clock is read. So every ground point takes the whole of the dive from 1858 on to arrive (to about 1889 on the far band, to about 1899 under the camera) and not the 16 to 20 frames of a fixed span of the ratio. It ends on the ground between farDeg[0] and farDeg[1] degrees of arc from the point under the close camera. Between mapDeg[0] and mapDeg[1] degrees the sea layer leaves the ground to the globe and from mapDeg[2] to mapDeg[3] it takes it back: on that band its texels are the map's own through the air (plates.haze.band), so the globe draws the band itself and the two are one body at the change of view; the towers stand on the band as elsewhere and take nothing back from the air, so a cloud is light from above at every height, and inside the edge of the picture's canvas over rim[0] of its width at the sides and rim[1] of its height at the near edge. Beyond the camera's own horizon it is not drawn. On the globe the mesh is not bent to the limb (look.ground.lock is off) and the push and the shimmer of the surface view stand still at the value they have at the change of view. Its look follows the same laws as the plate under it, by the share of the air path at the point (plates.haze.share): the part of the haze and of the sea's tone that the share does not show yet is taken from each texel, and its light goes from the globe's own curve of the Sun's height to the picture as it is by that share, as on the plate. So the ground and the plate under it differ in their detail only. In the surface view nothing is taken.",
     "farDeg": [
       11.5,
       13.5
+    ],
+    "mapDeg": [
+      6.4,
+      7.4,
+      10.0,
+      11.5
     ],
     "rim": [
       0.14,

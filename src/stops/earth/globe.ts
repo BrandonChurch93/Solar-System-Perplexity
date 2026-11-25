@@ -340,7 +340,10 @@ void main() {
     float early = front * frontH * smoothstep(0.5, 0.5 - uFeather, max(abs(qp.x), abs(qp.y)) * uEarlyScale) * near;
 ${PATCH_LEVELS}
     for (int k = 0; k < (share > 0.0 ? 1 : 0); k++) {
-      for (int j = 0; j < (frontH > 0.0 ? 1 : 0); j++) albedo = fromCode(clamp(toCode(albedo) + frontH * share * textureLod(uLowVeil, qp * uLowVeilWin + 0.5, 0.0).rgb, 0.0, 1.0));
+      for (int j = 0; j < (frontH > 0.0 ? 1 : 0); j++) {
+        vec4 air = textureLod(uLowVeil, qp * uLowVeilWin + 0.5, 0.0);
+        albedo = fromCode(clamp(toCode(albedo) * (1.0 - frontH * share * air.a) + frontH * share * air.rgb, 0.0, 1.0));
+      }
     }
     for (int k = 0; k < (near > 0.0 ? 1 : 0); k++) {
       vec4 tone = textureLod(uTone, h * uToneScale + 0.5, 0.0);
