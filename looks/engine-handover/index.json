@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T02:16:32.496Z",
- "head": "600a5e37a190b8a3a1a151970fd108ce8259c14b",
- "note": "relief: presenceLaw hook for Mars beside presenceDetail and the air share (600a5e37, ten drafts rendering); the dots of 2156 at cover 2 and 4 read at gain 6",
+ "pushed": "2026-11-25T02:36:39.179Z",
+ "head": "c0cef0c0e024b23d5ce6d155eff422f146bdea6d",
+ "note": "02:37 relief law hook with tone pushed (agent/engine-edge 6561b5a5), ten drafts byte equal; under pass in work, shot dump of 5400 frames equal with it off",
  "looks": [
+  {
+   "time": "2026-11-25T02:36:37.574Z",
+   "file": "20261125023637574-note-f02701.jpg",
+   "source": "out/work/blur/tone-tip/f02701.png",
+   "kind": "note",
+   "label": "edge c0cef0c0: draft of Mars 2701, byte equal to the branch before it"
+  },
+  {
+   "time": "2026-11-25T02:36:35.889Z",
+   "file": "20261125023635889-note-f02427.jpg",
+   "source": "out/work/blur/tone-tip/f02427.png",
+   "kind": "note",
+   "label": "edge c0cef0c0 (law hook and tone of the relief, off for every stop): draft of Mars 2427, byte equal to the branch before it"
+  },
   {
    "time": "2026-11-25T02:16:30.998Z",
    "file": "20261125021630998-note-b-f2156.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/law/x2156-z12.png",
    "kind": "note",
    "label": "2156 review, the rows of dots, main against K=1, zoom 12"
-  },
-  {
-   "time": "2026-11-25T01:50:41.055Z",
-   "file": "20261125015041055-note-x2156-z4.jpg",
-   "source": "../../../../tmp/law/x2156-z4.png",
-   "kind": "note",
-   "label": "2156 review, night lights, main against K=1, zoom 4"
-  },
-  {
-   "time": "2026-11-25T01:18:09.085Z",
-   "file": "20261125011809085-note-1857-review-ll-z6.jpg",
-   "source": "../../../../tmp/law/1857-review-ll-z6.png",
-   "kind": "note",
-   "label": "Earth 1857 on main, review tier, x 420 to 620, y 820 to 940 at 6 times: rows of dots along the motion inside the streaks"
   }
  ]
 }
