@@ -8322,3 +8322,46 @@ stretch.
   line (4860 unchanged, G17 0.426, 89.9 s).
 - Not yet done: the control that tells (i) from (ii) (the clock frozen on the name's tree), the judged frames on the
   change, the rise, the dive's start.
+
+## MAIL 1270 from the Builder (/root), 19:47 UTC (word for word)
+
+MAIL 1270 from the Builder (/root), 19:47 UTC. Neptune: NAMED 27624e6f of 19:02 and your correction of 19:08 are in. The name is read on machines now, on your commit as it stands (main's code with your three folders): nq6-01 to 06 the reader (dive parts 1 to 4 of 4, rise parts 1 and 2 of 2), nq7-01 units and gate, nq7-02 the judged 4605 and 4860 at the final tier on main's code and on the name.
+Main's own rows beside yours: dive parts 1 to 4 and rise part 2 are in hand; rise part 1 of 2 came back at 19:45 (mb2-01): RED on main, the pattern changes in place by 1.34 from 4986 + 1/2, 27 frames over the limit 0.45, first 4974; pop 1.0816 at 4963; level step 0.1591 at 4979.
+The name goes on if no line is worse than main's row (d311, d318), 4605 and 4860 match the approved pictures no worse than main's (d296) and G17 is no worse. Brandon's words on this stop stay the target: the planetary view "still looks really bad", and the surface image pops in entering and leaving. While the machines read, go on with your own list; do not wait.
+
+## Lab log 19:33 to 20:08 UTC: the row at 4753 cured at its cause, its proofs, the commit
+
+All pair numbers are my proxy (the report's own path on my preview frames, 960 wide, draft, rate 2), STATED.
+
+- Chain `/tmp/proofs5.sh N11` on the tree with the change, 19:35:05 to 20:07:26, one process, nothing else beside it.
+- The judged frames at 1920 by 1080, draft:
+  4605 76b23919e0801bca (37.2 s), 4707 e0e2da17eb22c160, 5006 1d0171f8588a429c: the name's files to the byte.
+  4860 ea2f8e1353a075a6 (91.8 s; the name bc656c4928eee5f3): against the name the largest difference is 9 levels,
+  5 pixels over 8, 10631 over 4, all at x 0 to 1068, y 484 to 1079 (the first streamer's shadow on the dark near
+  ground; largest 64 px mean 4.52 at (907, 1040)). Three parts: whole 23.593 | sky 3.420 | band 2.646 | ground 17.527
+  (the name 23.616 | 3.420 | 2.646 | 17.550; main 22.986 | 1.619 | 1.607 | 19.759). G17 median 0.426, p25 0.230,
+  75 tiles: the name's. Hold MAD 7.621, G17 0.674, p25 0.436: the name's.
+- THE CONTROL OF THE CAUSE, K1: the name's tree (the change taken out by the diagnostic text) with the clock stopped at
+  -3.45 s (`float t = -3.45;`), 4752 to 4760 at half frames: pattern 0.19 at (1292, 300), from the other end 0.06.
+  The name with its clock: 0.47 from the other end. So with the same eye's path and no clock there is no knot:
+  explanation (i), the slide, stands; (ii), the eye's foot, is out. With V1 and V6 (the shadow, the first streamer's):
+  the first streamer's shadow sliding over the deck under it.
+- The low dive on the change (N11v; the name N10v in brackets), largest of onward and from the other end:
+  4744 0.31 (0.31), 4750 0.29 (0.29), 4751 0.27 (0.28), 4752 0.26 at (1772, 444) (0.47 at (862, 856)).
+  From the other end alone: 0.22, 0.13, 0.15, 0.18.
+- The dive's start on the change (N11s; 5baaaad36 N9s in brackets): 4690 0.14 (0.14), 4692 0.15 (0.15), 4694 0.11
+  (0.11), 4696 0.11 (0.11), 4698 0.12 (0.12), 4700 0.21 (0.21), 4702 0.42 at (356, 176) (0.42), 4704 0.16 (0.16),
+  4706 0.43 at (1492, 248) (0.42). This is also the first run of these pairs with the rolls back at 0.05.
+- The rise on the change (N11q; the name N10q in brackets): 4960 0.22 (0.23), 4962 0.23 (0.25), 4968 0.32 at
+  (1792, 688) (0.33), 4970 0.24 (0.23).
+- What changes in place at 4753, said once: the lower edge of the first streamer's shadow on the dark near deck. The
+  streamer rides the cirrus wind, the deck the band's; the shadow slides 0.005 to 0.027 units in 8 frames and the
+  body's fine thick and thin parts (0.033 units) redrew its edge there. To the eye at 4752 and 4760 the two pictures
+  hardly differ (4752: largest 17 levels, mean 0.18; `/tmp/t1-place.jpg`, `/tmp/n11v-seq.jpg` looked at).
+- 19:46:51 looks pushed (fa1a5005, 8 looks): 4860 beside the approved on the change (G17 0.426, 91.8 s), the place.
+- 20:07 origin main is at 84a9a62ee (kit/PROGRESS.md alone differs from what was merged). Merged: 414f3aa61.
+  On top of it 985341693: the change, its own cause (deep.ts 12 lines, deep.json the text of castWave).
+- The teal blots looked at on N11 at 4860 (`/tmp/teal.jpg`): at (1168, 752) green patches on the plain right of the
+  streamer's gap, and the streamer's own edges there carry pink and cyan; mean of 24 px at the place: approved 40, 70,
+  106; the tree 68, 128, 175; main 57, 100, 152. No control yet.
+- Next: the tests on 985341693, then the deck's own shadow, the teal blots, (c), (d).
