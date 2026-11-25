@@ -1,64 +1,68 @@
 {
  "folder": "flightsky",
- "pushed": "2026-11-25T05:00:20.098Z",
- "head": "49af92ea67ff45d4b8d5a2799fe5b9c29e4dbb66",
- "note": "MAIL 904: Venus 1319 in three states, main, MAIL 732's cure alone, the tip 49af92ea",
+ "pushed": "2026-11-25T07:59:49.767Z",
+ "head": "548ce733275af945cb6ba704322928976450736f",
+ "note": "MAIL 915: the hold of the band in a rise, read from the film (agent/flightsky 548ce733). Draft 960 by 540, one sample. Uranus on take/b10e as cut; Neptune and a second Uranus on take/b10e with Neptune's folder of 121f3ade.",
  "looks": [
+  {
+   "time": "2026-11-25T07:27:43.095Z",
+   "file": "20261125072743095-note-pair-4436-b10e.jpg",
+   "source": "../scratch/b2/pair-4436-b10e.jpg",
+   "kind": "note",
+   "label": "MAIL 915 Uranus 4436 on take/b10e as cut: main rule left, band held right (draft)"
+  },
+  {
+   "time": "2026-11-25T07:27:41.017Z",
+   "file": "20261125072741017-note-sheet-uranus-b10e-4420-4444.jpg",
+   "source": "../scratch/b2/sheet-uranus-b10e-4420-4444.jpg",
+   "kind": "note",
+   "label": "MAIL 915 Uranus 4420 to 4444 on take/b10e as cut: main rule above, band held below (draft)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T07:27:39.625Z",
+   "file": "20261125072739625-note-cmp-uranus-b10e-gain.jpg",
+   "source": "../scratch/b2/cmp-uranus-b10e-gain.jpg",
+   "kind": "note",
+   "label": "MAIL 915 Uranus 4432, 4436, 4440 on take/b10e as cut: main rule, band held, band held with gain 0.5 (draft)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T07:27:38.160Z",
+   "file": "20261125072738160-note-pair-5006-turn.jpg",
+   "source": "../scratch/b2/pair-5006-turn.jpg",
+   "kind": "note",
+   "label": "MAIL 915 Neptune 5006 on b10e with Neptune 121f3ade: main rule left, band held right (draft)"
+  },
+  {
+   "time": "2026-11-25T07:27:36.723Z",
+   "file": "20261125072736723-note-sheet-neptune-turn-4984-5028.jpg",
+   "source": "../scratch/b2/sheet-neptune-turn-4984-5028.jpg",
+   "kind": "note",
+   "label": "MAIL 915 Neptune 4984 to 5028 on b10e with Neptune 121f3ade: main rule above, band held below (draft)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:27:32.578Z",
+   "file": "20261125072732578-note-sheet-uranus-turn-4420-4444.jpg",
+   "source": "../scratch/b2/sheet-uranus-turn-4420-4444.jpg",
+   "kind": "note",
+   "label": "MAIL 915 Uranus 4420 to 4444 on b10e with Neptune 121f3ade (the band leaves at 4427, comes back at the right from 4440): main rule above, band held below (draft)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T07:27:26.558Z",
+   "file": "20261125072726558-note-cmp-half.jpg",
+   "source": "../scratch/bl/cmp-half.jpg",
+   "kind": "note",
+   "label": "MAIL 915 Neptune 4996, 5000, 5004, 5006 on b10e with Neptune 121f3ade: main rule, band held, band held with gain 0.5 (draft)"
+  },
   {
    "time": "2026-11-25T04:50:21.531Z",
    "file": "20261125045021531-note-1319-crop-tip.jpg",
    "source": "../scratch/tw/1319-crop-tip.png",
    "kind": "note",
    "label": "Venus 1319, upper left, twice the size: the tip (MAIL 732's cure and the terrain law by the share of the sky)"
-  },
-  {
-   "time": "2026-11-25T04:50:20.408Z",
-   "file": "20261125045020408-note-1319-crop-m732.jpg",
-   "source": "../scratch/tw/1319-crop-m732.png",
-   "kind": "note",
-   "label": "Venus 1319, upper left, twice the size: MAIL 732's cure alone (cloud and generated star points, terrain law still by threshold)"
-  },
-  {
-   "time": "2026-11-25T04:50:17.861Z",
-   "file": "20261125045017861-note-1319-crop-main.jpg",
-   "source": "../scratch/tw/1319-crop-main.png",
-   "kind": "note",
-   "label": "Venus 1319, upper left, twice the size: main 8a6d457f (band of the model's strip, terrain law whole from share 0.08)"
-  },
-  {
-   "time": "2026-11-25T02:34:06.453Z",
-   "file": "20261125023406453-note-1318-pair-half.jpg",
-   "source": "../scratch/tw/1318-pair-half.png",
-   "kind": "note",
-   "label": "terrain weight: frame 1318 half size, before left, after right"
-  },
-  {
-   "time": "2026-11-25T02:34:05.227Z",
-   "file": "20261125023405227-note-step-crop.jpg",
-   "source": "../scratch/tw/step-crop.png",
-   "kind": "note",
-   "label": "terrain weight: venus dive k 168512 and 168513 at rate 128, top before, bottom after"
-  },
-  {
-   "time": "2026-11-24T21:40:58.389Z",
-   "file": "20261124214058389-note-3866-pair-half.jpg",
-   "source": "../scratch/m732/3866-pair-half.png",
-   "kind": "note",
-   "label": "m732 3866 half size, before left, after right"
-  },
-  {
-   "time": "2026-11-24T21:40:55.834Z",
-   "file": "20261124214055834-note-2726-after.jpg",
-   "source": "../scratch/m732/2726-after.png",
-   "kind": "note",
-   "label": "m732 2726 full after"
-  },
-  {
-   "time": "2026-11-24T21:40:53.386Z",
-   "file": "20261124214053386-note-2726-before.jpg",
-   "source": "../scratch/m732/2726-before.png",
-   "kind": "note",
-   "label": "m732 2726 full before"
   }
  ]
 }
