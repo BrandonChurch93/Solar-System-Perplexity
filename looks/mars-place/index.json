@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T21:14:35.288Z",
+ "pushed": "2026-11-25T21:21:00.478Z",
  "head": "47b7534197a50175cdfd682dbfa8b46e9ff5487e",
- "note": "rise state 47b75341 proofs green but sides; wall trial 14 plain by code is bad (contour lines), retuning",
+ "note": "NAMED 47b75341: dive sheet 19 frames and rise sheet",
  "looks": [
+  {
+   "time": "2026-11-25T21:20:59.730Z",
+   "file": "20261125212059730-note-dive-sheet.jpg",
+   "source": "out/work/place/d140/dive-sheet.jpg",
+   "kind": "note",
+   "label": "NAMED 47b75341 (ledge of C2, main's rise eye): the dive 2440 to 2476 every second frame, drafts. Equal to take 10 by pixels to 2470; 2474 and 2476 differ on the crest (the ledge)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T21:14:14.844Z",
    "file": "20261125211414844-note-rise-sheet.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/place/t3/corners2683.png",
    "kind": "note",
    "label": "BAD: rise 2683 on main's eye, lower corners at 1 to 1: the plate's net of blocks and streaks come in under the cliff (aprons' outer ends)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:36:57.583Z",
-   "file": "20261125203657583-note-net-plate.jpg",
-   "source": "out/work/place/t2/net-plate.jpg",
-   "kind": "note",
-   "label": "BAD: the 0.3 and 0.7 plates at 1 to 1.5: the take's cracked slabs and boulders 40 to 300 m across (the net of blocks) and the code wall beside it as hair",
    "stop": "mars"
   }
  ]
