@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T05:54:11.084Z",
+ "pushed": "2026-11-25T06:18:09.530Z",
  "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
- "note": "dive wip 4148 to 4156 still red 1.1 to 1.5 on two more forms of the hand; synthetic level change x2 over 8 frames on own light reads 0.69, so level alone is not the cause; looking at detail change next",
+ "note": "round 3 tree drawn every 4th frame, dive and rise; 4035 and 4290 equal by hash at draft; whole smooth report running since 06:17; finding: with the frames carried by pose the pattern at 4152 holds on 96 to 98 percent of the ground, the reader's flow loses the ground under the layer light",
  "looks": [
+  {
+   "time": "2026-11-25T06:18:08.685Z",
+   "file": "20261125061808685-note-tr-all-4152.jpg",
+   "source": "../../../../tmp/n50/tr-all-4152.jpg",
+   "kind": "note",
+   "label": "4152 against 4160 carried by the camera's pose and the ground's turn, not by flow: own light, layer light everywhere, layer light by pixel size; later frame, earlier carried, pattern, reader's way off the true one in red",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T06:18:07.962Z",
+   "file": "20261125061807962-note-dive-look.jpg",
+   "source": "../../../../tmp/n50/dive-look.jpg",
+   "kind": "note",
+   "label": "dive 4138 to 4206 every 4th frame, draft, same tree",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T06:18:06.932Z",
+   "file": "20261125061806932-note-rise-look.jpg",
+   "source": "../../../../tmp/n50/rise-look.jpg",
+   "kind": "note",
+   "label": "rise 4380 to 4436 every 4th frame, draft, tree for round 3 (layer law, hand by pixel size, cover by pixel size), not yet committed",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T05:54:10.383Z",
    "file": "20261125055410383-note-same-cv0-x3.jpg",
@@ -242,30 +266,6 @@
    "source": "../../../../tmp/parC/dive-b.jpg",
    "kind": "note",
    "label": "dive 4158 to 4166, named left, step 3 right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:10:14.359Z",
-   "file": "20261125021014359-note-dive-a.jpg",
-   "source": "../../../../tmp/parC/dive-a.jpg",
-   "kind": "note",
-   "label": "dive 4140 to 4156, named left, step 3 right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T01:49:11.620Z",
-   "file": "20261125014911620-note-r1.jpg",
-   "source": "../../../../tmp/parA/r1.jpg",
-   "kind": "note",
-   "label": "trial, not committed: the hold 4035 beside the rise's end 4454 and 4436, as named (hoops 1.5) and with hoops at 0.66, the hold's mean line amplitude",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T01:49:11.074Z",
-   "file": "20261125014911074-note-h1-pairs.jpg",
-   "source": "../../../../tmp/parA/h1-pairs.jpg",
-   "kind": "note",
-   "label": "trial, not committed: the rise 4408 to 4420, top as named, bottom with the surface light handed to the globe's own over 0.06 to 0.8 R (was 0.06 to 0.25): the pop at 4411 to 4413 reads 0.92 to 1.01 (was 1.24 to 1.31), the frame's mean level climbs over 18 frames (was 10); the pattern number rises from 0.70 to 0.80",
    "stop": "uranus"
   }
  ]
