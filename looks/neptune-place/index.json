@@ -1,9 +1,49 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T23:16:39.652Z",
- "head": "badc407aa9e73fb6d270476a9ed9fcb523618a9d",
- "note": "Dive last part cured in the tree: pattern 0.16 to 0.24 at every half step 4753 to 4761 (before up to 0.78); 4605, 4707, 5006 byte equal; 4860 22.420; rise and dive start drawing",
+ "pushed": "2026-11-25T23:58:48.812Z",
+ "head": "ef0cc1cf430939c842dce4218d88a622373caaaf",
+ "note": "Neptune 23:59: knot at 4760 cured (0.78 to 0.17 by my proxy), merged with main 1f51abc9, tests running; 4860 beside the approved, G17 0.507, 90 s the draft frame",
  "looks": [
+  {
+   "time": "2026-11-25T23:58:47.675Z",
+   "file": "20261125235847675-note-rchain-4706.jpg",
+   "source": "out/work/nep/weave/N14s/rchain-4706.jpg",
+   "kind": "note",
+   "label": "Dive start, pair 4706 to 4714: my proxy 0.44 at (1508, 244), what is left of dive part 2 of 4 (the limb leaves the frame); RED by the Builder's reader likely",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T23:58:46.783Z",
+   "file": "20261125235846783-note-rchain-4950.jpg",
+   "source": "out/work/nep/weave/N14q/rchain-4950.jpg",
+   "kind": "note",
+   "label": "Rise, pair 4950 to 4958 on the cure: my proxy 0.19 (limit 0.45); about 26 s the preview frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T23:58:45.666Z",
+   "file": "20261125235845666-note-rchain-4760.jpg",
+   "source": "out/work/nep/weave/N14e/rchain-4760.jpg",
+   "kind": "note",
+   "label": "Pair 4760 to 4768 by the report's path (my proxy, STATED): pattern 0.17, before 0.78 (limit 0.45); first frame, carried later frame, change, pattern",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T23:58:44.506Z",
+   "file": "20261125235844506-note-shadow-N14e.jpg",
+   "source": "../../../../tmp/shadow-N14e.jpg",
+   "kind": "note",
+   "label": "The cause at 4760: the first streamer's shadow on the deck, frames 4759 to 4761 after the cure (thick and thin parts read at twice castWave): the dark streak under the streamer's foot is gone",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T23:58:42.750Z",
+   "file": "20261125235842750-note-pair-N14.jpg",
+   "source": "../../../../tmp/pair-N14.jpg",
+   "kind": "note",
+   "label": "4860 at 1920 on the cure of the knot at 4760 (merge ef0cc1cf, main 1f51abc9): approved left, mine right; whole 22.420, sky 3.203, band 1.616, ground 17.601 (main 22.986, 1.619, 1.607, 19.759); G17 0.507 / 0.232 by my draft reader; 90.0 s the draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T23:16:38.360Z",
    "file": "20261125231638360-note-end-frames-after.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/shadow-N14e.jpg",
    "kind": "note",
    "label": "Cause panel, dive's last part: the first streamer's shadow alone at 4760 carried onto 4768, at 4768, their difference. Above the tree before (streak up to 12.5 levels), below the cure (7.9). My pattern 4760 to 4768: 0.78 before, 0.17 after",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T23:16:35.332Z",
-   "file": "20261125231635332-note-pair-N14.jpg",
-   "source": "../../../../tmp/pair-N14.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, the cure's tree (thick and thin parts read at twice castWave in the shadow): whole 22.420 (main 22.986, last proof 22.446), G17 median 0.507 p25 0.232 as before; 90.7 s per draft frame at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T22:55:36.651Z",
-   "file": "20261125225536651-note-u1-4860.jpg",
-   "source": "../../../../tmp/u1-4860.jpg",
-   "kind": "note",
-   "label": "4860: last proof, trial U1, difference times 8. The widened shadow body softens the far streamer's shadow line by up to 54 levels: that half of the trial is not kept",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T22:55:36.054Z",
-   "file": "20261125225536054-note-shadow-U1.jpg",
-   "source": "../../../../tmp/shadow-U1.jpg",
-   "kind": "note",
-   "label": "Cause of the dive's last part at 4760: the first streamer's shadow alone at 4760 carried to 4768, at 4768, and the difference. S1 tree with the streak; T2, U2, U1 with the thick and thin parts at their mean: my pattern 0.78 to 0.11",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T22:55:35.394Z",
-   "file": "20261125225535394-note-pair-U1.jpg",
-   "source": "../../../../tmp/pair-U1.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, trial U1 (shadow body widened and parts at twice castWave): whole 22.397 (main 22.986), G17 median 0.507; 109 s per draft frame at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T22:33:04.935Z",
-   "file": "20261125223304935-note-end-shadow.jpg",
-   "source": "../../../../tmp/end-shadow.jpg",
-   "kind": "note",
-   "label": "MAIL 1313, the dive's last part: the knot at 4760 to 4768 (my copy of the reader 0.78, limit 0.45) is the first streamer's shadow on the dark near deck: top row the shadow alone (cast off minus on, times 8) at 4760 carried, at 4768, their difference times 16: a sharp streak and a comb that slide over the deck; middle the two frames (times 4) and the reader's pattern; bottom the same with the shadow off (0.09)",
    "stop": "neptune"
   }
  ]
