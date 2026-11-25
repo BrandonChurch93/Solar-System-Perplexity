@@ -154,8 +154,10 @@
         5.0
       ],
       "band": {
-        "how": "The far band of the close ground is the map, one body with what the globe shows there. Past the lay back's cover the air of the close camera's ray takes the picture's contrast as well as adding grey: with mT the air mass of that ray at the ground point (the m of share), the cover of the air is k = (1 - exp(-air (min(mT, cap of share) - 1))) times the smooth step of the arc from the point under the close camera over coverDeg and less the smooth step over backDeg, where the glow of the limb is the sea layer's own again, kept in the fourth value of the veil; the veil's colour is the old veil times (1 - k) and the air's colour times k. The air's colour (colour) is read from the approved picture's sea layer as a law of the arc and the turn about the point under the close camera: rings of ringDeg from fromDeg to toDeg, turns of turnDeg, the texels more than clearPx under the horizon, blurred over sigmaDeg (arc, turn) and, where the picture has less than trust of a turn, the mean of the ring; past the last ring with leastTurns turns the value is held. The globe shows code (1 - share k) + share veil; the close view's sea layer holds on that band the same law at share 1, texel = map (1 - k) + veil and the tone of the open sea where the plate does not carry it, each texel the mean of lines samples down its own length on the ground, from texelDeg[0] degrees of arc on, whole from texelDeg[1], back to the approved picture's texels over backDeg, and it takes back from a texel what the law added (relief.ts thin). Made by assets-src/earth/place/band.py from the sea layer of relief/build.py and the veil of place/levels.py, after both.",
+        "how": "The far band of the close ground is the map, one body with what the globe shows there. Past the lay back's cover the air of the close camera's ray takes the picture's contrast as well as adding grey: with mT the air mass of that ray at the ground point (the m of share), the cover of the air is k = (1 - exp(-air (min(mT, cap of share) - 1))) times the smooth step of the arc from the point under the close camera over coverDeg and less the smooth step over backDeg, where the glow of the limb is the sea layer's own again, kept in the fourth value of the veil; the veil's colour is the old veil times (1 - k) and the air's own light. The air's light (light) is the air alone, with none of the cloud's white: it is what brings the map's open sea (light.sea, code) under the air a of the ray (the cover without the two steps) to the sea the approved picture shows between its clouds, k / a times (seen - (sea + old veil) (1 - a)), never under 0. That sea is read from the approved picture's sea layer as a law of the arc and the turn about the point under the close camera: in cells of ringDeg by turnDeg from fromDeg to toDeg, over the texels more than clearPx under the horizon, the value low per cent of a cell's texels lie under (per channel; cells with fewer than least texels do not count), in the glint, where glare[0] to glare[1] of a cell's texels are warm (warm, red less blue), the value mid per cent lie under; blurred over sigmaDeg (arc, turn); where the picture has less than trust of a turn the mean of the ring, beyond sideDeg past its sides the mean alone; past the last ring with leastTurns cells the value is held. The white of the band is the bodies that stand there (stand, wedge). Haze is by the path to the point hit: where the ray ends on a body at height z km over the sea, a standing top (stand) or a sheet of the map (sheet: km times the smooth step of the texel's darkest channel over cloud, not where it is warm), the air's cover there is 1 - (1 - k) to the power exp(-z / scaleKm) and its light less in the same share. The globe shows code (1 - share k) + share veil; the close view's sea layer holds on that band the same law at share 1, texel = map (1 - k) + veil and the tone of the open sea where the plate does not carry it, each texel the mean of lines samples down its own length on the ground, from texelDeg[0] degrees of arc on, whole from texelDeg[1], back to the approved picture's texels over backDeg, and it takes back from a texel what the law added (relief.ts thin). Made by assets-src/earth/place/band.py from the sea layer of relief/build.py and the veil of place/levels.py, after both.",
         "air": 0.28,
+        "scaleKm": 2.0,
+        "sheet": { "km": 1.5, "cloud": [0.3, 0.7] },
         "coverDeg": [
           5.0,
           6.4
@@ -169,21 +171,38 @@
           11.5
         ],
         "lines": 12,
-        "colour": {
+        "light": {
           "fromDeg": 4.0,
           "toDeg": 14.0,
-          "ringDeg": 0.05,
-          "turnDeg": 0.5,
-          "clearPx": 8,
+          "ringDeg": 0.1,
+          "turnDeg": 4.0,
+          "clearPx": 6,
+          "least": 120,
+          "low": 8,
+          "mid": 50,
+          "warm": [
+            0.024,
+            0.086
+          ],
+          "glare": [
+            0.25,
+            0.6
+          ],
           "sigmaDeg": [
-            0.1,
+            0.15,
             8.0
           ],
           "trust": [
             0.3,
             0.7
           ],
-          "leastTurns": 40
+          "sideDeg": 12.0,
+          "leastTurns": 3,
+          "sea": [
+            0.071,
+            0.236,
+            0.341
+          ]
         }
       },
       "share": {
@@ -271,6 +290,54 @@
         0.15,
         0.3
       ]
+    },
+    "wedge": {
+      "how": "The cover of the ground the close camera sees, one body at every height (ruling of 13:56 UTC, 25 Nov: the hold gives way there). wedge.py reads where the approved picture's sea layer shows cloud (read: lowest channel over cloud, near grey under grey, not warm; at 1 / shrink of its size, more than clearPx under the horizon), lays it back on the ground at sea level and spreads it over spreadDeg degrees; beyond the sides of the footprint the value is carried on over sideDeg degrees. The cover wanted is gain times that, at most cap, inside the envelope: from arcDeg[0] to arcDeg[1] degrees of arc from the point under the close camera it comes in, from arcDeg[2] to arcDeg[3] it runs out, and past the sides it runs out where the share of the footprint within sideDeg falls from sideShare[1] to sideShare[0]. The cover is laid as specks of the layer's own kind: a seeded field (seed) of octaves cellKm wide (each cellGain of the one before, streak times longer east to west), ranked to 0..1; a texel is speck where its rank is under the cover wanted, with the alpha rising to peak over soft of that cover, blurred over blurPx texels; its colour is the mean colour the layer (layer) holds at that alpha in the ring. The file (size px over a square of widthDeg degrees on the plate's plane, the web set half) holds the light times the cover and the cover, like the layer; the globe lays it over the layer for all three readers (cloud, shadow, glow before the bloom), riding with the layer; where the file is 0 the globe's value is the layer's to the bit. deck.py lays the same cover over the layer's before it places bodies (mend.json field.density.speck.wedge), so the bodies of the wedge stand on these specks. Nothing in it reads the time or the camera's height. Order of the bakes: wedge.py, deck.py, levels.py, band.py, above.py.",
+      "file": "place-wedge.png",
+      "layer": "wrap-cloud.webp",
+      "size": 1024,
+      "widthDeg": 36,
+      "arcDeg": [
+        5.0,
+        6.4,
+        12.0,
+        13.5
+      ],
+      "read": {
+        "shrink": 4,
+        "cloud": [
+          0.5,
+          0.75
+        ],
+        "grey": [
+          0.12,
+          0.25
+        ],
+        "warm": [
+          0.024,
+          0.086
+        ],
+        "clearPx": 8
+      },
+      "spreadDeg": 0.5,
+      "sideDeg": 1.5,
+      "sideShare": [
+        0.05,
+        0.4
+      ],
+      "gain": 0.7,
+      "cap": 0.25,
+      "seed": 11,
+      "cellKm": [
+        50,
+        12,
+        6
+      ],
+      "cellGain": 1.0,
+      "streak": 1.8,
+      "peak": 0.85,
+      "soft": 1.0,
+      "blurPx": 0.8
     },
     "stand": {
       "how": "The height of the map's cloud, from code. band.py reads the map as the globe shows it over times the width of the place level about the plate centre (size px, the web set half), takes as cloud what the darkest channel puts between cloud[0] and cloud[1] (code values over 255 as shares) and that is not warmer than warm (red less blue; the Sun's streak on the water is no cloud), and gives each cloud a height by its distance from its own edge: (distance over reachKm, at most 1) to the power, times lump[0] plus lump[1] times a seeded noise (cells of lumpKm kilometres, each weighted lumpGain times the one before, seed) plus bright times the cloud's brightness about its middle, at most 1, blurred over blurPx px, zero within rimPx px of the raster's edge and nearer than fromDeg degrees from the point under the close camera, where the close ground keeps its own picture. A value of 1 stands km kilometres high. One law reads it in two places, the globe's shader and the bake of the sea layer's band: the ray from the eye to the ground point is walked down from the top in steps steps, the foot of the ray at height z lies z over the sine of the ray's angle above the ground (at least graze) toward the eye, and the first height at which the field under the foot stands as high as the ray is the cloud's surface; the map is read at that foot. The shade is the map's own cloud times shade where the surface falls away from the Sun (slope times the rise of the field over slopeKm kilometres toward the Sun, on ground that stands at least bodyKm) and where another body stands between the point and the Sun (shadowSteps steps toward the Sun, soft over softKm, share shadow; the Sun no lower than sunFloor as a sine). On the globe every height is multiplied by the same share by which the place arrives (plates.arrive, the footprint of a pixel on the ground), so far off a cloud lies flat and casts nothing and the hold reads 0. The bake stands at share 1 from the close camera with the Sun of sun, the Sun in the close camera's frame at frame 2010 (tool out/work/earth/place/tmp/sun.ts). No height of the camera and no clock is read. The file holds that height and nothing else: no cloud is laid into the map for the close view, and the hold shows the map as it was.",

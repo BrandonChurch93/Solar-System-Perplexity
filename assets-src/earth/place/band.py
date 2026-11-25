@@ -75,12 +75,16 @@ def arc_of(d):
     return np.degrees(np.arccos(np.clip(d @ NADIR, -1, 1)))
 
 
-def cover_of(d):
+def air_of(d):
     to = EYE - d
     mu = np.maximum((d * to).sum(-1) / np.linalg.norm(to, axis=-1), 0)
     m = np.minimum(1 / (mu + 0.025 * np.exp(-11 * mu)), SHARE['cap'])
+    return 1 - np.exp(-BAND['air'] * (m - 1))
+
+
+def cover_of(d):
     arc = arc_of(d)
-    return (1 - np.exp(-BAND['air'] * (m - 1))) * step(BAND['coverDeg'][0], BAND['coverDeg'][1], arc) * (1 - step(BAND['backDeg'][0], BAND['backDeg'][1], arc))
+    return air_of(d) * step(BAND['coverDeg'][0], BAND['coverDeg'][1], arc) * (1 - step(BAND['backDeg'][0], BAND['backDeg'][1], arc))
 
 
 def grid(c, half, n):
@@ -100,35 +104,63 @@ def polar(d):
     return arc_of(d), np.degrees(np.arctan2(d @ e, d @ u))
 
 
-def air_colour(approved, d):
-    spec = BAND['colour']
-    arcs = np.arange(spec['fromDeg'], spec['toDeg'], spec['ringDeg']) + spec['ringDeg'] / 2
-    turns = np.arange(-180, 180, spec['turnDeg']) + spec['turnDeg'] / 2
-    n, e, u = g.frame_at(NADIR)
-    a, t = np.radians(arcs)[:, None], np.radians(turns)[None, :]
-    at = np.cos(a)[..., None] * n + np.sin(a)[..., None] * (np.sin(t)[..., None] * e + np.cos(t)[..., None] * u)
-    x, y, seen = g.image_of(at)
-    th, tw = approved.shape[:2]
+def air_light(approved, d, k, old):
+    spec = BAND['light']
+    img = cv2.resize(approved, (approved.shape[1] // 2, approved.shape[0] // 2), interpolation=cv2.INTER_AREA)
+    h, w = img.shape[:2]
     box = GROUND['box']
-    cx, cy = (x - box[0]) * tw / box[2] - 0.5, (y - box[1]) * th / box[3] - 0.5
-    line = np.polyval(GROUND['horizon'][8::-1], (x - GROUND['horizonSpan'][0]) / GROUND['horizonSpan'][1])
-    ok = (seen & (cx >= 0) & (cx <= tw - 1) & (cy <= th - 1) & (y > line + spec['clearPx'])).astype(np.float32)
-    got = cv2.remap(approved, cx.astype(np.float32), cy.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) * ok[..., None]
-    sa, st = spec['sigmaDeg'][0] / spec['ringDeg'], spec['sigmaDeg'][1] / spec['turnDeg']
-    blur = lambda v: cv2.GaussianBlur(v, (0, 0), sigmaX=st, sigmaY=sa, borderType=cv2.BORDER_REPLICATE)
-    near = blur(ok)
-    mean = got.sum(axis=1) / np.maximum(ok.sum(axis=1), 1e-6)[:, None]
-    last = np.nonzero(ok.sum(axis=1) >= spec['leastTurns'])[0].max()
-    mean[last:] = mean[last]
-    field = blur(got) / np.maximum(near, 1e-6)[..., None]
-    share = step(spec['trust'][0], spec['trust'][1], near)[..., None]
-    field = field * share + mean[:, None, :] * (1 - share)
+    xs, ys = np.meshgrid(box[0] + (np.arange(w) + 0.5) * box[2] / w, box[1] + (np.arange(h) + 0.5) * box[3] / h)
+    p, ok = g.sea(g.ray(xs, ys))
+    at = g.unit(g.local_to_body(p)).astype(np.float32)
+    line = np.polyval(GROUND['horizon'][8::-1], (xs - GROUND['horizonSpan'][0]) / GROUND['horizonSpan'][1])
+    ok = ok & (ys > line + spec['clearPx'])
+    del p, xs, ys, line
+    arc, turn = polar(at)
+    a0, da, dt = spec['fromDeg'], spec['ringDeg'], spec['turnDeg']
+    na = int(round((spec['toDeg'] - a0) / da))
+    t0 = float(np.floor(turn[ok].min() / dt) * dt)
+    nt = int(np.ceil((turn[ok].max() - t0) / dt))
+    ia, it = np.floor((arc - a0) / da).astype(int), np.floor((turn - t0) / dt).astype(int)
+    use = ok & (ia >= 0) & (ia < na) & (it >= 0) & (it < nt)
+    cell = (ia * nt + it)[use]
+    low = np.zeros((na * nt, 3), np.float32)
+    mid = np.zeros((na * nt, 3), np.float32)
+    for c in range(3):
+        v = img[..., c][use]
+        order = np.lexsort((v, cell))
+        cs, vs = cell[order], v[order]
+        first = np.searchsorted(cs, np.arange(na * nt))
+        count = np.searchsorted(cs, np.arange(na * nt), side='right') - first
+        have = count >= spec['least']
+        low[have, c] = vs[(first + spec['low'] / 100 * (count - 1)).astype(int)[have]]
+        mid[have, c] = vs[(first + spec['mid'] / 100 * (count - 1)).astype(int)[have]]
+    warm = step(spec['warm'][0], spec['warm'][1], img[..., 0] - img[..., 2])[use]
+    glare = step(spec['glare'][0], spec['glare'][1], np.bincount(cell, weights=warm, minlength=na * nt) / np.maximum(np.bincount(cell, minlength=na * nt), 1)).astype(np.float32)[:, None]
+    low = (low * (1 - glare) + mid * glare).reshape(na, nt, 3)
+    hv = have.reshape(na, nt).astype(np.float32)
+    sa, st = spec['sigmaDeg'][0] / da, spec['sigmaDeg'][1] / dt
+    blur = lambda q: cv2.GaussianBlur(q, (0, 0), sigmaX=st, sigmaY=sa, borderType=cv2.BORDER_REPLICATE)
+    rows = hv.sum(axis=1)
+    ring = (low * hv[..., None]).sum(axis=1) / np.maximum(rows, 1)[:, None]
+    full = np.nonzero(rows >= spec['leastTurns'])[0]
+    first, last = int(full.min()), int(full.max())
+    ring[:first] = ring[first]
+    ring[last:] = ring[last]
+    field = blur(low * hv[..., None]) / np.maximum(blur(hv), 1e-4)[..., None]
+    share = step(spec['trust'][0], spec['trust'][1], blur(hv))[..., None]
+    field = field * share + ring[:, None, :] * (1 - share)
     field[last:] = field[last]
-    print('air colour of the approved band by degrees (mean of the turns):', ', '.join('%g %s' % (arcs[i], np.round(mean[i], 2).tolist()) for i in range(0, len(arcs), max(len(arcs) // 12, 1))), 'held from', arcs[last], flush=True)
-    r, turn = polar(d)
-    px = ((turn + 180) / spec['turnDeg'] - 0.5).astype(np.float32)
-    py = ((r - spec['fromDeg']) / spec['ringDeg'] - 0.5).astype(np.float32)
-    return cv2.remap(field, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    print('the sea between the clouds of the approved band by degrees (mean of the turns):', ', '.join('%g %s' % (a0 + (i + 0.5) * da, np.round(ring[i], 2).tolist()) for i in range(0, na, max(na // 12, 1))), 'held from', a0 + (last + 0.5) * da, flush=True)
+    r, tn = polar(d)
+    px = np.clip((tn - t0) / dt - 0.5, -0.5, nt - 0.5).astype(np.float32)
+    py = ((r - a0) / da - 0.5).astype(np.float32)
+    inside = (step(-spec['sideDeg'], 0, tn - t0) * (1 - step(0, spec['sideDeg'], tn - (t0 + nt * dt))))[..., None]
+    got = cv2.remap(field, px, py, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    iy = np.clip(py, 0, na - 1)
+    mean = np.dstack([np.interp(iy.ravel(), np.arange(na), ring[:, c]).reshape(iy.shape) for c in range(3)]).astype(np.float32)
+    seen = got * inside + mean * (1 - inside)
+    air = air_of(d).astype(np.float32)[..., None]
+    return k[..., None] / np.maximum(air, 1e-6) * np.maximum(seen - (np.array(spec['sea'], np.float32) + old[..., :3]) * (1 - air), 0)
 
 
 def stand_field():
@@ -227,8 +259,7 @@ def main():
     old = np.frombuffer(src_veil.read_bytes(), np.float16).reshape(n, n, 4)[::-1].astype(np.float32)
     approved = np.asarray(Image.open(src_ground).convert('RGB')).astype(np.float32) / 255
     k = cover_of(grid(PC, half, n)).astype(np.float32)
-    air = air_colour(approved, grid(PC, half, n))
-    veil = np.concatenate([old[..., :3] * (1 - k[..., None]) + air * k[..., None], k[..., None]], axis=2).astype(np.float16)
+    veil = np.concatenate([old[..., :3] * (1 - k[..., None]) + air_light(approved, grid(PC, half, n), k, old), k[..., None]], axis=2).astype(np.float16)
     for s in ('full', 'web'):
         (PUB / s / HAZE['file']).write_bytes(veil[::-1].tobytes())
     veil = veil.astype(np.float32)
@@ -253,6 +284,8 @@ def main():
     hx = (xs - GROUND['horizonSpan'][0]) / GROUND['horizonSpan'][1]
     horizon = np.polyval(GROUND['horizon'][8::-1], hx)
     changed = 0
+    level = np.zeros(3)
+    w_sum = 0.0
     for r0 in range(top, bottom, 16):
         r1 = min(r0 + 16, bottom)
         ys = box[1] + (np.repeat(np.arange(r0, r1), lines) + np.tile((np.arange(lines) + 0.5) / lines, r1 - r0)) / sy
@@ -266,7 +299,15 @@ def main():
         hx_, hy_, kk = plane(d, PC)
         v = read(veil, hx_ * place / times + 0.5, hy_ * place / times + 0.5)
         at, z = stood(field, d, EYE)
-        code = np.clip(shaded(field, at, z, the_map(g.unit(at)), sun) * (1 - v[..., 3:4]) + v[..., :3], 0, 1)
+        kv = v[..., 3:4]
+        hit = the_map(g.unit(at))
+        sheet = step(BAND['sheet']['cloud'][0], BAND['sheet']['cloud'][1], hit.min(-1)) * (1 - step(STAND['warm'][0], STAND['warm'][1], hit[..., 0] - hit[..., 2]))
+        lift = np.exp(-np.maximum(z * RADIUS_KM, sheet * BAND['sheet']['km']) / BAND['scaleKm'])[..., None]
+        kz = np.where(lift < 1, 1 - np.maximum(1 - kv, 1e-6) ** lift, kv)
+        vz = v[..., :3] * np.where(kv > 1e-4, kz / np.maximum(kv, 1e-4), lift)
+        code = np.clip(shaded(field, at, z, hit, sun) * (1 - kz) + vz, 0, 1)
+        level += np.array([(code.mean(-1) * w).sum(), (vz.mean(-1) * w).sum(), ((z > 0) * w).sum()])
+        w_sum += float(w.sum())
         inside = step(0.5, 0.5 - PLATES['feather'], np.maximum(np.abs(hx_ * place), np.abs(hy_ * place)))
         hi, lo = code.max(-1), code.min(-1)
         sea = (1 - step(TONE['cloud'][0], TONE['cloud'][1], lo)) * step(TONE['grey'][0], TONE['grey'][1], (hi - lo) / np.maximum(hi, 1e-3))
@@ -277,6 +318,7 @@ def main():
         changed += int((out != full[r0:r1]).any(axis=2).sum())
         full[r0:r1] = out
     print('sea layer: texel rows', top, 'to', bottom, 'of', th, 'changed texels', changed, flush=True)
+    print('of the band\'s level the veil carries %.3f (level %.1f, veil %.1f of 255); share of the band on a standing body %.3f' % (level[1] / level[0], 255 * level[0] / w_sum, 255 * level[1] / w_sum, level[2] / w_sum), flush=True)
     Image.fromarray(full).save(PUB / 'full' / GROUND['file'], lossless=True, quality=70, method=4)
     web_was = np.asarray(Image.open(src_web).convert('RGB')).copy()
     wh, ww = web_was.shape[:2]

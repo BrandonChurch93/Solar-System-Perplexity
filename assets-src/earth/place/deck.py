@@ -174,7 +174,12 @@ def specks(sp, deg, n):
     d = g.unit(nn + tx[None, :, None] * e - ty[:, None, None] * u)
     x = ((np.arctan2(d[..., 0], d[..., 2]) / (2 * np.pi) + 0.5) * w - 0.5).astype(np.float32)
     y = ((0.5 - np.arcsin(np.clip(d[..., 1], -1, 1)) / np.pi) * h - 0.5).astype(np.float32)
-    return cv2.remap(cloud, x, y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP).astype(np.float32) / 255
+    held = cv2.remap(cloud, x, y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP).astype(np.float32) / 255
+    if sp.get('wedge'):
+        import wedge
+        more = wedge.added(d).astype(np.float32)
+        held = held + more * (1 - held)
+    return held
 
 
 def density(spec=SPEC):
