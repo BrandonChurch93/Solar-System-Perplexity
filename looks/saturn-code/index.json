@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T16:01:22.633Z",
+ "pushed": "2026-11-25T16:28:52.504Z",
  "head": "61c276a8a11b7fdf15965be1b0ad723d70385506",
- "note": "proof of 6617c15f on main's engine: dive and rise green, finals rendering; hold gap panel at 4 times; dark ice and one terminator at every height are next",
+ "note": "6617c15f named (old engine proof, own tree tsc, path as main's, vitest 917 green); the foot of MAIL 1187 traced; dark ice trials rendering on main's engine",
  "looks": [
+  {
+   "time": "2026-11-25T16:28:51.794Z",
+   "file": "20261125162851794-note-final_3866_small.jpg",
+   "source": "../../../../tmp/v/named2/final_3866_small.png",
+   "kind": "note",
+   "label": "6617c15f at 3866, final tier on the old engine (small copy): the kept look after the rise"
+  },
+  {
+   "time": "2026-11-25T16:10:34.860Z",
+   "file": "20261125161034860-note-foot6617_a.jpg",
+   "source": "../../../../tmp/v/dark/foot6617_a.png",
+   "kind": "note",
+   "label": "6617c15f rise at draft, frames 3814 to 3830 every 4: the foot between the globe and the inner ring; no plane stands in the gap, the globe shows through a veil of 2 percent"
+  },
   {
    "time": "2026-11-25T16:01:16.587Z",
    "file": "20261125160116587-note-p_hold_6617.jpg",
@@ -47,20 +61,6 @@
    "source": "../../../../tmp/v/named2/dive_whole.png",
    "kind": "note",
    "label": "6617c15f proof, dive at draft: whole frames 3540 to 3628 every 8"
-  },
-  {
-   "time": "2026-11-25T15:30:40.869Z",
-   "file": "20261125153040869-note-dive_foot.jpg",
-   "source": "../../../../tmp/v/named2/dive_foot.png",
-   "kind": "note",
-   "label": "6617c15f proof, dive at draft: right foot 3596 to 3607 at 2 times, every film frame"
-  },
-  {
-   "time": "2026-11-25T15:15:00.805Z",
-   "file": "20261125151500805-note-row4_lines.jpg",
-   "source": "../../../../tmp/v/thin/row4_lines.png",
-   "kind": "note",
-   "label": "3720 foot at 2 times, approved, main, mine (6617c15f): left as it is, right with my plane drawn: red radius 1.0, green inner rim, blue 4 N, yellow 8 N"
   }
  ]
 }
