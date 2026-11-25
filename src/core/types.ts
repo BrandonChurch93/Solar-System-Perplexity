@@ -48,6 +48,9 @@ export interface SetState {
   // The near bodies the stop names at this time (StopPlan.nearBodies), on the globe side only and only where it names any: the sample count of a
   // frame follows the fastest of them that is in the frame (core/motion nearMotion). Nothing else reads them.
   near?: NearBody[]
+  // The share of the way the light of the last stop has gone to the look back's Sun, from the moment the retreat's glides begin (before the
+  // seam, in the last frames of the rise) to the end of the retreat; absent at every other time. The set draws its light by it.
+  lookback?: number
 }
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
@@ -148,6 +151,7 @@ export interface Shot {
   cover: CoverState
   dust: number
   farLight?: number
+  farDisc?: [number, number, number]
   place?: PlaceState
   skyShare?: number
   skyShareHigh?: number
@@ -190,7 +194,7 @@ export interface SetContext {
 // under: set in the two updates of a sample that draws the globe under the surface view (Shot.under), and in no other. 'globe': this
 // update is for the first part, the state is the globe view's and camera is the twin; the set shows what stands under the place.
 // 'relief': this update is for the second part, the state is the surface view's as ever; the set shows what lies over the globe.
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number; under?: 'globe' | 'relief' }
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; farDisc?: [number, number, number]; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number; under?: 'globe' | 'relief' }
 
 export interface SkyPatch {
   view: ViewKind

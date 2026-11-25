@@ -373,6 +373,11 @@ describe('the carry of a rise into its travel', () => {
       return q
     })
   const camera = (film: FilmDirector, time: number): THREE.Vector3 => film.shotAt(Math.floor(time * config.fps + 1e-9), time).camera.position.clone()
+  const share = (film: FilmDirector, i: number, time: number): THREE.Vector3 => {
+    const inner = film as unknown as { approach: THREE.Vector3[]; shapes: TravelShape[] }
+    const seg = plans[i]!.seg.travel!
+    return inner.approach[i + 1]!.clone().multiplyScalar(film.slideOf(i) * inner.shapes[i]!.pass((time - seg.start) / (seg.end - seg.start)))
+  }
 
   it('starts with the whole speed and the whole rate, with no kink, and is at rest at its end', () => {
     const h = 1e-3
@@ -426,14 +431,16 @@ describe('the carry of a rise into its travel', () => {
       const film = new FilmDirector(standIn(id, speed, brake))
       const end = p.seg.rise.end
       const far = p.exitPose(end).position.length()
-      expect(camera(film, end).distanceTo(camera(real, end)) / far).toBeLessThan(1e-12)
+      const i = plans.indexOf(p)
+      const own = (f: FilmDirector, t: number): THREE.Vector3 => camera(f, t).sub(share(f, i, t))
+      expect(own(film, end).distanceTo(own(real, end)) / far).toBeLessThan(1e-11)
       const h = 2e-3
-      const before = camera(film, end).multiplyScalar(3).addScaledVector(camera(film, end - h), -4).add(camera(film, end - 2 * h)).multiplyScalar(1 / (2 * h))
-      const after = camera(film, end).multiplyScalar(-3).addScaledVector(camera(film, end + h), 4).sub(camera(film, end + 2 * h)).multiplyScalar(1 / (2 * h))
+      const before = own(film, end).multiplyScalar(3).addScaledVector(own(film, end - h), -4).add(own(film, end - 2 * h)).multiplyScalar(1 / (2 * h))
+      const after = own(film, end).multiplyScalar(-3).addScaledVector(own(film, end + h), 4).sub(own(film, end + 2 * h)).multiplyScalar(1 / (2 * h))
       expect(before.length()).toBeCloseTo(speed + p.p.rise.driftSpeed, 3)
       expect(after.distanceTo(before) / before.length(), 'speed').toBeLessThan(2e-3)
-      const bent = camera(film, end).addScaledVector(camera(film, end - h), -2).add(camera(film, end - 2 * h)).multiplyScalar(1 / (h * h))
-      const bends = camera(film, end).addScaledVector(camera(film, end + h), -2).add(camera(film, end + 2 * h)).multiplyScalar(1 / (h * h))
+      const bent = own(film, end).addScaledVector(own(film, end - h), -2).add(own(film, end - 2 * h)).multiplyScalar(1 / (h * h))
+      const bends = own(film, end).addScaledVector(own(film, end + h), -2).add(own(film, end + 2 * h)).multiplyScalar(1 / (h * h))
       expect(bent.length()).toBeCloseTo(-brake, 2)
       expect(bends.distanceTo(bent) / bent.length(), 'brake').toBeLessThan(5e-2)
       const seg = p.seg.travel!
@@ -443,6 +450,71 @@ describe('the carry of a rise into its travel', () => {
       expect(film.frames.map((f) => [...f.origin.toArray(), ...f.rotation.toArray()])).toEqual(real.frames.map((f) => [...f.origin.toArray(), ...f.rotation.toArray()]))
     })
   }
+})
+
+describe('the pass that begins before the seam', () => {
+  const legs = plans.map((p, i) => ({ p, i })).filter(({ p, i }) => i > 0 && p.seg.travel && Math.abs(p.seg.travel.start - p.seg.rise.end) < 1e-9)
+  const film = new FilmDirector(plans)
+  const inner = film as unknown as { approach: THREE.Vector3[]; shapes: TravelShape[] }
+  const camera = (time: number): THREE.Vector3 => film.shotAt(Math.floor(time * config.fps + 1e-9), time).camera.position.clone()
+  const judged = (p: StopPlan): number => p.seg.rise.firstFrame + Math.floor((config.raw.judged.fractions as Record<string, number>).rise! * p.seg.rise.frames + 1e-9)
+
+  it('lays nothing on a rise up to the end of its judged frame, at every stop a travel follows', () => {
+    expect(legs.length).toBe(7)
+    for (const { p, i } of legs) {
+      const shape = inner.shapes[i]!
+      const seg = p.seg.travel!
+      const free = p.seg.rise.end - (judged(p) + 1) / config.fps
+      expect(shape.look.ahead[0], p.id).toBeGreaterThan(0)
+      expect(shape.look.ahead[0], p.id).toBeLessThanOrEqual(free + 1e-9)
+      expect(shape.lead, p.id).toBeCloseTo(shape.look.ahead[0] / (seg.end - seg.start), 12)
+      for (const t of [(judged(p) + 1) / config.fps, p.seg.rise.end - shape.look.ahead[0]]) expect(shape.pass((t - seg.start) / (seg.end - seg.start)), p.id).toBeLessThan(1e-40)
+      const f = film.frames[i]!
+      const at = (judged(p) + config.shutterFraction) / config.fps
+      const plain = p.eyeShot('rise', at, 'orbit').pose.position.clone().applyQuaternion(f.rotation).add(f.origin)
+      expect(camera(at).distanceTo(plain), p.id).toBe(0)
+    }
+  })
+
+  it('is one curve from its start through the seam to its end: no step in the place, the speed or the rate of the eye at the seam', () => {
+    for (const { p, i } of legs) {
+      const end = p.seg.rise.end
+      const h = 2e-3
+      const far = p.exitPose(end).position.length()
+      const before = camera(end).multiplyScalar(3).addScaledVector(camera(end - h), -4).add(camera(end - 2 * h)).multiplyScalar(1 / (2 * h))
+      const after = camera(end).multiplyScalar(-3).addScaledVector(camera(end + h), 4).sub(camera(end + 2 * h)).multiplyScalar(1 / (2 * h))
+      expect(camera(end - 1e-9).distanceTo(camera(end)) / far, p.id + ' place').toBeLessThan(1e-7)
+      expect(after.distanceTo(before) / before.length(), p.id + ' speed').toBeLessThan(2e-2)
+      const seg = p.seg.travel!
+      const shape = inner.shapes[i]!
+      const plain = new TravelShape(p.id)
+      const at = (t: number): number => (t - seg.start) / (seg.end - seg.start)
+      const way = (t: number): number => film.slideOf(i) * shape.pass(at(t))
+      const lent = (t: number): number => film.slideOf(i) * (shape.pass(at(t)) - plain.pass(at(t)))
+      expect(way(end), p.id).toBeGreaterThan(0)
+      const speed = (way(end + h) - way(end - h)) / (2 * h)
+      expect(speed, p.id + ' has speed at the seam').toBeGreaterThan(p.p.rise.driftSpeed)
+      const bent = (lent(end) - 2 * lent(end - h) + lent(end - 2 * h)) / (h * h)
+      const bends = (lent(end + 2 * h) - 2 * lent(end + h) + lent(end)) / (h * h)
+      expect(Math.abs(bends - bent) / (speed / shape.look.ahead[0]), p.id + ' rate').toBeLessThan(5e-2)
+    }
+  })
+
+  it('never goes back and ends where the pass without it ends', () => {
+    for (const { p, i } of legs) {
+      const shape = inner.shapes[i]!
+      const plain = new TravelShape(p.id)
+      expect(plain.lead).toBe(0)
+      expect(shape.pass(shape.look.passBy), p.id).toBeCloseTo(plain.pass(shape.look.passBy), 12)
+      let last = 0
+      for (let k = 0; k <= 400; k++) {
+        const u = -shape.lead + ((shape.look.passBy + shape.lead) * k) / 400
+        const x = shape.pass(u)
+        expect(x, p.id + ' at ' + u.toFixed(3)).toBeGreaterThanOrEqual(last)
+        last = x
+      }
+    }
+  })
 })
 
 describe('the world a travel lands in', () => {
