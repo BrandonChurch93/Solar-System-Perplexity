@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T06:58:56.864Z",
+ "pushed": "2026-11-25T07:22:37.589Z",
  "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
- "note": "round 3: layer scale sweep beside the named; footprint edge found at 4164 to 4168, cure in work",
+ "note": "round 3: footprint edge at 4160 to 4174 cured by texel size; official report restarted 07:22 UTC",
  "looks": [
+  {
+   "time": "2026-11-25T07:22:36.791Z",
+   "file": "20261125072236791-note-p3-top.jpg",
+   "source": "../../../../tmp/n50/p3-top.jpg",
+   "kind": "note",
+   "label": "dive 4160 to 4245 in pairs of rows: before the cure above, with the cure below (4160 to 4174, 4176 to 4195, 4186 to 4245)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T07:22:36.103Z",
+   "file": "20261125072236103-note-p3-crop.jpg",
+   "source": "../../../../tmp/n50/p3-crop.jpg",
+   "kind": "note",
+   "label": "dive 4160, 4164, 4170, 4174, crop x 520 to 1480, y 380 to 920: top the round 3 tree with the footprint of the terrain picture as a dark straight edged shape, bottom the cure (the picture stands only where a pixel holds under 3 to 6 of its texels)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T06:58:55.547Z",
    "file": "20261125065855547-note-cover-edge-4.jpg",
@@ -245,28 +261,6 @@
    "kind": "note",
    "label": "dive 4162 + 1/2, 4166 + 1/2, 4170 + 1/2: this commit beside the trial with the surface law read at a fixed angle (not taken). The trial has no haze under the limb",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:43:24.105Z",
-   "file": "20261125024324105-note-z3-pops.jpg",
-   "source": "../../../../tmp/parC/z3-pops.png",
-   "kind": "note",
-   "label": "dive, the pop at 4141 to 4148 by place: four pairs of half frames on this commit and what is left after the motion times 8. It lies in the sky strip left of the limb, where the dense star field crosses",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:39:43.236Z",
-   "file": "20261125023943236-frame-f4035.jpg",
-   "source": "out/work/u/r45/fin7/f4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
   }
  ]
 }
