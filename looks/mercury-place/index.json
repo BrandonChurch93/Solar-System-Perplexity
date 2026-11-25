@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T09:02:01.129Z",
+ "pushed": "2026-11-25T09:25:14.300Z",
  "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "way C with ONE BODY take s5, not committed: files green (0.41, 0.07, 0.02, 0.03), rise 987 to 992 green as b9, 745 holds against the mark; RED by my look: 615 (cream mark in the disc) and 717 (soft grey zone round the place)",
+ "note": "way C: s5 reads green at dive 719 to 723 and rise 1010 to 1014 by my chain; 615 and 717 red at the disc; trial of the hero's light on the disc (texture only)",
  "looks": [
+  {
+   "time": "2026-11-25T09:25:13.701Z",
+   "file": "20261125092513701-note-s1s5-735.jpg",
+   "source": "../../../../tmp/m/s1s5-735.png",
+   "kind": "note",
+   "label": "735 at 1 to 1, x 160 y 540: the mark, way C take s1 (RED: the hero's rims as blots outside the disc), way C take s5",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T09:25:13.031Z",
+   "file": "20261125092513031-note-disc3-16.jpg",
+   "source": "../../../../tmp/m/disc3-16.png",
+   "kind": "note",
+   "label": "16 degrees round the spot at the first level: the mark's patch-1, the mark's patch-2, take s1's patch-1, take s5's patch-1 (s5: noise patches and grey ground from the key map, which goes out)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T09:25:12.223Z",
+   "file": "20261125092512223-note-t4-717x2.jpg",
+   "source": "../../../../tmp/m/rs/t4-717x2.png",
+   "kind": "note",
+   "label": "trial on the texture alone, not a frame: the disc at 20 px a degree twice. Left the mark's first level, right the place's bodies restyled to the hero's light (bands 0.04 to 0.6 degrees matched by rank). Top unlit, bottom a made up terminator",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T09:02:00.007Z",
    "file": "20261125090200007-note-s5-rise.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/s5-717.png",
    "kind": "note",
    "label": "717 at 1 to 1: the mark, way C with take s5. RED: a soft grey zone round the place without the gold rims, cream mark in it",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:01:54.330Z",
-   "file": "20261125090154330-note-s5-615-twice.jpg",
-   "source": "../../../../tmp/m/s5-615-twice.png",
-   "kind": "note",
-   "label": "615 at twice: approved hero, way C with take s5 (not committed). The gleam is too hot",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:01:53.120Z",
-   "file": "20261125090153120-note-s5-615-native.jpg",
-   "source": "../../../../tmp/m/s5-615-native.png",
-   "kind": "note",
-   "label": "615 at native size: approved hero, main, way C with take s5 (not committed). RED by my own look: a cream mark with two pits inside the disc that the hero does not have",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:01:51.993Z",
-   "file": "20261125090151993-note-ob-s5-map.jpg",
-   "source": "../../../../tmp/m/ob-s5-map.png",
-   "kind": "note",
-   "label": "ONE BODY take s5, the map against the first level: 0.41 (was 0.69): what is left is the disc of the place",
    "stop": "mercury"
   }
  ]
