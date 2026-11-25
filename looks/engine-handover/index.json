@@ -1,8 +1,8 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T22:36:46.558Z",
+ "pushed": "2026-11-25T23:03:22.350Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests: the end of a cut crest. Two faults found in the browser test, no new frames yet: a crack where the sheets end with a step left (cured: they close onto the mesh there), and the sheets drawn before the layer's mesh from some eyes (render order now after it). Air's fourth commit named: b75720ab",
+ "note": "crests: three faults of a cut crest's end cured in the browser test (0 open pixels at every eye tried); the map's rim found to be no end (the painting's own eye, 453 px), being mended; no new renders yet",
  "looks": [
   {
    "time": "2026-11-25T22:01:36.916Z",
