@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T10:00:12.328Z",
- "head": "ac5c5c1b3e3b3cbc5867634c633b1495bdca2664",
- "note": "state ac5c5c1b pushed: deck in the globe at every distance, 1755 changes on purpose",
+ "pushed": "2026-11-25T10:17:22.664Z",
+ "head": "55392321c0452e1bddc72911bc23b771e20c87a4",
+ "note": "ac5c5c1b: rise read 0.26 pattern, step 0.36, pop 1.14; deck one body, too white from above; state mail sent",
  "looks": [
+  {
+   "time": "2026-11-25T10:17:22.114Z",
+   "file": "20261125101722114-note-s-rise-3.jpg",
+   "source": "../../../../tmp/gl/k11/s-rise-3.jpg",
+   "kind": "note",
+   "label": "ac5c5c1b rise 2130 to 2138 draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T10:17:21.578Z",
+   "file": "20261125101721578-note-s-rise-2.jpg",
+   "source": "../../../../tmp/gl/k11/s-rise-2.jpg",
+   "kind": "note",
+   "label": "ac5c5c1b rise 2118 to 2129 draft",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T10:00:11.727Z",
    "file": "20261125100011727-note-s-dive-2.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k10/c1/p-whole.jpg",
    "kind": "note",
    "label": "2010 approved, ba479450, now (deck in the place levels, stand law), draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T09:15:16.592Z",
-   "file": "20261125091516592-note-sheet-top.jpg",
-   "source": "../../../../tmp/gl/k10/sheet-top.jpg",
-   "kind": "note",
-   "label": "trial from above: the approved bank's footprint as a deck in the map (24 degrees wide, over the cumulus field); not in the film yet",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T09:15:15.921Z",
-   "file": "20261125091515921-note-p-right.jpg",
-   "source": "../../../../tmp/gl/k10/b1/p-right.jpg",
-   "kind": "note",
-   "label": "2010 far band right, same three rows; bank and its shadow still missing here",
    "stop": "earth"
   }
  ]
