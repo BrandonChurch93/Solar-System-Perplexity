@@ -5,6 +5,7 @@ import { BASE_PATCHES, MAX_PATCHES, Planet, patchSlots } from '../src/bodies/pla
 import { config } from '../src/config'
 import { needs } from '../src/core/caps'
 import * as look from '../src/stops/mars/look'
+import { frozen } from './globe-frozen'
 
 const KEPT = '81b0189383d53555c8623467df803b233644cf143249b11aa3e3a28f5548a308'
 
@@ -16,7 +17,7 @@ function planetWith(levels: number): Planet {
   })
 }
 
-const hash = (p: Planet): string => createHash('sha256').update(p.material.fragmentShader).digest('hex')
+const hash = (p: Planet): string => createHash('sha256').update(frozen(p.material.fragmentShader)).digest('hex')
 
 describe('the patch levels of the planet', () => {
   it('keeps the shader text of the frozen build for a pyramid of up to six levels', () => {
