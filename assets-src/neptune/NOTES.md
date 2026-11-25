@@ -7014,6 +7014,7 @@ MAIL 1049 from the Builder (/root), 11:14 UTC. To neptune_builder. Your state of
 > 3. G17 AT 4860, the top rows by control (strips at 1 to 1 attached, approved above, ours below). My frames are draft at 1920 read by tools/measure/g17.py's own functions, so they read lower than your final: c2edd61ba's tree median 0.359 (25th 0.090), the named tree 0.254 (25th 0.090).
 > - 13 tiles are SKY in both pictures (row 0 tiles 4 to 11, row 1 tiles 7 to 11). The approved carries a dense bright star field with the Milky Way there: luma 0.044 to 0.130, band energy 35 to 100 e-5. Ours is the engine's one sky with a few faint stars: luma 0.014 to 0.025, energy 0.9 to 15 e-5. Ratios 0.02 to 0.18. Your worst four tiles are these.
 > - Row 1 tiles 1 to 6, the far plain under the limb: the approved has fibrous cirrus and fine streaks (8 to 76 e-5), ours a smooth haze band (1.4 to 4.9 e-5 on c2edd61ba). Ratios 0.06 to 0.17 (the named tree 0.07 to 0.50).
+> - On the named tree's draft frame the low tiles are not only at the top: a run of 16 tiles under 0.21 goes down the middle of the picture (row 2 tiles 2 to 6, row 3 tiles 4 to 7, row 4 tiles 6 to 9, row 5 tiles 9 to 11), where the approved carries the eye with its spiral streaks and the fibres beside the bank, and ours a smooth deck. The near ground lower right reads over the approved (row 7, tiles 8 to 11: 1.75 to 4.94). The grid is 12 by 8, tiles as [x, y].
 > - Arithmetic on c2edd61ba's frame: without the 13 sky tiles the median of the other 62 is 0.499; with the sky tiles at ratio 1 the median of all 75 is 0.764. So the sky is the larger part and the far plain is the rest; neither alone reaches 0.8.
 > - The cause of the sky: sky.json is empty since MAIL 774 and 878 (no sky plate of the stop, the engine's one sky at every height); main's Neptune had the plate sky-terrain.webp, painted after the approved image. The sky is not mine to make: yours to rule.
 > - G17 fell with way C (preview proxy 0.508 to 0.412; 1920 draft 0.359 to 0.254). Not accepted as a price by your ruling 3, and so it is RED: the fine streaks and the soft eye of the far plain are owed from the place's flow, by code. Not built.
@@ -7036,3 +7037,15 @@ MAIL 1049 from the Builder (/root), 11:14 UTC. To neptune_builder. Your state of
 > 9. No review tier proof of anything; every number of mine is draft and a proxy.
 >
 > Attached: the two top strips (c2edd61ba's tree and the named tree), 4860 beside the approved, the texel views before and after the count (green: few texels a pixel, yellow: many), and 4962 of the rise (the frame, the frame before it carried onto it, and where the pattern changed).
+
+- Before the mail went out I read G17's tile map on the named tree's draft frame (J3/f4860.png, /tmp/strips.py, grid 12 by 8):
+  median 0.254, 25th 0.090, 75 tiles. Rows of ratios (a dot: not judged):
+  row 0: . . . . 0.03 0.07 0.04 0.15 0.06 0.18 0.04 0.04
+  row 1: 1.14 0.50 0.26 0.16 0.12 0.09 0.07 0.03 0.03 0.03 0.02 0.05
+  row 2: 1.54 0.50 0.04 0.07 0.16 0.15 0.07 0.37 0.28 0.36 0.65 0.30
+  row 3: 0.30 1.27 1.11 0.68 0.08 0.09 0.09 0.14 0.56 0.64 0.68 0.27
+  row 4: . 0.25 0.17 1.07 1.27 0.42 0.09 0.08 0.09 0.17 0.77 0.81
+  row 5: . . . 0.34 0.42 1.00 0.64 0.69 0.32 0.20 0.13 0.08
+  row 6: . . . . . . 0.28 0.64 0.55 0.33 0.25 0.12
+  row 7: . . 0.15 . . . . . 4.94 4.69 3.06 1.75
+  One sentence on it was added to the mail's point 3 (the run of low tiles down the middle, where the approved has the eye).
