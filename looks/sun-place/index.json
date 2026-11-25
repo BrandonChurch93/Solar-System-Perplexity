@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T04:52:23.603Z",
+ "pushed": "2026-11-25T05:13:55.070Z",
  "head": "7bc9ef803c8b4751816db85acbe5bbcb4b8d0f75",
- "note": "trial d5 frame 60 near and far beside the approved; still wrong: flat faces, polygon outlines, too little glow at the horizon",
+ "note": "trial d9 frame 60 near and far beside the approved, the last of the heat only trials; MAIL 912 takes that way back, the sheen along the fibres comes next",
  "looks": [
+  {
+   "time": "2026-11-25T05:13:53.869Z",
+   "file": "20261125051353869-note-d9-60-far.jpg",
+   "source": "../../../../tmp/v/d9-60-far.jpg",
+   "kind": "note",
+   "label": "trial d9 frame 60 far (heat only, made before MAIL 912), approved left, native size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T05:13:52.596Z",
+   "file": "20261125051352596-note-d9-60-near.jpg",
+   "source": "../../../../tmp/v/d9-60-near.jpg",
+   "kind": "note",
+   "label": "trial d9 frame 60 near (heat only, made before MAIL 912), approved left, native size",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T04:52:18.582Z",
    "file": "20261125045218582-note-d5-60-far.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c4-90-far.jpg",
    "kind": "note",
    "label": "Commit 4, draft, frame 90 far ground and horizon at 1 to 1, approved left. Still wrong: jets are straight needles, far cells are pebbles and rows of ticks, not flat lenses",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:30:16.141Z",
-   "file": "20261125043016141-note-c4-0-near.jpg",
-   "source": "../../../../tmp/v/c4-0-near.jpg",
-   "kind": "note",
-   "label": "Commit 4 (ead85b2e, merged as 5476485a, not yet pushed), draft, frame 0 near ground at 1 to 1, approved left. Still wrong: bulbs are smooth lumps with dark outlines, strokes alike from bulb to bulb. sun-near frame 60: dark (under 0.15) 0.242 | body (0.15 to 0.55) 0.583 | pale (0.65 to 0.85) 0.094 | white (over 0.85) 0.021 ;; colour by band: 0.23 0.08 0.03 | 0.39 0.15 0.06 | 0.53 0.25 0.08 | 0.64 0.35 0.12 | 0.73 0.46 0.17 | 0.80 0.57 0.24 | 0.87 0.69 0.36 | 0.91 0.80 0.52 | 0.94 0.87 0.66 ;; brightest 15 percent: half width 7.7 px, 545 shapes | fine detail 0.0299 | mean 0.331",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:10:41.595Z",
-   "file": "20261125041041595-note-c4-rise-c3c4.jpg",
-   "source": "../../../../tmp/v/c4-rise-c3c4.jpg",
-   "kind": "note",
-   "label": "Rise 217, 225, 231, 247 draft: commit 3 above, commit 4 in the tree below. The ground leaves by distance from the eye, far side first; corona and far sky by height 0.3 to 3.2",
    "stop": "sun"
   }
  ]
