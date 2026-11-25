@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T05:53:42.694Z",
- "head": "06d73b4f9a974895fe907b0510a979badca10e07",
- "note": "proof of the tree in work: rise and dive pattern red, causes found (dust pace, palette table, night side sinking where the dust comes in); cures in test by slices; item 5 stands at 3567",
+ "pushed": "2026-11-25T06:17:07.124Z",
+ "head": "d8723c64dd475d311eee99cfc10dc11bda58797d",
+ "note": "proof of d8723c6 running (dive slice green, pattern 0.12 at 3615); beside it item 4: the moon's new look designed, limb findings",
  "looks": [
+  {
+   "time": "2026-11-25T06:17:06.422Z",
+   "file": "20261125061706422-note-limb_gap8.jpg",
+   "source": "../../../../tmp/v/x/limb_gap8.png",
+   "kind": "note",
+   "label": "item 4 sunlit limb over the inner ring gap at 8 times, frame 3465: approved hero left, the hold as named right (an edge of 2 px with one orange pixel line, no glow below the ring plane)"
+  },
+  {
+   "time": "2026-11-25T06:17:05.742Z",
+   "file": "20261125061705742-note-t4b.jpg",
+   "source": "../../../../tmp/v/moon/t4b.png",
+   "kind": "note",
+   "label": "item 4 moon, design in numpy at 7 times: approved hero left, the hold as named in the middle, the new look right (soft limb, thin rim, haze, hood of the north, irregular belts); not yet rendered by the film"
+  },
   {
    "time": "2026-11-25T05:53:42.054Z",
    "file": "20261125055342054-note-r61_3615_wide.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/x/g5_low.png",
    "kind": "note",
    "label": "3720 lower half, approved above, tree g5 below (review tier): wide soft lanes from octave 5 on, octaves 2 to 4 as lanes near the lens"
-  },
-  {
-   "time": "2026-11-25T04:36:35.256Z",
-   "file": "20261125043635256-note-g3_ll.jpg",
-   "source": "../../../../tmp/v/x/g3_ll.png",
-   "kind": "note",
-   "label": "3720 lower left at native size, approved on top, trial g3 below: broad zones now, hue still too weak, no matte grain"
-  },
-  {
-   "time": "2026-11-25T04:36:34.630Z",
-   "file": "20261125043634630-note-g3_whole.jpg",
-   "source": "../../../../tmp/v/x/g3_whole.png",
-   "kind": "note",
-   "label": "3720 review tier trial g3 (uncommitted) under the approved: finer grains near the lens, ringlets of two wider octaves with tone and hue of their own near the lens, globe palette by latitude; open: B ring too striped and smooth, near field still brown"
   }
  ]
 }
