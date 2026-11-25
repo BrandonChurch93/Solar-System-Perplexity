@@ -34,7 +34,7 @@ const CLEAR_DEG = 3
 const SUN_PULL_FROM = 0.12
 const SUN_PULL_END = 0.42
 const SUN_APPROACH_START = 0.42
-export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { turn: 0.375, phase: 0.425, pull: 0.3, aim: 0.375 }, ahead: 0.6 }
+export const LOOKBACK = { phaseDeg: 148, azimuthDeg: 127, distance: 8.6, sun: [0.59, 0.3] as [number, number], sunPerSecond: [-0.02, 0.005] as [number, number], settle: 4.8, hand: 0.1, lineDeg: 195, vfov: 34, glare: 4, flare: 0.35, sky: [0, 35, -5] as [number, number, number], skyExposure: 0.36, skyAnchor: { aimDeg: 14, rollDeg: 13 }, glide: { turn: 0.375, phase: 0.425, pull: 0.3, aim: 0.375 }, ahead: 0.1 }
 const basis = (first: THREE.Vector3, toward: THREE.Vector3): THREE.Quaternion => {
   const x = first.clone().normalize()
   const y = toward.clone().addScaledVector(x, -toward.dot(x)).normalize()
@@ -70,6 +70,7 @@ const bandLook = (id: string): number => (OPEN.bandLook as Record<string, number
 const riseLift = (id: string): number => (OPEN.riseLift as Record<string, number>)[id] ?? 0
 const DUST_LOOK = config.raw.travel.dust
 const OPEN_TAPS = 8
+const COMING_FLOOR = 0.05
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 const SUN_BODY = new THREE.Quaternion().fromArray(sunFit.globe.quaternion)
 
@@ -92,6 +93,8 @@ export class FilmDirector implements Director {
   private readonly small: number[] = []
   private readonly sunSwapSpan: [number, number] = SUN_SWAP
   private readonly openRef = new Map<number, number>()
+  private readonly comingRef = new Map<number, number>()
+  private near?: [number, number, [number, number]]
   private readonly settled = new Map<number, [number, number]>()
   private readonly skyFloors = new Map<string, SkyFloor>()
   // E6: the share of the film's shutter a frame keeps, as this film's own shots measure it. The film that is asked for a shot hands it to the
@@ -691,7 +694,7 @@ export class FilmDirector implements Director {
     return index === 0 ? (u < SUN_LEAVE && globeShare(position.distanceTo(this.frames[0]!.origin)) > 0 ? 1 : 0) : u < Math.max(this.clear[index + 1]!, hand > SUN_HAND.span[0] ? hand : 0) ? 1 : 0
   }
 
-  private bright(index: number, at: number): number {
+  private bright(index: number, at: number): [number, number] {
     const seg = this.plans[index]!.seg.travel!
     const time = Math.min(Math.max(at, seg.start), seg.end)
     const u = (time - seg.start) / (seg.end - seg.start)
@@ -707,7 +710,10 @@ export class FilmDirector implements Director {
     const sun = discShare(this.sunWorld.clone().applyQuaternion(inv), Math.sin(Math.min(radius, 1.5)), pose.vfov, aspect)
     const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
     const weight = index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : this.leaveWeight(index, u, pose.position)
-    return Math.min(weight * body(index) + body(index + 1) + glow * sun, 1)
+    const to = this.frames[index + 1]!.origin.clone().sub(pose.position)
+    const sin = Math.min(1 / to.length(), 0.999999)
+    const r = sin / Math.sqrt(1 - sin * sin) / Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+    return [Math.min(weight * body(index) + body(index + 1) + glow * sun, 1), Math.min((Math.PI * r * r) / (4 * aspect), 1) * 0.5 * (1 - to.normalize().dot(this.sunWorld))]
   }
 
   private sunSeen(index: number, time: number): number {
@@ -720,20 +726,37 @@ export class FilmDirector implements Director {
     return Math.max(near(time) - Math.max(near(seg.start), near(seg.end)), 0)
   }
 
-  private brightNear(index: number, time: number): number {
-    let sum = 0
-    for (let k = -OPEN_TAPS; k <= OPEN_TAPS; k++) sum += this.bright(index, time + (k / OPEN_TAPS) * OPEN.window)
-    return sum / (2 * OPEN_TAPS + 1)
+  private brightNear(index: number, time: number): [number, number] {
+    if (this.near && this.near[0] === index && this.near[1] === time) return this.near[2]
+    let sun = 0
+    let lit = 0
+    for (let k = -OPEN_TAPS; k <= OPEN_TAPS; k++) {
+      const share = this.bright(index, time + (k / OPEN_TAPS) * OPEN.window)
+      sun += share[0]
+      lit += share[1]
+    }
+    this.near = [index, time, [sun / (2 * OPEN_TAPS + 1), lit / (2 * OPEN_TAPS + 1)]]
+    return this.near[2]
   }
 
   openOf(index: number, time: number): number {
     const seg = this.plans[index]!.seg.travel!
     let ref = this.openRef.get(index)
     if (ref === undefined) {
-      ref = Math.min(OPEN.brightShare, this.brightNear(index, seg.start + 1 / config.fps), this.brightNear(index, seg.end - 1 / config.fps))
+      ref = Math.min(OPEN.brightShare, this.brightNear(index, seg.start + 1 / config.fps)[0], this.brightNear(index, seg.end - 1 / config.fps)[0])
       this.openRef.set(index, ref)
     }
-    return openSky(this.brightNear(index, time), ref)
+    return openSky(this.brightNear(index, time)[0], ref)
+  }
+
+  private comingOpen(index: number, time: number): number {
+    const seg = this.plans[index]!.seg.travel!
+    let ref = this.comingRef.get(index)
+    if (ref === undefined) {
+      ref = this.brightNear(index, seg.end)[1]
+      this.comingRef.set(index, ref)
+    }
+    return openSky(Math.max(this.brightNear(index, time)[1] - COMING_FLOOR * ref, 0), (1 - COMING_FLOOR) * ref)
   }
 
   patchSpanOf(index: number): [number, number] {
@@ -857,8 +880,8 @@ export class FilmDirector implements Director {
       const span = this.patchSpanOf(index)
       skyPatch = smooth(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
-      const arrive = smoother(ramp(OPEN.arriveFrom[0], OPEN.arriveFrom[1], u))
-      const open = mix(lens + (1 - lens) * mix(OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0), 1 - skyPatch, arrive)
+      const lifted = lens + (1 - lens) * mix(OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0)
+      const open = lifted * this.comingOpen(index, time)
       skyLook = mix(bandLook(a.id), bandLook(b.id), bandLook(b.id) < bandLook(a.id) ? skyPatch : smooth(ramp(Math.min(span[0], OPEN.lookFrom), span[1], u)))
       const dim = index > 0 ? SUN_DIM.level * smooth(this.sunSeen(index, time)) : 0
       light.sky = mix(light.sky, OPEN.openExposure * (1 - dim), open)
@@ -868,8 +891,9 @@ export class FilmDirector implements Director {
       const arriving = state(index + 1, 'orbit')
       if (index > 0 && this.shapes[index]!.look.pin[1] > 0) farLight = Math.pow(smooth(ramp(this.lit[index]!, this.lit[index]! + FAR_LIGHT.frames / ((segment.end - segment.start) * config.fps), u)), FAR_LIGHT.power)
       const herald = this.shapes[index]!
+      if (index === 0) farLight = 1
+      if (herald.look.disc[0] > 0) farDisc = herald.look.disc
       if (index > 0 && herald.look.herald > 0 && herald.look.pin[1] > 0) {
-        if (herald.look.disc[0] > 0) farDisc = herald.look.disc
         if (herald.pinned(u) < 1) {
           const to = arriving.origin.clone().sub(position)
           const r = new THREE.Quaternion().setFromUnitVectors(to.clone().normalize(), this.heroTo(index, time, pose.quaternion))
