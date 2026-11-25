@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T04:11:38.737Z",
+ "pushed": "2026-11-25T04:36:35.844Z",
  "head": "7755294aa70875d7406a3a89a2a51744cbb9a8ac",
- "note": "round 44 items 1 and 3 in work: foot closed with deeper dust lit through the globe's air, globe palette by latitude; next the near field",
+ "note": "round 44 item 2 in work: near field zones and finer grains; items 1 and 3 stand in the tree, not yet committed",
  "looks": [
+  {
+   "time": "2026-11-25T04:36:35.256Z",
+   "file": "20261125043635256-note-g3_ll.jpg",
+   "source": "../../../../tmp/v/x/g3_ll.png",
+   "kind": "note",
+   "label": "3720 lower left at native size, approved on top, trial g3 below: broad zones now, hue still too weak, no matte grain"
+  },
+  {
+   "time": "2026-11-25T04:36:34.630Z",
+   "file": "20261125043634630-note-g3_whole.jpg",
+   "source": "../../../../tmp/v/x/g3_whole.png",
+   "kind": "note",
+   "label": "3720 review tier trial g3 (uncommitted) under the approved: finer grains near the lens, ringlets of two wider octaves with tone and hue of their own near the lens, globe palette by latitude; open: B ring too striped and smooth, near field still brown"
+  },
   {
    "time": "2026-11-25T04:11:38.160Z",
    "file": "20261125041138160-note-n15_globe.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/x/n4_foot.png",
    "kind": "note",
    "label": "3720 foot at full size, approved (left) beside trial n4 (right, draft tier): still a hard line at the foot and the band too narrow and too green"
-  },
-  {
-   "time": "2026-11-25T03:21:46.930Z",
-   "file": "20261125032146930-note-n4_whole.jpg",
-   "source": "../../../../tmp/v/x/n4_whole.png",
-   "kind": "note",
-   "label": "3720 approved (left) beside trial n4 (right, draft tier): inner dust as slate ringlets, dust shade on the globe, night side darker"
-  },
-  {
-   "time": "2026-11-25T03:04:08.094Z",
-   "file": "20261125030408094-note-n1_foot.jpg",
-   "source": "../../../../tmp/v/x/n1_foot.png",
-   "kind": "note",
-   "label": "3720 draft foot at full size: approved, named tree, trial n1"
   }
  ]
 }
