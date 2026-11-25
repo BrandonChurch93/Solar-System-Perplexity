@@ -1,0 +1,120 @@
+{
+ "critic": "R3",
+ "score": 3,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 3,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-06.png",
+      "where": "upper-left and upper-center globe near terminator (crops B, F, G in image-06.png and crops J, K, L in image-07.png)",
+      "what": "severe polar UV stretching smears craters and surface texture into long diagonal streaks",
+      "fix": "remap the globe with cube-sphere or triplanar projection, or rotate the pole out of the close-up view and supply dedicated polar detail maps"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "entire close-up globe surface and terminator (crops A, C, E, F, G, H, I in image-06.png; L, P, Q, R in image-07.png; V in image-08.png)",
+      "what": "albedo and normal maps are far too low-resolution for this camera distance, creating soft, mushy surface detail on the lit side and a plastic, waxy embossed look on shadow-side crater rims",
+      "fix": "use higher-resolution tiled albedo and displacement maps and add procedural micro-crater detail for close-up framing"
+     },
+     {
+      "severity": "severe",
+      "file": "image-01.png",
+      "where": "lower-left night side of the globe extending to the left limb (crop D in image-02.png and crop P in image-03.png)",
+      "what": "a stray semi-transparent ghosted object resembling a spacecraft boom with rectangular boxes appears across the dark hemisphere",
+      "fix": "remove the contaminated flare or background plate artifact and ensure the unlit hemisphere cleanly occludes layers behind it"
+     },
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "lower-left sky outside the dark limb (crop D in image-02.png, crop O in image-03.png, and crop T in image-04.png)",
+      "what": "a large blurry oval blob with rainbow chromatic ghosting sits in the starfield alongside smeared flare patches",
+      "fix": "remove baked lens-ghost blobs from the sky plate so background stars remain clean point sources"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "sunlit upper and right limb of the globe (crop F in image-02.png and crops K, L, Q in image-03.png)",
+      "what": "an artificial warm orange atmospheric rim halo wraps around an airless cratered world like a 2D outer-glow effect",
+      "fix": "remove the atmospheric halo layer on this airless body and restrict limb brightness to physical surface backscatter and subtle optical bloom"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "sunlit right limb silhouette (crops E, I in image-06.png and crop R in image-07.png)",
+      "what": "a hard, slightly faceted geometric limb edge sits directly against blurry interior surface texture with a thin bright rim line",
+      "fix": "increase sphere tessellation with fine silhouette displacement and match surface texture sharpness up to the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "solar corona and photosphere (crop C in image-02.png, crops M, N, R in image-03.png, and crop C in image-06.png)",
+      "what": "pinpoint background stars shine directly through bright solar corona streamers while the solar surface texture in crops M and N is soft and blobby",
+      "fix": "mask or wash out faint background stars inside intense coronal glare and increase solar photosphere detail before bloom"
+     },
+     {
+      "severity": "minor",
+      "file": "image-08.png",
+      "where": "lower unlit globe interior (crops T and U in image-08.png)",
+      "what": "subtle gradient banding is visible across the dark night-side hemisphere",
+      "fix": "composite in 16-bit or 32-bit float and apply dithering when exporting to 8-bit PNG"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper lit hemisphere, toward the sun",
+      "what": "craters are dragged into parallel diagonal streaks instead of round bowls",
+      "fix": "replace the high-latitude mapping so the upper disk keeps round craters"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crops B, F, and H, and the lit sliver in I",
+      "what": "at native size the same streaks wipe out crater rims across the upper disk",
+      "fix": "recheck these crops at 1:1 after the mapping change; rims should be closed curves"
+     },
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "crops J and K",
+      "what": "the stretch continues along the top of the disk and smears the bright rays in front of the sun",
+      "fix": "keep those rays radial and the craters round, not pulled along the mapping"
+     },
+     {
+      "severity": "minor",
+      "file": "image-10.png",
+      "where": "crop B, lower right rayed craters",
+      "what": "the bright ejecta reads as a flat white splash laid on the ground",
+      "fix": "shade the rays with the terrain so they break on slopes and in shadow"
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "crops T and U, nearest ground",
+      "what": "the foreground regolith is soft and the fine grain does not hold up",
+      "fix": "raise near-ground texture resolution so the closest soil stays sharp"
+     }
+    ]
+   }
+  }
+ ]
+}
