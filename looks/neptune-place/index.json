@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T22:04:05.499Z",
- "head": "3e034198863b612ccb912b30b70f3b2fde72cd7e",
- "note": "4860 on the merge beside the approved, G17 0.507, 90.7 s a draft frame; now reading the end of the dive (4753 to 4769) for MAIL 1313",
+ "pushed": "2026-11-25T22:33:05.587Z",
+ "head": "badc407aa9e73fb6d270476a9ed9fcb523618a9d",
+ "note": "the knot of the dive's end named by layers: the first streamer's shadow; cure under trial; 4860 beside the approved unchanged, G17 0.507, 90.7 s a draft frame",
  "looks": [
+  {
+   "time": "2026-11-25T22:33:04.935Z",
+   "file": "20261125223304935-note-end-shadow.jpg",
+   "source": "../../../../tmp/end-shadow.jpg",
+   "kind": "note",
+   "label": "MAIL 1313, the dive's last part: the knot at 4760 to 4768 (my copy of the reader 0.78, limit 0.45) is the first streamer's shadow on the dark near deck: top row the shadow alone (cast off minus on, times 8) at 4760 carried, at 4768, their difference times 16: a sharp streak and a comb that slide over the deck; middle the two frames (times 4) and the reader's pattern; bottom the same with the shadow off (0.09)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T22:33:04.304Z",
+   "file": "20261125223304304-note-pair-N13.jpg",
+   "source": "../../../../tmp/pair-N13.jpg",
+   "kind": "note",
+   "label": "4860 on the merge beside the approved image (unchanged since 22:04): whole 22.446 (main 22.986), G17 0.507, 90.7 s the draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T22:04:04.139Z",
    "file": "20261125220404139-note-pair-N13.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/holdm.jpg",
    "kind": "note",
    "label": "4605 at 4 times: the dark dot at the place (top) and the Sun (bottom): approved, main, the name, then controls: storm dark 0 (the disc goes, a faint ring stays), wall 0 to 1.6 (a soft whirl), sunGlare 2.0 (the star gets smaller: no lever of the stop gives glare or spikes), depth 0 (no change). BAD as it stands: a hard dark disc and a small Sun",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T21:26:00.607Z",
-   "file": "20261125212600607-note-top4-L1.jpg",
-   "source": "../../../../tmp/top4-L1.jpg",
-   "kind": "note",
-   "label": "4860, the top 440 rows: approved, main (sky plate), the name, the cure: the limb is a thin line on the approved's line (0 to 2 px on the lit side, 5 to 11 px high on the left as main's); the brown band in the sky is the film's own Milky Way and stays",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T21:25:59.394Z",
-   "file": "20261125212559394-note-pair-N12.jpg",
-   "source": "../../../../tmp/pair-N12.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved with the limb's cure (low haze scale 0.028 to 0.010, in the tree, not committed): whole 22.446 against main's 22.986 (the name 23.593); sky 3.203, band 1.616 (main 1.607), ground 17.627; G17 0.507 / p25 0.232 (the name 0.426 / 0.230); 91.0 s the draft frame at 1920",
    "stop": "neptune"
   }
  ]
