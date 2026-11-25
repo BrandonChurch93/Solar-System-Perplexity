@@ -1,9 +1,65 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T10:40:53.950Z",
+ "pushed": "2026-11-25T11:12:46.783Z",
  "head": "bfd6c3adaacb2fb02b3fac5066a60941256f1c20",
- "note": "MAIL 1020 b: air by path, forms B1 and C, 4290 foreground open",
+ "note": "MAIL 1020 b built: air by path with dimming; chain 0.67, 1.38, 1.11, rise 1.02; 4290 within 20 levels",
  "looks": [
+  {
+   "time": "2026-11-25T11:12:46.198Z",
+   "file": "20261125111246198-note-p-D3-8829.jpg",
+   "source": "../../../../tmp/n54/p-D3-8829.jpg",
+   "kind": "note",
+   "label": "chain rise 4414.5 built: 1.02 (state 1.61)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T11:12:45.643Z",
+   "file": "20261125111245643-note-p-D3-8370.jpg",
+   "source": "../../../../tmp/n54/p-D3-8370.jpg",
+   "kind": "note",
+   "label": "chain 4185 built: 1.11 (state 0.98)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T11:12:45.041Z",
+   "file": "20261125111245041-note-p-D3-8341.jpg",
+   "source": "../../../../tmp/n54/p-D3-8341.jpg",
+   "kind": "note",
+   "label": "chain 4170.5 built: pattern 1.38 (state 1.11), red under the rising glow",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T11:12:44.488Z",
+   "file": "20261125111244488-note-p-D3-8305.jpg",
+   "source": "../../../../tmp/n54/p-D3-8305.jpg",
+   "kind": "note",
+   "label": "chain 4152.5 built: pattern 0.67 (state 1.59), red only at the globe's own limb rim",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T11:12:43.911Z",
+   "file": "20261125111243911-note-d3-w2.jpg",
+   "source": "../../../../tmp/n54/d3-w2.jpg",
+   "kind": "note",
+   "label": "built, dive 4170.5 to 4178.5 every second frame: the glow of the low sun rises over the far ground",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T11:12:43.361Z",
+   "file": "20261125111243361-note-d3-crop290.jpg",
+   "source": "../../../../tmp/n54/d3-crop290.jpg",
+   "kind": "note",
+   "label": "4290 lower part: state, without the dimming by the air between, with it (built): 119 pixels over 16 levels against the state",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T11:12:42.735Z",
+   "file": "20261125111242735-note-d3-b.jpg",
+   "source": "../../../../tmp/n54/d3-b.jpg",
+   "kind": "note",
+   "label": "air by path as built: 4290, 4200, 4186, 4176 state left, built right",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T10:40:52.964Z",
    "file": "20261125104052964-note-p-B1-8341.jpg",
@@ -186,62 +242,6 @@
    "source": "../../../../tmp/n51/pair-4035.jpg",
    "kind": "note",
    "label": "control S, place light held whole at every distance: pair of 4035, the hold is destroyed (dark outer ring, hard circle), so the hold keeps its own light",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T08:30:40.857Z",
-   "file": "20261125083040857-note-pat-state.jpg",
-   "source": "../../../../tmp/n52/pat-state.jpg",
-   "kind": "note",
-   "label": "state 128b54f1, 4152 and 4160 against 8 film frames later by the reader's own functions: frame, later frame carried back, pattern change (red over the limit): the red sits at the limb band and the left edge in the onward reading",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T08:10:55.352Z",
-   "file": "20261125081055352-note-pose3-all.jpg",
-   "source": "../../../../tmp/n51/pose3-all.jpg",
-   "kind": "note",
-   "label": "by poses 4152 to 4160: rows named 0.45, own light 0.55, G1 0.85; columns carried, pattern, detail fixed, detail carried",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T08:10:54.750Z",
-   "file": "20261125081054750-note-G1-top.jpg",
-   "source": "../../../../tmp/n51/G1-top.jpg",
-   "kind": "note",
-   "label": "trial G1 (haze read by the angle to the sun) at 4152 and 4160: rows named, own light, G1, state",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T07:45:28.291Z",
-   "file": "20261125074528291-note-look-0748.jpg",
-   "source": "../../../../tmp/n50/look-0748.jpg",
-   "kind": "note",
-   "label": "state 128b54f1 (main merged, footprint cure): rise 4396 to 4416 with the fade off, 4416 and 4436 and hold 4035 on the state, then the report's dive frames 4120 to 4160",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T07:22:36.791Z",
-   "file": "20261125072236791-note-p3-top.jpg",
-   "source": "../../../../tmp/n50/p3-top.jpg",
-   "kind": "note",
-   "label": "dive 4160 to 4245 in pairs of rows: before the cure above, with the cure below (4160 to 4174, 4176 to 4195, 4186 to 4245)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T07:22:36.103Z",
-   "file": "20261125072236103-note-p3-crop.jpg",
-   "source": "../../../../tmp/n50/p3-crop.jpg",
-   "kind": "note",
-   "label": "dive 4160, 4164, 4170, 4174, crop x 520 to 1480, y 380 to 920: top the round 3 tree with the footprint of the terrain picture as a dark straight edged shape, bottom the cure (the picture stands only where a pixel holds under 3 to 6 of its texels)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T06:58:55.547Z",
-   "file": "20261125065855547-note-cover-edge-4.jpg",
-   "source": "../../../../tmp/n50/cover-edge-4.png",
-   "kind": "note",
-   "label": "fault found on the round 3 tree: edge of the terrain picture's footprint at 4164 and 4168 (bottom), named 4160 and tree 4156 (top)",
    "stop": "uranus"
   }
  ]
