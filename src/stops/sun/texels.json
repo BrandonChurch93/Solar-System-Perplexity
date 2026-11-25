@@ -1,0 +1,9 @@
+{
+  "note": "Decision d253 (b). The size in texels of the full set's pictures that the Sun counts by: whatever picks a moment by texels to a pixel (the place on the globe giving way to the map, the life fading by the size of a cell on screen, the fine field, the two readings of the region's light) counts these texels in the web set too, so both sets exchange at the same moment and the web set is only softer. A level of the real picture is still picked by the real picture's size.",
+  "full": {
+    "wrap": [8192, 4096],
+    "plate": [8192, 2880],
+    "apron": [5504, 1548],
+    "field": [4096, 4096]
+  }
+}
