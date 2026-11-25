@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import type { HazeParams } from './haze'
+import { AIR_LAW_SCALE_HEIGHT } from '../terrain/air'
 
 export type Rgb = [number, number, number]
 
@@ -15,6 +16,20 @@ export interface HazeAir {
   forward: number
   glow?: Rgb
   glowPower?: number
+}
+
+export interface AirLaw {
+  light: Rgb
+  density: number
+  scaleHeight: number
+  dayFrom: number
+  dayTo: number
+}
+
+export function airLawUniforms(a: AirLaw): Record<string, THREE.IUniform> {
+  if (!(a.density >= 0) || !(a.dayTo > a.dayFrom)) throw new Error('the air law needs a density of 0 or more and a day edge that rises')
+  if (!(a.scaleHeight >= AIR_LAW_SCALE_HEIGHT[0] && a.scaleHeight <= AIR_LAW_SCALE_HEIGHT[1])) throw new Error('the air law is measured for a scale height of ' + AIR_LAW_SCALE_HEIGHT[0] + ' to ' + AIR_LAW_SCALE_HEIGHT[1] + ' radii, not ' + a.scaleHeight)
+  return { uAirLight: { value: new THREE.Vector3().fromArray(a.light) }, uAirLaw: { value: new THREE.Vector4(a.density, a.scaleHeight, a.dayFrom, a.dayTo) } }
 }
 
 export interface GlobeAir {
