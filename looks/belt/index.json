@@ -1,9 +1,30 @@
 {
  "folder": "belt",
- "pushed": "2026-11-25T16:41:01.599Z",
- "head": "74ee5759e06f0e15383d83449232ef1b3cc48501",
- "note": "smear cure trial: 1065 before and after",
+ "pushed": "2026-11-25T18:49:32.132Z",
+ "head": "59388c48b1d898acbd948ddbdf8db74bf6d6c681",
+ "note": "far Sun 59388c48: smear cure, the body follows each sample of the shutter; 615 and 717 before and after",
  "looks": [
+  {
+   "time": "2026-11-25T18:49:31.359Z",
+   "file": "20261125184931359-note-717-16-samples-limb-before-left-after-right-x4.jpg",
+   "source": "../../../../tmp/farsun/send/717-16-samples-limb-before-left-after-right-x4.jpg",
+   "kind": "note",
+   "label": "717 at 16 samples, limb x4, before left, after right"
+  },
+  {
+   "time": "2026-11-25T18:49:30.582Z",
+   "file": "20261125184930582-note-717-16-samples-disc-before-left-after-right-1to1.jpg",
+   "source": "../../../../tmp/farsun/send/717-16-samples-disc-before-left-after-right-1to1.jpg",
+   "kind": "note",
+   "label": "717 at 16 samples, disc, before left, after the sky sample hunk right, 1 to 1"
+  },
+  {
+   "time": "2026-11-25T18:49:29.796Z",
+   "file": "20261125184929796-note-615-final-box-before-left-after-right-1to1.jpg",
+   "source": "../../../../tmp/farsun/send/615-final-box-before-left-after-right-1to1.jpg",
+   "kind": "note",
+   "label": "615 final, box of MAIL 410, before left, after the sky sample hunk right, 1 to 1"
+  },
   {
    "time": "2026-11-25T16:41:00.707Z",
    "file": "20261125164100707-note-1065-16-samples-before-left-after-right-1to1.jpg",
@@ -40,28 +61,6 @@
    "kind": "note",
    "label": "1016 before over after the far Sun stands at sun.dir",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T14:29:07.880Z",
-   "file": "20261125142907880-note-pair-717-before-over-after-truesun-film-size.jpg",
-   "source": "../../../../tmp/farsun/send/pair-717-before-over-after-truesun-film-size.jpg",
-   "kind": "note",
-   "label": "717 before over after the far Sun stands at sun.dir (f8da2c20 with the hunk laid)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:37:18.041Z",
-   "file": "20261125133718041-note-4x-loops-upper-right-470-471-over-471globe-471far.jpg",
-   "source": "../../../../tmp/farsun/send/4x-loops-upper-right-470-471-over-471globe-471far.jpg",
-   "kind": "note",
-   "label": "loops upper right at 4 times: 470, 471 above; 471 forced globe, 471 forced far Sun below"
-  },
-  {
-   "time": "2026-11-25T13:37:17.280Z",
-   "file": "20261125133717280-note-4x-corona-470-471-over-471globe-471far.jpg",
-   "source": "../../../../tmp/farsun/send/4x-corona-470-471-over-471globe-471far.jpg",
-   "kind": "note",
-   "label": "corona at 4 times: 470, 471 above; 471 forced globe, 471 forced far Sun below"
   }
  ]
 }
