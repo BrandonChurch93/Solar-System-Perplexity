@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T08:24:50.126Z",
+ "pushed": "2026-11-25T08:50:38.728Z",
  "head": "da021335659e0efa1aafcc4ea362938b640121e3",
- "note": "round 3 state: both severe places before and after at 1 to 1, drafts of the working tree; smooth slices running",
+ "note": "round 3 state: severe 1 and 2 before and after at 1 to 1; terminator lean and night tone at 3720; the bark of the near field found in the sand",
  "looks": [
+  {
+   "time": "2026-11-25T08:50:37.529Z",
+   "file": "20261125085037529-note-t12_ll2.jpg",
+   "source": "../../../../tmp/v/x/t12_ll2.png",
+   "kind": "note",
+   "label": "3720 lower left at 2 to 1: left the final tier with the sand of the sheet (the bark of issue 11: the sand swept by the shutter), right a draft with the sand off"
+  },
+  {
+   "time": "2026-11-25T08:50:36.428Z",
+   "file": "20261125085036428-note-t10_skim4.jpg",
+   "source": "../../../../tmp/v/x/t10_skim4.png",
+   "kind": "note",
+   "label": "working tree drafts 3640, 3680, 3700, 3720 at half size"
+  },
+  {
+   "time": "2026-11-25T08:50:35.399Z",
+   "file": "20261125085035399-note-state2_3720_QR.jpg",
+   "source": "../../../../tmp/v/x/state2_3720_QR.png",
+   "kind": "note",
+   "label": "STATE 08:50, SEVERE 2: 3720 boxes Q and R at 1 to 1: approved, named 88ba2385 final, working tree draft: no lip, no strip, no mirror image, no vertical seam; the terminator leans as the approved's, the night side keeps a trace of tone"
+  },
+  {
+   "time": "2026-11-25T08:50:34.451Z",
+   "file": "20261125085034451-note-state2_3567_gap.jpg",
+   "source": "../../../../tmp/v/x/state2_3567_gap.png",
+   "kind": "note",
+   "label": "STATE 08:50, SEVERE 1: 3567 low right of the globe (1100,440 to 1920,900) at 1 to 1, named final above, working tree draft below: no sky patch, the night limb is the body's ellipse"
+  },
+  {
+   "time": "2026-11-25T08:50:33.496Z",
+   "file": "20261125085033496-note-state2_3567_QR.jpg",
+   "source": "../../../../tmp/v/x/state2_3567_QR.png",
+   "kind": "note",
+   "label": "STATE 08:50, SEVERE 1 after: 3567 boxes Q and R at 1 to 1, named 88ba2385 final above, working tree draft below"
+  },
   {
    "time": "2026-11-25T08:24:48.612Z",
    "file": "20261125082448612-note-t7_leftfoot.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/x/state_3567_gap.png",
    "kind": "note",
    "label": "SEVERE 1, 3567 box 1100,440 to 1920,900 at 1 to 1: named final above, working tree draft below"
-  },
-  {
-   "time": "2026-11-25T08:24:45.506Z",
-   "file": "20261125082445506-note-state_3567_QR.jpg",
-   "source": "../../../../tmp/v/x/state_3567_QR.png",
-   "kind": "note",
-   "label": "SEVERE 1, 3567 boxes Q and R (912,433 to 1824,866) at 1 to 1: named 88ba2385 final above, working tree draft below. The sky through the empty space inside the rim in the globe's shadow is closed; the night side is the body's own ellipse"
-  },
-  {
-   "time": "2026-11-25T08:08:35.048Z",
-   "file": "20261125080835048-note-t3_whole_pair.jpg",
-   "source": "../../../../tmp/v/x/t3_whole_pair.png",
-   "kind": "note",
-   "label": "3720 half size: approved left, trial T3 draft right"
-  },
-  {
-   "time": "2026-11-25T08:08:34.357Z",
-   "file": "20261125080834357-note-t3_wedge.jpg",
-   "source": "../../../../tmp/v/x/t3_wedge.png",
-   "kind": "note",
-   "label": "3567 at 1 to 1, where the shadow starts at the equator: named final left, trial T3 draft right"
-  },
-  {
-   "time": "2026-11-25T08:08:33.675Z",
-   "file": "20261125080833675-note-t3_foot.jpg",
-   "source": "../../../../tmp/v/x/t3_foot.png",
-   "kind": "note",
-   "label": "3720 at 1 to 1, foot of the globe: approved above, trial T3 draft below (dust depth 3, no band on the globe, ringlets on)"
-  },
-  {
-   "time": "2026-11-25T08:08:32.991Z",
-   "file": "20261125080832991-note-t3_gap.jpg",
-   "source": "../../../../tmp/v/x/t3_gap.png",
-   "kind": "note",
-   "label": "3567 at 1 to 1, gap between globe and inner rim in the globe's shadow: named 88ba2385 final above, trial T3 draft below (shaded plane solid from the globe on)"
   }
  ]
 }
