@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T07:30:57.679Z",
+ "pushed": "2026-11-25T07:43:31.586Z",
  "head": "2ad37054f2d530b01b4f154bafcd746ef7d4532d",
- "note": "third named commit of round 2 in proof: dive slice 3028 to 3032 green (pattern 0.40, limit 0.45), 3150 match worse (8.215 against 7.358 and 6.578)",
+ "note": "third named commit of round 2: the air as one slab of haze; dive slice green (0.40), rise slice red 0.61 against 0.45; 3150 match worse (8.215 against 6.578)",
  "looks": [
+  {
+   "time": "2026-11-25T07:43:30.135Z",
+   "file": "20261125074330135-note-trio-3150.jpg",
+   "source": "../work/r12/trio-3150.jpg",
+   "kind": "note",
+   "label": "3150 final tier: approved pack, second named commit, this commit (match 6.578, 7.358, 8.215)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T07:43:28.908Z",
+   "file": "20261125074328908-note-limb-3260.jpg",
+   "source": "../work/r12/limb-3260.jpg",
+   "kind": "note",
+   "label": "limb at 3260, 1 to 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T07:43:27.937Z",
+   "file": "20261125074327937-note-rise-pair.jpg",
+   "source": "../work/r12/rise-pair.jpg",
+   "kind": "note",
+   "label": "rise pair, second named commit against this one",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T07:43:26.793Z",
+   "file": "20261125074326793-note-jupiter-rise-k6500-6506-changes.jpg",
+   "source": "../work/r12/slices/jupiter-rise-k6500-6506-changes.png",
+   "kind": "note",
+   "label": "rise slice 3250 to 3253: change picture, pattern 0.61 against 0.45 (second named commit 1.26)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T07:43:26.022Z",
+   "file": "20261125074326022-note-rise-3242-3261.jpg",
+   "source": "../work/r12/rise-3242-3261.jpg",
+   "kind": "note",
+   "label": "rise 3242 to 3261, every film frame, draft tier, commit 2ad37054 (slab of haze)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T07:30:57.007Z",
    "file": "20261125073057007-note-trio-3150.jpg",
@@ -179,50 +219,6 @@
    "kind": "note",
    "label": "3150: approved close image, round 46, now (match 7.358 at 1400 by 788; far strip still too smooth)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:37:56.046Z",
-   "file": "20261125063756046-note-v0-sheet.jpg",
-   "source": "../work/r11/v0-sheet.jpg",
-   "kind": "note",
-   "label": "EXPERIMENT, not in the commit: 3029, 3037, 3252, 3260 as they are (left) and with the deck's air table off (right); the table makes most of the pattern line of both moves",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:25:38.271Z",
-   "file": "20261125062538271-note-trio-3150.jpg",
-   "source": "../work/r10/trio-3150.jpg",
-   "kind": "note",
-   "label": "3150: approved close image, round 46, now (match 7.358 at 1400 by 788; far strip still too smooth)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:25:37.526Z",
-   "file": "20261125062537526-note-jupiter-rise-draft-after.jpg",
-   "source": "out/work/handover/jupiter-rise-draft-after.png",
-   "kind": "note",
-   "label": "rise handover draft, frames 3241 to 3252 after the change of view: pale mounds at the bottom edge from 3248, dark straight edge lower left at 3252 (still wrong)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:25:35.427Z",
-   "file": "20261125062535427-note-jupiter-rise-draft-across.jpg",
-   "source": "out/work/handover/jupiter-rise-draft-across.png",
-   "kind": "note",
-   "label": "rise handover draft, frames 3240 to 3245 across the change of view, on the merge of main",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:05:15.179Z",
-   "file": "20261125060515179-sheet-jupiter-rise-top.jpg",
-   "source": "out/work/handover/jupiter-rise-top.png",
-   "kind": "sheet",
-   "label": "jupiter rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 3240), place picture off, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "first": 3240,
-   "last": 3314,
-   "tier": "draft"
   }
  ]
 }
