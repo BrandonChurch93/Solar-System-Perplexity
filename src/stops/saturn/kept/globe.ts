@@ -91,6 +91,7 @@ uniform float uNightBlur;
 uniform vec4 uFine;
 uniform float uFineTop;
 uniform vec3 uTerm;
+uniform vec4 uLean;
 uniform sampler2D uTable;
 uniform sampler2D uTableC;
 uniform float uNightFloor;
@@ -166,6 +167,9 @@ void main() {
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
   float ndl = dot(nL, uLightL) - (1.0 - uClose) * uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
+  // near the sheet the boundary of day and night stands more upright, as in the approved close image (grade.ts
+  // leanAt, by the height of the lens; none in the hold)
+  for (int k = 0; k < (uLean.y > 0.0 ? 1 : 0); k++) ndl += uLean.x - uLean.y * smoothstep(uLean.z, uLean.w, p.y);
   float lat = asin(clamp(p.y, -1.0, 1.0));
   // the map is rigid on the globe and turns with it as one body
   vec3 d = spinY(p, uSpin);
@@ -264,7 +268,7 @@ export class Globe {
         uRingShadow: { value: look.ringShadow }, uRingSoft: { value: new THREE.Vector3(look.ringSoft[0], look.ringSoft[1], look.ringSlant) },
         uHazeShadow: { value: look.hazeShadow },
         uRim: { value: new THREE.Vector4().fromArray(look.rim) }, uRimNight: { value: new THREE.Vector4().fromArray(look.rimNight) },
-        uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uFine: { value: new THREE.Vector4(look.fine[0], look.fine[1], look.fine[2], 0) }, uFineTop: { value: look.fineTop }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
+        uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uFine: { value: new THREE.Vector4(look.fine[0], look.fine[1], look.fine[2], 0) }, uFineTop: { value: look.fineTop }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) }, uLean: { value: new THREE.Vector4(0, 0, 0, 1) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
         uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },

@@ -17,13 +17,15 @@
   "gain": [1, 1],
   "unlit": 0.12,
   "shadow": {
-    "note": "the globe's shadow on the plane: edge half width at the limb and its growth per radius along the Sun's ray, how much farther each colour reaches into the shadow, and what is left inside it. solid: in the far look and in the set of the kept build the shaded sheet lets no star through from its inner edge on; it grows solid between these two radii (planet radii). The sheet in the light keeps its own opacity",
+    "note": "the globe's shadow on the plane: edge half width at the limb and its growth per radius along the Sun's ray, how much farther each colour reaches into the shadow, and what is left inside it. solid: once the lens has left the hold the shaded plane lets no star through from the globe on, in the set of the kept build and in the model at every height: the space between the globe and the inner rim in the globe's shadow holds dark ring matter with no light on it, so no sky shows between the night side and the shaded rings; it grows solid between these two radii (planet radii, the globe's own radius in the plane between them). It hides the sky alone: where the view ray ends on the globe the sheet counts by its true depth (limb, graze), so the night side of the globe keeps the body's whole outline in front of it and behind it. In the light that space is empty until the dust inside the rim comes in near the sheet (skim.json inner), and the sheet in the light lets no star through where it holds ice (starCover: the depth of the sheet counts that many times where the view ray passes the globe; the globe shows through by the true depth)",
     "soft": [0.006, 0.012],
     "reach": [1.25, 1.1, 1],
     "floor": [0.006, 0.008, 0.012],
-    "solid": [1.2458, 1.5]
+    "solid": [0.992, 1.0]
   },
   "layer": [0.95, 0.7, 0.2],
   "limb": [0.97, 1.0],
-  "limbNote": "stars do not show through any part of the sheet that holds ice, but the globe shows through it by the true depth: a ray counts as ending on the globe if it passes its centre closer than the first number, and not at all beyond the second (planet radii)"
+  "limbNote": "stars do not show through any part of the sheet that holds ice. A ray counts as ending on the globe if it passes its centre closer than the first number, and not at all beyond the second (planet radii); where it ends on the globe the sheet counts by its true depth and the globe shows through thin ice, as in the hold, while the view on the plane is steep (graze)",
+  "graze": [0.3, 0.4],
+  "grazeNote": "where the view grazes the plane the sheet hides the globe as it hides the stars: under the first number (the sine of the angle between the view ray and the plane) the depth counts starCover times in front of the globe too and nothing of the globe behind is added to the look of the ice in front of it (the strands over the globe, the thin sheet at the inner rim, its glow and the shine of the far look), over the second the true depth counts and all of that holds, in between a share of each. By the angle alone, in the set of the kept build once the lens has left the hold and in the model at every height: at the skim the lit southern half of the globe does not shine through the thin inner rings like a mirror image and no line of its limb crosses the ringlets; from the heights of the hold, the dive and the rise down to about 1.2 radii over the plane the view is steeper than the second number wherever the globe lies behind the rings"
 }

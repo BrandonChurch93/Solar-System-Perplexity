@@ -175,6 +175,8 @@ uniform vec3 uKPenumbra;
 uniform vec2 uKPenumbraFar;
 uniform vec2 uKSolid;
 uniform vec2 uKShadeRamp;
+uniform float uFill;
+uniform vec3 uKGraze;
 uniform vec4 uKOver;
 uniform vec4 uKStrand;
 uniform float uKSheetR[9];
@@ -200,6 +202,26 @@ float keptKnots(float r, float t[9]) {
   for (int k = 1; k < 8; k++) if (r >= uKSheetR[k]) i = k;
   return mix(t[i], t[i + 1], clamp((r - uKSheetR[i]) / (uKSheetR[i + 1] - uKSheetR[i]), 0.0, 1.0));
 }
+// how far the sheet of the far look is lit at the place along and beside the axis of the globe's shadow, mw the
+// pixel's width of miss
+float keptLit(float along, float miss, float mw) {
+  return along > 0.0 ? 1.0 : smoothstep(uKPenumbra.x - mw, uKPenumbra.y + mw + uKPenumbra.z * max(-along, 0.0) + uKPenumbraFar.y * max(-along - uKPenumbraFar.x, 0.0), miss);
+}
+// how far a view ray counts as passing the globe (1) and not ending on it (0): bb its nearest distance to the
+// globe's centre in the globe's own measure, bw the pixel's width of bb, mu the sine of the angle between the
+// ray and the plane. A ray counts as passing from where the globe's own soft edge begins (uKGraze.z pixels
+// inside its outline), so no star shows in that edge. Where the view grazes the plane every ray counts as
+// passing (sheet.json graze)
+float keptPast(float bb, float bw, float mu) {
+  return max(smoothstep(1.0 - (uKGraze.z + 1.0) * bw, 1.0 - uKGraze.z * bw, bb), 1.0 - smoothstep(uKGraze.x, uKGraze.y, mu));
+}
+// the opacity of the shaded plane, which lets no sky through from the globe on (sheet.json shadow.solid, as the
+// set of the kept build has it, kept/rings.ts): no star shows between the night side and the shaded rings. past:
+// keptPast of the view ray; where the ray ends on the globe the true depth counts, so the night side is the
+// body's own ellipse behind the empty space and behind thin ice
+float keptShade(float r, float along, float miss, float mw, float past) {
+  return uKSolid.x * uKSolid.y * (1.0 - keptLit(along, miss, mw)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) * smoothstep(uKShadeRamp.x, uKShadeRamp.y, r) * past;
+}
 // colour and opacity of the far look at radius r and azimuth phi. x: the place in the profile, texels: profile
 // texels a pixel, mu: cosine of the view to the normal, along and miss: the place along and beside the axis of
 // the globe's shadow with mw the pixel's width of miss, fore: in front of the globe, od and bb with its width
@@ -210,19 +232,27 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
   vec4 s = keptProf(x, texels * grad * uKFit.w);
   float body = smoothstep(uKEdge.x - 0.004, uKEdge.x + 0.004, r) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r));
   float ramp = smoothstep(uKFit.y, uKFit.z, r);
-  float a = 1.0 - pow(1.0 - min(max(s.a, uKFit.x * body * ramp), 0.999), clamp(uKFloorTone.w / max(mu, 0.02), 1.0, 8.0));
+  // no star shows through any part of the sheet that holds ice: where the view ray passes the globe the depth
+  // of the sheet counts uViewFit.w times (sheet.json starCover); the globe shows through by the true depth
+  // while the view on the plane is steep, and is hidden like the stars where it grazes the plane (uKGraze)
+  float cover = mix(1.0, uViewFit.w, uKSolid.x * body * keptPast(bb, bw, mu));
+  float a = 1.0 - pow(1.0 - min(max(s.a, uKFit.x * body * ramp), 0.999), clamp(uKFloorTone.w / max(mu, 0.02), 1.0, 8.0) * cover);
   vec3 c = inverseFilmic(s.rgb) * uKTone * keptAzGain(r, phi);
   float tu = (phi + uKMottle.z * pow(max(r, 1.0) / 1.86, -1.5) * uKMottle.w) / 6.283185307;
   float inB = smoothstep(1.5, 1.6, r) * (1.0 - smoothstep(1.88, 1.95, r));
   c *= 1.0 - uKMottle.x * inB * smoothstep(0.55, 0.9, vnoise(vec2(tu * 36.0, r * 3.0), 36)) + uKMottle.y * (vnoise(vec2(tu * 640.0, r * 70.0), 640) - 0.5);
   // the grade of the rings by the height of the lens (grade.ts); nothing of it runs at the heights of the hold
   for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) c = iceGrade(c, r) * iceView(mu, r) * iceZone(r, mu);
-  float lit = along > 0.0 ? 1.0 : smoothstep(uKPenumbra.x - mw, uKPenumbra.y + mw + uKPenumbra.z * max(-along, 0.0) + uKPenumbraFar.y * max(-along - uKPenumbraFar.x, 0.0), miss);
-  float over = fore ? smoothstep(-0.05, 0.0, od) * smoothstep(uKEdge.x, uKEdge.x + uKOver.x, r) * lit : 0.0;
+  float lit = keptLit(along, miss, mw);
+  // what the globe behind the sheet adds to the look of the ice in front of it (the strands over the globe, the
+  // thin sheet at the inner rim and its glow) holds while the view on the plane is steep: where the view grazes
+  // the plane the globe is hidden and the ice in front of it looks as it does beside it (uKGraze)
+  float steep = mix(1.0, smoothstep(uKGraze.x, uKGraze.y, mu), uKSolid.x);
+  float over = fore ? smoothstep(-0.05, 0.0, od) * smoothstep(uKEdge.x, uKEdge.x + uKOver.x, r) * lit * steep : 0.0;
   float keep = max(smoothstep(uKSheetFit.x, uKSheetFit.y, r), 1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb));
-  float sheet = fore ? (1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb)) * lit * smoothstep(uKEdge.x - fw, uKEdge.x + fw, r) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) : 0.0;
+  float sheet = fore ? steep * (1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb)) * lit * smoothstep(uKEdge.x - fw, uKEdge.x + fw, r) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) : 0.0;
   a = max(a, (1.0 - keptKnots(r, uKSheetT)) * sheet);
-  a = max(a, uKSolid.x * uKSolid.y * (1.0 - lit) * body * smoothstep(uKShadeRamp.x, uKShadeRamp.y, r));
+  a = max(a, keptShade(r, along, miss, mw, keptPast(bb, bw, mu)));
   vec3 wedge = uKSheetGlow.rgb * (1.0 - smoothstep(uKSheetFit.z, uKSheetFit.w, bb)) * keptKnots(r, uKWedgeG) * sheet * day;
   for (int j = 0; j < (over > 0.0 ? 1 : 0); j++) {
     float sx = (uKStrand.x + (r - uKEdge.x) * uKStrand.y - uKSpan.x) * uKSpan.y;
@@ -232,7 +262,8 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
     c *= mix(1.0, uKStrand.w * st, zone);
   }
   float dense = smoothstep(0.0, 0.6, dot(c, luma));
-  c = mix(uKFloorHold * (uKFloorTone.x + uKFloorTone.y * dense) * ramp * body, c, lit);
+  // near the sheet the ice in the globe's shadow keeps a share of its own light (uFill, skim.json inner.fill)
+  c = mix(uKFloorHold * (uKFloorTone.x + uKFloorTone.y * dense) * ramp * body, c, mix(lit, 1.0, uFill));
   for (int j = 0; j < (unlit ? 1 : 0); j++) c *= uKFloorTone.z * (0.25 + 3.0 * s.a * (1.0 - s.a)) / max(s.a, 0.05);
   return vec4(c + wedge, a);
 }`
@@ -379,10 +410,12 @@ void main() {
     vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uTintDense, uTintThin, thin);
     vec3 lit = globeShadow(P, uSunL, uPolar);
     // stars do not show through any part of the sheet that holds ice; the globe shows through by the true depth
+    // while the view on the plane is steep, and is hidden like the stars where it grazes the plane (uKGraze)
     float bn = dot(cs, ds) / length(ds);
     float behind = front ? 1.0 - smoothstep(uShadowFit.z, uShadowFit.w, sqrt(max(dot(cs, cs) - bn * bn, 0.0))) : 0.0;
-    alpha = 1.0 - exp(-left / mu * mix(uViewFit.w, 1.0, behind));
-    vec3 under = mix(uFloor, vec3(1.0), lit) * uShade.z;
+    alpha = 1.0 - exp(-left / mu * mix(uViewFit.w, 1.0, behind * smoothstep(uKGraze.x, uKGraze.y, mu)));
+    // near the sheet the ice in the globe's shadow keeps a share of its own light (uFill, skim.json inner.fill)
+    vec3 under = mix(uFloor, vec3(1.0), mix(lit, vec3(1.0), uFill)) * uShade.z;
     // the sheet and the white sparks of its brightest grains
     col = lum * (seen * law) * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit.y));
     // the brightest ice under the ceiling of the grade and the thin zones by the view, as in the far look
@@ -393,6 +426,8 @@ void main() {
   // the far look gives way to the model's own light where the lens has closed in
   col = mix(col, farLook.rgb, wfar);
   alpha = mix(alpha, farLook.a, wfar);
+  // the shaded plane lets no star through from the globe on, at every height of the lens
+  for (int k = 0; k < (mine ? 1 : 0); k++) alpha = max(alpha, keptShade(r, kAlong, kMiss, kMw, keptPast(bb, bw, abs(ray.y) / max(length(ray), 1e-6))));
   vec2 vq = vNdc * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   alpha *= uWeight;
@@ -453,8 +488,8 @@ export class Sheet {
 
   constructor(field: RingField, ice: Ice, polar: number) {
     const kl = keptLook.rings
-    // one triangle over the whole picture (VERT); the plane holds ice from the inner end of the model to
-    // where the ice past the rim ends (bounds), and near the sheet from the globe on (set)
+    // one triangle over the whole picture (VERT); the plane is drawn from the globe (set) to where the ice
+    // past the rim ends (bounds)
     this.geometry = new THREE.BufferGeometry()
     this.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3))
     this.uniforms = {
@@ -493,7 +528,7 @@ export class Sheet {
       uKFloorTone: { value: new THREE.Vector4(kl.floorTone[0], kl.floorTone[1], kl.unlit, skim.handover.kept.view) },
       uKAzGain: { value: azimuth.coeffs.flat() }, uKAzRadii: { value: azimuth.radii },
       uKShadowL: { value: this.farShadow }, uKPenumbra: { value: this.farPenumbra }, uKPenumbraFar: { value: new THREE.Vector2().fromArray(kl.penumbraFar) },
-      uKSolid: { value: this.farSolid }, uKShadeRamp: { value: new THREE.Vector2().fromArray(kl.shadeRamp) },
+      uKSolid: { value: this.farSolid }, uKShadeRamp: { value: new THREE.Vector2().fromArray(kl.shadeRamp) }, uFill: { value: 0 }, uKGraze: { value: new THREE.Vector3().fromArray(kl.graze) },
       uKOver: { value: new THREE.Vector4().fromArray(kl.over) },
       uKStrand: { value: new THREE.Vector4(kl.strand[0], kl.strand[1], kl.strand[2], kl.overTone[2]) },
       uKSheetR: { value: kl.sheetRadii }, uKSheetT: { value: kl.sheetThrough }, uKWedgeG: { value: kl.wedgeGain },
@@ -531,13 +566,16 @@ export class Sheet {
     this.outer.z = skim.outer.length[0]! * wide
     ;(this.uniforms.uOuter2!.value as THREE.Vector4).x = skim.outer.length[1]! * wide
     this.outerInk.y = Math.min(near * skim.outer.inkBy, 1)
-    // the dust inside the inner rim comes with the height of the lens (skim.json inner.by), and the plane holds
-    // ice from the globe on only where the lens is near (skim.json inner)
+    // the dust inside the inner rim comes with the height of the lens (skim.json inner.by) and only where the
+    // lens is near (skim.json inner); the plane is drawn from the globe on at every height, since its shaded
+    // part lets no star through from there (sheet.json shadow.solid)
     const dust = near > 0 ? inner : 0
     this.inner.y = skim.inner.depth[0]! * dust
     this.inner.z = skim.inner.depth[1]! * dust
     this.inner2.z = Math.min(near * skim.outer.inkBy, 1)
-    this.bounds.x = near > 0 ? skim.inner.end : (model.span as [number, number])[0]
+    this.bounds.x = skim.inner.end
+    // the light the ice keeps in the globe's shadow comes with the dust, by the same share (skim.json inner.fill)
+    this.uniforms.uFill!.value = skim.inner.fill * dust
   }
 
   // The numbers the kept set gives its rings for this take, for the far look (SHEET_FAR_GLSL; its weight is

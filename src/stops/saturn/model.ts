@@ -6,7 +6,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
-import { duskAt, dustAt, dustShadeAt, fineShare, gradeShare, hazeDayAt, innerShare, latToneAt, zoneShare } from './grade'
+import { duskAt, dustAt, dustShadeAt, fineShare, gradeShare, hazeDayAt, innerShare, latToneAt, leanAt, zoneShare } from './grade'
 import { Grains, type Lens } from './grains'
 import { iceField } from './ice'
 import * as look from './look'
@@ -184,6 +184,7 @@ export const createModel: SetFactory = async (ctx) => {
       su.uGain!.value = globeGain * state.weight * THREE.MathUtils.lerp(tune.halo.gain[0]!, tune.halo.gain[1]!, closeGlobe)
       su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, closeGlobe)
       duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2, gu.uDuskTint!.value as THREE.Vector4)
+      leanAt(camL.y, gu.uLean!.value as THREE.Vector4)
       dustAt(camL.y, gu.uDust!.value as THREE.Vector4)
       dustShadeAt(camL.y, gu.uDustShade!.value as THREE.Vector4)
       latToneAt(camL.y, gu.uLatFit!.value as THREE.Vector4)

@@ -111,6 +111,7 @@ uniform float uBandWide;
 uniform vec3 uBandZone;
 uniform vec3 uBandRelief;
 uniform vec3 uTerm;
+uniform vec4 uLean;
 uniform sampler2D uTable;
 uniform float uNightFloor;
 uniform vec4 uDusk;
@@ -216,6 +217,9 @@ void main() {
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
   float ndl = dot(nL, uLightL) - uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
+  // near the sheet the boundary of day and night stands more upright, as in the approved close image (grade.ts
+  // leanAt, by the height of the lens; none in the hold)
+  for (int k = 0; k < (uLean.y > 0.0 ? 1 : 0); k++) ndl += uLean.x - uLean.y * smoothstep(uLean.z, uLean.w, p.y);
   float lat = asin(clamp(p.y, -1.0, 1.0));
   // the map is rigid on the globe and turns with it as one body; the slide along the bands by latitude (the
   // winds) moves the fine streaks from functions only, never the map
@@ -327,7 +331,7 @@ export class Globe {
         uBandFine: { value: new THREE.Vector3(0, Math.log(skim.globeFine.reach[0]!), Math.log(skim.globeFine.reach[1]!)) }, uBandWide: { value: skim.globeFine.wide }, uBandZone: { value: new THREE.Vector3().fromArray(skim.globeFine.zone) }, uBandRelief: { value: new THREE.Vector3().fromArray(skim.globeFine.relief) },
         uBandFit: { value: new THREE.Vector4(skim.globeFine.cell, skim.globeFine.stretch, skim.globeFine.amount, skim.globeFine.bend) },
         uBandMore: { value: new THREE.Vector4(skim.globeFine.pixels[0]!, skim.globeFine.pixels[1]!, skim.globeFine.fall, skim.globeFine.seed) }, uBandTint: { value: new THREE.Vector3().fromArray(skim.globeFine.tint) },
-        uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
+        uTerm: { value: new THREE.Vector3().fromArray(look.termShift) }, uLean: { value: new THREE.Vector4(0, 0, 0, 1) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
         uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },

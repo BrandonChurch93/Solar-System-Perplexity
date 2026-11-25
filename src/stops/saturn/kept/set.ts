@@ -4,7 +4,7 @@ import { bufferFrame } from '../../../core/frame'
 import type { SetFactory } from '../../../core/types'
 import { smooth } from '../../../director/rig'
 import { Globe, Shell } from './globe'
-import { duskAt, dustAt, dustShadeAt, fineShare, gradeShare, hazeDayAt, latToneAt, zoneShare } from '../grade'
+import { duskAt, dustAt, dustShadeAt, fineShare, gradeShare, hazeDayAt, latToneAt, leanAt, zoneShare } from '../grade'
 import { Ice } from './ice'
 import * as look from './look'
 import { plan } from './plan'
@@ -228,6 +228,7 @@ export const createKept: SetFactory = async (ctx) => {
       gu.uVignette!.value = shot.post.vignette
       gu.uAspect!.value = aspect
       duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2, gu.uDuskTint!.value as THREE.Vector4)
+      leanAt(camL.y, gu.uLean!.value as THREE.Vector4)
       dustAt(camL.y, gu.uDust!.value as THREE.Vector4)
       dustShadeAt(camL.y, gu.uDustShade!.value as THREE.Vector4)
       latToneAt(camL.y, gu.uLatFit!.value as THREE.Vector4)

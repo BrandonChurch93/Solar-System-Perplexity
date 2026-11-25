@@ -78,6 +78,16 @@ export const duskAt = (height: number, into: THREE.Vector4, grey: THREE.Vector2,
   grey.set(THREE.MathUtils.lerp(dusk.grey[0]!, dusk.grey[1]!, w), dusk.greyPower)
 }
 
+// The lean of the boundary of day and night near the sheet (skim.json light.dusk.lean): the approved close
+// image has that boundary more upright on the globe than the Sun of the film draws it, later by the equator
+// and earlier toward the pole. The cosine of the Sun's angle on the clouds gets lean.low more by the equator
+// and falls by lean.fall toward the pole between the two sines of the latitude lean.lat, times the share of
+// the grade of the rings (by the height of the lens, none in the hold), in the kept set and in the model alike.
+export const leanAt = (height: number, into: THREE.Vector4): void => {
+  const w = gradeShare(height)
+  into.set(dusk.lean.low * w, dusk.lean.fall * w, dusk.lean.lat[0]!, dusk.lean.lat[1]!)
+}
+
 // The haze round the globe by the same share (skim.json light.halo.day): the two cosines of the Sun's angle
 // between which the day light of the haze comes in. With the lens high the haze keeps its own (far: what the
 // shell was built with, the look of the hold); as the lens comes down to the plane the glow of the limb draws
