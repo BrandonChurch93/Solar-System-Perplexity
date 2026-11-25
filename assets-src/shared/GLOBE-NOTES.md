@@ -425,6 +425,575 @@ Measured (`tests/globe-cap.test.ts`, a green square 0.02 degrees wide on a flat 
 
 `exactSpin` moves bytes of every frame of the stop that sets it (the colours shift by the amounts above, far under a pixel from orbit). The other way to the same end, inside a stop: the turn in the mesh's quaternion and a spin of 0 handed to `update`; at spin 0 the renderer's pair is exact. `src/bodies/globe.ts` and `src/bodies/standin.ts` still turn by the renderer's pair (far views); not changed.
 
+## 12. The floor of the pattern measure in a rise (TASK 697, MAIL 704, MAIL 710): the cure that keeps the band, for `tools/img/smooth.py`
+
+Not a globe option. The measure belongs to harness_builder; this is the proof and the patch asked of this notebook. Limit 0.45, the statement of the measure and every key of `smooth.pictures` stand as they were. MEASURED, STATED and UNKNOWN are kept apart; a number without a word is MEASURED here, draft tier, rate 2, with the tool's own functions.
+
+### The cause (MEASURED)
+
+`change()` chains 16 flows of the quarter size frames and carries the later frame back onto the earlier one. On rigid sequences made from Jupiter's frame k 6539 (nothing changes in place) the chain ends 0.6 to 1.0 quarter px beside the true place in the later frame (median; 99th percentile 2 to 3). Where the later frame shows the ground z times smaller, the way back enlarges that error z times: 0.8, 1.4, 2.5, 3.4, 5.3, 7.5 quarter px at z 1.3, 2, 3, 4, 6, 8, against a fine width of 2. Reading of the same sequences: 0.09, 0.13, 0.25, 0.42, 0.73, 1.17 with the chain; 0.00, 0.00, 0.02, 0.05, 0.17, 0.35 with the true map; 0.000 to 0.004 with the true map and the later frame at full size. Speed alone (0 to 80 px a capture frame at z 1 to 2) reads 0.18 or less; dives read 0.05 or less; the reading is the same whichever end of the sequence is the sharp one.
+
+### What was not taken (d236)
+
+The first patch (eb2975a6) made both widths of the detail as many times wider as the carried frame is enlarged. It cured the floor and hid an exchange of detail finer than 8 px times the enlargement (handover_engineer's rig: a whole exchange at 16 px read 0.10, 0.09, 0.09 at z 2, 3, 3.7, a cut 0.08). `matched` is gone again.
+
+### The cure
+
+The widths stay 8 and 40 px. What changes is the picture the farther frame is carried from, and which frame the pair is read on.
+
+- `carry(fw, bw, i, n, first, last, back)`: the map of the chain as `change()` made it, or the same chain run the other way (`back`), which carries frame i onto frame i + n. `change()` takes the map as `way` and returns its three values as before.
+- `enlarged(mx, my, ok, wide)`: how many times larger the carried frame is drawn, per pixel, from the slopes of the map averaged over the wide width.
+- `finer(full, scale, mx, my, step, levels)`: the carried frame taken from a picture `2^(step / 2)` times finer than the quarter size, reduced from the full size frame by area, the full size at most.
+- `sharper(a, moved, full, scale, mx, my, ok, grown, sigma)`: where the carried frame is enlarged by 1.19 or more it is carried again from the finer picture of the nearest half step, and the map is set right by `SETTLE_ROUNDS` (3) rounds of one more flow between frame a and the carried picture, at the finest scale of the flow, smoothed over the change blur (5 quarter px). Where the frame is not enlarged the carried picture is `moved` to the bit.
+- `readings(...)`: the onward reading (frame i against frame i + n carried back, cured when the carried frame is enlarged on the whole, median 1 or more) and, where frame i + n is the nearer one (the frame carried back is drawn smaller than 0.84), a second reading from the other end: frame i + n against frame i carried onto it from its finer picture, on the pixels where that one is enlarged by 1.19 or more.
+- `reading(onward, back, scale)`: the number of the pair is the larger of the two 99th percentiles, with its place in frame i, the share judged, and the band at that place.
+- `band(grown, scale, fine)`: the width in px of the nearer frame under which the window read nothing. 8 px where the carried frame is as large as it was or comes from a finer picture; beyond an enlargement of 4 the full size of the farther frame is not fine enough and the band is 8 times a quarter of the enlargement (10.6 px at 5.3); where the carried frame is drawn smaller (a dive read on its first frame) 8 px divided by that.
+- `pictures()` gives `patternBand` beside `pattern`; `tools/smooth.ts` prints it in the why of a pattern red, in the line of the largest change of the pattern, and as a column `band px` of the table. `changes()` shows the cured carried picture and, when there is one, a second row for the reading on the later frame.
+
+STATED: with no enlargement and no shrink over 1.19 nothing of this runs, and every pixel of the pattern is main's. In a pair that dives on the whole the onward reading is left as main has it, so a dive never reads less than on main; it reads more where the reading on the nearer frame is larger.
+
+Tried and left (MEASURED on the rig's Mars map): one round of the default flow leaves a clean rise at 0.40 at z 4.4 and 0.53 to 0.58 at 5.3; a flow at the finest scale that is not smoothed follows the exchange and reads a cut at z 2 as 0.44; widths that grow by z / 4 beyond 4 lower the exchanges at 5.3.
+
+### The rig's cases (handover_engineer's `rig.py`, Mars `wrap-color.jpg`, 1920 by 1080, 17 capture frames; read by `readings()` and `reading()`)
+
+Each cell: main, then the cure. Main is `m697/old/smooth.py`, the text of ed003c70. Rise:
+
+| case | z 2 | z 3 | z 3.7 | z 4.4 | z 5.3 |
+|---|---|---|---|---|---|
+| nothing exchanged, the first ground | 0.120, 0.012 | 0.337, 0.050 | 0.470, 0.072 | 0.700, 0.080 | 0.857, 0.100 |
+| nothing exchanged, the second ground | 0.167, 0.019 | 0.558, 0.086 | 0.616, 0.107 | 0.801, 0.099 | 0.911, 0.145 |
+| whole exchange, 16 px | 0.617, 0.553 | 0.825, 0.688 | 0.914, 0.765 | 0.954, 0.778 | 0.990, 0.835 |
+| whole exchange, 32 px | 1.030, 0.807 | 1.106, 0.956 | 1.212, 0.961 | 1.224, 0.960 | 1.168, 0.891 |
+| whole exchange, 64 px | 1.359, 0.971 | 1.339, 1.076 | 1.288, 1.043 | 1.286, 1.056 | 1.248, 1.030 |
+| whole exchange, 128 px | 1.440, 0.924 | 1.429, 1.117 | 1.391, 1.144 | 1.312, 1.091 | 1.300, 1.065 |
+| cut in one frame, 16 px | 0.617, 0.521 | 0.778, 0.712 | 0.933, 0.736 | 0.933, 0.872 | 0.970, 0.823 |
+| first half, 16 px | 0.248, 0.228 | 0.528, 0.424 | 0.582, 0.456 | 0.721, 0.437 | 0.860, 0.515 |
+| second half, 16 px | 0.213, 0.207 | 0.490, 0.244 | 0.613, 0.310 | 0.791, 0.400 | 0.875, 0.293 |
+| middle half, 16 px | 0.223, 0.227 | 0.502, 0.328 | 0.533, 0.363 | 0.727, 0.357 | 0.835, 0.390 |
+| middle half, 32 px | 0.419, 0.411 | 0.573, 0.495 | 0.670, 0.573 | 0.746, 0.587 | 0.834, 0.519 |
+| middle half, 64 px | 0.629, 0.617 | 0.674, 0.625 | 0.722, 0.638 | 0.815, 0.660 | 0.880, 0.615 |
+
+Dive (main judges 25, 11, 7, 5 and 3 percent of the frame at z 2 to 5.3; the reading on the nearer frame judges 96 to 100 percent):
+
+| case | z 2 | z 3 | z 3.7 | z 4.4 | z 5.3 |
+|---|---|---|---|---|---|
+| nothing exchanged, the first ground | 0.016, 0.016 | 0.029, 0.050 | 0.028, 0.072 | 0.037, 0.080 | 0.121, 0.121 |
+| nothing exchanged, the second ground | 0.030, 0.030 | 0.051, 0.086 | 0.054, 0.107 | 0.087, 0.099 | 0.220, 0.220 |
+| whole exchange, 16 px | 0.096, 0.598 | 0.099, 0.758 | 0.118, 0.757 | 0.079, 0.857 | 0.204, 0.812 |
+| whole exchange, 32 px | 0.389, 0.805 | 0.424, 1.010 | 0.431, 0.961 | 0.254, 0.955 | 0.248, 0.921 |
+| whole exchange, 64 px | 1.109, 1.109 | 0.859, 1.081 | 0.921, 1.064 | 0.616, 1.012 | 0.562, 1.007 |
+| whole exchange, 128 px | 1.384, 1.384 | 1.175, 1.175 | 1.172, 1.172 | 0.926, 1.061 | 0.897, 1.046 |
+| cut in one frame, 16 px | 0.098, 0.563 | 0.088, 0.851 | 0.110, 0.797 | 0.107, 0.869 | 0.182, 0.801 |
+| first half, 16 px | 0.031, 0.244 | 0.038, 0.418 | 0.049, 0.451 | 0.031, 0.479 | 0.073, 0.468 |
+| second half, 16 px | 0.038, 0.219 | 0.075, 0.323 | 0.087, 0.384 | 0.092, 0.350 | 0.085, 0.357 |
+| middle half, 16 px | 0.030, 0.282 | 0.060, 0.375 | 0.058, 0.406 | 0.057, 0.396 | 0.179, 0.370 |
+| middle half, 32 px | 0.115, 0.445 | 0.152, 0.516 | 0.193, 0.573 | 0.078, 0.587 | 0.206, 0.533 |
+| middle half, 64 px | 0.378, 0.625 | 0.308, 0.662 | 0.341, 0.662 | 0.191, 0.671 | 0.232, 0.593 |
+
+- Bar (2): nothing exchanged reads 0.145 at most in a rise and 0.220 at most in a dive (that one is main's own reading on 3 percent of the frame at z 5.3; the reading on the nearer frame is 0.145 at most). Room under 0.45: 0.23.
+- Bar (3): a whole exchange at 16, 32, 64 and 128 px reads 0.553 at the least in a rise (z 2, 16 px; main 0.617) and 0.598 in a dive (z 2, 16 px; main 0.096). A cut in one frame reads 0.521 at the least in a rise (z 2; main 0.617) and 0.563 in a dive (main 0.098). Room over 0.45: 0.07.
+- Half an exchange at 16 px reads 0.21 to 0.52 in a rise and 0.22 to 0.48 in a dive; the middle half at 32 px 0.41 to 0.59, at 64 px 0.59 to 0.67. Not run: first and second half at 32 and 64 px, any half at 128 px.
+- Six of the cases run again with the code as committed give the same pattern values to the digit. The band column was not kept from this run: it printed the middle band, the tool prints the band at the place.
+- The cure took 0.2 to 0.4 s a pair on a free machine (1.1 s at most beside two other jobs), plus 0.12 s to read one full size frame; a row is read once or twice.
+
+### The made proofs (`tools/smooth/made.py carried`, seed 710; `tests/smooth.test.ts`, eleven tests)
+
+Full size frames 960 by 540 of a ground with detail at every width, 17 capture frames, read at a quarter. Shrink 2, 3, 3.7, 4.4, 5.3.
+
+1. Nothing changes, rise: main 0.169, 0.281, 0.301, 0.471, 0.552; now 0.016, 0.028, 0.051, 0.052, 0.077. Dive: main 0.076, 0.157, 0.226, 0.200, none (it judges 24, 10, 6, 4 and 1 percent); on the nearer frame 0.016, 0.028, 0.055, 0.044, 0.078; the pair reads the larger, 0.076, 0.157, 0.226, 0.200, 0.078.
+2. Whole exchange at 16, 32, 64 px, rise: main 0.82 to 1.36; now 0.69 to 0.75 at 16 px, 0.91 to 1.01 at 32 px, 0.91 to 1.09 at 64 px. Dive at 16 px: main 0.335, 0.216, 0.204, 0.345, none; now 0.717, 0.749, 0.742, 0.809, 0.719. At 32 px now 0.94 to 1.09, at 64 px 1.00 to 1.28.
+3. Cut in one frame at 16 px, rise: main 0.80 to 0.93, now 0.69 to 0.82. Dive: main 0.496, 0.253, 0.242, 0.263, none; now 0.706, 0.803, 0.785, 0.761, 0.782.
+4. Half an exchange, rise: 0.33 to 0.36 at 16 px, 0.61 to 0.64 at 32 px, 0.71 to 0.72 at 64 px.
+5. No shrink (still, pans of 8 and 32 px, exchanged, half, cut): every pixel of the pattern equal to main's, the number and the judged share equal, no second reading. Every dive case: the onward pattern equal to main's in every pixel.
+6. The band at the place of the reading: 8.0 px to z 3.7; 8.0 to 9.5 at 4.4; 9.2 to 11.5 at 5.3; 15.8, 23.9, 29.7, 35.0 px where a dive's number is main's reading on the first frame (z 2 to 4.4). The enlargement read from the flows lies within a tenth of the shrink.
+7. Through `pictures()` from files at z 4.4: rise 0.048, dive 0.228 (main's reading, band 34.9 px), rise with a whole exchange 0.711, dive with a whole exchange 0.763.
+
+### Real frames (looks `six-<tag>`: the two frames, the carried picture, the pattern, the map as a grid over the enlargement)
+
+| row | tree | main | onward now | on the later frame | reads | band at the place | enlargement 1st, 50th, 99th percentile |
+|---|---|---|---|---|---|---|---|
+| Jupiter rise 3261 + 1/2 | `builder/proof-ju3` 062c4d01 | 0.690 at 300, 1076 | 0.272 | 0.116 on 2.6 percent | 0.272 at 316, 1072 | 11.1 px | 0.83, 2.30, 5.29 |
+| Mercury dive 746 + 1/2 | `builder/proof-me3` 93607f34 | 1.019 at 924, 64 | equal to main | 0.251 on 60 percent | 1.019 at 924, 64 | 8.0 px | 0.48, 0.80, 1.18 |
+| Neptune dive 4696 | main 2bc36ce6 | 0.716 at 628, 136 | equal to main | 0.450 on 52 percent | 0.716 at 628, 136 | 8.0 px | 0.68, 0.78, 1.05 |
+| Venus rise 1543 | main 2bc36ce6 | 1.151 at 240, 744 | 0.593 | 0.764 on 3.7 percent | 0.764 at 159, 355 | 8.0 px | 0.80, 1.41, 2.12 |
+| Venus dive 1282 + 1/2 | main 2bc36ce6 | 1.012 at 612, 132 | equal to main | 0.245 on 58 percent | 1.012 at 612, 132 | 8.0 px | 0.57, 0.72, 1.44 |
+
+- Jupiter 3261 + 1/2 goes green: over 0.45 on 0.041 of the judged area on main, 0.001 with the cure (one spot at the bottom edge). No judged pixel is lost in any of the five rows.
+- The three dives keep main's number: the red lies in the band under the limb, where the far ground is not enlarged in either frame. On the nearer frame the rest of the ground reads 0.25, 0.45 and 0.25.
+- Venus 1543 stays red. Onward, lower left of the frame (crop `crop-ve1543-onward`): the first frame has small bright clumps there, the later frame smooth streaks, carried from the quarter size and from the finer picture alike. On the later frame, at the far ground under the horizon (crop `crop-ve1543-back`): the later frame has fine speckle where the first frame has smooth haze. STATED: both are a change of the picture in place, not the floor. UNKNOWN which layer of the stop draws either.
+- Not read with the cure: Jupiter rise 3255, Neptune dive 4723, Mars dive 2466 (frames deleted for disk), Mercury rises 981 + 1/2 and 1009 (render stopped unfinished). UNKNOWN: any whole report; none was run.
+
+### The dives: what changes in place (a finding, nothing changed in a stop's folder)
+
+A rigid sequence through the same poses does not read red there. One real frame of the row laid on the unit sphere of its pose and seen through the 17 poses of the row:
+
+| row | the film | first frame laid on the sphere | last frame laid on the sphere |
+|---|---|---|---|
+| Mercury dive 746 + 1/2 | 1.02 | 0.16 | 0.22 |
+| Neptune dive 4696 | 0.72 | 0.20 | 0.16 |
+
+So no row leaves the judged area. Where the film reads over 0.45:
+
+| row | px from the limb, first frame (median; 10th to 90th percentile) | px from the limb in the later frame | 99th percentile by distance from the limb: 0 to 40, 40 to 80, 80 to 160, 160 to 320, over 320 px |
+|---|---|---|---|
+| Mercury dive 746 + 1/2 | 120; 72 to 205 | 55; 32 to 96 | none, 1.16, 1.10, 0.93, 0.19 |
+| Neptune dive 4696 | 82; 41 to 130 | 71; 38 to 118 | 1.36, 1.26, 0.71, 0.23, 0.21 |
+
+Seen in the crops (looks `pair-me746`, `pair-ne4696`): what changes in place is the band that rides with the limb and not with the ground. The ground that reads red comes nearer to the limb within the 8 film frames, a median 120 to 55 px in Mercury's row and 82 to 71 px in Neptune's, and the band of the limb comes to lie on it.
+- Neptune 4696: the rim of the air at the upper left limb of the whole globe. The place of the reading (628, 136) lies 34 px inside the limb in the first frame and 27 px inside it 8 film frames later, at 552, 32 of that frame, 32 px from its top edge. The rim is a bright blue band about 40 px wide with a dark line inside it; the cloud wisps of the ground pass under it. UNKNOWN which part of the air draws the dark line.
+- Mercury 746 + 1/2: the light along the limb. In the first frame bright arcs and streaks along the limb over the far ground; 8 film frames later that ground lies 25 px from the limb under a smooth bright band. UNKNOWN which of the stop's layers that are tied to the limb draws it (`rim`, `limb`, `silhouette`, `spill`, `haze` in `src/stops/mercury/set.ts`); the pyramid and the place picture are not what is seen there.
+
+
+More rows, read with the first patch (the cure was not run on them):
+
+- Mars dive 2466 (`builder/proof-mt3` 1483daf1): 1.294 at 900, 872; judged 0.42; 0.53 of the judged area over 0.45, spread over the whole ground; rigid through its poses 0.25 and 0.24. Over film frames 2466 to 2474 the globe's ground (smooth dune like land round the canyon) gives way to the close set (crisp layered cliffs) over the whole frame, half way at 2470; a straight edge of the close set stands in the lower left corner (pale wedge) and the lower right (dark wedge) at 2472 and 2474. Looks `ma2466-five`, `ma2466-both`, `pair-ma2466`.
+- Neptune dive 4723: 1.116 at 740, 580; judged 0.41; 0.46 of the judged area over 0.45, not at the limb; rigid 0.07 and 0.10. The whole ground is exchanged: the globe's broad white cloud streaks for the place picture (dark storm, spiral, ridge clouds).
+- Jupiter rise 3255: 0.623 at 1540, 392 on main, 0.552 with the first patch; its first frame laid on the body read 0.562 and 0.284; over 0.45 mostly within 160 px of the limb.
+- Venus dive 1282 + 1/2: 1.012 at 612, 132, in the band under the limb at the top of the frame, as in Mercury's and Neptune's dives. UNKNOWN what draws it; no crop of the limb was made.
+
+### What is still wrong
+
+- Beyond z 5.3 nothing was measured. The full size of the farther frame is the finest picture there is; beyond 4 the band widens with the enlargement and the report says so.
+- The enlargement at one place lies up to 13 percent beside the true one in the made films, so the band printed beyond z 4 does as well.
+- A dive is read twice and its number is the larger. Where main's reading of the first frame stands, the band printed is that of main's window at that place (8 px times the shrink there), and the reading on the nearer frame is not printed beside it.
+- The second reading leaves out the ground that is not enlarged by 1.19 in the nearer frame; there the pair is read as on main.
+
+## 13. The range picture and the pose record (MAIL 741, MAIL 744): what the camera's map of the pattern reader reads
+
+For a pair of capture frames of a dive or a rise the reader first carries one picture onto the other by the camera's own map, and lets the flow find only what is left. The map needs, for each pixel, how far the surface is, and for each frame where the camera stands and how the body is turned. Both come from here.
+
+**The view.** `diag=range`, a raw view like `depth` (code 6 in `src/diagnostics/diag.ts`, handover_engineer's file; the change is one entry of the list, two constants, one branch of `diagOut` and the reader `rangeOf`). Asked like a beauty frame of the capture page: the same grid, one sample at the pixel's middle (`src/core/jitter.ts`) and the middle of the shutter, no blur, bloom, tone map or grain. The old view `depth` is not changed (one grey channel, `log2(1 + range) / 14`, one level is 3.9 percent of the range, too coarse to carry a pixel).
+
+**The packing.** 24 bits in 8 bit colour, no extension: `n = 1 + floor(16777214 * clamp((log2(d) - RANGE_LOW) / RANGE_OCTAVES, 0, 1))`, `R = n >> 16`, `G = (n >> 8) & 255`, `B = n & 255`, alpha 255. `RANGE_LOW = -20`, `RANGE_OCTAVES = 32`: from 2^-20 to 2^12, one step is 1.3 millionths of the range. `n = 0` (black) is no surface: the sky and all that discards in a raw view (rims, veils, limbs, glare, the Sun's plate). `d` is the range along the pixel's ray from the lens (`length(vView)`), not z.
+
+**The units.** A layer hands its range in its own units. The globe hands radii of the body. A layer of the close view hands the close view's units, also where it is drawn on the globe side: Jupiter's cloud layer at 3261 (view `orbit`) reads 332 times the sphere's range, sphere over picture median 0.0030107, the plan's twin scale 0.0030101. So the record names the units a layer may use, `[1, close]` with `close = plan.twinFrame(time).scale` (`[1]` where the twin has none: Saturn), and `points` of `tools/img/range.py` takes for each pixel the one that puts the point nearest the body's surface. The two lie 60 to 970 times apart by stop (close: sun 0.08088, mercury 0.016218, venus 0.018407, earth 0.030751, mars 0.0010305, jupiter 0.0030101, uranus 0.015133, neptune 0.023924). The pick is a guess where a layer stands far off the surface; the cure at the root is that every close layer hands radii (MAIL 752: one token a stop, patches to the Builder, after this commit).
+
+**The record.** `poseRecord(film, plan, k, rate, fps, size)` in `tools/smooth/pose.ts` (harness_builder's folder, written here for it to lift; no page and no engine change, it calls `carriedCamera`, `film.shotAt` and the plan's turn). Per capture frame: `k`, `rate`, `time` (middle of the shutter), `view`; `camera` `p`, `q`, `vfov`, `width`, `height` in the frame of the stop's set, radius 1, the close view through the plan's twin, so both sides of the change of view stand in one frame; `sky.q`, the sky as the film draws it, `inverse(shot.skyTurn) * shot.skyQuaternion` (not the camera's turn: the sky has its own camera and its frame turns by `skyTurn`); `range` `low`, `octaves`, `units`; `bodies`, one entry: `id`, `place`, `turn` (`plan.drawn(time)` where the plan has one, as Mercury's, whose globe is drawn with it; `plan.turn(time)` elsewhere), `scale` and `axes` (the globe's fit, an oblate body), and `shape` where the plan hands one (section 16; the key is absent elsewhere). The further bodies of a stop and the lens of a stop that turns its world about the lens: section 17.
+
+**The rule.** A point X of frame i stands in frame j at `place_j + S_j turn_j (turn_i^-1 (S_i^-1 (X - place_i)))`, S the `shape` of the record as a 3 by 3 matrix, the unit where the record names none. `tools/img/range.py`, pure functions with the picture and the record as inputs: `ranges` (the picture to ranges), `rays`, `points` (the point of each pixel in the pose frame and the unit taken), `carried` (the pixel place and the range in the other frame), `sky` (the same for what has no range, by the rotation alone), `read`.
+
+**How a tool asks.** `openCapture({ dist, format, assets, diag: 'range' })` and a render of the capture frame at the draft tier, the same call as for the beauty; `npm run still -- --frame F --tier draft --diag range` for a film frame.
+
+**Measured** (tree 1924a104 plus the view, draft, 1920 by 1080, rate 2, no flow; the check script carries the second picture onto the first by `carried` and reads the mean absolute level difference on the pixels that land on the same surface, range there within 1 percent):
+
+| pair (capture frames) | surface of the frame | same surface there | way median, p99 px | as it is | carried | unit 1, close |
+| --- | --- | --- | --- | --- | --- | --- |
+| Jupiter 6522 to 6523 | 0.924 | 0.921 | 23.5, 89.7 | 17.43 | 2.37 | 0.000, 0.924 |
+| Jupiter 6522 to 6538 | 0.924 | 0.911 | 303, 718 | 50.18 | 14.08 | 0.000, 0.924 |
+| Uranus 8794 to 8795 | 0.585 | 0.584 | 16.1, 69.1 | 3.08 | 1.53 | 0.585, 0.000 |
+| Uranus 8794 to 8810 | 0.585 | 0.584 | 234, 701 | 19.92 | 15.90 | 0.585, 0.000 |
+| Uranus 8810 to 8826 | 0.635 | 0.635 | 250, 718 | 27.06 | 25.28 | 0.635, 0.000 |
+
+- Uranus's range picture is the sphere's: sphere over picture p1 0.999827, median 1.00001, p99 1.00602 at 8794. What is left there after the carry is not a way on the screen: white clouds that come in by a weight at their place, and the level of the air near the limb, which changes with the height (0.031 radii at 8794, 0.181 at 8826).
+- Made body (a flattened body that turns, in `tests/globe-range.test.ts`): the point is found within 1.2e-6 radii, the place in the other frame within 2.3e-5 px.
+
+**Not measured.** What Saturn's ring sheet, Uranus's deck, Mercury's globe and Neptune's layers hand as units. Whether the close view's own sky is fixed to the frame of `sky.q`. A layer that comes in by a weight is in a raw view only from one half on, and parallax relief hands the range of its mesh (stated by handover_engineer).
+
+## 14. The pale air beyond the edge (`limbAir`, MAIL 744 B b): a look only, off by default
+
+What it is for. On Mars's hold the grazing air of the globe ends with the sphere: at the lit limb the pale air stops on one pixel, the sharpening of the post chain draws a dark line outside it and the edge shows its steps (frame 2325, final, row 560: 453, 430, 685 as the sum of the three channels across the edge; the approved hero in its own pixels, 1.467 of the film's: 443, 479, 563, 643, 668).
+
+What it does. `src/bodies/limb.ts`, class `LimbAir`: a sphere of radius `1 + top * height` around the planet, back side, drawn after the globe and the shells (render order 6), premultiplied over what stands there (source one, destination one minus alpha; the alpha of the target is not written), no depth written. Each ray takes its nearest point to the centre; with `h` the height of that point above the unit sphere the share of the pale air is `1 - exp(-depth * exp(-h / height) * day * side)`, `depth`, day, side and the three colours being the planet's own grazing air (the same uniform objects, so what a stop sets per frame on the planet reaches the limb). At `h = 0` the share is the globe's own at its edge. In a raw view and without grazing depth it discards.
+
+How a stop turns it on: `new Planet({ ..., grazing, limbAir: { height, top } })`, both numbers in the stop's own params. `height` is the scale height in radii, `top` the number of scale heights the sphere reaches (8 in the look). Without `grazing` the constructor throws. Without `limbAir` nothing is made and no text of the planet's shader changes (`tests/globe-limb.test.ts` holds the hash of the text).
+
+Measured, Mars 2325 final, scratch only (a query word in a scratch copy of Mars's set, not in the repository): the disc has a radius of 605.6 px. Row 560 across the edge, sum of three channels: off 453, 430, 685, 651; height 0.0005: 461, 615, 663, 651; 0.001: 462, 555, 638, 659; 0.002: 454, 505, 564, 619, 645, 657; 0.004 and 0.008 read as a soft band of 10 and more px. Against the off picture at height 0.001: the pixels that change by more than 3 of 765 all lie between 600 and 620 px from the centre; everywhere else the largest change is 3 (the post chain's glow). Pictures: looks folder engine-globe, "Mars 2325 final, lit limb".
+
+Which stops it can serve: only Mars builds its globe with `Planet` of `src/bodies`. Jupiter, Saturn, Venus and Neptune take pieces of `src/bodies/haze` and draw their limb in their own globe shader; Sun, Mercury, Earth and Uranus take nothing of the limb from `src/bodies`.
+
+Not done: no stop turns it on; the dive and the rise were not rendered with it; the night side and the terminator were looked at only in the one frame.
+
+## 15. What counts pixels, and what counts the texels of the loaded set (MAIL 795, d253)
+
+The law. (a) Whatever counts screen pixels goes through the frame factor (`src/core/frame.ts`, section 9), so a capture at 3840 by 2160 is the picture of the render at 1920 by 1080. (b) The asset set must not move the moment at which a level, a patch or an exchange arrives: both sets count the full set's texels, the web set is only softer.
+
+How I looked. Every line of `src/bodies` (11 files), `src/terrain` (3 files) and `src/core/sets.ts` that holds one of: `dFdx`, `dFdy`, `fwidth`, `textureGrad`, `textureLod`, `textureSize`, `texelFetch`, `gl_FragCoord`, `gl_PointSize`, `gl_PointCoord`, `view.format`, a height or a width of a format or of an image, `1080`, `pixel`, `px`, `texels`, `lod`, `anisotropy`; then the shader text around each hit and the code that fills its uniforms.
+
+(a) Found, by file:
+
+- `planet.ts`: the colour levels come in by the texels of the parent a pixel (`gd`, `thin`, `cap` from `dFdx`, `dFdy`). Through the factor since d193 (`uPatchFade` over `bufferFrame()`, `tests/globe-frame.test.ts`).
+- `cap.ts`: the height levels, the grids and the mip of the heights read `pixel * distance`. `pixel` is the stop's own number, an angle (Mars gives the field of view over 1080), not the pixel of the buffer. Nothing to cure.
+- `farpoint.ts`: the radius is taken in pixels of the master, the core is widened by the factor squared, the size of the point follows the format's height. Through the factor since d193.
+- `limb.ts`, `haze.ts`, `air.ts`, `atmosphere.ts`, `trim.ts`, `globe.ts`, `moonbody.ts`: no term in pixels. `uAspect` with `vClip` is the vignette, a share of the frame.
+- `standin.ts`: a line width by `fwidth`, a presence by `radiusPx > 0.6`, a gain by `min(radiusPx, 1)`, all in pixels of the buffer and without the factor. No file of `src`, `tools` or `tests` imports it, so it is on no pixel path. Left as it is.
+- `relief.ts`: `dFdx` and `dFdy` only feed the gradients of `textureGrad` (which mip is read). The presence is a share the set gives. `screen` (the shield that keeps hidden cells from being drawn) counts the pixels of the buffer and the texels of the loaded alpha: it has to, it guards the real footprint of the real filter, and it removes only what cannot be seen.
+- `cover.ts`, `shield.ts`: angles and cells, no pixel.
+- `src/core/sets.ts`: the loader sets filters, wrap and anisotropy; it reads no size of the frame.
+- Left out on purpose, in every file: which mip a sampler reads (`textureGrad` gradients, `uGrad`, implicit `texture`). At the capture a pixel is half as wide and reads one mip finer; that is the finer picture of the same scene, no moment moves by it.
+
+So for (a) there is none without the factor on a pixel path of these folders.
+
+(b) Found: two, both in the shared globe, both reaching only Mars (the one stop that builds its globe with `Planet`).
+
+- The colour levels: a level comes in when its parent has fewer than `fade` texels a pixel, and the parent's texels were the loaded ones: `uPatchSize` from the width of the loaded file, `uMapWidth` from the stop (Mars gives the loaded wrap's width). With the web set (half the width) every level came in at about twice the height.
+- The height levels of the cap: `uCapFade` against `foot * scale * uCapSize` of the parent, `uCapSize` being the loaded size (Mars: 2048 full, 1024 web).
+
+The cure, off by default:
+
+- `patches.counts?: number[]` of `Planet`: one width per colour level, the full set's. Given, `uPatchSize` holds these numbers; not given, the loaded widths as before. No text of the shader changes either way. The wrap is counted by `mapWidth`, which is the stop's to give: the full set's width in both sets.
+- `count?: number` of a `CapLevel`: the full set's size of that height level. Given on any level, the cap's vertex program gets `uCapCount` and reads it in the one line that brings a level in; the mip of the heights (`lod`) keeps reading the loaded size, so the smaller set is not read softer than it is. Not given, the text is the old one to the letter (`tests/globe-count.test.ts`).
+- With `counts` the texels view of the globe shows the counted texels, not the loaded ones. With the full set the two are the same.
+
+How Mars turns it on (its builder's files, patch `count-mars.patch`, sent to the Builder): `levels.json` carries `"full": WIDTH` on each level (4096, 4096, 4096, 3686, 4096, 3686, 3277, 2176; `bake.py` writes that file and would have to write the widths), `assets.ts` types it, and `set.ts` gives `mapWidth: wrap.sets.full.color[0]`, `counts: patches.levels.map((l) => l.full)` and `count: l.size.full` on each cap level.
+
+Measured (draft tier, `npm run still`, Mars's patch in a scratch tree only):
+
+- Options off: 47 of 47 judged draft frames byte equal to the list of 86184412. The nine stop hashes stand, the engine hash goes 2981f5b6b07fec7a to 7de408a91944bdb0.
+- Mars with its patch, full set: frames 2212, 2325, 2427, 2580, 2726, 2782 byte equal to the frames without it (the full set counts itself). Mars's stop hash goes 9a6cc1876b2f3ff5 to 25d69772f1148712.
+- Mars's dive, web set against full set, texels view (which level each pixel reads): equal to full on 0.545 of the frame at 2400, 0.145 at 2427, 0.044 at 2450 before; 0.986, 1.000, 0.970 with the counts. Off by more than 3 of 255 after: 0.013, 0.000, 0.008 of the frame.
+- The same frames, beauty against full, both reduced by 4, mean / 99th part / largest of 255: 2400 before 1.39 / 14.4 / 93.8, after 0.51 / 3.4 / 23.8; 2427 before 0.75 / 5.4 / 24.6, after 0.74 / 4.6 / 18.1; 2450 before 0.34 / 1.5 / 66.1, after 0.33 / 1.3 / 7.0.
+- Looks `texels-panel` (full, web before, web with the counts; rows 2400, 2427, 2450) and `beauty-2427-crop`.
+
+Not known: what the remaining unequal pixels of the texels view are (by the eye the place's own layers and the cap's cliff). Not done: no final tier frame, no web film render, three dive frames only, no frame at 3840 by 2160.
+
+## 16. The drawn shape of a body in the pose record (MAIL 812.5): Earth's rise
+
+Asked by harness_builder: rows of Earth's rise that the pattern reader refuses (capture 4223 to 4259, rate 2, k against k + 16), first by "two grounds" (apart 0.53 to 0.83), then by "the range does not carry the pattern" (bulk 8.5 to 30.2 px). Two causes, both MEASURED on draft captures of 4215, 4223, 4230, 4231, 4239, 4245, 4246, 4261, 4274, 4290 on b6a8d201.
+
+**Cause A, the range picture of Earth's ground on the globe (the stop's file, not mine).** `src/stops/earth/relief.ts` draws its ground on the globe in three passes (a dim pass, then sea and towers blended under by the alpha that stands there). In the raw views the dim pass leaves the globe's code times one minus the ground's cover, and the ground's code is added on top, so a pixel where the cover is between 0.5 and 1 holds the sum of two codes and decodes 1.3 to 630 times too far. Share of the body's pixels more than 0.02 farther than the unit sphere, as it is and with the patch:
+
+| capture | 4215 | 4223 | 4230 | 4231 | 4239 | 4245 | 4246 | 4261 | 4274 | 4290 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| as it is | 0.009 | 0.035 | 0.087 | 0.094 | 0.448 | 0.573 | 0.576 | 0.248 | 0.019 | 0.002 |
+| with the patch | 0.000 | 0.000 | 0.000 | 0.000 | 0.001 | 0.002 | 0.003 | 0.010 | 0.007 | 0.002 |
+
+The patch, one line of `GROUND_FRAG` (the dim pass clears the pixel whole in a raw view where the ground is kept; the beauty is byte equal on 4230, 4245, 4274):
+
+```
+-  if (uDim > 0.5) outColor = vec4(0.0, 0.0, 0.0, ground * on);
++  if (uDim > 0.5) outColor = vec4(0.0, 0.0, 0.0, uDiag >= 2 ? 1.0 : ground * on);
+```
+
+Apart of the pairs 4215:4231, 4223:4239, 4230:4246, 4245:4261 (rebuilt with my own script, not the harness reader): as it is 0.008, 0.537, 0.830, 0.658; with the patch 0.002, 0.001, 0.001, 0.001.
+
+**Cause B, the shape of the drawn globe (the record's, mine).** `src/stops/earth/set.ts` draws the globe, its air and the ground on the globe in a group `shape` whose matrix is `shape.json` (x 1.0043409, y 0.9907715, z 0.9975241, shear -0.0042483) mixed to the unit by `low`: a sphere where the eye stands under 0.05 radii, the whole shape over 0.7, between them by the log of the height (capture 4216 to 4290 of the rise). The group sits in the set's frame outside the globe's turn, so a point g of the turned body is drawn at `S g`. The record held no shape, so the rule of section 13 carried a point of a sphere.
+
+What is in the record now. `bodies[0].shape`: nine numbers, the matrix by rows in the pose frame, as drawn at that frame. `poseRecord` asks the plan for `drawnShape(view, eye, time)` (type `Shaped` in `tools/smooth/pose.ts`; `eye` the record's camera place, `time` the record's time) and writes what it hands: `{ shape, place? }` or null. A plan without the member, or one that hands null, gives a record with no `shape` key, byte equal to the record before. `place` goes into `bodies[0].place` where given (a shape about a centre off the body's middle). `tools/img/range.py`: `carried` and `shaped` take the shape out before the turn and lay the other frame's shape on after it (`form`, `plain`).
+
+How a stop turns it on: a method on its plan. For Earth (`src/stops/earth/plan.ts`, the builder's file; the same rule as lines 169 and 175 of its `set.ts`):
+
+```
++import { descent, shape as figure } from './look'
+...
++  drawnShape(view: ViewKind, eye: THREE.Vector3): { shape: number[] } {
++    const low = view === 'orbit' ? 1 - smooth((Math.log(Math.max(eye.length() - 1, 1e-4)) - Math.log(descent.low)) / (Math.log(descent.high) - Math.log(descent.low))) : 1
++    return { shape: figure.flatMap((row, i) => row.map((v, j) => v + ((i === j ? 1 : 0) - v) * low)) }
++  }
+```
+
+MEASURED (range pictures with patch A, records written by the patched plan, beauty frames of b6a8d201; the carried frame against the first by a flow of my own at quarter size, median and 90th part of the flow left in px, pairs as above):
+
+| | 4215:4231 | 4223:4239 | 4230:4246 | 4245:4261 |
+|---|---|---|---|---|
+| as it is (no patch) | 0.1 | 1.0 | 3.4 | 21.5 |
+| patch A, record without shape | 0.1, 1.6 | 1.0, 2.0 | 3.3, 5.0 | 7.7, 11.4 |
+| patch A, record with shape | 0.1, 1.6 | 0.1, 2.0 | 0.3, 2.3 | 0.8, 3.8 |
+
+The shape of the records: the unit at 4215 to 4231; at 4245 x 1.0003124, y 0.9993359, shear -0.0003057; at 4261 x 1.0017539, y 0.9962713; at 4290 the whole of `shape.json`. All other keys of the ten records are byte equal to the records before.
+
+STATED from the code, not measured: in the terrain view the record says the unit (the place's ground is not in the group). In the film's ending (`set.ts`, `ending`) the set uses the whole shape whatever the height; the plan's method does not know the ending, and no record is written there today.
+
+UNKNOWN: what the harness reader (`carry.py` of agent/harness-prove) says on these rows with both patches; the numbers above are my flow, not its bulk. Uranus draws its globe in a shape with a turn, two scales and a centre (`src/stops/uranus/set.ts`, `plan.ts` `shaped`); its plan hands no `drawnShape`, and whether that is part of the bulk on its rise is not measured. Sun and Mars rows of the same mail: not looked at.
+
+Tests: `tests/globe-pose.test.ts` (the plan's shape and place reach the record with the view, the eye and the time of the frame; no key where there is none), `tests/globe-range.test.ts` (a made body in two shapes and two turns: the carried place equals the rule to 1e-9 px, the point lands on the body of the other frame, and the record without shape carries it elsewhere).
+
+## 17. The further bodies of a stop in the pose record (MAIL 835 task 1): moons, rings, and the lens of Saturn
+
+Asked by harness_builder and the Builder: Phobos crosses the face of Mars in capture 4776 to 4822, the record named one body, so a reader carried the moon by the turn of Mars. The record now names every body a stop draws with a range, each with its own place and turn.
+
+**What is in the record now.**
+
+- `bodies[1], bodies[2], ...`: `{ id, place, turn?, reach, sheet? }`. `place` and `turn` are those of the body at that frame in the pose frame, as for the first body. `reach` is the radius of the ball about `place` that holds everything the body draws (in radii of the stop). `turn` is left out where only the place is known. `sheet: { normal, inner, thick }` makes the body a flat ring instead of a ball: everything within `thick` of the plane through `place` with that normal, from the radius `inner` to `reach`.
+- `poseRecord` asks the plan for `drawnBodies(view, eye, time)` (type `Bodied` in `tools/smooth/pose.ts`) and writes what it hands. A plan without the member: in the orbit view the bodies of `plan.nearBodies(time)` are written by their place alone (id `<stop>.near.<i>`, no `turn`); today that is Phobos and nothing else. A plan that hands an empty list, or a stop with neither, gives a record byte equal to the record before.
+- `camera.q`: where the plan has `drawnSeat(time)` (type `Seated`), the turn the stop gives its whole world about the lens is taken into the camera (`q` times the inverse of that turn), because that is the lens the stop is drawn through. The sky keeps the film's camera. Only Saturn turns its world so (`plan.seat`, both of its scenes).
+- `tools/img/range.py`: `beyond(body, x)` (how far a point stands outside what a further body holds), `owner(x, record)` (the index of the body each point belongs to: the first of the further bodies that holds it to `HOLD` = 0.001 of its reach, else the first body), `moved` (one body's rule), `carried` (each point by its owner's place, turn and shape; bodies are matched by index and equal id), `points` (the unit of a pixel is the one that puts its point nearest a surface of any body of the record, not of the first alone).
+
+**The rule for a reader.** The pixels of a moon are the pixels whose point (`points`) lies in its ball: `owner(x, record) == i`. No second unit and no outline is needed; the range picture already holds the moon's own distance. Where two bodies hold a point the earlier named wins, so a plan names the smaller thing first (Titan before the rings).
+
+**How a stop turns it on.** A method on its plan (the builder's file). The six patches are in the mail of this commit, one per stop; Mars as the pattern:
+
+```
++  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
++    if (view !== 'orbit') return []
++    const e = time - this.holdMid
++    const place = new THREE.Vector3().fromArray(phobos.center).applyAxisAngle(this.axis, THREE.MathUtils.degToRad(this.p.moonDegPerSecond) * e)
++    const turn = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3().fromArray(phobos.tumbleAxis).normalize(), THREE.MathUtils.degToRad(moon.tumbleDegPerSecond) * e).multiply(new THREE.Quaternion().fromArray(phobos.holdQuaternion))
++    return [{ id: 'phobos', place: place.toArray(), turn: turn.toArray(), reach: phobos.radius * phobos.hi }]
++  }
+```
+
+**What each stop draws beside its globe (read in each set; a layer hands a range only where it calls `diagOut` with one).**
+
+| stop | further body with a range | what the patch names | without a range (a reader sees sky there) |
+|---|---|---|---|
+| Sun | none (`convect`, `globe`, `ground` are the body) | nothing | prominences, loops, jets, corona, fringe |
+| Mercury | none | nothing | the Sun's plate, glare, rim |
+| Venus | none (the cloud relief is the body) | nothing | veil, rim |
+| Earth | the Moon (`moon.ts`), orbit view | `moon`: the hold eye drawn to `look.moon.center` by `near`, round the axis by 0.13 deg/s of `plan.clock`; fixed turn; reach radius times near times 1.25 (its mesh) | |
+| Mars | Phobos (`bodies/moonbody.ts`), orbit view; no Deimos is drawn | `phobos`: as above | |
+| Jupiter | Io (`io.ts`), orbit view | `io`: `look.io.home` round the axis by 2.6 deg/s before the middle of the terrain, by `riseDeg` and the same rate from the middle of the rise after; turn about y by 0.6 deg/s; reach radius times 1.12 | |
+| Saturn | Titan (`titan.ts`), the ring sheet and the grains (`sheet.ts`, `grains.ts`), both views | `titan` (home round the axis by 0.3 deg/s, reach 1.6 radii of its disc, its mesh); `rings` as a sheet (normal `ringNormal`, inner 1.2458, reach 3.9, thick 0.15, at rest in the pose frame); `drawn` (the globe turns by `plan.spin` in both scenes, `plan.turn` says the unit where the spot is on the rings); `drawnSeat` | |
+| Uranus | Miranda and Ariel (`moons.ts`), orbit view | `miranda`, `ariel`: the fitted place drawn to the hold eye by `depth`, round the ring normal by 0.6 deg/s; own turn | the rings and arcs (`rings.ts`: they discard in the raw views) |
+| Neptune | Triton (`triton.ts`), orbit view | `triton`: the fitted place before the middle of the terrain, `look.triton.stage` after; round the axis by 0.3 deg/s; turn about `up` by 0.4 deg/s; reach the fitted radius | the ring (`ring.ts` discards in the raw views) |
+
+**COMPUTED from the plans with the patches in (no picture; `out/work/tmp/bodies.ts`, every capture frame of each hold, dive and rise at rate 2):** how far a body lands from its own place over 16 capture frames when it is carried by the globe's rule, median and most, in px of 1920 by 1080, and the capture frames where its ball is in the frame and its middle is not behind the globe.
+
+| stop, body | hold | dive | rise |
+|---|---|---|---|
+| Earth, moon | 3.8, 4.0 (3360 to 3659) | 4.9, 6.9 (3660 to 3702) | 3.5, 11.9 (4316 to 4349) |
+| Mars, phobos | 74.2, 97.2 (4500 to 4799; reach up to 256 px) | 171.5, 788.9 (4800 to 4825; reach up to 793 px) | not in the frame |
+| Jupiter, io | 3.0, 3.0 (5640 to 5939) | 3.2, 5.9 (5940 to 6010) | 2.1, 9.0 (6572 to 6629) |
+| Saturn, titan | 9.1, 9.5 (6780 to 7079) | 7.9, 9.5 (7080 to 7228) | 8.2, 8.3 (7699 to 7769) |
+| Saturn, a point of the rings | 2.5, 2.7 | 1.5, 2.5 | 1.7, 1.9 |
+| Uranus, miranda | 1.0, 1.1 (7920 to 8219) | 1.7, 2.3 (8220 to 8268) | behind the globe (8820 to 8909) |
+| Uranus, ariel | 0.7, 0.7 (7920 to 8219) | 1.0, 2.2 (8220 to 8250) | not in the frame |
+| Neptune, triton | 7.0, 7.1 (9060 to 9359) | 7.0, 7.2 (9360 to 9393) | 7.7, 8.3 (10009 to 10049) |
+
+**MEASURED on draft captures (range and beauty at 95fcf006, records written with the patches in; pairs k against k + 16).** On the pixels the record gives the body: the share whose range in the later frame agrees with the carried range to 0.2 percent (the geometry), the median flow left between the first frame and the later frame carried back (my own flow at quarter size, px), and the mean difference of grey (of 255). Each cell: by the globe's rule, then by its own.
+
+| pair | body, pixels | range agrees | flow left | grey apart |
+|---|---|---|---|---|
+| Mars 4780:4796 (hold) | phobos, 96752 | 5.0%, 99.5% | 82.4, 0.0 | 37.9, 2.0 |
+| Mars 4800:4816 (dive) | phobos, 99344 | 3.7%, 96.9% | 65.9, 3.2 | 39.4, 21.7 |
+| Earth 3500:3516 (hold) | moon, 5125 | 85.0%, 99.5% | 3.4, 0.1 | 19.8, 2.4 |
+| Earth 3670:3686 (dive) | moon, 5339 | 78.4%, 97.6% | 3.3, 0.4 | 19.1, 4.2 |
+| Earth 4320:4336 (rise) | moon, 5169 | 49.3%, 96.6% | 2.3, 1.5 | 28.3, 9.3 |
+| Jupiter 5800:5816 (hold) | io, 4153 | 89.1%, 99.9% | 2.9, 0.4 | 18.3, 3.1 |
+| Jupiter 5960:5976 (dive) | io, 5267 | 86.9%, 93.4% | 2.9, 1.1 | 20.8, 13.1 |
+| Jupiter 6610:6626 (rise) | io, 2901 | 98.4%, 98.2% | 0.8, 0.6 | 4.2, 4.6 |
+| Saturn 6900:6916 (hold) | titan, 3167 | 75.0%, 99.2% | 8.7, 0.0 | 47.9, 1.4 |
+| Saturn 6900:6916 (hold) | rings, 712335 | 99.8%, 99.8% | 2.6, 0.1 | 5.8, 3.5 |
+| Saturn 7100:7116 (dive) | titan, 3459 | 71.8%, 99.6% | 9.0, 0.1 | 45.9, 1.5 |
+| Saturn 7100:7116 (dive) | rings, 850546 | 99.7%, 99.7% | 2.4, 0.1 | 5.5, 3.3 |
+| Saturn 7200:7216 (dive, terrain view) | titan, 1706 | 71.3%, 98.5% | 6.4, 0.1 | 48.7, 2.2 |
+| Saturn 7720:7736 (rise) | titan, 2547 | 72.6%, 98.8% | 7.6, 0.1 | 47.1, 2.1 |
+| Uranus 8000:8016 (hold) | miranda, 1154 | 95.9%, 98.4% | 0.4, 0.1 | 9.6, 7.1 |
+| Uranus 8000:8016 (hold) | ariel, 655 | 97.6%, 98.9% | 0.2, 0.1 | 7.8, 5.5 |
+| Uranus 8230:8246 (dive) | miranda, 1149 | 93.3%, 99.0% | 0.4, 0.2 | 9.4, 8.4 |
+| Uranus 8230:8246 (dive) | ariel, 772 | 93.8%, 98.6% | 0.3, 0.2 | 9.6, 5.5 |
+| Neptune 9200:9216 (hold) | triton, 12648 | 0.0%, 99.5% | 35.2, 0.3 | 103.5, 2.3 |
+| Neptune 9364:9380 (dive) | triton, 12219 | none held, 99.8% | none, 0.2 | none, 2.1 |
+| Neptune 10020:10036 (rise) | triton, 12834 | 0.0%, 99.3% | 29.3, 0.3 | 44.1, 2.6 |
+
+On Neptune the one body record also picks the wrong unit for Triton's pixels (the close unit puts them nearer the globe), which is why nothing agrees there.
+
+**Mars, the named case.** With the fallback alone (no patch: place, no turn) the pair 4780:4796 reads flow left 0.6 px and grey apart 3.6 on the moon; with the patch 0.0 px and 2.0. In the dive the moon's shape lands (range agrees on 96.9 percent, the median of range there over carried range is 1.00000) and its light does not: the mean grey of the moon's pixels goes from 63.2 to 50.1 between 4800 and 4816. STATED from `src/stops/mars/set.ts` and `phobos.json` (`lit`): the baked lit side of the moon is shown in full while the eye stands within 12 degrees of the hold's eye as seen from the moon, and is gone at 24, where the moon's own light draws it; computed from the plan the angle is 11.54 at capture 4806, 13.74 at 4810, 17.66 at 4814, 24.01 at 4818, so the baked side goes out over capture 4808 to 4818 (five film frames). A reader that carries the moon rightly will still read a change of pattern on it in those frames; that is the picture, not the record.
+
+**Saturn, the lens.** MEASURED on 6900 and 7100: a sphere fitted to the points of Titan's mesh stood 0.0273 and 0.0261 radii beside the place of the record (across the ray; 0.0005 along it), and the globe's points stood off the unit shape by a slope of 0.011 and 0.014 per 1000 px across the picture. With the seat in the camera: 0.0002 and 0.0003 radii, slope 0.0002 and 0.0001. The record of Saturn was written through a lens that is not the one the stop is drawn through (`plan.seat(time)` turns the world about the lens in the lens's own frame). The patch hands it as `drawnSeat`.
+
+Also MEASURED on the same frames: every point of Saturn's globe stands 0.0200 outside the unit shape (median; with the seat in). STATED from `src/stops/saturn/kept/globe.ts`: the mesh is blown up by `limbInflate` 1.02 where the limb is shown and the range is that of the mesh, not of the globe drawn inside it.
+
+**STATED, not measured.** The moons of Earth, Mars, Jupiter, Uranus and Neptune are named in the orbit view alone, as their sets draw them in the orbit group; whether any is seen from a place picture was not looked at. Earth's Moon is kept round on the screen by its shader (`uRound`), so it is not exactly a ball that turns. The grains of Saturn's rings go round on their own orbits and the globe's shadow lies on the rings; the sheet carries both as at rest.
+
+**UNKNOWN.** What the harness reader says with these records. The turn of each moon was not measured apart from its place (the turns are small: Phobos 0.24 degrees in 16 capture frames).
+
+Tests: `tests/globe-pose.test.ts` (a plan's further bodies reach the record with the view, the eye and the time of the frame; the fallback of the near bodies, in the orbit view alone; the seat goes into the camera and nothing else changes; no key where there is none), `tests/globe-range.test.ts` (a made globe, moon and ring: every pixel is given to the body that drew it, the carried place equals each body's own rule to 1e-9 px, a record of one body lands the moon and the ring elsewhere, a body without a turn goes by its place alone, a body whose id differs in the other record goes with the globe).
+
+## 18. The unit of the close view, the near plane, and three stops looked at (MAIL 835 tasks 2 and 3)
+
+All flows here are my own (`tools/img/range.py` and a dense flow at a quarter of the size, pairs of capture frames k to k + 16, draft); "flow left" is what stays after the later frame is carried back by the record, as median, 90th and 99th percentile in px of the full frame. None is the harness reader's number.
+
+**Uranus, rise 8790 to 8834: the shape is not the bulk there.** MEASURED on 8790:8806, 8806:8822, 8818:8834: the record with `drawnShape` and without is the same record, flow left 0.3, 36.4; 0.5, 32.4; 12.3, 90.7 (99th up to 147.4) either way; the points stand 0.00000 to 0.00004 off the unit sphere. Computed from the plan: the roundness of the globe is 1 from capture 8293 to 8399 and from 8760 to 8849, and between 0 and 1 in 8228 to 8292 (dive) and 8850 to 8889 (rise). What changes in 8790 to 8834 is the picture: the clouds of the close deck go, the white clouds of the globe come in, the glare of the Sun moves (look `uranus-rise`). Where the shape counts: dive 8267:8283 flow left 2.3, 5.7 without the shape (points 0.00223 off the sphere) and 0.3, 4.8 with it; 8274:8290 2.7, 6.9 (0.00154) and 0.2, 7.1; rise 8850:8866 2.0, 8.9 and 1.1, 12.8. The patch for the plan (`drawnShape`, with `drawnBodies`) went to the Builder with section 17.
+
+**The Sun, rise 352 to 392: the record named the wrong unit.** `range.units[1]` was `plan.twinFrame(time).scale`; the Sun's plan lays its close view by its own `twin` (the radius of its stage), 0.0484809 against 0.0808819. MEASURED: the points of the close view stood 0.028 to 0.037 radii off the unit shape, with the plan's own unit 0.00019. Flow left 352:368 7.8, 16.2 to 1.1, 2.7; 368:384 34.3, 69.1 to 1.1, 2.7; 376:392 44.7, 91.6 to 1.2, 2.8. The grey stays 22 to 23 of 255 apart after the carry: the surface boils by itself (the two keys below are for that).
+
+The unit is now the length the plan's own `twin` gives a step of 1 (`poseRecord`), and it is named only where it is not 1. Computed for the other stops, own twin against `twinFrame`: Mercury 0.0162045 against 0.0162181, Venus 0.0184000 against 0.0184070, Jupiter 0.00301254 against 0.00301008, Neptune 0.0239197 against 0.0239242, Uranus by a factor 0.999998, Earth and Mars equal, Saturn 1 (no second unit, as before). The twin is the same along the three axes to 4e-9 and does not change with the time.
+
+**Mars, row 5364: the pick of the unit, then an exchange of two grounds.** 5364 is the first orbit frame after the seam; the eye stands 0.00138 radii over the sphere and the ground lies deeper under the sphere than that. `points` took the close unit on 36.0 percent of the surface, because the point at the lens was nearer a surface than the true one. The record now holds `camera.near` (the film's near plane of that frame in the units of the pose frame: 0.000275 at 5364) and `points` does not take a unit that puts a point in front of it. MEASURED on 5364:5380: close unit taken 36.0 percent to 0.0, flow left 4.3, 36.7, 59.1 to 3.1, 22.3, 51.9.
+
+What is left there is not the map. 5356:5364, 5364:5372 and 5356:5372 leave 0.1, 0.3 to 0.5 (grey 2.4 to 3.4 apart); 5372:5380 leaves 3.5, 56.7, 201.5 (grey 22.6). STATED from `src/stops/mars/set.ts` and `close.json` (presence 0.0019 to 0.0034): the ground of the close view is drawn in the globe's scene by a weight of the eye's height, computed 0.977 at 5372, 0.807 at 5374, 0.525 at 5376, 0.221 at 5378, 0.018 at 5380, and 0.011 at 4934 to 0.963 at 4946 in the dive. The close ground and the globe's ground are two pictures of one place (look `mars-5364`), and one gives way to the other in eight capture frames.
+
+**Checked again.** 24 pairs of Earth, Mars, Jupiter, Saturn, Uranus and Neptune read with the new record give the numbers they gave before, to the digit printed. NOT measured: a pair in the close view of Mercury, Venus, Jupiter or Neptune, where the unit moved by 0.02 to 0.08 percent.
+
+**UNKNOWN.** What the harness reader says of any of these rows.
+
+Tests: `tests/globe-pose.test.ts` (the unit is the plan's own twin, 0.3 away from `twinFrame` on the Sun; the near plane in the orbit view is the film's, in the close view the film's times the unit), `tests/globe-range.test.ts` (a made eye low over ground under the sphere: half the pixels wrong without the near plane, none with it).
+
+## 19. The range of a ball traced in a larger mesh (MAIL 835 task 4): Jupiter's dive, Saturn's hold
+
+**Jupiter.** MEASURED: the points of the globe's range lie on a sphere of radius 1.02996, not 1. STATED from `src/stops/jupiter/globe.ts`: the mesh is scaled by 1 plus the rim and the picture is traced on the unit sphere inside it; the range handed is that of the mesh. A point 0.03 too far out turns by the wrong arc, which is the flow left in the dive and the rise. Io's mesh is its ball times 1.12 in the same way.
+
+The patch (two lines, the builder's files, through the Builder):
+
+```
+src/stops/jupiter/globe.ts, last argument of diagOut:
+-  length(vView));
++  length(vView) * (rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vPos) : 1.0));
+src/stops/jupiter/io.ts, last argument of diagOut:
+-  length(vView));
++  length(vView) * (rt < uBall.w ? depth / length(vPos) : 1.0));
+```
+
+MEASURED with the patch rendered: points off the unit shape 0.02994 to 0.00000; the beauty frames 5960, 5976, 6580, 6596 are byte equal with and without it, 4 of 4. Flow left on the globe: dive 5960:5976 3.1, 5.2, 7.0 to 0.1, 0.5, 2.9; rise 6580:6596 14.5, 18.2, 44.7 to 0.3, 1.4, 13.2. On Io (by its own rule, the record with the plan's `drawnBodies`): 5960:5976 1.6, 2.6 to 0.9, 1.2; 6580:6596 8.5, 26.9 to 0.9, 5.5 (look `flow-6580`). STATED: Earth's Moon (1 + PAD) and Titan (1.6) are meshes larger than their ball as well; no patch was written for them.
+
+**Saturn.** The same one line for `src/stops/saturn/globe.ts` and `src/stops/saturn/kept/globe.ts` (`uLimbW > 0.0 && rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vLocal - uCam) : 1.0`): points off the unit shape 0.01996 to 0.00000 at 6900 and 7100, the beauty frames 6900, 6916, 7100, 7116 byte equal, 4 of 4. The flows do not change by it.
+
+The hold by region, record as it is against the record with the plan's `drawn`, `drawnSeat` and `drawnBodies` (section 17), flow left:
+
+| pair | region | as it is | full record |
+|---|---|---|---|
+| 6900:6916 (hold) | globe | 0.3, 0.9, 1.5 | 0.2, 1.8, 2.8 |
+| 6900:6916 (hold) | Titan | 1.1, 2.4, 2.9 | 0.0, 0.1, 0.1 |
+| 6900:6916 (hold) | rings | 0.1, 0.6, 1.7 | 0.1, 0.6, 2.1 |
+| 7100:7116 (dive) | globe | 0.4, 1.3, 6.2 | 0.5, 2.2, 6.1 |
+| 7100:7116 (dive) | Titan | 1.2, 2.8, 3.2 | 0.1, 0.1, 0.2 |
+| 7100:7116 (dive) | rings | 0.1, 0.8, 3.7 | 0.1, 0.9, 3.9 |
+
+The globe turns 0.3733 degrees in 16 capture frames (`plan.spin`, drawn with `uSpin`). STATED: two patterns lie on the same pixels of the globe, the map that turns with the spin and the shadow of the rings with the terminator that stay. No one carry lands both: the full record lands Titan and the lens, and on the globe its 90th percentile is larger than that of the record as it is. Nothing in the record closes the remainder of Saturn's hold; a reader would have to judge the shadow apart from the map.
+
+**UNKNOWN.** Whether Jupiter's 99th percentile of 1.063 at the harness falls under its limit with the patch (my flow says the cause is gone; the harness's number was not run). Which of Saturn's two patterns the harness reader follows.
+
+## 20. A body that moves by itself and a body with its own light (asked by harness_builder, the Builder's MAIL 842.2 b and e)
+
+"The one that draws it says it, in the record, beside the drawn shape; a missing field means rigid." Two optional keys on a body of the pose record:
+
+- `bodies[i].flows`: px of the record's frame (`camera.width` by `camera.height`) a film frame, the largest speed at which the surface moves by itself on the screen at that frame's range.
+- `bodies[i].light`: radii of the body about its `place`, how far its own light reaches.
+
+**How a stop turns it on.** Two methods on its plan, beside `drawnShape` (types `Flowing` and `Lit` in `tools/smooth/pose.ts`):
+
+```
+drawnFlow(view: ViewKind, eye: THREE.Vector3, time: number, lens: { vfov: number; width: number; height: number }): number | null
+drawnLight(view: ViewKind, eye: THREE.Vector3, time: number): number | null
+```
+
+`eye` is the camera of the record in the pose frame, `lens` is what turns a speed on the body into px of the record. They fill `bodies[0]`. A further body carries its own in what `drawnBodies` hands (`flows`, `light` on the entry). A plan without the method, or one that hands null, zero, a negative or a number that is not finite, gives no key, and the record is byte equal to the record without. No plan on main hands either today. What the reader does with them is the harness's (`tools/img/carry.py`).
+
+Test: `tests/globe-pose.test.ts` (both reach the record with the view, the eye, the time and the lens of the frame; nothing else changes; no key for null, 0, a negative, NaN, infinity; a further body keeps its own).
+
+## 21. Detail from the stop's own code on the cap (`cap.detail`, asked by mars_place_builder, MAIL 866 item 5): off by default
+
+**What it does.** A stop hands the cap a piece of shader text with one function, and the cap's fragment program reads it at every fragment of the cap: a factor on the colour of the ground and a small height that only the light sees. The place of the surface, its depth, its edge and the range picture do not change. The sphere outside the cap gets nothing of it.
+
+**How a stop turns it on.**
+
+```
+new Planet({ ..., cap: { ..., detail: { text, uniforms } } })
+```
+
+`text` must define
+
+```
+vec4 groundDetail(vec3 dir, float height, vec3 normal, float texelPx)
+```
+
+- `dir`: unit direction of the fragment in the frame of the map (the turn of the body taken out).
+- `height`: radii above the sphere, the cap's own height at the fragment.
+- `normal`: the cap's smooth normal in the same frame.
+- `texelPx`: the longest width of one texel of the finest plate drawn there, in pixels of the master. The finest plate drawn is the last level whose weight is at least 0.5, the wrap map where there is none. It goes through the frame factor (`uFrame`, set from `bufferFrame()` in `Planet.update`), so a draft and a final give the same number at the same place. Sizes are the ones the levels count by (`patches.counts`, section 15).
+- returns `rgb`, a factor on the linear colour of the ground before the light (the map after `inverseFilmic` and the own levels alike), and `a`, a height in radii for the light only.
+
+The text is laid after the helpers and before `main`, so `PI`, `dFdx`, `dFdy`, `fwidth` and the helpers above it can be used. Its uniforms are named `uDetail` and a name of the stop's own; every one declared must be given in `uniforms` and none else. `capDetail` (exported from `src/bodies/cap.ts`) refuses a text without the function, a text that holds `void main`, `discard`, `outColor`, `gl_FragDepth` or any sampler, a uniform with another name, one declared and not given, one given and not declared, and one declared twice. A sampler is refused because no texture unit is counted for it against the 16 of `src/core/caps.ts`.
+
+**How the light reads the height.** Three reads: at the fragment, one pixel of the buffer to the right, one up (`normalize(dir + dFdx(dir))`, `height + dFdx(height)`, `normalize(normal + dFdx(normal))`, the same with `dFdy`). With `p = dir * (1 + height)` and its two steps `sx`, `sy`, the slope of the returned height along the surface is `(bx * cross(sy, normal) + by * cross(normal, sx)) / dot(sx, cross(sy, normal))`; its negative is added to the normal before the normalize that the light already does, at full weight whatever `light.relief` and `light.from` are. With `light` on the own levels get the same tilt beside `light.own`; without it they get the light factor of the tilted normal and exactly 1 where the tilt is zero.
+
+**Limits.**
+
+- The two neighbours are one pixel of the buffer apart, not of the master. A height finer than a pixel aliases, and the same text gives a different tilt at draft and at final where it is not smooth over a pixel. The stop fades its own height by `texelPx` or by its own measure.
+- The cap is drawn only inside its border and its `from` band. The detail ends where the cap ends. A text that gives `rgb` 1 and height 0 where `texelPx` is at or under 1 leaves no step there; that is the stop's to keep.
+- Three calls of the stop's function for each fragment of the cap. The time on a film frame is not measured.
+- No film frame with the option on was drawn in this branch. The stop's builder shows it.
+
+**What was measured** (test page of `tests/globe-cap.test.ts`, float target, the harness browser):
+
+- Hook absent: `planetFrag` gives the same string with `detail` undefined as without the key, for four option sets; the text of the globe hashes to the kept value; a cap built without `detail` has no `uFrame` and no `uDetail` uniform, and its vertex text is the one of before (`tests/globe-detail.test.ts`).
+- A text that returns `vec4(1.0, 1.0, 1.0, 0.0)`: four views of 96 by 96 over a mesa of the cap's own heights (with `light` and own levels, with `light` and no own levels, without `light`, without `light` and with `exactSpin` and a turn of 0.3): 0 values of the float picture differ from the same view without `detail`.
+- A factor `uDetailTint` of 0.5, 0.25, 0.75, with `light`, with and without own levels: at every pixel of full alpha the linear value is the value without times the factor within 1 part in 10000; no alpha changes.
+- A height `2e-4 * sin(60 * dir.x)` on a flat cap, 192 by 96: the change of the light at columns 40 to 151 of the middle row is the one of the forward difference over one pixel counted by hand, within 5 percent of the largest swing (asserted); at the 17 columns printed inside the cap the two differ by at most 0.00002 against a swing of 0.0086. Columns off the cap change by 0.
+- A height `5e-4 * sin(300 * height)` over a mesa seen from above: the light changes on the two ramps only (up to 0.077 of the value), by less than 1e-5 on the flat top and on the floor.
+- `texelPx` at the centre, plate of 8 texels over 6 degrees, from 2 radii above with a field of 4 degrees: 8.975 at 96 rows and frame 1, 8.975 at 192 rows and frame 2, 8.975 at 48 rows and frame 0.5 (the three agree to 4 parts in a million); counted by hand 9.005. The 0.33 percent between the drawn and the hand count is not explained; the test allows 1 percent.
+
+**The clock test** (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent", limit 5000 ms, MAIL 866 item 3). Cause: each of its five shots disposed its planet before the next was built, so each shot compiled the program anew. Cure: the page keeps the planet of the last shot until the next shot has drawn, so shots with the same shader text use one program. The limit is not touched.
+
+## 22. The cap's patches sifted by the lens (`cap.cull`, proposed by handover_engineer, MAIL 888 point 2): off by default
+
+**What it does.** The cap draws its patches as instances of one small grid (`CAP_PATCHES` by `CAP_PATCHES` to a grid, 512 triangles a patch at Mars's 1024 cells). Without the option every patch of every drawn grid goes through the vertex shader whatever the lens sees. With it, before each draw the patches that lie wholly outside the lens of that draw are left out of the instance list. The shader text, the uniforms and the order of the patches that stay are the same, so the picture is the same to the bit; only the count of vertices changes.
+
+**How a stop turns it on.**
+
+```
+new Planet({ ..., cap: { ..., cull: true } })
+```
+
+Nothing else. No number of the stop is involved.
+
+**How it works.**
+
+- `ReliefCap.lens` is a `THREE.LOD` with no level, added to the globe's mesh before the cap's mesh (`Planet` does it). The renderer calls `update(camera)` of an LOD while it walks the scene, with the camera of that very draw and before it loads the instance list of the cap's mesh. So the sift is by the lens that draws: the jitter of a sample, a shutter sample, the wider picture of the place pass, the range pass, the texel view and a view from the side each sift by their own camera, in the same way. Nothing reads a camera of an earlier draw.
+- `capSift` (exported, pure) takes each patch as the body it can fill: its square on the plane of the spot, padded by a thousandth of a patch, times every height between the lowest and the highest any level can give (the levels' `low` and `high`, the sink, 0, times the cap's share). That body lies inside the hull of 8 points. A patch is left out only when all 8 lie outside one side of the lens widened by a 64th (left, right, top, bottom or the near plane; never the far plane), with a slack for what a 32 bit float loses at the size of the scene.
+- A patch that is hidden but inside the lens stays. Nothing is judged by what covers what.
+- The cap's mesh refuses to draw (it throws) when the matrix of the draw is not the one it was sifted by, which can only happen when the lens object is not in the scene before the mesh.
+- What reads beyond the edge of the picture (bloom, the place pass) reads a buffer that a camera drew; that camera is the one sifted by. Shadows and glows of the cap come from its height textures in the fragment shader, not from its patches, so no patch reaches into the picture through one.
+
+**Limits.**
+
+- It saves vertices only. Fragments, and patches in front of the lens that the ground hides, cost what they did.
+- The bounds of the height are the levels' own `low` and `high`, the same for every patch. Close to the ground the patches around the camera cannot be left out, since their body reaches above the camera. Bounds from the heights of each patch would leave out more; not built.
+- `renderer.info.render.triangles` falls with it.
+
+**What was measured.**
+
+- `tests/globe-cull.test.ts` (no browser): for 12 lenses (6 views, each at two turns of the globe, the globe moved, turned and scaled in the world; near the ground, from above, from the side, with the picture shifted by `setViewOffset`) no patch that `capSift` leaves out has a point of its 5 by 5 corners at the lowest height, at 0 or at the highest height inside the lens; the patches that stay keep their order; at 8 or more of the 12 fewer than half stay. With a lowest height at the centre every patch stays. Without `cull` a cap has no lens object and the mesh has no hook; with it the vertex text, the fragment text and the names of the uniforms are the same, the lens object is ahead of the mesh, and a draw by a camera that the lens did not sift by throws.
+- `tests/globe-cap.test.ts` (browser, float target): 9 views of a cap with heights (low over the ground at six places and fields, from above, with a turned globe, with the picture shifted by `setViewOffset`): 0 float values differ with `cull` from without; the cap's triangles kept are 25, 53, 21, 19, 34, 14, 82, 100 and 73 percent.
+- Mars with `cull: true` as a scratch edit of `src/stops/mars/set.ts` (not in the repository) against the same tree without it, draft, 1 sample, 1920 by 1080, the harness browser (software GL), full sha256 of the png:
+  rate 1, frames 2400 to 2488 at every 8th, 2456 and 2580: 14 of 14 byte equal;
+  rate 2, frames 2440 to 2460 by halves (41 capture frames, 41 different pictures): 41 of 41 byte equal;
+  the 13 Mars frames of the Builder's list of 115 (2325, 2427, 2444, 2448, 2455, 2459, 2580, 2690, 2694, 2701, 2705, 2726, 2782) with the option on: 13 of 13 equal to the list of main.
+- Seconds of one draft frame (one sample, with post and the png), off to on, same order of frames in both sessions: 2432 10.1 to 8.9; 2440 13.2 to 10.0; 2448 16.3 to 11.7; 2456 21.0 to 15.2; 2464 26.9 to 20.5; 2472 28.9 to 21.3. Within 0.3 s at 2400, 2408, 2416, 2424, 2480, 2488 and 2580. From an earlier pair of sessions (the same sift, before the refusal of the mesh compared the whole matrix): 2690 29.1 to 22.3; 2694 26.1 to 20.9; 2701 21.3 to 17.6; 2705 17.3 to 15.0; no change at 2325, 2427, 2726 and 2782. At rate 2 over 2440.5 to 2460 the frame takes 13.1 to 25.0 s off and 9.8 to 19.8 s on.
+- Patches kept (counted once with a readout that is not in the code): 2455 8692 of 20640; 2459 11869 of 24060; 2690 10593 of 24060. The cap's mesh is drawn once in a draft frame of Mars and its lens is asked twice, since the engine walks the world twice (an earlier line here said drawn twice; corrected after the count of section 23).
+- At 2580 and 2478 this tree does not draw the cap, so nothing is sifted there and the seconds do not change.
+
+**Not measured.** The final tier. Any stop but Mars (no other stop has a cap). Hardware GL.
+
+**The patch for Mars** (one word in `src/stops/mars/set.ts`, sent to the Builder, not in the repository): `cap: { cull: true, levels: capLevels, ...`.
+
+## 23. An own level under a whole level is not read (MAIL 954 ruling 1): always on for a body with own levels
+
+**What it does.** A body with own levels (`patches.own`) used to read every colour level whose weight was above 0 at a pixel. Now it weighs its levels first and reads them after, and it does not read a level when both hold: a level above it has the weight exactly 1.0 at this pixel, and the level's own weight on the lit ground, `w * (1.0 - uPatchOwn[i])`, is exactly 0 (an own level). The picture is the same to the bit; only texture reads are saved. A body without own levels keeps its text to the letter.
+
+**How a stop turns it on.** It does not. It comes with `patches.own`. No number of a stop is involved.
+
+**Why it is exact.** Per level the pixel holds three sums: `albedo = mix(albedo, t, w * (1.0 - o))`, `ownSum = ownSum * (1.0 - w) + t * (w * o)`, `own = own * (1.0 - w) + w * o`. At a level with `w == 1.0` the factor `1.0 - w` is exactly 0, so `ownSum` and `own` forget every finite value they held, whether the product and the sum are fused or not. A level whose weight on `albedo` is exactly 0 leaves `albedo` as it is under both forms of `mix`. So what such a level under a whole level adds is multiplied by exactly 0 before anything reads it. The other numbers a level hands on (`parent`, `fine`, `drawn`, `texels`, `seen`, `near`) come from the weights alone and are computed as before, in the same order.
+
+**What stays read, and why.** A lit level under a whole level, and the base map. `mix(x, y, 1.0)` is not `y` to the bit on the harness renderer (2 of 25 165 824 pairs differ by one last bit, measured with the cost table below), and a lit level under a whole own level still decides the lit ground the own light is mixed over. `tests/globe-lean.test.ts` holds both in 32 bit floats.
+
+**The text.** `patchLevels` in `src/bodies/planet.ts`. With own levels: `float whole = -1.0;`, then per level `float w<i> = 0.0;` and inside `if (uPatchCount > i.5)` the weight as before, `w<i> = w; if (w == 1.0) whole = i.0;` and the numbers handed on; then per level `if (w<i> > 0.0 && !(whole > i.5 && w<i> * (1.0 - uPatchOwn[i]) == 0.0))` with the read and the three sums as before. Without own levels: the one pass as before.
+
+**What was measured.**
+
+- `tests/globe-lean.test.ts` (no browser, 4 tests). In 32 bit floats, for 40 000 stacks of 8 levels (weights exactly 1, exactly 0 and between; own flags 0 and 1, and in the second half parts between), under three forms of `mix` (by the two weights, by a step from x, fused) and two forms of the sums (plain, fused): `albedo`, `ownSum` and `own` are the same floats with the rule and with every level read, and the rule leaves out more than 20 000 reads in each of the six pairs. A sum at `w == 1.0` gives the same float from any value it held before and from 0. A wider rule that also leaves out the lit levels under a whole level moves `albedo` in more than 1000 of 20 000 stacks under either form of `mix`, and `mix(x, y, 1.0)` by a step from x is not `y` for some of 20 000 pairs. The text of four shapes without own levels has the sha256 it had at 8cfc71f2 and holds no `whole`. The text with own levels holds the weighing and the reading line by line, each level read once.
+- `tests/globe-gl.test.ts` (browser, float target, 1 case more): a stack of five levels (lit, own, lit, own, own), 128 by 128, drawn with the text as it is and with the same text where the rule is taken out (the page puts `-1.0` for `whole` in the guards, so every level with a weight is read): 0 of 65 536 float values differ; the same for the stack with `fadeMinor`, and for a grazing view of three levels (own, own, own without and with `fadeMinor`; own, lit, own with `fadeMinor`). With the two lower own levels given another colour the pixels where the top level shows its plain scene value are the same floats (more than 200 pixels) and more than 200 pixels elsewhere move.
+- Changes of the code made on purpose, each run against `tests/globe-gl.test.ts` and `tests/globe-lean.test.ts` (12 tests): the guard asks for a whole level at or above the level itself (6 red, among them the new browser case and the text case); the guard without the weight on the lit ground, so lit levels are left out too (2 red: the new browser case and the text case); `whole` set from `w >= 0.5` (3 red); `whole` starting at 9.0 (4 red). Each taken back.
+- `tests/globe-levels.test.ts`: the sha256 that pins the text of a body with own levels is the new one (it was 813ceb84..., it is 6fbf99f9...). That text is the one this change is meant to move. The sha256 of a body without own levels (`KEPT`) is as before in every file that holds it.
+- Mars, on a scratch merge that was never pushed: the tree of this commit with the folders of Mars (`src/stops/mars`, `public/assets/mars`, `assets-src/mars`) as on `agent/mars-place` e53c76b7, against the tree of 8cfc71f2 with the same folders. Outside the four files of this change the two trees are the same. Draft, 1 sample, full set, the harness browser (software GL), full sha256 of the png, frames 2436, 2444, 2448, 2455, 2459, 2464, 2472 of the dive and 2690, 2694, 2701, 2705, 2712 of the rise, each side in one session after a warm frame:
+  1920 by 1080: 12 of 12 byte equal, 12 different pictures;
+  3840 by 2160: 12 of 12 byte equal, 12 different pictures.
+- Seconds of the same frames (one render each, the same order on both sides). 1920 by 1080, before to after: 2436 13.3 to 13.5; 2444 17.2 to 17.7; 2448 18.3 to 18.4; 2455 23.1 to 22.1; 2459 28.3 to 27.0; 2464 30.1 to 27.7; 2472 30.3 to 27.4; 2690 29.3 to 26.9; 2694 27.1 to 25.7; 2701 20.6 to 20.3; 2705 16.4 to 16.7; 2712 10.9 to 11.0; the 12 together 264.9 to 254.4. 3840 by 2160: 27.2 to 28.2; 35.9 to 36.0; 38.9 to 38.5; 50.5 to 46.6; 61.1 to 55.3; 68.0 to 60.2; 68.2 to 58.2; 66.5 to 57.9; 58.9 to 53.3; 41.9 to 40.9; 33.1 to 33.6; 23.9 to 24.2; together 574.1 to 532.9. Mars's set of that commit does not turn `cull` on.
+- Without Mars's folders, this commit against 8cfc71f2, draft, 1920 by 1080, frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997: 8 of 8 byte equal.
+
+**Not measured.** The final tier. Hardware GL: the rule rests on IEEE arithmetic of 32 bit floats (`x * 0.0` is 0 for a finite x, `1.0 - 1.0` is 0), which the harness renderer keeps; a renderer that does not would also not keep the frames of a body without this change. A stop other than Mars (no other stop has own levels). Whether the seconds gained hold with `cull` on (the scratch rows of the cost table, with `cull` on, gave 1.9 to 2.5 s at 2464 and 2472).
+
+### The cost of the cap at draft, and the list to draw on (MAIL 933, MAIL 954 rulings 2 and 3; scratch, nothing of it is in the code)
+
+Measured on a scratch merge of 3fc99fe5 and `agent/mars-place` 7cebce4c, Mars with `cull: true`, draft, 1920 by 1080, software GL, with uniform switches that were reverted. One render a row after a warm frame.
+
+- Frames 2464 and 2472: 23.4 to 23.7 s and 22.4 to 22.5 s; with the plain globe in the cap's place 6.1 and 6.2 s.
+- The cap is drawn once a frame. Its lens is asked twice, since the engine walks the world twice (about 2 ms each). Section 22 said "drawn, and so sifted, twice"; that was wrong and is corrected there.
+- Triangles alone (no work per pixel, no height reads), over the plain globe: 7.1 and 5.8 s for 5 688 320 and 4 543 488 triangles on 1 984 183 and 1 766 281 covered pixels; 1.06 and 1.09 fragments shaded a covered pixel.
+- Height reads of the vertex shader: about 1 s together. The 8 colour levels per pixel: 8.0 and 8.1 s. The base map: 0.8 and 0.7 s. The detail hook: 0.2 and 0.1 s. Slope reads of the wrap height, air, grazing: within the noise. The cap's shaders hold no march.
+
+The list to draw on if the sandbox master does not fit its hours (MAIL 954: not taken now, each moves a byte or changes what the ground holds at a slant):
+
+- Every read that is multiplied by 0 not read (lit levels and the base map too): 2464 24.2 to 17.5 s, 2472 23.0 to 15.8, 2690 22.1 to 15.6; PNG equal 12 of 12 at draft, but not exact (`mix(x, y, 1.0)` is not `y` to the bit in 2 of 25 165 824 pairs on this renderer).
+- Anisotropy of the colour levels 8, 4, 2, 1 in place of 16: 2464 24.0 to 23.4, 21.9, 19.9, 17.6 s; 2472 22.9 to 21.6, 19.8, 17.9, 15.5 s. Bytes move.
+- Cells 512 in place of 1024 (a quarter of the triangles): 24.0 to 17.0 s and 22.8 to 16.5 s. Bytes move.
+- The frame at 960 by 540: 12.1 and 10.8 s.
+- Fewer triangles at a slant: not built. The number that decides it (how many triangles of the kept patches reach no pixel) is not measured yet.
+
+### Bounds of the height per patch: built, measured, not taken (MAIL 933)
+
+A table of the least and the highest texel per tile of 8 by 8 of every height level, in a pyramid; per patch the range of the heights of the levels that can reach it, widened by the mip the vertex shader can read at the largest size of a pixel on the ground in the patch; a level that is whole over the patch replaces the range below it. Unit tests held it (a twin of the vertex shader's height; 4 changes made on purpose each turned one red) and the same Mars draft frames were byte equal with it. Patches kept with the common bounds to with the bounds per patch: 2455 8668 to 8319 of 20640; 2459 11846 to 11084 of 24060; 2472 8822 to 8009; 2476 8274 to 7387; 2690 10542 to 9859; 2694 12537 to 12197; 2701 12642 to 12584 of 20640. Seconds of a draft frame, common to per patch: 2432 8.9 to 8.9; 2440 10.0 to 10.2; 2448 11.7 to 11.7; 2456 15.2 to 14.9; 2464 20.5 to 20.8; 2472 21.3 to 20.9. The sift itself: about 2 ms a draw with the common bounds, about 15 ms with the bounds per patch. The patches that stay are nearly all in the lens; the heights were not what kept them. Not in the repository.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
@@ -466,3 +1035,14 @@ Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (su
   The largest numbers before: mean 2.014 and block 3.250 at the hold; after: mean 1.918, coarse mean 1.024, block -2.806, level -0.980, all at 2783.
 - MAIL 591: the named-tree table of `globe-levels.py` and what is red in Mars's dive at 2449 (section 10, two new parts). Runs a to o and j on b83618ec in a scratch tree, the judge's own tool; nothing of it is in the repository's code.
 - Merged main 1c3da4b2 (6ecaad26). The turn of the body (section 11): the cap's vertex program turns by `uSpinTurn` from the page, and `exactSpin` gives the same pair to the fragment of the globe and of the cap. `npx vitest run`: 461 tests green, two new in `tests/globe-cap.test.ts` (one of text, one in the harness browser; the browser test fails on the old vertex program with widths 40 and 38 for 46). Options off: the 11 draft stills of the proof list, rendered at 6ecaad26 and at this tree, are byte equal, 11 of 11. Not rendered: a film frame with a cap (no stop on main draws one), and a frame with `exactSpin` on.
+- TASK 697, MAIL 704: merged main ed003c70 (226eec4e). Section 12: the pattern measure follows the enlargement of the carried frame (`enlarged`, `matched` in `tools/img/smooth.py`), made proofs in `tools/smooth/made.py` (`carried`, `spread`) and ten new tests in `tests/smooth.test.ts`. Nothing in `src/` is touched, so the frames of every stop stand. `npx vitest run` on the merge with the patch: 564 tests, 561 green; the three red ones are in `tests/weights.test.ts` ("no dive of the film leaves a sky over 24 frames and a picture over 12 to the engine any more") and are red on main ed003c70 alone as well (that file run in a clean tree: 6 of 9). `tests/smooth.test.ts` 68 of 68 in 156 s on a loaded machine, `tests/globe-cap.test.ts` 24 of 24 in the whole run.
+- MAIL 710 (d236): the first patch not taken; the cure that keeps the band (section 12, rewritten). Merged main dfdc58cf. `tools/img/smooth.py` (`carry`, `finer`, `sharper`, `band`, `readings`, `reading`; `matched` removed), `tools/smooth.ts` (`patternBand` printed), `tools/smooth/made.py` (`carried` on full size films), `tests/smooth.test.ts`. Nothing in `src/` is touched, so the frames of every stop stand. `npx tsc --noEmit` clean. `npx vitest run` on the merge 4516efa8: 565 tests, 564 green, one red: `tests/globe-cap.test.ts` "brings a colour level in by the texels of its parent" ran 5018 ms against its limit of 5000 in the whole run; that file alone: 24 of 24, the same test in 3343 ms. `tests/smooth.test.ts` 69 of 69 in 92 s in the whole run, `tests/weights.test.ts` 9 of 9. One report printed by `tools/smooth.ts` with these tools on main 2bc36ce6 in a scratch tree (`--stop venus --kind rise --only pictures --frames 3086-3086`): the row of frame 1543 reads 0.76 at 159, 355, `band 8 px` in the red line, in the line of the largest change of the pattern and in the column `band px` (8.0); the panel of the changes has the second row for the reading on the later frame.
+- MAIL 744 B (b): the pale air beyond the edge (`limbAir`, section 14), `src/bodies/limb.ts`, one option of `Planet`, `tests/globe-limb.test.ts` (5 tests). Merged main 7346c598 (0ed3b250). On the merge with the change: tsc clean; `npx vitest run` 58 files, 621 tests, 1 red (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent", 5002 ms against its limit of 5000; the file alone: 24 passed, that test 3791 ms; the test was not touched). With the option off the 47 judged frames at draft have the hashes of 767f8d11, 47 of 47. Looked at on Mars 2325 final only, in a scratch copy of Mars's set; no stop turns it on.
+- MAIL 795 item 4 (d253): the audit of what counts pixels and what counts loaded texels (section 15). (a) none without the frame factor on a pixel path of `src/bodies`, `src/terrain`, `src/core/sets.ts`. (b) two terms counted the loaded set, both in the shared globe: cured by `patches.counts` (`src/bodies/planet.ts`) and `count` of a cap level (`src/bodies/cap.ts`), off by default, `tests/globe-count.test.ts` (5 tests). Merged main cc9015f2 (a76f725c). The pose record corrected after harness_builder measured it (section 13): the sky is `inverse(skyTurn) * skyQuaternion`, the body's turn is `plan.drawn` where a plan has it; `tests/globe-pose.test.ts` (3 tests). Over 8 film frames the sky stands apart from the camera by 8.39 degrees at Mercury 1434, 1.61 at Mars 4814, 1.20 at Earth 3680, 0.04 at Venus 2516; Mercury's drawn turn stands apart from `plan.turn` by 4.92 degrees at capture 2032 and 2.52 at 1740. The test runs and the proof are in the mail of the commit and in section 15.
+- MAIL 812.5 (asked by harness_builder): Earth's rise, rows 4223 to 4259 refused by the pattern reader (section 16). Cause A, the range picture of Earth's ground on the globe holds the sum of two codes where its cover is partial (one line of `src/stops/earth/relief.ts`, a patch, the builder's file). Cause B, the drawn shape of the globe was not in the pose record: `bodies[0].shape` from the plan's `drawnShape` (`tools/smooth/pose.ts`), taken by `carried` and `shaped` of `tools/img/range.py`, one test more in `tests/globe-pose.test.ts` and one in `tests/globe-range.test.ts`; Earth's plan hands it by a patch (the builder's file). Nothing in `src/` is touched. Flow left with both, median px at four pairs: 0.1, 0.1, 0.3, 0.8 (before 0.1, 1.0, 3.4, 21.5).
+  On the merge of main 6af0b7e4 (62ae7720): tsc clean; `npx vitest run` 60 files, 631 tests, 630 passed, 1 red (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent", 5063 ms against its limit of 5000, while the whole set ran; the file alone 24 of 24, that test 2749 ms; the test is not touched), 405 s. Options off, draft, frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997: 8 of 8 byte equal to the list of 86184412; engine hash 7de408a91944bdb0.
+- MAIL 835 task 1 (the moon, asked by harness_builder): every body a stop draws in its dive, rise and hold, in the pose record (section 17). `tools/smooth/pose.ts` (`drawnBodies`, `drawnSeat`, the fallback from `nearBodies`), `tools/img/range.py` (`beyond`, `owner`, `off`, `moved`, `HOLD`), `tests/globe-pose.test.ts` (3 tests more), `tests/globe-range.test.ts` (1 more). Only `tools/`, `tests/` and this notebook change, nothing under `src/`. Six patches for the plans of Earth, Mars, Jupiter, Saturn, Uranus and Neptune went to the Builder, none is in the repository. Before the merge: tsc clean; `npx vitest run` 60 files, 635 tests, 635 passed, 397 s; options off, draft, frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997: 8 of 8 byte equal to the list of 86184412. On the merge of main 9f603521 (5be4706c): tsc clean; `npx vitest run` 60 files, 639 tests, 639 passed, 400 s. The 8 frames were not rendered again on the merge (main changed `src/director/film.ts` and `src/space/farsun`; this commit changes no file under `src/`).
+- MAIL 835 tasks 2, 3 and 4, and the two keys asked by harness_builder (sections 18, 19, 20). `tools/smooth/pose.ts` (the close unit is the plan's own twin, `camera.near`, `drawnFlow` and `drawnLight` to `bodies[0].flows` and `bodies[0].light`), `tools/img/range.py` (`points` takes no unit in front of the near plane), `tests/globe-pose.test.ts` (2 tests more), `tests/globe-range.test.ts` (1 more). Nothing under `src/` changes. Patches for the builders' files went to the Builder, none is in the repository: the range of the traced ball for Jupiter's globe and Io and for Saturn's two globes; Uranus's `drawnShape` went with section 17. Merged main 63cf4b21 (6381d7ef; main changed `kit/` and `scorecards/` alone). On the merge with the changes: tsc clean; `npx vitest run` 60 files, 642 tests, 641 passed, 1 red (`tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent", 5003 ms against its limit of 5000 while the whole set ran; the file alone 24 of 24, that test 2586 ms; the test is not touched), 399 s. Options off, draft, frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997: 6 of 8 byte equal to the list of 86184412; 615 and 717 (Mercury) are 90038bb5cfadf649 and 4d8319ccbe410fd2, not 5646f2965e4fecff and 41586877bcd3191d. This tree differs from main 63cf4b21 in `tools/`, `tests/` and this notebook alone (`git diff --stat origin/main`), and main changed `src/space/farsun` and `src/director/film.ts` after 86184412; the two frames were not rendered at main apart.
+- MAIL 866 items 3 and 5 (the hook asked by mars_place_builder): the detail of a cap from the stop's own code (section 21). `src/bodies/cap.ts` (`detail`, `capDetail`), `src/bodies/planet.ts` (`PatchShader.detail`, `uFrame` on the cap), `tests/globe-detail.test.ts` (4 tests), `tests/globe-cap.test.ts` (5 tests more in the browser; the page keeps the last planet until the next has drawn, the cure of the clock test). Hook absent, draft, full set, 1920 by 1080, the 115 frames of the Builder's list of main 63cf4b21 (MAIL 867), full sha256 of the png, one session for every 20 frames: 115 back, 115 byte equal; drawn on the tree before the merge of main 4bc15f82, which brings `kit/PROGRESS.md` only; engine hash 6a5237758f4b4713. On the merge: tsc clean; `npx vitest run` 61 files, 651 tests, 651 passed, 395 s; the clock test 3511 ms in that whole run against its limit of 5000 (5003 before the cure), 2021 and 2030 ms with its file alone (2586 before). Not shown: a film frame with the option on; the time of the three calls on a film frame.
+- MAIL 888 point 2 (the cull proposed by handover_engineer) and MAIL 900: the cap's patches sifted by the lens of each draw (section 22). `src/bodies/cap.ts` (`cull`, `capSift`, the lens object and the refusal of the mesh), `src/bodies/planet.ts` (the lens object ahead of the cap's mesh), `tests/globe-cull.test.ts` (3 tests), `tests/globe-cap.test.ts` (1 test more in the browser; the test "brings a colour level in by the texels of its parent" takes the limit of its neighbours, 120000 ms: it was the one browser test of the file left at the default of 5000 and took 5014 ms once on the Builder's machine under load). Option off, draft, full set, 1920 by 1080, full sha256 of the png. On the tree of 7b482c07 with the cull: the 115 frames of the Builder's list: 115 back, 115 byte equal; engine hash 920de43abbec29a9; `npx vitest run` 62 files, 655 of 655, 397 s, the clock test 3868 ms. On the merge of main 64c4ccb4 (508f3333) with the cull: tsc clean; `npx vitest run` 64 files, 720 of 720, 408 s, the clock test 3566 ms; frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997: 8 of 8 byte equal to the list; engine hash 8c639223a2a3e013. Option on at Mars (a scratch edit, not in the repository), on the tree of 7b482c07 with the cull: 14 of 14 frames at rate 1 and 41 of 41 capture frames at rate 2 byte equal to the option off, 13 of 13 of Mars's frames of the list equal to the list (section 22). Not rendered with the option on after the merge of main.
+- MAIL 954 ruling 1: an own level under a whole level is not read (section 23), on `take/b10e` 8cfc71f2. `src/bodies/planet.ts` (`patchLevels`, two passes for a body with own levels; the text without own levels to the letter), `tests/globe-lean.test.ts` (4 tests), `tests/globe-gl.test.ts` (1 case more in the browser), `tests/globe-levels.test.ts` (the pin of the text with own levels). On the code commit 29995967: tsc clean; `npx vitest run` 75 files, 826 tests, 824 passed, 2 red, both in `tests/pass.test.ts` ("leads every other answer by 2 degrees at every stop of the film", Mercury 0.0042 against 2; "refuses a turn that the end of the rise cannot reach, unless the stop says it takes the corner", 0.0074 against 1), 567 s; the same two are red on 8cfc71f2 with that file run alone, and the Builder's d281 names them and their cause (not in this change, not touched). Mars on a scratch merge with `agent/mars-place` e53c76b7, 12 frames of dive and rise, before against after: 12 of 12 byte equal at 1920 by 1080 and 12 of 12 at 3840 by 2160, draft. Frames 615, 717, 1755, 1857, 2325, 2427, 2895, 2997 against 8cfc71f2, draft: 8 of 8 byte equal. Also in this section: the cost table of MAIL 933, the list to draw on of MAIL 954, the bounds per patch that were not taken. Origin main is not merged here: the base is `take/b10e` as ruled, and 8cfc71f2 does not hold main 9d53040b.

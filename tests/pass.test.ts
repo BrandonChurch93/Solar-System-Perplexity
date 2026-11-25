@@ -3,8 +3,9 @@ import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
+import { StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
-import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook } from '../src/space/travel/path'
+import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook, WORLD_ANSWER, WORLD_CORNER, WORLD_MISS, worldCosts, worldLead } from '../src/space/travel/path'
 
 const looks = ['base', ...Object.keys(TRAVEL)].map((id) => ({ id, look: travelLook(id) }))
 
@@ -212,6 +213,103 @@ describe('the dim of the sky while the Sun comes into the frame of a travel', ()
       expect(inFrame(q, 30, 16 / 9, to, 0, 3)).toBe(THREE.MathUtils.radToDeg(outsideFrame(q, 30, 16 / 9, to)) < 3)
     }
   })
+
+  // A film whose camera keeps its place and its lens on one leg and takes a made up turn there, so that the law of the dim can be asked at
+  // turn rates the film does not have. Every such film is made new: what a film keeps of a leg is then of that turn.
+  type Lens = { position: THREE.Vector3; quaternion: THREE.Quaternion; vfov: number }
+  type Inner = { travelCamera(index: number, time: number): Lens; sunSeen(index: number, time: number): number }
+  const madeUp = (index: number, turn: (real: Inner['travelCamera'], time: number) => THREE.Quaternion): FilmDirector => {
+    const made = new FilmDirector(plans)
+    const inner = made as unknown as Inner
+    const real = inner.travelCamera.bind(made)
+    inner.travelCamera = (i, time) => (i === index ? { ...real(i, time), quaternion: turn(real, time) } : real(i, time))
+    return made
+  }
+  const levelOf = (made: FilmDirector, p: number): number => made.shotAt(Math.floor(p), p / config.fps).skyExposure
+  const master = config.formats[config.formatKeys.master]!
+  const outside = (pose: Lens): number => outsideFrame(pose.quaternion, pose.vfov, master.width / master.height, film.sunWorld)
+  const pitched = (q: THREE.Quaternion, deg: number): THREE.Quaternion => q.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(deg)))
+  const rates = [1, 3, 10, 30]
+
+  it('is nothing at the last instant of every leg, wherever the Sun stands in the frame', () => {
+    const seen = film as unknown as Inner
+    legs.forEach((seg, index) => {
+      if (index > 0) expect(seen.sunSeen(index, seg.end), seg.id).toBe(0)
+    })
+  })
+
+  it('never takes the level down under a Sun that comes into the frame to stay, at any turn rate and at any time of the leg', () => {
+    const index = legs.findIndex((s) => s.id === 'uranus.travel')
+    const seg = legs[index]!
+    for (const rate of rates) {
+      for (const share of [0.3, 0.6, 0.8, 1]) {
+        // The camera ends where the film's camera ends, with the Sun inside the frame, and comes there by a pitch of rate degrees a frame
+        // that is over at the share of the leg; before the pitch the Sun stands outside the edge it comes in by.
+        const done = seg.start + share * (seg.end - seg.start)
+        let sign = 0
+        const made = madeUp(index, (real, time) => {
+          const end = real(index, seg.end)
+          if (sign === 0) sign = outside({ ...end, quaternion: pitched(end.quaternion, 1) }) > outside({ ...end, quaternion: pitched(end.quaternion, -1) }) ? 1 : -1
+          return pitched(end.quaternion, sign * Math.min(Math.max(done - time, 0) * config.fps * rate, 150))
+        })
+        const inner = made as unknown as Inner
+        const at = 'rate ' + rate + ', turned by ' + share + ' of the leg'
+        expect(outside(inner.travelCamera(index, seg.start)), at).toBeGreaterThan(0)
+        expect(outside(inner.travelCamera(index, seg.end)), at).toBeLessThan(0)
+        for (let p = seg.firstFrame; p < seg.endFrame - 0.25; p += 0.25) expect(levelOf(made, p + 0.25), at + ', frame ' + p).toBeGreaterThanOrEqual(levelOf(made, p) - 1e-9)
+      }
+    }
+  })
+
+  it('dims by the depth of a Sun that passes through the frame and gives it back by the same depth, whatever the clock says', () => {
+    const index = legs.findIndex((s) => s.id === 'uranus.travel')
+    const seg = legs[index]!
+    const open = config.raw.travel.sky.openExposure
+    // The open flight of the leg: the frames from its first on whose sky is the open sky and nothing else.
+    let openTo = seg.firstFrame
+    while (openTo < seg.endFrame && Math.abs(level(openTo) - open) < 1e-12 && Math.abs(level(openTo + 0.5) - open) < 1e-12) openTo++
+    // The Sun crosses the middle of the frame from below to above at the frame "middle", by a pitch of rate degrees a frame. Half the
+    // height of the frame is half the lens' angle, so at a pitch of deg the Sun stands that half less deg inside the upper or lower edge.
+    const middle = seg.firstFrame + 32
+    const reach = 31
+    expect(openTo - 1).toBeGreaterThan(middle + reach / rates[1]!)
+    const atSun = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(), film.sunWorld, new THREE.Vector3(0, 1, 0)))
+    const films = rates.map((rate) => madeUp(index, (_real, time) => pitched(atSun, Math.min(Math.max((time * config.fps - middle) * rate, -90), 90))))
+    const at = (k: number, deg: number): number | null => {
+      const p = middle + deg / rates[k]!
+      if (p < seg.firstFrame || p > openTo - 1) return null
+      const shot = films[k]!.shotAt(Math.floor(p), p / config.fps)
+      // the sky of the made up film is the open sky there too, so the level is the open sky's and the dim's and nothing else
+      expect(shot.skyStars, 'rate ' + rates[k] + ', ' + deg + ' degrees').toBeCloseTo(1, 12)
+      return shot.skyExposure
+    }
+    for (let k = 0; k < rates.length; k++) {
+      const inner = films[k] as unknown as Inner
+      expect(THREE.MathUtils.radToDeg(outside(inner.travelCamera(index, middle / config.fps))), 'rate ' + rates[k]).toBeCloseTo(-inner.travelCamera(index, middle / config.fps).vfov / 2, 6)
+      expect(THREE.MathUtils.radToDeg(outside(inner.travelCamera(index, seg.start))), 'rate ' + rates[k]).toBeGreaterThan(16)
+      expect(THREE.MathUtils.radToDeg(outside(inner.travelCamera(index, seg.end))), 'rate ' + rates[k]).toBeGreaterThan(16)
+    }
+    let asked = 0
+    for (let deg = -reach; deg <= reach; deg += 0.5) {
+      const first = at(1, deg)!
+      // no clock: the same depth gives the same level at every turn rate, so at every time of the open flight
+      for (let k = 0; k < rates.length; k++) {
+        const here = at(k, deg)
+        if (here === null) continue
+        expect(here, 'rate ' + rates[k] + ', ' + deg + ' degrees').toBeCloseTo(first, 12)
+        asked++
+      }
+      // given back by the same depth: the level on the way out is the level on the way in
+      expect(first, deg + ' degrees').toBeCloseTo(at(1, -deg)!, 12)
+      // deeper is darker
+      if (deg < 0) expect(at(1, deg + 0.5)!, deg + ' degrees').toBeLessThanOrEqual(first + 1e-12)
+    }
+    expect(asked).toBeGreaterThan(3.5 * (2 * reach * 2 + 1))
+    // nothing where the Sun stands farther outside than the dim reaches, a clear dim in the middle of the frame
+    expect(at(1, -reach)!).toBeCloseTo(open, 12)
+    expect(at(1, reach)!).toBeCloseTo(open, 12)
+    expect(at(1, 0)!).toBeLessThan(0.9 * open)
+  })
 })
 
 describe('the way out of the hold of the Sun', () => {
@@ -234,10 +332,28 @@ describe('the way out of the hold of the Sun', () => {
     }
   })
 
-  it('does not come nearer to the Sun and ends the pull where it always did', () => {
+  it('does not come nearer to the Sun and ends the pull where the Sun is as large as the next stop draws it', () => {
     for (let p = leg.firstFrame; p < leg.firstFrame + 0.45 * leg.frames; p += 0.25) expect(place(p + 0.25).length(), 'frame ' + p).toBeGreaterThanOrEqual(place(p).length() - 1e-5 * far)
-    expect(place(leg.firstFrame + 0.43 * leg.frames).length() / far).toBeCloseTo(6.2546 / 4.5741, 3)
+    const swap = 1 / Math.sin(THREE.MathUtils.degToRad(plans[1]!.p.light.sunRadiusDeg))
+    expect(swap / far).toBeGreaterThan(1)
+    expect(place(leg.firstFrame + 0.43 * leg.frames).length() / far).toBeCloseTo(swap / far, 3)
   })
+})
+
+describe('the opening of the stars as the bright bodies leave the frame of a travel', () => {
+  const film = new FilmDirector(plans) as unknown as { openOf(index: number, time: number): number }
+  const legs = config.segments.filter((s) => s.kind === 'travel')
+
+  it('has no step in any leg: a quarter of the time step gives a quarter of the largest change', () => {
+    legs.forEach((seg, index) => {
+      const most = (h: number): number => {
+        let m = 0
+        for (let p = seg.firstFrame; p < seg.endFrame - h / 2; p += h) m = Math.max(m, Math.abs(film.openOf(index, (p + h) / config.fps) - film.openOf(index, p / config.fps)))
+        return m
+      }
+      expect(most(1 / 16), seg.id).toBeLessThanOrEqual(0.3 * most(1 / 4) + 1e-9)
+    })
+  }, 30000)
 })
 
 describe('the carry of a rise into its travel', () => {
@@ -257,6 +373,11 @@ describe('the carry of a rise into its travel', () => {
       return q
     })
   const camera = (film: FilmDirector, time: number): THREE.Vector3 => film.shotAt(Math.floor(time * config.fps + 1e-9), time).camera.position.clone()
+  const share = (film: FilmDirector, i: number, time: number): THREE.Vector3 => {
+    const inner = film as unknown as { approach: THREE.Vector3[]; shapes: TravelShape[] }
+    const seg = plans[i]!.seg.travel!
+    return inner.approach[i + 1]!.clone().multiplyScalar(film.slideOf(i) * inner.shapes[i]!.pass((time - seg.start) / (seg.end - seg.start)))
+  }
 
   it('starts with the whole speed and the whole rate, with no kink, and is at rest at its end', () => {
     const h = 1e-3
@@ -310,14 +431,16 @@ describe('the carry of a rise into its travel', () => {
       const film = new FilmDirector(standIn(id, speed, brake))
       const end = p.seg.rise.end
       const far = p.exitPose(end).position.length()
-      expect(camera(film, end).distanceTo(camera(real, end)) / far).toBeLessThan(1e-12)
+      const i = plans.indexOf(p)
+      const own = (f: FilmDirector, t: number): THREE.Vector3 => camera(f, t).sub(share(f, i, t))
+      expect(own(film, end).distanceTo(own(real, end)) / far).toBeLessThan(1e-11)
       const h = 2e-3
-      const before = camera(film, end).multiplyScalar(3).addScaledVector(camera(film, end - h), -4).add(camera(film, end - 2 * h)).multiplyScalar(1 / (2 * h))
-      const after = camera(film, end).multiplyScalar(-3).addScaledVector(camera(film, end + h), 4).sub(camera(film, end + 2 * h)).multiplyScalar(1 / (2 * h))
+      const before = own(film, end).multiplyScalar(3).addScaledVector(own(film, end - h), -4).add(own(film, end - 2 * h)).multiplyScalar(1 / (2 * h))
+      const after = own(film, end).multiplyScalar(-3).addScaledVector(own(film, end + h), 4).sub(own(film, end + 2 * h)).multiplyScalar(1 / (2 * h))
       expect(before.length()).toBeCloseTo(speed + p.p.rise.driftSpeed, 3)
       expect(after.distanceTo(before) / before.length(), 'speed').toBeLessThan(2e-3)
-      const bent = camera(film, end).addScaledVector(camera(film, end - h), -2).add(camera(film, end - 2 * h)).multiplyScalar(1 / (h * h))
-      const bends = camera(film, end).addScaledVector(camera(film, end + h), -2).add(camera(film, end + 2 * h)).multiplyScalar(1 / (h * h))
+      const bent = own(film, end).addScaledVector(own(film, end - h), -2).add(own(film, end - 2 * h)).multiplyScalar(1 / (h * h))
+      const bends = own(film, end).addScaledVector(own(film, end + h), -2).add(own(film, end + 2 * h)).multiplyScalar(1 / (h * h))
       expect(bent.length()).toBeCloseTo(-brake, 2)
       expect(bends.distanceTo(bent) / bent.length(), 'brake').toBeLessThan(5e-2)
       const seg = p.seg.travel!
@@ -327,4 +450,129 @@ describe('the carry of a rise into its travel', () => {
       expect(film.frames.map((f) => [...f.origin.toArray(), ...f.rotation.toArray()])).toEqual(real.frames.map((f) => [...f.origin.toArray(), ...f.rotation.toArray()]))
     })
   }
+})
+
+describe('the pass that begins before the seam', () => {
+  const legs = plans.map((p, i) => ({ p, i })).filter(({ p, i }) => i > 0 && p.seg.travel && Math.abs(p.seg.travel.start - p.seg.rise.end) < 1e-9)
+  const film = new FilmDirector(plans)
+  const inner = film as unknown as { approach: THREE.Vector3[]; shapes: TravelShape[] }
+  const camera = (time: number): THREE.Vector3 => film.shotAt(Math.floor(time * config.fps + 1e-9), time).camera.position.clone()
+  const judged = (p: StopPlan): number => p.seg.rise.firstFrame + Math.floor((config.raw.judged.fractions as Record<string, number>).rise! * p.seg.rise.frames + 1e-9)
+
+  it('lays nothing on a rise up to the end of its judged frame, at every stop a travel follows', () => {
+    expect(legs.length).toBe(7)
+    for (const { p, i } of legs) {
+      const shape = inner.shapes[i]!
+      const seg = p.seg.travel!
+      const free = p.seg.rise.end - (judged(p) + 1) / config.fps
+      expect(shape.look.ahead[0], p.id).toBeGreaterThan(0)
+      expect(shape.look.ahead[0], p.id).toBeLessThanOrEqual(free + 1e-9)
+      expect(shape.lead, p.id).toBeCloseTo(shape.look.ahead[0] / (seg.end - seg.start), 12)
+      for (const t of [(judged(p) + 1) / config.fps, p.seg.rise.end - shape.look.ahead[0]]) expect(shape.pass((t - seg.start) / (seg.end - seg.start)), p.id).toBeLessThan(1e-40)
+      const f = film.frames[i]!
+      const at = (judged(p) + config.shutterFraction) / config.fps
+      const plain = p.eyeShot('rise', at, 'orbit').pose.position.clone().applyQuaternion(f.rotation).add(f.origin)
+      expect(camera(at).distanceTo(plain), p.id).toBe(0)
+    }
+  })
+
+  it('is one curve from its start through the seam to its end: no step in the place, the speed or the rate of the eye at the seam', () => {
+    for (const { p, i } of legs) {
+      const end = p.seg.rise.end
+      const h = 2e-3
+      const far = p.exitPose(end).position.length()
+      const before = camera(end).multiplyScalar(3).addScaledVector(camera(end - h), -4).add(camera(end - 2 * h)).multiplyScalar(1 / (2 * h))
+      const after = camera(end).multiplyScalar(-3).addScaledVector(camera(end + h), 4).sub(camera(end + 2 * h)).multiplyScalar(1 / (2 * h))
+      expect(camera(end - 1e-9).distanceTo(camera(end)) / far, p.id + ' place').toBeLessThan(1e-7)
+      expect(after.distanceTo(before) / before.length(), p.id + ' speed').toBeLessThan(2e-2)
+      const seg = p.seg.travel!
+      const shape = inner.shapes[i]!
+      const plain = new TravelShape(p.id)
+      const at = (t: number): number => (t - seg.start) / (seg.end - seg.start)
+      const way = (t: number): number => film.slideOf(i) * shape.pass(at(t))
+      const lent = (t: number): number => film.slideOf(i) * (shape.pass(at(t)) - plain.pass(at(t)))
+      expect(way(end), p.id).toBeGreaterThan(0)
+      const speed = (way(end + h) - way(end - h)) / (2 * h)
+      expect(speed, p.id + ' has speed at the seam').toBeGreaterThan(p.p.rise.driftSpeed)
+      const bent = (lent(end) - 2 * lent(end - h) + lent(end - 2 * h)) / (h * h)
+      const bends = (lent(end + 2 * h) - 2 * lent(end + h) + lent(end)) / (h * h)
+      expect(Math.abs(bends - bent) / (speed / shape.look.ahead[0]), p.id + ' rate').toBeLessThan(5e-2)
+    }
+  })
+
+  it('never goes back and ends where the pass without it ends', () => {
+    for (const { p, i } of legs) {
+      const shape = inner.shapes[i]!
+      const plain = new TravelShape(p.id)
+      expect(plain.lead).toBe(0)
+      expect(shape.pass(shape.look.passBy), p.id).toBeCloseTo(plain.pass(shape.look.passBy), 12)
+      let last = 0
+      for (let k = 0; k <= 400; k++) {
+        const u = -shape.lead + ((shape.look.passBy + shape.lead) * k) / 400
+        const x = shape.pass(u)
+        expect(x, p.id + ' at ' + u.toFixed(3)).toBeGreaterThanOrEqual(last)
+        last = x
+      }
+    }
+  })
+})
+
+describe('the world a travel lands in', () => {
+  const LEAD = 2
+  const least = (costs: number[]): number => costs.reduce((b, c, k) => (c < costs[b]! ? k : b), 0)
+  const turned = (id: string, by: number, to?: number): StopPlan[] => plans.map((p) => (p.id === id ? new StopPlan(p.id, p.fit, { ...p.p, travel: { ...p.p.travel, turnDeg: to ?? p.p.travel.turnDeg + by } }) : p))
+  const real = new FilmDirector(plans)
+
+  it('hangs on a hair between its two answers until a key says which, and then never changes the answer', () => {
+    const n = 720
+    const angles = Array.from({ length: n }, (_, k) => 1 + 0.5 * Math.cos((2 * Math.PI * (k + 0.3)) / n))
+    const sides = { open: 0, close: 0 }
+    for (let j = 0; j < 400; j++) {
+      const want = 0.6 + (0.8 * j) / 400
+      const bare = angles.map((a) => Math.abs(a - want))
+      const k = least(bare)
+      sides[angles[(k + 1) % n]! > angles[(k + n - 1) % n]! ? 'open' : 'close']++
+      expect(worldLead(bare, k), 'least at ' + want).toBeLessThan(0.005)
+      for (const answer of ['open', 'close'] as const) {
+        const costs = worldCosts(angles, bare, answer)
+        const t = least(costs)
+        expect(angles[(t + 1) % n]! > angles[(t + n - 1) % n]!, answer + ' at ' + want).toBe(answer === 'open')
+        expect(costs[t]!).toBeLessThan(0.005)
+        expect(worldLead(costs, t)).toBe(Infinity)
+      }
+      expect(worldCosts(angles, bare, 'least')).toBe(bare)
+    }
+    expect(sides.open).toBeGreaterThan(50)
+    expect(sides.close).toBeGreaterThan(50)
+  })
+
+  it('leads every other answer by ' + LEAD + ' degrees at every stop of the film', () => {
+    expect(real.placed.map((p) => p.id)).toEqual(plans.slice(1, -1).map((p) => p.id))
+    for (const p of real.placed) expect(p.leadDeg, p.id).toBeGreaterThan(LEAD)
+    for (const p of real.placed) expect(p.missDeg, p.id).toBeLessThan(WORLD_MISS)
+    for (const id of ['earth', 'jupiter']) expect(real.placed.find((p) => p.id === id)!.bareLeadDeg, id).toBeLessThan(0.2)
+    for (const p of real.placed) if (p.bareLeadDeg <= LEAD) expect(WORLD_ANSWER[p.id] === 'open' || WORLD_ANSWER[p.id] === 'close', p.id).toBe(true)
+  })
+
+  for (const p of plans.slice(1, -1)) {
+    it('keeps the world after ' + p.id + ' when the turn of its travel moves by a quarter of a degree', () => {
+      const i = plans.indexOf(p)
+      for (const by of [-0.25, 0.25]) {
+        const film = new FilmDirector(turned(p.id, by))
+        expect(THREE.MathUtils.radToDeg(film.frames[i + 1]!.rotation.angleTo(real.frames[i + 1]!.rotation)), p.id + ' by ' + by).toBeLessThan(2)
+      }
+    }, 60000)
+  }
+
+  it('refuses a turn that the end of the rise cannot reach, unless the stop says it takes the corner', () => {
+    expect(WORLD_CORNER).toEqual(['mercury'])
+    expect(() => new FilmDirector(turned('jupiter', 0, 170))).toThrow('jupiter: travel.turnDeg 170 cannot be reached from the end of its rise')
+    for (const to of [90, 175]) {
+      const film = new FilmDirector(turned('mercury', 0, to))
+      const made = film.placed.find((p) => p.id === 'mercury')!
+      expect(made.missDeg, 'mercury at ' + to).toBeGreaterThan(5)
+      expect(made.leadDeg, 'mercury at ' + to).toBeGreaterThan(LEAD)
+      expect(film.placed.map((p) => p.id)).toEqual(real.placed.map((p) => p.id))
+    }
+  }, 60000)
 })

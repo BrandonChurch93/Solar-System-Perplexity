@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 987–1007, paired crater landmarks and the sunlit limb",
+   "what": "The climb retraces the dive's composition closely enough to read as a reversal rather than a distinct outbound move. The paired craters pass through nearly the same positions and angles seen in sheet-02.png at frames 722–747.",
+   "fix": "Give the climb a modest lateral offset and a slightly different bank while matching the incoming camera position and velocity at the cover."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "frames 722–747, crater rims near the left edge",
+   "what": "The fastest part of the dive smears the near crater rims more heavily than the central terrain, briefly making the foreground look stretched.",
+   "fix": "Tune the shutter interval through peak speed and check consecutive full-resolution frames to keep the blur continuous without losing the shape of the nearest rims."
+  }
+ ]
+}

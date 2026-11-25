@@ -1,0 +1,56 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "upper limb cloud band",
+   "what": "the horizon cloud band is far brighter and whiter than the target, up to about 50 luma and about 100 red, so it reads as a hard white stripe instead of soft cyan",
+   "fix": "lower the exposure and pull red out of that band until it matches the target's soft cyan, and soften the edges"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "lower-right disk, just inside the terminator",
+   "what": "a bright spiral knot is present where the target is only smooth banded shading",
+   "fix": "remove the swirl and restore the smooth bands"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "cloud deck",
+   "what": "the atmosphere is warmer and brighter than the target; bright clouds run about 7 red high and many bands are 10 to 20 luma hot",
+   "fix": "cool the grade back toward the target cyan and lower highlight gain"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "illuminated left limb",
+   "what": "the limb edge is a few pixels hotter, about 30 luma, where the rings meet the disk",
+   "fix": "dim that edge to the target; the outer glow width already matches"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper ring arcs",
+   "what": "bright clumps along the strands sit about 20 pixels off the target, and some peaks are hotter",
+   "fix": "move the bright clumps back onto the target strands and match their brightness"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "rings above the limb",
+   "what": "the bright ring strand is about 40 luma hotter than the target, and finer strands sit slightly off the target edges",
+   "fix": "lower ring brightness to the target and nudge the strands back onto the target edges"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "cloud texture",
+   "what": "fine filament detail is a little softer than the target",
+   "fix": "restore high-frequency cloud texture without raising exposure"
+  }
+ ]
+}

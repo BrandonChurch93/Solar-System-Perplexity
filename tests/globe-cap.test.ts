@@ -9,8 +9,9 @@ import { CHROME, CHROME_FLAGS } from '../tools/lib/browser'
 import { CAP_PATCHES, ReliefCap, capCells, capFinest, capGrids, capHeightBytes, capHeights, capOverlap, capVert, type CapOptions } from '../src/bodies/cap'
 import { Planet, planetFrag } from '../src/bodies/planet'
 import * as look from '../src/stops/mars/look'
+import { frozen } from './globe-frozen'
 
-const hash = (text: string): string => createHash('sha256').update(text).digest('hex')
+const hash = (text: string): string => createHash('sha256').update(frozen(text)).digest('hex')
 const KEPT = '81b0189383d53555c8623467df803b233644cf143249b11aa3e3a28f5548a308'
 const MARS = [8.5, 3.8, 1.6, 0.7, 0.3]
 const scaleOf = (deg: number): number => 1 / (2 * Math.tan((deg * Math.PI) / 360))
@@ -342,6 +343,7 @@ import { config } from ${at('src/config.ts')}
 import { setFrame } from ${at('src/core/frame.ts')}
 
 const renderer = new THREE.WebGLRenderer({ canvas: document.createElement('canvas') })
+let held = () => {}
 
 function flat(rgb, size) {
   const data = new Uint8Array(8 * 8 * 4)
@@ -386,13 +388,14 @@ async function shot(o) {
     light: { wrap: 0.2, power: 1, gain: 1, night: [0, 0, 0], sun: [0.2, 0.15, 0.1], relief: 0, reliefNear: 0, limb: 0 },
     haze: o.haze ?? { scaleHeight: 0.01, depth: 0, day: [0, 0, 0], twilight: [0, 0, 0], strength: 0, extinction: 1, forward: 0, top: 1 },
     patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(o.spot ?? [0, 0, 1]), feather: 0.01, fade: [1, 2], nearDeg: 0, own: o.levels.map(() => o.own ?? true), ...(o.centresDeg ? { centresDeg: o.centresDeg } : {}) },
-    ...(levels.length ? { cap: { levels, border: o.border, from: o.from, cells: o.cells, pixel: o.pixel, ...(o.reachDeg ? { reachDeg: o.reachDeg } : {}), ...(o.light ? { light: o.light } : {}) } } : {}),
+    ...(levels.length ? { cap: { levels, border: o.border, from: o.from, cells: o.cells, pixel: o.pixel, ...(o.reachDeg ? { reachDeg: o.reachDeg } : {}), ...(o.light ? { light: o.light } : {}), ...(o.cull ? { cull: true } : {}), ...(o.detail ? { detail: { text: o.detail.text, uniforms: Object.fromEntries(Object.entries(o.detail.uniforms).map(([k, v]) => [k, { value: Array.isArray(v) ? new THREE.Vector3().fromArray(v) : v }])) } } : {}) } } : {}),
     ...(o.exactSpin ? { exactSpin: true } : {}),
   })
   const cam = new THREE.PerspectiveCamera(o.vfov, o.width / o.height, o.near, 10)
   cam.position.fromArray(o.position)
   cam.up.fromArray(o.up)
   cam.lookAt(new THREE.Vector3().fromArray(o.target))
+  if (o.shift) cam.setViewOffset(o.width, o.height, o.shift[0], o.shift[1], o.width, o.height)
   const from = cam.position.clone()
   planet.mesh.position.copy(from).negate()
   cam.position.set(0, 0, 0)
@@ -412,11 +415,18 @@ async function shot(o) {
   const drawn = planet.cap ? planet.cap.mesh.visible : false
   const triangles = renderer.info.render.triangles
   target.dispose()
-  planet.dispose()
-  height.dispose()
-  for (const t of [map, ...textures]) t.dispose()
+  const drop = held
+  held = () => {
+    planet.dispose()
+    height.dispose()
+    for (const t of [map, ...textures]) t.dispose()
+  }
+  drop()
   loader.freeAll()
-  return { pixels: Array.from(out), bytes, drawn, triangles }
+  const raw = new Uint8Array(out.buffer)
+  let text = ''
+  for (let i = 0; i < raw.length; i += 32768) text += String.fromCharCode.apply(null, raw.subarray(i, i + 32768))
+  return { pixels: btoa(text), bytes, drawn, triangles }
 }
 
 window.cap = { shot }
@@ -425,7 +435,7 @@ window.cap = { shot }
 interface Box { north: [number, number]; east: [number, number]; value: number }
 interface HeightDef { size: number; widthDeg: number; low: number; high: number; base: number; boxes: Box[] }
 interface HazeDef { scaleHeight: number; depth: number; day: [number, number, number]; twilight: [number, number, number]; strength: number; extinction: number; forward: number; top: number }
-interface CapShot { spin?: number; exactSpin?: boolean; spot?: [number, number, number]; frame?: number; centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
+interface CapShot { cull?: boolean; shift?: [number, number]; detail?: { text: string; uniforms: Record<string, number | [number, number, number]> }; spin?: number; exactSpin?: boolean; spot?: [number, number, number]; frame?: number; centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
 interface CapRead { pixels: number[]; bytes: number; drawn: boolean; triangles: number }
 
 const filmicInverse = (v: number): number => {
@@ -441,7 +451,11 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
   let browser: Browser
   let page: Page
   const errors: string[] = []
-  const call = (o: CapShot): Promise<CapRead> => page.evaluate((a) => (window as unknown as { cap: { shot(x: unknown): Promise<unknown> } }).cap.shot(a) as Promise<CapRead>, o)
+  // The pixels cross from the page as base64 of their floats: as a list of numbers a shot of 192 by 192 took 0.8 s to cross.
+  const call = async (o: CapShot): Promise<CapRead> => {
+    const r = await page.evaluate((a) => (window as unknown as { cap: { shot(x: unknown): Promise<unknown> } }).cap.shot(a) as Promise<Omit<CapRead, 'pixels'> & { pixels: string }>, o)
+    return { ...r, pixels: Array.from(new Float32Array(new Uint8Array(Buffer.from(r.pixels, 'base64')).buffer)) }
+  }
 
   beforeAll(async () => {
     const dir = resolve(ROOT, 'out/work/globe-test')
@@ -673,7 +687,7 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
     expect(share(await call(half), half)).toBeLessThan(0.02)
     expect(Math.abs(share(await call({ ...half, frame: 0.5 }), half) - one)).toBeLessThan(0.03)
     expect(errors).toEqual([])
-  })
+  }, 120000)
 
   it('measures the haze to its own surface: the sphere\'s depth where the height is 0, more air over a pit, less over a mesa', async () => {
     const haze: HazeDef = { scaleHeight: 0.01, depth: 0.4, day: [1, 1, 1], twilight: [0, 0, 0], strength: 1, extinction: 1, forward: 0, top: 1 }
@@ -730,4 +744,147 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
     }
     expect(errors).toEqual([])
   }, 240000)
+
+  it('draws the same picture to the last bit with `cull`, from fewer triangles where the lens sees a part of the cap', async () => {
+    const lit = { relief: 1, own: 1 }
+    const hills: HeightDef = { ...flatLevel(12), boxes: [{ north: [1.5, 2], east: [-4, 4], value: 30000 }, { north: [-3, -2], east: [-1, 3], value: 60000 }, { north: [-0.4, 0.4], east: [-0.4, 0.4], value: 20000 }] }
+    const fine: HeightDef = { ...flatLevel(3), boxes: [{ north: [-0.2, 0.3], east: [0.1, 0.5], value: 50000 }] }
+    const near = (deg: number, turn: number, vfov: number): CapShot => ({
+      ...low, vfov, heights: [hills, fine], light: lit,
+      position: [1.02 * Math.sin(rad(deg)) * Math.sin(turn), 1.02 * Math.sin(rad(deg)) * Math.cos(turn), 1.02 * Math.cos(rad(deg))],
+      target: [Math.sin(rad(2)) * Math.sin(turn + 2.6), Math.sin(rad(2)) * Math.cos(turn + 2.6), Math.cos(rad(2))],
+    })
+    const views: CapShot[] = [
+      { ...low, heights: [hills], light: lit },
+      { ...low, heights: [hills, fine], light: lit, shift: [0.37, -0.21] },
+      near(-3.2, 0, 40), near(1.1, 1.3, 25), near(0.4, 4.1, 70), near(2.5, 2.2, 12),
+      { ...near(0.8, 5.5, 50), exactSpin: true, spin: 0.4 },
+      { ...top, heights: [hills, fine] },
+      { ...top, vfov: 4, heights: [hills, fine], light: lit },
+    ]
+    const sphere = (await call(low)).triangles
+    let fewer = 0
+    for (const view of views) {
+      const off = await call(view)
+      const on = await call({ ...view, cull: true })
+      expect(on.drawn).toBe(true)
+      expect(off.drawn).toBe(true)
+      let apart = 0
+      for (let i = 0; i < off.pixels.length; i++) if (on.pixels[i] !== off.pixels[i]) apart++
+      expect(apart).toBe(0)
+      expect(on.triangles).toBeLessThanOrEqual(off.triangles)
+      if (on.triangles - sphere < 0.6 * (off.triangles - sphere)) fewer++
+    }
+    expect(fewer).toBeGreaterThanOrEqual(6)
+    expect(errors).toEqual([])
+  }, 240000)
+
+  describe('the detail a stop lays on the cap', () => {
+    const flatLevel: HeightDef = { size: 128, widthDeg: 12, low: 0, high: 0.04, base: 0, boxes: [] }
+    const mesa: HeightDef = { ...flatLevel, size: 16, boxes: [{ north: [-1.4, 1.4], east: [-1.4, 1.4], value: 30000 }] }
+    const top: CapShot = {
+      map: [128, 128, 128], levels: [{ rgb: RED, size: 8, widthDeg: 30 }, { rgb: GREEN, size: 8, widthDeg: 6 }], border: [0.09, 0.1], from: [8, 4], cells: 128, pixel: 1e-4,
+      vfov: 4, width: 96, height: 96, near: 0.1, position: [0, 0, 3], up: [0, 1, 0], target: [0, 0, 0], sun: [0.6, 0.2, 0.7],
+    }
+    const fn = (body: string, uniforms = ''): string => uniforms + 'vec4 groundDetail(vec3 dir, float height, vec3 normal, float texelPx) {\n' + body + '\n}'
+    const none = { text: fn('  return vec4(1.0, 1.0, 1.0, 0.0);'), uniforms: {} }
+
+    it('keeps every bit of the cap where the text gives a factor of 1 and a height of 0', async () => {
+      const lit = { relief: 1, own: 1 }
+      for (const view of [{ ...top, heights: [mesa], light: lit }, { ...top, heights: [mesa], light: lit, own: false }, { ...top, heights: [mesa] }, { ...top, heights: [mesa], own: false, exactSpin: true, spin: 0.3 }] as CapShot[]) {
+        const off = await call(view)
+        const on = await call({ ...view, detail: none })
+        expect(on.drawn).toBe(true)
+        let apart = 0
+        for (let i = 0; i < off.pixels.length; i++) if (on.pixels[i] !== off.pixels[i]) apart++
+        expect(apart).toBe(0)
+      }
+      expect(errors).toEqual([])
+    }, 240000)
+
+    it('lays the factor on the colour of the ground before the light, on the map and on the own levels alike, and moves no edge', async () => {
+      const tint = { text: fn('  return vec4(uDetailTint, 0.0);', 'uniform vec3 uDetailTint;\n'), uniforms: { uDetailTint: [0.5, 0.25, 0.75] as [number, number, number] } }
+      for (const own of [true, false]) {
+        const view: CapShot = { ...top, heights: [mesa], light: { relief: 1, own: 1 }, own }
+        const off = await call(view)
+        const on = await call({ ...view, detail: tint })
+        let worst = 0
+        let seen = 0
+        for (let i = 0; i < off.pixels.length; i += 4) {
+          expect(on.pixels[i + 3]).toBe(off.pixels[i + 3])
+          if (off.pixels[i + 3] !== 1) continue
+          seen++
+          for (let c = 0; c < 3; c++) worst = Math.max(worst, Math.abs(on.pixels[i + c]! - off.pixels[i + c]! * [0.5, 0.25, 0.75][c]!) / Math.max(off.pixels[i + c]!, 1e-6))
+        }
+        expect(seen).toBeGreaterThan(2000)
+        expect(worst).toBeLessThan(1e-4)
+      }
+      expect(errors).toEqual([])
+    }, 240000)
+
+    it('tilts the light by the slope of the height the text gives, as the true normal of that surface would, and draws the same place', async () => {
+      const amp = 2e-4
+      const freq = 60
+      const wave = { text: fn('  return vec4(1.0, 1.0, 1.0, uDetailAmp * sin(dir.x * uDetailFreq));', 'uniform float uDetailAmp;\nuniform float uDetailFreq;\n'), uniforms: { uDetailAmp: amp, uDetailFreq: freq } }
+      const sun = new THREE.Vector3(0.6, 0.2, 0.7).normalize()
+      const view: CapShot = { ...top, width: 192, height: 96, heights: [flatLevel] }
+      const off = await call(view)
+      const on = await call({ ...view, detail: wave })
+      const perPx = (2 * Math.tan(rad(2))) / 96
+      const hit = (x: number): THREE.Vector3 => {
+        const ray = new THREE.Vector3((x + 0.5 - 96) * perPx, 0, -1).normalize()
+        const b = 3 * ray.z
+        return new THREE.Vector3(0, 0, 3).addScaledVector(ray, -b - Math.sqrt(b * b - 8))
+      }
+      let worst = 0
+      let swing = 0
+      for (let x = 40; x < 152; x++) {
+        const a = px(off, view, x, 48)
+        const b = px(on, view, x, 48)
+        expect(b[3]).toBe(a[3])
+        const up = hit(x)
+        const next = hit(x + 1)
+        const slope = (amp * (Math.sin(next.x * freq) - Math.sin(up.x * freq))) / up.distanceTo(next)
+        const east = next.clone().sub(up).normalize()
+        const ndl0 = up.dot(sun)
+        const lift = Math.min(Math.max((up.clone().addScaledVector(east, -slope).normalize().dot(sun) - ndl0) / Math.max(ndl0 + 0.2, 0.06), -0.85), 1.6)
+        worst = Math.max(worst, Math.abs(b[1]! / a[1]! - (1 + lift)))
+        swing = Math.max(swing, Math.abs(lift))
+      }
+      expect(swing).toBeGreaterThan(0.005)
+      expect(worst).toBeLessThan(swing * 0.05)
+      expect(errors).toEqual([])
+    }, 240000)
+
+    it('reads a height that follows the cap\'s own height on its walls alone', async () => {
+      const strata = { text: fn('  return vec4(1.0, 1.0, 1.0, 5e-4 * sin(height * 300.0));'), uniforms: {} }
+      const view: CapShot = { ...top, heights: [mesa] }
+      const off = await call(view)
+      const on = await call({ ...view, detail: strata })
+      const ratio = (x: number, y: number): number => px(on, view, x, y)[1]! / px(off, view, x, y)[1]!
+      expect(Math.abs(ratio(48, 48) - 1)).toBeLessThan(1e-5)
+      expect(Math.abs(ratio(4, 4) - 1)).toBeLessThan(1e-5)
+      let wall = 0
+      for (let x = 0; x < 96; x++) wall = Math.max(wall, Math.abs(ratio(x, 48) - 1))
+      expect(wall).toBeGreaterThan(0.02)
+      for (let i = 3; i < off.pixels.length; i += 4) expect(on.pixels[i]).toBe(off.pixels[i])
+      expect(errors).toEqual([])
+    }, 240000)
+
+    it('hands the width of a texel of the finest plate drawn in pixels of the master, whatever the size of the buffer', async () => {
+      const width = { text: fn('  return vec4(vec3(texelPx * 0.25), 0.0);'), uniforms: {} }
+      const texel = (2 * Math.tan(rad(3))) / 8
+      const read = async (rows: number, frame: number): Promise<number> => {
+        const view: CapShot = { ...top, width: rows, height: rows, heights: [flatLevel], frame }
+        const off = await call(view)
+        const on = await call({ ...view, detail: width })
+        return px(on, view, rows / 2, rows / 2)[1]! / px(off, view, rows / 2, rows / 2)[1]! / 0.25
+      }
+      const master = (2 * Math.tan(rad(2)) * 2) / 96
+      expect(Math.abs(await read(96, 1) / (texel / master) - 1)).toBeLessThan(0.01)
+      expect(Math.abs(await read(192, 2) / (texel / master) - 1)).toBeLessThan(0.01)
+      expect(Math.abs(await read(48, 0.5) / (texel / master) - 1)).toBeLessThan(0.01)
+      expect(errors).toEqual([])
+    }, 240000)
+  })
 })

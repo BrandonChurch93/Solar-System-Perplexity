@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import type { RenderView, SetContext } from '../core/types'
+import { frameUniform } from '../core/frame'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { MAX_MARK, reach, reachNeeded, uniformCells } from './shield'
@@ -257,6 +258,115 @@ export function withPresence(source: string, lit: string): string {
   return source.replace(HEAD, HEAD + '\nuniform float uPresence;').replace(lit, lit + ' * uPresence')
 }
 
+// The relief with an edge (Relief.presenceEdge): the same shaders with their premultiplied output times a share that follows the place in
+// the WHOLE source picture, the layers' boxes taken together: 0 at a side of that picture and beyond it, where a layer's apron lies (the
+// apron is the picture's last texels drawn out), and 1 one feather inside the side, smooth between. Every layer reads the same coordinate
+// (vImage, the place in the whole picture, not in its own box), so all layers end along one line on the ground. The air reads it where the
+// ray of its pixel meets the sphere of the relief's farthest distance about the picture's eye, which is where its haze band belongs, so
+// the band ends with the ground under it. Built when a relief asks for the first time; a relief that never asks keeps the shaders above
+// to the letter.
+const IMAGE_IN = 'in vec2 vImage;'
+const THIN = 'if (alpha < 0.004) discard;'
+const AIR_DIR_IN = 'in vec3 vDir;'
+const AIR_DIR_OUT = 'out vec3 vDir;'
+const AIR_DIR = 'vDir = position;'
+
+export const EDGE_GLSL = /* glsl */ `
+uniform vec4 uEdgeSide;
+uniform vec4 uEdgeOver;
+float edgeSide(float inside, float over) {
+  return over > 0.0 ? smoothstep(0.0, 1.0, inside * over) : 1.0;
+}
+float edgeShare(vec2 im) {
+  return edgeSide(im.x - uEdgeSide.x, uEdgeOver.x) * edgeSide(uEdgeSide.y - im.x, uEdgeOver.y) * edgeSide(uEdgeSide.z - im.y, uEdgeOver.z) * edgeSide(im.y - uEdgeSide.w, uEdgeOver.w);
+}`
+
+export const EDGE_AIR_GLSL = /* glsl */ `
+uniform vec3 uEdgeFar;
+in vec3 vEdgeEye;
+vec2 edgeAirImage(vec3 d) {
+  float b = dot(vEdgeEye, d);
+  float c = dot(vEdgeEye, vEdgeEye) - uEdgeFar.x * uEdgeFar.x;
+  vec3 p = vEdgeEye + d * (sqrt(max(b * b - c, 0.0)) - b);
+  float ahead = -p.z;
+  if (ahead <= 1e-6 * uEdgeFar.x) return vec2(p.x < 0.0 ? -1e6 : 1e6, p.y < 0.0 ? 1e6 : -1e6);
+  return vec2(p.x / ahead * uEdgeFar.y, -p.y / ahead * uEdgeFar.z) * 0.5 + 0.5;
+}`
+
+export function withEdge(source: string, lit: string): string {
+  const air = lit === AIR_LIT
+  const head = air ? AIR_DIR_IN : IMAGE_IN
+  if (source.split(head).length !== 2 || source.split(lit).length !== 2 || (!air && source.split(THIN).length !== 2) || source.includes('uEdgeSide')) throw new Error('the relief shader has no single place for an edge')
+  if (air) return source.replace(head, head + EDGE_GLSL + EDGE_AIR_GLSL).replace(lit, lit + ' * edgeShare(edgeAirImage(d))')
+  return source.replace(head, head + EDGE_GLSL).replace(THIN, 'if (alpha < 0.004 || edgeShare(vImage) <= 0.0) discard;').replace(lit, lit + ' * edgeShare(vImage)')
+}
+
+// The lens in the air's own frame, for the edge: the air is drawn about the lens, so its vertex shader has no use for the place of the
+// lens until an edge asks where a ray meets the relief's far distance. The same line as the layers' eye, with the scale of the group.
+export function withEdgeEye(source: string): string {
+  if (source.split(AIR_DIR_OUT).length !== 2 || source.split(AIR_DIR).length !== 2 || source.includes('vEdgeEye')) throw new Error('the relief shader has no single place for the eye of its edge')
+  return source.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vEdgeEye;\nuniform float uEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vEdgeEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uEyeScale;')
+}
+
+// The relief with a law of the stop (Relief.presenceLaw): the same layer shader with its premultiplied output times a share the stop
+// writes itself, for a ground whose picture is true from one eye and gives way to what lies under it by place and by eye. The stop gives
+// GLSL that defines float lawShare(vec3 P, vec3 E, vec2 image): P the fragment in the relief's frame (the picture's eye at 0, the lens
+// along -z, the units of the distance files), E the present eye in the same frame, image the place in the whole picture (0 to 1, y
+// down). Its own uniforms are named uLaw... and come from the stop's own files; it may also read uUpL (up in the relief's frame) and
+// the two numbers below: the focal length of the present lens in pixels of the master, and the buffer pixels a pixel of the master
+// takes in this pass, for a law that counts on the screen. The law is read first in main, before any branch, so it may take
+// derivatives of what it is given; it must not leave the shader itself. The share is held to 0..1; at 0 the fragment is not drawn and
+// writes no depth. With the tone asked for the text also defines vec3 lawTone(vec3 P, vec3 E, vec2 image), of the same terms: a factor
+// on the linear colour of the layer where it is made, before the valley mist and before the share, held at or above 0, so the picture's
+// colour can go with the eye as the ground round it does. The mist's own colour and the air do not take it. Built when a relief asks;
+// a relief that never asks keeps the shaders above to the letter.
+const MAIN = 'void main() {'
+const VIG = 'vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);'
+export const LAW_GLSL = /* glsl */ `
+uniform float uLawFocal;
+uniform float uLawFrame;`
+
+const LAW_OWN = ['uLawFocal', 'uLawFrame']
+const LAW_SHARE = /\bfloat\s+lawShare\s*\(\s*vec3\s+\w+\s*,\s*vec3\s+\w+\s*,\s*vec2\s+\w+\s*\)\s*\{/g
+const LAW_TONE = /\bvec3\s+lawTone\s*\(\s*vec3\s+\w+\s*,\s*vec3\s+\w+\s*,\s*vec2\s+\w+\s*\)\s*\{/g
+const COL = 'vec3 col = inverseFilmic(texel.rgb) * uGain * vig;'
+const LAW_UNIFORM = /\buniform\s+(?:(?:lowp|mediump|highp)\s+)?\w+\s+(\w+)\s*(?:\[[^\]]*\])?\s*;/g
+
+// The uniforms a law declares, by name. Throws for a text that is no law, and for one whose tone does not go with what the set asked.
+export function lawUniforms(source: string, tone = false): string[] {
+  const text = source.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ')
+  if ((text.match(LAW_SHARE) ?? []).length !== 1) throw new Error('the law of a relief defines float lawShare(vec3 P, vec3 E, vec2 image) once')
+  const tones = (text.match(LAW_TONE) ?? []).length
+  if (tone && tones !== 1) throw new Error('the law of a relief with a tone defines vec3 lawTone(vec3 P, vec3 E, vec2 image) once')
+  if (!tone && (tones !== 0 || /\blawTone\b/.test(text))) throw new Error('the law of a relief has a lawTone and the set did not ask for the tone')
+  for (const word of ['void main', 'discard', 'outColor', 'gl_FragDepth']) if (text.includes(word)) throw new Error('the law of a relief gives a share and nothing else: it has no ' + word)
+  const names = [...text.matchAll(LAW_UNIFORM)].map((m) => m[1]!)
+  if ((text.match(/\buniform\b/g) ?? []).length !== names.length) throw new Error('the law of a relief declares each uniform on a line of its own kind: uniform type uLawName;')
+  for (const name of names) {
+    if (!/^uLaw[A-Z0-9]\w*$/.test(name) || LAW_OWN.includes(name)) throw new Error('a uniform of the law of a relief is named uLaw and a name of its own, not ' + name)
+    if (names.indexOf(name) !== names.lastIndexOf(name)) throw new Error('the law of a relief declares ' + name + ' twice')
+  }
+  return names
+}
+
+export function withLaw(source: string, text: string, tone = false): string {
+  if (source.split(MAIN).length !== 2 || source.split(VIG).length !== 2 || source.split(LIT).length !== 2 || (tone && source.split(COL).length !== 2) || source.includes('lawShare')) throw new Error('the relief shader has no single place for a law')
+  lawUniforms(text, tone)
+  const read = '\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);' + (tone ? '\n  vec3 reliefTone = max(lawTone(vLocal, vEye, vImage), vec3(0.0));' : '')
+  const made = source.replace(MAIN, LAW_GLSL.slice(1) + '\n' + text.trim() + '\n' + MAIN + read).replace(VIG, 'if (reliefLaw <= 0.0) discard;\n  ' + VIG).replace(LIT, LIT + ' * reliefLaw')
+  return tone ? made.replace(COL, COL.slice(0, -1) + ' * reliefTone;') : made
+}
+
+// The share of the edge at a place of the whole picture, as the shader reads it (for the shield and for tests).
+export function edgeShareAt(ix: number, iy: number, side: readonly number[], over: readonly number[]): number {
+  const one = (inside: number, k: number): number => {
+    if (!(k > 0)) return 1
+    const t = Math.min(Math.max(inside * k, 0), 1)
+    return t * t * (3 - 2 * t)
+  }
+  return one(ix - side[0]!, over[0]!) * one(side[1]! - ix, over[1]!) * one(side[2]! - iy, over[2]!) * one(iy - side[3]!, over[3]!)
+}
+
 // The eye of the layers under a scaled group. The layers take the eye out of the model view matrix as if the group had no scale; under a
 // scale s that is s squared times the eye, so the valley mist is seen from near the picture's own eye and not from the camera. A set that
 // stands the relief in another scene with a scale (the close view's ground in the globe's scene, through the twin) gets the same line
@@ -294,6 +404,9 @@ interface Grid {
   solid: Uint8Array
   box: Int16Array
   kept: number
+  // With an edge (Relief.presenceEdge): 1 for a cell of the layer's own box whose four corners have the whole share. Null without one.
+  inside: Uint8Array | null
+  image: Float32Array
 }
 
 interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial; grid: Grid }
@@ -317,9 +430,20 @@ export class Relief {
   private readonly none = new THREE.MeshBasicMaterial({ visible: false })
   private state: 'new' | 'ready' | 'off' = 'new'
   private readonly share = { value: 1 }
+  private readonly airShare = { value: 1 }
   private fades = false
+  private lawed = false
+  private lawWhole: (() => boolean) | null = null
+  private readonly lawFocal = { value: 1 }
+  private readonly lawFrame = { value: 1 }
   private readonly eyeScale = { value: 1 }
   private scaled = false
+  private edged = false
+  private edgeAir = true
+  private readonly edgeSide = { value: new THREE.Vector4(0, 1, 1, 0) }
+  private readonly edgeOver = { value: new THREE.Vector4(0, 0, 0, 0) }
+  private readonly edgeFar = { value: new THREE.Vector3(1, 1, 1) }
+  private far = 0
 
   private constructor(def: ReliefDef, motion: ReliefMotion) {
     this.def = def
@@ -367,7 +491,7 @@ export class Relief {
   }
 
   screen(renderer: THREE.WebGLRenderer, camera: THREE.Camera, width: number, height: number, tile: number): boolean {
-    if (this.share.value < 1) return false
+    if (this.share.value < 1 || (this.lawed && !(this.lawWhole !== null && this.lawWhole() === true))) return false
     if (!this.ready(renderer)) return false
     this.group.updateWorldMatrix(true, true)
     const tc = Math.ceil(width / tile) - 1
@@ -421,7 +545,7 @@ export class Relief {
               if (one > 1 || zero > 1) {
                 const need = Math.max(reachNeeded(ax, ay, bx, by, cx, cy, g.du, g.dv), reachNeeded(dx, dy, cx, cy, bx, by, g.du, g.dv))
                 if (zero >= need) continue
-                if (one >= need) solid = 1
+                if (one >= need && (!g.inside || g.inside[base])) solid = 1
               }
             }
             x0 = Math.min(tc, Math.max(0, Math.floor(minX / tile)))
@@ -513,8 +637,13 @@ export class Relief {
   // is a new program: call it once where the set is built, so the program is compiled with the others. Under 1 the relief is no shield
   // (screen answers false), so nothing behind it is culled. The share is the set's to give from a height, a distance or an angle, never
   // from a frame number.
-  presence(share: number): void {
+  // The air apart: presence(share, { air }) gives the layers the share and the air a share of its own, for a set whose ground under the
+  // relief has an air of its own. The first call that names it gives the air its own number; until then one number serves both, and a
+  // later call without it sets both again. The shield follows the share of the layers alone.
+  presence(share: number, options: { air?: number } = {}): void {
     if (!(share >= 0 && share <= 1)) throw new Error('the presence of a relief is a share from 0 to 1, not ' + share)
+    const air = options.air
+    if (air !== undefined && !(air >= 0 && air <= 1)) throw new Error('the presence of the air of a relief is a share from 0 to 1, not ' + air)
     if (!this.fades) {
       this.fades = true
       const parts: [THREE.ShaderMaterial, string][] = this.layers.map((l) => [l.material, LIT])
@@ -525,7 +654,98 @@ export class Relief {
         material.needsUpdate = true
       }
     }
+    if (air !== undefined && this.air) this.air.material.uniforms.uPresence = this.airShare
     this.share.value = share
+    this.airShare.value = air ?? share
+  }
+
+  // Where the relief ends: a feather at each side of the whole source picture, [left, right, bottom, top] in pixels of that picture (the
+  // units of the layers' boxes), 0 for a side that does not fade. The sides are those of the layers' boxes taken together, margins and
+  // all. The premultiplied output of every layer and of the air is times a share by the place in the picture: 0 at the side and beyond
+  // it (so no apron of that side is drawn), 1 one feather inside, smooth between; the same for every layer, so they end along one line
+  // on the ground, and the air ends with the far ground under its haze. A share by place, never by the clock. It goes with a presence
+  // (the two shares multiply). Off until a set calls it: a relief that never does keeps its shaders to the letter and draws as before.
+  // The first call gives the materials the shader with the edge, which is a new program: call it once where the set is built. Inside
+  // the feather the relief is no shield, so what lies behind it there is drawn; one feather inside it is the shield it was.
+  // The air: it ends with the ground unless the set says { air: false }. Then the ground layers end at the sides and the air stays whole:
+  // it keeps its shaders to the letter and draws as it did before the edge, for a set whose picture behind the relief has no air of its
+  // own to show beyond the side. The choice belongs to the programs, so the first call makes it; a later call may leave it out, and one
+  // that names the other choice throws.
+  presenceEdge(feather: readonly [number, number, number, number], options: { air?: boolean } = {}): void {
+    if (feather.length !== 4 || !feather.every((f) => f >= 0 && Number.isFinite(f))) throw new Error('the edge of a relief is four feathers of 0 or more pixels (left, right, bottom, top), not ' + JSON.stringify(feather))
+    if (this.edged && options.air !== undefined && options.air !== this.edgeAir) throw new Error('the air of the edge of a relief is chosen by the first call, where the set is built: here it ' + (this.edgeAir ? 'ends with the ground' : 'stays whole'))
+    const [W, H] = this.def.imageSize
+    const boxes = this.def.layers.map((l) => l.box)
+    const x0 = Math.min(...boxes.map((b) => b[0]))
+    const x1 = Math.max(...boxes.map((b) => b[0] + b[2]))
+    const y0 = Math.min(...boxes.map((b) => b[1]))
+    const y1 = Math.max(...boxes.map((b) => b[1] + b[3]))
+    this.edgeSide.value.set(x0 / W, x1 / W, y1 / H, y0 / H)
+    this.edgeOver.value.set(feather[0] > 0 ? W / feather[0] : 0, feather[1] > 0 ? W / feather[1] : 0, feather[2] > 0 ? H / feather[2] : 0, feather[3] > 0 ? H / feather[3] : 0)
+    if (!this.edged) {
+      this.edged = true
+      this.edgeAir = options.air !== false
+      const th = Math.tan(rad(this.def.vfovDeg) / 2)
+      this.edgeFar.value.set(this.far, 1 / (th * W / H), 1 / th)
+      for (const l of this.layers) {
+        l.material.fragmentShader = withEdge(l.material.fragmentShader, LIT)
+        l.material.uniforms.uEdgeSide = this.edgeSide
+        l.material.uniforms.uEdgeOver = this.edgeOver
+        l.material.needsUpdate = true
+      }
+      if (this.air && this.edgeAir) {
+        const m = this.air.material
+        m.fragmentShader = withEdge(m.fragmentShader, AIR_LIT)
+        m.vertexShader = withEdgeEye(m.vertexShader)
+        m.uniforms.uEdgeSide = this.edgeSide
+        m.uniforms.uEdgeOver = this.edgeOver
+        m.uniforms.uEdgeFar = this.edgeFar
+        m.uniforms.uEyeScale = this.eyeScale
+        m.needsUpdate = true
+      }
+    }
+    const side = this.edgeSide.value.toArray()
+    const over = this.edgeOver.value.toArray()
+    for (const l of this.layers) {
+      const g = l.grid
+      const inside = g.inside ?? new Uint8Array(g.nx * g.ny)
+      for (let cj = 0; cj < g.ny; cj++) {
+        for (let bi = 0; bi < g.nx; bi++) {
+          const a = cj * g.cols + bi + g.left
+          let whole = 1
+          for (const n of [a, a + 1, a + g.cols, a + g.cols + 1]) if (edgeShareAt(g.image[n * 2]!, g.image[n * 2 + 1]!, side, over) < 1) whole = 0
+          inside[cj * g.nx + bi] = whole
+        }
+      }
+      g.inside = inside
+    }
+  }
+
+  // How much of the relief is there by a law of the stop: every layer times a share the stop's own GLSL gives for the fragment, from
+  // the ground point, the present eye and the place in the picture (LAW_GLSL above has the terms). uniforms are the law's own, under the
+  // names its text declares; the stop keeps the objects and sets their values from its own files. It goes with a presence and an edge
+  // (the shares multiply) and leaves the air alone. One call, where the set is built: the text is the program. A
+  // relief that never calls it keeps its shaders to the letter and draws as before. With a law the relief is no shield, so what lies
+  // behind it is drawn; a set whose law is 1 for every fragment over a span (a switch among its uniforms) may say so through whole,
+  // which is asked whenever the shield is: while it answers true the relief shields as one that never asked, and the set stands for
+  // it that the law gives exactly 1 then. With tone the text also gives the factor on the layers' colour (lawTone, LAW_GLSL above).
+  // The law answers by place and by eye; a value that follows a frame number is not a law.
+  presenceLaw(text: string, uniforms: Record<string, THREE.IUniform> = {}, options: { whole?: () => boolean; tone?: boolean } = {}): void {
+    if (this.lawed) throw new Error('the law of a relief is given once, where the set is built')
+    const tone = options.tone === true
+    const names = lawUniforms(text, tone)
+    const given = Object.keys(uniforms)
+    for (const name of names) if (!given.includes(name)) throw new Error('the law of a relief declares ' + name + ' and the set gives no such uniform')
+    for (const name of given) if (!names.includes(name)) throw new Error('the set gives the law of a relief ' + name + ', which its text does not declare')
+    this.lawed = true
+    this.lawWhole = options.whole ?? null
+    for (const l of this.layers) {
+      l.material.fragmentShader = withLaw(l.material.fragmentShader, text, tone)
+      for (const name of names) l.material.uniforms[name] = uniforms[name]!
+      l.material.uniforms.uLawFocal = this.lawFocal
+      l.material.uniforms.uLawFrame = this.lawFrame
+      l.material.needsUpdate = true
+    }
   }
 
   static async load(ctx: SetContext, base: string, def: ReliefDef, motion: ReliefMotion): Promise<Relief> {
@@ -650,6 +870,7 @@ export class Relief {
           const iy = (y0 + fy * bh) / H
           const dir = new THREE.Vector3((2 * ix - 1) * th * aspect, (1 - 2 * iy) * th, -1).normalize()
           const dd = distance(fx, fy)
+          if (fx >= 0 && fx <= 1 && fy <= 1 && dd > r.far) r.far = dd
           position[n * 3] = dir.x * dd
           position[n * 3 + 1] = dir.y * dd
           position[n * 3 + 2] = dir.z * dd
@@ -731,7 +952,7 @@ export class Relief {
       const cellCount = (cols - 1) * (rows - 1)
       r.layers.push({ mesh, material, grid: {
         cols, rows, left: nl, nx, ny, position, index, alpha, one: new Uint8Array(0), zero: new Uint8Array(0), du: 1, dv: 1, full: geo, lean: part(), probe, veil,
-        sx: new Float64Array(cols * rows), sy: new Float64Array(cols * rows), cells: new Uint32Array(cellCount), solid: new Uint8Array(cellCount), box: new Int16Array(cellCount * 4), kept: 0,
+        sx: new Float64Array(cols * rows), sy: new Float64Array(cols * rows), cells: new Uint32Array(cellCount), solid: new Uint8Array(cellCount), box: new Int16Array(cellCount * 4), kept: 0, inside: null, image,
       } })
     }
     return r
@@ -753,6 +974,12 @@ export class Relief {
       }
     }
     this.eyeScale.value = plain ? 1 : 1 / s2
+    if (this.lawed) {
+      // The lens' own angle, not the projection: in a place picture the projection is the padded field.
+      const pass = frameUniform.value * (view.placeScale ?? 1)
+      this.lawFrame.value = pass
+      this.lawFocal.value = view.format.height / (2 * pass * Math.tan(rad(view.camera.fov) / 2))
+    }
     if (this.air) {
       const u = this.air.material.uniforms
       const f = m.air?.drift
