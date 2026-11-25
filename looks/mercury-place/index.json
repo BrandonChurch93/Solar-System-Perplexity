@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T15:17:30.809Z",
- "head": "dfa29d819f78f34d4473a4d5bad13e746e5ce143",
- "note": "MAIL 1151 (1): looking for the disc under the far Sun; hold sky patch hole lifted",
+ "pushed": "2026-11-25T15:43:20.635Z",
+ "head": "9ee41bdd5a681ab46cbd1bfa736c203725033ce7",
+ "note": "far Sun commit: the disc under the far Sun is the hole of the hold sky picture; the low view needs the ride, second form 9ee7de11 takes it by the terrain sky's share; stills rendering",
  "looks": [
+  {
+   "time": "2026-11-25T15:43:19.327Z",
+   "file": "20261125154319327-note-ba-low.jpg",
+   "source": "../../../../tmp/m/ba-low.jpg",
+   "kind": "note",
+   "label": "low view 765 and 970 on take/ts1: main's ride, the first form with no ride, what changes times 8: the warm line on the horizon leaves the terrain sky's Sun, so the low view keeps the ride",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T15:43:18.207Z",
+   "file": "20261125154318207-note-sun-under-2x2.jpg",
+   "source": "../../../../tmp/m/sun-under-2x2.jpg",
+   "kind": "note",
+   "label": "MAIL 1151 (1): 717 and 1008 on take/ts1 with the small commit, lifted 6: top the far Sun as it is, bottom the far Sun's opacity at zero (the hole of the hold sky picture at 717, plain stars at 1008)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T15:17:21.001Z",
    "file": "20261125151721001-note-look-skyhold-hole.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/pair-dive.png",
    "kind": "note",
    "label": "MAIL 1106 dive 720 to 722: the ground of pixel 1376, 836 at 721 + 1/2 and at 729 + 1/2, way C, take b9, the mark, times 4",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T13:29:03.530Z",
-   "file": "20261125132903530-note-pair-rise.jpg",
-   "source": "../../../../tmp/m/pair-rise.png",
-   "kind": "note",
-   "label": "MAIL 1106 rise 1009 to 1012: the ground of pixel 776, 644 at 1012 and the same ground at 1020 and 1016, way C and take b9, times 4",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T13:29:02.257Z",
-   "file": "20261125132902257-note-pop-sheet.jpg",
-   "source": "../../../../tmp/m/pop-sheet.png",
-   "kind": "note",
-   "label": "MAIL 1106 the pop 1042 to 1045 on the commit: 1044, 1044 + 1/2, 1049 and what the reader has left, times 8: a ring on the limb",
    "stop": "mercury"
   }
  ]
