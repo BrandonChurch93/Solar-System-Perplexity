@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T09:17:10.829Z",
+ "pushed": "2026-11-25T09:35:13.047Z",
  "head": "ab362641b9d9a924f577d3ad73df9d28231e3ebd",
- "note": "round 3 tree committed ab36264 (local), proof r66 runs: finals, whole rise and dive at rate 2; sand trial at the final tier not kept",
+ "note": "finals of the committed tree ab36264 (local) beside the approved and the named; 3465 byte identical; the whole rise renders at rate 2",
  "looks": [
   {
-   "time": "2026-11-25T09:17:01.224Z",
-   "file": "20261125091701224-note-t8_3866_D.jpg",
-   "source": "../../../../tmp/v/x/t8_3866_D.png",
+   "time": "2026-11-25T09:35:11.687Z",
+   "file": "20261125093511687-note-n3866_whole.jpg",
+   "source": "../../../../tmp/v/x/mail/n3866_whole.jpg",
    "kind": "note",
-   "label": "3866 crop D: stars on the rings, before and after the cover"
+   "label": "ab36264 FINAL 3866 at half size: approved hero, named, this commit"
   },
   {
-   "time": "2026-11-25T09:17:00.611Z",
-   "file": "20261125091700611-note-t10_3866_TUV.jpg",
-   "source": "../../../../tmp/v/x/t10_3866_TUV.png",
+   "time": "2026-11-25T09:35:10.952Z",
+   "file": "20261125093510952-note-n3720_whole.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_whole.jpg",
    "kind": "note",
-   "label": "3866 crops T U V: approved hero, named, working tree draft"
+   "label": "ab36264 FINAL 3720 at half size: approved close, named, this commit"
   },
   {
-   "time": "2026-11-25T09:16:59.998Z",
-   "file": "20261125091659998-note-t13f_low.jpg",
-   "source": "../../../../tmp/v/x/t13f_low.png",
+   "time": "2026-11-25T09:35:10.286Z",
+   "file": "20261125093510286-note-n3567_whole.jpg",
+   "source": "../../../../tmp/v/x/mail/n3567_whole.jpg",
    "kind": "note",
-   "label": "3720 lower sunlit globe: approved, named commit, working tree at the final tier"
+   "label": "ab36264 FINAL 3567 at half size: approved hero, named, this commit"
   },
   {
-   "time": "2026-11-25T09:16:59.422Z",
-   "file": "20261125091659422-note-t14f_O.jpg",
-   "source": "../../../../tmp/v/x/t14f_O.png",
+   "time": "2026-11-25T09:35:09.606Z",
+   "file": "20261125093509606-note-n3866_TUV.jpg",
+   "source": "../../../../tmp/v/x/mail/n3866_TUV.png",
    "kind": "note",
-   "label": "3720 final tier, trial of the sand without the near step: the hatch stays"
+   "label": "ab36264 FINAL 3866 boxes T U V at 1 to 1: approved hero, named, this commit (lower arc soft under the shutter as before)"
   },
   {
-   "time": "2026-11-25T09:16:58.849Z",
-   "file": "20261125091658849-note-t15f_zoom2.jpg",
-   "source": "../../../../tmp/v/x/t15f_zoom2.png",
+   "time": "2026-11-25T09:35:08.870Z",
+   "file": "20261125093508870-note-_3866_DI.jpg",
+   "source": "../../../../tmp/v/x/mail/_3866_DI.png",
    "kind": "note",
-   "label": "3720 box 90,900 to 240,1040 at 3x: draft of one take, final named sand, final sand by the shutter"
+   "label": "ab36264 FINAL 3866 boxes D (left) and I (right) at 1 to 1: approved hero, named, this commit (stars off the rings, sky patch gone; a dim red streak stays in the soft edge of the night limb)"
   },
   {
-   "time": "2026-11-25T09:16:58.205Z",
-   "file": "20261125091658205-note-t15f_O.jpg",
-   "source": "../../../../tmp/v/x/t15f_O.png",
+   "time": "2026-11-25T09:35:08.230Z",
+   "file": "20261125093508230-note-n3720_VW_low.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_VW_low.png",
    "kind": "note",
-   "label": "3720 final tier, lower left near field: approved, named sand, sand by the whole shutter (trial, not kept); the hatch stays"
+   "label": "ab36264 FINAL 3720 boxes V W at 1 to 1: approved, named, this commit"
   },
   {
-   "time": "2026-11-25T08:50:37.529Z",
-   "file": "20261125085037529-note-t12_ll2.jpg",
-   "source": "../../../../tmp/v/x/t12_ll2.png",
+   "time": "2026-11-25T09:35:07.530Z",
+   "file": "20261125093507530-note-n3720_cap.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_cap.png",
    "kind": "note",
-   "label": "3720 lower left at 2 to 1: left the final tier with the sand of the sheet (the bark of issue 11: the sand swept by the shutter), right a draft with the sand off"
+   "label": "ab36264 FINAL 3720 cap and terminator at 1 to 1: approved, named, this commit"
   },
   {
-   "time": "2026-11-25T08:50:36.428Z",
-   "file": "20261125085036428-note-t10_skim4.jpg",
-   "source": "../../../../tmp/v/x/t10_skim4.png",
+   "time": "2026-11-25T09:35:06.825Z",
+   "file": "20261125093506825-note-n3720_T_bark_2x.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_T_bark_2x.png",
    "kind": "note",
-   "label": "working tree drafts 3640, 3680, 3700, 3720 at half size"
+   "label": "ab36264 FINAL 3720 lower left corner at 2 to 1: approved, named, this commit"
   }
  ]
 }
