@@ -216,8 +216,11 @@ float labSeen(vec3 here) {
 #if defined(LAB_FRAG) && !defined(LAB_MAP)
 // the ground where its cells are too small in the picture to be things: the same cells at the same places, seen
 // from above (a map of the tile drawn from the same table at the same time), with the same penumbra
+vec3 labFarSeen = vec3(0.0);
 float labFar(vec2 chartPlace, float real, float flow, vec4 pn, vec2 gx, vec2 gy) {
-  float mapped = textureGrad(uLabMap, chartPlace / uLabFar.w, gx / uLabFar.w, gy / uLabFar.w).r;
+  vec4 m = textureGrad(uLabMap, chartPlace / uLabFar.w, gx / uLabFar.w, gy / uLabFar.w);
+  float mapped = m.r;
+  labFarSeen = vec3(m.r, m.b, 1.0 - pn.x);
   return uLabHeat.x + mix(max(mapped - uLabHeat.x, 0.0), uLabHeat.y * pn.y, pn.x) * pn.z;
 }
 #endif
@@ -483,8 +486,17 @@ float labTone(vec3 here, float band) {
 // the one curve from the heat of the sheet to the heat the ramp shows (lab.json heat.curve: pairs, straight between)
 float labCurve(float h) {
 ${CURVE_GLSL}}
+// many cells in one pixel: the light of the pixel is the mean of the cells' lights, not the light of their mean
+// heat. The map carries both (red: the heat, blue: the heat through the curve); share: how much of the far map is
+// in the pixel
+float labMean = 1.0;
+#if defined(LAB_FRAG) && !defined(LAB_MAP)
+void labMeans(float share) {
+  labMean = mix(1.0, clamp(labFarSeen.y / max(labCurve(labFarSeen.x), 1e-4), 0.5, 1.5), share * labFarSeen.z);
+}
+#endif
 vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
-  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(here, (thin - 0.1) / 0.9));
+  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(here, (thin - 0.1) / 0.9)) * labMean;
   vec3 shown = texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb;
   vec3 col = inverseFilmic(grade(shown, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   vec3 upHere = normalize(here - ST_CENTRE);
@@ -596,9 +608,9 @@ void main() {
   vec3 per = floor(uLabCount.xyz * 6.2831853 + 0.5);
   vec2 across = vec2(-v.y, v.x) / max(dot(v, v), 1e-8);
   float wa = length(vec2(dot(dFdx(v), across), dot(dFdy(v), across)));
-  float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (along - flow) * 0.7 + seed), per.x);
-  float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (along - flow) * 1.1 - seed), per.y);
-  float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (along - flow) * 1.7 + seed * 2.0), per.z);
+  float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (along - flow) * ${lab.fibre.along[0]!.toFixed(2)} + seed), per.x);
+  float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (along - flow) * ${lab.fibre.along[1]!.toFixed(2)} - seed), per.y);
+  float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (along - flow) * ${lab.fibre.along[2]!.toFixed(2)} + seed * 2.0), per.z);
   float ka = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.x);
   float kb = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.y);
   float kc = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.z);
@@ -625,14 +637,15 @@ void main() {
   // the field of the place joins two cells the heat runs over the border. The lane is where the heat falls: a thin
   // dark line in the bottom of the valley, wide where three cells meet, gone where two cells are of one piece
   float plan = min(vEdge, 1.5);
-  vec2 b1 = (0.12 + 0.3 * fract(seed * 7.13)) * vec2(cos(6.2831853 * fract(seed * 3.71)), sin(6.2831853 * fract(seed * 3.71)));
-  vec2 b2 = (0.25 + 0.35 * fract(seed * 5.37)) * vec2(cos(6.2831853 * fract(seed * 9.19)), sin(6.2831853 * fract(seed * 9.19)));
-  float r1 = 0.24 + 0.2 * fract(seed * 2.31);
-  float r2 = 0.16 + 0.16 * fract(seed * 4.87);
-  vec2 b3 = (0.3 + 0.35 * fract(seed * 6.91)) * vec2(cos(6.2831853 * fract(seed * 1.93)), sin(6.2831853 * fract(seed * 1.93)));
-  float r3 = 0.14 + 0.14 * fract(seed * 8.43);
+  vec2 b1 = ${lab.heat.stray.toFixed(2)} * (0.12 + 0.3 * fract(seed * 7.13)) * vec2(cos(6.2831853 * fract(seed * 3.71)), sin(6.2831853 * fract(seed * 3.71)));
+  vec2 b2 = ${lab.heat.stray.toFixed(2)} * (0.25 + 0.35 * fract(seed * 5.37)) * vec2(cos(6.2831853 * fract(seed * 9.19)), sin(6.2831853 * fract(seed * 9.19)));
+  float r1 = ${lab.heat.wide.toFixed(2)} * (0.24 + 0.2 * fract(seed * 2.31));
+  float r2 = ${lab.heat.wide.toFixed(2)} * (0.16 + 0.16 * fract(seed * 4.87));
+  vec2 b3 = ${lab.heat.stray.toFixed(2)} * (0.3 + 0.35 * fract(seed * 6.91)) * vec2(cos(6.2831853 * fract(seed * 1.93)), sin(6.2831853 * fract(seed * 1.93)));
+  float r3 = ${lab.heat.wide.toFixed(2)} * (0.14 + 0.14 * fract(seed * 8.43));
   float blotch = max(max(exp(-dot(d - b1, d - b1) / (r1 * r1)), 0.9 * exp(-dot(d - b2, d - b2) / (r2 * r2))), 0.8 * exp(-dot(d - b3, d - b3) / (r3 * r3)));
-  float rise = mix(blotch * pow(max(1.0 - plan * plan, 0.0), uLabHeatB.x), 1.0, ${lab.join.merge.toFixed(2)} * smoothstep(0.55, 0.95, join));
+  float fall = max(plan, min(sin(a) / sin(uLabDome.x) * uLabMore.x * ${lab.heat.round.toFixed(3)}, 1.5));
+  float rise = mix(blotch * pow(max(1.0 - fall * fall, 0.0), uLabHeatB.x), 1.0, ${lab.join.merge.toFixed(2)} * smoothstep(0.55, 0.95, join));
   float fan = 0.1 * mix(0.5, fa, ka) + 0.35 * mix(0.5, fb, kb) + 0.55 * mix(0.5, fc, kc);
   float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mix(mott, labWell(d, seed, uLabTime.x), ${lab.heat.spread[3]!.toFixed(2)}) - 0.5);
   float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
@@ -662,23 +675,29 @@ void main() {
   float lit = step(${lab.heat.points.toFixed(2)}, h1(gi + 17.0)) * (1.0 - smoothstep(0.1, 0.16 + 0.26 * h1(gi + 3.0), length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
   heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.02, 0.2, edgeD)) * (1.0 - pen);
   heat *= pn.z;
-  // (b) the angle of view: a look along the surface meets shallower, cooler gas, the law that darkens the limb
+  // (b) the angle of view: the ground has no lamp. A look that meets the surface aslant meets shallower, cooler gas:
+  // the heat times a darkening by the angle between the surface's normal and the eye (heat.graze: at a look along
+  // the surface, and the cosine at which it is 1). In the valley between two cells the normal is the ground's own
 #ifdef LAB_MAP
-  float mu = 1.0;
+  float law = 1.0;
+  float lawFar = 1.0;
 #else
-  float mu = abs(dot(normalize(normalize(vPos - ST_CENTRE) + ${lab.heat.lie.toFixed(2)} * vN), normalize(uLabEye - vPos)));
+  vec3 up = normalize(vPos - ST_CENTRE);
+  vec3 toEye = normalize(uLabEye - vPos);
+  vec3 nn = normalize(mix(vN, up, max(smoothstep(${lab.dome.soft[0]!.toFixed(2)}, ${lab.dome.soft[1]!.toFixed(2)}, plan), vSink)));
+  float law = mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, clamp(abs(dot(nn, toEye)) / ${lab.heat.graze[1]!.toFixed(2)}, 0.0, 1.0));
+  float lawFar = mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, clamp(abs(dot(up, toEye)) / ${lab.heat.graze[1]!.toFixed(2)}, 0.0, 1.0));
 #endif
-#ifndef LAB_MAP
-  float graze = abs(dot(vN, normalize(uLabEye - vPos)));
-  heat *= mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.graze[1]!.toFixed(2)}, graze));
-#endif
-  heat = uLabHeat.x + heat * mix(uLabHeatMore.y, 1.0, pow(mu, ${lab.heat.limb.toFixed(2)}));
+  heat = uLabHeat.x + heat * law;
 #ifdef LAB_MAP
-  outColor = vec4(heat, vTall, 0.0, 1.0);
+  outColor = vec4(heat, vTall, labCurve(heat), 1.0);
 #else
   vec2 gx = dFdx(vG);
   vec2 gy = dFdy(vG);
-  if (vSink > 0.0) heat = mix(heat, labFar(vG, vReal, flow, pn, gx, gy), vSink);
+  if (vSink > 0.0) {
+    heat = mix(heat, uLabHeat.x + (labFar(vG, vReal, flow, pn, gx, gy) - uLabHeat.x) * lawFar, vSink);
+    labMeans(vSink);
+  }
   outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, vPit), vPos, vClip, vView);
 #endif
 }`
@@ -749,17 +768,20 @@ void main() {
   // a cell smaller in the picture than a few pixels is no grain but the mean of the map there
   float blur = mix(${lab.far.blur[2]!.toFixed(1)}, 1.0, smoothstep(${lab.far.blur[0]!.toFixed(1)}, ${lab.far.blur[1]!.toFixed(1)}, seen));
 #endif
-  if (far > 0.0 && pn.w > 0.0) heat = mix(heat, labFar(chartPlace, r, flow, pn, gx * blur, gy * blur), far);
+  if (far > 0.0 && pn.w > 0.0) {
+    heat = mix(heat, labFar(chartPlace, r, flow, pn, gx * blur, gy * blur), far);
+    labMeans(far);
+  }
 #ifdef LAB_BAKE
   // the far twin: the ground from straight above, no law of the view, no gas, none of the flare's lights, as the
   // display colour of the picture
-  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos, 0.0));
+  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos, 0.0)) * labMean;
   vec3 lit = inverseFilmic(grade(texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   lit = clamp((lit * (2.51 * lit + 0.03)) / (lit * (2.43 * lit + 0.59) + 0.14), 0.0, 1.0);
   outColor = vec4(mix(lit * 12.92, 1.055 * pow(lit, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), lit)), 1.0);
 #else
   float mu = abs(dot(normalize(vPos - ST_CENTRE), normalize(uLabEye - vPos)));
-  heat = uLabHeat.x + (heat - uLabHeat.x) * mix(uLabHeatMore.y, 1.0, pow(mu, ${lab.heat.limb.toFixed(2)}));
+  heat = uLabHeat.x + (heat - uLabHeat.x) * mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, clamp(mu / ${lab.heat.graze[1]!.toFixed(2)}, 0.0, 1.0));
   outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, length(vG - uLabPitAt.xy)), vPos, vClip, vView);
 #endif
 }`

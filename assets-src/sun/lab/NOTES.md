@@ -569,3 +569,57 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
     dome's normal to the eye, linear in the cosine, for the far ground by the ball's up) is written as a script,
     /tmp/law.py on ground.ts, and waits for the whole run of h20. a1 at frame 90 (v/lab-90-a1.jpg): the cells have
     a bright middle and darker rims, still cobbles; percentiles 0.212 0.369 0.553 0.722 0.898 0.953.
+- 15:17 UTC: THE WHOLE RUN of h20, captures 380 to 470, 75 pairs: every pair under 0.45, largest 0.446 at capture
+  416 at [132, 536], mean 0.225 (rows in v/rise-h20.txt and in the NAMED mail). Stills 0 and 60 drawn.
+- 15:19 UTC: h20 committed, pushed, NAMED eccae6571e844f6539c5c5bc2023b8808e7af3d5 to /root; sun_builder told 15:20.
+  Growth 2,670,240 bytes.
+- 15:23 UTC: MAIL 1162. eccae657 is taken (ledger), joins the chain only when the harness's own reader is green on
+  the chain with it. THE LOOK IS NOT ACCEPTED AS PLASMA: approved = soft pillows with a bright middle, fine fibres
+  from the middle to the lane, thin dark lanes with bright filigree; mine = stones with hard facets, a lit side and
+  dark skirts. ORDER: 1 light as heat (heat times the darkening by the eye's angle; no lamp, no lit side, no cast
+  skirt). 2 lower relief: pillows, the lane thin and dark because it is cool, not because it is deep. 3 fibres and
+  grain carried outward in each cell's polar frame, flow by number, seen in 30 frames at the film's rate without
+  reading as a slide of a picture. 4 birth and death by a smooth law: no cell appears or goes inside one frame
+  (slivers in frames 0 to 179). 5 the top 1 percent 0.992 against 0.965: bring it to the approved. First find why
+  the pair at 416 stands out and say what it was. BY WHEN: a sheet of frames 0, 60, 90 against the approved at
+  1 to 1 with points 1 and 2 by 17:30 UTC. NAMED with points 1 to 4 by 19:15 UTC for the 20:00 cut, with the whole
+  run 380 to 470 and the hold's frames read again. If a point cannot be had, name what stands and say which point
+  is missing.
+- 15:24 to 15:36 UTC: WHY THE PAIR 416 STANDS OUT (h20).
+  - MEASURED (/tmp/band.py on the reader's own carry, quarter scale, boxes of the lowest 35 of 135 rows from the
+    left): the same ground is brighter 16 captures later: 96.5 to 108.8, 108.2 to 135.9, 63.2 to 77.3, 88.0 to 81.9
+    of 255. The pair 400 to 416 at the same corner: 104.7 to 104.8. Near the limb the later picture is darker.
+  - Cause 1, MEASURED: capture 432 drawn with the handover to the globe's face off (uLabAway zero) against the
+    film's 432: the film's is brighter by 1.09 to 1.17 in the lower 160 rows of 540 (1.15 to 1.17 in the lowest
+    100). From film frame 207 on (capture 414) the ground gives way to the globe's face by the distance from the
+    eye (place.json onGlobe.away 0.6 to 2.4 radii), and the globe's face is brighter there than my ground.
+  - Cause 2, MEASURED: capture 416 with every cell forced into the mean of the far map against the cells as
+    drawn: 1.03, 1.06, 1.08, 0.99 in the lowest 140 rows, 0.94 to 0.98 in the 70 rows above. The far filter took
+    the curve of the mean heat, and the curve bends, so many cells in a pixel were brighter than the same cells
+    apart. This is also why the refit of the curve raised the readings of 404 to 423.
+  - CURE of cause 2 (in the tree, not named): the far map carries the heat through the curve in its blue channel
+    beside the heat; a pixel of the far map shows the curve of the mean heat times mean(curve) / curve(mean)
+    (labMeans). MEASURED after: 0.975 to 1.00 in all eight boxes.
+  - Cause 1 is not cured: the twin on the globe is the bake of h14 with the old curve and the old filter. It needs
+    the rebake at the turned anchor with the final curve, then the level of my ground against the globe's face
+    measured at 432 with and without the handover. OWED.
+- 15:22 to 15:40 UTC: THE LIGHT LAW AND THE RELIEF (trials on frame 90, v/strip-b1.jpg, b2, b4).
+  - a2 = h20 with the law (/tmp/law.py): the blotches centred (heat.stray 0), the fibres' root in the middle
+    (fibre.offset 0), one darkening mix(graze[0], 1, |n.eye| / graze[1]) with the dome's normal eased to the ball's
+    up toward the rim (dome.soft) and for the far ground by the ball's up. STATED from the code: there never was a
+    term with a light direction; the one sided look came from the root set toward the lens and the blotches off
+    centre, and the skirt from heat.shade (a dark band of 0.3 inside the border) on a tall dome.
+  - b1: dome.height 0.22, dome.soft [0.55, 1], heat.shade off, heat.core 1.0, heat.patch [0, 0.85], heat.rim 0.2,
+    fibre.along [2.5, 4, 6], heat.thread [0.15, 0.5]: glowing blobs, the bright middle too small.
+  - b2: heat.wide 1.8 (the width of the hot middle), heat.core 0.6, heat.patch [0, 0.7], heat.rim 0.3: bright
+    cells with rays to the lane, thin lanes; reads as petals, a little flat, the lanes hairlines, angular.
+  - b4: heat.round 0.886 (the heat falls by the larger of the way to the border and the way to the dome's round
+    foot: cool wide corners, round bright bodies), dome.height 0.28, heat.crease[2] 0.45, heat.rim 0.2: soft
+    pillows with a streaked bright middle and cool lanes. b5 = b4 with the curve refit:
+    [[0,0],[0.1115,0.1155],[0.1661,0.2113],[0.3138,0.3335],[0.5712,0.5078],[1.1382,0.7174],[1.5756,0.8703],
+    [1.8756,1.0]]; frame 90 near percentiles 0.239 0.365 0.569 0.757 0.906 0.957 (approved 0.231 0.404 0.58 0.761
+    0.906 0.965). The top 1 percent is at the approved's (point 5 of MAIL 1162).
+  - b6 (heat.core 1.0, heat.patch [0, 1], thread[0] 0.1): too dark, glow blobs. Not kept.
+  - STILL WRONG in b5: the cells are angular flakes beside the approved's round pillows; lanes thin, no bright
+    filigree; the middle field reads flatter than h20's; fibres short.
+  - The twin was not rebaked: the bake now also carries labMean (the bake's own picture changes a little).
