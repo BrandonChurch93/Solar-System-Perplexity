@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T17:02:59.438Z",
+ "pushed": "2026-11-25T17:34:50.564Z",
  "head": "e1c18f468aadbc38e87d273844f31305eccd3bfc",
- "note": "stars sheets: close card off with one aim (S1) and with the present aim (S0), trial, not committed",
+ "note": "gas seated with the smooth step, light added 0.75 at 196 to 30.78 at 241; hold's card adds 0 pixels at 226, 3327 at 231; G3 red on the name, hunting the state at 90; frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T17:34:49.272Z",
+   "file": "20261125173449272-note-band-crops.jpg",
+   "source": "../../../../tmp/v/band-crops.jpg",
+   "kind": "note",
+   "label": "hold's card at 226, 231, 236 at 1 to 1: card on, gain 3, card off, difference x6",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T17:34:48.117Z",
+   "file": "20261125173448117-note-g1n-b.jpg",
+   "source": "../../../../tmp/v/g1n-b.jpg",
+   "kind": "note",
+   "label": "gas seated, smooth step: 226 to 253 (draft)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T17:34:46.978Z",
+   "file": "20261125173446978-note-g1n-a.jpg",
+   "source": "../../../../tmp/v/g1n-a.jpg",
+   "kind": "note",
+   "label": "gas seated, smooth step in the logarithm of the height 0.0571 to 3.2: 196 to 221 (draft)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T17:02:58.780Z",
    "file": "20261125170258780-note-s0.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/hb-a.jpg",
    "kind": "note",
    "label": "trial sheet b: share by the eye's height, equal steps of light, 60 and 196 to 226. frame 60 (named ground, unchanged by the gas table): dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:58:21.383Z",
-   "file": "20261125165821383-note-ha-b.jpg",
-   "source": "../../../../tmp/v/ha-b.jpg",
-   "kind": "note",
-   "label": "trial sheet a: full share, 231 to 261",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:58:20.718Z",
-   "file": "20261125165820718-note-ha-a.jpg",
-   "source": "../../../../tmp/v/ha-a.jpg",
-   "kind": "note",
-   "label": "trial sheet a: rays and prominences at full share at every height, 60 and 196 to 226. frame 60 (named ground, unchanged by the gas table): dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T16:26:41.617Z",
-   "file": "20261125162641617-note-h1-block.jpg",
-   "source": "../../../../tmp/v/h1-block.jpg",
-   "kind": "note",
-   "label": "captures 468 to 471, upper left: the sky slides behind the standing rays (pop of one block 3.22 at 469, shown)",
    "stop": "sun"
   }
  ]
