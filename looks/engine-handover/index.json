@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T13:26:41.169Z",
+ "pushed": "2026-11-25T14:09:30.901Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "air law: chunk and twins written, 17 tests green; the relief's use of it written, its tests next; sawtooth sheets of 13:10",
+ "note": "The air law is pushed (agent/engine-air), off unless a stop asks; smoke frames with made up numbers. Now the light by height (knots), tests green, the suite next",
  "looks": [
+  {
+   "time": "2026-11-25T14:09:30.294Z",
+   "file": "20261125140930294-note-al-02668-horizon-3x.jpg",
+   "source": "../../../../tmp/air/sheets/al-02668-horizon-3x.png",
+   "kind": "note",
+   "label": "Mars 2668 at draft, the horizon 3 times: law off over law on, made up numbers"
+  },
+  {
+   "time": "2026-11-25T14:09:29.701Z",
+   "file": "20261125140929701-note-al-02477-horizon-3x.jpg",
+   "source": "../../../../tmp/air/sheets/al-02477-horizon-3x.png",
+   "kind": "note",
+   "label": "Mars 2477 at draft, the horizon 3 times: law off over law on, made up numbers"
+  },
+  {
+   "time": "2026-11-25T14:09:29.022Z",
+   "file": "20261125140929022-note-al-02477-off-on.jpg",
+   "source": "../../../../tmp/air/sheets/al-02477-off-on.png",
+   "kind": "note",
+   "label": "Mars 2477 at draft, air law smoke test: top the law off, bottom on with the same made up numbers. A soft darker band over the horizon, the sky's air too thick"
+  },
+  {
+   "time": "2026-11-25T14:09:28.364Z",
+   "file": "20261125140928364-note-al-02668-off-on.jpg",
+   "source": "../../../../tmp/air/sheets/al-02668-off-on.png",
+   "kind": "note",
+   "label": "Mars 2668 at draft, air law smoke test: top the law off, bottom on with made up numbers (light 0.27 0.19 0.14, density 45, scale height 0.0045). Ground stays, the sky band far too thick and flat, stars gone. The numbers are the stop's to fit"
+  },
   {
    "time": "2026-11-25T13:10:12.241Z",
    "file": "20261125131012241-note-saw-depth-8x.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/law/sheets/saw-4way.png",
    "kind": "note",
    "label": "Mars 2668 draft, the sawtooth four ways at 4 to 1: mesh 420 (naming), mesh 840, distance filtered by one texel, the other diagonal"
-  },
-  {
-   "time": "2026-11-25T12:28:00.310Z",
-   "file": "20261125122800310-note-saw-locate.jpg",
-   "source": "../../../../tmp/law/sheets/saw-locate.png",
-   "kind": "note",
-   "label": "left the approved painting of Mars, right frame 2668 at draft: the teeth sit where the near cliff has moved across the ground behind it"
-  },
-  {
-   "time": "2026-11-25T12:27:59.162Z",
-   "file": "20261125122759162-note-z-2668-draft-4x.jpg",
-   "source": "../../../../tmp/law/sheets/z-2668-draft-4x.png",
-   "kind": "note",
-   "label": "Mars 2668 at draft, 4 times: a sawtooth on the lit crest and on the small mesa behind it (not the shutter: 1 sample)"
-  },
-  {
-   "time": "2026-11-25T12:19:45.372Z",
-   "file": "20261125121945372-note-z-2635-3x.jpg",
-   "source": "../../../../tmp/law/sheets/z-2635-3x.png",
-   "kind": "note",
-   "label": "Mars 2635 at review, 3 times, x 730..940 y 560..780: the same crest and mesa without the sawtooth, box and law"
-  },
-  {
-   "time": "2026-11-25T12:19:43.938Z",
-   "file": "20261125121943938-note-z-2668-3way-3x.jpg",
-   "source": "../../../../tmp/law/sheets/z-2668-3way-3x.png",
-   "kind": "note",
-   "label": "Mars 2668 at review, 3 times, x 640..850 y 540..760: a sawtooth on the lit crest and on the small mesa, the same in commit 4, the naming and the law. Not from the shutter. Not there at 2635"
   }
  ]
 }
