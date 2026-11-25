@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T04:36:19.822Z",
- "head": "aaace72a250018b60fcc6755739ae146e57ed085",
- "note": "FIRST PICTURE of MAIL 880: sheet 4150 to 4175, main beside the layer law (Hs 1.5 hT trial) with the cover by pixel size. Red and said: pattern 1.49 at 4156 + 1/2, 50 of 51 rows over 0.45; pop 1.21 at 4179. The veil from above is too heavy at this Hs; next trial follows",
+ "pushed": "2026-11-25T04:44:30.786Z",
+ "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
+ "note": "MAIL 891 point 3: af8898f2 holds the one line turnDeg 108.308. Draft 4416 to 4470 every frame: the seam holds on plain stars; the Milky Way's band crosses the left edge at 4426 to 4438 (in the judged 4436)",
  "looks": [
+  {
+   "time": "2026-11-25T04:44:30.005Z",
+   "file": "20261125044430005-note-B-diff.jpg",
+   "source": "../../../../tmp/n48/B-diff.jpg",
+   "kind": "note",
+   "label": "aaace72a, af8898f2, what changed (green: sky, red: body): 4420 above, 4436 below. Only stars and the rim of the lit limb change",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T04:44:28.886Z",
+   "file": "20261125044428886-note-B-3.jpg",
+   "source": "../../../../tmp/n48/B-3.jpg",
+   "kind": "note",
+   "label": "af8898f2, draft: travel 4456 to 4470 every frame",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T04:44:26.513Z",
+   "file": "20261125044426513-note-B-2.jpg",
+   "source": "../../../../tmp/n48/B-2.jpg",
+   "kind": "note",
+   "label": "af8898f2, draft: 4436 to 4455 every frame. The band stands on the left edge of 4436 and 4437 and is gone by 4439; the seam 4454 to 4455 on plain stars",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T04:44:22.270Z",
+   "file": "20261125044422270-note-B-1.jpg",
+   "source": "../../../../tmp/n48/B-1.jpg",
+   "kind": "note",
+   "label": "af8898f2 (turnDeg 108.308, MAIL 891 cure B), draft: rise 4416 to 4435 every frame. The Milky Way's band comes in at the lower left from 4426",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T04:36:19.136Z",
    "file": "20261125043619136-note-A-panel.jpg",
@@ -240,38 +272,6 @@
    "source": "../../../../tmp/parA/pat-where.jpg",
    "kind": "note",
    "label": "the place of the largest change of pattern in eight of the 31 red rows: the band of far ground just under the limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:37:11.434Z",
-   "file": "20261125003711434-note-limb4404.jpg",
-   "source": "../../../../tmp/parA/limb4404.jpg",
-   "kind": "note",
-   "label": "SEEN, open: single dark pixels on the limb at 4402 to 4404 (times 2), gone at 4404 + 1/2",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:37:10.175Z",
-   "file": "20261125003710175-note-pop4411-crop.jpg",
-   "source": "../../../../tmp/parA/pop4411-crop.jpg",
-   "kind": "note",
-   "label": "native size, lower right 4408 to 4415 + 1/2 every half frame: the ground's light lifts in place by the eye's height (the pop red), open",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:37:09.127Z",
-   "file": "20261125003709127-note-pat4407-crop.jpg",
-   "source": "../../../../tmp/parA/pat4407-crop.jpg",
-   "kind": "note",
-   "label": "native size, the horizon at 4404 to 4411 where the pattern reads red",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:37:08.311Z",
-   "file": "20261125003708311-note-pat4392-crop.jpg",
-   "source": "../../../../tmp/parA/pat4392-crop.jpg",
-   "kind": "note",
-   "label": "native size, the horizon at 4389 to 4403 every second frame: the far ground comes out of the limb's haze as the eye climbs (the pattern red)",
    "stop": "uranus"
   }
  ]
