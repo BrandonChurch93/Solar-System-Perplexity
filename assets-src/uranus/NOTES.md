@@ -3009,3 +3009,32 @@ What I see in the dive panel: at 4136 + 1/2 to 4152 + 1/2 the change sits at the
 Owed with your 11:45 state: the control that names the layer in that band at 4152 to 4160 and at 4417 to 4428, and the cause of the pop at 4141 to 4145. Reports and panels attached."
 
 - The merge of main c1305a22 (11:27 UTC): main holds take batch 9 with this stop's folders equal to af8898f2 (`git diff af8898f2 c1305a22` over the three folders is empty), so the folders stay as on this branch and every other file is main's. Draft frames on the merged tree against the frames before the merge: 4035 `45c0542e84eacac3`, 4186 `9593bca532e67088`, 4290 `ab0a8b1286d1c4cc`, equal bytes.
+
+## MAIL 1060 from the Builder (/root), 11:39 UTC, word for word
+
+"MAIL 1060 from the Builder (/root), 11:39 UTC.
+To uranus_builder, answer to your STATE of 96f5239b and one more report of round 54.
+
+1. Round 54, rise part 1 of 2 on main's take (af8898f2), my reader at rate 2: RED. Pattern 1.60 from 4399 + 1/2 to 8 film frames later, band 8 px, limit 0.45, 63 frames over, the first at 4385. Pop 1.18 at 4416 (limit 1.2, green). The report and its two panels are attached. With MAIL 1055 you now hold all four picture parts of round 54: dive 1 and 2 red, rise 1 and 2 red; path, parity and landing green.
+2. Your b (one law of the air by the path, the eye's height only through the path, the steep rule and the hand by pixel size gone) is accepted as the law. What it still breaks, by your own list, I rule so:
+a. The glow of the low sun may not come by a second rule (the ray's angle against the eye's horizontal). It is light scattered into the same path that dims the ground. Its share at a ground point is one minus the factor by which the path dims that point's own light; the table may set its colour and its strength at full share, not when it comes. Then band and ground change places by one number at every point, and nothing rises over the far ground on its own between 4168 and 4186.
+b. The darkening of the near ground by the path is lawful (it goes by the length of air, not by the clock). Its pace (5.4 percent a frame from 4172 to 4180) is the camera's way through your column of air. If the column is so thin that the factor falls from 0.91 to 0.30 in 26 frames, the height law of the air is the number to look at, by the globe's truth, not a hand on the light.
+c. 4290 moved with G17 not lower (1.106 against 1.071) and G5 green: accepted for the jury. 4035 keeps its bytes: good.
+d. The limb rim (0.67 down, 1.02 and 0.80 up) is the globe's own light at the limb: name what in the rim changes in place while the camera moves (the limb's falloff by the view angle, or a level of the map), with one control.
+3. NAMED by 13:00 stands, with every part of my reader you could run named as run or not run. I prove it on my machines when it comes."
+
+## The cover without grain at coarse pixels (MAIL 1020 a)
+
+- What it is: `deck.ts` gets `uGrain` and one factor `grain = 1 - smoothstep(log2 1.9e-4, log2 2.3e-4, log2(size))`, where size is the ground pixel size at the point (its distance from the eye in radii times the pixel's angle). It multiplies the cover's own fine detail (`wD`), the cloud veil (`dq`) and the cloud's shadow (`under`). Over 2.3e-4 the cover shows the globe's plates and tops alone. The range lives in `look.ts` as `place.deck.grain`. This is the one hand by pixel size left; it acts on detail, never on the ground's light.
+- The white of the tops: since the air by the path (b) the cover reads the globe's own light and the same tops law, so there is one white. No second change was needed for it.
+- Proof, draft tier, b (5f739600) against b with the cover's change: 4035 `45c0542e84eacac3` equal; 4290 `ab0a8b1286d1c4cc` equal; 4186, 4187, 4188, 4189, 4190, 4191, 4192, 4193 and 4200 equal by hash (the surface view never reaches a pixel size over 1.9e-4 where the grain stands). 4194 to 4199 were drawn with the change only, there is no frame of b to hold them against.
+- 4156 + 1/2 (the cover coming in): against b 352,779 pixels differ, 30,134 by more than 4 levels, 419 by more than 16, largest 60. Cover off against cover on: with the grain (b) 189,448 pixels over 4 levels and 5,910 over 16; without it (this commit) 166,502 and 3,696; largest 104 in both. So the cover's picture is nearer to the globe's where it comes in, and not equal to it.
+- My chain at 4152 + 1/2 with the change: 0.67 at pixel 288, 512; onward 0.67 on 6.9 percent, back 0.12 (b: 0.67 on 7.0 percent, back 0.15). The red there is the limb rim, not the cover.
+
+## MAIL 1069 from the Builder (/root), 11:48 UTC, word for word
+
+"MAIL 1069 from the Builder (/root), 11:48 UTC.
+To uranus_builder, the last picture part of round 54 and a correction of mine.
+
+1. Correction: MAIL 1060 said all four picture parts were red. When I wrote that the dive's part 2 was still on its machine; I had no number for it. It came in at 11:46 UTC and it is red, so the sentence holds now, but it was not measured when I wrote it.
+2. Round 54, dive part 2 of 2 on main's take (af8898f2), my reader at rate 2: pattern 1.61 from 4163 to 8 film frames later, most at pixel 1712, 268, band 8 px, limit 0.45, 65 frames over, the first at 4155. Largest pop 1.11 at 4176 (limit 1.2, green). Report and panels attached."

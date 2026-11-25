@@ -123,6 +123,7 @@ uniform float uFade;
 uniform float uGrad;
 uniform float uFine;
 uniform float uFrame;
+uniform vec3 uGrain;
 uniform vec2 uLens;
 uniform float uSharp;
 uniform float uBloom;
@@ -270,7 +271,8 @@ ${FAR_LEVELS}
   float dt = ka.x * kb.y - ka.y * kb.x;
   float thin = sqrt(max(0.5 * (sq - sqrt(max(sq * sq - 4.0 * dt * dt, 0.0))), 0.0));
   float farT = texP / max(abs(dFdy(nd.y)) * 540.0, 1e-9) * uLens.y;
-  float wD = mix(1.0 - smoothstep(uBase.z, uBase.w, farT), 1.0 - smoothstep(uBase.z, uBase.w, thin), wT);
+  float grain = 1.0 - smoothstep(uGrain.y, uGrain.z, log2(max(length(p - uCamL) / uRadius * uGrain.x, 1e-12)));
+  float wD = mix(1.0 - smoothstep(uBase.z, uBase.w, farT), 1.0 - smoothstep(uBase.z, uBase.w, thin), wT) * grain;
   vec3 rel = pa - uCentre;
   vec2 g = vec2(dot(rel, uF0) * uFlowDir.y + dot(rel, uR0) * uFlowDir.x, dot(rel, uF0) * uFlowDir.x - dot(rel, uR0) * uFlowDir.y) * vec2(0.55, 1.0) * uDetail.w;
   float fw = max(length(dFdx(g)), length(dFdy(g))) * uFine * max(uFrame, 1.0);
@@ -288,9 +290,9 @@ ${FAR_LEVELS}
   float muQ = dot(normalize(q - uCentre), -dv);
   float reach = smoothstep(uCloudB.z, uCloudB.w, muQ) * step(0.0, disc) * step(0.0, tq);
   vec2 gq = cloudPlace(q);
-  float dq = cloudAt(gq, 1.0) * reach * lit;
+  float dq = cloudAt(gq, 1.0) * reach * lit * grain;
   float veilA = clamp(dq * uCloudB.x, 0.0, 1.0);
-  float under = clamp(cloudAt(cloudPlace(uCentre + rs * n), 4.0 * uFrame) * uCloudB.x, 0.0, 1.0) * smoothstep(uCloudB.z, uCloudB.w, mu) * lit;
+  float under = clamp(cloudAt(cloudPlace(uCentre + rs * n), 4.0 * uFrame) * uCloudB.x, 0.0, 1.0) * smoothstep(uCloudB.z, uCloudB.w, mu) * lit * grain;
   col *= 1.0 - uCloudB.y * under;
   vec3 lVeil = airLight(muQ, psi);
   vec4 dimQ = bared(muQ);
@@ -451,7 +453,7 @@ export class Deck {
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uLight: { value: t.light },
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize.full) }, uNearWidth: { value: counted.near }, uCloudWidth: { value: counted.cloud },
         uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },
-        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uFrame: frameUniform, uLens: { value: new THREE.Vector2(1, 1) }, uSharp: { value: look.sharp }, uBloom: { value: 0 },
+        uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFade: { value: 1 }, uGrain: { value: new THREE.Vector3(0, 1, 2) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uFrame: frameUniform, uLens: { value: new THREE.Vector2(1, 1) }, uSharp: { value: look.sharp }, uBloom: { value: 0 },
         uDetail: { value: new THREE.Vector4(look.detail.tone, look.detail.relief, look.detail.fleck, look.detail.scale) },
         uBase: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(j.vfovDeg) / 2), 0, look.detail.stretch[0], look.detail.stretch[1]) },
         uSunG: { value: sunG },
@@ -567,6 +569,10 @@ export class Deck {
     this.overlay.visible = fade > 0 && fade < 1
     this.overlayMaterial.uniforms.uFade!.value = fade
     this.haze.update(camera, this.centre, deckJson.radius, gain * fade, vignette, aspect)
+  }
+
+  grain(pixel: number, span: [number, number]): void {
+    ;(this.material.uniforms.uGrain!.value as THREE.Vector3).set(pixel, Math.log2(span[0]), Math.log2(span[1]))
   }
 
   spread(pixel: number, span: [number, number], border: [number, number]): void {

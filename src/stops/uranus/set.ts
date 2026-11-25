@@ -226,6 +226,7 @@ export const createSet: SetFactory = async (ctx) => {
         const seg = shot.segment
         const moving = seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise')
         ground(state.time, shot.sun.dir, gain, moving ? reach(look.place.sky, eye.distanceTo(deckCentre) / deckJson.radius - 1) : 1, shot.post.vignette, aspect, shot.post.bloomStrength, view.place === true, view.place === true && view.camera.view ? [view.camera.view.fullWidth / view.camera.view.width, view.camera.view.fullHeight / view.camera.view.height] : [1, 1])
+        deck.grain(Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / 540, look.place.deck.grain)
         deck.spread(0, look.place.deck.pixel, look.place.deck.border)
         lowArcs.mesh.visible = false
         riseArcs.mesh.visible = false
@@ -280,6 +281,7 @@ export const createSet: SetFactory = async (ctx) => {
         deck.cover.quaternion.copy(seated)
         deck.cover.scale.setScalar(1 / deckJson.radius)
       }
+      deck.grain(pixel, look.place.deck.grain)
       deck.spread(spread ? pixel : 0, look.place.deck.pixel, look.place.deck.border)
       fixed(state.time)
       lowArcs.mesh.position.copy(arcCentre).applyQuaternion(skyTurn).sub(deckCentre).divideScalar(deckJson.radius).applyQuaternion(seated)
