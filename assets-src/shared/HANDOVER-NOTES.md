@@ -2056,6 +2056,47 @@ and plan.ts back by hash.
   to sheets by cells, the same in v1, to be told to the builders.
 - Looks pushed 20:07 (4601f342 on the looks branch; the note says 20:09 by mistake, the clock read 20:07:41 after the push).
 
+## 20:10 to 20:25 UTC, 25 Nov: the cure of design (c) green in the browser, the finals half way, MAIL 1281
+
+- MAIL 1281 (/root, 20:14): my state of 20:00 read, trial A left, agreed. For my files: hl1-12 (render_27, review tier, bdefa47
+  against da041de, 23 frames of Mercury's dive): 10 the same bytes, 13 differ (700, 701, 705, 706, 707, 717, 759, 760, 761, 775 to
+  778; PSNR 717 35.7 dB, 759 to 761 34.6 to 34.9 dB, the ends 53.6 and 70.1 dB; list /tmp/mail/hl1-12-psnr.txt; the pairs lie with
+  /root, 13.8 MB). Nothing new asked: "the five judged finals of Mars with the count of pixels that differ, and the crests named
+  only when 2477, 2668 and 2672 pass and 2580 holds. Send back those when the chain ends."
+- fin5-c3 (law by the fragment, final tier): f02477 64 samples 1066.665 s sha f53ef685..., f02668 16 samples 49.273 s sha
+  4bbd104f..., f02580 16 samples 50.665 s sha e946d0a0... (written 20:09:35, 20:10:24, 20:11:15); 2476 and 2325 to come, then
+  fin5-vs. Looked at the three whole: sound.
+- THE BROWSER TEST OF THE CURE, tests/crest-gl.test.ts, 6 tests (2 from v1, 4 new: a crest lying flat; the paint's border 1.5
+  texels beyond the middle with the cut on the middle and with out 2; a rim, standing and flat; a near ground before no ground,
+  standing and flat). A browser test of 64 by 48 texels beside the render costs it under a minute; I ran it so.
+  - FIRST RUN: 4 of 6 FAILED, among them both v1 tests: from the own eye a step of 3.3 times the difference of the two colours. THE
+    BUG WAS MINE, in the far sheet's alpha: I had written alpha = mix(alpha x (1 - cutOwn), cutAlpha, cutFill), which takes the far
+    side's own part down by (1 - cutFill) a second time, so in the pixel of the cut the far sheet had 3/4 of the cover and the
+    cleared colour showed through. RIGHT: cutMine = alpha x mix(1 - cutOwn, cutOwn, cutNear) x (1 - cutUnder); cutLent = cutAlpha x
+    cutFill; alpha = cutMine + cutLent; texel = mix(texel, cutTexel, cutLent / max(alpha, 1e-6)): the two parts added as covers,
+    the colour mixed by their covers (so a far end with no alpha lends no colour either).
+  - SECOND RUN: 4 of 6. The two left were the test's own numbers, not the engine: (1) the flat crest's ramp (rows 21 to 25) has a
+    row of the mesh's vertices on it (row 24), so the mesh ALONE is only 9.3 px off there (plain 113.07, sheets 122.00, rigid
+    122.38 at side -0.5; plain 76.64, sheets 69.24, rigid 69.62 at side +0.5), not over 16 as on the standing crest: the teeth
+    check now asks more than two texels (8 px). (2) from the own eye with out 2 the largest step is 0.0189 of the colours'
+    difference (the first of the painted border inside the cut's one pixel), not under 0.004: the bound is 0.05 as in the first
+    test, and the test now also holds the teeth: cut on the middle the same measure is 0.2997 (asked: over 0.15).
+  - THIRD RUN: 6 of 6. tests/crest.test.ts 14 of 14 (crest.ts unchanged). tsc clean. chk.py clean on the four files. The page's
+    html in the test no longer has a doctype line (its exclamation point); the other browser tests in the repo have it, theirs.
+  - The picture of the test's shots: /tmp/crest/gl-sheets.png (made by a scratch dump in the test, taken out again; backup of the
+    clean test /tmp/crest/crest-gl.test.v2.ts). Seen in it: with the sheets and the eye moved down, the far sheet under the near
+    side shows at the picture's lower rim where the near ground's rim has lifted (under 16 texels): by design, and outside what a
+    film frames.
+- Mars L1, the ends by the matte (/tmp/crest/rimstat.py TAG): of 47129 ramp texels 43315 have ground at both ends, 170 ground near
+  and none far, 898 none near and ground far (rims), 2746 none at either end. 339 ramp texels lie on the near side, are opaque
+  themselves and have no ground at their near end (285 of them solid): by 100 texel blocks (1200, 0) 174, (900, 0) 98, (1800, 500)
+  45, (1500, 300) 16: the top rim, where defect 1 stood. With the cure they ride with the far side.
+- /tmp/crest/setlook.py now takes five words a layer: LAYER STEP WALK UNDER OUT.
+- Looks pushed 20:23 (c84c806e on the looks branch: the test's picture, the three finals).
+- NEXT: when fin5-c3 is whole, stop the chain before fin5-vs; copy crest.ts and relief.ts of crest-wt into t-c2a; prove no numbers
+  gives the bytes of k0-draft; drafts with L1 0.002 12 24 2 (and out 3) at 2668, 2477, 2580, 2672; crops for defect 1 and 2; then
+  the review tier with teeth2.py and cmp.py; then fin5-vs, diff.py, the tree back.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
