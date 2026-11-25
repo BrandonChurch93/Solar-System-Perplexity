@@ -1,9 +1,47 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T07:02:23.745Z",
- "head": "b6744f2bd202613fa8d6a4d03c1f01647b478153",
- "note": "lab ground after MAIL 949: heat alone, pillows, sunk spot",
+ "pushed": "2026-11-25T07:35:45.183Z",
+ "head": "d8d0df3d7b2374a8fdd40e1a1734734cbd6d68f0",
+ "note": "sun lab state y 9119c72: fibres, veins, joins, thread penumbra",
  "looks": [
+  {
+   "time": "2026-11-25T07:35:44.412Z",
+   "file": "20261125073544412-note-pair-90-near.jpg",
+   "source": "out/work/sun/lab/pair-90-near.jpg",
+   "kind": "note",
+   "label": "lab pair near state y",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:35:43.562Z",
+   "file": "20261125073543562-note-pair-90-spot.jpg",
+   "source": "out/work/sun/lab/pair-90-spot.jpg",
+   "kind": "note",
+   "label": "lab pair spot state y",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:35:42.640Z",
+   "file": "20261125073542640-note-lab-90-y.jpg",
+   "source": "out/work/sun/lab/lab-90-y.png",
+   "kind": "note",
+   "label": "lab frame 90 state y 9119c72",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:27:52.588Z",
+   "file": "20261125072752588-frame-lab-90-y.jpg",
+   "source": "out/work/sun/lab/lab-90-y.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T07:02:23.190Z",
    "file": "20261125070223190-note-pair-90-near.jpg",
@@ -27,20 +65,6 @@
    "kind": "note",
    "label": "lab ground frame 90 draft, heat alone",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:01:26.935Z",
-   "file": "20261125070126935-frame-lab-90-o.jpg",
-   "source": "out/work/sun/lab/lab-90-o.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   },
   {
    "time": "2026-11-25T06:36:22.743Z",
