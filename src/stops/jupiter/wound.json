@@ -1,23 +1,26 @@
 {
-  "note": "Written by assets-src/jupiter/deck/wound.py. ranges: per age of deck.json life.flow.wound.turnDeg, the least and greatest change of distance in units and of the angle in radians that the 16 bit codes of deck-wound.bin span.",
+  "note": "Written by assets-src/jupiter/deck/wound.py. ranges: per age of deck.json life.flow.wound.turnDeg, the least and greatest change of distance in units and of the angle in radians that the 16 bit codes of deck-wound.bin span, then the greatest base 2 logarithm of the factor by which the flow has drawn the matter out (the third block of each age, from zero).",
   "ranges": [
     [
-      -0.6117662587767809,
-      0.6123366697986887,
-      -0.9699211213546598,
-      0.08151140701063374
+      -0.6117662437471678,
+      0.6123366547443416,
+      -0.9699210973704874,
+      0.08151140526577118,
+      1.107495187310937
     ],
     [
-      -1.6281248836441355,
-      1.6316154521429367,
-      -2.5930604427905966,
-      0.19475991464144657
+      -1.6281248432653987,
+      1.6316154115970625,
+      -2.5930603782513697,
+      0.1947599103277281,
+      1.9720133448071788
     ],
     [
-      -4.046761059665229,
-      4.067743254061435,
-      -6.4607149577201115,
-      0.430500385133735
+      -4.046760959258373,
+      4.067743152544486,
+      -6.4607147963720335,
+      0.43050037619396986,
+      2.9636039284923323
     ]
   ]
 }

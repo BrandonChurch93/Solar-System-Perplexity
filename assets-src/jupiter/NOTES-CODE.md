@@ -2734,3 +2734,49 @@ The tool is kept at `/home/user/workspace/work/r23/bands.py` (not in the repo: i
 - plain 14.0976, low band at 16 px 8.8093 (main's final 3.539; my last head 4.7449 at draft; the no eye state 9.0608).
 - bands 1 to 2, 2 to 4, 4 to 8, 8 to 16 px against the approved image: 0.5209, 0.5008, 0.5243, 0.6699 (under 1 px 0.6326). The head before: 0.9582, 0.9466, 0.9349, 0.9706. So the detail by code is about half as strong as it has to be, and all four bands are red.
 - My eye on it: the flow reads (streaks along the streamlines round the oval and along the jets), but the detail is one fine fur everywhere, the oval has no bands of its own, no billow has a lit and a shaded side, the lower right is dark without a cause. Not a film still. The relief and the light are what is missing.
+
+## Stage 2 of the cure: relief, light, shadows, and the first solve (25 November, 22:20 to 23:00 UTC)
+
+READ FIRST AFTER A COMPACTION: the working tree holds stage 2 on top of 573431f. Date that stands: the first 3150 at draft by 23:45 UTC in the looks with the three numbers of MAIL 1310 (low band, bands, eye). Renders for look work run at `--format preview` (960 by 540, about 42 s); the numbers are taken at `--format master` only.
+
+### What stage 2 is (all numbers in `deck.json`)
+
+- Heights. The old stored relief (`deck-fore/near/mid-height.bin`) is out of the program: it held the fit eye's frustum as a cliff (the painted dark of the lower frame read as depth) and painted lumps. `guide.py` now writes `guide-near-height.bin` and `guide-mid-height.bin` from code and the guide alone (`guide.relief`): a dish round the storm centre (`floorUnits`, `floorEdge` in storm radii), a crest ring (`crestUnits`, `crestAt`, `crestWidth`), lanes (the guide's own light against its `laneWideUnits` mean, `laneUnits`), basins (the guide's wide light in stops under `basinLight`, `basinUnits` a stop, within `basinRange`): dark matter lies deep. `stored(g)` in `clouds.ts` reads only these two maps with the guide's join.
+- Code detail as height (`look.cloud`): per age of the wound coordinates one field of tops per octave, two cells a side, the tallest top wins. Profile per age (`dome.profile`: 1 is a round dome, 0.25 a plateau with a steep rim), height per top between `dome.least` and 1 times its life pulse, octaves under a top gated (`dome.bare`, `dome.edge`). The height of an octave is `rise` times wave times one over the stretch (a form drawn out to a thread is as low as it is narrow), capped by `capUnits` per age. `marchOctaves` per age are in the march (they make silhouettes and cast shadows); finer ones are slopes only. `wound.py` writes the stretch as a third block per age.
+- Light (`look.sun`): the deck's curve on the slope of the whole height field (the low relief's slope, the march octaves by differences at the footprint, the fine ones by their own gradient), times the cast shadow (`shadowAt`: marched from the ground toward the place's Sun through the same heights, soft by `soft`), plus one fill (`fill`) shut by `open` and the detail's height. No law by eye, clock or camera height.
+- Tints: `top` and `deep` per unit of the detail's value, weighted per age by `tint`.
+- `assets-src/jupiter/deck/solve.py FRAME BARE APPROVED`: the albedo under the code's own light. FRAME is 3150 drawn as it is, BARE the same with a black guide (`work/r23/flat.py black`, then `restore`), both in scene light. Ratio of the two low bands (16 px of the master), limited per round (`guide.solve.step`), laid back to the ground through the fit camera at the stored heights, written as `assets-src/jupiter/deck/solve-near.png` and `solve-mid.png` (log2, 16 bit, summed over rounds). `guide.py` multiplies the guide by it and holds the result inside `guide.solve.albedo` (least and most light of the matter).
+
+### States and what they measured (3150, draft, master size unless said)
+
+| state | file in `work/r23/t` | seconds | plain | low band | bands 1 to 2, 2 to 4, 4 to 8, 8 to 16 | eye |
+|---|---|---|---|---|---|---|
+| b | b-3150.png | 66 | 28.6127 | 21.5457 | 1.21 1.24 1.21 1.15 | rock, far too dark |
+| c | c-3150.png | 148 | 27.0163 | 21.9503 | 1.01 1.01 1.02 1.06 | far field reads as cloud, near field mountains from the old relief, a seam |
+| d | d-3150.png | 126 | 24.2426 | 17.541 | 1.01 1.02 1.03 1.06 | lumps, a pit; too dark on the left |
+| e | e-3150.png | 132 | 36.1885 | 28.2625 | 1.18 1.25 1.31 1.37 | d after one solve with a floor of 0.07 on the matter's light: the lower right is lit and teal |
+| f | f-3150.png (preview) | 42 | | | | plateaus in the wound coordinates: the first state that reads as a vortex of sheared bands |
+
+### The open conflict, measured (for the Builder to rule)
+
+MAIL 1310 (i) asks for a low band no worse than main's 3.539; MAIL 1310 (iii) and my page (b) keep the lower left and the right third lit by the one Sun, with no darkness in the guide that the Sun does not cast. The approved image reads 7 to 30 (of 255) in its lower right third; lit by the Sun at 33.3 degrees a matter of 0.07 reads about 90 there. State e measured it: low band 28.2625 with the floor at 0.07. No shadow of this Sun reaches that far (a top of 0.4 units throws 0.6 units).
+
+### 23:00 to 23:25 UTC: the solve by range, states g to m, the gate of the billows
+
+More rows of the table above (3150, draft):
+
+| state | file in `work/r23/t` | seconds | plain | low band | bands 1 to 2, 2 to 4, 4 to 8, 8 to 16 | eye |
+|---|---|---|---|---|---|---|
+| g, h | g-3150.png, h-3150.png (preview) | 42 | | | | shallow dish, then one old solve round |
+| i | i-3150.png | 134 | 23.3755 | 14.7885 | 1.08 1.09 1.11 1.21 | two old solve rounds, floor 0.012: blotches and teal, the relief roughened by the solved guide |
+| j1 | j1-3150.png (preview) | 42 | 25.38 | 17.42 | | the plain guide with no solve, relief from the plain guide |
+| k | k-3150.png | 139 | 15.9608 | 5.547 | 1.00 0.99 0.93 0.86 (under 1 px 1.29) | four rounds of the solve by range: reads as the approved image's Jupiter; limb ragged, far field a field of lumps, the storm brown orange, lower right 30 against 8 |
+| v1 | v1-3150.png (preview) | 43 | 37.27 | 28.98 | | k's solve with the floor of the matter's light at 0.07: right third and bottom pale blue, lit |
+| m1 | m1-3150.png (preview) | 44 | 15.97 | 6.00 | | k with the gate of the billows, before a new solve: far field smooth with streaks, limb nearly smooth |
+
+- `solve.py FRAME BARE APPROVED RANGE` is now a forward layback: RANGE is the same frame drawn with `--diag range` (24 bit, distance = 2^((n - 1) / 16777214 x 32 - 20) times the radius: the first run forgot the radius and wrote every pixel under the eye; cured at 23:04). Each ground pixel's ray and range give its chart place; the log ratio of the low bands is splatted into 1024 square grids per level and the holes are filled by normalised blurs (`guide.solve.fillPx`). The even part of a round is damped by `share`, the part between the channels by `hueShare` and held inside `hueLog2`.
+- `guide.py` keeps the plain guide per level in `out/work/jupiter/guide/plain-NAME.npy` (pass `--fresh` when the plates, tone, calm or the cut change), takes the relief from the plain guide (so the solve never changes a height), and writes `guide-NAME-rough.bin` (256 square, 16 bit): the plain guide's own unrest, the root mean square of its light in stops against its `guide.rough.wideUnits` mean, over `guide.rough.most`.
+- The gate of the billows (`look.cloud.rough`): the code detail's height, slope and tint are scaled per age by mix(1, gate, `obey`), gate = mix(`least`, 1, smoothstep(`range`) of the stored unrest), read at the carried place. So the tall round tops stand where the approved image has its cumulus (the storm's rim, the near field) and the far field keeps the drawn out streaks of the oldest age. Two samplers more: 11 in the program.
+- Lanes take the matter's own hue: `look.cloud.saturate` (the guide over its own light, to the power of saturate times the depth of the detail), `deep` is now the same number on the three channels. Before it the lanes lost red most, which greyed the storm.
+- Where the low band still departs in k (parts of the 5.547 by cell of an 8 by 5 grid): the six cells of the lower right hold 2.29; there the frame reads 23 to 32 and the approved image 7 to 16. The floor of the matter's light (0.012) binds there: lit level ground reads the matter's light times 1.3.
+- Share of detail by code in state k at preview size (`work/r23/share2.py`): frames 3060, 3150, 3239: contrast 0.8449, 0.8718, 0.8585; the page's measure (absolute detail of the flat guide's frame over the full frame's) prints 1.5315, 1.5126, 1.5212 because the flat guide is lighter than the solved one in the dark parts; matched 1.0722, 1.1325, 1.1289.
