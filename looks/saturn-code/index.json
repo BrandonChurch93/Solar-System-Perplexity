@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T07:46:30.329Z",
+ "pushed": "2026-11-25T08:08:35.785Z",
  "head": "da021335659e0efa1aafcc4ea362938b640121e3",
- "note": "round 3: finding by layer what draws the two severe places (3567 gap, 3720 foot), first trial of the foot",
+ "note": "round 3: both severe places in trial, 3567 gap closed with dark matter from the globe on, 3720 foot without the band on the globe; drafts, not yet proven",
  "looks": [
+  {
+   "time": "2026-11-25T08:08:35.048Z",
+   "file": "20261125080835048-note-t3_whole_pair.jpg",
+   "source": "../../../../tmp/v/x/t3_whole_pair.png",
+   "kind": "note",
+   "label": "3720 half size: approved left, trial T3 draft right"
+  },
+  {
+   "time": "2026-11-25T08:08:34.357Z",
+   "file": "20261125080834357-note-t3_wedge.jpg",
+   "source": "../../../../tmp/v/x/t3_wedge.png",
+   "kind": "note",
+   "label": "3567 at 1 to 1, where the shadow starts at the equator: named final left, trial T3 draft right"
+  },
+  {
+   "time": "2026-11-25T08:08:33.675Z",
+   "file": "20261125080833675-note-t3_foot.jpg",
+   "source": "../../../../tmp/v/x/t3_foot.png",
+   "kind": "note",
+   "label": "3720 at 1 to 1, foot of the globe: approved above, trial T3 draft below (dust depth 3, no band on the globe, ringlets on)"
+  },
+  {
+   "time": "2026-11-25T08:08:32.991Z",
+   "file": "20261125080832991-note-t3_gap.jpg",
+   "source": "../../../../tmp/v/x/t3_gap.png",
+   "kind": "note",
+   "label": "3567 at 1 to 1, gap between globe and inner rim in the globe's shadow: named 88ba2385 final above, trial T3 draft below (shaded plane solid from the globe on)"
+  },
   {
    "time": "2026-11-25T07:46:29.690Z",
    "file": "20261125074629690-note-foot_pair_da.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/x/r64_3866_gap_pair.png",
    "kind": "note",
    "label": "3866 at full size, box 940,620 to 1300,1030: named 88ba2385 left (sky ends in a hard ellipse), local da02133 right (sky thins out through the shaded inner ring)"
-  },
-  {
-   "time": "2026-11-25T07:20:26.705Z",
-   "file": "20261125072026705-note-r64_3866_pair.jpg",
-   "source": "../../../../tmp/v/x/r64_3866_pair.png",
-   "kind": "note",
-   "label": "3866 final: named 88ba2385 above, local da02133 below"
-  },
-  {
-   "time": "2026-11-25T07:20:25.688Z",
-   "file": "20261125072025688-note-day_foot_3.jpg",
-   "source": "../../../../tmp/v/x/day_foot_3.png",
-   "kind": "note",
-   "label": "3720 day side foot, box 900,430 to 1520,770: approved, named 88ba2385, local da02133"
-  },
-  {
-   "time": "2026-11-25T07:20:24.792Z",
-   "file": "20261125072024792-note-night_foot_3.jpg",
-   "source": "../../../../tmp/v/x/night_foot_3.png",
-   "kind": "note",
-   "label": "3720 night side foot, box 1300,560 to 1920,900: approved, named 88ba2385, local da02133. The dust in front of the night side is darker in da02133 than in the approved"
-  },
-  {
-   "time": "2026-11-25T07:20:23.997Z",
-   "file": "20261125072023997-note-r64_3720_under_ap.jpg",
-   "source": "../../../../tmp/v/x/r64_3720_under_ap.png",
-   "kind": "note",
-   "label": "3720 final of local commit da02133 (below) under the approved close image (above)"
   }
  ]
 }
