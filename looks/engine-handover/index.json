@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T04:55:47.389Z",
+ "pushed": "2026-11-25T05:19:34.288Z",
  "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
- "note": "shutter that opens and closes (handover.shutterEnds, Earth 0.5): pairs of 1857 and 2156 at review against the box; neighbours and the border render now",
+ "note": "shutterEnds for Earth (7e3da15a, local): pairs of 1857 and 2156 at review, box against ends, three frames in a row; border frames 2099 to 2101 rendering; gradAt for Earth built (09cfadcd, local), proof chain queued",
  "looks": [
+  {
+   "time": "2026-11-25T05:14:27.520Z",
+   "file": "20261125051427520-note-en-1857-sea4.jpg",
+   "source": "../../../../tmp/law/dots/en-1857-sea4.png",
+   "kind": "note",
+   "label": "1857 review, sea at 4 times, box and ends: a fine diagonal hatch in both (the sea's fine texture drawn along the motion), not from the shutter"
+  },
+  {
+   "time": "2026-11-25T05:14:26.289Z",
+   "file": "20261125051426289-note-en3-1856-58-cloud.jpg",
+   "source": "../../../../tmp/law/dots/en3-1856-58-cloud.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5: 1856, 1857, 1858 review with ends, clouds x 420..620 y 820..940 at 3 times"
+  },
+  {
+   "time": "2026-11-25T05:14:25.223Z",
+   "file": "20261125051425223-note-en3-2155-57-brazil.jpg",
+   "source": "../../../../tmp/law/dots/en3-2155-57-brazil.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5: 2155, 2156, 2157 review with ends, Brazil at 2 times: three frames in a row, soft ovals in all three"
+  },
+  {
+   "time": "2026-11-25T05:14:23.969Z",
+   "file": "20261125051423969-note-en-1857-cloud3.jpg",
+   "source": "../../../../tmp/law/dots/en-1857-cloud3.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5: 1857, clouds x 1000..1240 y 780..1000 at 3 times: draft of one sample (what the cloud is), review box (7b3f4567: blocks with hard edges), review ends 0.5 (7e3da15a: soft)"
+  },
+  {
+   "time": "2026-11-25T05:10:36.586Z",
+   "file": "20261125051036586-note-en-pairs-2155-57-brazil.jpg",
+   "source": "../../../../tmp/law/dots/en-pairs-2155-57-brazil.png",
+   "kind": "note",
+   "label": "shutterEnds Earth 0.5: 2155, 2156, 2157 review, Brazil x 1240..1600 y 700..1060 at 2 times: box (7b3f4567) above, ends 0.5 (7e3da15a) below: bars with hard ends above, soft ovals below, on three frames in a row"
+  },
   {
    "time": "2026-11-25T04:44:04.550Z",
    "file": "20261125044404550-note-en-1857-wide.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/law/dots/en-1857.png",
    "kind": "note",
    "label": "shutterEnds Earth 0.5: 1857 review, clouds x 420..620 y 820..940 at 3 times, box beside ends: the bricks are soft specks"
-  },
-  {
-   "time": "2026-11-25T04:44:02.306Z",
-   "file": "20261125044402306-note-en-mid-2156.jpg",
-   "source": "../../../../tmp/law/dots/en-mid-2156.png",
-   "kind": "note",
-   "label": "shutterEnds Earth 0.5: 2156 review, the still middle x 760..1120 y 400..640 at 2 times, box beside ends: no change to name"
-  },
-  {
-   "time": "2026-11-25T04:44:01.461Z",
-   "file": "20261125044401461-note-en-land-2156.jpg",
-   "source": "../../../../tmp/law/dots/en-land-2156.png",
-   "kind": "note",
-   "label": "shutterEnds Earth 0.5 (7e3da15a): 2156 review, Brazil x 1240..1600 y 700..1060 at 2 times, box (7b3f4567) beside ends: the coast lights are small soft ovals, the stair along the coast is gone"
-  },
-  {
-   "time": "2026-11-25T04:36:42.446Z",
-   "file": "20261125043642446-note-win-1857-wide.jpg",
-   "source": "../../../../tmp/law/dots/win-1857-wide.png",
-   "kind": "note",
-   "label": "Earth 1857 review at full size: box above, ends 0.5 below (scratch)"
-  },
-  {
-   "time": "2026-11-25T04:36:41.869Z",
-   "file": "20261125043641869-note-win-1857.jpg",
-   "source": "../../../../tmp/law/dots/win-1857.png",
-   "kind": "note",
-   "label": "Earth 1857 review, clouds at 3 times: box beside ends 0.5 (scratch)"
-  },
-  {
-   "time": "2026-11-25T04:36:41.275Z",
-   "file": "20261125043641275-note-win25-lr-2156.jpg",
-   "source": "../../../../tmp/law/dots/win25-lr-2156.png",
-   "kind": "note",
-   "label": "Earth 2156 review, lower right at 3 times: box, ends 0.25, ends 0.5 (scratch)"
   }
  ]
 }
