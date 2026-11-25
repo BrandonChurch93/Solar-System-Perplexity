@@ -220,11 +220,12 @@ export function iceField(): Ice {
     const scale = bufferFrame()
     orbit.x = spinRadians / (2 * Math.PI)
     orbit.z = near
-    // the sand has its strength in the hold and none near the sheet
+    // the sand has the share far of its strength in the hold and, per layer, the share near of it near the
+    // sheet (ice.json sand), between them by the nearness of the lens; its sparks show in the hold alone
     const far = 1 - near
-    sandFit.w = far
+    sandFit.w = Math.max(far, near)
     sandSpark.set(g.spark.dense * far, g.spark.thin * far, g.spark.from, g.spark.to)
-    g.layers.forEach((layer, i) => sand[i]!.set(layer.pixels * scale, layer.dense * g.far * far, layer.thin * g.far * far, layer.sparks))
+    g.layers.forEach((layer, i) => sand[i]!.set(layer.pixels * scale, layer.dense * (g.far * far + g.near[i]! * near), layer.thin * (g.far * far + g.near[i]! * near), layer.sparks))
     levels.forEach((level, i) => grainLevel[i]!.set(grainLevel[i]!.x, level.ref * focal, l.pixels[i]![0]! * scale, l.pixels[i]![1]! * scale))
     grainFit.z = near
   }
