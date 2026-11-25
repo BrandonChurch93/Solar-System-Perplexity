@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T08:20:20.578Z",
- "head": "d433e57488fd6a9ac856f153de1729d7d2cd6c1d",
- "note": "08:21 UTC: frame 2436 of the Mars dive, draft, with the lean own level reads (29995967) on Mars's folders of 00c41dcd. The on and off pairs at two sizes are still rendering.",
+ "pushed": "2026-11-25T09:06:57.221Z",
+ "head": "09cf73c73f13f2639b20bcdebc4db149bd155d32",
+ "note": "09:10 UTC: a measurement only. Of the cap's kept triangles 62 to 76 percent reach no pixel at 1080 rows and 43 to 60 percent at 2160. Leaving all of them out would save 2.5 to 5.8 s a frame at 1080; every PNG stayed equal. Nothing is built on it.",
  "looks": [
+  {
+   "time": "2026-11-25T09:06:56.646Z",
+   "file": "20261125090656646-note-tri-uhd.jpg",
+   "source": "../m835/tri/tri-uhd.png",
+   "kind": "note",
+   "label": "The same at 3840 x 2160 draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:06:56.069Z",
+   "file": "20261125090656069-note-tri-master.jpg",
+   "source": "../m835/tri/tri-master.png",
+   "kind": "note",
+   "label": "Mars cap, 1920 x 1080 draft: where the triangles of the kept patches go, and the seconds if those that reach no pixel were left out (scratch, nothing built)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T08:20:14.991Z",
    "file": "20261125082014991-note-on-2436.jpg",
@@ -50,22 +66,6 @@
    "source": "../m835/cull-proof-1.png",
    "kind": "note",
    "label": "cap cull on against off, Mars draft: whole frames done 14 of 14 byte equal, half frames running",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T04:03:57.169Z",
-   "file": "20261125040357169-note-cull-seconds.jpg",
-   "source": "../m835/cull-seconds.png",
-   "kind": "note",
-   "label": "cap.cull (patches of the cap sifted by the lens, off by default): seconds of 14 Mars draft frames off and on, all byte equal",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T03:07:32.518Z",
-   "file": "20261125030732518-note-detail-hook-test.jpg",
-   "source": "../m835/detail-hook-test.png",
-   "kind": "note",
-   "label": "cap detail hook on the test page: tilt of the light against the hand count, and a height that follows the cap own height on its walls",
    "stop": "mars"
   }
  ]
