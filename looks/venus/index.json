@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T02:44:36.078Z",
+ "pushed": "2026-11-25T03:12:43.281Z",
  "head": "f2a418731e617071cfe34e445e300fa9ad997e0f",
- "note": "MAIL 815 5c: where the place's picture ends on the plates (frame of T) and on the ground; next the canvas margins are laid into the plates",
+ "note": "MAIL 815 5c: survey from the eye of T; in the dive the ground's picture ends at the lower border of the frame of T, so the line needs new picture below it; rise has picture to 1.85 heights, being laid",
  "looks": [
+  {
+   "time": "2026-11-25T03:12:42.697Z",
+   "file": "20261125031242697-note-survey-dive.jpg",
+   "source": "../../../../tmp/v/st/c0/survey-dive.jpg",
+   "kind": "note",
+   "label": "the close side at the T of the dive from the eye of T turned left, down and right (survey), and its layers: the ground ends where the frame of T ends, under it nothing",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T03:12:42.095Z",
+   "file": "20261125031242095-note-r2-1332-right.jpg",
+   "source": "../../../../tmp/v/st/c0/r2-1332-right.jpg",
+   "kind": "note",
+   "label": "trial, not kept as it stands: dive 1332 right lower quarter at 1 to 1, f2a41873 left, plates with the picture of the aprons laid round the frame of T right; the straight end of the near towers stays: measured, the close side's ground ends at 0.99 to 1.03 image heights of T in the dive, there is no picture below the frame of T",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T02:44:35.485Z",
    "file": "20261125024435485-note-lay.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/st/k7/star-step-1316h.jpg",
    "kind": "note",
    "label": "dive film time 1316.5 over 1316.5078 at capture rate 128: the band cloud steps up where the sky glow passes 0.999 (shared sky shader), not a law of the stop",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T01:15:07.643Z",
-   "file": "20261125011507643-note-H-lower.jpg",
-   "source": "../../../../tmp/v/cmp/st/H-lower.jpg",
-   "kind": "note",
-   "label": "dive 1324 to 1339 lower 420 rows: the straight lines of the frame of T, not cured",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T01:15:06.968Z",
-   "file": "20261125011506968-note-H-rise-1.jpg",
-   "source": "../../../../tmp/v/cmp/st/H-rise-1.jpg",
-   "kind": "note",
-   "label": "rise 1546 to 1551 + 1/2 at 60 a second, working tree: the rim and the blue strip, not cured",
    "stop": "venus"
   }
  ]
