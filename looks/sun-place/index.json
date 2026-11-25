@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T16:08:33.965Z",
- "head": "ee85a184d8a313eb38a35279d32380d71b2b5634",
- "note": "16:08 UTC, tree ee85a184 plus one line in arcs.ts (draw seats the arcade), test chain running. Harness reading of captures 380 to 470 (rise, pictures, draft, film size): green, pattern largest 0.31 at capture 438, pop 1.02, level step 0.11, pop of one block 3.22 at capture 469 (shown). Frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145.",
+ "pushed": "2026-11-25T16:26:42.213Z",
+ "head": "e1c18f468aadbc38e87d273844f31305eccd3bfc",
+ "note": "16:26 UTC, NAMED e1c18f46 on main baf5473f. Frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145. 360 final same bytes as f906d2ec, match 11.9804.",
  "looks": [
+  {
+   "time": "2026-11-25T16:26:41.617Z",
+   "file": "20261125162641617-note-h1-block.jpg",
+   "source": "../../../../tmp/v/h1-block.jpg",
+   "kind": "note",
+   "label": "captures 468 to 471, upper left: the sky slides behind the standing rays (pop of one block 3.22 at 469, shown)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:26:41.000Z",
+   "file": "20261125162641000-note-r4-247-sky.jpg",
+   "source": "../../../../tmp/v/r4-247-sky.png",
+   "kind": "note",
+   "label": "247: sky before the merge of main baf5473f (left) and on it (right), two crops",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:26:40.435Z",
+   "file": "20261125162640435-note-r4-stills.jpg",
+   "source": "../../../../tmp/v/r4-stills.jpg",
+   "kind": "note",
+   "label": "frames 0, 60, 90, 247 at draft on e1c18f46",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:26:39.836Z",
+   "file": "20261125162639836-note-r4-360-pair.jpg",
+   "source": "../../../../tmp/v/r4-360-pair.jpg",
+   "kind": "note",
+   "label": "360 at final before (f906d2ec) and after (e1c18f46): the same bytes, match 11.9804",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T16:08:32.799Z",
    "file": "20261125160832799-note-h1-c.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/r3-stills.jpg",
    "kind": "note",
    "label": "frames 0, 60, 90, 247 at draft with the lab's eccae657 ground, one sky, sky turn by height",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:33:51.664Z",
-   "file": "20261125153351664-note-r3c-pair400.jpg",
-   "source": "../../../../tmp/v/r3c-pair400.png",
-   "kind": "note",
-   "label": "captures 400 and 416 with eccae657: my reader's 0.690 lies in the arcade above the limb, not on the ground",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:33:50.909Z",
-   "file": "20261125153350909-note-r2c-pair.jpg",
-   "source": "../../../../tmp/v/r2c-pair.png",
-   "kind": "note",
-   "label": "captures 437 and 453 with df86: carried pair and pattern map, 0.294 by my reader",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:33:50.093Z",
-   "file": "20261125153350093-note-ga-b.jpg",
-   "source": "../../../../tmp/v/ga-b.jpg",
-   "kind": "note",
-   "label": "corona sheet a: full share, 236 to 261",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:33:49.215Z",
-   "file": "20261125153349215-note-ga-a.jpg",
-   "source": "../../../../tmp/v/ga-a.jpg",
-   "kind": "note",
-   "label": "corona sheet a: rays and prominences at full share at every height, 196 to 231 (not drawn before the change of view at 205)",
    "stop": "sun"
   }
  ]
