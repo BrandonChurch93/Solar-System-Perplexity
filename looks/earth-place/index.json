@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T12:25:15.657Z",
+ "pushed": "2026-11-25T12:48:06.247Z",
  "head": "b506ed95d5d1e96b4503740aef9628c8f3fa1b57",
- "note": "work state 12:27: tone by the length of air drafted (outline of the dark field gone, the place's sea still arrives as a patch 1850 to 1866); bodies now laid on the specks; nothing committed yet",
+ "note": "work state 12:49: tone by the air built, bodies on specks built, hold's cover inside the disc built; red: the place arrives as a pale patch 1854 to 1872, cure rendering",
  "looks": [
+  {
+   "time": "2026-11-25T12:48:05.638Z",
+   "file": "20261125124805638-note-g1-place.jpg",
+   "source": "../../../../tmp/gl/k14/g1-place.jpg",
+   "kind": "note",
+   "label": "work state, RED: with one gain for all the sea the place arrives as a pale patch 1854 to 1872 (1 to 1 crops); being cured now",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T12:48:05.010Z",
+   "file": "20261125124805010-note-g1-vs-e1-late.jpg",
+   "source": "../../../../tmp/gl/k14/g1-vs-e1-late.jpg",
+   "kind": "note",
+   "label": "work state, 1880 and 1889: left the last commit, right the tone by the length of air and the bodies on the specks (the sea is one tone now; the field's own ground still has an outline)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T12:25:14.462Z",
    "file": "20261125122514462-note-deck3-look.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k13/s-dive-a.jpg",
    "kind": "note",
    "label": "9b637af7 dive 1876 to 1887 draft, deck out",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T11:23:57.703Z",
-   "file": "20261125112357703-note-share-pair.jpg",
-   "source": "../../../../tmp/gl/k13/share-pair.jpg",
-   "kind": "note",
-   "label": "study: the hold's map with its cloud layer (left) against the close set's levels (right), rings at 5 and 10 degrees: the bodies do not stand on the same places",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T11:23:56.865Z",
-   "file": "20261125112356865-note-h1755-deck-2x.jpg",
-   "source": "../../../../tmp/gl/k13/h1755-deck-2x.png",
-   "kind": "note",
-   "label": "1755 at 2 px for 1: the deck state ac5c5c1b against the deck taken out (now equal to the kept hold to the byte)",
    "stop": "earth"
   }
  ]
