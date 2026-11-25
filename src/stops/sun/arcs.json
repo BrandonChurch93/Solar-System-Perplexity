@@ -1,0 +1,215 @@
+{
+  "note": "The arcade as bodies in space (MAIL 1010, MAIL 1029 point 2 and 3). Lengths are stage units (the ball's radius is terrain.json radius), angles degrees, speeds stage units a second along the strand. Every strand is a fixed line; what moves is the plasma along it, at one steady speed for each strand. least: the least half width of a strand in pixels of the buffer, below it the strand keeps that width and its light falls by the same share. light sheath: how many times the tube's width the thin sheath around it is wide, and its light against the tube's. light cool and hot: the colour of a faint and of a bright strand as the finished frame shows it, in linear light.",
+  "seed": 9173,
+  "least": 0.7,
+  "shape": {
+    "height": 1.4,
+    "power": [
+      0.85,
+      1.15
+    ],
+    "bulge": [
+      -0.05,
+      0.1
+    ],
+    "skew": [
+      -0.25,
+      0.3
+    ],
+    "wave": [
+      0.09,
+      0.035
+    ],
+    "sink": 0.02
+  },
+  "main": {
+    "count": 120,
+    "segments": 64,
+    "bundles": 10,
+    "inBundle": 0.72,
+    "leanDeg": [
+      -52,
+      44
+    ],
+    "heights": [
+      0.28,
+      1.0
+    ],
+    "shell": 0.5,
+    "feet": [
+      0.09,
+      0.07
+    ],
+    "spread": {
+      "leanDeg": 2.5,
+      "height": 0.035,
+      "feet": 0.03
+    },
+    "radius": [
+      0.002,
+      0.011
+    ],
+    "gain": [
+      0.2,
+      1.0
+    ],
+    "speed": [
+      0.2,
+      0.42
+    ],
+    "back": 0.22,
+    "clump": [
+      0.2,
+      0.5
+    ]
+  },
+  "drips": {
+    "count": 40,
+    "segments": 22,
+    "from": [
+      0.22,
+      0.78
+    ],
+    "heights": [
+      0.55,
+      1.0
+    ],
+    "leanDeg": [
+      -34,
+      28
+    ],
+    "inward": 0.2,
+    "radius": [
+      0.0012,
+      0.003
+    ],
+    "gain": [
+      0.15,
+      0.5
+    ],
+    "speed": [
+      0.45,
+      0.8
+    ],
+    "clump": [
+      0.1,
+      0.24
+    ]
+  },
+  "fountains": [
+    {
+      "foot": 0,
+      "count": 90,
+      "segments": 26,
+      "reach": [
+        0.04,
+        0.3
+      ],
+      "tall": [
+        1.2,
+        2.6
+      ],
+      "most": 0.5,
+      "turnDeg": [
+        -115,
+        115
+      ],
+      "feet": 0.05,
+      "radius": [
+        0.0015,
+        0.006
+      ],
+      "gain": [
+        0.6,
+        1.4
+      ],
+      "speed": [
+        0.35,
+        0.7
+      ],
+      "clump": [
+        0.1,
+        0.26
+      ]
+    },
+    {
+      "foot": 1,
+      "count": 50,
+      "segments": 22,
+      "reach": [
+        0.06,
+        0.42
+      ],
+      "tall": [
+        1.1,
+        2.2
+      ],
+      "most": 0.45,
+      "turnDeg": [
+        -110,
+        110
+      ],
+      "feet": 0.05,
+      "radius": [
+        0.0015,
+        0.005
+      ],
+      "gain": [
+        0.4,
+        1.1
+      ],
+      "speed": [
+        0.35,
+        0.7
+      ],
+      "clump": [
+        0.1,
+        0.24
+      ]
+    }
+  ],
+  "light": {
+    "level": 0.42,
+    "floor": 0.05,
+    "blobs": [
+      1.5,
+      2.6
+    ],
+    "sparks": [
+      1.3,
+      6.0
+    ],
+    "fine": 3.3,
+    "foot": [
+      2.2,
+      0.12
+    ],
+    "ends": 0.18,
+    "cool": [
+      1.0,
+      0.25,
+      0.015
+    ],
+    "hot": [
+      1.0,
+      0.62,
+      0.18
+    ],
+    "knee": 3.2,
+    "most": 0.92,
+    "sheath": [
+      3.5,
+      0.08
+    ]
+  },
+  "ground": {
+    "beat": 0.0
+  },
+  "leave": {
+    "lines": 2160,
+    "px": [
+      1,
+      2
+    ]
+  }
+}

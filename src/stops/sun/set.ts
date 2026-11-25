@@ -8,14 +8,14 @@ import { Corona } from './corona'
 import { Fringe } from './fringe'
 import { SunGlobe } from './globe'
 import { Ground } from './ground'
-import { Loops } from './loops'
+import { Arcade } from './arcs'
 import leaveFit from './leave.json'
 import place from './place.json'
 import * as look from './look'
 import { opening, plan } from './plan'
 import { Prominences } from './prominence'
 import { SkyCard } from './skycard'
-import { lifeCalm, lifeCalmAt, lifeFormat } from './life'
+import { lifeCalm, lifeFormat } from './life'
 import { formatUniform, setFormat } from './format'
 import { stage } from './stage'
 import { farSun, globeShare } from '../../space/farsun/farsun'
@@ -60,18 +60,22 @@ export const createSet: SetFactory = async (ctx) => {
   world.add(farSun.mesh)
   const farBody = new THREE.Quaternion()
 
-  if (opening.on) ground.land(look.opening.surge.reach, look.opening.surge.veil, look.opening.surge.most)
-  if (opening.on) ground.flash(look.opening.erupt.flash.span)
   const fringe = new Fringe(plate, await ctx.texture(base + look.files.haze, { srgb: true, anisotropy: 1 }), look.fringe)
-  const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops, opening.on ? look.opening : undefined)
+  // the arcade stands at its place on the ball in every view: on the stage in the close view, and in orbit carried
+  // with the ball's turn at the same coordinates, at its true size
+  const loops = new Arcade()
+  const standing = new THREE.Group()
+  standing.add(loops.mesh)
+  world.add(standing)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
   const surface = new Surface(ground.material.uniforms, map, mapToStage)
   const jets = new Jets(ground.material.uniforms)
-  terrain.add(ground.mesh, surface.mesh, fringe.mesh, jets.glow, jets.mesh, loops.mesh)
+  terrain.add(ground.mesh, surface.mesh, fringe.mesh, jets.glow, jets.mesh)
   world.add(backdropTerrain.mesh)
   const inGlobe = stage.centre.clone().multiplyScalar(-1 / stage.radius).applyQuaternion(plan.toGlobe)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
+  const eyeStage = new THREE.Vector3()
   const turn = new THREE.Quaternion()
   const carry = new THREE.Quaternion()
   const sight = new THREE.Quaternion()
@@ -126,6 +130,25 @@ export const createSet: SetFactory = async (ctx) => {
       const vignette = shot.post.vignette
       eye.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert())
       if (placing) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
+      const since = state.time - plan.seg.terrain.start
+      if (inOrbit) {
+        carry.copy(plan.carry(state.time))
+        standing.quaternion.copy(carry).multiply(plan.toGlobe)
+        standing.scale.setScalar(1 / stage.radius)
+        standing.position.copy(inGlobe).applyQuaternion(carry)
+        eyeStage.copy(world.position).negate().applyQuaternion(turn.copy(world.quaternion).invert()).applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
+      } else {
+        standing.quaternion.identity()
+        standing.scale.setScalar(1)
+        standing.position.set(0, 0, 0)
+        eyeStage.copy(eye)
+      }
+      // the arcade's lines stand still and its plasma runs on the stop's clock. It leaves by its own size alone
+      // (MAIL 1070 point 2): its height in pixels of a frame of arcs.json leave.lines rows, under leave.px[0] it is the
+      // face's light. Until the far Sun draws it, the globe's share still weighs it in the travel, where the set's
+      // weight ends at once; that share goes with the commit that hands the arcade to the far Sun
+      const arcPx = loops.tall / Math.max(eyeStage.distanceTo(loops.place), 1e-6) * loops.leave.lines / (2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2))
+      loops.update(since, eyeStage, (inOrbit ? state.weight * (kind === 'travel' ? globeShare(world.position.length()) : 1) : 1) * THREE.MathUtils.smoothstep(arcPx, loops.leave.px[0]!, loops.leave.px[1]!), gain, vignette, aspect)
       const height = Math.max(inOrbit ? world.position.length() - 1 : eye.distanceTo(stage.centre) / stage.radius - 1, 1e-4)
       const above = (r: number[]): number => (rising ? THREE.MathUtils.smoothstep(Math.log(height), Math.log(r[0]!), Math.log(r[1]!)) : inOrbit ? 1 : 0)
       // what leaves with the distance from the eye to its own place (radii of the ball, even steps in the logarithm):
@@ -143,12 +166,10 @@ export const createSet: SetFactory = async (ctx) => {
         if (placing) sight.premultiply(turn.copy(carry).invert()).premultiply(plan.toStage)
         ground.sight(sight, view.format.width, view.format.height)
         ground.haze(1 - above(by.haze))
-        const since = state.time - plan.seg.terrain.start
-        const open = opening.on && kind === 'terrain' ? 1 - share(since, look.opening.fade) : 0
-        const calm = lifeCalm(ground.material.uniforms, t)
-        const feet = loops.pulse(since)
-        const surge = loops.surge(since, open)
-        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, open, since, look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]) + calm * loops.lit(since), look.opening.surge.ground * surge[3], look.opening.surge.kick * surge[2], look.opening.erupt.flash.ground * loops.flashGround(since, open) + loops.shell(since, open), look.opening.erupt.flash.veil * loops.flashGround(since, open), look.opening.feet.ground * open * 0.5 * (feet[0] + feet[1]))
+        // the arcade stands as it is from the first frame: what it throws on the ground under its feet is a steady
+        // share (arcs.json ground), with no event in it
+        lifeCalm(ground.material.uniforms, t)
+        ground.update(eye, t, gain, vignette, aspect, fringe.lod(view.camera.fov, view.format.height), 0, 0, since, loops.ground)
         lifeFormat(ground.material.uniforms, view.format.height)
         // the ground from functions is the same on both sides of the rise: on the globe's side it lies on the globe
         // and gives way to the globe's own face by the eye's height
@@ -156,18 +177,12 @@ export const createSet: SetFactory = async (ctx) => {
         surface.update(t, eye, placing ? 1 - above(by.surface) : 1, placing)
         ground.material.uniforms.uFieldFine!.value.x = rising ? above(by.field) : 0
         // the glow at the limb leaves by the distance from the eye to the limb, each jet by the distance to its own foot
-        // (jets.ts), the arcade by the distance from the eye to the middle between its feet: its faint haze and thin
-        // strands first (far.strands, the cut), then all of it (far.loops)
+        // (jets.ts)
         const limbFar = Math.sqrt((1 + height) ** 2 - 1)
-        const arcFar = eye.distanceTo(loops.place) / stage.radius
         const glowLeft = 1 - gone(limbFar, byFar.glow)
         fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, glowLeft)
         fringe.mesh.visible = false
         jets.update(t, glowLeft, height < byFar.jets[1]!)
-        const strands = 1 - gone(arcFar, byFar.loops)
-        loops.mesh.visible = strands > 0
-        loops.trim(gone(arcFar, byFar.strands))
-        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * gone(arcFar, byFar.strands), 0, open, since, opening.on && kind === 'terrain', calm, lifeCalmAt)
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid
