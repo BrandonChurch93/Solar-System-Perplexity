@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T13:44:55.130Z",
+ "pushed": "2026-11-25T14:04:03.020Z",
  "head": "7c0b8675839b1fc66617635ef42a34f30e3417f5",
- "note": "13:45 UTC: wedge take s2 in the three frames, before and after; rise slices of 7c0b8675 running; 3150 last",
+ "note": "14:05 UTC: wedge takes m2 and m3 (made detail, no canvas pieces) seen in frames: not good enough, a patch fill in the flow frame is next; chain on 7c0b8675: dive and rise b green, rise a rendering",
  "looks": [
+  {
+   "time": "2026-11-25T14:04:02.320Z",
+   "file": "20261125140402320-note-n7-3150-trio.jpg",
+   "source": "../work/r14/n7-3150-trio.jpg",
+   "kind": "note",
+   "label": "3150 final on 7c0b8675 beside the approved close image (match 6.113)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:04:01.662Z",
+   "file": "20261125140401662-note-m3-wide.jpg",
+   "source": "../work/r14/beyond/m3-wide.jpg",
+   "kind": "note",
+   "label": "top view of take m3 (not committed): no canvas pieces, grain along the circles about the storm",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:04:00.187Z",
+   "file": "20261125140400187-note-wdm3-crop-3034.jpg",
+   "source": "../work/r14/wdm3-crop-3034.jpg",
+   "kind": "note",
+   "label": "3034 crop: before above; below the wedge as made detail in the flow frame on bands carried along the circles (take m3, not committed): the left border still reads as a line",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T13:44:53.957Z",
    "file": "20261125134453957-note-n7-3150-trio.jpg",
@@ -182,30 +206,6 @@
    "source": "../work/r14/diag-6509.jpg",
    "kind": "note",
    "label": "3254 and a half lower left, as built, ground grid, weight of the canvas",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:45:01.216Z",
-   "file": "20261125114501216-note-nochart-6509.jpg",
-   "source": "../work/r14/nochart-6509.jpg",
-   "kind": "note",
-   "label": "3254 and a half lower left, as built beside the approved eye's canvas left out",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:45:00.535Z",
-   "file": "20261125114500535-note-td-plate-vs-chart.jpg",
-   "source": "../work/r14/td-plate-vs-chart.jpg",
-   "kind": "note",
-   "label": "top down, plates beside the approved eye's canvas on the ground",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:44:59.860Z",
-   "file": "20261125114459860-note-f3258-ll.jpg",
-   "source": "../work/r14/f3258-ll.jpg",
-   "kind": "note",
-   "label": "rise 3258 lower left full size, the straight borders",
    "stop": "jupiter"
   }
  ]
