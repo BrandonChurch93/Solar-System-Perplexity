@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T15:55:45.241Z",
+ "pushed": "2026-11-25T16:25:57.184Z",
  "head": "485d5807546cb45e3e66e3de6679c5b1bc182e50",
- "note": "eighth named 66c70ae73: 4860 beside approved and main, G17 0.544 (draft proxy), 90.7 s a draft frame at 1920; rise pairs 0.48 0.56 0.55 still over, causes on the sheet",
+ "note": "toward the ninth: where the 5.5 against main lie at 4860 (right plain 5.2, sky 1.8); trials on the far plain's level; G17 0.544 proxy; 28 s a preview frame",
  "looks": [
+  {
+   "time": "2026-11-25T16:25:55.911Z",
+   "file": "20261125162555911-note-plain-2x.jpg",
+   "source": "../../../../tmp/plain-2x.jpg",
+   "kind": "note",
+   "label": "4860 the plain at 2 times: approved above, tip below (G17 0.544 draft proxy; 90.7 s a draft frame at 1920, 28 s at the preview)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T16:25:54.634Z",
+   "file": "20261125162554634-note-pm-P0-P1-P2-P3-P4-P5.jpg",
+   "source": "../../../../tmp/pm-P0-P1-P2-P3-P4-P5.jpg",
+   "kind": "note",
+   "label": "4860 preview trials on the far plain beside approved and main: P0 tip, P1 lobe 0.9, P2 and share 0.7, P3 depth 0.13, P4 air law off (tool), P5 map alone (tool)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T15:55:38.738Z",
    "file": "20261125155538738-note-n8-pairs.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v2-six.jpg",
    "kind": "note",
    "label": "the third streamer as a thin veil by the slant path law (MAIL 1126 point 4): 4968, 4972, 4976 upper left at 2 times, before above, after below: the row of flecks is gone, a faint veil with threads stands there. The pieces at the bank's end (first streamer's tail) are NOT cured. 28 s a preview frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T15:25:05.314Z",
-   "file": "20261125152505314-note-n8-beside.jpg",
-   "source": "../../../../tmp/n8-beside.jpg",
-   "kind": "note",
-   "label": "4605 and 4860: approved, main (from the sheet of MAIL 1112), this tip on the merge of main aed412aeb with the veil and the low sky at 0.38. 4860: G17 median 0.544 by my draft reader, a proxy (bar 0.8, RED and named), mean absolute 28.439 (main 22.947 by the Builder's read): the far plain too dark, the eye without its pale spiral. 90.7 s the draft frame at 1920, 36.3 s the hold",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T14:51:29.570Z",
-   "file": "20261125145129570-note-h1-4605.jpg",
-   "source": "../../../../tmp/h1-4605.jpg",
-   "kind": "note",
-   "label": "trial, not taken: 4605 with the hold's sky turned to bring the band top right (H1): mean absolute against the approved 11.376 (the tip 7.542): worse; the hold keeps its aim",
    "stop": "neptune"
   }
  ]
