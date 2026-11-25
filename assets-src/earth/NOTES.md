@@ -5250,3 +5250,31 @@ SEEN (`/tmp/gl/k11/d1/h-crop.jpg`, `s-hold.jpg`): on 1755, 1836, 1848 and 1857 t
 SEEN on 1872 to 1894 (`/tmp/gl/k11/s-dive-1.jpg`, `s-dive-2.jpg`, frames of c2, which equal this state at 1872 and 1890 to the byte): the deck stays one body from above down into the far band. The towers of the close ground still come in over the map's flat clouds from about 1884 to 1890 (flat on 1883, standing with dark sides on 1887 to 1890): not cured, their footprints are not in the field.
 
 Reader on c2, 1872 to 1886 (`/tmp/gl/k11/pat-dive-a.log`): largest 0.19 from 1878, level step most 0.45, pop most 1.11. The render was stopped at 1894 for the clock.
+
+### 09:52 to 10:06 UTC: tests, commit ac5c5c1b, the dive on it
+
+Tests on the tree of the commit (`/tmp/gl/k8/t/`): tsc 0; vitest 52 files, 561 tests passed; tests/globe-cap.test.ts alone 24 passed, 39.80 s; the three GL files 15 passed, 335.14 s.
+
+Committed and pushed 09:59:46: ac5c5c1b3e3b3cbc5867634c633b1495bdca2664 on ba479450, stands on main b890fee7229d776161ce6de3c756c8d60338c55c. Looks pushed 10:00 (2362087911c35b7027d9887e3b95de2d1aa35995).
+
+Judged frames at draft (`/tmp/gl/k11/d1`), sha256: 1755 702cd1b62718445d499685a90906a78f92dc55ac2730e825549939f2d11cb300, 1857 747a7eccf28d77ea033671386074f023214b85fefc845d3f49864ac98ef1df7f, 2156 e6f8d2b7cbb669684dc23952b5c0103d859675eacc978cb367c5689b712df698, 2010 35772c08ce69916eaea6c35cf855060bb1f53d4330edab932dc69ec360e5e491. Against ba479450: 2156 162484 px, 41543 over 2, 24435 over 8, largest 237.
+
+2010 inside 5 degrees at the middle (x 800 to 1120, rows 358 down): against ba479450 18207 px differ, 882 over 2 levels, 0 over 8, largest 6, rows 358 to 398; against 29eea607 14113 px, 770 over 2, largest 6, rows 358 to 375. Cause not separated: the glint files measured on the plate with the deck, or the shade of the law reaching in.
+
+1857 against ba479450 by cells of 240 by 216 px: the px over 8 levels lie in x 720 to 1200, y 216 to 864, not under the deck alone; the stand law shades the specks from 5.4 degrees outward once the place has arrived.
+
+Dive (`/tmp/gl/k10/c2`: 1872 to 1894 from before the green channel, 1895 to 1910 on ac5c5c1b), reader `/tmp/gl/k8/pat.py` 1872 to 1902: values for 1872 to 1894, "n" for 1895 to 1902 (the reader needs more frames past the last than the 8 I had written down; the partial run to 1894 read only to 1878, so it needs 16). Largest 0.38 from 1891 at [120, 392]; frames over 0.45: 0; level step most 0.45; pop most 1.10. ba479450 read 0.46 at 1891, 0.48, 1.10.
+
+SEEN: sheets `/tmp/gl/k11/s-dive-1.jpg`, `s-dive-2.jpg`, `s-dive-3.jpg` (1872 to 1910, every frame at a quarter size): the deck is one body from above into the far band. Crops 1 to 1 of the middle of 1883 to 1890 (`/tmp/gl/k11/towers.jpg`): towers and shadows in every frame; I could not name a frame where one arrives there. The whole frame at 1 to 1 was not gone through.
+
+## 10:06 to 10:18 UTC: the rise on ac5c5c1b, STATE mail sent
+
+Rise at draft (`/tmp/gl/k11/r1`, 2106 to 2138, on ac5c5c1b), reader `/tmp/gl/k8/pat.py` 2106 to 2130: values for 2106 to 2122, "n" for 2123 to 2130. Largest 0.26 from 2113 at [204, 320]; frames over 0.45: 0; level step most 0.36; pop most 1.14. ba479450 read 0.28 from 2117, 0.56, 1.04: the pop is higher than before, under the limit of 1.2.
+
+SEEN: sheets `/tmp/gl/k11/s-rise-1.jpg`, `s-rise-2.jpg`, `s-rise-3.jpg` (every frame, 480 px a frame, not 1 to 1): the deck is one body from the far band up to the view from above, no frame named where it changes; the strip on the limb at the right top with its green and yellow tint stands on 2114 to 2117 as before; from 2130 on the deck is the widest and whitest body of the frame, the same fault as at 1755. Frames 2139 to 2174 not rendered on this state.
+
+1755, px with the darkest channel over 150: the deck (x 853 to 990, y 384 to 540, 4134 px) mean RGB 216.2 221.6 211.8; the hurricane (x 660 to 800, y 400 to 540) 195.9 196.6 190.5; the cloud off the east coast 186.2 190.8 186.7.
+
+STATE mail (not NAMED) to /root sent 10:16 sandbox clock (about 10:20 on the Builder's clock), text kept at `/tmp/gl/k11/mail.txt`, with the pair of 2010 (whole, left, middle, right), the pair of 1755 (crop, whole, sheet), the crop of 1857, one sheet of the dive and one of the rise. Its own list of what is still wrong, worst first: 1755 deck as the brightest, plainest cloud hiding Yucatan; 2010 middle too near, right puffy, left from x 350; green covers 0.31 of the stand raster; towers' footprints not in the field; 882 px inside 5 degrees; Sun of the bake against the globe's Sun across the seam at 7.4 degrees not measured; field-deck.png not proved by a full deck.py run; the untouched items. Not run on this state: handover tool, the tool's smooth lines at rate 2, step in place, gate, review tier, finals.
+
+Next bake: the deck's tone and break from above down to the map's own cloud, the middle cleared to row 260, the right crisp, the left from x 100; the green cut to the sheet's own cover; then the towers' footprints into the field.
