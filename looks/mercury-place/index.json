@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T22:56:12.490Z",
+ "pushed": "2026-11-25T23:05:07.691Z",
  "head": "6591d862db3bc824abcce8ddf9fabd3611294bda",
- "note": "22:57 rise 1009 to 1020 whole frames on the merged tree; chain tn at 85 of 207; local reading inside the crater's box: law 0.26, name 0.61, set light alone 0.20",
+ "note": "23:06 rate 2 on the rise under the law: 989 to 998 green (0.24 at most), 1009.5 to 1014 the old red (0.64), chain tn at 100 of 207",
  "looks": [
+  {
+   "time": "2026-11-25T23:05:06.363Z",
+   "file": "20261125230506363-note-tn-rise-1009red.jpg",
+   "source": "../../../../tmp/m/tn-rise-1009red.jpg",
+   "kind": "note",
+   "label": "rise 1007 to 1018, the place of the open red 1009 to 1014 (rate 2 rows 0.49 to 0.64, the name's rows too): the hold's gold rims come up over the grey ground and small bright ticks stand on the night side at 1008.5 to 1013.5; not the crater",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T23:05:05.268Z",
+   "file": "20261125230505268-note-tn-rise-cr2.jpg",
+   "source": "../../../../tmp/m/tn-rise-cr2.jpg",
+   "kind": "note",
+   "label": "rise 1007 to 1023 at rate 2, the crater at 2 times under the law: the thin ring is in place from 1007 and sharpens to 1015, no step",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T23:05:04.098Z",
+   "file": "20261125230504098-note-tn-rise-989.jpg",
+   "source": "../../../../tmp/m/tn-rise-989.jpg",
+   "kind": "note",
+   "label": "rise 989 to 998 at rate 2, whole master frames under the law: the crater keeps the set's light all the way; rate 2 rows 0.08 to 0.24 (the name 0.48 to 0.51 at 989 to 992)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T22:56:11.157Z",
    "file": "20261125225611157-note-tn-rise-1009.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/cr-two.jpg",
    "kind": "note",
    "label": "rise 995, 1000, 1005, 1010, 1016, the crater at 2 times (preview size): top the name's light, bottom the set's light at every height; the turn of MAIL 1289 runs between these two",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T20:48:15.454Z",
-   "file": "20261125204815454-note-c717.jpg",
-   "source": "../../../../tmp/m/c717.png",
-   "kind": "note",
-   "label": "the name at 717, crater at 4 times: the ring of 615 is already faint here (turn work, MAIL 1289)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T20:48:14.746Z",
-   "file": "20261125204814746-note-rise-s15-b.jpg",
-   "source": "../../../../tmp/m/rise-s15-b.jpg",
-   "kind": "note",
-   "label": "s15 scratch proof: rise 987 to 992",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T20:48:13.777Z",
-   "file": "20261125204813777-note-rise-s15-a.jpg",
-   "source": "../../../../tmp/m/rise-s15-a.jpg",
-   "kind": "note",
-   "label": "s15 scratch proof: rise 981 to 986 whole frames, the set's light at every height (not named: ring lost at 615)",
    "stop": "mercury"
   }
  ]
