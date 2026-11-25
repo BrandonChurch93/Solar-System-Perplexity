@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T11:09:35.136Z",
+ "pushed": "2026-11-25T11:35:49.010Z",
  "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "wall law with rock by code, first run: facets gone, shadowed wall still bare, from above worm lines; not committed",
+ "note": "wall law with rock m4 pairs (beds read as contour stripes from above, not met), stair line control, tint at 2460 2468 2476 for (b) (c)",
  "looks": [
   {
-   "time": "2026-11-25T11:09:22.489Z",
-   "file": "20261125110922489-note-triangle-plate.jpg",
-   "source": "out/work/place/k9/triangle-plate.jpg",
+   "time": "2026-11-25T11:35:48.435Z",
+   "file": "20261125113548435-note-bc-setoff.jpg",
+   "source": "out/work/place/m4/bc-setoff.jpg",
    "kind": "note",
-   "label": "pale triangle traced: 0.7 plate beside body_share, the far end of the close set's ground laid from above",
+   "label": "(b) and (c) crops, set on left and set off right: equal, so the earlier picture is plates",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:09:21.575Z",
-   "file": "20261125110921575-note-see-0p3.jpg",
-   "source": "out/work/place/m1/see-0p3.jpg",
+   "time": "2026-11-25T11:35:47.909Z",
+   "file": "20261125113547909-note-c-2468.jpg",
+   "source": "out/work/place/m4/c-2468.jpg",
    "kind": "note",
-   "label": "0.3 plate whole, state beside wall law with rock by code, first run: pale cloudy wall with etched lines",
+   "label": "(c) crop (504, 844) at 1 to 1: 2468 state, 2468 tinted, 2472 state, 2476 tinted (set)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:09:20.624Z",
-   "file": "20261125110920624-note-above-try.jpg",
-   "source": "out/work/place/m2/above-try.jpg",
+   "time": "2026-11-25T11:35:47.368Z",
+   "file": "20261125113547368-note-b-2460.jpg",
+   "source": "out/work/place/m4/b-2460.jpg",
    "kind": "note",
-   "label": "0.7 plate from above at 1 to 1, state beside wall law with rock by code: shadowed wall times 3 over lit wall times 1.5 (worm lines of the take's grain, beds weak)",
+   "label": "(b) crop (780, 380) at 1 to 1: 2460 state, 2460 tinted, 2464 state, 2468 state",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T11:09:19.503Z",
-   "file": "20261125110919503-note-wall-2692.jpg",
-   "source": "out/work/place/m1/wall-2692.jpg",
+   "time": "2026-11-25T11:35:46.836Z",
+   "file": "20261125113546836-note-Y2476-small.jpg",
+   "source": "out/work/place/m4/Y2476-small.jpg",
    "kind": "note",
-   "label": "2692 far wall at 1 to 1, state over wall law with rock by code, first run (not committed)",
+   "label": "2476 plates tinted: nothing tinted, the whole frame is the set, one frame before T",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T10:44:35.219Z",
-   "file": "20261125104435219-note-wall-2692.jpg",
-   "source": "out/work/place/k9/wall-2692.jpg",
+   "time": "2026-11-25T11:35:46.313Z",
+   "file": "20261125113546313-note-Y2468-small.jpg",
+   "source": "out/work/place/m4/Y2468-small.jpg",
    "kind": "note",
-   "label": "2692 far wall 1 to 1: state against wall law trial 2",
+   "label": "2468 plates tinted: crop (c) at (504, 844) is the 0.7 plate going over to 0.3; untinted middle is the set",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T10:44:34.661Z",
-   "file": "20261125104434661-note-native-2692.jpg",
-   "source": "out/work/place/k9/native-2692.jpg",
+   "time": "2026-11-25T11:35:45.782Z",
+   "file": "20261125113545782-note-Y2460-small.jpg",
+   "source": "out/work/place/m4/Y2460-small.jpg",
    "kind": "note",
-   "label": "2692 native pair: state against wall law trial 2 (walls lit from the heights, layers; body kept): shadowed walls smooth and dark, not adopted",
+   "label": "2460 plates tinted (0.3 red, 0.7 green, 1.6 blue, 3.8 yellow, 8.5 cyan): crop (b) at (780, 380) is the 1.6 plate",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T10:39:38.910Z",
-   "file": "20261125103938910-note-see-0p7-1to1.jpg",
-   "source": "out/work/place/k9/see-0p7-1to1.jpg",
+   "time": "2026-11-25T11:33:13.085Z",
+   "file": "20261125113313085-note-stair-2466.jpg",
+   "source": "out/work/place/m4/stair-2466.jpg",
    "kind": "note",
-   "label": "0.7 deg plate 1 to 1, take against wall law trial 2: etched contour lines, synthetic",
+   "label": "control 2466 lower left: state above, paint of 0.7 and 1.6 plates low passed below, heights unchanged: stair lines gone, so they are paint",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T10:39:38.356Z",
-   "file": "20261125103938356-note-see-0p7.jpg",
-   "source": "out/work/place/k9/see-0p7.jpg",
+   "time": "2026-11-25T11:33:12.515Z",
+   "file": "20261125113312515-note-whole-0p7.jpg",
+   "source": "out/work/place/m4/whole-0p7.jpg",
    "kind": "note",
-   "label": "0.7 deg plate, take against wall law trial 2 (walls lit from heights, layers, gullies), seen from above",
+   "label": "0.7 plate whole, state left, wall law with rock right: walls stand as pale striped ribbons",
    "stop": "mars"
   }
  ]
