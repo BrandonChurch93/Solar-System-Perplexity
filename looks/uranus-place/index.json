@@ -1,9 +1,85 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T00:13:35.199Z",
+ "pushed": "2026-11-25T00:37:12.498Z",
  "head": "45f989100869dbc2c216814e93effed450162b7a",
- "note": "second commit pushed as 45f98910 (not yet NAMED, proofs running): rise 4440 to 4454 every frame; open and seen: hoops brighter than the hold's rings",
+ "note": "pictures part of the rise is RED on 45f98910 (pop 1.31 at 4411 to 4413, pattern 0.70 on the horizon line); panels and native crops; dark pixels on the limb 4402 to 4404 seen",
  "looks": [
+  {
+   "time": "2026-11-25T00:37:11.434Z",
+   "file": "20261125003711434-note-limb4404.jpg",
+   "source": "../../../../tmp/parA/limb4404.jpg",
+   "kind": "note",
+   "label": "SEEN, open: single dark pixels on the limb at 4402 to 4404 (times 2), gone at 4404 + 1/2",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T00:37:10.175Z",
+   "file": "20261125003710175-note-pop4411-crop.jpg",
+   "source": "../../../../tmp/parA/pop4411-crop.jpg",
+   "kind": "note",
+   "label": "native size, lower right 4408 to 4415 + 1/2 every half frame: the ground's light lifts in place by the eye's height (the pop red), open",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T00:37:09.127Z",
+   "file": "20261125003709127-note-pat4407-crop.jpg",
+   "source": "../../../../tmp/parA/pat4407-crop.jpg",
+   "kind": "note",
+   "label": "native size, the horizon at 4404 to 4411 where the pattern reads red",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T00:37:08.311Z",
+   "file": "20261125003708311-note-pat4392-crop.jpg",
+   "source": "../../../../tmp/parA/pat4392-crop.jpg",
+   "kind": "note",
+   "label": "native size, the horizon at 4389 to 4403 every second frame: the far ground comes out of the limb's haze as the eye climbs (the pattern red)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T00:37:07.213Z",
+   "file": "20261125003707213-note-rise-changes.jpg",
+   "source": "../../../../tmp/parA/rise-changes.jpg",
+   "kind": "note",
+   "label": "pictures part of the rise, RED: the pattern changes in place by 0.70 against 0.45, always on the horizon line (the tool's own panel)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T00:37:05.867Z",
+   "file": "20261125003705867-note-rise-pops.jpg",
+   "source": "../../../../tmp/parA/rise-pops.jpg",
+   "kind": "note",
+   "label": "pictures part of the rise, RED: the four largest pops 4411 + 1/2 to 4413 (1.31 against 1.2), the tool's own panel",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T00:35:48.175Z",
+   "file": "20261125003548175-job-frame-04110.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.dive frame 4110, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4110,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-25T00:28:02.754Z",
+   "file": "20261125002802754-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-25T00:09:51.825Z",
    "file": "20261125000951825-note-rise-2.jpg",
@@ -221,88 +297,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "03b89560bc9f479b"
-  },
-  {
-   "time": "2026-11-24T23:38:59.553Z",
-   "file": "20261124233859553-frame-f4137.jpg",
-   "source": "out/work/u/r45/fin4/f4137.png",
-   "kind": "frame",
-   "label": "uranus.dive frame 4137, final tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4137,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "03b89560bc9f479b"
-  },
-  {
-   "time": "2026-11-24T23:36:24.583Z",
-   "file": "20261124233624583-frame-f4290.jpg",
-   "source": "out/work/u/r45/fin4/f4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "03b89560bc9f479b"
-  },
-  {
-   "time": "2026-11-24T23:34:58.349Z",
-   "file": "20261124233458349-note-d253.jpg",
-   "source": "../../../../tmp/parA/d253.jpg",
-   "kind": "note",
-   "label": "d253: 4130 (top) and 4186 (bottom); left the frame, middle uhd against master times 6, right web against full times 6",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:34:57.483Z",
-   "file": "20261124233457483-note-d253-4130.jpg",
-   "source": "../../../../tmp/parA/d253-4130.jpg",
-   "kind": "note",
-   "label": "d253 proof, dive frame 4130 at draft, the storm where the first patch level arrives: 1920 by 1080 and 3840 by 2160, full set and web set",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:34:56.512Z",
-   "file": "20261124233456512-note-pair4035.jpg",
-   "source": "../../../../tmp/parA/pair4035.png",
-   "kind": "note",
-   "label": "4035 at 1 to 1, the storm: final of efaa5f82, of e9e2c3a7 (first named), of the second commit (tops law by ground only; 4280 pixels differ from the first named, largest 51)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:34:12.495Z",
-   "file": "20261124233412495-frame-f4035.jpg",
-   "source": "out/work/u/r45/fin4/f4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "03b89560bc9f479b"
-  },
-  {
-   "time": "2026-11-24T23:16:23.709Z",
-   "file": "20261124231623709-note-dive-2.jpg",
-   "source": "../../../../tmp/y2/dive-2.jpg",
-   "kind": "note",
-   "label": "dive 4170 to 4199 every frame, draft",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:16:22.903Z",
-   "file": "20261124231622903-note-dive-1.jpg",
-   "source": "../../../../tmp/y2/dive-1.jpg",
-   "kind": "note",
-   "label": "dive 4140 to 4169 every frame, draft: the engine's own band crosses the gap left of the limb at 4141 to 4148 (named, open)",
-   "stop": "uranus"
   }
  ]
 }
