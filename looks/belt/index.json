@@ -1,9 +1,33 @@
 {
  "folder": "belt",
- "pushed": "2026-11-25T13:37:27.164Z",
- "head": "c49bb248aea5b2abe88e90c9119aaff886e85a6a",
- "note": "c49bb248 with sun_builder's field (local copy, no arcade): pairs at 470, 471",
+ "pushed": "2026-11-25T14:29:10.193Z",
+ "head": "f8da2c208c12609ebcf71ec00731920f2a511861",
+ "note": "far Sun at sun.dir in dives and rises: before over after, f8da2c20",
  "looks": [
+  {
+   "time": "2026-11-25T14:29:09.430Z",
+   "file": "20261125142909430-note-previews-714-720-726-732-before-over-after-truesun.jpg",
+   "source": "../../../../tmp/farsun/send/previews-714-720-726-732-before-over-after-truesun.jpg",
+   "kind": "note",
+   "label": "dive 714 to 732 previews, before over after",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:29:08.663Z",
+   "file": "20261125142908663-note-pair-1016-before-over-after-truesun-film-size.jpg",
+   "source": "../../../../tmp/farsun/send/pair-1016-before-over-after-truesun-film-size.jpg",
+   "kind": "note",
+   "label": "1016 before over after the far Sun stands at sun.dir",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:29:07.880Z",
+   "file": "20261125142907880-note-pair-717-before-over-after-truesun-film-size.jpg",
+   "source": "../../../../tmp/farsun/send/pair-717-before-over-after-truesun-film-size.jpg",
+   "kind": "note",
+   "label": "717 before over after the far Sun stands at sun.dir (f8da2c20 with the hunk laid)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T13:37:18.041Z",
    "file": "20261125133718041-note-4x-loops-upper-right-470-471-over-471globe-471far.jpg",
@@ -40,27 +64,6 @@
    "kind": "note",
    "label": "471 at the film's size: the stop's globe forced to stay above, the far Sun forced to stand in below, wearing the stop's corona and prominences",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T11:15:44.667Z",
-   "file": "20261125111544667-note-disc-495-520-540-615-approved.jpg",
-   "source": "../../../../tmp/farsun/send/disc-495-520-540-615-approved.jpg",
-   "kind": "note",
-   "label": "the disc at 495, 520, 540, 615 and the approved image (drafts)"
-  },
-  {
-   "time": "2026-11-25T11:15:42.660Z",
-   "file": "20261125111542660-note-faces-480-495-520-560-620.jpg",
-   "source": "../../../../tmp/farsun/send/faces-480-495-520-560-620.jpg",
-   "kind": "note",
-   "label": "faces at 480, 495, 520, 560 (drafts)"
-  },
-  {
-   "time": "2026-11-25T11:15:40.247Z",
-   "file": "20261125111540247-note-one-body-465-470-475-480-485-495.jpg",
-   "source": "../../../../tmp/farsun/send/one-body-465-470-475-480-485-495.jpg",
-   "kind": "note",
-   "label": "465, 470, 475 (top), 480, 485, 495 (bottom): the far Sun wears the stop's face by the burn (previews)"
   }
  ]
 }
