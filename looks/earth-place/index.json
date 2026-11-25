@@ -1,9 +1,39 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T20:24:18.674Z",
+ "pushed": "2026-11-25T20:51:48.300Z",
  "head": "20ad27c24dd51c774c597e4cb2670ddfd97bf087",
- "note": "preview of the cure: ground round the canvas, one sea tone law; not baked",
+ "note": "pattern control: with the close ground off the quick reader's pattern falls from 0.50 to 0.61 at 1858 to 1861 to 0.18 to 0.24; the ground brings a brighter glint, pale air and a dark blob; not cured yet",
  "looks": [
+  {
+   "time": "2026-11-25T20:51:47.256Z",
+   "file": "20261125205147256-note-look-ground.jpg",
+   "source": "../../../../tmp/gl/k17/P2/look-ground.jpg",
+   "kind": "note",
+   "label": "control 1860 1864 1868 1870 draft shutter closed: close ground off, as is, difference times 4",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T20:40:05.278Z",
+   "file": "20261125204005278-sheet-earth-rise-top.jpg",
+   "source": "out/work/handover/earth-rise-top.png",
+   "kind": "sheet",
+   "label": "earth rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2100), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2174,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T20:37:04.820Z",
+   "file": "20261125203704820-compare-earth-rise-step-in-place.jpg",
+   "source": "out/work/handover/earth-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "earth rise, the largest step of the level in place (2.52): frame 2171, frame 2172, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2172
+  },
   {
    "time": "2026-11-25T20:24:17.382Z",
    "file": "20261125202417382-note-prev-after-crop2.jpg",
@@ -29,17 +59,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-25T20:18:59.722Z",
-   "file": "20261125201859722-compare-earth-rise-sides.jpg",
-   "source": "out/work/handover/earth-rise-sides.png",
-   "kind": "compare",
-   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
-  },
-  {
    "time": "2026-11-25T20:18:25.929Z",
    "file": "20261125201825929-sheet-earth-dive-top.jpg",
    "source": "out/work/handover/earth-dive-top.png",
@@ -60,22 +79,6 @@
    "stop": "earth",
    "segment": "earth.dive",
    "frame": 1890
-  },
-  {
-   "time": "2026-11-25T19:57:23.590Z",
-   "file": "20261125195723590-note-disc-1856-1870.jpg",
-   "source": "../../../../tmp/gl/k16/E/disc-1856-1870.jpg",
-   "kind": "note",
-   "label": "20ad27c2 draft 1856 to 1870 every second frame at pixel 970, 509: the place coming in",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T19:57:22.868Z",
-   "file": "20261125195722868-note-look-1890.jpg",
-   "source": "../../../../tmp/gl/k16/D/look-1890.jpg",
-   "kind": "note",
-   "label": "layer control 1890, same eight",
-   "stop": "earth"
   }
  ]
 }
