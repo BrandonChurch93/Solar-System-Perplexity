@@ -6182,3 +6182,68 @@ NAMED at 12:00 UTC stands; it goes into Saturn's round 3 of 3, your last."
   - Looks pushed 11:38 with the 3720 pictures and the tool's sheet of the rise.
   - Next: the dive's lines when job 2 ends (about 12:05), then job 3 (finals 3567 and 3866, G17, place,
     handover, G13, gate, parity, path), then vitest alone. A mail to the Builder at each.
+- 11:39 UTC. MAIL 1061 from the Builder, verbatim:
+  "MAIL 1061 from the Builder (/root), 11:39 UTC. To saturn_coder, answer to NAMED
+  6e96b4cb11c1145aa3cab3792832485152f571b2. 1. Received as the second NAMED of your round 3 (the first was
+  88ba2385). Proofs are queued on my machines on that sha (jobs sn6-01 to sn6-09): dive and rise in two
+  parts each by my reader, path and parity, the measure part finals, the landing report, the final stills
+  3465 and 3720 with hashes, and the units with the gate lines. Results go to you as they come. 2. By d186
+  a red NAMED is followed by the next commit within 90 minutes, and the third NAMED goes into the round as
+  it stands. The cut of batch 10 is laid after the running round start ends (about 13:15 UTC). It takes
+  the Saturn NAMED that stands then: 6e96b4cb, or a newer one if you name it by 13:10. Round 3 is Saturn's
+  last; its reds go to the jury as severe issues. 3. Your finding on the rise (two fine patterns, ring
+  plane and globe, sliding over each other while the sheet lets the globe through) needs one control
+  before any cure, because a thin sheet in front of a globe does show two patterns that slide under a
+  moving camera, and that is true parallax, not a fault of the picture. Run the window 3798 to 3830 with
+  the cover held at one fixed share (its value at 3811) on every frame. If the pattern line stays red with
+  the cover held, the red is the reader's (it carries one depth per pixel), and I pass it to
+  harness_builder with your frames; do not take detail out of either body to please it. If it turns green,
+  the red is the pace of the cover and the cure is yours: the share by the path of the view ray through
+  the sheet (its depth over the sine of the ray's angle to the plane, per ray), which is how a real sheet
+  goes from closed at a grazing view to open from above. Send the number with your next mail. 4. The pop
+  1.21 at 3872 + 1/2 sits in the stars and is the sky's (sky_builder has it, MAIL 1012). Not yours to
+  chase. 5. The departure of the contact line (y 733 against 622) and the open items of your list F go to
+  the jury as they stand, in your words."
+- 11:47 UTC. The control of MAIL 1061 item 3, started at once.
+  - The dive's lines on the named tree were running (frames to k7218 of about k7300 rendered). Stopped,
+    because the control decides whether there is a cure to build before 13:10 and the dive's frames keep
+    (the tool reuses a frame whose stamp fits the tree; the worktree's frames are left in place). The
+    chain r68 is stopped with it; its third job never started. The dive goes on from k7219 after the
+    control.
+  - New job script /tmp/v/job_n.sh: job_v.sh with the stop folder taken from SRC, so the proofs no longer
+    read the repo's working folder. /tmp/v/named/src/stops/saturn is the folder of 6e96b4cb (git archive).
+  - The control tree /tmp/v/ctl/saturn: the folder of 6e96b4cb with skim.json inner.cover.share set to
+    0.7037 at every knot and inner.by.depth to 0.02 at every knot (their values at the lens's height of
+    3811, 0.439). Nothing else differs (checked by comparing the two JSON files without those two lists).
+    Not committed: a control, not a tree.
+  - Run: SRC=/tmp/v/ctl/saturn KEEP=1 SLICE=7596-7680 /tmp/v/job_n.sh /tmp/v/r69 slice (the rise's
+    pictures at rate 2, draft, capture frames 7596 to 7680, film frames 3798 to 3840; the pattern at 3830
+    needs 3838). Engine 64c4ccb.
+  - The lens over the ring plane by out/scratch/lens.ts (h height, rho radius in the plane) and the sine of
+    the view ray's angle to the plane at the near point of radius 1.25: 3465 2.326, 5.050, 0.52; 3567
+    2.048, 4.464, 0.54; 3600 1.013, 3.776, 0.37; 3612 0.734, 3.536, 0.31; 3628 0.544, 3.296, 0.26; 3660
+    0.471, 3.044, 0.25; 3720 0.362, 2.689, 0.24; 3760 0.318, 2.466, 0.25; 3792 0.364, 2.495, 0.28; 3806
+    0.416, 2.592, 0.30; 3814 0.460, 2.655, 0.31; 3822 0.568, 2.775, 0.35; 3830 0.760, 2.971, 0.40; 3836
+    0.966, 3.157, 0.45; 3852 1.681, 3.784, 0.55; 3866 2.282, 4.576, 0.57. Through the whole skim the sine
+    stays 0.24 to 0.26 while the height falls from 0.544 to 0.318; hold and far look stand at 0.48 to
+    0.57. So the true path through the sheet grows only by a factor 2 from the hold to the skim: a sheet
+    that lets the globe through at the hold (18 in 100 covered) covers 33 in 100 at 3720 by its true
+    path. A share that closes the sheet at 3720 is steeper than a true sheet's, by height or by ray.
+- 11:57 UTC. While the control renders (about 13 s a frame in the low part of the rise; due about 12:12):
+  the cure the Builder names for the case that the control turns green is written as a trial in the
+  working tree, not committed: the cover by the view ray's own angle to the plane in place of the lens's
+  height.
+  - sheet.ts: uniform uOpen (one number a frame) gives way to openBy(mu), smoothstep over the sine of the
+    ray's angle to the plane between skim.json inner.cover.sine [0.30, 0.42]; keptPast takes the sine; the
+    far look, the near look and the shaded plane read it per pixel. Sheet.set loses its third argument;
+    grade.ts coverShare and the 44 knots of inner.cover go. tsc clean.
+  - Why these two numbers: the rays to the thin ice in front of the globe (radius up to 1.53) stand at
+    0.21 to 0.30 at 3720, so 3720 stays closed; at 3567 and 3866 and wherever the kept set draws no ray in
+    front of the globe stands under 0.42 (the lowest are the rays through the plane at the globe's limb:
+    0.426 at 3567, 0.455 at 3866), so those frames keep their arithmetic.
+  - What it changes by design: the first part of the skim (3628 to 3719) is closed all through, since the
+    sine there is 0.24 to 0.26; on the dive the sheet closes between about 3590 and 3613; on the rise each
+    place opens as its own ray steepens, the place at radius 1.4 between 3806 and 3826.
+  - What I expect, said before the reading: the same red on the rise. Each place still goes from streaks
+    to the globe within about 20 frames, the pace the lens sets, and three paces of the share have read
+    red already. It is rendered only if the control turns green, as MAIL 1061 says.
