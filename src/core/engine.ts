@@ -390,7 +390,7 @@ export class Engine {
       const glare = this.director?.glareOf?.(mid)
       const sun = glare ? { ...shot.sun, dir: glare } : shot.sun
       this.sky.setTerrain(shot.skyShare === undefined ? null : shot.skyGlow < 1 ? shot.skyShare : 0)
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open)
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open, shot.skyQuaternion)
       if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, base, sun)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()
