@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T11:38:59.128Z",
+ "pushed": "2026-11-25T11:45:42.540Z",
  "head": "d69b8640fb1f481dbb58cf26cb831f3bd2ecd392",
- "note": "Measurements only for MAIL 1032 a and b, nothing changed in the film. Mercury limb: the real 0.2 goes to 0.07 with the patches off and to 0.00 with the limb curve and brim off as well; relief does nothing there. Mars: red by true depth as well.",
+ "note": "measurement only: limb at Mars 2412, reader 0.21 on unchanged ground, real pair 0.011",
  "looks": [
+  {
+   "time": "2026-11-25T11:45:41.874Z",
+   "file": "20261125114541874-note-mars-2412-carry.jpg",
+   "source": "../m1032/mars-2412-carry.png",
+   "kind": "note",
+   "label": "Mars 2412 right limb: carry.py with the ball carries the moon as sky",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T11:45:41.223Z",
+   "file": "20261125114541223-note-mars-4824-maps.jpg",
+   "source": "../m1032/mars-4824-maps.jpg",
+   "kind": "note",
+   "label": "Mars 2412 limb: frame, 8 frames later, reader, real pair, carry.py with the ball (the moon), reader by the sphere",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T11:38:58.511Z",
    "file": "20261125113858511-note-chart-mars.jpg",
@@ -50,22 +66,6 @@
    "source": "../m1005/chart-limb.png",
    "kind": "note",
    "label": "MAIL 1005 Mercury dive limb 716 to 726: reader with its flows against the same pair carried by the sphere",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:54:15.587Z",
-   "file": "20261125095415587-note-limb-722.jpg",
-   "source": "../m1005/limb-722.png",
-   "kind": "note",
-   "label": "MAIL 1005, Mercury dive frame 722, lower right limb: the later frame carried back by the sphere and by the reader's flows; the reader on the real pair, an exact carry, and the reader on one picture foreshortened",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:33:17.450Z",
-   "file": "20261125093317450-note-sheet-1420.jpg",
-   "source": "../m1005/sheet-1420.png",
-   "kind": "note",
-   "label": "MAIL 1005 first look, Mercury dive k 1420 (film 710): pattern change by the reader, by an exact carry, and the reader on one picture foreshortened",
    "stop": "mercury"
   }
  ]
