@@ -83,7 +83,7 @@
     "azimuthDeg": 130
   },
   "look": {
-    "note": "Numbers of the shader in clouds.ts. shell: lowest and highest height of the layer the march runs in. march: slack added to the slope of the ray when a step is sized by the height over the ground, least step in pixel footprints, a hit counts under this many footprints, most steps. detail: the function detail is a field of rounded tops made per wave length (cells with one seeded top each, each wave turned against the last): the largest wave in units, how much a top is brighter than the crease beside it, a wave may be this many pixels of the canvas at most (the scale the laid back image resolves at that spot, the mean of across and along its view), and this many pixel footprints at least. detailLook: the height a top stands over the mean, power by which a wave's slope falls with its length, least roughness, most change of brightness. detailTone: how much a slope toward the Sun's azimuth lights a top. foot: least cosine between ray and ground in the footprint, the footprint is cut into taps when it is longer than this times its width, most taps. blend: share of a height map's half width where it starts to give way to the next and where it ends. join: the same for the plates. trust: the image field is shown fully while the smear of a texel across the footprint of a 1080th of the frame height (a pixel of the 16 by 9 master, whatever the format) is under trust[0] such footprints and not at all over trust[1]; trust[2] = 1 takes the image field away (a check of the plates alone). The two numbers are set so wide that the image field is never given up by the angle of view: the ground it covers has one look from every side, and what the angle shows is its own paint laid flat. stretch: a texel may be enlarged this many times before the lookup is widened, most change of tone the plates' own detail may add to a widened lookup (1 = none), most widening, least sine between the fit camera's ray and the ground. anisotropy: taps of the texture filter.",
+    "note": "Numbers of the shader in clouds.ts. shell: lowest and highest height of the layer the march runs in. march: slack added to the slope of the ray when a step is sized by the height over the ground, least step in pixel footprints, a hit counts under this many footprints, most steps. foot: least cosine between ray and ground in the footprint, the footprint is cut into taps when it is longer than this times its width, most taps (the haze). blend: share of a height map's half width where it starts to give way to the next and where it ends. join: the same for the levels of the guide. anisotropy: taps of the texture filter. cloud: the detail made by code, see its own note.",
     "shell": [
       -0.45,
       0.4
@@ -94,33 +94,9 @@
       0.25,
       240
     ],
-    "detail": [
-      0.4,
-      0.12,
-      3.0,
-      2.0
-    ],
-    "detailLook": [
-      0.7,
-      0.5,
-      0.25,
-      0.3
-    ],
     "blend": [
       0.75,
       0.95
-    ],
-    "trust": [
-      50.0,
-      100.0,
-      0,
-      0
-    ],
-    "stretch": [
-      1.5,
-      1.0,
-      4,
-      0.001
     ],
     "join": [
       0.88,
@@ -132,7 +108,48 @@
       4
     ],
     "anisotropy": 16,
-    "detailTone": 0.12
+    "cloud": {
+      "note": "The detail made by code: everything finer than the guide's cut. One field of rounded tops per wave length and per age of the wound coordinates (deck.json life.flow.wound): in every cell one top, alive between its forming and its dissolving. waveUnits: the largest wave; octaves: how many halvings of it there may be. leastFeet: the smallest wave drawn, in footprints of the pixel as it lies in the wound coordinates; fade: the wave, in the same measure over leastFeet, from which a wave has its full strength. taps: the most places along a drawn out footprint at which the field is read. fall: the power by which the strength of a wave falls with its length under the largest. tops: how much brighter a top is than the mean, in the logarithm of the light per unit of the field. slope: the same for a slope of one toward the Sun's azimuth; the slope is divided by the stretch of the wound coordinates, so a form drawn out to a thread is as low as it is narrow. tint: per channel, what is added to tops for the colour, so tops are paler and lanes deeper than the guide. ages: the weight of each age. lifeSeconds: the least time from forming to dissolving; a wave of lifeWaveUnits lives twice as long, a cell up to twice its wave's time. octaveTurn and octaveShift, ageTurn and ageShift: the turn in radians and the shift in cells between the fields of two neighbouring waves and of two ages, so none repeats another. cell: reach is the radius of a top in cells, jitter the share of the cell over which its centre is free. field: the mean and the variance of the field of one wave and the variance of its slope along one axis, measured by assets-src/jupiter/deck/puffs.py; the mean is taken off and the variance keeps the mean light of the ground the same with and without detail.",
+      "waveUnits": 0.5,
+      "octaves": 10,
+      "leastFeet": 2.0,
+      "fade": 1.6,
+      "taps": 8,
+      "fall": 0.15,
+      "tops": 0.17,
+      "slope": 0.08,
+      "tint": [
+        -0.08,
+        0.0,
+        0.16
+      ],
+      "ages": [
+        1.0,
+        0.85,
+        0.7
+      ],
+      "lifeSeconds": 16,
+      "lifeWaveUnits": 0.1,
+      "octaveTurn": 0.6,
+      "octaveShift": [
+        17.3,
+        -9.1
+      ],
+      "ageTurn": 1.3,
+      "ageShift": [
+        5.7,
+        3.1
+      ],
+      "cell": {
+        "reach": 0.75,
+        "jitter": 0.5
+      },
+      "field": {
+        "mean": 0.2353,
+        "variance": 0.0564,
+        "slopeVariance": 0.6068
+      }
+    }
   },
   "air": {
     "note": "The air between the camera and the deck, written by deck/air.py: one layer of haze over the deck, as thick as the eye of the approved view stands high (deck-fields.json view.eye) and equally dense everywhere. The share of the plates' light that comes through is exp(-layer.per times the length of the ray's path through the layer). From an eye at or above the layer's top that length follows from the sine of the angle between the ray and the ground at the point alone, and the eye is never under it (the surface view flies at that height or above), so the table is kept by that sine. The light the air adds (by that sine and by the turn of the ray away from the Sun's azimuth, mirrored) is what the cell means of the approved view have over that share of the plates' cell means, never less than 0. layer.per: the layer's strength for one unit of path. layer.flat: from the first knot at or over this sine downwards both tables are held. At every height those sines lie in the last pixels under the limb (at frame 3037 every sine under 0.056 lies within 10 px of it), and a table that still changes there draws its own profile over the far ground. sinRange: the sines of the first and last knot, spaced by ratio. knots: count over the sine, count over the turn from 0 to 180 degrees. clear: between these sines the air ends, so a steep ray sees the plates as they are. minTexels: texels of the view chart a cell needs. smooth: blur of the added light in cells. The weight by which the air is gone is not kept here: it is read from the place on the ground (place.json scene.air), the same at every height of the camera, so the ground the approved view saw keeps the air it was painted in from the first frame of the dive and nothing comes in as the camera sinks. assets-src/jupiter/deck/lift.py and lift-measure.json are the history of the weight solved by film time (the largest level step was 4.84 a frame then). History of the share: up to the second named commit of round 2 it was the one measured on the approved view (green 0.14 from sine 0.063 down and 0 under 0.02), which is not a share of light but how little of the plates' far field the approved view shows; a ground point crossed its step in 8 frames of the dive. air.py still prints it.",
@@ -780,26 +797,78 @@
     ]
   },
   "life": {
-    "note": "What moves in the surface view while the camera flies (mail 230). Every motion is a rigid turn or a rigid drift of a function of the ground point, set by time alone; no field is dragged through a flow and no picture is scrolled. storm: the vortex turns about centre (chart units, the middle of the red disc on the near plate) as a rigid body inside coreUnits, less and less out to rimUnits, where the ground stands still. Heights, colours, the image lookup and the function detail all read the same turned ground point, so the relief turns with its colour. The turn is boundDeg times tanh(degPerSecond times seconds from the middle of the surface view over boundDeg): degPerSecond counter clockwise seen from above at the middle (frame 3150, where the turn is zero and the picture is the approved one), never more than boundDeg either way. Wind up: in the 180 frames the rim of the core turns 7.62 degrees either way, spread over the 3.4 units from core to rim; the largest shear of the approved shapes there is 0.13 either way. The globe draws the plates of the place with the same turn, so both sides of a handover agree. rings: each ring adds its own turn to everything inside the inner one of its two edgeUnits, falling to nothing by a smoothstep at the outer one, in the same bounded form (boundDeg times tanh(degPerSecond times seconds over boundDeg)). There is one ring, and it takes the storm's turn back: the ground within 0.9 units of the centre, the red eye and its walls, stands still and keeps its shape, and the clouds run round it. Between 0.9 and 1.6 units the turn comes in (the shear there is 0.24 at the two ends of the surface view and none at the middle); from 1.6 units out the storm turns as written above. Up to round 46 four rings outran one another inside the core (10, 8, 6 and 4 degrees a second) and sheared the eye to nearly twice its width over its height by frame 3239. eddies: small vortices of the picture turn about their own centres (chart units as stored, carried round by the storm) in the same form: rigid inside coreUnits, still at rimUnits, degPerSecond at the middle (negative is clockwise), never more than boundDeg; in the 180 frames 6.34 degrees either way, the rim four cores out, largest shear 0.14. haze: two rigid sheets of cloud, thick.units thick, their middle at heightUnits over the datum (both above the relief, which stays within about 0.1), one on each side of the storm (side -1 south, 1 north of the line through the storm centre along the jet; a sheet begins between its two edgeUnits from that line and ends between its two reachUnits from the centre), drifting along the jet at unitsPerSecond (east is positive; the two go opposite ways, as the jets on the two sides of an anticyclone do). The density of a sheet is a function of its own point, the same at every height inside it: banks (bankUnits, warp) made of fibres along the jet (fibreUnits, fibreOctaves, fibreShare, fibreWarp), value noise in octaves (lacunarity, octaveGain, octaveShift, warpSeed), cover the two thresholds. What a ray shows of a sheet is its density along its way through it (mail 1021): the pattern is read at thick.taps points along the run of the ray between the upper and the lower face of the sheet and averaged, and each octave is faded (octaveFade) where the larger of that run and of the pixel's footprint (a 1080th of the frame height, a pixel of the 16 by 9 master, whatever the format) is long against the octave. The cover is taken of the faded noise with its two thresholds moved apart by what the faded octaves lost: thick.spread is the standard deviation of one octave of the noise, sqrt((26 / 35)^2 / 12), and a smoothstep of half width a is the distribution of a bell of variance a x a / 5, so the full width grows to sqrt(width^2 + 20 x spread^2 x the share of variance lost). A sheet whose pattern is averaged away keeps its mean density, not the cover of its mean. Steep and near a sheet is a bank with its parallax; grazing and far it is a veil with no pattern to slide over the ground. Neither the eye's height nor the clock enters, only the ray and the footprint. A sheet lightens what lies behind it by depth over the cosine of the view (at least minCosine) with the low passed colour of its ground (lightBlurUnits) times glow, so it takes the tone of its ground; that light is weighted by forward [g, gain] as min(gain x ((1 - g) / sqrt(1 + g x g - 2 g c))^3, 1), c being the cosine between the view ray and the direction to the Sun, so thin cloud shows where one looks toward the Sun and nearly vanishes where one looks down on it (measured: without the weight the south sheet lay as a pale mist band over the foreground at 3060 to 3135); on the deck it lays a shadow of shadowDepth where the Sun's ray passes through it (the one Sun of the place, solved.sun of place.json, which also lights the day side; the run of that ray through the sheet is averaged in the same way; the shadow is not faded by the pixel's footprint, it lies on the ground whoever looks at it), tinted by shadowTint, displaced by the height between sheet and ground, fading over softUnits where the ground reaches the sheet. Both count only where the ground is sunlit (lit: thresholds on the warmth of the low passed ground). flash: lightning inside the dark blue cloud. At each site (at in chart units as stored, radiusUnits) an envelope e = sum of strength x u x exp(1 - u) runs, u being the time since an event over riseSeconds. Two things follow from it. The cold pixels (cold: thresholds on blue against red, the sum of the two never taken below core.floor so that the black of the plate does not switch the mask; bright: thresholds on luminance, darker pixels take the share surround) are multiplied by exp(gain x e x exp(-q)), q being the squared distance over radiusUnits squared. And light is added: glow x e x (exp(-q x core.tight) + core.spill x exp(-q)) x the square root of the luminance of the pixel, a small bright heart with a wide faint spill that keeps the forms of the cloud it lights. The events [seconds from the middle, strength] were drawn once from seed and are listed, so the light is a function of time alone; a glow needs riseSeconds (about 4 frames) to its peak and fades over about 20, so nothing strobes; no event is alight at the middle (frame 3150) or at a handover. proof.cameraHeld: true holds the camera of the surface view at the pose of frame 3150 while time runs, for the life only sheet; false in the film.",
+    "note": "What moves in the surface view while the camera flies (mail 230, mail 1307). The ground is matter in a steady flow (flow): heights, the guide's colour and the detail made by code are read where their matter stood at the middle of the surface view (frame 3150), so every form is carried along its streamline, sheared where neighbouring streamlines run at different speeds, and nothing turns as a rigid body. No picture is scrolled or bent: the guide holds nothing finer than its cut (deck.json guide), so it is the matter's colour, and every finer form is made by code. storm: centre is the middle of the oval in chart units (also read by the tools of the plates). haze: two rigid sheets of cloud, thick.units thick, their middle at heightUnits over the datum (both above the relief, which stays within about 0.1), one on each side of the storm (side -1 south, 1 north of the line through the storm centre along the jet; a sheet begins between its two edgeUnits from that line and ends between its two reachUnits from the centre), drifting along the jet at unitsPerSecond (east is positive; the two go opposite ways, as the jets on the two sides of an anticyclone do). The density of a sheet is a function of its own point, the same at every height inside it: banks (bankUnits, warp) made of fibres along the jet (fibreUnits, fibreOctaves, fibreShare, fibreWarp), value noise in octaves (lacunarity, octaveGain, octaveShift, warpSeed), cover the two thresholds. What a ray shows of a sheet is its density along its way through it (mail 1021): the pattern is read at thick.taps points along the run of the ray between the upper and the lower face of the sheet and averaged, and each octave is faded (octaveFade) where the larger of that run and of the pixel's footprint (a 1080th of the frame height, a pixel of the 16 by 9 master, whatever the format) is long against the octave. The cover is taken of the faded noise with its two thresholds moved apart by what the faded octaves lost: thick.spread is the standard deviation of one octave of the noise, sqrt((26 / 35)^2 / 12), and a smoothstep of half width a is the distribution of a bell of variance a x a / 5, so the full width grows to sqrt(width^2 + 20 x spread^2 x the share of variance lost). A sheet whose pattern is averaged away keeps its mean density, not the cover of its mean. Steep and near a sheet is a bank with its parallax; grazing and far it is a veil with no pattern to slide over the ground. Neither the eye's height nor the clock enters, only the ray and the footprint. A sheet lightens what lies behind it by depth over the cosine of the view (at least minCosine) with the low passed colour of its ground (lightBlurUnits) times glow, so it takes the tone of its ground; that light is weighted by forward [g, gain] as min(gain x ((1 - g) / sqrt(1 + g x g - 2 g c))^3, 1), c being the cosine between the view ray and the direction to the Sun, so thin cloud shows where one looks toward the Sun and nearly vanishes where one looks down on it (measured: without the weight the south sheet lay as a pale mist band over the foreground at 3060 to 3135); on the deck it lays a shadow of shadowDepth where the Sun's ray passes through it (the one Sun of the place, solved.sun of place.json, which also lights the day side; the run of that ray through the sheet is averaged in the same way; the shadow is not faded by the pixel's footprint, it lies on the ground whoever looks at it), tinted by shadowTint, displaced by the height between sheet and ground, fading over softUnits where the ground reaches the sheet. Both count only where the ground is sunlit (lit: thresholds on the warmth of the low passed ground). flash: lightning inside the dark blue cloud. At each site (at in chart units as stored, radiusUnits) an envelope e = sum of strength x u x exp(1 - u) runs, u being the time since an event over riseSeconds. Two things follow from it. The cold pixels (cold: thresholds on blue against red, the sum of the two never taken below core.floor so that the black of the plate does not switch the mask; bright: thresholds on luminance, darker pixels take the share surround) are multiplied by exp(gain x e x exp(-q)), q being the squared distance over radiusUnits squared. And light is added: glow x e x (exp(-q x core.tight) + core.spill x exp(-q)) x the square root of the luminance of the pixel, a small bright heart with a wide faint spill that keeps the forms of the cloud it lights. The events [seconds from the middle, strength] were drawn once from seed and are listed, so the light is a function of time alone; a glow needs riseSeconds (about 4 frames) to its peak and fades over about 20, so nothing strobes; no event is alight at the middle (frame 3150) or at a handover. proof.cameraHeld: true holds the camera of the surface view at the pose of frame 3150 while time runs, for the life only sheet; false in the film.",
     "storm": {
       "centre": [
         -0.25,
         -0.55
-      ],
-      "coreUnits": 1.6,
-      "rimUnits": 5.0,
-      "degPerSecond": 3.0,
-      "boundDeg": 12,
-      "rings": [
-        {
-          "edgeUnits": [
-            0.9,
-            1.6
-          ],
-          "degPerSecond": -3.0,
-          "boundDeg": 12
-        }
       ]
+    },
+    "flow": {
+      "note": "The matter of the place moves in one steady flow, the curl of one stream function, so nothing gathers and nothing thins; no part of it is a rigid body. unitsPerSecond: the fastest speed of the storm's own turn, V. Storm: about life.storm.centre the speed at the distance r is V times 2 s^2 / (1 + s^4), s = r over scaleUnits, counter clockwise seen from above; the turn in degrees a second is fastest at 0.76 of scaleUnits and nothing at the centre, so every ring shears against its neighbours; between the two fadeUnits the storm's own speed goes to nothing. jets: zonal winds, east on the storm's south flank and west on its north flank, share of V at their fastest, one whole wave of east and west every acrossUnits across the belts; their stream function is led to nothing inside the two partUnits from the storm's centre, so the jets part and pass round the oval. eddies: small vortices of the same form at their own centres, share of V (negative is clockwise), each led to nothing between its fadeUnits. Every carried field (heights, guide, detail) is read where its matter stood at the middle of the surface view (frame 3150): the place is carried back along the flow by the midpoint rule over the whole time, which runs on without a bound and without a reset. wound: the detail made by code is read in wound coordinates, the place where its matter stood before the fastest ring of the storm had turned by turnDeg (one age each), so the shear of the flow itself has drawn every form out along its streamline. assets-src/jupiter/deck/wound.py follows the flow back from every point of a polar grid about the storm's centre out to reachUnits (pixels: round, then out, the rows even in the square root of the distance) in steps of stepSeconds and writes deck-wound.bin with its ranges in wound.json; beyond the storm's reach the flow is the straight jets and the same place is found in closed form, and between the two closedUnits, where both hold, the program passes from the one to the other.",
+      "unitsPerSecond": 0.0165,
+      "scaleUnits": 0.9,
+      "fadeUnits": [
+        5.0,
+        8.0
+      ],
+      "jets": {
+        "share": 0.8,
+        "acrossUnits": 6.0,
+        "partUnits": [
+          2.5,
+          6.0
+        ]
+      },
+      "eddies": [
+        {
+          "centre": [
+            -0.01,
+            -2.6
+          ],
+          "scaleUnits": 0.2,
+          "share": 0.22,
+          "fadeUnits": [
+            1.0,
+            2.0
+          ]
+        },
+        {
+          "centre": [
+            -0.15,
+            -3.03
+          ],
+          "scaleUnits": 0.18,
+          "share": -0.2,
+          "fadeUnits": [
+            1.0,
+            2.0
+          ]
+        }
+      ],
+      "wound": {
+        "turnDeg": [
+          55,
+          148,
+          370
+        ],
+        "reachUnits": 12.8,
+        "closedUnits": [
+          12.2,
+          12.6
+        ],
+        "pixels": {
+          "full": [
+            1024,
+            512
+          ],
+          "web": [
+            512,
+            256
+          ]
+        },
+        "stepSeconds": 1.0
+      }
     },
     "proof": {
       "cameraHeld": false
@@ -1038,28 +1107,36 @@
         "spill": 0.2,
         "floor": 0.02
       }
-    },
-    "eddies": [
-      {
+    }
+  },
+  "guide": {
+    "note": "The colour of the matter, written by assets-src/jupiter/deck/guide.py: the ground the plates paint (the plates joined as before, times the tone and the calm field, in the scene's light), cut by a Gaussian of cutUnits on the ground, in the chart of the body. Nothing finer than the cut is in it and no eye is in it: every program reads it by the ground point alone. levels: centre and size in units, pixels of the stored picture for the full and the web set, work: the grid the cut is made on. Beyond the mid level the far plate is the guide as it is (its own texel is wider than the cut).",
+    "cutUnits": 0.08,
+    "levels": {
+      "near": {
         "centre": [
-          -0.01,
-          -2.6
+          0,
+          0
         ],
-        "coreUnits": 0.09,
-        "rimUnits": 0.36,
-        "degPerSecond": 3.5,
-        "boundDeg": 7
+        "size": 20.48,
+        "pixels": {
+          "full": 1024,
+          "web": 512
+        },
+        "work": 4096
       },
-      {
+      "mid": {
         "centre": [
-          -0.15,
-          -3.03
+          0,
+          0
         ],
-        "coreUnits": 0.08,
-        "rimUnits": 0.32,
-        "degPerSecond": -3.5,
-        "boundDeg": 7
+        "size": 61.44,
+        "pixels": {
+          "full": 2048,
+          "web": 1024
+        },
+        "work": 2048
       }
-    ]
+    }
   }
 }

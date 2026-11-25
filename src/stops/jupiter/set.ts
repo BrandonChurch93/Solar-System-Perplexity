@@ -12,7 +12,7 @@ import { Io } from './io'
 import * as look from './look'
 import { bufferFrame, frameUniform } from '../../core/frame'
 import place from './place.json'
-import { chartAxes, chartEye, closeHeight, eddyTurn, flashNow, hazeDrift, plan, ringTurn, stormTurn } from './plan'
+import { chartAxes, chartEye, closeHeight, flashNow, hazeDrift, matterSeconds, plan } from './plan'
 import proof from './proof.json'
 import skyJson from './sky.json'
 
@@ -128,11 +128,7 @@ export const createSet: SetFactory = async (ctx) => {
       const gain = 1 / shot.post.exposure
       const scene = place.scene
       const du = ground.material.uniforms
-      du.uStormTurn!.value = stormTurn(state.time - terrainMid)
-      const eddies = du.uEddyTurn!.value as number[]
-      for (let i = 0; i < eddies.length; i++) eddies[i] = eddyTurn(i, state.time - terrainMid)
-      const seams = du.uSeam!.value as THREE.Vector3[]
-      for (let i = 0; i < seams.length; i++) seams[i]!.z = ringTurn(i, state.time - terrainMid)
+      du.uFlowTime!.value = matterSeconds(state.time - terrainMid)
       const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
       const pixel = 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height * frameUniform.value
       const footLeast = (height * place.solved.radiusUnits - deck.look.shell[1]!) * pixel

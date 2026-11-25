@@ -2701,3 +2701,36 @@ With it I asked for the bands of MAIL 479 (they are not in this notebook nor in 
 - Guide for stage 1: the low band of the plates in scene light times tone and calm (the painted light is still in it), cut at sigma 0.08 units near the storm; half float bins, 8 bit would band. Stage 2 divides the model's own shading out with an albedo floor.
 - The dark lee and the lower left must then come from the scene: tall rough relief seen against the light, shadows, openness, deeper is darker and bluer. d329 (i) needs those regions dark at 3150, the hold needs them lit: a red there is named, not hidden.
 - Code detail: octaves from about 0.5 units down to the footprint; billows cellular, filaments noise in the wound coordinates; lives 10 seconds and more.
+
+
+## 25 Nov, 21:45 to 22:15 UTC: stage 1 built (guide, flow, wound coordinates, code detail), first 3150 pushed; MAIL 1310 (the bands)
+
+READ FIRST AFTER A COMPACTION: stage 1 of the cure is in the tree and renders. The fit eye, the plates near, mid and fore, the tone and calm tables and the rigid turns are out of `clouds.ts`. Next: the relief and the light (slopes, cast shadows, fill), then edges, then sheets. The pair at 60 a second, the lens test and the Builder's two views are owed after that. Looks `agent/jupiter-code-looks` cc5a1336 (22:10:44) holds the first 3150.
+
+### MAIL 1310, 21:55 UTC, word for word
+
+> MAIL 1310 from the Builder (/root), 21:55 UTC. To jupiter_coder. The bands you asked for (MAIL 479 never reached you; this is its content, as ruled in d329 (4)).
+> The tool is attached: bands.py FRAME APPROVED [MASK]. Both pictures are read at 1920 by 1080 in display values (0 to 255). It prints json: plain (the old d296 number, for the record only), lowBand16, and five bands.
+> For a ground made by code the plain match of d296 is replaced at Jupiter's judged frame 3150 by three lines, at the final tier:
+> (i) LOW BAND: both pictures blurred with a Gaussian of sigma 16 px, mean absolute RGB over the whole frame: no worse than main's own. MEASURED on a machine's final of main's code at 1920 px: main reads 3.539 (plain 6.6676). Your head reads 4.75 at draft by your own word: 1.2 over main's. It is carried by composition, palette and light, not by detail, so close it there.
+> (ii) BANDS: luminance, differences of blurs at sigma 1, 2, 4, 8 and 16 px, root mean square over the mask: the ratio of your frame to the approved image within 0.7 and 1.4 in the four bands 1 to 2, 2 to 4, 4 to 8 and 8 to 16 px. The finest band (under 1 px) is printed without a line. Main's final reads 1.25 (under 1 px), then 1.07, 1.01, 0.99, 0.99.
+> (iii) MY EYE at 1 to 1: composition, palette, the Sun's side, limb and sky kept.
+> I own four departures (d310 (5)): no fine detail at the approved image's own places; the lower left and the right third lit by the one Sun; towers and sheets taller than painted; streaks that follow streamlines. The critics and their rubrics are untouched, so the frame must still read as the approved image's Jupiter to a fresh eye.
+> MAIN MOVED at 21:41: the fourth cut is on main (merge 6bdd87ec, tip 172e7bcd: the flights' cure of the rises, the air law of the engine, path.plumb, the shutter's ends by the frame's motion). Merge origin main before you name. Your date stands: the first 3150 at draft by 23:45 UTC, with the three numbers of this mail beside it.
+
+The tool is kept at `/home/user/workspace/work/r23/bands.py` (not in the repo: it is the Builder's). Use: `python3 work/r23/bands.py FRAME repo/references/approved/jupiter-close.jpg` from `/home/user/workspace`.
+
+### What is in the tree
+
+- `assets-src/jupiter/deck/guide.py` writes `guide-near.png` (1024 square over 20.48 units; web 512) and `guide-mid.png` (2048 over 61.44; web 1024): the plates joined as before, times tone and calm, in scene light, cut at `guide.cutUnits` 0.08, stored as 8 bit sRGB of the filmic curve. Beyond the mid level the far plate is the guide as it is. The painted light is still in the guide (stage 2 takes it out).
+- `assets-src/jupiter/deck/flow.py` is the reference of the flow (class `Flow`); `python3 assets-src/jupiter/deck/flow.py` prints its checks. Measured: fastest turn 1.1972 degrees a second, largest divergence 1.6e-8, nothing faster than V with the jets parting between 2.5 and 6 units (with 2.5 and 5 the passing flow ran 1.118 V at r 3.84: a named departure from the page).
+- `assets-src/jupiter/deck/wound.py` follows the flow back for the three ages (55, 148 and 370 degrees of the fastest ring: 45.9, 123.6 and 309.0 seconds at V 0.0165) on a polar grid about the storm (1024 angles by 512 rings even in the square root of the distance, out to 12.8 units) and writes `deck-wound.bin` (per age the change of distance and the turned angle, 16 bit; ranges in `src/stops/jupiter/wound.json`). Beyond 12.2 to 12.6 units the closed form of the jets takes over; measured off the closed form there at most 4.6e-13 units. The file does not depend on V. 2 min 16 s to run.
+- `assets-src/jupiter/deck/puffs.py` measures the mean and the variances of the field of rounded tops and writes them into `deck.json` `look.cloud.field`.
+- `clouds.ts`: `FLOW_GLSL` (`flowAt`, `carried`, `woundAt`), `DETAIL_GLSL` (`puffs`, `cloudAt`), `guideAt`. The march reads the stored heights at the carried place. At the hit: four more carried points give the slope and the map's Jacobian; per age three wound lookups give the strain; the footprint in wound coordinates gives taps and the least wave; the Sun's azimuth is carried into the wound coordinates and divided by the stretch. Look of stage 1: guide times the deck's curve times exp(tops times field, less slope times the field's slope toward the Sun, less half the variance, plus tint times field). Samplers: 3 heights, 2 guides, far plate, wound, limb, 2 air: 10.
+- `set.ts` sets `uFlowTime` by `matterSeconds` of `plan.ts` (seconds from 3150 less half a shutter); the rigid turns and their functions are gone. `deck.json`: `life.flow`, `guide`, `look.cloud` new; `life.storm` keeps only `centre`; `life.eddies`, `look.detail`, `detailLook`, `detailTone`, `trust`, `stretch` out.
+
+### Measured on the first state (draft, 3150, `work/r23/t/a-3150.png`, 40 s to draw)
+
+- plain 14.0976, low band at 16 px 8.8093 (main's final 3.539; my last head 4.7449 at draft; the no eye state 9.0608).
+- bands 1 to 2, 2 to 4, 4 to 8, 8 to 16 px against the approved image: 0.5209, 0.5008, 0.5243, 0.6699 (under 1 px 0.6326). The head before: 0.9582, 0.9466, 0.9349, 0.9706. So the detail by code is about half as strong as it has to be, and all four bands are red.
+- My eye on it: the flow reads (streaks along the streamlines round the oval and along the jets), but the detail is one fine fur everywhere, the oval has no bands of its own, no billow has a lit and a shaded side, the lower right is dark without a cause. Not a film still. The relief and the light are what is missing.

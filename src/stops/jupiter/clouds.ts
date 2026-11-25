@@ -6,47 +6,59 @@ import fields from './deck-fields.json'
 import { frameUniform } from '../../core/frame'
 import curve from './curve.json'
 import place from './place.json'
+import woundJson from './wound.json'
 
-const OCTAVES = 10
+const OCTAVES = deck.look.cloud.octaves
 const ABOVE_KNOTS = deck.above.gain.length
 const CURVE_KNOTS = curve.curve.length
 const FLASHES = deck.life.flash.sites.length
 const HAZE_TAPS = deck.life.haze.thick.taps
+const AGES = deck.life.flow.wound.turnDeg.length
+const EDDIES = deck.life.flow.eddies.length
 
-export const EDDIES = deck.life.eddies.length
-export const SEAMS = deck.life.storm.rings.length
-
-const CALM_GLSL = /* glsl */ `
+const FLOW_GLSL = /* glsl */ `
+uniform vec4 uFlow;
+uniform vec2 uFlowJet;
+uniform vec4 uFlowPart;
 uniform vec4 uEddy[${EDDIES}];
-uniform float uEddyTurn[${EDDIES}];
-uniform vec3 uSeam[${SEAMS}];
-vec2 calm(vec2 g, out vec2 cs) {
-  vec2 o = g - uStorm.xy;
-  float r2 = dot(o, o);
-  cs = vec2(1.0, 0.0);
-  vec2 moved = g;
-  for (int i = 0; i < (uStormTurn != 0.0 && r2 < uStorm.w * uStorm.w ? 1 : 0); i++) {
-    float r = sqrt(r2);
-    float a = -uStormTurn * (1.0 - smoothstep(uStorm.z, uStorm.w, r));
-    for (int k = 0; k < ${SEAMS}; k++) a -= uSeam[k].z * (1.0 - smoothstep(uSeam[k].x, uSeam[k].y, r));
-    float h = sin(0.5 * a);
-    float less = -2.0 * h * h;
-    cs = vec2(1.0 + less, sin(a));
-    moved = g + vec2(less * o.x - cs.y * o.y, cs.y * o.x + less * o.y);
-  }
+uniform vec2 uEddyFade[${EDDIES}];
+uniform float uFlowTime;
+vec2 flowAt(vec2 g) {
+  vec2 o = g - uFlow.xy;
+  float r = length(o);
+  float s = r * uFlow.z;
+  float t = clamp((r - uFlowPart.x) * uFlowPart.y, 0.0, 1.0);
+  float phase = uFlowJet.y * dot(o, uJet.zw);
+  float spin = 2.0 * uFlow.w * r * uFlow.z * uFlow.z / (1.0 + s * s * s * s) * (1.0 - smoothstep(uFlowPart.z, uFlowPart.w, r));
+  spin += uFlowJet.x / uFlowJet.y * (1.0 - cos(phase)) * 6.0 * t * (1.0 - t) * uFlowPart.y / max(r, 1e-9);
+  vec2 v = spin * vec2(-o.y, o.x) - t * t * (3.0 - 2.0 * t) * uFlowJet.x * sin(phase) * uJet.xy;
   for (int e = 0; e < ${EDDIES}; e++) {
-    vec2 oe = moved - uEddy[e].xy;
-    float re = dot(oe, oe);
-    for (int i = 0; i < (uEddyTurn[e] != 0.0 && re < uEddy[e].w * uEddy[e].w ? 1 : 0); i++) {
-      float a = -uEddyTurn[e] * (1.0 - smoothstep(uEddy[e].z, uEddy[e].w, sqrt(re)));
-      float h = sin(0.5 * a);
-      float less = -2.0 * h * h;
-      vec2 turn = vec2(1.0 + less, sin(a));
-      moved += vec2(less * oe.x - turn.y * oe.y, turn.y * oe.x + less * oe.y);
-      cs = vec2(cs.x * turn.x - cs.y * turn.y, cs.y * turn.x + cs.x * turn.y);
-    }
+    vec2 oe = g - uEddy[e].xy;
+    float re = length(oe);
+    float se = re * uEddy[e].z;
+    v += uEddy[e].w * 2.0 * re * uEddy[e].z * uEddy[e].z / (1.0 + se * se * se * se) * (1.0 - smoothstep(uEddyFade[e].x, uEddyFade[e].y, re)) * vec2(-oe.y, oe.x);
   }
-  return moved;
+  return v;
+}
+vec2 carried(vec2 g) {
+  return g - uFlowTime * flowAt(g - 0.5 * uFlowTime * flowAt(g));
+}
+uniform sampler2D uWound;
+uniform vec4 uWoundCode[${AGES}];
+uniform float uWoundAge[${AGES}];
+uniform vec4 uWoundShape;
+vec2 woundAt(vec2 x, int j) {
+  vec2 o = x - uFlow.xy;
+  float r = length(o);
+  vec2 y = x + uWoundAge[j] * sin(uFlowJet.y * dot(o, uJet.zw)) * uJet.xy;
+  for (int i = 0; i < (r < uWoundShape.w ? 1 : 0); i++) {
+    float a = r > 0.0 ? atan(o.y, o.x) : 0.0;
+    vec2 uv = vec2(a * 0.15915494309189535 + 0.5, clamp(sqrt(r * uWoundShape.x), uWoundShape.y, 1.0 - uWoundShape.y));
+    float dr = uWoundCode[j].x + uWoundCode[j].y * textureLod(uWound, vec2(uv.x, (float(2 * j) + uv.y) / ${2 * AGES}.0), 0.0).r;
+    float da = uWoundCode[j].z + uWoundCode[j].w * textureLod(uWound, vec2(uv.x, (float(2 * j + 1) + uv.y) / ${2 * AGES}.0), 0.0).r;
+    y = mix(uFlow.xy + (r + dr) * vec2(cos(a + da), sin(a + da)), y, smoothstep(uWoundShape.z, uWoundShape.w, r));
+  }
+  return y;
 }
 `
 
@@ -75,38 +87,49 @@ const STORED_GLSL = /* glsl */ `float stored(vec2 g, vec3 w) {
 `
 
 const DETAIL_GLSL = /* glsl */ `
-vec2 spot(ivec2 p) {
-  uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u;
-  h ^= h >> 15;
-  h *= 0x2C1B3C6Du;
-  h ^= h >> 12;
-  h *= 0x297A2D39u;
-  h ^= h >> 15;
-  uint k = h * 0x9E3779B1u;
-  k ^= k >> 16;
-  return vec2(float(h), float(k)) * (1.0 / 4294967296.0);
-}
-vec3 made(vec2 g, float cut, float least) {
-  int k0 = max(int(floor(log2(uDetail.x / (1.4 * cut)))), 0);
-  int k1 = min(int(ceil(log2(uDetail.x / least))), ${OCTAVES - 1});
+uniform vec4 uCloud;
+uniform vec4 uCloudLook;
+uniform vec4 uCloudCell;
+uniform vec4 uCloudShift;
+uniform vec2 uCloudTurn;
+uniform vec2 uCloudStat;
+uniform vec3 uCloudTint;
+uniform float uCloudTaps;
+uniform float uCloudAge[${AGES}];
+vec3 puffs(vec2 q, int seed, float life) {
+  vec2 base = floor(q);
+  ivec2 cell = ivec2(base);
+  vec2 f = q - base;
   vec3 sum = vec3(0.0);
-  for (int k = k0; k <= k1; k++) {
-    float wave = uDetail.x * exp2(-float(k));
-    float use = (1.0 - smoothstep(0.7 * cut, 1.4 * cut, wave)) * smoothstep(least, 1.6 * least, wave);
-    float a = 0.6 * float(k);
-    mat2 turn = mat2(cos(a), sin(a), -sin(a), cos(a));
-    vec2 q = (turn * g) / wave + vec2(17.3, -9.1) * float(k);
-    vec2 base = floor(q);
-    ivec2 cell = ivec2(base);
-    vec2 f = q - base;
-    float best = 8.0;
-    vec2 to = vec2(0.0);
-    for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
-      vec2 r = vec2(float(i), float(j)) + spot(cell + ivec2(i, j)) - f;
-      float d = dot(r, r);
-      if (d < best) { best = d; to = r; }
+  for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
+    ivec2 c = cell + ivec2(i, j);
+    uint h = uint(c.x) * 0x9E3779B1u ^ uint(c.y) * 0x85EBCA77u ^ uint(seed) * 0xC2B2AE3Du;
+    h ^= h >> 15;
+    h *= 0x2C1B3C6Du;
+    h ^= h >> 12;
+    h *= 0x297A2D39u;
+    h ^= h >> 15;
+    vec2 r = vec2(float(i), float(j)) + uCloudCell.y + uCloudCell.z * vec2(float(h & 0xFFFFu), float(h >> 16)) * (1.0 / 65536.0) - f;
+    float d = 1.0 - dot(r, r) * uCloudCell.x;
+    for (int m = 0; m < (d > 0.0 ? 1 : 0); m++) {
+      uint k = h * 0x9E3779B1u;
+      k ^= k >> 16;
+      float p = fract(uFlowTime / (life * (1.0 + float(k & 0xFFFFu) * (1.0 / 65536.0))) + float(k >> 16) * (1.0 / 65536.0));
+      sum += 16.0 * p * p * (1.0 - p) * (1.0 - p) * d * d * vec3(r * (6.0 * uCloudCell.x), d);
     }
-    sum += use * pow(wave / cut, uDetailLook.y) * vec3(2.0 * (to * turn), uDetailLook.x - best);
+  }
+  return sum;
+}
+vec4 cloudAt(vec2 y, float least, int age) {
+  int k1 = min(int(ceil(log2(uCloud.x / least))), ${OCTAVES - 1});
+  vec4 sum = vec4(0.0);
+  for (int k = 0; k <= k1; k++) {
+    float wave = uCloud.x * exp2(-float(k));
+    float use = smoothstep(least, uCloudCell.w * least, wave) * exp2(-float(k) * uCloud.z);
+    float a = uCloudTurn.x * float(k) + uCloudTurn.y * float(age);
+    mat2 turn = mat2(cos(a), sin(a), -sin(a), cos(a));
+    vec3 b = puffs((turn * y) / wave + uCloudShift.xy * float(k) + uCloudShift.zw * float(age), k + ${OCTAVES} * age, uCloud.w * (1.0 + wave * uCloudLook.z));
+    sum += use * vec4(b.xy * turn, b.z - uCloudLook.w, use);
   }
   return sum;
 }
@@ -139,34 +162,16 @@ precision highp float;
 uniform sampler2D uHeightFore;
 uniform sampler2D uHeightNear;
 uniform sampler2D uHeightMid;
-uniform sampler2D uPlateFore;
-uniform sampler2D uPlateNear;
-uniform sampler2D uPlateMid;
+uniform sampler2D uGuideNear;
+uniform sampler2D uGuideMid;
 uniform sampler2D uPlateFar;
-uniform sampler2D uView;
-uniform sampler2D uImageWide;
-uniform sampler2D uImageCore;
-uniform sampler2D uImageRange;
-uniform vec4 uCore;
-uniform vec4 uRangeShape;
-uniform vec4 uRangeCode;
-uniform vec2 uViewOrigin;
-uniform vec4 uViewRange;
-uniform vec4 uViewTexel;
-uniform vec3 uFitEye;
-uniform mat3 uFitAxes;
-uniform vec4 uFitWindow;
-uniform vec4 uTrust;
-uniform vec2 uSteep;
-uniform vec4 uStretch;
 uniform vec2 uBlend;
 uniform vec2 uJoin;
-uniform vec4 uFore;
 uniform vec4 uForeMap;
 uniform vec4 uNear;
 uniform vec4 uMid;
 uniform vec4 uFar;
-uniform vec4 uTexel;
+uniform vec3 uGuideTexel;
 uniform vec2 uHeightRange;
 uniform float uRadius;
 uniform vec2 uShell;
@@ -174,9 +179,6 @@ uniform vec4 uMarch;
 uniform float uPixel;
 uniform float uGrad;
 uniform float uFrame;
-uniform vec4 uDetail;
-uniform vec4 uDetailLook;
-uniform float uDetailTone;
 uniform vec3 uFoot;
 uniform vec2 uSunAz;
 uniform sampler2D uLimb;
@@ -190,18 +192,11 @@ uniform vec2 uAirLift;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform vec2 uAboveMix;
-uniform sampler2D uTone;
-uniform vec4 uToneBox;
-uniform float uToneEdge;
-uniform vec4 uCalmBox;
-uniform vec2 uSeenReach;
 uniform vec3 uSunCurve[${CURVE_KNOTS}];
 uniform vec3 uSunChart;
 uniform vec3 uLayer;
 uniform vec3 uRim;
 uniform vec3 uDepth;
-uniform vec4 uStorm;
-uniform float uStormTurn;
 uniform vec4 uJet;
 uniform vec4 uHazeBand[2];
 uniform vec4 uHazeSeed[2];
@@ -229,8 +224,7 @@ in vec3 vDir;
 in vec3 vEye;
 in vec2 vNdc;
 out vec4 outColor;
-${DIAG_GLSL}
-float hash(ivec2 p) {
+${DIAG_GLSL}${FLOW_GLSL}float hash(ivec2 p) {
   uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u;
   h ^= h >> 15;
   h *= 0x2C1B3C6Du;
@@ -252,77 +246,17 @@ ${ABOVE_GLSL}vec3 unfilm(vec3 y) {
   vec3 q = 2.43 * y - 2.51;
   return (-k - sqrt(max(k * k - 0.56 * q * y, 0.0))) / (2.0 * q);
 }
-vec4 seenAt(vec3 p, vec3 D, vec3 n, float foot, vec2 dx, vec2 dy, out vec2 size, out float count, out float wide, out float resolved) {
-  vec2 o = p.xy - uViewOrigin;
-  float d2 = max(dot(o, o), 1e-12);
-  float d = sqrt(d2);
-  float lift = 1.0 + d2 / (2.0 * uRadius);
-  vec2 uv = vec2((atan(o.x, o.y) - uViewRange.x) * uViewRange.y, (atan(lift, d) - uViewRange.z) * uViewRange.w);
-  float fall = (2.0 - lift) / (d2 + lift * lift);
-  vec2 turn = vec2(o.y, -o.x) * (uViewRange.y / d2);
-  vec2 drop = o * (-fall * uViewRange.w / d);
-  vec2 gx = vec2(dot(turn, dx), dot(drop, dx));
-  vec2 gy = vec2(dot(turn, dy), dot(drop, dy));
-  size = vec2(d * uViewTexel.x, uViewTexel.y / max(fall, 1e-6));
-  vec2 tx = gx / (uViewRange.yw * uViewTexel.xy);
-  vec2 ty = gy / (uViewRange.yw * uViewTexel.xy);
-  count = sqrt(max(dot(tx, tx), dot(ty, ty)));
-  vec4 c = textureGrad(uView, uv, gx, gy);
-  float len = uViewTexel.z * exp2(uViewTexel.w * (1.0 - c.a));
-  vec3 fit = p - uFitEye;
-  float range = length(fit);
-  fit /= range;
-  float turned = length(cross(D, fit)) / foot;
-  float level = range / (uFitWindow.x * max(-dot(fit, normalize(p + vec3(0.0, 0.0, uRadius))), uStretch.w));
-  float smear = min(len, level) * turned;
-  resolved = sqrt(range / uFitWindow.x * len);
-  bool inside = uv.x > 0.0 && uv.x < 1.0 && uv.y > 0.0 && uv.y < 1.0 && c.a > 0.004;
-  wide = clamp((1.0 + len * turned) / uStretch.x, 1.0, uStretch.z);
-  for (int i = 0; i < (inside && wide > 1.0 ? 1 : 0); i++) c.rgb = textureGrad(uView, uv, gx * wide, gy * wide).rgb;
-  size *= wide;
-  count /= wide;
-  vec3 q = uFitAxes * (p - uFitEye);
-  float near = 1.0 / max(-q.z, 1e-6);
-  vec2 at = uFitWindow.x * q.xy * near;
-  float edge = q.z < 0.0 ? smoothstep(uFitWindow.w, uTrust.w, min(uFitWindow.y - abs(at.x), uFitWindow.z - abs(at.y))) : 0.0;
-  edge *= 1.0 - smoothstep(uSeenReach.x, uSeenReach.y, d);
-  for (int i = 0; i < (inside && edge > 0.0 ? 1 : 0); i++) {
-    vec2 spot = at + vec2(0.5, -0.5);
-    vec2 cell = (uFitWindow.yz + spot) / uRangeShape.x - 0.5;
-    ivec2 low = ivec2(floor(cell));
-    ivec2 most = ivec2(uRangeShape.yz);
-    float far = max(max(texelFetch(uImageRange, clamp(low, ivec2(0), most), 0).r, texelFetch(uImageRange, clamp(low + ivec2(1, 0), ivec2(0), most), 0).r), max(texelFetch(uImageRange, clamp(low + ivec2(0, 1), ivec2(0), most), 0).r, texelFetch(uImageRange, clamp(low + ivec2(1, 1), ivec2(0), most), 0).r));
-    float shown = far > 0.99998 ? 1.0 : 1.0 - smoothstep(uRangeCode.z, uRangeCode.w, range * exp2(-uRangeCode.x - far * uRangeCode.y) - 1.0);
-    float own = range / (uFitWindow.x * max(abs(dot(fit, n)), 1e-3));
-    shown *= 1.0 - smoothstep(uSteep.x, uSteep.y, own * turned / uFrame);
-    for (int j = 0; j < (shown > 0.0 ? 1 : 0); j++) {
-      float open = uRangeShape.w * clamp((1.0 + own * turned) / uStretch.x, 1.0, uStretch.z);
-      vec3 qx = uFitAxes * vec3(dx, -dot(n.xy, dx) / n.z);
-      vec3 qy = uFitAxes * vec3(dy, -dot(n.xy, dy) / n.z);
-      vec2 ax = open * near * (uFitWindow.x * qx.xy + at * qx.z);
-      vec2 ay = open * near * (uFitWindow.x * qy.xy + at * qy.z);
-      vec3 picture = textureGrad(uImageWide, 0.5 + 0.5 * spot / uFitWindow.yz, 0.5 * ax / uFitWindow.yz, 0.5 * ay / uFitWindow.yz).rgb;
-      float core = smoothstep(uCore.z, uCore.w, min(uCore.x - abs(at.x), uCore.y - abs(at.y)));
-      for (int k = 0; k < (core > 0.0 ? 1 : 0); k++) picture = mix(picture, textureGrad(uImageCore, 0.5 + 0.5 * spot / uCore.xy, 0.5 * ax / uCore.xy, 0.5 * ay / uCore.xy).rgb, core);
-      c.rgb = mix(c.rgb, picture, shown);
-    }
-  }
-  return vec4(unfilm(c.rgb), inside ? edge * (1.0 - uTrust.z) * (1.0 - smoothstep(uTrust.x, uTrust.y, smear / uFrame)) : 0.0);
-}
-${STORED_GLSL}vec4 plateAt(vec2 g, vec2 dx, vec2 dy, out float size) {
-  vec2 f = abs(g - uFore.xy) * (2.0 * uFore.zw);
+${STORED_GLSL}vec3 guideAt(vec2 g, vec2 dx, vec2 dy, out float size) {
   vec2 a = abs(g - uNear.xy) * (2.0 * uNear.z);
   vec2 b = abs(g - uMid.xy) * (2.0 * uMid.z);
-  float wf = 1.0 - smoothstep(uJoin.x, uJoin.y, max(f.x, f.y));
-  float wn = (1.0 - wf) * (1.0 - smoothstep(uJoin.x, uJoin.y, max(a.x, a.y)));
-  float wm = (1.0 - wf - wn) * (1.0 - smoothstep(uJoin.x, uJoin.y, max(b.x, b.y)));
-  float wr = 1.0 - wf - wn - wm;
-  vec4 c = vec4(0.0);
-  for (int k = 0; k < (wf > 0.0 ? 1 : 0); k++) c += wf * textureGrad(uPlateFore, (g - uFore.xy) * uFore.zw + 0.5, dx * uFore.zw, dy * uFore.zw);
-  for (int k = 0; k < (wn > 0.0 ? 1 : 0); k++) c += wn * textureGrad(uPlateNear, (g - uNear.xy) * uNear.z + 0.5, dx * uNear.z, dy * uNear.z);
-  for (int k = 0; k < (wm > 0.0 ? 1 : 0); k++) c += wm * textureGrad(uPlateMid, (g - uMid.xy) * uMid.z + 0.5, dx * uMid.z, dy * uMid.z);
-  for (int k = 0; k < (wr > 0.0 ? 1 : 0); k++) c += wr * textureGrad(uPlateFar, (g - uFar.xy) * uFar.z + 0.5, dx * uFar.z, dy * uFar.z);
-  size = exp2(wf * log2(uTexel.x) + wn * log2(uTexel.y) + wm * log2(uTexel.z) + wr * log2(uTexel.w));
+  float wn = 1.0 - smoothstep(uJoin.x, uJoin.y, max(a.x, a.y));
+  float wm = (1.0 - wn) * (1.0 - smoothstep(uJoin.x, uJoin.y, max(b.x, b.y)));
+  float wr = 1.0 - wn - wm;
+  vec3 c = vec3(0.0);
+  for (int k = 0; k < (wn > 0.0 ? 1 : 0); k++) c += wn * unfilm(textureGrad(uGuideNear, (g - uNear.xy) * uNear.z + 0.5, dx * uNear.z, dy * uNear.z).rgb);
+  for (int k = 0; k < (wm > 0.0 ? 1 : 0); k++) c += wm * unfilm(textureGrad(uGuideMid, (g - uMid.xy) * uMid.z + 0.5, dx * uMid.z, dy * uMid.z).rgb);
+  for (int k = 0; k < (wr > 0.0 ? 1 : 0); k++) c += wr * unfilm(textureGrad(uPlateFar, (g - uFar.xy) * uFar.z + 0.5, dx * uFar.z, dy * uFar.z).rgb);
+  size = exp2(wn * log2(uGuideTexel.x) + wm * log2(uGuideTexel.y) + wr * log2(uGuideTexel.z));
   return c;
 }
 vec2 layered(vec2 p, int octaves, float size) {
@@ -344,7 +278,7 @@ vec2 layered(vec2 p, int octaves, float size) {
   return vec2(f / total, lost / (total * total));
 }
 float hazeOne(vec2 g, int k, float foot, vec2 stride) {
-  vec2 o = g - uStorm.xy;
+  vec2 o = g - uFlow.xy;
   float across = dot(o, uJet.zw);
   float w = smoothstep(uHazeSpan[k].x, uHazeSpan[k].y, uHazeBand[k].y * across) * (1.0 - smoothstep(uHazeSpan[k].z, uHazeSpan[k].w, length(o)));
   float dense = 0.0;
@@ -380,19 +314,10 @@ vec2 flashAt(vec2 g, vec3 c) {
   float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
   return vec2(s * smoothstep(uFlashLook.x, uFlashLook.y, (c.b - c.r) / max(c.b + c.r, uFlashCore.z)) * mix(uFlashShare, 1.0, smoothstep(uFlashLook.z, uFlashLook.w, lum)), (t + uFlashCore.y * s) * sqrt(max(lum, 0.0)));
 }
-vec3 toneAt(vec2 g) {
-  vec2 uv = clamp(vec2(g.x - uToneBox.x, uToneBox.y - g.y) * uToneBox.z + 0.5, uToneEdge, 1.0 - uToneEdge) * vec2(0.5, 1.0);
-  return uToneBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
-}
-vec3 calmAt(vec2 g) {
-  vec2 uv = clamp(vec2(g.x - uCalmBox.x, uCalmBox.y - g.y) * uCalmBox.z + 0.5, uToneEdge, 1.0 - uToneEdge) * vec2(0.5, 1.0) + vec2(0.5, 0.0);
-  return uCalmBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
-}
 vec4 sunAt(vec2 g) {
-  vec3 low = unfilm(textureLod(uPlateMid, (g - uMid.xy) * uMid.z + 0.5, uHazeLight.w).rgb) * toneAt(g);
+  vec3 low = unfilm(textureLod(uGuideMid, (g - uMid.xy) * uMid.z + 0.5, uHazeLight.w).rgb);
   return vec4(low, smoothstep(uHazeLit.x, uHazeLit.y, (low.r - low.b) / max(low.r + low.b, 1e-4)));
 }
-${CALM_GLSL}
 ${DETAIL_GLSL}
 void main() {
   vec3 D = normalize(vDir);
@@ -414,12 +339,11 @@ void main() {
   float gap = 1.0;
   float gapPrev = 1.0;
   bool hit = false;
-  vec2 cs = vec2(1.0, 0.0);
   vec3 w = vec3(0.0);
   int steps = 0;
   for (int i = 0; i < (inside ? int(uMarch.w) : 0); i++) {
     vec3 p = E + D * t;
-    vec2 at = calm(p.xy, cs);
+    vec2 at = carried(p.xy);
     w = levels(at);
     gap = above(p) - stored(at, w);
     steps = i;
@@ -433,7 +357,7 @@ void main() {
   for (int i = 0; i < (hit ? 3 : 0); i++) {
     float tm = gapPrev > 0.0 && gap < gapPrev ? tPrev + (t - tPrev) * gapPrev / (gapPrev - gap) : 0.5 * (t + tPrev);
     vec3 p = E + D * tm;
-    float gm = above(p) - stored(calm(p.xy, cs), w);
+    float gm = above(p) - stored(carried(p.xy), w);
     if (gm > 0.0) { tPrev = tm; gapPrev = gm; } else { t = tm; gap = gm; }
   }
   vec2 q = vNdc * 0.5 * vec2(uAspect, 1.0);
@@ -444,48 +368,63 @@ void main() {
   vec3 tint = vec3(float(steps) / uMarch.w, 0.0, 0.0);
   for (int k = 0; k < (hit ? 1 : 0); k++) {
     vec3 there = E + D * t;
-    vec2 g = calm(there.xy, cs);
-    vec3 p = vec3(g, there.z + (dot(there.xy, there.xy) - dot(g, g)) / (2.0 * uRadius));
-    vec3 V = vec3(cs.x * D.x - cs.y * D.y, cs.y * D.x + cs.x * D.y, D.z);
-    vec2 sunAz = vec2(cs.x * uSunAz.x - cs.y * uSunAz.y, cs.y * uSunAz.x + cs.x * uSunAz.y);
+    vec2 g = carried(there.xy);
     float foot = t * pix;
     float hs = max(foot, mix(uNear.w, uForeMap.w, w.x));
-    vec2 slope = vec2(stored(g + vec2(hs, 0.0), w) - stored(g - vec2(hs, 0.0), w), stored(g + vec2(0.0, hs), w) - stored(g - vec2(0.0, hs), w)) / (2.0 * hs);
-    vec3 n = normalize(vec3(g / uRadius - slope, 1.0));
-    float facing = min(dot(V, n), -uFoot.x);
+    vec2 gE = carried(there.xy + vec2(hs, 0.0));
+    vec2 gW = carried(there.xy - vec2(hs, 0.0));
+    vec2 gN = carried(there.xy + vec2(0.0, hs));
+    vec2 gS = carried(there.xy - vec2(0.0, hs));
+    vec2 slope = vec2(stored(gE, w) - stored(gW, w), stored(gN, w) - stored(gS, w)) / (2.0 * hs);
+    mat2 drift = mat2(gE - gW, gN - gS) * (0.5 / hs);
+    vec3 n = normalize(vec3(there.xy / uRadius - slope, 1.0));
+    float facing = min(dot(D, n), -uFoot.x);
     vec3 sx = dFdx(vDir);
     vec3 sy = dFdy(vDir);
-    sx = vec3(cs.x * sx.x - cs.y * sx.y, cs.y * sx.x + cs.x * sx.y, sx.z);
-    sy = vec3(cs.x * sy.x - cs.y * sy.y, cs.y * sy.x + cs.x * sy.y, sy.z);
-    sx = normalize(sx - V * dot(V, sx));
-    sy = normalize(sy - V * dot(V, sy));
-    vec2 dx = foot * (sx - V * (dot(sx, n) / facing)).xy;
-    vec2 dy = foot * (sy - V * (dot(sy, n) / facing)).xy;
-    float m00 = dx.x * dx.x + dy.x * dy.x;
-    float m11 = dx.y * dx.y + dy.y * dy.y;
-    float m01 = dx.x * dx.y + dy.x * dy.y;
-    float mean = 0.5 * (m00 + m11);
-    float diff = sqrt(0.25 * (m00 - m11) * (m00 - m11) + m01 * m01);
-    float major = sqrt(mean + diff);
-    float minor = sqrt(max(mean - diff, 1e-14));
-    vec2 axis = normalize(m00 > m11 ? vec2(mean + diff - m11, m01) : vec2(m01, mean + diff - m00));
-    vec2 sizeView;
-    float countView;
-    float wide;
-    float resolved;
-    vec4 seen = seenAt(p, V, n, foot, dx, dy, sizeView, countView, wide, resolved);
-    float sizePlate;
-    vec4 plate = plateAt(g, dx, dy, sizePlate);
-    float fine = 1.0;
-    for (int i = 0; i < (seen.a > 0.0 && wide > 1.0 && uStretch.y > 1.0 ? 1 : 0); i++) {
-      float sizeLow;
-      vec3 low = unfilm(plateAt(g, dx * wide, dy * wide, sizeLow).rgb);
-      fine = mix(1.0, clamp(dot(unfilm(plate.rgb), vec3(0.2126, 0.7152, 0.0722)) / max(dot(low, vec3(0.2126, 0.7152, 0.0722)), 1e-4), 1.0 / uStretch.y, uStretch.y), smoothstep(0.0, 1.0, wide - 1.0));
+    sx = normalize(sx - D * dot(D, sx));
+    sy = normalize(sy - D * dot(D, sy));
+    vec2 dx = foot * (sx - D * (dot(sx, n) / facing)).xy;
+    vec2 dy = foot * (sy - D * (dot(sy, n) / facing)).xy;
+    vec2 cx = drift * dx;
+    vec2 cy = drift * dy;
+    float major = sqrt(0.5 * (dot(cx, cx) + dot(cy, cy)) + sqrt(0.25 * (dot(cx, cx) - dot(cy, cy)) * (dot(cx, cx) - dot(cy, cy)) + dot(cx, cy) * dot(cx, cy)));
+    float sizeGuide;
+    vec3 guide = guideAt(g, cx, cy, sizeGuide);
+    float tall = 0.0;
+    float toward = 0.0;
+    float spread = 0.0;
+    float on = 0.0;
+    for (int j = 0; j < ${AGES}; j++) {
+      vec2 y = woundAt(g, j);
+      mat2 strain = mat2(woundAt(g + vec2(hs, 0.0), j) - y, woundAt(g + vec2(0.0, hs), j) - y) * drift * (1.0 / hs);
+      vec2 wx = strain * dx;
+      vec2 wy = strain * dy;
+      float m00 = wx.x * wx.x + wy.x * wy.x;
+      float m11 = wx.y * wx.y + wy.y * wy.y;
+      float m01 = wx.x * wx.y + wy.x * wy.y;
+      float mean = 0.5 * (m00 + m11);
+      float diff = sqrt(0.25 * (m00 - m11) * (m00 - m11) + m01 * m01);
+      float wide = sqrt(mean + diff);
+      float narrow = sqrt(max(mean - diff, 1e-14));
+      vec2 lie = normalize(m00 > m11 ? vec2(mean + diff - m11, m01) : vec2(m01, mean + diff - m00 + 1e-20));
+      float taps = clamp(ceil(wide / (uFoot.y * narrow)), 1.0, uCloudTaps);
+      float least = uCloud.y * max(narrow, wide / taps);
+      vec4 sum = vec4(0.0);
+      for (int i = 0; i < (least < uCloud.x ? int(taps) : 0); i++) sum += cloudAt(y + lie * (wide * ((float(i) + 0.5) / taps - 0.5)), least, j);
+      sum /= taps;
+      float s00 = dot(strain[0], strain[0]);
+      float s11 = dot(strain[1], strain[1]);
+      float s01 = dot(strain[0], strain[1]);
+      vec2 sun = strain * uSunAz * inversesqrt(0.5 * (s00 + s11) + sqrt(0.25 * (s00 - s11) * (s00 - s11) + s01 * s01));
+      tall += uCloudAge[j] * sum.z;
+      toward += uCloudAge[j] * dot(sum.xy, sun);
+      spread += uCloudAge[j] * uCloudAge[j] * sum.w * (uCloudLook.x * uCloudLook.x * uCloudStat.x + uCloudLook.y * uCloudLook.y * uCloudStat.y * dot(sun, sun));
+      on = max(on, smoothstep(least, uCloudCell.w * least, uCloud.x));
     }
     vec3 through = vec3(1.0);
     vec3 added = vec3(0.0);
     float sine = max(-dot(D, normalize(there + vec3(0.0, 0.0, uRadius))), 1e-6);
-    for (int i = 0; i < (seen.a < 1.0 && sine < uAirKnots.z ? 1 : 0); i++) {
+    for (int i = 0; i < (sine < uAirKnots.z ? 1 : 0); i++) {
       float row = clamp(log(sine / uAirKnots.x) * uAirKnots.y, 0.0, 1.0) * uAirTurn.x + uAirTurn.y;
       float column = acos(clamp(dot(D.xy / max(length(D.xy), 1e-6), uSunAz), -1.0, 1.0)) * uAirKnots.w + 0.5 * (1.0 - 3.14159265 * uAirKnots.w);
       through = vec3(texture(uAirThrough, vec2(0.5, row)).r, texture(uAirThrough, vec2(0.5, row + 1.0 / 3.0)).r, texture(uAirThrough, vec2(0.5, row + 2.0 / 3.0)).r);
@@ -499,23 +438,12 @@ void main() {
       through = mix(through, vec3(1.0), thin);
       added *= 1.0 - thin;
     }
-    float size = mix(sizePlate, resolved, seen.a);
-    int taps = int(clamp(ceil(major / (uFoot.y * minor)), 1.0, uFoot.z));
-    float span = max(minor, major / float(taps));
-    float cut = uDetail.z * size;
-    float least = uDetail.w * span;
-    float on = smoothstep(least, 2.0 * least, cut);
-    vec3 fineSum = vec3(0.0);
-    for (int i = 0; i < (on > 0.0 ? taps : 0); i++) fineSum += made(g + axis * (major * ((float(i) + 0.5) / float(taps) - 0.5)), cut, least);
-    float shade = clamp(1.0 + on * max(plate.a, uDetailLook.z) * (uDetail.y * fineSum.z - uDetailTone * dot(fineSum.xy, sunAz)) / float(taps), 1.0 - uDetailLook.w, 1.0 + uDetailLook.w);
     float ndl = dot(normalize(there + vec3(0.0, 0.0, uRadius)), uSunChart);
     float knotAt = clamp(sign(ndl) * sqrt(abs(ndl)) * 0.5 + 0.5, 0.0, 1.0) * ${CURVE_KNOTS - 1}.0;
     int knotLow = int(min(floor(knotAt), ${CURVE_KNOTS - 2}.0));
     vec3 lit = mix(uSunCurve[knotLow], uSunCurve[knotLow + 1], knotAt - float(knotLow));
-    seen.rgb *= lit;
-    vec3 ground = unfilm(plate.rgb) * lit;
-    for (int i = 0; i < (seen.a < 1.0 ? 1 : 0); i++) ground *= toneAt(g) * calmAt(g);
-    col = mix(ground * shade * through + added, seen.rgb * fine * shade, seen.a);
+    vec3 ground = guide * lit * exp(uCloudLook.x * tall - uCloudLook.y * toward - 0.5 * spread + uCloudTint * tall);
+    col = ground * through + added;
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
       int low = int(min(floor(knot), ${ABOVE_KNOTS - 2}.0));
@@ -523,11 +451,7 @@ void main() {
       vec3 byGain = mix(uAboveGain[low], uAboveGain[low + 1], part);
       vec3 byAir = mix(uAboveAir[low], uAboveAir[low + 1], part);
       col = mix(col, col * byGain + byAir, thin);
-      for (int j = 0; j < (thin < 1.0 && uAboveMix.x > 0.0 ? 1 : 0); j++) {
-        vec3 shallow = mix(ground * shade * throughLow + addedLow, seen.rgb * fine * shade, seen.a);
-        vec3 aloft = mix(ground * shade, seen.rgb * fine * shade, seen.a) * byGain + byAir;
-        col = mix(col, exp(mix(log(max(shallow, vec3(uAboveMix.y))), log(max(aloft, vec3(uAboveMix.y))), thin)), uAboveMix.x);
-      }
+      for (int j = 0; j < (thin < 1.0 && uAboveMix.x > 0.0 ? 1 : 0); j++) col = mix(col, exp(mix(log(max(ground * throughLow + addedLow, vec3(uAboveMix.y))), log(max(ground * byGain + byAir, vec3(uAboveMix.y))), thin)), uAboveMix.x);
     }
     vec2 flash = flashAt(g, col);
     col = col * exp(flash.x) + uFlashGlow * flash.y;
@@ -559,15 +483,13 @@ void main() {
         }
       }
     }
-    float kept = mix(major / sizePlate, countView, seen.a) / uGrad;
-    texels = max(kept, on * 2.0 * span / (uGrad * 1.6 * least));
+    texels = max(major / sizeGuide, on * 2.0 / (uCloudCell.w * uCloud.y)) / uGrad;
     alpha = 1.0;
     for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
       vec2 r = abs(there.xy - uFar.xy) * (2.0 * uFar.z);
       alpha = smoothstep(uDepth.x, uDepth.y, uDepth.z / (t * uPixel * uFrame)) * (1.0 - smoothstep(uJoin.x, uJoin.y, max(r.x, r.y)));
       col *= alpha;
     }
-    tint.b = seen.a;
     tint.g = on;
   }
   for (int k = 0; k < (hit ? 0 : 1); k++) {
@@ -630,46 +552,43 @@ export class CloudDeck {
 
   static async load(ctx: SetContext, base: string): Promise<CloudDeck> {
     const maps = fields.maps as Record<string, Level>
-    const plates = fields.plates as Record<string, Plate>
     const uniforms: Record<string, THREE.IUniform> = {}
     const l = deck.look
     for (const [name, key] of [['fore', 'Fore'], ['near', 'Near'], ['mid', 'Mid']] as const) {
       const m = maps[name]!
       uniforms['uHeight' + key] = { value: await heightMap(ctx, base + 'deck-' + name + '-height.bin', m.pixels[ctx.assets]!) }
     }
-    const im = fields.image
-    const ir = (im.range.pixels as Record<string, number[]>)[ctx.assets]!
-    const raw = new Uint16Array(await ctx.buffer(base + 'deck-image-range.bin'))
-    if (raw.length !== ir[0]! * ir[1]!) throw new Error('deck range size mismatch')
-    const ranges = new Float32Array(raw.length)
-    for (let i = 0; i < raw.length; i++) ranges[i] = raw[i]! / 65535
     const fm = maps.fore!
     uniforms.uForeMap = { value: new THREE.Vector4(fm.centre[0], fm.centre[1], 1 / fm.size, fm.size / fm.pixels[ctx.assets]!) }
+    const guides = deck.guide.levels as Record<string, Level>
     const texel: number[] = []
-    for (const [name, key] of [['fore', 'Fore'], ['near', 'Near'], ['mid', 'Mid'], ['far', 'Far']] as const) {
-      const m = plates[name]!
-      uniforms['uPlate' + key] = { value: await ctx.texture(base + 'plate-' + name + '.png', { srgb: true, anisotropy: l.anisotropy }) }
-      texel.push(m.size[0]! / m.pixels.full![0]!)
-      uniforms['u' + key] = { value: new THREE.Vector4(m.centre[0], m.centre[1], 1 / m.size[0]!, name === 'fore' ? 1 / m.size[1]! : m.size[0]! / m.pixels[ctx.assets]![0]!) }
+    for (const [name, key] of [['near', 'Near'], ['mid', 'Mid']] as const) {
+      const m = maps[name]!
+      const gl = guides[name]!
+      if (gl.centre[0] !== m.centre[0] || gl.centre[1] !== m.centre[1] || gl.size !== m.size) throw new Error('deck guide box mismatch: ' + name)
+      uniforms['uGuide' + key] = { value: await ctx.texture(base + 'guide-' + name + '.png', { srgb: true, anisotropy: l.anisotropy }) }
+      uniforms['u' + key] = { value: new THREE.Vector4(m.centre[0], m.centre[1], 1 / m.size, m.size / m.pixels[ctx.assets]!) }
+      texel.push(gl.size / gl.pixels[ctx.assets]!)
     }
+    const pf = (fields.plates as unknown as Record<string, Plate>).far!
+    uniforms.uPlateFar = { value: await ctx.texture(base + 'plate-far.png', { srgb: true, anisotropy: l.anisotropy }) }
+    uniforms.uFar = { value: new THREE.Vector4(pf.centre[0], pf.centre[1], 1 / pf.size[0]!, pf.size[0]! / pf.pixels[ctx.assets]![0]!) }
+    texel.push(pf.size[0]! / pf.pixels[ctx.assets]![0]!)
+    const fw = deck.life.flow
+    const wd = fw.wound
+    const [wc, wr] = (wd.pixels as Record<string, number[]>)[ctx.assets] as [number, number]
+    const woundRaw = new Uint16Array(await ctx.buffer(base + 'deck-wound.bin'))
+    if (woundRaw.length !== 2 * AGES * wc * wr || woundJson.ranges.length !== AGES) throw new Error('deck wound size mismatch')
+    const wound = new Float32Array(woundRaw.length)
+    for (let i = 0; i < woundRaw.length; i++) wound[i] = woundRaw[i]! / 65535
+    const speed = fw.unitsPerSecond
+    const cl = l.cloud
     const c = fields.chart
     const az = THREE.MathUtils.degToRad(deck.light.azimuthDeg)
-    const v = fields.view
     const lk = fields.limb.knots
     const lr = fields.limb.rows
     const glow = new Float32Array(3 * lr * lk[2]!)
     for (let ch = 0; ch < 3; ch++) for (let j = 0; j < lr; j++) for (let i = 0; i < lk[2]!; i++) glow[(ch * lr + j) * lk[2]! + i] = fields.limb.table[j]![i]![ch]!
-    const vp = (v.pixels as Record<string, number[]>)[ctx.assets]!
-    const tn = deck.tone
-    const toneRaw = new Uint16Array(await ctx.buffer(base + 'deck-tone.bin'))
-    const cm = deck.calm
-    const calmRaw = new Uint16Array(await ctx.buffer(base + 'deck-calm.bin'))
-    if (toneRaw.length !== 3 * tn.pixels * tn.pixels || calmRaw.length !== toneRaw.length || cm.pixels !== tn.pixels) throw new Error('deck tone size mismatch')
-    const tone = new Float32Array(2 * toneRaw.length)
-    for (let j = 0; j < 3 * tn.pixels; j++) for (let i = 0; i < tn.pixels; i++) {
-      tone[2 * j * tn.pixels + i] = toneRaw[j * tn.pixels + i]! / 65535
-      tone[(2 * j + 1) * tn.pixels + i] = calmRaw[j * tn.pixels + i]! / 65535
-    }
     const hz = deck.life.haze
     const fl = deck.life.flash
     const pn = place.solved.n
@@ -684,23 +603,7 @@ export class CloudDeck {
       for (let i = 0; i < ad; i++) added[(ch * as + j) * ad + i] = air.added[j]![i]![ch]!
     }
     Object.assign(uniforms, {
-      uTexel: { value: new THREE.Vector4().fromArray(texel) },
-      uView: { value: await ctx.texture(base + 'deck-view-color.png', { srgb: true, anisotropy: l.anisotropy }) },
-      uImageWide: { value: await ctx.texture(base + 'deck-image-wide.jpg', { srgb: true, anisotropy: l.anisotropy }) },
-      uImageCore: { value: await ctx.texture(base + 'deck-image-core.jpg', { srgb: true, anisotropy: l.anisotropy }) },
-      uImageRange: { value: ctx.floatTexture(ranges, ir[0]!, ir[1]!) },
-      uCore: { value: new THREE.Vector4(im.window[0]! / 2, im.window[1]! / 2, im.feather[0]!, im.feather[1]!) },
-      uRangeShape: { value: new THREE.Vector4((im.range.shrink as Record<string, number>)[ctx.assets]!, ir[0]! - 1, ir[1]! - 1, deck.image.sharpen) },
-      uRangeCode: { value: new THREE.Vector4(im.range.log2[0]!, (im.range.log2[1]! - im.range.log2[0]!) * 65535 / 65534, deck.image.hidden[0]!, deck.image.hidden[1]!) },
-      uViewOrigin: { value: new THREE.Vector2().fromArray(v.origin) },
-      uViewRange: { value: new THREE.Vector4(v.theta[0]!, 1 / (v.theta[1]! - v.theta[0]!), v.psi[0]!, 1 / (v.psi[1]! - v.psi[0]!)) },
-      uViewTexel: { value: new THREE.Vector4((v.theta[1]! - v.theta[0]!) / vp[0]!, (v.psi[1]! - v.psi[0]!) / vp[1]!, v.lengthRange[0]!, Math.log2(v.lengthRange[1]! / v.lengthRange[0]!)) },
-      uFitEye: { value: new THREE.Vector3().fromArray(v.eye) },
-      uFitAxes: { value: new THREE.Matrix3().set(v.axes[0]![0]!, v.axes[1]![0]!, v.axes[2]![0]!, v.axes[0]![1]!, v.axes[1]![1]!, v.axes[2]![1]!, v.axes[0]![2]!, v.axes[1]![2]!, v.axes[2]![2]!) },
-      uFitWindow: { value: new THREE.Vector4(v.focalPx, v.half[0]!, v.half[1]!, v.fade[0]!) },
-      uSteep: { value: new THREE.Vector2().fromArray(deck.image.steep) },
-      uTrust: { value: new THREE.Vector4(l.trust[0]!, l.trust[1]!, l.trust[2]!, v.fade[1]!) },
-      uStretch: { value: new THREE.Vector4().fromArray(l.stretch) },
+      uGuideTexel: { value: new THREE.Vector3().fromArray(texel) },
       uBlend: { value: new THREE.Vector2().fromArray(l.blend) },
       uJoin: { value: new THREE.Vector2().fromArray(l.join) },
       uS: { value: new THREE.Vector3().fromArray(c.origin) }, uEx: { value: new THREE.Vector3().fromArray(c.ex) }, uEy: { value: new THREE.Vector3().fromArray(c.ey) }, uEn: { value: new THREE.Vector3().fromArray(c.en) },
@@ -710,9 +613,15 @@ export class CloudDeck {
       uDepth: { value: new THREE.Vector3(place.scene.depth[0], place.scene.depth[1], l.shell[1]! - l.shell[0]!) },
       uMarch: { value: new THREE.Vector4().fromArray(l.march) },
       uPixel: { value: 0.001 },
-      uDetail: { value: new THREE.Vector4().fromArray(l.detail) },
-      uDetailLook: { value: new THREE.Vector4().fromArray(l.detailLook) },
-      uDetailTone: { value: l.detailTone },
+      uCloud: { value: new THREE.Vector4(cl.waveUnits, cl.leastFeet, cl.fall, cl.lifeSeconds) },
+      uCloudLook: { value: new THREE.Vector4(cl.tops, cl.slope, 1 / cl.lifeWaveUnits, cl.field.mean) },
+      uCloudCell: { value: new THREE.Vector4(1 / (cl.cell.reach * cl.cell.reach), 0.5 - 0.5 * cl.cell.jitter, cl.cell.jitter, cl.fade) },
+      uCloudShift: { value: new THREE.Vector4(cl.octaveShift[0]!, cl.octaveShift[1]!, cl.ageShift[0]!, cl.ageShift[1]!) },
+      uCloudTurn: { value: new THREE.Vector2(cl.octaveTurn, cl.ageTurn) },
+      uCloudStat: { value: new THREE.Vector2(cl.field.variance, cl.field.slopeVariance) },
+      uCloudTint: { value: new THREE.Vector3().fromArray(cl.tint) },
+      uCloudTaps: { value: cl.taps },
+      uCloudAge: { value: cl.ages.slice(0, AGES) },
       uFoot: { value: new THREE.Vector3().fromArray(l.foot) },
       uSunAz: { value: new THREE.Vector2(Math.cos(az), Math.sin(az)) },
       uLimb: { value: ctx.floatTexture(glow, lk[2]!, 3 * lr) },
@@ -726,18 +635,18 @@ export class CloudDeck {
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveMix: { value: new THREE.Vector2(deck.above.even, deck.above.floor) },
-      uTone: { value: ctx.floatTexture(tone, 2 * tn.pixels, 3 * tn.pixels) },
-      uCalmBox: { value: new THREE.Vector4(cm.centre[0]!, cm.centre[1]!, 1 / cm.size, cm.scale) },
-      uToneBox: { value: new THREE.Vector4(tn.centre[0]!, tn.centre[1]!, 1 / tn.size, tn.scale) },
-      uToneEdge: { value: 0.5 / tn.pixels },
-      uSeenReach: { value: new THREE.Vector2().fromArray(tn.known) },
       uSunCurve: { value: curve.curve.map((c) => new THREE.Vector3(c[0]! / place.solved.light[0]!, c[1]! / place.solved.light[1]!, c[2]! / place.solved.light[2]!)) },
       uSunChart: { value: new THREE.Vector3().fromArray(place.solved.sun) },
-      uStorm: { value: new THREE.Vector4(deck.life.storm.centre[0]!, deck.life.storm.centre[1]!, deck.life.storm.coreUnits, deck.life.storm.rimUnits) },
-      uStormTurn: { value: 0 },
-      uEddy: { value: deck.life.eddies.map((e) => new THREE.Vector4(e.centre[0]!, e.centre[1]!, e.coreUnits, e.rimUnits)) },
-      uEddyTurn: { value: deck.life.eddies.map(() => 0) },
-      uSeam: { value: deck.life.storm.rings.map((s) => new THREE.Vector3(s.edgeUnits[0]!, s.edgeUnits[1]!, 0)) },
+      uFlow: { value: new THREE.Vector4(deck.life.storm.centre[0]!, deck.life.storm.centre[1]!, 1 / fw.scaleUnits, speed) },
+      uFlowJet: { value: new THREE.Vector2(fw.jets.share * speed, 2 * Math.PI / fw.jets.acrossUnits) },
+      uFlowPart: { value: new THREE.Vector4(fw.jets.partUnits[0]!, 1 / (fw.jets.partUnits[1]! - fw.jets.partUnits[0]!), fw.fadeUnits[0]!, fw.fadeUnits[1]!) },
+      uEddy: { value: fw.eddies.map((e) => new THREE.Vector4(e.centre[0]!, e.centre[1]!, 1 / e.scaleUnits, e.share * speed)) },
+      uEddyFade: { value: fw.eddies.map((e) => new THREE.Vector2(e.fadeUnits[0]!, e.fadeUnits[1]!)) },
+      uFlowTime: { value: 0 },
+      uWound: { value: ctx.floatTexture(wound, wc, 2 * AGES * wr, true) },
+      uWoundCode: { value: woundJson.ranges.map((r) => new THREE.Vector4(r[0]!, r[1]! - r[0]!, r[2]!, r[3]! - r[2]!)) },
+      uWoundAge: { value: wd.turnDeg.map((t) => THREE.MathUtils.degToRad(t) * fw.jets.share * fw.scaleUnits / (1.5 * 3 ** -0.25)) },
+      uWoundShape: { value: new THREE.Vector4(1 / wd.reachUnits, 0.5 / wr, wd.closedUnits[0]!, wd.closedUnits[1]!) },
       uJet: { value: new THREE.Vector4(jet.x, jet.y, -jet.y, jet.x) },
       uHazeBand: { value: hz.bands.map((b) => new THREE.Vector4(b.heightUnits, b.side, 0, b.depth)) },
       uHazeSeed: { value: hz.bands.map((b) => new THREE.Vector4(b.seed[0]!, b.seed[1]!, b.shadowDepth, 20 * hz.thick.spread * hz.thick.spread)) },
@@ -754,7 +663,7 @@ export class CloudDeck {
       uFlashGlow: { value: new THREE.Vector3().fromArray(fl.glow) },
       uFlashCore: { value: new THREE.Vector3(fl.core.tight, fl.core.spill, fl.core.floor) },
       uHazeSpan: { value: hz.bands.map((b) => new THREE.Vector4(b.edgeUnits[0]!, b.edgeUnits[1]!, b.reachUnits[0]!, b.reachUnits[1]!)) },
-      uHazeLight: { value: new THREE.Vector4(Math.hypot(place.solved.sun[0]!, place.solved.sun[1]!) / place.solved.sun[2]!, hz.thick.units, hz.minCosine, Math.log2(hz.lightBlurUnits / texel[2]!)) },
+      uHazeLight: { value: new THREE.Vector4(Math.hypot(place.solved.sun[0]!, place.solved.sun[1]!) / place.solved.sun[2]!, hz.thick.units, hz.minCosine, Math.log2(hz.lightBlurUnits / texel[1]!)) },
       uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 1) },
       uHazeGlow: { value: new THREE.Vector3().fromArray(hz.glow) },
       uHazeShade: { value: new THREE.Vector3().fromArray(hz.shadowTint) },
