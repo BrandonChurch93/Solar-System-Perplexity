@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T13:22:46.998Z",
+ "pushed": "2026-11-25T13:53:19.142Z",
  "head": "4676101d05fd7c9bf713fd740834596beee14176",
- "note": "the slab for the cloud sheet (uncommitted): the dot is gone at 4962 and 4972, hold same bytes; rise pairs 0.48, 0.57, 0.62 (proxy); corner flecks still red",
+ "note": "slab controls: dot, speckle, limb lines, patch are the map's sheet (slab off against on); flecks named: third streamer; 4860 with the slab beside the approved, G17 median 0.216 (my reader, red)",
  "looks": [
+  {
+   "time": "2026-11-25T13:53:18.525Z",
+   "file": "20261125135318525-note-k3-corner.jpg",
+   "source": "../../../../tmp/k3-corner.jpg",
+   "kind": "note",
+   "label": "Control for the flecks at 4968, 4972, 4976 (upper left corner): left as it stands, right with the third streamer's density 0. The row of flecks is the third streamer; the flecks at the bank's end are the first streamer's tail. Not cured yet",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T13:53:17.893Z",
+   "file": "20261125135317893-note-sl-4976.jpg",
+   "source": "../../../../tmp/sl-4976.jpg",
+   "kind": "note",
+   "label": "4976: slab off above, on below. The white patch at the lower right is a cloud of the map's sheet: with the slab a soft round blob. 37 s per draft frame (35 off)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T13:53:17.310Z",
+   "file": "20261125135317310-note-sl-4974.jpg",
+   "source": "../../../../tmp/sl-4974.jpg",
+   "kind": "note",
+   "label": "4974: slab off above, on below (control). The dot, the speckle field lower left and the hard limb lines are the map's cloud sheet read as a flat picture: with the slab a soft haze and one soft band. 43 s per draft frame (39 off)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T13:53:16.715Z",
+   "file": "20261125135316715-note-look-s3b.jpg",
+   "source": "../../../../tmp/look-s3b.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved (left), with the run and the slab. G17 tile median by my reader 0.216 (0.254 without the slab: the far cloud streaks at the limb are softer, a cost, named). The eye and the streaks are not there yet. 105 s per draft frame (101 without the slab)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T13:22:41.234Z",
    "file": "20261125132241234-note-look-r1.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/s3-4972.jpg",
    "kind": "note",
    "label": "4972 at 1920 draft: before above, with the slab (far.slab [4, 2], uncommitted) below. The dot is gone with no streak, the hard limb lines are one soft band. 44 s per frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T12:40:03.671Z",
-   "file": "20261125124003671-note-r1-soft.jpg",
-   "source": "../../../../tmp/r1-soft.png",
-   "kind": "note",
-   "label": "4860 texel view, soft pixels of the same trial: 2.059 percent (48.66 before), all on the cirrus bank's thick heaps",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T12:40:02.377Z",
-   "file": "20261125124002377-note-look-r1.jpg",
-   "source": "../../../../tmp/look-r1.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, trial: the deck's octaves run on to the pixel's width as the mean along the run (not committed: it moves 4605 by one level on 3781 pixels inside the place's disc, being cured). G17 draft 1920 median 0.254, unchanged. 100.8 s the draft frame at 1920 (79 before)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T12:10:15.209Z",
-   "file": "20261125121015209-note-g13-count-before-after.jpg",
-   "source": "out/work/nep/weave/ev/g13-count-before-after.jpg",
-   "kind": "note",
-   "label": "the texel view before and with the count's commit (green: few texels a pixel, yellow: many): the hold reads 0.000 percent soft, the terrain 48.7 percent, RED: the near ground by code stops at the pixel's long side. 4860 beside the approved is the look before this one (G17 proxy 0.412, 79 s the draft frame at 1920)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T11:43:26.761Z",
-   "file": "20261125114326761-note-c-4860-C8.jpg",
-   "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
-   "kind": "note",
-   "label": "way C at 4860 beside the approved: G17 proxy 0.412 at preview (bar 0.8, RED and named); 64 s the draft frame at preview, 103 s at 1920",
    "stop": "neptune"
   }
  ]
