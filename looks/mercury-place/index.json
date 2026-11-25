@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T13:13:26.836Z",
+ "pushed": "2026-11-25T13:29:09.691Z",
  "head": "3cc3bba678d2b18c1c1f60d57a4b9686d4677c5b",
- "note": "merge with main d72a1199: G15 was red (tone.png 2048), cured with tone.png 1024, gate green; 615 beside the approved image and merged main: inside the disc the hero's gold ring crater is replaced by two grey pits; reread of the three stretches on the commit runs",
+ "note": "MAIL 1106: the three red places by pairs of frames: dive 720 to 722 the limb (same in the mark), rise 1009 to 1012 the first plate against the map's lumps, pop 1042 to 1045 a ring on the limb",
  "looks": [
+  {
+   "time": "2026-11-25T13:29:04.649Z",
+   "file": "20261125132904649-note-pair-dive.jpg",
+   "source": "../../../../tmp/m/pair-dive.png",
+   "kind": "note",
+   "label": "MAIL 1106 dive 720 to 722: the ground of pixel 1376, 836 at 721 + 1/2 and at 729 + 1/2, way C, take b9, the mark, times 4",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T13:29:03.530Z",
+   "file": "20261125132903530-note-pair-rise.jpg",
+   "source": "../../../../tmp/m/pair-rise.png",
+   "kind": "note",
+   "label": "MAIL 1106 rise 1009 to 1012: the ground of pixel 776, 644 at 1012 and the same ground at 1020 and 1016, way C and take b9, times 4",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T13:29:02.257Z",
+   "file": "20261125132902257-note-pop-sheet.jpg",
+   "source": "../../../../tmp/m/pop-sheet.png",
+   "kind": "note",
+   "label": "MAIL 1106 the pop 1042 to 1045 on the commit: 1044, 1044 + 1/2, 1049 and what the reader has left, times 8: a ring on the limb",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T13:13:25.289Z",
    "file": "20261125131325289-note-n-615-disc.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/h-745.png",
    "kind": "note",
    "label": "745 at 1 to 1, the mark beside way C on the tree",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T12:41:30.699Z",
-   "file": "20261125124130699-note-h-735.jpg",
-   "source": "../../../../tmp/m/h-735.png",
-   "kind": "note",
-   "label": "735 at 1 to 1, the mark beside way C on the tree",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T12:14:22.916Z",
-   "file": "20261125121422916-note-h-dive-b.jpg",
-   "source": "../../../../tmp/m/h-dive-b.png",
-   "kind": "note",
-   "label": "dive 718, 720, 722 at 1 to 1: way C s9 without the colour law left, the tree 58c6e8e7 right (equal by hash from 722)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T12:14:21.559Z",
-   "file": "20261125121421559-note-h-dive-a.jpg",
-   "source": "../../../../tmp/m/h-dive-a.png",
-   "kind": "note",
-   "label": "dive 712, 714, 716 at 1 to 1: way C s9 without the colour law left, the tree 58c6e8e7 right",
    "stop": "mercury"
   }
  ]
