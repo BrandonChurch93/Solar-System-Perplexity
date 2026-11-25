@@ -454,3 +454,30 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   size.py (new, rough): lane to lane along a row at 3 px: approved 66 to 68 px, h9 49 to 57, g15 60 to 71; at 8 px:
   approved 110 to 115, h9 93 to 99, g15 97 to 99. It counts veins as lanes and does not tell g15 from h9, so b is
   not proven by it. The sim's own scale is 0.68 of g15's.
+- 13:51 UTC: h9 committed and pushed as 9a4c4e9460964043c6525f45be16626140a1017a (not named). sun_builder told at
+  13:52 (new sha, rebaked level, the specks at frame x 1390, y 600) and corrected at 13:53.
+- 13:55 UTC: a strip at 1 to 1 (rows 820 to 1080, x 260 to 1660 of the 1920 frame, v/strip.jpg) showed h9 had
+  overshot the size: approved cells 100 to 160 px, g15 100 to 200, h9 60 to 130 with many of 60. The Builder's 70
+  to 120 against 100 to 220 was most likely read on my 1408 px attachments. So:
+  - h10: sim.slots 2790, radius [0.0249, 0.0598], far.cell 0.079 (0.83 of g15's size, tile 3.2): 70 to 150 px.
+  - h11, h12: fold [0.7, 0.72], vein 0.6: the cells turn dull, clay lumps with few bright cores. Not kept.
+  - h13: heat.tone [0.8, 0.4] (new key, was 0.55 + 0.9 of the place's field in the code), rim 0.5: little change.
+  - h14: fold [0.6, 0.77], vein 0.5, rim 0.55, patch [0.28, 0.9]: brighter cores. Percentiles 0.224 0.404 0.592
+    0.761 0.906 0.961 against 0.231 0.404 0.58 0.761 0.906 0.965 with the curve of h12
+    ([0.1047, 0.1155] ... [1.3871, 1.0]). FROZEN for the named at 14:01.
+  - size.py on h14 at 3 px: lane to lane 53 to 62 px (approved 66 to 68, g15 60 to 71).
+- 14:02 UTC: mail from sun_builder: g15 joined in f906d2ec on agent/sun-place. (1) The level laid whole reads 13.4045
+  on the hold 360 against 11.9772 (too dark), so it lays it by law f: the level's bands finer than 0.55 degrees
+  over the map's low band, in linear light; the hold is then the map alone. (2) The anchor is turned: place.json
+  globe.spot [0.23625665, 0.2013716, 0.95059575], north [-0.04857035, 0.97951492, -0.19542631]. My far.level.axes
+  are of the old frame; it passes the place from place.json. A rebake should be at the new place (NOT DONE in h14:
+  my branch's place.json is the old one; only the fine band of the level is used, so the harm is small). (3) The
+  rise with my ground reads 0.778 at [40, 330] against a limit of 0.45 (standing ground 0.349), captures 218.5 to
+  226.5: the stage ground seen from far, grains of one or two pixels kept sharp. Cure on my side: the far ground
+  filtered to the pixel by distance. OWED, first thing after the named. (4) The specks: none in its state at
+  x 1390, y 600; the old loops.ts with sparks is still drawn in my branch, not in its.
+- 14:02 UTC: h14 baked: full 1,972,137 bytes, web 519,307. Umbra on the bake at 0.15: 1.46 degrees wide (1.36 at
+  0.1, 1.56 at 0.2), middle 0.06 east and 0.38 north of S (old axes). Growth 2,654,872 bytes (JPGs 2,491,444,
+  text 163,428). spans.ts on h14: cells that show (614): at least 13 film frames from half of the largest ground
+  to nothing (1 percent 16, 5 percent 18, quartile 22, median 29); all ends median 25, 5 percent 6; whole lives
+  least 58, median 87, most 172.

@@ -618,7 +618,7 @@ void main() {
   float fan = 0.1 * mix(0.5, fa, ka) + 0.35 * mix(0.5, fb, kb) + 0.55 * mix(0.5, fc, kc);
   float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mix(mott, labWell(d, seed, uLabTime.x), ${lab.heat.spread[3]!.toFixed(2)}) - 0.5);
   float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
-  float top = mix(uLabHeatB.w, 1.0, middle) * (0.55 + 0.9 * wide);
+  float top = mix(uLabHeatB.w, 1.0, middle) * (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide);
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(0.04, 0.4, along));
   cell *= 1.0 + ${(2 * lab.heat.fine[0]!).toFixed(3)} * (labWell(d * ${lab.heat.fine[1]!.toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5);
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
