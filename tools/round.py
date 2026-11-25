@@ -192,19 +192,24 @@ def start(a):
         sh('git fetch -q origin main && git merge -q --no-edit origin/main')
     text = PROG.read_text()
     if not any(l.startswith('- Round %d,' % n) for l in round_lines(text)):
-        k = len([l for l in round_lines(text) if re.match(r'- Round \d+, Phase %d, %s,' % (phase, stop), l)]) + 1
+        import roundnotes
+        try:
+            counted = roundnotes.count(round_lines(text), phase, stop, roundnotes.number(a.note))
+        except ValueError as e:
+            sys.exit(str(e))
+        k, of_note = counted['k'], roundnotes.tail(counted)
         limit = c['quality']['maxRoundsPerStop']
         if k > limit:
-            sys.exit('%s has used its %d rounds' % (stop, limit))
+            sys.exit('%s has used its %d rounds%s' % (stop, limit, of_note))
         day = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M')
-        line = '- Round %d, Phase %d, %s, round %d of %d. Started %s UTC.' % (n, phase, stop, k, limit, day)
+        line = '- Round %d, Phase %d, %s, round %d of %d%s. Started %s UTC.' % (n, phase, stop, k, limit, of_note, day)
         i, j = section(text, 'Rounds')
         text = text[:j].rstrip('\n') + '\n' + line + '\n' + text[j:]
         text = set_status(text)
         text = set_row(text, stop, {2: 'in progress', 3: k})
         PROG.write_text(text)
-        commit('Round %d starts: Phase %d, %s, round %d of %d' % (n, phase, stop, k, limit))
-        state(n, {'round': n, 'stop': stop, 'phase': phase, 'k': k, 'tier': a.tier, 'every': a.every})
+        commit('Round %d starts: Phase %d, %s, round %d of %d%s' % (n, phase, stop, k, limit, of_note))
+        state(n, {'round': n, 'stop': stop, 'phase': phase, 'k': k, 'note': counted['note'], 'ofNote': of_note, 'first': counted['first'], 'tier': a.tier, 'every': a.every})
     if not a.no_mirror:
         sh('git fetch -q origin agent/' + stop)
         head = sh('git rev-parse --short origin/agent/' + stop).strip()
@@ -527,7 +532,7 @@ def pack(a):
     text = PROG.read_text()
     m = re.search(r'^- Next critic name: reviewer_(\d+)', text, re.M)
     num = int(m.group(1))
-    first = s['k'] == 1 or a.controls
+    first = s.get('first', s['k'] == 1) or a.controls
     jobs = []
 
     def add(role, model, files, msg, wants_file):
@@ -849,7 +854,7 @@ def close(a):
     seq = lambda grp: '; '.join('%s %s' % (k, ' '.join(vote(v) for v in vs)) for k, vs in sorted(grp.items()))
     fam = lambda role: ', '.join(j['model'] for j in by(role)[-1:])
     md = []
-    md.append('# Round %d · Phase %d · %s · round %d of %d\n' % (n, phase, stop, s['k'], c['quality']['maxRoundsPerStop']))
+    md.append('# Round %d · Phase %d · %s · round %d of %d%s\n' % (n, phase, stop, s['k'], c['quality']['maxRoundsPerStop'], s.get('ofNote', '')))
     md.append('- Build: main at %s (engine hash %s, %s hash %s), master format, final tier for judged stills, review tier for sheets, full asset set. Every returned record was checked against these hashes.' % (s['commit'][:7], s['engineHash'], stop, s['stopHash']))
     md.append('- Machine checks before the pack: %s.' % ('green (' + ' '.join(l.split()[1] for l in (rdir(n) / 'gate.txt').read_text().split('\n') if l.startswith('PASS')) + ')' if s.get('gateGreen') else 'not green, see below'))
     md.append('- Measures and the pack were rendered on supporting agents\' VMs at this commit and assembled on the Builder\'s VM with no rendering.')
@@ -1259,7 +1264,7 @@ def film_pack(a):
     source = None
     if s['mode'] in ('record', 'polish'):
         source = a.controls_from
-    elif s['k'] > 1 and not a.controls:
+    elif not s.get('first', s['k'] == 1) and not a.controls:
         source = min(int(re.match(r'- Round (\d+),', l).group(1)) for l in round_lines(text) if re.match(r'- Round \d+, Phase %d, whole film,' % s['phase'], l))
     if source and not (SC / rid(source) / 'jurors.txt').exists():
         sys.exit('round %d has no jurors.txt to take the controls from' % source)
@@ -1760,6 +1765,7 @@ for name in STEPS:
     q.add_argument('--no-mirror', action='store_true')
     q.add_argument('--allow-red', action='store_true')
     q.add_argument('--defer', action='store_true')
+    q.add_argument('--note')
     q.add_argument('--with', dest='with_rounds')
     q.add_argument('--no-cover', action='store_true')
     q.add_argument('--controls', action='store_true')

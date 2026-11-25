@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "dive frames 1284-1317, whole planet surface",
+   "what": "as the camera closes in, the globe's surface turns into a soft, smeared, stretched version of the far texture with streaky radial smearing. It reads as a zoomed-in bitmap that swims, not as cloud tops getting closer, and there is no parallax between the near surface and the limb",
+   "fix": "fade in the terrain-scale cloud detail and its displacement while the globe still fills only part of the frame, so detail grows with distance instead of the far texture being magnified"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "rise frames 1550-1577, surface filling the frame",
+   "what": "the same stretched, smeared texture appears on the way out, and frame 1564 is almost all directional smear with no readable structure",
+   "fix": "use the same detail blend as the dive in reverse, and blur along the camera's motion rather than stretching the texture"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "background, frames 1284-1309 then 1317",
+   "what": "the Milky Way band visible behind the globe during the hold disappears as the dive starts, leaving plain black, and then pops back in the upper left at 1317 together with a sun that was not in the hold",
+   "fix": "keep the same sky dome and star field rendered through the whole dive, and bring the sun in from behind the limb as the camera's angle changes"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "frames 1317-1333, surface and lighting",
+   "what": "the surface changes look abruptly, from flat, soft, greenish-gold paint to sharp, deep-shadowed volumetric cloud towers lit from behind. In the hold the globe is lit from the front and left, so the direction of the light flips during the descent",
+   "fix": "keep the sun direction the same in the globe and terrain views, or rotate the camera so the move to backlight is motivated, and spread the change in surface look over more frames"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 1584-1604, the globe and sky after the rise",
+   "what": "the globe that comes back has a different face (the big vortex sits right of center instead of at the upper right), it is darker, and the sky behind it has no Milky Way band. It does not read as the same place the camera left",
+   "fix": "keep the planet's rotation and the sky dome continuous from the hold, so the rise ends on the same hemisphere and background, allowing for the slow spin"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "terrain frames 1350-1529, the middle-distance cloud banks",
+   "what": "the near clouds move forward, but the cloud towers and their shadow shafts reshape in place more than they travel. The near-versus-far parallax is weak, and in places the clouds look like they are morphing",
+   "fix": "increase the camera's forward or sideways travel relative to the slow cloud evolution, so the near tops clearly pass under the camera while the horizon stays steady"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "hold frames 1110-1259, planet surface",
+   "what": "over about 150 frames the globe's rotation is barely visible, so the hold reads close to static",
+   "fix": "raise the spin rate slightly or add a gentle drift to the cloud bands so the globe is visibly alive"
+  }
+ ]
+}
