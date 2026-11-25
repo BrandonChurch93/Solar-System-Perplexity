@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T02:36:51.821Z",
- "head": "c0cef0c0e024b23d5ce6d155eff422f146bdea6d",
- "note": "02:37 relief law hook with tone pushed (agent/engine-edge 6561b5a5), ten drafts byte equal; under pass in work",
+ "pushed": "2026-11-25T03:04:05.523Z",
+ "head": "ec364902d2313e4a03faa37a6bec6fef9a2606c8",
+ "note": "under pass on take batch 8 (tip 9ea28c24, local): proof drafts with a Mars stand in; counts and the suite run next",
  "looks": [
+  {
+   "time": "2026-11-25T03:04:04.209Z",
+   "file": "20261125030404209-note-f02580.jpg",
+   "source": "out/work/blur/proof2-on/f02580.png",
+   "kind": "note",
+   "label": "under pass ON, stand in, 2580 draft: the relief covers the frame"
+  },
+  {
+   "time": "2026-11-25T03:04:03.357Z",
+   "file": "20261125030403357-note-top2477.jpg",
+   "source": "../../../../tmp/law/q/top2477.png",
+   "kind": "note",
+   "label": "under pass ON, stand in, 2477 draft, the horizon band y 120..400 (left half over right half): the sky and haze drawn once, no step"
+  },
+  {
+   "time": "2026-11-25T03:04:02.479Z",
+   "file": "20261125030402479-note-edge-left-on.jpg",
+   "source": "../../../../tmp/law/q/edge-left-on.png",
+   "kind": "note",
+   "label": "under pass ON, stand in, 2477 and 2478 drafts, crop x 0..640 y 380..1080: the relief's left and bottom edge over the cap"
+  },
+  {
+   "time": "2026-11-25T03:04:01.051Z",
+   "file": "20261125030401051-note-f02477.jpg",
+   "source": "out/work/blur/proof2-on/f02477.png",
+   "kind": "note",
+   "label": "under pass ON, Mars stand in (scratch, never pushed), 2477 draft: the relief over the globe's cap, feathered at its sides"
+  },
   {
    "time": "2026-11-25T02:36:37.574Z",
    "file": "20261125023637574-note-f02701.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/law/dots/b-r2156.png",
    "kind": "note",
    "label": "2156 crop x 1484 to 1556, y 972 to 1028, 10 times, gain 6 in linear light: main review 24 samples, K 1, cover 2 (candidate handover.sharpCover): the rows of single dots join at cover 2"
-  },
-  {
-   "time": "2026-11-25T01:50:46.124Z",
-   "file": "20261125015046124-note-kernel.jpg",
-   "source": "../../../../tmp/law/sim/kernel.png",
-   "kind": "note",
-   "label": "sim: a streak drawn with a footprint of 0.5, 0.77 and 1 px at 24 and 64 samples"
-  },
-  {
-   "time": "2026-11-25T01:50:44.934Z",
-   "file": "20261125015044934-note-d1857-z6.jpg",
-   "source": "../../../../tmp/law/d1857-z6.png",
-   "kind": "note",
-   "label": "1857 draft against review, zoom 6"
-  },
-  {
-   "time": "2026-11-25T01:50:43.616Z",
-   "file": "20261125015043616-note-x1857-z6.jpg",
-   "source": "../../../../tmp/law/x1857-z6.png",
-   "kind": "note",
-   "label": "1857 review, cloud specks, main against K=1, zoom 6"
-  },
-  {
-   "time": "2026-11-25T01:50:42.417Z",
-   "file": "20261125015042417-note-x2156-z12.jpg",
-   "source": "../../../../tmp/law/x2156-z12.png",
-   "kind": "note",
-   "label": "2156 review, the rows of dots, main against K=1, zoom 12"
   }
  ]
 }
