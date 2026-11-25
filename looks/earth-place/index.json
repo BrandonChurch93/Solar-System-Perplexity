@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T14:46:36.295Z",
+ "pushed": "2026-11-25T15:07:22.071Z",
  "head": "caaa727dac0700ca06512860cdbb6faba2855888",
- "note": "caaa727d: ruling b state, finals of 1755 and 2010 beside main and approved; both red by my look, dive lines running",
+ "note": "caaa727d: tool's dive lines running (frame 1880 of 1919); wedge specks read as clouds at 1 to 1; far band of 2010 still not the approved shot, height law for small bodies on trial outside the film",
  "looks": [
+  {
+   "time": "2026-11-25T15:07:20.692Z",
+   "file": "20261125150720692-note-pv-all.jpg",
+   "source": "../../../../tmp/gl/k15/pv-all.jpg",
+   "kind": "note",
+   "label": "far band of 2010, a preview outside the film (band.py's own law on the approved layer): approved, committed, and three trials of the height law for small bodies (not baked)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T15:07:19.442Z",
+   "file": "20261125150719442-note-d-c2.jpg",
+   "source": "../../../../tmp/gl/k15/d-c2.jpg",
+   "kind": "note",
+   "label": "caaa727d dive 1870, 1875, 1880 at 1 to 1 west of the disc: the wedge's specks read as small clouds with shadows; the dark blue spot north of the streak stands",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T15:07:05.923Z",
+   "file": "20261125150705923-note-d-s3.jpg",
+   "source": "../../../../tmp/gl/k15/d-s3.jpg",
+   "kind": "note",
+   "label": "caaa727d dive 1869 to 1880 from the tool's own frames: the wedge's specks west of the disc read as a sprinkle over the land; the disc's ground with an outline",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T14:46:35.704Z",
    "file": "20261125144635704-note-2010-band-middle.jpg",
@@ -49,36 +73,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "13d9cc752b1d9c4e"
-  },
-  {
-   "time": "2026-11-25T14:42:58.963Z",
-   "file": "20261125144258963-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
-  },
-  {
-   "time": "2026-11-25T14:26:09.613Z",
-   "file": "20261125142609613-note-a1-2010-whole.jpg",
-   "source": "../../../../tmp/gl/k15/a1-2010-whole.jpg",
-   "kind": "note",
-   "label": "2010 draft: approved, ee321270, now",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T14:26:08.687Z",
-   "file": "20261125142608687-note-a1-1755-pair4.jpg",
-   "source": "../../../../tmp/gl/k15/a1-1755-pair4.jpg",
-   "kind": "note",
-   "label": "1755 draft, wedge under ruling b: before, after, 4 px for 1",
-   "stop": "earth"
   }
  ]
 }
