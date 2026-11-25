@@ -1,9 +1,49 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T09:18:25.100Z",
- "head": "128b54f14e80f5396174fc156803b50c5a9aaf24",
- "note": "MAIL 975 controls: three causes in the red stretches: the steep rule's ring, the cover's picture against the globe's, the pale band of the air under the limb; not cured yet",
+ "pushed": "2026-11-25T09:43:06.486Z",
+ "head": "bfd6c3adaacb2fb02b3fac5066a60941256f1c20",
+ "note": "MAIL 975 answer: controls for dive part 4 and the rise; steep rule off not taken (darkens the disc's middle at 4137 and 4436); state bfd6c3ad, notes only",
  "looks": [
+  {
+   "time": "2026-11-25T09:43:05.851Z",
+   "file": "20261125094305851-note-pairs-s.jpg",
+   "source": "../../../../tmp/n52/pairs-s.jpg",
+   "kind": "note",
+   "label": "the cure tried and not taken: state (left) against the steep rule off (right) at 4137, 4416, 4436, draft: the middle of the disc goes dark at 4137 and 4436",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T09:43:05.273Z",
+   "file": "20261125094305273-note-p2-LK-8829.jpg",
+   "source": "../../../../tmp/n52/p2-LK-8829.jpg",
+   "kind": "note",
+   "label": "control, rise 4414.5 to 4422.5, the table's light out, cover off: pattern 0.62, 1.7 percent over",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T09:43:04.732Z",
+   "file": "20261125094304732-note-p2-sK-8829.jpg",
+   "source": "../../../../tmp/n52/p2-sK-8829.jpg",
+   "kind": "note",
+   "label": "control, rise 4414.5 to 4422.5, steep rule off, cover off: pattern 1.27, 24.4 percent over: the pale band of the air under the limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T09:43:04.146Z",
+   "file": "20261125094304146-note-p2-Lc-8370.jpg",
+   "source": "../../../../tmp/n52/p2-Lc-8370.jpg",
+   "kind": "note",
+   "label": "control, 4185 to 4193, cover on, the layer's factor held at 0.85: pattern 0.35, green: the factor by the eye's height is the cause of dive part 4",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T09:43:03.279Z",
+   "file": "20261125094303279-note-p2-st-8370.jpg",
+   "source": "../../../../tmp/n52/p2-st-8370.jpg",
+   "kind": "note",
+   "label": "reader's own chain, state, 4185 to 4193: pattern 0.98 (the back reading on 3 percent of the frame)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T09:18:23.775Z",
    "file": "20261125091823775-note-p2-s-8305.jpg",
@@ -202,52 +242,6 @@
    "source": "../../../../tmp/n48/X1-panel.png",
    "kind": "note",
    "label": "ablation X1: globe's own light, cover off, seen straight down (not the film's camera): pattern 0.03 at most",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T05:05:18.598Z",
-   "file": "20261125050518598-note-X2-panel.jpg",
-   "source": "../../../../tmp/n48/X2-panel.png",
-   "kind": "note",
-   "label": "ablation X2: dive 4152 to 4177, cover off, light handed by pixel with the layer law: pattern 1.43 at 4153, RED (cause is the hand of light, globe.ts line 322)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T04:47:51.814Z",
-   "file": "20261125044751814-frame-B-4436-final.jpg",
-   "source": "out/work/u/r48/B-4436-final.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T04:44:30.005Z",
-   "file": "20261125044430005-note-B-diff.jpg",
-   "source": "../../../../tmp/n48/B-diff.jpg",
-   "kind": "note",
-   "label": "aaace72a, af8898f2, what changed (green: sky, red: body): 4420 above, 4436 below. Only stars and the rim of the lit limb change",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T04:44:28.886Z",
-   "file": "20261125044428886-note-B-3.jpg",
-   "source": "../../../../tmp/n48/B-3.jpg",
-   "kind": "note",
-   "label": "af8898f2, draft: travel 4456 to 4470 every frame",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T04:44:26.513Z",
-   "file": "20261125044426513-note-B-2.jpg",
-   "source": "../../../../tmp/n48/B-2.jpg",
-   "kind": "note",
-   "label": "af8898f2, draft: 4436 to 4455 every frame. The band stands on the left edge of 4436 and 4437 and is gone by 4439; the seam 4454 to 4455 on plain stars",
    "stop": "uranus"
   }
  ]
