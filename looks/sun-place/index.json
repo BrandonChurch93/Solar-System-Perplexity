@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T18:22:09.521Z",
+ "pushed": "2026-11-25T18:54:51.167Z",
  "head": "16372d3ee3bcdf19829868a7871df8bdbc7ae502",
- "note": "G3 proof on the tree to be named: 90 alone, 60, 120, 495, 735 then 90 are one file (a06e0f96b68dd742). The harness 380 to 470 is drawing, then finals and the chain. frame 60 (before the far map's clear): dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "18:55 UTC. Harness of the rise on merge 16372d3e: RED on one line, the far sky's pattern 1.44 at 196 (limit 0.45, 19 capture frames from 191): the seated gas comes on as broad arcs in the sky. Other lines green (pattern 0.34 at 219, pop 1.03 at 217, level step 0.12). Finals at 60 and 360 render now. Frame 60 at draft (take of 17:49): dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T18:54:50.556Z",
+   "file": "20261125185450556-note-h5-190-204.jpg",
+   "source": "../../../../tmp/v/h5-190-204.jpg",
+   "kind": "note",
+   "label": "Harness frames 190 to 204 as drawn (merge 16372d3e, draft)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T18:54:49.986Z",
+   "file": "20261125185449986-note-h5-190-204-g4.jpg",
+   "source": "../../../../tmp/v/h5-190-204-g4.jpg",
+   "kind": "note",
+   "label": "Harness frames 190 to 204, top half at gain 4: the gas comes on as broad arcs in the sky (the far sky's pattern reads red here, 1.44 at 196 against 0.45)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T18:22:08.475Z",
    "file": "20261125182208475-note-limb60.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/s0.jpg",
    "kind": "note",
    "label": "trial S0: close card off, present aim: 0, 60, 216, 221 at draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:02:58.155Z",
-   "file": "20261125170258155-note-s1-b.jpg",
-   "source": "../../../../tmp/v/s1-b.jpg",
-   "kind": "note",
-   "label": "trial S1: close card off, one aim: 221, 226, 236, 247 at draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T17:02:57.498Z",
-   "file": "20261125170257498-note-s1-a.jpg",
-   "source": "../../../../tmp/v/s1-a.jpg",
-   "kind": "note",
-   "label": "trial S1: close card off, the film's sky, one aim: 0, 60, 90, 196, 206, 216 at draft. frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
    "stop": "sun"
   }
  ]
