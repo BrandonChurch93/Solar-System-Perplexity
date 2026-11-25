@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T05:04:42.790Z",
- "head": "121f3ade351391d8336231ae61034d8e69fb055a",
- "note": "Neptune third named commit 121f3ade: 4860 at 1920 beside the approved image, the rise at 1920, the Milky Way in the rise, the swirl's cause",
+ "pushed": "2026-11-25T05:44:57.883Z",
+ "head": "cdb17a08c143f288bf0560440e8463215889fad6",
+ "note": "haze as light added at 4860 (plain 49,81,121 vs 90,134,176), storm controls: rings draws the spiral",
  "looks": [
+  {
+   "time": "2026-11-25T05:44:57.308Z",
+   "file": "20261125054457308-note-swirl3.jpg",
+   "source": "out/work/nep/weave/ev/swirl3.jpg",
+   "kind": "note",
+   "label": "storm from orbit, controls: left as is, middle dark 0, right rings 0, at 4605 (5x) and 4720 (3x). The spiral lane is drawn by rings, not by dark.",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T05:44:56.735Z",
+   "file": "20261125054456735-note-a8-dive-b.jpg",
+   "source": "out/work/nep/weave/ev/a8-dive-b.jpg",
+   "kind": "note",
+   "label": "dive frames with the haze as light added, working tree, preview draft; soft dark ovals on the air are a red I name",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T05:44:55.867Z",
+   "file": "20261125054455867-note-4860-A8.jpg",
+   "source": "out/work/nep/weave/ev/4860-A8.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image, working tree with the haze as light added (not committed). Proxy G17 at the preview: median 0.536, p25 0.130 (bar 0.8, red). Plain's box (49, 81, 121) against the approved (90, 134, 176), before (24, 58, 98). 38 s the preview draft frame cold.",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T05:04:41.778Z",
    "file": "20261125050441778-note-swirl2-4605.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/weave/ev/4860-m1.jpg",
    "kind": "note",
    "label": "4860 at 1920 on the named commit (left) beside the approved image (right). G17 proxy median 0.675 p25 0.280 at 1920 (preview 1.077, 0.348). Plain (23, 57, 97) against (90, 134, 176): the haze is not built. 97 s the draft frame at 1920, 22 s at the preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T04:42:49.122Z",
-   "file": "20261125044249122-note-point4-specks.jpg",
-   "source": "out/work/nep/weave/ev/point4-specks.jpg",
-   "kind": "note",
-   "label": "point 4: main's own picture at 4720 (draft, 1920, 8x): the red and green specks stand in the web set and in the full set alike (23 red and 4 green pixels against 24 and 5); on my head none on the deck",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T04:42:48.566Z",
-   "file": "20261125044248566-note-night2-4713.jpg",
-   "source": "out/work/nep/weave/ev/night2-4713.jpg",
-   "kind": "note",
-   "label": "controls for the night side at 4713 (native, lifted 5x): head, night flatten off (22 px move by 1 level), fall power neutral (the pink turns blue), the map alone (the lumps stand): the lumps are the map's clouds, the tint is the fall's power by channel",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T04:42:48.007Z",
-   "file": "20261125044248007-note-swirl2-4720.jpg",
-   "source": "out/work/nep/weave/ev/swirl2-4720.jpg",
-   "kind": "note",
-   "label": "controls for the swirl with the dark eye at 4720 (preview, 2x): head, arms off, collar off, the storm's dark and rings at 0, the globe's map alone. It goes only with dark and rings at 0: the cause is the storm block of the scene from code",
    "stop": "neptune"
   }
  ]
