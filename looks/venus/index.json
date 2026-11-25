@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T21:44:54.689Z",
+ "pushed": "2026-11-25T22:15:45.039Z",
  "head": "833b30b7c88919612af5258dce6107fadffa347d",
- "note": "cure B alone (one carrier of the close picture a pixel): whole run going, stills seen",
+ "note": "cure B whole run, dive read red 0.67 at 1330, cause being named; far deck plate trial",
  "looks": [
+  {
+   "time": "2026-11-25T22:15:43.745Z",
+   "file": "20261125221543745-note-Bc-spot-1329.jpg",
+   "source": "../../../../tmp/v/sh/Bc-spot-1329.jpg",
+   "kind": "note",
+   "label": "cure B, dive 1328 + 1/2 to 1338 + 1/2, crop x 480 to 880, y 830 to 1080: the red rows' place",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T22:15:42.945Z",
+   "file": "20261125221542945-note-sheet2-rise-w.jpg",
+   "source": "../../../../tmp/v/fd/sheet2-rise-w.jpg",
+   "kind": "note",
+   "label": "far deck trial, widest plate of the rise: film, laid back picture of T alone, with the plate's fine forms",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T22:15:41.539Z",
+   "file": "20261125221541539-note-Bc-M0-ll.jpg",
+   "source": "../../../../tmp/v/sh/Bc-M0-ll.jpg",
+   "kind": "note",
+   "label": "main beside cure B, dive 1323 to 1335, lower left: pale near cloud stands whole in cure B",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T21:44:44.173Z",
    "file": "20261125214444173-note-B1-1554.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/B1-1554.jpg",
    "kind": "note",
    "label": "Cure B draft still 1554 at 2 to 1: sixth, H1, B1. B1 towers single",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T21:10:58.329Z",
-   "file": "20261125211058329-note-glass-1320.jpg",
-   "source": "../../../../tmp/v/sh/glass-1320.jpg",
-   "kind": "note",
-   "label": "1320 at 3 to 1, x 830 to 1070, y 650 to 770: b0b87889, fourth, sixth, H1, control cEnd (line gone), control cP0",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T21:10:56.903Z",
-   "file": "20261125211056903-note-M0H1b0-dive.jpg",
-   "source": "../../../../tmp/v/sh/M0H1b0-dive.jpg",
-   "kind": "note",
-   "label": "dive 1290, 1305, 1320, 1332 at a third: main's Venus folders (a4534656), H1, the build b0b87889",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T20:42:50.895Z",
-   "file": "20261125204250895-note-a4H1-1320.jpg",
-   "source": "../../../../tmp/v/sh/a4H1-1320.jpg",
-   "kind": "note",
-   "label": "1320: the straight line stands in the fourth state and in H1 (not the cure's)",
    "stop": "venus"
   }
  ]
