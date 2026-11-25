@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T03:50:44.803Z",
+ "pushed": "2026-11-25T04:17:49.653Z",
  "head": "690afebef51deca42701692d9a18810593b2ad90",
- "note": "sharpCover by stop (Earth 2), commit cut, proof chain renders: drafts equal 4 of 4, review 2156 and 1857 in",
+ "note": "sharpCover by stop (Earth 2): proof in (drafts equal, Mars 2427 review equal, Earth 2156 and 1857 review move), the suite runs; next the picture of a shutter that opens and closes",
  "looks": [
+  {
+   "time": "2026-11-25T03:58:45.587Z",
+   "file": "20261125035845587-note-ps-1857-draft.jpg",
+   "source": "../../../../tmp/law/dots/ps-1857-draft.png",
+   "kind": "note",
+   "label": "1857, same crop: the draft (one sample, no blur) beside the review frame: each cloud speck is drawn out into a bar of the shutter's length with hard ends"
+  },
+  {
+   "time": "2026-11-25T03:58:44.876Z",
+   "file": "20261125035844876-note-ps-1857.jpg",
+   "source": "../../../../tmp/law/dots/ps-1857.png",
+   "kind": "note",
+   "label": "sharpCover Earth 2: 1857 review, x 420..620 y 820..940 at 3 times, take batch 8 beside cover 2: the stripes inside the cloud bars are smoother, the bars stay bars"
+  },
+  {
+   "time": "2026-11-25T03:58:43.983Z",
+   "file": "20261125035843983-note-ps-mid-2156.jpg",
+   "source": "../../../../tmp/law/dots/ps-mid-2156.png",
+   "kind": "note",
+   "label": "sharpCover Earth 2: 2156 review, the still middle x 760..1120 y 400..640 at 2 times, take batch 8 beside cover 2: softer with the cover (footprint 1.0 against 0.5)"
+  },
+  {
+   "time": "2026-11-25T03:58:43.078Z",
+   "file": "20261125035843078-note-ps-land-2156.jpg",
+   "source": "../../../../tmp/law/dots/ps-land-2156.png",
+   "kind": "note",
+   "label": "sharpCover Earth 2 (9d86d6d1 on take batch 8): 2156 review, Brazil x 1240..1600 y 700..1060 at 2 times, take batch 8 beside cover 2. The rows of white dots become faint streaks; the orange bars with hard ends stay"
+  },
   {
    "time": "2026-11-25T03:50:32.590Z",
    "file": "20261125035032590-note-sh-lr-2156.jpg",
@@ -31,34 +59,6 @@
    "source": "out/work/blur/proof2-on/f02580.png",
    "kind": "note",
    "label": "under pass ON, stand in, 2580 draft: the relief covers the frame"
-  },
-  {
-   "time": "2026-11-25T03:04:03.357Z",
-   "file": "20261125030403357-note-top2477.jpg",
-   "source": "../../../../tmp/law/q/top2477.png",
-   "kind": "note",
-   "label": "under pass ON, stand in, 2477 draft, the horizon band y 120..400 (left half over right half): the sky and haze drawn once, no step"
-  },
-  {
-   "time": "2026-11-25T03:04:02.479Z",
-   "file": "20261125030402479-note-edge-left-on.jpg",
-   "source": "../../../../tmp/law/q/edge-left-on.png",
-   "kind": "note",
-   "label": "under pass ON, stand in, 2477 and 2478 drafts, crop x 0..640 y 380..1080: the relief's left and bottom edge over the cap"
-  },
-  {
-   "time": "2026-11-25T03:04:01.051Z",
-   "file": "20261125030401051-note-f02477.jpg",
-   "source": "out/work/blur/proof2-on/f02477.png",
-   "kind": "note",
-   "label": "under pass ON, Mars stand in (scratch, never pushed), 2477 draft: the relief over the globe's cap, feathered at its sides"
-  },
-  {
-   "time": "2026-11-25T02:36:37.574Z",
-   "file": "20261125023637574-note-f02701.jpg",
-   "source": "out/work/blur/tone-tip/f02701.png",
-   "kind": "note",
-   "label": "edge c0cef0c0: draft of Mars 2701, byte equal to the branch before it"
   }
  ]
 }
