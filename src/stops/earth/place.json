@@ -41,6 +41,7 @@
       {
         "file": "place-12.jpg",
         "widthDeg": 12,
+        "made": 4096,
         "raster": 4096,
         "size": 4096,
         "offset": [
@@ -51,6 +52,7 @@
       {
         "file": "place-5.jpg",
         "widthDeg": 12,
+        "made": 6144,
         "raster": 6144,
         "size": 2688,
         "offset": [
@@ -128,15 +130,13 @@
     },
     "low": {
       "file": "place-12-low.jpg",
-      "how": "The plate with the lay back of the close image put back wherever the image covers the ground, stretched parts included. The globe shows it instead of the plate where the camera sees the ground from the direction the close camera sees it: full when the two rays are angleDeg[1] apart or less, none from angleDeg[0], and only below height[0] (full gate from height[1], in radii above the sea). From straight above the plate with its repaint stays. The lay back ends inside the edge of the close image over a blur of fadeDeg degrees, so its edge is not a line on the sea. Nearer than fromDeg[0] degrees of arc to the point under the twin camera the plate already is the lay back and the low look is off (full from fromDeg[1]). The file holds a window of the plate raster (window: raster, size, offset as for a level) at size px, so its texels go where the lay back lies; the low look ends inside the window over feather times its width. The lay back differs from the plate in its broad tone (the haze of the low view) and in its detail. veil.file holds the broad part: the lay back less the plate over the lay back's cover, carried on past the cover by the recipe of mend.json veil, blurred over veil.sigmaDeg degrees, in code values over 255 as half floats (veil.size px over a square veil.times plates wide on the plate's plane, red green blue and the cover, south row first), made by levels.py. The detail goes by angleDeg; the broad part goes by the slant of the view through the air: its share is veil.slant.reach times the cosine of the close camera's ray at the ground over the cosine of the camera's ray there, to the power veil.slant.power, at most 1, with no cosine taken under veil.slant.least. So the haze is whole where the camera looks as flat as the close camera did and thins as the view steepens, by angle and height and not by time; reach is over 1 so that it is whole in the frames beside T, where the camera stands beside the close camera. Past the cover the globe adds the veil by the same slant and height, out to the edge of that square, where it ends over veil.feather of the width; so the haze of the low view has no edge on the ground.",
-      "angleDeg": [
-        35,
-        10
-      ],
+      "how": "The plate with the lay back of the close image put back wherever the image covers the ground, stretched parts included. The globe shows it instead of the plate by the height of the camera alone (radii above the sea): none from height[0] up, whole from height[1] down, and between them by the share 1 / (1 + (h / mid) ^ power), stretched so that it is 0 and 1 at those two heights. No angle and no clock is read, so one height always shows one ground. The two pictures are mixed in code values. From height[0] up the plate with its repaint stays. The lay back ends inside the edge of the close image over a blur of fadeDeg degrees, so its edge is not a line on the sea. Nearer than fromDeg[0] degrees of arc to the point under the twin camera the plate already is the lay back and the low look is off (full from fromDeg[1]). The file holds a window of the plate raster (window: raster, size, offset as for a level) at size px, so its texels go where the lay back lies; the low look ends inside the window over feather times its width. The lay back differs from the plate in its broad tone (the haze of the low view) and in its detail. veil.file holds the broad part: the lay back less the plate over the lay back's cover, carried on past the cover by the recipe of mend.json veil, blurred over veil.sigmaDeg degrees, in code values over 255 as half floats (veil.size px over a square veil.times plates wide on the plate's plane, red green blue and the cover, south row first), made by levels.py. The detail goes by the share above. The broad part has a share of its own, again by the camera's height alone: whole from veil.height[1] down, none from veil.height[0] up, and between them it falls evenly along the square root of ln(h / veil.root), with both ends rounded over veil.ease of that span; veil.root is a height just under the lowest the camera reaches. So the haze thins over the whole climb and there is no stretch of frames in which it lifts. Inside the cover the globe adds the difference of the two shares times the veil, so the broad tone follows the veil's share while the detail follows its own. Past the cover the globe adds the veil by the veil's share, out to the edge of that square, where it ends over veil.feather of the width; so the haze of the low view has no edge on the ground.",
       "height": [
-        0.6,
-        0.25
+        1.3,
+        0.034
       ],
+      "mid": 0.065,
+      "power": 1.5,
       "edgeDeg": 0.12,
       "fadeDeg": 0.5,
       "size": 2048,
@@ -157,11 +157,12 @@
         "file": "place-12-low-veil.bin",
         "size": 256,
         "sigmaDeg": 0.4,
-        "slant": {
-          "power": 2,
-          "reach": 1.7,
-          "least": 0.02
-        },
+        "height": [
+          0.6,
+          0.034
+        ],
+        "root": 0.0309,
+        "ease": 0.08,
         "times": 4,
         "feather": 0.16
       }
@@ -170,6 +171,7 @@
       {
         "file": "patch-96.jpg",
         "widthDeg": 96,
+        "made": 2185,
         "raster": 4096,
         "size": 2400,
         "offset": [
@@ -180,6 +182,7 @@
       {
         "file": "patch-48.jpg",
         "widthDeg": 48,
+        "made": 2048,
         "raster": 4096,
         "size": 4096,
         "offset": [
@@ -190,6 +193,7 @@
       {
         "file": "patch-24.jpg",
         "widthDeg": 24,
+        "made": 2048,
         "raster": 4096,
         "size": 4096,
         "offset": [
@@ -198,10 +202,10 @@
         ]
       }
     ],
-    "windows": "Each level is a square window of a gnomonic raster: widthDeg is the angle the whole raster spans, raster its size in px, size the window's size in px and offset the window's centre from the raster's centre in raster px (east, north), all for the full set. The levels in under lie in the plane about the plan's spot (assets.ts), the levels in levels in the plane about centre. The windows are placed over the ground the dive and the rise look at while that level is the finest one needed (out/work/earth/place/tmp/soft.ts, option need): the camera comes down over a point 3.9 degrees south east of centre and looks north west, so the windows sit between the two. A level comes in as the texel density of what is shown under it falls from fade[1] to fade[0] texels a pixel (assets.ts)."
+    "windows": "Each level is a square window of a gnomonic raster: widthDeg is the angle the whole raster spans, raster its size in px, size the window's size in px and offset the window's centre from the raster's centre in raster px (east, north), all for the full set. The levels in under lie in the plane about the plan's spot (assets.ts), the levels in levels in the plane about centre. The windows are placed over the ground the dive and the rise look at while that level is the finest one needed (out/work/earth/place/tmp/soft.ts, option need): the camera comes down over a point 3.9 degrees south east of centre and looks north west, so the windows sit between the two. A level comes in as the texel density of what is shown under it falls from fade[1] to fade[0] texels a pixel (assets.ts). That density is the least of the pixel's footprint on the map (its short axis), counted in real texels: made is the width in px of the whole raster at which the level's picture was made, so a file enlarged past it counts by its real detail (levels 96, 48 and 24 are pictures of 2048 px enlarged twice, RECIPE.md; level 96 holds the wrap's 22.76 px a degree)."
   },
   "path": {
-    "how": "One steady move on the globe side for the dive and for the rise. The close side is the level glide of the terrain view carried on in time; its twin is the anchor. The globe side camera stands at the anchor's height times exp(lift): lift and its rate are 0 at T, the rate eases over ease[0] frames to a constant, and over ease[1] frames into the rate of the hold (dive) or of the travel (rise). Each ease is a straight ramp of the rate with rounded ends: the rate changes by the same amount every frame, and round[0] of ease[0] (round[1] of ease[1]) is the share of the ramp at each of its two ends over which that change comes in and goes out. With k the share of the lift: the attitude goes from the anchor's to the far pose's along the one turn between them, by the same angle for every equal share of the lift. The place is the point where the anchor's view axis meets the globe; it stays on a ray of the camera that goes from the view axis to the direction in which the far pose sees the place, by k to the power hold, and the eye sits on that ray at the law's height. The handover of the dive is in its last frame and that of the rise in its first, so every frame of both is drawn from the globe side. bank rolls the view about its own axis by deg degrees times the squared sine of the turn's share, 0 at T and at the leg's end, and the turn with the roll in it still goes by the same angle for every equal share of the lift. The rise has a bank and the dive has none, so the climb is not the dive run backward. bend is the engine's bend of the surface view (terrain.bend): over its frames before the rise's T the surface view's way turns by turnDeg, about the axis acrossDeg, onto the way by which the rise takes the eye off it, so the eye's speed over its own height does not dip and does not turn back across the seam. The judged surface frame lies before the bend. rewind is the frame after T of the rise from which the spin is wound back to the state the travel starts with.",
+    "how": "One steady move on the globe side for the dive and for the rise. The close side is the level glide of the terrain view carried on in time; its twin is the anchor. The globe side camera stands at the anchor's height times exp(lift): lift and its rate are 0 at T, the rate eases over ease[0] frames to a constant, and over ease[1] frames into the rate of the hold (dive) or of the travel (rise). Each ease is a straight ramp of the rate with rounded ends: the rate changes by the same amount every frame, and round[0] of ease[0] (round[1] of ease[1]) is the share of the ramp at each of its two ends over which that change comes in and goes out. With k the share of the lift: the attitude goes from the anchor's to the far pose's along the one turn between them, by the same angle for every equal share of the lift. The place is the point where the anchor's view axis meets the globe; it stays on a ray of the camera that goes from the view axis to the direction in which the far pose sees the place, by k to the power hold, and the eye sits on that ray at the law's height. The handover of the dive is in its last frame and that of the rise in its first, so every frame of both is drawn from the globe side. bank rolls the view about its own axis by deg degrees times the squared sine of the turn's share, 0 at T and at the leg's end, and the turn with the roll in it still goes by the same angle for every equal share of the lift. The rise has a bank and the dive has none, so the climb is not the dive run backward. bend is the engine's bend of the surface view (terrain.bend): over its frames before the rise's T the surface view's way turns by turnDeg, about the axis acrossDeg, onto the way by which the rise takes the eye off it, so the eye's speed over its own height does not dip and does not turn back across the seam. The judged surface frame lies before the bend. land: over the last land frames of a leg the share k is the lift over its total plus (the law's end rate over the total) * land * u * u * (1 - u), with u from 0 to 1 over those frames, so the share ends with no rate of its own and the eye ends with the speed of the travel and none across it; the rise has it, the dive has none, and no frame before the last land frames reads it. rewind is the frame after T of the rise from which the spin is wound back to the state the travel starts with. pullBack (handover.rise) is the engine's option for a rise that a travel follows: the rise does not come to rest on the drift of the exit, it ends on its pose and flies speed radii a second above the drift, and the travel carries that speed on and gives it up after the seam. The far end stands back along the line of the exit by speed * over / 2 and comes out over the last over seconds. With it the law of the rise reads its end rate and the slope of that rate from the far end on the rise's own side of the seam (one sided differences over a sixteenth of a frame), and ends its last ease on that slope, so the eye neither stops at the seam nor speeds up into it.",
     "handover": {
       "dive": {
         "at": 0.99,
@@ -215,7 +219,11 @@
         "dissolveFrames": 1,
         "picture": false,
         "placeFrames": 0,
-        "skyFrames": 120
+        "skyFrames": 120,
+        "pullBack": {
+          "speed": 1.0,
+          "over": 0.5
+        }
       }
     },
     "dive": {
@@ -241,7 +249,8 @@
       "hold": 3,
       "bank": {
         "deg": -25
-      }
+      },
+      "land": 30
     },
     "bend": {
       "frames": 36,
@@ -261,7 +270,7 @@
     ]
   },
   "onGlobe": {
-    "how": "The close view's ground (the sea layer and the towers of relief.ts, the same meshes and texels the surface view draws) stands on the globe as an object of the globe world, placed by the fixed transform of place.ts, so the globe side shows the surface view's own ground and not a copy of it. It shows by the same angle and height as the low look of the plates (plates.low.angleDeg, plates.low.height), ends on the ground between farDeg[0] and farDeg[1] degrees of arc from the point under the close camera, and inside the edge of the picture's canvas over rim[0] of its width at the sides and rim[1] of its height at the near edge. Beyond the camera's own horizon it is not drawn. On the globe the mesh is not bent to the limb (look.ground.lock is off) and the push and the shimmer of the surface view stand still at the value they have at the change of view. Its haze thins by the slant law of the plate under it (plates.low.veil.slant, the one function slantSeen of globe.ts on both sides): from each texel the share of the veil that the law no longer shows is taken, read at the point where the close camera's ray through the texel meets the sea, and not nearer than plates.low.fromDeg to the point under the close camera, as on the plate. So the ground and the plate under it keep the same broad tone while the ground gives way by angle. In the surface view nothing is taken.",
+    "how": "The close view's ground (the sea layer and the towers of relief.ts, the same meshes and texels the surface view draws) stands on the globe as an object of the globe world, placed by the fixed transform of place.ts, so the globe side shows the surface view's own ground and not a copy of it. It shows by the same share of the camera's height as the low look of the plates (plates.low.height, mid, power), ends on the ground between farDeg[0] and farDeg[1] degrees of arc from the point under the close camera, and inside the edge of the picture's canvas over rim[0] of its width at the sides and rim[1] of its height at the near edge. Beyond the camera's own horizon it is not drawn. On the globe the mesh is not bent to the limb (look.ground.lock is off) and the push and the shimmer of the surface view stand still at the value they have at the change of view. Its haze thins by the veil's share of the plate under it (plates.low.veil.height, root, ease): from each texel the share of the veil that the law no longer shows is taken, read at the point where the close camera's ray through the texel meets the sea, and not nearer than plates.low.fromDeg to the point under the close camera, as on the plate. So the ground and the plate under it keep the same broad tone while the ground gives way by height. In the surface view nothing is taken.",
     "farDeg": [
       11.5,
       13.5
@@ -269,6 +278,15 @@
     "rim": [
       0.14,
       0.08
-    ]
+    ],
+    "near": {
+      "how": "At the heights the close camera itself flies (up to its height at the change of view of the rise) the globe side draws this ground by the close view's own rule: the far band bent to the camera's limb, the picture's own light above the horizon, no end at farDeg, and the rim's feather narrowed to rim (shares of the canvas, so that it lies outside the frame there). The shell of air is not drawn there and the ball is not drawn where its ground meets the eye at less than graze (the cosine of the angle to the upright), which is the hair of ball above the picture's horizon. All of it gives way, by one smooth step of the logarithm of the eye's height, to the farDeg end, the shell and the whole ball at the height to (radii).",
+      "to": 0.05,
+      "rim": [
+        0.07,
+        0.04
+      ],
+      "graze": 0.06
+    }
   }
 }

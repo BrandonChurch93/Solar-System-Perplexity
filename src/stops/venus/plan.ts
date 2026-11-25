@@ -86,7 +86,11 @@ const probe = (): Probe | undefined => (globalThis as { __venusProbe?: Probe }).
 
 // The share a blend of the globe side has at a height of the camera over the cloud tops (radii): 1 below the lower height, 0 above the
 // upper one, eased in the logarithm of the height. Every blend of the dive and the rise reads the height, none reads the clock (plan F).
-export const below = (height: number, h: [number, number], curve: (x: number) => number = ease): number => 1 - curve((Math.log(Math.max(height, 1e-4)) - Math.log(h[0])) / (Math.log(h[1]) - Math.log(h[0])))
+// A curve of a share takes 0 to 1 onto 0 to 1 and holds what it is given to 0 to 1 first, so only the rounding of its polynomial can
+// take it out of that: the quintic gave 1 + 1.1e-15 just under the upper height of sky.carry (frame 1266 + 3/8 of the dive), a share of
+// minus 1.1e-15 that the engine refuses (MAIL 754). What the curve gives is held to 0 to 1 here, where every share by height is made.
+export const below = (height: number, h: [number, number], curve: (x: number) => number = ease): number =>
+  1 - Math.min(Math.max(curve((Math.log(Math.max(height, 1e-4)) - Math.log(h[0])) / (Math.log(h[1]) - Math.log(h[0]))), 0), 1)
 
 class VenusPlan extends StopPlan {
   private ends: { roll: [number, number]; pitch: [number, number]; end: [number, number, number, number] } | null = null

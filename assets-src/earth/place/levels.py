@@ -251,6 +251,38 @@ def near_sea(img, w, spec, per):
     return img * (1 - w) + (img * land[..., None] + tone * (1 - land[..., None])) * w
 
 
+def rim_line(rg):
+    a, b = 0.5 - FEATHER, 0.5
+    for _ in range(48):
+        q = (a + b) / 2
+        if float(step(rg['wipe'][0], rg['wipe'][1], step(rg['plate'][0], rg['plate'][1], step(0.5, 0.5 - FEATHER, q)))) > 0.5:
+            a = q
+        else:
+            b = q
+    return (a + b) / 2
+
+
+def rim(w, img, spec, per, line):
+    n = w.shape[0]
+    c = (n - 1) / 2
+    i = np.arange(n, dtype=np.float32)
+    j = np.clip(i, c - line + spec['carryDeg'] * per, c + line - spec['carryDeg'] * per)
+    grid = np.meshgrid(j, j)
+    out = cv2.remap(w, grid[0], grid[1], cv2.INTER_LINEAR)
+    del grid
+    lo = img.min(axis=2)
+    cloud = step(spec['grey'][0], spec['grey'][1], lo / np.maximum(img.max(axis=2), 1)) * step(spec['bright'][0], spec['bright'][1], lo)
+    k = 2 * int(round(spec['growDeg'] * per)) + 1
+    near = cv2.GaussianBlur(cv2.dilate((cloud > 0.05).astype(np.float32), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))), (0, 0), spec['nearDeg'] * per)
+    cloud *= lo / 255
+    del lo
+    cloud = cv2.GaussianBlur(cloud, (0, 0), spec['lumpDeg'][0] * per) - cv2.GaussianBlur(cloud, (0, 0), spec['lumpDeg'][1] * per)
+    t = (np.maximum.outer(np.abs(i - c), np.abs(i - c)) - line) / per
+    out *= (1 - step(-spec['softDeg'], spec['softDeg'], t)) * (1 - near) + (1 - step(-spec['edgeDeg'], spec['edgeDeg'], t + spec['push'] * cloud)) * near
+    print('rim of the near sea: line', round(float(line), 1), 'px from the centre of the raster, share of the raster where the weight changes by more than 0.01', round(float((np.abs(out - w) > 0.01).mean()), 4), 'largest change further than softDeg from the line', round(float(np.abs(out - w)[np.abs(t) > spec['softDeg']].max()), 4), flush=True)
+    return out
+
+
 def field():
     spec = MEND['field']
     colour = np.load(WORK / 'field-colour.npy').astype(np.float32)
@@ -373,9 +405,10 @@ def main():
     del far, back, r, wd, dens
     nr = cv2.imread(str(WORK / 'field-near.png'), 0).astype(np.float32) / 255
     nr, ok = rep(nr, Win(P, MEND['field']['widthDeg'], nr.shape[0]), whole, signed=True)
-    wipe = MEND['field']['density']['ring']['wipe']
-    g12 = near_sea(g12, step(wipe[0], wipe[1], np.clip(nr, 0, 1) * ok)[..., None], MEND['nearSea'], size / deg)
-    del nr, ok
+    rg = MEND['field']['density']['ring']
+    zone = rim(step(rg['wipe'][0], rg['wipe'][1], np.clip(nr, 0, 1) * ok), g12, {**MEND['nearSea'], **MEND['nearSea']['rim']}, size / deg, rim_line(rg) * size)
+    g12 = near_sea(g12, zone[..., None], MEND['nearSea'], size / deg)
+    del nr, ok, zone
     fl = field()
     lay12 = cv2.imread(str(WORK / 'q12-lay.png')).astype(np.float32)
     fs = MEND['field']
