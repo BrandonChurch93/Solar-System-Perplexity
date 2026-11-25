@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T02:40:43.313Z",
- "head": "f5f800dd5adb4a30849162f2b91847d418115249",
- "note": "MAIL 835 tasks 3 and 4",
+ "pushed": "2026-11-25T03:07:33.143Z",
+ "head": "9c5fafc09846682f533eaef0369e223aeb91c836",
+ "note": "Cap detail hook (cap.detail, off by default), not yet committed. A plot of two tests on a 96 row test page, not a film frame: the tilt the hook gives equals the forward difference over one pixel; a height that is a function of the cap own height changes the light on the walls only. No film frame with the hook on yet. The 115 draft frames with the hook absent are being rendered.",
  "looks": [
+  {
+   "time": "2026-11-25T03:07:32.518Z",
+   "file": "20261125030732518-note-detail-hook-test.jpg",
+   "source": "../m835/detail-hook-test.png",
+   "kind": "note",
+   "label": "cap detail hook on the test page: tilt of the light against the hand count, and a height that follows the cap own height on its walls",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T02:40:35.583Z",
    "file": "20261125024035583-note-flow-6580.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "Earth rise 4230, 4245, 4261 draft: beauty, layers view, range against the unit sphere as it is and with the one line patch of the ground's dim pass",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T00:00:03.338Z",
-   "file": "20261125000003338-note-beauty-2427-crop.jpg",
-   "source": "../m752/count/beauty-2427-crop.png",
-   "kind": "note",
-   "label": "Mars 2427 draft beauty crop: full, web before, web with counts",
-   "stop": "mars"
   }
  ]
 }
