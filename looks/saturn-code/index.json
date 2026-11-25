@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T11:37:54.731Z",
- "head": "6e96b4cb11c1145aa3cab3792832485152f571b2",
- "note": "NAMED 6e96b4c sent: best committed tree, rise red by the pattern line; the dive's lines and the rest of the proofs are running",
+ "pushed": "2026-11-25T12:12:29.671Z",
+ "head": "7f9b2697e1168a283b04882d14a9775e964498d8",
+ "note": "control of mail 1061 measured (cover held: 0.14 to 0.44 where the named tree reads 0.49 to 1.03); dive lines of 6e96b4cb render now",
  "looks": [
+  {
+   "time": "2026-11-25T12:12:28.696Z",
+   "file": "20261125121228696-note-ctl_four.jpg",
+   "source": "../../../../tmp/v/r69/ctl_four.png",
+   "kind": "note",
+   "label": "control, cover held: through the handover 3824, 3828, 3832, 3836"
+  },
+  {
+   "time": "2026-11-25T12:12:27.956Z",
+   "file": "20261125121227956-note-ctl_three.jpg",
+   "source": "../../../../tmp/v/r69/ctl_three.png",
+   "kind": "note",
+   "label": "control, cover held: the foot at 3806, 3814, 3822 at full size"
+  },
+  {
+   "time": "2026-11-25T12:12:26.476Z",
+   "file": "20261125121226476-note-ctl_changes.jpg",
+   "source": "../../../../tmp/v/r69/ctl_changes.png",
+   "kind": "note",
+   "label": "control of mail 1061: cover share held at 0.7037, tool sheet of the rise slice 3798 to 3840, pattern most 0.44 before 3824, 0.70 at 3828"
+  },
   {
    "time": "2026-11-25T11:37:53.487Z",
    "file": "20261125113753487-note-saturn-rise-changes.jpg",
@@ -39,27 +60,6 @@
    "source": "../../../../tmp/v/x/mail/n3720_whole.jpg",
    "kind": "note",
    "label": "3720 final on the named head 6e96b4c: approved, named 88ba2385, this commit"
-  },
-  {
-   "time": "2026-11-25T11:17:34.239Z",
-   "file": "20261125111734239-note-strip3_2x.jpg",
-   "source": "../../../../tmp/v/x/strip3_2x.png",
-   "kind": "note",
-   "label": "v3 rise 3802, 3806.5, 3810, 3814.5 at twice size, x 780 to 1100, y 660 to 800: the sheet's streaks and the globe's mottled texture slide against each other"
-  },
-  {
-   "time": "2026-11-25T11:17:33.320Z",
-   "file": "20261125111733320-note-v3_rise_3808_3836.jpg",
-   "source": "../../../../tmp/v/x/v3_rise_3808_3836.png",
-   "kind": "note",
-   "label": "v3 (d567cfd) rise 3808 to 3836 every 4th, same crop: no step to the eye; early reading of the pattern 0.6 to 0.86 at 3806 to 3818, 0.2 from 3820"
-  },
-  {
-   "time": "2026-11-25T11:17:32.099Z",
-   "file": "20261125111732099-note-v3_rise_3792_3806.jpg",
-   "source": "../../../../tmp/v/x/v3_rise_3792_3806.png",
-   "kind": "note",
-   "label": "v3 (d567cfd) rise 3792 to 3806 every 2nd, draft, crop x 560 to 1180, y 470 to 830: the band over the globe opens; early reading of the pattern 0.1 to 0.6 here"
   }
  ]
 }
