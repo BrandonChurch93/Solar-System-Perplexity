@@ -4,8 +4,9 @@ import { describe, expect, it } from 'vitest'
 import { HAZE_GLSL, HazeShell, hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from '../src/bodies/haze'
 import { Planet } from '../src/bodies/planet'
 import * as look from '../src/stops/mars/look'
+import { frozen } from './globe-frozen'
 
-const hash = (text: string): string => createHash('sha256').update(text).digest('hex')
+const hash = (text: string): string => createHash('sha256').update(frozen(text)).digest('hex')
 const params: HazeParams = { scaleHeight: 0.01, depth: 1, day: [1, 1, 1], twilight: [0, 0, 0], strength: 1, extinction: 1, forward: 0, top: 4 }
 const LOBE = 'uHazeGlow * pow(max(dot(dir, uHazeGlowDir), 0.0), uHazeGlowPower)'
 
