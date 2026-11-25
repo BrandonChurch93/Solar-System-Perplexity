@@ -50,13 +50,17 @@ const PAINTED: Cell[] = [
   { lon: 9.32, lat: 14.74, radiusDeg: 6.5, painted: true, period: 2.7, at: 39.5, gain: 1, seed: 2 },
 ]
 
+// The time each seeded cell has its full flash. They are set so that the judged frame of the hold (39.5 s) shows each cell at the level it
+// showed there under the first law of the flash (assets-src/venus/NOTES.md, MAIL 707, C).
+const SEEDED_AT = [41.58, 41.75, 41.4, 39.98, 42.53, 43.12, 42.14, 40.54, 42.86, 39.72, 41.42, 40.23]
+
 const SEEDED: Cell[] = Array.from({ length: 12 }, (_, i) => ({
   lon: 28 + 92 * seeded(i * 3 + 1),
   lat: -38 + 104 * seeded(i * 3 + 2),
   radiusDeg: 2.2 + 3.2 * seeded(i * 3 + 3),
   painted: false,
   period: 1.3 + 2.6 * seeded(i * 5 + 40),
-  at: 39.5 + 3.9 * seeded(i * 5 + 41),
+  at: SEEDED_AT[i]!,
   gain: 0.35 + 0.65 * seeded(i * 5 + 42),
   seed: i + 3,
 }))
@@ -100,18 +104,27 @@ export const motion = { from: 1, step: 6, most: 8, hidden: 0.95, smear: { from: 
 
 export const boltColor: [number, number, number] = [0.105, 0.095, 0.14]
 
-function step(a: number, b: number, x: number): number {
-  const t = Math.min(Math.max((x - a) / (b - a), 0), 1)
-  return t * t * (3 - 2 * t)
-}
-
 export const flashGain = 1
 
+// The life of a flash, in seconds: it swells over rise, stands to hold and dies away over fall (or by rest before its cell's next one, when that
+// comes sooner); both ends are eased, so no frame holds a step. lead is where in that life the time `at` of a cell lies (on the stand, so the
+// judged frame of the hold shows the storm at full as before). A cell's flashes are not alike: each but the one at `at` has its own strength,
+// from least to full, by its number.
+export const flashLife = { lead: 0.5, rise: 0.4, hold: 0.6, fall: 1.1, rest: 0.02, least: 0.35 }
+
+function ease(a: number, b: number, x: number): number {
+  const t = Math.min(Math.max((x - a) / (b - a), 0), 1)
+  return t * t * t * (t * (t * 6 - 15) + 10)
+}
+
 export function flash(c: Cell, time: number): number {
-  const s = ((((time - c.at + 0.15) % c.period) + c.period) % c.period)
-  const body = s < 0.3 ? 1 : Math.exp(-(s - 0.3) / 0.22) * (0.72 + 0.28 * Math.cos(s * 41 + c.seed * 2.4))
-  const again = 0.55 * Math.exp(-Math.pow((s - 0.66 - 0.07 * seeded(c.seed + 9)) / 0.045, 2))
-  return flashGain * c.gain * (step(0, 0.07, s) * body + again)
+  const l = flashLife
+  const x = time - c.at + l.lead
+  const cycle = Math.floor(x / c.period)
+  const s = x - cycle * c.period
+  const level = ease(0, l.rise, s) * (1 - ease(l.hold, Math.min(l.hold + l.fall, c.period - l.rest), s))
+  const share = cycle === 0 ? 1 : l.least + (1 - l.least) * seeded(c.seed * 17 + cycle * 3 + 5)
+  return flashGain * c.gain * share * level
 }
 
 export const relief = {
