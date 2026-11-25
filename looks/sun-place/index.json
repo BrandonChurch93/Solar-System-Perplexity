@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T01:17:38.374Z",
+ "pushed": "2026-11-25T01:50:17.744Z",
  "head": "d1be1ff329436b786dd366d481adb4e2fbedf01e",
- "note": "01:18 UTC MAIL 830 measured at rate 2: the two blocks hold sky only, it moves as one piece 8, minus 47 px a half frame, nothing changes at once. MAIL 775 (a): the place on the map",
+ "note": "commit 3 in work: bulbs with height, trials 1 and 3 beside the approved at 1 to 1, near crop 60 66 72",
  "looks": [
+  {
+   "time": "2026-11-25T01:50:17.078Z",
+   "file": "20261125015017078-note-b3-life.jpg",
+   "source": "../../../../tmp/v/b3-life.png",
+   "kind": "note",
+   "label": "Same trial, near crop at 880 900 enlarged 3 times, frames 60, 66, 72: what moves is carried (the mottle of a top and the tongues keep their shape and travel). Lower half mean difference of frames 60 to 61: 9.53 (commit 2: 13.71). Upright thin streaks stand on the steep feet of near bulbs: still wrong.",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T01:50:16.241Z",
+   "file": "20261125015016241-note-b3-60.jpg",
+   "source": "../../../../tmp/v/b3-60.jpg",
+   "kind": "note",
+   "label": "Third trial of commit 3 (not committed), frame 60 at 1 to 1 beside the approved, crop at 900 640: bulbs that touch, creases of different width, pits. Wrong: the tops are too smooth and read as pebbles, the tongues on the flanks are too few; next trial brings them back broader. sun-near of this frame 60: share by band 0.1 .. 0.9 : 0.166 0.214 0.207 0.150 0.107 0.075 0.045 0.027 0.003 / dark (under 0.15) 0.171 | body (0.15 to 0.55) 0.678 | pale (0.65 to 0.85) 0.072 | white (over 0.85) 0.003 / brightest 15 percent: half width 13.4 px, 475 shapes | fine detail 0.0187 | mean 0.336",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T01:42:54.518Z",
+   "file": "20261125014254518-note-b1-60.jpg",
+   "source": "../../../../tmp/v/b1-60.jpg",
+   "kind": "note",
+   "label": "First state of commit 3 (not committed), frame 60 at 1 to 1 beside the approved, crop at 900 640: the cells are now bulbs with height in the slab (near domes stand before the valleys behind them), pits where three meet. Wrong and being worked on: far too dark, valleys too wide, tops too smooth (they must not read as pebbles), tongues too few. sun-near of this frame 60: share by band 0.1 .. 0.9 : 0.399 0.245 0.149 0.081 0.044 0.021 0.005 0.002 0.000 / dark (under 0.15) 0.454 | body (0.15 to 0.55) 0.519 | pale (0.65 to 0.85) 0.007 | white (over 0.85) 0.000 / brightest 15 percent: half width 14.7 px, 552 shapes | fine detail 0.0142 | mean 0.204",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T01:17:37.754Z",
    "file": "20261125011737754-note-hero-pair.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/c2-rise.jpg",
    "kind": "note",
    "label": "Commit 2: frames 217, 225, 231, 247 of the rise at one half. 247 keeps its draft bytes c22922926c09eb0d. Still wrong: the cell field on the ball is a pale patch of packed cells with a border against the globe's own map (one Sun is not built in this commit)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:59:13.599Z",
-   "file": "20261125005913599-note-c2-90.jpg",
-   "source": "../../../../tmp/v/c2-90.jpg",
-   "kind": "note",
-   "label": "Commit 2: frame 90, draft tier, the whole frame at 3 quarters. Draft bytes be1188af65d2db50",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:59:12.803Z",
-   "file": "20261125005912803-note-c2-0.jpg",
-   "source": "../../../../tmp/v/c2-0.jpg",
-   "kind": "note",
-   "label": "Commit 2 (d9c797a1, merged as af7ed569): frame 0, draft tier, the whole frame at 3 quarters. Draft bytes 562242a12d92c1d0",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:51:32.896Z",
-   "file": "20261125005132896-note-pop-blocks.jpg",
-   "source": "../../../../tmp/v/pop-blocks.png",
-   "kind": "note",
-   "label": "MAIL 830, state d84379b4 plus the tree: whole frames 242, 243, 244, 245 at 2 times, the two blocks marked (column 2 and 3 of row 2 in the grid of 16 by 9). Only sky is drawn there: the hold's sky card (stars and its bright clouds), the ends of the corona's streamers at the lower right. Mean of block column 3: 44.9, 45.5, 63.0, 54.1 of 255; a bright cloud of the card enters it at 244. Cause of the block pop not proven yet",
    "stop": "sun"
   }
  ]
