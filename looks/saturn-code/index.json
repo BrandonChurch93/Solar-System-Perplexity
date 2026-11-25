@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T20:47:48.454Z",
- "head": "17aa7329cffa8bf5de7f8b6dabd80d43759d6d3e",
- "note": "proof of the tree runs (rise, then dive); warp study for the fourth review note: lens, ring outline against true circles, by frame",
+ "pushed": "2026-11-25T21:03:30.159Z",
+ "head": "ec5a85d2f230ff34622454cdc75c9ddb37e1dd9d",
+ "note": "rise of the proof read (level step 0.13, pop 1.2173 at 3874, pattern 0.35, d312 1.73); dive of the proof renders; rigid rings and the lens law are built in a trial copy",
  "looks": [
+  {
+   "time": "2026-11-25T21:03:28.974Z",
+   "file": "20261125210328974-note-approved_hero_true_circles_3465.jpg",
+   "source": "../../../../tmp/v/warp/approved_hero_true_circles_3465.jpg",
+   "kind": "note",
+   "label": "warp study: the approved hero with true circles (green: 1.53, 1.948, 2.3394 radii) and the true limb (blue) through the lens of 3465"
+  },
+  {
+   "time": "2026-11-25T21:03:27.703Z",
+   "file": "20261125210327703-note-rise_3862.jpg",
+   "source": "../../../../tmp/v/pf/sheets/rise_3862.jpg",
+   "kind": "note",
+   "label": "proof of the tree to be named: rise 3862 to 3873, every frame (draft)"
+  },
+  {
+   "time": "2026-11-25T21:03:26.518Z",
+   "file": "20261125210326518-note-rise_3826.jpg",
+   "source": "../../../../tmp/v/pf/sheets/rise_3826.jpg",
+   "kind": "note",
+   "label": "proof of the tree to be named: rise 3826 to 3837, every frame (draft)"
+  },
   {
    "time": "2026-11-25T20:47:47.651Z",
    "file": "20261125204747651-note-ov_3465_right.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/g17/masks_pair.png",
    "kind": "note",
    "label": "3720: the two parts set apart by d323 (red: band 0 to 6 N, blue: plane inward of the rim) on the approved image and on the tree"
-  },
-  {
-   "time": "2026-11-25T20:09:28.586Z",
-   "file": "20261125200928586-note-u13_left.jpg",
-   "source": "../../../../tmp/v/g17/u13_left.png",
-   "kind": "note",
-   "label": "3720 far ansa: approved, no sheet, trial of the ringlets' amplitude 1.3 at every radius (a trial, not the fit)"
-  },
-  {
-   "time": "2026-11-25T20:09:27.881Z",
-   "file": "20261125200927881-note-shadow_hold_final.jpg",
-   "source": "../../../../tmp/v/g17/shadow_hold_final.png",
-   "kind": "note",
-   "label": "hold 3465 at the final tier, left limb: approved hero, the rings' shadow at a quarter (as main has it), the shadow in full"
-  },
-  {
-   "time": "2026-11-25T19:53:43.179Z",
-   "file": "20261125195343179-note-limb_top.jpg",
-   "source": "../../../../tmp/v/g17/limb_top.png",
-   "kind": "note",
-   "label": "3720 globe top, approved, main, no sheet tree (G17 tiles drawn)"
   }
  ]
 }
