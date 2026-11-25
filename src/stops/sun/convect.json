@@ -115,20 +115,21 @@
   "yield": 0.5,
   "apart": 0.2,
   "life": [
-   5,
-   9
+   3.5,
+   6
   ],
   "parts": 0.6,
   "laneIn": 0.6,
-  "round": 24,
+  "round": 40,
   "dome": {
    "height": 0.0,
    "full": 0.35,
-   "bulge": 0.03,
+   "bulge": 0.015,
    "power": 2.0,
    "dimple": 0.0045,
    "sink": 0.3,
-   "edge": 0.5
+   "shoulder": 0.03,
+   "crown": 0.5
   },
   "warp": {
    "amount": 0.55,
@@ -195,28 +196,28 @@
   "fan": 10
  },
  "spot": {
-  "umbra": 1.0,
+  "umbra": 0.85,
   "penumbra": 3.8,
   "drop": [
-   0.05,
-   0.05
+   0.012,
+   0.035
   ],
   "wall": [
-   0.8,
-   1.15
+   0.65,
+   1.45
   ],
   "ragged": 0.5,
   "floor": 0.02,
   "fibres": {
-   "level": 1.2,
-   "edge": 1.4,
+   "level": 1.25,
+   "edge": 0.6,
    "head": 0.3,
    "count": 19.3,
    "height": 0.009,
    "along": 2.0,
    "grains": 3,
    "speed": 0.5,
-   "gap": 0.14,
+   "gap": 2.0,
    "cut": 1.3,
    "bend": [
     6,
@@ -231,9 +232,16 @@
    "headFrom": 0.1,
    "twist": 2.6,
    "real": 0,
-   "sway": 0.35
+   "sway": 0.35,
+   "endsDeep": 0.5
   },
-  "uneven": 0.3
+  "uneven": 0.3,
+  "pull": {
+   "from": 0.9,
+   "share": 0.04,
+   "sharp": 5,
+   "turn": 0.15
+  }
  },
  "mesh": {
   "step": 0.008,
@@ -255,9 +263,9 @@
   "young": 0.25,
   "old": 0.5,
   "dark": 0.07,
-  "top": 0.66,
+  "top": 0.56,
   "spread": 0.4,
-  "middle": 0.5,
+  "middle": 0.25,
   "veil": {
    "amount": 0.05,
    "level": 0.5,
@@ -270,8 +278,8 @@
    "from": 2.0
   },
   "far": {
-   "from": 0.09,
-   "to": 0.36,
+   "from": 0.15,
+   "to": 0.5,
    "level": 0.5,
    "keep": 0.0,
    "mottle": 0,
@@ -281,8 +289,8 @@
     0.6
    ],
    "flat": [
-    0.15,
-    0.5
+    0.35,
+    1.0
    ],
    "lane": 0.5,
    "foot": [
@@ -310,8 +318,8 @@
    "scale": 22
   },
   "knee": [
-   0.7,
-   0.4
+   0.66,
+   0.3
   ],
   "limbTint": [
    0.88,
@@ -345,11 +353,18 @@
    "region": 48
   },
   "well": {
-   "out": 3,
+   "out": 8,
    "fall": 1.0,
    "tongue": 0.35,
    "scale": 4,
-   "note": "the heat of a cell: 1 in the middle, falling to the lane by (1 - way^out)^fall; tongue: how far the flow carries tongues of hot gas outward; scale: the size of the tongues"
+   "note": "the heat of a cell: 1 in the middle, falling to the lane by (1 - way^out)^fall; tongue: how far the flow carries tongues of hot gas outward; scale: the size of the tongues",
+   "seam": 0.035
+  },
+  "fibre": {
+   "one": 0.9,
+   "two": 0.6,
+   "least": 0.3,
+   "rim": 0.08
   }
  },
  "jets": {
@@ -406,7 +421,7 @@
   "floor": 0.02,
   "steps": 64,
   "margin": 1.25,
-  "soft": 0.007,
+  "soft": 0.0055,
   "free": 0.01,
   "top": 0.55,
   "deep": 0.01,
@@ -415,7 +430,8 @@
    "soft": 0.003,
    "free": 0.02,
    "heat": 0.12,
-   "reach": 0.03
+   "reach": 0.03,
+   "under": -0.014
   },
   "air": {
    "free": 0.25,
@@ -430,12 +446,19 @@
    "far": [
     0.004,
     0.014
-   ]
+   ],
+   "flat": 1.0
   },
   "pit": {
    "steps": 64,
    "depth": 0.11
   },
-  "fine": 2
+  "fine": 2,
+  "cut": {
+   "texels": 1.5,
+   "depth": 0.0015,
+   "most": 12,
+   "air": 0.02
+  }
  }
 }

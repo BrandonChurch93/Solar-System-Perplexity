@@ -66,6 +66,7 @@ uniform vec4 uCvTight;
 uniform vec4 uCvCurl;
 uniform vec4 uCvSpotMore;
 uniform vec4 uCvStream;
+uniform vec4 uCvPull;
 uniform float uCvTime;
 vec3 cvH3(vec3 p) {
   p = fract(p * vec3(0.1031, 0.1030, 0.0973));
@@ -80,6 +81,8 @@ vec3 cvNear;
 vec2 cvUp1;
 vec2 cvUp2;
 vec2 cvFan;
+// How many times narrower a cell is drawn across at the place of the last look at the cells (see cvPull).
+float cvPulled;
 // The diagram of the cells at q (lattice units) and time t (seconds). wrap: the lattice repeats after so many
 // squares along x (0: it does not repeat).
 // e: distance to the nearest lane and ge: its gradient (lattice units), rel: q minus the cell's own middle,
@@ -196,9 +199,23 @@ float cvTight(vec2 p) {
   // 1 near the place, the distance over uCvTight.x to the power uCvTight.y far from it, with no edge between
   return pow(1.0 + pow(length(p) / uCvTight.x, uCvTight.z), uCvTight.y / uCvTight.z);
 }
+// Round the sunspot the cells are the same diagram in a chart drawn tighter toward the spot's middle: a cell there
+// is narrow across and long toward the spot, the more the nearer, and far from the spot the chart is the ground's
+// own. So the penumbra is no layer of its own and has no outer line. uCvPull: x the distance from the spot's middle
+// where the stretch sets in, y the share of its width that a cell keeps along the way in (1 over y is how long it
+// is drawn against its width close to the middle), z how soon the stretch sets in, w a turn of the chart with the
+// way in, so no fibre is a straight spoke. Returned: how many times narrower a cell is drawn across at the
+// distance r from the spot's middle.
+float cvPull(float r) {
+  return pow(1.0 + pow(uCvPull.x / max(r, 1e-4), uCvPull.z), (1.0 - uCvPull.y) / uCvPull.z);
+}
 vec2 cvChart(vec2 p, float t) {
+  vec2 d = p - uCvSpot.xy;
+  float pull = cvPull(length(d));
+  float turn = uCvPull.w * log(pull);
+  vec2 dt = vec2(cos(turn) * d.x - sin(turn) * d.y, sin(turn) * d.x + cos(turn) * d.y);
   // away from the place the cells are smaller: the chart is drawn tighter with the distance on the ground
-  vec2 q = p * cvTight(p) / uCvCell.x;
+  vec2 q = (uCvSpot.xy + dt * pull) * cvTight(p) / uCvCell.x;
   q += uCvWarp.x * (vec2(vnoise(vec3(q * uCvWarp.y, t * uCvWarp.z)), vnoise(vec3(q.yx * uCvWarp.y + 31.7, t * uCvWarp.z + 7.3))) - 0.5);
   q += uCvWarpMore.x * (vec2(vnoise(vec3(q * uCvWarpMore.y + 13.1, t * uCvWarpMore.z)), vnoise(vec3(q.yx * uCvWarpMore.y + 57.9, t * uCvWarpMore.z + 3.1))) - 0.5);
   return q;
@@ -210,7 +227,9 @@ void cvCells(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 o
   float L = uCvCell.x;
   cvDiagram(cvChart(p, t), t, 0.0, e, ge, rel, own);
   float gap = uCvGap.x * (1.0 - uCvGap.z + 2.0 * uCvGap.z * vnoise(vec3(p * uCvGap.y, 1.7 + t * 0.05)));
-  e = max(e * L - gap, 0.0);
+  // (across a cell that is drawn narrower the lane is as much nearer)
+  cvPulled = cvPull(length(p - uCvSpot.xy));
+  e = max(e * L / cvPulled - gap, 0.0);
 }
 // A pattern carried outward from the cell's middle. Two takes of it, half a turn apart: each is carried for one
 // turn and then begins again nearer the middle, and it has no weight at the moment it begins again.
@@ -271,82 +290,35 @@ float cvDome(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 o
   cvCells(p, t, e, ge, rel, own);
   float r2 = dot(rel, rel);
   float r = sqrt(r2);
-  float way = cvWay(r, e);
-  // a bulb of gas: round over the middle, falling fast where it meets the lane (the edge power below 1 does
-  // that); a wide cell stands taller than a small one
-  float cap = pow(max(1.0 - pow(way, uCvDome.w), 0.0), uCvGloss.w);
-  float size = clamp((r + e / uCvCell.x) / uCvDome.y, 0.35, 1.5);
+  float across = e * cvPulled / uCvCell.x;
+  float way = cvWay(r, across * uCvCell.x);
+  // the cells are packed: the top of the gas stays high almost to the cell's border, which is the diagram's own
+  // edge, and falls only at the lane, over the share uCvGloss.x of a lattice unit; over the cell it is a mild
+  // crown, lower toward the border by the share uCvGloss.y. A wide cell stands taller than a small one
+  float rim = 1.0 - exp(-across / uCvGloss.x);
+  float cap = rim * (1.0 - uCvGloss.y * pow(way, uCvDome.w));
+  float size = clamp((r + across) / uCvDome.y, 0.35, 1.5);
   float tall = uCvDome.z * size * (0.7 + 0.6 * own.y) * mix(0.5, 1.0, own.z) + uCvDome.x;
   petal = cvPetal(rel, own.y, t);
   float old = smoothstep(0.5, 1.0, own.x);
-  // a smaller cell stands lower by the same share
-  return ((tall + uCvPetal.x * (petal.x - 0.4)) * cap - uCvPetalMore.w * old * exp(-r2 / 0.02) * cap - uCvDome.z * uCvLane.x) / cvTight(p);
+  // a smaller cell stands lower by the same share, and so does a cell drawn narrower
+  return ((tall + uCvPetal.x * (petal.x - 0.4)) * cap - uCvPetalMore.w * old * exp(-r2 / 0.02) * cap - uCvDome.z * uCvLane.x) / (cvTight(p) * cvPulled);
 }
-// The sunspot at ground point p. Returned: x how much of the place is the spot (1 inside the penumbra), y the
-// height of its funnel with the fibres on it (stage units), z the distance from its middle over the umbra's radius,
-// w the height of the fibre's body there from 0 (the dark between fibres) to 1 (its crest).
-// fibre: x the share of the way from the fibre's middle to its edge, y how far the place is past the fibre's own
-// end over the umbra (0 at the end, 1 well outside), z a number of the fibre's own, w its age from 0 to 1.
-// The fibres are cells of the same kind as the ground's, in a chart of angle and distance round the spot: each is
-// long toward the spot's middle, is born and swallowed like a cell, and the whole chart streams toward the umbra.
-vec4 cvSpot(vec2 p, float t, out vec4 fibre) {
+// The sunspot at ground point p, by place alone. It is no layer of its own: its fibres are the cells of the one
+// diagram, drawn long toward the spot by the chart. Returned: x the share of the funnel's fall there (0 outside
+// the penumbra, 1 at the umbra), y the share of the pit under the umbra, z the distance from the spot's middle over
+// the umbra's own radius that way (the umbra is no circle), w how deep in the penumbra the place lies: it rises
+// from 0 well outside over a wide span, with no line.
+vec4 cvSpot(vec2 p) {
   vec2 d = p - uCvSpot.xy;
   float r = length(d);
   vec2 u = r > 1e-5 ? d / r : vec2(1.0, 0.0);
-  float rs = r / uCvSpot.z;
   float lobes = vnoise(vec3(u * 1.3 + 4.7, 0.5)) + 0.5 * vnoise(vec3(u * 3.1 + 1.9, 2.5)) - 0.75;
   float outer = uCvSpot.w * (1.0 + uCvFibre.w * lobes);
-  float inside = 1.0 - smoothstep(outer * 0.8, outer * 1.04, r);
-  fibre = vec4(1.0, 0.0, 0.5, 0.5);
-  if (inside <= 0.0) return vec4(0.0, 0.0, rs, 0.0);
-  float away = log(max(rs, 0.05));
-  vec2 q = vec2(atan(d.y, d.x) * uCvBend.w / 6.2831853, away * uCvFibre.z + t * uCvStream.x);
-  // no fibre is straight: the chart sways a little along the fibres' length
-  q.x += uCvBend.x * (vnoise(vec3(u * uCvBend.z + 1.1, away * uCvBend.y - t * uCvAboveMore.w)) - 0.5);
-  q.x += uCvSpotMore.z * away;
-  float e;
-  vec2 ge;
-  vec2 rel;
-  vec3 own;
-  cvDiagram(q, t, uCvBend.w, e, ge, rel, own);
-  // every fibre is as long as it likes: its outer end lies at a place of its own, so the spot has no rim
-  float way = cvWay(length(rel), e * uCvCell.x);
-  // within the shortest reach all is spot; beyond it each fibre goes on alone as a tongue that narrows to its end
-  float reach = outer * (1.0 - uCvSpotMore.x * fract(own.y * 7.31 + 0.37));
-  float least = outer * (1.0 - uCvSpotMore.x);
-  float narrow = 1.0 - smoothstep(reach * 0.7, reach * 1.02, r);
-  float tongue = narrow * (1.0 - smoothstep(0.9 * narrow, 0.9 * narrow + 0.1, way));
-  inside = max(1.0 - smoothstep(least * 0.8, least, r), tongue);
-  if (inside <= 0.0) return vec4(0.0, 0.0, rs, 0.0);
-  float umbra = 1.0 + 0.4 * uCvFibre.w * lobes;
-  // every fibre ends over the umbra at a place of its own, with a round head
-  float past = clamp((rs - umbra * (1.0 + uCvStream.y * (own.y - 0.5))) / uCvStream.z, 0.0, 1.0);
-  float body = (1.0 - pow(way, uCvStream.w)) * sqrt(past) * mix(0.5, 1.0, own.z);
-  fibre = vec4(way, past, own.y, own.x);
-  float fall = 1.0 - smoothstep(umbra * uCvSpot.z, outer, r);
-  float pit = 1.0 - smoothstep(umbra * uCvSpot.z * uCvPit.z, umbra * uCvSpot.z * uCvPit.w, r);
-  // (the funnel alone: the fibres' own height comes on top of it, see cvFibreTop)
-  float h = -uCvPit.x * fall - uCvPit.y * pit;
-  return vec4(inside, h, rs, body);
-}
-// The height of a fibre's body over the spot's funnel (stage units), from what cvSpot gave.
-float cvFibreTop(vec4 spot, vec4 fibre) {
-  return uCvFibre.y * (0.6 + 0.8 * fibre.z) * spot.w;
-}
-// Height of the ground over the ball at p (stage units).
-float cvHeight(vec2 p, float t) {
-  float e;
-  vec2 ge;
-  vec2 rel;
-  vec3 own;
-  vec2 petal;
-  float dome = cvDome(p, t, e, ge, rel, own, petal);
-  vec4 fibre;
-  vec4 spot = cvSpot(p, t, fibre);
-  // the mesh carries the spot's funnel and pit. A fibre is narrower than the mesh's rings are apart, so its own
-  // height is carried only by the share uCvSpotMore.w (a mesh that cannot hold it draws seams along its rings); the
-  // rest of the fibres' relief is in the light alone
-  return mix(dome, spot.y + uCvSpotMore.w * cvFibreTop(spot, fibre), spot.x);
+  float umbra = uCvSpot.z * (1.0 + 0.4 * uCvFibre.w * lobes);
+  float fall = 1.0 - smoothstep(umbra, outer, r);
+  float pit = 1.0 - smoothstep(umbra * uCvPit.z, umbra * uCvPit.w, r);
+  return vec4(fall, pit, r / umbra, 1.0 - smoothstep(0.3 * outer, 1.3 * outer, r));
 }`
 
 const VERT = /* glsl */ `
@@ -406,6 +378,7 @@ uniform vec4 uCvCool;
 uniform vec4 uCvCoolMore;
 uniform vec4 uCvAir;
 uniform vec4 uCvStrand;
+uniform vec4 uCvStep;
 in vec2 vG;
 in vec3 vPos;
 in vec3 vView;
@@ -424,9 +397,12 @@ vec3 thrown(vec3 base, vec3 lit) {
 }
 // What the bake holds for the ground straight under a point p: x the heat of the gas there, y the height of its
 // top over the ball, z and w two fields of threads.
-vec4 cvRead(vec3 p) {
+vec2 cvPlace(vec3 p) {
   vec4 c = uCvBake * vec4(ST_CENTRE + normalize(p - ST_CENTRE) * ST_RADIUS, 1.0);
-  return textureLod(uCvBaked, c.xy / c.w * 0.5 + 0.5, 0.0);
+  return c.xy / c.w * 0.5 + 0.5;
+}
+vec4 cvRead(vec3 p) {
+  return textureLod(uCvBaked, cvPlace(p), 0.0);
 }
 // The gas at the height h over a place the bake holds as b. take: the share of the light it takes per unit of the
 // way through it. give: the light it gives. Inside a cell the gas is dense and hot, the hotter the deeper under
@@ -446,11 +422,57 @@ void cvGas(vec4 b, float h, out float take, out float give) {
   float strand = (b.z - uCvStrand.w) * exp(-lay1 * lay1) + (b.w - uCvStrand.w) * exp(-lay2 * lay2);
   float dense = inside * max(1.0 + uCvStrand.y * strand, 0.15) / uCvSlab.w;
   float air = (1.0 - inside) * exp(min(d, 0.0) / uCvAir.y) / uCvAir.x;
-  float cool = (1.0 - inside) * (1.0 - smoothstep(uCvCool.x - uCvCool.y, uCvCool.x + uCvCool.y, h)) * (1.0 - smoothstep(0.0, uCvCoolMore.x, -d)) * smoothstep(uCvCoolMore.w - 0.015, uCvCoolMore.w, b.y) / uCvCool.z;
+  float cool = (1.0 - inside) * (1.0 - smoothstep(uCvCool.x - uCvCool.y, uCvCool.x + uCvCool.y, h)) * (1.0 - smoothstep(0.0, uCvCoolMore.x, -d)) * smoothstep(uCvCoolMore.w - 0.004, uCvCoolMore.w, b.y) / uCvCool.z;
   float deep = 1.0 - exp(-max(d, 0.0) / uCvSlabMore.z);
   float hot = b.x * mix(uCvSlabMore.y, 1.0, deep) * max(1.0 + uCvStrand.x * strand, 0.0);
   take = dense + air + cool;
   give = (dense * hot + air * b.x * uCvAir.z + cool * uCvCool.w) / max(take, 1e-6);
+}
+// The march of one look. cvRd: the way of the look, cvS: how far along it the march has come, cvUv and cvD: the
+// place in the bake of the ground under that point and the depth of the point under the top of the gas, cvB: what
+// the bake holds there. cvLight: the light gathered, cvLeft: the share of the look not yet taken, cvSeen: how far
+// along the look half of it was taken (under 0: not yet).
+vec3 cvRd;
+float cvS;
+vec2 cvUv;
+float cvD;
+vec4 cvB;
+float cvLight;
+float cvLeft;
+float cvSeen;
+// One cut of the look, from where the march stands to the way s along it. The gas has parts finer than a cut:
+// its threads lie in thin layers under its top, and the ground under the look moves over the bake as the look goes
+// down, the more the nearer the ground is. A cut that steps over them draws a stipple that changes with the eye.
+// So a cut is taken in as many equal parts as it needs: one for every uCvStep.x texels of the bake that the ground
+// under it moves and for every uCvStep.y that the depth under the top of the gas changes, at most uCvStep.z. A cut
+// that lies in the thin air alone, more than uCvStep.w over the tops, or that has no light left to take is taken
+// whole. twice: a look that only grazes the slab goes as long again through the air beyond.
+void cvCut(float s, float twice) {
+  vec3 p1 = vPos + cvRd * s;
+  vec2 uv1 = cvPlace(p1);
+  vec4 b1 = textureLod(uCvBaked, uv1, 0.0);
+  float d1 = b1.y - (length(p1 - ST_CENTRE) - ST_RADIUS);
+  int parts = 1;
+  if (cvLeft > 0.003 && max(d1, cvD) > -uCvStep.w) {
+    float moved = length((uv1 - cvUv) * vec2(textureSize(uCvBaked, 0)));
+    parts = int(clamp(ceil(max(moved / uCvStep.x, abs(d1 - cvD) / uCvStep.y)), 1.0, uCvStep.z));
+  }
+  float ds = (s - cvS) / float(parts);
+  for (int j = 0; j < parts; j++) {
+    vec3 p = vPos + cvRd * (cvS + ds * (float(j) + 0.5));
+    vec4 b = cvRead(p);
+    float take;
+    float give;
+    cvGas(b, length(p - ST_CENTRE) - ST_RADIUS, take, give);
+    float a = 1.0 - exp(-take * ds * twice);
+    cvLight += cvLeft * a * give;
+    cvLeft *= 1.0 - a;
+    if (cvSeen < 0.0 && cvLeft < 0.5) cvSeen = max(cvS + ds * float(j + 1), 0.0);
+  }
+  cvS = s;
+  cvUv = uv1;
+  cvD = d1;
+  cvB = b1;
 }
 void main() {
   vec3 dir = normalize(vPos - ST_CENTRE);
@@ -472,54 +494,38 @@ void main() {
   // the gas whatever the eye does
   int n = int(uCvSlabMore.x);
   float dh = (hTop - low) / float(n);
-  float light = 0.0;
-  float left = 1.0;
-  float sPrev = 0.0;
-  float sSeen = -1.0;
-  vec4 b = vec4(0.0);
+  cvRd = rd;
+  cvS = 0.0;
+  cvUv = cvPlace(vPos);
+  cvB = textureLod(uCvBaked, cvUv, 0.0);
+  cvD = cvB.y - hTop;
+  cvLight = 0.0;
+  cvLeft = 1.0;
+  cvSeen = -1.0;
   for (int k = 0; k < n; k++) {
     float hk = hTop - dh * float(k + 1);
-    float s = -bq - sqrt(max(bq * bq - (hTop - hk) * (2.0 * ST_RADIUS + hTop + hk), 0.0));
-    vec3 p = vPos + rd * (0.5 * (s + sPrev));
-    b = cvRead(p);
-    float take;
-    float give;
-    cvGas(b, length(p - ST_CENTRE) - ST_RADIUS, take, give);
-    float a = 1.0 - exp(-take * (s - sPrev) * (grazes ? 2.0 : 1.0));
-    light += left * a * give;
-    left *= 1.0 - a;
-    if (sSeen < 0.0 && left < 0.5) sSeen = max(s, 0.0);
-    sPrev = s;
+    cvCut(-bq - sqrt(max(bq * bq - (hTop - hk) * (2.0 * ST_RADIUS + hTop + hk), 0.0)), grazes ? 2.0 : 1.0);
   }
   // the sunspot's funnel goes deeper than the slab of the cells: there the march goes on to the funnel's depth
   float pit = 0.0;
   if (!grazes) {
-    b = cvRead(vPos + rd * sPrev);
-    int m = b.y < hBot - 0.002 ? int(uCvCoolMore.y) : 0;
+    int m = cvB.y < hBot - 0.002 ? int(uCvCoolMore.y) : 0;
     float dp = (uCvCoolMore.z + hBot) * real / max(float(m), 1.0);
     for (int k = 0; k < m; k++) {
       float hk = hBot - dp * float(k + 1);
-      float s = -bq - sqrt(max(bq * bq - (hTop - hk) * (2.0 * ST_RADIUS + hTop + hk), 0.0));
-      vec3 p = vPos + rd * (0.5 * (s + sPrev));
-      b = cvRead(p);
-      float take;
-      float give;
-      cvGas(b, length(p - ST_CENTRE) - ST_RADIUS, take, give);
-      float a = 1.0 - exp(-take * (s - sPrev));
-      light += left * a * give;
-      left *= 1.0 - a;
-      if (sSeen < 0.0 && left < 0.5) sSeen = max(s, 0.0);
-      sPrev = s;
+      cvCut(-bq - sqrt(max(bq * bq - (hTop - hk) * (2.0 * ST_RADIUS + hTop + hk), 0.0)), 1.0);
     }
     pit = float(m > 0 ? 1 : 0);
     // under the slab the gas is deep and takes all light: what is left of the look ends in the heat of the place
-    b = cvRead(vPos + rd * sPrev);
-    light += left * b.x;
-    left = 0.0;
+    cvLight += cvLeft * cvB.x;
+    cvLeft = 0.0;
     // (far from the place the slab has no thickness and the way through it is nil give or take the last bit of a
     // number: it must not read as a look that was never used up)
-    if (sSeen < 0.0) sSeen = max(sPrev, 0.0);
+    if (cvSeen < 0.0) cvSeen = max(cvS, 0.0);
   }
+  float light = cvLight;
+  float left = cvLeft;
+  float sSeen = cvSeen;
   float seen = 1.0 - left;
   float lum = light / max(seen, 1e-4);
   vec3 toEye = -rd;
@@ -596,6 +602,7 @@ uniform vec4 uCvFlat;
 uniform vec4 uCvMesh;
 uniform vec4 uCvStrand;
 uniform vec4 uCvThreadFar;
+uniform vec4 uCvHeatMore;
 uniform sampler2D uCvMap;
 uniform mat3 uCvToMap;
 uniform vec4 uCvWide;
@@ -626,8 +633,7 @@ void main() {
   vec3 own;
   vec2 petal;
   float dome = cvDome(g, t, e, ge, rel, own, petal);
-  vec4 fibre;
-  vec4 spot = cvSpot(g, t, fibre);
+  vec4 spot = cvSpot(g);
   float L = uCvCell.x;
   // (uCvThreadFar.z: texels of this buffer to a pixel of the 16 by 9 master, each way. The buffer is as large in
   // every format, so what is counted here is counted in 1080ths of the frame height and a frame of any size is the
@@ -643,7 +649,8 @@ void main() {
   // (what fades reads the size in 1080ths of the frame height, not in pixels of the format: the buffer has the
   // master's pixels in every format, see above)
   float footM = sqrt(footX * footY);
-  float footC = footM * cvTight(g);
+  // (a cell drawn long toward the sunspot is narrower and longer: it is held as long as the root of its width is)
+  float footC = footM * cvTight(g) * sqrt(cvPulled);
   // (the long side of what a pixel covers: toward the limb a cell is many pixels wide and under a pixel deep, one
   // sample a pixel then draws grain, so the cell gives way by that side too, between uCvFlat.x and uCvFlat.y cells
   // a pixel)
@@ -658,7 +665,8 @@ void main() {
   float r = sqrt(r2);
   float old = smoothstep(0.5, 1.0, own.x);
   float young = 1.0 - smoothstep(0.0, 0.45, own.x);
-  float way = cvWay(r, e);
+  float across = e * cvPulled / L;
+  float way = cvWay(r, across * L);
   // the heat of the gas. A place is bright because it is hot and for no other reason: the gas is hottest where it
   // wells up in the middle of a cell, cools on its way out and is coolest in the lane. A young cell is hotter, an
   // old one cooler and its middle the first part to cool. The line where the gas has cooled is no ring: the flow
@@ -668,11 +676,27 @@ void main() {
   top *= 1.0 + uCvTone.w * exp(-r2 / (uCvHeat.y * uCvHeat.y)) * (1.0 - 2.2 * old);
   float out1 = clamp(way + uCvWell.z * (2.0 * cvPatch(rel, own.y, t) - 1.0) * 4.0 * way * (1.0 - way), 0.0, 1.0);
   float well = pow(max(1.0 - pow(out1, uCvWell.x), 0.0), uCvWell.y);
+  // (the lane is a thin seam: the gas keeps its heat almost to the cell's border and loses it over the share
+  // uCvWell.w of a lattice unit from the lane; between the fibres of the penumbra the dark is wider by
+  // uCvFibreLook.x)
+  well *= 1.0 - exp(-across / (uCvWell.w * (1.0 + uCvFibreLook.x * spot.w)));
   // (it boils: the heat of a place wavers with a fine field that the time carries)
   top *= 1.0 + uCvGrain.w * (vnoise(vec3(g / L * uCvGrain.y, t * uCvGrain.z + own.y * 5.0)) + 0.6 * vnoise(vec3(g / L * uCvGrain.y * 3.7 + 9.1, t * uCvGrain.z * 1.6 + own.y * 3.0)) - 0.8) * fine;
   float lum = uCvTone.x + (top - uCvTone.x) * well;
   // a few bright points stand in the lanes
   lum += uCvPoints.x * (1.0 - smoothstep(0.0, uCvPoints.y, e)) * smoothstep(uCvPoints.z, 1.0, vnoise(vec3(g / L * uCvPoints.w, t * 0.3))) * fine;
+  // threads: two fields of the cell's own flow lines, each carried outward; a thread is drawn only where a pixel
+  // is narrower than it, farther off the threads merge into their mean
+  // (seen flat, a thread is thinner than a pixel is deep long before a pixel is wider than it: the threads merge
+  // into their mean by the long side of what a pixel covers too, uCvThreadFar.w of it)
+  float threads = (1.0 - smoothstep(uCvThreadFar.x, uCvThreadFar.y, footC)) * (1.0 - smoothstep(uCvThreadFar.x, uCvThreadFar.y, footL * uCvThreadFar.w)) * fine;
+  float one = mix(uCvStrand.w, petal.y, threads);
+  float two = mix(uCvStrand.w, cvPetal(rel, own.y + 0.43, t + 11.0).y, threads);
+  // the hot gas itself lies in fibres that run from the cell's middle to its rim: the heat of a place is that of
+  // its fibre, and the hottest tops are made of them (uCvHeatMore: the share of the one field and of the other,
+  // the least the heat may fall to, the share of a lattice unit from the lane over which the fibres come in: the
+  // flank of a cell that faces the eye holds none, a pattern of the ground would stand on it as upright streaks)
+  lum *= max(1.0 + (uCvHeatMore.x * (one - uCvStrand.w) + uCvHeatMore.y * (two - uCvStrand.w)) * (1.0 - exp(-across / uCvHeatMore.w)), uCvHeatMore.z);
   lum = mix(uCvFar.z * (1.0 + uCvFarMore.x * mottle), lum, mix(uCvFar.w, 1.0, fine));
   // the ground is the globe's own ground: the light and dark of the globe's map lies under the cells at the place on
   // the ball where the globe itself shows it. Each cell takes the map's light at its own middle, so the map's
@@ -691,7 +715,7 @@ void main() {
   // close by; with both whole the ground reads the map by the far law alone. uCvWideMore.x: the least width of a
   // sample in texels of the map, so the enlarged map is a soft tone and no texel of it shows)
   {
-    vec2 gc = g - rel * (L / cvTight(g)) * uCvWideCell.x * (1.0 - spot.x);
+    vec2 gc = g - rel * (L / (cvTight(g) * cvPulled)) * uCvWideCell.x * (1.0 - spot.w);
     float arcC = max(length(gc), 1e-6);
     float alphaC = arcC / ST_RADIUS;
     vec3 mdC = uCvToMap * (-ST_DOWN * cos(alphaC) + sin(alphaC) * (ST_RIGHT * gc.x + ST_FWD * gc.y) / arcC);
@@ -712,25 +736,22 @@ void main() {
     lum *= cellTone * mix(nearTone, farTone, smoothstep(uCvWideBand.x, uCvWideBand.y, wideFoot));
   }
 
-  // the sunspot: fibres with bodies, grains that run toward the umbra along them, a bright head where each ends
-  // over the dark floor
-  float rs = spot.z;
-  vec2 su = normalize(g - uCvSpot.xy + vec2(1e-6, 0.0));
-  float run = vnoise(vec3(su * uCvFibre.x * 1.7 + 1.7, rs * uCvFibreLook.y + t * uCvFibreLook.z));
-  float fine2 = vnoise(vec3(su * uCvFibre.x * 4.3 + 5.1, rs * uCvFibreLook.y * 0.4 + t * uCvFibreLook.z * 0.5));
-  float head = exp(-pow((fibre.y - 0.45) / uCvUmbra.y, 2.0));
-  float pen = uCvUmbra.z * (uCvFibreLook.x + (1.0 - uCvFibreLook.x) * pow(spot.w, uCvFibreLook.w)) * (0.5 + 0.6 * run + 0.5 * fine2 * fibre.x) * (0.7 + 0.6 * fibre.z) * (1.0 + uCvUmbra.w * head) * mix(1.0, 0.8, smoothstep(1.0, 2.2, rs));
+  // the sunspot, by place: the cells drawn long toward it are its fibres. Each ends over the umbra at a place of
+  // its own with a round, brighter head; past its end lies the umbra's dark floor. The penumbra's gas is cooler by
+  // the share uCvUmbra.z where it lies deepest
+  float past = clamp((spot.z - (1.0 + uCvStream.y * (own.y - 0.5))) / uCvStream.z, 0.0, 1.0);
+  float head = exp(-pow((past - 0.45) / uCvUmbra.y, 2.0)) * spot.x;
   float floorL = uCvUmbra.x * (0.6 + 0.8 * vnoise(vec3(g * 22.0, t * 0.15)));
-  lum = mix(lum, mix(floorL, pen, smoothstep(uCvSpotMore.y, uCvSpotMore.y + 0.25, fibre.y)), spot.x);
+  lum *= mix(1.0, uCvUmbra.z, spot.w) * (1.0 + uCvUmbra.w * head);
+  lum = mix(floorL, lum, smoothstep(uCvSpotMore.y, uCvSpotMore.y + 0.25, past));
 
-  // the height of the gas's top over the ball: the cells' domes, the spot's funnel with its fibres as bodies on it
+  // the height of the gas's top over the ball: the cells' domes, lower in the spot's funnel and its pit by place;
+  // a fibre's body ends where the fibre ends
   float real = 1.0 - smoothstep(uCvMesh.x, uCvMesh.y, length(g));
-  float high = mix(dome * fine, spot.y + cvFibreTop(spot, fibre), spot.x) * uCvMesh.z * real;
-  // threads: two fields of the cell's own flow lines, each carried outward; a thread is drawn only where a pixel
-  // is narrower than it, farther off the threads merge into their mean
-  float threads = (1.0 - smoothstep(uCvThreadFar.x, uCvThreadFar.y, footC)) * fine * (1.0 - spot.x);
-  float one = mix(uCvStrand.w, petal.y, threads);
-  float two = mix(uCvStrand.w, cvPetal(rel, own.y + 0.43, t + 11.0).y, threads);
+  // (the wall of the pit under the umbra is no clean line: each fibre goes down into it at a place of its own,
+  // by the share uCvGloss.z of the spread of the fibres' ends)
+  float down = 1.0 - smoothstep(uCvPit.z, uCvPit.w, spot.z - uCvGloss.z * uCvStream.y * (own.y - 0.5));
+  float high = (dome * fine * sqrt(past) - uCvPit.x * spot.x - uCvPit.y * down) * uCvMesh.z * real;
   outColor = mix(vec4(uCvFar.z, 0.0, uCvStrand.w, uCvStrand.w), vec4(lum, high, one, two), met);
 }`
 
@@ -842,17 +863,19 @@ export class Surface {
         uCvMesh: { value: new THREE.Vector4(m.real[0]!, m.real[1]!, 1, 0) },
         uCvKeep: { value: 1 },
         uCvLine: { value: new THREE.Vector4(0, 0, 0, c.fan) },
-        uCvGloss: { value: new THREE.Vector4(0, 0, 0, c.dome.edge) },
+        uCvGloss: { value: new THREE.Vector4(c.dome.shoulder, c.dome.crown, s.fibres.endsDeep, 0) },
+        uCvPull: { value: new THREE.Vector4(s.pull.from * umbra * s.penumbra, s.pull.share, s.pull.sharp, s.pull.turn) },
+        uCvStep: { value: new THREE.Vector4(g.cut.texels, g.cut.depth, g.cut.most, g.cut.air) },
         uCvGrain: { value: new THREE.Vector4(0, l.boil.scale, l.boil.rate, l.boil.amount) },
         uCvThread: { value: new THREE.Vector4(c.thread.round, c.thread.out, c.thread.speed, 0) },
         uCvPatch: { value: new THREE.Vector4(0, 0, 0, l.well.scale) },
         uCvAboveMore: { value: new THREE.Vector4(0, 0, 0, s.fibres.sway) },
-        uCvThreadFar: { value: new THREE.Vector4(g.strand.far[0]!, g.strand.far[1]!, g.fine, 0) },
+        uCvThreadFar: { value: new THREE.Vector4(g.strand.far[0]!, g.strand.far[1]!, g.fine, g.strand.flat) },
         uCvKnee: { value: new THREE.Vector4(l.knee[0]!, l.knee[1]!, 0, 0) },
         uCvSlab: { value: new THREE.Vector4(g.lid, g.floor, g.soft, g.free) },
         uCvSlabMore: { value: new THREE.Vector4(g.steps, g.top, g.deep, 0) },
         uCvCool: { value: new THREE.Vector4(g.cool.fill, g.cool.soft, g.cool.free, g.cool.heat) },
-        uCvCoolMore: { value: new THREE.Vector4(g.cool.reach, g.pit.steps, g.pit.depth, -g.floor) },
+        uCvCoolMore: { value: new THREE.Vector4(g.cool.reach, g.pit.steps, g.pit.depth, g.cool.under) },
         uCvAir: { value: new THREE.Vector4(g.air.free, g.air.scale, g.air.glow, 0) },
         uCvStrand: { value: new THREE.Vector4(g.strand.light, g.strand.dense, g.strand.layer, g.strand.mean) },
         uCvBaked: { value: null as THREE.Texture | null },
@@ -870,7 +893,8 @@ export class Surface {
         uCvWideCell: { value: new THREE.Vector4(l.wide.cell.share, l.wide.cell.least, l.wide.cell.most, l.wide.cell.power) },
         uCvWideMore: { value: new THREE.Vector4(l.wide.texels, ...fullSize('wrap'), 0) },
         uCvHeat: { value: new THREE.Vector4(0, l.middleWide, l.young, l.old) },
-        uCvWell: { value: new THREE.Vector4(l.well.out, l.well.fall, l.well.tongue, 0) },
+        uCvWell: { value: new THREE.Vector4(l.well.out, l.well.fall, l.well.tongue, l.well.seam) },
+        uCvHeatMore: { value: new THREE.Vector4(l.fibre.one, l.fibre.two, l.fibre.least, l.fibre.rim) },
         uCvTone: { value: new THREE.Vector4(l.dark, l.top, l.spread, l.middle) },
         uCvPetal: { value: new THREE.Vector4(c.lumps.height, c.lumps.scale[0]!, c.lumps.turn[0]!, c.lumps.speed[0]!) },
         uCvWarpMore: { value: new THREE.Vector4(c.warp.fine[0]!, c.warp.fine[1]!, c.warp.fine[2]!, c.sizes) },
