@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T12:34:19.978Z",
+ "pushed": "2026-11-25T12:51:43.264Z",
  "head": "553b5a77ea5878ad0b5e887cf80ffc5c37b8d90a",
- "note": "553b5a77 named 12:26; the way up as it stands, 196 to 261 by fives (corona in by height 221 to 231, sky changes 236 to 256: owed). frame 60 sun-near: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes; fine 0.0287 mean 0.310 distance 0.081",
+ "note": "thin law take t1 (uncommitted, on 553b5a77): strands under 1 px laid as one bell; hold 360 arch is a glow, no wire; match 11.9826 (a10 11.9828, before 11.9772); rise pattern 0.388 not cured, cause being read. Frame 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-25T12:51:42.580Z",
+   "file": "20261125125142580-note-t1-90.jpg",
+   "source": "../../../../tmp/v/t1-90.jpg",
+   "kind": "note",
+   "label": "t1-90 left a10 right thin law",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:51:41.960Z",
+   "file": "20261125125141960-note-t1-229.jpg",
+   "source": "../../../../tmp/v/t1-229.jpg",
+   "kind": "note",
+   "label": "t1-229 left a10 right thin law",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:51:41.227Z",
+   "file": "20261125125141227-note-t1-360.jpg",
+   "source": "../../../../tmp/v/t1-360.jpg",
+   "kind": "note",
+   "label": "t1-360 left a10 right thin law",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T12:34:19.388Z",
    "file": "20261125123419388-note-w1-2.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/a10-chain-r-place.jpg",
    "kind": "note",
    "label": "2f60135f, rise 218 + 1/2 to 226 + 1/2, the place 2 times: the arch stands on the globe and shrinks with it",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:14:12.466Z",
-   "file": "20261125121412466-note-pair-360-a10.jpg",
-   "source": "../../../../tmp/v/pair-360-a10.jpg",
-   "kind": "note",
-   "label": "final tier frame 360, before (e6428c50) and after (2f60135f): whole frames, then the place 6 times; the arcade stands as thin arcs over the spot",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:05:29.175Z",
-   "file": "20261125120529175-note-a10-place.jpg",
-   "source": "../../../../tmp/v/a10-place.jpg",
-   "kind": "note",
-   "label": "take a10, the place enlarged: 229 (3 times), 247 (6 times), 269, 270, 360 (5 times)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:05:28.189Z",
-   "file": "20261125120528189-note-a10-seven.jpg",
-   "source": "../../../../tmp/v/a10-seven.jpg",
-   "kind": "note",
-   "label": "take a10: frames 179, 212, 229, 247, 269, 270, 360 (the arcade stands on the body at every distance)",
    "stop": "sun"
   }
  ]
