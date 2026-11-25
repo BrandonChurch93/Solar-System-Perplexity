@@ -1,72 +1,75 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T14:27:56.409Z",
- "head": "356f1a2735b18cd392e8909f0257a1132693802c",
- "note": "the cut in its final design: lossless trimmed cut layers, teeth gone at 2668 and 2676, 2580 equal to the eye, ledge at the far mesa at 2477 named",
+ "pushed": "2026-11-25T15:05:20.125Z",
+ "head": "09738fb6dd46a3cf652598055d119817104e124c",
+ "note": "dive sheet on merged main, the bodies of the two pattern runs, the C2 ledge (bad)",
  "looks": [
   {
-   "time": "2026-11-25T14:27:55.670Z",
-   "file": "20261125142755670-note-web-2668-crop.jpg",
-   "source": "out/work/place/saw/d/web-2668-crop.png",
+   "time": "2026-11-25T15:05:19.346Z",
+   "file": "20261125150519346-note-layers-sheet.jpg",
+   "source": "out/work/place/eng105/layers-sheet.jpg",
    "kind": "note",
-   "label": "cut at 2668, web set left, full set right, crop x 630 to 830 times 3",
+   "label": "who draws: globe blue, set layers red and yellow, 2460, 2468, 2687, 2695",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T14:27:55.039Z",
-   "file": "20261125142755039-note-pair-2477-clusters.jpg",
-   "source": "out/work/place/saw/d/pair-2477-clusters.png",
+   "time": "2026-11-25T15:05:18.756Z",
+   "file": "20261125150518756-note-c2-ledge-x4.jpg",
+   "source": "out/work/place/eng105/c2-ledge-x4.jpg",
    "kind": "note",
-   "label": "cut at 2477, the four clusters, state left, cut right; small dark ledge at the far mesa's upper left corner",
+   "label": "BAD: dark ledge of cut layer C2 at 2476, 2477, 2490, N1 left, the cut right, times 4",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T14:24:07.716Z",
-   "file": "20261125142407716-note-line-others.jpg",
-   "source": "out/work/place/saw/line-others.png",
+   "time": "2026-11-25T15:05:18.029Z",
+   "file": "20261125150518029-note-rise-track.jpg",
+   "source": "out/work/place/eng105/rise-track.jpg",
    "kind": "note",
-   "label": "old red, not from the cut: dark stepped line on the mesa's left flank in the dive, 2470 and 2472, state before N1 and N1",
+   "label": "rise 2687 to 2695, far ground and near ground at 1 to 1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T14:24:07.044Z",
-   "file": "20261125142407044-note-pair-2580-crop.jpg",
-   "source": "out/work/place/saw/d/pair-2580-crop.png",
+   "time": "2026-11-25T15:05:17.427Z",
+   "file": "20261125150517427-note-chg-rise-2687-2695.jpg",
+   "source": "out/work/place/eng105/chg-rise-2687-2695.png",
    "kind": "note",
-   "label": "the cut as it stands, draft 2580 crop times 3, N1 left, cut right",
+   "label": "rise pair 2687 to 2695, the tool's changes panel on my drafts",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T14:24:06.263Z",
-   "file": "20261125142406263-note-pair-2676-crop.jpg",
-   "source": "out/work/place/saw/d/pair-2676-crop.png",
+   "time": "2026-11-25T15:05:16.857Z",
+   "file": "20261125150516857-note-far-track.jpg",
+   "source": "out/work/place/eng105/far-track.jpg",
    "kind": "note",
-   "label": "the cut as it stands, draft 2676 crop times 3, N1 left, cut right",
+   "label": "dive 2460 to 2468, far canyon at 1 to 1: the body that changes in place",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T14:24:05.425Z",
-   "file": "20261125142405425-note-pair-2668-crop.jpg",
-   "source": "out/work/place/saw/d/pair-2668-crop.png",
+   "time": "2026-11-25T15:05:16.233Z",
+   "file": "20261125150516233-note-chg-dive-2460-2468.jpg",
+   "source": "out/work/place/eng105/chg-dive-2460-2468.png",
    "kind": "note",
-   "label": "the cut as it stands, draft 2668 crop x 630..830 y 540..750 times 4, N1 left, cut right",
+   "label": "dive pair 2460 to 2468, the tool's changes panel on my drafts",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T14:01:56.405Z",
-   "file": "20261125140156405-note-web-2668-crop.jpg",
-   "source": "out/work/place/saw/web-2668-crop.png",
+   "time": "2026-11-25T15:05:15.473Z",
+   "file": "20261125150515473-note-dive-sheet.jpg",
+   "source": "out/work/place/eng105/dive-sheet.jpg",
    "kind": "note",
-   "label": "trial cut, web set, draft 2668 crop at the crest",
+   "label": "dive every second frame 2440 to 2476, draft, the cut on merged main",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T14:01:55.644Z",
-   "file": "20261125140155644-note-tone-c.jpg",
-   "source": "out/work/place/saw/tone-c.png",
-   "kind": "note",
-   "label": "tone fall 2462 to 2464, the same ground at one scale from N1 drafts",
-   "stop": "mars"
+   "time": "2026-11-25T14:57:44.580Z",
+   "file": "20261125145744580-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
   }
  ]
 }
