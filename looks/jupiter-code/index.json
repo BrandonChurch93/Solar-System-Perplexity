@@ -1,9 +1,71 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T14:44:59.943Z",
+ "pushed": "2026-11-25T15:34:41.523Z",
  "head": "0e5c0362a8d001e1e0a2d689d74f58d3e83dc45a",
- "note": "14:46 UTC. Merge of main 50387ad is 0e5c0362: tests 917 of 917, 3150 equal bytes, 2895 three pixels by 1 level. Dive slice on the merge is rendering. Wedge take p2 being folded into a script. Far band of MAIL 1131 read.",
+ "note": "15:35 UTC: the wedge on the bench: drafts of 3034, 3042, 3254 + 1/2, the pieces from above; 3150 as named",
  "looks": [
+  {
+   "time": "2026-11-25T15:34:40.162Z",
+   "file": "20261125153440162-note-look-3150.jpg",
+   "source": "../work/r14/w/look-3150.jpg",
+   "kind": "note",
+   "label": "3150 final, named 0e5c0362 (6.113 against the approved image)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T15:34:38.986Z",
+   "file": "20261125153438986-note-thirds-m.jpg",
+   "source": "../work/r14/named/thirds-m.jpg",
+   "kind": "note",
+   "label": "far band at 3150 in thirds beside the approved image, level and relief",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T15:34:37.739Z",
+   "file": "20261125153437739-note-pieces-top.jpg",
+   "source": "../work/r14/w/pieces-top.jpg",
+   "kind": "note",
+   "label": "top view of the place: the pieces' borders drawn, the source ground outlined in green",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T15:34:36.634Z",
+   "file": "20261125153436634-note-after-3254h.jpg",
+   "source": "../work/r14/w/after-3254h.jpg",
+   "kind": "note",
+   "label": "3254 + 1/2 draft with the ground laid on past the canvas' borders (not yet committed)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T15:34:35.456Z",
+   "file": "20261125153435456-note-pair-3042.jpg",
+   "source": "../work/r14/w/pair-3042.jpg",
+   "kind": "note",
+   "label": "3042 draft: named 0e5c0362 above, with the ground laid on past the canvas' borders below (not yet committed)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T15:34:34.122Z",
+   "file": "20261125153434122-note-pair-3034.jpg",
+   "source": "../work/r14/w/pair-3034.jpg",
+   "kind": "note",
+   "label": "3034 draft: named 0e5c0362 above, with the ground laid on past the canvas' borders below (not yet committed)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T15:27:25.029Z",
+   "file": "20261125152725029-frame-n9-3150.jpg",
+   "source": "out/work/jupiter/final/n9-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T14:44:58.548Z",
    "file": "20261125144458548-note-n7-3150-trio.jpg",
@@ -37,20 +99,6 @@
    "stop": "jupiter",
    "segment": "jupiter.hold",
    "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T14:42:22.942Z",
-   "file": "20261125144222942-frame-n8-3150.jpg",
-   "source": "out/work/jupiter/final/n8-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -158,54 +206,6 @@
    "source": "../work/r14/wd-pair-3034.jpg",
    "kind": "note",
    "label": "3034 draft, before above, the wedge take s2 below (working take, not in the tree): the canvas borders are gone at this size, the made ground at the left reads rough",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T13:21:20.439Z",
-   "file": "20261125132120439-note-n7-3150-trio.jpg",
-   "source": "../work/r14/n7-3150-trio.jpg",
-   "kind": "note",
-   "label": "3150 final on 7c0b8675: approved, before, now (6.113)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T13:21:18.631Z",
-   "file": "20261125132118631-note-wedge-s1-top.jpg",
-   "source": "../work/r14/wedge-s1-top.jpg",
-   "kind": "note",
-   "label": "top view, first take of the wedge: canvas tone carried out, canvas plain ground laid turned about the storm (working picture, not in the tree)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T13:21:16.533Z",
-   "file": "20261125132116533-note-wedge-s0-top.jpg",
-   "source": "../work/r14/wedge-s0-top.jpg",
-   "kind": "note",
-   "label": "top view of the ground at the canvas borders, before (plates beyond the borders)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T13:21:14.326Z",
-   "file": "20261125132114326-note-farband-terms.jpg",
-   "source": "../work/r14/farband-terms.jpg",
-   "kind": "note",
-   "label": "3150 top 470 rows: approved, now, air off, haze sheets off, both off, plates alone (far band, cause)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:50:53.121Z",
-   "file": "20261125125053121-note-n7-3150-trio.jpg",
-   "source": "../work/r14/n7-3150-trio.jpg",
-   "kind": "note",
-   "label": "3150 final on 7c0b8675: 6.113 against the approved (before 7.800, round 46 pack 6.578)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:50:51.976Z",
-   "file": "20261125125051976-note-n7-3150-diff.jpg",
-   "source": "../work/r14/n7-3150-diff.jpg",
-   "kind": "note",
-   "label": "3150 against the approved, difference times 4, before and after the camera of the judged frame was set on the lay back's camera",
    "stop": "jupiter"
   }
  ]
