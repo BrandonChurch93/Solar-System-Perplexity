@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T14:59:35.877Z",
- "head": "ba0d1fc8f3800d8029117d78e79db73ce3b03e44",
- "note": "14:59 UTC. The globe gathers the light by height (airLaw.knots, ba0d1fc8, local). Scratch numbers on Mars, not the stop's. Cost at draft about 1 s a frame in the dive.",
+ "pushed": "2026-11-25T15:22:48.995Z",
+ "head": "09f21ce4c09ab3a890b93b46b30776f3ae75c366",
+ "note": "15:24 UTC. Crops of the light by height on the Mars scratch. Code at ba0d1fc8, test limits at 09f21ce4 (local). The gate's G2 on 8961dd4f passes here, 838 of 838.",
  "looks": [
+  {
+   "time": "2026-11-25T15:22:48.155Z",
+   "file": "20261125152248155-note-mars-knots-crops.jpg",
+   "source": "../m1140/mars-knots-crops.jpg",
+   "kind": "note",
+   "label": "Mars 2464 and 2455, 1 to 1 crops, draft, scratch numbers: the law without knots, knots over the datum, knots at 0 and under (shares 0.3 0.6 1)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T14:59:34.264Z",
    "file": "20261125145934264-note-mars-knots-sheet.jpg",
@@ -58,14 +66,6 @@
    "source": "../m1072/mars-1072-sheet.jpg",
    "kind": "note",
    "label": "Mars dive 2458 to 2472, MAIL 1072: 22820b17 against the control with the air off in both frames of each pair; heat is the real pair by the range way",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:45:41.874Z",
-   "file": "20261125114541874-note-mars-2412-carry.jpg",
-   "source": "../m1032/mars-2412-carry.png",
-   "kind": "note",
-   "label": "Mars 2412 right limb: carry.py with the ball carries the moon as sky",
    "stop": "mars"
   }
  ]
