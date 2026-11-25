@@ -46,6 +46,10 @@ export interface GlobePlace {
   // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
   // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
   tone: { cos: [number, number]; power: number; air: number; live: { sigmaDeg: number; contrast: number; colour: number; gain: number; most: number } }
+  // One ground for every height (plates.json, show). pixelDeg: the widths of a pixel of the master frame on the ground, in degrees
+  // of arc, between which the fine forms of the plates take the place of the globe's own. sigmaDeg: the size under which a form is
+  // fine. discDeg: the disc of the place, whole inside the first angle from the centre of the place and ended by the second.
+  show: { pixelDeg: [number, number]; sigmaDeg: number; discDeg: [number, number] }
 }
 
 export interface GlobeFlow {
@@ -170,6 +174,9 @@ uniform float uPlaceFull[${PLACE_LEVELS}];
 uniform vec4 uPlaceLook;
 uniform vec3 uPlaceForms;
 uniform float uPlaceOn;
+uniform vec4 uShow;
+uniform vec2 uDisc;
+uniform float uShowMap;
 uniform vec3 uToneEye;
 uniform vec4 uToneLook;
 uniform float uTonePower;
@@ -387,8 +394,12 @@ ${TAP_LEVELS}
   // flow: the place seen from above is a region of this cloud deck, so its tone and its colour are these (plates.json, tone.live). It goes
   // through the same air, limb light and exposure as the globe below.
   vec3 under = col;
+  // The same colour with the forms of the map between the two sizes left in it (the map at the level uShowMap), over under.
+  vec3 mapMid = vec3(1.0);
   for (int pass = 0; pass < (uPlaceOn > 0.0 ? 1 : 0); pass++) {
     vec3 wideMap = textureLod(uMap, lonLat(dc), uLive.y).rgb;
+    vec3 midMap = textureLod(uMap, lonLat(dc), uShowMap).rgb;
+    mapMid = clamp((midMap * midMap) / max(wideMap * wideMap, vec3(1e-6)), vec3(0.125), vec3(8.0));
     float wideLift = max(textureLod(uFlow, lonLat(dc), uLiveLook.y).g - uLift.x, 0.0) * uLift.y * smoothstep(uLift.z, uLift.w, max(wideMap.r, max(wideMap.g, wideMap.b)));
     under = wideMap * wideMap * ${wrap.top.toFixed(1)} * exp2(wideLift) * curveAt(ndl) * uTint;
   }
@@ -479,16 +490,22 @@ ${TAP_LEVELS}
   vec2 pgy = dFdy(pg);
   float pgd = sqrt(max(dot(pgx, pgx), dot(pgy, pgy)));
   for (int pass = 0; pass < (uPlaceOn > 0.0 && pn > 0.3 ? 1 : 0); pass++) {
+    // The fine forms of the place come by distance (plates.json, show): none where a pixel of the master frame is wider on the ground
+    // than uShow.y, all where it is narrower than uShow.x (logarithms of the width in radians of arc). No height is read.
+    float fineOn = 1.0 - smoothstep(uShow.x, uShow.y, log(max(pgd * uFrame, 1e-9)));
+    // The disc of the place (plates.json, show.discDeg): a region of the ground about the centre of the place, whole inside the first
+    // angle and ended by the second. Inside it the forms of the place stand at every height and every distance.
+    float inner = 1.0 - smoothstep(uDisc.x, uDisc.y, length(pg));
     // The wide ring (plates.json, wide): the forms of the place carried on round its widest plate, as light over that colour. Its
     // border follows its own cloud forms and eases out over uWideLook.y.
     for (int ring = 0; ring < (uWideLook.x > 0.0 ? 1 : 0); ring++) {
       vec2 q = pg * uWideLook.x;
       float m = uPlaceOn * smoothstep(0.5, 0.5 - uWideLook.y, length(q) + uWideForms.x * clamp(0.5 + textureLod(uWide, q + 0.5, uWideForms.y).r / max(textureLod(uWide, q + 0.5, uWideForms.z).r, 1e-3) - 1.0, 0.0, 1.0));
-      for (int k = 0; k < (m > 0.0 ? 1 : 0); k++) {
+      for (int k = 0; k < (m * fineOn > 0.0 ? 1 : 0); k++) {
         float ringOwn = inverseFilmic(vec3(textureGrad(uWide, q + 0.5, pgx * uWideLook.x * uGrad, pgy * uWideLook.x * uGrad).r)).r;
-        float ringLow = inverseFilmic(vec3(textureLod(uWide, q + 0.5, uWideLook.z).r)).r;
-        col = mix(col, under * pow(max(col, vec3(1e-5)) / max(under, vec3(1e-5)), vec3(uWideForms.w)) * (uLiveLook.x * pow(clamp(ringOwn / max(ringLow, 1e-5), 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)), m);
-        texels = mix(texels, pgd * uWideLook.x * uWideLook.w, m);
+        float ringLow = inverseFilmic(vec3(textureLod(uWide, q + 0.5, uShow.w).r)).r;
+        col = mix(col, under * mapMid * (uLiveLook.x * pow(clamp(ringOwn / max(ringLow, 1e-5), 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)), m * fineOn);
+        texels = mix(texels, pgd * uWideLook.x * uWideLook.w, m * fineOn);
       }
     }
     vec3 laid = vec3(0.0);
@@ -514,14 +531,27 @@ ${PLACE_GLSL}
       vec3 toT = normalize(uToneEye - dp);
       float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * uToneLook.y * pow(clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0), uToneLook.x);
       vec3 seen = light * uPlaceDusk.xyz;
-      for (int t = 0; t < (same < 1.0 ? 1 : 0); t++) {
-        // From above the plates give the forms alone, over the globe's own colour (under): their light over their own light at the
-        // same scale (the widest plate at the mip level uLive.x), the luminance to the power uLive.z and the colour to the power uLive.w.
+      for (int t = 0; t < 1; t++) {
+        // One ground for every height and every line of sight (plates.json, show). The forms of the ground are, by their size on the
+        // ground: over the level uLive.x the globe's own; between the levels uLive.x and uShow.z the globe's own outside the disc
+        // of the place and the plates' inside it; under the level uShow.z the plates', and they come by distance (fineOn) while they
+        // are too small in the frame to be told from the globe's own, which they replace. Nothing here reads a height. The share by
+        // the line of sight (same) moves the tone at the level uLive.x alone, from the globe's (under) to the plates', and no form.
         vec3 low = inverseFilmic(textureLod(uPlace0, pg * uPlaceScale[0] + 0.5, uLive.x).rgb);
+        vec3 mid = inverseFilmic(textureLod(uPlace0, pg * uPlaceScale[0] + 0.5, uShow.z).rgb);
         float lowLum = max(dot(low, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
+        float midLum = max(dot(mid, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
         float ownLum = max(dot(own, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
-        vec3 hue = clamp((own / ownLum) / max(low / lowLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
-        seen = mix(under * (uLiveLook.x * pow(clamp(ownLum / lowLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)) * pow(hue, vec3(uLive.w)), seen, same);
+        float fineW = fineOn;
+        vec3 fineHue = clamp((own / ownLum) / max(mid / midLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
+        vec3 midHue = clamp((mid / midLum) / max(low / lowLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
+        vec3 fineForms = pow(clamp(ownLum / midLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z * fineW) * pow(fineHue, vec3(uLive.w * fineW));
+        vec3 outside = col * pow(max(under * mapMid, vec3(1e-5)) / max(col, vec3(1e-5)), vec3(fineW));
+        vec3 inside = under * pow(clamp(midLum / lowLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z) * pow(midHue, vec3(uLive.w));
+        vec3 above = mix(outside, inside, inner) * fineForms * uLiveLook.x;
+        float aboveForms = max(dot(above, vec3(0.2126, 0.7152, 0.0722)), 1e-5) / max(dot(under, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
+        seen *= clamp(aboveForms * lowLum / ownLum, 1.0 / uLiveLook.z, uLiveLook.z);
+        seen = mix(above, seen, same);
       }
       col = mix(col, seen, cover * uPlaceOn);
       texels = mix(texels, placeTexels, uPlaceOn);
@@ -621,6 +651,9 @@ export class Globe {
         uPlaceLook: { value: new THREE.Vector4(o.place.feather, o.place.fade[0], o.place.fade[1], o.place.rim * 0.5) },
         uPlaceForms: { value: new THREE.Vector3(o.place.forms[0], Math.max(o.place.forms[1] - formsUnder, 0), Math.max(o.place.forms[2] - formsUnder, 0)) },
         uPlaceOn: { value: 0 },
+        uShow: { value: new THREE.Vector4(Math.log(THREE.MathUtils.degToRad(o.place.show.pixelDeg[0])), Math.log(THREE.MathUtils.degToRad(o.place.show.pixelDeg[1])), Math.log2(Math.max(THREE.MathUtils.degToRad(o.place.show.sigmaDeg) * ((o.place.textures[0]?.image as unknown as { width: number } | undefined)?.width ?? 1) / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[0] ?? 90) / 2)), 1)), Math.log2(Math.max(o.place.show.sigmaDeg * widePerDeg, 1))) },
+        uShowMap: { value: Math.log2(Math.max(o.place.show.sigmaDeg * o.mapWidth / 360, 1)) },
+        uDisc: { value: new THREE.Vector2(Math.tan(THREE.MathUtils.degToRad(o.place.show.discDeg[0])), Math.tan(THREE.MathUtils.degToRad(o.place.show.discDeg[1]))) },
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
         uToneLook: { value: new THREE.Vector4(o.place.tone.air, 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: o.place.tone.power },

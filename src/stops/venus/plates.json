@@ -66,8 +66,10 @@
     "fullFromY": 1010
   },
   "show": {
-    "note": "The weight of the plates over the globe, by the height of the camera over the cloud tops (radii, eased in the logarithm): none above the upper height, full below the lower one. The upper height is the height of the first frame of the dive, so the place comes in from that frame on and grows with nearness, and it is gone in the rise before the travel starts. Outside the dive and the rise of Venus the plates are off, so the hold is not touched.",
-    "heights": [0.8, 3.4]
+    "note": "One ground for every height (MAIL 785, MAIL 815 point 5 b). The plates stand on the globe at every height and in every segment, and nothing of them goes by the height of the camera. The forms of the ground by their size on the ground: over tone.live.sigmaDeg they are the globe's own everywhere; between sigmaDeg and tone.live.sigmaDeg they are the globe's own outside the disc of the place and the plates' inside it (discDeg: degrees of arc from the centre of the plates, whole inside the first angle, ended by the second); under sigmaDeg they are the plates', and they take the place of the globe's own of that size by distance: none where a pixel of the master frame is wider on the ground than pixelDeg[1], all where it is narrower than pixelDeg[0] (degrees of arc, eased in the logarithm), so the exchange runs while those forms are a few pixels wide. The share by the line of sight (tone) moves the tone at tone.live.sigmaDeg alone, from the globe's to the plates', and no form. The hold shows the disc of the place: that is meant.",
+    "pixelDeg": [0.03, 0.09],
+    "sigmaDeg": 0.3,
+    "discDeg": [4.5, 6.0]
   },
   "texelsNote": "Decision d253 (MAIL 802). What an exchange counts is the full set's texels in both sets, so the asset set does not move the moment at which a patch or a plate arrives or the place of a border: the web set is only softer. texels: the width of each picture in the full set (patches: the dive patches in their order; plates: the levels by tag; wide: the wide ring). The wrap and the pictures of the ground have theirs in wrap.json (color.full) and relief.json (imageSize.full). A mip level named in this file (forms.look, ground.matte.level) is a level of the full set's picture; the web set reads the level that covers the same ground. In the full set a picture of another width than the one written here stops the load.",
   "texels": { "patches": [4096, 4096], "plates": { "w": 4096, "a": 4096, "b": 4096, "c": 4096, "d": 4096 }, "wide": 8192 },

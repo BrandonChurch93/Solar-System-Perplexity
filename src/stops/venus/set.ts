@@ -108,7 +108,7 @@ export const createSet: SetFactory = async (ctx) => {
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.full, exact: key === 'full', spot: spotBody, feather: patches.feather, fade: patches.fade },
     air: { deck: ground.deck!.colours, deckSpanDeg: look.relief.air.deckSpanDeg },
-    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), full: place.levels.map((l) => l.full), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, wide: { ...place.wide, texture: wideTexture } },
+    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), full: place.levels.map((l) => l.full), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, show: place.show, wide: { ...place.wide, texture: wideTexture } },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
@@ -301,10 +301,8 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uCarryOn!.value = 1 - released
       const pl = plan.placeLook(state.segment, camera.length() - 1)
       const duskGain = Math.pow(place.dusk.gain, pl.dusk)
-      // The weight of the place grows with nearness, from the first frame of the dive on, and is gone in the rise before the travel.
-      const height = Math.log(Math.max(camera.length() - 1, 1e-4))
-      const byHeight = (h: [number, number]): number => 1 - smooth((height - Math.log(h[0])) / (Math.log(h[1]) - Math.log(h[0])))
-      gu.uPlaceOn!.value = pl.near ? pl.on * byHeight(place.show.heights) : pl.on
+      // The place is a thing of the planet: its plates stand at every height. What they show goes by distance and by place (globe.ts, show).
+      gu.uPlaceOn!.value = pl.on
       const after = state.time > terrainMid
       for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
