@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T21:10:59.485Z",
+ "pushed": "2026-11-25T21:26:37.172Z",
  "head": "5a508c0d9dfd1c16405944278128ef05edbbf590",
- "note": "main's dive rows read (25 of 179 over); cure B written (one exchange at a pixel), not yet rendered",
+ "note": "Cure B stills: towers single at 1548 and 1554, hold stills byte equal; the straight line at 1326 still stands, cause being measured",
  "looks": [
+  {
+   "time": "2026-11-25T21:26:36.339Z",
+   "file": "20261125212636339-note-B1-line1326.jpg",
+   "source": "../../../../tmp/v/sh/B1-line1326.jpg",
+   "kind": "note",
+   "label": "Straight line at 1326 still stands in B1 (H1, cEnd, B1, gain 1.8): its cure is not found yet",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T21:26:35.689Z",
+   "file": "20261125212635689-note-B1-dive2.jpg",
+   "source": "../../../../tmp/v/sh/B1-dive2.jpg",
+   "kind": "note",
+   "label": "Cure B draft stills 1296, 1304, 1312: sixth, H1, B1",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T21:26:34.628Z",
+   "file": "20261125212634628-note-B1-1554.jpg",
+   "source": "../../../../tmp/v/sh/B1-1554.jpg",
+   "kind": "note",
+   "label": "Cure B draft still 1554 at 2 to 1: sixth, H1, B1. B1 towers single",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T21:10:58.329Z",
    "file": "20261125211058329-note-glass-1320.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/H1-d-1320z.jpg",
    "kind": "note",
    "label": "H1 1320 at 2 to 1: straight lines found, cause open",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T20:16:40.495Z",
-   "file": "20261125201640495-note-venus-dive-changes.jpg",
-   "source": "../../../../tmp/v/smooth-H1/venus-dive-changes.png",
-   "kind": "note",
-   "label": "H1 dive changes: ground by the eye's distance alone, uncommitted",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T19:50:14.639Z",
-   "file": "20261125195014639-note-H1-frames.jpg",
-   "source": "../../../../tmp/v/probe/H1-frames.png",
-   "kind": "note",
-   "label": "trial H1 (the ground takes the close picture's share by the eye's distance, no height), draft 1304, 1312, 1320, 1566 at half size",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T19:50:13.393Z",
-   "file": "20261125195013393-note-gc-crops.jpg",
-   "source": "../../../../tmp/v/probe/gc-crops.png",
-   "kind": "note",
-   "label": "controls on dive 1291 to 1307, crop of 400 px about 1140, 440, lifted: above the close picture's share held at 0 (the ground comes in by height with its own outline), below held at 1 (no outline)",
    "stop": "venus"
   }
  ]
