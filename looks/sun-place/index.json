@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T11:41:00.058Z",
+ "pushed": "2026-11-25T12:05:30.488Z",
  "head": "e6428c506544b946a205a4b3467a32fe1edc0119",
- "note": "arcade as bodies in space, first take (uncommitted, on e6428c50): about 640 fixed strands with depth, plasma carried along them at a steady speed, no opening event; frames 0 33 49 65 90 179. Frame 60 near lines: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes; fine detail 0.0287, mean 0.310; distance 0.081",
+ "note": "arcade as bodies in space, uncommitted take a10: one stable arch 0 to 179, standing small on the body from 229 to 360; paler and more even than the approved. Frame 60: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310; distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-25T12:05:29.175Z",
+   "file": "20261125120529175-note-a10-place.jpg",
+   "source": "../../../../tmp/v/a10-place.jpg",
+   "kind": "note",
+   "label": "take a10, the place enlarged: 229 (3 times), 247 (6 times), 269, 270, 360 (5 times)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:05:28.189Z",
+   "file": "20261125120528189-note-a10-seven.jpg",
+   "source": "../../../../tmp/v/a10-seven.jpg",
+   "kind": "note",
+   "label": "take a10: frames 179, 212, 229, 247, 269, 270, 360 (the arcade stands on the body at every distance)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:05:26.984Z",
+   "file": "20261125120526984-note-a10-six.jpg",
+   "source": "../../../../tmp/v/a10-six.jpg",
+   "kind": "note",
+   "label": "arcade as bodies, take a10: frames 0, 33, 49, 60, 65, 90, then 90 beside the approved",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T11:40:59.507Z",
    "file": "20261125114059507-note-a4-90-pair.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/m5c-p3.jpg",
    "kind": "note",
    "label": "named merge, 240 + 1/2 to 248 + 1/2, every film frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T11:16:17.676Z",
-   "file": "20261125111617676-note-b10f-pairs.jpg",
-   "source": "../../../../tmp/v/b10f-pairs.jpg",
-   "kind": "note",
-   "label": "212 to 247: main above, take b10f below (my folders on both)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:49:47.585Z",
-   "file": "20261125104947585-note-c5b-cells-60fps.jpg",
-   "source": "../../../../tmp/v/c5b-cells-60fps.png",
-   "kind": "note",
-   "label": "near ground at 60 captures a second, frames 60 to 64",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:49:46.746Z",
-   "file": "20261125104946746-note-c5c-229.jpg",
-   "source": "../../../../tmp/v/c5c-229.jpg",
-   "kind": "note",
-   "label": "commit 5, frame 229",
    "stop": "sun"
   }
  ]
