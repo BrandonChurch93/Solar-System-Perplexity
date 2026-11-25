@@ -1,9 +1,47 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T09:40:59.557Z",
- "head": "9cb92e38f3e0065a5d7c21655a7b21204e4a5b1f",
- "note": "8.5 degree level repainted from the level as laid: pairs 2440 to 2456 and 2700 to 2712, halves and 1 to 1",
+ "pushed": "2026-11-25T10:06:21.934Z",
+ "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
+ "note": "facet controls at 2692: not the set, not the detail, not the cells",
  "looks": [
+  {
+   "time": "2026-11-25T10:06:21.378Z",
+   "file": "20261125100621378-note-facet-2692-lift.jpg",
+   "source": "out/work/place/k6/facet-2692-lift.jpg",
+   "kind": "note",
+   "label": "facets at 2692: set on and set held off (1 to 1, lifted 2.2): alike",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T10:06:20.816Z",
+   "file": "20261125100620816-note-facet-ctl.jpg",
+   "source": "out/work/place/k6/facet-ctl.jpg",
+   "kind": "note",
+   "label": "facets on the far wall at 2692: as it stands, detail not wired, cells 2048 (1 to 1, lifted 2.2): alike",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:51:06.551Z",
+   "file": "20261125095106551-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T09:50:33.528Z",
+   "file": "20261125095033528-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T09:40:57.710Z",
    "file": "20261125094057710-note-native-2.jpg",
@@ -34,38 +72,6 @@
    "source": "out/work/place/k7/pair-4.jpg",
    "kind": "note",
    "label": "8.5 level repainted, before (9cb92e38) and after: pair-4",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:40:53.444Z",
-   "file": "20261125094053444-note-pair-3.jpg",
-   "source": "out/work/place/k7/pair-3.jpg",
-   "kind": "note",
-   "label": "8.5 level repainted, before (9cb92e38) and after: pair-3",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:40:52.482Z",
-   "file": "20261125094052482-note-pair-2.jpg",
-   "source": "out/work/place/k7/pair-2.jpg",
-   "kind": "note",
-   "label": "8.5 level repainted, before (9cb92e38) and after: pair-2",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:40:51.410Z",
-   "file": "20261125094051410-note-pair-1.jpg",
-   "source": "out/work/place/k7/pair-1.jpg",
-   "kind": "note",
-   "label": "8.5 level repainted, before (9cb92e38) and after: pair-1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:30:18.785Z",
-   "file": "20261125093018785-note-b85-fits2.jpg",
-   "source": "out/work/place/b2/b85-fits2.jpg",
-   "kind": "note",
-   "label": "8.5 degree level repainted with the 3.8 in its middle, two takes after the fit to the map at the rim (right one chosen), not in the tree yet",
    "stop": "mars"
   }
  ]
