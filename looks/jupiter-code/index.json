@@ -1,9 +1,60 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T05:08:37.161Z",
+ "pushed": "2026-11-25T05:24:28.108Z",
  "head": "e55f084ca0436489551bb69b2604e167fcff5c4a",
- "note": "05:10 UTC: merge of main 64c4ccb at e55f084 (not pushed yet), path green on it, four draft frames equal by hash to e41572b; pictures report of the rise red (pattern 3246 + 1/2 to 3264, level 3287 + 1/2), true map says it is real; proofs still running",
+ "note": "05:25 UTC: slices of the dive and the rise on the merge e55f084 draw the bytes of e41572b and print its rows; cause of the rise's red pattern measured (ground unfolding out of the haze under the limb); handover, parity and tests still running; NAMED follows",
  "looks": [
+  {
+   "time": "2026-11-25T05:24:27.305Z",
+   "file": "20261125052427305-note-pair-3150-final.jpg",
+   "source": "../work/r9/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final tier beside the approved close image",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:24:26.047Z",
+   "file": "20261125052426047-note-storm-equal.jpg",
+   "source": "../work/r9/storm-equal.png",
+   "kind": "note",
+   "label": "the storm at equal ground 2895 to 3024 on the frames of e41572b: one storm; the rings round it arrive at 2988 to 2994 (named)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:24:23.344Z",
+   "file": "20261125052423344-note-ll-3253h.jpg",
+   "source": "../work/r9/tm/ll-3253h.jpg",
+   "kind": "note",
+   "label": "rise lower left of 3253 + 1/2 beside the next 8 frames carried back: the same mound, softer when near, straight dark edge at its right (named, not cured)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:24:22.512Z",
+   "file": "20261125052422512-note-later-3251h.jpg",
+   "source": "../work/r9/tm/later-3251h.png",
+   "kind": "note",
+   "label": "rise 3259 + 1/2, 3251 + 1/2 carried onto it by the true surface, map of the change of pattern: the band under the limb",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:24:18.792Z",
+   "file": "20261125052418792-note-limb-3259h.jpg",
+   "source": "../work/r9/tm/limb-3259h.jpg",
+   "kind": "note",
+   "label": "rise: the ground under the limb of 3259 + 1/2 (x 1280 to 1680, y 60 to 420) beside 3257 + 1/2, 3255 + 1/2, 3253 + 1/2, 3251 + 1/2 carried onto it by the true surface: one ground, squeezed and veiled earlier, wide and clear later (the cause of the rise's red pattern line)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:23:57.317Z",
+   "file": "20261125052357317-compare-jupiter-dive-sides.jpg",
+   "source": "out/work/handover/jupiter-dive-sides.png",
+   "kind": "compare",
+   "label": "jupiter dive, both sides at T (frame 3059) and their difference times 8",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3059,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T05:08:32.567Z",
    "file": "20261125050832567-note-pair-3150-final.jpg",
@@ -170,54 +221,6 @@
    "source": "../work/r9/dive-sheet.jpg",
    "kind": "note",
    "label": "dive e41572b at the frames of the sheet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:36:08.013Z",
-   "file": "20261125043608013-note-curve.jpg",
-   "source": "../work/r9/curve.png",
-   "kind": "note",
-   "label": "condition (a): darkest and brightest 5 by 5 mean in the storm, 2895 to 3058, this commit",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:36:01.925Z",
-   "file": "20261125043601925-note-true-3029.jpg",
-   "source": "../work/r9/tm/true-3029.png",
-   "kind": "note",
-   "label": "3029 against 3037 by the true map: pattern 0.67 at the top edge, far ground going into the horizon's haze",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:35:58.565Z",
-   "file": "20261125043558565-note-carry-3031h.jpg",
-   "source": "../work/r9/carry-3031h.jpg",
-   "kind": "note",
-   "label": "3031 + 1/2 against 3039 + 1/2: top the ground's true map from the poses (pattern 0.23), bottom the reader's chain (1.43 at quarter size): frame, later frame carried back, pattern",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:35:57.675Z",
-   "file": "20261125043557675-note-jupiter-dive-changes.jpg",
-   "source": "../work/r9/dive/jupiter-dive-changes.png",
-   "kind": "note",
-   "label": "dive e41572b the tool's own picture of the changes in place: red, pattern 1.24 from 3031 + 1/2",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:21:31.195Z",
-   "file": "20261125042131195-note-pair-3150-final.jpg",
-   "source": "../work/r9/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "close view 3150 at final tier on e41572b beside the approved image",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:21:30.561Z",
-   "file": "20261125042130561-note-dive-h.jpg",
-   "source": "../work/r9/dive-h.jpg",
-   "kind": "note",
-   "label": "dive 3040 to 3043, every frame, three quarter size",
    "stop": "jupiter"
   }
  ]
