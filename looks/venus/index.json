@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T20:16:42.614Z",
+ "pushed": "2026-11-25T20:42:51.732Z",
  "head": "e08e640c050136195e9341b3cb591a7cbd522b8c",
- "note": "H1 dive read: straight lines at 1318 to 1321 at 2 to 1, control running",
+ "note": "H1 by the eye's distance: reader rows cured, towers double at 2 to 1; control cP0 single; not named",
  "looks": [
+  {
+   "time": "2026-11-25T20:42:50.895Z",
+   "file": "20261125204250895-note-a4H1-1320.jpg",
+   "source": "../../../../tmp/v/sh/a4H1-1320.jpg",
+   "kind": "note",
+   "label": "1320: the straight line stands in the fourth state and in H1 (not the cure's)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T20:42:49.940Z",
+   "file": "20261125204249940-note-cP0-1554.jpg",
+   "source": "../../../../tmp/v/sh/cP0-1554.jpg",
+   "kind": "note",
+   "label": "1554 at 2 to 1: sixth, H1 (double towers, fringes), control cP0 (plates give the hero only): single",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T20:16:41.602Z",
    "file": "20261125201641602-note-H1-d-1320z.jpg",
@@ -50,28 +66,6 @@
    "source": "../../../../tmp/v/sh/sky-crop3.png",
    "kind": "note",
    "label": "hold sky plate at final 1185, no grain, 3 to 1, x 1457 to 1777, y 598 to 798: main's plate left, the filled plate right (not laid in: G17 0.962 to 0.935, match 2.473 to 2.491)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T18:48:55.682Z",
-   "file": "20261125184855682-job-frame-01185.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "venus.hold frame 1185, final tier, nograin view, from the running measure job",
-   "stop": "venus",
-   "segment": "venus.hold",
-   "frame": 1185,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-25T18:32:42.074Z",
-   "file": "20261125183242074-note-D2-hold4.jpg",
-   "source": "../../../../tmp/v/sh/D2-hold4.jpg",
-   "kind": "note",
-   "label": "hold 1185 at 4 to 1 round 1345, 435: approved hero, fifth state, trial D2 (the place whole in the frame of T, no exchange); below the same lifted",
    "stop": "venus"
   }
  ]
