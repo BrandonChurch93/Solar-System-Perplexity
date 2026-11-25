@@ -1,9 +1,55 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T15:19:57.535Z",
- "head": "eccae6571e844f6539c5c5bc2023b8808e7af3d5",
- "note": "h20 eccae657: ground carries the map band always; whole run 380 to 470 largest 0.446",
+ "pushed": "2026-11-25T15:41:12.962Z",
+ "head": "6c6139dd95d1302f5b5c6549b33ba2bdd7a048b8",
+ "note": "b5: light as heat, lower relief; cause of pair 416 found",
  "looks": [
+  {
+   "time": "2026-11-25T15:41:12.407Z",
+   "file": "20261125154112407-note-n432.jpg",
+   "source": "../v/n432.jpg",
+   "kind": "note",
+   "label": "lab b5 (not named) n432.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T15:41:11.830Z",
+   "file": "20261125154111830-note-b5-0-60.jpg",
+   "source": "../v/b5-0-60.jpg",
+   "kind": "note",
+   "label": "lab b5 (not named) b5-0-60.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T15:41:11.273Z",
+   "file": "20261125154111273-note-mid-b5.jpg",
+   "source": "../v/mid-b5.jpg",
+   "kind": "note",
+   "label": "lab b5 (not named) mid-b5.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T15:41:10.705Z",
+   "file": "20261125154110705-note-strip-b5.jpg",
+   "source": "../v/strip-b5.jpg",
+   "kind": "note",
+   "label": "lab b5 (not named) strip-b5.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T15:40:28.742Z",
+   "file": "20261125154028742-frame-lab-90-b6.jpg",
+   "source": "out/work/sun/lab/lab-90-b6.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T15:19:56.937Z",
    "file": "20261125151956937-note-h20-0-60.jpg",
@@ -26,52 +72,6 @@
    "source": "../v/rise-h20-six.jpg",
    "kind": "note",
    "label": "lab h20 eccae657 rise-h20-six.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:19:55.202Z",
-   "file": "20261125151955202-note-h14-h20-90.jpg",
-   "source": "../v/h14-h20-90.jpg",
-   "kind": "note",
-   "label": "lab h20 eccae657 h14-h20-90.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:19:54.629Z",
-   "file": "20261125151954629-note-strip-h20.jpg",
-   "source": "../v/strip-h20.jpg",
-   "kind": "note",
-   "label": "lab h20 eccae657 strip-h20.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:19:02.780Z",
-   "file": "20261125151902780-frame-lab-60-h20.jpg",
-   "source": "out/work/sun/lab/lab-60-h20.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 60, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 60,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T14:46:19.912Z",
-   "file": "20261125144619912-note-h17-0-60.jpg",
-   "source": "../v/h17-0-60.jpg",
-   "kind": "note",
-   "label": "h17 frames 0 and 60",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T14:46:19.243Z",
-   "file": "20261125144619243-note-limb-14-17.jpg",
-   "source": "../v/limb-14-17.jpg",
-   "kind": "note",
-   "label": "frame 90 limb at the left, h14 above h17",
    "stop": "sun"
   }
  ]
