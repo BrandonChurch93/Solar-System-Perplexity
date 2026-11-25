@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T21:30:00.990Z",
- "head": "b876dbf06f2094aa6cb56a97f0f4b751e7cf7855",
- "note": "rigid body trial: lens law of the dive built and checked by geometry, ring edge reader written (model in the rise reads 0.1 px from true circles); proof of the tree still runs, no render yet",
+ "pushed": "2026-11-25T21:52:38.956Z",
+ "head": "5e76dd25bb2efd5f2727e9312f00020927cd73c4",
+ "note": "ring edge reader proven on frames (model reads under 1 px off true circles); today's dive read: 28 px at the outer edge, leaving over 3572 to 3590; trial stills wait for the render slot",
  "looks": [
+  {
+   "time": "2026-11-25T21:52:37.442Z",
+   "file": "20261125215237442-note-edges_dive_now.jpg",
+   "source": "../../../../tmp/v/rigid/edges_dive_now.png",
+   "kind": "note",
+   "label": "saturn tree under proof, by the ring edge reader: px by which the ring edges leave true circles, by frame through the dive (the warp that the rigid body takes out)"
+  },
   {
    "time": "2026-11-25T21:29:54.866Z",
    "file": "20261125212954866-note-holdmap.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/g17/f2/final_3720.png",
    "kind": "note",
    "label": "3720 final on the tree under proof: no sheet, amplitude by radius; 28.5419, G17 1.0022"
-  },
-  {
-   "time": "2026-11-25T20:29:24.332Z",
-   "file": "20261125202924332-note-f1_a.jpg",
-   "source": "../../../../tmp/v/g17/f1_a.png",
-   "kind": "note",
-   "label": "3720 lower left, A ring: approved, no sheet without the term, the fitted amplitude (1.6 at 2.23 and 2.29)"
   }
  ]
 }
