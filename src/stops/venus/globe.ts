@@ -495,10 +495,17 @@ ${TAP_LEVELS}
   vec2 pgx = dFdx(pg);
   vec2 pgy = dFdy(pg);
   float pgd = sqrt(max(dot(pgx, pgx), dot(pgy, pgy)));
+  // The shorter side of a pixel on the ground: it goes with the distance of the camera alone, where the longer one (pgd) grows with a
+  // grazing line of sight as well.
+  float pgs = sqrt(max(0.5 * (dot(pgx, pgx) + dot(pgy, pgy)) - sqrt(0.25 * (dot(pgx, pgx) - dot(pgy, pgy)) * (dot(pgx, pgx) - dot(pgy, pgy)) + dot(pgx, pgy) * dot(pgx, pgy)), 0.0));
   for (int pass = 0; pass < (uPlaceOn > 0.0 && pn > 0.3 ? 1 : 0); pass++) {
     // The fine forms of the place come by distance (plates.json, show): none where a pixel of the master frame is wider on the ground
     // than uShow.y, all where it is narrower than uShow.x (logarithms of the width in radians of arc). No height is read.
     float fineOn = 1.0 - smoothstep(uShow.x, uShow.y, log(max(pgd * uFrame, 1e-9)));
+    // The place arrives by distance (plates.json, show.far, MAIL 1001 point 1): none of it where the shorter side of a pixel of the
+    // master frame on the ground is over uDiscFar.w, all of it where that side is under uDiscFar.z (logarithms of radians of arc).
+    // From the hold the ground is the approved globe's alone; no height and no clock is read.
+    float arrive = 1.0 - smoothstep(uDiscFar.z, uDiscFar.w, log(max(pgs * uFrame, 1e-9)));
     // The disc of the place (plates.json, show.discDeg): a region of the ground about the centre of the place, whole inside the first
     // angle and ended by the second. Inside it the forms of the place stand at every height and every distance.
     float inner = 1.0 - smoothstep(uDisc.x, uDisc.y, length(pg));
@@ -507,11 +514,11 @@ ${TAP_LEVELS}
     for (int ring = 0; ring < (uWideLook.x > 0.0 ? 1 : 0); ring++) {
       vec2 q = pg * uWideLook.x;
       float m = uPlaceOn * smoothstep(0.5, 0.5 - uWideLook.y, length(q) + uWideForms.x * clamp(0.5 + textureLod(uWide, q + 0.5, uWideForms.y).r / max(textureLod(uWide, q + 0.5, uWideForms.z).r, 1e-3) - 1.0, 0.0, 1.0));
-      for (int k = 0; k < (m * fineOn > 0.0 ? 1 : 0); k++) {
+      for (int k = 0; k < (m * fineOn * arrive > 0.0 ? 1 : 0); k++) {
         float ringOwn = inverseFilmic(vec3(textureGrad(uWide, q + 0.5, pgx * uWideLook.x * uGrad, pgy * uWideLook.x * uGrad).r)).r;
         float ringLow = inverseFilmic(vec3(textureLod(uWide, q + 0.5, uShow.w).r)).r;
-        col = mix(col, under * mapMid * (uLiveLook.x * pow(clamp(ringOwn / max(ringLow, 1e-5), 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)), m * fineOn);
-        texels = mix(texels, pgd * uWideLook.x * uWideLook.w, m * fineOn);
+        col = mix(col, under * mapMid * (uLiveLook.x * pow(clamp(ringOwn / max(ringLow, 1e-5), 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)), m * fineOn * arrive);
+        texels = mix(texels, pgd * uWideLook.x * uWideLook.w, m * fineOn * arrive);
       }
     }
     vec3 laid = vec3(0.0);
@@ -520,7 +527,7 @@ ${TAP_LEVELS}
     float placeTexels = texels;
 ${PLACE_COLOURS}
 ${PLACE_GLSL}
-    for (int k = 0; k < (cover > 0.0 ? 1 : 0); k++) {
+    for (int k = 0; k < (cover * arrive > 0.0 ? 1 : 0); k++) {
       // From above the place has the tones of the globe about it. The tones of the close view (the far deck pale under its haze, the near
       // towers dark against the Sun) belong to the line of sight of the close view: they come in as the line of sight nears the one of T.
       vec3 own = inverseFilmic(laid / cover);
@@ -556,12 +563,10 @@ ${PLACE_GLSL}
         vec3 midHue = clamp((mid / midLum) / max(low / lowLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
         vec3 fineForms = pow(clamp(ownLum / midLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z * fineW) * pow(fineHue, vec3(uLive.w * fineW));
         vec3 outside = col * pow(max(under * mapMid, vec3(1e-5)) / max(col, vec3(1e-5)), vec3(fineW));
-        // Inside the disc the forms between the two sizes are the place's own at every height. Where they are a few pixels wide in the
-        // frame they show as cloud of the globe's deck does at that size (plates.json, show.far): at the contrast uDiscFar.x and no
-        // further from the colour under them than uDiscFar.y times, where a pixel of the master frame is wider on the ground than
-        // uDiscFar.w; in full where it is narrower than uDiscFar.z (logarithms of radians of arc), and in full on the line of sight of T
-        // (same), whose picture they are. Their contrast alone moves: no form comes or goes, and no height is read.
-        float midFull = max(same, 1.0 - smoothstep(uDiscFar.z, uDiscFar.w, log(max(pgd * uFrame, 1e-9))));
+        // Inside the disc the forms between the two sizes are the place's own. While the place arrives (arrive) they stand as cloud of
+        // the globe's deck does at that size (plates.json, show.far): at the contrast uDiscFar.x and no further from the colour under
+        // them than uDiscFar.y times; in full when it has arrived, and in full on the line of sight of T (same), whose picture they are.
+        float midFull = max(same, arrive);
         float midMost = mix(uDiscFar.y, uLiveLook.z, midFull);
         vec3 inside = under * pow(clamp(midLum / lowLum, 1.0 / midMost, midMost), uLive.z * mix(uDiscFar.x, 1.0, midFull)) * pow(midHue, vec3(uLive.w));
         vec3 above = mix(outside, inside, inner) * fineForms * uLiveLook.x;
@@ -569,8 +574,8 @@ ${PLACE_GLSL}
         seen *= clamp(aboveForms * lowLum / ownLum, 1.0 / uLiveLook.z, uLiveLook.z);
         seen = mix(above, seen, same);
       }
-      col = mix(col, seen, cover * uPlaceOn);
-      texels = mix(texels, placeTexels, uPlaceOn);
+      col = mix(col, seen, cover * uPlaceOn * arrive);
+      texels = mix(texels, placeTexels, uPlaceOn * arrive);
     }
   }
   for (int pass = 0; pass < (uAirHaze.x > 0.0 ? 1 : 0); pass++) {
