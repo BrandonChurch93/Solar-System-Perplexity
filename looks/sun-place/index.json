@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T20:59:19.537Z",
+ "pushed": "2026-11-25T21:24:58.978Z",
  "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
- "note": "60 draft trial D4: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2023 shapes, fine 0.0566, mean 0.404 | distance 0.145; arcade trials running, harness far sky 0.452 at 195 lies on the arcade",
+ "note": "21:27 trial J1 of the arcade and limb at 60 and its fault at 360 (two blobs at the feet); sun-near 60: body 0.576 half width 5.4 px 2022 shapes fine 0.0566 mean 0.404 distance 0.145; not named",
  "looks": [
+  {
+   "time": "2026-11-25T21:24:53.369Z",
+   "file": "20261125212453369-note-J1-360z.jpg",
+   "source": "../../../../tmp/v/J1-360z.png",
+   "kind": "note",
+   "label": "frame 360 draft, the arcade's place four times: named state left, trial J1 right: two pale blobs at the feet, a fault of the trial, cause found (the least width multiplied by the sheath)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:24:52.751Z",
+   "file": "20261125212452751-note-J1-crop.jpg",
+   "source": "../../../../tmp/v/J1-crop.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, approved over trial J1 (arcade and limb numbers, sheath by the clamped light); not named",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T20:59:18.963Z",
    "file": "20261125205918963-note-pmap-195.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sm-a-sky12.jpg",
    "kind": "note",
    "label": "sun rise 190, 194, 198, 202 at draft, working tree on 6b6aca66 (the glow from inside, first state): top 42 percent, stars out by a median, x12. Bands of the map's rows still come in from 198; harness short run 190 to 200 reads the far sky 0.56 at 190 (limit 0.45, was 1.44 at 195 + 1/2 on the name). Next state reads the map as wide outward as round.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:38:49.277Z",
-   "file": "20261125193849277-note-f00221.jpg",
-   "source": "out/work/sun/t/n2/f00221.png",
-   "kind": "note",
-   "label": "Working tree, draft, frame 221: the gas from inside",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:38:48.675Z",
-   "file": "20261125193848675-note-n2-pairs.jpg",
-   "source": "../../../../tmp/v/n2-pairs.jpg",
-   "kind": "note",
-   "label": "Gas from inside, draft, 199 204 209 213 221 231: left the name 6b6aca66 (arcs), right the working tree (the map read wide by each look's distance, the part of the line before the eye)",
    "stop": "sun"
   }
  ]
