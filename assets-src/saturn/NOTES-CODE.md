@@ -7168,3 +7168,100 @@ So in front of the lit globe all three looks cover by one law from the kept ring
 - 20:28 MAIL to /root (low): the masks, the four numbers, the shadow answer, the slice, the correction, the
   time (proof ends about 22:40, name about 23:00).
 - Main moved to ce8cb68 by 20:27 (kit/PROGRESS.md only since faf2194).
+
+## 2026-11-25, 20:29 to 20:50 UTC: MAIL 1287 (the fourth review note, plan P) and the warp study, part 1
+
+MAIL 1287 (20:29, /root), in short: the 20:28 mail is taken as STATED, judged with the name (about 23:00), the
+hold's left foot under the full shadow by d296 and G17. BRANDON wrote the fourth review note (kit/PROGRESS.md,
+"Fourth review note of 2026-11-25", main ce8cb68b). The film he watched carries the picture of the first record
+round (05:42 UTC on 2026-11-23), older than my work since his first note. His words on Saturn, SEVERE: "The
+transition to Saturn still looks really warped and weird". Plan P: 1 /root shows him the dive (118 to 121 s)
+and the flight in (110.5 to 113.5 s) of main 53025569 at 60 frames a second. 2 I state by measure, for main's
+code and for my tree, by frame through the dive and the leaving, in one mail with frames at 1 to 1: (a) the
+rings: the outline against the ellipse a true circle gives at the eye's angle, any stretch as the eye nears or
+crosses the ring plane; (b) the cloud tops: the largest stretch of the ground's pattern toward the limb (ratio
+along and across), any frame with streaks; (c) the lens: the field of view by frame; (d) the handover: any
+frame where the globe and the close view show the same ground at two scales or two shapes. Name what an eye
+would call warped and at which frames. 3 the cure by cause in my folder, judged in a round of the fourth note.
+4 do not stop the proof; answer 2 when it is read, before the name if I can.
+
+TOOLS (scratch, not in the tree): out/scratch/warp.ts OUT F0 F1 [offset] (the lens of every film frame from
+the engine's own shots, FilmDirector.shotAt, in the frame of the rings; it agrees with plan.flight to 1e-12
+inside the stop); /tmp/v/warp/state.py A B STEP (field of view, height, distance, elevation over the ring
+plane, roll, distance to the hero pose, the kept set's pose weight and polar weight, the model's share);
+sizes.py A B STEP (the globe's disc and the A ring in pixels, the change of scale a frame by the lens and by
+the distance); geo.py (projection, the fit table polar-warp.bin as the shader reads it, the radius the kept
+set draws a ring radius at); shape.py A B STEP (how far the drawn rings lie off the true circles in pixels
+and how fast that changes); overlay.py FRAME IN OUT [box scale] (true circles green, drawn radius red, true
+limb blue on a frame); ringfit.py FRAME FILE... (the picture's own ring edges read back onto the plane
+through the lens, by azimuth).
+
+WHO DRAWS WHAT (the same in main and in my tree: plan.ts, fit.json, polar.json, rings.json, polar-warp.bin,
+the director, the config and skim.json pose, path, handover.dive, handover.rise, handover.kept.heights are
+byte equal or equal in value; my changes to kept/rings.ts touch cover and light, not the radius):
+- travel in 3315 to 3389 (the engine's), hold 3390 to 3539, dive 3540 to 3629, terrain 3630 to 3809, rise
+  3810 to 3884, travel out 3885 to 3959. The engine changes the view from orbit to terrain at 3589 and back
+  at 3853.
+- The kept set draws the flight in, the hold and the dive down to the height window 1.03 to 0.93 (frames
+  3599 to 3603, the takes of a frame shared by height); the model draws alone from there to the end.
+
+(c) THE LENS: 30.00 degrees through the flight in and the hold. Dive: 30.02 at 3546, 30.50 at 3558, 31.10 at
+3564, 31.99 at 3570, 33.18 at 3576, 34.63 at 3582, 36.22 at 3588, 37.77 at 3594, 39.11 at 3600, 40.20 at
+3606, 41.01 at 3612, 41.53 at 3618, 41.77 from 3627. The picture's scale changes by the lens by up to 0.79
+percent a frame (3582 to 3590) while the approach adds 0.70 percent a frame: they cancel. The globe's disc
+reads 395.9 px at 3564, 401.0 at 3570, 403.3 at 3576, 402.9 at 3582, 401.4 at 3588, 400.7 at 3594, 402.9 at
+3600, 408.2 at 3606 while the eye comes from 5.00 to 3.75 radii: the disc stands still for 36 frames while
+the far side of the A ring falls from 265 to 129 px over the centre. Rise: 41.77 at 3810, 40.44 at 3825,
+38.02 at 3835, 34.77 at 3845, 32.14 at 3855, 30.64 at 3865, 30.01 at 3880; lens up to 1.00 percent a frame
+(3840) against the retreat's 1.39: the disc shrinks 0.31 to 0.48 percent a frame until 3845 while the eye
+leaves at 0.3 to 1.4 percent a frame. Roll of the ring plane on screen: 11.3 at 3540 to 9.55 at 3630; 9.54
+at 3810 to 22.2 at 3880. Flight in: roll from -64.7 (3335) through -14.1 (3360) to 13.4 (3380); elevation of
+the eye over the ring plane 59 to 23.5 degrees; the disc 18 px at 3350, 110 at 3360, 246 at 3370, 344 at
+3380, 363 at 3390 (15 percent a frame at 3356, 5 percent at 3370).
+
+(a) THE RINGS: the hold's rings are the hero picture's layout, not circles: kept/rings.ts reads the profile
+at the plane radius less the pose weight times the fit table (polar-warp.bin, least -0.072, most +0.052
+radii; uPolarShape is the pose weight, 1 within 0.6 radii of the hero pose, 0 beyond 1.6, look.heroRange).
+By the code: off the true circle by up to 29.7 px at 3465 (outer part, azimuth 38). The weight comes in over
+3373 to 3379 of the flight in (0.22 at 3374, 0.57 at 3375, 0.82 at 3376, 0.99 at 3378): the drawn rings move
+against the true plane by up to 8.6 px a frame (3374), 26 px in all. It lets go over 3562 to 3593 of the dive
+(0.989 at 3564, 0.864 at 3570, 0.613 at 3576, 0.313 at 3582, 0.071 at 3588, 0 from 3594): up to 1.7 px a
+frame (3567, B ring's edge at azimuth -12), about 1 px a frame through 3576 to 3585, from up to 34.9 px off
+to 0. In 3540 to 3561 the weight is 1 (mail 298 holds). MEASURED ON THE PICTURES at 3465 (ringfit.py, lit
+azimuths): main's final: the B ring's outer edge reads at plane radius 1.890 to 1.982 by azimuth (spread
+0.092 radii; a circle gives 0), the rings' outer edge 2.298 to 2.394 (0.096); my tree: 1.890 to 1.986 and
+2.298 to 2.394. Against the fit table rms 0.012 and 0.007; against a circle 0.024 and 0.032. The table by
+harmonics at radius 2.3: mean -0.022, first 0.024, second 0.039, what is left 0.008 rms: the hero's outer
+ring is nearly an ellipse of its own, but the inner rings are pushed otherwise (at 1.95 the first harmonic
+0.024 toward azimuth 163, the second 0.003), so no pose makes all of them circles. The limb: kept/globe.ts
+draws the day limb off the true ellipsoid by the pose weight times look.globe.limbFit (+0.0138 to -0.0092
+radii by latitude: about +5 and -3 px at the hold), in and out with the same weight. The hero's light on the
+globe (hold light, a ratio projected from the hero pose) has the same weight. This was measured before
+(notes of 2026-11-24, "The traced sheet") and ruled then (mail 439, d165 point 5: the hold's ring layout
+stays the hero's and gives way to the rigid plane by pose).
+From 3594 the kept set draws true circles; the model draws true circles and the true limb at every frame
+(its limb fit weight is never set). The eye never crosses the ring plane: lowest 0.36 radii (3720).
+
+(b) THE CLOUD TOPS: one equirect map rigid on the ellipsoid, the same file and the same function in both
+scenes and in main (kept/globe.ts and globe.ts equirectGrad on the turned direction); nothing is projected
+from a lens onto the globe but the hold light, which is a factor of light and ends before the hero's limb.
+At the hold's pole (3465, 3 times) the vortices read round, no pinch. To do: the stretch by frame.
+
+(d) THE HANDOVER: at 3599 to 3603 both scenes are drawn in one frame's takes; by then the pose weight is 0
+and the polar picture's weight is under 0.006, so both draw the kept profile on true circles (the model's far
+look is the kept shader's pure state, mail 302). Handover report of this tree: side difference at T (3589)
+mean 0, 99.9th percentile 0, largest 6; rise largest 1.
+
+OLD NOTES of the known list (kit/PROGRESS.md items 38 and 41, round 26, the kept build's first record film):
+"the bottom edge of the warped terrain source picture enters the frame as a sloped seam" and "the camera
+swings Saturn upper-right and shrinks it until stalling near frame 3600, then reverses screen direction".
+That picture is gone from main's present code (the skim is the model, the dive has no cover).
+
+STILL TO DO for the mail: the dive's and the rise's frames of the proof (draft, 2 a film frame) at 1 to 1
+with the overlay and ringfit by frame; the cloud tops by frame; main's dive frames are not on disk (one
+render at a time, the proof runs to about 22:40): main is stated from the code and from its hold final.
+CURES to offer (not built): the rings: one rigid layout for the whole stop, either true circles at the hold
+too (cost at 3465 against the approved hero, to measure with one still) or the hero's table rigid at every
+pose with the model reading the pushed radius (3720 moves by up to 0.07 radii at azimuth 38, where the skim
+looks); the lens: one field of view for hold and skim would need a new fit of one of the two approved
+pictures, or the change of the lens is paced so that the disc never stands still.
