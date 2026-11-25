@@ -1,71 +1,71 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T13:36:03.306Z",
- "head": "2983ba43478c13ae854d5a0960146a370f30c135",
- "note": "cHl names the hold look for red 1; trials of leave by distance, fine forms by slant, release by line of sight: reds move, not cured",
+ "pushed": "2026-11-25T14:18:38.648Z",
+ "head": "a2fb11bee706053aa91ca067bab49de85d5489b9",
+ "note": "whole dive of the fifth state at rate 2: 31 rows over 0.45, largest 0.72 at 1330 + 1/2 (before 25 rows, 0.63); the dive beside b0b87889",
  "looks": [
   {
-   "time": "2026-11-25T13:36:02.055Z",
-   "file": "20261125133602055-note-Bd-venus-dive-k2636-2672-changes.jpg",
-   "source": "../../../../tmp/v/probe/Bd-venus-dive-k2636-2672-changes.png",
+   "time": "2026-11-25T14:17:09.173Z",
+   "file": "20261125141709173-note-near.jpg",
+   "source": "../../../../tmp/v/sh/n5/near.jpg",
    "kind": "note",
-   "label": "trial Bd (release by the angle and by the size against T, 1 to 3), dive rows 1318 to 1336: 19 rows over, largest 0.82; not taken",
+   "label": "the near ground at 1 to 1 (box 350 to 1050 by 760 to 1080), b0b87889 left, the fifth state right, 1326, 1332, 1338: the same forms, paler in the fifth state at 1326 and 1332 (mean level 43.5 against 41.8, 32.0 against 29.2), equal by 1338 (25.7 against 25.1)",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T13:36:01.049Z",
-   "file": "20261125133601049-note-band.jpg",
-   "source": "../../../../tmp/v/sh/cmbR/band.jpg",
+   "time": "2026-11-25T14:17:08.325Z",
+   "file": "20261125141708325-note-b0c.jpg",
+   "source": "../../../../tmp/v/sh/n5/b0c.jpg",
    "kind": "note",
-   "label": "trial cmbR (the same three), rise, the band y 180 to 470 every second frame 1539 to 1557: 3 rows over of 23 on the reader, but from 1549 a pale smeared sheet with hard edges where the picture of T is held on the far deck; not taken",
+   "label": "the dive beside main b0b87889 (left), the fifth state on the right: 1308, 1314, 1320, 1326, 1332, 1338",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T13:36:00.158Z",
-   "file": "20261125133600158-note-cmbD-venus-dive-k2532-2640-changes.jpg",
-   "source": "../../../../tmp/v/probe/cmbD-venus-dive-k2532-2640-changes.png",
+   "time": "2026-11-25T14:17:07.190Z",
+   "file": "20261125141707190-note-b0b.jpg",
+   "source": "../../../../tmp/v/sh/n5/b0b.jpg",
    "kind": "note",
-   "label": "trial cmbD (leave by the eye's distance at each ground point 1.9 to 3.4, fine forms by the sine of the elevation, release by the angle), dive rows 1266 to 1320: red 1 moved to 1277 + 1/2 to 1280 (0.58), new red 1303 to 1304 (0.55), 1309 to 1313 at or under 0.45",
+   "label": "the dive beside main b0b87889 (left), the fifth state on the right: 1282, 1286, 1287, 1290, 1296, 1302",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T13:35:58.876Z",
-   "file": "20261125133558876-note-cHl-venus-dive-k2546-2556-changes.jpg",
-   "source": "../../../../tmp/v/probe/cHl-venus-dive-k2546-2556-changes.png",
+   "time": "2026-11-25T14:17:06.269Z",
+   "file": "20261125141706269-note-b0a.jpg",
+   "source": "../../../../tmp/v/sh/n5/b0a.jpg",
    "kind": "note",
-   "label": "control cHl (the hold look kept on the body), dive rows 1273 to 1278: green, largest 0.30; the layer of red 1 is the hold look going out at the lower right limb",
+   "label": "the dive beside main b0b87889 (left) at half size, the fifth state on the right: 1260, 1262, 1266, 1270, 1274, 1278",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T12:58:50.457Z",
-   "file": "20261125125850457-note-band.jpg",
-   "source": "../../../../tmp/v/sh/f5r/band.jpg",
+   "time": "2026-11-25T14:17:05.549Z",
+   "file": "20261125141705549-note-d6.jpg",
+   "source": "../../../../tmp/v/sh/n5/d6.jpg",
    "kind": "note",
-   "label": "fifth state rise, the band y 180 to 470 of every second frame 1539 to 1557: the far band under the horizon goes from smooth pale air to the ground with fine forms by 1547 to 1549",
+   "label": "whole dive of the fifth state, every half frame 1330 to 1344 + 1/2 at quarter size",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T12:58:49.274Z",
-   "file": "20261125125849274-note-a.jpg",
-   "source": "../../../../tmp/v/sh/rPd/a.jpg",
+   "time": "2026-11-25T14:17:04.605Z",
+   "file": "20261125141704605-note-d5.jpg",
+   "source": "../../../../tmp/v/sh/n5/d5.jpg",
    "kind": "note",
-   "label": "trial rPd, whole frames 1318 to 1328 every second frame, half size, draft",
+   "label": "whole dive of the fifth state, every half frame 1315 to 1329 + 1/2 at quarter size",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T12:58:48.475Z",
-   "file": "20261125125848475-note-rPd-venus-dive-k2636-2672-changes.jpg",
-   "source": "../../../../tmp/v/probe/rPd-venus-dive-k2636-2672-changes.png",
+   "time": "2026-11-25T14:17:03.473Z",
+   "file": "20261125141703473-note-d4.jpg",
+   "source": "../../../../tmp/v/sh/n5/d4.jpg",
    "kind": "note",
-   "label": "trial rPd (ground.release read at each ground point by the angle between the line of sight and the one of T), dive rows 1318 to 1336: rows 1318 to 1328 + 1/2 at or under 0.45; 1329 to 1333 red as before (near ground, tone.near)",
+   "label": "whole dive of the fifth state, every half frame 1300 to 1314 + 1/2 at quarter size",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T12:58:47.445Z",
-   "file": "20261125125847445-note-cF-venus-dive-k2618-2626-changes.jpg",
-   "source": "../../../../tmp/v/probe/cF-venus-dive-k2618-2626-changes.png",
+   "time": "2026-11-25T14:02:52.567Z",
+   "file": "20261125140252567-note-d3.jpg",
+   "source": "../../../../tmp/v/sh/n5/d3.jpg",
    "kind": "note",
-   "label": "control cF (the plates' fine forms weighted by the longer side of a pixel on the ground), dive rows 1309 to 1313: green, largest 0.43; names the fine forms in the far band for 1310 + 1/2 to 1312",
+   "label": "whole dive of the fifth state, every half frame 1285 to 1299 + 1/2 at quarter size; the arrival strips 1273 to 1302 at 1 to 1 of this run are equal to the byte to the ones of a7bbcea8",
    "stop": "venus"
   }
  ]
