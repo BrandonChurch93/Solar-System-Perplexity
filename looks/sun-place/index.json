@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T14:00:45.063Z",
+ "pushed": "2026-11-25T14:25:35.575Z",
  "head": "f906d2ecd83bde72e38eb6e9df302f3d2d3aa478",
- "note": "joined state f906d2ec (lab ground, level as fine bands on the map, anchor turned, thick limit): final 360 11.9804 against 11.9772 before, worse, the two white feet; rise chain 218.5 to 226.5 reads 0.778 at [40, 330] over the limit 0.45, grain of the lab ground at far; frame 60: dark 0.177 body 0.561 pale 0.108 white 0.072 | half width 4.6 px, 1992 shapes, fine 0.0606, mean 0.397 | distance 0.074",
+ "note": "14:27 UTC. Way up studied, nothing committed since f906d2ec. Trial p1 (far twin laid at every distance) not kept: hold match 12.7733 against 11.9804, a speckled square at 360. Frame 60 not redrawn since k2, its lines: dark 0.177 body 0.561 pale 0.108 white 0.072 | half width 4.6 px, 1992 shapes, fine 0.0606, mean 0.397 | distance 0.074",
  "looks": [
+  {
+   "time": "2026-11-25T14:25:34.928Z",
+   "file": "20261125142534928-note-n1-b.jpg",
+   "source": "../../../../tmp/v/n1-b.jpg",
+   "kind": "note",
+   "label": "way up n1, preview: 244 248 252 256 260 264 269 270",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:25:34.284Z",
+   "file": "20261125142534284-note-n1-a.jpg",
+   "source": "../../../../tmp/v/n1-a.jpg",
+   "kind": "note",
+   "label": "way up as it stands with one sky trial n1, preview: 200 210 216 220 224 228 232 236 240",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:25:33.638Z",
+   "file": "20261125142533638-note-p1-360-box.jpg",
+   "source": "../../../../tmp/v/p1-360-box.jpg",
+   "kind": "note",
+   "label": "trial p1 not kept at 360 final: approved, committed f906d2ec, p1 (match 12.7733 against 11.9804)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T14:25:32.958Z",
+   "file": "20261125142532958-note-p1-sheet.jpg",
+   "source": "../../../../tmp/v/p1-sheet.jpg",
+   "kind": "note",
+   "label": "trial p1 not kept: far twin at every distance in its 40 degrees, draft 225 229 233 237 241 247 255 269",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T13:51:05.110Z",
    "file": "20261125135105110-note-k2-chain.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/k1-box.png",
    "kind": "note",
    "label": "joined state k2 (1d0faacf): k1-box.png",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:51:00.321Z",
-   "file": "20261125135100321-note-j3-360.jpg",
-   "source": "../../../../tmp/v/j3-360.jpg",
-   "kind": "note",
-   "label": "joined state k2 (1d0faacf): j3-360.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:50:59.436Z",
-   "file": "20261125135059436-note-j2-rise.jpg",
-   "source": "../../../../tmp/v/j2-rise.jpg",
-   "kind": "note",
-   "label": "joined state k2 (1d0faacf): j2-rise.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:50:57.903Z",
-   "file": "20261125135057903-note-k2-sheet-a.jpg",
-   "source": "../../../../tmp/v/k2-sheet-a.jpg",
-   "kind": "note",
-   "label": "joined state k2 (1d0faacf): k2-sheet-a.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:29:38.685Z",
-   "file": "20261125132938685-note-g1-six.jpg",
-   "source": "../../../../tmp/v/g1-six.jpg",
-   "kind": "note",
-   "label": "joined state j1: g1-six.jpg",
    "stop": "sun"
   }
  ]
