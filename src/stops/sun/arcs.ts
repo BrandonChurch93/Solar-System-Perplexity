@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { config } from '../../config'
 import { diagUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
-import { formatUniform } from './format'
+import { formatUniform, setFormat } from './format'
 import { stage } from './stage'
 import data from './arcs.json'
 
@@ -36,6 +36,7 @@ out vec4 vAcross;
 out vec4 vStrand;
 out vec2 vFlow;
 out vec3 vClip;
+out vec3 vAt;
 void main() {
   vec3 across = cross(aTan, uCam - position);
   across /= max(length(across), 1e-6);
@@ -44,7 +45,8 @@ void main() {
   float px = aStrand.y * length(mat3(modelViewMatrix) * across) * projectionMatrix[1][1] / max(mid.w, 1e-6) * 0.5 * uLeast.y * uFormat;
   float shown = max(px, uLeast.x);
   // the band is as wide as the tube's thin sheath (uHalo.x times the tube's width)
-  gl_Position = projectionMatrix * modelViewMatrix * vec4(position + across * (aAcross.x * aStrand.y * uHalo.x * shown / max(px, 1e-6)), 1.0);
+  vAt = position + across * (aAcross.x * aStrand.y * uHalo.x * shown / max(px, 1e-6));
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(vAt, 1.0);
   vAcross = aAcross;
   vStrand = vec4(aStrand.x, px / shown, aStrand.z, aStrand.w);
   vFlow = aFlow;
@@ -67,10 +69,13 @@ uniform vec3 uHot;
 uniform vec2 uTone;
 uniform vec2 uHalo;
 uniform vec2 uThin;
+uniform vec3 uCam;
+uniform vec4 uBall;
 in vec4 vAcross;
 in vec4 vStrand;
 in vec2 vFlow;
 in vec3 vClip;
+in vec3 vAt;
 out vec4 outColor;
 ${INVERSE_FILMIC_GLSL}
 float ah(float n, float seed) {
@@ -87,6 +92,18 @@ float an(float x, float seed) {
 }
 void main() {
   if (uDiag >= 2) discard;
+  // where the ball is not in the depth buffer (the far Sun's pass draws no depth): a strand behind the ball, as the
+  // eye sees it, gives no light. uBall: the ball's centre and radius in the stage's frame, radius 0 for no test
+  if (uBall.w > 0.0) {
+    vec3 d = vAt - uCam;
+    float far = length(d);
+    vec3 dir = d / max(far, 1e-6);
+    vec3 f = uCam - uBall.xyz;
+    float along = -dot(f, dir);
+    vec3 nearest = f + dir * along;
+    float off = dot(nearest, nearest);
+    if (along > 0.0 && off < uBall.w * uBall.w && along - sqrt(uBall.w * uBall.w - off) < far) discard;
+  }
   // the light of a thin round tube across its width, and of the thin sheath around it
   float x = vAcross.x * uHalo.x;
   float sheath = 1.0 - vAcross.x * vAcross.x;
@@ -158,10 +175,18 @@ export class Arcade {
   readonly strands: number
   /** The arcade's greatest height over the ball, in stage units. */
   readonly tall: number
-  /** How it leaves: by its own height in pixels of a frame of `lines` rows, gone under px[0], whole from px[1]. */
-  readonly leave: { lines: number; px: number[] } = data.leave
+  /** How it leaves: by its own height in pixels of a frame of `lines` rows, gone under px[0], whole from px[1].
+   *  under: how far under the ball's radius the ball stands that hides a strand where no depth is drawn (stage units). */
+  readonly leave: { lines: number; px: number[]; under: number } = data.leave
   private readonly keep: THREE.IUniform<number> = { value: 1 }
   private readonly time: THREE.IUniform<number> = { value: 0 }
+  private readonly ball: THREE.IUniform<THREE.Vector4> = { value: new THREE.Vector4() }
+  private readonly seatQuat = new THREE.Quaternion()
+  private readonly seatAt = new THREE.Vector3()
+  private seatScale = 1
+  private start = 0
+  private readonly eye = new THREE.Vector3()
+  private readonly back = new THREE.Matrix4()
 
   constructor() {
     const rnd = fixed(data.seed)
@@ -350,7 +375,7 @@ export class Arcade {
       uniforms: {
         uDiag: diagUniform, uFormat: formatUniform,
         uCam: { value: new THREE.Vector3() }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
-        uKeep: this.keep, uTime: this.time,
+        uKeep: this.keep, uTime: this.time, uBall: this.ball,
         uLeast: { value: new THREE.Vector2(data.least, config.raw.formats.master.height) },
         uHalo: { value: new THREE.Vector2(l.sheath[0]!, l.sheath[1]!) },
         uThin: { value: new THREE.Vector2(data.thin[0]!, data.thin[1]!) },
@@ -383,10 +408,11 @@ export class Arcade {
 
   /** time: the stop's clock in seconds (it only carries the plasma along the lines). eye: the eye in the stage's
    *  frame. keep: the share of the picture the stop holds (1 while the stop is the picture). */
-  update(time: number, eye: THREE.Vector3, keep: number, gain: number, vignette: number, aspect: number): void {
+  update(time: number, eye: THREE.Vector3, keep: number, gain: number, vignette: number, aspect: number, ball = false): void {
     const u = this.material.uniforms
     this.time.value = time
     this.keep.value = keep
+    this.ball.value.set(stage.centre.x, stage.centre.y, stage.centre.z, ball ? stage.radius - data.leave.under : 0)
     ;(u.uCam!.value as THREE.Vector3).copy(eye)
     u.uGain!.value = gain
     u.uVignette!.value = vignette
@@ -394,7 +420,52 @@ export class Arcade {
     this.mesh.visible = keep > 0
   }
 
+  /** Where the stage stands in the body's own frame at spin 0 (origin the ball's centre, unit its radius), and the
+   *  film's time at which the stop's clock starts. Told once by the set. */
+  body(quaternion: THREE.Quaternion, at: THREE.Vector3, scale: number, start: number): void {
+    this.seatQuat.copy(quaternion)
+    this.seatAt.copy(at)
+    this.seatScale = scale
+    this.start = start
+  }
+
+  /** The mesh's own seat under whoever holds it: in the body's frame at spin 0 (under the far Sun's group, which
+   *  stands at the ball's centre and turns with it), or none (under the stop's own group, which seats it itself). */
+  seat(onBody: boolean): void {
+    if (onBody) {
+      this.mesh.quaternion.copy(this.seatQuat)
+      this.mesh.position.copy(this.seatAt)
+      this.mesh.scale.setScalar(this.seatScale)
+    } else {
+      this.mesh.quaternion.identity()
+      this.mesh.position.set(0, 0, 0)
+      this.mesh.scale.setScalar(1)
+    }
+  }
+
+  /** Drawn by the far Sun (MAIL 1070 point 2, FarSunHold gas.arcade): the mesh hangs in the far Sun's group in the
+   *  body's frame. The eye is read from the camera through the mesh's world matrix, the leaving by size is applied
+   *  here, the light is the arcade's own times `wear` (the weight the far Sun gives all it wears of the stop), and a
+   *  strand behind the ball gives no light (that pass draws no depth). time: the film's time in seconds. */
+  draw(view: { time: number; camera: THREE.PerspectiveCamera; gain: number; vignette: number; aspect: number; height: number; wear: number }): void {
+    setFormat()
+    // the holder's world matrix is taken as the holder left it (no parent is updated from here)
+    this.mesh.updateMatrix()
+    if (this.mesh.parent) this.mesh.matrixWorld.multiplyMatrices(this.mesh.parent.matrixWorld, this.mesh.matrix)
+    else this.mesh.matrixWorld.copy(this.mesh.matrix)
+    const eye = view.camera.getWorldPosition(this.eye).applyMatrix4(this.back.copy(this.mesh.matrixWorld).invert())
+    this.update(view.time - this.start, eye, view.wear * this.sized(eye, view.camera.fov), view.gain, view.vignette, view.aspect, true)
+  }
+
+  /** The share left by the arcade's own size: its height in pixels of a frame of leave.lines rows as the eye (in the
+   *  stage's frame) sees it under the field given; gone under leave.px[0], whole from leave.px[1]. */
+  sized(eye: THREE.Vector3, vfovDeg: number): number {
+    const px = this.tall / Math.max(eye.distanceTo(this.place), 1e-6) * this.leave.lines / (2 * Math.tan(THREE.MathUtils.degToRad(vfovDeg) / 2))
+    return THREE.MathUtils.smoothstep(px, this.leave.px[0]!, this.leave.px[1]!)
+  }
+
   dispose(): void {
+    this.mesh.removeFromParent()
     this.mesh.geometry.dispose()
     this.material.dispose()
   }

@@ -56,7 +56,6 @@ export const createSet: SetFactory = async (ctx) => {
 
   const far = new FarPoint()
   orbit.add(far.points)
-  farSun.wear({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, limb: look.globe.limb, rim: look.globe.rim, boil: look.globe.boil, hot: look.globe.hot, pulse: look.globe.pulse, cell: look.globe.cell })
   world.add(farSun.mesh)
   const farBody = new THREE.Quaternion()
 
@@ -73,6 +72,14 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(ground.mesh, surface.mesh, fringe.mesh, jets.glow, jets.mesh)
   world.add(backdropTerrain.mesh)
   const inGlobe = stage.centre.clone().multiplyScalar(-1 / stage.radius).applyQuaternion(plan.toGlobe)
+  // the stage in the body's own frame at spin 0, for whoever draws the arcade from outside the stop: the far Sun's
+  // group stands at the ball's centre with the body's turn times the spin about y, the stop's own group with the
+  // carry (plan.carry: the turn at the time times the inverse of the turn at the anchor)
+  const seatTurn = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), -plan.spin(plan.anchorTime)).multiply(fitTurn.clone().invert())
+  loops.body(seatTurn.clone().multiply(plan.toGlobe), inGlobe.clone().applyQuaternion(seatTurn), 1 / stage.radius, plan.seg.terrain.start)
+  // what the far Sun wears of the stop (read only, MAIL 1066 and 1070): the face, the gas (corona, prominences and
+  // their numbers) and the arcade as a drawable that the far Sun hangs in its own group and asks to draw itself
+  farSun.wear({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, limb: look.globe.limb, rim: look.globe.rim, boil: look.globe.boil, hot: look.globe.hot, pulse: look.globe.pulse, cell: look.globe.cell, gas: { corona: corona.material.uniforms.uMap!.value, coronaLook: look.corona, prominence: prominences.material.uniforms.uMap!.value, flow: prominences.material.uniforms.uFlow!.value, prominenceLook: look.prominence, turn: fitTurn, arcade: { object: loops.mesh, draw: (v) => loops.draw(v) } } })
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2 + config.shutterFraction / (2 * config.fps)
   const eye = new THREE.Vector3()
   const eyeStage = new THREE.Vector3()
@@ -143,12 +150,10 @@ export const createSet: SetFactory = async (ctx) => {
         standing.position.set(0, 0, 0)
         eyeStage.copy(eye)
       }
-      // the arcade's lines stand still and its plasma runs on the stop's clock. It leaves by its own size alone
-      // (MAIL 1070 point 2): its height in pixels of a frame of arcs.json leave.lines rows, under leave.px[0] it is the
-      // face's light. Until the far Sun draws it, the globe's share still weighs it in the travel, where the set's
-      // weight ends at once; that share goes with the commit that hands the arcade to the far Sun
-      const arcPx = loops.tall / Math.max(eyeStage.distanceTo(loops.place), 1e-6) * loops.leave.lines / (2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2))
-      loops.update(since, eyeStage, (inOrbit ? state.weight * (kind === 'travel' ? globeShare(world.position.length()) : 1) : 1) * THREE.MathUtils.smoothstep(arcPx, loops.leave.px[0]!, loops.leave.px[1]!), gain, vignette, aspect)
+      // the arcade's lines stand still and its plasma runs on the stop's clock. It stands at its full light at every
+      // distance and leaves by its own size alone (MAIL 1070 point 2, arcs.json leave); in the travel the far Sun
+      // takes it over with the globe (below) and draws the same body
+      loops.update(since, eyeStage, (inOrbit ? state.weight : 1) * loops.sized(eyeStage, view.camera.fov), gain, vignette, aspect)
       const height = Math.max(inOrbit ? world.position.length() - 1 : eye.distanceTo(stage.centre) / stage.radius - 1, 1e-4)
       const above = (r: number[]): number => (rising ? THREE.MathUtils.smoothstep(Math.log(height), Math.log(r[0]!), Math.log(r[1]!)) : inOrbit ? 1 : 0)
       // what leaves with the distance from the eye to its own place (radii of the ball, even steps in the logarithm):
@@ -272,8 +277,15 @@ export const createSet: SetFactory = async (ctx) => {
       far.update(radiusPx, view, plan.p.tint, gain)
       farSun.mesh.visible = orbit.visible && visible && away < 1 && kind === 'travel'
       if (farSun.mesh.visible) {
+        // the far Sun may take the arcade in this call: it then hangs in the far Sun's group, in the body's frame
+        loops.seat(true)
         farSun.material.depthTest = false
         farSun.set({ camera: view.camera, centre: world.position, body: farBody.copy(world.quaternion).multiply(fitTurn), spin, time: state.time, holdTime: elapsed, exposure: shot.post.exposure, burn: shot.sun.far?.burn ?? 0, vignette, aspect, height: view.format.height }, 1 - away, 0)
+      }
+      // drawn once: what the far Sun took in this frame it keeps, else the arcade stands in the stop's own group
+      if (!(farSun.mesh.visible && loops.mesh.parent !== null && loops.mesh.parent !== standing)) {
+        loops.seat(false)
+        if (loops.mesh.parent !== standing) standing.add(loops.mesh)
       }
     },
     dispose: () => {
