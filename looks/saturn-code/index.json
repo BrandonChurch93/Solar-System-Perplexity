@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T10:29:38.484Z",
- "head": "ab362641b9d9a924f577d3ad73df9d28231e3ebd",
- "note": "rise of ab36264 red on the pattern line; cause found (cover by angle and dust going out in 8 frames); cure by height on trial, whole rise running",
+ "pushed": "2026-11-25T10:58:01.173Z",
+ "head": "74dfa6b467975d66dd5a410df6b443f8392bc633",
+ "note": "v3 of the cover by the lens's height on proof r68; 3465 final byte identical to the named",
  "looks": [
+  {
+   "time": "2026-11-25T10:58:00.397Z",
+   "file": "20261125105800397-note-v3_strip.jpg",
+   "source": "../../../../tmp/v/x/v3_strip.png",
+   "kind": "note",
+   "label": "rise 3796 to 3828 at draft, top v2 (equal steps of the share), bottom v3 (equal steps of the odds), crop x 600 to 1160, y 480 to 800"
+  },
+  {
+   "time": "2026-11-25T10:57:59.613Z",
+   "file": "20261125105759613-note-e_cover.jpg",
+   "source": "../../../../tmp/v/x/e_cover.png",
+   "kind": "note",
+   "label": "v2 (5df42e1) rise 3792 to 3803, the dust band over the lower globe: the pattern read 0.44 to 0.54 here"
+  },
   {
    "time": "2026-11-25T10:29:37.841Z",
    "file": "20261125102937841-note-v2_3720_foot.jpg",
@@ -45,21 +59,6 @@
    "source": "../../../../tmp/v/x/rise_foot_3830.png",
    "kind": "note",
    "label": "rise draft 3830, 3834, 3838 at 1 to 1: the night side low in the frame"
-  },
-  {
-   "time": "2026-11-25T10:04:43.257Z",
-   "file": "20261125100443257-note-rise_foot_3814.jpg",
-   "source": "../../../../tmp/v/x/rise_foot_3814.png",
-   "kind": "note",
-   "label": "rise draft 3814 + 1/2, 3818 + 1/2, 3822 + 1/2 at 1 to 1: the gap between rings and globe goes from covered to clear"
-  },
-  {
-   "time": "2026-11-25T10:04:42.474Z",
-   "file": "20261125100442474-note-saturn-rise-pops.jpg",
-   "source": "../../../../tmp/v/r66/saturn-rise-pops.png",
-   "kind": "note",
-   "label": "r66 rise on ab36264, the tool's pops sheet: pop 1.21 at 3872 + 1/2, RED",
-   "stop": "saturn"
   }
  ]
 }
