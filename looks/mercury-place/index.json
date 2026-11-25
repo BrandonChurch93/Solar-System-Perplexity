@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T17:41:06.838Z",
- "head": "0a7289553e74c4c80ebd6bdb63fd3a53051bdfa3",
- "note": "hold sky card: margin only plus pit fill, 615 5.8897 against main 5.8694; rise 1002.5 on reads 0.17 on my reader",
+ "pushed": "2026-11-25T18:00:02.540Z",
+ "head": "3da91ef177e8a7382a957c07bbc1e39d0ebd0b64",
+ "note": "3da91ef1: crater in the dive, way C rise 998.5 to 1002 steady (0.21), main's rise row found (0.95)",
  "looks": [
+  {
+   "time": "2026-11-25T18:00:01.255Z",
+   "file": "20261125180001255-note-rise-m9b.jpg",
+   "source": "../../../../tmp/m/rise-m9b.jpg",
+   "kind": "note",
+   "label": "rise 1000.5 to 1010.5 on 9ee7de11 (main's code): the place's ground exchanged for the map in place, pattern 0.95",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T18:00:00.000Z",
+   "file": "20261125180000000-note-early-cr.jpg",
+   "source": "../../../../tmp/m/early-cr.jpg",
+   "kind": "note",
+   "label": "dive 717 to 719 at 1 to 1, the gold ring crater in the place's ground (s14), commit 3da91ef1",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T17:51:41.453Z",
+   "file": "20261125175141453-note-rise-c.jpg",
+   "source": "../../../../tmp/m/rise-c.jpg",
+   "kind": "note",
+   "label": "rise 998.5 to 1002 way C s14 final tree, pattern 0.17 to 0.21",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T17:41:05.638Z",
    "file": "20261125174105638-note-rise-a.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/cr3-dive.jpg",
    "kind": "note",
    "label": "the crater 717 725 735 745: first form over third form",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T17:16:22.938Z",
-   "file": "20261125171622938-note-cr3-615-x4.jpg",
-   "source": "../../../../tmp/m/cr3-615-x4.png",
-   "kind": "note",
-   "label": "615 at 4 times: approved, main, the crater in the ground third form",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T16:47:21.162Z",
-   "file": "20261125164721162-note-cr1-615-x4.jpg",
-   "source": "../../../../tmp/m/cr1-615-x4.png",
-   "kind": "note",
-   "label": "615 disc at 4 times: approved, main, the crater's first try (ring too pale, cure under way)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T16:47:20.131Z",
-   "file": "20261125164720131-note-cr1-strip.jpg",
-   "source": "../../../../tmp/m/cr1-strip.jpg",
-   "kind": "note",
-   "label": "crater in the place's ground, first try (blur 0.06 deg): 710 717 725 730 735 740 745, the crater at one size",
    "stop": "mercury"
   }
  ]
