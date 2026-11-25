@@ -7,8 +7,8 @@ import wrapJson from './wrap.json'
 export const wrap = {
   height: true,
   sets: {
-    full: { color: wrapJson.color.full as [number, number], height: wrapJson.height.full as [number, number] },
-    web: { color: wrapJson.color.web as [number, number], height: wrapJson.height.web as [number, number] },
+    full: { color: wrapJson.color.full as [number, number], height: wrapJson.height.full as [number, number], plates: wrapJson.plates.full as [number, number] },
+    web: { color: wrapJson.color.web as [number, number], height: wrapJson.height.web as [number, number], plates: wrapJson.plates.web as [number, number] },
   },
 }
 
@@ -20,7 +20,7 @@ export const patches = {
   lean: 1,
   fade: [1.02, 1.95] as [number, number],
   nearDeg: 12,
-  place: { from: ownJson.from, ownDeg: ownJson.deg as [number, number], gain: ownJson.gain, light: ownJson.light as [number, number, number], hold: (ownJson.hold ?? undefined) as [number, number] | undefined },
+  place: { from: ownJson.from, ownDeg: ownJson.deg as [number, number], gain: ownJson.gain, light: (ownJson.light ?? undefined) as [number, number, number] | undefined, hold: (ownJson.hold ?? undefined) as [number, number] | undefined },
 }
 
 function reliefDef(key: 'full' | 'web'): ReliefDef {

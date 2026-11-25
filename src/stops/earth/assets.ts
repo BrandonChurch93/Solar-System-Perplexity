@@ -10,7 +10,7 @@ export const wrap = {
 
 export const patches = {
   spot: { lon: -77.4757, lat: 18.1499 },
-  levels: [...placeJson.plates.under, ...placeJson.plates.levels] as { file: string; widthDeg: number; raster?: number; size?: number; offset?: number[] }[],
+  levels: [...placeJson.plates.under, ...placeJson.plates.levels] as { file: string; widthDeg: number; raster?: number; size?: number; offset?: number[]; made?: number }[],
   placeFrom: placeJson.plates.under.length,
   feather: 0.12,
   fade: [1.02, 1.5] as [number, number],
