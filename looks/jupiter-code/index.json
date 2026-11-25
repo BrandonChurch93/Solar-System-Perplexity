@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T03:53:22.479Z",
+ "pushed": "2026-11-25T04:21:31.866Z",
  "head": "e41572b266f5705f8b14f5f0895f6b5b8fa1f94a",
- "note": "03:55 UTC: proof chain runs on e41572b; finals done: 2895 keeps its bytes, 3150 moves 410 pixels by at most 4 levels; judged 3296 after the new pace",
+ "note": "04:21 UTC: proofs of e41572b running (dive pictures at 220 of 260 frames); dive frames of this commit as the tool draws them",
  "looks": [
+  {
+   "time": "2026-11-25T04:21:31.195Z",
+   "file": "20261125042131195-note-pair-3150-final.jpg",
+   "source": "../work/r9/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "close view 3150 at final tier on e41572b beside the approved image",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:21:30.561Z",
+   "file": "20261125042130561-note-dive-h.jpg",
+   "source": "../work/r9/dive-h.jpg",
+   "kind": "note",
+   "label": "dive 3040 to 3043, every frame, three quarter size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:21:27.772Z",
+   "file": "20261125042127772-note-dive-g.jpg",
+   "source": "../work/r9/dive-g.jpg",
+   "kind": "note",
+   "label": "dive 3036 to 3039, every frame, three quarter size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:21:21.674Z",
+   "file": "20261125042121674-note-ur-1.jpg",
+   "source": "../work/r9/ur-1.jpg",
+   "kind": "note",
+   "label": "dive, upper right at 1 to 1, 3027 to 3038 every frame: the band of the old plate fill is gone; left: the far belt under the limb turns olive grey, two skies join softly",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T04:21:20.096Z",
+   "file": "20261125042120096-note-dive-sheet.jpg",
+   "source": "../work/r9/dive-sheet.jpg",
+   "kind": "note",
+   "label": "dive sheet on e41572b, the tool's own draft frames: 2983, 2997, 3012, 3030, 3050, 3056",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T03:53:21.870Z",
    "file": "20261125035321870-note-pair-3150-final.jpg",
@@ -178,46 +218,6 @@
    "source": "../work/r8/floor/plate-before-after.jpg",
    "kind": "note",
    "label": "03:24 sky plate of the surface view, lifted: left as it was (haze fill under its horizon, the floating band), right with the plate's own sky level carried under the horizon by code",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:54:30.130Z",
-   "file": "20261125025430130-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final tier beside the approved close image",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:54:29.484Z",
-   "file": "20261125025429484-note-rise-3262-3281.jpg",
-   "source": "../work/r8/rise-3262-3281.jpg",
-   "kind": "note",
-   "label": "rise 3262 to 3281, every frame, commit 220328cc",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:54:28.798Z",
-   "file": "20261125025428798-note-pairv-e3.jpg",
-   "source": "../work/r8/pairv-e3.png",
-   "kind": "note",
-   "label": "same pair with the deck off (globe alone): the change is in the globe's levels too, 0.88",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:54:28.171Z",
-   "file": "20261125025428171-note-pairv-e0.jpg",
-   "source": "../work/r8/pairv-e0.png",
-   "kind": "note",
-   "label": "rise, same ground lower left: frame 3272 (left) and 3280 carried back onto it (right), the red 0.74 of my own smooth run",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T02:29:15.244Z",
-   "file": "20261125022915244-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final beside the approved image (unchanged bytes at 220328cc)",
    "stop": "jupiter"
   }
  ]
