@@ -1,9 +1,24 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T01:18:58.470Z",
- "head": "5e094e51d1c61410a3ad2a39c843c76dd9eff2ea",
- "note": "5e094e5: rise, dive, path, G13 green on the engine of 7026711; main moved to af6ba5f, finals byte equal there, slices and parity, place, gate, handover, sizes, G17 running on it",
+ "pushed": "2026-11-25T01:43:17.747Z",
+ "head": "a9545ffae0453e7727d110e34bb1d65f3a351153",
+ "note": "5e094e5 merged with main 9c59fe7 (a9545ff, local): slices of rise and dive on main's engine equal r57 to the pixel and the row; parity, place, gate, handover green; d253 pairs; G17 running",
  "looks": [
+  {
+   "time": "2026-11-25T01:43:16.693Z",
+   "file": "20261125014316693-note-saturn-parity.jpg",
+   "source": "../../../../tmp/v/r58/saturn-parity.png",
+   "kind": "note",
+   "label": "parity on main's engine, tree 5e094e5: green, mean 2.180 at 3720 (limit 12), level -0.831 at 3720 (limit 2.2)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T01:43:15.338Z",
+   "file": "20261125014315338-note-d253_sheet.jpg",
+   "source": "../../../../tmp/v/r58/d253_sheet.png",
+   "kind": "note",
+   "label": "d253 proof, tree 5e094e5 on main's engine: dive frames 3567 and 3612 at 1920 and 3840 in the full and the web set, half size. Mean differences 0 to 255: 3567 sizes 1.753 full, 1.620 web, sets 2.181 at 1920; 3612 sizes 1.629 full, 1.625 web, sets 0.156 at 1920"
+  },
   {
    "time": "2026-11-25T01:18:57.559Z",
    "file": "20261125011857559-note-saturn-rise-changes.jpg",
@@ -50,20 +65,6 @@
    "source": "../../../../tmp/v/t21/f57_ll.png",
    "kind": "note",
    "label": "3720 final, lower left at full size (x 0 to 760, y 600 to 1080): approved left, film right. Not cured: near ringlets soft under the shutter, grains read as pale dashes, the dark gap blacker and wider than the approved"
-  },
-  {
-   "time": "2026-11-25T00:48:56.529Z",
-   "file": "20261125004856529-note-f57_foot.jpg",
-   "source": "../../../../tmp/v/t21/f57_foot.png",
-   "kind": "note",
-   "label": "3720 final, the foot at full size (x 900 to 1660, y 480 to 900): approved left, film right. Not cured: the band at the foot reads 137 to 148 tan where the approved has 89 to 127 grey; the dust stands at 0.65 of its depth at this height (the price of the green rise)"
-  },
-  {
-   "time": "2026-11-25T00:48:55.452Z",
-   "file": "20261125004855452-note-f57_whole.jpg",
-   "source": "../../../../tmp/v/t21/f57_whole.png",
-   "kind": "note",
-   "label": "3720 at the final tier of the tree under proof (right) beside the approved close image (left), half size. Pose fits; the foot band is lighter and browner than the approved, the globe more orange, the globe's shadow lies on the ring at the right"
   }
  ]
 }
