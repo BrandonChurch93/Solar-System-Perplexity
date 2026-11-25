@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T23:05:01.446Z",
+ "pushed": "2026-11-25T23:16:08.423Z",
  "head": "c6d698667a691dfb1c8cb7d4d5e4f70c062e2cc4",
- "note": "rim as light of the air on merged main reads 1.05 from 4399 (B1 1.60); coloured streaks at 4399 come from the hand layers, cause being split",
+ "note": "4290 final band of the rim trial beside B1 and approved; the upright lines at 4407 at 3x",
  "looks": [
+  {
+   "time": "2026-11-25T23:16:07.045Z",
+   "file": "20261125231607045-note-lines-b1-4407-3x.jpg",
+   "source": "../../../../tmp/n62/lines-b1-4407-3x.png",
+   "kind": "note",
+   "label": "4407 draft B1 6a0e74bb, crop x 960 to 1300 y 440 to 620 at 3x: the upright coloured lines named in MAIL 1333",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T23:16:05.841Z",
+   "file": "20261125231605841-note-rd-final-4290-band.jpg",
+   "source": "../../../../tmp/n62/rd-final-4290-band.jpg",
+   "kind": "note",
+   "label": "4290 final, left horizon 1 to 1: approved above, B1 6a0e74bb middle, rim exact form (trial, not committed) below; match 3.224 to 3.249, main 3.849",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T23:05:00.877Z",
    "file": "20261125230500877-note-rc-4290-horizon.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n59/p-A1-8302.jpg",
    "kind": "note",
    "label": "estimate by arithmetic on pictures, not a render: the rim as added light of the air, dive read from 4151: 0.77 (name 0.98, rim off 0.45)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T20:11:34.563Z",
-   "file": "20261125201134563-note-b1-rise-hand.jpg",
-   "source": "../../../../tmp/n58/b1-rise-hand.jpg",
-   "kind": "note",
-   "label": "B1 6a0e74bb, rise handover at the horizon, 4389 to 4395 draft at full size (surface to orbit at 4390 to 4391)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T19:42:45.804Z",
-   "file": "20261125194245804-note-p-B1-8774.jpg",
-   "source": "../../../../tmp/n58/p-B1-8774.jpg",
-   "kind": "note",
-   "label": "B1 chain read from 4387 (rise handover): 1.35 on the back side near the horizon, not cured",
    "stop": "uranus"
   }
  ]
