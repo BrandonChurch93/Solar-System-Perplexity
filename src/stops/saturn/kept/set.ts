@@ -229,10 +229,10 @@ export const createKept: SetFactory = async (ctx) => {
       gu.uAspect!.value = aspect
       duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2, gu.uDuskTint!.value as THREE.Vector4)
       leanAt(camL.y, gu.uLean!.value as THREE.Vector4)
-      dustAt(camL.y, gu.uDust!.value as THREE.Vector4)
-      dustShadeAt(camL.y, gu.uDustShade!.value as THREE.Vector4)
+      dustAt(gu.uDust!.value as THREE.Vector4)
+      dustShadeAt(gu.uDustShade!.value as THREE.Vector4)
       latToneAt(camL.y, gu.uLatFit!.value as THREE.Vector4)
-      dustAt(camL.y, su.uDust!.value as THREE.Vector4)
+      dustAt(su.uDust!.value as THREE.Vector4)
       hazeDayAt(camL.y, hazeDayFar, su.uHazeEdge!.value as THREE.Vector2)
       ;(su.uCam!.value as THREE.Vector3).copy(camS)
       ;(su.uSunW!.value as THREE.Vector3).copy(sunS)

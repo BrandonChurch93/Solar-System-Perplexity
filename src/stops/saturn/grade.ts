@@ -46,21 +46,11 @@ const byHeight = (heights: number[], shares: number[], height: number): number =
 // frame of the dive and of the rise. It follows the height alone.
 export const zoneShare = (height: number): number => byHeight(grade.by.heights, grade.by.share, height)
 
-// How much of its depth the dust inside the inner rim has with the lens at this height (skim.json inner.by):
-// none at the height over which the model draws the far look alone and above, all with the lens low in the
-// skim. Its knots are set so that the dust closes at an even pace on the fastest way through these heights (the
-// rise). It follows the height alone.
-export const innerShare = (height: number): number => byHeight(skimJson.inner.by.heights, skimJson.inner.by.depth, height)
-// How far the sheet hides what is behind it with the lens at this height (skim.json inner.cover): all of it at the
-// height of the approved close image and under, none from the upper height of the far look on.
-export const coverShare = (height: number): number => byHeight(skimJson.inner.cover.heights, skimJson.inner.cover.share, height)
 
 // How much of the fall of the night side of the globe shows with the lens at this height (skim.json light.dusk
 // nightHeights): none at the upper height and above, all at the lower and under, by the logarithm of the height,
-// eased at both ends. Its heights lie under those of the grade: the night side keeps the light of the hold while
-// the dust inside the inner rim comes in over it (inner.by, from 0.93 radii down), and sinks only where the lens
-// goes slowly, low in the skim. With one share for both, the faint clouds of the night side went out just where
-// the dust came in over them, and the report of the pictures read that as one pattern exchanged for another.
+// eased at both ends. Its heights lie under those of the grade: the night side keeps the light of the hold
+// through the heights the lens passes fast, and sinks only where the lens goes slowly, low in the skim.
 export const nightShare = (height: number): number =>
   1 - smooth(Math.log(Math.max(Math.abs(height), 1e-6) / dusk.nightHeights[0]!) / Math.log(dusk.nightHeights[1]! / dusk.nightHeights[0]!))
 
@@ -147,29 +137,23 @@ vec3 latTone(float lat) {
   return pow(mix(texelFetch(uLatTone, ivec2(int(i), 0), 0).rgb, texelFetch(uLatTone, ivec2(int(i) + 1, 0), 0).rgb, q - i), vec3(uLatFit.x));
 }`
 
-// The dust in front of the foot of the globe (skim.json inner.foot): the dust inside the inner rim of the rings
-// is a layer with a soft thickness, and with the lens low over the plane the view runs a long way through it
-// in front of the foot of the globe, so a soft dark band lies along the foot and the dark inner ring runs into
-// the planet, as in the approved close image. It is the same dust as that of the sheet inside the rim, so it
-// has the same share of its depth at every height of the lens (innerShare): none where the sheet has none.
-// Sets uDust: the depth of the dust on the view at the plane, and the two heights over the plane (planet
-// radii) between which it ends. The kept set and the model both call it with the height of the lens, so the
-// two scenes hold one globe at every height.
-export const dustAt = (height: number, into: THREE.Vector4): void => {
-  into.set(foot.depth * innerShare(height), foot.height[0]!, foot.height[1]!, 0)
+// The dust in front of the foot of the globe (skim.json inner.foot): a layer with a soft thickness that the view
+// runs a long way through with the lens low over the plane. Its depth is one number at every height of the lens
+// (inner.foot.depth), and that number is 0: what lies inside the inner rim is the thin sheet in the plane itself
+// (sheet.ts sheetInner), not a layer on the globe. Sets uDust: the depth of the dust on the view at the plane, and the two heights over the plane (planet
+// radii) between which it ends. The kept set and the model both call it, so the two scenes hold one globe.
+export const dustAt = (into: THREE.Vector4): void => {
+  into.set(foot.depth, foot.height[0]!, foot.height[1]!, 0)
 }
 
-// The shade of the dust inside the inner rim on the globe (skim.json inner): where the Sun's light crosses the
-// plane inside the rim on its way to the globe, the dust takes its share of it, so the strip of the globe that
-// shows through the dust on the far side of the plane from the Sun lies in its shade. It is the same dust as
-// that of the sheet (sheet.ts sheetInner): the same depth at the rim and by the globe, with the mean of its
-// ringlets (inner.bands), and the same share of it at every height of the lens (innerShare), so none in the
-// hold, times the share of the shade that shows (inner.shade). Sets uDustShade: the depth at the rim and by the
-// globe, the rim, the length over which the dust dies away outward of the rim. The kept set and the model both
-// call it with the height of the lens.
-export const dustShadeAt = (height: number, into: THREE.Vector4): void => {
+// The shade of matter inside the inner rim on the globe (skim.json inner): the share of the shade that shows is
+// one number at every height of the lens (inner.shade), and that number is 0: the thin sheet casts no shade on
+// the globe. Sets uDustShade: the depth at the
+// rim and by the globe, the rim, the length over which it dies away outward of the rim. The kept set and the
+// model both call it.
+export const dustShadeAt = (into: THREE.Vector4): void => {
   const bands = skimJson.inner.bands
-  const share = innerShare(height) * skimJson.inner.shade * Math.pow(bands.floor + (1 - bands.floor) * (1 - bands.gap), 3)
+  const share = skimJson.inner.shade * Math.pow(bands.floor + (1 - bands.floor) * (1 - bands.gap), 3)
   into.set(skimJson.inner.depth[0]! * share, skimJson.inner.depth[1]! * share, model.inner, skimJson.inner.fade)
 }
 

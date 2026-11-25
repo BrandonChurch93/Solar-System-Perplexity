@@ -6296,3 +6296,225 @@ NAMED at 12:00 UTC stands; it goes into Saturn's round 3 of 3, your last."
     rendered on the rise's slice only on the Builder's word.
   - Running since 12:11: the dive's own lines on the named tree (r68, frames to k7218 reused by stamp).
     After it: finals 3567 and 3866, place, handover, G13, gate, parity, path, then vitest alone.
+
+## 12:23 to 12:51 UTC: MAIL 1079 and MAIL 1093, the one law of cover
+
+MAIL 1079 from the Builder (/root), 12:23 UTC, verbatim:
+
+"Your control is read (the table, the three frames at the foot, the four through the handover). My machines on 6e96b4cb: dive parts 1 and 2 green, landing green, path and parity green, finals 3465 and 3720 drawn without error. Rise part 1 RED by the pattern alone: 1.03 from 3812 + 1/2, most at pixel 1024, 732 (pop 1.12, level step 0.02), as your own table says. Rise part 2 red by one number: pop 1.21 from 3872 + 1/2 against 1.2; the harness builder is asked about it, the same 1.21 stands at two other stops.
+1. Accepted: (a) is yours, (c) is the control's own doing. (b), the two patterns sliding under the moving lens, is the picture's truth: a sheet in front of a globe must slide. It stays. Show 3806 to 3814 at the final tier with the shutter once the cure is in; the jury decides (d251).
+2. Do not run the per ray trial with the window [0.30, 0.42]. A window by the sine is still a door that opens: each place goes from closed to open in 20 to 24 frames, as you reckoned. And do not carry a share by height through the kept set.
+3. THE CURE, ruled. The ring is one body at every height, so it has one law of cover at every height. For every ray that crosses the ring's plane: cover = 1 - exp(-tau(r) / s), s the sine between the ray and the plane, floored only against the division. tau(r) is the ring's own depth at the radius r, taken from the kept ring's own opacity: tau(r) = -s_hold x ln(1 - a_hold(r)), s_hold the sine at the hold's eye. No share, no window, no height, no clock, in the near look and in the kept set alike. Then nothing opens. The sheet thins as the sine grows, over the whole rise and the whole dive, and the step at 3600 to 3604 has no cause left, because both sets read the same law. At the skim the sheet is dense by itself (s near 0), as a ring seen along its plane is.
+- The hold keeps its look to within the sine's spread across the frame. It may change; its match with the approved image may not fall. Measure 3465 before and after (the picture beside the approved and your G17 read) and say both.
+- The streaks of the sheet, the shadow band and the veil are things in or on the ring: they take their weight from the same cover, not from a second law.
+- Where the near look and the kept set still differ after that in form, not in weight, name it by frame and say how it hands over without the clock.
+4. THE ROUND. Saturn's round 3 of 3 is its last. It does not start on a red whose cure is known. Saturn is not in the cut of about 13:30. State at 14:15 UTC: the law built, the rise slice 3798 to 3840 and the dive slice 3596 to 3608 read by the tool's own line, 3465 before and after. NAMED by 16:00 UTC. At 16:00 the round starts on what stands: the new NAMED if it is whole, else 6e96b4cb with the red as a severe issue.
+5. Of what you still owe on 6e96b4cb: let the dive's lines that run finish, then the cure comes first. My machines have read the dive, the landing, the path and the parity already."
+
+MAIL 1093 from the Builder (/root), 12:42 UTC, verbatim:
+
+"Your mail of 12:39 is read; pair_3720 and foot_3720 looked at, each beside the approved close picture and the approved hold.
+1. Build as ruled. The three departures you name go out or open: the share by height, the dark dust by height, the clamp.
+2. THE DARK FOOT, your point 5. The measure decides, and it is cheap, so make the one control when the cure stands. Both approved pictures show the thin inner ring DARK against the globe: in the hold picture it crosses the globe's lower limb as a dark translucent band, in the close picture it is the dark foot. Your law on today's ring gives pale thin ice instead. Under one law the dark can come two ways and neither is by height: a deeper inner ring at every height (your 67 in 100 at the hold), or the inner ring's own light lower (a dark ice that takes more than it gives). Control: the cure with the inner ring fitted to the approved hold picture where it crosses the globe (depth and own light, both free, one fit), then read final 3150 and final 3720 against references/approved/saturn-hero.png and saturn-close.jpg (mean absolute difference at the frame's size, whole frame and on the pixels that change) beside the cure without it. What I read on your pair, for scale: 3720 named 26.747, your law 25.952 whole frame; 55.04 and 50.78 on the changed pixels. The rule of d296 holds: a judged frame that reads worse than main's does not go onto main, and the hold outranks the skim if the two disagree. Say the eight numbers in the 14:15 state.
+3. Your point 4. Under the one law a star is a point behind the ice like the globe: it is dimmed by the same depth along its ray, no factor of 60, and the ice past the outer rim is a thin sheet that the grazing ray alone makes visible, no growth with the lens's nearness. Both after the cure, not before it, each with its pair at 3720 and at the hold; if a judged frame reads worse with it, it stays as it is and you say so."
+
+(3150 is no frame of Saturn's; I read it as 3465, the hold's judged frame, and say so.)
+
+What stands of 6e96b4cb before the cure (proofs in /tmp/v/r68): dive lines GREEN (level step 0.03 at 3600, pop 1.07 at 3568 + 1/2, pattern 0.40 at 3576 + 1/2); step in place green; finals 3465 4077873a1a20, 3720 c5dcf7675cef, 3567 8bd673ab8dcc, 3866 2a2165446143; rise RED (pattern 1.03 at 3812 + 1/2, pop 1.21 at 3872 + 1/2).
+
+What I found in the code at 12:28 to 12:49, and it corrects my mail of 12:39:
+- The model's depth is the ruled one already: ring_model.py depth = -0.43 x ln(1 - a) of the kept profile's opacity. Thin inner ring: depth 0.083 at radius 1.25, 0.12 at 1.30, 0.29 at 1.36, 0.57 at 1.40, 0.97 at 1.45, 2.97 from 1.5 on.
+- The kept set does NOT draw that thin ring thin where it crosses the lit globe: kept/rings.ts sets the opacity there to at least 1 - sheetThrough = 0.985 (the "sheet": in front of the globe, the ray ends on the globe, the ice is out of the globe's shadow), and paints the strands and a glow on it. The far look (sheet.ts keptSheet) did the same times the share by height. So the kept ring's own opacity in front of the lit globe is 0.985, not the 18 in 100 I wrote at 12:39; the 18 in 100 is what it has against the sky and in the globe's shadow.
+- The near look had the true thin depth there and went to opaque by the share of the height: that was the door.
+
+THE CURE as built (tree /tmp/v/law1/saturn, working tree of the repo, not committed yet):
+- skim.json: inner.by, inner.cover and inner.fill removed; handover.kept.floor 0.02 and lawNote added; inner.note rewritten.
+- grade.ts: innerShare and coverShare removed; dustAt and dustShadeAt take no height (their numbers are 0).
+- model.ts: sheet.set(close). kept/set.ts: the two calls without the height.
+- sheet.ts: uOpen and uFill out; keptPast out (keptEdge); keptRise(mu) = view / max(mu, floor), no clamp; keptFront (the mask of the sheet in front of the lit globe) and keptVeil (its cover by the law: 1 - through ^ keptRise) used by the far look AND by the near look.
+- kept/rings.ts: uView (view, floor) from skim.json; the opacity by rise = view / max(mu, floor), no clamp to 1 to 8; the sheet 1 - through ^ rise.
+- sheet.json: grazeNote and limbNote rewritten.
+So in front of the lit globe all three looks cover by one law from the kept ring's own 0.985: 0.9993 at sine 0.25, 0.958 at 0.57. Against the sky the factor 60 stands (after the cure, mail 1093 point 3), and in the globe's shadow the thin depth.
+
+12:56 to 13:20 UTC. THE ONE LAW, SECOND BUILD (view 0.55), AND THE PLAN TO 16:00.
+- First build (view 0.43, the model's bake sine) made the hold worse against the approved hero: draft 3465,
+  mean absolute difference at the frame's size (tool /tmp/v/x/mad.py: approved resized by Lanczos, mean of
+  |a - b| over the three channels) 4.692 before (law0), 4.717 with it. Cause: the clamp is open, so where the
+  hold's eye sees the ring steeper than 0.43 the ring thins; the inner ring in front of the globe let more of the
+  globe through. Drafts by the sine alone: 0.43 4.717, 0.50 4.695, 0.52 4.691, 0.56 4.685; sheet alone at 0.5 with
+  the ring at 0.43: 4.711.
+- So the sine of the hold's eye is not the bake sine: at 3465 the lens (height 2.326, radius 5.050) sees the
+  ring where it passes in front of the globe at the sine 0.52 (radius 1.25), 0.55 (1.5), 0.59 (1.9); the centre
+  at 0.418. skim.json handover.kept.view is now 0.55 and handover.kept.model 0.43 (ring_model.py VIEW: the
+  sine at which the model's depth was made from the kept opacity); the model near the sheet counts its depth
+  view / model times (sheet.ts uKDeep), so the kept set, the far look and the near look read one law.
+  Trees: /tmp/v/law1 (0.43), /tmp/v/law2 (0.55, the cure); the repo's working tree holds law2. tsc clean.
+- law2 finals (engine 64c4ccb): 3465 53c081b32e4d51dfa08006cdc1ade7e23d626609ceb254252f96f94ebe61b158,
+  3720 cf2e343d62cca1c723cd43f9001dacb7778b4811a04405dd1b22431f3298a7b6.
+  3465 against the hero: named 4.781, law2 4.777 whole frame; on the 143286 pixels that change 7.565 and 7.509;
+  on the 790 that change by more than 12 in the sum of channels 10.515 and 6.980. The hold does not fall.
+  3720 against the close: named 28.788, law2 28.611 whole frame; on the 221642 pixels that change 59.460 and
+  57.805. (The Builder's own read on my pair picture: 26.747 and 25.952; 55.04 and 50.78. Other scale, same way.)
+- What law2 shows at 3720 (final, looked at whole and at the foot): no dark foot. The dust by height is out,
+  the gap inside the inner rim is empty, the globe shows down to the inner rim and stars show in the gap left
+  of the globe; the inner ring in front of the globe is pale (the grade by height lifts the inner radii 3 to
+  4.5 times, light.grade.radial) and opaque (the kept sheet's depth by the law).
+- Where the dark of the hold's inner ring comes from: kept/look.ts innerDark [0.7, 1.45, 1.62, 0.5]: the kept
+  set darkens the inner ring to 0.3 of the profile's light inward of radius 1.45 (out by 1.62) in the layout's
+  region once the lens leaves the hold's pose, and the layout plate carries it at the pose. The far look and the
+  near look do not have it; the grade lifts instead. So the inner ring's own light runs 0.3 (hold), 1 (code
+  looks), 3 to 4.5 (skim): that is the pale foot.
+- The control of mail 1093 (tree /tmp/v/ctl2): law2 with the grade's radial table at 0.3 inward of 1.45, a
+  smooth run in the logarithm to the table's own numbers at 1.62: the inner ring's own light at the skim is the
+  hold's, its depth the kept sheet's (in law2 already). Numbers only, no shader. It still comes by the grade's
+  share by height between the hold and the skim; a build of it needs the factor at every height in the far and
+  near looks (not built).
+- Step times of r68 by the files' clocks: place 2 s, handover 46 s, G5 and G17 11 s.
+- Plan: control finals, then the whole rise on law2 (30 min; its table holds 3798 to 3840), the dive slice,
+  G17, the state mail early; then whole dive, finals 3567 and 3866, the small proofs, vitest alone, merge,
+  commit, push, NAMED. Point 3 of mail 1093 (star factor 60, outer growth) as pairs after that.
+
+13:20 to 13:26 UTC. THE CONTROL AND G17.
+- Control final 3720 sha 0016bca695f3696cd1711de0a204a3cc7f6c063fc4a764a7cf92b1d109520e86; control final 3465
+  has the cure's bytes (53c081b3). The eight numbers (final, my tool): 3465 cure 4.777, control 4.777, no pixel
+  changes; 3720 cure 28.611, control 34.659 whole frame, 48.707 and 81.872 on the 378154 pixels that change.
+  The control reads worse: the dark band is wide and near black at the skim where the approved has pale ice.
+- G17 by tools/measure/g17.py on the finals: 3465 named 1.0618 (p25 0.9191), cure 1.0618 (p25 0.9193). 3720
+  named 1.0004 (p25 0.6644), cure 0.9122 (p25 0.5660), control 0.8817 (p25 0.4710). Limit 0.8. The cure's G17 at
+  3720 is lower than the named's: tiles [7,4], [9,5], [10,5] (the foot) lose their detail, because the matter
+  the named build drew inside the inner rim by height (dark strands and pale ice from the rim toward the globe)
+  is out, and the globe's smooth southern half shows through the open gap down to the inner rim.
+- Why the dark foot is not to be had by one law (looked at the two approved pictures and the three 3720s with
+  the darks lifted, /tmp/v/law2/g17_tiles.png): the approved close has the plane closed from the globe's equator
+  out (its contact line, y 622 at x 1470, is where the plane meets the globe); the approved hold has the gap
+  between globe and inner rim open, and the kept ring holds nothing there. Matter in the gap deep enough to
+  close it at the skim (cover 0.9 at the sine 0.225 needs a normal depth of 0.52) would cover the globe's
+  southern half at the hold by 63 in 100 (sine 0.52). The hold outranks the skim, so the gap stays open.
+- The whole rise on law2 started 13:20:34 (job2.log), then the dive slice and G17.
+
+13:26 to 13:47 UTC. MAIN'S OWN 3720, THE TILES, WHAT THE CONTROL WAS, THE FRAMES OF THE RISE LOOKED AT.
+- Main's Saturn folder is 88ba2385's (git diff origin/main 88ba2385 on the stop and the assets: nothing).
+  6e96b4cb differs from main in 13 files. Main's finals from my proof r58: 3465 4077873a (the named's bytes),
+  3720 631f3cf203bc7ed84f841e909dae67cf604d51f1e96f87062860a2977ba4a55b.
+- 3720 against saturn-close.jpg, whole frame: main 27.801, named 6e96b4cb 28.788, cure 28.611. On the 1330875
+  pixels that differ between main's and the cure: 32.911 and 34.173. G17 by the script: main 0.974 (p25 0.565),
+  named 1.000 (p25 0.664), cure 0.912 (p25 0.566). So the cure reads worse than main's at 3720 by both, and
+  so did the named by the first. Tool /tmp/v/x/tiles.py (16 by 9 tiles, cure minus main in tenths): the loss
+  lies in the foot, row 4 columns 8 to 11 (+39.9, +15.3, +9.4, +8.9) and row 5 columns 8 to 10 (+13.1, +25.4,
+  +19.6): together 0.91 of the whole frame's 0.81; the named lost 1.27 there. Gains: row 1 columns 12 to 14
+  (the cap). Main's build has a wide dark disc of matter in the gap under the globe; the approved has the
+  plane closed to the globe with dark translucent ringlets at the contact.
+- Four pictures of the foot at 3720 (/tmp/v/law2/foot4_3720.png: approved, main, named, cure) looked at. The
+  named has dark strands round the foot and is the nearest in form; the cure has a bare pale edge at the inner
+  rim, the globe above it, stars in the gap on the left. As a still the cure's foot is the poorer one.
+- The hold beside the approved hero at the globe's lower left (/tmp/v/law2/gap_3465.png): in both the thin
+  inner ring lies over the lower globe as a dark translucent band with the limb showing through. The kept set
+  gets that look from a painted sheet (opacity 0.985, strands and a glow), not from a thin depth.
+- What my control was and was not: it kept the hold as it is (the kept look is the fit to the hero) and gave
+  the far and near look the hold's own light of the inner ring (0.3 inward of 1.45) through the grade's
+  table. It did not fit a depth: in front of the globe the depth stayed the painted sheet's. A fit of depth
+  and light together means a new profile of the inner ring in all three looks; not built. By eye the control
+  has a dark foot of the approved's kind, but wide, near black and 133 px lower in the frame than the
+  approved's, which is why the measure punishes it twice (dark where the approved is pale, bright globe
+  where the approved is dark).
+- veil.ts read: it is the glow of the air on the sky under the stars, its amount by plan.lowAt (the lens's
+  height, sky.heights 0.6 to 2.2), not a thing on the ring and no cover. The "veil" of the law in sheet.ts is
+  keptVeil, the sheet in front of the lit globe.
+- Heights of the lens by frame (out/scratch/h.ts): dive 3599 1.041, 3600 1.013, 3603 0.934, 3604 0.909,
+  3620 0.610, 3621 0.598; rise 3823 0.587, 3824 0.608, 3834 0.892, 3835 0.928, 3837 1.006. So the kept set and
+  the far look share the takes in 3600 to 3603; far look to near look 3603 to 3621 in the dive and 3824 to
+  3835 in the rise.
+- Rise frames of the cure looked at as they came (draft, rate 2): 3795 to 3840 whole at half size in sixes,
+  3806 to 3816 at full size in the box 700 560 to 1340 920, 3845 to 3873. No frame where the scene changes.
+  The outline of the globe through the sheet stands in 3803 to 3840 (a faint upright line through the inner
+  ring under the limb, cream to its right, grey to its left) and moves with the globe.
+- Main moved to d84636f (kit/PROGRESS.md only since c1305a2). The proof worktree stays on 64c4ccb so before
+  and after are on one engine; main differs from it outside the stops in the far sun, src/core/warm.json,
+  tests, kit and scorecards (as said at 10:58; the Builder's own machines read the same numbers on 6e96b4cb).
+- Looks pushed 13:32:44.
+
+### 13:49 to 14:05 UTC: rise green on the cure, dive slice, a window of stars at the right foot, state mail
+
+- Whole rise on law2 (draft, rate 2, 198 frames, window 3798 to 3896), done 13:49:44: "VERDICT: green".
+  Pattern 0.40 from 3830, most at pixel 1128, 912, band 8.3 px, limit 0.45 (named 1.03 from 3812 + 1/2); the
+  surface view beside it (3798 to 3809 + 1/2) change 10.5, pattern 0.14 (named 51.5, 0.448). Level step 0.05
+  at 3875 + 1/2 (limit 1.3). Pop 1.197 from 3873 + 1/2, limit 1.2 (named 1.21 at 3872 + 1/2: stars and the
+  rings' fine lines, not touched, no margin). Change in place 24.3 from 3855 + 1/2 (named 52.8). In 3798 to
+  3840: level step at most 0.02 (3828), pop 1.10 (3812 + 1/2), pattern 0.40 (3830), change in place 22.6
+  (3827 + 1/2).
+- Dive slice 3596 to 3608 on law2 (draft, rate 2, 25 capture frames with 3588 to 3616 + 1/2 round them), done
+  13:55:25: green for these frames. Level step 0.03 at 3600, pop 1.01 from 3608, pattern 0.11 from 3597 at
+  pixel 1544, 616, change in place 15.2 from 3604 + 1/2 (named 15.7). Pop of one block 3.26 from 3600 + 1/2,
+  column 13 row 6, shown, not judged; 6e96b4cb reads the same 3.26 at the same block and frame.
+- THAT BLOCK IS A FAULT, found by eye 13:56 (crop x 1480 to 1740, y 640 to 900, darks lifted,
+  /tmp/v/law2/d_block2.png): a window of stars at the globe's right foot, in the globe's shadow, between the
+  limb and the inner rim. Not there at 3588 and 3591, about 35 px wide from 3594 to 3600, about 85 px wide at
+  3600 + 1/2 and 3601, gone from 3601 + 1/2 (draft: one take a frame, the far look takes over there).
+- Cause, read in kept/rings.ts and checked against the lens's place by frame: a place that holds nothing of
+  the ring (inside the inner rim) is discarded when uPolarShape x uPolarW is 0 (line "bool gone"). The solid
+  shade ("the shaded plane lets no star through from the globe on") is drawn on those same places, so it goes
+  with them. uPolarShape is the pose's weight (kept/look.ts heroRange 0.6 to 1.6 from the hold's eye): 0 from
+  3594, where the lens is 1.62 from the hold's eye, and the places inside uInnerSpan go. uPolarW is the weight
+  by height (polarHeight 1.0 to 1.7): 0 at 3600 + 1/2 (height 1.000), and the rest of the gap goes. The far
+  look (sheet.ts keptShade) has the shade whole.
+- Cure in kept/rings.ts (tree /tmp/v/law3 = law2 with this one file): a place inside the inner rim that
+  would be discarded by the pose's clause alone (bare) is still drawn where the solid shade on it is over 0, in
+  the pass the split gives it. Nothing else of it is drawn (its profile is empty). At the hold the shade is 0
+  (uSolid.x 0), so the hold's bytes should not change: to be checked on the final 3465.
+- State mail sent 14:02 (the law built, 3465 before and after, 3720, the eight numbers of the control, main's
+  own 3720, the rise's lines, the dive slice's lines, the window named as a red the tool does not judge, what
+  still differs in form, what still goes by height or nearness).
+- Looks pushed 13:55:23.
+
+## 14:05 to 14:50 UTC: law3 checked, main merged, mail 1122, the thin sheet inside the inner rim
+
+- Final 3465 on law3 (the cure with the star window closed) = the cure's bytes (53c081b3...): the hold is not
+  touched by the window's cure. Tool's G5/G17 on law2: PASS (3465 median 1.054, 3720 median 0.911).
+- 14:15:41 merged origin/main 50387ad (take batch 10: the engine's sampler with sampleOrder, director, space,
+  tools/smooth.ts; nothing under my folders) as ccedab5, not pushed then. set.ts line 64 is unchanged and waits
+  for the Builder's word (mail 1009). My proofs stay on the engine 64c4ccb in the worktree mainref.
+- MAIL 1122 (14:14): one law serves the hold and the skim. The gap inside the inner rim is a thin sheet of
+  dust and ice between the rim and the cloud tops; cover of a ring point for a ray = 1 - exp(-tau(r) / sine of
+  the angle between the ray and the plane); tau inside the rim falls to nothing at the cloud tops; it takes the
+  Sun's light and the globe's shadow as the rings do; a phase law may depend on the angle between ray and Sun
+  alone. Rule d302: features of the body may cost the hold at most 0.01 of its match with the approved (mean
+  absolute level over the frame at 1920 by 1080), G17 at the hold may not fall. Wanted: for three values of
+  tau, 3465's number and G17, 3720's number and G17, the foot's picture (approved, main, mine). Nothing may
+  change by height, distance or clock. If the largest tau the hold allows leaves the seven tiles red: send
+  that and carry on with the star window. Round 3 moves to the second cut; the cut takes what is NAMED by
+  17:00 UTC if 3465 and 3720 match the approved no worse than main's (d296). The 90 minute control is not to
+  run on my machine.
+- The "finals dive" job on law3 was killed at 14:16:57 for this work: the whole dive was never run on law3.
+- THE THIN SHEET, by file (built 14:18 to 14:34):
+  - sheet.ts: sheetInner ends at the rim (1 - smoothstep(rim - fade, rim, r)) and runs in a straight line from
+    depth[0] at the rim to depth[1] at the cloud tops. uOnly (1 in a take the kept set draws): the ice outside
+    the rim is not drawn by the model then (knots x (1 - uOnly), wfar x (1 - uOnly), keptVeil x (1 - uOnly),
+    keptShade only if uOnly is 0), the thin sheet alone is. sheetThin = dust / the whole depth at the place: the
+    share of the place's depth that is the thin sheet. The near path runs for a place of mine where the far
+    look does not hold all of it or inside the rim. Cover against the sky: mix(mix(uViewFit.w, 1, true1), 1,
+    sheetThin): the thin sheet counts by its true depth (no factor of 60 on it; with the factor a dark line
+    stood at the rim, seen in the first test at depth 0.2). The composite keeps the thin sheet out of the mix of
+    far look and near look: inside = (col, alpha) x sheetThin; col = inside + mix(col - inside, farLook, wfar).
+    So the thin sheet is one picture in every take, by the same lines of the shader.
+  - model.ts: thinOnly (a flag the set writes); sheet.only(thinOnly) after sheet.set(close); with thinOnly the
+    globe, the shell, the grains, Titan and the far point are hidden: the model draws the thin sheet alone.
+  - set.ts: in a take the kept set draws, the model gets the same pose and is updated in thinOnly, so the thin
+    sheet lies on the kept picture in the same place; it is tested against the kept globe's depth.
+  - skim.json inner: depth [rim, cloud tops], fade, bands, light, rings, air, shade 0 (no shade of it on the
+    globe), foot depth 0 (no layer on the globe's foot). The note of inner names every number.
+  - sheet.json shadow note and two comments in grade.ts say what lies inside the rim now.
+  - Depth 0 gives law3's draft bytes at both frames (3465 c0f7b0169054cc24, 3720 6e026b9a8a6a0de6).
+- GEOMETRY (out/scratch/ph.ts): sine of the ray to the gap at the hold 0.50 to 0.52 in front of the globe and
+  0.41 to 0.45 at the sides; at 3720 0.22 to 0.24 in front and 0.12 to 0.15 at the sides. The path through the
+  sheet is 2.2 to 3.5 times longer at the skim, not more. Phase angles 98 to 111 degrees at the hold, 94 to
+  120 at the skim: a phase law has nothing to grip.
+- DRAFT SCAN (mean absolute level against the approved; law3 3465 4.6866, 3720 27.4899):
+  depth 0.01: 3465 +0.0053, 3720 minus 0.0247. depth 0.03: +0.0169, minus 0.0689. depth 0.1: +0.0596, minus
+  0.1851. About 4 of gain at the skim for 1 of cost at the hold. The cut needs 0.81 at 3720.
+- WHERE THE HOLD PAYS (depth 0.1, draft): of +0.0596, +0.0518 lies at x 570 to 729, the lit left side of the
+  gap, on pixels under level 40 (approved 18.2 there, cure 18.8, sheet 20.1): the approved hero's gap is dark
+  there, the sheet's light is what costs. In the globe's shadow the sheet is dark and costs next to nothing.
+- FINAL at depth 0.016 (tree /tmp/v/thin/f16): 3465 4.7854 (main 4.7807, cure 4.7768: +0.0086 on the cure,
+  +0.0047 on main), G17 median 1.0618 as before.
+- Repo's skim.json inner.depth set to [0.016, 0] at 14:46.
+- Looks pushed 14:17:45 and 14:42:26.
