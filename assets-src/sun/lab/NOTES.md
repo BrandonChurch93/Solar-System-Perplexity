@@ -623,3 +623,41 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   - STILL WRONG in b5: the cells are angular flakes beside the approved's round pillows; lanes thin, no bright
     filigree; the middle field reads flatter than h20's; fibres short.
   - The twin was not rebaked: the bake now also carries labMean (the bake's own picture changes a little).
+- 15:44 UTC: MAIL 1175 (the newest, rules): b7 has the approved's levels and not its form. (a) SIZE: approved near
+  cells 150 to 260 px, b7 70 to 150. (b) LANE: 10 to 25 px wide, dark red brown, thin bright threads in it; b7's are
+  hairlines and the cells meet as flat flakes with corners. (c) BODY: swollen, fibres from a darker dimple to the
+  rim, the light strongest on the crest; the roll all round the cell by the eye's angle and not by a side. MOTION is
+  the other half: a cell swells, its rim breaks, it splits or fades within the 12 s of the surface view, no pop.
+  SHEET at 17:30 UTC: frame 90's lower third at 1 to 1 against the approved (form) and one group of cells at 1 to 1
+  in five captures 12 frames apart (motion). If it still reads as stones or flakes: name another way of making the
+  body and its cost. NAMED by 19:15 with points 1 to 4 of MAIL 1162, the rebake, the whole run and the hold.
+- 15:44 to 16:15 UTC: FORM, trials on frame 90 (v/strip-NAME.jpg: approved, the one before, this one).
+  - b8: fibre.slow 1.3 (the grain runs along r as -slow log(1 - r / slow)); b9: dimple, the roll back by heat.shade
+    on 1 - fall (round, no side), wider lane, thin threads: orange fill in the lanes (the threads lacked
+    abs(edgeD)); c1: that cured. c2: cells 1.3 times (radius [0.0324, 0.0777], slots 1651, far.cell 0.103). c3:
+    height 0.36: little gained. c4: rim 0.45, shade [0.55, 0.35], dimple [0.4, 0.25], lane [0.07, 0.1]: close
+    packed, thin lanes, still leaves with veins (commit e799c1c4). c5: heat.round 0.95, vein 0.3, groove 0.35, fold
+    0.35: smooth cobbles. c6: thick strands of the first count (fibre.thick 0.9), thread [0.15, 0.85], dimple
+    [0.55, 0.3]. c7: fibre.counts [2.5, 7, 14] (were [5, 13, 30]), thread [0.2, 0.9], heat.hot 1.8: THE STEP: thick
+    bright strands on a darker body, the cell reads full. The fibres were two to three times too fine for the
+    approved's strands (16, 44 and 88 round a cell now). c8: fibre.cold 0.18, lane [0.1, 0.16], shade [0.45, 0.4].
+  - c9, d1: heat.breaks [0.45, 0.9, 0.8] (an old cell's rim breaks: the dark threads between its lobes grow from
+    the rim inward with its age), thin threads rarer, sim.relax 0.3 (rounder cells, fewer wedges), born laws
+    heat.born [0.2, 0.45, 0.95] then [0.4, 0.3, 0.9], dome.born [0.3, 0.3, 0.95]. A young cell's radius is its full
+    radius times the root of its share, so it is at half its radius early: the first born law left wedges bright.
+  - d2: radius [0.035, 0.10], slots 1123, far.cell 0.125 (largest cells 1.67 times h20's, wider spread). d4: curve
+    refit [[0,0],[0.0981,0.1155],[0.1285,0.2113],[0.2532,0.3335],[0.4677,0.5078],[0.8874,0.7174],[1.2366,0.8703],
+    [1.5366,1.0]]: frame 90 near percentiles 0.235 0.384 0.58 0.757 0.906 0.965 (approved 0.231 0.404 0.58 0.761
+    0.906 0.965). Commit 772d28de (not named). By eye d4 reads as swollen cells with strands from a dimple and dark
+    lanes with thin threads, near the approved's form; v/strip-d4.jpg, v/four-d4.jpg (0, 60, 90, approved).
+  - SEEN in d4, wrong: the far half of the ground washes to an even orange where the approved keeps its lanes to
+    the limb; the penumbra's strands read as long wavy hair at 1 to 1 (rows 780 to 900, x 900 to 1200); the group
+    of cells changes much in 12 film frames (v/motion-d4.jpg): one cell goes from mid to white in 0.4 s (the lumps
+    of heat.spread with heat.cool 0.7).
+  - flow.py on clip-b8h (9 pictures): 6 cells read, mean -0.380 px a film frame: not trusted (too few cells).
+  - Helpers: clip.ts --step N; v/motion.sh NAME x y w h (five captures 24 apart from 180, eye held, 3 by 2 sheet).
+- 16:17 UTC: the turned anchor lives in agent/sun-place f906d2ec (place.json toBody, globe.spot, north, mapSpot,
+  plates.fineDeg 0.55, and convect.json, set.ts, globe.ts differ from my branch). My branch's place.json is the old
+  one, so a bake with turned axes on my branch would put the umbra 0.7 degrees off the middle. PLAN: bake in a
+  worktree of f906d2ec (/home/user/workspace/place, node_modules linked) with my lab folders laid over it, and read
+  frame 90 and the run there too. Whole run d4 on my own branch started 16:18 (twin of h14 still).

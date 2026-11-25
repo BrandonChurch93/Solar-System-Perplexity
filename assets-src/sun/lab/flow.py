@@ -3,7 +3,7 @@
 # are the bright pieces between the dark lanes, the core of a cell its brightness weighted middle; the flow of a
 # cell, less the cell's own mean drift, is projected on the way from the core outward. A cell that only mottles
 # gives zero, a cell whose grain runs outward a positive number.
-#   python3 assets-src/sun/lab/flow.py FOLDER [first row] [capture frames apart]
+#   python3 assets-src/sun/lab/flow.py FOLDER [first row] [pictures apart] [capture frames between two pictures]
 import glob, sys
 import cv2
 import numpy as np
@@ -12,13 +12,14 @@ from scipy import ndimage
 folder = sys.argv[1]
 top = int(sys.argv[2]) if len(sys.argv) > 2 else 700
 apart = int(sys.argv[3]) if len(sys.argv) > 3 else 4
+step = int(sys.argv[4]) if len(sys.argv) > 4 else 1
 files = sorted(glob.glob(folder + '/k*.png'))
 out = []
 per = []
 for k in range(0, len(files) - apart, max((len(files) - apart) // 6, 1)):
     a = cv2.imread(files[k]).max(axis=2)[top:1060].astype(np.float32)
     b = cv2.imread(files[k + apart]).max(axis=2)[top:1060].astype(np.float32)
-    fl = cv2.calcOpticalFlowFarneback(a, b, None, 0.5, 4, 25, 3, 7, 1.5, 0) / (apart / 2)
+    fl = cv2.calcOpticalFlowFarneback(a, b, None, 0.5, 4, 25, 3, 7, 1.5, 0) / (apart * step / 2)
     soft = cv2.GaussianBlur(a, (0, 0), 3)
     wide = cv2.GaussianBlur(a, (0, 0), 30)
     body = ndimage.binary_opening(soft > 0.8 * wide, iterations=3)

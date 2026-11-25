@@ -624,7 +624,9 @@ void main() {
   float ridgeB = 1.0 - abs(2.0 * fb - 1.0);
   float bunch = smoothstep(0.3, 0.7, 0.6 * mix(0.5, fb, kb) + 0.4 * mix(0.5, fa, ka));
   float ridgeA = 1.0 - abs(2.0 * fa - 1.0);
-  float thread = clamp(mix(0.3, max(max(ridge * ridge * ridge, 0.7 * ridgeB * ridgeB * ridgeB * ridgeB), ${lab.fibre.thick.toFixed(2)} * mix(0.5, ridgeA * ridgeA, ka)), kc) * (0.45 + 0.9 * bunch), 0.0, 1.0);
+  // knots of hotter gas ride outward along the strands: the flow from the middle to the lane is seen in them
+  float bead = vnp(vec2(turn * per.y + floor(seed * 41.0), (run - flow) * ${lab.fibre.beads[1]!.toFixed(2)} + seed * 3.0), per.y);
+  float thread = clamp(mix(0.3, max(max(ridge * ridge * ridge, 0.7 * ridgeB * ridgeB * ridgeB * ridgeB), ${lab.fibre.thick.toFixed(2)} * mix(0.5, ridgeA * ridgeA, ka)), kc) * (0.45 + 0.9 * bunch) * (1.0 + ${lab.fibre.beads[0]!.toFixed(2)} * kb * (2.0 * smoothstep(0.25, 0.75, bead) - 1.0)), 0.0, 1.0);
 #ifdef LAB_MAP
   vec4 pn = vec4(0.0, 0.0, 1.0, 1.0);
 #else
