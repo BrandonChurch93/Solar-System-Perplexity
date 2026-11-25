@@ -266,14 +266,16 @@ export const createSet: SetFactory = async (ctx) => {
       // master pixel. The globe's fades read it as uFrame (frameUniform).
       const frameScale = bufferFrame()
       ;(gu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
-      // The air of the place on the globe side: the close side's own dome, seen from the globe camera, in below the heights of plates.json.
+      // The air of the place on the globe side is a field of the place (plates.json, air.field): the close side's own dome, seen from the
+      // globe camera, and the air on the line of sight to the ground take their weight where the line of sight passes the place, not by
+      // the height of the camera. What still goes by these heights is the lens darkening alone (lensOn, a grade over the frame).
       const ah = place.air.heights
-      const airOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(ah[0])) / (Math.log(ah[1]) - Math.log(ah[0]))) : 0
+      const lensOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(ah[0])) / (Math.log(ah[1]) - Math.log(ah[0]))) : 0
       const sh = place.air.sunHeights
       const sunOn = covering ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(sh[0])) / (Math.log(sh[1]) - Math.log(sh[0]))) : 0
       airTurn.copy(plan.turn(state.time)).multiply(plan.terrainFrame)
       airEye.copy(localP).applyQuaternion(airBack.copy(airTurn).invert()).multiplyScalar(deck.radius)
-      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, airOn * state.weight, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir, own)
+      ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, covering ? state.weight : 0, place.air.field, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir, own)
       // The ground of the close side itself, in below the heights of plates.json (ground): at the handover the globe side is the close side's scene.
       const heightT = eyeAtT(state.time > terrainMid ? 'rise' : 'dive').length() / deck.radius - 1
       // The tones of the ground by the law of the plates (plates.json, tone): the share of its stored tones by the height of the camera, and
@@ -290,12 +292,13 @@ export const createSet: SetFactory = async (ctx) => {
       const held = Math.max(1 - below((camera.length() - 1) / heightT, place.ground.release), 1e-6)
       const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: place.ground.true as [number, number], skin: place.ground.skin as [number, number], tall: place.ground.tall, held, keep: place.ground.keep, atT: camAtT(state.time > terrainMid ? 'rise' : 'dive'), frustum: [place.ground.frustum.margin[0]!, place.ground.frustum.margin[1]!, place.ground.frustum.wide] as [number, number, number], near: [place.ground.frustum.near[0]!, place.ground.frustum.near[1]!, place.ground.frustum.forms] as [number, number, number], flat: [place.ground.flat.sinElevation[0]!, place.ground.flat.sinElevation[1]!, place.ground.flat.horizon[1]!, place.ground.flat.horizon[0]!] as [number, number, number, number], matte: [place.ground.matte.width, place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
       ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir, own)
-      const vignette = shot.post.vignette * (1 - low * (1 - airOn))
+      const vignette = shot.post.vignette * (1 - low * (1 - lensOn))
       hazeTurn.copy(state.rotation).multiply(airTurn)
       ;(gu.uAirFwd!.value as THREE.Vector3).copy(ground.deck!.fwd).applyQuaternion(hazeTurn)
       ;(gu.uAirRight!.value as THREE.Vector3).copy(ground.deck!.right).applyQuaternion(hazeTurn)
       const hz = place.air.haze
-      ;(gu.uAirHaze!.value as THREE.Vector4).set(hz.most * airOn, hz.mu, hz.gain, THREE.MathUtils.degToRad(look.relief.air.deckSpanDeg))
+      ;(gu.uAirHaze!.value as THREE.Vector4).set(covering ? hz.most : 0, hz.mu, hz.gain, THREE.MathUtils.degToRad(look.relief.air.deckSpanDeg))
+      ;(gu.uAirField!.value as THREE.Vector3).set(place.air.field[0], place.air.field[1], place.air.top)
       gu.uCarryOn!.value = 1 - released
       const pl = plan.placeLook(state.segment, camera.length() - 1)
       const duskGain = Math.pow(place.dusk.gain, pl.dusk)

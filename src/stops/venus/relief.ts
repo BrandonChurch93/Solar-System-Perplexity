@@ -121,7 +121,7 @@ void main() {
 // The same air on the globe side (the handover): the dome hangs in the globe's scene at the globe's scale, so the eye
 // is given (the globe camera brought into this scene by the similarity of the plan) and not read from the camera.
 // The air picture comes in two parts there. The rest of it (uAir) is laid from the limb upward as on the close side and
-// comes in with uWeight as the camera comes down to the place. The Sun's own light (uSunMap) is laid from the limb as it
+// has its weight by place (airField, below): the place is the ground point of the line of sight, or the limb point under it where it passes over the limb. The Sun's own light (uSunMap) is laid from the limb as it
 // stands at T (uUpT, uDipT): the Sun is at infinity and keeps its direction while the limb sinks under a climbing
 // camera. It comes in with uSunWeight, and with it the engine's Sun is hidden as on the close side. The two parts are a
 // smooth split (airsun.py) and their sum is not the air picture just over the limb beside the Sun, where the Sun's part
@@ -163,7 +163,7 @@ const swapOnce = (text: string, from: string, to: string): string => {
 }
 
 const GLOBE_SWAPS: [string, string][] = [
-  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform float uSunWeight;\nuniform sampler2D uSunMap;\nuniform sampler2D uWhole;\nuniform float uExact;\nuniform vec4 uExactCore;\nuniform float uExactUnder;\nuniform vec3 uUpT;\nuniform float uDipT;\nuniform vec4 uSunBox;\nuniform vec2 uBand;\nfloat sunCore(vec2 at) {\n  vec2 off = vec2((at.x - uExactCore.x) * cos(uExactCore.y), at.y - uExactCore.y);\n  return (1.0 - smoothstep(uExactCore.z, uExactCore.w, length(off))) * smoothstep(-uExactUnder, 0.0, at.y);\n}'],
+  ['uniform float uGain;', 'uniform float uGain;\nuniform float uWeight;\nuniform float uSunWeight;\nuniform sampler2D uSunMap;\nuniform sampler2D uWhole;\nuniform float uExact;\nuniform vec4 uExactCore;\nuniform float uExactUnder;\nuniform vec3 uUpT;\nuniform float uDipT;\nuniform vec4 uSunBox;\nuniform vec2 uBand;\nuniform vec2 uField;\nfloat airField(vec3 d, vec3 up, float dip) {\n  float s = clamp(dot(d, up), -1.0, 1.0);\n  vec3 level = d - up * s;\n  float side = length(level);\n  float rim = cos(dip);\n  float arc = s < 0.0 && side < rim ? asin(side / rim) - acos(-s) : dip;\n  vec3 q = up * cos(arc) + level * (sin(arc) / max(side, 1e-6));\n  float x = clamp((acos(clamp(dot(q, uUpT), -1.0, 1.0)) - uField.x) / (uField.y - uField.x), 0.0, 1.0);\n  return 1.0 - x * x * x * (x * (x * 6.0 - 15.0) + 10.0);\n}\nfloat sunCore(vec2 at) {\n  vec2 off = vec2((at.x - uExactCore.x) * cos(uExactCore.y), at.y - uExactCore.y);\n  return (1.0 - smoothstep(uExactCore.z, uExactCore.w, length(off))) * smoothstep(-uExactUnder, 0.0, at.y);\n}'],
   [
     '  vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);',
     `  vec3 glow = inverseFilmic(textureLod(uAir, uv, 0.0).rgb);
@@ -179,10 +179,11 @@ const GLOBE_SWAPS: [string, string][] = [
   glow = mix(glow, mix(whole - sunHeld, glow, sunCore(vec2(az, elev))), uExact);
   sunGlow = mix(sunGlow, mix(sunGlow, wholeT - restT, sunCore(atT)), uExact);`,
   ],
-  ['dot(glow, vec3(0.3, 0.5, 0.2))', 'dot(glow * uWeight + sunGlow * uSunWeight, vec3(0.3, 0.5, 0.2))'],
+  ['  vec3 up = normalize(vUp);', '  vec3 up = normalize(vUp);\n  float weight = uWeight * airField(d, up, vDip);'],
+  ['dot(glow, vec3(0.3, 0.5, 0.2))', 'dot(glow * weight + sunGlow * uSunWeight, vec3(0.3, 0.5, 0.2))'],
   ['cut = max(cut, 1.0 - smoothstep(uSunHide.x, uSunHide.y, off));', 'cut = max(cut, (1.0 - smoothstep(uSunHide.x, uSunHide.y, off)) * uSunWeight);'],
-  ['cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev));', 'cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev) * uWeight);'],
-  ['outColor = vec4(glow * uGain * vig, cut);', 'outColor = vec4(max(glow * uWeight + sunGlow * uSunWeight, 0.0) * uGain * vig, cut) * (1.0 - smoothstep(uBand.x, uBand.y, -elev));'],
+  ['cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev));', 'cut = mix(cut, 1.0, smoothstep(0.0, -0.003, elev) * weight);'],
+  ['outColor = vec4(glow * uGain * vig, cut);', 'outColor = vec4(max(glow * weight + sunGlow * uSunWeight, 0.0) * uGain * vig, cut) * (1.0 - smoothstep(uBand.x, uBand.y, -elev));'],
 ]
 const AIR_FRAG_GLOBE = GLOBE_SWAPS.reduce((text, [from, to]) => swapOnce(text, from, to), AIR_FRAG)
 
@@ -518,6 +519,7 @@ export class CloudRelief {
     globeUniforms.uWeight = { value: 0 }
     globeUniforms.uSunWeight = { value: 0 }
     globeUniforms.uBand = { value: new THREE.Vector2(1e3, 2e3) }
+    globeUniforms.uField = { value: new THREE.Vector2(1e3, 2e3) }
     const sb = def.airSun
     globeUniforms.uAir = { value: await ctx.texture(base + sb.limbFile, { srgb: true, mips: false }) }
     globeUniforms.uSunMap = { value: await ctx.texture(base + sb.file, { srgb: true, mips: false }) }
@@ -539,7 +541,7 @@ export class CloudRelief {
     // the far deck fades into it. It is drawn where the globe has written its depth, the dome above only where it has not.
     // Under the horizon the close side reads the lowest row of the whole air picture, so this dome reads the whole picture too and takes
     // nothing from the Sun's own picture.
-    const underUniforms: Record<string, THREE.IUniform> = { ...globeUniforms, uAir: { value: airMap }, uWeight: { value: 0 }, uSunWeight: { value: 0 }, uExact: { value: 0 }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uThrough: { value: 1 }, uBand: { value: new THREE.Vector2(1e3, 2e3) } }
+    const underUniforms: Record<string, THREE.IUniform> = { ...globeUniforms, uAir: { value: airMap }, uWeight: { value: 0 }, uSunWeight: { value: 0 }, uExact: { value: 0 }, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uThrough: { value: 1 }, uBand: { value: new THREE.Vector2(1e3, 2e3) }, uField: { value: new THREE.Vector2(1e3, 2e3) } }
     const underMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: AIR_VERT_GLOBE, fragmentShader: AIR_FRAG_GLOBE, uniforms: underUniforms, ...BLEND, side: THREE.BackSide, depthTest: true, depthFunc: THREE.GreaterDepth, depthWrite: false })
     const underDome = new THREE.Mesh(dome.geometry, underMaterial)
     underDome.frustumCulled = false
@@ -717,7 +719,7 @@ export class CloudRelief {
   // eyeT: the same eye at the T of the handover. weight: the air on the limb. sunWeight: the Sun's own light. exact: the share of the
   // rest that is taken as the whole air picture less the Sun's part (1 at T). own: a frame of the stop's own hold, dive or rise, where
   // what is not shown yet is drawn dry.
-  updateGlobe(eye: THREE.Vector3, eyeT: THREE.Vector3, turn: THREE.Quaternion, weight: number, sunWeight: number, exact: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3, own: boolean): void {
+  updateGlobe(eye: THREE.Vector3, eyeT: THREE.Vector3, turn: THREE.Quaternion, weight: number, field: [number, number], sunWeight: number, exact: number, gain: number, vignette: number, view: RenderView, sun: THREE.Vector3, own: boolean): void {
     const g = this.globeAir!
     const shown = weight > 0 || sunWeight > 0
     g.mesh.visible = shown || own
@@ -729,6 +731,7 @@ export class CloudRelief {
     ;(u.uUpT!.value as THREE.Vector3).copy(eyeT).divideScalar(eyeT.length())
     u.uDipT!.value = Math.acos(this.radius / rT)
     u.uWeight!.value = weight
+    ;(u.uField!.value as THREE.Vector2).fromArray(field)
     u.uSunWeight!.value = sunWeight
     u.uExact!.value = exact
     u.uGain!.value = gain * this.motion.air.gain

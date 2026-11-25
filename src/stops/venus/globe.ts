@@ -184,6 +184,7 @@ uniform vec3 uAirDeck[10];
 uniform vec3 uAirFwd;
 uniform vec3 uAirRight;
 uniform vec4 uAirHaze;
+uniform vec3 uAirField;
 uniform float uFeather;
 uniform vec2 uPatchFade;
 uniform float uFrame;
@@ -532,7 +533,14 @@ ${PLACE_GLSL}
     float az = atan(dot(level, uAirRight), dot(level, uAirFwd));
     float at = (1.0 - abs(mod(az / uAirHaze.w * 0.5 + 0.5, 2.0) - 1.0)) * 9.0;
     int i = int(min(floor(at), 8.0));
-    col = mix(col, inverseFilmic(mix(uAirDeck[i], uAirDeck[i + 1], at - float(i))) * uAirHaze.z * uDusk.w, uAirHaze.x * exp(-mu / uAirHaze.y));
+    // The air is a field of the place (plates.json, air.field): it lies over the ground about the foot of the camera of T, whole inside
+    // the first angle from that foot and gone at the second, and a ground point takes it by the line of sight to it: the lower the
+    // line of sight over the ground point, the more air lies on it. Over the cosine uAirField.z the line of sight is too steep to
+    // show any. Nothing here reads the height of the camera.
+    float fx = clamp((acos(clamp(dot(dp, normalize(uToneEye)), -1.0, 1.0)) - uAirField.x) / (uAirField.y - uAirField.x), 0.0, 1.0);
+    float field = 1.0 - fx * fx * fx * (fx * (fx * 6.0 - 15.0) + 10.0);
+    float steep = exp(-uAirField.z / uAirHaze.y);
+    col = mix(col, inverseFilmic(mix(uAirDeck[i], uAirDeck[i + 1], at - float(i))) * uAirHaze.z * uDusk.w, uAirHaze.x * field * max(exp(-mu / uAirHaze.y) - steep, 0.0) / (1.0 - steep));
   }
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -616,7 +624,7 @@ export class Globe {
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
         uToneLook: { value: new THREE.Vector4(o.place.tone.air, 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: o.place.tone.power },
-        uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) },
+        uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) }, uAirField: { value: new THREE.Vector3(1e3, 2e3, 1) },
         uDusk: { value: new THREE.Vector4(1, 1, 1, 1) }, uPlaceDusk: { value: new THREE.Vector4(1, 1, 1, 0) },
         uLive: { value: new THREE.Vector4(Math.log2(Math.max(THREE.MathUtils.degToRad(o.place.tone.live.sigmaDeg) * ((o.place.textures[0]?.image as unknown as { width: number } | undefined)?.width ?? 1) / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[0] ?? 90) / 2)), 1)), Math.log2(Math.max(o.place.tone.live.sigmaDeg * o.mapWidth / 360, 1)), o.place.tone.live.contrast, o.place.tone.live.colour) },
         uLiveLook: { value: new THREE.Vector3(o.place.tone.live.gain, Math.log2(Math.max(o.place.tone.live.sigmaDeg * ((o.flow.map.image as unknown as { width: number } | undefined)?.width ?? 1) / 360, 1)), o.place.tone.live.most) },
