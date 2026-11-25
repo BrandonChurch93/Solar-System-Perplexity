@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T04:53:25.689Z",
- "head": "7b482c078a340454ff8fe1bbb7ce9b842d437e15",
- "note": "cap.cull: every Mars frame rendered with the option on is byte equal to the same frame with it off (14 whole frames at rate 1, 41 capture frames at rate 2); the frame is about a quarter faster where the cap is drawn; still wrong: no gain near 2580 where this tree does not draw the cap, and the patches around the camera stay",
+ "pushed": "2026-11-25T05:54:48.093Z",
+ "head": "3fc99fe5cbfe3795da6f581c151787bcf1b690a8",
+ "note": "The bounds of the height per patch for the cap's sift were built and measured on Mars at draft: 12 of 12 frames byte equal, 0.5 to 11 percent fewer patches, no seconds gained (within 0.4 s). Not committed. Next: a table of where the cap's seconds go at 2464 and 2472.",
  "looks": [
+  {
+   "time": "2026-11-25T05:54:47.494Z",
+   "file": "20261125055447494-note-bounds-result.jpg",
+   "source": "../m835/bounds-result.png",
+   "kind": "note",
+   "label": "Cap sift, bounds of the height per patch: bytes equal, no seconds gained, not taken",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T04:53:24.115Z",
    "file": "20261125045324115-note-cull-proof-2.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "Moons carried by their own place and turn (task 1, f5f800dd)",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T02:17:27.056Z",
-   "file": "20261125021727056-note-uranus-rise.jpg",
-   "source": "../m835/uranus-rise.png",
-   "kind": "note",
-   "label": "Uranus rise 8818 and 8834 with what the carry leaves: an exchange of pictures, the shape is the unit sphere there",
-   "stop": "uranus"
   }
  ]
 }
