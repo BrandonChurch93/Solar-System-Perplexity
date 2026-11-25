@@ -355,7 +355,7 @@ export const createSet: SetFactory = async (ctx) => {
           const eye = high.camera
           const diving = kind === 'dive'
           toLow.copy(eye.quaternion).invert().premultiply(view.camera.quaternion)
-          sunShown.copy(sunSeen).applyQuaternion(skyRide(diving ? skyDive : skyRise, high, eye, sunTurn))
+          sunShown.copy(sunSeen)
           light.copy(plan.lightDir).applyQuaternion(above.rotation)
           const distance = above.origin.distanceTo(eye.position)
           const offAxis = THREE.MathUtils.radToDeg(sunShown.angleTo(forward.set(0, 0, -1).applyQuaternion(eye.quaternion)))
@@ -377,8 +377,7 @@ export const createSet: SetFactory = async (ctx) => {
       let plate = 1
       let ghosts = 1
       if (diving || rising) {
-        sunShown.applyQuaternion(skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn))
-        rimSun.copy(sunShown)
+        skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn)
         glareSun.copy(carriedSun(state.rotation, shot, view.camera))
         plate = 1 - (shot.skyShare ?? 0)
         if (rising) ghosts = look.flare.after
