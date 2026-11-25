@@ -331,9 +331,11 @@ describe('the way out of the hold of the Sun', () => {
     }
   })
 
-  it('does not come nearer to the Sun and ends the pull where it always did', () => {
+  it('does not come nearer to the Sun and ends the pull where the Sun is as large as the next stop draws it', () => {
     for (let p = leg.firstFrame; p < leg.firstFrame + 0.45 * leg.frames; p += 0.25) expect(place(p + 0.25).length(), 'frame ' + p).toBeGreaterThanOrEqual(place(p).length() - 1e-5 * far)
-    expect(place(leg.firstFrame + 0.43 * leg.frames).length() / far).toBeCloseTo(6.2546 / 4.5741, 3)
+    const swap = 1 / Math.sin(THREE.MathUtils.degToRad(plans[1]!.p.light.sunRadiusDeg))
+    expect(swap / far).toBeGreaterThan(1)
+    expect(place(leg.firstFrame + 0.43 * leg.frames).length() / far).toBeCloseTo(swap / far, 3)
   })
 })
 
