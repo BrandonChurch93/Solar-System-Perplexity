@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T22:52:13.602Z",
- "head": "20ad27c24dd51c774c597e4cb2670ddfd97bf087",
- "note": "third strip",
+ "pushed": "2026-11-25T23:17:40.948Z",
+ "head": "e3fa3d456fac44200216c49c29c2d2ef9b247e75",
+ "note": "merge of main c94664b6 made (e3fa3d45), 3 draft frames same px; the oval's cause read on the plate: bare band outside the rim",
  "looks": [
+  {
+   "time": "2026-11-25T23:17:39.787Z",
+   "file": "20261125231739787-note-c1898.jpg",
+   "source": "../../../../tmp/gl/k20/c1898.png",
+   "kind": "note",
+   "label": "state dd5dd07a at 1898, draft, 1 to 1: the bare dark band between the canvas's last tufts and the field's first",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T23:17:38.380Z",
+   "file": "20261125231738380-note-rim-x2-lift.jpg",
+   "source": "../../../../tmp/gl/k20/rim-x2-lift.png",
+   "kind": "note",
+   "label": "plate at the near rim at 2 for 1, lifted by a square root for reading only: outside the rim about 120 px of bare sea before the field's first bodies, flat sea against rippled sea",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T22:52:01.690Z",
    "file": "20261125225201690-note-crop-1890.jpg",
@@ -63,22 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T22:22:01.918Z",
-   "file": "20261125222201918-note-bk-near2.jpg",
-   "source": "../../../../tmp/gl/k19/bk-near2.jpg",
-   "kind": "note",
-   "label": "plate at 1 to 1 at the canvas corner: pale wedge from the cloud at the rim",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:22:01.336Z",
-   "file": "20261125222201336-note-bk-near1.jpg",
-   "source": "../../../../tmp/gl/k19/bk-near1.jpg",
-   "kind": "note",
-   "label": "plate at 1 to 1 along the near rim: outside too dark, three pale smudges",
-   "stop": "earth"
   }
  ]
 }
