@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T12:48:06.247Z",
+ "pushed": "2026-11-25T13:04:23.996Z",
  "head": "b506ed95d5d1e96b4503740aef9628c8f3fa1b57",
- "note": "work state 12:49: tone by the air built, bodies on specks built, hold's cover inside the disc built; red: the place arrives as a pale patch 1854 to 1872, cure rendering",
+ "note": "h1: no pale patch 1850 to 1857, field ground still has an outline 1866 to 1895, reader 0.53 at the left edge is red; 1755 inside the disc with towers from above",
  "looks": [
+  {
+   "time": "2026-11-25T13:04:22.942Z",
+   "file": "20261125130422942-note-h2-1755-pair4.jpg",
+   "source": "../../../../tmp/gl/k14/h2-1755-pair4.jpg",
+   "kind": "note",
+   "label": "1755 at 4 to 1: kept left, towers from above inside the disc right (draft)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T13:04:21.807Z",
+   "file": "20261125130421807-note-h1-s2.jpg",
+   "source": "../../../../tmp/gl/k14/h1-s2.jpg",
+   "kind": "note",
+   "label": "draft, uncommitted: 1880 to 1893 with the sea by the air's length, bodies on the map's specks",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T12:48:05.638Z",
    "file": "20261125124805638-note-g1-place.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k13/s-ctl-a.jpg",
    "kind": "note",
    "label": "control 1883 to 1889: state above, path share 0 below (the darker field is the tone plate)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T11:40:55.969Z",
-   "file": "20261125114055969-note-s-dive-b.jpg",
-   "source": "../../../../tmp/gl/k13/s-dive-b.jpg",
-   "kind": "note",
-   "label": "9b637af7 dive 1888 to 1894 draft, deck out",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T11:40:55.416Z",
-   "file": "20261125114055416-note-s-dive-a.jpg",
-   "source": "../../../../tmp/gl/k13/s-dive-a.jpg",
-   "kind": "note",
-   "label": "9b637af7 dive 1876 to 1887 draft, deck out",
    "stop": "earth"
   }
  ]
