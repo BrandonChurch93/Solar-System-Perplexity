@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T19:30:23.057Z",
- "head": "ed10db012206623666a691c6edc1e90c6ca1b69d",
- "note": "Rings named by the wrap itself; the lit body of the lee is being built",
+ "pushed": "2026-11-25T19:55:12.108Z",
+ "head": "b660882b510fd8ac4ea3608fd0872db217139894",
+ "note": "19:57 UTC: design of the lit body of the storm's lee, tested as pictures before building; nothing in the tree has changed yet",
  "looks": [
+  {
+   "time": "2026-11-25T19:55:06.783Z",
+   "file": "20261125195506783-note-p1-3150.jpg",
+   "source": "out/work/jupiter/final/p1-3150.png",
+   "kind": "note",
+   "label": "surface view 3150 of the named tree at the final tier, unchanged by this design work (6.1102 against the approved close image)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T19:55:06.155Z",
+   "file": "20261125195506155-note-sim-a8g.jpg",
+   "source": "../work/r20/sim-a8g.png",
+   "kind": "note",
+   "label": "design test, not built: the hold's disc at 8 times, simulated. Left the approved hero, middle main, right the lit body written into the globe (simulated cost 0.0019 against 0.0203 of the named tree); the left dash is not yet kept",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T19:55:05.555Z",
+   "file": "20261125195505555-note-mask-a-mid.jpg",
+   "source": "../work/r20/mask-a-mid.jpg",
+   "kind": "note",
+   "label": "design test, not built: the storm at the place on the mid grid, 30.7 units wide. Left the body as carried now, middle the lee lit by the globe's own ground under a smooth mask, right the globe's own ground alone",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T19:30:22.349Z",
    "file": "20261125193022349-note-p1-3150.jpg",
@@ -182,30 +206,6 @@
    "source": "../work/r15/sheets/rise-a-d.jpg",
    "kind": "note",
    "label": "1c5b75f rise 3232 to 3273 + 1/2, every drawn frame, sheet d (draft, rate 2): green by my reader",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:45:07.973Z",
-   "file": "20261125174507973-note-rise-a-c.jpg",
-   "source": "../work/r15/sheets/rise-a-c.jpg",
-   "kind": "note",
-   "label": "1c5b75f rise 3232 to 3273 + 1/2, every drawn frame, sheet c (draft, rate 2): green by my reader",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:45:07.386Z",
-   "file": "20261125174507386-note-rise-a-b.jpg",
-   "source": "../work/r15/sheets/rise-a-b.jpg",
-   "kind": "note",
-   "label": "1c5b75f rise 3232 to 3273 + 1/2, every drawn frame, sheet b (draft, rate 2): green by my reader",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:45:06.781Z",
-   "file": "20261125174506781-note-rise-a-a.jpg",
-   "source": "../work/r15/sheets/rise-a-a.jpg",
-   "kind": "note",
-   "label": "1c5b75f rise 3232 to 3273 + 1/2, every drawn frame, sheet a (draft, rate 2): green by my reader",
    "stop": "jupiter"
   }
  ]
