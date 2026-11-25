@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T22:49:41.981Z",
+ "pushed": "2026-11-25T22:57:02.612Z",
  "head": "ef1bbb3a14fd518810e596aa9c975e88fd5c84ff",
- "note": "22:50 BAD: trial 17's plain on the 0.7, 1.6 and 3.8 plates is a flat felt, 3.8 with a weave; those three are being written again with the plain by code on the 0.3 plate alone",
+ "note": "22:57 trial 17 plain at 1 to 1 is bad beside the parent's ground; 0.3 plain from the parent running",
  "looks": [
+  {
+   "time": "2026-11-25T22:57:01.739Z",
+   "file": "20261125225701739-note-parent-crops.jpg",
+   "source": "../../../../tmp/parent-crops.jpg",
+   "kind": "note",
+   "label": "1 to 1 crops of the 0.3 plate: take | parent enlarged | trial 17. The parent's ground has the forms without the net; the 0.3 plain is being rebuilt from it (MAIL 1327)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T22:57:01.082Z",
+   "file": "20261125225701082-note-parent-whole.jpg",
+   "source": "../../../../tmp/parent-whole.jpg",
+   "kind": "note",
+   "label": "0.3 plate from above: the take (net of blocks) | its parent, the 0.7 take enlarged 1.55 | trial 17 plain by code (reads as smoke at 1 to 1: BAD)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T22:49:41.031Z",
    "file": "20261125224941031-note-rings.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/place/w17/cmpA.png",
    "kind": "note",
    "label": "0.3 plate from above at 1 to 1, crop A: trials 15, 16, 17 (wall with chutes, plain by code)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T21:49:20.434Z",
-   "file": "20261125214920434-note-C.jpg",
-   "source": "out/work/place/w17/C.png",
-   "kind": "note",
-   "label": "0.3 plate from above at 1 to 1, plain by code, trial 17 (x 900 y 1100): small craters on soft ground; the take's broad tone still reads as cloud shadow",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T21:40:03.995Z",
-   "file": "20261125214003995-note-over.jpg",
-   "source": "out/work/place/w16/over.jpg",
-   "kind": "note",
-   "label": "0.3 plate from above, trial 16, half size (BAD: plain's broad tone reads as cloud)",
    "stop": "mars"
   }
  ]
