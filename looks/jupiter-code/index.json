@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T23:11:13.373Z",
+ "pushed": "2026-11-25T23:28:31.157Z",
  "head": "573431fb53a875f5a78cb152a458f82656ac6bb7",
- "note": "state k: the guide solved by range; low band 5.547 against main 3.539; the limit is the lower right",
+ "note": "state n at 3150: low band 4.801 against main 3.539; v1 shows the same ground with no dark matter",
  "looks": [
+  {
+   "time": "2026-11-25T23:28:30.330Z",
+   "file": "20261125232830330-note-n-3150.jpg",
+   "source": "../work/r23/t/n-3150.png",
+   "kind": "note",
+   "label": "3150 draft state n: billows gated by the guide's own unrest (far field calm, streaks), lanes take the matter's hue, solve by range; low band 4.801 (main 3.539), plain 14.7584, bands 0.93 0.92 0.87 0.86 (under 1 px 1.19), 146.8 s; soft glows of the solve in the lower left, lower right 30 against 8",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T23:28:29.677Z",
+   "file": "20261125232829677-note-v1-3150.jpg",
+   "source": "../work/r23/t/v1-3150.png",
+   "kind": "note",
+   "label": "3150 preview state v1: state k with the floor of the matter's light at 0.07 (no matter darker than a dark cloud): low band 28.98 at preview size; the right third and the bottom lit pale blue",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T23:11:12.621Z",
    "file": "20261125231112621-note-k-3150.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r21/mine/k006300-r2-draft.png",
    "kind": "note",
    "label": "o1 my head b660882 frame 3150 draft 1 to 1 (surface view, middle)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:40:27.113Z",
-   "file": "20261125204027113-note-k006120-r2-draft.jpg",
-   "source": "../work/r21/mine/k006120-r2-draft.png",
-   "kind": "note",
-   "label": "o1 my head b660882 frame 3060 draft 1 to 1 (surface view, first frame)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:16:15.952Z",
-   "file": "20261125201615952-note-p1-3150.jpg",
-   "source": "out/work/jupiter/final/p1-3150.png",
-   "kind": "note",
-   "label": "surface view 3150 of the named tree at the final tier, unchanged by this design work (6.1102 against the approved close image)",
    "stop": "jupiter"
   }
  ]
