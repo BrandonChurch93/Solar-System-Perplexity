@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T11:19:04.398Z",
- "head": "bf7752dbd1a2b4c275fc06d469c7da3707acfb97",
- "note": "G13 cause by control: the hold's count was the scene's quad, not the picture; terrain near ground truly soft (47.6 percent), named red",
+ "pushed": "2026-11-25T11:43:28.931Z",
+ "head": "27737fef3b6f79b8aa3152940e84590a2c529d99",
+ "note": "G17's top rows by control: the approved's star field and fibrous far plain are what ours lacks; the count's commit is in, beauty equal to the bit on the four judged frames",
  "looks": [
+  {
+   "time": "2026-11-25T11:43:26.761Z",
+   "file": "20261125114326761-note-c-4860-C8.jpg",
+   "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
+   "kind": "note",
+   "label": "way C at 4860 beside the approved: G17 proxy 0.412 at preview (bar 0.8, RED and named); 64 s the draft frame at preview, 103 s at 1920",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T11:43:24.680Z",
+   "file": "20261125114324680-note-g17-top-wayC.jpg",
+   "source": "out/work/nep/weave/ev/g17-top-wayC.jpg",
+   "kind": "note",
+   "label": "the same strips on way C (draft): the far plain under the limb reads 0.07 to 0.50, the sky as before",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T11:43:22.410Z",
+   "file": "20261125114322410-note-g17-top-c2edd61b.jpg",
+   "source": "out/work/nep/weave/ev/g17-top-c2edd61b.jpg",
+   "kind": "note",
+   "label": "G17 at 4860, the top two rows at 1 to 1: approved above, ours below (c2edd61ba's tree, draft). The approved carries a dense bright star field with the Milky Way and fibrous cirrus under the limb; ours the engine's one sky and a smooth haze band. 13 sky tiles read 0.02 to 0.18",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T11:19:03.823Z",
    "file": "20261125111903823-note-c-4860-C8.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/weave/ev/c-dive-C8-a.jpg",
    "kind": "note",
    "label": "way C, dive inside the air 4736 4740 4744 4748: one curve, the air darkens by place; pairs 0.36 0.39 0.26 on my reader (proxy), limit 0.45",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T10:50:15.186Z",
-   "file": "20261125105015186-note-c-4860-C8.jpg",
-   "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
-   "kind": "note",
-   "label": "way C (C8) at 4860 beside the approved: G17 proxy 0.412 (c2edd61ba 0.508, bar 0.8, red and named); 31 s the draft frame at preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T10:32:49.959Z",
-   "file": "20261125103249959-note-c-air-C8.jpg",
-   "source": "out/work/nep/weave/ev/c-air-C8.jpg",
-   "kind": "note",
-   "label": "way C inside the air: 4745 (left) and 4963 (middle), beside 4963 with the hold's curve and no air (right). 4605 at 1920 is the same bytes as c2edd61b. Pairs 4992 to 5000 0.33 and 4704 to 4712 0.31 on my copy of the reader (limit 0.45)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T10:32:48.953Z",
-   "file": "20261125103248953-note-c-4860-C8.jpg",
-   "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
-   "kind": "note",
-   "label": "way C at 4860 (left) beside the approved (middle); right is the trial before. One curve at every height, the air as shares of the hold's light: white streamer, dark navy near, paler far, pale limb, no hard specks. Far plain still darker than the approved. G17 proxy median 0.412 p25 0.091 (c2edd61b 0.508, bar 0.8: red before and after). Preview draft 23 to 39 s per frame",
    "stop": "neptune"
   }
  ]
