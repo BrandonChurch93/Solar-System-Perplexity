@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T03:52:40.488Z",
- "head": "78ee1951b8ffdd7793dfd21d0fd5703f18a362ab",
- "note": "1920 proof of the one sky, 4716 to 4747 every frame: no flash at 4722 to 4724, one rigid star field; 4748 to 4762 render now",
+ "pushed": "2026-11-25T04:18:58.982Z",
+ "head": "6df8bbd2a262a52a7ee211756d09d896b9a9bf41",
+ "note": "the dive's sky proven at 1920 on every frame 4716 to 4762; frame law for the scene from code committed (1920 unchanged to the byte); tests 62 of 62 on the merge of main 7ecd813b; controls for the swirl and the night side render now, then the rise at 1920",
  "looks": [
+  {
+   "time": "2026-11-25T04:18:58.168Z",
+   "file": "20261125041858168-note-agree-4713.jpg",
+   "source": "out/work/nep/weave/ev/agree-4713.jpg",
+   "kind": "note",
+   "label": "frame law (c), 4713: the 1920 frame halved, the preview after, and the difference of the preview against it before and after (6x): the patch on the scene from code is gone, the rest is the map's cloud edges and the stars",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:18:57.497Z",
+   "file": "20261125041857497-note-p1-corner-4748.jpg",
+   "source": "out/work/nep/weave/ev/p1-corner-4748.jpg",
+   "kind": "note",
+   "label": "proof (a), 1920 draft: the upper right corner every frame 4748 to 4762, lifted 2x: the same stars across the change of view at 4758, shift 10, 9, 8 px a frame; nothing comes or goes",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:18:56.854Z",
+   "file": "20261125041856854-note-judged-f1p.jpg",
+   "source": "out/work/nep/weave/ev/judged-f1p.jpg",
+   "kind": "note",
+   "label": "the four judged frames, draft preview, 3ca662a4: 4605 and 5006 with the engine's sky and the engine's Sun, no plate",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T04:18:55.975Z",
+   "file": "20261125041855975-note-4860-f1p.jpg",
+   "source": "out/work/nep/weave/ev/4860-f1p.jpg",
+   "kind": "note",
+   "label": "4860 draft preview beside the approved close, 3ca662a4 (one sky, no plate, frame law for the scene from code): G17 proxy median 1.077 p25 0.348; the plain's box (24, 58, 98) against (90, 134, 176): the haze of MAIL 840 point 4 is not built; 22 s a draft frame at the preview, 70 s at 1920",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T03:52:39.227Z",
    "file": "20261125035239227-note-p1-corner-4732.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/nep/weave/ev/hold-k2.jpg",
    "kind": "note",
    "label": "4605 draft preview beside the hero: the hold's sky plate is gone (fdebc88a), the engine's sky and the engine's Sun stand; planet bytes unchanged; 22 s a draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:32:31.028Z",
-   "file": "20261125033231028-note-4860-k1.jpg",
-   "source": "out/work/nep/weave/ev/4860-k1.jpg",
-   "kind": "note",
-   "label": "4860 draft preview beside the approved close, one sky for both views (277b45e5), G17 proxy median 0.846 p25 0.317 (was 0.956, 0.358: the engine's Milky Way no longer stands in this sky), 22 s a draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:05:55.907Z",
-   "file": "20261125030555907-note-dash-b.jpg",
-   "source": "out/work/nep/weave/ev/dash-b.jpg",
-   "kind": "note",
-   "label": "dive at 1920: the row of dashes gone at 4709 and 4713 (thin law on the density)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:05:54.700Z",
-   "file": "20261125030554700-note-sky-i.jpg",
-   "source": "out/work/nep/weave/ev/sky-i.jpg",
-   "kind": "note",
-   "label": "the same diagnostic at the change of view: the Milky Way pops in at 4758, so the carry off is no cure; cause is two turns of the sky",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T03:05:52.706Z",
-   "file": "20261125030552706-note-sky-g.jpg",
-   "source": "out/work/nep/weave/ev/sky-g.jpg",
-   "kind": "note",
-   "label": "sky, upper right corner 4721 to 4732 at preview: top the head (Milky Way crosses at 4724 to 4726, red), bottom a diagnostic with the stars' carry off",
    "stop": "neptune"
   }
  ]
