@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T11:39:18.894Z",
+ "pushed": "2026-11-25T12:04:03.780Z",
  "head": "dfe0aa905683a93feed947cdf6915379e7b01757",
- "note": "Naming commit bdefa472 pushed and named: a surface view measured on its globe takes no soft. Uranus 4290 and 4259 at final before and after; now Mars's review rows box against the law",
+ "note": "Mars shutter law rows at review: dive's end 2484 to 2486, rise's start 2670 to 2672, judged dive frame 2427, holds 2668 and 2635, box against law; cap pair 2673",
  "looks": [
   {
-   "time": "2026-11-25T11:28:44.693Z",
-   "file": "20261125112844693-note-u4259-zoom-b.jpg",
-   "source": "../../../../tmp/law/sheets/u4259-zoom-b.png",
+   "time": "2026-11-25T12:04:03.210Z",
+   "file": "20261125120403210-note-hold-2635-1x.jpg",
+   "source": "../../../../tmp/law/sheets/hold-2635-1x.png",
    "kind": "note",
-   "label": "Uranus 4259 final at 2x, rings (1380,400 to 1700,640): before the naming and after. Coloured specks along the ring edges in both, not from this change"
+   "label": "Mars 2635 (the view's fastest frame, 8.34 px) at review, 1 to 1, x 420..1060 y 440..800: box against the law (share 0.103). Mean difference 0.21 of 255"
   },
   {
-   "time": "2026-11-25T11:28:43.403Z",
-   "file": "20261125112843403-note-u4259-zoom-a.jpg",
-   "source": "../../../../tmp/law/sheets/u4259-zoom-a.png",
+   "time": "2026-11-25T12:04:02.653Z",
+   "file": "20261125120402653-note-hold-2668-1x.jpg",
+   "source": "../../../../tmp/law/sheets/hold-2668-1x.png",
    "kind": "note",
-   "label": "Uranus 4259 final at 2x, clouds (560,540 to 880,780): before the naming and after"
+   "label": "Mars 2668 (judged hold, last frames of the view) at review, 1 to 1, x 420..1060 y 440..800: box 14 samples against the law (share 0.069 at 7.87 px). Mean difference 0.13 of 255, 0.27 percent of pixels over 2"
   },
   {
-   "time": "2026-11-25T11:28:42.098Z",
-   "file": "20261125112842098-note-u4290-zoom-b.jpg",
-   "source": "../../../../tmp/law/sheets/u4290-zoom-b.png",
+   "time": "2026-11-25T12:04:02.088Z",
+   "file": "20261125120402088-note-row-rise-start-2x.jpg",
+   "source": "../../../../tmp/law/sheets/row-rise-start-2x.png",
    "kind": "note",
-   "label": "Uranus 4290 final at 2x, rings (1420,380 to 1740,620): before the naming and after"
+   "label": "Mars rise's start at review, 2 times, x 800..1010 y 820..1000: 2670, 2671, 2672, box over law"
   },
   {
-   "time": "2026-11-25T11:28:41.292Z",
-   "file": "20261125112841292-note-u4290-zoom-a.jpg",
-   "source": "../../../../tmp/law/sheets/u4290-zoom-a.png",
+   "time": "2026-11-25T12:04:01.501Z",
+   "file": "20261125120401501-note-row-rise-start-1x.jpg",
+   "source": "../../../../tmp/law/sheets/row-rise-start-1x.png",
    "kind": "note",
-   "label": "Uranus 4290 final at 2x, clouds (600,560 to 920,800): before the naming and after"
+   "label": "Mars rise's start at review, 1 to 1, x 700..1120 y 760..1060: frames 2670, 2671, 2672. Top the box, bottom the law 6 to 14 (shares 0.083, 0.392, 0.5). Mean difference 0.22, 0.45, 0.37 of 255"
   },
   {
-   "time": "2026-11-25T11:28:40.466Z",
-   "file": "20261125112840466-note-u-final-pairs.jpg",
-   "source": "../../../../tmp/law/sheets/u-final-pairs.png",
+   "time": "2026-11-25T12:04:00.931Z",
+   "file": "20261125120400931-note-row-dive-end-2x.jpg",
+   "source": "../../../../tmp/law/sheets/row-dive-end-2x.png",
    "kind": "note",
-   "label": "Uranus 4290 and 4259 at final, before the naming (commit 4, 16 samples) and after (bdefa472, 19 samples, soft 0): G17 against the approved close image 4290 median 1.126 to 1.119, p25 1.024 to 1.026; 4259 median 1.054 to 1.053, p25 0.916 to 0.918; band energy tile by tile after over before: median 1.000, least 0.988, most 1.008"
+   "label": "Mars dive's end at review, 2 times, x 800..1010 y 820..1000: 2484, 2485, 2486, box over law"
   },
   {
-   "time": "2026-11-25T11:17:31.390Z",
-   "file": "20261125111731390-note-f04259.jpg",
-   "source": "out/work/blur/nu-final/f04259.png",
+   "time": "2026-11-25T12:04:00.330Z",
+   "file": "20261125120400330-note-row-dive-end-1x.jpg",
+   "source": "../../../../tmp/law/sheets/row-dive-end-1x.png",
    "kind": "note",
-   "label": "Uranus 4259 final on the first local form of the naming (c0d04d4c, soft 0.045, 19 samples): the form that was not pushed, drawn to state what the soft did"
+   "label": "Mars dive's end at review, 1 to 1, x 700..1120 y 760..1060: frames 2484, 2485, 2486. Top the box (naming commit bdefa472), bottom the law 6 to 14 (shares 0.470, 0.238, 0.047). Mean difference box to law 0.50, 0.29, 0.05 of 255"
   },
   {
-   "time": "2026-11-25T11:17:28.658Z",
-   "file": "20261125111728658-note-f04259.jpg",
-   "source": "out/work/blur/c4-final/f04259.png",
+   "time": "2026-11-25T11:59:22.197Z",
+   "file": "20261125115922197-note-cap-2673-thumb.jpg",
+   "source": "../../../../tmp/law/sheets/cap-2673-thumb.png",
    "kind": "note",
-   "label": "Uranus 4259 final, before the naming (commit 4 dfe0aa90): 16 samples, 7.18 px read on the plane"
+   "label": "Mars 2673 whole at half size: before the naming and after"
   },
   {
-   "time": "2026-11-25T11:17:25.954Z",
-   "file": "20261125111725954-note-f04290.jpg",
-   "source": "out/work/blur/c4-final/f04290.png",
+   "time": "2026-11-25T11:59:21.494Z",
+   "file": "20261125115921494-note-cap-2673-1x.jpg",
+   "source": "../../../../tmp/law/sheets/cap-2673-1x.png",
    "kind": "note",
-   "label": "Uranus 4290 final, before the naming (commit 4 dfe0aa90): 16 samples, 6.26 px read on the plane, G17 median 1.126 p25 1.024"
+   "label": "Mars 2673 at review, 1 to 1, x 0..640 y 600..1000: before the naming (commit 4, shutter 0.917, the plane read 15.26 px) and after (bdefa472, shutter 0.510, the globe reads 27.43 px). 24 samples both. Mean gradient 10.60 to 11.39"
   }
  ]
 }
