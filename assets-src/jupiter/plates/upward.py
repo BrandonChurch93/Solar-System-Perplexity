@@ -1,5 +1,7 @@
 import os
+import subprocess
 import sys
+import tempfile
 
 import cv2
 import jpeglib
@@ -151,6 +153,7 @@ def write_jpeg(src, dst, directions, seen):
     r0, r1, c0, c1 = r0 + box[0], r1 + box[0], c0 + box[1], c1 + box[1]
     old = jpeglib.read_spatial(src).spatial[r0:r1, c0:c1].astype(np.float64)
     small, grid = reduced(seen, texel)
+    small = cv2.GaussianBlur(small, (0, 0), UP['spread'][os.path.basename(dst)] * grid['pixels'][0] / PL['mid']['size'][0])
     k = wgt[sl][..., None]
     mixed = srgb_to_linear(old / 255) * (1 - k) + at(small, grid, X[sl], Y[sl]) * k
     rgb = np.clip(linear_to_srgb(mixed), 0, 1) * 255
@@ -163,7 +166,7 @@ def write_jpeg(src, dst, directions, seen):
         part = plane[r0 // 8:r1 // 8, c0 // 8:c1 // 8]
         part[touched] = coded[touched]
     im.write_dct(dst)
-    return dict(file=os.path.basename(dst), box=[int(r0), int(r1), int(c0), int(c1)], blocks=int(touched.sum()), texel=round(texel, 4), flowError=float(error))
+    return dict(file=os.path.basename(dst), box=[int(r0), int(r1), int(c0), int(c1)], blocks=int(touched.sum()), texel=round(texel, 4), spreadTexels=round(UP['spread'][os.path.basename(dst)] * grid['pixels'][0] / PL['mid']['size'][0], 3), flowError=float(error))
 
 
 def wrap_directions(h, w):
@@ -197,6 +200,17 @@ def patch_directions(level):
     return directions
 
 
+def before(path):
+    if 'from' not in UP:
+        return path
+    rel = os.path.relpath(path, ROOT)
+    raw = subprocess.run(['git', 'show', UP['from'] + ':' + rel], cwd=ROOT, check=True, capture_output=True).stdout
+    kept = os.path.join(tempfile.gettempdir(), 'upward-' + rel.replace(os.sep, '-'))
+    with open(kept, 'wb') as f:
+        f.write(raw)
+    return kept
+
+
 def write_far(src, dst, coded, alpha):
     plate = cv2.imread(os.path.join(src, 'plate-far.png'), cv2.IMREAD_UNCHANGED)[::-1].copy()
     f = {**PL['far'], 'pixels': [plate.shape[1], plate.shape[0]]}
@@ -227,9 +241,9 @@ if __name__ == '__main__':
         if 'far' in UP['levels']:
             rows.append(write_far(src, dst, coded, alpha))
         if 'wrap' in UP['levels']:
-            rows.append(write_jpeg(os.path.join(src, 'wrap-color.jpg'), os.path.join(dst, 'wrap-color.jpg'), wrap_directions, seen))
+            rows.append(write_jpeg(before(os.path.join(src, 'wrap-color.jpg')), os.path.join(dst, 'wrap-color.jpg'), wrap_directions, seen))
         if 'patches' in UP['levels']:
             for level in G.PATCHES['levels']:
-                rows.append(write_jpeg(os.path.join(src, level['file']), os.path.join(dst, level['file']), patch_directions(level), seen))
+                rows.append(write_jpeg(before(os.path.join(src, level['file'])), os.path.join(dst, level['file']), patch_directions(level), seen))
         for row in rows:
             print(name, row)
