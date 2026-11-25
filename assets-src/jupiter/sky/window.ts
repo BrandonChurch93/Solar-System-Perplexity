@@ -5,8 +5,8 @@ import { FilmDirector } from '../../../src/director/film'
 import { plans } from '../../../src/director/plans'
 import place from '../../../src/stops/jupiter/place.json'
 
-// The turn of the sky in the rise (scene.skyTurn) as it shows on screen.
-//   npx tsx assets-src/jupiter/sky/window.ts [--steps 2] [--slack 0.03]
+// The turn of the sky in the rise or the dive (scene.skyTurn) as it shows on screen.
+//   npx tsx assets-src/jupiter/sky/window.ts [--kind rise] [--steps 2] [--slack 0.03]
 // Prints the heights between which no pixel of the frame is sky, if there are any, and the way of the sky on screen in degrees a film
 // frame beside the camera's own turn. If the turn lies between those heights it is not seen. If it does not, it has to run with the
 // camera: the way of the sky then rises once and falls once (a second hill higher than slack times the largest fails).
@@ -16,7 +16,8 @@ const steps = Number(args().steps ?? 2)
 const slack = Number(args().slack ?? 0.03)
 const film = new FilmDirector(plans)
 const plan = plans[config.stopIds.indexOf('jupiter')]!
-const seg = config.segments.find((s) => s.id === 'jupiter.rise')!
+const kind = String(args().kind ?? 'rise')
+const seg = config.segments.find((s) => s.id === 'jupiter.' + kind)!
 const { width, height } = config.formats[config.formatKeys.master]!
 const shot = (time: number) => film.shotAt(Math.floor(time * config.fps + 1e-9), time)
 const open = (time: number): number => {
@@ -64,7 +65,7 @@ for (let i = seg.firstFrame * steps; i < seg.endFrame * steps; i++) {
 }
 const [a, b] = place.scene.skyTurn as [number, number]
 if (first !== null && last !== null) console.log('no pixel of the frame is sky from ' + at(first) + ' to ' + at(last))
-else console.log('the sphere never fills the frame in the rise')
+else console.log('the sphere never fills the frame in the ' + kind)
 const hidden = first !== null && last !== null && a >= plan.eyeHeight(first) && b <= plan.eyeHeight(last) && shown === 0
 let top = rows[0]!
 for (const r of rows) if (r.sky > top.sky) top = r

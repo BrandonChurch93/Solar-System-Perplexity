@@ -198,6 +198,7 @@ uniform vec2 uSeenReach;
 uniform vec3 uSunCurve[${CURVE_KNOTS}];
 uniform vec3 uSunChart;
 uniform vec3 uLayer;
+uniform vec3 uDepth;
 uniform vec4 uStorm;
 uniform float uStormTurn;
 uniform vec4 uJet;
@@ -432,7 +433,7 @@ void main() {
     vec3 V = vec3(cs.x * D.x - cs.y * D.y, cs.y * D.x + cs.x * D.y, D.z);
     vec2 sunAz = vec2(cs.x * uSunAz.x - cs.y * uSunAz.y, cs.y * uSunAz.x + cs.x * uSunAz.y);
     float foot = t * pix;
-    float hs = max(foot, mix(uTexel.y, uForeMap.w, w.x));
+    float hs = max(foot, mix(uNear.w, uForeMap.w, w.x));
     vec2 slope = vec2(stored(g + vec2(hs, 0.0), w) - stored(g - vec2(hs, 0.0), w), stored(g + vec2(0.0, hs), w) - stored(g - vec2(0.0, hs), w)) / (2.0 * hs);
     vec3 n = normalize(vec3(g / uRadius - slope, 1.0));
     float facing = min(dot(V, n), -uFoot.x);
@@ -542,7 +543,7 @@ void main() {
     alpha = 1.0;
     for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
       vec2 r = abs(there.xy - uFar.xy) * (2.0 * uFar.z);
-      alpha = uLayer.x * (1.0 - smoothstep(uJoin.x, uJoin.y, max(r.x, r.y)));
+      alpha = smoothstep(uDepth.x, uDepth.y, uDepth.z / (t * uPixel * uFrame)) * (1.0 - smoothstep(uJoin.x, uJoin.y, max(r.x, r.y)));
       col *= alpha;
     }
     tint.b = seen.a;
@@ -561,7 +562,7 @@ void main() {
       alpha *= uLayer.y;
     }
   }
-  outColor = diagOut(vec4(col * uGain * vig, alpha), texels, 1.0, tint, vec2(0.0), t);
+  outColor = diagOut(vec4(col * uGain * vig, alpha), texels, 1.0, tint, vec2(0.0), t / uRadius);
   if (!hit && (uDiag >= 2 || alpha + col.r + col.g + col.b <= 0.0)) discard;
 }`
 
@@ -624,7 +625,7 @@ export class CloudDeck {
     for (const [name, key] of [['fore', 'Fore'], ['near', 'Near'], ['mid', 'Mid'], ['far', 'Far']] as const) {
       const m = plates[name]!
       uniforms['uPlate' + key] = { value: await ctx.texture(base + 'plate-' + name + '.png', { srgb: true, anisotropy: l.anisotropy }) }
-      texel.push(m.size[0]! / m.pixels[ctx.assets]![0]!)
+      texel.push(m.size[0]! / m.pixels.full![0]!)
       uniforms['u' + key] = { value: new THREE.Vector4(m.centre[0], m.centre[1], 1 / m.size[0]!, name === 'fore' ? 1 / m.size[1]! : m.size[0]! / m.pixels[ctx.assets]![0]!) }
     }
     const c = fields.chart
@@ -682,6 +683,7 @@ export class CloudDeck {
       uRadius: { value: c.radius },
       uHeightRange: { value: new THREE.Vector2(fields.heightRange[0]!, fields.heightRange[1]! - fields.heightRange[0]!) },
       uShell: { value: new THREE.Vector2().fromArray(l.shell) },
+      uDepth: { value: new THREE.Vector3(place.scene.depth[0], place.scene.depth[1], l.shell[1]! - l.shell[0]!) },
       uMarch: { value: new THREE.Vector4().fromArray(l.march) },
       uPixel: { value: 0.001 },
       uDetail: { value: new THREE.Vector4().fromArray(l.detail) },

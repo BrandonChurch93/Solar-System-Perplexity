@@ -362,7 +362,7 @@ ${PATCH_LEVELS}
       c = calm((E + D * t).xy, cs);
       vec3 V = vec3(cs.x * D.x - cs.y * D.y, cs.y * D.x + cs.x * D.y, D.z);
       float breadth = t * pix;
-      float hs = max(breadth, mix(uPlateTexel.y, uForeMap.w, w.x));
+      float hs = max(breadth, mix(uPlateBoxNear.w, uForeMap.w, w.x));
       vec2 slope = vec2(stored(c + vec2(hs, 0.0), w) - stored(c - vec2(hs, 0.0), w), stored(c + vec2(0.0, hs), w) - stored(c - vec2(0.0, hs), w)) / (2.0 * hs);
       vec3 nr = normalize(vec3(c / uRadius - slope, 1.0));
       float facing = min(dot(V, nr), -uFoot.x);
@@ -478,7 +478,7 @@ ${PATCH_LEVELS}
     col = (cloud.rgb * uGain * uWeight * pa + col * cover * (1.0 - pa)) / max(total, 1e-5);
     cover = total;
   }
-  outColor = diagOut(vec4(col, cover), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), length(vView));
+  outColor = diagOut(vec4(col, cover), texels, 1.0, vec3(0.9, 0.6, 0.3), vec2(fl.x * uFlowT * 40.0 + sign(band) * steady * 0.3, fl.y * uSwirlT * 4.0), rt < 1.0 ? along - sqrt(max(1.0 - rt * rt, 0.0)) : length(vView));
   if (gone) discard;
 }`
 

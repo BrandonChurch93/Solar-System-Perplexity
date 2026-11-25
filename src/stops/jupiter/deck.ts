@@ -258,7 +258,7 @@ void main() {
   vec3 tint = LAYER == 1 ? mix(vec3(0.45, 0.8, 0.4), vec3(0.2, 0.75, 0.75), plate) : vec3(0.9, 0.8, 0.3);
   tint = mix(tint, vec3(1.0, 0.0, 0.0), LAYER == 1 ? step(0.5, tier.g) * step(plate, 0.5) : 0.0);
 #endif
-  outColor = diagOut(lit, texels, 1.0, tint, shift * 0.05, length(vView));
+  outColor = diagOut(lit, texels, 1.0, tint, shift * 0.05, length(vView) / uRadius);
   if (gone) discard;
 }`
 

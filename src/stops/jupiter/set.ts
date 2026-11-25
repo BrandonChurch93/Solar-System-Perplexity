@@ -6,10 +6,11 @@ import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches } from './assets'
 import { CloudDeck } from './clouds'
+import deck from './deck.json'
 import { Globe } from './globe'
 import { Io } from './io'
 import * as look from './look'
-import { bufferFrame } from '../../core/frame'
+import { bufferFrame, frameUniform } from '../../core/frame'
 import place from './place.json'
 import { chartAxes, chartEye, closeHeight, eddyTurn, flashNow, hazeDrift, low, plan, ringTurn, stormTurn } from './plan'
 import proof from './proof.json'
@@ -130,11 +131,11 @@ export const createSet: SetFactory = async (ctx) => {
       const seams = du.uSeam!.value as THREE.Vector3[]
       for (let i = 0; i < seams.length; i++) seams[i]!.z = ringTurn(i, state.time - terrainMid)
       const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
-      const deckShare = !inOrbit ? 1 : own ? low(height, scene.deck) : 0
+      const footLeast = (height * place.solved.radiusUnits - deck.look.shell[1]!) * 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height * frameUniform.value
       const limbShare = !inOrbit ? 1 : own ? low(height, scene.limb) : 0
-      ground.layer.visible = inOrbit && deckShare > 0
+      ground.layer.visible = inOrbit && own && ((deck.look.shell[1]! - deck.look.shell[0]!) / Math.max(footLeast, 1e-9) > scene.depth[0]! || limbShare > 0)
       du.uOwn!.value = inOrbit ? 1 : 0
-      ;(du.uLayer!.value as THREE.Vector3).set(deckShare, limbShare, inOrbit ? 1 : 0)
+      ;(du.uLayer!.value as THREE.Vector3).set(1, limbShare, inOrbit ? 1 : 0)
       if (!inOrbit || own) {
         ground.update(gain * (inOrbit ? state.weight : 1), shot.post.vignette, view)
         if (!inOrbit) (du.uSunChart!.value as THREE.Vector3).fromArray(place.solved.sun)
@@ -158,7 +159,6 @@ export const createSet: SetFactory = async (ctx) => {
       const elapsed = state.time - plan.holdMid
       const local = flowTime(state.time)
       const gu = globe.material.uniforms
-      ;(gu.uPlace!.value as THREE.Vector4).w = own ? low(height, scene.ground) : 0
       gu.uFlowT!.value = THREE.MathUtils.degToRad(look.flow.bandDegPerSecond) * local
       gu.uSwirlT!.value = THREE.MathUtils.degToRad(look.flow.swirlDegPerSecond) * local
       gu.uWispT!.value = look.flow.wispTilesPerSecond * elapsed
