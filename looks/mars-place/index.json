@@ -1,9 +1,65 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T06:01:50.456Z",
+ "pushed": "2026-11-25T06:19:13.513Z",
  "head": "e53c76b7c4665de823eedefc42e53adc866351e7",
- "note": "e53c76b7: takes in painted light toned by distance, cap light off; rise pairs, both sets at 2464 (web bad), bad ones in",
+ "note": "06:20 h3 (repainted takes in the plates) and side feather by sight, pairs; new thin orange lines at the foot at 2468 and 2472, dark blob at 2698, glow still there at 2448",
  "looks": [
+  {
+   "time": "2026-11-25T06:19:12.911Z",
+   "file": "20261125061912911-note-ph-2448.jpg",
+   "source": "out/work/place/eng58/ph-2448.jpg",
+   "kind": "note",
+   "label": "ph-2448: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:19:12.347Z",
+   "file": "20261125061912347-note-hj-2462.jpg",
+   "source": "out/work/place/eng58/hj-2462.jpg",
+   "kind": "note",
+   "label": "hj-2462: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:19:11.781Z",
+   "file": "20261125061911781-note-hj-2456.jpg",
+   "source": "out/work/place/eng58/hj-2456.jpg",
+   "kind": "note",
+   "label": "hj-2456: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:19:11.216Z",
+   "file": "20261125061911216-note-pj-2698.jpg",
+   "source": "out/work/place/eng58/pj-2698.jpg",
+   "kind": "note",
+   "label": "pj-2698: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:19:10.629Z",
+   "file": "20261125061910629-note-pj-2692.jpg",
+   "source": "out/work/place/eng58/pj-2692.jpg",
+   "kind": "note",
+   "label": "pj-2692: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:19:10.067Z",
+   "file": "20261125061910067-note-pj-2472.jpg",
+   "source": "out/work/place/eng58/pj-2472.jpg",
+   "kind": "note",
+   "label": "pj-2472: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T06:19:09.183Z",
+   "file": "20261125061909183-note-pj-2468.jpg",
+   "source": "out/work/place/eng58/pj-2468.jpg",
+   "kind": "note",
+   "label": "pj-2468: left the state before, right h3 takes with the side feather by sight (not committed)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T05:59:43.321Z",
    "file": "20261125055943321-compare-mars-rise-sides.jpg",
@@ -14,65 +70,6 @@
    "segment": "mars.rise",
    "frame": 2681,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T05:58:23.278Z",
-   "file": "20261125055823278-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T05:58:01.796Z",
-   "file": "20261125055801796-note-t-2676-2680.jpg",
-   "source": "out/work/place/eng58/t-2676-2680.jpg",
-   "kind": "note",
-   "label": "2676 and 2680 halved: surface view, clean",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:58:00.961Z",
-   "file": "20261125055800961-note-t-2704-2708.jpg",
-   "source": "out/work/place/eng58/t-2704-2708.jpg",
-   "kind": "note",
-   "label": "rise 2704 and 2708 halved: sheet with a crack, glow at 2704",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:58:00.071Z",
-   "file": "20261125055800071-note-n-2700-a.jpg",
-   "source": "out/work/place/eng58/n-2700-a.jpg",
-   "kind": "note",
-   "label": "rise 2700 left half native: red glow top right, strokes, dark piece",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:57:59.162Z",
-   "file": "20261125055759162-note-n-2692-a.jpg",
-   "source": "out/work/place/eng58/n-2692-a.jpg",
-   "kind": "note",
-   "label": "rise 2692 left half native: strokes west of the picture (bad)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:57:58.293Z",
-   "file": "20261125055758293-note-n-2696-b.jpg",
-   "source": "out/work/place/eng58/n-2696-b.jpg",
-   "kind": "note",
-   "label": "rise 2696 right half native: picture as dark piece with straight side in orange country (bad)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:57:57.556Z",
-   "file": "20261125055757556-note-n-2688-b.jpg",
-   "source": "out/work/place/eng58/n-2688-b.jpg",
-   "kind": "note",
-   "label": "rise 2688 right half native: east line, soft block, stepped stripes, wedge top right (bad)",
-   "stop": "mars"
   }
  ]
 }
