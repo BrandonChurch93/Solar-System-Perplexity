@@ -7,6 +7,7 @@ registered on the part both hold (ECC, affine), matched in colour on that part, 
 The result, out/work/venus/place/t/more-<frame>-<name>.png, is what tlay.py round lays into the plates (atT.round.more).
 
 python3 assets-src/venus/place/more.py KIND NAME TAKE    TAKE: the take scaled to the size of the survey picture
+python3 assets-src/venus/place/more.py input KIND NAME   writes the picture the image tool is given, out/work/venus/place/more/<name>-<kind>-in.jpg
 """
 import sys
 
@@ -58,5 +59,39 @@ def main(kind, name, take):
           'take against the kept part, mean of 255', round(float(diff.mean()), 2), 'share of the picture that is new', round(float(1 - share.mean()), 4))
 
 
+def body(cam, w, h):
+    """Where a survey camera sees the cloud tops of the globe (radius 1): 1 on the body, 0 in the sky."""
+    k = np.tan(np.radians(cam['vfovDeg']) / 2)
+    u = ((np.arange(w, dtype=np.float64) + 0.5) - w / 2) / (h / 2) * k
+    v = -((np.arange(h, dtype=np.float64) + 0.5) - h / 2) / (h / 2) * k
+    x, y, z, p = (np.array(cam[n], np.float64) for n in ('x', 'y', 'z', 'position'))
+    d = u[None, :, None] * x + v[:, None, None] * y - z
+    d /= np.linalg.norm(d, axis=2, keepdims=True)
+    b = d @ p
+    return ((b < 0) & (b * b - (p @ p - 1) >= 0)).astype(np.uint8)
+
+
+def give(kind, name):
+    """The picture the image tool is given: the close side through the survey camera at 2560 by 1440, flat magenta where that
+    camera sees the body and the close side has no ground. The sky and the limb stay as they are drawn."""
+    f = tlay.camera(kind)['frame']
+    close = cv2.imread(str(T / f'close-{f}-{name}.png'), cv2.IMREAD_COLOR)
+    layers = cv2.imread(str(T / f'layers-{f}-{name}.png'), cv2.IMREAD_COLOR).max(2)
+    h, w = close.shape[:2]
+    ground = (layers > 25).astype(np.uint8)
+    on = body(tlay.surveys(kind)[name], w, h)
+    empty = (on & (1 - ground)).astype(np.uint8)
+    out = close.copy()
+    out[empty.astype(bool)] = (255, 0, 255)
+    folder = T.parent / 'more'
+    folder.mkdir(exist_ok=True)
+    cv2.imwrite(str(folder / f'{name}-{kind}-in.jpg'), cv2.resize(out, (2560, 1440), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 95])
+    cv2.imwrite(str(folder / f'{name}-{kind}-ground.png'), ground * 255)
+    print(kind, name, 'share of the picture on the body', round(float(on.mean()), 4), 'with ground', round(float(ground.mean()), 4), 'magenta', round(float(empty.mean()), 4))
+
+
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2], sys.argv[3])
+    if sys.argv[1] == 'input':
+        give(sys.argv[2], sys.argv[3])
+    else:
+        main(sys.argv[1], sys.argv[2], sys.argv[3])
