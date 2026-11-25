@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T12:51:43.264Z",
- "head": "553b5a77ea5878ad0b5e887cf80ffc5c37b8d90a",
- "note": "thin law take t1 (uncommitted, on 553b5a77): strands under 1 px laid as one bell; hold 360 arch is a glow, no wire; match 11.9826 (a10 11.9828, before 11.9772); rise pattern 0.388 not cured, cause being read. Frame 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "pushed": "2026-11-25T13:30:08.991Z",
+ "head": "ae80c78dcbdee899442a43ad4169651934a6a6ec",
+ "note": "joined state j1 (lab ground, lab far level laid at every distance, gas field): final 360 reads 13.4045 against 11.9772 before, the level is a dark square on the hold, not kept in that form; rise 215 220 225 one ground, the patch edge shows at 225; frame 60: dark 0.189 body 0.566 pale 0.102 white 0.064 | half width 4.9 px, 2000 shapes, fine 0.0590, mean 0.385 | distance 0.064",
  "looks": [
+  {
+   "time": "2026-11-25T13:29:38.685Z",
+   "file": "20261125132938685-note-g1-six.jpg",
+   "source": "../../../../tmp/v/g1-six.jpg",
+   "kind": "note",
+   "label": "joined state j1: g1-six.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:29:38.081Z",
+   "file": "20261125132938081-note-l3-far.jpg",
+   "source": "../../../../tmp/v/l3-far.png",
+   "kind": "note",
+   "label": "joined state j1: l3-far.png",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:29:37.516Z",
+   "file": "20261125132937516-note-j1-90.jpg",
+   "source": "../../../../tmp/v/j1-90.jpg",
+   "kind": "note",
+   "label": "joined state j1: j1-90.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:29:36.948Z",
+   "file": "20261125132936948-note-j1-rise.jpg",
+   "source": "../../../../tmp/v/j1-rise.jpg",
+   "kind": "note",
+   "label": "joined state j1: j1-rise.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:29:36.183Z",
+   "file": "20261125132936183-note-j1-360.jpg",
+   "source": "../../../../tmp/v/j1-360.jpg",
+   "kind": "note",
+   "label": "joined state j1: j1-360.jpg",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T12:51:42.580Z",
    "file": "20261125125142580-note-t1-90.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/t1-360.jpg",
    "kind": "note",
    "label": "t1-360 left a10 right thin law",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:34:19.388Z",
-   "file": "20261125123419388-note-w1-2.jpg",
-   "source": "../../../../tmp/v/w1-2.jpg",
-   "kind": "note",
-   "label": "w1-2 the way up of 553b5a77, every 5th frame 196 to 261, preview draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:34:18.832Z",
-   "file": "20261125123418832-note-w1-1.jpg",
-   "source": "../../../../tmp/v/w1-1.jpg",
-   "kind": "note",
-   "label": "w1-1 the way up of 553b5a77, every 5th frame 196 to 261, preview draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:34:18.243Z",
-   "file": "20261125123418243-note-w1-0.jpg",
-   "source": "../../../../tmp/v/w1-0.jpg",
-   "kind": "note",
-   "label": "w1-0 the way up of 553b5a77, every 5th frame 196 to 261, preview draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:14:13.626Z",
-   "file": "20261125121413626-note-a10-chain-t.jpg",
-   "source": "../../../../tmp/v/a10-chain-t.jpg",
-   "kind": "note",
-   "label": "2f60135f, 174 + 1/2 to 182 + 1/2: nine frames, one arch",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:14:13.046Z",
-   "file": "20261125121413046-note-a10-chain-r-place.jpg",
-   "source": "../../../../tmp/v/a10-chain-r-place.jpg",
-   "kind": "note",
-   "label": "2f60135f, rise 218 + 1/2 to 226 + 1/2, the place 2 times: the arch stands on the globe and shrinks with it",
    "stop": "sun"
   }
  ]
