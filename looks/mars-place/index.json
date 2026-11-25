@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T03:04:14.973Z",
+ "pushed": "2026-11-25T03:25:46.715Z",
  "head": "75564ca06092159f628bb32683165712183ac36f",
- "note": "candidate one ground at draft, bad ones too: east slab 2464 to 2474 and 2684 to 2689, red far plateau, hard east side of the relief at 2448 to 2459",
+ "note": "first state r: pairs main beside mine at native size, 2440 to 2477 and 2684 to 2689, bad ones too (east slab, red glow, hard border of the picture at 2456)",
  "looks": [
   {
-   "time": "2026-11-25T03:04:14.255Z",
-   "file": "20261125030414255-note-fit-before.jpg",
-   "source": "out/work/place/see/fit-before.jpg",
+   "time": "2026-11-25T03:25:46.140Z",
+   "file": "20261125032546140-note-litcheck.jpg",
+   "source": "out/work/place/see/litcheck.jpg",
    "kind": "note",
-   "label": "cap heights (left), picture heights (middle), difference to 300 m (right) at 3.8, 1.6, 0.7, 0.3 degrees",
+   "label": "plates times the cap's light of the fitted heights: where the red glow comes from",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:04:13.602Z",
-   "file": "20261125030413602-note-g1-plates.jpg",
-   "source": "out/work/place/see/g1-plates.jpg",
+   "time": "2026-11-25T03:25:45.619Z",
+   "file": "20261125032545619-note-fit-look.jpg",
+   "source": "out/work/place/see/fit-look.jpg",
    "kind": "note",
-   "label": "the cap plates as they stand: the takes alone",
+   "label": "fitted heights 3.8, 1.6, 0.7, 0.3 degrees (blue: made ground lowered for the lenses at T)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:04:12.904Z",
-   "file": "20261125030412904-note-gap-2456-where.jpg",
-   "source": "out/work/place/see/gap-2456-where.jpg",
+   "time": "2026-11-25T03:25:45.043Z",
+   "file": "20261125032545043-note-pair-q-2782.jpg",
+   "source": "out/work/place/see/pair-q-2782.jpg",
    "kind": "note",
-   "label": "2456: where cap and relief stood over 1 px apart before the seen term",
+   "label": "2782 main beside mine (rise end as of 88d4f309), native",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:04:12.237Z",
-   "file": "20261125030412237-note-gap-2470-where.jpg",
-   "source": "out/work/place/see/gap-2470-where.jpg",
+   "time": "2026-11-25T03:25:44.466Z",
+   "file": "20261125032544466-note-n-r2686-east.jpg",
+   "source": "out/work/place/see/n-r2686-east.png",
    "kind": "note",
-   "label": "2470: where cap and relief stand over 1 px apart (green 1 to 4, yellow 4 to 16, cyan over 16 px)",
+   "label": "first state r beside main, native crop 2686-east",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:04:11.503Z",
-   "file": "20261125030411503-note-q2476-77-east.jpg",
-   "source": "out/work/place/see/q2476-77-east.png",
+   "time": "2026-11-25T03:25:43.882Z",
+   "file": "20261125032543882-note-n-r2470-east.jpg",
+   "source": "out/work/place/see/n-r2470-east.png",
    "kind": "note",
-   "label": "2476 and 2477 native, east side at the change of view",
+   "label": "first state r beside main, native crop 2470-east",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:04:10.784Z",
-   "file": "20261125030410784-note-q2464-mid.jpg",
-   "source": "out/work/place/see/q2464-mid.png",
+   "time": "2026-11-25T03:25:43.301Z",
+   "file": "20261125032543301-note-n-r2464-mid.jpg",
+   "source": "out/work/place/see/n-r2464-mid.png",
    "kind": "note",
-   "label": "2464 native, middle",
+   "label": "first state r beside main, native crop 2464-mid",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:04:10.045Z",
-   "file": "20261125030410045-note-q2688-east.jpg",
-   "source": "out/work/place/see/q2688-east.png",
+   "time": "2026-11-25T03:25:42.715Z",
+   "file": "20261125032542715-note-n-r2456-mid.jpg",
+   "source": "out/work/place/see/n-r2456-mid.png",
    "kind": "note",
-   "label": "2688 native, east: slab in the rise",
+   "label": "first state r beside main, native crop 2456-mid",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:04:09.278Z",
-   "file": "20261125030409278-note-q2474-east.jpg",
-   "source": "out/work/place/see/q2474-east.png",
+   "time": "2026-11-25T03:25:42.145Z",
+   "file": "20261125032542145-note-n-r2459-wedge.jpg",
+   "source": "out/work/place/see/n-r2459-wedge.png",
    "kind": "note",
-   "label": "2474 native, east",
+   "label": "first state r beside main, native crop 2459-wedge",
    "stop": "mars"
   }
  ]
