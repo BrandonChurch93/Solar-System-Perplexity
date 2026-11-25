@@ -37,13 +37,7 @@ print('== under, the plane about the spot:', which)
 run([arg(l['file'],*lev(l)) for l in under], W+'under-%s%s.png'%(which,tag))
 print('== place, the plane about the centre:', which)
 run([arg(l['file'],*lev(l)) for l in levels], W+'place-%s%s.png'%(which,tag))
-low=P['low']
-if 'file' in low:
-    lw=dict(low['window']); lw['widthDeg']=levels[0]['widthDeg']
-    print('== plate against the low look (place-12 -> place-12-low):', which)
-    run([arg(levels[0]['file'],*lev(levels[0])), arg(low['file'],*lev(lw))], W+'low-%s%s.png'%(which,tag))
-else:
-    print('== no low look: the plate holds the lay back itself:', which)
+print('== no low look: the plate is the one ground, the lay back is a work file of levels.py:', which)
 def warp(l, out):
     from PIL import Image
     Image.MAX_IMAGE_PIXELS=None
