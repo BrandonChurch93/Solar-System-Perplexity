@@ -1,61 +1,61 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T22:06:47.041Z",
+ "pushed": "2026-11-25T22:33:38.762Z",
  "head": "d040d374f3840db3a9bd77c83c6484c23feaaa24",
- "note": "cushion trials g and h after MAIL 1311: not there yet",
+ "note": "cushion trials h4 to h11: soft blobs, bell domes, seam of the place",
  "looks": [
   {
-   "time": "2026-11-25T22:06:46.418Z",
-   "file": "20261125220646418-note-appr-x3.jpg",
-   "source": "../v/appr-x3.jpg",
+   "time": "2026-11-25T22:33:38.119Z",
+   "file": "20261125223338119-note-strip-h11.jpg",
+   "source": "../v/strip-h11.jpg",
    "kind": "note",
-   "label": "appr-x3 (trial, not named)",
+   "label": "strip-h11 (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T22:06:45.794Z",
-   "file": "20261125220645794-note-limb-f3.jpg",
-   "source": "../v/limb-f3.jpg",
+   "time": "2026-11-25T22:33:37.513Z",
+   "file": "20261125223337513-note-fine-h10.jpg",
+   "source": "../v/fine-h10.jpg",
    "kind": "note",
-   "label": "limb-f3 (trial, not named)",
+   "label": "fine-h10 (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T22:06:45.227Z",
-   "file": "20261125220645227-note-levels-h3.jpg",
-   "source": "../v/levels-h3.jpg",
+   "time": "2026-11-25T22:33:36.884Z",
+   "file": "20261125223336884-note-levels-h10.jpg",
+   "source": "../v/levels-h10.jpg",
    "kind": "note",
-   "label": "levels-h3 (trial, not named)",
+   "label": "levels-h10 (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T22:06:44.609Z",
-   "file": "20261125220644609-note-strip-h3.jpg",
-   "source": "../v/strip-h3.jpg",
+   "time": "2026-11-25T22:33:36.277Z",
+   "file": "20261125223336277-note-strip-h10.jpg",
+   "source": "../v/strip-h10.jpg",
    "kind": "note",
-   "label": "strip-h3 (trial, not named)",
+   "label": "strip-h10 (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T22:06:44.038Z",
-   "file": "20261125220644038-note-strip-h2.jpg",
-   "source": "../v/strip-h2.jpg",
+   "time": "2026-11-25T22:33:35.716Z",
+   "file": "20261125223335716-note-strip-h7.jpg",
+   "source": "../v/strip-h7.jpg",
    "kind": "note",
-   "label": "strip-h2 (trial, not named)",
+   "label": "strip-h7 (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T22:06:43.474Z",
-   "file": "20261125220643474-note-strip-g3.jpg",
-   "source": "../v/strip-g3.jpg",
+   "time": "2026-11-25T22:33:35.130Z",
+   "file": "20261125223335130-note-strip-h6.jpg",
+   "source": "../v/strip-h6.jpg",
    "kind": "note",
-   "label": "strip-g3 (trial, not named)",
+   "label": "strip-h6 (trial, not named)",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T22:05:31.194Z",
-   "file": "20261125220531194-frame-lab-90-h3.jpg",
-   "source": "out/work/sun/lab/lab-90-h3.png",
+   "time": "2026-11-25T22:33:04.624Z",
+   "file": "20261125223304624-frame-lab-90-h11.jpg",
+   "source": "out/work/sun/lab/lab-90-h11.png",
    "kind": "frame",
    "label": "sun.terrain frame 90, draft tier",
    "stop": "sun",
@@ -67,11 +67,11 @@
    "engine": "822cc1bfb7014138"
   },
   {
-   "time": "2026-11-25T21:33:10.921Z",
-   "file": "20261125213310921-note-motion-b7.jpg",
-   "source": "../v/motion-b7.jpg",
+   "time": "2026-11-25T22:06:46.418Z",
+   "file": "20261125220646418-note-appr-x3.jpg",
+   "source": "../v/appr-x3.jpg",
    "kind": "note",
-   "label": "b7 motion-b7 (trial, not named)",
+   "label": "appr-x3 (trial, not named)",
    "stop": "sun"
   }
  ]
