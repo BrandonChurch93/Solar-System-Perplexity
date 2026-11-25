@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T13:06:08.553Z",
+ "pushed": "2026-11-25T13:26:41.169Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "sawtooth at Mars 2668 read four ways (mesh, filter, diagonal); both law commits pushed; air law chunk in work",
+ "note": "air law: chunk and twins written, 17 tests green; the relief's use of it written, its tests next; sawtooth sheets of 13:10",
  "looks": [
+  {
+   "time": "2026-11-25T13:10:12.241Z",
+   "file": "20261125131012241-note-saw-depth-8x.jpg",
+   "source": "../../../../tmp/law/sheets/saw-depth-8x.png",
+   "kind": "note",
+   "label": "Mars 2668 draft, distance view at 8 to 1, x 650..740 y 545..690: the mesh's cells show as blocks of 4.5 to 5 px, the step between the near crest and the ground behind runs across them"
+  },
+  {
+   "time": "2026-11-25T13:10:11.600Z",
+   "file": "20261125131011600-note-saw-diag-4way.jpg",
+   "source": "../../../../tmp/law/sheets/saw-diag-4way.png",
+   "kind": "note",
+   "label": "Mars 2668 draft, layer view (mesh 420, mesh 840, other diagonal) and distance view at 4 to 1: the layers' border is the same in all three, the teeth lie inside one layer"
+  },
   {
    "time": "2026-11-25T13:05:56.404Z",
    "file": "20261125130556404-note-saw-4way-8x.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/law/sheets/z-2668-3way-3x.png",
    "kind": "note",
    "label": "Mars 2668 at review, 3 times, x 640..850 y 540..760: a sawtooth on the lit crest and on the small mesa, the same in commit 4, the naming and the law. Not from the shutter. Not there at 2635"
-  },
-  {
-   "time": "2026-11-25T12:19:42.011Z",
-   "file": "20261125121942011-note-hold-2668-before-after-1x.jpg",
-   "source": "../../../../tmp/law/sheets/hold-2668-before-after-1x.png",
-   "kind": "note",
-   "label": "Mars 2668 at review, 1 to 1, x 420..1060 y 440..800: before the naming (commit 4, 8 samples) and after (bdefa472, 14 samples), whole shutter both. Mean gradient 10.63 to 11.18; G17 median 1.0246 to 1.0565"
-  },
-  {
-   "time": "2026-11-25T12:04:03.210Z",
-   "file": "20261125120403210-note-hold-2635-1x.jpg",
-   "source": "../../../../tmp/law/sheets/hold-2635-1x.png",
-   "kind": "note",
-   "label": "Mars 2635 (the view's fastest frame, 8.34 px) at review, 1 to 1, x 420..1060 y 440..800: box against the law (share 0.103). Mean difference 0.21 of 255"
   }
  ]
 }
