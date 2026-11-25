@@ -1,71 +1,77 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T07:08:42.118Z",
- "head": "4bea7af9e9c1c225b260e7dffe8f896c8a0720f4",
- "note": "h5: gamut after the forms takes the red glow patch out (2440, 2448 pairs h4 beside h5 at native size); 2456 and 2688 whole: block gone, blob and strokes stay",
+ "pushed": "2026-11-25T07:24:47.833Z",
+ "head": "00c41dcdb30195a4a8fba5dfedebef6b505e6e84",
+ "note": "h5 named: pairs h4 beside h5 native 2700, 2708 (hot rim line, bad); full beside web 2464 (web sheet, bad); whole 2464 with 2466, 2696 with 2698 (blob, bad)",
  "looks": [
+  {
+   "time": "2026-11-25T07:20:09.068Z",
+   "file": "20261125072009068-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T07:19:21.214Z",
+   "file": "20261125071921214-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T07:18:22.009Z",
+   "file": "20261125071822009-note-o-2696.jpg",
+   "source": "out/work/place/eng60/o-2696.jpg",
+   "kind": "note",
+   "label": "h5 draft rise 2696 and 2698 whole at half size: the picture as a dark round blob at the bend (bad)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T07:18:21.133Z",
+   "file": "20261125071821133-note-o-2464.jpg",
+   "source": "out/work/place/eng60/o-2464.jpg",
+   "kind": "note",
+   "label": "h5 draft 2464 and 2466 whole at half size: no slab; east wall right with drawn out faces (bad)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T07:18:20.450Z",
+   "file": "20261125071820450-note-qr-2708.jpg",
+   "source": "out/work/place/eng60/qr-2708.jpg",
+   "kind": "note",
+   "label": "rise 2708 draft native crop at x 432 y 242: h4 (left) beside h5 (right): the hot rim line along the canyon, thinner and still there (bad, glow 0.0008 against 0.0004 on 7cebce4c)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T07:18:19.540Z",
+   "file": "20261125071819540-note-fw-2464.jpg",
+   "source": "out/work/place/eng60/fw-2464.jpg",
+   "kind": "note",
+   "label": "2464 draft native crop x 60 to 760, y 440 to 1000: full set (left) beside web set (right) on h5: the web draws one more sheet of the picture with the valley's haze on it, hard outline (bad, d253 b)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T07:10:34.454Z",
+   "file": "20261125071034454-note-qr-2700.jpg",
+   "source": "out/work/place/eng60/qr-2700.jpg",
+   "kind": "note",
+   "label": "rise 2700 draft native crop 700 by 700 at x 570 y 0: h4 (left) beside h5 (right), red glow patch gone; dark round blob of the picture at the foot stays (bad)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T07:08:41.003Z",
    "file": "20261125070841003-note-o-2688.jpg",
    "source": "out/work/place/eng60/o-2688.jpg",
    "kind": "note",
    "label": "h5 draft rise 2688 and 2690, whole frames at half size: no slab; the east wall carries drawn out strokes with orange rims (bad)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:08:39.975Z",
-   "file": "20261125070839975-note-o-2456.jpg",
-   "source": "out/work/place/eng60/o-2456.jpg",
-   "kind": "note",
-   "label": "h5 draft 2456 and 2458, whole frames at half size: no block with straight sides; the picture stands as a dark blob with an upright wall edge right of it (bad)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:55:58.384Z",
-   "file": "20261125065558384-note-qr-2440.jpg",
-   "source": "out/work/place/eng60/qr-2440.jpg",
-   "kind": "note",
-   "label": "2440 draft native crop at x 436 y 0: h4 (left) beside h5 (right), red glow patch",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:55:57.323Z",
-   "file": "20261125065557323-note-qr-2448.jpg",
-   "source": "out/work/place/eng60/qr-2448.jpg",
-   "kind": "note",
-   "label": "2448 draft native crop 700 by 700 at x 449 y 0: h4 (left) beside h5 with the gamut after the forms (right), the red glow patch north of the canyon; the dark blob lower right is the picture, still there",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:41:07.999Z",
-   "file": "20261125064107999-note-pq-2694-a.jpg",
-   "source": "out/work/place/eng59/pq-2694-a.jpg",
-   "kind": "note",
-   "label": "e53c76b7 left, h4 with side feather right, native, 2694 left half: soft smeared ground",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:41:07.184Z",
-   "file": "20261125064107184-note-pq-2692-b.jpg",
-   "source": "out/work/place/eng59/pq-2692-b.jpg",
-   "kind": "note",
-   "label": "e53c76b7 left, h4 with side feather right, native, 2692 right half: dark wedge gone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:41:06.316Z",
-   "file": "20261125064106316-note-pq-2692-a.jpg",
-   "source": "out/work/place/eng59/pq-2692-a.jpg",
-   "kind": "note",
-   "label": "e53c76b7 left, h4 with side feather right, native, 2692 left half",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T06:41:05.465Z",
-   "file": "20261125064105465-note-pq-2690-b.jpg",
-   "source": "out/work/place/eng59/pq-2690-b.jpg",
-   "kind": "note",
-   "label": "e53c76b7 left, h4 with side feather right, native, 2690 right half: dark block gone, strokes on the walls",
    "stop": "mars"
   }
  ]
