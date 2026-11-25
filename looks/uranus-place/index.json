@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T20:11:37.023Z",
+ "pushed": "2026-11-25T20:23:15.115Z",
  "head": "6a0e74bb2f3472ec8ae201fea1922bc1dab673ba",
- "note": "B1 pushed as 6a0e74bb (G5 G17 pass, 4290 match 3.224); finals and the tool rows running",
+ "note": "B1 named candidate 6a0e74bb: final 4290 beside main, final 4186, dive handover crops; main final 4186 rendering, tool rows next",
  "looks": [
+  {
+   "time": "2026-11-25T20:23:13.675Z",
+   "file": "20261125202313675-note-b1-final-4186-half.jpg",
+   "source": "../../../../tmp/n59/b1-final-4186-half.jpg",
+   "kind": "note",
+   "label": "B1 6a0e74bb final 4186, half size",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T20:23:12.703Z",
+   "file": "20261125202312703-note-b1-dive-hand.jpg",
+   "source": "../../../../tmp/n59/b1-dive-hand.jpg",
+   "kind": "note",
+   "label": "B1 draft dive handover 4183 to 4188, crop",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T20:23:11.574Z",
+   "file": "20261125202311574-note-name-4290.jpg",
+   "source": "../../../../tmp/n59/name-4290.jpg",
+   "kind": "note",
+   "label": "B1 6a0e74bb final 4290 beside main and the name, horizon crops",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T20:11:35.839Z",
    "file": "20261125201135839-note-p-A1-8302.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n57/pair-pin-b.jpg",
    "kind": "note",
    "label": "trial, not committed: 4186, 4390, 4400, 4416, left 9c8a46df, right the place's table read from the handover's eye",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T16:24:25.532Z",
-   "file": "20261125162425532-note-pair-pin-a.jpg",
-   "source": "../../../../tmp/n57/pair-pin-a.jpg",
-   "kind": "note",
-   "label": "trial, not committed: dive 4152 to 4176, left e14bb1e4, right the place's table read from the handover's eye",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T15:56:13.055Z",
-   "file": "20261125155613055-note-pair-d1-b.jpg",
-   "source": "../../../../tmp/n57/pair-d1-b.jpg",
-   "kind": "note",
-   "label": "4379, 4390, 4400 at draft: as named e14bb1e4 with main merged (left) against the step for the 17:00 name, white tops through the air (right)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T15:48:56.377Z",
-   "file": "20261125154856377-note-pair-mg-b.jpg",
-   "source": "../../../../tmp/n57/pair-mg-b.jpg",
-   "kind": "note",
-   "label": "4379, 4390, 4400 at draft: the merged tree as named (left) against the trial with the table laid on the ground (right): milky flat teal, so the trial is not committed",
    "stop": "uranus"
   }
  ]
