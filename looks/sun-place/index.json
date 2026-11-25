@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T12:14:14.210Z",
- "head": "b93d2aa86e81f8dd413d1f16df2d032312192429",
- "note": "2f60135f arcade as bodies (merge b93d2aa8 on main a27b5e9d, chain running): final 360 pair, rise and terrain chains. Frame 60: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310; distance 0.081",
+ "pushed": "2026-11-25T12:34:19.978Z",
+ "head": "553b5a77ea5878ad0b5e887cf80ffc5c37b8d90a",
+ "note": "553b5a77 named 12:26; the way up as it stands, 196 to 261 by fives (corona in by height 221 to 231, sky changes 236 to 256: owed). frame 60 sun-near: dark 0.249 body 0.609 pale 0.073 white 0.016; half width 8.1 px, 542 shapes; fine 0.0287 mean 0.310 distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-25T12:34:19.388Z",
+   "file": "20261125123419388-note-w1-2.jpg",
+   "source": "../../../../tmp/v/w1-2.jpg",
+   "kind": "note",
+   "label": "w1-2 the way up of 553b5a77, every 5th frame 196 to 261, preview draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:34:18.832Z",
+   "file": "20261125123418832-note-w1-1.jpg",
+   "source": "../../../../tmp/v/w1-1.jpg",
+   "kind": "note",
+   "label": "w1-1 the way up of 553b5a77, every 5th frame 196 to 261, preview draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:34:18.243Z",
+   "file": "20261125123418243-note-w1-0.jpg",
+   "source": "../../../../tmp/v/w1-0.jpg",
+   "kind": "note",
+   "label": "w1-0 the way up of 553b5a77, every 5th frame 196 to 261, preview draft",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T12:14:13.626Z",
    "file": "20261125121413626-note-a10-chain-t.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/a10-seven.jpg",
    "kind": "note",
    "label": "take a10: frames 179, 212, 229, 247, 269, 270, 360 (the arcade stands on the body at every distance)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:05:26.984Z",
-   "file": "20261125120526984-note-a10-six.jpg",
-   "source": "../../../../tmp/v/a10-six.jpg",
-   "kind": "note",
-   "label": "arcade as bodies, take a10: frames 0, 33, 49, 60, 65, 90, then 90 beside the approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T11:40:59.507Z",
-   "file": "20261125114059507-note-a4-90-pair.jpg",
-   "source": "../../../../tmp/v/a4-90-pair.jpg",
-   "kind": "note",
-   "label": "frame 90: approved left, arcade as bodies right (uncommitted)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T11:40:58.922Z",
-   "file": "20261125114058922-note-a4-six.jpg",
-   "source": "../../../../tmp/v/a4-six.jpg",
-   "kind": "note",
-   "label": "arcade as bodies in space, first take, draft frames 0 33 49 65 90 179 (uncommitted)",
    "stop": "sun"
   }
  ]
