@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T03:12:33.436Z",
+ "pushed": "2026-11-25T03:47:26.384Z",
  "head": "aaace72a250018b60fcc6755739ae146e57ed085",
- "note": "third commit aaace72a: rise sheets 4380 to 4403 and 4404 to 4426 first; pop panel 4141 to 4146; fixed angle trial; 4436 pair",
+ "note": "MAIL 880 received; dive 4150 to 4175 of aaace72a before the layer law; this look is 6 minutes late (due 03:42); layer law and term 2 in work, first picture main beside mine to follow",
  "looks": [
+  {
+   "time": "2026-11-25T03:47:25.631Z",
+   "file": "20261125034725631-note-dive-aaace72a-4150-4175.jpg",
+   "source": "../../../../tmp/n48/dive-aaace72a-4150-4175.jpg",
+   "kind": "note",
+   "label": "dive 4150 to 4175 at draft, aaace72a as it stands, before the layer law of MAIL 880 (whole frames, row by row)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T03:10:59.748Z",
    "file": "20261125031059748-note-rise3-b.jpg",
@@ -271,20 +279,6 @@
    "format": "16x9",
    "diag": "texels",
    "job": "g13"
-  },
-  {
-   "time": "2026-11-25T00:28:02.754Z",
-   "file": "20261125002802754-job-frame-04035.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
