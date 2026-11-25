@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T11:00:31.157Z",
+ "pushed": "2026-11-25T11:23:53.222Z",
  "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "way C s9: the place arriving 714 to 720 against the mark; 615 pit against the hero's ring; cause of the warm tint (the old first level's colour law, not the map's); take s12 rendering",
+ "note": "way C: the warm tint at 615 cured by the map's colour law by distance; the first pit measured against the ring crater",
  "looks": [
+  {
+   "time": "2026-11-25T11:23:51.771Z",
+   "file": "20261125112351771-note-pit-zoom-h.jpg",
+   "source": "../../../../tmp/m/pit-zoom-h.png",
+   "kind": "note",
+   "label": "615 at times 20: main's ring crater and way C's first pit (not within 1 px, smaller)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T11:23:50.351Z",
+   "file": "20261125112350351-note-s13-717.jpg",
+   "source": "../../../../tmp/m/s13-717.png",
+   "kind": "note",
+   "label": "717: take s13 (the map's colour in the plates, dropped): the disc grey in golden ground",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T11:23:49.206Z",
+   "file": "20261125112349206-note-h-717.jpg",
+   "source": "../../../../tmp/m/h-717.png",
+   "kind": "note",
+   "label": "717 at 1 to 1: the mark, way C s9, way C with the colour law (as s9)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T11:23:47.763Z",
+   "file": "20261125112347763-note-h-615-zoom.jpg",
+   "source": "../../../../tmp/m/h-615-zoom.png",
+   "kind": "note",
+   "label": "615 at times 7: approved hero, main, way C take s9, way C with the map's colour by distance (the tint gone)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T11:00:30.344Z",
    "file": "20261125110030344-note-map-a-s9.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/arr-s9-a.png",
    "kind": "note",
    "label": "714 and 716 at 1 to 1 round pixel 728, 844: the mark left, way C take s9 right",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T10:34:48.486Z",
-   "file": "20261125103448486-note-ob9-722-where.jpg",
-   "source": "../../../../tmp/m/ob9-722-where.jpg",
-   "kind": "note",
-   "label": "take s9 at 722: where the reader's largest values lie (the limb)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T10:34:47.851Z",
-   "file": "20261125103447851-note-arr-b0d.jpg",
-   "source": "../../../../tmp/m/arr-b0d.png",
-   "kind": "note",
-   "label": "the mark 714 to 720 at 1 to 1 round pixel 728, 844 (MAIL 1033): the place's plate comes over the night ground",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T10:34:47.257Z",
-   "file": "20261125103447257-note-mark-handover2.jpg",
-   "source": "../../../../tmp/m/mark-handover2.jpg",
-   "kind": "note",
-   "label": "the mark 740 to 778: both pits of the place stay in view through the handover",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T10:34:46.427Z",
-   "file": "20261125103446427-note-s11-615-zoom.jpg",
-   "source": "../../../../tmp/m/s11-615-zoom.png",
-   "kind": "note",
-   "label": "615 times 7 round the place: approved hero, main, take s9, take s11 (colour law tried, no gain)",
    "stop": "mercury"
   }
  ]
