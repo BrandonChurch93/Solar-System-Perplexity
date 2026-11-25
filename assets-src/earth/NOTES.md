@@ -5356,3 +5356,13 @@ Control: the state with `plates.haze.share.footDeg` set to [1e-9, 5e-10] in plac
 ### 11:32 to 11:40 UTC: tests on this state
 
 tsc exit 0. vitest 52 files, 561 passed. `tests/globe-cap.test.ts` alone: 24 passed, 40.89 s. The three GL files: 15 passed, 348.31 s. Not run on this state: the rise frames, the handover tool, the tool's smooth lines at rate 2, the step in place, the gate, the review tier, the finals, the frames outside 1680 to 2174.
+
+### 11:40 to 11:44 UTC: commit 9b637af7 pushed, the control looked at 1 to 1
+
+Commit 9b637af7f935a7767b049bce08c6d59dbd15b29e pushed to agent/earth-place; it stands on main b890fee7229d776161ce6de3c756c8d60338c55c (main on the remote is c1305a22 now) and touches only the three folders. Looks pushed 11:24 and 11:41.
+
+Frame 1890, state against control, crop x 420 to 1380, y 220 to 860 at 1 to 1 (`/tmp/gl/k13/c1890-crop.jpg`), mean level of all three channels: sea right of the field (x 1300 to 1700, y 600 to 800) state 28.5, control 50.0; sea below it (x 600 to 1100, y 900 to 1040) state 65.7, control 69.1; the field's box with the glint (x 600 to 1100, y 420 to 760) state 113.2, control 97.9. SEEN: in the control the sea of the field and the sea round it have one tone (the globe's turquoise) and no darker field is left; what stays of the close ground is its own content, the towers with their shadows, the glint streak and the fine grain of the water. The control has faults of its own that are not in the state: red rims on some cloud and one black spot, since the tone is taken off at the clouds' edges too. It is a control and nothing of it is kept.
+
+### 11:46 UTC: STATE mail sent to /root (answer to MAIL 1040, not a NAMED)
+
+Carried: commit 9b637af7 and the main it stands on; 1755 equal to the byte with the two pairs at 2 px for 1; the dive strips 1876 to 1894 and what I saw on them; the reader's lines (largest 0.44 from 1891, level step most 0.45, pop most 1.09; 0.38 on ac5c5c1b); the control and the answer (a tone of the level, the plate place-tone.bin laid on by the path share, not the sea's own law; no cure of mine keeps both 1755 and 2010 inside 5 degrees to the byte); the cover table and the share of bodies on the specks; the conflict inside 5 degrees; the counts of 2010, 1857, 2156 against ba479450; the tests; the three departures; what was not run; the list worst first; the next step (field laid by the map's specks from 5 degrees outward with the hold's ring cover, far band from standing towers, haze by the path to the point hit at its height). Nine pictures attached.
