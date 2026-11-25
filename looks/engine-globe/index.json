@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T03:07:50.119Z",
- "head": "9c5fafc09846682f533eaef0369e223aeb91c836",
- "note": "Cap detail hook (cap.detail, off by default), not yet committed. A plot of two tests on a 96 row test page, not a film frame: the tilt the hook gives equals the forward difference over one pixel; a height that is a function of the cap own height changes the light on the walls only. No film frame with the hook on yet. The 115 draft frames with the hook absent are being rendered.",
+ "pushed": "2026-11-25T04:03:57.773Z",
+ "head": "7b482c078a340454ff8fe1bbb7ce9b842d437e15",
+ "note": "Cull of the cap's patches by the lens, not yet committed. The picture is the same to the byte in 14 of 14 Mars draft frames, so the look is a plot of seconds: 3.4 to 6.8 s less per draft frame where the cap is drawn (2444 to 2459, 2690 to 2705), nothing at 2325, 2427, 2478, 2726, 2782. Less than hoped; the cause is being measured.",
  "looks": [
+  {
+   "time": "2026-11-25T04:03:57.169Z",
+   "file": "20261125040357169-note-cull-seconds.jpg",
+   "source": "../m835/cull-seconds.png",
+   "kind": "note",
+   "label": "cap.cull (patches of the cap sifted by the lens, off by default): seconds of 14 Mars draft frames off and on, all byte equal",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T03:07:32.518Z",
    "file": "20261125030732518-note-detail-hook-test.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "Mars moon carried by its own place and turn: top hold pair 4780 to 4796 (first frame, later frame carried back, difference times 3), bottom dive pair 4800 to 4816 where the shape lands and the moon's light changes",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:42:37.294Z",
-   "file": "20261125004237294-note-earth-rise-range-panel.jpg",
-   "source": "../m812/earth-rise-range-panel.png",
-   "kind": "note",
-   "label": "Earth rise 4230, 4245, 4261 draft: beauty, layers view, range against the unit sphere as it is and with the one line patch of the ground's dim pass",
-   "stop": "earth"
   }
  ]
 }
