@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T06:36:23.699Z",
+ "pushed": "2026-11-25T07:01:39.814Z",
  "head": "d91c0f63dfdec7bcd7700d55196f3b525ab922d4",
- "note": "commit 5 in work, e20 frame 60:  dark (under 0.15) 0.237 | body (0.15 to 0.55) 0.575 | pale (0.65 to 0.85) 0.093 | white (over 0.85) 0.032 colour by band : 0.21 0.07 0.03 | 0.40 0.16 0.06 | 0.53 0.25 0.08 | 0.64 0.35 0.12 | 0.73 0.46 0.17 | 0.80 0.57 0.24 | 0.87 0.69 0.36 | 0.91 0.80 0.52 | 0.94 0.88 0.68 brightest 15 percent: half width 7.0 px, 1082 shapes | fine detail 0.0369 | mean 0.341 ; life estimate 170 to 178 pattern 0.220 (own script, limit 0.45); MAIL 946 read, commit 4b (spot) next",
+ "note": "commit 4b in work. Spot: values of the funnel and strands (config only). Pattern at 174 + 1/2 on my machine (preview, whole film frames, the reader's functions): commit 3 files 0.414, commit 4 0.547, commit 4 code with commit 3 ground values 0.415: the cause is in the values, not the bake. Frame 60 of d91c0f63:  dark (under 0.15) 0.242 | body (0.15 to 0.55) 0.583 | pale (0.65 to 0.85) 0.094 | white (over 0.85) 0.021 colour by band : 0.23 0.08 0.03 | 0.39 0.15 0.06 | 0.53 0.25 0.08 | 0.64 0.35 0.12 | 0.73 0.46 0.17 | 0.80 0.57 0.24 | 0.87 0.69 0.36 | 0.91 0.80 0.52 | 0.94 0.87 0.66 brightest 15 percent: half width 7.7 px, 545 shapes | fine detail 0.0299 | mean 0.331 ",
  "looks": [
+  {
+   "time": "2026-11-25T07:01:39.199Z",
+   "file": "20261125070139199-note-spot90-s3.jpg",
+   "source": "../../../../tmp/v/spot90-s3.jpg",
+   "kind": "note",
+   "label": "commit 4b in work (s3): frame 90 draft at 1 to 1 under the approved: flat wide floor, thin strands, darker grain toward the spot",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:01:38.589Z",
+   "file": "20261125070138589-note-spot90-a.jpg",
+   "source": "../../../../tmp/v/spot90-a.jpg",
+   "kind": "note",
+   "label": "MAIL 946: frame 90 draft at 1 to 1, the approved, the Sun's files of 0988d75a (take b9), commit 4 d91c0f63",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T06:36:23.099Z",
    "file": "20261125063623099-note-e20-far-90.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/e7-zoom.jpg",
    "kind": "note",
    "label": "Commit 5 trial e7, the same frame, a box of 300 by 200 px at 3 times, approved left",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T05:58:53.680Z",
-   "file": "20261125055853680-note-e7-near.jpg",
-   "source": "../../../../tmp/v/e7-near.jpg",
-   "kind": "note",
-   "label": "Commit 5 trial e7 (not committed), frame 60 near ground at 1 to 1, approved left. Domes meet in creases, a root low on the lens side of each cell by its own border, fibres branch outward with a sheen fixed on the ground. Wrong still: reads as dark foil, too brown and too dark, highlights too white, few glints. sun-near 60: dark 0.373 body 0.498 pale 0.061 white 0.034 | half width 7.9 px, 1196 shapes | fine detail 0.0371 | mean 0.273",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T05:42:43.986Z",
-   "file": "20261125054243986-note-e1-near.jpg",
-   "source": "../../../../tmp/v/e1-near.jpg",
-   "kind": "note",
-   "label": "Commit 5 trial e1 (not committed), frame 60 near ground at 1 to 1, approved left. First take of the MAIL 912 build: reads as smooth stones with wide dark lanes, fibres hardly seen, no glints. Wrong; the dome's foot meets the lane upright, that is next. sun-near 60: dark 0.211 body 0.608 pale 0.100 white 0.021 | half width 11.3 px, 246 shapes | fine detail 0.0187 | mean 0.340",
    "stop": "sun"
   }
  ]
