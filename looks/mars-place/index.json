@@ -1,9 +1,55 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T13:41:31.475Z",
+ "pushed": "2026-11-25T14:01:57.241Z",
  "head": "5e92bb49042763ee024e693a75e36df8172de9b8",
- "note": "MAIL 1104: sheet cut at four crests, 2668 crest 5 jumps to 2, rms 2.00 to 0.76; trial, proof running",
+ "note": "trial cut at four crests (not committed, G15 red), tone fall crops",
  "looks": [
+  {
+   "time": "2026-11-25T14:01:56.405Z",
+   "file": "20261125140156405-note-web-2668-crop.jpg",
+   "source": "out/work/place/saw/web-2668-crop.png",
+   "kind": "note",
+   "label": "trial cut, web set, draft 2668 crop at the crest",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T14:01:55.644Z",
+   "file": "20261125140155644-note-tone-c.jpg",
+   "source": "out/work/place/saw/tone-c.png",
+   "kind": "note",
+   "label": "tone fall 2462 to 2464, the same ground at one scale from N1 drafts",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T14:01:54.742Z",
+   "file": "20261125140154742-note-k3-2676-clusters.jpg",
+   "source": "out/work/place/saw/k3-2676-clusters.png",
+   "kind": "note",
+   "label": "trial cut of the sheet at four crests, draft 2676, state left and cut right at the four clusters",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T13:53:12.528Z",
+   "file": "20261125135312528-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T13:52:38.197Z",
+   "file": "20261125135238197-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T13:41:29.457Z",
    "file": "20261125134129457-note-pairA-2668.jpg",
@@ -26,46 +72,6 @@
    "source": "out/work/place/saw/k3-2678-crop.png",
    "kind": "note",
    "label": "cut trial: draft 2678 crop x 480..960 y 440..760 times 3, the frame of largest parallax",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:41:22.952Z",
-   "file": "20261125134122952-note-pairA-2668-crop.jpg",
-   "source": "out/work/place/saw/pairA-2668-crop.png",
-   "kind": "note",
-   "label": "MAIL 1104 cut trial: draft 2668 crop x 560..900 y 500..760 times 3, left state 5e92bb49, right sheet cut at the crests (uncommitted)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:19:16.811Z",
-   "file": "20261125131916811-note-web-2697.jpg",
-   "source": "out/work/place/n1/web-2697.jpg",
-   "kind": "note",
-   "label": "N1 web-2697, named 5e92bb49",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:19:16.224Z",
-   "file": "20261125131916224-note-web-2452.jpg",
-   "source": "out/work/place/n1/web-2452.jpg",
-   "kind": "note",
-   "label": "N1 web-2452, named 5e92bb49",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:19:15.634Z",
-   "file": "20261125131915634-note-pair-2692.jpg",
-   "source": "out/work/place/n1/pair-2692.jpg",
-   "kind": "note",
-   "label": "N1 pair-2692, named 5e92bb49",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:19:15.073Z",
-   "file": "20261125131915073-note-chunk-3.jpg",
-   "source": "out/work/place/n1/chunk-3.jpg",
-   "kind": "note",
-   "label": "N1 chunk-3, named 5e92bb49",
    "stop": "mars"
   }
  ]
