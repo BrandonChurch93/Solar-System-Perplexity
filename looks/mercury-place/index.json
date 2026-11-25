@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T12:14:24.411Z",
+ "pushed": "2026-11-25T12:41:32.521Z",
  "head": "58c6e8e750c53c4f94fae18b2597a100ea2d14de",
- "note": "way C 58c6e8e7: dive 712 to 722 and rise 1010 to 1020 on the tree; rise red 0.64 at 1012 as take b9, dive green by whole frames",
+ "note": "way C on the tree: rise 989 to 1009 green by my reader (0.08 to 0.42), 1009.5 to 1014 red 0.49 to 0.64 as take b9; dive crops against the mark; the disc reads greyer than the ground round it at 700 to 708; merge, tests and NAMED follow",
  "looks": [
+  {
+   "time": "2026-11-25T12:41:31.904Z",
+   "file": "20261125124131904-note-h-692-708-1to1.jpg",
+   "source": "../../../../tmp/m/h-692-708-1to1.png",
+   "kind": "note",
+   "label": "692, 700, 708 at 1 to 1, the mark beside way C: the disc is greyer than the ground round it, the first pit dark where the hero has its gold ring",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T12:41:31.323Z",
+   "file": "20261125124131323-note-h-745.jpg",
+   "source": "../../../../tmp/m/h-745.png",
+   "kind": "note",
+   "label": "745 at 1 to 1, the mark beside way C on the tree",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T12:41:30.699Z",
+   "file": "20261125124130699-note-h-735.jpg",
+   "source": "../../../../tmp/m/h-735.png",
+   "kind": "note",
+   "label": "735 at 1 to 1, the mark beside way C on the tree",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T12:14:22.916Z",
    "file": "20261125121422916-note-h-dive-b.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/pit-zoom-h.png",
    "kind": "note",
    "label": "615 at times 20: main's ring crater and way C's first pit (not within 1 px, smaller)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T11:23:50.351Z",
-   "file": "20261125112350351-note-s13-717.jpg",
-   "source": "../../../../tmp/m/s13-717.png",
-   "kind": "note",
-   "label": "717: take s13 (the map's colour in the plates, dropped): the disc grey in golden ground",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T11:23:49.206Z",
-   "file": "20261125112349206-note-h-717.jpg",
-   "source": "../../../../tmp/m/h-717.png",
-   "kind": "note",
-   "label": "717 at 1 to 1: the mark, way C s9, way C with the colour law (as s9)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T11:23:47.763Z",
-   "file": "20261125112347763-note-h-615-zoom.jpg",
-   "source": "../../../../tmp/m/h-615-zoom.png",
-   "kind": "note",
-   "label": "615 at times 7: approved hero, main, way C take s9, way C with the map's colour by distance (the tint gone)",
    "stop": "mercury"
   }
  ]
