@@ -1,9 +1,61 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T00:35:15.691Z",
+ "pushed": "2026-11-25T01:00:55.750Z",
  "head": "7f22b7d9071ad5aa952269178338627a45772cc5",
- "note": "7f22b7d9: one field, web grooves at 4605 named, 4860 beside approved, dive every frame started",
+ "note": "7f22b7d9: dive and rise every frame looked at; red: dark chunks 4705 to 4712, cause open; sky flash 4722 and 4723 is the engine's sky turning; web count cure in work",
  "looks": [
+  {
+   "time": "2026-11-25T01:00:54.464Z",
+   "file": "20261125010054464-note-named-4860.jpg",
+   "source": "out/work/nep/weave/named-4860.jpg",
+   "kind": "note",
+   "label": "4860 approved close | full | web on 7f22b7d9; G17 full 1.095 0.482, web 1.023 0.317; 38.2 s full, 27.7 s web per draft frame; bluer than the approved slate (red, named)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:00:53.589Z",
+   "file": "20261125010053589-note-rise-4998.jpg",
+   "source": "out/work/nep/weave/ev/rise-4998.jpg",
+   "kind": "note",
+   "label": "rise 4998 to 5009, every frame, full set draft preview on 7f22b7d9, about 6 s per frame; handover says every frame: pass for dive and rise",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:00:52.877Z",
+   "file": "20261125010052877-note-curve.jpg",
+   "source": "out/work/nep/weave/curve.png",
+   "kind": "note",
+   "label": "MAIL 806 3 (d): darkest and brightest 5 by 5 mean inside the place, hold 4605 then 4680 to 4758, full set draft preview (a proxy); it has a step by the dark chunks at 4705 to 4712",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T01:00:51.702Z",
+   "file": "20261125010051702-note-place-a.jpg",
+   "source": "out/work/nep/weave/ev/place-a.jpg",
+   "kind": "note",
+   "label": "RED, dive 4702 to 4713, the place at twice the size, full set draft preview on 7f22b7d9: dark chunks with hard edges round the spiral, 4705 to 4712; NOT the cirrus cast (control with cast 0 shows the same chunks); cause open",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T00:57:21.058Z",
+   "file": "20261125005721058-compare-neptune-rise-step-in-place.jpg",
+   "source": "out/work/handover/neptune-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "neptune rise, the largest step of the level in place (3.4): frame 5001, frame 5002, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "neptune",
+   "segment": "neptune.rise",
+   "frame": 5002
+  },
+  {
+   "time": "2026-11-25T00:46:01.381Z",
+   "file": "20261125004601381-compare-neptune-dive-step-body.jpg",
+   "source": "out/work/handover/neptune-dive-step-body.png",
+   "kind": "compare",
+   "label": "neptune dive, the largest step of the mean level of the body (2.95): frame 4708, frame 4709, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4709
+  },
   {
    "time": "2026-11-25T00:35:14.399Z",
    "file": "20261125003514399-note-dive-4680.jpg",
@@ -18,54 +70,6 @@
    "source": "out/work/nep/weave/named-4860.jpg",
    "kind": "note",
    "label": "4860 approved close | full | web on 7f22b7d9; G17 full 1.095 0.482, web 1.023 0.317 (fell when the terrain sky patch went); 38.2 s full, 27.7 s web per draft frame; still bluer than the approved slate",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T00:35:12.025Z",
-   "file": "20261125003512025-note-oval-4605.jpg",
-   "source": "out/work/nep/weave/oval-4605.png",
-   "kind": "note",
-   "label": "4605 oval, full against web on 7f22b7d9: the web set draws grooves in the dark oval (levels count the web texels, so they arrive at twice the height); mean 6.45 of 255 in the box; cure in its own commit next",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T00:23:21.929Z",
-   "file": "20261125002321929-note-C1-dive.jpg",
-   "source": "out/work/nep/weave/C1-dive.jpg",
-   "kind": "note",
-   "label": "Dive 4700 to 4755 and 4860 at the preview with the red power of the grade at 1.5: orange on the dim side at 4712 to 4740. REJECTED, the power is back at 2.6. 6 to 23 s a frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T00:23:20.655Z",
-   "file": "20261125002320655-note-T1-4605.jpg",
-   "source": "out/work/nep/weave/T1-4605.png",
-   "kind": "note",
-   "label": "4605 at 1920 draft full set, crop at the place: hero, head, one field at place 5.0 with one Sun and air under the grade. RED: two dark shadows of streamers with hard edges and no cloud over them, the small spiral. 30 s a frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T00:23:19.839Z",
-   "file": "20261125002319839-note-tone5-4860.jpg",
-   "source": "out/work/nep/weave/tone5-4860.jpg",
-   "kind": "note",
-   "label": "4860 preview draft full set: approved close, then power back level 0.75 air 0.05 (G17 1.047 0.420), air colour 0.25 0.42 0.7 CHOSEN (G17 1.095 0.482), air 0.09 colour 0.4 0.52 0.7 (orange limb, rejected). Sky is the engine's: the terrain patch is gone, G17 fell by the sky tiles. 38 s a frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T23:31:46.315Z",
-   "file": "20261124233146315-note-place5-4605.jpg",
-   "source": "out/work/nep/weave/place5-4605.png",
-   "kind": "note",
-   "label": "4605 at 1 to 1: hero, head, one field at place 5.0 full set, web set; still foreign: veil wedge, pale lift on the dark side, the pale spiral",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T23:31:45.730Z",
-   "file": "20261124233145730-note-place5-4860.jpg",
-   "source": "out/work/nep/weave/place5-4860.jpg",
-   "kind": "note",
-   "label": "4860 one field by place beside the approved close: head, place 5.0 full and web, place 1.2 and 3.5; G17 1.462 and 1.124 full; 40 s a draft frame; working tree",
    "stop": "neptune"
   }
  ]
