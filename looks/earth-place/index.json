@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T23:17:51.175Z",
- "head": "e3fa3d456fac44200216c49c29c2d2ef9b247e75",
- "note": "merge of main c94664b6 made (e3fa3d45), 3 draft frames same px; the oval's cause read on the plate: bare band outside the rim",
+ "pushed": "2026-11-25T23:45:44.090Z",
+ "head": "aca87ea3a82ad7f8041b4cc317032a0804d989b8",
+ "note": "23:47 field outside the canvas by the canvas's own cover and light; the oval still reads at 1890 by tone and by kind; glint colour control running",
  "looks": [
+  {
+   "time": "2026-11-25T23:45:43.439Z",
+   "file": "20261125234543439-note-step-1878.jpg",
+   "source": "../../../../tmp/gl/k20/S4/sheets/step-1878.jpg",
+   "kind": "note",
+   "label": "1878 draft, dd5dd07a beside now (23:40); the violet at the glint's far end not yet cured",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T23:45:42.845Z",
+   "file": "20261125234542845-note-step-1898.jpg",
+   "source": "../../../../tmp/gl/k20/S4/sheets/step-1898.jpg",
+   "kind": "note",
+   "label": "1898 draft, dd5dd07a beside now (23:40)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T23:45:42.187Z",
+   "file": "20261125234542187-note-step-1890.jpg",
+   "source": "../../../../tmp/gl/k20/S4/sheets/step-1890.jpg",
+   "kind": "note",
+   "label": "1890 draft, dd5dd07a beside the field by the canvas's own cover and light (23:40)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T23:17:39.787Z",
    "file": "20261125231739787-note-c1898.jpg",
@@ -43,42 +67,6 @@
    "kind": "note",
    "label": "third strip (bake 22:39) frame 1886, draft, rate 8, shutter 0",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:51:58.810Z",
-   "file": "20261125225158810-note-now-1874.jpg",
-   "source": "../../../../tmp/gl/k19/S3/sheets/now-1874.jpg",
-   "kind": "note",
-   "label": "third strip (bake 22:39) frame 1874, draft, rate 8, shutter 0",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:51:35.482Z",
-   "file": "20261125225135482-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T22:46:31.522Z",
-   "file": "20261125224631522-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
   }
  ]
 }
