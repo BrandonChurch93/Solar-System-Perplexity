@@ -207,6 +207,15 @@ export class SunPlan extends StopPlan {
     const [from, to] = place.onGlobe.heights.sky as [number, number]
     return { low: 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to)) }
   }
+
+  // The sky's turn from the close view's frame to the hold's is read from the height of the lens as well (place.json
+  // onGlobe.heights.carry, a smooth step in the logarithm of the height), not from the clock (MAIL 1146 point 3):
+  // 1 is the close view's sky, 0 the hold's
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    if (seg.kind !== 'rise') return null
+    const [from, to] = place.onGlobe.heights.carry as [number, number]
+    return 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to))
+  }
 }
 
 export const plan = new SunPlan('sun', fit as Fit, params)

@@ -166,10 +166,14 @@ export const createSet: SetFactory = async (ctx) => {
       // what leaves with the distance from the eye to its own place (radii of the ball, even steps in the logarithm):
       // one law at every frame, no height of the eye and no clock; the close view holds nothing as far away as a range begins
       const gone = (d: number, r: number[]): number => THREE.MathUtils.smoothstep(Math.log(Math.max(d, 1e-6)), Math.log(r[0]!), Math.log(r[1]!))
-      const skyIn = above(by.sky)
-      const shown = !inOrbit ? 0 : kind === 'travel' ? Math.min(1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]), globeShare(world.position.length())) : skyIn
+      // one sky: each of the two sky pictures stands at its own place among the stars at its whole light, the hold's
+      // behind the ball as the hold sees it, the close view's over the horizon of the place. Neither is weighed by the
+      // eye's height or by the clock: the turn of the camera on the way up carries the one out of the picture and
+      // the ball, as it shrinks, uncovers the other (their fields do not meet: the hold's reaches 37 degrees from the
+      // line to the ball's middle, the close view's begins 66 degrees from it)
+      const shown = !inOrbit ? 0 : kind === 'travel' ? Math.min(1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]), globeShare(world.position.length())) : 1
       backdrop.update(shown, gain, vignette, aspect)
-      backdropTerrain.update(terrain.visible ? 1 - skyIn : 0, gain, vignette, aspect)
+      backdropTerrain.update(terrain.visible ? 1 : 0, gain, vignette, aspect)
       if (terrain.visible) {
         const t = state.time - terrainMid
         ground.show(placing, 0, 0)
