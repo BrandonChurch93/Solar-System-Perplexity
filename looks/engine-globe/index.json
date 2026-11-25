@@ -1,8 +1,8 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T11:45:42.540Z",
+ "pushed": "2026-11-25T11:45:49.473Z",
  "head": "d69b8640fb1f481dbb58cf26cb831f3bd2ecd392",
- "note": "measurement only: limb at Mars 2412, reader 0.21 on unchanged ground, real pair 0.011",
+ "note": "measurement only: limb at Mars 2412",
  "looks": [
   {
    "time": "2026-11-25T11:45:41.874Z",
