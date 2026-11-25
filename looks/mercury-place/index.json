@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T07:22:05.127Z",
+ "pushed": "2026-11-25T07:47:25.681Z",
  "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "way C state F as pushed (45590da3): dive 725 to 741 beside the mark, rise 1001 and 1009, the fault at 731 to 745 named",
+ "note": "way C state F beside the mark, whole frames 727 to 745; trade refused by MAIL 961, ONE BODY repaint begins",
  "looks": [
+  {
+   "time": "2026-11-25T07:40:31.006Z",
+   "file": "20261125074031006-note-s3.jpg",
+   "source": "../../../../tmp/m/s3.jpg",
+   "kind": "note",
+   "label": "DRAFT 45590da3, whole frames 739, 743, 745: left the mark, right F. 739 is the worst: cream streaks of the map's highlights, stretched, on the grey ground; the mark is clean there. A cure is being rendered (the map gives up its own detail as the lens outruns it)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T07:40:30.369Z",
+   "file": "20261125074030369-note-s2.jpg",
+   "source": "../../../../tmp/m/s2.jpg",
+   "kind": "note",
+   "label": "DRAFT 45590da3 (way C state F, pushed, not named), whole frames 727, 731, 735: left the mark (b0b87889), right F. No grey disc; from 731 the map's rim highlights lie soft on the place's ground",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T07:14:14.372Z",
    "file": "20261125071414372-note-cj-rise-full.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/ci-1482-s.png",
    "kind": "note",
    "label": "DRAFT, state F (mix as powers) at 741, 1 to 1 beside the mark: the pale patches are faint",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:02:31.627Z",
-   "file": "20261125070231627-note-ci-1474-s.jpg",
-   "source": "../../../../tmp/m/ci-1474-s.png",
-   "kind": "note",
-   "label": "DRAFT, state F (mix as powers) at 737, 1 to 1 beside the mark. Named fault, the worst of the state: the hero's rim highlights, past their texels, lie on the crisp ground as soft pale patches with a little colour at their edges, from about 731 to 745. The mark is clean here",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:02:30.618Z",
-   "file": "20261125070230618-note-ci-full-b.jpg",
-   "source": "../../../../tmp/m/ci-full-b.jpg",
-   "kind": "note",
-   "label": "DRAFT, not a final: dive 733 and 741 whole frame. The mark (b0b87889), 9fc760b3, way C state F with the mix as powers: this is the state to be named. 741 is close to the mark; 733 stands in the hero's light with the place's craters in it",
    "stop": "mercury"
   }
  ]
