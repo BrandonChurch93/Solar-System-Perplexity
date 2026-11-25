@@ -1,0 +1,141 @@
+{
+ "critic": "R3",
+ "score": 3,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 3,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "clouds across the whole globe, worst on the west limb and Pacific (crops D, N, S, T of image-06/07/08)",
+      "what": "clouds break up into small square blocks and smeared tiles; the cloud layer looks like a low-resolution texture that was stretched, with visible pixels and blocky compression patterns",
+      "fix": "use a much higher-resolution cloud map for the close-up and filter it properly (mipmaps or anisotropic filtering); do not upscale the far-view texture"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "lower half: South America, Andes coast and the Pacific clouds (crops G, T, U, V)",
+      "what": "strong directional streaks and smearing that look like broken motion blur or a texture stretched along one axis; terrain and clouds lose all detail and turn to streaks",
+      "fix": "remove or fix the motion-blur pass, or fix the UV stretch near the bottom of the view so the texture stays sharp"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "Gulf of Mexico, Caribbean and Central America (crops A, F, O, P)",
+      "what": "bright white specks scattered over sea and land like noise or sparkles; they read as an artifact rather than small clouds or city lights",
+      "fix": "clamp or remove the speck layer; if they are meant as cumulus or lights, make them smaller and softer and keep lights off the day side"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "dark side on the right (crops E, I, Q, V)",
+      "what": "night side is soft and mushy, cloud swirls are blurry ghosts, and city lights are smeared into short dashes",
+      "fix": "sharpen the night-side textures and draw city lights as points without the streak blur"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "upper right limb, aurora (crops C, L, M)",
+      "what": "aurora is a row of hard-edged, saturated green blobs sitting on top of the limb, with a red glow behind; it looks pasted on and does not follow the planet's curve smoothly",
+      "fix": "make the aurora thinner and more translucent, follow the curve of the atmosphere, and soften the edges of each curtain"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "South America, east coast and interior (crops H, Q)",
+      "what": "city lights show on land that is still in daylight, so the night-light layer is not masked by the terminator",
+      "fix": "mask the city-light layer with the day/night terminator so lights appear only on the dark side"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "right limb near the terminator (crops E, I, R)",
+      "what": "a faint doubled edge or hard rim where the dark globe meets the sky; the atmosphere glow stops on the night side",
+      "fix": "carry a faint atmosphere rim across the terminator and blend the limb edge"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "globe surface overall (crops A, G, P)",
+      "what": "surface looks slightly airbrushed and over-saturated, with very bright turquoise shallows and a plastic feel",
+      "fix": "lower saturation of the shallows and add fine surface detail"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "moon, upper right (crop M)",
+      "what": "moon is small and soft with little detail and its lit side does not clearly match the sun direction on Earth",
+      "fix": "use a sharper moon texture and light it from the same direction as Earth"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "outer globe across South America, South Atlantic, and lower-left Pacific (crops image-14.png D, E, H; image-15.png P, Q; image-16.png T, U, V)",
+      "what": "heavy radial smearing blurs terrain and clouds toward the edges, producing visible diagonal corduroy banding and pixelated stair-stepped streaks across the lower-left Pacific clouds",
+      "fix": "remove radial or lens-edge blur and render full-resolution cloud and surface detail cleanly all the way to the limb without directional smearing or Moire striping"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Andes, Amazon basin, Central America, and North America surfaces and clouds (crops image-14.png A, H; image-15.png J, K, P)",
+      "what": "landmasses appear soft, plastic, and airbrushed with exaggerated baked relief, blotchy blurred cloud patches over the Amazon and US East Coast, and blocky low-resolution coastlines around Hudson Bay and Greenland",
+      "fix": "increase albedo, normal, coastline, and cloud-map resolution so terrain and cloud edges remain crisp and natural at 1:1 crop scale"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "night-side Atlantic coast of South America (crops image-14.png E; image-16.png V)",
+      "what": "coastal city lights are stretched into blurry radial streaks that cut off abruptly along a curved patch edge at the shoreline",
+      "fix": "render sharp point-level night lights aligned to high-resolution land masks without radial blur or hard patch boundaries"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper-right aurora and dark right limb (crops image-14.png C; image-15.png L, R; image-16.png W)",
+      "what": "the aurora reads as a soft airbrushed 2D glow with a segmented lower edge along the limb, and background stars remain brightly visible directly through the aurora and atmospheric haze",
+      "fix": "model the aurora as a smooth 3D volumetric emission shell above the limb and attenuate background stars behind bright auroral and atmospheric layers"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "upper-left Milky Way and sunlit left limb (crops image-14.png B, G, I; image-16.png S)",
+      "what": "stars in the Milky Way region appear as soft multi-pixel blobs with color noise, and a wide overbright cyan-white halo washes across the adjacent starfield",
+      "fix": "tighten star point-spread profiles, denoise the Milky Way background plate, and narrow the sunlit limb scattering falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "blue atmospheric horizon band across the limb (crops image-10.png B, C; image-11.png J, K, L, M)",
+      "what": "a thin dark concentric line creates a subtle doubled edge between the bright lower horizon haze and the upper blue Rayleigh glow",
+      "fix": "smooth the vertical atmospheric density transition so no dark seam line appears inside the limb gradient"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "top-center space background (crop image-11.png K)",
+      "what": "a clipped sun-glare haze enters from the top border with faint gradient banding in the dark sky falloff",
+      "fix": "remove the clipped border glare or apply clean 16-bit dithering to eliminate banding in the dark sky gradient"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,99 @@
+{
+ "critic": "R3",
+ "score": 3,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 3,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-01.png",
+      "where": "lower-left unlit hemisphere and adjacent sky (image-02.png crops D, H; image-03.png crops O, P; image-04.png crop T)",
+      "what": "a blurry ghosted spacecraft silhouette with a long boom/panel is baked onto the dark side of the planet, accompanied by a smeared bright white-orange blob and rainbow flare smudge just outside the lower-left limb",
+      "fix": "remove the stray spacecraft ghost, secondary streak, and flare blob completely so the night side and adjacent starfield are clean"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "upper-left terminator and upper-center to upper-right lit globe (image-06.png crops B, C, F, G; image-07.png crops J, K, L, P)",
+      "what": "craters and sunlit rims along the upper-left terminator are heavily stretched and smeared into directional streaks, while the upper-center and upper-right lit surface is soft and blurry next to the sharp center craters, exposing 2D warp stretching or insufficient texture resolution",
+      "fix": "render the close-up from true 3D sphere geometry with high-resolution close-up surface albedo and normal/displacement maps free of UV or 2D-warp stretching"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "lower-right and upper-right sky background (image-06.png crops E, I; image-07.png crops N, R; image-08.png crops S, V, W)",
+      "what": "the starfield and warm solar haze stop abruptly along straight diagonal patch borders in both the lower-right sky and far upper-right edge, cutting to flat nearly empty black where a rotated background plate runs out of bounds",
+      "fix": "extend the starfield and coronal haze seamlessly across the full frame using an unclipped 360-degree skybox or procedural background with smooth radial falloff"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "upper-right solar disk, prominence loop, and inner corona (image-06.png crop C; image-07.png crops L, M, N)",
+      "what": "the solar surface detail, prominence loop, and coronal streamers are soft, mushy, and visibly upscaled at native pixel size",
+      "fix": "render the solar disk, prominence, and coronal rays at full native output resolution so fine plasma structure stays crisp in the close-up"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "sunlit upper and right limb of the globe (image-02.png crops C, E, F, G; image-03.png crops K, L, Q)",
+      "what": "an airbrushed warm orange outer-glow halo wraps uniformly around the sunlit horizon of an airless cratered rocky body like a 2D layer effect",
+      "fix": "remove the artificial atmospheric-style rim glow so the bare rocky cratered limb meets space crisply, keeping any optical bloom strictly physical"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "lower-right sunlit limb (image-06.png crops E, H, I; image-08.png crop V)",
+      "what": "a soft hazy rim glow clings to the rocky limb and faint smudge specks sit just outside the lower-right horizon",
+      "fix": "render a clean geometric rocky horizon without a soft outer halo and remove the stray smudge specks near the lower limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "left and lower dark-sky starfield near the unlit limb (image-02.png crops B, D; image-03.png crop O; image-04.png crops T, U)",
+      "what": "stars sit surrounded by dark ringing pits and mottled compression-like blotches in the faint background sky, with soft blobby star shapes in the lower-left corner",
+      "fix": "composite clean PSF-sampled point stars over an uncompressed noise-free space background without sharpening rings or compression artifacts"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "upper sunlit globe, from the top limb down through the high latitudes (about y 0-320)",
+      "what": "crater texture is smeared along one diagonal, so rims lose their round shape; the same surface is sharp on the lower crescent",
+      "fix": "resample the globe texture so grazing and high-latitude views keep round crater rims instead of a directional smear"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "near foreground, especially the lower left and lower center plains",
+      "what": "regolith is softer and lower in micro-contrast than the terraced wall at the right, with a few isolated one-pixel specular glints on otherwise smooth slopes",
+      "fix": "raise near-camera texture resolution and remove single-pixel specular spikes that do not sit on a rock or rim"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "unlit hemisphere",
+      "what": "the night side is a flat, nearly textureless void with no starlight on the surface, so the terminator reads as a hard cut into empty black",
+      "fix": "add a very low starlight response on the night side so the limb stays a surface rather than a flat cutout"
+     }
+    ]
+   }
+  }
+ ]
+}
