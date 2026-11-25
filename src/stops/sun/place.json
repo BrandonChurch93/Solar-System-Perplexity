@@ -202,5 +202,10 @@
     "turnDeg": 156.5,
     "hold": 1,
     "note": "the bend of the surface view into its rise (d196), the engine's own (src/director/bend.ts): from this second of the surface view on the eye keeps the share of its height it flies a second and turns its way through acrossDeg (azimuth from its level way, 90 to its right; elevation) by turnDeg, so it leaves the way the rise carries on. hold: the share of the bend's shift of the spot in the picture that the lens takes out by turning with it. Frames 0 to 95 keep their camera"
+  },
+  "drift": {
+    "side": 0.45,
+    "power": 3,
+    "note": "the drift of the surface view (MAIL 836 point 5 iv): on top of its glide the eye slides to its right, level over the ground, from side stage units left of the glide at frame 0 into the glide itself at frame 90, by (1 - t over the time of frame 90) to the power: fastest at the start, eased out to no speed and no change of speed at frame 90, so the near ground passes faster than the far ground and the horizon. From frame 90 on the camera is the glide's own (the bend and the rise keep their path)"
   }
 }

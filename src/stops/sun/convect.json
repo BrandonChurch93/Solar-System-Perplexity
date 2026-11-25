@@ -123,13 +123,11 @@
   "round": 40,
   "dome": {
    "height": 0.0,
-   "full": 0.35,
-   "bulge": 0.015,
-   "power": 2.0,
+   "full": 0.5,
+   "bulge": 0.02,
+   "power": 3.0,
    "dimple": 0.0045,
-   "sink": 0.3,
-   "shoulder": 0.03,
-   "crown": 0.5
+   "sink": 0.3
   },
   "warp": {
    "amount": 0.55,
@@ -150,7 +148,7 @@
   ],
   "empty": 4,
   "gap": {
-   "width": 0.0004,
+   "width": 0.0015,
    "scale": 9,
    "vary": 0.95
   },
@@ -171,7 +169,7 @@
    "crease": 0.03
   },
   "thread": {
-   "round": 28,
+   "round": 15,
    "out": 2.5,
    "speed": 0.9,
    "off": 0.1,
@@ -180,10 +178,10 @@
     3.0,
     0.05
    ],
-   "thin": 2.2,
+   "thin": 1.6,
    "locks": 0.8
   },
-  "sizes": 0.3,
+  "sizes": 0.5,
   "tight": {
    "from": 2.6,
    "power": 1.1,
@@ -193,7 +191,21 @@
    1.7,
    8
   ],
-  "fan": 10
+  "fan": 10,
+  "bulb": {
+   "note": "each cell is a round bulb. round: the power that rounds its flank into the lane; spread: the share by which the heights of the cells differ; swell: the share and the rate (a second) by which a top swells and sinks; pit: where three cells meet, the half width of the pit (lattice units), its depth (stage units) and the share by which it is darker",
+   "round": 0.6,
+   "spread": 0.35,
+   "swell": [
+    0.12,
+    1.3
+   ],
+   "pit": [
+    0.085,
+    0.01,
+    0.75
+   ]
+  }
  },
  "spot": {
   "umbra": 0.85,
@@ -259,21 +271,19 @@
   "coarse": 0.03
  },
  "light": {
-  "middleWide": 0.25,
   "young": 0.25,
   "old": 0.5,
   "dark": 0.07,
-  "top": 0.56,
+  "top": 0.62,
   "spread": 0.4,
-  "middle": 0.25,
   "veil": {
-   "amount": 0.05,
+   "amount": 0.045,
    "level": 0.5,
    "most": 0.7,
    "tint": [
     0.98,
-    0.85,
-    0.5
+    0.83,
+    0.46
    ],
    "from": 2.0
   },
@@ -301,10 +311,10 @@
   "boil": {
    "scale": 5.0,
    "rate": 0.5,
-   "amount": 0.35
+   "amount": 0.5
   },
   "fall": {
-   "amount": 0.0,
+   "amount": 0.07,
    "power": 3
   },
   "deep": {
@@ -315,16 +325,17 @@
    "amount": 1.0,
    "within": 0.003,
    "few": 0.8,
-   "scale": 22
+   "scale": 22,
+   "drift": 0.08
   },
   "knee": [
    0.66,
    0.3
   ],
   "limbTint": [
-   0.88,
-   1.12,
-   1.25,
+   0.92,
+   1.08,
+   1.17,
    1.5
   ],
   "wide": {
@@ -353,19 +364,31 @@
    "region": 48
   },
   "well": {
-   "out": 8,
+   "out": 10,
    "fall": 1.0,
-   "tongue": 0.35,
-   "scale": 4,
-   "note": "the heat of a cell: 1 in the middle, falling to the lane by (1 - way^out)^fall; tongue: how far the flow carries tongues of hot gas outward; scale: the size of the tongues",
-   "seam": 0.035
+   "tongue": 0.6,
+   "scale": 6,
+   "note": "the heat of a cell: its top is one heat with a mottle that the flow carries outward (tongue: how strong; scale: the size of the mottle), it falls toward the lane by (1 - way^out)^fall and is lost in the crease over the share seam of a lattice unit, wide here and a hair there (uneven)",
+   "seam": 0.035,
+   "uneven": 0.7
   },
   "fibre": {
    "one": 0.9,
    "two": 0.6,
-   "least": 0.3,
-   "rim": 0.08
-  }
+   "least": 0.7,
+   "rim": 0.05
+  },
+  "tongue": {
+   "note": "the hot tongues that come out of the creases and run up the flanks. from: between which shares of the way from the middle to the lane a tongue begins, each group by its own reach; heat: how hot; groups: how many groups stand round a cell; soft: the share of the way over which a tongue comes in",
+   "from": [
+    0.3,
+    0.9
+   ],
+   "heat": 0.55,
+   "groups": 5,
+   "soft": 0.12
+  },
+  "farGlow": 0.25
  },
  "jets": {
   "count": 48000,
