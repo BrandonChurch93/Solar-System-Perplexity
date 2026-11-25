@@ -72,7 +72,7 @@ export const WORLD_MISS = 1
 
 export type WorldAnswer = 'least' | 'open' | 'close' | 'corner'
 
-export const WORLD_ANSWER: Record<string, WorldAnswer> = { mercury: 'corner', earth: 'open', jupiter: 'close', uranus: 'open' }
+export const WORLD_ANSWER: Record<string, WorldAnswer> = { mercury: 'open', earth: 'open', jupiter: 'close', uranus: 'open' }
 
 export function worldCosts(angles: number[], bare: number[], answer: WorldAnswer): number[] {
   if (answer === 'least' || answer === 'corner') return bare
