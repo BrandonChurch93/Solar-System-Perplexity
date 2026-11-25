@@ -6,7 +6,7 @@ import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../direc
 import { blendPose, forward, lookAt, mix, ramp, smooth } from '../../director/rig'
 import deck from './deck.json'
 import fit from './fit.json'
-import { haze, place as low, shape, show } from './look'
+import { haze, moons, place as low, shape, show } from './look'
 import path from './path.json'
 import place from './place.json'
 import plates from './plates.json'
@@ -171,6 +171,28 @@ export class UranusPlan extends StopPlan {
 
   roundness(time: number): number {
     return below(low.round, this.altitude(time))
+  }
+
+  drawnShape(view: ViewKind, _eye: THREE.Vector3, time: number): { shape: number[]; place: number[] } | null {
+    if (view !== 'orbit') return null
+    const moving = (this.seg.dive !== undefined && time >= this.seg.dive.start && time < this.seg.dive.end) || (time >= this.seg.rise.start && time < this.seg.rise.end)
+    const sphere = moving ? this.roundness(time) : 0
+    const place = shaped(new THREE.Vector3(), sphere)
+    const cols = [new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1)].map((e) => shaped(e, sphere).sub(place))
+    return { shape: [0, 1, 2].flatMap((i) => cols.map((c) => c.getComponent(i))), place: place.toArray() }
+  }
+
+  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
+    if (view !== 'orbit') return []
+    const e = time - this.holdMid
+    const eye = this.hold(this.holdMid - this.seg.hold.start).position
+    const normal = new THREE.Vector3().fromArray(fit.rings.normal).normalize()
+    return fit.moons.map((m, i) => {
+      const depth = moons.bodies[m.id]!.depth
+      const home = new THREE.Vector3().fromArray(m.position).sub(eye).multiplyScalar(depth).add(eye)
+      const turn = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0.3 - 0.5 * i, 1, 0.2).normalize(), 1.1 + 2.3 * i + rad(moons.spinDegPerSecond) * e)
+      return { id: m.id, place: home.applyAxisAngle(normal, rad(this.p.moonDegPerSecond) * e).toArray(), turn: turn.toArray(), reach: m.radius * depth }
+    })
   }
 
   deckFrame(time: number): THREE.Quaternion {
