@@ -116,10 +116,25 @@ export class FarSun {
       const k = (l as { knot?: number[] }).knot
       if (k) knots[i]!.set(k[0]!, 1 / (rad(k[1]!) * rad(k[1]!)), k[2]!)
     })
+    const hairBy = (look.fringe as { hair?: { at: number[]; steps: number; top: number; way?: number; all?: number[]; tuft?: number[]; fine: number; sharp: number; thick: number; fan: number; curl: number[] } }).hair
+    const sheet = new THREE.Vector4(0, 0, 1, 0)
+    const hair = Array.from({ length: MAX_LOBES }, () => new THREE.Vector2(0, 0.1))
+    if (hairBy) {
+      const sa = rad(hairBy.at[0]!)
+      const sd = rad(hairBy.at[1]!)
+      const sc = new THREE.Vector3(Math.cos(sa) * Math.cos(sd), Math.sin(sa) * Math.cos(sd), Math.sin(sd)).applyAxisAngle(new THREE.Vector3(0, 1, 0), -look.spinAt)
+      sheet.set(sc.x, sc.y, sc.z, 0)
+      look.fringe.lobes.slice(0, MAX_LOBES).forEach((l, i) => {
+        const h = (l as { hair?: number[] }).hair
+        if (h) hair[i]!.set(h[0]!, h[1]!)
+      })
+    }
     const knotAt = Array.from({ length: MAX_KNOTS }, () => new THREE.Vector4(0, 0, 1, 1))
     const knotBy = Array.from({ length: MAX_KNOTS }, () => new THREE.Vector4(0, 1, 0, 0.1))
     const knotRay = Array.from({ length: MAX_KNOTS }, () => new THREE.Vector4(1, 1, 0.1, 0))
     const knotOut = Array.from({ length: MAX_KNOTS }, () => new THREE.Vector2(1, 1))
+    const knotLimb = Array.from({ length: MAX_KNOTS }, () => new THREE.Vector2(1, 0))
+    const knotAxis = Array.from({ length: MAX_KNOTS }, () => new THREE.Vector4(0, 0, 1, 1))
     look.knot.at.slice(0, MAX_KNOTS).forEach((k, i) => {
       const ka = rad(k.at[0]!)
       const kd = rad(k.at[1]!)
@@ -128,6 +143,11 @@ export class FarSun {
       knotBy[i]!.set(0, k.edge, 0, k.rays.radius)
       knotRay[i]!.set(k.rays.fine, k.rays.sharp, k.rays.reach, k.rays.cone)
       knotOut[i]!.set((k as { out?: number }).out ?? 1, (k as { body?: number }).body ?? 1)
+      const kl = (k as { limb?: number[] }).limb
+      if (kl) knotLimb[i]!.set(kl[0]!, kl[1]!)
+      const lean = k.rays as { axis?: number[]; from?: number }
+      const ac = lean.axis ? new THREE.Vector3(Math.cos(rad(lean.axis[0]!)) * Math.cos(rad(lean.axis[1]!)), Math.sin(rad(lean.axis[0]!)) * Math.cos(rad(lean.axis[1]!)), Math.sin(rad(lean.axis[1]!))).applyAxisAngle(new THREE.Vector3(0, 1, 0), -look.spinAt) : kc
+      knotAxis[i]!.set(ac.x, ac.y, ac.z, lean.from ?? 1)
     })
     const loopGain = Array.from({ length: MAX_LOOPS }, (_, i) => (look.loops[i] as { gain?: number } | undefined)?.gain ?? 1)
     this.material = new THREE.ShaderMaterial({
@@ -146,7 +166,7 @@ export class FarSun {
         uChromo: { value: new THREE.Vector4(look.chromosphere.height, look.chromosphere.gain, 0, 0) }, uChromoColour: { value: new THREE.Vector3().fromArray(look.chromosphere.colour) }, uSpicules: { value: new THREE.Vector2().fromArray(look.chromosphere.spicules) },
         uCorona: { value: new THREE.Vector4(look.corona.steps, look.corona.gain, look.corona.scale[0]!, look.corona.scale[1]!) }, uCoronaRays: { value: new THREE.Vector3(look.corona.rays[0]!, look.corona.rays[1]!, look.corona.far) },
         uCoronaFront: { value: look.corona.front }, uBurn: { value: new THREE.Vector4(1, 0, look.burn.fall, 0) }, uIrrColour: { value: new THREE.Vector3().fromArray(look.burn.colour) }, uHide: { value: new THREE.Vector2().fromArray(look.burn.hide) }, uWhite: { value: new THREE.Vector3(look.body.ceiling, look.body.ceiling, look.body.ceiling) }, uDesat: { value: new THREE.Vector3(look.burn.desat[0]!, look.burn.desat[1]!, 0) }, uHalo: { value: new THREE.Vector2(0, look.burn.tightFall) }, uHaloColour: { value: new THREE.Vector3().fromArray(look.burn.tightColour) },
-        uFringe: { value: new THREE.Vector4(look.fringe.steps, look.fringe.top, look.fringe.gain, 0) }, uFringeShape: { value: new THREE.Vector4(look.fringe.height[0]!, look.fringe.height[1]!, look.fringe.scale, look.fringe.lean) }, uFringeColour: { value: new THREE.Vector3().fromArray(look.fringe.colour) }, uFringeLobe: { value: lobes }, uFringeLobeBy: { value: lobesBy }, uStrandLobe: { value: strandLobes(lobesBy) }, uStrandLobes: { value: lobesBy.filter((l) => l.w !== 0).length }, uLoopGain: { value: loopGain }, uLoopRagged: { value: new Array<number>(MAX_LOOPS).fill(0) }, uHaloEdge: { value: look.burn.edge }, uKeep: { value: new THREE.Vector4(0, 0, 0, look.burn.keep.top) }, uLimbGlow: { value: new THREE.Vector2(0, look.burn.limb[1]!) }, uHeatFloor: { value: look.spots.floor[0]! }, uPlage: { value: new THREE.Vector2(look.plage.gain, look.plage.scale) }, uLoopLook: { value: new THREE.Vector3(1, 0, 0) }, uPromPale: { value: new THREE.Vector3().fromArray(look.prominence.pale) }, uFringeKnot: { value: knots }, uKnot: { value: knotAt }, uKnotBy: { value: knotBy }, uKnotRay: { value: knotRay }, uKnotOut: { value: knotOut }, uKnotClump: { value: new THREE.Vector3().fromArray((look.knot as { clump?: number[] }).clump ?? [0, 0.2, 0]) }, uKnotLight: { value: new THREE.Vector4(look.knot.colour[0]!, look.knot.colour[1]!, look.knot.colour[2]!, look.knot.steps) }, uCoronaRim: { value: new THREE.Vector4(look.corona.rim[0]!, look.corona.rim[1]!, look.corona.rim[2]!, look.corona.rimTop) }, uChromoBurn: { value: look.chromosphere.burn }, uFringeFan: { value: new THREE.Vector3(look.fringe.strand.fan, look.fringe.strand.fine, look.fringe.strand.sharp) }, uFringeCurl: { value: new THREE.Vector3(look.fringe.strand.curl[0]!, look.fringe.strand.curl[1]!, look.fringe.strand.curl[2]!) }, uGlareInside: { value: look.glare.inside }, uCoronaNear: { value: new THREE.Vector3().fromArray(look.corona.near) }, uCoronaWide: { value: new THREE.Vector3().fromArray(look.corona.wide) },
+        uFringe: { value: new THREE.Vector4(look.fringe.steps, look.fringe.top, look.fringe.gain, 0) }, uFringeShape: { value: new THREE.Vector4(look.fringe.height[0]!, look.fringe.height[1]!, look.fringe.scale, look.fringe.lean) }, uFringeColour: { value: new THREE.Vector3().fromArray(look.fringe.colour) }, uFringeLobe: { value: lobes }, uFringeLobeBy: { value: lobesBy }, uStrandLobe: { value: strandLobes(lobesBy) }, uStrandLobes: { value: lobesBy.filter((l) => l.w !== 0).length }, uLoopGain: { value: loopGain }, uLoopRagged: { value: new Array<number>(MAX_LOOPS).fill(0) }, uLoopSheath: { value: Array.from({ length: MAX_LOOPS }, () => new THREE.Vector3(0, 1, 1)) }, uLoopRope: { value: Array.from({ length: MAX_LOOPS }, (_, i) => { const r = (look.loops[i] as { rope?: number[] } | undefined)?.rope; return new THREE.Vector3(r?.[0] ?? 1, r?.[1] ?? 0, r?.[2] ?? 0) }) }, uHaloEdge: { value: look.burn.edge }, uKeep: { value: new THREE.Vector4(0, 0, 0, look.burn.keep.top) }, uKeepFloor: { value: (look.burn.keep as { floor?: number }).floor ?? 0 }, uKeepSoft: { value: 1 }, uKeepCoarse: { value: new THREE.Vector3().fromArray((look.burn.keep as { coarse?: number[] }).coarse ?? [0, 1, 1]) }, uLimbGlow: { value: new THREE.Vector3(0, look.burn.limb[1]!, look.burn.limb[2] ?? 0) }, uHeatFloor: { value: look.spots.floor[0]! }, uPlage: { value: new THREE.Vector2(look.plage.gain, look.plage.scale) }, uLoopLook: { value: new THREE.Vector3(1, 0, 0) }, uPromPale: { value: new THREE.Vector3().fromArray(look.prominence.pale) }, uFringeKnot: { value: knots }, uKnot: { value: knotAt }, uKnotBy: { value: knotBy }, uKnotRay: { value: knotRay }, uKnotOut: { value: knotOut }, uKnotLimb: { value: knotLimb }, uKnotAxis: { value: knotAxis }, uKnotShade: { value: new THREE.Vector2().fromArray((look.knot as { shade?: number[] }).shade ?? [0, 0]) }, uKnotClump: { value: new THREE.Vector3().fromArray((look.knot as { clump?: number[] }).clump ?? [0, 0.2, 0]) }, uKnotLight: { value: new THREE.Vector4(look.knot.colour[0]!, look.knot.colour[1]!, look.knot.colour[2]!, look.knot.steps) }, uCoronaRim: { value: new THREE.Vector4(look.corona.rim[0]!, look.corona.rim[1]!, look.corona.rim[2]!, look.corona.rimTop) }, uChromoBurn: { value: look.chromosphere.burn }, uFringeFan: { value: new THREE.Vector3(look.fringe.strand.fan, look.fringe.strand.fine, look.fringe.strand.sharp) }, uFringeSheet: { value: sheet }, uFringeHair: { value: hair }, uFringeHairBy: { value: new THREE.Vector4(hairBy?.fine ?? 60, hairBy?.sharp ?? 10, hairBy?.thick ?? 0, hairBy?.fan ?? 0) }, uFringeHairCurl: { value: new THREE.Vector3().fromArray(hairBy?.curl ?? [0, 6, 3]) }, uFringeHairTop: { value: new THREE.Vector3(hairBy?.steps ?? 1, hairBy?.top ?? 0.1, hairBy?.way ?? 0) }, uFringeHairAll: { value: new THREE.Vector2().fromArray(hairBy?.all ?? [0, 0.1]) }, uFringeHairTuft: { value: new THREE.Vector3().fromArray(hairBy?.tuft ?? [0, 1, 1]) }, uGlareEnd: { value: (look.glare as { end?: number }).end ?? 0 }, uFringeWay: { value: new THREE.Vector2().fromArray((look.fringe as { way?: number[] }).way ?? [0, 0]) }, uFringeSpike: { value: new THREE.Vector3().fromArray((look.fringe as { spike?: number[] }).spike ?? [40, 24, 8]) }, uFringeCurl: { value: new THREE.Vector3(look.fringe.strand.curl[0]!, look.fringe.strand.curl[1]!, look.fringe.strand.curl[2]!) }, uGlareInside: { value: look.glare.inside }, uCoronaNear: { value: new THREE.Vector3().fromArray(look.corona.near) }, uCoronaWide: { value: new THREE.Vector3().fromArray(look.corona.wide) },
         uProm: { value: new THREE.Vector4(look.prominence.steps, look.prominence.shell, look.prominence.gain, look.prominence.flow) }, uPromColour: { value: new THREE.Vector3().fromArray(look.prominence.colour) }, uPromHot: { value: new THREE.Vector3().fromArray(look.prominence.hot) },
         uLoopMid: { value: mid }, uLoopAlong: { value: along }, uLoopUp: { value: up }, uLoopShape: { value: shape }, uLoops: { value: Math.min(look.loops.length, MAX_LOOPS) },
         uGlare: { value: new THREE.Vector4(0, 0, look.glare.tight, look.glare.wide) }, uGlareColour: { value: new THREE.Vector3().fromArray(look.glare.colour) }, uParts: { value: PARTS.all },
@@ -211,10 +231,12 @@ export class FarSun {
     u.uHeatFloor!.value = look.spots.floor[0]! + (look.spots.floor[1]! - look.spots.floor[0]!) * burn
     const gains = u.uLoopGain!.value as number[]
     const ragged = u.uLoopRagged!.value as number[]
+    const sheath = u.uLoopSheath!.value as THREE.Vector3[]
     look.loops.slice(0, MAX_LOOPS).forEach((l, i) => {
-      const by = l as { gain?: number; burn?: number; ragged?: number }
+      const by = l as { gain?: number; burn?: number; ragged?: number; sheath?: number[] }
       gains[i] = (by.gain ?? 1) * Math.pow(burnt, by.burn ?? look.prominence.burn)
       ragged[i] = (by.ragged ?? 0) * burn
+      sheath[i]!.set((by.sheath?.[0] ?? 0) * burn, by.sheath?.[1] ?? 1, by.sheath?.[2] ?? 1)
     })
     ;(u.uLoopLook!.value as THREE.Vector3).set(1 - (1 - look.prominence.thin) * burn, look.prominence.broken * burn, look.prominence.paleBy * burn)
     const knotBy = u.uKnotBy!.value as THREE.Vector4[]
@@ -222,7 +244,8 @@ export class FarSun {
       knotBy[i]!.x = (k.gain * (burnt - 1)) / (look.burn.gain - 1)
       knotBy[i]!.z = (k.rays.gain * (burnt - 1)) / (look.burn.gain - 1)
     })
-    ;(u.uLimbGlow!.value as THREE.Vector2).x = look.burn.limb[0]! * burn
+    ;(u.uLimbGlow!.value as THREE.Vector3).x = look.burn.limb[0]! * burn
+    u.uKeepSoft!.value = 1 + ((look.burn.keep as { soft?: number }).soft ?? 0) * burn
     ;(u.uKeep!.value as THREE.Vector4).set(keep * look.burn.keep.tint[0]!, keep * look.burn.keep.tint[1]!, keep * look.burn.keep.tint[2]!, look.burn.keep.top)
     ;(u.uFringe!.value as THREE.Vector4).z = look.fringe.gain * far
     ;(u.uWhite!.value as THREE.Vector3).set(look.body.ceiling + (look.burn.white[0]! - look.body.ceiling) * burn, look.body.ceiling + (look.burn.white[1]! - look.body.ceiling) * burn, look.body.ceiling + (look.burn.white[2]! - look.body.ceiling) * burn)

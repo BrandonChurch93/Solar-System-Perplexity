@@ -1,0 +1,63 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "upper right sky above the limb (frames 4956-4967, starting in sheet-04 frames 4933-4949 and continuing in sheet-05 frames 4950-4963)",
+   "what": "the right edge of the terrain sky picture slides roughly 85 pixels into frame, exposing a stark vertical cutoff to black while cross-dissolving into a shifted 3D starfield",
+   "fix": "extend or seamlessly wrap the terrain sky plate well past the full pan/pullback frustum and lock its orientation and motion to the 3D skybox"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "planet storm surface and upper left of the vortex (frames 4712-4745)",
+   "what": "without an opaque cloud cover masking the dive handoff, the 3D globe storm texture cross-dissolves directly into a finite sphere-projected terrain decal, producing a ghosted double-exposure of both storm systems at frame 4720, a hard dark-navy patch drop-off above-left of the spiral, truncated ends on the diagonal cumulus ridge, and a lingering white globe cloud patch on the right edge at 4729 that vanishes by 4737",
+   "fix": "pass camera through an opaque cloud/haze cover during the dive swap or blend multi-resolution planet textures seamlessly so neither double-exposed storms nor finite decal borders appear"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "planet surface around the spiral vortex and diagonal cumulus band (frames 4970-4997)",
+   "what": "during the rise pullback, the finite terrain decal shrinks in open view on the globe—exposing both abruptly cut-off ends of the straight cumulus ridge and the dark-navy decal boundary above-left of the eye (4970-4984)—before visibly cross-dissolving as a ghosted double-exposure back into the 3D globe storm texture (4984-4990)",
+   "fix": "complete the terrain-to-globe transition inside an opaque atmospheric/cloud cover before pulling the camera wide enough to reveal the terrain patch edges"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "foreground diagonal cumulus ridge and far upper-right horizon cloud band (frames 4819-4949)",
+   "what": "unreset 2D UV flow advection progressively stretches and smears the crisp cumulus puffs into stringy, taffy-like fibrous streaks and concentric arcs while shearing and tearing apart the thin white cloud line along the upper-right horizon",
+   "fix": "use dual-phase regenerating flow-map cycling or layered 3D cloud cards with bounded displacement so cloud flow and depth parallax never stretch or tear the texture"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "upper-right starfield and upper-left cloud deck across the dive cover (frames 4747-4758)",
+   "what": "frames across the nominal dive cover are an open cross-dissolve rather than a continuous covered move: a 3D Milky Way drifting down-right double-exposes over a misaligned 2D Milky Way plate drifting up-left (with a narrow dark cutoff strip at the far right edge in 4755-4758), while the dark-navy sphere-decal boundary on the upper left fades out into the brighter 2.5D cloud deck",
+   "fix": "match skyfield coordinates and motion across the handoff and mask the 3D-to-terrain switch inside a genuine atmospheric cloud cover"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "left cloud deck and upper-left cumulus ridge across the rise cover (frames 4956-4967)",
+   "what": "cross-fading from the 2.5D terrain view back to the finite sphere decal without a cover rapidly darkens the left side of the frame (mean luminance drops ~16% over 11 frames) as the dark-navy decal border fades in and clips off the upper-left cumulus clouds",
+   "fix": "match color and extent beyond the left frustum edge or obscure the handoff inside an atmospheric cloud cover so exposure and cloud continuity hold across the move"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "fast pullback across planet limb, rings, and stars (frames 4970-5011, and dive frames 4696-4720 in sheet-02.png)",
+   "what": "high-speed plunge and pullback frames have no motion blur, leaving rapidly whipping stars, cloud edges, and fine ring arcs frozen sharp with stair-stepped aliasing along the rings",
+   "fix": "enable smooth shutter/camera motion blur proportional to screen-space velocity and filter thin ring structures to prevent aliasing shimmer"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "upper-left moon surface (frames 4530-4679)",
+   "what": "the moon's surface texture rotates roughly 60 degrees on its axis over 150 frames while advancing only slightly along its orbit, spinning unrealistically fast compared to the planet",
+   "fix": "slow the moon's axial rotation to a believable tidally locked or slow sidereal rate consistent with its orbital speed"
+  }
+ ]
+}
