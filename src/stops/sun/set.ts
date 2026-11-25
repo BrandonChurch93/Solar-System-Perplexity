@@ -19,6 +19,8 @@ import { lifeCalm, lifeCalmAt, lifeFormat } from './life'
 import { formatUniform, setFormat } from './format'
 import { stage } from './stage'
 import { farSun, globeShare } from '../../space/farsun/farsun'
+import { LabGround } from './lab/ground'
+import lab from './lab/lab.json'
 
 export const createSet: SetFactory = async (ctx) => {
   const base = 'sun/' + ctx.assets + '/'
@@ -65,7 +67,7 @@ export const createSet: SetFactory = async (ctx) => {
   const fringe = new Fringe(plate, await ctx.texture(base + look.files.haze, { srgb: true, anisotropy: 1 }), look.fringe)
   const loops = new Loops(await ctx.texture(base + look.files.loops, { srgb: true, anisotropy: 8 }), grade, (data, size) => ctx.floatTexture(data, size, size, true), look.loops, opening.on ? look.opening : undefined)
   const backdropTerrain = new SkyCard(await ctx.texture(base + look.skyTerrain.file, { srgb: true, mips: false, anisotropy: 1 }), look.skyTerrain)
-  const surface = new Surface(ground.material.uniforms, map, mapToStage)
+  const surface = lab.ground === 'lab' ? new LabGround(ground.material.uniforms) : new Surface(ground.material.uniforms, map, mapToStage)
   const jets = new Jets(ground.material.uniforms)
   terrain.add(ground.mesh, surface.mesh, fringe.mesh, jets.glow, jets.mesh, loops.mesh)
   world.add(backdropTerrain.mesh)

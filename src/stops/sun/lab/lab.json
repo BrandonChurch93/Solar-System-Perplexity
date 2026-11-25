@@ -1,0 +1,39 @@
+{
+ "ground": "lab",
+ "note": "ground: lab draws the ground of this folder (cells as real domes from a baked life), standing draws the ground of convect.ts. sim: the life of the cells, a power diagram of sites on a tile that repeats (tile and radius in stage units, times in seconds). dome: the shape of a cell (arc: the angle of its profile from crown to foot in degrees, more than 90 hangs over the foot; height: of the cell's mean radius). lod: a dome is drawn with the finest mesh above the first size in pixels of a 1080 frame, the middle above the second. spot: the warp that combs the cells toward the spot (pull, wide in stage units) and the funnel of its pit.",
+ "sim": {
+  "tile": 8,
+  "slots": 2800,
+  "radius": [0.055, 0.165],
+  "life": [16, 38],
+  "step": 0.25,
+  "warm": 30,
+  "from": -0.5,
+  "to": 10.5,
+  "relax": 0.12,
+  "split": 0.5
+ },
+ "dome": {
+  "arc": 112,
+  "height": 0.55,
+  "young": 0.5,
+  "round": 6
+ },
+ "lod": {
+  "px": [70, 16],
+  "rings": [36, 14, 6],
+  "sectors": [96, 40, 16]
+ },
+ "spot": {
+  "pull": 0.45,
+  "wide": 0.55,
+  "depth": 0.14,
+  "wall": [0.12, 0.75]
+ },
+ "fibre": {
+  "counts": [9, 31, 97],
+  "tilt": 12,
+  "sheen": 60,
+  "lightUp": 0.12
+ }
+}
