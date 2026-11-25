@@ -1,4 +1,6 @@
-// usage: [LIGHT=smooth|smoother|soft] [G='{"turn":0.5}'] [STEP=4] [QUIET=1] [SCAN=1 [VALS='[0.3,0.4]'] [TOL=0.002] [TOP=12] [ONE='[turn,aim,phase]']] [PROFILE='[{"turn":0.5,"aim":0.3,"phase":0.4}]'] npx tsx assets-src/ending/turn.ts
+// usage: [LIGHT=smooth|smoother|soft [LRATE=1.5] [LLEAD=0.3]] [G='{"turn":0.5}'] [STEP=4] [QUIET=1] [SCAN=1 [VALS='[0.3,0.4]'] [TOL=0.002] [TOP=12] [ONE='[turn,aim,phase]']] [PROFILE='[{"turn":0.5,"aim":0.3,"phase":0.4}]'] npx tsx assets-src/ending/turn.ts
+// AHEAD=0.6: the glides of the rebuilt pose run on v = (u + a) / (1 + a), a = AHEAD seconds over the retreat's length. ONLY=turn,aim: only those glides. LIGHTV=1: the light on v too; LIGHTV=2: on v and set to 0 at the seam.
+// FROM=5000: the turn of the director's own camera from that frame to the retreat's end, with its peaks and dips (any tree).
 import * as THREE from 'three'
 import { config } from '../../src/config'
 import { FilmDirector, LOOKBACK } from '../../src/director/film'
@@ -15,12 +17,17 @@ const d = new FilmDirector(plans) as any
 const p = d.plans[d.plans.length - 1]
 const seg = config.segments.find((x: any) => x.kind === 'retreat')! as any
 const F0 = Math.round(seg.start * config.fps), F1 = Math.round(seg.end * config.fps)
+const AHEAD = Number(process.env.AHEAD ?? 0) / (seg.end - seg.start)
+const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null
+const gl = (u: number, e: number, k: string): number => { const a = !ONLY || ONLY.includes(k) ? AHEAD : 0; return glide((u + a) / (1 + a), e) }
 type U = { lit: number; phase: number; turn: number; pull: number; aim: number; t: number }
 const soft = (x: number, lead: number): number => { const c = Math.min(Math.max(x, 0), 1); const k = c / lead; return smooth(c) - (k < 1 ? 3 * lead * lead * k * k * (1 - k) * (1 - k) * (1 - k) : 0) }
-const laws: Record<string, (u: number) => number> = { smooth: (u) => smooth(Math.min(u * 1.5, 1)), smoother: (u) => smoother(Math.min(u * 1.5, 1)), soft: (u) => soft(u * 1.5, 0.3) }
-const lightLaw = laws[process.env.LIGHT ?? 'smooth']!
+const laws: Record<string, (u: number) => number> = { smooth: (u) => smooth(Math.min(u * 1.5, 1)), smoother: (u) => smoother(Math.min(u * 1.5, 1)), soft: (u) => soft(u * Number(process.env.LRATE ?? 1.5), Number(process.env.LLEAD ?? 0.3)) }
+const rawLaw = laws[process.env.LIGHT ?? 'smooth']!
+const LV = Number(process.env.LIGHTV ?? 0)
+const lightLaw = (u: number): number => LV === 0 ? rawLaw(u) : LV === 1 ? rawLaw((u + AHEAD) / (1 + AHEAD)) : (rawLaw((u + AHEAD) / (1 + AHEAD)) - rawLaw(AHEAD / (1 + AHEAD))) / (1 - rawLaw(AHEAD / (1 + AHEAD)))
 const G = { ...LOOKBACK.glide, ...(process.env.G ? JSON.parse(process.env.G) : {}) } as Record<string, number>
-const us = (u: number): U => ({ lit: lightLaw(u), phase: glide(u, G.phase!), turn: glide(u, G.turn!), pull: glide(u, G.pull!), aim: glide(u, G.aim!), t: u })
+const us = (u: number): U => ({ lit: lightLaw(u), phase: gl(u, G.phase!, 'phase'), turn: gl(u, G.turn!, 'turn'), pull: gl(u, G.pull!, 'pull'), aim: gl(u, G.aim!, 'aim'), t: u })
 const pose = (x: U): THREE.Quaternion => {
   const time = seg.start + x.t * (seg.end - seg.start)
   const a = p.exitPose(time)
@@ -61,9 +68,23 @@ if (!process.env.QUIET) console.log(rows.join('\n'))
 let ext: string[] = []
 for (let i = 1; i < totals.length - 1; i++) { if (totals[i]! > totals[i - 1]! && totals[i]! >= totals[i + 1]!) ext.push('peak ' + totals[i]!.toFixed(3) + ' at ' + (F0 + i)); if (totals[i]! < totals[i - 1]! && totals[i]! <= totals[i + 1]!) ext.push('dip ' + totals[i]!.toFixed(3) + ' at ' + (F0 + i)) }
 console.log('turns: ' + ext.join(', '))
+if (process.env.FROM) {
+  const from = Number(process.env.FROM), tol = Number(process.env.TOL ?? 0.002), step = Number(process.env.STEP ?? 4)
+  const cam = (f: number): THREE.Quaternion => d.shotAt(Math.floor(f), f / config.fps).camera.quaternion
+  const r: number[] = []
+  for (let f = from; f < F1; f++) r.push(omega(cam(f), cam(f + 1)).length())
+  const marks: string[] = []
+  let hi = r[0]!, lo = r[0]!, hiAt = 0, loAt = 0, up = true
+  for (let i = 1; i < r.length; i++) {
+    if (up) { if (r[i]! > hi) { hi = r[i]!; hiAt = i } else if (hi - r[i]! > tol) { marks.push('peak ' + hi.toFixed(3) + ' at ' + (from + hiAt)); up = false; lo = r[i]!; loAt = i } }
+    else if (r[i]! < lo) { lo = r[i]!; loAt = i } else if (r[i]! - lo > tol) { marks.push('dip ' + lo.toFixed(3) + ' at ' + (from + loAt)); up = true; hi = r[i]!; hiAt = i }
+  }
+  console.log('director, camera turn in degrees a frame from ' + from + ': ' + r.map((x, i) => i % step === 0 ? (from + i) + ' ' + x.toFixed(3) : '').filter(Boolean).join('; '))
+  console.log('director turns (a change under ' + tol + ' is not counted): start ' + r[0]!.toFixed(3) + ', ' + marks.join(', '))
+}
 if (process.env.SCAN) {
   const rate = (g: Record<string, number>, law: (u: number) => number): number[] => {
-    const u2 = (u: number): U => ({ lit: law(u), phase: glide(u, g.phase!), turn: glide(u, g.turn!), pull: glide(u, g.pull!), aim: glide(u, g.aim!), t: u })
+    const u2 = (u: number): U => ({ lit: law(u), phase: gl(u, g.phase!, 'phase'), turn: gl(u, g.turn!, 'turn'), pull: gl(u, g.pull!, 'pull'), aim: gl(u, g.aim!, 'aim'), t: u })
     const out: number[] = []
     let q = pose(u2(0))
     for (let f = F0; f < F1; f++) { const q1 = pose(u2((f + 1 - F0) / n)); out.push(omega(q, q1).length()); q = q1 }
@@ -84,7 +105,7 @@ if (process.env.SCAN) {
     let acc = 0, dec = 0, top = 0
     for (let i = 1; i < r.length; i++) { acc = Math.max(acc, r[i]! - r[i - 1]!); dec = Math.max(dec, r[i - 1]! - r[i]!) }
     for (let i = 0; i < r.length; i++) if (r[i]! > 0.9 * peak) top++
-    const q85 = pose({ lit: lightLaw(60 / n), phase: glide(60 / n, phase), turn: glide(60 / n, turn), pull: glide(60 / n, g.pull!), aim: glide(60 / n, aim), t: 60 / n })
+    const q85 = pose({ lit: lightLaw(60 / n), phase: gl(60 / n, phase, 'phase'), turn: gl(60 / n, turn, 'turn'), pull: gl(60 / n, g.pull!, 'pull'), aim: gl(60 / n, aim, 'aim'), t: 60 / n })
     found.push({ peak: deep > Number(process.env.TOL ?? 0.002) ? 99 + deep : peak, line: 'turn ' + turn + ' aim ' + aim + ' phase ' + phase + ': peak ' + peak.toFixed(3) + ' at ' + peakAt + ', rebound ' + deep.toFixed(3) + ', steepest rise ' + acc.toFixed(3) + ' and fall ' + dec.toFixed(3) + ' a frame, ' + top + ' frames within a tenth of the peak, 5085 at shutter open turned by ' + omega(base, q85).length().toFixed(1) })
   }
   found.sort((a, b) => a.peak - b.peak)
@@ -104,7 +125,7 @@ if (process.env.PROFILE) {
   for (let f = F0; f <= F1; f += Number(process.env.STEP ?? 5)) {
     const cells = sets.map((g0) => {
       const g = { ...G, ...g0 }
-      const u2 = (u: number): U => ({ lit: lightLaw(u), phase: glide(u, g.phase!), turn: glide(u, g.turn!), pull: glide(u, g.pull!), aim: glide(u, g.aim!), t: u })
+      const u2 = (u: number): U => ({ lit: lightLaw(u), phase: gl(u, g.phase!, 'phase'), turn: gl(u, g.turn!, 'turn'), pull: gl(u, g.pull!, 'pull'), aim: gl(u, g.aim!, 'aim'), t: u })
       const x = u2((f - F0) / n)
       const q = pose(x)
       const time = seg.start + x.t * (seg.end - seg.start)
