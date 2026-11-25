@@ -1,71 +1,71 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T03:59:59.742Z",
- "head": "a45346566e95e2554fc6390b9c6d2afbd8e81f02",
- "note": "MAIL 883 first picture: 1305 to 1320 and 1604 to 1614, main beside mine; dive 1321 to 1343 of the working tree",
+ "pushed": "2026-11-25T07:28:18.576Z",
+ "head": "86237abe705bfc32ecbf4651d7c40cd5e150603a",
+ "note": "venus 86237abe: one ground for every height, first state, dive and rise and hold at draft",
  "looks": [
   {
-   "time": "2026-11-25T03:59:59.043Z",
-   "file": "20261125035959043-note-mine-1333-1343.jpg",
-   "source": "../../../../tmp/v/st/c0/mine-1333-1343.jpg",
+   "time": "2026-11-25T07:28:17.334Z",
+   "file": "20261125072817334-note-dive-1302.jpg",
+   "source": "../../../../tmp/v/sh/q6all/dive-1302.jpg",
    "kind": "note",
-   "label": "venus mine-1333-1343: working tree with the picture past the end of the ground (trial g1), every frame, draft stills",
+   "label": "q6 dive every frame from 1302, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T03:59:58.231Z",
-   "file": "20261125035958231-note-mine-1321-1332.jpg",
-   "source": "../../../../tmp/v/st/c0/mine-1321-1332.jpg",
+   "time": "2026-11-25T07:28:16.283Z",
+   "file": "20261125072816283-note-dive-1296.jpg",
+   "source": "../../../../tmp/v/sh/q6all/dive-1296.jpg",
    "kind": "note",
-   "label": "venus mine-1321-1332: working tree with the picture past the end of the ground (trial g1), every frame, draft stills",
+   "label": "q6 dive every frame from 1296, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T03:59:57.299Z",
-   "file": "20261125035957299-note-m883-rise-1610-1614.jpg",
-   "source": "../../../../tmp/v/st/c0/m883-rise-1610-1614.jpg",
+   "time": "2026-11-25T07:28:15.273Z",
+   "file": "20261125072815273-note-dive-1290.jpg",
+   "source": "../../../../tmp/v/sh/q6all/dive-1290.jpg",
    "kind": "note",
-   "label": "venus MAIL 883 first picture m883-rise-1610-1614: left main 92c5f998 (its Venus folders on my tree's shared code), right mine (working tree on a4534656), draft stills",
+   "label": "q6 dive every frame from 1290, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T03:59:56.464Z",
-   "file": "20261125035956464-note-m883-rise-1604-1609.jpg",
-   "source": "../../../../tmp/v/st/c0/m883-rise-1604-1609.jpg",
+   "time": "2026-11-25T07:28:14.498Z",
+   "file": "20261125072814498-note-dive-1284.jpg",
+   "source": "../../../../tmp/v/sh/q6all/dive-1284.jpg",
    "kind": "note",
-   "label": "venus MAIL 883 first picture m883-rise-1604-1609: left main 92c5f998 (its Venus folders on my tree's shared code), right mine (working tree on a4534656), draft stills",
+   "label": "q6 dive every frame from 1284, 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T03:59:55.366Z",
-   "file": "20261125035955366-note-m883-dive-1313-1320.jpg",
-   "source": "../../../../tmp/v/st/c0/m883-dive-1313-1320.jpg",
+   "time": "2026-11-25T07:28:13.382Z",
+   "file": "20261125072813382-note-q6-hold-1x.jpg",
+   "source": "../../../../tmp/v/sh/q6-hold-1x.jpg",
    "kind": "note",
-   "label": "venus MAIL 883 first picture m883-dive-1313-1320: left main 92c5f998 (its Venus folders on my tree's shared code), right mine (working tree on a4534656), draft stills",
+   "label": "q6-hold-1x one ground for every height first state 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T03:59:54.154Z",
-   "file": "20261125035954154-note-m883-dive-1305-1312.jpg",
-   "source": "../../../../tmp/v/st/c0/m883-dive-1305-1312.jpg",
+   "time": "2026-11-25T07:28:12.269Z",
+   "file": "20261125072812269-note-q6-rise-b.jpg",
+   "source": "../../../../tmp/v/sh/q6-rise-b.jpg",
    "kind": "note",
-   "label": "venus MAIL 883 first picture m883-dive-1305-1312: left main 92c5f998 (its Venus folders on my tree's shared code), right mine (working tree on a4534656), draft stills",
+   "label": "q6-rise-b one ground for every height first state 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T03:49:46.509Z",
-   "file": "20261125034946509-note-rise-limb-ul.jpg",
-   "source": "../../../../tmp/v/st/c0/rise-limb-ul.png",
+   "time": "2026-11-25T07:28:11.237Z",
+   "file": "20261125072811237-note-q6-rise-a.jpg",
+   "source": "../../../../tmp/v/sh/q6-rise-a.jpg",
    "kind": "note",
-   "label": "venus rise-limb-ul (MAIL 876 slabs, MAIL 883)",
+   "label": "q6-rise-a one ground for every height first state 86237abe draft",
    "stop": "venus"
   },
   {
-   "time": "2026-11-25T03:49:45.766Z",
-   "file": "20261125034945766-note-r3-1554.jpg",
-   "source": "../../../../tmp/v/st/c0/r3-1554.png",
+   "time": "2026-11-25T07:28:10.460Z",
+   "file": "20261125072810460-note-q6-dive-b.jpg",
+   "source": "../../../../tmp/v/sh/q6-dive-b.jpg",
    "kind": "note",
-   "label": "venus r3-1554 (MAIL 876 slabs, MAIL 883)",
+   "label": "q6-dive-b one ground for every height first state 86237abe draft",
    "stop": "venus"
   }
  ]
