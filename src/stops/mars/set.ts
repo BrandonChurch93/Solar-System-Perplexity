@@ -117,6 +117,8 @@ export const createSet: SetFactory = async (ctx) => {
   const lawTexel = { value: new THREE.Vector4(closeJson.law.texel[0]!, closeJson.law.texel[1]!, reliefJson.camera.focalPxFull, 1 / closeJson.law.farthest) }
   const lawAir = { value: new THREE.Vector4(closeJson.law.air[0]!, closeJson.law.air[1]!, 0, 0) }
   const lawEye = { value: new THREE.Vector3() }
+  const finest = patches.levels.filter((l) => l.own).reduce((a, b) => (b.widthDeg / b.full < a.widthDeg / a.full ? b : a))
+  const plateTexel = THREE.MathUtils.degToRad(finest.widthDeg) / finest.full
   const lawTone = { value: new THREE.Vector3(1, 1, 1) }
   const [imageW, imageH] = reliefJson.imageSize.full as [number, number]
   const lawBoxes = Object.values(reliefJson.layers).map((l) => l.box)
@@ -380,6 +382,8 @@ export const createSet: SetFactory = async (ctx) => {
         terrain.scale.setScalar(f.scale)
         closeScene(true)
         lawAir.value.z = 1
+        // count 6 of the law: the texel of the finest own plate of the place, in the relief's units (the full set's count on both tiers)
+        lawAir.value.w = closeJson.law.need.on ? plateTexel / f.scale : 0
         lawTone.value.fromArray(ownGain)
         lawEye.value.copy(state.segment.kind === 'dive' ? takenDive : takenRise)
         ground.presence(1, { air: there })

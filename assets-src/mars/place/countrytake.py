@@ -45,6 +45,36 @@ def smooth(x):
     return x * x * (3 - 2 * x)
 
 
+def fit_take(take, lead, sigma):
+    """A repainted take holds the broad tone of its lead (bodylead.py: the take as it stood, the cast shadow of the cap's heights,
+    the finer plate, the close set from above) and adds only what is finer (MAIL 963 item 3): per colour, the lead's mean over
+    `sigma` texels of this plate over the take's own. A law of the ground: no distance, no border, no height in it."""
+    a = cv2.GaussianBlur(lead, (0, 0), sigma)
+    b = cv2.GaussianBlur(take, (0, 0), sigma)
+    return take * np.clip((a + 1.0) / (b + 1.0), 0.1, 4.0)
+
+
+def body_share(stem, width, c, body):
+    """How much of a plate texel is the close set seen from straight above (plates.json takes.body): by the ground one picture
+    pixel covers there, by the air between that ground and the picture's eye (its distance), and soft at the border of what
+    the set shows. Returns the share and the colour."""
+    hgt = np.load(stem + '-height.npy')
+    assert hgt.shape[0] == c, 'heights.py --size %d wanted for %s' % (c, stem)
+    seen = np.isfinite(hgt).astype(np.float32)
+    col = np.asarray(Image.open(stem + '-colour.png').convert('RGB')).astype(np.float32)
+    lies = np.where(seen > 0, np.load(stem + '-reach.npy') / body.get('texelDeg', width / c), 1e9).astype(np.float32)
+    v = seen * (1 - smooth((lies - body['texels'][0]) / (body['texels'][1] - body['texels'][0])))
+    if body.get('airKm'):
+        o = np.array(geom.load()['dive']['terrain']['origin'])
+        r = float(np.linalg.norm(o))
+        e0, n0, _ = geom.to_patch((o / r)[None, :])
+        at = ((np.arange(c) + 0.5) / c * 2 - 1) * geom.half_tan(width)
+        far = np.sqrt((at[None, :] - e0[0]) ** 2 + (-at[:, None] - n0[0]) ** 2 + (np.where(seen > 0, hgt, 0) - (r - 1)) ** 2) * 3389.5
+        v = v * (1 - smooth((far - body['airKm'][0]) / (body['airKm'][1] - body['airKm'][0]))).astype(np.float32)
+    v = v * smooth((cv2.GaussianBlur((v > 0.5).astype(np.float32), (0, 0), body['softTexels']) - 0.5) * 2)
+    return v, col
+
+
 def reach_mask(K, g=2048):
     wide = 2.2 * (K['toDeg'] + K['wanderDeg'])
     per = g / (2 * half(wide))
@@ -204,6 +234,7 @@ def main():
     ap.add_argument('--laid', required=True)
     ap.add_argument('--out', required=True)
     ap.add_argument('--foot', default=os.path.join(ROOT, 'out', 'work', 'place', 'ap'))
+    ap.add_argument('--top', default=os.path.join(ROOT, 'out', 'work', 'place', 'top'), help='the picture seen from above per level (heights.py --picture-only --size <the plate>): t<width>-colour.png, -height.npy, -reach.npy')
     ap.add_argument('--takes', default=os.path.join(ROOT, 'assets-src', 'mars', 'place', 'takes'))
     ap.add_argument('--plates', default=os.path.join(ROOT, 'assets-src', 'mars', 'place', 'plates.json'))
     ap.add_argument('--json', default=os.path.join(ROOT, 'src', 'stops', 'mars', 'levels.json'))
@@ -236,6 +267,11 @@ def main():
             if K.get('light') == 'painted':
                 # the take is painted in the approved picture's own light (MAIL 913, 1): it keeps that light whole, the cap adds none
                 # (cap.json light.own 0), no cast shadow of the heights is laid in and nothing is toned by a mask
+                fit = (K.get('fit') or {}).get('%g' % l['widthDeg'])
+                if fit:
+                    lead = np.asarray(Image.open(os.path.join(args.takes, fit)).convert('RGB')).astype(np.float32)
+                    lead = cv2.resize(lead, (c, c), interpolation=cv2.INTER_LANCZOS4 if lead.shape[0] < c else cv2.INTER_AREA)
+                    take = fit_take(take, lead, K['fitPx'] * c / 1254.0)
                 tone = K.get('tone')
                 level_gain = (K.get('levelGain') or {}).get('%g' % l['widthDeg'])
                 if level_gain:
@@ -284,8 +320,19 @@ def main():
                     r = take[..., 0]
                     take[..., 1] = np.maximum(take[..., 1], r * np.interp(r, gamut['red'], gamut['green']))
                     take[..., 2] = np.maximum(take[..., 2], r * np.interp(r, gamut['red'], gamut['blue']))
+                body = K.get('body')
+                held = 0.0
+                if body:
+                    # ONE BODY (MAIL 963): where the approved picture itself shows the ground at least as finely as this plate
+                    # does, the plate is the picture seen from straight above (heights.py --picture-only: its colour, and the
+                    # ground one picture pixel covers along its longest side). Whole at or under body.texels[0] plate texels a
+                    # picture pixel, none at body.texels[1]: a law of the ground, the same two numbers as the stretch of the
+                    # stop's law. The take is painted from that ground outward (lead: bodylead.py), so nothing is toned to it.
+                    v, col = body_share(os.path.join(args.top, 't%g' % l['widthDeg']), l['widthDeg'], c, body)
+                    take = col * v[..., None] + take * (1 - v[..., None])
+                    held = float((v > 0.5).mean())
                 Image.fromarray(np.clip(take + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)
-                print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])), name, 'the take alone, in its own painted light' + (', toned by ground distance to the picture' if tone else ''))
+                print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])), name, 'the take alone, in its own painted light' + (', toned by ground distance to the picture' if tone else '') + (', the picture from above on %.3f of it' % held if body else ''))
                 continue
             take, shadow, held, toned = take_light(take, l['widthDeg'], P['country']['light'], heights, K, laid, known, before, P['fit'])
             Image.fromarray(np.clip(take + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)

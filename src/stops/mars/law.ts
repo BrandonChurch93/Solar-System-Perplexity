@@ -38,6 +38,13 @@
 //    Off as the stop stands (close.json law.gap.on false, the file then holds no lower half): measured at 2456 to 2476 the count
 //    cuts ribbons into the picture along every outline of its layers, where a ground of one height a place cannot follow a wall
 //    seen from the side, and shows the cap through them (PLACE-NOTES.md, 24 November 03:40). The measure stays: gap.py.
+// 6. The need (uLawAir.w, the texel of the finest plate of the place in the relief's units; close.json law.need). The plates of the
+//    place hold the same ground as the picture, from straight above, as finely as their texels go (ONE BODY, MAIL 963 of /root;
+//    assets-src/mars/place/plates.json takes.body). The picture's own relief is laid on the ground only where a plate texel is
+//    wider on the present screen than the picture can be: none at or under uLawTexel.x pixels of the master a plate texel, whole
+//    from uLawTexel.y on, the two limits of count 1 read the other way round. As the other counts it is whole at the eye at which
+//    the surface view takes over, for every point: the plate's texel is counted against uLawTexel.y or against what it is at
+//    that eye, whichever is smaller. By the distance of the eye to the ground point alone; no time, no height.
 // The tone (lawTone): the layers' colour times uLawTone, which the set gives as the factor the globe's own ground round the picture
 // is drawn with at the present eye (set.ts, ownGain), so the picture and the ground it lies on are one tone on the way down.
 // In the surface view the set turns the law off (uLawAir.z under 0.5): the share is exactly 1 and the tone exactly 1.
@@ -100,6 +107,12 @@ float lawShare(vec3 P, vec3 E, vec2 image) {
   // the count: the present length, against the limit or against the length the surface view itself shows, whichever is longer
   float texel = 1.0 - smoothstep(uLawTexel.x, uLawTexel.y, now * min(1.0, uLawTexel.x / taken));
   float air = 1.0 - smoothstep(uLawAir.x, uLawAir.y, sinNow / sinTaken);
+  float need = 1.0;
+  if (uLawAir.w > 0.0) {
+    float plateNow = uLawAir.w * uLawFocal / length(P - E);
+    float plateTaken = uLawAir.w * uLawFocal / length(F);
+    need = smoothstep(uLawTexel.x, uLawTexel.y, plateNow * max(1.0, uLawTexel.y / plateTaken));
+  }
   float field = 1.0;
   if (uLawOver.x > 0.0) field *= smoothstep(0.0, 1.0, image.x * uLawOver.x);
   if (uLawOver.y > 0.0) field *= smoothstep(0.0, 1.0, (1.0 - image.x) * uLawOver.y);
@@ -127,7 +140,7 @@ float lawShare(vec3 P, vec3 E, vec2 image) {
     float apart = v * v * uLawGap.y * length(P) * length(cross(normalize(P), normalize(P - E))) * uLawFocal / length(P - E);
     gap = 1.0 - smoothstep(uLawGap.z, uLawGap.w, apart);
   }
-  return texel * air * field * seen * gap;
+  return texel * air * field * seen * gap * need;
 }
 vec3 lawTone(vec3 P, vec3 E, vec2 image) {
   if (uLawAir.z < 0.5) return vec3(1.0);
