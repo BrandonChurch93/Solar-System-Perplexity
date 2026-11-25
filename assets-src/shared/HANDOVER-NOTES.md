@@ -1767,6 +1767,58 @@ THE DIM, what I measured (scratch `out/work/tmp/dimlegs.ts`, `dimanat.ts`, `dime
   - A frame that stands still: no way is fed (`setWay(null)`: one sample, a hold, no cover), the helper returns at its first line and the old products run. A slow frame inside a dive (the way fed, every point under the lower number): the share is 0 and the old products run. Both to be PROVEN by the sha256 of a frame with and without the patch, not said.
 - THE COMMENT COMMIT on the merge, the whole suite and the build on it, then NAMED by 19:15: full shas A, B, C, D, the merge, the comment commit; which main; ranges; my test lines; that /root's finals are Earth 2174, 2175, Mercury 717, 721, 1012, Mars 2440, 2470. The near body is open and goes into the same mail as a point of its own, not into the name.
 
+## MAIL 1235 (17:35 UTC on 2026-11-25): the probe of Mars's dive line past Phobos (nothing committed)
+
+/root asked: can the dive's line pass the moon's place of 2415 about nine radii farther off (12 moon radii, 0.733 units; today 3.03), with
+the hold's pose, the place, the plumb end and the heights' monotone fall unchanged and without a swerve; the path part of the smooth tool
+on that line against today's; eight draft frames 2400 to 2430 on both lines with the moon's px a frame. I promised (1) and (2) by 18:45,
+(3) by 19:10. The NAMED of 19:15 stays.
+
+Tools (scratch, in /tmp/probe, gone after a restart: the recipe is here). `line.mts ROOT OUT [SIDESTEP_JSON|today] [FIRST END] [MOON_DEG_PER_SECOND]`
+(run in the tree: `cd TREE && npx tsx /tmp/probe/line.mts TREE OUT.json '{"right":-0.37,"up":0,"by":0.22}' 2200 2494 2.25`): builds the
+FilmDirector of the tree with the dive's sidestep (and the orbit's speed) replaced in memory, and prints per frame the eye in the set's
+frame, the moon's centre as `assets-src/mars/phobos/angle.ts` places it (phobos.json center turned about plan.axis by moonDegPerSecond
+times the time since plan.holdMid), the distance in moon radii (radius 0.061096), the moon's centre in px, its disc radius in px, its px
+a frame, the eye's speed, the camera's turn a frame and its change. `sum.py LABEL FILE [TODAY]` sums a line up. `scan.sh "right,up,by" ...`
+lays each sidestep into the scratch tree t-c2m's place.json (mars_place_builder's file, put back by hash at the end), runs
+`npx tsx tools/smooth.ts --stop mars --kind dive --only path` (3.5 s, no browser, writes out/work/smooth/mars-dive.md) and the line probe.
+
+Facts of today's line (the second cut a1032553, sidestep right -0.25 up 0 by 0.22, orbit -1.2 degrees a second):
+- The hold is 2250 to 2399, the dive 2400 to 2489. At the hold's last frame the moon stands 0.66 units in front of the lens and 0.10
+  off its axis (8.5 degrees), its centre at px (1149, 773), its disc 187 px in radius, 10.88 radii away, moving 2.4 px a frame. In the
+  judged frame 2325 it is 12.02 radii away at px (999, 847).
+- The eye falls almost plumb (hold 3.42 from the centre, the place 6 degrees of arc aside) and the moon is 1.4 degrees of arc from the
+  eye's nadir at 2.76 from the centre: the eye is level with the moon at 2414 to 2415, 15 frames after the hold.
+- Moon px a frame: 2405 35, 2408 86, 2409 115, 2410 160, 2411 240, 2412 404; closest 3.03 radii at 2415.
+- Turn: 0.056 degrees a frame in the hold, 0.689 at 2410, peak 2.523 at 2437; largest change 0.099 at 2419 (0.085 at 2405).
+- Path part of the smooth tool: green. Turn step 0.065 of the mean (0.066 at rate 2) at 2419, rate step 0.057, speed step 0.063;
+  limits 0.08 for a step and 0.03 for a fall before the largest value.
+
+What the sidestep can do (by 0.22 unless said; "in frame" is the moon's disc touching the frame):
+- right -0.30: 3.54 radii, green (turn step 0.066). right -0.35: 4.06, green (0.075 at 2405). right -0.37: 4.27, green.
+  right -0.45 by 0.26: 4.26, green. right -0.5 by 0.3: 3.82, green. right -0.6 by 0.35: 3.49. right -0.8 by 0.45: 2.84.
+- right -0.40: 4.58, RED (turn step 0.085). right -0.50: 5.62, RED (turn step 0.103, and the turn falls by 0.063 before its largest).
+  right -0.25 up 0.3: 4.17, RED (0.086).
+- right -1.12 (12.09 radii at 2415, the line asked for): RED: turn step 0.199 of the mean at 2405 and 0.134 at 2414, the turn falls
+  by 0.613 of the mean before its largest value (a second hump: 2.44 degrees a frame at 2410 where today has 0.69, back to 1.29 at 2417),
+  speed step 0.083. The moon is NOT slower: 140 px a frame at 2405, 189 at 2406, 243 at 2407, then out. Its closest is 10.42 radii at 2407.
+  Heights monotone, at most 0.039 lower than today's (2416); the poses at 2399, 2400, 2489 as today's (under 2e-5 units, 6e-3 degrees).
+- So: the line clears about 4.3 radii cleanly (1.2 more than today). Why no lay can do more: the moon stands in the frame 0.66 units
+  ahead of a lens that is level with it 15 frames later, so its direction from the eye turns by about 80 degrees in those frames
+  whatever the line; a wider pass makes it leave the frame earlier, not slower, and costs a swerve (0.55 units aside on a way of 0.75).
+
+The orbit's speed with the line (closest radii in the dive; the moon's centre is at the approved place in 2325 at every speed):
+- plus 1.5: today's line 9.16, right -0.37 10.41; the moon leaves the frame at 2400 (14.8 px a frame there).
+- plus 2: today's 10.31, -0.37 11.55, -0.45 by 0.26 11.60; moon in the frame of the hold to 2391 at 11.0 to 16.8 px a frame, never in the dive.
+- plus 2.25: today's 10.88, -0.37 12.12, -0.45 by 0.26 12.17; in the hold to 2387 at 11.5 to 17.9.
+- plus 2.5: today's 11.45, -0.37 12.68; to 2383 at 12.4 to 18.9. plus 2.75: today's 12.01, -0.37 13.24; 2256 to 2380 at 13.3 to 20.0.
+- plus 3: today's 12.57, -0.37 13.79; 2260 to 2377 at 14.2 to 21.1.
+  (The camera's own drift in the hold moves the moon right at about 7.4 px a frame; the orbit adds 4.3 px a frame for each degree a second.)
+
+Frames for (3): `/tmp/probe/frames.sh '{"right":-1.12,"up":0,"by":0.22}' '{"right":-0.37,"up":0,"by":0.22}' 2.25` renders 20 draft frames
+(2400 to 2414, 2416, 2418, 2420, 2425, 2430) on three lines in the trial tree t-c2a (labels p-today, p-12, p-pair) and puts place.json
+and plan.ts back by hash.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
