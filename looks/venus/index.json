@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T19:29:40.674Z",
- "head": "6106df930b0fff05dccb46a7626f8289567b43b6",
- "note": "control sheet: the close picture's share held at 0 on dive 1290 to 1299, the ground by height shows as the dark form at the centre",
+ "pushed": "2026-11-25T19:50:15.984Z",
+ "head": "53327e694461f9c13a4e0f89db863311c03e86df",
+ "note": "the ground by height named as the cause of the two new reds: controls and the trial of its cure",
  "looks": [
+  {
+   "time": "2026-11-25T19:50:14.639Z",
+   "file": "20261125195014639-note-H1-frames.jpg",
+   "source": "../../../../tmp/v/probe/H1-frames.png",
+   "kind": "note",
+   "label": "trial H1 (the ground takes the close picture's share by the eye's distance, no height), draft 1304, 1312, 1320, 1566 at half size",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T19:50:13.393Z",
+   "file": "20261125195013393-note-gc-crops.jpg",
+   "source": "../../../../tmp/v/probe/gc-crops.png",
+   "kind": "note",
+   "label": "controls on dive 1291 to 1307, crop of 400 px about 1140, 440, lifted: above the close picture's share held at 0 (the ground comes in by height with its own outline), below held at 1 (no outline)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T19:29:30.975Z",
    "file": "20261125192930975-note-cG0-venus-dive-k2580-2598-changes.jpg",
@@ -56,22 +72,6 @@
    "source": "../../../../tmp/v/sh/L5-f1586.jpg",
    "kind": "note",
    "label": "54480b0c final 1586 (judged), whole frame at two thirds",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T18:32:40.244Z",
-   "file": "20261125183240244-note-L5-f1287.jpg",
-   "source": "../../../../tmp/v/sh/L5-f1287.jpg",
-   "kind": "note",
-   "label": "54480b0c final 1287 (judged), whole frame at two thirds",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T17:55:07.505Z",
-   "file": "20261125175507505-note-L5r-2.jpg",
-   "source": "../../../../tmp/v/sh/L5r-2.jpg",
-   "kind": "note",
-   "label": "54480b0c whole rise, every half frame 1540 to 1554 and a half",
    "stop": "venus"
   }
  ]
