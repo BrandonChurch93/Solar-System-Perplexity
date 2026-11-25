@@ -36,15 +36,28 @@ After a compaction: read assets-src/shared/STOP-AGENT.md, then this file.
   edge (a split: the new cell takes a growing share of its host), the others on an edge of a picked cell.
   `cellsAt(t)` reads two steps of the table, blends them, and makes the diagram of that time: middle, area and up to 12
   edges (normal over distance) a cell.
-- ground.ts: one instanced polar mesh a cell in three densities (36 by 96, 14 by 40, 6 by 16) picked by size in the picture.
-  The cell data is a float texture (8 texels a cell), the list of drawn cells a float texture a level (read by
-  gl_InstanceID). Radius r(theta) is a p-norm (p 6) of the edges, so corners are round and three cells leave a pit.
-  Profile: an arc of 112 degrees from crown to foot, so the dome is widest above its foot and neighbours cut into each
-  other. Normal and fibre direction by finite differences in the vertex shader. Fibres are the meridians of the dome's
-  sphere about a pole that lies low on the side of the lens. Light: heat by height and by the way from the root, sheen by
-  the hair law for a light at the far horizon and a weak one from above. A dark floor under all of it.
+- ground.ts (state of 07:05, after MAIL 949): one instanced polar mesh a cell in three densities (36 by 96, 14 by 40,
+  6 by 16) picked by size in the picture. The cell data is a float texture (8 texels a cell), the list of drawn cells a
+  float texture a level (read by gl_InstanceID). Radius r(theta) is a p-norm (p 10) of the edges times 1.06, so the
+  pillows press on each other and the lane is the crease where two meet. Profile: an arc of 86 degrees, height 0.32 of
+  the radius, top flattened (power 2.2), a few shallow creases between lobes round 4 sites of the dome's own.
+- Light is heat alone (MAIL 949 point 1: no highlight that moves with the eye). heat 0 to 1 goes through the ramp of
+  convect.json, above 1 it is brighter than white. A hot patch of no even outline in the middle (rho plus noise), a
+  cooler shell round it combed into threads (fan from a root at the foot on the lens side), cold at the rim, at the
+  root and in the creases, knots, small points on the rim. The flank of a dome is cooler than its top by the lie of the
+  surface against the ball's up (not against the eye).
+- Haze: tau = amount exp(-height / scale) / mu^power, mu the cosine between up and the look. Far cells melt into a
+  bright limb, near ones stay sharp.
 - Spot: the cells' chart is drawn in toward the spot (place r on the ground belongs to r + pull exp(-(r/wide)^2) of the
-  chart), so cells become strands; a funnel in height.
+  chart), so cells become strands. A funnel in height (wall from 2.6 to 0.9 umbra radii, 0.12 deep), domes flatter
+  there. Every thread ends over the pit at its own place (discard by the thread's own noise), so there is no ring of
+  gaps. The floor is a dark mesh under all of it.
+
+## What MAIL 949 asks (06:38)
+
+1 no view bound highlight, heat alone. 2 wide range, knots that bloom, map a temperature. 3 cells half as wide, mixed,
+flatter tops with lobes, lanes uneven with small bright points. 4 depth by a glowing haze. 5 spot a wide flat dark sunk
+floor with fine dark threads over its edge. 6 far domes foreshorten into fine grain; look at 0 and 179 too.
 
 ## Measured
 
@@ -61,5 +74,11 @@ After a compaction: read assets-src/shared/STOP-AGENT.md, then this file.
 
 ## Log
 
-- 06:45 first raw still with real domes (out/work/sun/lab/lab-90-b.png): cells about twice too large, too yellow and
+- 06:36 first raw still with real domes (out/work/sun/lab/lab-90-b.png): cells about twice too large, too yellow and
   too evenly bright, no umbra.
+- 06:38 to 07:05 stills d to o. What failed on the way: threads as broad bands (satin, shells), a dark root drawn large
+  (reads as an open shell), deep lobes with a term by the eye (gems), dark rim all round a tall dome (beans), veins as
+  thin lines (a drawing). What held: low pillows that press on each other, a hot patch with a soft uneven edge, thin
+  dark rim, threads strong only in the shell and in the penumbra.
+- 07:05 still o: near ground max channel percentiles 5 25 50 75 95 = 0.27 0.44 0.63 0.79 0.94 against the approved
+  0.23 0.40 0.58 0.76 0.91. Frames 0 and 179 hold (stills n).

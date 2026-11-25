@@ -65,26 +65,26 @@
  },
  "heat": {
   "floor": 0.012,
-  "body": 0.84,
+  "body": 0.86,
   "cool": 0.2,
   "hot": 1.2,
-  "knot": 0.5,
+  "knot": 0.45,
   "edge": 0.75,
-  "pen": 0.6,
+  "pen": 0.8,
   "bloom": 2.5,
   "glint": 0.8,
-  "core": 0.5,
+  "core": 0.52,
   "thread": [
-   0.15,
+   0.3,
    0.9
   ],
   "rim": 0.3
  },
  "haze": {
-  "amount": 0.0015,
+  "amount": 0.002,
   "scale": 0.02,
   "level": 1.0,
-  "power": 2.0,
+  "power": 2.5,
   "tint": [
    1.0,
    0.8,

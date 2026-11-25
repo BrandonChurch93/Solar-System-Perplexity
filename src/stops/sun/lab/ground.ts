@@ -307,27 +307,28 @@ void main() {
   thread = smoothstep(0.38, 0.62, thread);
   float pen = 1.0 - smoothstep(uLabPit.w * 1.2, uLabPit.w * 3.0, vReal);
   // over the pit every thread ends at its own place
-  if (vReal < uLabPit.w * (0.92 + 0.5 * fb + 0.25 * fa + 0.2 * fract(seed * 0.7313))) discard;
+  if (vReal < uLabPit.w * (0.8 + 0.35 * fb + 0.2 * fa + 0.15 * fract(seed * 0.7313))) discard;
   // the heat: matter wells up in the middle of the dome, in a patch of no even outline, and in knots; round the
   // patch it is cooler and combed into threads, and it is cold at the rim, at the root and in the creases
   float root = smoothstep(0.04, uLabCount.w, along + 0.2 * (thread - 0.5) + 0.12 * (fa - 0.5));
   float blotch = 0.4 * vn(vec2(ang * 5.0 + seed * 0.71, along * 3.0 - seed)) + 0.6 * vn(d * 2.6 - seed * 0.37);
   float fine = vn(d * 9.0 + seed * 2.3);
-  float core = 1.0 - smoothstep(uLabHeatB.x - 0.3, uLabHeatB.x + 0.2, rho + 0.95 * (blotch - 0.5) + 0.14 * (thread - 0.5));
+  float core = 1.0 - smoothstep(uLabHeatB.x - 0.45, uLabHeatB.x + 0.35, rho + 0.95 * (blotch - 0.5) + 0.14 * (thread - 0.5));
   float knot = smoothstep(0.62, 0.85, vn(d * 6.3 - seed * 1.9)) * core;
   float age = vCell.y;
   float life = mix(1.15, 0.7, smoothstep(0.3, 0.85, age));
-  float shell = uLabHeatB.w * mix(1.0, mix(uLabHeat.z, uLabHeat.w, thread), max(uLabHeatB.z, pen));
+  float shell = uLabHeatB.w * mix(1.0, mix(uLabHeat.z, uLabHeat.w, thread), uLabHeatB.z);
   float inner = (0.9 + 0.16 * fine) * mix(1.0, mix(uLabHeat.z, uLabHeat.w, thread), uLabHeatB.y);
-  float heat = uLabHeat.y * mix(shell, inner, core * (1.0 - pen)) * life;
-  heat *= mix(0.07, 1.0, root) * (1.0 - 0.35 * groove) * (1.0 - 0.93 * smoothstep(0.7, 0.97, rho + 0.1 * (thread - 0.5)));
+  float strand = uLabHeatMore.z * mix(0.08, 1.1, thread * thread) * mix(0.5, 1.15, fa);
+  float heat = uLabHeat.y * mix(mix(shell, inner, core), strand, pen) * life;
+  heat *= mix(mix(0.07, 1.0, root), 1.0, 0.7 * pen) * (1.0 - 0.35 * groove) * (1.0 - 0.93 * smoothstep(0.7, 0.97, rho + 0.1 * (thread - 0.5)));
   heat += uLabHeatMore.x * knot * root * life;
   // small hard points of light on the rim of a dome, against the dark of the crease
   vec2 gq = d * 9.0 + seed * 3.7;
   vec2 gi = floor(gq);
   float lit = step(0.9, h1(gi + 17.0)) * (1.0 - smoothstep(0.1, 0.3, length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
   heat += uLabHeatMore.w * lit * smoothstep(0.6, 0.85, rho);
-  heat *= mix(1.0, uLabHeatMore.z, pen) * mix(0.06, 1.0, smoothstep(uLabPit.w * 1.1, uLabPit.w * 2.8, vReal));
+  heat *= mix(0.12, 1.0, smoothstep(uLabPit.w * 0.9, uLabPit.w * 2.1, vReal));
   // matter that wells up is hot where it comes up and cools as it turns over: the flanks of a dome and of its
   // lobes are cooler than their tops, by the lie of the surface alone
   float upward = dot(normalize(vN), normalize(vPos - ST_CENTRE));
@@ -614,7 +615,7 @@ export class LabGround {
           const gx = w.x
           const gy = w.y
           const arc = Math.hypot(gx - ex, gy - ey)
-          if (arc > horizon || Math.hypot(gx - this.spot.x, gy - this.spot.y) < 0.85 * this.umbra) continue
+          if (arc > horizon || Math.hypot(gx - this.spot.x, gy - this.spot.y) < 0.7 * this.umbra) continue
           const r = Math.sqrt(d.area[i]! / Math.PI)
           const full = Math.hypot(gx, gy)
           const al = full / stage.radius
