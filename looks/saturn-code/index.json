@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T15:15:02.006Z",
+ "pushed": "2026-11-25T15:30:46.497Z",
  "head": "6617c15f0777b4b5f07be68e545511ded73b4853",
- "note": "proof of 6617c15f renders (dive at 180 of 260); measuring row 4 by latitude, writing the dark ice sheet",
+ "note": "proof of 6617c15f: dive green, rise rendering; dark ice sheet and the dusk cure are written, not rendered yet",
  "looks": [
+  {
+   "time": "2026-11-25T15:30:41.789Z",
+   "file": "20261125153041789-note-dive_whole.jpg",
+   "source": "../../../../tmp/v/named2/dive_whole.png",
+   "kind": "note",
+   "label": "6617c15f proof, dive at draft: whole frames 3540 to 3628 every 8"
+  },
+  {
+   "time": "2026-11-25T15:30:40.869Z",
+   "file": "20261125153040869-note-dive_foot.jpg",
+   "source": "../../../../tmp/v/named2/dive_foot.png",
+   "kind": "note",
+   "label": "6617c15f proof, dive at draft: right foot 3596 to 3607 at 2 times, every film frame"
+  },
   {
    "time": "2026-11-25T15:15:00.805Z",
    "file": "20261125151500805-note-row4_lines.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/law3/t/foot_cmp.png",
    "kind": "note",
    "label": "saturn dive 3594 3600 3601 right foot: the cure above, the cure with the star window closed below (draft)"
-  },
-  {
-   "time": "2026-11-25T13:55:18.782Z",
-   "file": "20261125135518782-note-d_foot.jpg",
-   "source": "../../../../tmp/v/law2/d_foot.jpg",
-   "kind": "note",
-   "label": "cure law2, dive 3599 to 3604, the ring across the globe's foot, full size, draft"
-  },
-  {
-   "time": "2026-11-25T13:55:18.120Z",
-   "file": "20261125135518120-note-d_3596.jpg",
-   "source": "../../../../tmp/v/law2/d_3596.jpg",
-   "kind": "note",
-   "label": "cure law2, dive slice 3596 to 3603, draft, half size"
   }
  ]
 }
