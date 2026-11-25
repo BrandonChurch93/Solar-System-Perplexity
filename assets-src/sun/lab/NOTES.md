@@ -987,3 +987,46 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
     rim 0.3, wide 3.2, tubes.heat [0.8, 1.08], lump 0.2, thread [0.2, 0.6], tubes.depth 0.3: 135 cells, curve
     0.707 0.701 0.687 0.673 0.647 0.608 0.567 0.506 0.43 0.35 0.301, side 0.327, one direction 0.32, lane 5.75,
     0.313; match 30.043 / 50.043. SEEN: dark blobs on the tops, reads as marbled stone; outlines still crisp.
+- 21:10 to 21:25 UTC. THE FORM BY THE NUMBERS (frame 90 draft, cells.py, match.py; committed lab.json of u24 plus):
+  SEEN at 3 times (v/x3-b1.jpg): my cells were plates with crisp rims lying apart on a dark floor (heat.lane with a
+  flat dark bottom of 0.35 of its width, 0.12 to 0.24 of a radius wide on each side); the approved's cells touch,
+  with thin soft dark creases, black pits where three meet, dark olive tops, bright streaky patches on the
+  flanks, soft points of light along the lanes, everything soft.
+  b2: ground.ts: x = heat.blot times rise + ring + ...; ring = heat.ring[0] times smoothstep(ring[1], ring[2],
+    plan) times broad lobes round the cell (ring[3] of them, by the tubes' turn, fixed for the cell's life): the
+    flanks hotter than the top. heat.ring [0.7, 0.3, 0.75, 3], heat.blot 0.5, heat.lane [0.05, 0.05, 0.6, 0],
+    crease[2] 0.3. Cells touch; match 29.301 / 47.445 (flat, low contrast: P95 0.831).
+  b3: labSparks (ground.ts): small hot points in the cell's own frame (place from the middle in stage units, grid
+    heat.spark[1], share [2] of the grid's cells lit), two generations of [3] seconds each fading in and out, carried
+    outward by a zoom of exp([4]), 1.2 to 2.8 px wide by the screen derivative, gone where a pixel is over 0.3 of
+    the grid; weight [5] on the top rising to 1 on the flank. heat.glint 0 (the old points were fixed to the place).
+  b4: curve refit (percentiles 0.235 0.384 0.545 0.745 0.902 0.957), lane [0.1, 0.1], crease[2] 0.22: match
+    31.136 / 52.266; camouflage blobs, glazed look.
+  b5: patch [0, 1], rim 0.45, cool 1.5, spread[2] 6, thread [0.3, 0.8], fine [0.6, 2.0]: worn stone, too even.
+  b6: patch [0.2, 0.8], rim 0.3, cool 1.0, thread [0.8, 0.8] (the strands carry the patches: streaks from the
+    rim inward): the nearest to the approved's character so far. match 30.97 / 51.864.
+  b7: sparks 1.2 to 2.8 px, spark [1.2, 0.012, 0.3, 6, 1, 0.12], crease[2] 0.3, lane [0.12, 0.1, 0.6, 0].
+    MEASURED b7: 118 cells in the box (282 a box wholly counted; approved 129, 244), median 33.4 px (34.7),
+    10/50/90 19.0/33.4/68.6 (18.2/34.7/76.8), under half the median 0.042 (0.085); curve 0.682 0.677 0.678 0.668
+    0.649 0.62 0.582 0.527 0.456 0.389 0.346 against 0.667 0.662 0.657 0.647 0.619 0.586 0.547 0.496 0.433 0.369
+    0.324: largest gap 0.035 (at 0.6); lightest in the outer half 10.7 percent (14.4); side to side 0.29 (0.32);
+    one direction 0.08 (0.10); lane 5.97 px (7.08), depth 0.306 (0.234). Percentiles 0.239 0.384 0.557 0.733
+    0.902 0.976. match 31.093 / 52.25 (standing 30.286 / 53.294).
+  THE MATCH NUMBER AND WHAT IT CAN SAY: the approved's near ground against itself moved 40 px reads 50.58, moved
+    160 px 51.59, against its own flat mean colour 39.04. So a perfect twin with its cells at other places reads
+    about 51 on the near ground, a flat colour 39: the number falls with contrast, not with likeness. Costs:
+    (a) -0.083 whole frame (30.467 to 30.384), (c) -0.50 (to 29.884), (b) +1.09 (to 30.97 at b6; of it the
+    refit of the curve to the approved's percentiles +0.8), (d) +0.12 (to 31.093).
+  SEEN b7 whole frame (v/duo-b7.jpg): packed, mottled, streaky, sparkling; the nearest to the approved so far.
+    Still wrong: browner and darker in hue than the approved (its lights are more yellow at the same largest
+    channel: the ramp is the standing ground's), the lanes are no clear dark web (borders read by shading), the
+    cells are lumps rather than flat pillows, sparks are white pin points and not soft, every edge is crisp
+    (the approved's near field is soft), no black pits with spikes, the penumbra is long light hair.
+  Chain b7 started 21:22 (frames 0, 60, motion and flicker, final frame 90, four).
+  Chain b7 ended 21:32. Flicker b7 (u24): disc 26 px in box 100 790 460 290 largest 0.211 (0.192), 37.5 percent
+    of cells over a tenth (40); whole band disc 26 largest 0.255 (0.330), 34.2 percent (53); ellipse 90 by 45
+    largest 0.080 (0.087), none over; ellipse 70 by 35 largest 0.119 (0.253), 4 percent (15). Final tier frame 90
+    (lab-90-b7f.png, 372.5 s, 16 samples): percentiles 0.243 0.392 0.565 0.741 0.91 0.992, match 31.496 / 52.591.
+  21:33 the push of looks and the dry run of a push of code both fail: github answers 401 (no user name); reading
+    still works. Nothing changed on my side (no credential helper is set in git; the push of 21:10 went through).
+    Commits are kept locally until it works again; pictures go by mail.

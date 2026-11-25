@@ -694,6 +694,24 @@ float labWell(vec2 d, float seed, float t) {
   }
   return sum;
 }
+// small hot points on a cell: places where the hot gas under the cooler top is seen, a few px wide. They are born
+// about the cell, ride outward with its gas and go, two generations at any time, so none comes on or goes off
+// faster than a cell lives. q: the place from the cell's middle in units of the stage, px: a pixel in those units
+float labSparks(vec2 q, float seed, float t, float px) {
+  float sum = 0.0;
+  for (int k = 0; k < 2; k++) {
+    float at = t / ${(lab.heat.spark?.[3] ?? 6).toFixed(2)} + 0.5 * float(k) + seed * 3.0;
+    float ph = fract(at);
+    float gen = floor(at);
+    float zoom = exp(-${(lab.heat.spark?.[4] ?? 1).toFixed(2)} * (ph - 0.5)) / ${(lab.heat.spark?.[1] ?? 0.012).toFixed(4)};
+    vec2 g = q * zoom + vec2(17.0 * fract(gen * 0.6180339 + seed), 29.0 * fract(gen * 0.3819660 + seed * 5.0));
+    vec2 i = floor(g);
+    vec2 c = i + 0.3 + 0.4 * vec2(h1(i + 3.1), h1(i + 7.7));
+    float r = clamp(px * zoom * (1.2 + 1.6 * h1(i + 5.0)), 0.02, 0.3);
+    sum += step(${(1 - (lab.heat.spark?.[2] ?? 0.2)).toFixed(3)}, h1(i + 11.0)) * (1.0 - smoothstep(0.4 * r, r, length(g - c))) * min(2.0 - abs(4.0 * ph - 2.0), 1.0) * (1.0 - smoothstep(0.12, 0.3, px * zoom));
+  }
+  return min(sum, 1.0);
+}
 void main() {
   vec3 s = normalize(vS);
   float seed = vCell.x;
@@ -774,7 +792,14 @@ void main() {
 #endif
   float rise = mix(blotch * pow(max(1.0 - fall * fall, 0.0), uLabHeatB.x), 1.0, ${lab.join.merge.toFixed(2)} * smoothstep(0.55, 0.95, join));
   float fan = 0.1 * mix(0.5, fa, ka) + 0.35 * mix(0.5, fb, kb) + 0.55 * mix(0.5, fc, kc);
-  float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mix(mott, labWell(d, seed, uLabTime.x), ${lab.heat.spread[3]!.toFixed(2)}) - 0.5);
+#if ${T.on ? 1 : 0}
+  // the flanks of a cell are hotter than its top in a few broad lobes round it: the gas that has cooled on the top
+  // lies over the hot gas there no more
+  float ring = ${(lab.heat.ring?.[0] ?? 0).toFixed(2)} * smoothstep(${(lab.heat.ring?.[1] ?? 0.3).toFixed(2)}, ${(lab.heat.ring?.[2] ?? 0.8).toFixed(2)}, plan) * smoothstep(0.3, 0.7, vnq(vec2(tb.w * ${(lab.heat.ring?.[3] ?? 3).toFixed(1)} + floor(seed * 23.0), seed * 11.0), ${(lab.heat.ring?.[3] ?? 3).toFixed(1)}));
+#else
+  float ring = 0.0;
+#endif
+  float x = ${(lab.heat.blot ?? 1).toFixed(2)} * rise + ring + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mix(mott, labWell(d, seed, uLabTime.x), ${lab.heat.spread[3]!.toFixed(2)}) - 0.5);
   float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
   float top = mix(uLabHeatB.w, 1.0, middle) * (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide);
   // the gas wells up in a dimple a little cooler than the crest round it
@@ -823,6 +848,8 @@ void main() {
   heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.02, 0.2, edgeD)) * (1.0 - pen);
   // thin hot threads stand in the bottom of the lane, here and there
   heat += ${lab.heat.thin[0]!.toFixed(2)} * (1.0 - smoothstep(0.0, ${lab.heat.thin[1]!.toFixed(3)}, abs(edgeD))) * smoothstep(0.58, 0.78, vn(vG * ${lab.heat.thin[2]!.toFixed(1)} + 11.0)) * (1.0 - pen);
+  vec2 sq = d * vCell.z;
+  heat += ${(lab.heat.spark?.[0] ?? 0).toFixed(2)} * labSparks(sq, seed, uLabTime.x, max(length(dFdx(sq)), length(dFdy(sq)))) * mix(${(lab.heat.spark?.[5] ?? 0.3).toFixed(2)}, 1.0, smoothstep(0.45, 0.85, plan)) * (1.0 - smoothstep(0.93, 1.0, plan)) * (1.0 - pen);
   heat *= pn.z;
   // (b) the angle of view: the ground has no lamp. A look that meets the surface aslant meets shallower, cooler gas:
   // the heat times a darkening by the angle between the surface's normal and the eye (heat.graze: at a look along
