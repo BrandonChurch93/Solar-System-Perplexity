@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T07:48:46.807Z",
+ "pushed": "2026-11-25T08:10:55.928Z",
  "head": "128b54f14e80f5396174fc156803b50c5a9aaf24",
- "note": "state 128b54f1 pushed as asked in MAIL 962 (not named): main merged, footprint cure; the report runs on it since 07:34; next the haze's input and edge at 4148 to 4156",
+ "note": "trial G1 takes the sun side white-out off but the band under the limb stays red by poses (0.85 at 4152); cause now traced to the ground's field under the place light",
  "looks": [
+  {
+   "time": "2026-11-25T08:10:55.352Z",
+   "file": "20261125081055352-note-pose3-all.jpg",
+   "source": "../../../../tmp/n51/pose3-all.jpg",
+   "kind": "note",
+   "label": "by poses 4152 to 4160: rows named 0.45, own light 0.55, G1 0.85; columns carried, pattern, detail fixed, detail carried",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T08:10:54.750Z",
+   "file": "20261125081054750-note-G1-top.jpg",
+   "source": "../../../../tmp/n51/G1-top.jpg",
+   "kind": "note",
+   "label": "trial G1 (haze read by the angle to the sun) at 4152 and 4160: rows named, own light, G1, state",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T07:45:28.291Z",
    "file": "20261125074528291-note-look-0748.jpg",
@@ -245,22 +261,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T02:45:11.235Z",
-   "file": "20261125024511235-note-f4436-pair.jpg",
-   "source": "../../../../tmp/parC/f4436-pair.jpg",
-   "kind": "note",
-   "label": "judged 4436 at final: 9172cc84, this commit, the difference times 6. Only the ring arcs change (their lift 0.42 to 0.29 of the amplitude)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:43:26.656Z",
-   "file": "20261125024326656-note-z3-changes-new.jpg",
-   "source": "../../../../tmp/parC/z3-changes-new.png",
-   "kind": "note",
-   "label": "dive on this commit, the changes panel of main's reader of 7fd2923c at the four largest rows: the pattern changes along the far ground under the limb",
-   "stop": "uranus"
   }
  ]
 }
