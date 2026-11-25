@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T06:09:23.103Z",
- "head": "6a3ee62ccf927ba759d45dfb76f242e4c9dad343",
- "note": "02ca4d9f: air as light added (plain 49,81,120 vs 90,134,176; G17 proxy 1920 0.359 red), storm lane from orbit lowered, cloud term named",
+ "pushed": "2026-11-25T06:37:11.150Z",
+ "head": "918883791684652f1101dfe54fafc34d76169f9d",
+ "note": "06:37 UTC: the reds of the dive and the rise are being named by controls (the streamer under cirrus.thin is one, proven by the control without streamers); 4860 unchanged, G17 proxy 0.359 at 1920",
  "looks": [
+  {
+   "time": "2026-11-25T06:35:48.240Z",
+   "file": "20261125063548240-note-q1-pairs-rise.jpg",
+   "source": "out/work/nep/weave/ev/q1-pairs-rise.jpg",
+   "kind": "note",
+   "label": "RED named, rise: pairs 8 frames apart 4956, 4964, 4972, 4976, 4984 (left the frame, middle the later frame carried by poses, right the pattern proxy): the streamer thins away between 4972 and 4988",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T06:35:47.581Z",
+   "file": "20261125063547581-note-carry-4720.jpg",
+   "source": "out/work/nep/weave/ev/carry-4720.jpg",
+   "kind": "note",
+   "label": "RED named, dive: frames 4700 to 4736 carried onto the camera of 4720 (proxy by poses): the streamer is not there at 4716 and comes in piece by piece from 4720 to 4736 (cirrus.thin, by the pixel foot against its width); control without streamers: pattern proxy 4716 to 4724 falls from 1.03 to 0.20",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T06:35:46.881Z",
+   "file": "20261125063546881-note-4860-F2p.jpg",
+   "source": "out/work/nep/weave/ev/4860-F2p.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, tip 91888379: G17 proxy 1920 median 0.359, p25 0.090 (preview 0.508); plain (49, 81, 120) against (90, 134, 176); 92 s the draft frame at 1920, 38.5 s at the preview",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T06:09:22.536Z",
    "file": "20261125060922536-note-f2-b.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/weave/ev/swirl3.jpg",
    "kind": "note",
    "label": "storm from orbit, controls: left as is, middle dark 0, right rings 0, at 4605 (5x) and 4720 (3x). The spiral lane is drawn by rings, not by dark.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T05:44:56.735Z",
-   "file": "20261125054456735-note-a8-dive-b.jpg",
-   "source": "out/work/nep/weave/ev/a8-dive-b.jpg",
-   "kind": "note",
-   "label": "dive frames with the haze as light added, working tree, preview draft; soft dark ovals on the air are a red I name",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T05:44:55.867Z",
-   "file": "20261125054455867-note-4860-A8.jpg",
-   "source": "out/work/nep/weave/ev/4860-A8.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved image, working tree with the haze as light added (not committed). Proxy G17 at the preview: median 0.536, p25 0.130 (bar 0.8, red). Plain's box (49, 81, 121) against the approved (90, 134, 176), before (24, 58, 98). 38 s the preview draft frame cold.",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T05:04:41.778Z",
-   "file": "20261125050441778-note-swirl2-4605.jpg",
-   "source": "out/work/nep/weave/ev/swirl2-4605.jpg",
-   "kind": "note",
-   "label": "4605, the swirl with the dark eye: head, arms off, collar off, storm dark and rings at 0. Cause: the storm block's dark and rings",
    "stop": "neptune"
   }
  ]
