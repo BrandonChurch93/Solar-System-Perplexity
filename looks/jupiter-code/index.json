@@ -1,9 +1,47 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T00:20:48.256Z",
- "head": "a1d978797b22b212f8a4c85e6466785bd16127a0",
- "note": "00:21 UTC: storm in the hold now goes through the wrap's point spread; deck presence by relief depth over the pixel's foot; height laws of the limb next",
+ "pushed": "2026-11-25T00:43:01.881Z",
+ "head": "d6e04d84d5d3f8e943fe06a86bcddce938a0eabd",
+ "note": "00:43 UTC: limb laws of ruling 1 (b) in the dive, drafts; 3150 pair first",
  "looks": [
+  {
+   "time": "2026-11-25T00:43:01.228Z",
+   "file": "20261125004301228-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:43:00.519Z",
+   "file": "20261125004300519-note-y1-limb.jpg",
+   "source": "../work/r8/y1-limb.png",
+   "kind": "note",
+   "label": "dive 3020 to 3030 limb at full size, draft: rim gone, deck glow arriving by place",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:42:59.846Z",
+   "file": "20261125004259846-note-y1-sheet.jpg",
+   "source": "../work/r8/y1-sheet.jpg",
+   "kind": "note",
+   "label": "dive 3008 to 3030, draft: limb by two laws, rim by size on screen, deck glow by place (unfinished)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T00:38:29.608Z",
+   "file": "20261125003829608-frame-r7-2895.jpg",
+   "source": "out/work/jupiter/final/r7-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "13d9cc752b1d9c4e"
+  },
   {
    "time": "2026-11-25T00:20:47.671Z",
    "file": "20261125002047671-note-pair-3150-final.jpg",
@@ -35,20 +73,6 @@
    "kind": "note",
    "label": "hold 2895 round the place at 6 times: kept still left, now right (storm through the wrap's own point spread, unfinished)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:09:26.133Z",
-   "file": "20261125000926133-frame-r5-2895.jpg",
-   "source": "out/work/jupiter/final/r5-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
   },
   {
    "time": "2026-11-24T23:41:25.810Z",
@@ -182,36 +206,6 @@
    "source": "../work/r6/x1-rise-a.jpg",
    "kind": "note",
    "label": "draft, first run before the soft shadow: rise low, the lower left is NOT cured",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:18:46.020Z",
-   "file": "20261124231846020-note-x1-dive.jpg",
-   "source": "../work/r6/x1-dive.jpg",
-   "kind": "note",
-   "label": "draft, first run before the soft shadow: dive 2983 to 3056 on the hero's own oval",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:16:35.645Z",
-   "file": "20261124231635645-frame-r3-3150.jpg",
-   "source": "out/work/jupiter/final/r3-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
-  },
-  {
-   "time": "2026-11-24T22:55:07.753Z",
-   "file": "20261124225507753-note-pair-3150-x1.jpg",
-   "source": "../work/r6/pair-3150-x1.jpg",
-   "kind": "note",
-   "label": "UNFINISHED 3150 at the new place: approved image left, draft right",
    "stop": "jupiter"
   }
  ]
