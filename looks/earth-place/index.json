@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T12:06:08.483Z",
+ "pushed": "2026-11-25T12:25:15.657Z",
  "head": "b506ed95d5d1e96b4503740aef9628c8f3fa1b57",
- "note": "work state: tone by the air's length, first draft; the place's look arrives with the level as a patch (red, named)",
+ "note": "work state 12:27: tone by the length of air drafted (outline of the dark field gone, the place's sea still arrives as a patch 1850 to 1866); bodies now laid on the specks; nothing committed yet",
  "looks": [
+  {
+   "time": "2026-11-25T12:25:14.462Z",
+   "file": "20261125122514462-note-deck3-look.jpg",
+   "source": "../../../../tmp/gl/k14/deck3-look.jpg",
+   "kind": "note",
+   "label": "work state: left the ground with the map's specks marked, right the field of close bodies laid on them (cover by ring equal to the hold's to 7.5 degrees)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T12:06:07.008Z",
    "file": "20261125120607008-note-f1-arrive-crop.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/k13/h1755-deck-2x.png",
    "kind": "note",
    "label": "1755 at 2 px for 1: the deck state ac5c5c1b against the deck taken out (now equal to the kept hold to the byte)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T11:02:36.700Z",
-   "file": "20261125110236700-note-pv-z1-band.jpg",
-   "source": "../../../../tmp/gl/k12/pv-z1-band.jpg",
-   "kind": "note",
-   "label": "study only, numpy preview, not a frame and not built: cloud of the approved far band laid into the map; dropped after MAIL 1040 (no deck in the map)",
    "stop": "earth"
   }
  ]
