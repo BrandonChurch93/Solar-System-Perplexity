@@ -8725,3 +8725,27 @@ Chain `/tmp/proofs7.sh N14` on the tree with the one line (22:55:21 to 23:35:16,
 - Main fetched 23:26: 9f153844d (Status 341 and decision d333); against the merge it differs in kit/PROGRESS.md only. It is
   merged before the tests.
 - Looks pushed 23:16:45 (1e8baef7, 8 looks). Disk 2.3 GB free at 23:35.
+
+## Lab log 23:45 to 23:57 UTC: the cure committed, main merged twice, the bytes on the merge
+
+- Commits: 318ea1d30 (the cure: deep.ts one line and its words, deep.json the words of castWave), 59d8e1b14 (notes), e25d3d18a
+  (merge of origin main f6ce82dca: take batch 14, the far Sun by the kit's law of the frame; 18 files, none of mine).
+- ON THE MERGE e25d3d18a (/tmp/onmerge2.sh N15, 23:45:28 to 23:51:34, one process): the four judged frames at 1920 carry N14's
+  bytes (4605 ffd936903e9f95d9 in 35.7 s, 4707 02f91b12e6079bf8, 4860 9467c68c421b1678 in 90.0 s, 5006 27b759fae37df1a2), and
+  so do eight single frames of the pair sets at 960 (4700, 4713.5, 4750, 4760, 4768, 4955, 4965, 4972.5). 4860: whole 22.420 |
+  sky 3.203 | band 1.616 | ground 17.601; G17 0.507 / 0.232; 4605 MAD 7.605, G17 0.675 / 0.436. So batch 14 changes no byte
+  of Neptune by my draft tool, the hold's small Sun included: difference (b) of MAIL 1295 stands as it was.
+- Tests begun 23:51:43 on e25d3d18a (tsc clean, my own test 5 of 5, G11 PASS), stopped by me at 23:56:49 in the whole run when
+  MAIL 1343 named a newer main; they run once, on the merge of that main.
+
+## MAIL 1343 from the Builder, 23:54 UTC (read 23:56 by my clock, during the tests; word for word)
+
+> MAIL 1343 from the Builder (/root), 23:54 UTC, to every builder with open work. No answer needed.
+> NEW MAIN: code tip 1f51abc9a151db2cffca8eb0cb1aec99eed1f7f7. Merged since 172e7bcd:
+> take batch 14 at 23:39 (the far Sun by the kit's law of the frame; 17 files: assets-src/farsun, src/space/farsun, src/core/engine.ts, src/director/film.ts, src/space/sky.ts, src/stops/mercury/set.ts, tests/farsun-share.test.ts);
+> take batch 15 at 23:49 (the reader writes the ground pop as a number beside the verdict; tests/smooth.test.ts, tools/img/smooth.py, tools/smooth.ts, tools/smooth/madeground.py, tools/smooth/madepop.py, tools/smooth/maps.ts).
+> Merge origin main before your next name and say in the name mail which main it holds.
+> Under proof now: take batch 16, take/ea6 1f351f70 (the air's light along both paths with no stop using it yet, the cue and shot sheets as the tool writes them, and two changes of src/space/travel/path.ts: the way out of Mercury and the roll into Saturn). Once it is on main, cut/CUES.md and cut/SHOTS.md are no longer stale, and a clean units and gate run leaves an empty after list.
+
+Read: main is merged again before the name, and the name mail says which main it holds. Batch 15 changes the reader
+(tools/smooth), so one of my pairs is read again by the new reader before I send numbers.
