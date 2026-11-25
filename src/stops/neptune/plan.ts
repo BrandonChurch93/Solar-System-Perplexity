@@ -6,6 +6,7 @@ import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt } from '../../director/rig'
 import close from './close.json'
 import fit from './fit.json'
+import { triton } from './look'
 import move from './move.json'
 import { placeTurn } from './band'
 import place from './place.json'
@@ -126,6 +127,17 @@ class NeptunePlan extends StopPlan {
       turn: a.turn.clone().slerp(b.turn, w),
       field: a.field + (b.field - a.field) * w,
     })
+  }
+
+  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
+    if (view !== 'orbit') return []
+    const e = time - this.holdMid
+    const land = this.seg.terrain
+    const rate = THREE.MathUtils.degToRad(this.p.moonDegPerSecond)
+    const up = new THREE.Vector3().fromArray(triton.up).normalize()
+    const home = time < (land.start + land.end) / 2 ? new THREE.Vector3().fromArray(fit.moons[0]!.position) : new THREE.Vector3().fromArray(triton.stage).applyAxisAngle(this.axis, -rate * (this.seg.rise.end - this.holdMid))
+    const turn = new THREE.Quaternion().setFromAxisAngle(up, THREE.MathUtils.degToRad(triton.spinDegPerSecond) * e).multiply(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), up))
+    return [{ id: 'triton', place: home.applyAxisAngle(this.axis, rate * e).toArray(), turn: turn.toArray(), reach: fit.moons[0]!.radius }]
   }
 
   twin(local: Pose, time: number): Pose {
