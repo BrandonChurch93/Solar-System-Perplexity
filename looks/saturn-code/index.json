@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T06:17:07.124Z",
+ "pushed": "2026-11-25T06:37:39.125Z",
  "head": "d8723c64dd475d311eee99cfc10dc11bda58797d",
- "note": "proof of d8723c6 running (dive slice green, pattern 0.12 at 3615); beside it item 4: the moon's new look designed, limb findings",
+ "note": "rise red on d8723c6 (0.89 at 3827): cause found, the foot dust is lit in the globe's shadow; cure in test",
  "looks": [
+  {
+   "time": "2026-11-25T06:37:38.374Z",
+   "file": "20261125063738374-note-limb_gap_lift.jpg",
+   "source": "../../../../tmp/v/x/limb_gap_lift.png",
+   "kind": "note",
+   "label": "item 4 sunlit limb over the inner ring gap at 3465, lifted: approved against the named tree (the dip of the glow outside the limb)"
+  },
+  {
+   "time": "2026-11-25T06:37:37.703Z",
+   "file": "20261125063737703-note-t6a.jpg",
+   "source": "../../../../tmp/v/moon/t6a.png",
+   "kind": "note",
+   "label": "item 4 moon, fit only, not yet rendered by the film: approved moon, candidate look t6a, difference"
+  },
+  {
+   "time": "2026-11-25T06:37:37.068Z",
+   "file": "20261125063737068-note-dust_cause_3819.jpg",
+   "source": "../../../../tmp/v/x/dust_cause_3819.png",
+   "kind": "note",
+   "label": "cause at 3819, lifted 4 times, box 1440,700 to 1920,1000: as is; foot dust off (band gone); sheet dust off (band stays): the band is the foot dust of the globe shader, lit in the globe's shadow"
+  },
+  {
+   "time": "2026-11-25T06:37:36.403Z",
+   "file": "20261125063736403-note-r62_rise_lr.jpg",
+   "source": "../../../../tmp/v/x/r62_rise_lr.png",
+   "kind": "note",
+   "label": "proof r62 on d8723c6, rise slice RED: frames 3819, 3823, 3827 lifted, the pale band of lit dust over the night side that fades (pattern 0.89 at 3827)"
+  },
   {
    "time": "2026-11-25T06:17:06.422Z",
    "file": "20261125061706422-note-limb_gap8.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/x/i5_3567_pair2.png",
    "kind": "note",
    "label": "item 5, final 3567 before (left, 88ba2385) and after (right, local tree): the stars in the shadow thin out, no ellipse edge"
-  },
-  {
-   "time": "2026-11-25T05:24:23.287Z",
-   "file": "20261125052423287-note-foot_pair.jpg",
-   "source": "../../../../tmp/v/x/foot_pair.png",
-   "kind": "note",
-   "label": "3720 foot, approved over mine (review tier, tree f7991ad)"
-  },
-  {
-   "time": "2026-11-25T05:24:22.208Z",
-   "file": "20261125052422208-note-d3612_strip.jpg",
-   "source": "../../../../tmp/v/x/d3612_strip.png",
-   "kind": "note",
-   "label": "f7991ad draft, dive frames 3608 3612 3616 3620 at 4 times, left limb at the inner gap: the dust comes in too fast here (pattern 0.65 of 0.45 at 3612, red): a dark band along the limb and a cut in the gap's ringlets, in work"
-  },
-  {
-   "time": "2026-11-25T04:58:35.254Z",
-   "file": "20261125045835254-note-g5_ll.jpg",
-   "source": "../../../../tmp/v/x/g5_ll.png",
-   "kind": "note",
-   "label": "3720 lower left at native size, approved above, tree g5 below (review tier)"
-  },
-  {
-   "time": "2026-11-25T04:58:34.660Z",
-   "file": "20261125045834660-note-g5_low.jpg",
-   "source": "../../../../tmp/v/x/g5_low.png",
-   "kind": "note",
-   "label": "3720 lower half, approved above, tree g5 below (review tier): wide soft lanes from octave 5 on, octaves 2 to 4 as lanes near the lens"
   }
  ]
 }
