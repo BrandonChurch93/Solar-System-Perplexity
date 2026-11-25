@@ -1,13 +1,38 @@
-export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null }
+export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null; patternMapAlone?: number | null; patternMapMoves?: number | null; patternMapMoved?: number | null }
 
-// The number of a row under the map's reader: the reading on the bodies where the row has one, the whole frame's where it has none.
-export const mapOf = (row: Read): number | null | undefined => row.patternMapBody ?? row.patternMap
+export const NOT_CARRIED = 'the range does not carry the pattern'
+
+// The reading after the map and then one flow on what is left: on the bodies where the row has one, the whole frame's where it has none.
+export const flowed = (row: Read): number | null | undefined => row.patternMapBody ?? row.patternMap
+
+// The surface of the row's body moves by itself: its drawer names in the record how far it may (patternMapMoves, px of the frame between the
+// two frames of the pair). No such number: the body is rigid.
+export const moving = (row: Read): boolean => (row.patternMapMoves ?? null) !== null
+
+// The picture's own way along the flows parts from the map on a moving body (patternMapMoved) by more than its drawer names: more than the
+// surface's own motion is in it.
+export const outrun = (row: Read): boolean => moving(row) && (row.patternMapMoved ?? null) !== null && row.patternMapMoved! > row.patternMapMoves!
+
+export const NOT_FOLLOWED = 'the picture\'s own flow is not measured on a body whose surface moves by itself'
+
+// A moving body whose own flow is not measured: nothing says that the surface stays within what its drawer names, or no reading follows it.
+export const unfollowed = (row: Read): boolean => moving(row) && !outrun(row) && ((row.patternMapMoved ?? null) === null || row.pattern === null)
+
+// The number of a row under the map's reader. In place is at the same point of the matter: on a rigid body the map alone says where that
+// is, and the reading is the map's alone; on a body whose surface moves by itself it is the reading by the picture's own flow, main's
+// reader's, as long as that flow stays within what the drawer names of the map, and the map's alone where it does not. A row of a run
+// that did not read the map alone has the reading after the map and one flow.
+export const mapOf = (row: Read): number | null | undefined => (row.patternMapAlone === undefined ? flowed(row) : !moving(row) || outrun(row) ? row.patternMapAlone : row.pattern)
+
+// A row the map refuses because the range does not carry the pattern is judged by main's reader, by the flow.
+export const byFlow = (row: Read): boolean => row.patternMapNo === NOT_CARRIED
 
 export interface Apart { first: number; last: number; rows: number; k: number; main: number; map: number; red: 'main' | 'map'; no?: string }
 
 // The rows where main's reader and the reader by the camera's map fall on different sides of their limits, as runs of rows that follow each
 // other: each run with the row where the two lie farthest apart. A row either reader has no number for is in no run and ends one; a row the
-// map's reader refuses (patternMapNo) is a red of it, farther from main's number than any reading.
+// map's reader refuses (patternMapNo) is a red of it, farther from main's number than any reading; but a row it refuses because the range
+// does not carry the pattern is judged by main's reader and is in no run.
 export function apart<T extends Read>(rows: T[], max: number | null, mapMax: number | null): Apart[] {
   if (max === null || mapMax === null) return []
   const out: Apart[] = []
@@ -17,7 +42,7 @@ export function apart<T extends Read>(rows: T[], max: number | null, mapMax: num
     const main = row.pattern
     const no = row.patternMapNo ?? null
     const map = no !== null ? Number.POSITIVE_INFINITY : mapOf(row)
-    const differs = main !== null && map !== null && map !== undefined && main > max !== map > mapMax
+    const differs = !byFlow(row) && main !== null && map !== null && map !== undefined && main > max !== map > mapMax
     if (!differs) {
       run = null
       continue
@@ -40,7 +65,7 @@ export function apart<T extends Read>(rows: T[], max: number | null, mapMax: num
 // count of them.
 export function shownRows<T extends Read>(rows: T[], max: number | null, mapMax: number | null, count: number): T[] {
   const read = rows.filter((row) => row.patternMap !== null && row.patternMap !== undefined)
-  const ks = new Set<number>(read.length > 0 ? [read.reduce((x, y) => (mapOf(y)! > mapOf(x)! ? y : x)).k] : [])
+  const ks = new Set<number>(read.length > 0 ? [read.reduce((x, y) => ((mapOf(y) ?? -1) > (mapOf(x) ?? -1) ? y : x)).k] : [])
   const far = (run: Apart): number => (run.no ? Number.MAX_VALUE : Math.abs(run.main - run.map))
   for (const run of apart(rows, max, mapMax).sort((x, y) => far(y) - far(x))) {
     if (ks.size >= count) break
@@ -65,10 +90,13 @@ export const worded = (row: Read): boolean => row.patternMap !== undefined && ((
 // A row to look at: the sky off every body reads over the limit and the sky far from the limbs does not.
 export const look = (row: Read, max: number | null): boolean => max !== null && (row.patternMapSky ?? null) !== null && row.patternMapSky! > max && !((row.patternMapSkyFar ?? null) !== null && row.patternMapSkyFar! > max)
 
-export interface MapFault { kind: 'body' | 'far' | 'refused'; rows: number; first: number; k: number; value: number | null; no?: string }
+export interface MapFault { kind: 'body' | 'far' | 'refused' | 'outrun'; rows: number; first: number; k: number; value: number | null; no?: string; moved?: number; moves?: number }
 
 // What the map's reader finds red: the pattern on the body (the whole frame's where no body holds enough of it) over the limit, the pattern
-// of the sky far from the limbs over the limit, and every refusal by its reason. Of each the count of rows, the first and the largest.
+// of the sky far from the limbs over the limit, every row of a moving body whose own flow parts from the map by more than its drawer
+// names, whatever it reads, every row of a moving body whose own flow is not measured,
+// and every refusal by its reason; but a row refused because the range does not carry the pattern is main's reader's to judge, and is red
+// here only where main's reader has no number for it either. Of each the count of rows, the first and the largest.
 export function mapFaults<T extends Read>(rows: T[], max: number | null): MapFault[] {
   const out: MapFault[] = []
   const most = (kind: 'body' | 'far', of: (row: T) => number | null | undefined): void => {
@@ -78,10 +106,18 @@ export function mapFaults<T extends Read>(rows: T[], max: number | null): MapFau
     const top = bad.reduce((x, y) => (of(y)! > of(x)! ? y : x))
     out.push({ kind, rows: bad.length, first: bad[0]!.k, k: top.k, value: of(top)! })
   }
-  most('body', (row) => (row.patternMap === undefined || row.patternMapNo ? null : mapOf(row)))
+  most('body', (row) => (row.patternMap === undefined || row.patternMapNo || outrun(row) ? null : mapOf(row)))
   most('far', (row) => row.patternMapSkyFar)
+  const fast = rows.filter((row) => !row.patternMapNo && outrun(row))
+  if (fast.length > 0) {
+    const top = fast.reduce((x, y) => (y.patternMapMoved! - y.patternMapMoves! > x.patternMapMoved! - x.patternMapMoves! ? y : x))
+    out.push({ kind: 'outrun', rows: fast.length, first: fast[0]!.k, k: top.k, value: top.patternMapAlone ?? null, moved: top.patternMapMoved!, moves: top.patternMapMoves! })
+  }
+  const lost = rows.filter((row) => row.patternMap !== undefined && row.patternMapAlone !== undefined && !row.patternMapNo && unfollowed(row))
+  if (lost.length > 0) out.push({ kind: 'refused', rows: lost.length, first: lost[0]!.k, k: lost[0]!.k, value: null, no: NOT_FOLLOWED })
   for (const no of [...new Set(rows.filter((row) => row.patternMapNo).map((row) => row.patternMapNo!))]) {
-    const bad = rows.filter((row) => row.patternMapNo === no)
+    const bad = rows.filter((row) => row.patternMapNo === no && !(byFlow(row) && row.pattern !== null))
+    if (bad.length === 0) continue
     const top = bad.reduce((x, y) => ((y.patternMapRefused ?? -1) > (x.patternMapRefused ?? -1) ? y : x))
     out.push({ kind: 'refused', rows: bad.length, first: bad[0]!.k, k: top.k, value: top.patternMapRefused ?? null, no })
   }

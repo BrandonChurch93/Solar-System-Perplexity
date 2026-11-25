@@ -108,7 +108,7 @@ def frame(pose, bodies, sky=None, source='depth'):
     """A frame as the reader takes it: drawn at the full size and reduced, its depth picture and bodies at the reduced size."""
     full, _, _ = draw(pose, bodies, FULL, sky)
     grey = S.small(full, SCALE)
-    told = {**pose, 'bodies': [{'place': b['place'], 'turn': b['turn'], **({'shape': b['shape']} if b.get('shape') else {})} for b in bodies]}
+    told = {**pose, 'bodies': [{'place': b['place'], 'turn': b.get('told', b['turn']), **{key: b[key] for key in ('shape', 'flows', 'light') if b.get(key)}} for b in bodies]}
     if source == 'ball':
         told = C.told({**pose, 'turn': bodies[0]['turn']})
         depth, which = C.ball(told, grey.shape)
@@ -117,8 +117,8 @@ def frame(pose, bodies, sky=None, source='depth'):
     return {'grey': grey, 'full': lambda: full, 'depth': depth, 'which': which, 'pose': told}
 
 
-def read(a, b):
-    out, (p, later, rule) = C.read(a, b, MARGIN, SCALE, WIDE, FLOOR)
+def read(a, b, span=None):
+    out, (p, later, rule) = C.read(a, b, MARGIN, SCALE, WIDE, FLOOR, span)
     return out, p, rule
 
 
@@ -231,6 +231,22 @@ def main():
     bare = lambda f: {**f, 'pose': {**f['pose'], 'bodies': [{k: v for k, v in b.items() if k != 'shape'} for b in f['pose']['bodies']]}}
     out['shape'] = {'told': read(ga, gb)[0], 'untold': read(bare(ga), bare(gb))[0], 'oneTold': read(ga, bare(gb))[0]}
 
+    slid = about([0.1, 1, 0], 5.9)
+    out['moving'] = {}
+    for name, flows in (('rigid', None), ('told', 1.5), ('slow', 0.1)):
+        more = {'flows': flows} if flows else {}
+        out['moving'][name] = read(frame(first, [globe(t0, **more)]), frame(later, [globe(slid, told=t1, **more)]), 8)[0]
+    out['moving']['stray'] = {}
+    for name, more in (('clean', 0.0), ('slid', 0.5)):
+        seen = [frame(camera([0.1 * j, 0, 5], [0, 0, 0], 40), [globe(about([0.1, 1, 0], (1 + more) * j), told=about([0.1, 1, 0], 1.0 * j))]) for j in range(5)]
+        g = [f['grey'] for f in seen]
+        out['moving']['stray'][name] = S.strayed([S.motion(g[j], g[j + 1]) for j in range(4)], [S.motion(g[j + 1], g[j]) for j in range(4)], 0, 4, seen[0], seen[4], MARGIN, SCALE)
+    lamp = camera([0, 0, 6], [0, 0, 0], 40)
+    mask = C.lit({**lamp, 'bodies': [{'place': [0, 0, 0], 'turn': UNIT, 'light': 2.0}]}, (135, 240))
+    k = 135 / 2 / np.tan(np.radians(20))
+    out['light'] = {'none': C.lit({**lamp, 'bodies': [{'place': [0, 0, 0], 'turn': UNIT}]}, (135, 240)) is None, 'share': float(mask.mean()), 'byHand': float(np.pi * (k * 2 / np.sqrt(36 - 4)) ** 2 / (135 * 240)),
+                    'inside': bool(C.lit({**camera([0, 0, 1.5], [0, 0, 0], 40), 'bodies': [{'place': [0, 0, 0], 'turn': UNIT, 'light': 2.0}]}, (135, 240)).all())}
+
     low, high = camera([0.25, 0.12, 1.06], [0.9, 0.2, 0.6], 60), camera([0.3, 0.14, 1.2], [0.9, 0.2, 0.6], 60, 3)
     rough = {'relief': bumps(9, 0.012, 0.15), 'top': 0.03}
     ra, rb = frame(low, [globe(t0, **rough)]), frame(high, [globe(t1, **rough)])
@@ -271,6 +287,7 @@ def main():
     out['range']['picked'] = bool((unit == np.where(np.isfinite(depth), (layer < 1).astype(int), -1)).all())
     small = C.ranged(C.packed(depth, two['range'], layer), two, (FULL[0] // 4, FULL[1] // 4))[1]
     out['range']['pickedSmall'] = [float((small == i).mean()) for i in (-1, 0, 1)]
+    out['range']['near'] = [float((C.ranged(C.packed(depth, two['range'], layer), {**two, 'near': near}, FULL)[1] == 1).mean()) for near in (None, 0.01, 10.0)]
     if len(sys.argv) > 1:
         out['tool'] = tool(sys.argv[1])
     json.dump(out, sys.stdout)

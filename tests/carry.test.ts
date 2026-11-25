@@ -4,9 +4,9 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { BLOOM, apart, glowPx, look, mapFaults, shownRows, worded } from '../tools/smooth/maps'
+import { BLOOM, NOT_CARRIED as REFUSED_BY_RANGE, NOT_FOLLOWED, apart, byFlow, flowed, glowPx, look, mapFaults, mapOf, moving, outrun, shownRows, unfollowed, worded } from '../tools/smooth/maps'
 
-interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null; body: number | null; sky: number | null }
+interface Reading { value: number | null; at: [number, number] | null; share: number; on: number; by: { map: number; sky: number; flow: number } | null; rule: string | null; left: number | null; bulk: number | null; apart: number | null; no: string | null; refused: number | null; body: number | null; sky: number | null; alone: number | null; moves: number | null; moved: number | null }
 interface SkyFlow { value: number | null; share: number; far: number | null; farShare: number; none: [number | null, number | null]; limb: (number | null)[]; covered: number; coveredOnBody: number }
 interface Way { clean: Reading; exchange: Reading; untold: Reading }
 interface Made {
@@ -17,10 +17,12 @@ interface Made {
   oblate: { clean: Reading; ballOff: number; ballAgrees: number; asSphere: Reading }
   relief: { clean: Reading; asSphere: Reading }
   shape: { told: Reading; untold: Reading; oneTold: Reading }
+  moving: { rigid: Reading; told: Reading; slow: Reading; stray: { clean: number; slid: number } }
+  light: { none: boolean; share: number; byHand: number; inside: boolean }
   sky: { clean: Reading }
   skyFlow: { clean: SkyFlow; exchange: SkyFlow }
   refusal: { clean: Reading; shell: Reading; grounds: Reading }
-  range: { off: number; none: boolean; reduced: number; units: number; picked: boolean; pickedSmall: number[] }
+  range: { off: number; none: boolean; reduced: number; units: number; picked: boolean; pickedSmall: number[]; near: number[] }
   tool: { plainKeys: string[]; mainSame: boolean; more: string[]; limits: { bulkPx: number; apart: number }; main: number | null; clean: Record<string, unknown>; exchange: Record<string, unknown>; ball: number | null; ballUnits: number[] | null; rows: boolean[] }
 }
 
@@ -160,6 +162,45 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     }
   })
 
+  it('reads every pair by the map alone too: the same as after the flow where the record is true, and it does not follow a surface that slides', () => {
+    for (const r of [made.rise.clean, made.dive.clean, made.oblate.clean, made.relief.clean, made.shape.told]) {
+      expect(r.alone!).toBeLessThan(0.01)
+      expect(Math.abs(r.alone! - r.body!)).toBeLessThan(0.001)
+    }
+    expect(made.moon.known.alone!).toBeLessThan(0.01)
+    expect(made.rise.exchange.alone!).toBeGreaterThan(1)
+    const { rigid, told, slow } = made.moving
+    for (const r of [rigid, told, slow]) {
+      expect(r.no).toBeNull()
+      expect(r.bulk!).toBeGreaterThan(6)
+      expect(r.bulk!).toBeLessThan(8)
+      expect(r.body!).toBeLessThan(0.01)
+      expect(r.alone!).toBeGreaterThan(0.2)
+    }
+    const key = (r: Reading): object => ({ k: 1, pattern: 0.011, patternMap: r.value, patternMapBody: r.body, patternMapAlone: r.alone, patternMapMoves: r.moves, patternMapMoved: r.moved })
+    expect(rigid.moves).toBeNull()
+    expect(mapOf(key(rigid) as never)).toBe(rigid.alone)
+    expect(told.moves).toBe(12)
+    expect(told.moved!).toBeLessThan(12)
+    expect(mapOf(key(told) as never)).toBe(0.011)
+    expect(slow.moves).toBeCloseTo(0.8, 9)
+    expect(outrun(key(slow) as never)).toBe(true)
+    expect(mapOf(key(slow) as never)).toBe(slow.alone)
+    expect(mapFaults([key(slow) as never], LIMIT)).toEqual([{ kind: 'outrun', rows: 1, first: 1, k: 1, value: slow.alone, moved: slow.moved, moves: slow.moves }])
+  })
+
+  it('measures how far the picture\'s own way along the flows parts from the map on a body: under a pixel where the record is true, the slide where the surface slides', () => {
+    expect(made.moving.stray.clean).toBeLessThan(1)
+    const byHand = (2 * Math.PI / 180 / 4) * (540 / 2 / Math.tan((20 * Math.PI) / 180))
+    expect(Math.abs(made.moving.stray.slid - byHand)).toBeLessThan(0.5)
+  })
+
+  it('takes the light of a body from its record: every ray that passes nearer to it than the light reaches, none where the record names none', () => {
+    expect(made.light.none).toBe(true)
+    expect(Math.abs(made.light.share - made.light.byHand)).toBeLessThan(0.005)
+    expect(made.light.inside).toBe(true)
+  })
+
   it('reads the depth as the render packs it, to two millionths, and none as none', () => {
     expect(made.range.off).toBeLessThan(2e-6)
     expect(made.range.units).toBeLessThan(2e-6)
@@ -170,17 +211,26 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.range.reduced).toBeCloseTo(480 / 540, 6)
   })
 
+  it('takes no unit that puts a point nearer than the lens can draw, where the record names the near plane', () => {
+    expect(made.range.near[0]).toBeGreaterThan(0.2)
+    expect(made.range.near[1]).toBe(made.range.near[0])
+    expect(made.range.near[2]).toBe(0)
+  })
+
   it('stands beside main\'s reader in the pictures part: main\'s numbers do not move, the new ones have keys of their own', () => {
     expect(made.tool.mainSame).toBe(true)
     expect(made.tool.plainKeys).toContain('pattern')
     expect(made.tool.plainKeys.some((k) => k.startsWith('patternMap'))).toBe(false)
-    expect(made.tool.more).toEqual(['patternMap', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyShare', 'patternMapSkyTurn', 'patternMapUnits'])
+    expect(made.tool.more).toEqual(['patternMap', 'patternMapAlone', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapLit', 'patternMapMoved', 'patternMapMoves', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyShare', 'patternMapSkyTurn', 'patternMapUnits'])
     expect(made.tool.limits).toEqual({ bulkPx: 8, apart: 0.01 })
     expect(made.tool.clean.patternMapUnits).toHaveLength(1)
     expect((made.tool.clean.patternMapUnits as number[])[0]!).toBeGreaterThan(0.5)
     expect(made.tool.ballUnits).toBeNull()
     expect(made.tool.rows).toEqual([true, false, false])
     expect(made.tool.clean.patternMap as number).toBeLessThan(0.05)
+    expect(made.tool.clean.patternMapAlone as number).toBeLessThan(0.05)
+    expect(made.tool.clean.patternMapMoves).toBeNull()
+    expect(made.tool.clean.patternMapLit).toBe(false)
     expect(made.tool.ball as number).toBeLessThan(0.05)
     expect(made.tool.exchange.patternMap).toBeNull()
     expect(made.tool.exchange.patternMapNo).toBe(NOT_CARRIED)
@@ -253,15 +303,45 @@ describe('what the map\'s reader judges and what it hands to the eye', () => {
       row(7, { patternMap: null, patternMapNo: 'the range does not carry the pattern', patternMapRefused: null }),
       row(8, { patternMap: null }),
       row(9, {}),
+      { ...row(10, { patternMap: null, patternMapNo: 'the range does not carry the pattern', patternMapRefused: 0.3 }), pattern: null },
     ]
     expect(mapFaults(rows, 0.45)).toEqual([
       { kind: 'body', rows: 3, first: 2, k: 3, value: 0.7 },
       { kind: 'far', rows: 1, first: 4, k: 4, value: 0.6 },
       { kind: 'refused', rows: 2, first: 5, k: 6, value: 0.9, no: 'two grounds' },
-      { kind: 'refused', rows: 1, first: 7, k: 7, value: null, no: 'the range does not carry the pattern' },
+      { kind: 'refused', rows: 1, first: 10, k: 10, value: 0.3, no: 'the range does not carry the pattern' },
     ])
     expect(mapFaults(rows, null).map((f) => f.kind)).toEqual(['refused', 'refused'])
     expect(mapFaults([rows[0]!], 0.45)).toEqual([])
-    expect(rows.map((r) => worded(r))).toEqual([true, true, true, true, true, true, true, false, false])
+    expect(rows.map((r) => worded(r))).toEqual([true, true, true, true, true, true, true, false, false, true])
+    expect(rows.map((r) => byFlow(r))).toEqual([false, false, false, false, false, false, true, false, false, true])
+  })
+
+  it('hands a row the map refuses because the range does not carry the pattern to main\'s reader, and keeps it out of the runs of the two readers', () => {
+    expect(readFileSync(fileURLToPath(new URL('../tools/img/carry.py', import.meta.url)), 'utf8')).toContain('NOT_CARRIED = \'' + REFUSED_BY_RANGE + '\'')
+    const no = (k: number, pattern: number | null): { k: number; pattern: number | null; patternMap: null; patternMapNo: string } => ({ k, pattern, patternMap: null, patternMapNo: REFUSED_BY_RANGE })
+    expect(apart([no(1, 0.2), no(2, 0.9), no(3, null)], 0.45, 0.45)).toEqual([])
+    expect(mapFaults([no(1, 0.2), no(2, 0.9)], 0.45)).toEqual([])
+    expect(mapFaults([no(1, 0.2), no(2, 0.9), no(3, null)], 0.45)).toEqual([{ kind: 'refused', rows: 1, first: 3, k: 3, value: null, no: REFUSED_BY_RANGE }])
+  })
+
+  it('judges a rigid body by the map alone and a body whose drawer names its surface\'s own motion by the picture\'s own flow, within that motion of the map', () => {
+    const rigid = row(1, { patternMap: 0.2, patternMapBody: 0.1, patternMapAlone: 0.6, patternMapMoves: null, patternMapMoved: 3 })
+    const told = row(2, { pattern: 0.3, patternMap: 0.2, patternMapBody: 0.1, patternMapAlone: 0.6, patternMapMoves: 4, patternMapMoved: 3 })
+    const fast = row(3, { pattern: 0.2, patternMap: 0.2, patternMapBody: 0.1, patternMapAlone: 0.3, patternMapMoves: 2, patternMapMoved: 3 })
+    const old = row(4, { patternMap: 0.2, patternMapBody: 0.1 })
+    const bare = row(5, { patternMap: 0.2, patternMapBody: null, patternMapAlone: 0.5, patternMapMoves: null, patternMapMoved: null })
+    const blind = row(6, { pattern: 0.3, patternMap: 0.2, patternMapBody: 0.1, patternMapAlone: 0.2, patternMapMoves: 4, patternMapMoved: null })
+    const lost = row(7, { pattern: null, patternMap: 0.2, patternMapBody: 0.1, patternMapAlone: 0.2, patternMapMoves: 4, patternMapMoved: 3 })
+    const loud = row(8, { pattern: 0.8, patternMap: 0.2, patternMapBody: 0.1, patternMapAlone: 0.2, patternMapMoves: 4, patternMapMoved: 3 })
+    const all = [rigid, told, fast, old, bare, blind, lost, loud]
+    expect(all.map((r) => mapOf(r))).toEqual([0.6, 0.3, 0.3, 0.1, 0.5, 0.3, null, 0.8])
+    expect(all.map((r) => flowed(r))).toEqual([0.1, 0.1, 0.1, 0.1, 0.2, 0.1, 0.1, 0.1])
+    expect(all.map((r) => [moving(r), outrun(r), unfollowed(r)])).toEqual([[false, false, false], [true, false, false], [true, true, false], [false, false, false], [false, false, false], [true, false, true], [true, false, true], [true, false, false]])
+    expect(mapFaults(all, 0.45)).toEqual([
+      { kind: 'body', rows: 3, first: 1, k: 8, value: 0.8 },
+      { kind: 'outrun', rows: 1, first: 3, k: 3, value: 0.3, moved: 3, moves: 2 },
+      { kind: 'refused', rows: 2, first: 6, k: 6, value: null, no: NOT_FOLLOWED },
+    ])
   })
 })

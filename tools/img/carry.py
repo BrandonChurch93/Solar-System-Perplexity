@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """The pattern of a pair of frames read by one law: the pair is first carried by the camera's own map, taken from a depth picture and the pose
-of each frame (carry: a pure function of depth and pose, the turn of each body taken out, the sky by the camera's rotation alone); the flow then
-runs on the carried pair and finds only what is left; the reading is taken after both (read). Called by smooth.py when a pictures job asks for
-it; main's reader does not pass through here. A row is refused where over APART of the body's pixels arrive on their own body at another
-distance than the other frame holds there: the reading is a 99th percentile, so one pixel in a hundred carried onto a surface it does not
-belong to can set it alone (a second ground in the range picture, a moon before the body that the record does not name)."""
+of each frame (carry: a pure function of depth and pose, the turn of each body taken out, the sky by the camera's rotation alone); the reading
+by the map alone is taken there (alone); the flow then runs on the carried pair and finds only what is left; the reading after both is taken
+(read). Which of the two is the number of a row is the caller's: in place is at the same point of the matter, so the map alone on a rigid
+body, the map and then the flow on a body whose drawer names in the record that its surface moves by itself (bodies[].flows, px a film
+frame; own_flow), within that. Called by smooth.py when a pictures job asks for it; main's reader does not pass through here. A row is
+refused where over APART of the body's pixels arrive on their own body at another distance than the other frame holds there: the reading is
+a 99th percentile, so one pixel in a hundred carried onto a surface it does not belong to can set it alone (a second ground in the range
+picture, a moon before the body that the record does not name); and where the flow left over the body, its median, is over BULK_PX and
+what its drawer names for the surface's own motion: the range does not carry the pattern."""
 import os
 import sys
 import warnings
@@ -259,7 +263,7 @@ def pair(a, full, scale, way, same, which, covered=None):
     rule[moved] = 3
     rule[still & (which > 0)] = 1
     rule[still & (which == 0)] = 2
-    return b, rule > 0, rule, size
+    return b, rule > 0, rule, size, first
 
 
 def block(p, value, rule):
@@ -274,13 +278,39 @@ def block(p, value, rule):
     return RULES[int(np.argmax(held))]
 
 
-def read(a, b, margin, scale, wide, floor):
+def own_flow(a, b, span):
+    """How far the surface of the stop's body may move by itself between the two frames, in px of the frame: the largest speed its drawer
+    names in the record (bodies[0].flows, px a film frame at that frame's range) times the film frames between them (span); None where neither
+    record names one: the body is rigid."""
+    told = [f['pose']['bodies'][0].get('flows') for f in (a, b) if f['pose'].get('bodies')]
+    told = [float(x) for x in told if x is not None]
+    return max(told) * span if told and span else None
+
+
+def lit(pose, shape):
+    """Where the light of a body reaches, by its drawer: every pixel whose ray passes a body nearer than its light (bodies[].light, radii of
+    the body from its centre); None where no body of the pose names one."""
+    told = [(body, float(body['light'])) for body in pose.get('bodies') or [] if body.get('light') is not None]
+    if not told:
+        return None
+    ray, p = rays(pose, shape), np.array(pose['p'], dtype=np.float64)
+    out = np.zeros(shape, bool)
+    for body, light in told:
+        c = np.array(body['place'], dtype=np.float64) - p
+        t = ray @ c
+        out |= ((c @ c - t * t) <= light * light) & ((t > 0) | (c @ c <= light * light))
+    return out
+
+
+def read(a, b, margin, scale, wide, floor, span=None):
     """The pattern of a pair of frames by the one law, read on the nearer of the two (the one the camera's map draws the other larger on; the
     first when neither is). a and b: for each frame its reduced picture (grey), full() its picture at full size, its depth picture and bodies
     at the reduced size (depth, which) and its pose. Nothing is judged on the rim of either depth picture (rim, margin px of the reduced size).
-    Gives the value (the 99th percentile), the place of the largest in px of the full size of
+    span: the film frames between the two. Gives the value (the 99th percentile), the place of the largest in px of the full size of
     the frame read on, the share of the frame judged, which frame it is read on (0 the first, 1 the other), the share of the judged pixels
-    under each rule, the rule of the largest block, and the 99th percentile of the flow, in px of the full size, on what the map holds."""
+    under each rule, the rule of the largest block, and the 99th percentile of the flow, in px of the full size, on what the map holds; alone:
+    the reading by the map alone, before any flow, on the bodies (the whole frame's where no body holds enough of it); moves: how far the
+    surface may move by itself (own_flow); moved: the 99th percentile of the flow on the body's judged pixels, in px of the full size."""
     on = 0
     way = carry(a['depth'], a['which'], a['pose'], b['pose'])
     g = grown(*way[:2], way[3])
@@ -289,20 +319,24 @@ def read(a, b, margin, scale, wide, floor):
         way = carry(a['depth'], a['which'], a['pose'], b['pose'])
     same = seen(*way, a['which'], b['depth'], b['which'])
     picture = a['grey'].astype(np.float32)
-    later, ok, rule, size = pair(picture, b['full'], scale, way, same, a['which'], hidden(way[0], way[1], way[3], a['which'], b['depth'], b['which']))
+    later, ok, rule, size, first = pair(picture, b['full'], scale, way, same, a['which'], hidden(way[0], way[1], way[3], a['which'], b['depth'], b['which']))
     edge = rim(a['which'], margin) | (cv2.remap(rim(b['which'], margin).astype(np.float32), way[0], way[1], cv2.INTER_NEAREST, borderMode=cv2.BORDER_REPLICATE) > 0.5)
     rule[edge] = 0
     ok &= ~edge
     p = S.pattern(picture, later, ok, wide / 5, wide, floor)
     value, at, share = S.patterned(p)
-    out = {'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'by': None, 'rule': None, 'left': None, 'units': None, 'bulk': None, 'apart': None, 'no': None, 'refused': None, 'body': None, 'sky': None}
+    out = {'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'by': None, 'rule': None, 'left': None, 'units': None, 'bulk': None, 'apart': None, 'no': None, 'refused': None, 'body': None, 'sky': None, 'alone': None, 'moves': own_flow(a, b, span), 'moved': None}
+    q = S.pattern(picture, first, same & way[3] & ~edge, wide / 5, wide, floor)
+    for part in (np.isfinite(q) & (a['which'] > 0), np.isfinite(q)):
+        if out['alone'] is None and part.mean() >= S.PATTERN_SHARE:
+            out['alone'] = float(np.percentile(q[part], 99))
     body = way[3] & (a['which'] > 0) & ~edge
     own, met_at, _ = met(*way, a['which'], b['depth'], b['which'])
     if body.any():
         out['bulk'] = float(np.median(size[body]) / scale)
     if (own & ~edge).any():
         out['apart'] = float((own & ~met_at & ~edge).sum() / (own & ~edge).sum())
-    if out['bulk'] is not None and out['bulk'] > BULK_PX:
+    if out['bulk'] is not None and out['bulk'] > BULK_PX + (out['moves'] or 0):
         out['no'] = NOT_CARRIED
     elif out['apart'] is not None and out['apart'] > APART:
         out['no'] = TWO_GROUNDS
@@ -317,6 +351,8 @@ def read(a, b, margin, scale, wide, floor):
     out['rule'] = block(p, value, rule)
     held = judged & same & (rule > 0)
     out['left'] = float(np.percentile(size[held], 99) / scale) if held.any() else None
+    if (held & (a['which'] > 0)).any():
+        out['moved'] = float(np.percentile(size[held & (a['which'] > 0)], 99) / scale)
     if a.get('unit') is not None:
         out['units'] = [float((judged & (a['unit'] == i)).sum() / judged.sum()) for i in range(len((a['pose'].get('range') or {}).get('units') or [1]))]
     if out['no']:
@@ -342,7 +378,8 @@ def ranged(rgb, pose, shape):
     """The depth picture of the render at the reduced size: the distance along each pixel's ray in the units of the pose, nan where there is no
     surface (packed has the form; the pose's range: low, octaves, units), and which of the units each pixel was taken in (-1: no surface).
     A layer of the render hands its range in its own units, and the record names them all: of each pixel the unit is taken that puts its
-    point nearest the surface of the pose's first body. A reduced pixel takes the median of the pixels it covers and the unit of most of
+    point nearest the surface of the pose's first body, and never one that puts it nearer than the lens can draw (the pose's near, when it
+    names one). A reduced pixel takes the median of the pixels it covers and the unit of most of
     them when half of them or more show a surface, and none otherwise."""
     form = pose['range']
     n = (rgb[..., 0].astype(np.int64) << 16) | (rgb[..., 1].astype(np.int64) << 8) | rgb[..., 2].astype(np.int64)
@@ -353,7 +390,8 @@ def ranged(rgb, pose, shape):
     if len(units) > 1:
         ray = rays(pose, raw.shape)
         p = np.array(pose['p'], dtype=np.float64)
-        miss = lambda value: np.abs(np.linalg.norm(shaped(pose['bodies'][0], p + ray * (raw * value)[..., None]), axis=-1) - 1)
+        near = pose.get('near') or 0
+        miss = lambda value: np.where(raw * value < near, np.inf, np.abs(np.linalg.norm(shaped(pose['bodies'][0], p + ray * (raw * value)[..., None]), axis=-1) - 1))
         with np.errstate(all='ignore'):
             off = miss(units[0])
             for i, value in enumerate(units[1:], 1):

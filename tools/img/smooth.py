@@ -483,13 +483,14 @@ def glow_px(pose, scale):
     return None if pose is None or pose.get('glow') is None else float(pose['glow']) * scale
 
 
-def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor, reach=(None, None)):
+def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor, reach=(None, None), lit=(None, None)):
     """The pattern of frame i against frame i + n on the pixels off every body, read by the flow alone: the later frame carried back along
     the flows, where every flow on the way agrees with its way back, the pattern read over all of that, and of it the pixels off the bodies.
     a and b: the bodies of the two frames by their depth pictures. Sky that the later frame's bodies cover is not counted, nor the rim of
     either depth picture. Gives the 99th percentile and the share of the frame counted (no number under PATTERN_SHARE of the frame), the
     same two for the pixels farther from every body than reach px in both frames, the later frame's carried back (none where a reach is
-    none), and the pattern, where it is counted and where it is counted far."""
+    none), and outside the light of every body that names one (lit: where it reaches in each frame), and the pattern, where it is counted
+    and where it is counted far."""
     xs, ys = places(frames[i].shape)
     mx, my = xs, ys
     ok = np.ones(frames[i].shape, bool)
@@ -504,8 +505,27 @@ def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor, reach=(None, 
     if reach[0] is not None and reach[1] is not None:
         near = lambda body, px: cv2.distanceTransform((~body).astype(np.uint8), cv2.DIST_L2, 5) <= px if body.any() else np.zeros(body.shape, bool)
         far = off & ~near(a, reach[0]) & ~take(near(b, reach[1]))
+        if lit[0] is not None:
+            far &= ~lit[0]
+        if lit[1] is not None:
+            far &= ~take(lit[1])
     read = lambda part: (float(np.percentile(p[part], 99)) if part is not None and part.mean() >= PATTERN_SHARE else None, float(part.mean()) if part is not None else None)
     return {'value': read(off)[0], 'share': read(off)[1], 'far': read(far)[0], 'farShare': read(far)[1], 'p': p, 'off': off, 'offFar': far}
+
+
+def strayed(fw, bw, i, n, a, b, margin, scale):
+    """How far the picture's own way from frame i to frame i + n along the flows parts from the camera's map, on the bodies: the 99th
+    percentile in px of the full size, over what starts on a body less a margin at its edge, where every flow on the way agrees with its
+    way back and the map holds (a, b: the two frames as carry.py takes them). None where that is under PATTERN_SHARE of the frame."""
+    import carry as C
+    mx, my, ok = carry(fw, bw, i, n)
+    wx, wy, _, held = C.carry(a['depth'], a['which'], a['pose'], b['pose'])
+    size = 2 * int(round(margin)) + 1
+    inner = cv2.erode((a['which'] > 0).astype(np.uint8), np.ones((size, size), np.uint8), borderType=cv2.BORDER_CONSTANT, borderValue=1) > 0
+    m = ok & held & inner
+    if m.mean() < PATTERN_SHARE:
+        return None
+    return float(np.percentile(np.hypot(mx - wx, my - wy)[m], 99) / scale)
 
 
 def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw, rows):
@@ -513,7 +533,7 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
     the flow on the carried pair, the reading after both (carry.py). Keys of their own: patternMap and what belongs to it."""
     import carry as C
     n = len(paths)
-    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn')}
+    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn', 'patternMapAlone', 'patternMapMoves', 'patternMapMoved', 'patternMapLit')}
     held = {}
     depths = job.get('depths') or [None] * n
 
@@ -530,13 +550,17 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
             continue
         for j in [j for j in held if j < i]:
             del held[j]
-        out, _ = C.read(frame(i), frame(i + reach), margin, scale, wide, floor)
+        out, _ = C.read(frame(i), frame(i + reach), margin, scale, wide, floor, job.get('filmFrames'))
+        keys['patternMapAlone'][i], keys['patternMapMoves'][i] = out['alone'], out['moves']
         keys['patternMap'][i], keys['patternMapAt'][i], keys['patternMapShare'][i] = out['value'], out['at'], out['share']
         keys['patternMapOn'][i], keys['patternMapBy'][i], keys['patternMapRule'][i], keys['patternMapLeft'][i], keys['patternMapUnits'][i] = out['on'], out['by'], out['rule'], out['left'], out['units']
         keys['patternMapBulk'][i], keys['patternMapApart'][i], keys['patternMapNo'][i], keys['patternMapRefused'][i] = out['bulk'], out['apart'], out['no'], out['refused']
         keys['patternMapBody'][i], keys['patternMapSkyTurn'][i] = out['body'], out['sky']
         if all(fw[j] is not None and bw[j] is not None for j in range(i, i + reach)):
-            sky = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor, (glow_px(poses[i], scale), glow_px(poses[i + reach], scale)))
+            keys['patternMapMoved'][i] = strayed(fw, bw, i, reach, frame(i), frame(i + reach), margin, scale)
+            lit = [C.lit(frame(j)['pose'], frames[j].shape) for j in (i, i + reach)]
+            sky = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor, (glow_px(poses[i], scale), glow_px(poses[i + reach], scale)), lit)
+            keys['patternMapLit'][i] = any(x is not None for x in lit)
             keys['patternMapSky'][i], keys['patternMapSkyShare'][i], keys['patternMapSkyFar'][i], keys['patternMapSkyFarShare'][i] = sky['value'], sky['share'], sky['far'], sky['farShare']
     keys['patternMapLimits'] = {'bulkPx': C.BULK_PX, 'apart': C.APART}
     return keys
@@ -571,7 +595,7 @@ def maps(job):
             fw = [motion(frames[j], frames[j + 1]) for j in range(n)]
             bw = [motion(frames[j + 1], frames[j]) for j in range(n)]
             solid = lambda f: (f['which'] > 0) & np.isfinite(f['depth']) & (f['depth'] > 0)
-            sky = unbodied(frames, fw, bw, 0, n, solid(sides[0]), solid(sides[1]), C.rim, margin, wide, low, (glow_px(item['poses'][0], scale), glow_px(item['poses'][1], scale)))
+            sky = unbodied(frames, fw, bw, 0, n, solid(sides[0]), solid(sides[1]), C.rim, margin, wide, low, (glow_px(item['poses'][0], scale), glow_px(item['poses'][1], scale)), [C.lit(side['pose'], frames[0].shape) for side in sides])
             shown = np.repeat(np.clip(np.where(sky['off'], np.nan_to_num(sky['p']), 0) * 255, 0, 255).astype(np.uint8)[..., None], 3, axis=2)
             shown[~sky['off'] & solid(sides[0])] = (40, 40, 40)
             if sky['offFar'] is not None:
@@ -723,7 +747,7 @@ def look(job):
     for j in (0, 1):
         depth, which, _ = C.source(C.told(job['poses'][j]), frames[0].shape, (job.get('depths') or [None, None])[j])
         solid.append((which > 0) & np.isfinite(depth) & (depth > 0))
-    sky = unbodied(frames, fw, bw, 0, n, solid[0], solid[1], C.rim, margin, wide, low, (glow_px(job['poses'][0], scale), glow_px(job['poses'][1], scale)))
+    sky = unbodied(frames, fw, bw, 0, n, solid[0], solid[1], C.rim, margin, wide, low, (glow_px(job['poses'][0], scale), glow_px(job['poses'][1], scale)), [C.lit(C.told(job['poses'][j]), frames[0].shape) for j in (0, 1)])
     first, later = (np.asarray(Image.open(job['between'][j]).convert('RGB')) for j in (0, n))
     h, w = first.shape[:2]
     up = lambda m: cv2.resize(m.astype(np.uint8), (w, h), interpolation=cv2.INTER_NEAREST) > 0
