@@ -1,9 +1,69 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T15:34:59.061Z",
- "head": "0e5c0362a8d001e1e0a2d689d74f58d3e83dc45a",
- "note": "15:35 UTC: the wedge on the bench: drafts of 3034, 3042, 3254 + 1/2, the pieces from above; 3150 as named",
+ "pushed": "2026-11-25T16:02:14.545Z",
+ "head": "001113e74e8afb8dfddb5c5b7677254487095d5b",
+ "note": "16:03 UTC: the dive slice runs on the wedge's commit 001113e7; first 40 frames; 3150 last",
  "looks": [
+  {
+   "time": "2026-11-25T16:02:13.265Z",
+   "file": "20261125160213265-note-look-3150.jpg",
+   "source": "../work/r14/w/look-3150.jpg",
+   "kind": "note",
+   "label": "3150 final on the wedge's tree, the bytes of 0e5c0362",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:02:12.118Z",
+   "file": "20261125160212118-note-disc-2895.jpg",
+   "source": "../work/r14/w/disc-2895.png",
+   "kind": "note",
+   "label": "2895 final, the place's disc: before, with the wedge, difference times 8",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:02:10.686Z",
+   "file": "20261125160210686-note-dive-w-b.jpg",
+   "source": "../work/r14/w/sheets/dive-w-b.jpg",
+   "kind": "note",
+   "label": "dive 3021 to 3030 + 1/2 on 001113e7, draft, every frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:02:09.203Z",
+   "file": "20261125160209203-note-dive-w-a.jpg",
+   "source": "../work/r14/w/sheets/dive-w-a.jpg",
+   "kind": "note",
+   "label": "dive 3011 to 3020 + 1/2 on 001113e7 (the wedge named), draft, every frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T15:44:24.030Z",
+   "file": "20261125154424030-frame-n9-2895.jpg",
+   "source": "out/work/jupiter/final/n9-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
+  {
+   "time": "2026-11-25T15:38:50.812Z",
+   "file": "20261125153850812-frame-n9-3150.jpg",
+   "source": "out/work/jupiter/final/n9-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T15:34:40.162Z",
    "file": "20261125153440162-note-look-3150.jpg",
@@ -53,20 +113,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-25T15:27:25.029Z",
-   "file": "20261125152725029-frame-n9-3150.jpg",
-   "source": "out/work/jupiter/final/n9-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
    "time": "2026-11-25T14:44:58.548Z",
    "file": "20261125144458548-note-n7-3150-trio.jpg",
    "source": "../work/r14/n7-3150-trio.jpg",
@@ -89,20 +135,6 @@
    "kind": "note",
    "label": "3150, top of the frame: approved, round 46, before, now (the far band of MAIL 1131)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:43:24.617Z",
-   "file": "20261125144324617-frame-n8-2895.jpg",
-   "source": "out/work/jupiter/final/n8-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
   },
   {
    "time": "2026-11-25T14:28:03.970Z",
@@ -174,38 +206,6 @@
    "source": "../work/r14/wdm3-crop-3034.jpg",
    "kind": "note",
    "label": "3034 crop: before above; below the wedge as made detail in the flow frame on bands carried along the circles (take m3, not committed): the left border still reads as a line",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T13:44:53.957Z",
-   "file": "20261125134453957-note-n7-3150-trio.jpg",
-   "source": "../work/r14/n7-3150-trio.jpg",
-   "kind": "note",
-   "label": "3150 final on 7c0b8675: approved, before, now (6.113); the wedge take changes no pixel of it at the draft tier",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T13:44:53.149Z",
-   "file": "20261125134453149-note-wd-pair-3254h.jpg",
-   "source": "../work/r14/wd-pair-3254h.jpg",
-   "kind": "note",
-   "label": "3254 and a half draft, before above, the wedge take s2 below (working take, not in the tree)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T13:44:52.393Z",
-   "file": "20261125134452393-note-wd-pair-3042.jpg",
-   "source": "../work/r14/wd-pair-3042.jpg",
-   "kind": "note",
-   "label": "3042 draft, before above, the wedge take s2 below (working take, not in the tree)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T13:44:50.939Z",
-   "file": "20261125134450939-note-wd-pair-3034.jpg",
-   "source": "../work/r14/wd-pair-3034.jpg",
-   "kind": "note",
-   "label": "3034 draft, before above, the wedge take s2 below (working take, not in the tree): the canvas borders are gone at this size, the made ground at the left reads rough",
    "stop": "jupiter"
   }
  ]
