@@ -52,10 +52,20 @@ export const zoneShare = (height: number): number => byHeight(grade.by.heights, 
 // rise). It follows the height alone.
 export const innerShare = (height: number): number => byHeight(skimJson.inner.by.heights, skimJson.inner.by.depth, height)
 
+// How much of the fall of the night side of the globe shows with the lens at this height (skim.json light.dusk
+// nightHeights): none at the upper height and above, all at the lower and under, by the logarithm of the height,
+// eased at both ends. Its heights lie under those of the grade: the night side keeps the light of the hold while
+// the dust inside the inner rim comes in over it (inner.by, from 0.93 radii down), and sinks only where the lens
+// goes slowly, low in the skim. With one share for both, the faint clouds of the night side went out just where
+// the dust came in over them, and the report of the pictures read that as one pattern exchanged for another.
+export const nightShare = (height: number): number =>
+  1 - smooth(Math.log(Math.max(Math.abs(height), 1e-6) / dusk.nightHeights[0]!) / Math.log(dusk.nightHeights[1]! / dusk.nightHeights[0]!))
+
 // The dusk of the globe by the same share (skim.json light.dusk): with the lens high the globe keeps the light
 // of the hold; as the lens comes down to the plane its twilight zone narrows and its night side sinks and loses
 // its colour, as in the approved close image. Sets uDusk (the two cosines of the Sun's angle between which the
-// day ends, how much of that cut shows, the factor on the night floor) and uDuskGrey (the share of its colour
+// day ends, how much of that cut shows, the factor on the night floor, which follows nightShare) and
+// uDuskGrey (the share of its colour
 // the night side loses, and the power of the cut that share follows: above one the colour goes later than the
 // light, so the last light keeps its brown). The kept set and the model both call it with the height of the
 // lens, so the two scenes hold one globe at every height. uDuskTint: the colour factor on the last light (the
@@ -64,7 +74,7 @@ export const innerShare = (height: number): number => byHeight(skimJson.inner.by
 export const duskAt = (height: number, into: THREE.Vector4, grey: THREE.Vector2, tint: THREE.Vector4): void => {
   const w = gradeShare(height)
   tint.w = w
-  into.set(dusk.from, dusk.to, THREE.MathUtils.lerp(dusk.amount[0]!, dusk.amount[1]!, w), THREE.MathUtils.lerp(dusk.night[0]!, dusk.night[1]!, w))
+  into.set(dusk.from, dusk.to, THREE.MathUtils.lerp(dusk.amount[0]!, dusk.amount[1]!, w), THREE.MathUtils.lerp(dusk.night[0]!, dusk.night[1]!, nightShare(height)))
   grey.set(THREE.MathUtils.lerp(dusk.grey[0]!, dusk.grey[1]!, w), dusk.greyPower)
 }
 
