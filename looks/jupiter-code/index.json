@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T19:07:28.128Z",
- "head": "1c5b75fa8f007ab95b2fc0e6425350ec0cf7a256",
- "note": "19:10 UTC: 1c5b75fa named as the proof of the path; the angles of the storm's dark side measured and mailed; next the lit body and the shade field",
+ "pushed": "2026-11-25T19:30:23.057Z",
+ "head": "ed10db012206623666a691c6edc1e90c6ca1b69d",
+ "note": "Rings named by the wrap itself; the lit body of the lee is being built",
  "looks": [
+  {
+   "time": "2026-11-25T19:30:22.349Z",
+   "file": "20261125193022349-note-p1-3150.jpg",
+   "source": "out/work/jupiter/final/p1-3150.png",
+   "kind": "note",
+   "label": "3150 final of the named tree 1c5b75fa, unchanged while the hold's disc is rebuilt",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T19:30:21.814Z",
+   "file": "20261125193021814-note-lee2.jpg",
+   "source": "../work/r19/lee2.jpg",
+   "kind": "note",
+   "label": "The place from above, 32 units: the body as the globe carries it now, the hero's ground in the wrap, the hero's ground at the finest patch, the body's darkness against the hero's ground (white is 1.5)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T19:30:21.173Z",
+   "file": "20261125193021173-note-wrap-main-mine-diff.jpg",
+   "source": "../work/r19/rings/wrap-main-mine-diff.jpg",
+   "kind": "note",
+   "label": "The rings named, the globe's wrap at the place at 6 times: main, mine, mine minus main times 4. Past the painted storm the plates are the globe's finest imagery and the upward write lays its arcs into the wrap as far as 13 to 16.5 units",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T19:07:27.546Z",
    "file": "20261125190727546-note-p1-3150.jpg",
@@ -182,36 +206,6 @@
    "source": "../work/r15/sheets/rise-a-a.jpg",
    "kind": "note",
    "label": "1c5b75f rise 3232 to 3273 + 1/2, every drawn frame, sheet a (draft, rate 2): green by my reader",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:45:04.563Z",
-   "file": "20261125174504563-frame-p1-2895.jpg",
-   "source": "out/work/jupiter/final/p1-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T17:25:31.940Z",
-   "file": "20261125172531940-note-n9-3150.jpg",
-   "source": "out/work/jupiter/final/n9-3150.png",
-   "kind": "note",
-   "label": "3150 final as named (the path cure does not touch it; its bytes are compared in the chain)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T17:25:30.906Z",
-   "file": "20261125172530906-note-rise-b-d.jpg",
-   "source": "../work/r15/sheets/rise-b-d.jpg",
-   "kind": "note",
-   "label": "Rise 3300 to 3308 + 1/2 on 1c5b75f, every half frame, draft (slice green: level step 0.85, pop 1.13, pattern 0.16)",
    "stop": "jupiter"
   }
  ]
