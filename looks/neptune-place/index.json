@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T20:20:34.312Z",
+ "pushed": "2026-11-25T20:36:51.192Z",
  "head": "b53b86b9e3f74fc7b64315e41770d06c30b5a95a",
- "note": "row 4753 cured and committed (985341693, not named yet); now G17 at 4860: the deck's own fine grain is what is missing, controls running",
+ "note": "controls for the deck's own fine texture at 4860 (not committed): gain 0.62 lifts G17 from 0.426 to about 0.6, relief gives the grain, lump 0.35 turns chop into streaks; 90 s per draft frame",
  "looks": [
+  {
+   "time": "2026-11-25T20:36:35.700Z",
+   "file": "20261125203635700-note-h-near.jpg",
+   "source": "../../../../tmp/h-near.jpg",
+   "kind": "note",
+   "label": "4860, the near plain at full size, same six; the teal blots stand in all of mine (N11 15.7 over the surround at (1168, 752), approved 0.6)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T20:36:35.092Z",
+   "file": "20261125203635092-note-h-eye.jpg",
+   "source": "../../../../tmp/h-eye.jpg",
+   "kind": "note",
+   "label": "4860, the eye at full size: approved, N11 (985341693), controls G3 gain 0.62, H3 lump 0.35 and gain 0.62, H4 gain 0.62 and relief 0.025, H2 lump 0.35; G17 0.426, 0.604, 0.588, 0.492, 0.435",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T20:36:34.445Z",
+   "file": "20261125203634445-note-pair-H3.jpg",
+   "source": "../../../../tmp/pair-H3.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, control H3 (not committed): deck.lump 0.35 and deck.gain 0.62; G17 0.588 / p25 0.377 (N11 0.426 / 0.230, bar 0.8, main 0.934); ground part 17.794 (N11 17.527, main 19.759); 90 s per draft frame at 1920",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T20:20:32.900Z",
    "file": "20261125202032900-note-fine-a.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/back-panels.jpg",
    "kind": "note",
    "label": "the same knot in the reader's own panels, the name (top) and the eighth name (bottom, 0.42 from 4751): later frame, earlier carried, their detail, the pattern; the rounded lobe stands in the earlier frame alone",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T19:27:03.368Z",
-   "file": "20261125192703368-note-knot-shadow.jpg",
-   "source": "../../../../tmp/knot-shadow.jpg",
-   "kind": "note",
-   "label": "the row at 4753 found: pair 4752 to 4760 read from its other end, 0.47 by the report's own path on my preview frames; top: the later frame and the earlier carried onto it; bottom: what the first streamer's shadow takes of the deck's light, 4760 and 4752 carried: its lower edge is an arc in one and straight in the other; cast off 0.32, low haze off 0.31, veil off 0.45, relief 0 0.79; 25 s a preview draft frame there; 4860 beside the approved is the look of 19:03, the tree at 4860 is unchanged (G17 0.426, 89.9 s)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T19:03:38.233Z",
-   "file": "20261125190338233-note-hold-zoom10.jpg",
-   "source": "../../../../tmp/hold-zoom10.jpg",
-   "kind": "note",
-   "label": "the hold 4605 on the ninth name, the place on the globe enlarged, before (left) and now: match 7.621 and G17 0.674, p25 0.436 as on the eighth name; nothing outside the disc differs; 36.6 s per draft frame; 4860 beside the approved is the look before this one (G17 0.426, 89.9 s)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T19:03:37.632Z",
-   "file": "20261125190337632-note-n10-three.jpg",
-   "source": "../../../../tmp/n10-three.jpg",
-   "kind": "note",
-   "label": "4860 at full size: the approved (top), main (middle), the ninth name 27624e6f4 (bottom): ground part 17.550 against main 19.759, sky 3.420, band 2.646; G17 median 0.426, p25 0.230 by my draft reader; 89.9 s per draft frame",
    "stop": "neptune"
   }
  ]
