@@ -697,3 +697,44 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   [1, 1]): 0.565, 0.579, 0.587; approved: 0.625, 0.587, 0.541. far.tone.range's lower bound does nothing there.
   SEEN on v/form-e4.jpg and v/motion-e4.jpg: still pads (river stones with a fan drawn on top), not the approved's
   bulbs made of broad tubes; whole cells change their light much between captures 12 film frames apart.
+- 17:02 to 17:22 UTC, RULINGS. MAIL 1217 (judge's reading): cells read as stones, must be round domes of glowing
+  melt, light swelling smoothly from lane to crown, no glint, no facet, glow of the crowns bleeding over the lanes;
+  lanes thin, dark red brown, never black, fine bright threads where two cells touch; nearest cells a tenth of the
+  frame wide; colour deep gold to orange with red brown darks; nothing may move as a bent picture, each cell lives
+  (swell, brighten, spread, split or sink), lanes close and open, the spot's threads creep inward; fine silky
+  threads from the crown down into the lane, a crackle is the sign of a solid. MAIL 1218: THE TUBES RULED (6 to 12
+  tubes in the cell's polar frame, rise at the dimple, arch over, plunge into the lane; relief in the vertices; heat
+  on the crest, cold in the groove; light is heat times the eye's angle on the tube's own normal; carried outward
+  and renewed from the middle; a tube thins and sinks at the lane; an old cell's tubes part and it falls into two or
+  three). Sheet aimed 19:00 in the same form (form at 1 to 1 under the approved, motion strip, four frames). THE BAND
+  (point 3): at the surface the low band is the close picture's, at the hold the globe's map, ONE share between as a
+  smooth step in the logarithm of the lens's height over the whole rise; measure the largest change of a fixed place
+  from frame to frame, aim under 2 levels; the map is not touched. THE FLICKER (point 4): no cell's mean light
+  changes by more than a tenth within 12 film frames, measured on the motion strip's group. After the tubes: the
+  penumbra's strands end in short tongues, the split, the hump 419 to 429. MAIL 1228: NAMED 5a8c028a taken; jobs
+  sd7-01 (G3), sd7-02 to 05 (rise by the standing reader), sd7-06 (units and gate) out on d7. G3 RED on sun_builder's
+  e1c18f46 (an earlier state of my ground): frame 90 forward 4196dac2b200c2b2, backward or alone e22fe5d141289031.
+- 17:15 UTC: NAMED d7 5a8c028a mailed. Ruler (v/matchto.py, sun_builder's, three numbers) at frame 60: d7 draft
+  35.4568 | 11.2729 | 45.8213, d7 final 35.5695 | 11.5344 | 45.8703, e4 draft 35.0582 | 11.2729 | 45.2520; frame 90
+  e4 draft 30.8340 | 6.6924 | 41.1804. Builder's: sun_builder's ground 48.1804, main 43.5632 (third number, final).
+  Share of ground pixels (rows 600 to 1079) changing by more than 8 levels over 30 film frames on e4: eye held 0.778
+  from 60, 0.720 from 150; film eye 0.831, 0.835.
+- 17:13 UTC, MISTAKE: a second work tree filled the disk and the chain failed. Never add a work tree again. The e4
+  run was started and killed UNREAD at 17:20 to free the renderer for the tubes.
+- 17:20 UTC, TUBES (uncommitted until they read): SHAPE_GLSL gained vnq, labTubes (x across the tube, tube number,
+  count, turn), labTubeWide, labPart (old cell's 2 or 3 grooves open from rim to middle), labTubeBody (round back,
+  bumps riding outward, dimple); the dome's body is multiplied by the tube body in the vertices; fragment: strands
+  lie along the tubes, heat by place across the tube, parted groove dark, lane edge scalloped by the tubes.
+  t1 (twist 0.5, thin fingers): pinwheels, daisies, too dark. t2 (twist 0.08, finger [0.7, 0.9, 0.3, 0.08], heat
+  [0.45, 1.1, 0.35]): lobed pumpkins seen from above, real relief, lying flat, too regular, too dark. t3 (dome.height
+  0.5, sway [0.3, 0.9, 1.2]): flowers with a dark eye, every cell parted from its neighbours by a wide dark gap,
+  the grooves read as petals. WRONG in all three: grooves too deep at the crown, dimple reads as a flower's eye,
+  cells do not fill their ground.
+- 17:20 UTC, band law in trial: uLabToneFar.w = smooth step of log(height of the eye over the stage) between
+  far.tone.far.heights [1.2, 73.7], multiplied into the band in labTone (override globalThis.labBand).
+  Flicker cure in trial: heat.spread[3] 0 and heat.fine [0.2, 4] (labWell's lumps with generations of 3 s were the
+  cause, with the life law mix(1.15, 0.7, age)).
+- 17:27 UTC, MEASURED (pure.ts and pure.py, new): frame 90 at draft, 1920 by 1080, tubes state of the tree: drawn
+  alone, after 60, after 360, after 0 then 60: all four files the same bytes (543ac4c2bfe3871e), 0 pixels differ.
+  G3 itself (tools/determinism.ts: review tier, preview format, forward 360, 495, 735, 90; backward; 90 alone)
+  started 17:28 on the same tree, log v/det-tubes.log.
