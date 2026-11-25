@@ -1,71 +1,71 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T13:30:08.991Z",
- "head": "ae80c78dcbdee899442a43ad4169651934a6a6ec",
- "note": "joined state j1 (lab ground, lab far level laid at every distance, gas field): final 360 reads 13.4045 against 11.9772 before, the level is a dark square on the hold, not kept in that form; rise 215 220 225 one ground, the patch edge shows at 225; frame 60: dark 0.189 body 0.566 pale 0.102 white 0.064 | half width 4.9 px, 2000 shapes, fine 0.0590, mean 0.385 | distance 0.064",
+ "pushed": "2026-11-25T14:00:45.063Z",
+ "head": "f906d2ecd83bde72e38eb6e9df302f3d2d3aa478",
+ "note": "joined state f906d2ec (lab ground, level as fine bands on the map, anchor turned, thick limit): final 360 11.9804 against 11.9772 before, worse, the two white feet; rise chain 218.5 to 226.5 reads 0.778 at [40, 330] over the limit 0.45, grain of the lab ground at far; frame 60: dark 0.177 body 0.561 pale 0.108 white 0.072 | half width 4.6 px, 1992 shapes, fine 0.0606, mean 0.397 | distance 0.074",
  "looks": [
+  {
+   "time": "2026-11-25T13:51:05.110Z",
+   "file": "20261125135105110-note-k2-chain.jpg",
+   "source": "../../../../tmp/v/k2-chain.png",
+   "kind": "note",
+   "label": "joined state k2 (1d0faacf): k2-chain.png",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:51:04.037Z",
+   "file": "20261125135104037-note-k2-edge.jpg",
+   "source": "../../../../tmp/v/k2-edge.png",
+   "kind": "note",
+   "label": "joined state k2 (1d0faacf): k2-edge.png",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:51:02.483Z",
+   "file": "20261125135102483-note-k1-90.jpg",
+   "source": "../../../../tmp/v/k1-90.jpg",
+   "kind": "note",
+   "label": "joined state k2 (1d0faacf): k1-90.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:51:01.360Z",
+   "file": "20261125135101360-note-k1-box.jpg",
+   "source": "../../../../tmp/v/k1-box.png",
+   "kind": "note",
+   "label": "joined state k2 (1d0faacf): k1-box.png",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:51:00.321Z",
+   "file": "20261125135100321-note-j3-360.jpg",
+   "source": "../../../../tmp/v/j3-360.jpg",
+   "kind": "note",
+   "label": "joined state k2 (1d0faacf): j3-360.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:50:59.436Z",
+   "file": "20261125135059436-note-j2-rise.jpg",
+   "source": "../../../../tmp/v/j2-rise.jpg",
+   "kind": "note",
+   "label": "joined state k2 (1d0faacf): j2-rise.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T13:50:57.903Z",
+   "file": "20261125135057903-note-k2-sheet-a.jpg",
+   "source": "../../../../tmp/v/k2-sheet-a.jpg",
+   "kind": "note",
+   "label": "joined state k2 (1d0faacf): k2-sheet-a.jpg",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T13:29:38.685Z",
    "file": "20261125132938685-note-g1-six.jpg",
    "source": "../../../../tmp/v/g1-six.jpg",
    "kind": "note",
    "label": "joined state j1: g1-six.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:29:38.081Z",
-   "file": "20261125132938081-note-l3-far.jpg",
-   "source": "../../../../tmp/v/l3-far.png",
-   "kind": "note",
-   "label": "joined state j1: l3-far.png",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:29:37.516Z",
-   "file": "20261125132937516-note-j1-90.jpg",
-   "source": "../../../../tmp/v/j1-90.jpg",
-   "kind": "note",
-   "label": "joined state j1: j1-90.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:29:36.948Z",
-   "file": "20261125132936948-note-j1-rise.jpg",
-   "source": "../../../../tmp/v/j1-rise.jpg",
-   "kind": "note",
-   "label": "joined state j1: j1-rise.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T13:29:36.183Z",
-   "file": "20261125132936183-note-j1-360.jpg",
-   "source": "../../../../tmp/v/j1-360.jpg",
-   "kind": "note",
-   "label": "joined state j1: j1-360.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:51:42.580Z",
-   "file": "20261125125142580-note-t1-90.jpg",
-   "source": "../../../../tmp/v/t1-90.jpg",
-   "kind": "note",
-   "label": "t1-90 left a10 right thin law",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:51:41.960Z",
-   "file": "20261125125141960-note-t1-229.jpg",
-   "source": "../../../../tmp/v/t1-229.jpg",
-   "kind": "note",
-   "label": "t1-229 left a10 right thin law",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T12:51:41.227Z",
-   "file": "20261125125141227-note-t1-360.jpg",
-   "source": "../../../../tmp/v/t1-360.jpg",
-   "kind": "note",
-   "label": "t1-360 left a10 right thin law",
    "stop": "sun"
   }
  ]
