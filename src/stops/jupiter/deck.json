@@ -245,7 +245,7 @@
     "fadeFrom": 0.75
   },
   "plates": {
-    "note": "Top down plates of the place, made from the approved close image by assets-src/jupiter/plates (recipe in assets-src/jupiter/RECIPE.md). Units and chart as the maps; size and pixels are x then y. They hold albedo in the globe's coding (values above white kept), so the globe shows them as the deepest levels of its patches. order: the order in which the plates are made. parents: the plate a canvas is enlarged from; without one the canvas starts from the globe's own albedo at the place, with the flow frozen as in place.json (globeBlurPx: how soft that is in plate pixels). inset: a finished finer plate laid into the canvas at its own place. grade: one colour, the median over the laid back image within gradeRadius units of the vortex of the close image over the globe's albedo, both at a scale of gradeScale units. The plates were made as the close image divided by it. Since round 2 of the second note no program reads it: the plates hold the close image's light, and the globe and the deck both draw them over place.json solved.light, the globe's own light on a ground that faces the Sun at the place, with no exposure by height or time. useBlur: the laid back image is used where its own blur along the view is under useBlur[0] units, and not at all over useBlur[1]; beyond, near the image's horizon, the globe's own structure stays. flatten: from flatten[0] to flatten[1] units of ground distance from the close camera the laid back image gives up its tone above a scale of flatten[2] units to the globe's, because there its tone is the haze of a low view, not the cloud. carry: outside the laid back image the canvas carries the image's tone on from the border (measured at a scale of carry[0] units) and lets it go over carry[1] units. free: outside the laid back image the repaint is tied to the canvas at a scale that grows by this many pixels of blur per pixel of distance from the border. softPx: plate pixels of blur per unit of the image's own blur along the view, which marks unresolved parts as unfinished for the repaint. parentBlurPx: the blur of a level enlarged from the level above. clear: the globe's own structure is taken away within clear[0] units of the vortex (fading out to clear[1]) by a blur of clear[2] units, so the repaint closes the storm of the close image all the way round and the globe's small oval, which is that storm seen from far, does not stand beside it. bandPx: width and blur, in plate pixels, of the unfinished band along the border of the laid back image. finishedPx: blur under which the canvas is kept as it is. lock: the repaint keeps its own structure below lock[0] times the canvas blur (at least lock[1], at most lock[2] pixels) and takes the canvas above. lockGain: strength of the repaint's own structure. hiddenError: fixed point error of the lay back, in units, over which a place counts as hidden from the close image. feather: width of the join in units. nest: the near plate keeps its own repaint inside nest[0] units from its centre and is the mid plate beyond nest[1], measured with the power norm nestPower (a rounded square); the mid plate is the near plate made smaller inside the same shape. upward: assets-src/jupiter/plates/upward.py takes the place as the plates show it from above (fore, near and mid plate nested as the globe nests them) and writes it, reduced by area to the texel of a level above the mid plate, into the levels named in levels: far is the far plate (in the plates' coding), wrap is the globe's wrap and patches are its three patches (there divided by the grade, times the tone and calm fields, as the globe shows the plates). All three are written: the globe carries the place from the hold down (one Jupiter outranks the bytes of the hold inside a small disc round the place), so no height brings the storm in. from: the commit whose wrap and patches carry no place; the tool starts from those on every run, so a second run writes the same bytes. border: full within the first distance in units from the vortex, none from the second. spread: the point spread, in units of the chart, through which the place is written into each level of the globe's own imagery (a Gaussian of that width, in linear light, after the reduction by area). Each level is a picture of the planet with a point spread of its own, and nothing written into it may be crisper than the picture is: assets-src/jupiter/plates/spread.py measures it on the level as it stood before the place was written (the sharpest tenth of its clean edges, the fiftieth of its texels with the steepest gradient whose profile rises without a turn over 6 texels to either side): 1.30 texels of the wrap, 1.10, 1.20 and 1.02 texels of the three patches, in the full set; the web set takes the same widths in units and is only softer. For the wrap the octaves say the same: unfiltered, the place held 7.92 and 6.53 levels (rms of luma) in its two finest octaves where the great red storm of the same picture holds 4.26 and 4.05; through 1.25 texels it holds 2.43 and 3.99 (review of round 2, condition b of 23:34: in the hold nothing in the place is crisper than the hero's own detail round it). marginDeg: how far past the border the tool looks for texels.",
+    "note": "Top down plates of the place, made from the approved close image by assets-src/jupiter/plates (recipe in assets-src/jupiter/RECIPE.md). Units and chart as the maps; size and pixels are x then y. They hold albedo in the globe's coding (values above white kept), so the globe shows them as the deepest levels of its patches. order: the order in which the plates are made. parents: the plate a canvas is enlarged from; without one the canvas starts from the globe's own albedo at the place, with the flow frozen as in place.json (globeBlurPx: how soft that is in plate pixels). inset: a finished finer plate laid into the canvas at its own place. grade: one colour, the median over the laid back image within gradeRadius units of the vortex of the close image over the globe's albedo, both at a scale of gradeScale units. The plates were made as the close image divided by it. Since round 2 of the second note no program reads it: the plates hold the close image's light, and the globe and the deck both draw them over place.json solved.light, the globe's own light on a ground that faces the Sun at the place, with no exposure by height or time. useBlur: the laid back image is used where its own blur along the view is under useBlur[0] units, and not at all over useBlur[1]; beyond, near the image's horizon, the globe's own structure stays. flatten: from flatten[0] to flatten[1] units of ground distance from the close camera the laid back image gives up its tone above a scale of flatten[2] units to the globe's, because there its tone is the haze of a low view, not the cloud. carry: outside the laid back image the canvas carries the image's tone on from the border (measured at a scale of carry[0] units) and lets it go over carry[1] units. free: outside the laid back image the repaint is tied to the canvas at a scale that grows by this many pixels of blur per pixel of distance from the border. softPx: plate pixels of blur per unit of the image's own blur along the view, which marks unresolved parts as unfinished for the repaint. parentBlurPx: the blur of a level enlarged from the level above. clear: the globe's own structure is taken away within clear[0] units of the vortex (fading out to clear[1]) by a blur of clear[2] units, so the repaint closes the storm of the close image all the way round and the globe's small oval, which is that storm seen from far, does not stand beside it. bandPx: width and blur, in plate pixels, of the unfinished band along the border of the laid back image. finishedPx: blur under which the canvas is kept as it is. lock: the repaint keeps its own structure below lock[0] times the canvas blur (at least lock[1], at most lock[2] pixels) and takes the canvas above. lockGain: strength of the repaint's own structure. hiddenError: fixed point error of the lay back, in units, over which a place counts as hidden from the close image. feather: width of the join in units. nest: the near plate keeps its own repaint inside nest[0] units from its centre and is the mid plate beyond nest[1], measured with the power norm nestPower (a rounded square); the mid plate is the near plate made smaller inside the same shape. upward: assets-src/jupiter/plates/upward.py takes the place as the plates show it from above (fore, near and mid plate nested as the globe nests them) and writes it, reduced by area to the texel of a level above the mid plate, into the levels named in levels: far is the far plate (in the plates' coding), wrap is the globe's wrap and patches are its three patches (there divided by the grade, times the tone and calm fields, as the globe shows the plates). All three are written: the globe carries the place from the hold down (one Jupiter outranks the bytes of the hold inside a small disc round the place), so no height brings the storm in. from: the commit whose wrap and patches carry no place; the tool starts from those on every run, so a second run writes the same bytes. border: full within the first distance in units from the vortex, none from the second. ring: kept says that the far plate the tool starts from carries the place already (the tool's own earlier output), so in the far plate only the disc where the border is full is written again and the ring between the two distances stays as the first run mixed it; a second run then writes the same bytes. spread: the point spread, in units of the chart, through which the place is written into each level of the globe's own imagery (a Gaussian of that width, in linear light, after the reduction by area). Each level is a picture of the planet with a point spread of its own, and nothing written into it may be crisper than the picture is: assets-src/jupiter/plates/spread.py measures it on the level as it stood before the place was written (the sharpest tenth of its clean edges, the fiftieth of its texels with the steepest gradient whose profile rises without a turn over 6 texels to either side): 1.30 texels of the wrap, 1.10, 1.20 and 1.02 texels of the three patches, in the full set; the web set takes the same widths in units and is only softer. For the wrap the octaves say the same: unfiltered, the place held 7.92 and 6.53 levels (rms of luma) in its two finest octaves where the great red storm of the same picture holds 4.26 and 4.05; through 1.25 texels it holds 2.43 and 3.99 (review of round 2, condition b of 23:34: in the hold nothing in the place is crisper than the hero's own detail round it). marginDeg: how far past the border the tool looks for texels.",
     "fore": {
       "centre": [
         0,
@@ -371,6 +371,7 @@
         13.0,
         16.5
       ],
+      "ring": "kept",
       "spread": {
         "wrap-color.jpg": 0.328,
         "patch-wide.jpg": 0.168,
@@ -379,6 +380,134 @@
       },
       "marginDeg": 1.0,
       "from": "5f3565032784"
+    },
+    "beyond": {
+      "note": "The canvas' own ground laid on past its borders (MAIL 1074 item 2) by plates/beyond.py, no image model; recipe in assets-src/jupiter/RECIPE.md, step 17. from: the commit whose plates and heights the script reads, so a second run writes the same bytes. box: the part of the chart it works on (x from, x to, y from, y to), on a grid of the fore plate's texel. floor: added to a colour before its logarithm. insetPx, openPx: the canvas' ground is what the fit camera saw at least insetPx canvas pixels inside its frame, opened by openPx grid texels, its largest piece. zone: the ground to fill lies outside the canvas' ground, whole to borderUnits[0] from it and gone at borderUnits[1], whole to reachUnits[0] from the fit eye's ground point and gone at reachUnits[1]; filled: the share of laid ground round a texel from which it counts. source: where pieces may come from: the canvas' ground more than borderUnits inside its border and insetPx inside its frame, nearUnits from the eye's ground point, further than stormUnits from the storm's centre, without the glints (blue over glint[0] times red, the brightest above glint[1] in 100) and without the towers (the height over its mean within towerUnits, above towerShare in 100), these opened by openPx and widened by marginPx grid texels. So no piece is of the eye or of a tower. flow: the frame the pieces are laid in, log polar about the storm's centre (turns columns round, rings rows outward from innerUnits, the seam at axisDeg), where a shift is a turn about the storm and a scale, so a piece keeps its grain along the flow at its new place. pieces: the search in that frame for the source whose detail fits what lies beside it (seed of the first guess; flatUnits and heightWeight: the detail compared is colour and height less their mean within flatUnits; levels, passes, steps, reaches: the search from coarse to fine; toneWeight, scaleWeight, useWeight: the cost of another tone, another scale and a source used before; gapUnits: the least distance of a source from its target; together, arcFloor: the pull to lie beside the neighbour's source and the carry of the tone along the flow). splitUnits: the laid ground keeps the tone carried along the flow above this size and takes the pieces' detail below it. edge: inside the canvas' frame the plates take the canvas itself (its lay back blurred by layBlurPx), whole to insidePx[0] canvas pixels from the frame and gone at insidePx[1]. under: one body (condition i): where the fore plate hides the near plate the near plate is the fore plate filtered, whole to under[0] of the fore plate's half size and gone at under[1], inside look.join, so no texel with weight in the film changes by it. The mid plate is not written: the haze's light reads it under the near plate (clouds.ts sunAt, haze lightBlurUnits), and written as the near plate filtered it moved the final 3150 by up to 4 levels. preview: the pictures written to out/work/jupiter/beyond.",
+      "from": "7c0b8675839b1fc66617635ef42a34f30e3417f5",
+      "box": [
+        -6.501,
+        7.5,
+        -6.501,
+        0.999
+      ],
+      "floor": 0.002,
+      "insetPx": 4,
+      "openPx": 5,
+      "splitUnits": 0.2,
+      "source": {
+        "borderUnits": 0.06,
+        "insetPx": 40,
+        "nearUnits": [
+          0.9,
+          4.5
+        ],
+        "stormUnits": 2.2,
+        "glint": [
+          1.3,
+          80
+        ],
+        "towerUnits": 0.3,
+        "towerShare": 82,
+        "openPx": 9,
+        "marginPx": 41
+      },
+      "zone": {
+        "borderUnits": [
+          0.5,
+          1.8
+        ],
+        "reachUnits": [
+          4.8,
+          6.8
+        ],
+        "filled": [
+          0.5,
+          1.0
+        ]
+      },
+      "flow": {
+        "turns": 8384,
+        "rings": 1984,
+        "innerUnits": 1.8,
+        "axisDeg": -135
+      },
+      "pieces": {
+        "seed": 11,
+        "flatUnits": 0.08,
+        "heightWeight": 8,
+        "radius": 2,
+        "levels": [
+          4,
+          1
+        ],
+        "passes": {
+          "4": 16,
+          "3": 10,
+          "2": 6,
+          "1": 4
+        },
+        "steps": [
+          1,
+          4
+        ],
+        "wideFrom": 3,
+        "reachShare": [
+          4,
+          16
+        ],
+        "reachPx": [
+          24,
+          6
+        ],
+        "reachFinePx": [
+          6,
+          2
+        ],
+        "toneWeight": 0.5,
+        "scaleWeight": 1.0,
+        "useWeight": 0.05,
+        "gapUnits": 0.6,
+        "together": 0.08,
+        "arcFloor": 0.02
+      },
+      "edge": {
+        "layBlurPx": 0.8,
+        "insidePx": [
+          100,
+          200
+        ]
+      },
+      "under": [
+        0.7,
+        0.84
+      ],
+      "preview": {
+        "exposure": 1.6,
+        "box": [
+          -6.5,
+          5.0,
+          -6.5,
+          0.9
+        ],
+        "zoom": 0.36,
+        "piecesZoom": 0.5,
+        "pieceUnits2": 0.05,
+        "edgeShare": 0.25,
+        "close": [
+          [
+            -4.6,
+            -1.6,
+            -3.4,
+            -0.9
+          ],
+          [
+            -3.2,
+            0.6,
+            -5.2,
+            -2.6
+          ]
+        ]
+      }
     },
     "move": {
       "note": "The place stands on a storm the globe shows from orbit: the eye of the pale spiral oval east of the great red storm, where the globe's Sun stands as low as the close image shows it (place.json oval). assets-src/jupiter/plates/move.py lays the plates that reach beyond the painted storm on that ground: the globe's own imagery there with the flow at rest (softened as globeSoftenPx says) times the globe's light at the place (place.json solved.light). plates: the plates it writes. keep: per plate, the radius in units round the vortex inside which the painted plate stays as it was baked (read from the commit named in from) and the radius from which the plate is the globe's ground alone; between the two they blend smoothly. So the painted storm is the eye of the globe's own oval and the oval's spiral arms run round it. shade: see its own note. After it run plates/tone.py, plates/calm.py and plates/upward.py, which writes the storm into the far plate and into the globe's own imagery (upward: levels and border), so that the globe carries the place from the hold down and no height brings it in.",

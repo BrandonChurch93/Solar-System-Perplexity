@@ -221,6 +221,8 @@ def write_far(src, dst, coded, alpha):
     texel = f['size'][0] / f['pixels'][0]
     small, grid = reduced(coded, texel)
     k = w[sl][..., None]
+    if UP.get('ring') == 'kept':
+        k = np.floor(k)
     mixed = srgb_to_linear(plate[sl][..., 2::-1].astype(np.float64) / 255) * (1 - k) + at(small, grid, X[sl], Y[sl]) * k
     plate[sl][..., 2::-1] = np.round(np.clip(linear_to_srgb(mixed), 0, 1) * 255).astype(np.uint8)
     small, grid = reduced(alpha, texel)
