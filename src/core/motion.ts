@@ -163,6 +163,18 @@ export function softness(raw: number): number {
   return x * x * (3 - 2 * x)
 }
 
+// Whether a shot is a surface view that is measured on its globe as drawn (SetState.ball: a stop that handover.drawnMeasure names).
+// Such a view takes no soft (framePlan), in every kind of segment, as a dive and a rise take none where they hand over. softness is
+// the law of a frame that moves fast as a whole: it reads its lookups wider, by the fastest point the measure finds. The fastest point
+// of a surface view is the ground under the lens while its horizon stands nearly still, and one number for the whole sample would
+// soften the still part for the sake of the fast one. So the close side of a named stop has one law from the first frame of its dive
+// to the last of its rise, and no border inside the stop steps by it. The true px of a surface view may pass motion.softFromPx where
+// the plane read less (Uranus: 11.0 px where the plane read 9.6 at most), and its frames keep the lookups they had. A surface view
+// that is not named keeps the law it had. The rule reads what the frame draws and never the name of its segment.
+export function surfaceDrawn(shot: Shot): boolean {
+  return shot.sets.some((s) => s.weight > 0 && s.view !== 'orbit' && s.ball !== undefined)
+}
+
 export function samplesNeeded(base: number, cap: number, motion: number): number {
   const need = Math.ceil(motion / config.motion.maxStepPx - 1e-9)
   return need <= base ? base : Math.min(need, Math.max(cap, base))
@@ -424,7 +436,8 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
   // A flight is no stop's: the law of the stop it leaves ends with the stop's last frame.
   const law = segment.kind === 'travel' ? null : endsLawOf(segment.stop)
   const ends = law ? endsBy(law, seen) : 0
-  return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft: softness(raw), split: false, shutter: 1, ...(near > 0 ? { near } : {}), ...(ends > 0 ? { ends } : {}) }
+  const soft = surfaceDrawn(mid) ? 0 : softness(raw)
+  return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft, split: false, shutter: 1, ...(near > 0 ? { near } : {}), ...(ends > 0 ? { ends } : {}) }
 }
 
 // Where the lens of one end of the shutter sees a point of a sample: the matrix that takes the point from the view space of the sample

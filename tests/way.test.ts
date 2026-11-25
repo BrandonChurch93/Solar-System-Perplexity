@@ -56,7 +56,9 @@ function through(m: ArrayLike<number>, v: THREE.Vector3, single: boolean): THREE
   const w = row(3)
   return w > 1e-9 ? new THREE.Vector2(r(row(0) / w), r(row(1) / w)) : null
 }
-// The points of the surface the grid of the motion measure meets (config.motion.probeGrid), in the set's frame without its turn.
+// The points of the surface the grid of the motion measure meets (config.motion.probeGrid), in the set's frame without its turn: the unit
+// sphere on the globe side; on the close side the globe as the state names it (SetState.ball, a stop that handover.drawnMeasure names), else
+// the plane y = -ground.
 function gridPoints(mid: Shot): { x: number; y: number; local: THREE.Vector3 }[] {
   const s = mid.sets[0]!
   const [cols, rows] = config.motion.probeGrid
@@ -70,7 +72,12 @@ function gridPoints(mid: Shot): { x: number; y: number; local: THREE.Vector3 }[]
     for (let x = 0; x < cols; x++) {
       const ray = new THREE.Vector3(((x / (cols - 1)) * 2 - 1) * tan * aspect, ((y / (rows - 1)) * 2 - 1) * tan, -1).normalize().applyQuaternion(mid.camera.quaternion).applyQuaternion(inverse)
       if (s.view !== 'orbit') {
-        if (height > 0 && ray.y < -1e-9) out.push({ x, y, local: eye.clone().addScaledVector(ray, height / -ray.y) })
+        if (s.ball) {
+          const from = eye.clone().sub(s.ball.centre)
+          const near = -from.dot(ray)
+          const under = near * near - from.lengthSq() + s.ball.radius * s.ball.radius
+          if (under > 0 && near - Math.sqrt(under) > 0) out.push({ x, y, local: eye.clone().addScaledVector(ray, near - Math.sqrt(under)) })
+        } else if (height > 0 && ray.y < -1e-9) out.push({ x, y, local: eye.clone().addScaledVector(ray, height / -ray.y) })
         continue
       }
       const along = -eye.dot(ray)

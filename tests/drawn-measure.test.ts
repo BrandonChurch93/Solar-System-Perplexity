@@ -3,11 +3,12 @@ import * as THREE from 'three'
 import raw from '../config/showcase.json'
 import { buildConfig, config } from '../src/config'
 import { shutterSpan, spanMid } from '../src/core/clock'
-import { framePlan, rawMotion } from '../src/core/motion'
+import { framePlan, rawMotion, softness, surfaceDrawn } from '../src/core/motion'
 import type { Pose, SetState, Shot, ViewKind } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
 import { drawnMeasured, drawnWord, forceSide, handoverOf } from '../src/director/handover'
 import { plans } from '../src/director/plans'
+import { COVERED, coveredPlan, filmWith, restorePlans } from './lib/covered'
 
 // The measure that reads what a stop draws (handover.drawnMeasure). The surface view of a stop was measured on the plane y = -ground of
 // its set, one number of the plan for a height and the set's own y axis for an up. The ground a surface view shows is the globe: at the
@@ -74,8 +75,8 @@ describe('the switch', () => {
     expect(drawnMeasured('mars') && drawnMeasured('venus')).toBe(true)
     expect(drawnMeasured('earth')).toBe(false)
   }, LONG)
-  it('is a list of stops, each once, and the film names none', () => {
-    expect(raw.handover.drawnMeasure).toEqual([])
+  it('is a list of stops, each once, and the film names every stop but Saturn', () => {
+    expect(raw.handover.drawnMeasure).toEqual(NAMED)
     for (const bad of [['pluto'], ['mars', 'mars'], 'mars', { mars: true }]) {
       const off = JSON.parse(JSON.stringify(raw)) as typeof raw
       ;(off.handover as { drawnMeasure: unknown }).drawnMeasure = bad
@@ -84,10 +85,92 @@ describe('the switch', () => {
     const gone = JSON.parse(JSON.stringify(raw)) as typeof raw
     delete (gone.handover as { drawnMeasure?: unknown }).drawnMeasure
     expect(() => buildConfig(gone)).toThrow(/missing key handover.drawnMeasure/)
-    const named = JSON.parse(JSON.stringify(raw)) as typeof raw
-    ;(named.handover as { drawnMeasure: unknown }).drawnMeasure = NAMED
-    expect(() => buildConfig(named)).not.toThrow()
+    const none = JSON.parse(JSON.stringify(raw)) as typeof raw
+    ;(none.handover as { drawnMeasure: unknown }).drawnMeasure = []
+    expect(() => buildConfig(none)).not.toThrow()
   })
+})
+
+describe('the soft of a surface view', () => {
+  // softness is the law of the flights, by the fastest point of the frame. On its globe a surface view may read more than
+  // motion.softFromPx where the plane read less: Uranus's reads 10.7 to 11.0 px in every frame, the plane read 9.6 at most. The dive
+  // before it and the rise after it take no soft, so a soft in the surface view would step at its two borders (4199 to 4200, 4379 to
+  // 4380), and it would soften a judged hold for a law that was made for fast motion.
+  it('is none in a named stop, whatever its px, so no border inside the stop steps by it', () => {
+    const m = config.motion
+    for (const p of plans.filter((x) => NAMED.includes(x.id))) {
+      const segs = config.segments.filter((s) => s.stop === p.id && (s.kind === 'dive' || s.kind === 'terrain' || s.kind === 'rise'))
+      const view = segs.find((s) => s.kind === 'terrain')!
+      for (let f = view.firstFrame; f < view.endFrame; f += f < view.firstFrame + 3 || f > view.endFrame - 5 ? 1 : 6) {
+        expect(surfaceDrawn(film.shotAt(f, (f + spanMid()) / config.fps))).toBe(true)
+        expect(framePlan(film, f, 'review').soft).toBe(0)
+      }
+      // The frames each side of every border inside the stop: the dive's last and the view's first, the view's last and the rise's first.
+      for (const s of segs) for (const f of [s.firstFrame, s.endFrame - 1]) expect(framePlan(film, f, 'final').soft).toBe(0)
+    }
+    const view = config.segments.find((s) => s.stop === 'uranus' && s.kind === 'terrain')!
+    for (const f of [view.firstFrame, view.firstFrame + Math.floor(view.frames / 2), view.endFrame - 1]) {
+      const plan = framePlan(film, f, 'review')
+      expect(plan.raw).toBeGreaterThan(m.softFromPx)
+      expect(softness(plan.raw)).toBeGreaterThan(0)
+      expect(plan.soft).toBe(0)
+    }
+  }, LONG)
+  it('stays the soft of its motion in a stop that is not named and in a flight', () => {
+    const rings = config.segments.find((s) => s.stop === 'saturn' && s.kind === 'terrain')!
+    let most = 0
+    for (let f = rings.firstFrame; f < rings.endFrame; f += 3) {
+      const plan = framePlan(film, f, 'review')
+      expect(surfaceDrawn(film.shotAt(f, (f + spanMid()) / config.fps))).toBe(false)
+      expect(plan.soft).toBe(softness(plan.raw))
+      most = Math.max(most, plan.soft)
+    }
+    expect(most).toBeGreaterThan(0)
+    const flight = config.segments.find((s) => s.stop === 'uranus' && s.kind === 'travel')!
+    let whole = 0
+    for (let f = flight.firstFrame; f < flight.endFrame; f += 3) {
+      const plan = framePlan(film, f, 'review')
+      expect(plan.soft).toBe(softness(plan.raw))
+      if (plan.soft === 1) whole++
+    }
+    expect(whole).toBeGreaterThan(0)
+    // With no stop named the surface view of Uranus is read on the plane and by the law it had.
+    numbers.drawnMeasure = []
+    const view = config.segments.find((s) => s.stop === 'uranus' && s.kind === 'terrain')!
+    for (const f of [view.firstFrame, view.firstFrame + Math.floor(view.frames / 2), view.endFrame - 1]) {
+      const plan = framePlan(film, f, 'review')
+      expect(surfaceDrawn(film.shotAt(f, (f + spanMid()) / config.fps))).toBe(false)
+      expect(plan.soft).toBe(softness(plan.raw))
+    }
+  }, LONG)
+  it('reads what the frame draws and never the name of its segment: a rise that does not hand over takes none while it shows the surface', () => {
+    // The covered stop of the tests rises fast over its ground in the open before the cover closes, then shows its globe.
+    try {
+      const covered = filmWith(coveredPlan())
+      const rise = config.segments.find((s) => s.kind === 'rise' && s.stop === COVERED)!
+      expect(NAMED).toContain(COVERED)
+      let ground = 0
+      let fast = 0
+      let globe = 0
+      for (let f = rise.firstFrame; f < rise.endFrame; f++) {
+        const plan = framePlan(covered, f, 'review')
+        expect(plan.split).toBe(false)
+        if (surfaceDrawn(covered.shotAt(f, (f + spanMid()) / config.fps))) {
+          ground++
+          if (softness(plan.raw) > 0) fast++
+          expect(plan.soft).toBe(0)
+        } else {
+          globe++
+          expect(plan.soft).toBe(softness(plan.raw))
+        }
+      }
+      expect(ground).toBeGreaterThan(0)
+      expect(fast).toBeGreaterThan(0)
+      expect(globe).toBeGreaterThan(0)
+    } finally {
+      restorePlans()
+    }
+  }, LONG)
 })
 
 describe('the globe in the surface set', () => {
