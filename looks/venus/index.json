@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T01:15:08.284Z",
+ "pushed": "2026-11-25T01:53:12.459Z",
  "head": "f2a418731e617071cfe34e445e300fa9ad997e0f",
- "note": "MAIL 815 part a measured at 60 a second: dive pop 1.12 green, pattern 0.55 red on the far deck; rise as before; c and d not cured",
+ "note": "star cloud step at 1316 + 1/2 traced to the sky shader threshold uGlow < 0.999; request sent to the handover engineer",
  "looks": [
+  {
+   "time": "2026-11-25T01:53:11.837Z",
+   "file": "20261125015311837-note-star-step-1316h.jpg",
+   "source": "../../../../tmp/v/st/k7/star-step-1316h.jpg",
+   "kind": "note",
+   "label": "dive film time 1316.5 over 1316.5078 at capture rate 128: the band cloud steps up where the sky glow passes 0.999 (shared sky shader), not a law of the stop",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T01:15:07.643Z",
    "file": "20261125011507643-note-H-lower.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/cmp/st/H-b0-p2.jpg",
    "kind": "note",
    "label": "dive 1317 to 1322 + 1/2 beside b0b87889 at the equal eye height (b0 left of each pair)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T01:02:09.106Z",
-   "file": "20261125010209106-note-H-dive-4.jpg",
-   "source": "../../../../tmp/v/cmp/st/H-dive-4.jpg",
-   "kind": "note",
-   "label": "dive 1329 to 1334 + 1/2 at 60 a second, working tree after part a",
    "stop": "venus"
   }
  ]
