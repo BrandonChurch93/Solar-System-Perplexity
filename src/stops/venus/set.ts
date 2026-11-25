@@ -283,7 +283,7 @@ export const createSet: SetFactory = async (ctx) => {
       // dusk.heights) at the exposure of this height.
       const groundPl = plan.placeLook(state.segment, camera.length() - 1)
       const underAt = place.ground.tone.under[state.time > terrainMid ? 'rise' : 'dive']
-      const groundTone = { look: [place.tone.air, 1, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
+      const groundTone = { look: [place.tone.air, place.tone.near, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
       // Inside the frame of T true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is
       // the surface view. The border of the ground and its far limit outside that frame stand still (plates.json, ground.frustum).
       // The near ground, which the camera of T sees from above (ground.keep), keeps all of its picture at every height, so no crest of

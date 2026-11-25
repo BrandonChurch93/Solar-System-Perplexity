@@ -45,11 +45,11 @@ export interface GlobePlace {
   // The look of the place from above (plates.json, tone): the light of the plates, not below floor, raised to the power of the tone map
   // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
   // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
-  tone: { cos: [number, number]; power: number; air: number; live: { sigmaDeg: number; contrast: number; colour: number; gain: number; most: number } }
+  tone: { cos: [number, number]; power: number; air: number; near: number; live: { sigmaDeg: number; contrast: number; colour: number; gain: number; most: number } }
   // One ground for every height (plates.json, show). pixelDeg: the widths of a pixel of the master frame on the ground, in degrees
   // of arc, between which the fine forms of the plates take the place of the globe's own. sigmaDeg: the size under which a form is
   // fine. discDeg: the disc of the place, whole inside the first angle from the centre of the place and ended by the second.
-  show: { pixelDeg: [number, number]; sigmaDeg: number; discDeg: [number, number] }
+  show: { pixelDeg: [number, number]; sigmaDeg: number; discDeg: [number, number]; far: { contrast: number; most: number; pixelDeg: [number, number] } }
 }
 
 export interface GlobeFlow {
@@ -176,6 +176,7 @@ uniform vec3 uPlaceForms;
 uniform float uPlaceOn;
 uniform vec4 uShow;
 uniform vec2 uDisc;
+uniform vec4 uDiscFar;
 uniform float uShowMap;
 uniform vec3 uToneEye;
 uniform vec4 uToneLook;
@@ -400,8 +401,12 @@ ${TAP_LEVELS}
     vec3 wideMap = textureLod(uMap, lonLat(dc), uLive.y).rgb;
     vec3 midMap = textureLod(uMap, lonLat(dc), uShowMap).rgb;
     mapMid = clamp((midMap * midMap) / max(wideMap * wideMap, vec3(1e-6)), vec3(0.125), vec3(8.0));
-    float wideLift = max(textureLod(uFlow, lonLat(dc), uLiveLook.y).g - uLift.x, 0.0) * uLift.y * smoothstep(uLift.z, uLift.w, max(wideMap.r, max(wideMap.g, wideMap.b)));
-    under = wideMap * wideMap * ${wrap.top.toFixed(1)} * exp2(wideLift) * curveAt(ndl) * uTint;
+    // Where the hold look stands (held), the globe's own colour is that look: the map at the hold's level in place of the level of
+    // uLive.y, and below the picture of the hold over it (fine), as on the globe about the place. The place seen from the hold is
+    // then a region of the approved globe and not of the bare map.
+    vec3 baseMap = mix(wideMap, textureLod(uMap, lonLat(dc), max(uHoldMap.w, uLive.y)).rgb, held);
+    float wideLift = max(textureLod(uFlow, lonLat(dc), uLiveLook.y).g - uLift.x, 0.0) * uLift.y * smoothstep(uLift.z, uLift.w, max(baseMap.r, max(baseMap.g, baseMap.b)));
+    under = baseMap * baseMap * ${wrap.top.toFixed(1)} * exp2(wideLift) * curveAt(ndl) * uTint;
   }
   for (int pass = 0; pass < (uShade.x * uLimbFar > 0.0 ? 1 : 0); pass++) {
     vec3 wide = equirectGrad(uMap, dc, max(uShade.y, grad)).rgb;
@@ -475,6 +480,7 @@ ${TAP_LEVELS}
   vec3 past = uCam - dir * dot(uCam, dir);
   for (int pass = 0; pass < (uHoldRimMap.w > 0.0 && b > ${(holdJson.rim.from - 0.02).toFixed(3)} ? 1 : 0); pass++) fine *= holdRim(past, false);
   col *= fine;
+  under *= fine;
   for (int k = 0; k < (uCarryOn > 0.0 ? 1 : 0); k++) {
     float cl = max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
     col = mix(col, mix(vec3(cl), col, uCarry.x) * pow(cl / uCarry.z, uCarry.y - 1.0) * uCarry.w * uCarryTint, uCarryOn);
@@ -529,7 +535,10 @@ ${PLACE_GLSL}
       // deck of the close view belongs to the low line of sight of T; a camera that stands steeper over that deck sees less air there.
       vec3 toEye = normalize(spinY(uCamObj, uSpin) - dp);
       vec3 toT = normalize(uToneEye - dp);
-      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * uToneLook.y * pow(clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0), uToneLook.x);
+      // And by how near the camera stands to the ground point, against the camera at T (plates.json, tone.near): the ratio of the two
+      // distances to the power uToneLook.y, whole where the camera is no more than 1 / 0.95 times as far as the one at T. Seen along the
+      // line of sight of T from far off, a ground point has the tone of the globe and not the one of the close view.
+      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * pow(clamp(length(uToneEye - dp) / (0.95 * length(spinY(uCamObj, uSpin) - dp)), 0.0, 1.0), uToneLook.y) * pow(clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0), uToneLook.x);
       vec3 seen = light * uPlaceDusk.xyz;
       for (int t = 0; t < 1; t++) {
         // One ground for every height and every line of sight (plates.json, show). The forms of the ground are, by their size on the
@@ -547,7 +556,14 @@ ${PLACE_GLSL}
         vec3 midHue = clamp((mid / midLum) / max(low / lowLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
         vec3 fineForms = pow(clamp(ownLum / midLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z * fineW) * pow(fineHue, vec3(uLive.w * fineW));
         vec3 outside = col * pow(max(under * mapMid, vec3(1e-5)) / max(col, vec3(1e-5)), vec3(fineW));
-        vec3 inside = under * pow(clamp(midLum / lowLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z) * pow(midHue, vec3(uLive.w));
+        // Inside the disc the forms between the two sizes are the place's own at every height. Where they are a few pixels wide in the
+        // frame they show as cloud of the globe's deck does at that size (plates.json, show.far): at the contrast uDiscFar.x and no
+        // further from the colour under them than uDiscFar.y times, where a pixel of the master frame is wider on the ground than
+        // uDiscFar.w; in full where it is narrower than uDiscFar.z (logarithms of radians of arc), and in full on the line of sight of T
+        // (same), whose picture they are. Their contrast alone moves: no form comes or goes, and no height is read.
+        float midFull = max(same, 1.0 - smoothstep(uDiscFar.z, uDiscFar.w, log(max(pgd * uFrame, 1e-9))));
+        float midMost = mix(uDiscFar.y, uLiveLook.z, midFull);
+        vec3 inside = under * pow(clamp(midLum / lowLum, 1.0 / midMost, midMost), uLive.z * mix(uDiscFar.x, 1.0, midFull)) * pow(midHue, vec3(uLive.w));
         vec3 above = mix(outside, inside, inner) * fineForms * uLiveLook.x;
         float aboveForms = max(dot(above, vec3(0.2126, 0.7152, 0.0722)), 1e-5) / max(dot(under, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
         seen *= clamp(aboveForms * lowLum / ownLum, 1.0 / uLiveLook.z, uLiveLook.z);
@@ -654,8 +670,9 @@ export class Globe {
         uShow: { value: new THREE.Vector4(Math.log(THREE.MathUtils.degToRad(o.place.show.pixelDeg[0])), Math.log(THREE.MathUtils.degToRad(o.place.show.pixelDeg[1])), Math.log2(Math.max(THREE.MathUtils.degToRad(o.place.show.sigmaDeg) * ((o.place.textures[0]?.image as unknown as { width: number } | undefined)?.width ?? 1) / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[0] ?? 90) / 2)), 1)), Math.log2(Math.max(o.place.show.sigmaDeg * widePerDeg, 1))) },
         uShowMap: { value: Math.log2(Math.max(o.place.show.sigmaDeg * o.mapWidth / 360, 1)) },
         uDisc: { value: new THREE.Vector2(Math.tan(THREE.MathUtils.degToRad(o.place.show.discDeg[0])), Math.tan(THREE.MathUtils.degToRad(o.place.show.discDeg[1]))) },
+        uDiscFar: { value: new THREE.Vector4(o.place.show.far.contrast, o.place.show.far.most, Math.log(THREE.MathUtils.degToRad(o.place.show.far.pixelDeg[0])), Math.log(THREE.MathUtils.degToRad(o.place.show.far.pixelDeg[1]))) },
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
-        uToneLook: { value: new THREE.Vector4(o.place.tone.air, 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
+        uToneLook: { value: new THREE.Vector4(o.place.tone.air, o.place.tone.near, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: o.place.tone.power },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) }, uAirField: { value: new THREE.Vector3(1e3, 2e3, 1) },
         uDusk: { value: new THREE.Vector4(1, 1, 1, 1) }, uPlaceDusk: { value: new THREE.Vector4(1, 1, 1, 0) },
