@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T07:44:12.523Z",
- "head": "7e3da15af46a1d9872d6be92f3e9fe25a836611e",
- "note": "The table of MAIL 925: Mercury 730, Mars 2427, flight 2757, Uranus 4130 with and without the shutter's ends; Jupiter 3027 is rendering",
+ "pushed": "2026-11-25T08:13:51.302Z",
+ "head": "5708093a3a529023909690378fedc898443a4bfb",
+ "note": "commit 1 of the ends as a law of the frame's px is written and under test (local 5a601201); proof frames of nine stops queued behind Jupiter 3027 with ends",
  "looks": [
+  {
+   "time": "2026-11-25T08:13:49.014Z",
+   "file": "20261125081349014-note-f03027.jpg",
+   "source": "out/work/blur/bx-review/f03027.png",
+   "kind": "note",
+   "label": "Jupiter 3027 review, box shutter, 70 samples (take state 7e3da15a), the row for the queued table"
+  },
   {
    "time": "2026-11-25T07:41:56.986Z",
    "file": "20261125074156986-note-ma-2427-pair-1x.jpg",
@@ -52,14 +59,6 @@
    "source": "../../../../tmp/law/dots/ur-4130-clouds.png",
    "kind": "note",
    "label": "Uranus 4130 review (15.4 px, 26 samples), the clouds at the limb x 1240..1480 y 150..310 at 3 times: box, ends 0.5 (scratch): the smear is shorter, the puffs keep their shape"
-  },
-  {
-   "time": "2026-11-25T06:34:43.733Z",
-   "file": "20261125063443733-note-bd-uranus-4199.jpg",
-   "source": "../../../../tmp/law/dots/bd-uranus-4199.png",
-   "kind": "note",
-   "label": "Uranus border 4199 to 4200 at review, the rings x 1340..1580 y 400..560 at 3 times: 4199 box, 4199 with ends 0.5 (scratch), 4200: no step seen (box against ends 0.12 of 255)",
-   "stop": "uranus"
   }
  ]
 }
