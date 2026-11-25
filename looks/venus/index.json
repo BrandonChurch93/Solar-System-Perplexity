@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T01:53:20.317Z",
+ "pushed": "2026-11-25T02:16:52.260Z",
  "head": "f2a418731e617071cfe34e445e300fa9ad997e0f",
- "note": "star cloud step at 1316 + 1/2 traced to the sky shader threshold uGlow < 0.999; request sent to the handover engineer",
+ "note": "trial for MAIL 815 (b): fine forms of the place by pixel width on the ground, no height; hold and 1260 keep their bytes; not a commit",
  "looks": [
+  {
+   "time": "2026-11-25T02:16:51.590Z",
+   "file": "20261125021651590-note-cmp.jpg",
+   "source": "../../../../tmp/v/st/q1/cmp.jpg",
+   "kind": "note",
+   "label": "trial, not a commit: left the build f2a41873, right the fine forms of the place by the width of a pixel on the ground over the globe's own colour (no show.heights), frames 1290, 1302, 1314",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T01:53:11.837Z",
    "file": "20261125015311837-note-star-step-1316h.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/H-dive-changes.png",
    "kind": "note",
    "label": "dive changes over 8 film frames, working tree: pattern 0.55 from 1311, 0.53 from 1322, red",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T01:02:10.053Z",
-   "file": "20261125010210053-note-H-b0-p2.jpg",
-   "source": "../../../../tmp/v/cmp/st/H-b0-p2.jpg",
-   "kind": "note",
-   "label": "dive 1317 to 1322 + 1/2 beside b0b87889 at the equal eye height (b0 left of each pair)",
    "stop": "venus"
   }
  ]
