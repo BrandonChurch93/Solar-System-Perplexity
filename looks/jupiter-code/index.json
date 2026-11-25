@@ -1,9 +1,61 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T14:28:05.516Z",
+ "pushed": "2026-11-25T14:44:59.943Z",
  "head": "0e5c0362a8d001e1e0a2d689d74f58d3e83dc45a",
- "note": "14:30 UTC: wedge take p2 in 3034, 3042, 3254 + 1/2 (work files, not committed); chain running on the merge of main 50387ad",
+ "note": "14:46 UTC. Merge of main 50387ad is 0e5c0362: tests 917 of 917, 3150 equal bytes, 2895 three pixels by 1 level. Dive slice on the merge is rendering. Wedge take p2 being folded into a script. Far band of MAIL 1131 read.",
  "looks": [
+  {
+   "time": "2026-11-25T14:44:58.548Z",
+   "file": "20261125144458548-note-n7-3150-trio.jpg",
+   "source": "../work/r14/n7-3150-trio.jpg",
+   "kind": "note",
+   "label": "3150 on the merge 0e5c0362 (equal bytes to 7c0b8675): approved, before, now",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:44:57.048Z",
+   "file": "20261125144457048-note-wdp2-pair-3034.jpg",
+   "source": "../work/r14/wdp2-pair-3034.jpg",
+   "kind": "note",
+   "label": "3034: before and wedge take p2 (not committed yet)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:44:55.740Z",
+   "file": "20261125144455740-note-farband-4.jpg",
+   "source": "../work/r14/farband-4.jpg",
+   "kind": "note",
+   "label": "3150, top of the frame: approved, round 46, before, now (the far band of MAIL 1131)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T14:43:24.617Z",
+   "file": "20261125144324617-frame-n8-2895.jpg",
+   "source": "out/work/jupiter/final/n8-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
+  {
+   "time": "2026-11-25T14:42:22.942Z",
+   "file": "20261125144222942-frame-n8-3150.jpg",
+   "source": "out/work/jupiter/final/n8-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T14:28:03.970Z",
    "file": "20261125142803970-note-n7-3150-trio.jpg",
@@ -154,58 +206,6 @@
    "source": "../work/r14/n7-3150-diff.jpg",
    "kind": "note",
    "label": "3150 against the approved, difference times 4, before and after the camera of the judged frame was set on the lay back's camera",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:48:39.625Z",
-   "file": "20261125124839625-frame-n7-2895.jpg",
-   "source": "out/work/jupiter/final/n7-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f200e17ad0e70237"
-  },
-  {
-   "time": "2026-11-25T12:47:44.291Z",
-   "file": "20261125124744291-frame-n7-3150.jpg",
-   "source": "out/work/jupiter/final/n7-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f200e17ad0e70237"
-  },
-  {
-   "time": "2026-11-25T12:28:24.085Z",
-   "file": "20261125122824085-note-n6-3150-trio.jpg",
-   "source": "../work/r13/off/n6-3150-trio.jpg",
-   "kind": "note",
-   "label": "3150 on d438b57b: ours, approved, difference; match 7.800",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:28:23.521Z",
-   "file": "20261125122823521-note-rt-3150.jpg",
-   "source": "../work/r14/rt-3150.jpg",
-   "kind": "note",
-   "label": "3150 right third on d438b57b: ours, approved, difference",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T12:28:22.977Z",
-   "file": "20261125122822977-note-s1-corner.jpg",
-   "source": "../work/r14/beyond/s1-corner.jpg",
-   "kind": "note",
-   "label": "first quilt past the canvas' borders, not usable: square pieces, tone jumps, forms copied",
    "stop": "jupiter"
   }
  ]
