@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T08:42:46.351Z",
+ "pushed": "2026-11-25T09:07:44.592Z",
  "head": "705444897fa41f6743de1402262513bd60a3a69e",
- "note": "one body on the rise, in work. Part 2 by my chain (preview): 4b 0.495, 4b with the map light opened 0.471 (the arcade top still carries it), dome model 0.248, dome model with the map light opened 0.190. Frame 60 of these states is not drawn yet; sun-near frame 60 of 4b, on which the first pair stands: dark 0.223 body 0.616 pale 0.084 white 0.023 | brightest 15 percent: half width 8.2 px, 546 shapes, fine detail 0.0291, mean 0.326 | distance 0.070",
+ "note": "09:08 state in work on 4b code (not committed): part 2 by my chain 0.484 at the top of the arcade, not cured by the map's light on the far ground nor by the arcade cut; spot collar trial; frame 60 lines of this state: dark 0.223 body 0.616 pale 0.084 white 0.023 | half width 8.2 px, 546 shapes, fine detail 0.0291, mean 0.326 | distance 0.070 (approved 0.185 0.642 0.082 0.010, 4.8 px 1153, 0.0373, 0.338)",
  "looks": [
+  {
+   "time": "2026-11-25T09:02:11.513Z",
+   "file": "20261125090211513-note-g2-217.jpg",
+   "source": "../../../../tmp/v/g2-217.jpg",
+   "kind": "note",
+   "label": "frame 217 limb, master draft: 4b, far ground with the map's light opened, the same with the arcade cut keeping cores",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:02:10.532Z",
+   "file": "20261125090210532-note-s4-90s.jpg",
+   "source": "../../../../tmp/v/s4-90s.jpg",
+   "kind": "note",
+   "label": "spot collar trial at frame 90 under the approved image, 1 to 1: count 45, thin 2, reach 2.0 to 3.0, ragged 0.8; still a star of smooth strands, not the approved's dense dark and bright fibres",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:02:09.318Z",
+   "file": "20261125090209318-note-g2-pat.jpg",
+   "source": "../../../../tmp/v/g2-pat.png",
+   "kind": "note",
+   "label": "rise part 2 by my chain on the state in work (4b code, far ground takes the map's light, arcade cut keeps cores): frame 218 + 1/2, the change of the pattern (hot at the top of the arcade, 0.484), frame 226 + 1/2",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T08:42:45.725Z",
    "file": "20261125084245725-note-f2-90s.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/p3-limb-master.png",
    "kind": "note",
    "label": "4b master 217 and 225 at the limb, 3 to 1: the far ground gives way to the globe's map",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T08:20:06.262Z",
-   "file": "20261125082006262-note-p3-arc.jpg",
-   "source": "../../../../tmp/v/p3-arc.jpg",
-   "kind": "note",
-   "label": "point 3 test on 4b, preview, capture 437 to 453 at 2 to 1: top 4b; middle heights.strands off (no trim, the haze card shows); bottom heights.loops off",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:56:35.715Z",
-   "file": "20261125075635715-note-f1-90b.jpg",
-   "source": "../../../../tmp/v/f1-90b.jpg",
-   "kind": "note",
-   "label": "commit 5 in work (f1), frame 90, 1 to 1 under the approved: near ground. Seen: separate shells with wide black gaps, the approved domes overlap",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:56:34.726Z",
-   "file": "20261125075634726-note-f1-90.jpg",
-   "source": "../../../../tmp/v/f1-90.jpg",
-   "kind": "note",
-   "label": "commit 5 in work (f1: the combed domes with the cured spot of 4b), frame 90 at the master, 1 to 1 under the approved: far field and spot",
    "stop": "sun"
   }
  ]
