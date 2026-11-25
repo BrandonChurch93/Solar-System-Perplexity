@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T00:00:04.260Z",
- "head": "a76f725c080b3126097834150133586c478123c4",
- "note": "d253 (b): the web set brought Mars's colour and height levels in at about twice the height; with counts (off by default, Mars's patch not in the tree) the web set's levels stand where the full set's do. Full set bytes unchanged.",
+ "pushed": "2026-11-25T00:42:38.099Z",
+ "head": "b6a8d20159a7ae0b6c6f5a86292d047cae52dde5",
+ "note": "MAIL 812.5: Earth's ground on the globe hands a blended number in the range picture where its cover is between 0.5 and 1 (red); with the patch of the dim pass the range is the ground's or the globe's (grey), towers nearer (blue). Beauty bytes equal on 3 frames.",
  "looks": [
+  {
+   "time": "2026-11-25T00:42:37.294Z",
+   "file": "20261125004237294-note-earth-rise-range-panel.jpg",
+   "source": "../m812/earth-rise-range-panel.png",
+   "kind": "note",
+   "label": "Earth rise 4230, 4245, 4261 draft: beauty, layers view, range against the unit sphere as it is and with the one line patch of the ground's dim pass",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T00:00:03.338Z",
    "file": "20261125000003338-note-beauty-2427-crop.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "Mars near the ground, capture 4960 against 4980 carried by the range picture and the pose (relief, no unit sphere): 15.02 as it is, 1.92 carried",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T21:17:29.704Z",
-   "file": "20261124211729704-note-look-ur-8794-8810.jpg",
-   "source": "../m741/look-ur-8794-8810.jpg",
-   "kind": "note",
-   "label": "Uranus rise capture 8794 against 8810 carried by range and pose: 19.92 as it is, 15.90 carried; white clouds come in in place, limb air changes level",
-   "stop": "uranus"
   }
  ]
 }
