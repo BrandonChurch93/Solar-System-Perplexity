@@ -412,3 +412,160 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
     about 0.55 degrees at full strength times my fine band; think of it in linear light: my colour times the map's
     low band over my ground's mean light). Cells too large by about 1.6 against the approved and angular; far
     cells are tiles; limb a hard line.
+
+- 13:19 UTC, 25 Nov: MAIL 1109. g15 goes to sun_builder for the round (round 2 of 3 starts at 15:00 at the latest).
+  Order of work for the next named (due 14:40): a outline (round domes, soft upper envelope, no straight seam
+  longer than a third of a cell), b size (70 to 120 px in the lowest rows), c inside (bright blotchy core smaller
+  than the cell, dark veins to the junctions, from the flow), d tone (six percentiles of the approved, lane dark
+  amber, one law), e far field and limb (grain under 6 px, limb the gas edge on), f life (flow outward as a number:
+  mean radial motion of the grain in px a film frame at frame 90's near rows). Specks at the arcade's left foot:
+  whose.
+- 13:41 UTC: second mail of g15 sent (low). Film eye clip cut at 65 pictures: reader largest 0.260 at capture 48 at
+  [1268, 504], mean 0.166, share 0.478; proxy 0.258, 0.100, picture to next 0.032. Flow on g15's still eye clip
+  (flow.py): mean radial 0.032 px a film frame (4 captures apart), 0.041 (8 apart), standard error 0.018, share of
+  cells outward 0.56 to 0.58, 168 cells: no flow a number can tell. G17 on g15 NOT read; rise only 215 and 225
+  (gravel at 215). Specks: not mine by the code (STATED). At 225 pale blue white patches left of the spot: UNKNOWN
+  whose.
+- The h series (13:25 to 13:49), what each step did at frame 90:
+  - h1: ground.ts: vertex gives vEdge (the way to the cell's own border by a soft least way of power dome.round,
+    1 on the border); the dome's footprint is dome.over 1.45 of the cell, so bodies cut into each other and the
+    sheet is the upper side of all (depth buffer). sim scaled: tile 3.2, slots 4560, radius [0.0195, 0.0468]
+    (0.68 of g15's size), far.cell 0.062. spans.ts threshold 0.83 of radius[1]: same numbers as g15.
+  - h2: folds softer (heat.fold), lane dark amber (crease[2] 0.2, shade[0] 0.22), dome.height 0.4.
+  - h3: heat.curve fitted by curve.py (labCurve in labOut and the bake).
+  - h4: patch [0.35, 0.95], rim 0.5. Percentiles 0.208 0.333 0.569 0.745 0.902 0.969.
+  - h5: haze amount 0.004 power 2.5 level 1.3 own 0.6: the far field glows into the limb (no line) but the middle
+    distance is a flat orange fog. own 0.6 is the cause of the fog (the valleys light up).
+  - h6: shade [0.3, 0.2] (narrower dark skirt), thread[1] 0.22 (less streak), cool 1.1 (stronger lumps): blotchier,
+    lanes thinner.
+  - h7: join.level 0.0015: no change to see, kept.
+  - h8: haze amount 0.002 power 3.0 level 1.3 own 0.45; rim 0.6, vein 0.45: far field a glowing grain into the
+    limb, near unchanged.
+  - h9: curve fitted again, fold [0.55, 0.78]: percentiles 0.227 0.400 0.576 0.749 0.906 0.961 against the
+    approved's 0.231 0.404 0.58 0.761 0.906 0.965. FROZEN for the named.
+  - Still wrong in h9 by my eye: near cells read as nuggets with a dark skirt, not bubbles pressing; cores not
+    small blotchy spots; middle distance flat; penumbra ribbons and a dark red ring round the spot.
+- Draft still 56 s with the scaled sim. Clip picture about 17 s.
+- 13:50 UTC: h9 baked: full 1,966,957 bytes, web 499,732. Umbra on the bake (max channel under 0.15 after a blur
+  of 3 px): disc of equal area 1.51 degrees (1.39 at 0.1, 1.64 at 0.2), middle 0.06 east and 0.37 north of S.
+  Growth 2,627,955 bytes (JPGs 2,466,689, text 161,266). spans.ts on h9: cells that show: at least 13 film
+  frames from half of the largest ground to nothing (1 percent 16, quartile 22, median 29); whole lives least 51,
+  median 87, most 171.
+  size.py (new, rough): lane to lane along a row at 3 px: approved 66 to 68 px, h9 49 to 57, g15 60 to 71; at 8 px:
+  approved 110 to 115, h9 93 to 99, g15 97 to 99. It counts veins as lanes and does not tell g15 from h9, so b is
+  not proven by it. The sim's own scale is 0.68 of g15's.
+- 13:51 UTC: h9 committed and pushed as 9a4c4e9460964043c6525f45be16626140a1017a (not named). sun_builder told at
+  13:52 (new sha, rebaked level, the specks at frame x 1390, y 600) and corrected at 13:53.
+- 13:55 UTC: a strip at 1 to 1 (rows 820 to 1080, x 260 to 1660 of the 1920 frame, v/strip.jpg) showed h9 had
+  overshot the size: approved cells 100 to 160 px, g15 100 to 200, h9 60 to 130 with many of 60. The Builder's 70
+  to 120 against 100 to 220 was most likely read on my 1408 px attachments. So:
+  - h10: sim.slots 2790, radius [0.0249, 0.0598], far.cell 0.079 (0.83 of g15's size, tile 3.2): 70 to 150 px.
+  - h11, h12: fold [0.7, 0.72], vein 0.6: the cells turn dull, clay lumps with few bright cores. Not kept.
+  - h13: heat.tone [0.8, 0.4] (new key, was 0.55 + 0.9 of the place's field in the code), rim 0.5: little change.
+  - h14: fold [0.6, 0.77], vein 0.5, rim 0.55, patch [0.28, 0.9]: brighter cores. Percentiles 0.224 0.404 0.592
+    0.761 0.906 0.961 against 0.231 0.404 0.58 0.761 0.906 0.965 with the curve of h12
+    ([0.1047, 0.1155] ... [1.3871, 1.0]). FROZEN for the named at 14:01.
+  - size.py on h14 at 3 px: lane to lane 53 to 62 px (approved 66 to 68, g15 60 to 71).
+- 14:02 UTC: mail from sun_builder: g15 joined in f906d2ec on agent/sun-place. (1) The level laid whole reads 13.4045
+  on the hold 360 against 11.9772 (too dark), so it lays it by law f: the level's bands finer than 0.55 degrees
+  over the map's low band, in linear light; the hold is then the map alone. (2) The anchor is turned: place.json
+  globe.spot [0.23625665, 0.2013716, 0.95059575], north [-0.04857035, 0.97951492, -0.19542631]. My far.level.axes
+  are of the old frame; it passes the place from place.json. A rebake should be at the new place (NOT DONE in h14:
+  my branch's place.json is the old one; only the fine band of the level is used, so the harm is small). (3) The
+  rise with my ground reads 0.778 at [40, 330] against a limit of 0.45 (standing ground 0.349), captures 218.5 to
+  226.5: the stage ground seen from far, grains of one or two pixels kept sharp. Cure on my side: the far ground
+  filtered to the pixel by distance. OWED, first thing after the named. (4) The specks: none in its state at
+  x 1390, y 600; the old loops.ts with sparks is still drawn in my branch, not in its.
+- 14:02 UTC: h14 baked: full 1,972,137 bytes, web 519,307. Umbra on the bake at 0.15: 1.46 degrees wide (1.36 at
+  0.1, 1.56 at 0.2), middle 0.06 east and 0.38 north of S (old axes). Growth 2,654,872 bytes (JPGs 2,491,444,
+  text 163,428). spans.ts on h14: cells that show (614): at least 13 film frames from half of the largest ground
+  to nothing (1 percent 16, 5 percent 18, quartile 22, median 29); all ends median 25, 5 percent 6; whole lives
+  least 58, median 87, most 172.
+- 14:17 UTC: NAMED 212defeca69aa1e30f374c17d5cb7c9192fa1c3e (h14) sent to /root with 7 attachments. sun_builder told
+  at 14:18 (h14 replaces h9; asked which command reads its rise number).
+  - MEASURED on h14: percentiles as above. Still eye clip (clip-h14h, captures 0 to 40, 15.2 s a picture): reader
+    largest 0.181 at capture 4 at [88, 1072], mean 0.158, share 0.507; proxy 0.177, picture to next largest 0.032
+    at capture 14 (g15 0.004; cause UNKNOWN, look at k0013 to k0015). flow.py: 15 cells found (168 on g15), mean
+    radial -0.003 px a film frame, standard error 0.049, share outward 0.40: no flow by number. Draft still 44 s.
+  - My verdict in the mail: h14 better than g15 in outline, size, tone, far field, limb; not in the cores (dimmer)
+    and the lowest rows can read as lumps side by side. The hard maximum of the depth buffer is not the smooth
+    maximum the Builder asked for in a. The veins follow the borders, not a flow (c not done). f not done.
+  - NOT DONE: G17, film eye clip, rise of h14, rebake at the new place.
+- NEXT (order told to the Builder): 1. the far filter for the rise: labPx is uLabFar.z / distance (width, no
+  foreshortening); the far map (2048, mips, anisotropy 16) is read by textureGrad with the true footprint, so a
+  cell of 1 to 2 px stays a sharp grain. Cure to try: widen gx, gy as the cell's width in px falls (1 at 6 px, 3
+  at 2 px) so a cell under about 3 px fades into the mean; also let the domes sink by the foreshortened size near
+  the limb. Read captures 218.5 to 226.5 at preview. 2. the smooth maximum (a), the flow (c, f).
+- 14:21 UTC: MAIL 1123. RULING: h14 stands for the outline, the size, the tone, the far field and the limb. Neither
+  g15 nor h14 is plasma: both read as stones (g15 slabs, h14 cobbles), because a stone is lit from one side and a
+  cell of the Sun shines from within. Orders: (5) FIRST the far filter for the rise, named by 15:20 and told to
+  sun_builder at once. Then (2) the law of the cell's light: heat of the gas at the point times a darkening by the
+  angle between the surface normal and the EYE, 0.6 to 1, nothing by any light direction; send frame 90 with and
+  without any light term. (3) relief: the dome's height against its width goes down until the dark skirt is the
+  cool lane seen from above; soft valley; no step of the heat at the lane. (4) the inside and the flow are one:
+  the fine grain is a pattern carried outward by the cell's own flow, read in the cell's polar frame (angle, radius
+  less speed times time), drawn out along the radius. Second name with what is ready of 2 to 4 by 16:15; the rest
+  goes to round 3 of 3. The specks: no work.
+- 14:19 to 14:45 UTC: THE FAR FILTER (h15 to h17).
+  - The rise's reader (tools/img/smooth.py pattern, through my reader.ts): capture 437 against capture 453 carried
+    back along the flows, both reduced to their detail between 8 and 40 px of the preview frame and divided by
+    their local contrast. Commands: ../v/rise2.sh NAME [--still 437] (clip.ts --from 437 --to 453 --tier draft
+    --format preview, then reader.ts and clipstat.py). reader.ts --sheet OUT.png draws the pair (first, last carried
+    back, difference, pattern); --job FILE keeps the job for other readings.
+  - MEASURED: h14 0.875 at [276, 360]. h15 (cells under 2 to 5 px seen fade into the mean of the map by a wider
+    footprint, far.blur [2, 5, 4]; seen = width in px times min(mu + far.lie 0.35, 1); px are now real pixels of
+    the drawn frame, the focal from the buffer's height) 0.810 at [332, 440]. h15 with the life of the cells held
+    at capture 437 (clip.ts --still 437) 0.812: so it is NOT the life of the cells and NOT the grain alone.
+  - THE CAUSE, seen in the sheet (v/sheet-h15s.jpg, v/rise-pair.jpg): between capture 437 and 453 the film goes
+    from my ground to the globe. The globe at 453 shows its map (plages, filaments, dark lanes of 1 to 3 degrees);
+    my ground at 437 was an even grain with only the map's light wider than 1.5 degrees at power 0.5. The band the
+    reader judges, 8 to 40 px, is 0.7 to 3.3 degrees there: two unrelated patterns.
+  - THE CURE (h16): where the cells are too small to be things the ground is the globe's own map. labTone reads the
+    map's light at a level that goes from far.tone.deg 1.5 to far.tone.far.deg 0.55 (the width of law f on
+    sun_builder's side, place.json plates.fineDeg), never finer than the pixel, as the cell's width seen falls from
+    far.tone.far.px 12 to 4 px; the power goes from 0.5 to far.tone.far.power 1, the range from [0.6, 1.3] to
+    far.tone.far.range [0.25, 2.2]. In the bake the weight is 0 (the twin is as before, no rebake).
+  - MEASURED h16: reader 0.172 at [524, 264] (limit 0.45), proxy 0.268, picture to next 0.025. The large light of
+    my ground at 437 against the globe at 453 carried back (/tmp/tonefit.py: both blurred 3 px at quarter scale,
+    lower 55 percent of the frame, 13499 px): slope of the logs 1.003, correlation 0.956, standard deviations of
+    the logs 0.345 and 0.362, means 98.8 against 106.9 of 255 (mine 8 percent darker), 95th 144 against 171 (the
+    globe's white plages are brighter than my ramp's top). The power 1 was the first value tried and is kept.
+  - Frame 90 at 1080 with h16: near percentiles to the digit those of h14. But a dark dashed line stood on the
+    silhouette at the left (x 0 to 500, y 520 to 600 of 1920): the domes at the horizon sunk by the lie of the look
+    left the limb's own edge bare. h17: the sink of the domes goes by the width alone (labPx) as in h14, the heat
+    and the tone by the width seen. Dashed line gone (v/limb-14-17.jpg). The far band under the horizon is a
+    little smoother than h14.
+  - tone.py (the mean light of the twin for a given share of the heat) was started and stopped, not used.
+- 14:46 UTC: h17 committed and NAMED df86fc7a45cad102bd756ffedeb47ef9265d8950; sun_builder told 14:48.
+- 14:54 UTC: THE WHOLE RUN 380 to 470 on df86fc7a (75 pairs): 437 reads 0.121 but 401 to 424 read over the limit,
+  largest 0.853 at capture 412 at [156, 392], mean 0.365. Cause (v/pair412.jpg): the map's light came in only where
+  the cells are small in the picture, so between 412 and 428 the map's patches fade in over an even grain. The
+  filter moved the fault 12 film frames earlier. CORRECTION sent to /root and sun_builder at 14:59 (hold df86).
+  LESSON: never name on one pair; read the whole run 380 to 470.
+- 14:59 UTC: sun_builder MEASURED df86 on its branch: 437 to 453 0.294 at [46, 322] (was 0.778); the map's patches
+  stand at the same places (the turn through the constructor's map is right with its anchor); frame 360 the same
+  bytes. NEW FAULTS it saw: a row of single dark red pixels along the limb at captures 437 and 453; single pale
+  violet and green pixels in the grain at 453 at [430, 420] (NOT LOOKED AT YET). Its frame 60 lines of sun-near.py
+  on df86: white 0.027 (g15 0.072), half width 4.1 px, 2431 shapes, distance 0.089 (g15 0.074). It needs a name by
+  15:45 to join it for the 17:00 cut; its chain starts 16:15.
+- 15:01 UTC: MAIL 1145: direction accepted (the ground carries the map's band always, law f). THE PROOF OF A STATE
+  FROM NOW ON: the whole run 380 to 470 under the limit on my reader, every pair, with the rows; and frame 90 at
+  1080 beside h14 and beside the approved ground at 1 to 1. Do not name before the whole run is read. Then 2, 3, 4
+  of MAIL 1123 in order.
+- 15:00 to 15:08 UTC: h18 to h20.
+  - h18: the map's light at 0.55 degrees, power 1, everywhere: frame 90 goes pale where the map has plage
+    (percentiles 0.275 0.451 0.663 0.859 0.992 1.0). Not kept.
+  - h19: THE BAND. labTone = the wide tone as before (1.5 degrees, power 0.5, [0.6, 1.3]) times the map's light at
+    far.tone.far.deg 0.55 (never finer than a pixel) over the map's light at far.tone.far.broad 4 degrees, power 1,
+    range [0.4, 2.2], at every distance; faded out toward my spot by the same weight as the haze (the map has its
+    own spot there). In the bake the band is off. Run 404 to 453 (34 pairs): largest 0.332 at 422, mean 0.214.
+    Frame 90 percentiles 0.235 0.392 0.588 0.8 0.961 1.0.
+  - h20: curve refit by curve.py to [[0,0],[0.1065,0.1155],[0.1829,0.2113],[0.3463,0.3335],[0.6051,0.5078],
+    [1.0652,0.7174],[1.3442,0.8703],[1.6442,1.0]]: 0.22 0.38 0.576 0.757 0.918 0.992. And the limb's dots: they
+    are in h14 too, at the same pixels, so not the far filter: the air beyond the limb (AIR_FRAG, new in the h
+    series) is not drawn where the sight line passes inside the ball, and the ground's mesh stands a part of a
+    pixel inside the ball's edge; single pixels of neither. Cure: the air is drawn 1.5 pixels into the ball.
+  - The law work of point 2 (a1: fibre.offset 0, blotches centred by heat.stray 0, the darkening 0.6 to 1 by the
+    dome's normal to the eye, linear in the cosine, for the far ground by the ball's up) is written as a script,
+    /tmp/law.py on ground.ts, and waits for the whole run of h20. a1 at frame 90 (v/lab-90-a1.jpg): the cells have
+    a bright middle and darker rims, still cobbles; percentiles 0.212 0.369 0.553 0.722 0.898 0.953.

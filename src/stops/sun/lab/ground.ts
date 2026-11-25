@@ -23,6 +23,18 @@ import { EDGES, SLOTS, TILE, cellsAt, newCells } from './sim'
 
 const srgbToLinear = (v: number): number => (v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4))
 
+const CURVE_GLSL = (() => {
+  const k = lab.heat.curve as number[][]
+  let out = ''
+  for (let i = 1; i < k.length; i++) {
+    const [x0, y0] = k[i - 1] as [number, number]
+    const [x1, y1] = k[i] as [number, number]
+    const line = `${y0.toFixed(5)} + (h - ${x0.toFixed(5)}) * ${((y1 - y0) / (x1 - x0)).toFixed(5)}`
+    out += i < k.length - 1 ? `  if (h < ${x1.toFixed(5)}) return ${line};\n` : `  return ${line};\n`
+  }
+  return out
+})()
+
 function rampTexture(): THREE.DataTexture {
   const stops = ramp.ramp.stops as number[][]
   const levels = ramp.ramp.levels as number[]
@@ -196,6 +208,11 @@ vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy
 float labPx(vec3 here) {
   return uLabFar.z / max(distance(here, uLabEye), 1e-4);
 }
+// the same as the eye has it: a cell seen along the ground is as flat in the picture as the look is flat
+float labSeen(vec3 here) {
+  float mu = abs(dot(normalize(here - ST_CENTRE), normalize(uLabEye - here)));
+  return labPx(here) * min(mu + ${lab.far.lie.toFixed(2)}, 1.0);
+}
 #if defined(LAB_FRAG) && !defined(LAB_MAP)
 // the ground where its cells are too small in the picture to be things: the same cells at the same places, seen
 // from above (a map of the tile drawn from the same table at the same time), with the same penumbra
@@ -227,6 +244,7 @@ out float vReal;
 out float vPit;
 out float vDeep;
 out float vCorner;
+out float vEdge;
 out float vTall;
 out vec2 vG;
 flat out float vSink;
@@ -245,15 +263,20 @@ float deep;
 float tall;
 float sink = 0.0;
 float corner;
+float edge;
 vec3 dome(vec3 s) {
   float a = acos(clamp(s.z, -1.0, 1.0));
   vec2 u = length(s.xy) > 1e-6 ? normalize(s.xy) : vec2(1.0, 0.0);
   float inv = 0.0;
+  float invP = 0.0;
   float m1 = 0.0;
   float m2 = 0.0;
   for (int j = 0; j < ${EDGES}; j++) {
     float e = max(dot(u, edges[j]) * rad, 0.0);
     inv += pow(e, uLabDome.z);
+    float e2 = e * e;
+    float e4 = e2 * e2;
+    invP += e4 * e4;
     if (e > m1) { m2 = m1; m1 = e; } else if (e > m2) m2 = e;
   }
   corner = m2 / max(m1, 1e-6);
@@ -263,6 +286,9 @@ vec3 dome(vec3 s) {
   float groove = labLobes(u * (a / uLabDome.x), seed, 0.3) * (1.0 - smoothstep(0.6, 1.0, a / uLabDome.x));
   float top = 1.0 - pow(max(1.0 - f, 0.0), uLabDome.w);
   vec2 place = mid + u * (r * wide * uLabMore.x);
+  // the dome is a round body that reaches over the border of its cell into its neighbours: the sheet is the upper
+  // side of all of them, a lane the valley where two bodies meet. edge: the way to the cell's own border, 1 on it
+  edge = r * wide * uLabMore.x / max(rad * pow(max(invP, 1e-9), -0.125), 1e-6);
   // the borders are no straight lines: the ground itself is pushed about a little by a field of the place, the
   // same for both sides of a border
   place += ${lab.join.wobble.toFixed(4)} * (vec2(vn(place * 13.0 + 3.1) + 0.5 * vn(place * 29.0 - 7.0), vn(place * 13.0 - 21.7) + 0.5 * vn(place * 29.0 + 15.3)) - 0.75);
@@ -340,6 +366,7 @@ void main() {
   vPit = pitAway;
   vDeep = deep;
   vCorner = corner;
+  vEdge = edge;
   vTall = tall;
   vSink = sink;
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -372,6 +399,8 @@ uniform sampler2D uLabGlobe;
 uniform mat3 uLabToMap;
 uniform vec4 uLabTone;
 uniform vec3 uLabToneAt;
+uniform vec4 uLabToneFar;
+uniform vec3 uLabToneWide;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${GRADE_GLSL}
@@ -432,16 +461,30 @@ vec2 labGas(vec3 here) {
 // the large tone of the place is the globe's: the light of the globe's own map there, taken so wide that no
 // detail of it shows (uLabToneAt: the level of the map and the size of its texel there), against the map's middle
 // light, as a share of the heat
-float labTone(vec3 here) {
+float labLight(vec2 muv, float lod) {
+  vec2 texel = uLabToneAt.yz * exp2(lod - uLabToneAt.x);
+  vec3 sum = vec3(0.0);
+  for (int k = 0; k < 4; k++) sum += textureLod(uLabGlobe, muv + texel * (vec2(float(k & 1), float(k >> 1)) - 0.5), lod).rgb;
+  return max(dot(sum, vec3(0.3, 0.5, 0.2)) * 0.25, 1e-4);
+}
+float labTone(vec3 here, float band) {
   vec3 md = uLabToMap * normalize(here - ST_CENTRE);
   vec2 muv = vec2(atan(md.x, md.z) / 6.283185307179586 + 0.5, asin(clamp(md.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
-  vec3 sum = vec3(0.0);
-  for (int k = 0; k < 4; k++) sum += textureLod(uLabGlobe, muv + uLabToneAt.yz * (vec2(float(k & 1), float(k >> 1)) - 0.5), uLabToneAt.x).rgb;
-  float l = dot(sum, vec3(0.3, 0.5, 0.2)) * 0.25;
-  return clamp(pow(max(l, 1e-4) / uLabTone.x, uLabTone.y), uLabTone.z, uLabTone.w);
+  float tone = clamp(pow(labLight(muv, uLabToneAt.x) / uLabTone.x, uLabTone.y), uLabTone.z, uLabTone.w);
+#ifndef LAB_BAKE
+  // the ground is the globe's own ground: near and far it carries the map's light between two widths (uLabToneFar:
+  // the level of the fine width, the level of one pixel at one pixel a cell, the level of the broad width), never
+  // finer than a pixel, so that the globe seen from far and the ground seen from near are one pattern
+  float lod = max(uLabToneFar.x, uLabToneFar.y - log2(max(labSeen(here), 1e-3)));
+  if (lod < uLabToneFar.z) tone *= mix(1.0, clamp(pow(labLight(muv, lod) / labLight(muv, uLabToneFar.z), uLabToneWide.x), uLabToneWide.y, uLabToneWide.z), band);
+#endif
+  return tone;
 }
+// the one curve from the heat of the sheet to the heat the ramp shows (lab.json heat.curve: pairs, straight between)
+float labCurve(float h) {
+${CURVE_GLSL}}
 vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
-  heat = uLabHeat.x + (heat - uLabHeat.x) * labTone(here);
+  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(here, (thin - 0.1) / 0.9));
   vec3 shown = texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb;
   vec3 col = inverseFilmic(grade(shown, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   vec3 upHere = normalize(here - ST_CENTRE);
@@ -497,6 +540,7 @@ in float vReal;
 in float vPit;
 in float vDeep;
 in float vCorner;
+in float vEdge;
 in float vTall;
 in vec2 vG;
 flat in float vSink;
@@ -580,7 +624,7 @@ void main() {
   // where it sinks. The edge of the hot middle is drawn out into the fibres, bright with dark between them; where
   // the field of the place joins two cells the heat runs over the border. The lane is where the heat falls: a thin
   // dark line in the bottom of the valley, wide where three cells meet, gone where two cells are of one piece
-  float plan = sin(a) / sin(uLabDome.x);
+  float plan = min(vEdge, 1.5);
   vec2 b1 = (0.12 + 0.3 * fract(seed * 7.13)) * vec2(cos(6.2831853 * fract(seed * 3.71)), sin(6.2831853 * fract(seed * 3.71)));
   vec2 b2 = (0.25 + 0.35 * fract(seed * 5.37)) * vec2(cos(6.2831853 * fract(seed * 9.19)), sin(6.2831853 * fract(seed * 9.19)));
   float r1 = 0.24 + 0.2 * fract(seed * 2.31);
@@ -592,17 +636,20 @@ void main() {
   float fan = 0.1 * mix(0.5, fa, ka) + 0.35 * mix(0.5, fb, kb) + 0.55 * mix(0.5, fc, kc);
   float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mix(mott, labWell(d, seed, uLabTime.x), ${lab.heat.spread[3]!.toFixed(2)}) - 0.5);
   float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
-  float top = mix(uLabHeatB.w, 1.0, middle) * (0.55 + 0.9 * wide);
+  float top = mix(uLabHeatB.w, 1.0, middle) * (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide);
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(0.04, 0.4, along));
   cell *= 1.0 + ${(2 * lab.heat.fine[0]!).toFixed(3)} * (labWell(d * ${lab.heat.fine[1]!.toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5);
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
   float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
   
-  float edgeD = 1.0 / uLabMore.x - plan;
+  float edgeD = 1.0 - plan;
   float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
   float veins = labLobes(d, seed, 0.05 + 0.3 * rho) * smoothstep(0.1, 0.6, rho);
   cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), edgeD));
+  // the folds between the streams that run from the middle to each lane: dark threads toward the places where
+  // three cells meet
+  cell *= 1.0 - ${lab.heat.fold[0]!.toFixed(2)} * smoothstep(${lab.heat.fold[1]!.toFixed(2)}, 1.0, vCorner + 0.08 * (fan - 0.5)) * smoothstep(0.15, 0.6, plan);
   float bundle = pn.y;
   float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (along - flow) * 17.0 + seed), per.z)) * kc * middle;
   cell += 0.6 * uLabHeatMore.w * spark;
@@ -688,18 +735,25 @@ void main() {
 #ifdef LAB_BAKE
   float far = 1.0;
 #else
-  float far = 1.0 - smoothstep(uLabFar.x, uLabFar.y, labPx(vPos));
+  float seen = labSeen(vPos);
+  float far = 1.0 - smoothstep(uLabFar.x, uLabFar.y, seen);
 #endif
   vec2 gx = dFdx(chartPlace);
   vec2 gy = dFdy(chartPlace);
   vec4 pn = labPen(chartPlace, r, length(vG - uLabPitAt.xy), flow, gx, gy);
   // between the threads of the penumbra the floor is the same threads, a little deeper and cooler
   heat = mix(heat, uLabHeat.x + uLabHeat.y * pn.y * pn.z, max(pn.x, 1.0 - smoothstep(uLabPit.w * 1.7, uLabPit.w * 3.8, r)) * smoothstep(0.75, 0.95, length(vG - uLabPitAt.xy) / uLabPit.w));
-  if (far > 0.0 && pn.w > 0.0) heat = mix(heat, labFar(chartPlace, r, flow, pn, gx, gy), far);
+  #ifdef LAB_BAKE
+  float blur = 1.0;
+#else
+  // a cell smaller in the picture than a few pixels is no grain but the mean of the map there
+  float blur = mix(${lab.far.blur[2]!.toFixed(1)}, 1.0, smoothstep(${lab.far.blur[0]!.toFixed(1)}, ${lab.far.blur[1]!.toFixed(1)}, seen));
+#endif
+  if (far > 0.0 && pn.w > 0.0) heat = mix(heat, labFar(chartPlace, r, flow, pn, gx * blur, gy * blur), far);
 #ifdef LAB_BAKE
   // the far twin: the ground from straight above, no law of the view, no gas, none of the flare's lights, as the
   // display colour of the picture
-  heat = uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos);
+  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos, 0.0));
   vec3 lit = inverseFilmic(grade(texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   lit = clamp((lit * (2.51 * lit + 0.03)) / (lit * (2.43 * lit + 0.59) + 0.14), 0.0, 1.0);
   outColor = vec4(mix(lit * 12.92, 1.055 * pow(lit, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), lit)), 1.0);
@@ -739,7 +793,9 @@ void main() {
   vec3 dir = normalize(vPos - uLabEye);
   float b = dot(oc, dir);
   float past = sqrt(max(dot(oc, oc) - b * b, 0.0)) - ST_RADIUS;
-  if (uDiag >= 2 || b > 0.0 || past < 0.0 || uLabKeep <= 0.0) discard;
+  // the ground's own edge is a mesh and stands a part of a pixel inside the ball's: the gas is drawn over that part
+  if (uDiag >= 2 || b > 0.0 || past < -1.5 * fwidth(past) || uLabKeep <= 0.0) discard;
+  past = max(past, 0.0);
   float tau = ${lab.haze.air[1]!.toFixed(3)} * exp(-past / ${lab.haze.air[0]!.toFixed(4)});
   vec3 col = inverseFilmic(grade(uLabHazeTint.rgb, 0.0)) * (uLabHaze.z * mix(${lab.haze.own.toFixed(2)}, 1.0, ${lab.haze.air[2]!.toFixed(3)}) * (1.0 - exp(-tau)));
   col *= uGain;
@@ -789,6 +845,7 @@ export class LabGround {
   private readonly back = new THREE.Matrix4()
   private readonly frustum = new THREE.Frustum()
   private readonly eye = new THREE.Vector3()
+  private readonly size = new THREE.Vector2()
   private readonly at = new THREE.Vector2()
   private readonly ball = new THREE.Sphere()
   private readonly spot = new THREE.Vector2()
@@ -856,6 +913,8 @@ export class LabGround {
       uLabToMap: { value: toStage.clone().transpose() },
       uLabTone: { value: new THREE.Vector4(lab.far.tone.level, lab.far.tone.power, lab.far.tone.range[0]!, lab.far.tone.range[1]!) },
       uLabToneAt: { value: new THREE.Vector3(toneLod, toneTexel, toneTexel * 2) },
+      uLabToneFar: { value: new THREE.Vector4(Math.log2(Math.max((mapWide * lab.far.tone.far.deg) / 360, 1)), Math.log2((lab.far.cell * mapWide) / (2 * Math.PI * stage.radius)), Math.log2(Math.max((mapWide * lab.far.tone.far.broad) / 360, 1)), 0) },
+      uLabToneWide: { value: new THREE.Vector3(lab.far.tone.far.power, lab.far.tone.far.range[0]!, lab.far.tone.far.range[1]!) },
     }
     this.uniforms = all
     this.floorMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, uniforms: all, side: THREE.DoubleSide })
@@ -1101,7 +1160,10 @@ export class LabGround {
     const high = Math.max(eye.distanceTo(stage.centre) - stage.radius, 1e-3)
     const horizon = stage.radius * Math.acos(Math.min(stage.radius / (stage.radius + high), 1)) + 0.6
     const fov = (camera as THREE.PerspectiveCamera).fov ?? 55
-    const focal = 540 / Math.tan(THREE.MathUtils.degToRad(fov) / 2)
+    const view = (camera as THREE.PerspectiveCamera).view
+    const target = renderer.getRenderTarget()
+    const tall = view?.enabled ? view.fullHeight : target ? target.height : renderer.getDrawingBufferSize(this.size).y
+    const focal = tall / 2 / Math.tan(THREE.MathUtils.degToRad(fov) / 2)
     const d = this.cells.diagram
     const mean = lab.far.cell * focal
     ;(this.uniforms.uLabFar!.value as THREE.Vector4).z = mean

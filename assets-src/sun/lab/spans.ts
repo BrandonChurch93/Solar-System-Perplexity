@@ -3,6 +3,9 @@
 // nothing to half), and the largest share of its largest ground that it loses or gains in 8 film frames.
 //   npx tsx assets-src/sun/lab/spans.ts
 import { SLOTS, cellsAt, newCells } from '../../../src/stops/sun/lab/sim'
+import lab from '../../../src/stops/sun/lab/lab.json'
+
+const BIG = lab.sim.radius[1]! * 0.83
 
 const fps = 30
 const frames = 180
@@ -45,12 +48,12 @@ for (let i = 0; i < SLOTS; i++) {
           while (k >= f && area[k * SLOTS + i]! < 0.5 * most) k--
           if (k >= f) {
             ends.push(last + 1 - k)
-            if (r > 0.06) bigEnds.push(last + 1 - k)
+            if (r > BIG) bigEnds.push(last + 1 - k)
           }
           let worst = 0
           for (let q = f; q + 8 <= Math.min(last + 1, frames - 1); q++) worst = Math.max(worst, (area[q * SLOTS + i]! - area[(q + 8) * SLOTS + i]!) / most)
           loss.push(worst)
-          if (r > 0.06) bigLoss.push(worst)
+          if (r > BIG) bigLoss.push(worst)
         }
         if (f > 0) {
           let k = first
@@ -72,9 +75,9 @@ const pct = (v: number[], ps: number[]): string => {
 const ps = [0, 1, 5, 25, 50, 75, 95, 100]
 console.log('percentiles 0 1 5 25 50 75 95 100')
 console.log('film frames from half of the largest ground to nothing, ' + ends.length + ' ends: ' + pct(ends, ps))
-console.log('the same for cells over 0.06 units of radius, ' + bigEnds.length + ': ' + pct(bigEnds, ps))
+console.log('the same for cells over the size that shows, ' + bigEnds.length + ': ' + pct(bigEnds, ps))
 console.log('film frames from nothing to half of the largest ground, ' + starts.length + ' births: ' + pct(starts, ps))
 console.log('largest share of the largest ground lost in 8 film frames: ' + pct(loss, ps))
-console.log('the same for cells over 0.06 units of radius: ' + pct(bigLoss, ps))
+console.log('the same for cells over the size that shows: ' + pct(bigLoss, ps))
 console.log('largest share of the largest ground gained in 8 film frames: ' + pct(gain, ps))
 console.log('film frames a cell is seen, ' + lives.length + ' whole lives in the segment: ' + pct(lives, ps))

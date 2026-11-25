@@ -26,3 +26,16 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
 - The table of the life alone, measured without a picture: `npx tsx assets-src/sun/lab/spans.ts`.
 - The reader of a clip (largest and mean change of the pattern between pictures):
   `npx tsx assets-src/sun/lab/reader.ts --dir FOLDER --hold 0`.
+- The one curve from the heat of the sheet to the heat the ramp shows (lab.json heat.curve):
+  `python3 assets-src/sun/lab/curve.py P5 P25 P50 P75 P95 P99` with the six percentiles of the near ground of a
+  frame 90 still (pair.py prints them) gives the next curve from the one that stands in lab.json; put it there by
+  hand. It reads src/stops/sun/convect.json (ramp) and the approved's six numbers.
+- The flow inside the cells on a clip, in px a film frame, radially from each cell's core:
+  `python3 assets-src/sun/lab/flow.py FOLDER`.
+- A rough reading of the cells' width in the lowest rows beside the approved:
+  `python3 assets-src/sun/lab/size.py RENDER.png [FINEST_PX]`. It counts veins inside a cell as lanes and did not
+  tell g15 from h9, so it is no proof of size.
+- The rise read on my side: `npx tsx assets-src/sun/lab/clip.ts --from 437 --to 453 --tier draft --format preview
+  --out FOLDER` (add `--still 437` to hold the ground's time at that capture while the eye moves), then
+  `npx tsx assets-src/sun/lab/reader.ts --dir FOLDER --sheet OUT.png` (the sheet draws the first picture, the last
+  carried back to it, their difference and the change of the pattern; `--job FILE` keeps the job).
