@@ -1,9 +1,55 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T00:47:55.700Z",
- "head": "14e4331bd46bad0a9724c407ff29a879ad175d70",
- "note": "ruling 2 trials: edge with the air whole takes the slab out; every height is still a fan; dome is the globe's ground",
+ "pushed": "2026-11-25T01:00:37.994Z",
+ "head": "37d874e1ff409b225d42058d1aca894b77dc239e",
+ "note": "an edge on the globe side alone breaks T: the approved surface view shows its aprons at 2477 and 2681; edge not committed",
  "looks": [
+  {
+   "time": "2026-11-25T01:00:37.210Z",
+   "file": "20261125010037210-note-n54-sides96-rise.jpg",
+   "source": "out/work/place/see/n54-sides96-rise.png",
+   "kind": "note",
+   "label": "trial, not committed: the two sides at T of the rise with the same edge: mean 0.747, 99th percentile 30",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:00:36.348Z",
+   "file": "20261125010036348-note-n54-sides96-dive.jpg",
+   "source": "out/work/place/see/n54-sides96-dive.png",
+   "kind": "note",
+   "label": "trial, not committed: the two sides at T of the dive with the close ground ending at its picture's sides on the globe side only (feather 96 px): mean 1.517, 99th percentile 45",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:00:35.363Z",
+   "file": "20261125010035363-note-n55-aprons.jpg",
+   "source": "out/work/place/see/n55-aprons.jpg",
+   "kind": "note",
+   "label": "trial, not committed: the surface view at 2477, 2480, 2490 (top), 2520, 2580, 2681 (bottom) drawn without its aprons; the pale area is where the drawn out ground stands in the approved view: 22 to 26 percent of the frame at 2477, none at 2580, 6 to 8 percent at 2681",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T00:54:07.149Z",
+   "file": "20261125005407149-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T00:53:34.478Z",
+   "file": "20261125005334478-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T00:47:55.110Z",
    "file": "20261125004755110-note-n54-dome.jpg",
@@ -26,46 +72,6 @@
    "source": "out/work/place/see/n54-ea.jpg",
    "kind": "note",
    "label": "trial, right half at 2470, 2684, 2687: before (left of each pair) and with the close ground ending at the sides of its picture, its air left whole (right of each pair); the slab and fan at the right edge are out",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:38:36.893Z",
-   "file": "20261125003836893-note-n54-edge.jpg",
-   "source": "out/work/place/see/n54-edge.jpg",
-   "kind": "note",
-   "label": "trial, not committed: 2470, 2684, 2686 before (top) and with the close ground ending at the sides of its picture (bottom); a black box in the sky top right is new and being looked into",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:11:32.575Z",
-   "file": "20261125001132575-note-n52-fullweb.jpg",
-   "source": "out/work/place/see/n52-fullweb.jpg",
-   "kind": "note",
-   "label": "2452 draft, full set left, web set right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:11:32.003Z",
-   "file": "20261125001132003-note-n52-above.jpg",
-   "source": "out/work/place/see/n52-above.jpg",
-   "kind": "note",
-   "label": "d6c01889 draft: 2420 2440 2452 2460 2700 2710 2720 2740",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:11:31.432Z",
-   "file": "20261125001131432-note-n52-crops.jpg",
-   "source": "out/work/place/see/n52-crops.jpg",
-   "kind": "note",
-   "label": "d6c01889 draft, native crops of the place 2420 2440 2460 2480 2684 2700 2720 2740",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:11:30.875Z",
-   "file": "20261125001130875-note-n52-2687.jpg",
-   "source": "out/work/place/see/n52-2687.jpg",
-   "kind": "note",
-   "label": "2686 to 2688, top d6c01889, bottom 7253f5fd",
    "stop": "mars"
   }
  ]
