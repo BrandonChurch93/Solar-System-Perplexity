@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T06:13:33.425Z",
+ "pushed": "2026-11-25T06:36:23.699Z",
  "head": "d91c0f63dfdec7bcd7700d55196f3b525ab922d4",
- "note": "Commit 5 in work, trial e10 of frame 60 (draft): finer fibres, each dome combed from a side of its own. sun-near: dark 0.346, body 0.548, pale 0.050, white 0.022 (approved 0.185, 0.642, 0.082, 0.010); brightest 15 percent half width 7.6 px, 1473 shapes, fine detail 0.0378, mean 0.266 (approved 4.8 px, 1153, 0.0373, 0.338); distance of the band tables 0.153. Still wrong: too dark, glints are thin upright dashes, domes read as ribbed shells",
+ "note": "commit 5 in work, e20 frame 60:  dark (under 0.15) 0.237 | body (0.15 to 0.55) 0.575 | pale (0.65 to 0.85) 0.093 | white (over 0.85) 0.032 colour by band : 0.21 0.07 0.03 | 0.40 0.16 0.06 | 0.53 0.25 0.08 | 0.64 0.35 0.12 | 0.73 0.46 0.17 | 0.80 0.57 0.24 | 0.87 0.69 0.36 | 0.91 0.80 0.52 | 0.94 0.88 0.68 brightest 15 percent: half width 7.0 px, 1082 shapes | fine detail 0.0369 | mean 0.341 ; life estimate 170 to 178 pattern 0.220 (own script, limit 0.45); MAIL 946 read, commit 4b (spot) next",
  "looks": [
+  {
+   "time": "2026-11-25T06:36:23.099Z",
+   "file": "20261125063623099-note-e20-far-90.jpg",
+   "source": "../../../../tmp/v/e20-far-90.jpg",
+   "kind": "note",
+   "label": "commit 5 in work (e20), frame 90 draft far field, approved left: loaves, not yet melting into glow",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T06:36:22.551Z",
+   "file": "20261125063622551-note-e20-near-90.jpg",
+   "source": "../../../../tmp/v/e20-near-90.jpg",
+   "kind": "note",
+   "label": "commit 5 in work (e20), frame 90 draft, approved left, 1 to 1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T06:36:21.967Z",
+   "file": "20261125063621967-note-e20-near-60.jpg",
+   "source": "../../../../tmp/v/e20-near-60.jpg",
+   "kind": "note",
+   "label": "commit 5 in work (e20), frame 60 draft, approved left, 1 to 1",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T06:11:14.464Z",
    "file": "20261125061114464-note-e10-px.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/e1-near.jpg",
    "kind": "note",
    "label": "Commit 5 trial e1 (not committed), frame 60 near ground at 1 to 1, approved left. First take of the MAIL 912 build: reads as smooth stones with wide dark lanes, fibres hardly seen, no glints. Wrong; the dome's foot meets the lane upright, that is next. sun-near 60: dark 0.211 body 0.608 pale 0.100 white 0.021 | half width 11.3 px, 246 shapes | fine detail 0.0187 | mean 0.340",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T05:13:53.869Z",
-   "file": "20261125051353869-note-d9-60-far.jpg",
-   "source": "../../../../tmp/v/d9-60-far.jpg",
-   "kind": "note",
-   "label": "trial d9 frame 60 far (heat only, made before MAIL 912), approved left, native size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T05:13:52.596Z",
-   "file": "20261125051352596-note-d9-60-near.jpg",
-   "source": "../../../../tmp/v/d9-60-near.jpg",
-   "kind": "note",
-   "label": "trial d9 frame 60 near (heat only, made before MAIL 912), approved left, native size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:52:18.582Z",
-   "file": "20261125045218582-note-d5-60-far.jpg",
-   "source": "../../../../tmp/v/d5-60-far.jpg",
-   "kind": "note",
-   "label": "trial d5 frame 60 far, approved left, native size",
    "stop": "sun"
   }
  ]
