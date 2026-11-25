@@ -1,64 +1,66 @@
 {
  "folder": "belt",
- "pushed": "2026-11-25T06:28:08.449Z",
- "head": "7e51613a00a00ce269f70d8cd1a91d293ce899d0",
- "note": "far Sun at 615, look F2 before the merge of main: box 4.34 at draft (33cc2353 had 4.83), face 2.7",
+ "pushed": "2026-11-25T08:05:38.962Z",
+ "head": "96a7a7eecdc25b7112ea7dcc9fa8d46aef79631f",
+ "note": "far Sun 96a7a7ee: 615 final 4.34, rows 474 to 500, 539 and 540, 717 870 1016",
  "looks": [
+  {
+   "time": "2026-11-25T08:05:38.216Z",
+   "file": "20261125080538216-note-pair615-final-96a7a7ee.jpg",
+   "source": "../../../../tmp/farsun/send/pair615-final-96a7a7ee.jpg",
+   "kind": "note",
+   "label": "615 box final tier, approved left, 96a7a7ee right, blur 4.34"
+  },
+  {
+   "time": "2026-11-25T08:05:37.497Z",
+   "file": "20261125080537497-note-row474-480-485-96a7a7ee.jpg",
+   "source": "../../../../tmp/farsun/send/row474-480-485-96a7a7ee.jpg",
+   "kind": "note",
+   "label": "474, 480, 485 on 96a7a7ee"
+  },
+  {
+   "time": "2026-11-25T08:05:36.734Z",
+   "file": "20261125080536734-note-row490-500-96a7a7ee.jpg",
+   "source": "../../../../tmp/farsun/send/row490-500-96a7a7ee.jpg",
+   "kind": "note",
+   "label": "490 and 500 on 96a7a7ee"
+  },
+  {
+   "time": "2026-11-25T08:05:35.992Z",
+   "file": "20261125080535992-note-row539-540-96a7a7ee.jpg",
+   "source": "../../../../tmp/farsun/send/row539-540-96a7a7ee.jpg",
+   "kind": "note",
+   "label": "539 and 540 on 96a7a7ee"
+  },
+  {
+   "time": "2026-11-25T08:05:35.281Z",
+   "file": "20261125080535281-note-sun717-33cc2353-left-96a7a7ee-right.jpg",
+   "source": "../../../../tmp/farsun/send/sun717-33cc2353-left-96a7a7ee-right.jpg",
+   "kind": "note",
+   "label": "717, the far Sun: 33cc2353 left, 96a7a7ee right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:05:34.438Z",
+   "file": "20261125080534438-note-sun1016-33cc2353-left-96a7a7ee-right.jpg",
+   "source": "../../../../tmp/farsun/send/sun1016-33cc2353-left-96a7a7ee-right.jpg",
+   "kind": "note",
+   "label": "1016, the far Sun: 33cc2353 left, 96a7a7ee right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:05:33.414Z",
+   "file": "20261125080533414-note-row717-870-1016-96a7a7ee.jpg",
+   "source": "../../../../tmp/farsun/send/row717-870-1016-96a7a7ee.jpg",
+   "kind": "note",
+   "label": "717, 870, 1016 on 96a7a7ee, draft tier"
+  },
   {
    "time": "2026-11-25T06:27:50.886Z",
    "file": "20261125062750886-note-pair615-F2.jpg",
    "source": "../../../../tmp/farsun/send/pair615-F2.jpg",
    "kind": "note",
    "label": "615 box, approved left, far Sun right: face refit, crisp limb, 4.34 draft"
-  },
-  {
-   "time": "2026-11-25T03:25:38.224Z",
-   "file": "20261125032538224-note-pair615-box-S8fin.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-box-S8fin.jpg",
-   "kind": "note",
-   "label": "615 box final tier, approved left, 33cc2353 right, blur 4.83"
-  },
-  {
-   "time": "2026-11-25T03:02:32.924Z",
-   "file": "20261125030232924-note-row-474-480.jpg",
-   "source": "../../../../tmp/farsun/out/row-474-480.jpg",
-   "kind": "note",
-   "label": "474 and 480 on 26b48f8a, then 474 on af2fab0c"
-  },
-  {
-   "time": "2026-11-25T03:02:31.414Z",
-   "file": "20261125030231414-note-row-539-540-1034-1035.jpg",
-   "source": "../../../../tmp/farsun/out/row-539-540-1034-1035.jpg",
-   "kind": "note",
-   "label": "539, 540, 1034, 1035 on 26b48f8a after the Sun stop on one page"
-  },
-  {
-   "time": "2026-11-25T03:02:30.358Z",
-   "file": "20261125030230358-note-pair615-full-S8q.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-full-S8q.jpg",
-   "kind": "note",
-   "label": "615 full, approved left, 26b48f8a right, draft tier"
-  },
-  {
-   "time": "2026-11-25T03:02:29.286Z",
-   "file": "20261125030229286-note-pair615-box-S8q.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-box-S8q.jpg",
-   "kind": "note",
-   "label": "615 box, approved left, far Sun on the sphere of 11.69 degrees right, 26b48f8a draft tier, blur 4.83"
-  },
-  {
-   "time": "2026-11-25T01:14:46.836Z",
-   "file": "20261125011446836-note-n-dive-1.jpg",
-   "source": "../../../../tmp/farsun/out/n-dive-1.jpg",
-   "kind": "note",
-   "label": "far Sun af2fab0c n-dive-1 (draft tier; approved left)"
-  },
-  {
-   "time": "2026-11-25T01:14:44.835Z",
-   "file": "20261125011444835-note-n-dive-0.jpg",
-   "source": "../../../../tmp/farsun/out/n-dive-0.jpg",
-   "kind": "note",
-   "label": "far Sun af2fab0c n-dive-0 (draft tier; approved left)"
   }
  ]
 }
