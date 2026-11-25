@@ -26,6 +26,9 @@ import rimJson from './rim.json'
 import skyJson from './sky.json'
 import { SunPlate } from './sunplate'
 import sunJson from './sunplate.json'
+import tiltJson from './tilt.json'
+import ownJson from './own.json'
+import hueJson from './hue.json'
 
 interface SkyDef { file: string; vfovDeg: number; margin: number; feather?: number; gain: number; add: boolean; ring: number[] }
 
@@ -88,11 +91,13 @@ export const createSet: SetFactory = async (ctx) => {
   for (const level of patches.rise) risePlates.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
   const plateLevels = patches.rise.map((level) => level.level)
   const fineMap = await ctx.texture(base + fineJson.file, { srgb: false, channels: 1, repeat: true, anisotropy: 16 })
+  const tiltMap = await ctx.texture(base + tiltJson.file, { srgb: false, channels: 1, anisotropy: 16 })
+  const toneMap = await ctx.texture(base + tiltJson.tone.file, { srgb: true, anisotropy: 1 })
   const divePlates = plateLevels.map((level) => patchTextures[level]!)
 
   const globeOf = (): Globe => new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, mapFull: wrap.sets.full.color[0], height: wrapHeight, heightWidth: wrap.height ? sizes.height[0] : 4096, light: look.light,
-    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.levels.map(() => wrap.sets.full.plates[0]), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place } : undefined,
+    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.levels.map(() => wrap.sets.full.plates[0]), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place, tone: { map: toneMap, dark: ownJson.tone.dark }, hue: { floor: hueJson.floor, at: hueJson.at as [number, number], rgb: hueJson.rgb }, tilt: { map: tiltMap, widthDeg: tiltJson.widthDeg, zero: tiltJson.zero, step: tiltJson.step, sun: tiltJson.sun as [number, number, number] } } : undefined,
     fine: { texture: fineMap, period: fineJson.size[key][0]!, full: fineJson.size.full[0]!, guardShare: fineJson.guardShare, top: fineJson.top, shift: look.fine.shift, edge: look.fine.edge, blur: look.fine.blur, shade: look.fine.shade },
   })
   const globe = globeOf()
@@ -274,6 +279,8 @@ export const createSet: SetFactory = async (ctx) => {
     const close = 0
     const grade = diving ? by(look.carry.dive, time) : rising ? 1 - by(look.carry.rise, time) : 0
     g.near(close, 0)
+    const toned = THREE.MathUtils.clamp(Math.log(ownJson.tone.height[0] / Math.max(distance - 1, 1e-6)) / Math.log(ownJson.tone.height[0] / ownJson.tone.height[1]), 0, 1)
+    g.tone(toned * toned * (3 - 2 * toned))
     const high = (distance - 1) * closeRadius
     const capped = 0
     const way = rising ? 'rise' : 'dive'
