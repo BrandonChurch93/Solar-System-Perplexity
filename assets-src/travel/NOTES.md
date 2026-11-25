@@ -1264,3 +1264,140 @@ Tried, in order:
 - Shape of the speed in the window seam less 12 to seam plus 20 (limb, the clean point): one ramp down and up at mercury (2.34 at 1037), venus (1.77 at 1606 1/2), earth (3.83 at 2179), mars (1.41 at 2746), jupiter (1.72 at 3314), uranus (2.88 at 4457), neptune (0.25 at 5024 1/2). Saturn's limb makes a hump: 2.87 at 3873, 4.89 at 3882, 3.72 at 3890 1/2, then up: the borrowed share 0.03 of its long slide (16.2 r) is too much. Next: Saturn's own `ahead`.
 - Floors (steps within 10 percent of the lowest, limb): mercury 11, venus 10, jupiter 11, mars 8, earth 7, neptune 5, uranus 4. Next: let the borrowed speed peak after the seam so the low is a point.
 - Still to run on e4cb205a: whole vitest (only pass, air, skyshare 72 of 72 and globe-cap alone 24 of 24 so far), `npm run build`, shaderaudit; strips; then merge on newest main when batch 10 is in.
+
+## MAIL 953 (Builder, 06:48 UTC): answer to the first state e4cb205a (mailed 06:46)
+
+1. NEPTUNE: way A granted (a stand of 11 steps is still a stand). Conditions: (a) judged 5006 and every judged rise frame before it keep their hashes; (b) the light starts from rest at 5007 with no step in its rate, on the same clock as the camera's lead, so light and camera move as one; (c) pairs before and after of 5007, 5012, 5018, 5024, 5046, 5085, 5235 and the film's last frame, and the turn curve with one hump; (d) the set line of `src/stops/neptune/set.ts` goes to the Builder as a patch with a one line reason (it passes it to neptune_builder). Keep B's glide line only as long as A is not proven; do not ship both.
+2. BASE: branch `take/b10e`, tip 8cfc71f20ca86c5e6e6d1f2dde37b45dcd06bfaa (take/b9 plus the way and the shutter's ends, the under pass, the flight sky, the globe's cap, my 684176de with Mercury's turnDeg 111.27, the harness). Put the seam law on that tip. The Mars bank patch is not in it: say whether the seam law needs it, and if so send it again as a patch against take/b10e.
+3. Dust motes elsewhere in the seven judged travel frames: accepted. Say if any mote crosses a planet's disc in a judged frame.
+4. NAMED with the full sha once whole vitest, build and shader audit are green on that base; within 90 minutes (by 08:18 UTC), or a state mail with the table at that time.
+The order of my open list stands: Saturn's own share, the low as a point, Mercury 1043 to 1045 1/2.
+
+Working: `/tmp/wt-exp` is a second worktree (detached) for probes while a render uses `/tmp/wt-main`. `/tmp/shape.py JSON [stops]` prints the turning points of the speed in seam less 12 to plus 20 and the steps within 10 percent of the low. The before render on the old base was stopped at 57 of 149 (the base changes to take/b10e, all proofs are drawn again there).
+
+### On the new base take/b10e (06:49 to 06:55)
+
+- `/tmp/wt-exp` now holds the working branch `agent/travel-b10` on take/b10e 8cfc71f2 (local branch `take-b10e` in the repo). `/tmp/wt-main` is detached at take-b10e: the BEFORE tree for renders. Commits so far on agent/travel-b10:
+  1. 8253466e the law (cherry pick of e4cb205a; conflict in path.ts because take/b10e has no `bankDeg`: resolved without the bank). The seam law does not need the Mars bank.
+  2. 29558881 `WORLD_ANSWER.mercury: 'open'` instead of 'corner'. On bare take/b10e two tests of pass.test.ts FAIL (Mercury's turnDeg 111.27 is laid, so its miss is 0.007 and its lead 0.004: the corner is gone and the answer hangs on a hair). The key 'open' keeps every frame of the film to the bit (probe `out/work/tmp/world.ts`); tests adapted (mercury 90 is refused, reach 108.78 to 166.35; a corner still passes when the answer says so). pass.test.ts 40 of 40.
+  3. Neptune way A: `LOOKBACK.ahead = 0.6`, today's glide line, planned light `lookbackLight(v)`, `lookbackLit(time)` gives the share from 5007 to the retreat's end, `SetState.lookback` (types.ts) carries it to the set. The set's line is NOT in the commit: `out-travel/neptune-set-light-from-5007.patch` (line 163: `const lit = state.lookback ?? (...)`), laid uncommitted in /tmp/wt-exp for the renders. Measured: turn dip 0.610 at 5022, one hump to 1.223 at 5095; middle lowest 0.42 at 5022 1/2 (2 steps under 0.5), limb 0.75 at 5024: no stand.
+- Next: Saturn's share, peak of the borrowed speed after the seam (4th number of `ahead`), Mercury's pop; then the proofs on this base (before = take-b10e in /tmp/wt-main, after = /tmp/wt-exp), Builder's pairs 5007, 5012, 5018, 5024, 5046, 5085, 5235, 5399, whole vitest, build, shaderaudit, NAMED by 08:18.
+
+### The peak of the borrowed speed, the choices and the proofs (06:55 on)
+
+- `ahead` is four numbers now: `[seconds before the seam, share of the slide flown at the seam, share of passBy the borrowed speed lasts, share of passBy after the seam where the borrowed speed is highest]`. BASE `[0.6, 0.03, 0.5, 0]`. `pass()` has three pieces (rise to the peak, give back, the stop's own passBy curve), speed and acceleration meet at each joint (tests in pass.test.ts hold, 40 of 40).
+- Scan (`out/work/tmp/scan.ts` with `LOOK='{"stop":{"ahead":[...]}}'`, results `/tmp/sc-<share>-<peak>.json`, `/tmp/m-<share>-<peak>.json` for Mercury). Chosen and committed on `agent/travel-b10`:
+  4. 7d8f8ac0 mars `[0.6, 0.03, 0.5, 0.3]`, jupiter `[0.6, 0.06, 0.5, 0.15]`, saturn `[0.6, 0.03, 0.5, 0.2]`.
+  5. 172e61686737dcd088d545d515c7851876762959 mercury `[0.6, 0.04, 0.5, 0.15]` (middle up only, largest change of speed 1.79 to 1.46 px a half frame at 1043 1/2: this is the "pop 1043 to 1045 1/2", the steep part of Mercury's own pass; softer, not gone).
+- Finding, said plainly in the mail: a later peak lifts the low and shortens it but does not make it a sharp point. A point needs a step in the rate, and MAIL 378 forbids that. Steps within 10 percent of the low (limb): mercury 13, venus 9, earth 7, mars 6, jupiter 8, saturn none (up only), uranus 4, neptune 4.
+- Table on this state: `/tmp/seams-c4.json`, `/tmp/table-after.md`; before on take/b10e: `/tmp/seams-b10e.json`, `/tmp/table-before.md`. Stands by the rule: before YES at mercury (7), mars (9), jupiter (11), neptune (24); after none. Lowest limb after: mercury 3.31, venus 1.77, earth 3.83, mars 1.86, jupiter 2.02, saturn 2.61 (first value, up only), uranus 2.88, neptune 0.75 (middle 0.42).
+- Neptune's turn curve, way A: `/tmp/turn-after.txt`, before `/tmp/turn-before.txt`, drawing `out-travel/seams/neptune-turn-curve.png`. Before: falls to 0.001 at 5025 (the stand), peak 1.405 at 5102. After: low 0.610 at 5022, one hump, peak 1.223 at 5095. The knee where the fall begins (5098 to 5099 after, 5104 to 5105 before) is the old one, moved.
+- Renders on this base: after `/tmp/r-after` (log `/tmp/r-after.log`), before `/tmp/r-before`; frames `/tmp/all2-frames.txt` = the 149 of before plus the Builder's pairs (capture 10014, 10024, 10036, 10048, 10092, 10798) and Mercury 1041 to 1047 (2082 to 2094).
+- `out/work/tmp/discs.ts` prints where each next planet's disc sits in the judged travel frames (`/tmp/discs.json`), to answer whether a moved mote crosses a disc.
+
+## MAIL 958 (07:34): Mercury's world on take/b10e, the tie and the commit agent/travel-world (07:34 on)
+
+Fault, mine: "turnDeg 111.27 gives the same nine worlds to the bit" was measured on main 347732f6, where the end of
+Mercury's rise reached 111.27 to 163.85 degrees and the placing took the edge. On take/b10e 8cfc71f2 the reach is
+108.78 to 166.35 (edge at try 243), so 111.27 lies 2.5 degrees inside the reach, where two tries answer it on the
+same side 0.004 degrees apart (301 opens, about 188 closes). With the entry `corner` the bare cost decided: a tie.
+
+Measured on take/b10e:
+- With no key: bare lead 0.0042 degrees, miss 0.0074. With key open: taken 301, lead infinite, the film as take/b10e.
+- Taken 301 turns the Sun's and Mercury's worlds 29.000 degrees about the Sun's line against take/b9 (Venus to
+  Neptune equal). take/b9 has turnDeg 78 and no placing law (the older chain).
+- What moves in the picture (probe out/work/tmp/skyrel.ts: sky.frame x skyTurn^-1 x skyQuaternion, the Sun and the
+  far Sun in camera space, take/b9 against the commit): hold, dive, surface equal (0.000). The rise turns its sky from
+  the stop's own aim to the sky the flight holds, which is fixed to Venus's world: sky 0.32 degrees at 984, 2.55 at
+  991, 4.94 at 995, 23.30 at 1016, 29.00 at 1034 to 1050, 24.70 at 1072, 8.08 at 1090, 0 from 1108. Sun direction 0
+  through the rise, 6.84 at 1072. The far Sun's body (its surface pattern) stands 29.00 turned at 960, 6.01 at 1016,
+  0.02 at 1035 to 1050, 8.62 at 1072 and 29.00 from 1108 to the end of the film. So the move of 984 to 1016 is the
+  turn alone. (My first probe compared skyQuaternion without skyTurn and read 0: wrong measure.)
+- turnDeg 108 (107.75 and 108.25 the same): taken 243, miss 0.776, lead infinite, opens, and all nine world frames
+  equal to take/b9's bit for bit. A patch of src/stops/mercury/plan.ts line 23 is offered to the Builder.
+
+Commit on take/b10e, branch agent/travel-world: path.ts (WorldAnswer loses `corner`; mercury: open; new list
+WORLD_CORNER ['mercury'] = leave to take the edge when a turn cannot be reached, needed by tests/world.test.ts which
+turns the Sun), film.ts (the refusal reads WORLD_CORNER), tests/pass.test.ts (no stop excused from lead or miss;
+every stop with a bare lead under the limit has a key; the corner proven on Mercury turned to 90 and 175).
+
+NAMED 893d33e35f99dbcfc83ed5895952dc317d3062dc mailed 08:04 (bundle out-travel/travel-world-893d33e3.bundle, patch beside it).
+Whole vitest 821 of 821, 74 files; build exit 0; shader audit 6973 bytes, same as take/b10e. With turnDeg 108 (throwaway):
+pass.test.ts + world.test.ts 41 of 41. Probes: out/work/tmp/skyrel.ts OUT.json in both trees, /tmp/srcmp.py A B [FRAMES].
+- With 108 the sky, the Sun's direction and the far Sun's direction are 0.000 against take/b9 at every frame. The far
+  Sun's body differs 0.02 to 0.07 degrees through the film with either turn: another part of batch 10, not the turn.
+- At the seam the camera's own turn and way from 1028 to 1038 are equal in take/b9 and the commit (corner.ts): no kink
+  in either; the stand 1034 to 1037 1/2 is in both. Steepest change of speed at 1043 1/2: 2.24 (b9) against 2.00.
+- Item 173 (1058 to 1072) on the commit at draft: no drop out; the Sun leaves at the upper right 1064 to 1068.
+- take/b9 for renders and probes: /tmp/b9src (git archive of 8cbb3061: src, config, tools, kit, tests, assets-src/travel
+  and shared; node_modules, public, references, audio, cut, scorecards linked from /tmp/wt-main; public is equal).
+
+## Seam branch after the merge (08:00 on)
+
+agent/travel-b10 now: 1e72dce0 (merge of agent/travel-world), 899be58a (the lent way is laid on the lens before its
+set in both views: cures tests/under 1.000001), 7aad213f (Mars back to the base's ahead [0.6, 0.03, 0.5, 0]).
+- tools/lib/pace holds Mars's rise in tests/onemove: with the peak 0.3 after the seam the speed climbed again by 0.133
+  (whole) and 0.163 (half frames) of the mean, limit 0.03. Scan (out/work/tmp/marsscan.ts): ok at [0.6,0.03,0.5,0],
+  [0.6,0.02,0.5,0.3], [0.6,0.025,0.5,0.15], [0.6,0.015,0.5,0.3]; faults at [0.6,0.025,0.5,0.3], [0.6,0.03,0.5,0.15],
+  any peak 0.6 or 0.9 with 0.03. Lowest at the seam: base 1.57 middle and 1.41 limb at 2746; [0.6,0.02,0.5,0.3] 1.41
+  and 1.26; [0.6,0.025,0.5,0.15] 1.57 and 1.40. Base taken. The harness faults the other seven rises too with the lead
+  (marspace.ts) but the tests hold only Mars's.
+- Tests under, onemove, pass, world: 69 of 69. Table: out-travel/seam-speeds-b10e-7aad213f.md.
+- Stale proofs: Mars's seam strip and judged 2782 were rendered on 172e6168 (peak 0.3); to render again.
+
+## 08:08 to 08:12: rest of MAIL 958, seam proofs on the new tip
+
+- Mailed 08:08: take/b9 strips (out-travel/world/mercury-1010-to-1040-take-b9.jpg, mercury-1058-to-1072-take-b9.jpg).
+  In take/b9 the Milky Way cloud stands at the upper left of Mercury from 1018 to 1068; with 111.27 it is never in
+  the frame. Item 173 in take/b9: the Sun leaves at the upper right and the cloud at the left edge over 1062 to 1070
+  (the flight's turn to Venus). With 111.27 only the Sun leaves. With 108 the picture is take/b9's, so 173 stands.
+- The commit with turnDeg 108 against take/b9, draft preview (/tmp/s-108 against /tmp/s-b9): 984, 995, 1034 same
+  hash; 1016 0.05 percent of pixels by at most 2 levels; 1072 under 0.005 percent by at most 1 level. Recommended 108.
+  /tmp/wt-main/src/stops/mercury/plan.ts is back at 111.27 (checked).
+- Shot hashes at rate 2 (assets-src/travel/shothash.ts --rate 2; /tmp/shdiff.py OLD NEW):
+  take/b10e against 7aad213f: first changed half frame at each stop is 1017, 1587, 2157, 2727, 3297, 3867, 4437, 5007;
+  every earlier frame of every stop equal to the bit. Shot changes run to 1058 1/2, 1625, 2198, 2781 1/2, 3338 1/2,
+  3916, 4471 1/2 and 5144 1/2; after that only the dust's flow differs to the end of each flight.
+  172e6168 against 7aad213f: rise frames after the judged frame at seven stops differ only in `near` (about 1 part in
+  100 at most; camera equal but for the last digit), and Mars 2727 to 2819 1/2 moves (lead back at the base's).
+  So the proofs made on 172e6168 stand for everything but Mars's seam; Mars's strip and 2782 are to render again.
+- Whole vitest on 7aad213f started 08:08:45 (set line of neptune stashed away by checkout; the patch file is equal to
+  the diff, out-travel/neptune-set-light-from-5007.patch). Result in /tmp/vt-seam.json.
+
+## MAIL 971 (08:19): Mercury ruled to 108, base moved, merge and name again
+
+- 08:20 NAMED 7aad213f mailed (824 of 824, build, audit green on 8cfc71f2) and crossed MAIL 971: take/b10e is now
+  b1721d2ca4f39d06c05498b4f02ffd62beb05e37 (893d33e3, T1 turnDeg 108, T2 globe own levels, T3 band hold of the flight
+  sky). Asked: merge it into agent/travel-b10, byte proof and Mercury's row again, then NAMED; in the NAMED mail say what
+  holds the whole frame mean down at Venus and Uranus, and what I propose for item 173. Neptune's 0.42 for one half
+  frame: named here, no change asked. The set line patch goes to neptune_builder through the Builder.
+- Merge 6ce0447f0b972024f9fe1c99f2222c5af3fd531c (no conflict). /tmp/wt-main is detached at b1721d2c: the BEFORE tree.
+  Shader audit of b1721d2c: 6973 bytes but not the old base's bytes (/tmp/audit-before2.txt is the new reference).
+- Table on 6ce0447f (/tmp/seams-6ce0.json; before /tmp/seams-b172.json): Mercury 2.03 at 1023 / 3.63 at 1033 1/2
+  (before 0.04 / 0.42, stand 1034 to 1037 1/2, 7); the other seven rows as on 7aad213f.
+- Shot hashes b1721d2c against 6ce0447f: same runs as before; first changed half frame 1017, 1587, 2157, 2727, 3297,
+  3867, 4437, 5007. Against the old tip every frame of the film differs (T2 and T3 are in every shot), so the picture
+  proofs of 07:30 are of the old base.
+- Whole frame mean at Venus and Uranus (rows of seams.ts: share = part of the 48 by 27 points on a body): Venus 1603
+  to 1609: the disc is 22 to 24 percent of the frame and moves 1.31 to 1.43 px a half frame; the other 76 to 78
+  percent is the star sky, which the flight holds (0.02 px). Uranus 4454 to 4458 1/2: disc 12 to 14 percent at 2.06
+  to 2.47; sky 86 to 88 percent, held.
+- Item 173, probe out/work/tmp/i173.ts FROM,TO,REF,X,Y (Sun's place, a sky point's place, the camera's turn a half
+  frame). On 6ce0447f: no turn until 1054; the Sun's centre stands at the frame's upper right corner (1.005, 0.011)
+  from 1035 to 1054; the turn climbs from 1054 to 2.09 degrees a half frame at 1073, holds to 1090, ends about 1100
+  (about 132 degrees in 46 frames). The sky turns with the camera to the thousandth. The Sun's centre is over the top
+  edge at 1058; a sky point at (0.2, 0.3) crosses the top at 1068 and the left edge at 1071.
+- The first whole run on 6ce0447f died at 08:22 on a full disk (7 MB free: /tmp/wt-exp/dist is 1.3 GB after every
+  build, /tmp/r-before, /tmp/r-after, /tmp/s172, /tmp/b10src deleted). RULE: `df -h /tmp` before a build or a whole
+  run; delete /tmp/wt-exp/dist when no render needs it.
+- NAMED 6ce0447f0b972024f9fe1c99f2222c5af3fd531c mailed 08:35: whole vitest 834 of 834, 76 files (/tmp/vt-seam2.json);
+  build exit 0; audit the same bytes as b1721d2c's. Bundle out-travel/travel-b10-6ce0447f.bundle (against b1721d2c),
+  table out-travel/seam-speeds-b10e-6ce0447f.md. Net +904 bytes.
+- Said in the mail: tests/pass.test.ts:436 compares the camera less the lent share and has the limit 1e-11 instead of
+  the base's 1e-12 (reads 1.10e-12 with the subtraction). No other line of a base test is changed.
+- Item 173 proposal mailed: no change in this batch (the turn of about 132 degrees in 46 frames is bound by the closed
+  landing and by Mercury leaving the frame; 6 frames earlier would take the peak from 4.18 to about 3.7 degrees a
+  frame, by hand, and move judged 1072). Waiting for the Builder's word.
+- Owed: strips on 6ce0447f against b1721d2c (Mercury and Mars seams in half frames, item 173 stills, 1072 and 2782
+  pairs). Render lists /tmp/fa.txt (after, in /tmp/wt-exp, out /tmp/p-after) and /tmp/fb.txt (before, in
+  /tmp/wt-main at b1721d2c, out /tmp/p-before).
