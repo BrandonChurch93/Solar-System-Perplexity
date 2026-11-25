@@ -1,9 +1,17 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T16:37:07.391Z",
+ "pushed": "2026-11-25T16:55:10.201Z",
  "head": "485d5807546cb45e3e66e3de6679c5b1bc182e50",
- "note": "4860 against main: the right plain's level and the limb band are the 5.5; trials on the low air and the veil",
+ "note": "4860: the pale plain as a veil by place with its own light; ground part under main's (preview, one frame, STATED)",
  "looks": [
+  {
+   "time": "2026-11-25T16:55:08.756Z",
+   "file": "20261125165508756-note-pg-P0-W5.jpg",
+   "source": "../../../../tmp/pg-P0-W5.jpg",
+   "kind": "note",
+   "label": "4860 preview: approved, main, tip P0, trial W5 (the place's veil of ice haze with its own light, hole at the eye, wound into the storm's arms, bands along the flow); ground part 17.359 against main's 19.622 at 960; G17 of the tip 0.544/0.194, of the trial not measured yet; 64 s a draft preview frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T16:37:06.774Z",
    "file": "20261125163706774-note-three-appr-main-tip.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/n8-two.jpg",
    "kind": "note",
    "label": "4707 and 5006 on this tip: the stars stay points, the eye rides the globe as a small dark spot",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T15:25:09.608Z",
-   "file": "20261125152509608-note-m1-sun.jpg",
-   "source": "../../../../tmp/m1-sun.jpg",
-   "kind": "note",
-   "label": "4605 at x 1560 to 1860, y 40 to 270: approved, before the merge, on the merge. The far Sun stands in its place (1716, 153; approved 1709, 158) as the engine's small disc, without the approved's spiked flare; the sky round it is gold brown and dense, the approved's blue grey and sparse. Main's new band (take batch 10) made it dimmer and finer",
    "stop": "neptune"
   }
  ]
