@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T08:00:46.504Z",
+ "pushed": "2026-11-25T08:30:44.942Z",
  "head": "100af532c9ff84ef23d5aaa107d1e9c425148a13",
- "note": "08:02 knob traced: it is the close set's nearest ground drawn whole by the law; K composite test did not cure it (bad pairs included)",
+ "note": "repaint k4: canyon one body at 2452 and 2697, knob still there (bad), shell test no change, need count under test",
  "looks": [
+  {
+   "time": "2026-11-25T08:30:44.131Z",
+   "file": "20261125083044131-note-m2697.jpg",
+   "source": "out/work/place/k3/m2697.jpg",
+   "kind": "note",
+   "label": "marker test at 2697: knob ground located",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T08:30:43.249Z",
+   "file": "20261125083043249-note-cc.jpg",
+   "source": "out/work/place/k3/cc.jpg",
+   "kind": "note",
+   "label": "colour test at 2697: which plate draws round the knob",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T08:30:42.449Z",
+   "file": "20261125083042449-note-chainb.jpg",
+   "source": "out/work/place/b1/chainb.jpg",
+   "kind": "note",
+   "label": "repainted plates chain b, leads and takes",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T08:30:41.697Z",
+   "file": "20261125083041697-note-c2452.jpg",
+   "source": "out/work/place/k4/c2452.jpg",
+   "kind": "note",
+   "label": "2452 draft, left 00c41dcd, right repaint k4",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T08:30:40.863Z",
+   "file": "20261125083040863-note-c2697.jpg",
+   "source": "out/work/place/k4/c2697.jpg",
+   "kind": "note",
+   "label": "2697 draft, left 00c41dcd, right repaint k4: canyon one shadowed body, knob still inside",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T08:00:45.928Z",
    "file": "20261125080045928-note-f2697.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/place/k1/c2452.jpg",
    "kind": "note",
    "label": "k1 c2452: test, knob stands on K; H is the set off; f is the set seen at 2697",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:00:44.206Z",
-   "file": "20261125080044206-note-c2697.jpg",
-   "source": "out/work/place/k1/c2697.jpg",
-   "kind": "note",
-   "label": "k1 c2697: test, knob stands on K; H is the set off; f is the set seen at 2697",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:38:42.081Z",
-   "file": "20261125073842081-note-o-2705.jpg",
-   "source": "out/work/place/eng60/o-2705.jpg",
-   "kind": "note",
-   "label": "00c41dcd draft whole at half size 2705 and 2707",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:38:41.538Z",
-   "file": "20261125073841538-note-o-2701.jpg",
-   "source": "out/work/place/eng60/o-2701.jpg",
-   "kind": "note",
-   "label": "00c41dcd draft whole at half size 2701 and 2703",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:38:40.992Z",
-   "file": "20261125073840992-note-n-2469-2471.jpg",
-   "source": "out/work/place/eng60/n-2469-2471.jpg",
-   "kind": "note",
-   "label": "00c41dcd draft native lower right 2469 and 2471: wall strokes, east side at the edge (BAD)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:38:40.426Z",
-   "file": "20261125073840426-note-n-2457-2459.jpg",
-   "source": "out/work/place/eng60/n-2457-2459.jpg",
-   "kind": "note",
-   "label": "00c41dcd draft native crop 2457 and 2459: dark blob with upright wall edge (BAD)",
    "stop": "mars"
   }
  ]
