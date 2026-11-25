@@ -125,7 +125,76 @@ function named(view, look, weight) {
   return { plain, told, once, cleared }
 }
 
-window.skylift = { load, walk, named }
+function terrain(view, shares, low) {
+  const camera = new THREE.PerspectiveCamera(view.vfov, W / H, 0.1, 100)
+  const q = new THREE.Quaternion().fromArray(view.q)
+  const turn = new THREE.Quaternion().fromArray(view.turn)
+  sky.setFrame(new THREE.Quaternion().fromArray(view.frame))
+  sky.setPatches([])
+  sky.setBandLook(view.look)
+  sky.setStarLift(0, open.starLevel / view.exposure, open.flightStars.level)
+  const kept = new Float32Array(W * H * 4)
+  const shoot = (weight, glow) => {
+    sky.setTerrain(weight)
+    renderer.setRenderTarget(target)
+    renderer.clear(true, true, true)
+    sky.render(renderer, target, camera, q, view.exposure, glow, turn, H, sun, 0.45, W / H, null)
+    renderer.readRenderTargetPixels(target, 0, 0, W, H, out)
+    let mean = 0
+    for (let i = 0; i < W * H; i++) mean += filmic(0.2126 * out[i * 4] + 0.7152 * out[i * 4 + 1] + 0.0722 * out[i * 4 + 2])
+    return mean / (W * H)
+  }
+  const differ = () => { let n = 0; for (let i = 0; i < W * H * 4; i++) if (out[i] !== kept[i]) n++; return n }
+  const high = shoot(null, 1)
+  kept.set(out)
+  shoot(0, 1)
+  const orbit = differ()
+  const ground = shoot(null, low)
+  kept.set(out)
+  shoot(1, low)
+  const surface = differ()
+  const means = shares.map((s) => shoot(s, 1 + (low - 1) * s))
+  sky.setTerrain(null)
+  renderer.setRenderTarget(null)
+  return { high, ground, orbit, surface, means }
+}
+
+function held(view, lifts) {
+  const camera = new THREE.PerspectiveCamera(view.vfov, W / H, 0.1, 100)
+  const q = new THREE.Quaternion().fromArray(view.q)
+  const turn = new THREE.Quaternion().fromArray(view.turn)
+  sky.setFrame(new THREE.Quaternion().fromArray(view.frame))
+  sky.setPatches([])
+  sky.setBandLook(view.look)
+  const kept = new Float32Array(W * H * 4)
+  const shoot = (look, weight) => {
+    if (look) nameSkyLook('test', look, weight)
+    renderer.setRenderTarget(target)
+    renderer.clear(true, true, true)
+    sky.render(renderer, target, camera, q, view.exposure, 1, turn, H, sun, 0.45, W / H, null)
+    renderer.readRenderTargetPixels(target, 0, 0, W, H, out)
+    let mean = 0
+    for (let i = 0; i < W * H; i++) mean += filmic(0.2126 * out[i * 4] + 0.7152 * out[i * 4 + 1] + 0.0722 * out[i * 4 + 2])
+    return mean / (W * H)
+  }
+  const differ = () => { let n = 0; for (let i = 0; i < W * H * 4; i++) if (out[i] !== kept[i]) n++; return n }
+  const rows = []
+  for (const lift of lifts) {
+    sky.setStarLift(lift, open.starLevel / view.exposure, open.flightStars.level)
+    const plain = shoot(null, 0)
+    kept.set(out)
+    shoot({ hold: 0 }, 1)
+    const none = differ()
+    const half = shoot({ hold: 1 }, 0.5)
+    const full = shoot({ hold: 1 }, 1)
+    const after = shoot(null, 0)
+    rows.push({ lift, plain, none, half, full, same: differ(), after })
+  }
+  renderer.setRenderTarget(null)
+  return rows
+}
+
+window.skylift = { load, walk, named, terrain, held }
 `
 
 const FRAME = [0.883493, -0.063783, 0.25535, 0.387516]
@@ -247,5 +316,40 @@ describe.skipIf(!have)('the sky of the film under the lift of the stars in a Web
     const half = await run({ stars: 3 }, 0.5)
     expect(half.told[0]!).toBeGreaterThan(stars.plain[0]!)
     expect(half.told[0]!).toBeLessThan(stars.told[0]!)
+  }, 300000)
+
+  it('brings the law of the sky seen from a surface in by the share of that sky, with no step where the share begins', async () => {
+    const view = { ...VIEWS[0]!, frame: FRAME, look: 1 }
+    const shares = [0, 0.0005, 0.001, 0.0013, 0.0014, 0.002, 0.005, ...Array.from({ length: 20 }, (_, k) => (k + 1) / 20)]
+    type Run = { high: number; ground: number; orbit: number; surface: number; means: number[] }
+    const run = await page.evaluate(([v, list, low]) => (window as unknown as { skylift: { terrain(v: unknown, list: number[], low: number): Run } }).skylift.terrain(v, list, low), [view, shares, 0.25] as [unknown, number[], number])
+    if (process.env.SKYLIFT_PRINT) console.log(JSON.stringify(run))
+    expect(run.orbit).toBe(0)
+    expect(run.surface).toBe(0)
+    expect(run.means[0]!).toBe(run.high)
+    expect(run.means[shares.length - 1]!).toBe(run.ground)
+    for (let k = 1; k < shares.length; k++) expect(Math.abs(run.means[k]! - run.means[k - 1]!)).toBeLessThan(run.high * Math.max(1.5 * (shares[k]! - shares[k - 1]!), 0.002))
+  }, 300000)
+
+  it('keeps the band at the strength of the hold under a named hold while the stars lift, and leaves the sky alone without one', async () => {
+    const view = { ...VIEWS[0]!, frame: FRAME, look: 1 }
+    type Row = { lift: number; plain: number; none: number; half: number; full: number; same: number; after: number }
+    const rows = await page.evaluate(([v, lifts]) => (window as unknown as { skylift: { held(v: unknown, lifts: number[]): Row[] } }).skylift.held(v, lifts), [view, [0, 0.5, 1]] as [unknown, number[]])
+    if (process.env.SKYLIFT_PRINT) console.log(JSON.stringify(rows))
+    for (const row of rows) {
+      expect(row.none).toBe(0)
+      expect(row.same).toBe(0)
+      expect(row.after).toBe(row.plain)
+      if (row.lift === 0) {
+        expect(row.full).toBe(row.plain)
+        expect(row.half).toBe(row.plain)
+        continue
+      }
+      expect(row.half).toBeLessThan(row.plain)
+      expect(row.full).toBeLessThan(row.half)
+    }
+    const last = rows[rows.length - 1]!
+    expect(last.full).toBeLessThan(last.plain * 0.8)
+    for (let k = 1; k < rows.length; k++) expect(rows[k]!.full).toBeGreaterThan(rows[k - 1]!.full)
   }, 300000)
 })

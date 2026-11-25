@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "lower-left limb through the mid disc and the dark terrain",
+      "what": "surface detail is stretched into diagonal streaks, so clouds and terrain are soft and combed instead of sharp",
+      "fix": "remove the directional stretch and rebuild cloud and terrain detail so ridges stay crisp"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops D, A, G, and H",
+      "what": "the smear is obvious at native size: highlights pull into parallel dashes and the dark deck becomes repeated raked noise",
+      "fix": "replace the dragged noise with irregular multi-scale relief and stop the highlight streaking"
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crops J and N, upper clouds and left limb",
+      "what": "the same diagonal smear softens the storm bands and turns bright ridges into dashed strokes",
+      "fix": "keep flow in the large bands but restore sharp breaks and small eddies inside them"
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crops S, T, and U along the bottom limb and terrain",
+      "what": "the near terrain is fully smeared into diagonal lines, with no fine structure left",
+      "fix": "restore grain and interruptions in the flow so the bottom of the frame holds up at native size"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "upper polar vortex",
+      "what": "the eye tightens into a geometric spiral, with arms smeared around the center",
+      "fix": "break the perfect spiral so the eye does not fold into a mapping pinch"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "lower-right night-side clouds",
+      "what": "lightning reads as thin drawn strokes with a purple halo rather than a discharge inside the cloud",
+      "fix": "sink the bolts into the cloud volume and widen the glow so the core is not a hard vector"
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "right-hand sky in crops C and E",
+      "what": "some stars are hard single-pixel or two-pixel squares",
+      "fix": "give the brighter stars a small soft falloff and vary their size"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crop A, upper-right storm and the arcs directly below it",
+      "what": "Multiple bands of cloud detail are dragged into nearly concentric streaks that pinch at the eye. The surrounding bright fragments stretch along the same arcs, making the vortex look warped rather than volumetric.",
+      "fix": "Keep the storm eye but rebuild the surrounding bands with irregular spacing, broken cloud cells, and fine detail that survives along the bend."
+     },
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "crops N and O, shadowed left and lower globe",
+      "what": "Relatively crisp ridges give way to broad, directionally smeared folds. The dark surface loses fine relief well before it reaches the limb.",
+      "fix": "Preserve small-scale relief into the shadow and correct the directional texture stretch without flattening the lighting."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "crops T and U, bottom and lower-right limb",
+      "what": "A narrow brown rim and a wider soft glow follow separate contours along the lower-right edge, making the atmosphere look doubled.",
+      "fix": "Blend the inner rim into a continuous scattering falloff and taper it toward the shadowed limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "crops W and X, near cloud bank at the lower-right edge",
+      "what": "The nearest cloud folds smear into long diagonal strokes, with less internal texture than the more distant sunlit towers.",
+      "fix": "Restore irregular cloud structure within the shadowed folds while retaining the overall soft falloff."
+     },
+     {
+      "severity": "minor",
+      "file": "image-11.png",
+      "where": "crops M and N, horizontal flare from the sun to the right edge",
+      "what": "The flare separates into a thin, straight blue-gray stripe that remains distinct far from the sun and reads like an overlay.",
+      "fix": "Fade the horizontal streak more quickly into the surrounding bloom."
+     }
+    ]
+   }
+  }
+ ]
+}

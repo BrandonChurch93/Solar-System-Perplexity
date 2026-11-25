@@ -10,6 +10,7 @@ import deckRingsJson from './deck-rings.json'
 import { Globe, TOP_PATH } from './globe'
 import { Halo } from './halo'
 import * as look from './look'
+import { bandHold } from '../../space/sky'
 import { Moon } from './moons'
 import patchJson from './patches.json'
 import platesJson from './plates.json'
@@ -32,6 +33,7 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
 }
 
 export const createSet: SetFactory = async (ctx) => {
+  const holdBand = await bandHold(plan.id)
   const key = ctx.assets === 'full' ? 'full' : 'web'
   const base = 'uranus/' + ctx.assets + '/'
   const fit = plan.fit
@@ -208,6 +210,7 @@ export const createSet: SetFactory = async (ctx) => {
     sky: look.show.sky ? sky : [],
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
+      if (shot.segment.stop === plan.id && shot.segment.kind === 'rise') holdBand(shot.u)
       orbit.visible = inOrbit && state.weight > 0
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height

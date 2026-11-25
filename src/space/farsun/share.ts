@@ -10,22 +10,27 @@ const forced = typeof location !== 'undefined' ? new URLSearchParams(location.se
 
 export const swapDistance = 1 / Math.sin((params.light.sunRadiusDeg * Math.PI) / 180)
 
-export function spans(swap: number): { handover: [number, number]; wear: [number, number] } {
-  const reach = (span: number[]): number => Math.min(span[0]! * Math.pow(swap / span[0]!, span[1]!), swap)
-  return { handover: [look.handover[0]!, reach(look.handover)], wear: [look.wear[0]!, reach(look.wear)] }
+let sunStart: number | null = null
+
+export function sunStartsAt(distance: number): void {
+  sunStart = distance
 }
 
-export const handoverSpan = spans(swapDistance).handover
-export const wearSpan = spans(swapDistance).wear
+export function spans(swap: number, from: number = sunStart ?? look.sunStart): { handover: [number, number]; wear: [number, number] } {
+  const at = (share: number): number => Math.min(from * Math.pow(swap / from, share), swap)
+  return { handover: [at(look.handover[0]!), at(look.handover[1]!)], wear: [at(look.wear[0]!), at(look.wear[1]!)] }
+}
 
 export function globeShare(distance: number): number {
   if (forced === 'globe') return 1
   if (forced === 'far') return 0
-  return 1 - smoothstep(Math.log(distance), Math.log(handoverSpan[0]), Math.log(handoverSpan[1]))
+  const { handover } = spans(swapDistance)
+  return 1 - smoothstep(Math.log(distance), Math.log(handover[0]), Math.log(handover[1]))
 }
 
 export function wearShare(distance: number): number {
-  const x = Math.min(Math.max((distance - wearSpan[0]) / (wearSpan[1] - wearSpan[0]), 0), 1)
+  const { wear } = spans(swapDistance)
+  const x = Math.min(Math.max((distance - wear[0]) / (wear[1] - wear[0]), 0), 1)
   return Math.pow(1 - x, look.wear[2]!)
 }
 
