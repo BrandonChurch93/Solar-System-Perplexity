@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T00:29:31.971Z",
+ "pushed": "2026-11-25T00:51:34.201Z",
  "head": "81ec3adc20f19942fea262b0ceb6ccb552d69bc3",
- "note": "00:31 UTC trial p6 on 81ec3adc: packed cells, fibres, one diagram for the spot, sub cuts against the stipple. Frame 60 distance 0.048, half width 7.7 px, fine 0.0348, white 0.016. Proof frames render now",
+ "note": "00:52 UTC commit 2 state: frame 60 distance 0.047, half width 7.8 px, fine 0.0344, white 0.015; consecutive frames 60 to 62; MAIL 830 blocks at 242 to 245 hold sky only",
  "looks": [
+  {
+   "time": "2026-11-25T00:51:32.896Z",
+   "file": "20261125005132896-note-pop-blocks.jpg",
+   "source": "../../../../tmp/v/pop-blocks.png",
+   "kind": "note",
+   "label": "MAIL 830, state d84379b4 plus the tree: whole frames 242, 243, 244, 245 at 2 times, the two blocks marked (column 2 and 3 of row 2 in the grid of 16 by 9). Only sky is drawn there: the hold's sky card (stars and its bright clouds), the ends of the corona's streamers at the lower right. Mean of block column 3: 44.9, 45.5, 63.0, 54.1 of 255; a bright cloud of the card enters it at 244. Cause of the block pop not proven yet",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:51:32.199Z",
+   "file": "20261125005132199-note-c2-spot3.jpg",
+   "source": "../../../../tmp/v/c2-spot3.png",
+   "kind": "note",
+   "label": "Commit 2: frames 60, 61, 62 at 3 times, the umbra at 900, 560. The lip is ragged now. Still wrong: short white dashes one pixel high on the far lip and stepped ends of the fibres on the right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:51:31.399Z",
+   "file": "20261125005131399-note-c2-near.jpg",
+   "source": "../../../../tmp/v/c2-near.png",
+   "kind": "note",
+   "label": "Commit 2: frames 60, 61, 62 at 3 times, the near ground at 880, 900 (consecutive frames at 30 a second; the frames tool draws no half frames, 242 + 1/2 came out equal to 242). No stipple. Still wrong: faint upright streaks one pixel wide inside the cells; the fibres change their shape visibly from one frame to the next",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:51:30.308Z",
+   "file": "20261125005130308-note-c2-60-spot.jpg",
+   "source": "../../../../tmp/v/c2-60-spot.jpg",
+   "kind": "note",
+   "label": "Commit 2: frame 60 beside the approved at 1 to 1, the spot. One diagram drawn long toward the spot, no ring; the pit is shallower and each fibre goes down at a place of its own. Still wrong: the penumbra is rows of long cells and not the approved's long bright fibres over dark, the umbra is smaller, the ground behind the spot is a smooth band",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:51:29.453Z",
+   "file": "20261125005129453-note-c2-60.jpg",
+   "source": "../../../../tmp/v/c2-60.jpg",
+   "kind": "note",
+   "label": "Commit 2 as it will be named (tree on 81ec3adc, proof frames render now): frame 60 beside the approved at 1 to 1, the ground. share by band 0.1 .. 0.9 : 0.173 0.220 0.183 0.141 0.099 0.066 0.048 0.053 0.015 / dark (under 0.15) 0.175 | body (0.15 to 0.55) 0.643 | pale (0.65 to 0.85) 0.101 | white (over 0.85) 0.015 / brightest 15 percent: half width 7.8 px, 1326 shapes | fine detail 0.0344 | mean 0.351. Distance of the band tables 0.047",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T00:29:31.314Z",
    "file": "20261125002931314-note-p5-far.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/p6-60-spot.jpg",
    "kind": "note",
    "label": "Trial p6: frame 60 beside the approved at 1 to 1, the spot. One diagram, drawn long toward the spot by the chart; no ring and no second layer. Still wrong: the umbra's rim is a clean line, the fibres read as rows of long cells and not as the approved's long bright fibres",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:29:29.441Z",
-   "file": "20261125002929441-note-p6-60.jpg",
-   "source": "../../../../tmp/v/p6-60.jpg",
-   "kind": "note",
-   "label": "Trial p6 on 81ec3adc, not committed yet: frame 60 beside the approved at 1 to 1, the ground. Packed cells, the top high to the border, seam by the diagram's own edge, fibres in the heat, sub cuts of the march. share by band 0.1 .. 0.9 : 0.174 0.218 0.182 0.140 0.099 0.066 0.048 0.053 0.016 / dark (under 0.15) 0.177 | body (0.15 to 0.55) 0.639 | pale (0.65 to 0.85) 0.102 | white (over 0.85) 0.016 / brightest 15 percent: half width 7.7 px, 1361 shapes | fine detail 0.0348 | mean 0.351. Distance of the band tables 0.048 (commit 1: 0.046, half width 12.5, fine 0.0205)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:05:57.960Z",
-   "file": "20261125000557960-note-d253b-before-pairs.jpg",
-   "source": "../../../../tmp/v/d253b-before-pairs.jpg",
-   "kind": "note",
-   "label": "Before the cure (d84379b4): frames 231 and 225, full set left, web set right. The web set drew the wrap's patches and the wide map at another distance. Mean of 255 then: 225 5.140, 231 3.764, 240 1.973",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T00:05:57.295Z",
-   "file": "20261125000557295-note-d253b-after-pairs.jpg",
-   "source": "../../../../tmp/v/d253b-after-pairs.jpg",
-   "kind": "note",
-   "label": "81ec3adc (d253 b cure, on d84379b4): frame 60 and frame 231 at 1 to 1, full set left, web set right, after the cure. Web against full, mean of 255: 60 1.282, 225 1.012, 231 0.953, 240 1.736, 247 1.659. Frame 60 full set keeps its bytes, so its sun-near lines stand: share by band 0.1 .. 0.9 : 0.177 0.237 0.197 0.138 0.101 0.058 0.033 0.027 0.018 / dark (under 0.15) 0.191 | body (0.15 to 0.55) 0.674 | pale (0.65 to 0.85) 0.060 | white (over 0.85) 0.018 / brightest 15 percent: half width 12.5 px, 855 shapes | fine detail 0.0205 | mean 0.325",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:39:30.437Z",
-   "file": "20261124233930437-note-d253-diffs.jpg",
-   "source": "../../../../tmp/v/d253-diffs.jpg",
-   "kind": "note",
-   "label": "d253: the differences times 4, half size. Left: 1080 against 2160 halved (edges and fine lines). Right: web against full: the far ground differs in level, which is the region's light counted in the set's own texels: (b) does not hold yet",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:39:29.522Z",
-   "file": "20261124233929522-note-d253-set-pair.jpg",
-   "source": "../../../../tmp/v/d253-set-pair.jpg",
-   "kind": "note",
-   "label": "d253 (b): frame 60 at 1920 by 1080 in the web set (left) and the full set (right), 1 to 1 crop; mean difference of the whole frames 3.867 of 255",
    "stop": "sun"
   }
  ]
