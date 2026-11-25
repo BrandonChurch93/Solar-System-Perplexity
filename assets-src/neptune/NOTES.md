@@ -7049,3 +7049,309 @@ MAIL 1049 from the Builder (/root), 11:14 UTC. To neptune_builder. Your state of
   row 6: . . . . . . 0.28 0.64 0.55 0.33 0.25 0.12
   row 7: . . 0.15 . . . . . 4.94 4.69 3.06 1.75
   One sentence on it was added to the mail's point 3 (the run of low tiles down the middle, where the approved has the eye).
+
+- The seventh NAMED went out between 12:07:42 and 12:08:58 UTC (the pushed tip then 1808b13e7). Looks pushed 12:10:19 (080a035b).
+
+## MAIL 1078 from the Builder, 12:23 UTC (word for word)
+
+> MAIL 1078 from the Builder (/root), 12:23 UTC. To neptune_builder. Your seventh NAMED d63d08e2 is read, the five pictures seen (4860 beside the approved, the chain at 4962, both top strips, the count views).
+>
+> 1. PROOFS. Twenty jobs run on d63d08e2 on my machines since 12:18 (nq4): twenty draft stills beside main's tree, units and gate lines, determinism, the four parts of the dive and of the rise, path and parity, the measure in six parts and the finals (G5, G13, G17), the warm list and the counts. You get each as it comes. Your proxy numbers are taken as stated until then.
+>
+> 2. THE COUNT (f462b9938) is accepted as law: one text for the shader and its test, the measure and the limit untouched, the beauty's bytes equal. I move the test into tests/ at the cut so the gate runs it; keep it where it is until then.
+>
+> 3. THE CUT. Neptune is not in the cut of about 13:30. The rule, the same as for Jupiter today: a take whose judged frame matches the approved image worse than main's does not go onto main. At 4860 the white bank stands, but the storm's eye with its spiral streaks, the picture's subject, is not there, and the far plain is dark and plain. Neptune goes onto main alone when (a) units, gate lines and determinism are green on my machine, (b) no judged frame's match (G5 and the picture beside the approved) is under main's, (c) no part of the dive or the rise reads redder on my machines than main's same part. Then round 1 of 3 of the note starts on it at once, with whatever is still red as severe issues.
+>
+> 4. ORDER OF WORK: first what Brandon's note names (the picture that pops up entering and leaving), then the judged frame.
+> (i) ONE BODY for the map's cloud sheet by the slab law, as you planned it (taps along the ray's run through the slab between deck and sheet, the footprint widened by max(run / foot, 1), the hold to the bit). It is the cure of the rise 4960 to 4976 and of the dot, and likely of what you still see at 4972 to 4976 (the pale speckle field, the flecks, the patch, the slab). Name each of those by a control once the slab is in. Do not grade them away.
+> (ii) THE EYE AND THE STREAKS of the far plain, from the place's flow, by code, as one body: the same field feeds the globe's levels at the place, each coarser level the finer one filtered. 4605 may change inside the place's disc only if its match with the approved hold does not fall (measure before and after). The far plain's level (37, 80, 133 against 54, 107, 158) comes from the light and the air of the place, not from a grade.
+> (iii) THE OCTAVES down to the pixel's width, each shown as its mean along the pixel's run on the deck, as you named the cure. The trial with deck.limit 1.0 is not the way; leave the limit as it is.
+> (iv) The air's shares from the gas (red most), with 4860's color held by the light. (v) The limb at 4693 to 4700 by a control.
+>
+> 5. THE SKY, ruled. No plate: MAIL 774 and 878 stand (a plate is the picture that pops up). The sky at Neptune is the engine's one sky at every height, and its level is one value of the place, the same at the hold and in the surface view. Do nothing about the 13 sky tiles: they are red by the measure and go into the round as they are, and the jury decides whether the sky reads as missing (d251). I ask the sky's owner what the engine's sky holds in those rows at 4860's heading. If a cure comes, it comes as a law of the engine for every stop, not through your folders.
+>
+> 6. Your finding on the measure's count (the map by the pixel's longer side, the code by its width) goes to the harness builder as a finding; it changes nothing now. Main's own 71 percent at 4860 by your view is noted.
+>
+> 7. MAIL 983's line goes in on the merge that holds b1721d2c, as you say. The warm frames: I lay them (d197) from my machine's list (nq4-10), not from the old four.
+>
+> 8. State at 14:15 UTC (the slab in, the rise read again, 4962 and 4972 to 4976 shown). Eighth NAMED by 16:00 UTC with what stands, red named as red, worst first as today.
+
+## 25 Nov, 12:08 to 12:47 UTC: the deck's run (MAIL 1078 iii), its trials, the cirrus as the rest of the soft share
+
+- What was built (deep.ts, deep.json deck.run): where the deck is shaded, an octave too short for the pixel's long side is no
+  longer dropped. It is shown as its mean at points along the pixel's run on the deck (the sight line laid on the deck, fp / mu
+  long), as long as the share of the run between two points still holds half a wave. `more` is the share of the octave the one
+  point lost. The march and the shadow taps ask no run (gRun is zero outside the three shading calls).
+- R1, the first law (4 points, one point holds one width): 4860 at 1920 draft, texel view: soft 2.059 percent of 1570666, mean
+  1.74 (48.660 percent before). Beauty 100.8 s (79 before), sha 5ca7fd93a23714d1. Against J3 the picture moved on 23.7 percent of
+  the pixels by at most 5 levels (mean 0.104): the octaves that came are weak (the deck's gain 0.5 an octave, wisp.near 0), so
+  the eye sees hardly more than before. That is said as it is: the count is cured, the look of the near ground is not richer.
+  G17's tile map unchanged (median 0.254).
+- THE HOLD MOVED under that first law: 4605 differed from B6 on 3781 pixels by 1 level, all inside the place's disc (x 867 to
+  1197, y 543 to 927), sha 2fc46010ad935e2f. Cause: the foot there is not round (mu under 1), so octaves between the width and
+  the long side came in. Not in.
+- The cure: one point stands for a share of the run of up to c widths (deck.run[1]), as the one point of a nearly round foot
+  always did. c = 2: 4605 the same bytes, but the soft share at 4860 back at 32.540 percent (the finest made wave then lies
+  between 3 and 6 widths, the count wants it under 4). c = 1.3: the finest wave lies between 1.95 and 3.9 widths, under 4 at
+  every pixel; 4605 the same bytes as B6 (cf858a9f835a480f). 4530 and 4679 with the run and without it, and 4860's count
+  with c = 1.3: running at 12:47.
+- What is left of the soft share (2.06 percent) lies on the cirrus bank's thick heaps (count 0.72 to 1.0): the cirrus march's
+  step is 0.002 of the distance (steps.cirrusShare), 4 pixel feet at 1920, and octaves shorter than a step fade
+  (steps.cirrusLimit 1.0). Trials, NOT in: R2 cirrusLimit 0.5: 0.000 percent soft, mean 1.78, the picture moved on 15.8 percent
+  of the pixels by up to 62 levels, finer fibres, but under-sampled along the ray (the same kind of lever as deck.limit, ruled
+  not the way). R3 cirrusShare 0.001 with steps.cirrus 840: 0.000 percent, mean 1.78, 141 s the frame: more points along the
+  run, the lawful way, 40 percent dearer. Not decided.
+- L1 (deck.limit 1.0 alone, 12:02): 15.373 percent. Ruled not the way (MAIL 1078, iii).
+- Proofs of the first law by my reader at rate 2 (limit 0.45): rise 4992 to 5000 0.33 (0.33 before), dive 4704 to 4712 0.30
+  (0.31 before). The terrain pair could not be read (my poses file holds no terrain frames; KeyError 4856).
+- Looks pushed 12:40:10 (35de11d7): 4860 of the trial beside the approved, the soft map. G17 draft 0.254.
+- THE SLAB, the design before it is built (MAIL 1078 i). The deep view reads the map's cloud at one point, where the ray enters
+  the sheet's sphere (0.004 radii over the deck), with the pixel's footprint. New: the sheet is a slab between the deck's sphere
+  and the sheet's. run = the ray's path through it laid on the sphere (entry to the deck's point). foot = the read's own
+  footprint along that run (from the same screen derivatives the read uses, so soft and the frame factor are in it). share =
+  max(run - foot, 0) / run. Where share is 0 the old read stands as it is (the hold: by my estimate the run is at most 0.7 of
+  the foot inside the place's disc there). Else: the mean of points along the first share of the run, each read with its
+  footprint drawn out along the run by its part of it (the map's levels are its octaves; the sampler holds 16 to 1). The map's
+  alpha is a cover, so its mean along the run is the mean density; no variance term is owed as with Jupiter's threshold.
+  planet.ts gets one global (the run of one point) that layerAt adds to its gradients when it is set; the globe never sets it.
+
+## MAIL 1099 from the Builder, 12:47 UTC (word for word; the last line names the attachment)
+
+> MAIL 1099 from the Builder (/root), 12:47 UTC. To sky_builder and neptune_builder, one text for both. sky_builder's facts on Neptune's surface sky (answer to MAIL 1082, with its correction) are read and its picture is seen; neptune_builder gets the picture attached.
+>
+> THE FACTS IN SHORT (sky_builder, frame 4860 on d63d08e2, draft, no grain). The 13 sky tiles of the approved image that carry the band look, in our film, at sky 26 to 43 degrees off the galactic plane, 12 to 30 degrees outside the band's edge. No level reaches the approved reading there: times 4 gives the floor of the approved and a sixth of its energy, times 8 a blue green wash. The engine's band turned into those tiles (the sky pitched 41 degrees about the picture's horizontal axis) reads 1 to 10 times the approved energy by tile, about twice its luma, 6332 points against the approved 4162, and warm gold against the approved's blue grey. The sky's level is one value per stop (0.65 here) at every height; a law by height exists (StopPlan.air) and no stop uses it.
+>
+> RULED. No plate, as before. The cure is the place's heading, then its level, both by the path and never by the clock:
+> 1. The low sky of Neptune's dive (the turn the plan already carries by skyLow) ends so that the engine's band lies where the approved image has its band: fit the turn on the 13 tiles (row 0 tiles 4 to 11, row 1 tiles 7 to 11) by energy and by where the band's ridge runs.
+> 2. The level by height through the knots of air(): the hold keeps 0.65; at the surface the level that brings the 13 tiles' energy inside 0.6 to 2.0 of the approved by tile, or as near as one factor gets. Sky, band and stars keep one factor.
+> 3. The colour: say what one factor leaves (the band's mean colour in the 13 tiles, ours and approved). A tint comes only from a law that holds at every stop (the eye's air over the sky by the one air law that handover_engineer writes today), not from a knob of this place. If the law gives no blue grey there, the gold stays and goes to the critics as it is.
+> 4. Proofs: hold 4605 the same bytes as before (the hold's sky does not move); the stars stay points along the dive and the rise; the dive's and the rise's picture parts no redder than on d63d08e2; frame 4860 against references/approved/neptune-close.jpg before and after (mean absolute difference and G17).
+>
+> WHO. sky_builder writes the fit as a patch of Neptune's plan (turn and knots) with the tile table, in its own notes folder, and mails it to neptune_builder and to me by 14:00 UTC. neptune_builder lays it into its branch as its own commit after its present work and names it with the proofs of point 4. Neither of you waits for the other with anything else.
+>
+> Saturn's 3720 has the same question in small (0.25 to 0.5 of the approved energy, luma about equal): sky_builder, one line on what closes it there, with the same mail.
+>
+> Attachment: neptune-4860-sky-controls.jpg (/home/user/.perplexity/attachments/57fa179851c745fc8863e01ed000d6aa/neptune-4860-sky-controls.jpg)
+
+- What it asks of me: nothing now. When sky_builder's patch of the plan (the low sky's turn, the knots of air()) comes, by 14:00
+  UTC, I lay it as its own commit after the present work and name it with the four proofs of its point 4.
+
+## 25 Nov, 12:47 to 13:13 UTC: the run's hold cure committed (4676101d0), the slab built in three tries
+
+- THE RUN, closed. deck.run [points, widths]. c = 1.3: 4530, 4605, 4679 the same bytes with the run and without (R5 against
+  R5off; 4605 against B6), 4860 soft 3.251 percent (mean 1.61), beauty 82.8 s. c = 1.2: the three hold frames the same bytes
+  (R6), 4860 soft 2.621 percent (mean 1.65). c = 1.0 was 2.059 with the hold moved. Committed with 1.2 as 4676101d0. The rest
+  over 2 percent is the cirrus march's step (R2, R3 above), not decided yet.
+- THE SLAB, try 1 (S1): 4 points along the whole part of the run beyond one footprint, each point's footprint drawn out ALONG
+  the run only (a block in planet.ts layerAt, the sampler's 16 to 1). 4605 MOVED: 3664 pixels inside the place's disc (x 868 to
+  1178, y 499 to 758) by up to 12 levels (680 by 2 or more, 78 by 4 or more), sha fbb5dbb3d916cc22. My estimate that the run
+  stays under one footprint in the place's disc at the hold was wrong: the layer's thickness, 0.004 radii, is up to about two
+  footprints there. The picture: at 4962 the dot was gone but a faint streak stood in its place, at 4972 a tick about 30
+  pixels long where the dot was. A hairline is not accepted (MAIL 955). Not in.
+- Try 2 (S2): one read stands for 2 of its footprints along the run (far.slab[1]). 4605 the same bytes as B6.
+- Try 3 (S3), the law as it was planned and ruled (the footprint widened by run over foot, the whole footprint and not only
+  along the run): each point is read with a footprint max(run / (2 footprints), 1) times wider. So what is smaller than the run
+  goes into the mean: neither a flat picture on a sheet nor a streak. planet.ts keeps one new function (runFeet: a run in
+  footprints of a read, from the read's own derivatives) and nothing else; layerAt is untouched; the globe does not call it.
+  4530, 4605, 4679 the same bytes (744b541cb6e2c40d, cf858a9f835a480f, 1881e959216d3159). 4962: 72.4 s, 4972: 44.4 s at 1920
+  draft (the frames before the slab are not timed yet; a control with slab 0 follows).
+  Seen by me at 4962 and 4972 beside the frames before (C8q, preview): the dot is gone at both, no streak. At 4972 the hard
+  bright lines along the limb are one soft pale band, and the blurry pale speckle field lower left is gone but for a dim
+  area in the very corner. The white bank, the second bank, the deck and the sky are as before.
+- Pairs of the rise and the dive on the slab's tree: running since 13:06:53 (S3q, S3r, S3d, S3v).
+- sky_builder's picture (MAIL 1099) is seen: six panels, the approved, ours at 4860, the level times 2, 4, 8, the sky pitched
+  41 degrees.
+
+## 25 Nov, 13:13 to 13:23 UTC: the pairs on the slab's tree, what is still red in the rise
+
+- Pairs with the slab [4, 2] (my reader, preview, rate 2, limit 0.45; a proxy), the number before the slab in brackets:
+  4960 to 4968 0.48 (0.56), largest at 52, 768 of 1920. 4962 to 4970 0.57 (0.68), largest at 160, 760.
+  4968 to 4976 0.62 (0.85), largest at 0, 260. 4992 to 5000 0.35 (0.33), largest at 240, 956.
+  4704 to 4712 0.30 (0.30), largest at 312, 192. The veil's pairs 4736, 4744, 4752 still run.
+- So the slab takes the dot and brings the three early pairs down, and all three are still red (over 0.45).
+- Seen at 4968 to 4976 (crop /tmp/s3-corner.jpg): the hot spot is the upper left corner, where a row of small hard white
+  flecks comes in from the left edge and travels right and down. Suspect, NOT named: the third streamer of
+  deep.json cirrus.streamers (line [-5.5, -2.2, 0.55, 0.25], base 0.2, thick 0.06, density 0.4, lump 0.6, lumpShare 0.7)
+  broken into flecks. Control owed: that streamer's density 0, the pair 4968 to 4976 again.
+- Seen at 4962 to 4970 (S3q/chain-4962.jpg, third panel): a web of lines over the lower left, largest at 160, 760. Not
+  analysed yet.
+- Looks pushed 13:22:51 (7e5d8709): 4972 and 4962 before and after, the corner crop, 4860 beside the approved (the run's
+  trial; a 4860 with the slab is the next render).
+
+## MAIL from sky_builder, 13:25 UTC: the answer to MAIL 1099 (word for word; attachments neptune-lowsky.patch, NEPTUNE-1099.md, neptune-4860-lowsky.jpg under /home/user/.perplexity/attachments/8a6a72da895446fca3e19d72bbdfd180/)
+
+ANSWER to MAIL 1099 (sky_builder, 13:25 UTC): the fit of Neptune's low sky as a patch of the plan. To neptune_builder and the Builder, the same text.
+
+WHERE. Branch agent/flightsky, head 038f1a6c4a32d8611fc47b84cd54ce45bb1133f9, folder assets-src/flightsky/: neptune-lowsky.patch (attached), NEPTUNE-1099.md (attached, everything below in full), neptune-4860-lowsky.jpg (attached: approved, before, after, 13 tiles drawn), measure/lowsky.py. The patch is made on d63d08e2dd5560bba5d02cd926cf85a57573287e and applies clean to 1808b13e729122b7a0873cffbef0d835ecf279d1 (git apply --check; that head differs only in Neptune's notes). It touches src/stops/neptune/plan.ts only; tsc clean. Lay it in with: git apply assets-src/flightsky/neptune-lowsky.patch (after git fetch --depth 1 origin 038f1a6c4a32d8611fc47b84cd54ce45bb1133f9 and git show FETCH_HEAD:assets-src/flightsky/neptune-lowsky.patch).
+
+THE PATCH.
+1. Turn: skyAim.terrain [-111.84232, 28.36898, 9.4633] (today's aim at 4860 is [-42.828, -37.631, -21.589]). Neptune is not in sky.open, so the plan's aim is honoured.
+2. Path of the turn: skyTurnShare overridden for dive and rise, share = smooth(air(eyeHeight).share): by height between the knots, never by the clock.
+3. Knots: air [{ height 2, sky 0.65 }, { height 0.03, sky 0.27 }]. Hold flies at 2.07 to 2.18 radii (keeps 0.65), surface view at 0.0232 to 0.0247 (holds 0.27).
+4. On d63d08e2 nothing in the engine reads Shot.air (film.ts 954 to 955 writes it, no reader of air.sky in engine.ts, sky.ts, film.ts), so knots alone change nothing. The patch routes the knots through the plan's own skyGain (one factor on map, band and stars). When handover_engineer's air law reads air.sky in the engine, that skyGain override must go or the level counts twice.
+
+TILE TABLE, frame 4860, real render with the planet, draft, no grain, energy ours over approved, row 0 tiles 4 to 11 | row 1 tiles 7 to 11:
+before: 0.02 0.06 0.04 0.14 0.06 0.17 0.03 0.03 | 0.02 0.02 0.02 0.01 0.03 (0 of 13 inside 0.6 to 2.0)
+after:  1.74 1.35 0.89 1.58 1.69 1.40 1.27 0.86 | 1.56 1.81 0.69 0.43 0.95 (12 of 13, median 1.35)
+The one out is row 1 tile 10 (far right over the limb), no one level brings it in: 0.26 gives 12 of 13 (0.41 to 1.74), 0.2925 12 of 13 with one tile at 1.96, 0.325 11, 0.3575 9. 0.27 keeps both edges clear.
+Luma after over approved: 1.54 0.44 0.22 0.42 0.50 0.52 0.42 0.46 | 0.88 0.48 0.51 0.46 0.35. The approved sky has a smooth floor (median display RGB 13, 20, 28) ours has not (7, 9, 9); the level cannot buy it, the stars' energy runs over first.
+Points over the local floor in the 13 tiles: approved 4162, before 217, after 3823.
+4860 against references/approved/neptune-close.jpg, whole frame and top two rows: mean absolute luma difference before 0.1133 and 0.0784, after 0.1121 and 0.0737; mean absolute RGB (8 bit) before 29.29 and 21.33, after 28.97 and 20.17; G17 all 96 tiles inside 0.6 to 2.0: before 17, after 35. The whole frame number is the planet's.
+
+THE RIDGE. Approved: through about (1100, 95) px of 1920 by 1080, 42 degrees up to the right, 4 to 7 degrees wide, dark to its left, a shoulder to its right. The engine's band is wider (full within 5.4 degrees of its plane, gone at 13.5), so one heading cannot give ridge and shoulder both. Picked from 316 headings: the plane through (1100, 95) at 30 degrees, 12 shallower than the approved ridge; at the ridge's own slope the best found holds 9 of 13 (row 1 tiles 10 and 11 at 0.14 and 0.11). The turn from the hold's sky to this low sky is 101.4 degrees.
+
+COLOUR (point 3). Mean linear RGB of the 13 tiles: approved 0.0071 0.0109 0.0176 (R/G 0.65, B/G 1.62, blue grey); ours after 0.0065 0.0067 0.0072 (R/G 0.97, B/G 1.08, warm gold brown, the band's own colour). No tint in the patch; one factor leaves the gold.
+
+BY FRAME (shot prints, no render). Hold 4605: the same shot fields before and after (level 0.65, same skyTurn and skyQuaternion). Dive: turn runs 4690 to 4757 with the level beside it (4720: 0.524, 33.7 degrees), peak step 2.70 degrees a frame near 4730. Surface view 4770 to 4949 constant. Rise: turn back 4960 to 5007, peak step 3.53 degrees a frame at 4985, level climbs from 0.27 to the flight's 0.45 at 5005. Stars stay points there only by the mid shutter draw; they slide up to about 97 and 127 px a frame.
+
+A SIDE EFFECT for neptune_builder to prove or cure. In dive and rise the far Sun rides with the sky's turn (film.ts near 944 to 950, sun.far.dir; sun.far.share is 1.00 throughout). With the patch it stands up to 94.8 degrees from the true Sun at the dive's end (4769: far Sun 123 degrees off the view axis, true Sun 58, corner at 28.7) and is back in its own place at 4770; the reverse at 4950. At 4720 the far Sun is 52.6 off axis against 24.4 true (true Sun inside the picture, far Sun outside); at 4990 12.5 against 18.5. Before the patch the two agree. A cure, not tried: take the far Sun's direction from the hold's turn, not from the mixed turn.
+
+NOT DONE by me: the proofs of point 4 (bytes of 4605, redness of the dive's and the rise's parts, stars as points in rendered dive and rise frames, final tier, grain). All numbers are draft tier.
+
+SATURN 3720, one line: the level alone closes it, in Saturn's own skyGain, no heading: twice today's level brings 12 of its 13 low sky tiles (row 0 tiles 1 to 7 and 11, row 1 tiles 2 to 6; today 0.15 to 0.51) to 0.67 to 1.45 (row 1 tile 5 stays at 0.44), three times is over. Its price, measured: luma 0.9 to 2.3 times the approved, and the three left corner tiles, where the band's edge already stands (2.1, 2.7, 1.3 today), go to 4.7, 6.9, 3.8. Measured on d63d08e2's tree, draft, not on Saturn's newest.
+
+## MAIL 1112 from the Builder, 13:42 UTC (word for word; attachment three.jpg under /home/user/.perplexity/attachments/62958d29172041a39712e31de12ec642/)
+
+MAIL 1112 from the Builder (/root), 13:42 UTC. Your seventh named d63d08e2dd5560bba5d02cd926cf85a57573287e: the proofs so far and my ruling.
+PROOFS (machines, on d63d08e2):
+- nq4-01 RED, dive 1 of 4: pattern 0.51 from 4694 (4 frames over).
+- nq4-02 RED, dive 2 of 4: pattern 0.72 from 4706 + 1/2 (6 over).
+- nq4-03 RED, dive 3 of 4: pattern 0.55 from 4750 (4 over, first 4750).
+- nq4-06 RED, rise 2 of 4: pattern 0.61 from 4969 + 1/2 (16 over, first 4967).
+- nq4-07 and 08 (rise 3 of 4 and 4 of 4) GREEN. 09 parity GREEN. 12 units 708 and gate GREEN. 13 G3 GREEN.
+- nq4-20, the finals: G5 PASS (4605, 4707, 4860, 5006 invalid 0). G17 FAIL: 4605 median 0.827 p25 0.525 over 65 tiles; 4860 median 0.191 p25 0.073 over 75 tiles.
+- nq4-14 to 19, the six measure parts: each names 39 to 41 of its 82 or 83 frames over 0.02 soft (first 4741 to 4746). The join gives the G13 verdict; I send it when it is run.
+- Still out: dive 4 of 4 (nq4-04), rise 1 of 4 (nq4-05, until about 14:25), the warm run (nq4-10, at frame 4758 after 51 minutes).
+STILLS, looked at by me, sheet attached (approved, main, d63d08e2 at 4605 and 4860). By mean absolute RGB against the approved pictures (draft JPG stills): hold 4605 main 3.117, yours 7.681: the bright far Sun star at the top right is gone and a brown band of sky stands there. Close 4860 main 22.947, yours 29.367: the dark vortex of the approved view is gone and the sky is near black.
+RULED (d296, d299): d63d08e2 does not go onto main. A take whose judged frame matches the approved image worse than main's stays out.
+WANTED in the eighth:
+1. The storm is one body from the globe down to 4860: the dark vortex of the approved close view stands at 4860 and is the same body the hold shows at the place.
+2. The hold 4605 keeps main's picture outside the place's disc: the far Sun star and the sky at the top right come back.
+3. The sky at 4860 is the approved sky, not near black. Lay sky_builder's patch for it (agent/flightsky 038f1a6c4a32d8611fc47b84cd54ce45bb1133f9, assets-src/flightsky/neptune-lowsky.patch, plan.ts only, 12 of 13 tiles inside at 4860). Its skyGain override must go when the air law reads air.sky.
+4. G17 green at 4605 and 4860, and each red smooth part named with its cause in the picture and cured at the cause.
+Eighth NAMED by 16:00 with the full sha. Neptune's round 1 of 3 starts on what stands then.
+
+## 25 Nov, 13:23 to 14:02 UTC: the slab's controls and commit (e27370260), the flecks named, the storm found in the frame, the eye as one body begun
+
+- Veil pairs on the slab's tree: 4736 0.34 (0.36), 4744 0.40 (0.39), 4752 0.26 (0.26). Chain done 13:35:40.
+- S3b (1920 draft, slab on): 4860 105.4 s (c4b4faca20b5c1ee), 4974 43.0 s, 4976 37.1 s; texel view of 4860: soft 2.621 percent
+  (mean 1.65), the same as R6.
+- Control S3off (slab [0, 2]): 4860 101.0 s, 4962 69.4, 4972 41.7, 4974 38.8, 4976 35.1. So the slab costs 2 to 4 s a frame.
+  Seen, off against on at 4962, 4972, 4974, 4976: the dot, the blocky pale speckle field lower left, the hard bright limb
+  lines and the white patch (4976, lower right) all change with the slab and with nothing else: they are the map's cloud sheet
+  read as a flat picture. With the slab: no dot and no streak, a soft pale haze, one soft band, a soft round blob.
+- 4860 moves with the slab: 40485 pixels by 8 levels or more (max 106), the far cloud streaks near the limb are softer.
+  G17 tile median by my reader: 0.254 off, 0.216 on. A cost, named in the commit.
+- Control S3k3 (third streamer density 0) at 4968, 4972, 4976 against S3n, S3, S3b: the row of hard flecks in the upper left
+  corner is gone; the flecks at the bank's end stay (the first streamer's tail). So: the row is the third streamer
+  (density 0.4, lump 0.6, lumpShare 0.7: a thin body of which only the cores of the billows pass the cover). Named, not cured.
+- Committed the slab as e27370260; pushed 14:02 (1808b13e7..e27370260). Looks pushed 13:53:23 (2043cd09).
+- sky_builder's patch (13:25) applies clean (git apply --check). To lay after the eye.
+- MAIL 1112 (13:42): d63d08e2 stays out. Wanted: the storm one body from the globe down, the hold's sky and far Sun star as
+  main has them, the sky patch, G17 green and each red part named.
+  FACT for point 2: main's hold sky is a PLATE (main's sky.json: orbit sky-hold.webp, add false; the file is on main under
+  public/assets/neptune/full and web, not on this branch) and main's skyAim.orbit is [25.78793, 56.89437, -50.63077]; mine is
+  [-0.35387, -37.48986, 26.30965] (solved for the one sky turn, MAIL 914) and sky.json is empty (MAIL 774, 878, 1078 point 5:
+  no plate). The bright Sun star with its flare is in the plate, not in the engine's sky. In film.ts the rise turns to the
+  NEXT stop's (the ending's) orbit turn, not to this stop's, so the hold's aim can go back to main's without touching the
+  ending's turn once sky_builder's turn by height is in.
+- THE STORM IN THE FRAME (E1: dark 0.95, depth 0.15): the code's storm stands at x 0.53, y 0.46 of 4860, where the approved
+  has its eye. It was only too small and too weak (eye 0.25 is 0.16 of the frame's width; the approved's dark core is 0.24).
+  E2 (eye 0.45, dark 0.6), E3a to c (eye 0.42, dark 0.9, collar and arms lifted): a dark disc with a crisp edge. Cause of the
+  edge: the dark went onto the brightness before the albedo's two ramps (pale to blue to night), so a soft wall became a step.
+- ONE BODY for the eye (built, uncommitted): planet.ts eyeShade(p, field) in the map's shared lines: what the deck's colour
+  keeps at a direction of the body, 1 minus dark times the wall's smooth fall; uniforms uEyeAt (middle, radius as an angle),
+  uEyeMake (dark, wall from, wall to, ragged). The globe multiplies its deck by it with field 0, the scene multiplies the
+  map's deck by it with the deck's own structure moving the wall. The dark is taken out of the scene's detail (uDeckTone.z 0).
+  set.ts turns the eye's middle into the globe's frame each frame (it rides the globe with the scene). deep.json storm:
+  eye 0.42, depth 0.03, dark 0.7 for the first try (E4).
+- E4 (14:01 to 14:04; preview 4860 43.1 s, 4740 16.6 s, 4700 8.0 s; 4605 at 1920 35.3 s): the dark eye stands at 4700 on the
+  globe (a small dark spot at the place), at 4740 between the bank and the streamer, at 4860 as a soft dark oval where the
+  approved has its eye. No crisp edge any more. No spiral streaks yet.
+  4605 changes in 1707 pixels, all inside x 785 to 1258, y 499 to 879 (max 61 levels): a dark spot about 14 px across.
+  Against the approved hold (mean absolute RGB, 1920): 7.539 before, 7.542 after. It falls by 0.003: named.
+- E4j (1920): 4860 105.1 s (93c3ca102b39acb4), texels soft 2.621 percent. G17 by my reader median 0.216, p25 0.077 (S3b:
+  0.216, 0.087). Tile map: the bank's tiles 0.6 to 1.5, the plain's 0.03 to 0.30, the sky's 0.03 to 0.18, row 7 right 1.75
+  to 4.93 (my bank's end where the approved has dark). Against the approved close: 28.924 before, 28.888 after.
+- The hold against the approved, by quarters of the frame (S3 4605, mean absolute RGB): top row 6.74, 17.45, 19.03, 25.86;
+  second 4.08, 3.15, 3.50, 13.08; third 2.35, 2.69, 4.61, 6.83; bottom 2.30, 1.98, 3.11, 5.01. Whole 7.610 (Lanczos) or
+  7.539 (default resize). The difference is the sky: the approved has a blue grey star band across the top and the Sun star
+  with a flare at x 0.89, y 0.14; mine a warm brown band at the top right and a small star at x 0.63, y 0.14.
+- 14:10 STATE sent to /root (the answer MAIL 1078 point 8 asks for): slab in, pairs, what each thing is, the eye under way,
+  the cost at the hold, THE PLATE FACT with what I do without a ruling, the sky patch next.
+- 14:10:29 committed the eye as efd32eb40 (not pushed yet).
+- 14:11 sky_builder's patch laid by git apply (plan.ts only), types clean. K1 renders 4605, 4860, 4720, 4745, 4985, 5000 at 1920
+  for the proofs of MAIL 1099 point 4.
+
+## 25 Nov, 14:11 to 14:25 UTC: the low sky laid (cb54abd75), its proofs, storm trials T1 to T3
+
+- K1 (1920 draft, sky_builder's patch laid on efd32eb40): 4605 35.6 s, 4860 88.8 s, 4720 31.1 s, 4745 51.6 s, 4985 29.7 s,
+  5000 21.1 s.
+- PROOFS of MAIL 1099 point 4 so far:
+  hold 4605 the same bytes before and after: 4948d83e0ef7bd07 (E4 and K1).
+  4860 against the approved close (mean absolute RGB): 28.888 before (E4j), 28.583 after (K1); the top quarter 21.294 to
+  20.181. G17 by my reader: median 0.216 to 0.560, p25 0.077 to 0.194. The sky's tiles (row 0 from tile 4, row 1 from 7):
+  1.75 1.35 0.90 1.58 1.70 1.41 1.28 0.87 and 1.57 1.82 0.69 0.44 0.97: 12 of 13 inside 0.6 to 2.0, as sky_builder says.
+  Stars are points at 4720, 4745, 4985, 5000 (crops looked at 1 to 1).
+  OWED: the pairs of dive and rise against d63d08e2 (the chain), the far Sun's side effect.
+- NAMED: the band at 4860 is gold brown, the approved's is blue grey with a smooth floor.
+- Committed as cb54abd75 (its own commit). Looks pushed 14:17:22 (acb9abda, 8 looks).
+- G17's rule read in tools/measure.ts: a judged frame passes when its median is 0.8 or more (config detail.minSharpnessRatio
+  0.8). So 4605 (0.827 on the machine) passes and 4860 is the red one. At 4860 26 of 75 tiles read 0.8 or more with the low
+  sky; 38 are needed. The plain's tiles read 0.05 to 0.33 (round the storm), the edges of the bank and the limb 0.47 to 0.77.
+  The band of G17 is 3 to 12 pixels a cycle at 1920: the approved plain is full of fine streaks, mine is smooth there.
+- Storm trials at 4860 preview (44 s each), beside the approved (/tmp/t-four.jpg):
+  T1 eye 0.5, dark 0.8, rings 1.0, reach 1.6: a soft dark oval with a darker ring of slope round it, faint winding structure.
+  T2 the same plus arms.light 0.3 (from [0.5, 1.6]) and collar [1.1, 2.4, 0.3, 0.8]: saturated blue flecks round the eye.
+     Cause: the detail is one number on the map's colour (the map keeps its hue), so a lift over the map's level cannot turn
+     pale, it turns a strong blue. The pale streaks of the approved cannot come from arms.light or the collar. Not taken.
+  T3 eye 0.5, dark 0.8, rings 1.8, reach 2.2, collar [1.1, 3.0, 0.25, 1.0]: a little more winding structure, still soft.
+  None shows the pale fine streaks of the approved round the eye.
+- U1, U2 (1920, for G17): T1's values, and the same with wisp.light 0.3 (0.14).
+- U1 and U2 at 1920 (14:22 to 14:27): G17 by my reader median 0.547 and 0.554 (K1: 0.560), the tiles round the storm 0.03
+  to 0.20 as before. So neither the winding streaks' share (rings, reach) nor the thin streaks' light moves the fine band at
+  the storm's distance. Against the approved close: K1 28.583, U1 29.004, U2 29.005 (the box round the storm 31.367, 33.447,
+  33.501): the larger darker eye matches worse, because my plain is darker than the approved's already. NOT TAKEN; the
+  storm stays at eye 0.42, dark 0.7, rings 0.2, reach 0.9.
+- CAUSE of G17's red at 4860, as far as I have it: the approved plain carries fine streaks at 3 to 12 pixels a cycle
+  everywhere; my deck's octaves at that size are a sixteenth to a sixtieth of the longest wave (gain 0.5 an octave) and
+  lumps, not streaks (deck.lump 0.7). The cure is at the deck's spectrum near the storm, not at the storm's values. OWED.
+- THE HOLD'S SKY, a trial of turning the engine's sky to where the approved has its band (H1, 4605 at 1920):
+  skyAim.orbit [9.05, -18.2, 10.6] (the band through x 0.40, y 0.07 of the frame, 18 degrees down to the right, the band's
+  middle there). Against the approved hold: 7.542 before, 11.376 after. The engine's band there is its bright gold brown
+  middle; the approved's is a faint blue grey mist. Worse: NOT TAKEN. The hold's aim stays (the ending's turn, MAIL 914).
+  So the engine's sky cannot give main's hold by turning alone, and the far Sun star is not in it at all (the true Sun
+  is outside the frame at the hold: the planet is lit from the right and from behind the lens).
+- 4860 against the approved by tiles of 240 by 180 (K1): the largest differences are the far plain on the right (rows 2 to 4,
+  columns 5 to 7: 50 to 67 levels): approved 114,156,194 and 153,184,213 and 132,166,200, mine 65,100,146 and 103,131,172
+  and 72,96,135. The approved has a broad pale haze over the far plain. Second: the top left corner, where my limb stands
+  higher than the approved's (23,40,58 against 7,16,26).
+- Trials A1 (haze.share 0.75 for 0.45) and A2 (haze.low.depth 0.11 for 0.065) at 4860 and 4744 preview, against A0.
+- A0, A1, A2 (14:29 to 14:33; preview): 4860 against the approved close 28.548, 27.224, 28.118; the far plain on the right
+  (mean RGB) 58,85,123, then 70,95,131, then 65,90,126 against the approved 90,128,165. With share 0.75 the far plain is
+  paler and the eye is veiled (fainter). 4744 looks the same in all three at a glance. A LEAD for the far plain's level by
+  the air (1.3 levels of the whole frame), NOT TAKEN into the eighth: the globe's own air is not changed with it, so the
+  dive would have to be proved again, and there is one chain left before 16:00.
+- F0, F1 (14:35): the third streamer as a thin veil: lumpShare 0.2 for 0.7, at 4968, 4972, 4976 (and 4860 for the bytes).
+
+## MAIL 1126 from the Builder, 14:33 UTC (word for word)
+
+> MAIL 1126 from the Builder (/root), 14:33 UTC. To neptune_builder. Your STATE of 14:10 (tip e2737026 on agent/neptune-place, the slab in) is read.
+>
+> 1. THE STORM'S EYE AT THE HOLD STANDS. 4605 goes from 7.539 to 7.542 against the approved image: inside rule d302, new today: inside the place's disc the hold shows the place's body; features of that body which the surface view shows may cost the hold at most 0.01 of its match with the approved image (mean absolute level over the frame at 1920 by 1080); G17 at the hold may not fall; nothing outside the disc changes; no feature of the approved image inside the disc may be lost, and that is read on the disc at 4 times beside the approved image, not by the number.
+>
+> 2. NO PLATE AT THE HOLD, confirmed. Brandon's third note: "The last planet ... planetary review still looks really bad and then when it goes to the surface view, you can actually see the image pop up both entering and leaving." So the hold is the globe drawn by code with its sky by kind. d296 for 4605 is read on the disc and its glow. The sky is judged by kind (the far Sun as a star in its place with its flare, the stars' density and level), not by its bytes against the approved image.
+>
+> 3. The machines on your tip's parts so far: nq4-05 green (rise part 1 of 4). nq4-04 red: dive part 4 of 4, pattern 0.59 from 4759, 5 rows over, the first at 4753 + 1/2. nq4-10 is slow on its machine (its warm stands at 4829 + 1/2 after 100 minutes); the rest follow as they land.
+>
+> 4. The streamers: cure them as a thin veil of the one body (a sheet with its own optical depth, seen through the slant path law cover = 1 - exp(-tau / |sin e|), lit by the globe's light at the place), not as drawn strokes.
+>
+> 5. The far Sun changes under you: belt_builder's new commit (on machines now as take/ts1 6dd77c6b) keeps the far Sun where the light comes from while the sky turns. At Neptune the angle between the two was up to 122 degrees in the dive and 86 in the rise, so where the Sun star stands in your dive and rise will change when it reaches main. Nothing to do now; read 4605 again after the second cut.
+>
+> 6. TIMES: the second cut takes what is named by 17:00 UTC, a third what is named by 20:00 UTC. Name with the full sha and 4605 and 4860 beside the approved image and main.
+
+- What it rules: the eye at the hold stands (d302: at most 0.01 of the hold's match; mine costs 0.003; G17 at the hold may
+  not fall; nothing outside the disc changes; read at 4 times beside the approved). No plate at the hold: the sky is judged
+  by kind. Streamers: a thin veil of the one body by the slant path law. The far Sun: nothing to do now. Times: named by
+  17:00 for the second cut, by 20:00 for a third; each with 4605 and 4860 beside the approved image and main.
+- What it leaves: MAIL 1112's 16:00 for the eighth is not withdrawn. I name the eighth by 16:00 on what stands and go on.
