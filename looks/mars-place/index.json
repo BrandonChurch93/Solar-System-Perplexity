@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T10:44:35.776Z",
+ "pushed": "2026-11-25T11:09:23.525Z",
  "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "wall law trials 1 and 2 and a repaint from a heights sketch: none adopted; reader's pattern red read on its own sheet: top strip of the frame, not the far wall",
+ "note": "wall law with rock by code, first run: facets gone, shadowed wall still bare, from above worm lines; not committed",
  "looks": [
+  {
+   "time": "2026-11-25T11:09:22.489Z",
+   "file": "20261125110922489-note-triangle-plate.jpg",
+   "source": "out/work/place/k9/triangle-plate.jpg",
+   "kind": "note",
+   "label": "pale triangle traced: 0.7 plate beside body_share, the far end of the close set's ground laid from above",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T11:09:21.575Z",
+   "file": "20261125110921575-note-see-0p3.jpg",
+   "source": "out/work/place/m1/see-0p3.jpg",
+   "kind": "note",
+   "label": "0.3 plate whole, state beside wall law with rock by code, first run: pale cloudy wall with etched lines",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T11:09:20.624Z",
+   "file": "20261125110920624-note-above-try.jpg",
+   "source": "out/work/place/m2/above-try.jpg",
+   "kind": "note",
+   "label": "0.7 plate from above at 1 to 1, state beside wall law with rock by code: shadowed wall times 3 over lit wall times 1.5 (worm lines of the take's grain, beds weak)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T11:09:19.503Z",
+   "file": "20261125110919503-note-wall-2692.jpg",
+   "source": "out/work/place/m1/wall-2692.jpg",
+   "kind": "note",
+   "label": "2692 far wall at 1 to 1, state over wall law with rock by code, first run (not committed)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T10:44:35.219Z",
    "file": "20261125104435219-note-wall-2692.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/k9/see-0p7.jpg",
    "kind": "note",
    "label": "0.7 deg plate, take against wall law trial 2 (walls lit from heights, layers, gullies), seen from above",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T10:39:37.748Z",
-   "file": "20261125103937748-note-lead-take-03.jpg",
-   "source": "out/work/place/k9/lead-take-03.jpg",
-   "kind": "note",
-   "label": "lead with walls sketched from the heights and the image tool's take: tool painted an oblique canyon again, thrown away",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T10:39:37.147Z",
-   "file": "20261125103937147-note-two-bodies-0p7.jpg",
-   "source": "out/work/place/k8/two-bodies-0p7.jpg",
-   "kind": "note",
-   "label": "0.7 deg plate beside the light of its own heights: two bodies on the walls",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T10:39:36.545Z",
-   "file": "20261125103936545-note-two-bodies-0p3.jpg",
-   "source": "out/work/place/k8/two-bodies-0p3.jpg",
-   "kind": "note",
-   "label": "0.3 deg plate beside the light of its own heights: paint has a boulder plain where the heights have a wall",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T10:39:35.988Z",
-   "file": "20261125103935988-note-native-2458.jpg",
-   "source": "out/work/place/k8/native-2458.jpg",
-   "kind": "note",
-   "label": "2458 native pair: old 8.5 state against wall law trial 1 (smooth walls, not adopted)",
    "stop": "mars"
   }
  ]
