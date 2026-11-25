@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T16:48:34.880Z",
+ "pushed": "2026-11-25T17:07:44.729Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Shutter's ends by the law of the motion: flight line, Earth, merges of Mercury and Mars pushed; proof list and the field of 1857 and 2156 sent; hatch across the motion measured, not the samples",
+ "note": "The flight line and Earth by the law: suites run, then the merge of main's second cut, then the name. Pairs of 1857 and 2156 box against ends",
  "looks": [
+  {
+   "time": "2026-11-25T17:00:51.524Z",
+   "file": "20261125170051524-note-triple-1857-hatch-3x.jpg",
+   "source": "../../../../tmp/ends/triple-1857-hatch-3x.png",
+   "kind": "note",
+   "label": "Earth 1857 final at 3x: box, ends (main), and the scratch b2 (longer shutter with ends). RULED d312: neither box nor b2 is built"
+  },
+  {
+   "time": "2026-11-25T17:00:50.613Z",
+   "file": "20261125170050613-note-pair-2156-hatch-3x.jpg",
+   "source": "../../../../tmp/ends/pair-2156-hatch-3x.png",
+   "kind": "note",
+   "label": "Earth 2156 final, lower left at 3x: box against ends (main). The bars along the way go with the ends, the hatch across it stays in both"
+  },
   {
    "time": "2026-11-25T16:48:33.614Z",
    "file": "20261125164833614-note-e-box-01857-ll.jpg",
@@ -47,20 +61,6 @@
    "kind": "note",
    "label": "Earth 1857 review with the shutter's ends 0.5 (this morning, 7e3da15a), lower left at 1 to 1",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T16:16:07.599Z",
-   "file": "20261125161607599-note-z2668.jpg",
-   "source": "../../../../tmp/saw/z2668.png",
-   "kind": "note",
-   "label": "Mars 2668 draft, the crest of the teeth: lit texels pulled apart cell by cell"
-  },
-  {
-   "time": "2026-11-25T16:16:07.017Z",
-   "file": "20261125161607017-note-cells-L2.jpg",
-   "source": "../../../../tmp/saw/cells-L2.png",
-   "kind": "note",
-   "label": "design c study: Mars layer L2, stepped cells marked"
   }
  ]
 }
