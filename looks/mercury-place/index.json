@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T18:21:55.532Z",
- "head": "3da91ef177e8a7382a957c07bbc1e39d0ebd0b64",
- "note": "3da91ef1: dive 717 to 750 read on the commit, crater steady, 615 disc at 4 times beside approved and main",
+ "pushed": "2026-11-25T19:04:48.678Z",
+ "head": "62cccbc108a93bf58edf0deb3b942deabddcba40",
+ "note": "3da91ef1 named: limb switch main against 9ee7de11, pairs at 717 and 1016; MAIL 982 reads running on the name",
  "looks": [
+  {
+   "time": "2026-11-25T18:54:32.182Z",
+   "file": "20261125185432182-note-limb-switch.jpg",
+   "source": "../../../../tmp/m/limb-switch.jpg",
+   "kind": "note",
+   "label": "rise 1000.5 to 1005.5 right half: main 53025569 above (the limb lights from the top), 9ee7de11 below (lit from the first frame)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T18:34:44.980Z",
+   "file": "20261125183444980-note-pair1016-1to1.jpg",
+   "source": "../../../../tmp/m/pair1016-1to1.jpg",
+   "kind": "note",
+   "label": "1016 judged at 1 to 1 on the place: main left, name right",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T18:34:43.651Z",
+   "file": "20261125183443651-note-pair717.jpg",
+   "source": "../../../../tmp/m/pair717.jpg",
+   "kind": "note",
+   "label": "717 judged: main 9ee7de11 left, name 3da91ef1 right",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T18:21:54.876Z",
    "file": "20261125182154876-note-dive-cr-c.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/disc4-615.jpg",
    "kind": "note",
    "label": "615 disc at 4 times: approved, main 9ee7de11, name 3da91ef1",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:00:01.255Z",
-   "file": "20261125180001255-note-rise-m9b.jpg",
-   "source": "../../../../tmp/m/rise-m9b.jpg",
-   "kind": "note",
-   "label": "rise 1000.5 to 1010.5 on 9ee7de11 (main's code): the place's ground exchanged for the map in place, pattern 0.95",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:00:00.000Z",
-   "file": "20261125180000000-note-early-cr.jpg",
-   "source": "../../../../tmp/m/early-cr.jpg",
-   "kind": "note",
-   "label": "dive 717 to 719 at 1 to 1, the gold ring crater in the place's ground (s14), commit 3da91ef1",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T17:51:41.453Z",
-   "file": "20261125175141453-note-rise-c.jpg",
-   "source": "../../../../tmp/m/rise-c.jpg",
-   "kind": "note",
-   "label": "rise 998.5 to 1002 way C s14 final tree, pattern 0.17 to 0.21",
    "stop": "mercury"
   }
  ]
