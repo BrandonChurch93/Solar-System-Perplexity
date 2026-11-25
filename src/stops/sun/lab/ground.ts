@@ -858,6 +858,7 @@ export class LabGround {
   private readonly mapList = new THREE.DataTexture(new Float32Array(128 * 128 * 4), 128, 128, THREE.RGBAFormat, THREE.FloatType)
   private mapGeometry: THREE.InstancedBufferGeometry | null = null
   private mapTime = Number.NaN
+  private readonly clearTone = new THREE.Color()
   private readonly start = (plan.seg.terrain.end - plan.seg.terrain.start) / 2 + config.shutterFraction / (2 * config.fps)
 
   private readonly bakeScene = new THREE.Scene()
@@ -1194,7 +1195,15 @@ export class LabGround {
       const target = renderer.getRenderTarget()
       const xr = renderer.xr.enabled
       renderer.xr.enabled = false
+      // the map is a function of its time alone: it is cleared to what a new target holds (no colour, far depth)
+      // before it is drawn, the engine's autoClear being off; else the cells of the frame drawn before stay in it
+      // (frame 90 after 60 differed from 90 alone along the horizon, MAIL 1237 point 2)
+      const tone = renderer.getClearColor(this.clearTone)
+      const alpha = renderer.getClearAlpha()
       renderer.setRenderTarget(this.map)
+      renderer.setClearColor(0x000000, 0)
+      renderer.clear(true, true, false)
+      renderer.setClearColor(tone, alpha)
       renderer.render(this.mapScene, this.mapEye)
       renderer.setRenderTarget(target)
       renderer.xr.enabled = xr

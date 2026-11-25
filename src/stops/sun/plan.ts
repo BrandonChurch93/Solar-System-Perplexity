@@ -23,7 +23,7 @@ export const params: MoveParams = {
   spinDegPerSecond: 3.4,
   moonDegPerSecond: 0,
   tint: [1, 0.8, 0.4],
-  skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: [8.48669, -141.8932, 32.09218] },
+  skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: place.onGlobe.skyAim as [number, number, number] },
 }
 
 export const climb = { ease: { over: 1.3, speed: 0.095 } }
