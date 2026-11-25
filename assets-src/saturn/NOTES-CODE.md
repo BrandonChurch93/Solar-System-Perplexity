@@ -6033,3 +6033,38 @@ After a break in the session (00:53 to 00:57) the job was found running as left;
   - Proof r67 started 10:28:51 on this working tree, order: rise, dive, finals (3465 3567 3720 3866), g17,
     place, handover, g13, gate, parity, path. main moved to dde6df5 since 64c4ccb in kit/PROGRESS.md only,
     so the proof worktree's engine is main's.
+
+### 10:30 to 10:56 UTC: v2 read red before its proof ended, the cause, v3 (odds in equal steps)
+
+  - Early reading of r67 (5df42e1, v2) while it rendered: the tool's own python (tools/img/smooth.py, the
+    pictures measure) on the draft frames as they came, whole frame, no body mask, so not the tool's line.
+    Pattern 0.44 at 3799 + 1/2 and 0.46 to 0.54 at 3807 to 3812 (0.54 at 3810 + 1/2, most at pixel 1036 to
+    1048, 716 to 724: in the cover band over the lower globe; limit 0.45). r67 killed at 10:51:19, not
+    finished; v2 is pushed as 5df42e1 for the record and is not named.
+  - What the frames show (v2 frames 3792 to 3804, crop x 560 to 1180, y 470 to 830): the dark dust band
+    over the lower globe lightens right of the globe's outline behind the sheet (x about 905) as the lit
+    globe shows through. No step to the eye, but the pattern of the detail turns over fast.
+  - Cause, by model: the tool's pattern number is 1 minus the cosine of the angle between the detail of two
+    frames. A mix of two unrelated patterns with contrast ratio r, the incoming one at share T, stands at
+    the angle atan(r T / (1 - T)). Equal steps of T run through most of that angle in the first frames when
+    the incoming picture (the lit globe's bands) has much more contrast than the dust. An even pace for any
+    ratio needs log(T / (1 - T)) in equal steps: the odds, not the share.
+  - v3 (skim.json only, no shader text changed): inner.cover.share at the 44 knots (the lens's heights at
+    rise frames 3792 to 3835): 1 at 0.364, then 1 - 1 / (1 + exp(-L)), L from -4.4 to 3.6 in equal steps
+    (0.186 a frame): 0.985 at 0.367, 0.927 at 0.399, 0.806 at 0.425, 0.576 at 0.460, 0.438 at 0.492, 0.235
+    at 0.568, 0.065 at 0.760, 0.032 at 0.892, 0 at 0.928. inner.by.depth: as it was from 0.350 to 0.364,
+    then halving a knot down to 0.032, 0.02 from 0.380 to 0.445, then equal steps to 0 at 0.928. By the
+    model the worst pattern of a pure crossing is about 0.23.
+  - Known side effects: the fill (inner.fill times by) and the dust's own light fall within 4 to 5 frames
+    after 3792; a veil of about a fifth of the dust stays in the gap between 0.38 and 0.93 and thins with
+    height; 3720 (lens 0.362) has share 1 and the same by as v2, so it is v2's 3720 by design.
+  - Trial stills at draft, v3 against v2 at 3796, 3804, 3812, 3820, 3828 (/tmp/v/x/v3_strip.png, crop x 600
+    to 1160, y 480 to 800): the band over the globe is lighter at 3796 than v2's, alike at 3804, paler at
+    3812; the gap shows stars through a veil at 3820 and 3828. No step seen in these five.
+  - Proof r68 started 10:55:22 on this working tree (order: final 3465, rise, final 3720, dive, finals 3567
+    and 3866, g17, place, handover, g13, gate, parity, path). The NAMED is due by 12:00; what has not ended
+    by then is said as running in the mail.
+  - Mail from harness_builder (by the Builder's MAIL 1031 item 3b) asked for the sha, command and frames of
+    the run that read 0.98 at 3830. Answered 10:52: ab362641b9d9a924f577d3ad73df9d28231e3ebd on
+    agent/saturn-code, the rise at rate 2 at draft, slice frames 7596 to 7680.
+  - Branch pushed at 10:52 (7755294..5df42e1).
