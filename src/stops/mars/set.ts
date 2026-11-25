@@ -3,6 +3,7 @@ import { HazeShell } from '../../bodies/haze'
 import { MoonBody } from '../../bodies/moonbody'
 import { Planet } from '../../bodies/planet'
 import type { SetContext, SetFactory, SkyPatch, TextureOptions, ViewKind } from '../../core/types'
+import { bufferFrame } from '../../core/frame'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { FarPoint } from '../../bodies/farpoint'
@@ -355,7 +356,8 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      // counted in pixels of the buffer, so through the engine's measure of the frame (src/core/frame.ts, decision d253)
+      const visible = radiusPx > 0.6 * bufferFrame()
       planet.mesh.visible = visible
       shell.mesh.visible = visible
       halo.mesh.visible = visible && low < 1

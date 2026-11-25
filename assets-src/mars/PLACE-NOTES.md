@@ -1130,3 +1130,16 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
   light through 2470 to 2473 and 2686 to 2688; what remains is listed in the NAMED mail of this commit.
 - 00:09 MAIL 817: mars/full is not to be made smaller; the commit comes as a bundle; say which engine call ruling
   2 needs. READ: 86184412 is limbAir (air beyond the edge), it draws no ground.
+- 00:10 COMMIT d6c0188905e13b5842f73fbb7befe02a4a19be00 on the merge 4ab21c46 of main 2475f6c0, pushed to
+  agent/mars-place (the push went through again), looks pushed 00:12. Against 7253f5fd at draft the mean change
+  of a frame is 0.002 at 2420, 0.07 at 2440, 2.9 at 2460, 4.8 at 2467 falling to 0.004 at 2476, 0 from 2477 to
+  2681, 0.5 at 2685, 5.4 at 2689, 4.0 at 2692, 0.57 at 2700, 0.004 at 2720, 0 at 2740. NAMED mail sent after it.
+  Open for the next commit: the term in set.ts that reads view.format.height (law d253 a); ruling 2.
+- 00:27 MAIL 823: d6c01889 is the second named commit of the round, its proof runs on the machines. Third commit
+  due 01:55 UTC: ruling 2 (one ground at the place at every height, the east border out of the frame or grown, the
+  dome, the aprons, the flat pale spot 2400 to about 2435). presenceEdge may be built on from agent/engine-edge and
+  said so in the NAMED mail. `count-mars.patch` (globe_engineer's b6a8d201) only after /root says it is on main.
+- 00:34 Law d253 (a): set.ts draws the planet while its radius is over 0.6 px times `bufferFrame()` of
+  src/core/frame.ts, as Neptune and Uranus do. MEASURED: draft bytes of 2176, 2200, 2230, 2325, 2400, 2452, 2470,
+  2477, 2580, 2689, 2700, 2760, 2800, 2819 equal to the commit before; final 2325 keeps its sha, final 2580 equal
+  to the kept one; G11 and G15 pass; vitest 795 ok.
