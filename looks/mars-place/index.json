@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T01:53:52.137Z",
+ "pushed": "2026-11-25T02:21:36.668Z",
  "head": "88d4f309548622f39a1f3de85bc015c83317c8a9",
- "note": "02:00 trial of the law by a local patch, not committed: bad ones, a white fan of the far layers at 2456 and 2464",
+ "note": "02:25 trial of the law by place and eye (local patch, not committed): pairs at native size 2456, 2464, 2470, 2474, 2684, 2686, 2688, 2689; fan out, slab out; picture's rock darker and greyer than the cap above 2464",
  "looks": [
   {
-   "time": "2026-11-25T01:53:51.574Z",
-   "file": "20261125015351574-note-n56-2474-left.jpg",
-   "source": "out/work/place/see/n56-2474-left.jpg",
+   "time": "2026-11-25T02:21:35.741Z",
+   "file": "20261125022135741-note-n56-hr.jpg",
+   "source": "out/work/place/see/n56-hr.jpg",
    "kind": "note",
-   "label": "pair native size 2474 lower left: left 88d4f309 (apron), right trial (cap where the apron stood)",
+   "label": "TRIAL sheet rise: top 88d4f309 2684, 2686, 2688, 2692; under it the law at the same frames; bottom law 2685, 2687, 2689, 2696",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T01:53:51.045Z",
-   "file": "20261125015351045-note-n56-2470-right.jpg",
-   "source": "out/work/place/see/n56-2470-right.jpg",
+   "time": "2026-11-25T02:21:34.900Z",
+   "file": "20261125022134900-note-n56-h.jpg",
+   "source": "out/work/place/see/n56-h.jpg",
    "kind": "note",
-   "label": "pair native size 2470 right: left 88d4f309, right trial (edge feather takes the slab, a pale wedge stays)",
+   "label": "TRIAL sheet, law: 2440 (relief still cut by a height switch of the trial), 2448, 2456, 2464, 2470, 2474",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T01:53:50.511Z",
-   "file": "20261125015350511-note-n56-2464-fan.jpg",
-   "source": "out/work/place/see/n56-2464-fan.jpg",
+   "time": "2026-11-25T02:21:34.088Z",
+   "file": "20261125022134088-note-p56-2689.jpg",
+   "source": "out/work/place/see/p56-2689.jpg",
    "kind": "note",
-   "label": "TRIAL native size 2464 right half: fan with scalloped top edge",
+   "label": "TRIAL pair native 2689 middle: left 88d4f309, right law",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T01:53:49.961Z",
-   "file": "20261125015349961-note-n56-2456-fan.jpg",
-   "source": "out/work/place/see/n56-2456-fan.jpg",
+   "time": "2026-11-25T02:21:33.235Z",
+   "file": "20261125022133235-note-p56-2688.jpg",
+   "source": "out/work/place/see/p56-2688.jpg",
    "kind": "note",
-   "label": "TRIAL native size 2456: the far layers of the approved picture stand as a white fan over the cap (texel law alone lets an upright far sheet through)",
+   "label": "TRIAL pair native 2688 middle: left 88d4f309, right law",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T01:53:49.322Z",
-   "file": "20261125015349322-note-n56-a.jpg",
-   "source": "out/work/place/see/n56-a.jpg",
+   "time": "2026-11-25T02:21:32.436Z",
+   "file": "20261125022132436-note-p56-2686.jpg",
+   "source": "out/work/place/see/p56-2686.jpg",
    "kind": "note",
-   "label": "TRIAL not committed, law by texel size 1 to 3 px alone, left 88d4f309 right trial: 2440, 2456, 2464 (trial only), 2470, 2474. BAD: white fan of the far layers 2456 and 2464",
+   "label": "TRIAL pair native 2686 right top: left 88d4f309 (slab), right law",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T01:27:02.027Z",
-   "file": "20261125012702027-note-n55-four.jpg",
-   "source": "out/work/place/see/n55-four.jpg",
+   "time": "2026-11-25T02:21:31.625Z",
+   "file": "20261125022131625-note-p56-2684.jpg",
+   "source": "out/work/place/see/p56-2684.jpg",
    "kind": "note",
-   "label": "88d4f309 draft: 2427, 2469 (top), 2689, 2726 (bottom), bytes equal to d6c01889",
+   "label": "TRIAL pair native 2684 right top: left 88d4f309, right law",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T01:27:01.469Z",
-   "file": "20261125012701469-note-n55-T-dive.jpg",
-   "source": "out/work/place/see/n55-T-dive.jpg",
+   "time": "2026-11-25T02:21:30.762Z",
+   "file": "20261125022130762-note-p56-2474.jpg",
+   "source": "out/work/place/see/p56-2474.jpg",
    "kind": "note",
-   "label": "88d4f309 draft: every frame 2467 to 2481 (T 2477), bytes equal to d6c01889",
+   "label": "TRIAL pair native 2474 lower left: left 88d4f309 (apron), right law (cap where the apron stood)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T01:27:00.893Z",
-   "file": "20261125012700893-note-n55-T-rise.jpg",
-   "source": "out/work/place/see/n55-T-rise.jpg",
+   "time": "2026-11-25T02:21:30.020Z",
+   "file": "20261125022130020-note-p56-2470.jpg",
+   "source": "out/work/place/see/p56-2470.jpg",
    "kind": "note",
-   "label": "88d4f309 draft: every frame 2671 to 2685 (T 2681), bytes equal to d6c01889",
+   "label": "TRIAL pair native 2470 right half: left 88d4f309 (slab at the east border), right law (slab out, a pale wedge stays)",
    "stop": "mars"
   }
  ]
