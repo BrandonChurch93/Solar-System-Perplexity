@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T19:57:30.606Z",
+ "pushed": "2026-11-25T20:22:40.711Z",
  "head": "80d99af4c573b0875f794e6a9e1b4b22a4a8ab6d",
- "note": "separation: rise red 989 to 992 is the crater light turn (0.49 to 0.15 with it held); e1 shows a disc at 615, not named; cure next: the ring stays at every height",
+ "note": "s15 at 615: the crater in the set light at every height loses the hero ring at 4 times; bad, shown as it is",
  "looks": [
+  {
+   "time": "2026-11-25T20:22:39.578Z",
+   "file": "20261125202239578-note-crat8-s15.jpg",
+   "source": "../../../../tmp/m/crat8-s15.png",
+   "kind": "note",
+   "label": "615 crater at 8 times, below with gain 2.5: approved, main, name s14, s15: s15 loses the ring and the floor peaks",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T20:22:38.739Z",
+   "file": "20261125202238739-note-disc4-s15.jpg",
+   "source": "../../../../tmp/m/disc4-s15.png",
+   "kind": "note",
+   "label": "615 disc at 4 times: approved, main, name s14, s15 (the set light at every height): the gold ring reads lost in s15",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T19:57:29.985Z",
    "file": "20261125195729985-note-disc4-e1.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/pair1016-1to1.jpg",
    "kind": "note",
    "label": "1016 judged at 1 to 1 on the place: main left, name right",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:34:43.651Z",
-   "file": "20261125183443651-note-pair717.jpg",
-   "source": "../../../../tmp/m/pair717.jpg",
-   "kind": "note",
-   "label": "717 judged: main 9ee7de11 left, name 3da91ef1 right",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:21:54.876Z",
-   "file": "20261125182154876-note-dive-cr-c.jpg",
-   "source": "../../../../tmp/m/dive-cr-c.jpg",
-   "kind": "note",
-   "label": "dive 741 to 750 whole frames round the crater on 3da91ef1",
    "stop": "mercury"
   }
  ]
