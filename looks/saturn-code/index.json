@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T03:45:11.804Z",
+ "pushed": "2026-11-25T04:11:38.737Z",
  "head": "7755294aa70875d7406a3a89a2a51744cbb9a8ac",
- "note": "trial n5 of the foot at 3720: thinner soft band on the globe, twilight on the dust, dust ringlets; the diagonal step is a known fault of the trial; next the continuous twilight and the globe tone by latitude",
+ "note": "round 44 items 1 and 3 in work: foot closed with deeper dust lit through the globe's air, globe palette by latitude; next the near field",
  "looks": [
+  {
+   "time": "2026-11-25T04:11:38.160Z",
+   "file": "20261125041138160-note-n15_globe.jpg",
+   "source": "../../../../tmp/v/x/n15_globe.png",
+   "kind": "note",
+   "label": "3720 globe, approved on top, trial n15 below: band run and palette by latitude measured from the approved, twilight tint"
+  },
+  {
+   "time": "2026-11-25T04:11:37.604Z",
+   "file": "20261125041137604-note-n15_foot2.jpg",
+   "source": "../../../../tmp/v/x/n15_foot2.png",
+   "kind": "note",
+   "label": "3720 foot at 2x, approved on top, trial n15 below: dust zone in slate with soft streaks, the Sun's light through the globe's air; open: jagged contact at the draft tier, zone narrower on the night side"
+  },
+  {
+   "time": "2026-11-25T04:11:36.880Z",
+   "file": "20261125041136880-note-n15_pair_full.jpg",
+   "source": "../../../../tmp/v/x/n15_pair_full.png",
+   "kind": "note",
+   "label": "3720 draft trial n15 (uncommitted tree) under the approved image at full size: globe tone by latitude from the approved, calmer map, foot closed with deeper dust"
+  },
   {
    "time": "2026-11-25T03:45:11.216Z",
    "file": "20261125034511216-note-n5_foot2.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/x/n1_foot.png",
    "kind": "note",
    "label": "3720 draft foot at full size: approved, named tree, trial n1"
-  },
-  {
-   "time": "2026-11-25T03:04:07.560Z",
-   "file": "20261125030407560-note-n1_whole.jpg",
-   "source": "../../../../tmp/v/x/n1_whole.png",
-   "kind": "note",
-   "label": "3720 draft: approved, named tree, trial n1 (night side to near black by height, thinner foot band, inner dust greyer)"
-  },
-  {
-   "time": "2026-11-25T03:04:06.980Z",
-   "file": "20261125030406980-note-s1_hold_edge.jpg",
-   "source": "../../../../tmp/v/x/s1_hold_edge.png",
-   "kind": "note",
-   "label": "3465 final, inner ring edge at 3x, named left, with the item 5 change right: same bytes"
-  },
-  {
-   "time": "2026-11-25T03:04:06.361Z",
-   "file": "20261125030406361-note-s1_hold_pair.jpg",
-   "source": "../../../../tmp/v/x/s1_hold_pair.png",
-   "kind": "note",
-   "label": "3465 final, named tree left and with the item 5 change right, full size: same bytes (max difference 0)"
   }
  ]
 }
