@@ -1,9 +1,39 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T02:10:17.869Z",
+ "pushed": "2026-11-25T02:29:33.124Z",
  "head": "0d67e2957ef3ab04c43d6eaae1face0ca7981838",
- "note": "step 3 0d67e295 local, dive with the surface light handed over 0.06 to 0.8 R, named left; rise sheet follows when its frames are rendered",
+ "note": "third commit in proof: cause of the dive's pattern and level on the far half proven by render (the surface law of light by the view's angle: read at a fixed angle the row 4162 + 1/2 reads 0.20 and 19.5 against 1.61 and 96.2); rise sheet follows",
  "looks": [
+  {
+   "time": "2026-11-25T02:29:30.733Z",
+   "file": "20261125022930733-note-x-ab.jpg",
+   "source": "../../../../tmp/parC/x-ab.jpg",
+   "kind": "note",
+   "label": "trials at 4162 + 1/2, 4166 + 1/2, 4170 + 1/2: step 3; the same eye looking straight down (pattern 0.02); the surface light at full share at every height (pattern 1.59, so the hand by height is not the cause)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T02:29:28.889Z",
+   "file": "20261125022928889-note-z3-changes.jpg",
+   "source": "../../../../tmp/parC/z3-changes.png",
+   "kind": "note",
+   "label": "dive, step 3, the reader's own panels by pat.ts: frame, frame 8 later carried back, level change, pattern (rows 4151, 4157, 4163, 4169)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T02:28:49.252Z",
+   "file": "20261125022849252-frame-f4035.jpg",
+   "source": "out/work/u/r45/fin6/f4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c6c6edcaa80e1e1f"
+  },
   {
    "time": "2026-11-25T02:10:16.621Z",
    "file": "20261125021016621-note-dive-c.jpg",
@@ -97,20 +127,6 @@
    "stop": "uranus",
    "segment": "uranus.terrain",
    "frame": 4290,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "c6c6edcaa80e1e1f"
-  },
-  {
-   "time": "2026-11-25T01:04:34.515Z",
-   "file": "20261125010434515-frame-f4035.jpg",
-   "source": "out/work/u/r45/fin5/f4035.png",
-   "kind": "frame",
-   "label": "uranus.hold frame 4035, final tier",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
@@ -272,22 +288,6 @@
    "source": "../../../../tmp/parA/rise-1.jpg",
    "kind": "note",
    "label": "rise 4410 to 4439 every frame, draft, second commit",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:03:06.982Z",
-   "file": "20261125000306982-note-rise-0.jpg",
-   "source": "../../../../tmp/parA/rise-0.jpg",
-   "kind": "note",
-   "label": "rise 4380 to 4409 every frame, draft, second commit",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T00:03:06.122Z",
-   "file": "20261125000306122-note-rise-w.jpg",
-   "source": "../../../../tmp/parA/rise-w.jpg",
-   "kind": "note",
-   "label": "rise 4386 to 4409 every frame at draft, tree of the second commit (white tops fixed on the ground)",
    "stop": "uranus"
   }
  ]
