@@ -7439,3 +7439,62 @@ body's, in px. Zones: B inner 1.40 to 1.66, B outer 1.84 to 2.06, outer 2.20 to 
   shape.
 - The tree's hold final 3465 (the warp that is ruled out): B inner +9.3 px (az -180); B outer -15.7 (-10),
   +14.7 (170); outer +17.8 (100), -16.8 (-10).
+
+## 2026-11-25 21:33 to 22:05 UTC: the seat in the reader, today's dive read, the map's bands, main moved (1314)
+
+STATE: repo HEAD is the merge of origin main 172e7bc (the fourth cut, mail 1314) into agent/saturn-code, on top of
+5e76dd2. My folders are as at 17aa7329 (the tree under proof) plus this notebook. The proof of that tree ran on the
+OLD main ce8cb68 (worktree /home/user/workspace/mainref, out /tmp/v/pf); it was at its finals at 22:00.
+
+CORRECTION to the 21:24 notes (the 5 px at 3812 and the "plane 0.0012 higher"): that was the reader, not the film.
+Both sets turn the whole body about the lens by plan.seat(time) (main's code: the drift of the judged frames,
+blended by the clock). The lens file lacked it. out/scratch/warp.ts now writes the lens with the seat (and the
+spin of the map); files lens_s0.125.json (reader's frames, time f + 0.125) and lens_s0.25.json (film stills, time
+f + 0.25) in /tmp/v/warp; the trial's in /tmp/v/rigid/lens_trial_s*.json. Older lens files are wrong for edges.
+With the seat: the model alone and the kept set without pose weight read within 0.1 px (B inner), 0.15 to 0.7 px
+(B outer), 0.2 to 0.95 px (outer) of true circles, at every frame from 3592 on and through the rise; synthetic
+true circles through the same lens read 0.04 px.
+
+TODAY'S DIVE BY THE READER (tree under proof, every frame 3528 to 3640; /tmp/v/rigid/e4_dive_now.txt, .json, the
+picture edges_dive_now.png is in the looks): the worst sector's px off a true circle: B inner 5 px, B outer 12 to
+17 px, outer 24 to 28 px from the hold's end to 3572; it leaves over 3572 to 3592 (outer 27.0 at 3572, 19.3 at
+3576, 13.0 at 3580, 6.7 at 3584, 1.9 at 3588, under 1 px from 3590). This is the warp of mail 1294, by measure.
+
+THE GLOBE'S BANDS (for 1287 b): the band reader of /tmp/v/warp/globe4.py showed a steady trend in every frame,
++3.5 px at 30 degrees of longitude from the lens's meridian to -3.5 px at 80. Tested: (1) bands by latitude
+alone through the same lens (my own arithmetic, /tmp/v/rigid/syn_globe.py) read 0.0 px at every sector: the
+reader has no bias; (2) the wrap map itself laid on the true spheroid by my own arithmetic (longitude less the
+spin, latitude asin of the height over the polar radius) reads +2.6 to -3.1 px at 3530 and +2.8 to -3.5 px at
+3600, the film's frames +3.5 to -3.5 and +2.9 to -3.2. So the trend is the map's own (its bands do not sit
+exactly on latitudes), a property of the body, and the film's bands sit within about 1 px of where the rigid map
+puts them. The close patch (close-globe.jpg) is a box of the body's own longitude and latitude and its weight is
+0 in the kept set (window.close). No stretch of the globe's pattern found so far; the fine detail is a contrast
+term (weights in the summary above).
+
+PROOF SO FAR (old main): dive green: level step 0.02 at 3601, pop 1.07 from 3568 + 1/2, change in place 15.7
+from 3590 + 1/2, pattern 0.30 from 3576 + 1/2; d312 largest 1.32 levels a frame at 26 to 40 N, 3606 to 3607.
+Rise: pop 1.2173 from 3874 (limit 1.2, red; main 1.2105), level step 0.13 at 3896, pattern 0.35; d312 largest
+1.73 at 8 to 16 N, 3826 to 3827. G13 and gate ran (logs not yet read).
+
+MAIN MOVED (mail 1314, 21:41): no file of my folders is among main's 30; the merge is clean. But main's cure of
+the rises moves SATURN'S LENS: by geometry (out/scratch/warp.ts on pure trees of both mains, /tmp/v/rigid/m1, m2)
+59 frames differ: 3330 to 3338 (0.2 units at a distance of 14670, nothing) and 3867 to 3916: the eye moves
+2e-5 radii at 3868, 0.0014 at 3872, 0.0225 at 3876, 0.129 at 3880, 0.333 at 3884 (distance 6.587 to 6.543),
+1.23 at 3900. Frames to 3866 keep the same lens to the last digit. My tree has main's path exactly on either
+main. So the rise's rows of the proof (old main) do not stand for the merged tree: the rise is read again on the
+new main (queued).
+
+THE CHAIN THAT RUNS (detached, /tmp/v/rigid/run3.sh, log run3.log; waits for PROOF DONE, then moves mainref to
+172e7bc): tree's final 3465 on the new main (Tn), trial B final 3465 (heroLight 1, shapes off), trial C final
+3465 (heroLight 0) -> "STILLS BC DONE"; the dive of C with the reader (Cd) -> "DIVE C DONE"; the tree's rise on
+the new main (Tn: saturn-rise.md, seq_rise.txt, resp_rise.json, rise_jpg) -> "RISE T DONE"; finals 3720 and 3866
+of the tree on the new main, final 3720 of C (Cs) -> "SKIM DONE"; C's flight in 3352 to 3400 as sharp drafts
+(Cin, shut_n.sh) -> "FLIGHT IN C DONE"; drafts 3630 3809 3812 3850 3880 of C (Cr) and the tree (Tr) -> "RUN3
+DONE".
+
+NEXT: at STILLS BC DONE: d296 for the three states by part (/tmp/v/rigid/hold_parts.py LENS IMG...; as now
+4.7669), G17, ring edges and limb of the three stills, mail the three stills (1298 point 2). At DIVE C DONE: read
+the edges of C's dive (edge4.py with lens_trial_s0.125.json; expect under 1 px at every frame), the disc by frame,
+sheets, sha of 3630 to 3641 against /tmp/v/pf/dive_jpg; the table of 1298 point 4 and 1301 point 4. Then the
+NAMED mail of the tree under proof on the merge, with the rise's rows of the new main, vitest alone, net MB.
+Still owed: 1287 (b) and (d) in one mail (bands by frame against the rigid map, limb by frame, handover).
