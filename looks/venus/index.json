@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T08:26:53.033Z",
- "head": "e5ca8c0133de9c041a8a3638127762c9ad6632ea",
- "note": "where the reds of the first state lie: rise far deck under the limb 1542 to 1556, dive limb 1268 to 1291",
+ "pushed": "2026-11-25T09:02:54.117Z",
+ "head": "86ce0513ce71a8054b4be143f8edc3d7ccc4c1fd",
+ "note": "MAIL 981: the hold at 1185 against the approved hero, before, first state 86237abe, second state 86ce0513",
  "looks": [
+  {
+   "time": "2026-11-25T09:02:53.545Z",
+   "file": "20261125090253545-note-knot-x3-second.jpg",
+   "source": "../../../../tmp/v/sh/knot-x3-second.png",
+   "kind": "note",
+   "label": "1185 knot at 3 to 1, 140 px round 1345, 435: hero, before, first state, second state",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T09:02:52.971Z",
+   "file": "20261125090252971-note-hero-1185-second.jpg",
+   "source": "../../../../tmp/v/sh/hero-1185-second.png",
+   "kind": "note",
+   "label": "1185 against the approved hero, 1 to 1 crop of 320 px round 1345, 435: hero, before, first state, second state",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T08:26:52.033Z",
    "file": "20261125082652033-note-q6-dive-lr.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/q6all/rise-1582.jpg",
    "kind": "note",
    "label": "q6 rise every frame from 1582, 86237abe draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T07:54:23.663Z",
-   "file": "20261125075423663-note-rise-1576.jpg",
-   "source": "../../../../tmp/v/sh/q6all/rise-1576.jpg",
-   "kind": "note",
-   "label": "q6 rise every frame from 1576, 86237abe draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T07:54:22.733Z",
-   "file": "20261125075422733-note-rise-1570.jpg",
-   "source": "../../../../tmp/v/sh/q6all/rise-1570.jpg",
-   "kind": "note",
-   "label": "q6 rise every frame from 1570, 86237abe draft",
    "stop": "venus"
   }
  ]
