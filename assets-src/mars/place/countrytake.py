@@ -54,6 +54,58 @@ def fit_take(take, lead, sigma):
     return take * np.clip((a + 1.0) / (b + 1.0), 0.1, 4.0)
 
 
+def fit_ends(take, lead, sigma, width, ends):
+    """The widest take of the country (MAIL 963 items 3 and 5, MAIL 994 item 4): its lead is known at two ends only, where the
+    finer plate lies (the same land at that scale, bodylead.py --child) and at its rim (the map at the map's scale, which the
+    plate as it stood holds there). At both it holds the lead's broad tone as fit_take does; between them the factor is the
+    membrane between the two (Laplace: the smoothest field that takes both ends, no step, no border of its own), solved on
+    `grid` cells. ends: childDeg the finer plate's width, rimPx the rim band in px of the take at 1254, grid."""
+    import scipy.sparse as sp
+    import scipy.sparse.linalg as spl
+    c = take.shape[0]
+    at = (np.arange(c, dtype=np.float32) + 0.5 - c / 2) / (c / 2) * half(width)
+    side = np.maximum(np.abs(at)[None, :], np.abs(at)[:, None])
+    # the broad tone of the finer plate's ground is read from that ground alone (a mean that sees no texel outside it)
+    mid = (side <= half(ends['childDeg'])).astype(np.float32)[..., None]
+    share = cv2.GaussianBlur(mid, (0, 0), sigma)[..., None]
+    a = np.where(mid > 0, cv2.GaussianBlur(lead * mid, (0, 0), sigma) / np.maximum(share, 1e-6), cv2.GaussianBlur(lead, (0, 0), sigma))
+    b = np.where(mid > 0, cv2.GaussianBlur(take * mid, (0, 0), sigma) / np.maximum(share, 1e-6), cv2.GaussianBlur(take, (0, 0), sigma))
+    want = np.log(np.clip((a + 1.0) / (b + 1.0), 0.1, 4.0))
+    rim = ends['rimPx'] * c / 1254.0
+    edge = np.minimum(np.minimum(np.arange(c), c - 1 - np.arange(c))[None, :], np.minimum(np.arange(c), c - 1 - np.arange(c))[:, None])
+    known = (side <= half(ends['childDeg'])) | (edge < rim)
+    g = int(ends['grid'])
+    k = cv2.resize(known.astype(np.float32), (g, g), interpolation=cv2.INTER_AREA) > 0.5
+    w = cv2.resize(want * known[..., None], (g, g), interpolation=cv2.INTER_AREA) / np.maximum(cv2.resize(known.astype(np.float32), (g, g), interpolation=cv2.INTER_AREA), 1e-6)[..., None]
+    idx = -np.ones((g, g), np.int64)
+    free = ~k
+    idx[free] = np.arange(int(free.sum()))
+    ys, xs = np.nonzero(free)
+    rows, cols, vals = [], [], []
+    rhs = np.zeros((len(ys), 3), np.float64)
+    for dy, dx in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+        y2, x2 = ys + dy, xs + dx
+        assert y2.min() >= 0 and y2.max() < g and x2.min() >= 0 and x2.max() < g, 'the rim band is narrower than a cell of the grid'
+        j = idx[y2, x2]
+        inner = j >= 0
+        rows.append(np.arange(len(ys))[inner])
+        cols.append(j[inner])
+        vals.append(-np.ones(int(inner.sum())))
+        rhs[~inner] += w[y2[~inner], x2[~inner]]
+    rows.append(np.arange(len(ys)))
+    cols.append(np.arange(len(ys)))
+    vals.append(4 * np.ones(len(ys)))
+    A = sp.csr_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(len(ys), len(ys)))
+    solve = spl.factorized(A.tocsc())
+    field = w.astype(np.float64).copy()
+    for ch in range(3):
+        field[..., ch][free] = solve(rhs[:, ch])
+    field = cv2.resize(field.astype(np.float32), (c, c), interpolation=cv2.INTER_CUBIC)
+    m = cv2.GaussianBlur(known.astype(np.float32), (0, 0), c / g)[..., None]
+    m = np.clip(m * 2 - 1, 0, 1)
+    return take * np.exp(want * m + field * (1 - m))
+
+
 def body_share(stem, width, c, body):
     """How much of a plate texel is the close set seen from straight above (plates.json takes.body): by the ground one picture
     pixel covers there, by the air between that ground and the picture's eye (its distance), and soft at the border of what
@@ -271,7 +323,8 @@ def main():
                 if fit:
                     lead = np.asarray(Image.open(os.path.join(args.takes, fit)).convert('RGB')).astype(np.float32)
                     lead = cv2.resize(lead, (c, c), interpolation=cv2.INTER_LANCZOS4 if lead.shape[0] < c else cv2.INTER_AREA)
-                    take = fit_take(take, lead, K['fitPx'] * c / 1254.0)
+                    ends = (K.get('fitEnds') or {}).get('%g' % l['widthDeg'])
+                    take = fit_ends(take, lead, K['fitPx'] * c / 1254.0, l['widthDeg'], ends) if ends else fit_take(take, lead, K['fitPx'] * c / 1254.0)
                 tone = K.get('tone')
                 level_gain = (K.get('levelGain') or {}).get('%g' % l['widthDeg'])
                 if level_gain:
@@ -315,7 +368,7 @@ def main():
                     else:
                         take = geom.texel_of(geom.scene_of(take / 255.0) * ratio) * 255.0
                 gamut = K.get('gamut')
-                if gamut:
+                if gamut and l['widthDeg'] not in gamut.get('notAt', []):
                     # never redder at a red value than the approved picture's own ground is there (taketone.py --gamut)
                     r = take[..., 0]
                     take[..., 1] = np.maximum(take[..., 1], r * np.interp(r, gamut['red'], gamut['green']))

@@ -36,6 +36,7 @@ ap.add_argument('--stem', required=True)
 ap.add_argument('--child')
 ap.add_argument('--child-deg', type=float)
 ap.add_argument('--shadow', action='store_true')
+ap.add_argument('--no-nest', action='store_true', help='the base keeps its own tone where the finer plate ends (the level of 8.5 degrees: its rim is the map, MAIL 963 item 5)')
 ap.add_argument('--fit', help='the lead the take was painted from: the take is held to its broad tone (plates.json takes.fitPx), as countrytake.py does; for the child of the next lead')
 ap.add_argument('--gain', help='r,g,b: the level\'s own factor on the base (plates.json takes.levelGain as it stood for the take)')
 ap.add_argument('--size', type=int, default=1254)
@@ -86,8 +87,9 @@ if a.child:
     ring = np.ones((m, m), bool)
     ring[w:m - w, w:m - w] = False
     nest = k[ring].mean(0) / base[o:o + m, o:o + m][ring].mean(0)
-    base = base * nest
-    said.append('nest ' + ' '.join('%.3f' % x for x in nest))
+    if not a.no_nest:
+        base = base * nest
+    said.append(('nest ' if not a.no_nest else 'nest not applied, measured ') + ' '.join('%.3f' % x for x in nest))
     base[o:o + m, o:o + m] = k
     said.append('child %g deg on %d of %d texels' % (a.child_deg, m, c))
 v, col = body_share(a.stem, a.width_deg, c, B)
