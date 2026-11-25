@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T14:02:18.395Z",
+ "pushed": "2026-11-25T14:27:49.949Z",
  "head": "e14bb1e42a2bd00f8e8df092550f885b6cb72bae",
- "note": "e14bb1e4 named, not green; control C1 proves the cause of the dive's pattern red: the limb's lit band by the view cosine (1.35 to 0.30 with it off)",
+ "note": "cause of the dive's pattern red proven by split control (the place's lit band by the view cosine: 1.35 to 0.33 with it off); first cure trial P1 (band by the path) dropped: flash of light in the dive and 1.35 at 4185",
  "looks": [
+  {
+   "time": "2026-11-25T14:27:49.359Z",
+   "file": "20261125142749359-note-p-P1-8370.jpg",
+   "source": "../../../../tmp/n55/p-P1-8370.jpg",
+   "kind": "note",
+   "label": "trial P1 (not committed, dropped): chain panel 4185, pattern 1.35, onward 1.33 on 30 percent; the band's edge sweeps up over the ground",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T14:27:48.753Z",
+   "file": "20261125142748753-note-p-Cdeck-8341.jpg",
+   "source": "../../../../tmp/n55/p-Cdeck-8341.jpg",
+   "kind": "note",
+   "label": "control: only the glow's table at view cosine 1, chain panel 4170 + 1/2: pattern 0.33, back 0.13 (commit 1.35): the body of the dive's red is the place's lit band read by the view cosine",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T14:18:14.177Z",
+   "file": "20261125141814177-note-six-p1.jpg",
+   "source": "../../../../tmp/n55/six-p1.jpg",
+   "kind": "note",
+   "label": "trial P1 (not committed): the glow's table read by the path between eye and point; commit above, trial below at 4170 + 1/2, 4174 + 1/2, 4178 + 1/2, 4186, 4290 (4290 same bytes); the whole ground is lit in the middle of the dive",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T14:09:23.886Z",
+   "file": "20261125140923886-note-four-ctl.jpg",
+   "source": "../../../../tmp/n55/four-ctl.jpg",
+   "kind": "note",
+   "label": "controls at 4170 + 1/2 and 4178 + 1/2: commit, own light table at view cosine 1, the glow's table (place light) at view cosine 1, both; the lit band is the glow's table",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T14:02:17.777Z",
    "file": "20261125140217777-note-pair-c1.jpg",
@@ -228,38 +260,6 @@
    "source": "../../../../tmp/n54/p-D3-8370.jpg",
    "kind": "note",
    "label": "chain 4185 built: 1.11 (state 0.98)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:12:45.041Z",
-   "file": "20261125111245041-note-p-D3-8341.jpg",
-   "source": "../../../../tmp/n54/p-D3-8341.jpg",
-   "kind": "note",
-   "label": "chain 4170.5 built: pattern 1.38 (state 1.11), red under the rising glow",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:12:44.488Z",
-   "file": "20261125111244488-note-p-D3-8305.jpg",
-   "source": "../../../../tmp/n54/p-D3-8305.jpg",
-   "kind": "note",
-   "label": "chain 4152.5 built: pattern 0.67 (state 1.59), red only at the globe's own limb rim",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:12:43.911Z",
-   "file": "20261125111243911-note-d3-w2.jpg",
-   "source": "../../../../tmp/n54/d3-w2.jpg",
-   "kind": "note",
-   "label": "built, dive 4170.5 to 4178.5 every second frame: the glow of the low sun rises over the far ground",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:12:43.361Z",
-   "file": "20261125111243361-note-d3-crop290.jpg",
-   "source": "../../../../tmp/n54/d3-crop290.jpg",
-   "kind": "note",
-   "label": "4290 lower part: state, without the dimming by the air between, with it (built): 119 pixels over 16 levels against the state",
    "stop": "uranus"
   }
  ]
