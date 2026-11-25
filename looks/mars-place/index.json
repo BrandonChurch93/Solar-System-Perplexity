@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T16:57:02.688Z",
+ "pushed": "2026-11-25T17:24:31.190Z",
  "head": "71688463139ea30327a39c48d8cde7719c152345",
- "note": "wall take 4: 2692 at the take's level, from above bad (ribbons, hard borders); take 5 prepared",
+ "note": "wall take 6 early: tones as the take, two tool faults traced (cracks at joints, crescent at the wall's border)",
  "looks": [
+  {
+   "time": "2026-11-25T17:24:30.431Z",
+   "file": "20261125172430431-note-trace-c.jpg",
+   "source": "out/work/place/w6/trace-c.jpg",
+   "kind": "note",
+   "label": "wall take 6: trace-c.jpg",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T17:24:29.835Z",
+   "file": "20261125172429835-note-trace-b.jpg",
+   "source": "out/work/place/w6/trace-b.jpg",
+   "kind": "note",
+   "label": "wall take 6: trace-b.jpg",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T17:24:29.266Z",
+   "file": "20261125172429266-note-v07-wall.jpg",
+   "source": "out/work/place/w6/v07-wall.jpg",
+   "kind": "note",
+   "label": "wall take 6: v07-wall.jpg",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T17:24:28.677Z",
+   "file": "20261125172428677-note-v07-b.jpg",
+   "source": "out/work/place/w6/v07-b.jpg",
+   "kind": "note",
+   "label": "wall take 6: v07-b.jpg",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T17:24:28.086Z",
+   "file": "20261125172428086-note-v07-whole.jpg",
+   "source": "out/work/place/w6/v07-whole.jpg",
+   "kind": "note",
+   "label": "wall take 6: v07-whole.jpg",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T17:24:27.410Z",
+   "file": "20261125172427410-note-tripE2692.jpg",
+   "source": "out/work/place/w6/tripE2692.png",
+   "kind": "note",
+   "label": "wall take 6: tripE2692.png",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T16:57:01.833Z",
    "file": "20261125165701833-note-v03-whole.jpg",
@@ -18,54 +66,6 @@
    "source": "out/work/place/w4/v07-whole.jpg",
    "kind": "note",
    "label": "wall take 4 from above, 0.7 plate whole, take left, law right: BAD: the wall stands as fluted ribbons with hard borders, lighter than the take's black cast shadow; the boulder slope south of the canyon turned into a pale fluted sheet",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T16:57:00.574Z",
-   "file": "20261125165700574-note-pairE2692.jpg",
-   "source": "out/work/place/w4/pairE2692.png",
-   "kind": "note",
-   "label": "wall take 4 (the take's level, 0.632): 2692 at 1 to 1, state left, take right (only the 0.7 level under the law): band (39.6,30.6,26.1) against (39.9,31.1,27.1); stretched paint gone, dark rock with fall line streaks, weaker contrast than the state's smear",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T16:36:09.036Z",
-   "file": "20261125163609036-note-pairE2692.jpg",
-   "source": "out/work/place/w3/pairE2692.png",
-   "kind": "note",
-   "label": "wall take 3, early: 2692 at 1 to 1 (x 1100..1900, y 440..1080), state left, take 3 right with only the 0.7 level under the wall law: stretched paint gone, wall one grey brown band lighter than the take (48,37,33 against 40,31,27), straight borders where the other levels begin. Not good yet",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T16:25:34.221Z",
-   "file": "20261125162534221-note-v03-whole.jpg",
-   "source": "out/work/place/w2/v03-whole.jpg",
-   "kind": "note",
-   "label": "wall rock take 2, v03-whole: WRONG, shadowed wall pale grey (cap light divided out though cap.json own is 0); not committed",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T16:25:33.108Z",
-   "file": "20261125162533108-note-v07-whole.jpg",
-   "source": "out/work/place/w2/v07-whole.jpg",
-   "kind": "note",
-   "label": "wall rock take 2, v07-whole: WRONG, shadowed wall pale grey (cap light divided out though cap.json own is 0); not committed",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T16:25:31.899Z",
-   "file": "20261125162531899-note-c2692.jpg",
-   "source": "out/work/place/w2/c2692.jpg",
-   "kind": "note",
-   "label": "wall rock take 2, c2692: WRONG, shadowed wall pale grey (cap light divided out though cap.json own is 0); not committed",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T15:55:10.822Z",
-   "file": "20261125155510822-note-v38-a.jpg",
-   "source": "out/work/place/w1/v38-a.jpg",
-   "kind": "note",
-   "label": "wall rock take 1 from above, v38-a (plate after walls.py, not committed)",
    "stop": "mars"
   }
  ]
