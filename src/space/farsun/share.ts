@@ -16,7 +16,12 @@ export function sunStartsAt(distance: number): void {
   sunStart = distance
 }
 
-export function spans(swap: number, from: number = sunStart ?? look.sunStart): { handover: [number, number]; wear: [number, number] } {
+const handed = (): number => {
+  if (sunStart === null) throw new Error('the film has not handed the distance of the last view of the Sun stop to the far Sun')
+  return sunStart
+}
+
+export function spans(swap: number, from: number = handed()): { handover: [number, number]; wear: [number, number] } {
   const at = (share: number): number => Math.min(from * Math.pow(swap / from, share), swap)
   return { handover: [at(look.handover[0]!), at(look.handover[1]!)], wear: [at(look.wear[0]!), at(look.wear[1]!)] }
 }

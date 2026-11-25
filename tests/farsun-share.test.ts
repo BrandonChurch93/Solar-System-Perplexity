@@ -27,16 +27,15 @@ describe('the handover and the wear of the far Sun', () => {
   const wearSpan = spans(swapDistance).wear
   const sunStart = (film as unknown as { sunStart: number }).sunStart
 
-  it('starts from the distance of the last view of the Sun stop: the typed stand-in stands within 0.005 of the distance of the film, and the distance of the film is taken when it is handed over', () => {
-    expect(Math.abs(look.sunStart - sunStart)).toBeLessThan(0.005)
+  it('starts from the distance of the last view of the Sun stop as the film hands it over, with no stand-in for it in the look', () => {
+    expect('sunStart' in look).toBe(false)
     const handed = spans(swapDistance, sunStart)
-    const typed = spans(swapDistance, look.sunStart)
+    const read = spans(swapDistance)
     for (const key of ['handover', 'wear'] as const) {
       expect(handed[key][0]).toBeGreaterThanOrEqual(sunStart)
       expect(handed[key][1]).toBeGreaterThan(handed[key][0])
       expect(handed[key][1]).toBeLessThanOrEqual(swapDistance)
-      expect(Math.abs(handed[key][0] - typed[key][0])).toBeLessThan(0.005)
-      expect(Math.abs(handed[key][1] - typed[key][1])).toBeLessThan(0.005)
+      expect(read[key]).toEqual(handed[key])
     }
   })
 
