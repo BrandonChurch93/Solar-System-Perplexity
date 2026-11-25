@@ -65,6 +65,23 @@ export function groundOf(rows: { k: number; frame: number; groundPop?: number | 
   return { k: top.k, frame: top.frame, value: top.groundPop!, at: top.groundAt ?? null, size: top.groundSize ?? null, over: read.filter((x) => x.groundPop! > GROUND.named).length, rows: read.length }
 }
 
+export const GROUND_NOT = 'It is not the line "The ground beside it" of the pictures: that line gives the change in place and the pattern on the surface view before a rise or after a dive, this number is read on the globe\'s ground through the move itself.'
+
+export const FULL_PANEL = 'The largest pops with the carry at the full size and the largest ground pop, each with the next frame and what is left without the motion by that carry'
+
+export function fullTop(pops: number[], ground: number | null): number[] {
+  return [...new Set(ground === null ? pops : [...pops, ground])].sort((a, b) => a - b)
+}
+
+export function fullLabel(what: string, from: string, row: { pop?: number | null; residual?: number | null; base?: number | null }): string {
+  const pop = (row.pop ?? null) !== null ? ': pop ' + row.pop!.toFixed(2) + ', left ' + row.residual!.toFixed(2) + ' against ' + row.base!.toFixed(2) : ': no pop read'
+  return what + ' frame ' + from + ' and the next, with the carry at the full size, and what is left without the motion times 8' + pop
+}
+
+export function fullNear(row: { groundPop?: number | null; groundAt?: [number, number] | null; groundSize?: [number, number] | null }): string {
+  return 'the same three at the frames\' own pixels about the ring: the largest ground pop ' + row.groundPop!.toFixed(3) + ' at pixel ' + row.groundAt!.join(', ') + ', a patch of ' + row.groundSize!.join(' by ') + ' px'
+}
+
 export type GroundWhy = 'end' | 'pair' | 'share' | 'near'
 
 export interface GroundUnread { k: number; frame: number; code: GroundWhy; share: number | null; why: string }

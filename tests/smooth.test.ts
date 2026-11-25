@@ -1,4 +1,7 @@
 import { execFileSync } from 'node:child_process'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as THREE from 'three'
 import { beforeAll, describe, expect, it } from 'vitest'
@@ -10,7 +13,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, afterRise, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
-import { GROUND, groundLaw, groundLine, groundOf, groundRuns, groundUnread, groundUnreadLine } from '../tools/smooth/maps'
+import { FULL_PANEL, GROUND, GROUND_NOT, fullLabel, fullNear, fullTop, groundLaw, groundLine, groundOf, groundRuns, groundUnread, groundUnreadLine } from '../tools/smooth/maps'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
 import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
@@ -650,6 +653,48 @@ describe('the largest ground pop of a move', () => {
     expect(groundUnreadLine([], 4, from)).toBe('Ground pop: every one of the 4 rows is read.')
     expect(groundUnread([row(1, null, { groundShare: 0.5, groundLeft: 0.4 })], 1)[0]!.code).toBe('end')
     expect(groundUnread([{ k: 1, frame: 0 }], 9)[0]!.code).toBe('pair')
+  })
+})
+
+describe('the panel of the full size reading, a file of its own beside the two standing panels', () => {
+  it('takes the four largest pops of that reading and the row of the largest ground pop, each once, in the order of the frames', () => {
+    expect(fullTop([40, 12, 31, 18], 25)).toEqual([12, 18, 25, 31, 40])
+    expect(fullTop([40, 12, 31, 18], 31)).toEqual([12, 18, 31, 40])
+    expect(fullTop([40, 12], null)).toEqual([12, 40])
+    expect(fullTop([], 7)).toEqual([7])
+    expect(fullTop([], null)).toEqual([])
+  })
+
+  it('labels a row with its pop at the full size and gives the row of the largest ground pop a second line with that number, its place and its patch, each short enough for the sheet', () => {
+    const row = { pop: 1.4734, residual: 1.131, base: 0.764, groundPop: 1.4351, groundAt: [662, 350] as [number, number], groundSize: [96, 104] as [number, number] }
+    expect(fullLabel('neptune rise', '5028 + 1/2', row)).toBe('neptune rise frame 5028 + 1/2 and the next, with the carry at the full size, and what is left without the motion times 8: pop 1.47, left 1.13 against 0.76')
+    expect(fullLabel('x', '1', { pop: null })).toBe('x frame 1 and the next, with the carry at the full size, and what is left without the motion times 8: no pop read')
+    expect(fullNear(row)).toBe('the same three at the frames\' own pixels about the ring: the largest ground pop 1.435 at pixel 662, 350, a patch of 96 by 104 px')
+    expect(fullLabel('mercury rise', '1001 + 1/2', row).length).toBeLessThan(160)
+    expect(fullNear({ groundPop: 12.3456, groundAt: [1900, 1060], groundSize: [1920, 1080] }).length).toBeLessThan(160)
+    expect(FULL_PANEL).toContain('carry at the full size')
+    expect(GROUND_NOT).toContain('"The ground beside it"')
+    expect(GROUND_NOT).not.toMatch(/[\u2014!]/)
+  })
+
+  it('leaves the standing panel its bytes: the same pairs through this reader and through main\'s of 5179b435 write the same file, and a ring is drawn only where a pair asks for it', () => {
+    const folder = mkdtempSync(join(tmpdir(), 'panel-'))
+    try {
+      execFileSync('python3', ['-c', 'import sys, numpy as np\nfrom PIL import Image\nr = np.random.default_rng(5)\ng = r.integers(0, 255, (300, 500, 3), dtype=np.uint8).repeat(2, 0).repeat(2, 1)\nImage.fromarray(g[:540, :960]).save(sys.argv[1] + "/a.png")\nImage.fromarray(g[6:546, 4:964]).save(sys.argv[1] + "/b.png")', folder])
+      const through = (file: string, output: string, more: object = {}): Buffer => {
+        execFileSync('python3', [fileURLToPath(new URL(file, import.meta.url))], { input: JSON.stringify({ op: 'panel', output: join(folder, output), scale: 0.25, gain: 8, limit: 2000, pairs: [{ a: join(folder, 'a.png'), b: join(folder, 'b.png'), label: 'a made pair', ...more }] }), encoding: 'utf8', stdio: ['pipe', 'pipe', 'ignore'] })
+        return readFileSync(join(folder, output))
+      }
+      const mine = through('../tools/img/smooth.py', 'mine.png')
+      expect(mine.equals(through('./fixtures/reader-main-5179b435.py', 'main.png'))).toBe(true)
+      expect(mine.equals(through('../tools/img/smooth.py', 'ring.png', { ring: [480, 270, 60] }))).toBe(false)
+      const size = (b: Buffer): number[] => [b.readUInt32BE(16), b.readUInt32BE(20)]
+      expect(size(readFileSync(join(folder, 'ring.png')))).toEqual(size(mine))
+      const near = through('../tools/img/smooth.py', 'near.png', { ring: [950, 530, 60], near: 'about the ring' })
+      expect(size(near)).toEqual([size(mine)[0]!, size(mine)[1]! * 2])
+    } finally {
+      rmSync(folder, { recursive: true, force: true })
+    }
   })
 })
 
