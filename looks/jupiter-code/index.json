@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T20:57:41.220Z",
- "head": "b660882b510fd8ac4ea3608fd0872db217139894",
- "note": "answer to plan O: main and my head at 3060, 3239, 3150 at 1 to 1 and the storm crops",
+ "pushed": "2026-11-25T21:32:26.890Z",
+ "head": "52f133a150be3b14a96128111f8f2c3f07652b6e",
+ "note": "Page on the cure sent 21:32. Measure only: 3150 with the eye's share off reads 12.461, head 6.2249. Nothing of the cure built yet.",
  "looks": [
+  {
+   "time": "2026-11-25T21:32:26.144Z",
+   "file": "20261125213226144-note-noeye-3150.jpg",
+   "source": "../work/r22/t/noeye-3150.png",
+   "kind": "note",
+   "label": "3150 draft no grain with the fit eye's share at zero: what the plates alone draw. Not a take, a measure for the page on the cure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T21:32:25.426Z",
+   "file": "20261125213225426-note-noeye-sheet.jpg",
+   "source": "../work/r22/t/noeye-sheet.png",
+   "kind": "note",
+   "label": "Measure for the page, draft, no grain. Top 3060 and 3239, bottom left 3150, all with the fit eye's share at zero (plates times tone only, 12.461 by d296); bottom right 3150 of the head (6.2249)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T20:57:36.190Z",
    "file": "20261125205736190-note-k006300-r2-draft.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r15/p1-3150.jpg",
    "kind": "note",
    "label": "terrain 3150 on the tip, final tier",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T18:34:00.901Z",
-   "file": "20261125183400901-note-disc-8x.jpg",
-   "source": "../work/r18/disc-8x.jpg",
-   "kind": "note",
-   "label": "hold 2895, the place's disc at 8 times: approved, main, the tip",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T18:34:00.080Z",
-   "file": "20261125183400080-note-place-2895.jpg",
-   "source": "../work/r18/place-2895.jpg",
-   "kind": "note",
-   "label": "hold 2895 at the place and Io's shadow: approved, main, the tip, difference times 4",
    "stop": "jupiter"
   }
  ]
