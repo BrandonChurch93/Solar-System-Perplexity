@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T03:22:28.430Z",
+ "pushed": "2026-11-25T03:50:39.743Z",
  "head": "0988d75a16e313393841e1cca1a31fc6c42317d3",
- "note": "g4 bulbs beside approved and the rise strip before the one Sun work",
+ "note": "h3: rise with the ground leaving by distance, bulbs with mottle and lit lanes, beside the approved",
  "looks": [
+  {
+   "time": "2026-11-25T03:50:39.164Z",
+   "file": "20261125035039164-note-h3-rise.jpg",
+   "source": "../../../../tmp/v/h3-rise.jpg",
+   "kind": "note",
+   "label": "trial h3 draft rise frames 207 213 219 225 231 237 243 249 255 at one third size: the ground gives way to the globe's own face by the distance from the eye (far side first), corona and far sky by height 0.3 to 3.2, the change of view at frame 180. Still wrong: pale patch of cells against the orange globe at 225 and 231, two skies",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T03:50:38.593Z",
+   "file": "20261125035038593-note-h3-60-near.jpg",
+   "source": "../../../../tmp/v/h3-60-near.jpg",
+   "kind": "note",
+   "label": "trial h3 draft frame 60, approved left, mine right, native size: mottle on the tops, lanes lit, points. Still wrong: moulded shapes, broad pale strokes, corners.   share by band 0.1 .. 0.9 : 0.201 0.213 0.182 0.128 0.084 0.062 0.046 0.053 0.024   dark (under 0.15) 0.207 | body (0.15 to 0.55) 0.608 | pale (0.65 to 0.85) 0.099 | white (over 0.85) 0.024   brightest 15 percent: half width 7.5 px, 683 shapes | fine detail 0.0329 | mean 0.344 distance of the two band tables (half the sum of the differences, 0 is equal): 0.065 ",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T03:22:27.845Z",
    "file": "20261125032227845-note-g4-rise.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c3-0-far.jpg",
    "kind": "note",
    "label": "commit 3 (0988d75a), draft: approved (left) beside frame 0 far ground at 1 to 1, box x 15 y 420 of 1920. sun-near.py frame 60: share by band 0.1 .. 0.9 : 0.199 0.209 0.189 0.130 0.097 0.072 0.047 0.043 0.009 / dark (under 0.15) 0.205 | body (0.15 to 0.55) 0.624 | pale (0.65 to 0.85) 0.091 | white (over 0.85) 0.009 / brightest 15 percent: half width 9.6 px, 677 shapes | fine detail 0.0252 | mean 0.337",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:17:16.776Z",
-   "file": "20261125021716776-note-c3-rise-b.jpg",
-   "source": "../../../../tmp/v/c3-rise-b.jpg",
-   "kind": "note",
-   "label": "commit 3 proof: rise frames 231 and 247, half size; 247 equal in bytes to commit 2 (c22922926c09eb0d)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:17:15.802Z",
-   "file": "20261125021715802-note-c3-rise-a.jpg",
-   "source": "../../../../tmp/v/c3-rise-a.jpg",
-   "kind": "note",
-   "label": "commit 3 proof: rise frames 217 and 225, half size (the patch of cells against the map is commit 4, one Sun)",
    "stop": "sun"
   }
  ]
