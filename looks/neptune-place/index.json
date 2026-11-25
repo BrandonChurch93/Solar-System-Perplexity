@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T01:21:45.414Z",
- "head": "47ea885526742944dc3c0c1e1e15679d353ecefe",
- "note": "47ea8855: web count cure (grooves gone), main merged, tests 56 of 56, both handovers pass; 4860 beside the approved close G17 1.095 full, 0.972 web, 38 and 32 s per draft frame; reds: chunks at 4705 to 4712 (cause open), sky flash 4722, 4860 too blue",
+ "pushed": "2026-11-25T02:21:35.638Z",
+ "head": "1c8f661f69f16686ce82342c57e4e7617f63c6b9",
+ "note": "MAIL 840: chunks term named (the deck's own shadow), cured by the pixel's foot; dashes cured by a thin streamer law; sky aim dropped; 4860 beside approved, G17 1.142",
  "looks": [
+  {
+   "time": "2026-11-25T02:21:35.001Z",
+   "file": "20261125022135001-note-sky-d.jpg",
+   "source": "out/work/nep/weave/ev/sky-d.jpg",
+   "kind": "note",
+   "label": "4722 and 4723: 7f22b7d9 above (stars flash into the upper right corner), sky aim dropped below",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T02:21:34.419Z",
+   "file": "20261125022134419-note-spiral-c3.jpg",
+   "source": "out/work/nep/weave/ev/spiral-c3.jpg",
+   "kind": "note",
+   "label": "the spiral at the hold 4605 (4 times) and at 4709 (3 times): C2, C3 with arms 0.2 and collar 0.12, the map alone; 4713 whole",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T02:21:33.327Z",
+   "file": "20261125022133327-note-chunk-k.jpg",
+   "source": "out/work/nep/weave/ev/chunk-k.jpg",
+   "kind": "note",
+   "label": "4709 bisect, 3 times: head with navy chunks and dashes, C2 with the deck's own shadow through the pixel's foot and the thin streamer law, the map alone. 5.2 s per frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T02:21:31.382Z",
+   "file": "20261125022131382-note-four-c3.jpg",
+   "source": "out/work/nep/weave/ev/four-c3.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved close: head b42850bf, C2 (shadow by the foot 0.25, thin streamer law), C3 (arms 0.2, collar 0.12). G17 at 4860 preview full set: head 1.095 p25 0.482, C3 1.142 p25 0.358. Draft, 22 s per 4860 preview frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T01:21:44.832Z",
    "file": "20261125012144832-note-chunk-e.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/nep/weave/ev/webdive-4716.jpg",
    "kind": "note",
    "label": "web set dive every third frame 4716 to 4749",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:21:42.630Z",
-   "file": "20261125012142630-note-webdive-4680.jpg",
-   "source": "out/work/nep/weave/ev/webdive-4680.jpg",
-   "kind": "note",
-   "label": "web set dive every third frame 4680 to 4713, with the mean against the full set",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:21:42.042Z",
-   "file": "20261125012142042-note-oval2-4605.jpg",
-   "source": "out/work/nep/weave/oval2-4605.png",
-   "kind": "note",
-   "label": "4605 oval 3 times: full, web before, web with the full set's count (eecfa475): the grooves are gone",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:21:41.397Z",
-   "file": "20261125012141397-note-named-4605.jpg",
-   "source": "out/work/nep/weave/named-4605.png",
-   "kind": "note",
-   "label": "4605 beside the approved hero, full and web set, 47ea8855, draft 1920: 29.6 and 19.5 s per frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:21:40.573Z",
-   "file": "20261125012140573-note-named-4860.jpg",
-   "source": "out/work/nep/weave/named-4860.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved close, full and web set, 47ea8855, draft preview: G17 full 1.095 p25 0.482, web 0.972 p25 0.317; 38.2 and 32.0 s per frame",
    "stop": "neptune"
   }
  ]
