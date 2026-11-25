@@ -515,7 +515,7 @@ void main() {
   float edgeD = 1.0 / uLabMore.x - plan;
   float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
   float veins = labLobes(d, seed, 0.05 + 0.3 * rho) * smoothstep(0.1, 0.6, rho);
-  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.2 + 2.2 * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})), edgeD));
+  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), edgeD));
   float bundle = pn.y;
   float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (along - flow) * 17.0 + seed), per.z)) * kc * middle;
   cell += 0.6 * uLabHeatMore.w * spark;
