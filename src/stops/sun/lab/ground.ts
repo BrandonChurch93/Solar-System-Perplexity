@@ -461,31 +461,30 @@ vec2 labGas(vec3 here) {
 // the large tone of the place is the globe's: the light of the globe's own map there, taken so wide that no
 // detail of it shows (uLabToneAt: the level of the map and the size of its texel there), against the map's middle
 // light, as a share of the heat
-float labTone(vec3 here) {
-  vec3 md = uLabToMap * normalize(here - ST_CENTRE);
-  vec2 muv = vec2(atan(md.x, md.z) / 6.283185307179586 + 0.5, asin(clamp(md.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
-#ifdef LAB_BAKE
-  float w = 0.0;
-  float lod = uLabToneAt.x;
-#else
-  // where the cells are too small in the picture to be things the ground is the globe's own map: its light is read
-  // as fine as the globe draws its place (uLabToneFar: that level, the level of one pixel at one pixel a cell, the
-  // sizes of a cell in pixels between which it comes)
-  float seen = labSeen(here);
-  float w = 1.0 - smoothstep(uLabToneFar.z, uLabToneFar.w, seen);
-  float lod = mix(uLabToneAt.x, max(uLabToneFar.x, uLabToneFar.y - log2(max(seen, 1e-3))), w);
-#endif
+float labLight(vec2 muv, float lod) {
   vec2 texel = uLabToneAt.yz * exp2(lod - uLabToneAt.x);
   vec3 sum = vec3(0.0);
   for (int k = 0; k < 4; k++) sum += textureLod(uLabGlobe, muv + texel * (vec2(float(k & 1), float(k >> 1)) - 0.5), lod).rgb;
-  float l = dot(sum, vec3(0.3, 0.5, 0.2)) * 0.25;
-  return clamp(pow(max(l, 1e-4) / uLabTone.x, mix(uLabTone.y, uLabToneWide.x, w)), mix(uLabTone.z, uLabToneWide.y, w), mix(uLabTone.w, uLabToneWide.z, w));
+  return max(dot(sum, vec3(0.3, 0.5, 0.2)) * 0.25, 1e-4);
+}
+float labTone(vec3 here, float band) {
+  vec3 md = uLabToMap * normalize(here - ST_CENTRE);
+  vec2 muv = vec2(atan(md.x, md.z) / 6.283185307179586 + 0.5, asin(clamp(md.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
+  float tone = clamp(pow(labLight(muv, uLabToneAt.x) / uLabTone.x, uLabTone.y), uLabTone.z, uLabTone.w);
+#ifndef LAB_BAKE
+  // the ground is the globe's own ground: near and far it carries the map's light between two widths (uLabToneFar:
+  // the level of the fine width, the level of one pixel at one pixel a cell, the level of the broad width), never
+  // finer than a pixel, so that the globe seen from far and the ground seen from near are one pattern
+  float lod = max(uLabToneFar.x, uLabToneFar.y - log2(max(labSeen(here), 1e-3)));
+  if (lod < uLabToneFar.z) tone *= mix(1.0, clamp(pow(labLight(muv, lod) / labLight(muv, uLabToneFar.z), uLabToneWide.x), uLabToneWide.y, uLabToneWide.z), band);
+#endif
+  return tone;
 }
 // the one curve from the heat of the sheet to the heat the ramp shows (lab.json heat.curve: pairs, straight between)
 float labCurve(float h) {
 ${CURVE_GLSL}}
 vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
-  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(here));
+  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(here, (thin - 0.1) / 0.9));
   vec3 shown = texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb;
   vec3 col = inverseFilmic(grade(shown, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   vec3 upHere = normalize(here - ST_CENTRE);
@@ -754,7 +753,7 @@ void main() {
 #ifdef LAB_BAKE
   // the far twin: the ground from straight above, no law of the view, no gas, none of the flare's lights, as the
   // display colour of the picture
-  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos));
+  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos, 0.0));
   vec3 lit = inverseFilmic(grade(texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   lit = clamp((lit * (2.51 * lit + 0.03)) / (lit * (2.43 * lit + 0.59) + 0.14), 0.0, 1.0);
   outColor = vec4(mix(lit * 12.92, 1.055 * pow(lit, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), lit)), 1.0);
@@ -794,7 +793,9 @@ void main() {
   vec3 dir = normalize(vPos - uLabEye);
   float b = dot(oc, dir);
   float past = sqrt(max(dot(oc, oc) - b * b, 0.0)) - ST_RADIUS;
-  if (uDiag >= 2 || b > 0.0 || past < 0.0 || uLabKeep <= 0.0) discard;
+  // the ground's own edge is a mesh and stands a part of a pixel inside the ball's: the gas is drawn over that part
+  if (uDiag >= 2 || b > 0.0 || past < -1.5 * fwidth(past) || uLabKeep <= 0.0) discard;
+  past = max(past, 0.0);
   float tau = ${lab.haze.air[1]!.toFixed(3)} * exp(-past / ${lab.haze.air[0]!.toFixed(4)});
   vec3 col = inverseFilmic(grade(uLabHazeTint.rgb, 0.0)) * (uLabHaze.z * mix(${lab.haze.own.toFixed(2)}, 1.0, ${lab.haze.air[2]!.toFixed(3)}) * (1.0 - exp(-tau)));
   col *= uGain;
@@ -912,7 +913,7 @@ export class LabGround {
       uLabToMap: { value: toStage.clone().transpose() },
       uLabTone: { value: new THREE.Vector4(lab.far.tone.level, lab.far.tone.power, lab.far.tone.range[0]!, lab.far.tone.range[1]!) },
       uLabToneAt: { value: new THREE.Vector3(toneLod, toneTexel, toneTexel * 2) },
-      uLabToneFar: { value: new THREE.Vector4(Math.log2(Math.max((mapWide * lab.far.tone.far.deg) / 360, 1)), Math.log2((lab.far.cell * mapWide) / (2 * Math.PI * stage.radius)), lab.far.tone.far.px[0]!, lab.far.tone.far.px[1]!) },
+      uLabToneFar: { value: new THREE.Vector4(Math.log2(Math.max((mapWide * lab.far.tone.far.deg) / 360, 1)), Math.log2((lab.far.cell * mapWide) / (2 * Math.PI * stage.radius)), Math.log2(Math.max((mapWide * lab.far.tone.far.broad) / 360, 1)), 0) },
       uLabToneWide: { value: new THREE.Vector3(lab.far.tone.far.power, lab.far.tone.far.range[0]!, lab.far.tone.far.range[1]!) },
     }
     this.uniforms = all

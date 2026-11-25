@@ -536,3 +536,36 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
     and the tone by the width seen. Dashed line gone (v/limb-14-17.jpg). The far band under the horizon is a
     little smoother than h14.
   - tone.py (the mean light of the twin for a given share of the heat) was started and stopped, not used.
+- 14:46 UTC: h17 committed and NAMED df86fc7a45cad102bd756ffedeb47ef9265d8950; sun_builder told 14:48.
+- 14:54 UTC: THE WHOLE RUN 380 to 470 on df86fc7a (75 pairs): 437 reads 0.121 but 401 to 424 read over the limit,
+  largest 0.853 at capture 412 at [156, 392], mean 0.365. Cause (v/pair412.jpg): the map's light came in only where
+  the cells are small in the picture, so between 412 and 428 the map's patches fade in over an even grain. The
+  filter moved the fault 12 film frames earlier. CORRECTION sent to /root and sun_builder at 14:59 (hold df86).
+  LESSON: never name on one pair; read the whole run 380 to 470.
+- 14:59 UTC: sun_builder MEASURED df86 on its branch: 437 to 453 0.294 at [46, 322] (was 0.778); the map's patches
+  stand at the same places (the turn through the constructor's map is right with its anchor); frame 360 the same
+  bytes. NEW FAULTS it saw: a row of single dark red pixels along the limb at captures 437 and 453; single pale
+  violet and green pixels in the grain at 453 at [430, 420] (NOT LOOKED AT YET). Its frame 60 lines of sun-near.py
+  on df86: white 0.027 (g15 0.072), half width 4.1 px, 2431 shapes, distance 0.089 (g15 0.074). It needs a name by
+  15:45 to join it for the 17:00 cut; its chain starts 16:15.
+- 15:01 UTC: MAIL 1145: direction accepted (the ground carries the map's band always, law f). THE PROOF OF A STATE
+  FROM NOW ON: the whole run 380 to 470 under the limit on my reader, every pair, with the rows; and frame 90 at
+  1080 beside h14 and beside the approved ground at 1 to 1. Do not name before the whole run is read. Then 2, 3, 4
+  of MAIL 1123 in order.
+- 15:00 to 15:08 UTC: h18 to h20.
+  - h18: the map's light at 0.55 degrees, power 1, everywhere: frame 90 goes pale where the map has plage
+    (percentiles 0.275 0.451 0.663 0.859 0.992 1.0). Not kept.
+  - h19: THE BAND. labTone = the wide tone as before (1.5 degrees, power 0.5, [0.6, 1.3]) times the map's light at
+    far.tone.far.deg 0.55 (never finer than a pixel) over the map's light at far.tone.far.broad 4 degrees, power 1,
+    range [0.4, 2.2], at every distance; faded out toward my spot by the same weight as the haze (the map has its
+    own spot there). In the bake the band is off. Run 404 to 453 (34 pairs): largest 0.332 at 422, mean 0.214.
+    Frame 90 percentiles 0.235 0.392 0.588 0.8 0.961 1.0.
+  - h20: curve refit by curve.py to [[0,0],[0.1065,0.1155],[0.1829,0.2113],[0.3463,0.3335],[0.6051,0.5078],
+    [1.0652,0.7174],[1.3442,0.8703],[1.6442,1.0]]: 0.22 0.38 0.576 0.757 0.918 0.992. And the limb's dots: they
+    are in h14 too, at the same pixels, so not the far filter: the air beyond the limb (AIR_FRAG, new in the h
+    series) is not drawn where the sight line passes inside the ball, and the ground's mesh stands a part of a
+    pixel inside the ball's edge; single pixels of neither. Cure: the air is drawn 1.5 pixels into the ball.
+  - The law work of point 2 (a1: fibre.offset 0, blotches centred by heat.stray 0, the darkening 0.6 to 1 by the
+    dome's normal to the eye, linear in the cosine, for the far ground by the ball's up) is written as a script,
+    /tmp/law.py on ground.ts, and waits for the whole run of h20. a1 at frame 90 (v/lab-90-a1.jpg): the cells have
+    a bright middle and darker rims, still cobbles; percentiles 0.212 0.369 0.553 0.722 0.898 0.953.
