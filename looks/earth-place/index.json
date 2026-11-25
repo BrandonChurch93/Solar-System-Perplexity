@@ -1,9 +1,69 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T22:22:12.200Z",
+ "pushed": "2026-11-25T22:52:02.598Z",
  "head": "20ad27c24dd51c774c597e4cb2670ddfd97bf087",
- "note": "second strip pushed",
+ "note": "third strip: pale wedge at the east corner gone, field denser at the rim; the oval still reads (the picture's dark near edge, bright specks outside), violet and lavender at the glint's far end 1874 to 1878 not cured",
  "looks": [
+  {
+   "time": "2026-11-25T22:52:01.690Z",
+   "file": "20261125225201690-note-crop-1890.jpg",
+   "source": "../../../../tmp/gl/k19/S3/sheets/crop-1890.jpg",
+   "kind": "note",
+   "label": "1890 border at 1 to 1, second strip above, third below",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T22:52:00.941Z",
+   "file": "20261125225200941-note-now-1890.jpg",
+   "source": "../../../../tmp/gl/k19/S3/sheets/now-1890.jpg",
+   "kind": "note",
+   "label": "third strip (bake 22:39) frame 1890, draft, rate 8, shutter 0",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T22:51:59.753Z",
+   "file": "20261125225159753-note-now-1886.jpg",
+   "source": "../../../../tmp/gl/k19/S3/sheets/now-1886.jpg",
+   "kind": "note",
+   "label": "third strip (bake 22:39) frame 1886, draft, rate 8, shutter 0",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T22:51:58.810Z",
+   "file": "20261125225158810-note-now-1874.jpg",
+   "source": "../../../../tmp/gl/k19/S3/sheets/now-1874.jpg",
+   "kind": "note",
+   "label": "third strip (bake 22:39) frame 1874, draft, rate 8, shutter 0",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T22:51:35.482Z",
+   "file": "20261125225135482-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
+  {
+   "time": "2026-11-25T22:46:31.522Z",
+   "file": "20261125224631522-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T22:22:01.918Z",
    "file": "20261125222201918-note-bk-near2.jpg",
@@ -19,60 +79,6 @@
    "kind": "note",
    "label": "plate at 1 to 1 along the near rim: outside too dark, three pale smudges",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:22:00.781Z",
-   "file": "20261125222200781-note-crop-1890-first.jpg",
-   "source": "../../../../tmp/gl/k19/S2/sheets/crop-1890-first.jpg",
-   "kind": "note",
-   "label": "1890 lower border at 1 to 1, first strip (sown dots)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:22:00.216Z",
-   "file": "20261125222200216-note-crop-1890-now.jpg",
-   "source": "../../../../tmp/gl/k19/S2/sheets/crop-1890-now.jpg",
-   "kind": "note",
-   "label": "1890 lower border at 1 to 1, now",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:21:59.356Z",
-   "file": "20261125222159356-note-now-1890.jpg",
-   "source": "../../../../tmp/gl/k19/S2/sheets/now-1890.jpg",
-   "kind": "note",
-   "label": "second strip 1890 draft, field from the canvas's own bodies",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T21:40:48.650Z",
-   "file": "20261125214048650-note-canvas-source.jpg",
-   "source": "../../../../tmp/gl/k19/canvas-source.jpg",
-   "kind": "note",
-   "label": "canvas at 1 to 1 near the near rim: the bodies (clusters with long shadows) the new field outside the rim will be made of",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T21:40:48.041Z",
-   "file": "20261125214048041-note-plate-rings.jpg",
-   "source": "../../../../tmp/gl/k19/plate-rings.jpg",
-   "kind": "note",
-   "label": "plate 12 degrees top view as it stands (uncommitted): canvas outline yellow, rings 1, 2.5 red, 4.2, 5 green, 6.4 magenta about the nadir",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T21:29:35.060Z",
-   "file": "20261125212935060-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
   }
  ]
 }
