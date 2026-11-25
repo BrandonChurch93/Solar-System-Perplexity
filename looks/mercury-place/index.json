@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T02:50:11.535Z",
+ "pushed": "2026-11-25T03:00:33.935Z",
  "head": "8922aef2a3240e4c2af85b37ff29891a1fd0c2f6",
- "note": "share of the light measured in the rise: none of the pattern; streak term at 717 named by numbers",
+ "note": "set law: web beside full at 615, 717, 735 before and after; finals 615, 870, 1016 rendering",
  "looks": [
+  {
+   "time": "2026-11-25T02:51:08.013Z",
+   "file": "20261125025108013-note-sl0-web-full.jpg",
+   "source": "out/work/mercury/place/sheets/sl0-web-full.jpg",
+   "kind": "note",
+   "label": "set law BEFORE: web set (left) beside full set (right) at 615, 717, 735; mean difference 1.082, 4.068, 1.555 of 255; at 717 the web set had the place's disc in where the full set had not",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T02:51:06.777Z",
+   "file": "20261125025106777-note-sl1-web-full.jpg",
+   "source": "out/work/mercury/place/sheets/sl1-web-full.jpg",
+   "kind": "note",
+   "label": "set law AFTER: web set (left) beside full set (right) at 615, 717, 735; mean difference 0.776, 0.909, 1.087 of 255; the full set is equal by pixels to before",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T02:48:32.502Z",
    "file": "20261125024832502-note-717-draft-BFG.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/sheets/sn-pair615.jpg",
    "kind": "note",
    "label": "Sun commit, final tier on main 12c58853: approved, before (9.2 deg), after (11.69 deg at 1925.7, 46.0) at 615",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T01:30:51.010Z",
-   "file": "20261125013051010-note-sn-out1.jpg",
-   "source": "out/work/mercury/place/sheets/sn-out1.jpg",
-   "kind": "note",
-   "label": "Sun commit: 1100, 530, 870 before and after",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T01:30:49.899Z",
-   "file": "20261125013049899-note-sn-out.jpg",
-   "source": "out/work/mercury/place/sheets/sn-out.jpg",
-   "kind": "note",
-   "label": "Sun commit: flight out 1036 to 1080 before and after",
    "stop": "mercury"
   }
  ]
