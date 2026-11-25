@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T11:52:28.838Z",
+ "pushed": "2026-11-25T12:18:03.766Z",
  "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "control d (air off) far ground, (b) (c) ground followed with set on and off, (c) trial 1 thrown away (pale wedge), trial 2 plates from above (smeared fan)",
+ "note": "trial 3 of (c), set's margins and aprons as land: grounds (b) and (c) one body in the tracks; frames 2472 to 2477 worse (block at right, grey corner, grain of the 0.3 plate from close)",
  "looks": [
+  {
+   "time": "2026-11-25T12:17:56.366Z",
+   "file": "20261125121756366-note-v2-track-b.jpg",
+   "source": "out/work/place/m8/v2-track-b.jpg",
+   "kind": "note",
+   "label": "trial 3 try 2 of (c): v2-track-b (state above or left, trial below)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T12:17:55.776Z",
+   "file": "20261125121755776-note-v2-track-c.jpg",
+   "source": "out/work/place/m8/v2-track-c.jpg",
+   "kind": "note",
+   "label": "trial 3 try 2 of (c): v2-track-c (state above or left, trial below)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T12:17:54.896Z",
+   "file": "20261125121754896-note-v2-pair-2476.jpg",
+   "source": "out/work/place/m8/v2-pair-2476.jpg",
+   "kind": "note",
+   "label": "trial 3 try 2 of (c): v2-pair-2476 (state above or left, trial below)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T12:03:00.520Z",
+   "file": "20261125120300520-note-t2-track-b.jpg",
+   "source": "out/work/place/m7/t2-track-b.jpg",
+   "kind": "note",
+   "label": "ground (b) at 2460 2464 2468 2472: state above, trial 2 below: forms there from 2464, smear at 2460",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T12:02:59.064Z",
+   "file": "20261125120259064-note-t2-pair-2464.jpg",
+   "source": "out/work/place/m7/t2-pair-2464.jpg",
+   "kind": "note",
+   "label": "2464 draft: state above, (c) trial 2 below (set with aprons laid on the plates): streak fields and a smeared east wall, thrown away",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T11:52:28.201Z",
    "file": "20261125115228201-note-body-0p7.jpg",
@@ -26,46 +66,6 @@
    "source": "out/work/place/m6/margin-2472.jpg",
    "kind": "note",
    "label": "2472: the picture's field of the set, its margins in red; outside them the set draws aprons",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:50:10.888Z",
-   "file": "20261125115010888-note-body-3p8.jpg",
-   "source": "out/work/place/m6/look/body-3p8.jpg",
-   "kind": "note",
-   "label": "(c) trial 1 thrown away: 3.8 plate, state left, the set from above over its whole footprint right: a pale wedge of the picture's air",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:50:10.348Z",
-   "file": "20261125115010348-note-track-c.jpg",
-   "source": "out/work/place/m5/track-c.jpg",
-   "kind": "note",
-   "label": "(c) ground followed 2456 to 2472: set on above, set off below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:50:09.814Z",
-   "file": "20261125115009814-note-track-b.jpg",
-   "source": "out/work/place/m5/track-b.jpg",
-   "kind": "note",
-   "label": "(b) ground followed 2456 to 2472: set on above, set off below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:50:09.256Z",
-   "file": "20261125115009256-note-pair-air-2460.jpg",
-   "source": "out/work/place/m5/pair-air-2460.jpg",
-   "kind": "note",
-   "label": "2460 draft: state above, control d (air held off) below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:50:08.503Z",
-   "file": "20261125115008503-note-far-air.jpg",
-   "source": "out/work/place/m5/far-air.jpg",
-   "kind": "note",
-   "label": "control d (air held off) far ground x 1000 to 1500, y 0 to 220 at 2456 2460 2464 2468 2472: state above, control below",
    "stop": "mars"
   }
  ]
