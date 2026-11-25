@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T18:37:35.433Z",
+ "pushed": "2026-11-25T18:59:48.935Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "flight line and Earth by the law stand ready for the name; lookup trial at 1857 renders; the crest sheets are being written",
+ "note": "The name is sent on cdd5de66 (suite 919 of 919, build green); the lookup trial at 1857 renders again with the gate at 1 to 3 px; design (c) written, tests next",
  "looks": [
+  {
+   "time": "2026-11-25T18:59:47.480Z",
+   "file": "20261125185947480-note-f01857.jpg",
+   "source": "../t-c2a/out/work/blur/t-finB/f01857.png",
+   "kind": "note",
+   "label": "1857 final, lookup trial B with the gate 6 to 14 px, whole frame"
+  },
+  {
+   "time": "2026-11-25T18:59:46.234Z",
+   "file": "20261125185946234-note-sheet-first-3x.jpg",
+   "source": "../../../../tmp/trial/sheet-first-3x.png",
+   "kind": "note",
+   "label": "Lookup trial at 1857 final, first pass: as it is against two reads across the way with the gate 6 to 14 px; the gate is nearly shut in this crop, so the two are almost alike"
+  },
   {
    "time": "2026-11-25T18:37:33.870Z",
    "file": "20261125183733870-note-f01857.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/name/pair-2168-lights-4x.png",
    "kind": "note",
    "label": "Earth rise end at review, the city lights at 4 times: 2168 main (ends 0.5) and the law (ends 0.18), 2166 main and the law (0.40). Under the law the lights are longer streaks: the frame moves 9.3 px and the ends are nearly a box there"
-  },
-  {
-   "time": "2026-11-25T17:56:39.275Z",
-   "file": "20261125175639275-note-pairs-2166-2168-storm-3x.jpg",
-   "source": "../../../../tmp/name/pairs-2166-2168-storm-3x.png",
-   "kind": "note",
-   "label": "Earth rise end 2166 to 2168 at review, clouds at 3 times: main (ends 0.5) left, the law (ends 0.40, 0.28, 0.18) right; the largest step of 255 between them is 18, 37, 79"
-  },
-  {
-   "time": "2026-11-25T17:48:24.983Z",
-   "file": "20261125174824983-note-strip-law-2164-2170-storm-2x.jpg",
-   "source": "../../../../tmp/name/strip-law-2164-2170-storm-2x.png",
-   "kind": "note",
-   "label": "Earth rise end 2164 to 2170 at review under the law, clouds at 2 times: consecutive frames"
   }
  ]
 }
