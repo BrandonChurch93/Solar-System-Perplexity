@@ -1,0 +1,56 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "sun, upper right corner",
+   "what": "the sun disk is smaller with a harder, cleaner edge and a hot spot on its lower rim. The fiery corona spikes around it are thinner and dimmer, and the large orange prominence plumes on its lower left limb have become thin wispy filament loops",
+   "fix": "make the disk bigger again and soften it into the flare, then bring back the dense radial corona spikes and the bold, bright prominence tongues on the lower-left limb from -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "horizontal lens streak between the planet's upper right limb and the sun",
+   "what": "the anamorphic streak running left from the sun across the top of the frame is weaker and shorter",
+   "fix": "boost the streak's intensity and length to match -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lit hemisphere of the planet (crops A, F, G)",
+   "what": "the surface is a bit crisper and more contrasty, with harder micro-crater detail and slightly cooler blue-grey patches. -a is a touch softer and warmer",
+   "fix": "ease off the local contrast and sharpening a little and warm the grey highlights slightly toward -a's tan cast"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "night side and terminator (crops B, H)",
+   "what": "the dark limb against the stars has a slightly harder outline, and the faint earthshine and haze inside the night disk is a bit flatter",
+   "fix": "soften the night-side edge a little and restore the faint internal haze"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "foreground plains (crops D, G)",
+   "what": "the tiny warm and colored sparkle glints scattered over the regolith in -a are mostly gone, so the surface reads a little smoother",
+   "fix": "bring back the fine specular glint speckle at -a's density"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "large shadowed crater wall, center (crop A)",
+   "what": "an extra small bright speck or debris highlight shows up in the shadow next to the existing one",
+   "fix": "remove the extra speck so only -a's single highlight is left"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "overall grade",
+   "what": "global contrast is very slightly lower (stddev about 1 to 2 percent below -a), so the blacks in the crater shadows are a hair less deep",
+   "fix": "nudge the contrast up slightly so the crater shadows reach -a's density"
+  }
+ ]
+}
