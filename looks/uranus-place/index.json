@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T14:27:49.949Z",
- "head": "e14bb1e42a2bd00f8e8df092550f885b6cb72bae",
- "note": "cause of the dive's pattern red proven by split control (the place's lit band by the view cosine: 1.35 to 0.33 with it off); first cure trial P1 (band by the path) dropped: flash of light in the dive and 1.35 at 4185",
+ "pushed": "2026-11-25T14:52:32.793Z",
+ "head": "da6587c3cdb89d5e8f042233f66d7becef5b6d73",
+ "note": "answer on blur: rings and limb blur at review tier on the first cut; 4290 red excess mapped; trial of the ground's band rendering",
  "looks": [
+  {
+   "time": "2026-11-25T14:52:31.809Z",
+   "file": "20261125145231809-note-hold-disc.jpg",
+   "source": "../../../../tmp/n57/hold-disc.jpg",
+   "kind": "note",
+   "label": "hold 4035 disc: approved, main's final, signed difference times 3: the knot at the lower right",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T14:52:30.650Z",
+   "file": "20261125145230650-note-diff-4290-main.jpg",
+   "source": "../../../../tmp/n57/diff-4290-main.jpg",
+   "kind": "note",
+   "label": "4290 main's final against the approved: approved, ours, luma difference, signed difference times 3: red excess along the limb band and on the white clouds",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T14:52:29.529Z",
+   "file": "20261125145229529-note-blur-4150.jpg",
+   "source": "../../../../tmp/n57/blur-4150.jpg",
+   "kind": "note",
+   "label": "blur 4150: draft (one sample) left, review tier right on main's engine after the first cut: ring arcs about 10 px wide against 2 px, limb smeared, stars points",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T14:27:49.359Z",
    "file": "20261125142749359-note-p-P1-8370.jpg",
@@ -236,30 +260,6 @@
    "source": "../../../../tmp/n54/e1-a.jpg",
    "kind": "note",
    "label": "4176, 4186, 4200: air by the path (b, left) against the glow by the same number as the dimming (MAIL 1060 2a, right), draft",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:30:05.635Z",
-   "file": "20261125113005635-note-d3-c.jpg",
-   "source": "../../../../tmp/n54/d3-c.jpg",
-   "kind": "note",
-   "label": "4137, 4416, 4436: state bfd6c3ad left, air by the path (5f739600) right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:12:46.198Z",
-   "file": "20261125111246198-note-p-D3-8829.jpg",
-   "source": "../../../../tmp/n54/p-D3-8829.jpg",
-   "kind": "note",
-   "label": "chain rise 4414.5 built: 1.02 (state 1.61)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:12:45.643Z",
-   "file": "20261125111245643-note-p-D3-8370.jpg",
-   "source": "../../../../tmp/n54/p-D3-8370.jpg",
-   "kind": "note",
-   "label": "chain 4185 built: 1.11 (state 0.98)",
    "stop": "uranus"
   }
  ]
