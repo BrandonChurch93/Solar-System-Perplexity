@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T20:29:26.678Z",
+ "pushed": "2026-11-25T20:47:48.454Z",
  "head": "17aa7329cffa8bf5de7f8b6dabd80d43759d6d3e",
- "note": "tree 17aa732 under proof: no sheet, ringlets' amplitude fit (G17 1.0022 against main 0.9739), shadow in full at the hold; rise and dive rendering",
+ "note": "proof of the tree runs (rise, then dive); warp study for the fourth review note: lens, ring outline against true circles, by frame",
  "looks": [
+  {
+   "time": "2026-11-25T20:47:47.651Z",
+   "file": "20261125204747651-note-ov_3465_right.jpg",
+   "source": "../../../../tmp/v/warp/ov_3465_right.png",
+   "kind": "note",
+   "label": "warp study: hold 3465 of the tree, right, 2 times: green true circles, red the drawn radius of the hero fit (up to 30 px off in the shade)"
+  },
+  {
+   "time": "2026-11-25T20:47:46.569Z",
+   "file": "20261125204746569-note-ov_3465_left.jpg",
+   "source": "../../../../tmp/v/warp/ov_3465_left.png",
+   "kind": "note",
+   "label": "warp study: hold 3465 of the tree, left, 2 times: green true circles (2.27, 2.03, 1.95, 1.53), red where the kept set draws them, blue the true limb"
+  },
   {
    "time": "2026-11-25T20:29:25.211Z",
    "file": "20261125202925211-note-final_3720.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/g17/limb_top.png",
    "kind": "note",
    "label": "3720 globe top, approved, main, no sheet tree (G17 tiles drawn)"
-  },
-  {
-   "time": "2026-11-25T19:53:42.585Z",
-   "file": "20261125195342585-note-far_left.jpg",
-   "source": "../../../../tmp/v/g17/far_left.png",
-   "kind": "note",
-   "label": "3720 far rings, approved, main, no sheet tree: the fine contrast under study (G17 tiles drawn)"
-  },
-  {
-   "time": "2026-11-25T19:38:06.805Z",
-   "file": "20261125193806805-note-b_d0_3720.jpg",
-   "source": "../../../../tmp/v/cure/b_d0_3720.png",
-   "kind": "note",
-   "label": "3720 final at the foot: dark sheet 0.05, no sheet, approved"
   }
  ]
 }
