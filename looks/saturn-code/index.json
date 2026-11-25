@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T16:29:01.895Z",
- "head": "61c276a8a11b7fdf15965be1b0ad723d70385506",
- "note": "dark ice trials rendering on main's engine (depth 0.1, ice 0.05, one dusk at every height)",
+ "pushed": "2026-11-25T16:55:55.645Z",
+ "head": "a4af1b589c7bc9d57aaaa9e6feec470c2e62c443",
+ "note": "d312: one share of the globe's light by log height in the tree; drafts at 3465 3720 3830 3838; depth trials of the dark ice render",
  "looks": [
+  {
+   "time": "2026-11-25T16:55:54.894Z",
+   "file": "20261125165554894-note-draft_3838.jpg",
+   "source": "../../../../tmp/v/dark/S1/draft_3838.png",
+   "kind": "note",
+   "label": "3838 draft, one share (d312)"
+  },
+  {
+   "time": "2026-11-25T16:55:54.124Z",
+   "file": "20261125165554124-note-draft_3830.jpg",
+   "source": "../../../../tmp/v/dark/S1/draft_3830.png",
+   "kind": "note",
+   "label": "3830 draft, one share (d312)"
+  },
+  {
+   "time": "2026-11-25T16:55:53.345Z",
+   "file": "20261125165553345-note-draft_3720.jpg",
+   "source": "../../../../tmp/v/dark/S1/draft_3720.png",
+   "kind": "note",
+   "label": "3720 draft, one share of the globe's light by log height (d312), dark ice depth 0.1"
+  },
+  {
+   "time": "2026-11-25T16:55:52.627Z",
+   "file": "20261125165552627-note-pair_3720_S1.jpg",
+   "source": "../../../../tmp/v/dark/pair_3720_S1.png",
+   "kind": "note",
+   "label": "3720 foot region: approved, main (final), the tree with the one share and the dark ice (draft)"
+  },
   {
    "time": "2026-11-25T16:28:51.794Z",
    "file": "20261125162851794-note-final_3866_small.jpg",
@@ -31,36 +59,6 @@
    "source": "../../../../tmp/v/named2/rise_sheet.png",
    "kind": "note",
    "label": "proof of 6617c15f, rise 3806 to 3860, draft frames of the smooth tool"
-  },
-  {
-   "time": "2026-11-25T15:53:55.114Z",
-   "file": "20261125155355114-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/named2/out/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "proof of 6617c15f, rise: changes in place and of the pattern (the terminator's band at 3832 to 3840 is finding a)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T15:53:53.557Z",
-   "file": "20261125155353557-note-saturn-rise-pops.jpg",
-   "source": "../../../../tmp/v/named2/out/saturn-rise-pops.png",
-   "kind": "note",
-   "label": "proof of 6617c15f, rise: the four largest pops (stars at the rise's end, 1.199 against 1.2)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T15:47:30.363Z",
-   "file": "20261125154730363-note-wedge_6617_c.jpg",
-   "source": "../../../../tmp/v/dark/wedge_6617_c.png",
-   "kind": "note",
-   "label": "6617c15f rise 3826 to 3840, gap in front of the night side, levels lifted: band comes in toward the rim as the kept look comes in, night side goes grey green to brown"
-  },
-  {
-   "time": "2026-11-25T15:30:41.789Z",
-   "file": "20261125153041789-note-dive_whole.jpg",
-   "source": "../../../../tmp/v/named2/dive_whole.png",
-   "kind": "note",
-   "label": "6617c15f proof, dive at draft: whole frames 3540 to 3628 every 8"
   }
  ]
 }
