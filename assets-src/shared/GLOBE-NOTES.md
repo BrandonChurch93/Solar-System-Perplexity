@@ -809,6 +809,40 @@ What is left there is not the map. 5356:5364, 5364:5372 and 5356:5372 leave 0.1,
 
 Tests: `tests/globe-pose.test.ts` (the unit is the plan's own twin, 0.3 away from `twinFrame` on the Sun; the near plane in the orbit view is the film's, in the close view the film's times the unit), `tests/globe-range.test.ts` (a made eye low over ground under the sphere: half the pixels wrong without the near plane, none with it).
 
+## 19. The range of a ball traced in a larger mesh (MAIL 835 task 4): Jupiter's dive, Saturn's hold
+
+**Jupiter.** MEASURED: the points of the globe's range lie on a sphere of radius 1.02996, not 1. STATED from `src/stops/jupiter/globe.ts`: the mesh is scaled by 1 plus the rim and the picture is traced on the unit sphere inside it; the range handed is that of the mesh. A point 0.03 too far out turns by the wrong arc, which is the flow left in the dive and the rise. Io's mesh is its ball times 1.12 in the same way.
+
+The patch (two lines, the builder's files, through the Builder):
+
+```
+src/stops/jupiter/globe.ts, last argument of diagOut:
+-  length(vView));
++  length(vView) * (rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vPos) : 1.0));
+src/stops/jupiter/io.ts, last argument of diagOut:
+-  length(vView));
++  length(vView) * (rt < uBall.w ? depth / length(vPos) : 1.0));
+```
+
+MEASURED with the patch rendered: points off the unit shape 0.02994 to 0.00000; the beauty frames 5960, 5976, 6580, 6596 are byte equal with and without it, 4 of 4. Flow left on the globe: dive 5960:5976 3.1, 5.2, 7.0 to 0.1, 0.5, 2.9; rise 6580:6596 14.5, 18.2, 44.7 to 0.3, 1.4, 13.2. On Io (by its own rule, the record with the plan's `drawnBodies`): 5960:5976 1.6, 2.6 to 0.9, 1.2; 6580:6596 8.5, 26.9 to 0.9, 5.5 (look `flow-6580`). STATED: Earth's Moon (1 + PAD) and Titan (1.6) are meshes larger than their ball as well; no patch was written for them.
+
+**Saturn.** The same one line for `src/stops/saturn/globe.ts` and `src/stops/saturn/kept/globe.ts` (`uLimbW > 0.0 && rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vLocal - uCam) : 1.0`): points off the unit shape 0.01996 to 0.00000 at 6900 and 7100, the beauty frames 6900, 6916, 7100, 7116 byte equal, 4 of 4. The flows do not change by it.
+
+The hold by region, record as it is against the record with the plan's `drawn`, `drawnSeat` and `drawnBodies` (section 17), flow left:
+
+| pair | region | as it is | full record |
+|---|---|---|---|
+| 6900:6916 (hold) | globe | 0.3, 0.9, 1.5 | 0.2, 1.8, 2.8 |
+| 6900:6916 (hold) | Titan | 1.1, 2.4, 2.9 | 0.0, 0.1, 0.1 |
+| 6900:6916 (hold) | rings | 0.1, 0.6, 1.7 | 0.1, 0.6, 2.1 |
+| 7100:7116 (dive) | globe | 0.4, 1.3, 6.2 | 0.5, 2.2, 6.1 |
+| 7100:7116 (dive) | Titan | 1.2, 2.8, 3.2 | 0.1, 0.1, 0.2 |
+| 7100:7116 (dive) | rings | 0.1, 0.8, 3.7 | 0.1, 0.9, 3.9 |
+
+The globe turns 0.3733 degrees in 16 capture frames (`plan.spin`, drawn with `uSpin`). STATED: two patterns lie on the same pixels of the globe, the map that turns with the spin and the shadow of the rings with the terminator that stay. No one carry lands both: the full record lands Titan and the lens, and on the globe its 90th percentile is larger than that of the record as it is. Nothing in the record closes the remainder of Saturn's hold; a reader would have to judge the shadow apart from the map.
+
+**UNKNOWN.** Whether Jupiter's 99th percentile of 1.063 at the harness falls under its limit with the patch (my flow says the cause is gone; the harness's number was not run). Which of Saturn's two patterns the harness reader follows.
+
 ## Proof with the options off
 
 Draft stills `out/work/stills/f%05d-16x9-draft-full.png`, sha256, frames 360 (sun.hold), 615 (mercury.hold), 717 (mercury.dive), 1185 (venus.hold), 1857 (earth.dive), 2325 (mars.hold), 2427 (mars.dive), 2997 (jupiter.dive), 3465 (saturn.hold), 4035 (uranus.hold), 4707 (neptune.dive). The references were rendered at `412d2d09` before any change. The runs are named in the log below.
