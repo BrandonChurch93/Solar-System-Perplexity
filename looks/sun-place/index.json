@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-24T23:39:31.468Z",
- "head": "10116834abcd186836d36fe60e421649369e1dfa",
- "note": "23:40 UTC commit 1 of the third note (32b71390, the slab) with its d253 pairs: size holds to 2.354 of 255, the sets differ by 3.867 and move the far ground's light; pairs at 60 a second still owed",
+ "pushed": "2026-11-25T00:07:50.356Z",
+ "head": "81ec3adc20f19942fea262b0ceb6ccb552d69bc3",
+ "note": "00:08 UTC 81ec3adc d253 b cure committed: web against full in the rise 5.140 to 1.012 at 225, 3.764 to 0.953 at 231; full set bytes kept. Now: sub cuts of the march against the stipple, packed cells, fibres in the heat, the spot as one diagram",
  "looks": [
+  {
+   "time": "2026-11-25T00:05:57.960Z",
+   "file": "20261125000557960-note-d253b-before-pairs.jpg",
+   "source": "../../../../tmp/v/d253b-before-pairs.jpg",
+   "kind": "note",
+   "label": "Before the cure (d84379b4): frames 231 and 225, full set left, web set right. The web set drew the wrap's patches and the wide map at another distance. Mean of 255 then: 225 5.140, 231 3.764, 240 1.973",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:05:57.295Z",
+   "file": "20261125000557295-note-d253b-after-pairs.jpg",
+   "source": "../../../../tmp/v/d253b-after-pairs.jpg",
+   "kind": "note",
+   "label": "81ec3adc (d253 b cure, on d84379b4): frame 60 and frame 231 at 1 to 1, full set left, web set right, after the cure. Web against full, mean of 255: 60 1.282, 225 1.012, 231 0.953, 240 1.736, 247 1.659. Frame 60 full set keeps its bytes, so its sun-near lines stand: share by band 0.1 .. 0.9 : 0.177 0.237 0.197 0.138 0.101 0.058 0.033 0.027 0.018 / dark (under 0.15) 0.191 | body (0.15 to 0.55) 0.674 | pale (0.65 to 0.85) 0.060 | white (over 0.85) 0.018 / brightest 15 percent: half width 12.5 px, 855 shapes | fine detail 0.0205 | mean 0.325",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-24T23:39:30.437Z",
    "file": "20261124233930437-note-d253-diffs.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c1-00217-whole.jpg",
    "kind": "note",
    "label": "frame 217 with the slab, two thirds size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:19:08.864Z",
-   "file": "20261124231908864-note-c1b-rise.jpg",
-   "source": "../../../../tmp/v/c1b-rise.jpg",
-   "kind": "note",
-   "label": "the rise with the slab: 225, 231, 240; bottom right 231 of head faeea78b",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:19:08.319Z",
-   "file": "20261124231908319-note-c1-60-75.jpg",
-   "source": "../../../../tmp/v/c1-60-75.jpg",
-   "kind": "note",
-   "label": "frames 60 and 75 at 3x, the same box of the picture (not the same ground)",
    "stop": "sun"
   }
  ]
