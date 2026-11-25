@@ -391,12 +391,14 @@ export interface Cells {
   w: Float64Array
   u: Float32Array
   seed: Float32Array
+  /** the radius of the cell's ground at the middle of its life */
+  full: Float32Array
   live: Uint8Array
   diagram: Diagram
 }
 
 export function newCells(): Cells {
-  return { x: new Float64Array(SLOTS), y: new Float64Array(SLOTS), w: new Float64Array(SLOTS), u: new Float32Array(SLOTS), seed: new Float32Array(SLOTS), live: new Uint8Array(SLOTS), diagram: newDiagram() }
+  return { x: new Float64Array(SLOTS), y: new Float64Array(SLOTS), w: new Float64Array(SLOTS), u: new Float32Array(SLOTS), seed: new Float32Array(SLOTS), full: new Float32Array(SLOTS), live: new Uint8Array(SLOTS), diagram: newDiagram() }
 }
 
 /** The cells at the time t (seconds from the first frame of the terrain segment), read from the table alone. */
@@ -434,6 +436,7 @@ export function cellsAt(t: number, out: Cells): void {
     out.w[i] = tb[p + 6]! + (tb[p + 7]! - tb[p + 6]!) * f
     out.u[i] = u
     out.seed[i] = tb[p + 4]!
+    out.full[i] = tb[p + 5]!
   }
   diagram(out.x, out.y, out.w, out.live, out.diagram)
 }

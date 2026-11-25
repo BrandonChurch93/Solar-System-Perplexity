@@ -1,5 +1,6 @@
 // The life clip: capture frames A to B of the film (two a film frame), draft tier, one page, into a folder.
 // With --hold K the eye and all else stand at capture frame K and only the ground's time runs on (a control).
+// With --step N only every Nth capture frame is drawn.
 // With --still K the eye moves as in the film and the ground's time stands at capture frame K (the other control).
 //   npx tsx assets-src/sun/lab/clip.ts --from 240 --to 359 --out out/work/sun/lab/clip
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
@@ -19,7 +20,8 @@ ensureBuild()
 mkdirSync(out, { recursive: true })
 const held: { session?: Session } = {}
 const format = formatId(cfg, a.format)
-for (let k = from; k <= to; k++) {
+const step = Number(a.step ?? 1)
+for (let k = from; k <= to; k += step) {
   const file = join(out, 'k' + String(k).padStart(4, '0') + '.png')
   if (existsSync(file)) continue
   const open = () => openCapture({ dist: DIST, format, assets: 'full', diag: 'beauty', query: '&rate=2' })

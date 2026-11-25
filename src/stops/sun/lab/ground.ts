@@ -67,6 +67,10 @@ function rampTexture(): THREE.DataTexture {
   return t
 }
 
+const smooth = (a: number, b: number, x: number): number => {
+  const t = Math.min(Math.max((x - a) / (b - a), 0), 1)
+  return t * t * (3 - 2 * t)
+}
 const up = stage.down.clone().negate()
 const fwd = new THREE.Vector3(0, 0, -1).addScaledVector(stage.down, stage.down.z).normalize()
 const right = fwd.clone().cross(up).normalize()
@@ -364,7 +368,7 @@ void main() {
   vN = dot(lie, lie) > 1e-24 ? normalize(lie) : normalize(p - ST_CENTRE);
   vAxis = axis;
   vCell = vec4(c1.x, c1.y, rad, high);
-  vMore = vec4(ds, 0.0, 0.0, 0.0);
+  vMore = vec4(ds, c1.z, 0.0, 0.0);
   vReal = real;
   vPit = pitAway;
   vDeep = deep;
@@ -603,14 +607,15 @@ void main() {
   vec2 v = d + vAxis * off;
   float along = length(v) / (1.0 + off);
   float ang = atan(vAxis.x * v.y - vAxis.y * v.x, dot(vAxis, v));
+  float run = -${lab.fibre.slow.toFixed(2)} * log(1.0 - min(along, ${(lab.fibre.slow * 0.95).toFixed(3)}) / ${lab.fibre.slow.toFixed(2)});
   ang += 0.15 * sin(along * 4.0 + seed) * along + ${lab.fibre.bend.toFixed(2)} * (vn(vG * uLabJoin.w * 2.5 + 3.3) + 0.5 * vn(vG * uLabJoin.w * 6.1 - 8.7) - 0.75) * along;
   float turn = ang / 6.2831853 + 0.5;
   vec3 per = floor(uLabCount.xyz * 6.2831853 + 0.5);
   vec2 across = vec2(-v.y, v.x) / max(dot(v, v), 1e-8);
   float wa = length(vec2(dot(dFdx(v), across), dot(dFdy(v), across)));
-  float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (along - flow) * ${lab.fibre.along[0]!.toFixed(2)} + seed), per.x);
-  float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (along - flow) * ${lab.fibre.along[1]!.toFixed(2)} - seed), per.y);
-  float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (along - flow) * ${lab.fibre.along[2]!.toFixed(2)} + seed * 2.0), per.z);
+  float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (run - flow) * ${lab.fibre.along[0]!.toFixed(2)} + seed), per.x);
+  float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (run - flow) * ${lab.fibre.along[1]!.toFixed(2)} - seed), per.y);
+  float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (run - flow) * ${lab.fibre.along[2]!.toFixed(2)} + seed * 2.0), per.z);
   float ka = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.x);
   float kb = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.y);
   float kc = 1.0 - smoothstep(0.5, 1.1, wa * uLabCount.z);
@@ -627,7 +632,8 @@ void main() {
 #endif
   float pen = pn.x;
   float age = vCell.y;
-  float life = mix(1.15, 0.7, smoothstep(0.3, 0.85, age));
+  // a cell is born cool and small in the lane and warms as its ground grows; it cools as it goes
+  float life = mix(1.15, 0.7, smoothstep(0.3, 0.85, age)) * mix(${lab.heat.born[0]!.toFixed(2)}, 1.0, smoothstep(${lab.heat.born[1]!.toFixed(2)}, ${lab.heat.born[2]!.toFixed(2)}, vMore.y));
   // the heat of a cell: the heat of the place, which runs over the borders, combed into hot fibres with cooler
   // matter between them and many small hot points along the fibres
   float wide = 0.6 * vn(vG * uLabJoin.w + 5.3) + 0.4 * vn(vG * uLabJoin.w * 2.3 - 17.1);
@@ -650,6 +656,8 @@ void main() {
   float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mix(mott, labWell(d, seed, uLabTime.x), ${lab.heat.spread[3]!.toFixed(2)}) - 0.5);
   float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
   float top = mix(uLabHeatB.w, 1.0, middle) * (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide);
+  // the gas wells up in a dimple a little cooler than the crest round it
+  top *= 1.0 - ${lab.heat.dimple[0]!.toFixed(2)} * exp(-rho * rho / ${(lab.heat.dimple[1]! * lab.heat.dimple[1]!).toFixed(4)});
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(0.04, 0.4, along));
   cell *= 1.0 + ${(2 * lab.heat.fine[0]!).toFixed(3)} * (labWell(d * ${lab.heat.fine[1]!.toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5);
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
@@ -659,12 +667,12 @@ void main() {
   float edgeD = 1.0 - plan;
   float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
   float veins = labLobes(d, seed, 0.05 + 0.3 * rho) * smoothstep(0.1, 0.6, rho);
-  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), edgeD));
+  cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), max(1.0 - fall, 0.0)));
   // the folds between the streams that run from the middle to each lane: dark threads toward the places where
   // three cells meet
   cell *= 1.0 - ${lab.heat.fold[0]!.toFixed(2)} * smoothstep(${lab.heat.fold[1]!.toFixed(2)}, 1.0, vCorner + 0.08 * (fan - 0.5)) * smoothstep(0.15, 0.6, plan);
   float bundle = pn.y;
-  float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (along - flow) * 17.0 + seed), per.z)) * kc * middle;
+  float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (run - flow) * 17.0 + seed), per.z)) * kc * middle;
   cell += 0.6 * uLabHeatMore.w * spark;
   float warm = uLabHeat.y * cell * life * mix(${lab.heat.near.toFixed(2)}, 1.0, smoothstep(2.4, 4.0, vReal / uLabPit.w));
   warm = warm < ${lab.heat.knee[0]!.toFixed(2)} ? warm : ${lab.heat.knee[0]!.toFixed(2)} + ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)} * (1.0 - exp(-(warm - ${lab.heat.knee[0]!.toFixed(2)}) / ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)}));
@@ -674,6 +682,8 @@ void main() {
   vec2 gi = floor(gq);
   float lit = step(${lab.heat.points.toFixed(2)}, h1(gi + 17.0)) * (1.0 - smoothstep(0.1, 0.16 + 0.26 * h1(gi + 3.0), length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
   heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.02, 0.2, edgeD)) * (1.0 - pen);
+  // thin hot threads stand in the bottom of the lane, here and there
+  heat += ${lab.heat.thin[0]!.toFixed(2)} * (1.0 - smoothstep(0.0, ${lab.heat.thin[1]!.toFixed(3)}, abs(edgeD))) * smoothstep(0.5, 0.7, vn(vG * ${lab.heat.thin[2]!.toFixed(1)} + 11.0)) * (1.0 - pen);
   heat *= pn.z;
   // (b) the angle of view: the ground has no lamp. A look that meets the surface aslant meets shallower, cooler gas:
   // the heat times a darkening by the angle between the surface's normal and the eye (heat.graze: at a look along
@@ -1143,9 +1153,10 @@ export class LabGround {
       px[o] = d.mid[i * 2]!
       px[o + 1] = d.mid[i * 2 + 1]!
       px[o + 2] = r
-      px[o + 3] = lab.dome.height * r * young
+      px[o + 3] = lab.dome.height * r * young * (lab.dome.born[0]! + (1 - lab.dome.born[0]!) * smooth(lab.dome.born[1]!, lab.dome.born[2]!, r / Math.max(c.full[i]!, 1e-6)))
       px[o + 4] = c.seed[i]!
       px[o + 5] = u
+      px[o + 6] = Math.min(r / Math.max(c.full[i]!, 1e-6), 1)
       for (let e = 0; e < EDGES; e++) {
         const on = e < d.count[i]!
         px[o + 8 + e * 2] = on ? d.edges[(i * EDGES + e) * 2]! : 0
