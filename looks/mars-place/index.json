@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T03:25:57.095Z",
+ "pushed": "2026-11-25T03:52:40.703Z",
  "head": "75564ca06092159f628bb32683165712183ac36f",
- "note": "first state r: pairs main beside mine at native size, bad ones too",
+ "note": "03:53 UTC pairs main beside state t at 2440 to 2476 and rise 2684, 2688; gap count tried and turned off (ribbons); red glow and limb slab named",
  "looks": [
   {
-   "time": "2026-11-25T03:25:46.140Z",
-   "file": "20261125032546140-note-litcheck.jpg",
-   "source": "out/work/place/see/litcheck.jpg",
+   "time": "2026-11-25T03:52:39.548Z",
+   "file": "20261125035239548-note-glow-2448.jpg",
+   "source": "out/work/place/see/glow-2448.png",
    "kind": "note",
-   "label": "plates times the cap's light of the fitted heights: where the red glow comes from",
+   "label": "2448 native, north of the canyon: main, first state, state t: the red glow of the takes on lit slopes still stands (under cure: takes give up light and hue on steep ground)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:25:45.619Z",
-   "file": "20261125032545619-note-fit-look.jpg",
-   "source": "out/work/place/see/fit-look.jpg",
+   "time": "2026-11-25T03:52:38.480Z",
+   "file": "20261125035238480-note-limb-2476.jpg",
+   "source": "out/work/place/see/limb-2476.png",
    "kind": "note",
-   "label": "fitted heights 3.8, 1.6, 0.7, 0.3 degrees (blue: made ground lowered for the lenses at T)",
+   "label": "2476 native, far left limb: main, first state, state t: with the texel term by the longer axis a pale striped slab of cap stands at the limb where the picture's margin is drawn out (under cure)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:25:45.043Z",
-   "file": "20261125032545043-note-pair-q-2782.jpg",
-   "source": "out/work/place/see/pair-q-2782.jpg",
+   "time": "2026-11-25T03:52:37.571Z",
+   "file": "20261125035237571-note-s-2476-77.jpg",
+   "source": "out/work/place/see/s-2476-77.jpg",
    "kind": "note",
-   "label": "2782 main beside mine (rise end as of 88d4f309), native",
+   "label": "BAD 2476 with the gap count on (left) beside 2477 (right): ribbons along every outline of the picture's layers one frame before T",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:25:44.466Z",
-   "file": "20261125032544466-note-n-r2686-east.jpg",
-   "source": "out/work/place/see/n-r2686-east.png",
+   "time": "2026-11-25T03:52:36.615Z",
+   "file": "20261125035236615-note-rs-2464.jpg",
+   "source": "out/work/place/see/rs-2464.png",
    "kind": "note",
-   "label": "first state r beside main, native crop 2686-east",
+   "label": "BAD 2464 native crop: first state left, gap count on right: ribbon at the foot of the mesa, slab at the east",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:25:43.882Z",
-   "file": "20261125032543882-note-n-r2470-east.jpg",
-   "source": "out/work/place/see/n-r2470-east.png",
+   "time": "2026-11-25T03:52:35.674Z",
+   "file": "20261125035235674-note-rs-2456.jpg",
+   "source": "out/work/place/see/rs-2456.png",
    "kind": "note",
-   "label": "first state r beside main, native crop 2470-east",
+   "label": "BAD 2456 native crop: first state left, gap count on right (share nil where cap and relief stand over one pixel apart): ribbons of cap through the picture",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:25:43.301Z",
-   "file": "20261125032543301-note-n-r2464-mid.jpg",
-   "source": "out/work/place/see/n-r2464-mid.png",
+   "time": "2026-11-25T03:52:34.515Z",
+   "file": "20261125035234515-note-pair-t-2688.jpg",
+   "source": "out/work/place/see/pair-t-2688.jpg",
    "kind": "note",
-   "label": "first state r beside main, native crop 2464-mid",
+   "label": "pair 2688: main 63cf4b21 left, state t right (one ground: fitted heights, takes with the heights' light and the picture's tone, texel term by the longer axis, gap count off), draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:25:42.715Z",
-   "file": "20261125032542715-note-n-r2456-mid.jpg",
-   "source": "out/work/place/see/n-r2456-mid.png",
+   "time": "2026-11-25T03:52:33.451Z",
+   "file": "20261125035233451-note-pair-t-2684.jpg",
+   "source": "out/work/place/see/pair-t-2684.jpg",
    "kind": "note",
-   "label": "first state r beside main, native crop 2456-mid",
+   "label": "pair 2684: main 63cf4b21 left, state t right (one ground: fitted heights, takes with the heights' light and the picture's tone, texel term by the longer axis, gap count off), draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T03:25:42.145Z",
-   "file": "20261125032542145-note-n-r2459-wedge.jpg",
-   "source": "out/work/place/see/n-r2459-wedge.png",
+   "time": "2026-11-25T03:52:32.252Z",
+   "file": "20261125035232252-note-pair-t-2476.jpg",
+   "source": "out/work/place/see/pair-t-2476.jpg",
    "kind": "note",
-   "label": "first state r beside main, native crop 2459-wedge",
+   "label": "pair 2476: main 63cf4b21 left, state t right (one ground: fitted heights, takes with the heights' light and the picture's tone, texel term by the longer axis, gap count off), draft",
    "stop": "mars"
   }
  ]
