@@ -22,6 +22,8 @@ import { heightTexture } from '../../core/sets'
 import country from './country.json'
 import capJson from './cap.json'
 import closeJson from './close.json'
+import detailJson from './detail.json'
+import { groundDetailText, groundDetailUniforms } from './detail'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -66,7 +68,8 @@ export const createSet: SetFactory = async (ctx) => {
   }
   const planet = new Planet({
     map, mapWidth: wrap.sets.full.color[0], height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
-    cap: { levels: capLevels, border: capJson.border as [number, number], from: capJson.from as [number, number], cells: capJson.cells, pixel: THREE.MathUtils.degToRad(60) / 1080, fine: capJson.fine, reachDeg: capJson.reachDeg, feather: patches.feather, fade: patches.fade, light: capJson.light },
+    cap: { levels: capLevels, border: capJson.border as [number, number], from: capJson.from as [number, number], cells: capJson.cells, pixel: THREE.MathUtils.degToRad(60) / 1080, fine: capJson.fine, reachDeg: capJson.reachDeg, feather: patches.feather, fade: patches.fade, light: capJson.light,
+      ...(detailJson.wired ? { detail: { text: groundDetailText, uniforms: groundDetailUniforms(direction(patches.spot.lon, patches.spot.lat)) } } : {}) },
     patches: { textures: patchTextures, counts: patches.levels.map((l) => l.full), widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
       ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },

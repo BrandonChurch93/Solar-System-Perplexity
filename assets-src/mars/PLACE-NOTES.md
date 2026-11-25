@@ -1438,3 +1438,25 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
 - Not done in the cap commit, said in it: the under pass (agent/engine-under 9ea28c24 not pulled, the aprons stay at T, law.edge
   0); the gap count of MAIL 879 (b) built and off; the detail hook (detail.ts written, wired in the next commit after the merge
   of agent/engine-globe 7b482c07).
+
+### 24 November, 04:32 to 04:40 UTC (pushed, merged, the detail hook)
+
+- Cap commit pushed 04:32: agent/mars-place 4a64cc87 (on 75564ca0 = main 63cf4b21 and agent/engine-edge 6561b5a5). Mailed to /root
+  with the gap table and the list of what is wrong; travel_builder told that the rise's end is unchanged.
+- Merge of origin/main 579400e9: 19 conflicts, none of them a change of main in my three folders (main changed nothing there
+  since 63cf4b21; the conflicts are the criss-cross of take batch 8 with this branch's own merge of 6561b5a5). Resolved as main's
+  tree everywhere outside the three folders and 4a64cc87 inside them (git read-tree of origin/main, then the three folders from
+  4a64cc87): merge commit 41fad4b7. Checked: no difference to origin/main outside, none to 4a64cc87 inside. MAIL 895 (2) agrees.
+- Merge of agent/engine-globe 7b482c07 (the bundle's ref, clean): 070d6dda. MAIL 895 (1) agrees: as a commit, not two files.
+- The detail hook wired (set.ts: cap.detail from detail.ts when detail.json wired is true). First frames with it (draft): against
+  the frames before the two merges, 2474 mean 0.013, 2470 mean 0.030, 2464 mean 0.007 (0.0001 of the pixels over 4 levels, the
+  largest 110). The rule of MAIL 839 (3), detail wherever one texel of the plate is wider than one pixel of the master, is met on
+  almost no pixel of the dive: the finest plates hold 8 m (0.3 degrees), 12.6 m (0.7) and 26 m (1.6) a texel, a pixel straight
+  down is 39 m at 2456 and 8 m only from about 2470, where the approved picture has the whole share. The soft ground of 2456 to
+  2468 is NOT a wide texel; it is soft paint in the takes (texels enough, nothing in them). So this hook by this rule does not
+  cure the smudge; said so in the NAMED mail. What would: the rule read from what the plate holds (its measured finest wave) and
+  not from its texel count. Not built.
+- MAIL 895: (3) say what 2745 shows now; (4) cap.detail by distance first, not more toning; (5) NAMED when units, build, gate and
+  the own smooth report of dive and rise are in. Main is now 5179b435 (kit/PROGRESS.md alone on top of 579400e9).
+- Looks pushed 04:37 (f94e355b): the cap commit beside main at native size, 2420, 2440, 2456, 2464 (both halves), 2470, 2474, the
+  glow before and after at 2448, the rise at 2688.
