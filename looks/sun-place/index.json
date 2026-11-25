@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T22:34:25.808Z",
+ "pushed": "2026-11-25T22:58:29.228Z",
  "head": "42958a0033dcc92df77ce8202620b578bc848f61",
- "note": "harness slice 380 to 400 with carry running on the merge with main 172e7bcd (40 of 54 frames at 22:34); the merge changes no pixel at draft 0, 60, 90, 221, 247, 360; 495 review equals the name's; sun-near 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "harness slice 190 to 200 with carry GREEN on merge 42958a00: far sky pattern at most 0.24 (limit 0.45; the name read 1.44), pop 1.01, level step 0.08; the whole 380 to 470 run is at 100 of 124 frames; sun-near 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T22:58:28.147Z",
+   "file": "20261125225828147-note-h6-a.jpg",
+   "source": "../../../../tmp/v/h6-a.jpg",
+   "kind": "note",
+   "label": "the harness's own draft frames 190 to 201 on merge 42958a00 (candidate): the arcade as loops of sparks, one body",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T22:34:25.142Z",
    "file": "20261125223425142-note-F2-c.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/T4-crop.jpg",
    "kind": "note",
    "label": "frame 60 draft, approved over the candidate (not named): arcade as loops of sparks, the far strand drawn by its band's own least width and its pattern by its mean; limb fringe L3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T21:24:53.369Z",
-   "file": "20261125212453369-note-J1-360z.jpg",
-   "source": "../../../../tmp/v/J1-360z.png",
-   "kind": "note",
-   "label": "frame 360 draft, the arcade's place four times: named state left, trial J1 right: two pale blobs at the feet, a fault of the trial, cause found (the least width multiplied by the sheath)",
    "stop": "sun"
   }
  ]
