@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T06:52:31.670Z",
+ "pushed": "2026-11-25T07:20:28.850Z",
  "head": "da021335659e0efa1aafcc4ea362938b640121e3",
- "note": "rise slice green again (0.37) with the dust shaded by the globe; commit da02133 local, full proof running",
+ "note": "proof of local commit da02133 runs: dive slice green, finals of the four judged frames drawn, rise slice drawing",
  "looks": [
+  {
+   "time": "2026-11-25T07:20:27.677Z",
+   "file": "20261125072027677-note-r64_3866_gap_pair.jpg",
+   "source": "../../../../tmp/v/x/r64_3866_gap_pair.png",
+   "kind": "note",
+   "label": "3866 at full size, box 940,620 to 1300,1030: named 88ba2385 left (sky ends in a hard ellipse), local da02133 right (sky thins out through the shaded inner ring)"
+  },
+  {
+   "time": "2026-11-25T07:20:26.705Z",
+   "file": "20261125072026705-note-r64_3866_pair.jpg",
+   "source": "../../../../tmp/v/x/r64_3866_pair.png",
+   "kind": "note",
+   "label": "3866 final: named 88ba2385 above, local da02133 below"
+  },
+  {
+   "time": "2026-11-25T07:20:25.688Z",
+   "file": "20261125072025688-note-day_foot_3.jpg",
+   "source": "../../../../tmp/v/x/day_foot_3.png",
+   "kind": "note",
+   "label": "3720 day side foot, box 900,430 to 1520,770: approved, named 88ba2385, local da02133"
+  },
+  {
+   "time": "2026-11-25T07:20:24.792Z",
+   "file": "20261125072024792-note-night_foot_3.jpg",
+   "source": "../../../../tmp/v/x/night_foot_3.png",
+   "kind": "note",
+   "label": "3720 night side foot, box 1300,560 to 1920,900: approved, named 88ba2385, local da02133. The dust in front of the night side is darker in da02133 than in the approved"
+  },
+  {
+   "time": "2026-11-25T07:20:23.997Z",
+   "file": "20261125072023997-note-r64_3720_under_ap.jpg",
+   "source": "../../../../tmp/v/x/r64_3720_under_ap.png",
+   "kind": "note",
+   "label": "3720 final of local commit da02133 (below) under the approved close image (above)"
+  },
   {
    "time": "2026-11-25T06:52:30.913Z",
    "file": "20261125065230913-note-e1_night.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/moon/t6a.png",
    "kind": "note",
    "label": "item 4 moon, fit only, not yet rendered by the film: approved moon, candidate look t6a, difference"
-  },
-  {
-   "time": "2026-11-25T06:37:37.068Z",
-   "file": "20261125063737068-note-dust_cause_3819.jpg",
-   "source": "../../../../tmp/v/x/dust_cause_3819.png",
-   "kind": "note",
-   "label": "cause at 3819, lifted 4 times, box 1440,700 to 1920,1000: as is; foot dust off (band gone); sheet dust off (band stays): the band is the foot dust of the globe shader, lit in the globe's shadow"
-  },
-  {
-   "time": "2026-11-25T06:37:36.403Z",
-   "file": "20261125063736403-note-r62_rise_lr.jpg",
-   "source": "../../../../tmp/v/x/r62_rise_lr.png",
-   "kind": "note",
-   "label": "proof r62 on d8723c6, rise slice RED: frames 3819, 3823, 3827 lifted, the pale band of lit dust over the night side that fades (pattern 0.89 at 3827)"
-  },
-  {
-   "time": "2026-11-25T06:17:06.422Z",
-   "file": "20261125061706422-note-limb_gap8.jpg",
-   "source": "../../../../tmp/v/x/limb_gap8.png",
-   "kind": "note",
-   "label": "item 4 sunlit limb over the inner ring gap at 8 times, frame 3465: approved hero left, the hold as named right (an edge of 2 px with one orange pixel line, no glow below the ring plane)"
-  },
-  {
-   "time": "2026-11-25T06:17:05.742Z",
-   "file": "20261125061705742-note-t4b.jpg",
-   "source": "../../../../tmp/v/moon/t4b.png",
-   "kind": "note",
-   "label": "item 4 moon, design in numpy at 7 times: approved hero left, the hold as named in the middle, the new look right (soft limb, thin rim, haze, hood of the north, irregular belts); not yet rendered by the film"
-  },
-  {
-   "time": "2026-11-25T05:53:42.054Z",
-   "file": "20261125055342054-note-r61_3615_wide.jpg",
-   "source": "../../../../tmp/v/x/r61_3615_wide.png",
-   "kind": "note",
-   "label": "draft 3615, tree in work: the dust inside the rim lit over the night side; with the night side sunk at these heights the report read 0.65 at 3603, cure in work"
   }
  ]
 }
