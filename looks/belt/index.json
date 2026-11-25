@@ -1,9 +1,17 @@
 {
  "folder": "belt",
- "pushed": "2026-11-25T10:11:59.635Z",
+ "pushed": "2026-11-25T10:55:11.335Z",
  "head": "47c2ef0da731c6d54b1f8cb6d81788f6421e11fd",
- "note": "47c2ef0d: map of place at 615 (final 2.57), spots back through the handover; 470 globe against far Sun worn at burn 0",
+ "note": "far Sun: the wear by the burn alone; pair at burn 0",
  "looks": [
+  {
+   "time": "2026-11-25T10:55:08.693Z",
+   "file": "20261125105508693-note-pair455-globe-left-farsun-burn0-right.jpg",
+   "source": "../../../../tmp/farsun/send/pair455-globe-left-farsun-burn0-right.jpg",
+   "kind": "note",
+   "label": "455, burn 0: the Sun stop's globe (left), the far Sun forced to share 1 (right)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T10:11:58.874Z",
    "file": "20261125101158874-note-limb3840-1to1-96a7a7ee-left-map-right.jpg",
@@ -53,13 +61,6 @@
    "source": "../../../../tmp/farsun/send/pair615-box-map12.jpg",
    "kind": "note",
    "label": "615 box, approved | far Sun with the map of place 12 px (draft, 2.55, spike contrast 11.1)"
-  },
-  {
-   "time": "2026-11-25T08:05:38.216Z",
-   "file": "20261125080538216-note-pair615-final-96a7a7ee.jpg",
-   "source": "../../../../tmp/farsun/send/pair615-final-96a7a7ee.jpg",
-   "kind": "note",
-   "label": "615 box final tier, approved left, 96a7a7ee right, blur 4.34"
   }
  ]
 }
