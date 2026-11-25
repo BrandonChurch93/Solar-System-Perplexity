@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T09:32:45.970Z",
+ "pushed": "2026-11-25T09:57:44.768Z",
  "head": "705444897fa41f6743de1402262513bd60a3a69e",
- "note": "state of commit 5 in work: controls of both reds, texel cause, spot trial; nothing committed",
+ "note": "tree toward commit 5, frame 60: dark 0.174 body 0.627 pale 0.108 white 0.026; half width 7.7 px, 558 shapes, fine detail 0.0318, mean 0.360; distance 0.064. Part 2 by my own chain at preview 0.222 (4b 0.495); arcade, jets and glow leave by distance",
  "looks": [
+  {
+   "time": "2026-11-25T09:57:43.581Z",
+   "file": "20261125095743581-note-c5a-m1-zoom.jpg",
+   "source": "../../../../tmp/v/c5a-m1-zoom.png",
+   "kind": "note",
+   "label": "tree, arcade 202.5 to 210.5 every frame, my chain reads 0.522 in the sky under the arch (outside the ball), 0.244 on the ball",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:57:42.629Z",
+   "file": "20261125095742629-note-p2-strip-c5a.jpg",
+   "source": "../../../../tmp/v/p2-strip-c5a.png",
+   "kind": "note",
+   "label": "tree, part 2, 218.5 to 226.5 every 2 frames, circle at the red pixel of 4b",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:57:41.568Z",
+   "file": "20261125095741568-note-c5a-mid.jpg",
+   "source": "../../../../tmp/v/c5a-mid.jpg",
+   "kind": "note",
+   "label": "tree, rise 202.5 to 218.5 every 2 frames: arcade leaves by distance from the eye to its own place",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T09:57:40.440Z",
+   "file": "20261125095740440-note-x8b-60.jpg",
+   "source": "../../../../tmp/v/x8b-60.png",
+   "kind": "note",
+   "label": "frame 60: approved, 4b, tree (cells cycle 7 to 12 s, fibres 0.9, boil 0.5)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T09:32:45.098Z",
    "file": "20261125093245098-note-s4-90s.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/look-g2-60.png",
    "kind": "note",
    "label": "Tree at 09:10 (not committed), frame 60 near ground at 1 to 1 under the approved. sun-near.py frame 60: dark 0.223 body 0.616 pale 0.084 white 0.023 (approved 0.185 0.642 0.082 0.010); half width 8.2 px, 546 shapes (approved 4.8 px, 1153); fine detail 0.0291, mean 0.326, distance 0.070 (approved 0.0373, 0.338)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:02:11.513Z",
-   "file": "20261125090211513-note-g2-217.jpg",
-   "source": "../../../../tmp/v/g2-217.jpg",
-   "kind": "note",
-   "label": "frame 217 limb, master draft: 4b, far ground with the map's light opened, the same with the arcade cut keeping cores",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:02:10.532Z",
-   "file": "20261125090210532-note-s4-90s.jpg",
-   "source": "../../../../tmp/v/s4-90s.jpg",
-   "kind": "note",
-   "label": "spot collar trial at frame 90 under the approved image, 1 to 1: count 45, thin 2, reach 2.0 to 3.0, ragged 0.8; still a star of smooth strands, not the approved's dense dark and bright fibres",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:02:09.318Z",
-   "file": "20261125090209318-note-g2-pat.jpg",
-   "source": "../../../../tmp/v/g2-pat.png",
-   "kind": "note",
-   "label": "rise part 2 by my chain on the state in work (4b code, far ground takes the map's light, arcade cut keeps cores): frame 218 + 1/2, the change of the pattern (hot at the top of the arcade, 0.484), frame 226 + 1/2",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T08:42:45.725Z",
-   "file": "20261125084245725-note-f2-90s.jpg",
-   "source": "../../../../tmp/v/f2-90s.jpg",
-   "kind": "note",
-   "label": "dome model in work, frame 90 spot at 1 to 1 under the approved",
    "stop": "sun"
   }
  ]
