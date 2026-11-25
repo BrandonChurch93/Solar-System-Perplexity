@@ -612,11 +612,35 @@
    }
   }
  },
- "aprons": {
-  "note": "apronheights.py: the margins and the aprons of the close view's meshes (relief.json apron) in the country's heights. limitDeg: out to this far from the place's middle (the mesh heights are taken as they are out to country.far.fromDeg). joinDeg, joinTexels: the made ground beside apron ground goes over to it through a membrane over this many degrees, at least this many texels of the level.",
-  "limitDeg": 0.7,
-  "joinDeg": 0.6,
-  "joinTexels": 6
+ "fit": {
+  "note": "fitheights.py: the cap's heights fitted to the approved picture, a step on the plates of country.py. levels: the levels fitted (the 8.5 degree level keeps its bytes). toDeg, goneDeg: a texel the picture's eye saw takes the picture's own height out to toDeg from the eye's foot (country.far.fromDeg: beyond it the cap carries the canyon on and calms the far ground), gone by goneDeg (country.canyon.east.takeToDeg). joinTexels: the made ground beside follows through a membrane over this many texels. eyes: the lenses whose sight is kept free, first frame, last frame and step for the dive and the rise: the frame at which the surface view takes over, where the film shows the picture whole and nothing made may stand in front of it (a lens far from the picture's eye sees a rim hide the floor behind it, and that is true ground). every: every so many samples of the picture's distance files; cellPx: cells of a lens's frame, pixels of 1920 by 1080; grid: texels a side of the grid the lowering is found on; stepKm, passes, clear: as country.stepKm, the passes and country.clear of ground.lower_under_sight.",
+  "levels": [
+   3.8,
+   1.6,
+   0.7,
+   0.3
+  ],
+  "toDeg": 0.7,
+  "goneDeg": 0.85,
+  "joinTexels": 8,
+  "eyes": {
+   "dive": [
+    2477,
+    2477,
+    1
+   ],
+   "rise": [
+    2681,
+    2681,
+    1
+   ]
+  },
+  "every": 4,
+  "cellPx": 4,
+  "grid": 512,
+  "stepKm": 0.05,
+  "passes": 200,
+  "clear": 1.01
  },
  "skirt": {
   "note": "skirt.py: the made country beyond the close ground's footprint. insideDeg: the border is taken this far inside the laid footprint. openDeg: laid ground too narrow to hold a disc of this radius is not counted (blades). mirror: shares of the mirror at the nearest border point that are tried, first that falls on laid ground wins, else the border's own texel. holdDeg, reachDeg: the laid ground runs on to a line holdDeg + reachDeg x (1 + wander x field) from the border and ends over the last share soft of that way. toneDeg: the made country carries the broad tone of the laid ground at the border, which leaves over this far. wander: share by which the distances wander with the field. field: [cells across the 8.5 degree plate, weight] of the fixed field on the ground; seed. toneBlurDeg: the breadth the tone is measured over (laid texels only). gain: least and most of the tone's gain.",
@@ -694,7 +718,7 @@
   "seed": 702
  },
  "takes": {
-  "note": "countrytake.py: the country round the close ground from takes seen from straight above. levels: width in degrees to the take (assets-src/mars/place/takes, enlarged two times where the name ends in -x2). softDeg, inside: the laid ground is kept from where its mask, blurred by softDeg, is over inside. toneDeg: breadth over which the take follows the tone of the laid ground; toneFull: share of laid ground within that breadth from which the tone holds in full; gain: least and most.",
+  "note": "countrytake.py: the country round the place from takes seen from straight above. levels: width in degrees to the take (assets-src/mars/place/takes, enlarged two times where the name ends in -x2). lay: false since the one ground (MAIL 837, MAIL 849): the plates of the takes hold the take alone at its own tone and no copy of the close picture, which lies on the ground through its own relief by the law of the stop (src/stops/mars/law.ts). With lay true the laid ground is kept as before (softDeg, inside, toneDeg, toneFull, gain and the block reach). Since the cap commit of the one ground a take gives up its own painted light (take_light of countrytake.py: its luminance held to the region's colour by country.light darkest and brightest, the cast shadow of the cap's heights laid in), and under the approved picture, where the cap's heights are the picture's own (block fit), it takes the picture's broad tone from the laid ground: the mean over toneTexels texels of the plate, by toneFull and gain as before, no stroke of the laid picture being that wide. toneGain: the least and the most of that tone's factor (the picture's shadowed floor stands at 0.17 to 0.3 of its lit wall, country.light.fill; the limit only keeps a ratio of two means of black paint from running away). brightest: how far a take's bright side may stand over its region (log units, soft; country.light.brightest holds made ground). regionMost: how far a take's region may stand over the plateau's own colour (country.light.plateau; log units, soft). Both because a take is painted in full Sun and the cap lights it again.",
   "levels": {
    "0.3": "r03-take1-x2.png",
    "0.7": "r07-take1-x2.png",
@@ -708,12 +732,14 @@
   "gain": [
    0.5,
    2.0
-  ]
- },
- "seen": {
-  "note": "countrytake.py: outside the reach the laid ground is kept as well where an eye over the spot at eyeHeight (radii above the datum, the height of the film's eye in the change of view) sees the close ground squarely: the cosine between the ground's own vertical (from a<width>-height.npy) and the sight line, none under from, whole over to. So the faces that stand toward the eye keep the close view's own picture at any distance, and flat far ground, which that eye saw along itself, keeps the take seen from above. A fixed share on the ground: no height of the camera and no time is read.",
-  "eyeHeight": 0.0025,
-  "from": 0.15,
-  "to": 0.35
+  ],
+  "lay": false,
+  "toneTexels": 12,
+  "toneGain": [
+   0.1,
+   4.0
+  ],
+  "brightest": 0.25,
+  "regionMost": 0.25
  }
 }

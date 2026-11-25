@@ -1,5 +1,13 @@
 {
   "note": "The close view's own ground in the globe's scene (plan F, MAIL 578). In a dive and a rise the close view's meshes (src/terrain/relief.ts over relief.json) stand on the globe at their true place through the plan's twin frame, with their own light, haze and air, and are drawn by the globe side's eye in the same frame as the globe. presence: how much of them is there by the height of the eye over the unit sphere (radii, log scale): nothing above high, all of them from low down. The band lies where the close ground, a fan built for the close view's eye, fills the frame of the globe side (dive from about 2472, rise to about 2686); above it the place is the globe's own ground (cap.json, country.json). No time is read. The globe's own air (shell, halo, glint) leaves by the same share, so that at the change of view both sides draw the one scene.",
+  "law": {
+    "texel": [1, 2],
+    "air": [1, 2],
+    "farthest": 44.1083,
+    "edge": [0, 0, 0],
+    "seen": { "on": true, "file": "relief-seen.png", "scale": 8, "nearest": 2, "spare": 0.01, "soft": 0.02 },
+    "gap": { "on": false, "range": 0.5, "px": [0.5, 1], "from": 0.3, "to": 60, "steps": 500, "halvings": 6 }
+  },
   "presence": {
     "high": 0.0034,
     "low": 0.0019

@@ -12,6 +12,8 @@ import { patches, relief as reliefDefs, wrap } from './assets'
 import * as look from './look'
 import phobos from './phobos.json'
 import { plan } from './plan'
+import { closeLaw } from './law'
+import reliefJson from './relief.json'
 import skyFrame from '../../space/skyframe.json'
 import skyJson from './sky.json'
 import nearJson from './near.json'
@@ -60,12 +62,12 @@ export const createSet: SetFactory = async (ctx) => {
   const capLevels = []
   for (const l of country.levels) {
     const size = l.size[key]
-    capLevels.push({ height: heightTexture(ctx, new Uint16Array(await ctx.buffer(base + l.height)), size), size, widthDeg: l.widthDeg, low: l.low, high: l.high })
+    capLevels.push({ height: heightTexture(ctx, new Uint16Array(await ctx.buffer(base + l.height)), size), size, count: l.size.full, widthDeg: l.widthDeg, low: l.low, high: l.high })
   }
   const planet = new Planet({
-    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
+    map, mapWidth: wrap.sets.full.color[0], height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
     cap: { levels: capLevels, border: capJson.border as [number, number], from: capJson.from as [number, number], cells: capJson.cells, pixel: THREE.MathUtils.degToRad(60) / 1080, fine: capJson.fine, reachDeg: capJson.reachDeg, feather: patches.feather, fade: patches.fade, light: capJson.light },
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
+    patches: { textures: patchTextures, counts: patches.levels.map((l) => l.full), widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
       ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
@@ -106,6 +108,28 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(ground.group)
   // the share of the close view's ground is the set's to give (close.json): asked once here so its shader is built with the others
   ground.presence(1)
+  // The law of the stop (law.ts, close.json law): how much of the approved picture a ground point shows on the globe's own ground,
+  // by the size of the picture's texel on the present screen, by the air along the ray and by the picture's own field, and the tone
+  // the picture takes there. In the surface view the law is off (lawAir.z 0): share 1, tone 1, and the relief shields as before.
+  const lawTexel = { value: new THREE.Vector4(closeJson.law.texel[0]!, closeJson.law.texel[1]!, reliefJson.camera.focalPxFull, 1 / closeJson.law.farthest) }
+  const lawAir = { value: new THREE.Vector4(closeJson.law.air[0]!, closeJson.law.air[1]!, 0, 0) }
+  const lawEye = { value: new THREE.Vector3() }
+  const lawTone = { value: new THREE.Vector3(1, 1, 1) }
+  const [imageW, imageH] = reliefJson.imageSize.full as [number, number]
+  const lawBoxes = Object.values(reliefJson.layers).map((l) => l.box)
+  const lawSide = { value: new THREE.Vector4(Math.min(...lawBoxes.map((b) => b.x)) / imageW, Math.max(...lawBoxes.map((b) => b.x + b.w)) / imageW, Math.max(...lawBoxes.map((b) => b.y + b.h)) / imageH, Math.min(...lawBoxes.map((b) => b.y)) / imageH) }
+  // a side of 0 does not end (law.ts reads 0 as no count)
+  const lawOver = { value: new THREE.Vector4(...(closeJson.law.edge.map((e, i) => (e > 0 ? (i < 2 ? imageW : imageH) / e : 0)) as [number, number, number]), 0) }
+  // what the picture's own eye saw (seenby.py): 255 x nearest / front where two layers stand at one place of the picture
+  const lawSeen = { value: await ctx.texture(base + closeJson.law.seen.file, { srgb: false, mips: false, anisotropy: 1, channels: 1 } as TextureOptions) }
+  const lawSight = { value: new THREE.Vector4(closeJson.law.seen.on ? 1 : 0, 1 / closeJson.law.seen.nearest, closeJson.law.seen.soft, 0) }
+  // the gap of the cap from the picture's ground along the picture's rays (the lower half of the same file), and the picture's size
+  const lawGap = { value: new THREE.Vector4(closeJson.law.gap.on ? 1 : 0, closeJson.law.gap.range, closeJson.law.gap.px[0]!, closeJson.law.gap.px[1]!) }
+  const lawPicture = { value: new THREE.Vector2(imageW, imageH) }
+  // the eye at which the surface view takes over, in the relief's own frame: the one move's eye at the time of the change of view
+  const takenDive = plan.closePose('dive', handoverOf(plan.id, 'dive')!.time).position.clone()
+  const takenRise = plan.closePose('rise', handoverOf(plan.id, 'rise')!.time).position.clone()
+  ground.presenceLaw(closeLaw, { uLawTexel: lawTexel, uLawAir: lawAir, uLawEye: lawEye, uLawSide: lawSide, uLawOver: lawOver, uLawTone: lawTone, uLawSight: lawSight, uLawGap: lawGap, uLawPicture: lawPicture, uLawSeen: lawSeen }, { whole: () => lawAir.value.z < 0.5, tone: true })
   // In the globe's scene the close ground stands in front of the globe's own ground of the same place (the cap), which holds a made
   // ground where the close view's eye saw none: the depth is cleared between the close view's air and its meshes, so the meshes are
   // tested against each other only and the air, tested against the globe, lies on the sky alone. The whole of it is drawn after the
@@ -218,7 +242,8 @@ export const createSet: SetFactory = async (ctx) => {
         terrain.quaternion.identity()
         terrain.scale.setScalar(1)
         closeScene(false)
-        ground.presence(1)
+        lawAir.value.z = 0
+        ground.presence(1, { air: 1 })
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         return
       }
@@ -342,16 +367,19 @@ export const createSet: SetFactory = async (ctx) => {
       const moving = !ending && state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
       const c = closeJson.presence
       const there = moving ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(c.low)) / (Math.log(c.high) - Math.log(c.low))) : 0
-      terrain.visible = there > 0
+      terrain.visible = moving
       // the globe's own air leaves as the close view's air comes: one share by the height
       shell.material.uniforms.uGain!.value = gain * state.weight * (1 - there)
-      if (there > 0) {
+      if (moving) {
         const f = plan.twinFrame(state.time)
         terrain.position.copy(f.origin)
         terrain.quaternion.copy(f.rotation)
         terrain.scale.setScalar(f.scale)
         closeScene(true)
-        ground.presence(there)
+        lawAir.value.z = 1
+        lawTone.value.fromArray(ownGain)
+        lawEye.value.copy(state.segment.kind === 'dive' ? takenDive : takenRise)
+        ground.presence(1, { air: there })
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
       }
       const distance = world.position.length()

@@ -1225,3 +1225,216 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
   src/stops/mars or public/assets/mars differs from 2daa8f01; no engine branch is built on. Net of the three
   folders against main 12bfd7d5: about -11,040,000 bytes (the notebook grows by these lines). Ruling 2 is NOT
   done: the reasons and what it needs stand in the entries of 00:52 to 00:58.
+- 01:28 NAMED mail sent for 88d4f309548622f39a1f3de85bc015c83317c8a9 (pushed 01:26, looks 869fc066 at 01:27).
+  It says ruling 2 is not done, why the edge is not in, the two engine calls that would let it work, and the list
+  of what is still wrong. Waiting for /root's ruling on whether 2477 to about 2530 and 2677 to 2681 may change
+  where an apron stands. Next work that is mine whatever the ruling: the globe's own ground from low (the dome
+  lower right 2467 to 2471, the mounds, the strokes), since it is what would stand behind the aprons.
+- 01:35 MAIL 837 from /root (brief 238 still the task; this is its newest ruling). 88d4f309 is received and goes
+  to take batch 7; no judged round is spent on it. The technique changes (plateau rule): ONE GROUND for the
+  place. (a) a real terrain at the place in the globe's frame: heights from the relief's own depth, completed
+  where the approved picture does not see, and a picture of that same ground from above made from the same
+  points; the globe's patch at the place and this terrain are one thing. (b) the approved picture lies on that
+  terrain by projection from its own eye; how much of it a ground point shows is a law by place and eye (angle
+  between the present eye's ray and the approved eye's ray to the point, the ratio of the two distances, and the
+  test whether the approved picture sees the point); at T the weight is 1 everywhere. (c) the way out is the same
+  law backwards. "What I will not take is a law that brings a second ground over the first." Frames 2477 to about
+  2530 and 2677 to 2681 may change where an apron stood; 2580 keeps its bytes or changes only by what I name;
+  /root looks at 2477, 2490, 2505, 2520, 2681 as pairs at native size. Engine parts go to handover_engineer
+  (write to it myself), globe_engineer if a part is its. Times: plan by 02:10 UTC; looks every 30 minutes as
+  pairs at native size; first state at draft (2440, 2456, 2464, 2470, 2474, 2477, 2684 to 2689) by 03:45 UTC;
+  NAMED commit for round 1 of 3 by 05:45 UTC.
+- 01:43 UTC. Three asks to handover_engineer: (1) a law per fragment for the share of the approved picture on its
+  relief, (2) the air's share apart from the layers' share, (3) the aprons at T. 01:44 plan mail to /root: the
+  ONE ground is the globe's cap (country-*.bin, land-*.jpg); the approved picture lies on it through its own
+  relief with a share by place and eye; the air by height. Times: law by a local patch until 02:45, first state
+  03:45, cap assets commit 04:45, proof 05:15, NAMED 05:45.
+- 01:56 UTC. handover_engineer: ask 1 `ground.presenceDetail([from, to], { size })` (Jacobian law), ask 2
+  `presence(share, { air: airShare })`, both on agent/engine-edge NAMED by 03:00. Ask 3 by way (1): an engine
+  pass "under": `plan.under(time)`; in such a sample `update` is called twice, first with state.view 'orbit' and
+  view.under true and the globe camera (draw planet, cap, shell, leave the close ground out), then the engine
+  clears the depth and calls update with the surface state. NAMED by 04:30. T stays 2477 and 2681.
+- MAIL 839 (/root): plan accepted with its times. Conditions: (1) where the share is between 0.02 and 0.98 the
+  cap and the relief stand under one master pixel apart on screen: measure every tenth capture frame of dive and
+  rise, largest and 99th percentile px, table in the NAMED mail; where over, the cap's heights are fitted to the
+  relief (never the picture); what stays over is named "two grounds here". (2) limits of the law are geometric,
+  none tuned by eye, none a height. (3) the smudge is the cap's own picture seen from near (2456 to 2474): my
+  list plus detail from code by place under the plate wherever a plate texel is wider than a master pixel
+  (strata, scree, with real height in the cap's normal); no blur, no share by height; G13 by frame on the new
+  state. (4) engine dates as above; cherry pick its named commits; if the under pass is not there by 05:15 the
+  NAMED commit keeps the aprons at T on both sides and says so in its first line. (5) depth cleared between cap
+  and relief: any frame that shows a far part of the relief over a nearer hill of the cap goes to both at once.
+  (6) 60 fps dive on the machines. (7) 88d4f309 goes into batch 7. New numbers of the present rise (6ccc838):
+  pop 2.12 at 2688 + 1/2 (8 over, first 2686), pattern 1.36 from 2692 + 1/2 (50 over, first 2682 + 1/2); pop 1.29
+  at 2708 (4 over), pattern 0.90 from 2708 + 1/2 (21 over): name what happens at 2707 to 2712. Main is
+  aeffd516 since 01:47 (batch 6, nothing in my folders): merge before the NAMED commit.
+- 01:45 to 02:00 UTC, trials by a local patch of the layer shader (set.ts, NOT committed). MEASURED:
+  (a) the Jacobian law alone (1 to 3 px): from 2456 down nearly every texel of the relief is under a pixel on
+  screen, so the whole relief stands in from above: a white fan of the far sheets at 2456 and 2464 (looks
+  n56-a.jpg, n56-2456-fan.jpg). Cause: the relief's depth is compressed (dist range L1 2.1 to 6.2, L2 5.7 to
+  16.5, L0 3.5 to 44.1 units of the picture's eye height), its far ground stands as upright sheets.
+  (b) the eye in the relief's own frame (out/work/place/eyes.ts, from the plan): 2456 (-8.19, 6.75, 12.75),
+  2464 (-2.43, 1.58, 5.24), 2470 (-1.01, 0.52, 2.74), 2474 (-0.56, 0.23, 1.82), 2476 (-0.42, 0.14, 1.50);
+  surface view 2477 (-0.150, -0.030, 0.828), 2580 (0, 0, 0.002), 2681 (0.609, 0.016, -0.450); rise 2684 (0.09,
+  0.44, 1.05), 2690 (-1.14, 1.65, 3.77), 2700 (-11.96, 16.56, 19.21). So the surface view's eye is 0.84 units
+  from the picture's eye at T of the dive and 0.76 at T of the rise: a plain angle against the picture's eye is
+  up to 23 degrees on the near ground at T and cannot give 1 there.
+  (c) 02:01 told handover_engineer; asked for the count on the ground the texel shows (level ground at P: strip
+  |P| / f wide, |P| / (f sin g) long, seen from the present eye), as presenceDetail's law or as a law function
+  the stop gives. Trial of it running.
+- 02:05 to 02:54 UTC, handover_engineer: the law hook. `ground.presence(share, { air })` (name air every time);
+  `ground.presenceLaw(text, uniforms, { whole, tone: true })`; uniforms uLaw + own name; the engine gives uLawFocal
+  and uLawFrame. Its commit 6561b5a5 (agent/engine-edge) merged here locally, then origin main 63cf4b21 (local
+  HEAD 75564ca0, not pushed). The under pass is due 04:30 on take/b8's tip: `StopPlan.under(seg, time)`,
+  `RenderView.under` 'globe' then 'relief'.
+- 02:36 UTC, MEASURED and mailed: the black wedge with the needle tip (2444 to 2459, 2701) is a slab of apron ground
+  in the country's heights (apronheights.py). MAIL 859: accepted, the aprons go out of the heights in the cap commit.
+  Main's heights (no aprons) laid in public; the wedge is gone in the q frames.
+- 02:40 to 03:03 UTC. The law of the stop is `src/stops/mars/law.ts` (closeLaw): share = texel x air x field x seen.
+  texel: the relief picture's texel on the present screen, full at or under 1 px, none at 2. air: sine of the sight
+  on the ground now over the sine as taken, full at or under 1, none at 2. field: the picture's own field. seen:
+  `relief-seen.png` (seenby.py), what the picture's eye sees of the ground. Numbers in close.json block law.
+  Plates: takes alone (plates.json takes.lay false, block seen out), chain in out/work/place/g1 (c full, wc web).
+- 02:57 UTC, MAIL 865: bodies-mars.patch and count-mars.patch. count-mars applied by git apply; bodies-mars first hunk
+  does not fit (context line of a comment differs: plan.ts here names pullBack), laid in by hand. Also: main's
+  close ground comes in by a weight of the eye's height over 6 and 4 film frames; the one ground has no such
+  weight; the NAMED mail states the span over which the relief gains its detail (not shorter than the dive's
+  second half). MAIL 870: the smudge is in the film's picture and not in the player; judged on 2430 to 2470 first.
+- 03:03 UTC, q frames (candidate, draft) LOOKED AT: wedge gone; q2477 equals main's 2477 by bytes; a dark slab of
+  the cap's made ground stands right of and in front of the picture at 2464 to 2474 and 2684 to 2689 with hard
+  polygon borders; a pitted strip at its foot; the relief at 2448 to 2459 has a hard straight east side and is
+  darker than the cap round it; strokes on the cap's west wall at 2470; red patches on the far plateau 2440 to
+  2459. Against main the plateau has relief and texture at 2440 and 2456 where main is a smooth sheet.
+- 03:04 UTC looks pushed (q sheet, native crops, gap maps, plates, fit-before).
+- 03:05 to 03:16 UTC. `fitheights.py` (new): (1) picture ground of the cap takes the picture's own height out to
+  fit.toDeg, a membrane carries it into the made ground; (2) made ground outside the picture's field is lowered
+  until it hides no picture ground for the lenses at T (2477, 2681); (3) slope kept by ground.cone_under. With 25
+  lenses along the moves it lowered 10 km on 40 to 57 percent of the fine plates (a lens far from the picture's
+  eye sees true rims hide ground): cut to the two lenses at T. Run 03:15: 3.8 deg fitted 0.0345 of the plate,
+  most 1601 m; 1.6 deg 0.1872, 1962 m; 0.7 deg 0.1818, 1328 m, 99th left 7.5 m; 0.3 deg 0.1222, 714 m, 99th left
+  8.3 m; lowered 0.0001, 0.0007, 0.0051, 0.0269 of the plates, most 1.0 km.
+- 03:17 UTC, gap after the fit (largest / 99th px): 2440 32.67 / 2.85; 2456 220 / 50.7; 2464 348 / 103; 2470 330 /
+  139; 2474 252 / 76; 2476 209 / 63 (169 points); 2684 175 / 122; 2688 397 / 131; 2692 355 / 90; 2700 126 / 26.
+  NOT better than before the fit. By the angle from the eye's foot (2464, 2470, 2688): height apart median 7 to
+  25 m, but the 90th percentile 1.8 to 2.0 km at 0.2 to 0.4 degrees and 2.0 to 4.2 km beyond 0.7 degrees. So the
+  fit holds where the cap's texel shows the same ground as the relief's point; the rest is ground the cap holds at
+  another height (hidden walls, the far sheets). Cause not yet found (see next entry).
+- 03:18 UTC, litcheck.py (plates times 1 + lift of the fitted heights): gain over 2 on 0.2, 0.6, 2.0, 5.3 percent of
+  the plates 3.8, 1.6, 0.7, 0.3; lit 99.9th 0.50, 0.62, 0.66, 0.96 (scene values). The red glow is the cap's light
+  on Sun facing steep ground laid over a take that carries its own painted light.
+- 03:18 UTC, globe_engineer: preview of the cap detail hook (detail-hook-preview.patch, src/bodies cap.ts and
+  planet.ts); `groundDetail(dir, height, normal, texelPx)`; exactly 1.0 and 0.0 where off (a product with step);
+  fade the height by texelPx; three calls a fragment. NAMED about 04:00.
+
+### 24 November, 03:28 to 03:45 UTC (cap commit, work)
+
+- 03:28 first state mail sent to /root. MAIL 879 back at 03:27: the order of the faults stands; (a) the texel term must read the
+  longer axis of a texel's footprint on the present screen, (b) the field's share has to be nil where the two surfaces stand
+  over one pixel apart; the gap table again with the share of drawn pixels that hold a share over 0.02 while the gap is over one
+  pixel. Times stand: cap 04:45, proof 05:15, NAMED 05:45.
+- The red glow of the far plateau: the takes carry their own painted light and the cap's light of the heights is laid over it
+  (litcheck: the cap's light gain is over 2 on 0.2, 0.6, 2.0 and 5.3 percent of the plates 3.8, 1.6, 0.7, 0.3). Cure in
+  countrytake.py, take_light: a take's luminance is held to its region's colour (country.light darkest, brightest) and the cast
+  shadow of the cap's heights is laid in. Chain g2: painted light held on 0.51 to 0.69 of the plates, cast shadow on 0.14 to 0.35.
+- (a) law.ts: the texel term read a model, the footprint of a texel on level ground (the longer of across and along). It now
+  reads also the relief surface's own footprint from the screen derivatives of the place in the picture (one over the smaller
+  singular value of picture pixels over buffer pixels, by uLawFrame in master pixels); the larger of the two counts.
+- (b) built and measured, then turned off. seenby.py bakes, for every place of the picture, how far the cap stands from the
+  picture's ground along the picture's own ray (|e| median 0.0007, 90th 0.14 of the distance; within 0.002 on 0.603 and within
+  0.01 on 0.671 of 315911 places). The law took the share to nil where that gap is over one pixel for the present eye. Frames
+  s2456, s2464, s2470, s2476 (out/work/place/eng56, pairs in looks): the count cuts ribbons 20 to 60 px wide into the picture along
+  every outline of its layers (the foot of the mesa, the far wall, the east side), the cap shows through them in another light,
+  and 2476 against 2477 gets worse (mean difference 13.27 against 9.74, share over 16 levels 0.335 against 0.242). Reading: the
+  cap is one height a place, the picture has walls seen from the side; along an outline no fit of heights can close the gap,
+  so a count that is nil there is a hole and not a border. close.json law.gap.on false; the term stays in law.ts and the measure
+  in gap.py; the file relief-seen.png holds the lower half only while the count is on (873 by 444, 14 kB as it stands).
+- Memory: with both halves the gate gave "FAIL G15  mars/full uses 1400 MB, limit 1400"; one half is measured below.
+- The takes under the picture: where the cap's heights are the picture's own (block fit), a take now carries the picture's
+  broad tone from the laid ground (take_light, toneTexels 12 texels of the plate, the laid ground's light of the old heights
+  taken off and the fitted heights' light left to the cap). Chain g3: tone on 0.51 (0.7 plate) and 0.72 (0.3 plate) of the plates.
+  This is the cure tried for the dark piece with the hard border at 2456 and 2459 (the picture in its own shadow on a cap in
+  full light). Frames t (gap off, J term, chain g3) rendering from 03:44.
+- 03:48 globe_engineer: the cap's detail hook is NAMED, 7b482c07 on agent/engine-globe (bundle from main; fetched as
+  refs/remotes/bundle/engine-globe). travel_builder 03:50: its fit of 2745 to 2819 is NAMED 2b91ffd7 on my 88d4f309; it needs no
+  roll at 2744; tell it the sha if the rise's end moves.
+- 03:50 frames t (gap off, J term, chain g3) looked at as pairs beside main (looks b7f1ca7a, 03:52). What stands: 2440 and 2448
+  the plateau has relief and grain; the red glow north of the canyon is still there (2448, upper middle); 2456 and 2459 the
+  picture's piece is a dark island with a hard border and round it the toned cap makes a brown polygon with straight sides and
+  purple fringes (the laid ground's hue is the picture's air drawn out); 2464 the mesa stands, a hard dark foot at the lower
+  side; 2470, 2474, 2476 close to main; 2476 far left a pale striped slab of cap at the limb, new with the J term; rise 2684 and
+  2688 the east slab and a dark piece lower right with coloured specks. t2477 equals main's 2477 by bytes.
+- Cures laid in at 03:49 to 03:56. take_light: on steep ground (|lift| over country.light.steep) the take's light and dark go
+  to nothing and its hue comes back to the region's (hue, hueMost), the numbers relight.py holds made ground by. The picture's
+  tone is light and dark alone (one factor for the three colours) with takes.toneGain 0.1 to 4. law.ts: the limb slab is far
+  ground of the picture whose texels are longer than the limit at the eye of T itself (the surface view shows it whole there),
+  so the texel count is taken against the limit or the length at that eye, whichever is longer (whole at T for every point).
+  The exception "outside the picture's own sides only the level reading counts" changed 0.13 percent of the pixels of 2476 and
+  did not take the slab away; it stays in as true (the margins have no texels of their own).
+- The gate with relief-seen.png of one half: "PASS G15  at most 2 sets per frame; finished stops: mars/web 418 MB, mars/full
+  1400 MB". G11 wanted the file's path with <set> in a recipe: written into RECIPE.md.
+
+### 24 November, 03:56 to 04:12 UTC (cap commit, measures)
+
+- Frames v (chain g6, the texel count against the eye of T): the pale slab at the limb of 2476 is gone; the purple fringes of
+  2456 are gone (tone by light and dark alone); the red glow of 2448 stood as before. Cause found in the plates themselves:
+  0.34 percent of land-3p8 and land-1p6 stand over 200 in red at twice the green, main's plates none. Chain g7: the take's hue
+  held to its region's everywhere (country.light hue 0.3, hueMost 0.2). Frames w, x on g7.
+- The gap table on the fitted heights, gap count off (gap.py; the share is the law's without the reading of the surface's own
+  footprint, so at or over the law's): out/work/place/gap-cap-table.txt. Of all relief points with a share over 0.02, the share
+  that stands over one pixel of the master from the cap, by place and along the picture's ray: 2400 0.0000, 0.0000; 2420
+  0.0002, 0.0052; 2430 0.0008, 0.1397; 2440 0.1553, 0.2260; 2450 0.2629, 0.2448; 2456 0.3036, 0.3055; 2460 0.3202, 0.3175; 2464
+  0.3397, 0.3221; 2470 0.3736, 0.3338; 2474 0.3855, 0.3251; 2476 0.3913, 0.3217; 2684 0.3624, 0.2862; 2688 0.3676, 0.3361; 2690
+  0.3367, 0.3108; 2692 0.3169, 0.3044; 2700 0.2757, 0.2795; 2710 0.0031, 0.2121; 2720 0.0002, 0.0002; 2740 0.0002, 0.0000. Of the
+  points with a share between 0.02 and 0.98 (largest, 99th percentile px by place): 2440 32.67, 2.85; 2450 119.40, 25.27; 2456
+  220.16, 50.68; 2460 292.70, 74.82; 2464 348.23, 102.66; 2470 329.82, 138.87; 2474 251.91, 76.33; 2476 208.91, 63.49 (169
+  points); 2684 174.83, 122.40; 2688 396.67, 131.19; 2690 398.33, 110.56; 2692 354.55, 89.63; 2700 126.02, 26.29; 2710 10.38,
+  0.82. Plainly: about a third of the picture that shows from 2450 to 2700 stands on a cap that is more than a pixel away.
+  TWO GROUNDS HERE: 2440 to 2476 and 2684 to 2710, at the outlines of the picture's layers (the foot and the rim of the mesa,
+  the far wall, the east side) and in its margins.
+- Sides at T (`npm run handover -- --stop mars --only sides --tier draft`). State v (seen count on): dive mean 0.14, 99th 3,
+  pass; rise mean 0.433, 99th percentile 22, FAIL, the difference along the outlines of the layers: the seen count cuts
+  drawn out ground the surface view itself shows as a band at T. Seen count off (frames w): dive mean 0.008, 99th 0, max 13;
+  rise mean 0.006, 99th 0, max 6; but the drawn out ground comes back as a grey flat sheet behind the mesa at 2456 and 2464.
+  Cure laid in at 04:10: the seen count is whole for a sight no farther off the picture's ray than the sight of the eye of T,
+  and as before from twice that angle on (the limits of the air count). Frames x.
+- Disc: the handover tool refused to start under 3 GB free; old work folders of out/work/place deleted (3.7 GB free).
+- Net of the three folders against origin/main 92c5f998 (working tree): public/assets/mars +3,046,649; assets-src/mars
+  -21,295,281; src/stops/mars +25,669; together -18,222,963 bytes.
+
+### 24 November, 04:12 to 04:20 UTC (state x, looks, the red glow)
+
+- Sides of state x (seen count with the angle term): dive mean 0.008, 99th percentile 0, max 13; rise mean 0.006, 99th percentile
+  0, max 6: both pass, the same numbers as with the seen count off. x2477 equals main's 2477 by bytes (draft).
+- Frames x against w (seen count off): the grey drawn out sheets behind the mesa at 2456 and 2464 are gone with the angle term; the
+  cap's ground stands there (a flat red sand patch behind the mesa at 2470, top left: the cap has no fitted height where the
+  picture's eye saw nothing).
+- Looks pushed 04:18 (agent/mars-place-looks c34866b9): pairs main beside x at native size 2440, 2456, 2464 (both halves), 2470,
+  2476, 2688, whole frames 2448, 2456, 2459, 2474, 2684. (Three of the labels say "main left": wx-2456 and wx-2464 are w left and x
+  right, glow-x-2448 is v left and x right.)
+- Seen and wrong in x, worst first: (1) 2456 and 2459, the picture's dark piece stands as an island with a hard border, round it a
+  brown polygon with straight sides (the toned cap); (2) 2464, right half: the picture's east part stands as a sheet with a
+  straight side and a drawn out zigzag foot (MAIL 879 b; main has a dark slab there); (3) the red glow north of the canyon at 2440
+  and 2448 (0.9 percent of the frame over 200 in red at twice the green at 2448, main none); (4) 2470: flat red sand behind the
+  mesa top left and a dark diagonal streak top right; (5) 2688, lower edge: red sand under the drawn out foot of the picture.
+- The red glow: the hue hold halved the hot share of the plates (3.8: 0.0034 to 0.0016) and left the glow. Measured in scene
+  luminance: the plates of 3.8 and 1.6 degrees stand at 0.18 at the 99th percentile against 0.10 and 0.12 on main, their regions
+  up to 0.125 and 0.155 against 0.085 and 0.11 (the plateau's colour is 0.079). The takes are painted in full Sun and the cap
+  lights them again. Cure: takes.brightest 0.25 (the bright side over the region) and takes.regionMost 0.25 (the region over the
+  plateau), both soft, log units, in plates.json; chain g8, frames y.
+
+### 24 November, 04:20 to 04:32 UTC (the red glow traced, cap commit)
+
+- brightest and regionMost alone (chain g8, frames y) left the glow: 2448 0.0087 against 0.0091. Traced by the plates of each
+  step: the takes after take_light hold no hot texel (g9/a, 3.8 degrees and under: 0), the pyramid none but the border from
+  8.5; `landunder.py` lays the forms of the patch above into the plates with a gain up to 2 and brought it back (g9/c 1.6
+  degrees: 0.0032). Cure: take_light holds the whole of a take (the picture's tone too) to regionMost and brightest together
+  over the plateau, and landunder.py holds the forms to the same limit, never under what the plate held before. Plates after:
+  hot share 8.5: 0.0013, 3.8: 0.0009, 1.6: 0.0002, 0.7 and 0.3: 0. Frame 2448 (state z): 0.0047 of the pixels hot against 0.0091
+  (main 0.0000), 99.9th percentile of red 219 against 234 (main 178). Less, redder in hue, NOT gone: what stands is the cap's
+  own light on the takes' Sun side (1 + lift, up to 2.6) and the plate of 8.5 degrees, which is not a take.
+- Gate on the cap state: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops:
+  mars/web 418 MB, mars/full 1400 MB". tsc clean. Net against origin/main 92c5f998: public/assets/mars +1,988,566, assets-src/mars
+  -21,285,984, src/stops/mars +25,669, together -19,271,749 bytes.
+- Not done in the cap commit, said in it: the under pass (agent/engine-under 9ea28c24 not pulled, the aprons stay at T, law.edge
+  0); the gap count of MAIL 879 (b) built and off; the detail hook (detail.ts written, wired in the next commit after the merge
+  of agent/engine-globe 7b482c07).

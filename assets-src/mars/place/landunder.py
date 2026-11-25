@@ -26,6 +26,7 @@ import argparse
 import json
 import math
 import os
+import sys
 
 import cv2
 import numpy as np
@@ -34,6 +35,10 @@ from PIL import Image, JpegImagePlugin
 Image.MAX_IMAGE_PIXELS = None
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 RADIUS_KM = 3389.5
+
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import geom  # noqa: E402
 
 
 def half(width):
@@ -57,12 +62,15 @@ def main():
     ap.add_argument('--plates', default=os.path.join(ROOT, 'assets-src', 'mars', 'place', 'plates.json'))
     ap.add_argument('--json', default=os.path.join(ROOT, 'src', 'stops', 'mars', 'levels.json'))
     ap.add_argument('--look', default='')
+    ap.add_argument('--base', default='', help='folder of the levels above the land and of country-8p5.bin as they stand before this step (default: the set in public)')
     args = ap.parse_args()
     K = json.load(open(args.plates))['under']
+    T = json.load(open(args.plates))['takes']
+    LIGHT = json.load(open(args.plates))['country']['light']
     levels = json.load(open(args.json))['levels']
     own = [l for l in levels if l.get('own')]
     above = levels[levels.index(own[0]) - 1]
-    base = os.path.join(ROOT, 'public', 'assets', 'mars', args.set)
+    base = args.base or os.path.join(ROOT, 'public', 'assets', 'mars', args.set)
     os.makedirs(args.out, exist_ok=True)
     top = Image.open(os.path.join(args.dir, own[0]['file']))
     O = np.asarray(top.convert('RGB')).astype(np.float32)
@@ -129,6 +137,19 @@ def main():
         z = c / mm
         A = np.float32([[z, 0, -z * (n - mm) / 2 + (z - 1) / 2], [0, z, -z * (n - mm) / 2 + (z - 1) / 2]])
         g = np.exp(cv2.warpAffine(field, A, (c, c), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT))
+        if T.get('regionMost'):
+            # the forms may not lift a plate over what a take itself may stand over the plateau's own colour (takes.regionMost and
+            # takes.brightest, countrytake.py take_light): the cap lights the plate again, and ground lifted by the forms stood as
+            # glowing red on the far plateau (MAIL 849, b). Soft, and never under what the plate held before the forms.
+            wl = np.array([0.2126, 0.7152, 0.0722], np.float32)
+            floor = float(np.dot(LIGHT['plateau'], wl))
+            top = T['regionMost'] + T.get('brightest', LIGHT['brightest'])
+            had = np.log(np.maximum(geom.scene_of(pic / 255.0).astype(np.float32) @ wl, 1e-5) / floor)
+            S = geom.scene_of(np.clip(pic * g[..., None], 0, 255) / 255.0).astype(np.float32)
+            over = np.log(np.maximum(S @ wl, 1e-5) / floor)
+            held = np.where(over > 0, np.maximum(top * np.tanh(over / top), np.minimum(over, had)), over)
+            pic = geom.texel_of(S * np.exp(held - over)[..., None]) * 255
+            g = np.ones_like(g)
         out = np.clip(pic * g[..., None] + 0.5, 0, 255).astype(np.uint8)
         Image.fromarray(out).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)
         print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])), 'gain %.2f to %.2f' % (float(g.min()), float(g.max())))

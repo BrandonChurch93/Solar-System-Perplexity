@@ -75,8 +75,131 @@ def facing(h, width, eye_height):
     return cv2.GaussianBlur(f, (0, 0), 1.0)
 
 
+class Heights:
+    """The cap's height plates (country.json and the bins of one set), read at plane coordinates (tangents east and north)."""
+
+    def __init__(self, folder, doc):
+        self.levels = []
+        for L in doc['levels']:
+            n = L['size']['full']
+            h = L['low'] + np.fromfile(os.path.join(folder, L['height']), '<u2').reshape(n, n).astype(np.float32) / 65535 * (L['high'] - L['low'])
+            self.levels.append((L['widthDeg'], h))
+
+    def at(self, x, y, least):
+        """The ground at (x, y) from the levels at least `least` degrees wide, the finest inside first."""
+        out = np.zeros(x.shape, np.float32)
+        for w, h in self.levels:
+            if w < least:
+                continue
+            t, n = half(w), h.shape[0]
+            v = cv2.remap(h, ((x / t + 1) / 2 * n - 0.5).astype(np.float32), ((1 - y / t) / 2 * n - 0.5).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+            out = np.where(np.maximum(np.abs(x), np.abs(y)) < t * (1 - 1.0 / n), v, out)
+        return out
+
+
+def lift_of(h, width, Lg):
+    """1 + lift, the factor the cap's light gives the heights' normal (plates.json country.light.note)."""
+    sun = geom.scene_sun(Lg['sunMoment'])
+    gy, gx = np.gradient(h, 2 * half(width) / h.shape[0])
+    ndl = (-gx * sun[0] + gy * sun[1] + sun[2]) / np.sqrt(gx * gx + gy * gy + 1)
+    return 1 + np.clip((ndl - sun[2]) / max(sun[2] + Lg['wrap'], 0.06), -0.85, 1.6)
+
+
+def take_light(take, width, Lg, heights, K=None, laid=None, known=None, before=None, fit=None):
+    """A take is a picture with its own painted light. On the cap the light is the heights' (the cap lights every slope, 1 + lift),
+    so the take keeps its ground and gives up its light: in the log of scene values its luminance may leave the colour of its region
+    (the mean about a texel, regionDeg wide, at most regionShare of the plate) by no more than `darkest` down and `brightest` up
+    (a soft limit, tanh; the numbers of country.light, as relight.py holds made ground), so no blot of paint stands as a pit and no
+    painted Sun side glows under the cap's own light. Then the cast shadow of the cap's heights is laid in for the scene's Sun
+    (open share of the Sun's disc; shadowed ground keeps `fill`), since the cap's light casts none."""
+    c = take.shape[0]
+    S = geom.scene_of(take / 255.0).astype(np.float32)
+    lum = np.maximum(S @ np.array([0.2126, 0.7152, 0.0722], np.float32), 1e-4)
+    sig = min(Lg['regionDeg'], Lg['regionShare'] * width) / (width / c) / 2
+    k = max(int(sig / 24), 1)
+    region = cv2.resize(cv2.GaussianBlur(cv2.resize(lum, (c // k, c // k), interpolation=cv2.INTER_AREA), (0, 0), sig / k), (c, c), interpolation=cv2.INTER_LINEAR)
+    d = np.log(lum / np.maximum(region, 1e-4))
+    # a take is painted in full Sun: its bright side may stand over its region by `brightest` of the takes, and the region itself over
+    # the plateau's own colour (country.light.plateau) by `regionMost`, both soft (log units). Measured before these two: the 99th
+    # percentile of the plates of 3.8 and 1.6 degrees stood at 0.18 in scene luminance against 0.10 and 0.12 on main, the regions up
+    # to 0.155 against 0.11; under the cap's light that stood as glowing red patches on the far plateau (MAIL 849, b)
+    bright = (K or {}).get('brightest', Lg['brightest'])
+    held = np.where(d > 0, bright * np.tanh(d / bright), Lg['darkest'] * np.tanh(d / Lg['darkest']))
+    most = (K or {}).get('regionMost')
+    if most:
+        over = np.log(np.maximum(region, 1e-4) / float(np.dot(Lg['plateau'], [0.2126, 0.7152, 0.0722])))
+        held = held + np.where(over > 0, most * np.tanh(over / most) - over, 0)
+    # where the heights stand steep the cap's light is the whole light: there the take's own light and dark go to nothing (|lift|
+    # over `steep`). Everywhere the take's hue comes back to the region's by `hue`, at most hueMost (log units), as relight.py
+    # holds made ground: the takes paint lit ground a saturated red (0.3 to 0.7 percent of the plates of 3.8 and 1.6 degrees
+    # stood over 200 in red at twice the green), which under the cap's light stood as glowing patches on the far plateau
+    # (MAIL 849, b)
+    own = [h for w, h in heights.levels if w == width][0]
+    steep = np.clip(np.abs(cv2.resize(lift_of(own, width, Lg).astype(np.float32), (c, c), interpolation=cv2.INTER_LINEAR) - 1) / Lg['steep'], 0, 1)
+    held = held * (1 - steep)
+    blur = lambda m: cv2.resize(cv2.GaussianBlur(cv2.resize(m, (c // k, c // k), interpolation=cv2.INTER_AREA), (0, 0), sig / k), (c, c), interpolation=cv2.INTER_LINEAR)
+    for i in range(3):
+        tint = np.log(np.maximum(S[..., i], 1e-5) / lum) - np.log(np.maximum(blur(S[..., i]), 1e-5) / np.maximum(region, 1e-4))
+        S[..., i] *= np.exp(np.clip(Lg['hue'] * tint, -Lg['hueMost'], Lg['hueMost']) - tint)
+    S *= np.exp(held - d)[..., None]
+    # the cast shadow of the heights
+    n = [h.shape[0] for w, h in heights.levels if w == width][0]
+    t = half(width)
+    at = ((np.arange(n) + 0.5) / n * 2 - 1) * t
+    x = np.broadcast_to(at[None, :], (n, n)).astype(np.float32)
+    y = np.broadcast_to(-at[:, None], (n, n)).astype(np.float32)
+    sun = geom.scene_sun(Lg['sunMoment'])
+    flat = float(np.hypot(sun[0], sun[1]))
+    h0 = heights.at(x, y, width)
+    open_ = np.ones((n, n), np.float32)
+    size = np.radians(Lg['sunSizeDeg'])
+    for u in np.geomspace(2 * t / n, Lg['shadowKm'] / 3389.5, Lg['steps']):
+        occ = heights.at(x + sun[0] / flat * u, y + sun[1] / flat * u, width)
+        open_ = np.minimum(open_, np.clip(0.5 + (h0 + u * sun[2] / flat - occ) / (u * size), 0, 1))
+    open_ = cv2.resize(cv2.GaussianBlur(open_, (0, 0), 0.8), (c, c), interpolation=cv2.INTER_LINEAR)[..., None]
+    shade = open_ + (1 - open_) * np.array(Lg['fill'], np.float32)
+    toned = 0.0
+    if laid is not None:
+        # under the approved picture the cap is the picture's own ground (fitheights.py), so there the take carries the picture's broad
+        # tone: the mean colour of the laid ground over toneTexels texels of the plate (no stroke of the laid picture is that wide),
+        # as the cap's light of the heights it was laid for showed it, over the light of the heights as they stand. The take keeps
+        # its own grain. The picture's tone holds its own shadows, so the cast shadow is laid in only where the tone is not.
+        A = geom.scene_of(laid / 255.0).astype(np.float32)
+        own = [h for w, h in heights.levels if w == width][0]
+        was = [h for w, h in before.levels if w == width][0]
+        up = lambda m: cv2.resize(m, (c, c), interpolation=cv2.INTER_LINEAR)
+        A *= up((lift_of(was, width, Lg) / lift_of(own, width, Lg)).astype(np.float32))[..., None]
+        at = ((np.arange(c) + 0.5) / c * 2 - 1) * t
+        foot = np.degrees(np.arctan(np.hypot(at[None, :], at[:, None]))).astype(np.float32)
+        m = known * (1 - smooth((foot - fit['toDeg']) / (fit['goneDeg'] - fit['toDeg'])))
+        sg = K['toneTexels']
+        den = cv2.GaussianBlur(m, (0, 0), sg)
+        k = smooth(den / K['toneFull'])[..., None]
+        # the tone is the laid ground's light and dark alone, one factor for the three colours: the laid ground's hue holds the
+        # picture's air drawn out along its rays (the blue and white streaks of MAIL 850), which is not the ground's
+        wl = np.array([0.2126, 0.7152, 0.0722], np.float32)
+        ratio = cv2.GaussianBlur((A @ wl) * m, (0, 0), sg) / np.maximum(cv2.GaussianBlur((S @ wl) * m, (0, 0), sg), 1e-5)
+        gain = np.clip(np.where(den > 1e-3, ratio, 1), K['toneGain'][0], K['toneGain'][1])[..., None]
+        S *= np.exp(np.log(gain) * k)
+        shade = 1 + (shade - 1) * (1 - k)
+        toned = float((k > 0.5).mean())
+    S *= shade
+    # the whole of it, the picture's tone too (the laid ground holds the picture's Sun lit plateau), may stand over the plateau's own
+    # colour by no more than regionMost and brightest together, soft: the cap lights the plate again
+    if most:
+        wl = np.array([0.2126, 0.7152, 0.0722], np.float32)
+        top = most + bright
+        over = np.log(np.maximum(S @ wl, 1e-5) / float(np.dot(Lg['plateau'], wl)))
+        S *= np.exp(np.where(over > 0, top * np.tanh(over / top) - over, 0))[..., None]
+    return geom.texel_of(S) * 255, float(1 - open_.mean()), float((np.abs(held - d) > 0.05).mean()), toned
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument('--heights', default=os.path.join(ROOT, 'public', 'assets', 'mars', 'full'), help='the height plates of the cap (full set), for the light of a take')
+    ap.add_argument('--country', default=os.path.join(ROOT, 'src', 'stops', 'mars', 'country.json'))
+    ap.add_argument('--heights-laid', default=os.path.join(ROOT, 'out', 'work', 'place', 'keep-state', 'assets', 'full'), help='the height plates the laid ground was made for (the plates of country.py, before fitheights.py)')
+    ap.add_argument('--country-laid', default=os.path.join(ROOT, 'out', 'work', 'place', 'keep-state', 'stop', 'country.json'))
     ap.add_argument('--dir', required=True)
     ap.add_argument('--laid', required=True)
     ap.add_argument('--out', required=True)
@@ -92,6 +215,8 @@ def main():
     os.makedirs(args.out, exist_ok=True)
     wide, mask = reach_mask(R)
     g = mask.shape[0]
+    heights = Heights(args.heights, json.load(open(args.country))) if not K.get('lay', True) else None
+    before = Heights(args.heights_laid, json.load(open(args.country_laid))) if not K.get('lay', True) else None
     for l in own:
         f = Image.open(os.path.join(args.dir, l['file']))
         q, s = dict(f.quantization), JpegImagePlugin.get_sampling(f)
@@ -105,6 +230,13 @@ def main():
         take = np.asarray(Image.open(os.path.join(args.takes, name)).convert('RGB')).astype(np.float32)
         take = cv2.resize(take, (c, c), interpolation=cv2.INTER_LANCZOS4 if take.shape[0] < c else cv2.INTER_AREA)
         per = c / l['widthDeg']  # texels a degree, near enough at these widths
+        if not K.get('lay', True):
+            # the one ground carries no copy of the close picture: the take alone, at its own tone (MAIL 837, MAIL 849)
+            known = np.asarray(Image.open(os.path.join(args.laid, l['file'].replace('.jpg', '-laid.png'))).convert('L')).astype(np.float32) / 255
+            take, shadow, held, toned = take_light(take, l['widthDeg'], P['country']['light'], heights, K, laid, known, before, P['fit'])
+            Image.fromarray(np.clip(take + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)
+            print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])), name, 'the take alone; its painted light held on %.3f of the plate, cast shadow of the heights on %.3f, the picture\'s broad tone on %.3f' % (held, shadow, toned))
+            continue
         m = np.asarray(Image.open(os.path.join(args.laid, l['file'].replace('.jpg', '-laid.png'))).convert('L')).astype(np.float32) / 255
         foot = np.isfinite(np.load(os.path.join(args.foot, 'a%g-height.npy' % l['widthDeg']))).astype(np.float32)
         m = m * cv2.resize(foot, (c, c), interpolation=cv2.INTER_LINEAR)

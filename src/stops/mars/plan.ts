@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
-import type { Pose } from '../../core/types'
+import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import type { HandoverSide, PlaceOptions, SkyShares } from '../../director/handover'
 import fit from './fit.json'
@@ -8,6 +8,7 @@ import place from './place.json'
 import phobos from './phobos.json'
 import bend from './bend.json'
 import close from './close.json'
+import { moon } from './look'
 
 // A side of place.json: at, placeFrames, path, picture, pace, turn, liftPower and pullBack belong to the handover, every other key is an option of the place picture and reaches the
 // engine as it stands, so a number set in that file can not be lost on the way.
@@ -70,6 +71,14 @@ class MarsPlan extends StopPlan {
     const height = this.eyeShot(seg.kind, time, 'orbit').pose.position.length() - 1
     const k = Math.min(Math.max((Math.log(Math.max(height, 1e-5)) - Math.log(c.low)) / (Math.log(c.high) - Math.log(c.low)), 0), 1)
     return { low: 1 - k * k * (3 - 2 * k) }
+  }
+
+  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
+    if (view !== 'orbit') return []
+    const e = time - this.holdMid
+    const place = new THREE.Vector3().fromArray(phobos.center).applyAxisAngle(this.axis, THREE.MathUtils.degToRad(this.p.moonDegPerSecond) * e)
+    const turn = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3().fromArray(phobos.tumbleAxis).normalize(), THREE.MathUtils.degToRad(moon.tumbleDegPerSecond) * e).multiply(new THREE.Quaternion().fromArray(phobos.holdQuaternion))
+    return [{ id: 'phobos', place: place.toArray(), turn: turn.toArray(), reach: phobos.radius * phobos.hi }]
   }
 
   override terrain(tRel: number): Pose {

@@ -1,13 +1,13 @@
 {
   "levels": [
-    {"file": "patch-wide.jpg", "widthDeg": 96},
-    {"file": "patch-42.jpg", "widthDeg": 42},
-    {"file": "patch-19.jpg", "widthDeg": 19},
-    {"file": "land-8p5.jpg", "widthDeg": 8.5, "own": true},
-    {"file": "land-3p8.jpg", "widthDeg": 3.8, "own": true},
-    {"file": "land-1p6.jpg", "widthDeg": 1.6, "own": true},
-    {"file": "land-0p7.jpg", "widthDeg": 0.7, "own": true},
-    {"file": "land-0p3.jpg", "widthDeg": 0.3, "own": true}
+    {"file": "patch-wide.jpg", "full": 4096, "widthDeg": 96},
+    {"file": "patch-42.jpg", "full": 4096, "widthDeg": 42},
+    {"file": "patch-19.jpg", "full": 4096, "widthDeg": 19},
+    {"file": "land-8p5.jpg", "full": 3686, "widthDeg": 8.5, "own": true},
+    {"file": "land-3p8.jpg", "full": 4096, "widthDeg": 3.8, "own": true},
+    {"file": "land-1p6.jpg", "full": 3686, "widthDeg": 1.6, "own": true},
+    {"file": "land-0p7.jpg", "full": 3277, "widthDeg": 0.7, "own": true},
+    {"file": "land-0p3.jpg", "full": 2176, "widthDeg": 0.3, "own": true}
   ],
   "fadeMinor": true,
   "oneChannel": ["wrap-storm.png", "phobos-lit-mask.png", "relief-L0-alpha.png", "relief-L1-alpha.png", "relief-L2-alpha.png"]
