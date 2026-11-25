@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T09:14:56.035Z",
+ "pushed": "2026-11-25T09:30:19.722Z",
  "head": "9cb92e38f3e0065a5d7c21655a7b21204e4a5b1f",
- "note": "state 9cb92e38: strips of the dark field, set on against set off (control c)",
+ "note": "strips of every frame 2454 to 2473 and 2675 to 2700 on 9cb92e38; the 8.5 level repainted, not rendered yet",
  "looks": [
+  {
+   "time": "2026-11-25T09:30:18.785Z",
+   "file": "20261125093018785-note-b85-fits2.jpg",
+   "source": "out/work/place/b2/b85-fits2.jpg",
+   "kind": "note",
+   "label": "8.5 degree level repainted with the 3.8 in its middle, two takes after the fit to the map at the rim (right one chosen), not in the tree yet",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:30:18.169Z",
+   "file": "20261125093018169-note-strip-rise-3.jpg",
+   "source": "out/work/place/k6/strip-rise-3.jpg",
+   "kind": "note",
+   "label": "strip-rise-3: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:30:17.531Z",
+   "file": "20261125093017531-note-strip-rise-2.jpg",
+   "source": "out/work/place/k6/strip-rise-2.jpg",
+   "kind": "note",
+   "label": "strip-rise-2: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:30:16.895Z",
+   "file": "20261125093016895-note-strip-rise-1.jpg",
+   "source": "out/work/place/k6/strip-rise-1.jpg",
+   "kind": "note",
+   "label": "strip-rise-1: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:30:16.186Z",
+   "file": "20261125093016186-note-strip-dive-2.jpg",
+   "source": "out/work/place/k6/strip-dive-2.jpg",
+   "kind": "note",
+   "label": "strip-dive-2: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T09:30:15.379Z",
+   "file": "20261125093015379-note-strip-dive-1.jpg",
+   "source": "out/work/place/k6/strip-dive-1.jpg",
+   "kind": "note",
+   "label": "strip-dive-1: middle crop at native size, every frame, tree 9cb92e38, with field share, level and rms 8 to 40 px",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T09:14:55.436Z",
    "file": "20261125091455436-note-set-on-off-2468-2688.jpg",
@@ -18,60 +66,6 @@
    "source": "out/work/place/k6/set-on-off-2460-2464.jpg",
    "kind": "note",
    "label": "9cb92e38 draft middle crop native, left as it stands, right control c (set held off): 2460 above, 2464 below; the plates alone carry the field",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:14:54.276Z",
-   "file": "20261125091454276-note-strip-first12.jpg",
-   "source": "out/work/place/k6/strip-first12.jpg",
-   "kind": "note",
-   "label": "9cb92e38 draft, middle crop 800 by 450 native: 2444 2448 2452 2456 2460 2464 2468 2688 2692 2696 (2700 2704 on sheet 2); the dark field is flat at 2452 to 2456",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T09:07:27.513Z",
-   "file": "20261125090727513-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T09:06:53.010Z",
-   "file": "20261125090653010-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T08:51:25.649Z",
-   "file": "20261125085125649-note-w2412.jpg",
-   "source": "out/work/place/k5/w2412.jpg",
-   "kind": "note",
-   "label": "2410 to 2414: the moon leaves the frame at 2412, the level step of the reader",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:51:24.380Z",
-   "file": "20261125085124380-note-p2692.jpg",
-   "source": "out/work/place/k5/p2692.jpg",
-   "kind": "note",
-   "label": "2692 pair native: hard polygonal shadow edge at the right (bad)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:51:23.469Z",
-   "file": "20261125085123469-note-p2468.jpg",
-   "source": "out/work/place/k5/p2468.jpg",
-   "kind": "note",
-   "label": "2468 pair native: black jagged line near the top (bad)",
    "stop": "mars"
   }
  ]
