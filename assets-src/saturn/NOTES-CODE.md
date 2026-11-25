@@ -7579,3 +7579,89 @@ CHAIN NOW: /tmp/v/rigid/seq6.sh (log seq6.log) took over from seq5 at 22:46: wai
 readers ("DIVE C DONE"), the units of the repo's tree ("UNITS DONE", log /tmp/v/rigid/units.log), the tree's rise
 on the new main in /tmp/v/rigid/Tn ("RISE T DONE"). Tn/final_3866.png on the new main: 6d1683433f9faa3b, the
 same bytes as the proof on the old main.
+
+## 25 Nov, 23:30 to 23:55 UTC: the rings at the hold by code alone, why they read poorer, the cure in hand
+
+STATE: branch tip 2f89bcb is the tree under proof (its NAMED mail waits only for the rise read on main 172e7bc).
+Trial copies in /tmp/v/rigid: saturnC (rigid, lens b, no hold light), sE (C + baked globe light map in both
+sets), sD1 (C, hero ring pixels off), sF1, sF2, sF3 (below). None of it is in the repo yet.
+
+D1 AT THE FINAL TIER, 3465 (C with polarShow 0: the rings by code alone): whole 12.9498 (C 12.2529). G17
+median 1.1363, lowest quarter 0.7337 (C 1.0310, 0.8170): under the 0.8. Low tiles: the left ansa (columns 0
+to 3, rows 2 to 6: 0.42 to 0.74). High tiles: the near part (rows 5 to 7, columns 4 to 9: 1.4 to 3.0). By
+part: rings before the globe 25.567 (C 20.334), rings 1.53 to 1.95 lit 33.984 (28.757), 2.03 to 2.27 lit
+18.911 (16.103). In the picture: the A ring loses its grain and the Encke gap, the B ring's lanes are broader,
+paler and softer than the hero's pixels. Not adopted as is.
+
+WHY, three causes, measured:
+1. The profile is read soft. lodBias is a FACTOR on the footprint (texels a pixel times 1.2), not a step of
+   levels. At the hold's ansa one radius is 362 px, the finest row has 25206 samples a radius, so the read
+   lands near level 6.3 of the pyramid: samples of 0.92 px read with a tent, a blur of about 0.5 to 0.9 px.
+   That costs most of the energy in the band G17 reads (0.6 px minus 2.0 px). One number for both sets:
+   kept/look.ts lodBias (the model takes it as uKFit.w, sheet.ts 604).
+2. The lanes of the hero rows are of my own making (rings/build.py: the hero's smooth profile times half the
+   close image's detail times random lanes), not the hero's lanes.
+3. The profile has no Encke gap (hero strip at azimuth 170: bright line at 2.2652, gap 2.2756 to 2.2797).
+
+THE HERO'S FINE CONTRAST AT THE LEFT ANSA IS LANES, NOT GRAIN (straightened map at azimuth 170, rms of the
+difference of Gaussians in screen px of the hold, encoded levels): B ring all 17.1, lanes over 1 degree 16.9,
+lanes over 16 degrees 13.9. A ring all 6.2, 5.3, 4.0. So a narrow strip (48 columns, 2.1 degrees) holds nearly
+all of it; grain is about 28 percent of the A ring's energy and next to nothing of the B ring's.
+
+THE HERO'S LANES ARE NOT CIRCLES (/tmp/v/inj/reg.py): rows of the straightened map at azimuth 170 against other
+azimuths, B ring: correlation 0.67 at 165, 0.60 at 175, under 0.25 from 20 degrees away, the lag wanders by
+up to 6 rows. Only the outer strand 2.22 to 2.30 holds 0.82 to 0.97 from 110 to 220 degrees. So one profile
+by radius can lie on the hero's lanes near one azimuth only: this is the 6.89 of mail 1323, the price of a
+body that does not bend.
+
+TOOL /tmp/v/inj/inject.py OLD_FULL_BIN OUT_DIR [AZ 170] [COLS 48] [L_ROWS 48] [S_ROWS 1] [KEEP 0.6 1.5] (to
+go to assets-src/saturn/code when adopted): a strip of the hero's ring pixels (polar-rings.jpg and
+polar-inner.jpg, median over COLS columns at AZ) is set on the profile's own edges (strip 1.2375, 1.5156,
+1.9541, 2.0447, 2.3356 to profile 1.2473, 1.5239, 1.9558, 2.0406, 2.3394, a stretch by parts), then
+new = G_L(old) * strip / G_L(strip) * old / G_s(old) in the STORED values by channel (the last factor by its
+light alone, clipped): the level of each zone stays the profile's (B ring stored level 0.5557 to 0.5503), the
+lanes are the hero's, what the profile holds finer than a row of the hero's pixels stays for the dive. The
+opacity follows by the law of build.py (it gives the old opacity back to 0.00000 from the old colours). The
+pyramid is the mean of pairs (the old file packs back to 5.96e-08). The close rows are not touched. A first
+try in linear light by channel gave green and pink lines (a channel runs away near white): keep to the stored
+values. Views: /tmp/v/inj/out/v_abc3.png (three times the hold's scale), v_abc1.png (the hold's scale).
+
+TRIALS QUEUED (seq10, finals at 3465): F2 = E + polarShow 0 + new profile (rings-h.bin laid into mainref's
+public assets, both sets) + lodBias 0.4. F1 = the same with lodBias 1.2. F3 = old profile + lodBias 0.4.
+
+THE MOTTLED PATCH of mail 1323 point 5 (right ansa, x 1590 to 1650, y 540 to 620): it lies on the B ring's
+outer margin next to the division and it is in the hero ring pixel map (rows the bend used to move). It is not
+there when the hero's ring pixels are not drawn (D1). Picture /tmp/v/rigid/v_patch.jpg.
+
+BAKED GLOBE MAP (E) AT 3720, draft tier: whole 27.5016 = band 3.3494 + sheet 3.3528 + rest 20.7995 (the tree
+at the final tier 28.5419 = 3.3719 + 3.3424 + 21.8276: the tiers differ, finals to follow); globe lit 0.8171
+(tree 0.7923, main 0.9764), twilight and night 1.5473 (tree 1.5430, main 2.0626). E and D3 (the projector
+light in the model) agree to 0.001 at 3720. At 3465 (draft) globe day 4.473 (B 3.876, C 5.183), twilight and
+night 2.351 (B 2.136, C 3.565).
+
+FACTS OF THE KEPT SET: handover.kept.close is 0, so uClose is 0 at every height the kept set is drawn: of the
+kept rings only the hero's ring pixels (polarW: polarHeight 1.0 to 1.7, polarFar 7 to 9, and by the texel
+footprint) and the fine and penumbra terms change with the pose once heroLight and the bend are 0.
+ringShadowHero is 1: the ring shadow's strength on the globe does not slide with the pose. My finding (b) of
+22:36 was wrong there; corrected by mail at 23:39.
+
+MAIL 23:39 (low): time of the tree's name about 00:20, the D1 numbers, the E numbers, the correction.
+
+MAIL 1343 (23:54): NEW MAIN 1f51abc9 (take batches 14 and 15: the far Sun by the kit's law of the frame, 17 files
+with src/core/engine.ts, src/director/film.ts, src/space/sky.ts; the reader writes the ground pop as a number).
+No file of Saturn's in it. Batch 16 under proof at /root changes src/space/travel/path.ts (the roll into
+Saturn): the table of the flight in has to be read again once it is on main. Merged here at 23:58; the proof
+copy (mainref) moves to it after the ring trials, then the tree's three judged finals are drawn again there.
+
+RING LEVELS BY ZONE AND SECTOR AT 3465 (ring_levels.py, display luma, hero against rings by code alone, D1): the
+near sectors (azimuth 45 to 135 in the body frame, the eye stands at 90) agree within about 5 levels; the far
+side (minus 135 to minus 45) is brighter in the hero by 8 to 12 in the B ring and by 13 to 19 in the A ring;
+the division reads 59 to 78 in the hero against 41 to 53 (its own edges do not lie on true circles, so its
+level takes in the bright rings beside it). So a ring light map by radius and by azimuth from the Sun is a
+lift of the far side by some percent and next to nothing at the azimuths the skim sees (the eye at 3720
+stands at azimuth 100).
+
+SPECK SUSPECT: the sparkle glints of the kept rings (kept/rings.ts 531 to 550, look sparkle 1.6, cell 0.005)
+twinkle by uTime with pow(tw, 3): a glint can stand in one frame alone. They show only where the footprint is
+small against the cell (show = 1 - smoothstep(0.12, 0.3, major * foot / cell)), that is close to the plane,
+which is where the specks of 3593 and 3601 are. To be tried: a slice with sparkle 0.
