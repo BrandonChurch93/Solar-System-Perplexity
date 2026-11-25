@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T20:36:58.404Z",
+ "pushed": "2026-11-25T20:52:29.587Z",
  "head": "10c72f63d59e26694dc4a3eefecf245fa06bb988",
- "note": "20:38 border of set and plate traced to the aprons' outer ends; the net of blocks is the take's own paving",
+ "note": "rise 2683, 2684 on main's eye (bad: net and streaks at the corners); wall trial 13 against take 10 from above at 1 to 1",
  "looks": [
+  {
+   "time": "2026-11-25T20:52:28.411Z",
+   "file": "20261125205228411-note-cmpB.jpg",
+   "source": "out/work/place/w13/cmpB.png",
+   "kind": "note",
+   "label": "wall by code, trial 13, 0.3 plate from above at 1 to 1 (x 1000 y 560): before walls, take 10, trial 13",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:52:27.386Z",
+   "file": "20261125205227386-note-cmpA.jpg",
+   "source": "out/work/place/w13/cmpA.png",
+   "kind": "note",
+   "label": "wall by code, trial 13, 0.3 plate from above at 1 to 1 (x 1400 y 200): before walls, take 10 (hair), trial 13 (rock with beds between chutes of loose ground). Open: hard border of wall band and the take's boulder plain",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:49:27.575Z",
+   "file": "20261125204927575-note-corners2684.jpg",
+   "source": "out/work/place/t3/corners2684.png",
+   "kind": "note",
+   "label": "BAD: rise 2684 on main's eye, lower corners at 1 to 1: net of blocks at the foot left, streaks right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:49:26.594Z",
+   "file": "20261125204926594-note-corners2683.jpg",
+   "source": "out/work/place/t3/corners2683.png",
+   "kind": "note",
+   "label": "BAD: rise 2683 on main's eye, lower corners at 1 to 1: the plate's net of blocks and streaks come in under the cliff (aprons' outer ends)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T20:36:57.583Z",
    "file": "20261125203657583-note-net-plate.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/w12/dbg-c.jpg",
    "kind": "note",
    "label": "trial 12 look files, 0.3 plate x 1100 y 150: streak tone (whorls), relief, lift (flat facets of the heights), rock without grain",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:25:13.573Z",
-   "file": "20261125202513573-note-over-1p6.jpg",
-   "source": "out/work/place/w12/over-1p6.jpg",
-   "kind": "note",
-   "label": "1.6 plate before the walls with the outline of the heights' wall weight: the south wall (facing the Sun) lies on ground painted as plateau",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:25:12.603Z",
-   "file": "20261125202512603-note-ledge-b2.jpg",
-   "source": "out/work/place/c2b/ledge-b2.jpg",
-   "kind": "note",
-   "label": "LEDGE of C2 times 6 at 2477 and 2684: before the cut, state, behind cure. A yellow green speck stays at 2684 x 957 y 304 (also before the cut)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:25:11.698Z",
-   "file": "20261125202511698-note-ledge-b.jpg",
-   "source": "out/work/place/c2b/ledge-b.jpg",
-   "kind": "note",
-   "label": "LEDGE of C2 times 8 at 2476, 2477, 2490: before the cut, state 74dca647 (dark slab on the crest), with the behind cure (slab gone)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:14:00.506Z",
-   "file": "20261125201400506-note-v03-c.jpg",
-   "source": "out/work/place/w12/v03-c.jpg",
-   "kind": "note",
-   "label": "BAD from above, 0.3 plate x 1250 y 250 at 1 to 1: before, take 10 (fur), trial 12 (speckle), rock without grain (no form)",
    "stop": "mars"
   }
  ]
