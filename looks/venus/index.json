@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T19:50:15.984Z",
- "head": "53327e694461f9c13a4e0f89db863311c03e86df",
- "note": "the ground by height named as the cause of the two new reds: controls and the trial of its cure",
+ "pushed": "2026-11-25T20:16:42.614Z",
+ "head": "e08e640c050136195e9341b3cb591a7cbd522b8c",
+ "note": "H1 dive read: straight lines at 1318 to 1321 at 2 to 1, control running",
  "looks": [
+  {
+   "time": "2026-11-25T20:16:41.602Z",
+   "file": "20261125201641602-note-H1-d-1320z.jpg",
+   "source": "../../../../tmp/v/sh/H1-d-1320z.jpg",
+   "kind": "note",
+   "label": "H1 1320 at 2 to 1: straight lines found, cause open",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T20:16:40.495Z",
+   "file": "20261125201640495-note-venus-dive-changes.jpg",
+   "source": "../../../../tmp/v/smooth-H1/venus-dive-changes.png",
+   "kind": "note",
+   "label": "H1 dive changes: ground by the eye's distance alone, uncommitted",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T19:50:14.639Z",
    "file": "20261125195014639-note-H1-frames.jpg",
@@ -56,22 +72,6 @@
    "source": "../../../../tmp/v/sh/D2-hold4.jpg",
    "kind": "note",
    "label": "hold 1185 at 4 to 1 round 1345, 435: approved hero, fifth state, trial D2 (the place whole in the frame of T, no exchange); below the same lifted",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T18:32:41.496Z",
-   "file": "20261125183241496-note-cF2-limb.jpg",
-   "source": "../../../../tmp/v/sh/cF2-limb.jpg",
-   "kind": "note",
-   "label": "control cF2, rise 1555 and a half and 1563 and a half at 2 to 1 (x 1432 to 1732, y 126 to 326): the eye's footprint above, the screen's below; the plates' cells are crisper at the right above",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T18:32:40.912Z",
-   "file": "20261125183240912-note-L5-f1586.jpg",
-   "source": "../../../../tmp/v/sh/L5-f1586.jpg",
-   "kind": "note",
-   "label": "54480b0c final 1586 (judged), whole frame at two thirds",
    "stop": "venus"
   }
  ]
