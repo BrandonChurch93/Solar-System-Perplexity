@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T04:10:42.174Z",
- "head": "0988d75a16e313393841e1cca1a31fc6c42317d3",
- "note": "proof frames of commit 4 beside the approved, rise strip beside commit 3",
+ "pushed": "2026-11-25T04:30:25.358Z",
+ "head": "5476485ab97a31c00b8e5928241f912b11c19bfd",
+ "note": "Commit 4 (local head 5476485a, checks running): frame 0 near and frame 90 far beside the approved at 1 to 1, the change of view at 205 over four frames, and the colour specks at the arcade's foot with their cause in the loops card",
  "looks": [
+  {
+   "time": "2026-11-25T04:30:19.641Z",
+   "file": "20261125043019641-note-card-foot.jpg",
+   "source": "../../../../tmp/v/card-foot.png",
+   "kind": "note",
+   "label": "The cause of those specks: the loops card (public/assets/sun/full/loops.webp) at 1 to 1 round the left foot holds what was left of a difference against the old ground picture. Not mended yet",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T04:30:18.979Z",
+   "file": "20261125043018979-note-c4-foot-x8.jpg",
+   "source": "../../../../tmp/v/c4-foot-x8.png",
+   "kind": "note",
+   "label": "Commit 4, draft, frame 60, the ground at the arcade's left foot at 8 times: single pixels of magenta, cyan and green. Commit 3 has them too",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T04:30:17.930Z",
+   "file": "20261125043017930-note-c4-arc-204-207.jpg",
+   "source": "../../../../tmp/v/c4-arc-204-207.jpg",
+   "kind": "note",
+   "label": "Commit 4, draft, frames 204 205 206 207 across the change of view at 205 (place.rise.at 0.28), a strip of each: whole frame mean difference of 255 21.79, 21.90, 22.01, no step",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T04:30:16.782Z",
+   "file": "20261125043016782-note-c4-90-far.jpg",
+   "source": "../../../../tmp/v/c4-90-far.jpg",
+   "kind": "note",
+   "label": "Commit 4, draft, frame 90 far ground and horizon at 1 to 1, approved left. Still wrong: jets are straight needles, far cells are pebbles and rows of ticks, not flat lenses",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T04:30:16.141Z",
+   "file": "20261125043016141-note-c4-0-near.jpg",
+   "source": "../../../../tmp/v/c4-0-near.jpg",
+   "kind": "note",
+   "label": "Commit 4 (ead85b2e, merged as 5476485a, not yet pushed), draft, frame 0 near ground at 1 to 1, approved left. Still wrong: bulbs are smooth lumps with dark outlines, strokes alike from bulb to bulb. sun-near frame 60: dark (under 0.15) 0.242 | body (0.15 to 0.55) 0.583 | pale (0.65 to 0.85) 0.094 | white (over 0.85) 0.021 ;; colour by band: 0.23 0.08 0.03 | 0.39 0.15 0.06 | 0.53 0.25 0.08 | 0.64 0.35 0.12 | 0.73 0.46 0.17 | 0.80 0.57 0.24 | 0.87 0.69 0.36 | 0.91 0.80 0.52 | 0.94 0.87 0.66 ;; brightest 15 percent: half width 7.7 px, 545 shapes | fine detail 0.0299 | mean 0.331",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T04:10:41.595Z",
    "file": "20261125041041595-note-c4-rise-c3c4.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/c4-60-far.jpg",
    "kind": "note",
    "label": "Proof of commit 4, draft, frame 60 far ground and horizon at 1 to 1, approved left. Still wrong: far cells read as pebbles, a band of fine dots under the horizon",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:10:39.938Z",
-   "file": "20261125041039938-note-c4-60-near.jpg",
-   "source": "../../../../tmp/v/c4-60-near.jpg",
-   "kind": "note",
-   "label": "Proof of commit 4 in the tree, draft, frame 60 near ground at 1 to 1, approved left. sun-near frame 60: dark (under 0.15) 0.242 | body (0.15 to 0.55) 0.583 | pale (0.65 to 0.85) 0.094 | white (over 0.85) 0.021 ;; colour by band: 0.23 0.08 0.03 | 0.39 0.15 0.06 | 0.53 0.25 0.08 | 0.64 0.35 0.12 | 0.73 0.46 0.17 | 0.80 0.57 0.24 | 0.87 0.69 0.36 | 0.91 0.80 0.52 | 0.94 0.87 0.66 ;; brightest 15 percent: half width 7.7 px, 545 shapes | fine detail 0.0299 | mean 0.331; distance 0.085",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T03:50:39.164Z",
-   "file": "20261125035039164-note-h3-rise.jpg",
-   "source": "../../../../tmp/v/h3-rise.jpg",
-   "kind": "note",
-   "label": "trial h3 draft rise frames 207 213 219 225 231 237 243 249 255 at one third size: the ground gives way to the globe's own face by the distance from the eye (far side first), corona and far sky by height 0.3 to 3.2, the change of view at frame 180. Still wrong: pale patch of cells against the orange globe at 225 and 231, two skies",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T03:50:38.593Z",
-   "file": "20261125035038593-note-h3-60-near.jpg",
-   "source": "../../../../tmp/v/h3-60-near.jpg",
-   "kind": "note",
-   "label": "trial h3 draft frame 60, approved left, mine right, native size: mottle on the tops, lanes lit, points. Still wrong: moulded shapes, broad pale strokes, corners.   share by band 0.1 .. 0.9 : 0.201 0.213 0.182 0.128 0.084 0.062 0.046 0.053 0.024   dark (under 0.15) 0.207 | body (0.15 to 0.55) 0.608 | pale (0.65 to 0.85) 0.099 | white (over 0.85) 0.024   brightest 15 percent: half width 7.5 px, 683 shapes | fine detail 0.0329 | mean 0.344 distance of the two band tables (half the sum of the differences, 0 is equal): 0.065 ",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T03:22:27.845Z",
-   "file": "20261125032227845-note-g4-rise.jpg",
-   "source": "../../../../tmp/v/g4-rise.jpg",
-   "kind": "note",
-   "label": "trial g4 draft rise frames 204 210 216 222 228 234 240 246 at one third size, state before the one Sun work: corona and streamers arrive between 216 and 222, ground changes to the map 222 to 234",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T03:22:27.281Z",
-   "file": "20261125032227281-note-g4-60-near.jpg",
-   "source": "../../../../tmp/v/g4-60-near.jpg",
-   "kind": "note",
-   "label": "trial g4 draft frame 60, approved left, mine right, native size. Still wrong: bulbs dark and separate like pebbles, strokes too few.   share by band 0.1 .. 0.9 : 0.251 0.203 0.176 0.118 0.083 0.055 0.040 0.043 0.020   dark (under 0.15) 0.262 | body (0.15 to 0.55) 0.580 | pale (0.65 to 0.85) 0.083 | white (over 0.85) 0.020   brightest 15 percent: half width 8.5 px, 360 shapes | fine detail 0.0237 | mean 0.320 distance of the two band tables (half the sum of the differences, 0 is equal): 0.098 ",
    "stop": "sun"
   }
  ]
