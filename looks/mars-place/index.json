@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T16:25:35.639Z",
+ "pushed": "2026-11-25T16:36:09.937Z",
  "head": "71688463139ea30327a39c48d8cde7719c152345",
- "note": "wall rock take 2 is wrong in the light (pale grey shadowed wall at 2692), cause found (cap.json light.own 0), take 3 runs",
+ "note": "wall take 3 early draft at 2692: too light against the take, take 4 runs with the take's level measured (0.632)",
  "looks": [
+  {
+   "time": "2026-11-25T16:36:09.036Z",
+   "file": "20261125163609036-note-pairE2692.jpg",
+   "source": "out/work/place/w3/pairE2692.png",
+   "kind": "note",
+   "label": "wall take 3, early: 2692 at 1 to 1 (x 1100..1900, y 440..1080), state left, take 3 right with only the 0.7 level under the wall law: stretched paint gone, wall one grey brown band lighter than the take (48,37,33 against 40,31,27), straight borders where the other levels begin. Not good yet",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T16:25:34.221Z",
    "file": "20261125162534221-note-v03-whole.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/place/eng105/layers-sheet.jpg",
    "kind": "note",
    "label": "who draws: globe blue, set layers red and yellow, 2460, 2468, 2687, 2695",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T15:05:18.756Z",
-   "file": "20261125150518756-note-c2-ledge-x4.jpg",
-   "source": "out/work/place/eng105/c2-ledge-x4.jpg",
-   "kind": "note",
-   "label": "BAD: dark ledge of cut layer C2 at 2476, 2477, 2490, N1 left, the cut right, times 4",
    "stop": "mars"
   }
  ]
