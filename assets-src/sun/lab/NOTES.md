@@ -818,7 +818,7 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   4.4 px at the disc's middle (by geometry, unmeasured). The baked level is d7's, not rebaked.
   MESH (stated): near cells (over 70 px) 96 sectors, 10 to 16 a tube; a tube of 15 px belongs to a cell of 29 to
   48 px, second level, 40 sectors, 4 to 7 facets a tube, relief faded there by tubes.px [20, 48].
-- 19:27 to 19:40 UTC, u2 to u5 (in the tree). u2: fibre.along [0.5, 0.8, 1.2] (the threads were short dashes
+- 19:27 to 19:31 UTC, u2 to u5 (in the tree). u2: fibre.along [0.5, 0.8, 1.2] (the threads were short dashes
   because their pattern changed 2.5 to 6 times along the run: now strands from crown to lane), tubes.silk
   [0.15, 0.6], pits where three cells meet (dome.base[7], [8]: the border's height falls by 0.8 where the cell's
   corner measure is over 0.6), heat.fold [0.5, 0.7], heat.core 1.2, rim 0.3: silk on the flanks, hot crowns, reads
@@ -826,3 +826,38 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   u4 = u3 with the curve refit. u5: silk [0.3, 0.75], tubes.from [0.3, 0.7], crown 0.1, dome.height 0.42, cushion
   exponents 2.0, 1.4: broad flatter cushions with smooth mottled tops and streaked flanks: BEST SO FAR
   (v/strip-u5.jpg). Frame 90 near percentiles u5: 0.227 0.376 0.569 0.749 0.894 0.953 (curve of u4).
+- 19:32 to 19:45 UTC, u6, u7 (in the tree). SEEN in motion-u5 (v/wedge.png): a dark flat patch with a saw toothed
+  rim at the frame's bottom (captures 252, 276; x 250 to 550, y 980 to 1080): a low cell beside tall cushions whose
+  near vertical rim the mesh rings sampled unevenly. CURE (u6): under the cushion the mesh's rings follow the
+  border (`r = rad * pow(invP, -0.125)` before `place` in dome()), least bulge of a cell 0.4 of its base
+  (dome.base[9]), junction pits off (dome.base[7] 0: the corner measure differs on the two sides of a border and
+  made a wall), dome.over 1.2. v/wedge6.png: the flat patch is gone, a small saw tooth is left on some rims.
+  u7: heat.crease[2] 0.35 to 0.27, heat.lane [0.07, 0.1, 0.6] (darker, wider lanes). Flicker u6/u7 motion strip:
+  disc 26 px largest 0.155, 45 px 0.093, 60 px 0.099. Frame 90 near percentiles u7: 0.208 0.353 0.565 0.745 0.894
+  0.953 (curve of u4, refit due).
+  SEEN against the approved (v/strip-u7.jpg): mine read as flat cushions or leaves with a lit top and a dark flank
+  and a hard outline against the next cell; the approved's are round bulbs lit up to their rim, with a thin dark
+  lane and a thin bright rim, dark patches inside, strands that gather at the pits where three meet. The cells of
+  the approved are near round in the picture (1.2 to 1), mine 2 to 1: at this lens that means bulbs near as high
+  as wide. Trying u8 (height 0.7, cushion 2.0, 2.0) and u9 (height 0.6, cushion 2.5, 1.6, shade 0.8).
+- 19:40 UTC, MAIL 1267 (Builder): d9 as read by his machines: rise part 1 and 4 green, part 2 RED (pattern 0.5191
+  at 217 + 1/2, at the limb over the spot), part 3 red (pop 1.32 at 240 + 1/2 to 242, pattern 0.61: the whole disc
+  changes where my ground fades to the globe's painting, far.away 2.0 to 3.0 radii). d9 does not go on. RULED:
+  (a) what takes over from the live cells is the bake of the same cells at the same places, baked again for the
+  named state, laid on the globe by the turned anchor's numbers (the globe's folder is sun_builder's: I hand it the
+  bake and the numbers); (b) the swing at a place between live and bake measured first and alone at 221 and 229,
+  aim 99th percentile under 12 levels; (c) only then the law of the share and the 2 levels a frame. ORDER: form
+  first (silk as long strands crown to lane, crowns hotter than flanks, dark pits where three meet, bright threads
+  where two touch, cells flatter with mottled tops), then flicker by cause, then bake and band, then hashes and
+  the master run. Measure the cost of 80 sectors at the second level. Flicker: measure also on each cell's own
+  mean (a disc of the cell's size), the tenth stands for that. Send back: the next sheet with the same pictures
+  and the swing of (b). Brandon on u1: it still looks like an image, not like plasma.
+- 19:45 to 19:55 UTC. u8 (height 0.7, cushion 2, 2): round mushrooms, a pile of stones, dropped. u9 (0.6, 2.5,
+  1.6, shade 0.8): round cushions, still gourds. u10: height 0.5, cushion 2.2, 1.5, heat.shade [0.8, 0.45],
+  tubes.silk [0.1, 0.5], heat.rim 0.45, heat.core 0.9. u11 = u10 with heat.cool 1.1, fibre.cold 0.08, heat.thread
+  [0.3, 1.0]: streaked and of high contrast inside the cell as the approved, reads as satin shells or umbrellas
+  because every strand runs straight from the crown. u12: the tubes and strands fan from the cell's hot patch and
+  not from its middle (labFan in ground.ts, tubes.off 0.8): lopsided fans, the umbrella is gone, BEST SO FAR
+  (v/strip-u12.jpg). Percentiles u12 0.224 0.384 0.600 0.780 0.933 0.980, curve refit due.
+  STILL WRONG: no even dark lane round every cell (near cells stand over the lanes behind them), the strands are
+  too clean and parallel (satin), few dark patches inside the cells, no sparkle.

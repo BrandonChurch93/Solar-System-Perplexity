@@ -160,8 +160,13 @@ float vnq(vec2 p, float per) {
 // along a tube less the way the gas has run, so the sway of the tubes is carried outward and comes new from the
 // middle. x: across the tube, -1 and 1 in the grooves, 0 on its crest; y: the tube's number; z: how many; w: the
 // turn round the cell as the tubes lie, 0 to 1
-vec4 labTubes(vec2 d, float seed, float q) {
+vec2 labFan(vec2 d, float seed) {
+  vec2 c = ${(T.off ?? 0).toFixed(3)} * (0.12 + 0.3 * fract(seed * 7.13)) * vec2(cos(6.2831853 * fract(seed * 3.71)), sin(6.2831853 * fract(seed * 3.71)));
+  return d - c * max(1.0 - dot(d, d), 0.0) / (1.0 - dot(c, c));
+}
+vec4 labTubes(vec2 dd, float seed, float q) {
   float n = floor(${T.count[0]!.toFixed(1)} + ${(T.count[1]! - T.count[0]! + 1).toFixed(1)} * fract(seed * 5.317));
+  vec2 d = labFan(dd, seed);
   float rho = length(d);
   float th = atan(d.y, d.x) / 6.2831853 + 0.5 + (fract(seed * 3.713) - 0.5) * ${T.twist.toFixed(2)} * rho;
   float sway = ${T.sway[0]!.toFixed(2)} * (vnq(vec2(th * n + 3.0, q * ${T.sway[2]!.toFixed(2)} + seed * 17.0), n) - 0.5) + ${T.sway[1]!.toFixed(2)} * (vnq(vec2(th * 3.0, q * ${(T.sway[2]! * 0.5).toFixed(2)} + seed * 5.0), 3.0) - 0.5);
@@ -344,6 +349,10 @@ vec3 dome(vec3 s) {
   float wide = sin(a) / sin(uLabDome.x);
   float groove = labLobes(u * (a / uLabDome.x), seed, 0.3) * (1.0 - smoothstep(0.6, 1.0, a / uLabDome.x));
   float top = 1.0 - pow(max(1.0 - f, 0.0), uLabDome.w);
+#if ${CU ? 1 : 0}
+  // the rings of the mesh lie along the border, so the rim of a body is a clean line at any level of the mesh
+  r = rad * pow(max(invP, 1e-9), -0.125);
+#endif
   vec2 place = mid + u * (r * wide * uLabMore.x);
   // the dome is a round body that reaches over the border of its cell into its neighbours: the sheet is the upper
   // side of all of them, a lane the valley where two bodies meet. edge: the way to the cell's own border, 1 on it
@@ -374,9 +383,9 @@ vec3 dome(vec3 s) {
 #if ${T.on ? 1 : 0}
   float run = -${lab.fibre.slow.toFixed(2)} * log(1.0 - min(rho, ${(lab.fibre.slow * 0.95).toFixed(3)}) / ${lab.fibre.slow.toFixed(2)});
   float q = run - uLabTime.x * uLabTime.y;
-  shape *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), rho, edge, age, seed, q), tubes);
+  shape *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), length(labFan(u * rho, seed)), edge, age, seed, q), tubes);
 #endif
-  float h = edge <= 1.0 ? base + (high * low - base) * shape : base * max(1.0 - ${CU ? CU[6]!.toFixed(1) : '1.0'} * (edge - 1.0), 0.0);
+  float h = edge <= 1.0 ? base + max(high * low - base, ${CU ? (CU[9] ?? 0).toFixed(2) : '0.0'} * base) * shape : base * max(1.0 - ${CU ? CU[6]!.toFixed(1) : '1.0'} * (edge - 1.0), 0.0);
   deep = shape;
   tall = h;
 #else
@@ -384,7 +393,7 @@ vec3 dome(vec3 s) {
 #if ${T.on ? 1 : 0}
   float run = -${lab.fibre.slow.toFixed(2)} * log(1.0 - min(rho, ${(lab.fibre.slow * 0.95).toFixed(3)}) / ${lab.fibre.slow.toFixed(2)});
   float q = run - uLabTime.x * uLabTime.y;
-  body *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), rho, edge, age, seed, q), tubes);
+  body *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), length(labFan(u * rho, seed)), edge, age, seed, q), tubes);
 #endif
   float soft = 0.35 * high * low + 1e-6;
   float t = clamp(0.5 + 0.5 * (body - level) / soft, 0.0, 1.0);
@@ -684,7 +693,12 @@ void main() {
   // the fibres run from the middle of the cell to its lane and bend a little on their way; the gas runs along
   // them, so their pattern moves that way with the time
   float off = uLabTime.z;
+#if ${T.on ? 1 : 0}
+  vec2 v = labFan(d, seed);
+  float tr = length(v);
+#else
   vec2 v = d + vAxis * off;
+#endif
   float along = length(v) / (1.0 + off);
   float ang = atan(vAxis.x * v.y - vAxis.y * v.x, dot(vAxis, v));
   float run = -${lab.fibre.slow.toFixed(2)} * log(1.0 - min(along, ${(lab.fibre.slow * 0.95).toFixed(3)}) / ${lab.fibre.slow.toFixed(2)});
@@ -773,10 +787,10 @@ void main() {
   // little; a groove finer than a pixel is the mean of both
   float tSeen = 1.0 - smoothstep(0.25, 0.6, wa * tb.z / 6.2831853);
   float tAcross = smoothstep(0.0, ${T.heat[2]!.toFixed(2)}, 1.0 - abs(tb.x) / labTubeWide(plan));
-  cell *= mix(1.0, mix(${T.heat[0]!.toFixed(2)}, ${T.heat[1]!.toFixed(2)}, tAcross), tSeen * mix(${T.crown.toFixed(2)}, 1.0, smoothstep(${T.from[0]!.toFixed(2)}, ${T.from[1]!.toFixed(2)}, rho)) * smoothstep(0.03, 0.2, rho));
+  cell *= mix(1.0, mix(${T.heat[0]!.toFixed(2)}, ${T.heat[1]!.toFixed(2)}, tAcross), tSeen * mix(${T.crown.toFixed(2)}, 1.0, smoothstep(${T.from[0]!.toFixed(2)}, ${T.from[1]!.toFixed(2)}, tr)) * smoothstep(0.03, 0.2, tr));
   // broad swells of hotter and cooler gas ride outward with the flow, a few round the cell; they come new from the
   // middle and go down at the lane, so the cell's mean light does not follow them
-  cell *= 1.0 + ${T.lump[0]!.toFixed(2)} * (2.0 * vnq(vec2(tb.w * ${T.lump[2]!.toFixed(1)} + floor(seed * 57.0), (run - flow) * ${T.lump[1]!.toFixed(2)} + seed * 7.0), ${T.lump[2]!.toFixed(1)}) - 1.0) * smoothstep(0.0, 0.25, rho);
+  cell *= 1.0 + ${T.lump[0]!.toFixed(2)} * (2.0 * vnq(vec2(tb.w * ${T.lump[2]!.toFixed(1)} + floor(seed * 57.0), (run - flow) * ${T.lump[1]!.toFixed(2)} + seed * 7.0), ${T.lump[2]!.toFixed(1)}) - 1.0) * smoothstep(0.0, 0.25, tr);
   cell *= mix(1.0, ${lab.heat.crease[2]!.toFixed(2)}, labPart(tb, plan, age, seed));
 #endif
   // the folds between the streams that run from the middle to each lane: dark threads toward the places where
