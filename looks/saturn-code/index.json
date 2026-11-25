@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T06:37:39.125Z",
- "head": "d8723c64dd475d311eee99cfc10dc11bda58797d",
- "note": "rise red on d8723c6 (0.89 at 3827): cause found, the foot dust is lit in the globe's shadow; cure in test",
+ "pushed": "2026-11-25T06:52:31.670Z",
+ "head": "da021335659e0efa1aafcc4ea362938b640121e3",
+ "note": "rise slice green again (0.37) with the dust shaded by the globe; commit da02133 local, full proof running",
  "looks": [
+  {
+   "time": "2026-11-25T06:52:30.913Z",
+   "file": "20261125065230913-note-e1_night.jpg",
+   "source": "../../../../tmp/v/x/e1_night.png",
+   "kind": "note",
+   "label": "cure of the rise red, box 1440,700 to 1920,1000 lifted 4 times: 3819 before (lit dust over the night side), 3819 after (the dust in the globe's shadow returns no sunlight), 3827 after; slice of the rise then read 0.37 (limit 0.45)"
+  },
   {
    "time": "2026-11-25T06:37:38.374Z",
    "file": "20261125063738374-note-limb_gap_lift.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/x/r61_3615_wide.png",
    "kind": "note",
    "label": "draft 3615, tree in work: the dust inside the rim lit over the night side; with the night side sunk at these heights the report read 0.65 at 3603, cure in work"
-  },
-  {
-   "time": "2026-11-25T05:53:41.458Z",
-   "file": "20261125055341458-note-i5_3567_pair2.jpg",
-   "source": "../../../../tmp/v/x/i5_3567_pair2.png",
-   "kind": "note",
-   "label": "item 5, final 3567 before (left, 88ba2385) and after (right, local tree): the stars in the shadow thin out, no ellipse edge"
   }
  ]
 }
