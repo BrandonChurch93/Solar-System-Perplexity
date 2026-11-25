@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T08:22:36.835Z",
+ "pushed": "2026-11-25T08:42:07.543Z",
  "head": "ba4794504c56c5dfad14d26ab609e6c193dcb696",
- "note": "ba479450 state: far band is the map through air; dive reader 0.46 from 1891; 2010 far field lost, named",
+ "note": "trial of the specks' height from code on 2010's far band, bake only, blobs so far",
  "looks": [
+  {
+   "time": "2026-11-25T08:42:06.977Z",
+   "file": "20261125084206977-note-t1-m.jpg",
+   "source": "../../../../tmp/gl/k10/t1-m.jpg",
+   "kind": "note",
+   "label": "trial, not built: specks of the map stood up by a march in the bake, 2010 middle; top approved, middle ba479450 flat, bottom trial; reads as blobs, not yet a cloud",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T08:22:36.181Z",
    "file": "20261125082236181-note-p2010-right.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/k9/d1-vs-e3.jpg",
    "kind": "note",
    "label": "layers 1878 to 1890: globe alone above, with the ground below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T07:03:46.400Z",
-   "file": "20261125070346400-note-e2r-b.jpg",
-   "source": "../../../../tmp/gl/k8/e2r-b.jpg",
-   "kind": "note",
-   "label": "E2 rise 2122 to 2137, draft; pattern red 0.81 from 2125",
    "stop": "earth"
   }
  ]
