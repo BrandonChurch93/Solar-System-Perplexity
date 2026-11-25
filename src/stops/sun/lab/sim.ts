@@ -21,11 +21,13 @@ const smooth = (x: number): number => {
   return k * k * (3 - 2 * k)
 }
 
-/** The weight of a cell by the share of its life that has passed, of its full radius squared: far below nil at
- * both ends, so the cell comes from nothing and goes to nothing. */
-function weight(u: number): number {
+/** The weight of a cell by the share of its life that has passed and its full radius: so far below its neighbours
+ * at both ends that it holds no ground there, whatever their size, so the cell comes from nothing and goes to
+ * nothing and no step of the table shows. */
+const GONE = S.radius[1]! * S.radius[1]! * S.gone * S.gone
+function weight(u: number, full: number): number {
   const env = smooth(u / 0.4) * (1 - smooth((u - 0.6) / 0.4))
-  return 3 * env - 2
+  return full * full * env - GONE * (1 - env)
 }
 
 export interface Diagram {
@@ -107,7 +109,10 @@ export function diagram(x: Float64Array, y: Float64Array, w: Float64Array, live:
           if (dy > TILE / 2) dy -= TILE
           else if (dy < -TILE / 2) dy += TILE
           const d2 = dx * dx + dy * dy
-          if (d2 < 1e-14) continue
+          if (d2 < 1e-14) {
+            if (w[j]! > wi || (w[j]! === wi && j < i)) n = 0
+            continue
+          }
           const dl = Math.sqrt(d2)
           const dist = (d2 + wi - w[j]!) / (2 * dl)
           if (dist >= far) continue
@@ -187,7 +192,7 @@ export function diagram(x: Float64Array, y: Float64Array, w: Float64Array, live:
 
 export interface Life {
   steps: number
-  /** steps times SLOTS times: x, y, weight, share of life passed, seed, full radius */
+  /** steps times SLOTS times: x, y, the time of birth, the length of the life, seed, full radius */
   table: Float32Array
 }
 
@@ -213,7 +218,8 @@ export function life(): Life {
   const fresh = (i: number, t: number, first: boolean): void => {
     gen[i]!++
     const g = gen[i]!
-    span[i] = S.life[0]! + (S.life[1]! - S.life[0]!) * hash(i, g * 7 + 1)
+    const long = hash(i, g * 7 + 1)
+    span[i] = S.life[0]! + (S.life[1]! - S.life[0]!) * long * long
     born[i] = first ? t - span[i]! * hash(i, 3) : t
     const k = hash(i, g * 7 + 2)
     full[i] = S.radius[0]! + (S.radius[1]! - S.radius[0]!) * k * k
@@ -232,8 +238,8 @@ export function life(): Life {
     const t = t0 + s * S.step
     for (let i = 0; i < n; i++) {
       const u = (t - born[i]!) / span[i]!
-      w[i] = full[i]! * full[i]! * weight(u)
-      live[i] = u > 0.02 && u < 0.98 ? 1 : 0
+      w[i] = weight(u, full[i]!)
+      live[i] = u > 0 && u < 1 ? 1 : 0
     }
     diagram(x, y, w, live, d)
     if (s >= warm) {
@@ -241,8 +247,8 @@ export function life(): Life {
       for (let i = 0; i < n; i++) {
         table[o + i * REC] = x[i]!
         table[o + i * REC + 1] = y[i]!
-        table[o + i * REC + 2] = live[i] ? w[i]! : -9
-        table[o + i * REC + 3] = (t - born[i]!) / span[i]!
+        table[o + i * REC + 2] = born[i]!
+        table[o + i * REC + 3] = span[i]!
         table[o + i * REC + 4] = seed[i]!
         table[o + i * REC + 5] = full[i]!
       }
@@ -275,9 +281,10 @@ export function life(): Life {
       const ex = d.edges[(host * EDGES + e) * 2]!
       const ey = d.edges[(host * EDGES + e) * 2 + 1]!
       const inv = ex * ex + ey * ey
-      const reach = pick < S.split ? 0.55 : 1
-      let px = d.mid[host * 2]! + (reach * ex) / inv
-      let py = d.mid[host * 2 + 1]! + (reach * ey) / inv
+      const reach = (pick < S.split ? 0.55 : 1) * (0.5 + hash(i, gen[i]! * 7 + 8))
+      const lean = (hash(i, gen[i]! * 7 + 9) - 0.5) * 0.9
+      let px = d.mid[host * 2]! + (reach * (ex - lean * ey)) / inv
+      let py = d.mid[host * 2 + 1]! + (reach * (ey + lean * ex)) / inv
       px -= Math.floor(px / TILE) * TILE
       py -= Math.floor(py / TILE) * TILE
       x[i] = px
@@ -314,21 +321,28 @@ export function cellsAt(t: number, out: Cells): void {
   for (let i = 0; i < SLOTS; i++) {
     const p = a + i * REC
     const q = b + i * REC
+    // the weight is read off the cell's own age at the time, not off the steps, so nothing shows at a step: a cell
+    // whose life ends between two steps is there to its end, and the one that takes its slot is born on the step
     const same = tb[p + 4] === tb[q + 4]
-    const wa = tb[p + 2]!
-    const wb = tb[q + 2]!
-    out.live[i] = same && wa > -8 && wb > -8 ? 1 : 0
+    const u = (t - tb[p + 2]!) / tb[p + 3]!
+    out.live[i] = u > 0 && u < 1 ? 1 : 0
     if (!out.live[i]) continue
-    let dx = tb[q]! - tb[p]!
-    let dy = tb[q + 1]! - tb[p + 1]!
+    let dx = same ? tb[q]! - tb[p]! : 0
+    let dy = same ? tb[q + 1]! - tb[p + 1]! : 0
     if (dx > TILE / 2) dx -= TILE
     else if (dx < -TILE / 2) dx += TILE
     if (dy > TILE / 2) dy -= TILE
     else if (dy < -TILE / 2) dy += TILE
-    out.x[i] = tb[p]! + dx * f
-    out.y[i] = tb[p + 1]! + dy * f
-    out.w[i] = wa + (wb - wa) * f
-    out.u[i] = tb[p + 3]! + (tb[q + 3]! - tb[p + 3]!) * f
+    let px = tb[p]! + dx * f
+    let py = tb[p + 1]! + dy * f
+    if (px < 0) px += TILE
+    else if (px >= TILE) px -= TILE
+    if (py < 0) py += TILE
+    else if (py >= TILE) py -= TILE
+    out.x[i] = px
+    out.y[i] = py
+    out.w[i] = weight(u, tb[p + 5]!)
+    out.u[i] = u
     out.seed[i] = tb[p + 4]!
   }
   diagram(out.x, out.y, out.w, out.live, out.diagram)
