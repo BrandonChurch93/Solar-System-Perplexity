@@ -210,7 +210,7 @@ void main() {
   col = clear(col * glint * uGain * lens(), soft * glint * uGain * lens(), 1.0);
   float on = shown();
   outColor = diagOut(vec4(col * on, ground), diagTexels(uv * uSize), step(0.5, ground * on), uLayer, shift / uImage * 60.0, length(vView));
-  if (uDim > 0.5) outColor = vec4(0.0, 0.0, 0.0, ground * on);
+  if (uDim > 0.5) outColor = vec4(0.0, 0.0, 0.0, uDiag >= 2 ? 1.0 : ground * on);
   if (on <= 0.0 || (uDiag >= 2 && ground * on < 0.5)) discard;
 }`
 
