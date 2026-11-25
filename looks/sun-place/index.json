@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T20:41:32.771Z",
+ "pushed": "2026-11-25T20:59:19.537Z",
  "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
- "note": "sun-place 20:42 UTC: glow from inside, second state (ring for gas near the eye): no bands at x12 from 196 to 221, rays from 225; judged and hold frames same bytes at draft; harness slice 190 to 200 running. frame 60 unchanged bytes: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "60 draft trial D4: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2023 shapes, fine 0.0566, mean 0.404 | distance 0.145; arcade trials running, harness far sky 0.452 at 195 lies on the arcade",
  "looks": [
+  {
+   "time": "2026-11-25T20:59:18.963Z",
+   "file": "20261125205918963-note-pmap-195.jpg",
+   "source": "../../../../tmp/v/pmap-195.jpg",
+   "kind": "note",
+   "label": "sun rise 195 against 203, inside law third state: red is where the pattern by the flow reads over 0.45, yellow over 0.3: all of it on the arcade, none on the gas or the open sky",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T20:59:18.383Z",
+   "file": "20261125205918383-note-D4-crop.jpg",
+   "source": "../../../../tmp/v/D4-crop.jpg",
+   "kind": "note",
+   "label": "sun 60 draft, arcade trial D4 (not committed): approved over trial; loose strands of sparks, fountains at each foot; ruler top 30 percent 14.41 (name 18.57), box 20.39 (28.38)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T20:41:32.007Z",
    "file": "20261125204132007-note-n4-rise.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/n2-pairs.jpg",
    "kind": "note",
    "label": "Gas from inside, draft, 199 204 209 213 221 231: left the name 6b6aca66 (arcs), right the working tree (the map read wide by each look's distance, the part of the line before the eye)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:14:10.317Z",
-   "file": "20261125191410317-note-r5-sheet.jpg",
-   "source": "../../../../tmp/v/r5-sheet.jpg",
-   "kind": "note",
-   "label": "Name 6b6aca66 at draft: 0, 60, 90, 247",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:14:09.777Z",
-   "file": "20261125191409777-note-h5-corners.jpg",
-   "source": "../../../../tmp/v/h5-corners.jpg",
-   "kind": "note",
-   "label": "Top corners at 1 to 1, 220 and 228, 227.5 and 235.5: rays over moving stars",
    "stop": "sun"
   }
  ]
