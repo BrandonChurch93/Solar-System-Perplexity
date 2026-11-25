@@ -1,64 +1,64 @@
 {
  "folder": "belt",
- "pushed": "2026-11-24T23:47:47.383Z",
- "head": "12b9c5efde6198895ccc83d0c47c56ee7c48ab35",
- "note": "far Sun 12b9c5ef final tier 615; B11 is a limb glow not taken",
+ "pushed": "2026-11-25T01:14:47.919Z",
+ "head": "af2fab0cbcf515bb7b01d76f8fcee2c2877aff25",
+ "note": "far Sun af2fab0c: dense low flames hide the limb, hair thicker and orange, warm zones on the face; box 4.35 draft, 4.0 not met",
  "looks": [
+  {
+   "time": "2026-11-25T01:14:46.836Z",
+   "file": "20261125011446836-note-n-dive-1.jpg",
+   "source": "../../../../tmp/farsun/out/n-dive-1.jpg",
+   "kind": "note",
+   "label": "far Sun af2fab0c n-dive-1 (draft tier; approved left)"
+  },
+  {
+   "time": "2026-11-25T01:14:44.835Z",
+   "file": "20261125011444835-note-n-dive-0.jpg",
+   "source": "../../../../tmp/farsun/out/n-dive-0.jpg",
+   "kind": "note",
+   "label": "far Sun af2fab0c n-dive-0 (draft tier; approved left)"
+  },
+  {
+   "time": "2026-11-25T01:14:43.438Z",
+   "file": "20261125011443438-note-n-left.jpg",
+   "source": "../../../../tmp/farsun/out/n-left.jpg",
+   "kind": "note",
+   "label": "far Sun af2fab0c n-left (draft tier; approved left)"
+  },
+  {
+   "time": "2026-11-25T01:14:42.599Z",
+   "file": "20261125011442599-note-n-lowerleft.jpg",
+   "source": "../../../../tmp/farsun/out/n-lowerleft.jpg",
+   "kind": "note",
+   "label": "far Sun af2fab0c n-lowerleft (draft tier; approved left)"
+  },
+  {
+   "time": "2026-11-25T01:14:41.799Z",
+   "file": "20261125011441799-note-pair615-limb-K.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-limb-K.jpg",
+   "kind": "note",
+   "label": "far Sun af2fab0c pair615-limb-K (draft tier; approved left)"
+  },
+  {
+   "time": "2026-11-25T01:14:40.532Z",
+   "file": "20261125011440532-note-pair615-full-K.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-full-K.jpg",
+   "kind": "note",
+   "label": "far Sun af2fab0c pair615-full-K (draft tier; approved left)"
+  },
+  {
+   "time": "2026-11-25T01:14:38.103Z",
+   "file": "20261125011438103-note-pair615-box-K.jpg",
+   "source": "../../../../tmp/farsun/out/pair615-box-K.jpg",
+   "kind": "note",
+   "label": "far Sun af2fab0c pair615-box-K (draft tier; approved left)"
+  },
   {
    "time": "2026-11-24T23:47:46.642Z",
    "file": "20261124234746642-note-B11.jpg",
    "source": "../../../../tmp/farsun/out/B11.jpg",
    "kind": "note",
    "label": "far Sun 12b9c5ef B11"
-  },
-  {
-   "time": "2026-11-24T23:47:45.940Z",
-   "file": "20261124234745940-note-la_Afinal.jpg",
-   "source": "../../../../tmp/farsun/out/la_Afinal.jpg",
-   "kind": "note",
-   "label": "far Sun 12b9c5ef la_Afinal"
-  },
-  {
-   "time": "2026-11-24T23:47:44.933Z",
-   "file": "20261124234744933-note-pair615-box-Afinal.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-box-Afinal.jpg",
-   "kind": "note",
-   "label": "far Sun 12b9c5ef pair615-box-Afinal"
-  },
-  {
-   "time": "2026-11-24T23:23:13.194Z",
-   "file": "20261124232313194-note-Acmp_0.jpg",
-   "source": "../../../../tmp/farsun/out/Acmp_0.jpg",
-   "kind": "note",
-   "label": "far Sun 12b9c5ef Acmp_0"
-  },
-  {
-   "time": "2026-11-24T23:23:12.220Z",
-   "file": "20261124232312220-note-hv_A.jpg",
-   "source": "../../../../tmp/farsun/out/hv_A.jpg",
-   "kind": "note",
-   "label": "far Sun 12b9c5ef hv_A"
-  },
-  {
-   "time": "2026-11-24T23:23:11.471Z",
-   "file": "20261124232311471-note-pair615-full-A.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-full-A.jpg",
-   "kind": "note",
-   "label": "far Sun 12b9c5ef pair615-full-A"
-  },
-  {
-   "time": "2026-11-24T23:23:10.368Z",
-   "file": "20261124232310368-note-pair615-box-A.jpg",
-   "source": "../../../../tmp/farsun/out/pair615-box-A.jpg",
-   "kind": "note",
-   "label": "far Sun 12b9c5ef pair615-box-A"
-  },
-  {
-   "time": "2026-11-24T22:25:32.894Z",
-   "file": "20261124222532894-note-oval_zoom.jpg",
-   "source": "../../../../tmp/farsun/out/oval_zoom.jpg",
-   "kind": "note",
-   "label": "1027 (top) and 1040 (bottom), the Sun at full size: a3df7524 left, 261f6dff right; the white oval is gone"
   }
  ]
 }
