@@ -2290,3 +2290,277 @@ after the forms on the five land plates, and on the levels above by the share of
 - 15:20 to 15:27, wall rock, start: the trial folders of the morning are gone (disk), but stage n1/a (the plates after bodyfull.py, before the pyramid) and n1/b, n1/c stand; n1/c equals public by bytes. Base of landunder.py made again (out/work/place/g1/base-full, base-web: the three patch files of main 81d568a7, country-8p5.bin of public). walls.py back in assets-src/mars/place from out/work/place/code3 and rewritten (values plates.json takes.walls; both NOT in the named commit, a trial in the working tree): (1) light relative to the cap's own 1 + lift (the trial multiplied the Sun's slope light in a second time: the pale bands of 12:44); (2) flutes in octaves of the ground (1.6 km down to 25 m), fall line read on heights softened over 0.25 km on every level, an octave drawn from 2.5 texels of the level on; (3) the flow once, on the 3.8 level, read by the finer levels; (4) beds read on the heights with gullies and flutes in them, hardness changing along the wall; (5) the picture's own ground stays where a picture pixel is 2.5 texels or less, rock from 5 on; (6) the jpeg tables of the plate kept. Chain out/work/place/walls120.sh into out/work/place/w1.
 - Proof on merge 63992305 (15:17 to 15:31, proof119.log): build exit 0; gate "PASS G11  every asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished stops: mars/web 418 MB, mars/full 1400 MB"; tests 81 files, 917 of 917 passed (715 s). Against 09738fb6 and 356f1a27 the merge changes nothing under src, public, config, tools, tests, assets-src (git diff).
 - NAMED sent to /root on the commit that holds these lines (text out/work/place/named118.txt). Net against main 61059fcf in the mail.
+
+### 15:31 to 15:40 UTC, NAMED 71688463, MAIL 1169
+- 15:31 NAMED 71688463139ea30327a39c48d8cde7719c152345 sent to /root (high): notes commit on merge 63992305 with main 61059fcf, pushed to agent/mars-place. Net against main 61059fcf by the blobs of the commit: public +8,895,543; assets-src -12,170,847; src +33,769; sum -3,241,535 bytes.
+- MAIL 1169 (15:38) of /root: the name is taken, on seven machines as mw2, goes into the 17:00 cut if green. ORDER RULED with one change: (1) the wall rock by code, whole by about 18:30; (2) THEN the C2 ledge, before d299; (3) d299; (4) the air law. The air law's ground is the check tree take/eg2 5be08f6f (handover_engineer's 4bae298b and globe_engineer's e1230dc4, Planet and HazeShell take the law with knots): build nothing on it before /root writes that it is green; then it is in main and I build on main. If the beds read as contour bands from above in the second take: send the picture at once, /root rules on the technique (next rung: the wall as its own mesh sheets from the heights' flow, not a plate). OWED: the wall's first proof picture when it stands, no later than 17:30 UTC.
+- Base check of the plates chain (walls120.log): landunder.py on n1/b with the base made again gives all five land plates and the three patch files equal to public by bytes. Top views of the picture alone made again on the set with the cut (out/work/place/topp): seen from above 0.1222 of the 0.3 plate, 0.1791, 0.2211 (before the cut 0.122, 0.181, 0.223).
+
+### 15:40 to 16:00 UTC, wall rock take 1 seen from above, take 2
+- Take 1 (out/work/place/w1, walls.py as of 15:31, values plates.json takes.walls) on the levels 3.8, 1.6, 0.7, 0.3 (about 6 minutes a level; the tool's lines in walls120.log): wall on 0.032, 0.082, 0.214, 0.385 of the plates; the picture's own ground kept on 0.142, 0.246, 0.153, 0.144 of the wall; Sun reaches 0.52, 0.46, 0.43, 0.54 of the wall; beds seen 0.28 / 0.91 0.09 / 1.00 0.60 0.01 / 1.00 0.96 0.08; mean change of the plate 0.32, 0.78, 2.12, 4.14 levels. Pyramid and landunder.py run after it (w1/b, w1/c).
+- SEEN from above (w1/v38-whole.jpg, v38-a.jpg, v16-whole.jpg, v16-a.jpg, v16-b.jpg; looks pushed 15:56): the wall is two strips along the canyon, carried on into the far reach at upper right, and pieces at lower left. The shadowed north wall stays nearly black (the take's broad tone) with faint structure; in the light map the beds stand there as thin parallel lines along the height, the flutes are weak: CONTOUR LOOK on the shadowed wall. The sunlit south wall shows flutes and beds broken along the wall (better), but dull grey brown where the take had plateau paint stretched over the wall.
+- Measured on take 1: 1.6 level wall share 0.082, 70 percent of it dark; dark wall before (19.9, 19.1, 20.5), after (24.3, 22.0, 22.7); lit wall before (76.1, 57.0, 48.2), after (64.1, 49.2, 42.6). 3.8 level wall share 0.032; dark (21.6, 20.5, 22.1) to (26.9, 24.0, 24.7); lit (82.3, 56.8, 45.0) to (75.4, 52.8, 42.6).
+- TAKE 2 (walls.py changed, plates.json takes.walls: shadowWall, join added; ledge 0.8 to 0.4, fluteDepth 0.2 to 0.3, fluteTone 0.25 file log units to 0.4 scene log units): (a) the wall's tone is the law's rock on every level, not the take's broad tone: country.light.rock.wall in scene values times the light, through geom.texel_of (MAIL 963: the same land in the same light at every scale; MAIL 1091 point 2: paint for a view from above is not read on a wall); (b) the light on wall in scene values: the Sun's part 1 + lift of the fine heights where the Sun reaches, the sky's part twice shadowWall (0.224, 0.318, 0.414, the shadowed wall over the lit north wall of the approved close image, the number already in country.light's note) times the open sky seen, joined by a soft greater (power 3), the cap's 1 + lift divided out; (c) beds weaker, flutes deeper, so that ribs along the fall line lead and beds only step them. Talus keeps the take's broad tone with the relative light of take 1.
+- Renders of take 1 in the engine (w1r.sh): state drafts S2688, S2692, then W drafts 2458 to 2468 and 2688, 2692 with w1/c in public full (a trial; public is set back by git checkout after it).
+- Take 1 in the engine (drafts W2458 to W2468, W2688, W2692 with w1/c in public full, against the state's drafts; w1/p2460.jpg, p2464.jpg at half size, c2692.jpg at 1 to 1, x 1100..1900, y 440..1080): WORSE THAN THE STATE on the big shadowed wall of 2692. The state's wall there is brown streaked paint drawn down the wall; take 1 is a nearly blank dark wall (the take's broad tone of the shadow, the sky's light flat on it). At 2460 and 2464 at half size hardly a change is seen on the far wall. Take 1 is not shown as a proof.
+- Take 1 at the 0.7 and 0.3 levels from above (w1/v07-whole.jpg, v03-whole.jpg, dbg03.jpg): at 0.3 the wall is 0.385 of the plate (the limits of detail.json, 25 to 44 degrees, take broad slopes of cratered ground); pale blots (the take's broad tone smeared over fitPx); the beds stand as parallel bands along the height over the whole shadowed wall (the heights there are a plane, so nothing breaks them), with angular notches (the hardness of a bed jumped where fract wrapped; the value noise's lattice). CONTOUR LOOK, plainly.
+- Take 2 further changed for it (16:00): wallSin [0.5, 0.72] of its own (30 degrees, the angle of rest, to 46) in place of detail.json wall; beds only 0.45 and 0.16 km, riser half a bed (edge 0.5), tone going over a quarter of a bed (toneEdge 0.25), edges rougher (roughShare 0.35), hardness changing over 0.8 km and without a jump (triangle wave); each octave of the flutes on a lattice turned by its own angle; the cap's light divided out is that of the heights softened by country.light.shadowLiftTexels (as relight.py does in shadow) and the fine relief is laid on those softened heights, so no facet of the heights' grid is divided in and only what is finer is added.
+- Where the wall of 2692 lies (pose of geometry.json, ray to the sphere, relief not counted): frame pixel (1500, 760) is 0.097 degrees west and 0.193 north of the spot: outside the 0.3 plate, on the 0.7 plate at (1183, 735), on the 1.6 plate at (1619, 1398). So the wall of 2692 is drawn by the 0.7 plate (12.6 m a texel).
+- handover_engineer (low, 16:00, no answer needed; files kept in out/work/place/mail): 139 crests of the set's meshes that tear by 2 px or more on the path (mars-crests.txt, cells-L0/L1/L2.png); the crest of the teeth at 2668 is pulled apart by 12.1 px, not folded (folded at 2477 to 2480); a crest in a layer of its own needs ground painted behind it, about 35 full px and a margin; the dist maps hold a step as a ramp of 5 texels (L1), 9 (L0), 5 (L2).
+- Take 2 runs as two processes (walls121.sh into out/work/place/w2: levels 3.8 and 0.7, levels 1.6 and 0.3, one flow field w2/field.npz), then pyramid, landunder, drafts 2692, 2688, 2464, 2460, 2468, 2458, 2462, 2466.
+
+### 16:00 to 16:26 UTC, wall take 2: WRONG LIGHT, found; take 3 started
+- Take 2 ran as two processes; the one with the 3.8 level was killed for memory (two walls.py at once do not fit in 8 GB). Run again alone. The tool's lines: 3.8 wall on 0.029, 1.6 on 0.075, 0.7 on 0.200, 0.3 on 0.370 of the plates; the plate on the wall 37.1 to 61.5, 31.5 to 59.2, 31.9 to 58.1, 35.1 to 53.9; mean change 1.13, 2.92, 7.71, 12.16 levels. Files grow: land-0p3 1,623,991 to 1,831,495, land-0p7 3,359,828 to 3,718,380 (the net of the folders must be watched).
+- SEEN, take 2 in the engine at 2692 (w2/c2692.jpg at 1 to 1, h2692.jpg): the shadowed wall is a PALE GREY BAND, about 100 levels, like concrete, with sharp borders. WRONG. Cause found in src/stops/mars/cap.json: light.own is 0 since MAIL 913 (the plates of 3.8 degrees and under are takes in their own painted light, the cap does not light them a second time). I had divided the cap's 1 + lift out of the wall's light (0.33 to 0.5 on a wall turned from the Sun), as relight.py did before MAIL 913. Take 1 carried the same fault in its Sun's part (flat walls). The remaining drafts of take 2 were stopped.
+- SEEN from above, take 2 (w2/v16-whole.jpg, v07-whole.jpg, v03-whole.jpg, v03-b.jpg, v03-c.jpg): (1) at 0.3 the wall takes a broad diagonal band of what the take painted as a slope with boulders seen from above (the heights there are steeper than 30 degrees): by MAIL 1091 point 2 that is wall; it comes out as brown fluted rock with the boulders' grain (under 2.5 texels) as a cobble and the beds as thin dark broken lines (the risers' cast shadows): cracks rather than height lines there; (2) on the shadowed wall the beds are still long thin lines along the height: CONTOUR LOOK remains in shadow; (3) in the picture's own ground on the mesa the border between kept ground and rock stood as STRIPES and a dotted pattern (the picture's footprints change stripe by stripe; the heights' grid of 2048 beats against the plate's 2176): a fault of the tool; (4) in the 0.7 plate the 0.3 plate's wall stands as a block with straight sides: the 0.3 level's heights are steep along its upper border where the 0.7 level's are not (the levels' heights disagree there; not traced).
+- TAKE 3 (walls.py, plates.json takes.walls keepTexels 8, ledge 0.25): the plate carries its whole light (no division by the cap's light); wall and its borders read on the heights softened by shadowLiftTexels (no beat of the two grids); the picture's own ground kept by the greater part of the ground within keepTexels texels (one border line); talus: the take's tone times the light with the fine relief over the light of the softened heights. Chain walls122.sh into out/work/place/w3: the 0.7 level first and one early draft of 2692 (tag E), then 1.6, 0.3, 3.8, pyramid, landunder, drafts.
+
+### 16:26 to 16:40 UTC, MAIL 1193 (G2 red on /root's machines), wall take 3 early draft, take 4
+- MAIL 1193 (16:25, high) of /root on NAMED 71688463: not in the cut of 17:00. Tests 917 of 917 in the other run, but the gate is RED: "FAIL G2  pi.D6E8EtSi.js:9321:26"; G3 PASS; dive part 1 red with the old rows (level step 1.33, pop 1.47, pattern 1.00, frames 2400 to 2440); dive part 2 red, pattern 1.41 from 2460 (43 frames over, first 2453); rise part 1 red, pop 1.23 at 2706 and pattern 1.48 from 2687 (51 frames over, first 2677; main's largest 1.31); rise part 2 red, pop 1.23, pattern 0.52; 13 of 36 frames differ from main, all 2410 to 2810. "A red machine check comes first." Order stands: wall rock, ledge, the land beyond the picture, air law. With the next NAMED: for each red line the step that cures it, and the dive in 19 frames. Files in out/work/place/mail (mw2-01-gate.txt, mars-dive-p1of2.md, p2of2.md, mars-rise-p1of2.md, p2of2.md, two change pictures).
+- G2 TRACED (measured here): G2 is `npx vitest run --reporter=dot` (tools/gate.ts) and its note the last 600 characters. "cli-api.D6E8EtSi.js:9321:26" is vitest's dot reporter (printTaskErrors) calling formatErrorAttempts, which uses Map.groupBy at line 9347; Node 20 has none (node v20.20.2 here, typeof Map.groupBy undefined). Reproduced: one scratch test that fails on purpose with --reporter=dot gives exit 1 and exactly this TypeError with these lines (scratch file removed). So a test or suite failed on that machine and the reporter's crash hides its name. Here `npx vitest run` gave 917 of 917, exit 0, three times on this line. Sent to /root 16:33 (high) with the ask for the failing test's name (json or tap reporter). Owed: the gate's own command (build, then the dot reporter) on my tree when the plate tool does not run.
+- Take 3, early draft of 2692 with only the 0.7 level under the wall law (w3/E2692.png, pair w3/pairE2692.png at 1 to 1 against the state): the stretched orange paint on the upper wall is gone; the wall is one band of grey brown rock with faint streaks down the fall line and a few bed lines, with straight borders where the other levels (not yet done) begin. It is LIGHTER than the take: band (48, 37, 33) against the state's (40, 31, 27) and (32, 25, 23) lower down; the shadowed floor beside it (32, 26, 24).
+- MEASURED on the 0.7 plate (n1/a against w3/a, wall mask of the tool, scene values): shadowed wall, take (0.0152, 0.0139, 0.0150), law (0.0226, 0.0212, 0.0217); lit wall, take (0.0626, 0.0391, 0.0331), law (0.1153, 0.0764, 0.0615). The colours agree (lit 1.89 : 1.18 : 1 against 1.87 : 1.24 : 1), the level does not: the take over the law on the wall is 0.650, 0.608, 0.633 per colour, 0.632 all. The law's numbers come from the approved close image, whose walls are lighter than the take's. A wall lighter in the levels with the law than in the 8.5 level (which keeps the take) would break ONE BODY at 3.8 to 8.5.
+- TAKE 4 (16:35, chain walls122.sh w4, log walls123.log): plates.json takes.walls takeLevel 0.632 (measured as above; the tool prints "take over law" on every level so the number can be checked), the law's rock times it. Nothing else changed. Take 3's chain stopped after the early draft (public set back by git checkout).
+
+### 16:40 to 16:50 UTC, MAIL 1201, take 4 early draft, Phobos in the dive
+- MAIL 1201 (16:39) of /root: G2 taken as read; job mg2-01 runs the suite three times with the json reporter on 71688463 on a machine that draws nothing; the same crash was the suite's exit 1 on the travel's take while its gate passed, so one test that fails on some runs, most likely not mine. Do NOT run the gate before the wall proof. Wall: the beds as long thin lines want what breaks them (joints, slumps, talus fans); say what I choose. FOUND BY THE HARNESS: a moon passes close to the camera at 2406 to 2411 (x 1200 to 1620, y 480 to 840), turns paler and softer while it grows, its dark side shifts and is gone at 2410.5; answer in three lines: which body and what law, whether its light is the Sun's in every frame, whether its surface holds detail at that size. Rise 2697 and dive 2457 are slow humps of the whole frame, rise 2741 the standing reader's own line: no event. Files in out/work/place/mail (s-mars-dive-moon-both.jpg, f-mars-dive-2407h.png).
+- PHOBOS, measured (npx tsx assets-src/mars/phobos/angle.ts 2396 2416): the body is Phobos (src/stops/mars/set.ts MoonBody, phobos.json). Its baked lit side (phobos-lit.jpg, the hold's own pixels) is shown whole within phobos.json lit.fromDeg 12 degrees of the hold's eye as seen from the moon and gone at toDeg 24, where the moon's own light (look.ts moon: sun, sunBias, bump, rim) draws it. The angle on the dive: 2400 10.45, 2403 11.64, 2404 12.59, 2405 13.93, 2406 15.71, 2407 17.98, 2408 20.86, 2409 24.52, 2410 29.26, 2412 44.88, 2414 81.45 degrees; distance 10.9 radii at 2400, 9.8 at 2406, 7.8 at 2409, 5.8 at 2411, 3.0 at 2415. So the paling and softening of 2406 to 2409 is the going over from the painted side to the computed light, by angle: two different lights, not the Sun turning. The colour map is 4096 by 2048 round the moon, about 1300 texels across the disc: at 7.8 radii the disc is about as wide in px as that, from 2409 on the map is enlarged past its fineness. Not cured; it is its own step after the wall.
+- Take 4, early draft at 2692 (w4/pairE2692.png, 1 to 1 against the state): the wall band is (39.6, 30.6, 26.1) against the state's (39.9, 31.1, 27.1): the take's level. The stretched orange paint on the upper wall is gone; the wall is dark brown rock with streaks down the fall line; weaker in contrast than the state's smear (sd 3.8 against 5.5 levels). The tool's line on the 0.7 level: take over law 0.622 at full size (0.632 was measured at half size); takeLevel goes to 0.622 with the next take. From above (w4/v07-wall.jpg, 0.7 plate x 860 y 420): the wall stands as a slightly lighter lobe on the take's black cast shadow with a feathered border on its right; a few bed lines cross it as curves along the height.
+- Chosen for what breaks the beds (take 5, prepared as out/work/place/w5patch.py, not applied while take 4 runs): JOINTS, columns down the fall line (the ground's noise drawn out along the fall line like a flute, cut into columns), each column reading its beds at a height of its own, so a bed steps from column to column. The gullies, the flutes and the fans at the foot already move and cover the beds.
+
+### 16:50 to 17:03 UTC, wall take 4 whole: proof pictures sent; take 5 started
+- Take 4 on all four levels (walls123.log): wall on 0.028 (3.8), 0.073 (1.6), 0.198 (0.7), 0.370 (0.3) of the plates; take over law 0.579 at 1.6, 0.622 at 0.7, 0.544 at 0.3. Files after pyramid and landunder (w4/c): land-0p3 1,698,979, land-0p7 3,429,155, land-1p6 4,461,509, land-3p8 5,474,722, land-8p5 4,408,998.
+- wproof.py w4: dark wall before to after (20.7, 19.6, 21.2) to (40.1, 31.5, 28.4) at 0.3, (19.2, 18.5, 20.3) to (30.1, 25.0, 23.5) at 0.7, (20.1, 19.4, 21.1) to (32.0, 26.6, 24.8) at 1.6, (21.9, 20.7, 22.5) to (30.5, 26.1, 24.9) at 3.8; lit wall (82.2, 63.6, 53.8) to (76.6, 56.2, 47.0), (78.8, 58.8, 49.6) to (70.1, 51.6, 43.3), (74.9, 56.8, 48.4) to (70.2, 51.6, 43.4), (80.1, 55.7, 44.3) to (71.4, 51.3, 42.5). Frames against the state: mean change 0.53 levels at 2458, 0.65 at 2460, 0.71 at 2462, 0.80 at 2464, 0.91 at 2466, 1.04 at 2468, 1.50 at 2688, 0.89 at 2692.
+- SEEN in the engine (w4/proof-a-2692-wall.jpg, proof-c-pairs.jpg, p2468.jpg, p2688-a.jpg, p2688-b.jpg): the canyon's walls read as cliffs with flutes where the state has a smeared band; the first take better than the state on the walls. At 2688 the dark slab with a straight top at the near slope's upper end is the C2 ledge (in the state too). At 2688 lower left of the big wall a lobe of other grain and tone (a level's border, not traced).
+- SEEN from above, BAD (w4/v07-whole.jpg, v03-whole.jpg, v03-a.jpg, v16-a.jpg): (A) the wall is fluted ribbons with hard borders, lighter than the take's black cast shadow; (B) the take's boulder slope at 0.3 (by the heights sine 0.69 median, 0.79 at the 75th, 0.84 at the 90th percentile) became a pale fluted sheet; (C) at the top of the 0.3 plate a block of wall with a straight lower border, where the picture's own kept ground begins; (D) the beds are few long curves, the flutes carry the look.
+- Slopes measured (out/work/place/slope125.py, heights at half the plate's size): share over sine 0.5, 0.72, 0.745, 0.83, 0.917: 0.3 level 0.472, 0.331, 0.268, 0.148, 0.006; 0.7 level 0.273, 0.182, 0.167, 0.098, 0.006; 1.6 level 0.120, 0.069, 0.062, 0.033, 0.002. At the wall of 2692 (0.7 plate x 1183 y 735, 300 px): sine 0.53 median, 0.85 at the 75th, 0.88 at the 90th, 0.90 at the 99th. The heights hold no slope over about 66 degrees.
+- 17:02 mail to /root (high; its head says 17:10, written by guess, my clock by date -u showed 17:02): six pictures of take 4, the reading above, the three lines on Phobos, and what take 5 is.
+- TAKE 5 (17:01, chain walls122.sh w5, log walls124.log; patch out/work/place/w5patch.py applied to walls.py and plates.json takes.walls): (i) joints: jointKm 0.5, jointCount 2, jointShift 1.0; (ii) broadKm 0.27, broadClip 6: coarser than 0.27 km (twice the 8.5 level's texel of 0.137 km) the wall keeps the take's own tone and colour (the wall weighted mean of the take over that of the law's rock), finer it is the law's rock; takeLevel taken out again; (iii) wallSin [0.745, 0.866]: the wall begins where paint for a view from above is drawn out to 1.5 times its length down the slope and is whole at twice.
+
+### 17:03 to 17:10 UTC, MAIL 1220, take 5 early draft, take 6
+- MAIL 1220 (17:08) of /root: take 4 is the first take better than the state on the walls; from above not yet one body. RULED: ONE BODY outranks the wording of MAIL 1034 (c): the wall keeps the tone and colour of the level above for everything that level can show, the law adds only what is finer; a wall in the take's cast shadow stays as dark as the take paints it. Take 5's three points are the way. If the shadowed walls then read too dark at 2580 beside the approved close picture: the same lift of the shadows on EVERY level and the globe's patch alike, never on the fine levels alone; send the pair at 2580 with take 5. THE MOON, ranked before the round, after the wall and the ledge: during the dive and the rise the moon keeps clear of the lens's way (the frame's mean level climbs 49.2 to 77.7 from 2406 to 2409.5, about 8 levels a frame against maxLevelStep 1.3); find the nearest pass at which level step and pop hold with a margin (start at 12 radii) and reach it at the cause: the moon's own way on its orbit from where the hold's judged frame has it (that frame unchanged); if that moves it too fast through the hold, say so with numbers and name what the dive's line would have to do (handover_engineer owns the line). Not allowed: switching off, fading, shrinking. The two lights (baked inside 12 degrees, computed from 24) must agree in any case: with the ledge. Files' growth paid before any commit.
+- Take 5, early draft at 2692 and the 0.7 plate from above (w5/tripE2692.png, w5/v07-whole.jpg, v07-wall.jpg): tones as the state's (band 39.7, 31.3, 27.2; lower band 31.9, 25.2, 23.1 against the state's 31.9, 25.3, 23.0); from above the wall has the take's tone, the ribbons are gone as tone. Faults of the take: (1) the flow field was a copy of take 4's (fed read on the old wall of 30 degrees), (2) talus rose from 0.028 to 0.120 of the plate, because everything between detail.json's talus and the new wall counted as talus where fed: the slope south of the canyon became a soft band of the take's broad tone. (3) In the take's dark the wall's structure is weak: sd 1.6 levels on the lower band against the state's 3.6 and take 4's 3.1; the flutes of 0.4 km and wider are now tone of the level above, only the finer carry.
+- TAKE 6 (17:10, walls122.sh w6, log walls125.log): flow field made anew; restSin [0.5, 0.64]: talus goes out between 30 and 40 degrees (loose rock lies no steeper), between it and the wall the take's paint stays. Take 5's chain stopped after its early draft.
+
+### 17:10 to 17:15 UTC, Phobos and the dive's line, first numbers (while take 6 runs)
+- Tools: out/work/place/moon126.ts (eye's distance to the moon for speeds of the moon on its orbit), moon127.ts (the moon's centre in the 1920 by 1080 frame, the width of its disc in px, its speed in px a frame). The moon is at phobos.center at plan.holdMid, which is frame 2325.00: another speed on the orbit leaves the judged hold frame 2325 as it is. Camera vfov 30.1 degrees.
+- TODAY (plan.p.moonDegPerSecond -1.2): in the hold the moon drifts 1.5 to 2.4 px a frame (centre 877, 911 at 2250 to 1149, 773 at 2400; disc 305 to 372 px); then the dive flies past it: 160 px a frame at 2410, 240 at 2411, disc 687 px at 2411, nearest 3.03 radii at 2415 (out of frame from 2412).
+- By the moon's speed on its orbit alone: nearest pass on the dive 5.74 radii at 0 deg/s, 8.02 at +1, 10.31 at +2, 12.57 at +3, 14.79 at +4 (about 2.3 radii for each degree a second; the other way it is worse: 1.34 at -2, 1.47 at -3, 12.74 only at -8). At +1 the moon stands at the right edge at 2400 and leaves at 46 px a frame at 2404; at +2 it has left the frame at 2389 and never sweeps. THE PRICE: the hold's own eye moves, and the moon's -1.2 nearly cancels that; at +1 the moon crosses the hold from x 240 at 2250 to x 1923 at 2400 at 9.3 to 12.8 px a frame, at +2 from x -29 to out at 2389 at 12.3 to 16.8 px a frame (today 1.5 to 2.4). So the orbit alone clears the dive only by sending the moon across the whole hold in five seconds. Another axis of the orbit gains nothing (the present direction gives 2.27 of the 2.37 radii for each degree a second that any direction could).
+- What the dive's line would have to do instead (handover_engineer's): pass the moon's place of 2415 nine radii farther off (0.55 of the scene's units; the moon's radius is 0.061), or the moon stand that much farther from the line in the hold, which changes 2325. Not built; ranked after the wall and the ledge (MAIL 1220).
+
+### 17:16 to 17:26 UTC, wall take 6, the early pictures and two tool faults traced
+
+- Take 6 (take 5's way with the flow field made anew and restSin): 0.7 level wall on 0.106, talus 0.007, take over law 0.581,
+  the plate on the wall 31.0 to 30.9, mean change 0.90.
+- 2692 at 1 to 1 (w6/tripE2692.png: state, take 4, take 6): tones equal the state's (band 39.7, 31.3, 27.2 against 39.9, 31.1,
+  27.1; upper band 52.9, 42.7, 37.9 against 52.7, 42.8, 38.0; lower band 31.9, 25.3, 23.1 against 31.9, 25.3, 23.0); the
+  stretched paint is gone, rock with streaks down the fall line, dark and quiet low on the wall.
+- From above (w6/v07-whole.jpg, v07-b.jpg, v07-wall.jpg): the plate has the take's tones, the ribbons are gone as tone, the
+  shadowed north wall stays dark with faint flutes. TWO FAULTS of the tool, both traced in the look pictures (w6/trace-b.jpg,
+  w6/trace-c.jpg):
+  1. Thin black cracks on the wall (0.7 plate x 2100 y 700). Cause: the joints' columns are cut hard (floor), so the beds'
+     step in the heights jumps at a column's border by up to ledge times the thickness (0.11 km, 9 texels of height) inside
+     one texel; the slope's light and the cast shadow paint that cliff black. Cure: the step fades to nothing toward a
+     column's border over jointSoftKm, the tone keeps its offset.
+  2. A dark crescent at the wall's border (0.7 plate x 1196 y 530). Cause: the displacement of the heights is cut off by the
+     wall's mask, and its broad octaves (flutes of 1.6 km are 0.48 km deep) leave a cliff where the mask ends. Cure: the
+     displacement is taken finer than broadKm only (its wall weighted mean over broadKm taken out), the same scale under
+     which the tone is the law's; coarser the heights hold. That is the rule "add only what is finer" for the heights too.
+- Both go into take 7 after take 6's chain is through; take 6's pictures go to /root as they are, the faults named.
+
+### 17:26 UTC, wall take 7 started; take 6's chain stopped
+
+- Take 6's chain stopped at 17:25 (its 1.6 and 0.3 levels were running; public/assets/mars/full restored by git checkout): both
+  of its faults are the tool's, so its further levels would only have shown them again.
+- Take 7 = take 6 plus out/work/place/w7patch.py: (1) plates.json takes.walls.jointSoftKm 0.06: the beds' step in the
+  heights fades in from a joint column's border over that ground distance (the tone keeps its offset); (2) the heights
+  are displaced only finer than broadKm: the displacement's own mean over wall and talus within broadKm is taken out.
+  Flow field of take 6 reused (w6/field.npz copied; wallSin unchanged). Chain: out/work/place/walls122.sh w7, log
+  out/work/place/walls127.log; after it out/work/place/w7after.sh (log w7after.log): take 7's plates into public full,
+  final 2580 to out/work/place/view/w7-2580.png, drafts W2440 to W2456 (every fourth) and W2470 to W2476, public
+  restored.
+- Mail to /root 17:27 (low): take 6's early pictures and numbers, the two faults and their cures, what breaks the beds
+  (joints, talus only under the angle of rest), and the moon's orbit numbers for the ruling.
+
+### 17:33 to 17:36 UTC, wall take 7, the early pictures
+
+- 0.7 level: wall on 0.106, talus 0.007, the picture's own ground on 0.111 of the wall, beds seen 1.00 and 0.27, light
+  mean 1.09 on the wall, Sun reaches 0.46, take over law 0.571, the plate on the wall 31.0 to 31.1, mean change 0.85.
+- Looked at w7/tripE2692.png (2692 at 1 to 1: state, take 6, take 7), w7/v07-b.jpg (0.7 plate x 2100 y 700, take, take 6,
+  take 7), v07-c.jpg (x 1050 y 400), v07-d.jpg (x 700 y 1500), trace-b.jpg (x 2330 y 880 at three times):
+  the black cracks are gone but for single short black hooks (one in a crop of 220 px at 0.7 x 2386 y 998), the dark
+  crescent at x 1196 y 530 is gone, 2692 reads as take 6 (rock with streaks down the fall line in the take's tone).
+- The hooks left: the distance to a joint column's border was read from the field's gradient, which is wrong where the
+  field only just touches a border (gradient near nothing). Cure prepared (out/work/place/w8patch.py): the distance is
+  measured (distance transform of the columns' borders). Not put in while take 7's chain runs.
+- Seen and left: on the wall the sky look shows the rough noise's lattice of 3 texels as small blocks; in the plate at
+  1 to 1 it reads as grain, not as a pattern.
+
+- MAIL 1236 (17:35) of /root: take 7's two cures are the right kind (causes in the tool); whole take 7 about 18:00.
+  PHOBOS ruled for now: the orbit stays at today's speed (the hold keeps its calm); the sweep at 2410 and 2411 is cured
+  on the camera's side if it can be: handover_engineer probes the dive's line passing the moon's place about nine radii
+  farther off (MAIL 1235); if the line cannot clear it, a smaller change of the line is paired with a small change of
+  the speed (+1 gives 8.02 radii). No work on the moon for me until that probe is in; the wall comes first.
+
+### 17:48 to 17:58 UTC, wall take 7 whole; take 8 started
+
+- The tool's lines: 3.8 level wall on 0.011, talus 0.001, beds seen 0.01 0.00, the plate on the wall 37.6 to 37.7, mean
+  change 0.05, take over law 0.619; 1.6: 0.032, 0.002, beds 0.83 0.00, 31.2 to 31.3, 0.20, 0.556; 0.7: 0.106, 0.007,
+  beds 1.00 0.27, 31.0 to 31.1, 0.85, 0.571; 0.3: 0.156, 0.008, beds 0.99 0.91, 37.9 to 38.7, 1.77, 0.482.
+- wproof.py w7: dark wall (mask over 0.5, luma under 40 before) 0.3 (22.9, 21.7, 23.5) to (30.3, 26.8, 26.8), lit wall
+  (79.4, 62.2, 53.4) to (70.4, 55.1, 47.8); 0.7 (19.1, 18.6, 20.7) to (22.0, 20.5, 21.9), lit (76.7, 58.1, 49.5) to
+  (71.1, 53.8, 46.0); 1.6 dark to (22.0, 20.5, 21.8), lit to (71.7, 53.8, 45.7); 3.8 dark (22.4, 20.9, 22.5) to (23.9,
+  21.8, 23.2), lit (81.5, 55.9, 43.8) to (80.2, 54.6, 42.7). Changed by over 2 levels outside the wall mask: 0.0140,
+  0.0172, 0.0125, 0.0137 of the plates (the pyramid and the talus).
+- Drafts against the state (mean change / share over 8 levels): 2458 0.16 / 0.0026; 2460 0.17 / 0.0030; 2462 0.20 /
+  0.0035; 2464 0.22 / 0.0041; 2466 0.28 / 0.0059; 2468 0.31 / 0.0073; 2688 0.44 / 0.0112; 2692 0.23 / 0.0054.
+- Final 2580 with take 7's plates (out/work/place/view/w7-2580.png) equals the state's n105-2580.png in every pixel: no
+  plate is in the terrain's judged frame. Darkest quarter: approved (13.2, 13.0, 14.1), film (15.5, 14.5, 15.3).
+- Plates' bytes (w7/c against n1/c): 0p3 1,642,647 to 1,631,312; 0p7 3,392,992 to 3,384,866; 1p6 4,452,848 to
+  4,440,104; 3p8 5,474,587 to 5,469,562.
+- Looked at every picture (w7/proof-a-2692-wall, proof-b-above, proof-c-pairs, p2468-a, p2688-a, p2688-b, v03-whole,
+  v03-a, v03-c, v07-whole, v16-a, p2580). Film's eye: better than the state (stretched paint gone, tone held). From
+  above at 0.3 still wrong: 1. black cracks at joints (cure: w8patch.py, distance transform); 2. ghost outlines of the
+  take's boulders flat on the wall (the take's grain under 2.5 texels); 3. steep strips read as smoothed fluted bands
+  amid boulder ground (the ruling itself; wallSin).
+- Mail to /root 17:57 (high) with nine pictures, these numbers and the three points; looks pushed 20e6c651.
+- Take 8 = take 7 plus w8patch.py, started 17:56: out/work/place/walls128.sh w8 (log walls128.log): walls on 0.3, 0.7,
+  then 1.6, 3.8; pyramid; land under; web plates; ends with "PLATES DONE" (w8/c full, w8/wc web). w7after.sh was
+  stopped after the final 2580 (its drafts of take 7 are not needed).
+
+### 18:00 to 18:09 UTC, MAIL 1247; take 8 read on two levels and stopped; take 9 started
+
+- MAIL 1247 (18:00) of /root, rulings on take 7. THE RULE: the film is judged by the film's eye and the dive looks down on
+  this land; loose blocks do not rest on land steeper than about 40 degrees, so on a wall nothing that is the picture of
+  a resting boulder may remain, at any scale; and a wall may not be told from the ground beside it by being smoother.
+  ON 2 (ghost boulders): on a wall the take's grain goes out with the wall's own ramp (none at a full wall); in its
+  place the law gives the rock its own fine grain by code, as strong as the take's grain on the ground beside it
+  (root mean square under 2.5 texels, matched within a tenth), stretched along the fall line like the flutes, not
+  round cells. Take 9 if take 8 cannot carry it; the name waits for take 9. "Do not name a state in which the net of
+  cells can be seen from above." ON 3: wall from 48 degrees with the ramp to 60 stays; if a strip still reads as a
+  band after take 9, send the crop and the grain's numbers on both sides. PROOF WITH THE NAME, beside my list: v03-c
+  again (state, new take, mask), one crop from above at 0.7 on a wall, and in the film's eye the frame of the dive and
+  the frame of the rise in which the wall of v03-c is largest, each as a pair with the state at 1 to 1. 2580 noted.
+  Name about 19:00 if take 9 is needed; say the new time in one line. Third cut at 20:00 from the names green by then.
+- Take 8 (crack cure by measured distance) stopped after its 0.3 and 0.7 levels (w8/a): it could not be the name. Read
+  on them (w8/v03-a.jpg, take 7 beside take 8 and take 8's light): the crack at 0.3 x 1550 y 1065 and the dark blade
+  at x 1445 y 1170 are still there. So they are not the joints. Counted (texels on wall under level 10 and over 12
+  darker than their 5 px median): 0.3 state 2075, take 7 244, take 8 186; 0.7 state 350, take 7 223, take 8 182.
+  TRACED in the light look: the blade is a trench along a narrow wall strip's border. The strip is 0.65 km wide, the
+  flutes of 0.4 to 1.6 km are up to 0.48 km deep, and taking out the mean within 0.27 km leaves their slope across the
+  strip, so the strip's two borders stand as cliffs of up to 0.2 km; in the trench neither the Sun nor the sky reaches.
+- Take 9 = take 8 plus out/work/place/w9patch.py:
+  1. a flute wider than broadKm draws its tone but does not move the heights (the deepest displacement is then 0.06 km);
+  2. takes.walls.skyLeast 0.35 (open sky, level open ground 1; mean on the wall 0.54, 5th percentile 0.36 to 0.41):
+     the least sky a texel is given, the light the rock around throws into a slot, so no slot is black;
+  3. the grain of MAIL 1247: on a wall the take's grain is not kept; the rock's own is the ground's noise of
+     grainCellTexels 1.0 texel drawn out along the fall line (grainLen 3 cells each way, grainSteps 7), its strength
+     set by the tool: the take's grain on the ground beside (rms under 2.5 texels, read within broadKm) less what the
+     rock's fine relief gives already. The tool prints the three rms numbers per level;
+  4. the head of walls.py says what the tool does now (tone by broadKm, heights, joints, grain).
+  Chain out/work/place/walls128.sh w9, log walls129.log, started 18:09.
+- 18:10 to 18:17 UTC. The wall of v03-c in the film's eye (MAIL 1247 proof): its centre on the 0.3 plate is x 1820 y 380,
+  that is 0.1009 deg east and 0.0976 deg north of the spot. Projected with geom.Camera on the poses of geometry.json it is
+  largest and whole in the dive at 2460 (centre x 1252 y 921, box x 1084 to 1415, y 797 to 1091; at 2461 it runs out at
+  the bottom) and in the rise at 2697 (centre x 982 y 917, box x 848 to 1097, y 812 to 1045). The pairs go at these two.
+  Commit proof is out/work/place/proof129.sh: it renders the state's draft of 2697 first (public as HEAD), then copies
+  the take's plates into public and runs build, memory, gate lines, finals, drafts, sides and tests.
+- 18:17 to 18:23 UTC, take 9 read on two levels (walls129.log; w9/v03-c.jpg, v03-a.jpg, v03-whole.jpg, v07-c.jpg, v07-d.jpg,
+  v03-dark-gain5.jpg, v03-masks.jpg). Numbers: 0.7 wall on 0.106, plate on the wall 31.0 to 31.5, grain under 2.5 texels
+  the take on the ground beside 0.1605, the rock without its grain 0.0572, with it 0.1515 (0.94 of the take's); 0.3 wall
+  on 0.156, plate 37.9 to 39.4, grain 0.2141, 0.0593, 0.2013 (0.94). SEEN: no net of cells on the wall, no ghost boulders,
+  the crack at 0.3 x 1550 y 1065 and the blade at x 1445 y 1170 are gone. The grain is short streaks down the fall line;
+  at 1 to 1 from above it reads as fur, and in the whole plate the walls read as brushed patches beside the blocky
+  ground: told from the ground by the kind of grain, no longer by being smooth. For /root's eye, with the numbers.
+- FOUND, a fault of the tool since take 1 (the mask is the same in takes 6 to 9): along the north border of the 0.3
+  plate, x 0 to about 1100, y 0 to 130, the mask says wall where the 0.7 mask at the same ground says none and the take
+  paints floor in shadow. With the code grain it shows as upright streaks with a straight lower edge (gain 5 picture).
+  CAUSE: the 0.3 heights (country-0p3.bin, as on main) hold in their north band a slope from -5.85 km to -2.17 km at
+  the border where the 0.7 heights have the floor at -6.33 km (the wall's foot there lies about 4.7 km farther north).
+  Own against parent in the outer 0.12 of each level: 3.8 in 8.5 mean 0.026 km, most 0.48; 1.6 in 3.8 0.019, 1.02;
+  0.7 in 1.6 0.018, 1.17; 0.3 in 0.7 mean 0.355, most 4.18 (north side mean 1.23, left 0.18, bottom 0.014, right 0.004).
+  The cap (src/bodies/cap.ts levelRead) mixes each level over the coarser ones by a weight that falls across the outer
+  0.12 of its width, so the film never draws that slope whole; countrytake.Heights.at, which walls.py used, switches hard.
+  Share of the 0.3 level's north band steeper than 48 degrees: by the hard switch 0.434, as the cap draws it 0.128.
+  CURE in the tool (out/work/place/w10patch.py): walls.py reads the heights by `as_drawn` (the cap's mix with
+  country.json edgeShare 0.12). The heights themselves are not touched; that the 0.3 level's north band is not its
+  parent's ground is a red of ONE BODY in the heights, named, not cured here.
+- Take 9's chain was stopped at 18:22 (its 1.6 and 3.8 not finished). TAKE 10 = take 9 with as_drawn, all four levels by
+  the one tool: walls128.sh w10, log walls130.log, started 18:22:58 (a first start failed at once: the name `drawn` was
+  a local of main; renamed as_drawn).
+- 18:18 UTC, mail of sky_builder: a hold sky plate with the star pits filled, to lay in with my next name "by the
+  Builder's MAIL 1212 point 3". I have no MAIL 1212, and MAIL 1062 holds 2325 byte equal. Not laid in; asked /root.
+- 18:24 UTC: merged main 62a03dd0 (kit/PROGRESS.md only, statuses and decisions d308 to d317) as 3b02abac4, not pushed yet.
+- MAIL 1251 of /root (18:24 UTC), the hold sky plate with the star pits filled (sky_builder's files, kept in
+  out/work/place/skyfill/): "The order stands." "It never rides inside a place's name or inside any other step. It is
+  its own commit, after your current name, and never onto a name that is being read on machines. Whatever earlier mail
+  holds your hold byte equal binds your place's work; this step is the one ordered change of the hold's sky." "Before
+  you name it: your own G17 and the d296 match at your judged hold frame at the final tier, beside main's own numbers
+  from the same machine. If either is worse than main's, it stays out and you send me the numbers. Outside the sky no
+  pixel may move by more than one code; say the count." "In the report: one crop of the sky at full size, main beside
+  the plate, where the fill does the most." "It does not hold up your running work." For Mars: its own commit after the
+  name, with the pair at 2325 at the final tier. The time 19:35 and the reading of the north band are accepted; "put
+  the red of the heights (the 0.3 level's north band is not its parent's ground) into the report as its own line so
+  that it gets an owner."
+- 18:32 UTC, take 10 read on two levels (walls130.log; w10/v03-c.jpg, v03-whole.jpg, v03-e.jpg, v03-dark-gain5.jpg).
+  0.7: wall on 0.106, talus 0.007, the plate on the wall 30.9 to 31.4, grain 0.1603 (take beside), 0.0573 (rock
+  without), 0.1515 (with). 0.3: wall on 0.127 (take 9: 0.156), talus 0.008, the plate on the wall 43.5 to 45.3, grain
+  0.2166, 0.0574, 0.2075 (0.96 of the take's). North band of the 0.3 plate (x 0 to 1100, y 0 to 130): wall mask mean
+  0.842 in take 9, 0.043 in take 10; the mask inside the band's inner border is equal to take 9's. Specks on the
+  wall of take 10 (darker than level 10 and over 12 under their 5 px median): state 2012, take 10 65.
+  SEEN: north band clean. BAD (v03-e, 0.3 plate x 380 y 820): on the lit slope of the butte the mask stands at part
+  strength, and the code grain lies there as hair over the take's blocks; fur at 1 to 1 on the full walls as in take 9.
+  The strength is the ruled one (the take's root mean square); what reads as fur is that the take's grain is few
+  strong blocks and the rock's is a dense streak in every texel of the same root mean square.
+- Proof script for the name: out/work/place/proof130.sh (state draft 2697 first, plates into public, the pairs' frames
+  first, then the sheet's frames, finals, build, memory, gate lines, web frames, sides, tests on the merge 3b02abac4).
+- 18:45 UTC, take 10 whole (walls130.log, "PLATES DONE" 18:45:05). 3.8: wall on 0.011, talus 0.001, the plate on the
+  wall 37.6 to 37.8, grain 0.1155 (take beside) and 0.1064 (rock, 0.92). 1.6: wall on 0.032, talus 0.002, the plate
+  31.2 to 31.7, grain 0.1354 and 0.1280 (0.95). Bytes of the plates, state to take 10: full 0p3 1,642,647 to 1,687,466,
+  0p7 3,392,992 to 3,433,241, 1p6 4,452,848 to 4,439,447, 3p8 5,474,587 to 5,473,760, 8p5 4,411,388 to 4,409,162, the
+  three patches 4,757,043 / 4,694,248 / 5,497,541 to 4,756,861 / 4,694,157 / 5,497,580; sum of full 34,323,294 to
+  34,391,674 (plus 68,380); web sum 11,190,090 to 11,138,637 (less 51,453).
+- For the net: `takes/p38-lead.png` (2,761,756 bytes; the lead of take 5 of the 3.8 plate of an earlier round, made by
+  the filllead.py line of its RECIPE row from two takes that stay; no tool reads it) leaves the tree with this commit;
+  RECIPE has the sentence. RECIPE also has the bullet "The wall rock of the plates by code".
+- 18:46 UTC proof130.sh w10 started (state draft w1/S2697.png rendered with public as HEAD, then the plates copied).
+- In the film's eye, drafts against the state (mean of the largest channel difference, 99th percentile, share over 8
+  levels): 2458 0.31, 4, 0.0033; 2460 0.33, 5, 0.0040; 2468 0.51, 9, 0.0103; 2688 0.73, 11, 0.0158; 2692 0.42, 7,
+  0.0073; 2697 0.27, 3, 0.0028. SEEN at 1 to 1 (w10/pair-2460.jpg, pair-2697.jpg, pair-2692.jpg, pair-2688.jpg,
+  pair-2468.jpg): no fur at the film's scale. 2460: the wall of v03-c nearly as the state, a little finer. 2697: the
+  ridge at the middle is a fluted strip where the state has blocks drawn out. 2692 and 2688: the shadowed wall is
+  dark fluted rock where the state has paint drawn out into worms; calmer. 2468 (cap part, lower half): the orange
+  blot on the slope at x 1070 to 1140, y 780 to 910 is a lit streaked slope now; fine streaks show at the right.
+  The straight ledge at y 760 of 2468 is the C2 ledge (next step), in both.
+- 18:49 UTC: the push of the looks FAILS for the login ("could not read Username for 'https://github.com'"), five
+  tries over two minutes; the push of 18:23 went through. By MAIL 621 and 757: tried again, no other credential.
+  If the commit's push fails too it goes as a bundle and the pictures by mail.
+- 18:57 UTC: the proof stopped at the build, "ENOSPC: no space left on device" (the build copies public into dist and
+  the disk had 1.2 GB). Up to there it had: drafts 2477 and 2490 equal by bytes to the state's; final 2325
+  ba09dc6338ec96a9e79158722080cb743aa295f63607cad078d91901e722a4cc, equal by bytes to the kept one; final 2580 equal by
+  bytes to the state's final (match 7.21272, 14.25716, 0.9448602). Scratch of the wall takes 2 to 9 deleted
+  (out/work/place/w2 to w9, 1.1 GB, none of it in the tree), dist removed, the rest of the proof started again as
+  out/work/place/proof130b.sh (build, memory, gate lines, web frames, sides, tests).
+- 18:59 UTC: main moved to 66912fc1 (kit/PROGRESS.md only, status 326 and 327, d318, d319; nothing for this stop).
+  Merged as 9e6819a4 before the tests started, so the tests run on this merge. Build exit 0. Memory as G15 counts it:
+  full 1,399,833,865, web 417,574,115 bytes (as the state: the plates keep their sizes in pixels).
+- Net of the three folders, working tree against main 66912fc1: public plus 8,912,470, assets-src less 14,847,972,
+  src plus 33,769, sum less 5,901,733 bytes (the named state stood at less 3,241,535; the plates cost 16,927, the
+  lead that left gives 2,761,756 back).
+- Looked at, every frame: the dive in 19 frames (w10/dive-sheet.jpg, in ten pieces at 1 to 2), the five levels from
+  above (w10/above.jpg), v07-c, proof-c-pairs, proof-c-2458, proof-c-2688, proof-d1 to d3. SEEN: from above at 0.7
+  and 0.3 at 1 to 1 the wall reads as FUR (v07-c: fine hair over the lower half where the mask is full); on the 0.7
+  plate whole the walls read as fluted bands beside the take's cratered ground (proof-d1, the rim right of the
+  middle). In the dive's frames no fur is seen; the dive's known reds are as in the state: the drawn out paint on the
+  near ground 2444 to 2458, the far wall changing form 2462 to 2472, the swirls at lower left of 2474.
+- The push still fails for the login at 18:57 (ls-remote reads; "could not read Username"). Looks added locally:
+  v07-c, above, dive-sheet, pair-2688, pair-2468, proof-d1. They go by mail.
+- 19:15 UTC, the proof of take 10 whole, on merge 9e6819a4 with the working tree: build exit 0; gate "PASS G11  every
+  asset has a row or a recipe" and "PASS G15  at most 2 sets per frame; finished stops: mars/web 418 MB, mars/full
+  1400 MB"; tests 81 files, 917 of 917 (19:01 to 19:13); sides at T, draft, rendered 19:14 after the disk had 3 GB:
+  dive mean 0.008, 99th 0, max 13; rise mean 0.006, 99th 0, max 7 (as the state). Web set drafts 2452 and 2692 looked
+  at, whole. Dive against the state, px over 8 levels of 2,073,600: 2440 99, 2442 150, 2444 243, 2446 432, 2448 778,
+  2450 1207, 2452 2079, 2454 3402, 2456 5977, 2458 6894, 2460 8205, 2462 10335, 2464 12031, 2466 17787, 2468 21420,
+  2470 15637, 2472 7863, 2474 3440, 2476 0; 2477 and 2490 equal by bytes.
+- For the disk also deleted (scratch, none in the tree): out/work/place/code, m5, k3, depth, t61, eng56, the plates of
+  w1 (its state drafts stay), n1/b, w10/b; unreachable loose objects pruned (the stash and all refs stand).
