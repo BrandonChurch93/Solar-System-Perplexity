@@ -1,9 +1,71 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T16:02:14.545Z",
- "head": "001113e74e8afb8dfddb5c5b7677254487095d5b",
- "note": "16:03 UTC: the dive slice runs on the wedge's commit 001113e7; first 40 frames; 3150 last",
+ "pushed": "2026-11-25T16:27:06.600Z",
+ "head": "74aac3d2ed9a0c0580cf0564a739b58cf9002315",
+ "note": "16:28 UTC: the wedge is named (001113e7); rise slice a runs; next the far band's left third (air's share), the wedge's ground, the mid plate, the cast shadows",
  "looks": [
+  {
+   "time": "2026-11-25T16:27:05.363Z",
+   "file": "20261125162705363-note-look-3150.jpg",
+   "source": "../work/r14/w/look-3150.jpg",
+   "kind": "note",
+   "label": "3150 final on the named tree, bytes of 0e5c0362, match 6.113",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:27:04.061Z",
+   "file": "20261125162704061-note-strays-2895.jpg",
+   "source": "../work/r14/w/strays-2895.jpg",
+   "kind": "note",
+   "label": "2895: the pixels that differ by 1 level from the kept still, drawn by place",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:27:02.687Z",
+   "file": "20261125162702687-note-dive-w-de.jpg",
+   "source": "../work/r14/w/sheets/dive-w-de.jpg",
+   "kind": "note",
+   "label": "dive on 001113e7, every half frame, last sheets",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:27:01.494Z",
+   "file": "20261125162701494-note-dive-w-c.jpg",
+   "source": "../work/r14/w/sheets/dive-w-c.jpg",
+   "kind": "note",
+   "label": "dive on 001113e7, every half frame, third sheet",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:27:00.206Z",
+   "file": "20261125162700206-note-pair-3254h-named.jpg",
+   "source": "../work/r14/w/pair-3254h-named.jpg",
+   "kind": "note",
+   "label": "3254 + 1/2 of the rise on the named tree beside the tree before",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:26:58.899Z",
+   "file": "20261125162658899-note-pair-3042-named.jpg",
+   "source": "../work/r14/w/pair-3042-named.jpg",
+   "kind": "note",
+   "label": "3042 on the named tree 001113e7 beside the tree before: the canvas' ground laid on past its borders",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T16:18:06.405Z",
+   "file": "20261125161806405-frame-n9b-2895.jpg",
+   "source": "out/work/jupiter/final/n9b-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T16:02:13.265Z",
    "file": "20261125160213265-note-look-3150.jpg",
@@ -35,20 +97,6 @@
    "kind": "note",
    "label": "dive 3011 to 3020 + 1/2 on 001113e7 (the wedge named), draft, every frame",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T15:44:24.030Z",
-   "file": "20261125154424030-frame-n9-2895.jpg",
-   "source": "out/work/jupiter/final/n9-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
   },
   {
    "time": "2026-11-25T15:38:50.812Z",
@@ -158,54 +206,6 @@
    "source": "../work/r14/beyond/p2-pieces.jpg",
    "kind": "note",
    "label": "wedge take p2 from above, the pieces' borders yellow, the source's border green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:28:00.733Z",
-   "file": "20261125142800733-note-wdp2-pair-3254h.jpg",
-   "source": "../work/r14/wdp2-pair-3254h.jpg",
-   "kind": "note",
-   "label": "wedge take p2, 3254 + 1/2 before above, after below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:27:59.855Z",
-   "file": "20261125142759855-note-wdp2-pair-3042.jpg",
-   "source": "../work/r14/wdp2-pair-3042.jpg",
-   "kind": "note",
-   "label": "wedge take p2, 3042 before above, after below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:27:58.769Z",
-   "file": "20261125142758769-note-wdp2-pair-3034.jpg",
-   "source": "../work/r14/wdp2-pair-3034.jpg",
-   "kind": "note",
-   "label": "wedge take p2 (not committed), 3034 before above, after below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:04:02.320Z",
-   "file": "20261125140402320-note-n7-3150-trio.jpg",
-   "source": "../work/r14/n7-3150-trio.jpg",
-   "kind": "note",
-   "label": "3150 final on 7c0b8675 beside the approved close image (match 6.113)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:04:01.662Z",
-   "file": "20261125140401662-note-m3-wide.jpg",
-   "source": "../work/r14/beyond/m3-wide.jpg",
-   "kind": "note",
-   "label": "top view of take m3 (not committed): no canvas pieces, grain along the circles about the storm",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:04:00.187Z",
-   "file": "20261125140400187-note-wdm3-crop-3034.jpg",
-   "source": "../work/r14/wdm3-crop-3034.jpg",
-   "kind": "note",
-   "label": "3034 crop: before above; below the wedge as made detail in the flow frame on bands carried along the circles (take m3, not committed): the left border still reads as a line",
    "stop": "jupiter"
   }
  ]
