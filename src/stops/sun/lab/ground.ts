@@ -23,6 +23,18 @@ import { EDGES, SLOTS, TILE, cellsAt, newCells } from './sim'
 
 const srgbToLinear = (v: number): number => (v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4))
 
+const CURVE_GLSL = (() => {
+  const k = lab.heat.curve as number[][]
+  let out = ''
+  for (let i = 1; i < k.length; i++) {
+    const [x0, y0] = k[i - 1] as [number, number]
+    const [x1, y1] = k[i] as [number, number]
+    const line = `${y0.toFixed(5)} + (h - ${x0.toFixed(5)}) * ${((y1 - y0) / (x1 - x0)).toFixed(5)}`
+    out += i < k.length - 1 ? `  if (h < ${x1.toFixed(5)}) return ${line};\n` : `  return ${line};\n`
+  }
+  return out
+})()
+
 function rampTexture(): THREE.DataTexture {
   const stops = ramp.ramp.stops as number[][]
   const levels = ramp.ramp.levels as number[]
@@ -227,6 +239,7 @@ out float vReal;
 out float vPit;
 out float vDeep;
 out float vCorner;
+out float vEdge;
 out float vTall;
 out vec2 vG;
 flat out float vSink;
@@ -245,15 +258,20 @@ float deep;
 float tall;
 float sink = 0.0;
 float corner;
+float edge;
 vec3 dome(vec3 s) {
   float a = acos(clamp(s.z, -1.0, 1.0));
   vec2 u = length(s.xy) > 1e-6 ? normalize(s.xy) : vec2(1.0, 0.0);
   float inv = 0.0;
+  float invP = 0.0;
   float m1 = 0.0;
   float m2 = 0.0;
   for (int j = 0; j < ${EDGES}; j++) {
     float e = max(dot(u, edges[j]) * rad, 0.0);
     inv += pow(e, uLabDome.z);
+    float e2 = e * e;
+    float e4 = e2 * e2;
+    invP += e4 * e4;
     if (e > m1) { m2 = m1; m1 = e; } else if (e > m2) m2 = e;
   }
   corner = m2 / max(m1, 1e-6);
@@ -263,6 +281,9 @@ vec3 dome(vec3 s) {
   float groove = labLobes(u * (a / uLabDome.x), seed, 0.3) * (1.0 - smoothstep(0.6, 1.0, a / uLabDome.x));
   float top = 1.0 - pow(max(1.0 - f, 0.0), uLabDome.w);
   vec2 place = mid + u * (r * wide * uLabMore.x);
+  // the dome is a round body that reaches over the border of its cell into its neighbours: the sheet is the upper
+  // side of all of them, a lane the valley where two bodies meet. edge: the way to the cell's own border, 1 on it
+  edge = r * wide * uLabMore.x / max(rad * pow(max(invP, 1e-9), -0.125), 1e-6);
   // the borders are no straight lines: the ground itself is pushed about a little by a field of the place, the
   // same for both sides of a border
   place += ${lab.join.wobble.toFixed(4)} * (vec2(vn(place * 13.0 + 3.1) + 0.5 * vn(place * 29.0 - 7.0), vn(place * 13.0 - 21.7) + 0.5 * vn(place * 29.0 + 15.3)) - 0.75);
@@ -340,6 +361,7 @@ void main() {
   vPit = pitAway;
   vDeep = deep;
   vCorner = corner;
+  vEdge = edge;
   vTall = tall;
   vSink = sink;
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
@@ -440,8 +462,11 @@ float labTone(vec3 here) {
   float l = dot(sum, vec3(0.3, 0.5, 0.2)) * 0.25;
   return clamp(pow(max(l, 1e-4) / uLabTone.x, uLabTone.y), uLabTone.z, uLabTone.w);
 }
+// the one curve from the heat of the sheet to the heat the ramp shows (lab.json heat.curve: pairs, straight between)
+float labCurve(float h) {
+${CURVE_GLSL}}
 vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
-  heat = uLabHeat.x + (heat - uLabHeat.x) * labTone(here);
+  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(here));
   vec3 shown = texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb;
   vec3 col = inverseFilmic(grade(shown, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   vec3 upHere = normalize(here - ST_CENTRE);
@@ -497,6 +522,7 @@ in float vReal;
 in float vPit;
 in float vDeep;
 in float vCorner;
+in float vEdge;
 in float vTall;
 in vec2 vG;
 flat in float vSink;
@@ -580,7 +606,7 @@ void main() {
   // where it sinks. The edge of the hot middle is drawn out into the fibres, bright with dark between them; where
   // the field of the place joins two cells the heat runs over the border. The lane is where the heat falls: a thin
   // dark line in the bottom of the valley, wide where three cells meet, gone where two cells are of one piece
-  float plan = sin(a) / sin(uLabDome.x);
+  float plan = min(vEdge, 1.5);
   vec2 b1 = (0.12 + 0.3 * fract(seed * 7.13)) * vec2(cos(6.2831853 * fract(seed * 3.71)), sin(6.2831853 * fract(seed * 3.71)));
   vec2 b2 = (0.25 + 0.35 * fract(seed * 5.37)) * vec2(cos(6.2831853 * fract(seed * 9.19)), sin(6.2831853 * fract(seed * 9.19)));
   float r1 = 0.24 + 0.2 * fract(seed * 2.31);
@@ -599,10 +625,13 @@ void main() {
   float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
   
-  float edgeD = 1.0 / uLabMore.x - plan;
+  float edgeD = 1.0 - plan;
   float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
   float veins = labLobes(d, seed, 0.05 + 0.3 * rho) * smoothstep(0.1, 0.6, rho);
   cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5))) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), edgeD));
+  // the folds between the streams that run from the middle to each lane: dark threads toward the places where
+  // three cells meet
+  cell *= 1.0 - ${lab.heat.fold[0]!.toFixed(2)} * smoothstep(${lab.heat.fold[1]!.toFixed(2)}, 1.0, vCorner + 0.08 * (fan - 0.5)) * smoothstep(0.15, 0.6, plan);
   float bundle = pn.y;
   float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (along - flow) * 17.0 + seed), per.z)) * kc * middle;
   cell += 0.6 * uLabHeatMore.w * spark;
@@ -699,7 +728,7 @@ void main() {
 #ifdef LAB_BAKE
   // the far twin: the ground from straight above, no law of the view, no gas, none of the flare's lights, as the
   // display colour of the picture
-  heat = uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos);
+  heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos));
   vec3 lit = inverseFilmic(grade(texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   lit = clamp((lit * (2.51 * lit + 0.03)) / (lit * (2.43 * lit + 0.59) + 0.14), 0.0, 1.0);
   outColor = vec4(mix(lit * 12.92, 1.055 * pow(lit, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), lit)), 1.0);

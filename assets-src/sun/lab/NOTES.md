@@ -412,3 +412,45 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
     about 0.55 degrees at full strength times my fine band; think of it in linear light: my colour times the map's
     low band over my ground's mean light). Cells too large by about 1.6 against the approved and angular; far
     cells are tiles; limb a hard line.
+
+- 13:19 UTC, 25 Nov: MAIL 1109. g15 goes to sun_builder for the round (round 2 of 3 starts at 15:00 at the latest).
+  Order of work for the next named (due 14:40): a outline (round domes, soft upper envelope, no straight seam
+  longer than a third of a cell), b size (70 to 120 px in the lowest rows), c inside (bright blotchy core smaller
+  than the cell, dark veins to the junctions, from the flow), d tone (six percentiles of the approved, lane dark
+  amber, one law), e far field and limb (grain under 6 px, limb the gas edge on), f life (flow outward as a number:
+  mean radial motion of the grain in px a film frame at frame 90's near rows). Specks at the arcade's left foot:
+  whose.
+- 13:41 UTC: second mail of g15 sent (low). Film eye clip cut at 65 pictures: reader largest 0.260 at capture 48 at
+  [1268, 504], mean 0.166, share 0.478; proxy 0.258, 0.100, picture to next 0.032. Flow on g15's still eye clip
+  (flow.py): mean radial 0.032 px a film frame (4 captures apart), 0.041 (8 apart), standard error 0.018, share of
+  cells outward 0.56 to 0.58, 168 cells: no flow a number can tell. G17 on g15 NOT read; rise only 215 and 225
+  (gravel at 215). Specks: not mine by the code (STATED). At 225 pale blue white patches left of the spot: UNKNOWN
+  whose.
+- The h series (13:25 to 13:49), what each step did at frame 90:
+  - h1: ground.ts: vertex gives vEdge (the way to the cell's own border by a soft least way of power dome.round,
+    1 on the border); the dome's footprint is dome.over 1.45 of the cell, so bodies cut into each other and the
+    sheet is the upper side of all (depth buffer). sim scaled: tile 3.2, slots 4560, radius [0.0195, 0.0468]
+    (0.68 of g15's size), far.cell 0.062. spans.ts threshold 0.83 of radius[1]: same numbers as g15.
+  - h2: folds softer (heat.fold), lane dark amber (crease[2] 0.2, shade[0] 0.22), dome.height 0.4.
+  - h3: heat.curve fitted by curve.py (labCurve in labOut and the bake).
+  - h4: patch [0.35, 0.95], rim 0.5. Percentiles 0.208 0.333 0.569 0.745 0.902 0.969.
+  - h5: haze amount 0.004 power 2.5 level 1.3 own 0.6: the far field glows into the limb (no line) but the middle
+    distance is a flat orange fog. own 0.6 is the cause of the fog (the valleys light up).
+  - h6: shade [0.3, 0.2] (narrower dark skirt), thread[1] 0.22 (less streak), cool 1.1 (stronger lumps): blotchier,
+    lanes thinner.
+  - h7: join.level 0.0015: no change to see, kept.
+  - h8: haze amount 0.002 power 3.0 level 1.3 own 0.45; rim 0.6, vein 0.45: far field a glowing grain into the
+    limb, near unchanged.
+  - h9: curve fitted again, fold [0.55, 0.78]: percentiles 0.227 0.400 0.576 0.749 0.906 0.961 against the
+    approved's 0.231 0.404 0.58 0.761 0.906 0.965. FROZEN for the named.
+  - Still wrong in h9 by my eye: near cells read as nuggets with a dark skirt, not bubbles pressing; cores not
+    small blotchy spots; middle distance flat; penumbra ribbons and a dark red ring round the spot.
+- Draft still 56 s with the scaled sim. Clip picture about 17 s.
+- 13:50 UTC: h9 baked: full 1,966,957 bytes, web 499,732. Umbra on the bake (max channel under 0.15 after a blur
+  of 3 px): disc of equal area 1.51 degrees (1.39 at 0.1, 1.64 at 0.2), middle 0.06 east and 0.37 north of S.
+  Growth 2,627,955 bytes (JPGs 2,466,689, text 161,266). spans.ts on h9: cells that show: at least 13 film
+  frames from half of the largest ground to nothing (1 percent 16, quartile 22, median 29); whole lives least 51,
+  median 87, most 171.
+  size.py (new, rough): lane to lane along a row at 3 px: approved 66 to 68 px, h9 49 to 57, g15 60 to 71; at 8 px:
+  approved 110 to 115, h9 93 to 99, g15 97 to 99. It counts veins as lanes and does not tell g15 from h9, so b is
+  not proven by it. The sim's own scale is 0.68 of g15's.
