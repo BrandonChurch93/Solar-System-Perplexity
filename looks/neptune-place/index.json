@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T19:27:06.058Z",
- "head": "8f25c0520676ef575a8845694267076e780b2e58",
- "note": "the row at 4753 found without panels: the first streamer's shadow slides over the deck; my old copy of the reader over-read the rise (0.23 and 0.25 by the report's own path, not 0.50 and 0.59)",
+ "pushed": "2026-11-25T19:46:46.022Z",
+ "head": "b563ec70d7adb66abfbb2524cb2325350b7230eb",
+ "note": "trial cure of the row at 4753: 0.47 to 0.26 on my proxy; judged frames 4605, 4707, 5006 unmoved to the byte, 4860 by 9 codes at most; the other rows are rendering",
  "looks": [
+  {
+   "time": "2026-11-25T19:46:44.616Z",
+   "file": "20261125194644616-note-t1-place.jpg",
+   "source": "../../../../tmp/t1-place.jpg",
+   "kind": "note",
+   "label": "the row at 4753, the place at 4752 and 4760 (lifted), the name above and the trial below: in the shadow on the deck the streamer's thick and thin parts are read no finer than the shadow's own noise, so its edge no longer changes in place as it slides; pair 4752 to 4760 by the report's own path on my preview frames 0.26 (the name 0.47); the name's tree with the clock stopped 0.19, from the other end 0.06: the cause is the slide",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T19:46:43.419Z",
+   "file": "20261125194643419-note-pair-N11.jpg",
+   "source": "../../../../tmp/pair-N11.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved (left), the tree with the trial cure of the row at 4753 (not committed, not named): G17 0.426 / p25 0.230 as on the name, ground part 17.527 (the name 17.550, main 19.759), 91.8 s the draft frame at 1920; against the name the frame moves by at most 9 codes, all in the streamer's shadow on the dark near ground; 4605, 4707 and 5006 are the name's files to the byte",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T19:27:04.690Z",
    "file": "20261125192704690-note-back-panels.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/n10-chains-dive.jpg",
    "kind": "note",
    "label": "the low dive on 27624e6f4, pairs 4744, 4750, 4751, 4752: 0.31, 0.29, 0.28, 0.27 (the eighth name 0.40, 0.23, 0.22, 0.26)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T18:46:24.949Z",
-   "file": "20261125184624949-note-n10-chains-rise.jpg",
-   "source": "../../../../tmp/n10-chains-rise.jpg",
-   "kind": "note",
-   "label": "the rise on 27624e6f4, pairs 4960, 4962, 4968, 4970 to 8 frames later by my copy of the reader: 0.50, 0.59, 0.43, 0.37 (limit 0.45; the eighth name 0.48, 0.56, 0.55); 4860 beside the approved is the look before this one: G17 0.426, 89.9 s the draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T18:24:20.140Z",
-   "file": "20261125182420140-note-n9s-chains.jpg",
-   "source": "../../../../tmp/n9s-chains.jpg",
-   "kind": "note",
-   "label": "the dive's start, pairs 4694, 4702, 4706 to 8 frames later by my copy of the reader at half frames: 0.11, 0.42, 0.42 (limit 0.45); the eighth name read 0.51 from 4694 on the Builder's machine",
    "stop": "neptune"
   }
  ]
