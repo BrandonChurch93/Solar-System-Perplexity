@@ -1,9 +1,55 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T02:29:15.847Z",
+ "pushed": "2026-11-25T02:54:34.973Z",
  "head": "220328cc110b9dfd889615931fa98a68fa085bb7",
- "note": "02:30 UTC: own smooth run on 220328cc red in path (rise rate 0.097, speed climb 0.031), dive pattern 1.23, rise pattern 0.74; chain stopped, cures under way (rise pace for the new place, sky plate without haze under its horizon)",
+ "note": "02:56 UTC: finding the cause of the rise's 0.74 at 3272 (MAIL 853 point 2): made detail and relief are ruled out by experiment; pairs of the same ground at 3272 and 3280",
  "looks": [
+  {
+   "time": "2026-11-25T02:54:30.130Z",
+   "file": "20261125025430130-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final tier beside the approved close image",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:54:29.484Z",
+   "file": "20261125025429484-note-rise-3262-3281.jpg",
+   "source": "../work/r8/rise-3262-3281.jpg",
+   "kind": "note",
+   "label": "rise 3262 to 3281, every frame, commit 220328cc",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:54:28.798Z",
+   "file": "20261125025428798-note-pairv-e3.jpg",
+   "source": "../work/r8/pairv-e3.png",
+   "kind": "note",
+   "label": "same pair with the deck off (globe alone): the change is in the globe's levels too, 0.88",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:54:28.171Z",
+   "file": "20261125025428171-note-pairv-e0.jpg",
+   "source": "../work/r8/pairv-e0.png",
+   "kind": "note",
+   "label": "rise, same ground lower left: frame 3272 (left) and 3280 carried back onto it (right), the red 0.74 of my own smooth run",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T02:54:22.776Z",
+   "file": "20261125025422776-frame-ly-3272.jpg",
+   "source": "out/work/jupiter/diag/ly-3272.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3272, draft tier, layers view",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3272,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "c6c6edcaa80e1e1f"
+  },
   {
    "time": "2026-11-25T02:29:15.244Z",
    "file": "20261125022915244-note-pair-3150-final.jpg",
@@ -154,46 +200,6 @@
    "source": "../work/r6/pair-3150-final.jpg",
    "kind": "note",
    "label": "3150 final tier beside the approved image (same bytes as the kept still)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:30.176Z",
-   "file": "20261125012230176-note-c1-dive.jpg",
-   "source": "../work/r8/c1-dive.jpg",
-   "kind": "note",
-   "label": "dive 2983, 2997, 3012, 3030, 3050, 3056 (draft tier)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:29.496Z",
-   "file": "20261125012229496-note-c1-rise-a.jpg",
-   "source": "../work/r8/c1-rise-a.jpg",
-   "kind": "note",
-   "label": "rise 3250, 3256, 3262, 3268 (draft tier, lower left not cured)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:28.595Z",
-   "file": "20261125012228595-note-c1-rise-b.jpg",
-   "source": "../work/r8/c1-rise-b.jpg",
-   "kind": "note",
-   "label": "rise 3274, 3282, 3296 (draft tier)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:27.675Z",
-   "file": "20261125012227675-note-pair-2895-final-6x.jpg",
-   "source": "../work/r8/pair-2895-final-6x.png",
-   "kind": "note",
-   "label": "hold 2895 final tier, kept still beside this commit, 6 times",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T01:22:26.360Z",
-   "file": "20261125012226360-note-curve-c1.jpg",
-   "source": "../work/r8/curve-c1.png",
-   "kind": "note",
-   "label": "curve of condition (a): darkest and brightest 5 by 5 mean inside the storm, 2895 to 3058",
    "stop": "jupiter"
   }
  ]
