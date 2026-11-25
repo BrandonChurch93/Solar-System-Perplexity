@@ -100,16 +100,22 @@ export function landingCurves(w: Pick<LandingWindow, 'samples' | 'rate'>, width:
   return out
 }
 
-// The seam from a rise into the travel that leaves the stop: reachFrames film frames to each side, in the camera of the stop. A rise that is
-// followed by anything else (the first stop's, the last stop's) has none.
-export interface LeaveWindow { rise: Segment; travel: Segment; seam: number; rate: number; k0: number; samples: Sample[] }
+// The seam from a rise into the move that follows it (the travel that leaves the stop; the retreat after the last stop's rise): reachFrames
+// film frames to each side, in the camera of the stop. A rise that ends in a hold (the first stop's) has none: there the picture is to
+// come to rest. A rise the film ends on has none.
+export function afterRise(cfg: Config, stop: string): { rise: Segment; next: Segment | null } | null {
+  const rise = cfg.segments.find((s) => s.stop === stop && s.kind === 'rise')
+  return rise ? { rise, next: cfg.segments.find((s) => s.firstFrame === rise.endFrame) ?? null } : null
+}
+
+export interface LeaveWindow { rise: Segment; next: Segment; seam: number; rate: number; k0: number; samples: Sample[] }
 
 export function sampleLeave(cfg: Config, film: FilmDirector, plan: StopPlan, rate: number, reachFrames: number): LeaveWindow | null {
-  const rise = cfg.segments.find((s) => s.stop === plan.id && s.kind === 'rise')
-  const travel = rise ? cfg.segments.find((s) => s.kind === 'travel' && s.firstFrame === rise.endFrame) : undefined
-  if (!rise || !travel) return null
+  const after = afterRise(cfg, plan.id)
+  if (!after || !after.next || after.next.kind === 'hold') return null
+  const { rise, next } = after
   const seam = rise.endFrame
-  return { rise, travel, seam, rate, ...samplesOf(cfg, film, plan, rate, Math.max(seam - reachFrames, 0), Math.min(seam + reachFrames, cfg.frameCount)) }
+  return { rise, next, seam, rate, ...samplesOf(cfg, film, plan, rate, Math.max(seam - reachFrames, 0), Math.min(seam + reachFrames, cfg.frameCount)) }
 }
 
 export function project(p: Pose, point: THREE.Vector3, width: number, height: number): { x: number; y: number; front: boolean } {

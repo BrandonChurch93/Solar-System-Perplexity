@@ -67,6 +67,31 @@ export function travelLook(id: string): TravelLook {
   return { ...BASE, ...(TRAVEL[id] ?? {}) }
 }
 
+export const WORLD_MISS = 1
+
+export type WorldAnswer = 'least' | 'open' | 'close'
+
+export const WORLD_ANSWER: Record<string, WorldAnswer> = { mercury: 'open', earth: 'open', jupiter: 'close', uranus: 'open' }
+
+export const WORLD_CORNER: readonly string[] = ['mercury']
+
+export function worldCosts(angles: number[], bare: number[], answer: WorldAnswer): number[] {
+  if (answer === 'least') return bare
+  const n = angles.length
+  return bare.map((c, k) => (angles[(k + 1) % n]! > angles[(k + n - 1) % n]!) === (answer === 'open') ? c : Infinity)
+}
+
+export function worldLead(costs: number[], taken: number): number {
+  const n = costs.length
+  let lead = Infinity
+  for (let k = 0; k < n; k++) {
+    const away = Math.min((k - taken + n) % n, (taken - k + n) % n)
+    if (away < 3 || !(costs[k]! <= costs[(k + n - 1) % n]!) || !(costs[k]! < costs[(k + 1) % n]!)) continue
+    lead = Math.min(lead, costs[k]! - costs[taken]!)
+  }
+  return lead
+}
+
 const choose = (n: number, k: number): number => {
   let c = 1
   for (let i = 0; i < k; i++) c = (c * (n - i)) / (i + 1)
