@@ -493,7 +493,7 @@ function mapLines(p: PictureKind): string[] {
 }
 
 function lookLines(p: PictureKind): string[] {
-  const glow = p.mapGlow ? 'Far from the limbs is farther than ' + (p.mapGlow[0] === p.mapGlow[1] ? p.mapGlow[0] : p.mapGlow[0] + ' to ' + p.mapGlow[1]) + ' px of the frame from every body in both frames of the pair: the reach of the widest level of the film\'s bloom (' + BLOOM.texels + ' texels of the buffer halved ' + BLOOM.levels + ' times, times the bloom radius of the shot); the body\'s motion over the pair is in it by taking both outlines.' : null
+  const glow = p.mapGlow ? 'Far from the limbs is farther than ' + (p.mapGlow[0] === p.mapGlow[1] ? p.mapGlow[0] : p.mapGlow[0] + ' to ' + p.mapGlow[1]) + ' px of the frame from every body in both frames of the pair: the whole reach of the film\'s bloom, beyond which the glow of a body adds nothing (' + BLOOM.levels + ' halvings of the buffer, each taking ' + BLOOM.taps + ' texels to every side, ' + BLOOM.taps * (2 ** BLOOM.levels - 1) + ' px, and the steps back up, each a tent of one texel times the bloom radius of the shot, ' + (2 ** (BLOOM.levels + 1) - 4) + ' px at radius 1); the body\'s motion over the pair is in it by taking both outlines. It is derived, not set.' : null
   const rows = p.rows.filter((row) => look(row, PATTERN.max))
   if (rows.length === 0) return [...(glow ? [glow] : []), 'No row is marked LOOK (the sky off every body over the limit ' + PATTERN.max + ' while the sky far from the limbs is not).']
   const top = rows.reduce((x, y) => (y.patternMapSky! > x.patternMapSky! ? y : x))
@@ -504,7 +504,7 @@ function mapRefusals(p: PictureKind): string[] {
   const no = p.rows.filter((row) => row.patternMapNo)
   if (!p.mapLimits) return []
   const L = p.mapLimits
-  const law = 'A row is refused, and counts as a red of this reader, where its own evidence says the pair is not carried: "the range does not carry the pattern" where the flow left after the map, its median over the body\'s pixels, is over ' + L.bulkPx + ' px; "two grounds" where over ' + L.apart + ' of the body\'s pixels arrive on their own body at another distance than the other frame holds there.'
+  const law = 'A row is refused, and counts as a red of this reader, where its own evidence says the pair is not carried: "the range does not carry the pattern" where the flow left after the map, its median over the body\'s pixels, is over ' + L.bulkPx + ' px; "two grounds" where over ' + L.apart + ' of the body\'s pixels arrive on their own body at another distance than the other frame holds there (a second ground in the range picture, or a surface before the body that the record does not name, a moon; the reading is a 99th percentile, so that share can set it alone).'
   if (no.length === 0) return [law + ' No row is refused.']
   const kinds = [...new Set(no.map((row) => row.patternMapNo!))]
   return [law + ' Refused: ' + kinds.map((kind) => {

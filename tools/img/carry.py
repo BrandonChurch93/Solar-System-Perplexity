@@ -2,7 +2,9 @@
 """The pattern of a pair of frames read by one law: the pair is first carried by the camera's own map, taken from a depth picture and the pose
 of each frame (carry: a pure function of depth and pose, the turn of each body taken out, the sky by the camera's rotation alone); the flow then
 runs on the carried pair and finds only what is left; the reading is taken after both (read). Called by smooth.py when a pictures job asks for
-it; main's reader does not pass through here."""
+it; main's reader does not pass through here. A row is refused where over APART of the body's pixels arrive on their own body at another
+distance than the other frame holds there: the reading is a 99th percentile, so one pixel in a hundred carried onto a surface it does not
+belong to can set it alone (a second ground in the range picture, a moon before the body that the record does not name)."""
 import os
 import sys
 import warnings
@@ -18,7 +20,7 @@ STEPS = 2
 LOWEST = -3 * STEPS
 SAME = 0.02
 BULK_PX = 8.0
-APART = 0.5
+APART = 0.01
 NOT_CARRIED = 'the range does not carry the pattern'
 TWO_GROUNDS = 'two grounds'
 FLOW_PX = 0.5

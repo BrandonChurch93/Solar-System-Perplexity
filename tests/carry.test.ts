@@ -78,11 +78,11 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(clean.value!).toBeLessThan(0.05)
     expect(clean.no).toBeNull()
     expect(clean.bulk!).toBeLessThan(0.5)
-    expect(clean.apart!).toBeLessThan(0.05)
+    expect(clean.apart!).toBeLessThan(made.tool.limits.apart / 10)
     expect(shell.value).toBeNull()
     expect(shell.no).toBe(NOT_CARRIED)
     expect(shell.bulk!).toBeGreaterThan(made.tool.limits.bulkPx)
-    expect(shell.apart!).toBeLessThan(0.05)
+    expect(shell.apart!).toBeLessThan(made.tool.limits.apart / 10)
     expect(grounds.value).toBeNull()
     expect(grounds.no).toBe('two grounds')
     expect(grounds.bulk!).toBeLessThan(0.5)
@@ -97,9 +97,13 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.moon.covered.seen).toBe(0)
   })
 
-  it('does not hold a moon under the map when the depth picture has its distance and not its body, and reads a moon it knows nothing of as an exchange', () => {
+  it('refuses a moon the depth picture has the distance of and the record does not name, and reads a moon it knows nothing of as an exchange', () => {
     expect(made.moon.oneBodyMoonUnderMap).toBe(0)
-    expect(made.moon.oneBody.value!).toBeLessThan(LIMIT)
+    expect(made.moon.oneBody.value).toBeNull()
+    expect(made.moon.oneBody.no).toBe('two grounds')
+    expect(made.moon.oneBody.apart!).toBeGreaterThan(made.tool.limits.apart)
+    expect(made.moon.oneBody.refused!).toBeLessThan(LIMIT)
+    expect(made.moon.known.no).toBeNull()
     expect(made.moon.unknown.value!).toBeGreaterThan(LIMIT)
   })
 
@@ -159,7 +163,7 @@ describe('the pattern of a pair read by the camera\'s own map, on made bodies wi
     expect(made.tool.plainKeys).toContain('pattern')
     expect(made.tool.plainKeys.some((k) => k.startsWith('patternMap'))).toBe(false)
     expect(made.tool.more).toEqual(['patternMap', 'patternMapApart', 'patternMapAt', 'patternMapBody', 'patternMapBulk', 'patternMapBy', 'patternMapLeft', 'patternMapLimits', 'patternMapNo', 'patternMapOn', 'patternMapRefused', 'patternMapRule', 'patternMapShare', 'patternMapSky', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyShare', 'patternMapSkyTurn', 'patternMapUnits'])
-    expect(made.tool.limits).toEqual({ bulkPx: 8, apart: 0.5 })
+    expect(made.tool.limits).toEqual({ bulkPx: 8, apart: 0.01 })
     expect(made.tool.clean.patternMapUnits).toHaveLength(1)
     expect((made.tool.clean.patternMapUnits as number[])[0]!).toBeGreaterThan(0.5)
     expect(made.tool.ballUnits).toBeNull()
@@ -209,8 +213,12 @@ describe('what the map\'s reader judges and what it hands to the eye', () => {
     const chain = readFileSync(fileURLToPath(new URL('../src/post/chain.ts', import.meta.url)), 'utf8')
     expect(Number(/const LEVELS = (\d+)/.exec(chain)![1])).toBe(BLOOM.levels)
     expect(chain).toContain('vec2 t = uTexel * uRadius;')
-    expect(glowPx(1)).toBe(128)
-    expect(glowPx(0.5)).toBe(64)
+    expect(chain).toContain('vUv + t * vec2(' + BLOOM.taps.toFixed(1) + ', 0.0)')
+    expect(chain).not.toContain('vUv + t * vec2(' + (BLOOM.taps + 1).toFixed(1) + ', 0.0)')
+    expect(chain).toContain('for (let i = LEVELS - 2; i >= 0; i--)')
+    expect(glowPx(1)).toBe(2 + 4 + 8 + 16 + 32 + 64 + 64 + 32 + 16 + 8 + 4)
+    expect(glowPx(1)).toBe(250)
+    expect(glowPx(0.5)).toBe(188)
   })
 
   it('marks a row LOOK where the sky off every body is over the limit and the sky far from the limbs is not', () => {

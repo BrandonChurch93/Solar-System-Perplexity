@@ -49,13 +49,15 @@ export function shownRows<T extends Read>(rows: T[], max: number | null, mapMax:
   return rows.filter((row) => ks.has(row.k))
 }
 
-// The film's bloom (src/post/chain.ts): the buffer is halved levels times, and the widest level is laid back with a tent of one of its texels
-// either way, read between texels: its light reaches texels texels of that level from where it starts. Counted in pixels of the buffer, which
-// the picture of a frame is one to one, whatever the frame factor.
-export const BLOOM = { levels: 6, texels: 2 }
+// The film's bloom (src/post/chain.ts): the buffer is halved levels times, each halving taking taps of the texels it reads to every side, and
+// laid back up level by level, each step a tent of one texel of the level below it times the shot's bloom radius. Counted in pixels of the
+// buffer, which the picture of a frame is one to one, whatever the frame factor.
+export const BLOOM = { levels: 6, taps: 2 }
 
-// How far the glow of a body reaches over the sky beside it, in pixels of the frame: the reach of the bloom's widest level at that radius.
-export const glowPx = (bloomRadius: number): number => BLOOM.texels * 2 ** BLOOM.levels * bloomRadius
+// How far the glow of a body reaches over the sky beside it, in pixels of the frame: the whole reach of the bloom, the halvings' taps
+// (taps times 1, 2, 4 and so on) and the tents of the way back up (the radius times 4, 8 and so on up to the widest texel). Beyond it the
+// bloom of the body adds nothing to a pixel.
+export const glowPx = (bloomRadius: number): number => BLOOM.taps * (2 ** BLOOM.levels - 1) + bloomRadius * (2 ** (BLOOM.levels + 1) - 4)
 
 // The map's reader has a word on a row: a number or a refusal.
 export const worded = (row: Read): boolean => row.patternMap !== undefined && ((row.patternMapNo ?? null) !== null || (mapOf(row) ?? null) !== null)
