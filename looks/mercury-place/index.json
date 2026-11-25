@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T03:00:45.154Z",
- "head": "8922aef2a3240e4c2af85b37ff29891a1fd0c2f6",
- "note": "set law: web beside full at 615, 717, 735 before and after; finals 615, 870, 1016 rendering",
+ "pushed": "2026-11-25T03:16:44.709Z",
+ "head": "d7fff550cde3793810cc991cf050182deed1a7a5",
+ "note": "set law tree: final 615 against the approved at the critic's crops, 717 drafts against b0; finals 1016 and 870 still to render",
  "looks": [
+  {
+   "time": "2026-11-25T03:16:43.739Z",
+   "file": "20261125031643739-note-sl-717-limb-ground.jpg",
+   "source": "out/work/mercury/place/sheets/sl-717-limb-ground.jpg",
+   "kind": "note",
+   "label": "717 draft, b0 beside the set law tree, crops E I R (limb) and A C H at 1 to 1",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T03:16:42.689Z",
+   "file": "20261125031642689-note-sl-717-streak-crops.jpg",
+   "source": "out/work/mercury/place/sheets/sl-717-streak-crops.jpg",
+   "kind": "note",
+   "label": "717 draft (one sample, no shutter), b0 beside the set law tree, crops B F G J K L at 1 to 1: round craters; the streaks of round 48 are the final tier's shutter",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T03:16:41.622Z",
+   "file": "20261125031641622-note-sl-615-rim-face.jpg",
+   "source": "out/work/mercury/place/sheets/sl-615-rim-face.jpg",
+   "kind": "note",
+   "label": "set law tree, final 615 beside the approved at 1 to 1, crops F K L Q A B H G: rim equal in the mean, heavier on the arc facing the Sun, lighter on the lower right arc",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T03:16:40.153Z",
+   "file": "20261125031640153-note-sl-615-sun-ghost.jpg",
+   "source": "out/work/mercury/place/sheets/sl-615-sun-ghost.jpg",
+   "kind": "note",
+   "label": "set law tree, final 615 beside the approved at 1 to 1, the critic's crops C M D P O T: the boom ghost is in the approved too and ours is lighter; the oval blob is heavier in ours (plus 15 percent), open",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T02:51:08.013Z",
    "file": "20261125025108013-note-sl0-web-full.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/dg0-sheet.jpg",
    "kind": "note",
    "label": "rise 1000 to 1010 with the plates' own light switched off (diagnostic, not a state of the stop): the pattern stays 0.92 to 1.15, the place's crater field still turns into the map's",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T02:29:40.366Z",
-   "file": "20261125022940366-note-d717-whole.jpg",
-   "source": "../../../../tmp/m/d717-whole.jpg",
-   "kind": "note",
-   "label": "dive 712 to 726 every second frame, round 2 state: the place's disc comes in from 720 and reaches into the globe's dusk as a bay of flat light",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T02:09:07.955Z",
-   "file": "20261125020907955-note-sm-state.jpg",
-   "source": "out/work/mercury/place/sheets/sm-state.jpg",
-   "kind": "note",
-   "label": "Sun commit: 539, 540, 1034, 1035; top on main 12c58853, bottom on main aeffd516 (orange where the Sun set is loaded: shared wear range)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T02:09:07.386Z",
-   "file": "20261125020907386-note-sn-pair615-merge-draft.jpg",
-   "source": "out/work/mercury/place/sheets/sn-pair615-merge-draft.jpg",
-   "kind": "note",
-   "label": "Sun commit a4f61cec on main aeffd516, draft: approved, before (d9cddae5 on main 12c58853), after at 615 (fresh page)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T01:58:33.133Z",
-   "file": "20261125015833133-note-sn-pair615.jpg",
-   "source": "out/work/mercury/place/sheets/sn-pair615.jpg",
-   "kind": "note",
-   "label": "Sun commit, final tier on main 12c58853: approved, before (9.2 deg), after (11.69 deg at 1925.7, 46.0) at 615",
    "stop": "mercury"
   }
  ]
