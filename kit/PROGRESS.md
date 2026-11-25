@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 6 · Polish and deliver
 - Current stop: none. All nine stops are finished (Phase 4 gate, 00:52 UTC on 2026-11-22). Phase 5 is done: its three whole film rounds 30, 31 and 32 ran to the limit of three, round 32 closed at 11:55 UTC and its build is kept as the best of the three (main 4365a0f0, engine hash be043ade04a7ab6e: R5 7, R6 6, R7 6, R2 pass, R3 4, R4 6; 1 severe and 21 major, written under open items 79 to 100), and the Phase 5 gate held at 12:23 UTC with the preview film of that build in `out/preview.mp4`. Phase 6 step 1 runs: three polish rounds (33, 34, 35) on the open items, worst first, each judged only on the frames its batch touched. Round 33 closed at 15:26 UTC with 95 answers (13 severe, 97 major; motion better at Jupiter, Saturn, Mercury, Neptune and the Sun, so its build is the base of round 34). Round 34 closed at 17:40 UTC with 59 answers (10 severe, 80 major, written under open items 109 to 129; the opening at phone size passes with 9, compression 8, the whole film 6; motion at Mercury 3 and Earth 4, and the film's motion critic names two sky pops that are the camera's turn). Round 35, the last polish round, is cut at 18:30 UTC from take outs and small proven things, with at most one larger cure per stop as its own commit; then the best build of rounds 32 to 35 is frozen, and the record round, the sandbox master, the nine clips, the nine posts and the gauntlet follow
-- Current round: open: 52 (mercury), 53 (venus). The next round is 54. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 52 (mercury), 53 (venus), 54 (uranus). The next round is 55. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_1983
 - Blocked: no
 - Review notes in force: three, of 05:57 UTC and of about 21:50 UTC on 2026-11-23 and of about 21:25 UTC on 2026-11-24. The second is the section "Second review note of 2026-11-23" (plans E to I), the third the section "Third review note of 2026-11-24" (plans J to N); together they set the work from here
@@ -225,7 +225,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | mars | in progress | 1 | 9 | pass | 4 | 4 | pass | 6 to 15 |
 | jupiter | in progress | 1 | 6 | pass | 6 | 3 | pass | 33 to 37 |
 | saturn | in progress | 2 | 7 | fail | 4 | 8 | pass | 38 to 45 |
-| uranus | in progress | 1 | 7 | pass | 6 | 5 | pass | 62 to 68 |
+| uranus | in progress | 3 | 7 | pass | 6 | 5 | pass | 62 to 68 |
 | neptune | in progress | 2 | 5 | fail | 4 | 4 | pass | 18 to 27 |
 
 ## Workspace record
@@ -1533,6 +1533,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 51, Phase 6, saturn, round 2 of 3. Started 2026-11-25 04:14 UTC. Judged on main at 579400e. Measures G5, G13 and G17 green; the smooth report was not placed at the close (its four picture slices sj2 01 to 04 green on render machines, landing green, counts still running), which the round tool writes as not measured. The whole smooth report of the build was joined at 09:23 UTC on 2026-11-25 from the machines' parts (path, place, parity; the pictures of both moves in four slices; counts), is green and is placed after the close as `scorecards/round-051/smooth-saturn.md` and `.json`. R1 7, R2 fail (0 of 10 against 4 of 10), R3 4, R4 8, R8 pass. 2 severe, 11 major. Closed 07:24 UTC. Next: Saturn round 3 of 3 on a commit named by saturn_coder (d186) that cures, causes first: the inner ring and its crossing of the globe (both severe issues: the bright patch of sky between globe and inner ring at 3567, the puck on a glossy table with its mirror picture and seam at 3720), the globe's light (the straight soft boundary of day and night, the lumpy dark limb), the coarse near ring field and the wide main division at 3720, the blocky lower globe, stars on top of opaque rings at 3866; the whole list is the summary `scorecards/round-051/`.
 - Round 52, Phase 6, mercury, round 3 of 3. Started 2026-11-25 10:38 UTC.
 - Round 53, Phase 6, venus, round 2 of 3. Started 2026-11-25 10:38 UTC.
+- Round 54, Phase 6, uranus, round 3 of 3. Started 2026-11-25 10:38 UTC.
 
 ## Final scores
 
