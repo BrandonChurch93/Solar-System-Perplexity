@@ -67,7 +67,7 @@
           ]
         }
       },
-      "liftPower": 1.25,
+      "liftPower": 0.55,
       "skyFloor": true,
       "pullBack": {
         "speed": 3.0,
@@ -152,11 +152,11 @@
     ],
     "sky": [
       0.14,
-      0.42
+      0.41
     ],
     "skyTurn": [
       0.14,
-      0.5
+      0.41
     ],
     "halo": 3.2
   }
