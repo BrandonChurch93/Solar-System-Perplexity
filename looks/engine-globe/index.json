@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T13:35:59.922Z",
- "head": "69cf344886789d03b77fffd8f77ceabe272c757f",
- "note": "MAIL 1092, scratch, nothing committed. Left: Mars as it is (69cf3448), frames 2325, 2427, 2455, 2464, draft. Right: the globe and its shell under the one air law (option airLaw, a stand in of my own for the chunk until handover_engineer's file arrives), numbers of my own guess (density 14.7 a radius, scale height 0.0045, light 0.5 0.42 0.34), halo and glint off, grazing air off. Not a look to judge: it shows that the option draws. Seen: the blue rim of the hold is gone with halo and glint; at 2464 the pale band at the horizon is wider.",
+ "pushed": "2026-11-25T13:43:56.261Z",
+ "head": "8443eb1d74e3e703390d157f707a455af9ada7c7",
+ "note": "Air law on the globe, scratch on Mars, crops. Off proof 11 of 11 byte equal. Stars at 2464 are dimmed, not gone: the path's factor on a level line is 0.45 to 0.92 with a vertical depth of 0.066. Not a look, numbers are scratch.",
  "looks": [
+  {
+   "time": "2026-11-25T13:43:55.172Z",
+   "file": "20261125134355172-note-mars-law-crops.jpg",
+   "source": "../m1092/mars-law-crops.jpg",
+   "kind": "note",
+   "label": "Mars 2464 and hold, crops: as it is against the air law on (scratch numbers)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T13:35:58.998Z",
    "file": "20261125133558998-note-mars-law-sheet.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "MAIL 1032 b, Mercury dive frame 722, lower right limb: what the real change of 0.2 is made of. Scratch controls, reverted: relief off, limb curve and brim off, patches off, all three off",
    "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T11:13:08.513Z",
-   "file": "20261125111308513-note-mars-2460-far.jpg",
-   "source": "../m1032/mars-2460-far.png",
-   "kind": "note",
-   "label": "Mars dive on 22820b17, frame 2460 far ground at pixel 1260, 60: the same ground 8 film frames later lies in the haze under the horizon",
-   "stop": "mars"
   }
  ]
 }
