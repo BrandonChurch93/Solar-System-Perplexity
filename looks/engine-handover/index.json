@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T20:23:16.498Z",
+ "pushed": "2026-11-25T20:44:27.067Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests design (c): the cure passes its browser test (6 of 6: standing, flat, the cut moved out, a rim, a near ground before no ground), no frame of Mars with it yet since the renderer is on the five judged finals of Mars; three of those at the law by the fragment are in",
+ "note": "the five judged finals of Mars, first half done (the law by the fragment); design (c) the crests: off by default gives the same bytes on 2668, 2477, 2580, 2672 at draft, the first drafts with the cure render now",
  "looks": [
+  {
+   "time": "2026-11-25T20:43:36.704Z",
+   "file": "20261125204336704-note-f02325.jpg",
+   "source": "../t-c2a/out/work/blur/fin5-c3/f02325.png",
+   "kind": "note",
+   "label": "Mars 2325 final tier, the law by the fragment: first half of the five judged finals"
+  },
+  {
+   "time": "2026-11-25T20:43:35.912Z",
+   "file": "20261125204335912-note-f02476.jpg",
+   "source": "../t-c2a/out/work/blur/fin5-c3/f02476.png",
+   "kind": "note",
+   "label": "Mars 2476 final tier, the law by the fragment (4bae298b with the cut and the shutter's ends, the fitted numbers by scratch): first half of the five judged finals"
+  },
   {
    "time": "2026-11-25T20:23:02.713Z",
    "file": "20261125202302713-note-f02580.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/crest/cure-teeth-zoom-b.png",
    "kind": "note",
    "label": "crests, the cure: the same at 9x (texels x 1610..1675 y 400..465); measured on 298 points of this crest the paint's light falls off at 0.12 texels beyond the middle in the median, 1.88 at 95 percent, 3.15 at 99 percent"
-  },
-  {
-   "time": "2026-11-25T20:07:34.953Z",
-   "file": "20261125200734953-note-cure-teeth-field.jpg",
-   "source": "../../../../tmp/crest/cure-teeth-field.png",
-   "kind": "note",
-   "label": "crests design (c), the cure, no render yet: Mars L1 at the teeth crest, map texels x 1530..1730 y 335..520 at 3x; left the paint, middle the field with the cut on the step's middle (white), right the cut 2 texels out; green near side of a ramp, red far side; the thin white lines in the open are borders between two crests' bands"
-  },
-  {
-   "time": "2026-11-25T19:36:16.618Z",
-   "file": "20261125193616618-note-kx-under0.jpg",
-   "source": "../../../../tmp/crest/kx-under0.png",
-   "kind": "note",
-   "label": "Mars 2668 draft, design (c) on L1 with under 0: the blocks go, a few specks stay"
   }
  ]
 }
