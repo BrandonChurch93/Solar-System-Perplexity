@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T13:32:40.363Z",
+ "pushed": "2026-11-25T13:55:19.386Z",
  "head": "0025b0b5b7007c550a021474ae60f67fc08b515b",
- "note": "whole rise at rate 2 on the one law of cover (law2) is rendering; frames 3803 to 3814 looked at; control of the dark inner ring reads worse at 3720",
+ "note": "one law of cover (law2): whole rise green by the tool, dive slice 3596 to 3608 rendering, state mail next",
  "looks": [
+  {
+   "time": "2026-11-25T13:55:18.782Z",
+   "file": "20261125135518782-note-d_foot.jpg",
+   "source": "../../../../tmp/v/law2/d_foot.jpg",
+   "kind": "note",
+   "label": "cure law2, dive 3599 to 3604, the ring across the globe's foot, full size, draft"
+  },
+  {
+   "time": "2026-11-25T13:55:18.120Z",
+   "file": "20261125135518120-note-d_3596.jpg",
+   "source": "../../../../tmp/v/law2/d_3596.jpg",
+   "kind": "note",
+   "label": "cure law2, dive slice 3596 to 3603, draft, half size"
+  },
   {
    "time": "2026-11-25T13:32:39.130Z",
    "file": "20261125133239130-note-g17_tiles.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/law2/skim_3720_foot.png",
    "kind": "note",
    "label": "3720 foot, finals: approved close, named, one law (no dark foot, the gap is open)"
-  },
-  {
-   "time": "2026-11-25T13:21:28.040Z",
-   "file": "20261125132128040-note-skim_3720_whole.jpg",
-   "source": "../../../../tmp/v/law2/skim_3720_whole.png",
-   "kind": "note",
-   "label": "3720 final: approved close, named 6e96b4cb, one law of cover"
-  },
-  {
-   "time": "2026-11-25T13:13:17.886Z",
-   "file": "20261125131317886-note-sheet6.jpg",
-   "source": "../../../../tmp/v/law1/sheet6.png",
-   "kind": "note",
-   "label": "one law, first build (view 0.43): drafts 3465 3567 3600 3604 3720 3806 3814 3830 3866"
   }
  ]
 }
