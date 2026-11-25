@@ -139,6 +139,7 @@ export const createSet: SetFactory = async (ctx) => {
   const skyRide = (anchor: THREE.Quaternion, shot: Shot, camera: { quaternion: THREE.Quaternion }, out: THREE.Quaternion): THREE.Quaternion => out.copy(camera.quaternion).multiply(skyBack.copy(shot.skyQuaternion).invert()).multiply(shot.skyTurn).multiply(anchor)
   const sunDisc = Math.atan(sunJson.disc * (sunJson.rect[2]! - sunJson.rect[0]!))
   const sunShown = new THREE.Vector3()
+  const sunSeen = new THREE.Vector3().fromArray(fit.sunInFrame!.directionFromCamera).normalize().applyQuaternion(film.frames[plans.findIndex((p) => p.id === plan.id)]!.rotation)
   const rimSun = new THREE.Vector3()
   const kick = new THREE.Vector3()
   const sunTurn = new THREE.Quaternion()
@@ -347,7 +348,7 @@ export const createSet: SetFactory = async (ctx) => {
           const eye = high.camera
           const diving = kind === 'dive'
           toLow.copy(eye.quaternion).invert().premultiply(view.camera.quaternion)
-          sunShown.copy(high.sun.dir).applyQuaternion(skyRide(diving ? skyDive : skyRise, high, eye, sunTurn))
+          sunShown.copy(sunSeen).applyQuaternion(skyRide(diving ? skyDive : skyRise, high, eye, sunTurn))
           light.copy(plan.lightDir).applyQuaternion(above.rotation)
           const distance = above.origin.distanceTo(eye.position)
           const offAxis = THREE.MathUtils.radToDeg(sunShown.angleTo(forward.set(0, 0, -1).applyQuaternion(eye.quaternion)))
@@ -362,9 +363,9 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const diving = mine && kind === 'dive'
       const rising = mine && kind === 'rise'
-      sunShown.copy(shot.sun.dir)
-      rimSun.copy(shot.sun.dir)
-      glareSun.copy(shot.sun.dir)
+      sunShown.copy(sunSeen)
+      rimSun.copy(sunSeen)
+      glareSun.copy(sunSeen)
       const shrink = 0
       let plate = 1
       let ghosts = 1
