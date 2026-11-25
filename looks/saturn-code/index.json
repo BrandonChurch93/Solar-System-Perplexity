@@ -1,9 +1,46 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T09:36:02.568Z",
+ "pushed": "2026-11-25T10:04:46.287Z",
  "head": "ab362641b9d9a924f577d3ad73df9d28231e3ebd",
- "note": "finals of the committed tree ab36264 (local) beside the approved and the named; 3465 byte identical; the whole rise renders at rate 2",
+ "note": "r66 on ab36264: the whole rise is red on two lines (pattern at the foot 3810 to 3833, pop 1.21 at 3872), finding the causes",
  "looks": [
+  {
+   "time": "2026-11-25T10:04:44.905Z",
+   "file": "20261125100444905-note-rise_ansa_3870_3877.jpg",
+   "source": "../../../../tmp/v/x/rise_ansa_3870_3877.png",
+   "kind": "note",
+   "label": "rise draft 3870 to 3877 at 1 to 1, left ansa: the rings' fine lines"
+  },
+  {
+   "time": "2026-11-25T10:04:44.198Z",
+   "file": "20261125100444198-note-rise_foot_3830.jpg",
+   "source": "../../../../tmp/v/x/rise_foot_3830.png",
+   "kind": "note",
+   "label": "rise draft 3830, 3834, 3838 at 1 to 1: the night side low in the frame"
+  },
+  {
+   "time": "2026-11-25T10:04:43.257Z",
+   "file": "20261125100443257-note-rise_foot_3814.jpg",
+   "source": "../../../../tmp/v/x/rise_foot_3814.png",
+   "kind": "note",
+   "label": "rise draft 3814 + 1/2, 3818 + 1/2, 3822 + 1/2 at 1 to 1: the gap between rings and globe goes from covered to clear"
+  },
+  {
+   "time": "2026-11-25T10:04:42.474Z",
+   "file": "20261125100442474-note-saturn-rise-pops.jpg",
+   "source": "../../../../tmp/v/r66/saturn-rise-pops.png",
+   "kind": "note",
+   "label": "r66 rise on ab36264, the tool's pops sheet: pop 1.21 at 3872 + 1/2, RED",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T10:04:41.168Z",
+   "file": "20261125100441168-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r66/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "r66 rise on ab36264, the tool's changes sheet: pattern 0.97 at 3814 + 1/2 and 0.98 at 3830, RED",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-25T09:35:11.687Z",
    "file": "20261125093511687-note-n3866_whole.jpg",
@@ -80,41 +117,6 @@
    "source": "../../../../tmp/v/x/mail/n3720_QR_foot.png",
    "kind": "note",
    "label": "ab36264 FINAL 3720 boxes Q R at 1 to 1: approved close, named 88ba2385, this commit (severe 2: lip, strips, mirror and seam gone; contact line 110 px lower than the approved, said)"
-  },
-  {
-   "time": "2026-11-25T09:35:04.030Z",
-   "file": "20261125093504030-note-n3567_QR_gap.jpg",
-   "source": "../../../../tmp/v/x/mail/n3567_QR_gap.png",
-   "kind": "note",
-   "label": "ab36264 FINAL 3567 boxes Q R at 1 to 1: approved hero, named 88ba2385, this commit (severe 1: the sky patch is gone)"
-  },
-  {
-   "time": "2026-11-25T09:17:01.224Z",
-   "file": "20261125091701224-note-t8_3866_D.jpg",
-   "source": "../../../../tmp/v/x/t8_3866_D.png",
-   "kind": "note",
-   "label": "3866 crop D: stars on the rings, before and after the cover"
-  },
-  {
-   "time": "2026-11-25T09:17:00.611Z",
-   "file": "20261125091700611-note-t10_3866_TUV.jpg",
-   "source": "../../../../tmp/v/x/t10_3866_TUV.png",
-   "kind": "note",
-   "label": "3866 crops T U V: approved hero, named, working tree draft"
-  },
-  {
-   "time": "2026-11-25T09:16:59.998Z",
-   "file": "20261125091659998-note-t13f_low.jpg",
-   "source": "../../../../tmp/v/x/t13f_low.png",
-   "kind": "note",
-   "label": "3720 lower sunlit globe: approved, named commit, working tree at the final tier"
-  },
-  {
-   "time": "2026-11-25T09:16:59.422Z",
-   "file": "20261125091659422-note-t14f_O.jpg",
-   "source": "../../../../tmp/v/x/t14f_O.png",
-   "kind": "note",
-   "label": "3720 final tier, trial of the sand without the near step: the hatch stays"
   }
  ]
 }
