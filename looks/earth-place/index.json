@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T13:53:36.079Z",
- "head": "538f48e2795fcbcc7a45708b6ea50b47a63fc70a",
- "note": "far band measured by the view: the hold has few specks where the close camera looks; blocker mailed",
+ "pushed": "2026-11-25T14:26:10.265Z",
+ "head": "a9d4f0b6223316fc51d960d2b37d0f78d10be32a",
+ "note": "ruling b first draft: wedge specks in the hold, 2010 band; not yet judged",
  "looks": [
+  {
+   "time": "2026-11-25T14:26:09.613Z",
+   "file": "20261125142609613-note-a1-2010-whole.jpg",
+   "source": "../../../../tmp/gl/k15/a1-2010-whole.jpg",
+   "kind": "note",
+   "label": "2010 draft: approved, ee321270, now",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T14:26:08.687Z",
+   "file": "20261125142608687-note-a1-1755-pair4.jpg",
+   "source": "../../../../tmp/gl/k15/a1-1755-pair4.jpg",
+   "kind": "note",
+   "label": "1755 draft, wedge under ruling b: before, after, 4 px for 1",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T13:53:35.475Z",
    "file": "20261125135335475-note-h1-track.jpg",
@@ -50,28 +66,6 @@
    "source": "../../../../tmp/gl/k14/final-1755-pair.jpg",
    "kind": "note",
    "label": "1755 final tier beside the approved hero: kept, and with the close set's clouds inside the disc",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T13:13:07.512Z",
-   "file": "20261125131307512-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
-  },
-  {
-   "time": "2026-11-25T13:04:22.942Z",
-   "file": "20261125130422942-note-h2-1755-pair4.jpg",
-   "source": "../../../../tmp/gl/k14/h2-1755-pair4.jpg",
-   "kind": "note",
-   "label": "1755 at 4 to 1: kept left, towers from above inside the disc right (draft)",
    "stop": "earth"
   }
  ]
