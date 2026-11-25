@@ -1,9 +1,27 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T05:41:29.857Z",
+ "pushed": "2026-11-25T06:06:07.681Z",
  "head": "b9908e0352a26912e1440587e32e2a69343167d4",
- "note": "step in place trial on the K4 line: dive tool run in flight, frames 1860 to 1868 beside b9908e03",
+ "note": "0606 trial share root 0.55 ends 0.15 on the K4 line: three frames of my own smooth slice 1876 to 1896, not a commit",
  "looks": [
+  {
+   "time": "2026-11-25T06:06:06.865Z",
+   "file": "20261125060606865-note-look-0606.jpg",
+   "source": "../../../../tmp/gl/k8/look-0606.jpg",
+   "kind": "note",
+   "label": "trial tree, smooth frames 1876, 1879, 1883 (draft), pattern slice in flight",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T05:50:52.777Z",
+   "file": "20261125055052777-compare-earth-dive-step-in-place.jpg",
+   "source": "out/work/handover/earth-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "earth dive, the largest step of the level in place (1.98): frame 1867, frame 1868, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1868
+  },
   {
    "time": "2026-11-25T05:41:28.897Z",
    "file": "20261125054128897-note-sh-a-s1.jpg",
@@ -51,26 +69,6 @@
    "kind": "note",
    "label": "K4 state 1 rise largest step in place 2144 to 2145",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T04:24:22.531Z",
-   "file": "20261125042422531-note-rise-third-1920.jpg",
-   "source": "../../../../tmp/gl/k5/rise-third-1920.jpg",
-   "kind": "note",
-   "label": "K4 state 1 rise every third frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T04:23:42.293Z",
-   "file": "20261125042342293-sheet-earth-rise-top.jpg",
-   "source": "out/work/handover/earth-rise-top.png",
-   "kind": "sheet",
-   "label": "earth rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2100), place picture off, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2100,
-   "last": 2174,
-   "tier": "draft"
   }
  ]
 }
