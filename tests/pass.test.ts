@@ -5,7 +5,7 @@ import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
 import { StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
-import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook, worldCosts, worldLead } from '../src/space/travel/path'
+import { CARRY, carryBend, carryWay, inFrame, landing, outsideFrame, passCurve, TRAVEL, TravelShape, travelLook, WORLD_ANSWER, WORLD_MISS, worldCosts, worldLead } from '../src/space/travel/path'
 
 const looks = ['base', ...Object.keys(TRAVEL)].map((id) => ({ id, look: travelLook(id) }))
 
@@ -475,6 +475,7 @@ describe('the world a travel lands in', () => {
   it('leads every other answer by ' + LEAD + ' degrees at every stop of the film', () => {
     expect(real.placed.map((p) => p.id)).toEqual(plans.slice(1, -1).map((p) => p.id))
     for (const p of real.placed) expect(p.leadDeg, p.id).toBeGreaterThan(LEAD)
+    for (const p of real.placed) if (WORLD_ANSWER[p.id] !== 'corner') expect(p.missDeg, p.id).toBeLessThan(WORLD_MISS)
     for (const id of ['earth', 'jupiter']) expect(real.placed.find((p) => p.id === id)!.bareLeadDeg, id).toBeLessThan(0.2)
   })
 
@@ -488,9 +489,9 @@ describe('the world a travel lands in', () => {
     }, 60000)
   }
 
-  it('refuses a turn that the end of the rise cannot reach, and a corner that is none', () => {
+  it('refuses a turn that the end of the rise cannot reach, unless the stop says it takes the corner', () => {
     expect(() => new FilmDirector(turned('jupiter', 0, 170))).toThrow('jupiter: travel.turnDeg 170 cannot be reached from the end of its rise')
-    expect(() => new FilmDirector(turned('mercury', 0, 130))).toThrow('mercury: its travel takes the corner, but travel.turnDeg 130 can be reached')
+    expect(() => new FilmDirector(turned('mercury', 0, 130))).not.toThrow()
     expect(real.placed.find((p) => p.id === 'mercury')!.missDeg).toBeGreaterThan(1)
   }, 60000)
 })

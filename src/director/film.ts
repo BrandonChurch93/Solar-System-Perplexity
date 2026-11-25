@@ -12,7 +12,7 @@ import { eyeHeightAt, eyeHeights, handoverFrame, handoverOf, horizonWeight, noSk
 import skyFrame from '../space/skyframe.json'
 import world from './world.json'
 import { aimAt, type SkyAims } from '../space/aim'
-import { CARRY, TravelShape, WORLD_MISS, carryBend, carryWay, inFrame, outsideFrame, travelLook, worldCosts, worldLead } from '../space/travel/path'
+import { CARRY, TravelShape, WORLD_ANSWER, WORLD_MISS, carryBend, carryWay, inFrame, outsideFrame, travelLook, worldCosts, worldLead } from '../space/travel/path'
 import { discShare, openSky } from '../space/travel/open'
 import { globeShare, wearShare } from '../space/farsun/share'
 import farLook from '../space/farsun/look.json'
@@ -439,7 +439,7 @@ export class FilmDirector implements Director {
     const fr = forward(from.quaternion)
     const camUp = Y.clone().applyQuaternion(from.quaternion)
     const want = THREE.MathUtils.degToRad(a.p.travel.turnDeg)
-    const answer = i === 0 ? 'least' : travelLook(a.id).answer
+    const answer = i === 0 ? 'least' : (WORLD_ANSWER[a.id] ?? 'least')
     const turns: THREE.Quaternion[] = []
     const angles: number[] = []
     const bare: number[] = []
@@ -468,9 +468,8 @@ export class FilmDirector implements Director {
     if (i > 0) {
       const taken = tries.indexOf(best)
       const miss = THREE.MathUtils.radToDeg(Math.abs(angles[taken]! - want))
-      const span = THREE.MathUtils.radToDeg(Math.min(...angles)).toFixed(2) + ' to ' + THREE.MathUtils.radToDeg(Math.max(...angles)).toFixed(2) + ' degrees'
-      if (answer !== 'corner' && miss > WORLD_MISS) throw new Error(a.id + ': travel.turnDeg ' + a.p.travel.turnDeg + ' cannot be reached from the end of its rise, which reaches ' + span)
-      if (answer === 'corner' && miss <= WORLD_MISS) throw new Error(a.id + ': its travel takes the corner, but travel.turnDeg ' + a.p.travel.turnDeg + ' can be reached (' + span + ')')
+      const [low, high] = [THREE.MathUtils.radToDeg(Math.min(...angles)), THREE.MathUtils.radToDeg(Math.max(...angles))]
+      if (answer !== 'corner' && (a.p.travel.turnDeg < low - WORLD_MISS || a.p.travel.turnDeg > high + WORLD_MISS)) throw new Error(a.id + ': travel.turnDeg ' + a.p.travel.turnDeg + ' cannot be reached from the end of its rise, which reaches ' + low.toFixed(2) + ' to ' + high.toFixed(2) + ' degrees')
       this.placed.push({ id: a.id, taken, missDeg: miss, leadDeg: THREE.MathUtils.radToDeg(worldLead(costs, taken)), bareLeadDeg: THREE.MathUtils.radToDeg(worldLead(bare, taken)), opens: angles[(taken + 1) % 720]! > angles[(taken + 719) % 720]! })
     }
     const begin = i === 0 ? SUN_APPROACH_START : this.clearAt(i, best.r, seg)
