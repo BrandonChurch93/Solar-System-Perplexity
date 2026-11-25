@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T17:24:31.190Z",
+ "pushed": "2026-11-25T17:55:00.792Z",
  "head": "71688463139ea30327a39c48d8cde7719c152345",
- "note": "wall take 6 early: tones as the take, two tool faults traced (cracks at joints, crescent at the wall's border)",
+ "note": "wall take 7 whole: film's eye better than the state, from above at 0.3 still wrong (cracks, ghost boulders, smoothed strips)",
  "looks": [
   {
-   "time": "2026-11-25T17:24:30.431Z",
-   "file": "20261125172430431-note-trace-c.jpg",
-   "source": "out/work/place/w6/trace-c.jpg",
+   "time": "2026-11-25T17:54:59.927Z",
+   "file": "20261125175459927-note-proof-b-above.jpg",
+   "source": "out/work/place/w7/proof-b-above.jpg",
    "kind": "note",
-   "label": "wall take 6: trace-c.jpg",
+   "label": "wall take 7 from above, 0.7 x 860 y 420 at 1 to 1, the shadowed wall of 2692",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T17:24:29.835Z",
-   "file": "20261125172429835-note-trace-b.jpg",
-   "source": "out/work/place/w6/trace-b.jpg",
+   "time": "2026-11-25T17:54:59.336Z",
+   "file": "20261125175459336-note-v16-a.jpg",
+   "source": "out/work/place/w7/v16-a.jpg",
    "kind": "note",
-   "label": "wall take 6: trace-b.jpg",
+   "label": "wall take 7 from above, 1.6 x 1300 y 1080 at 1 to 1",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T17:24:29.266Z",
-   "file": "20261125172429266-note-v07-wall.jpg",
-   "source": "out/work/place/w6/v07-wall.jpg",
+   "time": "2026-11-25T17:54:58.674Z",
+   "file": "20261125175458674-note-v07-whole.jpg",
+   "source": "out/work/place/w7/v07-whole.jpg",
    "kind": "note",
-   "label": "wall take 6: v07-wall.jpg",
+   "label": "wall take 7 from above, 0.7 plate whole, state left: tones as the take; the ridge top right fluted",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T17:24:28.677Z",
-   "file": "20261125172428677-note-v07-b.jpg",
-   "source": "out/work/place/w6/v07-b.jpg",
+   "time": "2026-11-25T17:54:58.000Z",
+   "file": "20261125175458000-note-v03-c.jpg",
+   "source": "out/work/place/w7/v03-c.jpg",
    "kind": "note",
-   "label": "wall take 6: v07-b.jpg",
+   "label": "wall take 7 from above, 0.3 x 1500 y 60 at 1 to 1: BAD: ghost outlines of the take's boulders (its grain under 2.5 texels) flat on fluted rock",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T17:24:28.086Z",
-   "file": "20261125172428086-note-v07-whole.jpg",
-   "source": "out/work/place/w6/v07-whole.jpg",
+   "time": "2026-11-25T17:54:57.384Z",
+   "file": "20261125175457384-note-v03-a.jpg",
+   "source": "out/work/place/w7/v03-a.jpg",
    "kind": "note",
-   "label": "wall take 6: v07-whole.jpg",
+   "label": "wall take 7 from above, 0.3 x 700 y 1000 at 1 to 1: BAD: black cracks at joints, boulders gone on the strip",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T17:24:27.410Z",
-   "file": "20261125172427410-note-tripE2692.jpg",
-   "source": "out/work/place/w6/tripE2692.png",
+   "time": "2026-11-25T17:54:56.690Z",
+   "file": "20261125175456690-note-v03-whole.jpg",
+   "source": "out/work/place/w7/v03-whole.jpg",
    "kind": "note",
-   "label": "wall take 6: tripE2692.png",
+   "label": "wall take 7 from above, 0.3 plate whole, state left: BAD: steep strips read as smoothed fluted bands amid boulder ground, thin black cracks left",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T16:57:01.833Z",
-   "file": "20261125165701833-note-v03-whole.jpg",
-   "source": "out/work/place/w4/v03-whole.jpg",
+   "time": "2026-11-25T17:54:56.023Z",
+   "file": "20261125175456023-note-proof-c-pairs.jpg",
+   "source": "out/work/place/w7/proof-c-pairs.jpg",
    "kind": "note",
-   "label": "wall take 4 from above, 0.3 plate whole, take left, law right: BAD: boulder slope replaced by a pale fluted sheet with a hard border; at the top a block with a straight lower border where the picture's own ground begins",
+   "label": "wall take 7, pairs 2458 and 2688 half size, state left",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T16:57:01.242Z",
-   "file": "20261125165701242-note-v07-whole.jpg",
-   "source": "out/work/place/w4/v07-whole.jpg",
+   "time": "2026-11-25T17:54:55.454Z",
+   "file": "20261125175455454-note-p2468-a.jpg",
+   "source": "out/work/place/w7/p2468-a.jpg",
    "kind": "note",
-   "label": "wall take 4 from above, 0.7 plate whole, take left, law right: BAD: the wall stands as fluted ribbons with hard borders, lighter than the take's black cast shadow; the boulder slope south of the canyon turned into a pale fluted sheet",
+   "label": "wall take 7, 2468 x 560 y 440 at 1 to 1, state left",
    "stop": "mars"
   }
  ]
