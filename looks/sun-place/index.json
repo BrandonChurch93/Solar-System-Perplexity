@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T00:07:50.356Z",
+ "pushed": "2026-11-25T00:29:31.971Z",
  "head": "81ec3adc20f19942fea262b0ceb6ccb552d69bc3",
- "note": "00:08 UTC 81ec3adc d253 b cure committed: web against full in the rise 5.140 to 1.012 at 225, 3.764 to 0.953 at 231; full set bytes kept. Now: sub cuts of the march against the stipple, packed cells, fibres in the heat, the spot as one diagram",
+ "note": "00:31 UTC trial p6 on 81ec3adc: packed cells, fibres, one diagram for the spot, sub cuts against the stipple. Frame 60 distance 0.048, half width 7.7 px, fine 0.0348, white 0.016. Proof frames render now",
  "looks": [
+  {
+   "time": "2026-11-25T00:29:31.314Z",
+   "file": "20261125002931314-note-p5-far.jpg",
+   "source": "../../../../tmp/v/p5-far.png",
+   "kind": "note",
+   "label": "Trial p5: frames 60 and 61 at 3 times, the far ground at 300, 500. The cells go on toward the horizon; the lower third still shows short upright dashes where the fibres set in (cured next by fading them by the long side of a pixel)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:29:30.730Z",
+   "file": "20261125002930730-note-p6-stip.jpg",
+   "source": "../../../../tmp/v/p6-stip.png",
+   "kind": "note",
+   "label": "Trial p6: frames 60 and 61 at 3 times, the near ground at 880, 900. The stipple of commit 1 is gone; faint upright streaks remain where a fibre runs toward the eye. Consecutive frames at 30 a second: the frames tool draws no half frames",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:29:30.143Z",
+   "file": "20261125002930143-note-p6-60-spot.jpg",
+   "source": "../../../../tmp/v/p6-60-spot.jpg",
+   "kind": "note",
+   "label": "Trial p6: frame 60 beside the approved at 1 to 1, the spot. One diagram, drawn long toward the spot by the chart; no ring and no second layer. Still wrong: the umbra's rim is a clean line, the fibres read as rows of long cells and not as the approved's long bright fibres",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T00:29:29.441Z",
+   "file": "20261125002929441-note-p6-60.jpg",
+   "source": "../../../../tmp/v/p6-60.jpg",
+   "kind": "note",
+   "label": "Trial p6 on 81ec3adc, not committed yet: frame 60 beside the approved at 1 to 1, the ground. Packed cells, the top high to the border, seam by the diagram's own edge, fibres in the heat, sub cuts of the march. share by band 0.1 .. 0.9 : 0.174 0.218 0.182 0.140 0.099 0.066 0.048 0.053 0.016 / dark (under 0.15) 0.177 | body (0.15 to 0.55) 0.639 | pale (0.65 to 0.85) 0.102 | white (over 0.85) 0.016 / brightest 15 percent: half width 7.7 px, 1361 shapes | fine detail 0.0348 | mean 0.351. Distance of the band tables 0.048 (commit 1: 0.046, half width 12.5, fine 0.0205)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T00:05:57.960Z",
    "file": "20261125000557960-note-d253b-before-pairs.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/d253-set-pair.jpg",
    "kind": "note",
    "label": "d253 (b): frame 60 at 1920 by 1080 in the web set (left) and the full set (right), 1 to 1 crop; mean difference of the whole frames 3.867 of 255",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:39:28.592Z",
-   "file": "20261124233928592-note-d253-size-pair.jpg",
-   "source": "../../../../tmp/v/d253-size-pair.jpg",
-   "kind": "note",
-   "label": "d253 (a): frame 60 drawn at 1920 by 1080 (left) and at 3840 by 2160 halved (right), full set, 1 to 1 crop; mean difference of the whole frames 2.354 of 255",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:39:27.676Z",
-   "file": "20261124233927676-note-c1-60-spot.jpg",
-   "source": "../../../../tmp/v/c1-60-spot.jpg",
-   "kind": "note",
-   "label": "32b71390 frame 60, the spot beside the approved at 1 to 1: the penumbra is soft and hatched, ragged at its outer end",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:39:26.153Z",
-   "file": "20261124233926153-note-c1-60-p1.jpg",
-   "source": "../../../../tmp/v/c1-60-p1.jpg",
-   "kind": "note",
-   "label": "32b71390 frame 60 (draft, bytes b059c9677c9e51af) beside the approved close image at 1 to 1. sun-near.py: share by band 0.1 .. 0.9 : 0.177 0.237 0.197 0.138 0.101 0.058 0.033 0.027 0.018 / dark (under 0.15) 0.191 | body (0.15 to 0.55) 0.674 | pale (0.65 to 0.85) 0.060 | white (over 0.85) 0.018 / brightest 15 percent: half width 12.5 px, 855 shapes | fine detail 0.0205 | mean 0.325",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-24T23:19:09.436Z",
-   "file": "20261124231909436-note-c1-00217-whole.jpg",
-   "source": "../../../../tmp/v/c1-00217-whole.jpg",
-   "kind": "note",
-   "label": "frame 217 with the slab, two thirds size",
    "stop": "sun"
   }
  ]
