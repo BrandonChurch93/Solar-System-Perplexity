@@ -938,12 +938,12 @@ export class FilmDirector implements Director {
         if (t) skyTurn = t
       }
       const lent = segment.kind === 'rise' ? this.passAhead(index, time) : null
-      if (lent && view === 'terrain') {
+      if (lent) {
         const turned = lent.clone().applyQuaternion(this.frames[index]!.rotation.clone().invert())
-        local = this.laidClose(index, time, local, (g) => ({ position: g.position.clone().add(turned), quaternion: g.quaternion, vfov: g.vfov }))
+        const lay = (g: Pose): Pose => ({ position: g.position.clone().add(turned), quaternion: g.quaternion, vfov: g.vfov })
+        local = view === 'terrain' ? this.laidClose(index, time, local, lay) : lay(local)
       }
       pose = inSet(s, local)
-      if (lent && view !== 'terrain') pose.position.add(lent)
       sets = [s]
       if (view === 'terrain' && p.under(segment, time)) {
         // The one ground: the globe view's state at this time and the twin of the lens, with the range the globe view gives a lens there.
