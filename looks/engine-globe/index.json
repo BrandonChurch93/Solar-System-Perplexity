@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T14:13:16.050Z",
- "head": "8961dd4f370cab66bc162c21d948c9110a16b93a",
- "note": "airLaw on the globe at 8961dd4f with the real chunk of handover_engineer. Off: 11 of 11 byte equal. Mars scratch on: halo and glint hidden, numbers are scratch and not a look. Stars under the law are dimmed and stand (vertical depth 0.066).",
+ "pushed": "2026-11-25T14:32:33.525Z",
+ "head": "1e4c32a81295bf5614aed410cb2856eef871bf7b",
+ "note": "14:33 UTC. Second version of the air law's file laid at 1e4c32a8, first chunk the same string, off frames 11 of 11 byte equal. No picture changed.",
  "looks": [
+  {
+   "time": "2026-11-25T14:32:32.810Z",
+   "file": "20261125143232810-note-mars-law-real-sheet.jpg",
+   "source": "../m1092/mars-law-real-sheet.jpg",
+   "kind": "note",
+   "label": "No new picture. The chunk's second version (blob abe559c6) is laid; 11 off frames byte equal to 69cf3448. This is the sheet of 14:13 again.",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T14:13:15.468Z",
    "file": "20261125141315468-note-mars-law-real-sheet.jpg",
@@ -58,14 +66,6 @@
    "source": "../m1032/mars-4824-maps.jpg",
    "kind": "note",
    "label": "Mars 2412 limb: frame, 8 frames later, reader, real pair, carry.py with the ball (the moon), reader by the sphere",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:38:58.511Z",
-   "file": "20261125113858511-note-chart-mars.jpg",
-   "source": "../m1032/chart-mars.png",
-   "kind": "note",
-   "label": "MAIL 1032 a, Mars dive 2456 to 2474 on 22820b17: reader (A) against the real pair carried by range pictures (E), and by the distance of the ground",
    "stop": "mars"
   }
  ]
