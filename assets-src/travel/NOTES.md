@@ -1552,3 +1552,30 @@ Plan: (A) h with the start found from geometry, mercury leg only; (B) hand over 
 - Lift cure, form sent in MAIL 1073 point 5: one line on every leg, leg 0 too: open = lens + (lifted - lens) x comingOpen. comingOpen = openSky of the arriving body's LIT area (disc share x (1 + cos phase) / 2) against that same figure at the hold's first frame. The Sun's share enters through lens (openOf) as before.
 - Probe (lift, as is > new): sun leg 486 0.81>0.60, 504 0.25>0.60, 513 0>0.54, 522 0>0.32, 531 0>0.07; mercury 1072 0.92>1.00, 1080 0.70>0.96, 1087 0.46>0.68, 1095 0.19>0.29; saturn 3930 0.45>1.00, 3937 0.28>0.98, 3945 0.11>0.64; uranus 4500 1.00>0.62, 4507 0.82>0.32. Max step a frame 0.044 sun, 0.050, 0.049, 0.048, 0.074 mars, 0.069, 0.080 saturn, 0.060. 533 frames change sky values, none outside travels.
 - Disc control render /tmp/t-discs (far points off) is running: 73 s a frame.
+
+### 12:22 UTC, 25 Nov: the seven other discs measured, one law on eight legs (coded in /tmp/wt-main, not committed yet)
+- Control render /tmp/t-discs (master draft, far points off): linear light of the max channel per pixel of disc area (sum in the box over pi r^2, sky off; lower bound where pixels stand at 255) and colour.
+  - sun leg (Mercury): 0.61 at r 3.1, 0.40 at 6.1, 0.36 at 10.4; colour 1 : 0.44 : 0.33. Taken 0.40.
+  - venus leg (Earth): blue 0.30 at 4.1, 0.42 at 6.7, 0.30 at 10.1; colour 0.42 : 0.75 : 1. Taken 0.33.
+  - earth leg (Mars): 0.25 at 3.5, 0.20 at 6.2, 0.21 at 10.1; colour 1 : 0.42 : 0.28. Taken 0.21.
+  - mars leg (Jupiter): 0.11 at 3.7, 0.23 at 7.8, 0.20 at 14; colour 1 : 0.45 : 0.22. Taken 0.21.
+  - jupiter leg (Saturn with rings): 1.60 at 3.6, 1.17 at 5.9, 0.98 at 8.9; colour 1 : 0.63 : 0.42. Taken 1.0.
+  - saturn leg (Uranus): green 1.21 at 3.5, 0.70 at 7.5, 0.49 at 13.5; colour 0.51 : 1 : 1. Taken 0.70.
+  - uranus leg (Neptune): blue 1.20 at 4.1, 0.91 at 7.5, 0.80 at 12.2; colour 0.09 : 0.24 : 1. Taken 0.91.
+- disc = taken / 1.3 (the same factor as Venus: 0.55 measured, 0.42 in the file) times the colour: sun [0.31, 0.136, 0.1], venus [0.107, 0.19, 0.254], earth [0.16, 0.067, 0.045], mars [0.16, 0.072, 0.035], jupiter [0.77, 0.485, 0.32], saturn [0.275, 0.54, 0.54], uranus [0.06, 0.17, 0.7].
+- Every stop passes gain = 1 / post exposure, so the point's light in the picture is disc / share on every leg.
+- DECISION: the share is one number for all legs, HAND.share = 0.42 / 2.5 (bit for bit Venus's old share, so the mercury leg keeps its far point bytes). The point's top level is then the body's own disc light over that share: Venus 2.5, Mercury 1.85, Earth 1.5, Mars 0.95, Jupiter 0.95, Saturn 4.6, Uranus 3.2, Neptune 4.2. Why not one peak of 2.5 for all: with a dim disc the floor would hold more light than the disc has at 4.5 px (Mars: floor 9.2 against 4 at 3 px) and the sum would dip while the point fades. With one share the floor equals the disc's light at 2.3 px on every leg and the swap 1.5 to 4.5 px stands for all.
+- Leg 0 (Sun to Mercury) had no farLight (old hold law, white point with halo, always on). Now farLight = 1 on leg 0 (always on as before, no pin there), so it runs the same law. Mercury is in frame from 450 at 0.18 px beside the Sun's disc and moves across; r 1.3 at 502.
+- farDisc now leaves the herald block: every leg with a disc passes it.
+- Checked: no leaving body is in frame with weight while farLight is over 0 (probe leave.ts), so the arriving disc's colour cannot land on a leaving point.
+- Shot hashes, new against c776ab20: 601 frames, 450 to 539, 1048 to 1108, 1605 to 1679, 2175 to 2249, 2745 to 2819, 3315 to 3389, 3885 to 3959, 4455 to 4529. Against 6ce0447f: 615 frames, the eight travels whole and nothing else.
+
+### 12:30 UTC, 25 Nov: three commits on agent/travel-b10 over c776ab20 (in /tmp/wt-exp, not yet named, checks owed)
+- 555d196d704b779e108231e7976699d6330fe501 film.ts: lift cure (lit area, every leg). The reference is the lit share at seg.end itself (the hold's own geometry), not one frame before it: nothing reads the frame length. Last travel frames end at 0.0001 to 0.0015, the hold at 0.
+- 7e6a5600282407bda00c26e017bfb3460705833e film.ts + path.ts: discs on every leg, farDisc out of the herald block, leg 0 farLight 1.
+- 48a0b940300fd88d1269e2a43966d2c87d23b46c farpoint.ts: HAND.share = 0.42 / 2.5, one share for all.
+- Max step of the lift a frame, new (base): sun 0.044 (0.056), mercury 0.049 (0.036), venus 0.048 (0.036), earth 0.048 (0.036), mars 0.073 (0.056), jupiter 0.068 (0.036), saturn 0.078 (0.040), uranus 0.059 (0.056). Sky exposure step: saturn 0.0117 (0.0048), jupiter 0.0070 (0.0040), others within 0.001 of base.
+- Shot hashes new against c776ab20: 602 frames (450 to 539, 1048 to 1109, the six other travels whole). Against 6ce0447f: 615 frames, the eight travels and nothing else.
+- As is leg 0 looked at (/tmp/t-leg0asis, 4 times): a white point with a halo about 14 px wide from 470 to 502. Under the one law it becomes a 1 px point in Mercury's colour at 1.85.
+- Running: /tmp/t-legs (59 frames, master draft, wt-main with the same five files as the tip). Then: tables with /tmp/proofleg.py NEW /tmp/t-discs OUT, crops /tmp/cropleg.py, then the final tier 1064 to 1068, then vitest, build, shaderaudit, bundle, NAMED.
+- Scripts new: /tmp/legm.py (place and radius per frame from /tmp/leg-NAME.json), /tmp/proofleg.py, /tmp/cropleg.py DIR OUT FRAMES COLS W H ZOOM TAG, /tmp/hashcmp.py A B, /tmp/skyend.py.
