@@ -1142,3 +1142,14 @@ Verbatim core, to be kept:
 - SENT 04:19 to the Builder: the correction of answer 3 (c) (yes, a red by drift alone exists with main's reader as it stands) and case A's first stretch.
 - RUNNING since 04:09: case A second stretch k 1477 to 1500, full then web, log `scratch/r745/logs/mercury-A-1477.log`, jobs to `scratch/r745/mercA/job-full-1477.json`, `job-web-1477.json`. Then one mail with 798 (b), (c) second stretch, (d).
 - Disk: b0's frames of 1425 to 1446 (both sets) and repo's Jupiter frames 6482 to 6514 removed; the jobs of those rows can no longer be replayed (numbers and pictures kept).
+
+### 04:22 to 04:35 UTC, 25 Nov: MAIL 798 (c) case A second stretch, (b), (d)
+
+- Case A second stretch, k 1477 to 1500 at b0b87889 in `b0` (draft; reports and kept jobs in `scratch/r745/mercA/`: `mercury-dive-k1477-1500.{json,md}`, `web-mercury-dive-k1477-1500.{json,md}`, `job-full-1477.json`, `job-web-1477.json`; jobs read again with b4's `tools/img/smooth.py`, outputs `/tmp/jobA2.out`, `/tmp/jobA2w.out`; sheet `mercA/a-1477-sheet.jpg`):
+  - full set: main as it stands over on all 24 rows, 0.46 at k 1477, 1.57 at k 1489; map alone over on k 1478 to 1498, 1.50 at k 1486 (film 743); refused "two grounds" on k 1490 to 1493 (pair gave 1.20); chain off the map 17 to 40 px at the 99th.
+  - web set: the same to 0.03: main 0.46 to 1.57, map alone 1.51 at k 1486, refused k 1490 to 1493 (1.18).
+  - the sheet shows it: in both sets the globe's map of k 1477 gives way to the place's field by k 1502 on the same ground. This stretch is an exchange in time, alike in every set.
+  - drawn at film 743, 747, 751 master full and uhd full (`scratch/r745/sets/b0/`, `sets-743.json`): pattern 8 to 40 px between the sets 0.002, 0.001, 0.001; parity mean 2.4, 2.4, 2.0, block level about 2. So a check between the sets does NOT see this stretch; the smooth reader does (1.50).
+  - timing in one session, three frames 4 film frames apart: master 23.5, 5.8, 5.7 s; uhd 34.2, 19.6, 20.6 s (the 38 s and 26 s of the 17 scattered frames were each a fresh place).
+- Windows: Sun rise and each dive 114 film frames, each other rise 99: 1818 film frames over 17 moves; every 8th film frame about 230 pairs.
+- b0's frames of 1477 to 1500 removed (both sets) for disk; numbers, jobs and the sheet kept.
