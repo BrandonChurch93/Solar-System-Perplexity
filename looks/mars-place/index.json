@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T17:55:00.792Z",
+ "pushed": "2026-11-25T18:23:41.088Z",
  "head": "71688463139ea30327a39c48d8cde7719c152345",
- "note": "wall take 7 whole: film's eye better than the state, from above at 0.3 still wrong (cracks, ghost boulders, smoothed strips)",
+ "note": "wall rock take 9 from above: code grain on walls matches the take's strength, reads as fur at 1 to 1; a wall band at the 0.3 north border traced to the heights, take 10 running",
  "looks": [
+  {
+   "time": "2026-11-25T18:23:40.334Z",
+   "file": "20261125182340334-note-v03-dark-gain5.jpg",
+   "source": "out/work/place/w9/v03-dark-gain5.jpg",
+   "kind": "note",
+   "label": "take 9 fault, 0.3 plate north border at gain 5: wall streaks where the 0.7 level has no wall; cured in the tool for take 10",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T18:23:39.747Z",
+   "file": "20261125182339747-note-v07-c.jpg",
+   "source": "out/work/place/w9/v07-c.jpg",
+   "kind": "note",
+   "label": "take 9, 0.7 plate from above at 1 to 1 on a wall: state, take 9, mask",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T18:23:39.155Z",
+   "file": "20261125182339155-note-v03-whole.jpg",
+   "source": "out/work/place/w9/v03-whole.jpg",
+   "kind": "note",
+   "label": "take 9, 0.3 plate whole: state, take 9; walls read as brushed patches",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T18:23:38.345Z",
+   "file": "20261125182338345-note-v03-c.jpg",
+   "source": "out/work/place/w9/v03-c.jpg",
+   "kind": "note",
+   "label": "take 9 of the wall rock, 0.3 plate from above at 1 to 1: state, take 9 with the rock's own code grain, wall mask",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T17:54:59.927Z",
    "file": "20261125175459927-note-proof-b-above.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/w7/v03-c.jpg",
    "kind": "note",
    "label": "wall take 7 from above, 0.3 x 1500 y 60 at 1 to 1: BAD: ghost outlines of the take's boulders (its grain under 2.5 texels) flat on fluted rock",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T17:54:57.384Z",
-   "file": "20261125175457384-note-v03-a.jpg",
-   "source": "out/work/place/w7/v03-a.jpg",
-   "kind": "note",
-   "label": "wall take 7 from above, 0.3 x 700 y 1000 at 1 to 1: BAD: black cracks at joints, boulders gone on the strip",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T17:54:56.690Z",
-   "file": "20261125175456690-note-v03-whole.jpg",
-   "source": "out/work/place/w7/v03-whole.jpg",
-   "kind": "note",
-   "label": "wall take 7 from above, 0.3 plate whole, state left: BAD: steep strips read as smoothed fluted bands amid boulder ground, thin black cracks left",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T17:54:56.023Z",
-   "file": "20261125175456023-note-proof-c-pairs.jpg",
-   "source": "out/work/place/w7/proof-c-pairs.jpg",
-   "kind": "note",
-   "label": "wall take 7, pairs 2458 and 2688 half size, state left",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T17:54:55.454Z",
-   "file": "20261125175455454-note-p2468-a.jpg",
-   "source": "out/work/place/w7/p2468-a.jpg",
-   "kind": "note",
-   "label": "wall take 7, 2468 x 560 y 440 at 1 to 1, state left",
    "stop": "mars"
   }
  ]
