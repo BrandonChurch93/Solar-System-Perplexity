@@ -4,10 +4,14 @@ import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
 import * as THREE from 'three'
 import { setsForFrame } from '../src/director/timeline'
-import { faceLaw, holdFrame, wornAt } from '../src/space/farsun/farsun'
+import { farSun, faceLaw, holdFrame, wornAt } from '../src/space/farsun/farsun'
 import { HOLD } from '../src/space/farsun/hold'
 import look from '../src/space/farsun/look.json'
 import { globeShare, spans, swapDistance, wearShare } from '../src/space/farsun/share'
+import { FARSUN_FRAG } from '../src/space/farsun/shader'
+import { Corona } from '../src/stops/sun/corona'
+import * as sunLook from '../src/stops/sun/look'
+import { Prominences } from '../src/stops/sun/prominence'
 
 const swapOf = (deg: number): number => 1 / Math.sin((deg * Math.PI) / 180)
 
@@ -85,6 +89,41 @@ describe('the handover and the wear of the far Sun', () => {
     for (let k = count - 5 * 16; k < count; k++) expect(wornAt(far(first + k / 16).burn), String(k)).toBe(0)
     expect(globeShare(swapDistance)).toBe(0)
     expect(wearShare(swapDistance)).toBe(0)
+  })
+
+  it('draws the gas of the Sun stop by the laws of the stop, word for word, and its weight is the wear', () => {
+    const t = new THREE.Texture()
+    const pick = (src: string, keys: string[]): string[] => src.split('\n').map((l) => l.trim()).filter((l) => keys.some((k) => l.startsWith(k)))
+    const mine = (l: string): string => l.replace(/TAU/g, '6.283185307179586').replace(/uWave/g, 'uGasWave').replace(/uTime/g, 'uHoldTime').replace(/uMove/g, 'uPromMove').replace(/cells\(/g, 'gasCells(')
+    const laws = [...pick(new Corona(t, sunLook.corona).material.fragmentShader, ['float sway =', 'return 0.5 * cells(']), ...pick(new Prominences(t, t, sunLook.prominence).material.fragmentShader, ['float run =', 'float pa =', 'float pb ='])]
+    expect(laws).toHaveLength(5)
+    for (const law of laws) expect(FARSUN_FRAG, law).toContain(mine(law))
+    expect(FARSUN_FRAG).toContain('float worn = uWear * uGasOn;')
+    expect(FARSUN_FRAG).toContain('gas *= (1.0 - worn) * dim;')
+  })
+
+  it('carries the arcade of the Sun stop on the body while it wears the stop, and lets go of it when it does not', () => {
+    const t = new THREE.Texture()
+    const object = new THREE.Object3D()
+    const seen: number[] = []
+    const g = sunLook.globe
+    farSun.wear({ map: t, grade: t, mapWidth: 8192, limb: g.limb, rim: g.rim, boil: g.boil, hot: g.hot, pulse: g.pulse, cell: g.cell, gas: { corona: t, coronaLook: sunLook.corona, prominence: t, flow: t, prominenceLook: sunLook.prominence, turn: new THREE.Quaternion(), arcade: { object, draw: (v) => void seen.push(v.wear) } } })
+    const body = new THREE.Quaternion().setFromEuler(new THREE.Euler(0.3, -0.7, 0.2))
+    const view = { camera: new THREE.PerspectiveCamera(30, 16 / 9, 0.1, 100), centre: new THREE.Vector3(1, 2, -6), body, spin: 0.4, time: 20, holdTime: 3, exposure: 1, burn: 0, vignette: 0, aspect: 16 / 9, height: 1080 }
+    farSun.set(view, 1, 0)
+    expect(object.parent).toBe(farSun.carry)
+    expect(seen).toEqual([1])
+    const at = new THREE.Vector3(0.2, 0.5, 0.8)
+    const want = at.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), 0.4).applyQuaternion(body).add(view.centre)
+    expect(at.clone().applyMatrix4(object.matrixWorld).distanceTo(want)).toBeLessThan(1e-9)
+    farSun.set({ ...view, burn: 1 }, 1, 0)
+    expect(object.parent).toBeNull()
+    farSun.set(view, 0, 0)
+    expect(object.parent).toBeNull()
+    expect(seen).toEqual([1])
+    farSun.set(view, 1, 0)
+    farSun.wear(null)
+    expect(object.parent).toBeNull()
   })
 
   it('holds the face of the Sun stop whole while the globe is in the frame alone, and has let go of no more than the look says where the pull ends', () => {

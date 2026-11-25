@@ -19,6 +19,17 @@ export interface FarSunHold {
   hot: { from: number; to: number; boost: number }
   pulse: { amount: number; rate: number; from: number; to: number }
   cell: { amount: number; rate: number; scale: number; fine: number }
+  gas?: FarSunGas
+}
+
+export interface FarSunGas {
+  corona: THREE.Texture
+  coronaLook: { inner: number; outer: number; gain: number; edge: number; wave: { amount: number; scale: number; speed: number; sway: number }; drift: number; hide: { from: number; to: number; amount: number } }
+  prominence: THREE.Texture
+  flow: THREE.Texture
+  prominenceLook: { half: number; plane: number; speed: number; period: number; surge: number }
+  turn: THREE.Quaternion
+  arcade?: { object: THREE.Object3D; draw(view: { time: number; camera: THREE.PerspectiveCamera; gain: number; vignette: number; aspect: number; height: number; wear: number }): void }
 }
 
 export interface FarSunView {
@@ -37,6 +48,8 @@ export interface FarSunView {
 
 const tri = new THREE.BufferGeometry()
 tri.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3))
+const UP = new THREE.Vector3(0, 1, 0)
+const ONE = new THREE.Vector3(1, 1, 1)
 const flat = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
 
 export const PARTS = { body: 1, corona: 2, loops: 4, glare: 8, all: 15 }
@@ -105,10 +118,13 @@ function strandLobes(by: THREE.Vector4[]): number[] {
 export class FarSun {
   readonly material: THREE.ShaderMaterial
   readonly mesh: THREE.Mesh
+  readonly carry = new THREE.Group()
+  private arcade: FarSunGas['arcade'] | null = null
   private readonly own: THREE.Mesh
   private readonly scene = new THREE.Scene()
   private readonly m4 = new THREE.Matrix4()
   private readonly q = new THREE.Quaternion()
+  private readonly spun = new THREE.Quaternion()
   private readonly v = new THREE.Vector3()
   parts = PARTS.all
   alone = false
@@ -220,6 +236,8 @@ export class FarSun {
         uDepth: { value: 0 }, uProj: { value: new THREE.Vector4(1, 1, 0, 0) }, uCam: { value: new THREE.Matrix3() }, uBody: { value: new THREE.Matrix3() }, uCentre: { value: new THREE.Vector3(0, 0, -10) },
         uSpin: { value: 0 }, uTime: { value: 0 }, uHoldTime: { value: 0 }, uWear: { value: 0 }, uOpacity: { value: 1 }, uGain: { value: 1 }, uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPixel: { value: 0.001 }, uGrad: gradUniform, uMaster: { value: 1 },
         uMap: { value: null }, uGrade: { value: null }, uMapOn: { value: 0 }, uMapWidth: { value: 8192 },
+        uGasOn: { value: 0 }, uGasMap: { value: null }, uPromMap: { value: null }, uPromFlow: { value: null }, uGasTurn: { value: new THREE.Matrix3() }, uGasRange: { value: new THREE.Vector2(1, 2) },
+        uGasBy: { value: new THREE.Vector3(1, 1, 0) }, uGasWave: { value: new THREE.Vector4() }, uGasHide: { value: new THREE.Vector3(0, 1, 0) }, uPromPlane: { value: new THREE.Vector4(1, 0, 1, 0) }, uPromMove: { value: new THREE.Vector3(0, 1, 0) },
         uHoldLimb: { value: new THREE.Vector2(1, 0) }, uHoldRim: { value: new THREE.Vector3() }, uHoldRimShape: { value: new THREE.Vector2(0.09, 2) }, uHoldRimBy: { value: new THREE.Vector4(0, 0, 0, 0) },
         uBoil: { value: new THREE.Vector4(0, 1, 0.01, 0) }, uQuiet: { value: new THREE.Vector2(0, 1) }, uHot: { value: new THREE.Vector3(1, 2, 0) }, uPulse: { value: new THREE.Vector4(0, 1, 0, 1) }, uCell: { value: new THREE.Vector4(0, 1, 1, 0) },
         uReach: { value: look.reach }, uLimbU: { value: new THREE.Vector3().fromArray(look.limb.u) }, uLimbV: { value: new THREE.Vector3().fromArray(look.limb.v) },
@@ -240,6 +258,10 @@ export class FarSun {
     this.mesh = new THREE.Mesh(tri, this.material)
     this.mesh.frustumCulled = false
     this.mesh.renderOrder = 50
+    this.carry.renderOrder = 51
+    this.carry.matrixAutoUpdate = false
+    this.carry.matrixWorldAutoUpdate = false
+    this.mesh.add(this.carry)
     this.own = new THREE.Mesh(tri, this.material)
     this.own.frustumCulled = false
     this.scene.add(this.own)
@@ -248,6 +270,24 @@ export class FarSun {
     wear(hold: FarSunHold | null): void {
     const u = this.material.uniforms
     u.uMapOn!.value = hold ? 1 : 0
+    const gas = hold?.gas
+    if (this.arcade && this.arcade.object.parent === this.carry) this.carry.remove(this.arcade.object)
+    this.arcade = gas?.arcade ?? null
+    u.uGasOn!.value = gas ? 1 : 0
+    u.uGasMap!.value = gas?.corona ?? null
+    u.uPromMap!.value = gas?.prominence ?? null
+    u.uPromFlow!.value = gas?.flow ?? null
+    if (gas) {
+      const c = gas.coronaLook
+      const p = gas.prominenceLook
+      ;(u.uGasTurn!.value as THREE.Matrix3).setFromMatrix4(this.m4.makeRotationFromQuaternion(gas.turn))
+      ;(u.uGasRange!.value as THREE.Vector2).set(c.inner, c.outer)
+      ;(u.uGasBy!.value as THREE.Vector3).set(c.gain, Math.max(c.edge, 1e-6), c.drift)
+      ;(u.uGasWave!.value as THREE.Vector4).set(c.wave.amount, c.wave.scale, c.wave.speed, c.wave.sway)
+      ;(u.uGasHide!.value as THREE.Vector3).set(c.hide.from, c.hide.to, c.hide.amount)
+      ;(u.uPromPlane!.value as THREE.Vector4).set(p.half, p.plane, 1, 0)
+      ;(u.uPromMove!.value as THREE.Vector3).set(p.speed, p.period, p.surge)
+    }
     if (!hold) {
       u.uMap!.value = null
       u.uGrade!.value = null
@@ -280,6 +320,13 @@ export class FarSun {
     u.uHoldTime!.value = view.holdTime
     const worn = u.uMapOn!.value > 0 ? wornAt(view.burn) : 0
     u.uWear!.value = worn
+    const arcade = this.arcade
+    if (arcade && worn > 0 && opacity > 0) {
+      this.carry.matrixWorld.compose(view.centre, this.q.copy(view.body).multiply(this.spun.setFromAxisAngle(UP, view.spin)), ONE)
+      if (arcade.object.parent !== this.carry) this.carry.add(arcade.object)
+      this.carry.updateMatrixWorld(true)
+      arcade.draw({ time: view.time, camera: view.camera, gain: 1 / view.exposure, vignette: view.vignette, aspect: view.aspect, height: view.height, wear: worn })
+    } else if (arcade && arcade.object.parent === this.carry) this.carry.remove(arcade.object)
     u.uOpacity!.value = opacity
     u.uGain!.value = 1 / view.exposure
     ;(u.uLens!.value as THREE.Vector2).set(view.vignette, view.aspect)
