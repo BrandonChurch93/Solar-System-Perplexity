@@ -7,6 +7,7 @@ import { EQUIRECT_GLSL } from '../space/sky'
 import { GROUND_AIR_GLSL, hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
 import { setHazeAir, type GlobeAir } from './air'
 import { ReliefCap, type CapOptions } from './cap'
+import { LimbAir, type LimbAirParams } from './limb'
 
 export interface PlanetLight {
   wrap: number
@@ -34,6 +35,7 @@ export interface PatchSet {
   ownGain?: boolean
   fadeMinor?: boolean
   centresDeg?: [number, number][]
+  counts?: number[]
 }
 
 export interface StormParams {
@@ -74,6 +76,7 @@ export interface PlanetOptions {
   segments?: number
   cap?: CapOptions
   exactSpin?: boolean
+  limbAir?: LimbAirParams
 }
 
 const VERT = /* glsl */ `
@@ -320,6 +323,7 @@ export class Planet {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
   readonly cap?: ReliefCap
+  readonly limb?: LimbAir
   private readonly bodyToWorld = new THREE.Matrix3()
   private readonly m4 = new THREE.Matrix4()
   private readonly worldToBody = new THREE.Matrix3()
@@ -336,7 +340,8 @@ export class Planet {
       const w = p?.widthsDeg[i]
       return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
     }
-    const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    if (p?.counts && (p.counts.length !== p.textures.length || p.counts.some((n) => !(n > 0)))) throw new Error('counts needs one width above 0 per patch level')
+    const size = (i: number): number => p?.counts?.[i] ?? (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
     const slots = patchSlots(p?.textures.length ?? 0)
     const levels = Array.from({ length: slots }, (_, i) => i)
     if (p?.own && p.own.length !== p.textures.length) throw new Error('own needs one entry per patch level')
@@ -398,6 +403,11 @@ export class Planet {
       this.cap = new ReliefCap(planetFrag({ ...text, cap: true, ...(o.cap.light ? { capLight: true } : {}) }), shared, o.cap)
       this.mesh.add(this.cap.mesh)
     }
+    if (o.limbAir) {
+      if (!o.grazing) throw new Error('the limb air carries the grazing air of the planet and this planet has none')
+      this.limb = new LimbAir(this, o.limbAir, diagUniform)
+      this.mesh.add(this.limb.mesh)
+    }
   }
 
   update(camera: THREE.Vector3, sun: THREE.Vector3, spin: number, gain: number, weight: number): void {
@@ -441,5 +451,6 @@ export class Planet {
     this.mesh.geometry.dispose()
     this.material.dispose()
     this.cap?.dispose()
+    this.limb?.dispose()
   }
 }

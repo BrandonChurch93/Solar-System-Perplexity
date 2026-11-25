@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 980–1007, central crater pair and horizon",
+   "what": "The climb largely unwinds the dive: the same crater pair shrinks along almost the same track as the horizon rolls back. This makes the exit read like a camera reversal rather than a continuing flyby.",
+   "fix": "Carry some of the terrain pass's downrange movement into the climb and ease onto a slightly offset outbound arc so foreground craters and the horizon separate along a new path."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 540–689, illuminated globe face",
+   "what": "The globe's crater pattern changes very little relative to the limb. The drift reads mostly as camera movement rather than independent planetary rotation.",
+   "fix": "Keep the rotation slow, but give a recognizable sunlit marking a little more movement relative to the limb without speeding up the camera."
+  }
+ ]
+}
