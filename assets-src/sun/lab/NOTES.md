@@ -689,3 +689,11 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
 - 16:54 UTC, MEASURED d7 (turned anchor, twin rebaked): whole run 380 to 470: largest 0.406 at capture 398 at
   [0, 536], mean 0.206, 75 pairs, limit 0.45; pair 416 now 0.213 (h20 0.446), the hump 419 to 429 stands at 0.31 to
   0.39. Hold 700 to 732: largest 0.006, mean 0.005.
+- 17:00 UTC, e4 (on d7 5a8c028a): heat.wide 2.8, heat.round 0.85 (cells fill their ground, gaps narrower), heat.shade
+  [0.45, 0.65], heat.dimple [0.6, 0.35]. Frame 90 near percentiles 0.243 0.400 0.584 0.745 0.898 0.953 with the d7
+  curve (no refit). Run and hold NOT read for e4. MEASURED cause of the dark right and bright middle of frame 90:
+  the globe's map low band (far.tone.far, law f). Mean of the largest channel, band on: right (x 1400 to 1900, rows
+  720 to 1080) 0.524, left (200 to 700) 0.642, middle near (800 to 1200, rows 900 to 1080) 0.662; band off (range
+  [1, 1]): 0.565, 0.579, 0.587; approved: 0.625, 0.587, 0.541. far.tone.range's lower bound does nothing there.
+  SEEN on v/form-e4.jpg and v/motion-e4.jpg: still pads (river stones with a fan drawn on top), not the approved's
+  bulbs made of broad tubes; whole cells change their light much between captures 12 film frames apart.
