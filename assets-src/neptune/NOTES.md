@@ -7467,3 +7467,70 @@ Eighth NAMED by 16:00 with the full sha. Neptune's round 1 of 3 starts on what s
   every distance), or a far level as wide as the heaps.
   4960 to 4970 at the lower left (x 0 to 240, y 294 to 474 of the preview): the dark deck's fine structure; between
   4965 and 4970 short pale streaks (the deck's wisps) and one thin straight dark line come in. Not traced by a control.
+- THE REST OF THE CHAIN (done 15:53:32; my reader; limit 0.45; in brackets d63d08e2): dive 4736 to 4744 0.29 at (192, 40)
+  (0.36), 4744 to 4752 0.40 at (1568, 640) (0.39), 4752 to 4760 0.26 at (852, 860) (0.26); 4704 to 4712 0.29 at (312, 188)
+  (0.30); rise 4992 to 5000 0.33 at (240, 956) (0.33). One pair 0.01 higher than on d63d08e2 (4744, under the limit),
+  every other lower or the same.
+- WHERE 4860 LOSES ITS MATCH (N8 against the approved, tiles of 160 by 135, tip minus approved, mean of R, G, B):
+  row 0:  14   6   4   7  12  -8 -26 -17  -9  -5  -8  -5
+  row 1:  43  38  30  26  18   5   1   1  -9  -6  -5  -7
+  row 2:  53 -18 -30  -2 -10 -28 -35 -21 -11   5  17   1
+  row 3:  16   3  -3  -2 -10  -9 -16 -49 -53 -63 -54 -20
+  row 4:  12  15   6 -28  -8 -47 -34 -32 -45 -54 -61 -62
+  row 5:   7   7  15  14  -2 -12 -23 -26 -29 -41 -64 -79
+  row 6:  10   7   4   1   2   2 -21  30  62 -30 -34 -52
+  row 7:   9   4   1   1  -2  -6  -6  -7   7  23  15 -27
+  The plain on the right (x 1120 to 1920, y 405 to 810) is 45 to 79 levels darker than the approved's; the upper left
+  under the limb 26 to 53 brighter (my limb stands higher there); the two bright tiles of row 6 are my cirrus bank's
+  end where the approved's bank has already left the frame's middle. Boxes: far plain right of the storm (1300 to 1800,
+  330 to 480) approved 123, 156, 186, tip 99, 127, 166; the eye (760 to 1060, 430 to 520) 24, 54, 90 and 25, 50, 86;
+  near deck lower right (1300 to 1800, 800 to 1000) 44, 75, 110 and 56, 73, 100; sky top right 13, 19, 26 and 10, 13, 13.
+- 15:40 main had moved to baf5473f5 (scorecards of rounds 52 and 55, kit/PROGRESS.md; nothing under src, tests, tools,
+  config, public). Merged by a merge commit while the chain ran (no source file of the render is touched): 66c70ae73.
+  Pushed 15:40 (122deacc9..66c70ae73).
+
+## 25 Nov, 15:54 UTC: the eighth NAMED mail to the Builder (word for word; attached n8-beside.jpg, n8-pairs.jpg, v2-six.jpg)
+
+> NAMED 66c70ae73355030cb2898126a5daa06ddbda54a9 (agent/neptune-place, pushed). Eighth named commit, for MAIL 1112 and MAIL 1126. It is the merge of main baf5473f5 (scorecards and kit/PROGRESS.md only) on top of my commits, which stand on the merge of main aed412aeb. All numbers are my draft proxies and are read as STATED. I did not run your checks.
+>
+> WHAT IS IN IT since e27370260, one commit per cause:
+> 1. efd32eb40: the storm's eye as one body from the globe down (WANTED 1, d302).
+> 2. cb54abd75: sky_builder's low sky patch (WANTED 3). 967b2a0f9 and 91ada652c change two things of it, see A and B.
+> 3. a42f77f3d: MAIL 983's line in set.ts, on the merge that holds b1721d2c.
+> 4. 6db76dcd2: the third streamer as a thin veil by the slant path law (MAIL 1126 point 4).
+>
+> TWO CHANGES TO WHAT YOU RULED, so that you can overrule them:
+> A. The patch as written turns a shared unit red. Whole run on the merge of aed412aeb (tap reporter, alone, 14:51 to 15:03 UTC): 80 files ok, 1 not ok, tests/air.test.ts, "is absent on every shot of the film as long as no stop names an air": the patch names params.air, and nothing in the engine reads the air of a shot. Cure in my folder (967b2a0f9): the two knots stand in plan.ts as lowSky and are read by skyTurnShare and skyGain through the same law (airAt). Control: skyGain, skyTurnShare and the eye's height at 20 frames from 4530 to 5024 are the same numbers to the last digit before and after. tests/air.test.ts is green alone after it. When the engine's air law reads air.sky the knots go to params.air and the skyGain override goes, as one step.
+> B. Main's take batch 10 moved my sky, and I raised the patch's low level from 0.27 to 0.38 for it (91ada652c). Measured on the merge, my plan giving the sky the same numbers: 4605 differs on 170544 pixels, all at x 1132 to 1919, y 0 to 770 (the band at the top right is dimmer and finer; the disc and the left keep their bytes); 4860 on 316801 pixels, all at y 0 to 527. At 0.27 the eight sky tiles of G17's top row at 4860 fell from 0.87 to 1.75 of the approved image's to 0.35 to 1.24, the frame's tile median from 0.560 to 0.457. At 0.38 they read 0.50 to 1.70 (median 0.97) and the frame 0.544. The hold flies above the top knot: its gain is exactly 1.
+>
+> 4605 AND 4860 BESIDE THE APPROVED IMAGE AND MAIN (attached n8-beside.jpg: approved, main cut from your sheet of MAIL 1112, this tip; 1920 draft PNG; mean absolute level by my reader with the approved image fitted as G17 fits it):
+> - 4605 ceabf0253c5d1a57, 36.3 s: 7.621 (your read: main 3.117, d63d08e2 7.681). G17 by my draft reader: median 0.674, p25 0.436, 65 tiles; 0.678 before the merge. Your machine read 0.827 on d63d08e2; my draft reader reads lower, so only its differences count. The disc: the eye stands as a small dark spot at the place. The veil moves 948 pixels of the disc by at most 6 levels (x 726 to 1068, y 532 to 791); match and G17 are the same to three places; nothing outside the disc differs by my commits.
+> - A LINE OF MINE CORRECTED: I had written in my notebook that the far Sun is not in the hold's frame. False. It stands at (1716, 153), the approved image's at (1709, 158). What differs is its kind: the engine's small round disc about 10 pixels across, where the approved has a star with a wide glow and eight spikes; and the sky round it is gold brown and dense where the approved's is blue grey and sparse. Both are the engine's sky and far Sun, not my folder. So of WANTED 2 the star in its place stands; its flare and the sky's kind do not. RED, named.
+> - 4860 46d435ccbf4cdd43, 90.7 s: 28.439 (your read: main 22.947, d63d08e2 29.367; my reader before the low sky 28.888, with it at 0.27 before the merge 28.583). G17 median 0.544, p25 0.194, 75 tiles (0.216 before the low sky; bar 0.8). RED.
+> - 4707 e2503f09256ad5ab, 23.1 s. 5006 8d9e6fc1366e4682, 23.8 s.
+>
+> THE PROOFS OF MAIL 1099 POINT 4:
+> - The hold with and without the patch, before the merge: the same bytes (4948d83e0ef7bd07 both).
+> - Stars stay points: looked at on 4720, 4745, 4985, 5000 before the merge and on 4707 and 5006 of the tip.
+> - Pairs 8 frames apart at the preview, capture rate 2, by my copy of the reader (limit 0.45); in brackets d63d08e2:
+>   dive 4704 to 4712 0.29 (0.30); 4736 to 4744 0.29 (0.36); 4744 to 4752 0.40 (0.39); 4752 to 4760 0.26 (0.26).
+>   rise 4960 to 4968 0.48 (0.56); 4962 to 4970 0.56 (0.68); 4968 to 4976 0.55 (0.85); 4992 to 5000 0.33 (0.33).
+>   So one pair reads 0.01 higher than on d63d08e2 (4744, under the limit), every other pair lower or the same.
+> - 4860 before and after: above.
+>
+> REDS, worst first, each with its cause in the picture:
+> 1. 4860's match is under main's (28.439 against 22.947). By tiles of 160 by 135 the plain on the right (x 1120 to 1920, y 405 to 810) is 45 to 79 levels darker than the approved's and carries no fine streaks; the upper left under the limb is 26 to 53 brighter, the limb standing higher there; the eye is a dark oval without the approved's pale spiral; the sky is a gold brown band on black where the approved is blue grey with fine stars. A lead, measured and not taken: the air's share 0.45 to 0.75 brings 28.548 to 27.224 at the preview and veils the eye.
+> 2. G17 at 4860 0.544 against 0.8. The tiles round the storm read 0.05 to 0.16: the approved plain has fine streaks at 3 to 12 pixels a cycle, my deck has weak lumps at that size. The sky's tiles are round 1 now.
+> 3. Rise part 2 (your nq4-06): my three pairs are still over, 0.48, 0.56, 0.55. Causes looked at on the frames (attached n8-pairs.jpg): 4968 to 4976 at (1512, 588): the second streamer changes its kind with the distance, a bank of white heaps at 4968, one thin pale line by 4976, because its far level is far thinner than the heaps it stands for. 4960 to 4970 at the lower left: short pale streaks of the deck and one thin straight dark line come in between 4965 and 4970; not traced by a control.
+> 4. Dive parts 1 to 4 (your nq4-01 to 03 on d63d08e2, nq4-04 on my tip of 14:02): not cured. My pairs read under the limit there, so my reader does not see what yours sees. The limb at 4693 to 4700 has no control yet; 4706 + 1/2, 4750 and 4753 + 1/2 to 4759 have no cause named.
+> 5. G13 at 4860: soft 2.621 percent, OVER (the march step in the cirrus bank's thick heaps).
+> 6. The small pieces round the end of the first streamer's bank in the rise (4968 to 4976, lower middle): its thin tail, a marched body. Not cured.
+> 7. The whole test run was not repeated on the tip. On the merge: 80 of 81 files, the one red cured and green alone; my own test ok; G11 PASS; tsc clean. The whole run on the tip starts now; I mail only if it is red.
+>
+> THE VEIL (attached v2-six.jpg, before above, after below, 4968, 4972, 4976 upper left at 2 times): the row of flecks is gone, a faint wide veil with threads stands there. The first try (an even depth, the old width) read as one drawn pale line and was not taken.
+>
+> Net of my folders: 63.523 MB against main's 80.827. No file under public/assets/neptune changed. Looks pushed 15:25 UTC (4860 beside the approved and main, G17 0.544, 90.7 s the draft frame at 1920). Notebook: every mail word for word, this state under "25 Nov, 14:50" and after.
+>
+> NEXT, toward 17:00 if it holds and else 20:00: the far plain's level from the light and the air of the place, the eye's pale spiral and the streaks from the flow, the second streamer as one kind at every distance.
+
+- 15:54:24 the whole test run on the tip started (npx vitest run --reporter=tap, alone, /tmp/vitest-tip.log).
