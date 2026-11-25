@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T05:24:28.108Z",
+ "pushed": "2026-11-25T05:36:18.557Z",
  "head": "e55f084ca0436489551bb69b2604e167fcff5c4a",
- "note": "05:25 UTC: slices of the dive and the rise on the merge e55f084 draw the bytes of e41572b and print its rows; cause of the rise's red pattern measured (ground unfolding out of the haze under the limb); handover, parity and tests still running; NAMED follows",
+ "note": "05:37 UTC: merge e55f084c proven equal to e41572b by bytes on drafts and slices; handover, finals, parity and tests still running; naming when they end",
  "looks": [
+  {
+   "time": "2026-11-25T05:36:17.975Z",
+   "file": "20261125053617975-note-trio-3150.jpg",
+   "source": "../work/r10/trio-3150.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image and the kept still (match 7.358 at the round's size, round 46 6.578)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:36:17.374Z",
+   "file": "20261125053617374-note-storm-equal.jpg",
+   "source": "../work/r9/storm-equal.png",
+   "kind": "note",
+   "label": "the storm on equal ground, 2895 to 3024, frames of e41572b",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:36:16.811Z",
+   "file": "20261125053616811-note-jupiter-rise-k6500-6506-changes.jpg",
+   "source": "../work/r10/slices/jupiter-rise-k6500-6506-changes.png",
+   "kind": "note",
+   "label": "rise 3250 to 3253 on the merge, the tool's change picture (rows equal to the whole run)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:36:16.166Z",
+   "file": "20261125053616166-note-jupiter-dive-k6056-6064-changes.jpg",
+   "source": "../work/r10/slices/jupiter-dive-k6056-6064-changes.png",
+   "kind": "note",
+   "label": "dive 3028 to 3032 on the merge, the tool's change picture (rows equal to the whole run)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T05:24:27.305Z",
    "file": "20261125052427305-note-pair-3150-final.jpg",
@@ -189,38 +221,6 @@
    "source": "../work/r9/rise-c.jpg",
    "kind": "note",
    "label": "rise 3256 to 3261, e41572b, tool frames: pale mounds over a dark smooth field at the lower left, known red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:49:31.635Z",
-   "file": "20261125044931635-note-rise-b.jpg",
-   "source": "../work/r9/rise-b.jpg",
-   "kind": "note",
-   "label": "rise 3248 to 3255, e41572b, tool frames",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:49:29.891Z",
-   "file": "20261125044929891-note-rise-a.jpg",
-   "source": "../work/r9/rise-a.jpg",
-   "kind": "note",
-   "label": "rise 3240 to 3247 at half size, e41572b, tool frames",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:36:09.991Z",
-   "file": "20261125043609991-note-pair-3150-final.jpg",
-   "source": "../work/r9/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final: approved close image, this commit",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:36:08.785Z",
-   "file": "20261125043608785-note-dive-sheet.jpg",
-   "source": "../work/r9/dive-sheet.jpg",
-   "kind": "note",
-   "label": "dive e41572b at the frames of the sheet",
    "stop": "jupiter"
   }
  ]
