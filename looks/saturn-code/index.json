@@ -1,9 +1,45 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T11:17:35.421Z",
- "head": "74dfa6b467975d66dd5a410df6b443f8392bc633",
- "note": "v3 reads red on the pattern by the early reading (0.86 at 3813); cause found: two sliding patterns; naming v3 with the red said",
+ "pushed": "2026-11-25T11:37:54.731Z",
+ "head": "6e96b4cb11c1145aa3cab3792832485152f571b2",
+ "note": "NAMED 6e96b4c sent: best committed tree, rise red by the pattern line; the dive's lines and the rest of the proofs are running",
  "looks": [
+  {
+   "time": "2026-11-25T11:37:53.487Z",
+   "file": "20261125113753487-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r68/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "the tool's sheet of the rise's changes on the named head: pattern red 1.03, 3802 to 3819",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T11:37:52.254Z",
+   "file": "20261125113752254-note-n3720_cap.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_cap.png",
+   "kind": "note",
+   "label": "3720 cap at 1 to 1: approved, named 88ba2385, the named head 6e96b4c"
+  },
+  {
+   "time": "2026-11-25T11:37:51.265Z",
+   "file": "20261125113751265-note-n3720_OP_near.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_OP_near.png",
+   "kind": "note",
+   "label": "3720 near ring field at 1 to 1: approved, named 88ba2385, the named head 6e96b4c"
+  },
+  {
+   "time": "2026-11-25T11:37:50.140Z",
+   "file": "20261125113750140-note-n3720_QR_foot.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_QR_foot.png",
+   "kind": "note",
+   "label": "3720 foot at 1 to 1: approved, named 88ba2385, the named head 6e96b4c"
+  },
+  {
+   "time": "2026-11-25T11:37:49.116Z",
+   "file": "20261125113749116-note-n3720_whole.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_whole.jpg",
+   "kind": "note",
+   "label": "3720 final on the named head 6e96b4c: approved, named 88ba2385, this commit"
+  },
   {
    "time": "2026-11-25T11:17:34.239Z",
    "file": "20261125111734239-note-strip3_2x.jpg",
@@ -24,41 +60,6 @@
    "source": "../../../../tmp/v/x/v3_rise_3792_3806.png",
    "kind": "note",
    "label": "v3 (d567cfd) rise 3792 to 3806 every 2nd, draft, crop x 560 to 1180, y 470 to 830: the band over the globe opens; early reading of the pattern 0.1 to 0.6 here"
-  },
-  {
-   "time": "2026-11-25T10:58:00.397Z",
-   "file": "20261125105800397-note-v3_strip.jpg",
-   "source": "../../../../tmp/v/x/v3_strip.png",
-   "kind": "note",
-   "label": "rise 3796 to 3828 at draft, top v2 (equal steps of the share), bottom v3 (equal steps of the odds), crop x 600 to 1160, y 480 to 800"
-  },
-  {
-   "time": "2026-11-25T10:57:59.613Z",
-   "file": "20261125105759613-note-e_cover.jpg",
-   "source": "../../../../tmp/v/x/e_cover.png",
-   "kind": "note",
-   "label": "v2 (5df42e1) rise 3792 to 3803, the dust band over the lower globe: the pattern read 0.44 to 0.54 here"
-  },
-  {
-   "time": "2026-11-25T10:29:37.841Z",
-   "file": "20261125102937841-note-v2_3720_foot.jpg",
-   "source": "../../../../tmp/v/x/v2_3720_foot.png",
-   "kind": "note",
-   "label": "3720 foot: ab36264 final beside the new tree at draft, the foot stays closed"
-  },
-  {
-   "time": "2026-11-25T10:29:37.105Z",
-   "file": "20261125102937105-note-v2_strip.jpg",
-   "source": "../../../../tmp/v/x/v2_strip.png",
-   "kind": "note",
-   "label": "cure on trial: the cover by the lens's height, evenly over 43 frames of the rise (lower row) against ab36264 (upper row), frames 3798 to 3836"
-  },
-  {
-   "time": "2026-11-25T10:29:36.441Z",
-   "file": "20261125102936441-note-v1_cmp.jpg",
-   "source": "../../../../tmp/v/x/v1_cmp.png",
-   "kind": "note",
-   "label": "trial: the cover by the angle switched off (lower row) against ab36264 at 3814, 3818, 3822"
   }
  ]
 }
