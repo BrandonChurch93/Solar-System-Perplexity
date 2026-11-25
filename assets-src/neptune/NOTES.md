@@ -6100,3 +6100,31 @@ Attachment: bw1-neptune.jpg
 - MAIL 871 asks which gives the coloured specks at 4720 in the player's picture of main 73809f4b: the web set or the draft tier. Main's picture is my older state (the place picture); on my head one frame each at 1920, draft: S_web (web set) and S_full (full set).
   Result (ev/speck-a.jpg, both looked at 1:1): no green or red speck in either. Counted: pixels where green or red stands over blue by 25: 0 of 2073600 in the web set, 0 in the full set. The two sets look alike at this frame. So on my head neither the web set nor the draft tier gives them at 4720. Which of the two gave them on main 73809f4b is NOT named: I did not draw main's own picture (no time before 03:20), and main's stop there is my older state with the place picture, which is gone on this branch. A few pale single pixel dots stand on the dark deck in both sets (they are in the scene from code, not in a set): red, with the flecks of MAIL 840 point 5. Seconds per draft frame at 1920: 33.0 (web), 42.8 (full), each the first of its run.
 - 03:15 notebook committed, branch pushed, NAMED mail sent (word for word below once sent).
+
+## MY NAMED MAIL to the Builder (/root), second named commit, sent 03:16 UTC, high priority (word for word). Attachments: ev/4860-h2.jpg, sky-g.jpg, sky-i.jpg, sky-f.jpg, dash-b.jpg, d2-4704.jpg, d2-4713.jpg, spiral-c3.jpg, speck-a.jpg, hold-c5.jpg
+
+NAMED 703188766 (branch tip 917b06c5aeb2608292853e40a40c40b5c1e9d82f, notebook only on top). Second named commit of round 1 of 3 of the third note. Clock by my date -u: 03:15 UTC. From /root/neptune_builder.
+
+It stands on main 76163c29 (merged 03:03, clean, my folders untouched by the merge). Tests on 70318876: 60 files ok of 60, 0 not ok, exit 0 (03:05 to 03:12). G11 pass. Net MB of my folders 72.415 against main's 80.827. No file under public/assets/neptune changed since b42850bf. All numbers below are draft proxies of my own, read as STATED.
+
+Commits by cause: e7b8a47f (sky: no aim for the surface view), 117cd4f6 (the deck's own shadow through the pixel's foot), b91c3b0d and 5a6c96af (thin streamer law), b04e2653 (storm's arms and collar off the top of the albedo), 70318876 (patch of MAIL 864).
+
+Judged first.
+(1) Dive 4705 to 4713, navy chunks: CURED on the frames I have. Term named by bisect at 4709: the deck's own shadow in my deep.ts (it read the relief at one fixed step whatever the pixel covered, cut within two pixels and took all of the Sun). Nothing in src/bodies: with the globe's map alone the chunks, the spiral and the dashes are all gone, so no mail to globe_engineer. Seen: every frame 4680 to 4724 at 1920 on 1c8f661f, none. Dashes: stood again at 1920 at 4708 to 4715 after my first cure (the preview had hidden them), cured in 5a6c96af: gone at 4709 and 4713 at 1920; the streamer comes in from its wide end between 4713 and 4722. NOT seen at 1920 on the final head: 4714 to 4721. My earlier control (light.shadow 0) was no control: my error.
+(3) Sky flash: NOT CURED, cause named. Dropping the aim moved it to 4724, 4725, 4726 (the Milky Way crosses the upper right corner). It is not the plate: with the plate taken out (diagnostic) it stands the same. Term: the carry of the stars on the globe side in my plan.ts (skyCarryShare by sky.height 0.4 to 0.2 radii, eight frames, 4720 to 4728). With the carry off the corner is steady 4721 to 4732, but the Milky Way then pops in in ONE frame at the change of view, 4757 to 4758. So the cause under both is that the close view's sky stands at another turn than the globe's. Cure: one sky for both views, not a law that turns one into the other. Not built. The plate stays for now; I did not prove it never exchanges.
+
+The rest.
+(2) Spiral at the hold: PARTLY. Arms 0.2 from 0.6, collar 0.12 from 0.3. A faint swirl with a dark eye still stands at 4605 and is plain at 4720. Red.
+(4) 4860: NOT CURED, the haze is not built. Plain's box (24, 58, 99) against (90, 134, 176). Oval (5, 21, 45) against (39, 71, 109). G17 median 0.956, p25 0.358 (b42850bf 1.095, 0.482). An orange line still lies on the limb.
+(5) Flecks: PARTLY; pale single pixel dots still stand on the dark deck at 4720 in both sets.
+(6) Frame law (a) for the scene from code: OPEN, no commit. It bit my own proofs: preview and 1920 differ. My two new foot laws read the canvas pixel too.
+(7) Night side: cause NOT proven. Reading only: lumps from the night albedo flattened to a 96 texel map (look.ts night), violet from the fall's powers by channel [2.6, 3.1, 3.7]. Controls prepared, not run.
+(8) Texels at 4605: not re-measured.
+
+MAIL 864. Patch applied by hand (its context is main's plan.ts, git apply refused), text for text, tsc clean. sha256 at draft (preview, full set), before and after, equal: 4605 d2562740c3adff4c, 4707 7ec2a09e55b2fb38, 4860 851e5626635f1125, 5006 b548deb6b5d4bfba. Point 2 (parity at 4703, dive part 2, rise parts 2 and 3): no cure in this commit, and frame law (6) is my reading of the parity red, not proven.
+
+MAIL 871. Specks at 4720: NOT reproduced on my head. Draft at 1920, web set and full set: pixels with green or red over blue by 25: 0 of 2073600 in each. Which of the two gave them on main 73809f4b is NOT named: I did not draw main's own picture.
+
+Not done on this head, all red: no handover table (dive or rise); the rise 4950 to 5024 not drawn or looked at; G15 and the path proof not run; four means, curve and web set sheets not redrawn; 4860 at 1920 not drawn; sky-hold.webp is still in use. Looks pushed 03:06 (788eb4c9).
+
+Notes on this mail, written after it went: the "before" of the hash proof is 5a6c96af (before the merge and the patch), the "after" is 70318876. "Nothing in src/bodies" rests on one diagnostic (far.on 2 at 4709, preview). The sentence on the parity red is a reading and is marked as one.
