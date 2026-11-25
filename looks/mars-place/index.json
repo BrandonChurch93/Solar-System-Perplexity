@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T12:18:03.766Z",
+ "pushed": "2026-11-25T12:32:33.404Z",
  "head": "22820b17727af6c3ac68996bfceebac0aca83c2a",
- "note": "trial 3 of (c), set's margins and aprons as land: grounds (b) and (c) one body in the tracks; frames 2472 to 2477 worse (block at right, grey corner, grain of the 0.3 plate from close)",
+ "note": "control of (c): trial 3 holds grounds (b) and (c) as one body; 2472 to 2477 worse than the state at the picture's sides (land near the eye is no wall rock yet, no air on the bare land, apron too short at 2477)",
  "looks": [
+  {
+   "time": "2026-11-25T12:32:32.362Z",
+   "file": "20261125123232362-note-w-track9-b.jpg",
+   "source": "out/work/place/m9/w-track9-b.jpg",
+   "kind": "note",
+   "label": "trial 3, ground (b) followed 2460 to 2476 at rate 2: state above, trial below",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T12:32:31.463Z",
+   "file": "20261125123231463-note-w-track9-c.jpg",
+   "source": "out/work/place/m9/w-track9-c.jpg",
+   "kind": "note",
+   "label": "trial 3, ground (c) followed 2460 to 2476 at rate 2: state above (plain becomes streaked wall rock), trial below (one plain)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T12:32:30.214Z",
+   "file": "20261125123230214-note-w-pair-2477.jpg",
+   "source": "out/work/place/m9/w-pair-2477.jpg",
+   "kind": "note",
+   "label": "trial 3 at 2477: state above, trial below: cliff of the near mesa ends at the picture's lower side, block at right, grey corner (apron too short for the land's true distance)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T12:32:28.811Z",
+   "file": "20261125123228811-note-control-c-2460-2476.jpg",
+   "source": "out/work/place/m9/control-c-2460-2476.jpg",
+   "kind": "note",
+   "label": "control of (c), trial 3 (margins and aprons of the set are the land, band 320 px): 2460 to 2476 at rate 2, state above, trial below",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T12:17:56.366Z",
    "file": "20261125121756366-note-v2-track-b.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/m7/t2-track-b.jpg",
    "kind": "note",
    "label": "ground (b) at 2460 2464 2468 2472: state above, trial 2 below: forms there from 2464, smear at 2460",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T12:02:59.064Z",
-   "file": "20261125120259064-note-t2-pair-2464.jpg",
-   "source": "out/work/place/m7/t2-pair-2464.jpg",
-   "kind": "note",
-   "label": "2464 draft: state above, (c) trial 2 below (set with aprons laid on the plates): streak fields and a smeared east wall, thrown away",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:52:28.201Z",
-   "file": "20261125115228201-note-body-0p7.jpg",
-   "source": "out/work/place/m7/look/body-0p7.jpg",
-   "kind": "note",
-   "label": "(c) trial 2, 0.7 plate from above: state left, the set's ground with aprons right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:52:27.511Z",
-   "file": "20261125115227511-note-body-1p6.jpg",
-   "source": "out/work/place/m7/look/body-1p6.jpg",
-   "kind": "note",
-   "label": "(c) trial 2, 1.6 plate from above: state left, set's ground near and set's forms beyond right: a smeared fan with straight sides and apron streaks",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T11:50:11.453Z",
-   "file": "20261125115011453-note-margin-2472.jpg",
-   "source": "out/work/place/m6/margin-2472.jpg",
-   "kind": "note",
-   "label": "2472: the picture's field of the set, its margins in red; outside them the set draws aprons",
    "stop": "mars"
   }
  ]
