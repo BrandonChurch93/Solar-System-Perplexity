@@ -121,11 +121,13 @@ State of ONE BODY: with `own.json` `hold` and `tone` set the globe gives the lea
 
 ## The place's own light: tone.png
 
-Files, both sets: `public/assets/mercury/full/tone.png` and `public/assets/mercury/web/tone.png` (2048 square, three channels, 8 bit, 831558 bytes, the same file in both sets so that the two sets show the same thing at the same height).
+Files, both sets: `public/assets/mercury/full/tone.png` and `public/assets/mercury/web/tone.png` (1024 square, three channels, 8 bit, 299834 bytes, the same file in both sets so that the two sets show the same thing at the same height).
 
 What it is: over the square of `tilt.json` (`widthDeg` 38 about the spot, north up, gnomonic), what the levels must be multiplied by to give the place in its own light. Inside the disc of `own.json` `hold` it is the place's own picture over the field the levels hold, both under a Gaussian of the first band's width (0.04 degrees, one texel of this file); outside it, the place's tone over the map's under a Gaussian of `lightDeg` (0.7 degrees). Held between 1/16 and `oneBody.light.most`, written through the film curve and sRGB. The globe reads it by the eye's height (`src/stops/mercury/own.json`, `tone`; the law is in that file's `about`).
 
-How it is made: step 2 of ONE BODY writes it beside the plates; step 4 installs it.
+How it is made: step 2 of ONE BODY writes it beside the plates; step 4 installs it. `python3 assets-src/mercury/place/onebody.py make s9 tone.png` writes it alone (plates.json `oneBody.takes.s9.light.size`).
+
+Its size: take s9's light was 2048 square first (831558 bytes, kept as `out/work/mercury/place/onebody/s9/tone-2048.png`). The loader counts a picture as width times height times 4 times 4/3: 22.4 MB at 2048, 5.6 MB at 1024, and with 2048 the full set stood at 1414 MB at the hold where G15 allows 1400. At 1024 it stands at 1397 MB. Given up, measured: the 1024 file read back at 2048 against the 2048 file differs inside the disc by mean 0.52 of 255, 99th percentile 1.9, largest 9 (159 texels of 360736 over 4); outside the disc by 1 at most.
 
 ## The two sets and the levels: one law (`src/stops/mercury/wrap.json` `plates`, `fine.json` `size.full`)
 

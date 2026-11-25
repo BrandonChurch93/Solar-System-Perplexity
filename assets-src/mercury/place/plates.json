@@ -586,7 +586,7 @@
     },
     "light": {
      "file": "tone.png",
-     "size": 2048,
+     "size": 1024,
      "most": 8.0
     }
    }

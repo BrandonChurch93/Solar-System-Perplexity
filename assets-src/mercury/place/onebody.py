@@ -1,6 +1,7 @@
 """ONE BODY (MAIL 961, d251): the map, the first level and the plates of the place show the same bodies at every scale they share.
 
   python3 assets-src/mercury/place/onebody.py make [take]     writes out/work/mercury/place/onebody/<take>/{full,web}/
+  python3 assets-src/mercury/place/onebody.py make <take> tone.png   writes the light's file alone, at `light.size`
   python3 assets-src/mercury/place/onebody.py install [take]  copies them into public (never beside a render)
   python3 assets-src/mercury/place/onebody.py law             writes src/stops/mercury/hue.json
 
@@ -225,14 +226,16 @@ def make(take, spec, only=None):
         P.write(first, spec['parent']['file'], OUT / take)
     print(take, spec['parent']['file'], 'share of the level that changes', round(float((w < 1).mean()), 5), flush=True)
     for plate in spec['plates']:
-        if only and plate['file'] != only:
+        if only and plate['file'] != only and not (only == spec['light']['file'] and plate is two):
             continue
         o = ground(SRC / plate['file'])
         a = np.maximum(into(a1, wide, plate['widthDeg'], size), 0)
-        out, light, w = field(a, o, plate['widthDeg'], size, spec, False, curve, plate is two and not only)
-        P.write(out, plate['file'], OUT / take)
-        print(take, plate['file'], 'F over O in brightness, 1, 50, 99 percentile', np.round(np.percentile(((out @ LUMA + 1e-3) / (o @ LUMA + 1e-3))[::4, ::4], [1, 50, 99]), 3), flush=True)
-        if plate is two and not only:
+        lit = plate is two and only in (None, spec['light']['file'])
+        out, light, w = field(a, o, plate['widthDeg'], size, spec, False, curve, lit)
+        if only != spec['light']['file']:
+            P.write(out, plate['file'], OUT / take)
+            print(take, plate['file'], 'F over O in brightness, 1, 50, 99 percentile', np.round(np.percentile(((out @ LUMA + 1e-3) / (o @ LUMA + 1e-3))[::4, ::4], [1, 50, 99]), 3), flush=True)
+        if lit:
             m = spec['light']['size']
             coded = (M.srgb(P.filmic(np.minimum(cv2.resize(light, (m, m), interpolation=cv2.INTER_AREA), spec['light']['most']))) * 255 + 0.5).astype(np.uint8)
             for key in ('full', 'web'):
