@@ -237,3 +237,36 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   reader.ts is the judged reader's pictures() run on a folder.
 - A draft still is 25 to 27 s on a fresh page now.
 - STATED verdict c4: no lamp, no cliff, no slits. Near field still reads as solid shells, not gas.
+
+## 10:44 UTC, state c7 (commit 5663fa267a0e65784e8111eb86288dfd48fa2cae), MAIL 1030 and sun_builder's mail of 10:33
+
+- MAIL 1030: round 50 closed on the film's standing ground. Decision d290: the lab ground replaces it once proven
+  beside the approved image at 1 to 1. From now the critics' words judge: granules with ridges and narrow dark lanes,
+  bright tops at the approved scale; umbra with depth, penumbra filaments of varied length; G17 at frame 0 was 0.635
+  against 0.8 on the standing ground. Owed in the 11:05 mail: no lamp state, frame 90 pairs at 1 to 1 (whole, cells,
+  spot, limb), my reading of G17 on frame 0, the control for the gold foil, the clip 120 to 150, reader against proxy,
+  one line on whether the ground lays into sun_builder's interface.
+- sun_builder's interface (GROUND.md, eye-path.json in /home/user/.perplexity/attachments/d1add9c365c7465faa1ac6a60ef50c98/):
+  new Surface(shared, map, toStage), mesh, update(time, eye, keep, onGlobe), dispose(). LabGround has the same four
+  (constructor takes shared only) and is switched in set.ts by lab.ground.
+- c5 to c7: the heat of a cell is two blotches of its own (seeded places and sizes in the cell's disc) in place of a
+  ring about the middle, so no rim of even width; the dark by the lane has a width of the place (0.1 + 2 c0);
+  join.level 0.012; counts [2, 5, 11]; rim 0.32, body 1.0, core 0.35, patch [0.15, 0.75], thread [0.25, 0.7],
+  offset 0.45. c6 (rim 0.16, lane dark 0.4) was bright spots in a dark sea.
+- MEASURED c7 frame 90 near ground: mean rgb [0.614 0.349 0.161], max channel [0.337 0.455 0.592 0.773 0.933 0.969].
+- MEASURED G17 (tools/measure/g17.py) frame 0, nograin view, review tier (15 samples): median 0.916, 25th percentile
+  0.629, 79 tiles; worst tiles [6,4] 0.268, [7,4] 0.337, [5,4] 0.393 (the penumbra and the pit). Frame 90 review
+  beauty (with grain): 1.331.
+- Control for the lamp: c7 with heat.lie 30 (view law on the full local normal) against lie 0.3: bright faces toward
+  the eye come back; mean difference of the near ground 0.035, 5.6 percent of pixels over 0.1.
+  /home/user/workspace/v/control-lamp.jpg.
+- STATED verdict c7: scales or leaves of polished amber with marbling; hard polygon silhouettes; flat red level
+  between the cells in the middle field; limb darker and redder than the approved (its far field is a bright haze).
+- NEXT (plan): the gas as a march. The map pass also writes the height of the ground; every fragment marches its
+  sight line through a thin layer over that height field (in the chart, warp undone) and gathers glow with the
+  depth of gas under the line: thick over lanes, thin over tops, most toward the horizon. Also: bend down (the
+  marbling), level lower and over higher (V creases, no flat red), haze up toward the limb.
+- MEASURED clip of c7, capture frames 240 to 300 (film 120 to 150), 61 pictures at 10.3 to 10.8 s: judged reader
+  largest 0.626 at k0259 at [28, 1040] (bottom left corner, one cell event near the lens, rows 254 to 267 over the
+  limit 0.45), mean 0.357; outside that event 0.19 to 0.30. Proxy largest 0.276 at k0282, mean 0.184. zzd on the
+  same window: reader 0.717 and 0.383, proxy 0.305 and 0.244. Files reader-c7.txt, proxy-c7.txt, clip-c7.mp4.
