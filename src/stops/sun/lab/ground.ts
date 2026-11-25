@@ -188,7 +188,7 @@ vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy
   float strand = max(mix(0.22, t1.x, kt1), 0.9 * mix(0.22, t2.x, kt2)) * mix(0.7, 1.15, lb) * mix(0.8, 1.1, la);
   float pen = 1.0 - smoothstep(-0.5, 0.5, rs - uLabJoin.y - uLabJoin.z * (pb - 0.5) - 0.5 * uLabJoin.z * (vn(chartPlace * 23.0 + 1.7) - 0.5));
   float tongue = smoothstep(0.62, 0.8, pa) * smoothstep(0.5, 0.7, pc);
-  float bundle = uLabHeatMore.z * mix(mix(0.02, 0.1, smoothstep(1.2, 3.0, rp)), ${lab.spot.hot.toFixed(2)}, strand) * mix(0.6, 1.1, smoothstep(0.3, 0.7, pa)) * mix(0.5, 1.0, smoothstep(1.0, 2.2, rs));
+  float bundle = uLabHeatMore.z * mix(mix(${lab.spot.gap[0]!.toFixed(3)}, ${lab.spot.gap[1]!.toFixed(3)}, smoothstep(1.2, 3.0, rp)), ${lab.spot.hot.toFixed(2)}, strand) * mix(0.6, 1.1, smoothstep(0.3, 0.7, pa)) * mix(0.5, 1.0, smoothstep(1.0, 2.2, rs));
   return vec4(pen, bundle, mix(0.04, 1.0, smoothstep(0.72 + 0.3 * t1.y, 0.88 + 0.4 * t1.y, rp + 0.2 * (pa - 0.5))), rp - 1.14 - 0.1 * (pb - 0.5) - 0.06 * (pc - 0.5));
 }
 #endif
@@ -368,6 +368,10 @@ uniform vec3 uLabAwayTint;
 uniform vec4 uLabHaze;
 uniform vec4 uLabHazeTint;
 uniform vec4 uLabGas;
+uniform sampler2D uLabGlobe;
+uniform mat3 uLabToMap;
+uniform vec4 uLabTone;
+uniform vec3 uLabToneAt;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${GRADE_GLSL}
@@ -425,7 +429,19 @@ vec2 labGas(vec3 here) {
   return vec2(lit / max(1.0 - exp(-tau), 1e-5), tau);
 }
 #endif
+// the large tone of the place is the globe's: the light of the globe's own map there, taken so wide that no
+// detail of it shows (uLabToneAt: the level of the map and the size of its texel there), against the map's middle
+// light, as a share of the heat
+float labTone(vec3 here) {
+  vec3 md = uLabToMap * normalize(here - ST_CENTRE);
+  vec2 muv = vec2(atan(md.x, md.z) / 6.283185307179586 + 0.5, asin(clamp(md.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
+  vec3 sum = vec3(0.0);
+  for (int k = 0; k < 4; k++) sum += textureLod(uLabGlobe, muv + uLabToneAt.yz * (vec2(float(k & 1), float(k >> 1)) - 0.5), uLabToneAt.x).rgb;
+  float l = dot(sum, vec3(0.3, 0.5, 0.2)) * 0.25;
+  return clamp(pow(max(l, 1e-4) / uLabTone.x, uLabTone.y), uLabTone.z, uLabTone.w);
+}
 vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
+  heat = uLabHeat.x + (heat - uLabHeat.x) * labTone(here);
   vec3 shown = texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb;
   vec3 col = inverseFilmic(grade(shown, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   vec3 upHere = normalize(here - ST_CENTRE);
@@ -438,7 +454,7 @@ vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
   col = col * exp(-tau * ${lab.gas.dim.toFixed(2)}) + inverseFilmic(grade(glow, 0.0)) * (1.0 + uLabHazeTint.w * max(gas.x * uLabHaze.z - 1.0, 0.0)) * (1.0 - exp(-tau));
 #else
   float tau = thin * uLabHaze.x * exp(-max(over, 0.0) / uLabHaze.y) / pow(max(mu, 0.02), uLabHaze.w);
-  col = col * exp(-tau * 0.6) + inverseFilmic(grade(uLabHazeTint.rgb, 0.0)) * (uLabHaze.z * (1.0 - exp(-tau)));
+  col = col * exp(-tau * 0.6) + inverseFilmic(grade(uLabHazeTint.rgb, 0.0)) * (uLabHaze.z * mix(${lab.haze.own.toFixed(2)}, 1.0, clamp(heat, 0.0, 1.0)) * (1.0 - exp(-tau)));
 #endif
   vec2 gb = stImage(here);
   gb = vec2((gb.x - uBox.x) / (uBox.z - uBox.x), 1.0 - (gb.y - uBox.y) / (uBox.w - uBox.y));
@@ -578,6 +594,7 @@ void main() {
   float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
   float top = mix(uLabHeatB.w, 1.0, middle) * (0.55 + 0.9 * wide);
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(0.04, 0.4, along));
+  cell *= 1.0 + ${(2 * lab.heat.fine[0]!).toFixed(3)} * (labWell(d * ${lab.heat.fine[1]!.toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5);
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
   float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
@@ -661,23 +678,75 @@ void main() {
   float um = labUmbra(vG);
   vec2 q = (vG - uLabPitAt.xy) * 26.0;
   float dots = sin(q.x * 1.7 + 2.0 * sin(q.y * 1.3)) * sin(q.y * 2.1 + 1.5 * sin(q.x * 0.9));
-  float heat = 0.012 + um * (0.02 + 0.035 * max(dots, 0.0));
+  float heat = 0.5 * uLabHeat.x + um * (${lab.spot.floor[0]!.toFixed(3)} + ${lab.spot.floor[1]!.toFixed(3)} * max(dots, 0.0));
   // where the cells are too small to be things the floor is the ground: the place in the cells' own chart (the
   // comb toward the spot undone), the map of the cells there
   vec2 ds = vG - uLabSpot.xy;
   float r = length(ds);
   vec2 chartPlace = uLabSpot.xy + ds * ((r + uLabSpot.z * exp(-(r * r) / (uLabSpot.w * uLabSpot.w))) / max(r, 1e-6));
   float flow = uLabTime.x * uLabTime.y;
+#ifdef LAB_BAKE
+  float far = 1.0;
+#else
   float far = 1.0 - smoothstep(uLabFar.x, uLabFar.y, labPx(vPos));
+#endif
   vec2 gx = dFdx(chartPlace);
   vec2 gy = dFdy(chartPlace);
   vec4 pn = labPen(chartPlace, r, length(vG - uLabPitAt.xy), flow, gx, gy);
   // between the threads of the penumbra the floor is the same threads, a little deeper and cooler
   heat = mix(heat, uLabHeat.x + uLabHeat.y * pn.y * pn.z, max(pn.x, 1.0 - smoothstep(uLabPit.w * 1.7, uLabPit.w * 3.8, r)) * smoothstep(0.75, 0.95, length(vG - uLabPitAt.xy) / uLabPit.w));
   if (far > 0.0 && pn.w > 0.0) heat = mix(heat, labFar(chartPlace, r, flow, pn, gx, gy), far);
+#ifdef LAB_BAKE
+  // the far twin: the ground from straight above, no law of the view, no gas, none of the flare's lights, as the
+  // display colour of the picture
+  heat = uLabHeat.x + (heat - uLabHeat.x) * labTone(vPos);
+  vec3 lit = inverseFilmic(grade(texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
+  lit = clamp((lit * (2.51 * lit + 0.03)) / (lit * (2.43 * lit + 0.59) + 0.14), 0.0, 1.0);
+  outColor = vec4(mix(lit * 12.92, 1.055 * pow(lit, vec3(1.0 / 2.4)) - 0.055, step(vec3(0.0031308), lit)), 1.0);
+#else
   float mu = abs(dot(normalize(vPos - ST_CENTRE), normalize(uLabEye - vPos)));
   heat = uLabHeat.x + (heat - uLabHeat.x) * mix(uLabHeatMore.y, 1.0, pow(mu, ${lab.heat.limb.toFixed(2)}));
   outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, length(vG - uLabPitAt.xy)), vPos, vClip, vView);
+#endif
+}`
+
+// the thin gas over the ground seen against the sky beyond the limb: the same haze as over the ground (labOut), by
+// the nearest way of the sight line past the ball alone
+const AIR_VERT = /* glsl */ `
+precision highp float;
+out vec3 vPos;
+out vec3 vView;
+${SHAPE_GLSL}
+void main() {
+  vec3 p = ST_CENTRE + position * (ST_RADIUS + ${(lab.haze.air[0]! * 8).toFixed(4)});
+  vPos = p;
+  vec4 mv = modelViewMatrix * vec4(p, 1.0);
+  vView = mv.xyz;
+  gl_Position = projectionMatrix * mv;
+}`
+
+const AIR_FRAG = /* glsl */ `
+precision highp float;
+#define LAB_FRAG
+#define LAB_MAP
+in vec3 vPos;
+in vec3 vView;
+out vec4 outColor;
+${SHAPE_GLSL}
+${TAIL_GLSL}
+void main() {
+  vec3 oc = uLabEye - ST_CENTRE;
+  vec3 dir = normalize(vPos - uLabEye);
+  float b = dot(oc, dir);
+  float past = sqrt(max(dot(oc, oc) - b * b, 0.0)) - ST_RADIUS;
+  if (uDiag >= 2 || b > 0.0 || past < 0.0 || uLabKeep <= 0.0) discard;
+  float tau = ${lab.haze.air[1]!.toFixed(3)} * exp(-past / ${lab.haze.air[0]!.toFixed(4)});
+  vec3 col = inverseFilmic(grade(uLabHazeTint.rgb, 0.0)) * (uLabHaze.z * mix(${lab.haze.own.toFixed(2)}, 1.0, ${lab.haze.air[2]!.toFixed(3)}) * (1.0 - exp(-tau)));
+  col *= uGain;
+  float away = -b / ST_RADIUS;
+  float near = uLabAway.y > 0.0 ? 1.0 - smoothstep(log(uLabAway.x), log(uLabAway.y), log(max(away, 1e-5))) : 1.0;
+  col *= uLabAway.w > 0.0 ? mix(vec3(1.0), uLabAwayTint, smoothstep(log(uLabAway.z), log(uLabAway.w), log(max(away, 1e-5)))) : vec3(1.0);
+  outColor = vec4(col * (uLabKeep * near), 0.0);
 }`
 
 type Shared = Record<string, THREE.IUniform>
@@ -692,6 +761,13 @@ interface Level {
   count: number
   plain: THREE.ShaderMaterial
   laid: THREE.ShaderMaterial
+}
+
+interface Bake {
+  deg: number
+  size: number
+  data?: Uint8Array
+  axes?: number[]
 }
 
 export class LabGround {
@@ -727,7 +803,16 @@ export class LabGround {
   private mapTime = Number.NaN
   private readonly start = (plan.seg.terrain.end - plan.seg.terrain.start) / 2 + config.shutterFraction / (2 * config.fps)
 
-  constructor(shared: Shared) {
+  private readonly bakeScene = new THREE.Scene()
+  private readonly toStage: THREE.Matrix3
+
+  /** shared: the uniforms of the standing ground's material that the flare and the grade write. map: the globe's
+   * own map; toStage: the turn from the map's axes to the stage's. */
+  constructor(shared: Shared, map: THREE.Texture, toStage: THREE.Matrix3) {
+    this.toStage = toStage.clone()
+    const mapWide = (map.image as unknown as { width: number }).width
+    const toneLod = Math.log2(Math.max((mapWide * lab.far.tone.deg) / 360, 1))
+    const toneTexel = Math.pow(2, toneLod) / mapWide
     const keep = ['uGrade', 'uGlow', 'uBox', 'uLand', 'uKick', 'uFlash', 'uGlowBeat', 'uGlowPlain', 'uLandOn', 'uKickOn', 'uFlashOn', 'uLandVeil', 'uGroundMost', 'uGain', 'uVignette', 'uAspect']
     const uniforms: Shared = {}
     for (const name of keep) uniforms[name] = shared[name]!
@@ -767,6 +852,10 @@ export class LabGround {
       uLabCount: { value: new THREE.Vector4(f.counts[0]!, f.counts[1]!, f.counts[2]!, f.root) },
       uLabFar: { value: new THREE.Vector4(lab.far.px[0]!, lab.far.px[1]!, 1, TILE) },
       uLabMap: { value: this.map.texture },
+      uLabGlobe: { value: map },
+      uLabToMap: { value: toStage.clone().transpose() },
+      uLabTone: { value: new THREE.Vector4(lab.far.tone.level, lab.far.tone.power, lab.far.tone.range[0]!, lab.far.tone.range[1]!) },
+      uLabToneAt: { value: new THREE.Vector3(toneLod, toneTexel, toneTexel * 2) },
     }
     this.uniforms = all
     this.floorMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, uniforms: all, side: THREE.DoubleSide })
@@ -921,6 +1010,25 @@ export class LabGround {
     this.mesh.add(fine)
     this.fine = fine
     this.parts.push(disc)
+    const shell = new THREE.SphereGeometry(1, 192, 96)
+    const airMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: AIR_VERT, fragmentShader: AIR_FRAG, uniforms: all, side: THREE.BackSide, transparent: true, depthTest: false, depthWrite: false, ...WEIGHED })
+    const air = new THREE.Mesh(shell, airMaterial)
+    air.frustumCulled = false
+    const late = new THREE.Group()
+    late.renderOrder = 1
+    late.add(air)
+    this.mesh.add(late)
+    this.parts.push(shell, airMaterial)
+    const flat = { glslVersion: THREE.GLSL3, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, uniforms: all, side: THREE.DoubleSide, depthTest: false, depthWrite: false } as const
+    const bakeFloor = new THREE.ShaderMaterial({ ...flat, defines: { LAB_BAKE: 1 } })
+    const bakePit = new THREE.ShaderMaterial({ ...flat, defines: { LAB_BAKE: 1, LAB_PIT: 1 } })
+    const wideBake = new THREE.Mesh(floor, bakeFloor)
+    const fineBake = new THREE.Mesh(disc, bakePit)
+    wideBake.frustumCulled = false
+    fineBake.frustumCulled = false
+    fineBake.renderOrder = 1
+    this.bakeScene.add(wideBake, fineBake)
+    this.parts.push(bakeFloor, bakePit)
   }
 
   /** time: seconds from the middle of the terrain segment, as the standing ground takes it. eye: the eye in the
@@ -936,7 +1044,7 @@ export class LabGround {
     for (const lv of this.levels) lv.mesh.material = onGlobe ? lv.laid : lv.plain
     ;(this.uniforms.uLabEye!.value as THREE.Vector3).copy(eye)
     if (keep <= 0) return
-    const now = time + this.start + ((globalThis as { labAhead?: number }).labAhead ?? 0)
+    const now = (globalThis as { labBake?: Bake }).labBake ? this.start : time + this.start + ((globalThis as { labAhead?: number }).labAhead ?? 0)
     ;(this.uniforms.uLabTime!.value as THREE.Vector4).x = now
     cellsAt(now, this.cells)
     const c = this.cells
@@ -1029,6 +1137,8 @@ export class LabGround {
       renderer.setRenderTarget(target)
       renderer.xr.enabled = xr
     }
+    const bake = (globalThis as { labBake?: Bake }).labBake
+    if (bake && !bake.data) this.bake(renderer, bake)
     for (const o of this.order) o.length = 0
     const t0 = Math.floor((ex - horizon) / TILE)
     const t1 = Math.floor((ex + horizon) / TILE)
@@ -1096,6 +1206,41 @@ export class LabGround {
       lv.list.needsUpdate = true
     }
     void formatUniform
+  }
+
+  /** The far twin for the globe: the ground where its cells are no things, from straight above every point, in a
+   * square picture laid gnomonic about the spot with the map's north up and east to the right, seen from outside
+   * (FAR-TWIN.md of the Sun's builder). An eye in the middle of the ball looks out at the spot; the picture is
+   * turned left to right so that it is the view from outside. */
+  private bake(renderer: THREE.WebGLRenderer, bake: Bake): void {
+    const ax = lab.far.level.axes
+    const s = new THREE.Vector3().fromArray(ax.spot)
+    const east = new THREE.Vector3().fromArray(ax.east)
+    const north = new THREE.Vector3().fromArray(ax.north)
+    const mid = s.clone().applyMatrix3(this.toStage).multiplyScalar(stage.radius).add(stage.centre)
+    const eye = new THREE.PerspectiveCamera(bake.deg, 1, 1, 100)
+    eye.position.copy(stage.centre)
+    eye.up.copy(north).applyMatrix3(this.toStage)
+    eye.lookAt(mid)
+    eye.updateMatrixWorld(true)
+    eye.projectionMatrix.elements[0]! *= -1
+    eye.projectionMatrixInverse.copy(eye.projectionMatrix).invert()
+    const to = new THREE.WebGLRenderTarget(bake.size, bake.size, { type: THREE.UnsignedByteType, format: THREE.RGBAFormat, minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter, depthBuffer: false, stencilBuffer: false, generateMipmaps: false })
+    const target = renderer.getRenderTarget()
+    const xr = renderer.xr.enabled
+    const auto = renderer.autoClear
+    renderer.xr.enabled = false
+    renderer.autoClear = true
+    renderer.setRenderTarget(to)
+    renderer.render(this.bakeScene, eye)
+    const data = new Uint8Array(bake.size * bake.size * 4)
+    renderer.readRenderTargetPixels(to, 0, 0, bake.size, bake.size, data)
+    renderer.setRenderTarget(target)
+    renderer.xr.enabled = xr
+    renderer.autoClear = auto
+    to.dispose()
+    bake.data = data
+    bake.axes = [...s.toArray(), ...east.toArray(), ...north.toArray()]
   }
 
   dispose(): void {

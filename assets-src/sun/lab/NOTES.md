@@ -328,3 +328,68 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   whether my pass can give the level.
 - Life span law (sim.ts): span = 2.5 + 11.5 q^2 s with q even in 0 to 1: shortest 75 film frames, median 5.4 s
   (161 frames), longest 420; 36 percent under 4 s. A cell grows over the first 38 percent and shrinks over the last.
+- 11:20 to 12:05 UTC, all in the worktree /home/user/workspace/lab2 (at f2) while chain 3 draws in the repo; to be
+  copied into the repo when the chain ends (src/stops/sun/lab/*, set.ts, assets-src/sun/lab/bake.ts, level.py,
+  spans.ts):
+  - Still eye clip of f2 (out/work/sun/lab/clip-f2h, v/clip-f2-still-eye.mp4): reader largest 0.476 at k0016 at
+    [980, 888], mean 0.263 (limit 0.45); proxy largest 0.308. Cause seen in v/spot980.jpg: a large old cell in the
+    middle of the near field is eaten by its neighbours in about 10 film frames. The fault is the span law.
+  - spans.ts (CPU only, about 30 s) measures the table alone. f2 law: half of the largest ground to nothing in a
+    median of 13 film frames, quartile 7, 5 percent in 2.
+  - New span law (sim.ts): every cell is given the ground its age asks for. share(u, span): from nothing to its
+    full ground over max(0.38 of the span, 1.4 s), at most half the span, the ground growing evenly with the time
+    (quadratic ease over the first 0.3). At every step of 0.25 s the weights of the power diagram are moved toward
+    the weights at which each cell holds its share: 6 rounds of 0.6 of the lacking ground over the cell's
+    stiffness (sum over its edges of length over twice the way to the neighbour: the ground gained by a unit of
+    weight); a cell that holds nothing is put by bisection (find) at the weight at which it holds its share. A
+    cell born on a step comes up from the weight at which it holds nothing at that step (find(.., 0)), the cell
+    that ended went down to that weight at its last place. What failed on the way: a closed form weight with a
+    least window (neighbours rule the ends); a start weight of anchor (the cell holds half the host at once);
+    the threshold weight taken at the next step (the gauge of the weights drifts from step to step, so a newborn
+    began with a radius of 0.05 and ate its neighbours for a few frames); find for every cell over 1.5 times its
+    share (jumps: 95th percentile of the share lost in 8 frames up from 0.31 to 0.59).
+  - MEASURED with spans.ts on the new law (solve 6, gain 0.6, soft 0.8, warm 15): cells over 0.06 units of
+    radius: half of the largest ground to nothing in at least 14 film frames (1 percent 16, quartile 22, median
+    29); largest share of the largest ground lost in 8 film frames: median 0.19, 95 percent 0.29, most 0.82. All
+    cells: ends 5 percent in 5 frames, quartile 18, median 24; births 5 percent 6, quartile 20, median 27. Whole
+    lives seen in the 180 frames: least 57 frames, median 86, most 170. Not yet drawn.
+  - Map tone (labTone): heat times clamp((L / 0.245)^0.3, 0.8, 1.2), L the globe's map at about 2.8 degrees (4 taps
+    at the lod of that width); LabGround(shared, map, toStage). Map about the spot (gnomonic 40 degrees, linear
+    light, lod 6): percentiles 1/5/25/50/75/95/99 = 0.129 0.151 0.203 0.244 0.291 0.463 0.632, at the spot 0.283.
+  - Bake of the far twin: globalThis.labBake = {deg, size}; LabGround.bake() draws the floor shader with LAB_BAKE
+    (far 1, mu 1, no haze, no lights, tone on, clock 0) from the ball's centre toward the spot, x mirrored;
+    assets-src/sun/lab/bake.ts writes out/work/sun/lab/level/place-far-0.rgba, level.py makes
+    public/assets/sun/full/lab/place-far-0.jpg (2048) and web (1024), quality 92. Untested.
+  - Look candidates in lab2's lab.json: spot.floor [0.004, 0.02], spot.gap [0, 0.07], heat.lane [0.04, 0.13, 0.6],
+    heat.shade [0.3, 0.2], heat.rim 0.72, heat.body 1.05, heat.patch [0.1, 0.9], heat.thread [0.04, 0.6], haze
+    {amount 0.006, power 2.0, level 1.1, own 0.45}. Untested.
+
+- 12:20 to 12:45 UTC, 25 Nov: state g15 (to be NAMED).
+  - 12:20 state mail sent on f2 (d26bc8a3). MAIL 1088 (12:36) rules: spot width by the hold's measure at final 360
+    (bake laid in at 1.58 and 1.9 degrees, mean absolute difference to references/approved/sun-hero.png, whole and
+    in the place's box; sun_builder reads 11.9772 whole): NOT DONE, needs sun_builder's globe reading my level. Spot
+    onto the knot: if spot.back moves the spot in frame 90 by over a hundredth of the width, sun_builder turns the
+    place's anchor by 0.7 degrees instead. Bake 2048 allowed if not coarser than the map; in my folder: yes. The
+    Builder's eye on f2: cobbles on a brown floor (close the lanes), one sided satin sheen (no lamp), glitter in
+    lanes, umbra level, far field and hard horizon, rise 215 to 225 two bodies (law wanted: map's low band times
+    my fine band). Order for the NAMED of 13:30: span law drawn, both clips under 0.45, a and b, f as far as it
+    stands.
+  - lab2 copied into the repo; worktree lab2 to be removed.
+  - Looks g1 to g15 at frame 90 draft. What helped: heat.body 0.88, rim 0.48, shade [0.14, 0.3], patch [0.2, 1.0],
+    heat.fine [0.6, 4.0] (a finer welling), edge 0.8; spot ranks [3.6, 2.7], tongues [180, 115], hot 2.6, gap
+    [0.02, 0.2]; heat.lie 0 (the view law reads the ball's up alone, no dome normal: the one sided sheen was the
+    0.3 of the dome's normal); glint 0.3 and points 0.93 (glitter in lanes gone); dome.height 0.3 and arc 70 (the
+    near flank of a tall dome showed its dark rim to the eye: boulders; flatter reads as one sheet); haze.amount
+    0.0045 (lanes darker). far.tone deg 1.5, power 0.5, range [0.6, 1.3] (the map's tone stronger).
+  - Air: the gas past the limb. A sphere of radius ST_RADIUS + 8 * air[0], back side, no depth test, in a group of
+    renderOrder 1 (at -5.8 inside my group it did not show: drawn before the sky's later layers). tau = air[1] *
+    exp(-(nearest way of the look past the ball) / air[0]). air [0.1, 3] was a wide orange fog over the stars,
+    [0.03, 1.5] nothing to see, [0.04, 1.2] a soft glow of some 15 px. The limb itself is still a hard pale line.
+  - g15 near ground, frame 90 draft: max channel percentiles 5 25 50 75 95 99 = 0.224 0.353 0.569 0.753 0.949 1.0
+    (approved 0.231 0.404 0.58 0.761 0.906 0.965).
+  - Bake at 1280 (g15): full 1,984,357 bytes, web (640) 549,666 bytes. Texel: 0.0326 degrees at the middle, 0.0288
+    (radial) at the edge; the globe's map (8192 wide) 0.0439 degrees: finer everywhere. Web: 0.065 against 0.088.
+    Umbra on the bake (max channel under 0.15 after a blur of 3 px): disc of equal area 1.55 degrees wide (1.43 at
+    0.1, 1.66 at 0.2), box 1.60 E-W by 1.53 N-S, middle 0.06 east and 0.39 north of S. The map's knot (sun_builder):
+    1.9 to 2.0 wide, 0.08 west and 0.32 south. So: width 0.8 of the knot, middles 0.72 degrees apart.
+  - Still eye and film eye clips on the new span law: see the next entry.
