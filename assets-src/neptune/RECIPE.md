@@ -174,7 +174,9 @@ The five maps are `public/assets/neptune/<set>/close-deck.webp`, `public/assets/
 - Takes: 3 of 6 (takes 1 and 2 were seen only in an offline preview on the approved image). Take 1: mask from a luma threshold in a box and one smoothed direction: straight streaks, blue glints, the mask leaked onto the dark sea; dropped. Take 2: pit as a connected region, fibres along its outline, lower gain; the shadow mask softened other dark patches below the ribbon. Take 3, kept: the shadow mask is the largest dark body only. A coding fault was found by measurement on the first render and fixed before the kept file: 0.5 is not an 8 bit value (128 decodes to 1.0039, which lifted the whole core by 1.7 percent, mean abs diff 2.27); the unit is now 127.
 - Checks: judged terrain 4860 before and after in `NOTES.md` (Phase 6, item 27); kept amounts `fine: [1, 0.5]`; G15 neptune web 333 MB, full 1328 MB; crops `out/work/nep/p6/g1/b-eye-tri.jpg`, `c-ribbon-quad.jpg`, `c-eye-4800-4860-4930.jpg` (in looks).
 
-## public/assets/neptune/<set>/close-glow.png and public/assets/neptune/<set>/sky-terrain.webp
+## public/assets/neptune/<set>/close-glow.png
+
+- 24 Nov, MAIL 774: the sky patch of the terrain that this section also describes (it was the second file of this recipe, named sky hyphen terrain, webp) is deleted from both sets and from `src/stops/neptune/sky.json`. The terrain shows the engine's own sky. What follows about that patch is history; `terrain.py` still makes the glow.
 
 - What: `close-glow.png` 512x64 is the blue glow above the horizon of the approved close image, unwrapped by azimuth about the nadir (80 degrees wide) and by height above the horizon (0 to 0.012 radii), stars removed. `sky-terrain.webp` 3520x1980 lossless (`web` 1760x990) is the sky of the approved close image without that glow, with margin 0.125.
 - Tool: `python3 assets-src/neptune/sky/terrain.py` (no generation). Inputs: the approved close image and `src/stops/neptune/close.json`.
