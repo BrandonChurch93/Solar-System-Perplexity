@@ -114,6 +114,9 @@ uniform vec3 uFarPower;
 uniform vec2 uOwn;
 uniform vec4 uFarFall;
 uniform vec3 uFarCloud;
+uniform vec4 uAirLaw;
+uniform vec3 uAirDepth;
+uniform vec3 uAirSun;
 ${globe(MAP_DECL)}in vec3 vPos;
 in vec3 vClip;
 out vec4 outColor;
@@ -598,6 +601,17 @@ float between(float h1, float mu1, float h2, float mu2, float hp, float H) {
   if (mu2 <= 0.0) return max(column(h2, -mu2, H) - column(h1, -mu1, H), 0.0);
   return max(2.0 * column(hp, 0.0, H) - column(h1, -mu1, H) - column(h2, mu2, H), 0.0);
 }
+// The air of way C (deep.json, air): thin at the deck, thickest some way up: exp(-h / scale) - exp(-h / foot) along a path.
+float airPath(float h1, float mu1, float h2, float mu2, float hp) {
+  float a = between(h1, mu1, h2, mu2, hp, uAirLaw.y);
+  return uAirLaw.z > 0.0 ? max(a - between(h1, mu1, h2, mu2, hp, uAirLaw.z), 0.0) : a;
+}
+// What an eye inside the air sees of a thing, as a share of what the hold shows of it: see where it is used.
+vec3 airGain(vec3 kc, float betweenAir, float behindAir, vec3 own) {
+  vec3 clearNear = exp(-kc * betweenAir);
+  vec3 clearAll = exp(-kc * (betweenAir + behindAir));
+  return (1.0 - own * clearAll) * (1.0 - clearNear) / max(1.0 - clearAll, vec3(1e-6)) + own * clearNear;
+}
 // Air between a point and the Sun; the deck is opaque, so a line that dips under it carries nothing.
 float toSun(vec3 q, float H, out float lit) {
   float r = length(q);
@@ -613,7 +627,7 @@ float toSun(vec3 q, float H, out float lit) {
 // The veil is light between the eye and the deck and is laid on as the film shows the planet from afar, before the grade of the
 // fall, and graded with what lies under it (underAir). The air is not: it is added after the end's grade (fallEnd, see where col is
 // made), since under a grade by channel thin air came through to the grade's powers. This shader works in the colours of the
-// ground (the full grade; its end takes the grade back by the height). toHold: a colour of the ground as the hold shows it, in
+// ground (the old grade of the ground; its end takes that grade back at every height: one curve, the hold's). toHold: a colour of the ground as the hold shows it, in
 // parts of the pivot; toGround: back. underAir: a colour of the ground under a light of the hold (add) that lets clear of it
 // through. With no light and all let through it gives the colour back to the bit.
 vec3 toHold(vec3 c) {
@@ -623,8 +637,8 @@ vec3 toHold(vec3 c) {
 vec3 toGround(vec3 y) {
   return mix(pow(y, uFarFall.xyz), y, smoothstep(0.6, 1.2, y)) * uFallPivot / max(uGain, 1e-6);
 }
-// The end's grade of the fall (deep.json, globe.fall) on a colour that has the film's gain: none where the power is 1, so the
-// ground keeps its bytes.
+// The end's curve (deep.json, globe.fall) on a colour that has the film's gain: the scene's colours brought to the hold's look,
+// by 1 over the full powers at every height (way C). None where the power is 1.
 vec3 fallEnd(vec3 c) {
   if (!any(notEqual(uFallPower, vec3(1.0)))) return c;
   vec3 x = max(c, vec3(0.0)) / uFallPivot;
@@ -850,11 +864,11 @@ void main() {
     vec3 deckFar = mapDeck * knot(uGDeck, ndlFar) * (1.0 - uGShadow.x * mapShadow * smoothstep(0.0, 0.2, ndlFar) * (1.0 - min(mapCloud, 1.0)));
     farCover = min(mapCloud, 1.0) * smoothstep(-0.09, -0.03, ndlSheet);
     farLook = mix(uFarTone * pow(max(deckFar * uGTint, vec3(0.0)), uFarPower), uFarCloud * knot(uGCloud, ndlSheet) * uGTint, mapCloud * smoothstep(-0.09, -0.03, ndlSheet));
-    // The globe's own grade of the fall (planet.ts, FALL_GLSL, the one text of it; deep.json, globe.fall), on the colour as the film
-    // shows it and at the strength the globe has at this height: uFarFall holds the full powers in xyz and the most blue at this
-    // height in w, uFallPower the globe's power at this height over the full one. The end of this shader raises every channel to
-    // uFallPower (the scene is made at the full grade), so that is undone here beforehand: the far look leaves this shader as the
-    // globe's own picture of the map at every height, and at the ground at the navy the grade ends in.
+    // The end of this shader raises every channel to uFallPower (the scene is made in the colours of the old grade of the ground
+    // and its end brings them to the hold's look: 1 over the full powers at every height, way C), so that is undone here
+    // beforehand: the far look leaves this shader as the globe's own picture of the map at every height. uFarFall holds the full
+    // powers in xyz. The old grade of the globe by the height (planet.ts, FALL_GLSL; deep.json, globe.fall) runs here at the
+    // power 1 and changes nothing.
     vec3 fallFar = fallGrade(farLook * uGain, uFallPivot, uFarFall.xyz * uFallPower, uFarFall.w) / uFallPivot;
     farLook = mix(pow(fallFar, 1.0 / uFallPower), fallFar, smoothstep(0.6, 1.2, fallFar)) * uFallPivot / max(uGain, 1e-6);
   }
@@ -1024,6 +1038,44 @@ void main() {
   vec3 col = fallEnd(bare * outGain) * clearAll + fallEnd(airLight * outGain) * airShare;
   float seen = deckHit ? 1.0 : 1.0 - cloudClear * dot(clearDeck, vec3(0.3333)) * veilClear;
   float alpha = clamp(seen, 0.0, 1.0);
+  // The air the eye stands in (deep.json, air; the Builder's MAIL 1011, way C). The film shows every thing of the place by one
+  // curve at every height, the hold's. What differs down there is light and air, as things of the place. The hold sees a thing
+  // through the whole air over it, and what it shows there, H, is two lights: the thing's own, the Sun's light dimmed by the air
+  // above the lit point (a gain g by colour, red most) and then let through by the air of the whole ray, H g exp(-all); and the
+  // light of the lit air in front of it, the rest, H (1 - g exp(-all)). An eye inside the air has only a part of that air in
+  // front of the thing: of the air's light it gets the share (1 - exp(-between)) / (1 - exp(-all)), and the thing's own light
+  // comes through the shorter path, H g exp(-between). So L = H ((1 - g exp(-all)) share + g exp(-between)): near ground, with
+  // little air in front, stays dark, and far ground, behind a long path, goes pale. between is the air from the eye to the
+  // thing, all is between and the air of the same ray behind the eye up to the top. Above the top nothing is behind the eye, the
+  // sum is H, and this block is not run, so the hold keeps its bits. It reads the thing's height, the eye's place and the ray,
+  // and no clock. The air is thin at the deck and thickest some way up (scale and foot), so the eye of the terrain stands under most of it.
+  float airTopR = uRadius + uAirLaw.x;
+  float eyeR = length(oc);
+  for (int once = 0; once < (uAirLaw.x > 0.0 && eyeR < airTopR ? 1 : 0); once++) {
+    float he = eyeR - uRadius;
+    float me = b / eyeR;
+    float sTop = sqrt(max(airTopR * airTopR - rt2, 0.0));
+    float mIn = -sTop / airTopR;
+    float mOut = sTop / airTopR;
+    float whole = max(airPath(0.0, 1.0, uAirLaw.x, 1.0, 0.0), 1e-6);
+    vec3 kc = uAirDepth / whole;
+    float behind = airPath(uAirLaw.x, mIn, he, me, hp);
+    vec3 gain = vec3(0.0);
+    float cloudPart = cloudWeight > 0.0 ? 1.0 - cloudClear : 0.0;
+    for (int k = 0; k < (cloudWeight > 0.0 ? 1 : 0); k++) {
+      vec3 qc = oc + rd * tMean;
+      float hc = length(qc) - uRadius;
+      gain += cloudPart * airGain(kc, airPath(he, me, hc, dot(rd, qc) / length(qc), hp), behind, vec3(uAirLaw.w));
+    }
+    if (deckHit) {
+      vec3 qd = oc + rd * tDeck;
+      float hd = length(qd) - uRadius;
+      gain += (1.0 - cloudPart) * airGain(kc, airPath(he, me, hd, dot(rd, qd) / length(qd), hp), behind, exp(-uAirSun * airPath(hd, 1.0, uAirLaw.x, 1.0, 0.0) / whole));
+    } else {
+      gain += (1.0 - cloudPart) * airGain(kc, airPath(he, me, uAirLaw.x, mOut, hp), behind, vec3(0.0));
+    }
+    col *= gain;
+  }
   // On the globe the scene ends at a border on the ground: by the angle from the place of what the ray meets (or passes nearest).
   vec3 met = normalize(deckHit ? oc + rd * tDeck : oc + rd * max(-b, 0.0));
   float inside = uCap.z > 0.0 ? smoothstep(uCap.y, uCap.x, dot(met, uPlaceUp)) : 1.0;
@@ -1102,7 +1154,7 @@ export class Deep {
       uniforms: {
         uCentre: { value: this.centre }, uCam: { value: new THREE.Vector3() }, uRadius: { value: radius },
         uE0: { value: e0 }, uE1: { value: e1 }, uAxis: { value: axis }, uSun: { value: new THREE.Vector3(0, 1, 0) },
-        uTime: { value: 0 }, uPix: { value: 0.0005 }, uFoot: { value: 0.0005 }, uGrad: gradUniform, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uShow: { value: 1 }, uFallPivot: { value: new THREE.Vector3().fromArray(look.globe.fall.pivot) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uPlaceUp: { value: this.up.clone() }, uGridShow: { value: look.globe.grid },
+        uTime: { value: 0 }, uPix: { value: 0.0005 }, uFoot: { value: 0.0005 }, uGrad: gradUniform, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uShow: { value: 1 }, uFallPivot: { value: new THREE.Vector3().fromArray(look.globe.fall.pivot) }, uFallPower: { value: new THREE.Vector3(1 / look.globe.fall.power[0]!, 1 / look.globe.fall.power[1]!, 1 / look.globe.fall.power[2]!) }, uPlaceUp: { value: this.up.clone() }, uGridShow: { value: look.globe.grid },
         uCap: { value: v4(Math.cos(THREE.MathUtils.degToRad(look.globe.border[0]!)), Math.cos(THREE.MathUtils.degToRad(look.globe.border[1]!)), laid ? 1 : 0, 0) },
         uStorm: { value: v4(s.at[0]!, s.at[1]!, s.eye, s.reach) },
         uBowl: { value: v4(s.depth, s.wall[0]!, s.wall[1]!, s.ragged) },
@@ -1149,7 +1201,8 @@ export class Deep {
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
         uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uShade: { value: v4(l.shade, l.shadeFoot, ci.thin[0]!, ci.thin[1]!) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
-        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
+        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
+        uAirLaw: { value: v4(look.air.top, look.air.scale, look.air.foot, look.air.cirrus) }, uAirDepth: { value: v3(look.air.depth) }, uAirSun: { value: v3(look.air.sun) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
         uDiag: diagUniform,
       },
@@ -1183,11 +1236,10 @@ export class Deep {
   }
 
   // On the globe (the laid scene only): turn is the turn from the close scene to the stop's frame, camera the eye in the stop's frame
-  // in radii, show how much of the scene is drawn (a function of the eye's height, never of time). power: what is left of the grade
-  // of the fall at this height, as the power the end of the shader raises a channel to under the pivot (deep.json globe.fall): the
-  // scene is made at the grade's full strength, the globe is graded by the height, so this is the globe's power at this height over
-  // the full one, 1 at the ground. blueMost: the most blue the globe's grade keeps at this height (planet.ts, FALL_GLSL). Returns
-  // the eye in the close scene.
+  // in radii, show how much of the scene is drawn (a function of the eye's height, never of time). power: the power the end of the
+  // shader raises a channel to under the pivot (deep.json globe.fall): 1 over the full powers at every height (way C: one curve,
+  // the hold's; the set gives it). blueMost: the most blue the old grade by the height kept (planet.ts, FALL_GLSL); no limit now.
+  // Returns the eye in the close scene.
   lay(camera: THREE.Vector3, turn: THREE.Quaternion, show: number, power: THREE.Vector3, blueMost: number): THREE.Vector3 {
     this.mesh.quaternion.copy(turn)
     this.material.uniforms.uShow!.value = show

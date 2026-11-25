@@ -229,7 +229,9 @@ export const createSet: SetFactory = async (ctx) => {
         layOut.copy(pu.uSpotN!.value as THREE.Vector3).applyAxisAngle(spinAxis, spin).applyQuaternion(layTurn)
         laid.toned(layEast, layNorth, layOut, (pu.uPatchOff!.value as THREE.Vector2[])[patches.place.shownFrom]!, (pu.uPatchScale!.value as number[])[patches.place.shownFrom]!, patches.place.tone.stops * (1 - closeLight))
       }
-      const fall = deepLook.on && !ending ? 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.fall.height[1]!) / Math.log(deepLook.globe.fall.height[0]! / deepLook.globe.fall.height[1]!)) : 0
+      // One curve at every height, the hold's (the Builder's MAIL 1011, way C): the globe is not graded by the eye's height and the
+      // scene's end takes its ground colours back to the hold's by the full powers. What differs down there is the air (deep.ts).
+      const fall = 0
       for (let c = 0; c < 3; c++) {
         const p = deepLook.globe.fall.power[c]!
         fallGlobePower.setComponent(c, 1 + fall * (p - 1))
