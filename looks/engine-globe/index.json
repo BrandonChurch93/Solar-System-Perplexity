@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T07:32:54.839Z",
- "head": "687be0be4fc34780ffbac6855e3ef092c52c8fd2",
- "note": "MAIL 954 row 1 built on take/b10e 8cfc71f2 (local commit, not named yet). Picture: frame 2436 of Mars's dive with the row on, draft. The side with the row off is rendering now; the hashes of 12 frames at two sizes are compared after it. Nothing is claimed yet.",
+ "pushed": "2026-11-25T08:20:20.578Z",
+ "head": "d433e57488fd6a9ac856f153de1729d7d2cd6c1d",
+ "note": "08:21 UTC: frame 2436 of the Mars dive, draft, with the lean own level reads (29995967) on Mars's folders of 00c41dcd. The on and off pairs at two sizes are still rendering.",
  "looks": [
+  {
+   "time": "2026-11-25T08:20:14.991Z",
+   "file": "20261125082014991-note-on-2436.jpg",
+   "source": "out/work/m954b/on-2436.png",
+   "kind": "note",
+   "label": "mars 2436 draft 1920x1080, row 1 on, Mars folders of 00c41dcd",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T07:32:46.197Z",
    "file": "20261125073246197-note-on-2436.jpg",
@@ -59,14 +67,6 @@
    "kind": "note",
    "label": "cap detail hook on the test page: tilt of the light against the hand count, and a height that follows the cap own height on its walls",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T02:40:35.583Z",
-   "file": "20261125024035583-note-flow-6580.jpg",
-   "source": "../m835/flow-6580.png",
-   "kind": "note",
-   "label": "Jupiter 6580 to 6596, flow left with the range patch (points on the unit shape)",
-   "stop": "jupiter"
   }
  ]
 }
