@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T04:17:48.023Z",
- "head": "75564ca06092159f628bb32683165712183ac36f",
- "note": "04:18 UTC state x pairs at native size: sides at T pass both (0.008, 0.006); red glow, east slab, flat sand behind the mesa still wrong",
+ "pushed": "2026-11-25T04:36:56.686Z",
+ "head": "070d6dda636b9b19bbc95a00d9abb3a39c5d5cb1",
+ "note": "04:37 UTC cap commit 4a64cc87 as pairs beside main at native size; island 2456, straight side 2464, red glow less and not gone",
  "looks": [
   {
-   "time": "2026-11-25T04:17:47.401Z",
-   "file": "20261125041747401-note-pair-x-2684.jpg",
-   "source": "out/work/place/see/pair-x-2684.jpg",
+   "time": "2026-11-25T04:36:55.981Z",
+   "file": "20261125043655981-note-z2688-half.jpg",
+   "source": "out/work/place/see/z2688-half.jpg",
    "kind": "note",
-   "label": "04:18 pair main beside x, frame 2684 whole",
+   "label": "04:37 rise 2688, main left (the old rise), cap commit right (the rise of 88d4f309), half size",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T04:17:46.813Z",
-   "file": "20261125041746813-note-pair-x-2474.jpg",
-   "source": "out/work/place/see/pair-x-2474.jpg",
+   "time": "2026-11-25T04:36:55.288Z",
+   "file": "20261125043655288-note-glow-z-2448.jpg",
+   "source": "out/work/place/see/glow-z-2448.png",
    "kind": "note",
-   "label": "04:18 pair main beside x, frame 2474 whole",
+   "label": "04:37 cap commit 4a64cc87, glow-z-2448: main left, the commit right, native size (glow-z: before left, after right). Bad: island with a hard border 2456, sheet with a straight side 2464 right, red glow 2440 2448, flat sand behind the mesa 2470",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T04:17:46.172Z",
-   "file": "20261125041746172-note-pair-x-2459.jpg",
-   "source": "out/work/place/see/pair-x-2459.jpg",
+   "time": "2026-11-25T04:36:54.635Z",
+   "file": "20261125043654635-note-nz-2420-480.jpg",
+   "source": "out/work/place/see/nz-2420-480.png",
    "kind": "note",
-   "label": "04:18 pair main beside x, frame 2459 whole",
+   "label": "04:37 cap commit 4a64cc87, nz-2420-480: main left, the commit right, native size (glow-z: before left, after right). Bad: island with a hard border 2456, sheet with a straight side 2464 right, red glow 2440 2448, flat sand behind the mesa 2470",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T04:17:45.579Z",
-   "file": "20261125041745579-note-pair-x-2456.jpg",
-   "source": "out/work/place/see/pair-x-2456.jpg",
+   "time": "2026-11-25T04:36:53.937Z",
+   "file": "20261125043653937-note-nz-2474-480.jpg",
+   "source": "out/work/place/see/nz-2474-480.png",
    "kind": "note",
-   "label": "04:18 pair main beside x, frame 2456 whole",
+   "label": "04:37 cap commit 4a64cc87, nz-2474-480: main left, the commit right, native size (glow-z: before left, after right). Bad: island with a hard border 2456, sheet with a straight side 2464 right, red glow 2440 2448, flat sand behind the mesa 2470",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T04:17:44.968Z",
-   "file": "20261125041744968-note-pair-x-2448.jpg",
-   "source": "out/work/place/see/pair-x-2448.jpg",
+   "time": "2026-11-25T04:36:53.338Z",
+   "file": "20261125043653338-note-nz-2470-480.jpg",
+   "source": "out/work/place/see/nz-2470-480.png",
    "kind": "note",
-   "label": "04:18 pair main beside x, frame 2448 whole",
+   "label": "04:37 cap commit 4a64cc87, nz-2470-480: main left, the commit right, native size (glow-z: before left, after right). Bad: island with a hard border 2456, sheet with a straight side 2464 right, red glow 2440 2448, flat sand behind the mesa 2470",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T04:17:44.343Z",
-   "file": "20261125041744343-note-wx-2456.jpg",
-   "source": "out/work/place/see/wx-2456.png",
+   "time": "2026-11-25T04:36:52.702Z",
+   "file": "20261125043652702-note-nz-2464-960.jpg",
+   "source": "out/work/place/see/nz-2464-960.png",
    "kind": "note",
-   "label": "04:18 state x (fitted cap, takes with held light, law with the seen angle term) wx-2456: main left, x right, native; bad: red glow 2440 2448, east slab with a straight side 2464, flat sand behind the mesa 2470",
+   "label": "04:37 cap commit 4a64cc87, nz-2464-960: main left, the commit right, native size (glow-z: before left, after right). Bad: island with a hard border 2456, sheet with a straight side 2464 right, red glow 2440 2448, flat sand behind the mesa 2470",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T04:17:43.713Z",
-   "file": "20261125041743713-note-wx-2464.jpg",
-   "source": "out/work/place/see/wx-2464.png",
+   "time": "2026-11-25T04:36:52.063Z",
+   "file": "20261125043652063-note-nz-2464-0.jpg",
+   "source": "out/work/place/see/nz-2464-0.png",
    "kind": "note",
-   "label": "04:18 state x (fitted cap, takes with held light, law with the seen angle term) wx-2464: main left, x right, native; bad: red glow 2440 2448, east slab with a straight side 2464, flat sand behind the mesa 2470",
+   "label": "04:37 cap commit 4a64cc87, nz-2464-0: main left, the commit right, native size (glow-z: before left, after right). Bad: island with a hard border 2456, sheet with a straight side 2464 right, red glow 2440 2448, flat sand behind the mesa 2470",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T04:17:43.107Z",
-   "file": "20261125041743107-note-glow-x-2448.jpg",
-   "source": "out/work/place/see/glow-x-2448.png",
+   "time": "2026-11-25T04:36:51.431Z",
+   "file": "20261125043651431-note-nz-2456-480.jpg",
+   "source": "out/work/place/see/nz-2456-480.png",
    "kind": "note",
-   "label": "04:18 state x (fitted cap, takes with held light, law with the seen angle term) glow-x-2448: main left, x right, native; bad: red glow 2440 2448, east slab with a straight side 2464, flat sand behind the mesa 2470",
+   "label": "04:37 cap commit 4a64cc87, nz-2456-480: main left, the commit right, native size (glow-z: before left, after right). Bad: island with a hard border 2456, sheet with a straight side 2464 right, red glow 2440 2448, flat sand behind the mesa 2470",
    "stop": "mars"
   }
  ]
