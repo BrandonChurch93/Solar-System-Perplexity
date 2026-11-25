@@ -2843,3 +2843,99 @@ What I ask instead: name the input of the haze that changes at a fixed point of 
 6. Next mail by 10:15 UTC as you planned: a state or a NAMED, with the sha.
 
 - 07:46: the state pushed as asked in point 3 (this commit, on the merge 62f882df), not named. The official report runs on the same tree (started 07:34:25).
+
+## MAIL 975 from the Builder (/root), 08:24 UTC, word for word
+
+"MAIL 975 from the Builder (/root), 08:24 UTC. To uranus_builder. My reader on your state 128b54f1 (check ur6), all eight slices back.
+
+The way down, 4110 to 4199:
+- part 1 GREEN (pattern 0.43 from 4122).
+- part 2 RED: pop score 1.31 from 4151 + 1/2 (5 frames over); pattern 1.59 from 4152 + 1/2 to 8 film frames later (42 over, first 4130).
+- part 3 RED: pop score 1.201 at 4180 (2 over); pattern 1.38 from 4170 (56 over, first 4155).
+- part 4 RED: pattern 0.98 from 4185 (26 over, first 4183 + 1/2).
+The way up, 4380 to 4454:
+- part 1 GREEN (0.21).
+- part 2 RED: pattern 1.67 from 4414 + 1/2 (36 over, first 4398).
+- part 3 RED: pattern 1.49 from 4417 + 1/2 (37 over).
+- part 4 GREEN (0.22).
+Limits: pattern 0.45, pop 1.2. The five red reports and their changes panels are attached.
+
+So the picture changes in place from about 4130 to 4196 on the way down and from 4398 to about 4436 on the way up: more than half of each move. That is not a seam to trim, it is something that comes with the camera's height over the whole stretch.
+
+What I ask by 10:15, or sooner if you have it: by frame and cause, what it is that changes in place in each red stretch (name the thing: a plate, a level of the deck, the ring, the air, a grade). Prove the cause with a control as Neptune's builder did: the same frames with that one thing held whole, read by your own chain at rate 2 (check that f.5 and f are different pictures; Neptune's tool had read whole frames for half frames). Then the cure by cause. The frame law stands (d251, d253): nothing comes or goes with the clock or with the camera's height as such."
+
+## Answer to MAIL 975: what changes in place, by cause, with controls (08:27 to 10:05 UTC)
+
+State 128b54f14e80f5396174fc156803b50c5a9aaf24, no code changed in this step. Named commit stays af8898f22e173a4f7772ffc9bb87eb6824f2ed11.
+
+### The chain used
+- `/tmp/n52/pat2.py`: the reader's own functions imported from `tools/img/smooth.py` (`small`, `grey`, `motion`, `body`, `carry`, `change`, `readings`, `reading`; scale 0.25, reach 16 capture frames, sigma 5, wide 10, floor 1), on 17 consecutive draft files at rate 2 (`k%06d-r2-draft.png`, k = 2 x frame), body from my poses. It reproduces the Builder's numbers on the state to the digit: 1.59 at 4152 + 1/2, 0.98 at 4185.
+- f and f + 1/2 are different pictures: of the 16 neighbour pairs of every window 0 have equal bytes (md5), in every run below.
+- Controls are drawn by `out/work/u/dfr.ts` with one thing changed in src for the length of the render and restored after it (`/tmp/n50/abl2.sh`, patch lists in `/tmp/n50/abl/NAME.json`); the draft frames of dfr are the bytes of the draft stills (4137: sha256 0ad419509c3f2b4e both ways).
+- Each row: pattern (the larger 99th percentile of the two readings), then onward and back as 99th percentile, share of the judged area over 0.45.
+
+### Window 4152 + 1/2 to 4160 + 1/2 (dive part 2, the Builder's worst pair)
+| control | pattern | onward | back |
+| --- | --- | --- | --- |
+| state | 1.59 | 1.18, 25.8 percent | 1.59, 70.2 percent |
+| K: cover off | 1.37 | 0.87, 8.0 percent | 1.37, 78.8 percent |
+| s: steep rule off | 1.33 | 1.20, 26.0 percent | 1.33, 51.1 percent |
+| sK: steep rule off, cover off | 1.23 | 0.87, 7.9 percent | 1.23, 17.8 percent (median 0.02) |
+| SKs: as sK, hand whole at every pixel size | 1.25 | 0.82, 8.0 percent | 1.25, 9.2 percent (median 0.01) |
+| LK: the table's light out (own light over the field), cover off, steep rule on | 0.93 | 0.93, 4.1 percent | 0.10, 0.0 percent |
+| O: the globe's own light whole, cover off | 0.61 | 0.61, 3.8 percent | 0.06, 0.0 percent |
+| SKsTL: as SKs, tops off, table read at mu itself at every height | 1.57 | 1.26, 49.4 percent | 1.57, 79.4 percent |
+| SKsT: as SKs, tops off | 1.17 | 0.82, 8.3 percent | 1.17, 79.5 percent |
+| S: hand whole at every pixel size, steep rule on, cover on | 1.27 | 1.16 | 1.27, 55 percent |
+| FK: field not divided out, cover off | 1.21 | 0.85 | 1.21, 54 percent |
+
+What the rows say:
+- The steep rule (`look.place.steep [0.75, 0.95]`, `uSteep` in `globe.ts` line 320 and in the cover's weight in `deck.ts`): the place's light is held off where the view cosine at the ground point is over 0.75 to 0.95. On the screen that is a ring around the point under the eye; the ground passes through it. At the place's centre the view cosine is 0.929 at 4152 and 0.818 at 4160, so the hand there goes from 0.03 to 0.73 in 8 frames and the ground's level under it from 53 to about 30 (draft, x 960, y 900 at 4152 + 1/2: 53 with the rule, 26 without). By the poses (`/tmp/n52/ring.py`) the band with a hand by pixel size over 0.02 covers 33 percent of the body at 4130, 39 at 4140, 36 at 4152, 31 at 4160, 15 at 4168, 4 at 4176, none from 4180. With the rule off the back reading's share falls from 78.8 to 17.8 percent (cover off) and from 70.2 to 51.1 (cover on). That is the wide red of the back reading.
+- The cover (`deck.ts`, drawn from 4145 on the way down and to 4427 on the way up, weight by pixel size `place.deck.pixel [2.3e-4, 4.6e-4]`): where it comes in its picture is not the globe's. At 4156 + 1/2 (crop x 640 to 1340, y 260 to 560, `/tmp/n52/cover-tops.jpg`) the white tops are duller on the cover, a grain stands on them, the ground between them is darker, and toward the limb the far ground is smeared. Cover on against cover off, the same frame: 97,132 pixels over 4 levels at 4152 + 1/2, 451,610 at 4156 + 1/2, 608,013 at 4160 + 1/2, largest 72, 100, 93. With the cover off the onward share falls from 25.8 to 8.0 percent, and with both off the back share from 51.1 to 17.8.
+- The air (the fitted table `layerLight` read at mu times 0.487 from above, brought in by the hand by pixel size `place.light.pixel [2.3e-4, 2.2e-3]`): what is left with both off (7.9 and 17.8 percent, at the limb's corners and edges) against 3.8 and 0.0 with the globe's own light. The table is 6.3 to 8.3 times the globe's own light at the limb (display level 66 to 183 in the box x 900 to 1500, y 150 to 330 at 4160 + 1/2) and half of it straight down; its pale band stands at the limb while the ground slides out from under it, and in the band the ground's detail is pressed flat by the tone curve's shoulder.
+- The globe's own limb rim: 0.61 on 3.8 percent with nothing of the place in the picture.
+- The table read at mu itself (no layer law) is worse than the layer law: 1.57, 49.4 percent onward.
+- The back reading is not steady on this ground: with the white tops off (SKsT against SKs) its share goes from 9.2 to 79.5 percent while the onward reading stays at 8 percent, and the carried picture is marbled (`/tmp/n52/p2-SKsT-8305.jpg`). The tops are what the reader's flow holds on to over the dark near ground. Named so that the back shares above are read with that in mind; the reader is not mine.
+
+### Window 4170 + 1/2 to 4178 + 1/2 (dive part 3)
+- state 1.11 (onward 0.36, back 1.11 on 22.7 percent); O (own light whole, cover off) 0.56 (onward 0.56 at x 1752, y 576 on 3.0 percent, back 0.13).
+- By the poses the steep ring still covers 15 percent of the body at 4168 and 4 at 4176; the layer's factor rises from 0.487 to 0.554 at 4176 and 0.630 at 4180.
+
+### Window 4185 to 4193 (dive part 4)
+| control | pattern | onward | back |
+| --- | --- | --- | --- |
+| state | 0.98 | 0.56, 3.0 percent | 0.98, 28.7 percent on 3 percent of the frame |
+| K: cover off | 0.69 | 0.69, 4.9 percent | not counted (judged share 0.02) |
+| LcK: cover off, the layer's factor held at 0.85 | 0.32 | 0.32, 0.0 percent | not counted (0.01) |
+| Lc: cover on, the layer's factor held at 0.85 | 0.35 | 0.35, 0.0 percent | not counted (0.01) |
+
+- The thing: the layer's factor by the eye's height (`set.ts` `layer(h)`, line 181 and 258; `uLayer` in `globe.ts` and `deck.ts`), MAIL 880's own form "read the fitted table at mu times c(hT) / c(h)". It is 0.487 above 0.11 R, 0.554 at 4176, 0.630 at 4180, 0.754 at 4185, 0.780 at 4186, 0.878 at 4190, 0.936 at 4193, 0.986 at 4199. At one view cosine the table's luminance falls with it: at 0.3 from 0.521 (4168) to 0.270 (4185) to 0.178 (4193); at 0.5 from 0.219 to 0.095 to 0.046. So from 4168 to 4199 every ground point's light changes with the eye's depth in the layer.
+- With the factor held the window is green with the cover on (0.35) and off (0.32). The cover is not the cause here.
+
+### Window 4414 + 1/2 to 4422 + 1/2 (rise part 2)
+| control | pattern | onward | back |
+| --- | --- | --- | --- |
+| state (the Builder's reader) | 1.67 | | |
+| s: steep rule off, cover on | 1.61 | 1.61, 35.6 percent | 1.29 on 4 percent of the frame |
+| sK: steep rule off, cover off | 1.27 | 1.27, 24.4 percent | 1.17 on 4 percent |
+| LK: the table's light out, cover off, steep rule on | 0.62 | 0.62, 1.7 percent | 0.62 on 4 percent |
+| O: the globe's own light whole, cover off | 0.71 | 0.32, 0.3 percent | 0.71 on 6 percent |
+
+- The thing: the air. At 4414 + 1/2 (0.175 R) a pale band stands under the limb and the ground under it shows no detail; at 4422 + 1/2 (0.419 R) the band is a thin rim and the same ground shows its swirls (`/tmp/n52/cmp-rise.jpg`, the globe's own light below it for comparison: the detail stands in both frames). By the sphere, the table passes 0.3 of view cosine at 18 degrees from the point under the eye at 0.175 R and at 30 degrees at 0.419 R, so the band's edge crosses 0.21 R of ground in 8 frames. With the table's light out the onward share falls from 24.4 to 1.7 percent.
+- The cover adds 11 points of share (35.6 against 24.4); it is drawn to 4427. The steep rule adds little here (1.67 to 1.61).
+- From 4391 to 4410 the layer's factor falls from 0.832 to 0.490 (the same thing as dive part 4, the other way); from 4422 to 4445 the hand by pixel size gives the globe's own light back (0.97 at 4422, 0.61 at 4430, 0.25 at 4436, 0.01 at 4445 under the eye).
+
+### The cure tried and not taken: the steep rule off
+- Pattern by my chain: 1.59 to 1.33 at 4152 + 1/2, 1.67 (the Builder's) to 1.61 at 4414 + 1/2.
+- Draft stills with the rule off (`out/work/u/pat/s`): 4035 45c0542e84eacac3, 4186 1a7f44bee863be5a, 4200 5dee7de9a3b9ab9c, 4290 07e623864d7cb34d, all the state's bytes. 4137, 4416 and 4436 move: 4137 623,248 pixels, largest 44, 28,243 over 32, box x 505 to 1740, y 3 to 1079, mean -10.2 levels; 4416 524,526, largest 128, 4,126 over 32, box x 451 to 1919, y 334 to 1079; 4436 551,060, largest 62, 149,385 over 32, box x 452 to 1645, y 4 to 1079, mean -17.3 levels (`/tmp/n52/pairs-s.jpg`).
+- Looked at: without the rule the middle of the disc is darker than the rest of the globe at 4137 and at 4436, a dark field around the place that is not in the hold. That gives up MAIL 780 (one Uranus in one pose has one brightness) for 0.26 of pattern, so it is not in the tree.
+
+### Why the three causes are one
+- The hold's picture (the globe's own light) and the surface view's picture (the fitted table) do not agree on the light of the same ground: the table is half the globe's light for a steep view from above and 6 to 8 times it at a grazing view. Both pictures are ruled to stay (MAIL 803, and 4290 to the byte).
+- So every ground point has to go from one light to the other between 4110 and 4186, in place. Three things do it now: the hand by pixel size, the steep rule by the view's angle, and the table's own fall with the view's angle (the air). The cover adds its own picture on top.
+- The hand cannot be wider: it is 0 at the hold (pixel size 2.28e-3 at 4110) and whole over all ground in sight at T (2.2e-4 at the horizon).
+
+### Cures by cause, not built, with what each gives up
+1. The air from above as a thin veil over the globe's own light (MAIL 880: "from above, a thin veil"): above the layer the ground keeps the globe's light and the air adds only what its length adds; the table's full law is reached inside the layer, by the eye's depth in the air. It removes the factor 6 to 8 at the limb and the half straight down, and with it the steep rule. It gives up the rule that above and inside read one table at one argument (MAIL 880's c(hT) / c(h) form), and the light then changes with the eye's depth in the layer from about 0.11 R down (4168 to 4186), which the level line and the pop line judge.
+2. The cover's picture made the globe's where it comes in: one white for the tops and no grain at pixel sizes over 2.3e-4, so the cover adds only what a smaller pixel can show. Gives up nothing of 4290 if the grain and the cover's white are whole at the surface view's pixel sizes; it has to be proven on 4186 to 4200.
+3. The steep rule off alone: measured above, gives up the brightness of the disc's middle at 4137 and 4436.
