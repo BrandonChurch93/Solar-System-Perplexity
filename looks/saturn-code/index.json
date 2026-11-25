@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T03:04:08.652Z",
+ "pushed": "2026-11-25T03:21:48.082Z",
  "head": "7755294aa70875d7406a3a89a2a51744cbb9a8ac",
- "note": "round 44 items 5, 1, 2: item 5 cured in the tree with the hold's bytes kept; first trial of the foot at 3720",
+ "note": "round 44 items 1 and 3: foot trial n4 beside the approved, then the globe's tone by latitude",
  "looks": [
+  {
+   "time": "2026-11-25T03:21:47.506Z",
+   "file": "20261125032147506-note-n4_foot.jpg",
+   "source": "../../../../tmp/v/x/n4_foot.png",
+   "kind": "note",
+   "label": "3720 foot at full size, approved (left) beside trial n4 (right, draft tier): still a hard line at the foot and the band too narrow and too green"
+  },
+  {
+   "time": "2026-11-25T03:21:46.930Z",
+   "file": "20261125032146930-note-n4_whole.jpg",
+   "source": "../../../../tmp/v/x/n4_whole.png",
+   "kind": "note",
+   "label": "3720 approved (left) beside trial n4 (right, draft tier): inner dust as slate ringlets, dust shade on the globe, night side darker"
+  },
   {
    "time": "2026-11-25T03:04:08.094Z",
    "file": "20261125030408094-note-n1_foot.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/r59_ll.png",
    "kind": "note",
    "label": "approved beside final 3720, lower left near field at full size (open 23)"
-  },
-  {
-   "time": "2026-11-25T02:47:18.674Z",
-   "file": "20261125024718674-note-r59_right.jpg",
-   "source": "../../../../tmp/v/r59_right.png",
-   "kind": "note",
-   "label": "approved beside final 3720, right foot region at full size: foot band, shadow on the rings, dark gap (open 21, 22, 24)"
-  },
-  {
-   "time": "2026-11-25T02:47:17.792Z",
-   "file": "20261125024717792-note-r59_whole.jpg",
-   "source": "../../../../tmp/v/r59_whole.png",
-   "kind": "note",
-   "label": "approved close image beside final 3720 of the named tree (88ba238), whole frame"
   }
  ]
 }
