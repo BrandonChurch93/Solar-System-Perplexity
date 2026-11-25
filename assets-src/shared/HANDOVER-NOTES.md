@@ -1995,6 +1995,67 @@ and plan.ts back by hash.
   the far end), a near side outside the matte, a far end outside the matte.
 - Looks pushed 19:36 (8ab60b15 on the looks branch). No answer from /root to the NAMED of 18:59 yet.
 
+## 19:40 to 20:10 UTC, 25 Nov: MAIL 1273, trial A left, the five judged finals started, the cure of design (c) coded
+
+- MAIL 1273 (/root, 19:47): hl1-13: 7 of 22 frames the same bytes with and without my law, 15 differ; the third cut take/c3a 6e61ada1
+  is built with the law (agent/engine-flight db070a4a on the cut without Jupiter 8988c1b7); 4 of 15 reads back, each equal to main's
+  row. The hatch at 3 to 12 px at Earth 1857 is the map's own detail and earth_builder's (MAIL 1272). Trial A may go on only as its
+  own commit with (a) unit tests, (b) the same bytes on a stop that does not use the path, (c) one reader part before and after on
+  Earth's dive part 1 of 2 (main's row: pattern 0.2902 at 1845, pop 1.0494 at 1864, level step 0.1891 at 1863). "Send back: the commit
+  of trial A with (a) to (c), or one line that you leave it."
+- ANSWERED 19:59 (text /tmp/mail/2000.txt): I LEAVE TRIAL A. The reader's pictures run at the draft tier (smooth.pictures.tier draft,
+  one sample), where A changes nothing by construction (a frame that is fed no way runs the calls it ran), so (c) cannot show a gain;
+  A takes most below 3.5 px while the hatch sits at 3 to 12 px; it would add a path to seven lookups of Earth's globe. Taken up again
+  only if earth_builder's cure leaves a rest below 3.5 px at review. Also said: hl1-13 agrees with my NAMED (948, 961, 1028 are first
+  or last frames over fromPx); the state of design (c); the finals render.
+- THE FIVE JUDGED FINALS OF MARS (MAIL 1137 point 1) run since 19:51:28 in t-c2a: /tmp/air/v4/chain5.sh (log chain5.log, ends with
+  "chain5 end"): fin5-c3 (law by the fragment: relief.merged3.ts, air.c3.ts) then fin5-vs (share at the vertices: relief.merged4.ts,
+  air.vs.ts), frames 2477, 2668, 2580, 2476, 2325, both with mars_place_builder's fitted airLaw numbers b in look.ts by scratch; the
+  chain restores the tree at its end. NO FRAME OUT AFTER 16 MIN: the final tier allows 256 samples a frame (tiers.final: 16, fast 64,
+  max 256) and 2477 moves most; my guess of 30 min was wrong, it may be 100 min for both runs. Do not touch t-c2a, no browser test,
+  no whole suite while it runs. PLAN: when fin5-c3 is whole and I need the renderer for the crest drafts, stop the chain before
+  fin5-vs, do the crest proof, run fin5-vs after it (run3.sh fin5-vs vs final "[...]"), then diff.py.
+- THE CURE OF DESIGN (c), CODED 19:52 to 20:05 in crest-wt (uncommitted; v1 saved as /tmp/crest/crest.v1.ts, relief.v1.ts,
+  crest.test.v1.ts, crest-gl.test.v1.ts). It replaces the plan (i) to (iv) above: the CPU cannot know the matte (SetContext has only
+  texture() and buffer()), so the SHADER asks it.
+  - crest.ts: a fourth number out (texels of the map the near side's paint reaches beyond the step's middle; left out 0; refused under
+    0 or over one cell). The share is now a true distance to the line of the middle (marching squares over the soft middle on ramp
+    texels, plus or minus one half on band texels), moved out by out, one texel wide. New fields: side (by PLACE: the side of the
+    nearest ramp texel, not by the texel's own distance), toNearX/Y (way to the near end of the nearest ramp texel, for ramp texels
+    and band texels within ceil(1.5 cell) + 2; else 0: the texel asks itself). toFar is also set for far side texels within
+    ceil(out) + 2 of a ramp, and reads the far ground out texels BEYOND the far end on the line from the near end to the far end (the
+    far end is the first even ground and may lie as near to the middle as the cut does). The band is now found by two sweeps that
+    hand the nearest ramp texel on (Euclidean), not by a flood over 8 neighbours: the flood gave every band texel a ramp texel along
+    a 45 degree diagonal (found by a test of a crest lying flat: the way to the far ground was 2 texels off sideways), so the fill
+    under the near side would have run in diagonal streaks. away is now ceil of the true distance. crestTexels gives two arrays
+    (cut: share, way to far x, y, 255; back: way to near x, y, 0, 255). crestCells(field, nx, ny, {under, out}): kind 1 also where a
+    far side texel beside a ramp is taken by the cut.
+  - relief.ts: sampler uCutBack (nearest); aSheet 1 near, 0 far in place of a cell, -1 far under a kept cell (vertices of its own);
+    cutGround = step(0.5, matte at the near end); cutOwn = cutShare x cutGround; the near sheet is the layer's texel times cutOwn;
+    the far sheet is the layer's texel times (1 - cutOwn) and, under a texel that is opaque within CREST_SOLID (2/255, a named
+    exported constant), the far end's texel with the far end's alpha; the under sheet is that fill alone. So: a step whose near side
+    is no ground is a rim and rides with the far side; a far side that is no ground draws nothing; nothing under a texel that is
+    not opaque.
+  - Tests: tests/crest.test.ts 14 of 14 (new: sides by place with a hollow in the near ground, the nearest ramp texel on its own row,
+    the cut moved out and the far ground read further out, the cells the cut takes, a crest lying flat, out refused, the far sheet
+    under a kept cell has the far sheet's vertices, the two textures and their filters, the shader text with uCutBack). tsc clean.
+    tests/crest-gl.test.ts still the v1 text: to be extended (the paint's border beyond the middle with out, a transparent near side,
+    a far end outside the matte, a crest lying flat) and run when no render runs.
+- THE FIELD ON MARS L1 with the cure (out/work/tmp/field.mts L1 0.002 12 24 OUT, 1.1 to 1.4 s): 47129 ramp texels, 3026 sheet cells
+  and 5165 under cells at out 0, 3123 and 5087 at out 2, reach 52. 3644 of the ramp texels (7.7 percent) have a near end outside the
+  matte (the blue blobs along the top rim and on the fill's fan: defect 1's blocks). Looked at: /tmp/crest/cure-teeth-field.png,
+  cure-teeth-zoom-a.png, -b.png, cure-whole-left.png, -right.png (tools /tmp/crest/overlay2.py, border.py).
+- WHERE THE PAINT'S BORDER LIES on the teeth crest, measured on 298 points of the middle line (border.py: the largest fall of the
+  light going out to the far side, full size luma): median 0.12 texels beyond the middle, 75 percent 0.62, 90 percent 1.38, 95
+  percent 1.88, 99 percent 3.15. Mean luma by texels beyond the middle: 120 at -1, 92 at 0, 64 at 0.5, 42 at 1, 32 at 1.5, 28 at 2,
+  26 at 2.5, 24 from 4. So out 2 leaves 4 levels of the rim's light on the far sheet in the mean, out 3 none. Trial numbers for the
+  proof: L1 step 0.002, walk 12, under 24, out 2, and out 3 beside it. The stop chooses.
+- SEEN in the field pictures: thin lines of the cut out in the open between two crests: there a texel's nearest ramp changes from
+  one crest's far side to the next crest's near side. They cut nothing: those cells keep the mesh. Where two crests come nearer
+  than about two cells the near sheet of one takes vertices from the other's ground and is a wall again (as the mesh was): inherent
+  to sheets by cells, the same in v1, to be told to the builders.
+- Looks pushed 20:07 (4601f342 on the looks branch; the note says 20:09 by mistake, the clock read 20:07:41 after the push).
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
