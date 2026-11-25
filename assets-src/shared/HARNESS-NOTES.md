@@ -1143,7 +1143,7 @@ Verbatim core, to be kept:
 - RUNNING since 04:09: case A second stretch k 1477 to 1500, full then web, log `scratch/r745/logs/mercury-A-1477.log`, jobs to `scratch/r745/mercA/job-full-1477.json`, `job-web-1477.json`. Then one mail with 798 (b), (c) second stretch, (d).
 - Disk: b0's frames of 1425 to 1446 (both sets) and repo's Jupiter frames 6482 to 6514 removed; the jobs of those rows can no longer be replayed (numbers and pictures kept).
 
-### 04:22 to 04:35 UTC, 25 Nov: MAIL 798 (c) case A second stretch, (b), (d)
+### 04:22 to 04:33 UTC, 25 Nov: MAIL 798 (c) case A second stretch, (b), (d)
 
 - Case A second stretch, k 1477 to 1500 at b0b87889 in `b0` (draft; reports and kept jobs in `scratch/r745/mercA/`: `mercury-dive-k1477-1500.{json,md}`, `web-mercury-dive-k1477-1500.{json,md}`, `job-full-1477.json`, `job-web-1477.json`; jobs read again with b4's `tools/img/smooth.py`, outputs `/tmp/jobA2.out`, `/tmp/jobA2w.out`; sheet `mercA/a-1477-sheet.jpg`):
   - full set: main as it stands over on all 24 rows, 0.46 at k 1477, 1.57 at k 1489; map alone over on k 1478 to 1498, 1.50 at k 1486 (film 743); refused "two grounds" on k 1490 to 1493 (pair gave 1.20); chain off the map 17 to 40 px at the 99th.
