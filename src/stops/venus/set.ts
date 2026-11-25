@@ -159,6 +159,8 @@ export const createSet: SetFactory = async (ctx) => {
     bodyEyes[kind] = { time, eye }
     return eye
   }
+  // The nearest eye of the hold in the frame of the body: its last (globe.ts, arrive).
+  const heldEye = plan.hold(plan.seg.hold.end - plan.seg.hold.start).position.clone().applyQuaternion(plan.turn(plan.seg.hold.end).multiply(globeTurn).invert())
   const carry = { ...ground.carry!, soft: look.veil.sunSoft, tint: look.veil.sunTint }
   // The cover veil is never drawn any more (plan.veilAmount is 0 and plan.release is 1 on every frame of both moves), so its cloud
   // picture is not loaded: the sheet keeps a texture it never shows.
@@ -283,7 +285,7 @@ export const createSet: SetFactory = async (ctx) => {
       // dusk.heights) at the exposure of this height.
       const groundPl = plan.placeLook(state.segment, camera.length() - 1)
       const underAt = place.ground.tone.under[state.time > terrainMid ? 'rise' : 'dive']
-      const groundTone = { look: [place.tone.air, place.tone.near, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
+      const groundTone = { look: [place.tone.air, 0, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
       // Inside the frame of T true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is
       // the surface view. The border of the ground and its far limit outside that frame stand still (plates.json, ground.frustum).
       // The near ground, which the camera of T sees from above (ground.keep), keeps all of its picture at every height, so no crest of
@@ -301,11 +303,17 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uCarryOn!.value = 1 - released
       const pl = plan.placeLook(state.segment, camera.length() - 1)
       const duskGain = Math.pow(place.dusk.gain, pl.dusk)
-      // The place is a thing of the planet: its plates stand at every height. What they show goes by distance and by place (globe.ts, show).
+      // The place is a thing of the planet: its plates stand at every height. What they show goes by the distance of the eye to the
+      // ground point and by place, read through the footprint of the pixel on the deck (globe.ts, show). The angle of a pixel of the
+      // master frame at the middle of the frame, and how many of those a pixel of this buffer is.
       gu.uPlaceOn!.value = pl.on
+      const pixelAngle = 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height
+      ;(gu.uFoot!.value as THREE.Vector3).x = pixelAngle * frameScale
+      ;(gu.uFoot!.value as THREE.Vector3).z = 1 / frameScale
       const after = state.time > terrainMid
       for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
+      ;(gu.uHeldEye!.value as THREE.Vector3).copy(heldEye)
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
       // The plates hold the light of the place at the full gain and the full tint,
       // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.
