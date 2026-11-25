@@ -7,14 +7,14 @@ import { Warm } from './warm'
 import { floatTarget } from './pass'
 import { TILE, openTiles, type Tiles } from './tiles'
 import { midShutterCarry } from './held'
-import { framePlan } from './motion'
+import { framePlan, frameWay } from './motion'
 import { captureFrames, captureRate, shutterSeconds, spanMid, wholeFrame } from './clock'
 import { samplesFor } from './sampler'
 import { SetLoader } from './sets'
 import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
 import { floorRing, sharedSkyWeight } from './skyfloor'
 import { Place, placeCamera, placeLayout, type PlaceMode, type PlacePicture } from './place'
-import { gradUniform, isRaw, setDiag, setFine, setSamples } from '../diagnostics/diag'
+import { gradUniform, isRaw, setDiag, setFine, setSamples, setWay, type Way } from '../diagnostics/diag'
 import { applyProbe, parseProbe, type Probe } from '../diagnostics/probe'
 import { PostChain } from '../post/chain'
 import { Belt } from '../space/belt/belt'
@@ -79,6 +79,10 @@ export class Engine {
   private readonly carry = new THREE.Matrix4()
   private sampleCount = 1
   private soft = 0
+  // The count that sharpens the lookups of a sample where it is not the count of the frame (FramePlan.sharp), null elsewhere.
+  private sharp: number | null = null
+  // The way of the points of the sample being drawn across the open shutter (frameWay of core/motion.ts), null where none is fed.
+  private way: Way | null = null
   private shutter = 1
   private asked = 0
   private lastFrame: { frame: number; tier: string } | null = null
@@ -249,10 +253,12 @@ export class Engine {
     const probe = this.probe
     applyProbe(probe)
     const plan = framePlan(this.director, f, tier)
-    const samples = samplesFor(plan.samples, plan.shutter)
+    const still = probe.shut
+    // A frame drawn with the shutter shut stands still: all of its samples see every pixel and weigh the same.
+    const samples = samplesFor(plan.samples, plan.shutter, still ? 0 : plan.ends ?? 0)
     this.soft = plan.soft
     this.shutter = plan.shutter
-    const still = probe.shut
+    this.sharp = still ? null : plan.sharp ?? null
     const middle = probe.time ?? (f + spanMid()) / config.fps
     const mid = this.director.shotAt(f, middle)
     let other: Shot | null = null
@@ -262,12 +268,16 @@ export class Engine {
       other ??= this.director!.shotAt(f, middle, view)
       return other
     }
+    // The way of each point across the open shutter, for the lookups a stop reads by it (gradAt): fed only where the plan has a cover.
+    const wayOf = still || samples.length === 1 ? null : frameWay(this.director, f, plan, mid)
     this.accumulator.begin()
     samples.forEach((s, i) => {
       const shot = samples.length === 1 || still ? mid : this.director!.shotAt(f, (f + s.timeOffset) / config.fps)
+      this.way = wayOf ? wayOf(shot) : null
       this.renderSample(shot, midOf(shot), s.jitterX, s.jitterY, i, samples.length)
       this.accumulator.add(this.renderer, this.sampleTarget.texture, s.weight)
     })
+    this.way = null
     applyProbe(null)
     this.post.render(this.renderer, this.accumulator.texture, mid.post, f, probe.view, samples.length > 1)
     this.lastShot = mid
@@ -278,6 +288,8 @@ export class Engine {
   renderLive(shot: Shot): void {
     this.lastFrame = null
     this.soft = 0
+    this.sharp = null
+    this.way = null
     this.shutter = 1
     this.accumulator.begin()
     this.renderSample(shot, shot, 0, 0, 0, 1)
@@ -302,7 +314,9 @@ export class Engine {
     const diag = this.probe.view
     const raw = isRaw(diag)
     setDiag(diag)
-    setSamples(count, GRAD_FLOOR, this.soft)
+    setSamples(this.sharp ?? count, GRAD_FLOOR, this.soft)
+    // The picture of a place is drawn with a lens of its own: the way is off until it is done.
+    setWay(null)
     implicitUniform.value = this.sky.cull ? 1 : 0
     const wanted = shot.sets.map((s) => s.id)
     if (wanted.join('|') !== this.attached.join('|')) {
@@ -324,6 +338,7 @@ export class Engine {
     const edged = lapped && this.probe.edgeIn !== undefined ? { ...lapped, edgeIn: this.probe.edgeIn } : lapped
     const place = edged && this.probe.toneIn !== undefined ? { ...edged, toneIn: this.probe.toneIn } : edged
     const picture = place ? this.picture(place, shot) : null
+    setWay(this.way, count, GRAD_FLOOR, this.soft)
     r.setRenderTarget(this.sampleTarget)
     r.clear(true, true, true)
     if (!raw) {
