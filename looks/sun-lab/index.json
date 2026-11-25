@@ -1,9 +1,39 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T15:58:26.399Z",
- "head": "e799c1c4dd8d9eb1da849d0da248a2b920f873db",
- "note": "c4 form and motion strips",
+ "pushed": "2026-11-25T16:14:09.470Z",
+ "head": "772d28def4b0dcdb01291cc3b986cdcbb3072ea5",
+ "note": "d4 form",
  "looks": [
+  {
+   "time": "2026-11-25T16:14:08.874Z",
+   "file": "20261125161408874-note-four-d4.jpg",
+   "source": "../v/four-d4.jpg",
+   "kind": "note",
+   "label": "d4 frames 0, 60, 90 and the approved, small (not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:14:08.309Z",
+   "file": "20261125161408309-note-strip-d4.jpg",
+   "source": "../v/strip-d4.jpg",
+   "kind": "note",
+   "label": "d4 frame 90 lower third at 1 to 1: approved, d2, d4 (not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:13:33.834Z",
+   "file": "20261125161333834-frame-lab-60-d4.jpg",
+   "source": "out/work/sun/lab/lab-60-d4.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 60, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 60,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T15:58:25.826Z",
    "file": "20261125155825826-note-motion-c4.jpg",
@@ -19,20 +49,6 @@
    "kind": "note",
    "label": "c4 frame 90 lower third at 1 to 1: approved, c3, c4 (not named)",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:54:36.543Z",
-   "file": "20261125155436543-frame-lab-90-c4.jpg",
-   "source": "out/work/sun/lab/lab-90-c4.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   },
   {
    "time": "2026-11-25T15:41:12.407Z",
@@ -56,22 +72,6 @@
    "source": "../v/mid-b5.jpg",
    "kind": "note",
    "label": "lab b5 (not named) mid-b5.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:41:10.705Z",
-   "file": "20261125154110705-note-strip-b5.jpg",
-   "source": "../v/strip-b5.jpg",
-   "kind": "note",
-   "label": "lab b5 (not named) strip-b5.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:19:56.937Z",
-   "file": "20261125151956937-note-h20-0-60.jpg",
-   "source": "../v/h20-0-60.jpg",
-   "kind": "note",
-   "label": "lab h20 eccae657 h20-0-60.jpg",
    "stop": "sun"
   }
  ]
