@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T03:16:44.709Z",
- "head": "d7fff550cde3793810cc991cf050182deed1a7a5",
- "note": "set law tree: final 615 against the approved at the critic's crops, 717 drafts against b0; finals 1016 and 870 still to render",
+ "pushed": "2026-11-25T03:40:27.602Z",
+ "head": "cdc5d5151162ae9aeed19f33ebf17bc61f906375",
+ "note": "NAMED cdc5d515 sent 03:27; relief way started 03:27, first picture due 05:27; finals 1016 and 870 still rendering",
  "looks": [
+  {
+   "time": "2026-11-25T03:40:26.364Z",
+   "file": "20261125034026364-note-v-EI.jpg",
+   "source": "../../../../tmp/m/mail/v-EI.jpg",
+   "kind": "note",
+   "label": "717 limb crops E and I, b0 beside the set law commit, draft: the limb's bright line is in both (open, nothing done)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T03:16:43.739Z",
    "file": "20261125031643739-note-sl-717-limb-ground.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/m/717-draft-BFG.jpg",
    "kind": "note",
    "label": "717 at draft (one sample, no shutter), the critic's crops B F G at 1 to 1 on the tip: round craters; the streaks of round 48 are the shutter of the final tier (12 to 28 px over half a film frame there)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T02:48:31.173Z",
-   "file": "20261125024831173-note-dg0-sheet.jpg",
-   "source": "../../../../tmp/m/dg0-sheet.jpg",
-   "kind": "note",
-   "label": "rise 1000 to 1010 with the plates' own light switched off (diagnostic, not a state of the stop): the pattern stays 0.92 to 1.15, the place's crater field still turns into the map's",
    "stop": "mercury"
   }
  ]
