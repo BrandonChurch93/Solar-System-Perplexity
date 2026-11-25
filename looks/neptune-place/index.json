@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T09:42:02.884Z",
+ "pushed": "2026-11-25T10:08:08.652Z",
  "head": "0971fc1df1cba26f17a1d660924bd31629d0bc8b",
- "note": "09:42 control: the dot at 4962 is the globe map's cloud layer on its sheet (pair 0.87 to 0.29 with it off); way C ruled (MAIL 1011), starts now",
+ "note": "way C first trials at 4860 beside the approved: trial 4 right way but near ground too blue, trial 5 tints olive (bad, not kept)",
  "looks": [
+  {
+   "time": "2026-11-25T10:08:08.043Z",
+   "file": "20261125100808043-note-c-4860-C5.jpg",
+   "source": "out/work/nep/weave/ev/c-4860-C5.jpg",
+   "kind": "note",
+   "label": "way C trial 5 at 4860 (left) beside the approved and c2edd61b: stronger air. BAD: olive and purple patches where blue runs out before red. G17 proxy 0.578 p25 0.225. Not kept",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T10:08:07.410Z",
+   "file": "20261125100807410-note-c-4860-C4.jpg",
+   "source": "out/work/nep/weave/ev/c-4860-C4.jpg",
+   "kind": "note",
+   "label": "way C trial 4 at 4860 (left) beside the approved (middle) and c2edd61b (right): one curve at every height, a thin blue veil of air taken off by the path. G17 proxy median 0.522 p25 0.228 (c2edd61b 0.508). Preview draft 23 to 39 s per frame. Near ground still too blue, not yet dark navy",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T09:42:02.269Z",
    "file": "20261125094202269-note-4860-NGp.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/ev/4605-NG.jpg",
    "kind": "note",
    "label": "4605 at 1920, the place: CONTROL no grade at any height (left) against c2edd61ba (right): 88934 px differ, 24425 over 8 levels, most 72. Draft, 29.9 s per frame. Not laid",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T09:13:29.048Z",
-   "file": "20261125091329048-note-4860-NGp.jpg",
-   "source": "out/work/nep/weave/ev/4860-NGp.jpg",
-   "kind": "note",
-   "label": "4860 CONTROL no grade at any height (left) | approved | c2edd61ba (right). G17 proxy 0.445 p25 0.212 against 0.508 p25 0.128. Draft, preview, 23.3 s per frame. Not laid",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T08:50:13.233Z",
-   "file": "20261125085013233-note-4605-cover-diff.jpg",
-   "source": "out/work/nep/weave/ev/4605-cover-diff.jpg",
-   "kind": "note",
-   "label": "4605 at 1920 with the cover cure against c2edd61ba (difference times 60 on the right): 14078 pixels, 358 over 8 levels, the most 45, all on the streamers of the place. The hold is NOT to the bit with it",
    "stop": "neptune"
   }
  ]
