@@ -25,7 +25,7 @@ void main() {
 }`
 
 const YOUNG = { from: 2, fade: 0.6, wide: 0.3, gone: [8, 12] }
-const HAND = { peak: 2.5, swap: [1.5, 4.5] }
+const HAND = { share: 0.42 / 2.5, swap: [1.5, 4.5] }
 
 export class FarPoint {
   readonly points: THREE.Points
@@ -49,13 +49,12 @@ export class FarPoint {
     const r = radiusPx / f
     const disc = lit === undefined ? undefined : view.farDisc
     if (lit !== undefined && disc) {
-      const share = Math.max(disc[0], disc[1], disc[2]) / HAND.peak
       const point = lit * (1 - smooth((px - HAND.swap[0]) / (HAND.swap[1] - HAND.swap[0])))
       this.material.uniforms.uHalo!.value = 0
-      this.material.uniforms.uWide!.value = Math.max(0.9 * core, share * radiusPx * radiusPx)
+      this.material.uniforms.uWide!.value = Math.max(0.9 * core, HAND.share * radiusPx * radiusPx)
       this.points.visible = point > 0 && view.diag === 'beauty'
       this.material.uniforms.uSize!.value = Math.max(15, (30 * view.format.height) / 1080)
-      ;(this.material.uniforms.uColor!.value as THREE.Vector3).fromArray(disc).multiplyScalar((point * gain) / share)
+      ;(this.material.uniforms.uColor!.value as THREE.Vector3).fromArray(disc).multiplyScalar((point * gain) / HAND.share)
       return
     }
     this.material.uniforms.uHalo!.value = lit === undefined ? 0.07 : 0

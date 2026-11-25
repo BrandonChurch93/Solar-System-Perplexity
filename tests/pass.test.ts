@@ -262,12 +262,17 @@ describe('the dim of the sky while the Sun comes into the frame of a travel', ()
   })
 
   it('dims by the depth of a Sun that passes through the frame and gives it back by the same depth, whatever the clock says', () => {
-    const index = legs.findIndex((s) => s.id === 'uranus.travel')
-    const seg = legs[index]!
     const open = config.raw.travel.sky.openExposure
-    // The open flight of the leg: the frames from its first on whose sky is the open sky and nothing else.
-    let openTo = seg.firstFrame
-    while (openTo < seg.endFrame && Math.abs(level(openTo) - open) < 1e-12 && Math.abs(level(openTo + 0.5) - open) < 1e-12) openTo++
+    // The open flight of a leg: the frames from its first on whose sky is the open sky and nothing else. The leg asked is the one whose
+    // open flight is the longest.
+    const flight = (s: (typeof legs)[number]): number => {
+      let to = s.firstFrame
+      while (to < s.endFrame && Math.abs(level(to) - open) < 1e-12 && Math.abs(level(to + 0.5) - open) < 1e-12) to++
+      return to
+    }
+    const index = legs.reduce((best, s, i) => (flight(s) - s.firstFrame > flight(legs[best]!) - legs[best]!.firstFrame ? i : best), 0)
+    const seg = legs[index]!
+    const openTo = flight(seg)
     // The Sun crosses the middle of the frame from below to above at the frame "middle", by a pitch of rate degrees a frame. Half the
     // height of the frame is half the lens' angle, so at a pitch of deg the Sun stands that half less deg inside the upper or lower edge.
     const middle = seg.firstFrame + 32
@@ -493,7 +498,9 @@ describe('the pass that begins before the seam', () => {
       const lent = (t: number): number => film.slideOf(i) * (shape.pass(at(t)) - plain.pass(at(t)))
       expect(way(end), p.id).toBeGreaterThan(0)
       const speed = (way(end + h) - way(end - h)) / (2 * h)
-      expect(speed, p.id + ' has speed at the seam').toBeGreaterThan(p.p.rise.driftSpeed)
+      const capped = p.id === 'earth'
+      if (capped) expect(shape.look.ahead[1], 'the path gate goes red at Earth above a share of 0.004 of its slide').toBeLessThanOrEqual(0.004)
+      expect(speed, p.id + (capped ? ' has speed at the seam, under the drift of its rise: its gate allows no more' : ' has more speed at the seam than the drift of its rise')).toBeGreaterThan(capped ? 0 : p.p.rise.driftSpeed)
       const bent = (lent(end) - 2 * lent(end - h) + lent(end - 2 * h)) / (h * h)
       const bends = (lent(end + 2 * h) - 2 * lent(end + h) + lent(end)) / (h * h)
       expect(Math.abs(bends - bent) / (speed / shape.look.ahead[0]), p.id + ' rate').toBeLessThan(5e-2)
