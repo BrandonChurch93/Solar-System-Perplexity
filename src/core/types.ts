@@ -42,12 +42,21 @@ export interface SetState {
   // measured through the twin. What follows the height (air, haze, the reach of the close ground) reads it here and not from the clock.
   height: number
   ground?: number
+  // Where the unit sphere of the body lies in a surface set at this time, in the set's own frame and units: the globe as the plan's twin
+  // places it there (StopPlan.ballIn). Given in the surface view of a stop that handover.drawnMeasure names: raw motion then tracks the
+  // points of that sphere, fixed in the set, in place of the plane y = -ground.
+  ball?: { centre: THREE.Vector3; radius: number }
   // The turn of the body's surface at this time, in the set's own frame. Given on the globe side of a dive and a rise of a stop that opted in,
-  // where the camera follows the turning place: raw motion then tracks points that turn with the body.
+  // where the camera follows the turning place: raw motion then tracks points that turn with the body. It is the plan's turn, and for a
+  // stop that handover.drawnMeasure names the turn the stop draws its body by (StopPlan.drawn). Only the measure reads it: rawMotion, and
+  // wayMatrix, which is the same measure point for point.
   turn?: THREE.Quaternion
   // The near bodies the stop names at this time (StopPlan.nearBodies), on the globe side only and only where it names any: the sample count of a
   // frame follows the fastest of them that is in the frame (core/motion nearMotion). Nothing else reads them.
   near?: NearBody[]
+  // The share of the way the light of the last stop has gone to the look back's Sun, from the moment the retreat's glides begin (before the
+  // seam, in the last frames of the rise) to the end of the retreat; absent at every other time. The set draws its light by it.
+  lookback?: number
 }
 
 export interface CoverHorizon { normal: [number, number]; offset: number; soft: number }
@@ -148,6 +157,7 @@ export interface Shot {
   cover: CoverState
   dust: number
   farLight?: number
+  farDisc?: [number, number, number]
   place?: PlaceState
   skyShare?: number
   skyShareHigh?: number
@@ -158,7 +168,16 @@ export interface Shot {
   // PLAN F: the one air of the stop this shot belongs to, at the height of this shot's lens over its body. Set in the hold, the dive, the
   // surface view and the rise of a stop that names an air; absent everywhere else.
   air?: Air
+  // The globe drawn under the surface view, where the stop's plan asks for it (StopPlan.under); absent in every other shot.
+  under?: UnderDraw
 }
+
+// The one ground of a stop, the globe under its surface view. A sample of the surface view whose shot carries this is drawn in two
+// parts: first the stop's set as the globe view draws it at this time, by the lens that stands over the globe where the shot's lens
+// stands over the place (the twin: the same angle and the same picture of the ground, in radii), then, with the depth cleared, the
+// surface view over it. set is the state the set is given for the first part, camera the twin in the world, near and far its range.
+// The sky is drawn once, before both, by the shot's own lens. The set is told which part it is drawn for in RenderView.under.
+export interface UnderDraw { set: SetState; camera: Pose; near: number; far: number }
 
 export interface SkyFloor { nadir: THREE.Vector3; dip: number }
 
@@ -178,7 +197,16 @@ export interface SetContext {
 // time step from the shutter (one sample's share of it, for a smear along the motion) multiplies the step by this.
 // shutterSeconds: how long the full shutter of the frame being drawn is open, in seconds, at the capture rate (film.shutterDegrees of the capture
 // frame; shutterFraction / fps at rate 1). One sample's share of it is shutterSeconds / samples.
-export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number }
+// under: set in the two updates of a sample that draws the globe under the surface view (Shot.under), and in no other. 'globe': this
+// update is for the first part, the state is the globe view's and camera is the twin; the set shows what stands under the place.
+// 'relief': this update is for the second part, the state is the surface view's as ever; the set shows what lies over the globe.
+// jitterX, jitterY: where inside the pixel this sample is drawn, in px of the format, as the engine shifts the lens for it. 0 or absent:
+// the middle. A set that shifts something of its own by the sample's place reads it here and not from a list it makes itself.
+// weight: this sample's share of the frame's light; the weights of a frame add up to 1. Absent: 1 / samples.
+// weights: the weight of every sample of the frame, in the order of their times (index sample is this one's). It is there only where
+// the shutter of the frame has ends (FramePlan.ends), so the samples do not weigh alike; a set that spreads something over the samples
+// by their count then spreads it by the light instead (sampleOrder of core/sampler.ts). Absent, every sample weighs 1 / samples.
+export interface RenderView { camera: THREE.PerspectiveCamera; diag: string; format: FormatDef; sample: number; samples: number; cameraPosition: THREE.Vector3; farLight?: number; farDisc?: [number, number, number]; place?: boolean; placeScale?: number; shutter?: number; shutterSeconds?: number; under?: 'globe' | 'relief'; jitterX?: number; jitterY?: number; weight?: number; weights?: number[] }
 
 export interface SkyPatch {
   view: ViewKind

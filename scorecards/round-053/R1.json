@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "upper right planet limb (crop C, top-left)",
+   "what": "a thin warm-orange fringe step (~2px wide) sits just outside the pale-gold limb instead of fading smoothly into space as in pair-02-a.png",
+   "fix": "feather and widen the outer planet mask or atmospheric rim falloff along the upper-right limb so the bright edge dissolves smoothly without a warm color step"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "starfield and sunlit cloud streaks (crops A, B, F, G, H)",
+   "what": "subpixel resampling slightly softens 1px pinpoint stars and fine cloud micro-texture compared to pair-02-a.png",
+   "fix": "use pixel-aligned or sharper (bicubic/Lanczos) sampling on the starfield and base cloud plate so pinpoint stars and fine cloud grain retain full crispness"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "upper sky starfield (crops B and G)",
+   "what": "faint 1px pinpoint stars are slightly softer and dimmer than in pair-04-a.png due to texture filtering",
+   "fix": "keep the background star layer pixel-aligned or apply sharper sampling so pinpoint stars hold their peak brightness"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "bottom center-left frame border",
+   "what": "vertical cloud displacement brings two tiny lit cloud-tip slivers into the bottom 4px of the frame where pair-03-a.png has clean dark shadow",
+   "fix": "add ~1% overscan or clamp vertical displacement near the bottom border so bright cloud tips do not peek in at the frame edge"
+  }
+ ]
+}
