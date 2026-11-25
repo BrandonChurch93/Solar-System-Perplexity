@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T18:24:21.247Z",
+ "pushed": "2026-11-25T18:46:30.194Z",
  "head": "27624e6f44de796d7761c24bd391044558a4cfe4",
- "note": "the rolls back at 0.05 (their shadow drew hairlines into the rise); 4860 ground part 17.550 under main's 19.759, G17 0.426 by my reader",
+ "note": "the pairs on the tree to be named: rise 0.50, 0.59, 0.43, 0.37; low dive 0.31 to 0.27; 4860 G17 0.426, ground part 17.550",
  "looks": [
+  {
+   "time": "2026-11-25T18:46:28.392Z",
+   "file": "20261125184628392-note-pair-N10.jpg",
+   "source": "../../../../tmp/pair-N10.jpg",
+   "kind": "note",
+   "label": "4860 at 1920 by 1080 beside the approved (left), the tree to be named: ground part 17.550 (main 19.759), sky 3.420, band 2.646; G17 median 0.426, p25 0.230 by my draft reader; 89.9 s per draft frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T18:46:26.715Z",
+   "file": "20261125184626715-note-n10-chains-dive.jpg",
+   "source": "../../../../tmp/n10-chains-dive.jpg",
+   "kind": "note",
+   "label": "the low dive on 27624e6f4, pairs 4744, 4750, 4751, 4752: 0.31, 0.29, 0.28, 0.27 (the eighth name 0.40, 0.23, 0.22, 0.26)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T18:46:24.949Z",
+   "file": "20261125184624949-note-n10-chains-rise.jpg",
+   "source": "../../../../tmp/n10-chains-rise.jpg",
+   "kind": "note",
+   "label": "the rise on 27624e6f4, pairs 4960, 4962, 4968, 4970 to 8 frames later by my copy of the reader: 0.50, 0.59, 0.43, 0.37 (limit 0.45; the eighth name 0.48, 0.56, 0.55); 4860 beside the approved is the look before this one: G17 0.426, 89.9 s the draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T18:24:20.140Z",
    "file": "20261125182420140-note-n9s-chains.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/hold-zoom.jpg",
    "kind": "note",
    "label": "the hold 4605, the place on the globe at 3 times, before (left) and now: the eye's arm shows; MAD 7.623 (was 7.621), G17 0.674 and 0.436 as before; nothing outside the disc changes",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T17:59:07.910Z",
-   "file": "20261125175907910-note-pair-N9.jpg",
-   "source": "../../../../tmp/pair-N9.jpg",
-   "kind": "note",
-   "label": "4860 at 1920 by 1080 beside the approved (left), tree 5baaaad36: ground part 17.780 (main 19.759), sky 3.407, band 2.656; G17 median 0.570, p25 0.403; 90 s per draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T17:50:00.929Z",
-   "file": "20261125175000929-note-m1-two.jpg",
-   "source": "../../../../tmp/m1-two.jpg",
-   "kind": "note",
-   "label": "dive 4694 and 4706: the tree before (top) and with the held field on the body (bottom); my proxy 4694 to 4702 falls from 0.49 to 0.05",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T17:50:00.334Z",
-   "file": "20261125175000334-note-g-zoom.jpg",
-   "source": "../../../../tmp/g-zoom.jpg",
-   "kind": "note",
-   "label": "4860 round the eye at 2 times: approved, G1 (below 0.7), G2 (below 1), G3 (below 1, relief 0.12)",
    "stop": "neptune"
   }
  ]
