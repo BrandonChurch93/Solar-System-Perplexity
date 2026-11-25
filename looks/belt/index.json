@@ -1,9 +1,16 @@
 {
  "folder": "belt",
- "pushed": "2026-11-25T03:25:39.254Z",
- "head": "33cc2353f501a55f139463c64d433e7670cb8c9e",
- "note": "far Sun 33cc2353 on agent/travel-b9: box 615 final tier 4.83; no step at 499.5",
+ "pushed": "2026-11-25T06:27:52.065Z",
+ "head": "7e51613a00a00ce269f70d8cd1a91d293ce899d0",
+ "note": "far Sun at 615, look F2 before the merge of main: box 4.34 at draft (33cc2353 had 4.83), face 2.7",
  "looks": [
+  {
+   "time": "2026-11-25T06:27:50.886Z",
+   "file": "20261125062750886-note-pair615-F2.jpg",
+   "source": "../../../../tmp/farsun/send/pair615-F2.jpg",
+   "kind": "note",
+   "label": "615 box, approved left, far Sun right: face refit, crisp limb, 4.34 draft"
+  },
   {
    "time": "2026-11-25T03:25:38.224Z",
    "file": "20261125032538224-note-pair615-box-S8fin.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/farsun/out/n-dive-0.jpg",
    "kind": "note",
    "label": "far Sun af2fab0c n-dive-0 (draft tier; approved left)"
-  },
-  {
-   "time": "2026-11-25T01:14:43.438Z",
-   "file": "20261125011443438-note-n-left.jpg",
-   "source": "../../../../tmp/farsun/out/n-left.jpg",
-   "kind": "note",
-   "label": "far Sun af2fab0c n-left (draft tier; approved left)"
   }
  ]
 }
