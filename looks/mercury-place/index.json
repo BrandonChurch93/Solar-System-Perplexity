@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T23:05:07.691Z",
+ "pushed": "2026-11-25T23:28:55.806Z",
  "head": "6591d862db3bc824abcce8ddf9fabd3611294bda",
- "note": "23:06 rate 2 on the rise under the law: 989 to 998 green (0.24 at most), 1009.5 to 1014 the old red (0.64), chain tn at 100 of 207",
+ "note": "23:30 dive 719 to 730 at rate 2 under the law: the turn adds nothing; the red 720 to 723 is the name's (0.57 against 0.59); chain tn at 137 of 207",
  "looks": [
+  {
+   "time": "2026-11-25T23:28:54.433Z",
+   "file": "20261125232854433-note-tn-dive-719.jpg",
+   "source": "../../../../tmp/m/tn-dive-719.jpg",
+   "kind": "note",
+   "label": "dive 719 to 730 at rate 2, whole master frames on merged main under the law",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T23:28:53.248Z",
+   "file": "20261125232853248-note-tn-dive-cr719.jpg",
+   "source": "../../../../tmp/m/tn-dive-cr719.jpg",
+   "kind": "note",
+   "label": "dive 719 to 734 at rate 2, the crater at 1 to 1 under the law: thin ring at 719 to 722, the set's terraces come up from 724 to 731, no step; the bright ridges at the right of 719 to 721 are the open red 720 to 723 (rate 2 0.45 to 0.57, the name 0.46 to 0.59)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T23:05:06.363Z",
    "file": "20261125230506363-note-tn-rise-1009red.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/turn-717-1016.png",
    "kind": "note",
    "label": "717 and 1016, crater at 4 times: main, the name 33314fb8, the law hero.height 3.1 to 0.3 on merged main. 615 and 870 are the name's bytes. At 717 the rim's 98 percent luma goes 124 to 96 (share 0.33), at 1016 125 to 117",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T21:52:47.547Z",
-   "file": "20261125215247547-note-law-a-rise.jpg",
-   "source": "../../../../tmp/m/law-a-rise.jpg",
-   "kind": "note",
-   "label": "rise 998 to 1025, the crater at 3 times (preview, mixed from the two ends): the crater's own turn by height, top 3.1 radii, bottom 0.3; the white and blue ground that comes in at 1009 to 1012 is the other, older red",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T21:22:50.897Z",
-   "file": "20261125212250897-note-cr-two.jpg",
-   "source": "../../../../tmp/m/cr-two.jpg",
-   "kind": "note",
-   "label": "rise 995, 1000, 1005, 1010, 1016, the crater at 2 times (preview size): top the name's light, bottom the set's light at every height; the turn of MAIL 1289 runs between these two",
    "stop": "mercury"
   }
  ]
