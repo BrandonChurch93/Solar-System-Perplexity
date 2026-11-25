@@ -123,7 +123,7 @@ float vn(vec2 p) {
 // where two cells are of one piece: a field of the place, the same for both sides of a border. 0 a full crease,
 // 1 the two run into each other
 float labJoin(vec2 chartPlace) {
-  return smoothstep(0.42, 0.72, 0.65 * vn(chartPlace * uLabJoin.x + 31.7) + 0.35 * vn(chartPlace * uLabJoin.x * 2.3 - 11.3));
+  return smoothstep(0.36, 0.64, 0.65 * vn(chartPlace * uLabJoin.x + 31.7) + 0.35 * vn(chartPlace * uLabJoin.x * 2.3 - 11.3));
 }
 vec3 labBall(vec2 g, float h) {
   float arc = length(g);
@@ -373,9 +373,9 @@ void main() {
   float inward = 1.0 - plan;
   float vi = (turn + 0.035 * sin(plan * 7.0 + seed * 5.0) * inward) * 14.0 + floor(seed * 9.0);
   float vid = mod(floor(vi), 14.0);
-  float reach = 0.25 + 0.6 * h1(vec2(vid, seed + 3.0));
+  float reach = 0.15 + 0.5 * h1(vec2(vid, seed + 3.0));
   float thin = max(1.5 * wa * 2.2, 0.05) * (1.0 - 0.7 * inward / reach);
-  float vein = (1.0 - smoothstep(0.1 * thin, 1.6 * thin, abs(fract(vi) - 0.5))) * (1.0 - smoothstep(0.7 * reach, reach, inward)) * step(0.5, h1(vec2(vid + 7.0, seed)));
+  float vein = (1.0 - smoothstep(0.1 * thin, 1.6 * thin, abs(fract(vi) - 0.5))) * (1.0 - smoothstep(0.7 * reach, reach, inward)) * step(0.6, h1(vec2(vid + 7.0, seed)));
   float rim = smoothstep(0.86, 0.99, rho + 0.1 * (thread - 0.5)) * (1.0 - 0.85 * join);
   float shade = mix(0.02, 1.0, smoothstep(0.05, 0.7, vDeep)) * mix(0.55, 1.0, smoothstep(0.4, 0.97, vDeep));
   cell *= mix(1.0 - uLabTime.w, 1.0, root) * (1.0 - 0.85 * vein) * (1.0 - 0.3 * groove * (1.0 - join)) * (1.0 - 0.93 * rim) * shade;
