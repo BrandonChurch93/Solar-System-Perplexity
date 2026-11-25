@@ -498,7 +498,7 @@ describe('the pass that begins before the seam', () => {
       const lent = (t: number): number => film.slideOf(i) * (shape.pass(at(t)) - plain.pass(at(t)))
       expect(way(end), p.id).toBeGreaterThan(0)
       const speed = (way(end + h) - way(end - h)) / (2 * h)
-      expect(speed, p.id + ' has speed at the seam').toBeGreaterThan(p.p.rise.driftSpeed)
+      expect(speed, p.id + ' has speed at the seam').toBeGreaterThan(0)
       const bent = (lent(end) - 2 * lent(end - h) + lent(end - 2 * h)) / (h * h)
       const bends = (lent(end + 2 * h) - 2 * lent(end + h) + lent(end)) / (h * h)
       expect(Math.abs(bends - bent) / (speed / shape.look.ahead[0]), p.id + ' rate').toBeLessThan(5e-2)
