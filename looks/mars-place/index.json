@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T15:55:11.577Z",
+ "pushed": "2026-11-25T16:25:35.639Z",
  "head": "71688463139ea30327a39c48d8cde7719c152345",
- "note": "wall rock by code, take 1 seen from above: beds read as thin lines on the shadowed wall, flutes weak; take 2 follows",
+ "note": "wall rock take 2 is wrong in the light (pale grey shadowed wall at 2692), cause found (cap.json light.own 0), take 3 runs",
  "looks": [
+  {
+   "time": "2026-11-25T16:25:34.221Z",
+   "file": "20261125162534221-note-v03-whole.jpg",
+   "source": "out/work/place/w2/v03-whole.jpg",
+   "kind": "note",
+   "label": "wall rock take 2, v03-whole: WRONG, shadowed wall pale grey (cap light divided out though cap.json own is 0); not committed",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T16:25:33.108Z",
+   "file": "20261125162533108-note-v07-whole.jpg",
+   "source": "out/work/place/w2/v07-whole.jpg",
+   "kind": "note",
+   "label": "wall rock take 2, v07-whole: WRONG, shadowed wall pale grey (cap light divided out though cap.json own is 0); not committed",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T16:25:31.899Z",
+   "file": "20261125162531899-note-c2692.jpg",
+   "source": "out/work/place/w2/c2692.jpg",
+   "kind": "note",
+   "label": "wall rock take 2, c2692: WRONG, shadowed wall pale grey (cap light divided out though cap.json own is 0); not committed",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T15:55:10.822Z",
    "file": "20261125155510822-note-v38-a.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/eng105/c2-ledge-x4.jpg",
    "kind": "note",
    "label": "BAD: dark ledge of cut layer C2 at 2476, 2477, 2490, N1 left, the cut right, times 4",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T15:05:18.029Z",
-   "file": "20261125150518029-note-rise-track.jpg",
-   "source": "out/work/place/eng105/rise-track.jpg",
-   "kind": "note",
-   "label": "rise 2687 to 2695, far ground and near ground at 1 to 1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T15:05:17.427Z",
-   "file": "20261125150517427-note-chg-rise-2687-2695.jpg",
-   "source": "out/work/place/eng105/chg-rise-2687-2695.png",
-   "kind": "note",
-   "label": "rise pair 2687 to 2695, the tool's changes panel on my drafts",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T15:05:16.857Z",
-   "file": "20261125150516857-note-far-track.jpg",
-   "source": "out/work/place/eng105/far-track.jpg",
-   "kind": "note",
-   "label": "dive 2460 to 2468, far canyon at 1 to 1: the body that changes in place",
    "stop": "mars"
   }
  ]
