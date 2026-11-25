@@ -1,9 +1,106 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T05:36:29.904Z",
+ "pushed": "2026-11-25T05:57:35.208Z",
  "head": "e55f084ca0436489551bb69b2604e167fcff5c4a",
- "note": "05:37 UTC: merge e55f084c proven equal to e41572b by bytes on drafts and slices; handover, finals, parity and tests still running; naming when they end",
+ "note": "05:59 UTC: correction, the dive's pattern line is the picture (my script had dropped 120 px under the limb); chain q10 running (handover at draft tier, finals, parity, tests), naming when it ends",
  "looks": [
+  {
+   "time": "2026-11-25T05:57:33.904Z",
+   "file": "20261125055733904-note-trio-3150.jpg",
+   "source": "../work/r10/trio-3150.jpg",
+   "kind": "note",
+   "label": "3150 final beside the approved image and the kept still (match 7.358 at the round's size, round 46 6.578)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:57:32.523Z",
+   "file": "20261125055732523-note-jupiter-dive-draft-across.jpg",
+   "source": "out/work/handover/jupiter-dive-draft-across.png",
+   "kind": "note",
+   "label": "handover report on the merge, dive 3053 to 3059 across T, draft tier",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:57:31.103Z",
+   "file": "20261125055731103-note-jupiter-dive-draft-before.jpg",
+   "source": "out/work/handover/jupiter-dive-draft-before.png",
+   "kind": "note",
+   "label": "handover report on the merge, dive 3047 to 3058, draft tier",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:57:30.100Z",
+   "file": "20261125055730100-note-asis-dive-3029.jpg",
+   "source": "../work/r11/asis-dive-3029.png",
+   "kind": "note",
+   "label": "dive 3029 against 3037 by the ground's true map: frame, the other carried onto it, pattern (white is over the limit); corrected reading, the strip under the limb is the red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:57:29.428Z",
+   "file": "20261125055729428-note-dive-ur-3025-3045.jpg",
+   "source": "../work/r11/dive-ur-3025-3045.jpg",
+   "kind": "note",
+   "label": "dive, upper right at 2 to 3, frames 3025 3029 3033 3037 3041 3045 of e41572b: the far ground under the limb, where the pattern line is red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:52:07.626Z",
+   "file": "20261125055207626-compare-jupiter-rise-sides.jpg",
+   "source": "out/work/handover/jupiter-rise-sides.png",
+   "kind": "compare",
+   "label": "jupiter rise, both sides at T (frame 3240) and their difference times 8",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3240,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T05:51:44.612Z",
+   "file": "20261125055144612-sheet-jupiter-dive-top.jpg",
+   "source": "out/work/handover/jupiter-dive-top.png",
+   "kind": "sheet",
+   "label": "jupiter dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 3059), place picture off, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "first": 2970,
+   "last": 3059,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T05:49:45.141Z",
+   "file": "20261125054945141-sheet-jupiter-dive-draft-before.jpg",
+   "source": "out/work/handover/jupiter-dive-draft-before.png",
+   "kind": "sheet",
+   "label": "jupiter dive, every frame 3047 to 3058 (before T, frame 3059), draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "first": 3047,
+   "last": 3058,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T05:49:43.333Z",
+   "file": "20261125054943333-sheet-jupiter-dive-draft-across.jpg",
+   "source": "out/work/handover/jupiter-dive-draft-across.png",
+   "kind": "sheet",
+   "label": "jupiter dive, every frame 3053 to 3059 (across T, frame 3059), draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "first": 3053,
+   "last": 3059,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T05:49:42.042Z",
+   "file": "20261125054942042-compare-jupiter-dive-step-in-place.jpg",
+   "source": "out/work/handover/jupiter-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "jupiter dive, the largest step of the level in place (0.93): frame 3004, frame 3005, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3005
+  },
   {
    "time": "2026-11-25T05:36:17.975Z",
    "file": "20261125053617975-note-trio-3150.jpg",
@@ -77,17 +174,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-25T05:23:57.317Z",
-   "file": "20261125052357317-compare-jupiter-dive-sides.jpg",
-   "source": "out/work/handover/jupiter-dive-sides.png",
-   "kind": "compare",
-   "label": "jupiter dive, both sides at T (frame 3059) and their difference times 8",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3059,
-   "tier": "draft"
-  },
-  {
    "time": "2026-11-25T05:08:32.567Z",
    "file": "20261125050832567-note-pair-3150-final.jpg",
    "source": "../work/r9/pair-3150-final.jpg",
@@ -125,102 +211,6 @@
    "source": "../work/r9/rise-l.jpg",
    "kind": "note",
    "label": "after the rise 3316 to 3323 draft, every frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:08:20.169Z",
-   "file": "20261125050820169-note-rise-k.jpg",
-   "source": "../work/r9/rise-k.jpg",
-   "kind": "note",
-   "label": "rise 3308 to 3315 draft, every frame, commit e41572b (the merge e55f084 draws the same bytes at the four judged frames)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:05:48.606Z",
-   "file": "20261125050548606-frame-f3296.jpg",
-   "source": "out/work/jupiter/h6/f3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T05:05:15.079Z",
-   "file": "20261125050515079-frame-f3150.jpg",
-   "source": "out/work/jupiter/h6/f3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T05:04:37.596Z",
-   "file": "20261125050437596-frame-f2997.jpg",
-   "source": "out/work/jupiter/h6/f2997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T05:04:03.688Z",
-   "file": "20261125050403688-frame-f2895.jpg",
-   "source": "out/work/jupiter/h6/f2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T04:49:53.149Z",
-   "file": "20261125044953149-note-pair-3150-final.jpg",
-   "source": "../work/r9/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final tier beside the approved close image, e41572b, match 7.784",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:49:43.150Z",
-   "file": "20261125044943150-note-f3259-ll.jpg",
-   "source": "../work/r9/f3259-ll.png",
-   "kind": "note",
-   "label": "rise 3259 lower left at 1 to 1, e41572b: the near plate's cumulus over the dark smooth ground beside the fit camera",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:49:42.277Z",
-   "file": "20261125044942277-note-rise-d.jpg",
-   "source": "../work/r9/rise-d.jpg",
-   "kind": "note",
-   "label": "rise 3262 to 3267, e41572b, tool frames",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:49:33.328Z",
-   "file": "20261125044933328-note-rise-c.jpg",
-   "source": "../work/r9/rise-c.jpg",
-   "kind": "note",
-   "label": "rise 3256 to 3261, e41572b, tool frames: pale mounds over a dark smooth field at the lower left, known red",
    "stop": "jupiter"
   }
  ]
