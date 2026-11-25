@@ -3396,3 +3396,137 @@ Next, in this order: G5 and G17 for B1; B1 as its own commit with main merged; t
 - Judged frames at draft, sha256 of the file (first 16), the name 9c8a46df / this step: 4035 45c0542e84eacac3 / the same. 4137 f584697198aa0913 / the same. 4290 5f08791e65deeb71 / 7d4bd3af6435318b, changed on purpose (the line at the horizon). 4436 5dde74d5c137b391 / the same.
 - Final 4290 against `references/approved/uranus-close.jpg`: 3.224 (R 3.451, G 3.078, B 3.144); the name 3.225; main 3.849.
 - The tool's four rows are run on the pushed commit and are in the NAMED mail, not here.
+
+### B1 on the pushed commit 6a0e74bb: proofs (19:54 to 20:33 UTC)
+
+- Merge: 2d9e542c with main fd52cf33f64e0f9fea42ccbc10bc2f7e3427d0cc by sha, no fast forward, pushed to agent/uranus-place as 6a0e74bb2f3472ec8ae201fea1922bc1dab673ba.
+- `npm run smooth -- --stop uranus --only path`, last lines, the same as the name's: "smooth uranus: red, 4 over the limit or not measured." The four: "rise: whole frames, speed: changes by 0.094 of the mean (over 8 points) over one film frame at frame 4457, limit 0.08"; "rise: whole frames, speed: climbs again by 0.184 of the mean (over 8 points) after its largest value (frame 4433), up to frame 4451, limit 0.03"; "rise: rate 2, speed: changes by 0.104 of the mean (over 8 points) over one film frame at frame 4457, limit 0.08"; "rise: rate 2, speed: climbs again by 0.198 of the mean (over 8 points) after its largest value (frame 4432 + 1/2), up to frame 4451, limit 0.03". All four are count steps of the ring of 8 points (MAIL 401), not tuned.
+- tsc clean. `tests/globe-cap.test.ts` alone: 1 file passed, 30 tests passed.
+- Net size of my folders: this commit 85.004 MB against main's 84.862 MB, 150 files each.
+- Final 4290: B1 against the name, 1944 pixels differ by over 6 codes (0.09 percent), largest 19, all on the horizon line. Cost 199.9 s for 19 samples against the name's 149.1 s.
+- Final 4186: B1 1226.1 s, main 1017.5 s, 64 samples each. Main's pose at 4186 is not the name's (20.6 percent of the pixels differ by over 6 codes), so the pair of 4186 shows two pictures, not one line.
+
+### Findings after B1 (20:16 to 21:10 UTC), measured unless said
+
+- Cover on (B1) against cover off (control L3c), draft: outside the place's field the 99th percentile of the difference per tile of 120 px is 1 to 3 codes at 4416 and 4420; inside the field 20 to 60 codes. Share of the frame over 6 codes: 11.1 percent at 4416, 7.1 at 4418, 8.4 at 4420, 7.5 at 4422, 3.2 at 4424, 0 at 4426. Side by side the two are one body. At 4420 and 4422 the difference is an emboss: the clock's shear.
+- So the two laws of light agree outside the field to 1 to 3 codes: that item of the list is measured small.
+- Cloud map: 0.33 percent of `wrap-cloud.png` is over 0.05; within 32 degrees of the spot at most 0.33 percent of the area, largest opacity 0.30; shadows at most 0.16 percent. The clouds drift by their own clock, so this counts density only. No cloud shows in the tiles outside the field at 4416 and 4420.
+- The patch spot is 2.175 degrees from the place's up. Patch widths 80, 46, 24 degrees. The wrap map enters 32.5 degrees from the spot, where the cover's alpha is at most 0.13: under 0.02 of weight (arithmetic).
+- Dive part 1 on my chain with the cover off, read from 4151, 4151 + 1/2, 4152, 4152 + 1/2: 0.95, 0.83, 0.70, 0.69 (the name 0.98, 0.84, 0.77, 0.82; rim off 0.45, 0.58, 0.65, 0.68). The cover is not the cause there.
+- A second candidate on the dive: `globe.ts` sharpens the wrap map by `uSharp.x + uSharp.y * (1.0 - mu)` with `look.globe.sharp [0.3, 0.8]`, a factor by the view cosine on the point's own detail. Controls S1 and S2 are queued.
+- The light table (513 by 128, rows the view cosine): against its row at view cosine 1 it rises under view cosine 0.4, to 2.7 to 7 times under 0.1. So the limb's detail is amplified 3 to 7 times by the table now.
+- The clock: 3.25 from 4155 through the terrain; on the rise it stands until 4417 + 3/8, then 3.2585 at 4418, 3.3950 at 4420, 3.6836 at 4422, 4.1059 at 4424, 4.6435 at 4426.
+
+## 21:43 to 22:30 UTC, the rise's first part reads 1.60 from 4399 on B1: cause by controls and by the ground's own carry
+
+State: branch head 6a0e74bb (B1 on the old main fd52cf33), not named. The name stays 9c8a46df. Main moved to 172e7bcd at 21:41 (MAIL 1314), not merged yet.
+
+### What the row says and why B1 reads what main reads
+
+- Tool row, rise part 1 of 2: B1 1.60 from 4399 (71 over), the name 1.29 from 4387, main 1.60 from 4399 + 1/2.
+- In the name the deck's far ground beyond the place's field was one flat colour (`calm * calm * uPlace.y`), under the reader's floor of contrast, so the reader did not judge it. B1 shows the globe's own map there, as main's globe does, and the reader judges it and reads main's number.
+
+### Controls on B1 (draft, 4399 to 4407 in half frames, chain reader with the tool's own code, reach 16 half frames)
+
+| control | what is off | back side p99 | p50 | share over 0.45 | judged share |
+| --- | --- | --- | --- | --- | --- |
+| B1 | nothing | 1.60 | 0.28 | 0.285 | 0.13 |
+| HS | billow shade | 0.97 | 0.29 | 0.276 | 0.13 |
+| HV | veil | 1.17 | 0.29 | 0.267 | 0.13 |
+| HA | deck image, billow shade, veil, tops | 1.05 | 0.50 | 0.559 | 0.12 |
+| RIM2 | rim taken as light of the air, in globe and deck | 0.94 | 0.20 | 0.116 | 0.10 |
+
+No layer of the four brings the row under 0.45. The reader judges only 0.10 to 0.13 of the frame here: the band of far ground under the limb.
+
+### The ground's own carry (the plan's deck frame, no flow)
+
+- `set.ts` seats the deck by `plan.deckFrame(time)`. In the frame of the reader's poses the ground is the unit sphere (range view: to 0.00001) and turns 0.2667 degrees in 8 film frames about [-0.3735, -0.8084, 0.4549] (1 degree per second, the globe's spin). A free fit on the picture gave 0.2700 degrees about an axis 0.8 degrees from it.
+- First frame (4399) carried onto 4407 by that geometry alone: what is left by tile of 240 by 120 px is 0.0 to 0.9 full px over the near and middle ground of B1. The ground stands in place.
+- The reader's pattern on that carry, B1: over all it carries (0.451 of the frame) p50 0.03, share over 0.45 0.185. By view cosine at 4407: 0.4 and up p50 0.01 to 0.04, none over; 0.3 to 0.4 p50 0.22, 0.21 over; 0.2 to 0.3 p50 0.77, 0.87 over; 0.1 to 0.2 p50 0.67, 0.76 over. Contrast of both frames there is 2.5 to 4.4 levels, over the floor 1.0.
+- The reader's own way (flow chain) is 46 reduced px (median) off the ground's way where it reads red: under the limb the flow follows the limb's light and not the ground.
+
+### What changes in place under the limb
+
+- Mean level by depth under the limb at 4399 (draft): 205 at 2 to 20 px (view cosine up to 0.10), 186 at 40 px (0.14), 163 at 80 px (0.21), 152 at 160 px (0.31). At 4407: 219 to 20 px, 190 at 40, 155 at 80, 112 at 160.
+- The band's own detail between 8 and 40 px (mean profile, the ground averaged out along the limb): 9 to 15 levels, against the reader's floor of 1.0. The band rides with the limb, so against the ground it is a pattern that moves: a ground point 60 px under the limb at 4407 was under the band at 4399 (level 187 against 138 for the same point).
+- Where it comes from: `light.bin` (513 by 128, Sun cosine by view cosine). Rows 0 to 9 (view cosine 0 to 0.071) are one value, rows 10 to 14 fall steeply (Sun cosine 0.4: 3.913, 3.881, 3.574, 3.048, 2.638, 2.355), and at some Sun cosines a peak sits at row 12 or 13 over a lower plateau (Sun cosine 0.2: 1.267 flat, then 1.310, 1.543, 1.738, 1.677). At the hold that span is about one pixel of limb line. At 4399 the same span is 10 to 45 px: the hard band on the horizon.
+
+### MAIL 1326 from the Builder, 22:41 UTC, word for word
+
+MAIL 1326 from the Builder (/root), 22:41 UTC. On your rim numbers and the rise's first part (your mail of 22:41). Four pictures seen as files, not yet opened large.
+
+A. The fall of the 25th percentile at 4035 by 0.0000021 (1.0821136 to 1.0821115, the limit is 0.8) is no line. The rule as I hold it for every builder (d318): a line is a number on the wrong side of its limit; a number that stands a third over its limit and moves in its seventh digit is not one. It was right to state it and not round it away, and it stays written in your state. The thing the rim was changed for moved the right way: match 3.737 against 3.743, and the error against the approved where the two differ 15.48 to 14.73. The globe's part stays in.
+
+B. Your finding on the reader is taken as you state it, with its own bounds (one strength of air, one ground contrast, weaker airs not tried): under a made air with nothing wrong in place the reader still reads 0.71 on this part, so it counts the air's own change over a ground point as a change of pattern. That does not move the bar: the limit stays 0.45 and a take goes on by d311 (no line worse than main's own row). It tells both of us what the number can and cannot say here, and I log it. What the picture owes is what you name: the way from 1.60 down toward that case.
+One thing to say in your state: the hard band is in light.bin (rows for view cosine 0 to 0.071 one value, then a fall by a third within four rows). Does the rim as light of the air cure that band at its cause, or lay air over it? If the table itself still has the step, say what a smooth law across view cosine 0 to 0.1 does to 4035 and to the row, as its own control. Fix the cause where it is, not above it.
+
+C. Go on as you say: merge main, the rim (globe and deck, calm sources matched) as its own commit and a state, 4035 and 4290 at the final tier with match and G17, the path's lines, the tool's four rows. NAMED only if no row is worse than the name's. I draw the reader's rows on my machines when you name it.
+
+### Controls PL, AO and the made case (22:33 to 22:40 UTC, draft, 4399 to 4407, chain reader with the tool's own code)
+
+- PL: the four hand layers off and `lNow = field.rgb`, so the far ground shows only the map at the ground point. Reads 0.06. Its flow lies 0.34 reduced px (1.4 full px, median) from the ground's own geometry. By the plateau rule (MAIL 1230 point 3) the layer whose absence brings the row under 0.45 is the light and air law at the far ground.
+- AO: the hand layers off and the albedo set to 1 (the air law alone). Not judged at all: nothing over the reader's floor in the judged area.
+- Made case (`made.py`): MC0, the PL frames with their contrast stretched and no air, reads 0.05. MC1, the same ground under an exact air by the path (level = ground x T + air x (1 - T), T = exp(-0.1 / view cosine), normalised) reads 0.71 with the tool's code and 0.65 on the exact carry (view cosine 0.1 to 0.2 p50 0.66, 0.2 to 0.3 p50 0.37). One strength of air and one ground contrast, weaker airs not tried. So a picture with nothing wrong in place still reads 0.71 here.
+
+### The rim on the globe alone, numbers at 4035 (trial RIM1 on 6a0e74bb, job 22:07 to 22:33 UTC)
+
+- Final 4035 match with uranus-hero.png 3.737 against main's 3.743. G17 at 4035 over 70 tiles: median 1.177913424648752 (main and B1 the same), 25th percentile 1.0821114578678723 against 1.0821135621887694 (lower by 0.0000021). 4290: 1.0760174633587556 and 0.9607568606917272, as B1.
+- 9149 px differ from main's by more than 1 level (662 over 4, largest 25), all on the limb. Where they differ the mean error against the approved falls from 15.48 to 14.73.
+- Judged draft frames: 4035 `22b4815479f18654` (was `45c0542e84eacac3`), 4137 `e3a91f73e4881baf` (was `f584697198aa0913`), 4290 `7d4bd3af6435318b` (as B1), 4436 `54c8f90a461a0fea` (was `5dde74d5c137b391`).
+- Chain reads, draft: dive from 4151 0.71 (name 0.98), from 4152 + 1/2 0.60 (name 0.82); rise from 4418 0.74 (B1 0.86).
+
+### My mail to the Builder, 22:41 UTC, word for word
+
+URANUS, 22:41 UTC. The rim's numbers you asked for (MAIL 1275 point 3) and point 3's finding on the rise's first part. Nothing is named by this mail. Head 6a0e74bb (B1, on the old main), the name stays 9c8a46df. Main 555fe096 is fetched and gets merged before the next name.
+
+A. THE RIM AT 4035 (trial on B1: the part of the globe's light over the straight down light is light of the air, coloured by the calm map, and no longer multiplies the map's detail). MEASURED here, final tier:
+- match with uranus-hero.png 3.737 against main's 3.743 (better by 0.006).
+- G17 over the same 70 tiles: median 1.177913424648752 on both, equal to the last digit. 25th percentile 1.0821114578678723 against main's 1.0821135621887694: lower by 0.0000021. At your three digits both read 1.178 and 1.082. A fall is a fall, so I state it and do not round it away. Cause: the map's fine grain no longer rides the rim's light under the limb line.
+- 9149 px differ from main's by more than 1 level (662 by more than 4, the largest 25), all on the limb. Where they differ the mean error against the approved falls from 15.48 to 14.73.
+- 4290: the draft frame is the same bytes as B1's (the deck is not touched by this part), G17 1.076 and 0.961 as B1.
+- Judged draft frames changed on purpose: 4035 22b4815479f18654 (was 45c0542e84eacac3), 4137 e3a91f73e4881baf (was f584697198aa0913), 4436 54c8f90a461a0fea (was 5dde74d5c137b391). 4137 and 4436 look the same to the eye at frame size (12 thousand and 8 thousand px over 2 levels, at the limb).
+- Chain reads with the tool's code, draft: dive from 4151 0.71 (name 0.98), from 4152 + 1/2 0.60 (name 0.82); rise from 4418 0.74 (B1 0.86). Lower, still red.
+- Picture 1: the limb at 4035, final, four crops: approved, main, the trial, the difference times 8.
+
+B. THE RISE'S FIRST PART, 1.60 from 4399 on B1 (main 1.60 from 4399 + 1/2, the name 1.29 from 4387). Cause by the plateau rule:
+- Why the name reads lower: beyond the place's field its far ground was one flat colour, under the reader's floor, so the reader did not judge it. B1 shows the globe's map there as main's globe does, and reads main's number.
+- Controls on B1, 4399 to 4407, tool's code (back side p99): nothing off 1.60; billow shade off 0.97; veil off 1.17; deck image, shade, veil and tops off 1.05; the same four off and the light and air law off (the ground shows only the map at the ground point) 0.06. So the layer is the light of the air at the far ground, and the ground itself is a place: with it alone the reader is green and its flow lies 1.4 full px (median) from the ground's own geometry.
+- The ground's own carry (plan.deckFrame and the poses, no flow) on B1: 4399 carried onto 4407 leaves 0.0 to 0.9 px over the near and middle ground. The reader's measure on that carry: median 0.03 over the 45 percent of the frame it carries; where the view cosine at 4407 is 0.4 or more nothing is over 0.45; at 0.2 to 0.3 the median is 0.77.
+- What changes in place there: the limb's bright band passes over the ground. The ground that stands at view cosine 0.2 to 0.3 at 4407 reads level 138 there and read 187 at 4399, when the eye was at 0.035 radii and not yet at 0.082. The band is 205 flat to 20 px under the limb, then 186 at 40 px and 163 at 80 px. It is the hard band of the critics' list seen from low: light.bin's rows for view cosine 0 to 0.071 are one value, then at Sun cosine 0.4 it falls by a third within four rows (view cosine 0.079 to 0.102); at the hold that span is about one pixel (arithmetic), at 4399 it lies 10 to 45 px under the limb (by the pose).
+- A made case, so the number can be read rightly: the plain ground of the control (reader 0.05) under an exact air by the path, level = ground x T + air x (1 - T), T = exp(-0.1 / view cosine), nothing else. Tool's code: 0.71; on the exact carry 0.65. So a picture with nothing wrong in place still reads 0.71 here under this made air (one strength and one ground contrast, weaker airs not tried): the reader counts the air's own change over a ground point as a change of pattern. What the picture owes is the way from 1.60 down toward that.
+- The trial that goes that way: the rim as light of the air in the globe and in the deck reads 0.94 from 4399 (share over 0.45: 0.116 against 0.285). Picture 2: 4399 and 4407, B1 left, the trial right: the far ground under the limb fades into the air where B1 keeps it crisp up to the horizon. Pictures 3 and 4: B1 on the exact carry, and the made case.
+
+C. WHAT I DO NOW, without waiting: merge main, put the rim (globe and deck, calm sources matched) on B1 as its own commit and a state, not a name; then 4035 and 4290 at the final tier with match and G17, the path's lines, the tool's four rows. It becomes NAMED only if the rim's rule holds as you set it and no row is worse than the name's. If you rule the 0.0000021 out, the globe's part stays out and I say what the deck's part alone reads.
+
+### 22:45 to 23:20 UTC: main merged, the rim's two forms on the deck, the upright lines
+
+- 22:45 main `555fe096e386d7c2bcab8b7af071d10e0c2211e6` merged into B1 `6a0e74bb` as `c6d698667a691dfb1c8cb7d4d5e4f70c062e2cc4` (no fast forward, trailer; no Uranus file changed by the merge; tsc clean; `npx vitest run tests/globe-cap.test.ts` alone 30 passed). Pushed. Not a name; the name stays 9c8a46df. Main's Uranus folders at 555fe096 are the same bytes as at 172e7bcd (`git diff --stat` between the two over my three folders is empty).
+- RIM, FORM RC (trial, `/tmp/n62/rimc.py`): the rim's light as light of the air on the globe and on the deck's map part only; one config value `look.globe.rimDeg` (degrees of ground per calm texel) sets the calm source on both. Draft chain from 4399: 1.10 (B1 1.60). Final 4035 the same bytes as the globe only trial (match 3.737, main 3.743). 4290 changes only on a sliver at the horizon.
+- RIM, FORM RD (trial, `/tmp/n62/rimd.py`): the same, and on the deck the rim's part is taken by the veil (the share of air under the eye) off every ground, the terrain picture's too: `rim = sunlit * max(1 - plain, 0) * bared(mu, plain).a`, `col = (mix(aS, aT, wT) * (lNow - rim) + calmS * rim + tops) * shade`. Draft chain from 4399: 1.05 (back p50 0.27, share over 0.45: 0.180, judged 0.11). Judged drafts: 4035, 4137, 4436 the bytes of the globe only trial; 4290 changes: 229957 px differ, 59506 by over 1 level, 10916 by over 4, largest 17, along the left horizon band and the lower right corner.
+- RD at the final tier, 4290 against `references/approved/uranus-close.jpg`: 3.249 (R 3.511, G 3.089, B 3.148). B1 3.224, main 3.849. Where RD and B1 differ by over 1 level (58371 px): error against the approved 3.422 (B1), 3.990 (RD), 8.760 (main); mean level 146.14 (B1), 145.51 (RD), 145.11 (approved), 152.33 (main); detail (luma less its blur of sigma 6, rms) 8.80 (B1), 8.23 (RD), 8.27 (approved), 11.2 (main). Read: RD takes the level and the amount of detail toward the approved and loses the place of the streaks, because at the terrain's own eye the picture's albedo was taken with the rim's light in it and RD draws it without. The cause of the fall of 0.025 is known and it is a loss at a judged frame, so RD does not go on as it is.
+- The form that would keep 4290 with one law (not tried): take the picture's albedo with the same split, `aT' = aT + (aT - calm) * rimI / (LI - rimI)` at the picture's own eye. It raises the picture's detail seen from above by up to `LI / (LI - rimI)` near the picture's own horizon. Arithmetic, not a render.
+- Looks pushed 23:16 (head e01563a8f118): the 4290 final band of RD beside B1 and the approved; the upright lines at 4407 at 3x.
+
+### MAIL 1333, word for word
+
+"MAIL 1333 from the Builder (/root), 23:05 UTC. One thing I see in your panel b1-rim2-look.jpg, in all four pictures alike (both moments, both states): fine upright lines of blue and green, one to two pixels wide, in the white cloud at the bottom of the frame, most of all at the right of the lower pair. They do not look like cloud. I showed the panel to Brandon in status 341 as unfinished and named the lines as a flaw.
+State in your next mail: (1) the two film frames of the panel and its tier; (2) whether main 172e7bcd draws the same lines at those frames at the final tier (one picture at 1 to 1 of the same crop from main settles it); (3) the cause in words (the march's steps without a turn of the jitter from pixel to pixel, a table's edge, the grain, or something else) and (4) whether it is yours to cure in your folder. If main draws them, they are a flaw of the film as it stands and go on your list ahead of the rim; if only the trial draws them, say so and they are a term of the rim's name.
+Nothing else changes: the rim goes on as a state as agreed in 1326."
+
+### The upright lines: what the panel is, and the cause
+
+- The panel `b1-rim2-look.jpg`: upper pair film frame 4399, lower pair 4407, draft tier (1920 x 1080, one sample), cut 1 to 1 at x 504 to 1304, y 184 to 624; left B1 `6a0e74bb`, right the trial RIM2 (found again by matching the panel's cells against the frames: 0.9996 to 0.9998).
+- Geometry (arithmetic from `deck.json` and the path): the terrain picture `deck-color.jpg` is 8192 x 4608 texels over a window of 3.695 x 2.078 in tangent, 2217 texels per unit tangent, drawn from an eye 0.0151 radii up (`|centre| - radius` = 1.0 of 66.08). The frame at 4407 holds 1180 px per unit tangent (vfov 49.19 degrees, 1080 rows). From its own eye the picture gives 1.9 texels per draft px each way. From 0.0353 radii (4399) and 0.0818 radii (4407) a texel far out on the ground is 2.3 and 5.4 times longer along the line of sight than across, more toward the picture's own horizon where the ground curves away: 1 px wide and 3 to 10 px tall on the frame.
+
+### The upright lines: main, the controls, the cause, the cure (23:18 to 23:40 UTC)
+
+- Correction of my own first guesses: the lines are not the hand layers and not the tops' fibre. Controls at 4407 at draft on c6d69866, measure `/tmp/n62/lm.py` (crop x 960 to 1300, y 440 to 620; colour detail across the lines, rms of green less the mean of red and blue / of blue less red, each less its 5 px box across): B1 1.85 / 4.34; tops off 2.27 / 5.24; veil off 1.85 / 4.35; the terrain picture off (`wT = 0`) 0.62 / 0.92, lines gone. The trial RD 1.79 / 4.21: the rim does not make them.
+- Main (555fe096, Uranus folders the bytes of 172e7bcd) at 4407: final tier (64 samples, 271 s) 0.54 / 0.87 and draft 0.52 / 0.79, no lines; picture `/tmp/n63/main-final-4407-crop.png` (the panel's crop, 1 to 1). Main at 4399 at draft: 0.89 / 1.89 against B1's 1.34 / 2.74, the same kind, weaker. Main at 4399 at the final tier: not rendered when this was written.
+- Why main is clean at 4407: on main the cover with the picture leaves by the eye's height (`look.place.deck.span [0.0235, 0.06]` radii; 4407 is at 0.0818, 4399 at 0.0353 is on the ramp). The name 9c8a46df took that law out (d253, the cover by pixel size `deck.pixel`), so the picture stays under higher eyes. The lines are in the name and in B1, not on main, not from the rim.
+- Cause: the terrain picture seen from above its own eye. Its texels lie longer along the line of sight than across (2.3 times at 4399, 5.4 at 4407, more toward its own horizon), and where one texel is longer than a pixel the picture's own per channel texel noise (raised by `sharp 0.3`) is drawn as a strip one pixel wide and 3 to 10 tall. Proof by a diag render (`out/work/u/pat/LG-diag`, colour by log2 of master px per texel along the stretched axis): the zone of the lines at 4399 and 4407 is at 1 to 2.5, the whole of 4290 at about -0.25, 4186 under 0.
+- Cure, one law by place and pixel size: `look.deck.long [1, 2]`, uniform `uLong`, one line in `deck.ts`: the picture's weight falls from one to nought as a texel grows from 1 to 2 master px along its stretched axis; what stands instead is the same ground point's plates inside the field and the globe's map outside (B1). Nothing by the clock, nothing by the eye's height.
+- Trials at draft: `[1, 2]` (LG1) 4399 0.74 / 1.63, 4403 0.58 / 0.80, 4407 0.62 / 0.92, 4413 0.71 / 1.09; `[1.5, 3]` (LG2) 4399 0.83 / 1.87, 4407 0.62 / 0.92. By eye at 3x: both clean at 4407; at 4399 `[1.5, 3]` leaves more fine strips in the lower middle, so `[1, 2]` is taken.
+- Judged draft frames with `[1, 2]`, sha256 first 16, all the bytes of B1: 4035 45c0542e84eacac3, 4137 f584697198aa0913, 4290 7d4bd3af6435318b, 4436 5dde74d5c137b391. 4186 changes: 6296 px by over 1 level, 2084 over 4, 179 over 10, largest 18, mean 0.0097, in two strips near the horizon (upper left, right middle); to the eye at 2x the same picture.
+- What gives way: under the rise from about 4399 the far cloud is the plates' and the map's, softer than the picture's (4407: main's cloud reads a little crisper). No seam seen at 4399, 4403, 4407, 4413 at frame size.
+- Not cured: at 4399 soft upright streaks several px tall stay in the lower middle where a texel is under 1 master px long. They are the picture's own features pulled 2.3 times along the sight, not texel strips; main draws them too at 4399 (0.89 / 1.89 against 0.74 / 1.63 here). A law by the picture's stretch (the ratio of its two axes on the frame) would take them and would change 4186; not tried.
+- `npx tsc --noEmit -p .` clean; `npx vitest run tests/globe-cap.test.ts` alone: 1 file, 30 passed; `npm run -s smooth -- --stop uranus --only path`: "smooth uranus: green. out/work/smooth/uranus.md", "VERDICT: green. No number is over its limit."

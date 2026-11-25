@@ -18,6 +18,7 @@ export interface DeckLook {
   detail: { tone: number; relief: number; fleck: number; scale: number; stretch: [number, number] }
   near: [number, number]
   coarse: [number, number]
+  long: [number, number]
   cloud: { height: number; tile: number; stretch: number; group: number; cover: [number, number]; curve: [number, number]; drift: number; gain: number; shade: number; reach: [number, number]; tint: [number, number, number]; lit: [number, number] }
 }
 
@@ -146,6 +147,7 @@ uniform sampler2D uNear;
 uniform vec4 uNearWin;
 uniform vec3 uNearMix;
 uniform vec2 uCoarse;
+uniform vec2 uLong;
 uniform sampler2D uCloud;
 uniform vec4 uCloudA;
 uniform vec4 uCloudB;
@@ -245,6 +247,7 @@ void main() {
   float tdt = ta.x * tb.y - ta.y * tb.x;
   float least = sqrt(max(0.5 * (tsq - sqrt(max(tsq * tsq - 4.0 * tdt * tdt, 0.0))), 0.0));
   wT *= 1.0 - smoothstep(uCoarse.x, uCoarse.y, log2(max(least * uFine * uFrame, 1e-6)));
+  wT *= smoothstep(uLong.y, uLong.x, log2(max(least * uFine * uFrame, 1e-6)));
   vec2 uvN = (uvT - uNearWin.xy) / (uNearWin.zw - uNearWin.xy);
   vec2 eN = min(uvN, 1.0 - uvN);
   float wN = smoothstep(0.0, uNearMix.z, min(eN.x, eN.y)) * (1.0 - smoothstep(uNearMix.x, uNearMix.y, plateT * uFine * uFrame));
@@ -482,7 +485,7 @@ export class Deck {
         uCloud: { value: t.cloud }, uCloudA: { value: new THREE.Vector4(look.cloud.height, 1 / look.cloud.tile, 1 / look.cloud.group, look.cloud.drift) },
         uCloudB: { value: new THREE.Vector4(look.cloud.gain, look.cloud.shade, look.cloud.reach[0], look.cloud.reach[1]) }, uCloudC: { value: new THREE.Vector4(look.cloud.cover[0], look.cloud.cover[1], look.cloud.curve[0], look.cloud.curve[1]) }, uCloudD: { value: new THREE.Vector4(cloudJson.gutter, 1 / look.cloud.stretch, 0, 0) },
         uCloudTint: { value: new THREE.Vector3().fromArray(look.cloud.tint) }, uCloudLit: { value: new THREE.Vector2().fromArray(look.cloud.lit) },
-        uNear: { value: t.near }, uNearWin: { value: new THREE.Vector4().fromArray(nearJson.window) }, uNearMix: { value: new THREE.Vector3(look.near[0], look.near[1], nearJson.edge) }, uCoarse: { value: new THREE.Vector2(Math.log2(look.coarse[0]), Math.log2(look.coarse[1])) },
+        uNear: { value: t.near }, uNearWin: { value: new THREE.Vector4().fromArray(nearJson.window) }, uNearMix: { value: new THREE.Vector3(look.near[0], look.near[1], nearJson.edge) }, uCoarse: { value: new THREE.Vector2(Math.log2(look.coarse[0]), Math.log2(look.coarse[1])) }, uLong: { value: new THREE.Vector2(-Math.log2(look.long[0]), -Math.log2(look.long[1])) },
       },
     })
     const nPsi = 720
