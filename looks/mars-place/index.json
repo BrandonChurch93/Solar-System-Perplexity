@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T02:21:36.668Z",
+ "pushed": "2026-11-25T02:42:20.684Z",
  "head": "88d4f309548622f39a1f3de85bc015c83317c8a9",
- "note": "02:25 trial of the law by place and eye (local patch, not committed): pairs at native size 2456, 2464, 2470, 2474, 2684, 2686, 2688, 2689; fan out, slab out; picture's rock darker and greyer than the cap above 2464",
+ "note": "02:45 trial of the one ground: main's heights cure the wedge at 2448; east of the field at 2470 is bad in both states; gap measure by layer",
  "looks": [
   {
-   "time": "2026-11-25T02:21:35.741Z",
-   "file": "20261125022135741-note-n56-hr.jpg",
-   "source": "out/work/place/see/n56-hr.jpg",
+   "time": "2026-11-25T02:42:20.075Z",
+   "file": "20261125024220075-note-gapwhy.jpg",
+   "source": "out/work/place/see/gapwhy.png",
    "kind": "note",
-   "label": "TRIAL sheet rise: top 88d4f309 2684, 2686, 2688, 2692; under it the law at the same frames; bottom law 2685, 2687, 2689, 2696",
+   "label": "relief minus cap in height, 0 dark to 500 m and over red, by layer L0, L1, L2 in the picture's frame. Red in L0 is ground hidden behind L1 and L2 at the picture's eye",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:21:34.900Z",
-   "file": "20261125022134900-note-n56-h.jpg",
-   "source": "out/work/place/see/n56-h.jpg",
+   "time": "2026-11-25T02:42:19.459Z",
+   "file": "20261125024219459-note-pl-0p3.jpg",
+   "source": "out/work/place/see/pl-0p3.jpg",
    "kind": "note",
-   "label": "TRIAL sheet, law: 2440 (relief still cut by a height switch of the trial), 2448, 2456, 2464, 2470, 2474",
+   "label": "plate land-0p3 of 88d4f309, the same",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:21:34.088Z",
-   "file": "20261125022134088-note-p56-2689.jpg",
-   "source": "out/work/place/see/p56-2689.jpg",
+   "time": "2026-11-25T02:42:18.869Z",
+   "file": "20261125024218869-note-pl-0p7.jpg",
+   "source": "out/work/place/see/pl-0p7.jpg",
    "kind": "note",
-   "label": "TRIAL pair native 2689 middle: left 88d4f309, right law",
+   "label": "plate land-0p7 of 88d4f309, the laid smears with blue and white streaks on the west third",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:21:33.235Z",
-   "file": "20261125022133235-note-p56-2688.jpg",
-   "source": "out/work/place/see/p56-2688.jpg",
+   "time": "2026-11-25T02:42:18.306Z",
+   "file": "20261125024218306-note-n56-heights-plan.jpg",
+   "source": "out/work/place/see/n56-heights-plan.jpg",
    "kind": "note",
-   "label": "TRIAL pair native 2688 middle: left 88d4f309, right law",
+   "label": "1.6 degree heights in plan, main beside 88d4f309. The apron slabs stand only in mine",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:21:32.436Z",
-   "file": "20261125022132436-note-p56-2686.jpg",
-   "source": "out/work/place/see/p56-2686.jpg",
+   "time": "2026-11-25T02:42:17.735Z",
+   "file": "20261125024217735-note-n56-wedge-term.jpg",
+   "source": "out/work/place/see/n56-wedge-term.png",
    "kind": "note",
-   "label": "TRIAL pair native 2686 right top: left 88d4f309 (slab), right law",
+   "label": "the wedge's term at 2448. Frame, plates through the same camera, heights alone in grey. The wedge is a slab of apron ground in the heights",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:21:31.625Z",
-   "file": "20261125022131625-note-p56-2684.jpg",
-   "source": "out/work/place/see/p56-2684.jpg",
+   "time": "2026-11-25T02:42:17.171Z",
+   "file": "20261125024217171-note-n56-tr.jpg",
+   "source": "out/work/place/see/n56-tr.jpg",
    "kind": "note",
-   "label": "TRIAL pair native 2684 right top: left 88d4f309, right law",
+   "label": "law and tone on the cap of 88d4f309, rise",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:21:30.762Z",
-   "file": "20261125022130762-note-p56-2474.jpg",
-   "source": "out/work/place/see/p56-2474.jpg",
+   "time": "2026-11-25T02:42:16.610Z",
+   "file": "20261125024216610-note-n56-t.jpg",
+   "source": "out/work/place/see/n56-t.jpg",
    "kind": "note",
-   "label": "TRIAL pair native 2474 lower left: left 88d4f309 (apron), right law (cap where the apron stood)",
+   "label": "law and tone on the cap of 88d4f309, dive",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:21:30.020Z",
-   "file": "20261125022130020-note-p56-2470.jpg",
-   "source": "out/work/place/see/p56-2470.jpg",
+   "time": "2026-11-25T02:42:16.041Z",
+   "file": "20261125024216041-note-n56-mr.jpg",
+   "source": "out/work/place/see/n56-mr.jpg",
    "kind": "note",
-   "label": "TRIAL pair native 2470 right half: left 88d4f309 (slab at the east border), right law (slab out, a pale wedge stays)",
+   "label": "local trial, rise 2684 2686 2688 2701",
    "stop": "mars"
   }
  ]
