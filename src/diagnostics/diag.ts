@@ -1,9 +1,9 @@
 import type * as THREE from 'three'
 
-export const DIAG_VIEWS = ['beauty', 'ungraded', 'nograin', 'texels', 'layers', 'depth', 'flow'] as const
+export const DIAG_VIEWS = ['beauty', 'ungraded', 'nograin', 'texels', 'layers', 'depth', 'flow', 'range'] as const
 export type DiagView = (typeof DIAG_VIEWS)[number]
 
-const CODES: Record<string, number> = { beauty: 0, ungraded: 0, nograin: 0, texels: 2, layers: 3, depth: 4, flow: 5 }
+const CODES: Record<string, number> = { beauty: 0, ungraded: 0, nograin: 0, texels: 2, layers: 3, depth: 4, flow: 5, range: 6 }
 
 export const diagUniform: THREE.IUniform<number> = { value: 0 }
 
@@ -32,8 +32,18 @@ export function isRaw(view: string): boolean {
   return (CODES[view] ?? 0) >= 2
 }
 
+export const RANGE_LOW = -20
+export const RANGE_OCTAVES = 32
+
+export function rangeOf(r: number, g: number, b: number): number | null {
+  const n = r * 65536 + g * 256 + b
+  return n > 0 ? 2 ** (RANGE_LOW + ((n - 1) / 16777214) * RANGE_OCTAVES) : null
+}
+
 export const DIAG_GLSL = /* glsl */ `
 uniform int uDiag;
+const float RANGE_LOW = ${RANGE_LOW}.0;
+const float RANGE_OCTAVES = ${RANGE_OCTAVES}.0;
 float diagTexels(vec2 uvTexels) {
   vec2 dx = dFdx(uvTexels);
   vec2 dy = dFdy(uvTexels);
@@ -52,5 +62,11 @@ vec4 diagOut(vec4 beauty, float texels, float counted, vec3 layer, vec2 flow, fl
     return vec4(d, d, d, 1.0);
   }
   if (uDiag == 5) return vec4(0.5 + flow * 0.5, 0.0, 1.0);
+  if (uDiag == 6) {
+    float n = 1.0 + floor(clamp((log2(max(viewDepth, 1e-30)) - RANGE_LOW) / RANGE_OCTAVES, 0.0, 1.0) * 16777214.0);
+    float high = floor(n / 65536.0);
+    float mid = floor((n - high * 65536.0) / 256.0);
+    return vec4(high / 255.0, mid / 255.0, (n - high * 65536.0 - mid * 256.0) / 255.0, 1.0);
+  }
   return beauty;
 }`

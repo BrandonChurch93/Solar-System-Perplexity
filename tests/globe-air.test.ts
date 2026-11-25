@@ -5,8 +5,9 @@ import { hazeAir, setHazeAir, type GlobeAir } from '../src/bodies/air'
 import { GROUND_AIR_GLSL, HazeShell, airDepth, hazeUniforms, type HazeParams } from '../src/bodies/haze'
 import { Planet, planetFrag } from '../src/bodies/planet'
 import * as look from '../src/stops/mars/look'
+import { frozen } from './globe-frozen'
 
-const hash = (text: string): string => createHash('sha256').update(text).digest('hex')
+const hash = (text: string): string => createHash('sha256').update(frozen(text)).digest('hex')
 const KEPT = '81b0189383d53555c8623467df803b233644cf143249b11aa3e3a28f5548a308'
 const SHELL = '692d6d8ba375114b2cd5dd0f4126a2d7edfa8a2b1569e9eaa8e6e23f0ced5e02'
 const values = (u: Record<string, THREE.IUniform>): string => JSON.stringify(Object.keys(u).sort().map((k) => [k, u[k]!.value instanceof THREE.Texture ? 'texture' : u[k]!.value]))
