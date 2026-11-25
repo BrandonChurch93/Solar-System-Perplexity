@@ -212,6 +212,103 @@ describe('the dim of the sky while the Sun comes into the frame of a travel', ()
       expect(inFrame(q, 30, 16 / 9, to, 0, 3)).toBe(THREE.MathUtils.radToDeg(outsideFrame(q, 30, 16 / 9, to)) < 3)
     }
   })
+
+  // A film whose camera keeps its place and its lens on one leg and takes a made up turn there, so that the law of the dim can be asked at
+  // turn rates the film does not have. Every such film is made new: what a film keeps of a leg is then of that turn.
+  type Lens = { position: THREE.Vector3; quaternion: THREE.Quaternion; vfov: number }
+  type Inner = { travelCamera(index: number, time: number): Lens; sunSeen(index: number, time: number): number }
+  const madeUp = (index: number, turn: (real: Inner['travelCamera'], time: number) => THREE.Quaternion): FilmDirector => {
+    const made = new FilmDirector(plans)
+    const inner = made as unknown as Inner
+    const real = inner.travelCamera.bind(made)
+    inner.travelCamera = (i, time) => (i === index ? { ...real(i, time), quaternion: turn(real, time) } : real(i, time))
+    return made
+  }
+  const levelOf = (made: FilmDirector, p: number): number => made.shotAt(Math.floor(p), p / config.fps).skyExposure
+  const master = config.formats[config.formatKeys.master]!
+  const outside = (pose: Lens): number => outsideFrame(pose.quaternion, pose.vfov, master.width / master.height, film.sunWorld)
+  const pitched = (q: THREE.Quaternion, deg: number): THREE.Quaternion => q.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(deg)))
+  const rates = [1, 3, 10, 30]
+
+  it('is nothing at the last instant of every leg, wherever the Sun stands in the frame', () => {
+    const seen = film as unknown as Inner
+    legs.forEach((seg, index) => {
+      if (index > 0) expect(seen.sunSeen(index, seg.end), seg.id).toBe(0)
+    })
+  })
+
+  it('never takes the level down under a Sun that comes into the frame to stay, at any turn rate and at any time of the leg', () => {
+    const index = legs.findIndex((s) => s.id === 'uranus.travel')
+    const seg = legs[index]!
+    for (const rate of rates) {
+      for (const share of [0.3, 0.6, 0.8, 1]) {
+        // The camera ends where the film's camera ends, with the Sun inside the frame, and comes there by a pitch of rate degrees a frame
+        // that is over at the share of the leg; before the pitch the Sun stands outside the edge it comes in by.
+        const done = seg.start + share * (seg.end - seg.start)
+        let sign = 0
+        const made = madeUp(index, (real, time) => {
+          const end = real(index, seg.end)
+          if (sign === 0) sign = outside({ ...end, quaternion: pitched(end.quaternion, 1) }) > outside({ ...end, quaternion: pitched(end.quaternion, -1) }) ? 1 : -1
+          return pitched(end.quaternion, sign * Math.min(Math.max(done - time, 0) * config.fps * rate, 150))
+        })
+        const inner = made as unknown as Inner
+        const at = 'rate ' + rate + ', turned by ' + share + ' of the leg'
+        expect(outside(inner.travelCamera(index, seg.start)), at).toBeGreaterThan(0)
+        expect(outside(inner.travelCamera(index, seg.end)), at).toBeLessThan(0)
+        for (let p = seg.firstFrame; p < seg.endFrame - 0.25; p += 0.25) expect(levelOf(made, p + 0.25), at + ', frame ' + p).toBeGreaterThanOrEqual(levelOf(made, p) - 1e-9)
+      }
+    }
+  })
+
+  it('dims by the depth of a Sun that passes through the frame and gives it back by the same depth, whatever the clock says', () => {
+    const index = legs.findIndex((s) => s.id === 'uranus.travel')
+    const seg = legs[index]!
+    const open = config.raw.travel.sky.openExposure
+    // The open flight of the leg: the frames from its first on whose sky is the open sky and nothing else.
+    let openTo = seg.firstFrame
+    while (openTo < seg.endFrame && Math.abs(level(openTo) - open) < 1e-12 && Math.abs(level(openTo + 0.5) - open) < 1e-12) openTo++
+    // The Sun crosses the middle of the frame from below to above at the frame "middle", by a pitch of rate degrees a frame. Half the
+    // height of the frame is half the lens' angle, so at a pitch of deg the Sun stands that half less deg inside the upper or lower edge.
+    const middle = seg.firstFrame + 32
+    const reach = 31
+    expect(openTo - 1).toBeGreaterThan(middle + reach / rates[1]!)
+    const atSun = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().lookAt(new THREE.Vector3(), film.sunWorld, new THREE.Vector3(0, 1, 0)))
+    const films = rates.map((rate) => madeUp(index, (_real, time) => pitched(atSun, Math.min(Math.max((time * config.fps - middle) * rate, -90), 90))))
+    const at = (k: number, deg: number): number | null => {
+      const p = middle + deg / rates[k]!
+      if (p < seg.firstFrame || p > openTo - 1) return null
+      const shot = films[k]!.shotAt(Math.floor(p), p / config.fps)
+      // the sky of the made up film is the open sky there too, so the level is the open sky's and the dim's and nothing else
+      expect(shot.skyStars, 'rate ' + rates[k] + ', ' + deg + ' degrees').toBeCloseTo(1, 12)
+      return shot.skyExposure
+    }
+    for (let k = 0; k < rates.length; k++) {
+      const inner = films[k] as unknown as Inner
+      expect(THREE.MathUtils.radToDeg(outside(inner.travelCamera(index, middle / config.fps))), 'rate ' + rates[k]).toBeCloseTo(-inner.travelCamera(index, middle / config.fps).vfov / 2, 6)
+      expect(THREE.MathUtils.radToDeg(outside(inner.travelCamera(index, seg.start))), 'rate ' + rates[k]).toBeGreaterThan(16)
+      expect(THREE.MathUtils.radToDeg(outside(inner.travelCamera(index, seg.end))), 'rate ' + rates[k]).toBeGreaterThan(16)
+    }
+    let asked = 0
+    for (let deg = -reach; deg <= reach; deg += 0.5) {
+      const first = at(1, deg)!
+      // no clock: the same depth gives the same level at every turn rate, so at every time of the open flight
+      for (let k = 0; k < rates.length; k++) {
+        const here = at(k, deg)
+        if (here === null) continue
+        expect(here, 'rate ' + rates[k] + ', ' + deg + ' degrees').toBeCloseTo(first, 12)
+        asked++
+      }
+      // given back by the same depth: the level on the way out is the level on the way in
+      expect(first, deg + ' degrees').toBeCloseTo(at(1, -deg)!, 12)
+      // deeper is darker
+      if (deg < 0) expect(at(1, deg + 0.5)!, deg + ' degrees').toBeLessThanOrEqual(first + 1e-12)
+    }
+    expect(asked).toBeGreaterThan(3.5 * (2 * reach * 2 + 1))
+    // nothing where the Sun stands farther outside than the dim reaches, a clear dim in the middle of the frame
+    expect(at(1, -reach)!).toBeCloseTo(open, 12)
+    expect(at(1, reach)!).toBeCloseTo(open, 12)
+    expect(at(1, 0)!).toBeLessThan(0.9 * open)
+  })
 })
 
 describe('the way out of the hold of the Sun', () => {
