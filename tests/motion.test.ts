@@ -84,8 +84,13 @@ describe('motion across the shutter', () => {
     const fast = shutterMotion(m, m, moved(m, ahead.clone().multiplyScalar(0.1)))
     expect(slow).toBeGreaterThan(0)
     expect(fast).toBeGreaterThan(5 * slow)
-    const low = { ...m, sets: [{ ...s, ground: s.ground! / 4 }] }
-    expect(shutterMotion(low, low, moved(low, ahead.clone().multiplyScalar(0.01)))).toBeGreaterThan(slow)
+    // A lower plane reads more where the plane is the ground: in a state that names no globe. The state of a stop that
+    // handover.drawnMeasure names carries one (SetState.ball) and is read on it, whatever its plane (tests/drawn-measure.test.ts).
+    const flat = { ...s }
+    delete flat.ball
+    const plane = { ...m, sets: [flat] }
+    const low = { ...m, sets: [{ ...flat, ground: s.ground! / 4 }] }
+    expect(shutterMotion(low, low, moved(low, ahead.clone().multiplyScalar(0.01)))).toBeGreaterThan(shutterMotion(plane, plane, moved(plane, ahead.clone().multiplyScalar(0.01))))
   })
 })
 
@@ -185,17 +190,28 @@ describe('gradient scale under motion', () => {
       expect(fastest.soft).toBe(1)
     })
   })
-  it('adds no softness in a dive or a rise of a stop that hands over, and the rule of the cover in every other frame of the film', () => {
+  it('adds no softness in a dive or a rise of a stop that hands over, none in a surface view measured on its globe, and the rule of the cover in every other frame of the film', () => {
+    let ground = 0
+    let fast = 0
     for (let f = 0; f < config.frameCount; f += 3) {
       const seg = segmentAtFrame(f)
       const plan = framePlan(director, f, 'review')
-      const hands = (seg.kind === 'dive' || seg.kind === 'rise') && plans.find((p) => p.id === seg.stop)!.handsOver
+      const move = seg.kind === 'dive' || seg.kind === 'rise'
+      const hands = move && plans.find((p) => p.id === seg.stop)!.handsOver
       if (hands) expect(plan.soft).toBe(0)
       else {
         expect(plan.split).toBe(false)
-        expect(plan.soft).toBe(softness(plan.raw))
+        // The surface view of a stop that handover.drawnMeasure names (its state carries the globe) takes none, whatever its px.
+        if (ends(f)[1].sets.some((s) => s.weight > 0 && s.view !== 'orbit' && s.ball !== undefined)) {
+          ground++
+          if (plan.raw > m.softFromPx) fast++
+          expect(plan.soft).toBe(0)
+        } else expect(plan.soft).toBe(softness(plan.raw))
       }
     }
+    expect(ground).toBeGreaterThan(0)
+    // Some of them pass the px where the soft of a flight begins (Uranus's surface view on its globe), so the rule is asked of the film.
+    expect(fast).toBeGreaterThan(0)
   })
 })
 

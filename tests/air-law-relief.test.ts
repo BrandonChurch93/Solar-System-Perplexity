@@ -157,7 +157,7 @@ describe('the air law in a relief: the field', () => {
 })
 
 describe('the air law in a relief: with the other shares', () => {
-  it('the presence, the air apart, the edge, the share by the eye and a law of a stop find their places in the shaders with the law', async () => {
+  it('the presence, the air apart, the edge and a law of a stop find their places in the shaders with the law', async () => {
     const plain = materials(await Relief.load(ctx, '', def, motion(true, true)))
     const r = await Relief.load(ctx, '', def, motion(true, true))
     const all = materials(r)
@@ -179,10 +179,8 @@ describe('the air law in a relief: with the other shares', () => {
     }
     expect(dome.vertexShader).toBe(withEdgeEye(AIR_LAW_VERT))
     expect(dome.fragmentShader).toBe(withEdge(withPresence(AIR_LAW_FRAG, AIR_LIT), AIR_LIT))
-    r.presenceDetail([1, 2])
     r.presenceLaw('float lawShare(vec3 p, vec3 eye, vec2 im) { return 1.0; }')
     for (const m of all.filter((x) => !isAir(x))) {
-      expect(m.fragmentShader.includes('detailShare(vImage)')).toBe(true)
       expect(m.fragmentShader.includes('lawShare(vLocal, vEye, vImage)')).toBe(true)
       expect(count(m.fragmentShader, AIR_LAW_GLSL)).toBe(1)
       expect(count(m.fragmentShader, AIR_LAW_LAYER)).toBe(1)

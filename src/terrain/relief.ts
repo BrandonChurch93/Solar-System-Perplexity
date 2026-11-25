@@ -317,53 +317,6 @@ export function withEdgeEye(source: string): string {
   return source.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vEdgeEye;\nuniform float uEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vEdgeEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uEyeScale;')
 }
 
-// The relief with a share by the eye (Relief.presenceDetail): the same layer shader with its premultiplied output times a share that
-// follows how large the picture's own texel stands on the screen at the fragment. t is the place in the whole source picture in its
-// pixels (vImage times the size the set names), J the two screen derivatives of t, and its smaller singular value the texels of the
-// picture a buffer pixel takes in the worst direction; one over it, over the frame factor (buffer pixels a pixel of the master) and over
-// the scale of a place picture, is the longest side of one texel in pixels of the master. The share is 1 where that side is at or under
-// the first number, 0 at or over the second, smooth between. From the picture's own eye every texel has one size, so the share is one
-// number for the whole relief; from another eye it falls where the ground is seen nearer or flatter than the picture saw it, and to 0 on
-// the sheet a layer draws across a jump of depth. A share by place and eye, never by height or by the clock. Read before any branch of
-// the shader, so the derivatives are whole. Built when a relief asks for the first time; a relief that never asks keeps the shaders
-// above to the letter.
-const MAIN = 'void main() {'
-const VIG = 'vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);'
-
-export const DETAIL_GLSL = /* glsl */ `
-uniform vec2 uDetailSize;
-uniform vec2 uDetailRange;
-uniform float uFrame;
-float detailShare(vec2 im) {
-  if (uDetailRange.y <= 0.0) return 1.0;
-  vec2 t = im * uDetailSize;
-  vec2 tx = dFdx(t);
-  vec2 ty = dFdy(t);
-  float e = 0.5 * (dot(tx, tx) + dot(ty, ty));
-  float det = abs(tx.x * ty.y - tx.y * ty.x);
-  float big = sqrt(e + sqrt(max(e * e - det * det, 0.0)));
-  float k = big > 0.0 ? det / big * uFrame * uFine : 0.0;
-  return k > 0.0 ? 1.0 - smoothstep(uDetailRange.x, uDetailRange.y, 1.0 / k) : 0.0;
-}`
-
-export function withDetail(source: string): string {
-  if (source.split(IMAGE_IN).length !== 2 || source.split(MAIN).length !== 2 || source.split(VIG).length !== 2 || source.split(LIT).length !== 2 || source.includes('uDetailRange')) throw new Error('the relief shader has no single place for a share by the eye')
-  return source.replace(IMAGE_IN, IMAGE_IN + DETAIL_GLSL).replace(MAIN, MAIN + '\n  float detail = detailShare(vImage);').replace(VIG, 'if (detail <= 0.0) discard;\n  ' + VIG).replace(LIT, LIT + ' * detail')
-}
-
-// The share by the eye as the shader reads it, from the two screen derivatives of the place in the picture in its pixels (for tests):
-// frame is buffer pixels a pixel of the master times the scale of a place picture.
-export function detailShareAt(tx: readonly [number, number], ty: readonly [number, number], range: readonly [number, number], frame = 1): number {
-  if (!(range[1] > 0)) return 1
-  const e = 0.5 * (tx[0] * tx[0] + tx[1] * tx[1] + ty[0] * ty[0] + ty[1] * ty[1])
-  const det = Math.abs(tx[0] * ty[1] - tx[1] * ty[0])
-  const big = Math.sqrt(e + Math.sqrt(Math.max(e * e - det * det, 0)))
-  const k = big > 0 ? det / big * frame : 0
-  if (!(k > 0)) return 0
-  const t = Math.min(Math.max((1 / k - range[0]) / (range[1] - range[0]), 0), 1)
-  return 1 - t * t * (3 - 2 * t)
-}
-
 // The relief with a law of the stop (Relief.presenceLaw): the same layer shader with its premultiplied output times a share the stop
 // writes itself, for a ground whose picture is true from one eye and gives way to what lies under it by place and by eye. The stop gives
 // GLSL that defines float lawShare(vec3 P, vec3 E, vec2 image): P the fragment in the relief's frame (the picture's eye at 0, the lens
@@ -376,6 +329,8 @@ export function detailShareAt(tx: readonly [number, number], ty: readonly [numbe
 // on the linear colour of the layer where it is made, before the valley mist and before the share, held at or above 0, so the picture's
 // colour can go with the eye as the ground round it does. The mist's own colour and the air do not take it. Built when a relief asks;
 // a relief that never asks keeps the shaders above to the letter.
+const MAIN = 'void main() {'
+const VIG = 'vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);'
 export const LAW_GLSL = /* glsl */ `
 uniform float uLawFocal;
 uniform float uLawFrame;`
@@ -598,13 +553,10 @@ export class Relief {
   private readonly share = { value: 1 }
   private readonly airShare = { value: 1 }
   private fades = false
-  private detailed = false
   private lawed = false
   private lawWhole: (() => boolean) | null = null
   private readonly lawFocal = { value: 1 }
   private readonly lawFrame = { value: 1 }
-  private readonly detailSize = { value: new THREE.Vector2(1, 1) }
-  private readonly detailRange = { value: new THREE.Vector2(0, 0) }
   private readonly eyeScale = { value: 1 }
   private scaled = false
   private edged = false
@@ -660,7 +612,7 @@ export class Relief {
   }
 
   screen(renderer: THREE.WebGLRenderer, camera: THREE.Camera, width: number, height: number, tile: number): boolean {
-    if (this.share.value < 1 || this.detailRange.value.y > 0 || (this.lawed && !(this.lawWhole !== null && this.lawWhole() === true))) return false
+    if (this.share.value < 1 || (this.lawed && !(this.lawWhole !== null && this.lawWhole() === true))) return false
     if (!this.ready(renderer)) return false
     this.group.updateWorldMatrix(true, true)
     const tc = Math.ceil(width / tile) - 1
@@ -828,35 +780,6 @@ export class Relief {
     this.airShare.value = air ?? share
   }
 
-  // How much of the relief is there by the eye: every layer times a share by the size its picture's own texel has on the screen at the
-  // fragment (DETAIL_GLSL above), [from, to] in pixels of the master a texel: whole at or under from, gone at or over to. size is the
-  // size in pixels of the picture the numbers are meant for; a set with a smaller picture for the web names the full one here, so both
-  // end at the same places. null holds the share at 1 with the same program. It goes with a presence and with an edge (the shares
-  // multiply) and leaves the air alone, which has its own share (presence). Off until a set calls it: a relief that never does keeps its
-  // shaders to the letter and draws as before. The first call gives the layers the shader with the share, which is a new program: call
-  // it once where the set is built. While a range stands the relief is no shield, so what lies behind it is drawn. In a place picture
-  // the share is the one of the picture's eye. The measure follows the plane of each triangle of the mesh, so it steps from one triangle
-  // to the next where the mesh bends: a set chooses from and to wide enough apart for its mesh.
-  presenceDetail(range: readonly [number, number] | null, options: { size?: readonly [number, number] } = {}): void {
-    if (range !== null && !(range.length === 2 && range[0] >= 0 && range[1] > range[0] && Number.isFinite(range[1]))) throw new Error('the share of a relief by the eye is whole at or under a texel size and gone at or over a larger one, in pixels of the master, not ' + JSON.stringify(range))
-    const size = options.size
-    if (size !== undefined && !(size.length === 2 && size[0] > 0 && size[1] > 0 && Number.isFinite(size[0]) && Number.isFinite(size[1]))) throw new Error('the size of the picture of a relief is two numbers of pixels above 0, not ' + JSON.stringify(size))
-    if (!this.detailed) {
-      this.detailed = true
-      this.detailSize.value.set(this.def.imageSize[0], this.def.imageSize[1])
-      for (const l of this.layers) {
-        l.material.fragmentShader = withDetail(l.material.fragmentShader)
-        l.material.uniforms.uDetailSize = this.detailSize
-        l.material.uniforms.uDetailRange = this.detailRange
-        l.material.uniforms.uFrame = frameUniform
-        l.material.needsUpdate = true
-      }
-    }
-    if (size) this.detailSize.value.set(size[0], size[1])
-    if (range) this.detailRange.value.set(range[0], range[1])
-    else this.detailRange.value.set(0, 0)
-  }
-
   // Where the relief ends: a feather at each side of the whole source picture, [left, right, bottom, top] in pixels of that picture (the
   // units of the layers' boxes), 0 for a side that does not fade. The sides are those of the layers' boxes taken together, margins and
   // all. The premultiplied output of every layer and of the air is times a share by the place in the picture: 0 at the side and beyond
@@ -921,8 +844,8 @@ export class Relief {
 
   // How much of the relief is there by a law of the stop: every layer times a share the stop's own GLSL gives for the fragment, from
   // the ground point, the present eye and the place in the picture (LAW_GLSL above has the terms). uniforms are the law's own, under the
-  // names its text declares; the stop keeps the objects and sets their values from its own files. It goes with a presence, an edge and
-  // the share by the eye (the shares multiply) and leaves the air alone. One call, where the set is built: the text is the program. A
+  // names its text declares; the stop keeps the objects and sets their values from its own files. It goes with a presence and an edge
+  // (the shares multiply) and leaves the air alone. One call, where the set is built: the text is the program. A
   // relief that never calls it keeps its shaders to the letter and draws as before. With a law the relief is no shield, so what lies
   // behind it is drawn; a set whose law is 1 for every fragment over a span (a switch among its uniforms) may say so through whole,
   // which is asked whenever the shield is: while it answers true the relief shields as one that never asked, and the set stands for

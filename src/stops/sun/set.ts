@@ -91,6 +91,7 @@ export const createSet: SetFactory = async (ctx) => {
   const unfit = new THREE.Matrix3()
   orbit.matrixAutoUpdate = false
   const by = place.onGlobe.heights
+  const byFar = place.onGlobe.far
   const share = (x: number, r: [number, number]): number => THREE.MathUtils.smoothstep(x, r[0], r[1])
   const even = (x: number, r: [number, number]): number => 0.5 * (share(x, r) + THREE.MathUtils.clamp((x - r[0]) / (r[1] - r[0]), 0, 1))
 
@@ -127,6 +128,9 @@ export const createSet: SetFactory = async (ctx) => {
       if (placing) eye.applyQuaternion(turn.copy(carry).invert()).applyQuaternion(plan.toStage).multiplyScalar(stage.radius).add(stage.centre)
       const height = Math.max(inOrbit ? world.position.length() - 1 : eye.distanceTo(stage.centre) / stage.radius - 1, 1e-4)
       const above = (r: number[]): number => (rising ? THREE.MathUtils.smoothstep(Math.log(height), Math.log(r[0]!), Math.log(r[1]!)) : inOrbit ? 1 : 0)
+      // what leaves with the distance from the eye to its own place (radii of the ball, even steps in the logarithm):
+      // one law at every frame, no height of the eye and no clock; the close view holds nothing as far away as a range begins
+      const gone = (d: number, r: number[]): number => THREE.MathUtils.smoothstep(Math.log(Math.max(d, 1e-6)), Math.log(r[0]!), Math.log(r[1]!))
       const skyIn = above(by.sky)
       const shown = !inOrbit ? 0 : kind === 'travel' ? Math.min(1 - THREE.MathUtils.smoothstep(state.u, look.skyFade[0], look.skyFade[1]), globeShare(world.position.length())) : skyIn
       backdrop.update(shown, gain, vignette, aspect)
@@ -151,13 +155,19 @@ export const createSet: SetFactory = async (ctx) => {
         ground.mesh.visible = false
         surface.update(t, eye, placing ? 1 - above(by.surface) : 1, placing)
         ground.material.uniforms.uFieldFine!.value.x = rising ? above(by.field) : 0
-        fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, 1 - above(by.fringe))
+        // the glow at the limb leaves by the distance from the eye to the limb, each jet by the distance to its own foot
+        // (jets.ts), the arcade by the distance from the eye to the middle between its feet: its faint haze and thin
+        // strands first (far.strands, the cut), then all of it (far.loops)
+        const limbFar = Math.sqrt((1 + height) ** 2 - 1)
+        const arcFar = eye.distanceTo(loops.place) / stage.radius
+        const glowLeft = 1 - gone(limbFar, byFar.glow)
+        fringe.update(eye, t, gain, vignette, aspect, view.camera.fov, view.format.height, glowLeft)
         fringe.mesh.visible = false
-        jets.update(t, 1 - above(by.fringe))
-        const strands = 1 - above(by.loops)
+        jets.update(t, glowLeft, height < byFar.jets[1]!)
+        const strands = 1 - gone(arcFar, byFar.loops)
         loops.mesh.visible = strands > 0
-        loops.trim(above(by.strands))
-        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * above(by.strands), 0, open, since, opening.on && kind === 'terrain', calm, lifeCalmAt)
+        loops.trim(gone(arcFar, byFar.strands))
+        loops.update(t, gain * strands, vignette, aspect, 0, place.onGlobe.loopsCut * gone(arcFar, byFar.strands), 0, open, since, opening.on && kind === 'terrain', calm, lifeCalmAt)
         if (!inOrbit) return
       }
       const elapsed = state.time - plan.holdMid
