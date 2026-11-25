@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T10:00:09.289Z",
+ "pushed": "2026-11-25T10:23:46.462Z",
  "head": "fa33e867991dacc386b60b868b4b5a6ae44f70c4",
- "note": "10:00 UTC: cause of the rise's pattern measured (the banks' parallax), cures of thickness and sidestep being built",
+ "note": "MAIL 1021 item 1: first thickness 0.1 reads 0.52 0.716 0.587 at 3246 to 3247, still red; 0.3 with the density averaged rendering",
  "looks": [
+  {
+   "time": "2026-11-25T10:23:45.824Z",
+   "file": "20261125102345824-note-th10-3150.jpg",
+   "source": "../work/r13/off/th10-3150.jpg",
+   "kind": "note",
+   "label": "3150: as named, sheets 0.1 thick, banks off, what the banks add",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T10:23:45.222Z",
+   "file": "20261125102345222-note-wedge-3252-x3-lift.jpg",
+   "source": "../work/r13/off/wedge-3252-x3-lift.jpg",
+   "kind": "note",
+   "label": "3252 lower left, lifted: the straight edge, cause being traced",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T10:23:44.618Z",
+   "file": "20261125102344618-note-th10-diff.jpg",
+   "source": "../work/r13/off/th10-diff.jpg",
+   "kind": "note",
+   "label": "what the banks add, times 4: as named above, 0.1 thick below",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T10:23:43.980Z",
+   "file": "20261125102343980-note-th10-cmp.jpg",
+   "source": "../work/r13/off/th10-cmp.jpg",
+   "kind": "note",
+   "label": "rise 3246 to 3254 upper left: as named, sheets 0.1 thick (not enough: 0.716 at 3246 + 1/2), banks off",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T10:00:07.775Z",
    "file": "20261125100007775-note-n5-3150.jpg",
@@ -168,38 +200,6 @@
    "source": "../work/r12/trio-3150.jpg",
    "kind": "note",
    "label": "3150 final tier: approved pack, this commit, second named commit, kept still (match 6.578 for round 46, 8.215 now, 7.358 second named)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T08:07:02.438Z",
-   "file": "20261125080702438-note-jupiter-dive-k6066-6084-changes.jpg",
-   "source": "../work/r12/slices/jupiter-dive-k6066-6084-changes.png",
-   "kind": "note",
-   "label": "dive slice 3033 to 3042: green, pattern at most 0.43 against 0.45 (second named commit 1.20 falling to 0.47 up to 3037)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:57:19.220Z",
-   "file": "20261125075719220-note-ul-3252-3260.jpg",
-   "source": "../work/r12/ul-3252-3260.jpg",
-   "kind": "note",
-   "label": "rise, upper left at 1 to 1, the same window of 3252 (left) and 3260 (right): the tool's largest place of the red 0.61, a pale wash on the far ground in 3252",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:57:17.999Z",
-   "file": "20261125075717999-note-jupiter-rise-k6508-6524-changes.jpg",
-   "source": "../work/r12/slices/jupiter-rise-k6508-6524-changes.png",
-   "kind": "note",
-   "label": "rise slice 3254 to 3262: green, pattern at most 0.35 (second named commit up to 1.22)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:57:16.979Z",
-   "file": "20261125075716979-note-jupiter-parity.jpg",
-   "source": "../work/r12/parity/jupiter-parity.png",
-   "kind": "note",
-   "label": "parity on 2ad37054, 1920 by 1080 against 3840 by 2160: green; one thin line along the limb at 3038, 3150, 3259 (block 15,4 at 3150: 7.187 levels, limit 12)",
    "stop": "jupiter"
   }
  ]
