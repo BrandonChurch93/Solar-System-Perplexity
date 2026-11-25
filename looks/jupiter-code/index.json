@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T21:32:26.890Z",
- "head": "52f133a150be3b14a96128111f8f2c3f07652b6e",
- "note": "Page on the cure sent 21:32. Measure only: 3150 with the eye's share off reads 12.461, head 6.2249. Nothing of the cure built yet.",
+ "pushed": "2026-11-25T21:51:39.494Z",
+ "head": "336de354d612f66480cfd58abbd8c8eeaa0835f3",
+ "note": "Cure of the surface view, step 1 in the making: the guide chart is built (cut 0.08 units); flow and code detail follow; first 3150 on the new ground by 23:45 UTC",
  "looks": [
+  {
+   "time": "2026-11-25T21:51:38.701Z",
+   "file": "20261125215138701-note-noeye-3150.jpg",
+   "source": "../work/r22/t/noeye-3150.png",
+   "kind": "note",
+   "label": "3150 at draft with the fit eye off (plates and tone only), as pushed at 21:32: the state before the guide and the flow",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T21:51:38.092Z",
+   "file": "20261125215138092-note-guide-near-21h51.jpg",
+   "source": "../work/r23/guide-near-21h51.jpg",
+   "kind": "note",
+   "label": "Cure step 1, guide: the near ground from above (20.48 units). Left the plates as painted, right the guide cut at 0.08 units. Not yet in a frame.",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T21:32:26.144Z",
    "file": "20261125213226144-note-noeye-3150.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r15/sheets/rise-b-d.jpg",
    "kind": "note",
    "label": "jupiter rise 3300 to 3308 and a half on 1c5b75fa, every drawn frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T19:07:25.982Z",
-   "file": "20261125190725982-note-plates-top.jpg",
-   "source": "../work/r18/plates-top.jpg",
-   "kind": "note",
-   "label": "jupiter ground from above, near and mid plate, with the eye of 3150, its lens axis and the way to the Sun",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T18:34:01.573Z",
-   "file": "20261125183401573-note-p1-3150.jpg",
-   "source": "../work/r15/p1-3150.jpg",
-   "kind": "note",
-   "label": "terrain 3150 on the tip, final tier",
    "stop": "jupiter"
   }
  ]
