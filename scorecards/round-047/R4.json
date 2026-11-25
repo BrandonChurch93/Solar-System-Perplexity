@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 2167 to 2174, full globe",
+   "what": "the rise is still moving at the last sample: the globe is still shrinking and the moon is still drifting toward the opening hold, about a pixel a frame",
+   "fix": "carry the ease until the camera is held on the same globe as the opening, and show that held tail"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "join from frame 1829 to sheet-02 frame 1830",
+   "what": "no consecutive-frame sheet across the hold-to-dive cover; the two neighboring frames match and do not pop",
+   "fix": "add a consecutive-frame sheet spanning the hold-to-dive cover"
+  }
+ ]
+}
