@@ -9,11 +9,11 @@ import phobos from './phobos.json'
 import bend from './bend.json'
 import close from './close.json'
 
-// A side of place.json: at, placeFrames, path, picture, pace, turn and liftPower belong to the handover, every other key is an option of the place picture and reaches the
+// A side of place.json: at, placeFrames, path, picture, pace, turn, liftPower and pullBack belong to the handover, every other key is an option of the place picture and reaches the
 // engine as it stands, so a number set in that file can not be lost on the way.
-type SideFile = PlaceOptions & Pick<HandoverSide, 'at' | 'placeFrames' | 'path' | 'picture' | 'pace' | 'turn' | 'liftPower'>
+type SideFile = PlaceOptions & Pick<HandoverSide, 'at' | 'placeFrames' | 'path' | 'picture' | 'pace' | 'turn' | 'liftPower' | 'pullBack'>
 function side(file: unknown): HandoverSide {
-  const { at, placeFrames, path, picture: on, pace, turn, liftPower, ...picture } = file as SideFile
+  const { at, placeFrames, path, picture: on, pace, turn, liftPower, pullBack, ...picture } = file as SideFile
   const out: HandoverSide = { skyFloor: true, place: picture }
   if (at !== undefined) out.at = at
   if (placeFrames !== undefined) out.placeFrames = placeFrames
@@ -22,15 +22,20 @@ function side(file: unknown): HandoverSide {
   if (pace !== undefined) out.pace = pace
   if (turn !== undefined) out.turn = turn
   if (liftPower !== undefined) out.liftPower = liftPower
+  if (pullBack !== undefined) out.pullBack = pullBack
   return out
 }
 
+// The rise ends north up, as the hold and the approach show the planet (rise.level false, rollDeg 0): the level end
+// stood with north 103.5 degrees off and rolled the disc inside the shutter. The offset of the look-at is solved
+// (assets-src/mars/RECIPE.md, round 2) so that the north up camera looks along the forward the level end had: the
+// engine places every later stop from that forward, so their world turn stays as it was.
 export const params: MoveParams = {
   hold: { orbitDeg: -8, axis: [-0.15, 1, 0], push: -0.04 },
   spot: { x: 0.45, y: 0.54 },
   dive: { headingDeg: -245, altitude: 0.032, back: 0.08, ahead: 0.16, bow: -0.2, rollDeg: -6, swoop: true, surge: { glide: 0.14, rise: 60, fall: 2, swell: [0.3, 9, 1.2] } },
   terrain: { vfov: 60, gather: 0.22, forward: 1.65, rise: 0.06, side: 0.3, yawDeg: -2.9, pitchDeg: 0.78, entryHeight: 0.4, entryBack: 0.5, entryPitchDeg: -6, entryYawDeg: -3, entryRollDeg: -3, horizonDeg: 18.43, dipDeg: 2.6, exitHeight: 0.8, exitForward: 0.35, exitPitchDeg: 12 },
-  rise: { azimuthDeg: 34, elevationDeg: 16, distance: 4.6, offset: [-0.32, -0.08], driftSpeed: 0.08, rollDeg: 0, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
+  rise: { azimuthDeg: 34, elevationDeg: 16, distance: 4.6, offset: [0.12369695522247795, -0.5308716998277915], driftSpeed: 0.08, rollDeg: 0, ahead: 0.03, hug: 1.7, settle: 5, level: false, pan: 0.3 },
   travel: { turnDeg: 86, side: -1, turnEnd: 0.52 },
   arrive: { swingDeg: -30, axis: [0.3, 1, 0.1], offset: [-0.55, -0.2] },
   light: { exposure: 1, skyExposure: 0.5, terrainSkyGlow: 0.25, skyLow: [0.04, 0.35, 0.3], sunRadiusDeg: 1.1, sunGlare: 0.8, flare: 0.3 },
