@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T06:35:00.539Z",
+ "pushed": "2026-11-25T06:58:56.864Z",
  "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
- "note": "finding: the pattern line reads the reader's own lost carry on the dive (named commit and round 3 tree); by the camera poses the ground holds on 92 to 100 percent of the judged pixels; a real change stays in a band under the limb",
+ "note": "round 3: layer scale sweep beside the named; footprint edge found at 4164 to 4168, cure in work",
  "looks": [
+  {
+   "time": "2026-11-25T06:58:55.547Z",
+   "file": "20261125065855547-note-cover-edge-4.jpg",
+   "source": "../../../../tmp/n50/cover-edge-4.png",
+   "kind": "note",
+   "label": "fault found on the round 3 tree: edge of the terrain picture's footprint at 4164 and 4168 (bottom), named 4160 and tree 4156 (top)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T06:58:54.392Z",
+   "file": "20261125065854392-note-sweep1.jpg",
+   "source": "../../../../tmp/n50/sweep1.jpg",
+   "kind": "note",
+   "label": "dive 4148 to 4168 step 4, rows: named af8898f2, round 3 tree layer scale 1.5 hT, 0.5 hT, 1.0 hT",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T06:34:59.368Z",
    "file": "20261125063459368-note-reader-torn.jpg",
@@ -251,22 +267,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T02:29:30.733Z",
-   "file": "20261125022930733-note-x-ab.jpg",
-   "source": "../../../../tmp/parC/x-ab.jpg",
-   "kind": "note",
-   "label": "trials at 4162 + 1/2, 4166 + 1/2, 4170 + 1/2: step 3; the same eye looking straight down (pattern 0.02); the surface light at full share at every height (pattern 1.59, so the hand by height is not the cause)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:29:28.889Z",
-   "file": "20261125022928889-note-z3-changes.jpg",
-   "source": "../../../../tmp/parC/z3-changes.png",
-   "kind": "note",
-   "label": "dive, step 3, the reader's own panels by pat.ts: frame, frame 8 later carried back, level change, pattern (rows 4151, 4157, 4163, 4169)",
-   "stop": "uranus"
   }
  ]
 }
