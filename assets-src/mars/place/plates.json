@@ -720,11 +720,12 @@
  "takes": {
   "note": "countrytake.py: the country round the place from takes seen from straight above. levels: width in degrees to the take (assets-src/mars/place/takes, enlarged two times where the name ends in -x2). lay: false since the one ground (MAIL 837, MAIL 849): the plates of the takes hold the take alone at its own tone and no copy of the close picture, which lies on the ground through its own relief by the law of the stop (src/stops/mars/law.ts). With lay true the laid ground is kept as before (softDeg, inside, toneDeg, toneFull, gain and the block reach). Since the cap commit of the one ground a take gives up its own painted light (take_light of countrytake.py: its luminance held to the region's colour by country.light darkest and brightest, the cast shadow of the cap's heights laid in), and under the approved picture, where the cap's heights are the picture's own (block fit), it takes the picture's broad tone from the laid ground: the mean over toneTexels texels of the plate, by toneFull and gain as before, no stroke of the laid picture being that wide. toneGain: the least and the most of that tone's factor (the picture's shadowed floor stands at 0.17 to 0.3 of its lit wall, country.light.fill; the limit only keeps a ratio of two means of black paint from running away). brightest: how far a take's bright side may stand over its region (log units, soft; country.light.brightest holds made ground). regionMost: how far a take's region may stand over the plateau's own colour (country.light.plateau; log units, soft). Both because a take is painted in full Sun and the cap lights it again. light: \"painted\" since MAIL 913 (1): none of that light pass is run; the plate is the take alone in its own painted light (the pass made flat dark polygons with straight sides and a pale polygon out of the takes of 0.3 and 0.7 degrees), the cap lights no own level (src/stops/mars/cap.json light.own 0), and tone brings the take to the light of the approved picture by ground distance from the spot.",
   "levels": {
-   "0.3": "r03-take1-x2.png",
-   "0.7": "r07-take1-x2.png",
-   "1.6": "r16-take1-x2.png",
-   "3.8": "r38-take1-x2.png"
+   "0.3": "s03-take2.png",
+   "0.7": "s07-take1.png",
+   "1.6": "s16-take1.png",
+   "3.8": "s38-take2.png"
   },
+  "levelGain": {"0.3": [0.712, 0.856, 0.935], "0.7": [0.85, 0.904, 0.963], "1.6": [0.801, 0.84, 0.844], "3.8": [1.0, 1.0, 1.0]},
   "softDeg": 0.004,
   "inside": 0.5,
   "toneDeg": 0.03,
@@ -733,7 +734,8 @@
    0.5,
    2.0
   ],
-  "lay": false, "light": "painted", "tone": {"note": "taketone.py: median scene value of the laid picture over that of the take under the picture's reach, per level; set at a quarter of the level's width from the spot, one at the half width of the widest take", "deg": [0.075, 0.175, 0.4, 0.95, 1.9], "ratio": [[0.366, 0.468, 0.589], [0.519, 0.676, 0.87], [0.738, 0.928, 1.096], [1.199, 1.195, 1.121], [1, 1, 1]]},
+  "lay": false, "light": "painted", "tone": {"note": "taketone.py: median scene value of the laid picture over that of the take (with levelGain) under the picture's reach, per level; set at a quarter of the level's width from the spot. Read for the levels of 0.3 and 0.7 degrees; one from 0.4 degrees on: what the picture holds over the takes farther out (1.08 to 1.16 at 1.6 degrees, 1.2 to 1.9 at 3.8) is its haze over the far plateau, which is air and not the ground's tone", "deg": [0.075, 0.175, 0.4], "ratio": [[0.623, 0.635, 0.667], [0.54, 0.731, 0.88], [1, 1, 1]], "curve": "takecurve.json"},
+  "gamut": {"note": "taketone.py --gamut: by the red texel value, the least green over red and blue over red that the ground of the approved close picture holds (1st percentile of its lower 70 percent); a take is never redder than that", "red": [56, 72, 88, 104, 120, 136, 152, 168, 184, 200, 216, 232, 248], "green": [0.351, 0.348, 0.385, 0.423, 0.444, 0.465, 0.483, 0.5, 0.523, 0.551, 0.583, 0.609, 0.642], "blue": [0.102, 0.079, 0.114, 0.162, 0.183, 0.211, 0.236, 0.256, 0.278, 0.307, 0.345, 0.375, 0.422]},
   "toneTexels": 12,
   "toneGain": [
    0.1,

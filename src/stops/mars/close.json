@@ -4,7 +4,7 @@
     "texel": [1, 2],
     "air": [1, 2],
     "farthest": 44.1083,
-    "edge": [0, 0, 0],
+    "edgeNote": "edge: over how many pixels of the picture (full size, 5632 by 3168) the picture goes over into the ground beside it at its left, right and lower side, counted inward from the picture's own side; the margins beyond have no share. A quarter of the picture's width and of its height: the middle half is the picture whole. By the sight (law.ts count 3): none of it at the eye at which the surface view takes over.", "edge": [1408, 1408, 792],
     "seen": { "on": true, "file": "relief-seen.png", "scale": 8, "nearest": 2, "spare": 0.01, "soft": 0.02 },
     "gap": { "on": false, "range": 0.5, "px": [0.5, 1], "from": 0.3, "to": 60, "steps": 500, "halvings": 6 }
   },

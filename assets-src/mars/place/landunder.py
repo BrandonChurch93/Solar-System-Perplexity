@@ -20,6 +20,10 @@ The weight is 0 at the place (within keepDeg of the spot, the close view's own g
 canyon and the main trough (ground lower than depthKm under the plateau round it, from country-8p5.bin), 1 beyond fullDeg: a
 border on the ground. Values: plates.json block under.
 
+The colour: after the forms each land plate is held to the gamut of the approved close picture (plates.json takes.gamut), and
+the levels above by the share of the place's forms in them. MEASURED on the plates of 06:20 UTC: texels with red over 200 and
+red at least twice green, land-8p5 0.0012 before, 0.0000 after; land-3p8 0.0011 before, 0.0000 after.
+
   python3 assets-src/mars/place/landunder.py --dir DIR --out OUT [--set full]
 """
 import argparse
@@ -52,6 +56,21 @@ def smooth(x):
 
 def lum(a):
     return a[..., 0] * 0.2126 + a[..., 1] * 0.7152 + a[..., 2] * 0.0722
+
+
+def in_gamut(pic, gamut, share=None):
+    """Never redder at a red value than the ground of the approved close picture is there (plates.json takes.gamut, taketone.py
+    --gamut; the same law as countrytake.py holds its takes to): green and blue are raised to the least share of red that the
+    picture holds at that red. share (0 to 1 per texel): how much of that texel is the place's ground."""
+    r = pic[..., 0]
+    g = np.maximum(pic[..., 1], r * np.interp(r, gamut['red'], gamut['green']))
+    b = np.maximum(pic[..., 2], r * np.interp(r, gamut['red'], gamut['blue']))
+    if share is None:
+        pic[..., 1], pic[..., 2] = g, b
+    else:
+        pic[..., 1] += share * (g - pic[..., 1])
+        pic[..., 2] += share * (b - pic[..., 2])
+    return pic
 
 
 def main():
@@ -121,6 +140,10 @@ def main():
         g = np.exp(cv2.resize(above, (mm, mm), interpolation=cv2.INTER_AREA))
         before = pic.copy()
         pic[x0:x0 + mm, x0:x0 + mm] *= g[..., None]
+        if T.get('gamut'):
+            # where these levels hold the place's forms (the share (1 - w) * near of land-8p5 in them) they hold its colour too
+            sh = cv2.resize(((1 - w) * near).astype(np.float32), (mm, mm), interpolation=cv2.INTER_AREA)
+            pic[x0:x0 + mm, x0:x0 + mm] = in_gamut(pic[x0:x0 + mm, x0:x0 + mm], T['gamut'], sh)
         out = np.clip(pic + 0.5, 0, 255).astype(np.uint8)
         same = np.abs(out.astype(np.int16) - np.clip(before + 0.5, 0, 255).astype(np.int16)).max(2) == 0
         out[same] = np.asarray(f.convert('RGB'))[same]
@@ -150,7 +173,11 @@ def main():
             held = np.where(over > 0, np.maximum(top * np.tanh(over / top), np.minimum(over, had)), over)
             pic = geom.texel_of(S * np.exp(held - over)[..., None]) * 255
             g = np.ones_like(g)
-        out = np.clip(pic * g[..., None] + 0.5, 0, 255).astype(np.uint8)
+        pic = pic * g[..., None]
+        if T.get('gamut'):
+            # the forms multiply all three colours and the gamut goes by the red value: held again after them
+            pic = in_gamut(pic, T['gamut'])
+        out = np.clip(pic + 0.5, 0, 255).astype(np.uint8)
         Image.fromarray(out).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)
         print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])), 'gain %.2f to %.2f' % (float(g.min()), float(g.max())))
 

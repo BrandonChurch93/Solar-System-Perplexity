@@ -237,6 +237,11 @@ def main():
                 # the take is painted in the approved picture's own light (MAIL 913, 1): it keeps that light whole, the cap adds none
                 # (cap.json light.own 0), no cast shadow of the heights is laid in and nothing is toned by a mask
                 tone = K.get('tone')
+                level_gain = (K.get('levelGain') or {}).get('%g' % l['widthDeg'])
+                if level_gain:
+                    # the takes of two levels are painted apart: each is brought to the one above it where they share ground
+                    # (taketone.py --nest), so no step stands where a finer plate ends
+                    take = geom.texel_of(geom.scene_of(take / 255.0) * np.float32(level_gain)) * 255.0
                 if tone:
                     # one light by ground distance from the spot: the take's scene values times the measured ratio of the laid
                     # picture to the take (taketone.py), read between the measured distances in the log of the distance
@@ -244,7 +249,41 @@ def main():
                     lg = np.log(np.maximum(np.degrees(np.arctan(np.hypot(at[None, :], at[:, None]))), 1e-4))
                     nodes = np.log(np.float32(tone['deg']))
                     ratio = np.stack([np.exp(np.interp(lg, nodes, np.log(np.float32(tone['ratio'])[:, ch]))) for ch in range(3)], axis=2).astype(np.float32)
-                    take = geom.texel_of(geom.scene_of(take / 255.0) * ratio) * 255.0
+                    curve = json.load(open(os.path.join(os.path.dirname(args.plates), tone['curve']))) if tone.get('curve') else None
+                    if curve:
+                        # the take's value read through the measured shares (taketone.py --curve): at each level's distance the
+                        # take holds the laid picture's own range of light and colour, between them by the log of the distance,
+                        # itself from the last distance on. Beyond the measured ends the end's own factor holds.
+                        v = np.maximum(take / 255.0, 1e-4)
+                        logs = []
+                        for wdeg in sorted(float(x) for x in curve['levels']):
+                            c_ = curve['levels']['%g' % wdeg]
+                            ch_out = []
+                            for ch in range(3):
+                                tq, lq = np.maximum(np.float32(c_['take'][ch]), 1e-4), np.maximum(np.float32(c_['laid'][ch]), 1e-4)
+                                tq = np.maximum.accumulate(tq + np.arange(len(tq), dtype=np.float32) * 1e-6)
+                                f = np.interp(v[..., ch], tq, lq)
+                                f = np.where(v[..., ch] < tq[0], v[..., ch] * lq[0] / tq[0], f)
+                                f = np.where(v[..., ch] > tq[-1], v[..., ch] * lq[-1] / tq[-1], f)
+                                ch_out.append(np.log(np.maximum(f, 1e-4)))
+                            logs.append(np.stack(ch_out, axis=2))
+                        logs.append(np.log(v))
+                        assert len(logs) == len(nodes)
+                        k = np.clip(np.searchsorted(nodes, lg) - 1, 0, len(nodes) - 2)
+                        t = np.clip((lg - nodes[k]) / (nodes[k + 1] - nodes[k]), 0, 1)[..., None]
+                        out = np.zeros_like(v)
+                        for i in range(len(nodes) - 1):
+                            sel = (k == i)[..., None]
+                            out = np.where(sel, logs[i] * (1 - t) + logs[i + 1] * t, out)
+                        take = np.clip(np.exp(out), 0, 1) * 255.0
+                    else:
+                        take = geom.texel_of(geom.scene_of(take / 255.0) * ratio) * 255.0
+                gamut = K.get('gamut')
+                if gamut:
+                    # never redder at a red value than the approved picture's own ground is there (taketone.py --gamut)
+                    r = take[..., 0]
+                    take[..., 1] = np.maximum(take[..., 1], r * np.interp(r, gamut['red'], gamut['green']))
+                    take[..., 2] = np.maximum(take[..., 2], r * np.interp(r, gamut['red'], gamut['blue']))
                 Image.fromarray(np.clip(take + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)
                 print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])), name, 'the take alone, in its own painted light' + (', toned by ground distance to the picture' if tone else ''))
                 continue

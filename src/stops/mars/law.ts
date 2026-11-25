@@ -16,9 +16,12 @@
 // 2. The air. The picture's colour carries the low air along its own ray; a ray that meets the level k times as steeply crosses 1 / k of
 //    it. k is counted against the ray of the eye at which the surface view takes over, so it is 1 there for every point: full at or
 //    under uLawAir.x, none at uLawAir.y.
-// 3. The field (uLawSide, uLawOver; close.json law.edge, pixels of the picture at its left, right and lower side, 0 for a side that
+// 3. The field (uLawOver; close.json law.edge, pixels of the picture at its left, right and lower side, 0 for a side that
 //    does not end): the picture ends at its own sides, so the margins beyond them, which no eye of the picture saw, are not laid on
-//    the globe's ground. A share by the place in the picture, none at the side of the margins and whole at the picture's own side.
+//    the globe's ground. A share by the place in the picture, none at the picture's own side and beyond it, whole so many pixels
+//    inside it. By the sight, as count 4: whole at the eye at which the surface view takes over, where the margins fill
+//    its frame, and as written from twice that angle off the picture's ray on (MAIL 771, MAIL 913 item 3: the picture has no
+//    border of its own on the ground; it goes over into the ground beside it over the breadth of law.edge).
 // 4. What the picture's eye saw (uLawSeen, uLawSight; close.json law.seen, the file of assets-src/mars/place/seenby.py): where two
 //    layers stand at one place of the picture, the ground behind the front one is drawn out ground for an eye beside the picture's
 //    eye and was never seen. A point farther from the picture's eye than the front there (by the spare) has no share; uLawSight.z
@@ -98,9 +101,14 @@ float lawShare(vec3 P, vec3 E, vec2 image) {
   float texel = 1.0 - smoothstep(uLawTexel.x, uLawTexel.y, now * min(1.0, uLawTexel.x / taken));
   float air = 1.0 - smoothstep(uLawAir.x, uLawAir.y, sinNow / sinTaken);
   float field = 1.0;
-  if (uLawOver.x > 0.0) field *= smoothstep(0.0, 1.0, (image.x - uLawSide.x) * uLawOver.x);
-  if (uLawOver.y > 0.0) field *= smoothstep(0.0, 1.0, (uLawSide.y - image.x) * uLawOver.y);
-  if (uLawOver.z > 0.0) field *= smoothstep(0.0, 1.0, (uLawSide.z - image.y) * uLawOver.z);
+  if (uLawOver.x > 0.0) field *= smoothstep(0.0, 1.0, image.x * uLawOver.x);
+  if (uLawOver.y > 0.0) field *= smoothstep(0.0, 1.0, (1.0 - image.x) * uLawOver.y);
+  if (uLawOver.z > 0.0) field *= smoothstep(0.0, 1.0, (1.0 - image.y) * uLawOver.z);
+  // the sides end by the sight: whole for a sight that stands no farther off the picture's own ray than the sight of the eye at
+  // which the surface view takes over (so the two sides agree there and the margins fill its frame), ending from twice that on
+  float past = length(cross(normalize(P), normalize(P - E))) / max(length(cross(normalize(P), normalize(P - uLawEye))), 1e-6);
+  float off = smoothstep(uLawAir.x, uLawAir.y, past);
+  field = 1.0 - (1.0 - field) * off;
   // the file holds the field once (what the picture's eye saw) or, while the gap counts, twice, one half over the other
   vec2 at = vec2((image.x - uLawSide.x) / (uLawSide.y - uLawSide.x), (image.y - uLawSide.w) / (uLawSide.z - uLawSide.w));
   bool inside = at.x > 0.0 && at.x < 1.0 && at.y > 0.0 && at.y < 1.0;
@@ -111,8 +119,7 @@ float lawShare(vec3 P, vec3 E, vec2 image) {
     seen = 1.0 - smoothstep(1.0, 1.0 + uLawSight.z, length(P) * front * uLawSight.y);
     // the surface view shows that ground as far as its own eye looks past the front: by the angle between the picture's ray and
     // the sight, whole up to the angle of the eye at which the surface view takes over, as the count was before from twice it on
-    float past = length(cross(normalize(P), normalize(P - E))) / max(length(cross(normalize(P), normalize(P - uLawEye))), 1e-6);
-    seen = 1.0 - (1.0 - seen) * smoothstep(uLawAir.x, uLawAir.y, past);
+    seen = 1.0 - (1.0 - seen) * off;
   }
   float gap = 1.0;
   if (uLawGap.x > 0.5) {
