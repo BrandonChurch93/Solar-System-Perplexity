@@ -36,19 +36,10 @@ vec3 lightAt(float ndl, float mu) {
 }`
 
 export const AIR_GLSL = /* glsl */ `
-vec3 airLight(float mu, float psi) {
-  float m = clamp(mu, 0.0, 1.0);
-  vec3 l = deckLight(m, psi);
-  for (int k = 0; k < (uPath.x != 1.0 || uPath.w != 1.0 ? 1 : 0); k++) {
-    float from = sqrt(max(1.0 - uPath.w * (1.0 - m * m), 0.0));
-    l = deckLight(from, psi) * (1.0 - exp(-uPath.y * uPath.x * uPath.z / (uPath.z * m + 1.0))) / (1.0 - exp(-uPath.y * uPath.z / (uPath.z * from + 1.0)));
-  }
-  return l;
-}
 vec4 bared(float mu) {
   vec4 f = vec4(1.0);
   for (int k = 0; k < (uHaze.x < 1.0 ? 1 : 0); k++) {
-    float chord = uHaze.y * uPath.z / (uPath.z * clamp(mu, 0.0, 1.0) + 1.0);
+    float chord = uHaze.y * uChord / (uChord * clamp(mu, 0.0, 1.0) + 1.0);
     float all = exp(-chord);
     float part = exp(-uHaze.x * chord);
     float veil = (1.0 - part) / (1.0 - all);
@@ -66,6 +57,20 @@ vec3 joined(vec3 own, vec3 air, float over) {
     l = own * exp2(a * log2(max(air, vec3(1e-9)) / max(own, vec3(1e-9))) + 0.25 * (over + 1.0) * (over + 1.0) - a * over);
   }
   return l;
+}
+vec3 airGlow(vec3 sunlit, float mu, float psi) {
+  vec3 g = vec3(0.0);
+  for (int k = 0; k < (uHaze.x < 1.0 ? 1 : 0); k++) {
+    float chord = uHaze.y * uChord / (uChord * clamp(mu, 0.0, 1.0) + 1.0);
+    float all = exp(-chord);
+    float there = exp(-uHaze.z * chord);
+    float veil = (1.0 - there) / (1.0 - all);
+    vec3 ground = sunlit * (uBare * there + (1.0 - uBare * all) * veil);
+    vec3 table = deckLight(mu, psi);
+    float over = airOver(ground, table, veil);
+    for (int j = 0; j < (over > -1.0 ? 1 : 0); j++) g = (joined(ground, table, over) - ground) * (exp(-uHaze.x * chord) - all) / (there - all);
+  }
+  return g;
 }`
 
 export const PATCH_COUNT = patchJson.levels.length
@@ -151,8 +156,8 @@ uniform float uPlateScale[${PLATE_COUNT}];
 uniform float uPlateSize[${PLATE_COUNT}];
 uniform vec2 uPlace;
 uniform float uJoin;
-uniform vec4 uPath;
-uniform vec2 uHaze;
+uniform float uChord;
+uniform vec3 uHaze;
 uniform vec3 uBare;
 uniform sampler2D uPlaceField;
 uniform vec3 uPlaceEye;
@@ -309,7 +314,7 @@ ${PLATE_LEVELS}
   vec3 pD = uPlaceRot * spinY(d0, uSpin);
   vec3 dvD = normalize(pD - uPlaceEye);
   float muD = dot(pD, -dvD);
-  vec3 lD = airLight(muD, atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0)));
+  float psiD = atan(dot(dvD, uDeckR0), dot(dvD, uDeckF0));
   vec2 cloud = vec2(equirectGrad(uCloud, dc, uGrad).r, equirectGrad(uShadow, dc, uGrad).r) * (1.0 - wP);
   cloud.r = clamp(cloud.r * (1.0 + uCloudFine * (dot(albedo, vec3(1.0)) / max(dot(wide, vec3(1.0)), 1e-3) - 1.0)), 0.0, 1.0);
   vec2 fq = vec2(dot(d, uFaceE), dot(d, uFaceU)) * sqrt(2.0 / max(1.0 + dot(d, uFaceN), 0.05));
@@ -337,14 +342,14 @@ ${PLATE_LEVELS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   vec4 dim = bared(muD);
   vec3 own = col * uNear * dim.rgb;
-  vec3 base = max(field.rgb * light, vec3(1e-6)) * dim.rgb;
-  float over = airOver(base, lD, dim.a);
+  vec3 sunlit = max(field.rgb * light, vec3(1e-6));
+  vec3 base = sunlit * dim.rgb;
   vec3 tops = vec3(0.0);
   float topShare = 0.0;
   for (int k = 0; k < (pn > 0.5 ? 1 : 0); k++) topShare = topsAt(pg, px, py);
   for (int k = 0; k < (topShare > 0.0 ? 1 : 0); k++) tops = topsLight(topShare, dot(pD, uTopSun), topsSeen(uDeckCentre + uDeckRadius * pD, pD));
   col = own;
-  for (int k = 0; k < (over > -1.0 ? 1 : 0); k++) col = own * joined(base, lD, over) / base;
+  for (int k = 0; k < (dim.a < 1.0 ? 1 : 0); k++) col = own * (base + airGlow(sunlit, muD, psiD)) / base;
   col += uNear * tops;
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));
@@ -379,7 +384,7 @@ export interface PlaceOptions {
   field: THREE.Texture
   clockRef: number
   aMax: number
-  air: { scale: number; depth: number; floor: number; top: number; haze: { depth: number; bare: [number, number, number] } }
+  air: { scale: number; floor: number; haze: { depth: number; bare: [number, number, number]; under: number } }
   topLight: { sun: [number, number]; white: [number, number, number]; fine: [number, number]; lane: [number, number, number]; path: THREE.Vector3[] }
   feather: number
   deck: { centre: number[]; radius: number; f0: number[]; r0: number[]; sun: number[]; flow: [number, number, number, number]; flowAngle: number; light: THREE.Texture; lightSize: number[]; psiMax: number }
@@ -425,7 +430,7 @@ export class Globe {
         ...Object.fromEntries(pl.textures.map((t, i) => ['uPlate' + i, { value: t }])),
         uPlateScale: { value: pl.halfTans.map((t) => 1 / (2 * t)) },
         uPlateSize: { value: pl.sizes },
-        uPlace: { value: new THREE.Vector2(pl.feather, pl.aMax) }, uJoin: { value: pl.air.floor }, uHaze: { value: new THREE.Vector2(1, pl.air.haze.depth) }, uBare: { value: new THREE.Vector3().fromArray(pl.air.haze.bare) }, uPath: { value: new THREE.Vector4(1, pl.air.depth * pl.air.top, Math.sqrt(1 / pl.air.scale), 1) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopLane: { value: new THREE.Vector3().fromArray(pl.topLight.lane) }, uTopSun: { value: v3(pl.deck.sun) }, uTopPath: { value: pl.topLight.path }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
+        uPlace: { value: new THREE.Vector2(pl.feather, pl.aMax) }, uJoin: { value: pl.air.floor }, uHaze: { value: new THREE.Vector3(1, pl.air.haze.depth, pl.air.haze.under) }, uBare: { value: new THREE.Vector3().fromArray(pl.air.haze.bare) }, uChord: { value: Math.sqrt(1 / pl.air.scale) }, uTops: { value: new THREE.Vector2().fromArray(pl.topLight.sun) }, uTopWhite: { value: new THREE.Vector3().fromArray(pl.topLight.white) }, uTopLane: { value: new THREE.Vector3().fromArray(pl.topLight.lane) }, uTopSun: { value: v3(pl.deck.sun) }, uTopPath: { value: pl.topLight.path }, uTopFine: { value: new THREE.Vector2().fromArray(pl.topLight.fine) }, uPlaceField: { value: pl.field }, uPlaceRef: { value: pl.clockRef }, uPlaceEye: { value: new THREE.Vector3(0, 1, 0) }, uCloudTime: { value: 0 },
         uPlaceRot: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(pl.rot)) },
         uPlaceN: { value: v3(pl.frame.n) }, uPlaceE: { value: v3(pl.frame.e) }, uPlaceU: { value: v3(pl.frame.u) },
         uDeckCentre: { value: v3(pl.deck.centre) }, uDeckRadius: { value: pl.deck.radius }, uDeckF0: { value: v3(pl.deck.f0) }, uDeckR0: { value: v3(pl.deck.r0) },
@@ -475,11 +480,8 @@ export class Globe {
     ;(u.uPatchRim!.value as THREE.Vector2).set(base + (feather - base) * on, wave * on)
   }
 
-  air(path: number, from: number, under: number): void {
-    const u = this.material.uniforms.uPath!.value as THREE.Vector4
-    u.x = path
-    u.w = from
-    ;(this.material.uniforms.uHaze!.value as THREE.Vector2).x = under
+  air(under: number): void {
+    ;(this.material.uniforms.uHaze!.value as THREE.Vector3).x = under
   }
 
   place(deckTime: number, eye: THREE.Vector3): void {
@@ -491,7 +493,7 @@ export class Globe {
   plates(): Record<string, THREE.IUniform> {
     const u = this.material.uniforms
     const out: Record<string, THREE.IUniform> = { uPlateScale: u.uPlateScale!, uPlateSize: u.uPlateSize!, uPlace: u.uPlace!, uPlaceField: u.uPlaceField!, uPlaceN: u.uPlaceN!, uPlaceE: u.uPlaceE!, uPlaceU: u.uPlaceU! }
-    for (const name of ['uTops', 'uTopWhite', 'uTopFine', 'uTopLane', 'uTopSun', 'uTopPath', 'uJoin', 'uPath', 'uHaze', 'uBare', 'uPlaceRot', 'uSpin', 'uShade', 'uShadeMix']) out[name] = u[name]!
+    for (const name of ['uTops', 'uTopWhite', 'uTopFine', 'uTopLane', 'uTopSun', 'uTopPath', 'uJoin', 'uChord', 'uHaze', 'uBare', 'uPlaceRot', 'uSpin', 'uShade', 'uShadeMix']) out[name] = u[name]!
     out.uOwnLight = u.uLight!
     out.uOwnLightSize = u.uLightSize!
     for (let i = 0; i < PLATE_COUNT; i++) out['uPlate' + i] = u['uPlate' + i]!
