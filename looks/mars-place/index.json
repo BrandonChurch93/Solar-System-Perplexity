@@ -1,72 +1,75 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T23:06:13.953Z",
+ "pushed": "2026-11-25T23:39:38.122Z",
  "head": "ef1bbb3a14fd518810e596aa9c975e88fd5c84ff",
- "note": "23:08 trial 19: 0.3 plain from its parent's ground, no border to the 0.7 ring from above; wall chutes still read smooth",
+ "note": "23:42 trial 19 plates in the frames: net of blocks gone at the foot, ground soft at 1 to 1 (bad, named); sides at T hold without the veil",
  "looks": [
   {
-   "time": "2026-11-25T23:06:13.205Z",
-   "file": "20261125230613205-note-t19-ring.jpg",
-   "source": "../../../../tmp/t19-ring.jpg",
+   "time": "2026-11-25T23:39:36.825Z",
+   "file": "20261125233936825-note-veil-rise.jpg",
+   "source": "../../../../tmp/veil-rise.jpg",
    "kind": "note",
-   "label": "trial 19, 0.3 plate inside the 0.7 ring from above (0.6 degrees wide): the wall strip by code runs on across the border",
+   "label": "rise T 2681 globe side: veil on | veil off, difference times 8: max 5 display values",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:06:12.612Z",
-   "file": "20261125230612612-note-t19-borderA.jpg",
-   "source": "../../../../tmp/t19-borderA.jpg",
+   "time": "2026-11-25T23:39:35.998Z",
+   "file": "20261125233935998-note-veil-dive.jpg",
+   "source": "../../../../tmp/veil-dive.jpg",
    "kind": "note",
-   "label": "trial 19, the 0.3 plate laid in its 0.7 parent as the pyramid lays it: east border and north border at the 0.3 texel: no border to see",
+   "label": "dive T 2477 globe side: veil on | veil off (near.json grazing.depth 0), difference times 8: a hairline at the horizon, max 8 display values",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:06:12.059Z",
-   "file": "20261125230612059-note-t19-wall.jpg",
-   "source": "../../../../tmp/t19-wall.jpg",
+   "time": "2026-11-25T23:39:35.092Z",
+   "file": "20261125233935092-note-p19-2474-c0.jpg",
+   "source": "../../../../tmp/p19-2474-c0.jpg",
    "kind": "note",
-   "label": "wall at 1 to 1 (1250,150): the name's plate (hair) | trial 17 (smoke on the plain) | trial 19",
+   "label": "2474 lower left at 1 to 1: the name | trial 19",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:06:11.494Z",
-   "file": "20261125230611494-note-t19-cropsB.jpg",
-   "source": "../../../../tmp/t19-cropsB.jpg",
+   "time": "2026-11-25T23:39:34.226Z",
+   "file": "20261125233934226-note-p19-2686-m0.jpg",
+   "source": "../../../../tmp/p19-2686-m0.jpg",
    "kind": "note",
-   "label": "trial 19 at 1 to 1, crops 700,1500 and 1500,1500: take | parent | trial 19",
+   "label": "2686 foot at 1 to 1: the name | trial 19 (no net, no hair; soft blobs, flat chute at right: still wrong)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:06:10.922Z",
-   "file": "20261125230610922-note-t19-cropsA.jpg",
-   "source": "../../../../tmp/t19-cropsA.jpg",
+   "time": "2026-11-25T23:39:33.285Z",
+   "file": "20261125233933285-note-p19-2684-m0.jpg",
+   "source": "../../../../tmp/p19-2684-m0.jpg",
    "kind": "note",
-   "label": "trial 19 at 1 to 1, crops 200,200 and 1300,300: take | parent | trial 19. Plain reads as the parent's ground, no net of blocks. The wall by code at 1300,300 is smooth chutes between spurs: still wrong, reads as paint",
+   "label": "2684 foot at 1 to 1: the name (tiles of the net) | trial 19 (no net; SOFT, the parent's 12.6 m ground enlarged: still wrong)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T23:06:10.103Z",
-   "file": "20261125230610103-note-t19-whole.jpg",
-   "source": "../../../../tmp/t19-whole.jpg",
+   "time": "2026-11-25T23:39:32.333Z",
+   "file": "20261125233932333-note-p19-rise-whole.jpg",
+   "source": "../../../../tmp/p19-rise-whole.jpg",
    "kind": "note",
-   "label": "0.3 plate from above, whole: take | parent (0.7 take) enlarged 1.55 | trial 19 (plain = parent's ground plus only what is finer by code; walls by code with chutes)",
+   "label": "rise 2684 and 2686, draft: the name | trial 19 plates (veil on)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T22:57:01.739Z",
-   "file": "20261125225701739-note-parent-crops.jpg",
-   "source": "../../../../tmp/parent-crops.jpg",
+   "time": "2026-11-25T23:39:31.392Z",
+   "file": "20261125233931392-note-above19.jpg",
+   "source": "../../../../tmp/above19.jpg",
    "kind": "note",
-   "label": "1 to 1 crops of the 0.3 plate: take | parent enlarged | trial 17. The parent's ground has the forms without the net; the 0.3 plain is being rebuilt from it (MAIL 1327)",
+   "label": "from above at the five plates, same ground spot, 1 to 1: set from above | picture alone | the name's plate | trial 19's plate (0.3: net of blocks gone, soft; 0.7 to 8.5: take's ground, walls by code)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T22:57:01.082Z",
-   "file": "20261125225701082-note-parent-whole.jpg",
-   "source": "../../../../tmp/parent-whole.jpg",
-   "kind": "note",
-   "label": "0.3 plate from above: the take (net of blocks) | its parent, the 0.7 take enlarged 1.55 | trial 17 plain by code (reads as smoke at 1 to 1: BAD)",
-   "stop": "mars"
+   "time": "2026-11-25T23:33:19.596Z",
+   "file": "20261125233319596-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
   }
  ]
 }
