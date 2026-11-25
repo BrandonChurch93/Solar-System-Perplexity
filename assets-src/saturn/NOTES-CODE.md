@@ -7498,3 +7498,39 @@ the edges of C's dive (edge4.py with lens_trial_s0.125.json; expect under 1 px a
 sheets, sha of 3630 to 3641 against /tmp/v/pf/dive_jpg; the table of 1298 point 4 and 1301 point 4. Then the
 NAMED mail of the tree under proof on the merge, with the rise's rows of the new main, vitest alone, net MB.
 Still owed: 1287 (b) and (d) in one mail (bands by frame against the rigid map, limb by frame, handover).
+
+22:37 UTC. STATE AFTER THE THREE STILLS (read this first after a compaction).
+PROOF of the tree 17aa7329 on old main ce8cb68 is done (/tmp/v/pf): G13 PASS (0 of 83 over 0.02), gate PASS G11
+and G15 (saturn web 274 MB, full 747 MB), parity green, handover all lines pass, place green, path red on 7 lines
+3873 to 3886 (main's own on the old main; GREEN on the new main, /tmp/v/rigid/path_newmain.log). Finals: 3465
+fdbf21adf8ff16d1, 3720 337d20b2a719e357, 3567 99def901, 3866 6d168343. On the new main 172e7bc the tree gives the
+SAME BYTES at 3465 and 3720 (/tmp/v/rigid/Tn); 3866 renders.
+MAILS SENT: 22:35 high, the three stills of 1298 point 2; 22:36 low, 1287 (b) and (d). Owed: the table of 1298
+point 4 and 1301 point 4 for the trial (after the dive of C), then the NAMED mail of the tree on the merge.
+THREE STATES AT 3465 (final, new main): d296 as now 4.7669 (main 4.7807); B (trial /tmp/v/rigid/saturn: shapes off,
+heroLight 1) 11.9745; C (/tmp/v/rigid/saturnC: heroLight 0) 12.2529. By part (as now, B, C): globe day 2.048,
+3.876, 5.183; twilight and night 2.015, 2.136, 3.565; rings before the globe 16.065, 20.186, 20.334; rings in the
+shadow 4.048, 4.239, 4.670; lit rings 1.25 to 1.53: 8.796, 25.710, 25.875; 1.53 to 1.95: 7.970, 28.724, 28.757;
+1.95 to 2.03: 11.597, 28.326, 28.316; 2.03 to 2.27: 5.539, 16.120, 16.103; 2.27 to 2.45: 9.834, 49.845, 49.847;
+sky 2.732, 2.968, 2.973. G17 median and lowest quarter: 1.0618, 0.9193; 1.0159, 0.8192; 1.0310, 0.8170.
+Ring edges, worst sector (B inner, B outer, outer): as now +5.37, -10.68, +21.77 px; B and C -1.32, +2.06, -0.47.
+Limb, nine rays in ten within: 4.45; 0.94; 0.98 px. B against C as drafts: 3596 mean absolute 0.665 (most 70.7),
+3850 the same bytes (the model draws alone there).
+FOUND IN THE TRIAL, MINE TO CURE BEFORE THE RIGID NAME: the ring map polar-rings.jpg (the hero's ring pixels
+unrolled, 8192 by 1024, radius 1.42 to 2.48, sampled at azimuth atan(z, x) / 2 pi + 0.5) is straightened only to
+about 2 px at the hold's scale (1 row = 0.38 px at the ansa). With the bend off: (1) the B outer edge reads +0.8
+to +2.1 px at azimuth -50 to -20 and -1.7 at 60 (outer edge within 0.5 px everywhere); (2) a mottled patch about
+50 px long on the outer margin of the B ring at the right ansa (x 1590 to 1650, y 540 to 620 at 3465; in the map
+at azimuth -25 to -5 beside the Cassini division: stretched pixels of the hero's soft zone by the shadow's edge).
+Pictures: /tmp/v/rigid/soft_right_3465.png, polar_right.png, B_3465_right_circles.png. Cure: in the map, in body
+coordinates: straighten the three edges row by row to under 0.5 px, rebuild that patch from the rows beside it
+(tool to write under assets-src/saturn/shot or code; both sets full and web). The model does not read the map.
+B AS BUILT IS NOT YET LAWFUL under 1298: its light is laid from the hero's camera and the model (alone from 3603)
+does not carry it. C fits both rulings (1298 rigid body, 1301 the skim keeps its bytes). If /root wants the light:
+bake it into two body maps (rings by radius and azimuth, globe by latitude and longitude from the Sun) for both
+sets; the skim's bytes then move. Waiting for the ruling; C is the trial that is being proven.
+SLIP: run3.sh stood in the guard of /tmp/v/job_n.sh (pgrep), so its two jobs did not start. New chain
+/tmp/v/rigid/seq5.sh (log seq5.log), started 22:29, order: dive of C with the reader (Cd) "DIVE C DONE"; the
+tree's rise on the new main (Tn) "RISE T DONE"; final 3720 of C (Cs) "SKIM DONE"; flight in of C 3352 to 3400
+(Cin) "FLIGHT IN C DONE"; drafts 3630 3809 3812 3850 3880 of C (Cr) and the tree (Tr) "SEQ5 DONE". Never name a
+chain run2, run3, run4, job_w, job_t, job_u or slice. Free disk is 4.6 GB: renders refuse under 3 GB.
