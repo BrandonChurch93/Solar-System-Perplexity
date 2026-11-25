@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T01:50:47.299Z",
- "head": "03d79f6d40487fd41705bd944cc24b2abc86eef0",
- "note": "the dots at 2156 and 1857: main against one sample a pixel of path, and a sim of the footprint; cover of 2 is rendering",
+ "pushed": "2026-11-25T02:16:32.496Z",
+ "head": "600a5e37a190b8a3a1a151970fd108ce8259c14b",
+ "note": "relief: presenceLaw hook for Mars beside presenceDetail and the air share (600a5e37, ten drafts rendering); the dots of 2156 at cover 2 and 4 read at gain 6",
  "looks": [
+  {
+   "time": "2026-11-25T02:16:30.998Z",
+   "file": "20261125021630998-note-b-f2156.jpg",
+   "source": "../../../../tmp/law/dots/b-f2156.png",
+   "kind": "note",
+   "label": "2156 same crop at the final tier 64 samples: main, cover 2, cover 4: main still has one dotted row, cover 4 is soft"
+  },
+  {
+   "time": "2026-11-25T02:16:29.772Z",
+   "file": "20261125021629772-note-b-r2156.jpg",
+   "source": "../../../../tmp/law/dots/b-r2156.png",
+   "kind": "note",
+   "label": "2156 crop x 1484 to 1556, y 972 to 1028, 10 times, gain 6 in linear light: main review 24 samples, K 1, cover 2 (candidate handover.sharpCover): the rows of single dots join at cover 2"
+  },
   {
    "time": "2026-11-25T01:50:46.124Z",
    "file": "20261125015046124-note-kernel.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/law/1857-review-ll-z6.png",
    "kind": "note",
    "label": "Earth 1857 on main, review tier, x 420 to 620, y 820 to 940 at 6 times: rows of dots along the motion inside the streaks"
-  },
-  {
-   "time": "2026-11-25T01:18:08.333Z",
-   "file": "20261125011808333-note-1857-review-ll.jpg",
-   "source": "../../../../tmp/law/1857-review-ll.png",
-   "kind": "note",
-   "label": "Earth 1857 on main, review tier (26 samples, 0.60 px a sample), lower left at full size: the bright cloud specks are streaks made of dots"
-  },
-  {
-   "time": "2026-11-25T01:08:32.358Z",
-   "file": "20261125010832358-note-f02156.jpg",
-   "source": "out/work/blur/m-review/f02156.png",
-   "kind": "note",
-   "label": "Earth 2156 on main, review tier, 24 samples, blur 14.3 px, whole frame"
   }
  ]
 }
