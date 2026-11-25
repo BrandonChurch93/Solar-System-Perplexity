@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T08:11:45.847Z",
+ "pushed": "2026-11-25T08:37:49.804Z",
  "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "ONE BODY take s1 by code, not named: files alike (0.10) but the frames outside the disc are worse than the mark; painting next",
+ "note": "ONE BODY by code: the levels of the place hold the parent's bodies, files read 0.41, 0.05, 0.01, 0.01; frames of it not yet rendered. b9 rise 987 to 992 reads 0.03 to 0.06 by my chain",
  "looks": [
+  {
+   "time": "2026-11-25T08:37:49.081Z",
+   "file": "20261125083749081-note-ob-s4.jpg",
+   "source": "../../../../tmp/m/ob-s4.png",
+   "kind": "note",
+   "label": "ONE BODY take s4, levels 1 to 2, 2 to 3, 3 to 4, both pictures and the change of their pattern: 0.05, 0.01, 0.01 (limit 0.45; was 1.09)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T08:37:47.963Z",
+   "file": "20261125083747963-note-ob-s4-map.jpg",
+   "source": "../../../../tmp/m/ob-s4-map.png",
+   "kind": "note",
+   "label": "ONE BODY take s4, the map against the first level on the band they share (limit 0.45): 0.41, was 0.69 on main's bytes. Left: the disc of the place only",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T08:11:45.032Z",
    "file": "20261125081145032-note-h615.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/s3.jpg",
    "kind": "note",
    "label": "DRAFT 45590da3, whole frames 739, 743, 745: left the mark, right F. 739 is the worst: cream streaks of the map's highlights, stretched, on the grey ground; the mark is clean there. A cure is being rendered (the map gives up its own detail as the lens outruns it)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:40:30.369Z",
-   "file": "20261125074030369-note-s2.jpg",
-   "source": "../../../../tmp/m/s2.jpg",
-   "kind": "note",
-   "label": "DRAFT 45590da3 (way C state F, pushed, not named), whole frames 727, 731, 735: left the mark (b0b87889), right F. No grey disc; from 731 the map's rim highlights lie soft on the place's ground",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T07:14:14.372Z",
-   "file": "20261125071414372-note-cj-rise-full.jpg",
-   "source": "../../../../tmp/m/cj-rise-full.jpg",
-   "kind": "note",
-   "label": "DRAFT, the state as pushed (way C state F), rise 1001 and 1009 whole frame: the place's own light has gone back by the eye's height, the hero's planet stands without a grey disc",
    "stop": "mercury"
   }
  ]
