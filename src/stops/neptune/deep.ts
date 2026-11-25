@@ -144,6 +144,9 @@ vec4 gRun = vec4(0.0);
 float gFoot = 0.0;
 // The share of the streamer found at this place that is drawn at this foot (cirrusBody).
 float gKeep = 1.0;
+// The shortest wave the shadow on the deck reads of the cirrus (deep.json, cirrus.castWave), set by the taps of that shadow alone;
+// 0 where the cirrus is read for the eye (cirrusBody).
+float gShadow = 0.0;
 
 float hash3(ivec3 p) {
   uint h = uint(p.x) * 0x9E3779B1u ^ uint(p.y) * 0x85EBCA77u ^ uint(p.z) * 0xC2B2AE3Du;
@@ -442,6 +445,13 @@ float cirrusBody(vec3 straight, vec3 bent, float t, out float lee, out float cre
     // Its thick and thin parts go through the same filter: a part shorter than the foot is drawn at the mean of the parts.
     lump = mix(0.5, lump, 1.0 - smoothstep(uShade.z, uShade.w, gFoot / make.y));
     lump2 = mix(0.5, lump2, 1.0 - smoothstep(uShade.z, uShade.w, gFoot / (make.y * 0.37)));
+    // In the shadow on the deck they are read no finer than the noise is (cirrus.castWave): a part shorter than that wave lies in
+    // the shadow at the mean of the parts. The streamer rides its own wind and the deck under it the band's, so its shadow slides
+    // over the ground, and a part that short changed the shadow's edge in place within a few frames (the row at 4753).
+    if (gShadow > 0.0) {
+      lump = mix(0.5, lump, smoothstep(gShadow, 2.0 * gShadow, make.y));
+      lump2 = mix(0.5, lump2, smoothstep(gShadow, 2.0 * gShadow, make.y * 0.37));
+    }
     float strength = body.w * ends * mix(1.0 - make.z, 1.0, smoothstep(0.25, 0.75, lump));
     float width = semi * (0.65 + 0.7 * lump2);
     float y = off - 0.6 * semi * (lump2 - 0.5);
@@ -842,6 +852,7 @@ void main() {
     float veil = 0.0;
     float castGap = (uShell.y - uShell.x) / max(sunUp, 0.05) / uLightMake.z;
     int casts = int(uLightMake.z);
+    gShadow = uCirrusWind.z;
     for (int i = 0; i < casts; i++) {
       // Taps in empty air read nothing, and neither do the taps nearer to them than the nearest room is: they are passed here,
       // by the rooms' bound alone.
@@ -861,6 +872,7 @@ void main() {
       veil += thick;
       if (thick <= 0.0) i += int(uCirrusSkip.x * away / castGap);
     }
+    gShadow = 0.0;
     veil *= (uShell.y - uShell.x) / max(sunUp, 0.05) / uLightMake.z;
     float lit;
     float airSun = uHazeLow.x / uHazeLow.y * toSun(q, uHazeLow.y, lit) + uHazeHigh.x / uHazeHigh.y * toSun(q, uHazeHigh.y, lit);
