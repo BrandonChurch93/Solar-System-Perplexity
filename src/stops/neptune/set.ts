@@ -5,6 +5,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { handoverOf } from '../../director/handover'
 import { smooth } from '../../director/rig'
+import { bandHold } from '../../space/sky'
 import { Air } from './air'
 import { close, farMap, flowMap, held, mended, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
@@ -37,6 +38,7 @@ function eased(t: number, full: number, ease: number): number {
 }
 
 export const createSet: SetFactory = async (ctx) => {
+  const holdBand = await bandHold(plan.id)
   const base = 'neptune/' + ctx.assets + '/'
   const fit = plan.fit
   const world = new THREE.Group()
@@ -166,6 +168,7 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
+      if (shot.segment.stop === plan.id && shot.segment.kind === 'rise') holdBand(shot.u)
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
