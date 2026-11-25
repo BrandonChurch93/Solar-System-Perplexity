@@ -147,7 +147,7 @@ class Line {
   // frame holds where it does.
   mix(tier: string): { samples: number; close: number; globe: number } {
     const p = framePlan(film, this.frameT, tier)
-    const close = samplesFor(p.samples, p.shutter).filter((s) => sideAt(this.seg, (this.frameT + s.timeOffset) / fps) === 'terrain').length
+    const close = p.sides ? p.sides.filter((side) => side === 'terrain').length : samplesFor(p.samples, p.shutter).filter((s) => sideAt(this.seg, (this.frameT + s.timeOffset) / fps) === 'terrain').length
     return { samples: p.samples, close, globe: p.samples - close }
   }
 

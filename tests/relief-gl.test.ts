@@ -37,7 +37,6 @@ async function shot(o) {
   const relief = await Relief.load(ctx, '', o.def, o.motion)
   if (o.presence !== null) relief.presence(o.presence, o.airShare === undefined ? {} : { air: o.airShare })
   if (o.edge) relief.presenceEdge(o.edge, o.wholeAir ? { air: false } : {})
-  if (o.detail !== undefined) relief.presenceDetail(o.detail, o.detailSize ? { size: o.detailSize } : {})
   if (o.law) relief.presenceLaw(o.law.text, Object.fromEntries(Object.entries(o.law.uniforms || {}).map(([k, v]) => [k, { value: !Array.isArray(v) ? v : v.length === 2 ? new THREE.Vector2(...v) : v.length === 3 ? new THREE.Vector3(...v) : new THREE.Vector4(...v) }])), o.law.tone ? { tone: true } : {})
   frameUniform.value = o.frame ?? 1
   const s = o.scale ?? 1
@@ -67,24 +66,22 @@ async function shot(o) {
   let texts = 0
   let eyes = 0
   let edges = 0
-  let details = 0
   let laws = 0
   relief.group.traverse((x) => {
     if (!x.material) return
     if (x.material.fragmentShader.includes('uPresence')) texts++
     if (x.material.fragmentShader.includes('edgeShare(')) edges++
-    if (x.material.fragmentShader.includes('detailShare(vImage)')) details++
     if (x.material.fragmentShader.includes('lawShare(vLocal, vEye, vImage)')) laws++
     if (x.material.vertexShader.includes('uEyeScale')) eyes++
   })
   relief.dispose()
-  return { pixels: Array.from(out), texts, eyes, edges, details, laws, shared }
+  return { pixels: Array.from(out), texts, eyes, edges, laws, shared }
 }
 
 window.relief = { shot }
 `
 
-interface Shot { law?: { text: string; uniforms?: Record<string, number | number[]>; tone?: boolean }; airShare?: number; again?: { presence: number; airShare?: number }; detail?: [number, number] | null; detailSize?: [number, number]; frame?: number; wholeAir?: boolean; def: object; motion: object; files: Record<string, number[]>; dist: Record<string, number>; presence: number | null; drawn: boolean; width: number; height: number; back: [number, number, number]; scale?: number; eye?: [number, number, number]; early?: boolean; edge?: [number, number, number, number]; sizes?: Record<string, number> }
+interface Shot { law?: { text: string; uniforms?: Record<string, number | number[]>; tone?: boolean }; airShare?: number; again?: { presence: number; airShare?: number }; frame?: number; wholeAir?: boolean; def: object; motion: object; files: Record<string, number[]>; dist: Record<string, number>; presence: number | null; drawn: boolean; width: number; height: number; back: [number, number, number]; scale?: number; eye?: [number, number, number]; early?: boolean; edge?: [number, number, number, number]; sizes?: Record<string, number> }
 
 const W = 32
 const H = 16
@@ -139,12 +136,12 @@ const sided: Shot = {
   sizes: { 'far-apron.bin': 16 },
 }
 const RIGHT: [number, number, number, number] = [0, 8, 0, 0]
-// The share by the eye: a relief with a lens so narrow that its layers of one distance are planes across the axis to 5 parts in 100000,
-// so every texel of a layer has one size on the screen (under a wide lens the flat triangles of the mesh lean against the view at the
-// sides, and the place in the picture, which the rasteriser carries across a triangle in space, runs a few percent off the screen's own).
+// For a law that counts on the screen: a relief with a lens so narrow that its layers of one distance are planes across the axis to 5
+// parts in 100000, so every texel of a layer has one size on the screen (under a wide lens the flat triangles of the mesh lean against
+// the view at the sides, and the place in the picture, which the rasteriser carries across a triangle in space, runs a few percent off
+// the screen's own).
 const NARROW = 0.5
 const narrow: Shot = { ...base, def: { ...base.def, vfovDeg: NARROW } }
-const narrowSided: Shot = { ...sided, def: { ...sided.def, vfovDeg: NARROW } }
 // The air's ray comes from the rasteriser's own interpolation over a few large triangles: measured 0.0024 of a share at most here
 // (0.013 of a pixel of the picture), so the margin is twice that.
 const WORST_AIR = 0.005
@@ -163,9 +160,8 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
   let page: Page
   const errors: string[] = []
   const shoot = async (o: Shot): Promise<number[]> => {
-    const out = await page.evaluate((x) => (window as unknown as { relief: { shot(o: unknown): Promise<{ pixels: number[]; texts: number; eyes: number; edges: number; details: number; laws: number }> } }).relief.shot(x), o)
+    const out = await page.evaluate((x) => (window as unknown as { relief: { shot(o: unknown): Promise<{ pixels: number[]; texts: number; eyes: number; edges: number; laws: number }> } }).relief.shot(x), o)
     expect(out.laws).toBe(o.law ? (o.def as { layers: object[] }).layers.length : 0)
-    expect(out.details).toBe(o.detail !== undefined ? (o.def as { layers: object[] }).layers.length : 0)
     expect(out.edges).toBe(o.edge ? (o.def as { layers: object[] }).layers.length + ('air' in o.motion && !o.wholeAir ? 1 : 0) : 0)
     expect(out.texts).toBe(o.presence === null ? 0 : (o.def as { layers: object[] }).layers.length + ('air' in o.motion ? 1 : 0))
     // The air of a relief with an edge has the lens in its vertex shader too (where its ray meets the far distance).
@@ -412,7 +408,7 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
     expect(errors).toEqual([])
   }, 120000)
 
-  // The air apart from the layers (Relief.presence with { air }) and the share by the eye (Relief.presenceDetail).
+  // The air apart from the layers (Relief.presence with { air }).
 
   it('the air has a share of its own when a set names it: at 0 the picture is the relief without air to the bit, and layers and air go by their own shares', async () => {
     const plain = await shoot(aired)
@@ -445,133 +441,6 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
     const want = await shoot({ ...aired, presence: 0.5, airShare: 0.25 })
     expect(await shoot({ ...aired, presence: 0.8, again: { presence: 0.5, airShare: 0.25 } })).toEqual(want)
     expect(await shoot({ ...aired, presence: 0.8, airShare: 0.1, again: { presence: 0.5 } })).toEqual(await shoot({ ...aired, presence: 0.5 }))
-    expect(errors).toEqual([])
-  }, 120000)
-
-  it('a share by the eye held at 1 is the relief that never asked, to the bit', async () => {
-    for (const set of [base, aired, sided]) {
-      expect(await shoot({ ...set, detail: null })).toEqual(await shoot(set))
-    }
-    expect(errors).toEqual([])
-  }, 120000)
-
-  it('from the picture own eye every texel has one size: at or under the first size the relief is whole to the bit, at or over the second no layer is drawn, between the picture is the relief times one share plus the ground times the rest', async () => {
-    const plain = await shoot(narrow)
-    const back = await shoot({ ...narrow, drawn: false })
-    // The picture of 32 by 16 on a frame of 32 by 16: a texel is one pixel.
-    expect(await shoot({ ...narrow, detail: [2, 4] })).toEqual(plain)
-    expect(await shoot({ ...narrow, detail: [1.01, 1.5] })).toEqual(plain)
-    expect(await shoot({ ...narrow, detail: [0.25, 0.5] })).toEqual(back)
-    expect(await shoot({ ...narrow, detail: [0.5, 0.99] })).toEqual(back)
-    const far = pixel(plain, ...CORNER)
-    const near = pixel(plain, ...CENTRE).map((v, c) => v - far[c]! * (1 - ALPHA))
-    for (const [range, share] of [[[0.5, 1.5], 0.5], [[0.75, 1.75], 1 - smoothStep(0.25)], [[0.2, 1.2], 1 - smoothStep(0.8)]] as [[number, number], number][]) {
-      const got = await shoot({ ...narrow, detail: range })
-      for (let y = 0; y < H; y++) {
-        for (let x = 0; x < W; x++) {
-          if (x >= 7 && x <= 24 && y >= 3 && y <= 12) continue
-          for (let c = 0; c < 4; c++) expect(pixel(got, x, y)[c]).toBeCloseTo(share * pixel(plain, x, y)[c]! + (1 - share) * pixel(back, x, y)[c]!, 3)
-        }
-      }
-      // Where a layer lies over another both carry the share, and the one behind shows through.
-      for (let c = 0; c < 3; c++) {
-        const behind = far[c]! * share + narrow.back[c]! * (1 - share)
-        expect(pixel(got, ...CENTRE)[c]).toBeCloseTo(near[c]! * share + behind * (1 - ALPHA * share), 3)
-      }
-    }
-    // Under a wide lens too the ends are whole and gone, with room for the lean of the mesh at the sides.
-    expect(await shoot({ ...base, detail: [1.3, 2] })).toEqual(await shoot(base))
-    expect(await shoot({ ...base, detail: [0.25, 0.7] })).toEqual(await shoot({ ...base, drawn: false }))
-    // The air is left alone: with every layer gone the air of the relief is whole.
-    const airPlain = await shoot(aired)
-    const airGone = await shoot({ ...aired, detail: [0.25, 0.5] })
-    expect(airGone).toEqual(await shoot({ ...aired, presence: 0, airShare: 1 }))
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (!(x >= 7 && x <= 24 && y >= 3 && y <= 12)) expect(pixel(airGone, x, y)).toEqual(pixel(airPlain, x, y))
-    expect(errors).toEqual([])
-  }, 120000)
-
-  it('the size a set names is the size of the picture the numbers are meant for, and the numbers are pixels of the master whatever the frame', async () => {
-    const plain = await shoot(narrow)
-    const back = await shoot({ ...narrow, drawn: false })
-    // Named twice as large the texel is half a pixel, named half as large it is two.
-    expect(await shoot({ ...narrow, detail: [0.6, 1.5], detailSize: [64, 32] })).toEqual(plain)
-    expect(await shoot({ ...narrow, detail: [0.6, 1.5], detailSize: [16, 8] })).toEqual(back)
-    expect(await shoot({ ...narrow, detail: [0.6, 1.5], detailSize: [32, 16] })).not.toEqual(plain)
-    // A frame of twice the height: the texel takes two pixels of the buffer and is one pixel of the master as before.
-    const big = { ...narrow, width: 2 * W, height: 2 * H }
-    const at2 = (p: number[], x: number, y: number): number[] => p.slice((y * 2 * W + x) * 4, (y * 2 * W + x) * 4 + 4)
-    const plain2 = await shoot(big)
-    const back2 = await shoot({ ...big, drawn: false })
-    expect(await shoot({ ...big, detail: [1.01, 1.5], frame: 2 })).toEqual(plain2)
-    expect(await shoot({ ...big, detail: [1.01, 1.5] })).toEqual(back2)
-    const got = await shoot({ ...big, detail: [0.5, 1.5], frame: 2 })
-    let read = 0
-    for (let y = 0; y < 2 * H; y++) {
-      for (let x = 0; x < 2 * W; x++) {
-        if (x >= 14 && x <= 49 && y >= 6 && y <= 25) continue
-        read++
-        for (let c = 0; c < 4; c++) expect(at2(got, x, y)[c]).toBeCloseTo(0.5 * at2(plain2, x, y)[c]! + 0.5 * at2(back2, x, y)[c]!, 3)
-      }
-    }
-    expect(read).toBeGreaterThan(1000)
-    expect(errors).toEqual([])
-  }, 120000)
-
-  it('by the eye: nearer than the picture saw it the texel stands larger and the relief gives way, a little nearer a part of it, much nearer all of it', async () => {
-    const range: [number, number] = [1.1, 1.4]
-    for (const set of [narrow]) {
-      expect(await shoot({ ...set, detail: range })).toEqual(await shoot(set))
-      // Half way to the far layer every texel in view is about two pixels or more: nothing of the relief is drawn.
-      const close: [number, number, number] = [0, 0, -3]
-      const backClose = await shoot({ ...set, drawn: false, eye: close })
-      expect(await shoot({ ...set, detail: range, eye: close })).toEqual(backClose)
-      expect(await shoot({ ...set, detail: null, eye: close })).not.toEqual(backClose)
-    }
-    // On the way there the far layer, 6 from the picture's eye and seen alone at the first pixel, has texels of 6 over its distance
-    // pixels: one share in all colours, the share of that size. The rasteriser sets a corner of the mesh on a part of a pixel, so
-    // on a cell of 8 pixels the size reads up to a third of a percent off, which the steep range here makes a hundredth of the share.
-    let last = 1
-    for (const z of [-0.6, -0.9, -1.2, -1.6]) {
-      const eye: [number, number, number] = [0, 0, z]
-      const plain = pixel(await shoot({ ...narrow, eye }), 0, 0)
-      const back = pixel(await shoot({ ...narrow, drawn: false, eye }), 0, 0)
-      const got = pixel(await shoot({ ...narrow, detail: range, eye }), 0, 0)
-      const want = 1 - smoothStep((6 / (6 + z) - range[0]) / (range[1] - range[0]))
-      const shares = [0, 1, 2].map((c) => (got[c]! - back[c]!) / (plain[c]! - back[c]!))
-      for (const share of shares) {
-        expect(Math.abs(share - want)).toBeLessThan(0.02)
-        expect(share).toBeCloseTo(shares[0]!, 4)
-        expect(share).toBeLessThan(last)
-      }
-      last = shares[0]!
-    }
-    expect(last).toBeLessThan(0.1)
-    expect(last).toBeGreaterThan(0)
-    expect(errors).toEqual([])
-  }, 120000)
-
-  it('goes with a presence and an edge: the three shares multiply', async () => {
-    const edged = await shoot({ ...narrowSided, edge: RIGHT })
-    const back = await shoot({ ...narrowSided, drawn: false })
-    const got = await shoot({ ...narrowSided, presence: 0.5, edge: RIGHT, detail: [0.5, 1.5] })
-    let read = 0
-    let feathered = 0
-    for (let y = 0; y < H; y++) {
-      for (let x = 0; x < W; x++) {
-        if (x >= 7 && x <= 24 && y >= 3 && y <= 12) continue
-        // Beyond the side: the ground alone, to the bit. Inside it, where the far layer alone covers the pixel: the share of the edge
-        // times a half of the presence times a half by the eye (a texel of one pixel between a half and one and a half).
-        if (x >= 24) {
-          expect(pixel(got, x, y)).toEqual(pixel(back, x, y))
-          continue
-        }
-        read++
-        if (x >= 17 && Math.abs(pixel(edged, x, y)[0]! - pixel(back, x, y)[0]!) > 0.01) feathered++
-        for (let c = 0; c < 4; c++) expect(pixel(got, x, y)[c]).toBeCloseTo(0.25 * pixel(edged, x, y)[c]! + 0.75 * pixel(back, x, y)[c]!, 3)
-      }
-    }
-    expect(read).toBeGreaterThan(100)
-    expect(feathered).toBeGreaterThan(10)
     expect(errors).toEqual([])
   }, 120000)
 
