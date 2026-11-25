@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T17:11:20.448Z",
- "head": "8c5292816e66d20013834900191aeed22710c77f",
- "note": "second name's tree 8c52928 pushed; finals 3465 and 3720 on main's engine; rise, G13, gate, parity, dive render",
+ "pushed": "2026-11-25T17:19:19.911Z",
+ "head": "114ad7e9b0b699f187f1694da3b79ae97eb3e602",
+ "note": "second name 114ad7e: finals and pair against main's own finals; rise proof running",
  "looks": [
+  {
+   "time": "2026-11-25T17:19:18.612Z",
+   "file": "20261125171918612-note-final_3465.jpg",
+   "source": "../../../../tmp/v/n2/final_3465.png",
+   "kind": "note",
+   "label": "the name 114ad7e, final 3465 on main's engine: 4.7784 (main 4.7807)"
+  },
+  {
+   "time": "2026-11-25T17:19:17.221Z",
+   "file": "20261125171917221-note-final_3720.jpg",
+   "source": "../../../../tmp/v/n2/final_3720.png",
+   "kind": "note",
+   "label": "the name 114ad7e, final 3720 on main's engine: 28.6192 (main 27.7989), rest 21.8907 (main 22.0907)"
+  },
+  {
+   "time": "2026-11-25T17:19:16.191Z",
+   "file": "20261125171916191-note-p_hold_n2.jpg",
+   "source": "../../../../tmp/v/dark/p_hold_n2.png",
+   "kind": "note",
+   "label": "hold 3465 at 4 times: approved hero, main c92aad6 final, the name 114ad7e final"
+  },
+  {
+   "time": "2026-11-25T17:19:15.201Z",
+   "file": "20261125171915201-note-pair_3720_n2.jpg",
+   "source": "../../../../tmp/v/dark/pair_3720_n2.png",
+   "kind": "note",
+   "label": "3720 at full size, x 784 to 1920: approved, main c92aad6 final, the name 114ad7e final (clean foot, band 0 to 6 N left out)"
+  },
   {
    "time": "2026-11-25T17:11:19.718Z",
    "file": "20261125171119718-note-p_hold_n2.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/dark/pair_3720_n2.png",
    "kind": "note",
    "label": "8c52928 final 3720, the two owned regions at full size: approved, main, the name (clean gap, no band at 0 to 6 N)"
-  },
-  {
-   "time": "2026-11-25T16:55:54.894Z",
-   "file": "20261125165554894-note-draft_3838.jpg",
-   "source": "../../../../tmp/v/dark/S1/draft_3838.png",
-   "kind": "note",
-   "label": "3838 draft, one share (d312)"
-  },
-  {
-   "time": "2026-11-25T16:55:54.124Z",
-   "file": "20261125165554124-note-draft_3830.jpg",
-   "source": "../../../../tmp/v/dark/S1/draft_3830.png",
-   "kind": "note",
-   "label": "3830 draft, one share (d312)"
-  },
-  {
-   "time": "2026-11-25T16:55:53.345Z",
-   "file": "20261125165553345-note-draft_3720.jpg",
-   "source": "../../../../tmp/v/dark/S1/draft_3720.png",
-   "kind": "note",
-   "label": "3720 draft, one share of the globe's light by log height (d312), dark ice depth 0.1"
-  },
-  {
-   "time": "2026-11-25T16:55:52.627Z",
-   "file": "20261125165552627-note-pair_3720_S1.jpg",
-   "source": "../../../../tmp/v/dark/pair_3720_S1.png",
-   "kind": "note",
-   "label": "3720 foot region: approved, main (final), the tree with the one share and the dark ice (draft)"
   }
  ]
 }
