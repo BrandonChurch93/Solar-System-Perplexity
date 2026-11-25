@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T04:58:35.870Z",
- "head": "7755294aa70875d7406a3a89a2a51744cbb9a8ac",
- "note": "item 2 near field: wide lanes only from octave 5, octaves 2 to 4 soft near the lens; next the commit of item 5 with the foot, wedge and globe",
+ "pushed": "2026-11-25T05:24:23.971Z",
+ "head": "f7991adbd2b5152ea5dfe7d7ec6e2a2ef9bb4044",
+ "note": "proof of f7991ad runs; dive slice 3600 to 3630 is red (pattern 0.65 at 3612, the denser dust inside the rim comes in too fast); finding the cure before naming",
  "looks": [
+  {
+   "time": "2026-11-25T05:24:23.287Z",
+   "file": "20261125052423287-note-foot_pair.jpg",
+   "source": "../../../../tmp/v/x/foot_pair.png",
+   "kind": "note",
+   "label": "3720 foot, approved over mine (review tier, tree f7991ad)"
+  },
+  {
+   "time": "2026-11-25T05:24:22.208Z",
+   "file": "20261125052422208-note-d3612_strip.jpg",
+   "source": "../../../../tmp/v/x/d3612_strip.png",
+   "kind": "note",
+   "label": "f7991ad draft, dive frames 3608 3612 3616 3620 at 4 times, left limb at the inner gap: the dust comes in too fast here (pattern 0.65 of 0.45 at 3612, red): a dark band along the limb and a cut in the gap's ringlets, in work"
+  },
   {
    "time": "2026-11-25T04:58:35.254Z",
    "file": "20261125045835254-note-g5_ll.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/x/n15_foot2.png",
    "kind": "note",
    "label": "3720 foot at 2x, approved on top, trial n15 below: dust zone in slate with soft streaks, the Sun's light through the globe's air; open: jagged contact at the draft tier, zone narrower on the night side"
-  },
-  {
-   "time": "2026-11-25T04:11:36.880Z",
-   "file": "20261125041136880-note-n15_pair_full.jpg",
-   "source": "../../../../tmp/v/x/n15_pair_full.png",
-   "kind": "note",
-   "label": "3720 draft trial n15 (uncommitted tree) under the approved image at full size: globe tone by latitude from the approved, calmer map, foot closed with deeper dust"
-  },
-  {
-   "time": "2026-11-25T03:45:11.216Z",
-   "file": "20261125034511216-note-n5_foot2.jpg",
-   "source": "../../../../tmp/v/x/n5_foot2.png",
-   "kind": "note",
-   "label": "saturn-code 3720 trial n5 foot at 2x (top approved, bottom mine, mine 78 rows lower): a hard diagonal step in the dust is a fault of this trial (twilight not continuous at the terminator plane), being cured"
   }
  ]
 }
