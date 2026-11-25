@@ -145,8 +145,101 @@ def pops(needs):
             'differ': differ, 'apart': apart, 'rows': len(parts), 'spans': spans}
 
 
+FILM = {'shape': (540, 960), 'scale': 0.25, 'frames': 16, 'level': 110.0, 'contrast': 16.0, 'grain': 1.24, 'blur': 20.0, 'wide': 40.0}
+ZOOMS = (2, 3, 3.7, 4.4, 5.3)
+WIDTHS = (16, 32, 64)
+WEIGHTS = {'none': lambda t: t * 0, 'whole': lambda t: t, 'half': lambda t: 0.25 + t / 2, 'cut': lambda t: (t > 0.5) * 1.0}
+
+
+def ground(rng):
+    """A ground with detail at every width from 1 to 64 px, twice the frame each way."""
+    shape = (FILM['shape'][0] * 2, FILM['shape'][1] * 2)
+    g = sum(s ** 0.5 * cv2.GaussianBlur(rng.standard_normal(shape).astype(np.float32), (0, 0), s) for s in (0.5, 1, 2, 4, 8, 16, 32, 64))
+    return FILM['level'] + FILM['contrast'] * g / g.std()
+
+
+def exchanged(one, other, width):
+    """The ground one with all its detail finer than the width replaced by that of the ground other."""
+    low = lambda x: cv2.GaussianBlur(x, (0, 0), width)
+    return low(one) + other - low(other)
+
+
+def shot(world, shrink, across):
+    """The frame, at the full size, that shows the middle of the world shrunk and moved across by px: reduced by area means, mirrored beyond
+    the edge of the world. Nothing in it but the world."""
+    if shrink > 1:
+        world = cv2.resize(world, (int(round(world.shape[1] / shrink)), int(round(world.shape[0] / shrink))), interpolation=cv2.INTER_AREA)
+    h, w = FILM['shape']
+    m = np.array([[1, 0, (w - 1) / 2 - (world.shape[1] - 1) / 2 + across], [0, 1, (h - 1) / 2 - (world.shape[0] - 1) / 2]])
+    return cv2.warpAffine(world, m, (w, h), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT_101)
+
+
+def film(rng, way, shrink, speed, one, other, weight):
+    """17 capture frames at the full size of a camera over the ground one, which gives way to the ground other by the weight (a function of
+    the share of the window that has passed). rise: the picture shrinks, the first frame is the nearest and shows the ground at its own
+    sharpness; dive: the rise run backwards, the exchange still onward in time. speed: px of the film a capture frame, across."""
+    n = FILM['frames']
+    weights = WEIGHTS[weight](np.arange(n + 1) / n)
+    out = []
+    for at in range(n + 1):
+        j = n - at if way == 'dive' else at
+        a, b = (shot(w, shrink ** (j / n), speed * j) if w is not None else 0 for w in (one, other if weights[at] > 0 else None))
+        f = (1 - weights[at]) * a + weights[at] * b
+        out.append(np.clip(f + FILM['grain'] * rng.standard_normal(FILM['shape']).astype(np.float32), 0, 255).astype(np.float64))
+    return out
+
+
+def judged(full):
+    """A made film read as the pictures part reads a row: its first frame against its last. main: the measure as it stood, the later frame
+    carried back from the reduced picture; now: the reading of the pair on the nearer of its frames."""
+    scale, sigma, wide = FILM['scale'], FILM['blur'] * FILM['scale'], FILM['wide'] * FILM['scale']
+    frames = [S.small(f, scale) for f in full]
+    n = len(frames) - 1
+    fw = [S.motion(frames[j], frames[j + 1]) for j in range(n)]
+    bw = [S.motion(frames[j + 1], frames[j]) for j in range(n)]
+    way = S.carry(fw, bw, 0, n)
+    d, moved, ok = S.change(frames, fw, bw, 0, n, sigma, None, None, way)
+    p = S.pattern(frames[0].astype(np.float32), moved, ok, wide / 5, wide, FLOOR)
+    main = S.patterned(p)
+    onward, back = S.readings(frames, fw, bw, 0, n, scale, sigma, wide, FLOOR, None, None, lambda j: full[j], way, moved)
+    now, at, share, band = S.reading(onward, back, scale)
+    grown = S.enlarged(way[0], way[1], ok, wide)
+    return {'main': main[0], 'mainShare': main[2], 'now': now, 'share': share, 'band': band, 'onward': S.patterned(onward[0])[0], 'back': S.patterned(back[0])[0] if back else None,
+            'same': bool(np.array_equal(p, onward[0], equal_nan=True)), 'grown': float(np.median(grown[ok])) if ok.any() else None}
+
+
+def carries():
+    import tempfile
+    from PIL import Image
+    rng = np.random.default_rng(710)
+    one, other = ground(rng), ground(rng)
+    swaps = {w: exchanged(one, other, w) for w in WIDTHS}
+    out = {'rigid': [], 'exchange': [], 'still': []}
+    for way in ('rise', 'dive'):
+        for z in ZOOMS:
+            out['rigid'].append({'way': way, 'zoom': z, **judged(film(rng, way, z, 0, one, None, 'none'))})
+            for w in WIDTHS:
+                for weight in ('whole',) + (('half',) if way == 'rise' else ()) + (('cut',) if w == WIDTHS[0] else ()):
+                    out['exchange'].append({'way': way, 'zoom': z, 'width': w, 'weight': weight, **judged(film(rng, way, z, 0, one, swaps[w], weight))})
+    for speed, weight in ((0, 'none'), (8, 'none'), (32, 'none'), (0, 'whole'), (8, 'whole'), (0, 'half'), (0, 'cut')):
+        out['still'].append({'speed': speed, 'weight': weight, **judged(film(rng, 'rise', 1, speed, one, swaps[32], weight))})
+    with tempfile.TemporaryDirectory() as folder:
+        def through(way, later, weight):
+            paths = []
+            for j, f in enumerate(film(rng, way, 4.4, 0, one, later, weight)):
+                g = np.rint(f).astype(np.uint8)
+                paths.append(os.path.join(folder, '%02d.png' % j))
+                Image.fromarray(np.stack([g, g, g], axis=2)).save(paths[-1])
+            n = S.pictures({'paths': paths, 'scale': FILM['scale'], 'window': 32, 'floor': 0.25, 'grid': [16, 9], 'changeFrames': FILM['frames'], 'changeBlur': FILM['blur'], 'patternPx': FILM['wide'], 'patternFloor': FLOOR})
+            return {'pattern': n['pattern'][0], 'band': n['patternBand'][0], 'at': n['patternAt'][0]}
+        out['through'] = {'rise': through('rise', None, 'none'), 'dive': through('dive', None, 'none'), 'riseExchange': through('rise', swaps[16], 'whole'), 'diveExchange': through('dive', swaps[16], 'whole')}
+    return out
+
+
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 1 and sys.argv[1] == 'carried':
+        json.dump({'carried': carries()}, sys.stdout)
+    elif len(sys.argv) > 1:
         json.dump({'pops': pops(json.loads(sys.argv[1]))}, sys.stdout)
     else:
         json.dump({'patterns': patterns(), 'bodies': bodies()}, sys.stdout)
