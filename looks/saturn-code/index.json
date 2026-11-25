@@ -1,9 +1,31 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T18:23:27.680Z",
- "head": "f044d99f6e957bce193bf5b719ede2e59d43ef39",
- "note": "the paced share on the rise: measured 1.64 levels a frame so far (3790 to 3815); rings' tone refit and the depth and ice table for the ruling of mail 1248 are next",
+ "pushed": "2026-11-25T18:52:02.438Z",
+ "head": "defa4f2658436952dd0a06e1d781a81274f11500",
+ "note": "paced share: whole rise measured (largest 1.71 levels a frame); pop at 3874 traced to the stars' drift through half a quarter pixel; rings' tone refit rendering at 3720",
  "looks": [
+  {
+   "time": "2026-11-25T18:52:01.774Z",
+   "file": "20261125185201774-note-saturn-rise-pops.jpg",
+   "source": "../../../../tmp/v/c1/saturn-rise-pops.png",
+   "kind": "note",
+   "label": "paced share, the judge's four largest pops of the rise (3873 to 3875: the stars under the plane's horizon, see the mail of 18:42)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T18:52:01.107Z",
+   "file": "20261125185201107-note-changes_top.jpg",
+   "source": "../../../../tmp/v/c1/changes_top.png",
+   "kind": "note",
+   "label": "paced share, the judge's sheet of the rise: largest changes of pattern and place (pop 1.21 at 3874 as main, level step 0.13)"
+  },
+  {
+   "time": "2026-11-25T18:51:59.896Z",
+   "file": "20261125185159896-note-pat_3827.jpg",
+   "source": "../../../../tmp/v/c1/pat_3827.png",
+   "kind": "note",
+   "label": "paced share, rise 3823 to 3837 every 2 at full size, crop at 892,716: the terminator at the foot, where the pattern number reads 0.44995 at 3827 (limit 0.45; the name 0.29 there)"
+  },
   {
    "time": "2026-11-25T18:23:14.889Z",
    "file": "20261125182314889-note-rise_a_paced.jpg",
@@ -38,27 +60,6 @@
    "source": "../../../../tmp/v/dark/rise_3814_3828.png",
    "kind": "note",
    "label": "the name 114ad7e, rise 3814 to 3828 every frame (draft, main's engine): the dusk under the one share"
-  },
-  {
-   "time": "2026-11-25T17:19:18.612Z",
-   "file": "20261125171918612-note-final_3465.jpg",
-   "source": "../../../../tmp/v/n2/final_3465.png",
-   "kind": "note",
-   "label": "the name 114ad7e, final 3465 on main's engine: 4.7784 (main 4.7807)"
-  },
-  {
-   "time": "2026-11-25T17:19:17.221Z",
-   "file": "20261125171917221-note-final_3720.jpg",
-   "source": "../../../../tmp/v/n2/final_3720.png",
-   "kind": "note",
-   "label": "the name 114ad7e, final 3720 on main's engine: 28.6192 (main 27.7989), rest 21.8907 (main 22.0907)"
-  },
-  {
-   "time": "2026-11-25T17:19:16.191Z",
-   "file": "20261125171916191-note-p_hold_n2.jpg",
-   "source": "../../../../tmp/v/dark/p_hold_n2.png",
-   "kind": "note",
-   "label": "hold 3465 at 4 times: approved hero, main c92aad6 final, the name 114ad7e final"
   }
  ]
 }
