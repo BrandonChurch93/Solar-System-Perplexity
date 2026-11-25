@@ -1,9 +1,55 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T07:56:11.759Z",
- "head": "ac24b9b8f35fb0dee30f4618290bb567559897be",
- "note": "sun lab state zk ac24b9b: mottled hot tops, dark by depth, smaller plumper cells",
+ "pushed": "2026-11-25T08:17:36.141Z",
+ "head": "4382e81086a9b11dac5a7bdd5cbfea9d449a5fb6",
+ "note": "sun lab state zl 4382e81 frame 90, pairs, clip of zk 120 to 179",
  "looks": [
+  {
+   "time": "2026-11-25T08:17:35.379Z",
+   "file": "20261125081735379-note-clip-zk.mp4.jpg",
+   "source": "out/work/sun/lab/clip-zk.mp4",
+   "kind": "note",
+   "label": "sun lab zl 4382e81 clip-zk.mp4",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:17:34.849Z",
+   "file": "20261125081734849-note-pair-90-near.jpg",
+   "source": "out/work/sun/lab/pair-90-near.jpg",
+   "kind": "note",
+   "label": "sun lab zl 4382e81 pair-90-near.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:17:34.307Z",
+   "file": "20261125081734307-note-pair-90-spot.jpg",
+   "source": "out/work/sun/lab/pair-90-spot.jpg",
+   "kind": "note",
+   "label": "sun lab zl 4382e81 pair-90-spot.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:17:33.763Z",
+   "file": "20261125081733763-note-lab-90-whole.jpg",
+   "source": "out/work/sun/lab/lab-90-whole.jpg",
+   "kind": "note",
+   "label": "sun lab zl 4382e81 lab-90-whole.jpg",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T08:16:45.693Z",
+   "file": "20261125081645693-frame-lab-90-zl.jpg",
+   "source": "out/work/sun/lab/lab-90-zl.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T07:56:11.186Z",
    "file": "20261125075611186-note-pair-90-near.jpg",
@@ -26,52 +72,6 @@
    "source": "out/work/sun/lab/lab-90-zk.png",
    "kind": "note",
    "label": "lab frame 90 state zk ac24b9b",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:55:19.943Z",
-   "file": "20261125075519943-frame-lab-90-zk.jpg",
-   "source": "out/work/sun/lab/lab-90-zk.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T07:35:44.412Z",
-   "file": "20261125073544412-note-pair-90-near.jpg",
-   "source": "out/work/sun/lab/pair-90-near.jpg",
-   "kind": "note",
-   "label": "lab pair near state y",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:35:43.562Z",
-   "file": "20261125073543562-note-pair-90-spot.jpg",
-   "source": "out/work/sun/lab/pair-90-spot.jpg",
-   "kind": "note",
-   "label": "lab pair spot state y",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:35:42.640Z",
-   "file": "20261125073542640-note-lab-90-y.jpg",
-   "source": "out/work/sun/lab/lab-90-y.png",
-   "kind": "note",
-   "label": "lab frame 90 state y 9119c72",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T07:02:23.190Z",
-   "file": "20261125070223190-note-pair-90-near.jpg",
-   "source": "out/work/sun/lab/pair-90-near.jpg",
-   "kind": "note",
-   "label": "lab pair near ground, approved left",
    "stop": "sun"
   }
  ]
