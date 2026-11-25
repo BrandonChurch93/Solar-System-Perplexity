@@ -1,4 +1,4 @@
-import type * as THREE from 'three'
+import * as THREE from 'three'
 import { setCapture, spanMid } from '../../src/core/clock'
 import type { ViewKind } from '../../src/core/types'
 import { RANGE_LOW, RANGE_OCTAVES } from '../../src/diagnostics/diag'
@@ -23,7 +23,7 @@ export interface PoseRecord {
   rate: number
   time: number
   view: ViewKind
-  camera: { p: number[]; q: number[]; vfov: number; width: number; height: number }
+  camera: { p: number[]; q: number[]; vfov: number; near: number; width: number; height: number }
   sky: { q: number[] }
   range: { low: number; octaves: number; units: number[] }
   bodies: [PoseBody, ...PoseNear[]]
@@ -36,7 +36,9 @@ export function poseRecord(film: FilmDirector, plan: StopPlan, k: number, rate: 
   const c = carriedCamera(film, plan, plan.id, at, time)
   const seg = segmentAtFrame(at)
   const shot = film.shotAt(at, time, seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise') ? sideAt(seg, time) : undefined)
-  const close = plan.twinFrame(time).scale
+  const still = new THREE.Quaternion()
+  const close = plan.twin({ position: new THREE.Vector3(1, 0, 0), quaternion: still, vfov: c.pose.vfov }, time).position.distanceTo(plan.twin({ position: new THREE.Vector3(), quaternion: still, vfov: c.pose.vfov }, time).position)
+  const two = Number.isFinite(close) && close > 0 && Math.abs(close - 1) > 1e-9
   const globe = plan.fit.globe
   const drawn = (plan as { drawn?: (time: number) => THREE.Quaternion }).drawn
   const seat = (plan as Partial<Seated>).drawnSeat
@@ -49,9 +51,9 @@ export function poseRecord(film: FilmDirector, plan: StopPlan, k: number, rate: 
     rate,
     time,
     view: c.side,
-    camera: { p: c.pose.position.toArray(), q: lens.toArray(), vfov: c.pose.vfov, width: size.width, height: size.height },
+    camera: { p: c.pose.position.toArray(), q: lens.toArray(), vfov: c.pose.vfov, near: shot.near * (c.side === 'terrain' && two ? close : 1), width: size.width, height: size.height },
     sky: { q: shot.skyTurn.clone().invert().multiply(shot.skyQuaternion).toArray() },
-    range: { low: RANGE_LOW, octaves: RANGE_OCTAVES, units: Number.isFinite(close) && close > 0 ? [1, close] : [1] },
+    range: { low: RANGE_LOW, octaves: RANGE_OCTAVES, units: two ? [1, close] : [1] },
     bodies: [{ id: plan.id, place: form?.place ?? [0, 0, 0], turn: (drawn ? drawn.call(plan, time) : plan.turn(time)).toArray(), scale: globe?.scale ?? [1, 1, 1], axes: globe?.quaternion ?? [0, 0, 0, 1], ...(form ? { shape: form.shape } : {}) }, ...others],
   }
 }

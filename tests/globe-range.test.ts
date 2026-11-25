@@ -414,3 +414,51 @@ describe.skipIf(!have)('the range view in a WebGL2 browser', () => {
     }
   }, 60000)
 })
+
+const LOW = `
+import json, sys
+import numpy as np
+sys.path.insert(0, sys.argv[1])
+import range as R
+
+CLOSE, NEAR, DEEP = 0.001, 0.0003, 0.997
+
+def record(near):
+    cam = {'p': [0.0, 0.0, 1.0014], 'q': [0.5372996, 0, 0, 0.8433914], 'vfov': 50.0, 'width': 96, 'height': 54}
+    if near is not None:
+        cam['near'] = near
+    return {'camera': cam, 'sky': {'q': [0, 0, 0, 1]}, 'range': {'low': -20, 'octaves': 32, 'units': [1, CLOSE]}, 'bodies': [{'id': 'made', 'place': [0, 0, 0], 'turn': [0, 0, 0, 1], 'scale': [1, 1, 1], 'axes': [0, 0, 0, 1]}]}
+
+rec = record(NEAR)
+ray = R.rays(rec, (54, 96))
+p = np.array(rec['camera']['p'])
+b = ray @ p
+disc = b * b - (p @ p - DEEP * DEEP)
+t = np.where(disc > 0, -b - np.sqrt(np.maximum(disc, 0)), np.inf)
+hit = np.isfinite(t)
+low = hit & (np.arange(96)[None, :] < 48)
+raw = np.where(low, t / CLOSE, t)
+n = np.where(hit, 1 + np.floor(np.clip((np.log2(np.maximum(raw, 1e-30)) + 20) / 32, 0, 1) * R.TOP), 0).astype(np.int64)
+rgb = np.stack([n >> 16, (n >> 8) & 255, n & 255], axis=-1)
+want = p + ray * np.where(hit, t, 0)[..., None]
+out = {'hit': int(hit.sum()), 'low': int(low.sum()), 'least': float(t[hit].min()), 'height': float(np.linalg.norm(p) - 1)}
+for name, r in (('free', record(None)), ('bound', rec)):
+    x, which = R.points(R.ranges(rgb, r), r)
+    out[name] = {'wrong': float((which != np.where(low, 1, 0))[hit].mean()), 'miss': float(np.max(np.linalg.norm(x - want, axis=-1)[hit & (which == np.where(low, 1, 0))])), 'empty': bool((which[~hit] == -1).all())}
+json.dump(out, sys.stdout)
+`
+
+describe('the near plane of the lens in the pick of a unit', () => {
+  it('does not take a unit that puts a point nearer than the lens can draw, where the ground lies deeper under the sphere than the eye stands over it', () => {
+    const n = JSON.parse(execFileSync('python3', ['-c', LOW, resolve(ROOT, 'tools/img')], { encoding: 'utf8' })) as { hit: number; low: number; least: number; height: number; free: { wrong: number; miss: number; empty: boolean }; bound: { wrong: number; miss: number; empty: boolean } }
+    expect(n.hit).toBeGreaterThan(2000)
+    expect(n.low).toBeGreaterThan(1000)
+    expect(n.least).toBeGreaterThan(0.0003)
+    expect(n.height).toBeLessThan(0.003)
+    expect(n.free.wrong).toBe(0.5)
+    expect(n.bound.wrong).toBe(0)
+    expect(n.bound.miss).toBeLessThan(1e-6)
+    expect(n.bound.empty).toBe(true)
+    expect(n.free.empty).toBe(true)
+  })
+})

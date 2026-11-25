@@ -91,13 +91,15 @@ def off(record, x):
 def points(d, record):
     """The point each pixel shows, in the pose frame, and the unit its range was taken in (an index into range.units).
     A layer hands its range in its own units; of the units the record names, the one is taken that puts the point nearest a surface
-    of the record (off), the earlier unit where two stand alike."""
+    of the record (off), the earlier unit where two stand alike. A unit that puts the point nearer than the near plane of the lens
+    (camera.near, where the record names it) is not taken: nothing is drawn there."""
     ray = rays(record, d.shape)
     p = np.array(record['camera']['p'], dtype=np.float64)
+    near = record['camera'].get('near', 0)
     best, which, least = None, None, None
     for i, unit in enumerate(record['range']['units']):
         x = p + ray * (d * unit)[..., None]
-        miss = off(record, x)
+        miss = np.where(d * unit < near, np.inf, off(record, x))
         if best is None:
             best, which, least = x, np.zeros(d.shape, dtype=np.int64), miss
         else:

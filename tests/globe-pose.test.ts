@@ -128,4 +128,36 @@ describe('the pose record of a capture frame', () => {
     const still = Object.assign(Object.create(venus) as typeof venus, { drawnSeat: () => new THREE.Quaternion() } satisfies Seated)
     expect(JSON.stringify(poseRecord(film, still, 2516, 2, 30, size))).toBe(JSON.stringify(before))
   })
+
+  it('names the unit of the close view as the plan\'s own twin lays it, and the near plane of the lens in the units of the pose frame', () => {
+    const still = new THREE.Quaternion()
+    const along = (p: (typeof plans)[number], time: number, step: THREE.Vector3): number => p.twin({ position: step, quaternion: still, vfov: 40 }, time).position.distanceTo(p.twin({ position: new THREE.Vector3(), quaternion: still, vfov: 40 }, time).position)
+    const laid = (p: (typeof plans)[number], time: number): number => along(p, time, new THREE.Vector3(1, 0, 0))
+    const shotOf = (id: string, k: number, time: number): ReturnType<FilmDirector['shotAt']> => {
+      const seg = segmentAtFrame(k / 2)
+      return film.shotAt(k / 2, time, seg.stop === id && (seg.kind === 'dive' || seg.kind === 'rise') ? sideAt(seg, time) : undefined)
+    }
+    const sun = plan('sun')
+    const low = poseRecord(film, sun, 368, 2, 30, size)
+    expect(low.view).toBe('terrain')
+    expect(low.range.units.length).toBe(2)
+    expect(Math.abs(low.range.units[1]! / laid(sun, low.time) - 1)).toBeLessThan(1e-9)
+    expect(Math.abs(low.range.units[1]! / sun.twinFrame(low.time).scale - 1)).toBeGreaterThan(0.3)
+    expect(low.camera.near).toBeCloseTo(shotOf('sun', 368, low.time).near * low.range.units[1]!, 15)
+    for (const id of ['mercury', 'venus', 'earth', 'mars', 'jupiter', 'uranus', 'neptune']) {
+      const p = plan(id)
+      const r = poseRecord(film, p, Math.round(p.holdMid * 60), 2, 30, size)
+      expect(r.view).toBe('orbit')
+      expect(Math.abs(r.range.units[1]! / laid(p, r.time) - 1)).toBeLessThan(1e-12)
+      for (const step of [new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1)]) expect(Math.abs(along(p, r.time, step) / laid(p, r.time) - 1)).toBeLessThan(1e-8)
+      expect(Math.abs(r.range.units[1]! / p.twinFrame(r.time).scale - 1)).toBeLessThan(1e-3)
+    }
+    const saturn = poseRecord(film, plan('saturn'), Math.round(plan('saturn').holdMid * 60), 2, 30, size)
+    expect(saturn.range.units).toEqual([1])
+    const mars = poseRecord(film, plan('mars'), 5364, 2, 30, size)
+    expect(mars.view).toBe('orbit')
+    expect(mars.camera.near).toBe(shotOf('mars', 5364, mars.time).near)
+    expect(mars.camera.near).toBeGreaterThan(0)
+    expect(mars.camera.near).toBeLessThan(Math.hypot(...mars.camera.p) - 1)
+  })
 })
