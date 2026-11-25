@@ -548,8 +548,9 @@ float toSun(vec3 q, float H, out float lit) {
   return max(2.0 * column(max(hp, 0.0), 0.0, H) - column(h, -mu, H), 0.0);
 }
 
-// Air and veil are light between the eye and the deck, so they are laid on as the film shows the planet from afar, before the grade
-// of the fall, and are graded with what lies under them as the globe's own picture is. This shader works in the colours of the
+// The veil is light between the eye and the deck and is laid on as the film shows the planet from afar, before the grade of the
+// fall, and graded with what lies under it (underAir). The air is not: it is added after the end's grade (fallEnd, see where col is
+// made), since under a grade by channel thin air came through to the grade's powers. This shader works in the colours of the
 // ground (the full grade; its end takes the grade back by the height). toHold: a colour of the ground as the hold shows it, in
 // parts of the pivot; toGround: back. underAir: a colour of the ground under a light of the hold (add) that lets clear of it
 // through. With no light and all let through it gives the colour back to the bit.
@@ -559,6 +560,13 @@ vec3 toHold(vec3 c) {
 }
 vec3 toGround(vec3 y) {
   return mix(pow(y, uFarFall.xyz), y, smoothstep(0.6, 1.2, y)) * uFallPivot / max(uGain, 1e-6);
+}
+// The end's grade of the fall (deep.json, globe.fall) on a colour that has the film's gain: none where the power is 1, so the
+// ground keeps its bytes.
+vec3 fallEnd(vec3 c) {
+  if (!any(notEqual(uFallPower, vec3(1.0)))) return c;
+  vec3 x = max(c, vec3(0.0)) / uFallPivot;
+  return mix(pow(x, uFallPower), x, smoothstep(0.6, 1.2, x)) * uFallPivot;
 }
 vec3 underAir(vec3 c, vec3 add, vec3 clear) {
   vec3 y = toHold(c);
@@ -889,7 +897,7 @@ void main() {
   // The air: what it takes between the camera and each thing, and what it scatters toward the camera from the Sun.
   float topAir = uRadius + uHazeMake.z;
   float dAir = topAir * topAir - rt2;
-  vec3 airSource = vec3(0.0);
+  vec3 airLight = vec3(0.0);
   float airAll = 0.0;
   float airBefore = 0.0;
   vec3 clearDeck = vec3(1.0);
@@ -910,15 +918,15 @@ void main() {
     float highAll = uHazeHigh.x / uHazeHigh.y * between(ha, ma, hb, mb, hp, uHazeHigh.y);
     // Where the light that reaches the camera is scattered: the lowest point of the ray, or the deck it ends on.
     vec3 qm = deckHit ? qb + normalize(qb) * uHazeLow.y : oc + rd * clamp(-b, ta, tb);
-    float litLow;
-    float litHigh;
-    float sunLow = uHazeLow.x / uHazeLow.y * toSun(qm, uHazeLow.y, litLow) + uHazeHigh.x / uHazeHigh.y * toSun(qm, uHazeHigh.y, litHigh);
+    // One Sun, the globe's: the air is lit as the deck under it is, by the globe's own curve of light at the height of the Sun
+    // there (its green, as a share of the curve's top), so no air stands bright over a deck that the globe's curve leaves dark.
+    float sunCurve = knot(uGDeck, dot(normalize(qm), uSun)).g / max(knot(uGDeck, 1.0).g, 1e-6);
     float forward = (1.0 - uHazeMake.y * uHazeMake.y) / pow(1.0 + uHazeMake.y * uHazeMake.y - 2.0 * uHazeMake.y * sunView, 1.5);
     float phase = mix(0.75 * (1.0 + sunView * sunView), forward, uHazeMake.x);
     vec3 depthAll = vec3(lowAll + highAll);
-    vec3 scattered = uLight.x * uHazeMake.w * phase * litLow * exp(-sunLow) * (lowAll * uHazeLowColour + highAll * uHazeHighColour) / max(lowAll + highAll, 1e-5);
+    vec3 scattered = uLight.x * uHazeMake.w * phase * sunCurve * (lowAll * uHazeLowColour + highAll * uHazeHighColour) / max(lowAll + highAll, 1e-5);
     clearDeck = exp(-depthAll);
-    airSource = toHold(scattered);
+    airLight = scattered;
     airAll = 1.0 - exp(-(lowAll + highAll));
     if (cloudWeight > 0.0) {
       vec3 qc = oc + rd * clamp(tMean, ta, tb);
@@ -935,8 +943,19 @@ void main() {
   float veilClear = farW < 1.0 ? mix(exp(-veilDepth(oc, rd, b, rt2, !deckHit, pix, t)), 1.0, farW) : 1.0;
   vec3 veilLight = uLight.x * uVeilLight * (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) * mix(1.0, (1.0 - uLight.z * uLight.z) / pow(1.0 + uLight.z * uLight.z - 2.0 * uLight.z * sunView, 1.5), uLight.y);
   vec3 veiled = underAir(deckLight, toHold(veilLight) * (1.0 - veilClear), vec3(veilClear));
-  vec3 behind = underAir(veiled, airSource * max(airAll - airBefore, 0.0), clearDeck);
-  vec3 col = underAir(clearCloud * cloud + cloudClear * behind, airSource * airBefore, vec3(1.0));
+  // The air is light ADDED along the path (MAIL 840 point 4, MAIL 914): L = L0 * T + S * (1 - T), T one number for the three
+  // channels, S the lit air's own colour. It is added in the light the film shows at this height: what lies under it and the
+  // air's own colour each take the end's grade of the fall alone, and the sum is made after it. Under the grade (a power by
+  // channel) the sum was a mean to that power: thin air lifted a dark deck by almost nothing, and red, the channel of the
+  // smallest power, by the most, which was the orange and violet band at the far limb and the plain that stayed navy.
+  vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  float outGain = uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
+  vec3 bare = cloud + cloudClear * veiled;
+  vec3 clearAll = (clearCloud * cloud + cloudClear * clearDeck * veiled) / max(bare, vec3(1e-9));
+  // The air behind the cirrus lies low on the deck, as the veil does, so the shadow a streamer casts on the deck lies on it too.
+  float airShade = deckHit ? (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) : 1.0;
+  float airShare = airBefore + airShade * cloudClear * max(airAll - airBefore, 0.0);
+  vec3 col = fallEnd(bare * outGain) * clearAll + fallEnd(airLight * outGain) * airShare;
   float seen = deckHit ? 1.0 : 1.0 - cloudClear * dot(clearDeck, vec3(0.3333)) * veilClear;
   float alpha = clamp(seen, 0.0, 1.0);
   // On the globe the scene ends at a border on the ground: by the angle from the place of what the ray meets (or passes nearest).
@@ -952,8 +971,6 @@ void main() {
     if (abs(gg.x) < 0.1 && abs(gg.y) < 0.1) col = vec3(0.0, 1.0, 0.0);
   }
 
-  vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
-  col = col * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float tSeen = cloudClear < 0.5 ? tMean : tDeck;
   float made = cloudClear < 0.5 ? cloudFinest : deckFinest;
   float texels = deckHit || cloudClear < 0.5 ? 4.0 * tSeen * uPix / max(made, 1e-6) : 0.0;
@@ -963,11 +980,6 @@ void main() {
     vec3 gm = bandOf(oc + rd * tDeck);
     float gx = clamp((uGridShow > 2.5 ? gm.y : gm.x) / 48.0 + 0.5, 0.0, 1.0) * 255.0;
     layer = vec3(floor(gx) / 255.0, fract(gx), deckHit ? 1.0 : 0.0);
-  }
-  // The grade of the fall (deep.json, globe.fall): none where the power is 1, so the hold keeps its bytes.
-  if (any(notEqual(uFallPower, vec3(1.0)))) {
-    vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
-    col = mix(pow(fallX, uFallPower), fallX, smoothstep(0.6, 1.2, fallX)) * uFallPivot;
   }
   outColor = diagOut(vec4(col, alpha) * (whole * inside), texels, deckHit || cloudClear < 0.5 ? 1.0 : 0.0, layer, vec2(0.0), min(tSeen, 4000.0) / uRadius);
 }`

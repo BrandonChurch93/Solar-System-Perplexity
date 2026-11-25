@@ -114,11 +114,11 @@
     "life": 0.03
   },
   "haze": {
-    "how": "Two layers of air whose density falls with height: low (the bright line at the limb and the pale far deck) and high (the wide blue glow). depth: optical depth straight down from space; scale: the height over which it falls by e; colour: what it scatters of white sunlight. forward: weight and sharpness of the lobe toward the Sun. top: height where the drawn shell ends.",
-    "low": { "depth": 0.05, "scale": 0.045, "colour": [0.25, 0.42, 0.7] },
+    "how": "Two layers of air whose density falls with height: low (the bright line at the limb and the pale far deck) and high (the wide blue glow). depth: optical depth straight down from space; scale: the height over which it falls by e; colour: what it scatters of white sunlight. forward: weight and sharpness of the lobe toward the Sun. top: height where the drawn shell ends. share: the strength of the air's own light, as a part of the Sun's. The air is light added along the path, after the end's grade of the fall: L = G(L0) * T + G(S) * (1 - T), T one number for the three channels, G the grade of the fall's end (none at the ground, so there L = L0 * T + S * (1 - T)). S is lit by the globe's own curve of light at the place (curve.json deck, its green over the curve's top), so air and deck have one Sun, and behind the cirrus it takes the shadow the deck under it has. low 0.065 and 0.028, share 0.45 since 25 Nov, 06 h (0.05, 0.045 and 0.25 before, under a law that graded the air with the deck and let thin air through as (1 - T) to the fall's powers, 4.5 times more in red than in blue: the orange and violet band at the far limb and a plain that stayed navy).",
+    "low": { "depth": 0.065, "scale": 0.028, "colour": [0.25, 0.42, 0.7] },
     "high": { "depth": 0.0015, "scale": 0.12, "colour": [0.03, 0.25, 0.7] },
     "forward": [0.5, 0.7],
-    "share": 0.25,
+    "share": 0.45,
     "top": 2.2
   },
   "light": {
