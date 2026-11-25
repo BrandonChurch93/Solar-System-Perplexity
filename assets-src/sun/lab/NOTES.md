@@ -123,3 +123,20 @@ Everything by place, eye distance, angle and pixel size. Nothing by the clock.
    domes above 12 px only once more than 16000 are in the frame (h about 8 units), all of it by pixel size.
 5. The chart about the place stretches sideways by sin(a)/a at the angle a from the place (0.64 at 90 degrees): grain
    only there, accepted.
+
+## 07:36 to 07:50, while the clip of state y renders (no still possible)
+
+- kit/05 read on determinism: a fixed step simulation from the first frame of the segment may cache checkpoints, the
+  cache never changes the result. My table is made at load by the same code on every machine, no file.
+- Looked at approved and state y side by side at 2 to 1 (v/appr-zoom.jpg): the approved top is a SOFT bright blotch
+  mottled at about a third of a cell, the fibres are fine and soft and are strongest toward the rim (dark between
+  them there), the crown is bright, the dark is thin veins with a soft halo and beads of light along them. State y
+  is striped shells: the fan from a dark root at the foot reads as a scallop, the threads are too bold and too white.
+- So state z (written, not yet seen): root of the fan inside the dome (fibre.offset 0.3 of the radius, was 0.92 at
+  the foot), no dark root (fibre.dark 0), periodic noise round the turn (vnp, no seam), the fibres' strength grows
+  from heat.thread[1] on the crown to heat.thread[0] at the rim, a mottle of the place (scale 30 and 66 a unit) on
+  the top, veins now come in from the rim (14 places a turn, half drawn, each of its own reach), rim band thinner
+  (0.8 to 0.98). Penumbra: thread counts 85, 190, 400 a radian (were 55, 120, 260), less white.
+- Far end seen in y-far.jpg: red orange haze with few light patches against the approved's golden grain. The haze
+  power 2.5 makes everything under a look of 4 degrees opaque. To try: power 1.5, amount 0.004, and smaller cells
+  (sim slots 5625, radius 0.021 to 0.06) since the approved cells are about 0.8 of mine in the near pair.
