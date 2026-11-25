@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T15:43:20.635Z",
- "head": "9ee41bdd5a681ab46cbd1bfa736c203725033ce7",
- "note": "far Sun commit: the disc under the far Sun is the hole of the hold sky picture; the low view needs the ride, second form 9ee7de11 takes it by the terrain sky's share; stills rendering",
+ "pushed": "2026-11-25T16:01:29.588Z",
+ "head": "acd76b3e234a488be092288abcddc6bd251e30ef",
+ "note": "9ee7de11 on take/ts1: 765 and 970 equal main's to the byte, view change 760 and 978 without a jump of the horizon glow; units 81 files 917 tests green on it; gate and units on the merge running",
  "looks": [
+  {
+   "time": "2026-11-25T16:01:28.238Z",
+   "file": "20261125160128238-note-sw-mid.jpg",
+   "source": "../../../../tmp/m/sw-mid.jpg",
+   "kind": "note",
+   "label": "take/ts1 with 9ee7de11: 745 (terrain sky's share 0.65) and 990 (0.48), the set's Sun part way between the far Sun and the terrain sky's",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T16:01:26.618Z",
+   "file": "20261125160126618-note-sw-rise.jpg",
+   "source": "../../../../tmp/m/sw-rise.jpg",
+   "kind": "note",
+   "label": "take/ts1 with 9ee7de11: 977 + 1/2 and 978 in the rise, the pillar at x 554 and 558",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T16:01:25.324Z",
+   "file": "20261125160125324-note-sw-dive.jpg",
+   "source": "../../../../tmp/m/sw-dive.jpg",
+   "kind": "note",
+   "label": "take/ts1 with 9ee7de11: 759 + 1/2 (high view, whole ride), 760 (low view), 760 + 1/2: the warm pillar on the horizon keeps its place across the change of view (peak of the top rows at x 579, 575, 570)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T15:43:19.327Z",
    "file": "20261125154319327-note-ba-low.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/ba-1.png",
    "kind": "note",
    "label": "717 and 1016 on take/ts1 6dd77c6b: before, after the ride is out of sunShown, what changes times 8 (draft tier, rate 2)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T14:40:27.066Z",
-   "file": "20261125144027066-note-crat3s.jpg",
-   "source": "../../../../tmp/m/crat3s.png",
-   "kind": "note",
-   "label": "crater on files: map ring, place pit, hero light on the body",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T13:49:37.494Z",
-   "file": "20261125134937494-note-g13-779.jpg",
-   "source": "../../../../tmp/m/g13-779.png",
-   "kind": "note",
-   "label": "G13 at 779 on the commit: the texel view (flat top value, 0.00 percent soft) and the lower half of the picture at 1 to 1",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T13:29:04.649Z",
-   "file": "20261125132904649-note-pair-dive.jpg",
-   "source": "../../../../tmp/m/pair-dive.png",
-   "kind": "note",
-   "label": "MAIL 1106 dive 720 to 722: the ground of pixel 1376, 836 at 721 + 1/2 and at 729 + 1/2, way C, take b9, the mark, times 4",
    "stop": "mercury"
   }
  ]
