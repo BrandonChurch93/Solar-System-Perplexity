@@ -278,6 +278,15 @@
     "rim": [
       0.14,
       0.08
-    ]
+    ],
+    "near": {
+      "how": "At the heights the close camera itself flies (up to its height at the change of view of the rise) the globe side draws this ground by the close view's own rule: the far band bent to the camera's limb, the picture's own light above the horizon, no end at farDeg, and the rim's feather narrowed to rim (shares of the canvas, so that it lies outside the frame there). The shell of air is not drawn there and the ball is not drawn where its ground meets the eye at less than graze (the cosine of the angle to the upright), which is the hair of ball above the picture's horizon. All of it gives way, by one smooth step of the logarithm of the eye's height, to the farDeg end, the shell and the whole ball at the height to (radii).",
+      "to": 0.05,
+      "rim": [
+        0.07,
+        0.04
+      ],
+      "graze": 0.06
+    }
   }
 }

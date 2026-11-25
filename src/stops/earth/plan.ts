@@ -6,6 +6,7 @@ import { forward, lookAt, mix, ramp, slerpDir, smooth } from '../../director/rig
 import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../director/moves'
 import fit from './fit.json'
 import placeJson from './place.json'
+import { descent, moon, shape as figure } from './look'
 import { side, twin } from './place'
 
 export interface Leg { ease: number[]; round: number[]; hold: number; bank?: { deg: number }; land?: number }
@@ -84,6 +85,17 @@ export class Plan extends StopPlan {
 
   private handoverTime(kind: 'dive' | 'rise'): number {
     return handoverOf(this.id, kind)!.time
+  }
+
+  drawnShape(view: ViewKind, eye: THREE.Vector3): { shape: number[] } {
+    const low = view === 'orbit' ? 1 - smooth((Math.log(Math.max(eye.length() - 1, 1e-4)) - Math.log(descent.low)) / (Math.log(descent.high) - Math.log(descent.low))) : 1
+    return { shape: figure.flatMap((row, i) => row.map((v, j) => v + ((i === j ? 1 : 0) - v) * low)) }
+  }
+
+  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
+    if (view !== 'orbit') return []
+    const home = this.hold(this.holdMid - this.seg.hold.start).position.lerp(new THREE.Vector3().fromArray(moon.center), moon.near)
+    return [{ id: 'moon', place: home.applyAxisAngle(this.axis, THREE.MathUtils.degToRad(this.p.moonDegPerSecond) * (this.clock(time) - this.holdMid)).toArray(), turn: moon.quaternion, reach: moon.radius * moon.near * 1.25 }]
   }
 
   clock(time: number): number {

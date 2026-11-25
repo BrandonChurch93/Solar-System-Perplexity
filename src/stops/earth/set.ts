@@ -105,7 +105,7 @@ export const createSet: SetFactory = async (ctx) => {
   plateEast.applyQuaternion(toGround).multiplyScalar(veilScale)
   plateNorth.applyQuaternion(toGround).multiplyScalar(veilScale)
   const veilPlane = new THREE.Matrix3().set(plateEast.x, plateEast.y, plateEast.z, plateNorth.x, plateNorth.y, plateNorth.z, plateAt.x, plateAt.y, plateAt.z)
-  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground, { farDeg: placeJson.onGlobe.farDeg, rim: placeJson.onGlobe.rim, veil: { map: lowVeil, plane: veilPlane, fromDeg: plates.low.fromDeg } })
+  const ground = await Ground.load(ctx, base, reliefJson as GroundDef, look.ground, { farDeg: placeJson.onGlobe.farDeg, rim: placeJson.onGlobe.rim, rimNear: placeJson.onGlobe.near.rim, veil: { map: lowVeil, plane: veilPlane, fromDeg: plates.low.fromDeg } })
   terrain.add(ground.group)
   const onGlobe = new THREE.Group()
   onGlobe.scale.setScalar(1 / placeRadius)
@@ -152,6 +152,7 @@ export const createSet: SetFactory = async (ctx) => {
   const ease = look.globe.drift.ease
   const home = plan.hold(plan.seg.hold.end - plan.seg.hold.start).position.length()
   const leaveAt = handoverOf(plan.id, 'rise')!.time
+  const nearEnds = [Math.log(Math.max(plan.eye('dive', handoverOf(plan.id, 'dive')!.time, 'orbit').position.length(), plan.eye('rise', leaveAt, 'orbit').position.length()) - 1), Math.log(placeJson.onGlobe.near.to)]
 
   return {
     id: plan.id,
@@ -199,14 +200,16 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uNear!.value = low
       const lowLook = ending ? 0 : lowWeight(camera.length() - 1)
       const lowAir = ending ? 0 : airWeight(camera.length() - 1)
+      const whole = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - nearEnds[0]!) / (nearEnds[1]! - nearEnds[0]!))
       gu.uLowLook!.value = lowLook
       gu.uLowAir!.value = lowAir
+      gu.uGraze!.value = whole * placeJson.onGlobe.near.graze
       if (ground.group.parent !== onGlobe) onGlobe.add(ground.group)
       ground.group.visible = lowLook > 0
       onGlobe.quaternion.copy(plan.turn(state.time)).multiply(placeFrame).multiply(fromLocal).normalize()
       onGlobe.position.copy(placeCentre).applyQuaternion(onGlobe.quaternion).multiplyScalar(-1 / placeRadius)
       toPlace.copy(onGlobe.quaternion).invert()
-      if (lowLook > 0) ground.update(Math.min(Math.max(state.time, plan.seg.terrain.start), plan.seg.terrain.end) - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eyePlace.copy(eye).applyQuaternion(toPlace).multiplyScalar(placeRadius).add(placeCentre), sunPlace.copy(plan.lightDir).applyQuaternion(toPlace), 0, lowLook, lowAir)
+      if (lowLook > 0) ground.update(state.time - terrainMid, gain, shot.post.vignette, shot.post.bloomStrength, view, eyePlace.copy(eye).applyQuaternion(toPlace).multiplyScalar(placeRadius).add(placeCentre), sunPlace.copy(plan.lightDir).applyQuaternion(toPlace), 0, lowLook, lowAir, whole)
       const turned = plan.spin(state.time)
       eyeBody.copy(eye).applyQuaternion(untilt)
       ;(gu.uEyeBody!.value as THREE.Vector3).set(Math.cos(turned) * eyeBody.x - Math.sin(turned) * eyeBody.z, eyeBody.y, Math.sin(turned) * eyeBody.x + Math.cos(turned) * eyeBody.z)
@@ -223,6 +226,7 @@ export const createSet: SetFactory = async (ctx) => {
       au.uWide!.value = 1 - low
       au.uAway!.value = away
       au.uFree!.value = leaving ? 1 : away
+      au.uOut!.value = 1 - whole
       const thinAir = 1 + (d.air - 1) * low
       const thinRim = 1 + (d.inner - 1) * low
       ;(au.uHeight!.value as THREE.Vector4).set(look.air.heights[0]! * thinAir, look.air.heights[1]! * thinAir, look.air.heights[2]!, look.air.heights[3]!)
