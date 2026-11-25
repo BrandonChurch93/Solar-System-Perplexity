@@ -1,9 +1,47 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T16:52:20.837Z",
- "head": "91aa7c4ba61446238f86bbce9da83b3217f7c351",
- "note": "16:58 UTC: trials of the air's share for the far band's left third; the path line of MAIL 1208 under work",
+ "pushed": "2026-11-25T17:12:08.637Z",
+ "head": "1c5b75fa8f007ab95b2fc0e6425350ec0cf7a256",
+ "note": "17:13 UTC: path cure committed (1c5b75fa), chain running; air share and cast shadows trialled, not in",
  "looks": [
+  {
+   "time": "2026-11-25T17:12:07.866Z",
+   "file": "20261125171207866-note-n9-3150.jpg",
+   "source": "out/work/jupiter/final/n9-3150.png",
+   "kind": "note",
+   "label": "3150 final as it stands (named 001113e7, the path cure changes no pixel of it)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T17:12:07.146Z",
+   "file": "20261125171207146-note-thirds-final.jpg",
+   "source": "../work/r15/air/thirds-final.jpg",
+   "kind": "note",
+   "label": "Trial, not in the tree: far band at 3150, approved, named (air share 1), air share 0.3 (final); level and relief of the three thirds",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T17:12:06.440Z",
+   "file": "20261125171206440-note-rise-new-5.jpg",
+   "source": "../work/r15/rise-new-5.jpg",
+   "kind": "note",
+   "label": "Rise with the pull back at 2.4 radii a second over 1.75 s, drafts of 3270, 3283, 3296, 3305, 3314 (commit 1c5b75fa)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T17:04:34.269Z",
+   "file": "20261125170434269-frame-a30-3150.jpg",
+   "source": "out/work/jupiter/final/a30-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T16:52:20.132Z",
    "file": "20261125165220132-note-k006300-r2-draft.jpg",
@@ -115,20 +153,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-25T15:38:50.812Z",
-   "file": "20261125153850812-frame-n9-3150.jpg",
-   "source": "out/work/jupiter/final/n9-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
    "time": "2026-11-25T15:34:40.162Z",
    "file": "20261125153440162-note-look-3150.jpg",
    "source": "../work/r14/w/look-3150.jpg",
@@ -182,30 +206,6 @@
    "source": "../work/r14/n7-3150-trio.jpg",
    "kind": "note",
    "label": "3150 on the merge 0e5c0362 (equal bytes to 7c0b8675): approved, before, now",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:44:57.048Z",
-   "file": "20261125144457048-note-wdp2-pair-3034.jpg",
-   "source": "../work/r14/wdp2-pair-3034.jpg",
-   "kind": "note",
-   "label": "3034: before and wedge take p2 (not committed yet)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:44:55.740Z",
-   "file": "20261125144455740-note-farband-4.jpg",
-   "source": "../work/r14/farband-4.jpg",
-   "kind": "note",
-   "label": "3150, top of the frame: approved, round 46, before, now (the far band of MAIL 1131)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T14:28:03.970Z",
-   "file": "20261125142803970-note-n7-3150-trio.jpg",
-   "source": "../work/r14/n7-3150-trio.jpg",
-   "kind": "note",
-   "label": "3150 on 7c0b8675 beside the approved image",
    "stop": "jupiter"
   }
  ]
