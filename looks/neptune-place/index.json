@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T18:46:30.194Z",
- "head": "27624e6f44de796d7761c24bd391044558a4cfe4",
- "note": "the pairs on the tree to be named: rise 0.50, 0.59, 0.43, 0.37; low dive 0.31 to 0.27; 4860 G17 0.426, ground part 17.550",
+ "pushed": "2026-11-25T19:03:38.873Z",
+ "head": "8f25c0520676ef575a8845694267076e780b2e58",
+ "note": "ninth name 27624e6f4 is on the remote: 4860 approved, main, name at full size (ground 17.550 under main 19.759, G17 0.426 red, 89.9 s a draft frame) and the hold's place",
  "looks": [
+  {
+   "time": "2026-11-25T19:03:38.233Z",
+   "file": "20261125190338233-note-hold-zoom10.jpg",
+   "source": "../../../../tmp/hold-zoom10.jpg",
+   "kind": "note",
+   "label": "the hold 4605 on the ninth name, the place on the globe enlarged, before (left) and now: match 7.621 and G17 0.674, p25 0.436 as on the eighth name; nothing outside the disc differs; 36.6 s per draft frame; 4860 beside the approved is the look before this one (G17 0.426, 89.9 s)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T19:03:37.632Z",
+   "file": "20261125190337632-note-n10-three.jpg",
+   "source": "../../../../tmp/n10-three.jpg",
+   "kind": "note",
+   "label": "4860 at full size: the approved (top), main (middle), the ninth name 27624e6f4 (bottom): ground part 17.550 against main 19.759, sky 3.420, band 2.646; G17 median 0.426, p25 0.230 by my draft reader; 89.9 s per draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T18:46:28.392Z",
    "file": "20261125184628392-note-pair-N10.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pair-N10.jpg",
    "kind": "note",
    "label": "4860 at 1920 by 1080 beside the approved (left), tree 27624e6f4 (the rolls back at 0.05): ground part 17.550 (main 19.759), sky 3.420, band 2.646; G17 median 0.426, p25 0.230 by my draft reader (0.570 with the rolls at 0.12, 0.544 on the eighth name); 90 s per draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T17:59:10.630Z",
-   "file": "20261125175910630-note-n9-f4707.jpg",
-   "source": "../../../../tmp/n9-f4707.jpg",
-   "kind": "note",
-   "label": "4707 before (left) and now: the held field lies on the body from the dive's first moment",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T17:59:09.283Z",
-   "file": "20261125175909283-note-hold-zoom.jpg",
-   "source": "../../../../tmp/hold-zoom.jpg",
-   "kind": "note",
-   "label": "the hold 4605, the place on the globe at 3 times, before (left) and now: the eye's arm shows; MAD 7.623 (was 7.621), G17 0.674 and 0.436 as before; nothing outside the disc changes",
    "stop": "neptune"
   }
  ]
