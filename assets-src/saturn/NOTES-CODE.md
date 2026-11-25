@@ -5318,3 +5318,41 @@ After a break in the session (00:53 to 00:57) the job was found running as left;
   batch 6's reader are running; then that run (rise, dive, parity, place, G13) and a mail with its lines.
   Batch 7 (the bloom cure, the frame law's steps in the engine, the relief's edge) is cut and in its checks;
   it moves pictures. I do not wait for it.
+
+## 2026-11-25, 02:26 to 02:40 UTC: batch 6 merged, what is measured on its engine, the fourth NAMED mail
+
+- Merge 7359286c9cfa43401d5e7dcc989b1ce41f1ca07d: main 7fd2923 into the branch, made with the base 9c59fe7
+  named (merge-tree, commit-tree, ff-only, as before). Checked before: main changed nothing in my three
+  folders since 9c59fe7, the branch nothing outside them. After: the head equals main outside the three
+  folders; src/stops/saturn is still 9f71d5a4 and public/assets/saturn 75fa372a. The worktree mainref is
+  detached at 7fd2923 (engine hash ee785742acc8b67e).
+- On the merged head: tsc exit 0 (both new files in its list). vitest alone, 02:26:17 to 02:32:52: exit 0,
+  635 tests passed, none failed, none pending, 60 test files. tests/globe-cap.test.ts "brings a colour
+  level in by the texels of its parent" ran 4.44 s.
+- Job r59 (job_v.sh, steps finals path rise dive parity place g13), started 02:33:00 on 7fd2923 with my
+  stop folder: final 3465 sha256 4077873a1a2005c40bed0e9f225e2ebbe3cf153ee06f75b93a2c3a4735002f0f, final
+  3720 sha256 631f3cf203bc7ed84f841e909dae67cf604d51f1e96f87062860a2977ba4a55b: both the bytes of af6ba5f
+  and of 7026711. The path part: "VERDICT: green. No number is over its limit.", 274 lines, every line
+  equal to the report on af6ba5f but the commit line. The rise's pictures began 02:37:27 (new reader, every
+  frame drawn again); then dive, parity, place, G13. Expected: rise about 03:02, all about 03:35.
+- Looks pushed 02:27 (head f5bf8a30): the draft pairs of 3567 and 3866 (main's stop folder beside mine) and
+  the crop of the upper limb at 3885.
+- 3885 again, read closer. The path part of both folders says the lens runs a slightly different course
+  through the leave (speed at 3885 3.7721 against 3.7710, height at 3890 5.9511 against 5.9521, at 3896
+  6.0937 against 6.0949; at 3884 and 3885 equal to four places): the travel starts from the rise's end and
+  my rise has new paces. A shift of that size would give one level over the ringlets and no change in the
+  stars, which is what the difference picture shows. The single pixels of up to 46 levels on the outline
+  need more than a smooth edge gives: at six times (/tmp/v/r58c/limb_3885.png) the globe's upper limb is a
+  row of dark single pixels between the cream globe and the orange haze, in main's folder and in mine. A
+  reading, not proven by a trial. Number 25 stays open.
+- FOUND for round item 4 (edges at native size), to check on the judged frames next: that row of dark
+  pixels on the limb. In globe.ts the last line multiplies the colour by cover times mix(cover, 1, uEdgeLin)
+  and writes cover as alpha: with uEdgeLin under 1 an edge pixel is darker than a plain blend of the globe
+  over the haze. To do: crop the limb of 3465, 3567 and 3720 at six times; read uEdgeLin and uEdgePx of
+  both looks; try uEdgeLin 1 on a move frame (the hold must keep its bytes, so only by a law that is none
+  in the hold, or not at all if the kept look draws the hold's limb the same way).
+- The fourth NAMED mail goes out now from /tmp/v/mail/named5_draft.md (fill5.py): it names the head that
+  holds this entry, says which numbers come from which of the three engines (7026711, af6ba5f, 7fd2923) and
+  that the picture parts by batch 6's reader are running. Its text is kept in /tmp/v/mail/named5.md.
+- After the mail: watch r59; mail the rise's lines when they are in, then the rest. If the new reader reads
+  a line red: say so at once, find the frame, cure it within 90 minutes of the mail.
