@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T18:20:11.153Z",
+ "pushed": "2026-11-25T18:33:20.815Z",
  "head": "9c8a46df4b0a760960ed3dfa2d62cb3a31146915",
- "note": "layer hunt: the cover (deck level change) makes the rise onward read; trial border 0.19 to 0.24 rad under the tool, not named",
+ "note": "tool on the trial, rise part 2 of 2: 0.83 from 4421, 21 over (name 1.16, main 0.88, 16 over); handover frames rendering",
  "looks": [
+  {
+   "time": "2026-11-25T18:33:20.139Z",
+   "file": "20261125183320139-note-t1-tool-changes.jpg",
+   "source": "../../../../tmp/n57/t1-tool-changes.jpg",
+   "kind": "note",
+   "label": "tool on the trial (border 0.19 to 0.24 rad), rise part 2 of 2: pattern 0.83 from 4421 (name 1.16, main 0.88), 21 frames over; what is left is the back read at the left limb",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T18:20:09.782Z",
    "file": "20261125182009782-note-arc12.jpg",
@@ -240,14 +248,6 @@
    "source": "../../../../tmp/n55/p-Cdeck-8341.jpg",
    "kind": "note",
    "label": "control: only the glow's table at view cosine 1, chain panel 4170 + 1/2: pattern 0.33, back 0.13 (commit 1.35): the body of the dive's red is the place's lit band read by the view cosine",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T14:18:14.177Z",
-   "file": "20261125141814177-note-six-p1.jpg",
-   "source": "../../../../tmp/n55/six-p1.jpg",
-   "kind": "note",
-   "label": "trial P1 (not committed): the glow's table read by the path between eye and point; commit above, trial below at 4170 + 1/2, 4174 + 1/2, 4178 + 1/2, 4186, 4290 (4290 same bytes); the whole ground is lit in the middle of the dive",
    "stop": "uranus"
   }
  ]
