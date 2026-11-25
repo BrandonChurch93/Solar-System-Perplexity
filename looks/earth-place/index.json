@@ -1,9 +1,47 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T03:42:26.445Z",
+ "pushed": "2026-11-25T04:04:06.004Z",
  "head": "3a136a1a415c2b86419fa67dd9d1a4dfec123746",
- "note": "K4 state 1 on 3a136a1a: square of haze at 1857 found and cured (1857 byte equal again), haze share cap 3.5 to 8; tool run and proofs running",
+ "note": "K4 state 1: dive drawn, 1857 keeps its bytes, far ground one pale deck from 1886; strip on the limb 1902 to 1904 still there; rise frames and proofs running",
  "looks": [
+  {
+   "time": "2026-11-25T04:04:04.566Z",
+   "file": "20261125040404566-note-k4-beside.jpg",
+   "source": "../../../../tmp/gl/k5/k4-beside.jpg",
+   "kind": "note",
+   "label": "1866, 1878, 1890, 1898 draft: 3a136a1a (left) beside K4 state 1 (right)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T04:04:03.762Z",
+   "file": "20261125040403762-note-dive-third-1920.jpg",
+   "source": "../../../../tmp/gl/k5/dive-third-1920.jpg",
+   "kind": "note",
+   "label": "K4 state 1 (haze cap 8), draft: the dive 1830 to 1917, every third frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T04:03:52.054Z",
+   "file": "20261125040352054-sheet-earth-dive-top.jpg",
+   "source": "out/work/handover/earth-dive-top.png",
+   "kind": "sheet",
+   "label": "earth dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1919), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1830,
+   "last": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T04:01:14.386Z",
+   "file": "20261125040114386-compare-earth-dive-step-in-place.jpg",
+   "source": "out/work/handover/earth-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "earth dive, the largest step of the level in place (3.04): frame 1885, frame 1886, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1886
+  },
   {
    "time": "2026-11-25T03:42:25.676Z",
    "file": "20261125034225676-note-p-1857.jpg",
@@ -34,38 +72,6 @@
    "source": "../../../../tmp/gl/k5/n3.jpg",
    "kind": "note",
    "label": "K4 beside 3a136a1a, dive 1866 to 1882, haze cap 3.5 (before the change to 8)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:26:01.185Z",
-   "file": "20261125032601185-note-hz-seam.jpg",
-   "source": "../../../../tmp/gl/ho/q/seam/hz-seam.jpg",
-   "kind": "note",
-   "label": "3a136a1a horizon at both changes of view, native",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:26:00.612Z",
-   "file": "20261125032600612-note-s1-b.jpg",
-   "source": "../../../../tmp/gl/k5/s1-b.jpg",
-   "kind": "note",
-   "label": "K4 state 1 in work, draft, 1898 to 1920",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:26:00.003Z",
-   "file": "20261125032600003-note-s1-a.jpg",
-   "source": "../../../../tmp/gl/k5/s1-a.jpg",
-   "kind": "note",
-   "label": "K4 state 1 in work, draft, 1862 to 1894 every fourth frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:25:59.393Z",
-   "file": "20261125032559393-note-n-1890.jpg",
-   "source": "../../../../tmp/gl/k5/n-1890.jpg",
-   "kind": "note",
-   "label": "1890 draft: K4 state 1 in work (top) over 3a136a1a (bottom)",
    "stop": "earth"
   }
  ]
