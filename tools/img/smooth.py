@@ -354,11 +354,30 @@ def pictures(job):
             'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare}
 
 
-def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor):
+SKY_FAR = 0.15
+
+
+def limb_px(pose, shape):
+    """How many pixels SKY_FAR of the radius of the pose's largest body spans in a picture of the shape; none where the lens stands on or in
+    a body, 0 where the pose names no body."""
+    reach = 0.0
+    k = shape[0] / 2 / np.tan(np.radians(pose['vfov']) / 2)
+    for body in pose.get('bodies') or []:
+        r = float(max(body.get('scale') or [1]))
+        d = float(np.linalg.norm(np.array(body['place'], dtype=np.float64) - np.array(pose['p'], dtype=np.float64)))
+        if d <= r:
+            return None
+        reach = max(reach, SKY_FAR * k * r / np.sqrt(d * d - r * r))
+    return reach
+
+
+def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor, reach=(None, None)):
     """The pattern of frame i against frame i + n on the pixels off every body, read by the flow alone: the later frame carried back along
     the flows, where every flow on the way agrees with its way back, the pattern read over all of that, and of it the pixels off the bodies.
     a and b: the bodies of the two frames by their depth pictures. Sky that the later frame's bodies cover is not counted, nor the rim of
-    either depth picture. Gives the 99th percentile and the share of the frame counted; no number under PATTERN_SHARE of the frame."""
+    either depth picture. Gives the 99th percentile and the share of the frame counted (no number under PATTERN_SHARE of the frame), the
+    same two for the pixels farther from every body than reach px in both frames (none where a reach is none), and the pattern, where it is
+    counted and where it is counted far."""
     xs, ys = places(frames[i].shape)
     mx, my = xs, ys
     ok = np.ones(frames[i].shape, bool)
@@ -369,8 +388,12 @@ def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor):
     later = cv2.remap(frames[i + n].astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
     p = pattern(frames[i].astype(np.float32), later, ok, wide / 5, wide, floor)
     off = np.isfinite(p) & ~a & ~take(b) & ~rim(a, margin) & ~take(rim(b, margin))
-    share = float(off.mean())
-    return (float(np.percentile(p[off], 99)) if share >= PATTERN_SHARE else None), share
+    far = None
+    if reach[0] is not None and reach[1] is not None:
+        near = lambda body, px: cv2.distanceTransform((~body).astype(np.uint8), cv2.DIST_L2, 5) <= px if body.any() else np.zeros(body.shape, bool)
+        far = off & ~near(a, reach[0]) & ~take(near(b, reach[1]))
+    read = lambda part: (float(np.percentile(p[part], 99)) if part is not None and part.mean() >= PATTERN_SHARE else None, float(part.mean()) if part is not None else None)
+    return {'value': read(off)[0], 'share': read(off)[1], 'far': read(far)[0], 'farShare': read(far)[1], 'p': p, 'off': off, 'offFar': far}
 
 
 def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw, rows):
@@ -378,7 +401,7 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
     the flow on the carried pair, the reading after both (carry.py). Keys of their own: patternMap and what belongs to it."""
     import carry as C
     n = len(paths)
-    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyTurn')}
+    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn')}
     held = {}
     depths = job.get('depths') or [None] * n
 
@@ -389,6 +412,7 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
             held[j] = {'grey': frames[j], 'full': lambda: grey(paths[j]), 'depth': depth, 'which': which, 'unit': unit, 'pose': pose}
         return held[j]
 
+    solid = lambda f: (f['which'] > 0) & np.isfinite(f['depth']) & (f['depth'] > 0)
     for i in rows:
         if not poses[i] or not poses[i + reach] or (job.get('depths') and not (depths[i] and depths[i + reach])):
             continue
@@ -400,8 +424,8 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
         keys['patternMapBulk'][i], keys['patternMapApart'][i], keys['patternMapNo'][i], keys['patternMapRefused'][i] = out['bulk'], out['apart'], out['no'], out['refused']
         keys['patternMapBody'][i], keys['patternMapSkyTurn'][i] = out['body'], out['sky']
         if all(fw[j] is not None and bw[j] is not None for j in range(i, i + reach)):
-            solid = lambda f: (f['which'] > 0) & np.isfinite(f['depth']) & (f['depth'] > 0)
-            keys['patternMapSky'][i], keys['patternMapSkyShare'][i] = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor)
+            sky = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor, (limb_px(frame(i)['pose'], frames[i].shape), limb_px(frame(i + reach)['pose'], frames[i].shape)))
+            keys['patternMapSky'][i], keys['patternMapSkyShare'][i], keys['patternMapSkyFar'][i], keys['patternMapSkyFarShare'][i] = sky['value'], sky['share'], sky['far'], sky['farShare']
     keys['patternMapLimits'] = {'bulkPx': C.BULK_PX, 'apart': C.APART}
     return keys
 
@@ -409,7 +433,9 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
 def maps(job):
     """Rows of six for pairs read by the camera's own map (carry.py): the frame read on, the other frame as it is, the other frame carried onto
     it by the map and the flow, their difference times 4, the rule of each pixel (green the map, blue the sky, orange the flow, black not
-    judged), the change of their pattern (white is 1). The label of a row ends with its reading."""
+    judged), the change of their pattern (white is 1). The label of a row ends with its reading. With the frames between the two (between)
+    a seventh: the change of the pattern off every body by the flow alone, on the first frame (white is 1, the bodies grey, a blue cast
+    within SKY_FAR of a body's radius of a limb)."""
     import carry as C
     scale = job.get('scale', 0.25)
     margin = float(job.get('changeBlur', 20)) * scale
@@ -427,6 +453,18 @@ def maps(job):
             sides.append({'grey': reduced, 'full': (lambda g=g: g), 'depth': d, 'which': which, 'unit': unit, 'pose': pose})
         out, row = C.panels(sides[0], sides[1], margin, scale, wide, low)
         readings.append(out)
+        if item.get('between'):
+            frames = [small(grey(path), scale) for path in item['between']]
+            n = len(frames) - 1
+            fw = [motion(frames[j], frames[j + 1]) for j in range(n)]
+            bw = [motion(frames[j + 1], frames[j]) for j in range(n)]
+            solid = lambda f: (f['which'] > 0) & np.isfinite(f['depth']) & (f['depth'] > 0)
+            sky = unbodied(frames, fw, bw, 0, n, solid(sides[0]), solid(sides[1]), C.rim, margin, wide, low, (limb_px(sides[0]['pose'], frames[0].shape), limb_px(sides[1]['pose'], frames[0].shape)))
+            shown = np.repeat(np.clip(np.where(sky['off'], np.nan_to_num(sky['p']), 0) * 255, 0, 255).astype(np.uint8)[..., None], 3, axis=2)
+            shown[~sky['off'] & solid(sides[0])] = (40, 40, 40)
+            if sky['offFar'] is not None:
+                shown[sky['off'] & ~sky['offFar'], 2] = np.maximum(shown[sky['off'] & ~sky['offFar'], 2], 90)
+            row = np.concatenate([row, shown], axis=1)
         by = out['by'] or {}
         rows.append((item['label'] + (': no reading: %s (the flow left over the body %s px, the body at another distance on %s of it%s)' % (out['no'], '%.1f' % out['bulk'] if out['bulk'] is not None else 'none', '%.2f' % out['apart'] if out['apart'] is not None else 'none', ', the pair gave %.2f' % out['refused'] if out['refused'] is not None else '') if out['no'] else ': no reading' if out['value'] is None else ': %.2f read on the %s frame, shares map %.2f, sky %.2f, flow %.2f, largest block under the %s' % (out['value'], 'later' if out['on'] else 'first', by.get('map', 0), by.get('sky', 0), by.get('flow', 0), out['rule'])), row))
     if not rows:
