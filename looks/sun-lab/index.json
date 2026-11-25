@@ -1,32 +1,64 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T11:23:58.866Z",
- "head": "e361ec9e174609bcd42c35e62b3e4d00648c7955",
- "note": "lab ground e3 to f2",
+ "pushed": "2026-11-25T12:44:27.814Z",
+ "head": "751af6d0a9ab9d6900f801ffd2dc4710f7532858",
+ "note": "lab ground g15 at 751af6d0",
  "looks": [
   {
-   "time": "2026-11-25T11:18:20.474Z",
-   "file": "20261125111820474-frame-lab-240-e13.jpg",
-   "source": "out/work/sun/lab/lab-240-e13.png",
+   "time": "2026-11-25T12:44:27.198Z",
+   "file": "20261125124427198-note-level-g15.jpg",
+   "source": "../v/level-g15.jpg",
+   "kind": "note",
+   "label": "g15 far twin baked, 40 degrees about the spot",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:44:26.645Z",
+   "file": "20261125124426645-note-g15-spot.jpg",
+   "source": "../v/g15-spot.jpg",
+   "kind": "note",
+   "label": "g15 spot beside the approved",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:44:26.087Z",
+   "file": "20261125124426087-note-g15-near.jpg",
+   "source": "../v/g15-near.jpg",
+   "kind": "note",
+   "label": "g15 near field beside the approved",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:44:25.527Z",
+   "file": "20261125124425527-note-lab-90-g15.jpg",
+   "source": "../v/lab-90-g15.jpg",
+   "kind": "note",
+   "label": "lab ground g15 frame 90 draft (751af6d0)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T12:41:37.307Z",
+   "file": "20261125124137307-frame-lab-90-g15.jpg",
+   "source": "out/work/sun/lab/lab-90-g15.png",
    "kind": "frame",
-   "label": "sun.rise frame 240, draft tier",
+   "label": "sun.terrain frame 90, draft tier",
    "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 240,
+   "segment": "sun.terrain",
+   "frame": 90,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
    "engine": "822cc1bfb7014138"
   },
   {
-   "time": "2026-11-25T11:17:59.159Z",
-   "file": "20261125111759159-frame-lab-90-f2.jpg",
-   "source": "out/work/sun/lab/lab-90-f2.png",
+   "time": "2026-11-25T12:12:46.285Z",
+   "file": "20261125121246285-frame-lab-240-f2.jpg",
+   "source": "out/work/sun/lab/lab-240-f2.png",
    "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
+   "label": "sun.rise frame 240, draft tier",
    "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
+   "segment": "sun.rise",
+   "frame": 240,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
@@ -46,38 +78,6 @@
    "source": "../v/lab-179-c7.jpg",
    "kind": "note",
    "label": "sun lab state c7 lab-179-c7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:47:00.582Z",
-   "file": "20261125104700582-note-lab-0-c7.jpg",
-   "source": "../v/lab-0-c7.jpg",
-   "kind": "note",
-   "label": "sun lab state c7 lab-0-c7",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:47:00.048Z",
-   "file": "20261125104700048-note-clip-c7-sheet.jpg",
-   "source": "../v/clip-c7-sheet.jpg",
-   "kind": "note",
-   "label": "sun lab state c7 clip-c7-sheet",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:46:59.533Z",
-   "file": "20261125104659533-note-control-lamp.jpg",
-   "source": "../v/control-lamp.jpg",
-   "kind": "note",
-   "label": "sun lab state c7 control-lamp",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T10:46:59.011Z",
-   "file": "20261125104659011-note-c7r-far.jpg",
-   "source": "../v/c7r-far.jpg",
-   "kind": "note",
-   "label": "sun lab state c7 c7r-far",
    "stop": "sun"
   }
  ]
