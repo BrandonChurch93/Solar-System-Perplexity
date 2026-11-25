@@ -1,9 +1,51 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T16:16:40.609Z",
- "head": "6b0e4d5f3af9f2791070a2f6fe723080aaa467ce",
- "note": "item 5 read on the level picture: the disc is the near edge of the plate, no cure yet; main with the soft shutter ends is being taken next",
+ "pushed": "2026-11-25T16:42:34.570Z",
+ "head": "0b70228bba7ccf609b19d3333313440a4e76b4dd",
+ "note": "16:43 UTC: 1857 and 2156 at final on the merge with main 59449dbf: the hard blocks of the box shutter are gone with main's soft ends; a fine hatch in the large clouds and pale blue specks near the rim are left. Wedge at 1755 goes to a twentieth (15.68 against main 15.95). Bakes run.",
  "looks": [
+  {
+   "time": "2026-11-25T16:42:33.586Z",
+   "file": "20261125164233586-note-half-2156.jpg",
+   "source": "../../../../tmp/gl/k16/A/out/half-2156.jpg",
+   "kind": "note",
+   "label": "2156 final whole at half size: box beside soft ends"
+  },
+  {
+   "time": "2026-11-25T16:42:32.957Z",
+   "file": "20261125164232957-note-half-1857.jpg",
+   "source": "../../../../tmp/gl/k16/A/out/half-1857.jpg",
+   "kind": "note",
+   "label": "1857 final whole at half size: box beside soft ends"
+  },
+  {
+   "time": "2026-11-25T16:42:32.314Z",
+   "file": "20261125164232314-note-ll-2156.jpg",
+   "source": "../../../../tmp/gl/k16/A/out/ll-2156.png",
+   "kind": "note",
+   "label": "2156 final lower left 1 to 1: box beside soft ends"
+  },
+  {
+   "time": "2026-11-25T16:42:31.683Z",
+   "file": "20261125164231683-note-ll-1857.jpg",
+   "source": "../../../../tmp/gl/k16/A/out/ll-1857.png",
+   "kind": "note",
+   "label": "1857 final lower left 1 to 1: box (base 3a136a1a) beside soft ends (merge with main 59449dbf)"
+  },
+  {
+   "time": "2026-11-25T16:41:45.983Z",
+   "file": "20261125164145983-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T16:16:40.014Z",
    "file": "20261125161640014-note-lv12-disc.jpg",
@@ -19,54 +61,11 @@
    "label": "1885 draft of caaa727d with the rings of the place (4.2 yellow, 5 red, 6.4 green degrees from the point under the close camera): the cloud field of the plate ends on its near edge, dark sea under the camera's point; item 5 of mail 1183, not cured"
   },
   {
-   "time": "2026-11-25T16:07:09.437Z",
-   "file": "20261125160709437-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
-  },
-  {
    "time": "2026-11-25T16:03:42.910Z",
    "file": "20261125160342910-note-1857-model3.jpg",
    "source": "../../../../tmp/gl/k15/A/1857-model3.jpg",
    "kind": "note",
    "label": "cause A found, 1857 lower left: the open render beside MODELS with the motion measured between crisp frames at both ends of the shutter: the box of today makes the render's blocks (3.52 levels from it, closed frame 16.06); soft ends make dabs; the look of 15:57 that withdrew this reading was the faulty model"
-  },
-  {
-   "time": "2026-11-25T15:57:12.133Z",
-   "file": "20261125155712133-note-1857-model.jpg",
-   "source": "../../../../tmp/gl/k15/A/1857-model.jpg",
-   "kind": "note",
-   "label": "cause A, 1857 lower left: the open render beside MODELS (closed frame drawn out along the motion, box and soft ends) and the closed render: no model makes the blocks, so my reading of 15:39 (the half shutter's blur on thin marks) is withdrawn; cause not found"
-  },
-  {
-   "time": "2026-11-25T15:57:11.091Z",
-   "file": "20261125155711091-note-2156-coast-aurora.jpg",
-   "source": "../../../../tmp/gl/k15/A/2156-coast-aurora.jpg",
-   "kind": "note",
-   "label": "caaa727d 2156 at final: night coast and aurora, shutter open (lights as dashes, rays run together) beside closed (points, the hold's rays): bad, not cured"
-  },
-  {
-   "time": "2026-11-25T15:57:09.981Z",
-   "file": "20261125155709981-note-2156-ll-1to1.jpg",
-   "source": "../../../../tmp/gl/k15/A/2156-ll-1to1.jpg",
-   "kind": "note",
-   "label": "caaa727d 2156 at final, lower left at 1 to 1: shutter open (smear along the radius and flat bluish squares near the rim) beside shutter closed (crisp): bad, not cured"
-  },
-  {
-   "time": "2026-11-25T15:39:06.447Z",
-   "file": "20261125153906447-note-d-s4.jpg",
-   "source": "../../../../tmp/gl/k15/d-s4.jpg",
-   "kind": "note",
-   "label": "caaa727d dive 1881 to 1889, draft, whole frames: bad: the place reads as a disc with an outline and a fringe of specks; dark blue spot north of the streak",
-   "stop": "earth"
   }
  ]
 }
