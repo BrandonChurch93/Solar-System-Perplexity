@@ -1,6 +1,6 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T09:35:13.047Z",
+ "pushed": "2026-11-25T09:36:02.568Z",
  "head": "ab362641b9d9a924f577d3ad73df9d28231e3ebd",
  "note": "finals of the committed tree ab36264 (local) beside the approved and the named; 3465 byte identical; the whole rise renders at rate 2",
  "looks": [
@@ -59,6 +59,62 @@
    "source": "../../../../tmp/v/x/mail/n3720_T_bark_2x.png",
    "kind": "note",
    "label": "ab36264 FINAL 3720 lower left corner at 2 to 1: approved, named, this commit"
+  },
+  {
+   "time": "2026-11-25T09:35:06.134Z",
+   "file": "20261125093506134-note-n3720_TU_near.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_TU_near.png",
+   "kind": "note",
+   "label": "ab36264 FINAL 3720 boxes T U at 1 to 1: approved, named, this commit (the bark calmer, a faint hatch stays)"
+  },
+  {
+   "time": "2026-11-25T09:35:05.431Z",
+   "file": "20261125093505431-note-n3720_OP_near.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_OP_near.png",
+   "kind": "note",
+   "label": "ab36264 FINAL 3720 boxes O P at 1 to 1: approved, named, this commit (main division wider and hollow, no strands: not cured)"
+  },
+  {
+   "time": "2026-11-25T09:35:04.758Z",
+   "file": "20261125093504758-note-n3720_QR_foot.jpg",
+   "source": "../../../../tmp/v/x/mail/n3720_QR_foot.png",
+   "kind": "note",
+   "label": "ab36264 FINAL 3720 boxes Q R at 1 to 1: approved close, named 88ba2385, this commit (severe 2: lip, strips, mirror and seam gone; contact line 110 px lower than the approved, said)"
+  },
+  {
+   "time": "2026-11-25T09:35:04.030Z",
+   "file": "20261125093504030-note-n3567_QR_gap.jpg",
+   "source": "../../../../tmp/v/x/mail/n3567_QR_gap.png",
+   "kind": "note",
+   "label": "ab36264 FINAL 3567 boxes Q R at 1 to 1: approved hero, named 88ba2385, this commit (severe 1: the sky patch is gone)"
+  },
+  {
+   "time": "2026-11-25T09:17:01.224Z",
+   "file": "20261125091701224-note-t8_3866_D.jpg",
+   "source": "../../../../tmp/v/x/t8_3866_D.png",
+   "kind": "note",
+   "label": "3866 crop D: stars on the rings, before and after the cover"
+  },
+  {
+   "time": "2026-11-25T09:17:00.611Z",
+   "file": "20261125091700611-note-t10_3866_TUV.jpg",
+   "source": "../../../../tmp/v/x/t10_3866_TUV.png",
+   "kind": "note",
+   "label": "3866 crops T U V: approved hero, named, working tree draft"
+  },
+  {
+   "time": "2026-11-25T09:16:59.998Z",
+   "file": "20261125091659998-note-t13f_low.jpg",
+   "source": "../../../../tmp/v/x/t13f_low.png",
+   "kind": "note",
+   "label": "3720 lower sunlit globe: approved, named commit, working tree at the final tier"
+  },
+  {
+   "time": "2026-11-25T09:16:59.422Z",
+   "file": "20261125091659422-note-t14f_O.jpg",
+   "source": "../../../../tmp/v/x/t14f_O.png",
+   "kind": "note",
+   "label": "3720 final tier, trial of the sand without the near step: the hatch stays"
   }
  ]
 }
