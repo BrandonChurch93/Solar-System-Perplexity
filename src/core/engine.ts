@@ -79,6 +79,8 @@ export class Engine {
   private readonly carry = new THREE.Matrix4()
   private sampleCount = 1
   private soft = 0
+  // The count that sharpens the lookups of a sample where it is not the count of the frame (FramePlan.sharp), null elsewhere.
+  private sharp: number | null = null
   private shutter = 1
   private asked = 0
   private lastFrame: { frame: number; tier: string } | null = null
@@ -253,6 +255,8 @@ export class Engine {
     this.soft = plan.soft
     this.shutter = plan.shutter
     const still = probe.shut
+    // A frame drawn with the shutter shut stands still: all of its samples see every pixel.
+    this.sharp = still ? null : plan.sharp ?? null
     const middle = probe.time ?? (f + spanMid()) / config.fps
     const mid = this.director.shotAt(f, middle)
     let other: Shot | null = null
@@ -278,6 +282,7 @@ export class Engine {
   renderLive(shot: Shot): void {
     this.lastFrame = null
     this.soft = 0
+    this.sharp = null
     this.shutter = 1
     this.accumulator.begin()
     this.renderSample(shot, shot, 0, 0, 0, 1)
@@ -302,7 +307,7 @@ export class Engine {
     const diag = this.probe.view
     const raw = isRaw(diag)
     setDiag(diag)
-    setSamples(count, GRAD_FLOOR, this.soft)
+    setSamples(this.sharp ?? count, GRAD_FLOOR, this.soft)
     implicitUniform.value = this.sky.cull ? 1 : 0
     const wanted = shot.sets.map((s) => s.id)
     if (wanted.join('|') !== this.attached.join('|')) {

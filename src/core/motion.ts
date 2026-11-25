@@ -176,7 +176,36 @@ export function sampleStep(plan: { samples: number; seen: number; near?: number 
 // raw stays the motion across the full shutter; seen is the motion across the shutter that is open, and the sample count follows it.
 // near is there only in a frame with a named near body in it: that body's motion across the shutter that is open (nearMotion). The count
 // follows the larger of seen and near, up to the tier's maxSamplesPerFrame. The cap of the shutter does not read it.
-export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number }
+// sharp is there only in a dive or a rise of a stop that hands over and that handover.sharpCover names with a cover above 0: the count that
+// sharpens the lookups of a sample in place of the count of the whole frame (sharpCount).
+export interface FramePlan { samples: number; raw: number; seen: number; soft: number; split: boolean; shutter: number; near?: number; sharp?: number }
+
+// The samples that see one pixel of the path. In a frame that stands still all samples of the frame lie over one another, each at its own
+// place inside the pixel. In a frame that moves they are spread along the path: a point of the picture that moves by seen px across the open
+// shutter is seen in one pixel of its path by samples / seen of them, not by all.
+export function pathSamples(plan: { samples: number; seen: number }): number {
+  return plan.samples / Math.max(plan.seen, 1)
+}
+
+// The count that sharpens the lookups of a sample. The lookups are read finer than the pixel where the samples that lie over one another add
+// up to the pixel: the engine reads them at 1 / sqrt(count) of a pixel a side, down to a half (setSamples of src/diagnostics/diag.ts). With
+// the count of the whole frame that is true only of a frame that stands still. In a frame that moves, a light smaller than the footprint is
+// met by a sample only where the footprint lies on it: of the samples that see one pixel of the path, the share footprint squared. Where
+// that is one sample or less to a pixel, the streak of the light is a row of dots (seen at Earth's 2156 at the review tier: 24 samples over
+// 14.3 px, 1.7 to a pixel, read at half a pixel: 0.4 of a sample meets the light in each pixel of its way). So the count is the samples
+// that see one pixel of the path, over the cover: the number of samples whose footprints must lie on every point of the way
+// (handover.sharpCover, by stop). A frame that hardly moves keeps the count of the frame over the cover, which stays at the half while the tier
+// takes four times the cover. The count never passes the count of the frame, whatever the cover: no frame is read finer than it was, and
+// at one sample the lookups are the pixel's own, as they were.
+export function sharpCount(plan: { samples: number; seen: number }, cover: number): number {
+  return Math.min(pathSamples(plan) / cover, plan.samples)
+}
+
+// The cover of a stop: handover.sharpCover names the stops that asked for it. A stop it does not name has none, and its frames are read by
+// the count of the whole frame, as they were.
+export function sharpCoverOf(stop: string): number {
+  return (config.raw.handover.sharpCover as Record<string, number>)[stop] ?? 0
+}
 
 const SIDES: ViewKind[] = ['orbit', 'terrain']
 // How often the share of the shutter is corrected by the measure across the shortened shutter (shutterScale). After two the motion left is the
@@ -336,7 +365,9 @@ export function framePlan(source: ShotSource, frame: number, tier: string): Fram
     const seen = split ? left : left * seenShare(at(spanMid()))
     const body = nearOver(source, frame, split, shutterOffset(0, shutter), shutterOffset(1, shutter))
     const near = split || !(body > 0) ? body : body * seenShare(at(spanMid()))
-    return { samples: cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near)), raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}) }
+    const samples = cap <= base ? base : samplesNeeded(base, cap, Math.max(seen, near))
+    const cover = sharpCoverOf(segment.stop)
+    return { samples, raw, seen, soft: 0, split, shutter, ...(near > 0 ? { near } : {}), ...(cover > 0 ? { sharp: sharpCount({ samples, seen }, cover) } : {}) }
   }
   const mid = at(spanMid())
   const raw = rawMotion(at(0), mid, at(shutterSpan()))
