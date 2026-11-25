@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T13:50:20.880Z",
- "head": "82140079267d87735c341f33fe100c369dd89482",
- "note": "new tree before the commit: rim not cured (4152 + 1/2 0.81), dive 4170 + 1/2 1.35, rise 1.03; 4290 final 3.858 against main 3.849; 4416 still pale, coloured streaks named",
+ "pushed": "2026-11-25T14:02:18.395Z",
+ "head": "e14bb1e42a2bd00f8e8df092550f885b6cb72bae",
+ "note": "e14bb1e4 named, not green; control C1 proves the cause of the dive's pattern red: the limb's lit band by the view cosine (1.35 to 0.30 with it off)",
  "looks": [
+  {
+   "time": "2026-11-25T14:02:17.777Z",
+   "file": "20261125140217777-note-pair-c1.jpg",
+   "source": "../../../../tmp/n55/pair-c1.jpg",
+   "kind": "note",
+   "label": "control C1 (not a picture to keep): 4170 + 1/2 and 4178 + 1/2, commit left, falloff by the view cosine out of the light in the air right; pattern 1.35 falls to 0.30, so the lit band at the horizon is the body",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T13:56:07.137Z",
+   "file": "20261125135607137-note-p-N1-8370.jpg",
+   "source": "../../../../tmp/n55/p-N1-8370.jpg",
+   "kind": "note",
+   "label": "new tree: chain panel dive 4185, pattern 1.27 (82140079 1.17), onward green, back read red under the lit band, not cured",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T13:50:15.105Z",
    "file": "20261125135015105-note-two-4170n.jpg",
@@ -244,22 +260,6 @@
    "source": "../../../../tmp/n54/d3-crop290.jpg",
    "kind": "note",
    "label": "4290 lower part: state, without the dimming by the air between, with it (built): 119 pixels over 16 levels against the state",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T11:12:42.735Z",
-   "file": "20261125111242735-note-d3-b.jpg",
-   "source": "../../../../tmp/n54/d3-b.jpg",
-   "kind": "note",
-   "label": "air by path as built: 4290, 4200, 4186, 4176 state left, built right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T10:40:52.964Z",
-   "file": "20261125104052964-note-p-B1-8341.jpg",
-   "source": "../../../../tmp/n53/p-B1-8341.jpg",
-   "kind": "note",
-   "label": "B1 chain 4170.5: pattern 1.32",
    "stop": "uranus"
   }
  ]
