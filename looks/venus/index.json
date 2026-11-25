@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T09:03:03.239Z",
+ "pushed": "2026-11-25T09:25:18.118Z",
  "head": "86ce0513ce71a8054b4be143f8edc3d7ccc4c1fd",
- "note": "MAIL 981: the hold at 1185 against the approved hero",
+ "note": "third state in work: the place arrives by distance, the hold at 1185 and 1259 equal to before to the byte at draft",
  "looks": [
+  {
+   "time": "2026-11-25T09:25:16.981Z",
+   "file": "20261125092516981-note-ar-cmp-rise.jpg",
+   "source": "../../../../tmp/v/sh/ar-cmp-rise.jpg",
+   "kind": "note",
+   "label": "rise 1556 1566 1576 1586: tree of 8adf0940 (top), first state (middle, 1564 for 1566), third state in work (bottom), draft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T09:25:15.694Z",
+   "file": "20261125092515694-note-ar-cmp-dive.jpg",
+   "source": "../../../../tmp/v/sh/ar-cmp-dive.jpg",
+   "kind": "note",
+   "label": "dive 1290 1296 1308: tree of 8adf0940 (left), first state 86237abe (middle), third state in work (right), draft",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T09:02:53.545Z",
    "file": "20261125090253545-note-knot-x3-second.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/q6-vs-b0-1274-82.jpg",
    "kind": "note",
    "label": "dive 1274 1278 1282 lower right limb, tree before (top) and 86237abe (bottom): the same pale smear and rim in both",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T07:54:25.384Z",
-   "file": "20261125075425384-note-venus-dive-changes.jpg",
-   "source": "../../../../tmp/v/smooth-q6/venus-dive-changes.png",
-   "kind": "note",
-   "label": "q6 dive rate 2 on 86237abe: the largest changes of the pattern (red, 0.83 from 1321 + 1/2)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T07:54:24.483Z",
-   "file": "20261125075424483-note-rise-1582.jpg",
-   "source": "../../../../tmp/v/sh/q6all/rise-1582.jpg",
-   "kind": "note",
-   "label": "q6 rise every frame from 1582, 86237abe draft",
    "stop": "venus"
   }
  ]
