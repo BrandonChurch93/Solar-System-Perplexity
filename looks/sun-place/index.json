@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T05:58:54.864Z",
+ "pushed": "2026-11-25T06:13:33.425Z",
  "head": "d91c0f63dfdec7bcd7700d55196f3b525ab922d4",
- "note": "Commit 5 trial e7: domes in creases, roots, branching fibres with sheen; still too dark and foil like, being tuned",
+ "note": "Commit 5 in work, trial e10 of frame 60 (draft): finer fibres, each dome combed from a side of its own. sun-near: dark 0.346, body 0.548, pale 0.050, white 0.022 (approved 0.185, 0.642, 0.082, 0.010); brightest 15 percent half width 7.6 px, 1473 shapes, fine detail 0.0378, mean 0.266 (approved 4.8 px, 1153, 0.0373, 0.338); distance of the band tables 0.153. Still wrong: too dark, glints are thin upright dashes, domes read as ribbed shells",
  "looks": [
+  {
+   "time": "2026-11-25T06:11:14.464Z",
+   "file": "20261125061114464-note-e10-px.jpg",
+   "source": "../../../../tmp/v/e10-px.png",
+   "kind": "note",
+   "label": "sun trial e10 frame 60, approved left, 4 to 1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T06:11:13.765Z",
+   "file": "20261125061113765-note-e10-near.jpg",
+   "source": "../../../../tmp/v/e10-near.jpg",
+   "kind": "note",
+   "label": "sun trial e10 frame 60, approved left, 1 to 1, near box",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T05:58:54.264Z",
    "file": "20261125055854264-note-e7-zoom.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/d5-60-far.jpg",
    "kind": "note",
    "label": "trial d5 frame 60 far, approved left, native size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:52:17.873Z",
-   "file": "20261125045217873-note-d5-60-near.jpg",
-   "source": "../../../../tmp/v/d5-60-near.jpg",
-   "kind": "note",
-   "label": "trial d5 frame 60 near, approved left, native size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T04:30:19.641Z",
-   "file": "20261125043019641-note-card-foot.jpg",
-   "source": "../../../../tmp/v/card-foot.png",
-   "kind": "note",
-   "label": "The cause of those specks: the loops card (public/assets/sun/full/loops.webp) at 1 to 1 round the left foot holds what was left of a difference against the old ground picture. Not mended yet",
    "stop": "sun"
   }
  ]
