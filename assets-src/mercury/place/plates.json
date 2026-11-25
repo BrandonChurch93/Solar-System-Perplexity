@@ -470,7 +470,7 @@
    14,
    15.5
   ],
-  "take": "s9",
+  "take": "s14",
   "takes": {
    "s1": {
     "fineDeg": 0.03,
@@ -588,6 +588,58 @@
      "file": "tone.png",
      "size": 1024,
      "most": 8.0
+    }
+   },
+   "s14": {
+    "fineDeg": 0.16,
+    "toneDeg": 2.0,
+    "lightDeg": 0.7,
+    "plain": true,
+    "swap": true,
+    "restyle": {
+     "bands": [
+      0.04,
+      0.1,
+      0.25,
+      0.6
+     ],
+     "ring": [
+      7,
+      15
+     ],
+     "caps": [
+      null,
+      [
+       3,
+       97
+      ],
+      [
+       20,
+       75
+      ]
+     ],
+     "near": {
+      "at": [
+       1.8,
+       -0.5
+      ],
+      "deg": [
+       1.2,
+       1.7
+      ]
+     }
+    },
+    "light": {
+     "file": "tone.png",
+     "size": 1024,
+     "most": 8.0
+    },
+    "hero": {
+     "overDeg": 0.02,
+     "most": [
+      0.125,
+      32
+     ]
     }
    }
   },

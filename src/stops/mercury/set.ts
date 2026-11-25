@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../bodies/farpoint'
-import { samplesFor } from '../../core/sampler'
 import type { SetContext, SetFactory, Shot, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { FILMIC_GLSL } from '../../post/chain'
@@ -97,7 +96,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const globeOf = (): Globe => new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, mapFull: wrap.sets.full.color[0], height: wrapHeight, heightWidth: wrap.height ? sizes.height[0] : 4096, light: look.light,
-    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.levels.map(() => wrap.sets.full.plates[0]), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place, tone: { map: toneMap, dark: ownJson.tone.dark }, hue: { floor: hueJson.floor, at: hueJson.at as [number, number], rgb: hueJson.rgb }, tilt: { map: tiltMap, widthDeg: tiltJson.widthDeg, zero: tiltJson.zero, step: tiltJson.step, sun: tiltJson.sun as [number, number, number] } } : undefined,
+    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.levels.map(() => wrap.sets.full.plates[0]), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place, tone: { map: toneMap, dark: ownJson.tone.dark }, hue: { floor: hueJson.floor, at: hueJson.at as [number, number], rgb: hueJson.rgb }, hero: ownJson.hero as { at: [number, number]; deg: [number, number]; tint: [number, number, number] }, tilt: { map: tiltMap, widthDeg: tiltJson.widthDeg, zero: tiltJson.zero, step: tiltJson.step, sun: tiltJson.sun as [number, number, number] } } : undefined,
     fine: { texture: fineMap, period: fineJson.size[key][0]!, full: fineJson.size.full[0]!, guardShare: fineJson.guardShare, top: fineJson.top, shift: look.fine.shift, edge: look.fine.edge, blur: look.fine.blur, shade: look.fine.shade },
   })
   const globe = globeOf()
@@ -407,7 +406,7 @@ export const createSet: SetFactory = async (ctx) => {
       const now = fast ? at(state.time) : null
       const before = fast ? at(state.time - (open * (view.shutter ?? 1)) / view.samples) : null
       const moving = now?.view === 'orbit' && before?.view === 'orbit'
-      const jitter = moving ? samplesFor(view.samples)[view.sample] : undefined
+      const jitter = moving ? view : undefined
       globe.smear(view.camera, moving ? now.pose : null, moving ? before.pose : null, look.smear, jitter?.jitterX ?? 0, jitter?.jitterY ?? 0, view.samples)
       far.update(radiusPx, view, plan.p.tint, gain)
       if (state.weight <= 0) far.points.visible = false

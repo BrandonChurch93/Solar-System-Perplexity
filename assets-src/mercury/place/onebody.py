@@ -26,6 +26,15 @@ the ranks of A's bands at that same point: the place's first pit lies on the her
 The colour is A's over the last band (geometric) times A's own law of colour against the bands' sum. The curves are written to
 <take>/restyle.json. Without `restyle` a take keeps O's bodies between `fineDeg` and `toneDeg` as they are.
 
+`hero` (the take gives `overDeg` and `most`; `at`, `deg` and `tint` are read from src/stops/mercury/own.json `hero`) lays the
+hero's own ring crater into the ground. R is the map's part over `overDeg` against the second level's own part over `overDeg`,
+less `tint` (the law's colour against the level's own in the ring round the crater, which the globe gives back where it shows
+the level by the hue law), held to `most` and full inside `deg` (full and out, degrees round `at`). The light's file is divided
+by R and coded; every level is then multiplied by the light's file without R over the light's file with R, both read back as
+the globe reads them (two taps of the file, then the film curve back). So a level carries exactly what the light's file takes
+back: F times L stays the place in its own light to the file's rounding, the one crater in the hero's light above and in the
+place's own light below, and no remainder finer than a cell of the light's file stands between them.
+
 `law` writes src/stops/mercury/hue.json: the map's own colour against its brightness inside the disc (public full/wrap-color.jpg in
 the frame of the first plate, `steps` knots even in the logarithm between the two percentiles `law`, each the mean colour of
 its step over its luma). On the map bright ground is cooler than dark ground, in A it is warmer; the globe gives the disc the
@@ -178,6 +187,61 @@ def field(a, o, width, size, spec, first, curve=None, lit=False):
     return out, light, w
 
 
+HERO = {}
+
+
+def tone_code(light, spec):
+    m = spec['light']['size']
+    return (M.srgb(P.filmic(np.minimum(cv2.resize(light, (m, m), interpolation=cv2.INTER_AREA), spec['light']['most']))) * 255 + 0.5).astype(np.uint8)
+
+
+def hero_light(out, light, width, size, spec):
+    h = spec.get('hero')
+    if not h:
+        return light
+    gx, gy = M.grid((0, 0), width, size)
+    at = [math.tan(math.radians(v)) for v in h['at']]
+    m = 1 - P.step(math.tan(math.radians(h['deg'][0])), math.tan(math.radians(h['deg'][1])), np.hypot(gx - at[0], gy - at[1]))
+    ys, xs = np.nonzero(m > 0)
+    s = math.radians(h['overDeg']) / (2 * M.half(width)) * size
+    pad = int(3 * s) + 2
+    box = (slice(max(ys.min() - pad, 0), min(ys.max() + pad + 1, size)), slice(max(xs.min() - pad, 0), min(xs.max() + pad + 1, size)))
+    f = spec['floor']
+    r = (soft(np.maximum(the_map(width, size)[box], 0), s) + f) / (soft(np.maximum(out[box], 0), s) + f) / np.float32(h['tint'])
+    print('hero: the light of the map over the place\'s, 0.1, 50, 99.9 percent and most', np.round(np.percentile(r @ LUMA, [0.1, 50, 99.9]), 3), round(float(r.max()), 2), 'held to', h['most'], 'share outside', round(float(((r > h['most'][1]) | (r < h['most'][0])).mean()), 5), flush=True)
+    r = (np.clip(r, *h['most']) ** m[box][..., None]).astype(np.float32)
+    lit = light.copy()
+    lit[box] /= r
+    HERO['width'] = width
+    HERO['own'] = M.linear(tone_code(light, spec))
+    HERO['lit'] = M.linear(tone_code(lit, spec))
+    HERO['cells'] = int((HERO['own'] != HERO['lit']).any(-1).sum())
+    print('hero: cells of the light that change', HERO['cells'], flush=True)
+    return lit
+
+
+def hero(out, width, size, spec):
+    if not HERO:
+        return out
+    m = spec['light']['size']
+    k = m / (2 * M.half(HERO['width']))
+    gx, gy = M.grid((0, 0), width, size)
+    ys, xs = np.nonzero((HERO['own'] != HERO['lit']).any(-1))
+    cell = 2 * M.half(HERO['width']) / m
+    x0, x1 = ((xs.min() - 2) / m - 0.5) * m * cell, ((xs.max() + 3) / m - 0.5) * m * cell
+    y1, y0 = (0.5 - (ys.min() - 2) / m) * m * cell, (0.5 - (ys.max() + 3) / m) * m * cell
+    rows, cols = np.nonzero((gy[:, 0] > y0) & (gy[:, 0] < y1))[0], np.nonzero((gx[0] > x0) & (gx[0] < x1))[0]
+    if not len(rows) or not len(cols):
+        return out
+    box = (slice(rows.min(), rows.max() + 1), slice(cols.min(), cols.max() + 1))
+    mx, my = (gx[box] * k + m / 2 - 0.5).astype(np.float32), (m / 2 - gy[box] * k - 0.5).astype(np.float32)
+    own = P.unfilmic(cv2.remap(HERO['own'], mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE))
+    lit = P.unfilmic(cv2.remap(HERO['lit'], mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE))
+    out = out.copy()
+    out[box] *= (own / np.maximum(lit, 1e-4)).astype(np.float32)
+    return out
+
+
 def coded(x):
     y = P.filmic(x)
     return (M.srgb(np.where(y >= 0.9849, 1, y)) * 255).astype(np.float32) @ LUMA
@@ -222,6 +286,12 @@ def make(take, spec, only=None):
             print(take, 'band', b['deg'], 'the place 1, 50, 99 percent', [b['from'][i] for i in (3, 52, 101)], 'the hero', [b['to'][i] for i in (3, 52, 101)], flush=True)
     first, _, w = field(a1, np.where(covered, np.maximum(under, 0), a1), wide, size, spec, True, curve)
     first = np.where(w[..., None] >= 1, a1, first)
+    if spec.get('hero'):
+        o = ground(SRC / two['file'])
+        out, light, _ = field(np.maximum(into(a1, wide, two['widthDeg'], size), 0), o, two['widthDeg'], size, spec, False, curve, True)
+        hero_light(out, light, two['widthDeg'], size, spec)
+        del o, out, light
+    first = hero(first, wide, size, spec)
     if not only:
         P.write(first, spec['parent']['file'], OUT / take)
     print(take, spec['parent']['file'], 'share of the level that changes', round(float((w < 1).mean()), 5), flush=True)
@@ -232,12 +302,14 @@ def make(take, spec, only=None):
         a = np.maximum(into(a1, wide, plate['widthDeg'], size), 0)
         lit = plate is two and only in (None, spec['light']['file'])
         out, light, w = field(a, o, plate['widthDeg'], size, spec, False, curve, lit)
+        if lit:
+            light = hero_light(out, light, plate['widthDeg'], size, spec)
+        out = hero(out, plate['widthDeg'], size, spec)
         if only != spec['light']['file']:
             P.write(out, plate['file'], OUT / take)
             print(take, plate['file'], 'F over O in brightness, 1, 50, 99 percentile', np.round(np.percentile(((out @ LUMA + 1e-3) / (o @ LUMA + 1e-3))[::4, ::4], [1, 50, 99]), 3), flush=True)
         if lit:
-            m = spec['light']['size']
-            coded = (M.srgb(P.filmic(np.minimum(cv2.resize(light, (m, m), interpolation=cv2.INTER_AREA), spec['light']['most']))) * 255 + 0.5).astype(np.uint8)
+            coded = tone_code(light, spec)
             for key in ('full', 'web'):
                 Image.fromarray(coded).save(OUT / take / key / spec['light']['file'], optimize=True)
             print(take, spec['light']['file'], 'light 1, 50, 99 percentile', np.round(np.percentile(light[::4, ::4], [1, 50, 99]), 3), (OUT / take / 'full' / spec['light']['file']).stat().st_size, flush=True)
@@ -268,7 +340,10 @@ def install(take):
 
 if __name__ == '__main__':
     take = sys.argv[2] if len(sys.argv) > 2 else SPEC['take']
-    spec = {**SPEC, 'disc': json.loads((M.ROOT / 'src/stops/mercury/own.json').read_text())['hold'], **SPEC['takes'][take]}
+    own = json.loads((M.ROOT / 'src/stops/mercury/own.json').read_text())
+    spec = {**SPEC, 'disc': own['hold'], **SPEC['takes'][take]}
+    if spec.get('hero'):
+        spec['hero'] = {**own['hero'], **spec['hero']}
     if sys.argv[1] == 'make':
         make(take, spec, sys.argv[3] if len(sys.argv) > 3 else None)
     elif sys.argv[1] == 'install':

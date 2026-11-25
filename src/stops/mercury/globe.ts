@@ -45,6 +45,7 @@ export interface GlobePatches {
   tilt?: GlobeTilt
   tone?: { map: THREE.Texture; dark: number }
   hue?: { floor: number; at: [number, number]; rgb: number[][] }
+  hero?: { at: [number, number]; deg: [number, number]; tint: [number, number, number] }
 }
 
 export interface GlobeTilt {
@@ -217,6 +218,8 @@ uniform sampler2D uTone;
 uniform vec2 uToneSet;
 uniform vec3 uHue[${HUE_KNOTS}];
 uniform vec3 uHueAt;
+uniform vec4 uHero;
+uniform vec3 uHeroTint;
 uniform float uToneDark;
 uniform sampler2D uClose;
 uniform mat3 uCloseCam;
@@ -436,6 +439,7 @@ void main() {
   float tilt = 0.0;
   vec3 toneOwn = vec3(0.0);
   float core = 0.0;
+  float gold = 0.0;
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
     vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
@@ -455,6 +459,7 @@ void main() {
     float thin = parent;
     float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
     core = uPlace.y * front * (1.0 - smoothstep(uPlace.z, uPlace.w, ring));
+    gold = 1.0 - smoothstep(uHero.z, uHero.w, length(g - uHero.xy));
     vec2 tq = g * uTiltCode.x;
     float code = uTiltCode.y / 255.0;
     for (int k = 0; k < (uTiltCode.w * front > 0.0 && max(abs(tq.x), abs(tq.y)) < 0.5 ? 1 : 0); k++) {
@@ -503,7 +508,7 @@ ${FINE}
   for (int k = 0; k < (mapHue * uHueAt.z > 0.0 ? 1 : 0); k++) {
     float lum = dot(ground, vec3(0.2126, 0.7152, 0.0722));
     float knot = clamp((log(lum + uHueAt.z) - uHueAt.x) * uHueAt.y, 0.0, ${HUE_KNOTS - 1}.0 - 1e-3);
-    ground = mix(ground, lum * mix(uHue[int(knot)], uHue[int(knot) + 1], fract(knot)), mapHue);
+    ground = mix(ground, mix(lum * mix(uHue[int(knot)], uHue[int(knot) + 1], fract(knot)), ground * pow(uHeroTint, vec3(gold)), gold), mapHue);
   }
   ground *= fine;
   float inRing = placed * uPlace.y * (1.0 - smoothstep(uPlace.z, uPlace.w, ring)) * (1.0 - uToneSet.y);
@@ -603,6 +608,7 @@ export class Globe {
         uTilt: { value: p?.tilt?.map ?? o.map },
         uTiltCode: { value: new THREE.Vector4(p?.tilt ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.tilt.widthDeg) / 2)) : 1, p?.tilt?.zero ?? 0, p?.tilt?.step ?? 0, p?.tilt ? 1 : 0) },
         uTiltSun: { value: new THREE.Vector3(...(p?.tilt?.sun ?? [0, 0, 1])).normalize() },
+        uHero: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(p?.hero?.at[0] ?? 0)), Math.tan(THREE.MathUtils.degToRad(p?.hero?.at[1] ?? 0)), p?.hero ? Math.tan(THREE.MathUtils.degToRad(p.hero.deg[0])) : -2, p?.hero ? Math.tan(THREE.MathUtils.degToRad(p.hero.deg[1])) : -1) }, uHeroTint: { value: new THREE.Vector3().fromArray(p?.hero?.tint ?? [1, 1, 1]) },
         uTone: { value: p?.tone?.map ?? o.map }, uToneSet: { value: new THREE.Vector2(0, p?.tone ? 1 : 0) }, uToneDark: { value: p?.tone?.dark ?? 1 },
         uHue: { value: Array.from({ length: HUE_KNOTS }, (_, i) => new THREE.Vector3().fromArray(p?.hue?.rgb[i] ?? [1, 1, 1])) }, uHueAt: { value: new THREE.Vector3(p?.hue?.at[0] ?? 0, p?.hue ? (HUE_KNOTS - 1) / (p.hue.at[1] - p.hue.at[0]) : 0, p?.hue?.floor ?? 0) },
         uFineMap: { value: f?.texture ?? o.map }, uFine: { value: new THREE.Vector2(f && p ? 1 : 0, f?.top ?? 1) },
