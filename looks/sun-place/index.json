@@ -1,9 +1,57 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T02:09:57.844Z",
+ "pushed": "2026-11-25T02:17:18.008Z",
  "head": "b6906952bd77d84b231d64dfb2ed966485660755",
- "note": "commit 3 in proof: frame 60 and frame 90 beside the approved at 1 to 1 (near ground, far ground, spot)",
+ "note": "commit 3 proof: life strip 60 to 90, frames 0 and 90, near pairs beside the approved, rise",
  "looks": [
+  {
+   "time": "2026-11-25T02:17:16.776Z",
+   "file": "20261125021716776-note-c3-rise-b.jpg",
+   "source": "../../../../tmp/v/c3-rise-b.jpg",
+   "kind": "note",
+   "label": "commit 3 proof: rise frames 231 and 247, half size; 247 equal in bytes to commit 2 (c22922926c09eb0d)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:17:15.802Z",
+   "file": "20261125021715802-note-c3-rise-a.jpg",
+   "source": "../../../../tmp/v/c3-rise-a.jpg",
+   "kind": "note",
+   "label": "commit 3 proof: rise frames 217 and 225, half size (the patch of cells against the map is commit 4, one Sun)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:17:14.936Z",
+   "file": "20261125021714936-note-c3-90-near.jpg",
+   "source": "../../../../tmp/v/c3-90-near.jpg",
+   "kind": "note",
+   "label": "commit 3 proof: approved (left) beside frame 90 near ground at 1 to 1, box x 630 y 650 of 1920",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:17:13.390Z",
+   "file": "20261125021713390-note-c3-0-near.jpg",
+   "source": "../../../../tmp/v/c3-0-near.jpg",
+   "kind": "note",
+   "label": "commit 3 proof: approved (left) beside frame 0 near ground at 1 to 1, box x 630 y 650 of 1920",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:17:12.066Z",
+   "file": "20261125021712066-note-c3-0-90.jpg",
+   "source": "../../../../tmp/v/c3-0-90.jpg",
+   "kind": "note",
+   "label": "commit 3 proof: frames 0 and 90 whole, half size (the eye's drift: 0 stands 0.752 stage units from the eye of 90)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T02:17:11.170Z",
+   "file": "20261125021711170-note-c3-life.jpg",
+   "source": "../../../../tmp/v/c3-life.png",
+   "kind": "note",
+   "label": "commit 3 proof, draft tier: near crop 318 by 420 at x 820 y 640, native size, frames 60 66 72 78 84 90 side by side (the life strip of MAIL 836 point 5 iii). sun-near.py frame 60: share by band 0.1 .. 0.9 : 0.199 0.209 0.189 0.130 0.097 0.072 0.047 0.043 0.009 / dark (under 0.15) 0.205 | body (0.15 to 0.55) 0.624 | pale (0.65 to 0.85) 0.091 | white (over 0.85) 0.009 / brightest 15 percent: half width 9.6 px, 677 shapes | fine detail 0.0252 | mean 0.337",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T02:09:56.772Z",
    "file": "20261125020956772-note-c3-90-s.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/v/c3-90-b.jpg",
    "kind": "note",
    "label": "State of commit 3, frame 90 at 1 to 1 beside the approved, the far ground and the horizon (your box x 0 to 1100, y 700 to 1120): the far ground is amber and keeps its cells as flat lenses. Wrong: softer and of less contrast than the approved, no dark creases far off; the jets are not changed in this commit (point 3e is not done).",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:09:54.428Z",
-   "file": "20261125020954428-note-c3-90-a.jpg",
-   "source": "../../../../tmp/v/c3-90-a.jpg",
-   "kind": "note",
-   "label": "State of commit 3, frame 90 at 1 to 1 beside the approved, the near ground and the spot's near lip (your box x 900 to 2000, y 1000 to 1560 of the approved): bulbs with height, silhouettes of near domes before the valleys, tongues on the flanks, mottled tops. Wrong: the outlines are still angular in plan, the tongues are thin pale hairs more than broad gold strokes, the pits are small, the tops are flatter and duller than the approved's.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T02:09:53.196Z",
-   "file": "20261125020953196-note-c3-60-a.jpg",
-   "source": "../../../../tmp/v/c3-60-a.jpg",
-   "kind": "note",
-   "label": "State of commit 3 (in proof, not yet committed), frame 60 at 1 to 1 beside the approved, crop at 630 650. sun-near of this frame 60: share by band 0.1 .. 0.9 : 0.199 0.209 0.189 0.130 0.097 0.072 0.047 0.043 0.009 / dark (under 0.15) 0.205 | body (0.15 to 0.55) 0.624 | pale (0.65 to 0.85) 0.091 | white (over 0.85) 0.009 / brightest 15 percent: half width 9.6 px, 677 shapes | fine detail 0.0252 | mean 0.337",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T01:50:17.078Z",
-   "file": "20261125015017078-note-b3-life.jpg",
-   "source": "../../../../tmp/v/b3-life.png",
-   "kind": "note",
-   "label": "Same trial, near crop at 880 900 enlarged 3 times, frames 60, 66, 72: what moves is carried (the mottle of a top and the tongues keep their shape and travel). Lower half mean difference of frames 60 to 61: 9.53 (commit 2: 13.71). Upright thin streaks stand on the steep feet of near bulbs: still wrong.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T01:50:16.241Z",
-   "file": "20261125015016241-note-b3-60.jpg",
-   "source": "../../../../tmp/v/b3-60.jpg",
-   "kind": "note",
-   "label": "Third trial of commit 3 (not committed), frame 60 at 1 to 1 beside the approved, crop at 900 640: bulbs that touch, creases of different width, pits. Wrong: the tops are too smooth and read as pebbles, the tongues on the flanks are too few; next trial brings them back broader. sun-near of this frame 60: share by band 0.1 .. 0.9 : 0.166 0.214 0.207 0.150 0.107 0.075 0.045 0.027 0.003 / dark (under 0.15) 0.171 | body (0.15 to 0.55) 0.678 | pale (0.65 to 0.85) 0.072 | white (over 0.85) 0.003 / brightest 15 percent: half width 13.4 px, 475 shapes | fine detail 0.0187 | mean 0.336",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T01:42:54.518Z",
-   "file": "20261125014254518-note-b1-60.jpg",
-   "source": "../../../../tmp/v/b1-60.jpg",
-   "kind": "note",
-   "label": "First state of commit 3 (not committed), frame 60 at 1 to 1 beside the approved, crop at 900 640: the cells are now bulbs with height in the slab (near domes stand before the valleys behind them), pits where three meet. Wrong and being worked on: far too dark, valleys too wide, tops too smooth (they must not read as pebbles), tongues too few. sun-near of this frame 60: share by band 0.1 .. 0.9 : 0.399 0.245 0.149 0.081 0.044 0.021 0.005 0.002 0.000 / dark (under 0.15) 0.454 | body (0.15 to 0.55) 0.519 | pale (0.65 to 0.85) 0.007 | white (over 0.85) 0.000 / brightest 15 percent: half width 14.7 px, 552 shapes | fine detail 0.0142 | mean 0.204",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T01:17:37.754Z",
-   "file": "20261125011737754-note-hero-pair.jpg",
-   "source": "../../../../tmp/v/hero-pair.png",
-   "kind": "note",
-   "label": "MAIL 775 (a): the globe's map cut round the place (top down, 40 degrees wide left, 10 degrees right; assets-src/sun/place/hero.py). The place stands on the map at u 0.5393, v 0.5685 from the bottom (x 4418, y 1767 of 8192 by 4096) and the map has a spot there",
    "stop": "sun"
   }
  ]
