@@ -6,7 +6,7 @@ import { StopPlan, type Fit, type MoveParams, type OrbitShot } from '../../direc
 import { blendPose, forward, lookAt, mix, ramp, smooth } from '../../director/rig'
 import deck from './deck.json'
 import fit from './fit.json'
-import { haze, place as low, shape, show } from './look'
+import { haze, moons, place as low, shape, show } from './look'
 import path from './path.json'
 import place from './place.json'
 import plates from './plates.json'
@@ -17,7 +17,7 @@ export const params: MoveParams = {
   dive: { headingDeg: 53.784, altitude: 0.02623, back: 0.07, ahead: 0.14, bow: 0.2, rollDeg: 7, swoop: true },
   handover: { dive: { at: path.dive.at, placeFrames: 0, skyFrames: 0, picture: false }, rise: { at: path.rise.at, placeFrames: 0, skyFrames: 0, picture: false } },
   terrain: { vfov: 60, forward: 3.2, rise: 0.7107, side: 0.15, yawDeg: 1.5, pitchDeg: -0.5, entryHeight: 1.14, entryBack: 1.26, entryPitchDeg: 6, exitHeight: 2.4, exitForward: 1.3, exitPitchDeg: 10, horizonDeg: 2.874, dipDeg: 9.9055, rollDeg: 14.03 },
-  rise: { azimuthDeg: 30, elevationDeg: -30, distance: 6.8, offset: [0.3, -0.32], driftSpeed: 0.08, rollDeg: -25, ahead: 0.03, hug: 1.7, settle: 5, level: true, pan: 0.3 },
+  rise: { azimuthDeg: 0, elevationDeg: 0, distance: 6.8, offset: [0.036, -0.083], driftSpeed: 0.08, rollDeg: 0, ahead: 0.03, hug: 1.7, settle: 5, level: false, pan: 0.3 },
   travel: { turnDeg: 66, side: 1 },
   arrive: { swingDeg: 0, axis: [0, 1, 0], offset: [-0.5, 0.3] },
   light: { exposure: 1, skyExposure: 0.6, sunRadiusDeg: 0.2, sunGlare: 0.65, flare: 0 },
@@ -94,6 +94,10 @@ function window(x: number, k: number[]): number {
   return trapeze(ramp(k[0]!, k[3]!, x), (k[1]! - k[0]!) / span, (k[2]! - k[0]!) / span, 0)
 }
 
+function share(x: number, k: number[]): number {
+  return window(x, k) / window(1, k)
+}
+
 interface Pivot { n: THREE.Vector3; f: THREE.Vector3; e: THREE.Vector3 }
 interface Polar { height: number; sweep: number; turn: number; rel: THREE.Quaternion; field: number }
 
@@ -113,8 +117,8 @@ export class UranusPlan extends StopPlan {
 
   terrain(tRel: number): Pose {
     const base = super.terrain(tRel)
-    if (this.kept) return base
     const b = path.bend
+    if (this.kept || b.turnDeg === 0) return base
     const dur = this.seg.terrain.end - this.seg.terrain.start
     const u = tRel / dur - 0.5 - config.shutterFraction / (2 * config.fps * dur)
     const from = b.heading[0]! - 0.5
@@ -167,6 +171,28 @@ export class UranusPlan extends StopPlan {
 
   roundness(time: number): number {
     return below(low.round, this.altitude(time))
+  }
+
+  drawnShape(view: ViewKind, _eye: THREE.Vector3, time: number): { shape: number[]; place: number[] } | null {
+    if (view !== 'orbit') return null
+    const moving = (this.seg.dive !== undefined && time >= this.seg.dive.start && time < this.seg.dive.end) || (time >= this.seg.rise.start && time < this.seg.rise.end)
+    const sphere = moving ? this.roundness(time) : 0
+    const place = shaped(new THREE.Vector3(), sphere)
+    const cols = [new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 1, 0), new THREE.Vector3(0, 0, 1)].map((e) => shaped(e, sphere).sub(place))
+    return { shape: [0, 1, 2].flatMap((i) => cols.map((c) => c.getComponent(i))), place: place.toArray() }
+  }
+
+  drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
+    if (view !== 'orbit') return []
+    const e = time - this.holdMid
+    const eye = this.hold(this.holdMid - this.seg.hold.start).position
+    const normal = new THREE.Vector3().fromArray(fit.rings.normal).normalize()
+    return fit.moons.map((m, i) => {
+      const depth = moons.bodies[m.id]!.depth
+      const home = new THREE.Vector3().fromArray(m.position).sub(eye).multiplyScalar(depth).add(eye)
+      const turn = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0.3 - 0.5 * i, 1, 0.2).normalize(), 1.1 + 2.3 * i + rad(moons.spinDegPerSecond) * e)
+      return { id: m.id, place: home.applyAxisAngle(normal, rad(this.p.moonDegPerSecond) * e).toArray(), turn: turn.toArray(), reach: m.radius * depth }
+    })
   }
 
   deckFrame(time: number): THREE.Quaternion {
@@ -288,7 +314,7 @@ export class UranusPlan extends StopPlan {
     const to = kind === 'dive' ? close : far
     const a = this.polar(from, g)
     const b = this.polar(to, g)
-    const base = this.posed({ height: mix(a.height, b.height, window(x, k.height)), sweep: mix(a.sweep, b.sweep, window(x, k.sweep)), turn: mix(a.turn, b.turn, window(x, k.turn)), rel: a.rel.slerp(b.rel, window(x, k.aim)), field: mix(a.field, b.field, window(x, k.field)) }, g)
+    const base = this.posed({ height: mix(a.height, b.height, share(x, k.height)), sweep: mix(a.sweep, b.sweep, window(x, k.sweep)), turn: mix(a.turn, b.turn, window(x, k.turn)), rel: a.rel.slerp(b.rel, window(x, k.aim)), field: mix(a.field, b.field, window(x, k.field)) }, g)
     const seen = (p: Pose): THREE.Vector2 => {
       const v = mark.clone().sub(p.position).applyQuaternion(p.quaternion.clone().invert())
       const t = Math.tan(rad(p.vfov) / 2) * -v.z
@@ -319,7 +345,7 @@ export class UranusPlan extends StopPlan {
   private joined(kind: 'dive' | 'rise', time: number): Pose {
     const k = path.bend.back
     const x = kind === 'rise' ? (time - this.seg.rise.start) / (this.seg.rise.end - this.seg.rise.start) : 0
-    if (x <= k[0]!) return this.led(kind, time, this.anchor(kind, time))
+    if (x <= k[0]! || path.bend.turnDeg === 0) return this.led(kind, time, this.anchor(kind, time))
     this.kept = true
     let old: Pose
     try {
