@@ -473,16 +473,22 @@ void main() {
   // the field of the place joins two cells the heat runs over the border. The lane is where the heat falls: a thin
   // dark line in the bottom of the valley, wide where three cells meet, gone where two cells are of one piece
   float plan = sin(a) / sin(uLabDome.x);
-  float rise = mix(pow(max(1.0 - plan * plan, 0.0), uLabHeatB.x), 1.0, ${lab.join.merge.toFixed(2)} * smoothstep(0.55, 0.95, join));
+  vec2 b1 = (0.12 + 0.3 * fract(seed * 7.13)) * vec2(cos(6.2831853 * fract(seed * 3.71)), sin(6.2831853 * fract(seed * 3.71)));
+  vec2 b2 = (0.25 + 0.35 * fract(seed * 5.37)) * vec2(cos(6.2831853 * fract(seed * 9.19)), sin(6.2831853 * fract(seed * 9.19)));
+  float r1 = 0.3 + 0.25 * fract(seed * 2.31);
+  float r2 = 0.18 + 0.2 * fract(seed * 4.87);
+  float blotch = max(exp(-dot(d - b1, d - b1) / (r1 * r1)), 0.85 * exp(-dot(d - b2, d - b2) / (r2 * r2)));
+  float rise = mix(blotch * pow(max(1.0 - plan * plan, 0.0), uLabHeatB.x), 1.0, ${lab.join.merge.toFixed(2)} * smoothstep(0.55, 0.95, join));
   float fan = 0.1 * mix(0.5, fa, ka) + 0.35 * mix(0.5, fb, kb) + 0.55 * mix(0.5, fc, kc);
   float x = rise + 2.0 * uLabHeatB.y * smoothstep(0.1, 0.5, along) * (fan - 0.5) + uLabHeat.z * (mott - 0.5);
   float middle = smoothstep(${lab.heat.patch[0]!.toFixed(2)}, ${lab.heat.patch[1]!.toFixed(2)}, x);
-  float top = mix(uLabHeatB.w, 1.0, middle) * (0.8 + 0.4 * wide);
+  float top = mix(uLabHeatB.w, 1.0, middle) * (0.55 + 0.9 * wide);
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(0.04, 0.4, along));
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
   float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
   cell *= (1.0 - ${lab.heat.vein.toFixed(2)} * vein) * mix(mix(0.02, ${lab.heat.crease[2]!.toFixed(2)}, join), 1.0, lane);
+  cell *= mix(0.55, 1.0, smoothstep(0.0, 0.1 + 2.0 * c0, deep));
   float bundle = pn.y;
   float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (along - flow) * 17.0 + seed), per.z)) * kc * middle;
   cell += 0.6 * uLabHeatMore.w * spark;
