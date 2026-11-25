@@ -1,0 +1,344 @@
+diff --git a/src/stops/sun/convect.ts b/src/stops/sun/convect.ts
+index d50aad34..59ed203c 100644
+--- a/src/stops/sun/convect.ts
++++ b/src/stops/sun/convect.ts
+@@ -63,6 +63,7 @@ uniform vec4 uCvWarpMore;
+ uniform vec4 uCvGap;
+ uniform vec4 uCvSwallow;
+ uniform vec4 uCvLine;
++uniform vec4 uCvRoot;
+ uniform vec4 uCvPatch;
+ uniform vec4 uCvTight;
+ uniform vec4 uCvCurl;
+@@ -75,6 +76,13 @@ vec3 cvH3(vec3 p) {
+   p += dot(p, p.yxz + 33.33);
+   return fract((p.xxy + p.yxx) * p.zyx);
+ }
++// The way to the lens on the ground as one cell takes it (uCvRoot.xy is the way itself, fixed on the ground): each
++// cell turns it by an angle of its own, uCvThread.w radians at the most each way, so no two domes are combed from
++// the same side. key: the cell's own number.
++vec2 cvLens(float key) {
++  float a = (2.0 * fract(key * 9.73) - 1.0) * uCvThread.w;
++  return vec2(cos(a) * uCvRoot.x - sin(a) * uCvRoot.y, sin(a) * uCvRoot.x + cos(a) * uCvRoot.y);
++}
+ // What the last look at the diagram leaves for the threads of the lanes: the distances to the three nearest lanes
+ // of the cell (lattice units, cvNear.x the least) and the ways up from the two nearest (unit length).
+ // cvFan: the way up from the lane net by a softer measure than e (uCvLine.w to a lattice unit), not of unit
+@@ -83,8 +91,14 @@ vec3 cvNear;
+ vec2 cvUp1;
+ vec2 cvUp2;
+ vec2 cvFan;
++// How far the cell of the last look at the diagram reaches from its own middle toward the lens, to its border that
++// way (lattice units; uCvRoot.xy is the way to the lens on the ground). It is the cell's own measure, one number for
++// the whole cell, and it moves only as the borders move.
++float cvReach;
+ // How many times narrower a cell is drawn across at the place of the last look at the cells (see cvPull).
+ float cvPulled;
++// The place in the chart of the last look at the cells (lattice units).
++vec2 cvQ;
+ // The diagram of the cells at q (lattice units) and time t (seconds). wrap: the lattice repeats after so many
+ // squares along x (0: it does not repeat).
+ // e: distance to the nearest lane and ge: its gradient (lattice units), rel: q minus the cell's own middle,
+@@ -152,10 +166,21 @@ void cvDiagram(vec2 q, float t, float wrap, out float e, out vec2 ge, out vec2 r
+   vec2 u2 = vec2(0.0, 1.0);
+   vec2 facc = vec2(0.0);
+   float sharp = uCvLane.w;
++  float reach = 1.5;
++  vec2 lensOwn = cvLens(si[bi].y);
+   for (int i = 0; i < 36; i++) {
+     if (i == bi) continue;
+     float ej;
+     vec2 gj;
++    {
++      // (the border toward the lens: where the way from the middle to the lens meets the border with this
++      // neighbour. The other half of the same cell counts only as the two part, over the first quarter of a
++      // lattice unit between them, so nothing steps at the moment they part)
++      vec2 dn = sp[i] - s1;
++      float dl = dot(dn, lensOwn);
++      float d2 = dot(dn, dn);
++      if (dl > 1e-4) reach = min(reach, max((d2 + so[i] - so[bi]) / (2.0 * dl), 0.0) + (i / 2 == bi / 2 ? 2.0 * (1.0 - smoothstep(0.0, 0.0625, d2)) : 0.0));
++    }
+     if (i / 2 == bi / 2) {
+       // the other half of the same cell: the lane between the halves runs through the cell's middle, and it is
+       // there (still shallow) before the halves part
+@@ -191,6 +216,7 @@ void cvDiagram(vec2 q, float t, float wrap, out float e, out vec2 ge, out vec2 r
+   cvUp1 = u1;
+   cvUp2 = u2;
+   cvFan = facc;
++  cvReach = clamp(reach, 0.05, 1.5);
+   e = max(-log(max(acc, 1e-30)) / sharp, 0.0);
+   ge = gacc / max(acc, 1e-30);
+   own = si[bi];
+@@ -227,7 +253,8 @@ vec2 cvChart(vec2 p, float t) {
+ // units, own: as in the diagram.
+ void cvCells(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 own) {
+   float L = uCvCell.x;
+-  cvDiagram(cvChart(p, t), t, 0.0, e, ge, rel, own);
++  cvQ = cvChart(p, t);
++  cvDiagram(cvQ, t, 0.0, e, ge, rel, own);
+   float gap = uCvGap.x * (1.0 - uCvGap.z + 2.0 * uCvGap.z * vnoise(vec3(p * uCvGap.y, 1.7 + t * 0.05)));
+   // (across a cell that is drawn narrower the lane is as much nearer)
+   cvPulled = cvPull(length(p - uCvSpot.xy));
+@@ -300,7 +327,12 @@ float cvDome(vec2 p, float t, out float e, out vec2 ge, out vec2 rel, out vec3 o
+   // one, then to the other). A wide cell stands taller than a small one (uCvDome.y: the half width that stands
+   // uCvDome.z tall), each has a height of its own (uCvGloss.y: the share by which it differs) and its top swells
+   // and sinks with a beat of its own (uCvBulb.x the share, uCvBulb.y the rate)
+-  float cap = pow(max(1.0 - pow(way, uCvDome.w), 0.0), uCvGloss.x);
++  // (MAIL 912: the domes overlap and no lane has a width. A dome is the cap of a ball wider than its cell,
++  // uCvDome.w times as wide, so it does not come down to its border upright: two domes meet in a crease with
++  // sloping sides, and the ground falls deep only where three or four meet. uCvGloss.x: a power on the cap, 1 the
++  // ball itself)
++  float capK = sqrt(max(uCvDome.w * uCvDome.w - 1.0, 0.0));
++  float cap = pow(max((sqrt(max(uCvDome.w * uCvDome.w - way * way, 0.0)) - capK) / (uCvDome.w - capK), 0.0), uCvGloss.x);
+   float size = clamp((r + across) / uCvDome.y, 0.35, 1.6);
+   float beat = 1.0 + uCvBulb.x * sin(t * uCvBulb.y * (0.7 + 0.6 * fract(own.y * 3.7)) + own.y * 40.0);
+   float tall = uCvDome.z * size * (1.0 - uCvGloss.y + 2.0 * uCvGloss.y * fract(own.y * 7.31)) * mix(0.5, 1.0, own.z) * beat + uCvDome.x;
+@@ -636,6 +668,18 @@ uniform vec4 uCvWideMore;
+ uniform vec4 uCvWideFar;
+ uniform vec4 uCvWideBand;
+ uniform vec4 uCvWideCell;
++uniform vec4 uCvSheen;
++uniform vec4 uCvSheenMore;
++uniform vec4 uCvRootMore;
++uniform vec4 uCvComb;
++uniform vec4 uCvWisp;
++uniform vec4 uCvTravel;
++uniform vec4 uCvWideOpen;
++uniform vec4 uCvFade;
++uniform vec4 uCvGlintHold;
++uniform vec4 uCvGlint;
++uniform vec4 uCvGlintMore;
++uniform vec4 uCvLit;
+ in vec2 vNdc;
+ out vec4 outColor;
+ ${STAGE_GLSL}
+@@ -681,6 +725,13 @@ vec3 cvStrands(vec2 u, float r, float z, float t, float across) {
+   float key = smoothstep(0.2, 0.8, vnoise(vec3(v * uCvFibre.x * 2.5 + 11.3, 5.7)));
+   return vec3(strand, key, lock);
+ }
++// The slope of a field on the ground from its change over the buffer. gx, gy: the change of the ground point from
++// one texel to the next each way, h: the change of the field. Returned: the field's change per unit of the way on
++// the ground, both ways.
++vec2 cvSlope(vec2 gx, vec2 gy, vec2 h) {
++  float det = gx.x * gy.y - gx.y * gy.x;
++  return abs(det) > 1e-24 ? vec2(h.x * gy.y - h.y * gx.y, h.y * gx.x - h.x * gy.x) / det : vec2(0.0);
++}
+ void main() {
+   // the ground under this place of the picture: where the eye's ray meets the ball
+   vec3 rd = normalize(uCvRay0 + vNdc.x * uCvRayX + vNdc.y * uCvRayY);
+@@ -752,10 +803,20 @@ void main() {
+   // (the flank does not cool to the dark of the lane: it keeps the share uCvPatch.x of the top's heat, a deeper
+   // orange round a hot middle, and only the crease itself is dark)
+   float well = mix(uCvPatch.x, 1.0, pow(max(1.0 - pow(way, uCvWell.x), 0.0), uCvWell.y));
+-  float seamWide = uCvWell.w * (1.0 - uCvBulbMore.z + 2.0 * uCvBulbMore.z * vnoise(vec3(g / L * 0.9 + 3.3, 4.1 + t * 0.05))) * (1.0 + uCvFibreLook.x * spot.w);
++  // (MAIL 912: the crease is a hair and it opens into the pit where three or four cells meet: toward such a place
++  // it is wider, up to 1 + uCvGrain.x times)
++  float open3 = exp(-cvNear.y / uCvBulb.z);
++  float seamWide = uCvWell.w * (1.0 - uCvBulbMore.z + 2.0 * uCvBulbMore.z * vnoise(vec3(g / L * 0.9 + 3.3, 4.1 + t * 0.05))) * (1.0 + uCvFibreLook.x * spot.w) * (1.0 + uCvGrain.x * open3 * open3);
+   well *= 1.0 - exp(-across / seamWide);
+   // (it boils: the heat of a place wavers with a fine field that the time carries)
+-  top *= 1.0 + uCvGrain.w * (vnoise(vec3(g / L * uCvGrain.y, t * uCvGrain.z + own.y * 5.0)) + 0.6 * vnoise(vec3(g / L * uCvGrain.y * 3.7 + 9.1, t * uCvGrain.z * 1.6 + own.y * 3.0)) - 0.8) * fine;
++  // (two forms of it. In place: the field stands on the ground and the time changes it. Carried, uCvTravel.z: the
++  // field lies in the cell's own chart round its middle and travels outward with the fibres' matter, so a hot
++  // patch wells up at the middle and is borne to the lane as a body; round the very middle, where a chart round
++  // a point has no room, it is its mean)
++  float boilHere = vnoise(vec3(g / L * uCvGrain.y, t * uCvGrain.z + own.y * 5.0)) + 0.6 * vnoise(vec3(g / L * uCvGrain.y * 3.7 + 9.1, t * uCvGrain.z * 1.6 + own.y * 3.0)) - 0.8;
++  float boilOut = (r - t * uCvTravel.x) * uCvGrain.y;
++  float boilBorne = (vnoise(vec3(ur * uCvGrain.y * uCvTravel.w, boilOut + own.y * 5.0)) + 0.6 * vnoise(vec3(ur * uCvGrain.y * uCvTravel.w * 2.3 + 9.1, boilOut * 2.3 + own.y * 3.0)) - 0.8) * smoothstep(0.02, 0.12, r);
++  top *= 1.0 + uCvGrain.w * mix(boilHere, boilBorne, uCvTravel.z) * fine;
+   float lum = uCvTone.x + (top - uCvTone.x) * well;
+   // where three cells meet the pit is dark (uCvBulbMore.x: by what share)
+   float pit3 = exp(-cvNear.y / uCvBulb.z);
+@@ -797,6 +858,117 @@ void main() {
+   // uCvTongue.z: how hot a tongue is)
+   float tongue = max(uCvHeatMore.x * (one - uCvStrand.w) + uCvHeatMore.y * (two - uCvStrand.w), 0.0);
+   lum = max(lum * (1.0 - (1.0 - uCvHeatMore.z) * flank * (1.0 - min(tongue, 1.0))), 0.0) + uCvTongue.z * tongue * (0.6 + 0.8 * own.y) * (1.0 - exp(-across / uCvHeatMore.w)) * (1.0 - uCvBulbMore.x * pit3);
++  // What a dome looks like (MAIL 912). It is combed: fine fibres run over it from a root that lies low on its side
++  // toward the lens, up over the crown and down the far shoulder. The root is a place of the cell's own on the
++  // ground (uCvRoot.xy: the way to the lens on the ground, fixed; uCvRoot.z: how far from the cell's middle the
++  // root lies, lattice units), and near the sunspot it lies on the side away from the spot (uCvRootMore.z), so there
++  // the fibres run toward the spot as the strands of the penumbra do. Nothing here reads the eye: the sheen lies
++  // on the ground and moves only with its dome.
++  vec2 gx = dFdx(g);
++  vec2 gy = dFdy(g);
++  vec2 grad = cvSlope(gx, gy, vec2(dFdx(dome), dFdy(dome)));
++  vec2 mid = g - rel * (L / (cvTight(g) * cvPulled));
++  vec2 outS = mid - uCvSpot.xy;
++  outS /= max(length(outS), 1e-5);
++  vec2 lens = normalize(mix(cvLens(own.y), outS, uCvRootMore.z * cvSpot(mid).w));
++  // (the root lies the share uCvRoot.z of the way from the cell's middle to its border toward the lens, each cell
++  // a little more or less; its width and the reach of its shade go with the size of the cell)
++  float sz = clamp(cvReach, 0.15, 1.0);
++  vec2 rr = rel - lens * (uCvRoot.z * (0.8 + 0.4 * fract(own.y * 5.13)) * cvReach);
++  float rl = length(rr);
++  vec2 fq = rl > 1e-5 ? rr / rl : vec2(0.0, 1.0);
++  // (the fibre's way on the ground, from its way in the chart, and how steeply the dome rises along it)
++  vec2 qx = dFdx(cvQ);
++  vec2 qy = dFdy(cvQ);
++  float dq = qx.x * qy.y - qx.y * qy.x;
++  vec2 ab = abs(dq) > 1e-24 ? vec2(fq.x * qy.y - fq.y * qy.x, fq.y * qx.x - fq.x * qx.y) / dq : vec2(0.0);
++  vec2 fg = gx * ab.x + gy * ab.y;
++  fg /= max(length(fg), 1e-12);
++  float slope = dot(grad, fg);
++  // (the fibres: fixed in angle round the root, bent by a slow field of the cell's own, carried outward; they stand
++  // in locks. uCvComb: x how many round, y how thin a fibre is against the dark beside it, z the share of the
++  // body's heat lost between two fibres, w how soon a fibre changes along its way. A fibre is drawn where a pixel
++  // can hold it, elsewhere the comb is its mean, uCvGlintMore.w)
++  vec2 bent = rr + uCvCurl.x * (vec2(vnoise(vec3(rr * uCvCurl.y, own.y * 13.0 + t * uCvCurl.z)), vnoise(vec3(rr.yx * uCvCurl.y + 7.7, own.y * 5.0 - t * uCvCurl.z))) - 0.5);
++  float bl = length(bent);
++  vec2 bu = bl > 1e-5 ? bent / bl : vec2(0.0, 1.0);
++  // (the fibres branch: near the root there are few and each is wide, further out there are twice and four times
++  // as many. Each count is drawn where one of its fibres is some pixels wide: it comes in where a pixel covers less
++  // than the share uCvThin.y of a fibre's width and is full under uCvThin.x, and it gives way to the finer count
++  // where a fibre is wider than uCvThin.w pixels, gone at uCvThin.z. What a pixel covers is taken across the
++  // fibre, not along it: a fibre that runs away from the lens is held by the pixel's width, one that runs across
++  // the look by its depth on the ground)
++  vec2 fn = vec2(-fg.y, fg.x);
++  float footF = max(abs(dot(gx, fn)), abs(dot(gy, fn))) * uCvThreadFar.z * cvTight(g) * cvPulled;
++  float fb = vnoise(vec3(bu * uCvComb.x * 0.6 + 5.7, own.y * 23.0 + 3.0));
++  float fibre = 0.0;
++  float holdF = 0.0;
++  for (int k = 0; k < 4; k++) {
++    float fk = uCvComb.x * exp2(float(k));
++    float ratio = footF * fk / max(bl, 1e-4) / L;
++    float band = (1.0 - smoothstep(uCvThin.x, uCvThin.y, ratio)) * smoothstep(1.0 / uCvThin.z, 1.0 / uCvThin.w, ratio);
++    // (the fibres' matter travels out from the root, uCvTravel.x lattice units a second. uCvTravel.y: the share of
++    // that way the fibre's own line takes. With 1 a fibre and its wisps travel as one body; with 0 the wisps run
++    // along a fibre that stands)
++    float fa = vnoise(vec3(bu * fk, (bl - t * uCvTravel.x * uCvTravel.y) * uCvComb.w + own.y * 41.0 + 7.3 * float(k)));
++    // (a fibre is no line of one light from end to end: it is a wisp, bright for a stretch and thin for the next)
++    // (each fibre has its own wisps: the field is as fine round the root as the fibres are and long along them, so
++    // the wisps of neighbours do not line up into rings round the root)
++    // (uCvWisp: between which values of the field a wisp comes in, how many wisps lie along a lattice unit, and
++    // the least a fibre keeps between two wisps)
++    float fw = vnoise(vec3(bu * fk * 1.3 + 2.3, (bl - t * uCvTravel.x) * uCvWisp.z + own.y * 17.0 + 3.1 * float(k)));
++    fibre += band * pow(1.0 - abs(2.0 * fa - 1.0), uCvComb.y) * (uCvWisp.w + smoothstep(uCvWisp.x, uCvWisp.y, fw));
++    holdF += band;
++  }
++  // (the fibres are strongest where they leave the root and thin out on their way over the dome: from uCvFade.x to
++  // uCvFade.y of the cell's reach from the root they fall to the share uCvFade.z)
++  fibre *= mix(1.0 - uCvCurl.w, 1.0, smoothstep(0.2, 0.7, fb)) * 1.25 / max(holdF, 1.0) * mix(1.0, uCvFade.z, smoothstep(uCvFade.x * sz, uCvFade.y * sz, rl));
++  holdF = min(holdF, 1.0) * (1.0 - smoothstep(uCvThreadFar.x, uCvThreadFar.y, footC)) * fine;
++  float comb = mix(uCvGlintMore.w, fibre, holdF);
++  // (the body is darker to the root: over uCvRootMore.w lattice units round it the heat falls by the share
++  // uCvRootMore.y, and the root itself, uCvRoot.w wide, is dark by the share uCvRootMore.x; between two fibres the
++  // body is a little cooler)
++  lum *= mix(1.0 - uCvRootMore.y, 1.0, smoothstep(0.0, uCvRootMore.w * sz, rl)) * (1.0 - uCvRootMore.x * exp(-rl * rl / (uCvRoot.w * uCvRoot.w * sz * sz)) * fine);
++  // (the fibres carry the light: a fibre is brighter than the body by the share uCvPatch.z)
++  lum *= 1.0 + (mix(-uCvComb.z, uCvPatch.z, min(fibre, 1.0))) * holdF;
++  // (the sheen, by the law of hair: a fibre is bright where it lies across the half way direction, which stands
++  // between straight up and the far horizon, uCvSheenMore.xy its sine and cosine from straight up; so the sheen
++  // lies in a streak on the crown and the far shoulder. It has a wide part and a narrow heart (uCvSheen.yz their
++  // powers, uCvSheen.w the heart's share), each lock has its streak a little further up or down the fibre
++  // (uCvSheenMore.z), and a second weak lobe is lit from straight above (uCvSheenMore.w). The side of a dome that
++  // is turned from the far light carries none: uCvLit.xy the cosine and sine of the light's height over the far
++  // horizon, uCvLit.zw from where to where the side is lit. In the crease itself, uCvGlintMore.z lattice units
++  // wide, there is none)
++  vec2 farWay = -uCvRoot.xy;
++  float tn = sqrt(1.0 + slope * slope);
++  // (the streak of a strand of fibres lies a little further up or down than its neighbour's, by a field round the
++  // root finer than the locks: the sheen is a row of streaks along the fibres and no ring across them)
++  float fs = vnoise(vec3(bu * uCvComb.x * 2.5 + 1.9, own.y * 31.0 + 0.7));
++  float th = (dot(fg, farWay) * uCvSheenMore.x + slope * uCvSheenMore.y) / tn + uCvSheenMore.z * (fs - 0.5) * holdF;
++  float s1 = max(1.0 - th * th, 0.0);
++  float sheen = mix(pow(s1, uCvSheen.y), pow(s1, uCvSheen.z), uCvSheen.w) + uCvSheenMore.w * pow(1.0 / (tn * tn), uCvSheen.y);
++  float lit = smoothstep(uCvLit.z, uCvLit.w, (uCvLit.y - dot(grad, farWay) * uCvLit.x) / sqrt(1.0 + dot(grad, grad)));
++  float crease = smoothstep(0.0, uCvGlintMore.z, across);
++  lum += uCvSheen.x * (top / uCvTone.y) * sheen * lit * crease * comb * comb;
++  // (glints: small hard points that the cell carries, on the crests where the sheen is and along the rim of the
++  // dome, most where the rim stands against a pit. uCvGlint: x how bright, y how many to a lattice unit, z how
++  // few, w the rim's share; uCvGlintMore.xy: where the rim lies on the way out and how wide. A glint is drawn where
++  // a pixel can hold it)
++  // (a point laid on the ground's plan is a flat dash on a crown, which the lens sees from the side, and a tall
++  // dash on a flank that faces the lens, where a short way on the plan is a long way up the dome. The points are
++  // laid in a measure of the dome's own that is round in both: across the way to the far horizon as the plan has
++  // it, and along it the plan's way times uCvFlat.w with the dome's height times uCvLine.z added (the sine and
++  // cosine of one fixed angle over the ground, the angle the ground is made to be seen from; no eye moves it). A
++  // rim's points need no far light: the share uCvLine.y of them stands on the side turned from it too)
++  float gAlong = dot(rel, farWay);
++  vec2 gq = rel + farWay * (gAlong * (uCvFlat.w - 1.0) + dome * cvTight(g) * cvPulled / L * uCvLine.z);
++  float glint = smoothstep(uCvGlint.z, uCvGlint.z + 0.06, vnoise(vec3(gq * uCvGlint.y, own.y * 57.0 + 1.3))) * (1.0 - smoothstep(0.2, 0.6, footC * uCvGlint.y / L)) * fine;
++  float rim = exp(-pow((way - uCvGlintMore.x) / uCvGlintMore.y, 2.0));
++  // (the buffer holds the ground by its plan, so on a flank that rises steeply toward the lens it has too few rows
++  // for a point: there a point would be a dash, and none is laid. uCvGlintHold.xy: between which slopes toward the
++  // lens the points give way)
++  glint *= 1.0 - smoothstep(uCvGlintHold.x, uCvGlintHold.y, dot(grad, farWay));
++  lum += uCvGlint.x * glint * (lit * sheen * crease + uCvGlint.w * rim * (0.3 + pit3) * mix(uCvLine.y, 1.0, lit));
+   lum = mix(uCvFar.z * (1.0 + uCvFarMore.x * mottle), lum, mix(uCvFar.w, 1.0, fine));
+   // the ground is the globe's own ground: the light and dark of the globe's map lies under the cells at the place on
+   // the ball where the globe itself shows it. Each cell takes the map's light at its own middle, so the map's
+@@ -830,7 +1002,12 @@ void main() {
+     float wideFoot = sqrt(lenX * lenY);
+     float cellLum = dot(textureGrad(uCvMap, muvC, mdx * max(1.0, uCvWideMore.x / lenX), mdy * max(1.0, uCvWideMore.x / lenY)).rgb, vec3(0.3, 0.5, 0.2));
+     float regionLum = dot(textureGrad(uCvMap, muv, mdx * max(1.0, uCvWideBand.z / lenX), mdy * max(1.0, uCvWideBand.z / lenY)).rgb, vec3(0.3, 0.5, 0.2));
+-    float cellTone = clamp(pow(cellLum / max(regionLum, 1e-3), uCvWideCell.w), uCvWideCell.y, uCvWideCell.z);
++    // (the cell's part is held between narrow bounds where a cell is large in the picture, so the near ground is
++    // no map of blotches; where a pixel holds the map as the globe shows it, between uCvWideOpen.x and uCvWideOpen.y
++    // texels of the map to a pixel, the bounds open to uCvWideOpen.zw: there the far ground carries the map's light
++    // and dark as the globe's face does, in the same place, before the one gives way to the other)
++    float openW = smoothstep(uCvWideOpen.x, uCvWideOpen.y, wideFoot);
++    float cellTone = clamp(pow(cellLum / max(regionLum, 1e-3), uCvWideCell.w), mix(uCvWideCell.y, uCvWideOpen.z, openW), mix(uCvWideCell.z, uCvWideOpen.w, openW));
+     float nearTone = 1.0 + uCvWide.x * clamp(pow(regionLum / uCvWide.y, uCvWide.z) - 1.0, -1.0, uCvWide.w);
+     float farTone = 1.0 + uCvWideFar.x * clamp(pow(regionLum / uCvWideFar.y, uCvWideFar.z) - 1.0, -1.0, uCvWideFar.w);
+     lum *= cellTone * mix(nearTone, farTone, smoothstep(uCvWideBand.x, uCvWideBand.y, wideFoot));
+@@ -856,6 +1033,15 @@ void main() {
+   // (where the strands are whole the cell's own light and dark is gone but for the share uCvUmbra2.x: the strand
+   // and the gap beside it are the picture there, on the one tone uCvUmbra2.y)
+   lum = mix(lum, uCvUmbra2.y, (1.0 - uCvUmbra2.x) * sw) * mix(1.0, uCvSpotMore.x + uCvStrands.z * st.x, sw);
++  // (the strands carry the sheen of the domes' fibres, by the same law: a strand runs toward the spot's middle
++  // and falls with the funnel; uCvLine.x: its share of a dome's sheen. Each lock has its streak at a place of its
++  // own along the strand)
++  float fallM = uCvPit.x * spot.x + uCvPit.y * (1.0 - smoothstep(uCvPit.z, uCvPit.w, spot.z));
++  float slopeS = -dot(cvSlope(gx, gy, vec2(dFdx(fallM), dFdy(fallM))), su);
++  float tnS = sqrt(1.0 + slopeS * slopeS);
++  float thS = (dot(su, farWay) * uCvSheenMore.x + slopeS * uCvSheenMore.y) / tnS + uCvSheenMore.z * (st.z - 0.5);
++  float sS = max(1.0 - thS * thS, 0.0);
++  lum += uCvSheen.x * uCvLine.x * uCvUmbra2.y * mix(pow(sS, uCvSheen.y), pow(sS, uCvSheen.z), uCvSheen.w) * st.x * sw;
+   one = mix(one, st.x, sw);
+   two = mix(two, uCvStrand.w, sw);
+   // (a strand ends, in the mean, at uCvUmbra2.w umbra radii from the middle: under the lip, on the wall)
+@@ -997,17 +1183,30 @@ export class Surface {
+         uCvKeep: { value: 1 },
+         uCvAway: { value: new THREE.Vector4(0, 0, 0, 0) },
+         uCvAwayTint: { value: new THREE.Vector3().fromArray(place.onGlobe.red.tint) },
+-        uCvLine: { value: new THREE.Vector4(0, 0, 0, c.fan) },
++        uCvLine: { value: new THREE.Vector4(l.sheen.strands, l.glint.shade, Math.cos(THREE.MathUtils.degToRad(l.glint.lean)), c.fan) },
++        uCvSheen: { value: new THREE.Vector4(l.sheen.amount, l.sheen.wide, l.sheen.narrow, l.sheen.heart) },
++        uCvSheenMore: { value: new THREE.Vector4(Math.sin(THREE.MathUtils.degToRad(l.sheen.tilt)), Math.cos(THREE.MathUtils.degToRad(l.sheen.tilt)), l.sheen.streak, l.sheen.above) },
++        uCvRoot: { value: new THREE.Vector4(Math.cos(THREE.MathUtils.degToRad(l.root.lens)), Math.sin(THREE.MathUtils.degToRad(l.root.lens)), l.root.off, l.root.core) },
++        uCvRootMore: { value: new THREE.Vector4(l.root.dark, l.root.shade, l.root.spot, l.root.reach) },
++        uCvComb: { value: new THREE.Vector4(l.comb.round, l.comb.thin, l.comb.gaps, l.comb.along) },
++        uCvGlintHold: { value: new THREE.Vector4(l.glint.steep[0]!, l.glint.steep[1]!, 0, 0) },
++        uCvFade: { value: new THREE.Vector4(l.comb.fade[0]!, l.comb.fade[1]!, l.comb.fade[2]!, 0) },
++        uCvWisp: { value: new THREE.Vector4(l.comb.wisp[0]!, l.comb.wisp[1]!, l.comb.wisp[2]!, l.comb.wisp[3]!) },
++        uCvTravel: { value: new THREE.Vector4(l.comb.travel[0]!, l.comb.travel[1]!, l.boil.borne, l.boil.round) },
++        uCvWideOpen: { value: new THREE.Vector4(l.wide.cell.open.over[0]!, l.wide.cell.open.over[1]!, l.wide.cell.open.least, l.wide.cell.open.most) },
++        uCvGlint: { value: new THREE.Vector4(l.glint.amount, l.glint.scale, l.glint.few, l.glint.rim) },
++        uCvGlintMore: { value: new THREE.Vector4(l.glint.at, l.glint.wide, l.sheen.crease, l.comb.mean) },
++        uCvLit: { value: new THREE.Vector4(Math.cos(THREE.MathUtils.degToRad(l.sheen.sun)), Math.sin(THREE.MathUtils.degToRad(l.sheen.sun)), l.sheen.lit[0]!, l.sheen.lit[1]!) },
+         uCvGloss: { value: new THREE.Vector4(c.bulb.round, c.bulb.spread, s.fibres.endsDeep, s.fibres.cools) },
+         uCvBulb: { value: new THREE.Vector4(c.bulb.swell[0]!, c.bulb.swell[1]!, c.bulb.pit[0]!, c.bulb.pit[1]!) },
+         uCvBulbMore: { value: new THREE.Vector4(c.bulb.pit[2]!, l.points.drift * l.points.scale, l.well.uneven, l.tongue.soft) },
+         uCvTongue: { value: new THREE.Vector4(l.tongue.from[0]!, l.tongue.from[1]!, l.tongue.heat, l.tongue.groups) },
+         uCvPull: { value: new THREE.Vector4(s.pull.from * umbra * s.penumbra, s.pull.share, s.pull.sharp, s.pull.turn) },
+         uCvStep: { value: new THREE.Vector4(g.cut.texels, g.cut.depth, g.cut.most, g.cut.air) },
+-        uCvGrain: { value: new THREE.Vector4(0, l.boil.scale, l.boil.rate, l.boil.amount) },
+-        uCvThread: { value: new THREE.Vector4(c.thread.round, c.thread.out, c.thread.speed, 0) },
+-        uCvPatch: { value: new THREE.Vector4(l.well.flank, l.well.lobes, 0, l.well.scale) },
+-        uCvThin: { value: new THREE.Vector4(g.strand.thin[0]!, g.strand.thin[1]!, 0, 0) },
++        uCvGrain: { value: new THREE.Vector4(l.well.open, l.boil.scale, l.boil.rate, l.boil.amount) },
++        uCvThread: { value: new THREE.Vector4(c.thread.round, c.thread.out, c.thread.speed, THREE.MathUtils.degToRad(l.root.turn)) },
++        uCvPatch: { value: new THREE.Vector4(l.well.flank, l.well.lobes, l.comb.lift, l.well.scale) },
++        uCvThin: { value: new THREE.Vector4(g.strand.thin[0]!, g.strand.thin[1]!, l.comb.wide[0]!, l.comb.wide[1]!) },
+         uCvThreadFar: { value: new THREE.Vector4(g.strand.far[0]!, g.strand.far[1]!, g.fine, g.strand.flat) },
+         uCvKnee: { value: new THREE.Vector4(l.knee[0]!, l.knee[1]!, g.pit.veil[0]!, g.pit.veil[1]!) },
+         uCvSlab: { value: new THREE.Vector4(g.lid, g.floor, g.soft, g.free) },
+@@ -1050,7 +1249,7 @@ export class Surface {
+         uCvVeil: { value: new THREE.Vector4(l.veil.amount, l.veil.level, l.veil.most, l.veil.from) },
+         uCvVeilTint: { value: new THREE.Vector3().fromArray((l.veil.tint as number[]).map(srgbToLinear)) },
+         uCvFar: { value: new THREE.Vector4(l.far.from, l.far.to, l.far.level, l.far.keep) },
+-        uCvFlat: { value: new THREE.Vector4(l.far.flat[0]!, l.far.flat[1]!, l.far.lane, 0) },
++        uCvFlat: { value: new THREE.Vector4(l.far.flat[0]!, l.far.flat[1]!, l.far.lane, Math.sin(THREE.MathUtils.degToRad(l.glint.lean))) },
+       },
+     })
+     // Rings round the point under the stage's camera. Their spacing follows what a pixel covers on the ground from the

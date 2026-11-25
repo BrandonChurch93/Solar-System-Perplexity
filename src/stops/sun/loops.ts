@@ -457,6 +457,8 @@ export class Loops {
   private readonly reach: [number, number]
   private readonly knots: KnotsLook | undefined
   private readonly across: number
+  /** The arcade's own place: the middle between its feet on the ground, in the stage's frame. */
+  readonly place: THREE.Vector3
   private readonly peel: THREE.Mesh | undefined
   private readonly shed: THREE.ShaderMaterial | undefined
 
@@ -472,6 +474,7 @@ export class Loops {
     const footB = stage.onGround(fb[0], fb[1])
     const axis = footB.clone().sub(footA).normalize()
     const mid = footA.clone().add(footB).multiplyScalar(0.5)
+    this.place = mid.clone()
     const up = mid.clone().sub(stage.centre).normalize()
     const toward = up.clone().cross(axis).normalize()
     if (toward.dot(mid) > 0) toward.negate()

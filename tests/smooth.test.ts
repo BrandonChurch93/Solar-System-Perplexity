@@ -9,7 +9,7 @@ import { shutterMid } from '../src/core/sampler'
 import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
-import { SEAM_OWN, SEAM_REACH, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
+import { SEAM_OWN, SEAM_REACH, afterRise, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
 import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
@@ -451,6 +451,10 @@ describe('the pop score at the two ends of a window, on a made run whose residua
 })
 
 describe('the pattern measure on made pictures, a judged area with a limb, a frame edge and a hole', () => {
+  beforeAll(() => {
+    made()
+  }, 240_000)
+
   it('reads the same pattern at contrast 2, 3, 5 and 10 under 0.01', () => {
     const p = made().patterns
     expect(p.judged).toBeGreaterThan(0.4)
@@ -895,7 +899,7 @@ describe('the picture between a rise and the travel that leaves the stop', () =>
     expect(judgeLeave([null, 100, 6.9, 100], 0, 2, min).fault).not.toBeNull()
   })
 
-  it('is sampled at the seven seams from a rise into a travel: not at the first stop, whose travel follows its hold, and not at the last', () => {
+  it('is sampled at the seam from every rise into the move that follows it: not at the first stop, whose rise ends in its hold', () => {
     const film = new FilmDirector(plans)
     const reach = config.raw.smooth.reachFrames
     const seams: string[] = []
@@ -904,13 +908,36 @@ describe('the picture between a rise and the travel that leaves the stop', () =>
       if (!w) continue
       seams.push(plan.id)
       expect(w.seam).toBe(w.rise.endFrame)
-      expect(w.travel.firstFrame).toBe(w.seam)
+      expect(w.next.firstFrame).toBe(w.seam)
+      expect(w.next.kind).toBe(plan.id === plans[plans.length - 1]!.id ? 'retreat' : 'travel')
       expect(w.samples[0]!.k).toBe((w.seam - reach) * 2 - 1)
       expect(w.samples[w.samples.length - 1]!.k).toBe((w.seam + reach) * 2 - 1)
-      expect(w.samples.filter((s) => s.k >= w.seam * 2).every((s) => s.segment === w.travel.id)).toBe(true)
+      expect(w.samples.filter((s) => s.k >= w.seam * 2).every((s) => s.segment === w.next.id)).toBe(true)
       expect(w.samples.filter((s) => s.k < w.seam * 2).every((s) => s.segment === w.rise.id)).toBe(true)
     }
-    expect(seams).toEqual(plans.slice(1, -1).map((p) => p.id))
+    expect(seams).toEqual(plans.slice(1).map((p) => p.id))
+    expect(afterRise(config, plans[0]!.id)!.next!.kind).toBe('hold')
+    expect(sampleLeave(config, film, plans[0]!, 2, reach)).toBeNull()
+  })
+
+  it('reads a rise that ends in a retreat as it reads one that ends in a travel, and names the retreat', () => {
+    const film = new FilmDirector(plans)
+    const plan = plans[plans.length - 1]!
+    const w = sampleLeave(config, film, plan, 2, config.raw.smooth.reachFrames)!
+    expect(w.next.id).toBe('ending.retreat')
+    const min = minLeaveOf(config.raw.smooth.path)
+    const master = config.formats[config.formatKeys.master]!
+    const read = judgeLeave(landingCurves(w, master.width, master.height).limb, w.k0, 2, min, w.next.kind)
+    expect(read.lowest).not.toBeNull()
+    expect(read.first).not.toBeNull()
+    expect(read.last).not.toBeNull()
+    expect(read.lowest!.k).toBeGreaterThan(read.first!.k)
+    expect(read.lowest!.k).toBeLessThan(read.last!.k)
+    expect(read.over!).toBeGreaterThan(0)
+    expect(read.over!).toBeLessThan(1)
+    expect(read.fault === null).toBe(read.over! >= min)
+    expect(judgeLeave([null, 24.21, 0.3, 97.87], 2070, 2, min, 'retreat').fault!.text).toContain('comes to rest between the rise and the retreat: the fastest point')
+    expect(judgeLeave([null, 24.21, 0.3, 97.87], 2070, 2, min).fault!.text).toContain('between the rise and the travel: the fastest point')
   })
 })
 

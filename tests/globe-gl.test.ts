@@ -80,6 +80,8 @@ function levels(o) {
     patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3(0, 0, 1), feather: o.feather, fade: [1, 2], nearDeg: 0, ...(o.own ? { own: o.own } : {}), ...(o.ownGain ? { ownGain: true } : {}), ...(o.fadeMinor ? { fadeMinor: true } : {}) },
   })
   if (o.ownGain) planet.setOwnGain(o.ownGain)
+  const guards = planet.material.fragmentShader.split('whole > ').length - 1
+  if (o.every) planet.material.fragmentShader = planet.material.fragmentShader.split('whole > ').join('-1.0 > ')
   const cam = new THREE.PerspectiveCamera(o.vfov, o.width / o.height, o.near, 10)
   cam.position.fromArray(o.position)
   cam.up.fromArray(o.up)
@@ -106,7 +108,7 @@ function levels(o) {
   planet.dispose()
   height.dispose()
   for (const t of [map, ...textures]) t.dispose()
-  return { pixels: Array.from(out), text: planet.material.fragmentShader.length }
+  return { pixels: Array.from(out), text: planet.material.fragmentShader.length, guards }
 }
 
 window.globe = { mask, levels, anisotropy: renderer.capabilities.getMaxAnisotropy() }
@@ -149,7 +151,7 @@ const maskValue = (x: number, y: number): number => (x * 37 + y * 91 + ((x * y) 
 
 interface MaskRead { bytes: number; format: number; colorSpace: string; levels: number[][]; between: number[]; small: number[] }
 interface LevelDef { rgb: [number, number, number]; size: number; widthDeg: number }
-interface LevelShot { map: [number, number, number]; mapWidth: number; anisotropy: number; levels: LevelDef[]; feather: number; own?: boolean[]; ownGain?: [number, number, number]; fadeMinor?: boolean; glow?: { direction?: number[]; colour?: [number, number, number]; power?: number }; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[]; diag: number; segments: number }
+interface LevelShot { map: [number, number, number]; mapWidth: number; anisotropy: number; levels: LevelDef[]; feather: number; own?: boolean[]; every?: boolean; ownGain?: [number, number, number]; fadeMinor?: boolean; glow?: { direction?: number[]; colour?: [number, number, number]; power?: number }; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[]; diag: number; segments: number }
 
 const filmicInverse = (v: number): number => {
   const y = Math.min(Math.max(v, 0), 0.985)
@@ -305,6 +307,39 @@ describe.skipIf(!have)('the globe options in a WebGL2 browser', () => {
     const scene = stack.levels[0]!.rgb.map((b) => filmicInverse(b / 255))
     const ring = mixed.findIndex((p, x) => x > 64 && Math.abs(p[0]! - scene[0]!) < 1e-5)
     expect(ring).toBeGreaterThan(64)
+  }, 120000)
+
+  it('draws the same pixels with the own levels under a whole level read and not read', async () => {
+    const stack: LevelShot = {
+      ...top, feather: 0.3, own: [false, true, false, true, true],
+      levels: [{ rgb: [230, 204, 178], size: 8, widthDeg: 70 }, { rgb: [40, 160, 90], size: 8, widthDeg: 56 }, { rgb: [77, 64, 51], size: 8, widthDeg: 44 }, { rgb: [200, 60, 30], size: 8, widthDeg: 32 }, { rgb: [30, 80, 220], size: 8, widthDeg: 18 }],
+    }
+    const shoot = (more: Partial<LevelShot>) => call<{ pixels: number[]; guards: number }>('levels', { ...stack, ...more })
+    const lean = await shoot({})
+    const every = await shoot({ every: true })
+    expect(lean.guards).toBe(6)
+    expect((await shoot({ own: undefined as unknown as boolean[] })).guards).toBe(0)
+    expect(every.pixels).toEqual(lean.pixels)
+    const other = await shoot({ levels: stack.levels.map((l, i) => (i === 1 || i === 3 ? { ...l, rgb: [250, 250, 20] as [number, number, number] } : l)) })
+    const scene = stack.levels[4]!.rgb.map((b) => filmicInverse(b / 255))
+    const flat = (p: number[], i: number): boolean => [0, 1, 2].every((c) => Math.abs(p[i * 4 + c]! - scene[c]!) < 1e-5)
+    let whole = 0
+    let moved = 0
+    for (let i = 0; i < stack.width * stack.height; i++) {
+      const same = [0, 1, 2].every((c) => other.pixels[i * 4 + c] === lean.pixels[i * 4 + c])
+      if (flat(lean.pixels, i)) {
+        whole++
+        expect(same, 'pixel ' + i).toBe(true)
+      } else if (!same) moved++
+    }
+    expect(whole).toBeGreaterThan(200)
+    expect(moved).toBeGreaterThan(200)
+    for (const more of [{ fadeMinor: true }, { ...graze, own: [true, true, true] }, { ...graze, own: [true, true, true], fadeMinor: true }, { ...graze, own: [true, false, true], fadeMinor: true }] as Partial<LevelShot>[]) {
+      const a = await shoot(more)
+      const b = await shoot({ ...more, every: true })
+      expect(a.pixels.some((v) => v > 0)).toBe(true)
+      expect(b.pixels).toEqual(a.pixels)
+    }
   }, 120000)
 
   it('adds a haze glow about a direction of the stop, in step with its colour and its power', async () => {

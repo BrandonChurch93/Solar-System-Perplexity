@@ -63,10 +63,13 @@ describe('a stop that did not opt in', () => {
   })
   it('gets the same shots and the same frame plan whether or not another stop opted in', () => {
     const before = withMars(off())
+    // A surface view that is measured on its globe takes no soft in any kind of segment (surfaceDrawn of core/motion.ts): the fixture
+    // stop is named in handover.drawnMeasure, and its rise shows its surface in the open before the cover closes.
     const old = (f: number): { raw: number; soft: number } => {
       const at = (o: number): Shot => before.shotAt(f, (f + o) / fps)
-      const raw = rawMotion(at(0), at(shutterMid()), at(config.shutterFraction))
-      return { raw, soft: softness(raw) }
+      const mid = at(shutterMid())
+      const raw = rawMotion(at(0), mid, at(config.shutterFraction))
+      return { raw, soft: mid.sets.some((x) => x.weight > 0 && x.view !== 'orbit' && x.ball !== undefined) ? 0 : softness(raw) }
     }
     const plansBefore: Record<number, { raw: number; soft: number; samples: number; seen: number }> = {}
     const shotsBefore: Record<string, string> = {}

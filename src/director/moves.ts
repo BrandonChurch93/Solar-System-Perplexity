@@ -222,6 +222,12 @@ export class StopPlan {
     return new THREE.Quaternion().setFromAxisAngle(this.axis, THREE.MathUtils.degToRad(this.p.spinDegPerSecond) * (time - this.holdMid))
   }
 
+  // The turn the stop draws its body by at a time. It is the plan's turn, unless a stop draws another one (a spin that comes to rest over
+  // the place) and says so here. The measure of a stop that handover.drawnMeasure names carries it in the state of the globe side.
+  drawn(time: number): THREE.Quaternion {
+    return this.turn(time)
+  }
+
   spin(time: number): number {
     return THREE.MathUtils.degToRad(this.p.spinDegPerSecond) * (time - this.holdMid)
   }
@@ -740,6 +746,17 @@ export class StopPlan {
     return { position: globe.position.clone().sub(zero.position).applyQuaternion(back).multiplyScalar(1 / unit.position.distanceTo(zero.position)), quaternion: back.multiply(globe.quaternion), vfov: globe.vfov }
   }
 
+  // Where the unit sphere of the body lies in the surface set at a time, in the set's own frame and units: the twin undone for the centre
+  // of the body and for a point of its surface. The twin places the globe's picture and its air in the surface view at the handover, so
+  // this is the globe as the surface view has it, whatever the set draws on it. The measure of a stop that handover.drawnMeasure names
+  // reads it (SetState.ball). terrain.ground is not asked: beside the measure of a stop that is not named it feeds the twin of the engine
+  // (twinFrame), where it places the globe side of a dive and a rise, so it is no number to tune a measure with.
+  ballIn(time: number): { centre: THREE.Vector3; radius: number } {
+    const at = (x: number): THREE.Vector3 => this.untwin({ position: new THREE.Vector3(x, 0, 0), quaternion: new THREE.Quaternion(), vfov: this.p.terrain.vfov }, time).position
+    const centre = at(0)
+    return { centre, radius: at(1).distanceTo(centre) }
+  }
+
   // The law of a dive or a rise on the one move, three things. pace: the flanks of the bell the height runs on. turn: the flanks of the
   // bell the eye's direction from the place and the camera's uprightness run on. liftPower: the height runs with the lift of that
   // direction (the sine of the eye's elevation over the ground of the place) to this power, so ln(height / lift^power) follows the bell.
@@ -947,6 +964,15 @@ export class StopPlan {
 
   coverHidden(_seg: Segment, _time: number): number | undefined {
     return undefined
+  }
+
+  // The globe under the surface view (Shot.under, the one ground): true where a sample of the surface view of this stop is to draw the
+  // stop's set as the globe view first, by the twin of its lens, and the surface view over it. Asked for a sample of the surface view
+  // alone, in the dive, the surface segment and the rise. False by default: the surface view is drawn alone, as it was. A stop answers by
+  // the place of the eye (its height, what of the globe is in the frame); an answer that changes at a time changes the picture at that
+  // time, so the two sides of it have to be the same picture.
+  under(_seg: Segment, _time: number): boolean {
+    return false
   }
 
   // Three schedules of the sky on the globe side of a dive or rise that hands over run on the film's clock. A stop whose path runs at a pace of
