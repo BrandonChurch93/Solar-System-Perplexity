@@ -2727,3 +2727,13 @@ after the forms on the five land plates, and on the levels above by the share of
   at that height). It is a straight line: fit rms 1.0 px at 2682 right, 11.7 at 2683 right (540 px long), 0.3 px
   at 2475 in both lower corners. So it is where the set's meshes end (an apron's outer side) or where count 3 of
   the law (the field, close.json law.edge) lets go. Which strip: tint test next.
+- 20:33 UTC: the ledge is committed as 8dfdfc9c (own commit, on merge 62a9b2aa). Then the rise back on main's eye
+  (MAIL 1288 item 5): src/stops/mars/place.json and plan.ts are main's to the byte (git checkout origin/main --);
+  RECIPE round 2 says so. The north up end's values stand in RECIPE and in the tree up to 8dfdfc9c.
+- 20:36 UTC, ITEM 2 (a), the dive's list (seen139.py on layers pictures of every frame 2457 to 2478; share of the
+  ground in frame drawn by the set, the rest is the globe's own ground with the plates):
+  2456 and above 0; 2457 0.3 percent; 2458 1.0; 2459 2.0; 2460 3.8; 2461 6.2; 2462 9.7; 2463 14.9; 2464 23.0;
+  2465 34.7; 2466 42.2; 2467 49.7; 2468 57.6; 2469 68.4; 2470 81.4; 2471 87.2; 2472 91.2; 2473 94.8; 2474 97.8;
+  2475 99.3; 2476 99.94; 2477 and 2478 100 (surface view). So set and plates share the frame in 2457 to 2476, and
+  the set grows from a quarter to nine tenths of the ground in the 8 frames 2464 to 2472.
+  Rise on main's eye: being rendered (out/work/place/t3).
