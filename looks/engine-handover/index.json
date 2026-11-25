@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T12:04:03.780Z",
- "head": "dfe0aa905683a93feed947cdf6915379e7b01757",
- "note": "Mars shutter law rows at review: dive's end 2484 to 2486, rise's start 2670 to 2672, judged dive frame 2427, holds 2668 and 2635, box against law; cap pair 2673",
+ "pushed": "2026-11-25T12:19:47.430Z",
+ "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
+ "note": "Mars rows sent; 2668 before and after the naming; a sawtooth crest at 2668 found in all three builds, looking for its cause",
  "looks": [
+  {
+   "time": "2026-11-25T12:19:45.372Z",
+   "file": "20261125121945372-note-z-2635-3x.jpg",
+   "source": "../../../../tmp/law/sheets/z-2635-3x.png",
+   "kind": "note",
+   "label": "Mars 2635 at review, 3 times, x 730..940 y 560..780: the same crest and mesa without the sawtooth, box and law"
+  },
+  {
+   "time": "2026-11-25T12:19:43.938Z",
+   "file": "20261125121943938-note-z-2668-3way-3x.jpg",
+   "source": "../../../../tmp/law/sheets/z-2668-3way-3x.png",
+   "kind": "note",
+   "label": "Mars 2668 at review, 3 times, x 640..850 y 540..760: a sawtooth on the lit crest and on the small mesa, the same in commit 4, the naming and the law. Not from the shutter. Not there at 2635"
+  },
+  {
+   "time": "2026-11-25T12:19:42.011Z",
+   "file": "20261125121942011-note-hold-2668-before-after-1x.jpg",
+   "source": "../../../../tmp/law/sheets/hold-2668-before-after-1x.png",
+   "kind": "note",
+   "label": "Mars 2668 at review, 1 to 1, x 420..1060 y 440..800: before the naming (commit 4, 8 samples) and after (bdefa472, 14 samples), whole shutter both. Mean gradient 10.63 to 11.18; G17 median 1.0246 to 1.0565"
+  },
   {
    "time": "2026-11-25T12:04:03.210Z",
    "file": "20261125120403210-note-hold-2635-1x.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/law/sheets/row-dive-end-2x.png",
    "kind": "note",
    "label": "Mars dive's end at review, 2 times, x 800..1010 y 820..1000: 2484, 2485, 2486, box over law"
-  },
-  {
-   "time": "2026-11-25T12:04:00.330Z",
-   "file": "20261125120400330-note-row-dive-end-1x.jpg",
-   "source": "../../../../tmp/law/sheets/row-dive-end-1x.png",
-   "kind": "note",
-   "label": "Mars dive's end at review, 1 to 1, x 700..1120 y 760..1060: frames 2484, 2485, 2486. Top the box (naming commit bdefa472), bottom the law 6 to 14 (shares 0.470, 0.238, 0.047). Mean difference box to law 0.50, 0.29, 0.05 of 255"
-  },
-  {
-   "time": "2026-11-25T11:59:22.197Z",
-   "file": "20261125115922197-note-cap-2673-thumb.jpg",
-   "source": "../../../../tmp/law/sheets/cap-2673-thumb.png",
-   "kind": "note",
-   "label": "Mars 2673 whole at half size: before the naming and after"
-  },
-  {
-   "time": "2026-11-25T11:59:21.494Z",
-   "file": "20261125115921494-note-cap-2673-1x.jpg",
-   "source": "../../../../tmp/law/sheets/cap-2673-1x.png",
-   "kind": "note",
-   "label": "Mars 2673 at review, 1 to 1, x 0..640 y 600..1000: before the naming (commit 4, shutter 0.917, the plane read 15.26 px) and after (bdefa472, shutter 0.510, the globe reads 27.43 px). 24 samples both. Mean gradient 10.60 to 11.39"
   }
  ]
 }
