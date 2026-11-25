@@ -254,7 +254,7 @@
    ]
   },
   "density": {
-   "how": "Where the bodies lie, as a chance from 0 to 1 on size px over widthDeg, from a seeded generator. The core is the ground the close image covers (the lay back, its edge softened by edgeDeg) further than far degrees of arc from the point under the twin camera; the near limit of far is pushed outward by up to farVary[1] degrees by a noise of farVary[0] degrees, so it is no arc. Round the core the field thins out over reachDeg degrees times exp(vary[1] times a noise of vary[0] degrees), so its outline follows no line of the core. Groups: a sum of noises (grain: sigma in degrees and weight) plus a lift that runs from lift[0] outside to lift[1] in the core (gamma) and is raised over land (land[0], by the envelope to the power land[1]; land is the land of the hold's 48 degree level by calm.py, blurred by landDeg), through cut. The groups thin to open where the lay back shows neither cloud (darkest channel through cloud after a blur of cloudDeg) nor land; outside the lay back's cover its cloud is carried on from the cover's edge over spreadDeg degrees, so the field does not change along that edge. wide is a thin scatter of small groups over the whole raster (its own grain, cut, top chance, land weight). The whole field ends between wide.edgeDeg[0] and wide.edgeDeg[1] degrees from the raster's rim, varied by edgeVary degrees with no variation at the rim itself, and deck.py drops every body that the raster's edge would cut. Outside the lay back's cover no body lies where the hold's map has cloud of its own (base: darkest channel of the hold's 48 degree level through base.cloud after a blur of base.deg degrees), so a sharp body never stands on a soft cloud of the far map. ring: nearer to the point under the twin camera than the far limit and outside the lay back's cover the bodies go on at the lay back's own cloud share, so the cloud of the close view does not stop at the edge of its picture. The share is the part of the lay back whose darkest channel is over ring.cloud, as a mean over shareDeg degrees carried outward from the cover's edge; the chance is (share over top) to the power 1 over power, the inverse of what the field lays (measured on the field of deck9.log: cover top times chance to the power; cover 0.014, 0.053, 0.075, 0.107, 0.154, 0.219, 0.242, 0.319, 0.382, 0.419 for a chance of 0.15, 0.25 and so on in tenths to 0.85, then 0.935 and 1). The calm zone is that ring and the ground within calmDeg degrees (varied like reachDeg) of the cover and of the ring, outside the cover, where the plate is fully laid into the levels (its footprint weight through ring.plate). There levels.py wipes the plate's own cloud and calms its sea (nearSea), fully where the zone's weight is over wipe[1], and only from there on may a body lie where the plate had cloud of its own. deck.py writes the zone's weight to field-near.png.",
+   "how": "Where the bodies lie, on size px over widthDeg. The bodies stand on the specks of the hold's own cloud layer (speck), so on the way down a speck of the map grows into a body at the same coordinates and none is born beside it. Specks are taken out where the ground the close image covers (the lay back, its edge softened by edgeDeg) lies nearer than far degrees of arc from the point under the twin camera (the near limit of far pushed outward by farVary: sigma in degrees and reach in degrees of a seeded noise), where the approved picture's own clouds stand, and toward the rim of the raster over wide.edgeDeg (wide.edgeVary degrees of a seeded noise). ring.calmDeg, ring.plate and ring.wipe are the calm ring levels.py reads: where the field lies near the plate's own clouds the plate's sea is calmed under it. vary (sigma in degrees, strength) varies the calm ring's width.",
    "size": 2048,
    "seed": 5,
    "far": [
@@ -266,90 +266,18 @@
     1.2
    ],
    "edgeDeg": 0.25,
-   "cloud": [
-    95,
-    185
-   ],
-   "cloudDeg": 0.12,
-   "open": 0.15,
-   "spreadDeg": 1.5,
-   "reachDeg": 4.5,
    "vary": [
     3.0,
     0.7
    ],
-   "landDeg": 0.3,
-   "grain": [
-    [
-     2.2,
-     0.5
-    ],
-    [
-     0.9,
-     0.7
-    ],
-    [
-     0.4,
-     0.6
-    ],
-    [
-     0.16,
-     0.4
-    ]
-   ],
-   "lift": [
-    -2.4,
-    0.3
-   ],
-   "gamma": 1.0,
-   "land": [
-    2.0,
-    1.0
-   ],
-   "cut": [
-    -0.5,
-    0.6
-   ],
    "wide": {
-    "grain": [
-     [
-      3.5,
-      1.0
-     ],
-     [
-      1.2,
-      0.7
-     ],
-     [
-      0.5,
-      0.5
-     ]
-    ],
-    "cut": [
-     0.9,
-     1.9
-    ],
-    "top": 0.5,
-    "land": 0.6,
     "edgeDeg": [
      1.2,
      3.5
     ],
     "edgeVary": 0.8
    },
-   "power": 1.5,
-   "base": {
-    "cloud": [
-     120,
-     170
-    ],
-    "deg": 0.3
-   },
    "ring": {
-    "cloud": 110,
-    "shareDeg": 1.0,
-    "top": 0.42,
-    "power": 1.6,
     "calmDeg": 3.0,
     "plate": [
      0.8,
@@ -358,6 +286,40 @@
     "wipe": [
      0.0,
      0.5
+    ]
+   },
+   "speck": {
+    "how": "The bodies stand on the specks of the map, and the cover is kept. deck.py reads the cover of the hold's own cloud layer (file, of the full set) on the field's raster and spreads it over deg degrees of arc (about the layer's own texel). Where that passes alpha[0] to alpha[1] the ground is speck; the spread cover itself is the cover wanted there. lay places the tiles as before but keeps a body by the cover still lacking: the cover wanted less the cover laid so far, both spread over nearDeg degrees, over the tile's own cover, is the chance that a body of the tile is kept (times the old shaping by size for the three sizes; after them the smallest size is laid fill times more with no shaping, to take up what is left), and a body is kept only if more than onBody of it stands on speck. So a speck of the map grows into bodies at the same coordinates, none is born on open sea, and the light of a patch (its cloud share times the cloud's light plus the rest times the sea's) is the hold's. rings are the bands, in degrees of arc from the point under the twin camera, deck.py prints the cover wanted and laid by.",
+    "file": "wrap-cloud.webp",
+    "deg": 0.06,
+    "alpha": [
+     0.02,
+     0.1
+    ],
+    "nearDeg": 0.25,
+    "onBody": 0.5,
+    "fill": 2,
+    "rings": [
+     [
+      0,
+      2.5
+     ],
+     [
+      2.5,
+      5
+     ],
+     [
+      5,
+      7.5
+     ],
+     [
+      7.5,
+      10
+     ],
+     [
+      10,
+      12
+     ]
     ]
    }
   },

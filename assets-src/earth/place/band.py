@@ -237,7 +237,7 @@ def main():
 
     field = stand_field()
     sun = g.unit(np.array(STAND['sun']) @ g.TO_BODY.T)
-    tone = np.frombuffer((PUB / 'full' / TONE['file']).read_bytes(), np.float16).reshape(TONE['size'], TONE['size'], 4)[::-1].astype(np.float32)
+    gain = np.array(PLATES['seaGain'][::-1], np.float32)
     full = np.clip(np.round(approved * 255), 0, 255).astype(np.uint8)
     del approved
     th, tw = full.shape[:2]
@@ -250,7 +250,6 @@ def main():
     top, bottom = max(int(rows.min()) * 8 - 16, 0), min(int(rows.max()) * 8 + 24, th)
     lines = BAND['lines']
     place = 1 / (2 * np.tan(np.radians(PLACE_WIDE) / 2))
-    tone_wide = 1 / (2 * np.tan(np.radians(TONE['widthDeg']) / 2))
     hx = (xs - GROUND['horizonSpan'][0]) / GROUND['horizonSpan'][1]
     horizon = np.polyval(GROUND['horizon'][8::-1], hx)
     changed = 0
@@ -268,11 +267,10 @@ def main():
         v = read(veil, hx_ * place / times + 0.5, hy_ * place / times + 0.5)
         at, z = stood(field, d, EYE)
         code = np.clip(shaded(field, at, z, the_map(g.unit(at)), sun) * (1 - v[..., 3:4]) + v[..., :3], 0, 1)
-        tn = read(tone, hx_ * tone_wide + 0.5, hy_ * tone_wide + 0.5)
         inside = step(0.5, 0.5 - PLATES['feather'], np.maximum(np.abs(hx_ * place), np.abs(hy_ * place)))
         hi, lo = code.max(-1), code.min(-1)
         sea = (1 - step(TONE['cloud'][0], TONE['cloud'][1], lo)) * step(TONE['grey'][0], TONE['grey'][1], (hi - lo) / np.maximum(hi, 1e-3))
-        code = np.clip(code + ((1 - inside) * sea)[..., None] * tn[..., :3], 0, 1)
+        code = np.clip(code * (1 + ((1 - inside) * sea)[..., None] * (gain - 1)), 0, 1)
         was = np.repeat(full[r0:r1].astype(np.float32) / 255, lines, axis=0)
         now = (was * (1 - w[..., None]) + code * w[..., None]).reshape(r1 - r0, lines, tw, 3).mean(axis=1)
         out = np.clip(np.round(now * 255), 0, 255).astype(np.uint8)

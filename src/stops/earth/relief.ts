@@ -129,6 +129,8 @@ uniform vec2 uVeilFrom;
 uniform vec4 uArrive;
 uniform vec3 uShare;
 uniform vec4 uCome;
+uniform vec3 uAir;
+uniform vec3 uAirGain;
 uniform vec3 uLevel;
 uniform sampler2D uTone;
 uniform float uToneK;
@@ -182,7 +184,7 @@ vec4 thin(vec4 c, float deck) {
   float top = max(code.r, max(code.g, code.b));
   float least = min(code.r, min(code.g, code.b));
   float sea = (1.0 - smoothstep(uToneCloud.x, uToneCloud.y, least)) * smoothstep(uToneGrey.x, uToneGrey.y, (top - least) / max(top, 1e-3));
-  code = max(code - less * sea * textureLod(uTone, on * uToneK + 0.5, 0.0).rgb, 0.0);
+  code = code * mix(vec3(1.0), mix(vec3(1.0), uAirGain, unveiled(length(uEye - at) / uSea.w)) / uAirGain, sea);
   return vec4(fromCode(code) * c.a, c.a);
 }
 vec3 lightOn() {
@@ -413,7 +415,7 @@ export class Ground {
           uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uPerLine: frameUniform, uBias: biasUniform,
           uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
           uShow: { value: new THREE.Vector4(0, 0, 1, 1) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uRimNear: { value: new THREE.Vector2(globe.rimNear[0]!, globe.rimNear[1]!) }, uOwn: { value: new THREE.Vector4(2, 3, 2, 3) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) },
-          uVeil: { value: globe.veil.map }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, uArrive: { value: new THREE.Vector4(globe.arrive[0]!, 1 / Math.log(globe.arrive[0]! / globe.arrive[1]!), 1, 1) }, uShare: { value: new THREE.Vector3().fromArray(globe.share) }, uCome: { value: new THREE.Vector4(globe.share[3]!, globe.share[4]!, globe.share[5]!, globe.share[6]!) }, uLevel: { value: new THREE.Vector3().fromArray(globe.level) }, uToneK: { value: globe.toneTimes }, uSunAt: { value: new THREE.Vector3(0, 1, 0) }, ...globe.light, ...extra,
+          uVeil: { value: globe.veil.map }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, uArrive: { value: new THREE.Vector4(globe.arrive[0]!, 1 / Math.log(globe.arrive[0]! / globe.arrive[1]!), 1, 1) }, uShare: { value: new THREE.Vector3().fromArray(globe.share) }, uCome: { value: new THREE.Vector4(globe.share[3]!, globe.share[4]!, globe.share[5]!, globe.share[6]!) }, uAir: { value: new THREE.Vector3(globe.share[7]!, globe.share[8]!, globe.share[9]!) }, uAirGain: { value: new THREE.Vector3(globe.share[10]!, globe.share[11]!, globe.share[12]!) }, uLevel: { value: new THREE.Vector3().fromArray(globe.level) }, uToneK: { value: globe.toneTimes }, uSunAt: { value: new THREE.Vector3(0, 1, 0) }, ...globe.light, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,

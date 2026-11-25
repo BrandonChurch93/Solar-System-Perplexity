@@ -165,8 +165,19 @@ def variants(scale, spec=SPEC):
     return out, want
 
 
+def specks(sp, deg, n):
+    from levels import PUBLIC, Win
+    cloud = cv2.imread(str(PUBLIC / 'full' / sp['file']), cv2.IMREAD_UNCHANGED)[..., 3]
+    h, w = cloud.shape
+    nn, e, u = g.frame_at(P)
+    tx, ty = Win(P, deg, n).tangent()
+    d = g.unit(nn + tx[None, :, None] * e - ty[:, None, None] * u)
+    x = ((np.arctan2(d[..., 0], d[..., 2]) / (2 * np.pi) + 0.5) * w - 0.5).astype(np.float32)
+    y = ((0.5 - np.arcsin(np.clip(d[..., 1], -1, 1)) / np.pi) * h - 0.5).astype(np.float32)
+    return cv2.remap(cloud, x, y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_WRAP).astype(np.float32) / 255
+
+
 def density(spec=SPEC):
-    from calm import land_of, SPEC as CALM
     from farin import CANVAS, reach as from_nadir
     from layback import layback
     from levels import hold_level, reproject, footprint, SPOT, PLATES
@@ -179,47 +190,35 @@ def density(spec=SPEC):
         f = cv2.GaussianBlur(rng.standard_normal((n, n)).astype(np.float32), (0, 0), sigma_deg * per)
         return f / f.std()
 
-    def fbm(grain):
-        f = sum(w * noise(s) for s, w in grain)
-        return f / f.std()
-
     under, _ = reproject(hold_level(48), SPOT, 48, P, deg, n)
-    land = cv2.GaussianBlur(land_of(under, CALM, CALM['dotPx']['48']), (0, 0), ds['landDeg'] * per)
-    lay, _, inside = layback(cv2.imread(str(CANVAS)), 1, deg, n)
+    _, _, inside = layback(cv2.imread(str(CANVAS)), 1, deg, n)
     cover = step(0.5, 1.0, cv2.GaussianBlur((inside > 0.99).astype(np.float32), (0, 0), ds['edgeDeg'] * per))
-    cloud = step(ds['cloud'][0], ds['cloud'][1], cv2.GaussianBlur(lay.astype(np.float32).min(axis=2), (0, 0), ds['cloudDeg'] * per))
-    seen = (inside > 0.99).astype(np.float32)
-    cloud = cloud * cover + mblur(cloud * seen, seen, ds['spreadDeg'] * per) * (1 - cover)
     dist = from_nadir(P, deg, n)
     far = step(ds['far'][0], ds['far'][1], dist - ds['farVary'][1] * np.abs(noise(ds['farVary'][0])))
-    core = cover * step(ds['far'][0], ds['far'][1], dist)
-    out = cv2.distanceTransform((core < 0.5).astype(np.uint8), cv2.DIST_L2, 5) / per
     vary = np.exp(ds['vary'][1] * noise(ds['vary'][0]))
-    env = 1 - step(0, 1, out / (ds['reachDeg'] * vary))
-    lift = ds['lift'][0] + (ds['lift'][1] - ds['lift'][0]) * env ** ds['gamma'] + ds['land'][0] * land * env ** ds['land'][1]
-    groups = step(ds['cut'][0], ds['cut'][1], fbm(ds['grain']) + lift)
-    system = groups * (1 - (1 - ds['open']) * (1 - np.maximum(cloud, land)))
+    sp = ds['speck']
+    held = specks(sp, deg, n)
+    spread = cv2.GaussianBlur(held, (0, 0), sp['deg'] * per)
+    on = step(sp['alpha'][0], sp['alpha'][1], spread)
     wd = ds['wide']
     i = np.arange(n, dtype=np.float32)
     rim = np.minimum.outer(np.minimum(i, n - 1 - i), np.minimum(i, n - 1 - i)) / per
-    wide = wd['top'] * step(wd['cut'][0], wd['cut'][1], fbm(wd['grain']) + wd['land'] * land)
-    clear = 1 - step(ds['base']['cloud'][0], ds['base']['cloud'][1], cv2.GaussianBlur(under.astype(np.float32).min(axis=2), (0, 0), ds['base']['deg'] * per)) * (1 - cover)
     rg = ds['ring']
-    share = mblur((lay.astype(np.float32).min(axis=2) > rg['cloud']).astype(np.float32) * seen, seen, rg['shareDeg'] * per)
     near = (1 - far) * (1 - cover)
     out = cv2.distanceTransform((np.maximum(cover, 1 - far) < 0.5).astype(np.uint8), cv2.DIST_L2, 5) / per
     calm = (np.maximum(near, (1 - step(0, 1, out / (rg['calmDeg'] * vary))) * (1 - cover)) * step(rg['plate'][0], rg['plate'][1], footprint(P, deg, n, P, PLATES['levels'][0]['widthDeg']))).astype(np.float32)
-    clear = clear + (1 - clear) * step(rg['wipe'][1], 1, calm)
-    ring = np.clip(share / rg['top'], 0, 1) ** (1 / rg['power']) * near
-    dens = np.clip((np.maximum(system, wide) * far + ring) * clear * step(wd['edgeDeg'][0], wd['edgeDeg'][1], rim + wd['edgeVary'] * noise(1.5) * step(0, wd['edgeDeg'][1], rim)), 0, 1).astype(np.float32)
-    print('ring: share of the raster', round(float(near.mean()), 4), 'mean chance where its weight is over 0.9', round(float(dens[near > 0.9].mean()), 3), 'cloud share of the lay back carried there', round(float(share[near > 0.9].mean()), 3), 'calm sea: share of the raster', round(float(calm.mean()), 4), flush=True)
-    print('density: mean', round(float(dens.mean()), 4), 'over land inside the cover', round(float(dens[(core > 0.9) & (land > 0.5)].mean()), 3), 'over sea inside the cover', round(float(dens[(core > 0.9) & (land < 0.1)].mean()), 3), 'wide part alone', round(float(wide.mean()), 4), flush=True)
+    open_ = (1 - (1 - far) * cover) * step(wd['edgeDeg'][0], wd['edgeDeg'][1], rim + wd['edgeVary'] * noise(1.5) * step(0, wd['edgeDeg'][1], rim))
+    dens = np.clip(on * open_, 0, 1).astype(np.float32)
+    goal = np.clip(spread * open_, 0, 1).astype(np.float32)
+    ring = [(a, b, (dist >= a) & (dist < b)) for a, b in sp['rings']]
+    print('specks: alpha of the hold\'s cloud layer, share of the ground that is speck and the cover wanted, mean by ring of degrees from the point under the twin camera: ' + ', '.join('%g to %g: %.3f, %.3f and %.3f' % (a, b, held[m].mean(), dens[m].mean(), goal[m].mean()) for a, b, m in ring), flush=True)
     look = under * (1 - 0.85 * dens[..., None]) + 255 * 0.85 * dens[..., None]
     cv2.imwrite(str(WORK / 'field-density-look.jpg'), cv2.resize(np.clip(look, 0, 255).astype(np.uint8), (1024, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 88])
-    return dens, calm
+    np.save(WORK / 'field-held.npy', held.astype(np.float16))
+    return dens, calm, goal
 
 
-def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale):
+def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale, goal, fill=False):
     n = alpha.shape[0]
     k = n / dens.shape[0]
     size = tiles[0][0].shape[0]
@@ -236,6 +235,8 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale):
             x += pitch
         y += pitch * 0.87
         row += 1
+    sig = spec['density']['speck']['nearDeg'] * n / spec['widthDeg']
+    wide = cv2.GaussianBlur(goal, (0, 0), sig / k)
     order = rng.permutation(len(spots))
     last = -1
     reach = max(int(round(spec['shadow']['reachPx'] * scale / spec['scale'])) // 4, 2)
@@ -251,7 +252,6 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale):
         if d.max() < 0.02:
             continue
         raw = d
-        d = d * (share[0] + (share[1] - share[0]) * step(share[2], share[3], d))
         v = int(rng.integers(len(tiles)))
         if v == last:
             v = (v + 1) % len(tiles)
@@ -259,11 +259,17 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale):
         wa, wc, wm, wl, count, far, wb, lit, wh = tiles[v]
         sl = (slice(ay0 - oy, ay1 - oy), slice(ax0 - ox, ax1 - ox))
         lab = wl[sl]
-        chance = rng.uniform(0, 1, count) ** (1 / spec['density']['power'])
+        sp = spec['density']['speck']
+        aim = cv2.remap(wide, ((np.arange(ax0, ax1, dtype=np.float32) + 0.5) / k - 0.5)[None, :].repeat(ay1 - ay0, 0), ((np.arange(ay0, ay1, dtype=np.float32) + 0.5) / k - 0.5)[:, None].repeat(ax1 - ax0, 1), cv2.INTER_LINEAR)
+        low = cv2.GaussianBlur(cv2.resize(alpha[ay0:ay1, ax0:ax1], (max((ax1 - ax0) // 8, 1), max((ay1 - ay0) // 8, 1)), interpolation=cv2.INTER_AREA), (0, 0), sig / 8)
+        lack = np.clip((aim - cv2.resize(low, (ax1 - ax0, ay1 - ay0), interpolation=cv2.INTER_LINEAR)) / max(float(wa.mean()), 1e-3), 0, 1)
+        d = lack * (1.0 if fill else share[0] + (share[1] - share[0]) * step(share[2], share[3], d))
+        chance = rng.uniform(0, 1, count)
         sums = np.bincount(lab.ravel(), weights=d.ravel(), minlength=count)
         counts = np.maximum(np.bincount(lab.ravel(), minlength=count), 1)
-        keep = (sums / counts) > chance
-        keep &= lit | (np.bincount(lab.ravel(), weights=raw.ravel(), minlength=count) / counts > spec['veil']['dense'])
+        stood = np.bincount(lab.ravel(), weights=raw.ravel(), minlength=count) / counts
+        keep = ((sums / counts) > chance) & (stood > sp['onBody'])
+        keep &= lit | (stood > spec['veil']['dense'])
         keep[0] = False
         if oy < 0:
             keep[lab[0, :]] = False
@@ -297,20 +303,34 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale):
 def main():
     spec = SPEC
     n = spec['raster']
-    dens, calm = density(spec)
+    dens, calm, goal = density(spec)
     cv2.imwrite(str(WORK / 'field-density.png'), (dens * 255).astype(np.uint8))
     cv2.imwrite(str(WORK / 'field-near.png'), (calm * 255 + 0.5).astype(np.uint8))
     rng = np.random.default_rng(spec['seed'])
     alpha = np.zeros((n, n), np.float32)
     colour = np.zeros((n, n, 3), np.float32)
     shade = np.ones((n, n), np.float32)
+    small = None
     for scale, share in spec['sizes']:
         tiles, want = variants(scale, spec)
-        lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale)
+        lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale, goal)
+        if small is None:
+            small = (tiles, want, scale, share)
         del tiles
-    big = cv2.resize(dens, (n, n))
-    print('cover where the density is over 0.9:', round(float(alpha[big > 0.9].mean()), 3), 'between 0.3 and 0.6:', round(float(alpha[(big > 0.3) & (big < 0.6)].mean()), 3), 'under 0.05:', round(float(alpha[big < 0.05].mean()), 4), flush=True)
-    del big
+    for _ in range(spec['density']['speck']['fill']):
+        lay(small[0], small[1], dens, small[3], alpha, colour, shade, rng, spec, small[2], goal, True)
+    del small
+    from farin import reach as from_nadir
+    m = dens.shape[0]
+    laid = cv2.resize(alpha, (m, m), interpolation=cv2.INTER_AREA)
+    dist = from_nadir(P, spec['widthDeg'], m)
+    sig = spec['density']['speck']['nearDeg'] * m / spec['widthDeg']
+    for a, b in spec['density']['speck']['rings']:
+        r = (dist >= a) & (dist < b)
+        print('ring %g to %g degrees: cover wanted %.4f, cover laid %.4f, share of the ground that is speck %.3f, share of the cover laid that stands on speck %.3f' % (a, b, goal[r].mean(), laid[r].mean(), (dens[r] > 0.5).mean(), (laid[r] * (dens[r] > 0.5)).sum() / max(laid[r].sum(), 1e-6)), flush=True)
+    r = (dist >= spec['density']['far'][0]) & (dist < spec['density']['speck']['rings'][-1][1])
+    print('from %g degrees outward, both spread over %g degrees: correlation of the cover laid with the cover wanted %.3f' % (spec['density']['far'][0], spec['density']['speck']['nearDeg'], np.corrcoef(cv2.GaussianBlur(goal, (0, 0), sig)[r], cv2.GaussianBlur(laid, (0, 0), sig)[r])[0, 1]), flush=True)
+    del laid, dist
     np.save(WORK / 'field-alpha.npy', (alpha * 255 + 0.5).astype(np.uint8))
     np.save(WORK / 'field-colour.npy', np.clip(colour + 0.5, 0, 255).astype(np.uint8))
     np.save(WORK / 'field-shade.npy', (shade * 255 + 0.5).astype(np.uint8))
