@@ -1,9 +1,33 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T01:03:48.032Z",
+ "pushed": "2026-11-25T01:18:58.470Z",
  "head": "5e094e51d1c61410a3ad2a39c843c76dd9eff2ea",
- "note": "r57: rise green 0.40, dive green 0.33 on the tree of local commit 5e094e5; path, G13, parity, gate, handover, place, the two sizes and G17 still running",
+ "note": "5e094e5: rise, dive, path, G13 green on the engine of 7026711; main moved to af6ba5f, finals byte equal there, slices and parity, place, gate, handover, sizes, G17 running on it",
  "looks": [
+  {
+   "time": "2026-11-25T01:18:57.559Z",
+   "file": "20261125011857559-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r57/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "r57 tree 5e094e5 engine 7026711: rise, the changes in place (pattern 0.40, limit 0.45)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T01:18:56.845Z",
+   "file": "20261125011856845-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r57/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "r57 tree 5e094e5 engine 7026711: dive, the changes in place (pattern 0.33, limit 0.45)",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T01:18:55.745Z",
+   "file": "20261125011855745-note-saturn-dive-pops.jpg",
+   "source": "../../../../tmp/v/r57/saturn-dive-pops.png",
+   "kind": "note",
+   "label": "r57 tree 5e094e5 engine 7026711: dive, the largest pops (pop 1.07, limit 1.2)",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-25T01:03:37.272Z",
    "file": "20261125010337272-note-saturn-dive-changes.jpg",
@@ -40,27 +64,6 @@
    "source": "../../../../tmp/v/t21/f57_whole.png",
    "kind": "note",
    "label": "3720 at the final tier of the tree under proof (right) beside the approved close image (left), half size. Pose fits; the foot band is lighter and browner than the approved, the globe more orange, the globe's shadow lies on the ring at the right"
-  },
-  {
-   "time": "2026-11-25T00:29:26.507Z",
-   "file": "20261125002926507-note-globe_pair.jpg",
-   "source": "../../../../tmp/v/t21/globe_pair.png",
-   "kind": "note",
-   "label": "item 3, not cured: the globe of the approved close image (left) beside mine at 3720, draft tier (right): mine is more orange with a broad brown terminator"
-  },
-  {
-   "time": "2026-11-25T00:29:25.455Z",
-   "file": "20261125002925455-note-rise57_548.jpg",
-   "source": "../../../../tmp/v/t21/rise57_548.png",
-   "kind": "note",
-   "label": "r57 rise, draft tier, crop at 548 544, film frames 3836 to 3850 every second: the globe comes in over the inner ring and the gap"
-  },
-  {
-   "time": "2026-11-25T00:29:24.682Z",
-   "file": "20261125002924682-note-rise57_foot_a.jpg",
-   "source": "../../../../tmp/v/t21/rise57_foot_a.png",
-   "kind": "note",
-   "label": "r57 rise, draft tier, crop at 1136 792, film frames 3802 to 3822 every fourth: the dust in front of the foot thins as the lens climbs (my early reading of the pattern 0.42 at 3813 and a half, limit 0.45)"
   }
  ]
 }
