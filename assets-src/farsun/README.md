@@ -391,6 +391,10 @@ behind the Sun's near side for a stretch of the flight (4 against 3.97, read at 
 drawable cut by it would leave by distance while it can be seen (MAIL 1070). The depth range of that
 draw is 0 to 0, so no depth left in the target stands in front of it. Its strength is the wear's, and it
 is gone with the wear or under its own size, never by a frame. With no arcade lent, nothing of this runs.
+`tests/farsun-share.test.ts` holds it in a WebGL2 browser: a dark stand-in of the chromosphere's height
+at the stop's spot, drawn by the far Sun in every frame from the end of the handover while the spot is
+in the frame, must darken more than half its own disc of lit pixels, and the camera must leave with the
+near and far it came with.
 
 ## The wear by the burn (MAIL 1017, 1027 and 1043)
 
@@ -491,3 +495,11 @@ Their reasons stay beside (`travel.txt`, `sun.txt`, `mercury.txt`, `film-sunstar
 `film-truesun.patch` are not in main yet and stay. The last takes the ride with the stars out of the film
 (MAIL 1113 and 1119): in a dive and a rise the far Sun stands at `sun.dir` and its body keeps its place
 while the sky turns. The test holds it at every half frame and is red until the hunk is on `film.ts`.
+`sky-sample.patch` (MAIL 1176 and 1195) hands the sky the orientation of the sample of the shutter it
+draws, beside the one of the middle that the stars keep, and the sky turns its camera to it for the far
+Sun's set and draw alone. So the body, its corona, loops, rays and lens light are drawn where each sample
+sees them, and a turn smears them along their own path as it smears every body of the world's pass; the
+stars are the stated exception and stay at the middle. A frame of one sample keeps its bytes. At a hold
+the body takes the blur of the camera's own drift (0.4 px either side of the middle at Mercury), as the
+planet beside it does. The test holds the sky's half (the far Sun's camera is the sample's, the stars'
+is the middle's, and without the argument both are the middle's) and is red until the hunk is laid.
