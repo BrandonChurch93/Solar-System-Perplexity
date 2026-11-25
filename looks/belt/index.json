@@ -1,9 +1,16 @@
 {
  "folder": "belt",
- "pushed": "2026-11-25T16:19:05.541Z",
+ "pushed": "2026-11-25T16:41:01.599Z",
  "head": "74ee5759e06f0e15383d83449232ef1b3cc48501",
- "note": "arcade at 484: cure named in 74ee5759",
+ "note": "smear cure trial: 1065 before and after",
  "looks": [
+  {
+   "time": "2026-11-25T16:41:00.707Z",
+   "file": "20261125164100707-note-1065-16-samples-before-left-after-right-1to1.jpg",
+   "source": "../../../../tmp/farsun/send/1065-16-samples-before-left-after-right-1to1.jpg",
+   "kind": "note",
+   "label": "1065 at 16 samples, far Sun through the middle of the shutter (left) and through each sample (right), 1 to 1"
+  },
   {
    "time": "2026-11-25T16:19:04.764Z",
    "file": "20261125161904764-note-arcade-f906-over-cure-over-globe-484-490-x6.jpg",
@@ -55,13 +62,6 @@
    "source": "../../../../tmp/farsun/send/4x-corona-470-471-over-471globe-471far.jpg",
    "kind": "note",
    "label": "corona at 4 times: 470, 471 above; 471 forced globe, 471 forced far Sun below"
-  },
-  {
-   "time": "2026-11-25T13:37:16.532Z",
-   "file": "20261125133716532-note-4x-loops-lower-left-470-471-over-471globe-471far.jpg",
-   "source": "../../../../tmp/farsun/send/4x-loops-lower-left-470-471-over-471globe-471far.jpg",
-   "kind": "note",
-   "label": "loops lower left at 4 times: 470, 471 above; 471 forced globe, 471 forced far Sun below"
   }
  ]
 }
