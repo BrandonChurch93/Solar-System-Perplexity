@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T10:33:18.392Z",
+ "pushed": "2026-11-25T10:51:35.125Z",
  "head": "63752893cb7ae9cf12b9651fe340d6ba5a826053",
- "note": "fourth state: the globe's own fine forms stay on the place inside the disc, 1284 and 1290 beside before, first and third",
+ "note": "control tone.near 0 beside the fourth state (0.5) and before at 1290 and 1296, crop 950 to 1500 by 200 to 700, draft",
  "looks": [
+  {
+   "time": "2026-11-25T10:51:34.093Z",
+   "file": "20261125105134093-note-n0-d.jpg",
+   "source": "../../../../tmp/v/sh/n0-d.jpg",
+   "kind": "note",
+   "label": "control tone near 0 at 1290 1296: before, fourth state, control",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T10:33:17.762Z",
    "file": "20261125103317762-note-a4-1290.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/sh/ar-cmp-rise.jpg",
    "kind": "note",
    "label": "rise 1556 1566 1576 1586: tree of 8adf0940 (top), first state (middle, 1564 for 1566), third state in work (bottom), draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T09:25:15.694Z",
-   "file": "20261125092515694-note-ar-cmp-dive.jpg",
-   "source": "../../../../tmp/v/sh/ar-cmp-dive.jpg",
-   "kind": "note",
-   "label": "dive 1290 1296 1308: tree of 8adf0940 (left), first state 86237abe (middle), third state in work (right), draft",
    "stop": "venus"
   }
  ]
