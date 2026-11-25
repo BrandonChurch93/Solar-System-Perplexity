@@ -454,6 +454,9 @@ export class Arcade {
    *  here, the light is the arcade's own times `wear` (the weight the far Sun gives all it wears of the stop), and a
    *  strand behind the ball gives no light (that pass draws no depth). time: the film's time in seconds. */
   draw(view: { time: number; camera: THREE.PerspectiveCamera; gain: number; vignette: number; aspect: number; height: number; wear: number }): void {
+    // whoever draws it here holds it on the body: the seat is taken here, so a holder that draws after the stop's own
+    // update has put the mesh back into the stop's group (the sky's pass of the travel out) finds it seated
+    this.seat(true)
     setFormat()
     // the holder's world matrix is taken as the holder left it (no parent is updated from here)
     this.mesh.updateMatrix()
