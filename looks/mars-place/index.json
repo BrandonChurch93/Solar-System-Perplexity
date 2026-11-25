@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T19:24:54.438Z",
- "head": "74dca6470c2b50a4c808c2f1d8995d032dd5b922",
- "note": "sky plate of the hold measured at 2325 final, held out by the letter of MAIL 1251",
+ "pushed": "2026-11-25T19:41:42.764Z",
+ "head": "f1d9217084f274313761854db08e637cea68c1c1",
+ "note": "ledge of C2: the prepared cure does not cure (bad pair shown); traced: 602 texels of L0 stand in front of L2's pushed back ground under C2",
  "looks": [
+  {
+   "time": "2026-11-25T19:41:42.087Z",
+   "file": "20261125194142087-note-crest-src.jpg",
+   "source": "out/work/place/c2s/crest-src.jpg",
+   "kind": "note",
+   "label": "the crest of C2 in the files: colour, alpha, distance of L2 before the cut, L2 now, C2, L0. L0 holds a near blob (9.2) under L2 that L2's pushed back fill (11.55) now stands behind",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T19:41:41.556Z",
+   "file": "20261125194141556-note-lay2477.jpg",
+   "source": "out/work/place/c2s/lay2477.jpg",
+   "kind": "note",
+   "label": "2477 times 8, beauty and layers: red wedge is L0 between L2 (yellow) and C2 (blue)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T19:41:41.029Z",
+   "file": "20261125194141029-note-e1.jpg",
+   "source": "out/work/place/c2s/e1.jpg",
+   "kind": "note",
+   "label": "trace of the ledge at 2477 times 8: the state, and L0 painted magenta in the box: the slab is L0 seen through L2",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T19:41:40.469Z",
+   "file": "20261125194140469-note-ledge-three.jpg",
+   "source": "out/work/place/c2s/ledge-three.jpg",
+   "kind": "note",
+   "label": "ledge of C2 at 2476, 2477, 2490 times 6: N1 before the cut, the state, the prepared cure (keeps only the nearest part): the dark slab stays, NOT cured, not committed",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T19:24:53.887Z",
    "file": "20261125192453887-note-pair-2325-sky-x4.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/place/w10/proof-d-plates.jpg",
    "kind": "note",
    "label": "MAIL 1034: the plates whole, state and take 10",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:16:46.628Z",
-   "file": "20261125191646628-note-proof-c-pairs.jpg",
-   "source": "out/work/place/w10/proof-c-pairs.jpg",
-   "kind": "note",
-   "label": "MAIL 1034: pairs at 2458 and 2688, state and take 10",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:16:46.077Z",
-   "file": "20261125191646077-note-proof-b-above.jpg",
-   "source": "out/work/place/w10/proof-b-above.jpg",
-   "kind": "note",
-   "label": "MAIL 1034: the same wall from above at 1 to 1, state and take 10",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:16:45.552Z",
-   "file": "20261125191645552-note-proof-a-2692-wall.jpg",
-   "source": "out/work/place/w10/proof-a-2692-wall.jpg",
-   "kind": "note",
-   "label": "MAIL 1034: wall crop of 2692 at 1 to 1, state and take 10",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T19:16:44.990Z",
-   "file": "20261125191644990-note-pairs-1247.jpg",
-   "source": "out/work/place/w10/pairs-1247.jpg",
-   "kind": "note",
-   "label": "MAIL 1247: the wall of v03-c in the film's eye, 2460 and 2697, state and take 10, draft, 1 to 1",
    "stop": "mars"
   }
  ]
