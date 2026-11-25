@@ -568,7 +568,12 @@ ${PLACE_GLSL}
         // them than uDiscFar.y times; in full when it has arrived, and in full on the line of sight of T (same), whose picture they are.
         float midFull = max(same, arrive);
         float midMost = mix(uDiscFar.y, uLiveLook.z, midFull);
-        vec3 inside = under * pow(clamp(midLum / lowLum, 1.0 / midMost, midMost), uLive.z * mix(uDiscFar.x, 1.0, midFull)) * pow(midHue, vec3(uLive.w));
+        // The globe's own forms under the level uShow.z stay on the place until the plates' of that size take their place (fineW), as
+        // they do outside the disc: without them the wide disc stood out of focus from the arrival of the place to the arrival of its
+        // fine forms (1284, 1290). Where the look of the hold stands the globe's forms between the two sizes are in that look, not
+        // in the map.
+        vec3 ownFine = pow(clamp(max(col, vec3(1e-5)) / max(under * mix(mapMid, vec3(1.0), held), vec3(1e-5)), vec3(1.0 / uLiveLook.z), vec3(uLiveLook.z)), vec3(1.0 - fineW));
+        vec3 inside = under * pow(clamp(midLum / lowLum, 1.0 / midMost, midMost), uLive.z * mix(uDiscFar.x, 1.0, midFull)) * pow(midHue, vec3(uLive.w)) * ownFine;
         vec3 above = mix(outside, inside, inner) * fineForms * uLiveLook.x;
         float aboveForms = max(dot(above, vec3(0.2126, 0.7152, 0.0722)), 1e-5) / max(dot(under, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
         seen *= clamp(aboveForms * lowLum / ownLum, 1.0 / uLiveLook.z, uLiveLook.z);
