@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T21:03:30.159Z",
- "head": "ec5a85d2f230ff34622454cdc75c9ddb37e1dd9d",
- "note": "rise of the proof read (level step 0.13, pop 1.2173 at 3874, pattern 0.35, d312 1.73); dive of the proof renders; rigid rings and the lens law are built in a trial copy",
+ "pushed": "2026-11-25T21:30:00.990Z",
+ "head": "b876dbf06f2094aa6cb56a97f0f4b751e7cf7855",
+ "note": "rigid body trial: lens law of the dive built and checked by geometry, ring edge reader written (model in the rise reads 0.1 px from true circles); proof of the tree still runs, no render yet",
  "looks": [
+  {
+   "time": "2026-11-25T21:29:54.866Z",
+   "file": "20261125212954866-note-holdmap.jpg",
+   "source": "../../../../tmp/v/rigid/light/holdmap.png",
+   "kind": "note",
+   "label": "saturn hold light map as a gain in stops (study for the rigid body: what the hold light is made of)"
+  },
   {
    "time": "2026-11-25T21:03:28.974Z",
    "file": "20261125210328974-note-approved_hero_true_circles_3465.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/g17/f1_a.png",
    "kind": "note",
    "label": "3720 lower left, A ring: approved, no sheet without the term, the fitted amplitude (1.6 at 2.23 and 2.29)"
-  },
-  {
-   "time": "2026-11-25T20:29:23.276Z",
-   "file": "20261125202923276-note-masks_pair.jpg",
-   "source": "../../../../tmp/v/g17/masks_pair.png",
-   "kind": "note",
-   "label": "3720: the two parts set apart by d323 (red: band 0 to 6 N, blue: plane inward of the rim) on the approved image and on the tree"
   }
  ]
 }
