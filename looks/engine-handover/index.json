@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T10:07:53.685Z",
- "head": "66a1302f65cf5b3ded1e27eab6ab4cbef621cf19",
- "note": "commit 4 (the measure reads the twin's globe, list empty) written, plans and shots byte equal, suite running; Mars trial rows",
+ "pushed": "2026-11-25T10:28:30.358Z",
+ "head": "dfe0aa905683a93feed947cdf6915379e7b01757",
+ "note": "draft frames by hash on commit 4 and on the naming commit are rendering, 54 frames each, beside the whole suite on the naming tree",
  "looks": [
+  {
+   "time": "2026-11-25T10:28:28.061Z",
+   "file": "20261125102828061-note-c4-draft-merc-a.jpg",
+   "source": "../../../../tmp/law/c4-draft-merc-a.png",
+   "kind": "note",
+   "label": "Mercury draft frames 744, 759, 760, 761, 765, 766 on commit 4 of the measure law (dfe0aa90), the base of the hash list for the naming commit"
+  },
   {
    "time": "2026-11-25T10:07:52.217Z",
    "file": "20261125100752217-note-m-rise-in-c.jpg",
@@ -52,13 +59,6 @@
    "source": "out/work/blur/bx-review/f03027.png",
    "kind": "note",
    "label": "Jupiter 3027 review, box shutter, 70 samples (take state 7e3da15a), the row for the queued table"
-  },
-  {
-   "time": "2026-11-25T07:41:56.986Z",
-   "file": "20261125074156986-note-ma-2427-pair-1x.jpg",
-   "source": "../../../../tmp/law/dots/ma-2427-pair-1x.png",
-   "kind": "note",
-   "label": "Mars 2427 review (49 samples, 29.0 px), x 1200..1920 y 600..1080 at 1 to 1: box, ends 0.5 (scratch). The painted strokes become land in motion, cliffs and ridges keep their shape"
   }
  ]
 }
