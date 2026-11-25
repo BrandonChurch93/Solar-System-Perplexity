@@ -801,3 +801,28 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   percentiles before: 0.227 0.443 0.616 0.765 0.882 0.918). Sheet chain started 19:09 (v/sheet.sh u1).
   STILL WRONG, seen: matte, no silk on the flanks, crowns not hot enough against the flanks, lanes lack the dark
   pits where three cells meet, cells read as gourds or shells more than as melt.
+- 19:26 UTC, THE TUBES' FIRST SHEET mailed (u1, commit c1b54b2b, not named). MEASURED on u1: frame 90 near
+  percentiles 0.231 0.412 0.584 0.761 0.910 0.961; ruler at 60 draft 35.4393 | 11.2726 | 45.7965; flicker
+  (flicker.py, box 100 790 460 290, disc 26 px) largest 0.158, median 0.080, 3 of 8 over a tenth; with a disc of
+  45 px largest 0.071, of 60 px 0.091, none over a tenth: the 0.158 is the swells riding through a small disc,
+  not the cell's mean. Band (band.ts, band.py, frames 221 to 222): share steps 0.0316 a frame, largest change of a
+  fixed place 5.84 levels, 99th percentile of places 3.35; the band's swing at a place is up to 183 levels (99th
+  percentile 88), so 2 levels cannot be met at the top places by any law over 90 frames (a straight line in time
+  gives 2.0). Asked the Builder to rule.
+  THE FACE (MAIL 1258 point 3), MEASURED on my branch at 250, 262, 360 (1920 by 1080): from about 256 nothing of
+  my ground is drawn (far.away 2.0 to 3.0 radii; at 269 the eye is 3.57 radii up); the face is the globe's own
+  map (the painting), strongest period 23 px, smallest bright blobs 3 to 8 px, globe radius 450 px. CORRECTION:
+  nothing on my branch loads my baked level (place.json plates.levels is empty); what came over the living cells
+  at 221 to 229 on d7 and d8 was the standing globe's own place (the standing ground's plates on the ball), not my
+  far twin. If sun_builder's globe shows my baked level at the hold, a cell of it (0.07 to 0.2 units) is 1.5 to
+  4.4 px at the disc's middle (by geometry, unmeasured). The baked level is d7's, not rebaked.
+  MESH (stated): near cells (over 70 px) 96 sectors, 10 to 16 a tube; a tube of 15 px belongs to a cell of 29 to
+  48 px, second level, 40 sectors, 4 to 7 facets a tube, relief faded there by tubes.px [20, 48].
+- 19:27 to 19:40 UTC, u2 to u5 (in the tree). u2: fibre.along [0.5, 0.8, 1.2] (the threads were short dashes
+  because their pattern changed 2.5 to 6 times along the run: now strands from crown to lane), tubes.silk
+  [0.15, 0.6], pits where three cells meet (dome.base[7], [8]: the border's height falls by 0.8 where the cell's
+  corner measure is over 0.6), heat.fold [0.5, 0.7], heat.core 1.2, rim 0.3: silk on the flanks, hot crowns, reads
+  as glossy umbrellas. u3: heat.wide 1.8, stray 0.8 (hot patches off the middle): uneven, nearer the approved.
+  u4 = u3 with the curve refit. u5: silk [0.3, 0.75], tubes.from [0.3, 0.7], crown 0.1, dome.height 0.42, cushion
+  exponents 2.0, 1.4: broad flatter cushions with smooth mottled tops and streaked flanks: BEST SO FAR
+  (v/strip-u5.jpg). Frame 90 near percentiles u5: 0.227 0.376 0.569 0.749 0.894 0.953 (curve of u4).

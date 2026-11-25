@@ -369,7 +369,7 @@ vec3 dome(vec3 s) {
 #if ${CU ? 1 : 0}
   // every body stands on the height of the place at its own border (a field of the place, the same for both sides),
   // so two neighbours meet on their border and no body lies over another's ground
-  float base = ${CU ? CU[0]!.toFixed(4) : '0.0'} * (1.0 + ${CU ? CU[1]!.toFixed(2) : '0.0'} * (vn(place * ${CU ? CU[2]!.toFixed(1) : '1.0'} + 51.0) - 0.5) + ${CU ? CU[3]!.toFixed(2) : '0.0'} * labJoin(place)) * low;
+  float base = ${CU ? CU[0]!.toFixed(4) : '0.0'} * (1.0 + ${CU ? CU[1]!.toFixed(2) : '0.0'} * (vn(place * ${CU ? CU[2]!.toFixed(1) : '1.0'} + 51.0) - 0.5) + ${CU ? CU[3]!.toFixed(2) : '0.0'} * labJoin(place)) * (1.0 - ${CU ? (CU[7] ?? 0).toFixed(2) : '0.0'} * smoothstep(${CU ? (CU[8] ?? 0.7).toFixed(2) : '0.7'}, 1.0, corner)) * low;
   float shape = pow(max(1.0 - pow(min(edge, 1.0), ${CU ? CU[4]!.toFixed(2) : '2.0'}), 0.0), ${CU ? (1 / CU[5]!).toFixed(4) : '0.5'}) * (1.0 - uLabMore.y * groove);
 #if ${T.on ? 1 : 0}
   float run = -${lab.fibre.slow.toFixed(2)} * log(1.0 - min(rho, ${(lab.fibre.slow * 0.95).toFixed(3)}) / ${lab.fibre.slow.toFixed(2)});
