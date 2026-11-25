@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T21:01:22.040Z",
+ "pushed": "2026-11-25T21:22:57.242Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests: first drafts of the cure. The teeth crest is cured at 2668 and 2672; four small faults found (pixels at the cut, crumbs at 2477, a wall between close crests, the under sheet past a rim); reworking the cut. The second half of the five judged finals renders",
+ "note": "crests v4: distance cut, two lines a pixel apart, crests named by points; tests green, finals second half rendering",
  "looks": [
+  {
+   "time": "2026-11-25T21:22:56.364Z",
+   "file": "20261125212256364-note-ov4-at2.jpg",
+   "source": "../../../../tmp/crest/ov4-at2.png",
+   "kind": "note",
+   "label": "design (c) rework: the same crest named by two points (the new key at), the neighbours stay the mesh's wall; the gap at 1643..1671 is a third bit of ramp that is not named"
+  },
+  {
+   "time": "2026-11-25T21:22:55.188Z",
+   "file": "20261125212255188-note-ov3-teeth.jpg",
+   "source": "../../../../tmp/crest/ov3-teeth.png",
+   "kind": "note",
+   "label": "design (c) rework: Mars L1 map around the teeth crest, left the paint, right every ramp found on the whole layer (green near half, red far half, white the cut, yellow cells drawn as sheets, cyan cells with the far sheet under): three crests within a few cells, the cut lines between them are the zigzag fault"
+  },
   {
    "time": "2026-11-25T21:01:21.074Z",
    "file": "20261125210121074-note-q-2580-pts-1.jpg",
@@ -45,20 +59,6 @@
    "source": "../t-c2a/out/work/blur/fin5-c3/f02476.png",
    "kind": "note",
    "label": "Mars 2476 final tier, the law by the fragment (4bae298b with the cut and the shutter's ends, the fitted numbers by scratch): first half of the five judged finals"
-  },
-  {
-   "time": "2026-11-25T20:23:02.713Z",
-   "file": "20261125202302713-note-f02580.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-c3/f02580.png",
-   "kind": "note",
-   "label": "Mars 2580 at the final tier (16 samples), the law by the fragment"
-  },
-  {
-   "time": "2026-11-25T20:23:01.782Z",
-   "file": "20261125202301782-note-f02668.jpg",
-   "source": "../t-c2a/out/work/blur/fin5-c3/f02668.png",
-   "kind": "note",
-   "label": "Mars 2668 at the final tier (16 samples), the law by the fragment"
   }
  ]
 }
