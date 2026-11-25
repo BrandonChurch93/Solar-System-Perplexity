@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T20:09:29.462Z",
- "head": "965f6227d4a3b8d7081bcd60867eb5fbdd6fb408",
- "note": "d323: no sheet, the rings' shadow in full at the hold, the ringlets' amplitude by radius being fit at 3720",
+ "pushed": "2026-11-25T20:29:26.678Z",
+ "head": "17aa7329cffa8bf5de7f8b6dabd80d43759d6d3e",
+ "note": "tree 17aa732 under proof: no sheet, ringlets' amplitude fit (G17 1.0022 against main 0.9739), shadow in full at the hold; rise and dive rendering",
  "looks": [
+  {
+   "time": "2026-11-25T20:29:25.211Z",
+   "file": "20261125202925211-note-final_3720.jpg",
+   "source": "../../../../tmp/v/g17/f2/final_3720.png",
+   "kind": "note",
+   "label": "3720 final on the tree under proof: no sheet, amplitude by radius; 28.5419, G17 1.0022"
+  },
+  {
+   "time": "2026-11-25T20:29:24.332Z",
+   "file": "20261125202924332-note-f1_a.jpg",
+   "source": "../../../../tmp/v/g17/f1_a.png",
+   "kind": "note",
+   "label": "3720 lower left, A ring: approved, no sheet without the term, the fitted amplitude (1.6 at 2.23 and 2.29)"
+  },
+  {
+   "time": "2026-11-25T20:29:23.276Z",
+   "file": "20261125202923276-note-masks_pair.jpg",
+   "source": "../../../../tmp/v/g17/masks_pair.png",
+   "kind": "note",
+   "label": "3720: the two parts set apart by d323 (red: band 0 to 6 N, blue: plane inward of the rim) on the approved image and on the tree"
+  },
   {
    "time": "2026-11-25T20:09:28.586Z",
    "file": "20261125200928586-note-u13_left.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/cure/b_d0_3720.png",
    "kind": "note",
    "label": "3720 final at the foot: dark sheet 0.05, no sheet, approved"
-  },
-  {
-   "time": "2026-11-25T19:38:06.086Z",
-   "file": "20261125193806086-note-foot3.jpg",
-   "source": "../../../../tmp/v/cure/foot3.png",
-   "kind": "note",
-   "label": "3720 at the globe's foot, full size: approved, main, working tree"
-  },
-  {
-   "time": "2026-11-25T19:38:04.807Z",
-   "file": "20261125193804807-note-rule_hold.jpg",
-   "source": "../../../../tmp/v/cure/rule_hold.png",
-   "kind": "note",
-   "label": "hold 3465 final, the gap at 4 times: hero, main 4.7807, dark sheet 4.7784, no sheet 4.7768, bright sheet 4.9556"
-  },
-  {
-   "time": "2026-11-25T19:38:03.581Z",
-   "file": "20261125193803581-note-rule_skim.jpg",
-   "source": "../../../../tmp/v/cure/rule_skim.png",
-   "kind": "note",
-   "label": "3720 final: approved, main 27.80, dark sheet 28.05, bright sheet 27.79 (the table for the ruling)"
   }
  ]
 }
