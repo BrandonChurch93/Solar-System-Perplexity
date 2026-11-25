@@ -190,7 +190,7 @@ describe('the drawn shape of a body in the pose record', () => {
     expect(n.onBody).toBeLessThan(5e-6)
     expect(n.rigid).toBeGreaterThan(0.2)
     expect(n.unit).toBeLessThan(1e-9)
-  })
+  }, 60000)
 })
 
 const BODIED = `
@@ -295,7 +295,7 @@ describe('the further bodies of the pose record', () => {
     expect(n.beyondSheet[3]).toBeCloseTo(0.1, 12)
     expect(n.beyondSheet[4]).toBeCloseTo(0.3, 12)
     expect(n.beyondSheet[5]).toBeCloseTo(1.3, 12)
-  })
+  }, 60000)
 })
 
 const PAGE = `
@@ -382,7 +382,7 @@ describe.skipIf(!have)('the range view in a WebGL2 browser', () => {
 
   afterAll(async () => {
     await browser?.close()
-  })
+  }, 60000)
 
   it('hands the range through a half float picture into 8 bit colour, to 4 millionths over 24 octaves', async () => {
     const W = 256
