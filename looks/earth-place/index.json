@@ -1,9 +1,49 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T21:40:49.544Z",
+ "pushed": "2026-11-25T22:22:02.541Z",
  "head": "20ad27c24dd51c774c597e4cb2670ddfd97bf087",
- "note": "veil take back as a share of the texel applied in code (not baked yet); field outside the canvas being rebuilt from the canvas's own bodies; nothing proved yet",
+ "note": "second strip: field of the canvas's own bodies stands, sown dots gone; still red: rim tone too dark outside, pale wedge at the corner, shadows cut at the rim",
  "looks": [
+  {
+   "time": "2026-11-25T22:22:01.918Z",
+   "file": "20261125222201918-note-bk-near2.jpg",
+   "source": "../../../../tmp/gl/k19/bk-near2.jpg",
+   "kind": "note",
+   "label": "plate at 1 to 1 at the canvas corner: pale wedge from the cloud at the rim",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T22:22:01.336Z",
+   "file": "20261125222201336-note-bk-near1.jpg",
+   "source": "../../../../tmp/gl/k19/bk-near1.jpg",
+   "kind": "note",
+   "label": "plate at 1 to 1 along the near rim: outside too dark, three pale smudges",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T22:22:00.781Z",
+   "file": "20261125222200781-note-crop-1890-first.jpg",
+   "source": "../../../../tmp/gl/k19/S2/sheets/crop-1890-first.jpg",
+   "kind": "note",
+   "label": "1890 lower border at 1 to 1, first strip (sown dots)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T22:22:00.216Z",
+   "file": "20261125222200216-note-crop-1890-now.jpg",
+   "source": "../../../../tmp/gl/k19/S2/sheets/crop-1890-now.jpg",
+   "kind": "note",
+   "label": "1890 lower border at 1 to 1, now",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T22:21:59.356Z",
+   "file": "20261125222159356-note-now-1890.jpg",
+   "source": "../../../../tmp/gl/k19/S2/sheets/now-1890.jpg",
+   "kind": "note",
+   "label": "second strip 1890 draft, field from the canvas's own bodies",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T21:40:48.650Z",
    "file": "20261125214048650-note-canvas-source.jpg",
@@ -33,52 +73,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T21:24:23.143Z",
-   "file": "20261125212423143-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T21:14:05.501Z",
-   "file": "20261125211405501-note-look.jpg",
-   "source": "../../../../tmp/gl/k18/C1/look.jpg",
-   "kind": "note",
-   "label": "control: close ground off, as is, difference x4 blurred 12 px, 1866 to 1898 every eighth",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T21:14:04.922Z",
-   "file": "20261125211404922-note-pair-1894.jpg",
-   "source": "../../../../tmp/gl/k18/S1/sheets/pair-1894.jpg",
-   "kind": "note",
-   "label": "first strip of the cure 1894 and next, draft, shutter closed: left 20ad27c2, right ground carried round the canvas and the ground taking the plate's glint and residue law",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T21:14:04.261Z",
-   "file": "20261125211404261-note-pair-1886.jpg",
-   "source": "../../../../tmp/gl/k18/S1/sheets/pair-1886.jpg",
-   "kind": "note",
-   "label": "first strip of the cure 1886 and next, draft, shutter closed: left 20ad27c2, right ground carried round the canvas and the ground taking the plate's glint and residue law",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T21:14:03.517Z",
-   "file": "20261125211403517-note-pair-1878.jpg",
-   "source": "../../../../tmp/gl/k18/S1/sheets/pair-1878.jpg",
-   "kind": "note",
-   "label": "first strip of the cure 1878 and next, draft, shutter closed: left 20ad27c2, right ground carried round the canvas and the ground taking the plate's glint and residue law",
-   "stop": "earth"
   }
  ]
 }
