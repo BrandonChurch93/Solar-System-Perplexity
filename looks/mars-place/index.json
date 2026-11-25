@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T13:19:17.412Z",
+ "pushed": "2026-11-25T13:41:31.475Z",
  "head": "5e92bb49042763ee024e693a75e36df8172de9b8",
- "note": "N1 named 5e92bb49: plates carry the picture's ground from above; chunks of all frames, pair 2692, web frames",
+ "note": "MAIL 1104: sheet cut at four crests, 2668 crest 5 jumps to 2, rms 2.00 to 0.76; trial, proof running",
  "looks": [
+  {
+   "time": "2026-11-25T13:41:29.457Z",
+   "file": "20261125134129457-note-pairA-2668.jpg",
+   "source": "out/work/place/saw/pairA-2668.jpg",
+   "kind": "note",
+   "label": "cut trial: draft 2668 whole, above state, below cut",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T13:41:27.252Z",
+   "file": "20261125134127252-note-cuts-sheet.jpg",
+   "source": "out/work/place/saw/src/cuts-sheet.jpg",
+   "kind": "note",
+   "label": "cut trial: the four cut layers, alpha and distances",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T13:41:25.187Z",
+   "file": "20261125134125187-note-k3-2678-crop.jpg",
+   "source": "out/work/place/saw/k3-2678-crop.png",
+   "kind": "note",
+   "label": "cut trial: draft 2678 crop x 480..960 y 440..760 times 3, the frame of largest parallax",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T13:41:22.952Z",
+   "file": "20261125134122952-note-pairA-2668-crop.jpg",
+   "source": "out/work/place/saw/pairA-2668-crop.png",
+   "kind": "note",
+   "label": "MAIL 1104 cut trial: draft 2668 crop x 560..900 y 500..760 times 3, left state 5e92bb49, right sheet cut at the crests (uncommitted)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T13:19:16.811Z",
    "file": "20261125131916811-note-web-2697.jpg",
@@ -35,41 +67,6 @@
    "kind": "note",
    "label": "N1 chunk-3, named 5e92bb49",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:19:14.498Z",
-   "file": "20261125131914498-note-chunk-2.jpg",
-   "source": "out/work/place/n1/chunk-2.jpg",
-   "kind": "note",
-   "label": "N1 chunk-2, named 5e92bb49",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:19:13.916Z",
-   "file": "20261125131913916-note-chunk-1.jpg",
-   "source": "out/work/place/n1/chunk-1.jpg",
-   "kind": "note",
-   "label": "N1 chunk-1, named 5e92bb49",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:19:13.308Z",
-   "file": "20261125131913308-note-chunk-0.jpg",
-   "source": "out/work/place/n1/chunk-0.jpg",
-   "kind": "note",
-   "label": "N1 chunk-0, named 5e92bb49",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T13:18:15.286Z",
-   "file": "20261125131815286-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
   }
  ]
 }
