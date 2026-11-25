@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T15:33:53.262Z",
+ "pushed": "2026-11-25T16:08:33.965Z",
  "head": "ee85a184d8a313eb38a35279d32380d71b2b5634",
- "note": "15:35 UTC, tree ee85a184 (eccae657 ground joined, one sky, sky turn by height, on main baf5473f), harness reading 380 to 470 running. Frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145 (df86: 0.089). 360 final same bytes as f906d2ec, match 11.9804.",
+ "note": "16:08 UTC, tree ee85a184 plus one line in arcs.ts (draw seats the arcade), test chain running. Harness reading of captures 380 to 470 (rise, pictures, draft, film size): green, pattern largest 0.31 at capture 438, pop 1.02, level step 0.11, pop of one block 3.22 at capture 469 (shown). Frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145.",
  "looks": [
+  {
+   "time": "2026-11-25T16:08:32.799Z",
+   "file": "20261125160832799-note-h1-c.jpg",
+   "source": "../../../../tmp/v/h1-c.jpg",
+   "kind": "note",
+   "label": "218 to 221 + 1/2 at every capture: the dense stars and the first rays come in",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:08:31.703Z",
+   "file": "20261125160831703-note-h1-b.jpg",
+   "source": "../../../../tmp/v/h1-b.jpg",
+   "kind": "note",
+   "label": "way up 236, 241, 243 + 1/2, the same frames",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T16:08:30.651Z",
+   "file": "20261125160830651-note-h1-a.jpg",
+   "source": "../../../../tmp/v/h1-a.jpg",
+   "kind": "note",
+   "label": "way up 196 to 231 every 5th, the harness's own draft frames at film size, eccae657 ground on main baf5473f",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T15:33:52.396Z",
    "file": "20261125153352396-note-r3-stills.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/ga-a.jpg",
    "kind": "note",
    "label": "corona sheet a: rays and prominences at full share at every height, 196 to 231 (not drawn before the change of view at 205)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:33:48.303Z",
-   "file": "20261125153348303-note-c1-sky.jpg",
-   "source": "../../../../tmp/v/c1-sky.jpg",
-   "kind": "note",
-   "label": "sky turn by the clock (above) and by the eye's height (below), 221 to 256, preview",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:33:47.229Z",
-   "file": "20261125153347229-note-w2-b.jpg",
-   "source": "../../../../tmp/v/w2-b.jpg",
-   "kind": "note",
-   "label": "way up 236 to 261, the lab's df86 ground (trial), draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T15:33:46.514Z",
-   "file": "20261125153346514-note-w2-a.jpg",
-   "source": "../../../../tmp/v/w2-a.jpg",
-   "kind": "note",
-   "label": "way up 196 to 231, the lab's df86 ground (trial), draft",
    "stop": "sun"
   }
  ]
