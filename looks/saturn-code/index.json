@@ -1,9 +1,24 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-24T23:47:32.378Z",
+ "pushed": "2026-11-25T00:14:50.047Z",
  "head": "38591789c340058ad8cc55ca9d84ae3550aa9336",
- "note": "d253: frame factor on every ring level and feather counted in pixels (13 places); 3612 size pair 2.47 to 1.63, cells over 12: 55 to 0; 1920 bytes equal; whole proof r56 runs on this tree",
+ "note": "rise red by 0.01 on the tree of 23:46 (the dust at the globe's foot); the same states now over 48 frames in place of 38; proof r57 runs",
  "looks": [
+  {
+   "time": "2026-11-25T00:14:49.345Z",
+   "file": "20261125001449345-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r56a/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "report sheet of the rise on the tree of 23:46: RED, pattern 0.46 from 3801 + 1/2 (limit 0.45), the dust band in front of the globe's foot thinning by height",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T00:14:48.615Z",
+   "file": "20261125001448615-note-st1_foot3.jpg",
+   "source": "../../../../tmp/v/t21/st1_foot3.png",
+   "kind": "note",
+   "label": "3720 the foot at 1 to 1, x 900 to 1540, y 480 to 880, draft, no grain: approved, the tree of 23:46 (dust whole), the tree of 00:14 (dust at 0.65 of its depth at this height): far from the approved's dark ringlets in both"
+  },
   {
    "time": "2026-11-24T23:47:31.191Z",
    "file": "20261124234731191-note-e3567_sets.jpg",
@@ -45,21 +60,6 @@
    "source": "../../../../tmp/v/t21/dk1_whole.png",
    "kind": "note",
    "label": "3720 beside the approved (left), draft, no grain: the dust inside the inner rim dark (inner.light 0.3 and 0.12 where it was 0.9 and 0.7), half size"
-  },
-  {
-   "time": "2026-11-24T23:24:01.430Z",
-   "file": "20261124232401430-note-final_3720.jpg",
-   "source": "../../../../tmp/v/r55/final_3720.png",
-   "kind": "note",
-   "label": "3720 at the final tier, tree of 22:32 on main 7026711, sha ee1aec39, same bytes as the frame of 21:02; the inner zone is still pale where the approved is dark"
-  },
-  {
-   "time": "2026-11-24T23:24:00.817Z",
-   "file": "20261124232400817-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r55/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "report sheet of the dive on main 7026711 plus the tree of 22:32: green, pattern 0.33 at 3576",
-   "stop": "saturn"
   }
  ]
 }
