@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T16:47:21.858Z",
+ "pushed": "2026-11-25T17:16:25.881Z",
  "head": "0a7289553e74c4c80ebd6bdb63fd3a53051bdfa3",
- "note": "the hero's ring crater laid into the place's ground; first try, ring too pale at 615, remake under way",
+ "note": "crater in the ground third form clean at 735; hold sky card border and hole laid again, stills rendering",
  "looks": [
+  {
+   "time": "2026-11-25T17:16:25.190Z",
+   "file": "20261125171625190-note-border-check.jpg",
+   "source": "out/work/mercury/border-check.jpg",
+   "kind": "note",
+   "label": "hold sky card lifted 6: before over after the border cure",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T17:16:24.519Z",
+   "file": "20261125171624519-note-cr3-735x3.jpg",
+   "source": "../../../../tmp/m/cr3-735x3.png",
+   "kind": "note",
+   "label": "735 at 3 times: 0.06 degrees, 0.02 degrees with specks, third form",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T17:16:23.831Z",
+   "file": "20261125171623831-note-cr3-dive.jpg",
+   "source": "../../../../tmp/m/cr3-dive.jpg",
+   "kind": "note",
+   "label": "the crater 717 725 735 745: first form over third form",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T17:16:22.938Z",
+   "file": "20261125171622938-note-cr3-615-x4.jpg",
+   "source": "../../../../tmp/m/cr3-615-x4.png",
+   "kind": "note",
+   "label": "615 at 4 times: approved, main, the crater in the ground third form",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T16:47:21.162Z",
    "file": "20261125164721162-note-cr1-615-x4.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/sw-mid.jpg",
    "kind": "note",
    "label": "take/ts1 with 9ee7de11: 745 (terrain sky's share 0.65) and 990 (0.48), the set's Sun part way between the far Sun and the terrain sky's",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T16:01:26.618Z",
-   "file": "20261125160126618-note-sw-rise.jpg",
-   "source": "../../../../tmp/m/sw-rise.jpg",
-   "kind": "note",
-   "label": "take/ts1 with 9ee7de11: 977 + 1/2 and 978 in the rise, the pillar at x 554 and 558",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T16:01:25.324Z",
-   "file": "20261125160125324-note-sw-dive.jpg",
-   "source": "../../../../tmp/m/sw-dive.jpg",
-   "kind": "note",
-   "label": "take/ts1 with 9ee7de11: 759 + 1/2 (high view, whole ride), 760 (low view), 760 + 1/2: the warm pillar on the horizon keeps its place across the change of view (peak of the top rows at x 579, 575, 570)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T15:43:19.327Z",
-   "file": "20261125154319327-note-ba-low.jpg",
-   "source": "../../../../tmp/m/ba-low.jpg",
-   "kind": "note",
-   "label": "low view 765 and 970 on take/ts1: main's ride, the first form with no ride, what changes times 8: the warm line on the horizon leaves the terrain sky's Sun, so the low view keeps the ride",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T15:43:18.207Z",
-   "file": "20261125154318207-note-sun-under-2x2.jpg",
-   "source": "../../../../tmp/m/sun-under-2x2.jpg",
-   "kind": "note",
-   "label": "MAIL 1151 (1): 717 and 1008 on take/ts1 with the small commit, lifted 6: top the far Sun as it is, bottom the far Sun's opacity at zero (the hole of the hold sky picture at 717, plain stars at 1008)",
    "stop": "mercury"
   }
  ]
