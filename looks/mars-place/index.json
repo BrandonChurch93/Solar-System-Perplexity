@@ -1,71 +1,77 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T05:47:05.775Z",
- "head": "7cebce4ca374ea450423aa4e609bb9ff140d48be",
- "note": "MAIL 913 first state, draft, beside NAMED 7cebce4c at native size: the plates are the takes alone in their painted light, toned by ground distance; the polygon, the smear and the slab are gone, the picture still stands as a dark island at 2448 to 2456 and its east side is a line at 2460 to 2468",
+ "pushed": "2026-11-25T06:01:50.456Z",
+ "head": "e53c76b7c4665de823eedefc42e53adc866351e7",
+ "note": "e53c76b7: takes in painted light toned by distance, cap light off; rise pairs, both sets at 2464 (web bad), bad ones in",
  "looks": [
   {
-   "time": "2026-11-25T05:45:04.934Z",
-   "file": "20261125054504934-note-look-2468.jpg",
-   "source": "out/work/place/eng58/look-2468.png",
+   "time": "2026-11-25T05:59:43.321Z",
+   "file": "20261125055943321-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T05:58:23.278Z",
+   "file": "20261125055823278-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T05:58:01.796Z",
+   "file": "20261125055801796-note-t-2676-2680.jpg",
+   "source": "out/work/place/eng58/t-2676-2680.jpg",
    "kind": "note",
-   "label": "2468 draft native: NAMED 7cebce4c left, MAIL 913 first state right (takes alone in their painted light, toned by ground distance, cap light own 0)",
+   "label": "2676 and 2680 halved: surface view, clean",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T05:45:03.524Z",
-   "file": "20261125054503524-note-look-2464.jpg",
-   "source": "out/work/place/eng58/look-2464.png",
+   "time": "2026-11-25T05:58:00.961Z",
+   "file": "20261125055800961-note-t-2704-2708.jpg",
+   "source": "out/work/place/eng58/t-2704-2708.jpg",
    "kind": "note",
-   "label": "2464 draft native: NAMED 7cebce4c left, MAIL 913 first state right (takes alone in their painted light, toned by ground distance, cap light own 0)",
+   "label": "rise 2704 and 2708 halved: sheet with a crack, glow at 2704",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T05:45:00.981Z",
-   "file": "20261125054500981-note-look-2460.jpg",
-   "source": "out/work/place/eng58/look-2460.png",
+   "time": "2026-11-25T05:58:00.071Z",
+   "file": "20261125055800071-note-n-2700-a.jpg",
+   "source": "out/work/place/eng58/n-2700-a.jpg",
    "kind": "note",
-   "label": "2460 draft native: NAMED 7cebce4c left, MAIL 913 first state right (takes alone in their painted light, toned by ground distance, cap light own 0)",
+   "label": "rise 2700 left half native: red glow top right, strokes, dark piece",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T05:44:58.116Z",
-   "file": "20261125054458116-note-look-2456.jpg",
-   "source": "out/work/place/eng58/look-2456.png",
+   "time": "2026-11-25T05:57:59.162Z",
+   "file": "20261125055759162-note-n-2692-a.jpg",
+   "source": "out/work/place/eng58/n-2692-a.jpg",
    "kind": "note",
-   "label": "2456 draft native: NAMED 7cebce4c left, MAIL 913 first state right (takes alone in their painted light, toned by ground distance, cap light own 0)",
+   "label": "rise 2692 left half native: strokes west of the picture (bad)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T05:20:31.881Z",
-   "file": "20261125052031881-note-g13-red.jpg",
-   "source": "out/work/place/see57/g13-red.jpg",
+   "time": "2026-11-25T05:57:58.293Z",
+   "file": "20261125055758293-note-n-2696-b.jpg",
+   "source": "out/work/place/eng58/n-2696-b.jpg",
    "kind": "note",
-   "label": "CORRECTION to the G13 label: soft is the green (under one texel a pixel): the lower left corner outside the square of 8.5 degrees (patch-19) at 2440 to 2448, the lower right at 2460 and 2684",
+   "label": "rise 2696 right half native: picture as dark piece with straight side in orange country (bad)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T05:19:56.237Z",
-   "file": "20261125051956237-note-g13-red.jpg",
-   "source": "out/work/place/see57/g13-red.jpg",
+   "time": "2026-11-25T05:57:57.556Z",
+   "file": "20261125055757556-note-n-2688-b.jpg",
+   "source": "out/work/place/eng58/n-2688-b.jpg",
    "kind": "note",
-   "label": "G13 texels at 2440, 2447, 2448, 2460: the soft ground (yellow) is the picture's own piece, not the cap",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:19:55.295Z",
-   "file": "20261125051955295-note-sets-2448.jpg",
-   "source": "out/work/place/see57/sets-2448.jpg",
-   "kind": "note",
-   "label": "d253 at 2448, 1080: full set, web set, difference times 4: the picture's piece is larger and soft in the web set. RED",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T05:19:54.392Z",
-   "file": "20261125051954392-note-sets-2464.jpg",
-   "source": "out/work/place/see57/sets-2464.jpg",
-   "kind": "note",
-   "label": "d253 at 2464, 1080: full set, web set, difference times 4: the web set shows the picture's near ground lower left, the full set does not. RED",
+   "label": "rise 2688 right half native: east line, soft block, stepped stripes, wedge top right (bad)",
    "stop": "mars"
   }
  ]
