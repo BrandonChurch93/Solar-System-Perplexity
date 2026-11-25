@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T07:20:28.850Z",
+ "pushed": "2026-11-25T07:46:30.329Z",
  "head": "da021335659e0efa1aafcc4ea362938b640121e3",
- "note": "proof of local commit da02133 runs: dive slice green, finals of the four judged frames drawn, rise slice drawing",
+ "note": "round 3: finding by layer what draws the two severe places (3567 gap, 3720 foot), first trial of the foot",
  "looks": [
+  {
+   "time": "2026-11-25T07:46:29.690Z",
+   "file": "20261125074629690-note-foot_pair_da.jpg",
+   "source": "../../../../tmp/v/x/foot_pair_da.png",
+   "kind": "note",
+   "label": "3720 foot at 1 to 1, final: approved over the local tree before the cure (band on the globe, globe through the dust, black strip)"
+  },
+  {
+   "time": "2026-11-25T07:46:29.094Z",
+   "file": "20261125074629094-note-t1_foot.jpg",
+   "source": "../../../../tmp/v/x/t1_foot.png",
+   "kind": "note",
+   "label": "3720 foot at 1 to 1, draft: approved over trial 1 (inner sheet deep enough to hide the globe, no band on the globe); shadow wedge and tone still open"
+  },
+  {
+   "time": "2026-11-25T07:46:28.484Z",
+   "file": "20261125074628484-note-gap4.jpg",
+   "source": "../../../../tmp/v/x/gap4.png",
+   "kind": "note",
+   "label": "3567 low right of the globe at 1 to 1: hero, my 3465, named tree 3567, local tree 3567 (the sky through the gap inside the rim, in the globe's shadow)"
+  },
   {
    "time": "2026-11-25T07:20:27.677Z",
    "file": "20261125072027677-note-r64_3866_gap_pair.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/x/r64_3720_under_ap.png",
    "kind": "note",
    "label": "3720 final of local commit da02133 (below) under the approved close image (above)"
-  },
-  {
-   "time": "2026-11-25T06:52:30.913Z",
-   "file": "20261125065230913-note-e1_night.jpg",
-   "source": "../../../../tmp/v/x/e1_night.png",
-   "kind": "note",
-   "label": "cure of the rise red, box 1440,700 to 1920,1000 lifted 4 times: 3819 before (lit dust over the night side), 3819 after (the dust in the globe's shadow returns no sunlight), 3827 after; slice of the rise then read 0.37 (limit 0.45)"
-  },
-  {
-   "time": "2026-11-25T06:37:38.374Z",
-   "file": "20261125063738374-note-limb_gap_lift.jpg",
-   "source": "../../../../tmp/v/x/limb_gap_lift.png",
-   "kind": "note",
-   "label": "item 4 sunlit limb over the inner ring gap at 3465, lifted: approved against the named tree (the dip of the glow outside the limb)"
-  },
-  {
-   "time": "2026-11-25T06:37:37.703Z",
-   "file": "20261125063737703-note-t6a.jpg",
-   "source": "../../../../tmp/v/moon/t6a.png",
-   "kind": "note",
-   "label": "item 4 moon, fit only, not yet rendered by the film: approved moon, candidate look t6a, difference"
   }
  ]
 }
