@@ -1,71 +1,71 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T04:22:39.341Z",
- "head": "cdc5d5151162ae9aeed19f33ebf17bc61f906375",
- "note": "relief way: state B (lean only on the painted globe) chosen over A (soft disc); B sweep renders",
+ "pushed": "2026-11-25T04:36:14.263Z",
+ "head": "9fc760b3bdbce8f547340e88ba97f39f45fa719f",
+ "note": "relief 9fc760b3 first picture: 700 to 760 and 985 to 1005 every 4th frame beside cdc5d515; frames between follow",
  "looks": [
+  {
+   "time": "2026-11-25T04:36:13.682Z",
+   "file": "20261125043613682-note-t717b.jpg",
+   "source": "../../../../tmp/m/t717b.png",
+   "kind": "note",
+   "label": "717 at the place: cdc5d515, state A (dropped), relief 9fc760b3",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T04:36:13.101Z",
+   "file": "20261125043613101-note-h615.jpg",
+   "source": "../../../../tmp/m/h615.png",
+   "kind": "note",
+   "label": "615 at the place: approved hero, cdc5d515, relief 9fc760b3, own pixels; 615 does not stay main's bytes inside the place (12052 px over 8 codes), ruling of MAIL 633 asked",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T04:36:12.542Z",
+   "file": "20261125043612542-note-fp-728-732.jpg",
+   "source": "../../../../tmp/m/fp-728-732.jpg",
+   "kind": "note",
+   "label": "728 and 732 larger: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T04:36:11.983Z",
+   "file": "20261125043611983-note-fp-720-724.jpg",
+   "source": "../../../../tmp/m/fp-720-724.jpg",
+   "kind": "note",
+   "label": "720 and 724 larger: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T04:36:11.244Z",
+   "file": "20261125043611244-note-fp-rise-p1.jpg",
+   "source": "../../../../tmp/m/fp-rise-p1.jpg",
+   "kind": "note",
+   "label": "rise 985 to 1005: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T04:36:10.657Z",
+   "file": "20261125043610657-note-fp-dive-p1b.jpg",
+   "source": "../../../../tmp/m/fp-dive-p1b.jpg",
+   "kind": "note",
+   "label": "dive 732 to 760: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T04:36:10.037Z",
+   "file": "20261125043610037-note-fp-dive-p1a.jpg",
+   "source": "../../../../tmp/m/fp-dive-p1a.jpg",
+   "kind": "note",
+   "label": "dive 700 to 728: left cdc5d515 (the commit batch 9 brings to main; origin/main 92c5f998 does not have it yet), right relief 9fc760b3; draft, master, full set, every 4th frame",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T04:22:26.484Z",
    "file": "20261125042226484-note-t1016.jpg",
    "source": "../../../../tmp/m/t1016.png",
    "kind": "note",
    "label": "relief way, 1016 crop 560,200 640x640: set law tree, state A (dropped), state B",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:22:25.220Z",
-   "file": "20261125042225220-note-t717b.jpg",
-   "source": "../../../../tmp/m/t717b.png",
-   "kind": "note",
-   "label": "relief way, 717 crop 700,380 480x480 at 1 to 1: cdc5d515 beside state B",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:22:23.935Z",
-   "file": "20261125042223935-note-t717.jpg",
-   "source": "../../../../tmp/m/t717.png",
-   "kind": "note",
-   "label": "relief way, 717 crop 600,300 640x640: cdc5d515, state A (dropped: soft disc), state B (lean only, chosen): the place's craters stand on the painted ground as shade, region a little darker",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:22:22.589Z",
-   "file": "20261125042222589-note-t615.jpg",
-   "source": "../../../../tmp/m/t615.png",
-   "kind": "note",
-   "label": "relief way, 615 crop 780,440 460x500 at 1 to 1: cdc5d515, state A (tone and lean, dropped: soft patch), state B (lean only, chosen). B changes 615 inside about 232 by 268 px: needs the ruling",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:03:34.348Z",
-   "file": "20261125040334348-note-p1434.jpg",
-   "source": "../../../../tmp/m/p1434.jpg",
-   "kind": "note",
-   "label": "relief way, first state: 717 whole frame, left cdc5d515, right relief",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:03:33.296Z",
-   "file": "20261125040333296-note-c1434.jpg",
-   "source": "../../../../tmp/m/c1434.png",
-   "kind": "note",
-   "label": "relief way, first state: 717 crop 560,280 720x680, left cdc5d515, right relief. Soft disc in the judged frame: a fault",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T04:03:31.838Z",
-   "file": "20261125040331838-note-c1230.jpg",
-   "source": "../../../../tmp/m/c1230.png",
-   "kind": "note",
-   "label": "relief way, first state (tone and lean on the globe at all times): 615 crop 780,440 460x500, left cdc5d515, right relief. The place shows as a soft patch: a fault",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T03:40:26.364Z",
-   "file": "20261125034026364-note-v-EI.jpg",
-   "source": "../../../../tmp/m/mail/v-EI.jpg",
-   "kind": "note",
-   "label": "717 limb crops E and I, b0 beside the set law commit, draft: the limb's bright line is in both (open, nothing done)",
    "stop": "mercury"
   }
  ]
