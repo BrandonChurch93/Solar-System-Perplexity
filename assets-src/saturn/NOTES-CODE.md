@@ -6878,3 +6878,57 @@ So in front of the lit globe all three looks cover by one law from the kept ring
 - Pair at full size /tmp/v/dark/pair_3720_n2.png: the name's foot is a clean gap (stars at the left, the globe
   down to the rim); the approved has translucent grey rings up to the globe and a dark band on it; main a brown
   veil. By eye the name is the emptiest of the three there. Named.
+
+## 17:11 to 17:20 UTC: main c92aad6 merged, main's own finals on the same engine
+
+- 17:12: notebook commit 8746c25, merge of main c92aad6 (PROGRESS alone) as 114ad7e9b0b699f187f1694da3b79ae97eb3e602,
+  pushed. The stop folder's tree is the one of 8c52928 (eddc0e16), so the proof of 8c52928 is the proof of
+  114ad7e. Net of my three folders against main: plus 0.210 MB.
+- MAIN'S OWN FINALS on engine c92aad6 (/tmp/v/dark/M0): 3465 4.7807, G17 median 1.0618 (sha e7921a64, not the
+  bytes of the engine before, 4077873a, the number the same); 3720 27.7989, G17 median 0.9739 (sha 7b9a7195).
+- 3465, the name against main (split65.py): whole 4.7784 against 4.7807, -0.0023: gap in front of the lit
+  globe -0.0011, in front of the dark globe +0.0000, gap against the sky -0.0006, outside the box -0.0009.
+  Levels (holdgap.py): gap core 31.4 (main 31.5), lit globe behind the gap 163.7 (main 167.5).
+- 3720 by region, part of the whole frame's number, main then the name (reg3.py, both finals of this engine):
+  band 0 to 6 N 2.9888, 3.3748; thin sheet 2.7194, 3.3536 (before the globe 2.3182, 2.9436; against the sky
+  0.4012, 0.4100); rest 22.0907, 21.8907; whole 27.7989, 28.6192. Levels in the thin sheet: approved 166.7,
+  main 86.5, the name 97.6; in the band: approved 116.7, main 63.6, the name 107.9.
+- Looks pushed 17:19 (the pair, the hold panel, the two finals). Next due by 17:49.
+- The proof goes on: rise (frames from k 7580), then G13, gate, parity, dive, path, handover, place.
+
+## 17:20 to 17:53 UTC: the rise of 114ad7e, the measure of d312 is NOT met, the cure is built as a model
+
+- RISE PART of the tree (draft, rate 2, 230 frames, main's engine c92aad6 with this stop folder; frames kept
+  in mainref/out/work/smooth/saturn/frames/k{2*frame:06d}-r2-draft.png): RED on one number: pop 1.21 at
+  3873 + 1/2 and 3874, 1.203 at 3874 + 1/2 (limit 1.2): the stars at the rise's end, the place of MAIL 1045, at
+  share 0; the engine before read 1.197 for my tree. Main's own rise on this engine is not run. Level step 0.13
+  at 3896 (limit 1.3), pattern 0.38 from 3829 + 1/2 (limit 0.45). Report in /tmp/v/n2/saturn-rise.md.
+- THE MEASURE OF d312 (seq2.py: the same places of the body, cells of 2 degrees of latitude by 0.02 of the
+  Sun's cosine that are seen in both frames, population held; rise 3792 to 3868, every film frame): largest
+  2.82 levels a frame at 8 to 16 N, cosine -0.14 to -0.10, frame 3819 to 3820; 2.50 at 16 to 26 N, -0.10, 3821;
+  2.44 at 26 to 40 N, -0.06, 3823; pooled 8 to 40 N 2.15 at 3821. 3830 against 3838 as the mean of the 8 frames:
+  1.73 pooled, 1.53, 1.78, 2.10 by band; largest single frame there 2.35 (26 to 40 N, -0.06, 3831 to 3832).
+  From 3871 on the levels fall with share 0 (the departure), so the range ends at 3868.
+- CAUSE, measured (resp.py to resp_rise.json): the level on screen answers the share along a bent curve. At
+  8 to 16 N, cosine -0.14, by the state (0 the skim, 1 the hold): 28.1, 40.7 at 0.051, 61.1 at 0.162, 84.5 at
+  0.35, 95.9 at 0.5, 105 at 0.71, 109.3 at 1: 41 percent of 81 levels in the first 16 percent. At 26 to 40 N,
+  -0.06: 17.5 to 108.3, nearly straight. The eased line has no slope at the skim's end, the level has.
+- CURES TRIED IN THE MODEL (design.py, design2.py): a power or a log curve on the dusk's amount by the share
+  makes it worse, because the bins answer differently (one curve cannot straighten both). What works (pace.py):
+  keep every number a straight line by the one share and pace the STEP by height by the measured response on
+  the rise, the fastest passage, so that the fastest twilight bin moves evenly (kappa 0.6, ease 0.1 over the
+  rise's frames 3792.5 to 3863.9, 33 knots, /tmp/v/dark/pace_table.json). The model reads: rise 1.69, skim 1.68
+  (3797), dive 1.21; the tree by the same model: rise 2.83, skim 1.39, dive 1.58 (3608). Share by frame under
+  the table: 3567 0.0268, 3589 0.3785, 3601 0.5415, 3629 0.7818, 3660 0.8386, 3700 0.9566, 3720 1, 3760 1,
+  3800 0.9643, 3809 0.8952, 3819 0.7974, 3830 0.6506, 3838 0.5145, 3850 0.2606, 3866 0.
+- Rise looked at, every frame 3790 to 3843 (whole frame; the foot at full size 3803 to 3813), 3844 to 3872
+  every second: no frame where the scene changes; the terminator softens steadily; the outline of the globe
+  through the ring under the left limb 3803 to 3840 stands as before (named).
+- 17:43: WORD for 17:45 sent (what is missing: G13, gate, parity running; dive, path, handover, place, vitest,
+  the three finals by depth not run; the measure at 2.82 with its cause and the cure's plan).
+- 17:50: looks pushed (rise sheets). Next due by 18:20.
+- 17:52: main moved to faf2194 (PROGRESS alone, d313 to d316: nothing on Saturn). Merged for the name; the
+  picture path is the one of c92aad6, so the proof stands.
+- NEXT: the NAMED mail for 18:05; G13, gate, parity by mail when they end; then the paced share in grade.ts
+  (byHeight over light.body heights and share, the generator and the response in assets-src/saturn/code), its
+  proof, its name; then the three finals by depth, the rings' tone by radius under the one law, 1200 point 4.
