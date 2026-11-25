@@ -1552,3 +1552,6 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
 - Next (MAIL 913): the angles at 2454, 2460, 2468; the top down render of the one ground with the picture on it; the repaint
   with the image tool (media skill, at most 6 takes per asset per phase by the brief; MAIL 913 allows as much as it takes);
   the stretch measure; the borders; the air. Then every frame 2440 to 2476 and 2676 to 2710 at draft.
+- 05:27 main moved to 977ec0b3 (kit/PROGRESS.md alone): merged as 00ca3e32; the units of d99ec00a stand for it (no file of the
+  film or of a test changed). The NAMED commit is the one that holds this line. Net of the three folders against main with
+  it: said in the mail.
