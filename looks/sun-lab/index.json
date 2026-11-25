@@ -1,9 +1,47 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T09:39:52.893Z",
- "head": "faca211e6d2e3f23ebb2b88246d4f2e808b08d40",
- "note": "sun lab zze: mid gold tops, pit with a steep wall, life clip of zzd",
+ "pushed": "2026-11-25T10:22:28.633Z",
+ "head": "388a03f0e65909a174cbcf8be98389abf1c756e3",
+ "note": "state c4: heat without a lamp, funnel pit, threads",
  "looks": [
+  {
+   "time": "2026-11-25T10:22:28.083Z",
+   "file": "20261125102228083-note-c4-near.jpg",
+   "source": "../v/c4-near.jpg",
+   "kind": "note",
+   "label": "sun lab frame 90 state c4, near field, approved left",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T10:22:27.547Z",
+   "file": "20261125102227547-note-c4-spot.jpg",
+   "source": "../v/c4-spot.jpg",
+   "kind": "note",
+   "label": "sun lab frame 90 state c4, spot, approved left",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T10:22:26.970Z",
+   "file": "20261125102226970-note-lab-90-c4.jpg",
+   "source": "../v/lab-90-c4.jpg",
+   "kind": "note",
+   "label": "sun lab frame 90 state c4: no lamp, funnel pit with threads",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T10:21:40.238Z",
+   "file": "20261125102140238-frame-lab-90-c4.jpg",
+   "source": "out/work/sun/lab/lab-90-c4.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T09:39:52.289Z",
    "file": "20261125093952289-note-clip-zzd.mp4.jpg",
@@ -34,44 +72,6 @@
    "source": "out/work/sun/lab/pair-90-near.jpg",
    "kind": "note",
    "label": "sun lab state zze pair-90-near.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:37:02.371Z",
-   "file": "20261125093702371-frame-lab-90-zze.jpg",
-   "source": "out/work/sun/lab/lab-90-zze.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T09:14:33.477Z",
-   "file": "20261125091433477-note-lab-179-whole.jpg",
-   "source": "out/work/sun/lab/lab-179-whole.jpg",
-   "kind": "note",
-   "label": "sun lab state zzc/zzd lab-179-whole",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:14:32.912Z",
-   "file": "20261125091432912-note-lab-0-whole.jpg",
-   "source": "out/work/sun/lab/lab-0-whole.jpg",
-   "kind": "note",
-   "label": "sun lab state zzc/zzd lab-0-whole",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T09:14:32.318Z",
-   "file": "20261125091432318-note-rise-sheet.jpg",
-   "source": "out/work/sun/lab/rise-sheet.jpg",
-   "kind": "note",
-   "label": "sun lab state zzc/zzd rise-sheet",
    "stop": "sun"
   }
  ]
