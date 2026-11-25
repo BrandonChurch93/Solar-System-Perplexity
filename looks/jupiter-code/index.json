@@ -1,9 +1,113 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T04:50:04.688Z",
- "head": "e41572b266f5705f8b14f5f0895f6b5b8fa1f94a",
- "note": "04:50 UTC, e41572b: the rise of the tool's own frames 3240 to 3267 (still drawing, 3268 to 3339 follow); dive read red by the reader's carry (true map 0.67 at 3029, cause the air table by angle); chain goes on to the merge of main 5179b43",
+ "pushed": "2026-11-25T05:08:37.161Z",
+ "head": "e55f084ca0436489551bb69b2604e167fcff5c4a",
+ "note": "05:10 UTC: merge of main 64c4ccb at e55f084 (not pushed yet), path green on it, four draft frames equal by hash to e41572b; pictures report of the rise red (pattern 3246 + 1/2 to 3264, level 3287 + 1/2), true map says it is real; proofs still running",
  "looks": [
+  {
+   "time": "2026-11-25T05:08:32.567Z",
+   "file": "20261125050832567-note-pair-3150-final.jpg",
+   "source": "../work/r9/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final tier beside the approved close image",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:08:31.337Z",
+   "file": "20261125050831337-note-rise-sheet.jpg",
+   "source": "../work/r9/rise-sheet.jpg",
+   "kind": "note",
+   "label": "rise sheet 3250 3256 3262 3268 3274 3282 3296 draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:08:28.769Z",
+   "file": "20261125050828769-note-true-rise-3253h.jpg",
+   "source": "../work/r9/tm/true-rise-3253h.png",
+   "kind": "note",
+   "label": "rise 3253 + 1/2 against 8 frames later carried by the true surface, and the map of the change in place: lower left and the limb (red, named)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:08:22.301Z",
+   "file": "20261125050822301-note-rise-m.jpg",
+   "source": "../work/r9/rise-m.jpg",
+   "kind": "note",
+   "label": "after the rise 3324 to 3334 draft, every frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:08:20.864Z",
+   "file": "20261125050820864-note-rise-l.jpg",
+   "source": "../work/r9/rise-l.jpg",
+   "kind": "note",
+   "label": "after the rise 3316 to 3323 draft, every frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:08:20.169Z",
+   "file": "20261125050820169-note-rise-k.jpg",
+   "source": "../work/r9/rise-k.jpg",
+   "kind": "note",
+   "label": "rise 3308 to 3315 draft, every frame, commit e41572b (the merge e55f084 draws the same bytes at the four judged frames)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T05:05:48.606Z",
+   "file": "20261125050548606-frame-f3296.jpg",
+   "source": "out/work/jupiter/h6/f3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T05:05:15.079Z",
+   "file": "20261125050515079-frame-f3150.jpg",
+   "source": "out/work/jupiter/h6/f3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T05:04:37.596Z",
+   "file": "20261125050437596-frame-f2997.jpg",
+   "source": "out/work/jupiter/h6/f2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T05:04:03.688Z",
+   "file": "20261125050403688-frame-f2895.jpg",
+   "source": "out/work/jupiter/h6/f2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T04:49:53.149Z",
    "file": "20261125044953149-note-pair-3150-final.jpg",
@@ -115,110 +219,6 @@
    "kind": "note",
    "label": "dive 3040 to 3043, every frame, three quarter size",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:21:27.772Z",
-   "file": "20261125042127772-note-dive-g.jpg",
-   "source": "../work/r9/dive-g.jpg",
-   "kind": "note",
-   "label": "dive 3036 to 3039, every frame, three quarter size",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:21:21.674Z",
-   "file": "20261125042121674-note-ur-1.jpg",
-   "source": "../work/r9/ur-1.jpg",
-   "kind": "note",
-   "label": "dive, upper right at 1 to 1, 3027 to 3038 every frame: the band of the old plate fill is gone; left: the far belt under the limb turns olive grey, two skies join softly",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T04:21:20.096Z",
-   "file": "20261125042120096-note-dive-sheet.jpg",
-   "source": "../work/r9/dive-sheet.jpg",
-   "kind": "note",
-   "label": "dive sheet on e41572b, the tool's own draft frames: 2983, 2997, 3012, 3030, 3050, 3056",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:53:21.870Z",
-   "file": "20261125035321870-note-pair-3150-final.jpg",
-   "source": "../work/r9/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "frame 3150, final tier, commit e41572b (right) beside the approved close image (left); 410 pixels differ from the still before the plate changed, largest 4 levels",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:53:21.253Z",
-   "file": "20261125035321253-note-f3296-crop.jpg",
-   "source": "../work/r9/f3296-crop.png",
-   "kind": "note",
-   "label": "frame 3296 on commit e41572b, draft, 1 to 1: the place in the pale oval right of the red storm",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:53:20.585Z",
-   "file": "20261125035320585-note-pair-3296-draft.jpg",
-   "source": "../work/r9/pair-3296-draft.jpg",
-   "kind": "note",
-   "label": "judged frame 3296, draft: before the rise's pace was set again (left) and on commit e41572b (right); the camera stands lower at 3296 now",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T03:52:59.798Z",
-   "file": "20261125035259798-frame-f3012-uhd-web.jpg",
-   "source": "out/work/jupiter/d253c/f3012-uhd-web.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3012, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3012,
-   "tier": "draft",
-   "format": "uhd",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T03:50:03.204Z",
-   "file": "20261125035003204-frame-f3296.jpg",
-   "source": "out/work/jupiter/h5/f3296.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3296, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T03:49:31.301Z",
-   "file": "20261125034931301-frame-f3150.jpg",
-   "source": "out/work/jupiter/h5/f3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
-  },
-  {
-   "time": "2026-11-25T03:48:20.616Z",
-   "file": "20261125034820616-frame-f2895.jpg",
-   "source": "out/work/jupiter/h5/f2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "ee785742acc8b67e"
   }
  ]
 }
