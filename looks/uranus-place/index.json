@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T15:56:14.273Z",
- "head": "da6587c3cdb89d5e8f042233f66d7becef5b6d73",
- "note": "15:57 the table on the ground is not committed (late flight goes milky); the 17:00 name is the tops through the air: final 4290 match 3.225 against main 3.849, final 4035 main's bytes",
+ "pushed": "2026-11-25T16:24:26.827Z",
+ "head": "9c8a46df4b0a760960ed3dfa2d62cb3a31146915",
+ "note": "9c8a46df named 16:18; trial of the pinned table eye: brighter patch at 4160 to 4168, 4416 paler, under look",
  "looks": [
+  {
+   "time": "2026-11-25T16:24:26.158Z",
+   "file": "20261125162426158-note-pair-pin-b.jpg",
+   "source": "../../../../tmp/n57/pair-pin-b.jpg",
+   "kind": "note",
+   "label": "trial, not committed: 4186, 4390, 4400, 4416, left 9c8a46df, right the place's table read from the handover's eye",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T16:24:25.532Z",
+   "file": "20261125162425532-note-pair-pin-a.jpg",
+   "source": "../../../../tmp/n57/pair-pin-a.jpg",
+   "kind": "note",
+   "label": "trial, not committed: dive 4152 to 4176, left e14bb1e4, right the place's table read from the handover's eye",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T15:56:13.055Z",
    "file": "20261125155613055-note-pair-d1-b.jpg",
@@ -245,22 +261,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "f200e17ad0e70237"
-  },
-  {
-   "time": "2026-11-25T13:27:24.064Z",
-   "file": "20261125132724064-note-p-N1-8305.jpg",
-   "source": "../../../../tmp/n55/p-N1-8305.jpg",
-   "kind": "note",
-   "label": "new tree, my chain at 4152 + 1/2: pattern 0.81 at 360, 404 (limit 0.45), red at the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T13:27:22.819Z",
-   "file": "20261125132722819-note-pair-4290.jpg",
-   "source": "../../../../tmp/n55/pair-4290.jpg",
-   "kind": "note",
-   "label": "4290 draft: main (left) against the new tree (right): 678 pixels over 4 levels, largest 5",
-   "stop": "uranus"
   }
  ]
 }
