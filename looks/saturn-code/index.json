@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T17:19:29.421Z",
+ "pushed": "2026-11-25T17:50:34.260Z",
  "head": "114ad7e9b0b699f187f1694da3b79ae97eb3e602",
- "note": "second name 114ad7e: finals and pair against main's own finals; rise proof running",
+ "note": "second name 114ad7e: rise frames; the measure of d312 reads 2.82 a frame at worst, cure by pacing in work",
  "looks": [
+  {
+   "time": "2026-11-25T17:50:33.333Z",
+   "file": "20261125175033333-note-rise_b.jpg",
+   "source": "../../../../tmp/v/dark/rise_b.png",
+   "kind": "note",
+   "label": "the name 114ad7e, rise 3803 to 3813, the foot at full size (the outline through the ring under the left limb, named)"
+  },
+  {
+   "time": "2026-11-25T17:50:32.039Z",
+   "file": "20261125175032039-note-rise_e.jpg",
+   "source": "../../../../tmp/v/dark/rise_e.png",
+   "kind": "note",
+   "label": "the name 114ad7e, rise 3844 to 3872 every second frame"
+  },
+  {
+   "time": "2026-11-25T17:50:30.816Z",
+   "file": "20261125175030816-note-rise_3829_3843.jpg",
+   "source": "../../../../tmp/v/dark/rise_3829_3843.png",
+   "kind": "note",
+   "label": "the name 114ad7e, rise 3829 to 3843 every frame"
+  },
+  {
+   "time": "2026-11-25T17:50:29.793Z",
+   "file": "20261125175029793-note-rise_3814_3828.jpg",
+   "source": "../../../../tmp/v/dark/rise_3814_3828.png",
+   "kind": "note",
+   "label": "the name 114ad7e, rise 3814 to 3828 every frame (draft, main's engine): the dusk under the one share"
+  },
   {
    "time": "2026-11-25T17:19:18.612Z",
    "file": "20261125171918612-note-final_3465.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/dark/pair_3720_n2.png",
    "kind": "note",
    "label": "3720 at full size, x 784 to 1920: approved, main c92aad6 final, the name 114ad7e final (clean foot, band 0 to 6 N left out)"
-  },
-  {
-   "time": "2026-11-25T17:11:19.718Z",
-   "file": "20261125171119718-note-p_hold_n2.jpg",
-   "source": "../../../../tmp/v/dark/p_hold_n2.png",
-   "kind": "note",
-   "label": "hold 3465 at 4 times: approved hero, main, 8c52928 (dark ice depth 0.05)"
-  },
-  {
-   "time": "2026-11-25T17:11:18.936Z",
-   "file": "20261125171118936-note-final_3465.jpg",
-   "source": "../../../../tmp/v/n2/final_3465.png",
-   "kind": "note",
-   "label": "8c52928 final 3465 on main's engine: 4.7784 against the hero (main 4.7807)"
-  },
-  {
-   "time": "2026-11-25T17:11:18.184Z",
-   "file": "20261125171118184-note-final_3720.jpg",
-   "source": "../../../../tmp/v/n2/final_3720.png",
-   "kind": "note",
-   "label": "8c52928 final 3720 on main's engine: 28.62 against the approved (main 27.80); rest of the frame 21.89 against main's 22.09"
-  },
-  {
-   "time": "2026-11-25T17:11:17.453Z",
-   "file": "20261125171117453-note-pair_3720_n2.jpg",
-   "source": "../../../../tmp/v/dark/pair_3720_n2.png",
-   "kind": "note",
-   "label": "8c52928 final 3720, the two owned regions at full size: approved, main, the name (clean gap, no band at 0 to 6 N)"
   }
  ]
 }
