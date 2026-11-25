@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T17:55:22.074Z",
- "head": "54480b0c61c9c373e659f2511cf8d8bad9c25ed9",
- "note": "check",
+ "pushed": "2026-11-25T18:32:42.668Z",
+ "head": "9b54c18f38b71768534a57e8e0563ce5f98cb0ac",
+ "note": "finals 1287 and 1586 of 54480b0c; the row 1555.5 by control cF2 (footprint of step 2); the hold with no exchange (D2) at 4 to 1",
  "looks": [
+  {
+   "time": "2026-11-25T18:32:42.074Z",
+   "file": "20261125183242074-note-D2-hold4.jpg",
+   "source": "../../../../tmp/v/sh/D2-hold4.jpg",
+   "kind": "note",
+   "label": "hold 1185 at 4 to 1 round 1345, 435: approved hero, fifth state, trial D2 (the place whole in the frame of T, no exchange); below the same lifted",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T18:32:41.496Z",
+   "file": "20261125183241496-note-cF2-limb.jpg",
+   "source": "../../../../tmp/v/sh/cF2-limb.jpg",
+   "kind": "note",
+   "label": "control cF2, rise 1555 and a half and 1563 and a half at 2 to 1 (x 1432 to 1732, y 126 to 326): the eye's footprint above, the screen's below; the plates' cells are crisper at the right above",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T18:32:40.912Z",
+   "file": "20261125183240912-note-L5-f1586.jpg",
+   "source": "../../../../tmp/v/sh/L5-f1586.jpg",
+   "kind": "note",
+   "label": "54480b0c final 1586 (judged), whole frame at two thirds",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T18:32:40.244Z",
+   "file": "20261125183240244-note-L5-f1287.jpg",
+   "source": "../../../../tmp/v/sh/L5-f1287.jpg",
+   "kind": "note",
+   "label": "54480b0c final 1287 (judged), whole frame at two thirds",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T17:55:07.505Z",
    "file": "20261125175507505-note-L5r-2.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/sh/L5p-2.jpg",
    "kind": "note",
    "label": "dive 1308 to 1338: b0b87889 left, 54480b0c right",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T17:55:04.735Z",
-   "file": "20261125175504735-note-L5p-1.jpg",
-   "source": "../../../../tmp/v/sh/L5p-1.jpg",
-   "kind": "note",
-   "label": "dive 1282 to 1302: b0b87889 left, 54480b0c right",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T17:55:03.699Z",
-   "file": "20261125175503699-note-L5-arr.jpg",
-   "source": "../../../../tmp/v/sh/L5-arr.jpg",
-   "kind": "note",
-   "label": "54480b0c dive 1290 to 1306 by two at 1 to 1 (x 900 to 1400, y 200 to 600): the new red 1293 and a half to 1296 and a half, the two pictures of the place exchanged in the middle of the dive",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T17:04:45.404Z",
-   "file": "20261125170445404-note-cD1-b0.jpg",
-   "source": "../../../../tmp/v/sh/cD1-b0.jpg",
-   "kind": "note",
-   "label": "dive 1320 1326 1332 1338: b0b87889 left, 54480b0c right",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T17:04:44.721Z",
-   "file": "20261125170444721-note-cD2-T.jpg",
-   "source": "../../../../tmp/v/sh/cD2-T.jpg",
-   "kind": "note",
-   "label": "control cD2: release out on the dive, the step over the handover 1342 and a half to 1343 times 4, with release left, without right; below the right horizon",
    "stop": "venus"
   }
  ]
