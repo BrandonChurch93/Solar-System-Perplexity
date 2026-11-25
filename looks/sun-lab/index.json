@@ -1,77 +1,77 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T23:10:07.826Z",
- "head": "533cd7c5e6abedd5e774572be46d4c5f9f42f349",
- "note": "h16 at the final tier, frame 90",
+ "pushed": "2026-11-25T23:33:46.705Z",
+ "head": "bffb70dd82158854eb504e6ff3b2c8a60230861c",
+ "note": "h18 to h21: petals, texture true to the px; motion sheet of h18",
  "looks": [
+  {
+   "time": "2026-11-25T23:33:46.029Z",
+   "file": "20261125233346029-note-motion-h18-mid.jpg",
+   "source": "../v/motion-h18-mid.jpg",
+   "kind": "note",
+   "label": "motion-h18-mid (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:33:45.407Z",
+   "file": "20261125233345407-note-sheet-h18.jpg",
+   "source": "../v/sheet-h18.jpg",
+   "kind": "note",
+   "label": "sheet-h18 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:33:44.841Z",
+   "file": "20261125233344841-note-strip-h21.jpg",
+   "source": "../v/strip-h21.jpg",
+   "kind": "note",
+   "label": "strip-h21 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:33:44.247Z",
+   "file": "20261125233344247-note-x3-h19.jpg",
+   "source": "../v/x3-h19.jpg",
+   "kind": "note",
+   "label": "x3-h19 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:33:43.649Z",
+   "file": "20261125233343649-note-strip-h19.jpg",
+   "source": "../v/strip-h19.jpg",
+   "kind": "note",
+   "label": "strip-h19 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:33:43.037Z",
+   "file": "20261125233343037-note-strip-h18.jpg",
+   "source": "../v/strip-h18.jpg",
+   "kind": "note",
+   "label": "strip-h18 (trial, not named)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T23:32:38.533Z",
+   "file": "20261125233238533-frame-lab-90-h22.jpg",
+   "source": "out/work/sun/lab/lab-90-h22.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T23:10:07.267Z",
    "file": "20261125231007267-note-lab-90-h16f.jpg",
    "source": "../v/lab-90-h16f.jpg",
    "kind": "note",
    "label": "lab-90-h16f (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T23:10:06.703Z",
-   "file": "20261125231006703-note-x3-h16f.jpg",
-   "source": "../v/x3-h16f.jpg",
-   "kind": "note",
-   "label": "x3-h16f (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T23:10:06.142Z",
-   "file": "20261125231006142-note-half-h16f.jpg",
-   "source": "../v/half-h16f.jpg",
-   "kind": "note",
-   "label": "half-h16f (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T23:10:05.591Z",
-   "file": "20261125231005591-note-fine-h16f.jpg",
-   "source": "../v/fine-h16f.jpg",
-   "kind": "note",
-   "label": "fine-h16f (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T23:10:05.028Z",
-   "file": "20261125231005028-note-levels-h16f.jpg",
-   "source": "../v/levels-h16f.jpg",
-   "kind": "note",
-   "label": "levels-h16f (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T23:10:04.467Z",
-   "file": "20261125231004467-note-strip-h16f.jpg",
-   "source": "../v/strip-h16f.jpg",
-   "kind": "note",
-   "label": "strip-h16f (trial, not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T23:09:30.696Z",
-   "file": "20261125230930696-frame-lab-90-standingf.jpg",
-   "source": "out/work/sun/lab/lab-90-standingf.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, final tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T22:53:30.828Z",
-   "file": "20261125225330828-note-parts-line.jpg",
-   "source": "../v/parts-line.jpg",
-   "kind": "note",
-   "label": "parts-line (trial, not named)",
    "stop": "sun"
   }
  ]
