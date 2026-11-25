@@ -2097,6 +2097,71 @@ and plan.ts back by hash.
   gives the bytes of k0-draft; drafts with L1 0.002 12 24 2 (and out 3) at 2668, 2477, 2580, 2672; crops for defect 1 and 2; then
   the review tier with teeth2.py and cmp.py; then fin5-vs, diff.py, the tree back.
 
+## 20:25 to 21:15 UTC, 25 Nov: the first drafts of design (c) do not hold, four faults, the rework (v4 of the cure)
+
+- The chain of the finals was stopped after its first half. fin5-c3 (law by the fragment, final tier, t-c2a/out/work/blur/fin5-c3):
+  2477 sha f53ef685663a..., 2668 4bbd104f..., 2580 e946d0a0..., 2476 (64 samples, 1859 s) 1a660864..., 2325 ba09dc63.... Ended
+  20:42:43. The second half fin5-vs (the mean share at the vertices) STARTED 20:57:51 in t-c2a: `bash /tmp/air/v4/run3.sh fin5-vs vs
+  final "[2477,2668,2580,2476,2325]"`, log /tmp/air/v4/fin5-vs.log (empty until the first frame, ends with "done fin5-vs", about
+  21:50). When it ends: `cd t-c2a/out/work/blur && python3 /tmp/air/v4/diff2.py fin5-c3 fin5-vs 02325 02476 02477 02580 02668`,
+  mail /root the count and the largest step per frame (MAIL 1137 point 1: at most 1 step of 255 in any channel at any pixel, or the
+  law by the fragment stays).
+- Notices of mars_place_builder (nothing asked): 20:31 two commits coming on agent/mars-place (the ledge of C2, the rise back on
+  main's eye; "the ridge behind the cliff stays with L2; this does not touch that tear"); 20:41 for MAIL 1290 item 3 of /root (the
+  widest hand over the dive's path allows, mine and its together, later): the share of the ground the close set draws: 2456 0,
+  2460 3.8, 2464 23.0, 2468 57.6, 2472 91.2, 2476 99.94, 2477 100 percent ("from 23 to 91 percent in the 8 frames 2464 to 2472");
+  eye heights 2460 24 km, 2464 15, 2468 10, 2472 7.3, 2475 6.1. I have not seen MAIL 1290 itself.
+- THE FIRST DRAFTS (v3 of the cure, L1 step 0.002, walk 12, under 24 texels; dirs in t-c2a/out/work/blur: k0-draft the base,
+  q0-draft no numbers, q2-draft out 2, q3-draft out 3, qt-draft tinted out 2):
+  - no numbers gives the base's bytes on 2477, 2580, 2668, 2672.
+  - the teeth measure (/tmp/crest/teeth3.py FRAME DIR...; boxes 2668 rows 640..668 cols 672..706 level 100; 2672 rows 640..668 cols
+    664..699; 2477 rows 586..600 cols 884..908 level 70): 2668 cure 0 jumps, rms 0.61 px (base 5 jumps, rms 2.00); 2672 cure 2
+    jumps of 2 px, rms 0.56 (base 4, largest 10 px, rms 2.04); at 2477 the measure is not valid (the crest face is 1 to 2 px wide in
+    the base and 4 to 5 px with the cure).
+  - 2580 against the base: out 2 differ 15329 px, largest 62, over 8: 318, over 32: 19; out 3 differ 15759, largest 76, over 8:
+    248, over 32: 25.
+  - FOUR FAULTS, found in crops at 8x to 20x and a tinted debug render (red near sheet, green far own, blue far fill, magenta
+    under): (1) single pixels on the cut at 2580 (points (182,442), (271,388), (570,417), (690,463), (798,726), (849,721)): the
+    near share s lay over a far sheet that held the fill by s, so the fill had a part s(1 - s) of the pixel, a quarter at the most,
+    from the picture's own eye. (2) pale single pixels beside the cut at 2477 (x 876..908, y 566..606): the share's ramp was one
+    texel wide and a texel is half a pixel there, so one sample did not smooth the cut. (3) a zigzag at 2668 (x 583..593, y
+    606..615): two crests nearer than about two cells; band texels go to the nearest ramp texel of either crest, so a cut cell gets
+    vertices at the other crest's far distance. (4) a line at 2668 (x 554..567, y 455..458): the far sheet under the near side
+    showing past the layer's rim. NOT a fault: the lumps at the rim rock (2668 x 428..443, y 414..427; L1 map about x 1181..1250,
+    y 50..95) are the rock's own paint on the far sheet, rigid. No lit outline beside the teeth crest.
+  - Mailed /root 20:58 (low priority): not named, the four faults, the plan.
+- THE REWORK (v4), in crest-wt, uncommitted on 4bae298b; the v3 state is saved as /tmp/crest/crest.v3.ts, relief.v3.ts,
+  crest.test.v3.ts, crest-gl.test.v3.ts:
+  - crest.ts: the byte of the cut is no longer a share but THE DISTANCE TO THE CUT over CREST_SPAN = 8 texels (127.5 on the cut,
+    rising toward the near side); CREST_REACH = 4 texels (how far beyond the cut the near side may draw: 1.5 px where a texel is
+    3/8 px at the least); CrestNumbers.boxes [left, top, right, bottom][] in texels: ramp texels outside every box are dropped.
+  - relief.ts, the shader: cutPx = (cutSoft - 0.5) / |gradient of cutSoft on the screen| is the distance to the cut in PIXELS. TWO
+    LINES A PIXEL APART: the near sheet's share is clamp(cutPx + 1.5) (its edge lies a pixel beyond the cut), the far end's texel
+    comes in by clamp(cutPx + 0.5) (centred on the cut). The far sheet's own part is cutRest = max((1 - s) / (1 - s x alpha),
+    (1 - p) x solid): what the near sheet leaves, so the matte comes back too. From the picture's own eye the sheets give the
+    layer's texel back exactly (measured in the browser: 0 pixels moved against the painting, cut on the middle and out 2; the plain
+    mesh moves more than a column of them, its wall draws the paint out of true even from the own eye).
+    WHY NOT one pixel inward (share cutPx + 1, fill cutPx): tried first; 4 of 7 browser tests failed with 0.04 to 0.08 of the
+    colours' difference in the gap, the far sheet then holds half a pixel of the near paint inside the cut.
+  - relief.ts, the numbers: ReliefCrest is { layer, step, walk, under, out?, boxes? } with walk, under, out in CELLS of the layer's
+    mesh (the same at every size the files come in; a walk is one texel at the least), out at most 1, boxes as shares of the
+    layer's own box (0 to 1). Mars L1 trial: step 0.002, walk 2, under 4, out 0.35 (2 texels) or 0.5 (3), the teeth crest's box
+    about [0.62, 0.27, 0.71, 0.42] (L1 texels x 1540..1722, y 345..509 of 2460 x 1234).
+  - Faults 3 and 4 are not cured by the engine: a stop gives BOXES and takes only the crests it has looked at. To say in the NAMED
+    mail and to both builders: crests nearer than about two cells get a wall in the sheets; the far sheet under the near ground
+    shows past a layer's rim; a box should end where the step ends or is hidden (a notch where sheets meet the kept wall); the fill
+    is a streak across the band; the paint's border on the teeth crest lies median 0.12 texels beyond the middle, 95 percent 1.88,
+    99 percent 3.15; a step whose near side is outside the matte is a rim.
+  - Tests at 21:13: tests/crest.test.ts 15 of 15 (a new one: the boxes), tests/crest-gl.test.ts 7 of 7 (a new one: a crest cut
+    in a box is the sheets inside and the mesh away from it; the own eye checks are now exact), tsc clean.
+- NEXT: (1) setlook.py for cells and boxes, the tint debug from the new relief; (2) when fin5-vs ends: diff2, looks, mail /root,
+  the fourth commit of the air or not; (3) drafts of v4 in t-c2a (`cp /tmp/air/air.c3.ts t-c2a/src/terrain/air.ts; cp
+  crest-wt/src/terrain/{crest,relief}.ts t-c2a/src/terrain/`, `bash /tmp/crest/exp.sh LABEL "LOOK WORDS" "[2668,2477,2580,2672]"
+  draft`): no numbers must give k0-draft's bytes (2668 d53e7a37, 2477 99455ba7, 2580 99a2313d, 2672 22f466c1); teeth3, cmp, crops
+  at the fault places; (4) the review tier (2477 34 samples, 2668 14, 2672 24, 2580 10; about 12 min a variant), base and cure;
+  look at every frame; (5) commit on agent/engine-crest from crest-wt (the four files), suite and build, push, NAMED; (6) restore
+  the scratch trees (list in the entry 19:40 to 20:10).
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
