@@ -2,8 +2,15 @@
 # lit globe of a film frame at the pose of skim.json (frame 3720, 1920 by 1080, no grain) to the lit globe of the
 # approved close image. One knot per whole degree of latitude from 0 to 80, three numbers (red, green, blue) in
 # scene linear light. With PREV the result is PREV times the new measure, so a second pass on a frame drawn with
-# the first table gives the table to keep. The result is skim.json light.tone.gain. Measures only: it draws
-# nothing and the film does not run it.
+# the first table gives the table of the measure (kept as lat_tone_raw.json). Measures only: it draws nothing and
+# the film does not run it.
+# lat_tone.py --smooth RAW.json OUT.json SIGMA FIRST: the table the film keeps (skim.json light.tone.gain): the
+# measure smoothed along the latitude, in the logarithm, with a bell of SIGMA degrees (mirrored at both ends),
+# the knots under FIRST degrees taken as the knot at FIRST before it (down there the approved image shows the
+# band of the rings in front of the globe, not the clouds). The grade comes with the height of the lens, so it
+# may change the broad palette of the globe by latitude but no band of it: a table with the measure's steps from
+# one degree to the next repainted the bands while the lens climbed, and the report of the pictures read that
+# as one pattern exchanged for another (0.58 at frame 3834, limit 0.45).
 import sys, json, os
 import numpy as np
 from PIL import Image
@@ -12,6 +19,23 @@ REPO = os.path.normpath(os.path.join(HERE, '..', '..', '..'))
 sys.path.insert(0, HERE)
 args = sys.argv[1:]
 sys.argv = ['x']
+if args and args[0] == '--smooth':
+    raw = np.log(np.array(json.load(open(args[1])), float))
+    sigma, first = float(args[3]), int(args[4])
+    raw[:first] = raw[first]
+    n = len(raw)
+    at = np.arange(n)
+    wide = np.concatenate([raw[::-1], raw, raw[::-1]])
+    where = np.concatenate([-at[::-1] - 1, at, 2 * n - 1 - at[::-1]])
+    out = np.zeros_like(raw)
+    for i in range(n):
+        w = np.exp(-0.5 * ((where - i) / sigma) ** 2)
+        out[i] = (wide * w[:, None]).sum(0) / w.sum()
+    out = np.exp(out)
+    print('gain', out.min().round(3), 'to', out.max().round(3))
+    print(' '.join('%d:%.2f/%.2f/%.2f' % (i, *out[i]) for i in range(0, n, 8)))
+    json.dump(np.round(out, 3).tolist(), open(args[2], 'w'))
+    raise SystemExit(0)
 import pose_fit as pf, geom
 W, H = 1920, 1080
 skim = json.load(open(os.path.join(REPO, 'src', 'stops', 'saturn', 'skim.json')))

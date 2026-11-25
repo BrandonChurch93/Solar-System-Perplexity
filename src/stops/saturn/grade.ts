@@ -141,11 +141,12 @@ export const dustAt = (height: number, into: THREE.Vector4): void => {
 // shows through the dust on the far side of the plane from the Sun lies in its shade. It is the same dust as
 // that of the sheet (sheet.ts sheetInner): the same depth at the rim and by the globe, with the mean of its
 // ringlets (inner.bands), and the same share of it at every height of the lens (innerShare), so none in the
-// hold. Sets uDustShade: the depth at the rim and by the globe, the rim, the length over which the dust dies
-// away outward of the rim. The kept set and the model both call it with the height of the lens.
+// hold, times the share of the shade that shows (inner.shade). Sets uDustShade: the depth at the rim and by the
+// globe, the rim, the length over which the dust dies away outward of the rim. The kept set and the model both
+// call it with the height of the lens.
 export const dustShadeAt = (height: number, into: THREE.Vector4): void => {
   const bands = skimJson.inner.bands
-  const share = innerShare(height) * Math.pow(bands.floor + (1 - bands.floor) * (1 - bands.gap), 3)
+  const share = innerShare(height) * skimJson.inner.shade * Math.pow(bands.floor + (1 - bands.floor) * (1 - bands.gap), 3)
   into.set(skimJson.inner.depth[0]! * share, skimJson.inner.depth[1]! * share, model.inner, skimJson.inner.fade)
 }
 
