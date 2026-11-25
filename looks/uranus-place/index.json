@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T06:18:09.530Z",
+ "pushed": "2026-11-25T06:30:26.296Z",
  "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
- "note": "round 3 tree drawn every 4th frame, dive and rise; 4035 and 4290 equal by hash at draft; whole smooth report running since 06:17; finding: with the frames carried by pose the pattern at 4152 holds on 96 to 98 percent of the ground, the reader's flow loses the ground under the layer light",
+ "note": "round 3 tree (layer law, cover by pixel size, sky turn spread over the dive): the official smooth report runs since 06:17; dive 4138 to 4157 from its frames. Reader on these rows by my own run: pattern 0.58 to 0.79 at 4136 to 4141, 1.0 to 1.33 at 4142 to 4144 + 1/2: red, not cured",
  "looks": [
+  {
+   "time": "2026-11-25T06:30:24.929Z",
+   "file": "20261125063024929-note-rep-dive-a.jpg",
+   "source": "../../../../tmp/n50/rep-dive-a.jpg",
+   "kind": "note",
+   "label": "round 3 tree, dive 4138 to 4157, every whole frame, from the frames of the running smooth report (draft, rate 2)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T06:18:08.685Z",
    "file": "20261125061808685-note-tr-all-4152.jpg",
@@ -258,14 +266,6 @@
    "source": "../../../../tmp/parC/dive-c.jpg",
    "kind": "note",
    "label": "dive 4168 to 4176, named left, step 3 right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:10:15.532Z",
-   "file": "20261125021015532-note-dive-b.jpg",
-   "source": "../../../../tmp/parC/dive-b.jpg",
-   "kind": "note",
-   "label": "dive 4158 to 4166, named left, step 3 right",
    "stop": "uranus"
   }
  ]
