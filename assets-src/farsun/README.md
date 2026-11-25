@@ -501,5 +501,8 @@ Sun's set and draw alone. So the body, its corona, loops, rays and lens light ar
 sees them, and a turn smears them along their own path as it smears every body of the world's pass; the
 stars are the stated exception and stay at the middle. A frame of one sample keeps its bytes. At a hold
 the body takes the blur of the camera's own drift (0.4 px either side of the middle at Mercury), as the
-planet beside it does. The test holds the sky's half (the far Sun's camera is the sample's, the stars'
-is the middle's, and without the argument both are the middle's) and is red until the hunk is laid.
+planet beside it does. One test holds the sky's half (the far Sun's camera is the sample's, the stars'
+is the middle's, and without the argument both are the middle's). A second holds the engine's half
+(MAIL 1263): the engine's own `renderSample` is run on a stand-in engine with no set, twice for one
+frame with two sky orientations and one middle, and the far Sun has to be set through each sample's own.
+Both are red until the hunk is laid, and the second is red with either half alone.

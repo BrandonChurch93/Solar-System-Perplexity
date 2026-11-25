@@ -5,6 +5,7 @@ import { build } from 'vite'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { CHROME, CHROME_FLAGS } from '../tools/lib/browser'
 import { config } from '../src/config'
+import { Engine } from '../src/core/engine'
 import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
 import * as THREE from 'three'
@@ -307,6 +308,51 @@ describe('the handover and the wear of the far Sun', () => {
     expect(stars.length).toBeGreaterThan(0)
     for (const q of stars) expect(q.equals(mid.skyQuaternion)).toBe(true)
     expect(camera.quaternion.equals(stood)).toBe(true)
+  })
+
+  it('is handed the sky orientation of each sample of the shutter by the engine, so two samples of one frame see it through two cameras', () => {
+    const seg = config.segments.find((s) => s.id === plans[1]!.id + '.hold')!
+    const frame = ((seg.start + seg.end) / 2) * config.fps
+    const mid = film.shotAt(frame, frame / config.fps)
+    const { width, height } = config.raw.formats.master
+    const canvas = { addEventListener: (): void => undefined }
+    const renderer = new Proxy({}, { get: (_, key) => (key === 'domElement' ? canvas : (): void => undefined) }) as unknown as THREE.WebGLRenderer
+    const body: THREE.Quaternion[] = []
+    const set = vi.spyOn(farSun, 'set').mockImplementation((view) => {
+      body.push(view.camera.quaternion.clone())
+      return 0
+    })
+    const draw = vi.spyOn(farSun, 'render').mockImplementation(() => undefined)
+    const still = { render: (): void => undefined }
+    const engine = Object.assign(Object.create(Engine.prototype) as object, {
+      format: { width, height },
+      camera: new THREE.PerspectiveCamera(mid.camera.vfov, width / height),
+      renderer,
+      probe: {},
+      sky: new Sky(height),
+      attached: [],
+      sets: new Map(),
+      world: new THREE.Group(),
+      near: new THREE.Group(),
+      over: new THREE.Group(),
+      sampleTarget: new THREE.WebGLRenderTarget(width, height),
+      director: {},
+      skyPatches: [],
+      held: [],
+      trims: [],
+      belt: still,
+      dust: still,
+    })
+    const turned = (angle: number): THREE.Quaternion => mid.skyQuaternion.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle))
+    const moments = [turned(-mid.sun.angularRadius), turned(mid.sun.angularRadius)]
+    const sample = (Engine.prototype as unknown as { renderSample: (...all: unknown[]) => void }).renderSample
+    for (const [i, q] of moments.entries()) sample.call(engine, { ...mid, sets: [], skyQuaternion: q }, mid, { jitterX: 0, jitterY: 0, weight: 1 }, i, moments.length)
+    set.mockRestore()
+    draw.mockRestore()
+    expect(body).toHaveLength(moments.length)
+    for (const [i, q] of moments.entries()) expect(body[i]!.equals(q)).toBe(true)
+    expect(body[0]!.equals(body[1]!)).toBe(false)
+    expect(body[0]!.equals(mid.skyQuaternion)).toBe(false)
   })
 })
 

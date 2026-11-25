@@ -6,7 +6,7 @@
 #   its camera to it for the far Sun's set and draw alone. The stars and the band keep the middle one.
 # Where the two are the same bits (every frame of one sample, every sample of a camera that does not turn)
 #   the frame keeps its bytes. Without the argument the sky uses the middle one, as before.
-#   tests/farsun-share.test.ts is red until the sky's half of this hunk is laid.
+#   tests/farsun-share.test.ts holds each half with a test of its own and is red until both are laid.
 diff --git a/src/core/engine.ts b/src/core/engine.ts
 index 07dcf5f6..e5e9750e 100644
 --- a/src/core/engine.ts
