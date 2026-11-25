@@ -1,9 +1,73 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T01:04:07.015Z",
- "head": "20dc1f83189395ef511c0c130b1b300b5c671aa6",
- "note": "second commit: main 12bfd7d5 merged, the four finals and the unit tests run again on it; pattern red marked on the frames; travel 4503 to 4515",
+ "pushed": "2026-11-25T01:27:47.721Z",
+ "head": "9172cc8404c438c895d2d0aa3881b52081708ef9",
+ "note": "second NAMED 9172cc84 sent 01:22; travel sheet 4503 to 4530 after the last merge; Sun enters Neptune's frame at 4515",
  "looks": [
+  {
+   "time": "2026-11-25T01:27:46.987Z",
+   "file": "20261125012746987-note-travel-b.jpg",
+   "source": "../../../../tmp/parA/travel-b.jpg",
+   "kind": "note",
+   "label": "travel 4503 to 4530 every third frame at draft, on the named tree 9172cc84 (4503 to 4515 equal to the byte to those before the merge of 12bfd7d5)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T01:12:28.488Z",
+   "file": "20261125011228488-frame-f4436.jpg",
+   "source": "out/work/u/r45/fin5/f4436.png",
+   "kind": "frame",
+   "label": "uranus.rise frame 4436, final tier",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4436,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c6c6edcaa80e1e1f"
+  },
+  {
+   "time": "2026-11-25T01:09:13.715Z",
+   "file": "20261125010913715-frame-f4137.jpg",
+   "source": "out/work/u/r45/fin5/f4137.png",
+   "kind": "frame",
+   "label": "uranus.dive frame 4137, final tier",
+   "stop": "uranus",
+   "segment": "uranus.dive",
+   "frame": 4137,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c6c6edcaa80e1e1f"
+  },
+  {
+   "time": "2026-11-25T01:06:43.836Z",
+   "file": "20261125010643836-frame-f4290.jpg",
+   "source": "out/work/u/r45/fin5/f4290.png",
+   "kind": "frame",
+   "label": "uranus.terrain frame 4290, final tier",
+   "stop": "uranus",
+   "segment": "uranus.terrain",
+   "frame": 4290,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c6c6edcaa80e1e1f"
+  },
+  {
+   "time": "2026-11-25T01:04:34.515Z",
+   "file": "20261125010434515-frame-f4035.jpg",
+   "source": "out/work/u/r45/fin5/f4035.png",
+   "kind": "frame",
+   "label": "uranus.hold frame 4035, final tier",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c6c6edcaa80e1e1f"
+  },
   {
    "time": "2026-11-25T01:04:05.634Z",
    "file": "20261125010405634-note-travel-a.jpg",
@@ -247,56 +311,6 @@
    "first": 4187,
    "last": 4198,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T23:53:54.231Z",
-   "file": "20261124235354231-sheet-uranus-dive-draft-before.jpg",
-   "source": "out/work/handover/uranus-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4174 to 4185 (before T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4174,
-   "last": 4185,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T23:53:52.477Z",
-   "file": "20261124235352477-sheet-uranus-dive-draft-across.jpg",
-   "source": "out/work/handover/uranus-dive-draft-across.png",
-   "kind": "sheet",
-   "label": "uranus dive, every frame 4180 to 4191 (across T, frame 4186), draft tier",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "first": 4180,
-   "last": 4191,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-24T23:53:50.747Z",
-   "file": "20261124235350747-compare-uranus-dive-step-in-place.jpg",
-   "source": "out/work/handover/uranus-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "uranus dive, the largest step of the level in place (2.8): frame 4173, frame 4174, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "uranus",
-   "segment": "uranus.dive",
-   "frame": 4174
-  },
-  {
-   "time": "2026-11-24T23:42:44.825Z",
-   "file": "20261124234244825-note-pair4436.jpg",
-   "source": "../../../../tmp/parA/pair4436.jpg",
-   "kind": "note",
-   "label": "4436 final: e9e2c3a7 (left), second commit (right); 2.80 percent of pixels differ at the storm",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:42:43.809Z",
-   "file": "20261124234243809-note-pair4137.jpg",
-   "source": "../../../../tmp/parA/pair4137.jpg",
-   "kind": "note",
-   "label": "4137 final: e9e2c3a7 (left), second commit (right); 1.99 percent of pixels differ at the storm",
-   "stop": "uranus"
   }
  ]
 }
