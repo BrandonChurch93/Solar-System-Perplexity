@@ -42,6 +42,15 @@ export interface GlobePatches {
   lean: number
   nearDeg: number
   place?: { from: number; ownDeg: [number, number]; gain: number; fade?: [number, number]; light?: [number, number, number]; hold?: [number, number] }
+  tilt?: GlobeTilt
+}
+
+export interface GlobeTilt {
+  map: THREE.Texture
+  widthDeg: number
+  zero: number
+  step: number
+  sun: readonly [number, number, number]
 }
 
 export interface GlobeOptions {
@@ -198,6 +207,9 @@ uniform vec3 uPlaceFade;
 uniform vec3 uPlaceLight;
 uniform vec3 uPlaceHold;
 uniform float uPlaceEarly;
+uniform sampler2D uTilt;
+uniform vec4 uTiltCode;
+uniform vec3 uTiltSun;
 uniform sampler2D uClose;
 uniform mat3 uCloseCam;
 uniform vec3 uCloseUp;
@@ -412,6 +424,7 @@ void main() {
   float stays = 0.0;
   float placeDrive = 0.0;
   float ring = 0.0;
+  float tilt = 0.0;
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
     vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
@@ -430,6 +443,13 @@ void main() {
     float parent = diagTexelsDir(d, uMapFull) * uFrame;
     float thin = parent;
     float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
+    vec2 tq = g * uTiltCode.x;
+    float code = uTiltCode.y / 255.0;
+    for (int k = 0; k < (uTiltCode.w * front > 0.0 && max(abs(tq.x), abs(tq.y)) < 0.5 ? 1 : 0); k++) {
+      code = textureGrad(uTilt, tq + 0.5, gx * uTiltCode.x, gy * uTiltCode.x).r;
+      for (int j = 0; j < (uSmear > 0.0 && bare ? 1 : 0); j++) code = streak(uTilt, tq + 0.5, sx * uTiltCode.x, sy * uTiltCode.x, along, lat).r;
+    }
+    tilt = (code * 255.0 - uTiltCode.y) * uTiltCode.z * max(dot(d, uTiltSun) + uWrap, 0.06);
 ${PATCH_LEVELS}
 ${FINE}
   }
@@ -457,7 +477,7 @@ ${FINE}
   float dusk = 1.0 - smoothstep(uReliefRange.x, uReliefRange.y, ndl0);
   float strength = mix(mix(uRelief.z, uRelief.x, dusk), uRelief.y, near) * smoothstep(0.0, 0.12, mu) * (1.0 - stays);
   vec3 np = normalize(n - slopeW * strength);
-  float ndl = dot(np, uSunW);
+  float ndl = dot(np, uSunW) + tilt;
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), uLift.x, uLift.y);
   float inn = c > 0.0 ? max(1.0 - uSink + crest - s, 0.0) : 1.0;
   float side = smoothstep(uLineSide.x, uLineSide.y, dot(n, uLineW)) * smoothstep(uLineSun.x, uLineSun.y, ndl0);
@@ -554,6 +574,9 @@ export class Globe {
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchFull: { value: levels.map((i) => p?.full[i] ?? size(i)) },
         uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
+        uTilt: { value: p?.tilt?.map ?? o.map },
+        uTiltCode: { value: new THREE.Vector4(p?.tilt ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.tilt.widthDeg) / 2)) : 1, p?.tilt?.zero ?? 0, p?.tilt?.step ?? 0, p?.tilt ? 1 : 0) },
+        uTiltSun: { value: new THREE.Vector3(...(p?.tilt?.sun ?? [0, 0, 1])).normalize() },
         uFineMap: { value: f?.texture ?? o.map }, uFine: { value: new THREE.Vector2(f && p ? 1 : 0, f?.top ?? 1) },
         uFineScale: { value: Array.from({ length: FINE_LEVELS }, (_, i) => (f && p ? (2 ** (i + 1) * scale(p.textures.length - 1) * size(p.textures.length - 1)) / f.period : 1)) },
         uFineSize: { value: f?.period ?? 1 }, uFineFull: { value: f?.full ?? f?.period ?? 1 }, uFineShift: { value: new THREE.Vector2(f?.shift[0] ?? 0, f?.shift[1] ?? 0) },

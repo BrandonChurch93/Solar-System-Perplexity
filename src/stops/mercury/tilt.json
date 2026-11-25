@@ -1,0 +1,15 @@
+{
+  "about": "The place's craters as a relief of the globe (the relief way). `tilt.png` (one channel) holds, over `widthDeg` about the spot (north up, gnomonic, the frame of the plates), how much the ground leans toward the Sun, as a share of the level ground's light: a code is `zero` + lean / `step`. It is read from the lit picture of the place, taken back out of level 2 of the plates with the map's own ground and the globe's law (assets-src/mercury/place/plates.py lays them together): the picture over its own low tone (a Gaussian of `sigmaDeg`, counted only where the picture is lit, `lit`), less 1, times a weight. The weight is where the place has craters to give: the share the plates give the place's picture (`deg` of own.json) times where that picture is lit (`seen`: the share of lit ground within `seenDeg`). `sun` is the Sun in the map's frame when that picture was lit. The globe turns the share back into a lean (times the cosine of that Sun plus its wrap at the point) and adds it to the cosine of the Sun of the frame before its own law of light. So the place's craters stand on the map's own ground as shade, at every height, the same craters the plates show finer. The map's picture, the levels and the globe's own relief stay as they are. `least` is the smallest share of the place's picture the lean is read at; `viewGain` only lights the check picture. Made by assets-src/mercury/place/tilt.py.",
+  "file": "tilt.png",
+  "widthDeg": 38,
+  "size": { "full": 2048, "web": 1024 },
+  "sigmaDeg": 0.75,
+  "lit": [0.006, 0.02],
+  "least": 0.05,
+  "zero": 90,
+  "step": 0.01,
+  "sun": [0.834334, 0.54873, 0.052742],
+  "seen": [0.6, 0.95],
+  "seenDeg": 1.0,
+  "viewGain": 1.0
+}
