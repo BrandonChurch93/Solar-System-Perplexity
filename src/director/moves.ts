@@ -20,6 +20,25 @@ export interface Fit {
   globe: { quaternion: number[]; scale: number[] }
 }
 
+// The plumb of a pose at the unit sphere of its body: the angle of the direction from the eye to the body's centre off the camera's upright
+// plane (the plane of its up and forward axes), in radians, positive where the centre lies to the right. 0 where the centre lies straight
+// under or over the camera or on its line of sight: a ball that hangs plumb in the picture, a limb that lies level.
+export function plumbOf(p: { position: THREE.Vector3; quaternion: THREE.Quaternion }): number {
+  const c = p.position.clone().negate().applyQuaternion(p.quaternion.clone().invert()).normalize()
+  return Math.asin(Math.min(Math.max(c.x, -1), 1))
+}
+
+// The least turn of a camera, in its own frame, that gives its plumb the wanted angle: a turn about the axis square to the camera's right
+// and to the centre's direction along the upright plane, so the centre moves straight to or from that plane and not along it. Near the
+// ground, where the centre lies under the camera, it is a roll; far out, where the centre lies near the line of sight, a pan. None where
+// the centre lies on the camera's right axis, where no such axis is.
+export function plumbTurn(position: THREE.Vector3, quaternion: THREE.Quaternion, want: number): THREE.Quaternion {
+  const c = position.clone().negate().applyQuaternion(quaternion.clone().invert()).normalize()
+  const flat = Math.hypot(c.y, c.z)
+  if (flat < 1e-9) return new THREE.Quaternion()
+  return new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, -c.z / flat, c.y / flat), want - Math.asin(Math.min(Math.max(c.x, -1), 1)))
+}
+
 export interface Surge { glide: number; rise: number; fall: number; swell?: [number, number, number] }
 
 export interface MoveParams {
@@ -479,10 +498,10 @@ export class StopPlan {
     return { position, quaternion: lookAt(position, new THREE.Vector3(0, 0, 0), t.ahead), vfov: pose.vfov }
   }
 
-  handoverPath(kind: 'dive' | 'rise'): { rise: number; fall: number; turnRise: number; turnFall: number; level: boolean; levelBy: number; sidestep?: Sidestep } {
+  handoverPath(kind: 'dive' | 'rise'): { rise: number; fall: number; turnRise: number; turnFall: number; level: boolean; levelBy: number; sidestep?: Sidestep; plumb?: true } {
     const base = kind === 'dive' ? config.raw.handover.descent : config.raw.handover.ascent
     const own = this.p.handover?.[kind]?.path
-    const out = { rise: own?.rise ?? base.rise, fall: own?.fall ?? base.fall, turnRise: own?.turnRise ?? base.turnRise, turnFall: own?.turnFall ?? base.turnFall, level: own?.level ?? base.level, levelBy: own?.levelBy ?? base.levelBy, sidestep: own?.sidestep }
+    const out = { rise: own?.rise ?? base.rise, fall: own?.fall ?? base.fall, turnRise: own?.turnRise ?? base.turnRise, turnFall: own?.turnFall ?? base.turnFall, level: own?.level ?? base.level, levelBy: own?.levelBy ?? base.levelBy, sidestep: own?.sidestep, plumb: own?.plumb === true ? (true as const) : undefined }
     if (!(out.rise >= 0) || !(out.fall > 0) || !(out.rise + out.fall <= 1) || !(out.turnRise >= 0) || !(out.turnFall > 0) || !(out.turnRise + out.turnFall <= 1) || !(out.levelBy > 0 && out.levelBy <= 1)) throw new Error('the handover path of ' + this.id + ' needs rise and turnRise of 0 or more, fall and turnFall above 0, each pair adding up to at most 1, and levelBy above 0 and at most 1')
     const s = out.sidestep
     if (s && (!Number.isFinite(s.right) || !Number.isFinite(s.up) || !(s.by > 0 && s.by <= 1))) throw new Error('the sidestep of ' + this.id + ' needs right and up in radii and by above 0 and at most 1')
@@ -532,6 +551,9 @@ export class StopPlan {
     const position = centre.clone().addScaledVector(out, range)
     const upright = one ? turn : path.level ? smooth(turn / path.levelBy) : turn
     const quaternion = lookAt(position, centre, ahead).multiply(a.rel.slerp(b.rel, upright))
+    // path.plumb: the centre's angle off the camera's upright plane is the mix of the two ends' own as they stand now; the least turn that
+    // makes it so. The swing below turns eye and camera together about the place's vertical and leaves that angle as it is.
+    if (path.plumb) quaternion.multiply(plumbTurn(position, quaternion, mix(plumbOf(far), plumbOf(low), upright)))
     if (swing) {
       const on = new THREE.Quaternion().setFromAxisAngle(centre, swing * (1 - upright))
       position.applyQuaternion(on)
@@ -637,7 +659,7 @@ export class StopPlan {
   // picture changes sides (T, handover.dive.at and handover.rise.at) moves nothing on the path.
   // It is the default of every stop that hands over. A stop named in handover.ownPath keeps the path of its own class until its builder
   // takes the name off the list. What a stop on the one move may still set: its two ends (hold, terrain, rise.distance and the like), its
-  // place (spot), at, path.sidestep, path.level and the flanks of the pace (handover.dive.pace, handover.rise.pace). What is not read on the
+  // place (spot), at, path.sidestep, path.level, path.plumb and the flanks of the pace (handover.dive.pace, handover.rise.pace). What is not read on the
   // one move: terrain.entry* and terrain.exit*, path.rise, fall, turnRise, turnFall, levelBy and fromDive, and a class's own divePose,
   // risePose, dive and rise.
   get engineMove(): boolean {

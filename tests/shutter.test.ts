@@ -1,6 +1,6 @@
 import { afterAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
-import { blurAllowed, framePlan, rawMotion, samplesNeeded, seenShare, shutterScale, softness } from '../src/core/motion'
+import { blurAllowed, endsBy, framePlan, rawMotion, samplesNeeded, seenShare, shutterScale, softness, type EndsLaw } from '../src/core/motion'
 import { sampleCount, samplesFor, shutterMid, shutterOffset, shutterPosition } from '../src/core/sampler'
 import type { Shot, ViewKind } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
@@ -33,6 +33,13 @@ const hands = (frame: number): boolean => moving.includes(segmentAtFrame(frame))
 // The surface view of a stop that handover.drawnMeasure names: its state carries the globe, and its frames take no soft in any kind of
 // segment (surfaceDrawn of core/motion.ts).
 const ground = (mid: Shot): boolean => mid.sets.some((s) => s.weight > 0 && s.view !== 'orbit' && s.ball !== undefined)
+// The share of its time over which a frame outside a handover opens and closes the shutter: none, but where handover.shutterEnds names
+// the frame's stop with a law of the frame's motion {share, fromPx, toPx}. A hold, a surface view or a flight of such a stop that moves
+// by more than fromPx carries the share in its plan: the flight is the stop's it leaves, as its segment names it.
+const endsOf = (stop: string | undefined, seen: number): number => {
+  const own = stop === undefined ? undefined : (numbers.shutterEnds as unknown as Record<string, number | EndsLaw | undefined>)[stop]
+  return typeof own === 'object' ? endsBy(own, seen) : 0
+}
 // The motion of a frame between two times inside it, measured here as the film's plan of a frame measures it: on both sides in the frame that
 // swaps them, the larger one.
 const motionOf = (frame: number, from: number, to: number): number => {
@@ -126,10 +133,11 @@ describe('the share of the shutter a frame keeps', () => {
       const mid = at(shutterMid())
       const raw = rawMotion(at(0), mid, at(config.shutterFraction))
       const seen = raw * seenShare(mid)
+      const ends = endsOf(segmentAtFrame(f).stop, seen)
       for (const tier of ['draft', 'review', 'final']) {
         const base = sampleCount(tier, kind)
         const cap = config.tiers[tier]!.maxSamplesPerFrame
-        expect(framePlan(film, f, tier)).toEqual({ samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: ground(mid) ? 0 : softness(raw), split: false, shutter: 1 })
+        expect(framePlan(film, f, tier)).toEqual({ samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: ground(mid) ? 0 : softness(raw), split: false, shutter: 1, ...(ends > 0 ? { ends } : {}) })
       }
     }
   })
