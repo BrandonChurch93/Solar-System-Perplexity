@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T02:42:20.684Z",
- "head": "88d4f309548622f39a1f3de85bc015c83317c8a9",
- "note": "02:45 trial of the one ground: main's heights cure the wedge at 2448; east of the field at 2470 is bad in both states; gap measure by layer",
+ "pushed": "2026-11-25T03:04:14.973Z",
+ "head": "75564ca06092159f628bb32683165712183ac36f",
+ "note": "candidate one ground at draft, bad ones too: east slab 2464 to 2474 and 2684 to 2689, red far plateau, hard east side of the relief at 2448 to 2459",
  "looks": [
   {
-   "time": "2026-11-25T02:42:20.075Z",
-   "file": "20261125024220075-note-gapwhy.jpg",
-   "source": "out/work/place/see/gapwhy.png",
+   "time": "2026-11-25T03:04:14.255Z",
+   "file": "20261125030414255-note-fit-before.jpg",
+   "source": "out/work/place/see/fit-before.jpg",
    "kind": "note",
-   "label": "relief minus cap in height, 0 dark to 500 m and over red, by layer L0, L1, L2 in the picture's frame. Red in L0 is ground hidden behind L1 and L2 at the picture's eye",
+   "label": "cap heights (left), picture heights (middle), difference to 300 m (right) at 3.8, 1.6, 0.7, 0.3 degrees",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:42:19.459Z",
-   "file": "20261125024219459-note-pl-0p3.jpg",
-   "source": "out/work/place/see/pl-0p3.jpg",
+   "time": "2026-11-25T03:04:13.602Z",
+   "file": "20261125030413602-note-g1-plates.jpg",
+   "source": "out/work/place/see/g1-plates.jpg",
    "kind": "note",
-   "label": "plate land-0p3 of 88d4f309, the same",
+   "label": "the cap plates as they stand: the takes alone",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:42:18.869Z",
-   "file": "20261125024218869-note-pl-0p7.jpg",
-   "source": "out/work/place/see/pl-0p7.jpg",
+   "time": "2026-11-25T03:04:12.904Z",
+   "file": "20261125030412904-note-gap-2456-where.jpg",
+   "source": "out/work/place/see/gap-2456-where.jpg",
    "kind": "note",
-   "label": "plate land-0p7 of 88d4f309, the laid smears with blue and white streaks on the west third",
+   "label": "2456: where cap and relief stood over 1 px apart before the seen term",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:42:18.306Z",
-   "file": "20261125024218306-note-n56-heights-plan.jpg",
-   "source": "out/work/place/see/n56-heights-plan.jpg",
+   "time": "2026-11-25T03:04:12.237Z",
+   "file": "20261125030412237-note-gap-2470-where.jpg",
+   "source": "out/work/place/see/gap-2470-where.jpg",
    "kind": "note",
-   "label": "1.6 degree heights in plan, main beside 88d4f309. The apron slabs stand only in mine",
+   "label": "2470: where cap and relief stand over 1 px apart (green 1 to 4, yellow 4 to 16, cyan over 16 px)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:42:17.735Z",
-   "file": "20261125024217735-note-n56-wedge-term.jpg",
-   "source": "out/work/place/see/n56-wedge-term.png",
+   "time": "2026-11-25T03:04:11.503Z",
+   "file": "20261125030411503-note-q2476-77-east.jpg",
+   "source": "out/work/place/see/q2476-77-east.png",
    "kind": "note",
-   "label": "the wedge's term at 2448. Frame, plates through the same camera, heights alone in grey. The wedge is a slab of apron ground in the heights",
+   "label": "2476 and 2477 native, east side at the change of view",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:42:17.171Z",
-   "file": "20261125024217171-note-n56-tr.jpg",
-   "source": "out/work/place/see/n56-tr.jpg",
+   "time": "2026-11-25T03:04:10.784Z",
+   "file": "20261125030410784-note-q2464-mid.jpg",
+   "source": "out/work/place/see/q2464-mid.png",
    "kind": "note",
-   "label": "law and tone on the cap of 88d4f309, rise",
+   "label": "2464 native, middle",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:42:16.610Z",
-   "file": "20261125024216610-note-n56-t.jpg",
-   "source": "out/work/place/see/n56-t.jpg",
+   "time": "2026-11-25T03:04:10.045Z",
+   "file": "20261125030410045-note-q2688-east.jpg",
+   "source": "out/work/place/see/q2688-east.png",
    "kind": "note",
-   "label": "law and tone on the cap of 88d4f309, dive",
+   "label": "2688 native, east: slab in the rise",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T02:42:16.041Z",
-   "file": "20261125024216041-note-n56-mr.jpg",
-   "source": "out/work/place/see/n56-mr.jpg",
+   "time": "2026-11-25T03:04:09.278Z",
+   "file": "20261125030409278-note-q2474-east.jpg",
+   "source": "out/work/place/see/q2474-east.png",
    "kind": "note",
-   "label": "local trial, rise 2684 2686 2688 2701",
+   "label": "2474 native, east",
    "stop": "mars"
   }
  ]
