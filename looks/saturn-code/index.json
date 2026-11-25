@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T00:29:31.769Z",
+ "pushed": "2026-11-25T00:48:58.858Z",
  "head": "5e094e51d1c61410a3ad2a39c843c76dd9eff2ea",
- "note": "proof r57 of the tree with the dark dust and the stretched table is running: rise frames arriving, my early reading green so far (0.42 against 0.45), verdict of the report about 00:40",
+ "note": "rise of r57 green (pattern 0.40, limit 0.45); final 3720 of the tree under proof beside the approved, whole, foot and lower left; dive proving now",
  "looks": [
+  {
+   "time": "2026-11-25T00:48:57.569Z",
+   "file": "20261125004857569-note-f57_ll.jpg",
+   "source": "../../../../tmp/v/t21/f57_ll.png",
+   "kind": "note",
+   "label": "3720 final, lower left at full size (x 0 to 760, y 600 to 1080): approved left, film right. Not cured: near ringlets soft under the shutter, grains read as pale dashes, the dark gap blacker and wider than the approved"
+  },
+  {
+   "time": "2026-11-25T00:48:56.529Z",
+   "file": "20261125004856529-note-f57_foot.jpg",
+   "source": "../../../../tmp/v/t21/f57_foot.png",
+   "kind": "note",
+   "label": "3720 final, the foot at full size (x 900 to 1660, y 480 to 900): approved left, film right. Not cured: the band at the foot reads 137 to 148 tan where the approved has 89 to 127 grey; the dust stands at 0.65 of its depth at this height (the price of the green rise)"
+  },
+  {
+   "time": "2026-11-25T00:48:55.452Z",
+   "file": "20261125004855452-note-f57_whole.jpg",
+   "source": "../../../../tmp/v/t21/f57_whole.png",
+   "kind": "note",
+   "label": "3720 at the final tier of the tree under proof (right) beside the approved close image (left), half size. Pose fits; the foot band is lighter and browner than the approved, the globe more orange, the globe's shadow lies on the ring at the right"
+  },
   {
    "time": "2026-11-25T00:29:26.507Z",
    "file": "20261125002926507-note-globe_pair.jpg",
@@ -39,27 +60,6 @@
    "source": "../../../../tmp/v/t21/st1_foot3.png",
    "kind": "note",
    "label": "3720 the foot at 1 to 1, x 900 to 1540, y 480 to 880, draft, no grain: approved, the tree of 23:46 (dust whole), the tree of 00:14 (dust at 0.65 of its depth at this height): far from the approved's dark ringlets in both"
-  },
-  {
-   "time": "2026-11-24T23:47:31.191Z",
-   "file": "20261124234731191-note-e3567_sets.jpg",
-   "source": "../../../../tmp/v/t21/e3567_sets.png",
-   "kind": "note",
-   "label": "d253, 3567 crop x 640 to 1140, y 680 to 1080: full set, web set, difference times 4: one picture, the web set softer; no patch at another moment"
-  },
-  {
-   "time": "2026-11-24T23:47:30.181Z",
-   "file": "20261124234730181-note-e3567_c1.jpg",
-   "source": "../../../../tmp/v/t21/e3567_c1.png",
-   "kind": "note",
-   "label": "d253, 3567 crop x 300 to 800, y 250 to 650: 1920, 3840 halved, difference times 8: the same ringlets in the same places; the kept takes are sharper at 3840 and the gap by the globe is warmer at 1920 (the film's bloom)"
-  },
-  {
-   "time": "2026-11-24T23:47:29.206Z",
-   "file": "20261124234729206-note-e3612_all.jpg",
-   "source": "../../../../tmp/v/t21/e3612_all.png",
-   "kind": "note",
-   "label": "d253 after the cure, 3612 at 1920 and its difference to 3840 halved, times 8: mean 1.63 (was 2.47), cells over 12 of 20736: 0 (was 55); what is left is the ringlets' edges, the film's grain and a warm halo by the lit limb (the film's bloom, not mine)"
   }
  ]
 }
