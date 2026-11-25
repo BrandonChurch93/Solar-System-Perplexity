@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T19:38:32.319Z",
+ "pushed": "2026-11-25T19:53:43.809Z",
  "head": "965f6227d4a3b8d7081bcd60867eb5fbdd6fb408",
- "note": "table for the ruling on the thin sheet sent; the judge's slice of 3824 to 3832 on the working tree is rendering",
+ "note": "ruling d323: no sheet; reading G17 tile by tile at 3720, building the ringlets amplitude term by radius",
  "looks": [
+  {
+   "time": "2026-11-25T19:53:43.179Z",
+   "file": "20261125195343179-note-limb_top.jpg",
+   "source": "../../../../tmp/v/g17/limb_top.png",
+   "kind": "note",
+   "label": "3720 globe top, approved, main, no sheet tree (G17 tiles drawn)"
+  },
+  {
+   "time": "2026-11-25T19:53:42.585Z",
+   "file": "20261125195342585-note-far_left.jpg",
+   "source": "../../../../tmp/v/g17/far_left.png",
+   "kind": "note",
+   "label": "3720 far rings, approved, main, no sheet tree: the fine contrast under study (G17 tiles drawn)"
+  },
   {
    "time": "2026-11-25T19:38:06.805Z",
    "file": "20261125193806805-note-b_d0_3720.jpg",
@@ -45,21 +59,6 @@
    "source": "../../../../tmp/v/cure/four_3720.png",
    "kind": "note",
    "label": "3720 final at half size: approved, main, the last name, the working tree with the rings and the globe refit (28.05 against main 27.80)"
-  },
-  {
-   "time": "2026-11-25T18:52:01.774Z",
-   "file": "20261125185201774-note-saturn-rise-pops.jpg",
-   "source": "../../../../tmp/v/c1/saturn-rise-pops.png",
-   "kind": "note",
-   "label": "paced share, the judge's four largest pops of the rise (3873 to 3875: the stars under the plane's horizon, see the mail of 18:42)",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T18:52:01.107Z",
-   "file": "20261125185201107-note-changes_top.jpg",
-   "source": "../../../../tmp/v/c1/changes_top.png",
-   "kind": "note",
-   "label": "paced share, the judge's sheet of the rise: largest changes of pattern and place (pop 1.21 at 3874 as main, level step 0.13)"
   }
  ]
 }
