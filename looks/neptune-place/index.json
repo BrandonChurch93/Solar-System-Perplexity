@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T21:00:18.936Z",
+ "pushed": "2026-11-25T21:26:03.073Z",
  "head": "1914c0c1465ccf4f0e5846a02fe2e2a7186f741f",
- "note": "MAIL 1295: 4860's band is the low haze standing 14 to 24 px over the approved's limb (control F2); the hold's disc is main's, the sky beside it is not; 91.8 s per draft frame",
+ "note": "4860 with the limb cured reads 22.446 against main's 22.986 (91.0 s per draft frame); the hold's dot is the storm's eye (dark 0.7), the small Sun is the engine's far Sun; proofs of the pairs drawing now",
  "looks": [
+  {
+   "time": "2026-11-25T21:26:01.806Z",
+   "file": "20261125212601806-note-holdm.jpg",
+   "source": "../../../../tmp/holdm.jpg",
+   "kind": "note",
+   "label": "4605 at 4 times: the dark dot at the place (top) and the Sun (bottom): approved, main, the name, then controls: storm dark 0 (the disc goes, a faint ring stays), wall 0 to 1.6 (a soft whirl), sunGlare 2.0 (the star gets smaller: no lever of the stop gives glare or spikes), depth 0 (no change). BAD as it stands: a hard dark disc and a small Sun",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T21:26:00.607Z",
+   "file": "20261125212600607-note-top4-L1.jpg",
+   "source": "../../../../tmp/top4-L1.jpg",
+   "kind": "note",
+   "label": "4860, the top 440 rows: approved, main (sky plate), the name, the cure: the limb is a thin line on the approved's line (0 to 2 px on the lit side, 5 to 11 px high on the left as main's); the brown band in the sky is the film's own Milky Way and stays",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T21:25:59.394Z",
+   "file": "20261125212559394-note-pair-N12.jpg",
+   "source": "../../../../tmp/pair-N12.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved with the limb's cure (low haze scale 0.028 to 0.010, in the tree, not committed): whole 22.446 against main's 22.986 (the name 23.593); sky 3.203, band 1.616 (main 1.607), ground 17.627; G17 0.507 / p25 0.232 (the name 0.426 / 0.230); 91.0 s the draft frame at 1920",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T21:00:18.379Z",
    "file": "20261125210018379-note-hold-right.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/h-eye.jpg",
    "kind": "note",
    "label": "4860, the eye at full size: approved, N11 (985341693), controls G3 gain 0.62, H3 lump 0.35 and gain 0.62, H4 gain 0.62 and relief 0.025, H2 lump 0.35; G17 0.426, 0.604, 0.588, 0.492, 0.435",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T20:36:34.445Z",
-   "file": "20261125203634445-note-pair-H3.jpg",
-   "source": "../../../../tmp/pair-H3.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, control H3 (not committed): deck.lump 0.35 and deck.gain 0.62; G17 0.588 / p25 0.377 (N11 0.426 / 0.230, bar 0.8, main 0.934); ground part 17.794 (N11 17.527, main 19.759); 90 s per draft frame at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T20:20:32.900Z",
-   "file": "20261125202032900-note-fine-a.jpg",
-   "source": "../../../../tmp/fine-a.jpg",
-   "kind": "note",
-   "label": "4860 at full size under the limb, x 320 to 1120, y 270 to 405, 2 times: the approved, my tree, main; my far deck is smooth (G17 tiles 0.04 to 0.14)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T20:20:31.734Z",
-   "file": "20261125202031734-note-fine-b.jpg",
-   "source": "../../../../tmp/fine-b.jpg",
-   "kind": "note",
-   "label": "4860 at full size, the eye: the approved (top), my tree 985341693 (middle), main (bottom); G17 0.426 / p25 0.230 on my tree (main 0.934 / 0.549 by the same draft reader), 91.8 s the draft frame; the tree's oval and plain are smooth where the approved has fine streaks: G17's tiles on the plain read 0.07 to 0.2; with the sheet and the low haze both off the same tiles still read 0.09 to 0.27, so the fine grain is missing in the deck itself, not hidden by the air",
    "stop": "neptune"
   }
  ]
