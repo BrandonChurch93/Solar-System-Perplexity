@@ -1,9 +1,41 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T07:01:39.814Z",
+ "pushed": "2026-11-25T07:27:11.385Z",
  "head": "d91c0f63dfdec7bcd7700d55196f3b525ab922d4",
- "note": "commit 4b in work. Spot: values of the funnel and strands (config only). Pattern at 174 + 1/2 on my machine (preview, whole film frames, the reader's functions): commit 3 files 0.414, commit 4 0.547, commit 4 code with commit 3 ground values 0.415: the cause is in the values, not the bake. Frame 60 of d91c0f63:  dark (under 0.15) 0.242 | body (0.15 to 0.55) 0.583 | pale (0.65 to 0.85) 0.094 | white (over 0.85) 0.021 colour by band : 0.23 0.08 0.03 | 0.39 0.15 0.06 | 0.53 0.25 0.08 | 0.64 0.35 0.12 | 0.73 0.46 0.17 | 0.80 0.57 0.24 | 0.87 0.69 0.36 | 0.91 0.80 0.52 | 0.94 0.87 0.66 brightest 15 percent: half width 7.7 px, 545 shapes | fine detail 0.0299 | mean 0.331 ",
+ "note": "work on commit 4b, trial K1 (not the state to be named): frame 60 dark 0.251 body 0.635 pale 0.053 white 0.003; half width 11.1 px, 252 shapes; fine detail 0.0159; mean 0.297; distance 0.072",
  "looks": [
+  {
+   "time": "2026-11-25T07:26:28.436Z",
+   "file": "20261125072628436-note-rise-D.jpg",
+   "source": "../../../../tmp/v/rise-D.jpg",
+   "kind": "note",
+   "label": "where the pattern of d91c0f63 changes most from 218 + 1/2 to 226 + 1/2 (my chain at preview, own body): behind the top of the arcade at the limb",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:26:27.322Z",
+   "file": "20261125072627322-note-4b-217-tight.jpg",
+   "source": "../../../../tmp/v/4b-217-tight.jpg",
+   "kind": "note",
+   "label": "frame 217, 1 to 1: cells.tight.power 0.4 (commit 4) holds the far ground, 1.1 (commit 3) lets it go to the globe's map",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:26:26.256Z",
+   "file": "20261125072626256-note-k1-60.jpg",
+   "source": "../../../../tmp/v/k1-60.jpg",
+   "kind": "note",
+   "label": "frame 60, 1 to 1: approved, commit 4, trial K1 (commit 3 values of threads, tongues, boil, points back): the fibres are gone with the reading, not taken as it stands",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T07:26:25.031Z",
+   "file": "20261125072625031-note-4b-spot90.jpg",
+   "source": "../../../../tmp/v/4b-spot90.jpg",
+   "kind": "note",
+   "label": "frame 90 at the master, 1 to 1: approved, take batch 9 Sun files, trial K1 of commit 4b (spot cured), commit 4",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T07:01:39.199Z",
    "file": "20261125070139199-note-spot90-s3.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/e20-near-90.jpg",
    "kind": "note",
    "label": "commit 5 in work (e20), frame 90 draft, approved left, 1 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T06:36:21.967Z",
-   "file": "20261125063621967-note-e20-near-60.jpg",
-   "source": "../../../../tmp/v/e20-near-60.jpg",
-   "kind": "note",
-   "label": "commit 5 in work (e20), frame 60 draft, approved left, 1 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T06:11:14.464Z",
-   "file": "20261125061114464-note-e10-px.jpg",
-   "source": "../../../../tmp/v/e10-px.png",
-   "kind": "note",
-   "label": "sun trial e10 frame 60, approved left, 4 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T06:11:13.765Z",
-   "file": "20261125061113765-note-e10-near.jpg",
-   "source": "../../../../tmp/v/e10-near.jpg",
-   "kind": "note",
-   "label": "sun trial e10 frame 60, approved left, 1 to 1, near box",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T05:58:54.264Z",
-   "file": "20261125055854264-note-e7-zoom.jpg",
-   "source": "../../../../tmp/v/e7-zoom.jpg",
-   "kind": "note",
-   "label": "Commit 5 trial e7, the same frame, a box of 300 by 200 px at 3 times, approved left",
    "stop": "sun"
   }
  ]
