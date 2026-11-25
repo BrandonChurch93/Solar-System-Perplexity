@@ -92,6 +92,20 @@ The old level pictures that `plates.py plate` mixes in outside the ring: `git sh
 
 Checks: the sheets `out/work/mercury/place/repaint/L<N>-sheet-*.jpg` (lead beside result), `B<N>-view.jpg`, the top down dive sheet (`tilepatch.py on topdown`, 12 frames, `off`), the texel view of the dive (`DIAG=texels`), the dense sheets of dive and rise, the kept frames against `out/stills`.
 
+## ONE BODY: the first level and the plates as one field (step 9 of the plates; `plates.json` `oneBody`)
+
+Files, both sets: `patch-1.jpg`, `patch-2.jpg`, `patch-3.jpg`, `patch-4.jpg`, `patch-3r.jpg`, `patch-4r.jpg` and `tone.png` under `public/assets/mercury/<set>/`. No generation: the files are read from files of the stop (the commit `oneBody.from`, which holds the plates of steps 1 to 8 and the first level of 27f1ba3e).
+
+What it is: two levels of the pyramid show the same bodies at every scale they share, so that a level coming in by its texels has nothing to exchange and only brings what is finer (the law is written at the head of `assets-src/mercury/place/onebody.py`). Outside the disc of `src/stops/mercury/own.json` `hold` (4.5 to 6.5 degrees from the spot) every plate is the map's own first level reduced into its frame plus the place's detail under `fineDeg`; the first level is the picture of the file of 27f1ba3e there (decoded and written again at the same quality). Inside the disc the place's bodies stand at every level, the first one included, in the hero's light (`restyle`: by rank onto the hero's bands, the broad band capped, the first pit onto the hero's own ring crater); `tone.png` holds the place's own picture over that field, and the globe turns from the one to the other by the eye's height (`own.json` `tone`).
+
+1. Once: `mkdir -p out/work/mercury/place/onebody/from` and, for each of the six files, `git show <oneBody.from>:public/assets/mercury/full/<file> > out/work/mercury/place/onebody/from/<file>`.
+2. `python3 assets-src/mercury/place/onebody.py make s9`: writes `out/work/mercury/place/onebody/s9/{full,web}/` (six JPEGs a set, quality `quality`, and `tone.png`) and `restyle.json` (the curves). It prints, per band, the place's and the hero's 1, 50 and 99 percent values, the share of the first level that changes (0.0167) and the light's spread. About 100 seconds and 4.85 GB of memory: never beside a render.
+3. The likeness as the reader takes it (`assets-src/shared/globe-levels.py`, detail 8 to 40 px, 99th percentile, limit 0.45): `python3 assets-src/mercury/place/maplevel.py DIR/map-76.png`, then `globe-levels.py --dir DIR --level map-76.png:76 --level patch-1.jpg:76`, `--level patch-1.jpg:76 --level patch-2.jpg:38 --level patch-3.jpg:19 --level patch-4.jpg:9.5`, `--level patch-2.jpg:38 --level patch-3r.jpg:19 --level patch-4r.jpg:9.5`. Take s9: the map to level 1 0.69 (over the limit; the first level outside the disc is the picture of 27f1ba3e, as before), 1 to 2 0.14, 2 to 3 0.02, 3 to 4 0.04, 2 to 3r 0.12, 3r to 4r 0.04.
+4. `python3 assets-src/mercury/place/onebody.py install s9`, then `python3 assets-src/mercury/squeeze.py`. Both write over files a running render may hold: never beside a render.
+5. `python3 assets-src/mercury/place/onebody.py law s9`: writes `src/stops/mercury/hue.json`, the map's own colour against its brightness inside the disc (16 knots between the percentiles `oneBody.law` of the map's brightness there; it reads `public/assets/mercury/full/wrap-color.jpg`, no plate). Why: inside the disc the first level stays in at every distance and its bright rims are warm, while the map's bright ground is cool; round the disc the ground is the map at the hold and the first level once it is in by distance. The globe (`globe.ts` `mapHue`) gives the held ground the map's colour at the same brightness by the share by which the first level is not yet in by distance, with the brightness untouched. Measured at 615 against main inside the judged box, luminance left out: Lab b +0.50 before, -0.05 with the law; at 717 the disc keeps the first level's colour.
+
+Takes (by code, each a recipe in `plates.json` `oneBody.takes`, the kept ones on disk under `out/work/mercury/place/onebody/`): s1 (the place's bodies as they are, the parent's rims and colour at every level: hot blots at 735), s5 (parent over 0.16 degrees, plain colour, the map's ground laid into the first level: rims of 717 lost), s6 (the hero's light by rank: a cream mark at 615), s7 (the broad band capped: no cream mark, the ring crater dim), s9 (s7 with the first pit matched to the hero's own crater): used. Dropped ones are named in `oneBody.dropped`.
+
 ## The place's craters as relief of the globe: tilt.png
 
 Files, both sets: `public/assets/mercury/full/tilt.png` (2048 square, one channel, 8 bit, 1003922 bytes) and `public/assets/mercury/web/tilt.png` (1024 square, 257479 bytes). Values written beside them: `src/stops/mercury/tilt.json`. No generation, no takes: the file is read from files of the stop.
@@ -103,13 +117,15 @@ What it is: the place's craters on the globe at every height. The globe shows th
 
 Work files: `out/work/mercury/place/tilt/` (not committed). The tool needs `out/work/mercury/place/tiles/cameras.json` (the Sun of the lit picture, written by `tilepatch.py`) as `plates.py` does; the same Sun stands in `tilt.json` `sun` for the globe.
 
-## The body of the place's ground: tone.png
+State of ONE BODY: with `own.json` `hold` and `tone` set the globe gives the lean no weight (the place's bodies stand in the levels themselves). The file is still shipped and bound; it and its code can go once the state is ruled.
 
-Files, both sets: `public/assets/mercury/full/tone.png` and `public/assets/mercury/web/tone.png` (1024 square, three channels, 8 bit, 1110583 bytes, the same file in both sets so that the two sets show the same thing at the same height).
+## The place's own light: tone.png
 
-What it is: the place's own lit picture over the square of `tilt.json` (`widthDeg` 38 about the spot, north up, gnomonic), taken back out of level 2 of the plates as for the relief, under a Gaussian of `tone.sigmaDeg` (0.1 degrees, about two texels of the map's level 1), written through the film curve and sRGB. The globe reads it as the body of the place's ground: a plate's picture over it is the plate's fine detail, which comes with the plate's texels; the body itself comes by the eye's height (`src/stops/mercury/own.json`, `tone`; the law is described in that file's `about`).
+Files, both sets: `public/assets/mercury/full/tone.png` and `public/assets/mercury/web/tone.png` (2048 square, three channels, 8 bit, 831558 bytes, the same file in both sets so that the two sets show the same thing at the same height).
 
-How it is made: `python3 assets-src/mercury/place/tilt.py make` writes it beside `tilt.png` when `tilt.json` has the entry `tone` (`file`, `size`, `sigmaDeg`); `python3 assets-src/mercury/place/tilt.py install` copies both. The same run gives `tilt.png` to the byte of the committed file.
+What it is: over the square of `tilt.json` (`widthDeg` 38 about the spot, north up, gnomonic), what the levels must be multiplied by to give the place in its own light. Inside the disc of `own.json` `hold` it is the place's own picture over the field the levels hold, both under a Gaussian of the first band's width (0.04 degrees, one texel of this file); outside it, the place's tone over the map's under a Gaussian of `lightDeg` (0.7 degrees). Held between 1/16 and `oneBody.light.most`, written through the film curve and sRGB. The globe reads it by the eye's height (`src/stops/mercury/own.json`, `tone`; the law is in that file's `about`).
+
+How it is made: step 2 of ONE BODY writes it beside the plates; step 4 installs it.
 
 ## The two sets and the levels: one law (`src/stops/mercury/wrap.json` `plates`, `fine.json` `size.full`)
 

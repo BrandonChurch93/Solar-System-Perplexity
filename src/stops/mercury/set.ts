@@ -28,6 +28,7 @@ import { SunPlate } from './sunplate'
 import sunJson from './sunplate.json'
 import tiltJson from './tilt.json'
 import ownJson from './own.json'
+import hueJson from './hue.json'
 
 interface SkyDef { file: string; vfovDeg: number; margin: number; feather?: number; gain: number; add: boolean; ring: number[] }
 
@@ -96,7 +97,7 @@ export const createSet: SetFactory = async (ctx) => {
 
   const globeOf = (): Globe => new Globe({
     map, mapWidth: (map.image as unknown as { width: number }).width, mapFull: wrap.sets.full.color[0], height: wrapHeight, heightWidth: wrap.height ? sizes.height[0] : 4096, light: look.light,
-    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.levels.map(() => wrap.sets.full.plates[0]), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place, tone: { map: toneMap, floor: ownJson.tone.floor, most: ownJson.tone.most, dark: ownJson.tone.dark }, tilt: { map: tiltMap, widthDeg: tiltJson.widthDeg, zero: tiltJson.zero, step: tiltJson.step, sun: tiltJson.sun as [number, number, number] } } : undefined,
+    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.levels.map(() => wrap.sets.full.plates[0]), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place, tone: { map: toneMap, dark: ownJson.tone.dark }, hue: { floor: hueJson.floor, at: hueJson.at as [number, number], rgb: hueJson.rgb }, tilt: { map: tiltMap, widthDeg: tiltJson.widthDeg, zero: tiltJson.zero, step: tiltJson.step, sun: tiltJson.sun as [number, number, number] } } : undefined,
     fine: { texture: fineMap, period: fineJson.size[key][0]!, full: fineJson.size.full[0]!, guardShare: fineJson.guardShare, top: fineJson.top, shift: look.fine.shift, edge: look.fine.edge, blur: look.fine.blur, shade: look.fine.shade },
   })
   const globe = globeOf()

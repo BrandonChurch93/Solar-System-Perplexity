@@ -401,9 +401,18 @@
   "base": "",
   "tiles": "u-",
   "featherPx": 240,
-  "ringDeg": [4.5, 5.5],
-  "alpha": [0.0, 0.5],
-  "clip": [0.6, 0.9],
+  "ringDeg": [
+   4.5,
+   5.5
+  ],
+  "alpha": [
+   0.0,
+   0.5
+  ],
+  "clip": [
+   0.6,
+   0.9
+  ],
   "floor": 0.05
  },
  "first": {
@@ -411,12 +420,181 @@
   "widthDeg": 76,
   "sigmaDeg": 1.5,
   "top": 4,
-  "lit": [0.2, 0.32],
+  "lit": [
+   0.2,
+   0.32
+  ],
   "night": 0.6,
   "faint": 1.5,
   "rimDeg": 0.8,
   "edgeDeg": 0.8,
   "inside": 0.95,
   "floor": 0.02
+ },
+ "oneBody": {
+  "from": "45590da315c5d242180950c644cdeefbd29cde74",
+  "parent": {
+   "file": "patch-1.jpg",
+   "widthDeg": 76
+  },
+  "plates": [
+   {
+    "file": "patch-2.jpg",
+    "widthDeg": 38
+   },
+   {
+    "file": "patch-3.jpg",
+    "widthDeg": 19
+   },
+   {
+    "file": "patch-4.jpg",
+    "widthDeg": 9.5
+   },
+   {
+    "file": "patch-3r.jpg",
+    "widthDeg": 19
+   },
+   {
+    "file": "patch-4r.jpg",
+    "widthDeg": 9.5
+   }
+  ],
+  "light": {
+   "file": "tone.png",
+   "size": 1024,
+   "most": 8.0
+  },
+  "floor": 0.003,
+  "hue": 1.5,
+  "keepDeg": [
+   14,
+   15.5
+  ],
+  "take": "s9",
+  "takes": {
+   "s1": {
+    "fineDeg": 0.03,
+    "toneDeg": 2.0
+   },
+   "s5": {
+    "fineDeg": 0.16,
+    "toneDeg": 2.0,
+    "plain": true,
+    "swap": true,
+    "map": [
+     0.1,
+     0.25
+    ]
+   },
+   "s6": {
+    "fineDeg": 0.16,
+    "toneDeg": 2.0,
+    "lightDeg": 0.7,
+    "plain": true,
+    "swap": true,
+    "restyle": {
+     "bands": [
+      0.04,
+      0.1,
+      0.25,
+      0.6
+     ],
+     "ring": [
+      7,
+      15
+     ]
+    },
+    "light": {
+     "file": "tone.png",
+     "size": 2048,
+     "most": 8.0
+    }
+   },
+   "s7": {
+    "fineDeg": 0.16,
+    "toneDeg": 2.0,
+    "lightDeg": 0.7,
+    "plain": true,
+    "swap": true,
+    "restyle": {
+     "bands": [
+      0.04,
+      0.1,
+      0.25,
+      0.6
+     ],
+     "ring": [
+      7,
+      15
+     ],
+     "caps": [
+      null,
+      [
+       3,
+       97
+      ],
+      [
+       20,
+       75
+      ]
+     ]
+    },
+    "light": {
+     "file": "tone.png",
+     "size": 2048,
+     "most": 8.0
+    }
+   },
+   "s9": {
+    "fineDeg": 0.16,
+    "toneDeg": 2.0,
+    "lightDeg": 0.7,
+    "plain": true,
+    "swap": true,
+    "restyle": {
+     "bands": [
+      0.04,
+      0.1,
+      0.25,
+      0.6
+     ],
+     "ring": [
+      7,
+      15
+     ],
+     "caps": [
+      null,
+      [
+       3,
+       97
+      ],
+      [
+       20,
+       75
+      ]
+     ],
+     "near": {
+      "at": [
+       1.8,
+       -0.5
+      ],
+      "deg": [
+       1.2,
+       1.7
+      ]
+     }
+    },
+    "light": {
+     "file": "tone.png",
+     "size": 2048,
+     "most": 8.0
+    }
+   }
+  },
+  "dropped": "s2 (s1 with no disc: the place's bodies gone at the handover), s3 (plain colour, fineDeg 0.05), s4 (s3 with the map's own ground in the first level), s8 (s7 with the middle band free: the cream arc at 615 brighter), s10 (s9 with the second pit painted over by the place's own plain and a bite in the disc: the set shows that pit through the handover, so the globe would hold another ground than the set), s11 (s9 with the law of colour measured inside the disc: no change to see at 615)., s12 (s9 with the map's own colour over 0.6 degrees times the map's law against the bands' sum: half a cure of the warm tint at 615), s13 (s9 with the map's own colour at the same brightness: 615 right, but the disc at 717 grey in the first level's golden ground; the hold's colour went to the globe, src/stops/mercury/hue.json). Kept on disk with their recipes: s1, s5, s6, s7, s9. s5 lays the map's own ground into the first level (`map`): the rims of the left two thirds of 717 go; out from s6 on.",
+  "law": [
+   5,
+   99.5
+  ]
  }
 }

@@ -3258,3 +3258,377 @@ No other change of the hold in this commit." Attachments: `/home/user/.perplexit
 - NOT DONE: the comparison with the mark at every half frame (MAIL 770). Only every fourth frame 717 to 749 was looked at. So the state is pushed and not named.
 - tsc clean at 07:12. Tests running since 07:12 (`/tmp/m/t3.sh`, log `/tmp/m/test-f.log`).
 - 07:20 tests on the merge (2931e023 plus this state): tsc clean; the whole run 61 files passed, 1 file with 1 failure of 24: `tests/globe-cap.test.ts`, "brings a colour level in by the texels of its parent a 1080th of the frame height", stopped at 5003 ms (the 5 s limit of the test; the reporter then fell over on `Map.groupBy` and printed no totals). That file alone: 24 of 24 passed in 40.9 s. The test is not touched (MAIL 670).
+
+### 07:24 state F pushed as 45590da3 (NOT named); its lines; first state mail sent; strip for MAIL 770 running
+
+- Commit `45590da315c5d242180950c644cdeefbd29cde74` on agent/mercury-place, parent the plumbing merge `2931e023` of 9fc760b3 with main `71a573d4`. Pushed 07:21. NOT named: MAIL 770's comparison at every half frame is not done.
+- Gate, word for word: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: mercury/web 353 MB, mercury/full 1397 MB". 3 MB are left under the full set's limit.
+- Smooth, path only: "smooth mercury: green. out/work/smooth/mercury.md", "VERDICT: green. No number is over its limit."
+- globe-levels: patch-1 to patch-2 99th percentile 1.09 OVER (as on 9fc760b3, the plates are the same), patch-2 to patch-3r 0.10, patch-3r to patch-4r 0.02.
+- Net of my three folders against main: +2.002 MB.
+- Looks pushed 07:22 (`01483f3c`).
+- CORRECTION of the 07:13 entry: the later reading of the pair 733 to 741 on `cj` is 0.79, not 0.81 (0.81 was the form `ci`). So against 9fc760b3 the later reading is 0.04 to 0.18 higher from 725 to 741.
+- The first state mail to the Builder left at 07:24 (two minutes past the 90 of MAIL 930 (5)), text `/tmp/m/mail-f.txt`. It says: pushed, not named; what the law is; A, B, D dropped with pictures; the measures above; the fault at 731 to 745 as the worst; that my 04:41 mail was wrong ("nothing changes places"); six slices asked on 45590da3 (K 1412 to 1451, 1436 to 1475, 1460 to 1499, 1948 to 1987, 1972 to 2011, 1996 to 2035).
+- Strip running since 07:23 (`/tmp/m/strip.sh`, log `/tmp/m/strip.log`, ends `STRIPDONE`): K 2032, 1558, then every missing K 1434 to 1510 into `out/work/mercury/place/cj`. Nothing heavy beside it.
+
+### 07:41 the machines' reader runs here on my own drafts and gives the machines' numbers; F whole frames seen; a cure of the streaks under way
+
+- TOOL: `/tmp/m/pic.py DIR K0 K1 OUT.json` (every K, the machines' way: rate 2, changeFrames 16, window 32) and `/tmp/m/pic1.py DIR K0 K1 STEP OUT.json` (STEP 2: whole frames only, changeFrames 8) call `tools/img/smooth.py` `pictures` with the poses of `/tmp/m/poses-a1.json`, the job that `tools/smooth.ts` builds (scale 0.25, floor 0.25, grid 16 by 9, changeBlur 20, patternPx 40, patternFloor 1). Nothing of the shared tool is touched.
+- PROOF on the 9fc760b3 drafts (`a1`, K 1412 to 1484): largest pattern 1.13 at 717, over the limit from 712 + 1/2 to 723 (22 capture frames). The machines said 1.13 from 717, 21 over from 712 + 1/2. So the reader here is the machines' reader, on drafts rendered here. Whole frames only (`pic1.py`, STEP 2): 1.11 at 717, over 713 to 720; lower than rate 2 at 720 to 723 (0.37 to 0.57 against 0.50 to 0.59). Use rate 2 before a number is said.
+- What the measure is (read in `tools/img/smooth.py` `pattern`): 1 minus the correlation of the two frames' detail between Gaussians of 8 px and 40 px, each over its own local contrast, the 99th percentile over the judged area. So a slow exchange of two unlike patterns of equal contrast reads about 0.28 where the share moves 0.3 to 0.7 in 8 frames, and a pattern that stays (the plates' detail) holds the number down while another leaves.
+- 1016 on F (`cj/k002032.png`) against main's still of 02:14 (`sl0f`): the planet's disc is to the byte (rows of 1290 equal pixels across the disc); sky and Sun differ since main moved (take batch 9). 779 on the pushed form (`cj/k001558.png`): within 1 code of the 9fc760b3 draft, 0 pixels over 1 code.
+- F whole frames beside the mark, SEEN (`/tmp/m/s1.jpg` 719, 721, 723; `s2.jpg` 727, 731, 735; `s3.jpg` 739, 743, 745; `s4.jpg` 747, 749, 753): the mark shows a grey disc of the place's own light from 721 to 731 inside the hero's golden ground; F has none, the hero's ground goes on. From 731 the map's rim highlights lie soft on the place's ground, 739 the worst (cream streaks, stretched sideways); 747 on F equals the mark by eye. Looks added (s2, s3).
+- Killing a render: `pkill -f rate2f.ts` leaves the two node processes alive and they open a new browser and go on. Kill them with `kill -9` and check `ps`. Found twice (07:34, 07:40); no still was written by a wrong build (last `cj` file 07:39:31, build of F2 after 07:40:08).
+- The first strip was stopped at 07:40. `cj` now holds K 1434 to 1452 even, then every fourth to 1510, 1558, 2002, 2018, 2032.
+- CURE UNDER TRIAL (F2, in the working tree, not committed): inside the place's disc the map gives up its own detail as the lens outruns it. `keep` is 1 while the map has 0.67 texels a pixel or more and 0 under 0.2, smooth in the logarithm, per pixel, through the frame factor; the map's ground there is its own body (the map read with a fixed footprint of `bodyDeg` 0.3 degrees, the same in both sets) times its detail to the power `keep`. Nothing else changes: the plates' detail by texels, the bodies by height. Above 0.67 texels a pixel the branch is not run, so 615 and 717 keep their bytes. Stills `out/work/mercury/place/ck`.
+
+### 07:43 MAIL 961 from the Builder, verbatim
+
+"MAIL 961 from the Builder (/root), 07:43 UTC. Answer to your first state of way C (45590da315c5d242180950c644cdeefbd29cde74, looks 01483f3c).
+
+1. Logged as a state, not named. The six slices you asked for are out on that sha since 07:33 as check mw1, parts 01 to 06 (dive capture frames 1412 to 1451, 1436 to 1475, 1460 to 1499; rise 1948 to 1987, 1972 to 2011, 1996 to 2035). Each report comes to you when it is back.
+
+2. RULED: the trade is not an end state. What I see on your own look of 737 at 1 to 1 (x 160, y 540): the mark (b0b87889) holds clean rims; way C lays soft pale patches with orange and blue green fringes on the rim highlights over the right two thirds of the crop. That is worse than the mark in the dive Brandon called seamless, so it cannot go into a take as it stands, whatever 717 reads.
+
+3. The cause, as I read your numbers: level 2 is another picture than the map (globe levels, patch-1 to patch-2: 99th percentile of the pattern 1.09 against the limit 0.45). While the two pictures differ in their bodies between 0.1 and 1 degree, every law that hands the eye from one to the other shows the exchange somewhere: by distance it is the pattern at 717, by the eye's height it is bodies that change places and the pale patches at 731 to 745. Moving the exchange is a cure of the symptom.
+
+4. The cure at the cause is the one ruled for Earth and Neptune (ONE BODY): the place's plates and the map show the same bodies at every scale they share. Paint patch-2, and any level under it that shares a scale with its parent, so that its craters, rims and tone bodies between 0.1 and 1 degree are the parent's own in place, size and light: take the parent reduced to the plate's frame as the base and add only what is finer. The place's own bodies begin under the scale the parent holds. Then the handover by texels has nothing to exchange and the fine detail arrives by distance alone, which is the frame law (d253).
+
+5. Proof I want before any slice: the likeness of patch-1 to patch-2 and of the map to patch-1 on the band each pair shares, as the reader takes it (detail 8 to 40 px, 99th percentile under 0.45), with a panel of both pictures and their detail. If painting cannot reach it on a part of the band, say where, with the panel. Do not hide a remainder under a tone, a veil or the eye's height.
+
+6. Takes: assets.maxTakesPerAsset holds for each asset; each kept take with its recipe beside it.
+
+7. Mercury's round 2 of 3 runs on take batch 9's Mercury, not on way C. Way C is for round 3 of 3. State mail with the likeness panel by 09:15 UTC. NAMED when your own reader is green on 700 to 760 and 975 to 1016 and the 1 to 1 crops of 731 to 745 hold against the mark."
+
+### 08:07 ONE BODY: what it means on this stop, first take s1 made and measured on the files (stills rendering)
+
+- 07:47 looks pushed (4c46e0c9): F beside the mark, whole frames 727 to 745. Trial F2 (the map gives up its own detail by its texels to a pixel) reverted unread: it hides a remainder under a law, which MAIL 961 item 5 forbids.
+- READ AS (MAIL 961): the files become one field. Each plate shows its parent's bodies; the place adds only what is finer. Proof on the files with `globe-levels.py` (map to patch-1, patch-1 to patch-2, and down), panel, state mail by 09:15. NAMED only on a green reader of my own on 700 to 760 and 975 to 1016 and the 1 to 1 crops of 731 to 745 against the mark.
+- FACT 1 (pictures `/tmp/m/t1.jpg`, the mark at 745, 752, 756, 760): from 745 the frame is filled by the surface view's own craters of 1 to 2 degrees, which the plates hold as the lay back. If the plates carried the map's bodies there, the whole picture would change places at the handover (745 to 760, 960 to 975). So inside the surface view's reach the bodies cannot be the map's without moving the exchange to T.
+- FACT 2 (`/tmp/m/c7.jpg`, patch-1 and patch-2 at 14 degrees across): the hero's ring crater (2.4 degrees wide, 1.9 east and 0.6 south of the spot, shadow on its upper right) and the place's largest crater (1.9 degrees wide) stand at the same place with the same light direction. The largest body is already one; the middle bodies (0.2 to 1 degree) differ.
+- THE WAY TAKEN (d251 with MAIL 961): one field F in the map's units at every level. Outside a small disc (4.5 to 6.5 degrees from the spot, `own.json` `hold`) F is the parent whole plus the place's detail under `fineDeg` 0.03 degrees. Inside it the place's bodies are the planet's at every level, the first level included, on the hero's tone, and the first level is held there from the hold on (`hold`, with the globe's relief shading out by the same weight), so nothing changes places in time. The place's light is a separate smooth colour L (tone.png now holds it: the place's tone over the map's tone above `toneDeg` 2 degrees); F times L is the place in its own light, to the old plate inside the disc, so the handover at T keeps the mark's picture. The globe lights F by its one law; L comes in by the eye's height (the `tone` law of F, 1.25 to 0.05 radii). What still comes by the eye's height is light alone, no body.
+- TOOL `assets-src/mercury/place/onebody.py make|install [take]`, values `plates.json` `oneBody` (takes s1: the disc of `own.json`; s2: no disc, the map's bodies everywhere). `maplevel.py` lays the map into the first level's frame for the likeness of map to patch-1. Sources: the files of 45590da3 (`git show 45590da3:public/assets/mercury/full/<file>` into `out/work/mercury/place/onebody/from`).
+- SHADER (`globe.ts`, 7 lines): with `tone` on, the plates are no longer drawn as their own light by their weight; the field `ground` (map and plates by their texels) is lit by the globe, and inside the ring the colour is the power mix of that and `ground` times L times the gain by G. The relief of tilt.json is off with `tone` (the bodies are in the field).
+- MEASURED on the files of take s1 (`globe-levels.py`, limit 0.45): patch-1 to patch-2 0.10 (was 1.09), patch-2 to patch-3 0.01, patch-3 to patch-4 0.03, patch-2 to patch-3r 0.10, patch-3r to patch-4r 0.03. Panel `/tmp/m/ob-s1.png`.
+- MEASURED map to patch-1 (`maplevel.py`, the map is `wrap-color.jpg`, 8192 across, 0.044 degrees a texel): 0.69 OVER on the file of 45590da3 (main's, from 27f1ba3e) and 0.73 with take s1. Panel `/tmp/m/ob-m0.png`, looked at: all of it lies on a diagonal band through the frame, upper left to lower right, where the map shows a dark rough strip and patch-1 a pale plain. That is main's own difference of the two files, not the place.
+- SIZE: the s1 plates are larger (full: patch-1 7.29 MB from 6.70, patch-2 9.03 from 7.06, patch-3 9.13 from 6.44, patch-3r 9.05 from 6.43, patch-4 8.55 from 6.97, patch-4r 7.98 from 6.53, tone.png 0.21 from 1.11): about 10 MB more in the full set, G15 has 3 MB left. To settle before a commit (tilt.png 1.0 MB is no longer read with `tone` on; quality or chroma of the plates).
+- 08:05 take s1 installed, stills `ob1` started (K 1434, 1470, 1230, 1490, 1520, 1450, 1462, 1478, 1504).
+
+## 08:24 UTC MAIL 974 from the Builder (verbatim)
+
+MAIL 974 from the Builder (/root), 08:24 UTC. To mercury_builder. Reader results and one line about your plan file.
+
+1. Your plan file on take/b10e. On the engine cut 8cfc71f2 I had laid the line travel: { turnDeg: 111.27, side: 1 } into src/stops/mercury/plan.ts. That was my miss (d281): it broke two unit tests and moved your rise 984 to 1016. It is taken back: take/b10e b1721d2ca4f39d06c05498b4f02ffd62beb05e37 carries turnDeg 108, as take b9 and your branch do. Nothing for you to change. If your branch ever showed 111.27, say so.
+
+2. Way C (45590da3), the rise, by my reader on two machines: RED by a hair in both slices. Frames 974 to 993 1/2 (mw1-04) and 986 to 1005 1/2 (mw1-05): the pattern of the picture changes in place by 0.47 from frame 990 to 8 film frames later, band 8 px, limit 0.45, 4 frames over, first 989 + 1/2. Nothing else over a limit in those slices. The report and the changes panel of mw1-05 are attached. Slices 01 to 03 and 06 are still running.
+
+3. Counts on ce1faae (ms9-04): GREEN, the warm list holds 53 to 60 frames; it goes into the warm commit after the merge of batch 9.
+
+4. What I ask in your 09:15 state mail: what changes in place at 989 to 998 by cause (name the thing: a level of the ground, the plate, the air), what take b9 reads over the same frames by your own chain, and whether way C is no worse than take b9 on every number of the dive and the rise. If it is, I lay it on take/b10e once slices 01 to 03 and 06 are back. If the 0.47 has a cure by cause, make it first.
+
+Attached: mercury-rise-k1972-2011.md (pattern 0.448 at 988 + 1/2, 0.451 at 989 + 1/2, 0.47 at 990 and 990 + 1/2, 0.46 at 991, 0.44 at 991 + 1/2; most at pixel 684, 524; largest pop 1.03, level step 0.18) and its changes panel.
+
+## 08:32 UTC ONE BODY, takes s1 to s5 (nothing committed; the tree holds cdc5d515's stop files while b9's rise renders)
+
+- 08:10 stills `ob1` of take s1 seen beside the mark (`/tmp/m/o1.jpg`, `/tmp/m/o2.jpg`): inside the disc the mark's picture holds at 745 and 760; outside it the map's bodies stand soft, blue and orange with white streaks toward the limb. Worse than the mark. Looks pushed 08:11.
+- FACT: `globe-levels.py` judges the grey picture only, normalised (0 the same pattern, 1 unrelated). Band of patch-1 to patch-2: 0.19 to 0.93 degrees; patch-2 to patch-3 0.09 to 0.46; map to patch-1 0.44 to 2.2.
+- FACT: G15's MB are not file bytes (public is 1.3 GB on disk); the plates' JPEG size does not move it.
+- Scan, patch-1 to patch-2, the place's detail ADDED over the whole parent under `fineDeg`: 0.03 0.10, 0.06 0.12, 0.09 0.14, 0.12 0.15, 0.16 0.17. With `swap` (the parent's part under `fineDeg` REPLACED by the place's): 0.08 0.04, 0.16 0.12, 0.24 0.26. Limit 0.45. So the mark's photographic field outside the disc (the old repaint, lock 0.24 degrees) is inside the reader's likeness once its light is out of the file and the parent's lows are under it.
+- Map to patch-1, 0.69 on main's bytes: all on a strip along the day and night line, 5.7 degrees from the spot on the night side, running upper left to lower right through the whole level. The map holds a strip of small shadowed craters, main's patch-1 (file of 567b3a55, round 36) a pale smooth plain. Panel `/tmp/m/ob-m0b.png`. Cure in `onebody.py` (`map`: [0.1, 0.25]): where the reader's own function reads another picture, the first level takes the map's own ground (13 percent of the level). After it 0.41, all of it the disc itself (the place's bodies in patch-1, d251; the map is never drawn there, `stays`).
+- Hero's ground against the place's field inside the disc (ground units): hero 1, 50, 95, 99 percent 0.014, 0.19, 2.66, 4.86, mean 0.457; place 0.020, 0.25, 0.65, 1.03, mean 0.289. The pits are alike; the hero's lit rims are 4 times brighter, orange (1.35, 0.93, 0.68), its shadows blue (0.91, 1.01, 1.12). That is the "dark matte patch" at 615.
+- `gleam` (own.json, globe.ts): inside the hold's disc the hero's light makes the place's lit ground shine as the hero's rims do: ground times (1 + gain h) with h = x / (1 + x), x = (brightness / knee) to the power, warm tint by h, cool tint in the dark. Light only; gone at G 1 with the place's own light. Not yet seen in a frame.
+- Take s4: fineDeg 0.05, plain (the parent's colour under 2 degrees taken out of the plates inside `keepDeg`), map: files 0.41, 0.05, 0.01, 0.01, 0.10, 0.01. Take s5: the same with swap and fineDeg 0.16 (being made).
+- `stays` now times `front` (the far side of the planet no longer takes the disc).
+- 08:24 MAIL 974. b9's Mercury is cdc5d515 (trees equal to take/b9 8cbb3061; take/b10e differs in plan.ts by one line). `a1` was 9fc760b3, not b9.
+- 08:28 DISK FULL (1.3 MB free) at the build: fetch of the take branches. Deleted: the scan takes, still folders ci ck cd ce ch c3 mnd a1u t2 t918a c1t sm a1, worktree /tmp/mn, two npy in /tmp/m. 1.7 GB free. `/tmp/b0` (the mark's tree) stays, without dist.
+- 08:30 render `b9r`: cdc5d515's stop files in my tree (`git checkout cdc5d515 -- src/stops/mercury public/assets/mercury`; my three changed files saved in /tmp/m/wip: globe.ts, own.json, assets.ts), rise K 1974 to 2000 step 2. Back with `git checkout 45590da3 -- src/stops/mercury public/assets/mercury`, then copy /tmp/m/wip back, then install the take.
+
+## 08:33 UTC MAIL 982 from the Builder (verbatim)
+
+MAIL 982 from the Builder (/root), 08:33 UTC. Mercury, way C 45590da3: the rest of my reader's slices (check mw1), all at rate 2 on render machines with the file cache dropped.
+
+MEASURED (limit of the pattern 0.45, of a pop 1.2, of a level step 1.3):
+- mw1-01, dive, capture frames 1412 to 1451 (film 706 to 725 + 1/2): RED. Pattern 0.54 from frame 721 + 1/2 to 8 film frames later, band 8.1 px, 9 frames over, first 719. Level 0.06, pop 1.02 at 724 (green). The panel's difference picture at 721 + 1/2 shows closed outlines round the crater field, one inside the other: the edges of something laid in rings.
+- mw1-02, dive, capture 1436 to 1475: RED, the same peak (0.54 from 721 + 1/2, 9 over, first 719).
+- mw1-03, dive, capture 1460 to 1499: GREEN.
+- mw1-06, rise, capture 1996 to 2035: RED. Pattern 0.65 from 1012 to 8 film frames later, band 8 px, 11 frames over, first 1009.
+- Already with you from MAIL 974: mw1-04 and 05 RED, 0.47 from 990, 4 over.
+So way C is red in three stretches: 719 to 730 in the dive, 989 to 998 and 1009 to 1020 in the rise. Attached: the md and the changes panel of each red slice.
+
+What I ask, with your 09:15 state:
+1. For each of the three stretches: what comes or goes there (which level, patch, cover or light), by frame, and whether take b9 (Mercury ce1faae, counts and landing GREEN in ms9-04) is green or red at the same frames with the same reader. A stretch that is red on take b9 as well is an old fault and is still yours to cure; a stretch that is only red on way C is a step back and way C does not go on a take until it is cured (d234, no worse than the take).
+2. The cure by cause for the first one you can name, with the control that proves it (the stretch rendered with the suspect switched off, the number beside it).
+3. No commit named without your own rate 2 read of all three stretches on the commit itself.
+Turn 108 stays as ruled in MAIL 974. Nothing here asks you to lower or move a judged frame.
+
+Attached: mercury-dive-k1412-1451.md and changes panel, mercury-rise-k1996-2035.md and changes panel, mercury-dive-k1436-1475.md (in /home/user/.perplexity/attachments/2e97b1e3584b4a629a199050dbb6a7e9/).
+
+## 08:41 UTC b9's rise read, take s5 made, the three red stretches against the notes of 24 Nov
+
+- FACT: take/b9 8cbb3061 holds the Mercury trees of cdc5d515 (src tree 5657ed9e68, public tree a23304b024, both equal). ce1faae (the Builder's name for b9's Mercury in MAIL 982) is travel's merge of main 63cf4b21 and differs from cdc5d515 in 6 files of src/stops/mercury (globe.ts, set.ts, assets.ts, look.ts, wrap.json: the frame factor of d253; plan.ts: the rise's carry rest). Both are ancestors of take/b9. I render cdc5d515's files = what take/b9 holds. To be said in the mail.
+- The path: plan.ts does not differ between cdc5d515, 9fc760b3 and 45590da3, so /tmp/m/poses-a1.json holds for all three.
+- b9r chain 1 (cdc5d515's stop files, whole frames 987 to 1000, draft, far Sun on): `pic1.py` (the reader's own `pictures`, whole frames, 8 film frames on): 987 0.03, 988 0.06, 989 0.04, 990 0.06, 991 0.04, 992 0.04. GREEN. So the 0.47 at 990 is way C's own: a step back.
+- The make of s5 beside the render was killed by the kernel (4.85 GB beside chrome's 3.2 GB of 8 GB). RULE: `onebody.py make` never beside a render.
+- Take s5 (swap, fineDeg 0.16, plain, map [0.1, 0.25]), files: map to patch-1 0.41, patch-1 to 2 0.07, 2 to 3 0.02, 3 to 4 0.03, 2 to 3r 0.10, 3r to 4r 0.04 (limit 0.45). Panels /tmp/m/ob-s5.png, ob-s5-map.png: seen. In the panel of 2 to 3 the lower left of the level is soft: the parent's bodies there are the map's at 0.044 degrees a texel and the place's part under 0.16 degrees adds few craters. The frames will say what that costs against the mark.
+- Looks pushed 08:37:53 (s4's two panels).
+- MAIL 982's three stretches against my notes of 24 Nov:
+  - dive 719 to 730 (0.54 at 721 + 1/2, pixel 1376, 840): the notes of 24 Nov 20:50 hold the same red on the tree of that hour: 0.60 at 722, pixel (1372, 896), red 719 + 1/2 to 723, and the controls: only patch-1 over the map 0.53, relief shading off 0.61, the map alone (no level of the place at all) 0.57. So it is not a level, a plate, a cover or a light of the place: it is the map at the limb in the lower right of the judged region. Old, known, open.
+  - rise 1009 to 1020 (0.65 at 1012): the notes of 24 Nov 22:05 hold 0.76 at 1008, 0.91 at 1010, 0.84 at 1012, 0.43 at 1016 on the tree of that hour: patch-1 going out to the map, item (a) of my list. Old. The cause found today 08:20: the first level is another picture than the map on a strip along the day and night line (files 0.69).
+  - rise 989 to 998 (0.47 at 990): way C's own (b9 0.06).
+- The Builder's panels seen: dive 706 to 714 (0.44) and rise 1012 to 1020 (0.65) have their largest change on the terminator side of the disc, lower middle: the strip. Dive 721 + 1/2 and rise 999 + 1/2 (0.43): a ring of change round the crater field.
+- Queue: b9r chain 2 (dive 719 to 731, rise 1010 to 1022, whole frames), then `/tmp/m/next-s5.sh`: tree back to 45590da3 plus the three WIP files, install s5, stills `ob5`: 615, 717, 735, 745, rise 987 to 1000, then dive 719 to 731 and rise 1010 to 1022.
+
+## 08:44 UTC the mark's dive by the reader, the turn in plan.ts, G by frame
+
+- The mark (b0b87889, stills b0d, every half frame, `/tmp/m/pic.py`, the reader's `pictures` at rate 2, 8 film frames on): 718 1.00, 718 + 1/2 0.89, 719 0.79, 719 + 1/2 0.65, 720 0.58, 720 + 1/2 0.53 at (1348, 912), 721 0.49, 721 + 1/2 0.52 at (1364, 900), 722 0.58 at (1372, 896), 722 + 1/2 0.54, 723 0.46, 723 + 1/2 0.43, then 0.26 to 0.38 to 732. So the dive's red 719 to 723 at the lower right limb is in the mark too, at the pixel of way C's 0.54 (1376, 840).
+- FACT, plan.ts line 23 by `git show REV:src/stops/mercury/plan.ts`: 45590da3 `turnDeg: 78`, cdc5d515 78, take/b9 8cbb3061 78, origin/main 78; take/b10e b1721d2c `turnDeg: 108`; the engine cut 8cfc71f2 111.27. `git log --all -S'111.27' -- src/stops/mercury/plan.ts` finds nothing on my refs. MAIL 974 says take b9 and my branch carry 108: they carry 78. To be said first in the state mail. MAIL 918 named 78 as the value to be replaced.
+- State F's G (set.ts line 281: t = log(1.25 / h) / log(1.25 / 0.05), G = t t (3 - 2 t), h the eye's height in radii): dive 721 + 1/2 (h 0.90) 0.03, 729 + 1/2 (0.43) 0.26; rise 990 (0.12) 0.82, 998 (0.33) 0.37; 1004 (0.68) 0.10; from about 1010 (h 1.25) on 0. So at 1009 to 1020 the tone law has no part; at 990 to 998 it moves 45 percent of its way in 8 frames. (My earlier "0.73 to 0.41" were t, not G.)
+
+## 08:49 UTC b9's dive read
+
+- b9r chain 2, dive only (cdc5d515's stop files, whole frames 719 to 731, draft): `pic1.py`: 719 0.79 at (668, 844) band 15, 720 0.58 at (846, 844), 721 0.41, 722 0.36 at (1368, 904), 723 0.30. RED at 719 and 720: the exchange at the place (the mark at rate 2 reads the same 0.79 at 719 at (741, 862)). The limb spot reads 0.36 at whole frames where the mark at rate 2 reads 0.58 and way C by the Builder's rate 2 reads 0.53: my whole frame chain reads the limb lower than rate 2 does, so the two chains are not to be compared digit for digit. To be said.
+- The rise's end of b9 was cut from the queue to keep time for the take's frames: instead b9 at K 2018 and 2032 (`b9e`) against way C state F's stills of the same K (`cj`): if the frames are the same picture, b9 reads there what way C reads.
+- 08:48 `next-s5.sh` runs: b9e, then the tree back to 45590da3 plus the three WIP files, install s5, stills `ob5`.
+
+## 08:51 UTC b9 at the rise's end is way C's picture; the tree is back
+
+- b9e (cdc5d515's files) against cj (way C state F, 45590da3) at draft: K 2018 (1009): largest difference 9 display values, mean 0.057, 1942 pixels over 2, all in x 670 to 942, y 520 to 898 (the place); K 2032 (1016): largest difference 0. So at the rise's end b9 shows way C's picture and the reader's 0.65 at 1012 is b9's as well (inferred from two frames of the stretch, not read by a chain on b9).
+- 08:50:15 the tree is back: 45590da3's stop files, the three WIP files (globe.ts, own.json, assets.ts), take s5 installed (14 public files changed: 6 plates and tone.png in both sizes). No cdc5d515 file is staged any more.
+- 08:50:16 render `ob5` (way C WIP with take s5 and the gleam): rise 987 to 1000 whole frames, then 615, 717, 735, 745, then dive 719 to 731 and rise 1010 to 1022.
+
+## 08:58 UTC way C with take s5, the rise 987 to 992 by my chain
+
+- `ob5` (45590da3's files plus WIP globe.ts, own.json, assets.ts; take s5 installed; hold [4.5, 6.5]; gleam on), whole frames 987 to 1000, draft: `pic1.py`: 987 0.04, 988 0.07, 989 0.06, 990 0.06, 991 0.05, 992 0.05 (b9 by the same chain 0.03, 0.06, 0.04, 0.06, 0.04, 0.04); pop 1.03 to 1.08 (b9 1.00 to 1.05), limit 1.2. GREEN.
+- NOT MEASURED: way C state F (45590da3) by this whole frame chain over the same frames. The Builder's rate 2 reads 0.47 there. Until state F is read by my chain (or the take by rate 2) the 0.47 to 0.06 is two chains, not one. Owed: the rate 2 read of the stretch on the take.
+
+## 09:03 UTC way C with take s5: the judged frames seen; the first level of my branch is the mark's file
+
+- LOOKED (all in looks, pushed 09:02): 
+  - 615 at native size and at twice beside the hero (`/tmp/m/s5-615-native.png`, `-twice.png`): RED. Inside the disc a cream white mark with two black pits, which the hero does not have (the hero holds a ring crater there). The gleam (gain 3.3, knee 0.6) lights broad areas, not thin rims. 8591 pixels differ from main's 615 by more than 2 display values, all in x 926 to 1051, y 639 to 765; largest 205.
+  - 717 at 1 to 1 beside the mark (`s5-717.png`): RED. A soft grey zone about 300 px wide round the place without the map's thin gold rims, the cream mark in its middle. Cause read from the recipe: `plain` takes the parent's colour under 2 degrees out of levels 2 and up, and `swap` at 0.16 degrees replaces the parent's own thin rims (0.05 to 0.1 degrees) by the place's detail. So where level 2 comes in at 717 the rims go. Worse than the mark.
+  - 735 at 1 to 1, x 160 y 540 (`s5-735.png`): rims clean, the same craters as the mark, no pale patches, no orange or blue green fringes; but soft dark bodies of the parent (the map's shadows along the day and night line, 0.3 to 2 degrees) lie under the field where the mark is evenly lit.
+  - 745 at 1 to 1, x 160 y 540 (`s5-745.png`): the mark's picture, a touch flatter at the lower left. Holds.
+  - rise 990, 994, 998, 1000 beside b9 (`s5-rise.jpg`): the same scene; the take is softer than b9 outside the disc at 994.
+- FACT: `public/assets/mercury/full/patch-1.jpg` of 45590da3 is the mark's file (blob 85f217dd, 6704871 bytes, equal to /tmp/b0's); origin/main holds another (65bfb613). So "main's bytes of patch-1" in my notes of 08:14 to 08:41 means the mark's file. Measured on the mark's files: map to patch-1 0.69, patch-1 to patch-2 1.09 (limit 0.45).
+- NEXT (after the state mail): level 2 must keep the parent's own rims and colour (add only what is finer than the parent's texel, no `plain` at a level that is in view at 717); the gleam down or out; then 615, 717, 735 again.
+
+## 09:05 UTC STATE MAIL SENT to /root (answer to MAIL 961 (5), 974 (1, 4), 982), 7 attachments
+
+In short: 45590da3 is a step back against take b9 at 989 to 998 only (0.47 against b9's 0.03 to 0.06 by my whole frame chain), the other two stretches are old (dive 719 to 723 red on b9 and on the mark; rise 1009 to 1020 the same picture on b9); plan.ts reads turnDeg 78 on my branch, take/b9 and main, 108 on take/b10e, 111.27 on 8cfc71f2; take/b9's Mercury is cdc5d515, not ce1faae; ONE BODY take s5 green in files and on the rise 987 to 992 (0.04 to 0.07); its picture RED at 615 and 717, new fault at 735, holds at 745. Named as not proven: 45590da3 by my chain; rate 2 on the take. Asked: how the dive's limb red 720 to 723 is ruled. Full text in the mail; the numbers are in the entries above.
+
+### 09:11 UTC MAIL 1003 from the Builder (verbatim)
+
+MAIL 1003 from the Builder (/root), 09:11 UTC. Answer to your STATE of 09:05. It is the kind of state I need: thank you for keeping the two chains apart.
+
+1. RULED: 45590da3 goes on no take (as you say yourself). Take b9's Mercury stays cdc5d515 until you name better.
+
+2. The line "travel: { turnDeg: 108 }" on take/b10e is the travel owner's (item 173's cure, laid on the take by the engine cut). MEASURED on my machines, take/b10f against take/b10e at draft: 995 equal to 100.8 dB, 991 107.8 dB, 870 105.0 dB, 1016 44.3 dB with every changed pixel on the Sun (the far Sun's new look; the body does not move). The first half frame the seam law changes is 1017. A reader slice of your rise's last quarter on take/b10f is out now (tz1-01); I send you its report.
+
+3. The dive's limb red at 720 to 723 (the map's own ground at the limb, 0.57 with the map alone): RULED as the engine's item, not yours. I pass your control numbers to the globe's owner. It stays in the reports as an old red and goes into Mercury's next round as it stands; it does not hold your NAMED.
+
+4. Your order of work under 7 stands. Two conditions for the NAMED: (a) 615 no worse than cdc5d515 beside the hero at native size and twice (no cream mark, no pits the hero does not have); (b) the three stretches read at rate 2 on your own machine, each no worse than take b9. Level 1 holding the place's bodies inside the disc at every distance is the ONE BODY answer and is accepted; the price at 615 is the thing to cure, by the hero's light on the disc as you plan.
+
+5. The finals of 870 and 1016 on cdc5d515 stay owed with the NAMED.
+
+Next state by 10:45 UTC.
+  - READ AS (1003): (a) 615 must look like the hero does in cdc5d515 (main's bytes there): no cream mark, no matte black pits; the place's bodies stay in level 1 inside the disc (accepted as ONE BODY), lit as the hero is. (b) the three stretches at rate 2 here, each no worse than take b9. The limb red 720 to 723 is the engine's and does not hold the NAMED. Finals of 870 and 1016 on cdc5d515 owed with the NAMED. Next state by 10:45 UTC.
+
+## 09:21 UTC way C with take s5: dive 719 to 723 and rise 1010 to 1014 by my chain; what the panel of the disc shows
+
+- `ob5` (WIP + take s5), whole frames, draft, `pic1.py`: dive 719 0.32 at (1372, 752), 720 0.36, 721 0.35 at (1352, 912), 722 0.34 at (1368, 904), 723 0.26: GREEN (take b9 by the same chain 0.79, 0.58, 0.41, 0.36, 0.30). Rise 1010 0.25 at (804, 476), 1011 0.24, 1012 0.19, 1013 0.14, 1014 0.10: GREEN (the Builder's rate 2 on state F, which is b9's picture there: 0.65 at 1012). The pop column of these short chains (1.3 at 1010) has no 8 frames before the first frame: NOT a reading; the rate 2 read with margins is owed on the candidate.
+- SEEN `/tmp/m/disc3-16.png` (16 degrees round the spot at the first level's scale: the mark's patch-1, the mark's patch-2, s1's patch-1, s5's patch-1): (1) the place's first pit lies where the hero's ring crater lies (1.8 degrees east, 0.5 south of the spot) and is as wide (about 1.8 degrees); the second pit (3.9 east, 0.7 north) has no crater of the hero under it. (2) s5's patch-1 holds two patches of coloured noise (top left, lower right) and a grey ground with dark worms on the left: that is `map` (the map's own ground laid into the first level where the two differ): the map there is another, poorer picture than the mark's patch-1, and laid in through the film curve at hot rims it breaks into noise. `map` is what took the thin rims out of the left two thirds of 717 on s5. `map` goes out of the next take: outside the disc the first level stays the mark's file. Price, named: the rise's end 1009 to 1020 (level 1 leaving to the map) stays what take b9 shows (the Builder's 0.65 at 1012), an old red, no worse than b9.
+- SEEN `/tmp/m/s1s5-735.png` (735 at 1 to 1, x 160 y 540: the mark, s1, s5): s1 (the parent's bodies and colour kept at every level outside the disc) shows the hero's hot rims as white and orange blots on a dark blue ground in the left half: far worse than the mark. s5 (`swap` 0.16, `plain`) holds the mark's field there. So outside the disc the hero's thin rims must leave where level 2 comes in, as in the mark; `swap` and `plain` stay.
+- PLAN for take s6: s5 without `map`; inside the disc the place's bodies from 0.05 degrees up are restyled to the hero's light (each band matched to the hero's ring by rank, colour by the hero's law of colour against brightness), the same restyled bodies at every level; `tone.png` holds the place's own picture over that field down to the same scale, so at G 1 the plate is the place's picture as before. Trial on the texture alone first (`/tmp/m/restyle.py`).
+
+### 09:28 UTC MAIL 1008 from the Builder (verbatim)
+
+MAIL 1008 from the Builder (/root), 09:28 UTC. One line for your set from the engine's shutter owner (handover_engineer, commit 1c85affe on take/b10e, named 09:25, not on a take yet). Nothing to do now: it can only stand on a tree that has that commit. Put it in your first commit after I tell you the engine take carries it.
+
+src/stops/mercury/set.ts line 401 (line numbers of b1721d2c):
+  const jitter = moving ? samplesFor(view.samples)[view.sample] : undefined
+becomes
+  const jitter = moving ? view : undefined
+Line 402 stays as it is (it reads jitter?.jitterX ?? 0, jitter?.jitterY ?? 0); the import of samplesFor in line 3 can go.
+
+Why, in its words: without shutter ends the values are today's (the engine hands the very sample it placed). Under ends the list of places is moved as a whole, by a quarter of a pixel at most and by another amount in each frame; the globe shader undoes the place along the motion (globe.ts 356 to 359), so with line 401 as it is the globe's lookups would sit off by that move.
+
+Proof I ask with it: the hash of 615, 717 and 870 at draft equal before and after the line.
+
+  - READ AS: nothing now. When the Builder says the engine take carries 1c85affe: the one line in set.ts in my first commit after that, with the hashes of 615, 717, 870 at draft before and after.
+
+## 09:29 UTC take s6 made and installed: the hero's light on the disc
+
+- Trial on the texture alone (`/tmp/m/restyle.py`, pictures `/tmp/m/rs/t1` to `t4`, t4 in the looks 09:25): the place's bodies matched by rank to the hero's own bodies band by band. Seen: with one band 0.05 to 2 degrees the apron between the two pits turns into a cream mark again (t2); with the hero's own picture kept above 0.6 degrees, three bands 0.04, 0.1, 0.25, 0.6 matched each to the hero's ring (7 to 15 degrees from the spot), and the colour taken from the hero's ground as a geometric mean (its floors, not its hot rims), the disc reads as the hero's ground with other craters (t4).
+- `onebody.py` (new keys of a take): `restyle` {bands, ring}: inside the disc F = the parent's own picture above the last band + each band of the place between two widths, mapped by rank to the hero's band of the same widths in the ring + the place's own detail under the first width; colour = the parent's (geometric mean over the last width) times the hero's law of colour against the bands' sum. The curves are written beside the take (`restyle.json`). `lightDeg`: the width over which `tone.png` is smooth outside the disc (0.7). Inside the disc `tone.png` is the place's picture over F, both under the first band's width, so F times it is the place's picture; `light.size` 2048 to hold that. `map` is out (s6 does not set it).
+- s6 = {fineDeg 0.16, toneDeg 2, lightDeg 0.7, plain, swap, restyle {bands [0.04, 0.1, 0.25, 0.6], ring [7, 15]}, light size 2048}. Made alone 09:26 to 09:28. patch-1: 1.67 percent of the level changes (the disc). tone.png 833176 bytes.
+- globe-levels on s6's files (99th percentile, limit 0.45): map to patch-1 0.69 OVER (the mark's first level outside the disc, as take b9 has it: `map` is out), patch-1 to patch-2 0.12, 2 to 3 0.02, 3 to 4 0.04, 2 to 3r 0.11, 3r to 4r 0.04.
+- The gleam is out of globe.ts, assets.ts and own.json (it lit broad areas; the light is in the files now). WIP against 45590da3 in src: globe.ts (15 lines), own.json (`hold` [4.5, 6.5]).
+- 09:28:46 stills `ob6`: 615, 717, 735, 745, 725, 760.
+
+## 09:38 UTC s6 seen, take s7 (caps) made and installed
+
+- s6 stills `ob6` (615, 717, 725, 735, 745, 760), SEEN:
+  - 615 against main's bytes (`cj`): differs only in x 927 to 1050, y 641 to 763, 8686 pixels over 2 display values, largest 170. At three times beside the hero (`/tmp/m/s6-box615.png`): the cream mark between the two pits is weaker than on s5 but still there (a pale arc over pit 2); both pits are darker and fuller than any hero crater near them; the hero's own ring crater (at about x 1006, y 712, where pit 1 lies) has lost its thin bright ring. RED, not good enough for 1003 (a).
+  - 717 beside the mark: no hard edge, but the disc reads as a calm brown patch with soft round craters among the hero's hot thin arcs. The left two thirds are the mark's again (no `map`).
+  - 735, 745, 760 at 1 to 1 (`/tmp/m/s6-c735.png`, `s6-c745.png`, `s6-c760.png`: the mark, s5, s6): the same bodies as the mark; s6 is nearer to the mark's tone at 735 than s5 (s5 had a broad dark shade at the lower left); a little warmer. HOLD.
+  - FACT: the bar of 1003 (a) is main's 615 (cdc5d515's 615 is main's bytes).
+- Cause of the cream mark: a match by rank keeps the share of area; the place's pale bodies are broad (the apron of pit 2), the hero's bright bodies are thin rims, so the apron takes the hero's hot tail in the broad band (0.25 to 0.6 degrees).
+- Cure tried on the texture (`/tmp/m/rs/caps-615.png`: t4 = s6's law, t5 to t7 with caps): the broad band is held inside the hero's own middle (soft limit, tanh, at two percentiles of the hero's band in the ring); the fine bands keep the hero's hot rims. `onebody.py`: `restyle.caps` (one pair of percentiles or null per band), the limits are written into `restyle.json`.
+- s7 = s6 + caps [null, [3, 97], [20, 75]]. Made alone 09:36:33 to 09:38:11, installed 09:38:19 (no render beside either). Levels by globe-levels: map to 1 0.69 OVER (old), 1 to 2 0.14, 2 to 3 0.02, 3 to 4 0.04, 2 to 3r 0.12, 3r to 4r 0.04.
+- 09:38:19 stills `ob7`: 615, 717, 735, 725.
+
+## 09:47 UTC s7 and s8 seen; pit 1 is the hero's ring crater; take s9 (near) in the making
+
+- s7 stills `ob7` (615, 717, 725, 735), SEEN. 615 against main: 8611 pixels over 2 display values in the same box, largest 136 (s6 170). At native size the place reads as hero ground with a small pair of craters; at three times (`/tmp/m/s7-box615.png`): the cream mark is down to a faint pale arc over pit 2, the pits are no longer matte black, but the hero's ring crater has lost its bright ring (pit 1 stands there as a smaller dim pit) and pit 2 is a crater the hero does not have. 717 (`/tmp/m/s7-717.png`): no cream, no hard edge; the disc is calmer than the hero's ground round it. 725, 735 (`/tmp/m/s7-725-735.jpg`): at 725 the mark's grey disc with its pale patch is gone, the place sits in the hero's ground; 735 holds against the mark (the pale apron a little dimmer).
+- s8 = s7 with the middle band free again (caps [null, null, [20, 75]]): 615 largest 149; the cream arc is a little brighter, pit 1's rim hardly. s7 is the better of the two. s8 goes.
+- 09:42:16 looks pushed (remote head 1f74f48f): s7's 615 at native and twice beside the hero, the box at three times, 717 three up, 725 and 735 pairs. Next looks by 10:12.
+- FOUND (`/tmp/m/rs/near.png`: 4.8 degrees round the point 1.8 east, 0.5 south, the hero's first level left, the place's own picture right, circles of 1 and 1.5 degrees): pit 1 IS the hero's ring crater: the same terraced wall, the same central peak, the same shadow at the upper right, the same place, nearly the same size (the hero's rim at about 1.1 degrees, the place's at about 1.0). The place's picture was painted on that crater. What differs is only the light: the hero's lit wall is hot cream, the place's is pale grey.
+- So the cure for the ring at 615: inside 1.2 degrees of that point (out by 1.7) the place's bands are matched by rank to the hero's bands OF THE SAME CRATER, not of the ring at 7 to 15 degrees. Same body, the hero's light. `onebody.py` `restyle.near` {at [east, north], deg [full, out]}; the curves go into `restyle.json` under each band's `near`.
+- s9 = s7 + near {at [1.8, -0.5], deg [1.2, 1.7]}. Make started 09:46:46 (no render beside).
+- PLAN: 615 and 717 on s9; the better of s7 and s9 is the take. Then rate 2 (every K): dive K 1438 to 1476 (719 to 730 with 8 frames on), rise K 1978 to 2012 and K 2018 to 2056. 113 stills, about 77 min. The state mail at 10:45 carries what is read by then.
+- 09:51 MY FAULT, 12 seconds: I started the dive chain while the last still of the first `ob9` chain (K 1470) was still rendering (the log said `done 1434`, not `CHAINDONE`). Two render processes stood side by side from 09:51:14 to 09:51:26. Both killed, no still of that time kept (`ob9` held only K 1230 and 1434, both finished before). Restarted alone 09:51:30. RULE: start a chain only on `CHAINDONE` and an empty `pgrep`.
+- s9 615 SEEN (`/tmp/m/s9-box615.png`, `/tmp/m/s9-615-twice.png`): against main 8638 pixels over 2 display values in the same box, largest 134. Pit 1 now carries a thin ring and a dark floor as the hero's crater does, but stays smaller than the hero's ring (FACT from `/tmp/m/disc3-s9.png` and `near.png`: the hero's crater is about 2.4 degrees wide, the place's pit 1 about 1.7; the same crater painted at 0.7 of its size). Pit 2 and a faint pale patch over it remain, the hero has neither. s9 is the take that is read.
+- 09:51:30 rate 2 chain, dive, `ob9` K 1438 to 1476 (39 stills, about 27 min).
+
+## 09:57 UTC while the dive chain renders: files put in order (no pixel meant to change)
+
+- s9 717 SEEN (`/tmp/m/s9-717.png`: the mark, s7, s9): pit 1 reads as the mark's ring crater, a little smaller, dark floor and rings; no cream; no hard edge; the disc calmer than the ground round it.
+- Code, after the dive chain's build (so the dive stills are on the tree before these edits; PROOF OWED: K 1434 drawn again after the next build must equal `ob9/k001434.png` to the byte):
+  - `globe.ts`: `uToneSet` is a vec2 (share G, on); `floor` and `most` of the tone are gone from the options (the shader has not read them since the gleam and the `worn` line went). `set.ts` line 99 passes `{ map, dark }` only (the `sunPlate.update` region is not touched). `own.json`: `tone` holds `height` and `dark`; `about` written anew (ONE BODY, `hold`, the hero's light, the tone law, the price at 615).
+  - `tilt.json`: `tone` holds the file name only; `about` says the lean has no weight in this state and that tone.png is written by onebody.py. `tilt.py` no longer writes or installs tone.png.
+  - `onebody.py`: head text written anew (the law with `swap`, `plain`, `map`, `restyle`, `caps`, `near`, `light`).
+  - `plates.json` `oneBody`: `take` s9; takes kept s1, s5, s6, s7, s9 (five, on disk with recipes); s2, s3, s4, s8 named under `dropped`; the temporary `disc` key of s5 is out (it equalled `hold`). Folders s4 and s8 deleted.
+  - `RECIPE.md`: new section ONE BODY (step 9 of the plates), the tone.png section written anew (size token SIZE_TONE to fill after squeeze), a state line under tilt.png.
+  - `npx tsc --noEmit -p .`: clean.
+- FACT 09:56: origin/main is 616e5aae; since my merge base 71a573d4 it changes only kit/PROGRESS.md and scorecards/round-051 (14 files, none under src, tools, config, tests, public). So stills of my tree hold for the merge.
+- OWED before the commit: `python3 assets-src/mercury/squeeze.py` (never beside a render), then one still to prove the same picture; tilt.png and its code have no weight now and are still shipped (say so in the mail).
+- Queue: dive rate 2 (to about 10:22), `ob9v` K 1434 after the rebuild, rise rate 2 K 1978 to 2012 and 2018 to 2056, then the rest of 700 to 760 and 975 to 1016 at every second frame.
+- 10:02:09 UTC looks pushed (4 pictures of take s9: 615 native, 615 twice, the box, 717). Next looks by 10:32.
+
+## 10:10 UTC plan for the last fault at 615: the second pit (take s10, `clear`)
+
+- SEEN in the place's own field (`from/patch-3.jpg`, grid in degrees, `/tmp/m/o3-grid.jpg`, `/tmp/m/o3-east.jpg`): pit 1 (the ring crater with the central peak) sits at 1.6 east, 0.6 south, about 1.7 degrees wide. Pit 2 is a black shadow and a terraced slope round 3.8 to 4.0 east, 0.6 to 0.75 north, about 2.4 degrees across (x 2.6 to 4.8, y -0.7 to 1.8). The hero has no crater there (ridges and small craters). At 735 the mark shows both pits (`/tmp/m/s7-735-full.jpg`), so pit 2 is in the mark's dive; it is the repaint's, not the set's true ground (the set's ground is the middle 2 to 3 degrees, entry 04:5x), and the frame reaches 3.5 to 4.1 degrees at 747 and 2.0 to 2.7 at 757, so it is out of view by the time the set takes over.
+- Why not shrink `hold`: the hole's ring is 3 to 4.5 degrees and the set's far field takes the globe's ground beyond it at 752 to 780; a smaller disc makes two grounds there (entry 05:0x, the price of the small core).
+- CURE BY THE RULED LAW (MAIL 961 (4): bodies between 0.1 and 1 degree are the parent's own in place, size and light): where the parent has no body, the place has none. New key `clear` in a take (`onebody.py`: `spot`, `cleared`): round `at` (degrees east, north; `deg` full and out) (1) the place's own field is painted over at every level with its own plain from `from` (the same shift at every level, so the levels stay one body), and (2) the disc has a bite there (w 1): the parent is the base, the first level is the hero's own bytes, the plates add only what is finer.
+- take s10 = s9 + `"clear": [{"at": [4.0, 0.75], "from": [4.0, -1.85], "deg": [1.15, 1.6]}]`. Preview of the painted field at a quarter size SEEN (`/tmp/m/clr-s10.jpg`): pit 2 gone, plain with small craters in its place (two of them are twins of craters 2.6 degrees south: the price of painting with the place's own ground), pit 1 untouched, the dark belt west of pit 2 stays.
+- PRICE to say in the mail: 735 no longer shows pit 2 (the mark does). Takes on disk after s10: s1, s5, s6, s7, s9, s10 = 6 (the limit).
+- Order after CHAINDONE (dive on s9): read the dive (it tells whether way C's dive is green at rate 2 at all), then `mk.sh s10` (never beside a render), install, stills K 1230, 1434, 1470, 1490, look. If s10 holds: rise rate 2 on s10, then the dive again on s10.
+
+## 10:18 UTC the dive at rate 2 on take s9 (K 1438 to 1476, 39 stills, draft, master, full; `ob9`; own reader `/tmp/m/pic.py`, `/tmp/m/ob9-dive.json`)
+
+- MEASURED, pattern (limit 0.45), every half frame: 719 0.36, 719.5 0.41, 720 0.45, 720.5 0.51, 721 0.48, 721.5 0.51, 722 0.56, 722.5 0.54, 723 0.43, 723.5 0.41, 724 0.34, 724.5 0.35, 725 0.31, 725.5 0.26, 726 0.26, 726.5 0.25, 727 0.26, 727.5 0.30, 728 0.31, 728.5 0.34, 729 0.33, 729.5 0.26, 730 0.25. Largest 0.56 at 722; 5 of 23 over. Pop 0.85 to 1.02 (limit 1.2).
+- WHERE: every value from 719 to 726 is at x 1316 to 1404, y 812 to 976: SEEN on the still of 722 (`/tmp/m/ob9-722-where.jpg`): that is the map's own ground at the limb, lower right, far from the place (the place is near x 980, y 650). It is the old red of MAIL 1003 (3) (0.57 with the map alone, RULED the engine's). From 727.5 the largest is at x 1280, y 236 (upper part), 0.25 to 0.34, green.
+- AGAINST take b9: the Builder's rate 2 on the mark: 718 1.00, 719 0.79, 720 0.58, 722 0.58, green after 723 + 1/2. s9: 719 0.36, 720 0.45, 722 0.56, green from 723. No worse at any frame of 719 to 730; the place itself is under the limb's value at every frame.
+- 10:18 to 10:20 take s10 made (`/tmp/m/mk-s10.log`): globe-levels lines: map to 1 0.69 OVER (old), 1 to 2 0.14, 2 to 3 0.02, 3 to 4 0.05, 2 to 3r 0.10, 3r to 4r 0.05. tone.png 824911 bytes. Sizes full: patch-1 7292336, 2 8035227, 3 7632442, 3r 7544952, 4 7730005, 4r 7158246.
+- 10:20:34 one sequence, one render at a time (`/tmp/m/seq10.sh`): K 1434 on s9 with the cleaned code (`ob9v`, the proof of the same bytes), then install s10, then K 1230, 1434, 1470, 1490 on s10 (`ob10`).
+
+## 10:21 UTC FAULT: the disk ran full in the build (cured, nothing lost)
+
+- The sequence of 10:20:34 failed at its first step: `vite build` copies public into dist before the tool links it (about 1280 MB for a short time); the disk had 1.3 GB free and ended at 7 MB. Both renders of the sequence ended at the build, no still was drawn. The install of s10 ran in between: CHECKED, all 14 files in public equal the take's files (`cmp`), NOTES whole.
+- Room made: `dist` (the broken copy, the build makes it anew), `out/work/mercury/place/ob5`, `ob1`, `plates` (C1's plates, made anew by `plates.py core`), `/tmp/m/bench-*.npy`. 1845 MB free at 10:21:50.
+- RULE: before a chain that builds (any change under src or public), `df -m /` must show 1500 MB or more.
+- The proof "K 1434 on s9 with the cleaned code equals `ob9`" was not drawn (s10 is installed now). In its place: `ob10` K 1434 against `ob9` K 1434 must differ only round the cleared spot; every read for the NAMED is drawn on the final tree anyway.
+- 10:22:14 chain `ob10` K 1230, 1434, 1470, 1490 on s10 started, alone.
+
+## 10:29 UTC MAIL 1033 from the Builder, verbatim
+
+"MAIL 1033 from the Builder (/root), 10:29 UTC. To mercury_builder. Three facts and one change of ruling.
+
+MEASURED on my machines.
+1. Mercury's way up, its last quarter (part 4 of 4), on take/b10f 022d2157: GREEN (pop 1.14 of 1.2, level 0.23, pattern 0.13). The same slice on take/b10e b1721d2c is RED: pop 1.35 from 1044 + 1/2, 7 frames over, first 1042 (level 0.33, pattern 0.09). So the seam law of take/b10f cures the pop there; nothing for you to do.
+2. globe_engineer's control on your way down (k 1432 to 1452, take/b10e): at the lower right limb, 720 to 722 + 1/2, the reader reads 0.54 to 0.68 on a pair in which nothing changes by construction, and the real pair carried by the sphere changes by 0.09 to 0.22. The limb red is the reader's flow.
+
+CHANGE OF RULING. MAIL 1003 said the limb red of 720 to 723 was the globe's item. It is nobody's item in the picture now: it is a fault of the reader and harness_builder has it (MAIL 1031). Do not build anything against it.
+
+STANDS AS YOURS. Rows 716 to 719 + 1/2 of the same slice read 0.66 to 1.13 at another place: inside the disc near pixel 728, 844, where the place comes onto the ground. By the sphere's way the reader still reads 0.52 at 716 and 0.87 at 717 there, so that one may be real. It is the place arriving, which is your folder: show frames 714 to 720 at 1 to 1 round that pixel, say what arrives there and by which law (ONE BODY: only finer detail arrives by distance, never another picture), and cure it by cause.
+
+Your state of 10:45 UTC stands as asked in MAIL 1003, with this added."
+
+READ AS: (1) the pop at 1042 to 1045 is cured by take/b10f's seam law, not mine. (2) the limb red 720 to 723 is the reader's fault; build nothing against it (my 0.48 to 0.56 at the limb on s9 is that). (3) MINE: 716 to 719 + 1/2 near pixel 728, 844 on take/b10e (its Mercury is cdc5d515): the place arriving. Owed: frames 714 to 720 at 1 to 1 round that pixel (the take's Mercury and way C), what arrives there and by which law, the cure by cause. Way C's answer by law: outside `hold` the plates are the parent's own ground with only finer detail; the stills must show it. So the dive read on the final take starts at K 1424 (712), not 1438.
+
+## 10:27 UTC take s10 SEEN and DROPPED; why pit 2 cannot go
+
+- s10 615 (`/tmp/m/s10-615-zoom.png`, 615 times 7 round x 1012, y 700: hero, main, s9, s10): the black of pit 2 is gone but pale arcs stay in the ring of the cleared spot and the dark belt west of it; not cleaner. Against main: 8578 px over 2 display values (s9 8638), largest 135.
+- THE FACT THAT DECIDES (`/tmp/m/mark-handover2.jpg`, the mark at 740, 748, 755, 762, 770, 778): pit 1 (the ring crater with the central peak) is the subject of the frame right through 778 and pit 2 stands behind it under the horizon in every one of them. My note of 10:10 ("out of view by the time the set takes over") was WRONG: the reach I quoted is for the frame's lower part; the view looks to the horizon. Both pits are bodies of the place that the set shows. So pit 2 cannot be painted out of the globe without two grounds at the handover. `clear` is out of onebody.py again; s10's folder and recipe are gone (named under `dropped` in the next edit of plates.json).
+- SEEN at times 7 on s9: the hero's ring crater has a dark floor and a bright ring about 21 px wide; pit 1 is about 14 px, dark floor, a dim arc on its lower rim. The disc is warmer (golden brown arcs) than the hero's grey ground there. Cause of the warmth: the law of colour against brightness is measured in the ring 7 to 15 degrees, where the hero's bright rims are the terminator's gold; at the place the hero's bright rims are near white.
+- take s11 = s9 + `restyle.hueRing` [0, 6.5]: the law of colour is measured on the hero's own ground inside the disc. Brightness unchanged by construction. Making now (10:29:30).
+- 10:28:55 the rise chain on s10 killed after 3 stills (K 2018 to 2020 in `ob10`, to delete).
+
+## 10:34 UTC take s11 SEEN and DROPPED; s9 stands; the chain
+
+- s11 615 at times 7 (`/tmp/m/s11-615-zoom.png`): the same picture as s9 to the eye; against main 8659 px over 2 (s9 8638), mean colour of the box 32.5, 32.6, 31.9 on both (main 29.4, 30.2, 30.2). The warmth is not the colour law: the arcs are dim, and a dim cream reads as gold. `hueRing` is out of onebody.py again; s11's folder gone; s10 and s11 named under `dropped` in plates.json. Takes on disk: from, s1, s5, s6, s7, s9.
+- 10:33:55 the s11 chain killed (2 stills); s9 installed again (CHECKED by `cmp`, all 14 files).
+- 10:34:15 one sequence (`/tmp/m/seq9.sh`), one render at a time: `ob9v` K 1434, 1438 (the proof that the cleaned code draws `ob9`'s bytes), then `ob9` K 1424 to 1437 (MAIL 1033: 712 to 718 + 1/2), K 2018 to 2056 and K 1978 to 2012 (the rise's two stretches at rate 2). 90 stills, to about 11:42.
+- 10:34:53 looks pushed (5ee469fc): 615 times 7, the mark's handover 740 to 778, the mark 714 to 720 round pixel 728, 844, where the reader's largest values lie at 722. 33 minutes after the last push (3 over the rule). Next by 11:04.
+- SEEN on the mark, 714 to 720 at 1 to 1, crop x 408 y 574 (pixel 728, 844 is its middle; `/tmp/m/arr-b0d.png`): the night ground left of the terminator with thin lit rims; from 716 to 720 a darker, smooth, brownish patch comes in right of the middle (x 400 to 500 of the crop, y 150 to 250) and the bumps of the relief under it go. That is the place's plate (the own disc, `deg` 10 to 15 on b9's Mercury) taking the map's ground by the plate's weight: another picture, not finer detail. On way C the plates hold the parent's ground outside `hold` 4.5 to 6.5; the stills of 712 to 718 + 1/2 on s9 will say.
+
+## 10:38 UTC STATE MAIL sent to /root (asked for in MAIL 1003 and 1033)
+
+- PROVED 10:36: `ob9v` K 1434 and K 1438 (the cleaned code, new build) equal `ob9` by file hash (836ee7d0..., 2cee6f4c...). So the dive stills of 09:51 to 10:18 stand for the tree as it is.
+- The mail said: take s9; the dive read (only the limb over); 615 condition (a) NOT MET with the three things that stay (the ring crater at two thirds, the second pit, the warmth; 8638 px over 2, largest 134, 255 over 40) and why paint cannot take them (both pits are the set's, the mark 740 to 778); RULING ASKED: does 615 as shown go to the round as way C's price or does 615 keep main's bytes; MAIL 1033's item seen on the mark, the proof on way C owed in a second mail at about 10:50; the chain; the faults (09:51, 10:20, s10 and s11, looks 33 min). Next state by 11:50 UTC or the NAMED.
+- OWED NEXT: the read of 712 to 718 + 1/2 on s9 (`pic.py ob9 1424 1454`) and crops of K 1428, 1432, 1436, 1440 beside the mark at x 408 y 574; second mail.
+
+## 10:48 UTC MAIL 1035 from the Builder (verbatim)
+
+"MAIL 1035 from the Builder (/root), 10:48 UTC. Your state of 10:38 is read.
+RULING on 615 (decision d291 (5)): way C's 615 goes to its round as the price of one body. Reason: the other choice is an exchange of two craters on the way down, which is the fault Brandon's notes name; a hold that differs from main inside a box of 123 px is the smaller wrong. Before you name it: (1) the warm tint goes. It is a fault of tone, not a body: the disc's ground sits on the hero's grey. State the mean and the largest difference in colour against main's 615 inside the box with the luminance left out; the cream arcs must not read gold at times 7. (2) The first pit keeps its place on the hero's ring crater, centre within 1 px. (3) Say in the NAMED what 615 shows at times 7 beside the hero, so the round's summary carries it. R1 judges 615 as the kit says.
+Round 52, your round 2 of 3 of the second note, started at 10:38 UTC on take batch 9's Mercury cdc5d515, which is on main since 10:32 (merge fb0b4d17; the round's commit is 9d59e699). Way C is for round 3 of 3.
+Your reading of 716 to 720 (the plates' own disc taking the map's ground by weight: another picture, not finer detail) is accepted as the cause of that item. Way C holds the parent's ground there; measure it as you plan.
+Limb rows 720 + 1/2 to 722 + 1/2: the reader's, as MAIL 1033 says. harness_builder named a reader that prints both lines side by side at 10:37; numbers follow when I have proven it. The rise's part 4 stays as MAIL 1033 says.
+Next state by 11:50 UTC or the NAMED, as you wrote."
+
+READ AS: 615 changes inside the box and goes to round 3 of 3 with way C. Three things before the NAMED: (1) the warmth out, measured as colour with the luminance left out (mean and largest in the box against main's 615), arcs not gold at times 7; (2) pit 1's centre within 1 px of the hero's ring crater; (3) the NAMED says what 615 shows at times 7. Main now carries cdc5d515 (merge fb0b4d17, round commit 9d59e699): merge origin main again before the commit. The second mail of 10:50 is no longer asked for as a mail of its own ("measure it as you plan"): the numbers go into the state of 11:50 or the NAMED.
+
+## 10:49 UTC MEASURED: the place arriving, 712 to 719, the mark against way C s9
+
+- Tool `/tmp/m/picat.py DIR K0 K1 CX CY HALF`: the reader's own pattern map (rate 2, K against K + 16), its largest value inside a box round a pixel. Box round 728, 844, half 80.
+- The mark (`b0d`): 714 0.49, 714.5 0.74, 715 0.97, 715.5 1.11, 716 1.17, 716.5 1.20, 717 1.18 (at 728, 844 itself), 717.5 1.13, 718 1.09, 718.5 1.02, 719 0.87. Whole frame 99th percentile there 0.64 to 1.13.
+- Way C s9 (`ob9`), same box: 714 0.09, 714.5 0.14, 715 0.18, 715.5 0.22, 716 0.26, 716.5 0.29, 717 0.29, 717.5 0.29, 718 0.26, 718.5 0.22, 719 0.17. Whole frame 99th percentile 712 to 719: 0.17 to 0.36, none over 0.45, the largest value at the limb (x 1308 to 1372) from 713.5 on.
+- SEEN `/tmp/m/arr-s9-a.png` (714, 716) and `/tmp/m/arr-s9-b.png` (718, 720), 1 to 1, x 408 y 574, the mark left, way C right: on the mark a smooth darker body comes in right of the middle from 716 and has taken the ground by 720 (the bumps of the map's relief under it gone, other rims). On way C the ground is the same picture in all four frames: the map's night ground with its relief, and the place's small craters round pit 1 at the top right from 714 on, growing only by distance.
+
+## 10:53 UTC the chain on s9 stopped; the cause of the warmth FOUND; take s12
+
+- 10:53:25 the chain killed after K 2024 (the rise's 1009 to 1012 on s9, 7 stills, not enough for a read; k002025 removed). Reason: MAIL 1035 (1) needs a new take, every read for the NAMED is owed on the commit itself (MAIL 982 (3)), and `onebody.py make` does not run beside a render. So the final take gets one chain: rise 1009 to 1020 first, then the dive 712 to 730, then rise 989 to 998.
+- MEASURED colour at 615 in the box x 927 to 1050, y 641 to 763, s9 against main (`/tmp/m/hue615.py`, `hue615b.py`), luminance left out (Lab a, b): mean of the difference a +0.10, b +0.50; mean distance 1.14; largest 23.87 at x 999 y 716; 2689 px over 2, 828 px over 4. By brightness: px of luma 45 to 60 main R minus B +2.2, s9 +5.2; 60 to 80 main +2.9, s9 +7.2; 80 to 110 main +5.1, s9 +14.2. Px bright only in s9 (the place's arcs, 1008 px): 59.4, 55.2, 49.1. So the arcs are gold by measure, not only to the eye.
+- CAUSE (`/tmp/m/huemap.py`, the textures inside 4.5 degrees of the spot, linear values): the map (wrap-color, the hero at the hold) has bright detail COOLER than its ground (coded 190 to 215: R/G 0.965, B/G 1.063; brightest R/G 0.977, B/G 1.084) and dark detail warmer (R/G 1.16, B/G 0.86). The old first level A (patch-1 of 45590da3) runs the other way: bright R/G 1.17, B/G 0.85, dark R/G 0.86, B/G 1.24. s9 took its law of colour against brightness from A (ring 7 to 15 degrees), s11 from A inside the disc: both A, so s11 could not change it. At the hold the hero is the map, not the first level (the first level comes in by distance). Take s9 bright R/G 1.07 to 1.15, B/G 0.92 to 0.82.
+- CURE by cause, take s12 = s9 + `restyle.hueOf` "map": inside the disc the colour over the last band and the law of colour against the bands' sum are the map's own (wrap-color in the level's frame, the law measured inside the disc). Brightness is unchanged by construction (the colour is divided by its luma). `the_map()` in onebody.py is the sampler `as_map` had, taken out as a function. 10:58:29 make started (no render running).
+- SEEN `/tmp/m/map-a-s9.png`, `/tmp/m/pitmap.png` (the map, A, s9's first level round the spot): the map there is coarse (22.75 px a degree) with a hard light and dark weave and blue green smudges; A is brighter than the map inside 6.5 degrees (coded mean 143 against 126 inside 4.5; 153 against 139 from 4.5 to 6.5; equal past 20 degrees). That is the old red "map to 1 0.69", now with its tone part measured. Not touched in s12 (a tone change inside the disc alone would make a disc against A outside it during the dive).
+
+## 10:59 UTC MAIL 1035 (2), the first pit's centre, MEASURED: NOT within 1 px
+
+- `/tmp/m/pitfit.py` (the circle with the strongest edge from dark floor to ground, 615 at native size): main 615 centre x 1007.50 y 710.25 radius 8.5; the approved hero x 1005.25 y 712.00 radius 8.5 (the approved image stands about 2 px left and 2 px low of main's 615); way C s9 x 1007.00 y 704.75 radius 4.5 (the lower bound: the dark part of the pit is a small blob, not a round floor).
+- SEEN `/tmp/m/pit-zoom-s9.png` (times 14, pixel ticks): the hero's ring spans x 996 to 1019, y 701 to 722. s9's pit spans, rim to rim, x 1000 to 1016, y 700.5 to 717.5 (centre about 1008, 709; within 1 px in x, about 2 px high in y), but its dark part spans y 701 to 713 only: the place's pit has its floor half lit (the set's sun stands higher than the hero's at the terminator), the hero's floor is in shadow all over. So the dark body reads 4 to 5 px high of the hero's.
+- In the textures (`/tmp/m/pitmap.py`, the rims by eye on a times 5 sheet): the map's ring centre about 1.96 E, 0.77 S, 2.4 degrees wide; s9's pit rim about 1.86 E, 0.63 S, 1.6 to 1.9 degrees wide. About 0.17 degrees apart, 2 px at the hold (12 px a degree there).
+- What would put it within 1 px: the place moves 0.17 degrees on the planet (assets.ts `spot`, plan.ts `spot`, the first level resampled so the map's ground stays). That shifts the dive's aim and every dive and rise frame against the mark, and the set's sun by up to 0.17 degrees (870). Not done; to be named and ruled.
+
+## 11:12 UTC takes s12 and s13 (colour of the map in the paint) tried; the conflict 615 against 717 FOUND; the hold's colour goes to the globe
+
+- FAULT 11:05: s13 was installed and a render started while its make still wrote patch-4r (I read a `pgrep` line as empty). No harm to the stills (615 and 717 use no rise plate; s13 was installed again after `MAKEDONE` and checked by `cmp`), but it is the rule broken: install only on `MAKEDONE`.
+- take s12 (the map's colour over 0.6 degrees times the map's law against the bands' sum): 615 colour against main, luminance left out, Lab a +0.00 b +0.44, mean distance 1.01, 397 px over 4 (s9: b +0.50, 1.14, 828). Half a cure: the geometric mean over 0.6 degrees weighs the map's warm dark px.
+- take s13 (the map's own colour at the same brightness, 32 steps): 615 a +0.06 b -0.03, mean distance 0.86, 261 px over 4. By brightness class R minus B: luma 45 to 60 main +2.2, s13 +2.2; 60 to 80 +2.9 against +3.1; 80 to 110 +5.1 against +5.3. SEEN at times 7 (`/tmp/m/s13-615-zoom.png`): the arcs are grey white, no gold. So at 615 the tint is gone.
+- BUT 717 (`/tmp/m/hue717.py`, box x 815 to 1065, y 524 to 779; SEEN `/tmp/m/s13-717.png`): the mark's ground there, R minus B by class: 60 to 80 +13.5, 80 to 110 +28.2, 110 to 150 +48.0. s9: +12.7, +23.8, +40.0 (near the mark). s13: +7.2, +14.9, +27.5: a grey disc in golden ground. So the paint that is right at 615 is wrong at 717 and the other way round.
+- CAUSE: the ground round the disc changes its law of colour with distance. At the hold it is the map (bright ground cooler than dark); by 717 it is the first level, which came in by distance and whose bright rims are warm (the old red "map to 1", here in colour). The disc holds one paint at every distance, so one of the two ends is off whichever law the paint has.
+- CURE by cause, in the globe (my folder): the plates stay take s9 (the first level's own law, right at 717 and below). Inside `hold` the globe gives the ground the map's colour at the same brightness by the share by which the first level is NOT yet in by distance (the same `uPatchFade` law on the same texel ratio that brings the first level in round the disc), and the level's own colour by the rest. `mapHue = stays * edge * smoothstep(fade.x, fade.y, parent)`; brightness untouched (the colour is a colour of luma 1 times the ground's luma). By distance alone, no time, no state; the texel ratio goes through the frame factor as before. The law: `src/stops/mercury/hue.json`, 16 knots between the 5th and the 99.5th percentile of the map's brightness inside the disc, written by `onebody.py law` (recipe `oneBody.law` in plates.json).
+- Takes s12 and s13 dropped (folders to delete, named under `dropped`); s9 installed again 11:11 (CHECKED by `cmp`). tsc clean. 11:12 stills: K 1230, 1434 and the proof K 1424, 1438 (if the first level is fully in by 712 inside the disc, they equal `ob9` by hash and the dive stills of s9 stand).
+
+## 11:24 UTC the colour law by distance MEASURED (stills `ob9h`); state mail sent; the chain of the stretches runs
+
+- 11:15 the first stills failed: the shader name `held` was already used (line 408, the wide plate); mine is `mapHue` now. Four minutes lost.
+- `ob9h` = plates s9 + the law (K 1230, 1424, 1434, 1438 rendered 11:16 to 11:19).
+  - 615 against main inside the box, luminance left out: Lab a +0.01, b -0.05, mean distance 0.89, largest 24.72 at x 999 y 716 (the hero's gold ring arc, a body), 1698 px over 2, 263 over 4. R minus B: luma 45 to 60 +2.0 (main +2.2), 60 to 80 +2.9 (+2.9), 80 to 110 +4.7 (+5.1). Box mean rgb 31.9, 32.6, 32.7 against main 29.4, 30.2, 30.2 (the brightness is not touched by the law: the old red stays). SEEN `/tmp/m/h-615-zoom.png`: arcs grey white, none gold.
+  - 717 by class R minus B: 60 to 80 +12.5, 80 to 110 +23.3, 110 to 150 +39.2 (s9 +12.7, +23.8, +40.0; the mark +13.5, +28.2, +48.0). SEEN `/tmp/m/h-717.png`: as s9.
+  - against `ob9` (s9 without the law): K 1424 (712) largest 24, 2024 px over 2, all in x 873 to 1043, y 574 to 738; K 1434 (717) largest 6, 107 px; K 1438 (719) largest 2, none over 2. So no still of s9 stands for this tree: the whole chain again.
+- The first pit against the hero's ring crater, SEEN at times 20 (`/tmp/m/pit-zoom-h.png`): main's ring x 996 to 1019, y 701 to 722 (22 px, centre 1007.5, 711.5 by its rim, 710.25 by the fit); way C's dark floor x 1001 to 1014, y 702 to 714, pale rim below y 715 to 717, rim to rim centre about 1008, 709. NOT within 1 px (1.3 to 2.5 px high), and smaller. Told in the state mail with the cost of a cure (move the place 0.17 degrees); not done without a word.
+- 11:22 `squeeze.py` run (6.078 MB saved, same pictures decoded); 11:22:54 chain `ob9h`: K 2018 to 2056, then 1425 to 1476, then 1978 to 2012 (124 stills).
+- 11:23 state mail to the Builder (answer to MAIL 1035 (1), (2), (3), the arrival, the faults, NAMED planned about 12:50). 11:24 looks pushed.
+- plates.json: `take` s9, takes s1, s5, s6, s7, s9 (5), s12 and s13 named under `dropped`, their folders deleted; `oneBody.law` [5, 99.5] is the recipe of hue.json.
+
+## MAIL 1058 from the Builder, 11:27 UTC (verbatim)
+
+MAIL 1058 from the Builder (/root), 11:27 UTC. On your state of 11:25.
+(1) The warm tint: accepted as cured by cause (the map's colour at the same brightness by the share the first level is not yet in, by distance alone).
+(2) The first pit: RULED, do not move the place. Inside the disc the hero's ring crater is not drawn any more, the place's pit is; moving the place by 0.17 degrees would line the pit up with a ring that only the approved image holds, by 1.3 to 2.5 px on a ring of 22 px, and would move 870 and every dive frame. Name with (2) as it stands and say so, as you propose. Owed in the NAMED in its place: 615 at the final tier beside the approved image and beside main, whole and at 1 to 1 on the disc, with G5 and G17 of the hold by your proxy. The hold must not fall against the approved image.
+(3) Your text for the summary is accepted as the draft.
+The arrival's numbers (0.09 to 0.29 where the mark read 0.49 to 1.20) are owed again on the commit, with the slices of dive and rise by main's reader. The two faults (a take installed before its make had ended; a shader name used twice) are noted; cmp after every install stays the rule. NAMED 12:50 stands.
+
+READ AS: no move of the place. For the NAMED: (a) 615 at the final tier on the commit, a sheet whole and a sheet at 1 to 1 on the disc, beside the approved image and beside main; G5 and G17 of the hold by my proxy; the hold must not fall against the approved image. (b) the arrival 714 to 719 read again on the commit. (c) the slices of dive and rise by main's reader. (d) (2) named as it stands. NAMED 12:50.
