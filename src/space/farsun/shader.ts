@@ -5,7 +5,9 @@ import look from './look.json'
 
 export const MAX_LOOPS = Math.max(look.loops.length, 1)
 export const MAX_LOBES = Math.max(look.fringe.lobes.length, 1)
+export const MAX_TONGUES = Math.max(look.fringe.tongues.length, 1)
 export const MAX_KNOTS = Math.max(look.knot.at.length, 1)
+export const MAX_STREAMERS = Math.max(look.corona.streamers.length, 1)
 
 export const FARSUN_VERT = /* glsl */ `
 uniform float uDepth;
@@ -59,6 +61,10 @@ uniform vec3 uChromoColour;
 uniform vec2 uSpicules;
 uniform vec4 uCorona;
 uniform vec3 uCoronaRays;
+uniform vec4 uStreamer[${MAX_STREAMERS}];
+uniform vec2 uStreamerBy[${MAX_STREAMERS}];
+uniform int uStreamers;
+uniform float uStreamerRays;
 uniform float uCoronaFront;
 uniform vec3 uCoronaNear;
 uniform vec3 uCoronaWide;
@@ -89,6 +95,11 @@ uniform vec4 uFringeLobe[${MAX_LOBES}];
 uniform vec4 uFringeLobeBy[${MAX_LOBES}];
 uniform int uStrandLobe[${MAX_LOBES}];
 uniform int uStrandLobes;
+uniform vec4 uTongueFoot[${MAX_TONGUES}];
+uniform vec4 uTongueAxis[${MAX_TONGUES}];
+uniform vec4 uTongueBy[${MAX_TONGUES}];
+uniform vec2 uTongueStrand[${MAX_TONGUES}];
+uniform int uTongues;
 uniform vec3 uFringeFan;
 uniform vec3 uFringeCurl;
 uniform vec4 uFringeSheet;
@@ -123,6 +134,7 @@ uniform vec3 uFringeKnot[${MAX_LOBES}];
 uniform vec4 uKnot[${MAX_KNOTS}];
 uniform vec4 uKnotAxis[${MAX_KNOTS}];
 uniform vec2 uKnotShade;
+uniform vec3 uKnotShadeColour;
 uniform vec4 uKnotBy[${MAX_KNOTS}];
 uniform vec4 uKnotRay[${MAX_KNOTS}];
 uniform vec4 uKnotLight;
@@ -216,6 +228,7 @@ vec3 whiteLook(vec3 d, float mu, float pixel, out float detail) {
   for (int k = 0; k < (pixel * uGrainScale.y < 0.4 ? 1 : 0); k++) heat += uGrainDepth.y * (granule(d, uGrainScale.y, uGrainLife.y) - 0.55) * (1.0 - smoothstep(0.12, 0.4, pixel * uGrainScale.y));
   for (int k = 0; k < (pixel * uGrainScale.z < 0.4 ? 1 : 0); k++) heat += uGrainDepth.z * (granule(d, uGrainScale.z, uGrainLife.z) - 0.55) * (1.0 - smoothstep(0.12, 0.4, pixel * uGrainScale.z));
   float fine = textureLod(uFace, mapUv(d), max(log2(max(pixel * uFaceSize.x / 6.283185307179586, 1e-3)), 0.0)).r * uFaceSize.y;
+  for (int k = 0; k < (uSpots.x > 0.0 ? 1 : 0); k++) fine *= pow(uSpotLook.w / max(textureLod(uFace, mapUv(d), uSpots.y).r * uFaceSize.y, 0.1), uSpots.x);
   heat *= pow(fine, uSpots.z);
   float face = uSpots.w * smoothstep(uSpotLook.x, uSpotLook.y, fine) * (1.0 + uSpotLook.z * (1.0 - mu));
   heat = max(heat, uHeatFloor);
@@ -334,7 +347,7 @@ void main() {
       lit = min(lit * mottle, uWhite);
       for (int w = 0; w < (knotLight < 0.0 && uKnotShade.y > 0.0 ? 1 : 0); w++) {
         vec3 less = (vec3(0.995) - lit) * -knotLight;
-        patched = lit - mix(less, vec3(dot(less, vec3(0.3, 0.6, 0.1))), uKnotShade.x) * uKnotShade.y;
+        patched = lit - mix(less, uKnotShadeColour * less.b, uKnotShade.x) * uKnotShade.y;
       }
       for (int w = 0; w < (uKeepWarm.x > 0.0 ? 1 : 0); w++) patched *= 1.0 - vec3(0.0, uKeepWarm.z, uKeepWarm.w) * (uKeepWarm.x * smoothstep(uKeepWarmAt.x, uKeepWarmAt.y, vnoise(d * uKeepWarm.y + 9.0)));
       body += share * inverseFilmic(patched);
@@ -362,7 +375,9 @@ void main() {
       vec3 sd = spinY(q / r, uSpin);
       float scale = mix(uCorona.z, uCorona.w, pow(vnoise(sd * 5.0 + 11.0), 2.0));
       float rays = 0.06 + 1.6 * pow(vnoise(sd * uCoronaRays.x + 3.1), 2.5) + 0.9 * pow(vnoise(sd * uCoronaRays.y + 9.7), 3.0);
-      float rho = exp(-(r - 1.0) / scale) * rays + uCoronaRays.z * pow(r, -2.5);
+      float stream = 0.0;
+      for (int k = 0; k < uStreamers; k++) stream += uStreamerBy[k].x * exp(-(1.0 - dot(sd, uStreamer[k].xyz)) * uStreamer[k].w - (r - 1.0) / uStreamerBy[k].y);
+      float rho = max(exp(-(r - 1.0) / scale) * rays + stream * (uStreamerRays + rays), 0.0) + uCoronaRays.z * pow(r, -2.5);
       rho *= smoothstep(uReach, uReach * 0.8, r) * step(1.0, r);
       sum += mix(uCoronaRim.rgb, mix(uCoronaNear, uCoronaWide, smoothstep(1.0, 1.5, r)), smoothstep(0.0, uCoronaRim.w, r - 1.0)) * rho;
     }
@@ -484,7 +499,28 @@ void main() {
       }
       hair *= hd * uFringeHairBy.z;
     }
-    gas += burnWhite((uFringeColour * (sum * dt) + uFringeHairColour * hair) * (uFringe.z * uBurn.x));
+    float tongue = 0.0;
+    vec3 eye = spinY(ro, uSpin);
+    vec3 sight = spinY(rd, uSpin);
+    for (int k = 0; k < uTongues; k++) {
+      vec3 axis = uTongueAxis[k].xyz;
+      vec4 by = uTongueBy[k];
+      vec3 gap = eye - uTongueFoot[k].xyz;
+      float skew = dot(sight, axis);
+      float open = max(1.0 - skew * skew, 1e-4);
+      float fore = dot(sight, gap);
+      float rise = dot(axis, gap);
+      float t = (skew * rise - fore) / open;
+      float along = (rise - skew * fore) / open;
+      vec3 across = gap + sight * t - axis * along;
+      float way = clamp(along / uTongueAxis[k].w, -0.5, 0.999);
+      float end = (1.0 - smoothstep(0.7, 1.0, along / uTongueAxis[k].w)) * smoothstep(-0.5, -0.25, along / uTongueAxis[k].w) * step(1.0, length(eye + sight * t)) * step(0.0, t);
+      float wide = uTongueFoot[k].w * pow(1.0 - way, by.y);
+      float tube = 1.7725 * wide / sqrt(open) * exp(-dot(across, across) / max(wide * wide, 1e-10)) * pow(1.0 - way, uTongueStrand[k].y);
+      float strand = pow(vnoise(across * by.z + axis * (along * by.z * 0.06) + 3.0 + float(k)), by.w) + 0.5 * pow(vnoise(across * (by.z * 2.3) + axis * (along * by.z * 0.14) + 7.0), by.w);
+      tongue += by.x * tube * end * mix(1.0, strand, uTongueStrand[k].x * end);
+    }
+    gas += burnWhite((uFringeColour * (sum * dt + tongue) + uFringeHairColour * hair) * (uFringe.z * uBurn.x));
   }
   for (int n = 0; n < (cover < 0.5 && (uParts & 4) != 0 ? ${MAX_KNOTS} : 0); n++) {
     if (uKnotBy[n].z <= 0.0) continue;

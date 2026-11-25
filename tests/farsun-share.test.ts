@@ -3,7 +3,7 @@ import { config } from '../src/config'
 import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
 import look from '../src/space/farsun/look.json'
-import { globeShare, handoverSpan, spans, swapDistance, wearShare, wearSpan } from '../src/space/farsun/share'
+import { globeShare, spans, swapDistance, wearShare } from '../src/space/farsun/share'
 
 const swapOf = (deg: number): number => 1 / Math.sin((deg * Math.PI) / 180)
 
@@ -15,14 +15,32 @@ describe('the handover and the wear of the far Sun', () => {
     return { share: f.share, burn: f.burn }
   }
 
+  const handoverSpan = spans(swapDistance).handover
+  const wearSpan = spans(swapDistance).wear
+  const sunStart = (film as unknown as { sunStart: number }).sunStart
+
+  it('starts from the distance of the last view of the Sun stop: the typed stand-in stands within 0.005 of the distance of the film, and the distance of the film is taken when it is handed over', () => {
+    expect(Math.abs(look.sunStart - sunStart)).toBeLessThan(0.005)
+    const handed = spans(swapDistance, sunStart)
+    const typed = spans(swapDistance, look.sunStart)
+    for (const key of ['handover', 'wear'] as const) {
+      expect(handed[key][0]).toBeGreaterThanOrEqual(sunStart)
+      expect(handed[key][1]).toBeGreaterThan(handed[key][0])
+      expect(handed[key][1]).toBeLessThanOrEqual(swapDistance)
+      expect(Math.abs(handed[key][0] - typed[key][0])).toBeLessThan(0.005)
+      expect(Math.abs(handed[key][1] - typed[key][1])).toBeLessThan(0.005)
+    }
+  })
+
   it('reads the swap distance the film reads, from the plan of the first stop after the Sun', () => {
     expect(swapDistance).toBeCloseTo(swapOf(plans[1]!.p.light.sunRadiusDeg), 12)
     expect(swapDistance).toBeCloseTo((film as unknown as { sunSwap: number }).sunSwap, 12)
   })
 
-  it('holds its ends as shares of the way, with no distance of an end in the look', () => {
+  it('holds both ends as shares of the way from the last view of the Sun stop to the swap, with no distance of an end in the look', () => {
     for (const span of [look.handover, look.wear]) {
-      expect(span[1]).toBeGreaterThan(0)
+      expect(span[0]).toBeGreaterThanOrEqual(0)
+      expect(span[1]).toBeGreaterThan(span[0]!)
       expect(span[1]).toBeLessThanOrEqual(1)
     }
   })
