@@ -35,3 +35,7 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
 - A rough reading of the cells' width in the lowest rows beside the approved:
   `python3 assets-src/sun/lab/size.py RENDER.png [FINEST_PX]`. It counts veins inside a cell as lanes and did not
   tell g15 from h9, so it is no proof of size.
+- The rise read on my side: `npx tsx assets-src/sun/lab/clip.ts --from 437 --to 453 --tier draft --format preview
+  --out FOLDER` (add `--still 437` to hold the ground's time at that capture while the eye moves), then
+  `npx tsx assets-src/sun/lab/reader.ts --dir FOLDER --sheet OUT.png` (the sheet draws the first picture, the last
+  carried back to it, their difference and the change of the pattern; `--job FILE` keeps the job).

@@ -496,3 +496,43 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   cell of 1 to 2 px stays a sharp grain. Cure to try: widen gx, gy as the cell's width in px falls (1 at 6 px, 3
   at 2 px) so a cell under about 3 px fades into the mean; also let the domes sink by the foreshortened size near
   the limb. Read captures 218.5 to 226.5 at preview. 2. the smooth maximum (a), the flow (c, f).
+- 14:21 UTC: MAIL 1123. RULING: h14 stands for the outline, the size, the tone, the far field and the limb. Neither
+  g15 nor h14 is plasma: both read as stones (g15 slabs, h14 cobbles), because a stone is lit from one side and a
+  cell of the Sun shines from within. Orders: (5) FIRST the far filter for the rise, named by 15:20 and told to
+  sun_builder at once. Then (2) the law of the cell's light: heat of the gas at the point times a darkening by the
+  angle between the surface normal and the EYE, 0.6 to 1, nothing by any light direction; send frame 90 with and
+  without any light term. (3) relief: the dome's height against its width goes down until the dark skirt is the
+  cool lane seen from above; soft valley; no step of the heat at the lane. (4) the inside and the flow are one:
+  the fine grain is a pattern carried outward by the cell's own flow, read in the cell's polar frame (angle, radius
+  less speed times time), drawn out along the radius. Second name with what is ready of 2 to 4 by 16:15; the rest
+  goes to round 3 of 3. The specks: no work.
+- 14:19 to 14:45 UTC: THE FAR FILTER (h15 to h17).
+  - The rise's reader (tools/img/smooth.py pattern, through my reader.ts): capture 437 against capture 453 carried
+    back along the flows, both reduced to their detail between 8 and 40 px of the preview frame and divided by
+    their local contrast. Commands: ../v/rise2.sh NAME [--still 437] (clip.ts --from 437 --to 453 --tier draft
+    --format preview, then reader.ts and clipstat.py). reader.ts --sheet OUT.png draws the pair (first, last carried
+    back, difference, pattern); --job FILE keeps the job for other readings.
+  - MEASURED: h14 0.875 at [276, 360]. h15 (cells under 2 to 5 px seen fade into the mean of the map by a wider
+    footprint, far.blur [2, 5, 4]; seen = width in px times min(mu + far.lie 0.35, 1); px are now real pixels of
+    the drawn frame, the focal from the buffer's height) 0.810 at [332, 440]. h15 with the life of the cells held
+    at capture 437 (clip.ts --still 437) 0.812: so it is NOT the life of the cells and NOT the grain alone.
+  - THE CAUSE, seen in the sheet (v/sheet-h15s.jpg, v/rise-pair.jpg): between capture 437 and 453 the film goes
+    from my ground to the globe. The globe at 453 shows its map (plages, filaments, dark lanes of 1 to 3 degrees);
+    my ground at 437 was an even grain with only the map's light wider than 1.5 degrees at power 0.5. The band the
+    reader judges, 8 to 40 px, is 0.7 to 3.3 degrees there: two unrelated patterns.
+  - THE CURE (h16): where the cells are too small to be things the ground is the globe's own map. labTone reads the
+    map's light at a level that goes from far.tone.deg 1.5 to far.tone.far.deg 0.55 (the width of law f on
+    sun_builder's side, place.json plates.fineDeg), never finer than the pixel, as the cell's width seen falls from
+    far.tone.far.px 12 to 4 px; the power goes from 0.5 to far.tone.far.power 1, the range from [0.6, 1.3] to
+    far.tone.far.range [0.25, 2.2]. In the bake the weight is 0 (the twin is as before, no rebake).
+  - MEASURED h16: reader 0.172 at [524, 264] (limit 0.45), proxy 0.268, picture to next 0.025. The large light of
+    my ground at 437 against the globe at 453 carried back (/tmp/tonefit.py: both blurred 3 px at quarter scale,
+    lower 55 percent of the frame, 13499 px): slope of the logs 1.003, correlation 0.956, standard deviations of
+    the logs 0.345 and 0.362, means 98.8 against 106.9 of 255 (mine 8 percent darker), 95th 144 against 171 (the
+    globe's white plages are brighter than my ramp's top). The power 1 was the first value tried and is kept.
+  - Frame 90 at 1080 with h16: near percentiles to the digit those of h14. But a dark dashed line stood on the
+    silhouette at the left (x 0 to 500, y 520 to 600 of 1920): the domes at the horizon sunk by the lie of the look
+    left the limb's own edge bare. h17: the sink of the domes goes by the width alone (labPx) as in h14, the heat
+    and the tone by the width seen. Dashed line gone (v/limb-14-17.jpg). The far band under the horizon is a
+    little smoother than h14.
+  - tone.py (the mean light of the twin for a given share of the heat) was started and stopped, not used.

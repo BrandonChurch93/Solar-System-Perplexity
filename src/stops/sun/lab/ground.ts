@@ -208,6 +208,11 @@ vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy
 float labPx(vec3 here) {
   return uLabFar.z / max(distance(here, uLabEye), 1e-4);
 }
+// the same as the eye has it: a cell seen along the ground is as flat in the picture as the look is flat
+float labSeen(vec3 here) {
+  float mu = abs(dot(normalize(here - ST_CENTRE), normalize(uLabEye - here)));
+  return labPx(here) * min(mu + ${lab.far.lie.toFixed(2)}, 1.0);
+}
 #if defined(LAB_FRAG) && !defined(LAB_MAP)
 // the ground where its cells are too small in the picture to be things: the same cells at the same places, seen
 // from above (a map of the tile drawn from the same table at the same time), with the same penumbra
@@ -394,6 +399,8 @@ uniform sampler2D uLabGlobe;
 uniform mat3 uLabToMap;
 uniform vec4 uLabTone;
 uniform vec3 uLabToneAt;
+uniform vec4 uLabToneFar;
+uniform vec3 uLabToneWide;
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${GRADE_GLSL}
@@ -457,10 +464,22 @@ vec2 labGas(vec3 here) {
 float labTone(vec3 here) {
   vec3 md = uLabToMap * normalize(here - ST_CENTRE);
   vec2 muv = vec2(atan(md.x, md.z) / 6.283185307179586 + 0.5, asin(clamp(md.y, -1.0, 1.0)) / 3.141592653589793 + 0.5);
+#ifdef LAB_BAKE
+  float w = 0.0;
+  float lod = uLabToneAt.x;
+#else
+  // where the cells are too small in the picture to be things the ground is the globe's own map: its light is read
+  // as fine as the globe draws its place (uLabToneFar: that level, the level of one pixel at one pixel a cell, the
+  // sizes of a cell in pixels between which it comes)
+  float seen = labSeen(here);
+  float w = 1.0 - smoothstep(uLabToneFar.z, uLabToneFar.w, seen);
+  float lod = mix(uLabToneAt.x, max(uLabToneFar.x, uLabToneFar.y - log2(max(seen, 1e-3))), w);
+#endif
+  vec2 texel = uLabToneAt.yz * exp2(lod - uLabToneAt.x);
   vec3 sum = vec3(0.0);
-  for (int k = 0; k < 4; k++) sum += textureLod(uLabGlobe, muv + uLabToneAt.yz * (vec2(float(k & 1), float(k >> 1)) - 0.5), uLabToneAt.x).rgb;
+  for (int k = 0; k < 4; k++) sum += textureLod(uLabGlobe, muv + texel * (vec2(float(k & 1), float(k >> 1)) - 0.5), lod).rgb;
   float l = dot(sum, vec3(0.3, 0.5, 0.2)) * 0.25;
-  return clamp(pow(max(l, 1e-4) / uLabTone.x, uLabTone.y), uLabTone.z, uLabTone.w);
+  return clamp(pow(max(l, 1e-4) / uLabTone.x, mix(uLabTone.y, uLabToneWide.x, w)), mix(uLabTone.z, uLabToneWide.y, w), mix(uLabTone.w, uLabToneWide.z, w));
 }
 // the one curve from the heat of the sheet to the heat the ramp shows (lab.json heat.curve: pairs, straight between)
 float labCurve(float h) {
@@ -717,14 +736,21 @@ void main() {
 #ifdef LAB_BAKE
   float far = 1.0;
 #else
-  float far = 1.0 - smoothstep(uLabFar.x, uLabFar.y, labPx(vPos));
+  float seen = labSeen(vPos);
+  float far = 1.0 - smoothstep(uLabFar.x, uLabFar.y, seen);
 #endif
   vec2 gx = dFdx(chartPlace);
   vec2 gy = dFdy(chartPlace);
   vec4 pn = labPen(chartPlace, r, length(vG - uLabPitAt.xy), flow, gx, gy);
   // between the threads of the penumbra the floor is the same threads, a little deeper and cooler
   heat = mix(heat, uLabHeat.x + uLabHeat.y * pn.y * pn.z, max(pn.x, 1.0 - smoothstep(uLabPit.w * 1.7, uLabPit.w * 3.8, r)) * smoothstep(0.75, 0.95, length(vG - uLabPitAt.xy) / uLabPit.w));
-  if (far > 0.0 && pn.w > 0.0) heat = mix(heat, labFar(chartPlace, r, flow, pn, gx, gy), far);
+  #ifdef LAB_BAKE
+  float blur = 1.0;
+#else
+  // a cell smaller in the picture than a few pixels is no grain but the mean of the map there
+  float blur = mix(${lab.far.blur[2]!.toFixed(1)}, 1.0, smoothstep(${lab.far.blur[0]!.toFixed(1)}, ${lab.far.blur[1]!.toFixed(1)}, seen));
+#endif
+  if (far > 0.0 && pn.w > 0.0) heat = mix(heat, labFar(chartPlace, r, flow, pn, gx * blur, gy * blur), far);
 #ifdef LAB_BAKE
   // the far twin: the ground from straight above, no law of the view, no gas, none of the flare's lights, as the
   // display colour of the picture
@@ -818,6 +844,7 @@ export class LabGround {
   private readonly back = new THREE.Matrix4()
   private readonly frustum = new THREE.Frustum()
   private readonly eye = new THREE.Vector3()
+  private readonly size = new THREE.Vector2()
   private readonly at = new THREE.Vector2()
   private readonly ball = new THREE.Sphere()
   private readonly spot = new THREE.Vector2()
@@ -885,6 +912,8 @@ export class LabGround {
       uLabToMap: { value: toStage.clone().transpose() },
       uLabTone: { value: new THREE.Vector4(lab.far.tone.level, lab.far.tone.power, lab.far.tone.range[0]!, lab.far.tone.range[1]!) },
       uLabToneAt: { value: new THREE.Vector3(toneLod, toneTexel, toneTexel * 2) },
+      uLabToneFar: { value: new THREE.Vector4(Math.log2(Math.max((mapWide * lab.far.tone.far.deg) / 360, 1)), Math.log2((lab.far.cell * mapWide) / (2 * Math.PI * stage.radius)), lab.far.tone.far.px[0]!, lab.far.tone.far.px[1]!) },
+      uLabToneWide: { value: new THREE.Vector3(lab.far.tone.far.power, lab.far.tone.far.range[0]!, lab.far.tone.far.range[1]!) },
     }
     this.uniforms = all
     this.floorMaterial = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: FLOOR_VERT, fragmentShader: FLOOR_FRAG, uniforms: all, side: THREE.DoubleSide })
@@ -1130,7 +1159,10 @@ export class LabGround {
     const high = Math.max(eye.distanceTo(stage.centre) - stage.radius, 1e-3)
     const horizon = stage.radius * Math.acos(Math.min(stage.radius / (stage.radius + high), 1)) + 0.6
     const fov = (camera as THREE.PerspectiveCamera).fov ?? 55
-    const focal = 540 / Math.tan(THREE.MathUtils.degToRad(fov) / 2)
+    const view = (camera as THREE.PerspectiveCamera).view
+    const target = renderer.getRenderTarget()
+    const tall = view?.enabled ? view.fullHeight : target ? target.height : renderer.getDrawingBufferSize(this.size).y
+    const focal = tall / 2 / Math.tan(THREE.MathUtils.degToRad(fov) / 2)
     const d = this.cells.diagram
     const mean = lab.far.cell * focal
     ;(this.uniforms.uLabFar!.value as THREE.Vector4).z = mean
