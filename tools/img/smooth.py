@@ -517,12 +517,22 @@ def pictures(job):
     weaveShare = [None] * n
     weaveBand = [None] * n
     full = lambda j: grey(paths[j])
+    redraw = again(job, paths, frames, poses, reach) if reach > 0 and job.get('unchanged') and job.get('carry') else None
     if reach > 0:
         for i in range(n - reach):
             if not own[0] <= i + start < own[1] or not inside(i + reach) or any(fw[j] is None for j in range(i, i + reach)):
                 continue
             first, last = (body(poses[j], frames[j].shape, sigma) if poses[j] else None for j in (i, i + reach))
             way = carry(fw, bw, i, reach, first, last)
+            if redraw and poses[i] and poses[i + reach]:
+                made = redraw(i)
+                swapped = list(frames)
+                swapped[i + reach] = made['small']
+                d, later, ok = change(swapped, fw, bw, i, reach, sigma, first, last, way)
+                shift[i], top[i], at, judged[i] = changed(d)
+                spot[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
+                weave[i], weaveAt[i], weaveShare[i], weaveBand[i] = reading(*readings(swapped, fw, bw, i, reach, scale, sigma, wide, low, first, last, lambda j, i=i, made=made: made['full'] if j == i + reach else grey(paths[j]), way, later), scale)
+                continue
             d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last, way)
             if pair(i, i + reach):
                 d = change(frames, fw, bw, i, reach, sigma, first, last, way, pair(i, i + reach))[0]
@@ -532,7 +542,10 @@ def pictures(job):
     for i in range(n):
         if not inside(i + 1):
             residual[i] = moved[i] = unsure[i] = None
-    more = mapped(job, paths, frames, poses, scale, sigma, wide, low, reach, fw, bw, [i for i in range(n - reach) if own[0] <= i + start < own[1] and inside(i + reach) and not any((j + 1) in marks for j in range(i, i + reach))]) if reach > 0 and job.get('carry') else {}
+    more = mapped(job, paths, frames, poses, scale, sigma, wide, low, reach, fw, bw, [i for i in range(n - reach) if own[0] <= i + start < own[1] and inside(i + reach) and not any((j + 1) in marks for j in range(i, i + reach))], redraw) if reach > 0 and job.get('carry') else {}
+    for i in range(n if more else 0):
+        if more['patternBoth'][i] is None and weave[i] is not None:
+            more['patternBoth'][i], more['patternBothBy'][i], more['patternBothMap'][i] = weave[i], 'flow', 0.0
     return {**more, 'level': levels, 'levelStep': step, 'residual': residual, 'base': base, 'popAll': plain, 'popCarried': masked, 'pop': pop, 'motionPx': moved, 'unsure': unsure, 'popBlock': block, 'popBlockAt': where, 'grid': [cols, rows],
             'change': shift, 'changeTop': top, 'changeAt': spot, 'changeShare': judged, 'changeFrames': reach,
             'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare, 'patternBand': weaveBand}
@@ -561,7 +574,8 @@ def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor, reach=(None, 
     take = lambda x: cv2.remap(x.astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) > 0
     later = cv2.remap(frames[i + n].astype(np.float32), mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
     p = pattern(frames[i].astype(np.float32), later, ok, wide / 5, wide, floor)
-    off = np.isfinite(p) & ~a & ~take(b) & ~rim(a, margin) & ~take(rim(b, margin))
+    edge = rim(a, margin) | take(rim(b, margin))
+    off = np.isfinite(p) & ~a & ~take(b) & ~edge
     far = None
     if reach[0] is not None and reach[1] is not None:
         near = lambda body, px: cv2.distanceTransform((~body).astype(np.uint8), cv2.DIST_L2, 5) <= px if body.any() else np.zeros(body.shape, bool)
@@ -571,7 +585,7 @@ def unbodied(frames, fw, bw, i, n, a, b, rim, margin, wide, floor, reach=(None, 
         if lit[1] is not None:
             far &= ~take(lit[1])
     read = lambda part: (float(np.percentile(p[part], 99)) if part is not None and part.mean() >= PATTERN_SHARE else None, float(part.mean()) if part is not None else None)
-    return {'value': read(off)[0], 'share': read(off)[1], 'far': read(far)[0], 'farShare': read(far)[1], 'p': p, 'off': off, 'offFar': far}
+    return {'value': read(off)[0], 'share': read(off)[1], 'far': read(far)[0], 'farShare': read(far)[1], 'p': p, 'off': off, 'offFar': far, 'rim': edge}
 
 
 def strayed(fw, bw, i, n, a, b, margin, scale):
@@ -589,20 +603,50 @@ def strayed(fw, bw, i, n, a, b, margin, scale):
     return float(np.percentile(np.hypot(mx - wx, my - wy)[m], 99) / scale)
 
 
-def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw, rows):
+def holder(job, paths, frames, poses, j):
+    """A frame as carry.py reads it: its reduced picture, its picture at full size (full), its depth and bodies at the reduced size and at
+    the full size (whole), and its pose with its bodies."""
+    import carry as C
+    pose = C.told(poses[j])
+    picture = (job.get('depths') or [None] * len(paths))[j]
+    depth, which, unit = C.source(pose, frames[j].shape, picture)
+    box = {}
+
+    def whole():
+        if 'whole' not in box:
+            box['whole'] = C.source(pose, grey(paths[j]).shape, picture)[:2]
+        return box['whole']
+
+    return {'grey': frames[j], 'full': lambda: grey(paths[j]), 'depth': depth, 'which': which, 'unit': unit, 'pose': pose, 'whole': whole}
+
+
+def again(job, paths, frames, poses, reach):
+    """For the control of a job that asks for it (unchanged): the later frame of the pair of row i replaced by frame i drawn again as the
+    later frame sees the same ground (carry.py redrawn), at full size and reduced. One pair is kept."""
+    import carry as C
+    box = {}
+
+    def made(i):
+        if box.get('row') != i:
+            full, same = C.redrawn(holder(job, paths, frames, poses, i), holder(job, paths, frames, poses, i + reach))
+            box.update(row=i, full=full, small=small(full, job.get('scale', 0.25)), share=float(same.mean()))
+        return box
+
+    return made
+
+
+def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw, rows, redraw=None):
     """The pattern of each row's pair read a second way, beside the reader above and judging nothing: the pair carried by the camera's own map,
     the flow on the carried pair, the reading after both (carry.py). Keys of their own: patternMap and what belongs to it."""
     import carry as C
     n = len(paths)
-    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternMapBulk', 'patternMapSure', 'patternMapBound', 'patternMapGraze', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn', 'patternMapAlone', 'patternMapMoves', 'patternMapMoved', 'patternMapLit')}
+    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternTrue', 'patternTrueAt', 'patternTrueOn', 'patternTrueShare', 'patternTrueEnds', 'patternTrueHeld', 'patternTrueBy', 'patternTrueRedrawn', 'patternTrueFiner', 'patternTrueSteep', 'patternTrueGraze', 'patternRest', 'patternRestAt', 'patternRestShare', 'patternBoth', 'patternBothBy', 'patternBothMap', 'patternMapBulk', 'patternMapSure', 'patternMapBound', 'patternMapGraze', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn', 'patternMapAlone', 'patternMapMoves', 'patternMapMoved', 'patternMapLit')}
     held = {}
     depths = job.get('depths') or [None] * n
 
     def frame(j):
         if j not in held:
-            pose = C.told(poses[j])
-            depth, which, unit = C.source(pose, frames[j].shape, depths[j])
-            held[j] = {'grey': frames[j], 'full': lambda: grey(paths[j]), 'depth': depth, 'which': which, 'unit': unit, 'pose': pose}
+            held[j] = holder(job, paths, frames, poses, j)
         return held[j]
 
     solid = lambda f: (f['which'] > 0) & np.isfinite(f['depth']) & (f['depth'] > 0)
@@ -611,7 +655,18 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
             continue
         for j in [j for j in held if j < i]:
             del held[j]
-        out, _ = C.read(frame(i), frame(i + reach), margin, scale, wide, floor, job.get('filmFrames'))
+        later = frame(i + reach)
+        if redraw:
+            made = redraw(i)
+            later = {**later, 'grey': made['small'], 'full': lambda made=made: made['full']}
+            keys['patternTrueRedrawn'][i] = made['share']
+        out, _ = C.read(frame(i), later, margin, scale, wide, floor, job.get('filmFrames'))
+        true, ends = C.true(frame(i), later, margin, scale, wide, floor)
+        moves = C.own_flow(frame(i), later, job.get('filmFrames'))
+        by_map = np.isfinite(ends[0]['p']) if true['value'] is not None and moves is None else np.zeros(frames[i].shape, bool)
+        keys['patternTrue'][i], keys['patternTrueAt'][i], keys['patternTrueOn'][i], keys['patternTrueShare'][i] = true['value'], true['at'], true['on'], true['share']
+        keys['patternTrueEnds'][i], keys['patternTrueHeld'][i], keys['patternTrueBy'][i], keys['patternTrueFiner'][i] = true['ends'], true['held'], true['kind'], true['finer']
+        keys['patternTrueSteep'][i], keys['patternTrueGraze'][i] = true['steep'], true['graze']
         keys['patternMapAlone'][i], keys['patternMapMoves'][i] = out['alone'], out['moves']
         keys['patternMap'][i], keys['patternMapAt'][i], keys['patternMapShare'][i] = out['value'], out['at'], out['share']
         keys['patternMapOn'][i], keys['patternMapBy'][i], keys['patternMapRule'][i], keys['patternMapLeft'][i], keys['patternMapUnits'][i] = out['on'], out['by'], out['rule'], out['left'], out['units']
@@ -621,7 +676,18 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
         if all(fw[j] is not None and bw[j] is not None for j in range(i, i + reach)):
             keys['patternMapMoved'][i] = strayed(fw, bw, i, reach, frame(i), frame(i + reach), margin, scale)
             lit = [C.lit(frame(j)['pose'], frames[j].shape) for j in (i, i + reach)]
-            sky = unbodied(frames, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor, (glow_px(poses[i], scale), glow_px(poses[i + reach], scale)), lit)
+            shown = frames
+            if redraw:
+                shown = list(frames)
+                shown[i + reach] = made['small']
+            sky = unbodied(shown, fw, bw, i, reach, solid(frame(i)), solid(frame(i + reach)), C.rim, margin, wide, floor, (glow_px(poses[i], scale), glow_px(poses[i + reach], scale)), lit)
+            rest = np.where((solid(frame(i)) & ~by_map & ~sky['rim']) | (sky['off'] if sky['offFar'] is None else sky['offFar']), sky['p'], np.nan)
+            value, at, share = patterned(rest)
+            keys['patternRest'][i], keys['patternRestAt'][i], keys['patternRestShare'][i] = value, [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, share
+            parts = [(v, name) for v, name in ((true['value'] if by_map.any() else None, 'map'), (value, 'flow')) if v is not None]
+            if parts:
+                keys['patternBoth'][i], keys['patternBothBy'][i] = max(parts)
+                keys['patternBothMap'][i] = float(by_map.sum() / max(by_map.sum() + np.isfinite(rest).sum(), 1))
             keys['patternMapLit'][i] = any(x is not None for x in lit)
             keys['patternMapSky'][i], keys['patternMapSkyShare'][i], keys['patternMapSkyFar'][i], keys['patternMapSkyFarShare'][i] = sky['value'], sky['share'], sky['far'], sky['farShare']
     keys['patternMapLimits'] = {'bulkPx': C.BULK_PX, 'apart': C.APART, 'boundPx': C.BOUND_PX / scale, 'graze': C.GRAZE, 'carried': C.CARRIED_SHARE}

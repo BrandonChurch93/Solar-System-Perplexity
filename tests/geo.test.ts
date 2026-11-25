@@ -9,11 +9,12 @@ const LIMIT = 0.45
 const NOT_CARRIED = 'the range does not carry the pattern'
 
 interface Case { flow: number | null; patternMap: number | null; patternMapBody: number | null; patternMapAlone: number | null; patternMapNo: string | null; patternMapRefused: number | null; patternMapBulk: number | null; patternMapSure: number | null; patternMapGraze: number | null; patternMapBound: number | null; patternMapMoved: number | null; limits: { bulkPx: number; apart: number; boundPx: number; graze: number; carried: number } }
-type Made = Record<'clean' | 'swap' | 'light' | 'lightSwap' | 'glint' | 'drift' | 'far', Case>
+type Made = Record<'clean' | 'swap' | 'light' | 'lightSwap' | 'glint' | 'drift' | 'far' | 'same' | 'sameSwap' | 'slide' | 'slide4' | 'sky', Case & { true: number | null; trueSteep: number | null; trueGraze: number | null; trueBy: string | null; trueEnds: (number | null)[]; trueRest: number | null; trueBoth: number | null; trueBothBy: string | null; trueBothMap: number | null }>
 
 let made: Made
 const row = (c: Case): { k: number; pattern: number | null; patternMapMoves: null } & Omit<Case, 'flow' | 'limits'> => {
-  const { flow, limits: _limits, ...rest } = c
+  const { flow, limits: _limits, ...all } = c
+  const rest = Object.fromEntries(Object.entries(all).filter(([key]) => !key.startsWith('true'))) as Omit<Case, 'flow' | 'limits'>
   return { k: 0, pattern: flow, patternMapMoves: null, ...rest }
 }
 const geometry = (c: Case): number | null => mapOf(row(c)) ?? null
@@ -88,5 +89,75 @@ describe('the pattern by geometry on a turning sphere under a camera that dives,
     expect(flowJudges(older)).toBe(false)
     expect(flowJudges({ ...row(made.light), patternMapMoves: 2, patternMapMoved: 1 })).toBe(false)
     expect(flowJudges({ k: 0, pattern: 1.04 })).toBe(true)
+  })
+})
+
+describe('the pattern by the true carry on the same sphere: the map alone at the full size, no flow, no angle left out', () => {
+  it('reads nothing where nothing changes and says what its map stands on', () => {
+    expect(made.clean.true!).toBeLessThan(0.02)
+    expect(made.clean.trueBy).toBe('range')
+    expect(made.clean.trueEnds).toHaveLength(2)
+  })
+
+  it('keeps a swapped texture red, with and without the light, from both ends', () => {
+    for (const c of [made.swap, made.lightSwap]) {
+      expect(c.true!).toBeGreaterThan(1)
+      for (const end of c.trueEnds) expect(end!).toBeGreaterThan(1)
+    }
+  })
+
+  it('reads a strong light bound to the angle of the view, and a narrow glint, under the limit without any flow', () => {
+    expect(made.light.true!).toBeLessThan(0.25)
+    expect(made.glint.true!).toBeLessThan(LIMIT)
+  })
+
+  it('has no flow to take out a drift the record does not tell: a small one stays under the limit, a large one is red', () => {
+    expect(made.drift.true!).toBeGreaterThan(made.clean.true! + 0.1)
+    expect(made.drift.true!).toBeLessThan(LIMIT)
+    expect(made.far.true!).toBeGreaterThan(LIMIT)
+  })
+
+  it('reads a texture that slides on its body: by 4 px a step red by its number, by 2 px a step three times the flow but under the limit, and both refused because the pattern has moved on its body, where the flow follows the slide and reads it green', () => {
+    expect(made.slide4.true!).toBeGreaterThan(LIMIT)
+    expect(made.slide.true!).toBeGreaterThan(3 * made.slide.flow!)
+    expect(made.slide.true!).toBeLessThan(LIMIT)
+    for (const c of [made.slide, made.slide4]) {
+      expect(c.flow!).toBeLessThan(0.2)
+      expect(c.patternMapNo).toBe('the range does not carry the pattern')
+      expect(c.patternMapBulk!).toBeGreaterThan(c.limits.bulkPx)
+    }
+    expect(made.clean.patternMapNo).toBeNull()
+  })
+
+  it('gives the line of both: the larger of the map\'s part and the flow\'s part, with who gives it and the share the map reads', () => {
+    for (const c of [made.clean, made.swap, made.light, made.sky]) {
+      expect(c.trueBoth!).toBeCloseTo(Math.max(c.true!, c.trueRest!), 9)
+      expect(c.trueBothMap!).toBeGreaterThan(0.2)
+      expect(c.trueBothMap!).toBeLessThan(0.8)
+    }
+    expect(made.swap.trueBothBy).toBe('map')
+    expect(made.clean.trueBoth!).toBeLessThan(LIMIT)
+  })
+
+  it('keeps a row red whose flow part alone is red: the body unchanged, the sky off it one field fading into another', () => {
+    expect(made.sky.true!).toBeLessThan(0.02)
+    expect(made.sky.trueRest!).toBeGreaterThan(1)
+    expect(made.sky.trueBoth!).toBeGreaterThan(1)
+    expect(made.sky.trueBothBy).toBe('flow')
+  })
+
+  it('shows the reading without the low angles and their share beside it, and leaves nothing out of the number itself', () => {
+    for (const c of [made.clean, made.swap, made.light, made.glint]) {
+      expect(c.trueGraze!).toBeGreaterThan(0.03)
+      expect(c.trueGraze!).toBeLessThan(0.15)
+      expect(c.trueSteep!).toBeLessThanOrEqual(c.true! + 1e-9)
+    }
+  })
+
+  it('reads nothing on the control, a pair whose later frame is the first one drawn again by the map, even where the real pair is a swap', () => {
+    expect(made.same.true!).toBeLessThan(0.02)
+    expect(made.sameSwap.true!).toBeLessThan(0.02)
+    expect(made.sameSwap.flow!).toBeLessThan(LIMIT)
+    expect(made.lightSwap.flow!).toBeGreaterThan(LIMIT)
   })
 })

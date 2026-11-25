@@ -430,6 +430,94 @@ def read(a, b, margin, scale, wide, floor, span=None):
     return out, (p, later, rule)
 
 
+FINEST = 8
+
+
+def lay(a, b):
+    """The camera's map from the frame a to the frame b at the full size of the pictures (carry, with the depth and the bodies of each frame
+    at its full size, whole()): the places, where a pixel of a body and every pixel beside it arrive on the surface they left (same), and
+    how many times finer than the grid of a the picture of b must be taken so that no pixel of b is passed over where the map draws b
+    smaller (up: the larger stretch of the map, its 99th percentile on what is seen, never over FINEST)."""
+    depth, which = a['whole']()
+    mx, my, far, held = carry(depth, which, a['pose'], b['pose'])
+    same = seen(mx, my, far, held, which, *b['whole']()) & (which > 0)
+    same = cv2.erode(same.astype(np.uint8), np.ones((3, 3), np.uint8)) > 0
+    up = 1
+    if same.any():
+        ax, bx, ay, by = np.gradient(mx, axis=1), np.gradient(mx, axis=0), np.gradient(my, axis=1), np.gradient(my, axis=0)
+        half = (ax * ax + bx * bx + ay * ay + by * by) / 2
+        long = np.sqrt(half + np.sqrt(np.maximum(half * half - (ax * by - bx * ay) ** 2, 0)))
+        up = int(np.clip(np.ceil(np.percentile(long[same], 99) - 0.05), 1, FINEST))
+    return {'mx': mx, 'my': my, 'same': same, 'up': up}
+
+
+def taken(picture, way):
+    """A picture of the full size carried along a map of lay: each pixel the mean of what the picture shows on a grid up times finer."""
+    mx, my, up = way['mx'], way['my'], way['up']
+    g = picture.astype(np.float32)
+    if up == 1:
+        return cv2.remap(g, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+    h, w = mx.shape
+    out = np.empty((h, w), np.float32)
+    rows = max(1, (1 << 23) // (w * up * up))
+    for top in range(0, h, rows):
+        end = min(h, top + rows)
+        lo, hi = max(0, top - 1), min(h, end + 1)
+        size = (w * up, (hi - lo) * up)
+        part = cv2.remap(g, cv2.resize(mx[lo:hi], size, interpolation=cv2.INTER_LINEAR), cv2.resize(my[lo:hi], size, interpolation=cv2.INTER_LINEAR), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        out[top:end] = cv2.resize(part, (w, hi - lo), interpolation=cv2.INTER_AREA)[top - lo:end - lo]
+    return out
+
+
+def redrawn(a, b):
+    """The frame a drawn again as the frame b sees the same ground: one picture, laid by the camera's map onto the grid of b. Nothing of
+    it changes between the two by construction. Where a does not show the ground of b, and off the bodies, the picture of b stands."""
+    way = lay(b, a)
+    return np.where(way['same'], taken(a['full'](), way), b['full']().astype(np.float32)).astype(np.float64), way['same']
+
+
+def kind(frame):
+    return 'sphere' if frame.get('unit') is None else 'range'
+
+
+def true(a, b, margin, scale, wide, floor):
+    """The pattern of a pair read by the true carry alone, on the bodies: each frame against the other carried onto it by the camera's map
+    at the full size (lay, taken), both reduced as the reader reduces, read from both ends. No flow is taken and no angle is left out; only
+    the rim of either depth picture is not judged (rim, margin px of the reduced size), as in read. A frame is not read as it is but as it
+    comes back from the grid of the other and home again: it has then lost the detail the other frame has no pixels for, as the carried
+    frame has lost what this one has no pixels for, so that where one of the two sees the ground at a low angle both hold the same widths.
+    Gives the larger of the two 99th percentiles, its place in px of the full size of the frame it is read on, which frame that is (0 the
+    first), the share of the frame judged, the two values, the share of the first frame's body that is judged, what the map stands on
+    (kind), how many times finer the pictures were taken (lay); and beside it, judging nothing, steep: the same reading counted only where
+    both frames see the ground at a cosine of GRAZE or more, and graze: the share of the first frame's body that leaves out."""
+    ways = (lay(a, b), lay(b, a))
+    over = (taken(b['full'](), ways[0]), taken(a['full'](), ways[1]))
+    ends = []
+    for on, (x, y) in enumerate(((a, b), (b, a))):
+        way, other = ways[on], ways[1 - on]
+        home = taken(over[1 - on], way)
+        both = way['same'] & (cv2.remap(other['same'].astype(np.float32), way['mx'], way['my'], cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0) > 0.999)
+        later = S.small(over[on].astype(np.float64), scale).astype(np.float32)
+        ok = S.small(both.astype(np.float64), scale) > 0.999
+        low = carry(x['depth'], x['which'], x['pose'], y['pose'])
+        edge = rim(x['which'], margin) | (cv2.remap(rim(y['which'], margin).astype(np.float32), low[0], low[1], cv2.INTER_NEAREST, borderMode=cv2.BORDER_REPLICATE) > 0.5)
+        ok &= (x['which'] > 0) & ~edge
+        p = S.pattern(S.small(home.astype(np.float64), scale).astype(np.float32), later, ok, wide / 5, wide, floor)
+        value, at, share = S.patterned(p)
+        inner = (x['which'] > 0) & ~rim(x['which'], margin)
+        here, there = slant(x['depth'], x['which'], x['pose'], y['pose'])
+        with np.errstate(invalid='ignore'):
+            flat = (x['which'] > 0) & ((here < GRAZE) | (there < GRAZE))
+        steep = np.isfinite(p) & ~flat
+        ends.append({'value': value, 'at': [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None, 'share': share, 'on': on, 'p': p, 'later': later,
+                     'held': float(np.isfinite(p).sum() / max(inner.sum(), 1)), 'steep': float(np.percentile(p[steep], 99)) if steep.mean() >= S.PATTERN_SHARE else None,
+                     'graze': float((flat & inner).sum() / max(inner.sum(), 1))})
+    best = max(ends, key=lambda e: -1 if e['value'] is None else e['value'])
+    steep = [e['steep'] for e in ends if e['steep'] is not None]
+    return {'value': best['value'], 'at': best['at'], 'on': best['on'], 'share': best['share'], 'ends': [e['value'] for e in ends], 'held': ends[0]['held'], 'kind': kind(a),
+            'finer': [w['up'] for w in ways], 'steep': max(steep) if steep else None, 'graze': ends[0]['graze']}, ends
+
+
 def packed(depth, form, unit=1.0):
     """A depth as the render packs it into 8 bit colour: n = 1 + floor(16777214 * (log2(depth / unit) - low) / octaves) in red, green and blue,
     the highest bits in red; black is no surface. unit: the size of the unit the layer counts in, a number or one for each pixel."""
