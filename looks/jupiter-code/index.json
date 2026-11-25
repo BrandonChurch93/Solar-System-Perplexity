@@ -1,9 +1,89 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T06:58:25.239Z",
- "head": "b79d375ebfc18ad36f3c18260c8830c707952f22",
- "note": "round 2, third commit in work: experiments on the air's law (which part of the veil the pattern reading counts); nothing committed yet",
+ "pushed": "2026-11-25T07:15:58.615Z",
+ "head": "2ad37054f2d530b01b4f154bafcd746ef7d4532d",
+ "note": "third named commit of round 2 in proof: air as one slab of haze, flat at the lowest sines; dive pattern down, 3150 match worse at the far right",
  "looks": [
+  {
+   "time": "2026-11-25T07:15:57.580Z",
+   "file": "20261125071557580-note-trio-3150-draft.jpg",
+   "source": "../work/r12/trio-3150-draft.jpg",
+   "kind": "note",
+   "label": "3150: approved image, this commit 2ad37054 (slab air, far ground stays lit: match worse), second named commit b79d375e",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T07:15:56.223Z",
+   "file": "20261125071556223-note-s3-rise.jpg",
+   "source": "../work/r11/s3-rise.png",
+   "kind": "note",
+   "label": "rise pairs, slab air (commit 2ad37054), draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T07:15:54.950Z",
+   "file": "20261125071554950-note-s3-dive.jpg",
+   "source": "../work/r11/s3-dive.png",
+   "kind": "note",
+   "label": "dive 3029 to 3037 pairs, slab air (commit 2ad37054), draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T07:14:10.511Z",
+   "file": "20261125071410511-frame-n5-3296.jpg",
+   "source": "out/work/jupiter/p1/n5-3296.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3296, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3296,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T07:13:36.300Z",
+   "file": "20261125071336300-frame-n5-3150.jpg",
+   "source": "out/work/jupiter/p1/n5-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T07:12:57.551Z",
+   "file": "20261125071257551-frame-n5-2997.jpg",
+   "source": "out/work/jupiter/p1/n5-2997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T07:12:22.510Z",
+   "file": "20261125071222510-frame-n5-2895.jpg",
+   "source": "out/work/jupiter/p1/n5-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T06:58:24.623Z",
    "file": "20261125065824623-note-trio-3150.jpg",
@@ -11,20 +91,6 @@
    "kind": "note",
    "label": "3150: approved close image, this commit at final tier, kept still of the first named commit",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:58:24.187Z",
-   "file": "20261125065824187-frame-a2-3260.jpg",
-   "source": "out/work/jupiter/p1/a2-3260.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3260, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3260,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   },
   {
    "time": "2026-11-25T06:58:24.008Z",
@@ -59,20 +125,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-25T06:57:02.696Z",
-   "file": "20261125065702696-frame-a2-3037.jpg",
-   "source": "out/work/jupiter/p1/a2-3037.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3037, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3037,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
    "time": "2026-11-25T06:37:56.666Z",
    "file": "20261125063756666-note-trio-3150.jpg",
    "source": "../work/r10/trio-3150.jpg",
@@ -87,20 +139,6 @@
    "kind": "note",
    "label": "EXPERIMENT, not in the commit: 3029, 3037, 3252, 3260 as they are (left) and with the deck's air table off (right); the table makes most of the pattern line of both moves",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:36:09.918Z",
-   "file": "20261125063609918-frame-back-3150.jpg",
-   "source": "out/work/jupiter/p1/back-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   },
   {
    "time": "2026-11-25T06:25:38.271Z",
@@ -125,20 +163,6 @@
    "kind": "note",
    "label": "rise handover draft, frames 3240 to 3245 across the change of view, on the merge of main",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T06:06:53.853Z",
-   "file": "20261125060653853-frame-n4-2895.jpg",
-   "source": "out/work/jupiter/final/n4-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
   },
   {
    "time": "2026-11-25T06:05:15.179Z",
@@ -205,38 +229,6 @@
    "kind": "note",
    "label": "dive 3029 against 3037 by the ground's true map: frame, the other carried onto it, pattern (white is over the limit); corrected reading, the strip under the limb is the red",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:57:29.428Z",
-   "file": "20261125055729428-note-dive-ur-3025-3045.jpg",
-   "source": "../work/r11/dive-ur-3025-3045.jpg",
-   "kind": "note",
-   "label": "dive, upper right at 2 to 3, frames 3025 3029 3033 3037 3041 3045 of e41572b: the far ground under the limb, where the pattern line is red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:51:44.612Z",
-   "file": "20261125055144612-sheet-jupiter-dive-top.jpg",
-   "source": "out/work/handover/jupiter-dive-top.png",
-   "kind": "sheet",
-   "label": "jupiter dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 3059), place picture off, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "first": 2970,
-   "last": 3059,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T05:49:45.141Z",
-   "file": "20261125054945141-sheet-jupiter-dive-draft-before.jpg",
-   "source": "out/work/handover/jupiter-dive-draft-before.png",
-   "kind": "sheet",
-   "label": "jupiter dive, every frame 3047 to 3058 (before T, frame 3059), draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "first": 3047,
-   "last": 3058,
-   "tier": "draft"
   }
  ]
 }
