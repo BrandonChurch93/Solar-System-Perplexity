@@ -1,9 +1,52 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T02:21:35.638Z",
- "head": "1c8f661f69f16686ce82342c57e4e7617f63c6b9",
- "note": "MAIL 840: chunks term named (the deck's own shadow), cured by the pixel's foot; dashes cured by a thin streamer law; sky aim dropped; 4860 beside approved, G17 1.142",
+ "pushed": "2026-11-25T03:05:57.248Z",
+ "head": "7031887668d08018617884805ddec61df9a4507c",
+ "note": "neptune 03:06 UTC: chunks and dashes cured, sky flash named and not cured, 4860 still too blue",
  "looks": [
+  {
+   "time": "2026-11-25T03:05:55.907Z",
+   "file": "20261125030555907-note-dash-b.jpg",
+   "source": "out/work/nep/weave/ev/dash-b.jpg",
+   "kind": "note",
+   "label": "dive at 1920: the row of dashes gone at 4709 and 4713 (thin law on the density)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T03:05:54.700Z",
+   "file": "20261125030554700-note-sky-i.jpg",
+   "source": "out/work/nep/weave/ev/sky-i.jpg",
+   "kind": "note",
+   "label": "the same diagnostic at the change of view: the Milky Way pops in at 4758, so the carry off is no cure; cause is two turns of the sky",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T03:05:52.706Z",
+   "file": "20261125030552706-note-sky-g.jpg",
+   "source": "out/work/nep/weave/ev/sky-g.jpg",
+   "kind": "note",
+   "label": "sky, upper right corner 4721 to 4732 at preview: top the head (Milky Way crosses at 4724 to 4726, red), bottom a diagnostic with the stars' carry off",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T03:05:46.270Z",
+   "file": "20261125030546270-note-4860-h2.jpg",
+   "source": "out/work/nep/weave/ev/4860-h2.jpg",
+   "kind": "note",
+   "label": "4860 at 70318876 beside the approved close picture: G17 median 0.956 p25 0.358 (proxy), right plain 24 58 99 against 90 134 176, the haze is not built; 22 s per draft frame at preview",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T02:24:13.182Z",
+   "file": "20261125022413182-compare-neptune-dive-sides.jpg",
+   "source": "out/work/handover/neptune-dive-sides.png",
+   "kind": "compare",
+   "label": "neptune dive, both sides at T (frame 4758) and their difference times 8",
+   "stop": "neptune",
+   "segment": "neptune.dive",
+   "frame": 4758,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T02:21:35.001Z",
    "file": "20261125022135001-note-sky-d.jpg",
@@ -26,46 +69,6 @@
    "source": "out/work/nep/weave/ev/chunk-k.jpg",
    "kind": "note",
    "label": "4709 bisect, 3 times: head with navy chunks and dashes, C2 with the deck's own shadow through the pixel's foot and the thin streamer law, the map alone. 5.2 s per frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T02:21:31.382Z",
-   "file": "20261125022131382-note-four-c3.jpg",
-   "source": "out/work/nep/weave/ev/four-c3.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved close: head b42850bf, C2 (shadow by the foot 0.25, thin streamer law), C3 (arms 0.2, collar 0.12). G17 at 4860 preview full set: head 1.095 p25 0.482, C3 1.142 p25 0.358. Draft, 22 s per 4860 preview frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:21:44.832Z",
-   "file": "20261125012144832-note-chunk-e.jpg",
-   "source": "out/work/nep/weave/ev/chunk-e.jpg",
-   "kind": "note",
-   "label": "RED 4709: dark chunks with stepped edges round the spiral stay with cirrus cast 0 and with deck shadow 0; cause open",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:21:44.261Z",
-   "file": "20261125012144261-note-webrise-4950.jpg",
-   "source": "out/work/nep/weave/ev/webrise-4950.jpg",
-   "kind": "note",
-   "label": "web set rise every fifth frame 4950 to 5005",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:21:43.723Z",
-   "file": "20261125012143723-note-webdive-4752.jpg",
-   "source": "out/work/nep/weave/ev/webdive-4752.jpg",
-   "kind": "note",
-   "label": "web set dive every third frame 4752 to 4767",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T01:21:43.169Z",
-   "file": "20261125012143169-note-webdive-4716.jpg",
-   "source": "out/work/nep/weave/ev/webdive-4716.jpg",
-   "kind": "note",
-   "label": "web set dive every third frame 4716 to 4749",
    "stop": "neptune"
   }
  ]
