@@ -70,6 +70,7 @@ const bandLook = (id: string): number => (OPEN.bandLook as Record<string, number
 const riseLift = (id: string): number => (OPEN.riseLift as Record<string, number>)[id] ?? 0
 const DUST_LOOK = config.raw.travel.dust
 const OPEN_TAPS = 8
+const COMING_FLOOR = 0.05
 const SUN_COLOR = new THREE.Color(1, 0.9, 0.72)
 const SUN_BODY = new THREE.Quaternion().fromArray(sunFit.globe.quaternion)
 
@@ -708,8 +709,10 @@ export class FilmDirector implements Director {
     const glow = index === 0 ? smooth(ramp(SUN_GLOW_FROM, this.sunSwapSpan[1], u)) : 1
     const weight = index === 0 ? 1 - smooth(ramp(this.sunSwapSpan[0], this.sunSwapSpan[1], u)) : this.leaveWeight(index, u, pose.position)
     if (coming) {
-      const to = this.frames[index + 1]!.origin.clone().sub(pose.position).normalize()
-      return body(index + 1) * 0.5 * (1 - to.dot(this.sunWorld))
+      const to = this.frames[index + 1]!.origin.clone().sub(pose.position)
+      const sin = Math.min(1 / to.length(), 0.999999)
+      const r = sin / Math.sqrt(1 - sin * sin) / Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)
+      return Math.min((Math.PI * r * r) / (4 * aspect), 1) * 0.5 * (1 - to.normalize().dot(this.sunWorld))
     }
     return Math.min(weight * body(index) + body(index + 1) + glow * sun, 1)
   }
@@ -747,7 +750,7 @@ export class FilmDirector implements Director {
       ref = this.brightNear(index, seg.end, true)
       this.comingRef.set(index, ref)
     }
-    return openSky(this.brightNear(index, time, true), ref)
+    return openSky(Math.max(this.brightNear(index, time, true) - COMING_FLOOR * ref, 0), (1 - COMING_FLOOR) * ref)
   }
 
   patchSpanOf(index: number): [number, number] {
@@ -869,7 +872,7 @@ export class FilmDirector implements Director {
       skyPatch = smooth(ramp(span[0], span[1], u))
       const lens = this.openOf(index, time)
       const lifted = lens + (1 - lens) * mix(OPEN.leave.level * smoother(ramp(OPEN.leave.from, OPEN.leave.by, u)), 1, index > 0 ? riseLift(a.id) : 0)
-      const open = lens + (lifted - lens) * this.comingOpen(index, time)
+      const open = lifted * this.comingOpen(index, time)
       skyLook = mix(bandLook(a.id), bandLook(b.id), bandLook(b.id) < bandLook(a.id) ? skyPatch : smooth(ramp(Math.min(span[0], OPEN.lookFrom), span[1], u)))
       const dim = index > 0 ? SUN_DIM.level * smooth(this.sunSeen(index, time)) : 0
       light.sky = mix(light.sky, OPEN.openExposure * (1 - dim), open)
