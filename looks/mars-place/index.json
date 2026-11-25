@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T20:25:15.479Z",
- "head": "f1d9217084f274313761854db08e637cea68c1c1",
- "note": "20:30 ledge of C2 before and after the behind cure, wall weight on the 1.6 plate",
+ "pushed": "2026-11-25T20:36:58.404Z",
+ "head": "10c72f63d59e26694dc4a3eefecf245fa06bb988",
+ "note": "20:38 border of set and plate traced to the aprons' outer ends; the net of blocks is the take's own paving",
  "looks": [
+  {
+   "time": "2026-11-25T20:36:57.583Z",
+   "file": "20261125203657583-note-net-plate.jpg",
+   "source": "out/work/place/t2/net-plate.jpg",
+   "kind": "note",
+   "label": "BAD: the 0.3 and 0.7 plates at 1 to 1.5: the take's cracked slabs and boulders 40 to 300 m across (the net of blocks) and the code wall beside it as hair",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:36:57.019Z",
+   "file": "20261125203657019-note-tint-corners.jpg",
+   "source": "out/work/place/t2/tint-corners.jpg",
+   "kind": "note",
+   "label": "BORDER TRACE 1 to 1: the straight border at 2683 and 2475 lower right is the outer end of L0's apron (right and bottom strip), at 2474 and 2475 lower left the outer end of L1's apron; beyond it the plate",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T20:36:56.420Z",
+   "file": "20261125203656420-note-tint-sheet.jpg",
+   "source": "out/work/place/t2/tint-sheet.jpg",
+   "kind": "note",
+   "label": "BORDER TRACE: the set's aprons tinted (L1 yellow, L0 bottom magenta, L0 right cyan, L0 left green, L2 white) at 2468, 2474, 2476 and rise 2682, 2683 on main's eye: at T the aprons fill the left, the foot and the right of the frame",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T20:25:14.479Z",
    "file": "20261125202514479-note-dbg-c.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/place/w12/v03-c.jpg",
    "kind": "note",
    "label": "BAD from above, 0.3 plate x 1250 y 250 at 1 to 1: before, take 10 (fur), trial 12 (speckle), rock without grain (no form)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:13:59.715Z",
-   "file": "20261125201359715-note-whole-mask-0p7.jpg",
-   "source": "out/work/place/w12/whole-mask-0p7.jpg",
-   "kind": "note",
-   "label": "0.7 plate before the walls beside its wall weight",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:13:58.787Z",
-   "file": "20261125201358787-note-whole-mask.jpg",
-   "source": "out/work/place/w12/whole-mask.jpg",
-   "kind": "note",
-   "label": "0.3 plate before the walls beside its wall weight: the heights' wall band lies on ground the take paints as a plain of boulders",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T20:13:57.978Z",
-   "file": "20261125201357978-note-corner2684.jpg",
-   "source": "out/work/place/t1/corner2684.jpg",
-   "kind": "note",
-   "label": "MAIL 1266 2a: rise 2684 lower corners at 1 to 1: state, main, layers",
    "stop": "mars"
   }
  ]
