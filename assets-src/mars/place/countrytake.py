@@ -233,6 +233,21 @@ def main():
         if not K.get('lay', True):
             # the one ground carries no copy of the close picture: the take alone, at its own tone (MAIL 837, MAIL 849)
             known = np.asarray(Image.open(os.path.join(args.laid, l['file'].replace('.jpg', '-laid.png'))).convert('L')).astype(np.float32) / 255
+            if K.get('light') == 'painted':
+                # the take is painted in the approved picture's own light (MAIL 913, 1): it keeps that light whole, the cap adds none
+                # (cap.json light.own 0), no cast shadow of the heights is laid in and nothing is toned by a mask
+                tone = K.get('tone')
+                if tone:
+                    # one light by ground distance from the spot: the take's scene values times the measured ratio of the laid
+                    # picture to the take (taketone.py), read between the measured distances in the log of the distance
+                    at = (np.arange(c, dtype=np.float32) + 0.5 - c / 2) / c * 2 * half(l['widthDeg'])
+                    lg = np.log(np.maximum(np.degrees(np.arctan(np.hypot(at[None, :], at[:, None]))), 1e-4))
+                    nodes = np.log(np.float32(tone['deg']))
+                    ratio = np.stack([np.exp(np.interp(lg, nodes, np.log(np.float32(tone['ratio'])[:, ch]))) for ch in range(3)], axis=2).astype(np.float32)
+                    take = geom.texel_of(geom.scene_of(take / 255.0) * ratio) * 255.0
+                Image.fromarray(np.clip(take + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)
+                print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])), name, 'the take alone, in its own painted light' + (', toned by ground distance to the picture' if tone else ''))
+                continue
             take, shadow, held, toned = take_light(take, l['widthDeg'], P['country']['light'], heights, K, laid, known, before, P['fit'])
             Image.fromarray(np.clip(take + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(args.out, l['file']), 'JPEG', qtables=q, subsampling=s)
             print(l['file'], os.path.getsize(os.path.join(args.out, l['file'])), name, 'the take alone; its painted light held on %.3f of the plate, cast shadow of the heights on %.3f, the picture\'s broad tone on %.3f' % (held, shadow, toned))

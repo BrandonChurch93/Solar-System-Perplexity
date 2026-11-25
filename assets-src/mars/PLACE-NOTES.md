@@ -1555,3 +1555,103 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
 - 05:27 main moved to 977ec0b3 (kit/PROGRESS.md alone): merged as 00ca3e32; the units of d99ec00a stand for it (no file of the
   film or of a test changed). The NAMED commit is the one that holds this line. Net of the three folders against main with
   it: said in the mail.
+
+### 24 November, 05:28 UTC onward (after NAMED; MAIL 913 is the task)
+
+- 05:27 pushed 7cebce4ca374ea450423aa4e609bb9ff140d48be; 05:28 NAMED mailed to /root (out/work/place/named57.txt), travel_builder
+  told the sha and that the rise's end is unchanged. Looks 9545506a.
+- 05:30 finding on the plates (sheet out/work/place/see57/rtakes.jpg, rows lead, take, plate after countrytake, public plate;
+  columns 0.3, 0.7, 1.6, 3.8 degrees): the r takes are whole nadir pictures of rock, rim and canyon. After take_light
+  (painted light held under the picture's reach, cast shadow of the fitted heights, the picture's broad tone over 12 texels)
+  the plates at 0.3 and 0.7 degrees are flat dark polygons with straight sides and a pale polygon in the middle. So the brown
+  polygon with straight sides is in the PLATES, made by my own light pass, not only in the relief.
+- 05:31 measured, scene values under the laid mask (out/work/place/tone58.py): 0.3 degrees laid (0.023, 0.019, 0.019) against
+  take (0.063, 0.041, 0.032), ratio (0.37, 0.47, 0.59); 0.7: ratio (0.52, 0.68, 0.87); 1.6: (0.74, 0.93, 1.10); 3.8: (1.20,
+  1.20, 1.12). The take is 2 to 3 times brighter and redder than the picture under the picture's reach at the two finest
+  levels: the two lights of MAIL 913 (1), measured.
+- 05:32 MAIL 913 (5), measured (out/work/place/ang58.ts; the ground taken as the rim plateau one unit under the picture's
+  camera, the lens's middle ray met with it, the picture's own ray from its camera to that point):
+  frame, angle between the two rays, lens ray to the ground, picture ray to the ground, degrees
+  2440 70.5, 57.2, 11.5 | 2448 58.9, 48.4, 16.5 | 2454 46.2, 41.8, 19.4 | 2460 32.4, 35.2, 21.1 | 2464 24.2, 31.4, 21.6 |
+  2468 17.4, 28.2, 21.9 | 2472 12.0, 25.6, 22.0 | 2476 7.9, 23.6, 22.1 | 2477 7.1, 23.2, 22.1
+  rise 2681 8.0 | 2684 8.2 | 2688 11.5 | 2692 17.4 | 2696 25.5 | 2700 35.8 | 2710 65.2
+  The picture sees the middle of the frame at 19 to 22 degrees to the ground; the lens at 42 down to 28. Stretch of a flat
+  face along the view: sin(lens)/sin(picture) = 2.0 at 2454, 1.6 at 2460, 1.27 at 2468.
+- 05:33 test h1 (not committed): countrytake with takes.light "painted" (the take alone, no light pass), cap.json light.own 0
+  (the cap does not light a painted plate again). Chain out/work/place/chain58.sh h1. Levels: all under 0.45 (largest 0.32).
+- 05:34 MAIL 924: check mz2 runs on 7cebce4c; batch 10 is not cut before 06:30 UTC; a NAMED of the MAIL 913 state before the cut
+  replaces 7cebce4c as round 1, else 7cebce4c is judged with my reds as severe items and the next takes round 2. "do not hold
+  the next NAMED for more than its first whole state". Show 2464 in both sets again on the next commit.
+- 05:35 h1 looked at, draft, beside the NAMED state (out/work/place/eng58/pw-2448, 2456, 2460, 2464, 2468, 2470.jpg): the pale
+  polygon, the wide dark smear and the dark slab at the right are gone; the country round the picture is rock with the canyon
+  running on. Left: the picture still stands darker than the country at 2456 to 2464 with its east side as a straight edge, the
+  strokes lower left at 2468 to 2470, a foot line at the lower edge at 2470.
+- 05:36 h2: plates.json takes.tone, one light by ground distance: the take's scene values times the measured ratio (taketone.py)
+  read by the log of the distance from the spot; chain58.sh h2 web (full and web). handover_engineer told of the coming commit.
+- 05:40 h2 looked at, draft, native (out/work/place/eng58/bn-2464.jpg, bn-2468a.jpg, bn-2468b.jpg; ab-2460.jpg h1 beside h2): at
+  2464 and 2468 the ground east of the picture is dark rock in the picture's tone where the slab stood. Still wrong, seen:
+  the east side of the picture is a line along which its drawn out wall meets the plate's rock (coarser, blocky); a stepped
+  dark band top right at 2468 with pale streaks toward the limb beyond it; strokes on the picture's own ground lower left at
+  2468; at 2460 the picture's canyon is still the darkest thing in the frame with its lower right side straight.
+  h2 is taken as the first whole state of MAIL 913 (MAIL 924: do not hold it). Proof run: out/work/place/proof58.sh.
+- 05:45 known cost of cap.json light.own 0: every own level loses the lift of the heights' normal, also the plate of 8.5
+  degrees (made ground without slope light). A light per level would be an engine option, not mine. Named in the mail.
+- 05:41 proof of h2 (out/work/place/proof58.log): final 2325 sha256 da436cb0...9db1 equal; final 2580 equal by bytes to the kept
+  final. tsc clean. Gate: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops:
+  mars/web 418 MB, mars/full 1400 MB". Net against main: public +11,275,689, assets-src -21,263,678, src +25,578, sum -9,962,411.
+  globe-levels both sets under 0.45 (largest patch-19 to land-8p5 0.33 full, 0.34 web). Looks pushed 05:47 (a4a47946).
+- 05:44 to 05:54 h2 frames at draft, native halves, each looked at (out/work/place/eng58/n-*-a.jpg, -b.jpg), one line each:
+  2440 a: the canyon as a crack with a pale grey floor and a pale tip at its west end on the orange sheet, red glow upper right.
+       b: orange country, crater rim right, nothing of the place but the crack. Still a sheet with one crack.
+  2444 a: as 2440, red glow upper right, grey flat floor of the west arm. b: the picture as a small dark piece at the bend.
+  2448 a: red glow top right, the west arm a grey band to the left edge. b: the picture a dark island with hard sides in orange.
+  2452 a: red glow top, pale band top left. b: the island larger, hard straight sides, the east arm of the canyon good.
+  2456 a: drawn out strokes on the ridge west of the picture, red glow top right. b: the island with straight sides, the
+       ground under it now dark brown, the plateau beyond bright orange.
+  2460 a: strokes on the ridge west of the picture; the near ground dark rock in one tone. b: the picture's east side a
+       straight line, east of it straight sided dark faces of the cap's canyon wall; no pale polygon, no smear.
+  2464 a: strokes west of the picture (x 80 to 500, y 300 to 620). b: the east side a line from (600, 440) to (480, 700) against
+       the plate's dark rock, a comb of pale strokes at the foot (x 150 to 210, y 830 to 910). No slab.
+  2468 the crops bn-2468a, bn-2468b: strokes lower left; stepped dark band top right with pale streaks toward the limb.
+  2472 a: swirled strokes lower left (x 0 to 400, y 600 to 900). b: the plate's rock lower right, soft, a line against the
+       picture; foot line near y 1000 with an orange patch; a dark horizontal streak at the right edge y 480 to 560.
+  2476 a: swirled strokes lower left. b: clean.
+  2676, 2680: the surface view, clean. 2684 a: clean. b: soft dark rock block lower right (x 720 to 960, y 600 to 1080), a
+       stepped dark band above it (y 370 to 620).
+  2688 a: strokes west and lower left of the picture. b: the east side a line from (700, 400) to (450, 900), soft plate rock
+       east of it, stepped translucent stripes at (640 to 760, 400 to 500), a pale fan of streaks and a bright wedge top right.
+- 05:50 to 05:54 new takes in the picture's light (media skill, default route, square, 1254 px, two inputs: the lead as image
+  1, references/approved/mars-close.jpg as image 2), for the state AFTER h2:
+  s07 take 1: r07-take1.png repainted (s07-prompt1.txt): forms kept, low Sun from the upper left, darker. Kept.
+  s03 take 1: lead the middle 0.3 degrees of s07 take 1 enlarged (s03-prompt1.txt): a dotted pattern over all of it. Not used.
+  s03 take 2: r03-take1.png repainted (s03-prompt2.txt): forms kept, good. Kept.
+  s16 take 1: lead r16-take1.png with s07 take 1 nested (s16-lead1.png, s16-prompt1.txt): one light, good. Kept.
+  s38 take 1: lead r38-take1.png with s16 take 1 nested (s38-lead1.png, s38-prompt1.txt): the nested square stays a darker
+       square with straight sides. Not used.
+  s38 take 2: r38-take1.png repainted (s38-prompt2.txt): forms kept, low Sun, long shadows. Kept.
+  2692 a: strokes west of the picture (x 0 to 500, y 300 to 650), pebbled soft plate rock below. b: the picture's east wall
+       a straight cut from (400, 520) to (200, 800), east of it a grey faceted rock block of the plate. Beside the NAMED
+       state (look-2692): the flat dark slab and the pale polygon of 7cebce4c are gone, the block has rock on it.
+  2696 a: strokes on the ridge (x 100 to 480, y 330 to 600). b: the picture a dark piece lower left with a straight side,
+       grey faceted block below it, the country beyond bright orange (two lights still).
+  2700 a: the picture a dark piece at the right edge, red glow top right, strokes on the ridge. b: orange country, the west
+       arm lower left. 2704, 2708 (halved): sheet with a crack, glow at 2704, none at 2708.
+  2477 and 2490 at draft: equal by bytes to main and to 7cebce4c. 2476 against 2477 mean 9.69 (as before).
+- 05:57 the two sets at 2464 on h2 (eng58/P2464 full, W2464 web; mean 7.993 at 1080): d253 (b) still red. In the web set the
+  picture's near ground stands lower left as a pale brown sheet with a hard outline (x 0 to 800, y 540 to 1080), where the
+  full set shows the cap's dark rock. Not traced further. In the looks.
+- 05:59 sides at T on h2 (draft): dive mean 0.008, 99th 0, largest 13; rise mean 0.006, 99th 0, largest 6. Path green
+  (plan untouched). Units on the h2 tree: 63 files, 939 ok, 0 not ok (globe-cap 108 s beside a render). Build green, tsc clean.
+  Gate lines as at 05:41. Net against main 71a573d4 with taketone.py in: public +11,275,689, assets-src -21,259,473, src
+  +25,578, sum -9,958,206.
+- 05:56 main moved to 71a573d4 (kit/PROGRESS.md only). Merged after the commit of h2; the units ran on the tree before the
+  merge, the merge brings that one file.
+- The s takes (new light) are NOT in this commit: they sit in out/work/place/gen58/s/ with their prompts and leads until the
+  plates are made from them (binaries once per milestone). If the scratch is lost they are made again from the prompts logged
+  here: each is "repaint image 1 in the light of image 2 (low Sun from the upper left, long shadows to the lower right, brown
+  rock, warm haze in the low ground), keep every form, rim, crack and crater of image 1 where it is, straight down view".
+- WHAT h2 IS AND IS NOT (for the NAMED mail): cure (1) of MAIL 913 is begun, not done: the plates of 3.8 degrees and under
+  carry the takes in their painted light, toned by ground distance from the spot to the laid picture's own tone, and the
+  cap's own light is off. The polygon, the wide smear and the dark slab of 7cebce4c are gone. NOT done: the takes are still
+  the high Sun ones (two lights from 2440 to about 2458 and 2692 to 2710), no stretch law (2), the east side of the close
+  set is in frame (3), no air (4), path as it was (5).
