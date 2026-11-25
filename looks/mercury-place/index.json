@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T20:48:16.138Z",
+ "pushed": "2026-11-25T21:22:52.111Z",
  "head": "80d99af4c573b0875f794e6a9e1b4b22a4a8ab6d",
- "note": "MAIL 1289: s15 kept as proof; working on the crater's own turn by height; nothing new to judge yet",
+ "note": "MAIL 1289: the two ends of the crater's turn on the rise; laws by height being read (earlier label on 717 said the ring is faint there: wrong, the rim is bright at 717 on the name)",
  "looks": [
+  {
+   "time": "2026-11-25T21:22:50.897Z",
+   "file": "20261125212250897-note-cr-two.jpg",
+   "source": "../../../../tmp/m/cr-two.jpg",
+   "kind": "note",
+   "label": "rise 995, 1000, 1005, 1010, 1016, the crater at 2 times (preview size): top the name's light, bottom the set's light at every height; the turn of MAIL 1289 runs between these two",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T20:48:15.454Z",
    "file": "20261125204815454-note-c717.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/m/gh/optics-check.jpg",
    "kind": "note",
    "label": "ghosts as optics, groundwork: the approved's ghost plate against 9 images of the opening on the Sun to centre line (not in the tree)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T19:31:51.420Z",
-   "file": "20261125193151420-note-rise989-cr.jpg",
-   "source": "../../../../tmp/m/rise989-cr.jpg",
-   "kind": "note",
-   "label": "rise 989 to 999 round the two pits at 1 to 1: one ground, the light turns (rate 2 red 0.51 at 990)",
    "stop": "mercury"
   }
  ]
