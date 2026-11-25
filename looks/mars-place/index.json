@@ -1,9 +1,63 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T01:00:37.994Z",
- "head": "37d874e1ff409b225d42058d1aca894b77dc239e",
- "note": "an edge on the globe side alone breaks T: the approved surface view shows its aprons at 2477 and 2681; edge not committed",
+ "pushed": "2026-11-25T01:27:02.601Z",
+ "head": "88d4f309548622f39a1f3de85bc015c83317c8a9",
+ "note": "88d4f309: third state of the round, picture equal to d6c01889; the edge trial is not committed",
  "looks": [
+  {
+   "time": "2026-11-25T01:27:02.027Z",
+   "file": "20261125012702027-note-n55-four.jpg",
+   "source": "out/work/place/see/n55-four.jpg",
+   "kind": "note",
+   "label": "88d4f309 draft: 2427, 2469 (top), 2689, 2726 (bottom), bytes equal to d6c01889",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:27:01.469Z",
+   "file": "20261125012701469-note-n55-T-dive.jpg",
+   "source": "out/work/place/see/n55-T-dive.jpg",
+   "kind": "note",
+   "label": "88d4f309 draft: every frame 2467 to 2481 (T 2477), bytes equal to d6c01889",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:27:00.893Z",
+   "file": "20261125012700893-note-n55-T-rise.jpg",
+   "source": "out/work/place/see/n55-T-rise.jpg",
+   "kind": "note",
+   "label": "88d4f309 draft: every frame 2671 to 2685 (T 2681), bytes equal to d6c01889",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:27:00.313Z",
+   "file": "20261125012700313-note-n55-level.jpg",
+   "source": "out/work/place/see/n55-level.jpg",
+   "kind": "note",
+   "label": "88d4f309 draft: 2411, 2412, 2413 (each drawn twice): Phobos, lit, leaves the frame at the right edge; that bends the level at 2412 + 1/2",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T01:17:26.110Z",
+   "file": "20261125011726110-compare-mars-rise-sides.jpg",
+   "source": "out/work/handover/mars-rise-sides.png",
+   "kind": "compare",
+   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.rise",
+   "frame": 2681,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T01:16:53.853Z",
+   "file": "20261125011653853-compare-mars-dive-sides.jpg",
+   "source": "out/work/handover/mars-dive-sides.png",
+   "kind": "compare",
+   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
+   "stop": "mars",
+   "segment": "mars.dive",
+   "frame": 2477,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T01:00:37.210Z",
    "file": "20261125010037210-note-n54-sides96-rise.jpg",
@@ -18,60 +72,6 @@
    "source": "out/work/place/see/n54-sides96-dive.png",
    "kind": "note",
    "label": "trial, not committed: the two sides at T of the dive with the close ground ending at its picture's sides on the globe side only (feather 96 px): mean 1.517, 99th percentile 45",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T01:00:35.363Z",
-   "file": "20261125010035363-note-n55-aprons.jpg",
-   "source": "out/work/place/see/n55-aprons.jpg",
-   "kind": "note",
-   "label": "trial, not committed: the surface view at 2477, 2480, 2490 (top), 2520, 2580, 2681 (bottom) drawn without its aprons; the pale area is where the drawn out ground stands in the approved view: 22 to 26 percent of the frame at 2477, none at 2580, 6 to 8 percent at 2681",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:54:07.149Z",
-   "file": "20261125005407149-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T00:53:34.478Z",
-   "file": "20261125005334478-compare-mars-dive-sides.jpg",
-   "source": "out/work/handover/mars-dive-sides.png",
-   "kind": "compare",
-   "label": "mars dive, both sides at T (frame 2477) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.dive",
-   "frame": 2477,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T00:47:55.110Z",
-   "file": "20261125004755110-note-n54-dome.jpg",
-   "source": "out/work/place/see/n54-dome.jpg",
-   "kind": "note",
-   "label": "lower right at 2467, 2469, 2470, 2473, 2477, 2684: the dark dome is the globe's own ground, it is not in the surface view at 2477",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:47:54.479Z",
-   "file": "20261125004754479-note-n54-eh.jpg",
-   "source": "out/work/place/see/n54-eh.jpg",
-   "kind": "note",
-   "label": "trial not kept: the close ground there at every height (bottom) against the commit before (top) at 2420, 2440, 2460: from above it is a fan, so the presence band stays",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T00:47:53.646Z",
-   "file": "20261125004753646-note-n54-ea.jpg",
-   "source": "out/work/place/see/n54-ea.jpg",
-   "kind": "note",
-   "label": "trial, right half at 2470, 2684, 2687: before (left of each pair) and with the close ground ending at the sides of its picture, its air left whole (right of each pair); the slab and fan at the right edge are out",
    "stop": "mars"
   }
  ]
