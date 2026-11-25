@@ -1,9 +1,109 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T05:57:59.356Z",
- "head": "e55f084ca0436489551bb69b2604e167fcff5c4a",
- "note": "05:59 UTC: correction, the dive's pattern line is the picture (my script had dropped 120 px under the limb); chain q10 running (handover at draft tier, finals, parity, tests), naming when it ends",
+ "pushed": "2026-11-25T06:25:42.374Z",
+ "head": "c48bddc93fa6638407fa9e102efd8bff11ed8360",
+ "note": "06:26 UTC: handover on the merge of main passes at the draft tier (dive and rise), parity green, tests running; next the NAMED commit, then the air and the far ground",
  "looks": [
+  {
+   "time": "2026-11-25T06:25:38.271Z",
+   "file": "20261125062538271-note-trio-3150.jpg",
+   "source": "../work/r10/trio-3150.jpg",
+   "kind": "note",
+   "label": "3150: approved close image, round 46, now (match 7.358 at 1400 by 788; far strip still too smooth)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:25:37.526Z",
+   "file": "20261125062537526-note-jupiter-rise-draft-after.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-after.png",
+   "kind": "note",
+   "label": "rise handover draft, frames 3241 to 3252 after the change of view: pale mounds at the bottom edge from 3248, dark straight edge lower left at 3252 (still wrong)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:25:35.427Z",
+   "file": "20261125062535427-note-jupiter-rise-draft-across.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-across.png",
+   "kind": "note",
+   "label": "rise handover draft, frames 3240 to 3245 across the change of view, on the merge of main",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T06:13:07.148Z",
+   "file": "20261125061307148-frame-f3012-uhd-web.jpg",
+   "source": "out/work/jupiter/d253d/f3012-uhd-web.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3012, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3012,
+   "tier": "draft",
+   "format": "uhd",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T06:10:07.350Z",
+   "file": "20261125061007350-frame-n4-3150.jpg",
+   "source": "out/work/jupiter/final/n4-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T06:06:53.853Z",
+   "file": "20261125060653853-frame-n4-2895.jpg",
+   "source": "out/work/jupiter/final/n4-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T06:05:15.179Z",
+   "file": "20261125060515179-sheet-jupiter-rise-top.jpg",
+   "source": "out/work/handover/jupiter-rise-top.png",
+   "kind": "sheet",
+   "label": "jupiter rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 3240), place picture off, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3240,
+   "last": 3314,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T06:03:34.259Z",
+   "file": "20261125060334259-sheet-jupiter-rise-draft-after.jpg",
+   "source": "out/work/handover/jupiter-rise-draft-after.png",
+   "kind": "sheet",
+   "label": "jupiter rise, every frame 3241 to 3252 (after T, frame 3240), draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "first": 3241,
+   "last": 3252,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T06:03:31.304Z",
+   "file": "20261125060331304-compare-jupiter-rise-step-in-place.jpg",
+   "source": "out/work/handover/jupiter-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "jupiter rise, the largest step of the level in place (0.58): frame 3291, frame 3292, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3292
+  },
   {
    "time": "2026-11-25T05:57:33.904Z",
    "file": "20261125055733904-note-trio-3150.jpg",
@@ -43,17 +143,6 @@
    "kind": "note",
    "label": "dive, upper right at 2 to 3, frames 3025 3029 3033 3037 3041 3045 of e41572b: the far ground under the limb, where the pattern line is red",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:52:07.626Z",
-   "file": "20261125055207626-compare-jupiter-rise-sides.jpg",
-   "source": "out/work/handover/jupiter-rise-sides.png",
-   "kind": "compare",
-   "label": "jupiter rise, both sides at T (frame 3240) and their difference times 8",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3240,
-   "tier": "draft"
   },
   {
    "time": "2026-11-25T05:51:44.612Z",
@@ -147,70 +236,6 @@
    "source": "../work/r9/storm-equal.png",
    "kind": "note",
    "label": "the storm at equal ground 2895 to 3024 on the frames of e41572b: one storm; the rings round it arrive at 2988 to 2994 (named)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:24:23.344Z",
-   "file": "20261125052423344-note-ll-3253h.jpg",
-   "source": "../work/r9/tm/ll-3253h.jpg",
-   "kind": "note",
-   "label": "rise lower left of 3253 + 1/2 beside the next 8 frames carried back: the same mound, softer when near, straight dark edge at its right (named, not cured)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:24:22.512Z",
-   "file": "20261125052422512-note-later-3251h.jpg",
-   "source": "../work/r9/tm/later-3251h.png",
-   "kind": "note",
-   "label": "rise 3259 + 1/2, 3251 + 1/2 carried onto it by the true surface, map of the change of pattern: the band under the limb",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:24:18.792Z",
-   "file": "20261125052418792-note-limb-3259h.jpg",
-   "source": "../work/r9/tm/limb-3259h.jpg",
-   "kind": "note",
-   "label": "rise: the ground under the limb of 3259 + 1/2 (x 1280 to 1680, y 60 to 420) beside 3257 + 1/2, 3255 + 1/2, 3253 + 1/2, 3251 + 1/2 carried onto it by the true surface: one ground, squeezed and veiled earlier, wide and clear later (the cause of the rise's red pattern line)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:08:32.567Z",
-   "file": "20261125050832567-note-pair-3150-final.jpg",
-   "source": "../work/r9/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final tier beside the approved close image",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:08:31.337Z",
-   "file": "20261125050831337-note-rise-sheet.jpg",
-   "source": "../work/r9/rise-sheet.jpg",
-   "kind": "note",
-   "label": "rise sheet 3250 3256 3262 3268 3274 3282 3296 draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:08:28.769Z",
-   "file": "20261125050828769-note-true-rise-3253h.jpg",
-   "source": "../work/r9/tm/true-rise-3253h.png",
-   "kind": "note",
-   "label": "rise 3253 + 1/2 against 8 frames later carried by the true surface, and the map of the change in place: lower left and the limb (red, named)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:08:22.301Z",
-   "file": "20261125050822301-note-rise-m.jpg",
-   "source": "../work/r9/rise-m.jpg",
-   "kind": "note",
-   "label": "after the rise 3324 to 3334 draft, every frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T05:08:20.864Z",
-   "file": "20261125050820864-note-rise-l.jpg",
-   "source": "../work/r9/rise-l.jpg",
-   "kind": "note",
-   "label": "after the rise 3316 to 3323 draft, every frame",
    "stop": "jupiter"
   }
  ]
