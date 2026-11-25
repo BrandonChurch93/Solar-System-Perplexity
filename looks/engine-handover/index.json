@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T11:17:33.788Z",
- "head": "c0d04d4c88f335d1fc6ccee5de64752d773caab4",
- "note": "MAIL 1041: the soft of a surface view measured on its globe is none (naming commit amended, local); before pictures of Uranus 4290 and 4259 at final; the suite runs on the cured tree",
+ "pushed": "2026-11-25T11:39:18.894Z",
+ "head": "dfe0aa905683a93feed947cdf6915379e7b01757",
+ "note": "Naming commit bdefa472 pushed and named: a surface view measured on its globe takes no soft. Uranus 4290 and 4259 at final before and after; now Mars's review rows box against the law",
  "looks": [
+  {
+   "time": "2026-11-25T11:28:44.693Z",
+   "file": "20261125112844693-note-u4259-zoom-b.jpg",
+   "source": "../../../../tmp/law/sheets/u4259-zoom-b.png",
+   "kind": "note",
+   "label": "Uranus 4259 final at 2x, rings (1380,400 to 1700,640): before the naming and after. Coloured specks along the ring edges in both, not from this change"
+  },
+  {
+   "time": "2026-11-25T11:28:43.403Z",
+   "file": "20261125112843403-note-u4259-zoom-a.jpg",
+   "source": "../../../../tmp/law/sheets/u4259-zoom-a.png",
+   "kind": "note",
+   "label": "Uranus 4259 final at 2x, clouds (560,540 to 880,780): before the naming and after"
+  },
+  {
+   "time": "2026-11-25T11:28:42.098Z",
+   "file": "20261125112842098-note-u4290-zoom-b.jpg",
+   "source": "../../../../tmp/law/sheets/u4290-zoom-b.png",
+   "kind": "note",
+   "label": "Uranus 4290 final at 2x, rings (1420,380 to 1740,620): before the naming and after"
+  },
+  {
+   "time": "2026-11-25T11:28:41.292Z",
+   "file": "20261125112841292-note-u4290-zoom-a.jpg",
+   "source": "../../../../tmp/law/sheets/u4290-zoom-a.png",
+   "kind": "note",
+   "label": "Uranus 4290 final at 2x, clouds (600,560 to 920,800): before the naming and after"
+  },
+  {
+   "time": "2026-11-25T11:28:40.466Z",
+   "file": "20261125112840466-note-u-final-pairs.jpg",
+   "source": "../../../../tmp/law/sheets/u-final-pairs.png",
+   "kind": "note",
+   "label": "Uranus 4290 and 4259 at final, before the naming (commit 4, 16 samples) and after (bdefa472, 19 samples, soft 0): G17 against the approved close image 4290 median 1.126 to 1.119, p25 1.024 to 1.026; 4259 median 1.054 to 1.053, p25 0.916 to 0.918; band energy tile by tile after over before: median 1.000, least 0.988, most 1.008"
+  },
   {
    "time": "2026-11-25T11:17:31.390Z",
    "file": "20261125111731390-note-f04259.jpg",
@@ -24,42 +59,6 @@
    "source": "out/work/blur/c4-final/f04290.png",
    "kind": "note",
    "label": "Uranus 4290 final, before the naming (commit 4 dfe0aa90): 16 samples, 6.26 px read on the plane, G17 median 1.126 p25 1.024"
-  },
-  {
-   "time": "2026-11-25T10:51:10.802Z",
-   "file": "20261125105110802-note-measure-mercury-a.jpg",
-   "source": "../../../../tmp/law/measure-mercury-a.png",
-   "kind": "note",
-   "label": "The motion measure against the drawn pictures, Mercury's surface view, three pairs of consecutive draft frames: before the naming (plane, red) the measure reads a third to a half under the motion of the pictures, after it (the globe as drawn, green) within 4 percent",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T10:28:28.061Z",
-   "file": "20261125102828061-note-c4-draft-merc-a.jpg",
-   "source": "../../../../tmp/law/c4-draft-merc-a.png",
-   "kind": "note",
-   "label": "Mercury draft frames 744, 759, 760, 761, 765, 766 on commit 4 of the measure law (dfe0aa90), the base of the hash list for the naming commit"
-  },
-  {
-   "time": "2026-11-25T10:07:52.217Z",
-   "file": "20261125100752217-note-m-rise-in-c.jpg",
-   "source": "../../../../tmp/law/m-rise-in-c.png",
-   "kind": "note",
-   "label": "Mars rise in at review, 2671 to 2673, 1 to 1 crop: shutter law from 6, 5 and 4.5 px to 14 (trials on the old px; the rows are drawn again on the true px)"
-  },
-  {
-   "time": "2026-11-25T09:48:33.219Z",
-   "file": "20261125094833219-note-m-rise-in-a.jpg",
-   "source": "../../../../tmp/law/m-rise-in-a.png",
-   "kind": "note",
-   "label": "Mars rise in at 1 to 1 (crop 480,760 to 960,1080), frames 2671 to 2673: top the box, bottom the shutter law 6 to 14 px"
-  },
-  {
-   "time": "2026-11-25T09:48:32.088Z",
-   "file": "20261125094832088-note-m-rise-in-b.jpg",
-   "source": "../../../../tmp/law/m-rise-in-b.png",
-   "kind": "note",
-   "label": "Mars rise in at 1 to 1 (crop 0,600 to 480,920), frames 2671 to 2673: top the box (1c85affe), bottom the shutter law 6 to 14 px (scratch, Mars alone): 2671 equal by sha, the streak's spread 1.83, 2.24, 2.53 px for 1.83, 3.05, 4.04"
   }
  ]
 }
