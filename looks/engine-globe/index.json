@@ -1,9 +1,25 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T10:47:57.138Z",
+ "pushed": "2026-11-25T11:13:09.241Z",
  "head": "d69b8640fb1f481dbb58cf26cb831f3bd2ecd392",
- "note": "MAIL 1032: measurement only. Mars dive 2456 to 2474 on 22820b17 is rendering for columns A, C, E, F, G with the way taken from range pictures; no numbers yet.",
+ "note": "Measurement for MAIL 1032 a, Mars dive 2456 to 2474 on 22820b17. Not a cure, nothing changed in the film. Measured at 2460: reader 1.45, real pair carried by range pictures 1.31, far ground 4 to 8 heights away 1.5, near ground 0.3.",
  "looks": [
+  {
+   "time": "2026-11-25T11:13:08.513Z",
+   "file": "20261125111308513-note-mars-2460-far.jpg",
+   "source": "../m1032/mars-2460-far.png",
+   "kind": "note",
+   "label": "Mars dive on 22820b17, frame 2460 far ground at pixel 1260, 60: the same ground 8 film frames later lies in the haze under the horizon",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T11:13:07.815Z",
+   "file": "20261125111307815-note-mars-2460.jpg",
+   "source": "../m1032/mars-2460.png",
+   "kind": "note",
+   "label": "Mars dive on 22820b17, frame 2460 against 8 film frames later: reader with its flows (A), real pair carried by the range pictures (E), one picture redrawn (C)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T10:47:56.167Z",
    "file": "20261125104756167-note-mars-pair.jpg",
@@ -50,22 +66,6 @@
    "source": "../m835/tri/tri-master.png",
    "kind": "note",
    "label": "Mars cap, 1920 x 1080 draft: where the triangles of the kept patches go, and the seconds if those that reach no pixel were left out (scratch, nothing built)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T08:20:14.991Z",
-   "file": "20261125082014991-note-on-2436.jpg",
-   "source": "out/work/m954b/on-2436.png",
-   "kind": "note",
-   "label": "mars 2436 draft 1920x1080, row 1 on, Mars folders of 00c41dcd",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T07:32:46.197Z",
-   "file": "20261125073246197-note-on-2436.jpg",
-   "source": "out/work/m954/on-2436.png",
-   "kind": "note",
-   "label": "Mars 2436 draft 1920 x 1080, own levels under a whole level not read, scratch merge of take/b10e with mars-place e53c76b7",
    "stop": "mars"
   }
  ]
