@@ -217,8 +217,7 @@ void main() {
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
   float ndl = dot(nL, uLightL) - uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
-  // near the sheet the boundary of day and night stands more upright, as in the approved close image (grade.ts
-  // leanAt, by the height of the lens; none in the hold)
+  // the lean of the boundary of day and night, by the one share of the globe's light (grade.ts leanAt)
   for (int k = 0; k < (uLean.y > 0.0 ? 1 : 0); k++) ndl += uLean.x - uLean.y * smoothstep(uLean.z, uLean.w, p.y);
   float lat = asin(clamp(p.y, -1.0, 1.0));
   // the map is rigid on the globe and turns with it as one body; the slide along the bands by latitude (the
@@ -228,8 +227,8 @@ void main() {
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   vec3 soft = inverseFilmic(equirectGrad(uMap, d, uNightBlur).rgb);
   float texels = diagTexelsDir(p, uMapWidth);
-  // near the sheet the small features of the map stand out less: the map is mixed with itself averaged over
-  // uLatFit.w of its texels (grade.ts latToneAt; none in the hold)
+  // the calming of the small features of the map: the map mixed with itself averaged over uLatFit.w of its
+  // texels, by the one share of the globe's light by the height of the lens (grade.ts bodyShare, latToneAt)
   for (int k = 0; k < (uLatFit.z > 0.0 ? 1 : 0); k++) albedo = mix(albedo, inverseFilmic(equirectGrad(uMap, d, uLatFit.w / max(texels, 1e-3)).rgb), uLatFit.z);
   float mapTexels = texels;
   // near the lens the bands get their fine structure from functions: it comes with the nearness of the surface
@@ -255,11 +254,12 @@ void main() {
 
   vec3 P = vec3(p.x, p.y * uPolar, p.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
-  // the dust inside the inner rim shades the globe behind the plane (grade.ts dustShadeAt; none in the hold)
-  for (int k = 0; k < (uDustShade.y > 0.0 ? 1 : 0); k++) shadow *= dustShade(P, uSunL);
+  // the thin sheet inside the inner rim shades the globe behind the plane by its own depth, at every height
+  // of the lens (grade.ts dustShadeAt)
+  for (int k = 0; k < (max(uDustShade.x, uDustShade.y) > 0.0 ? 1 : 0); k++) shadow *= dustShade(P, uSunL);
   vec3 light = curveAt(ndl) * tableAt(uTable, ndl, lat);
   vec3 night = min(light, vec3(uNightFloor));
-  // near the sheet the terminator is narrower: the twilight zone is cut down by the dusk (0 in the hold)
+  // the twilight zone is cut down by the dusk, by the one share of the globe's light (grade.ts duskAt)
   vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) * mix(1.0, smoothstep(uDusk.x, uDusk.y, ndl), uDusk.z) + night * uDusk.w;
   for (int k = 0; k < (uFine.w > 0.0 ? 1 : 0); k++) {
     // the neighbourhood the small features of the map are set off against keeps its size on the globe when the
@@ -272,11 +272,12 @@ void main() {
     albedo *= mix(1.0, min(pow(clamp(dot(albedo, lw) / lm, 0.5, 2.0), power - 1.0), uFineTop), uFine.w);
   }
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
-  // near the sheet the bands have the palette of the approved close image (grade.ts latTone; none in the hold)
+  // the palette of the approved close image on the bands, by the one share of the globe's light (grade.ts
+  // bodyShare, latToneAt)
   for (int k = 0; k < (uLatFit.x > 0.0 ? 1 : 0); k++) col *= latTone(lat);
-  // near the sheet the night side is grey, not the colour of the clouds in the last red light (none in the hold)
+  // the grey of the night side, by the same share (grade.ts duskAt)
   for (int k = 0; k < (uDuskGrey.x > 0.0 ? 1 : 0); k++) col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uDuskGrey.x * pow(1.0 - smoothstep(uDusk.x, uDusk.y, ndl), uDuskGrey.y));
-  // and the last light on the clouds has the brown of the approved close image (grade.ts duskAt; none in the hold)
+  // and the colour factor on the last light on the clouds, by the same share (grade.ts duskAt)
   for (int k = 0; k < (uDuskTint.w > 0.0 ? 1 : 0); k++) col *= mix(vec3(1.0), uDuskTint.rgb, uDuskTint.w * (1.0 - smoothstep(uDuskSpan.x, uDuskSpan.y, ndl)));
   col += uRim.rgb * exp(-mu * mu / (uRim.w * uRim.w)) * pow(max(ndl, 0.0), uRimPower) * shadow;
   col += uRimNight.rgb * exp(-mu / uRimNight.w);

@@ -6518,3 +6518,337 @@ So in front of the lit globe all three looks cover by one law from the kept ring
   +0.0047 on main), G17 median 1.0618 as before.
 - Repo's skim.json inner.depth set to [0.016, 0] at 14:46.
 - Looks pushed 14:17:45 and 14:42:26.
+
+### 14:50 to 15:30 UTC: 6617c15f pushed and in proof; mails 1142 and 1148; the dark ice is written
+
+- 14:50 COMMIT 4a866e8 (one law of cover, thin sheet inside the inner rim, depth [0.016, 0]) and the merge of
+  main 675afce: HEAD = remote = 6617c15f0777b4b5f07be68e545511ded73b4853. Mails to /root: the table (14:52),
+  an addendum (14:55), an answer with the ink flaw and point 6 (15:04).
+- FINALS so far (mean absolute level against the approved; G17 median): 3465 main 4.7807 (1.0618), cure
+  4.7768, sheet 0.016 4.7854, ink fixed 4.7844 (G17 1.0618 in all). 3720 main 27.8012 (0.974), cure 28.6113
+  (0.912), sheet 0.016 28.5738 (0.912). Seven tiles at 3720, approved / main / mine: (4,8) 169.0 / 183.6 /
+  236.9; (4,9) 184.5 / 201.5 / 227.6; (4,10) 188.1 / 199.0 / 217.0; (4,11) 167.1 / 156.1 / 192.9; (5,8)
+  178.0 / 174.8 / 204.7; (5,9) 163.9 / 149.8 / 215.0; (5,10) 141.6 / 126.5 / 209.0.
+- KNOWN RED OF 6617c15f (said in the mail of 15:04, taken by mail 1148 point 2): the thin sheet's colour (ink)
+  goes by the lens's nearness through inner2.z. Cured in the working tree (inner2.z = 1 always).
+- THE PROOF OF 6617c15f: tree /tmp/v/named2/saturn laid into the worktree /home/user/workspace/mainref (engine
+  64c4ccb), log /tmp/v/named2/job.log, outputs /tmp/v/named2/out/. Dive done 15:23:04: GREEN (level step
+  0.02 at 3601, limit 1.3; pop 1.07 at 3568 + 1/2, limit 1.2; change in place 15.4 and pattern 0.35, shown
+  and not judged). Read every line of its table. Looked at the right foot 3596 to 3607 at 2 times
+  (/tmp/v/named2/dive_foot.png: no step, the one bright pixel at the limb at 3601 is still there) and at the
+  whole frames every 8 (/tmp/v/named2/dive_whole.png). Rise runs to about 15:55, then finals, the small steps
+  and vitest alone.
+- MAIL 1142 (15:01), the rulings: 1. main's two departures by the lens's height stay out, one body at every
+  height. 2. 6617c15f runs its proof to its NAMED as it is, for the cut of 17:00. 3. THE SHEET AS DARK ICE, a
+  second commit for the cut of 20:00, named by 19:15: the inner rings are dark ice that reflects about half
+  of what the bright rings' ice does; the sheet gets its own darker ice, one number in skim.json, so that at
+  the hold against black its own light is small and at the skim in front of the lit globe it is a grey veil
+  that takes light away; the same matter shades the globe and is shaded by it by the same depth (inner.shade
+  follows tau); no law by height, distance or clock. 4. The hold may lose up to 0.06 of mean absolute level
+  against main's 4.7807 if G17 at the hold does not fall, no new form is seen in the gap at 4 times beside
+  the hero, and 3720 gains at least five times what the hold loses; finals with the dark ice at tau 0.05,
+  0.1, 0.15 at both frames, the table and the four panel picture for each. 5. Row 4: say what the globe reads
+  at the same latitude at the hold in the hero and in ours. 6. set.ts line 64: say what the choice is.
+- MAIL 1148 (15:09): 1. set.ts line 64 (sampleOrder) goes into the dark ice name as its own commit before the
+  ice, with the proof (draft hashes of 3465, 3589, 3720 equal before and after). 2. The known red of 6617c15f
+  is taken; the cut of 17:00 takes the commit if its proof is green. 3. Two findings in the rise, measured
+  on 64c4ccb4 with ab362641's saturn folder: (a) THE LIGHT MOVES ON THE BODY: between 3830 and 3838 the globe
+  does not turn, the half level line of the terminator moves 27 px over the ground; the cause is the grade by
+  the lens's height on dusk.amount and dusk.lean. One terminator at every height. (b) A DARK WEDGE under the
+  line where the plane meets the globe (radius 1.03 to 1.10 in front of the globe, x 1480 to 1540 at 3830)
+  goes out by the frames (17.5, 23.0, 26.8, 28.0, 28.1 at 3830 to 3838 in twos): say which term draws it on
+  that tree and whether the thin sheet at one depth still has it; if so it is in the frames 3812 to 3840.
+- THE WEDGE ON ab36264, from this notebook's own entry of 10:09 to 10:30: sheet.json graze [0.3, 0.4] (the
+  sheet hid the globe like the stars, 60 times its depth, where the sine of the view to the plane was under
+  0.3, and by its true depth over 0.4; the gap's median sine is 0.362 at 3830 and 0.411 at 3836). That law is
+  not in 6617c15f (the depth counts once against the globe at every angle). To be shown on the proof's
+  frames 3812 to 3840.
+- POINT 5 (row 4), measured with out/scratch/proj.ts (projects ring radii and the globe's latitudes with the
+  Sun's cosine to pixels: /tmp/v/thin/proj_3465.json, proj_3720.json). At the hold the globe at 1 to 12 N
+  reads the same in the hero and in ours (1 to 4 N: 208.2, 222.3, 234.7 at Sun cosines 0.2 to 0.4, 0.4 to
+  0.6, 0.6 to 0.8, both). At 3720 ours 224.7, 234.9, 244.0 (1 to 4 N); the approved 115.0, 118.1, 155.4 (1
+  to 4 N), 145.5, 191.5, 215.7 (4 to 8 N), 220.0, 236.0, 242.2 (8 to 12 N; ours 224.8, 232.8, 243.3). So ours
+  is right at the hold and matches the approved at 8 N and above; the excess is at 0 to 8 N, where the
+  approved has a streaked belt, a dark band and grey ring matter that stand about 55 px (4 degrees of
+  latitude) higher on the globe than a thin plane through the equator does. Neither the exposure nor the
+  globe's tone. Picture /tmp/v/thin/row4_lines.png (in the looks).
+- POINT 4: the hero's black sky top right (1500 0 1900 150) reads mean 10.5, median 9.7 (ours 8.8, 7.7); the
+  hero's gap reads 18.2: the hero has a faint veil in the gap itself.
+- ENGINE: sampleOrder and view.weights exist only on main's engine (61059fc), not on 64c4ccb. For the second
+  name the proof worktree goes to origin/main: in mainref, git checkout -q -- src/stops/saturn; git clean
+  -fdq src/stops/saturn; git checkout -q --detach origin/main.
+- THE DARK ICE, written in the working tree 15:15 to 15:26, tsc clean, chk.py clean, NOT rendered yet:
+  - sheet.ts: inner2.z = 1 (the ink fix); uInnerBands (gap, floor, like); the sheet's light = inner.ice x the
+    like ring's ice (the thin inner ring at radius like.x, which returns like.y where deep) by ringSat of its
+    own depth; uThinKeep takes the near look's gain, tint, saturation and flatten back out of the thin sheet,
+    and the thin sheet does not pass the grade loop: own light by the Sun's and the view's angles alone.
+  - model.ts sets uThinKeep; grade.ts dustShadeAt = the depth of the sheet times the mean of its bands, no
+    share, and its profile ends inward of the rim like sheetInner; globe.ts and kept/globe.ts run the shade
+    loop when either depth is over 0.
+  - skim.json inner: light, dark, shade out; ice 0.1 (a first guess, to be set on drafts at the hold).
+- THE DUSK CURE (finding a), written 15:26: grade.ts duskAt sets dusk.amount as one number (no share by
+  height), leanAt takes no height; skim.json light.dusk.amount 0 (was [0, 1]), lean low 0 and fall 0 (were
+  0.05 and 0.08), notes rewritten; the comments in globe.ts and kept/globe.ts say so. What still goes by the
+  lens's height in the dusk: night (nightHeights), grey, tint. Not rendered yet: 3720's terminator will
+  change (the lean and the cut were fitted to the approved at 3720), G17 at 3720 to be read.
+- ORDER FOR THE SECOND NAME: proof of 6617c15f ends, NAMED; merge origin/main; commit A set.ts line 64 with
+  its three hashes on main's engine; stills for the dusk and the wedge; dark ice finals at 0.05, 0.1, 0.15;
+  commit B; full proof; NAMED by 19:15.
+
+### 15:30 to 15:50 UTC: second name under way (working tree, nothing of it pushed yet)
+
+- MERGE: origin/main baf5473 (status 317, d308) merged in locally as 61c276a, not pushed. Remote branch is
+  still 6617c15f, whose proof runs in /tmp/v/named2 (dive green 15:23, rise rendering).
+- COMMIT A (set.ts alone): line 64 takes sampleOrder(view.weights, view.sample, stride) when the view has
+  weights, else the old order. Proof trees: /tmp/v/dark/A0/src/stops/saturn (6617c15f's folder) and
+  /tmp/v/dark/A1/src/stops/saturn (the same plus set.ts); draft hashes of 3465, 3589, 3720 must be equal, on
+  main's engine.
+- THE THIN SHEET'S LIGHT, restructured: uThinKeep is gone. sheetAt sets sheetGlow (the share of the place's
+  brightness that is the thin sheet's); main takes that share out (dustLum) before spokes, flatten, sand,
+  tone and the grade loop, and adds it back as own = dustLum x (seen x law) x the ice's colour with the FAR
+  tint, saturation and gain (uThinFar, uThinFar2, set once from JSON). So the sheet's light is the same in
+  every take and at every height.
+- THE THIN SHEET'S DEPTH: its share of the cover takes no uKDeep, and the vector `inner` holds skim.json
+  inner.depth itself (the model / view factor is out). Cover, own light and shade all go by the same depth.
+  In front of the globe the cover is the same as in 6617c15f at the same number (there the 0.78 in `inner`
+  and the 1.28 of uKDeep cancelled); the own light now reads the true depth where it read 0.78 of it.
+- THE JOIN AT THE RIM: skim.json inner.join [0.0038, 0.0042]: the sheet ends from 0.0038 inward of the rim
+  to 0.0042 outward of it (1.242 to 1.25), where the ring's own depth rises from 0.0007 to 0.083. Sum of the
+  two at depth 0.1: 0.10, 0.10, 0.085, 0.074, 0.083 at 1.242, 1.244, 1.2458, 1.248, 1.25: no gap, no ridge.
+  With the old end (fade 0.02 inward of the rim) the sum fell to about 0.02 at 1.244: a clear line. grade.ts
+  dustShade ends the same way. Not rendered yet.
+- FINDING (a) REPRODUCED on 6617c15f's rise frames (term.py, the same places of the body at 3830 and 3838):
+  twilight (Sun cosine -0.16 to -0.04) up by as much as 38 levels, half level line moves -0.009 to -0.022 in
+  cosine (lat 2 to 40 N), day side down 2 to 8 levels, night side up 3.6 to 5.2. Pixel [1356, 704] at 3830 is
+  lat 16 N, lon 94.5, cosine -0.148; 2 degrees of longitude are 26 px there.
+- ALSO BY HEIGHT IN THE DUSK: the night side goes grey green (3826 to 3832) to brown (3836 to 3840): dusk
+  grey and tint by gradeShare(height). Plan: D2 = all dusk terms one value at every height, the hold's (grey
+  0, night 1, no tint); D1 = amount and lean only (the tree as it stands). Render both at 3720, 3830, 3838,
+  read 3720's number and G17, mail both; D2 is the principled one.
+- FINDING (b): on ab36264 the wedge was sheet.json graze [0.3, 0.4] (off in 6617c15f: [-2, -1]). On 6617c15f
+  the gap in front of the night side (x 1500) reads 24 to 28 at 3830, 19 to 25 at 3834, 14 to 18 at 3838: a
+  dark band comes IN as the kept look comes in (heights 0.93 to 1.03). The kept look has a cover in the gap
+  in front of the night side that the near look lacks. Term not traced yet: trial stills at 3838 with the
+  kept ring hidden (mk.py hidekept) next.
+- TOOL: /tmp/v/dark/mk.py SRC DST depth=T ice=V fade=V dusk2 hidekept makes a trial copy of the folder.
+
+### 15:50 to 16:05 UTC, 25 Nov: rise of 6617c15f green, finding (b) traced, hold gap measured
+
+- PROOF OF 6617c15f, RISE (engine 64c4ccb, folder laid in, done 15:52:19), every line read: level step 0.05
+  at 3875 + 1/2 (limit 1.3); pop 1.199 from 3872 + 1/2 (limit 1.2; 1.19 and 1.195 beside it: the stars at the
+  rise's end, MAIL 1045 says do not chase); block pop 9.46 at 3896 block 10,7 (after the rise, the next leg's
+  motion begins; shown, not judged); change in place 25.4 from 3856 at pixel 1508, 788; pattern 0.38 at 3832
+  at pixel 1124, 928 (shown, not judged). The changes picture shows a band along the terminator at 3832 to
+  3840 and 3817 to 3825: that is finding (a). Dive green before it: level step 0.02 at 3601, pop 1.07 at
+  3568 + 1/2. Final 3465 hashes 8be58285ad37951c as before.
+- FINDING (b) TRACED on 6617c15f's rise frames (out/scratch/ray.ts gives per pixel the plane's radius, the
+  azimuth, in shadow or not, the globe's latitude, longitude and Sun cosine; gap.py, south.py read with it).
+  The note above ("a dark band comes in as the kept look comes in") was wrong. At radius 1.03 to 1.10,
+  x 1480 to 1540: 27.8 / 27.0 at 3830, 28.1 / 27.3, 27.6 / 26.6, 26.7 / 25.3, 25.4 / 22.4 at 3838 (mean,
+  median): no wedge that goes out on this tree. The kept profile's alpha is 0 inside radius 1.24 and both
+  shades stop where the ray ends on the globe, so no ring matter covers the gap in front of the night side.
+  What changes in that column is what the view sees: cosine -0.50, lon 78.6 at 3830 and cosine -0.67,
+  lon 65.7 at 3838, and further south by parallax, where the night side is darker. On ab36264 the wedge was
+  sheet.json graze [0.3, 0.4]: the shaded plane in front of the globe counted 60 times its depth under view
+  sine 0.3 and once over 0.4 (gap median sine 0.362 at 3830, 0.411 at 3836). 6617c15f has graze [-2, -1]: off.
+- BODY FIXED READ OF THE SOUTH (south.py, same latitude and cosine, cos -0.72 to -0.6): lat -7 to -5 reads
+  24.3 at 3826, 22.9, 21.8, 20.5, 19.9 at 3840; lat -9 to -7 reads 21.0 at 3830, 19.0, 17.0, 16.2; lat -3 to
+  -1 holds (26.0 to 25.2); the north rises (1 to 3 N 24.4 to 26.0, 6 to 10 N 26.9 to 30.0). So the night
+  side's level still moves on the body by the lens's height, south down, north up. Candidates: the dusk's
+  night factor and grey by height, light.tone by latitude through gradeShare(height). Trials lat0 and grade0
+  in mk.py switch them off one by one.
+- HOLD GAP (holdgap.py at 1920 wide, plane radius 1.06 to 1.20, mean / median): against the sky on the lit
+  side hero 37.0 / 29.9, main 41.3 / 33.9, 6617c15f 42.9 / 35.3; in front of the lit globe hero 158.9 / 206.6,
+  main 167.5 / 219.6, 6617c15f 166.1 / 219.4 (the hero is 5 percent darker there: a veil of depth about 0.035
+  would match); in front of the night side 17.3 / 17.7 / 17.6; sky in the globe's shadow 11.8 / 10.1 / 10.0.
+  The hero's black sky (1500 0 to 1900 150) reads 9.8 / 8.7 (ours 8.2 / 7.2) and its gap 18.2: the hero has
+  a faint veil in the gap itself.
+- PICTURE p_hold_6617.png (panel4.py hold): the hold at 4 times, hero, main, 6617c15f. The hero's gap shows
+  two or three faint arcs in front of the globe and against the sky; main and 6617c15f show one faint arc
+  each in front of the globe, none new in 6617c15f.
+- MAIN MOVED to 733be55 (status 318, d309): the path part of the smooth tool is red on main since the first
+  cut in the rises of seven stops (Saturn 7 lines); a tree is green on the path when its lines are main's
+  own, compared byte by byte. So: run the path part on main's folder at the same engine and diff the two.
+- VITEST for 6617c15f: the repo's working tree is not that tree and a second worktree does not fit on the
+  disk, so it runs in mainref detached at 6617c15f once the job has ended, alone, log to a file.
+- TOOLS since 15:50: out/scratch/ray.ts FRAME OUT.json X0 X1 Y0 Y1 STEP [POLAR]; /tmp/v/dark/gap.py,
+  south.py, south2.py, holdgap.py, term.py, num2.py, panel4.py (four panel pictures: skim foot at 1 to 1,
+  hold gap at 4 times), trial.sh NAME "opts" TIER FRAMES, mk.py options depth, ice, fade, dusk2, hidekept,
+  lat0, grade0.
+
+### 16:05 to 16:20 UTC, 25 Nov: the proof's engine, MAIL 1187 (the foot), the job stopped, points 4 and 5 sent
+
+- THE PROOF'S ENGINE IS NOT THE COMMIT'S. The worktree mainref stood on main 64c4ccb (status 283, 04:42, before
+  the first cut 53025569 of 14:02); 6617c15f has main 675afce merged in (after the cut: director with the seam
+  law, the sampler's weights, tools/smooth). So dive, rise, finals, place and handover of 6617c15f are numbers
+  of its folder on the old engine, and the NAMED says so in its first lines. 675afce and origin/main 733be55
+  do not differ under src, tools, config, tests or package.json, so "main's engine" is one thing for 6617c15f
+  and for the second name. From now on every proof runs on it.
+- FINALS of 6617c15f (old engine): 3465 8be58285ad37951c, 4.7854, G17 median 1.0618 (main 4.7807, 1.0618);
+  3567 5d3e71e244c8d765 (looked at: the kept look, clean); 3720 6180e8ec606e1f91, 28.5738, G17 0.9122 (main
+  27.8012, 0.9740); 3866 e9f2c8645053ac56. Place green (the stop draws no place picture). Handover sides, flow,
+  path: pass for dive and rise.
+- JOB STOPPED at 16:15:11 with G13 at 20 of 83 frames (15 minutes to go, then gate and parity): the renderer
+  is needed for the second name, whose proof must start by 17:25. G13, gate and parity are NOT run on 6617c15f;
+  the NAMED says so. They run on the second name's tree on main's engine.
+- ON THE COMMIT'S OWN TREE (mainref detached at 6617c15f): tsc exit 0; the path part is red on 7 lines of the
+  rise's speed (3873 to 3886; falls by 0.704 of the mean before its largest value, lowest at 3876), and its log
+  is byte equal to the log of main 675afce's own folder (/tmp/v/named2/real/path_6617.log, path_main.log; the
+  two reports differ in the commit line alone). By d309 that counts as main's own until travel_builder's cure
+  is on main. vitest started 16:16:06, log /tmp/v/named2/real/vitest.log (81 files on main now, 60 before).
+- MAIL 1187 (16:10 by its own word): the harness's finder names the foot under the globe between the globe and
+  the inner ring in ab362641's rise: 4 to 6 percent of the judged pixels lose the plane's surface to what lies
+  behind within 8 film frames at 3814 to 3822 (51572, 72483, 31388 px), its rest at 3830 (13306 px at x 1515
+  to 1839, y 933 to 1049, where the wedge stands). "By d253 nothing of a rise comes or goes with the clock:
+  the plane's cover may not go out while it is seen." Asked: in the name mail for 6617c15f say in two lines
+  what the foot is and what ends it, and whether 6617c15f still has it; if it does, it is the first item of the
+  next name.
+- WHAT THE FOOT IS (read from ab36264's sheet.ts line 416 and its skim.json): the model's inner dust between
+  the rim and the cloud tops, alpha = 1 - exp(-left / mu * mix(60, 1, behind * smoothstep(0.3, 0.4, mu))),
+  with depth 3.0 times inner.by(height) (0.0063 at 3814, 0.00026 at 3830). Against the sky it counted 60 times
+  always, in front of the globe 60 times under view sine 0.3 falling to once at 0.4 (median sine in front of
+  the globe 0.275 at 3814, 0.362 at 3830). So it stood near solid at 3814 and went out by the height law and
+  by the graze window. 6617c15f has neither: depth 0.016 at every height, no factor 60 on the thin share,
+  graze off. By the law its cover in front of the globe is 0.020 mean, 0.040 most at 3814 and 0.015, 0.030 at
+  3830 (the whole frame's rays, out/scratch/ray.ts at step 2). On its frames the lit globe behind the gap
+  reads 235.2, 234.4, 233.4, 231.7, 228.7 at 3814, 3818, 3822, 3826, 3830; stars show in the gap in all five.
+  Picture /tmp/v/dark/foot6617_a.png (in the looks). The finder is not among main's tools by a name I can
+  find, so it is not run here.
+- POINTS 4 AND 5 OF MAIL 1142 SENT 16:17 (low): the hold's gap core against the sky (radius 1.09 to 1.17, x
+  under 650) reads mean, median, lower quartile hero 25.6, 24.4, 19.9; main 31.5, 30.9, 27.4; 6617c15f 32.6,
+  31.9, 28.5: ours is 6 brighter than the hero before any sheet (the kept picture's own gap). The lit globe
+  with no plane in front, by latitude north (lat.py): hold hero 236.2, 235.4, 236.7, 237.5, 236.2, 238.4,
+  232.4 and ours the same within 0.3; skim approved 111.2, 159.9, 192.5, 243.2, 244.7, 241.3, 237.9, 6617c15f
+  242.7, 242.8, 243.7, 243.4, 242.9, 243.6, 237.6, main 161.0, 167.4, 219.8, 235.4, 235.1, 237.0, 231.4. So
+  ours is right at the hold and right at the skim from 6 N up; the excess is at 0 to 6 N where the approved
+  has a dark band just above the plane's line (main drew it with the foot's dust by height, out by ruling 1).
+- THE FIRST GUESS OF inner.ice goes down to 0.05 for the trials: the hold's gap is already brighter than the
+  hero's, so the sheet's own light must be as small as it can; a veil of depth 0.05 to 0.1 in front of the lit
+  globe brings ours to the hero's there.
+- DISK fell to 2986 MB free (under the 3 GB below which a render refuses): the proof's frames in mainref
+  (980 files, 2 GB) are removed, 14 of them kept in /tmp/v/named2/keep (3589, 3601, 3810 to 3840, 3866); the
+  whole frame ray files of 3826 and 3830 removed. 5274 MB free after.
+- TRIAL QUEUE /tmp/v/dark/queue1.sh (after vitest, mainref at origin/main): W2 depth 0.1, ice 0.05, dusk2 at
+  3465, 3720, 3830, 3838; W the same with the dusk as it is at 3720; W3 = W2 with lat0 at 3720, 3830, 3838;
+  Wi1, Wi2 ice 0.1 and 0.02 at 3465; A0, A1 at 3465, 3589, 3720 (set.ts line 64); A0 at the final tier at 3720.
+
+### 16:20 to 16:30 UTC, 25 Nov: NAMED 6617c15f sent, MAIL 1198, trials started on main's engine
+
+- vitest on 6617c15f's own tree: 81 files, 917 tests green (721 s; the last file, skylift-gl, alone took the
+  last 5 minutes under software WebGL). Final 3866 of 6617c15f looked at: the kept look, clean.
+- NAMED 6617c15f0777b4b5f07be68e545511ded73b4853 SENT at 16:28 (high) with foot6617_a.png. It says in its
+  first lines which engine the numbers are from, names G13, gate and parity as not run, answers MAIL 1187
+  (the foot) and MAIL 1148 (a) and (b), and lists what is not cured. Text: /tmp/v/mail/named_6617.txt.
+- MAIL 1198 (16:25 by its own word), verbatim core: "1. Point 4, the hold's gap: read as you read it. The
+  sheet may take light in front of the lit globe (the hero is 5 percent darker there) and should add as little
+  of its own as it can in the gap against the sky, where ours is already 6 over the hero before any sheet.
+  2. Point 5, RULED: the dark band on the globe at 0 to 6 N in the approved close image is left out and named.
+  With the Sun and the lens north of the plane no ring matter and no ring shadow can lie there, and one body
+  at every height cannot wear at the skim what the hold does not have (d253, the one body rule). From 6 N up
+  3720 matches the approved image (243 against 243 to 245). The difference is owned by you and dated today;
+  the stills critic will see it as it is. 3. Carry on with your list in its order; NAMED by 19:30 for the cut
+  of 20:00."
+  So: no band at 0 to 6 N (named in the next NAMED as left out by ruling), and the second name is due 19:30.
+- Main moved to 59449db (status 319, d310): kit/PROGRESS.md alone differs from 733be55 and from 675afce under
+  src, tools, config, tests, package.json: nothing. d310 (4): "the standing reader (tools/smooth.ts, limits of
+  config/showcase.json) stays the one judge of motion. The full size carry and row (i) (pixels that lose their
+  surface to the one behind) are finders only: what they find goes to the stop's builder with the frames; they
+  pass or fail nothing." The travel cure of the path part is laid as take/tr3 5623ef15, not on main yet.
+- mainref now stands detached at origin/main 59449db; queue1.sh started 16:28:34 (log /tmp/v/dark/queue1.log).
+- Looks pushed 16:29 (c87f0508). Next due by 16:59.
+
+## 16:30 to 16:55 UTC: MAIL 1200 and MAIL 1205 (d312, the one share of the globe's light), the second name
+
+- MAIL 1200 (16:39), core: "1. TAKEN at 16:33 as a name, and it does NOT go onto main (d296, d311 point 6): by
+  your own numbers both judged frames match the approved worse than main's (3465 4.7854 against 4.7807; 3720
+  28.57 against 27.80 with G17 0.912 against 0.974), and the dive and rise were read on the engine before the
+  first cut, not on its own tree. 2. THE ONE LAW OF COVER is right and stays: nothing by height, the same
+  sheet in the kept look and the near look. 3. THE SECOND NAME, due 18:05 (if it cannot be whole by then, say
+  at 17:45 what is missing; the 20:00 cut is the target): (a) on main as it stands (merge origin main first;
+  the code is the first cut), every number from its own tree; (c) the judged frames: the dark band at 0 to 6 N
+  of the approved close picture is left out and named, so 3720 cannot be held to the one number over the whole
+  frame. Send with the name a table of the mean absolute level against the approved at 3720 in three regions,
+  for main and for the name: the band at 0 to 6 N, the thin sheet's foot, and the rest of the frame. The rest
+  may not be worse than main's; the two owned regions are judged by my eye beside the approved, so send that
+  pair at full size. At 3465 name where the 0.005 comes from; if it is the thin sheet in front of the globe,
+  say so with the place; (d) G13, the gate (G11, G15) and parity on that tree. 4. Still open after that, in
+  your order: the thin sheet's colour by nearness and the near look's grade by height, the globe's tone and
+  haze by height, the outline through the sheet at the left limb 3803 to 3840, the one bright pixel at 3601,
+  set.ts line 64."
+- My finding sent 16:41 (/tmp/v/mail/dusk_price.txt): one dusk at every height (the hold's) costs 3720 about
+  3.3 at the draft tier, all of it in the globe's twilight and night (level at the Sun cosine -0.14: hold 85,
+  approved close 15).
+- MAIL 1205 (16:42), d312, core: "NOT one dusk at every height. 1. The two approved pictures show two
+  terminators, and both are Brandon's targets. The film keeps both ends as they are on main: the hold's dusk
+  at the hold, the close picture's dusk and night at the skim. 2. What was wrong on main and in 6617c15f was
+  never that the two ends differ, it was that the change sat in a narrow window of heights (38 levels at fixed
+  places from 3830 to 3838). The cure: ONE share for all of it together (dusk amount, lean, night floor, grey,
+  tint and the globe's tone by latitude), a smooth step in the logarithm of the lens's height over the WHOLE
+  flight, from the hold's height to the skim's height, with no slope at either end, the same law on the way
+  down and on the way up. It is the camera's answer to the bright plane filling the frame, as an eye adapts,
+  and it is the one exception to d253's light rule, owned by the two approved pictures. No second window of
+  heights for any of these numbers. 3. The measure that proves it, with the second name: at the same places of
+  the body (your twilight bins) the largest change of level from one film frame to the next anywhere in the
+  dive and in the rise. Aim: under 2 levels a frame at every bin; say the largest and where. And your 3830
+  against 3838 again. 4. With that d296 stands whole at both judged frames: 3465 and 3720 no worse than main's
+  over the frame, the dark band at 0 to 6 N and the thin sheet's foot as the two owned regions with their
+  table. The fourth region falls away. 5. The ice at 0.05 of the bright ice's light: taken, by your three
+  readings. The depth from drafts: taken; say which and why, the three finals after the name. 6. 18:05 stands
+  for the name, 17:45 for the word on what is missing. If the one share cannot be in by 18:05, name the dark
+  ice and the cover law on main's dusk as it is (your second way) and bring the share with the name after it."
+- DONE in the tree (16:44 to 16:52): grade.ts bodyShare(height) = 1 - smooth(log(h / heights[0]) / log(heights[1]
+  / heights[0])), heights in skim.json light.body.heights [0.365, 2.2]: 0 over the whole hold (least height
+  2.2281), 1 at frame 3720 (0.3622) and under. On it and on nothing else: duskAt (amount [0, 1], night
+  [1, 0.8], grey [0, 1], the tint's share), leanAt (low 0.05, fall 0.08), latToneAt (the palette by latitude
+  and the calm of the map), fineShare, hazeDayAt (the day edge of the haze). nightHeights is gone, nightShare
+  is gone, tone.share is gone. gradeShare stays for the rings alone (uGrade.x, sheet.far).
+- Lens heights (out/scratch/hh.ts): hold 2.2281 (3390) to 2.4116; dive 2.4143 (3542) to 0.5401 (3629); skim
+  0.5372 (3630), least 0.3185 (3760), 0.4291 (3809); rise 0.4336 (3810) to 2.9055 (3884). 3465 2.3258, 3567
+  2.0477, 3589 1.3459, 3601 0.9862, 3720 0.3622, 3830 0.7600, 3838 1.0469, 3866 2.2823. The share at 3630 is
+  0.88, so the first seconds of the skim still carry a little of the hold's dusk; it reaches 1 near 3700.
+- Drafts of this tree on main's engine (/tmp/v/dark/S1): 3465 42619fff10cc55b9 (the same bytes as the trial
+  with one dusk at every height, so the hold has share 0 of everything), 4.7012; 3720 27.5085, G17 median
+  0.6482; 6617c15f on the same engine (A0out): 4.6953 and 27.4485. So against 6617c15f the dark ice at depth
+  0.1 costs 0.006 at the hold and 0.06 at 3720 (draft), and the "gain of 0.39 to 0.56" I wrote at 16:35 was the
+  brighter twilight of the one dusk trial behind the gap, not the ice. Corrected here.
+- Tools made: out/scratch/cams.ts (the lens of each frame in the ring frame into /tmp/v/dark/cams.json),
+  /tmp/v/dark/rays.py (every pixel's ray in numpy: plane radius, globe latitude, Sun cosine; checked against
+  ray.ts to 1e-5), /tmp/v/dark/reg3.py IMG... (3720 in three regions against the approved: band 0 to 6 N,
+  thin sheet between radius 1.0 and 1.2458 before the globe or against the sky, rest).
+- 3720 by region, draft, part of the whole frame's number (A0 = 6617c15f, S1 = this tree): band 3.3740,
+  3.3741; thin sheet 3.2989, 3.3575 (before the globe 2.9068, 2.9376; against the sky 0.3921, 0.4198); rest
+  20.7756, 20.7770. Levels in the thin sheet region: approved 166.7 (179.6 before the globe, 109.8 against the
+  sky), ours 95 to 101: the approved picture has lit ring matter there (grey bands up to the globe, lit in
+  front of the night side), ours a dark gap with a veil.
+- WHY THE FOOT CANNOT HAVE BOTH PICTURES under one matter and one light: the cosine between the Sun and the
+  view at the sheet is 0.15 in the hold and 0.18 at 3720 (the same angle, so no law of scattering by angle
+  can tell them apart); the view's sine is 0.47 against 0.20, so a thin sheet shows 2.3 times more of itself
+  at the skim, no more. A sheet as bright as the approved close picture's in front of the night side (about
+  90 levels) would put about 38 levels of its own into the hold's gap against the sky, where the hero has 25.6
+  and ours has 31.5 before any sheet.
+- Commit a4af1b5: set.ts line 64 alone (sampleOrder by the shutter's weights), proof in its message.
+- Main moved to f348295 (status 320, d311): kit/PROGRESS.md alone differs from 59449db.
+- 16:56: 3830 against 3838 with the one share as a cubic step (drafts /tmp/v/dark/S1, tool /tmp/v/dark/seq.py:
+  the visible clouds between 8 and 40 N by bins of the Sun's cosine, change of the mean level a frame): the
+  largest 2.14 levels a frame at cosine -0.10 (6617c15f on the same engine: 3.51); by bands of latitude 1.94
+  (8 to 16 N), 2.26 (16 to 26 N), 2.72 (26 to 40 N, cosine -0.06). The lens rises fastest there (4 percent of
+  its height a frame), in the middle of the step, where the cubic step has its largest slope 1.5.
+- So the step is a straight line with eased ends (grade.ts easedLine, skim.json light.body.ease 0.1): largest
+  slope 1.11, no slope at either end. Shares (out/scratch/bs.ts): 3567 0.0089, 3589 0.2484, 3601 0.4407, 3629
+  0.8132, 3630 0.8165, 3720 1, 3760 1, 3809 0.9549, 3830 0.6019, 3838 0.4038, 3866 0, hold 0. Expected at
+  3830 to 3838: 1.6 levels a frame over 8 to 40 N, 2.0 in the band 26 to 40 N.
+- THE DEPTH, from drafts on main's engine (queue4: M0 is main's own folder, D00, D05, D15 the trials, S1 depth
+  0.1), mean absolute level against the approved, 3465 and 3720: main 4.6919, 27.0159; depth 0 4.6866,
+  27.4869; 0.05 4.6885, 27.4974; 0.1 4.7012, 27.5085; 0.15 4.7210, 27.5240. G17 median at the hold 0.8521 in
+  all; at 3720 main 0.6107, ours 0.6482. Lit globe behind the hold's gap: 165.6, 163.5, 161.2, 158.8 (main
+  167.3, hero 158.9); gap core against the sky 31.5, 31.4, 31.3, 31.1 (main 31.5, hero 25.6).
+  DECIDED: depth [0.05, 0]: the largest of the three at which the hold is no worse than main's. Beyond it the
+  cost at the hold grows faster than the depth (in front of the dark globe +0.0000, +0.0047, +0.0124 against
+  main; in front of the lit globe -0.0014, +0.0034, +0.0111).
+- 3720 by region against MAIN at draft (reg3.py; part of the whole frame's number, main then depth 0.1): band 0
+  to 6 N 2.9902, 3.3741; thin sheet 2.7131, 3.3575; rest 21.3126, 20.7770; whole 27.0159, 27.5085. The rest is
+  better than main's by 0.54 (the globe's twilight 2.06 to 1.61); the two owned regions are worse by 0.38 and
+  0.64. Picture /tmp/v/dark/pair_3720_S1.png (approved, main, ours): the approved has grey lit ring matter up
+  to the globe and a dark band on the globe; main has a brown veil with a hard lit edge in front of the night
+  side; ours has a clean gap with stars at the left and a faint veil.
+- Looks pushed 16:56. Next due by 17:25.

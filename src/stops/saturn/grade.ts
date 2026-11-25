@@ -24,6 +24,31 @@ const [lo, hi] = skimJson.sky.heights as [number, number]
 export const gradeShare = (height: number): number =>
   1 - smooth(Math.log(Math.max(Math.abs(height), 1e-6) / lo) / Math.log(hi / lo))
 
+// The one share of the light of the globe by the height of the lens (skim.json light.body.heights). The two
+// approved pictures show two terminators: the hero's twilight is broad, the close image's is narrow, its night
+// near black and its bands paler. The film keeps both: the globe's own light in the hold, the close image's at
+// the skim. Everything of the globe that differs between the two follows this one share and nothing else: the
+// cut of the twilight zone and its lean, the floor of the night side, its grey, the colour of the last light,
+// the tone of the bands by latitude, the calm of the small features and the day edge of the haze. The share is
+// a step in the logarithm of the height over the whole flight: none at the upper height and above, where every height of the
+// hold lies, all at the lower and under, where frame 3720 lies; flat at both ends, the same on the way down and
+// on the way up. No number of the globe has a window of heights of its own, so the light changes on the body
+// as slowly as the flight allows.
+const body = skimJson.light.body
+// The step itself: a straight line with eased ends (the slope comes in over the first part body.ease of the way
+// and goes out over the last, so there is none at either end). Its largest slope is 1 / (1 - ease), where the
+// cubic step of the rig has 1.5: the light changes at fixed places of the body by the least a frame that a step
+// between the two heights allows.
+const easedLine = (t: number, ease: number): number => {
+  const x = Math.min(Math.max(t, 0), 1)
+  const slope = 1 / (1 - ease)
+  if (x < ease) return (slope * x * x) / (2 * ease)
+  if (x > 1 - ease) return 1 - (slope * (1 - x) * (1 - x)) / (2 * ease)
+  return slope * (x - ease / 2)
+}
+export const bodyShare = (height: number): number =>
+  1 - easedLine(Math.log(Math.max(Math.abs(height), 1e-6) / body.heights[0]!) / Math.log(body.heights[1]! / body.heights[0]!), body.ease)
+
 // A share by the height of the lens over the ring plane from knots (heights, planet radii, rising; the share at
 // each): straight lines in the logarithm of the height between the knots, the first share under the first
 // height and the last over the last.
@@ -47,61 +72,55 @@ const byHeight = (heights: number[], shares: number[], height: number): number =
 export const zoneShare = (height: number): number => byHeight(grade.by.heights, grade.by.share, height)
 
 
-// How much of the fall of the night side of the globe shows with the lens at this height (skim.json light.dusk
-// nightHeights): none at the upper height and above, all at the lower and under, by the logarithm of the height,
-// eased at both ends. Its heights lie under those of the grade: the night side keeps the light of the hold
-// through the heights the lens passes fast, and sinks only where the lens goes slowly, low in the skim.
-export const nightShare = (height: number): number =>
-  1 - smooth(Math.log(Math.max(Math.abs(height), 1e-6) / dusk.nightHeights[0]!) / Math.log(dusk.nightHeights[1]! / dusk.nightHeights[0]!))
-
-// The dusk of the globe by the same share (skim.json light.dusk): with the lens high the globe keeps the light
-// of the hold; as the lens comes down to the plane its twilight zone narrows and its night side sinks and loses
-// its colour, as in the approved close image. Sets uDusk (the two cosines of the Sun's angle between which the
-// day ends, how much of that cut shows, the factor on the night floor, which follows nightShare) and
-// uDuskGrey (the share of its colour
-// the night side loses, and the power of the cut that share follows: above one the colour goes later than the
-// light, so the last light keeps its brown). The kept set and the model both call it with the height of the
-// lens, so the two scenes hold one globe at every height. uDuskTint: the colour factor on the last light (the
-// clouds between the cosines dusk.tint.from and dusk.tint.to of the Sun's angle take it, whole at the first) and
-// the share of it that shows.
+// The dusk of the globe (skim.json light.dusk), by the one share of the globe's light (bodyShare). In the hold
+// the boundary of day and night is the one the picture of the hold has; at the skim the twilight zone is cut
+// down (the two cosines of the Sun's angle between which the day ends, and how much of that cut shows,
+// dusk.amount), the night floor sinks (the factor dusk.night), the night side loses its colour (dusk.grey, and
+// the power of the cut that share follows: above one the colour goes later than the light, so the last light
+// keeps its brown) and the last light takes the colour factor dusk.tint (the clouds between the cosines
+// dusk.tint.from and dusk.tint.to of the Sun's angle take it, whole at the first), as in the approved close
+// image. Each number is a pair, hold and skim, with a straight line by the share between: one share for all,
+// so no part of the dusk has heights of its own. Sets uDusk (the two cosines, the amount of the cut, the factor
+// on the night floor), uDuskGrey and the share in uDuskTint. The kept set and the model both call it with the
+// height of the lens, so the two scenes hold one globe at every height.
 export const duskAt = (height: number, into: THREE.Vector4, grey: THREE.Vector2, tint: THREE.Vector4): void => {
-  const w = gradeShare(height)
+  const w = bodyShare(height)
   tint.w = w
-  into.set(dusk.from, dusk.to, THREE.MathUtils.lerp(dusk.amount[0]!, dusk.amount[1]!, w), THREE.MathUtils.lerp(dusk.night[0]!, dusk.night[1]!, nightShare(height)))
+  into.set(dusk.from, dusk.to, THREE.MathUtils.lerp(dusk.amount[0]!, dusk.amount[1]!, w), THREE.MathUtils.lerp(dusk.night[0]!, dusk.night[1]!, w))
   grey.set(THREE.MathUtils.lerp(dusk.grey[0]!, dusk.grey[1]!, w), dusk.greyPower)
 }
 
-// The lean of the boundary of day and night near the sheet (skim.json light.dusk.lean): the approved close
-// image has that boundary more upright on the globe than the Sun of the film draws it, later by the equator
-// and earlier toward the pole. The cosine of the Sun's angle on the clouds gets lean.low more by the equator
-// and falls by lean.fall toward the pole between the two sines of the latitude lean.lat, times the share of
-// the grade of the rings (by the height of the lens, none in the hold), in the kept set and in the model alike.
+// The lean of the boundary of day and night on the globe (skim.json light.dusk.lean): at the skim the boundary
+// stands more upright, as in the approved close image, where it lies later by the equator and earlier toward
+// the pole. The cosine of the Sun's angle on the clouds gets lean.low more by the equator and falls by
+// lean.fall toward the pole between the two sines of the latitude lean.lat, times the one share of the globe's
+// light (bodyShare), so none of it in the hold. The kept set and the model both call it with the height of the
+// lens.
 export const leanAt = (height: number, into: THREE.Vector4): void => {
-  const w = gradeShare(height)
+  const w = bodyShare(height)
   into.set(dusk.lean.low * w, dusk.lean.fall * w, dusk.lean.lat[0]!, dusk.lean.lat[1]!)
 }
 
-// The haze round the globe by the same share (skim.json light.halo.day): the two cosines of the Sun's angle
-// between which the day light of the haze comes in. With the lens high the haze keeps its own (far: what the
-// shell was built with, the look of the hold); as the lens comes down to the plane the glow of the limb draws
-// back toward the Sun, so it dies away along the limb well before the terminator, as in the approved close
-// image. The kept set and the model both call it with the height of the lens, so the two scenes hold one haze
-// at every height.
+// The haze round the globe by the one share of the globe's light (skim.json light.halo.day; bodyShare): the
+// two cosines of the Sun's angle between which the day light of the haze comes in. With the lens high the haze
+// keeps its own (far: what the shell was built with, the look of the hold); as the lens comes down to the
+// plane the glow of the limb draws back toward the Sun, so it dies away along the limb well before the
+// terminator, as in the approved close image. The kept set and the model both call it with the height of the
+// lens, so the two scenes hold one haze at every height.
 export const hazeDayAt = (height: number, far: THREE.Vector2, into: THREE.Vector2): void => {
-  const w = gradeShare(height)
+  const w = bodyShare(height)
   into.set(THREE.MathUtils.lerp(far.x, halo.day[0]!, w), THREE.MathUtils.lerp(far.y, halo.day[1]!, w))
 }
 
-// The tone of the globe by its latitude, by the same share (skim.json light.tone): with the lens high the globe
-// keeps the colours of the hold; as the lens comes down to the plane its bands go over to the palette of the
-// approved close image (paler, a grey blue band toward the pole, its own run of cream and ochre bands), and the
-// small features of the map stand out less: the map is mixed with itself averaged over tone.calm.texels of its
-// texels by tone.calm.amount, and the boost of its small features (look.globe.fine) is taken back by
-// tone.calm.fine. The factors stand in a row of texels, one knot each (they are too many for a list of
-// uniforms), read texel by texel with a straight line between. Sets uLatFit: the share, one over the step of
-// the knots (radians), the share of the averaged map, the texels it is averaged over. The kept set and the
-// model both call it with the height of the lens, so the two scenes hold one globe at every height. It follows
-// the height alone.
+// The tone of the globe by its latitude, by the one share of the globe's light (skim.json light.tone;
+// bodyShare): in the hold the globe keeps the colours of the picture of the hold; at the skim its bands have
+// the palette of the approved close image (paler, a grey blue band toward the pole, its own run of cream and
+// ochre bands), and the small features of the map stand out less: the map is mixed with itself averaged over
+// tone.calm.texels of its texels by tone.calm.amount, and the boost of its small features (look.globe.fine) is
+// taken back by tone.calm.fine. The factors stand in a row of texels, one knot each (they are too many for a
+// list of uniforms), read texel by texel with a straight line between. Sets uLatFit: the share, one over the
+// step of the knots (radians), the share of the averaged map, the texels it is averaged over. The kept set and
+// the model both call it with the height of the lens, so the two scenes hold one globe at every height.
 const latToneRow = (): THREE.DataTexture => {
   const data = new Float32Array(tone.gain.length * 4)
   tone.gain.forEach((g, i) => data.set([g[0]!, g[1]!, g[2]!, 1], i * 4))
@@ -118,12 +137,12 @@ export const latToneUniforms = (): { uLatTone: { value: THREE.DataTexture }; uLa
   uLatFirst: { value: (tone.first * Math.PI) / 180 },
 })
 export const latToneAt = (height: number, into: THREE.Vector4): void => {
-  const w = gradeShare(height)
+  const w = bodyShare(height)
   into.x = w
   into.z = tone.calm.amount * w
 }
 // the share of the boost of the small features of the map that is left with the lens at this height
-export const fineShare = (height: number): number => 1 - tone.calm.fine * gradeShare(height)
+export const fineShare = (height: number): number => 1 - tone.calm.fine * bodyShare(height)
 
 // latTone: the factor on the colour of the globe at the latitude lat (radians, either side of the equator):
 // straight lines between the knots of skim.json light.tone.gain, flat outside them, to the power of the share.
@@ -146,25 +165,28 @@ export const dustAt = (into: THREE.Vector4): void => {
   into.set(foot.depth, foot.height[0]!, foot.height[1]!, 0)
 }
 
-// The shade of matter inside the inner rim on the globe (skim.json inner): the share of the shade that shows is
-// one number at every height of the lens (inner.shade), and that number is 0: the thin sheet casts no shade on
-// the globe. Sets uDustShade: the depth at the
-// rim and by the globe, the rim, the length over which it dies away outward of the rim. The kept set and the
-// model both call it.
+// The shade of the thin sheet inside the inner rim on the globe (skim.json inner.depth): the matter that stands
+// in front of the globe shades it, by the same depth and the same law of cover as on the view's ray (the Sun's
+// light is left exp(-tau(r) / |sin e|) of, e the Sun's height over the plane, r where the Sun's ray to the
+// clouds crosses the plane). No share and no height of the lens: the shade follows the depth alone. The depth
+// is the mean of the sheet's plateaus (inner.bands, sheet.ts sheetBands). Sets uDustShade: that depth at the
+// rim and by the globe, the rim, the length inward of the rim from which the sheet ends (inner.join; it ends as
+// in sheet.ts sheetInner, over the foot of the ring). The kept set and the model both call it.
 export const dustShadeAt = (into: THREE.Vector4): void => {
   const bands = skimJson.inner.bands
-  const share = skimJson.inner.shade * Math.pow(bands.floor + (1 - bands.floor) * (1 - bands.gap), 3)
-  into.set(skimJson.inner.depth[0]! * share, skimJson.inner.depth[1]! * share, model.inner, skimJson.inner.fade)
+  const mean = Math.pow(bands.floor + (1 - bands.floor) * (1 - bands.gap), 3)
+  into.set(skimJson.inner.depth[0]! * mean, skimJson.inner.depth[1]! * mean, model.inner, skimJson.inner.join[0]!)
 }
 
 // dustShade: the share of the Sun's light that reaches the point P (planet radii, the plane of the rings at
-// y 0) through the dust inside the inner rim; 1 where the Sun's ray to P does not cross the plane.
+// y 0) through the thin sheet inside the inner rim (the depth of sheet.ts sheetInner); 1 where the Sun's ray to
+// P does not cross the plane.
 export const DUST_SHADE_GLSL = /* glsl */ `
 uniform vec4 uDustShade;
 float dustShade(vec3 P, vec3 sun) {
   float t = -P.y / (abs(sun.y) > 1e-4 ? sun.y : 1e-4);
   float rq = length(P.xz + sun.xz * max(t, 0.0));
-  float tau = mix(uDustShade.x, uDustShade.y, clamp((uDustShade.z - rq) / (uDustShade.z - 1.0), 0.0, 1.0)) * exp(-max(rq - uDustShade.z, 0.0) / uDustShade.w);
+  float tau = mix(uDustShade.x, uDustShade.y, clamp((uDustShade.z - rq) / (uDustShade.z - 1.0), 0.0, 1.0)) * (1.0 - smoothstep(uDustShade.z - uDustShade.w, uDustShade.z + ${skimJson.inner.join[1]!.toFixed(6)}, rq));
   return t > 0.0 ? exp(-tau / max(abs(sun.y), 0.02)) : 1.0;
 }`
 
