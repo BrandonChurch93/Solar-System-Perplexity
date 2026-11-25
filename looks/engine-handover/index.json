@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T17:31:04.127Z",
+ "pushed": "2026-11-25T17:48:26.258Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "flight line and Earth by the law on a trial merge with the second cut: my own look at consecutive frames 2179 to 2184 at review; pairs against main's number follow",
+ "note": "Earth under the law on the trial merge with the second cut: flight 2179 to 2184 (2179 moves 4.00 px, not 5.0 as one label says), pairs 2182 and 2183 against main's box, rise end 2164 to 2170; Mars's line past Phobos is being probed",
  "looks": [
+  {
+   "time": "2026-11-25T17:48:24.983Z",
+   "file": "20261125174824983-note-strip-law-2164-2170-storm-2x.jpg",
+   "source": "../../../../tmp/name/strip-law-2164-2170-storm-2x.png",
+   "kind": "note",
+   "label": "Earth rise end 2164 to 2170 at review under the law, clouds at 2 times: consecutive frames"
+  },
+  {
+   "time": "2026-11-25T17:48:23.863Z",
+   "file": "20261125174823863-note-sheet-law-2164-2170-whole.jpg",
+   "source": "../../../../tmp/name/sheet-law-2164-2170-whole.png",
+   "kind": "note",
+   "label": "Earth rise end 2164 to 2170 at review under the law, whole frames (seen 14.0 to 6.6 px, the ends' share 0.5 falling to 0.008)"
+  },
+  {
+   "time": "2026-11-25T17:48:22.526Z",
+   "file": "20261125174822526-note-pair-2183-1to1.jpg",
+   "source": "../../../../tmp/name/pair-2183-1to1.png",
+   "kind": "note",
+   "label": "Earth flight 2183 at review at 1 to 1: the law (left) against main's box (right)"
+  },
+  {
+   "time": "2026-11-25T17:48:21.380Z",
+   "file": "20261125174821380-note-pair-2183-clouds-3x.jpg",
+   "source": "../../../../tmp/name/pair-2183-clouds-3x.png",
+   "kind": "note",
+   "label": "Earth flight 2183 at review, clouds at 3 times: the law's soft ends (left) against main's box (right), trial merge with the second cut"
+  },
+  {
+   "time": "2026-11-25T17:35:12.798Z",
+   "file": "20261125173512798-note-strip-law-2179-2184-clouds-2x.jpg",
+   "source": "../../../../tmp/name/strip-law-2179-2184-clouds-2x.png",
+   "kind": "note",
+   "label": "Earth's flight under the law, consecutive 2179 to 2184 review at 2 times (ends none, none, 0.14, 0.5, 0.5, 0.5; px 5.0, 5.6, 8.8, 14.1, 21.7, 31.7)"
+  },
+  {
+   "time": "2026-11-25T17:35:11.811Z",
+   "file": "20261125173511811-note-pair-2182-moon-4x.jpg",
+   "source": "../../../../tmp/name/pair-2182-moon-4x.png",
+   "kind": "note",
+   "label": "Earth's flight 2182 review, the Moon at 4 times: main's box left, the law right"
+  },
+  {
+   "time": "2026-11-25T17:35:10.683Z",
+   "file": "20261125173510683-note-pair-2182-clouds-3x.jpg",
+   "source": "../../../../tmp/name/pair-2182-clouds-3x.png",
+   "kind": "note",
+   "label": "Earth's flight 2182 review, trial merge with the second cut, 3 times: main's box left, the law (ends 0.5 at 14.05 px) right. Bars become lozenges; the fine hatch along the way is in both"
+  },
   {
    "time": "2026-11-25T17:30:58.932Z",
    "file": "20261125173058932-note-sheet-law-flight-moon.jpg",
    "source": "../../../../tmp/name/sheet-law-flight-moon.png",
    "kind": "note",
    "label": "trial merge with the second cut, law, review: flight 2179 to 2183, the Moon at 2 times (ends none, none, 0.14, 0.5, 0.5)"
-  },
-  {
-   "time": "2026-11-25T17:30:57.641Z",
-   "file": "20261125173057641-note-sheet-law-flight-stars.jpg",
-   "source": "../../../../tmp/name/sheet-law-flight-stars.png",
-   "kind": "note",
-   "label": "trial merge with the second cut, law, review: flight 2179 to 2183, the sky left of Earth at 1 to 1 (stars stand, the globe leaves)"
-  },
-  {
-   "time": "2026-11-25T17:00:51.524Z",
-   "file": "20261125170051524-note-triple-1857-hatch-3x.jpg",
-   "source": "../../../../tmp/ends/triple-1857-hatch-3x.png",
-   "kind": "note",
-   "label": "Earth 1857 final at 3x: box, ends (main), and the scratch b2 (longer shutter with ends). RULED d312: neither box nor b2 is built"
-  },
-  {
-   "time": "2026-11-25T17:00:50.613Z",
-   "file": "20261125170050613-note-pair-2156-hatch-3x.jpg",
-   "source": "../../../../tmp/ends/pair-2156-hatch-3x.png",
-   "kind": "note",
-   "label": "Earth 2156 final, lower left at 3x: box against ends (main). The bars along the way go with the ends, the hatch across it stays in both"
-  },
-  {
-   "time": "2026-11-25T16:48:33.614Z",
-   "file": "20261125164833614-note-e-box-01857-ll.jpg",
-   "source": "../../../../tmp/ends/e-box-01857-ll.png",
-   "kind": "note",
-   "label": "Earth 1857 final as a box, lower left quarter at 1 to 1"
-  },
-  {
-   "time": "2026-11-25T16:48:32.795Z",
-   "file": "20261125164832795-note-e-ends-01857-ll.jpg",
-   "source": "../../../../tmp/ends/e-ends-01857-ll.png",
-   "kind": "note",
-   "label": "Earth 1857 final with the cosine ends, lower left quarter at 1 to 1"
-  },
-  {
-   "time": "2026-11-25T16:48:31.552Z",
-   "file": "20261125164831552-note-pair-1857-cloud-8x.jpg",
-   "source": "../../../../tmp/ends/pair-1857-cloud-8x.png",
-   "kind": "note",
-   "label": "Earth 1857 final, crop 440,980,560,1060 at 8 times: box left, cosine ends right. The hatch of strokes one px wide across the motion, in both"
-  },
-  {
-   "time": "2026-11-25T16:48:30.391Z",
-   "file": "20261125164830391-note-pair-1857-hatch-3x.jpg",
-   "source": "../../../../tmp/ends/pair-1857-hatch-3x.png",
-   "kind": "note",
-   "label": "Earth 1857 final, 64 samples, crop 330,860,650,1080 at 3 times: box left, cosine ends right. Bars become lozenges; a hatch along the motion stays in both"
   }
  ]
 }
