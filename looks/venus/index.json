@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T10:13:05.543Z",
- "head": "f837166a631ca76d7e034d3070bc85de13012dd1",
- "note": "third state f837166a: hold equal to before to the byte; MAIL 1014 point followed over 1608 to 1616",
+ "pushed": "2026-11-25T10:33:18.392Z",
+ "head": "63752893cb7ae9cf12b9651fe340d6ba5a826053",
+ "note": "fourth state: the globe's own fine forms stay on the place inside the disc, 1284 and 1290 beside before, first and third",
  "looks": [
+  {
+   "time": "2026-11-25T10:33:17.762Z",
+   "file": "20261125103317762-note-a4-1290.jpg",
+   "source": "../../../../tmp/v/sh/a4-1290.jpg",
+   "kind": "note",
+   "label": "a4 1290 before, first, a3, fourth",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T10:33:17.169Z",
+   "file": "20261125103317169-note-a4-1284.jpg",
+   "source": "../../../../tmp/v/sh/a4-1284.jpg",
+   "kind": "note",
+   "label": "a4 1284 third, first, a3, fourth",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T10:13:04.953Z",
    "file": "20261125101304953-note-e-pair.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/ar-cmp-dive.jpg",
    "kind": "note",
    "label": "dive 1290 1296 1308: tree of 8adf0940 (left), first state 86237abe (middle), third state in work (right), draft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T09:02:53.545Z",
-   "file": "20261125090253545-note-knot-x3-second.jpg",
-   "source": "../../../../tmp/v/sh/knot-x3-second.png",
-   "kind": "note",
-   "label": "1185 knot at 3 to 1, 140 px round 1345, 435: hero, before, first state, second state",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T09:02:52.971Z",
-   "file": "20261125090252971-note-hero-1185-second.jpg",
-   "source": "../../../../tmp/v/sh/hero-1185-second.png",
-   "kind": "note",
-   "label": "1185 against the approved hero, 1 to 1 crop of 320 px round 1345, 435: hero, before, first state, second state",
    "stop": "venus"
   }
  ]
