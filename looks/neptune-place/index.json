@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T12:40:05.006Z",
- "head": "1808b13e729122b7a0873cffbef0d835ecf279d1",
- "note": "trial of the deck's run: soft 48.66 to 2.06 percent at 4860 by my reading, picture moved at most 5 levels, 4605 moved by 1 level (not in until it stays to the bit); 100.8 s per draft frame",
+ "pushed": "2026-11-25T13:22:46.998Z",
+ "head": "4676101d05fd7c9bf713fd740834596beee14176",
+ "note": "the slab for the cloud sheet (uncommitted): the dot is gone at 4962 and 4972, hold same bytes; rise pairs 0.48, 0.57, 0.62 (proxy); corner flecks still red",
  "looks": [
+  {
+   "time": "2026-11-25T13:22:41.234Z",
+   "file": "20261125132241234-note-look-r1.jpg",
+   "source": "../../../../tmp/look-r1.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, with the deck's run (trial of 12:39; the committed widths 1.2 and the slab are not in this one, that 4860 renders next). G17 tile map median 0.254 (my reader, draft). 81 to 83 s per frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T13:22:39.882Z",
+   "file": "20261125132239882-note-s3-corner.jpg",
+   "source": "../../../../tmp/s3-corner.jpg",
+   "kind": "note",
+   "label": "What is still red at 4968 to 4976: a row of small hard white flecks comes in at the upper left corner and travels. Not yet named by a control",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T13:22:38.611Z",
+   "file": "20261125132238611-note-s3-4962.jpg",
+   "source": "../../../../tmp/s3-4962.jpg",
+   "kind": "note",
+   "label": "4962 at 1920 draft: before above, with the slab below. The dot is gone. 72 s per frame. Rise pairs with the slab (my reader, a proxy): 4960 to 4968 0.48 (0.56), 4962 to 4970 0.57 (0.68), 4968 to 4976 0.62 (0.85), 4992 to 5000 0.35 (0.33), dive 4704 to 4712 0.30 (0.30)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T13:22:37.336Z",
+   "file": "20261125132237336-note-s3-4972.jpg",
+   "source": "../../../../tmp/s3-4972.jpg",
+   "kind": "note",
+   "label": "4972 at 1920 draft: before above, with the slab (far.slab [4, 2], uncommitted) below. The dot is gone with no streak, the hard limb lines are one soft band. 44 s per frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T12:40:03.671Z",
    "file": "20261125124003671-note-r1-soft.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
    "kind": "note",
    "label": "way C at 4860 beside the approved: G17 proxy 0.412 at preview (bar 0.8, RED and named); 64 s the draft frame at preview, 103 s at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T11:43:24.680Z",
-   "file": "20261125114324680-note-g17-top-wayC.jpg",
-   "source": "out/work/nep/weave/ev/g17-top-wayC.jpg",
-   "kind": "note",
-   "label": "the same strips on way C (draft): the far plain under the limb reads 0.07 to 0.50, the sky as before",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T11:43:22.410Z",
-   "file": "20261125114322410-note-g17-top-c2edd61b.jpg",
-   "source": "out/work/nep/weave/ev/g17-top-c2edd61b.jpg",
-   "kind": "note",
-   "label": "G17 at 4860, the top two rows at 1 to 1: approved above, ours below (c2edd61ba's tree, draft). The approved carries a dense bright star field with the Milky Way and fibrous cirrus under the limb; ours the engine's one sky and a smooth haze band. 13 sky tiles read 0.02 to 0.18",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T11:19:03.823Z",
-   "file": "20261125111903823-note-c-4860-C8.jpg",
-   "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
-   "kind": "note",
-   "label": "way C at 4860 beside the approved, G17 proxy 0.412 (bar 0.8, RED); 31 s the draft frame at preview, 78 s the texel view at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T11:19:03.159Z",
-   "file": "20261125111903159-note-g13-views.jpg",
-   "source": "out/work/nep/weave/ev/g13-views.jpg",
-   "kind": "note",
-   "label": "G13 texel view (red is texels a pixel, yellow 2, green under 1): left as named, right the control. Top 4530: 89.9 percent soft becomes 0.000 (the scene's count was written where it draws nothing). Bottom 4860: 71.2 becomes 47.6 percent soft, RED, the near ground by code",
    "stop": "neptune"
   }
  ]
