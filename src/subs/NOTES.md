@@ -45,3 +45,7 @@ The subtitle layer of the narrated film on the page (MAIL 1319). Branch agent/su
   - d. See 22:52.
 - The address: `?mode=export&format=uhd&subs=1` (Ultra HD is 3840 by 2160 at 60 frames a second by config capture.rates.uhd 2), or frame by frame `?mode=capture&format=uhd&rate=2&subs=1`; the autopilot `?mode=autopilot&subs=1`.
 - Main moved to 9f153844 (kit/PROGRESS.md only); merged by merge commit; tests run on the merge.
+- 23:32 UTC NAMED ca7fa6273bfbcfaa8b6e9acbd3696f1afae7a923 mailed with pair-99, pair-360, pair-1215, the 60 fps step picture and a 4K crop. Parity (mars rise) green on it. Commits after it touch this notebook only.
+- 4K check, frame 360 draft 3840 by 2160: 0.4679 in the band (letters 6.36 on 5.05 percent, a one pixel outline, no shift; haze 0.355; clear 0; outside 0). Whole draft frame 26.0 s with the layer, 24.6 s without, on SwiftShader.
+- 23:34 UTC correction mailed: the film frame itself differs between rate 1 and rate 2 (frame 277 against capture frame 554: mean abs 0.61, the engine's shutter), so a 60 fps frame is not the 30 fps frame to the byte. The layer is the same: on the 57888 band pixels where the frame under it is equal at both rates and the layer draws, the results are equal in every pixel.
+- Open: the GL passes are not timed on a GPU.
