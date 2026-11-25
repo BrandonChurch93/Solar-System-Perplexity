@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T08:33:40.132Z",
- "head": "040ecece961d4a64ceb3f3aac8e1400024d05706",
- "note": "08:34 UTC. Round 3 opened by MAIL 972. Measured for its point 4 (no build yet): the scene's Sun stands 33.1 deg over the place at 3150 (31.9 to 34.0 over the right third's far ground); the approved right third's far ground reads 62.6 73.3 76.3 against mine 136.0 129.1 115.2 (8 bit means, ground farther than 10 units); the slab path to that ground is 12.8 units in the median at 3150 (share 0.836) and 1.05 units at 2895 (share 0.985). Probe stills show how far the deck holds away from the fit view: 1 to 2 units ahead and 30 deg round the storm hold, 60 deg does not.",
+ "pushed": "2026-11-25T09:02:02.703Z",
+ "head": "53a0ee4e235bb59257f69df781f9de694c68817e",
+ "note": "round 3 of 3, working tree tests of the ray law, nothing committed",
  "looks": [
+  {
+   "time": "2026-11-25T09:02:02.075Z",
+   "file": "20261125090202075-note-ray015-3150-pair.jpg",
+   "source": "../work/r13/ray015-3150-pair.jpg",
+   "kind": "note",
+   "label": "3150: approved, working tree ray law 0.15 (draft), db67666d (final), ray law 0.4 (draft)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T09:02:01.484Z",
+   "file": "20261125090201484-note-ray015-rise.jpg",
+   "source": "../work/r13/ray015-rise.jpg",
+   "kind": "note",
+   "label": "working tree, ray law 0.15: 3252 and 3260 with the change of the pattern",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T09:02:00.855Z",
+   "file": "20261125090200855-note-ray015-dive.jpg",
+   "source": "../work/r13/ray015-dive.jpg",
+   "kind": "note",
+   "label": "working tree, ray law 0.15: 3029 and 3037 with the change of the pattern",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T09:02:00.243Z",
+   "file": "20261125090200243-note-ray04-dive.jpg",
+   "source": "../work/r13/ray04-dive.jpg",
+   "kind": "note",
+   "label": "working tree, ray law 0.4: 3029 and 3037 with the change of the pattern, red at the far ground under the limb",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T09:01:59.577Z",
+   "file": "20261125090159577-note-band-pers.jpg",
+   "source": "../work/r13/band-pers.jpg",
+   "kind": "note",
+   "label": "3150 upper part, working tree, not committed: approved, db67666d, the ray law at strength 0.1, 0.15 and 0.4 a unit of path",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T09:01:58.691Z",
+   "file": "20261125090158691-note-right-3150-marked.jpg",
+   "source": "../work/r13/right-3150-marked.jpg",
+   "kind": "note",
+   "label": "3150 right part, approved beside db67666d, lines at 5, 10 and 15 units from the eye: the approved is dark from the near ground on",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T08:33:39.504Z",
    "file": "20261125083339504-note-pair-3150-big.jpg",
@@ -152,60 +200,6 @@
    "source": "../work/r12/dive-pair.jpg",
    "kind": "note",
    "label": "3029 and 3037: second named commit, this commit, no air",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:30:55.318Z",
-   "file": "20261125073055318-note-limb-3037.jpg",
-   "source": "../work/r12/limb-3037.jpg",
-   "kind": "note",
-   "label": "3037 under the limb at 1 to 1: second named commit, this commit, no air",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:30:54.577Z",
-   "file": "20261125073054577-note-jupiter-dive-k6056-6064-changes.jpg",
-   "source": "../work/r12/slices/jupiter-dive-k6056-6064-changes.png",
-   "kind": "note",
-   "label": "the tool's change picture, dive slice 3028 to 3032 on 2ad37054: green, pattern 0.40 against the limit 0.45 (second named commit 1.24)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:30:53.849Z",
-   "file": "20261125073053849-note-dive-3031-3040.jpg",
-   "source": "../work/r12/dive-3031-3040.jpg",
-   "kind": "note",
-   "label": "dive 3031 to 3040, commit 2ad37054 (slab air), draft, every film frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:30:52.983Z",
-   "file": "20261125073052983-note-dive-3020-3030.jpg",
-   "source": "../work/r12/dive-3020-3030.jpg",
-   "kind": "note",
-   "label": "dive 3020 to 3030, commit 2ad37054 (slab air), draft, every film frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T07:18:26.603Z",
-   "file": "20261125071826603-frame-n5-2895.jpg",
-   "source": "out/work/jupiter/final/n5-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-25T07:15:57.580Z",
-   "file": "20261125071557580-note-trio-3150-draft.jpg",
-   "source": "../work/r12/trio-3150-draft.jpg",
-   "kind": "note",
-   "label": "3150: approved image, this commit 2ad37054 (slab air, far ground stays lit: match worse), second named commit b79d375e",
    "stop": "jupiter"
   }
  ]
