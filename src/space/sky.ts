@@ -1196,7 +1196,7 @@ export class Sky {
 
   private readonly farCentre = new THREE.Vector3()
 
-  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number, open: Tiles | null): void {
+  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number, open: Tiles | null, sunQuaternion: THREE.Quaternion = skyQuaternion): void {
     if (this.canvas !== renderer.domElement) {
       this.canvas = renderer.domElement
       this.canvas.addEventListener('webglcontextrestored', () => { this.stale = true })
@@ -1333,6 +1333,8 @@ export class Sky {
     const fs = sun.far
     if (fs && farShare > 0 && (!fs.centre || fs.share >= 1)) {
       const centre = fs.centre ?? this.farCentre.copy(fs.dir ?? sun.dir).multiplyScalar(1 / Math.sin(Math.min(Math.max(sun.angularRadius, 1e-5), 1.5)))
+      camera.quaternion.copy(sunQuaternion)
+      camera.updateMatrixWorld(true)
       farSun.set({ camera, centre, body: fs.body, spin: fs.spin, time: fs.time, holdTime: fs.holdTime, exposure: fs.exposure, burn: fs.burn, vignette, aspect, height }, farShare, 0)
       farSun.render(renderer, target)
     }

@@ -1,5 +1,11 @@
-import { describe, expect, it } from 'vitest'
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { chromium, type Browser, type Page } from 'playwright-core'
+import { build } from 'vite'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { CHROME, CHROME_FLAGS } from '../tools/lib/browser'
 import { config } from '../src/config'
+import { Engine } from '../src/core/engine'
 import { FilmDirector } from '../src/director/film'
 import { plans } from '../src/director/plans'
 import * as THREE from 'three'
@@ -9,11 +15,72 @@ import { HOLD } from '../src/space/farsun/hold'
 import look from '../src/space/farsun/look.json'
 import { globeShare, spans, swapDistance, wearShare } from '../src/space/farsun/share'
 import { FARSUN_FRAG } from '../src/space/farsun/shader'
+import { Sky } from '../src/space/sky'
 import { Corona } from '../src/stops/sun/corona'
 import * as sunLook from '../src/stops/sun/look'
+import place from '../src/stops/sun/place.json'
 import { Prominences } from '../src/stops/sun/prominence'
 
 const swapOf = (deg: number): number => 1 / Math.sin((deg * Math.PI) / 180)
+
+const ROOT = resolve(__dirname, '..')
+const at = (path: string): string => JSON.stringify(resolve(ROOT, path))
+
+const PAGE = `
+import * as THREE from 'three'
+import { farSun } from ${at('src/space/farsun/farsun.ts')}
+import * as sunLook from ${at('src/stops/sun/look.ts')}
+
+const renderer = new THREE.WebGLRenderer({ canvas: document.createElement('canvas') })
+renderer.autoClear = false
+const blank = new THREE.DataTexture(new Uint8Array([128, 128, 128, 255]), 1, 1)
+blank.needsUpdate = true
+const knot = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 16), new THREE.MeshBasicMaterial({ color: 0, transparent: true, depthTest: true, depthWrite: false, blending: THREE.CustomBlending, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor }))
+knot.frustumCulled = false
+let shown = true
+
+function count(v) {
+  const target = new THREE.WebGLRenderTarget(v.width, v.height, { depthBuffer: true })
+  const [x0, y0, x1, y1] = v.box
+  const w = x1 - x0 + 1
+  const h = y1 - y0 + 1
+  target.scissor.set(x0, y0, w, h)
+  target.scissorTest = true
+  const g = sunLook.globe
+  knot.position.fromArray(v.spot)
+  knot.scale.setScalar(v.size)
+  farSun.wear({ map: blank, grade: blank, mapWidth: 1, limb: g.limb, rim: g.rim, boil: g.boil, hot: g.hot, pulse: g.pulse, cell: g.cell, gas: { corona: blank, coronaLook: sunLook.corona, prominence: blank, flow: blank, prominenceLook: sunLook.prominence, turn: new THREE.Quaternion(), arcade: { object: knot, draw: () => { knot.visible = shown } } } })
+  const camera = new THREE.PerspectiveCamera(v.vfov, v.width / v.height, v.near, v.far)
+  camera.quaternion.fromArray(v.q)
+  camera.updateMatrixWorld(true)
+  const view = { camera, centre: new THREE.Vector3().fromArray(v.centre), body: new THREE.Quaternion().fromArray(v.body), spin: v.spin, time: v.time, holdTime: v.holdTime, exposure: v.exposure, burn: v.burn, vignette: v.vignette, aspect: v.width / v.height, height: v.height }
+  const shoot = (on) => {
+    shown = on
+    renderer.setRenderTarget(target)
+    renderer.clear(true, true, true)
+    farSun.set(view, 1, 0)
+    farSun.render(renderer, target)
+    const out = new Uint8Array(w * h * 4)
+    renderer.readRenderTargetPixels(target, x0, y0, w, h, out)
+    return out
+  }
+  const withIt = shoot(true)
+  const without = shoot(false)
+  let lit = 0
+  let dark = 0
+  for (let i = 0; i < w * h * 4; i += 4) {
+    if (without[i] + without[i + 1] + without[i + 2] === 0) continue
+    lit++
+    if (withIt[i] + withIt[i + 1] + withIt[i + 2] === 0) dark++
+  }
+  farSun.wear(null)
+  renderer.setRenderTarget(null)
+  target.dispose()
+  return { lit, dark, near: camera.near, far: camera.far }
+}
+
+window.farsunArcade = { count }
+`
 
 describe('the handover and the wear of the far Sun', () => {
   const film = new FilmDirector(plans)
@@ -207,4 +274,152 @@ describe('the handover and the wear of the far Sun', () => {
     }
     expect(turned).toBeGreaterThan(0.5)
   })
+
+  it('is seen through the sky orientation of its own sample of the shutter while the stars keep the one of the middle, and through the middle one where no other is handed', () => {
+    const seg = config.segments.find((s) => s.id === plans[1]!.id + '.hold')!
+    const frame = ((seg.start + seg.end) / 2) * config.fps
+    const mid = film.shotAt(frame, frame / config.fps)
+    const own = mid.skyQuaternion.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), mid.sun.angularRadius))
+    const { width, height } = config.raw.formats.master
+    const aspect = width / height
+    const camera = new THREE.PerspectiveCamera(mid.camera.vfov, aspect)
+    camera.quaternion.copy(mid.camera.quaternion)
+    const stood = camera.quaternion.clone()
+    const stars: THREE.Quaternion[] = []
+    const body: THREE.Quaternion[] = []
+    const canvas = { addEventListener: (): void => undefined }
+    const renderer = new Proxy({}, { get: (_, key) => (key === 'domElement' ? canvas : key === 'render' ? (_scene: THREE.Object3D, eye: THREE.Camera): void => { stars.push(eye.quaternion.clone()) } : (): void => undefined) }) as unknown as THREE.WebGLRenderer
+    const target = new THREE.WebGLRenderTarget(width, height)
+    const set = vi.spyOn(farSun, 'set').mockImplementation((view) => {
+      body.push(view.camera.quaternion.clone())
+      return 0
+    })
+    const draw = vi.spyOn(farSun, 'render').mockImplementation(() => undefined)
+    const sky = new Sky(height)
+    const through = (...sample: THREE.Quaternion[]): void => (sky.render as (...all: unknown[]) => void).call(sky, renderer, target, camera, mid.skyQuaternion, mid.skyExposure, mid.skyGlow, mid.skyTurn, height, mid.sun, mid.post.vignette, aspect, null, ...sample)
+    through(own)
+    through()
+    set.mockRestore()
+    draw.mockRestore()
+    expect(body).toHaveLength(2)
+    expect(body[0]!.equals(own)).toBe(true)
+    expect(body[0]!.equals(mid.skyQuaternion)).toBe(false)
+    expect(body[1]!.equals(mid.skyQuaternion)).toBe(true)
+    expect(stars.length).toBeGreaterThan(0)
+    for (const q of stars) expect(q.equals(mid.skyQuaternion)).toBe(true)
+    expect(camera.quaternion.equals(stood)).toBe(true)
+  })
+
+  it('is handed the sky orientation of each sample of the shutter by the engine, so two samples of one frame see it through two cameras', () => {
+    const seg = config.segments.find((s) => s.id === plans[1]!.id + '.hold')!
+    const frame = ((seg.start + seg.end) / 2) * config.fps
+    const mid = film.shotAt(frame, frame / config.fps)
+    const { width, height } = config.raw.formats.master
+    const canvas = { addEventListener: (): void => undefined }
+    const renderer = new Proxy({}, { get: (_, key) => (key === 'domElement' ? canvas : (): void => undefined) }) as unknown as THREE.WebGLRenderer
+    const body: THREE.Quaternion[] = []
+    const set = vi.spyOn(farSun, 'set').mockImplementation((view) => {
+      body.push(view.camera.quaternion.clone())
+      return 0
+    })
+    const draw = vi.spyOn(farSun, 'render').mockImplementation(() => undefined)
+    const still = { render: (): void => undefined }
+    const engine = Object.assign(Object.create(Engine.prototype) as object, {
+      format: { width, height },
+      camera: new THREE.PerspectiveCamera(mid.camera.vfov, width / height),
+      renderer,
+      probe: {},
+      sky: new Sky(height),
+      attached: [],
+      sets: new Map(),
+      world: new THREE.Group(),
+      near: new THREE.Group(),
+      over: new THREE.Group(),
+      sampleTarget: new THREE.WebGLRenderTarget(width, height),
+      director: {},
+      skyPatches: [],
+      held: [],
+      trims: [],
+      belt: still,
+      dust: still,
+    })
+    const turned = (angle: number): THREE.Quaternion => mid.skyQuaternion.clone().multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), angle))
+    const moments = [turned(-mid.sun.angularRadius), turned(mid.sun.angularRadius)]
+    const sample = (Engine.prototype as unknown as { renderSample: (...all: unknown[]) => void }).renderSample
+    for (const [i, q] of moments.entries()) sample.call(engine, { ...mid, sets: [], skyQuaternion: q }, mid, { jitterX: 0, jitterY: 0, weight: 1 }, i, moments.length)
+    set.mockRestore()
+    draw.mockRestore()
+    expect(body).toHaveLength(moments.length)
+    for (const [i, q] of moments.entries()) expect(body[i]!.equals(q)).toBe(true)
+    expect(body[0]!.equals(body[1]!)).toBe(false)
+    expect(body[0]!.equals(mid.skyQuaternion)).toBe(false)
+  })
+})
+
+describe.skipIf(!existsSync(CHROME))('the thing the Sun stop stands on the body, drawn by the far Sun in a WebGL2 browser', () => {
+  let browser: Browser
+  let page: Page
+  const film = new FilmDirector(plans)
+
+  beforeAll(async () => {
+    const dir = resolve(ROOT, 'out/work/farsun-test')
+    mkdirSync(dir, { recursive: true })
+    const entry = resolve(dir, 'page.js')
+    writeFileSync(entry, PAGE)
+    const built = await build({
+      root: ROOT, configFile: false, logLevel: 'silent',
+      build: { write: false, minify: false, target: 'es2022', lib: { entry, formats: ['iife'], name: 'farsunPage', fileName: 'farsun-page' } },
+    })
+    const output = (Array.isArray(built) ? built[0]! : built) as { output: { type: string; code?: string }[] }
+    const code = output.output.find((x) => x.type === 'chunk')!.code!
+    browser = await chromium.launch({ executablePath: CHROME, headless: true, args: CHROME_FLAGS })
+    page = await browser.newPage()
+    const errors: string[] = []
+    page.on('pageerror', (e) => errors.push(e.message))
+    await page.route('http://farsun.test/**', (route) => {
+      const url = route.request().url()
+      if (url.endsWith('/page.js')) return route.fulfill({ status: 200, contentType: 'text/javascript', body: code })
+      if (url === 'http://farsun.test/') return route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><script src="./page.js"></script>' })
+      return route.fulfill({ status: 404, body: '' })
+    })
+    await page.goto('http://farsun.test/')
+    await page.waitForFunction(() => 'farsunArcade' in window, undefined, { timeout: 60000 })
+    expect(errors).toEqual([])
+  }, 300000)
+
+  afterAll(async () => {
+    await browser?.close()
+  })
+
+  it('is drawn over the body at its place in every frame from the end of the handover while that place is in the frame, also where the near plane of the film stands behind it, and the camera keeps its planes', async () => {
+    const leg = config.segments.find((s) => s.kind === 'travel' && s.stop === plans[0]!.id)!
+    const { width, height } = config.raw.formats.master
+    const size = look.chromosphere.height
+    const spot = new THREE.Vector3().fromArray(place.globe.spot).normalize()
+    const views: { frame: number; cut: boolean; radius: number; v: Record<string, unknown> }[] = []
+    for (let frame = leg.firstFrame; frame < leg.endFrame; frame++) {
+      const shot = film.shotAt(frame, frame / config.fps)
+      const f = shot.sun.far
+      if (!f || f.share < 1 || wornAt(f.burn) <= 0) continue
+      const centre = f.centre ?? shot.sun.dir.clone().multiplyScalar(1 / Math.sin(shot.sun.angularRadius))
+      const seen = spot.clone().applyAxisAngle(new THREE.Vector3(0, 1, 0), f.spin).applyQuaternion(f.body).add(centre).applyQuaternion(shot.skyQuaternion.clone().invert())
+      if (seen.z >= 0) continue
+      const k = height / 2 / Math.tan((shot.camera.vfov * Math.PI) / 360)
+      const x = width / 2 + (seen.x / -seen.z) * k
+      const y = height / 2 + (seen.y / -seen.z) * k
+      const radius = (size * k) / -seen.z
+      if (x < 2 * radius || x > width - 2 * radius || y < 2 * radius || y > height - 2 * radius) continue
+      const box = [Math.floor(x - radius), Math.floor(y - radius), Math.ceil(x + radius), Math.ceil(y + radius)]
+      views.push({ frame, cut: shot.near > -seen.z, radius, v: { width, height, size, spot: spot.toArray(), box, vfov: shot.camera.vfov, near: shot.near, far: shot.far, q: shot.skyQuaternion.toArray(), centre: centre.toArray(), body: f.body.toArray(), spin: f.spin, time: f.time, holdTime: f.holdTime, exposure: f.exposure, burn: f.burn, vignette: shot.post.vignette } })
+    }
+    expect(views.length).toBeGreaterThan(0)
+    expect(views.some((w) => w.cut)).toBe(true)
+    for (const w of views) {
+      const got = await page.evaluate((v) => (window as unknown as { farsunArcade: { count(v: unknown): { lit: number; dark: number; near: number; far: number } } }).farsunArcade.count(v), w.v)
+      expect(got.lit, 'frame ' + w.frame).toBeGreaterThan(0)
+      expect(got.dark, 'frame ' + w.frame).toBeGreaterThan((Math.PI * w.radius * w.radius) / 2)
+      expect(got.near, 'frame ' + w.frame).toBe(w.v.near)
+      expect(got.far, 'frame ' + w.frame).toBe(w.v.far)
+    }
+  }, 300000)
 })
