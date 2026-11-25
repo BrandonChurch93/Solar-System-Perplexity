@@ -1,9 +1,61 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T20:31:51.876Z",
- "head": "ed3fc7f84804fe778c3536928bfb4705f2d54e17",
- "note": "u24, swing at 221",
+ "pushed": "2026-11-25T21:04:35.195Z",
+ "head": "771f0d86fc7b41d4d90f16f147b98735bf511391",
+ "note": "sun lab: measuring the cells of the approved and mine (curve middle to border, lanes, counts), then the form by those numbers",
  "looks": [
+  {
+   "time": "2026-11-25T21:04:34.621Z",
+   "file": "20261125210434621-note-cells-u24.jpg",
+   "source": "../v/cells-u24.jpg",
+   "kind": "note",
+   "label": "sun lab: the reader of cells on lab u24 frame 90",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:04:34.062Z",
+   "file": "20261125210434062-note-cells-appr.jpg",
+   "source": "../v/cells-appr.jpg",
+   "kind": "note",
+   "label": "sun lab: the new reader of cells (cells.py) on the approved close image: lanes magenta, cells cyan",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:04:33.516Z",
+   "file": "20261125210433516-note-strip-u27.jpg",
+   "source": "../v/strip-u27.jpg",
+   "kind": "note",
+   "label": "sun lab u27 (trial, not committed): approved on top, u26, u27 at 1 to 1; still shells, softer",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:04:12.565Z",
+   "file": "20261125210412565-frame-lab-90-standing.jpg",
+   "source": "out/work/sun/lab/lab-90-standing.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T20:44:26.234Z",
+   "file": "20261125204426234-frame-lab-360-u24.jpg",
+   "source": "out/work/sun/lab/lab-360-u24.png",
+   "kind": "frame",
+   "label": "sun.hold frame 360, draft tier",
+   "stop": "sun",
+   "segment": "sun.hold",
+   "frame": 360,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-25T20:31:51.193Z",
    "file": "20261125203151193-note-swing-221-x2.jpg",
@@ -21,57 +73,11 @@
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T20:31:47.439Z",
-   "file": "20261125203147439-frame-lab-90-u24.jpg",
-   "source": "out/work/sun/lab/lab-90-u24.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
    "time": "2026-11-25T20:01:02.584Z",
    "file": "20261125200102584-note-duo-u18.jpg",
    "source": "../v/duo-u18.jpg",
    "kind": "note",
    "label": "sun lab u18, frame 90 draft over the approved, lower 60 percent (not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:46:18.304Z",
-   "file": "20261125194618304-note-strip-u12.jpg",
-   "source": "../v/strip-u12.jpg",
-   "kind": "note",
-   "label": "sun lab u12, frame 90 draft at 1 to 1: approved, u11, u12 (not named)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:25:03.744Z",
-   "file": "20261125192503744-note-face-250-262.jpg",
-   "source": "../v/face-250-262.png",
-   "kind": "note",
-   "label": "lab u1 face-250-262.png",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:25:03.172Z",
-   "file": "20261125192503172-note-lab-90-u1f-full.jpg",
-   "source": "../v/lab-90-u1f-full.jpg",
-   "kind": "note",
-   "label": "lab u1 lab-90-u1f-full.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:25:02.605Z",
-   "file": "20261125192502605-note-four-u1.jpg",
-   "source": "../v/four-u1.jpg",
-   "kind": "note",
-   "label": "lab u1 four-u1.jpg",
    "stop": "sun"
   }
  ]
