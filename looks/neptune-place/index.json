@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T17:59:12.056Z",
- "head": "5baaaad3641287c72c51f7b6586bd95c9229200b",
- "note": "4860 at full size on the merge: ground part 17.780 under main's 19.759, G17 0.570; the hold costs 0.002",
+ "pushed": "2026-11-25T18:24:21.247Z",
+ "head": "27624e6f44de796d7761c24bd391044558a4cfe4",
+ "note": "the rolls back at 0.05 (their shadow drew hairlines into the rise); 4860 ground part 17.550 under main's 19.759, G17 0.426 by my reader",
  "looks": [
+  {
+   "time": "2026-11-25T18:24:20.140Z",
+   "file": "20261125182420140-note-n9s-chains.jpg",
+   "source": "../../../../tmp/n9s-chains.jpg",
+   "kind": "note",
+   "label": "the dive's start, pairs 4694, 4702, 4706 to 8 frames later by my copy of the reader at half frames: 0.11, 0.42, 0.42 (limit 0.45); the eighth name read 0.51 from 4694 on the Builder's machine",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T18:24:19.037Z",
+   "file": "20261125182419037-note-rctl.jpg",
+   "source": "../../../../tmp/rctl.jpg",
+   "kind": "note",
+   "label": "the rise at 4970, lower left at 2.4 times: the rolls at 0.12 cast thin dark lines that come in between 4966 and 4970 (right column); at 0.05 one faint line (left column); the light from below has no part (bottom row)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T18:24:17.740Z",
+   "file": "20261125182417740-note-pair-N10.jpg",
+   "source": "../../../../tmp/pair-N10.jpg",
+   "kind": "note",
+   "label": "4860 at 1920 by 1080 beside the approved (left), tree 27624e6f4 (the rolls back at 0.05): ground part 17.550 (main 19.759), sky 3.420, band 2.646; G17 median 0.426, p25 0.230 by my draft reader (0.570 with the rolls at 0.12, 0.544 on the eighth name); 90 s per draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T17:59:10.630Z",
    "file": "20261125175910630-note-n9-f4707.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/g-zoom.jpg",
    "kind": "note",
    "label": "4860 round the eye at 2 times: approved, G1 (below 0.7), G2 (below 1), G3 (below 1, relief 0.12)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T17:49:59.749Z",
-   "file": "20261125174959749-note-look-g3.jpg",
-   "source": "../../../../tmp/look-g3.jpg",
-   "kind": "note",
-   "label": "4860: approved (left) beside trial G3 (right, preview 960): the sheet of ice haze lit from the deck under it, so the deck's fine swirls show in the pale plain; G17 0.705 / 0.490 at preview (Y2 0.612 / 0.210); ground part 17.731 against main 19.622 at 960; 67 s a draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T17:25:03.491Z",
-   "file": "20261125172503491-note-y-sheet2.jpg",
-   "source": "../../../../tmp/y-sheet2.jpg",
-   "kind": "note",
-   "label": "4860: approved, Y2 (storm patch 0.45, arms 2 by 2), Y6 (arms 2 by 3)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T17:25:02.900Z",
-   "file": "20261125172502900-note-look-y2.jpg",
-   "source": "../../../../tmp/look-y2.jpg",
-   "kind": "note",
-   "label": "4860: approved (left) beside trial Y2 (right, preview 960): the eye as a dark oval with pale arms winding in; G17 0.612 / 0.210 at preview; ground part 16.406 against main 19.622 at 960; 70 s a draft frame",
    "stop": "neptune"
   }
  ]
