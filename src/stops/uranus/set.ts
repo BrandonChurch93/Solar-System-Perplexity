@@ -130,7 +130,7 @@ export const createSet: SetFactory = async (ctx) => {
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: deckLight,
     halo: deckHalo,
-  }, look.texels, look.deck, globe.plates(), look.place.deck.calm)
+  }, look.texels, look.deck, globe.plates())
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const deckCentre = new THREE.Vector3().fromArray(deckJson.centre)

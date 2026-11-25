@@ -5,7 +5,7 @@ import deckJson from './deck.json'
 import { frameUniform } from '../../core/frame'
 import nearJson from './deck-near.json'
 import cloudJson from './deck-cloud.json'
-import { AIR_GLSL, PLATE_LEVELS, PLATE_SAMPLERS, TOPS_GLSL } from './globe'
+import { AIR_GLSL, PATCH_COUNT, PATCH_SAMPLERS, PLATE_LEVELS, PLATE_SAMPLERS, TOPS_GLSL } from './globe'
 
 export interface DeckLook {
   flow: [number, number, number, number]
@@ -88,7 +88,19 @@ uniform sampler2D uPlaceField;
 uniform vec3 uPlaceN;
 uniform vec3 uPlaceE;
 uniform vec3 uPlaceU;
-uniform float uPlateWide;`
+` + PATCH_SAMPLERS + /* glsl */ `
+uniform float uPatchScale[${PATCH_COUNT}];
+uniform float uFeather;
+uniform vec3 uSpotN;
+uniform vec3 uSpotE;
+uniform vec3 uSpotU;
+uniform vec4 uBandRate;
+uniform float uPlaceRef;`
+
+const MAP_LEVELS = Array.from({ length: PATCH_COUNT - 1 }, (_, i) => `  {
+    vec2 q = mg * uPatchScale[${i + 1}];
+    wideMap = mix(wideMap, textureGrad(uPatch${i + 1}, q + 0.5, mx * uPatchScale[${i + 1}], my * uPatchScale[${i + 1}]).rgb, smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))));
+  }`).join('\n')
 
 const FAR_LEVELS = PLATE_LEVELS.replace('field = textureLod(uPlaceField, q + 0.5, 0.0); wP = w * field.a;', '')
 
@@ -263,9 +275,16 @@ void main() {
   float texP = 0.0;
 ${FAR_LEVELS}
   vec2 q0 = pg * uPlateScale[0];
-  vec3 calm = textureLod(uPlate0, q0 + 0.5, uPlateWide).rgb;
   vec4 field = textureLod(uPlaceField, q0 + 0.5, 0.0);
-  vec3 aS = mix(calm * calm * uPlace.y, aP, smoothstep(0.5, 0.5 - uPlace.x, max(abs(q0.x), abs(q0.y))) * field.a);
+  vec3 body = n * uPlaceRot;
+  float mapTurn = uPlaceRef * (uBandRate.x + uBandRate.y * sin(uBandRate.z * asin(clamp(body.y, -1.0, 1.0)) + uBandRate.w));
+  vec3 dm = vec3(cos(mapTurn) * body.x - sin(mapTurn) * body.z, body.y, sin(mapTurn) * body.x + cos(mapTurn) * body.z);
+  vec2 mg = vec2(dot(dm, uSpotE), dot(dm, uSpotU)) / max(dot(dm, uSpotN), 0.05);
+  vec2 mx = dFdx(mg) * uGrad;
+  vec2 my = dFdy(mg) * uGrad;
+  vec3 wideMap = textureGrad(uPatch0, mg * uPatchScale[0] + 0.5, mx * uPatchScale[0], my * uPatchScale[0]).rgb;
+${MAP_LEVELS}
+  vec3 aS = mix(inverseFilmic(wideMap) / field.rgb, aP, smoothstep(0.5, 0.5 - uPlace.x, max(abs(q0.x), abs(q0.y))) * field.a);
   vec3 sunlit = field.rgb * ownLight(n, mu);
   vec3 plain = plainOver(n, mu);
   vec3 lNow = sunlit * bared(mu, plain).rgb + airGlow(sunlit, mu, psi, plain);
@@ -432,7 +451,7 @@ export class Deck {
   private readonly centre = new THREE.Vector3().fromArray(deckJson.centre)
   private readonly unbloom: number
 
-  constructor(t: DeckTextures, counted: { near: number; cloud: number }, look: DeckLook, plates: Record<string, THREE.IUniform>, calm: number) {
+  constructor(t: DeckTextures, counted: { near: number; cloud: number }, look: DeckLook, plates: Record<string, THREE.IUniform>) {
     this.unbloom = look.bloom
     const j = deckJson
     const up = new THREE.Vector3().fromArray(j.up)
@@ -453,7 +472,6 @@ export class Deck {
       uniforms: {
         ...shared,
         ...plates,
-        uPlateWide: { value: Math.log2(((plates.uPlate0!.value as THREE.Texture).image as unknown as { width: number }).width * calm) },
         uHeight: { value: t.height }, uLift: { value: look.lift }, uColor: { value: t.color }, uLight: { value: t.light },
         uLightSize: { value: new THREE.Vector2().fromArray(j.lightSize) }, uColorSize: { value: new THREE.Vector2().fromArray(j.imageSize.full) }, uNearWidth: { value: counted.near }, uCloudWidth: { value: counted.cloud },
         uWin: { value: new THREE.Vector4().fromArray(j.window) }, uCamL: { value: new THREE.Vector3() }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) }, uEdge: { value: look.edge }, uInset: { value: new THREE.Vector2().fromArray(look.inset) }, uAMax: { value: j.aMax }, uEps: { value: j.eps },

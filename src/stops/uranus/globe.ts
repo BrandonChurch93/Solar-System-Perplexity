@@ -77,7 +77,7 @@ vec3 airGlow(vec3 sunlit, float mu, float psi, vec3 plain) {
 
 export const PATCH_COUNT = patchJson.levels.length
 
-const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
+export const PATCH_SAMPLERS = Array.from({ length: PATCH_COUNT }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
 const PATCH_LEVELS = Array.from({ length: PATCH_COUNT }, (_, i) => `    {
       vec2 q = g * uPatchScale[${i}];
@@ -509,6 +509,8 @@ export class Globe {
     out.uOwnLight = u.uLight!
     out.uOwnLightSize = u.uLightSize!
     for (let i = 0; i < PLATE_COUNT; i++) out['uPlate' + i] = u['uPlate' + i]!
+    for (const name of ['uPatchScale', 'uFeather', 'uSpotN', 'uSpotE', 'uSpotU', 'uBandRate', 'uPlaceRef']) out[name] = u[name]!
+    for (let i = 0; i < PATCH_COUNT; i++) out['uPatch' + i] = u['uPatch' + i]!
     return out
   }
 

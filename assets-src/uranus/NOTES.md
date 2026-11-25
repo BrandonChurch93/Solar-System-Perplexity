@@ -3207,3 +3207,192 @@ Your e14bb1e4 was named as not for main. What I need from you, with times:
 - By 17:30 a report in ten lines: which of round 54's items and which of the rows above your tree now cures, each with its frame and one picture for the worst three; what is still red and why.
 - NAMED by 19:15 for the third cut of 20:00: a commit that is for main, on main's first cut 53025569, with the lines of dive and rise run by the tool on your side and their numbers in the mail. If the whole cannot stand by then, name the part that is green and say what is left.
 The order stays the one you corrected and I agreed to in MAIL 1127."
+
+## Round 58 notes (16:18 to 18:45 UTC, on 9c8a46df)
+
+### Mails, word for word
+
+"MAIL 1197 from the Builder (/root), 16:25 UTC. 1. NAMED 9c8a46df is taken for main by d296 (4290 at final 3.225 against main's 3.849 by your measure; 4035 main's bytes). Seven jobs are queued on the commit itself, since against main it changes src/stops/uranus (4 files) and assets-src/uranus only: tests and gate, determinism, your four parts, same bytes against main on 37 frames (22 inside 3885 to 4529). I measure 4290 and 4035 myself on a machine's final before it goes on. The four path lines are main's own until the travel's cure is on main; that cure is in the same cut if green. 2. It goes on if no line of the reader is worse than main's own row. Its round starts when it is on main. 3. Your trial (the place's light table read at the ground point), RULED as you chose: not committed. The look comes before the number, and a milky flat late flight is a worse picture than a red row. Pin the table to the eye of the handover for the dive and the rise only, so the surface flight keeps its bytes; the report of 17:30 with pictures of 4170 to 4200 and 4379 to 4416 decides. 4. Open and yours, in your own order: the dive's pop and pattern, the rise's pattern, 4416 pale flat teal (the bared own light: say what you propose, since the rim ruling of MAIL 1097 made it), the knot at 4035 and the pasted vortex, the smeared disc, the ring strands."
+
+"MAIL 1230 from the Builder (/root), 17:25 UTC. RULING on your report of 17:30. I looked at r-4290, the pair, and both sheets of the second form. 1. 9c8a46df STANDS as Uranus's name for the cut of 20:00. Its final 4290 sits nearer the approved than main's (3.225 against 3.849) and by my eye the limb and the Sun's place are the approved's. It goes on if its seven jobs are green where main is green and no reader line is worse than main's own row. Main's own rows are being read on main 53025569 itself now (jobs mb1-02 your rise part 2 of 2, mb1-10 and 11 your dive in two parts), because the rows I gave you as main's came from a tree that turned out to be the code before the first cut. You get them as they land. 2. NEITHER FORM OF THE PIN IS NAMED. The first washes the rise (the pair at 4390 and 4400 is paler over the whole globe, 4416 paler still). The second leaves two rows red (0.63 and 1.00 against 0.45) and lays a pale wedge with a soft straight edge over the globe from 4154 to 4176: at 4168 and 4170 I see a pale band with a dark triangle under it, which no globe has and main does not show. A red row traded for a new fault the eye sees is not a cure. 3. PLATEAU RULE: the dive's row and the rise's row have survived the ground point trial and the pin in two forms. Change the technique, and say the rung in your next report. The new rung is to find the layer before any law is changed: draw 4150 to 4190 and 4400 to 4420 at draft with one layer off at a time (the air's veil, the vortex's close picture, the deck's level change, the rim glow) and read each with the reader; the layer whose absence brings the row under 0.45 is the cause. Then that layer gets one law by place: a function of the point on the globe, the Sun's angle there and the camera's height, nothing read from an eye that is not the camera's, nothing by the clock (d253). By the sheet my guess is two things at once from 4152: the veil coming down from the limb, and the vortex patch changing its drawing in place while it stretches (ONE BODY, d302). 4. 4416, "plain to the power of the path's weight": yes, render it, on these terms: the weight is a function of the camera's height alone; show 4379 to 4416 in eight frames beside the name's, and the reader's row on the rise part 2 of 2. It is named only if no row is worse and the globe at 4416 stops being a pale flat teal beside the approved whole globe. 5. Order: point 3's finding first (report 18:45 with the four reads and one sheet), then 4416, then the knot at 4035 and the pasted vortex, the smeared disc, the ring strands, R4's blur. A name by 19:45 goes into the cut of 20:00 only if it is green on your own reader runs; else 9c8a46df goes."
+
+### The pin of the place's light table, two forms: measured, not committed (ruled out by MAIL 1230)
+
+- Numbers are my chain at draft (`/tmp/n52/pat2.py`, 17 capture frames a window), limit 0.45. Patches kept as `/tmp/n57/pinned-handover.patch` and `/tmp/n57/pinned-end.patch`; frames in `out/work/u/pat/M1p` and `M2p`.
+- Form 1 (MAIL 1197 point 3): in the orbit view of the dive and the rise the globe and the cover read `deckLight` at the view cosine and azimuth the ground point has from the eye of the handover (`uTableEye` in `globe.ts`, `uTableL` in `deck.ts`, `place.pinned` in `look.ts`). 4170 + 1/2 0.47 (the name 1.32); 4185 1.04 (1.27 on e14bb1e4; the surface view from 4186 on still reads by the camera); 4152 + 1/2 1.06 (0.81 on e14bb1e4); rise 4414 + 1/2 0.98 (1.05). Judged 4035, 4137, 4290, 4436 keep their bytes, also 4186, 4200, 4379, 4390. The rise is paler from 4392 on: lower half of the frame 100.4 against 71.1 at 4400, whole frame 99.0 against 90.6 at 4416. A small kink of the lit band's level at the handover (109.3, 108.8 at 4185, 4186, then up 1.2 a frame).
+- Form 2: the dive only, pinned to the eye of the dive's last frame (`eyeAt('dive', plan.seg.terrain.start)`) in both views, the rise not pinned. 4185 0.29; 4170 + 1/2 0.63 (0.052 of the judged area over); 4152 + 1/2 1.00. 4137, 4200, 4201, 4290, 4380, 4390, 4400, 4416, 4436 keep the name's bytes. Lit band's level 4170 to 4200 every second frame: 87, 94, 101, 107, 110, 112, 114, 116, 115, 114, 113, 112, 112, 113, 114, 115.
+- The cost in both forms: from 4154 to 4176 the lit band of the low frames shows from above as a pale wedge over the place, with a soft straight edge on the side away from the Sun and a dark triangle under it at 4168 and 4170. It is the table's Sun wedge (luma 0.715 at azimuth 0 and view cosine 0, 0.097 at 45 degrees to one side, 0.353 to the other) laid on the ground and brought in by the path's share (about 0.16 at 4160, 0.44 at 4168, 0.72 at 4176).
+- Ruling (MAIL 1230 point 2): neither form is named. "A red row traded for a new fault the eye sees is not a cure."
+
+### 4416: line 9 of my report was wrong, four controls
+
+- I wrote in the report of 17:30 that the bared light (`uBare * plain`) lifts the limb at 4416 and proposed `plain` to the power of the path's weight. That was arithmetic, not a render. Control B1 (`out/work/u/pat/B1`, the power form in `bared`): 4416 differs from the name in 132,817 pixels, none by more than 4 levels, largest 1; 4290 keeps its bytes. So the bared light is not the cause.
+- Controls at draft, one change each, mean level of the frame (R G B): the name 90.5 (49 107 116); glow off (K2) 90.3 (49 107 115); dimming off (K1) 95.2 (52 112 121); `air.scale` 0.0001, so the hold's light alone (K3) 95.0 (52 112 121); main 9d59e699 85.9 (43 99 115). In the box x 1000 to 1800, y 150 to 450 (the globe above the place): main 62.5 153.6 174.7, the name 63.1 150.2 159.7.
+- So no term of the air makes 4416 pale; with the air off it is paler still. The note of round 57 ("with the air off the frame is main's deep blue") was wrong and is taken back here. At 0.218 R the one law shows the map times the globe's own light, the teal of the whole globe; main's deep blue came from its second light by the eye's height, which MAIL 1020 took out. Mailed to the Builder at 17:31 UTC as a correction. Nothing is named for it.
+
+### More mails of the round, word for word
+
+"MAIL 1233 from the Builder (/root), 17:35 UTC. Main's own row is in, and it changes point 1 of MAIL 1230. Your note of 17:31 is read.
+
+1. MAIN 53025569 itself, rise part 2 of 2 (job mb1-02): 'the pattern of the picture changes in place by 0.88 from frame 4422 to 8 film frames later, band 8 px, limit 0.45 (16 frames over it, first 4417 + 1/2)'. YOUR NAME 9c8a46df, the same part (job ur8-06): '1.16 from frame 4418 (21 frames over it, first 4417 + 1/2)'; its largest pop there 1.09, level step 0.27. So the name is WORSE than main's own row on the rise, and by the cut's rule it does not go onto main as it is, though its 4290 is nearer the approved. It goes on when its rise row is at or under main's 0.88 with no more frames over; under 0.45 is the aim.
+2. Your name's dive part 1 of 2 (job ur8-03) is red on two numbers: pop 1.42 from 4151 + 1/2 (limit 1.2) and pattern 0.98 from 4151; change in place 26.8 from 4152, most at pixel 300, 512. Main's own dive rows come with jobs mb1-10 and 11; you get them.
+3. So the layer hunt of point 3 is now the gate for the name, and the rise's window 4414 to 4426 comes first in it: say which layer makes the 0.28 your name adds over main there. The harness builder reads the same window on main's code.
+4. 4416: line 9 withdrawn, noted, and no second brightness is right. For the 18:45 report put three crops side by side at the same scale: the approved whole globe, the hold's judged frame, and 4416, each at the same place on the globe. If the colour there is the same in all three, 4416 is not a colour fault and what is left is flatness, for which the means are the Sun's angle at the place and the limb's darkening by the camera's own view angle, both by place. If it is not the same, say which of the map and the light differs from the hold's."
+
+"MAIL 1240 from the Builder (/root), 17:40 UTC. Main's own dive rows, read on main 53025569 itself (job mb1-10, dive part 1 of 2): 'pop score 1.50 from frame 4144 + 1/2 to the next, limit 1.2 (6 frames over it, first 4141 + 1/2)' and 'the pattern of the picture changes in place by 1.17 from frame 4152 + 1/2 to 8 film frames later, band 8 px, limit 0.45 (32 frames over it, first 4136 + 1/2)'. Your name on the same part (ur8-03): pop 1.42 from 4151 + 1/2 (8 frames over, first 4148 + 1/2); pattern 0.98 from 4151 (37 frames over, first 4123 + 1/2). So on the dive your name is smaller in size on both rows and has more frames over on both; the rise (1.16 against main's 0.88) is what keeps it off main. Same bytes against main (ur8-07): 10 of 37 frames differ, 4137 to 4416, all inside your stop. Dive part 2 of main is still out."
+
+"MAIL 1250 from the Builder (/root), 18:23 UTC. Your report of 18:25 is read. The work is good: a layer found by taking it away, and your own draft corrected by a measure.
+RULINGS.
+1. The sky plate (your point 5). MAIL 1212 went to sky_builder alone: it ordered the fill of the star pits for every stop's hold plate. MAILs 803 and 1020 bind the place's work: a place may not move the hold. This plate is a change of the hold's sky that I order by itself. So: it goes into your next name as its own commit, the plate made with the fifth argument (the dark lanes of the star cloud kept), with your own G17 and the d296 match at 4035 at the final tier beside main's numbers. If either is worse than main's, it stays out and you say so. Put the crop of the star cloud at 4035 at full size, main beside the plate, into the report.
+2. The rise. The cover is the cause, so the cure by cause is the task: one body, the cover and the globe show the same streaks at the same ground at the height where the cover goes. Build that. The trial (the border at 10.9 to 13.8 degrees) may be named under your own conditions as a step toward it, not instead of it.
+3. The dive. With the cover off the red stays at the left limb, so go on as you plan: the air, the close picture and the rim, one off at a time, the rim control first since the place there is at view cosine 0.16.
+4. 4416: accepted as the globe's own day colour at that Sun angle. The flatness is point 2.
+ROWS for you, main's own against your name 9c8a46df (pattern, limit 0.45): dive part 1 of 2 main 1.17 from 4152 + 1/2 (32 frames over) and pop 1.50, yours 0.98 (37 over) and pop 1.42; dive part 2 of 2 main 1.61 from 4163 (65 over), yours 1.52 from 4180 (68 over); rise part 1 of 2 main 1.60 from 4399 + 1/2 (63 over), yours 1.29 from 4387. All red on both, yours smaller in size. By d311 a red line that is smaller than main's is not worse, so the name can go into a cut once the rise part 2 of 2 is no worse than main's 0.88.
+The third cut is at 20:00 from names green or no worse by then. Report at 19:45 as you said, sooner with a name."
+
+From sky_builder, 18:18 UTC, in my words: MAIL from /root/sky_builder (18:18 UTC), cites the Builder's MAIL 1212 point 3 (d312), which did not reach me: the hold sky plate of Uranus with the star pits filled, to lay in with my next name. Files: sky-hold-full.webp 4928 x 2772, 8712990 bytes, sha256 cb4d673a...5015, to public/assets/uranus/full/sky-hold.webp; sky-hold-web.webp 2464 x 1386, 2474370 bytes, sha256 f1f8c52b...6b26f, to public/assets/uranus/web/sky-hold.webp; made from main's plate f348295e (sha256 bfae95e2...c345) by `python3 assets-src/flightsky/mercury-hold/calm.py FULL_IN FULL_OUT WEB_OUT 0 40`. Card at 4035 final, no grain: pits 27 to 9 percent of the frame's stars; G17 median 1.178 to 1.157, green; outside the sky 477 pixels differ by one code; in the sky 22.5 percent of the pixels differ, largest 31 codes. Not measured: grain on, other frames of the hold, the web tier, frames outside the hold. Copies in /tmp/n57/sky/.
+
+### The layer hunt (MAIL 1230 point 3, MAIL 1233 point 3): the cover is the layer of the rise
+
+- Method: frames at draft with one layer off at a time, read with the tool's own module (`tools/img/smooth.py` through `/tmp/n52/pat2.py`, 17 capture frames a window). The chain on the name gives 1.16 from 4418, the tool's own row (job ur8-06), so the reads are in the tool's unit. Controls, one edit each, never committed: air off (`air.scale` 0.0001 in look.ts; dir L1a), cover off (the `spread` line of set.ts with `look.show.deck` negated; dir L3c). Not rendered in this round: the rim control (`lightAt(ndl, 1.0)` in globe.ts) and the close picture control (plates off).
+- Rise, pattern (onward read, back read), limit 0.45:
+
+| start | name 9c8a46df | air off | cover off | border 0.19 to 0.24 rad |
+|---|---|---|---|---|
+| 4414 + 1/2 | 1.05 (1.05, 0.72) | 0.92 (0.92, 0.81) | 0.80 (0.35, 0.80) | 0.78 (0.51, 0.78) |
+| 4416 | 0.81 (0.74, 0.81) | 0.73 (0.65, 0.73) | 0.51 (0.37, 0.51) | 0.49 (0.49, 0.49) |
+| 4417 | 0.71 (0.71, 0.63) | 0.93 (0.93, 0.47) | 0.65 (0.34, 0.65) | 0.56 (0.56, 0.48) |
+| 4418 | 1.16 (0.82, 1.16) | 0.91 (0.91, 0.69) | 0.74 (0.26, 0.74) | 0.66 (0.41, 0.66) |
+
+- The layer: the cover, the deck's close picture drawn in the orbit view (`COVER_FRAG` in deck.ts). Its absence brings the onward read under 0.45 at all four starts. With the air off the onward read stays 0.65 to 0.93.
+- The cause in the picture: where the cover stands beyond the place's own picture it is a flat sheet (`calm` in deck.ts: plate 1 read at a level 16 texels wide), and the globe under it carries the map's streaks at the same ground. While the camera rises the cover goes by the size of a pixel (2.3e-4 to 4.6e-4 R a pixel), so the streaks come in in place. Two bodies on one ground.
+- Where the two bodies part: on the globe the plates are weighted by the alpha of `place-field.bin` (256 by 256 floats, RGBA): 1 to 5.4 degrees from the place, one half between 6.4 and 9.7 degrees by direction, 0 from 10.4 degrees (0.182 rad). The plates' square (full weight to 13.8 degrees, none at 15.6) is wider than that, and I first took the square for the border: the report of 18:19 said 13.8 degrees, the correction went at 18:24.
+- The red of the onward map, at eight of its points at 4414 + 1/2, 4417 and 4418, lies 11.6 to 12.4 degrees from the place at view cosine 0.47 to 0.63: map ground under the flat cover. Crops there (`/tmp/n57/arc12.jpg`): the name is flat at 4414 + 1/2, half streaked at 4418 + 1/2, streaked at 4422 + 1/2; with the cover off the streaks stand in all three.
+- The 1.16 from 4418 on the name is the back read at pixel 515, 274: the left limb, 27.9 degrees from the place at view cosine 0.16, inside the border of the name's cover (0.42 to 0.56 rad). Air off: 0.69. Cover off: 0.74.
+- Left with the cover off: the back read 0.51 to 0.80 on 0.04 to 0.06 of the frame at the left limb (pixels 47, 737 and 306, 492).
+- Dive 4151 to 4160 with the cover off: 0.95 from 4151 at pixel 336, 500 (the tool on the name 0.98, most at 300, 512), 0.69 from 4152 + 1/2 (name 0.82). The cover is not the cause there; the red stays at the left limb.
+- The cure by cause (MAIL 1250 point 2, the task): the deck's far ground, beyond the field's alpha, carries the globe's own map at that ground, so that the cover and the globe are one body wherever the cover goes. Not built in this step.
+
+### 4416: the three crops (MAIL 1233 point 4)
+
+- The same ground on the globe in each: 5 degrees half width, centred 8.3 degrees north of the place, the middle of frame 4416 (`/tmp/n57/crop3.py`, poses from `out/work/u/place3.ts`). Mean R G B, luma: the approved whole globe 3.5 57.8 65.8, 46.8; the hold 4035 at final 10.2 65.0 75.4, 54.1; 4416 of the name at draft 59.3 130.8 135.7, 115.9.
+- Not the same, and it is the light, not the map: the globe turns the place toward the Sun by about 0.87 degrees a second; the Sun's cosine at that ground is -0.084 at 4035 and +0.104 at 4416; the globe's own table (`light.bin`) gives 0.003 0.069 0.098 and 0.057 0.255 0.305.
+- The check: the ground of the hold with 4416's angle to the Sun reads 40.1 121.7 129.7 (luma 104.9) in the hold's frame and 38.7 121.2 121.6 (103.7) in the approved image. So 4416's teal is the whole globe's own day colour at that Sun angle. Accepted by MAIL 1250 point 4. The flatness is the cover.
+
+
+### MAIL 1257, word for word
+
+"MAIL 1257 from the Builder (/root), 18:41 UTC. From harness_builder (ANSWER 1232.3, 18:34), on main's own row of your rise, 0.88 from 4422, with its three pictures attached.
+1. That row is the chain's own, no layer of the picture: the ground 40 to 250 px inside the LEFT limb is seen at a slant in 4422 (2 to 5 times narrower across the limb than in 4430) and the chain carries it onto 4430 as streaks. By the camera's map the same pixels read 0.05 (median). So main's 0.88 is not a thing to cure in the picture, and I will not hold your name to it as a picture fault; it stays written as the reader's line.
+2. What does change in place there, by the map, 8 film frames apart at 4422: the levels 0 to 20 px inside the limb fall by 51.4, 20 to 40 px by 34.0, 40 to 80 by 15.7; deeper than 400 px the globe rises by 9.0 (at 4418: minus 43.7, minus 28.5, minus 9.0, deep plus 22.5). The limb's light slides off the ground as the camera pulls away, and the whole globe gains. Levels, not pattern. Say which of your layers makes the limb's light (halo, veil or the globe's own rim) and whether the globe's gain of 22 levels in 8 frames is a law of yours.
+3. A FINDING for you to answer: on the right of the frame the camera's map does not carry Uranus's picture on this rise: 0 px at x 460, growing evenly to about 18, 15 px (top right) and 14, 24 px (bottom right) at x 1660 over 8 film frames at 4422; 0.7 to 1.0 px over a half step. Neptune's dive gives 0 to 4 px by the same measure. A turn of the globe that the pose record does not carry would look like this. Does your globe, its cover or its cloud field turn or drift during the rise by a law that the pose record does not hold? Answer harness_builder directly with the law and its numbers so that the true carry is right on your stop, and copy me in one line.
+Your report of 19:45 stands."
+
+### The trial T1 (cover border at 10.9 to 13.8 degrees): measured, not named
+
+One edit: `look.place.deck.border` from `[0.42, 0.56]` to `[0.19, 0.24]` (radians from the place). It is not inside the place's picture (on the globe the plates are weighted by the alpha of `place-field.bin`: 1 to 5.4 degrees, half at 6.4 to 9.7, 0 from 10.4 degrees); it only shrinks the ring where the cover and the globe are two bodies.
+
+- Tool, rise part 2 of 2, on the trial: "the pattern of the picture changes in place by 0.83 from frame 4421 to 8 film frames later, band 8 px, limit 0.45 (21 frames over it, first 4417 + 1/2)", most at pixel 71, 1020 (the back read at the left limb); largest pop 1.09 from 4432 + 1/2; level step 0.27. The name 9c8a46df: 1.16 from 4418 (21 over); main 53025569: 0.88 from 4422 (16 over).
+- My chain reader on the trial across the handovers (not tool rows): dive 4173 1.32; 4174 1.36; 4174 + 1/2 1.32; 4175 1.27; 4175 + 1/2 1.28; 4176 1.59 (back read, the far ground band at the horizon); 4176 + 1/2 1.15; 4177 1.30; 4178 1.17; 4179 1.24; 4180 1.23. Rise 4387: 1.48, back read in the far ground under the Sun. The name's tool rows there: dive part 2 of 2 1.52 from 4180, rise part 1 of 2 1.29 from 4387; main's 1.61 from 4163 and 1.60 from 4399 + 1/2.
+- Cause of the new reads: with the trial the orbit frames show the globe's map beyond 10.9 to 13.8 degrees while the surface view shows the deck's flat calm there, so the far ground changes at the handovers (4185 to 4186, 4390 to 4391).
+- Verdict: not named. It fails both of my own conditions (the dive no worse than the name; no more frames over than main's 16) and it trades a red row for a change of the far ground at the handover (MAIL 1230 point 2). The cure by cause (MAIL 1250 point 2) is the task.
+
+### The law the pose record does not hold (MAIL 1257 point 3), sent to harness_builder at 18:48
+
+Frame time t = (frame + 0.125) / 30, e = t - 134.5. The globe's mesh is fixed (`fit.globe.quaternion`), its local Y is the plan's axis. The map is read at d = spinY(d0, a), lat = asin(d0.y):
+
+- bands of the map and its patches: a = spin(t) + clock(t) * rb(lat), rb = 0.0042 sin(2.4 lat + 1.584) rad per clock second (`look.globe.bandRate`), zero at latitude 37.2 and -37.8 degrees;
+- the place's plates: a = spin(t) + (clock(t) - 3.25) * rb(lat) (`plates.json` clockRef 3.25);
+- clouds and their shadows: a = spin(t) + e * (0.006 + 0.004 sin(3.1 lat + 1.2)) rad per film second;
+- spin(t) = radians(-1) * e is the plan's turn and is in the record; the cover is rigid in the plan's deck frame.
+
+`plan.clock`: e up to 137 s; then 2.5 + 1.5 (x - x^3 + x^4 / 2) with x = min((e - 2.5) / 1.5, 1), 3.25 from frame 4155; on the rise it stands at 3.25 until 4417 + 3/8 and catches up: y = clamp(((t - 146) / 2.5 - 0.5) / 0.5), s = 1.25 / 10.75, clock = 3.25 + 10.75 ((3 - s) y^2 + (s - 2) y^3). Values: 4418 3.2585; 4420 3.3950; 4422 3.6836; 4424 4.1059; 4426 4.6435; 4428 5.2780; 4430 5.9910; 4434 7.5784; 4438 9.2584; 4442 10.8835; 4446 12.3063; 4450 13.3792; 4454 13.9549; 4455 14.0042. From 4422 to 4430 the clock runs 2.307 s in 8 film frames (8.65 times film time; 12.6 times from 4434 to 4438): the bands turn by up to 0.555 degrees there, about 18 draft pixels at 0.7 R. This is a motion of the map by a warped clock; it is weighed against d253 in the cure. Arithmetic from the code, no render.
+
+### The limb's light on the rise (MAIL 1257 point 2): the globe's table read at the camera's view cosine
+
+Control R1 (not committed): `lightAt(ndl, mu)` to `lightAt(ndl, 1.0)` in the globe's main light (globe.ts, two places); halo and veil untouched. Draft frames 4418, 4422, 4426. Same ground carried by my pose map (`/tmp/n57/carry.py`), binned by distance inside the limb at 4418, change of level 4418 to 4426:
+
+| take | 0 to 20 px | 20 to 40 | 40 to 80 | 80 to 200 | 200 to 400 | over 400 |
+|---|---|---|---|---|---|---|
+| name 9c8a46df | -55.8 | -36.3 | -18.0 | -2.3 | +5.1 | +5.2 |
+| air off | -57.8 | -38.8 | -20.6 | -5.4 | +1.6 | +2.0 |
+| rim off (R1) | +1.6 | +2.2 | +1.6 | +2.5 | +5.3 | +5.2 |
+
+From 4422 to 4426: name -39.3, -27.3, -14.6, -3.1, +0.9, +1.6; rim off +1.0, +1.1, +1.1, +1.4, +1.5, +1.6. So the fall at the limb is the table's rim term (`light.bin` at Sun cosine 0.3: 2.81 at view cosine 0.05, 1.26 at 0.16, 0.76 at 0.3, 0.57 at 1.0). Of the deep gain of 5.2 levels, 3.2 is the air's law by the path (the view cosine at the place's ground rises from 0.72 to 0.91). The Builder's 22.5 is not reproduced by my map.
+
+### Correction: the place's latitude (19:07)
+
+My mail of 18:56 and the notes above it say the band turn is zero on latitude 37.2 degrees. That was wrong. The place stands at body latitude minus 23.88 degrees (N0 through `uPlaceRot`), the band rate there is plus 0.00231 rad per clock second, and the zero line of the band law near it is the southern one at body latitude minus 37.8 degrees, 14 degrees south of the place. harness_builder got the corrected numbers at 19:07, the Builder in the report of 19:45.
+
+### The sky plate (MAIL 1250 point 1): measured, stays out
+
+Laid into `public/assets/uranus` with the fifth argument 40 (my own run of the peer's `calm.py` gives the peer's bytes; full cb4d673a...5015, web f1f8c52b...6b26f). G5 PASS. G17 at 4035: median 1.157, p25 1.068 over 70 tiles; main 1.178, 1.082. Final 4035 against `references/approved/uranus-hero.png`: 3.782; main 3.743. Both worse than main's, so by the Builder's rule the plate stays out and the public assets are back at main's bytes. In the frame 380067 pixels differ (18.3 percent), 4825 by over 8 codes, largest 32. Star cloud box (x 1251 to 1731, y 523 to 823): 31014 of 144000 differ, 775 by over 8 codes, largest 25, mean luma 50.90 against 51.14; the dark lanes are kept.
+
+### The rim control on the dive (MAIL 1250 point 3)
+
+Control only, never committed: `lightAt(ndl, mu)` read as `lightAt(ndl, 1.0)` in globe.ts. Chain rows read from 4151, 4151 + 1/2, 4152, 4152 + 1/2: 0.45, 0.58, 0.65, 0.68; the name 0.98, 0.84, 0.77, 0.82; cover off 0.95 at 4151 and 0.69 at 4152 + 1/2. The table read at the camera's view cosine is the cause on the dive's left limb as on the rise's. A red rest stays in the upper left near the limb. The cure by cause (MAIL 1097 point 1: the rim as light of the air on the path) would change the hold's limb, which MAIL 1020 keeps; named to the Builder at 19:45, not changed.
+
+### B1: the deck's far ground reads the globe's own map (MAIL 1250 point 2, the cure by cause)
+
+The cause of the rise's red rows on the onward side was the cover: the deck's far ground, outside the place's plates, was a flat calm copy of plate 0 (`calm * calm * uPlace.y`, the plate read at a wide level), while the globe under it shows its map. As the cover goes (4419 to 4426) the streaks of the map came in in place.
+
+The law now: for a deck point with normal `n`, the body direction is `n * uPlaceRot`; the map direction is that direction turned about the axis by `uPlaceRef * rate(latitude)` (the band law at the plates' reference clock 3.25, `uBandRate`), since the plates are glued to the map at that clock. On the spot's tangent plane (`uSpotE`, `uSpotU`, `uSpotN`) the deck reads the globe's own three patch textures (`uPatch0` overlaid by `uPatch1` and `uPatch2` with `uFeather`), and the far albedo is `inverseFilmic(patch) / field.rgb`, which times the deck's `field.rgb * ownLight` is the globe's `inverseFilmic(map) * light`. The blend to the plates (`aP`) by the plate's edge and the field's alpha is unchanged. Nothing by the clock, nothing by height, no new asset, border `[0.42, 0.56]` unchanged. `uPlateWide` and `look.place.deck.calm` are gone.
+
+Files: `deck.ts` (the uniforms, `MAP_LEVELS`, the far albedo, the constructor without `calm`), `globe.ts` (`PATCH_SAMPLERS` exported; `plates()` hands out `uPatchScale, uFeather, uSpotN, uSpotE, uSpotU, uBandRate, uPlaceRef, uPatch0..2`), `look.ts` (`calm` removed), `set.ts` (the argument removed).
+
+Not mirrored, known: the wrap map outside patch 0's square (beyond about 32 degrees from the spot); the patches' fade by pixel size (1 inside the cover's range); the globe's cloud and shadow maps, which the globe shows beyond the field's alpha and the deck does not; the two laws of light (the deck's `ownLight` against the globe's table with the rim); the clock's catch-up from 4417 + 3/8, where the globe's map and plates shear from the rigid cover by (clock minus 3.25) times the band rate, 2.9 draft px at 4422 and 5.9 at 4426 at the place (arithmetic).
+
+Chain reader, rise, read from 4414 + 1/2, 4416, 4417, 4418 (limit 0.45):
+
+| | onward p99 | back p99 | row |
+|---|---|---|---|
+| name 9c8a46df | 1.05, 0.74, 0.71, 0.82 | 0.72, 0.81, 0.63, 1.16 | 1.05, 0.81, 0.71, 1.16 |
+| cover off (control) | 0.35, 0.37, 0.34, 0.26 | 0.80, 0.51, 0.65, 0.74 | 0.80, 0.51, 0.65, 0.74 |
+| B1 | 0.27, 0.32, 0.29, 0.26 | 0.61, 0.48, 0.48, 0.86 | 0.61, 0.48, 0.48, 0.86 |
+
+The back side is a strip at the left limb, 4 to 6 percent of the frame: the rim cause. Handovers on the chain, not cured by B1: read from 4387 1.35 (T1 1.48), read from 4180 1.28 (T1 1.23), both on the back side.
+
+Draft frames against the name: 4290 differs in 1.0 percent of the pixels (a line at the horizon), 1833 pixels by over 6 codes, largest 21, mean luma 58.55 against 58.56; 4186 1.2 percent, largest 21; 4390 4.4 percent, largest 44; 4415 51.5 percent, 14.5 percent by over 6 codes, largest 52; 4418 54.6, 11.1, 43; 4421 51.0, 3.3, 26; 4424 28.5, 0.0, 7; 4426 1.8, 0.0, 1. Mean luma moves by under 0.2 codes on every frame of 4415 to 4426.
+
+Final 4290 against `references/approved/uranus-close.jpg`: B1 3.224, the name 3.225, main 3.849.
+
+Heights (R) and the farthest seen ground from the place (degrees): 4176 0.0478, 20.9; 4184 0.0250, 14.9; 4185 0.0235, 14.4; 4186 0.0222, 14.0; 4199 0.0154, 11.4; 4290 0.0151, 9.9; 4390 0.0190, 12.6; 4391 0.0200, 12.9; 4395 0.0255, 14.2; 4400 0.0388, 16.7; 4418 0.271; 4422 0.419; 4426 0.647.
+
+### The report of 19:45, word for word
+
+"REPORT 19:45 from uranus_builder. No new name: 9c8a46df stands for the cut of 20:00. Head of agent/uranus-place is still 9c8a46df4b0a760960ed3dfa2d62cb3a31146915; what follows is measured in the working tree.
+
+1. THE CURE BY CAUSE IS BUILT AS A TRIAL (B1, not committed yet). The deck's far ground, in the surface view and in the cover, no longer shows a flat calm plate: it reads the globe's own map through the globe's own three patch textures, at the same ground point (deck.ts 27 lines, globe.ts 4 lines, no new asset, no border moved, nothing by the clock or by height). My chain reader, rise, read from 4414 + 1/2, 4416, 4417, 4418 (limit 0.45):
+- onward side, which is where the cover was red: B1 0.27, 0.32, 0.29, 0.26; name 1.05, 0.74, 0.71, 0.82; cover switched off 0.35, 0.37, 0.34, 0.26. So the cover now carries less change than having no cover.
+- whole row (the larger of onward and back): B1 0.61, 0.48, 0.48, 0.86; name 1.05, 0.81, 0.71, 1.16; cover off 0.80, 0.51, 0.65, 0.74. What is left is only the strip at the left limb (4 to 6 percent of the frame), the rim cause of my 18:56 mail.
+- the look (sheets attached, every frame 4415 to 4426 looked at beside the name): at 4415 to 4421 the far globe shows its own streaks where the name is flat and milky; from 4424 on B1 and the name differ by at most 7 codes, at 4426 by 1. Mean luma moves by under 0.2 codes on every frame.
+- 4290 changes on purpose, only on a line at the horizon: 1.0 percent of the pixels differ, 1833 pixels by over 6 codes, largest 21, mean luma 58.55 against 58.56 (crop attached). 4186 the same kind: 1.2 percent, largest 21.
+- NOT cured by B1, on my chain: the handovers. Read from 4387: 1.35 (trial T1 1.48), read from 4180: 1.28 (T1 1.23), both on the back side, near the horizon on the rise and near the place on the dive. I have no chain rows of the name at those two reads, so I claim nothing against the name there.
+- final 4290 against uranus-close.jpg: B1 3.224, the name 3.225, main 3.849 (mean absolute difference at the frame's size).
+- NOT measured yet: G5, G17, the tool's four rows. Those take 90 to 150 minutes together, so B1 cannot be a name by 20:00. Not mirrored by B1 and said so: the globe's cloud and shadow maps beyond the place's field, the wrap map beyond 32 degrees, the two laws of light, and the clock's catch-up from 4417 + 3/8 (the globe's map shears from the rigid cover, 2.9 draft px at 4422 and 5.9 at 4426 at the place, by arithmetic).
+
+2. THE SKY PLATE STAYS OUT, by your rule. Laid in with the fifth argument (40; my own run of calm.py gives the peer's bytes): G5 PASS; G17 at 4035 median 1.157, p25 1.068 over 70 tiles against main's 1.178, 1.082; final 4035 against uranus-hero.png 3.782 against main's 3.743. Both worse than main's. In the frame 18.3 percent of the pixels differ, 4825 by over 8 codes, largest 32. Star cloud box (x 1251 to 1731, y 523 to 823): 31014 of 144000 pixels differ, 775 by over 8 codes, largest 25, mean luma 50.90 against 51.14; the dark lanes are kept. Crop at full size attached, main left, plate right. My public assets are back at main's bytes.
+
+3. THE TRIAL T1 (border at 10.9 to 13.8 degrees) is not named: it fails my own conditions (tool rise part 2 of 2 0.83 from 4421 with 21 over; my chain 1.59 at 4176 and 1.48 at 4387; the far ground changes at both handovers). B1 replaces it.
+
+4. DIVE, RIM CONTROL FIRST as planned. With the globe's light table read at view cosine 1 in place of the camera's (control only), my chain rows read from 4151, 4151 + 1/2, 4152, 4152 + 1/2: 0.45, 0.58, 0.65, 0.68 against the name's 0.98, 0.84, 0.77, 0.82 (cover off: 0.95 and 0.69 at the first and last). So the rim, the table read at the camera's view cosine, is the cause on the dive's left limb as on the rise's; a red rest stays in the upper left near the limb (sheet attached). The cure by cause of MAIL 1097 point 1 (the rim as light of the air on the path, not a factor on the ground's pattern) would change the hold's limb, and MAIL 1020 keeps the hold's bytes. I name that and will measure it (4035 match and G17 with the rim moved) before I change anything. The plates and air controls on the dive come after B1's proof.
+
+5. A CORRECTION to my 18:56 mail. I wrote that the band turn is zero on latitude 37.2 degrees. Wrong sign and wrong place: the zero line of the band law that matters is the southern one, body latitude minus 37.8 degrees, 14 degrees south of the place. The place stands at body latitude minus 23.88 degrees and the band rate there is plus 0.00231 rad per clock second. harness_builder has the corrected numbers (sent 19:07).
+
+Next, in this order: G5 and G17 for B1; B1 as its own commit with main merged; the tool's four rows; NAMED if no row is worse than the name's. Then the handover's cause by controls (what changes in place between 4387 and 4395 near the horizon), then the dive's plates and air."
+
+### MAIL 1275, word for word
+
+"MAIL 1275 from the Builder (/root), 19:47 UTC. Uranus, answer to your report of 19:45.
+1. B1 IS THE CURE BY CAUSE: the deck's far ground showing the globe's own map at the same ground point is what Brandon asks for ('Like there's actually a place on the planet that the camera's going to'). Go on in your order: G5 and G17, B1 as its own commit with main merged, the tool's four rows, NAMED if no row is worse than the name's. With the name send 4290 and 4186 at the final tier beside main's (the line at the horizon that changes on purpose) and the match of 4290 with uranus-close.jpg as you measured it (3.224 against main's 3.849).
+2. What B1 does not mirror goes on your list in this order: the clock's catch up from 4417 + 3/8 (a shear of 2.9 and 5.9 draft px at 4422 and 4426 is the map moving against the cover, which a viewer can see), then the cloud and shadow maps beyond the place's field, the wrap map beyond 32 degrees, the two laws of light.
+3. THE RIM. Your control names the cause on both moves. MAIL 1020 kept the hold's bytes so that no trial would cost the judged hold; it does not keep them against a cure by cause. The rule: the rim as light of the air on the path goes on if at 4035 the match with uranus-hero.png is no worse than main's 3.743 (d296) and G17's median and 25th percentile are no lower than main's 1.178 and 1.082 over the same tiles, and the limb at 4035 is shown at the final tier beside main's and the approved picture. Bring the numbers before it goes into a name, as you planned.
+4. The sky plate stays out and T1 is closed, as you say. The corrected band numbers are noted.
+5. 9c8a46df stands as your name until B1 is named."
+
+### B1 as a commit: measured on its tree (19:42 to 19:53 UTC)
+
+- `npm run -s measure -- --stop uranus --only G5,G17`, 551 s: "PASS G5 uranus: 4035 hold invalid 0 coverage 0.195; 4137 dive invalid 0 coverage 0.666; 4290 terrain invalid 0 coverage 0.519; 4436 rise invalid 0 coverage 0.591" and "PASS G17 uranus: 4035 median 1.178 p25 1.082 over 70 tiles; 4290 median 1.076 p25 0.961 over 59 tiles". The name 9c8a46df read 4290 median 1.076 p25 0.963, so the 25th percentile at 4290 is lower by 0.002; 4035 is main's.
+- Judged frames at draft, sha256 of the file (first 16), the name 9c8a46df / this step: 4035 45c0542e84eacac3 / the same. 4137 f584697198aa0913 / the same. 4290 5f08791e65deeb71 / 7d4bd3af6435318b, changed on purpose (the line at the horizon). 4436 5dde74d5c137b391 / the same.
+- Final 4290 against `references/approved/uranus-close.jpg`: 3.224 (R 3.451, G 3.078, B 3.144); the name 3.225; main 3.849.
+- The tool's four rows are run on the pushed commit and are in the NAMED mail, not here.
