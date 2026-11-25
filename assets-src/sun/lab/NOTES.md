@@ -1185,3 +1185,32 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
 - 23:09 UTC. Standing ground at the final tier (618 s): parts ground 51.4401 strip 40.9655 sky 9.0457 whole
   30.4864; bands [0.78 0.82 0.86 0.93 1.00 1.04 1.03], low64 10.01. So the sky part of h16 is 0.113 over the
   standing ground's at final (9.1586) and 0.106 over at draft (8.5419 against 8.4355). Line 2 of mail 1318 not met.
+- 23:10 UTC. MAIL to /root: state h16 (commit 533cd7c5), draft and final, three parts, lines not met (sky 0.113 over, finest band 1.67), next state by 00:20 UTC.
+- 23:12 UTC. MAIL 1336 from /root: h16 read, he sees what I see. ORDER CHANGED: motion before the finest band,
+  the limb and frames 0 and 60. The state of 00:20 carries, beside frame 90: (1) frames 60 to 120, every second
+  frame, draft tier (reduced size allowed, say which), as one mp4 or a sheet of twelve; (2) in words what moves
+  (cells swell, split, sink; lanes open and close; strands flow; sparks live and die; anything sliding or bending
+  as one flat picture); (3) the two flicker numbers as far as they can be read on that strip. Lines of 1318 stand.
+- 23:11 to 23:25 UTC. h17, h18: petals (cushion.petal [amount, along a, along b, lo, hi, share of b]: soft radial
+  dabs in the fan's own coordinates, riding outward with the flow; h17 on counts x and y, h18 on y and z), counts
+  [2.5, 5, 9], lane [0.16, 0.08], patch 0.55, sparks 0.6. h18 MEASURED draft, curve refit: bands [1.64 1.10 0.95
+  0.94 0.97 0.91 0.88] before the refit, low64 8.14; curve [0.688 0.689 0.68 0.655 0.628 0.591 0.553 0.493 0.428
+  0.371 0.33] (before the refit), lane 6.03. SEEN: still smooth lumps of polished gold; at preview size they read
+  as nuggets. The texture is in cell units, so a large cell has large smooth features: next make it true to the
+  px (fibre.size).
+  MOTION of h18 (v/mov.sh): film frames 60 to 120 every second frame at preview size, 9.3 s a frame, in
+  out/work/sun/lab/film-h18, v/film-h18.mp4 (15 a second, true speed), v/sheet-h18.jpg (twelve). Eye held clip
+  mo-h18 (captures 180 to 276, step 24). FLICKER h18 (b7 in brackets): near box disc 26 px 0.287 (0.211), 53.3
+  percent over a tenth (37.5); band disc 26 0.397 (0.255), 46.4 (34.2); ellipse 90 by 45 0.106 (0.080), 6.7;
+  ellipse 70 by 35 0.138 (0.119), 16 (4). WORSE than b7 on every line: the stronger patches and petals ride
+  through a fixed disc. SEEN in the held clip: cells swell, brighten, are covered by neighbours; the pattern of
+  the middle crop is mostly new after 1.6 s; nothing slides as one picture.
+- 23:26 to 23:34 UTC. fibre.size 0.05 (ground.ts qSize = radius of the cell over 0.05, clamp 0.4 to 3): the fan's
+  counts, the petals' run and the grain are true to the px, not to the cell, so a large cushion no longer has
+  large smooth features. h19 (= h18 + size): big cells mottled, less polished. bands [1.71 1.13 0.98 0.98 1.01
+  0.94 0.91], low64 7.62, curve inside 0.036, lane 5.98. h20 petals 0.7 with narrow thresholds: hard dark
+  teardrops, a leopard (failed). h21 petals soft and mostly dark with light dabs: glossy nuggets again. h22 =
+  h19 with dome.height 0.22: no gain to the eye, middle 0.075 too light; back to 0.32.
+  CAUSE of the worse flicker: labWell (blob's swell, patches, grain) grows by e^2 = 7.4 times in one generation
+  of 3 s (heat.spread [3, 2]), far faster than the gas crosses a cell in its life. h23 = h19 with spread
+  [4.0, 1.0]: 2.7 times in 4 s.
