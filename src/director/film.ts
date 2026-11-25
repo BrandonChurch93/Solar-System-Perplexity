@@ -1078,12 +1078,6 @@ export class FilmDirector implements Director {
     const first = this.plans[0]!
     if (index > 0 || segment.kind === 'travel') sun.far = { centre: index === 0 && u < SUN_LEAVE ? this.frames[0]!.origin.clone().sub(pose.position) : undefined, share: index === 0 ? (u < SUN_LEAVE ? 1 - globeShare(pose.position.distanceTo(this.frames[0]!.origin)) : 1) : sunWeight, body: this.frames[0]!.rotation.clone().multiply(SUN_BODY), spin: first.spin(time), holdTime: time - first.holdMid, time, exposure: light.exposure, vfov: pose.vfov, burn: index === 0 ? this.sunBurn(u, pose.position) : 1 }
     if (sun.far && (segment.kind === 'dive' || segment.kind === 'rise')) {
-      const held = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : this.plans[index]!.id]
-      if (held) {
-        const ride = skyTurn.clone().multiply(held.clone().invert())
-        sun.far.dir = sun.dir.clone().applyQuaternion(ride)
-        sun.far.body = ride.multiply(sun.far.body)
-      }
       sun.far.share *= 1 - (skyShare ?? 0)
     }
     const out: Shot = { frame, time, segment, u, camera: pose, skyQuaternion: skyCarry ? skyCarry.multiply(pose.quaternion) : pose.quaternion.clone(), skyExposure: light.sky, skyGlow, skyTurn, skyStars, skyPatch, skyLook, near, far, sun, sets, post, cover, dust, farLight, ...(farDisc ? { farDisc } : {}), pixel: (2 * Math.tan(THREE.MathUtils.degToRad(pose.vfov) / 2)) / config.raw.formats.master.height }
