@@ -1,21 +1,29 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-25T20:01:14.618Z",
- "head": "266767ab93ae44fd1417402dc1a213ea2b378fdb",
- "note": "u18 lit cells, dark lanes",
+ "pushed": "2026-11-25T20:31:51.876Z",
+ "head": "ed3fc7f84804fe778c3536928bfb4705f2d54e17",
+ "note": "u24, swing at 221",
  "looks": [
   {
-   "time": "2026-11-25T20:01:02.584Z",
-   "file": "20261125200102584-note-duo-u18.jpg",
-   "source": "../v/duo-u18.jpg",
+   "time": "2026-11-25T20:31:51.193Z",
+   "file": "20261125203151193-note-swing-221-x2.jpg",
+   "source": "../v/swing-221-x2.png",
    "kind": "note",
-   "label": "sun lab u18, frame 90 draft over the approved, lower 60 percent (not named)",
+   "label": "sun lab: frame 221 at 1 to 1, live cells (left) and their bake of frame 233 on the globe (right), same places after the anchor fix; swing 99th percentile 168 levels",
    "stop": "sun"
   },
   {
-   "time": "2026-11-25T20:00:14.274Z",
-   "file": "20261125200014274-frame-lab-90-u18.jpg",
-   "source": "out/work/sun/lab/lab-90-u18.png",
+   "time": "2026-11-25T20:31:50.574Z",
+   "file": "20261125203150574-note-lab-90-u24.jpg",
+   "source": "../v/lab-90-u24.jpg",
+   "kind": "note",
+   "label": "sun lab u24 frame 90: the scaly patch (beads) gone, 80 sectors at the second level",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T20:31:47.439Z",
+   "file": "20261125203147439-frame-lab-90-u24.jpg",
+   "source": "out/work/sun/lab/lab-90-u24.png",
    "kind": "frame",
    "label": "sun.terrain frame 90, draft tier",
    "stop": "sun",
@@ -25,6 +33,14 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "822cc1bfb7014138"
+  },
+  {
+   "time": "2026-11-25T20:01:02.584Z",
+   "file": "20261125200102584-note-duo-u18.jpg",
+   "source": "../v/duo-u18.jpg",
+   "kind": "note",
+   "label": "sun lab u18, frame 90 draft over the approved, lower 60 percent (not named)",
+   "stop": "sun"
   },
   {
    "time": "2026-11-25T19:46:18.304Z",
@@ -56,22 +72,6 @@
    "source": "../v/four-u1.jpg",
    "kind": "note",
    "label": "lab u1 four-u1.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:25:02.057Z",
-   "file": "20261125192502057-note-motion-u1.jpg",
-   "source": "../v/motion-u1.jpg",
-   "kind": "note",
-   "label": "lab u1 motion-u1.jpg",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:25:01.508Z",
-   "file": "20261125192501508-note-form-u1.jpg",
-   "source": "../v/form-u1.jpg",
-   "kind": "note",
-   "label": "lab u1 form-u1.jpg",
    "stop": "sun"
   }
  ]
