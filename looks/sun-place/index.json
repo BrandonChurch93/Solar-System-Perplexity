@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T21:24:58.978Z",
+ "pushed": "2026-11-25T21:51:13.112Z",
  "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
- "note": "21:27 trial J1 of the arcade and limb at 60 and its fault at 360 (two blobs at the feet); sun-near 60: body 0.576 half width 5.4 px 2022 shapes fine 0.0566 mean 0.404 distance 0.145; not named",
+ "note": "21:53 candidate arcade and limb at 60 and 360 (not named), film frames rendering at draft; sun-near 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T21:51:12.474Z",
+   "file": "20261125215112474-note-T3-360z.jpg",
+   "source": "../../../../tmp/v/T3-360z.png",
+   "kind": "note",
+   "label": "frame 360 draft, the arcade's place four times: named state left, candidate right: no blobs, a faint veil; final match 11.9850 against the name's 11.9804 and main's 11.9772",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:51:11.911Z",
+   "file": "20261125215111911-note-L8.jpg",
+   "source": "../../../../tmp/v/L8.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, limb: as it is over a local trial with the lab ground's haze off (not committed, the lab's file): the bright band and the flat glow over the limb are the ground's haze; sent to the lab 21:47",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T21:51:11.298Z",
+   "file": "20261125215111298-note-T4-crop.jpg",
+   "source": "../../../../tmp/v/T4-crop.jpg",
+   "kind": "note",
+   "label": "frame 60 draft, approved over the candidate (not named): arcade as loops of sparks, the far strand drawn by its band's own least width and its pattern by its mean; limb fringe L3",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T21:24:53.369Z",
    "file": "20261125212453369-note-J1-360z.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/n4-rise.jpg",
    "kind": "note",
    "label": "Same state as drawn: 221, 223, 225, 227, 229, 231, 236, 241, 247, 253 (draft). Rays come in from 225 by distance. 0, 60, 90, 247 and 270, 360, 449 keep their draft bytes.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T20:41:31.382Z",
-   "file": "20261125204131382-note-n4.jpg",
-   "source": "../../../../tmp/v/n4.jpg",
-   "kind": "note",
-   "label": "Same state as drawn: 196, 199, 202, 204, 208, 213, 221, 231 (draft)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T20:41:30.728Z",
-   "file": "20261125204130728-note-n4-sky12.jpg",
-   "source": "../../../../tmp/v/n4-sky12.jpg",
-   "kind": "note",
-   "label": "sun rise 196 to 231 at draft, working tree on 6b6aca66, second state of the glow from inside: gas near the eye is read as its ring (the map's mean round the centre), the map's own threads come in from 0.6 to 2.0 radii of each look's distance. Top 42 percent, stars out by a median, x12: no bands, no arcs. Harness short run 190 to 200 under way.",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T20:06:51.052Z",
-   "file": "20261125200651052-note-sm-a-sky12.jpg",
-   "source": "../../../../tmp/v/sm-a-sky12.jpg",
-   "kind": "note",
-   "label": "sun rise 190, 194, 198, 202 at draft, working tree on 6b6aca66 (the glow from inside, first state): top 42 percent, stars out by a median, x12. Bands of the map's rows still come in from 198; harness short run 190 to 200 reads the far sky 0.56 at 190 (limit 0.45, was 1.44 at 195 + 1/2 on the name). Next state reads the map as wide outward as round.",
    "stop": "sun"
   }
  ]
