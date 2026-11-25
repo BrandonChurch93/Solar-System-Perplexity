@@ -92,6 +92,12 @@ The old level pictures that `plates.py plate` mixes in outside the ring: `git sh
 
 Checks: the sheets `out/work/mercury/place/repaint/L<N>-sheet-*.jpg` (lead beside result), `B<N>-view.jpg`, the top down dive sheet (`tilepatch.py on topdown`, 12 frames, `off`), the texel view of the dive (`DIAG=texels`), the dense sheets of dive and rise, the kept frames against `out/stills`.
 
+## The two sets and the levels: one law (`src/stops/mercury/wrap.json` `plates`, `fine.json` `size.full`)
+
+The web set holds every picture at half the full set's width. Which level of the map, of the plates and of the fine ground a pixel shows, and with what weight, is counted in the full set's texels in both sets: `uMapFull` (the map's width in the full set, `wrap.json` `color.full`), `uPatchFull` (the plates' width in the full set, `wrap.json` `plates.full`), `uFineFull` (`fine.json` `size.full`). So the web set shows the same level at the same weight on every pixel as the full set, from its own half width picture, and a level never comes in later in the web set than in the full set. Only the level of detail inside a picture (the sampler's own filter) and the fine ground's own fade against its texels use the set's own width. The full set's picture is the same bytes as before the law.
+
+Checks: the full set at frames 615, 717, 735 and 1016 before and after (equal by pixels); the web set beside the full set at 615, 717 and 735, left half web, right half full, with the mean difference of the two renders (`out/work/mercury/place/sheets/sl0-web-full.jpg` before, `sl1-web-full.jpg` after).
+
 ## Last step for every JPEG of the stop: squeeze.py
 
 Files, both sets: `public/assets/mercury/<set>/patch-1.jpg`, `patch-2.jpg`, `patch-3.jpg`, `patch-3r.jpg`, `patch-4.jpg`, `patch-4r.jpg`, `relief-color.jpg`, `wide-color.jpg`, `wrap-color.jpg`. No generation, no takes.

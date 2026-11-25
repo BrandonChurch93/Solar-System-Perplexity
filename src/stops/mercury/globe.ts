@@ -35,6 +35,7 @@ export interface GlobeLight {
 export interface GlobePatches {
   textures: THREE.Texture[]
   widthsDeg: number[]
+  full: number[]
   spot: THREE.Vector3
   feather: number
   fade: [number, number]
@@ -46,6 +47,7 @@ export interface GlobePatches {
 export interface GlobeOptions {
   map: THREE.Texture
   mapWidth: number
+  mapFull: number
   height: THREE.Texture
   heightWidth: number
   light: GlobeLight
@@ -56,6 +58,7 @@ export interface GlobeOptions {
 export interface GlobeFine {
   texture: THREE.Texture
   period: number
+  full: number
   guardShare: number
   top: number
   shift: readonly [number, number]
@@ -107,8 +110,8 @@ ${i === 0 ? '      stays = uPlaceHold.z * (1.0 - smoothstep(uPlaceHold.x, uPlace
       albedo = mix(albedo, tx, tw);
       own = mix(own, tx, step(uPlaceFrom, ${i}.25) * mix(tw, 1.0, first));
       placed = mix(placed, tw, first);
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}] * uFrame;
-      thin = gl * uPatchScale[${i}] * uPatchSize[${i}] * uFrame;
+      parent = gd * uPatchScale[${i}] * uPatchFull[${i}] * uFrame;
+      thin = gl * uPatchScale[${i}] * uPatchFull[${i}] * uFrame;
       texels = mix(texels, gd * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w));
       near = max(near, w * uPatchNear[${i}]);
     }`).join('\n')
@@ -126,8 +129,8 @@ const CLOSE_DRAWS = [['uWide', 'uvw', 'axw', 'ayw', 'ww', 'uWideSize', '\n    fo
 
 const FINE = Array.from({ length: FINE_LEVELS }, (_, i) => `    {
       float wf = uFine.x * front * unseen * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, mix(parent, thin, uPatchLean)));
-      float fd = gd * uFineScale[${i}] * uFineSize;
-      float fl = gl * uFineScale[${i}] * uFineSize;
+      float fd = gd * uFineScale[${i}] * uFineFull;
+      float fl = gl * uFineScale[${i}] * uFineFull;
       wf *= 1.0 - smoothstep(uFineBlur.x, uFineBlur.y, sm * fd);
       vec2 fq = g * uFineScale[${i}] + uFineShift * ${i}.0;
       vec2 fu = vec2(fq.x, uFineBand.x + fract(fq.y) * uFineBand.y);
@@ -138,7 +141,7 @@ const FINE = Array.from({ length: FINE_LEVELS }, (_, i) => `    {
       fine *= mix(1.0, fv, wf);
       parent = fd * uFrame;
       thin = fl * uFrame;
-      texels = mix(texels, fd, step(0.5, wf));
+      texels = mix(texels, gd * uFineScale[${i}] * uFineSize, step(0.5, wf));
     }`).join('\n')
 
 const FRAG = /* glsl */ `
@@ -148,12 +151,14 @@ uniform sampler2D uHeight;
 ${PATCH_SAMPLERS}
 uniform float uPatchScale[${MAX_PATCHES}];
 uniform float uPatchSize[${MAX_PATCHES}];
+uniform float uPatchFull[${MAX_PATCHES}];
 uniform float uPatchNear[${MAX_PATCHES}];
 uniform float uPatchCount;
 uniform sampler2D uFineMap;
 uniform vec2 uFine;
 uniform float uFineScale[${FINE_LEVELS}];
 uniform float uFineSize;
+uniform float uFineFull;
 uniform vec2 uFineShift;
 uniform vec2 uFineBand;
 uniform vec2 uFineEdge;
@@ -167,6 +172,7 @@ uniform vec3 uSpotN;
 uniform vec3 uSpotE;
 uniform vec3 uSpotU;
 uniform float uMapWidth;
+uniform float uMapFull;
 uniform float uGrad;
 uniform float uHeightStep;
 uniform float uSpin;
@@ -421,8 +427,8 @@ void main() {
     gx *= uGrad;
     gy *= uGrad;
     float front = step(0.3, dn);
-    float parent = texels * uFrame;
-    float thin = texels * uFrame;
+    float parent = diagTexelsDir(d, uMapFull) * uFrame;
+    float thin = parent;
     float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
 ${PATCH_LEVELS}
 ${FINE}
@@ -545,17 +551,17 @@ export class Globe {
       uniforms: {
         uMap: { value: o.map }, uHeight: { value: o.height },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
-        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchFull: { value: levels.map((i) => p?.full[i] ?? size(i)) },
         uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
         uFineMap: { value: f?.texture ?? o.map }, uFine: { value: new THREE.Vector2(f && p ? 1 : 0, f?.top ?? 1) },
         uFineScale: { value: Array.from({ length: FINE_LEVELS }, (_, i) => (f && p ? (2 ** (i + 1) * scale(p.textures.length - 1) * size(p.textures.length - 1)) / f.period : 1)) },
-        uFineSize: { value: f?.period ?? 1 }, uFineShift: { value: new THREE.Vector2(f?.shift[0] ?? 0, f?.shift[1] ?? 0) },
+        uFineSize: { value: f?.period ?? 1 }, uFineFull: { value: f?.full ?? f?.period ?? 1 }, uFineShift: { value: new THREE.Vector2(f?.shift[0] ?? 0, f?.shift[1] ?? 0) },
         uFineBand: { value: new THREE.Vector2((f?.guardShare ?? 0) / (1 + 2 * (f?.guardShare ?? 0)), 1 / (1 + 2 * (f?.guardShare ?? 0))) },
         uFineEdge: { value: new THREE.Vector2(f?.edge[0] ?? 1, f?.edge[1] ?? 1) }, uFineBlur: { value: new THREE.Vector2(f?.blur[0] ?? 1, f?.blur[1] ?? 2) }, uFineShade: { value: new THREE.Vector3(f?.shade[0] ?? 0, f?.shade[1] ?? 1, f?.shade[2] ?? 1) },
         uFeather: { value: p?.feather ?? 0.12 }, uPatchLean: { value: p?.lean ?? 0 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uMend: { value: new THREE.Vector4(1000, 1000, 1, 0) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
-        uMapWidth: { value: o.mapWidth }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
+        uMapWidth: { value: o.mapWidth }, uMapFull: { value: o.mapFull }, uHeightStep: { value: (2 * Math.PI) / o.heightWidth },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uShow: { value: 1 }, uHole: { value: new THREE.Vector4(0, 1, 1, 0) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uFrame: frameUniform, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uWrap: { value: l.wrap }, uCurve: { value: l.curve.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimb: { value: l.limb.map((k) => new THREE.Vector3(k[0], k[1], k[2])) }, uLimbTo: { value: l.limbTo }, uNight: { value: new THREE.Vector3().fromArray(l.night) }, uNightDim: { value: 1 },
         uRelief: { value: new THREE.Vector4(l.relief, l.reliefNear, l.reliefDay, 0) }, uNightFlat: { value: new THREE.Vector4(l.nightFlat, l.nightDetail, l.nightVeil, l.nightVeilFrom) }, uNightSoft: { value: new THREE.Vector4(l.nightSoft[0], l.nightSoft[1], l.nightSoft[2], l.nightSoft[3]) }, uDusk: { value: new THREE.Vector4().fromArray(l.dusk.range) }, uDuskFrom: { value: l.dusk.from }, uReliefRange: { value: new THREE.Vector2().fromArray(l.reliefRange) }, uSil: { value: new THREE.Vector3(0, l.silhouette.floor, l.silhouette.taps) }, uSilWide: { value: new THREE.Vector2().fromArray(l.silhouette.wide) },

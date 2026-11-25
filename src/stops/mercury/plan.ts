@@ -169,7 +169,11 @@ export class Plan extends StopPlan {
     const p1 = s[i]!
     const p2 = s[i + 1]!
     const p3 = s[Math.min(i + 2, s.length - 1)]!
-    return Math.min(Math.max(0.5 * (2 * p1 + (p2 - p0) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (3 * p1 - p0 - 3 * p2 + p3) * f * f * f), 0), 1)
+    const share = Math.min(Math.max(0.5 * (2 * p1 + (p2 - p0) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (3 * p1 - p0 - 3 * p2 + p3) * f * f * f), 0), 1)
+    if (seg.kind === 'dive') return share
+    const { soft, done } = sky.carryRest
+    const x = Math.max(share - done, 0)
+    return (x * (1 - Math.exp(-x / soft))) / ((1 - done) * (1 - Math.exp(-(1 - done) / soft)))
   }
 
   override twin(local: Pose, time: number): Pose {
