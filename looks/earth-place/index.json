@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T09:03:12.214Z",
+ "pushed": "2026-11-25T09:15:18.116Z",
  "head": "ba4794504c56c5dfad14d26ab609e6c193dcb696",
- "note": "09:04 trial only: specks of the far band standing by code, and the mask of the approved bank; no film frame yet",
+ "note": "09:16 specks stand by code at 2010 (draft, 1755 unchanged 0 px); deck of the approved bank laid into the map as a trial from above, bake running",
  "looks": [
+  {
+   "time": "2026-11-25T09:15:16.592Z",
+   "file": "20261125091516592-note-sheet-top.jpg",
+   "source": "../../../../tmp/gl/k10/sheet-top.jpg",
+   "kind": "note",
+   "label": "trial from above: the approved bank's footprint as a deck in the map (24 degrees wide, over the cumulus field); not in the film yet",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T09:15:15.921Z",
+   "file": "20261125091515921-note-p-right.jpg",
+   "source": "../../../../tmp/gl/k10/b1/p-right.jpg",
+   "kind": "note",
+   "label": "2010 far band right, same three rows; bank and its shadow still missing here",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T09:15:15.239Z",
+   "file": "20261125091515239-note-p-middle.jpg",
+   "source": "../../../../tmp/gl/k10/b1/p-middle.jpg",
+   "kind": "note",
+   "label": "2010 far band middle, 2 px for 1: approved, ba479450, now with the specks standing by code (draft, uncommitted); the bank is not in yet",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T09:03:11.515Z",
    "file": "20261125090311515-note-bank_try.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/k9/a1-top.jpg",
    "kind": "note",
    "label": "ba479450 far band at 1 to 1, 1886 to 1899: map's shoals and specks stay in place, towers arrive lower right",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T08:22:34.979Z",
-   "file": "20261125082234979-note-a1-s2.jpg",
-   "source": "../../../../tmp/gl/k9/a1-s2.jpg",
-   "kind": "note",
-   "label": "ba479450 dive 1884 to 1899, draft: far band stays the map and goes grey with the air; reader 0.46 from 1891",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T08:02:33.561Z",
-   "file": "20261125080233561-note-step-T.jpg",
-   "source": "../../../../tmp/gl/k9/step-T.jpg",
-   "kind": "note",
-   "label": "1919 and 1920 and their difference times 4, first take of way a, no step on the band",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T08:02:32.311Z",
-   "file": "20261125080232311-note-p2010-middle.jpg",
-   "source": "../../../../tmp/gl/k9/p2010-middle.png",
-   "kind": "note",
-   "label": "2010 far band, approved, before 29eea607, after way a: band is the map through air, flat specks, towers stand, deck lost",
    "stop": "earth"
   }
  ]
