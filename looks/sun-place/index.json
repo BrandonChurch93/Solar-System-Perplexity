@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T20:06:51.862Z",
+ "pushed": "2026-11-25T20:41:32.771Z",
  "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
- "note": "sun-place 20:08 UTC: inside law first state, far sky 1.44 to 0.56 on the short run (still red), bands of the map's rows from 198 at x12; next state under render. frame 60 unchanged bytes: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "sun-place 20:42 UTC: glow from inside, second state (ring for gas near the eye): no bands at x12 from 196 to 221, rays from 225; judged and hold frames same bytes at draft; harness slice 190 to 200 running. frame 60 unchanged bytes: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T20:41:32.007Z",
+   "file": "20261125204132007-note-n4-rise.jpg",
+   "source": "../../../../tmp/v/n4-rise.jpg",
+   "kind": "note",
+   "label": "Same state as drawn: 221, 223, 225, 227, 229, 231, 236, 241, 247, 253 (draft). Rays come in from 225 by distance. 0, 60, 90, 247 and 270, 360, 449 keep their draft bytes.",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T20:41:31.382Z",
+   "file": "20261125204131382-note-n4.jpg",
+   "source": "../../../../tmp/v/n4.jpg",
+   "kind": "note",
+   "label": "Same state as drawn: 196, 199, 202, 204, 208, 213, 221, 231 (draft)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T20:41:30.728Z",
+   "file": "20261125204130728-note-n4-sky12.jpg",
+   "source": "../../../../tmp/v/n4-sky12.jpg",
+   "kind": "note",
+   "label": "sun rise 196 to 231 at draft, working tree on 6b6aca66, second state of the glow from inside: gas near the eye is read as its ring (the map's mean round the centre), the map's own threads come in from 0.6 to 2.0 radii of each look's distance. Top 42 percent, stars out by a median, x12: no bands, no arcs. Harness short run 190 to 200 under way.",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T20:06:51.052Z",
    "file": "20261125200651052-note-sm-a-sky12.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/h5-corners.jpg",
    "kind": "note",
    "label": "Top corners at 1 to 1, 220 and 228, 227.5 and 235.5: rays over moving stars",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:14:09.221Z",
-   "file": "20261125191409221-note-h5-b.jpg",
-   "source": "../../../../tmp/v/h5-b.jpg",
-   "kind": "note",
-   "label": "Harness, rise 214 to 235, every film frame",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:14:08.528Z",
-   "file": "20261125191408528-note-h5-a.jpg",
-   "source": "../../../../tmp/v/h5-a.jpg",
-   "kind": "note",
-   "label": "Harness, rise 190 to 213, every film frame: the gas comes on as arcs from 199",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T19:00:05.095Z",
-   "file": "20261125190005095-note-sun60-name-r5.jpg",
-   "source": "../../../../tmp/v/sun60-name-r5.jpg",
-   "kind": "note",
-   "label": "Frame 60 at final: approved | main (panel of mail 1224) | this name. 40.3061 | 18.6308 | 49.5956 against the approved",
    "stop": "sun"
   }
  ]
