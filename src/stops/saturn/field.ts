@@ -273,7 +273,8 @@ export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'ful
   const near = fine.near
   // the mean of a line over a cell, to first order in its strength: one edge per cell, half width
   // w0 + (w1 - w0) u^2, strength smoothstep(rare, 1, v) with u and v even on 0 to 1, half of them dark
-  const lineMean = (groove.width[0] + (groove.width[1] - groove.width[0]) / 3) * meanSmoothstep(groove.rare) * (groove.bright - groove.dark)
+  const lineUnit = (groove.width[0] + (groove.width[1] - groove.width[0]) / 3) * meanSmoothstep(groove.rare)
+  const lineMean = lineUnit * (groove.bright - groove.dark)
   const octaves = Array.from({ length: fine.octaves }, (_, o) => o)
   const oct = octaves.map(() => new THREE.Vector4())
   const tint = octaves.map(() => new THREE.Vector4())
@@ -304,6 +305,11 @@ export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'ful
     follow.set(near.hue.follow.dense[0]!, near.hue.follow.dense[1]!, near.hue.follow.thin[0]!, near.hue.follow.thin[1]!).multiplyScalar(t)
     fineFit.w = mix(1, near.footprints, t)
     grooveFit.w = mix(fine.filter, near.filter, t)
+    // near the sheet the lines at the edges of the ringlets have their own depth and their own gain
+    // (near.groove.dark and bright): grooves cut into the ice, and few lines brighter than it
+    grooveFit.x = mix(groove.dark, near.groove.dark, t)
+    grooveFit.y = mix(groove.bright, near.groove.bright, t)
+    grooveFit.z = lineUnit * (grooveFit.y - grooveFit.x)
     hueFit.z = mix(fine.hue.green, near.hue.green, t)
     hueFit.w = mix(fine.hue.gold, near.hue.gold, t)
     wide.z = near.wide.level * t

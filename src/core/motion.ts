@@ -159,6 +159,19 @@ export function samplesNeeded(base: number, cap: number, motion: number): number
   return need <= base ? base : Math.min(need, Math.max(cap, base))
 }
 
+// The step of a frame's plan: how far the picture moves from one sample of the frame to the next, in px of the master. own is the picture's
+// own motion in view across the shutter that is open, over the samples; near is the same of a near body the stop names to the motion measure
+// (0 without one). The count follows the motion at motion.maxStepPx a sample up to the most the tier may take (samplesNeeded); where the
+// count ends there, the step is larger. A step of more than a pixel draws a fine edge as a row of separate copies, so every frame of every
+// dive and rise is judged on own against handover.limits.sampleStepPx at every tier that takes more than one sample (tools/handover.ts,
+// tests/step.test.ts). near is reported beside it and not judged: a moon that crosses the picture within one shutter can be held to a pixel
+// by no count, and what the frame shows of it is a streak in which one sample is the share 1 / samples.
+// A frame of one sample has no step: it is one sharp picture (the draft tier).
+export function sampleStep(plan: { samples: number; seen: number; near?: number }): { own: number; near: number } {
+  if (!(plan.samples > 1)) return { own: 0, near: 0 }
+  return { own: plan.seen / plan.samples, near: (plan.near ?? 0) / plan.samples }
+}
+
 // shutter is the share of the film's shutter the frame keeps (E6): 1 everywhere but in the capped frames of a dive or a rise that hands over.
 // raw stays the motion across the full shutter; seen is the motion across the shutter that is open, and the sample count follows it.
 // near is there only in a frame with a named near body in it: that body's motion across the shutter that is open (nearMotion). The count
@@ -290,6 +303,23 @@ export function shutterScale(source: ShotSource, frame: number): number {
     cap.scale.set(frame, scale)
   }
   return scale
+}
+
+// Where the floor of the shutter holds over the cap of the blur: the px by which the motion of a frame across the least share of the shutter
+// (handover.minShutter) is more than the cap lets the frame keep (blurAllowed). 0 where both hold: outside the dives and rises of the stops
+// that hand over, without a cap, without a floor, and in every frame slow enough for both. The floor holds there by rule (one law at every
+// rate and in every segment), so this is a number of the report (tools/handover.ts) and no fault: such a frame is fast by its path, and
+// that is the stop's to cure in its plan.
+export function capConflict(source: ShotSource, frame: number): number {
+  const own = handing(frame)
+  if (!own) return 0
+  const floor = config.raw.handover.minShutter
+  const allowed = blurAllowed(source, frame)
+  if (!(floor > 0) || !Number.isFinite(allowed)) return 0
+  const full = fullMotion(capOf(source), source, frame, own.h)
+  if (!(full > allowed)) return 0
+  const left = floor >= 1 ? full : motionOver(source, frame, inWindow(frame, own.h), shutterOffset(0, floor), shutterOffset(1, floor))
+  return Math.max(left - allowed, 0)
 }
 
 export function framePlan(source: ShotSource, frame: number, tier: string): FramePlan {
