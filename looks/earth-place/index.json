@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T11:02:37.646Z",
+ "pushed": "2026-11-25T11:23:58.508Z",
  "head": "55392321c0452e1bddc72911bc23b771e20c87a4",
- "note": "MAIL 1040: deck taken out, bake running; study picture of the dropped layer",
+ "note": "deck taken out after MAIL 1040: 1755 back to the byte; study of cloud share hold against close set",
  "looks": [
+  {
+   "time": "2026-11-25T11:23:57.703Z",
+   "file": "20261125112357703-note-share-pair.jpg",
+   "source": "../../../../tmp/gl/k13/share-pair.jpg",
+   "kind": "note",
+   "label": "study: the hold's map with its cloud layer (left) against the close set's levels (right), rings at 5 and 10 degrees: the bodies do not stand on the same places",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T11:23:56.865Z",
+   "file": "20261125112356865-note-h1755-deck-2x.jpg",
+   "source": "../../../../tmp/gl/k13/h1755-deck-2x.png",
+   "kind": "note",
+   "label": "1755 at 2 px for 1: the deck state ac5c5c1b against the deck taken out (now equal to the kept hold to the byte)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T11:02:36.700Z",
    "file": "20261125110236700-note-pv-z1-band.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k11/s-rise-2.jpg",
    "kind": "note",
    "label": "ac5c5c1b rise 2118 to 2129 draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T10:00:11.727Z",
-   "file": "20261125100011727-note-s-dive-2.jpg",
-   "source": "../../../../tmp/gl/k11/s-dive-2.jpg",
-   "kind": "note",
-   "label": "dive 1883 to 1894 (draft): the deck stays one body; towers still come in 1884 to 1890",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T10:00:11.125Z",
-   "file": "20261125100011125-note-s-hold.jpg",
-   "source": "../../../../tmp/gl/k11/d1/s-hold.jpg",
-   "kind": "note",
-   "label": "ac5c5c1b 1755, 1836, 1848, 1857: the deck is there from the hold on, nothing arrives",
    "stop": "earth"
   }
  ]
