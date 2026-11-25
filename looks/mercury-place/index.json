@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T01:58:34.202Z",
- "head": "b173bb86366038360b18a2c1736c87696a1d9f46",
- "note": "Sun commit: final pair at 615; globe unchanged (terminator 162.94 px both, lit 158.459 to 158.462); one shared test red (old swap distance 6.2546), main moved to aeffd516, merge built, tests running",
+ "pushed": "2026-11-25T02:09:08.527Z",
+ "head": "a4f61cec0f74ae07e84f050530e4f9cf5e2907c3",
+ "note": "Sun commit a4f61cec pushed: 11.69 deg at (1925.7, 46.0); globe unchanged; reds named: far Sun wear range, tests/pass.test.ts 239",
  "looks": [
+  {
+   "time": "2026-11-25T02:09:07.955Z",
+   "file": "20261125020907955-note-sm-state.jpg",
+   "source": "out/work/mercury/place/sheets/sm-state.jpg",
+   "kind": "note",
+   "label": "Sun commit: 539, 540, 1034, 1035; top on main 12c58853, bottom on main aeffd516 (orange where the Sun set is loaded: shared wear range)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T02:09:07.386Z",
+   "file": "20261125020907386-note-sn-pair615-merge-draft.jpg",
+   "source": "out/work/mercury/place/sheets/sn-pair615-merge-draft.jpg",
+   "kind": "note",
+   "label": "Sun commit a4f61cec on main aeffd516, draft: approved, before (d9cddae5 on main 12c58853), after at 615 (fresh page)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T01:58:33.133Z",
    "file": "20261125015833133-note-sn-pair615.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/mercury/place/sheets/sn-dive1.jpg",
    "kind": "note",
    "label": "Sun commit: dive 720 to 750 before and after",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T01:30:45.102Z",
-   "file": "20261125013045102-note-sn-dive0.jpg",
-   "source": "out/work/mercury/place/sheets/sn-dive0.jpg",
-   "kind": "note",
-   "label": "Sun commit: 689 to 710 before and after",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T01:30:43.963Z",
-   "file": "20261125013043963-note-sn-flight-in.jpg",
-   "source": "out/work/mercury/place/sheets/sn-flight-in.jpg",
-   "kind": "note",
-   "label": "Sun commit: flight in 490 to 530 before and after",
    "stop": "mercury"
   }
  ]
