@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T00:19:27.328Z",
- "head": "15d489e9e70ff9fb2c598d02ba7fb0288f6d799e",
- "note": "round 2 state: rise 1004 to 1029 rendered and looked at; pattern measure and smooth run queued",
+ "pushed": "2026-11-25T00:46:05.484Z",
+ "head": "7793e81130002568278611542aaaf8dc15ad15ee",
+ "note": "A1 rise 940 to 991 and the sheet of the rise's T; Sun order of mail 820 next",
  "looks": [
+  {
+   "time": "2026-11-25T00:46:04.034Z",
+   "file": "20261125004604034-note-a1-t.jpg",
+   "source": "out/work/mercury/place/sheets/a1-t.jpg",
+   "kind": "note",
+   "label": "A1 rise T 976 + 1/2: 966 + 1/2 to 980 + 1/2 every half frame, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T00:46:03.208Z",
+   "file": "20261125004603208-note-a1-s2.jpg",
+   "source": "out/work/mercury/place/sheets/a1-s2.jpg",
+   "kind": "note",
+   "label": "A1 rise 964 to 991, draft, every whole frame",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T00:46:02.192Z",
+   "file": "20261125004602192-note-a1-s1.jpg",
+   "source": "out/work/mercury/place/sheets/a1-s1.jpg",
+   "kind": "note",
+   "label": "A1 rise 952 to 963, draft",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T00:46:01.404Z",
+   "file": "20261125004601404-note-a1-s0.jpg",
+   "source": "out/work/mercury/place/sheets/a1-s0.jpg",
+   "kind": "note",
+   "label": "A1 rise 940 to 951, draft, every whole frame",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T00:19:25.991Z",
    "file": "20261125001925991-note-a1-r2.jpg",
@@ -34,38 +66,6 @@
    "source": "out/work/mercury/place/sheets/b0a1-e06.jpg",
    "kind": "note",
    "label": "b0b87889 on top, round 2 state below, half frames, sheet e06",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:35:14.529Z",
-   "file": "20261124233514529-note-b0a1-05.jpg",
-   "source": "out/work/mercury/place/sheets/b0a1-05.jpg",
-   "kind": "note",
-   "label": "b0b87889 on top, round 2 state below, half frames, sheet 05",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:35:13.301Z",
-   "file": "20261124233513301-note-b0a1-03.jpg",
-   "source": "out/work/mercury/place/sheets/b0a1-03.jpg",
-   "kind": "note",
-   "label": "b0b87889 on top, round 2 state below, half frames, sheet 03",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:35:12.043Z",
-   "file": "20261124233512043-note-b0a1-01.jpg",
-   "source": "out/work/mercury/place/sheets/b0a1-01.jpg",
-   "kind": "note",
-   "label": "b0b87889 on top, round 2 state below, half frames, sheet 01",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-24T23:29:11.536Z",
-   "file": "20261124232911536-note-a1-d3.jpg",
-   "source": "out/work/mercury/place/sheets/a1-d3.jpg",
-   "kind": "note",
-   "label": "round 2 state, dive 772 to 783, every frame, draft, true far Sun",
    "stop": "mercury"
   }
  ]
