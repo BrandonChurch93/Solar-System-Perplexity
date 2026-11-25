@@ -1,4 +1,7 @@
-export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null }
+export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null }
+
+// The number of a row under the map's reader: the reading on the bodies where the row has one, the whole frame's where it has none.
+export const mapOf = (row: Read): number | null | undefined => row.patternMapBody ?? row.patternMap
 
 export interface Apart { first: number; last: number; rows: number; k: number; main: number; map: number; red: 'main' | 'map'; no?: string }
 
@@ -13,7 +16,7 @@ export function apart<T extends Read>(rows: T[], max: number | null, mapMax: num
   for (const row of rows) {
     const main = row.pattern
     const no = row.patternMapNo ?? null
-    const map = no !== null ? Number.POSITIVE_INFINITY : row.patternMap
+    const map = no !== null ? Number.POSITIVE_INFINITY : mapOf(row)
     const differs = main !== null && map !== null && map !== undefined && main > max !== map > mapMax
     if (!differs) {
       run = null
@@ -37,7 +40,7 @@ export function apart<T extends Read>(rows: T[], max: number | null, mapMax: num
 // count of them.
 export function shownRows<T extends Read>(rows: T[], max: number | null, mapMax: number | null, count: number): T[] {
   const read = rows.filter((row) => row.patternMap !== null && row.patternMap !== undefined)
-  const ks = new Set<number>(read.length > 0 ? [read.reduce((x, y) => (y.patternMap! > x.patternMap! ? y : x)).k] : [])
+  const ks = new Set<number>(read.length > 0 ? [read.reduce((x, y) => (mapOf(y)! > mapOf(x)! ? y : x)).k] : [])
   const far = (run: Apart): number => (run.no ? Number.MAX_VALUE : Math.abs(run.main - run.map))
   for (const run of apart(rows, max, mapMax).sort((x, y) => far(y) - far(x))) {
     if (ks.size >= count) break

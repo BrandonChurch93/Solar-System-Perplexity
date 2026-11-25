@@ -236,6 +236,19 @@ def main():
     sa, sb = {**sa, 'sky': sa['q']}, {**sa, 'sky': times(turn, sa['q'])}
     sky = lambda rays: stars(rays)
     out['sky'] = {'clean': read(frame(sa, [], sky), frame(sb, [], sky))[0]}
+    out['skyFlow'] = {}
+    for name, seeds in (('clean', (3, 3, 3)), ('exchange', (3, 3, 11))):
+        seen = []
+        for j, seed in enumerate(seeds):
+            pose = {**camera([0.3 * j, 0, 5], [0.3 * j - 0.9, 0, 0], 40), 'sky': times(about([0.2, 1, 0.1], 1.5 * j), sa['q'])}
+            field = waves(seed, 0.01, 0.1)
+            seen.append(frame(pose, [globe(C.UNIT)], lambda rays: field(rays)))
+        frames = [f['grey'] for f in seen]
+        fw = [S.motion(frames[j], frames[j + 1]) for j in range(2)]
+        bw = [S.motion(frames[j + 1], frames[j]) for j in range(2)]
+        value, share = S.unbodied(frames, fw, bw, 0, 2, seen[0]['which'] > 0, seen[2]['which'] > 0, C.rim, MARGIN, WIDE, FLOOR)
+        covered = C.hidden(*[C.carry(seen[0]['depth'], seen[0]['which'], seen[0]['pose'], seen[2]['pose'])[j] for j in (0, 1, 3)], seen[0]['which'], seen[2]['depth'], seen[2]['which'])
+        out['skyFlow'][name] = {'value': value, 'share': share, 'covered': float(covered.mean()), 'coveredOnBody': float((covered & (seen[0]['which'] > 0)).mean())}
     form = {'low': -20, 'octaves': 32, 'units': [330.0]}
     depth = np.exp(np.random.default_rng(4).uniform(-6, 6, FULL))
     depth[:60] = np.nan

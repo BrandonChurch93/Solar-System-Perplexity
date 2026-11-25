@@ -154,6 +154,13 @@ def seen(mx, my, far, held, which, depth, body):
     return at | sky
 
 
+def hidden(mx, my, held, which, depth, body):
+    """Where a carried pixel of the sky arrives on a body of the frame it is carried into: the body stands before that sky there, the sky is
+    covered and nothing of the pair can be read on it."""
+    solid = ((body > 0) & np.isfinite(depth) & (depth > 0)).astype(np.float32)
+    return held & (which == 0) & (cv2.remap(solid, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) > 0)
+
+
 def grown(mx, my, held):
     """How many times larger the carried frame is drawn than it was, per pixel, from the slopes of the map: under 1 where it is drawn smaller,
     1 where the map has no slope to read."""
@@ -202,13 +209,14 @@ def rim(which, margin):
     return (cv2.dilate(solid, box, borderType=cv2.BORDER_CONSTANT, borderValue=0) > 0) & ~(cv2.erode(solid, box, borderType=cv2.BORDER_CONSTANT, borderValue=1) > 0)
 
 
-def pair(a, full, scale, way, same, which):
+def pair(a, full, scale, way, same, which, covered=None):
     """The frame a against another frame carried onto it: first by the camera's map (way: mx, my, far, held of carry; same: seen), from the
     finer picture of the other frame where the map draws it larger (full() gives it at its full size); then the flow between a and the carried
     picture finds what is left, and the other frame is carried once more along the map and that flow. Where the flow and its way back do not
     agree it carries nothing and the map stands alone. Gives the carried picture, where the pair is judged, the rule of each pixel (0 none, 1
     the map, 2 the sky by the camera's rotation, 3 the flow: what the flow moved by more than FLOW_PX; what the map does not hold and the flow
-    does not move is covered and not judged), and the size of the flow."""
+    does not move is covered and not judged, and what is covered by the range picture itself is not judged whatever the flow finds), and the
+    size of the flow."""
     mx, my, far, held = way
     step = stepped(grown(mx, my, held), scale)
     g, levels = full(), {}
@@ -223,6 +231,8 @@ def pair(a, full, scale, way, same, which):
     sy = np.where(use, cv2.remap(my, nx, ny, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE), my)
     b = drawn(g, scale, sx, sy, step, levels)
     moved = use & (size > FLOW_PX)
+    if covered is not None:
+        moved &= ~covered
     still = same & ~moved
     rule = np.zeros(a.shape, np.uint8)
     rule[moved] = 3
@@ -258,7 +268,7 @@ def read(a, b, margin, scale, wide, floor):
         way = carry(a['depth'], a['which'], a['pose'], b['pose'])
     same = seen(*way, a['which'], b['depth'], b['which'])
     picture = a['grey'].astype(np.float32)
-    later, ok, rule, size = pair(picture, b['full'], scale, way, same, a['which'])
+    later, ok, rule, size = pair(picture, b['full'], scale, way, same, a['which'], hidden(way[0], way[1], way[3], a['which'], b['depth'], b['which']))
     edge = rim(a['which'], margin) | (cv2.remap(rim(b['which'], margin).astype(np.float32), way[0], way[1], cv2.INTER_NEAREST, borderMode=cv2.BORDER_REPLICATE) > 0.5)
     rule[edge] = 0
     ok &= ~edge
