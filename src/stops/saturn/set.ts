@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { sampleOrder } from '../../core/sampler'
 import type { SetFactory } from '../../core/types'
 import { isRaw } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
@@ -61,7 +62,7 @@ export const createSet: SetFactory = async (ctx) => {
       const share = state.time < dive.start ? 0 : state.time >= dive.end ? 1 : 1 - smooth((Math.log(height) - logLo) / (logHi - logLo))
       const count = Math.max(view.samples, 1)
       const stride = window.strides.find((s) => gcd(s, count) === 1) ?? 1
-      const order = ((view.sample * stride) % count + 0.5) / count
+      const order = view.weights ? sampleOrder(view.weights, view.sample, stride) : ((view.sample * stride) % count + 0.5) / count
       const alone: string = state.time >= plan.seg.hold.end ? window.alone : ''
       const drawn = (alone === 'model' || (alone !== 'kept' && order < share)) ? model : kept
       const idle = drawn === model ? kept : model
