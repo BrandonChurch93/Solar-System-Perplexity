@@ -1143,3 +1143,85 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
   src/core/frame.ts, as Neptune and Uranus do. MEASURED: draft bytes of 2176, 2200, 2230, 2325, 2400, 2452, 2470,
   2477, 2580, 2689, 2700, 2760, 2800, 2819 equal to the commit before; final 2325 keeps its sha, final 2580 equal
   to the kept one; G11 and G15 pass; vitest 795 ok.
+- 00:35 Merged agent/engine-edge (42115f68 `Relief.presenceEdge`, with 79ade566 under it) into agent/mars-place
+  locally, to build ruling 2 on it. PLAN: the close ground ends in the globe's scene along the sides of its own
+  picture (close.json edge, feathers 676, 676, 380, 0 px of the full picture: the painted margins of relief.json),
+  off in the surface view so 2477 to 2681 keep their bytes.
+- 00:38 TRIAL at draft with the edge of 42115f68: 2477, 2580, 2325 equal bytes. The slab and fan at the right
+  edge at 2684 and 2686 are gone. NEW with it: the close air ends with the ground and the globe's shell is out
+  there (its gain is 1 minus the presence), so the globe's limb stands bare beyond the right side, a dark box top
+  right at 2684 to 2686 (`see/n54-edge.jpg`, `see/n54-box.png`). Asked handover_engineer for an edge that leaves
+  the air whole; tried that picture by a local hack that is not committed: the box is gone (`see/n54-ea.jpg`).
+- 00:43 TRIAL, the close ground there at every height with the edge (presence band 5 and 2, not kept): from above
+  it is still a fan, a pale sector of its own air with the relief stretched along its rays, at 2420 a white
+  wedge, at 2440 a quarter circle over the canyon, at 2460 a pale country over the globe's own
+  (`see/n54-eh.jpg`). The relief is a picture of one eye in depth; it is not a ground from above. The presence
+  band stays 0.0034 and 0.0019: the exchange of the two grounds by height at 2472 to 2476 and 2684 to 2689
+  REMAINS in this commit.
+- 00:44 handover_engineer pushed a1a44e027862036d1bd6aa63bfaa31b2bd45dacb on agent/engine-edge:
+  `presenceEdge(feather, { air: false })`, the ground layers end at the sides and the air is not touched. Merged
+  here (929017c3). set.ts makes that choice at set-up.
+- 00:47 TRIAL at draft with a1a44e02 (edge, air whole): 2477, 2580, 2325 equal bytes; 2684, 2470, 2687 equal to
+  the local hack; the slab and fan at the right edge are out and no dark box (`see/n54-ea.jpg`). The dark dome
+  lower right at 2467 to 2471 is the globe's own ground: it is not in the surface view at 2477
+  (`see/n54-dome.jpg`).
+- 00:52 MEASURED, and it ends the edge on the globe side alone: `handover --only sides` at draft with feathers
+  676, 676, 380, 0: dive mean 1.999, 99th percentile 46, 27.1 percent of pixels over 1; rise mean 1.156, 99th
+  percentile 40, 11.2 percent over 1 (limits 0.5 and 4; the commit before has 0.008 and 0.006). With feathers of
+  96 px: dive 1.517 and 45, 20.6 percent over 1; rise 0.747 and 30, 6.5 percent over 1
+  (`see/n54-sides96-dive.png`, `see/n54-sides96-rise.png`). READ from the pictures: at T the surface view's own
+  camera does not stand in the picture's eye; its first frame shows the drawn out ground beyond the left side and
+  under the picture in about a fifth of the frame, its last frame shows it beyond the right side. Those aprons
+  are part of the approved canyon view. An edge that takes them off the globe side takes them out of one side of
+  T only. The engine's edge is all or nothing at a side (any feather over 0 gives share 0 beyond it), so there
+  is no law by place that keeps the aprons at T and has them gone three frames later.
+- 00:56 So ruling 2 cannot be built on presenceEdge from the globe side alone. What it needs is the same ground
+  behind the aprons on BOTH sides of T: the surface view drawing the globe's own ground where its aprons stand,
+  from 2477 on and up to 2681, which changes the approved canyon view wherever an apron is in view. Measuring
+  now in how much of each surface frame an apron stands.
+- 00:57 MEASURED at draft, the surface view itself drawn with an edge of 1 px (its aprons out, nothing else)
+  against its kept frames, share of pixels that differ by more than 1 and by more than 8 of 255: 2477 26.3 and
+  22.2 percent; 2480 20.1 and 16.7; 2490 13.0 and 10.6; 2520 4.9 and 4.5 (left of x 910, under y 474); 2580,
+  2609, 2640, 2671, 2676 none; 2681 7.8 and 6.2 (right of x 1667). `see/n55-aprons.jpg`. So the approved canyon
+  view stands on its aprons in its first 45 frames or so and in its last five, and the judged frame 2580 has
+  none. The trial edge on the globe side changed 8.6 percent of the pixels by more than 8 at 2470, 7.4 at 2684
+  and 5.3 at 2687 against d6c01889.
+- 00:58 DECISION: the edge is not committed. set.ts and close.json are those of 2daa8f01; the merges of
+  agent/engine-edge are dropped here (they were never pushed). Told handover_engineer.
+  What ruling 2 needs, in order of what I would build: (1) the globe side owning every frame in which an apron
+  is in view, that is T of the dive at a frame near 2530 and T of the rise at or before 2676, both inside the
+  surface view's own span, which place.json cannot say today (`dive.at` and `rise.at` are shares of the dive and
+  the rise); with that, `ground.presenceEdge(feather, { air: false })` of a1a44e02 takes the aprons off the
+  globe and the globe's own ground stands behind, and T sits where both sides are the picture alone. (2) or the
+  surface view drawing the globe under its relief through `plan.twin`, which the set cannot do: the view has one
+  camera and one scene. Either way 2477 to about 2530 and 2677 to 2681 change where an apron stood, and 2580
+  keeps its bytes.
+- 00:59 Merged main 12bfd7d5 (take batch 5). The merge has nine bases and git marked conflicts in files that
+  only one side had changed since 2475f6c0; resolved by side: Mars's three folders as on 2daa8f01, everything
+  else as on main. CHECKED: the tree outside the three folders is main's, inside them it is 2daa8f01's, to the
+  byte (two empty diffs). Merge 37d874e1.
+- 01:10 MAIL 832: d6c01889 on the machines. Green: path, place, 4K against 1080p, handover (dive 0.008, rise
+  0.006). Red: dive level step 1.32 at 2412 + 1/2 (limit 1.3, main has the same), pop 1.30 at 2438 (12 frames
+  over), pattern 1.28 from 2463 + 1/2 to 8 frames later (35 frames over, first 2434 + 1/2); rise pop 1.31 at 2687
+  (4 over), pattern 1.02 from 2690 + 1/2 (79 over, first 2678). READ from its tables: the pattern of the dive is
+  0.44 to 0.45 at 2434 to 2438, under 0.25 from 2440 to 2452, 0.45 at 2454, 0.73 to 0.89 at 2456 to 2460, 1.20
+  to 1.27 at 2462 to 2466, 0.86 at 2468, 0.41 at 2470, 0.17 and less from 2472. The pair of 2464 is 2472: the
+  globe's ground against the close ground that has come in over it by height. The rows 2456 to 2460 pair two
+  frames of the globe's own ground. The rise: 0.47 at 2678, 0.79 to 1.01 at 2680 to 2692, 0.50 to 0.90 to 2710.
+- 01:25 Proof on the merge 37d874e1 of main 12bfd7d5, nothing of Mars's picture changed (`proof55.log`): tsc
+  clean; final 2325 sha256 da436cb0...a99db1; final 2580 equal to the kept final; draft bytes equal to d6c01889
+  at 2420, 2427, 2440, 2452, 2460, every frame 2467 to 2481 and 2671 to 2692, 2700, 2710, 2720, 2726, 2740, and
+  equal to 2daa8f01 at 2176, 2200, 2230, 2325, 2400, 2520, 2580, 2640, 2760, 2800, 2819; sides dive mean 0.008
+  (max 13), rise 0.006 (max 6); smooth path green; G11 and G15 pass (mars/web 417 MB, mars/full 1399 MB); vitest
+  800 ok, 0 not ok; globe-levels as before (patch-19 to land-8p5 0.32 full, 0.30 web, others 0.00 to 0.07); px
+  in view at the shutter floor dive 47.7 at 2456 (over 14 on 2419 to 2479), rise 65.8 at 2701 (over 14 on 2676
+  to 2726).
+- 01:26 The level at 2412 + 1/2 (MAIL 832 note 2). MEASURED at draft, whole frames 2411, 2412, 2413 (my scratch
+  tool draws no half frames): the frame's mean is 69.53, 68.51, 68.82. In a grid of 4 by 4 the block at the right
+  edge, third row, falls 78, 41, 21 while every block on the planet rises by 3 to 6 a frame. SEEN
+  (`see/n55-level.jpg`): Phobos, lit, stands cut by the right edge of the frame at 2411, is a sliver at 2412 and
+  is out at 2413. The moon leaving the frame is what bends the level there; not the exposure and not the haze.
+- 01:28 COMMIT of the third named state of the round: the merge of main 12bfd7d5 and this notebook. Nothing in
+  src/stops/mars or public/assets/mars differs from 2daa8f01; no engine branch is built on. Net of the three
+  folders against main 12bfd7d5: about -11,040,000 bytes (the notebook grows by these lines). Ruling 2 is NOT
+  done: the reasons and what it needs stand in the entries of 00:52 to 00:58.
