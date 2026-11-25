@@ -1,9 +1,52 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T12:12:29.671Z",
- "head": "7f9b2697e1168a283b04882d14a9775e964498d8",
- "note": "control of mail 1061 measured (cover held: 0.14 to 0.44 where the named tree reads 0.49 to 1.03); dive lines of 6e96b4cb render now",
+ "pushed": "2026-11-25T12:51:23.819Z",
+ "head": "0025b0b5b7007c550a021474ae60f67fc08b515b",
+ "note": "mail 1079 and 1093: the one law of cover is being built (share by height out, dust by height out, clamp open); controls at 3720, 3806, 3814",
  "looks": [
+  {
+   "time": "2026-11-25T12:51:23.147Z",
+   "file": "20261125125123147-note-pair_rise.jpg",
+   "source": "../../../../tmp/v/law0/pair_rise.png",
+   "kind": "note",
+   "label": "3806 and 3814 on the law control (draft): nothing opens"
+  },
+  {
+   "time": "2026-11-25T12:51:22.493Z",
+   "file": "20261125125122493-note-foot3.jpg",
+   "source": "../../../../tmp/v/law0/foot3.png",
+   "kind": "note",
+   "label": "the foot at 3720: top the approved close, middle the named final, bottom the law control (draft)"
+  },
+  {
+   "time": "2026-11-25T12:51:21.862Z",
+   "file": "20261125125121862-note-pair_3720.jpg",
+   "source": "../../../../tmp/v/law0/pair_3720.png",
+   "kind": "note",
+   "label": "3720: left the named final, right the near look with no share by height and no dust (control of the law, draft)"
+  },
+  {
+   "time": "2026-11-25T12:22:33.105Z",
+   "file": "20261125122233105-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r68/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "dive on the named head 6e96b4c: the tool's sheet of the largest changes",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T12:22:31.993Z",
+   "file": "20261125122231993-note-dive_named_foot.jpg",
+   "source": "../../../../tmp/v/r68/dive_named_foot.png",
+   "kind": "note",
+   "label": "dive on the named head 6e96b4c: the foot at full size 3598 to 3612"
+  },
+  {
+   "time": "2026-11-25T12:22:30.670Z",
+   "file": "20261125122230670-note-dive_named_contact.jpg",
+   "source": "../../../../tmp/v/r68/dive_named_contact.png",
+   "kind": "note",
+   "label": "dive on the named head 6e96b4c: twelve whole frames 3596 to 3632, tool verdict green (pattern 0.40, pop 1.07)"
+  },
   {
    "time": "2026-11-25T12:12:28.696Z",
    "file": "20261125121228696-note-ctl_four.jpg",
@@ -17,49 +60,6 @@
    "source": "../../../../tmp/v/r69/ctl_three.png",
    "kind": "note",
    "label": "control, cover held: the foot at 3806, 3814, 3822 at full size"
-  },
-  {
-   "time": "2026-11-25T12:12:26.476Z",
-   "file": "20261125121226476-note-ctl_changes.jpg",
-   "source": "../../../../tmp/v/r69/ctl_changes.png",
-   "kind": "note",
-   "label": "control of mail 1061: cover share held at 0.7037, tool sheet of the rise slice 3798 to 3840, pattern most 0.44 before 3824, 0.70 at 3828"
-  },
-  {
-   "time": "2026-11-25T11:37:53.487Z",
-   "file": "20261125113753487-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r68/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "the tool's sheet of the rise's changes on the named head: pattern red 1.03, 3802 to 3819",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T11:37:52.254Z",
-   "file": "20261125113752254-note-n3720_cap.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_cap.png",
-   "kind": "note",
-   "label": "3720 cap at 1 to 1: approved, named 88ba2385, the named head 6e96b4c"
-  },
-  {
-   "time": "2026-11-25T11:37:51.265Z",
-   "file": "20261125113751265-note-n3720_OP_near.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_OP_near.png",
-   "kind": "note",
-   "label": "3720 near ring field at 1 to 1: approved, named 88ba2385, the named head 6e96b4c"
-  },
-  {
-   "time": "2026-11-25T11:37:50.140Z",
-   "file": "20261125113750140-note-n3720_QR_foot.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_QR_foot.png",
-   "kind": "note",
-   "label": "3720 foot at 1 to 1: approved, named 88ba2385, the named head 6e96b4c"
-  },
-  {
-   "time": "2026-11-25T11:37:49.116Z",
-   "file": "20261125113749116-note-n3720_whole.jpg",
-   "source": "../../../../tmp/v/x/mail/n3720_whole.jpg",
-   "kind": "note",
-   "label": "3720 final on the named head 6e96b4c: approved, named 88ba2385, this commit"
   }
  ]
 }
