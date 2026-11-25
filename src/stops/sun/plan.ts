@@ -143,7 +143,13 @@ export class SunPlan extends StopPlan {
     const u = climb.ease.speed * (this.run(tRel) - this.run(dur * (0.5 + pivot)))
     const c = u + pivot + g * pivot * pivot
     const lin = g === 0 ? c : (-1 + Math.sqrt(Math.max(1 + 4 * g * c, 0))) / (2 * g)
-    return super.terrain((lin + 0.5) * dur)
+    const pose = super.terrain((lin + 0.5) * dur)
+    // the drift (place.drift): the eye slides to its right into the glide, which it reaches at the middle frame with
+    // no speed and no change of speed left, so the near ground passes faster than the horizon; from there on the
+    // camera is the glide's own
+    const x = tRel / (dur * (0.5 + pivot))
+    if (x < 1) pose.position.x -= place.drift.side * Math.pow(1 - x, place.drift.power)
+    return pose
   }
 
   // The bend of the surface view into its rise (ruling d196), the engine's own (src/director/bend.ts): from place.bend.from

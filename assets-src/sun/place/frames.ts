@@ -14,13 +14,15 @@ for (const part of String(a.frames ?? '').split(',')) {
 const tier = a.tier ?? 'draft'
 const diag = a.diag ?? 'beauty'
 const dir = a.dir ?? 'out/work/sun/pl/frames'
+// --rate N: the page counts capture frames at N to a film frame (as the smooth tool does), and --frames are capture frames
+const rate = a.rate ? Number(a.rate) : 1
 requireDisk(cfg)
 ensureBuild()
 mkdirSync(dir, { recursive: true })
 const held: { session?: Session } = {}
 for (const frame of list) {
-  const { png, seconds } = await renderPngFresh(() => openCapture({ dist: DIST, format: formatId(cfg, a.format), assets: 'full', diag }), held, frame, tier)
-  const file = join(dir, 'f' + String(frame).padStart(5, '0') + (diag === 'beauty' ? '' : '-' + diag) + '.png')
+  const { png, seconds } = await renderPngFresh(() => openCapture({ dist: DIST, format: formatId(cfg, a.format), assets: a.assets === 'web' ? 'web' : 'full', diag, query: rate > 1 ? '&rate=' + rate : '' }), held, frame, tier)
+  const file = join(dir, (rate > 1 ? 'k' + String(frame).padStart(6, '0') + '-r' + rate : 'f' + String(frame).padStart(5, '0')) + (diag === 'beauty' ? '' : '-' + diag) + '.png')
   writeFileSync(file, png)
   console.log(file + ' ' + seconds.toFixed(1) + 's')
 }
