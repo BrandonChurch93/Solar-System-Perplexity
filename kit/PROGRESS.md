@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 6 · Polish and deliver
 - Current stop: none. All nine stops are finished (Phase 4 gate, 00:52 UTC on 2026-11-22). Phase 5 is done: its three whole film rounds 30, 31 and 32 ran to the limit of three, round 32 closed at 11:55 UTC and its build is kept as the best of the three (main 4365a0f0, engine hash be043ade04a7ab6e: R5 7, R6 6, R7 6, R2 pass, R3 4, R4 6; 1 severe and 21 major, written under open items 79 to 100), and the Phase 5 gate held at 12:23 UTC with the preview film of that build in `out/preview.mp4`. Phase 6 step 1 runs: three polish rounds (33, 34, 35) on the open items, worst first, each judged only on the frames its batch touched. Round 33 closed at 15:26 UTC with 95 answers (13 severe, 97 major; motion better at Jupiter, Saturn, Mercury, Neptune and the Sun, so its build is the base of round 34). Round 34 closed at 17:40 UTC with 59 answers (10 severe, 80 major, written under open items 109 to 129; the opening at phone size passes with 9, compression 8, the whole film 6; motion at Mercury 3 and Earth 4, and the film's motion critic names two sky pops that are the camera's turn). Round 35, the last polish round, is cut at 18:30 UTC from take outs and small proven things, with at most one larger cure per stop as its own commit; then the best build of rounds 32 to 35 is frozen, and the record round, the sandbox master, the nine clips, the nine posts and the gauntlet follow
-- Current round: open: 52 (mercury), 53 (venus), 54 (uranus). The next round is 55. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: 52 (mercury), 53 (venus), 54 (uranus), 55 (earth). The next round is 56. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_1983
 - Blocked: no
 - Review notes in force: three, of 05:57 UTC and of about 21:50 UTC on 2026-11-23 and of about 21:25 UTC on 2026-11-24. The second is the section "Second review note of 2026-11-23" (plans E to I), the third the section "Third review note of 2026-11-24" (plans J to N); together they set the work from here
@@ -221,7 +221,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 | sun | in progress | 1 | 5 | pass | 4 | 4 | pass | 46 to 53 |
 | mercury | in progress | 3 | 8 | pass | 3 | 8 | pass | 69 to 78 |
 | venus | in progress | 2 | 8 | pass | 5 | 6 | pass | 28 to 32 |
-| earth | in progress | 1 | 9 | pass | 3 | 8 | pass | 54 to 61 |
+| earth | in progress | 3 | 9 | pass | 3 | 8 | pass | 54 to 61 |
 | mars | in progress | 1 | 9 | pass | 4 | 4 | pass | 6 to 15 |
 | jupiter | in progress | 1 | 6 | pass | 6 | 3 | pass | 33 to 37 |
 | saturn | in progress | 2 | 7 | fail | 4 | 8 | pass | 38 to 45 |
@@ -1534,6 +1534,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 52, Phase 6, mercury, round 3 of 3. Started 2026-11-25 10:38 UTC.
 - Round 53, Phase 6, venus, round 2 of 3. Started 2026-11-25 10:38 UTC.
 - Round 54, Phase 6, uranus, round 3 of 3. Started 2026-11-25 10:38 UTC.
+- Round 55, Phase 6, earth, round 3 of 3. Started 2026-11-25 10:38 UTC.
 
 ## Final scores
 
