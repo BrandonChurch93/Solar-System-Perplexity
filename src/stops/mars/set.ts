@@ -3,6 +3,7 @@ import { HazeShell } from '../../bodies/haze'
 import { MoonBody } from '../../bodies/moonbody'
 import { Planet } from '../../bodies/planet'
 import type { SetContext, SetFactory, SkyPatch, TextureOptions, ViewKind } from '../../core/types'
+import { bufferFrame } from '../../core/frame'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { FarPoint } from '../../bodies/farpoint'
@@ -131,10 +132,15 @@ export const createSet: SetFactory = async (ctx) => {
   const shellTwilightLow = new THREE.Vector3().fromArray(look.descent.shellTwilight)
   const edgeLow = new THREE.Vector2().fromArray(look.descent.edge)
   const edge = new THREE.Vector2()
+  // a range under every value of a cosine: the planet's veil at a grazing sight line then holds on every side and under every Sun
+  const everywhere = new THREE.Vector2(-3, -2)
   // the glow of the close view's low Sun, as a direction in the stop's frame: from the twin of the dive at T
   const glowGround = new THREE.Vector3(1, 0, 0)
   const glowShell = new THREE.Vector3(1, 0, 0)
   const glowWorld = new THREE.Vector3()
+  // the far ground's veil is lit where the ground lies toward the low Sun of the close view: a direction along the ground in the stop's frame
+  const veilLight = new THREE.Vector3(1, 0, 0)
+  let veilSpin = 0
   const ownGain: [number, number, number] = [1, 1, 1]
   const hasOwn = patches.levels.some((l) => l.own)
   const diveT = handoverOf(plan.id, 'dive')?.time
@@ -151,6 +157,8 @@ export const createSet: SetFactory = async (ctx) => {
     }
     aim(glowGround, nearJson.glow.ground)
     aim(glowShell, nearJson.glow.shell)
+    aim(veilLight, { rightDeg: nearJson.grazing.lightRightDeg, upDeg: 0 })
+    veilSpin = plan.spin(diveT)
   }
   const light = new THREE.Vector3()
   const glow = new THREE.Vector3()
@@ -159,6 +167,16 @@ export const createSet: SetFactory = async (ctx) => {
   const holdDirection = new THREE.Vector3()
   const grazingHome = new THREE.Vector3().fromArray(look.grazing.highlightDir).normalize().applyQuaternion(holdTurn)
   const grazingSide = new THREE.Vector3().fromArray(look.grazing.sideDir).normalize().applyQuaternion(holdTurn)
+  // the hold's own veil at a grazing sight line, as the planet was built with it: near.json grazing takes the same uniforms below
+  // the height where the descent has put that veil out, and these give them back above it
+  const grazingHold = {
+    shape: (planet.material.uniforms.uGrazingShape!.value as THREE.Vector4).clone(),
+    day: (planet.material.uniforms.uGrazingDay!.value as THREE.Vector2).clone(),
+    fill: (planet.material.uniforms.uGrazingFill!.value as THREE.Vector3).clone(),
+    highlight: (planet.material.uniforms.uGrazingHighlight!.value as THREE.Vector3).clone(),
+    sideRange: (planet.material.uniforms.uGrazingSideRange!.value as THREE.Vector2).clone(),
+    range: (planet.material.uniforms.uGrazingRange!.value as THREE.Vector2).clone(),
+  }
   const shellHome = new THREE.Vector3().fromArray(look.shellDir).normalize().applyQuaternion(holdTurn)
   const glowHome = new THREE.Vector3().fromArray(look.haloDir).normalize().applyQuaternion(holdTurn)
   const glintHome = new THREE.Vector3().fromArray(look.glintDir).normalize().applyQuaternion(holdTurn)
@@ -247,6 +265,24 @@ export const createSet: SetFactory = async (ctx) => {
       su.uHazeTau!.value *= 1 + (n.shellDepth - 1) * near
       su.uHazeH!.value *= 1 + (n.shellScaleHeight - 1) * near
       pu.uHazeH!.value = look.haze.scaleHeight * (1 + (n.hazeScaleHeight - 1) * near)
+      // the far ground's veil of the close view, by the angle of the sight line to the ground (near.json grazing): the planet's veil at a
+      // grazing sight line is the hold's above descent.low and is out below it (depth times 1 - low), so from there down its uniforms
+      // carry the close view's far haze, by the weight near. No time is read.
+      const ng = n.grazing
+      const veil = near > 0 && low >= 1
+      const shape = pu.uGrazingShape!.value as THREE.Vector4
+      if (veil) shape.set(ng.depth * near, ng.width, ng.width, ng.power)
+      else shape.set(look.grazing.depth * (1 - low), grazingHold.shape.y, grazingHold.shape.z, grazingHold.shape.w)
+      ;(pu.uGrazingDay!.value as THREE.Vector2).copy(veil ? everywhere : grazingHold.day)
+      ;(pu.uGrazingSideRange!.value as THREE.Vector2).copy(veil ? everywhere : grazingHold.sideRange)
+      if (veil) (pu.uGrazingFill!.value as THREE.Vector3).fromArray(ng.fill)
+      else (pu.uGrazingFill!.value as THREE.Vector3).copy(grazingHold.fill)
+      if (veil) (pu.uGrazingHighlight!.value as THREE.Vector3).fromArray(ng.light)
+      else (pu.uGrazingHighlight!.value as THREE.Vector3).copy(grazingHold.highlight)
+      if (veil) (pu.uGrazingRange!.value as THREE.Vector2).set(ng.lightFrom, ng.lightTo)
+      else (pu.uGrazingRange!.value as THREE.Vector2).copy(grazingHold.range)
+      // the lit side of the veil lies on the ground: it turns with the body from where it stood at T of the dive
+      if (veil) (pu.uGrazingSun!.value as THREE.Vector3).copy(veilLight).applyAxisAngle(plan.axis, plan.spin(state.time) - veilSpin).applyQuaternion(state.rotation)
       const gg = n.glow.ground
       const gs = n.glow.shell
       planet.setGlow(glowWorld.copy(glowGround).applyQuaternion(state.rotation), [gg.colour[0]! * near, gg.colour[1]! * near, gg.colour[2]! * near], gg.power)
@@ -320,7 +356,8 @@ export const createSet: SetFactory = async (ctx) => {
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      // counted in pixels of the buffer, so through the engine's measure of the frame (src/core/frame.ts, decision d253)
+      const visible = radiusPx > 0.6 * bufferFrame()
       planet.mesh.visible = visible
       shell.mesh.visible = visible
       halo.mesh.visible = visible && low < 1
