@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T07:03:47.193Z",
- "head": "b9908e0352a26912e1440587e32e2a69343167d4",
- "note": "E2 state: red on the pattern in both moves, the far band's deck comes with the air in ten frames; next trial keeps the towers' colour",
+ "pushed": "2026-11-25T07:35:05.512Z",
+ "head": "29eea607c472653f103f2b80e74a26608cf8d6b9",
+ "note": "layers alone: the sea layer carries the pattern number; globe alone 0.17",
  "looks": [
+  {
+   "time": "2026-11-25T07:35:04.934Z",
+   "file": "20261125073504934-note-like-e2-1876-1890.jpg",
+   "source": "../../../../tmp/gl/k9/like-e2-1876-1890.jpg",
+   "kind": "note",
+   "label": "1876 laid to the pose of 1890, detail and pattern change, band 8 to 12 deg marked",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T07:35:04.324Z",
+   "file": "20261125073504324-note-d1-vs-e3.jpg",
+   "source": "../../../../tmp/gl/k9/d1-vs-e3.jpg",
+   "kind": "note",
+   "label": "layers 1878 to 1890: globe alone above, with the ground below",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T07:03:46.400Z",
    "file": "20261125070346400-note-e2r-b.jpg",
@@ -52,22 +68,6 @@
    "source": "../../../../tmp/gl/k7/sh-a-s1.jpg",
    "kind": "note",
    "label": "b9908e03 draft dive 1860 to 1868 for the pair",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T05:41:27.816Z",
-   "file": "20261125054127816-note-sh-a.jpg",
-   "source": "../../../../tmp/gl/k7/sh-a.jpg",
-   "kind": "note",
-   "label": "step 1 trial (share by the air path eased, kappa 0.55 cap 40 root 0.55 ends 0.15): draft dive 1860 to 1868, not judged yet",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T05:17:06.051Z",
-   "file": "20261125051706051-note-cmp-p24-r1c2-t1-c.jpg",
-   "source": "out/work/earth/place/k3/take/cmp-p24-r1c2-t1-c.jpg",
-   "kind": "note",
-   "label": "K3 first take: patch-24 tile at true size, left as shipped, right the take",
    "stop": "earth"
   }
  ]
