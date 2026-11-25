@@ -1,9 +1,23 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T00:16:04.801Z",
- "head": "e789b0c94d6e4fc6000c0fa5e2d88c7e1387f563",
- "note": "mail 805: Earth 1857 and Mars 2427 four times each at the final tier, both rates",
+ "pushed": "2026-11-25T00:44:20.145Z",
+ "head": "12c5885384337163a364633214d50f1fbad78239",
+ "note": "mail 824: edge proof done (10 drafts equal), step law in test, presenceEdge air option pushed for Mars",
  "looks": [
+  {
+   "time": "2026-11-25T00:44:19.197Z",
+   "file": "20261125004419197-note-f02701.jpg",
+   "source": "out/work/blur/edge-after/f02701.png",
+   "kind": "note",
+   "label": "Mars 2701 draft, one sample, tree 42115f68 (edge off): bytes equal to 79ade566"
+  },
+  {
+   "time": "2026-11-25T00:44:17.482Z",
+   "file": "20261125004417482-note-f02156.jpg",
+   "source": "out/work/blur/edge-after/f02156.png",
+   "kind": "note",
+   "label": "Earth 2156 draft, one sample, tree 42115f68 (edge off): bytes equal to 79ade566"
+  },
   {
    "time": "2026-11-25T00:15:52.342Z",
    "file": "20261125001552342-note-earth1857-land-four.jpg",
@@ -51,22 +65,6 @@
    "kind": "note",
    "label": "Earth 1857 lower left quarter at full size, final tier, film rate as it is (floor 0.5): blur 15.6 px, 64.3 px to the next frame",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-24T23:51:03.625Z",
-   "file": "20261124235103625-note-mars2427-r2-whole.jpg",
-   "source": "../../../../tmp/law/m805/mars2427-r2-whole.png",
-   "kind": "note",
-   "label": "Mars 2427 (capture frame 4854) lower right quarter, final tier, rate 2 with the whole shutter of the capture frame: blur 28.8 px, 58.4 px to the next drawn frame",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-24T23:51:02.955Z",
-   "file": "20261124235102955-note-mars2427-r2-asis.jpg",
-   "source": "../../../../tmp/law/m805/mars2427-r2-asis.png",
-   "kind": "note",
-   "label": "Mars 2427 (capture frame 4854) lower right quarter, final tier, rate 2 as it is (floor 0.5): blur 14.4 px, 58.4 px to the next drawn frame",
-   "stop": "mars"
   }
  ]
 }
