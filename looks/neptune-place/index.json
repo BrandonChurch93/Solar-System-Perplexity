@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T10:08:08.652Z",
+ "pushed": "2026-11-25T10:32:51.256Z",
  "head": "0971fc1df1cba26f17a1d660924bd31629d0bc8b",
- "note": "way C first trials at 4860 beside the approved: trial 4 right way but near ground too blue, trial 5 tints olive (bad, not kept)",
+ "note": "way C at 4860 beside the approved (G17 proxy 0.412), frames inside the air, first proofs: 4605 same bytes, pairs 0.33 and 0.31",
  "looks": [
+  {
+   "time": "2026-11-25T10:32:49.959Z",
+   "file": "20261125103249959-note-c-air-C8.jpg",
+   "source": "out/work/nep/weave/ev/c-air-C8.jpg",
+   "kind": "note",
+   "label": "way C inside the air: 4745 (left) and 4963 (middle), beside 4963 with the hold's curve and no air (right). 4605 at 1920 is the same bytes as c2edd61b. Pairs 4992 to 5000 0.33 and 4704 to 4712 0.31 on my copy of the reader (limit 0.45)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T10:32:48.953Z",
+   "file": "20261125103248953-note-c-4860-C8.jpg",
+   "source": "out/work/nep/weave/ev/c-4860-C8.jpg",
+   "kind": "note",
+   "label": "way C at 4860 (left) beside the approved (middle); right is the trial before. One curve at every height, the air as shares of the hold's light: white streamer, dark navy near, paler far, pale limb, no hard specks. Far plain still darker than the approved. G17 proxy median 0.412 p25 0.091 (c2edd61b 0.508, bar 0.8: red before and after). Preview draft 23 to 39 s per frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T10:08:08.043Z",
    "file": "20261125100808043-note-c-4860-C5.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/ev/chain-4962-base.jpg",
    "kind": "note",
    "label": "c2edd61ba 4962 | 4970 carried back | pattern map: my copy of the reader, rate 2, 480 wide: 0.87 at (464, 1076) of 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T09:13:30.237Z",
-   "file": "20261125091330237-note-fleck-4960.jpg",
-   "source": "out/work/nep/weave/ev/fleck-4960.jpg",
-   "kind": "note",
-   "label": "c2edd61ba rise 4960 to 4967, preview crops x4: one hard pale fleck on the dark near deck comes in over the lower edge at 4961 and rides up; it is the hot place of the red at 4962 (my copy of the reader 0.87 at 464, 1076). Draft rate 2, 18 s per frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T09:13:29.674Z",
-   "file": "20261125091329674-note-4605-NG.jpg",
-   "source": "out/work/nep/weave/ev/4605-NG.jpg",
-   "kind": "note",
-   "label": "4605 at 1920, the place: CONTROL no grade at any height (left) against c2edd61ba (right): 88934 px differ, 24425 over 8 levels, most 72. Draft, 29.9 s per frame. Not laid",
    "stop": "neptune"
   }
  ]
