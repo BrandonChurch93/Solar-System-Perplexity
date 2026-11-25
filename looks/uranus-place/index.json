@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T16:24:26.827Z",
+ "pushed": "2026-11-25T16:52:33.231Z",
  "head": "9c8a46df4b0a760960ed3dfa2d62cb3a31146915",
- "note": "9c8a46df named 16:18; trial of the pinned table eye: brighter patch at 4160 to 4168, 4416 paler, under look",
+ "note": "pinned table trial: dive 4170 + 1/2 pattern 0.47 against 1.32; rise 4414 + 1/2 0.98 against 1.05 and paler; not committed",
  "looks": [
+  {
+   "time": "2026-11-25T16:52:32.169Z",
+   "file": "20261125165232169-note-s-pin-rise.jpg",
+   "source": "../../../../tmp/n57/s-pin-rise.jpg",
+   "kind": "note",
+   "label": "trial, not committed: rise 4379 to 4416, the place's table read from the handover's eye (paler from 4392 on)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T16:52:31.137Z",
+   "file": "20261125165231137-note-s-pin-dive.jpg",
+   "source": "../../../../tmp/n57/s-pin-dive.jpg",
+   "kind": "note",
+   "label": "trial, not committed: dive 4170 to 4200 every second frame, the place's table read from the handover's eye",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T16:24:26.158Z",
    "file": "20261125162426158-note-pair-pin-b.jpg",
@@ -235,28 +251,6 @@
    "stop": "uranus",
    "segment": "uranus.hold",
    "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f200e17ad0e70237"
-  },
-  {
-   "time": "2026-11-25T13:50:12.607Z",
-   "file": "20261125135012607-note-two-4417.jpg",
-   "source": "../../../../tmp/n55/two-4417.jpg",
-   "kind": "note",
-   "label": "82140079 draft: 4417 beside 4422, the smooth sheet goes and the map's streaks stand (rise part 2 red)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T13:28:47.071Z",
-   "file": "20261125132847071-frame-N1-4290.jpg",
-   "source": "out/work/u/fin/N1-4290.png",
-   "kind": "frame",
-   "label": "uranus.terrain frame 4290, final tier",
-   "stop": "uranus",
-   "segment": "uranus.terrain",
-   "frame": 4290,
    "tier": "final",
    "format": "16x9",
    "diag": "beauty",
