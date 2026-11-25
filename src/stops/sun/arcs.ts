@@ -17,8 +17,9 @@ import data from './arcs.json'
  * its colour follows from how much it gives. Nothing of a strand comes or goes with the clock; the lines stand
  * still and only the plasma on them moves.
  *
- * A strand thinner than a pixel keeps a pixel's width and gives less light by the same share, so the arcade seen
- * from far is the same body with the same light, only smaller.
+ * A strand thinner than a pixel keeps a pixel's width and gives less light by the same share; the thinner it is, the
+ * more its light lies as one soft bell over its band and the less as a line. So the arcade seen from far is the same
+ * body with the same light, filtered: a glow in the shape of its lines, not a wire.
  */
 
 const VERT = /* glsl */ `
@@ -65,6 +66,7 @@ uniform vec3 uCool;
 uniform vec3 uHot;
 uniform vec2 uTone;
 uniform vec2 uHalo;
+uniform vec2 uThin;
 in vec4 vAcross;
 in vec4 vStrand;
 in vec2 vFlow;
@@ -97,8 +99,30 @@ void main() {
   float low = 1.0 + uFoot.x * exp(-max(vAcross.z, 0.0) / uFoot.y);
   float ends = smoothstep(0.0, uFoot.z, vAcross.w) * smoothstep(0.0, uFoot.z, 1.0 - vAcross.w);
   float gives = vStrand.z * plasma * low * mix(1.0, ends, vFlow.y);
-  vec3 shown = mix(uCool, uHot, gives / (gives + uTone.x)) * (gives * tube * uPlasmaMore.z);
-  vec3 col = inverseFilmic(min(shown, vec3(uTone.y))) * (vStrand.y * uKeep);
+  vec3 base = mix(uCool, uHot, gives / (gives + uTone.x)) * (gives * uPlasmaMore.z);
+  vec3 lit = inverseFilmic(min(base * tube, vec3(uTone.y)));
+  // a strand thinner than a pixel is not a line any more: the light of its tube and sheath, summed across the band
+  // in linear light (three points over the tube, two over the sheath beyond it), is laid as one bell over the whole
+  // band. The sum across is the same as the tube's own, so the strand gives the pixel the share of it that its true
+  // width covers and nothing more; many of them over each other are a glow in the shape of their lines
+  float soft = 1.0 - smoothstep(uThin.x, uThin.y, vStrand.y);
+  if (soft > 0.0) {
+    float edge = 1.0 / uHalo.x;
+    vec3 sum = vec3(0.0);
+    for (int k = 0; k < 3; k++) {
+      float a = edge * (k == 0 ? 0.1127017 : k == 1 ? 0.5 : 0.8872983);
+      float s = 1.0 - a * a;
+      float t = a * uHalo.x;
+      sum += edge * (k == 1 ? 0.4444444 : 0.2777778) * inverseFilmic(min(base * (1.0 - t * t + uHalo.y * s * s), vec3(uTone.y)));
+    }
+    for (int k = 0; k < 2; k++) {
+      float a = edge + (1.0 - edge) * (k == 0 ? 0.2113249 : 0.7886751);
+      float s = 1.0 - a * a;
+      sum += (1.0 - edge) * 0.5 * inverseFilmic(min(base * (uHalo.y * s * s), vec3(uTone.y)));
+    }
+    lit = mix(lit, sum * (1.875 * sheath * sheath), soft);
+  }
+  vec3 col = lit * (vStrand.y * uKeep);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = vec4(col, 0.0);
@@ -201,22 +225,27 @@ export class Arcade {
     for (let k = 0; k < m.count; k++) {
       const id = 1000 + k
       let p = mainArch(id)
-      if (rnd(id, 6) < m.inBundle) {
-        // a strand of a bundle: the bundle's arch, a little off it
-        const g = mainArch(100 + Math.floor(rnd(id, 7) * m.bundles))
+      const bundled = rnd(id, 6) < m.inBundle
+      if (bundled) {
+        // a strand of a bundle: the bundle's arch, a little off it. The bundles are of unlike size: the first ones
+        // hold the most strands, and a bundle of many strands is wider than one of few
+        const n = Math.min(Math.floor(Math.pow(rnd(id, 7), m.unlike) * m.bundles), m.bundles - 1)
+        const g = mainArch(100 + n)
+        const wide = between(m.spread.wide, n / Math.max(m.bundles - 1, 1))
         p = {
-          h: g.h * (1 + m.spread.height * (2 * rnd(id, 8) - 1)),
-          lean: g.lean + deg(m.spread.leanDeg) * (2 * rnd(id, 9) - 1),
-          a: foot(g.a, id, 10, [m.spread.feet, m.spread.feet]),
-          b: foot(g.b, id, 12, [m.spread.feet, m.spread.feet]),
+          h: g.h * (1 + wide * m.spread.height * (2 * rnd(id, 8) - 1)),
+          lean: g.lean + deg(wide * m.spread.leanDeg) * (2 * rnd(id, 9) - 1),
+          a: foot(g.a, id, 10, [wide * m.spread.feet, wide * m.spread.feet]),
+          b: foot(g.b, id, 12, [wide * m.spread.feet, wide * m.spread.feet]),
         }
       }
       const thick = Math.pow(rnd(id, 14), 2)
       all.push({
         line: arch(p.a, p.b, p.h, p.lean, m.segments, id),
         seed: rnd(id, 15),
-        radius: between(m.radius, thick),
-        gain: between(m.gain, rnd(id, 16)) * (0.7 + 0.3 * thick),
+        // a strand of no bundle is thinner and dimmer than one of a rope
+        radius: between(m.radius, thick) * (bundled ? 1 : m.loose.radius),
+        gain: between(m.gain, rnd(id, 16)) * (0.7 + 0.3 * thick) * (bundled ? 1 : m.loose.gain),
         speed: between(m.speed, rnd(id, 17)) * (rnd(id, 18) < m.back ? -1 : 1),
         clump: between(m.clump, rnd(id, 19)),
         open: 0,
@@ -324,6 +353,7 @@ export class Arcade {
         uKeep: this.keep, uTime: this.time,
         uLeast: { value: new THREE.Vector2(data.least, config.raw.formats.master.height) },
         uHalo: { value: new THREE.Vector2(l.sheath[0]!, l.sheath[1]!) },
+        uThin: { value: new THREE.Vector2(data.thin[0]!, data.thin[1]!) },
         uPlasma: { value: new THREE.Vector4(l.floor, l.blobs[0]!, l.blobs[1]!, l.sparks[0]!) },
         uPlasmaMore: { value: new THREE.Vector4(l.fine, l.sparks[1]!, l.level, 0) },
         uFoot: { value: new THREE.Vector4(l.foot[0]!, l.foot[1]!, l.ends, 0) },

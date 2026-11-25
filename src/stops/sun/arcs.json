@@ -1,7 +1,7 @@
 {
-  "note": "The arcade as bodies in space (MAIL 1010, MAIL 1029 point 2 and 3). Lengths are stage units (the ball's radius is terrain.json radius), angles degrees, speeds stage units a second along the strand. Every strand is a fixed line; what moves is the plasma along it, at one steady speed for each strand. least: the least half width of a strand in pixels of the buffer, below it the strand keeps that width and its light falls by the same share. light sheath: how many times the tube's width the thin sheath around it is wide, and its light against the tube's. light cool and hot: the colour of a faint and of a bright strand as the finished frame shows it, in linear light.",
+  "note": "The arcade as bodies in space (MAIL 1010, MAIL 1029 point 2 and 3). Lengths are stage units (the ball's radius is terrain.json radius), angles degrees, speeds stage units a second along the strand. Every strand is a fixed line; what moves is the plasma along it, at one steady speed for each strand. least: the least half width of a strand in pixels of the buffer, below it the strand keeps that width and its light falls by the same share. thin: over this range of a strand's true half width against least (0.45 down to 0.15) its light goes from the line of a tube to one soft bell over its whole band, with the same sum across in linear light. light sheath: how many times the tube's width the thin sheath around it is wide, and its light against the tube's. light cool and hot: the colour of a faint and of a bright strand as the finished frame shows it, in linear light. main unlike: the ten bundles are of unlike size, a strand takes bundle floor(x to this power times 10) for x from 0 to 1. main spread wide: a bundle is as wide as spread times this, the largest bundle the first value, the smallest the second. main loose: a strand of no bundle has this share of the radius and of the light.",
   "seed": 9173,
-  "least": 0.7,
+  "least": 0.7, "thin": [0.15, 0.45],
   "shape": {
     "height": 1.4,
     "power": [
@@ -40,14 +40,23 @@
       0.09,
       0.07
     ],
+    "unlike": 1.8,
     "spread": {
-      "leanDeg": 2.5,
-      "height": 0.035,
-      "feet": 0.03
+      "leanDeg": 1.8,
+      "height": 0.026,
+      "feet": 0.02,
+      "wide": [
+        1.5,
+        0.6
+      ]
+    },
+    "loose": {
+      "radius": 0.6,
+      "gain": 0.55
     },
     "radius": [
-      0.002,
-      0.011
+      0.0016,
+      0.007
     ],
     "gain": [
       0.2,
@@ -169,7 +178,7 @@
     }
   ],
   "light": {
-    "level": 0.42,
+    "level": 0.36,
     "floor": 0.05,
     "blobs": [
       1.5,
@@ -181,8 +190,8 @@
     ],
     "fine": 3.3,
     "foot": [
-      2.2,
-      0.12
+      7.0,
+      0.16
     ],
     "ends": 0.18,
     "cool": [
@@ -192,11 +201,11 @@
     ],
     "hot": [
       1.0,
-      0.62,
-      0.18
+      0.7,
+      0.28
     ],
-    "knee": 3.2,
-    "most": 0.92,
+    "knee": 8.0,
+    "most": 0.97,
     "sheath": [
       3.5,
       0.08
