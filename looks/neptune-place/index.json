@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T17:50:01.545Z",
- "head": "485d5807546cb45e3e66e3de6679c5b1bc182e50",
- "note": "17:50 UTC: 4860 trial G3 beside the approved: the texture comes back under the veil (G17 0.705/0.490 at preview, ground 17.731 against main 19.622 at 960); the limb's row at 4694 by control: the held field went with the view, now on the body (proxy 0.49 to 0.05); 67 s a draft frame",
+ "pushed": "2026-11-25T17:59:12.056Z",
+ "head": "5baaaad3641287c72c51f7b6586bd95c9229200b",
+ "note": "4860 at full size on the merge: ground part 17.780 under main's 19.759, G17 0.570; the hold costs 0.002",
  "looks": [
+  {
+   "time": "2026-11-25T17:59:10.630Z",
+   "file": "20261125175910630-note-n9-f4707.jpg",
+   "source": "../../../../tmp/n9-f4707.jpg",
+   "kind": "note",
+   "label": "4707 before (left) and now: the held field lies on the body from the dive's first moment",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T17:59:09.283Z",
+   "file": "20261125175909283-note-hold-zoom.jpg",
+   "source": "../../../../tmp/hold-zoom.jpg",
+   "kind": "note",
+   "label": "the hold 4605, the place on the globe at 3 times, before (left) and now: the eye's arm shows; MAD 7.623 (was 7.621), G17 0.674 and 0.436 as before; nothing outside the disc changes",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T17:59:07.910Z",
+   "file": "20261125175907910-note-pair-N9.jpg",
+   "source": "../../../../tmp/pair-N9.jpg",
+   "kind": "note",
+   "label": "4860 at 1920 by 1080 beside the approved (left), tree 5baaaad36: ground part 17.780 (main 19.759), sky 3.407, band 2.656; G17 median 0.570, p25 0.403; 90 s per draft frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T17:50:00.929Z",
    "file": "20261125175000929-note-m1-two.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/look-y2.jpg",
    "kind": "note",
    "label": "4860: approved (left) beside trial Y2 (right, preview 960): the eye as a dark oval with pale arms winding in; G17 0.612 / 0.210 at preview; ground part 16.406 against main 19.622 at 960; 70 s a draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T16:55:08.756Z",
-   "file": "20261125165508756-note-pg-P0-W5.jpg",
-   "source": "../../../../tmp/pg-P0-W5.jpg",
-   "kind": "note",
-   "label": "4860 preview: approved, main, tip P0, trial W5 (the place's veil of ice haze with its own light, hole at the eye, wound into the storm's arms, bands along the flow); ground part 17.359 against main's 19.622 at 960; G17 of the tip 0.544/0.194, of the trial not measured yet; 64 s a draft preview frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T16:37:06.774Z",
-   "file": "20261125163706774-note-three-appr-main-tip.jpg",
-   "source": "../../../../tmp/three-appr-main-tip.jpg",
-   "kind": "note",
-   "label": "4860: approved (top), main (middle), tip (bottom); G17 of the tip 0.544/0.194; 90.7 s a draft frame at 1920",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T16:37:06.190Z",
-   "file": "20261125163706190-note-pm-P0-Q1-Q2-Q3.jpg",
-   "source": "../../../../tmp/pm-P0-Q1-Q2-Q3.jpg",
-   "kind": "note",
-   "label": "4860 preview: approved, main, tip P0, trials Q1 to Q3 (low air's own light, hole at the eye); G17 of the tip 0.544/0.194; 64 s a draft preview frame",
    "stop": "neptune"
   }
  ]
