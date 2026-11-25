@@ -59,6 +59,7 @@ export interface LimbParams {
 export interface PatchSet {
   textures: THREE.Texture[]
   widthsDeg: number[]
+  counts: number[]
   spot: THREE.Vector3
   feather: number
   featherOwn?: number
@@ -75,6 +76,7 @@ export interface PatchSet {
 export interface NeptuneOptions {
   map: THREE.Texture
   mapWidth: number
+  mapCount: number
   code: number
   deck: number[][]
   cloud: number[][]
@@ -112,20 +114,23 @@ void main() {
 
 const SAMPLERS = Array.from({ length: MAX_LEVELS }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-// The texel count of the texels view (diag only, no colour depends on it). A level of the globe's own pyramid counts where its weight is
+// Two counts (decision d253 b, 25 Nov). The count that brings a level in (parent) is the FULL set's texels in both sets, from
+// patches.json (texels, mapTexels), so the web set's levels arrive at the same height as the full set's and are only softer; until
+// 25 Nov it was the loaded picture's own width, half in the web set, so its levels arrived at twice the height.
+// The texel count of the texels view (diag only, no colour depends on it) stays the loaded picture's own. A level of the globe's own pyramid counts where its weight is
 // at least a half. A shown plate counts by what is drawn of it, its weight times its alpha, summed from the deepest plate up: the plate at
 // which half of the pixel is reached sets the count. Until 23 Nov 15:50 a shown plate counted by its weight alone, also where its alpha had
 // ended (the corners of the widest plate's square), so the view called ground sharp that only the globe's own levels drew.
 const weights = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, i) => i < shownFrom ? `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
       w${i} = front * smoothstep(0.5, 0.5 - uFeatherOwn, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uLine));
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      texels = mix(texels, parent, step(0.5, w${i}));
+      parent = gd * uPatchScale[${i}] * uPatchFull[${i}];
+      texels = mix(texels, gd * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w${i}));
     }` : `    if (uPatchCount > ${i}.5) {
       vec2 q = (g - uPatchOff[${i}]) * uPatchScale[${i}];
       w${i} = shown * front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)))${i === shownFrom ? '' : ' * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uLine))'};
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      t${i} = parent;
+      parent = gd * uPatchScale[${i}] * uPatchFull[${i}];
+      t${i} = gd * uPatchScale[${i}] * uPatchSize[${i}];
     }`).join('\n')
 
 const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, n) => MAX_LEVELS - 1 - n).map((i) => i < shownFrom ? `  float k${i} = w${i} * rest;
@@ -228,7 +233,7 @@ vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
   gx *= uGrad * soft;
   gy *= uGrad * soft;
   float front = step(0.3, dn);
-  float parent = texels;
+  float parent = diagTexelsDir(dd, uMapFull);
 ${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;\n  float t' + i + ' = 0.0;').join('\n')}
 ${weights(shownFrom)}
   float rest = 1.0;
@@ -255,12 +260,14 @@ ${fetches(shownFrom)}
   return c;
 }`
 
-export const MAP_UNIFORMS = ['uMap', 'uMapWidth', 'uGrad', 'uSpotN', 'uSpotE', 'uSpotU', 'uPatchCount', 'uPatchScale', 'uPatchSize', 'uFeather', 'uFeatherOwn', 'uPatchFade', 'uLine', 'uPatchOff', 'uHoldMap', 'uHoldBox', 'uHold', 'uMendMap', 'uMendBox', 'uEnd', 'uSpin', 'uStream', 'uShear', 'uStormAxis', 'uStormRadius', 'uStormAngle', 'uCloudHeight', 'uCloudSoft', 'uCirrusPx', 'uFarMap', 'uCirrus', 'uClump', 'uCode', 'uShadow', 'uTint', 'uDeck', 'uCloud', ...Array.from({ length: MAX_LEVELS }, (_, i) => 'uPatch' + i)]
+export const MAP_UNIFORMS = ['uMap', 'uMapWidth', 'uGrad', 'uSpotN', 'uSpotE', 'uSpotU', 'uPatchCount', 'uPatchScale', 'uPatchSize', 'uPatchFull', 'uMapFull', 'uFeather', 'uFeatherOwn', 'uPatchFade', 'uLine', 'uPatchOff', 'uHoldMap', 'uHoldBox', 'uHold', 'uMendMap', 'uMendBox', 'uEnd', 'uSpin', 'uStream', 'uShear', 'uStormAxis', 'uStormRadius', 'uStormAngle', 'uCloudHeight', 'uCloudSoft', 'uCirrusPx', 'uFarMap', 'uCirrus', 'uClump', 'uCode', 'uShadow', 'uTint', 'uDeck', 'uCloud', ...Array.from({ length: MAX_LEVELS }, (_, i) => 'uPatch' + i)]
 export const MAP_DECL = /* glsl */ `
 uniform sampler2D uMap;
 ${SAMPLERS}
 uniform float uPatchScale[${MAX_LEVELS}];
 uniform float uPatchSize[${MAX_LEVELS}];
+uniform float uPatchFull[${MAX_LEVELS}];
+uniform float uMapFull;
 uniform float uPatchCount;
 uniform float uFeather;
 uniform float uFeatherOwn;
@@ -303,6 +310,8 @@ uniform sampler2D uMap;
 ${SAMPLERS}
 uniform float uPatchScale[${MAX_LEVELS}];
 uniform float uPatchSize[${MAX_LEVELS}];
+uniform float uPatchFull[${MAX_LEVELS}];
+uniform float uMapFull;
 uniform float uPatchCount;
 uniform float uFeather;
 uniform float uFeatherOwn;
@@ -605,6 +614,7 @@ export class NeptunePlanet {
       return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
     }
     const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    const full = (i: number): number => p?.counts[i] ?? size(i)
     const shownFrom = Math.min(p?.shownFrom ?? MAX_LEVELS, MAX_LEVELS)
     const offset = (i: number): THREE.Vector2 => new THREE.Vector2(Math.tan(THREE.MathUtils.degToRad(p?.offsetsDeg?.[i]?.[0] ?? 0)), Math.tan(THREE.MathUtils.degToRad(p?.offsetsDeg?.[i]?.[1] ?? 0)))
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
@@ -623,7 +633,7 @@ export class NeptunePlanet {
         uFlowMap: { value: o.flow ?? o.map }, uFlow: { value: 0 },
         uFarMap: { value: o.far ?? o.map }, uCirrus: { value: new THREE.Vector4(0, 0, 0, 1) }, uClump: { value: new THREE.Vector3(0, 0.5, 1) },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
-        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchFull: { value: levels.map(full) }, uMapFull: { value: o.mapCount },
         uPatchCount: { value: p?.textures.length ?? 0 },
         uFeather: { value: p?.feather ?? 0.12 }, uFeatherOwn: { value: p?.featherOwn ?? p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uLine: { value: 1 },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },

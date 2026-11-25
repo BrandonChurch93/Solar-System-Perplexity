@@ -3,9 +3,12 @@
   "lon": 0.2304,
   "lat": -20.1669
  },
+ "mapTexels": 8192,
+ "texelsHow": "mapTexels and the texels of each level: the width in texels of the FULL set's picture (wrap.webp 8192, each patch level 4096). The count that brings a level in is made from these in both asset sets (planet.ts, uMapFull and uPatchFull; decision d253 b), so the web set, whose pictures are half as wide, brings its levels in at the same height as the full set and is only softer. If a full picture is baked at another width, change the number here.",
  "levels": [
   {
    "file": "patch-96.webp",
+   "texels": 4096,
    "widthDeg": 96,
    "offsetDeg": [
     0,
@@ -14,6 +17,7 @@
   },
   {
    "file": "patch-64.webp",
+   "texels": 4096,
    "widthDeg": 64,
    "offsetDeg": [
     0,
@@ -22,6 +26,7 @@
   },
   {
    "file": "patch-40.webp",
+   "texels": 4096,
    "widthDeg": 40,
    "offsetDeg": [
     0,
