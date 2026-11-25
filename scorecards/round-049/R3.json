@@ -1,0 +1,131 @@
+{
+ "critic": "R3",
+ "score": 5,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-02.png",
+      "where": "crop E, upper left",
+      "what": "granule texture is pulled into parallel horizontal bands and meets the cells in a sawtooth edge; the same shear is in image-06.png crop E",
+      "fix": "stop stretching the granule map into the penumbra and blend the filaments into the cells"
+     },
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "near terrain, crops S through W",
+      "what": "cells read as packed scales with the same radial fiber on every crown and hard carved lanes; the same surface fills image-01.png, image-05.png, and image-08.png",
+      "fix": "drop the repeated radial grain and let the cell tops vary in emission instead of a silky fiber"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "limb along the horizon",
+      "what": "the horizon is a hard line with a regular fringe of upright spikes; the same fringe runs along image-05.png",
+      "fix": "vary the spike height and spacing and soften the limb so the glow does not sit on a hard line"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "sunspot core",
+      "what": "the umbra is a flat black void and the spokes run straight into it; image-05.png has the same empty core",
+      "fix": "give the core a soft floor and small bright dots so the spokes do not pinch into a hole"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "upper sky",
+      "what": "the brighter stars are small round discs; the fainter ones stay pinpoints, and the sky crops in image-03.png hold up",
+      "fix": "keep the bright stars to a tight point with a short falloff"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crops A and F, center of the terrain view around the dark sunspot",
+      "what": "Long, nearly parallel filaments stretch into a pinched oval with a nearly featureless black center. The stretched collar stops abruptly against the surrounding granules.",
+      "fix": "Build the penumbra from shorter, irregular filaments that vary in width and direction and intermix with the adjacent granules. Preserve faint structure in the dark core."
+     },
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "crops S through W, foreground granules",
+      "what": "The smooth domes share the same brushed streaks, dark outlines and bright gold highlights. They read as polished, molded pebbles rather than granular plasma.",
+      "fix": "Break up the shared dome profile and outlines, reduce the specular look, and vary cell shape, scale and fine emissive texture."
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "crops T and U, lower solar disk",
+      "what": "Most bright granules smear into short parallel streaks, leaving much less resolved detail than on the upper disk. The blur spans large contiguous areas.",
+      "fix": "Re-render the disk detail with less directional filtering and preserve distinct fine granules through the lower disk and into the foreshortened limb."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crops B, E and F, corona along the upper and right limbs",
+      "what": "Broad, soft gray-white spokes radiate off a narrow bright rim at similar widths, making the corona look like a separate radial-blur layer.",
+      "fix": "Replace the uniform spokes and bright rim with irregular fine streamers, varying their angles, widths and density, and blend their bases into the limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "crops S and V, lower-left and lower-right prominences",
+      "what": "The broader red-orange loops look like flat, soft-edged ribbons, and some short bright segments end in blunt, rectangular tips.",
+      "fix": "Split the broad ribbons into thinner translucent strands and taper their ends."
+     },
+     {
+      "severity": "minor",
+      "file": "image-11.png",
+      "where": "crops N, Q and R, limb above the far terrain",
+      "what": "Short luminous spikes repeat at similar angles and heights, giving the limb a comb-like fringe.",
+      "fix": "Vary the height, spacing and tilt of the spikes and leave occasional quiet gaps in the fringe."
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 9,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crops B, C, D, and E (coronal rays around the limb)",
+      "what": "several coronal rays appear as overly straight, uniform radial streaks with slight aliasing against the starfield",
+      "fix": "soften the sharpest ray edges and introduce subtle curvature and feathering along the outer coronal streamers"
+     },
+     {
+      "severity": "minor",
+      "file": "image-18.png",
+      "where": "crops C and D (upper-right and lower-left solar prominences)",
+      "what": "parts of the red plasma loops have slightly hard, ribbon-like cutout edges against the bright inner corona",
+      "fix": "blend the outer boundaries of the prominence filaments more gradually into the surrounding coronal glow"
+     }
+    ]
+   }
+  }
+ ]
+}
