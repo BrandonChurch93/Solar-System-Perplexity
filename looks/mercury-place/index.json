@@ -1,9 +1,33 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T19:04:56.104Z",
- "head": "62cccbc108a93bf58edf0deb3b942deabddcba40",
- "note": "3da91ef1 named: limb switch main against 9ee7de11, pairs at 717 and 1016",
+ "pushed": "2026-11-25T19:31:52.707Z",
+ "head": "33314fb8026b85894a43a6facd6ab38235f71614",
+ "note": "the pit fill out of the hold card (d320): 615 at 5.8715, tiles as main; rise 989 to 992 red at rate 2",
  "looks": [
+  {
+   "time": "2026-11-25T19:31:52.070Z",
+   "file": "20261125193152070-note-optics-check.jpg",
+   "source": "../../../../tmp/m/gh/optics-check.jpg",
+   "kind": "note",
+   "label": "ghosts as optics, groundwork: the approved's ghost plate against 9 images of the opening on the Sun to centre line (not in the tree)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T19:31:51.420Z",
+   "file": "20261125193151420-note-rise989-cr.jpg",
+   "source": "../../../../tmp/m/rise989-cr.jpg",
+   "kind": "note",
+   "label": "rise 989 to 999 round the two pits at 1 to 1: one ground, the light turns (rate 2 red 0.51 at 990)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T19:31:50.729Z",
+   "file": "20261125193150729-note-fo-sheet.jpg",
+   "source": "../../../../tmp/m/fo-sheet.jpg",
+   "kind": "note",
+   "label": "615 and 717 without the pit fill (33314fb8): whole, lifted 4, 717 lower right 1 to 1 beside 3da91ef1",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T18:54:32.182Z",
    "file": "20261125185432182-note-limb-switch.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/m/dive-cr-b.jpg",
    "kind": "note",
    "label": "dive 725 to 740 whole frames round the crater on 3da91ef1",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:11:45.185Z",
-   "file": "20261125181145185-note-dive-sky.jpg",
-   "source": "../../../../tmp/m/dive-sky.jpg",
-   "kind": "note",
-   "label": "dive 717 to 724.5 top right lifted 3 on 3da91ef1: the hold card under the far Sun",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:11:43.934Z",
-   "file": "20261125181143934-note-dive-cr-a.jpg",
-   "source": "../../../../tmp/m/dive-cr-a.jpg",
-   "kind": "note",
-   "label": "dive 717 to 724.5 at 1 to 1 on 3da91ef1: the crater's place, every half frame",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T18:01:08.455Z",
-   "file": "20261125180108455-note-disc4-615.jpg",
-   "source": "../../../../tmp/m/disc4-615.jpg",
-   "kind": "note",
-   "label": "615 disc at 4 times: approved, main 9ee7de11, name 3da91ef1",
    "stop": "mercury"
   }
  ]
