@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T12:51:23.819Z",
+ "pushed": "2026-11-25T13:13:18.594Z",
  "head": "0025b0b5b7007c550a021474ae60f67fc08b515b",
- "note": "mail 1079 and 1093: the one law of cover is being built (share by height out, dust by height out, clamp open); controls at 3720, 3806, 3814",
+ "note": "one law of cover built (sine of the hold's eye 0.55); finals 3465 and 3720, rise and dive slices rendering",
  "looks": [
+  {
+   "time": "2026-11-25T13:13:17.886Z",
+   "file": "20261125131317886-note-sheet6.jpg",
+   "source": "../../../../tmp/v/law1/sheet6.png",
+   "kind": "note",
+   "label": "one law, first build (view 0.43): drafts 3465 3567 3600 3604 3720 3806 3814 3830 3866"
+  },
+  {
+   "time": "2026-11-25T13:13:17.066Z",
+   "file": "20261125131317066-note-draft_3812.jpg",
+   "source": "../../../../tmp/v/law2/draft_3812.png",
+   "kind": "note",
+   "label": "3812 draft under the one law"
+  },
+  {
+   "time": "2026-11-25T13:13:16.317Z",
+   "file": "20261125131316317-note-tri_3720.jpg",
+   "source": "../../../../tmp/v/law2/tri_3720.png",
+   "kind": "note",
+   "label": "3720: approved close, named final, one law draft (no dark foot: the dust by height is out)"
+  },
+  {
+   "time": "2026-11-25T13:13:15.588Z",
+   "file": "20261125131315588-note-hold_3465_whole.jpg",
+   "source": "../../../../tmp/v/law2/hold_3465_whole.png",
+   "kind": "note",
+   "label": "3465 whole: approved hero, named final, one law final"
+  },
+  {
+   "time": "2026-11-25T13:13:14.746Z",
+   "file": "20261125131314746-note-hold_3465_band.jpg",
+   "source": "../../../../tmp/v/law2/hold_3465_band.png",
+   "kind": "note",
+   "label": "3465 where the inner ring crosses the globe: approved hero, named 6e96b4cb final, one law of cover final (view 0.55)"
+  },
   {
    "time": "2026-11-25T12:51:23.147Z",
    "file": "20261125125123147-note-pair_rise.jpg",
@@ -24,42 +59,6 @@
    "source": "../../../../tmp/v/law0/pair_3720.png",
    "kind": "note",
    "label": "3720: left the named final, right the near look with no share by height and no dust (control of the law, draft)"
-  },
-  {
-   "time": "2026-11-25T12:22:33.105Z",
-   "file": "20261125122233105-note-saturn-dive-changes.jpg",
-   "source": "../../../../tmp/v/r68/saturn-dive-changes.png",
-   "kind": "note",
-   "label": "dive on the named head 6e96b4c: the tool's sheet of the largest changes",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T12:22:31.993Z",
-   "file": "20261125122231993-note-dive_named_foot.jpg",
-   "source": "../../../../tmp/v/r68/dive_named_foot.png",
-   "kind": "note",
-   "label": "dive on the named head 6e96b4c: the foot at full size 3598 to 3612"
-  },
-  {
-   "time": "2026-11-25T12:22:30.670Z",
-   "file": "20261125122230670-note-dive_named_contact.jpg",
-   "source": "../../../../tmp/v/r68/dive_named_contact.png",
-   "kind": "note",
-   "label": "dive on the named head 6e96b4c: twelve whole frames 3596 to 3632, tool verdict green (pattern 0.40, pop 1.07)"
-  },
-  {
-   "time": "2026-11-25T12:12:28.696Z",
-   "file": "20261125121228696-note-ctl_four.jpg",
-   "source": "../../../../tmp/v/r69/ctl_four.png",
-   "kind": "note",
-   "label": "control, cover held: through the handover 3824, 3828, 3832, 3836"
-  },
-  {
-   "time": "2026-11-25T12:12:27.956Z",
-   "file": "20261125121227956-note-ctl_three.jpg",
-   "source": "../../../../tmp/v/r69/ctl_three.png",
-   "kind": "note",
-   "label": "control, cover held: the foot at 3806, 3814, 3822 at full size"
   }
  ]
 }
