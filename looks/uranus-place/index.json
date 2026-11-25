@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T06:30:26.296Z",
+ "pushed": "2026-11-25T06:35:00.539Z",
  "head": "af8898f22e173a4f7772ffc9bb87eb6824f2ed11",
- "note": "round 3 tree (layer law, cover by pixel size, sky turn spread over the dive): the official smooth report runs since 06:17; dive 4138 to 4157 from its frames. Reader on these rows by my own run: pattern 0.58 to 0.79 at 4136 to 4141, 1.0 to 1.33 at 4142 to 4144 + 1/2: red, not cured",
+ "note": "finding: the pattern line reads the reader's own lost carry on the dive (named commit and round 3 tree); by the camera poses the ground holds on 92 to 100 percent of the judged pixels; a real change stays in a band under the limb",
  "looks": [
+  {
+   "time": "2026-11-25T06:34:59.368Z",
+   "file": "20261125063459368-note-reader-torn.jpg",
+   "source": "../../../../tmp/n50/reader-torn.jpg",
+   "kind": "note",
+   "label": "the reader's carried picture is torn: same pairs carried by the camera poses (top rows) against the reader of tools/img/smooth.py (bottom rows): aaace72a row 4164 0.35 against 1.40; round 3 tree row 4144 0.32 against 1.12, row 4152 0.91 against 1.37",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T06:30:24.929Z",
    "file": "20261125063024929-note-rep-dive-a.jpg",
@@ -258,14 +266,6 @@
    "source": "../../../../tmp/parC/z3-changes.png",
    "kind": "note",
    "label": "dive, step 3, the reader's own panels by pat.ts: frame, frame 8 later carried back, level change, pattern (rows 4151, 4157, 4163, 4169)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T02:10:16.621Z",
-   "file": "20261125021016621-note-dive-c.jpg",
-   "source": "../../../../tmp/parC/dive-c.jpg",
-   "kind": "note",
-   "label": "dive 4168 to 4176, named left, step 3 right",
    "stop": "uranus"
   }
  ]
