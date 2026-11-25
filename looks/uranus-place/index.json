@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T21:53:45.829Z",
+ "pushed": "2026-11-25T22:18:13.061Z",
  "head": "6a0e74bb2f3472ec8ae201fea1922bc1dab673ba",
- "note": "B1 not named: rise part 1 row 1.60 from 4399 (name 1.29, main 1.60); controls: four deck layers off still 1.05, rim as air 0.94; cause hunt goes on",
+ "note": "rise 4399 red: ground carry reader in work, far ground under the limb still red in control HA",
  "looks": [
+  {
+   "time": "2026-11-25T22:18:11.794Z",
+   "file": "20261125221811794-note-pair-HA.jpg",
+   "source": "../../../../tmp/n61/pair-HA.jpg",
+   "kind": "note",
+   "label": "uranus control HA: 4407 beside 4399 carried by the ground",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T22:18:10.783Z",
+   "file": "20261125221810783-note-truth2-HA-8798.jpg",
+   "source": "../../../../tmp/n61/truth2-HA-8798.jpg",
+   "kind": "note",
+   "label": "uranus 4399 to 4407 control HA: reader carry against ground carry",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T21:53:44.844Z",
    "file": "20261125215344844-note-pat-RIM2-8798.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n58/cloud-main-plate.png",
    "kind": "note",
    "label": "sky plate at 4035 final, star cloud at full size: main left, plate with the fifth argument right. G17 1.157 against main 1.178, match 3.782 against 3.743: stays out",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T18:56:07.999Z",
-   "file": "20261125185607999-note-p-T1b-8352.jpg",
-   "source": "../../../../tmp/n57/p-T1b-8352.jpg",
-   "kind": "note",
-   "label": "trial T1 chain read from 4176: 1.59, back read in the far ground at the horizon",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T18:56:07.052Z",
-   "file": "20261125185607052-note-t1-hand2.jpg",
-   "source": "../../../../tmp/n57/t1-hand2.jpg",
-   "kind": "note",
-   "label": "trial T1 (border 10.9 to 13.8 degrees), handovers: 4389 to 4392 above, 4184 to 4187 below",
    "stop": "uranus"
   }
  ]
