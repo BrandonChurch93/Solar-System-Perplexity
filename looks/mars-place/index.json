@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T08:30:44.942Z",
+ "pushed": "2026-11-25T08:51:26.930Z",
  "head": "100af532c9ff84ef23d5aaa107d1e9c425148a13",
- "note": "repaint k4: canyon one body at 2452 and 2697, knob still there (bad), shell test no change, need count under test",
+ "note": "knob gone at 2444 to 2458 and 2695 to 2706 (pairs); still bad: flat shadow, hot line 2708, grey square of the 3.8 plate, strokes",
  "looks": [
   {
-   "time": "2026-11-25T08:30:44.131Z",
-   "file": "20261125083044131-note-m2697.jpg",
-   "source": "out/work/place/k3/m2697.jpg",
+   "time": "2026-11-25T08:51:25.649Z",
+   "file": "20261125085125649-note-w2412.jpg",
+   "source": "out/work/place/k5/w2412.jpg",
    "kind": "note",
-   "label": "marker test at 2697: knob ground located",
+   "label": "2410 to 2414: the moon leaves the frame at 2412, the level step of the reader",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T08:30:43.249Z",
-   "file": "20261125083043249-note-cc.jpg",
-   "source": "out/work/place/k3/cc.jpg",
+   "time": "2026-11-25T08:51:24.380Z",
+   "file": "20261125085124380-note-p2692.jpg",
+   "source": "out/work/place/k5/p2692.jpg",
    "kind": "note",
-   "label": "colour test at 2697: which plate draws round the knob",
+   "label": "2692 pair native: hard polygonal shadow edge at the right (bad)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T08:30:42.449Z",
-   "file": "20261125083042449-note-chainb.jpg",
-   "source": "out/work/place/b1/chainb.jpg",
+   "time": "2026-11-25T08:51:23.469Z",
+   "file": "20261125085123469-note-p2468.jpg",
+   "source": "out/work/place/k5/p2468.jpg",
    "kind": "note",
-   "label": "repainted plates chain b, leads and takes",
+   "label": "2468 pair native: black jagged line near the top (bad)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T08:30:41.697Z",
-   "file": "20261125083041697-note-c2452.jpg",
-   "source": "out/work/place/k4/c2452.jpg",
+   "time": "2026-11-25T08:51:22.899Z",
+   "file": "20261125085122899-note-p2464.jpg",
+   "source": "out/work/place/k5/p2464.jpg",
    "kind": "note",
-   "label": "2452 draft, left 00c41dcd, right repaint k4",
+   "label": "2464 pair native",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T08:30:40.863Z",
-   "file": "20261125083040863-note-c2697.jpg",
-   "source": "out/work/place/k4/c2697.jpg",
+   "time": "2026-11-25T08:51:22.182Z",
+   "file": "20261125085122182-note-p2460.jpg",
+   "source": "out/work/place/k5/p2460.jpg",
    "kind": "note",
-   "label": "2697 draft, left 00c41dcd, right repaint k4: canyon one shadowed body, knob still inside",
+   "label": "2460 pair native",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T08:00:45.928Z",
-   "file": "20261125080045928-note-f2697.jpg",
-   "source": "out/work/place/k1/f2697.jpg",
+   "time": "2026-11-25T08:51:21.388Z",
+   "file": "20261125085121388-note-rim85.jpg",
+   "source": "out/work/place/k5/rim85.jpg",
    "kind": "note",
-   "label": "k1 f2697: test, knob stands on K; H is the set off; f is the set seen at 2697",
+   "label": "plates from above: the 3.8 plate stands in the 8.5 as a greyer square (bad)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T08:00:45.338Z",
-   "file": "20261125080045338-note-h2697.jpg",
-   "source": "out/work/place/k1/h2697.jpg",
+   "time": "2026-11-25T08:51:20.543Z",
+   "file": "20261125085120543-note-w2708.jpg",
+   "source": "out/work/place/k5/w2708.jpg",
    "kind": "note",
-   "label": "k1 h2697: test, knob stands on K; H is the set off; f is the set seen at 2697",
+   "label": "2708, 2709, 2712 whole: hot line along the canyon rim still there (bad)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-25T08:00:44.810Z",
-   "file": "20261125080044810-note-c2452.jpg",
-   "source": "out/work/place/k1/c2452.jpg",
+   "time": "2026-11-25T08:51:19.801Z",
+   "file": "20261125085119801-note-likeness-panel.jpg",
+   "source": "out/work/place/lk/likeness-panel.jpg",
    "kind": "note",
-   "label": "k1 c2452: test, knob stands on K; H is the set off; f is the set seen at 2697",
+   "label": "likeness of each plate to its parent, before and after the repaint (stage a)",
    "stop": "mars"
   }
  ]
