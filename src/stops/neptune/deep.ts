@@ -95,6 +95,7 @@ uniform vec2 uVeilFall;
 uniform vec3 uVeilLight;
 uniform float uStreamBend[${STREAMERS}];
 uniform vec4 uDeckFine;
+uniform vec2 uDeckRun;
 uniform vec4 uHazeLow;
 uniform vec4 uHazeHigh;
 uniform vec3 uHazeLowColour;
@@ -127,6 +128,9 @@ ${globe(mapGlsl(patches.place.shownFrom))}
 ${FALL_GLSL}
 ${COUNT_GLSL}// The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
 float gWisp = 0.0;
+// The pixel's run on the deck, set where the deck is shaded (xy: the run along the sight line, whole, in the deck's own measure;
+// z: the count of points along it, 0 where no run is asked; w: the shortest wave one point may hold).
+vec4 gRun = vec4(0.0);
 // The foot the cirrus is read with at this place (two pixels on the ground or in the air), set by who asks for the cirrus.
 float gFoot = 0.0;
 // The share of the streamer found at this place that is drawn at this foot (cirrusBody).
@@ -291,7 +295,16 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
     float leastZ = max(least.x, least.y * st);
     float keepZ = smoothstep(leastZ, 2.0 * leastZ, lam);
     float keepW = smoothstep(least.z, 2.0 * least.z, lam * local);
-    if (keepZ <= 0.0 && keepW <= 0.0) break;
+    // The detail runs on under the foot: an octave too short for the pixel's long side is shown as its mean at points along the
+    // pixel's run on the deck, while the share of that run between two points still holds half a wave of it. One point stands for
+    // uDeckRun.y widths of the pixel, as the one point of a foot that is nearly round always did, so such a foot is drawn as
+    // before, to the bit (the hold). more: the share of the octave that the one point lost and the mean carries.
+    float more = 0.0;
+    if (gRun.z > 1.0) {
+      float leastN = max(leastZ / gRun.z, gRun.w);
+      more = max(smoothstep(leastN, 2.0 * leastN, lam) - keepZ, 0.0);
+    }
+    if (keepZ <= 0.0 && more <= 0.0 && keepW <= 0.0) break;
     float seed = 17.3 * float(k) + 0.5;
     float z = 0.0;
     float w = 0.0;
@@ -301,6 +314,19 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
       float n = zonal(vec2(uv.x, uv.y + carry), lam, st, t, seed);
       z = keepZ * (n - 0.5);
       rz = keepZ * pow(1.0 - abs(2.0 * n - 1.0), uWisp.y);
+    }
+    if (m < 0.985 && more > 0.0) {
+      float zs = 0.0;
+      float rs = 0.0;
+      for (int i = 0; i < 8; i++) {
+        if (float(i) >= gRun.z) break;
+        vec2 o = gRun.xy * ((float(i) + 0.5) / gRun.z - 0.5);
+        float n = zonal(vec2(uv.x + o.x, uv.y + o.y + carry), lam, st, t, seed);
+        zs += n - 0.5;
+        rs += pow(1.0 - abs(2.0 * n - 1.0), uWisp.y);
+      }
+      z += more * zs / gRun.z;
+      rz += more * rs / gRun.z;
     }
     if (m > 0.015 && keepW > 0.0) {
       float n = winding(rho + carry / uSpiral.x, th, lam, al, pt, t, seed);
@@ -740,10 +766,12 @@ void main() {
     vec2 sight = normalize(vec2(dot(rd, east), dot(rd, north)) + 1e-6);
     vec2 cover = fp * sqrt(vec2(sight.x * sight.x / (mu * mu) + sight.y * sight.y, sight.y * sight.y / (mu * mu) + sight.x * sight.x));
     vec3 fine = uDeckFine.x * vec3(cover.y, cover.x, fp * sqrt(0.5 + 0.5 / (mu * mu)));
+    gRun = vec4(sight * (fp / mu), uDeckRun.x, uDeckRun.y * uDeckFine.x * fp);
     float h0 = deckHeight(g.xy, fine, t, p0, deckFinest);
     float wisp = gWisp;
     float hE = deckHeight(g.xy + vec2(e, 0.0), fine, t, p1, f1);
     float hN = deckHeight(g.xy + vec2(0.0, e), fine, t, p1, f1);
+    gRun = vec4(0.0);
     vec3 nrm = normalize(up - east * ((hE - h0) / e) - north * ((hN - h0) / e));
     float sunUp = dot(up, uSun);
     float ndl = clamp((dot(nrm, uSun) + uLight.w) / (1.0 + uLight.w), 0.0, 1.0);
@@ -1194,6 +1222,7 @@ export class Deep {
         uNear: { value: new THREE.Vector3(d.near[0]!, d.near[1]!, d.wisp.near) },
         uWisp: { value: v4(d.wisp.from, d.wisp.power, d.wisp.gain, d.wisp.light) },
         uDeckFine: { value: v4(d.limit, d.wisp.mean, d.wisp.where[0]!, d.wisp.where[1]!) },
+        uDeckRun: { value: new THREE.Vector2(d.run[0]!, d.run[1]!) },
         uHazeLow: { value: v4(h.low.depth, h.low.scale, 0, 0) }, uHazeHigh: { value: v4(h.high.depth, h.high.scale, 0, 0) },
         uHazeLowColour: { value: v3(h.low.colour) }, uHazeHighColour: { value: v3(h.high.colour) },
         uHazeMake: { value: v4(h.forward[0]!, h.forward[1]!, h.top, h.share) },
