@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T15:05:20.125Z",
- "head": "09738fb6dd46a3cf652598055d119817104e124c",
- "note": "dive sheet on merged main, the bodies of the two pattern runs, the C2 ledge (bad)",
+ "pushed": "2026-11-25T15:55:11.577Z",
+ "head": "71688463139ea30327a39c48d8cde7719c152345",
+ "note": "wall rock by code, take 1 seen from above: beds read as thin lines on the shadowed wall, flutes weak; take 2 follows",
  "looks": [
+  {
+   "time": "2026-11-25T15:55:10.822Z",
+   "file": "20261125155510822-note-v38-a.jpg",
+   "source": "out/work/place/w1/v38-a.jpg",
+   "kind": "note",
+   "label": "wall rock take 1 from above, v38-a (plate after walls.py, not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T15:55:10.246Z",
+   "file": "20261125155510246-note-v16-b.jpg",
+   "source": "out/work/place/w1/v16-b.jpg",
+   "kind": "note",
+   "label": "wall rock take 1 from above, v16-b (plate after walls.py, not committed)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-25T15:55:09.370Z",
+   "file": "20261125155509370-note-v16-a.jpg",
+   "source": "out/work/place/w1/v16-a.jpg",
+   "kind": "note",
+   "label": "wall rock take 1 from above, v16-a (plate after walls.py, not committed)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T15:05:19.346Z",
    "file": "20261125150519346-note-layers-sheet.jpg",
@@ -43,33 +67,6 @@
    "kind": "note",
    "label": "dive 2460 to 2468, far canyon at 1 to 1: the body that changes in place",
    "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T15:05:16.233Z",
-   "file": "20261125150516233-note-chg-dive-2460-2468.jpg",
-   "source": "out/work/place/eng105/chg-dive-2460-2468.png",
-   "kind": "note",
-   "label": "dive pair 2460 to 2468, the tool's changes panel on my drafts",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T15:05:15.473Z",
-   "file": "20261125150515473-note-dive-sheet.jpg",
-   "source": "out/work/place/eng105/dive-sheet.jpg",
-   "kind": "note",
-   "label": "dive every second frame 2440 to 2476, draft, the cut on merged main",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T14:57:44.580Z",
-   "file": "20261125145744580-compare-mars-rise-sides.jpg",
-   "source": "out/work/handover/mars-rise-sides.png",
-   "kind": "compare",
-   "label": "mars rise, both sides at T (frame 2681) and their difference times 8",
-   "stop": "mars",
-   "segment": "mars.rise",
-   "frame": 2681,
-   "tier": "draft"
   }
  ]
 }
