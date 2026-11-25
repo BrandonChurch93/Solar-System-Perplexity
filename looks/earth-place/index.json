@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T13:37:45.221Z",
- "head": "ee321270c9774c1644b141cade7e1cae9325a444",
- "note": "ee321270 pushed: tool's slice 1886 to 1892 red (pattern 0.54, limit 0.45); far band of 2010 worst; field ground outline 1866 to 1895 and 2124 to 2136",
+ "pushed": "2026-11-25T13:53:36.079Z",
+ "head": "538f48e2795fcbcc7a45708b6ea50b47a63fc70a",
+ "note": "far band measured by the view: the hold has few specks where the close camera looks; blocker mailed",
  "looks": [
+  {
+   "time": "2026-11-25T13:53:35.475Z",
+   "file": "20261125135335475-note-h1-track.jpg",
+   "source": "../../../../tmp/gl/k14/h1-track.jpg",
+   "kind": "note",
+   "label": "one ground point followed 1845 to 1888 at a fixed ground scale (draft h1)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T13:53:34.905Z",
+   "file": "20261125135334905-note-band-hold-alpha.jpg",
+   "source": "../../../../tmp/gl/k14/band-hold-alpha.jpg",
+   "kind": "note",
+   "label": "alpha of the hold's cloud layer about the place with the close camera's footprint (red) and rings at 5, 8, 10, 12, 14 degrees",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T13:53:34.306Z",
+   "file": "20261125135334306-note-band-law.jpg",
+   "source": "../../../../tmp/gl/k14/band-law.jpg",
+   "kind": "note",
+   "label": "far band of 2010 by preview: approved, the law as built, towers to 12 km, the ceiling of the law",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T13:37:44.563Z",
    "file": "20261125133744563-note-r1-s2.jpg",
@@ -48,30 +72,6 @@
    "source": "../../../../tmp/gl/k14/h2-1755-pair4.jpg",
    "kind": "note",
    "label": "1755 at 4 to 1: kept left, towers from above inside the disc right (draft)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T13:04:21.807Z",
-   "file": "20261125130421807-note-h1-s2.jpg",
-   "source": "../../../../tmp/gl/k14/h1-s2.jpg",
-   "kind": "note",
-   "label": "draft, uncommitted: 1880 to 1893 with the sea by the air's length, bodies on the map's specks",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T12:48:05.638Z",
-   "file": "20261125124805638-note-g1-place.jpg",
-   "source": "../../../../tmp/gl/k14/g1-place.jpg",
-   "kind": "note",
-   "label": "work state, RED: with one gain for all the sea the place arrives as a pale patch 1854 to 1872 (1 to 1 crops); being cured now",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T12:48:05.010Z",
-   "file": "20261125124805010-note-g1-vs-e1-late.jpg",
-   "source": "../../../../tmp/gl/k14/g1-vs-e1-late.jpg",
-   "kind": "note",
-   "label": "work state, 1880 and 1889: left the last commit, right the tone by the length of air and the bodies on the specks (the sea is one tone now; the field's own ground still has an outline)",
    "stop": "earth"
   }
  ]
