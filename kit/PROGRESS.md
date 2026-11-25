@@ -218,7 +218,7 @@ State is one of `not started`, `stand-in`, `in progress` or `finished`. A finish
 
 | Stop | State | Rounds run | R1 | R2 | R3 | R4 | R8 | Open items |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sun | in progress | 2 | 4 | pass | 5 | 5 | pass | 46 to 53 |
+| sun | in progress | 1 | 4 | pass | 5 | 5 | pass | 46 to 53 |
 | mercury | in progress | 1 | 8 | pass | 3 | 8 | pass | 69 to 78 |
 | venus | in progress | 1 | 8 | pass | 5 | 6 | pass | 28 to 32 |
 | earth | in progress | 1 | 9 | pass | 3 | 8 | pass | 54 to 61 |
@@ -1508,7 +1508,7 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 48, Phase 6, mercury, round 1 of 3 of the second note (round 37 was its round of the first note). Started 2026-11-24 20:58 UTC. Judged on main at 73809f4. Measures not green. R1 8, R2 pass, R3 3, R4 8, R8 pass. 7 severe, 7 major. Next: Mercury round 2 of 3 of the second note on a commit named by mercury_builder (d186) that cures, causes first: (1) on the way down and up the globe's ground is two things at one place, the map's craters and the place's craters: the motion report is red on four lines (dive: the pattern changes in place by 1.02 from 746 + 1/2, 37 frames over the limit from 719 + 1/2; rise: 1.17 from 981 + 1/2, 90 frames over from 961 + 1/2; rise: pop 1.36 at 1044 + 1/2; rise: the picture comes to rest between the rise and the travel at 1037, 0.30 px a film frame), and the surface critic gives its first part a 3: at 717 and at 1016 the craters near the terminator and on the upper disc are drawn out into long diagonal streaks, the close globe is soft on the lit side and waxy on the shadow side at that distance, and the limb at 717 is a hard faceted edge against soft ground; (2) the hold 615 against the approved: the Sun's disc is smaller and harder with a hot spot on its lower rim, the corona's spikes thinner, the plumes at its lower left thin loops; a warm rim glow lies round an airless world; the critic of the surface reads the lens ghost over the night side as a stray object and the ghost in the sky left of the dark limb as a blurred oval with colour fringes (both stand in the approved picture too; the builder says which of them the approved carries and at what weight); (3) two minors of the motion critic (the climb unwinds the dive along almost the same track; the globe's own turn in the hold is small). R1 8 and R4 8 with no severe open on either. The film jury passes with 5 of 10 against the controls' 6 of 10: the hold was called a stock image by 5 of 5, the surface view a film frame by 5 of 5. The recognition jury passes; G5, G13 and G17 are green. mercury_builder's own word of 02:29 UTC names one cause for the reds of (1) and a set law commit by 03:45 UTC (MAIL 852). `scorecards/round-048/`.
 - Round 49, Phase 6, sun, round 1 of 3. Started 2026-11-24 20:58 UTC. Judged on main at 73809f4. Measures green. R1 4, R2 pass, R3 5, R4 5, R8 pass. 2 severe, 16 major. Next: see the summary `scorecards/round-049/`.
 - Round 47, Phase 6, earth, round 1 of 3 of the second note (round 40 was its round of the first note). Started 2026-11-24 21:00 UTC. Judged on main at 73809f4. Measures not green. R1 9, R2 pass, R3 3, R4 8, R8 pass. 10 severe, 9 major. Next: see the summary `scorecards/round-047/`.
-- Round 50, Phase 6, sun, round 2 of 3. Started 2026-11-25 04:14 UTC.
+- Round 50, Phase 6, sun, round 1 of 3 of the third note (round 49 was its round of the second note). Started 2026-11-25 04:14 UTC.
 
 ## Final scores
 
