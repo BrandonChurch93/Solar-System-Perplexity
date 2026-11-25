@@ -7307,7 +7307,7 @@ Where on the screen (outer edge): -180 at 214, 335 (left ansa), -130 at 670, 229
 Pictures: /tmp/v/warp/approved_hero_true_circles_3465.jpg (the approved with the true circles green, the
 true limb blue), ov_3465_left.jpg and ov_3465_right.jpg (the tree's hold, green true, red drawn).
 
-20:58 MAIL to /root (low): the cause confirmed with the list above and the weights by frame; the rule taken
+20:56 MAIL to /root (low; its head says 20:58): the cause confirmed with the list above and the weights by frame; the rule taken
 (the limb fit and the arc go by the same rule; the hold light stays unless ruled out); the difference at 3465
 by azimuth; ORDER: the rigid rings come as the NEXT name (they change every frame 3373 to 3593, the judged
 3465 and 3567, the dive's sequence, G13, gate, parity); the 23:00 name stays the tree under proof; the still
@@ -7319,3 +7319,66 @@ shape (0) that multiplies the table's push, the outer fit's push, the arc and th
 limbShow 0; then the hold at 3465 at the final tier against the approved (d296 and G17 are expected to read
 worse than main: by d310 (5) held to the look, each difference named), the flight in 3370 to 3382 and the
 dive 3556 to 3600 as sequences, and the proof of flight in, hold and dive; frames from 3603 by bytes.
+
+## 2026-11-25 21:00 to 21:15 UTC: the rise of the proof read; mail 1298 (rigid body in full, the lens by distance)
+
+RISE of the tree under proof (17aa7329, /tmp/v/pf/saturn-rise.md): level step 0.13 at 3896 (limit 1.3); pop
+1.2173 from 3874 (limit 1.2, RED, known: reader's fault, main 1.2105); pattern 0.35 at 3832 + 1/2 (limit
+0.45); d312 largest 1.73 levels a frame at 8 to 16 N, frame 3826 to 3827. All 115 frames looked at: one
+flight, no swap seen; stars and dust clouds brighten 3826 to 3885 (known, stars' gain by height); Titan comes
+out from behind the limb at 3847. The left limb was not checked at 1 to 1 on every frame.
+
+MAIL 1298 (21:01), core verbatim:
+"1. Order: as you say. The 23:00 name stays the tree under proof. The rigid body comes as the next name, built
+in your trial copy from now.
+2. Rigid body, in full: rings, the globe's outline (limb fit out) and the arc at the left ansa (out). Nothing
+that is drawn may be weighted by the pose. That takes in the hero's light too: a light that comes with the
+pose at 3373 to 3379 and goes at 3562 to 3593 is a change the eye did not cause. What the hold needs of it
+becomes a property of the body in the body's own coordinates, or of the Sun's light and the two shadows
+(rings on globe, globe on rings), present at every frame of the stop from the first frame Saturn is larger
+than a few px to the last. Give me the cost at 3465 by d296 (mean absolute RGB against the approved) for
+three states: as now, pose weight off for shapes with the light kept at every frame, light off. With the
+three stills. I own the differences at 3465 by d310 (5): the approved hero's rings are not circles on one
+plane, yours will be.
+3. The lens, for Saturn alone. Keep both approved fits (30.00 at the hold, 41.77 at the ring view). The field
+of view is a function of the eye's distance d from Saturn's centre and of nothing else, the same law in the
+dive and in the rise: tan(fov / 2) = tan(15 degrees) * (d_hold / d) ^ k, with k = ln(tan(20.885 deg) /
+tan(15 deg)) / ln(d_hold / d_ring). With your numbers (5.48 and 3.32 radii) k is 0.706, so the disc on
+screen goes as d to the power of minus 0.294: it grows whenever the eye comes in, at 29 percent of the rate
+a fixed lens would give, and never stands while anything else moves. Use your exact d_hold and d_ring so
+41.77 is met at the ring view to 0.01 degree. If the eye's distance is not monotone in a move, say so before
+building. If move() is shared by the stops, the law comes in as an option of Saturn's plan that no other
+stop sets, and you show by bytes that a frame of another stop's dive does not change.
+4. Proof I want with the name, beyond units, gate and the reader's rows (no line worse than main's, d311): a
+table by frame over 3340 to 3400, 3543 to 3630 and 3810 to 3880 of the eye's distance, the field of view,
+the disc's radius in px and the px by which each of the three ring edges leaves its true circle (must be 0
+to the reading's error at every frame); the disc's radius monotone in each move with its least change a
+frame stated; frames from 3603 on that the model draws alone: which stay the same bytes and which change by
+the lens law. Then I order the dive, the rise and the flight in at 60 frames a second and look myself
+before it goes on.
+5. Not ruled out, say if you see it differently with numbers: the lens could also be held at 30 through the
+dive with the ring view composed from farther off. I did not take it because it moves the judged ring view
+off its approved fit.
+Send the three stills of point 2 and the table of point 4 for the trial copy as soon as the render slot is
+free (your 22:40), before any name."
+
+LENS STUDY (no render; /tmp/v/warp/lenslaw.py, lawcmp.py, lawtab.py, lawdive.py, lawpick.py, lawrise.py):
+- The eye's distance d (radii): flight in monotone; hold 5.6429 (3390) to 5.4772 (3539); dive 5.4761 (3540)
+  to 3.3297 (3629), monotone; SKIM NOT monotone: 3.3208 (3630), least 2.4499 (3773), 2.6516 (3809); judged
+  3720 at 2.7122; rise 2.6599 (3810) to 6.5975 (3884), monotone; it passes 3.3208 at 3837, 5.4761 at 3871.
+- move() is private in src/stops/saturn/plan.ts (line 272): fov = a.vfov * (b.vfov / a.vfov) ^ w, w the view
+  pace of the move by its share of time. Not shared with any stop.
+- The disc now (radius px = 540 / (tan(fov / 2) * sqrt(d * d - 1))): dive 374.3 (3540), 391.6 (3560), 403.3
+  (3580), 402.9 (3600), 446.9 (3630); it stands or shrinks through 3579 to 3593 (15 frames, least -0.07
+  percent a frame at 3587). Rise: shrinks at every frame, 0.36 percent (3812), 0.61 (3828), 0.52 (3840), 1.36
+  (3880); largest change of rate from frame to frame 0.039.
+- The pure power through 5.476 and 3.32 would give 47.5 at 3720 and 50.6 at 3773: off the fit.
+- With stops (30 beyond 5.4761, 41.77 inside 3.3208): dive good; corner at 3630 jumps the rate 0.10 to 0.29,
+  so the slope is eased over the last 0.045 of ln d at the ring end (and 0.004 at the hold end, which keeps
+  the first frames at the hold's own rate): dive rate 0.026 (3541), 0.079 (3548), 0.172 (3560), 0.216 to
+  0.221 (3580 to 3612), 0.29 (3624 on); no frame stands; largest change of rate 0.031. Lens 32.39 (3567),
+  38.51 (3603), 40.81 (3616), 41.77 exact from 3630. In the RISE the same law stalls: 1.44 (3836), 0.52 to
+  0.43 (3840 to 3870), 1.48 (3872), jump 0.79 at 3871.
+- One power through 5.4761 and 2.7122 (k 0.503): the skim breathes 38.03 (3630), 43.76 (3773), 42.15 (3810).
+21:12 MAIL to /root (low): these facts; I build the law for the dive, the rise keeps its lens, with a switch
+in skim.json that puts the rise on the same law, for the look at 60 frames a second.
