@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T02:31:36.664Z",
+ "pushed": "2026-11-25T02:44:36.078Z",
  "head": "f2a418731e617071cfe34e445e300fa9ad997e0f",
- "note": "trials for MAIL 815 (b), no commit: a disc of the place at every height shows at the hold as a dark speckled patch; outside it fine forms by pixel width read as another material at 1308 to 1317",
+ "note": "MAIL 815 5c: where the place's picture ends on the plates (frame of T) and on the ground; next the canvas margins are laid into the plates",
  "looks": [
+  {
+   "time": "2026-11-25T02:44:35.485Z",
+   "file": "20261125024435485-note-lay.jpg",
+   "source": "../../../../tmp/v/st/c0/lay.jpg",
+   "kind": "note",
+   "label": "f2a41873 dive 1334 (top) and 1329 with the layers: the ground (yellow) ends on a straight line, the plates (pale) below it hold another picture",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T02:44:34.884Z",
+   "file": "20261125024434884-note-plate-c.jpg",
+   "source": "../../../../tmp/v/st/c0/plate-c.jpg",
+   "kind": "note",
+   "label": "f2a41873 plate c of the dive from above: red the frame of T (inside it the picture of the place laid back), green the canvas of the ground, blue the aprons; outside red the old plate, the cause of the straight lines at 1322 to 1339",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T02:31:36.010Z",
    "file": "20261125023136010-note-cmpB.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/cmp/st/H-rise-1.jpg",
    "kind": "note",
    "label": "rise 1546 to 1551 + 1/2 at 60 a second, working tree: the rim and the blue strip, not cured",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T01:15:06.077Z",
-   "file": "20261125011506077-note-H-rise-changes.jpg",
-   "source": "../../../../tmp/v/H-rise-changes.png",
-   "kind": "note",
-   "label": "rise changes over 8 film frames, working tree: 0.53 at 1546 + 1/2 along the far deck, 0.65 at 1575 on the body, 0.72 at 1608 + 1/2 in the strip by the limb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T01:02:13.312Z",
-   "file": "20261125010213312-note-H-topleft.jpg",
-   "source": "../../../../tmp/v/cmp/st/H-topleft.jpg",
-   "kind": "note",
-   "label": "dive 1314 to 1319 + 1/2 top left corner at full size: the star cloud comes up between 1316 and 1316 + 1/2",
    "stop": "venus"
   }
  ]
