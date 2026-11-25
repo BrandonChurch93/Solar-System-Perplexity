@@ -306,6 +306,7 @@ out float vReal;
 out float vPit;
 out float vDeep;
 out float vCorner;
+out float vJunc;
 out float vEdge;
 out float vTall;
 out vec2 vG;
@@ -327,6 +328,7 @@ float deep;
 float tall;
 float sink = 0.0;
 float corner;
+float junc;
 float edge;
 vec3 dome(vec3 s) {
   float a = acos(clamp(s.z, -1.0, 1.0));
@@ -335,13 +337,15 @@ vec3 dome(vec3 s) {
   float invP = 0.0;
   float m1 = 0.0;
   float m2 = 0.0;
+  vec2 ea = vec2(0.0);
+  vec2 eb = vec2(0.0);
   for (int j = 0; j < ${EDGES}; j++) {
     float e = max(dot(u, edges[j]) * rad, 0.0);
     inv += pow(e, uLabDome.z);
     float e2 = e * e;
     float e4 = e2 * e2;
     invP += e4 * e4;
-    if (e > m1) { m2 = m1; m1 = e; } else if (e > m2) m2 = e;
+    if (e > m1) { m2 = m1; m1 = e; eb = ea; ea = edges[j]; } else if (e > m2) { m2 = e; eb = edges[j]; }
   }
   corner = m2 / max(m1, 1e-6);
   float r = rad * pow(max(inv, 1e-9), -1.0 / uLabDome.z);
@@ -354,6 +358,10 @@ vec3 dome(vec3 s) {
   r = rad * pow(max(invP, 1e-9), -0.125);
 #endif
   vec2 place = mid + u * (r * wide * uLabMore.x);
+  // the way from the place to the point where this cell and its two nearest neighbours meet: the same point and
+  // the same way for all three, so a pit there is one pit
+  float det = ea.x * eb.y - ea.y * eb.x;
+  junc = m2 > 0.0 && abs(det) > 1e-6 ? 1.0 - smoothstep(0.0, ${CU ? (CU[8] ?? 0.03).toFixed(4) : '0.03'}, length(u * (r * wide * uLabMore.x) - vec2(eb.y - ea.y, ea.x - eb.x) / det)) : 0.0;
   // the dome is a round body that reaches over the border of its cell into its neighbours: the sheet is the upper
   // side of all of them, a lane the valley where two bodies meet. edge: the way to the cell's own border, 1 on it
   edge = r * wide * uLabMore.x / max(rad * pow(max(invP, 1e-9), -0.125), 1e-6);
@@ -378,8 +386,8 @@ vec3 dome(vec3 s) {
 #if ${CU ? 1 : 0}
   // every body stands on the height of the place at its own border (a field of the place, the same for both sides),
   // so two neighbours meet on their border and no body lies over another's ground
-  float base = ${CU ? CU[0]!.toFixed(4) : '0.0'} * (1.0 + ${CU ? CU[1]!.toFixed(2) : '0.0'} * (vn(place * ${CU ? CU[2]!.toFixed(1) : '1.0'} + 51.0) - 0.5) + ${CU ? CU[3]!.toFixed(2) : '0.0'} * labJoin(place)) * (1.0 - ${CU ? (CU[7] ?? 0).toFixed(2) : '0.0'} * smoothstep(${CU ? (CU[8] ?? 0.7).toFixed(2) : '0.7'}, 1.0, corner)) * low;
-  float shape = pow(max(1.0 - pow(min(edge, 1.0), ${CU ? CU[4]!.toFixed(2) : '2.0'}), 0.0), ${CU ? (1 / CU[5]!).toFixed(4) : '0.5'}) * (1.0 - uLabMore.y * groove);
+  float base = ${CU ? CU[0]!.toFixed(4) : '0.0'} * (1.0 + ${CU ? CU[1]!.toFixed(2) : '0.0'} * (vn(place * ${CU ? CU[2]!.toFixed(1) : '1.0'} + 51.0) - 0.5) + ${CU ? CU[3]!.toFixed(2) : '0.0'} * labJoin(place)) * (1.0 - ${CU ? (CU[7] ?? 0).toFixed(2) : '0.0'} * junc) * low;
+  float shape = pow(max(1.0 - pow(min(edge, 1.0), ${CU ? CU[4]!.toFixed(2) : '2.0'}), 0.0), ${CU ? (1 / CU[5]!).toFixed(4) : '0.5'}) * (1.0 - uLabMore.y * groove) * (1.0 - ${CU ? (CU[7] ?? 0).toFixed(2) : '0.0'} * junc);
 #if ${T.on ? 1 : 0}
   float run = -${lab.fibre.slow.toFixed(2)} * log(1.0 - min(rho, ${(lab.fibre.slow * 0.95).toFixed(3)}) / ${lab.fibre.slow.toFixed(2)});
   float q = run - uLabTime.x * uLabTime.y;
@@ -460,6 +468,7 @@ void main() {
   vPit = pitAway;
   vDeep = deep;
   vCorner = corner;
+  vJunc = junc;
   vEdge = edge;
   vTall = tall;
   vSink = sink;
@@ -645,6 +654,7 @@ in float vReal;
 in float vPit;
 in float vDeep;
 in float vCorner;
+in float vJunc;
 in float vEdge;
 in float vTall;
 in vec2 vG;
@@ -735,7 +745,7 @@ void main() {
   float pen = pn.x;
   float age = vCell.y;
   // a cell is born cool and small in the lane and warms as its ground grows; it cools as it goes
-  float life = mix(1.15, 0.7, smoothstep(0.3, 0.85, age)) * mix(${lab.heat.born[0]!.toFixed(2)}, 1.0, smoothstep(${lab.heat.born[1]!.toFixed(2)}, ${lab.heat.born[2]!.toFixed(2)}, vMore.y));
+  float life = mix(${lab.heat.life[0]!.toFixed(2)}, ${lab.heat.life[1]!.toFixed(2)}, smoothstep(${lab.heat.life[2]!.toFixed(2)}, ${lab.heat.life[3]!.toFixed(2)}, age)) * mix(${lab.heat.born[0]!.toFixed(2)}, 1.0, smoothstep(${lab.heat.born[1]!.toFixed(2)}, ${lab.heat.born[2]!.toFixed(2)}, vMore.y));
   // the heat of a cell: the heat of the place, which runs over the borders, combed into hot fibres with cooler
   // matter between them and many small hot points along the fibres
   float wide = 0.6 * vn(vG * uLabJoin.w + 5.3) + 0.4 * vn(vG * uLabJoin.w * 2.3 - 17.1);
@@ -781,7 +791,7 @@ void main() {
   // falls into pieces before it fades
   float old = smoothstep(${lab.heat.breaks[0]!.toFixed(2)}, ${lab.heat.breaks[1]!.toFixed(2)}, age);
   float veins = labLobes(d, seed, 0.05 + 0.3 * rho + 0.12 * old) * smoothstep(mix(0.1, 0.0, old), mix(0.6, 0.2, old), rho);
-  cell *= (1.0 - mix(${lab.heat.vein.toFixed(2)}, ${lab.heat.breaks[2]!.toFixed(2)}, old) * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(0.0, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5) - laneTube)) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), max(1.0 - fall, 0.0)));
+  cell *= (1.0 - mix(${lab.heat.vein.toFixed(2)}, ${lab.heat.breaks[2]!.toFixed(2)}, old) * veins) * (1.0 - ${lab.heat.groove.toFixed(2)} * groove * smoothstep(0.1, 0.5, rho)) * mix(${lab.heat.crease[2]!.toFixed(2)}, 1.0, smoothstep(${(lab.heat.lane[3] ?? 0).toFixed(2)} * laneWide, laneWide, edgeD + ${lab.heat.lane[2]!.toFixed(2)} * laneWide * (fan - 0.5) - laneTube)) * mix(${lab.heat.shade[0]!.toFixed(2)}, 1.0, smoothstep(0.0, ${lab.heat.shade[1]!.toFixed(2)} * (0.4 + 1.2 * smoothstep(0.3, 0.8, c0 / ${lab.heat.crease[0]!.toFixed(3)})), max(1.0 - fall, 0.0)));
 #if ${T.on ? 1 : 0}
   // the heat of a tube: hot on its crest, cold in the groove between two tubes, where the gas of both sinks a
   // little; a groove finer than a pixel is the mean of both
@@ -796,6 +806,7 @@ void main() {
   // the folds between the streams that run from the middle to each lane: dark threads toward the places where
   // three cells meet
   cell *= 1.0 - ${lab.heat.fold[0]!.toFixed(2)} * smoothstep(${lab.heat.fold[1]!.toFixed(2)}, 1.0, vCorner + 0.08 * (fan - 0.5)) * smoothstep(0.15, 0.6, plan);
+  cell *= 1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc;
   float bundle = pn.y;
   float spark = smoothstep(0.74, 0.9, vnp(vec2(turn * per.z + 5.0 + floor(seed * 53.0), (run - flow) * 17.0 + seed), per.z)) * kc * middle;
   cell += 0.6 * uLabHeatMore.w * spark;
@@ -1253,7 +1264,7 @@ export class LabGround {
   update(time: number, eye: THREE.Vector3, keep = 1, onGlobe = false): void {
     this.mesh.visible = keep > 0
     this.uniforms.uLabKeep!.value = keep
-    const away = lab.far.away
+    const away = (globalThis as { labGone?: boolean }).labGone ? [1e-4, 2e-4] : lab.far.away
     const red = place.onGlobe.red.over
     ;(this.uniforms.uLabAway!.value as THREE.Vector4).set(onGlobe ? away[0]! : 0, onGlobe ? away[1]! : 0, onGlobe ? red[0]! : 0, onGlobe ? red[1]! : 0)
     this.under.material = onGlobe ? this.floorLaid : this.floorMaterial

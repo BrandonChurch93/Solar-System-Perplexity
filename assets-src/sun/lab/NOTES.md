@@ -826,7 +826,7 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   u4 = u3 with the curve refit. u5: silk [0.3, 0.75], tubes.from [0.3, 0.7], crown 0.1, dome.height 0.42, cushion
   exponents 2.0, 1.4: broad flatter cushions with smooth mottled tops and streaked flanks: BEST SO FAR
   (v/strip-u5.jpg). Frame 90 near percentiles u5: 0.227 0.376 0.569 0.749 0.894 0.953 (curve of u4).
-- 19:32 to 19:45 UTC, u6, u7 (in the tree). SEEN in motion-u5 (v/wedge.png): a dark flat patch with a saw toothed
+- 19:32 to 19:40 UTC, u6, u7 (in the tree). SEEN in motion-u5 (v/wedge.png): a dark flat patch with a saw toothed
   rim at the frame's bottom (captures 252, 276; x 250 to 550, y 980 to 1080): a low cell beside tall cushions whose
   near vertical rim the mesh rings sampled unevenly. CURE (u6): under the cushion the mesh's rings follow the
   border (`r = rad * pow(invP, -0.125)` before `place` in dome()), least bulge of a cell 0.4 of its base
@@ -852,7 +852,7 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   the master run. Measure the cost of 80 sectors at the second level. Flicker: measure also on each cell's own
   mean (a disc of the cell's size), the tenth stands for that. Send back: the next sheet with the same pictures
   and the swing of (b). Brandon on u1: it still looks like an image, not like plasma.
-- 19:45 to 19:55 UTC. u8 (height 0.7, cushion 2, 2): round mushrooms, a pile of stones, dropped. u9 (0.6, 2.5,
+- 19:41 to 19:46 UTC. u8 (height 0.7, cushion 2, 2): round mushrooms, a pile of stones, dropped. u9 (0.6, 2.5,
   1.6, shade 0.8): round cushions, still gourds. u10: height 0.5, cushion 2.2, 1.5, heat.shade [0.8, 0.45],
   tubes.silk [0.1, 0.5], heat.rim 0.45, heat.core 0.9. u11 = u10 with heat.cool 1.1, fibre.cold 0.08, heat.thread
   [0.3, 1.0]: streaked and of high contrast inside the cell as the approved, reads as satin shells or umbrellas
@@ -861,3 +861,38 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   (v/strip-u12.jpg). Percentiles u12 0.224 0.384 0.600 0.780 0.933 0.980, curve refit due.
   STILL WRONG: no even dark lane round every cell (near cells stand over the lanes behind them), the strands are
   too clean and parallel (satin), few dark patches inside the cells, no sparkle.
+- 19:46 to 19:51 UTC. u13: pits where three cells meet by the way to the point where the cell's two nearest borders
+  cross (the same point for all three cells, so one pit; dome.base[7] depth 0.7, [8] radius 0.025 units; heat.pit
+  0.5 darkens it; varying vJunc): slight, no wall. u14: heat.patch [0.25, 0.7], heat.wide 1.3, heat.rim 0.35:
+  defined hot blotches on darker bodies, nearer the approved's contrast inside a cell. Curve refit for u14:
+  percentiles 0.208 0.353 0.576 0.757 0.906 0.961 (low end still under the approved's 0.231 0.404).
+  flicker.py takes an ellipse now (half width, half height). MEASURED on mo-u6, box 0 760 1920 320: disc 26 px
+  largest 0.389 (57 percent of 61 over a tenth); ellipse 90 by 45 (a near cell's own outline) largest 0.120, 1 of
+  17 over a tenth; ellipse 70 by 35 largest 0.155. CAUSE (stated, by the law): heat's life factor mix(1.15, 0.7,
+  smoothstep(0.3, 0.85, age)) alone moves a cell of 2.5 s life by up to 0.2 in 12 frames. To cure by the law of
+  the life, not by slowing cells.
+- 19:53 UTC, sun_builder asks about the bake (his globe lays the first patch level about HIS mapSpot, fine bands
+  under 0.55 degrees only, turning with the map). Answered 19:54 (the mail says 19:58, my clock guess; read date -u first): files, 40 degrees gnomonic, what is baked in;
+  the file on the branch is d7's at clock 0, not to be laid; my axes are globe.spot's numbers used in the MAP's
+  frame (0.047 degrees off his mapSpot): the NEW BAKE TAKES place.json globe.mapSpot, E = Y x N, U = N x E, and
+  the cells of one film frame of the handover (bake() must use the frame's time, not this.start). Proposal: fine
+  bands only, my low band the map's by the time the ground leaves. Asked: does the stage's ground turn with the
+  map over 221 to 256.
+  TOOLS: swing.ts (frames twice: as it stands and with globalThis.labGone, the live ground away) and swing.py.
+  For the swing on my branch: place.json plates.levels = [{file: "lab/place-far-0.jpg", widthDeg: 40}].
+- 19:54 to 20:00 UTC. SEEN at the whole frame (v/four-u14.jpg): u14 reads as a heap of shiny nuggets, each a hot
+  blotch on a dark body with wide dark gaps; the approved is one sheet of cells lit up to their rims with thin
+  dark lanes. The 1 to 1 strip alone misled me: judge at the whole frame too (v/duo.sh NAME: frame 90 over the
+  approved, lower 60 percent). The sheet chain of u14 was killed unread.
+  u15: heat.wide 2.4, core 0.4, patch [0.0, 0.8], rim 0.5, shade [0.9, 0.3], dome.height 0.36, cushion 3.0, 1.5,
+  pit depth 0.4: lit cells, packed. u16: lanes dark from the border (heat.lane [0.12, 0.12, 0.6, 0.35]: the 4th
+  is the share of the lane's width that stays dark), heat.crease[2] 0.15, curve refit: golden with dark red brown
+  lanes, at the whole frame near the approved (v/duo-u16.jpg). u17 (thread [0.3, 0.7], tubes.heat [0.6, 1.15],
+  silk [0.25, 0.7]): flat lily pads, dropped. u18: thread [0.3, 0.85], tubes.heat [0.5, 1.2, 0.45], silk [0.2,
+  0.65], height 0.42, cushion 2.4, 1.5, and the flicker's causes by law: heat.life [1.05, 0.9, 0.0, 1.0] (was
+  1.15 to 0.7 over ages 0.3 to 0.85), heat.born [0.85, 0.0, 1.0] (was 0.4 over 0.3 to 0.9 of the growth),
+  tubes.lump [0.4, 1.6, 4] (was 0.6, 3 round). u19 = u18 with the curve refit (u18 percentiles 0.239 0.459 0.635
+  0.784 0.894 0.945). Sheet chain of u19 started 20:00 (v/sheet.sh u19, log v/sheet-u19.log).
+  STILL WRONG (u18, seen): no thin bright rim where two cells touch, no sparkle, the strands are evenly fluted
+  (satin), dark gaps with debris where small low cells sit between large ones, the middle distance is beads, the
+  penumbra's threads are light where the approved's are dark.
