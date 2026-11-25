@@ -1153,3 +1153,9 @@ Verbatim core, to be kept:
   - timing in one session, three frames 4 film frames apart: master 23.5, 5.8, 5.7 s; uhd 34.2, 19.6, 20.6 s (the 38 s and 26 s of the 17 scattered frames were each a fresh place).
 - Windows: Sun rise and each dive 114 film frames, each other rise 99: 1818 film frames over 17 moves; every 8th film frame about 230 pairs.
 - b0's frames of 1477 to 1500 removed (both sets) for disk; numbers, jobs and the sheet kept.
+
+### 04:33 to 04:35 UTC, 25 Nov: MAIL 798 answered in whole
+
+- PUSHED `agent/harness` 5ad142b789260c7d3662fe6cc9ada6e87ddb43bf (merge of main 5179b435 "batch 8 on main"; main moved `tests/bloom-reach.test.ts`, `tests/relief*.test.ts`, `tests/step.test.ts`, `tools/handover.ts` against 92c5f998, none of mine). b4 still 23d005ef on main 5e315d5d: merge main again before its next push.
+- SENT 04:34 to the Builder: 798 (b) parity catches the exchange only by block level (and coarse at 717) and only where a frame is drawn, the part draws 706, 735, 763 and misses 713 to 727; (c) second stretch red by every reader in both sets, an exchange in time alike in all sets (sets agree to 0.002 at 743 to 751); (d) proposal: pattern 8 to 40 px master full against uhd full, clean at most 0.022 of 21 frames, fault 0.77 and 0.97, limit proposed 0.10, every 8th film frame of the moves (about 230 pairs, 100 to 245 minutes on one machine), web set not judged this way (clean up to 0.62). Pictures `mercA/a-1477-sheet.jpg`, `b0-717-three.jpg`. Nothing built for (d).
+- OWED now: nothing by mail. Open: parts jupiter rise 2 and neptune dive 4 (66 of 68 placed); read the parts again on 23d005ef plus the globes' range patches only when asked; lift 9c5fafc0 once it is in main.
