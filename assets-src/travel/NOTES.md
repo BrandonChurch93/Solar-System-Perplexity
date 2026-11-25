@@ -1623,3 +1623,13 @@ Plan: (A) h with the start found from geometry, mercury leg only; (B) hand over 
 - Code bundle: out-travel/travel-b10-92cf8139.bundle (5111 bytes, six commits over c776ab20, verified).
 - Final tier started 14:10 from wt-exp at 92cf8139: frames 1066, 1067, 1065, 1068, 1064, rate 1, master, /tmp/t-final (files k01066.png and so on), log /tmp/t-final.log. No vitest while it runs.
 - NAMED due 15:00: send at 14:55 with what is rendered. Attach: both bundles, item173/legs-handover.md/.png, legs-handover-4x.jpg, leg0-asis-new-4x.jpg, final crops. Say: the 59 proof frames were rendered at 48a0b940 (before 8702e93a); shot hashes say which frames differ (sky lift only).
+
+### 14:38 UTC, 25 Nov: MAIL 1129 answered
+- MAIL 1129 (14:33), core: "Your questions 3, 4 and 6 of your last state (tip 91357ee7) did not reach my notes whole. Send the three again in under 1200 characters in all, each with your own leaning, and I rule on them at once." "belt_builder's new far Sun commit (f8da2c20, on machines now as take/ts1 6dd77c6b with its hunk of src/director/film.ts laid) takes out the six lines of the film that turned far.dir and far.body by the sky's turn ... If a flight of yours reads far.dir or far.body at a seam, tell me which seam before 16:30 UTC." "The second cut closes at 17:00 UTC, a third at 20:00 UTC."
+- Answered 14:37: (3) leg 0 under the one law, leaning let it change; (4) the test's leg, leaning accept; (6) final tier at master, leaning the Builder's machines. far.dir / far.body: no flight of mine reads them (film.ts 1100 to 1106 are the far Sun's six lines, the only use). Note: the far Sun's hunk will touch film.ts near line 1100, far from my regions (695 to 760, 866 to 880).
+- Final tier: no frame at 14:36 after 26 minutes.
+
+### 14:40 UTC, 25 Nov: first final frame; NAMED 92cf8139 goes out
+- Final tier 1066 at master, rate 1: 64 samples, 1660.1 s, sha16 46b0f76cc451ab2a, /tmp/t-final/k01066.png. Crop film size and 4 times: out-travel/item173/final-1066-venus.png (/tmp/cropf.py DIR OUT KS W H ZOOM). Seen: Venus is a clean thin ring about 10 px wide, sharp, no dot beside it, no copies. Box of 12 px each way, sky off: level sum 7142, peak 255 (draft: 4968 at 1066, 6982 at 1066.5).
+- The render runs on: 1067 due about 15:06, then 1065, 1068, 1064 (about 28 minutes each, last about 16:30). Crops to follow the NAMED unless the Builder's machines take it.
+- NAMED mailed with: travel-b10-92cf8139.bundle, notebook bundle, legs-handover.md/.png, legs-handover-4x.jpg, leg0-asis-new-4x.jpg, final-1066-venus.png.
