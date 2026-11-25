@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import type { RenderView, SetContext } from '../src/core/types'
-import { Relief, withEyeScale, withPresence, type ReliefAir, type ReliefDef, type ReliefMotion } from '../src/terrain/relief'
+import { EDGE_AIR_GLSL, EDGE_GLSL, Relief, edgeShareAt, withEdge, withEdgeEye, withEyeScale, withPresence, type ReliefAir, type ReliefDef, type ReliefMotion } from '../src/terrain/relief'
 
 // The presence of a relief (Relief.presence): off until a set asks, then the same shader with its premultiplied output times a share,
 // and no shield under 1. The pixels are tests/relief-gl.test.ts.
@@ -252,5 +252,246 @@ describe('the eye of a relief under a scaled group', () => {
     expect(() => withEyeScale(one + EYE)).toThrow(/no single place/)
     expect(() => withEyeScale(one.replace('out vec3 vEye;', ''))).toThrow(/no single place/)
     expect(() => withEyeScale(withEyeScale(one))).toThrow(/no single place/)
+  })
+})
+
+// The edge of a relief (Relief.presenceEdge): off until a set asks, then the same shaders with their premultiplied output times a share by
+// the place in the whole source picture, and no shield inside the feather. The pixels are tests/relief-gl.test.ts.
+
+const THIN = 'if (alpha < 0.004) discard;'
+const wide: ReliefDef = {
+  ...def,
+  layers: [
+    { color: 'far-color.jpg', dist: 'far.bin', box: [-8, 0, 48, 20], distSize: [2, 2], tint: [1, 1, 1] },
+    { color: 'near-color.jpg', alpha: 'near-alpha.png', dist: 'near.bin', box: [-8, 4, 24, 16], distSize: [2, 2], tint: [1, 1, 1] },
+    { color: 'mid-color.jpg', alpha: 'mid-alpha.png', dist: 'mid.bin', box: [16, 4, 24, 8], distSize: [2, 2], tint: [1, 1, 1] },
+  ],
+}
+const grids = (r: Relief): { nx: number; ny: number; cols: number; left: number; image: Float32Array; inside: Uint8Array | null }[] =>
+  (r as unknown as { layers: { grid: { nx: number; ny: number; cols: number; left: number; image: Float32Array; inside: Uint8Array | null } }[] }).layers.map((l) => l.grid)
+
+describe('the edge of a relief', () => {
+  it('is off until a set asks: no edge in any shader, no uniform, no cell kept from the shield', async () => {
+    for (const withAir of [false, true]) {
+      const r = await Relief.load(ctx, '', def, motion(withAir))
+      r.presence(0.5)
+      r.update(1.5, 2, 0.3, view)
+      for (const m of materials(r)) {
+        expect(m.fragmentShader.includes('edgeShare')).toBe(false)
+        expect(m.fragmentShader.includes('uEdge')).toBe(false)
+        expect(m.vertexShader.includes('vEdgeEye')).toBe(false)
+        expect(Object.keys(m.uniforms).some((k) => k.startsWith('uEdge'))).toBe(false)
+      }
+      for (const g of grids(r)) expect(g.inside).toBe(null)
+    }
+  })
+
+  it('the first call gives every layer and the air the shader with the edge and one pair of numbers for all; later calls change numbers only', async () => {
+    for (const withAir of [false, true]) {
+      const plain = materials(await Relief.load(ctx, '', def, motion(withAir)))
+      const r = await Relief.load(ctx, '', def, motion(withAir))
+      const all = materials(r)
+      const versions = all.map((m) => m.version)
+      r.presenceEdge([0, 8, 4, 0])
+      all.forEach((m, i) => {
+        const air = litOf(plain[i]!) === AIR_LIT
+        expect(m.fragmentShader).toBe(withEdge(plain[i]!.fragmentShader, litOf(plain[i]!)))
+        expect(m.fragmentShader.includes(air ? AIR_LIT + ' * edgeShare(edgeAirImage(d))' : LIT + ' * edgeShare(vImage)')).toBe(true)
+        expect(m.fragmentShader.includes(EDGE_GLSL)).toBe(true)
+        expect(m.fragmentShader.includes(EDGE_AIR_GLSL)).toBe(air)
+        expect(m.fragmentShader.includes('if (alpha < 0.004 || edgeShare(vImage) <= 0.0) discard;')).toBe(!air)
+        expect(m.vertexShader).toBe(air ? withEdgeEye(plain[i]!.vertexShader) : plain[i]!.vertexShader)
+        expect(m.uniforms.uEdgeSide).toBe(all[0]!.uniforms.uEdgeSide)
+        expect(m.uniforms.uEdgeOver).toBe(all[0]!.uniforms.uEdgeOver)
+        expect(m.uniforms.uEdgeFar === undefined).toBe(!air)
+        expect(m.uniforms.uEyeScale === undefined).toBe(!air)
+        expect(m.version).toBe(versions[i]! + 1)
+      })
+      // The sides are those of the layers' boxes together, as places in the picture (0 to 1 over the image size); the feathers are in
+      // its pixels: 8 of 32 across is a quarter, 4 of 16 down is a quarter.
+      expect((all[0]!.uniforms.uEdgeSide!.value as THREE.Vector4).toArray()).toEqual([0, 1, 1, 0])
+      expect((all[0]!.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()).toEqual([0, 4, 4, 0])
+      const texts = all.map((m) => m.fragmentShader + m.vertexShader)
+      r.presenceEdge([16, 0, 0, 2])
+      r.presenceEdge([0, 0, 0, 0])
+      r.presenceEdge([4, 2, 1, 8])
+      all.forEach((m, i) => {
+        expect(m.fragmentShader + m.vertexShader).toBe(texts[i])
+        expect(m.version).toBe(versions[i]! + 1)
+      })
+      expect((all[0]!.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()).toEqual([8, 16, 16, 2])
+      // The air stands for its edge at the farthest distance of the layers (5 in every picture of this relief), with the picture's own lens.
+      if (withAir) {
+        const far = all.find((m) => m.uniforms.uEdgeFar)!.uniforms.uEdgeFar!.value as THREE.Vector3
+        const th = Math.tan((40 * Math.PI) / 360)
+        expect(far.x).toBeCloseTo(5, 6)
+        expect(far.y).toBeCloseTo(1 / (th * 2), 12)
+        expect(far.z).toBeCloseTo(1 / th, 12)
+      }
+    }
+  })
+
+  it('leaves the air whole when the set says so: the layers get the edge, the air keeps its shaders and its uniforms to the letter', async () => {
+    const plain = materials(await Relief.load(ctx, '', def, motion(true)))
+    const r = await Relief.load(ctx, '', def, motion(true))
+    const all = materials(r)
+    const versions = all.map((m) => m.version)
+    r.presenceEdge([0, 8, 4, 0], { air: false })
+    const ground = all.find((_, i) => litOf(plain[i]!) !== AIR_LIT)!
+    let airs = 0
+    all.forEach((m, i) => {
+      if (litOf(plain[i]!) === AIR_LIT) {
+        airs++
+        expect(m.fragmentShader).toBe(plain[i]!.fragmentShader)
+        expect(m.vertexShader).toBe(plain[i]!.vertexShader)
+        expect(Object.keys(m.uniforms).sort()).toEqual(Object.keys(plain[i]!.uniforms).sort())
+        expect(m.version).toBe(versions[i])
+      } else {
+        expect(m.fragmentShader).toBe(withEdge(plain[i]!.fragmentShader, LIT))
+        expect(m.uniforms.uEdgeSide).toBe(ground.uniforms.uEdgeSide)
+        expect(m.version).toBe(versions[i]! + 1)
+      }
+    })
+    expect(airs).toBe(1)
+    // The numbers and the shield are those of the edge that ends the air too.
+    const both = await Relief.load(ctx, '', def, motion(true))
+    both.presenceEdge([0, 8, 4, 0])
+    expect((ground.uniforms.uEdgeSide!.value as THREE.Vector4).toArray()).toEqual((materials(both).find((m) => m.uniforms.uEdgeSide)!.uniforms.uEdgeSide!.value as THREE.Vector4).toArray())
+    expect((ground.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()).toEqual((materials(both).find((m) => m.uniforms.uEdgeOver)!.uniforms.uEdgeOver!.value as THREE.Vector4).toArray())
+    expect(grids(r).map((g) => Array.from(g.inside!))).toEqual(grids(both).map((g) => Array.from(g.inside!)))
+    // The choice is the first call's: a later call may leave it out or name it again, and changes numbers only.
+    const texts = all.map((m) => m.fragmentShader + m.vertexShader)
+    r.presenceEdge([4, 2, 1, 8])
+    r.presenceEdge([4, 2, 1, 8], { air: false })
+    r.presenceEdge([0, 0, 0, 0], {})
+    all.forEach((m, i) => expect(m.fragmentShader + m.vertexShader).toBe(texts[i]))
+    // The other choice is another program: it throws, and leaves the numbers as they were.
+    const before = (ground.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()
+    expect(() => r.presenceEdge([16, 16, 16, 16], { air: true })).toThrow(/chosen by the first call.*stays whole/)
+    expect((ground.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()).toEqual(before)
+    expect(() => both.presenceEdge([16, 16, 16, 16], { air: false })).toThrow(/chosen by the first call.*ends with the ground/)
+    both.presenceEdge([16, 16, 16, 16], { air: true })
+    // A relief without air takes either word and has nothing to leave whole.
+    const bare = await Relief.load(ctx, '', def, motion(false))
+    bare.presenceEdge([0, 8, 4, 0], { air: false })
+    for (const m of materials(bare)) expect(m.fragmentShader.includes('edgeShare(vImage)')).toBe(true)
+  })
+
+  it('takes its sides from the boxes of all layers together, margins and all', async () => {
+    const r = await Relief.load(ctx, '', wide, motion(true))
+    r.presenceEdge([4, 8, 2, 0])
+    const m = materials(r)[0]!
+    // Boxes: x from -8 to 40, y from 0 to 20, in a picture of 32 by 16.
+    expect((m.uniforms.uEdgeSide!.value as THREE.Vector4).toArray()).toEqual([-8 / 32, 40 / 32, 20 / 16, 0])
+    expect((m.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()).toEqual([8, 4, 8, 0])
+  })
+
+  it('the share is 0 at a side and beyond it, 1 one feather inside, a half at half a feather, and never falls on the way in', () => {
+    const side = [-0.25, 1.25, 1.25, 0]
+    const over = [8, 4, 8, 0]
+    // Right side at 1.25 with a feather of a quarter.
+    expect(edgeShareAt(1.25, 0.5, side, over)).toBe(0)
+    expect(edgeShareAt(1.4, 0.5, side, over)).toBe(0)
+    expect(edgeShareAt(1.0, 0.5, side, over)).toBe(1)
+    expect(edgeShareAt(0.5, 0.5, side, over)).toBe(1)
+    expect(edgeShareAt(1.125, 0.5, side, over)).toBeCloseTo(0.5, 12)
+    // Left side at -0.25 with a feather of an eighth, bottom side at 1.25 with an eighth.
+    expect(edgeShareAt(-0.25, 0.5, side, over)).toBe(0)
+    expect(edgeShareAt(-0.3, 0.5, side, over)).toBe(0)
+    expect(edgeShareAt(-0.125, 0.5, side, over)).toBe(1)
+    expect(edgeShareAt(-0.1875, 0.5, side, over)).toBeCloseTo(0.5, 12)
+    expect(edgeShareAt(0.5, 1.25, side, over)).toBe(0)
+    expect(edgeShareAt(0.5, 1.6, side, over)).toBe(0)
+    expect(edgeShareAt(0.5, 1.125, side, over)).toBe(1)
+    // The top does not fade: 1 on it and beyond it.
+    expect(edgeShareAt(0.5, 0, side, over)).toBe(1)
+    expect(edgeShareAt(0.5, -3, side, over)).toBe(1)
+    // A corner is the product of its two sides.
+    expect(edgeShareAt(1.125, 1.1875, side, over)).toBeCloseTo(0.25, 12)
+    let last = 0
+    for (let k = 0; k <= 400; k++) {
+      const v = edgeShareAt(1.25 - (k / 400) * 0.25, 0.5, side, over)
+      expect(v).toBeGreaterThanOrEqual(last)
+      expect(v).toBeGreaterThanOrEqual(0)
+      expect(v).toBeLessThanOrEqual(1)
+      last = v
+    }
+    expect(last).toBe(1)
+    // No side fades: 1 everywhere.
+    for (const [x, y] of [[-9, 0.5], [9, 0.5], [0.5, 9], [0.5, -9]]) expect(edgeShareAt(x!, y!, side, [0, 0, 0, 0])).toBe(1)
+  })
+
+  it('refuses feathers that are none and changes nothing by it', async () => {
+    const r = await Relief.load(ctx, '', def, motion(true))
+    const texts = materials(r).map((m) => m.fragmentShader)
+    for (const bad of [[-1, 0, 0, 0], [0, Number.NaN, 0, 0], [0, 0, Number.POSITIVE_INFINITY, 0], [0, 0, 0], [0, 0, 0, 0, 0]]) {
+      expect(() => r.presenceEdge(bad as unknown as [number, number, number, number])).toThrow(/four feathers of 0 or more pixels/)
+    }
+    expect(materials(r).map((m) => m.fragmentShader)).toEqual(texts)
+    for (const g of grids(r)) expect(g.inside).toBe(null)
+  })
+
+  it('goes with a presence in either order: the two shares multiply', async () => {
+    for (const first of ['edge', 'presence']) {
+      const plain = materials(await Relief.load(ctx, '', def, motion(true)))
+      const r = await Relief.load(ctx, '', def, motion(true))
+      if (first === 'edge') r.presenceEdge([4, 4, 4, 0])
+      r.presence(0.5)
+      if (first !== 'edge') r.presenceEdge([4, 4, 4, 0])
+      materials(r).forEach((m, i) => {
+        const lit = litOf(plain[i]!)
+        const edge = lit === AIR_LIT ? ' * edgeShare(edgeAirImage(d))' : ' * edgeShare(vImage)'
+        expect(m.fragmentShader.includes(lit + (first === 'edge' ? ' * uPresence' + edge : edge + ' * uPresence'))).toBe(true)
+        expect(m.uniforms.uPresence!.value).toBe(0.5)
+        expect(m.uniforms.uEdgeSide).toBeDefined()
+      })
+    }
+  })
+
+  it('keeps from the shield every cell that does not stand whole inside the feather, and none without a feather', async () => {
+    const r = await Relief.load(ctx, '', wide, motion(false))
+    r.presenceEdge([0, 12, 0, 0])
+    const m = materials(r)[0]!
+    const side = (m.uniforms.uEdgeSide!.value as THREE.Vector4).toArray()
+    const over = (m.uniforms.uEdgeOver!.value as THREE.Vector4).toArray()
+    let kept = 0
+    let whole = 0
+    for (const g of grids(r)) {
+      expect(g.inside!.length).toBe(g.nx * g.ny)
+      for (let cj = 0; cj < g.ny; cj++) {
+        for (let bi = 0; bi < g.nx; bi++) {
+          const a = cj * g.cols + bi + g.left
+          const least = Math.min(...[a, a + 1, a + g.cols, a + g.cols + 1].map((n) => edgeShareAt(g.image[n * 2]!, g.image[n * 2 + 1]!, side, over)))
+          expect(g.inside![cj * g.nx + bi]).toBe(least < 1 ? 0 : 1)
+          // The right side stands at x 40 of 32 and the feather is 12 wide: a cell is whole when its right end is at 28 of 32 or left of it.
+          expect(g.inside![cj * g.nx + bi]).toBe(g.image[(a + 1) * 2]! <= 28 / 32 + 1e-9 ? 1 : 0)
+          if (least < 1) kept++
+          else whole++
+        }
+      }
+    }
+    expect(kept).toBeGreaterThan(0)
+    expect(whole).toBeGreaterThan(0)
+    r.presenceEdge([0, 0, 0, 0])
+    for (const g of grids(r)) expect([...g.inside!].every((v) => v === 1)).toBe(true)
+  })
+
+  it('the shader with the edge needs one place for it and refuses none or two', () => {
+    const one = 'precision highp float;\nin vec2 vImage;\nout vec4 outColor;\nvoid main() { if (alpha < 0.004) discard; outColor = vec4(col * alpha, alpha); }'
+    const made = withEdge(one, LIT)
+    expect(made).toBe('precision highp float;\nin vec2 vImage;' + EDGE_GLSL + '\nout vec4 outColor;\nvoid main() { if (alpha < 0.004 || edgeShare(vImage) <= 0.0) discard; outColor = vec4(col * alpha, alpha) * edgeShare(vImage); }')
+    expect(() => withEdge(one.replace(LIT, 'vec4(1.0)'), LIT)).toThrow(/no single place/)
+    expect(() => withEdge(one + ' vec4(col * alpha, alpha)', LIT)).toThrow(/no single place/)
+    expect(() => withEdge(one.replace('in vec2 vImage;', ''), LIT)).toThrow(/no single place/)
+    expect(() => withEdge(one.replace(THIN, ''), LIT)).toThrow(/no single place/)
+    expect(() => withEdge(made, LIT)).toThrow(/no single place/)
+    const sky = 'precision highp float;\nin vec3 vDir;\nout vec4 outColor;\nvoid main() { vec3 d = normalize(vDir); outColor = vec4(glow * uGain * vig, cut); }'
+    expect(withEdge(sky, AIR_LIT)).toBe('precision highp float;\nin vec3 vDir;' + EDGE_GLSL + EDGE_AIR_GLSL + '\nout vec4 outColor;\nvoid main() { vec3 d = normalize(vDir); outColor = vec4(glow * uGain * vig, cut) * edgeShare(edgeAirImage(d)); }')
+    expect(() => withEdge(sky.replace('in vec3 vDir;', ''), AIR_LIT)).toThrow(/no single place/)
+    expect(() => withEdge(withEdge(sky, AIR_LIT), AIR_LIT)).toThrow(/no single place/)
+    const vert = 'out vec3 vDir;\nvoid main() {\n  vDir = position;\n}'
+    expect(withEdgeEye(vert)).toBe('out vec3 vDir;\nout vec3 vEdgeEye;\nuniform float uEyeScale;\nvoid main() {\n  vDir = position;\n  vEdgeEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uEyeScale;\n}')
+    expect(() => withEdgeEye(vert.replace('vDir = position;', ''))).toThrow(/no single place/)
+    expect(() => withEdgeEye(withEdgeEye(vert))).toThrow(/no single place/)
   })
 })
