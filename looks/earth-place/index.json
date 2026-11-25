@@ -1,9 +1,66 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T19:29:32.872Z",
+ "pushed": "2026-11-25T19:57:24.355Z",
  "head": "20ad27c24dd51c774c597e4cb2670ddfd97bf087",
- "note": "rise lines on 20ad27c2 red at 0.52 (2127 + 1/2), the edge of the canvas on the rise, three generated grounds for the cure not yet in the picture",
+ "note": "layer control at 1870, 1882, 1890 on 20ad27c2 (not cured: edge of the canvas, dark round, towers); handover tool running",
  "looks": [
+  {
+   "time": "2026-11-25T19:57:23.590Z",
+   "file": "20261125195723590-note-disc-1856-1870.jpg",
+   "source": "../../../../tmp/gl/k16/E/disc-1856-1870.jpg",
+   "kind": "note",
+   "label": "20ad27c2 draft 1856 to 1870 every second frame at pixel 970, 509: the place coming in",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T19:57:22.868Z",
+   "file": "20261125195722868-note-look-1890.jpg",
+   "source": "../../../../tmp/gl/k16/D/look-1890.jpg",
+   "kind": "note",
+   "label": "layer control 1890, same eight",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T19:57:21.997Z",
+   "file": "20261125195721997-note-look-1882.jpg",
+   "source": "../../../../tmp/gl/k16/D/look-1882.jpg",
+   "kind": "note",
+   "label": "layer control 1882, same eight",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T19:57:20.935Z",
+   "file": "20261125195720935-note-look-1870.jpg",
+   "source": "../../../../tmp/gl/k16/D/look-1870.jpg",
+   "kind": "note",
+   "label": "layer control 1870 on 20ad27c2: as it is, ground off, level share 0, tone 0, stand 0, air lift 0, above 0, plates 0",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T19:54:57.853Z",
+   "file": "20261125195457853-compare-earth-dive-sides.jpg",
+   "source": "out/work/handover/earth-dive-sides.png",
+   "kind": "compare",
+   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T19:33:32.509Z",
+   "file": "20261125193332509-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "da1c454a83994f2f"
+  },
   {
    "time": "2026-11-25T19:29:31.911Z",
    "file": "20261125192931911-note-look-south-t2.jpg",
@@ -18,54 +75,6 @@
    "source": "../../../../tmp/gl/k16/gen/look-east-t2.jpg",
    "kind": "note",
    "label": "not in the picture: generated ground outside the east side, take 2",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T19:29:29.959Z",
-   "file": "20261125192929959-note-plate-with-t3-look.jpg",
-   "source": "../../../../tmp/gl/k16/gen/plate-with-t3-look.jpg",
-   "kind": "note",
-   "label": "not in the picture: generated ground outside the near edge of the canvas laid on the plate, take 3",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T19:29:26.685Z",
-   "file": "20261125192926685-note-earth-rise-changes.jpg",
-   "source": "../../../../tmp/gl/k16/C/earth-rise-changes.png",
-   "kind": "note",
-   "label": "rise lines on 20ad27c2: red, pattern 0.52 at 2127 + 1/2, the tool's own picture",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T19:29:26.032Z",
-   "file": "20261125192926032-note-s-2140.jpg",
-   "source": "../../../../tmp/gl/k16/S/s-2140.jpg",
-   "kind": "note",
-   "label": "rise draft 2140 to 2151 on 20ad27c2: pale patch and glint inside the dark round",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T19:29:25.140Z",
-   "file": "20261125192925140-note-s-2128.jpg",
-   "source": "../../../../tmp/gl/k16/S/s-2128.jpg",
-   "kind": "note",
-   "label": "rise draft 2128 to 2139 on 20ad27c2: the place as a pale wedge on navy sea, the edge that is my next step",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T19:06:20.723Z",
-   "file": "20261125190620723-note-look-t12.jpg",
-   "source": "../../../../tmp/gl/k16/gen/look-t12.jpg",
-   "kind": "note",
-   "label": "skirt takes 1 and 2 for the ground round the canvas, not in the picture yet",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T19:06:19.619Z",
-   "file": "20261125190619619-note-p5-small.jpg",
-   "source": "../../../../tmp/gl/k16/p5-small.jpg",
-   "kind": "note",
-   "label": "place-5 plate whole, the lay back ends on the canvas outline with bare navy outside, bad",
    "stop": "earth"
   }
  ]
