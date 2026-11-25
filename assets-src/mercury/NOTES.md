@@ -4124,3 +4124,12 @@ Attachments: l-mercury-rise.jpg (four crops 1000.5, 1002.0, 1003.5, 1005.0: the 
 - `/tmp/b0` is back on 9ee7de11's set.ts (its dist is built from main's set.ts until the next chain there rebuilds).
 - Disk: `out/work/mercury/place/b0d` (858 MB, the old stills of the mark b0b87889) deleted at 18:50 to keep 1500 MB free before the build in `/tmp/b0`.
 - Fault: 17:48 the gate beside a render (above). MAIL 982 is not met for 3da91ef1 (the stretches read are listed in the NAMED mail, point G).
+
+## 18:58 UTC: NAMED mail sent for 3da91ef1; the push is lost
+
+- NAMED 3da91ef177e8a7382a957c07bbc1e39d0ebd0b64 mailed to the Builder at 18:58 (text kept in `/tmp/m/named-draft.txt`; sections: MAIL 1262 in two lines, A smooth, B frames outside dive and rise, C the hold 615 by d296 and G17 with the tile list, D the order of MAIL 1189, E answers, F still wrong, G what was read at rate 2, H tests and size, I faults). Five pictures attached (limb switch, pairs at 717 and 1016, disc at 4 times, main's rise beside way C's).
+- Checked before sending (18:56): the name's limb band (`fin`) equals 9ee7de11's (`m9`) at K 2001, 2005, 2009, 2011 in the third to seventh block within 0.4. The box x 960 to 1080, y 480 to 600 reads 113.8, 124.2, 114.4, 105.7 on main 53025569 and on 9ee7de11 alike, 73.1, 73.0, 71.4, 72.4 on the name: the limb's light does not reach that box.
+- The name's set.ts line 381 `sunShown.applyQuaternion(sunRide.identity().slerp(sunTurn, shot.skyShare ?? 0))`; origin main's line 373 `sunShown.applyQuaternion(skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn))`.
+- BLOCKER, mailed: since 18:54 `git push` and the looks push fail with "could not read Username for 'https://github.com'". Reading works (`git fetch`, `ls-remote`). Not to be cured by me (no login, no look at credentials). Local only: a240e3b0 (notes) and what follows; three looks (pairs at 717 and 1016, the limb switch) added and not pushed.
+- Origin main is 66912fc1 since 18:46; against 3da91ef1 it differs in kit/PROGRESS.md only. Not merged yet (merge before the next name).
+- Open on the name, by my own list: ghosts as optics, bloom by the limb's brightness, way C's rise row 0.63 at 1012, the hole at 719 to 724, the crater not shaded from relief, MAIL 982 not met (dive rows 719 + 1/2 to 723 + 1/2 at rate 2 not read; 690 to 716, 751 to 779, 960 to 998, 1023 to 1034 not read).
