@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T19:39:02.143Z",
+ "pushed": "2026-11-25T20:06:51.862Z",
  "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
- "note": "Working tree on 6b6aca66: the gas from inside, arcs gone at draft 199 to 231; 0 60 90 247 270 360 449 same bytes at draft. Frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "sun-place 20:08 UTC: inside law first state, far sky 1.44 to 0.56 on the short run (still red), bands of the map's rows from 198 at x12; next state under render. frame 60 unchanged bytes: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T20:06:51.052Z",
+   "file": "20261125200651052-note-sm-a-sky12.jpg",
+   "source": "../../../../tmp/v/sm-a-sky12.jpg",
+   "kind": "note",
+   "label": "sun rise 190, 194, 198, 202 at draft, working tree on 6b6aca66 (the glow from inside, first state): top 42 percent, stars out by a median, x12. Bands of the map's rows still come in from 198; harness short run 190 to 200 reads the far sky 0.56 at 190 (limit 0.45, was 1.44 at 195 + 1/2 on the name). Next state reads the map as wide outward as round.",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T19:38:49.277Z",
    "file": "20261125193849277-note-f00221.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/sun60-name-r5.jpg",
    "kind": "note",
    "label": "Frame 60 at final: approved | main (panel of mail 1224) | this name. 40.3061 | 18.6308 | 49.5956 against the approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T18:54:50.556Z",
-   "file": "20261125185450556-note-h5-190-204.jpg",
-   "source": "../../../../tmp/v/h5-190-204.jpg",
-   "kind": "note",
-   "label": "Harness frames 190 to 204 as drawn (merge 16372d3e, draft)",
    "stop": "sun"
   }
  ]
