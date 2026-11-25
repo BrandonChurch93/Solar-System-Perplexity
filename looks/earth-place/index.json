@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T17:55:12.277Z",
+ "pushed": "2026-11-25T18:13:02.273Z",
  "head": "20ad27c24dd51c774c597e4cb2670ddfd97bf087",
- "note": "20ad27c2 in proof: dive lines run, 1857 final pair, Gulf speck control (specks are in the surface patches)",
+ "note": "dive lines on 20ad27c2 at frame 1894 of 1919; disc seen 1866 to 1892 as before, nothing cured yet, cause traced to the plate's own picture",
  "looks": [
+  {
+   "time": "2026-11-25T18:13:01.364Z",
+   "file": "20261125181301364-note-plate-foot.jpg",
+   "source": "../../../../tmp/gl/k16/plate-foot.jpg",
+   "kind": "note",
+   "label": "the level's own picture place-12 beside the same with the lay back's outline: the dark round and the end of the cloud field are in the picture itself",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T18:13:00.601Z",
+   "file": "20261125181300601-note-gc-1882.jpg",
+   "source": "../../../../tmp/gl/k16/strip/gc-1882.jpg",
+   "kind": "note",
+   "label": "1882 and 1886 lower part 1 to 1, right with the guide: yellow the near edge of the ground the approved close picture covers, red rings of 1 to 4 degrees about the point under the close camera",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T18:12:59.880Z",
+   "file": "20261125181259880-note-s-1881.jpg",
+   "source": "../../../../tmp/gl/k16/S/s-1881.jpg",
+   "kind": "note",
+   "label": "20ad27c2 dive draft frames 1881 to 1892 whole: the place reads as an island of cloud field with a pale veil, navy sea round it",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T18:12:58.978Z",
+   "file": "20261125181258978-note-s-1873.jpg",
+   "source": "../../../../tmp/gl/k16/S/s-1873.jpg",
+   "kind": "note",
+   "label": "20ad27c2 dive draft frames 1873 to 1884 whole, from the smooth tool",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T17:55:07.124Z",
    "file": "20261125175507124-note-pair-1857.jpg",
@@ -35,43 +67,6 @@
    "kind": "note",
    "label": "hold 1755, three spots at 5 for 1, before and after the cut",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T17:36:08.950Z",
-   "file": "20261125173608950-note-final-1755-c2.jpg",
-   "source": "../../../../tmp/gl/k16/final-1755-c2.png",
-   "kind": "note",
-   "label": "hold 1755 final on 20ad27c2 (wedge a twentieth, maps cut)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T17:36:08.248Z",
-   "file": "20261125173608248-note-disc4-c2.jpg",
-   "source": "../../../../tmp/gl/k16/disc4-c2.png",
-   "kind": "note",
-   "label": "hold 1755 final disc at 4 for 1: approved, main, ee321270, 20ad27c2",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T17:33:50.941Z",
-   "file": "20261125173350941-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "da1c454a83994f2f"
-  },
-  {
-   "time": "2026-11-25T17:17:20.225Z",
-   "file": "20261125171720225-note-disc-b.jpg",
-   "source": "../../../../tmp/gl/k16/disc-b.jpg",
-   "kind": "note",
-   "label": "trial with a fringe of bodies and a carried tone (dropped): 1886 to 1892, caaa727d left, trial right"
   }
  ]
 }
