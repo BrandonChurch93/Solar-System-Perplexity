@@ -749,7 +749,9 @@ void main() {
   // the power of the fall) and the crease is the coolest. No two creases are alike: the share of a lattice unit
   // from the lane over which the gas loses its heat (uCvWell.w) is wide here and a hair there (uCvBulbMore.z: by how
   // much); between the fibres of the penumbra the dark is wider by uCvFibreLook.x
-  float well = pow(max(1.0 - pow(way, uCvWell.x), 0.0), uCvWell.y);
+  // (the flank does not cool to the dark of the lane: it keeps the share uCvPatch.x of the top's heat, a deeper
+  // orange round a hot middle, and only the crease itself is dark)
+  float well = mix(uCvPatch.x, 1.0, pow(max(1.0 - pow(way, uCvWell.x), 0.0), uCvWell.y));
   float seamWide = uCvWell.w * (1.0 - uCvBulbMore.z + 2.0 * uCvBulbMore.z * vnoise(vec3(g / L * 0.9 + 3.3, 4.1 + t * 0.05))) * (1.0 + uCvFibreLook.x * spot.w);
   well *= 1.0 - exp(-across / seamWide);
   // (it boils: the heat of a place wavers with a fine field that the time carries)
@@ -771,6 +773,10 @@ void main() {
   // (seen flat, a thread is thinner than a pixel is deep long before a pixel is wider than it: the threads merge
   // into their mean by the long side of what a pixel covers too, uCvThreadFar.w of it)
   float threads = (1.0 - smoothstep(uCvThreadFar.x, uCvThreadFar.y, footC)) * (1.0 - smoothstep(uCvThreadFar.x, uCvThreadFar.y, footL * uCvThreadFar.w)) * fine;
+  // a dome is no single swell: it is made of a few lobes that the cell's flow carries outward, with thin cooler
+  // folds between them (the same lobes that its height has). uCvPatch.y: the share of its heat a fold loses. A fold
+  // is drawn where a pixel can hold it, at twice the size of what a pixel covers where a thread is still drawn
+  lum *= 1.0 - uCvPatch.y * (1.0 - petal.x) * (1.0 - smoothstep(2.0 * uCvThreadFar.x, 2.0 * uCvThreadFar.y, footC)) * fine;
   // (the threads are fixed in angle round the cell's middle, so a thread is as thin as its place is near the
   // middle: it is drawn only where it is wider than what a pixel covers, between the shares uCvThin.x and uCvThin.y
   // of its width to a pixel; nearer the middle the threads are their mean. A thread thinner than a pixel drawn
@@ -943,6 +949,11 @@ export class Surface {
   private readonly at0 = new THREE.Vector3()
   private readonly atX = new THREE.Vector3()
   private readonly atY = new THREE.Vector3()
+  private readonly ray = new THREE.Vector3()
+  private readonly rimMid = new THREE.Vector3()
+  private readonly rimA = new THREE.Vector3()
+  private readonly rimB = new THREE.Vector3()
+  private readonly fromMid = new THREE.Vector3()
 
   /** shared: the uniforms of the lights that the opening throws on the ground, kept by the old ground. map: the
    * globe's own map, toStage: the turn from the map's axes to the stage's (the globe lays the stage by it). */
@@ -995,7 +1006,7 @@ export class Surface {
         uCvStep: { value: new THREE.Vector4(g.cut.texels, g.cut.depth, g.cut.most, g.cut.air) },
         uCvGrain: { value: new THREE.Vector4(0, l.boil.scale, l.boil.rate, l.boil.amount) },
         uCvThread: { value: new THREE.Vector4(c.thread.round, c.thread.out, c.thread.speed, 0) },
-        uCvPatch: { value: new THREE.Vector4(0, 0, 0, l.well.scale) },
+        uCvPatch: { value: new THREE.Vector4(l.well.flank, l.well.lobes, 0, l.well.scale) },
         uCvThin: { value: new THREE.Vector4(g.strand.thin[0]!, g.strand.thin[1]!, 0, 0) },
         uCvThreadFar: { value: new THREE.Vector4(g.strand.far[0]!, g.strand.far[1]!, g.fine, g.strand.flat) },
         uCvKnee: { value: new THREE.Vector4(l.knee[0]!, l.knee[1]!, g.pit.veil[0]!, g.pit.veil[1]!) },
@@ -1201,13 +1212,19 @@ export class Surface {
     // size, and the picture is the same)
     const wide = this.size.x / formatUniform.value
     const high = this.size.y / formatUniform.value
-    const w = Math.ceil(wide * margin * fine)
-    const h = Math.ceil(high * margin * fine)
+    // (a frame smaller than the master needs no more of the diagram than it can show: there the buffer is as much
+    // smaller each way, and every measure that is counted in it is still counted in pixels of the master
+    // (uCvThreadFar.z, the texels of the buffer to a master pixel), so whatever comes in or goes out by size does
+    // so at the same moment. A frame larger than the master keeps the master's buffer)
+    const small = Math.min(formatUniform.value, 1)
+    const w = Math.ceil(wide * margin * fine * small)
+    const h = Math.ceil(high * margin * fine * small)
     if (this.baked.width !== w || this.baked.height !== h) this.baked.setSize(w, h)
+    ;(u.uCvThreadFar!.value as THREE.Vector4).z = fine * small
     // from the stage's own frame to the picture, and to the buffer (the same look, margin wider each way)
     this.toClip.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse).multiply(this.mesh.matrixWorld)
     ;(u.uCvClip!.value as THREE.Matrix4).copy(this.toClip)
-    this.wider.makeScale((wide * fine) / w, (high * fine) / h, 1)
+    this.wider.makeScale((wide * fine * small) / w, (high * fine * small) / h, 1)
     this.toBake.multiplyMatrices(this.wider, this.toClip)
     ;(u.uCvBake!.value as THREE.Matrix4).copy(this.toBake)
     // the eye in the stage's frame, and the ray of every place of the buffer
@@ -1220,6 +1237,71 @@ export class Surface {
     ;(u.uCvRay0!.value as THREE.Vector3).copy(this.at0).sub(eye)
     ;(u.uCvRayX!.value as THREE.Vector3).copy(this.atX)
     ;(u.uCvRayY!.value as THREE.Vector3).copy(this.atY)
+    // Only the part of the buffer that holds the ball is drawn: the march reads the buffer at the place of a point
+    // of the ball alone, so no place whose ray misses the ball is ever read. The box round the ball in the buffer
+    // is found from the eye alone: the ball seen from the eye is a round cone, its cut with the buffer has no
+    // hollow, so the box round it touches either a point of the ball's edge that lies in the buffer or a point of
+    // the buffer's own edge whose ray meets the ball. Both are walked, and the box is taken box.pad texels wider
+    // (convect.json gas.box: edge and rim are how many points of the buffer's edge and of the ball's edge are walked).
+    const box = data.gas.box
+    const oc = this.fromMid.copy(eye).sub(stage.centre)
+    const far2 = oc.lengthSq() - stage.radius * stage.radius
+    let x0 = Infinity
+    let x1 = -Infinity
+    let y0 = Infinity
+    let y1 = -Infinity
+    const meets = (x: number, y: number): void => {
+      const ray = this.ray.copy(u.uCvRay0!.value as THREE.Vector3).addScaledVector(this.atX, x).addScaledVector(this.atY, y).normalize()
+      const bq = oc.dot(ray)
+      if (bq < 0 && bq * bq - far2 > 0) {
+        x0 = Math.min(x0, x)
+        x1 = Math.max(x1, x)
+        y0 = Math.min(y0, y)
+        y1 = Math.max(y1, y)
+      }
+    }
+    for (let i = 0; i <= box.edge; i++) {
+      const s = (i / box.edge) * 2 - 1
+      meets(s, -1)
+      meets(s, 1)
+      meets(-1, s)
+      meets(1, s)
+    }
+    if (far2 > 0) {
+      // (the ball's edge as the eye sees it: a circle round the line from the ball's middle to the eye)
+      const d = oc.length()
+      const mid = this.rimMid.copy(stage.centre).addScaledVector(oc, (stage.radius * stage.radius) / (d * d))
+      const rim = stage.radius * Math.sqrt(far2) / d
+      const a = this.rimA.set(1, 0, 0)
+      if (Math.abs(oc.x) > 0.9 * d) a.set(0, 1, 0)
+      a.addScaledVector(oc, -a.dot(oc) / (d * d)).normalize()
+      const b = this.rimB.copy(oc).cross(a).normalize()
+      const m = this.toBake.elements
+      for (let i = 0; i < box.rim; i++) {
+        const turn = (i / box.rim) * Math.PI * 2
+        const p = this.ray.copy(mid).addScaledVector(a, rim * Math.cos(turn)).addScaledVector(b, rim * Math.sin(turn))
+        const cw = m[3]! * p.x + m[7]! * p.y + m[11]! * p.z + m[15]!
+        if (!(cw > 0)) continue
+        const cx = (m[0]! * p.x + m[4]! * p.y + m[8]! * p.z + m[12]!) / cw
+        const cy = (m[1]! * p.x + m[5]! * p.y + m[9]! * p.z + m[13]!) / cw
+        if (Math.abs(cx) <= 1 && Math.abs(cy) <= 1) {
+          x0 = Math.min(x0, cx)
+          x1 = Math.max(x1, cx)
+          y0 = Math.min(y0, cy)
+          y1 = Math.max(y1, cy)
+        }
+      }
+    } else {
+      x0 = y0 = -1
+      x1 = y1 = 1
+    }
+    const left = Math.max(Math.floor((x0 * 0.5 + 0.5) * w) - box.pad, 0)
+    const low = Math.max(Math.floor((y0 * 0.5 + 0.5) * h) - box.pad, 0)
+    const right = Math.min(Math.ceil((x1 * 0.5 + 0.5) * w) + box.pad, w)
+    const top = Math.min(Math.ceil((y1 * 0.5 + 0.5) * h) + box.pad, h)
+    this.baked.scissorTest = true
+    if (right > left && top > low) this.baked.scissor.set(left, low, right - left, top - low)
+    else this.baked.scissor.set(0, 0, 1, 1)
     const xr = renderer.xr.enabled
     renderer.xr.enabled = false
     renderer.setRenderTarget(this.baked)

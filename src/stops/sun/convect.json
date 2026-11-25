@@ -379,7 +379,9 @@
    "scale": 6,
    "note": "the heat of a cell: its top is one heat with a mottle that the flow carries outward (tongue: how strong; scale: the size of the mottle), it falls toward the lane by (1 - way^out)^fall and is lost in the crease over the share seam of a lattice unit, wide here and a hair there (uneven)",
    "seam": 0.035,
-   "uneven": 0.7
+   "uneven": 0.7,
+   "flank": 0,
+   "lobes": 0
   },
   "fibre": {
    "one": 1.15,
@@ -507,6 +509,12 @@
    "depth": 0.0015,
    "most": 12,
    "air": 0.02
+  },
+  "box": {
+   "note": "the bake is drawn only in the box round the ball in its buffer: edge and rim are how many points of the buffer's edge and of the ball's edge are walked to find the box, pad how many texels it is taken wider",
+   "edge": 1024,
+   "rim": 2048,
+   "pad": 16
   }
  }
 }
