@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T20:36:51.192Z",
- "head": "b53b86b9e3f74fc7b64315e41770d06c30b5a95a",
- "note": "controls for the deck's own fine texture at 4860 (not committed): gain 0.62 lifts G17 from 0.426 to about 0.6, relief gives the grain, lump 0.35 turns chop into streaks; 90 s per draft frame",
+ "pushed": "2026-11-25T21:00:18.936Z",
+ "head": "1914c0c1465ccf4f0e5846a02fe2e2a7186f741f",
+ "note": "MAIL 1295: 4860's band is the low haze standing 14 to 24 px over the approved's limb (control F2); the hold's disc is main's, the sky beside it is not; 91.8 s per draft frame",
  "looks": [
+  {
+   "time": "2026-11-25T21:00:18.379Z",
+   "file": "20261125210018379-note-hold-right.jpg",
+   "source": "../../../../tmp/hold-right.jpg",
+   "kind": "note",
+   "label": "4605, the right limb at full size: approved, main, mine. The disc and its limb are main's pixels; what differs is the sky beside it (main's is the plate cut from the approved)",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T21:00:17.753Z",
+   "file": "20261125210017753-note-top4.jpg",
+   "source": "../../../../tmp/top4.jpg",
+   "kind": "note",
+   "label": "4860, the top 440 rows: approved, main (sky plate), N11, and control F2 (sheet and low haze off): the wide pale glow over my limb is the low haze (band 2.646 with it, 1.326 without); the sky's brown band is the film's own Milky Way",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T21:00:17.135Z",
+   "file": "20261125210017135-note-pair-N11.jpg",
+   "source": "../../../../tmp/pair-N11.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved on 985341693 (N11): whole 23.593, sky 3.420, band 2.646, ground 17.527 (main 22.986, 1.619, 1.607, 19.759); G17 0.426 / p25 0.230; 91.8 s the draft frame at 1920",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T20:36:35.700Z",
    "file": "20261125203635700-note-h-near.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/fine-b.jpg",
    "kind": "note",
    "label": "4860 at full size, the eye: the approved (top), my tree 985341693 (middle), main (bottom); G17 0.426 / p25 0.230 on my tree (main 0.934 / 0.549 by the same draft reader), 91.8 s the draft frame; the tree's oval and plain are smooth where the approved has fine streaks: G17's tiles on the plain read 0.07 to 0.2; with the sheet and the low haze both off the same tiles still read 0.09 to 0.27, so the fine grain is missing in the deck itself, not hidden by the air",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T19:46:44.616Z",
-   "file": "20261125194644616-note-t1-place.jpg",
-   "source": "../../../../tmp/t1-place.jpg",
-   "kind": "note",
-   "label": "the row at 4753, the place at 4752 and 4760 (lifted), the name above and the trial below: in the shadow on the deck the streamer's thick and thin parts are read no finer than the shadow's own noise, so its edge no longer changes in place as it slides; pair 4752 to 4760 by the report's own path on my preview frames 0.26 (the name 0.47); the name's tree with the clock stopped 0.19, from the other end 0.06: the cause is the slide",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T19:46:43.419Z",
-   "file": "20261125194643419-note-pair-N11.jpg",
-   "source": "../../../../tmp/pair-N11.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved (left), the tree with the trial cure of the row at 4753 (not committed, not named): G17 0.426 / p25 0.230 as on the name, ground part 17.527 (the name 17.550, main 19.759), 91.8 s the draft frame at 1920; against the name the frame moves by at most 9 codes, all in the streamer's shadow on the dark near ground; 4605, 4707 and 5006 are the name's files to the byte",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T19:27:04.690Z",
-   "file": "20261125192704690-note-back-panels.jpg",
-   "source": "../../../../tmp/back-panels.jpg",
-   "kind": "note",
-   "label": "the same knot in the reader's own panels, the name (top) and the eighth name (bottom, 0.42 from 4751): later frame, earlier carried, their detail, the pattern; the rounded lobe stands in the earlier frame alone",
    "stop": "neptune"
   }
  ]
