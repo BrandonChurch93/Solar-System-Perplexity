@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T07:00:38.668Z",
- "head": "ac408e47a433a5f9c3b5570c067d1dbe984c4171",
- "note": "07:00 UTC, ac408e47: the dive's pattern red at 4712 to 4728 named (streamers under cirrus.thin) and cured by their far level; RED: thin streaks from orbit; a second layer at 4724 to 4744 and 4972 to 4988 not named yet",
+ "pushed": "2026-11-25T07:27:30.565Z",
+ "head": "19a98ef7fba3f258ea996015c884dc45c580efa9",
+ "note": "07:30 rise 4987 to 5003: control says the fall grade (tone curve by height) lifting is what turns the crescent on; far streak rebuild next",
  "looks": [
+  {
+   "time": "2026-11-25T07:27:29.983Z",
+   "file": "20261125072729983-note-4860-S5.jpg",
+   "source": "out/work/nep/weave/ev/4860-S5.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved, ac408e47 at the preview (draft, 39 s the frame at worst). G17 proxy median 0.508, p25 0.128. The deck is not yet the approved one: plain too dark, no fine curl",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T07:27:29.368Z",
+   "file": "20261125072729368-note-rise-4992-grade.jpg",
+   "source": "out/work/nep/weave/ev/rise-4992-grade.jpg",
+   "kind": "note",
+   "label": "rise 4992 to 5000: as named above, the fall grade held constant below (control). Pattern 0.66 against 0.26 by my copy of the reader at the preview",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T07:00:38.056Z",
    "file": "20261125070038056-note-s4-dive.jpg",
@@ -50,22 +66,6 @@
    "source": "out/work/nep/weave/ev/carry-4720.jpg",
    "kind": "note",
    "label": "RED named, dive: frames 4700 to 4736 carried onto the camera of 4720 (proxy by poses): the streamer is not there at 4716 and comes in piece by piece from 4720 to 4736 (cirrus.thin, by the pixel foot against its width); control without streamers: pattern proxy 4716 to 4724 falls from 1.03 to 0.20",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T06:35:46.881Z",
-   "file": "20261125063546881-note-4860-F2p.jpg",
-   "source": "out/work/nep/weave/ev/4860-F2p.jpg",
-   "kind": "note",
-   "label": "4860 beside the approved, tip 91888379: G17 proxy 1920 median 0.359, p25 0.090 (preview 0.508); plain (49, 81, 120) against (90, 134, 176); 92 s the draft frame at 1920, 38.5 s at the preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T06:09:22.536Z",
-   "file": "20261125060922536-note-f2-b.jpg",
-   "source": "out/work/nep/weave/ev/f2-b.jpg",
-   "kind": "note",
-   "label": "commit 02ca4d9f, preview draft: 4750, 4757, 4758 (change of view), 4956, 4957, 4975. Soft dark ovals (cirrus shadow on the air) and a faint pink band at the far limb are reds I name.",
    "stop": "neptune"
   }
  ]
