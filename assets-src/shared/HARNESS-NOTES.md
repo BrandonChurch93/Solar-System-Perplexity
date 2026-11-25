@@ -1124,3 +1124,11 @@ Verbatim core, to be kept:
 - Disk: the tool refused a start at 2.9 GB; `out/work/smooth/sun/frames` removed (the Sun's numbers are kept in `scratch/r745/sun470/`).
 - Parts placed: neptune dive 3 (render_29, 03:42), neptune rise 1 (render_17, 03:50): 66 parts; missing jupiter rise 2, neptune dive 4. Table: `scratch/r745/parts-table.md` (98 cause lines).
 - MAIL 872 answers sent at about 03:55 (see the next entry if they changed).
+
+### 03:53 to 03:58 UTC, 25 Nov: after the NAMED of 23d005ef
+
+- SENT 03:53 to the Builder: NAMED 23d005ef, answers 2, 3 (a)(b)(c), 4 of MAIL 872, the Sun for MAIL 842, `parts-table.md` (66 parts), the changes sheets of Saturn rise 3 and Jupiter rise 3, pictures `cause/m6498.jpg`, `m1926.jpg`, `k473-six.jpg`. `agent/harness` pushed 0a3442e91 (merge of main 92c5f998).
+- Said there and to be kept in mind: a table that can decide needs the parts READ again on a tree with 23d005ef and the globes' range patches (main's column in the parts is the older reader, the map alone is not at 6ccc8389).
+- RUNNING since 03:54: MAIL 798 (c) case A in `/home/user/workspace/b0` (b0b87889 with c44ffa2c's tools laid over; its main reader is the OLDER one, no finer picture): `npx tsx tools/smooth.ts --stop mercury --kind dive --only pictures --frames 1425-1446 --carry-range --carry-limit 0.283 --calibrate` with the shim (job to `/tmp/shim/jobs/job-0.json`, to be read again with b4's `tools/img/smooth.py`), log `scratch/r745/logs/mercury-A-full-1425.log`. Then the same with `--assets web`, then 1477 to 1500 both.
+- Disk: `repo/out/work/smooth/mercury/frames` and stale `/tmp` browser profiles removed to stay over 3 GB (3.1 GB at 03:54).
+- MAIL 798 (d) numbers at hand (`scratch/r745/sets/main/sets.json`, 17 film frames, the middle of every dive and rise on main 7346c598's src): pattern 8 to 40 px between master full and uhd full at most 0.022 (film 4988), 40 to 200 px at most 0.001; between master full and master web 8 to 40 px up to 0.62 (4988), 0.40 (2708), 0.28 (4725), 40 to 200 px up to 0.195. At b0b87889 film 713, 717: uhd 0.77, 0.97 (40 to 200: 0.24, 0.31); web 0.79, 0.97. So master full against uhd full separates cleanly (0.022 against 0.77); the web set does not (its own textures differ by up to 0.62 where nothing is wrong). A draw: master 38 s, uhd 26 s on this sandbox.
