@@ -5,7 +5,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { segmentAtFrame } from '../src/director/timeline'
-import { poseRecord, type Shaped } from '../tools/smooth/pose'
+import { poseRecord, type Bodied, type Seated, type Shaped } from '../tools/smooth/pose'
 
 const film = new FilmDirector(plans)
 const size = { width: 1920, height: 1080 }
@@ -69,5 +69,63 @@ describe('the pose record of a capture frame', () => {
     expect({ ...r, bodies: [{ ...r.bodies[0]!, shape: undefined, place: [0, 0, 0] }] }).toEqual({ ...before, bodies: [{ ...before.bodies[0]!, shape: undefined }] })
     const none = Object.assign(Object.create(mars) as typeof mars, { drawnShape: () => null } satisfies Shaped)
     expect(JSON.stringify(poseRecord(film, none, 4814, 2, 30, size))).toBe(JSON.stringify(before))
+  })
+
+  it('names every further body a plan hands with its own place, turn and reach, with the view, the eye and the time of the frame', () => {
+    const venus = plan('venus')
+    const before = poseRecord(film, venus, 2516, 2, 30, size)
+    expect(before.bodies.length).toBe(1)
+    const seen: { view: string; eye: number[]; time: number }[] = []
+    const moon = { id: 'moon', place: [0.4, 0.1, 1.6], turn: [0, 0.1, 0, 0.995], reach: 0.07 }
+    const rings = { id: 'rings', place: [0, 0, 0], turn: [0, 0, 0, 1], reach: 2.3, sheet: { normal: [0, 1, 0], inner: 1.2, thick: 0.01 } }
+    const bodied = Object.assign(Object.create(venus) as typeof venus, {
+      drawnBodies: (view, eye, time) => {
+        seen.push({ view, eye: eye.toArray(), time })
+        return [moon, rings]
+      },
+    } satisfies Bodied)
+    const r = poseRecord(film, bodied, 2516, 2, 30, size)
+    expect(r.bodies.slice(1)).toEqual([moon, rings])
+    expect(seen).toEqual([{ view: r.view, eye: r.camera.p, time: r.time }])
+    expect(JSON.stringify({ ...r, bodies: r.bodies.slice(0, 1) })).toBe(JSON.stringify(before))
+    const none = Object.assign(Object.create(venus) as typeof venus, { drawnBodies: () => [] } satisfies Bodied)
+    expect(JSON.stringify(poseRecord(film, none, 2516, 2, 30, size))).toBe(JSON.stringify(before))
+  })
+
+  it('names the near bodies of a plan that hands no further bodies by their place alone, in the orbit view alone', () => {
+    const mars = plan('mars')
+    const hold = poseRecord(film, mars, 4780, 2, 30, size)
+    expect(hold.view).toBe('orbit')
+    const near = mars.nearBodies(hold.time)
+    expect(near.length).toBe(1)
+    expect(hold.bodies.length).toBe(2)
+    expect(hold.bodies[1]).toEqual({ id: 'mars.near.0', place: near[0]!.centre.toArray(), reach: near[0]!.radius })
+    const later = poseRecord(film, mars, 4796, 2, 30, size)
+    expect(new THREE.Vector3().fromArray(later.bodies[1]!.place).distanceTo(new THREE.Vector3().fromArray(hold.bodies[1]!.place))).toBeGreaterThan(1e-4)
+    let low = 0
+    for (let k = 4830; k < 5400 && !low; k += 10) if (poseRecord(film, mars, k, 2, 30, size).view === 'terrain') low = k
+    expect(low).toBeGreaterThan(0)
+    expect(poseRecord(film, mars, low, 2, 30, size).bodies.length).toBe(1)
+    const own = Object.assign(Object.create(mars) as typeof mars, { drawnBodies: () => [{ id: 'phobos', place: [1, 2, 3], turn: [0, 0, 0, 1], reach: 0.08 }] } satisfies Bodied)
+    expect(poseRecord(film, own, 4780, 2, 30, size).bodies.slice(1)).toEqual([{ id: 'phobos', place: [1, 2, 3], turn: [0, 0, 0, 1], reach: 0.08 }])
+  })
+
+  it('takes the turn of a stop\'s world about the lens into the camera, and leaves the sky and every other key as they were', () => {
+    const venus = plan('venus')
+    const before = poseRecord(film, venus, 2516, 2, 30, size)
+    const t = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0.2, 1, 0.1).normalize(), 0.004)
+    const seated = Object.assign(Object.create(venus) as typeof venus, { drawnSeat: () => t.clone() } satisfies Seated)
+    const r = poseRecord(film, seated, 2516, 2, 30, size)
+    expect(apartBy(q(r.camera.q), q(before.camera.q).multiply(t.clone().invert()))).toBeLessThan(1e-12)
+    expect(degrees(q(r.camera.q), q(before.camera.q))).toBeGreaterThan(0.2)
+    expect(JSON.stringify({ ...r, camera: { ...r.camera, q: before.camera.q } })).toBe(JSON.stringify(before))
+    const point = new THREE.Vector3(0.3, -0.2, 0.93)
+    const inLens = (rec: typeof r, x: THREE.Vector3): THREE.Vector3 => x.clone().sub(new THREE.Vector3().fromArray(rec.camera.p)).applyQuaternion(q(rec.camera.q).invert())
+    const world = point.clone().sub(new THREE.Vector3().fromArray(before.camera.p))
+    const seat = q(before.camera.q).multiply(t).multiply(q(before.camera.q).invert())
+    const drawn = world.applyQuaternion(seat).applyQuaternion(q(before.camera.q).invert())
+    expect(inLens(r, point).distanceTo(drawn)).toBeLessThan(1e-12)
+    const still = Object.assign(Object.create(venus) as typeof venus, { drawnSeat: () => new THREE.Quaternion() } satisfies Seated)
+    expect(JSON.stringify(poseRecord(film, still, 2516, 2, 30, size))).toBe(JSON.stringify(before))
   })
 })

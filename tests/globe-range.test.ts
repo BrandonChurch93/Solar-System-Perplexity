@@ -193,6 +193,111 @@ describe('the drawn shape of a body in the pose record', () => {
   })
 })
 
+const BODIED = `
+import json, sys
+import numpy as np
+sys.path.insert(0, sys.argv[1])
+import range as R
+
+def matrix(q):
+    x, y, z, w = q
+    return np.array([[1 - 2 * (y * y + z * z), 2 * (x * y - z * w), 2 * (x * z + y * w)], [2 * (x * y + z * w), 1 - 2 * (x * x + z * z), 2 * (y * z - x * w)], [2 * (x * z - y * w), 2 * (y * z + x * w), 1 - 2 * (x * x + y * y)]])
+
+def unit(q):
+    return list(np.array(q) / np.linalg.norm(q))
+
+def record(p, q, turn, moon, moonTurn):
+    q = unit(q)
+    return {'camera': {'p': p, 'q': q, 'vfov': 50.0, 'width': 96, 'height': 54}, 'sky': {'q': q}, 'range': {'low': -20, 'octaves': 32, 'units': [1, 0.003]},
+            'bodies': [{'id': 'made', 'place': [0, 0, 0], 'turn': turn, 'scale': [1, 1, 1], 'axes': [0, 0, 0, 1]},
+                       {'id': 'moon', 'place': moon, 'turn': unit(moonTurn), 'reach': 0.2},
+                       {'id': 'rings', 'place': [0, 0, 0], 'turn': [0, 0, 0, 1], 'reach': 2.2, 'sheet': {'normal': [0, 1, 0], 'inner': 1.3, 'thick': 0.01}}]}
+
+def ball(p, ray, c, r):
+    o = p - np.array(c)
+    b = ray @ o
+    disc = b * b - (o @ o - r * r)
+    return np.where(disc > 0, -b - np.sqrt(np.maximum(disc, 0)), np.inf)
+
+def picture(rec):
+    """The globe, a moon ball of 0.15 inside its reach of 0.2, and a ring plane, each in radii; which of the three every pixel shows."""
+    ray = R.rays(rec, (54, 96))
+    p = np.array(rec['camera']['p'])
+    globe = ball(p, ray, [0, 0, 0], 1.0)
+    moon = ball(p, ray, rec['bodies'][1]['place'], 0.15)
+    with np.errstate(all='ignore'):
+        s = -p[1] / ray[..., 1]
+    out = np.linalg.norm((p + ray * s[..., None])[..., [0, 2]], axis=-1)
+    ring = np.where((s > 0) & (out >= 1.3) & (out <= 2.2), s, np.inf)
+    t = np.minimum(np.minimum(globe, moon), ring)
+    who = np.where(np.isfinite(t), np.argmin(np.stack([globe, moon, ring]), axis=0), -1)
+    n = np.where(np.isfinite(t), 1 + np.floor(np.clip((np.log2(np.maximum(t, 1e-30)) + 20) / 32, 0, 1) * R.TOP), 0).astype(np.int64)
+    return np.stack([n >> 16, (n >> 8) & 255, n & 255], axis=-1), who
+
+ta, tb = [0, 0, 0, 1], [0, 0.0499792, 0, 0.9987503]
+ma, mb = [0.25, 0.3, 1.25], [0.05, 0.32, 1.3]
+ua, ub = [0.1, 0, 0, 0.995], [0.1, 0.2, 0, 0.9747]
+a = record([0.6, 0.35, 2.6], [-0.06, 0.11, 0.0, 0.992], ta, ma, ua)
+b = record([0.5, 0.4, 2.7], [-0.07, 0.09, 0.0, 0.9935], tb, mb, ub)
+rgb, who = picture(a)
+x, which = R.points(R.ranges(rgb, a), a)
+own = R.owner(x, a)
+hit = who >= 0
+px, py, far = R.carried(x, a, b)
+want = np.where((who == 0)[..., None], x @ matrix(ta) @ matrix(tb).T, np.where((who == 1)[..., None], (x - np.array(ma)) @ matrix(unit(ua)) @ matrix(unit(ub)).T + np.array(mb), x))
+c = b['camera']
+k = 54 / 2 / np.tan(np.radians(50.0) / 2)
+r = (want - np.array(c['p'])) @ matrix(c['q'])
+ex, ey = r[..., 0] / -r[..., 2] * k + 96 / 2 - 0.5, 54 / 2 - 0.5 - r[..., 1] / -r[..., 2] * k
+one = lambda rec: {**rec, 'bodies': rec['bodies'][:1]}
+x1, _ = R.points(R.ranges(rgb, a), one(a))
+qx, qy, _ = R.carried(x1, one(a), one(b))
+bare = lambda rec: {**rec, 'bodies': [rec['bodies'][0], {k2: v for k2, v in rec['bodies'][1].items() if k2 != 'turn'}, rec['bodies'][2]]}
+nx, ny, _ = R.carried(x, bare(a), bare(b))
+other = {**b, 'bodies': [b['bodies'][0], {**b['bodies'][1], 'id': 'other'}, b['bodies'][2]]}
+ox, oy, _ = R.carried(x, a, other)
+gx, gy, _ = R.carried(x, one(a), one(b))
+slip = lambda u, v, m: float(np.nanmax(np.hypot(u - ex, v - ey)[m])) if m.any() else -1.0
+json.dump({
+    'globe': int((who == 0).sum()), 'moon': int((who == 1).sum()), 'rings': int((who == 2).sum()),
+    'owner': float((own == np.maximum(who, 0))[hit].mean()), 'unit': float((which[hit] == 0).mean()),
+    'place': slip(px, py, hit), 'range': float(np.nanmax(np.abs(far - np.linalg.norm(want - np.array(c['p']), axis=-1))[hit])),
+    'oneMoon': float(np.nanmedian(np.hypot(qx - ex, qy - ey)[who == 1])), 'oneRings': float(np.nanmedian(np.hypot(qx - ex, qy - ey)[who == 2])), 'oneGlobe': slip(qx, qy, who == 0),
+    'noTurn': float(np.nanmedian(np.hypot(nx - ex, ny - ey)[who == 1])), 'noTurnRest': slip(nx, ny, who != 1),
+    'otherName': float(np.nanmax(np.hypot(ox - gx, oy - gy)[who == 1])), 'otherRest': slip(ox, oy, hit & (who != 1)),
+    'beyondBall': [float(v) for v in R.beyond(a['bodies'][1], np.array([ma, [ma[0] + 0.2, ma[1], ma[2]], [ma[0] + 0.5, ma[1], ma[2]]]))],
+    'beyondSheet': [float(v) for v in R.beyond(a['bodies'][2], np.array([[1.5, 0, 0], [1.5, 0.01, 0], [1.5, 0.05, 0], [1.2, 0, 0], [2.5, 0, 0], [0, 0, 0]]))],
+}, sys.stdout)
+`
+
+describe('the further bodies of the pose record', () => {
+  it('gives each point to the body that holds it and carries it by that body\'s own place and turn', () => {
+    const n = JSON.parse(execFileSync('python3', ['-c', BODIED, resolve(ROOT, 'tools/img')], { encoding: 'utf8' })) as Record<string, number> & { beyondBall: number[]; beyondSheet: number[] }
+    expect(n.globe).toBeGreaterThan(500)
+    expect(n.moon).toBeGreaterThan(80)
+    expect(n.rings).toBeGreaterThan(500)
+    expect(n.owner).toBe(1)
+    expect(n.unit).toBe(1)
+    expect(n.place).toBeLessThan(1e-9)
+    expect(n.range).toBeLessThan(1e-12)
+    expect(n.oneGlobe).toBeLessThan(1e-9)
+    expect(n.oneMoon).toBeGreaterThan(5)
+    expect(n.oneRings).toBeGreaterThan(5)
+    expect(n.noTurn).toBeGreaterThan(0.5)
+    expect(n.noTurnRest).toBeLessThan(1e-9)
+    expect(n.otherName).toBe(0)
+    expect(n.otherRest).toBeLessThan(1e-9)
+    expect(n.beyondBall[0]).toBe(0)
+    expect(n.beyondBall[1]).toBeLessThan(1e-12)
+    expect(n.beyondBall[2]).toBeCloseTo(0.3, 12)
+    expect(n.beyondSheet.slice(0, 2)).toEqual([0, 0])
+    expect(n.beyondSheet[2]).toBeCloseTo(0.04, 12)
+    expect(n.beyondSheet[3]).toBeCloseTo(0.1, 12)
+    expect(n.beyondSheet[4]).toBeCloseTo(0.3, 12)
+    expect(n.beyondSheet[5]).toBeCloseTo(1.3, 12)
+  })
+})
+
 const PAGE = `
 import * as THREE from 'three'
 import { DIAG_GLSL, diagUniform, setDiag } from ${at('src/diagnostics/diag.ts')}
