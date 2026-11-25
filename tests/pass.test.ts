@@ -498,7 +498,9 @@ describe('the pass that begins before the seam', () => {
       const lent = (t: number): number => film.slideOf(i) * (shape.pass(at(t)) - plain.pass(at(t)))
       expect(way(end), p.id).toBeGreaterThan(0)
       const speed = (way(end + h) - way(end - h)) / (2 * h)
-      expect(speed, p.id + ' has speed at the seam').toBeGreaterThan(0)
+      const capped = p.id === 'earth'
+      if (capped) expect(shape.look.ahead[1], 'the path gate goes red at Earth above a share of 0.004 of its slide').toBeLessThanOrEqual(0.004)
+      expect(speed, p.id + (capped ? ' has speed at the seam, under the drift of its rise: its gate allows no more' : ' has more speed at the seam than the drift of its rise')).toBeGreaterThan(capped ? 0 : p.p.rise.driftSpeed)
       const bent = (lent(end) - 2 * lent(end - h) + lent(end - 2 * h)) / (h * h)
       const bends = (lent(end + 2 * h) - 2 * lent(end + h) + lent(end)) / (h * h)
       expect(Math.abs(bends - bent) / (speed / shape.look.ahead[0]), p.id + ' rate').toBeLessThan(5e-2)
