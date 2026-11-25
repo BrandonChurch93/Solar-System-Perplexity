@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T19:03:38.873Z",
+ "pushed": "2026-11-25T19:27:06.058Z",
  "head": "8f25c0520676ef575a8845694267076e780b2e58",
- "note": "ninth name 27624e6f4 is on the remote: 4860 approved, main, name at full size (ground 17.550 under main 19.759, G17 0.426 red, 89.9 s a draft frame) and the hold's place",
+ "note": "the row at 4753 found without panels: the first streamer's shadow slides over the deck; my old copy of the reader over-read the rise (0.23 and 0.25 by the report's own path, not 0.50 and 0.59)",
  "looks": [
+  {
+   "time": "2026-11-25T19:27:04.690Z",
+   "file": "20261125192704690-note-back-panels.jpg",
+   "source": "../../../../tmp/back-panels.jpg",
+   "kind": "note",
+   "label": "the same knot in the reader's own panels, the name (top) and the eighth name (bottom, 0.42 from 4751): later frame, earlier carried, their detail, the pattern; the rounded lobe stands in the earlier frame alone",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T19:27:03.368Z",
+   "file": "20261125192703368-note-knot-shadow.jpg",
+   "source": "../../../../tmp/knot-shadow.jpg",
+   "kind": "note",
+   "label": "the row at 4753 found: pair 4752 to 4760 read from its other end, 0.47 by the report's own path on my preview frames; top: the later frame and the earlier carried onto it; bottom: what the first streamer's shadow takes of the deck's light, 4760 and 4752 carried: its lower edge is an arc in one and straight in the other; cast off 0.32, low haze off 0.31, veil off 0.45, relief 0 0.79; 25 s a preview draft frame there; 4860 beside the approved is the look of 19:03, the tree at 4860 is unchanged (G17 0.426, 89.9 s)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T19:03:38.233Z",
    "file": "20261125190338233-note-hold-zoom10.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/n9s-chains.jpg",
    "kind": "note",
    "label": "the dive's start, pairs 4694, 4702, 4706 to 8 frames later by my copy of the reader at half frames: 0.11, 0.42, 0.42 (limit 0.45); the eighth name read 0.51 from 4694 on the Builder's machine",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T18:24:19.037Z",
-   "file": "20261125182419037-note-rctl.jpg",
-   "source": "../../../../tmp/rctl.jpg",
-   "kind": "note",
-   "label": "the rise at 4970, lower left at 2.4 times: the rolls at 0.12 cast thin dark lines that come in between 4966 and 4970 (right column); at 0.05 one faint line (left column); the light from below has no part (bottom row)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T18:24:17.740Z",
-   "file": "20261125182417740-note-pair-N10.jpg",
-   "source": "../../../../tmp/pair-N10.jpg",
-   "kind": "note",
-   "label": "4860 at 1920 by 1080 beside the approved (left), tree 27624e6f4 (the rolls back at 0.05): ground part 17.550 (main 19.759), sky 3.420, band 2.646; G17 median 0.426, p25 0.230 by my draft reader (0.570 with the rolls at 0.12, 0.544 on the eighth name); 90 s per draft frame",
    "stop": "neptune"
   }
  ]
