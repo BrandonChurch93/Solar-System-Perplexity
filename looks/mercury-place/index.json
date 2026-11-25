@@ -1,9 +1,41 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T10:02:03.912Z",
+ "pushed": "2026-11-25T10:34:49.086Z",
  "head": "45590da315c5d242180950c644cdeefbd29cde74",
- "note": "way C take s9 (not committed yet): 615 with the hero's light on the disc and the hero's own bands on the place; cream mark gone; two pits remain, one is the hero's ring crater painted smaller; rate 2 dive rendering",
+ "note": "take s9: dive at rate 2 read (only the limb over, the reader's); 615 at times 7 shows the price honestly: the place's ring crater at two thirds of the hero's, a second pit; the rise renders",
  "looks": [
+  {
+   "time": "2026-11-25T10:34:48.486Z",
+   "file": "20261125103448486-note-ob9-722-where.jpg",
+   "source": "../../../../tmp/m/ob9-722-where.jpg",
+   "kind": "note",
+   "label": "take s9 at 722: where the reader's largest values lie (the limb)",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T10:34:47.851Z",
+   "file": "20261125103447851-note-arr-b0d.jpg",
+   "source": "../../../../tmp/m/arr-b0d.png",
+   "kind": "note",
+   "label": "the mark 714 to 720 at 1 to 1 round pixel 728, 844 (MAIL 1033): the place's plate comes over the night ground",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T10:34:47.257Z",
+   "file": "20261125103447257-note-mark-handover2.jpg",
+   "source": "../../../../tmp/m/mark-handover2.jpg",
+   "kind": "note",
+   "label": "the mark 740 to 778: both pits of the place stay in view through the handover",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T10:34:46.427Z",
+   "file": "20261125103446427-note-s11-615-zoom.jpg",
+   "source": "../../../../tmp/m/s11-615-zoom.png",
+   "kind": "note",
+   "label": "615 times 7 round the place: approved hero, main, take s9, take s11 (colour law tried, no gain)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T10:01:58.319Z",
    "file": "20261125100158319-note-s9-717.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/m/s9-615-native.png",
    "kind": "note",
    "label": "615 native: the hero (main) beside take s9",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:42:11.775Z",
-   "file": "20261125094211775-note-s7-725-735.jpg",
-   "source": "../../../../tmp/m/s7-725-735.jpg",
-   "kind": "note",
-   "label": "725 and 735: the mark, way C take s7",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:42:11.099Z",
-   "file": "20261125094211099-note-s7-717.jpg",
-   "source": "../../../../tmp/m/s7-717.png",
-   "kind": "note",
-   "label": "717 1 to 1: the mark, take s6, take s7",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:42:10.386Z",
-   "file": "20261125094210386-note-s7-box615.jpg",
-   "source": "../../../../tmp/m/s7-box615.png",
-   "kind": "note",
-   "label": "615 place box times 3: hero, main, take s6, take s7",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T09:42:09.653Z",
-   "file": "20261125094209653-note-s7-615-twice.jpg",
-   "source": "../../../../tmp/m/s7-615-twice.png",
-   "kind": "note",
-   "label": "615 twice: approved hero, way C take s7",
    "stop": "mercury"
   }
  ]
