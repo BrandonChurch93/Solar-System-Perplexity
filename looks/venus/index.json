@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T12:31:16.186Z",
- "head": "b2e41f75c4fdf1223a2545e1432d6fd93c727331",
- "note": "controls for the reds: cL names leave.heights, cRd names ground.release, cHR is not the layer; fifth state 1309 to 1313 and the limb",
+ "pushed": "2026-11-25T12:58:51.933Z",
+ "head": "5c4140d4c15166c87ca7c7ccb096cf07d2ba5032",
+ "note": "cF names the fine forms in the far band; first trial of release by the line of sight (rPd); fifth state rise band",
  "looks": [
+  {
+   "time": "2026-11-25T12:58:50.457Z",
+   "file": "20261125125850457-note-band.jpg",
+   "source": "../../../../tmp/v/sh/f5r/band.jpg",
+   "kind": "note",
+   "label": "fifth state rise, the band y 180 to 470 of every second frame 1539 to 1557: the far band under the horizon goes from smooth pale air to the ground with fine forms by 1547 to 1549",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T12:58:49.274Z",
+   "file": "20261125125849274-note-a.jpg",
+   "source": "../../../../tmp/v/sh/rPd/a.jpg",
+   "kind": "note",
+   "label": "trial rPd, whole frames 1318 to 1328 every second frame, half size, draft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T12:58:48.475Z",
+   "file": "20261125125848475-note-rPd-venus-dive-k2636-2672-changes.jpg",
+   "source": "../../../../tmp/v/probe/rPd-venus-dive-k2636-2672-changes.png",
+   "kind": "note",
+   "label": "trial rPd (ground.release read at each ground point by the angle between the line of sight and the one of T), dive rows 1318 to 1336: rows 1318 to 1328 + 1/2 at or under 0.45; 1329 to 1333 red as before (near ground, tone.near)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-25T12:58:47.445Z",
+   "file": "20261125125847445-note-cF-venus-dive-k2618-2626-changes.jpg",
+   "source": "../../../../tmp/v/probe/cF-venus-dive-k2618-2626-changes.png",
+   "kind": "note",
+   "label": "control cF (the plates' fine forms weighted by the longer side of a pixel on the ground), dive rows 1309 to 1313: green, largest 0.43; names the fine forms in the far band for 1310 + 1/2 to 1312",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T12:31:14.989Z",
    "file": "20261125123114989-note-limb.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/probe/d2-venus-dive-k2618-2626-changes.png",
    "kind": "note",
    "label": "fifth state dive rows 1309 to 1313: 4 rows over, 0.54 at 1311, the upper left far band",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T12:31:10.967Z",
-   "file": "20261125123110967-note-cRd-venus-dive-k2644-2652-changes.jpg",
-   "source": "../../../../tmp/v/probe/cRd-venus-dive-k2644-2652-changes.png",
-   "kind": "note",
-   "label": "control cRd (ground.release 0.5 to 0.6), dive rows 1322 to 1326: green 0.29 to 0.38, names ground.release",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T12:31:10.022Z",
-   "file": "20261125123110022-note-cHR-venus-dive-k2546-2556-changes.jpg",
-   "source": "../../../../tmp/v/probe/cHR-venus-dive-k2546-2556-changes.png",
-   "kind": "note",
-   "label": "control cHR (the hold's rim picture kept on), same rows: equal to the fifth state, not the layer",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T12:31:08.824Z",
-   "file": "20261125123108824-note-cL-venus-dive-k2546-2556-changes.jpg",
-   "source": "../../../../tmp/v/probe/cL-venus-dive-k2546-2556-changes.png",
-   "kind": "note",
-   "label": "control cL (leave.heights 0.9 to 1.0) on the fifth state, dive rows 1273 to 1278: the reader's changes panel, green 0.19 to 0.24, names leave.heights for the limb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T11:46:43.483Z",
-   "file": "20261125114643483-note-c1296.jpg",
-   "source": "../../../../tmp/v/sh/a8/c1296.jpg",
-   "kind": "note",
-   "label": "1296 at 2 to 1, box 950 to 1250 by 480 to 700: before, control a5, fifth state (the soft pale lobes beside the pale tower are in before too)",
    "stop": "venus"
   }
  ]
