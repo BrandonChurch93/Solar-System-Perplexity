@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-24T23:31:46.907Z",
- "head": "6d271fc4044f6e7891677cb9a78f6d329ad4a811",
- "note": "one field by place alone, place moved 2.3 to 5.0; 4860 beside approved in both sets; working tree, not named",
+ "pushed": "2026-11-25T00:23:23.292Z",
+ "head": "7f22b7d9071ad5aa952269178338627a45772cc5",
+ "note": "one field at place 5.0: tone trials at 4860 beside the approved close, the hold crop, a rejected grade",
  "looks": [
+  {
+   "time": "2026-11-25T00:23:21.929Z",
+   "file": "20261125002321929-note-C1-dive.jpg",
+   "source": "out/work/nep/weave/C1-dive.jpg",
+   "kind": "note",
+   "label": "Dive 4700 to 4755 and 4860 at the preview with the red power of the grade at 1.5: orange on the dim side at 4712 to 4740. REJECTED, the power is back at 2.6. 6 to 23 s a frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T00:23:20.655Z",
+   "file": "20261125002320655-note-T1-4605.jpg",
+   "source": "out/work/nep/weave/T1-4605.png",
+   "kind": "note",
+   "label": "4605 at 1920 draft full set, crop at the place: hero, head, one field at place 5.0 with one Sun and air under the grade. RED: two dark shadows of streamers with hard edges and no cloud over them, the small spiral. 30 s a frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-25T00:23:19.839Z",
+   "file": "20261125002319839-note-tone5-4860.jpg",
+   "source": "out/work/nep/weave/tone5-4860.jpg",
+   "kind": "note",
+   "label": "4860 preview draft full set: approved close, then power back level 0.75 air 0.05 (G17 1.047 0.420), air colour 0.25 0.42 0.7 CHOSEN (G17 1.095 0.482), air 0.09 colour 0.4 0.52 0.7 (orange limb, rejected). Sky is the engine's: the terrain patch is gone, G17 fell by the sky tiles. 38 s a frame",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-24T23:31:46.315Z",
    "file": "20261124233146315-note-place5-4605.jpg",
@@ -42,30 +66,6 @@
    "source": "out/work/nep/weave/of1-4860.jpg",
    "kind": "note",
    "label": "23:10 TRIAL one field, step 1 (not kept yet): approved close | 4860 head | 4860 with the map as the deck and the scene's detail on it; G17 of the 1920 files head 0.977 and 0.638, trial 1.382 and 0.944; too blue, white sheet at the horizon; 82 s per draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T23:13:03.746Z",
-   "file": "20261124231303746-note-wf3-4860-5006.jpg",
-   "source": "out/work/nep/weave/wf3-4860-5006.jpg",
-   "kind": "note",
-   "label": "23:05 web set cured beside the full set, 4860 and 5006, draft 1920 (web | full); 4860 takes 91 s web, 102 s full",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T22:26:01.838Z",
-   "file": "20261124222601838-note-c-mapA-storm.jpg",
-   "source": "out/work/nep/weave/c-mapA-storm.jpg",
-   "kind": "note",
-   "label": "Control: the globe map alone, 4980 to 4995 carried onto 4980: no eye, no plain, no ridge at the place",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-24T22:26:01.284Z",
-   "file": "20261124222601284-note-wf3-4605-storm.jpg",
-   "source": "out/work/nep/weave/wf3-4605-storm.jpg",
-   "kind": "note",
-   "label": "4605 storm at 1 to 1: web as on main | web cured | full set",
    "stop": "neptune"
   }
  ]
