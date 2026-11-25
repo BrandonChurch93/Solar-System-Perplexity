@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-25T19:14:10.937Z",
+ "pushed": "2026-11-25T19:39:02.143Z",
  "head": "6b6aca66dbee0a0d8bc2bff8f1cfe994c3dbf165",
- "note": "19:14 UTC. NAMED 6b6aca66 (not for main: smooth red on the far sky 1.44 at 196, frame 60 at final 40.3061 | 18.6308 | 49.5956). Frame 60 at draft: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
+ "note": "Working tree on 6b6aca66: the gas from inside, arcs gone at draft 199 to 231; 0 60 90 247 270 360 449 same bytes at draft. Frame 60: dark 0.154 body 0.576 pale 0.107 white 0.035 | half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404 | distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-25T19:38:49.277Z",
+   "file": "20261125193849277-note-f00221.jpg",
+   "source": "out/work/sun/t/n2/f00221.png",
+   "kind": "note",
+   "label": "Working tree, draft, frame 221: the gas from inside",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-25T19:38:48.675Z",
+   "file": "20261125193848675-note-n2-pairs.jpg",
+   "source": "../../../../tmp/v/n2-pairs.jpg",
+   "kind": "note",
+   "label": "Gas from inside, draft, 199 204 209 213 221 231: left the name 6b6aca66 (arcs), right the working tree (the map read wide by each look's distance, the part of the line before the eye)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-25T19:14:10.317Z",
    "file": "20261125191410317-note-r5-sheet.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/h5-190-204.jpg",
    "kind": "note",
    "label": "Harness frames 190 to 204 as drawn (merge 16372d3e, draft)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T18:54:49.986Z",
-   "file": "20261125185449986-note-h5-190-204-g4.jpg",
-   "source": "../../../../tmp/v/h5-190-204-g4.jpg",
-   "kind": "note",
-   "label": "Harness frames 190 to 204, top half at gain 4: the gas comes on as broad arcs in the sky (the far sky's pattern reads red here, 1.44 at 196 against 0.45)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-25T18:22:08.475Z",
-   "file": "20261125182208475-note-limb60.jpg",
-   "source": "../../../../tmp/v/limb60.jpg",
-   "kind": "note",
-   "label": "limb at 60, 1 to 1: approved left, this tree right (left limb above, right limb below). Mine: a clean bright line with a smooth glow, few hairs; not changed in the coming name",
    "stop": "sun"
   }
  ]
