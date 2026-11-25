@@ -1507,3 +1507,48 @@ r43-dive-change.png, r43-rise-sheet.png, r43-rise-change.png, r43-2427*.png, r43
   test alone after it: 9 passed. tsc clean. handover_engineer told before the commit. The stop's hooks are now two:
   ground.presenceLaw (law.ts) and cap.detail (detail.ts).
 - globe-levels on both sets: every pair under 0.45 (the largest patch-19 to land-8p5: 0.33 full, 0.31 web).
+
+### 24 November, 05:10 to 05:25 UTC (proof mailed, G13, d253, pairs, MAIL 913)
+
+- 05:09 pushed 0310c936, PROOF mailed to /root. 05:13 merged main 347732f6 (kit/PROGRESS.md alone): d99ec00a.
+- G13 at draft by frame (soft share, limit 2 percent): 2436 0.00, 2440 2.54, 2444 0.00, 2447 3.32, 2448 2.81, 2452 0.92, 2456 1.23,
+  2460 2.03, 2464 0.50, 2468 0.28, 2472 1.79, 2476 0.02; rise 2684 3.63, 2688 1.19, 2692 1.37, 2700 0.12. Red: 2440, 2447, 2448,
+  2460, 2684. Where the soft pixels stand (read from the texel pictures, soft is under one texel a pixel): 2440, 2447, 2448 the
+  lower left corner of the frame (3.20 of the 3.32 at 2447), which is the ground outside the square of 8.5 degrees, drawn from
+  patch-19 (19 degrees over 4096: about 275 m a texel against about 137 m a pixel straight down at 2447); 2460 and 2684 the
+  lower right (1.39 of 2.03; 3.21 of 3.63), the ground east of the close set. So the soft ground of G13 is the globe's own
+  level beyond the fine plates, not the picture and not the takes. The detail hook does not reach it (it works under the
+  country's plates only). A first label in the looks said the yellow piece was the soft ground; wrong, corrected in the looks.
+- d253, one dive frame at both sizes and in both sets (draft, means 0 to 255): 2464: 1080 against uhd (brought to 1080 by area)
+  full 1.402, web 1.420; full against web at 1080 6.712, at uhd 6.788. 2448: sizes 1.245 (full), 1.254 (web); sets 2.923 at 1080,
+  3.041 at uhd. (a) the sizes: no shape moves, the difference is fine grain (99th 7 and 4). (b) the sets: RED. In the web set
+  the picture's near ground stands in the lower left of 2464 as a soft smeared sheet where the full set shows the cap, and at
+  2448 the picture's piece is larger. Not traced. The law reads the same numbers in both sets (the picture's size is the full
+  one in both, the seen file is one file); what differs are the heights of the cap (1024 against 2048 a side) and the close
+  set's distances, so which of the two grounds stands in front where they lie within the fit's rest is my first guess. It is
+  the same fault as "two grounds here".
+- Pairs main beside this state at draft: 2477, 2490, 2505, 2520 equal by bytes. 2681: another pose (main has the rise before
+  88d4f309), both clean. 2745: main's globe whole in the upper left; this state north up (MAIL 850), low and cut by the lower
+  edge, travel_builder's bank not laid here.
+- MAIL 913 (/root, to the proof): NAMED at 05:45 as planned, whole suite, reds as they are. For the commit after it: (1) one
+  light: render the one ground from straight above with the picture projected on it, repaint the country outside the
+  picture's reach with the image tool in the picture's light (inputs: the approved close image and that render); that plate is
+  the cap's colour from where its texel is under a pixel out to the reach of the last 40 frames; the globe's map takes over
+  outward by distance with a feather wider than the frame. (2) stretch: per texel of the ground how many picture pixels land
+  on it; under a floor the colour comes from the repainted plate, blended by that measure. (3) no border of the close set in
+  any frame or the same pixels as the ground beyond. (4) the picture's haze by distance and height over the one ground from
+  2440 on and in the rise. (5) say for 2454, 2460, 2468 the angle between the lens's ray and the picture's own ray at the
+  middle of the frame; my call whether the last 22 frames come in nearer the picture's axis; the handover at T stays. Proof:
+  every frame 2440 to 2476 and 2676 to 2710 at draft, native halves, no border, island, slab or stroke; the cause of 2447's
+  3.32 percent named. New generation allowed, as much as it takes (media skill, never a third party picture).
+
+### 24 November, 05:25 to 05:30 UTC (NAMED commit, round 1 of 3 of the third note)
+
+- Units on d99ec00a (main 347732f6 merged): 63 files, 939 ok, 0 not ok (tests/globe-cap.test.ts ok in the whole run, 74.7 s
+  for its file). tsc clean, build green. Gate again on this tree: "PASS G11  every asset has a row or a recipe", "PASS G15  at
+  most 2 sets per frame; finished stops: mars/web 418 MB, mars/full 1400 MB".
+- The NAMED commit is this notebook on top of d99ec00a; no pixel path changes after 0310c936, none after 567121f5 but the hook
+  out of plan.ts. The aprons stay at T, the under pass is not pulled. The mail's draft: out/work/place/named57.txt.
+- Next (MAIL 913): the angles at 2454, 2460, 2468; the top down render of the one ground with the picture on it; the repaint
+  with the image tool (media skill, at most 6 takes per asset per phase by the brief; MAIL 913 allows as much as it takes);
+  the stretch measure; the borders; the air. Then every frame 2440 to 2476 and 2676 to 2710 at draft.
