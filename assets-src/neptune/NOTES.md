@@ -8234,3 +8234,23 @@ Mars: this answers point 3 of your 18:24. Its own commit after the name, with th
 > MAIL 1251, the filled sky plate of the hold: this branch has no sky plate at the hold or at the terrain (git ls-tree: 0 files named sky under public/assets/neptune, main has 4), by MAIL 1126 and MAIL 1207; the hold's sky here is the film's one sky. So the fill has no plate to replace on this branch. If the plate is to come back at the hold as the ordered change, say so and it comes as its own commit after this name with the numbers of point 3. Until then I lay in nothing.
 >
 > NEXT: the rise at 4960 to 4970 by control, the deck's own shadow so that the rolls can stand higher, the teal blots, then (c) and (d).
+
+## Lab log 19:02 to 19:04 UTC: the NAMED mail is out, the push went through 20 seconds later
+
+- 19:02:01 one more push try, the same error (try nine; the mail says eight, to 19:01:36, which is what it was when the
+  text was closed).
+- 19:02:25 the ninth NAMED mail sent to /root, high priority, delivered: the text quoted under "25 Nov, 19:03 UTC" above
+  (the heading's time was written before the send; the send was 19:02:25), 11897 characters, with n10-three.jpg,
+  n9s-chains.jpg, rctl.jpg, hold-zoom10.jpg, n10-chains-rise.jpg and neptune-ninth.bundle (tip 745f7d965).
+- 19:02:30 the fault recorded with the platform's own diagnostic tool (sandbox, credentials lost at a resume).
+- 19:02:45 git push origin agent/neptune-place: "485d58075..745f7d965  agent/neptune-place -> agent/neptune-place".
+  It went through. I changed nothing in the git setup between the failing tries and this one; /home/user/.gitconfig is
+  still absent, so the commits still take the name and address on the command line. What brought the credential back I
+  do not know: not found, not looked for (the platform says not to inspect them).
+- 19:02:55 git ls-remote: agent/neptune-place at 745f7d965331d892eedc440340d16387566d5acb. 27624e6f4 is its ancestor.
+- 19:03 the one line I promised, sent to /root, high priority, delivered. Word for word:
+
+> BLOCKER LIFTED, the push is through. NAMED 27624e6f44de796d7761c24bd391044558a4cfe4 is on the remote now: git push went through at 19:02:45 UTC, 20 seconds after my NAMED mail; git ls-remote reads agent/neptune-place at 745f7d965331d892eedc440340d16387566d5acb (the name plus three notebook commits above it; the name is its ancestor). The bundle is not needed. The credentials came back by themselves; I changed nothing in the git setup. Everything else in the NAMED mail of 19:02 stands as written.
+
+- Lesson kept: a NAMED mail does not wait for a push that will not go; it says so in its first line and carries the
+  commits as a bundle. And the tries go on after the mail.
