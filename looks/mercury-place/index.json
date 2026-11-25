@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T14:40:28.031Z",
+ "pushed": "2026-11-25T14:53:28.494Z",
  "head": "dfa29d819f78f34d4473a4d5bad13e746e5ce143",
- "note": "14:41 crater measured on files: hero ring and first pit are one crater; next the far Sun ride out of sunShown on main 53025569",
+ "note": "14:55 far Sun ride out of sunShown: 717, 1016 before and after on take/ts1; the change is the rim glow on the right limb, at most 16 codes at 717, 10 at 1016",
  "looks": [
+  {
+   "time": "2026-11-25T14:53:27.266Z",
+   "file": "20261125145327266-note-bac-726.jpg",
+   "source": "../../../../tmp/m/bac-726.png",
+   "kind": "note",
+   "label": "726 right limb times 2 on take/ts1: before and after the ride is out of sunShown; the rim glow now lies where the far Sun stands behind the limb",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-25T14:53:25.782Z",
+   "file": "20261125145325782-note-ba-1.jpg",
+   "source": "../../../../tmp/m/ba-1.png",
+   "kind": "note",
+   "label": "717 and 1016 on take/ts1 6dd77c6b: before, after the ride is out of sunShown, what changes times 8 (draft tier, rate 2)",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T14:40:27.066Z",
    "file": "20261125144027066-note-crat3s.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/n-615-disc.png",
    "kind": "note",
    "label": "615 at 1 to 1 round the disc: approved image, merged main, way C on the commit",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T13:13:24.142Z",
-   "file": "20261125131324142-note-n-615-whole.jpg",
-   "source": "../../../../tmp/m/n-615-whole.png",
-   "kind": "note",
-   "label": "615 whole at one third: approved image, merged main, way C on the commit (still tier)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T13:13:22.629Z",
-   "file": "20261125131322629-note-n-615-x4.jpg",
-   "source": "../../../../tmp/m/n-615-x4.png",
-   "kind": "note",
-   "label": "615 times 4 on the disc: approved image, merged main d72a1199 rendered here, way C on the commit (still tier). The hero's gold ring crater is gone, two grey pits stand there; main's crater lower left is gone",
    "stop": "mercury"
   }
  ]
