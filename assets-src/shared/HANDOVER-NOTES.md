@@ -2252,6 +2252,52 @@ and plan.ts back by hash.
   diagnose and cure the dash (a GL test that fails without the cure), look at 2672, 2477, 2580 at full size, the third point,
   redraft, review tier, teeth3, cmp, NAMED; (3) the pair with Mars's airLaw when its sha comes.
 
+## 22:02 to 22:50 UTC, 25 Nov: air's fourth commit NAMED; the crests' end: two faults found in the browser test, both cured in code
+
+**Air.** `agent/engine-air` b75720ab3226bf44e2d749876af689737cda0d0b pushed 22:15, on main 172e7bcd by fast forward. Build exit 0;
+suite in the export tree `t-air4` with no render beside: 989 of 989, 87 files. NAMED mail to /root 22:16 (`/tmp/mail/root-air4.txt`),
+the file to globe_engineer (blob b6e3a7ec of air.ts, no version with a loop of count 0: measured no gain), a line to
+mars_place_builder (send the airLaw sha for the pair).
+
+**Crests, state of the work tree** (`/home/user/workspace/crest-wt`, branch agent/engine-crest on 4bae298b, NOT committed):
+
+1. The bright dash at 2668 (row 626, x 661..664) was a crack at the sheets' top end of crest A: the sheets ended on a side of the
+   mesh that the cut crosses, with the near sheet at the near field and the far sheet at the far field and the mesh's wall between.
+   Cure `crestEnds(field, kinds, nx, ny)` in crest.ts: the vertices at both ends of a side between a kind 1 cell and one that is not
+   (the map's rim counts as not) along which both grounds are read (a texel with share over `least` and one under 128). At those
+   vertices the near sheet and the far sheet take the mesh's own distance. Browser test at eyes 0.5: 0 open pixels (it was 106, 285,
+   34, 187 by the earlier session's count, not measured again).
+2. FAULT TWO, found at eyes of 1.0 (`SIDES=1 npx vitest run tests/crest-open.tmp.test.ts`): 3 to 13 open pixels beside the sheets'
+   end from eyes with x = +1. Cause PROVEN: three sorts the transparent meshes of one render order by the depth of the middle of
+   their bounds before the id, so from some eyes the sheets were drawn BEFORE the layer's mesh; the near sheet's faint edge
+   (alpha just over the discard) wrote depth and shut the mesh's far ground out behind it. Cure: `sheetMesh.renderOrder = k + 0.5`
+   (after its layer's mesh, before the next layer's). Measured with it: 0 open at all 8 eyes of 1.0, all 6 cuts.
+   The frame of the count at 1.0 needs the corner factor 1 / hypot(1, WIDTH/2/FOCAL, HEIGHT/2/FOCAL) on both axes (the plain mesh
+   showed 4, 42, 50 px at the frame's edge with the factor by axis).
+3. FAULT THREE, by reasoning (the test's eyes did not reach it): under the near ground the far sheet ended in the open at the far
+   distance (the far end of the cells `under`, the sides of the kind 2 cells beyond a crest's end, the near part of an end side).
+   Cure, coded 22:44: `crestRing(kinds, nx, ny)` (a kind 0 cell that touches a kind 1 or 2 cell by a side or a corner becomes 3:
+   keeps the mesh, gets the under sheet) and `crestRim(kinds, nx, ny)` (vertices with a kind 0 cell or the map's rim among their
+   four). In relief.ts: `kinds = crestRing(crestCells(...))`, then the ridge's taking out, then `ends`, `rim`; `vertex()`:
+   near sheet `ends ? own : near field`; far sheet `(ends || rim) ? own : far field`; under sheet the same and at least
+   `own * (1 + CREST_BEHIND)`. So the far sheet's rim lies on the ground all round and the rise happens inside the ring cell.
+   Known and left: at an end vertex on the near side the far sheet (own) and the under sheet (own times 1.001) differ by a
+   thousandth along one side under the near ground; at eyes of 1.0 that is 0.004 px wide at mid side.
+4. The near sheet's fold: at an end vertex on the far side the near sheet goes from the near distance to the far one over one cell.
+   In the end cell that is the zip (one tooth). In the far side's neighbour cell it is paint with share 0, or within 1.5 px of the
+   cut on one unbroken surface; its depth writes hurt only when the sheets were drawn before the mesh (fault two). Left as it is.
+
+**Tests to finish** (all in crest-wt): `tests/crest.test.ts`: the new `it` 'names the vertices where the sheets end...' must say what
+was measured (box rows 16..31: row 1 '000110000', row 5 '000111000'; whole: rows 0 and 6 '000111000'; whole out 2 '000110000'; the
+tooth by the mean of the four texels round (32, 40)); tests for the ring and the rim; 'give a sheet the vertex...' (ends and rim
+vertices) and 'take the cells...' (under counts hold the ring; `sheets.renderOrder` is k + 0.5). `tests/crest-gl.test.ts`: the end
+test gets eyes of 1.0 with the corner frame and the boxes 0.5..1 and 0.33..0.67. Then delete `tests/crest-*.tmp.test.ts`,
+`out/work/tmp/ends*.mts`.
+
+**Then**: merge onto b75720ab (relief.ts three ways, base 4bae298b), new base render, Mars trial numbers (A, D by a point at shares
+(0.6220, 0.2755), third point (0.6732, 0.3882)), drafts 2668 2477 2580 2672, review tier, teeth3 and cmp, commit, suite, build,
+NAMED with "merged main 172e7bcd", lines to mars_place_builder and mercury_builder.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
