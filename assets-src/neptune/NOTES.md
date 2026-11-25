@@ -6550,3 +6550,33 @@ REDS, each with its frame:
 Seconds per draft frame: 1920: 4605 30.1 as the first frame of a run (11 before; the frames after it as before, 4722 27.1 both times, so I read it as the shader's build, not measured apart), 4692 14.6, 4704 17.9, 4714 21.6, 4729 31.8, 4737 35.2. Preview: 5 to 10 the half frame, 4860 23.0. Looks pushed 07:59 (fc655d8e).
 
 Attachments, worst first: 1 rise-4992-grade.jpg, 2 crops-964.jpg, 3 s6-4605.jpg, 4 s6-dive-b.jpg, 5 s6-dive-a.jpg, 6 4860-S6p.jpg.
+
+## MAIL 973 from the Builder, received 25 Nov 08:20 UTC, word for word
+
+MAIL 973 from the Builder (/root), 08:19 UTC. To neptune_builder. Answer to your NAMED c2edd61bacab922cd9de7297bb397b7be94a1d4d.
+
+1. Received and in the ledger as the sixth named. It stays out of batch 10 by your own word. Your finding with controls is accepted as the cause: what turns on across the crescent at 4987 to 5003 is the grade of the fall (FALL_GLSL, a power on the finished colour): 0.66 as named, 0.26 with the grade held whole.
+
+2. RULED: yes, take the cure by cause next, as its own commit on c2edd61b. Terms:
+(a) The gain is a function of the light at the place and of nothing else: not the clock, not the camera's height as such (d251, d253). Say in one line what it reads.
+(b) It touches 4707 and 4860. Send pairs of both against the approved image and against c2edd61b, with the match numbers before and after. If 4860 gets worse by more than the noise of the measure, do not lay it: send what you have and what it would cost, and I rule.
+(c) The hold 4605 must stay to the bit, or say why not.
+(d) Then the rise 4950 to 5024 and the dive 4680 to 4769 by your own slices, and NAMED with the full sha. My reader goes on it at once.
+
+3. Reader results on your earlier commits, files with me under work/p6: nq1-04 GREEN (02ca4d9f, dive part 4 of 4). nq3-04 RED (ac408e47, rise part 2: pattern 0.77 from 4969, 19 over, first 4963). Both are older than c2edd61b; I pass them so your notes have them. Say if the red at 4963 to 4969 is the same grade of the fall or a second thing.
+
+4. The travel owner has a set line for Neptune's light of the look back from 5007 (its way A). It comes to you as a patch when it sends it; your folder, your commit.
+
+Next state mail by 09:40 UTC.
+
+## 25 Nov, 08:20 UTC: my correction to the sixth NAMED mail, word for word (sent low priority, no attachments)
+
+CORRECTION to my sixth NAMED mail (c2edd61ba), two statements of it are wrong. Found 08:13 to 08:19 UTC by my own checks, no action asked of you.
+
+1. "On half frames" is false. My frame tool opened the page without the capture rate, and the page draws a frame with a half as the whole frame under it: f4716.5.png is equal to f4716.png to the byte, in every folder I measured. So every pattern number of mine since 07:02 (the fifth and the sixth mail) is your functions carried along 8 steps of one whole film frame, on frames drawn with the whole shutter of rate 1, not 16 half steps at the shutter of rate 2. That is one reason they read lower than yours. The controls were all read the same way, so the differences between them (rise 4992 to 5000: 0.66 as named, 0.26 with the grade whole, 0.27 with none, 0.93 with the scene whole) are a finding of that weaker reader and not yet of yours. The tool is mended (the page at rate 2, checked: 4729, 4729 + 1/2 and 4730 are three different pictures, and the page says rate 2). I read the named pair and its controls again with it now and send the numbers with my next NAMED, or before if they overturn the finding.
+
+2. Condition 1, "the far level is the fainter one by about a fifth (cover wants about 0.31)", is withdrawn. Control: the same frames with cover 0.31. The four boxes read 1.15, 1.27, 1.02, 1.33 where they read 1.16, 1.29, 1.03, 1.33 with 0.26, and their level moved by 0.03 of 16: the boxes lay beside the far level, on the deck and the marched part, so the number never measured the far level. Condition 1 is NOT MEASURED. Cover stays 0.26. I measure it now by cause: one frame drawn three times (far level alone, march alone, neither), light summed across the width at stations along the streamer.
+
+Red 4 of the mail reads then: the far level's light against the march not measured; an even band at 4605; the new form not read by your reader; rise 4960 to 4988 not measured.
+
+MAIL 973 received 08:20: you accepted the finding of (3) on those numbers and ruled the cure. I read the pair 4992 to 5000 as named and with the grade whole again at rate 2 before I build anything on it, and mail you at once if it does not hold; if it holds I go on by your terms (a) to (d).
