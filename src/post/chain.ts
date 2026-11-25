@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import { Pass, floatTarget } from '../core/pass'
 import type { PostParams } from '../core/types'
 import { isRaw } from '../diagnostics/diag'
+import { frameUniform } from '../core/frame'
+import { HALVE, bloomPlan } from './reach'
 
 const DOWN = /* glsl */ `
 precision highp float;
@@ -179,6 +181,9 @@ export class PostChain {
   private readonly final: Pass
   private readonly streak: Pass
   private streaks: THREE.WebGLRenderTarget[] = []
+  private halves: THREE.WebGLRenderTarget[] = []
+  private readonly halve: Pass
+  private step = 1
   private width = 0
   private height = 0
 
@@ -191,6 +196,7 @@ export class PostChain {
       uFade: { value: 1 }, uFrame: { value: 0 }, uAspect: { value: 16 / 9 }, uMode: { value: 0 }, uStreak: { value: null }, uFlare: { value: 0 }, uSharpen: { value: 0 }, uPixel: { value: new THREE.Vector2() },
     })
     this.streak = new Pass(STREAK, { uTex: { value: null }, uStep: { value: new THREE.Vector2() }, uThreshold: { value: 0 } })
+    this.halve = new Pass(HALVE, { uTex: { value: null } })
   }
 
   resize(width: number, height: number): void {
@@ -198,11 +204,11 @@ export class PostChain {
     this.disposeTargets()
     this.width = width
     this.height = height
-    let w = width
-    let h = height
+    const plan = bloomPlan(width, height, frameUniform.value, LEVELS)
+    this.step = plan.step
+    for (const [w, h] of plan.halves) this.halves.push(floatTarget(w, h, THREE.HalfFloatType))
     for (let i = 0; i < LEVELS; i++) {
-      w = Math.max(2, Math.ceil(w / 2))
-      h = Math.max(2, Math.ceil(h / 2))
+      const [w, h] = plan.levels[i]!
       this.downs.push(floatTarget(w, h, THREE.HalfFloatType))
       this.ups.push(floatTarget(w, h, THREE.HalfFloatType))
       if (i === STREAK_LEVEL) this.streaks.push(floatTarget(w, h, THREE.HalfFloatType), floatTarget(w, h, THREE.HalfFloatType))
@@ -215,9 +221,17 @@ export class PostChain {
     let src = scene
     let sw = this.width
     let sh = this.height
+    for (const half of this.halves) {
+      this.halve.material.uniforms.uTex!.value = src
+      this.halve.render(renderer, half)
+      src = half.texture
+      sw = half.width
+      sh = half.height
+    }
     for (let i = 0; i < LEVELS; i++) {
+      const step = i === 0 ? this.step : 1
       d.uTex!.value = src
-      ;(d.uTexel!.value as THREE.Vector2).set(1 / sw, 1 / sh)
+      ;(d.uTexel!.value as THREE.Vector2).set(step / sw, step / sh)
       d.uPrefilter!.value = i === 0 ? 1 : 0
       this.down.render(renderer, this.downs[i]!)
       src = this.downs[i]!.texture
@@ -270,6 +284,8 @@ export class PostChain {
     for (const t of this.downs) t.dispose()
     for (const t of this.ups) t.dispose()
     for (const t of this.streaks) t.dispose()
+    for (const t of this.halves) t.dispose()
+    this.halves = []
     this.streaks = []
     this.downs = []
     this.ups = []
