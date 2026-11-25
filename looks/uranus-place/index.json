@@ -1,9 +1,39 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-25T00:37:12.498Z",
- "head": "45f989100869dbc2c216814e93effed450162b7a",
- "note": "pictures part of the rise is RED on 45f98910 (pop 1.31 at 4411 to 4413, pattern 0.70 on the horizon line); panels and native crops; dark pixels on the limb 4402 to 4404 seen",
+ "pushed": "2026-11-25T01:04:07.015Z",
+ "head": "20dc1f83189395ef511c0c130b1b300b5c671aa6",
+ "note": "second commit: main 12bfd7d5 merged, the four finals and the unit tests run again on it; pattern red marked on the frames; travel 4503 to 4515",
  "looks": [
+  {
+   "time": "2026-11-25T01:04:05.634Z",
+   "file": "20261125010405634-note-travel-a.jpg",
+   "source": "../../../../tmp/parA/travel-a.jpg",
+   "kind": "note",
+   "label": "travel 4503 to 4515 every third frame, draft, tree before the merge of main 12bfd7d5 (the Sun comes into Neptune's frame at 4515)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-25T00:45:53.592Z",
+   "file": "20261125004553592-job-frame-04388.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.rise frame 4388, draft tier, texels view, from the running g13 job",
+   "stop": "uranus",
+   "segment": "uranus.rise",
+   "frame": 4388,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "texels",
+   "job": "g13"
+  },
+  {
+   "time": "2026-11-25T00:41:27.283Z",
+   "file": "20261125004127283-note-pat-where.jpg",
+   "source": "../../../../tmp/parA/pat-where.jpg",
+   "kind": "note",
+   "label": "the place of the largest change of pattern in eight of the 31 red rows: the band of far ground just under the limb",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-25T00:37:11.434Z",
    "file": "20261125003711434-note-limb4404.jpg",
@@ -267,36 +297,6 @@
    "kind": "note",
    "label": "4137 final: e9e2c3a7 (left), second commit (right); 1.99 percent of pixels differ at the storm",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:42:42.661Z",
-   "file": "20261124234242661-note-4290-ll.jpg",
-   "source": "../../../../tmp/parA/4290-ll.jpg",
-   "kind": "note",
-   "label": "4290 lower left at 1 to 1: e9e2c3a7 (left), second commit (right)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:42:41.411Z",
-   "file": "20261124234241411-note-tri4290.jpg",
-   "source": "../../../../tmp/parA/tri4290.jpg",
-   "kind": "note",
-   "label": "4290: approved close image, final of e9e2c3a7, final of the second commit (whites by ground only; 31.37 percent of pixels differ, 6.71 percent over 8)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-24T23:42:11.372Z",
-   "file": "20261124234211372-frame-f4436.jpg",
-   "source": "out/work/u/r45/fin4/f4436.png",
-   "kind": "frame",
-   "label": "uranus.rise frame 4436, final tier",
-   "stop": "uranus",
-   "segment": "uranus.rise",
-   "frame": 4436,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "03b89560bc9f479b"
   }
  ]
 }
