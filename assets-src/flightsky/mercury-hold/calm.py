@@ -1,37 +1,49 @@
 import sys, os, hashlib, numpy as np, cv2
 from PIL import Image
 
-CALM = 31
+WIDE = 31
+SOFT = 6.0
 NEAR = 13
 EVEN = 2.5
-SOFT = 6.0
 SPECK = 4.0
 GROW = 1.6
-KEEP = 0.0
-FINE = 1.2
+RING = 7
+PIT = 1.0
+DEEP = 2.5
+HUE = 0.0
+W = np.array([0.2126, 0.7152, 0.0722], np.float32)
 
 
 def lum(a):
-    return a @ np.array([0.2126, 0.7152, 0.0722], np.float32)
+    return a @ W
 
 
-def calm(code, keep=KEEP):
+def med(code, k, s):
+    m = np.dstack([cv2.medianBlur(code[..., c], k) for c in range(3)]).astype(np.float32)
+    return cv2.GaussianBlur(m, (0, 0), s, borderType=cv2.BORDER_REFLECT)
+
+
+def calm(code, hue=HUE):
     a = code.astype(np.float32)
-    wide = np.dstack([cv2.medianBlur(code[..., c], CALM) for c in range(3)]).astype(np.float32)
-    wide = cv2.GaussianBlur(wide, (0, 0), SOFT, borderType=cv2.BORDER_REFLECT)
-    near = np.dstack([cv2.medianBlur(code[..., c], NEAR) for c in range(3)]).astype(np.float32)
-    near = cv2.GaussianBlur(near, (0, 0), EVEN, borderType=cv2.BORDER_REFLECT)
-    floor = wide * (lum(near) / np.maximum(lum(wide), 0.5))[..., None]
-    d = a - floor
-    dl = lum(d)
-    noise = 1.4826 * cv2.medianBlur(np.clip(np.abs(dl) * 8, 0, 255).astype(np.uint8), CALM).astype(np.float32) / 8
+    wide = med(code, WIDE, SOFT)
+    near = med(code, NEAR, EVEN)
+    L, Ln, Lw = lum(a), lum(near), lum(wide)
+    dl = L - Ln
+    noise = 1.4826 * cv2.medianBlur(np.clip(np.abs(dl) * 8, 0, 255).astype(np.uint8), WIDE).astype(np.float32) / 8
     noise = np.maximum(cv2.GaussianBlur(noise, (0, 0), SOFT * 2), 0.5)
     core = (dl > SPECK * noise).astype(np.float32)
-    star = np.clip(cv2.GaussianBlur(cv2.dilate(core, np.ones((3, 3), np.uint8)), (0, 0), GROW / 2) * 2, 0, 1)[..., None]
-    fine = d - cv2.GaussianBlur(d, (0, 0), FINE)
-    out = floor + np.maximum(d, 0) * star + keep * fine * (1 - star)
+    star = np.clip(cv2.GaussianBlur(cv2.dilate(core, np.ones((3, 3), np.uint8)), (0, 0), GROW / 2) * 2, 0, 1)
+    k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * RING + 1, 2 * RING + 1))
+    ring = np.clip(cv2.GaussianBlur(cv2.dilate(core, k), (0, 0), 1.5) * 1.5, 0, 1)
+    lack = np.minimum(Ln, Lw) - L
+    t = np.clip((lack - PIT * noise) / ((DEEP - PIT) * noise), 0, 1)
+    L1 = L + lack * t * t * (3 - 2 * t) * ring
+    flat = wide * (L1 / np.maximum(Lw, 0.5))[..., None]
+    own = a + near * ((L1 - L) / np.maximum(Ln, 0.5))[..., None]
+    mix = (hue * (1 - star))[..., None]
+    out = flat * mix + own * (1 - mix)
     out = np.clip(np.rint(out), 0, 255).astype(np.uint8)
-    return np.where(core[..., None] > 0, code, out), core > 0, noise
+    return np.where(core[..., None] > 0, code, out), core > 0, noise, ring
 
 
 def write(img, dst):
@@ -42,15 +54,15 @@ def write(img, dst):
 
 def main():
     src, full, web = sys.argv[1], sys.argv[2], sys.argv[3]
-    keep = float(sys.argv[4]) if len(sys.argv) > 4 else KEEP
+    hue = float(sys.argv[4]) if len(sys.argv) > 4 else HUE
     code = np.asarray(Image.open(src).convert('RGB'))
-    out, core, noise = calm(code, keep)
+    out, core, noise, ring = calm(code, hue)
     moved = (out != code).any(axis=2)
-    print(f'{src}: {os.path.getsize(src)} bytes, noise median {np.median(noise):.2f} codes, star pixels {int(core.sum())} ({core.mean() * 100:.2f} percent), changed pixels {int(moved.sum())} ({moved.mean() * 100:.1f} percent), star pixels changed {int((moved & core).sum())}, largest change {int(np.abs(out.astype(int) - code.astype(int)).max())} codes')
+    dl = lum(out.astype(np.float32)) - lum(code.astype(np.float32))
+    print(f'{src}: {os.path.getsize(src)} bytes, noise median {np.median(noise):.2f} codes, star pixels {int(core.sum())} ({core.mean() * 100:.2f} percent), changed pixels {int(moved.sum())} ({moved.mean() * 100:.1f} percent), star pixels changed {int((moved & core).sum())}, largest change {int(np.abs(out.astype(int) - code.astype(int)).max())} codes, luma raised by over 1 code {int((dl > 1).sum())} ({(dl > 1).mean() * 100:.2f} percent), luma lowered by over 1 code {int((dl < -1).sum())}')
     write(out, full)
     h, w = out.shape[:2]
-    half = out.reshape(h // 2, 2, w // 2, 2, 3).astype(np.float32).mean(axis=(1, 3))
-    write(np.clip(np.rint(half), 0, 255).astype(np.uint8), web)
+    write(np.asarray(Image.fromarray(out).resize((w // 2, h // 2), Image.LANCZOS)), web)
 
 
 if __name__ == '__main__':
