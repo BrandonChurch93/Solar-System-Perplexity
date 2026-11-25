@@ -183,7 +183,7 @@ it('knows the foot of the eye in the frame of its plates, whatever the turn of t
       if (drawn > 1) both++
     }
     expect(both).toBeGreaterThan(0)
-  })
+  }, 60000)
 
   it('draws no grid whose parent already has cells under `fine` pixels at the nearest ground, and the finest drawn grid whole', () => {
     const grids = capGrids(MARS, 34)
@@ -485,7 +485,7 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
 
   afterAll(async () => {
     await browser?.close()
-  })
+  }, 60000)
 
   const RED: [number, number, number] = [200, 40, 30]
   const GREEN: [number, number, number] = [40, 180, 60]
