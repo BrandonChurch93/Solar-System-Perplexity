@@ -30,7 +30,7 @@
     "how": "The nadir of the close camera on the body and the azimuth of its view from north. Chosen so that the long island of the close image lies on the island south of the large one in the patch pyramid (1.75 degrees west and 1.65 south of the spot), with the view within 6 degrees of the azimuth of the Sun so the glint lies ahead on both sides. Checked with assets-src/earth/place/overlay.py."
   },
   "plates": {
-    "how": "Top down gnomonic plates of the place, north up, about the point where the centre of the close frame meets the sea. Built by assets-src/earth/place/levels.py. The plate is the lay back of the approved close image where that looks at the ground steeply and its repaint where the lay back stretches, used as it is. The patch levels under it are the hold's levels with the plate laid in, and with the far cloud sheet of the place laid in where it reaches past the plate (assets-src/earth/place/ring.py). The place comes in while it is small: the first level is forced in inside earlyDeg about the centre by the share of plates.arrive. The tone is the low frequencies of what seaGain does to the hold's sea; it is added to the globe round the place by the share of the air path (plates.haze.share) and taken from the place by farness, never on cloud (tone.cloud, code values of the darkest channel) and never on grey (tone.grey: the spread of the three channels over the brightest one, none under the first value, full from the second, so the shaded side of a cloud keeps its colour), so the look changes with the eye's ray only. With that share the place is drawn as the picture it is, times gain, where the Sun stands above day; the globe's city lights, limb and shape give way by the descent ramp of look.ts, which reads the camera's height.",
+    "how": "Top down gnomonic plates of the place, north up, about the point where the centre of the close frame meets the sea. Built by assets-src/earth/place/levels.py. The plate is the lay back of the approved close image where that looks at the ground steeply and its repaint where the lay back stretches, used as it is. The patch levels under it are the hold's levels with the plate laid in, and with the far cloud sheet of the place laid in where it reaches past the plate (assets-src/earth/place/ring.py). The place comes in while it is small: the first level is forced in inside earlyDeg about the centre between the two heights of look.descent.place. The tone is the low frequencies of what seaGain does to the hold's sea; it is added to the globe round the place by nearness (the descent ramp of look.ts) and taken from the place by farness, never on cloud (tone.cloud, code values of the darkest channel) and never on grey (tone.grey: the spread of the three channels over the brightest one, none under the first value, full from the second, so the shaded side of a cloud keeps its colour), so the look changes with height only. With nearness the place is drawn as the picture it is, times gain, where the Sun stands above day; the globe's own shading, city lights and shape give way by the same ramp.",
     "centre": {
       "lon": -82.122527,
       "lat": 18.669862
@@ -128,47 +128,43 @@
         "floor": 6
       }
     },
-    "arrive": {
-      "how": "The place arrives by distance alone. For every point of the ground the globe takes the length of the eye's ray to that point times the angle one line of the reference frame takes in the lens (2 tan(vfov / 2) over the master height, so a capture at another size reads the same value): the size of one reference line on the ground, in degrees of the globe. Above footDeg[0] nothing of the place is forced in, from footDeg[1] down all of it is, and between them the share runs smoothly along the logarithm of that size. The share lays the first place level in inside earlyDeg and opens the path share below. footDeg[0] lies under the least value of the hold (0.0935 at 1829), so the hold reads 0 at every point. No height and no clock is read.",
-      "footDeg": [
-        0.0889,
-        0.043
-      ]
-    },
-    "haze": {
-      "how": "The broad tone of the close view over the plate: the lay back of the approved close image less the plate over the lay back's cover, carried on past the cover by the recipe of mend.json veil, blurred over sigmaDeg degrees, in code values over 255 as half floats (size px over a square times plates wide on the plate's plane, red green blue and the cover, south row first), made by levels.py. The plate is the one ground at every distance; the lay back is no picture of the film any more (layBack names the work file levels.py makes it from). The globe adds the haze to the ground by the share of the air path at the ground point. Past the edge of that square the value of its border goes on (the border is one value all the way round, so there is no edge on the ground). Nearer than fromDeg[0] degrees of arc to the point under the close camera the close view's ground takes none back (full from fromDeg[1]).",
-      "file": "place-12-low-veil.bin",
-      "size": 256,
-      "sigmaDeg": 0.4,
-      "times": 4,
+    "low": {
+      "file": "place-12-low.jpg",
+      "how": "The plate with the lay back of the close image put back wherever the image covers the ground, stretched parts included. The globe shows it instead of the plate by the height of the camera alone (radii above the sea): none from height[0] up, whole from height[1] down, and between them by the share 1 / (1 + (h / mid) ^ power), stretched so that it is 0 and 1 at those two heights. No angle and no clock is read, so one height always shows one ground. The two pictures are mixed in code values. From height[0] up the plate with its repaint stays. The lay back ends inside the edge of the close image over a blur of fadeDeg degrees, so its edge is not a line on the sea. Nearer than fromDeg[0] degrees of arc to the point under the twin camera the plate already is the lay back and the low look is off (full from fromDeg[1]). The file holds a window of the plate raster (window: raster, size, offset as for a level) at size px, so its texels go where the lay back lies; the low look ends inside the window over feather times its width. The lay back differs from the plate in its broad tone (the haze of the low view) and in its detail. veil.file holds the broad part: the lay back less the plate over the lay back's cover, carried on past the cover by the recipe of mend.json veil, blurred over veil.sigmaDeg degrees, in code values over 255 as half floats (veil.size px over a square veil.times plates wide on the plate's plane, red green blue and the cover, south row first), made by levels.py. The detail goes by the share above. The broad part has a share of its own, again by the camera's height alone: whole from veil.height[1] down, none from veil.height[0] up, and between them it falls evenly along the square root of ln(h / veil.root), with both ends rounded over veil.ease of that span; veil.root is a height just under the lowest the camera reaches. So the haze thins over the whole climb and there is no stretch of frames in which it lifts. Inside the cover the globe adds the difference of the two shares times the veil, so the broad tone follows the veil's share while the detail follows its own. Past the cover the globe adds the veil by the veil's share, out to the edge of that square, where it ends over veil.feather of the width; so the haze of the low view has no edge on the ground.",
+      "height": [
+        1.3,
+        0.034
+      ],
+      "mid": 0.065,
+      "power": 1.5,
+      "edgeDeg": 0.12,
+      "fadeDeg": 0.5,
+      "size": 2048,
+      "window": {
+        "raster": 4096,
+        "size": 3456,
+        "offset": [
+          -320,
+          320
+        ]
+      },
+      "feather": 0.03,
       "fromDeg": [
         4.2,
         5.0
       ],
-      "share": {
-        "how": "The share of the close view's look at a ground point, by the path of the eye's ray through the air there: m(mu) = 1 / (mu + 0.025 exp(-11 mu)) is the air mass of a ray that leaves the ground at the cosine mu from the vertical. With mE for the eye and mT for the close camera of the approved image, the share is smooth((mE - 1) / max(kappa (min(mT, cap) - 1), floor)), times a share of the distance alone: the size of one reference line of the frame on the ground at that point (as in plates.arrive), none above footDeg[0], all from footDeg[1] down, smooth along its logarithm between. footDeg[0] lies under the least value of the frames 1857 and 2156 (0.0417 at 1858, 0.0507 at 2156), so while the whole globe is in the frame its rim, which every eye sees flat, takes no haze. cap bounds the close camera's air mass: at 8 the share is whole on ground the eye sees less than about 15 degrees above its horizon; at 3.5 it was whole under 29 degrees, and the far ground and the storm in the west went pale from 1866 on. So ground seen steeply has none, ground seen as flat as the close camera sees it has all, and the far ground comes first. It gives the haze above, the tone of the sea round the place, the place's own light (gain, day) and the presence of the close view's ground on the globe (onGlobe). One value per ground point for all of them.",
-        "kappa": 0.42,
-        "cap": 8,
-        "floor": 0.25,
-        "footDeg": [
-          0.04,
-          0.025
-        ]
-      },
-      "layBack": {
-        "file": "place-12-low.jpg",
-        "edgeDeg": 0.12,
-        "fadeDeg": 0.5,
-        "size": 2048,
-        "window": {
-          "raster": 4096,
-          "size": 3456,
-          "offset": [
-            -320,
-            320
-          ]
-        },
-        "feather": 0.03
+      "veil": {
+        "file": "place-12-low-veil.bin",
+        "size": 256,
+        "sigmaDeg": 0.4,
+        "height": [
+          0.6,
+          0.034
+        ],
+        "root": 0.0309,
+        "ease": 0.08,
+        "times": 4,
+        "feather": 0.16
       }
     },
     "under": [
@@ -274,7 +270,7 @@
     ]
   },
   "onGlobe": {
-    "how": "The close view's ground (the sea layer and the towers of relief.ts, the same meshes and texels the surface view draws) stands on the globe as an object of the globe world, placed by the fixed transform of place.ts, so the globe side shows the surface view's own ground and not a copy of it. It is the finest level of the ground and comes by distance alone: at each of its points (read where the close camera's ray through the texel meets the sea) the eye's distance times the angle of one reference line in its lens is taken over the close camera's distance times the angle of one line in its own lens. That ratio says how many texels of the close picture one reference line of the frame covers there. Above level[0] the ground is not shown, from level[1] down it is whole, between them it comes smoothly along the logarithm of the ratio; no height and no clock is read. It ends on the ground between farDeg[0] and farDeg[1] degrees of arc from the point under the close camera, and inside the edge of the picture's canvas over rim[0] of its width at the sides and rim[1] of its height at the near edge. Beyond the camera's own horizon it is not drawn. On the globe the mesh is not bent to the limb (look.ground.lock is off) and the push and the shimmer of the surface view stand still at the value they have at the change of view. Its look follows the same laws as the plate under it, by the share of the air path at the point (plates.haze.share): the part of the haze and of the sea's tone that the share does not show yet is taken from each texel, and its light goes from the globe's own curve of the Sun's height to the picture as it is by that share, as on the plate. So the ground and the plate under it differ in their detail only. In the surface view nothing is taken.",
+    "how": "The close view's ground (the sea layer and the towers of relief.ts, the same meshes and texels the surface view draws) stands on the globe as an object of the globe world, placed by the fixed transform of place.ts, so the globe side shows the surface view's own ground and not a copy of it. It shows by the same share of the camera's height as the low look of the plates (plates.low.height, mid, power), ends on the ground between farDeg[0] and farDeg[1] degrees of arc from the point under the close camera, and inside the edge of the picture's canvas over rim[0] of its width at the sides and rim[1] of its height at the near edge. Beyond the camera's own horizon it is not drawn. On the globe the mesh is not bent to the limb (look.ground.lock is off) and the push and the shimmer of the surface view stand still at the value they have at the change of view. Its haze thins by the veil's share of the plate under it (plates.low.veil.height, root, ease): from each texel the share of the veil that the law no longer shows is taken, read at the point where the close camera's ray through the texel meets the sea, and not nearer than plates.low.fromDeg to the point under the close camera, as on the plate. So the ground and the plate under it keep the same broad tone while the ground gives way by height. In the surface view nothing is taken.",
     "farDeg": [
       11.5,
       13.5
@@ -291,10 +287,6 @@
         0.04
       ],
       "graze": 0.06
-    },
-    "level": [
-      3.0,
-      1.25
-    ]
+    }
   }
 }

@@ -4,7 +4,7 @@ import type { RenderView, SetContext } from '../../core/types'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { NOISE_GLSL } from '../../terrain/relief'
-import { SHARE_GLSL, VEIL_GLSL } from './globe'
+import { VEIL_GLSL } from './globe'
 
 type Box = [number, number, number, number]
 
@@ -30,7 +30,7 @@ export interface GroundLook {
   plain: [number, number]
 }
 
-export interface GroundOnGlobe { farDeg: number[]; rim: number[]; rimNear: number[]; arrive: number[]; share: number[]; level: number[]; toneTimes: number; light: Record<string, THREE.IUniform>; veil: { map: THREE.Texture; plane: THREE.Matrix3; fromDeg: number[] } }
+export interface GroundOnGlobe { farDeg: number[]; rim: number[]; rimNear: number[]; veil: { map: THREE.Texture; plane: THREE.Matrix3; fromDeg: number[] } }
 
 function unpack(buffer: ArrayBuffer, size: number, file: string): Float32Array {
   const count = new Uint32Array(buffer, 0, 1)[0]!
@@ -125,21 +125,6 @@ uniform vec4 uCanvas;
 uniform sampler2D uVeil;
 uniform mat3 uVeilPlane;
 uniform vec2 uVeilFrom;
-uniform vec4 uArrive;
-uniform vec3 uShare;
-uniform vec2 uCome;
-uniform vec3 uLevel;
-uniform sampler2D uTone;
-uniform float uToneK;
-uniform vec2 uToneCloud;
-uniform vec2 uToneGrey;
-uniform vec3 uSunAt;
-uniform vec3 uCurve[33];
-uniform vec3 uTwilight;
-uniform vec2 uTwilightAt;
-uniform vec3 uTint;
-uniform vec3 uPlaceGain;
-uniform vec2 uPlaceDay;
 in vec2 vImage;
 in vec2 vUv;
 in vec3 vView;
@@ -152,48 +137,18 @@ ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
 ${NOISE_GLSL}
 ${VEIL_GLSL}
-${SHARE_GLSL}
-vec3 seaAt() {
+vec4 thin(vec4 c) {
+  if (uShow.x <= 0.0 || c.a <= 0.0) return c;
   vec3 ray = normalize(vLocal);
   float along = dot(ray, uSea.xyz);
   float reach = dot(uSea.xyz, uSea.xyz) - uSea.w * uSea.w;
   float under = along * along - reach;
-  return ray * (under > 0.0 ? along - sqrt(under) : sqrt(reach));
-}
-float shareAt(vec3 at) {
-  vec3 up = normalize(at - uSea.xyz);
-  vec3 to = uEye - at;
-  float near = come(length(to) / uSea.w);
-  float share = 0.0;
-  for (int k = 0; k < (near > 0.0 ? 1 : 0); k++) share = near * pathShare(dot(up, normalize(to)), dot(up, normalize(-at)));
-  return share;
-}
-vec4 thin(vec4 c) {
-  if (uShow.x <= 0.0 || c.a <= 0.0) return c;
-  vec3 at = seaAt();
+  vec3 at = ray * (under > 0.0 ? along - sqrt(under) : sqrt(reach));
   vec3 up = normalize(at - uSea.xyz);
   vec3 q = uVeilPlane * up;
-  vec2 on = q.xy / max(q.z, 0.05);
-  float less = 1.0 - shareAt(at);
-  vec3 code = max(toCode(c.rgb / c.a) - less * (1.0 - smoothstep(uVeilFrom.x, uVeilFrom.y, dot(up, normalize(-uSea.xyz)))) * textureLod(uVeil, on + 0.5, 0.0).rgb, 0.0);
-  float top = max(code.r, max(code.g, code.b));
-  float least = min(code.r, min(code.g, code.b));
-  float sea = (1.0 - smoothstep(uToneCloud.x, uToneCloud.y, least)) * smoothstep(uToneGrey.x, uToneGrey.y, (top - least) / max(top, 1e-3));
-  code = max(code - less * sea * textureLod(uTone, on * uToneK + 0.5, 0.0).rgb, 0.0);
-  return vec4(fromCode(code) * c.a, c.a);
-}
-vec3 lightOn() {
-  if (uShow.x <= 0.0) return vec3(1.0);
-  vec3 at = seaAt();
-  vec3 up = normalize(at - uSea.xyz);
-  vec3 q = uVeilPlane * up;
-  float ndl = dot(up, uSunAt);
-  float own = shareAt(at) * textureLod(uTone, q.xy / max(q.z, 0.05) * uToneK + 0.5, 0.0).a * smoothstep(uPlaceDay.x, uPlaceDay.y, ndl);
-  float band = (ndl - uTwilightAt.x) / uTwilightAt.y;
-  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
-  int i = int(min(floor(x), 31.0));
-  vec3 shade = mix(uCurve[i], uCurve[i + 1], x - float(i)) * (1.0 + uTwilight * exp(-band * band)) * uTint;
-  return mix(shade, uPlaceGain, own) / uPlaceGain;
+  vec3 haze = textureLod(uVeil, q.xy / max(q.z, 0.05) + 0.5, 0.0).rgb;
+  float less = (1.0 - uShow.z) * (1.0 - smoothstep(uVeilFrom.x, uVeilFrom.y, dot(up, normalize(-uSea.xyz))));
+  return vec4(fromCode(max(toCode(c.rgb / c.a) - less * haze, 0.0)) * c.a, c.a);
 }
 float shown() {
   if (uShow.x <= 0.0) return 1.0;
@@ -202,10 +157,7 @@ float shown() {
   vec2 q = (vImage - uCanvas.xy) / uCanvas.zw;
   vec2 feather = mix(uReach.zw, uRimNear, uShow.w);
   float rim = smoothstep(0.0, feather.x, min(q.x, 1.0 - q.x)) * smoothstep(0.0, feather.y, 1.0 - q.y);
-  vec3 at = seaAt();
-  float reach = length(uEye - at);
-  float level = smoothstep(0.0, 1.0, log(uLevel.x * length(at) * uLevel.z / max(reach * uArrive.z, 1e-9)) * uLevel.y);
-  return mix(arrived(reach / uSea.w) * level * far, 1.0, uShow.w) * rim;
+  return uShow.y * mix(far, 1.0, uShow.w) * rim;
 }
 vec3 masks() {
   vec2 mq = (vImage - uMaskBox.xy) / uMaskBox.zw;
@@ -250,9 +202,8 @@ void main() {
   vec3 texel = thin(vec4(textureGrad(uColor, at, dFdx(vUv) * uGrad + run, dFdy(vUv) * uGrad).rgb, 1.0)).rgb;
   vec3 wide = thin(vec4(textureGrad(uColor, at, dFdx(vUv) * (uPlain.y * uFine) + run, dFdy(vUv) * (uPlain.y * uFine)).rgb, 1.0)).rgb;
   float fall = exp(min(vImage.y - uTop.x, 0.0) / uTop.y);
-  vec3 light = lightOn() * fall;
-  vec3 col = inverseFilmic(texel) * light;
-  vec3 soft = inverseFilmic(wide) * light;
+  vec3 col = inverseFilmic(texel) * fall;
+  vec3 soft = inverseFilmic(wide) * fall;
   vec2 g = vLocal.xz * uShimmer.y;
   float fine = 1.0 - smoothstep(0.35, 1.0, max(fwidth(g.x), fwidth(g.y)) * uFine * uPerLine);
   float sparkle = 0.6 * (vnoise(vec3(g, uShimmer.z + 7.3)) - vnoise(vec3(g, 7.3))) + 0.4 * (vnoise(vec3(g * 2.3 + 4.1, uShimmer.z * 1.7 + 3.1)) - vnoise(vec3(g * 2.3 + 4.1, 3.1)));
@@ -304,9 +255,8 @@ void main() {
     sun = uLit.a * smoothstep(uFace.x, uFace.y, facing);
     texel.rgb = mix(texel.rgb, uLit.rgb * texel.a, sun);
   }
-  vec3 light = lightOn() * uGain * lens();
-  vec3 lit = inverseFilmic(texel.rgb) * light;
-  vec3 col = clear(lit, mix(lit, inverseFilmic(wide.rgb) * light, smoothstep(0.8, 1.0, wide.a) * (1.0 - sun)), texel.a);
+  vec3 lit = inverseFilmic(texel.rgb) * uGain * lens();
+  vec3 col = clear(lit, mix(lit, inverseFilmic(wide.rgb) * uGain * lens(), smoothstep(0.8, 1.0, wide.a) * (1.0 - sun)), texel.a);
   float on = shown();
   outColor = diagOut(vec4(col * on, texel.a), diagTexels(uv * uSize), 1.0, uLayer, shift / uImage * 60.0, length(vView));
   gl_FragDepth = gl_FragCoord.z * uBody.y;
@@ -409,7 +359,7 @@ export class Ground {
           uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uPerLine: frameUniform, uBias: biasUniform,
           uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
           uShow: { value: new THREE.Vector4(0, 0, 1, 1) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uRimNear: { value: new THREE.Vector2(globe.rimNear[0]!, globe.rimNear[1]!) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) },
-          uVeil: { value: globe.veil.map }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, uArrive: { value: new THREE.Vector4(globe.arrive[0]!, 1 / Math.log(globe.arrive[0]! / globe.arrive[1]!), 1, 1) }, uShare: { value: new THREE.Vector3().fromArray(globe.share) }, uCome: { value: new THREE.Vector2(globe.share[3]!, globe.share[4]!) }, uLevel: { value: new THREE.Vector3(globe.level[0]!, 1 / Math.log(globe.level[0]! / globe.level[1]!), globe.level[2]!) }, uToneK: { value: globe.toneTimes }, uSunAt: { value: new THREE.Vector3(0, 1, 0) }, ...globe.light, ...extra,
+          uVeil: { value: globe.veil.map }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,
@@ -506,7 +456,7 @@ export class Ground {
     return r
   }
 
-  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, sun: THREE.Vector3, under: number, onGlobe: number | null, whole = 0): void {
+  update(dt: number, gain: number, vignette: number, bloom: number, view: RenderView, eye: THREE.Vector3, sun: THREE.Vector3, under: number, onGlobe: number | null, air = 1, whole = 0): void {
     const k = this.look
     const part = view.camera.view
     const cut = under > 0 && part !== null && part.enabled
@@ -514,7 +464,8 @@ export class Ground {
       const u = l.material.uniforms
       const show = u.uShow!.value as THREE.Vector4
       show.x = onGlobe === null ? 0 : 1
-      ;(u.uArrive!.value as THREE.Vector4).z = onGlobe ?? 1
+      show.y = onGlobe ?? 0
+      show.z = air
       show.w = onGlobe === null ? 1 : whole
       const globe = onGlobe !== null
       const m = l.material
@@ -530,7 +481,6 @@ export class Ground {
       }
       ;(u.uEye!.value as THREE.Vector3).copy(eye)
       if (u.uSun) (u.uSun.value as THREE.Vector3).copy(sun)
-      ;(u.uSunAt!.value as THREE.Vector3).copy(sun)
       ;(u.uDrift!.value as THREE.Vector2).set(k.drift[0] * dt, k.drift[1] * dt)
       if (u.uShimmer) (u.uShimmer.value as THREE.Vector4).z = k.shimmer[2] * dt
       u.uGain!.value = gain
