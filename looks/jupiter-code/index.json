@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T13:21:22.280Z",
+ "pushed": "2026-11-25T13:44:55.130Z",
  "head": "7c0b8675839b1fc66617635ef42a34f30e3417f5",
- "note": "13:22 UTC: far band cause pictures, wedge first take top view (working), 3150 last",
+ "note": "13:45 UTC: wedge take s2 in the three frames, before and after; rise slices of 7c0b8675 running; 3150 last",
  "looks": [
+  {
+   "time": "2026-11-25T13:44:53.957Z",
+   "file": "20261125134453957-note-n7-3150-trio.jpg",
+   "source": "../work/r14/n7-3150-trio.jpg",
+   "kind": "note",
+   "label": "3150 final on 7c0b8675: approved, before, now (6.113); the wedge take changes no pixel of it at the draft tier",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T13:44:53.149Z",
+   "file": "20261125134453149-note-wd-pair-3254h.jpg",
+   "source": "../work/r14/wd-pair-3254h.jpg",
+   "kind": "note",
+   "label": "3254 and a half draft, before above, the wedge take s2 below (working take, not in the tree)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T13:44:52.393Z",
+   "file": "20261125134452393-note-wd-pair-3042.jpg",
+   "source": "../work/r14/wd-pair-3042.jpg",
+   "kind": "note",
+   "label": "3042 draft, before above, the wedge take s2 below (working take, not in the tree)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T13:44:50.939Z",
+   "file": "20261125134450939-note-wd-pair-3034.jpg",
+   "source": "../work/r14/wd-pair-3034.jpg",
+   "kind": "note",
+   "label": "3034 draft, before above, the wedge take s2 below (working take, not in the tree): the canvas borders are gone at this size, the made ground at the left reads rough",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T13:21:20.439Z",
    "file": "20261125132120439-note-n7-3150-trio.jpg",
@@ -174,38 +206,6 @@
    "source": "../work/r14/f3258-ll.jpg",
    "kind": "note",
    "label": "rise 3258 lower left full size, the straight borders",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:44:59.249Z",
-   "file": "20261125114459249-note-a3.jpg",
-   "source": "../work/r14/sa/a3.jpg",
-   "kind": "note",
-   "label": "rise 3255 to 3260 as built on d438b57b, every capture frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:44:58.607Z",
-   "file": "20261125114458607-note-a2.jpg",
-   "source": "../work/r14/sa/a2.jpg",
-   "kind": "note",
-   "label": "rise 3250 to 3255 as built on d438b57b, every capture frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:26:18.015Z",
-   "file": "20261125112618015-note-s1-3150.jpg",
-   "source": "../work/r13/off/s1-3150.jpg",
-   "kind": "note",
-   "label": "3150 as named, now (thick sheets, one Sun), approved (draft, same sources as d438b57b)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:26:16.284Z",
-   "file": "20261125112616284-note-d438-rise-3240-3247.jpg",
-   "source": "../work/r13/off/d438-rise-3240-3247.jpg",
-   "kind": "note",
-   "label": "d438b57b rise 3240 to 3247, the commit's own slice frames (draft)",
    "stop": "jupiter"
   }
  ]
