@@ -1,10 +1,11 @@
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { GRADE_GLSL } from '../../stops/sun/grade'
 import { NOISE_GLSL } from '../../terrain/relief'
+import look from './look.json'
 
-export const MAX_LOOPS = 16
-export const MAX_LOBES = 8
-export const MAX_KNOTS = 14
+export const MAX_LOOPS = Math.max(look.loops.length, 1)
+export const MAX_LOBES = Math.max(look.fringe.lobes.length, 1)
+export const MAX_KNOTS = Math.max(look.knot.at.length, 1)
 
 export const FARSUN_VERT = /* glsl */ `
 uniform float uDepth;
@@ -90,22 +91,40 @@ uniform int uStrandLobe[${MAX_LOBES}];
 uniform int uStrandLobes;
 uniform vec3 uFringeFan;
 uniform vec3 uFringeCurl;
+uniform vec4 uFringeSheet;
+uniform vec4 uFringeHairBy;
+uniform vec3 uFringeHairCurl;
+uniform vec3 uFringeHairTop;
+uniform vec2 uFringeHairAll;
+uniform vec3 uFringeHairTuft;
+uniform vec2 uFringeHair[${MAX_LOBES}];
+uniform vec3 uFringeSpike;
+uniform vec2 uFringeWay;
+uniform float uGlareEnd;
 uniform float uLoopGain[${MAX_LOOPS}];
 uniform float uLoopRagged[${MAX_LOOPS}];
+uniform vec3 uLoopRope[${MAX_LOOPS}];
+uniform vec3 uLoopSheath[${MAX_LOOPS}];
 uniform float uHaloEdge;
 uniform vec4 uKeep;
-uniform vec2 uLimbGlow;
+uniform vec3 uLimbGlow;
+uniform float uKeepFloor;
+uniform vec3 uKeepCoarse;
+uniform float uKeepSoft;
 uniform float uHeatFloor;
 uniform vec2 uPlage;
 uniform vec3 uLoopLook;
 uniform vec3 uPromPale;
 uniform vec3 uFringeKnot[${MAX_LOBES}];
 uniform vec4 uKnot[${MAX_KNOTS}];
+uniform vec4 uKnotAxis[${MAX_KNOTS}];
+uniform vec2 uKnotShade;
 uniform vec4 uKnotBy[${MAX_KNOTS}];
 uniform vec4 uKnotRay[${MAX_KNOTS}];
 uniform vec4 uKnotLight;
 uniform vec3 uKnotClump;
 uniform vec2 uKnotOut[${MAX_KNOTS}];
+uniform vec2 uKnotLimb[${MAX_KNOTS}];
 uniform vec4 uCoronaRim;
 uniform float uChromoBurn;
 uniform int uParts;
@@ -213,6 +232,7 @@ float loopGas(vec3 q, int i, float soft, out float heat) {
   vec3 along = uLoopAlong[i];
   vec3 up = uLoopUp[i];
   vec4 shape = uLoopShape[i];
+  vec3 rope = uLoopRope[i];
   vec3 rel = q - mid;
   float x = dot(rel, along);
   float y = dot(rel, up);
@@ -221,22 +241,28 @@ float loopGas(vec3 q, int i, float soft, out float heat) {
   heat = 0.0;
   for (int s = 0; s < 4; s++) {
     float fs = float(s);
-    float a = shape.x * (1.0 - 0.17 * fs) * (1.0 + 0.25 * (vhash(vec3(fs, shape.w, 1.3)) - 0.5));
-    float h = shape.y * (1.0 - 0.2 * fs) * (1.0 + 0.3 * (vhash(vec3(fs, shape.w, 4.7)) - 0.5));
-    float xs = x - shape.x * 0.3 * (vhash(vec3(fs, shape.w, 8.1)) - 0.5);
+    float a = shape.x * (1.0 - 0.17 * fs * rope.x) * (1.0 + 0.25 * (vhash(vec3(fs, shape.w, 1.3)) - 0.5) * rope.x);
+    float h = shape.y * (1.0 - 0.2 * fs * rope.x) * (1.0 + 0.3 * (vhash(vec3(fs, shape.w, 4.7)) - 0.5) * rope.x);
+    float xs = x - shape.x * 0.3 * (vhash(vec3(fs, shape.w, 8.1)) - 0.5) * rope.x;
     vec2 pe = vec2(xs / a, y / h);
     float e = length(pe);
     float along2 = atan(pe.x, pe.y);
     float wob = vnoise(vec3(along2 * 2.3 + shape.w, fs * 4.1, uTime * 0.05)) - 0.5;
     wob += uLoopRagged[i] * (2.0 * wob + 0.8 * (vnoise(vec3(along2 * 9.0 + shape.w * 1.7, fs * 2.3, 3.1)) - 0.5));
-    float ring = (e - 1.0 - 0.16 * wob) * e / max(length(vec2(xs / (a * a), y / (h * h))), 1e-4);
-    float lean = z - shape.x * 0.5 * (vhash(vec3(fs, shape.w, 2.9)) - 0.5) * cos(along2) - 0.04 * (vnoise(vec3(along2 * 3.1, shape.w, fs * 1.9)) - 0.5);
+    float ring = (e - 1.0 - 0.16 * wob - rope.y * sin(along2 * rope.z + fs * 1.5708)) * e / max(length(vec2(xs / (a * a), y / (h * h))), 1e-4);
+    float lean = z - shape.x * 0.5 * (vhash(vec3(fs, shape.w, 2.9)) - 0.5) * cos(along2) * rope.x - 0.04 * (vnoise(vec3(along2 * 3.1, shape.w, fs * 1.9)) - 0.5) - rope.y * shape.y * cos(along2 * rope.z + fs * 1.5708);
     float thin = shape.z * uLoopLook.x;
     float width = max(thin * (0.7 + 0.9 * vnoise(vec3(along2 * 5.0, float(i) * 3.1, fs * 7.7))), soft);
     float dist2 = ring * ring + lean * lean;
     float strand = 0.3 + 1.4 * vnoise(vec3(along2 * 7.0 - uTime * uProm.w * (1.0 + 0.4 * fs), float(i) * 1.7 + shape.w, fs * 2.9));
     strand *= mix(1.0, 1.8 * smoothstep(0.35, 0.65, vnoise(vec3(along2 * 2.6 + shape.w * 3.0, fs * 5.3, float(i) * 2.1))), uLoopLook.y);
     float g = exp(-dist2 / (width * width)) * strand * (thin / width) * step(0.0, y + 0.05);
+    for (int m = 0; m < (uLoopSheath[i].x > 0.0 ? 1 : 0); m++) {
+      float wide = width * uLoopSheath[i].y;
+      float flame = 0.25 + 1.5 * vnoise(q * uLoopSheath[i].z + fs * 3.7);
+      float body = uLoopSheath[i].x * exp(-dist2 / (wide * wide)) * strand * flame * flame * step(0.0, y + 0.05);
+      g += body;
+    }
     sum += g;
     heat += g * strand;
   }
@@ -270,6 +296,7 @@ void main() {
     vec3 knotAt = spinY(uKnot[n].xyz, -uSpin);
     float knotOff = acos(clamp(dot(normalize(knotAt - ro), rd), -1.0, 1.0)) / discAngle;
     float knotHere = uKnotBy[n].x * exp(-pow(knotOff * knotOff * uKnot[n].w, uKnotBy[n].y)) * smoothstep(-0.2, 0.05, dot(knotAt, ro) - 1.0);
+    for (int m = 0; m < (uKnotLimb[n].y > 0.0 ? 1 : 0); m++) knotHere *= pow(min(uKnotLimb[n].x / max(dot(knotAt, normalize(ro - knotAt)), 1e-4), 1.0), uKnotLimb[n].y);
     knotLight += knotHere * uKnotOut[n].y;
     knotOut += knotHere * uKnotOut[n].x;
   }
@@ -293,10 +320,19 @@ void main() {
     for (int j = 0; j < (uWear < 1.0 || uMapOn <= 0.0 ? 1 : 0); j++) {
       float share = uMapOn > 0.0 ? 1.0 - uWear : 1.0;
       float detail;
-      vec3 lit = shoulder(whiteLook(d, mu, pixel / max(mu, 0.2), detail) * (uBright * dim));
-      lit = min(lit * pow(vec3(detail / uKeep.w), uKeep.xyz), uWhite);
+      vec3 lit = shoulder(whiteLook(d, mu, pixel * uKeepSoft / max(mu, 0.2), detail) * (uBright * dim));
       lit = mix(lit, uWhite, uLimbGlow.x * exp(-(1.0 - min(x, 1.0)) * uLimbGlow.y));
-      body += share * inverseFilmic(mix(lit, vec3(0.995), min(knotLight, 1.0)));
+      float coarse = 1.0;
+      for (int w = 0; w < (uKeepCoarse.x > 0.0 ? 1 : 0); w++) coarse += uKeepCoarse.x * (vnoise(d * uKeepCoarse.y) + uKeepCoarse.z * vnoise(d * (uKeepCoarse.y * 2.3) + 3.0) - 0.5 - 0.5 * uKeepCoarse.z) * (1.0 - smoothstep(0.12, 0.4, pixel / max(mu, 0.2) * uKeepCoarse.y));
+      vec3 mottle = pow(vec3(max(detail, uKeepFloor) * coarse / uKeep.w), uKeep.xyz * (1.0 + uLimbGlow.z * (1.0 - mu)));
+      float glint = clamp(knotLight, 0.0, 1.0);
+      vec3 patched = min(mix(lit, vec3(0.995), glint) * mix(mottle, vec3(1.0), smoothstep(0.6, 1.0, glint)), mix(uWhite, vec3(0.995), glint));
+      lit = min(lit * mottle, uWhite);
+      for (int w = 0; w < (knotLight < 0.0 && uKnotShade.y > 0.0 ? 1 : 0); w++) {
+        vec3 less = (vec3(0.995) - lit) * -knotLight;
+        patched = lit - mix(less, vec3(dot(less, vec3(0.3, 0.6, 0.1))), uKnotShade.x) * uKnotShade.y;
+      }
+      body += share * inverseFilmic(patched);
     }
     col = body * cover;
     alpha = cover;
@@ -332,6 +368,7 @@ void main() {
     vec3 srd = spinY(rd, uSpin);
     float sb = dot(sro, srd);
     for (int i = 0; i < uLoops; i++) {
+      if (uLoopGain[i] <= 0.0) continue;
       vec4 shape = uLoopShape[i];
       vec3 mid = uLoopMid[i] + uLoopUp[i] * shape.y * 0.5;
       float bound = length(vec2(shape.x * 1.3, shape.y * 0.65)) + 0.08;
@@ -358,7 +395,7 @@ void main() {
       }
     }
   }
-  for (int k = 0; k < (miss < uFringe.y && cover < 0.5 && (uParts & 4) != 0 ? 1 : 0); k++) {
+  for (int k = 0; k < (miss < uFringe.y && cover < 0.5 && uFringe.z > 0.0 && (uParts & 4) != 0 ? 1 : 0); k++) {
     float halfChord = sqrt(max(uFringe.y * uFringe.y - near2, 0.0));
     float s0 = max(-b - halfChord, 0.0);
     float s1 = -b + halfChord;
@@ -395,23 +432,69 @@ void main() {
         strands += by.w * exp(-(1.0 - dot(foot, lobe.xyz)) * lobe.w) * strand * exp(-up / max(reach, 1e-3));
       }
       float tall = mix(uFringeShape.x, uFringeShape.y, pow(vnoise(sd * 6.0 + 5.0), 2.0)) * high;
-      vec3 bent = sd + (vec3(vnoise(sd * 9.0 + 1.0), vnoise(sd * 9.0 + 4.0), vnoise(sd * 9.0 + 7.0)) - 0.5) * (up * uFringeShape.w);
-      float spike = 40.0 * pow(vnoise(bent * uFringeShape.z), 8.0) + 24.0 * pow(vnoise(bent * (uFringeShape.z * 2.7) + 3.0), 8.0);
+      vec3 bent = sd + (vec3(vnoise(sd * 9.0 + 1.0), vnoise(sd * 9.0 + 4.0), vnoise(sd * 9.0 + 7.0)) - 0.5) * (up * uFringeShape.w) + cross(uFringeSheet.xyz, sd) * (up * (uFringeWay.x + uFringeWay.y * up));
+      float spike = uFringeSpike.x * pow(vnoise(bent * uFringeShape.z), uFringeSpike.z) + uFringeSpike.y * pow(vnoise(bent * (uFringeShape.z * 2.7) + 3.0), uFringeSpike.z);
       sum += (exp(-up / tall) * spike * more + strands + knot) * (fade * step(1.0, r));
     }
-    gas += burnWhite(uFringeColour * (sum * dt * uFringe.z * uBurn.x));
+    float hair = 0.0;
+    float hairTop = 1.0 + uFringeHairTop.y;
+    for (int j = 0; j < (uFringeHairBy.z > 0.0 && near2 < hairTop * hairTop ? 1 : 0); j++) {
+      float reachHalf = sqrt(hairTop * hairTop - near2);
+      float h0 = max(-b - reachHalf, 0.0);
+      int hairSteps = int(uFringeHairTop.x);
+      float hd = max(-b + reachHalf - h0, 0.0) / float(hairSteps);
+      for (int i = 0; i < hairSteps; i++) {
+        vec3 q = ro + rd * (h0 + (float(i) + offset) * hd);
+        float r = length(q);
+        vec3 sd = spinY(q / r, uSpin);
+        float up = max(r - 1.0, 0.0);
+        float fade = (1.0 - smoothstep(0.5 * uFringeHairTop.y, uFringeHairTop.y, up)) * step(1.0, r);
+        vec3 level = sd * uFringeHairCurl.y + up * uFringeHairCurl.z;
+        vec3 wisp = sd + (vec3(vnoise(level + 1.0), vnoise(level + 4.0), vnoise(level + 7.0)) - 0.5) * (up * uFringeHairCurl.x) + cross(uFringeSheet.xyz, sd) * (up * uFringeHairTop.z);
+        float weight = uFringeHairAll.x;
+        float thin = 1.0;
+        float reachBy = uFringeHairAll.x * uFringeHairAll.y;
+        vec3 mid = wisp * uFringeHairAll.x;
+        for (int n = 0; n < ${MAX_LOBES}; n++) {
+          vec2 by = uFringeHair[n];
+          if (by.x == 0.0) continue;
+          vec4 lobe = uFringeLobe[n];
+          float w = by.x * exp(-(1.0 - dot(wisp, lobe.xyz)) * lobe.w);
+          if (by.x < 0.0) {
+            thin *= 1.0 + max(w, -1.0);
+            continue;
+          }
+          weight += w;
+          reachBy += w * by.y;
+          mid += w * lobe.xyz;
+        }
+        for (int m = 0; m < (weight * fade > 1e-4 ? 1 : 0); m++) {
+          vec3 foot = normalize(wisp - (wisp - normalize(mid)) * min(up * uFringeHairBy.w, 0.8));
+          vec3 cellAt = foot * uFringeHairBy.x;
+          float strand = pow(vnoise(cellAt), uFringeHairBy.y) + 0.5 * pow(vnoise(cellAt * 1.7 + 2.0), uFringeHairBy.y);
+          float tuft = uFringeHairTuft.x * pow(vnoise(cellAt * uFringeHairTuft.y + 5.0), uFringeHairBy.y);
+          float reach = max(reachBy / weight * (0.35 + 1.3 * vnoise(foot * (uFringeHairBy.x * 0.31) + 11.0)), 1e-3);
+          hair += thin * weight * (strand * exp(-up / reach) + tuft * exp(-up / (reach * uFringeHairTuft.z))) * fade;
+        }
+      }
+      hair *= hd * uFringeHairBy.z;
+    }
+    gas += burnWhite(uFringeColour * ((sum * dt + hair) * uFringe.z * uBurn.x));
   }
   for (int n = 0; n < (cover < 0.5 && (uParts & 4) != 0 ? ${MAX_KNOTS} : 0); n++) {
     if (uKnotBy[n].z <= 0.0) continue;
-    vec3 knotAt = spinY(uKnot[n].xyz, -uSpin);
+    vec3 knotDir = spinY(uKnot[n].xyz, -uSpin);
+    vec3 knotAt = knotDir * uKnotAxis[n].w;
     float tk = dot(knotAt - ro, rd);
     vec3 nearK = ro + rd * tk - knotAt;
     float halfK = sqrt(max(uKnotBy[n].w * uKnotBy[n].w - dot(nearK, nearK), 0.0));
+    if (halfK <= 0.0) continue;
     int steps = int(uKnotLight.w);
     float dt = 2.0 * halfK / float(steps);
     vec3 cell = floor(spinY(normalize(ro + rd * (-b)), uSpin) * 2048.0);
     float offset = fract(sin(dot(cell, vec3(12.9898, 78.233, 37.719))) * 43758.5453);
     vec4 by = uKnotRay[n];
+    vec3 axisAt = spinY(uKnotAxis[n].xyz, -uSpin);
     float sum = 0.0;
     for (int i = 0; i < (halfK > 0.0 ? steps : 0); i++) {
       vec3 q = ro + rd * (tk - halfK + (float(i) + offset) * dt);
@@ -423,9 +506,10 @@ void main() {
       float ray = pow(vnoise(sdir * by.x), by.y) + 0.5 * pow(vnoise(sdir * (by.x * 2.3) + 2.0), by.y);
       ray *= mix(1.0, 2.2 * smoothstep(0.35, 0.65, vnoise(sdir * (by.x * uKnotClump.y) + 5.0)), uKnotClump.x);
       float reach = by.z * (0.35 + 1.3 * vnoise(sdir * (by.x * 0.31) + 11.0));
-      sum += ray * exp(-dist / max(reach, 1e-3)) * smoothstep(by.w - 0.3, by.w + 0.2, dot(dir, knotAt)) * smoothstep(uKnotBy[n].w, 0.6 * uKnotBy[n].w, dist) * step(1.0, length(q));
+      float tip = min(dist / max(uKnotAxis[n].w - 1.0, 1e-6), 1.0);
+      sum += ray * exp(-dist / max(reach, 1e-3)) * smoothstep(by.w - 0.3, by.w + 0.2, dot(dir, axisAt)) * smoothstep(uKnotBy[n].w, 0.6 * uKnotBy[n].w, dist) * step(1.0, length(q)) * tip * tip;
     }
-    gas += burnWhite(uKnotLight.rgb * (sum * dt * uKnotBy[n].z)) * smoothstep(-0.2, 0.05, dot(knotAt, ro) - 1.0);
+    gas += burnWhite(uKnotLight.rgb * (sum * dt * uKnotBy[n].z)) * smoothstep(-0.2, 0.05, dot(knotDir, ro) - 1.0);
   }
   gas *= dim;
   col += gas;
@@ -434,7 +518,7 @@ void main() {
   for (int k = 0; k < ((uParts & 8) != 0 ? 1 : 0); k++) {
     float o = max(x, 1.0) - 1.0;
     float inside = 1.0 - smoothstep(0.6, 1.0, x);
-    float glow = uGlare.x * (exp(-o * uGlare.z) + uGlare.w / (1.0 + o * o * 1.5)) * (1.0 - uGlareInside * inside) * ahead;
+    float glow = uGlare.x * (exp(-o * uGlare.z) + uGlare.w / ((1.0 + o * o * 1.5) * (1.0 + o * o * uGlareEnd))) * (1.0 - uGlareInside * inside) * ahead;
     col += (uGlareColour * glow + uKnotLight.rgb * knotOut + (uIrrColour * (uBurn.y * exp(-o * o * uBurn.z * uBurn.z)) + uHaloColour * (uHalo.x * exp(-o * uHalo.y))) * ((1.0 - cover) * smoothstep(uHaloEdge, 1.0, x) * ahead)) * ((1.0 - uWear) * dim);
   }
   col *= lens * uOpacity;
