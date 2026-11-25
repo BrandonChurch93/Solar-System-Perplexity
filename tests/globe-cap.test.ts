@@ -388,13 +388,14 @@ async function shot(o) {
     light: { wrap: 0.2, power: 1, gain: 1, night: [0, 0, 0], sun: [0.2, 0.15, 0.1], relief: 0, reliefNear: 0, limb: 0 },
     haze: o.haze ?? { scaleHeight: 0.01, depth: 0, day: [0, 0, 0], twilight: [0, 0, 0], strength: 0, extinction: 1, forward: 0, top: 1 },
     patches: { textures, widthsDeg: o.levels.map((l) => l.widthDeg), spot: new THREE.Vector3().fromArray(o.spot ?? [0, 0, 1]), feather: 0.01, fade: [1, 2], nearDeg: 0, own: o.levels.map(() => o.own ?? true), ...(o.centresDeg ? { centresDeg: o.centresDeg } : {}) },
-    ...(levels.length ? { cap: { levels, border: o.border, from: o.from, cells: o.cells, pixel: o.pixel, ...(o.reachDeg ? { reachDeg: o.reachDeg } : {}), ...(o.light ? { light: o.light } : {}), ...(o.detail ? { detail: { text: o.detail.text, uniforms: Object.fromEntries(Object.entries(o.detail.uniforms).map(([k, v]) => [k, { value: Array.isArray(v) ? new THREE.Vector3().fromArray(v) : v }])) } } : {}) } } : {}),
+    ...(levels.length ? { cap: { levels, border: o.border, from: o.from, cells: o.cells, pixel: o.pixel, ...(o.reachDeg ? { reachDeg: o.reachDeg } : {}), ...(o.light ? { light: o.light } : {}), ...(o.cull ? { cull: true } : {}), ...(o.detail ? { detail: { text: o.detail.text, uniforms: Object.fromEntries(Object.entries(o.detail.uniforms).map(([k, v]) => [k, { value: Array.isArray(v) ? new THREE.Vector3().fromArray(v) : v }])) } } : {}) } } : {}),
     ...(o.exactSpin ? { exactSpin: true } : {}),
   })
   const cam = new THREE.PerspectiveCamera(o.vfov, o.width / o.height, o.near, 10)
   cam.position.fromArray(o.position)
   cam.up.fromArray(o.up)
   cam.lookAt(new THREE.Vector3().fromArray(o.target))
+  if (o.shift) cam.setViewOffset(o.width, o.height, o.shift[0], o.shift[1], o.width, o.height)
   const from = cam.position.clone()
   planet.mesh.position.copy(from).negate()
   cam.position.set(0, 0, 0)
@@ -422,7 +423,10 @@ async function shot(o) {
   }
   drop()
   loader.freeAll()
-  return { pixels: Array.from(out), bytes, drawn, triangles }
+  const raw = new Uint8Array(out.buffer)
+  let text = ''
+  for (let i = 0; i < raw.length; i += 32768) text += String.fromCharCode.apply(null, raw.subarray(i, i + 32768))
+  return { pixels: btoa(text), bytes, drawn, triangles }
 }
 
 window.cap = { shot }
@@ -431,7 +435,7 @@ window.cap = { shot }
 interface Box { north: [number, number]; east: [number, number]; value: number }
 interface HeightDef { size: number; widthDeg: number; low: number; high: number; base: number; boxes: Box[] }
 interface HazeDef { scaleHeight: number; depth: number; day: [number, number, number]; twilight: [number, number, number]; strength: number; extinction: number; forward: number; top: number }
-interface CapShot { detail?: { text: string; uniforms: Record<string, number | [number, number, number]> }; spin?: number; exactSpin?: boolean; spot?: [number, number, number]; frame?: number; centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
+interface CapShot { cull?: boolean; shift?: [number, number]; detail?: { text: string; uniforms: Record<string, number | [number, number, number]> }; spin?: number; exactSpin?: boolean; spot?: [number, number, number]; frame?: number; centresDeg?: [number, number][]; light?: { relief: number; own: number; from?: number }; haze?: HazeDef; sun?: [number, number, number]; own?: boolean; map: [number, number, number]; levels: { rgb: [number, number, number]; size: number; widthDeg: number }[]; heights?: HeightDef[]; border: [number, number]; from: [number, number]; cells: number; pixel: number; reachDeg?: number; vfov: number; width: number; height: number; near: number; position: number[]; up: number[]; target: number[] }
 interface CapRead { pixels: number[]; bytes: number; drawn: boolean; triangles: number }
 
 const filmicInverse = (v: number): number => {
@@ -447,7 +451,11 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
   let browser: Browser
   let page: Page
   const errors: string[] = []
-  const call = (o: CapShot): Promise<CapRead> => page.evaluate((a) => (window as unknown as { cap: { shot(x: unknown): Promise<unknown> } }).cap.shot(a) as Promise<CapRead>, o)
+  // The pixels cross from the page as base64 of their floats: as a list of numbers a shot of 192 by 192 took 0.8 s to cross.
+  const call = async (o: CapShot): Promise<CapRead> => {
+    const r = await page.evaluate((a) => (window as unknown as { cap: { shot(x: unknown): Promise<unknown> } }).cap.shot(a) as Promise<Omit<CapRead, 'pixels'> & { pixels: string }>, o)
+    return { ...r, pixels: Array.from(new Float32Array(new Uint8Array(Buffer.from(r.pixels, 'base64')).buffer)) }
+  }
 
   beforeAll(async () => {
     const dir = resolve(ROOT, 'out/work/globe-test')
@@ -679,7 +687,7 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
     expect(share(await call(half), half)).toBeLessThan(0.02)
     expect(Math.abs(share(await call({ ...half, frame: 0.5 }), half) - one)).toBeLessThan(0.03)
     expect(errors).toEqual([])
-  })
+  }, 120000)
 
   it('measures the haze to its own surface: the sphere\'s depth where the height is 0, more air over a pit, less over a mesa', async () => {
     const haze: HazeDef = { scaleHeight: 0.01, depth: 0.4, day: [1, 1, 1], twilight: [0, 0, 0], strength: 1, extinction: 1, forward: 0, top: 1 }
@@ -734,6 +742,40 @@ describe.skipIf(!have)('the relief cap in a WebGL2 browser', () => {
         expect(Math.hypot(exact.x, exact.y)).toBeLessThan(1)
       }
     }
+    expect(errors).toEqual([])
+  }, 240000)
+
+  it('draws the same picture to the last bit with `cull`, from fewer triangles where the lens sees a part of the cap', async () => {
+    const lit = { relief: 1, own: 1 }
+    const hills: HeightDef = { ...flatLevel(12), boxes: [{ north: [1.5, 2], east: [-4, 4], value: 30000 }, { north: [-3, -2], east: [-1, 3], value: 60000 }, { north: [-0.4, 0.4], east: [-0.4, 0.4], value: 20000 }] }
+    const fine: HeightDef = { ...flatLevel(3), boxes: [{ north: [-0.2, 0.3], east: [0.1, 0.5], value: 50000 }] }
+    const near = (deg: number, turn: number, vfov: number): CapShot => ({
+      ...low, vfov, heights: [hills, fine], light: lit,
+      position: [1.02 * Math.sin(rad(deg)) * Math.sin(turn), 1.02 * Math.sin(rad(deg)) * Math.cos(turn), 1.02 * Math.cos(rad(deg))],
+      target: [Math.sin(rad(2)) * Math.sin(turn + 2.6), Math.sin(rad(2)) * Math.cos(turn + 2.6), Math.cos(rad(2))],
+    })
+    const views: CapShot[] = [
+      { ...low, heights: [hills], light: lit },
+      { ...low, heights: [hills, fine], light: lit, shift: [0.37, -0.21] },
+      near(-3.2, 0, 40), near(1.1, 1.3, 25), near(0.4, 4.1, 70), near(2.5, 2.2, 12),
+      { ...near(0.8, 5.5, 50), exactSpin: true, spin: 0.4 },
+      { ...top, heights: [hills, fine] },
+      { ...top, vfov: 4, heights: [hills, fine], light: lit },
+    ]
+    const sphere = (await call(low)).triangles
+    let fewer = 0
+    for (const view of views) {
+      const off = await call(view)
+      const on = await call({ ...view, cull: true })
+      expect(on.drawn).toBe(true)
+      expect(off.drawn).toBe(true)
+      let apart = 0
+      for (let i = 0; i < off.pixels.length; i++) if (on.pixels[i] !== off.pixels[i]) apart++
+      expect(apart).toBe(0)
+      expect(on.triangles).toBeLessThanOrEqual(off.triangles)
+      if (on.triangles - sphere < 0.6 * (off.triangles - sphere)) fewer++
+    }
+    expect(fewer).toBeGreaterThanOrEqual(6)
     expect(errors).toEqual([])
   }, 240000)
 

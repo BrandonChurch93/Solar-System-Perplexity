@@ -1,0 +1,180 @@
+diff --git a/src/space/sky.ts b/src/space/sky.ts
+index 0e86b0bf..93c6d8ad 100644
+--- a/src/space/sky.ts
++++ b/src/space/sky.ts
+@@ -478,6 +478,8 @@ uniform vec2 uCrowdShape;
+ uniform vec2 uStarLift;
+ uniform vec4 uNamedStars;
+ out float vSize;
++out float vDrawn;
++uniform float uLeast;
+ ${SKY_BAND_GLSL}
+ ${SKY_PATCH_GLSL}
+ ${SKY_SUNFADE_GLSL}
+@@ -487,7 +489,8 @@ void main() {
+   gl_Position.z = 0.0;
+   float size = aStar.x * uPixel;
+   vSize = size;
+-  gl_PointSize = size;
++  vDrawn = max(size, uLeast * uPixel);
++  gl_PointSize = vDrawn;
+   float crowd = 1.0;
+   if (uHasSky > 0.5) {
+     vec3 d = normalize(position);
+@@ -518,6 +521,7 @@ const STAR_FRAG = /* glsl */ `
+ precision highp float;
+ in vec3 vColor;
+ in float vSize;
++in float vDrawn;
+ uniform float uCore;
+ uniform float uHalo;
+ uniform float uPixel;
+@@ -525,7 +529,7 @@ uniform vec4 uStarLaw;
+ out vec4 outColor;
+ void main() {
+   float size = vSize / uPixel;
+-  vec2 p = (gl_PointCoord - 0.5) * size;
++  vec2 p = (gl_PointCoord - 0.5) * (vDrawn / uPixel);
+   float r2 = dot(p, p);
+   float core = exp(-r2 / uCore);
+   float glow = uHalo * exp(-r2 / (0.035 * size * size));
+@@ -548,6 +552,8 @@ in float aStar;
+ in vec3 aColor;
+ out vec3 vColor;
+ out float vSize;
++out float vDrawn;
++uniform float uLeast;
+ ${SKY_BAND_GLSL}
+ ${SKY_PATCH_GLSL}
+ ${SKY_DUST_GLSL}
+@@ -559,7 +565,8 @@ void main() {
+   gl_Position.z = 0.0;
+   float b = uDeepLaw.x * aStar * pow(aStar / uDeepLaw.z, uDeepLaw.y);
+   float size = min(uDeepSize.x + uDeepSize.y * log2(1.0 + b), uDeepSize.z) * uPixel;
+-  gl_PointSize = size;
++  vDrawn = max(size, uLeast * uPixel);
++  gl_PointSize = vDrawn;
+   vSize = size;
+   vec3 d = normalize(position);
+   vColor = mix(vec3(dot(aColor, vec3(0.3, 0.5, 0.2))), aColor, mix(uDeepCalm.x, 1.0, smoothstep(uDeepCalm.y, uDeepCalm.z, b))) * dust(d, aStar) * sunFade(gl_Position) * (b * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w) / mix(1.0, 1.0 / pow(1.0 + dot(lq, lq) * 0.9, 2.0), uLens.x * uLens.z));
+@@ -583,6 +590,8 @@ in vec2 aStar;
+ in vec3 aColor;
+ out vec3 vColor;
+ out float vSize;
++out float vDrawn;
++uniform float uLeast;
+ ${SKY_PATCH_GLSL}
+ ${SKY_SUNFADE_GLSL}
+ void main() {
+@@ -602,7 +611,8 @@ void main() {
+   c *= k * mix(1.0, uFlightBand.w / uFlightLook.y, uLift) * aStar.x * uExposure * (1.0 - patchCoord(0, d).z * uPatchLens[0].w) * (1.0 - patchCoord(1, d).z * uPatchLens[1].w);
+   vColor = c * sunFade(gl_Position);
+   float size = min(uStripSize.x + uStripSize.y * log2(1.0 + max(c.r, max(c.g, c.b))), uStripSize.z) * uPixel;
+-  gl_PointSize = size;
++  vDrawn = max(size, uLeast * uPixel);
++  gl_PointSize = vDrawn;
+   vSize = size;
+ }`
+ 
+@@ -612,6 +622,9 @@ const POLE = [0.45, 0.82, 0.35] as const
+ const GAMMA_TURN = 0.28
+ const STAR_MAX_SIZE = 11
+ const STAR_HALO = 0.012
++const STAR_EDGE = 0.002
++
++export const starLeast = (core: number): number => 2 * Math.sqrt(core * Math.log(1 / STAR_EDGE))
+ 
+ function noiseCube(n: number): THREE.Data3DTexture {
+   const data = new Uint8Array(n * n * n * 4)
+@@ -839,6 +852,7 @@ export class Sky {
+   private readonly v3 = new THREE.Vector3()
+   private readonly q2 = new THREE.Quaternion()
+   private readonly starLaw = { value: new THREE.Vector4(1, 0, 0, 0) }
++  private readonly starLeast = { value: starLeast(skyFrame.stars.core) }
+   private readonly sunSpot = { value: new THREE.Vector4(0, 0, 0, 1) }
+   private readonly sunHalf = { value: new THREE.Vector3(960, 540, 0) }
+   private readonly starPos: Float32Array
+@@ -894,7 +908,7 @@ export class Sky {
+     fm.vertexShader = STAR_VERT.replace('void main() {', SKY_DUST_GLSL + 'void main() {').replace('vColor = aColor * b * uExposure;', 'vColor = aColor * dust(normalize(position), aStar.y) * b * uExposure;')
+     for (const name of ['uPatchM', 'uPatchLens', 'uPatchRing', 'uPatchMode', 'uPatchFold']) fm.uniforms[name] = mat.uniforms[name]!
+     fm.uniforms.uHalo = this.flightHalo
+-    for (const m of [mat, fm]) Object.assign(m.uniforms, { uStarLaw: this.starLaw, uSunSpot: this.sunSpot, uSunHalf: this.sunHalf })
++    for (const m of [mat, fm]) Object.assign(m.uniforms, { uLeast: this.starLeast, uStarLaw: this.starLaw, uSunSpot: this.sunSpot, uSunHalf: this.sunHalf })
+     this.flight = new THREE.Points(new THREE.BufferGeometry(), fm)
+     this.flight.frustumCulled = false
+     this.flight.visible = false
+@@ -916,7 +930,7 @@ export class Sky {
+     this.deep.visible = false
+     this.stars.add(this.deep)
+     const pu = this.pass.material.uniforms
+-    for (const m of [fm, dm]) Object.assign(m.uniforms, { uBandGlow: pu.uBandGlow!, uGal: pu.uGal!, uBandMap: mat.uniforms.uBandMap!, uBandWiden: mat.uniforms.uBandWiden!, uBandFadeEnd: mat.uniforms.uBandFadeEnd!, uDustLane: { value: this.dustLane }, uDustCloud: { value: this.dustCloud }, uDustKeep: { value: this.dustKeep }, uDustRed: { value: this.dustRed } })
++    for (const m of [fm, dm]) Object.assign(m.uniforms, { uLeast: this.starLeast, uBandGlow: pu.uBandGlow!, uGal: pu.uGal!, uBandMap: mat.uniforms.uBandMap!, uBandWiden: mat.uniforms.uBandWiden!, uBandFadeEnd: mat.uniforms.uBandFadeEnd!, uDustLane: { value: this.dustLane }, uDustCloud: { value: this.dustCloud }, uDustKeep: { value: this.dustKeep }, uDustRed: { value: this.dustRed } })
+     const sm = new THREE.ShaderMaterial({
+       glslVersion: THREE.GLSL3,
+       vertexShader: STRIP_VERT,
+@@ -929,7 +943,7 @@ export class Sky {
+       transparent: true,
+       ...BEHIND,
+     })
+-    Object.assign(sm.uniforms, { uStarLaw: this.starLaw, uSunSpot: this.sunSpot, uSunHalf: this.sunHalf })
++    Object.assign(sm.uniforms, { uLeast: this.starLeast, uStarLaw: this.starLaw, uSunSpot: this.sunSpot, uSunHalf: this.sunHalf })
+     this.strip = new THREE.Points(new THREE.BufferGeometry(), sm)
+     this.strip.frustumCulled = false
+     this.strip.visible = false
+diff --git a/tests/starcut.test.ts b/tests/starcut.test.ts
+new file mode 100644
+index 00000000..3ae38e63
+--- /dev/null
++++ b/tests/starcut.test.ts
+@@ -0,0 +1,51 @@
++import { describe, expect, it } from 'vitest'
++import { starLeast } from '../src/space/sky'
++import { SIZE } from '../src/space/travel/field'
++import skyFrame from '../src/space/skyframe.json'
++
++const samples = (drawn: number, core: number, px: number, py: number): number => {
++  let sum = 0
++  for (let j = -12; j <= 12; j++) {
++    for (let i = -12; i <= 12; i++) {
++      const dx = i - px
++      const dy = j - py
++      if (Math.abs(dx) < drawn / 2 && Math.abs(dy) < drawn / 2) sum += Math.exp(-(dx * dx + dy * dy) / core)
++    }
++  }
++  return sum
++}
++
++const swing = (drawn: number, core: number): [number, number] => {
++  let least = Infinity
++  let most = 0
++  for (let a = 0; a <= 20; a++) {
++    for (let b = 0; b <= 20; b++) {
++      const s = samples(drawn, core, a / 20, b / 20) / (Math.PI * core)
++      least = Math.min(least, s)
++      most = Math.max(most, s)
++    }
++  }
++  return [least, most]
++}
++
++describe('a star sprite is drawn to where its core has died', () => {
++  const core = skyFrame.stars.core
++
++  it('the sprite cut at the least size of the law loses light by the place on the grid', () => {
++    const [least, most] = swing(SIZE[0], core)
++    expect(most - least).toBeGreaterThan(0.1)
++  })
++
++  it('the drawn width keeps the light of the smallest star at any place on the grid', () => {
++    const drawn = Math.max(SIZE[0], starLeast(core))
++    expect(drawn).toBeGreaterThan(SIZE[0])
++    expect(drawn).toBeLessThan(SIZE[2])
++    const [least, most] = swing(drawn, core)
++    expect(least).toBeGreaterThan(0.99)
++    expect(most).toBeLessThan(1.01)
++  })
++
++  it('a star larger than the drawn width is drawn at its own size', () => {
++    for (const size of [5, 8, SIZE[2]]) expect(Math.max(size, starLeast(core))).toBe(size)
++  })
++})
