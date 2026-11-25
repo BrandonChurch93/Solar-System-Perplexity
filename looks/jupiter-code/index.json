@@ -1,9 +1,123 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T00:57:54.051Z",
- "head": "28993fbfbf5e133b2aae2b233205de556380a72a",
- "note": "00:58 UTC: proofs running (every frame 2895 to 3059, then finals, smooth, tests). The storm in the hold after the filter; the fourth height law removed.",
+ "pushed": "2026-11-25T01:22:32.158Z",
+ "head": "4797a5807360f50339cc3f075a5cd3e20b0c8f23",
+ "note": "01:28 UTC: all cures of this commit built, proofs running (finals keep their bytes; smooth, tests, gate until about 03:35). Unfinished: limb pattern 3031 to 3035, rings arriving 2986 to 2991, rise lower left.",
  "looks": [
+  {
+   "time": "2026-11-25T01:22:31.217Z",
+   "file": "20261125012231217-note-pair-3150-final.jpg",
+   "source": "../work/r6/pair-3150-final.jpg",
+   "kind": "note",
+   "label": "3150 final tier beside the approved image (same bytes as the kept still)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:22:30.176Z",
+   "file": "20261125012230176-note-c1-dive.jpg",
+   "source": "../work/r8/c1-dive.jpg",
+   "kind": "note",
+   "label": "dive 2983, 2997, 3012, 3030, 3050, 3056 (draft tier)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:22:29.496Z",
+   "file": "20261125012229496-note-c1-rise-a.jpg",
+   "source": "../work/r8/c1-rise-a.jpg",
+   "kind": "note",
+   "label": "rise 3250, 3256, 3262, 3268 (draft tier, lower left not cured)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:22:28.595Z",
+   "file": "20261125012228595-note-c1-rise-b.jpg",
+   "source": "../work/r8/c1-rise-b.jpg",
+   "kind": "note",
+   "label": "rise 3274, 3282, 3296 (draft tier)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:22:27.675Z",
+   "file": "20261125012227675-note-pair-2895-final-6x.jpg",
+   "source": "../work/r8/pair-2895-final-6x.png",
+   "kind": "note",
+   "label": "hold 2895 final tier, kept still beside this commit, 6 times",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:22:26.360Z",
+   "file": "20261125012226360-note-curve-c1.jpg",
+   "source": "../work/r8/curve-c1.png",
+   "kind": "note",
+   "label": "curve of condition (a): darkest and brightest 5 by 5 mean inside the storm, 2895 to 3058",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:22:25.221Z",
+   "file": "20261125012225221-note-storm-equal.jpg",
+   "source": "../work/r8/storm-equal.png",
+   "kind": "note",
+   "label": "the storm on equal ground, hold to dive",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:22:24.224Z",
+   "file": "20261125012224224-note-d253-core.jpg",
+   "source": "../work/r8/d253-core.png",
+   "kind": "note",
+   "label": "frame 3012 at 1920 and at 3840, full and web set, the storm's core (proof asked in MAIL 796)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:22:23.110Z",
+   "file": "20261125012223110-note-c1-limb-3028.jpg",
+   "source": "../work/r8/c1-limb-3028.png",
+   "kind": "note",
+   "label": "dive 3028 to 3043, upper right at 1 to 1: the limb where my own judge reads a pattern (unfinished, cause being named)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T01:17:20.709Z",
+   "file": "20261125011720709-frame-f3012-uhd-web.jpg",
+   "source": "out/work/jupiter/d253b/f3012-uhd-web.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3012, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3012,
+   "tier": "draft",
+   "format": "uhd",
+   "diag": "beauty",
+   "engine": "c6c6edcaa80e1e1f"
+  },
+  {
+   "time": "2026-11-25T01:14:06.133Z",
+   "file": "20261125011406133-frame-n2-3150.jpg",
+   "source": "out/work/jupiter/final/n2-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c6c6edcaa80e1e1f"
+  },
+  {
+   "time": "2026-11-25T01:10:17.146Z",
+   "file": "20261125011017146-frame-n2-2895.jpg",
+   "source": "out/work/jupiter/final/n2-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "c6c6edcaa80e1e1f"
+  },
   {
    "time": "2026-11-25T00:57:41.703Z",
    "file": "20261125005741703-note-pair-3150-final.jpg",
@@ -27,34 +141,6 @@
    "kind": "note",
    "label": "c1 draft: the storm in the hold and the first dive frames, 2895 to 2994, 72 px across shown about 6 times (after the filter by the pixel's foot)",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T00:50:30.210Z",
-   "file": "20261125005030210-frame-r8-2895.jpg",
-   "source": "out/work/jupiter/final/r8-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
-  },
-  {
-   "time": "2026-11-25T00:49:35.597Z",
-   "file": "20261125004935597-frame-r7-3150.jpg",
-   "source": "out/work/jupiter/final/r7-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
   },
   {
    "time": "2026-11-25T00:43:01.228Z",
@@ -126,92 +212,6 @@
    "source": "../work/r6/pair-2895-final-1to1.png",
    "kind": "note",
    "label": "hold 2895 final, kept beside new, 1 to 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:41:24.657Z",
-   "file": "20261124234124657-note-pair-2895-final-6x.jpg",
-   "source": "../work/r6/pair-2895-final-6x.png",
-   "kind": "note",
-   "label": "hold 2895 final, kept beside new, 6 times",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:41:24.083Z",
-   "file": "20261124234124083-note-d253-3012.jpg",
-   "source": "../work/r6/d253-3012.jpg",
-   "kind": "note",
-   "label": "d253: dive frame 3012 at both sizes and in both sets",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:41:23.504Z",
-   "file": "20261124234123504-note-x2-riselow.jpg",
-   "source": "../work/r6/x2-riselow.jpg",
-   "kind": "note",
-   "label": "rise low 3250 to 3254.5, lower left not cured yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:41:22.854Z",
-   "file": "20261124234122854-note-x2-leave-storm-2x.jpg",
-   "source": "../work/r6/x2-leave-storm-2x.png",
-   "kind": "note",
-   "label": "leave, the storm at 2 times, 3296 to 3306, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:41:22.296Z",
-   "file": "20261124234122296-note-x2-leave.jpg",
-   "source": "../work/r6/x2-leave.jpg",
-   "kind": "note",
-   "label": "leave 3296 to 3306 after the place moved onto the hero's oval, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:32:05.085Z",
-   "file": "20261124233205085-frame-g3012-uhd-web.jpg",
-   "source": "out/work/jupiter/d253/g3012-uhd-web.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3012, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3012,
-   "tier": "draft",
-   "format": "uhd",
-   "diag": "beauty",
-   "engine": "13d9cc752b1d9c4e"
-  },
-  {
-   "time": "2026-11-24T23:18:55.036Z",
-   "file": "20261124231855036-note-pair-3150-final.jpg",
-   "source": "../work/r6/pair-3150-final.jpg",
-   "kind": "note",
-   "label": "3150 final: approved image left, new right (mean difference 7.974, first named commit 7.849)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:18:53.934Z",
-   "file": "20261124231853934-note-pair-2895-final-1to1.jpg",
-   "source": "../work/r6/pair-2895-final-1to1.png",
-   "kind": "note",
-   "label": "2895 final at 1 to 1: kept left, new right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:18:53.019Z",
-   "file": "20261124231853019-note-pair-2895-final-6x.jpg",
-   "source": "../work/r6/pair-2895-final-6x.png",
-   "kind": "note",
-   "label": "2895 final at 6 to 1: kept left, new right. The rings round the storm are crisper than the hero's own: mine to cure",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-24T23:18:51.879Z",
-   "file": "20261124231851879-note-pair-2895-final-whole.jpg",
-   "source": "../work/r6/pair-2895-final-whole.jpg",
-   "kind": "note",
-   "label": "2895 final whole: kept left, new right",
    "stop": "jupiter"
   }
  ]
