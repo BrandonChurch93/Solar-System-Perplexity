@@ -1,9 +1,63 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T03:00:15.030Z",
- "head": "dc790c7aad5909a665e0447c4d0fa09d47921834",
- "note": "handover tool: both moves pass (sides, flow, every frame); bad: stepped darker strip on the limb 1902 to 1905 and 2105 to 2114, cause measured, not cured",
+ "pushed": "2026-11-25T03:26:01.793Z",
+ "head": "3a136a1a415c2b86419fa67dd9d1a4dfec123746",
+ "note": "3a136a1a named (handover cure); K4 state 1 in work: low picture gone, haze by the air path; far ground pale 1866 to 1882, strip on the limb still there",
  "looks": [
+  {
+   "time": "2026-11-25T03:26:01.185Z",
+   "file": "20261125032601185-note-hz-seam.jpg",
+   "source": "../../../../tmp/gl/ho/q/seam/hz-seam.jpg",
+   "kind": "note",
+   "label": "3a136a1a horizon at both changes of view, native",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:26:00.612Z",
+   "file": "20261125032600612-note-s1-b.jpg",
+   "source": "../../../../tmp/gl/k5/s1-b.jpg",
+   "kind": "note",
+   "label": "K4 state 1 in work, draft, 1898 to 1920",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:26:00.003Z",
+   "file": "20261125032600003-note-s1-a.jpg",
+   "source": "../../../../tmp/gl/k5/s1-a.jpg",
+   "kind": "note",
+   "label": "K4 state 1 in work, draft, 1862 to 1894 every fourth frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:25:59.393Z",
+   "file": "20261125032559393-note-n-1890.jpg",
+   "source": "../../../../tmp/gl/k5/n-1890.jpg",
+   "kind": "note",
+   "label": "1890 draft: K4 state 1 in work (top) over 3a136a1a (bottom)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-25T03:25:54.921Z",
+   "file": "20261125032554921-compare-earth-dive-sides.jpg",
+   "source": "out/work/handover/earth-dive-sides.png",
+   "kind": "compare",
+   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-25T03:18:47.053Z",
+   "file": "20261125031847053-compare-earth-rise-sides.jpg",
+   "source": "out/work/handover/earth-rise-sides.png",
+   "kind": "compare",
+   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-25T03:00:14.438Z",
    "file": "20261125030014438-note-sh-rv-2112.jpg",
@@ -18,96 +72,6 @@
    "source": "../../../../tmp/gl/ho/p/sh-rv-2100.jpg",
    "kind": "note",
    "label": "rise 2100 to 2111 with the cure, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:00:12.344Z",
-   "file": "20261125030012344-note-tr-a.jpg",
-   "source": "../../../../tmp/gl/ho/tr/tr-a.jpg",
-   "kind": "note",
-   "label": "the strip 1902 to 1905 by trial: d0036659, cure, no cut of the ball's rim, shell of air kept full",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:00:11.173Z",
-   "file": "20261125030011173-note-hz-rv-zoom.jpg",
-   "source": "../../../../tmp/gl/ho/p/hz-rv-zoom.jpg",
-   "kind": "note",
-   "label": "rise horizon 2110, 2112, 2114 at 3 times, d0036659 left, cure right: bad, a stepped darker strip on the limb",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T03:00:09.959Z",
-   "file": "20261125030009959-note-hz-rv-a.jpg",
-   "source": "../../../../tmp/gl/ho/p/hz-rv-a.jpg",
-   "kind": "note",
-   "label": "rise horizon 2100 to 2111 at native size, cure: 2100 to 2104 one gradient, bad: thin dark line 2107 and 2108, stepped strip 2110 and 2111",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T02:41:42.423Z",
-   "file": "20261125024142423-sheet-earth-rise-top.jpg",
-   "source": "out/work/handover/earth-rise-top.png",
-   "kind": "sheet",
-   "label": "earth rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2100), place picture off, draft tier",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "first": 2100,
-   "last": 2174,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T02:39:12.849Z",
-   "file": "20261125023912849-compare-earth-rise-step-in-place.jpg",
-   "source": "out/work/handover/earth-rise-step-in-place.png",
-   "kind": "compare",
-   "label": "earth rise, the largest step of the level in place (2.28): frame 2137, frame 2138, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2138
-  },
-  {
-   "time": "2026-11-25T02:24:24.531Z",
-   "file": "20261125022424531-sheet-earth-dive-top.jpg",
-   "source": "out/work/handover/earth-dive-top.png",
-   "kind": "sheet",
-   "label": "earth dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1919), place picture off, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1830,
-   "last": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-25T02:23:22.150Z",
-   "file": "20261125022322150-note-hz-zoom-b.jpg",
-   "source": "../../../../tmp/gl/ho/p/hz-zoom-b.jpg",
-   "kind": "note",
-   "label": "horizon 1904 to 1906 at 5 times, d0036659 left, cure right",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T02:23:21.203Z",
-   "file": "20261125022321203-note-hz-zoom-a.jpg",
-   "source": "../../../../tmp/gl/ho/p/hz-zoom-a.jpg",
-   "kind": "note",
-   "label": "horizon 1901 to 1903 at 5 times, d0036659 left, cure right",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T02:23:20.068Z",
-   "file": "20261125022320068-note-hz-dv-b.jpg",
-   "source": "../../../../tmp/gl/ho/p/hz-dv-b.jpg",
-   "kind": "note",
-   "label": "horizon 1908 to 1919 at native size, cure: one gradient",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T02:23:19.019Z",
-   "file": "20261125022319019-note-hz-dv-a.jpg",
-   "source": "../../../../tmp/gl/ho/p/hz-dv-a.jpg",
-   "kind": "note",
-   "label": "horizon 1896 to 1907 at native size, cure: bad, a darker strip on the limb 1902 to 1905",
    "stop": "earth"
   }
  ]
