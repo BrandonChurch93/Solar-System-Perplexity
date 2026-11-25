@@ -1,9 +1,53 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T12:28:24.668Z",
- "head": "d438b57b3312eda5d94a8c3f8bf6d74d1bbbf2a6",
- "note": "12:30 UTC: shadows of the stored relief measured, first quilt refused by myself, 3150 by thirds",
+ "pushed": "2026-11-25T12:50:54.240Z",
+ "head": "7c0b8675839b1fc66617635ef42a34f30e3417f5",
+ "note": "3150 at 6.113 after the registration cure (drift and half pixel); wedge rework next",
  "looks": [
+  {
+   "time": "2026-11-25T12:50:53.121Z",
+   "file": "20261125125053121-note-n7-3150-trio.jpg",
+   "source": "../work/r14/n7-3150-trio.jpg",
+   "kind": "note",
+   "label": "3150 final on 7c0b8675: 6.113 against the approved (before 7.800, round 46 pack 6.578)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T12:50:51.976Z",
+   "file": "20261125125051976-note-n7-3150-diff.jpg",
+   "source": "../work/r14/n7-3150-diff.jpg",
+   "kind": "note",
+   "label": "3150 against the approved, difference times 4, before and after the camera of the judged frame was set on the lay back's camera",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-25T12:48:39.625Z",
+   "file": "20261125124839625-frame-n7-2895.jpg",
+   "source": "out/work/jupiter/final/n7-2895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f200e17ad0e70237"
+  },
+  {
+   "time": "2026-11-25T12:47:44.291Z",
+   "file": "20261125124744291-frame-n7-3150.jpg",
+   "source": "out/work/jupiter/final/n7-3150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, final tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "f200e17ad0e70237"
+  },
   {
    "time": "2026-11-25T12:28:24.085Z",
    "file": "20261125122824085-note-n6-3150-trio.jpg",
@@ -59,34 +103,6 @@
    "kind": "note",
    "label": "d438b57b draft: dive 3034, 3042 and flight 3060, 3075, 3090; the canvas border shows in the dive too",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:49:47.019Z",
-   "file": "20261125114947019-frame-n6-2895.jpg",
-   "source": "out/work/jupiter/final/n6-2895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f200e17ad0e70237"
-  },
-  {
-   "time": "2026-11-25T11:48:51.483Z",
-   "file": "20261125114851483-frame-n6-3150.jpg",
-   "source": "out/work/jupiter/final/n6-3150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, final tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "f200e17ad0e70237"
   },
   {
    "time": "2026-11-25T11:45:02.485Z",
@@ -190,22 +206,6 @@
    "source": "../work/r13/off/s1-rise-late.jpg",
    "kind": "note",
    "label": "rise 3280 to 3300 now, whole frames small (draft)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:04:19.573Z",
-   "file": "20261125110419573-note-s1-limb-enters.jpg",
-   "source": "../work/r13/off/s1-limb-enters.jpg",
-   "kind": "note",
-   "label": "rise 3283 to 3288 + 1/2, lower left of the frame, now: the limb enters at the corner at 3283 + 1/2 and crosses the left edge 3284 to 3287 (draft); level step largest 0.74 at 3287",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T11:04:18.402Z",
-   "file": "20261125110418402-note-s1-corner.jpg",
-   "source": "../work/r13/off/s1-corner.jpg",
-   "kind": "note",
-   "label": "rise 3246 to 3255, top left of the frame, now: thick sheets, one Sun, sidestep 0.5 0.75 0.5 (draft); pattern reads 0.10 at 3246 to 3247",
    "stop": "jupiter"
   }
  ]
