@@ -1,9 +1,25 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T00:48:58.858Z",
+ "pushed": "2026-11-25T01:03:48.032Z",
  "head": "5e094e51d1c61410a3ad2a39c843c76dd9eff2ea",
- "note": "rise of r57 green (pattern 0.40, limit 0.45); final 3720 of the tree under proof beside the approved, whole, foot and lower left; dive proving now",
+ "note": "r57: rise green 0.40, dive green 0.33 on the tree of local commit 5e094e5; path, G13, parity, gate, handover, place, the two sizes and G17 still running",
  "looks": [
+  {
+   "time": "2026-11-25T01:03:37.272Z",
+   "file": "20261125010337272-note-saturn-dive-changes.jpg",
+   "source": "../../../../tmp/v/r57/saturn-dive-changes.png",
+   "kind": "note",
+   "label": "r57 smooth report, dive, the tool's sheet of the largest changes: green, pattern 0.33 from 3576 at pixel 1404 428 (limit 0.45), pop 1.07, level step 0.02",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-25T01:03:36.551Z",
+   "file": "20261125010336551-note-saturn-rise-changes.jpg",
+   "source": "../../../../tmp/v/r57/saturn-rise-changes.png",
+   "kind": "note",
+   "label": "r57 smooth report, rise, the tool's sheet of the largest changes: green, pattern 0.40 from 3813 and a half at pixel 1136 792 (limit 0.45), the dust in front of the globe's foot",
+   "stop": "saturn"
+  },
   {
    "time": "2026-11-25T00:48:57.569Z",
    "file": "20261125004857569-note-f57_ll.jpg",
@@ -45,21 +61,6 @@
    "source": "../../../../tmp/v/t21/rise57_foot_a.png",
    "kind": "note",
    "label": "r57 rise, draft tier, crop at 1136 792, film frames 3802 to 3822 every fourth: the dust in front of the foot thins as the lens climbs (my early reading of the pattern 0.42 at 3813 and a half, limit 0.45)"
-  },
-  {
-   "time": "2026-11-25T00:14:49.345Z",
-   "file": "20261125001449345-note-saturn-rise-changes.jpg",
-   "source": "../../../../tmp/v/r56a/saturn-rise-changes.png",
-   "kind": "note",
-   "label": "report sheet of the rise on the tree of 23:46: RED, pattern 0.46 from 3801 + 1/2 (limit 0.45), the dust band in front of the globe's foot thinning by height",
-   "stop": "saturn"
-  },
-  {
-   "time": "2026-11-25T00:14:48.615Z",
-   "file": "20261125001448615-note-st1_foot3.jpg",
-   "source": "../../../../tmp/v/t21/st1_foot3.png",
-   "kind": "note",
-   "label": "3720 the foot at 1 to 1, x 900 to 1540, y 480 to 880, draft, no grain: approved, the tree of 23:46 (dust whole), the tree of 00:14 (dust at 0.65 of its depth at this height): far from the approved's dark ringlets in both"
   }
  ]
 }
