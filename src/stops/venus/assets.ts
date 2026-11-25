@@ -47,7 +47,7 @@ export const place = {
   wide: { file: platesJson.wide.file, widthDeg: platesJson.wide.widthDeg, full: platesJson.texels.wide, rim: platesJson.wide.rim, forms: platesJson.wide.forms, formsDeg: platesJson.wide.formsDeg as [number, number], own: platesJson.wide.own },
   rim: platesJson.rim,
   forms: platesJson.forms.look as [number, number, number],
-  tone: { cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, air: platesJson.tone.air, heights: platesJson.tone.heights as [number, number], live: platesJson.tone.live },
+  tone: { cos: platesJson.tone.cos as [number, number], power: platesJson.tone.curve, air: platesJson.tone.air, live: platesJson.tone.live },
   air: { heights: platesJson.air.heights as [number, number], field: platesJson.air.field.deg.map((d) => (d * Math.PI) / 180) as [number, number], top: platesJson.air.field.top, sunHeights: platesJson.air.sun.heights as [number, number], exactHeights: platesJson.air.sun.exactHeights as [number, number], haze: platesJson.air.haze },
   centre: [0, 1, 2].map((i) => under[i]! * Math.cos(ahead) + heading[i]! * Math.sin(ahead)) as [number, number, number],
   feather: platesJson.feather,

@@ -375,8 +375,8 @@ const TRUE_GLSL = /* glsl */ `
 `
 // The tones of the ground on the globe side, by the law of the plates (globe.ts): the tones of the close view (the far deck pale under
 // its haze, the near towers dark against the Sun) belong to the line of sight of T. They show by the share same: the angle between the
-// line of sight of this eye and the one of T at the point (uToneLook.zw, to the power uToneLive.x), the height of the camera
-// (uToneLook.y, set.ts) and the air on the line of sight (the sines of the two elevations over the deck, to the power uToneLook.x).
+// line of sight of this eye and the one of T at the point (uToneLook.zw, to the power uToneLive.x) and the air on the line of sight
+// (the sines of the two elevations over the deck, to the power uToneLook.x). uToneLook.y stays 1: no height of the camera is read.
 // Seen from elsewhere the ground gives its forms alone over the globe's colour at the place (uToneUnder.rgb, scene light, plates.json):
 // its light over its own light at a coarse level of the picture of the close view (uBroad at the level uToneLive.y, taken at the place
 // in the image, uBroadBox), the luminance to the power uToneLive.w within 1 / uToneLive.z and uToneLive.z, the colour to the power

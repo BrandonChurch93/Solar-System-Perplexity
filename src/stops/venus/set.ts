@@ -278,13 +278,12 @@ export const createSet: SetFactory = async (ctx) => {
       ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, covering ? state.weight : 0, place.air.field, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir, own)
       // The ground of the close side itself, in below the heights of plates.json (ground): at the handover the globe side is the close side's scene.
       const heightT = eyeAtT(state.time > terrainMid ? 'rise' : 'dive').length() / deck.radius - 1
-      // The tones of the ground by the law of the plates (plates.json, tone): the share of its stored tones by the height of the camera, and
-      // the globe's colour at the place (ground.tone.under, as it stands at the near end of dusk.heights) at the exposure of this height.
+      // The tones of the ground by the law of the plates (plates.json, tone): the share of its stored tones goes by the angle and the air
+      // alone (no height of the camera is read), over the globe's colour at the place (ground.tone.under, as it stands at the near end of
+      // dusk.heights) at the exposure of this height.
       const groundPl = plan.placeLook(state.segment, camera.length() - 1)
-      const groundHeight = Math.log(Math.max(camera.length() - 1, 1e-4))
-      const toneShare = 1 - smooth((groundHeight - Math.log(place.tone.heights[0])) / (Math.log(place.tone.heights[1]) - Math.log(place.tone.heights[0])))
       const underAt = place.ground.tone.under[state.time > terrainMid ? 'rise' : 'dive']
-      const groundTone = { look: [place.tone.air, toneShare, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
+      const groundTone = { look: [place.tone.air, 1, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
       // Inside the frame of T true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is
       // the surface view. The border of the ground and its far limit outside that frame stand still (plates.json, ground.frustum).
       // The near ground, which the camera of T sees from above (ground.keep), keeps all of its picture at every height, so no crest of
@@ -309,7 +308,6 @@ export const createSet: SetFactory = async (ctx) => {
       const after = state.time > terrainMid
       for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
-      ;(gu.uToneLook!.value as THREE.Vector4).y = byHeight(place.tone.heights)
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
       // The plates hold the light of the place at the full gain and the full tint,
       // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.
