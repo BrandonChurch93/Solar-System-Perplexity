@@ -374,7 +374,7 @@ vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
   float near = uLabAway.y > 0.0 ? 1.0 - smoothstep(log(uLabAway.x), log(uLabAway.y), log(max(away, 1e-5))) : 1.0;
   col *= uLabAway.w > 0.0 ? mix(vec3(1.0), uLabAwayTint, smoothstep(log(uLabAway.z), log(uLabAway.w), log(max(away, 1e-5)))) : vec3(1.0);
   float held = uLabKeep * near;
-  if (held <= 0.0 || (uDiag >= 2 && held < 0.5)) discard;
+  if (uLabKeep <= 0.0 || (uDiag >= 2 && held < 0.5)) discard;
   return diagOut(vec4(col * held, held), 1.0, 1.0, vec3(0.9, 0.5, 0.1), vec2(0.0), length(view));
 }`
 
