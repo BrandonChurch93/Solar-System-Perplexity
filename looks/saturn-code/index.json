@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T08:56:14.538Z",
+ "pushed": "2026-11-26T09:25:03.787Z",
  "head": "b28d29a882862711ad1033614fee83f5dd77cf55",
- "note": "state two: tone, thin, moon order, sky turn and world as main, rise lens to 30; reading the rise",
+ "note": "state two: moon behind the ring, shadow edge at 3612, the rise's pattern place; drafts of the flights run",
  "looks": [
+  {
+   "time": "2026-11-26T09:25:03.172Z",
+   "file": "20261126092503172-note-pat5.jpg",
+   "source": "../../../../tmp/v/rigid/R2/pat5.jpg",
+   "kind": "note",
+   "label": "rise 3822 3826 3830 3834 at the place of the pattern reading, state two over main"
+  },
+  {
+   "time": "2026-11-26T09:25:02.530Z",
+   "file": "20261126092502530-note-shadow_3612.jpg",
+   "source": "../../../../tmp/v/rigid/S2/shadow_3612.jpg",
+   "kind": "note",
+   "label": "frame 3612, the shadow's edge: K, state one, state two"
+  },
+  {
+   "time": "2026-11-26T09:25:01.807Z",
+   "file": "20261126092501807-note-moon_3608_3630.jpg",
+   "source": "../../../../tmp/v/rigid/S2/moon_3608_3630.jpg",
+   "kind": "note",
+   "label": "state two, the moon and the ring's edge, frames 3608 to 3630, state one over state two"
+  },
   {
    "time": "2026-11-26T08:56:13.682Z",
    "file": "20261126085613682-note-s1pop_3870.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/rigid/SV/sh/flights.jpg",
    "kind": "note",
    "label": "state one: flights in and out, drafts"
-  },
-  {
-   "time": "2026-11-26T08:18:31.041Z",
-   "file": "20261126081831041-note-tone-screen.jpg",
-   "source": "../../../../tmp/v/rigid/S2/t5/tone-screen.jpg",
-   "kind": "note",
-   "label": "the ring's broad tone as it falls on the hold frame (first reading)"
-  },
-  {
-   "time": "2026-11-26T08:18:30.476Z",
-   "file": "20261126081830476-note-lr_thin_x4.jpg",
-   "source": "../../../../tmp/v/rigid/S2/lr_thin_x4.jpg",
-   "kind": "note",
-   "label": "3465 lower right lifted by 4: tone only, tone with the thin shadowed ring, approved"
-  },
-  {
-   "time": "2026-11-26T08:18:29.913Z",
-   "file": "20261126081829913-note-lr_thin.jpg",
-   "source": "../../../../tmp/v/rigid/S2/lr_thin.jpg",
-   "kind": "note",
-   "label": "3465 lower right: tone only, tone with the thin shadowed ring, approved"
   }
  ]
 }
