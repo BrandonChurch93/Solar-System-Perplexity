@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T18:27:53.030Z",
+ "pushed": "2026-11-26T18:48:34.795Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune 4954 at review with the entry looked at whole, in tiles and beside 4953 (no double exposure, softness as 4953); building sun_builder's request: a second sky aim whose turn is seen, held to 0.5 degrees a frame",
+ "note": "The Sun's sky turn that is seen (asked by sun_builder for a later cut): the engine's count as a graph, no frame of the Sun drawn yet; Neptune 4951 still drawing",
  "looks": [
+  {
+   "time": "2026-11-26T18:48:33.562Z",
+   "file": "20261126184833562-note-turn-graph.jpg",
+   "source": "../../../../tmp/sun/turn-graph.png",
+   "kind": "note",
+   "label": "A GRAPH OF NUMBERS, NOT A FRAME: the Sun, how far the sky turns in the film's world from one frame to the next; red main's plan as it stands (largest 2.082 at 238), blue the Sun's named plan 5ccff167 (0.037), green the same plan with the two sky aims and the word seen (0.419 at 212, a corner in the rate at the view change 205 | 206); dashed the limit 0.5 the film refuses to build above"
+  },
   {
    "time": "2026-11-26T18:27:51.754Z",
    "file": "20261126182751754-note-st54-a.jpg",
@@ -52,14 +59,6 @@
    "source": "../t-arr/out/work/blur/ne-on/f04954.png",
    "kind": "note",
    "label": "Neptune 4954, review, 24 samples, with the entry of handover.shutterEnds (tree t-arr): the third frame of the rise's onset, whole"
-  },
-  {
-   "time": "2026-11-26T18:26:01.892Z",
-   "file": "20261126182601892-note-sun-sky-turn.jpg",
-   "source": "../../../../tmp/sun/sun-sky-turn.png",
-   "kind": "note",
-   "label": "the Sun 0 to 269, numbers only: the sky's turn in the film's world a frame with the second sky aim sun_builder asks for (0.419 at 212) against the limit 0.5 the engine would hold a seen turn to",
-   "stop": "sun"
   }
  ]
 }
