@@ -1,9 +1,65 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T09:15:14.369Z",
+ "pushed": "2026-11-26T09:46:19.812Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "idle work in scratch: the stair of Mars's dark band 2460 to 2473 and a cure tried with the outline at 2 px a texel; the files are the Mars builder's, findings go to it by mail",
+ "note": "Mars dive 2464 to 2474: the stair of the band's far edge and the dark line on the plateau's rim, as they stand and with the outline at 2 px a texel (a trial; the files are the Mars builder's). Writing the engine's side: a law may read the relief's masks",
  "looks": [
+  {
+   "time": "2026-11-26T09:45:59.832Z",
+   "file": "20261126094559832-note-m9-2474.jpg",
+   "source": "../../../../tmp/stair/m9-2474.png",
+   "kind": "note",
+   "label": "Mars dive 2474: above as it stands, below the trial with the outline at 2 px a texel. Draft tier"
+  },
+  {
+   "time": "2026-11-26T09:45:59.030Z",
+   "file": "20261126094559030-note-arc9-2468.jpg",
+   "source": "../../../../tmp/stair/arc9-2468.png",
+   "kind": "note",
+   "label": "Mars dive 2468, the head of the band, enlarged: the light arc of an earlier trial is not in the trial that is kept. Draft tier"
+  },
+  {
+   "time": "2026-11-26T09:45:58.188Z",
+   "file": "20261126094558188-note-tip9-2472.jpg",
+   "source": "../../../../tmp/stair/tip9-2472.png",
+   "kind": "note",
+   "label": "Mars dive 2472, the tip of the band, enlarged: the trial that is kept has no hook and no dark line down from the tip. Draft tier"
+  },
+  {
+   "time": "2026-11-26T09:45:57.310Z",
+   "file": "20261126094557310-note-rim9b-2472.jpg",
+   "source": "../../../../tmp/stair/rim9b-2472.png",
+   "kind": "note",
+   "label": "Mars dive 2472, the far rim of the plateau, three times: above as it stands with the dark stepped line, below the trial without it. Draft tier"
+  },
+  {
+   "time": "2026-11-26T09:45:56.536Z",
+   "file": "20261126094556536-note-rim9-2470.jpg",
+   "source": "../../../../tmp/stair/rim9-2470.png",
+   "kind": "note",
+   "label": "Mars dive 2470, the far rim of the plateau, x 1080 to 1520, three times: above as it stands, a dark stepped line along the rim; below the trial, the line gone. Draft tier"
+  },
+  {
+   "time": "2026-11-26T09:45:55.566Z",
+   "file": "20261126094555566-note-band9-2472.jpg",
+   "source": "../../../../tmp/stair/band9-2472.png",
+   "kind": "note",
+   "label": "Mars dive 2472, the band, three times: above as it stands, below the trial with the outline at 2 px a texel. Draft tier"
+  },
+  {
+   "time": "2026-11-26T09:45:54.714Z",
+   "file": "20261126094554714-note-band9-2468.jpg",
+   "source": "../../../../tmp/stair/band9-2468.png",
+   "kind": "note",
+   "label": "Mars dive 2468, x 800 to 1250, three times: above as it stands, below the trial with the outline at 2 px a texel. The band and its darkness stay, the steps of its far edge go. Draft tier"
+  },
+  {
+   "time": "2026-11-26T09:45:53.518Z",
+   "file": "20261126094553518-note-band9-2464.jpg",
+   "source": "../../../../tmp/stair/band9-2464.png",
+   "kind": "note",
+   "label": "Mars dive 2464, x 800 to 1250, three times: above as it stands, the far edge of the dark band in steps of 8 px; below a trial with the outline of the seen ground at 2 px a texel, the edge smooth. Draft tier"
+  },
   {
    "time": "2026-11-26T09:15:13.727Z",
    "file": "20261126091513727-note-m8-2470-crest-b.jpg",
@@ -17,27 +73,6 @@
    "source": "../../../../tmp/stair/arc-2468.png",
    "kind": "note",
    "label": "Mars dive 2468 draft, head of the band five times in six states: the rule that asks the front whole within 1 px brings a light arc (lower left and middle), within 3 px it does not"
-  },
-  {
-   "time": "2026-11-26T09:15:12.452Z",
-   "file": "20261126091512452-note-rim8-2472.jpg",
-   "source": "../../../../tmp/stair/rim8-2472.png",
-   "kind": "note",
-   "label": "Mars dive 2472 draft, the plateau's far rim four times: as it stands (dark stepped seam) over the same scratch trial (seam gone)"
-  },
-  {
-   "time": "2026-11-26T09:15:11.821Z",
-   "file": "20261126091511821-note-matte8-2472-a.jpg",
-   "source": "../../../../tmp/stair/matte8-2472-a.png",
-   "kind": "note",
-   "label": "Mars dive 2472 draft, the dark band three times: as it stands (stair on its far edge) over the scratch trial with the outline at 2 px a texel"
-  },
-  {
-   "time": "2026-11-26T09:15:11.112Z",
-   "file": "20261126091511112-note-tip8-2472.jpg",
-   "source": "../../../../tmp/stair/tip8-2472.png",
-   "kind": "note",
-   "label": "Mars dive 2472 draft, the tip of the dark band six times: as it stands, and three scratch trials of an outline held at 2 px a texel (the hook at the tip goes when the cut begins 2 px inside where the ground behind stands close)"
   }
  ]
 }
