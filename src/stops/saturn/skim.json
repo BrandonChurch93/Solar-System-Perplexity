@@ -619,6 +619,7 @@
       "from": -0.1,
       "to": 0.16,
       "amount": [0, 1],
+      "slide": { "from": -0.52, "to": -0.26, "power": 2, "whole": 0.45 },
       "night": [1, 0.8],
       "grey": [0, 1],
       "greyPower": 2,
