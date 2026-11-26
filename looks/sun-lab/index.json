@@ -1,78 +1,62 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-26T02:25:56.492Z",
- "head": "e285903a57bafb8d8271a621aa6849c58673dc02",
- "note": "02:26 UTC lab trials t46 to t57 (pools, thin lanes, fingers)",
+ "pushed": "2026-11-26T19:16:25.745Z",
+ "head": "0d3449bcbfadcb05726e8b14ec6084aff0b6ea9a",
+ "note": "h46 trial: fall of heat by a ratio, crown in the middle, bell bodies: the pebble outline is gone; sparks next",
  "looks": [
   {
-   "time": "2026-11-26T02:25:55.914Z",
-   "file": "20261126022555914-note-trials-p.jpg",
-   "source": "../v/trials-p.jpg",
+   "time": "2026-11-26T19:16:24.946Z",
+   "file": "20261126191624946-note-diag3.jpg",
+   "source": "../v/diag3.jpg",
    "kind": "note",
-   "label": "02:13 FAILED trials t46 to t48: raised seam heat between fused tops reads as a pale bed",
+   "label": "sun lab h46 trial: diag3",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T02:25:55.357Z",
-   "file": "20261126022555357-note-levels-s.jpg",
-   "source": "../v/levels-s.jpg",
+   "time": "2026-11-26T19:16:24.032Z",
+   "file": "20261126191624032-note-lab-90-h46f.jpg",
+   "source": "../v/lab-90-h46f.jpg",
    "kind": "note",
-   "label": "02:25 levels picture: approved, t55, t56, t57",
+   "label": "sun lab h46 trial: lab-90-h46f",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T02:25:54.815Z",
-   "file": "20261126022554815-note-trials-s.jpg",
-   "source": "../v/trials-s.jpg",
+   "time": "2026-11-26T19:16:23.455Z",
+   "file": "20261126191623455-note-levels-h46f.jpg",
+   "source": "../v/levels-h46f.jpg",
    "kind": "note",
-   "label": "02:25 trials t55 t56 t57 at 3 to 1 under the approved: the shoulder ends in fingers along the fan",
+   "label": "sun lab h46 trial: levels-h46f",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T02:25:54.232Z",
-   "file": "20261126022554232-note-trials-q.jpg",
-   "source": "../v/trials-q.jpg",
+   "time": "2026-11-26T19:16:22.889Z",
+   "file": "20261126191622889-note-z-h46f.jpg",
+   "source": "../v/z-h46f.jpg",
    "kind": "note",
-   "label": "02:17 trials t49 t50 t51 at 3 to 1 under the approved: pools at the crossings, thin lanes between some tops",
+   "label": "sun lab h46 trial: z-h46f",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T02:24:48.300Z",
-   "file": "20261126022448300-frame-lab-90-t57.jpg",
-   "source": "out/work/sun/lab/lab-90-t57.png",
+   "time": "2026-11-26T19:16:22.318Z",
+   "file": "20261126191622318-note-c-h46f.jpg",
+   "source": "../v/c-h46f.jpg",
+   "kind": "note",
+   "label": "sun lab h46 trial: c-h46f",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T19:14:09.221Z",
+   "file": "20261126191409221-frame-lab-90-h46f.jpg",
+   "source": "out/work/sun/lab/lab-90-h46f.png",
    "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
+   "label": "sun.terrain frame 90, final tier",
    "stop": "sun",
    "segment": "sun.terrain",
    "frame": 90,
-   "tier": "draft",
+   "tier": "final",
    "format": "16x9",
    "diag": "beauty",
    "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-26T02:05:35.665Z",
-   "file": "20261126020535665-note-blocks2.jpg",
-   "source": "../v/blocks2.png",
-   "kind": "note",
-   "label": "lab cause of the rectangles at junctions: skirts (heat, show edge, show tall, base fall 5)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:05:35.137Z",
-   "file": "20261126020535137-note-strip-t39.jpg",
-   "source": "../v/strip-t39.jpg",
-   "kind": "note",
-   "label": "lab t39 near field at 1 to 1 under the approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:05:34.605Z",
-   "file": "20261126020534605-note-x3-t39.jpg",
-   "source": "../v/x3-t39.jpg",
-   "kind": "note",
-   "label": "lab t39 at 3 times under the approved: dark patches on tops, no outlines",
-   "stop": "sun"
   }
  ]
 }
