@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T01:14:44.836Z",
+ "pushed": "2026-11-26T01:47:44.648Z",
  "head": "aca87ea3a82ad7f8041b4cc317032a0804d989b8",
- "note": "01:15 plate after the rim line cure: band inside the canvas and cold bodies named, both in cure",
+ "note": "01:24 strip on bake f: canvas end has no line at 1882; island at the right rim is cut straight (cause found, cure next)",
  "looks": [
+  {
+   "time": "2026-11-26T01:47:44.065Z",
+   "file": "20261126014744065-note-block4.jpg",
+   "source": "../../../../tmp/gl/k20/S7/block4.jpg",
+   "kind": "note",
+   "label": "BAD: island right of the place cut straight at the rim since the 00:50 bake (four strips side by side)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T01:47:43.496Z",
+   "file": "20261126014743496-note-q-1896.jpg",
+   "source": "../../../../tmp/gl/k20/S7/tow/q-1896.jpg",
+   "kind": "note",
+   "label": "01:24 strip, 1896 to 1899 at half size, towers rising by distance",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T01:47:42.937Z",
+   "file": "20261126014742937-note-crop-1882.jpg",
+   "source": "../../../../tmp/gl/k20/S7/sheets/crop-1882.jpg",
+   "kind": "note",
+   "label": "01:24 strip, 1882 below the place 1 to 1: no line at the canvas end, tufts go on outside",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T01:47:41.987Z",
+   "file": "20261126014741987-note-now-1882.jpg",
+   "source": "../../../../tmp/gl/k20/S7/sheets/now-1882.jpg",
+   "kind": "note",
+   "label": "01:24 strip, 1882 whole frame, bake f with towers patch",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T01:14:43.881Z",
    "file": "20261126011443881-note-p3-e.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/k20/torim-s.jpg",
    "kind": "note",
    "label": "00:42 12 degree plate at the south rim, before above, with the canvas to its rim below (before the skirt)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T00:49:04.853Z",
-   "file": "20261126004904853-note-torim-map.jpg",
-   "source": "../../../../tmp/gl/k20/torim-map.jpg",
-   "kind": "note",
-   "label": "00:42 top view: green = plate and lay back are one picture, orange = canvas goes on to its rim (new), grey = canvas over the hold's ground, cyan = 5 degree window",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T00:21:36.676Z",
-   "file": "20261126002136676-note-now-1898.jpg",
-   "source": "../../../../tmp/gl/k20/S5/sheets/now-1898.jpg",
-   "kind": "note",
-   "label": "1898 whole frame now, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T00:21:36.099Z",
-   "file": "20261126002136099-note-now-1890.jpg",
-   "source": "../../../../tmp/gl/k20/S5/sheets/now-1890.jpg",
-   "kind": "note",
-   "label": "1890 whole frame now, draft",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T00:21:35.535Z",
-   "file": "20261126002135535-note-crop-1890.jpg",
-   "source": "../../../../tmp/gl/k20/S5/sheets/crop-1890.jpg",
-   "kind": "note",
-   "label": "1890 near rim at 1 to 1: 23:40 above, now below (field by kind of sea tone, curls out). The canvas's end still reads",
    "stop": "earth"
   }
  ]
