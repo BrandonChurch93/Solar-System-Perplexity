@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T03:29:59.568Z",
+ "pushed": "2026-11-26T03:48:17.442Z",
  "head": "749712666e01f152e8b073b465d095f807347546",
- "note": "03:30 UTC the air term by term on the pair 2708 and 2716 (state), C1 at 2704 beside the state",
+ "note": "air term by term on main and state, C1 beside state and main at 2444 2704 2708, trial et0 of one tint and one edge",
  "looks": [
+  {
+   "time": "2026-11-26T03:48:16.521Z",
+   "file": "20261126034816521-note-t-et0.jpg",
+   "source": "../../../../tmp/pm/t-et0.jpg",
+   "kind": "note",
+   "label": "trial et0 (scratch): tint and day edge held at the hold's value at every height, right, beside state 74971266, left; frames 2477, 2681, 2580 keep their bytes, 2708 reads as the ground of 2716, 2696 goes pale where the near tint comes in",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:46:04.066Z",
+   "file": "20261126034604066-note-v-2708.jpg",
+   "source": "../../../../tmp/pm/c1/v-2708.jpg",
+   "kind": "note",
+   "label": "frame 2708 draft: C1 (tree without the land-8p5 row) on top, state 74971266 in the middle, main below. C1 shows the 3.8 plate's border, the state washes the map's forms flat",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:46:03.016Z",
+   "file": "20261126034603016-note-v-2704.jpg",
+   "source": "../../../../tmp/pm/c1/v-2704.jpg",
+   "kind": "note",
+   "label": "frame 2704 draft: C1 (tree without the land-8p5 row) on top, state 74971266 in the middle, main below. C1 shows the 3.8 plate's border, the state washes the map's forms flat",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:46:01.854Z",
+   "file": "20261126034601854-note-v-2444.jpg",
+   "source": "../../../../tmp/pm/c1/v-2444.jpg",
+   "kind": "note",
+   "label": "frame 2444 draft: C1 (tree without the land-8p5 row) on top, state 74971266 in the middle, main below. C1 shows the 3.8 plate's border, the state washes the map's forms flat",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:42:13.670Z",
+   "file": "20261126034213670-note-air-NM.jpg",
+   "source": "../../../../tmp/pm/air-NM.png",
+   "kind": "note",
+   "label": "air term by term at 2708 and 2716, state 74971266 left, main right; rows none, all, day edge, tint, haze depth, haze colour held at the near ground value; true carry on the 2716 tiles",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T03:29:58.775Z",
    "file": "20261126032958775-note-air-N.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/pm/b1a-2704n.png",
    "kind": "note",
    "label": "frame 2704 at native size, 800 px right of the canyon: C1 (the tree without the land-8p5 row) left, state 74971266 right: without the row the border of the 3.8 degree plate reads as a line and the ground beyond it is the map's flat sand: bad for C1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:07:16.888Z",
-   "file": "20261126030716888-note-f2445.jpg",
-   "source": "../../../../tmp/pm/f2445.png",
-   "kind": "note",
-   "label": "frame 2445 lower right quarter at draft, state 74971266: the strands of the 3.8 degree take seen in the dive: bad",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:07:16.227Z",
-   "file": "20261126030716227-note-hist38se.jpg",
-   "source": "../../../../tmp/pm/hist38se.png",
-   "kind": "note",
-   "label": "cause of the streaks of MAIL 1379 point 2: land-3p8 south east of the place from above (800 texels) in main, 9cb92e38f (takes as one body), 5e92bb490 (picture's ground), 74dca6470 (wall rock): the parallel strands aimed at the place are in the take, before every later step: bad",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:07:15.563Z",
-   "file": "20261126030715563-note-top2462.jpg",
-   "source": "../../../../tmp/pm/top2462.png",
-   "kind": "note",
-   "label": "dive slice at 2462 and 2470, top right 600 by 300 at draft: main's Mars data above (veil on the far ground), state 74971266 below (veil out, far ground shows its pattern at the top edge): bad, tied to the open air item",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T02:45:18.014Z",
-   "file": "20261126024518014-note-mars-dive-k4924-4924-changes.jpg",
-   "source": "../../../../tmp/pm/diveN/mars-dive-k4924-4924-changes.png",
-   "kind": "note",
-   "label": "dive slice at 4924 on the tree 74971266: frame 2462 against 2470 by the reader, pattern 1.30 at the far ground at the top edge; the chain parts from the camera's map by 38.4 px there",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T02:24:52.333Z",
-   "file": "20261126022452333-note-ends-B-V0-E1.jpg",
-   "source": "../../../../tmp/pm/ends-B-V0-E1.png",
-   "kind": "note",
-   "label": "true carry at 2708, end on 2716's grid: map alone at both frames 0.9365, the name 0.9648, main's plate 0.8094; 2716, 2708 carried, their details, the pattern",
    "stop": "mars"
   }
  ]
