@@ -276,12 +276,20 @@ def sums(img, w, s, f=4):
     return cv2.resize(a, size, interpolation=cv2.INTER_LINEAR), cv2.resize(c, size, interpolation=cv2.INTER_LINEAR)
 
 
-def whole(w, lit, dr, spec):
+def whole(w, lit, dr, spec, per):
     k = 2 * spec['join'] + 1
     count, lab = cv2.connectedComponents(cv2.dilate(((lit > 0.5) & (dr > 0)).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))) * (dr > 0).astype(np.uint8), connectivity=8)
     flat = lab.ravel()
     px = np.maximum(np.bincount(flat, minlength=count), 1)
     stays = np.bincount(flat, weights=w.ravel(), minlength=count) / px < 0.5
+    k = 2 * spec['meet'] + 1
+    met = cv2.dilate(((lit > 0.5) & (dr <= 0)).astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))) > 0
+    at = (lit > 0.5) & (dr > 0) & (dr * per <= spec['touch'])
+    touch = np.bincount(lab[at], minlength=count)
+    cut = (touch >= spec['least']) & (np.bincount(lab[at & met], minlength=count) < 0.5 * touch)
+    cut[0] = False
+    print('skirt, clouds of the map at the rim of the canvas:', int((touch[1:] >= spec['least']).sum()), 'of them cut by the rim and so gone whole', int(cut.sum()), 'on', int(np.bincount(lab[lit > 0.5], minlength=count)[cut].sum()), 'px', flush=True)
+    stays &= ~cut
     stays[0] = False
     goes = ~stays
     goes[0] = False
@@ -500,7 +508,7 @@ def skirt(g12, under, inside, dist, spec, per):
     out = g12 * (1 - zone) + np.maximum((g12 + e) * (want + e) / (own + e) - e, 0) * zone
     del own
     w = step(0, spec['calmDeg'], dr) * (1 - step(spec['fieldDeg'][0], spec['fieldDeg'][1], dr)) * (1 - step(MEND['far']['fromDeg'][0], MEND['far']['fromDeg'][1], dist)) * (1 - land)
-    w, kept = whole(w, lit, dr, spec['whole'])
+    w, kept = whole(w, lit, dr, spec['whole'], per)
     out = out * (1 - kept[..., None]) + g12 * kept[..., None]
     out = out * (1 - w[..., None]) + want * w[..., None]
     del want

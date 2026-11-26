@@ -700,8 +700,12 @@
   "least": 0.002,
   "fill": 0.05,
   "whole": {
+   "how": "A cloud of the map outside the canvas is one body (lit px joined over join px): it stays whole where under half of it lies where the field takes over and goes whole otherwise, with halo px round it. A body that the canvas's rim cuts goes whole: it has at least least lit px within touch px of the rim and at fewer than half of those px a lit body of the canvas within meet px on the other side, so the canvas shows sea where the body's other part lay and the rim would be its straight side. A body that goes on into a cloud of the canvas is one with it and is judged as the others.",
    "join": 4,
-   "halo": 14
+   "halo": 14,
+   "touch": 2,
+   "meet": 3,
+   "least": 6
   }
  },
  "toRim": {
