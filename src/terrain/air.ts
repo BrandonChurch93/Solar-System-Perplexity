@@ -94,8 +94,10 @@
 // sphere of a knot. The gather has no twin in 32 bit: the shader is held against the twin in doubles in a WebGL2 browser
 // (tests/air-law-gl.test.ts).
 // ITS COST. A gather is one loop of the fixed count 12 and three local arrays of 12 floats, no texture: 13 columns, 12 exp for the
-// factors, 4 log and up to 4 exp for the rates, in all about 29 exp, 43 sqrt and 110 divisions. A fragment of a painted layer takes
-// two gathers beside its two depths, the sky one gather beside its depth.
+// factors, 4 log and up to 4 exp for the rates, in all about 29 exp, 43 sqrt and 110 divisions. A painted layer takes two gathers
+// at each vertex of its mesh (airLawPathShare along the present path and along the picture's) and at each fragment its two depths
+// alone; the sky takes one gather beside its depth at each fragment. MEASURED on the five judged frames of Mars at the final tier:
+// the share at the vertices against the gathers at every fragment moves no channel of no pixel by more than 1 step of 255.
 
 // erfcx(x) for x >= 0 is (1 + a1 x + a2 x^2) / (1 + b1 x + b2 x^2 + b3 x^3). b1 = a1 + 2 / sqrt(pi) gives the slope at 0 and
 // b3 = sqrt(pi) * a2 the value far out; a1, a2 and b2 are fitted.
@@ -246,6 +248,10 @@ float airLawGatherOut(vec3 a, vec3 dir, float scaleHeight, float density, vec3 h
   float low = max(length(a - dir * start), ${glsl(CORE)});
   float top = 1.0 + max(heights.z, 0.0) + ${glsl(AIR_LAW_TOP)} * scaleHeight;
   return airLawGatherLine(low, start, max(sqrt(max((top - low) * (top + low), 0.0)), start), scaleHeight, density, heights, shares);
+}
+float airLawPathShare(vec3 a, vec3 b, float scaleHeight, float density, vec3 heights, vec3 shares) {
+  float took = 1.0 - airLawFactor(airLawDepth(a, b, scaleHeight), density);
+  return clamp(airLawGather(a, b, scaleHeight, density, heights, shares) / max(took, 1e-30), min(shares.x, min(shares.y, shares.z)), max(shares.x, max(shares.y, shares.z)));
 }
 float airLawHeld(float gathered, float seen, float density, float least) {
   if (least > 0.0) gathered *= min((1.0 - least) / max(1.0 - exp(-density * seen), 1e-30), 1.0);
@@ -449,6 +455,14 @@ export function airLawGatherOut(a: AirVec, dir: AirVec, scaleHeight: number, den
   const low = Math.max(lowest(a, dir, whole), CORE)
   const top = 1 + Math.max(heights[2], 0) + AIR_LAW_TOP * scaleHeight
   return gatherLine(low, start, Math.max(Math.sqrt(Math.max((top - low) * (top + low), 0)), start), scaleHeight, density, heights, shares)
+}
+
+// The share of the light along the path from a to b: what the path gathers over what it takes from the factor, a number between the
+// lowest and the highest share. With every share alike it is that share. It changes slowly from one point of the ground to the
+// next where one minus the factor does not, so a mesh may take it at its vertices and the factor at every fragment (see ITS COST).
+export function airLawPathShare(a: AirVec, b: AirVec, scaleHeight: number, density: number, heights: AirKnots, shares: AirKnots): number {
+  const took = 1 - airLawFactor(airLawDepth(a, b, scaleHeight), density)
+  return Math.min(Math.max(airLawGather(a, b, scaleHeight, density, heights, shares) / Math.max(took, 1e-30), Math.min(shares[0], shares[1], shares[2])), Math.max(shares[0], shares[1], shares[2]))
 }
 
 // What a colour that already holds the air of the path seen holds of the light gathered along it: all of it, or with a least the

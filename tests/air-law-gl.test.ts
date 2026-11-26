@@ -4,7 +4,7 @@ import { chromium, type Browser, type Page } from 'playwright-core'
 import { build } from 'vite'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { CHROME, CHROME_FLAGS } from '../tools/lib/browser'
-import { airLaw, airLawDepth, airLawDepthOut, airLawFactor, airLawFactorSeen, airLawGather, airLawGatherOut, airLawHeld, airLawSeen, type AirVec } from '../src/terrain/air'
+import { airLaw, airLawDepth, airLawDepthOut, airLawFactor, airLawFactorSeen, airLawGather, airLawGatherOut, airLawHeld, airLawPathShare, airLawSeen, type AirVec } from '../src/terrain/air'
 import { airLawKnots, airLawPoint, type ReliefAirLaw } from '../src/terrain/relief'
 
 // The relief under the air law in a WebGL2 browser (ReliefMotion.airLaw): the pixels, read back as floats and held against the twins of
@@ -85,6 +85,10 @@ const KNOTS: ReliefAirLaw = { ...LAW, knots: [[-1, 0.3], [0.5, 0.7], [1.5, 1]] }
 const LARGE: ReliefAirLaw = { light: [0.31, 0.52, 0.08], density: 200, scaleHeight: 0.001, radius: 972.27, eyeHeight: 1, knots: [[-1, 0.3], [0.5, 0.7], [1.5, 1]] }
 const PITCH = 0
 const FAR = 6
+// The cells of the relief's mesh on the picture's long side, and so along and down the picture.
+const MESH = 16
+const NX = MESH
+const NY = (MESH * H) / W
 const whole: Shot = {
   def: {
     imageSize: [W, H],
@@ -94,7 +98,7 @@ const whole: Shot = {
     maskBox: [0, 0, W, H],
     mistDir: [1, 0],
   },
-  motion: { mistSpeed: 0, dustSpeed: 0, dustDir: [1, 0], mesh: 16, pitchDeg: PITCH },
+  motion: { mistSpeed: 0, dustSpeed: 0, dustDir: [1, 0], mesh: MESH, pitchDeg: PITCH },
   files: { 'far-color.jpg': [200, 120, 60, 255], 'masks.png': [0, 0, 0, 255] },
   dist: { 'far.bin': FAR },
   width: W,
@@ -121,6 +125,30 @@ const SHIFTS: [number, number][] = [[SHIFT, 0], [-SHIFT, 0], [0, SHIFT], [0, -SH
 const FLOAT = 2e-4
 // The distance of a fragment from the lens out of the depth view (src/diagnostics/diag.ts: log2(1 + distance) / 14).
 const distanceOf = (d: number): number => 2 ** (d * 14) - 1
+// The mesh of the relief `whole` as Relief builds it: NX by NY cells over the picture, a vertex on the sight line of the picture's
+// eye through its place at the distance FAR, rows from the top, each cell cut from its upper right corner to its lower left one.
+const vertex = (i: number, j: number): AirVec => {
+  const t = Math.tan((VFOV * Math.PI) / 360)
+  const v: AirVec = [((2 * i) / NX - 1) * t * (W / H), (1 - (2 * j) / NY) * t, -1]
+  const n = FAR / Math.hypot(v[0], v[1], v[2])
+  return [v[0] * n, v[1] * n, v[2] * n]
+}
+const cross = (a: AirVec, b: AirVec): AirVec => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]
+const dot = (a: AirVec, b: AirVec): number => a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+// The three corners of the triangle of that mesh a point of it lies in, each with its weight: what the rasteriser carries from the
+// vertices to a fragment is the sum of the corners' values by these weights (linear on the triangle in space). The picture's eye
+// stands at 0 and sees the flat triangle where it sees the triangle of the picture, so the cell and its half are read there; the
+// weights are the one answer of p = a A + b B + c C, since the eye is not in the triangle's plane.
+const corners = (p: AirVec): { at: AirVec; weight: number }[] => {
+  const t = Math.tan((VFOV * Math.PI) / 360)
+  const u = Math.min(Math.max(((p[0] / -p[2] / (t * (W / H)) + 1) / 2) * NX, 0), NX * (1 - 1e-12))
+  const v = Math.min(Math.max(((1 - p[1] / -p[2] / t) / 2) * NY, 0), NY * (1 - 1e-12))
+  const i = Math.floor(u)
+  const j = Math.floor(v)
+  const [A, B, C] = u - i + (v - j) <= 1 ? [vertex(i, j), vertex(i, j + 1), vertex(i + 1, j)] : [vertex(i + 1, j), vertex(i, j + 1), vertex(i + 1, j + 1)]
+  const det = dot(A, cross(B, C))
+  return [{ at: A, weight: dot(p, cross(B, C)) / det }, { at: B, weight: dot(A, cross(p, C)) / det }, { at: C, weight: dot(A, cross(B, p)) / det }]
+}
 
 const have = existsSync(CHROME)
 
@@ -162,7 +190,7 @@ describe.skipIf(!have)('the air law of a relief in a WebGL2 browser', () => {
     await page.route('http://airlaw.test/**', (route) => {
       const url = route.request().url()
       if (url.endsWith('/page.js')) return route.fulfill({ status: 200, contentType: 'text/javascript', body: code })
-      if (url === 'http://airlaw.test/') return route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><script src="./page.js"></script>' })
+      if (url === 'http://airlaw.test/') return route.fulfill({ status: 200, contentType: 'text/html', body: '<script src="./page.js"></script>' })
       return route.fulfill({ status: 404, body: '' })
     })
     await page.goto('http://airlaw.test/')
@@ -357,29 +385,42 @@ describe.skipIf(!have)('the air law of a relief in a WebGL2 browser', () => {
     expect(errors).toEqual([])
   }, 120000)
 
-  it('the light by height: from another eye a pixel is the plain pixel through the law with what the two paths gather, and the sky is what the path out gathers', async () => {
+  it('the light by height: from another eye a pixel is the plain pixel through the law with the share of the light the two paths gather at the corners of its triangle, and the sky is what the path out gathers', async () => {
     const light = (gain: number): AirVec => [KNOTS.light[0] * gain, KNOTS.light[1] * gain, KNOTS.light[2] * gain]
-    const layer = (plain: number[], distance: number, x: number, y: number, eye: AirVec, law: ReliefAirLaw, gain: number): { colour: [number, number, number]; moved: number } => {
+    // The twin of a layer's pixel as the relief draws it: the fragment's own two depths and its factor, and the share of the light
+    // along the two paths (airLawPathShare) taken at the three corners of the fragment's triangle and carried to it by their weights.
+    // apart: how far that stands from the law with both paths gathered to the fragment's own point.
+    const layer = (plain: number[], distance: number, x: number, y: number, eye: AirVec, law: ReliefAirLaw, gain: number): { colour: [number, number, number]; moved: number; apart: number } => {
       const knots = airLawKnots(law)!
       const d = ray(x, y)
-      const point = airLawPoint([eye[0] + d[0] * distance, eye[1] + d[1] * distance, eye[2] + d[2] * distance], law, PITCH)
+      const local: AirVec = [eye[0] + d[0] * distance, eye[1] + d[1] * distance, eye[2] + d[2] * distance]
+      const point = airLawPoint(local, law, PITCH)
       const a = airLawPoint(eye, law, PITCH)
       const was = airLawPoint([0, 0, 0], law, PITCH)
       const depth = airLawDepth(a, point, law.scaleHeight)
       const seen = airLawDepth(was, point, law.scaleHeight)
-      const now = airLawGather(a, point, law.scaleHeight, law.density, knots.heights, knots.shares)
-      const held = airLawHeld(airLawGather(was, point, law.scaleHeight, law.density, knots.heights, knots.shares), seen, law.density, law.least ?? 0)
+      let shareNow = 0
+      let shareSeen = 0
+      for (const c of corners(local)) {
+        const q = airLawPoint(c.at, law, PITCH)
+        shareNow += c.weight * airLawPathShare(a, q, law.scaleHeight, law.density, knots.heights, knots.shares)
+        shareSeen += c.weight * airLawPathShare(was, q, law.scaleHeight, law.density, knots.heights, knots.shares)
+      }
+      const now = shareNow * (1 - airLawFactor(depth, law.density))
+      const held = airLawHeld(shareSeen * (1 - airLawFactor(seen, law.density)), seen, law.density, law.least ?? 0)
       const factor = airLawFactorSeen(depth, seen, law.density, law.least ?? 0)
       // how far the light by height moves the pixel off the law with one light: the test must see the knots at work
       const flat = airLaw([plain[0]!, plain[1]!, plain[2]!], light(gain), factor)
       const colour = airLawSeen([plain[0]!, plain[1]!, plain[2]!], light(gain), factor, now, held)
-      return { colour, moved: Math.max(Math.abs(colour[0] - flat[0]), Math.abs(colour[1] - flat[1]), Math.abs(colour[2] - flat[2])) }
+      const whole = airLawSeen([plain[0]!, plain[1]!, plain[2]!], light(gain), factor, airLawGather(a, point, law.scaleHeight, law.density, knots.heights, knots.shares), airLawHeld(airLawGather(was, point, law.scaleHeight, law.density, knots.heights, knots.shares), seen, law.density, law.least ?? 0))
+      return { colour, moved: Math.max(Math.abs(colour[0] - flat[0]), Math.abs(colour[1] - flat[1]), Math.abs(colour[2] - flat[2])), apart: Math.max(Math.abs(colour[0] - whole[0]), Math.abs(colour[1] - whole[1]), Math.abs(colour[2] - whole[2])) }
     }
     let worst = 0
     let share = 0
     let moved = 0
     let count = 0
     let large = 0
+    let apart = 0
     for (const [eye, gain] of [[[0.8, 0.6, 1.5], 1], [[-1.2, 3, 4], 2], [[0.4, -0.3, -2.5], 1], [[0, 14, 30], 1]] as [[number, number, number], number][]) {
       for (const law of [KNOTS, { ...KNOTS, least: 0.6 }, LARGE, { ...LARGE, least: 0.5 }]) {
         const plain = await shoot({ ...whole, eye, gain })
@@ -400,16 +441,21 @@ describe.skipIf(!have)('the air law of a relief in a WebGL2 browser', () => {
               share = Math.max(share, off / (FLOAT + Math.max(...room.map((r) => Math.abs(r[c]! - want.colour[c]!)))))
             }
             moved = Math.max(moved, want.moved)
+            apart = Math.max(apart, want.apart)
             count++
           }
         }
       }
     }
-    console.log('AIR-GL the light by height from four other eyes, two sets of numbers, with and without a least: ' + count + ' pixels, the knots move a pixel by up to ' + moved.toFixed(3) + ', worst off the twin ' + worst.toExponential(3) + ' (with the radius ' + LARGE.radius + ': ' + large.toExponential(3) + '), ' + share.toFixed(3) + ' of what the ray moved by ' + SHIFT + ' of a pixel changes')
+    console.log('AIR-GL the light by height from four other eyes, two sets of numbers, with and without a least: ' + count + ' pixels, the knots move a pixel by up to ' + moved.toFixed(3) + ', worst off the twin ' + worst.toExponential(3) + ' (with the radius ' + LARGE.radius + ': ' + large.toExponential(3) + '), ' + share.toFixed(3) + ' of what the ray moved by ' + SHIFT + ' of a pixel changes; the share at the corners of a cell of ' + W / NX + ' pixels stands off the law gathered to the fragment by up to ' + apart.toExponential(3))
     expect(count).toBeGreaterThan(3000)
     expect(moved).toBeGreaterThan(0.02)
     expect(share).toBeLessThan(1)
     expect(worst).toBeLessThan(0.01)
+    // The share at the corners against the law gathered to the fragment's own point, on this coarse mesh with knots a cell or two
+    // apart: under a hundredth of the light. On a stop's mesh it is held by pixels (Mars, five frames at the final tier: no pixel
+    // by more than one step of 255).
+    expect(apart).toBeLessThan(0.01)
     // the sky around a patch: the back times the factor of the whole path plus the light times what that path gathers
     let skyWorst = 0
     let skyShare = 0
