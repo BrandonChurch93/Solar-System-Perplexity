@@ -341,6 +341,7 @@ out vec3 vPos;
 out vec3 vN;
 out vec3 vView;
 out vec3 vClip;
+uniform vec4 uLabLens;
 out float vReal;
 out float vPit;
 out float vDeep;
@@ -549,6 +550,7 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   vView = mv.xyz;
   gl_Position = projectionMatrix * mv;
+  gl_Position.xy += uLabLens.xy * max(uLabLens.z - gl_Position.w, -uLabLens.w * gl_Position.w);
   vClip = gl_Position.xyw;
 #ifdef LAB_MAP
   gl_Position = vec4(vG / uLabFar.w * 2.0 - 1.0, 0.9 - tall * 12.0, 1.0);
@@ -632,7 +634,7 @@ vec2 labGas(vec3 here) {
     float dens = skin + sunk;
     float dt = (t1 - t0) * thin * dens;
     // the gas over the cells is the hot gas that wells up; the gas that lies in the valleys has cooled and sinks
-    lit += exp(-tau) * (1.0 - exp(-dt)) * m.r * (${GH[0]!.toFixed(3)} * skin + ${GH[1]!.toFixed(3)} * sunk) / max(dens, 1e-6);
+    lit += exp(-tau) * (1.0 - exp(-dt)) * min(m.r, ${(GH[2] ?? 99).toFixed(2)}) * (${GH[0]!.toFixed(3)} * skin + ${GH[1]!.toFixed(3)} * sunk) / max(dens, 1e-6);
     tau += dt;
   }
   return vec2(lit / max(1.0 - exp(-tau), 1e-5), tau);
@@ -905,7 +907,7 @@ void main() {
   // the hottest gas of a cell stands in a few soft clumps, each at its own place off the crown and of its own
   // size and heat: where the gas wells up fastest
   float qHot = 0.0;
-  for (int k = 0; k < 3; k++) {
+  for (int k = 0; k < ${Math.round(Q?.hot?.[6] ?? 3)}; k++) {
     float hs = seed * (3.71 + 2.3 * float(k)) + 0.37 * float(k);
     float ha = 6.2831853 * fract(hs * 5.13);
     vec2 hb = (${(Q?.hot?.[1] ?? 0.2).toFixed(3)} + ${((Q?.hot?.[2] ?? 0.6) - (Q?.hot?.[1] ?? 0.2)).toFixed(3)} * fract(hs * 7.77)) * vec2(cos(ha), sin(ha));
@@ -1012,6 +1014,7 @@ void main() {
   float warm = uLabHeat.y * cell * life * mix(${lab.heat.near.toFixed(2)}, 1.0, smoothstep(2.4, 4.0, vReal / uLabPit.w));
   warm = warm < ${lab.heat.knee[0]!.toFixed(2)} ? warm : ${lab.heat.knee[0]!.toFixed(2)} + ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)} * (1.0 - exp(-(warm - ${lab.heat.knee[0]!.toFixed(2)}) / ${(lab.heat.knee[1]! - lab.heat.knee[0]!).toFixed(3)}));
   float seamOn = 1.0;
+  float qSh = 1.0;
 #if ${Q?.seam ? 1 : 0}
   // the seam: on the border both cells have the heat of the place, the same from either side, so no line stands
   // there; the cell's own heat comes in over the lane's width, sooner along a fibre
@@ -1019,13 +1022,15 @@ void main() {
   seamOn = qSeam;
   qSeam = clamp(qSeam + ${(4 * lab.heat.lane[2]!).toFixed(2)} * (fan - 0.5) * qSeam * (1.0 - qSeam), 0.0, 1.0);
   float qShoulder = ${(lab.heat.lane[14] ?? 0) > 0 ? 'min(clamp(' + (lab.heat.lane[14] ?? 0).toFixed(5) + ' / vCell.z, 0.08, ' + (lab.heat.lane[8] ?? 0.3).toFixed(3) + ') * (1.0 + ' + (lab.heat.lane[15] ?? 0).toFixed(2) + ' * vJunc * pool), 1.0)' : (lab.heat.lane[8] ?? 0.3).toFixed(3)};
-  warm *= mix(1.0, mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, qShoulder, edgeD + ${(lab.heat.lane[13] ?? 0).toFixed(2)} * (fan - 0.5) * ${(lab.heat.lane[14] ?? 0) > 0 ? 'qShoulder' : '1.0'})), mix(${(lab.heat.lane[11] ?? 0).toFixed(2)}, 1.0, pool));
+  qSh = mix(1.0, mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, qShoulder, edgeD + ${(lab.heat.lane[13] ?? 0).toFixed(2)} * (fan - 0.5) * ${(lab.heat.lane[14] ?? 0) > 0 ? 'qShoulder' : '1.0'})), mix(${(lab.heat.lane[11] ?? 0).toFixed(2)}, 1.0, pool));
+  warm *= qSh;
   warm = mix(uLabHeat.y * ${lab.heat.crease[2]!.toFixed(2)} * (${(Q?.seam?.[0] ?? 0.7).toFixed(2)} + ${(Q?.seam?.[1] ?? 0.6).toFixed(2)} * vn(vG * ${(Q?.seam?.[2] ?? 40).toFixed(1)} + 23.0)) * mix(${(Q?.seam?.[3] ?? 1).toFixed(2)}, 1.0, pool) * (1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc), warm, qSeam);
 #endif
   float heat = pen > 0.999 ? uLabHeat.y * bundle : mix(warm, uLabHeat.y * bundle, pen);
 #if ${F ? 1 : 0}
   // where three cells meet the gas of all three runs together and sinks: streaks of hot gas stand round that point
   // like a fan, each of its own length, width and heat, none in the dark point itself and none in the lane
+#if ${(F?.[8] ?? 0) > 0 ? 0 : 1}
   float fD = length(vFan.xy) / max(vCell.z, 1e-6);
   float fU = (atan(vFan.y, vFan.x) / 6.2831853 + 0.5) * ${(4 * Math.round(F?.[1] ?? 5)).toFixed(1)};
   float fCol = mod(floor(fU), ${(4 * Math.round(F?.[1] ?? 5)).toFixed(1)});
@@ -1036,6 +1041,26 @@ void main() {
   float fW = ${(F?.[7] ?? 0) > 0 ? 'min(' + (F?.[7] ?? 0).toFixed(4) + ' / max(fD * ' + (6.2831853 / (4 * Math.round(F?.[1] ?? 5))).toFixed(5) + ', 1e-5), 0.48)' : (F?.[3] ?? 0.3).toFixed(3)} * (0.5 + 0.9 * h1(vec2(fCol, seed * 13.0 + 7.0))) * mix(1.0, ${(F?.[7] ?? 0) > 0 ? '0.7' : '0.4'}, clamp(fT, 0.0, 1.0));
   float fS = (1.0 - smoothstep(0.3 * fW, fW, abs(fX))) * step(${(F?.[5] ?? 0.3).toFixed(2)}, fLot) * mix(0.4, 1.0, h1(vec2(fCol, seed * 71.0 + 11.0)));
   heat += ${(F?.[0] ?? 0).toFixed(2)} * mix(${(F?.[6] ?? 0.15).toFixed(2)}, fS, fSeen) * smoothstep(${(0.5 * (F?.[4] ?? 0.06)).toFixed(4)}, ${(F?.[4] ?? 0.06).toFixed(4)}, fD) * (1.0 - smoothstep(0.45, 1.0, fT)) * vFan.z * seamOn * (1.0 - pen);
+#else
+  float fD = length(vFan.xy) / max(vCell.z, 1e-6);
+  float fA = atan(vFan.y, vFan.x) / 6.2831853 + 0.5;
+  float fSum = 0.0;
+  for (int k = 0; k < 2; k++) {
+    float fN = k == 0 ? ${(4 * Math.round(F?.[1] ?? 5)).toFixed(1)} : ${Math.round(4 * (F?.[1] ?? 5) * (F?.[8] ?? 1.6)).toFixed(1)};
+    float fK = seed * 91.0 + 3.0 + 19.0 * float(k);
+    float fU = (fA + ${(F?.[9] ?? 0).toFixed(3)} * (k == 0 ? 1.0 : -0.7) * (2.0 * step(0.5, fract(seed * 29.0)) - 1.0) * fD) * fN;
+    float fCol = mod(floor(fU), fN);
+    float fLot = h1(vec2(fCol, fK));
+    float fX = fract(fU) - 0.5 - 0.3 * (h1(vec2(fCol, fK + 34.0)) - 0.5);
+    float fSeen = 1.0 - smoothstep(0.25, 0.6, min(fwidth(fU), fN - fwidth(fU)));
+    float fB = ${(F?.[4] ?? 0.06).toFixed(4)} * (1.0 + ${(F?.[10] ?? 0).toFixed(2)} * (2.0 * h1(vec2(fCol, fK + 51.0)) - 1.0));
+    float fT = (fD - fB) / mix(${((F?.[2] ?? 0.6) * 0.675).toFixed(4)}, ${(F?.[2] ?? 0.6).toFixed(3)} * mix(0.35, 1.0, fLot), fSeen);
+    float fW = ${(F?.[3] ?? 0.3).toFixed(3)} * (0.5 + 0.9 * h1(vec2(fCol, fK + 10.0))) * mix(1.0, 0.4, clamp(fT, 0.0, 1.0));
+    float fS = (1.0 - smoothstep(0.3 * fW, fW, abs(fX))) * step(${(F?.[5] ?? 0.3).toFixed(2)}, fLot) * mix(0.4, 1.0, h1(vec2(fCol, fK + 68.0)));
+    fSum = max(fSum, mix(${(F?.[6] ?? 0.15).toFixed(2)}, fS, fSeen) * smoothstep(0.0, ${(F?.[11] ?? 0.25).toFixed(2)}, fT) * (1.0 - smoothstep(0.45, 1.0, fT)) * (k == 0 ? 1.0 : ${(F?.[12] ?? 0.8).toFixed(2)}));
+  }
+  heat += ${(F?.[0] ?? 0).toFixed(2)} * fSum * vFan.z * seamOn * (1.0 - pen) * mix(1.0, qSh, ${(F?.[13] ?? 0).toFixed(2)});
+#endif
 #endif
   // small hot points in the lanes
   vec2 gq = vG * 90.0;
@@ -1090,6 +1115,7 @@ out vec3 vPos;
 out vec2 vG;
 out vec3 vView;
 out vec3 vClip;
+uniform vec4 uLabLens;
 ${SHAPE_GLSL}
 void main() {
 #ifdef LAB_PIT
@@ -1103,6 +1129,7 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   vView = mv.xyz;
   gl_Position = projectionMatrix * mv;
+  gl_Position.xy += uLabLens.xy * max(uLabLens.z - gl_Position.w, -uLabLens.w * gl_Position.w);
   vClip = gl_Position.xyw;
 }`
 
@@ -1296,6 +1323,7 @@ export class LabGround {
       uLabCells: { value: this.cellTexture },
       uLabEye: { value: new THREE.Vector3() },
       uLabKeep: { value: 1 },
+      uLabLens: { value: new THREE.Vector4(0, 0, 1, 0) },
       uLabAway: { value: new THREE.Vector4(0, 0, 0, 0) },
       uLabAwayTint: { value: new THREE.Vector3().fromArray(place.onGlobe.red.tint) },
       uLabDome: { value: new THREE.Vector4(THREE.MathUtils.degToRad(d.arc), d.height, d.round, d.flat) },
@@ -1602,6 +1630,24 @@ export class LabGround {
     const target = renderer.getRenderTarget()
     const tall = view?.enabled ? view.fullHeight : target ? target.height : renderer.getDrawingBufferSize(this.size).y
     const focal = tall / 2 / Math.tan(THREE.MathUtils.degToRad(fov) / 2)
+    const lens = (lab as { lens?: number[] }).lens
+    if (lens && lens[0]! > 0) {
+      // a lens with an open aperture: each sample of a frame looks from another point of the aperture (the point is
+      // the sample's own place inside its pixel, laid on a disc), so what lies off the plane of focus is unsharp
+      const a = Math.min(Math.max(2 * (view?.enabled ? view.offsetX : 0), -1), 1)
+      const b = Math.min(Math.max(2 * (view?.enabled ? view.offsetY : 0), -1), 1)
+      let lx = 0
+      let ly = 0
+      if (a !== 0 || b !== 0) {
+        const wide = Math.abs(a) > Math.abs(b)
+        const r = wide ? a : b
+        const phi = wide ? (Math.PI / 4) * (b / a) : Math.PI / 2 - (Math.PI / 4) * (a / b)
+        lx = r * Math.cos(phi)
+        ly = r * Math.sin(phi)
+      }
+      const across = view?.enabled ? view.fullWidth : target ? target.width : renderer.getDrawingBufferSize(this.size).x
+      ;(this.uniforms.uLabLens!.value as THREE.Vector4).set((lx * lens[0]! * 2) / across, (ly * lens[0]! * 2) / tall, lens[1]!, lens[2] ?? 1)
+    }
     const d = this.cells.diagram
     const mean = lab.far.cell * focal
     ;(this.uniforms.uLabFar!.value as THREE.Vector4).z = mean

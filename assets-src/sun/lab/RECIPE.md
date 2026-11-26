@@ -200,3 +200,18 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   MEASURED side.py: without it +0.026, with it +0.015.
   dome.base[10], [11] (absent: 0): the body's outline pulled in round the directions of the cell's corners; tried
   (t174, t175) and left off: islands on a floor.
+  After h42 (26 Nov, 12:25 UTC; code only, lab.json of the commit is h42's):
+  heat.cushion.hot[6] (absent: 3): the number of hot clumps a cell. gas.heat[2] (absent: 99): the cap on the
+  map's heat by which the gas glows (uncapped, clumps and fans under the gas drew red smears).
+  heat.fan[8] (absent or 0: the single rank of h42, unchanged): the fan round a pit is two ranks, the second with
+  [8] times the columns and [12] of the heat (absent 0.8); [9] the turn of a rank with the way from the pit, in
+  turns a cell radius (the ranks turn against each other and cross; which way by the cell's seed); [10] how
+  uneven the streaks' starts are (share of fan[4]); [11] the share of its length over which a streak rises
+  (absent 0.25); [13] (absent 0) the share of the shoulder's law (the fall of a cell's heat toward its border,
+  heat.lane[8], [9], [11]) that the fans take too.
+  lens (absent: off) = [k, focus, far]: an open aperture. The engine draws 1, 4 or 16 samples a frame (draft,
+  review, final), each from its own place inside the pixel (camera.view offset, core/jitter.ts). In `pick` that
+  place, times 2 and laid on the unit disc by the concentric map, is the sample's point of the aperture; DOME_VERT
+  and FLOOR_VERT move gl_Position.xy by that point times k px (2 k / width, 2 k / height in clip units) times
+  max(focus - w, -far * w), w the depth in stage units: k (focus / depth - 1) px nearer than the focus, at most
+  far times k px beyond it. The map pass and the far twin are not moved. One sample (a draft): no shift.

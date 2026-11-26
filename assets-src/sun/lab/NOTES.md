@@ -2243,3 +2243,106 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   (20.38, 21.32 against 19.75): the law darkened the whole far field, which is seen along the ground. Code now:
   only where the skin is seen more aslant than the ground itself (the ratio of the two, never over 1). t186 =
   t182 with graze [1.4,0.5,0.0,0.3,0.7], dome.soft [0.9,1.0].
+- 10:44 UTC. STATE h42 = t186, commit 5c558c6e72b6df515c17ea89deb3778396a2dd16 pushed; chain-h42 started 10:41:54 (final 90, final 60, film, flicker). Low mail sent with drafts. Open: red smears in the far part of the Builder's crop.
+- 10:53 UTC. h42 final 90 MEASURED (bands.py): whole low band 12.8224, plain 29.7742 (main 29.558: 0.216 over);
+  rows 540 on: low band 26.0251, plain 49.3228; cut rows 324 on: low band 19.5095, plain 38.9099; sky part
+  7.0417; bands 1.128 0.971 0.926 0.923 (under 1 px 1.383); side +0.012; curve 0.689 0.690 0.693 0.687 0.674
+  0.652 0.615 0.555 0.472 0.376 0.309; lane 5.9 px (4.19, 7.94).
+  LEVELS PICTURE of h42 against the approved: the approved's top quarter lies in round blobs of 10 to 60 px,
+  several a cell, and its lowest quarter in broad swaths of 30 to 60 px that take in whole sides of cells; no
+  thin net of lanes is seen in it at all. Mine: whole cells in the top level (the cell's own tone 0.35 did that),
+  the dark as thin lines. NEXT: more and smaller clumps (5 a cell, 0.12 to 0.3), a cell's own tone down to 0.15,
+  the body outside the clumps darker, broad uneven dark margins.
+  The red smears: the gas glows by the map's raw heat under it (m.r, no cap), so clumps, fans and sparks in the
+  map drive it. Patch ready (v/patch-hot2.py): gas.heat[2] a cap on that heat; hot[6] the number of clumps.
+- 11:02 UTC. h42 final 60 MEASURED: whole low band 14.6007, plain 33.2938; rows 540 on: 26.902, 50.8146; rows 324
+  on: low band 21.2386, plain 42.0784; bands 1.141 0.997 0.953 0.974; sky part 11.4419.
+- 11:12 UTC. h42 film 60 to 120: flicker rows: near box disc 26: 0.121, 6.7 percent of 15; band disc 26: 0.317,
+  33.3 percent of 60; ellipse 90 by 45: 0.131, 15.4 percent of 13; ellipse 70 by 35: 0.138, 18.5 percent of 27.
+  All red, three worse than h41. Thought (not proven): a clump of 2.5 times the heat rides through a standing disc.
+- 11:13 UTC. patch-hot2 applied (hot[6] the number of clumps, gas.heat[2] the cap on the map's heat the gas glows
+  by). t187: hot [3.0,0.15,0.7,0.12,0.3,0.15,5], gas.heat [1.0,0.35,0.7], blob floor 0.4. t188: hot
+  [4.0,0.15,0.75,0.1,0.22,0.1,6], the same gas and blob, root bend 0.35. Base h42.
+- 11:14 UTC. High state mail h42 to /root (nine attachments, my word: better than h41, not plasma, does not pass
+  line iii to my eye); low mail to sun_builder. Growth 2,792,864 bytes. Next mail due by 12:40.
+- 11:19 UTC. t187, t188 (5 and 6 smaller clumps, tone 0.15 and 0.1, blob floor 0.4, gas cap 0.7): cut low band
+  18.83, 18.76 (h42 draft 19.55), side +0.013, +0.016, curve gap at most 0.065. Seen: bronze cushions with broader
+  dark margins; the clumps melt into a sheen. Levels picture of t188: still many mid levels on the cells and the
+  black in thin lines; the approved is two valued in the small: bright blobs straight against broad dark, the mid
+  levels only thin rims, and black pools of 30 to 60 px where three cells meet.
+- 11:21 UTC. t189: blob [0.4,1.0,0.6,0.35,0.2,0.3,3,0.8,0.3] (edge nearer the crown, deeper lobes, a steeper edge,
+  floor 0.3, pulled in more where three cells meet), junction width base[8] 0.03. t190: the same with the weave
+  weaker (between threads 0.55, a thread's own heat 1.3). Base t188.
+- 11:25 UTC. t189, t190 MEASURED: cut low band 18.84, 19.23; side +0.017, +0.024; lane 5.84, 5.86. Seen: no nearer;
+  foil wrapped cushions. The levels picture says what differs: the approved's level sets are round blobs with soft
+  outlines at 10 to 60 px; mine are angular: thread lines, fan lines, root lines, hard silhouettes.
+- 11:27 UTC. t191 (to find which part draws the satin): no thread contrast (weave[7] 1, [19] 1), no fan, no root;
+  only blob, clumps, lane. t192: the same with the body's limb law at 0.1 from cosine 0.9 and the skin gas at
+  [60, 0.012]. Base t189.
+- 11:32 UTC. t191, t192 MEASURED: cut low band 19.97, 20.17; side +0.032, +0.015. Seen: without threads, fans and
+  roots the bodies are polished pebbles in syrup: the satin is not only the threads, the body itself is a smooth
+  gradient to near white, which reads as gloss. t192's lanes are softer (limb law on the body 0.1 from 0.9, skin
+  gas 60) but pool like syrup.
+- 11:33 UTC. SEEN in the approved at 3.5 times (v/ap-zoom.jpg, cols 700 to 1100, rows 820 to 1020): (1) the
+  dominant fine form is fans of bright fibres that stand round the dark pits where three cells meet, 30 to 60 px
+  long, 2 to 4 px wide, wider away from the pit, bright against dark brown between them, seen on the flank that
+  faces the eye; (2) the tops are amber and mottled, two valued in blobs, not a gradient; (3) rows 920 and under
+  are out of focus: soft blobs and round discs of 5 to 9 px (the bright points as a lens shows them unsharp);
+  (4) the pits are broad, dark and soft, the lanes between them only soft gaps.
+- 11:34 UTC. t193: fans 3.5, 8 a quarter, length 0.9, width 0.45, on dark flanks (blob edge 0.3), patches 0.7.
+  t194: 6 a quarter, length 1.1, width 0.35. Base t192.
+- 11:39 UTC. t193, t194 MEASURED: cut low band 18.92, 18.35; side -0.019, -0.013; curve 0.61 to 0.31 (gap at
+  most 0.055 in the middle, under the approved). Seen: the mottled amber tops (patch 0.7) are the first tops that
+  do not read as satin; the fans read as white scratches: too thin, too white, too crisp. In the approved the
+  flank above a pit is bright as a whole and the fibres are parted by thin dark gaps.
+- 11:40 UTC. t195: fan [1.8,6,1.1,0.9,0.05,0.1,0.3] (wide streaks that fill their columns, less heat). t196: fan
+  [2.5,8,1.0,0.7,0.05,0.2,0.3], patch 0.55. Base t194.
+- 11:45 UTC. t195, t196 MEASURED: cut low band 18.52, 18.31; side -0.019, -0.021. Seen: wide streaks read as
+  scallop shells: all begin on one arc round the pit, all straight, in one even rank.
+- 11:46 UTC. Code (v/patch-fan3.py): with heat.fan[8] over 0 the fan is two ranks (the second with [8] times
+  the columns and [12] of the heat), each with its own turn that grows with the way from the pit ([9], the two
+  ranks turn against each other and cross), each streak begins at its own distance ([10]) and rises over the
+  share [11] of its length. Absent: the old single rank, unchanged.
+  t197: fan [1.8,6,1.1,0.9,0.05,0.1,0.3,0,1.6,0.08,0.6,0.3,0.8]. t198: [2.2,5,1.3,0.7,0.06,0.2,0.3,0,1.7,0.12,
+  0.8,0.4,0.9]. Base t195.
+- 11:52 UTC. t197, t198 MEASURED: cut low band 18.75, 18.51; side -0.015, -0.010; curve t198 0.658 to 0.318 (gap
+  at most 0.033). Seen: t198's fans read as feathers or flames, no longer as shells or scratches, and the face is
+  what MAIL 1429 item 3 says (fibres from the pit up the flank, a mottled crown). Lost against h42: the body's
+  roundness (the crown is broken up, blob edge 0.3), and the skin gas at 60 washes the penumbra out. Still crisp
+  at 1 to 2 px everywhere where the approved is soft.
+- 11:54 UTC. t199: blob back to [0.45,0.8,0.5,0.35,0.35,0.3,3,0.8,0.3], patch [0.5,0.7,0.35,0.65,0.3], fan heat
+  1.7, skin gas [30,0.008], body limb law 0.2 from 0.8. t200: the same with 7 a quarter, width 0.6. Base t198.
+- 11:58 UTC. t199, t200 MEASURED: cut low band 19.62, 19.77; side +0.009, +0.013; curve t199 0.666 to 0.309 (gap
+  at most 0.036). Luminance percentiles of rows 800 on (2, 10, 25, 50, 75, 90, 98, 99.5): approved 0.083 0.134
+  0.202 0.331 0.520 0.681 0.821 0.883; t199 0.080 0.120 0.203 0.335 0.530 0.685 0.832 0.877. Rows 620 to 800:
+  approved median 0.419, t199 0.297 (the middle field is too dark). Seen at 3 times (v/z-t199.jpg): mine are
+  crisp polygons with corners and bright edges straight against the black; the approved's cells are ovals with a
+  dark margin all round, 2 to 3 px soft, and broad dark pits.
+- 12:00 UTC. Code (v/patch-sh.py): heat.fan[13] (absent: 0): the share of the shoulder's law (the fall of a
+  cell's heat toward its border) that the fans take too. t201: shoulder at full strength everywhere (lane[11] 1,
+  width 0.35, to 0.3), fans under it. t202: the same with the valley black at 0.02 and the blob pulled in more
+  where three cells meet (blob[7] 1.2). Base t199.
+- 12:06 UTC. t201, t202 MEASURED: cut low band 19.53, 19.59; side +0.023, +0.027. Seen: with the dark margin all
+  round the cells read as nuggets again (a failed look). Not kept.
+- 12:07 UTC. A test, not a state (v/diag-soft-t199.jpg): t199's draft with every edge 1.3 px softer and a faint
+  glow, made in python only to learn the cause. Seen: the stone is gone, it reads as glowing gas. So the first
+  cause of "solid" is the crisp 1 px edge of every body and line, where the approved's are 2 to 3 px soft at rows
+  820 to 900 and far softer under row 920, with round discs of 5 to 9 px where bright points are: the approved was
+  taken through a lens with an open aperture, focused on the middle distance.
+- 12:10 UTC. Code (v/patch-lens.py): "lens" in lab.json (absent: off, the picture unchanged) = [k, focus, far].
+  The engine draws 16 samples a frame at final (4 at review, 1 at draft), each from its own place inside the
+  pixel (camera.view offset). With a lens each sample also looks from its own point of an aperture: the sample's
+  place in the pixel laid on a disc (concentric map), and the ground's vertices (DOME_VERT, FLOOR_VERT) are moved
+  in clip space by that point times k px times (focus / depth - 1), as a thin lens does; farther than the focus
+  the shift is held at far times k px. No pass over the frame: 16 sharp pictures from 16 points of the aperture,
+  summed by the engine's own accumulator. A draft has one sample and shows no lens. Depths (STATED, from vfov 55,
+  focal 1037 px, 950 px a unit near): rows 950 on about 1 unit, rows 820 to 900 about 1.5 to 1.8.
+  UNKNOWN whether the Builder allows a lens (MAIL 1318: the finest band by the form, not by a blur over the
+  frame); asked in the next mail, one key switches it off.
+  t199L: t199 with lens [2.0, 2.5, 0.5], final 90, started 12:10.
+- 12:21 UTC. t199L final 90 MEASURED: whole low band 12.9527, plain 29.5222; rows 540 on 26.0914, 48.7553; lower
+  70 percent 19.6547, 38.6355; sky part 7.0417; bands 1.024 0.975 0.959 0.924, under 1 px 1.125; side +0.009;
+  curve 0.677 0.676 0.672 0.665 0.653 0.630 0.588 0.531 0.458 0.377 0.319; lane 6.12. Seen: rows 920 on soft as
+  the approved's, rows 800 to 900 still crisp; at 3 times a faint regular weave of the 16 samples.
+- 12:22 UTC. High mail to /root: the question whether a lens is allowed, t199L's numbers and pictures, my list.
+  Next mail due by 13:52. Until the ruling: the dark near flank, points, middle field, flow along the fans.
