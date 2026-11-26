@@ -34,10 +34,31 @@ export function aimOf(q: THREE.Quaternion): [number, number, number] {
 export interface SkyAims {
   frame: THREE.Quaternion
   turns: Record<string, THREE.Quaternion>
+  dives: Record<string, { turn: THREE.Quaternion; aim: THREE.Quaternion; from: number; to: number }>
   orbits: Record<string, THREE.Quaternion>
   patches: Record<string, { orbit: THREE.Quaternion; terrain: THREE.Quaternion }>
   fitted: { frame: number; terrainFrame: number }
   anchor: string
   follows: Record<string, string>
   open: Record<string, boolean>
+}
+
+export const STAR_LEVEL = 0.01
+
+export function starShare(plate: { aim: THREE.Quaternion; tan: [number, number]; add: boolean; ring: [number, number, number, number]; edge: number; unfold?: [number, number] }, weight: number, shot: { skyQuaternion: THREE.Quaternion; skyTurn: THREE.Quaternion; camera: { vfov: number } }, frame: THREE.Quaternion, aspect: number): number {
+  if (plate.add || !(plate.ring[2] < plate.ring[3] && plate.ring[3] <= 0)) return 1
+  const q = plate.aim.clone().invert().multiply(frame).multiply(shot.skyTurn.clone().invert()).multiply(shot.skyQuaternion)
+  const th = Math.tan(THREE.MathUtils.degToRad(shot.camera.vfov) / 2)
+  const v = new THREE.Vector3()
+  let least = Infinity
+  for (const [x, y] of [[-1, -1], [1, -1], [-1, 1], [1, 1]] as const) {
+    v.set(x * th * aspect, y * th, -1).applyQuaternion(q)
+    if (!(v.z < 0)) return 1
+    const u = (v.x / -v.z / plate.tan[0]) * 0.5 + 0.5
+    const w = (v.y / -v.z / plate.tan[1]) * 0.5 + 0.5
+    least = Math.min(least, u, 1 - u, w, 1 - w)
+  }
+  const from = plate.edge * (plate.unfold?.[1] ?? 0)
+  const k = plate.edge > from ? Math.min(Math.max((least - from) / (plate.edge - from), 0), 1) : least >= plate.edge ? 1 : 0
+  return 1 - Math.min(Math.max(weight, 0), 1) * k * k * (3 - 2 * k)
 }

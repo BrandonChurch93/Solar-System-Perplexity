@@ -17,6 +17,9 @@ the same way, says how a plate value shows, and the new plate is set so it shows
 python3 assets-src/venus/place/tlay.py calib KIND TAG      the shift between the globe's draw laid back and the plate, to write to atT.shiftDeg
 python3 assets-src/venus/place/tlay.py check KIND TAG      the globe's draw laid back beside the plate (is the camera right?)
 python3 assets-src/venus/place/tlay.py make KIND [TAG ...]  out/work/venus/place/t/<kind>-<tag>.png from the plates of build.py
+python3 assets-src/venus/place/tlay.py round KIND [TAG ...] the plates of the film with the picture of the place round the frame of T (survey.ts)
+python3 assets-src/venus/place/tlay.py far KIND [TAG ...]   the plates of the film with the far deck of T: where the camera of T sees the ground
+                                                              at a low angle the plate takes the picture of T itself (atT.far)
 python3 assets-src/venus/place/tlay.py lock KIND SUFFIX [TAG ...]  the same plates, tones locked again with t/globe-<frame><suffix>.png
 python3 assets-src/venus/place/tlay.py export KIND [TAG ...]  public/assets/venus/{full,web}/place3-<tag>-<kind>.jpg, or place3-<tag>-light-<kind>.jpg
                                                               for a level that holds its light alone (plates.json, lightNote)
@@ -162,6 +165,191 @@ def make(kind, tag, start='build'):
     print(kind, tag, 'share of the plate in the frame at T', round(float((cover > 0.5).mean()), 4), 'share replaced by the picture', round(float((trust > 0.5).mean()), 4), 'mean change of the plate, of 255', round(float(np.abs(out - old).mean() * 255), 2))
 
 
+def surveys(kind):
+    """The survey cameras at T (survey.ts --json), moved along the ground by the shift of the camera of T."""
+    cams = json.loads((WORK / f'survey-{kind}.json').read_text())
+    n, e, u = lay.frame(lay.centre_dir())
+    se, sn = np.radians(AT['shiftDeg'][kind])
+    for cam in cams.values():
+        cam['position'] = (np.array(cam['position']) + e * se + u * sn).tolist()
+    return cams
+
+
+def around(kind, tag):
+    """The picture of the place round the frame of T, on the grid of a level: the close side and the globe side drawn from the
+    eye of T by the survey cameras (those of atT.round.use), laid back and put together by their place in each frame, and where
+    the close side has ground (the layers view, taken in by a few pixels of the draw so that no pixel of its outline counts). For
+    a camera of atT.round.more the picture is the one of more.py, which goes on past the end of the ground."""
+    f = camera(kind)['frame']
+    wsum = np.zeros((SIZE, SIZE), np.float32)
+    c = np.zeros((SIZE, SIZE, 3), np.float32)
+    g = np.zeros((SIZE, SIZE, 3), np.float32)
+    has = np.zeros((SIZE, SIZE), np.float32)
+    more = AT['round']['more'].get(kind, [])
+    for name, cam in surveys(kind).items():
+        if name not in AT['round']['use'][kind]:
+            continue
+        fx, fy, ok, _ = project(cam, tag)
+        inside = np.minimum(np.minimum(fx, 1 - fx) * 16 / 9, np.minimum(fy, 1 - fy))
+        w = (lay.smooth(0.0, AT['edge'], inside) * ok).astype(np.float32)
+        layers = read(T / f'layers-{f}-{name}.png').max(2)
+        ground = cv2.erode((layers > 0.1).astype(np.float32), np.ones((2 * AT['round']['inPx'] + 1,) * 2, np.uint8))
+        picture = T / f'close-{f}-{name}.png'
+        if name in more:
+            # Past the end of the ground the picture goes on (more.py): the whole frame of this camera counts.
+            picture = T / f'more-{f}-{name}.png'
+            ground = np.ones_like(ground)
+        c += laid(read(picture), fx, fy) * w[..., None]
+        g += laid(read(T / f'globe-{f}-{name}.png'), fx, fy) * w[..., None]
+        has += cv2.remap(ground, fx * ground.shape[1] - 0.5, fy * ground.shape[0] - 0.5, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0) * w
+        wsum += w
+    div = np.maximum(wsum, 1e-4)
+    return c / div[..., None], g / div[..., None], has / div, np.minimum(wsum, 1)
+
+
+def round_(kind, tag):
+    """The plates round the frame of T (plates.json, atT.round). Inside the frame of T the plate of the film stays as it is
+    (where make replaced it in full). Round it, as far as the ground of the close side has picture (its canvas and its aprons),
+    the plate takes that picture as the eye of T sees it, with the tones locked through the globe's own draw as in make. Its
+    border lies inside the outline of that picture and is as wide on the ground everywhere, sooner where the picture is dark
+    and later where it is bright, so it is no straight line. Starts from the plate of the film (kept in t/<kind>-<tag>-round-start.png)."""
+    R = AT['round']
+    kept = T / f'{kind}-{tag}-round-start.png'
+    if not kept.exists():
+        cv2.imwrite(str(kept), np.clip(present(kind, tag) * 255 + 0.5, 0, 255).astype(np.uint8))
+    old = read(kept)
+    fx, fy, ok, elevation = project(camera(kind), tag)
+    cover0, trust0 = weights(fx, fy, ok, elevation)
+    core = lay.smooth(R['core'][0], R['core'][1], trust0)
+    c, g, has, seen = around(kind, tag)
+    per = LEVELS[tag]['widthDeg'] / SIZE
+    region = ((has > 0.5) | (cover0 > 0.5)).astype(np.uint8)
+    dist = cv2.distanceTransform(region, cv2.DIST_L2, 5) * per
+    form = np.clip(cv2.GaussianBlur(c @ np.array([0.0722, 0.7152, 0.2126], np.float32), (0, 0), max(R['formDeg'] / per, 0.5)) * R['scale'], 0, 1)
+    matte = lay.smooth(0.0, 1.0, dist / R['matteDeg'] * (1 + R['forms']) - R['forms'] * (1 - form))
+    steep = lay.smooth(AT['trustSinElevation'][0], AT['trustSinElevation'][1], elevation)
+    trust = (matte * steep * lay.smooth(0.5, 0.9, has) * (1 - core)).astype(np.float32)
+    sigma = AT['toneSigma'][tag] * SIZE
+    lo, m = low(old, seen, sigma)
+    lg, _ = low(g, seen, sigma)
+    known = lay.smooth(0.02, 0.2, m)[..., None]
+    shows = 1 + known * (ratio(lo, lg) - 1)
+    new = c * shows
+    # Past the outline the plate keeps its forms and takes the broad tone the picture has at the outline, fading out over reachDeg.
+    inside = (trust > 0.5).astype(np.float32)
+    broad = R['toneDeg'] / per
+    tone, weight = low(ratio(cv2.GaussianBlur(new, (0, 0), broad), cv2.GaussianBlur(old, (0, 0), broad)), inside, R['carryDeg'] / per)
+    away = cv2.distanceTransform(1 - (trust > 0.02).astype(np.uint8), cv2.DIST_L2, 5) * per
+    carry = (lay.smooth(0.0, 0.05, weight) * (1 - lay.smooth(0.0, R['reachDeg'], away)) * (1 - core) * (1 - cover0))[..., None]
+    out = old * (1 + carry * (tone - 1)) * (1 - trust[..., None]) + new * trust[..., None]
+    write(T / f'{kind}-{tag}.png', out)
+    write(T / f'{kind}-{tag}-round.png', trust)
+    change = np.abs(out - old).mean(2) * 255
+    print(kind, tag, 'share of the plate that takes the picture round the frame of T', round(float((trust > 0.5).mean()), 4), 'share that takes none of it', round(float((trust == 0).mean()), 4), 'mean change of the plate, of 255', round(float(change.mean()), 2), 'inside the kept part', round(float(change[core >= 1].mean()) if (core >= 1).any() else 0.0, 3))
+
+
+def seen(plate, cam, tag, rows, w, h):
+    """The plate as the camera of T sees it, on the rows y0 to y1 of a frame w by h: each pixel the mean of the plate over its
+    ground, taken with atT.far.rays rays (down the frame, across it)."""
+    y0, y1 = rows
+    down, across = AT['far']['rays']
+    n, e, u = lay.frame(lay.centre_dir())
+    pos = np.array(cam['position']); X = np.array(cam['x']); Y = np.array(cam['y']); Z = np.array(cam['z'])
+    th = np.tan(np.radians(cam['vfovDeg']) / 2)
+    tw = np.tan(np.radians(LEVELS[tag]['widthDeg']) / 2)
+    acc = np.zeros((y1 - y0, w, 3), np.float32)
+    cnt = np.zeros((y1 - y0, w), np.float32)
+    c0 = float(pos @ pos) - 1.0
+    for k in range(down):
+        fy = (np.arange(y0, y1) + (k + 0.5) / down) / h
+        for j in range(across):
+            fx = (np.arange(w) + (j + 0.5) / across) / w
+            gx, gy = np.meshgrid((fx - 0.5) * 2 * th * 16 / 9, (0.5 - fy) * 2 * th)
+            d = gx[..., None] * X + gy[..., None] * Y - Z
+            d /= np.linalg.norm(d, axis=-1, keepdims=True)
+            b = d @ pos
+            disc = b * b - c0
+            hit = (disc > 0) & (b < 0)
+            t = -b - np.sqrt(np.maximum(disc, 0))
+            p = pos + t[..., None] * d
+            pn = p @ n
+            col = ((p @ e) / pn / tw + 1) / 2 * SIZE - 0.5
+            row = (1 - (p @ u) / pn / tw) / 2 * SIZE - 0.5
+            ok = hit & (pn > 0) & (col >= 0) & (col <= SIZE - 1) & (row >= 0) & (row <= SIZE - 1)
+            got = cv2.remap(plate, col.astype(np.float32), row.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+            acc += got * ok[..., None]
+            cnt += ok
+    return acc / np.maximum(cnt, 1e-6)[..., None], cnt / (down * across)
+
+
+def far(kind, tag):
+    """The far deck of T. make gives the picture of T to the plate only where the camera of T looks at the ground steeply enough
+    (trust); down to coverSinElevation the plate keeps its own forms with the tones of T. From the eye of T that far ground is
+    then not the picture of T, and the ground of the surface view is exchanged there for other forms as it gives way. Here the
+    plate of the film takes the picture of T over that ground as well:
+    - the close side drawn at T, laid back, over the tones the plate has now (as make does);
+    - along the line of sight of T one pixel of T covers many texels of the plate, so the forms of the plate finer than that
+      pixel stay: the plate over the plate as the camera of T sees it (seen), laid back the same way, within atT.ratio.
+    So from the eye of T the plate is the picture of T, and from above it keeps forms as fine as the plate about it. It starts
+    from the file of the film (present), so the step can be run once on a plate; t/<kind>-<tag>-far-start.png keeps that start."""
+    kept = T / f'{kind}-{tag}-far-start.png'
+    if not kept.exists():
+        cv2.imwrite(str(kept), np.clip(present(kind, tag) * 255 + 0.5, 0, 255).astype(np.uint8))
+    cam = camera(kind)
+    close, _ = frames(kind)
+    fx, fy, ok, elevation = project(cam, tag)
+    cover, trust0 = weights(fx, fy, ok, elevation)
+    inside = np.minimum(np.minimum(fx, 1 - fx) * 16 / 9, np.minimum(fy, 1 - fy))
+    edge = lay.smooth(0.0, AT['edge'], inside) * ok
+    t1 = edge * lay.smooth(AT['coverSinElevation'][0], AT['coverSinElevation'][1], elevation)
+    del inside, edge, elevation, ok
+    t1 = lay.smooth(0.5, 0.95, cv2.GaussianBlur(t1.astype(np.float32), (0, 0), AT['soft'] * SIZE)).astype(np.float32)
+    # The share the far deck adds: none where the plate holds the picture already, none at the border of the frame.
+    m = np.clip((t1 - trust0) / np.maximum(1 - trust0, 1e-4), 0, 1).astype(np.float32)
+    m[trust0 > 0.999] = 0
+    least = AT['far']['least']
+    if not (m > least).any():
+        print(kind, tag, 'no far deck of T on this level')
+        return
+    wgt = np.maximum(cover, t1).astype(np.float32)
+    del cover, trust0, t1
+    old = read(kept)
+    picture = read(close)
+    h, w = picture.shape[:2]
+    c = laid(picture, fx, fy)
+    sigma = AT['toneSigma'][tag] * SIZE
+    lc, k = low(c, wgt, sigma)
+    lp, _ = low(old, wgt, sigma)
+    del wgt
+    known = lay.smooth(0.02, 0.2, k)[..., None].astype(np.float32)
+    L = (c * (1 + known * (ratio(lp, lc) - 1))).astype(np.float32)
+    del c, lc, lp, known, k
+    sel = m > least
+    y0 = max(int(np.floor(fy[sel].min() * h)) - 8, 0)
+    y1 = min(int(np.ceil(fy[sel].max() * h)) + 8, h)
+    del sel
+    view, has = seen(old, cam, tag, (y0, y1), w, h)
+    full = np.zeros_like(picture)
+    full[y0:y1] = view
+    fullHas = np.zeros((h, w), np.float32)
+    fullHas[y0:y1] = has
+    del picture, view, has
+    S = laid(full, fx, fy)
+    sHas = cv2.remap(fullHas, fx * w - 0.5, fy * h - 0.5, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0)
+    del full, fullHas, fx, fy
+    fine = np.clip((old + AT['floor']) / (S + AT['floor']), AT['ratio'][0], AT['ratio'][1]).astype(np.float32)
+    del S
+    fine = (1 + lay.smooth(0.9, 1.0, sHas)[..., None] * (fine - 1)).astype(np.float32)
+    del sHas
+    mm = m[..., None]
+    out = old * (1 - mm) + L * fine * mm
+    del L, fine
+    write(T / f'{kind}-{tag}.png', out)
+    write(T / f'{kind}-{tag}-far.png', m)
+    ch = np.abs(out - old).mean(2) * 255
+    print(kind, tag, 'rows of T', y0, y1, 'share of the plate that takes the far deck of T', round(float((m > 0.5).mean()), 4), 'mean change of 255 there', round(float(ch[m > 0.5].mean()), 2), 'elsewhere', round(float(ch[m <= least].mean()), 3))
+
+
 def lock(kind, suffix, tag):
     cam = camera(kind)
     close, globe = frames(kind)
@@ -289,6 +477,10 @@ if __name__ == '__main__':
             make(kind, tag, start)
         elif cmd == 'lock':
             lock(kind, suffix, tag)
+        elif cmd == 'round':
+            round_(kind, tag)
+        elif cmd == 'far':
+            far(kind, tag)
         elif cmd == 'export':
             export(kind, tag)
         elif cmd == 'split':
