@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T07:48:53.943Z",
- "head": "8bb83bd7596c80a7845c6964c5b1a244aea229c3",
- "note": "candidate 8bb83bd7 on main 77a7d410 (N9); teal texels in the map's made ground found, hue hold in work; bad: specks at 2435, dark stepped band 2460 to 2473",
+ "pushed": "2026-11-26T08:45:13.000Z",
+ "head": "792d4a20450074fe3f1337bb77276e0154b6279a",
+ "note": "candidate 792d4a20 (map's hues held); bad: dark stepped band at 2468, pale soft patch at 2441, speckle at 2726",
  "looks": [
+  {
+   "time": "2026-11-26T08:45:12.095Z",
+   "file": "20261126084512095-note-strip30.jpg",
+   "source": "../../../../tmp/pm/strip30.png",
+   "kind": "note",
+   "label": "792d4a20 strip 2415 to 2450 at draft, native",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T08:45:11.480Z",
+   "file": "20261126084511480-note-g32a.jpg",
+   "source": "../../../../tmp/pm/g32a.png",
+   "kind": "note",
+   "label": "2468 at 4 times, the dark stepped band on the far mesa's crest: as it stands (left) and with the seen file read finer (right, not taken: the stair stays)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T08:45:10.848Z",
+   "file": "20261126084510848-note-g31c.jpg",
+   "source": "../../../../tmp/pm/g31c.png",
+   "kind": "note",
+   "label": "2726 at 6 times, before and 792d4a20: bad in both, pale green and pink texels east of the canyon",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T08:45:10.230Z",
+   "file": "20261126084510230-note-g31e.jpg",
+   "source": "../../../../tmp/pm/g31e.png",
+   "kind": "note",
+   "label": "2441 native: before and 792d4a20; bad in both: pale soft patch south east of the canyon's bend",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T08:45:09.593Z",
+   "file": "20261126084509593-note-g31a.jpg",
+   "source": "../../../../tmp/pm/g31a.png",
+   "kind": "note",
+   "label": "2435 at 3 times: candidate before (left) with dark teal specks south of the canyon, 792d4a20 (right) without",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T07:48:53.024Z",
    "file": "20261126074853024-note-full29.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/pm/g30a.png",
    "kind": "note",
    "label": "map 0.8 to 2.8 degrees south of the canyon: the globe's own, the name's patch-19 with teal and purple texels, the same held in the globe's hue range (in work)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:21:57.003Z",
-   "file": "20261126072157003-note-judge-N9.jpg",
-   "source": "../../../../tmp/pm/judge-N9.png",
-   "kind": "note",
-   "label": "judge d344, N9: with the 8.5 plate, without, difference x 8, eight frames. Mean abs 0.56 to 1.54, 99th 4 to 8",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:21:56.339Z",
-   "file": "20261126072156339-note-g29.jpg",
-   "source": "../../../../tmp/pm/g29.png",
-   "kind": "note",
-   "label": "2726 (4x) and 2427 (2x) boxes, N7 left, N9 right. Still wrong: speckle and a greenish line right and lower left of the canyon at 2726 are the map's own",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:21:55.617Z",
-   "file": "20261126072155617-note-g29c.jpg",
-   "source": "../../../../tmp/pm/g29c.png",
-   "kind": "note",
-   "label": "2441 draft, canyon: N7 (top) and N9 (bottom). Pale grey green rim gone; the made canyon keeps the plate's picture, the map takes it",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:21:54.909Z",
-   "file": "20261126072154909-note-g29d.jpg",
-   "source": "../../../../tmp/pm/g29d.png",
-   "kind": "note",
-   "label": "2704 draft, canyon: candidate N7 (left) and N9 (right). The green tinge and the pale rim beside the canyon are gone with N9",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:01:16.863Z",
-   "file": "20261126070116863-note-n8-rim.jpg",
-   "source": "../../../../tmp/pm/n8-rim.png",
-   "kind": "note",
-   "label": "files from above beyond 0.8 degrees: map (flat brown band, pale green rim), N7 plate, base plate; red, cause of the green tinge",
    "stop": "mars"
   }
  ]
