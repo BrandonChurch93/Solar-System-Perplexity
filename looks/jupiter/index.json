@@ -1,9 +1,33 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T15:59:49.331Z",
- "head": "e5051fcc0a0d41589d7f84a22c2c8ce70e1e8467",
- "note": "16:01 UTC. Named e5051fcc for the later cut at 15:59 (bundle by mail, branch not released). Path check green on it. The reader slice of rows 3259 to 3268 + 1/2 on the build is running",
+ "pushed": "2026-11-26T16:13:51.742Z",
+ "head": "01913ba3568b1d51dc97b3200206d4e65f2a71bf",
+ "note": "16:13 UTC. Build e5051fcc read on rows 3259 to 3268 + 1/2: pattern 1.34 at row 3262 on a sliver, 0.49 at 3266 + 1/2, the rest under 0.45. The name's rows of the same slice are being drawn for the comparison",
  "looks": [
+  {
+   "time": "2026-11-26T16:13:50.662Z",
+   "file": "20261126161350662-note-sheet-m-3268-3276.jpg",
+   "source": "../../../../tmp/sheet-m-3268-3276.jpg",
+   "kind": "note",
+   "label": "Build e5051fcc at 3268, 3271, 3274, 3276, draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:13:49.475Z",
+   "file": "20261126161349475-note-storm-diff-3263-3266.jpg",
+   "source": "../../../../tmp/storm-diff-3263-3266.jpg",
+   "kind": "note",
+   "label": "Storm patch at 3263 and 3266: name, build e5051fcc, build minus name 3 times (grey is no change)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:13:48.683Z",
+   "file": "20261126161348683-note-storm-far-2x-3261-3266.jpg",
+   "source": "../../../../tmp/storm-far-2x-3261-3266.jpg",
+   "kind": "note",
+   "label": "Beyond the storm at 3261, 3263, 3266, 2 times, name above build e5051fcc: in the build the plates' lit cloud puffs show in the picture's shadow some frames sooner",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T15:59:48.267Z",
    "file": "20261126155948267-note-strip-far-3246-3260.jpg",
@@ -53,30 +77,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "e1ac861ce101f79f"
-  },
-  {
-   "time": "2026-11-26T15:45:53.899Z",
-   "file": "20261126154553899-note-map5-c.jpg",
-   "source": "../../../../tmp/map5-c.jpg",
-   "kind": "note",
-   "label": "Rows 3257 and 3258, name then build, my replay of the reader's back reading. Right: judged pixels from green (0) to red (0.9), magenta where the settled place lies outside the earlier frame. Left: earlier and later frame at the highest place inside the frame. Correction to place-3257.jpg of 15:24: its left crops are not the counterpart of its right crops, the reader's place lies off the 1920 wide frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:45:52.666Z",
-   "file": "20261126154552666-note-sheet-c-b2.jpg",
-   "source": "../../../../tmp/sheet-c-b2.jpg",
-   "kind": "note",
-   "label": "The build ca38ff89, frames 3260, 3262, 3264, 3266",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:45:52.036Z",
-   "file": "20261126154552036-note-sheet-c-a2.jpg",
-   "source": "../../../../tmp/sheet-c-a2.jpg",
-   "kind": "note",
-   "label": "The build ca38ff89, frames 3252, 3254, 3256, 3258",
-   "stop": "jupiter"
   },
   {
    "time": "2026-11-26T14:57:51.128Z",
