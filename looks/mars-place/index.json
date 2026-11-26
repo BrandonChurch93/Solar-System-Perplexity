@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T10:33:42.745Z",
+ "pushed": "2026-11-26T11:02:45.329Z",
  "head": "699a879fd36d8c1e30333c656cb8416f4526baae",
- "note": "rows 2721 and 2401 traced (base map against patch-wide; the moon); step 2 at 2470",
+ "note": "step 2 pairs at 2468, 2472, 2686; the map's canyon behind the 2409 difference",
  "looks": [
+  {
+   "time": "2026-11-26T11:02:44.256Z",
+   "file": "20261126110244256-note-map2409-42.jpg",
+   "source": "../../../../tmp/pm/map2409-42.png",
+   "kind": "note",
+   "label": "the channel at 2409: patch-42 on main and on this state (the canyon in the map)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T11:02:43.336Z",
+   "file": "20261126110243336-note-q32-2686-rim.jpg",
+   "source": "../../../../tmp/pm/q32-2686-rim.png",
+   "kind": "note",
+   "label": "2686 far rim at twice, both states: a dark slab with stairs at x 1335..1420 y 245..265 stays (bad)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T11:02:42.553Z",
+   "file": "20261126110242553-note-q32-2472-band.jpg",
+   "source": "../../../../tmp/pm/q32-2472-band.png",
+   "kind": "note",
+   "label": "2472 the band at twice: 699a879f above, with the matte below (outline smoother, the thin dark line under the tip gone; tip still stepped)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T11:02:41.664Z",
+   "file": "20261126110241664-note-p32-2468-near.jpg",
+   "source": "../../../../tmp/pm/p32-2468-near.png",
+   "kind": "note",
+   "label": "2468 x 380..700 y 480..700 four times: 699a879f draws a whole light line on the near slope (bad, missed before the name), with the matte a row of faint dots",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T10:33:41.459Z",
    "file": "20261126103341459-note-m32-rim.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/pm/left21-a.png",
    "kind": "note",
    "label": "2721.5 and 2729.5 carried back, x 0..480, y 360..1080: the rings at the left are there and gone",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:33:37.139Z",
-   "file": "20261126103337139-note-row2721-ground.jpg",
-   "source": "../../../../tmp/pm/row2721-ground.png",
-   "kind": "note",
-   "label": "the 2721 pattern line: the same ground 11 to 21 deg east and south of the spot at 2721.5, 2725.5, 2729.5 (patch-wide's craters, then the base map's other craters), and the two files (bad, main's own red)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:02:26.465Z",
-   "file": "20261126100226465-note-g41.jpg",
-   "source": "../../../../tmp/pm/g41.png",
-   "kind": "note",
-   "label": "trials of the law not taken",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:02:25.872Z",
-   "file": "20261126100225872-note-g43.jpg",
-   "source": "../../../../tmp/pm/g43.png",
-   "kind": "note",
-   "label": "2685 count by count: the level line is carried by count 6",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:02:25.227Z",
-   "file": "20261126100225227-note-rise31.jpg",
-   "source": "../../../../tmp/pm/rise31.png",
-   "kind": "note",
-   "label": "rise 2684 to 2688 drafts of 699a879f (bad: level line low left, the cap's hill at right)",
    "stop": "mars"
   }
  ]
