@@ -25,9 +25,7 @@
 // 4. What the picture's eye saw (uLawSeen, uLawSight; close.json law.seen, the file of assets-src/mars/place/seenby.py): where two
 //    layers stand at one place of the picture, the ground behind the front one is drawn out ground for an eye beside the picture's
 //    eye and was never seen. A point farther from the picture's eye than the front there (by the spare) has no share; uLawSight.z
-//    is the breadth over which that goes, a share of the distance. uLawSight.x under 0.5: the count is off. The answer is taken
-//    at the file's four texels round the place and weighed; where hidden ground begins is read from the outline in the blue of
-//    the relief's masks (uLawOutline, close.json law.seen.outline), four times as fine as the file. The surface view
+//    is the breadth over which that goes, a share of the distance. uLawSight.x under 0.5: the count is off. The surface view
 //    itself shows a band of that ground, as wide as its eye stands beside the picture's eye; so the count is whole for a sight
 //    that stands no farther off the picture's ray than the sight of that eye, and as above from twice that angle on (the
 //    limits of the air count): the two sides agree at T, measured by `npm run handover -- --stop mars --only sides`.
@@ -61,7 +59,6 @@ uniform vec4 uLawSide;
 uniform vec4 uLawOver;
 uniform vec3 uLawTone;
 uniform vec4 uLawSight;
-uniform vec2 uLawOutline;
 uniform vec4 uLawGap;
 uniform vec2 uLawPicture;
 uniform sampler2D uLawSeen;
@@ -132,33 +129,8 @@ float lawShare(vec3 P, vec3 E, vec2 image) {
   float row = clamp(at.y, lawHalfRow(), 1.0 - lawHalfRow());
   float seen = 1.0;
   if (uLawSight.x > 0.5) {
-    // the answer (was this point behind the front for the picture's eye) is taken at each of the four texels of the file round
-    // the place and the four answers are weighed by the place between them. Reading the file itself between its texels and
-    // answering once put the line where hidden ground begins at the centres of the file's texels for ground a little behind
-    // the front, and a texel beyond the outline for ground far behind it: a stair of 3 to 5 pixels along the far mesa's crest
-    // at 2460 to 2473 (26 November). The line now runs on the outline as the file holds it, whatever the distance behind.
-    vec2 seenSize = vec2(textureSize(uLawSeen, 0));
-    vec2 cell = vec2(at.x, 1.0 - row / lawHalves()) * seenSize - 0.5;
-    ivec2 corner = ivec2(floor(cell));
-    vec2 part = fract(cell);
-    float hidden = 0.0;
-    for (int j = 0; j < 2; j++) {
-      for (int i = 0; i < 2; i++) {
-        ivec2 fetch = clamp(corner + ivec2(i, j), ivec2(0), ivec2(seenSize) - 1);
-        float front = inside ? texelFetch(uLawSeen, fetch, 0).r : 0.0;
-        float weight = (i == 0 ? 1.0 - part.x : part.x) * (j == 0 ? 1.0 - part.y : part.y);
-        hidden += weight * smoothstep(1.0, 1.0 + uLawSight.z, length(P) * front * uLawSight.y);
-      }
-    }
-    seen = 1.0 - hidden;
-    // the outline of that ground is a value of its own (uLawSight.w over 0.5; close.json law.seen.outline, the blue of the relief's
-    // masks at 2 pixels of the picture a texel, assets-src/mars/place/outline.py; the masks and their box are the relief's own, read
-    // as its contract allows): the file above holds the front's distance carried on beyond its outline, and hidden ground begins
-    // where the outline says, between uLawOutline.x and uLawOutline.y of it
-    if (uLawSight.w > 0.5) {
-      vec2 mq = (image - uMaskBox.xy) / uMaskBox.zw;
-      seen = 1.0 - (1.0 - seen) * smoothstep(uLawOutline.x, uLawOutline.y, textureLod(uMasks, vec2(mq.x, 1.0 - mq.y), 0.0).b);
-    }
+    float front = inside ? textureLod(uLawSeen, vec2(at.x, 1.0 - row / lawHalves()), 0.0).r : 0.0;
+    seen = 1.0 - smoothstep(1.0, 1.0 + uLawSight.z, length(P) * front * uLawSight.y);
     // the surface view shows that ground as far as its own eye looks past the front: by the angle between the picture's ray and
     // the sight, whole up to the angle of the eye at which the surface view takes over, as the count was before from twice it on
     seen = 1.0 - (1.0 - seen) * off;

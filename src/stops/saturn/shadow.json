@@ -1,12 +1,14 @@
 {
- "source": "assets-src/saturn/rings/shadow_fit.py, direction of the globe's shadow on the rings in the ring frame, fitted to the hero",
- "local": [
-  -0.903132,
-  0.224951,
-  -0.365717
- ],
- "azimuthOffsetDeg": 3.0,
- "elevationDeg": 13.0,
- "widen": -0.0125,
- "score": 0.9972
+  "source": "assets-src/saturn/code/shadow_view_fit.py: the direction that casts the globe's shadow on the rings, in the frame of the body (y the axis, azimuth = atan2(z, x)), fitted to the edges of the shadow in the approved hero as the hold's view of fit.json sees them on true circles",
+  "local": [
+    -0.895186,
+    0.222604,
+    -0.386121
+  ],
+  "azimuthDeg": -156.668,
+  "azimuthOffsetDeg": 4.287,
+  "elevationDeg": 12.862,
+  "edgesRmsPx": 12.9,
+  "fromSunDeg": 5.077,
+  "note": "Two directions stand at Saturn and this file is the second. The globe is lit by the Sun of fit.json (azimuth -160.955, elevation 15.781 in the body's frame; the globe's light at the hold is a map baked from the approved picture, so the terminator stands where the picture has it). The globe's shadow on the rings is cast from the direction in local, 5.077 degrees from that Sun (4.287 in azimuth, 2.919 lower over the ring plane). How each was read: the Sun of fit.json is the kept fit of the shading of the globe, carried with the body into the solved view; local is read by shadow_view_fit.py on 40 points of the shadow's two edges on 30 circles of the B and the A ring of the approved hero, least squares in px along the circle (12.9 px rms left, mean 0). Why two: the approved picture does not hold one Sun; cast from the globe's Sun the shadow's near edge lies 71 px along the circles from the picture's (the lit ring runs on where the picture is black). It is one direction in the body's frame for every frame that draws the ring: the sets turn the Sun onto it by one fixed turn (kept/set.ts and model.ts, shadowTurn) and no weight of time, view or distance stands on it. Ruled by the Builder as (c), mail 1431, under d356 (7); main held the same kind of turn before (azimuth offset 3.0, elevation 13.0, 4.0 degrees from the Sun, fitted in the old view by assets-src/saturn/rings/shadow_fit.py)."
 }

@@ -73,7 +73,10 @@ export interface MoveParams {
   // that is not given. Not set: the stop names no body and every frame keeps its sample count.
   near?: NearParams[]
   tint: [number, number, number]
-  skyAim?: { orbit?: [number, number, number]; terrain?: [number, number, number]; dive?: [number, number, number]; turn?: [number, number] }
+  // skyAim.arrive: the sky's aim on the stop's way in, read as orbit is (along, tilt and lift of the view of the judged hold frame). The
+  // sky has the turn of that aim in the rise of the stop before and on the travel to this stop, where it has this stop's orbit turn
+  // otherwise, and the stop's own turn from the first frame of its hold on (FilmDirector.arrivals). Not set: the way in has the orbit turn.
+  skyAim?: { orbit?: [number, number, number]; terrain?: [number, number, number]; dive?: [number, number, number]; turn?: [number, number]; arrive?: [number, number, number] }
 }
 
 export interface NearParams { centre: [number, number, number]; radius: number; degPerSecond?: number }
