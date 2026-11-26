@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T13:18:19.289Z",
+ "pushed": "2026-11-26T13:46:14.603Z",
  "head": "6696b4afe40189fc3cee6d950ef07f34bf11da12",
- "note": "13:19 UTC: both lines green at master draft on wg0 (1.658, bands green), dive and rise frames red with the baked code, cause under test",
+ "note": "13:46 UTC: dive frames of line A were red in every state with the medium (black disc at 2997 and 3296), cause found and cured in the dev tree; speckles and the paint from above still red",
  "looks": [
+  {
+   "time": "2026-11-26T13:46:13.777Z",
+   "file": "20261126134613777-note-wi1-3150.jpg",
+   "source": "../work/r26/t/wi1-3150.png",
+   "kind": "note",
+   "label": "line A dev state wi1 at 3150, preview draft: line (i) 1.749 whole frame, 1.395 outside the seven cells, bands green, 32.4 s; not in the repo yet",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:46:13.039Z",
+   "file": "20261126134613039-note-see-mid.jpg",
+   "source": "../work/r26/t/see-mid.png",
+   "kind": "note",
+   "label": "why the wedge: left my solved paint of the mid level seen from above, right the plate of main; the solve turned the whole fan of the view, to be limited to the central patch",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:46:12.248Z",
+   "file": "20261126134612248-note-wi1-2997.jpg",
+   "source": "../work/r26/t/wi1-2997.png",
+   "kind": "note",
+   "label": "line A dev state wi1 at 2997, preview draft: the black disc on the dive is gone (the march now searches the crossing), still red: about 220 black single pixels and the solved paint lying on the globe as a hard wedge",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T13:18:18.646Z",
    "file": "20261126131818646-note-wg0s-vs-appr.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r26/t/e1-crop.jpg",
    "kind": "note",
    "label": "Cause of the red at master, proved by a switch: 3150 lower left at preview (left), at preview with the least pixel feet halved so that it draws master's octaves (middle, line (i) 4.040), and master brought to preview (right, 3.851). Middle and right differ by 0.37 in the low band.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T11:12:55.360Z",
-   "file": "20261126111255360-note-wa5-r4-3150.jpg",
-   "source": "../work/r26/t/wa5-r4-3150.png",
-   "kind": "note",
-   "label": "Frame 3150, line A at 9f297b47 (state wa5 after four solve rounds), preview, draft: line (i) 2.006 at this size, 3.851 at master. Not a candidate.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T11:12:54.360Z",
-   "file": "20261126111254360-note-wa5off-3150.jpg",
-   "source": "../work/r26/t/wa5off-3150.png",
-   "kind": "note",
-   "label": "Frame 3150, line A at 9f297b47 without the solve's paint (form, light and the map's colour alone), preview, draft: line (i) 15.326.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T11:12:39.897Z",
-   "file": "20261126111239897-note-sheet-wa5r4-sizes.jpg",
-   "source": "../work/r26/t/sheet-wa5r4-sizes.jpg",
-   "kind": "note",
-   "label": "RED at master: frame 3150 of line A at 9f297b47 at preview draft (line (i) 2.006) beside the same at master draft (3.851), and the master's lower half at 1 to 1. At master the thin pale lines along the flow cover the ground like wood grain; the lower left is 4 to 9 levels lighter.",
    "stop": "jupiter"
   }
  ]
