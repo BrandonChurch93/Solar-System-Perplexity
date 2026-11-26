@@ -1,8 +1,8 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T20:05:31.472Z",
+ "pushed": "2026-11-26T20:32:36.962Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the Sun's pair 180 and 181 at review with the seen turn: stars are crisp points that step 5 to 11 px a frame, as in the drafts; main 262b9a68 (the fifth cut) merged into agent/engine-sky-seen without a conflict, proofs running",
+ "note": "no new picture since 20:05: the fifth cut (main 262b9a68) is merged into agent/engine-sky-seen; one test of mine was red on the merge (a tolerance under the floor of the angle measure), cured in a test commit 7d88f13c; build, suite, path lines and dumps run on it now",
  "looks": [
   {
    "time": "2026-11-26T20:02:42.231Z",
