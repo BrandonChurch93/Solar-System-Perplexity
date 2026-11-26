@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T05:36:46.485Z",
+ "pushed": "2026-11-26T06:00:25.092Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "05:37 UTC: line A after MAIL 1422. w11 refused, w12 and w12b are round tops as the surface itself, wholly code, no scaffold yet. The fine colour map (w13) is drawing now.",
+ "note": "06:00 UTC: line A with the colour map (my call so far: map on, half its light out). Storm now wound fibres round a lower eye. The dark field is the open point: boulders (w15), teeth (w16), satin rolls (w17). Next: shorter rolls with lumpy crests.",
  "looks": [
+  {
+   "time": "2026-11-26T06:00:24.417Z",
+   "file": "20261126060024417-note-w17-3150.jpg",
+   "source": "../work/r26/t/w17-3150.png",
+   "kind": "note",
+   "label": "w17 at 3150, preview, draft, no scaffold: long rolls along the flow carry the dark field, tops only on their crests (too weak to see here). Reads as flowing satin with strata, not cloud yet. Line (i) 17.686",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:00:23.734Z",
+   "file": "20261126060023734-note-w16-3150.jpg",
+   "source": "../work/r26/t/w16-3150.png",
+   "kind": "note",
+   "label": "w16 at 3150, preview, draft, no scaffold: softer skin, pointed tops, bright painted rims cut. Dark field reads as teeth; too soft, band line red. Refused.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T05:54:01.860Z",
+   "file": "20261126055401860-note-w15-3150.jpg",
+   "source": "../work/r26/t/w15-3150.png",
+   "kind": "note",
+   "label": "w15 at 3150, preview, draft, no scaffold: tops only where the field is over a threshold, flat deck between. Dark field reads as boulders, not cloud. Line (i) 18.711",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T05:54:00.614Z",
+   "file": "20261126055400614-note-w14-3150.jpg",
+   "source": "../work/r26/t/w14-3150.png",
+   "kind": "note",
+   "label": "w14 at 3150, preview, draft, no scaffold: map with half its light taken out, no tops inside the storm. The storm reads as wound fibres round a lower eye; left side still terraced, dark field still lumps. Line (i) 17.499",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T05:53:59.252Z",
+   "file": "20261126055359252-note-w13b-3150.jpg",
+   "source": "../work/r26/t/w13b-3150.png",
+   "kind": "note",
+   "label": "w13b at 3150, preview, draft, no scaffold: w12b with the fine colour map of MAIL 1422 item 3 (the picture's detail as colour on the code's tops). Reads as painted pillows; the storm gains its fibres. Line (i) 17.557",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T05:36:38.020Z",
    "file": "20261126053638020-note-w12b-3150.jpg",
@@ -154,46 +194,6 @@
    "source": "../work/r25/t/t-3150.png",
    "kind": "note",
    "label": "state t (a64c3d06) at 3150, master draft, scaffold off: line (i) 16.026 (main 3.539, state s 9.259 with scaffold), bands green; boulders, flat storm dish, right third too light",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T03:20:17.283Z",
-   "file": "20261126032017283-note-t-3239-960.jpg",
-   "source": "../work/r25/t/t-3239-960.png",
-   "kind": "note",
-   "label": "state t (a64c3d06) at 3239, preview draft, scaffold off: cells left of the storm drawn out into bars",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T03:20:15.917Z",
-   "file": "20261126032015917-note-t-3060-960.jpg",
-   "source": "../work/r25/t/t-3060-960.png",
-   "kind": "note",
-   "label": "state t (a64c3d06) at 3060, preview draft, scaffold off: boulders and slabs, same faults as 3150",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T03:20:14.490Z",
-   "file": "20261126032014490-note-u4-3150.jpg",
-   "source": "../work/r25/t/u4-3150.png",
-   "kind": "note",
-   "label": "dev u4 at 3150, preview draft: curl warp of the heights tears the relief into combed stripes, line (i) 28.205, dropped",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:59:53.746Z",
-   "file": "20261126025953746-note-u2-3150.jpg",
-   "source": "../work/r25/t/u2-3150.png",
-   "kind": "note",
-   "label": "dev u2 at 3150, preview draft, no solve: line (i) 16.119, bands green, storm reads as a flat dish, cells as boulders",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:59:53.074Z",
-   "file": "20261126025953074-note-pat1.jpg",
-   "source": "../work/r25/lab2/pat1.png",
-   "kind": "note",
-   "label": "lab pattern study of the curl warp seen from above (numpy, not the film's shader): marbled folds at reach 0.5, 0.2, 0.06",
    "stop": "jupiter"
   }
  ]
