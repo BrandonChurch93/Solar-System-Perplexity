@@ -1,9 +1,59 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T15:46:00.140Z",
- "head": "4fe62ed99fcc4d5ee9fb559561766f43b23a02de",
- "note": "15:46 UTC. Build for the later cut (ca38ff89, merged with main as 4fe62ed9, local, branch not released): the picture's level follows the camera above the surface view's ceiling. By seven placements 53 of 60 comparisons are lower than the name's, 7 higher, all on rows 3256 + 1/2 to 3258 + 1/2, where the reader's place lies off the frame in both trees. Units and G15 on the merged tree are still running",
+ "pushed": "2026-11-26T15:59:49.331Z",
+ "head": "e5051fcc0a0d41589d7f84a22c2c8ce70e1e8467",
+ "note": "16:01 UTC. Named e5051fcc for the later cut at 15:59 (bundle by mail, branch not released). Path check green on it. The reader slice of rows 3259 to 3268 + 1/2 on the build is running",
  "looks": [
+  {
+   "time": "2026-11-26T15:59:48.267Z",
+   "file": "20261126155948267-note-strip-far-3246-3260.jpg",
+   "source": "../../../../tmp/strip-far-3246-3260.jpg",
+   "kind": "note",
+   "label": "Far strip (x 1200 to 1920, y 200 to 620) at 3246 to 3260 by twos, name rows above build rows: the name holds dark and swaps at 3254 to 3258, the build e5051fcc brightens from 3250 on",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:53:52.270Z",
+   "file": "20261126155352270-frame-f03294.jpg",
+   "source": "out/work/jupiter/frames/m3/f03294.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3294, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3294,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
+  {
+   "time": "2026-11-26T15:53:05.181Z",
+   "file": "20261126155305181-frame-f03038.jpg",
+   "source": "out/work/jupiter/frames/m3/f03038.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3038, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3038,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
+  {
+   "time": "2026-11-26T15:49:43.501Z",
+   "file": "20261126154943501-frame-f03150.jpg",
+   "source": "out/work/jupiter/frames/m2/f03150.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3150, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3150,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
   {
    "time": "2026-11-26T15:45:53.899Z",
    "file": "20261126154553899-note-map5-c.jpg",
@@ -27,44 +77,6 @@
    "kind": "note",
    "label": "The build ca38ff89, frames 3252, 3254, 3256, 3258",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:45:51.345Z",
-   "file": "20261126154551345-note-crop-far-3258.jpg",
-   "source": "../../../../tmp/crop-far-3258.jpg",
-   "kind": "note",
-   "label": "Far band at native pixels, frames 3258 and 3266, name above, build below: at 3258 the build's rim towers are lit as both show them at 3266",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:45:50.554Z",
-   "file": "20261126154550554-note-pair-c-3252-3256.jpg",
-   "source": "../../../../tmp/pair-c-3252-3256.jpg",
-   "kind": "note",
-   "label": "Name 13bebe00 above, the build ca38ff89 below, frames 3252 and 3256: the far strip brightens sooner in the build",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:45:49.105Z",
-   "file": "20261126154549105-note-pair-c-3250-3258.jpg",
-   "source": "../../../../tmp/pair-c-3250-3258.jpg",
-   "kind": "note",
-   "label": "Name 13bebe00 above, the build ca38ff89 below (local, not pushed), frames 3250 and 3258",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:59:53.858Z",
-   "file": "20261126145953858-frame-f03200.jpg",
-   "source": "out/work/jupiter/frames/c2/f03200.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3200, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3200,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
   },
   {
    "time": "2026-11-26T14:57:51.128Z",
