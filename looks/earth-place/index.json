@@ -1,9 +1,64 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T08:10:29.920Z",
+ "pushed": "2026-11-26T08:23:13.849Z",
  "head": "a5e46e815452cc68eaf7a90ed57edbcebb2d9ae9",
- "note": "08:11 candidate a5e46e81 on main 77a7d410 pushed, units green (90 files, 1034 tests; the 07:45 note said 52 files, wrong); finals 1755 and 2010 and the handover tool running; two crops of standing reds",
+ "note": "08:24 candidate a5e46e81: 2010 final is byte equal to the final of 22:51 (4.286 against main's 4.555); 1755 final 4.8818 (main 5.3500), 866 px differ from the final of 22:46, 848 of them inside 5 degrees; handover tool runs",
  "looks": [
+  {
+   "time": "2026-11-26T08:23:12.988Z",
+   "file": "20261126082312988-note-p12-rim-a.jpg",
+   "source": "../../../../tmp/gl/k23/N/p12-rim-a.jpg",
+   "kind": "note",
+   "label": "BAD, the plate at 1 to 1 with the canvas's rim drawn yellow: the canvas's own tufts south of the glint are the same tan dust as the sown field, which goes on about a degree past the rim and stops; past it bare sea and the map's hard white clouds",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T08:23:11.700Z",
+   "file": "20261126082311700-note-1755-disc4.jpg",
+   "source": "../../../../tmp/gl/k23/N/1755-disc4.jpg",
+   "kind": "note",
+   "label": "1755 at final, the disc at 4 for 1: approved, main, ee321270, the final of 22:46, the candidate a5e46e81. One pale yellow speck new at the disc's south (hold px 986, 536), not yet checked for twinkle: RED until checked",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T08:18:55.676Z",
+   "file": "20261126081855676-compare-earth-dive-sides.jpg",
+   "source": "out/work/handover/earth-dive-sides.png",
+   "kind": "compare",
+   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-26T08:17:39.594Z",
+   "file": "20261126081739594-still-f02010-16x9-final-full.jpg",
+   "source": "out/work/stills/f02010-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.terrain frame 2010, final tier",
+   "stop": "earth",
+   "segment": "earth.terrain",
+   "frame": 2010,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T08:11:49.895Z",
+   "file": "20261126081149895-still-f01755-16x9-final-full.jpg",
+   "source": "out/work/stills/f01755-16x9-final-full.png",
+   "kind": "still",
+   "label": "earth.hold frame 1755, final tier",
+   "stop": "earth",
+   "segment": "earth.hold",
+   "frame": 1755,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
   {
    "time": "2026-11-26T08:10:29.306Z",
    "file": "20261126081029306-note-c1884.jpg",
@@ -26,46 +81,6 @@
    "source": "../../../../tmp/gl/k23/pm-d-1889-0.jpg",
    "kind": "note",
    "label": "dive 1889, where the quick reader's top percent sits now (red): the far side of Yucatan under the limb, 0.28",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T07:44:31.295Z",
-   "file": "20261126074431295-note-r2-0.jpg",
-   "source": "../../../../tmp/gl/k23/r2-0.jpg",
-   "kind": "note",
-   "label": "rise 2136 to 2143 every frame, same state; quick reader over 2104 to 2150 largest 0.32 from 2144",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T07:44:30.664Z",
-   "file": "20261126074430664-note-d2-1.jpg",
-   "source": "../../../../tmp/gl/k23/d2-1.jpg",
-   "kind": "note",
-   "label": "dive 1864 to 1871 every frame, same state, draft, shutter off; quick reader over 1856 to 1908 largest 0.31 from 1867",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T07:17:15.276Z",
-   "file": "20261126071715276-note-r1-3.jpg",
-   "source": "../../../../tmp/gl/k23/r1-3.jpg",
-   "kind": "note",
-   "label": "rise 2128 to 2135 every frame, same state; still a swap of two pictures in the far band, paced by the air path",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T07:17:14.029Z",
-   "file": "20261126071714029-note-r1-2.jpg",
-   "source": "../../../../tmp/gl/k23/r1-2.jpg",
-   "kind": "note",
-   "label": "rise 2120 to 2127 every frame, same state; quick reader largest 0.21 from 2123",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T07:17:12.727Z",
-   "file": "20261126071712727-note-d1-2.jpg",
-   "source": "../../../../tmp/gl/k23/d1-2.jpg",
-   "kind": "note",
-   "label": "dive 1896 to 1903 every frame, same state",
    "stop": "earth"
   }
  ]
