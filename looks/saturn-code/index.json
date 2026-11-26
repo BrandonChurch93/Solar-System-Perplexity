@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T06:17:14.576Z",
+ "pushed": "2026-11-26T06:47:22.866Z",
  "head": "d65bfcbc0f77ca551a025d1066de534e296d0526",
- "note": "ruling d356 (7) taken: building the solved hold view (distance 5.12 radii, lens 32.94) in fit.json; reading the shadow of the globe on the near ring against the approved",
+ "note": "solved hold view (d356 7): first finals at 3465, the shadow's two angles, the globe's light being laid again through the solved view",
  "looks": [
+  {
+   "time": "2026-11-26T06:47:22.252Z",
+   "file": "20261126064722252-note-globe-ones.jpg",
+   "source": "../../../../tmp/v/rigid/SV/globe-ones.jpg",
+   "kind": "note",
+   "label": "3465 globe box: approved, film with the globe's light map at ones in the solved view, A, K"
+  },
+  {
+   "time": "2026-11-26T06:47:21.681Z",
+   "file": "20261126064721681-note-d3465-sheet.jpg",
+   "source": "../../../../tmp/v/rigid/SV/d3465-sheet.jpg",
+   "kind": "note",
+   "label": "3465: approved, solved view draft, K, difference"
+  },
+  {
+   "time": "2026-11-26T06:47:21.119Z",
+   "file": "20261126064721119-note-shadowfit.jpg",
+   "source": "../../../../tmp/v/rigid/SV/shadowfit.jpg",
+   "kind": "note",
+   "label": "approved with the shadow edges read (yellow), cast by the globe's Sun (cyan), by shadow.json (magenta), by the fit (green)"
+  },
+  {
+   "time": "2026-11-26T06:47:20.469Z",
+   "file": "20261126064720469-note-lr-plain.jpg",
+   "source": "../../../../tmp/v/rigid/SV/lr-plain.jpg",
+   "kind": "note",
+   "label": "3465 lower right at 1 to 1: approved, K, solved view A (shadow as main), solved view B (one light)"
+  },
   {
    "time": "2026-11-26T06:17:13.995Z",
    "file": "20261126061713995-note-shadow-lift.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/rigid/VF/one-r-a.jpg",
    "kind": "note",
    "label": "3465 right tip at 1 to 1: approved, K real, the third kind laid from the approved"
-  },
-  {
-   "time": "2026-11-26T05:50:02.325Z",
-   "file": "20261126055002325-note-one-ll-b.jpg",
-   "source": "../../../../tmp/v/rigid/VF/one-ll-b.jpg",
-   "kind": "note",
-   "label": "3465 lower left at 1 to 1: approved, the solved view laid from the approved, main real"
-  },
-  {
-   "time": "2026-11-26T05:50:01.671Z",
-   "file": "20261126055001671-note-one-ll-a.jpg",
-   "source": "../../../../tmp/v/rigid/VF/one-ll-a.jpg",
-   "kind": "note",
-   "label": "3465 lower left at 1 to 1: approved, K real, the third kind laid from the approved"
-  },
-  {
-   "time": "2026-11-26T05:50:01.003Z",
-   "file": "20261126055001003-note-view-all.jpg",
-   "source": "../../../../tmp/v/rigid/VF/view-all.jpg",
-   "kind": "note",
-   "label": "3465 at a third of the size: approved, main, K, and the approved laid on three rigid bodies (true circles today, true circles solved view, circles of their own)"
-  },
-  {
-   "time": "2026-11-26T05:33:18.725Z",
-   "file": "20261126053318725-note-lip1_3596.jpg",
-   "source": "../../../../tmp/v/rigid/PC/lip1_3596.jpg",
-   "kind": "note",
-   "label": "58113814 dive 3596 to 3607 at the right end of the equator, full size"
   }
  ]
 }
