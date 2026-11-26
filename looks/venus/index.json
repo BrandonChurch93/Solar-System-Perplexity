@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T03:13:52.404Z",
- "head": "bc119b82cf73f3327e15d02bfb5a89bd3df26ac3",
- "note": "trial R: main's code with the rise's far deck plates, beside main; two rows worse than main's, not named",
+ "pushed": "2026-11-26T03:44:51.321Z",
+ "head": "57c7e81dd489a4a15e3cd4f3bd6c031c56f86018",
+ "note": "trial R's whole rise beside main: 16 red rows against 19, two worse, soft round the place at 1557 to 1563",
  "looks": [
+  {
+   "time": "2026-11-26T03:44:50.449Z",
+   "file": "20261126034450449-note-R-M1-late.jpg",
+   "source": "../../../../tmp/v/sh/R/R-M1-late.jpg",
+   "kind": "note",
+   "label": "Trial R, not named: left R (main's code, the far deck of T in the rise's plates), right main, rise 1557, 1563, 1569, 1575, draft frames at half size. In R the ground round the place is soft at 1557 and 1563 where main shows the hold's crisp cells; by 1575 the two are alike. By the reader R's rise has 16 red rows against main's 19, two of them worse than main's (1544 + 1/2 0.83 against 0.75, 1547 0.49 against 0.40)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T03:13:51.767Z",
    "file": "20261126031351767-note-r-3094-back.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/sh/cF0D-cand-L.jpg",
    "kind": "note",
    "label": "control without the far deck in the dive's plates left, with it right, 1321, 1322, 1329, 1330, x 0 to 760, y 250 to 640",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T01:55:00.917Z",
-   "file": "20261126015500917-note-m1-cand-L.jpg",
-   "source": "../../../../tmp/v/sh/m1-cand-L.jpg",
-   "kind": "note",
-   "label": "main left, candidate with the far deck in the dive's plates right, 1320 and 1323, x 0 to 760, y 250 to 640: main's pale patch and small towers",
    "stop": "venus"
   }
  ]
