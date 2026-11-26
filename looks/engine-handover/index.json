@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T13:13:21.576Z",
+ "pushed": "2026-11-26T13:34:40.267Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune's tip with the cure of the readers: units, the pose pair, the seams line, the warm check over 4440 to 4540 and draft frames of the way in",
+ "note": "Idle after the cure 3bbb219a: tracing the level tone edge on Neptune near y 1033 at 4529 (not the ring, not the air, not the held plate: it is in the planet's own map)",
  "looks": [
+  {
+   "time": "2026-11-26T13:34:39.519Z",
+   "file": "20261126133439519-note-wrap-stretch.jpg",
+   "source": "../../../../tmp/seen/pics/wrap-stretch.png",
+   "kind": "note",
+   "label": "Neptune's map wrap.webp with the contrast stretched: the footprint of the approved picture and its lower border"
+  },
+  {
+   "time": "2026-11-26T13:34:38.869Z",
+   "file": "20261126133438869-note-grid-4529-whole.jpg",
+   "source": "../../../../tmp/seen/pics/grid-4529-whole.png",
+   "kind": "note",
+   "label": "Scratch trial: the body's own grid drawn on Neptune at 4529 (lines of the held box): the level edge follows no line of latitude or longitude"
+  },
+  {
+   "time": "2026-11-26T13:34:38.217Z",
+   "file": "20261126133438217-note-noring-4529.jpg",
+   "source": "../../../../tmp/seen/pics/noring-4529.png",
+   "kind": "note",
+   "label": "The same frame with the ring hidden in a scratch tree: the edge at y 1033 stays, the edges at y 1054 and 1078 were the ring"
+  },
+  {
+   "time": "2026-11-26T13:34:37.584Z",
+   "file": "20261126133437584-note-edge-4529-zoom.jpg",
+   "source": "../../../../tmp/seen/pics/edge-4529-zoom.png",
+   "kind": "note",
+   "label": "Neptune 4529 draft, x 1220..1700 y 980..1080 at 2 to 1, plain above and gain 3 below: a level edge at y 1033 where the cloud detail ends"
+  },
   {
    "time": "2026-11-26T13:13:20.831Z",
    "file": "20261126131320831-note-nep-tip-wayin.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/seen/pics/review-step-upper-left.png",
    "kind": "note",
    "label": "The same four review frames 1 to 1, upper left: Milky Way, stars and Triton keep their place over 4529 to 4530"
-  },
-  {
-   "time": "2026-11-26T12:56:30.332Z",
-   "file": "20261126125630332-note-review-step-whole.jpg",
-   "source": "../../../../tmp/seen/pics/review-step-whole.png",
-   "kind": "note",
-   "label": "The step of the stars on Neptune with its way in aim at the review tier: 4528 to 4531 whole at half size (16 samples in the travel, 4 in the hold)"
-  },
-  {
-   "time": "2026-11-26T12:20:37.997Z",
-   "file": "20261126122037997-note-step-line.jpg",
-   "source": "../../../../tmp/arr/pics/step-line.png",
-   "kind": "note",
-   "label": "4529 and 4530, x 1240 to 1840, y 960 to 1080 at twice the size: a level tone edge across the planet near y 1033, also on main's Neptune, not chased"
-  },
-  {
-   "time": "2026-11-26T12:20:36.611Z",
-   "file": "20261126122036611-note-step-lower-right.jpg",
-   "source": "../../../../tmp/arr/pics/step-lower-right.png",
-   "kind": "note",
-   "label": "The same four frames, lower right at full size: limb and stars over 4529 and 4530"
-  },
-  {
-   "time": "2026-11-26T12:20:35.386Z",
-   "file": "20261126122035386-note-step-upper-left.jpg",
-   "source": "../../../../tmp/arr/pics/step-upper-left.png",
-   "kind": "note",
-   "label": "The same four frames, upper left of the picture at full size: stars and band keep their place over 4529 and 4530"
   }
  ]
 }
