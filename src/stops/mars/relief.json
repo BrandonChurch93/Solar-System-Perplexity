@@ -57,12 +57,8 @@
  },
  "drawOrder": [
   "L0",
-  "C0",
   "L2",
-  "C2",
-  "L1",
-  "C1",
-  "C3"
+  "L1"
  ],
  "layers": {
   "L0": {
@@ -196,182 +192,6 @@
     2.1312,
     6.2153
    ]
-  },
-  "C0": {
-   "files": {
-    "full": {
-     "color": "public/assets/mars/full/relief-C0-color.png",
-     "alpha": "public/assets/mars/full/relief-C0-alpha.png",
-     "dist": "public/assets/mars/full/relief-C0-dist.bin"
-    },
-    "web": {
-     "color": "public/assets/mars/web/relief-C0-color.png",
-     "alpha": "public/assets/mars/web/relief-C0-alpha.png",
-     "dist": "public/assets/mars/web/relief-C0-dist.bin"
-    }
-   },
-   "box": {
-    "x": 2348,
-    "y": 1580,
-    "w": 184,
-    "h": 188
-   },
-   "colorSize": {
-    "full": [
-     184,
-     188
-    ],
-    "web": [
-     92,
-     94
-    ]
-   },
-   "distSize": {
-    "full": [
-     92,
-     94
-    ],
-    "web": [
-     46,
-     47
-    ]
-   },
-   "distRange": [
-    5.1243,
-    5.7528
-   ]
-  },
-  "C1": {
-   "files": {
-    "full": {
-     "color": "public/assets/mars/full/relief-C1-color.png",
-     "alpha": "public/assets/mars/full/relief-C1-alpha.png",
-     "dist": "public/assets/mars/full/relief-C1-dist.bin"
-    },
-    "web": {
-     "color": "public/assets/mars/web/relief-C1-color.png",
-     "alpha": "public/assets/mars/web/relief-C1-alpha.png",
-     "dist": "public/assets/mars/web/relief-C1-dist.bin"
-    }
-   },
-   "box": {
-    "x": 2368,
-    "y": 1760,
-    "w": 284,
-    "h": 312
-   },
-   "colorSize": {
-    "full": [
-     284,
-     312
-    ],
-    "web": [
-     142,
-     156
-    ]
-   },
-   "distSize": {
-    "full": [
-     142,
-     156
-    ],
-    "web": [
-     71,
-     78
-    ]
-   },
-   "distRange": [
-    4.3301,
-    4.693
-   ]
-  },
-  "C2": {
-   "files": {
-    "full": {
-     "color": "public/assets/mars/full/relief-C2-color.png",
-     "alpha": "public/assets/mars/full/relief-C2-alpha.png",
-     "dist": "public/assets/mars/full/relief-C2-dist.bin"
-    },
-    "web": {
-     "color": "public/assets/mars/web/relief-C2-color.png",
-     "alpha": "public/assets/mars/web/relief-C2-alpha.png",
-     "dist": "public/assets/mars/web/relief-C2-dist.bin"
-    }
-   },
-   "box": {
-    "x": 3320,
-    "y": 896,
-    "w": 272,
-    "h": 236
-   },
-   "colorSize": {
-    "full": [
-     272,
-     236
-    ],
-    "web": [
-     136,
-     118
-    ]
-   },
-   "distSize": {
-    "full": [
-     136,
-     118
-    ],
-    "web": [
-     68,
-     59
-    ]
-   },
-   "distRange": [
-    8.2743,
-    10.993
-   ]
-  },
-  "C3": {
-   "files": {
-    "full": {
-     "color": "public/assets/mars/full/relief-C3-color.png",
-     "alpha": "public/assets/mars/full/relief-C3-alpha.png",
-     "dist": "public/assets/mars/full/relief-C3-dist.bin"
-    },
-    "web": {
-     "color": "public/assets/mars/web/relief-C3-color.png",
-     "alpha": "public/assets/mars/web/relief-C3-alpha.png",
-     "dist": "public/assets/mars/web/relief-C3-dist.bin"
-    }
-   },
-   "box": {
-    "x": 780,
-    "y": 1212,
-    "w": 176,
-    "h": 116
-   },
-   "colorSize": {
-    "full": [
-     176,
-     116
-    ],
-    "web": [
-     88,
-     58
-    ]
-   },
-   "distSize": {
-    "full": [
-     88,
-     58
-    ],
-    "web": [
-     44,
-     29
-    ]
-   },
-   "distRange": [
-    4.177,
-    4.8313
-   ]
   }
  },
  "masks": {
@@ -411,7 +231,7 @@
   "textureBend": 0.38,
   "textureFade": [0.42, 0.76],
   "mips": false,
-  "baseAlphaNoMips": ["L0", "L2", "C0", "C1", "C2", "C3"],
+  "baseAlphaNoMips": ["L0"],
   "resolution": { "full": 0.5, "web": 1 },
   "layers": [
    { "layer": "L0", "atlas": "relief-L0-apron.webp", "depth": "relief-L0-apron.bin", "edges": [1344, 1184, 1456], "textureShear": [0, 0, 0], "bottomColorShear": [-1.65, 0.54, 0.9], "rightColorShear": [-0.9, 0.57, 0.79, 0.96] },
@@ -427,81 +247,6 @@
   "slope": 0.26,
   "interval": [0.046, 0.018],
   "taps": [1, 4, 6, 4, 1]
- },
- "cuts": {
-  "note": "The sheet is cut where the surface is cut (assets-src/mars/place/cutlayers.py over the list of crests.py). bias: how much nearer the cut layer stands than its parent, as a share of the distance. fill: under the near side the parent holds the far side carried on as far as this many times the crest's largest parallax over the surface view. band: cells of the parent's grid over which the parent goes back to its own distance, under the cut layer's whole alpha. feather: cells over which the cut layer's alpha ends beyond that. soft: texels of the distance file over which the file draws a step; within that many of the other side a texel is neither side's and takes the carried on distance. behind: the layers test depth against each other, so where a parent is pushed back and hides another layer that layer stands at least the parent's new distance times 1 plus this, widened by a cell of its grid. made: written by the tool, one row per cut layer with the crest's box in the picture, its largest parallax and the cell there in px of the 1080 line frame, and the frame of it.",
-  "bias": 0.005,
-  "fill": 1.5,
-  "band": 2,
-  "feather": 2,
-  "soft": 2,
-  "behind": 0.02,
-  "made": [
-   {
-    "id": "C0",
-    "parent": "L0",
-    "crest": [
-     2366,
-     1590,
-     2520,
-     1752
-    ],
-    "parallaxPx": 12.8,
-    "cellPx": 6.3,
-    "frame": 2678,
-    "fillPx": 50.7,
-    "wholePx": 83.9,
-    "endPx": 117.2
-   },
-   {
-    "id": "C1",
-    "parent": "L1",
-    "crest": [
-     2452,
-     1824,
-     2578,
-     1990
-    ],
-    "parallaxPx": 7.7,
-    "cellPx": 4.6,
-    "frame": 2678,
-    "fillPx": 29.4,
-    "wholePx": 52.8,
-    "endPx": 76.3
-   },
-   {
-    "id": "C2",
-    "parent": "L2",
-    "crest": [
-     3376,
-     932,
-     3526,
-     1066
-    ],
-    "parallaxPx": 6.5,
-    "cellPx": 2.9,
-    "frame": 2678,
-    "fillPx": 28.2,
-    "wholePx": 45.0,
-    "endPx": 61.8
-   },
-   {
-    "id": "C3",
-    "parent": "L1",
-    "crest": [
-     856,
-     1240,
-     884,
-     1252
-    ],
-    "parallaxPx": 5.8,
-    "cellPx": 4.7,
-    "frame": 2675,
-    "fillPx": 21.7,
-    "wholePx": 45.1,
-    "endPx": 68.5
-   }
-  ]
  },
  "safeMove": {
   "forward": 1.65,
