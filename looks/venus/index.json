@@ -1,71 +1,77 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T16:31:13.997Z",
+ "pushed": "2026-11-26T19:06:43.164Z",
  "head": "1367104f80e3b1a598c747802c75af30dd9272f5",
- "note": "right border of the rise, main against the dropped take; no name, code back at the name 35edb711",
+ "note": "round 58 faults (a) and (b) on main's code: what is seen and two controls; nothing cured yet",
  "looks": [
+  {
+   "time": "2026-11-26T19:06:41.282Z",
+   "file": "20261126190641282-note-b-g0-left.jpg",
+   "source": "../../../../tmp/v/sh/b-g0-left.jpg",
+   "kind": "note",
+   "label": "control, rise, left edge 1539 to 1546: M main, G0 ground off: the pale cells that enter at the left edge from 1543 stand with the ground off, so they are in the plates",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:06:39.485Z",
+   "file": "20261126190639485-note-b-band.jpg",
+   "source": "../../../../tmp/v/sh/b-band.jpg",
+   "kind": "note",
+   "label": "main's rise at draft tier, the Sun's glow 1539 to 1546: no band at 1539 and 1540, level bands left and right of the Sun from 1541 on",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:06:37.662Z",
+   "file": "20261126190637662-note-a-wall.jpg",
+   "source": "../../../../tmp/v/sh/a-wall.jpg",
+   "kind": "note",
+   "label": "main's dive and surface view at draft tier, left margin, frames 1340 to 1354 + 1/2, lifted in tone for sight: the block at the left edge stands before and after the handover at 1343",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:06:35.972Z",
+   "file": "20261126190635972-note-a-g0-lr.jpg",
+   "source": "../../../../tmp/v/sh/a-g0-lr.jpg",
+   "kind": "note",
+   "label": "control, lower right corner 1332 to 1340: M main, G0 the ground of the surface picture off on the globe side: with the ground off there is no cut, the plates run on",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:06:34.049Z",
+   "file": "20261126190634049-note-a-lr.jpg",
+   "source": "../../../../tmp/v/sh/a-lr.jpg",
+   "kind": "note",
+   "label": "main's dive at draft tier, lower right corner, frames 1332 to 1347: the cut moves down and leaves the frame after 1341",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:06:31.889Z",
+   "file": "20261126190631889-note-a-whole.jpg",
+   "source": "../../../../tmp/v/sh/a-whole.jpg",
+   "kind": "note",
+   "label": "main's dive at draft tier, frames 1332, 1336, 1340, 1343 whole: the straight cut under the dark cumulus at the lower right (1332 to 1340) and the block at the lower left; the cause of fault (a) of round 58 under study, nothing cured",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T18:42:12.014Z",
+   "file": "20261126184212014-frame-f01339-review.jpg",
+   "source": "out/work/sheets/.frames-xnopiN/f01339-review.png",
+   "kind": "frame",
+   "label": "venus.dive frame 1339, review tier",
+   "stop": "venus",
+   "segment": "venus.dive",
+   "frame": 1339,
+   "tier": "review",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
   {
    "time": "2026-11-26T16:31:13.406Z",
    "file": "20261126163113406-note-S2-Mn-right.jpg",
    "source": "../../../../tmp/v/sh/S2-Mn-right.jpg",
    "kind": "note",
    "label": "rise 1544 to 1556 every second frame, right border x 1620 to 1920, y 330 to 580: main 301ced79 above, the dropped take with the ease below; the same forms on both, the haze under the limb clears over 1546 to 1554 on both; the take is not named, the tree is back at main's code",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T16:25:51.908Z",
-   "file": "20261126162551908-note-S2-Mn-left-b.jpg",
-   "source": "../../../../tmp/v/sh/S2-Mn-left-b.jpg",
-   "kind": "note",
-   "label": "rise 1547 to 1552, the same box: main above, the take below; the same forms, the pale cells pass and the ground turns smooth tan from 1548 on both",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T16:25:51.226Z",
-   "file": "20261126162551226-note-S2-Mn-left-a.jpg",
-   "source": "../../../../tmp/v/sh/S2-Mn-left-a.jpg",
-   "kind": "note",
-   "label": "rise 1542 to 1546, left border x 0 to 240, y 660 to 820, twice: main d2637685 above, the take with the ease of the air share for the rise below; the same forms on both, the pale cells enter from the left border from 1543 on both, the take a little darker",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T15:52:09.998Z",
-   "file": "20261126155209998-note-S2-leftmarks.jpg",
-   "source": "../../../../tmp/v/sh/S2-leftmarks.jpg",
-   "kind": "note",
-   "label": "Same state, left border x 0 to 240, y 660 to 820, three times, 1541 to 1550: pale cells enter from the left border from 1543 and stand as a pale cluster on dark ground by 1546; the ground about them turns smooth tan from 1548. Not yet compared with main's frames at this place.",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T15:52:08.985Z",
-   "file": "20261126155208985-note-S2-ho-ll.jpg",
-   "source": "../../../../tmp/v/sh/S2-ho-ll.jpg",
-   "kind": "note",
-   "label": "Rise 1538 to 1545 at each half frame, lower left (x 0 to 640, y 480 to 1080), draft, the ease of the air share for the rise's T (47736932): the dark near ground and its lit ridges go on from frame to frame, no step seen at the handover (1539 + 1/2); pale cells enter at the left border from 1543 + 1/2.",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T14:54:20.944Z",
-   "file": "20261126145420944-note-S1dive-ll.jpg",
-   "source": "../../../../tmp/v/sh/S1dive-ll.jpg",
-   "kind": "note",
-   "label": "Dive 1326 to 1336, lower part, draft: the name 35edb711 above, the ease of the air share in the dive below (dropped for the dive: its pattern rows 1327 to 1331 read over main's). Same forms, the left third a little darker with the ease at 1326 and 1328.",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T14:22:06.906Z",
-   "file": "20261126142206906-note-S1-1557-s.jpg",
-   "source": "../../../../tmp/v/sh/S1-1557-s.jpg",
-   "kind": "note",
-   "label": "Rise 1557, 1560, 1563, 1566: the name 35edb711 above, the cubic ease of the air share (90278525, not named) below; the blue white patch under the limb is a little weaker below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T13:53:18.786Z",
-   "file": "20261126135318786-note-S1-1549-b.jpg",
-   "source": "../../../../tmp/v/sh/S1-1549-b.jpg",
-   "kind": "note",
-   "label": "Rise 1552, 1553, 1554: the name 35edb711 above, the eased air share (90278525) below; the reader's pop reads 1.10 at 1553 against 1.07",
    "stop": "venus"
   }
  ]
