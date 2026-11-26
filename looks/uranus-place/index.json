@@ -1,9 +1,39 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T17:52:47.271Z",
+ "pushed": "2026-11-26T18:22:35.843Z",
  "head": "b7f9558077fb3565f41555bbd5cbd4735978fc3e",
- "note": "pair 4401 final: main's rows of dark dashes against D's none; judged finals on the name give main's bytes",
+ "note": "D finals 4400 and 4401 consecutive, no dashes; the cloud group's stair cut edge at 8 to 1 with five controls",
  "looks": [
+  {
+   "time": "2026-11-26T18:22:32.396Z",
+   "file": "20261126182232396-note-grp-zoom.jpg",
+   "source": "../../../../tmp/n82/grp-zoom.jpg",
+   "kind": "note",
+   "label": "draft 4416, the brightest body of the cloud group at 8 to 1 (x 1055 to 1135, y 972 to 1032): the name, fibre gain 0, old main, tops over off, cover gain 0, cover shade 0. The stair cut lower edge stands in all but old main",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T18:22:29.071Z",
+   "file": "20261126182229071-note-D-4400-4401-strip.jpg",
+   "source": "../../../../tmp/n82/D-4400-4401-strip.jpg",
+   "kind": "note",
+   "label": "D final 4400 above D final 4401 (17b4dca9), strip x 560 to 1260, y 830 to 1080 at 2 to 1: consecutive frames, one scene, no dark dashes (0 px darker by 28 on both)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T17:57:31.158Z",
+   "file": "20261126175731158-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-26T17:47:11.940Z",
    "file": "20261126174711940-note-pair-4401-right.jpg",
@@ -43,20 +73,6 @@
    "kind": "note",
    "label": "D draft 4154 to 4167, every frame, one scene, no step seen",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T16:43:15.327Z",
-   "file": "20261126164315327-job-frame-04035.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-26T16:34:39.344Z",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n79/lh-top.jpg",
    "kind": "note",
    "label": "the name, draft 4413, 4414 + 1/2, 4416: the limb's bright band reaches the top edge at 4414 + 1/2 and leaves through it, the cause of the level's bend at 4415 on both trees",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T13:00:59.002Z",
-   "file": "20261126130059002-note-d-dots-3.jpg",
-   "source": "../../../../tmp/n79/d-dots-3.jpg",
-   "kind": "note",
-   "label": "the name, draft 4403, 4407, 4410 at 2 times, x 700 to 1100, y 700 to 1000: the dark specks in rows on the near ground, cause being read by controls",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T12:50:05.225Z",
-   "file": "20261126125005225-note-d-4407-dash.jpg",
-   "source": "../../../../tmp/n78/d-4407-dash.png",
-   "kind": "note",
-   "label": "final 4407 at 3 times, x 800 to 1020, y 760 to 960: main final, the name final, the name draft. Fine dark dashes in the name only; at draft they are dots",
    "stop": "uranus"
   }
  ]
