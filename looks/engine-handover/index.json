@@ -1,65 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T15:26:44.279Z",
+ "pushed": "2026-11-26T16:07:02.156Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune's entry of the shutter's ends: the review frames of the split frame 4758 and the rise's onset render (one frame over 25 minutes on this machine); no new picture yet",
+ "note": "Neptune's split frame of the dive at review with the entry of the shutter's ends: 4758 beside 4757, no double exposure seen; the rise's split frame 4956 renders",
  "looks": [
+  {
+   "time": "2026-11-26T16:07:01.023Z",
+   "file": "20261126160701023-note-p57-58-b.jpg",
+   "source": "../../../../tmp/nep/see/p57-58-b.png",
+   "kind": "note",
+   "label": "4757 beside 4758, review, x 1380..1620 y 760..960 at 2 to 1: no second copy of any edge in the split frame"
+  },
+  {
+   "time": "2026-11-26T16:07:00.074Z",
+   "file": "20261126160700074-note-p57-58-a.jpg",
+   "source": "../../../../tmp/nep/see/p57-58-a.png",
+   "kind": "note",
+   "label": "4757 (orbit alone) beside 4758 (split frame, both views by turns), review, x 60..300 y 170..370 at 2 to 1: same shapes, blur and texture; the thin wisp with the check pattern is in both"
+  },
+  {
+   "time": "2026-11-26T16:06:58.740Z",
+   "file": "20261126160658740-note-f04757.jpg",
+   "source": "../t-arr/out/work/blur/ne-on/f04757.png",
+   "kind": "note",
+   "label": "Neptune 4757, the frame before the dive's split frame, review tier (24 samples, orbit alone, ends 0.5), with the entry: whole frame"
+  },
+  {
+   "time": "2026-11-26T15:51:11.273Z",
+   "file": "20261126155111273-note-z4758-e.jpg",
+   "source": "../../../../tmp/nep/see/z4758-e.png",
+   "kind": "note",
+   "label": "4758 review with the entry, x 156..216 y 232..268 at 12 to 1: a thin wisp whose luma alternates from pixel to pixel by about 8 of 255 (the two views drawn by turns differ there)"
+  },
+  {
+   "time": "2026-11-26T15:51:10.010Z",
+   "file": "20261126155110010-note-s4758-12.jpg",
+   "source": "../../../../tmp/nep/see/s4758-12.png",
+   "kind": "note",
+   "label": "4758 review with the entry, x 1280..1920 y 540..1080 at 1 to 1"
+  },
+  {
+   "time": "2026-11-26T15:51:08.861Z",
+   "file": "20261126155108861-note-s4758-00.jpg",
+   "source": "../../../../tmp/nep/see/s4758-00.png",
+   "kind": "note",
+   "label": "4758 review with the entry, x 0..640 y 0..540 at 1 to 1: limb and stars drawn once, the cirrus smeared along the motion"
+  },
+  {
+   "time": "2026-11-26T15:51:07.176Z",
+   "file": "20261126155107176-note-f04758.jpg",
+   "source": "../t-arr/out/work/blur/ne-on/f04758.png",
+   "kind": "note",
+   "label": "Neptune 4758, the split frame of the dive, review tier (24 samples, terrain and orbit by turns, ends 0.5), with the entry: whole frame"
+  },
   {
    "time": "2026-11-26T15:01:55.310Z",
    "file": "20261126150155310-note-f04707.jpg",
    "source": "../t-arr/out/work/blur/ne-on-draft/f04707.png",
    "kind": "note",
    "label": "Neptune 4707 at draft tier on Neptune's tip 2b9dbf28 with the engine's cure and the entry neptune in handover.shutterEnds: sha256 9f8419a62b77d4d4, the same bytes as before the entry (one sample, so the ends weigh nothing)"
-  },
-  {
-   "time": "2026-11-26T14:36:27.546Z",
-   "file": "20261126143627546-note-ends-plan.jpg",
-   "source": "../../../../tmp/nep/ends-plan.png",
-   "kind": "note",
-   "label": "Neptune, the entry in handover.shutterEnds asked by its builder: the plan of the review tier by frame, px seen and ends, main's Neptune and its tip; no picture rendered yet, the suite runs"
-  },
-  {
-   "time": "2026-11-26T14:07:03.187Z",
-   "file": "20261126140703187-note-fall-4700.jpg",
-   "source": "../../../../tmp/seen/pics/fall-4700.png",
-   "kind": "note",
-   "label": "Neptune 4700, same crop: the tip (1.3 7.6 21.1), the tip with main's law of the fall (0.9 3.8 9.7), main (0.8 3.0 7.1)"
-  },
-  {
-   "time": "2026-11-26T14:07:02.534Z",
-   "file": "20261126140702534-note-fall-4707.jpg",
-   "source": "../../../../tmp/seen/pics/fall-4707.png",
-   "kind": "note",
-   "label": "Neptune 4707, left half lower 640 px, 1 to 1, draft: the tip 2b9dbf28 (night box 1.4 7.0 19.2), the tip with main's law of the fall by height put back in a scratch tree (0.5 0.8 1.0), main (0.8 0.9 0.8)"
-  },
-  {
-   "time": "2026-11-26T13:56:38.941Z",
-   "file": "20261126135638941-note-veil-sun-row.jpg",
-   "source": "../../../../tmp/seen/pics/veil-sun-row.png",
-   "kind": "note",
-   "label": "Neptune tip, dive 4690 to 4706, x 1280..1920 y 0..640: the law's Sun leaves the card's Sun place (4 px at 4690, 143 at 4700, 259 at 4703)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T13:56:38.263Z",
-   "file": "20261126135638263-note-veil-4707-left.jpg",
-   "source": "../../../../tmp/seen/pics/veil-4707-left.png",
-   "kind": "note",
-   "label": "4707 left half 1 to 1: night side of the globe, left the tip (1.4 7.0 19.2), right main (0.8 0.9 0.8)"
-  },
-  {
-   "time": "2026-11-26T13:56:37.625Z",
-   "file": "20261126135637625-note-veil-4707-corner.jpg",
-   "source": "../../../../tmp/seen/pics/veil-4707-corner.png",
-   "kind": "note",
-   "label": "4707 top right 960 x 540, 1 to 1: left the tip (sky corner 8.6 25.1 38.3 is the hold card's own texel), right main (1.3 4.3 5.7)"
-  },
-  {
-   "time": "2026-11-26T13:56:36.850Z",
-   "file": "20261126135636850-note-veil-pairs.jpg",
-   "source": "../../../../tmp/seen/pics/veil-pairs.png",
-   "kind": "note",
-   "label": "Neptune 4690, 4707, 4730 at draft: left tip 2b9dbf28 with the cure, right main's Neptune with the cure"
   }
  ]
 }
