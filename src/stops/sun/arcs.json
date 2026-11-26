@@ -1,5 +1,5 @@
 {
-  "note": "The arcade as bodies in space (MAIL 1010, MAIL 1029 point 2 and 3). Lengths are stage units (the ball's radius is terrain.json radius), angles degrees, speeds stage units a second along the strand. Every strand is a fixed line; what moves is the plasma along it, at one steady speed for each strand. least: the half width of a strand's tube, in pixels of the master's frame, under which it is no line any more. thin: over this range of a tube's true half width against least (0.45 down to 0.15) its light goes from the line of a tube to one soft bell over its whole band, with the same sum across in linear light. band: the least half width in pixels of the whole band a strand is drawn with, tube and sheath together; a band that would be narrower keeps that width and its light falls by the same share. The least belongs to the band and not to the tube, so a wider sheath does not widen what a far strand is drawn with. along: the pattern of the plasma along a strand goes to its own mean over this range of its steps under one pixel (0.25: four pixels to a step, 1: one), the sparks by their own finer steps, so a far strand gives the same light and does not glitter. light sheath: how many times the tube's width the thin sheath around it is wide, and its light against the most the tube's own gas gives there (never more than light most). light cool and hot: the colour of a faint and of a bright strand as the finished frame shows it, in linear light. leave lines and px (MAIL 1421): the arcade gives its whole light while it stands at least px[1] rows tall in a frame of lines rows, and none under px[0]; between them its share is a smooth step in the logarithm of that size, one law of the distance at every frame. Measured in the set (rows of 2160): 637 at frame 0 and more through the close view, 502 at 203, 393 at 210, 307 at 216, 245 at 221, 167 at 229, 137 at 233, 109 at 238, 64 at the hold. Its loops can be told apart down to about 150 rows (frame 231); from about 120 (frame 236) the body is a haze with a few soft dots. So it is whole in the close view and up to frame 208, falls over the 25 frames after and gives nothing from frame 233 on, at the hold and in the travel. leave under: where the ball is not in the depth buffer (the far Sun draws the arcade in a pass without depth) a strand behind a ball this far under the true radius, as the eye sees it, gives no light. main unlike: the ten bundles are of unlike size, a strand takes bundle floor(x to this power times 10) for x from 0 to 1. main spread wide: a bundle is as wide as spread times this, the largest bundle the first value, the smallest the second. main loose: a strand of no bundle has this share of the radius and of the light.",
+  "note": "The arcade as bodies in space (MAIL 1010, MAIL 1029 point 2 and 3). Lengths are stage units (the ball's radius is terrain.json radius), angles degrees, speeds stage units a second along the strand. Every strand is a fixed line; what moves is the plasma along it, at one steady speed for each strand. least: the half width of a strand's tube, in pixels of the master's frame, under which it is no line any more. thin: over this range of a tube's true half width against least (0.45 down to 0.15) its light goes from the line of a tube to one soft bell over its whole band, with the same sum across in linear light. band: the least half width in pixels of the whole band a strand is drawn with, tube and sheath together; a band that would be narrower keeps that width and its light falls by the same share. The least belongs to the band and not to the tube, so a wider sheath does not widen what a far strand is drawn with. along: the pattern of the plasma along a strand goes to its own mean over this range of its steps under one pixel (0.25: four pixels to a step, 1: one), the sparks by their own finer steps, so a far strand gives the same light and does not glitter. light sheath: how many times the tube's width the thin sheath around it is wide, and its light against the most the tube's own gas gives there (never more than light most). light cool and hot: the colour of a faint and of a bright strand as the finished frame shows it, in linear light. leave lines and px (MAIL 1421): the arcade gives its whole light while it stands at least px[1] rows tall in a frame of lines rows, and none under px[0]; between them its share is a smooth step in the logarithm of that size, one law of the distance at every frame. Measured through the film's own shot (assets-src/sun/place/arcsize.ts, rows of 2160): 671 at frame 0, 735 at 60, 778 at 90, 822 at 120, 779 at 179, 528 at 203, 446 at 208, 413 at 210, 323 at 216, 258 at 221, 214 at 225, 176 at 229, 145 at 233, 138 at 234, 131 at 235, 115 at 238, 67 at the hold. Its loops can be told apart down to about 150 rows; from about 120 the body is a haze with a few soft dots. So it is whole in the close view and up to frame 208, falls over the 26 frames after and gives nothing from frame 235 on, at the hold and in the travel. leave under: where the ball is not in the depth buffer (the far Sun draws the arcade in a pass without depth) a strand behind a ball this far under the true radius, as the eye sees it, gives no light. shape (MAIL 1427 b, fitted to the approved close picture as frame 90 shows it): height the height in stage units that the heights of the kinds are shares of; power the form of the rise, the height times the sine to this power (1 a round top, more a narrower one), each strand its own between the two values; bulge how much wider than its feet an arch stands at its top (under 0: drawn in); skew how far the top leans toward one foot; wave the turn out of its plane; sink how far its ends stand under the ground. shape side: the two sides are not alike, the left foot's side first: bulge is added at the shoulder (by the square of the height), round stands out beyond the foot low down (most at half the height, nothing at the foot and at the top). main bundles and unlike: the bundles are of unlike size, a strand takes bundle floor(x to the power unlike times bundles) for x from 0 to 1, so the first hold the most. main inBundle: the share of the arches that run in a bundle; the rest stand alone (loose radius and gain: their share of the radius and of the light; loose heights: their own range of heights). main heights and shell: the range of a bundle's height and how many stand near the outer shell (shell under 1: most). main feet: how far from the foot's middle a bundle may stand, along the axis and across it. main spread wide: a bundle is as wide as spread times this, the largest bundle the first value, the smallest the second; spread shape: how far a strand's own form may differ from its bundle's. main gain and dim: a strand's light between the two values by x to the power dim, so few are bright; thinGain: the share of that light a strand of the least radius keeps (a thick one keeps all). main back: the share of the arches whose plasma runs the other way. drips: lines that leave an arch and fall inside it: from where along the arch, inward how far toward the middle of the arcade they come down, hook how far a line runs on along the arch before it falls; begin and fall: the line is drawn from begin along the way down for the share fall, open at both ends, so it is a streak in the air and not a post to the ground. fountains: short arcs thrown out of a foot (foot 0 the left): reach how far, tall how high against the reach, most the greatest height, turnDeg the fan about the axis away from the other foot, leanDeg the lean of a throw, power and skew its form (the top nearer the foot than the place it falls to). light foot: how many times brighter a strand is at the ground and the height over which that falls away. ground beat: the share of the stage's glow map under the feet that the arcade lights; 0, the map's red and green show as a patch at more.",
   "seed": 9173,
   "least": 0.7,
   "band": 2.45,
@@ -12,7 +12,7 @@
     1.0
   ],
   "shape": {
-    "height": 1.135,
+    "height": 1.165,
     "power": [
       1.0,
       1.6
@@ -37,18 +37,18 @@
       ],
       "round": [
         0.0,
-        0.1
+        0.22
       ]
     }
   },
   "main": {
-    "count": 200,
+    "count": 120,
     "segments": 64,
     "bundles": 9,
     "inBundle": 0.78,
     "leanDeg": [
-      -30,
-      26
+      -34,
+      30
     ],
     "heights": [
       0.55,
@@ -56,8 +56,8 @@
     ],
     "shell": 0.6,
     "feet": [
-      0.15,
-      0.1
+      0.1,
+      0.08
     ],
     "unlike": 1.6,
     "spread": {
@@ -95,7 +95,7 @@
       0.05,
       0.2
     ],
-    "dim": 1.8,
+    "dim": 2.6,
     "thinGain": 0.4
   },
   "drips": {
@@ -147,16 +147,16 @@
       "segments": 26,
       "reach": [
         0.1,
-        0.7
+        0.42
       ],
       "tall": [
-        0.9,
-        1.8
+        1.0,
+        2.2
       ],
       "most": 0.5,
       "turnDeg": [
-        -50,
-        50
+        -40,
+        40
       ],
       "feet": 0.02,
       "radius": [
@@ -231,7 +231,7 @@
     }
   ],
   "light": {
-    "level": 1.0,
+    "level": 1.18,
     "floor": 0.05,
     "blobs": [
       2.2,
@@ -243,8 +243,8 @@
     ],
     "fine": 7.0,
     "foot": [
-      5.0,
-      0.25
+      8.0,
+      0.3
     ],
     "ends": 0.18,
     "cool": [
