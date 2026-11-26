@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T06:12:52.116Z",
+ "pushed": "2026-11-26T06:33:38.321Z",
  "head": "6ada65b9074e177278cc9892bd418ab213843d64",
- "note": "arcade leaves by size (207 to 234), sky top at 90, arch trial D as lines; sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "note": "arch trial K and limb crops at 90; sun-near 60 of the pushed state: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T06:33:37.757Z",
+   "file": "20261126063337757-note-limb-R2.jpg",
+   "source": "../../../../tmp/v/limb-R2.jpg",
+   "kind": "note",
+   "label": "limb right at 90: approved, main final, trial draft; fringe taller and more even than the approved, to be cut",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T06:33:37.094Z",
+   "file": "20261126063337094-note-E3-pair.jpg",
+   "source": "../../../../tmp/v/E3-pair.jpg",
+   "kind": "note",
+   "label": "frame 90 draft, arch trial K with the sky aim turned, beside the approved: dome still flat on top, pale straw, right foot hooks; not a name",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T06:12:51.003Z",
    "file": "20261126061251003-note-viz-D.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c1-rise-a.jpg",
    "kind": "note",
    "label": "cure first numbers (225 to 480 rows): rise drafts 216 to 241; the arcade falls too fast between 216 and 225, numbers being set again",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T05:47:09.557Z",
-   "file": "20261126054709557-note-hold3.jpg",
-   "source": "../../../../tmp/v/hold3.png",
-   "kind": "note",
-   "label": "cure in the working tree (leave by size, log step): 300, 330, 360 final at 2 to 1 about the spot, main's 360 at the right; 360 equals main's bytes",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T05:47:08.921Z",
-   "file": "20261126054708921-note-arc-rise.jpg",
-   "source": "../../../../tmp/v/arc-rise.jpg",
-   "kind": "note",
-   "label": "candidate 6bc94020, the arcade about the spot at 2 to 1 through the rise, before the cure: strands at 221 to 231, haze and two dots at 236, dots from 241",
    "stop": "sun"
   }
  ]
