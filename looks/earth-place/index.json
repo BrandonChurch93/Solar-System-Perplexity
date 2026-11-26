@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T18:08:34.454Z",
+ "pushed": "2026-11-26T18:32:24.422Z",
  "head": "774abe6a9a625ca12ecfece9d2420d36ee1a1c30",
- "note": "named 774abe6a at 18:07 with the rise row 2126 + 1/2 red over the limit first on the list; main's finals of 1857 and 2156 are drawing now for the answer",
+ "note": "name 774abe6a held by MAIL 1527; main's finals of 1857 and 2156 beside mine: fewer white specks on mine, a comb in the west cloud on mine only",
  "looks": [
+  {
+   "time": "2026-11-26T18:32:23.822Z",
+   "file": "20261126183223822-note-pair-1857-hatch-x3.jpg",
+   "source": "../../../../tmp/gl/k24/Q/pair-1857-hatch-x3.jpg",
+   "kind": "note",
+   "label": "1857 final, cloud west of Central America at 3 times: mine left carries a comb, main right does not",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T18:32:23.197Z",
+   "file": "20261126183223197-note-pair-1857-gulf.jpg",
+   "source": "../../../../tmp/gl/k24/Q/pair-1857-gulf.jpg",
+   "kind": "note",
+   "label": "1857 final, Gulf window: mine left, main right (main's drawn on the merged tree)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T18:08:33.712Z",
    "file": "20261126180833712-note-finals-both.jpg",
@@ -57,28 +73,6 @@
    "kind": "note",
    "label": "1857 final of 345d510f at 1 to 1, night side x 1160 y 330: cloud swirl a soft ghost, round 55 item 5 stands",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T17:10:19.022Z",
-   "file": "20261126171019022-sheet-earth-dive-top.jpg",
-   "source": "out/work/handover/earth-dive-top.png",
-   "kind": "sheet",
-   "label": "earth dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1919), place picture off, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1830,
-   "last": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-26T17:07:08.843Z",
-   "file": "20261126170708843-compare-earth-dive-step-in-place.jpg",
-   "source": "out/work/handover/earth-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "earth dive, the largest step of the level in place (2.75): frame 1887, frame 1888, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1888
   }
  ]
 }
