@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T03:20:20.089Z",
+ "pushed": "2026-11-26T03:31:56.751Z",
  "head": "a64c3d06a47f7ee3553e0f99fe5e73499ca1daac",
- "note": "03:21 UTC: state t as it stands (a64c3d06), not better than state s; u4 dropped",
+ "note": "state t at 1400 px: 3060, 3239, 3150 (master draft). Faults as in MAIL 1387; item 1 measure next",
  "looks": [
+  {
+   "time": "2026-11-26T03:31:56.104Z",
+   "file": "20261126033156104-note-t-3150-1400.jpg",
+   "source": "../work/r25/t/t-3150-1400.png",
+   "kind": "note",
+   "label": "state t, master draft, frame 3150 at 1400 px",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T03:31:55.511Z",
+   "file": "20261126033155511-note-t-3239-1400.jpg",
+   "source": "../work/r25/t/t-3239-1400.png",
+   "kind": "note",
+   "label": "state t, master draft, frame 3239 at 1400 px (last frame of the surface view)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T03:31:54.816Z",
+   "file": "20261126033154816-note-t-3060-1400.jpg",
+   "source": "../work/r25/t/t-3060-1400.png",
+   "kind": "note",
+   "label": "state t, master draft, frame 3060 at 1400 px (first frame of the surface view)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T03:20:18.555Z",
    "file": "20261126032018555-note-t-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r24/kA/k006300.png",
    "kind": "note",
    "label": "Series A, state s, capture frame 6300 (film 3150), draft, 960 px. Matter floor 0.016. Low band whole frame 9.27, outside the seven cells 8.75",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T00:35:10.936Z",
-   "file": "20261126003510936-note-seriesA-sheet.jpg",
-   "source": "../work/r25/t/seriesA-sheet.jpg",
-   "kind": "note",
-   "label": "Series A, state s, four of the 60 frames at 60 a second (film 3135, 3142, 3149, 3156), draft, V 0.0165. Not film grade yet: reads as wet clay, tops hardly slide against depths (0.26 px a film frame at 1.5 units against a design of 0.82)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T00:13:08.593Z",
-   "file": "20261126001308593-note-s4-3150.jpg",
-   "source": "../work/r23/t/s4-3150.png",
-   "kind": "note",
-   "label": "state s, 3150 at preview size, draft: matter's floor 0.016, three solve rounds; low band 9.27 whole frame, 8.75 outside the seven cells; bands 1.15 1.10 0.99 0.90",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T00:13:07.442Z",
-   "file": "20261126001307442-note-top-ends-s.jpg",
-   "source": "../work/r24/t/top-ends-s.jpg",
-   "kind": "note",
-   "label": "state s laid back on the ground chart (camera taken out), 3060 beside 3239, rings at 0.45, 0.9, 1.6 and 2.5 units: turn of the picture by ring 0.13 0.42 0.98 0.99 0.70 0.44 0.25 0.11 0.08 degrees a second, the flow law 0.41 0.83 1.15 1.15 0.82 0.46 0.23 0.13 0.10",
    "stop": "jupiter"
   }
  ]
