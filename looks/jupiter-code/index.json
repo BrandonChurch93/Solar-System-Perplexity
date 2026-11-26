@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T11:52:33.272Z",
+ "pushed": "2026-11-26T12:11:44.819Z",
  "head": "23087fd30ea977015762d59c4bc5eda4f590a493",
- "note": "wb5: curls and ropes in the dark ground, solve not fitted yet",
+ "note": "wb8 to wb10: slope light, fronts with lit rims, heaps on the rims; solve not fitted",
  "looks": [
+  {
+   "time": "2026-11-26T12:11:44.117Z",
+   "file": "20261126121144117-note-wb10-3150.jpg",
+   "source": "../work/r26/t/wb10-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state wb10 (dev tree, solve not fitted)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:11:43.468Z",
+   "file": "20261126121143468-note-wb10-pair.jpg",
+   "source": "../work/r26/t/wb10-pair.jpg",
+   "kind": "note",
+   "label": "3150 preview draft: wb9 left, wb10 right: the light takes the slope, fronts, heaps on the rims; solve not fitted (too light)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:11:42.846Z",
+   "file": "20261126121142846-note-wb8-pair.jpg",
+   "source": "../work/r26/t/wb8-pair.jpg",
+   "kind": "note",
+   "label": "3150 preview draft: wb7 left (steep ropes, molten glass, refused), wb8 right (fronts: plateaus with cliffs, lit rims); lower left at twice the size below",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T11:52:32.643Z",
    "file": "20261126115232643-note-wb5-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r26/t/w90-r2-deep.png",
    "kind": "note",
    "label": "3150 lower right at twice the size, state w90 after two rounds above, approved below: my ground is smooth streaks, the glow four soft lamps",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:10:36.075Z",
-   "file": "20261126101036075-note-w88-3150.jpg",
-   "source": "../work/r26/t/w88-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w88: heaps only where the map is lit above its surround; line (i) 9.249; boulders in a river, refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:51:17.229Z",
-   "file": "20261126095117229-note-w86-r2-3150.jpg",
-   "source": "../work/r26/t/w86-r2-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w86 after two solve rounds: sheet tint 0.9, thread tint 1.2, paint share 0.9, matter floor 0.14; bands green; line (i) 7.122, worse than w77 (5.428): the floor lifts the far right and the dark red under the eye",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:51:15.987Z",
-   "file": "20261126095115987-note-w87-3150.jpg",
-   "source": "../work/r26/t/w87-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w87 before a solve: lanes at 0.08 units of height, pits like craters in the storm; refused",
    "stop": "jupiter"
   }
  ]
