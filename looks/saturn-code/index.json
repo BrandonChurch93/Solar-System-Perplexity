@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T11:16:39.255Z",
+ "pushed": "2026-11-26T11:25:27.659Z",
  "head": "8ed55e3f4e5511090906eda915df73f2c03b7fc6",
- "note": "cure 8ed55e3f on state two: the dusk's cut slides by the share; rise part 1 read green at 0.2623; every frame of the rise 3816 to 3862 looked at; rise part 2 being read",
+ "note": "cure 8ed55e3f named at 11:24; 3866 side by side with main; rise part 2 read green at 0.2486",
  "looks": [
+  {
+   "time": "2026-11-26T11:25:27.083Z",
+   "file": "20261126112527083-note-cure_rise2_changes.jpg",
+   "source": "../../../../tmp/v/rigid/G1/cure_rise2_changes.png",
+   "kind": "note",
+   "label": "cure 8ed55e3f: the reader's changes picture of rise part 2, 3841 to 3860, green, pattern at most 0.2486 at 3857 on the ring's far arm"
+  },
+  {
+   "time": "2026-11-26T11:25:26.555Z",
+   "file": "20261126112526555-note-sbs_3866_crops.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sbs_3866_crops.jpg",
+   "kind": "note",
+   "label": "3866 draft at full size, main above, cure 8ed55e3f below: day side, dusk, far ring arm, near ring arm"
+  },
+  {
+   "time": "2026-11-26T11:25:25.995Z",
+   "file": "20261126112525995-note-sbs_3866_whole.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sbs_3866_whole.jpg",
+   "kind": "note",
+   "label": "3866 draft, main left, cure 8ed55e3f right: equal lens and size, the globe 25.5 px left and 6.4 px down, the ring lower and greyer"
+  },
   {
    "time": "2026-11-26T11:16:38.103Z",
    "file": "20261126111638103-note-cure_rise_3852.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/rigid/G1/sheets/cure_spot_3840.jpg",
    "kind": "note",
    "label": "cure 8ed55e3f: every frame from 3840, twelve a sheet, the dusk by the ring's inner edge at full size (crop 1000 to 1480, 690 to 960)"
-  },
-  {
-   "time": "2026-11-26T11:16:33.414Z",
-   "file": "20261126111633414-note-cure_spot_3828.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sheets/cure_spot_3828.jpg",
-   "kind": "note",
-   "label": "cure 8ed55e3f: every frame from 3828, twelve a sheet, the dusk by the ring's inner edge at full size (crop 1000 to 1480, 690 to 960)"
-  },
-  {
-   "time": "2026-11-26T11:16:32.434Z",
-   "file": "20261126111632434-note-cure_spot_3816.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sheets/cure_spot_3816.jpg",
-   "kind": "note",
-   "label": "cure 8ed55e3f: every frame from 3816, twelve a sheet, the dusk by the ring's inner edge at full size (crop 1000 to 1480, 690 to 960)"
-  },
-  {
-   "time": "2026-11-26T11:16:31.428Z",
-   "file": "20261126111631428-note-cure_rise_changes.jpg",
-   "source": "../../../../tmp/v/rigid/G1/cure_rise_changes.png",
-   "kind": "note",
-   "label": "cure 8ed55e3f: the reader's changes picture of rise part 1, frames 3816 to 3840, green, pattern at most 0.2623"
   }
  ]
 }
