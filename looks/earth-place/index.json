@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T03:37:00.653Z",
+ "pushed": "2026-11-26T03:55:11.776Z",
  "head": "77e5db7634fcb149575f050ad121fbe92b392cb5",
- "note": "far band by the air path, draft strips: rise pattern 0.45 at 2121 (was 0.57 at 2126), the map's bright shallows now show: not yet good",
+ "note": "first air law is red on the dive (0.66 at 1888); second law (the air path alone in the far band, even in the log of the path) renders now",
  "looks": [
+  {
+   "time": "2026-11-26T03:55:10.882Z",
+   "file": "20261126035510882-note-s-dive-a.jpg",
+   "source": "../../../../tmp/gl/k22/E3/s-dive-a.jpg",
+   "kind": "note",
+   "label": "bad: dive 1880 to 1900 at half size with the first air law (multiplied by the presence by distance): pattern 0.66 at 1888 by my reader, the lands go under the deck in about 12 frames, bright shallows at the limb at 1892 to 1896",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T03:36:59.858Z",
    "file": "20261126033659858-note-p1-2120.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/k20/R1/tow/x-2127.png",
    "kind": "note",
    "label": "bad: rise 2127 to 2130 at 1 to 1, the field is an even dust, pale blue shards, hard white clouds of the map at the right",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T02:52:04.164Z",
-   "file": "20261126025204164-note-top-b.jpg",
-   "source": "../../../../tmp/gl/k20/R1/top-b.png",
-   "kind": "note",
-   "label": "bad: rise 2125 to 2128, top of the frame at 1 to 1, the hold's lands come out from under the close picture's far deck",
    "stop": "earth"
   }
  ]
