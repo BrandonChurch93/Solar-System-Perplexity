@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T11:02:45.329Z",
- "head": "699a879fd36d8c1e30333c656cb8416f4526baae",
- "note": "step 2 pairs at 2468, 2472, 2686; the map's canyon behind the 2409 difference",
+ "pushed": "2026-11-26T11:56:44.566Z",
+ "head": "f73602f96c26790928796406d3c1a158f7d32475",
+ "note": "step 2 f73602f9 pushed; dive 2462 pattern still over main's, lies in the far ground of land-8p5; main and a hybrid render now to find the cause",
  "looks": [
+  {
+   "time": "2026-11-26T11:56:43.280Z",
+   "file": "20261126115643280-note-q32-2466-rim.jpg",
+   "source": "../../../../tmp/pm/q32-2466-rim.png",
+   "kind": "note",
+   "label": "dive 2466 far rim, 699a879f above and step 2 below",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T11:56:42.212Z",
+   "file": "20261126115642212-note-far8p5.jpg",
+   "source": "../../../../tmp/pm/far8p5.png",
+   "kind": "note",
+   "label": "land-8p5 at 1.8 W 1.7 S, main above and this tree below: main's hot rim lips against the map's tone",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T11:56:41.089Z",
+   "file": "20261126115641089-note-top2462.jpg",
+   "source": "../../../../tmp/pm/top2462.png",
+   "kind": "note",
+   "label": "step 2 at dive 2462: where the reader's top hundredth of pattern lies (frame top, the canyon's west reach in land-8p5)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T11:02:44.256Z",
    "file": "20261126110244256-note-map2409-42.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/pm/m32-rim.png",
    "kind": "note",
    "label": "2470 four times, the far rim: the second stair before and after the outline",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:33:40.510Z",
-   "file": "20261126103340510-note-m32-2470.jpg",
-   "source": "../../../../tmp/pm/m32-2470.png",
-   "kind": "note",
-   "label": "2470 three times: 699a879f above, the outline at 2 px a texel below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:33:39.404Z",
-   "file": "20261126103339404-note-row2401-reader.jpg",
-   "source": "../../../../tmp/pm/row2401-reader.png",
-   "kind": "note",
-   "label": "the 2401 pattern line is the moon in front of the globe (the reader's panel)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:33:38.273Z",
-   "file": "20261126103338273-note-left21-a.jpg",
-   "source": "../../../../tmp/pm/left21-a.png",
-   "kind": "note",
-   "label": "2721.5 and 2729.5 carried back, x 0..480, y 360..1080: the rings at the left are there and gone",
    "stop": "mars"
   }
  ]
