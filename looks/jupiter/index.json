@@ -1,9 +1,25 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T20:19:06.447Z",
- "head": "16c37e70dbf3a2a8390b93f1772e53318e8529fc",
- "note": "M1 and M2: the haze bands' shade warm and shallow (41de45ce) on main 262b9a68; proofs drawing",
+ "pushed": "2026-11-26T20:42:47.532Z",
+ "head": "c7875528d5baa7d82bb38e011479700c421b7403",
+ "note": "3150 at review: the state 41de45ce beside main 262b9a68 and approved; the other three judged finals are main's bytes",
  "looks": [
+  {
+   "time": "2026-11-26T20:34:30.818Z",
+   "file": "20261126203430818-note-rev-m2.jpg",
+   "source": "../../../../tmp/eye/rev-m2.jpg",
+   "kind": "note",
+   "label": "M2 box at 3150, review tier: approved, main 262b9a68, the state 41de45ce",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:34:29.774Z",
+   "file": "20261126203429774-note-rev-m1.jpg",
+   "source": "../../../../tmp/eye/rev-m1.jpg",
+   "kind": "note",
+   "label": "M1 box at 3150, review tier: approved, main 262b9a68, the state 41de45ce",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T20:19:05.193Z",
    "file": "20261126201905193-note-m12b-m2-2.jpg",
@@ -34,22 +50,6 @@
    "source": "../../../../tmp/eye/s2-rows.png",
    "kind": "note",
    "label": "S2 rows K 6034 to 6105: the cure against main (old base)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T20:19:00.792Z",
-   "file": "20261126201900792-note-m12b-sheet.jpg",
-   "source": "../../../../tmp/eye/m12b-sheet.jpg",
-   "kind": "note",
-   "label": "M1 and M2 at 3150 draft: approved, main 262b9a68, the shadow off, the warm shade at depth 0.35 (41de45ce)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:50:38.969Z",
-   "file": "20261126195038969-note-r1-far.jpg",
-   "source": "../../../../tmp/eye/r1-far.jpg",
-   "kind": "note",
-   "label": "S2 cure, far zone at K 6068, 6076, 6084: plates' field gives way to the laid back picture (second group, still red)",
    "stop": "jupiter"
   },
   {
