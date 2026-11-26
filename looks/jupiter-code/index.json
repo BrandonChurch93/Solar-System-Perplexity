@@ -1,9 +1,111 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T20:08:23.425Z",
+ "pushed": "2026-11-26T20:40:14.765Z",
  "head": "c6d64f97ce25da553ebe32e850e76281020c827f",
- "note": "Item 3 a is a commit on main 262b9a68 (c6d64f97), its tests and rows run now; frames of the commit have the bytes of the trial shown at 19:44. Item 3 b: two tests of new detail for the ring of the wide patch, both from code and the film's own picture; test 1 too weak, test 2 crisper with a stipple fault. Nothing of 3 b is committed.",
+ "note": "Item 3 a: the commit c6d64f97 on main 262b9a68 passed tests, path and gate, but its 2997 at the final tier shows a new fault (bricks and flecks where the wide level now draws and the picture moves), so it is not named; cause and cure are being tested. M8: the limb edge measured. Item 3 b: test 2 with a gate.",
  "looks": [
+  {
+   "time": "2026-11-26T20:40:13.491Z",
+   "file": "20261126204013491-note-one-k2.jpg",
+   "source": "../work/r29/b2/one-k2.png",
+   "kind": "note",
+   "label": "The same without the gate, for comparison: the stipple of dabs on the flat ground above.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:12.193Z",
+   "file": "20261126204012193-note-one-gb.jpg",
+   "source": "../work/r29/b2/one-gb.png",
+   "kind": "note",
+   "label": "Item 3 b, test 2 with a gate: the finish of the repainted centre carried by example to the ring, only where the wrap itself has forms. One to one on the plane of the patch, left the wrap, right with the finish; above flat cream ground, below curls. The stipple on flat ground is nearly gone, the curls keep their crisp edges.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:11.184Z",
+   "file": "20261126204011184-note-pair-2895-3296.jpg",
+   "source": "../work/r29/m8/pair-2895-3296.png",
+   "kind": "note",
+   "label": "M8, why: the hold 2895 above, the rise 3296 below, both final tier, half size. The wide glow outside the lit limb of the hold lies in the hold's sky patch (the approved picture's own sky); the rise has only the globe's own skirt, which ends 0.03 radii beyond the limb.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:10.233Z",
+   "file": "20261126204010233-note-limb-3296-z10.jpg",
+   "source": "../work/r29/m8/limb-3296-z10.png",
+   "kind": "note",
+   "label": "M8, the lit limb at 3296 ten times enlarged: one sample beside the final tier. The edge of the disc is smooth (its crossing of level 160 lies within 0.06 px of a smooth curve, row to row 0.03 px), but it is harder than the hold's: largest step of one pixel 43 of a rise of 200, the hold 26 of 174, the approved picture 19 of 153.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:09.448Z",
+   "file": "20261126204009448-note-pair-d.jpg",
+   "source": "../work/r29/c3b/pair-d.png",
+   "kind": "note",
+   "label": "2997 final tier, the left limb: main, the commit. No difference I can see.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:08.736Z",
+   "file": "20261126204008736-note-pair-c.jpg",
+   "source": "../work/r29/c3b/pair-c.png",
+   "kind": "note",
+   "label": "2997 final tier, below the spot: main, the commit. Here I see no fault; the commit is a little crisper.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:07.754Z",
+   "file": "20261126204007754-note-pair-b.jpg",
+   "source": "../work/r29/c3b/pair-b.png",
+   "kind": "note",
+   "label": "2997 final tier, the right side with Io: main, the commit. The same flecks left of Io and above it.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:06.540Z",
+   "file": "20261126204006540-note-zoom-a6.jpg",
+   "source": "../work/r29/c3b/zoom-a6.png",
+   "kind": "note",
+   "label": "Six times enlarged: the commit at one sample beside the commit at the final tier. Rows stay apart while the shutter smears along the way: the lookups of a sample are read at half a pixel, and where the picture moves 14 px only 4 or 5 of the 64 samples see one pixel of the path.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:05.463Z",
+   "file": "20261126204005463-note-zoom-a-draft.jpg",
+   "source": "../work/r29/c3b/zoom-a-draft.png",
+   "kind": "note",
+   "label": "The same place at one sample (draft tier), twice enlarged: main, the commit. At one sample the commit is crisp and whole; the fault comes with the samples of the shutter.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:04.278Z",
+   "file": "20261126204004278-note-zoom-a.jpg",
+   "source": "../work/r29/c3b/zoom-a.png",
+   "kind": "note",
+   "label": "The same place twice enlarged, final tier: main, the commit. The bricks are about 5 by 2 px.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:40:03.245Z",
+   "file": "20261126204003245-note-pair-a.jpg",
+   "source": "../work/r29/c3b/pair-a.png",
+   "kind": "note",
+   "label": "A FAULT OF MY OWN COMMIT c6d64f97 (item 3 a), found before naming: 2997 master at the final tier, 64 samples, grain off, one to one, the upper right. Left main 262b9a68, right the commit. Where the wide level now draws, the moving ground breaks into small bricks and bright flecks. The commit is not named.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:08:37.880Z",
+   "file": "20261126200837880-frame-f02820.jpg",
+   "source": "out/work/jupiter/frames/c3b-main/f02820.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2820, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "a455bc02904b0d42"
+  },
   {
    "time": "2026-11-26T20:08:22.737Z",
    "file": "20261126200822737-note-v-k05-a.jpg",
@@ -69,20 +171,6 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T20:06:30.240Z",
-   "file": "20261126200630240-frame-f02820.jpg",
-   "source": "out/work/jupiter/frames/c3b/f02820.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2820, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "a455bc02904b0d42"
-  },
-  {
    "time": "2026-11-26T19:45:15.485Z",
    "file": "20261126194515485-frame-f03283.jpg",
    "source": "out/work/jupiter/frames/fa-mainx/f03283.png",
@@ -118,100 +206,6 @@
    "source": "../work/r29/s/l2-3010-corner.png",
    "kind": "note",
    "label": "The same pair at 3010, preview, four times enlarged, the upper right corner at the horizon: main, the trial, the difference times 6. The wide level now draws on the grazing ground there.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:51.792Z",
-   "file": "20261126194351792-note-l2-rise-xb.jpg",
-   "source": "../work/r29/s/l2-rise-xb.png",
-   "kind": "note",
-   "label": "Rise with the pair [1.12, 1.65], same crop, every frame 3290 to 3295. A COST I NAME: the ring pattern right of the spot (the repaint's weak place, in main too) leaves two frames later here (it stands at 3290 and faintly at 3291; on main it is gone by 3290). 3296 on are main's bytes.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:50.813Z",
-   "file": "20261126194350813-note-main-rise-xb.jpg",
-   "source": "../work/r29/s/main-rise-xb.png",
-   "kind": "note",
-   "label": "Rise on main 594567e7, same crop, every frame 3290 to 3295.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:49.757Z",
-   "file": "20261126194349757-note-l2-rise-xa.jpg",
-   "source": "../work/r29/s/l2-rise-xa.png",
-   "kind": "note",
-   "label": "Rise with the pair [1.12, 1.65], same crop, every frame 3284 to 3289.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:48.522Z",
-   "file": "20261126194348522-note-main-rise-xa.jpg",
-   "source": "../work/r29/s/main-rise-xa.png",
-   "kind": "note",
-   "label": "Rise on main 594567e7, preview draft, one to one crop, every frame 3284 to 3289.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:47.310Z",
-   "file": "20261126194347310-note-l2-2997-bottom.jpg",
-   "source": "../work/r29/s/l2-2997-bottom.png",
-   "kind": "note",
-   "label": "The same pair, 2997 at one to one, the bottom: main beside the trial.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:46.448Z",
-   "file": "20261126194346448-note-l2-2997-left.jpg",
-   "source": "../work/r29/s/l2-2997-left.png",
-   "kind": "note",
-   "label": "The same pair, 2997 at one to one, the left side: main beside the trial.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:45.613Z",
-   "file": "20261126194345613-note-l2-2997-centre.jpg",
-   "source": "../work/r29/s/l2-2997-centre.png",
-   "kind": "note",
-   "label": "The same pair, 2997 at one to one, the centre: main beside the trial.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:44.246Z",
-   "file": "20261126194344246-note-l2-2997-right.jpg",
-   "source": "../work/r29/s/l2-2997-right.png",
-   "kind": "note",
-   "label": "Item 3 a, the pair I keep: the wide level alone on [1.12, 1.65], read on the short axis of the pixel's footprint. 2997 master draft, one sample, at one to one, the right side: main 594567e7 beside the trial. 3296, 3150 and the hold keep main's bytes with this pair.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:43:42.241Z",
-   "file": "20261126194342241-frame-f03021.jpg",
-   "source": "out/work/jupiter/frames/fa-mainx/f03021.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3021, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3021,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
-  },
-  {
-   "time": "2026-11-26T19:19:26.473Z",
-   "file": "20261126191926473-note-l2-dive-xb.jpg",
-   "source": "../work/r29/s/l2-dive-xb.png",
-   "kind": "note",
-   "label": "Dive, third trial, same crop, every frame 2992 to 2997. The ring pattern right of the spot (the repaint's weak place) stands from 2993 here, from 2995 on main; at the judged 2997 both show it alike.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:19:25.578Z",
-   "file": "20261126191925578-note-main-dive-xb2.jpg",
-   "source": "../work/r29/s/main-dive-xb2.png",
-   "kind": "note",
-   "label": "Dive on main 594567e7, same crop, every frame 2992 to 2997.",
    "stop": "jupiter"
   }
  ]
