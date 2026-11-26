@@ -1,9 +1,55 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T11:24:10.306Z",
- "head": "54ae2b6d5f8050eb506f10757b9f18dd96cd796d",
- "note": "11:24 on 54ae2b6d: units 94 files 1096 tests pass, globe-cap alone 30 pass, gate G1 G11 G12 G15 pass, path green, cues and shots leave no change; G17 4035 median 1.178 p25 1.082, 4290 median 1.067 p25 0.958; main's finals and level frames are being drawn",
+ "pushed": "2026-11-26T11:53:41.545Z",
+ "head": "38f6b05975eda1d173dbb2b15a00c390b8b0cee8",
+ "note": "11:53 the name's state is pushed: 38f6b059 on agent/uranus-place (54ae2b6d + notes + main fd7ed4c6); finals of the four judged frames on both trees, G17 on both (4290 median 1.067 against main's 1.100, green), drafts outside the stop same bytes; the name's finals 4407 and 4186 are being drawn, the mail follows",
  "looks": [
+  {
+   "time": "2026-11-26T11:53:35.061Z",
+   "file": "20261126115335061-note-f4436.jpg",
+   "source": "../../../../tmp/n78/f4436.jpg",
+   "kind": "note",
+   "label": "final 4436: main beside the name",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T11:53:32.290Z",
+   "file": "20261126115332290-note-f4137.jpg",
+   "source": "../../../../tmp/n78/f4137.jpg",
+   "kind": "note",
+   "label": "final 4137: main beside the name (the second aim's sky)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T11:53:30.583Z",
+   "file": "20261126115330583-note-f4035.jpg",
+   "source": "../../../../tmp/n78/f4035.jpg",
+   "kind": "note",
+   "label": "final 4035: the approved, main (match 3.743), the name (match 3.737)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T11:53:26.257Z",
+   "file": "20261126115326257-note-10-final-4290-approved-main-name.jpg",
+   "source": "../../../../tmp/n78/att/10-final-4290-approved-main-name.jpg",
+   "kind": "note",
+   "label": "final 4290: the approved, main (match 3.847), the name 38f6b059 (match 3.178)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T11:38:09.265Z",
+   "file": "20261126113809265-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-26T11:24:07.659Z",
    "file": "20261126112407659-note-pop-4175-4176.jpg",
@@ -43,20 +89,6 @@
    "kind": "note",
    "label": "54ae2b6d final 4035: match with uranus-hero.png 3.737 (main 3.743)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:57:54.277Z",
-   "file": "20261126105754277-job-frame-04035.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-26T10:42:35.965Z",
@@ -216,38 +248,6 @@
    "source": "../../../../tmp/n73/aim-4200x3.png",
    "kind": "note",
    "label": "4200 at draft, upper half times 3: two aims (top), one aim (middle), difference times 4 (bottom): only the stars beside the plate at the top and right edge differ, no band enters; 4280 to 4298 differ by at most 1 level (3 at two pixels of 4284), 4299 keeps its bytes",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T08:36:04.963Z",
-   "file": "20261126083604963-note-uranus-dive-p1of2-changes.jpg",
-   "source": "../../../../tmp/n72/out/d1/uranus-dive-p1of2-changes.png",
-   "kind": "note",
-   "label": "reader dive part 1 of 2 on f94de477: pattern 0.99 from 4151 (28 of 114 over), pop 1.10 (0 over; main 1.5036), level 0.07; the red patch lies at the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T08:35:59.678Z",
-   "file": "20261126083559678-note-d1-d.jpg",
-   "source": "../../../../tmp/n73/d1-d.png",
-   "kind": "note",
-   "label": "head f94de477, two sky aims, dive drafts consecutive, sheet d of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T08:35:53.534Z",
-   "file": "20261126083553534-note-d1-c.jpg",
-   "source": "../../../../tmp/n73/d1-c.png",
-   "kind": "note",
-   "label": "head f94de477, two sky aims, dive drafts consecutive, sheet c of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T08:35:52.016Z",
-   "file": "20261126083552016-note-d1-b.jpg",
-   "source": "../../../../tmp/n73/d1-b.png",
-   "kind": "note",
-   "label": "head f94de477, two sky aims, dive drafts consecutive, sheet b of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
    "stop": "uranus"
   }
  ]
