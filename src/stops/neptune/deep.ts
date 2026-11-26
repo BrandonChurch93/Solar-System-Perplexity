@@ -60,6 +60,7 @@ uniform vec4 uCollar;
 uniform vec4 uArmIn;
 uniform float uVeilSizes;
 uniform float uVeilOwn;
+uniform float uCirrusFall;
 uniform vec2 uVeilBelow;
 uniform vec4 uVeilStorm;
 uniform vec2 uVeilArms;
@@ -1208,13 +1209,21 @@ void main() {
   // smallest power, by the most, which was the orange and violet band at the far limb and the plain that stayed navy.
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float outGain = uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  vec3 bare = cloud + cloudClear * veiled;
-  vec3 clearAll = (clearCloud * cloud + cloudClear * clearDeck * veiled) / max(bare, vec3(1e-9));
+  // The cirrus's light and the fall (deep.json, cirrus.fall). The fall is a power by channel under its pivot (blue lifted most,
+  // red least) and nothing above it: it is the deck's colour, the gas that makes the planet blue. A cirrus is ice over that gas.
+  // Under the fall its lit crest stayed white (above the pivot) while its grey shade came out cyan and lifted, so the cloud
+  // lost its body and its thin edge over the deck went lavender (the Builder's MAIL 1474, fault 2). Its light is added after
+  // the fall, as the air's is: white where the Sun reaches it and neutral grey in its shade, at every height. fall is the share
+  // of its light that still goes under the fall with the deck (1: the law till 26 Nov, 12 h).
+  vec3 cloudUnder = cloud * uCirrusFall;
+  vec3 bare = cloudUnder + cloudClear * veiled;
+  vec3 clearAll = (clearCloud * cloudUnder + cloudClear * clearDeck * veiled) / max(bare, vec3(1e-9));
   // The air behind the cirrus lies low on the deck, as the veil does, so the shadow a streamer casts on the deck lies on it too.
   float airShade = deckHit ? (exp(-deckUnder) + uThrough.x * exp(-uThrough.y * deckUnder)) / (1.0 + uThrough.x) : 1.0;
   float airShare = airBefore + airShade * cloudClear * max(airAll - airBefore, 0.0);
   vec3 airCol = fallEnd(airLight * outGain) * airShare;
-  vec3 col = fallEnd(bare * outGain) * clearAll + airCol;
+  vec3 cloudOwn = (cloud - cloudUnder) * outGain * clearCloud;
+  vec3 col = fallEnd(bare * outGain) * clearAll + airCol + cloudOwn;
   float seen = deckHit ? 1.0 : 1.0 - cloudClear * dot(clearDeck, vec3(0.3333)) * veilClear;
   float alpha = clamp(seen, 0.0, 1.0);
   // The air the eye stands in (deep.json, air; the Builder's MAIL 1011, way C). The film shows every thing of the place by one
@@ -1239,23 +1248,30 @@ void main() {
     float whole = max(airPath(0.0, 1.0, uAirLaw.x, 1.0, 0.0), 1e-6);
     vec3 kc = uAirDepth / whole;
     float behind = airPath(uAirLaw.x, mIn, he, me, hp);
-    vec3 gain = vec3(0.0);
     float thingAir = 0.0;
-    float cloudPart = cloudWeight > 0.0 ? 1.0 - cloudClear : 0.0;
+    // Each thing takes its own gain: the cirrus's light that stands outside the fall its own, the light under the fall (the deck,
+    // the veil and the share of the cirrus left there) the mean of the two by the cover, and the air's light the mean by the
+    // whole cover, as before.
+    float cover = cloudWeight > 0.0 ? 1.0 - cloudClear : 0.0;
+    float cloudPart = cover * uCirrusFall;
+    vec3 cloudGain = vec3(0.0);
     for (int k = 0; k < (cloudWeight > 0.0 ? 1 : 0); k++) {
       vec3 qc = oc + rd * tMean;
       float hc = length(qc) - uRadius;
-      gain += cloudPart * airGain(kc, airPath(he, me, hc, dot(rd, qc) / length(qc), hp), behind, vec3(uAirLaw.w));
+      cloudGain = airGain(kc, airPath(he, me, hc, dot(rd, qc) / length(qc), hp), behind, vec3(uAirLaw.w));
     }
+    vec3 deckGain = vec3(0.0);
     if (deckHit) {
       vec3 qd = oc + rd * tDeck;
       float hd = length(qd) - uRadius;
       thingAir = airPath(he, me, hd, dot(rd, qd) / length(qd), hp);
-      gain += (1.0 - cloudPart) * airGain(kc, thingAir, behind, exp(-uAirSun * airPath(hd, 1.0, uAirLaw.x, 1.0, 0.0) / whole));
+      deckGain = airGain(kc, thingAir, behind, exp(-uAirSun * airPath(hd, 1.0, uAirLaw.x, 1.0, 0.0) / whole));
     } else {
       thingAir = airPath(he, me, uAirLaw.x, mOut, hp);
-      gain += (1.0 - cloudPart) * airGain(kc, thingAir, behind, vec3(0.0));
+      deckGain = airGain(kc, thingAir, behind, vec3(0.0));
     }
+    vec3 gain = cloudPart * cloudGain + (1.0 - cloudPart) * deckGain;
+    vec3 gainAir = cover * cloudGain + (1.0 - cover) * deckGain;
     // The low air's own light (deep.json, haze.own). The low air lies on the deck, under the eye of the terrain: all of it stands
     // between the eye and the ground, so what the hold shows of it is its own light by that share (as a cirrus' is, air.cirrus)
     // and only the rest is the light of the air over it, of which an eye inside has a part. Own 0: it takes the ground's gain,
@@ -1268,8 +1284,10 @@ void main() {
     // dark blue deck and small in blue, so the sheet's gain lifted red and green alone: teal and green blotches on the deck
     // where the sheet lies thin (the Builder's MAIL 1474, fault 1) and a pink edge where a cirrus thins over it.
     float veilShare = clamp(cloudClear * dot(veilOnly, vec3(1.0)) / max(dot(bare, vec3(1.0)), 1e-9), 0.0, 1.0);
-    vec3 thingGain = uVeilOwn > 0.0 ? mix(gain, airGain(kc, thingAir, behind, vec3(uVeilOwn)), veilShare) : gain;
-    col = uHazeLow.w > 0.0 ? (col - airCol) * thingGain + airCol * airGain(kc, thingAir, behind, vec3(uHazeLow.w)) : col * thingGain;
+    vec3 veilGain = airGain(kc, thingAir, behind, vec3(uVeilOwn));
+    vec3 thingGain = uVeilOwn > 0.0 ? mix(gain, veilGain, veilShare) : gain;
+    vec3 airsGain = uHazeLow.w > 0.0 ? airGain(kc, thingAir, behind, vec3(uHazeLow.w)) : (uVeilOwn > 0.0 ? mix(gainAir, veilGain, veilShare) : gainAir);
+    col = (col - cloudOwn - airCol) * thingGain + airCol * airsGain + cloudOwn * cloudGain;
   }
   // On the globe the scene ends at a border on the ground: by the angle from the place of what the ray meets (or passes nearest).
   vec3 met = normalize(deckHit ? oc + rd * tDeck : oc + rd * max(-b, 0.0));
@@ -1380,7 +1398,7 @@ export class Deep {
         uStreamMake: { value: ci.streamers.map((x) => v4(x.ends, x.lump, x.lumpShare, x.seed)) },
         uCirrusWave: { value: v4(ci.wave, ci.stretch, ci.rise, ci.gain) },
         uCirrusMake: { value: v4(ci.erode, ci.soft, ci.lee, ci.life) },
-        uCirrusBody: { value: v4(ci.sigma, look.steps.cirrus, ci.octaves, l.cirrus) },
+        uCirrusBody: { value: v4(ci.sigma, look.steps.cirrus, ci.octaves, l.cirrus) }, uCirrusFall: { value: ci.fall },
         uCirrusWarp: { value: v4(ci.warp, ci.warpWave, Math.sin(THREE.MathUtils.degToRad(ci.sweepDeg)), Math.cos(THREE.MathUtils.degToRad(ci.sweepDeg))) },
         uCirrusBend: { value: v4(ci.warpNext[0]!, ci.warpNext[1]!, ci.core, ci.leeErode) },
         uCirrusBillow: { value: new THREE.Vector3(ci.billow[0], ci.billow[1], ci.leeThin) }, uCirrusFringe: { value: v4(ci.fringe[0]!, ci.fringe[1]!, ci.fringe[2]!, ci.fringe[3]!) }, uFarStreak: { value: v3(d.wisp.far) },
