@@ -12146,3 +12146,52 @@ NEPTUNE: LOOK, 19:50 UTC (low; no name, nothing asks an answer today). The tree 
 3. Seen now and not said at 19:38, a second price of G4 (g4-limb.jpg: the upper left quarter of 4979, 4983, 4987 at 960, the name left, G4 right): the long bright streaks toward the limb break into ragged flecks with holes. The name's long streaks there are the approved image's kind; G4 loses them. G5 keeps them (they lie beyond its border).
 
 4. This closes my research before the freeze. For Neptune's next round the patches need one of two things, and both are in the notebook with their controls: (h) of MAIL 1475 opened for this layer (candidate G4, with the flecks of point 3 to cure and the whole proof still to do), or another road to form than a field multiplied onto the cover. Until then they stand as the named red of 7a620a39. I draw nothing more today unless you ask.
+
+## MAIL 1540 from the Builder (/root), 20:03 UTC (read 20:48 by my clock, when MAIL 1548 woke me; word for word; low priority)
+
+> MAIL 1540 from the Builder (/root), 20:03 UTC. THE FIFTH CUT IS ON MAIN. Origin main is 262b9a68df0a6bda8d77518539580de554bb0dc5 (the merge of take/e5 89cba277 on the status line a20b5bd7, pushed 19:54 UTC). The engine hash is now a455bc02904b0d42.
+> WHAT RIDES: Saturn's lens cure of the flight in 5075e26d, Neptune's name 7a620a39, Venus's way in a0ecb566, Uranus's notebook b7f95580, Jupiter's lossless sky patch of the hold 594567e7.
+> WHAT DOES NOT RIDE: the Sun's name 5ccff167 (its measures G5 and G13 and its departure clips are not all in; it rides alone as its own take when they are green), Jupiter's build E f0688395 (held), Earth, Mars, every state that is not a name with its proofs ruled by my mail.
+> FROM NOW ON: build your next state on this main: merge origin main 262b9a68 into your branch (never rebase, never force), make main's rows for your comparisons on this sha, and name the base sha in every mail. The terms of my last mail to you stand, with their times. If the merge conflicts on your branch, send me the conflicting file names and nothing else; if it does not, do not answer this mail.
+
+## MAIL 1548 from the Builder (/root), 20:47 UTC (read 20:48 by my clock; word for word; high priority)
+
+> MAIL 1548 from the Builder (/root) to every builder, 20:47 UTC 26 Nov. High priority. It overtakes MAILS 1543, 1544 and 1545 where they ask for new work.
+>
+> 1. BRANDON HAS SAID MOVE ON. His words, passed on by Partner at 20:38 UTC: "The solar system fly through honestly is good to go ahead and move on the quality. Looks there. The voiceover sounds great. I've honestly just been waiting for him to finish up for the past day or two." By d391 (3) this ends the quality loops. The kit's final steps start now: the freeze, the record round, the master, the clips, the posts, the preview film, the checks, BUILD COMPLETE.
+>
+> 2. FROM THIS MAIL ON: start no new cure, no new trial and no new proof run. Stop the render and measure runs you have going (end the processes, leave the files).
+>
+> 3. THE FREEZE IS AT 21:30 UTC. Only a name whose proofs were already running on my machines before this mail, and are whole and green in my hands by 21:20, rides: that is the Sun's name 5ccff167 alone (nothing is asked of its builder). Nothing else rides: Jupiter's shade and S2's cure, Saturn's pose W, Venus's wider plates, Uranus's D, Mars's flight out rows, the Sun ground lab's states, engine-sky-seen, Mercury's probes, Neptune's (h) and Earth's name stay on their branches, as they stand, for a later day if Brandon asks.
+>
+> 4. ASKED OF EACH OF YOU ONCE, BY 21:15 UTC:
+> (a) Commit and push your work as it stands to your own branch (never main, never a force push), with a NOTES file at the top of your stop's source folder that says what the state is, what is proven, what is still wrong by frame and place, and how to go on.
+> (b) Send me one mail of at most ten lines: branch, head sha, pushed yes or no; then the three worst open items of your stop on main as it stands, by frame, in plain words fit for the open items list that Brandon reads. MEASURED, STATED and UNKNOWN apart.
+> If you have no work in hand, skip (a) and (b) and answer point 5 alone.
+>
+> 5. THEN YOUR MACHINE RENDERS THE MASTER. Say in the same mail: free disk in MB (6000 are needed; remove old frame folders, tars and scratch trees to get there, never your branch), the number of cores, and whether `npm run build` ends with exit 0 at your place on main's code sha 262b9a68df0a6bda8d77518539580de554bb0dc5 in a clone or worktree kept apart from your own work. Render jobs with full steps follow from me. Until a job comes, do nothing more.
+>
+> 6. No reply is needed beyond that one mail. Thank you for the work; every state stays on origin under your branch.
+
+## 26 Nov, 19:50 to 20:56 UTC: lab log (waiting; then MAIL 1540 and MAIL 1548: the merge, the NOTES file of the stop, the build on main's sha, the disk)
+
+- 19:50 to 20:48: nothing drawn, nothing changed; I waited for mail. No mail came between MAIL 1525 and 20:48.
+- 20:48:44 read both mails. No render, no test and no measure run was going on this machine.
+- MAIL 1540: origin main fetched (it stood at 075be65fe: 262b9a68 and two status commits that change kit/PROGRESS.md alone).
+  Merged 262b9a68df0a6bda8d77518539580de554bb0dc5 as told, plain, no conflict: 6f0cc27e0. The merged tree against 262b9a68:
+  three files, all under assets-src/neptune (NOTES.md, check/far-grain-mid-run.patch, check/far-grain-trial.patch). The
+  stop's code, values and assets are main's to the byte; against the name 7a620a39 nothing differs in src/stops/neptune and
+  public/assets/neptune. No test run on the merge (MAIL 1548 point 2; its code is main's).
+- MAIL 1548 point 4 (a): src/stops/neptune/NOTES.md written (81 lines: the state, what is proven, what is still wrong by
+  frame and place, how to go on). It is a text file; the tests that walk src read .ts files alone (handover.test.ts,
+  warm.test.ts), and tsc and the build do not read it.
+- MAIL 1548 point 5, the build: this repo is shallow (108 lines in .git/shallow); a clone of it, also with --shared, goes by
+  the pack protocol and began to copy the packs (stopped by me after 1 minute 30, nothing left behind). So the tree apart is
+  an export: git archive 262b9a68 into /home/user/workspace/main-build without out/ and references/ (1562 MB), node_modules a
+  link to this tree's (package.json and package-lock.json are the same at both shas). npm run build there, 20:54:40 to
+  20:55:06: "BUILD EXIT 0" (tsc --noEmit, then vite: "337 modules transformed", "built in 15.00s"); dist 1301 MB (the build
+  copies public). The export and its dist removed after it.
+- MAIL 1548 point 5, the disk: 2083 MB free at 20:48. Removed: the 71 frame folders under out/work/nep/weave (1241 MB; the
+  tools and sheets at its top stay): 3281 MB free. 4 cores. .git is 10545 MB in 62 packs; the objects my refs reach are
+  6740 MB on disk (40780 objects; 22629 objects stand in more than one pack), so about 3.8 GB of it is doubles. A full
+  repack needs more room than the disk has.
