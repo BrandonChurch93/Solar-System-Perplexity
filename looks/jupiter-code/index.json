@@ -1,9 +1,17 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T03:55:31.470Z",
+ "pushed": "2026-11-26T04:17:04.808Z",
  "head": "a64c3d06a47f7ee3553e0f99fe5e73499ca1daac",
- "note": "w1: first state after MAIL 1387 and 1388, a working picture",
+ "note": "w4: darkness by tall relief, scaffold off",
  "looks": [
+  {
+   "time": "2026-11-26T04:17:04.134Z",
+   "file": "20261126041704134-note-w4-3150.jpg",
+   "source": "../work/r26/t/w4-3150.png",
+   "kind": "note",
+   "label": "w4 at 3150, preview, draft, scaffold off, floor 0.03: tall relief where the guide is dark. Line (i) 15.297 whole frame, bands green. Wrong: the dark thirds read as draped ridges, not as fine billows with lit rims; right third too bright by 9 to 29",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T03:55:30.820Z",
    "file": "20261126035530820-note-w1-3150.jpg",
@@ -186,14 +194,6 @@
    "source": "../work/r25/t/t2-3150.png",
    "kind": "note",
    "label": "Dev tree, variant t2 at 3150, draft, 960 px (tall tops, fill by the open sky, matter floor 0.03, no solve). Darkness by cast shade works and edges stand 0.12 units before their ground, but it reads as rock and the low band is 25.3 (state s 9.27)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T00:51:27.605Z",
-   "file": "20261126005127605-note-t4-3150.jpg",
-   "source": "../work/r25/t/t4-3150.png",
-   "kind": "note",
-   "label": "Dev tree, variant t4 at 3150, draft, 960 px (round towers 0.36 units wide, fill by the open sky, matter floor 0.03, no solve). Not film grade: reads as boulders, not cloud; the ceiling flattens the fine billows. Kept only as a step",
    "stop": "jupiter"
   }
  ]
