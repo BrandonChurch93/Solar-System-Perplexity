@@ -1,9 +1,33 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-26T01:52:05.565Z",
+ "pushed": "2026-11-26T02:19:24.579Z",
  "head": "62498f603f4a1026520ffb3d74e81742da39f8ec",
- "note": "The place's whole own share (eye, curl, streak, blots) now by height alone, same down and up, no clock: at 4605 the place equals main byte for byte; 4860 unchanged, G17 0.513 red (gate 0.8). Pairs of dive and rise drawing now. Draft seconds a frame: 4605 36, 4707 23, 4736 42, 4860 90, 5006 23.",
+ "note": "02:20 own law proofs: dive pairs 4702 to 4728 all under 0.45 by my proxy (worst 0.44 at 4706, 0.41 at 4702, as the name), rise pairs still rendering; plate trial pictures built outside the tree, first stills after the name",
  "looks": [
+  {
+   "time": "2026-11-26T02:19:23.324Z",
+   "file": "20261126021923324-note-pair-N16.jpg",
+   "source": "../../../../tmp/pair-N16.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image, own law by height in the tree (bytes equal to the look of 01:52), G17 0.513 against the gate 0.8 (red, named); draft 90 s a frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T02:19:22.267Z",
+   "file": "20261126021922267-note-cmp-topright.jpg",
+   "source": "../../../../tmp/sky/cmp-topright.jpg",
+   "kind": "note",
+   "label": "plate trial, not rendered yet: above the card's top right margin, below the recipe sky (sparse blue grey stars, no band) at the same scale of sky, for the continuation round the card",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T02:19:21.004Z",
+   "file": "20261126021921004-note-held-all.jpg",
+   "source": "../../../../tmp/sky/held-all.jpg",
+   "kind": "note",
+   "label": "plate trial, not rendered yet: the hero's sky card (sky_builder's filled card, frame plus margins) with the Sun and its whole glow taken off by code; stars and the band stay; the Sun and its glare are the engine's",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-26T01:51:59.686Z",
    "file": "20261126015159686-note-pair-N16.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/eye2-hold-1400.jpg",
    "kind": "note",
    "label": "4605, the eye at 4 times: main left (no dot), the name second, three softer walls; the dot leaves the hold by a law of the eye's height, being built",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-26T01:31:21.852Z",
-   "file": "20261126013121852-note-sun-main-name.jpg",
-   "source": "../../../../tmp/sun-main-name.jpg",
-   "kind": "note",
-   "label": "4605, the Sun: main with the hold's plate left, the name with the engine's far Sun right; same place to 0.6 px, the glare is what is missing (asked of sky_builder 01:26)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-26T01:31:21.285Z",
-   "file": "20261126013121285-note-pair-N16.jpg",
-   "source": "../../../../tmp/pair-N16.jpg",
-   "kind": "note",
-   "label": "4860 on my tree (softer wall of the eye, not named) beside the approved; G17 0.513 / 0.232; 90 s a draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-26T01:16:41.713Z",
-   "file": "20261126011641713-note-n16-eye-4707-5006.jpg",
-   "source": "../../../../tmp/n16-eye-4707-5006.jpg",
-   "kind": "note",
-   "label": "the eye at 4707 and at 5006, enlarged: name ef0cc1cf | cure, twice",
    "stop": "neptune"
   }
  ]
