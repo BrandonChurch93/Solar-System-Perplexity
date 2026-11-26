@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T15:00:26.072Z",
- "head": "d13f80620a9cba3b45519b048fe2d95cbe14bd73",
- "note": "saturn rise: the cause of the cure's middle standing above main's; the reader's lag along the lanes at the lit arm's tip, lens turn and drift experiments on the cached stills (no render)",
+ "pushed": "2026-11-26T15:24:14.149Z",
+ "head": "434083c8d5e997cc920f5837984ea4d374145707",
+ "note": "mail 1508: the dive's red path lines read on my tree; cause is the lens law by the distance (even opening leaves the path's turn at the place bare); cure of the lens in work",
  "looks": [
+  {
+   "time": "2026-11-26T15:24:05.216Z",
+   "file": "20261126152405216-note-dive_speed_cause.jpg",
+   "source": "../../../../tmp/v/p1508/dive_speed_cause.png",
+   "kind": "note",
+   "label": "Saturn dive, mail 1508: the speed at the place on main now against the same path with the old lens law, and the lens rate of both"
+  },
   {
    "time": "2026-11-26T15:00:20.210Z",
    "file": "20261126150020210-note-lag_chart.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/rigid/T1/placements_rise2_20rows.png",
    "kind": "note",
    "label": "Saturn rise part 2, frames 3853 to 3862 and a half: the reader's pattern rows under 25 placements of the same stills, the cure left and main right; red is the stills as they are. From 3858 and a half on the placements close into one falling curve on both trees"
-  },
-  {
-   "time": "2026-11-26T13:18:08.765Z",
-   "file": "20261126131808765-note-placements_rise2.jpg",
-   "source": "../../../../tmp/v/rigid/T1/placements_rise2.png",
-   "kind": "note",
-   "label": "Saturn rise part 2, frames 3853 to 3858: the reader's pattern rows read again on the same stills moved by one or two whole pixels, 25 placements, the cure left and main right; red is the stills as they are"
   }
  ]
 }
