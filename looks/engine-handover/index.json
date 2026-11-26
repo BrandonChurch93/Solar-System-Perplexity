@@ -1,8 +1,8 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T15:01:57.188Z",
+ "pushed": "2026-11-26T15:02:09.093Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "15:02 UTC: the entry neptune of handover.shutterEnds merged onto main's fourth cut 6b6136fc (tip 04b50f90, not pushed yet); shutter-ends 28 of 28 on it; the whole suite runs; the review frames of the split frames 4758 and 4956 are held meanwhile",
+ "note": "15:02 UTC: the entry neptune on main's fourth cut 6b6136fc, the whole suite runs on it; review frames of the split frames held meanwhile",
  "looks": [
   {
    "time": "2026-11-26T15:01:55.310Z",
