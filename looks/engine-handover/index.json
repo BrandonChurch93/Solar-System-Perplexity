@@ -1,99 +1,29 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T01:10:07.275Z",
+ "pushed": "2026-11-26T01:37:59.984Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests v8: review proof looked at and measured; the red mark beside crest A traced to a speck in L1's paint (r8-2668-dbg, L1-red-block); the line at D's box end (r8-2668-D2, D3, r8-2672-D2); committing next",
+ "note": "Design (c) is committed and merged with main fb40db96 (suite running). Looking at a thin light line on the cut at the top end of crest D's box, where the sheets close onto the wall",
  "looks": [
   {
-   "time": "2026-11-26T01:09:43.487Z",
-   "file": "20261126010943487-note-s8-dive-2480.jpg",
-   "source": "../../../../tmp/crest/s8-dive-2480.png",
+   "time": "2026-11-26T01:37:54.596Z",
+   "file": "20261126013754596-note-r8-2668-Dend-dbg.jpg",
+   "source": "../../../../tmp/crest/r8-2668-Dend-dbg.png",
    "kind": "note",
-   "label": "draft strip of the dive from 2480, base over crests"
+   "label": "Design (c), 2668 at the top end of crest D's box: review base, review crests, the sheets tinted (near red, fill green), the texel shown"
   },
   {
-   "time": "2026-11-26T01:09:42.816Z",
-   "file": "20261126010942816-note-s8-dive-2477.jpg",
-   "source": "../../../../tmp/crest/s8-dive-2477.png",
+   "time": "2026-11-26T01:37:53.413Z",
+   "file": "20261126013753413-note-s8-Dend-b.jpg",
+   "source": "../../../../tmp/crest/s8-Dend-b.png",
    "kind": "note",
-   "label": "draft strip of the dive from 2477, base over crests"
+   "label": "Design (c), the top end of crest D's box, frames 2669 to 2672 at draft, 10 to 1: base above, crests below"
   },
   {
-   "time": "2026-11-26T01:09:42.176Z",
-   "file": "20261126010942176-note-s8-rise-2670.jpg",
-   "source": "../../../../tmp/crest/s8-rise-2670.png",
+   "time": "2026-11-26T01:37:52.058Z",
+   "file": "20261126013752058-note-s8-Dend-a.jpg",
+   "source": "../../../../tmp/crest/s8-Dend-a.png",
    "kind": "note",
-   "label": "draft strip of the rise from 2670, base over crests"
-  },
-  {
-   "time": "2026-11-26T01:09:41.573Z",
-   "file": "20261126010941573-note-s8-rise-2667.jpg",
-   "source": "../../../../tmp/crest/s8-rise-2667.png",
-   "kind": "note",
-   "label": "draft strip of the rise from 2667, base over crests"
-  },
-  {
-   "time": "2026-11-26T01:09:40.936Z",
-   "file": "20261126010940936-note-s8-rise-2664.jpg",
-   "source": "../../../../tmp/crest/s8-rise-2664.png",
-   "kind": "note",
-   "label": "draft strip of the rise from 2664, base over crests"
-  },
-  {
-   "time": "2026-11-26T01:09:40.359Z",
-   "file": "20261126010940359-note-r8-2477-c51.jpg",
-   "source": "../../../../tmp/crest/r8-2477-c51.png",
-   "kind": "note",
-   "label": "2477 review, crest D, base (dashes) and crests (one stroke), 20 to 1"
-  },
-  {
-   "time": "2026-11-26T01:09:39.787Z",
-   "file": "20261126010939787-note-r8-2477-z.jpg",
-   "source": "../../../../tmp/crest/r8-2477-z.png",
-   "kind": "note",
-   "label": "2477 review, the fold, base and crests at zoom"
-  },
-  {
-   "time": "2026-11-26T01:09:39.221Z",
-   "file": "20261126010939221-note-r8-2672-z.jpg",
-   "source": "../../../../tmp/crest/r8-2672-z.png",
-   "kind": "note",
-   "label": "2672 review, crest A's edge, base and crests, 12 to 1"
-  },
-  {
-   "time": "2026-11-26T01:09:38.639Z",
-   "file": "20261126010938639-note-r8-2672-D2.jpg",
-   "source": "../../../../tmp/crest/r8-2672-D2.png",
-   "kind": "note",
-   "label": "2672 review, D's box end, base and crests, 20 to 1"
-  },
-  {
-   "time": "2026-11-26T01:09:38.024Z",
-   "file": "20261126010938024-note-r8-2668-D3.jpg",
-   "source": "../../../../tmp/crest/r8-2668-D3.png",
-   "kind": "note",
-   "label": "2668 review, D's box end, closer"
-  },
-  {
-   "time": "2026-11-26T01:09:37.452Z",
-   "file": "20261126010937452-note-r8-2668-D2.jpg",
-   "source": "../../../../tmp/crest/r8-2668-D2.png",
-   "kind": "note",
-   "label": "2668 review, D's box end, base and crests at zoom: a line 1 px wide where the near sheet closes onto the wall"
-  },
-  {
-   "time": "2026-11-26T01:09:36.877Z",
-   "file": "20261126010936877-note-L1-red-block.jpg",
-   "source": "../../../../tmp/crest/L1-red-block.png",
-   "kind": "note",
-   "label": "L1 colour, texels x 3250..3260 y 872..878: the magenta speck the fill draws out at 2664 to 2672"
-  },
-  {
-   "time": "2026-11-26T01:09:36.245Z",
-   "file": "20261126010936245-note-r8-2668-dbg.jpg",
-   "source": "../../../../tmp/crest/r8-2668-dbg.png",
-   "kind": "note",
-   "label": "2668 trace of the red mark beside crest A: texel place per pixel, the mark is the far end's texel of the fill (a speck in L1's paint), scratch view"
+   "label": "Design (c), the top end of crest D's box, frames 2664 to 2668 at draft, 10 to 1: base above, crests below. A thin light line on the cut where the sheets close onto the wall, strength changes frame to frame"
   }
  ]
 }
