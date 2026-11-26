@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T13:31:23.676Z",
+ "pushed": "2026-11-26T13:49:43.001Z",
  "head": "5c21aa69b6276474d126bca53c88234dcbaed917",
- "note": "13:32 answer to MAIL 1490 sent (level step is the framing at the top edge); speck controls drawing: detail zero changes nothing",
+ "note": "13:50 the dark specks of 4403 to 4416 are the cover's small clouds over the tops' light (controls); cure D takes them to main's count with 4186 to 4350 at the name's bytes",
  "looks": [
+  {
+   "time": "2026-11-26T13:49:35.776Z",
+   "file": "20261126134935776-note-sp-4407-ctl.jpg",
+   "source": "../../../../tmp/n79/sp-4407-ctl.jpg",
+   "kind": "note",
+   "label": "draft 4407 controls: main, the name, the cover's cloud gain 0, the cover off: the dark specks are the cover's small clouds",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T13:49:34.796Z",
+   "file": "20261126134934796-note-sp-4407-D.jpg",
+   "source": "../../../../tmp/n79/sp-4407-D.jpg",
+   "kind": "note",
+   "label": "draft 4407, x 400 to 700, y 700 to 860: main, the name bcc9d174, cure D (the tops' light over the pose's kept over the small clouds)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T13:31:23.017Z",
    "file": "20261126133123017-note-lh-top.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n75/d2-spot.png",
    "kind": "note",
    "label": "832be54a dive, the spot of the reader's largest pattern row (4175 + 1/2, pixel 970, 620) at 1 to 1: 4174 to 4177, 4183, 4184",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:22:22.466Z",
-   "file": "20261126102222466-note-d2-e.jpg",
-   "source": "../../../../tmp/n75/d2-e.png",
-   "kind": "note",
-   "label": "832be54a dive draft 4188 to 4199",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T09:50:34.328Z",
-   "file": "20261126095034328-note-d2-d.jpg",
-   "source": "../../../../tmp/n75/d2-d.png",
-   "kind": "note",
-   "label": "832be54a dive draft 4181 to 4187",
    "stop": "uranus"
   }
  ]
