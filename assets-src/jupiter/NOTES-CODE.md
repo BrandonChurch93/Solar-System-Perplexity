@@ -3332,3 +3332,9 @@ All at 3150, preview, draft, in keep mode on w58's scaffold (w58 solved reads 7.
 - Line (i) at 3150, preview, draft: 6.446 over the whole frame (main 3.390 at this tier): red. Bands green. The scaffold (A) is in it, the floor of the matter is 0.05 and did not rise: red.
 - Not drawn on this state: the pair at 60 a second, the slices of dive and rise, the hold's hash, parity, G17, finals. Named red until drawn.
 - New files add 13.2 MB to the three folders against 8d5b7cbe (the fore map and the fore solve picture, larger maps).
+
+### 08:53 UTC: the view colour picture leaves the tracked tree
+
+- `public/assets/jupiter/full/deck-view-color.png` (29.0 MB) and `web/deck-view-color.png` (9.0 MB) are removed: no program reads them at run time and no test names them. `assets-src/jupiter/deck/view.py` writes them again; `plates/beyond.py` and `deck/air.py` read them, so run `view.py` first when the plates are built again.
+- `deck-image-core.jpg` (3.9 MB full, 1.2 MB web) is removed too: only `deck/image.py` names it, as its writer.
+- Net of the three folders against main 77a7d41 after this: 3.4 MB added (source 7.2 MB, mostly the three solve pictures; public 1.2 MB less 5.0 MB).
