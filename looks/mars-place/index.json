@@ -1,8 +1,8 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T19:03:34.761Z",
+ "pushed": "2026-11-26T19:30:34.530Z",
  "head": "498513133f001112164442409cd35fd8a6395ff7",
- "note": "whole cure: reader control done, the lower right place carried K 5384 only; a second place at the upper left stays over main; the whole cure's own rows run",
+ "note": "whole cure: its own rows on my machine give his 1.060 at K 5384 again; the control brings 5383 and 5384 to main's level; main's own rows on my machine run to tell the upper left",
  "looks": [
   {
    "time": "2026-11-26T19:03:33.558Z",
