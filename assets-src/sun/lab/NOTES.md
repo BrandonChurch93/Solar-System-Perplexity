@@ -2405,3 +2405,165 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   fading in as the other goes), [18] its length at birth as a share.
   t205 = t204 with hot [..,4.0,0.5], fan [..,0.5,0.7,6,1.8,5.0,0.5], lens [1.85,2.5,0.5,1.12,0.065,0.1]; then the
   film 60 to 120 of it.
+- 12:49 UTC. t205 MEASURED (draft 90): cut low band 19.79, plain 38.96, side +0.019, lane 6.22. Note: tb.sh was
+  given the base as a path from the workspace and trialsf.sh could not copy it, so t205 stands on t202b (t202's
+  lane), not on t204; v/lab-t205.json is what was rendered. Film 60 to 120 and the eye held clip of t205:
+  flicker rows 0.212 / 40.0 percent; 0.245 / 59.1; 0.112 / 6.2; 0.154 / 21.9 (h42: 0.121 / 6.7; 0.317 / 33.3;
+  0.131 / 15.4; 0.138 / 18.5). Seen (v/motion-t205.jpg, five moments 0.4 s apart, eye held): the clumps come and
+  go and the streaks change, the cells boil inside; the cause of the worse first two rows is the clumps (heat
+  times 5, in over 1 s). So: hot[9] the share of a clump's life over which it comes and goes (absent 0.25),
+  v/patch-fade.py, and a longer life.
+- 12:50 UTC. FOUND: the spot. h39 and h40 had a black umbra; from h41 on (the walked gas, gas.steps 12) the gas of
+  the cells before the spot lies over the umbra and the penumbra as a brown haze (v/spot4.jpg, spot4b.jpg).
+  MEASURED rows 620 to 800, middle third, luminance 2nd percentile: approved 0.046, h40 0.009, h42 0.068, t205
+  0.067. Code (v/patch-veil.py): gas.spot[2], the share by which the veil on a sight line follows the thinness of
+  the place where it ends. t206 = t205 with gas.spot [5, 9, 1.0]: 2nd percentile 0.046, the umbra dark again.
+- 12:55 UTC. MEASURED luminance by region (v/pct.py), median: rows 620 to 800 left, middle, right: approved 0.443,
+  0.259, 0.528; t206 0.411, 0.191, 0.348; h40 0.404, 0.162, 0.268. Rows 800 on: approved 0.342, 0.294, 0.357;
+  t206 0.348, 0.339, 0.310. So "rows 620 to 800 too dark" is the middle third (the penumbra and the cells round
+  it) and the right third; the right third was as dark in h40. STATED cause of the right third: the large tone
+  of the place follows the globe's map (far.tone), which is darker there than the approved picture; UNKNOWN until
+  tested.
+  t207 = t206 with the fall of a cell's heat toward its border over 0.8 of the way and down to 0.12 (lane[8],
+  [9]): cut low band 19.88, plain 39.04, side +0.032 (worse: the lower part of a cell lighter than the upper),
+  lane 6.14, middle third median 0.232. Seen with the stand in: the cells glow from the middle with a dark
+  margin, the nearest yet to "lit from within"; still leathery, and the near flank is the lighter one where the
+  approved's is the darker.
+  t208, t209: body limb law weaker (graze[3] 0.5), clumps of 6 s with 0.3 coming and going; t208 straight fans
+  of 7 columns, shorter and thinner; t209 the fans of t207 with less turn and the seam hotter (0.06, 0.25).
+- 13:01 UTC. t208, t209 MEASURED: cut low band 19.42, 19.80; plain 39.08, 38.96; side +0.041, +0.038 (the weaker
+  body limb law makes the side worse, not better); lane 6.07, 6.10. Seen with the stand in: t209 (seam 0.06,
+  0.25) has lanes that glow orange brown in places and softer cells, the first that read as soft matter; without
+  punch: no near white, no sharp bright fibres.
+- 13:02 UTC. Code: the veil follows the thinness of the place squared (0.01 in the spot); the umbra of t207 still
+  showed its floor's dashes lighter than h40's.
+- 13:08 UTC. t210 = t209 with fans that do not take the fall, heat 3.0, 7 columns, thin, nearly straight;
+  spot.hot 2.4, spot.gap [0.03, 0.45] (the penumbra lighter); sparks 1.5 and larger. t211 = t210 with the body's
+  blob smaller and lower (blob[0] 0.40, [5] 0.2), patches 0.6, clumps smaller and hotter (6.0, 0.06 to 0.14).
+  MEASURED: cut low band 18.42, 18.14 (t209 19.80); plain 38.69, 38.55; side +0.023, +0.022; lane 5.91, 5.77
+  (narrower, the fans stand in the lane's margin); rows 620 to 800 median left, middle, right: t211 0.401, 0.266,
+  0.363 (approved 0.443, 0.259, 0.528): the middle third is there, the right third is not.
+  Seen: the spot is right again (dark umbra, lighter penumbra). The fans at 3.0 stand as one white starburst in
+  every cell: a motif (the failed "asterisks", "shells"). So: heat.fan[19], [20]: a field of the place by which
+  the fans are strong round some pits and faint round others. t212: heat 2.4, share of the fall 0.3, fewer
+  (lot 0.4), longer and thinner, field 0.15. t213: heat 3.0, no fall, field 0.1.
+- 13:16 UTC. t212, t213 MEASURED (draft 90): cut low band 19.26, 19.32 (t211 18.14); plain 38.95, 38.95; side
+  +0.038, +0.034; lane 5.79, 5.62; curve t212 0.667 0.656 0.659 0.658 0.649 0.626 0.597 0.552 0.484 0.412 0.359.
+  Rows 620 to 800 median left, middle, right: t212 0.370, 0.354, 0.348 (the refit curve lifts the middle tones
+  when the fans are weaker, so the penumbra went pale again). Seen with the stand in, whole lower half beside the
+  approved (v/half-t212s-s.jpg): the fan motif is weaker, not gone; the sparks at 1.5 read as white rice grains
+  all over (the approved's points are orange, round, in the lanes only); at half size mine is beige where the
+  approved is deep orange: the palette by luminance tenth is the same (v/sat.py), so the cause is the scale of the
+  contrast: the approved's dark net of lanes and its bright flanks are coherent over 10 to 40 px, mine mixes
+  white and brown inside 5 px. So t214 = t212 with sparks 0.5, lanes wider (one side 0.026, least 0.04), patches
+  0.8; t215 = t214 with spot.gap [0.03, 0.28] and the limb law 1.6 at a grazing look (rows 620 to 800).
+- 13:34 UTC. t214, t215 MEASURED: cut low band 20.05, 19.39; plain 39.53, 39.34; side +0.034, +0.034; lane 5.71,
+  5.74 (lane[4], [5] wider did not widen the measured lane: its width is the fall's). Limb law 1.6 moved rows 620
+  to 800 by 0.01 only. Sparks at 0.5: the rice is gone. Eye held clip of t215 (v/motion-t215.jpg, left crop,
+  crisp draft): flicker rows 0.157 / 18.2 percent; 0.308 / 34.4; 0.089 / 0.0; 0.163 / 10.7 (h42: 0.121 / 6.7;
+  0.317 / 33.3; 0.131 / 15.4; 0.138 / 18.5). Seen: the outlines change and the streaks come and go; the seven
+  wide streaks a quarter turn read as palm leaves on the cells seen aslant (left of the frame).
+  A render refused to start at 13:27 (3.0 GB free, 3 needed): old clips and trial stills under out/work removed,
+  4.5 GB free.
+  t216 (walked gas a third as thick, spot.gap [0.02, 0.15]) and t217 (no walked gas, as h40): cut low band 18.75,
+  18.68; plain 39.30, 39.51; side +0.036, +0.037; lane 5.63, 5.51; near crops the same to the eye (the walked
+  gas is not the cause of the milky near ground); rows 620 to 800 median L, M, R: t217 0.386, 0.345, 0.368; rows
+  540 to 620 0.496 (approved 0.532; t215 0.423). The penumbra at gap 0.15 has dark gaps again. Base from here:
+  t217 (no walked gas: the spot's haze cannot come back, and a frame is faster).
+  STATED, the cause of the pale gold at half size: the mean heat by the way from middle to border equals the
+  approved's, but the approved carries it as strong fine texture (fibres 3 to 4 px wide, 6 to 8 px apart, mottle)
+  and mine as a smooth fall. t218: fans of 12 a quarter turn, shorter (0.9), softer; t219: 16, 0.7, heat 2.6.
+- 13:40 UTC. Update mailed to /root (t218, no name). MAIL 1495 (13:40) from the Builder, his eye on t218, by weight:
+  (a) the lanes: near black gaps between domes, wide enough to read at half size (mine thin and brown, 5.58 px
+  against 7.08, the fall rows 5 to 9 over); (b) the spot: a bowl, near black floor, dark wall of threads with
+  bright tips, bright outer ring (mine a flat pale disc, brown floor); (c) size: the approved's near cells are
+  large and grow strongly toward the bottom edge, mine smaller and nearer one size; (d) the fine fibres of 3 to 8
+  px on the flanks (without them wax). The motion stays the point; (a) to (d) must not cost the living clumps and
+  streaks. The flicker law of MAIL 1218 and G17 are bars for the name. Names until 18:30.
+- 13:49 UTC. Film and eye held clip of t218: flicker rows 0.157 / 20.0 percent; 0.307 / 36.4; 0.089 / 0.0; 0.173 /
+  12.1. Seen at the four places of largest change (v/flk-t218.jpg): each is a cell that swells or moves into the
+  fixed disc of 26 px (a young cell growing from small to large in 0.4 to 0.8 s), not a clump and not a streak.
+  STATED: flicker.py holds its discs still, so a border that passes counts as a change of light; the law speaks
+  of a cell's mean light. New tool assets-src/sun/lab/cellflk.py: follows each cell by its own island (a second
+  held clip with "show": "seam") and takes the mean inside the island at each capture.
+- 14:06 UTC. Trials for MAIL 1495 (drafts of 90; cut low band / plain / side / lane px; rows 620 to 800 median
+  left, middle, right):
+  t218 (base) 18.47 / 39.60 / +0.038 / 5.58; 0.395, 0.347, 0.365.
+  t220 = t218 with lane[3] 0.15 (the seam's heat alone over the first 0.15 of the lane's width, a dark bottom),
+  seam [0.04, 0.25], spot.ring [0.5, 1.0] (dark near the umbra, light at the outer rim), spot.gap [0.02, 0.10],
+  fans heat 3.0 field 0.5: 18.56 / 39.95 / +0.033 / 5.86; 0.387, 0.313, 0.361.
+  t221 = the same with lane[3] 0.3, seam [0.03, 0.2]: 18.81 / 40.08 / +0.032 / 5.93: islands on a flat brown
+  floor at 1 to 1; left.
+  t222 = t220 with seam [0.02, 0.25], lane[7] 1.0 (less swell at the crossings), spot.ring [0.35, 1.0], spot.hot
+  1.8: 18.34 / 39.65 / +0.028 / 5.81; 0.393, 0.267, 0.365 (the middle third is there: approved 0.259).
+  t223 = t222 with larger softer cool patches (patch [0.9, 1.2, 0.3, 0.7, 0.3]) and a darker body outside the
+  light (blob[5] 0.12): 18.24 / 39.52 / +0.023 / 5.70; 0.388, 0.291, 0.367.
+  t224 = t223 with seam [0.005, 0.12]: 18.38 / 39.58 / +0.021 / 5.68; 0.388, 0.299, 0.367; the near 2nd
+  percentile 0.081 (approved 0.072): the lanes are darker to the eye, the refit curve takes most of it back (it
+  fits the percentiles, and the approved's darkest tenth is partly on cell bodies, mine all in the lanes).
+  t225 = t224 with the shoulder's end at 0.05: the same.
+  MEASURED the palette on the 1 to 1 strip by luminance tenth: mean RGB and shares equal the approved's within
+  0.01 and 3 points (also h40's). So nothing in the colours or the levels is left to fit; what differs is where
+  the light sits.
+  STATE h43 = t224 with spot.floor [0.008, 0.02] (the refit curve lifted the umbra's floor; no refit after it).
+  v/lab-h43.json. Chain v/a43.sh started 14:06: eye held clip, the same with show seam, cellflk, film 60 to 120,
+  final 90, final 60, final 90 again (two renders, the hashes), final 90 at preview size.
+  NOT DONE of MAIL 1495: (c) the size of the cells (sim.radius; a new table, far twin, far.cell and handover:
+  not inside today's hours with the proofs) and most of (d).
+- 14:27 UTC. h43 MEASURED. Eye held clip mo-h43, fixed discs (flicker.py): 0.160 / 50.0; 0.255 / 40.3; 0.090 / 0.0;
+  0.170 / 26.7. By the cell itself (cellflk.py, 431 cell pairs, 4 pairs of captures 12 film frames apart): largest
+  0.293, median 0.035, share over a tenth 0.111. By cause (v/cf2.py on the same islands): of the 431, 156 change
+  their island's area by over half in the 12 frames (islands of the seam mask join and part, cells are born, split
+  and die): 24.4 percent of those are over a tenth. The 275 whose area stays within 0.67 to 1.5: 3.6 percent over a
+  tenth, largest 0.252, median 0.029. Small cells (600 to 2000 px) 17.3 percent, 2000 to 6000 px 6.8, over 6000 px
+  4.2. So the law of MAIL 1218 is NOT met: about one steady cell in 28 and the cells that are being born, split or
+  swallowed. Final 90 (lab-90-h43f.png, 6.7 min): whole low band 11.8488 (main 15.303), plain 30.4119 (main 29.558,
+  standing 30.4864); rows 540 on: low band 24.0767 (main 27.289), plain 50.1908 (main 49.735); cut rows 324 on:
+  low band 18.2322 (standing 23.4775), plain 39.6763 (40.1645); sky part 7.0416; bands 1.268 1.085 0.976 0.907
+  (under 1 px 1.493); G17 by g17.py median 1.585 (line 0.8; worst tile 0.723 at [6, 5]); lane 5.69 px (7.08);
+  side +0.025; curve 0.667 0.672 0.667 0.662 0.651 0.640 0.613 0.569 0.502 0.409 0.345 (approved 0.667 0.662
+  0.657 0.647 0.619 0.586 0.547 0.496 0.433 0.369 0.324: over 0.05 at the tenths 0.4 to 0.7, largest 0.073).
+  SEEN at 1 to 1 and at 3 times (v/c-h43f.jpg, v/z-h43f.jpg, v/spot-h43f.jpg, v/half-h43f-s.jpg): still shells
+  with a hard outline over a brown floor, marbled faces, no white glow inside; the approved at 3 times is soft
+  (out of focus), its lanes glow dark red with bright points, short bright flames stand round each dark meeting
+  point. Spot: pale flat disc of thin spokes; the approved's is a bowl whose far wall is seen, thick bright threads
+  on dark (10th percentile of the spot's box 0.122 against 0.216, 90th 0.91 against 0.83), larger umbra (270 px
+  against 200). At half size: the approved's middle ground cells are about twice as wide and its lanes 4 to 6 px
+  at half size. The chain a43 was stopped after the final 90 to free the machine for trials (final 60, the second
+  90 and the preview final are made for the state that is named). Trials t226 (spot: tongues [90, 56], ranks
+  [1.8, 1.3], lean 0.3, hot 2.4, gap [0.01, 0.05], ring [0.45, 1.0]) and t227 (the same and sim.slots 1100,
+  sim.radius [0.027, 0.111], far.cell 0.154: cells 1.23 times wider) started 14:27.
+- 14:45 UTC. Trials on h43 (drafts at 90, no lens at draft). t226 spot of fewer, longer tongues: a wheel of straight
+  spokes, worse. t227 the same and sim.slots 1100 (cells 1.23 times wider): in the Builder's crop (v/m-t227.jpg) the
+  cells are then larger than the approved's (80 to 150 px against 60 to 110), at 1675 slots they match (50 to 100
+  px); so the size stays and (c) is answered by that picture: the count in his crop is right, the strong growth to
+  the bottom edge is the eye's law. t228: spot tongues [110, 70], ranks [3.2, 2.4], bend 0.25, wave [0.07, 0.015]:
+  zebra; cushion.patch[0] 0.5 (was 0.9): the marbling is soft dark mottling, no leopard, better than h43 and than
+  t229's fewer patches ([0.6, 1.2, 0.4, 0.8, 0.3]: polished nuggets, wax). t229: spot tongues [80, 50], ranks
+  [2.6, 2.0], lean 0.3, bend 0.25, wave [0.07, 0.015], hot 2.4, gap [0.01, 0.05], ring [0.45, 1.0], depth 0.06,
+  wall [0.85, 2.2]: the far wall of the bowl is seen, tongues read as petals with dark between: better than h43.
+  Base b44 = h43 with t229's spot and patch[0] 0.5 (v/lab-b44.json, curve of t228). t230 (lane[3] 0.3, lane[4]
+  0.015) and t231 (lane[4] 0.015): lane profile and width do not move (5.79, 5.67 px; profile the same to 0.005),
+  at 3 times both are the same shells on a flat brown floor: the lane's numbers do not rule the picture's lane,
+  the bodies' outline over the floor does (dome form), so lane stays h43's. MEASURED on the approved (cells.py):
+  lane profile 0.616 0.596 0.568 0.529 0.481 0.427 0.373 0.325 0.302 and back, depth 0.234, width quartiles 5.4,
+  8.67; h43f: 0.637 0.623 0.604 0.578 0.545 0.505 0.454 0.364 0.284, depth 0.341, quartiles 3.88, 7.7. So mine is
+  deeper in the mean and has a notch of one px at the middle; the approved is a smooth valley with a bottom of
+  3 px. Why laneWide's key lane[4] did nothing in t214: lane[4] / radius is 0.59 for the mean cell, at the clamp
+  top lane[6] 0.6. t232, t233 (spot once more: bend 0.35, wave [0.1, 0.02], depth 0.08, wall [0.9, 2.3]) started
+  14:44. Then freeze and the whole proof list (v/proof.sh).
+- 14:59 UTC. t232 (spot: tongues [70, 44], ranks [3.4, 2.6], lean 0.34, bend 0.35, wave [0.1, 0.02], depth 0.08,
+  wall [0.9, 2.3]) reads as a bowl of short tongues; t233 (long bent tongues, hot 2.8) as an anemone. STATE h44 =
+  t232 (v/lab-h44.json): h43 and that spot and cushion.patch[0] 0.5. Chain v/proof.sh h44 started 14:49:50, log
+  v/proof-h44.log, markers TWIN DONE, FINAL90 DONE, A DONE (flicker), B DONE (film), RISE DONE (v/rise-h44.txt),
+  PURE DONE, FINAL60 DONE, TWICE DONE, CHAIN DONE. lab.json carries "show" during step A: commit lab.json only
+  after CHAIN DONE and a diff against v/lab-h44.json. Twin baked again 14:51: full 1,740,711, web 469,022 bytes.
+  MEASURED final 90 h44 (lab-90-h44f.png): whole low band 12.1662, plain 30.6237; rows 540 on 24.8087, 50.6027;
+  cut rows 324 on 18.7397, 40.0465; sky 7.0416; bands 1.226 1.087 1.009 0.954 (under 1 px 1.375); G17 median 1.509
+  (worst tile 0.599 at [6, 5]); rows 640 to 760: 1 to 2 px 1.123, 2 to 4 px 1.062 (h43f 1.105, 0.989); curve 0.682
+  0.682 0.681 0.675 0.660 0.643 0.614 0.567 0.499 0.406 0.340; side +0.042 (h43f +0.025); lane 5.8 px, depth 0.331.
+  Growth 2,709,018 bytes. Update mailed to /root 14:59 (low) with spot-h44f, c-h44f, m-h44f, half-h44f-s,
+  sheet-h43-s. NEXT MAIL DUE 16:29 at the latest. Lens facts for the proof list: disc px = 2.0 times
+  |2.5 / depth - 1| at 1080 rows, capped 0.5 and 1.12 apertures; lens on when samples >= pi times (largest disc
+  px)^2: master 15.8 (16 at final: on; 4 at review: off; rise frames at review draw 16: on), preview 3.94 (review
+  4: ON, draft off), uhd 63.05 (final 16: OFF; needs 64).
