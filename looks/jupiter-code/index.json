@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T06:00:25.092Z",
+ "pushed": "2026-11-26T06:15:36.147Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "06:00 UTC: line A with the colour map (my call so far: map on, half its light out). Storm now wound fibres round a lower eye. The dark field is the open point: boulders (w15), teeth (w16), satin rolls (w17). Next: shorter rolls with lumpy crests.",
+ "note": "looks 06:20 UTC: w18 to w20, colour map on, no scaffold; dark thirds still lit too broadly, tops dim and grey",
  "looks": [
+  {
+   "time": "2026-11-26T06:15:35.550Z",
+   "file": "20261126061535550-note-w19-3150.jpg",
+   "source": "../work/r26/t/w19-3150.png",
+   "kind": "note",
+   "label": "w19 at 3150, preview, draft, no scaffold: rolls, curls, small tops on crests; line i 17.687, bands green",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:15:34.953Z",
+   "file": "20261126061534953-note-w20-3150.jpg",
+   "source": "../work/r26/t/w20-3150.png",
+   "kind": "note",
+   "label": "w20 at 3150, preview, draft, no scaffold: tops driven by the picture's unrest; line i 17.979, bands green; lower left reads as pebbles",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:15:34.291Z",
+   "file": "20261126061534291-note-w18-3150.jpg",
+   "source": "../work/r26/t/w18-3150.png",
+   "kind": "note",
+   "label": "w18 at 3150, preview, draft, no scaffold: rolls with warp, no lumps; line i 17.600, bands green",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T06:00:24.417Z",
    "file": "20261126060024417-note-w17-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r25/t/t-3150-1400.png",
    "kind": "note",
    "label": "state t, master draft, frame 3150 at 1400 px",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T03:31:55.511Z",
-   "file": "20261126033155511-note-t-3239-1400.jpg",
-   "source": "../work/r25/t/t-3239-1400.png",
-   "kind": "note",
-   "label": "state t, master draft, frame 3239 at 1400 px (last frame of the surface view)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T03:31:54.816Z",
-   "file": "20261126033154816-note-t-3060-1400.jpg",
-   "source": "../work/r25/t/t-3060-1400.png",
-   "kind": "note",
-   "label": "state t, master draft, frame 3060 at 1400 px (first frame of the surface view)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T03:20:18.555Z",
-   "file": "20261126032018555-note-t-3150.jpg",
-   "source": "../work/r25/t/t-3150.png",
-   "kind": "note",
-   "label": "state t (a64c3d06) at 3150, master draft, scaffold off: line (i) 16.026 (main 3.539, state s 9.259 with scaffold), bands green; boulders, flat storm dish, right third too light",
    "stop": "jupiter"
   }
  ]
