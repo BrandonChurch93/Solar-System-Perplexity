@@ -123,6 +123,8 @@ export class FilmDirector implements Director {
   // the turn steps from the one of the way in to the stop's own; back, laid after the turn of any shot from that frame on, gives the
   // turn with this step and every step before it taken out (Shot.skyTurnSeen).
   private skySteps: { frame: number; back: THREE.Quaternion }[] = []
+  // The stops that say the turn between their two sky aims is seen (StopParams.skyAim.seen), in the film's order.
+  private skySeen: string[] = []
 
   constructor(plans: StopPlan[]) {
     shutterScales(this.shutterOf)
@@ -222,6 +224,7 @@ export class FilmDirector implements Director {
     const out = n.exitPose(n.seg.rise.end).position.clone().normalize()
     this.lookbackSide = out
     this.sky = this.aimSky()
+    this.holdSeenTurns()
   }
 
   private aimSky(): SkyAims {
@@ -251,6 +254,7 @@ export class FilmDirector implements Director {
       return round(cam(hold).multiply(aimAt(want[0], want[1], want[2]).invert()).multiply(f))
     })
     let carry: THREE.Quaternion | null = null
+    const seen: string[] = []
     this.plans.forEach((p, i) => {
       const hold = judged(p.id + '.hold')
       const terrain = judged(p.id + '.terrain')
@@ -277,11 +281,15 @@ export class FilmDirector implements Director {
         if (second) {
           const span = p.p.skyAim?.turn
           const aim = aimAt(second[0], second[1], second[2])
-          if (!span || !(span[0] <= span[1]) || span[0] < (p.seg.dive?.firstFrame ?? Infinity) || span[1] >= p.seg.rise.endFrame || !out.turns[p.id]) throw new Error(p.id + ': a second sky aim needs the frames of its turn, in order and within the stop\'s dive, surface view and rise, and a low turn to end in')
+          if (!span || !(span[0] <= span[1]) || span[0] < (p.seg.dive ?? p.seg.terrain).firstFrame || span[1] >= p.seg.rise.endFrame || !out.turns[p.id]) throw new Error(p.id + ': a second sky aim needs the frames of its turn, in order and within the stop\'s dive, surface view and rise, and a low turn to end in')
           out.dives[p.id] = { turn: round(tcam.clone().multiply(aim.clone().invert()).multiply(f)), aim: round(aim), from: span[0] / config.fps, to: (span[1] + 1) / config.fps }
         }
       }
       out.patches[p.id] = { orbit: round(orbit), terrain: round(low) }
+      if (p.p.skyAim?.seen) {
+        if (!out.dives[p.id]) throw new Error(p.id + ': a turn of the sky that is seen needs a second sky aim to turn from')
+        seen.push(p.id)
+      }
     })
     const arrivals: FilmDirector['arrivals'] = {}
     const steps: FilmDirector['skySteps'] = []
@@ -299,6 +307,7 @@ export class FilmDirector implements Director {
     })
     this.arrivals = arrivals
     this.skySteps = steps
+    this.skySeen = seen
     const back = judged(config.endingId + '.lookback')
     const lastId = this.plans[this.plans.length - 1]!.id
     const kept = out.orbits[lastId]
@@ -333,12 +342,53 @@ export class FilmDirector implements Director {
     return k <= 0 ? d.turn : k >= 1 ? to : d.turn.clone().slerp(to, k)
   }
 
-  private skyPlate(id: string, time: number): { aim: THREE.Quaternion; turning: boolean } | undefined {
+  private skyPlate(id: string, time: number): Shot['skyPlate'] {
     const d = this.sky.dives[id]
     const to = this.sky.patches[id]?.terrain
     if (!d || !to) return undefined
     const k = smoother(ramp(d.from, d.to, time))
-    return { aim: k <= 0 ? d.aim : k >= 1 ? to : d.aim.clone().slerp(to, k), turning: k > 0 && k < 1 }
+    return { aim: k <= 0 ? d.aim : k >= 1 ? to : d.aim.clone().slerp(to, k), turning: k > 0 && k < 1, ...(this.skySeen.includes(id) ? { seen: true as const } : {}) }
+  }
+
+  // The law of a turn between two sky aims that is seen (StopParams.skyAim.seen). No plate hides the stars of such a stop while they turn,
+  // so the turn itself is held: from one frame to the next, at every frame of the stop's dive, surface view and rise, the sky turns in the
+  // film's world by at most handover.skySeen.maxDegPerFrame degrees. The count is of the sky as the shots lay it (skyInWorld), so it takes
+  // in the turn between the two aims, the carry of the stars on the globe side of a handover and every schedule the stop gives itself.
+  // A stop over the limit is refused when the film is built. A film in which no stop says the word asks for no shot here.
+  private holdSeenTurns(): void {
+    if (!this.skySeen.length) return
+    const limit = config.raw.handover.skySeen?.maxDegPerFrame
+    if (!(limit > 0)) throw new Error('handover.skySeen.maxDegPerFrame must be above 0 where a stop says that the turn of its sky is seen')
+    for (const id of this.skySeen) {
+      const index = this.plans.findIndex((p) => p.id === id)
+      const p = this.plans[index]!
+      const first = (p.seg.dive ?? p.seg.terrain).firstFrame
+      let before = this.skyInWorld(index, first)
+      for (let f = first + 1; f < p.seg.rise.endFrame; f++) {
+        const now = this.skyInWorld(index, f)
+        const step = THREE.MathUtils.radToDeg(before.angleTo(now))
+        if (step > limit) throw new Error(id + ': the sky turns by ' + step.toFixed(3) + ' degrees in the film\'s world from frame ' + (f - 1) + ' to frame ' + f + '; a turn between two sky aims that is seen may take at most handover.skySeen.maxDegPerFrame, ' + limit + ' degrees a frame')
+        before = now
+      }
+    }
+  }
+
+  // The sky in the film's world at a frame of the dive, surface view or rise of the stop of this index: the lens in the world, laid
+  // against the sky the shot gives it (skyQuaternion and skyTurn). The lens of the surface view is read through its twin, the lens of the
+  // globe view that stands where it stands, so the sky of the two views is counted in one world and the count has no step where the view
+  // changes. The angle between the values of two frames is how far the stars turn in the world between them: what holdSeenTurns counts,
+  // and what a builder reads to see how near a plan is to the limit.
+  skyInWorld(index: number, frame: number): THREE.Quaternion {
+    const time = frame / config.fps
+    const s = this.shotAt(frame, time)
+    const set = s.sets[0]!
+    const lens = s.camera.quaternion.clone()
+    if (set.view === 'terrain') {
+      const back = set.rotation.clone().invert()
+      const local: Pose = { position: s.camera.position.clone().sub(set.origin).applyQuaternion(back), quaternion: back.clone().multiply(s.camera.quaternion), vfov: s.camera.vfov }
+      lens.copy(this.frames[index]!.rotation).multiply(this.plans[index]!.twin(local, time).quaternion)
+    }
+    return lens.multiply(s.skyQuaternion.clone().invert()).multiply(s.skyTurn).normalize()
   }
 
   private skyAnchor(frame: number): THREE.Quaternion {

@@ -76,7 +76,11 @@ export interface MoveParams {
   // skyAim.arrive: the sky's aim on the stop's way in, read as orbit is (along, tilt and lift of the view of the judged hold frame). The
   // sky has the turn of that aim in the rise of the stop before and on the travel to this stop, where it has this stop's orbit turn
   // otherwise, and the stop's own turn from the first frame of its hold on (FilmDirector.arrivals). Not set: the way in has the orbit turn.
-  skyAim?: { orbit?: [number, number, number]; terrain?: [number, number, number]; dive?: [number, number, number]; turn?: [number, number]; arrive?: [number, number, number] }
+  // skyAim.seen: the stop says that the turn between its two sky aims (dive and turn) is seen. The engine then asks for no surface plate
+  // that hides the stars while they turn (src/core/engine.ts), and the film holds the stop to a law of its own instead: at every frame of
+  // its dive, surface view and rise the sky turns in the film's world by at most handover.skySeen.maxDegPerFrame degrees from one frame
+  // to the next, or the film is not built (FilmDirector.holdSeenTurns). Not set: the stars turn between two aims only where a plate hides them.
+  skyAim?: { orbit?: [number, number, number]; terrain?: [number, number, number]; dive?: [number, number, number]; turn?: [number, number]; arrive?: [number, number, number]; seen?: boolean }
 }
 
 export interface NearParams { centre: [number, number, number]; radius: number; degPerSecond?: number }

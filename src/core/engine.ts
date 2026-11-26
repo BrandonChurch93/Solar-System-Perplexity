@@ -361,7 +361,7 @@ export class Engine {
       const high = shot.skyShareHigh
       const shared = share > 0 || high !== undefined
       const plate = mid.skyPlate
-      let hid = !plate?.turning
+      let hid = !plate?.turning || plate.seen === true
       const arrivals = this.director!.arrivals
       const step = skyStep(shot.segment, shot.frame, shot.sets, arrivals)
       let stepHid = step === null

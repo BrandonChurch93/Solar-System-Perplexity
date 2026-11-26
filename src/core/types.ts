@@ -152,7 +152,9 @@ export interface Shot {
   // taken out, so along the film it never steps and the lens against it (its inverse times skyQuaternion) goes from frame to frame as
   // the seen sky does. Not given before the first step and in a film without one: the seen turn is then skyTurn itself.
   skyTurnSeen?: THREE.Quaternion
-  skyPlate?: { aim: THREE.Quaternion; turning: boolean }
+  // The aim of the stop's surface plate where the stop gives the sky a second aim, and whether the stars turn between the two aims in
+  // this shot. seen: the stop has said that this turn is seen (StopParams.skyAim.seen), so no plate has to hide the stars while they turn.
+  skyPlate?: { aim: THREE.Quaternion; turning: boolean; seen?: true }
   skyStars?: number
   skyPatch?: number
   skyLook?: number
