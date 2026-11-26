@@ -1,9 +1,33 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T14:28:51.113Z",
- "head": "c7fdadc4b8b1234108c6a60cc98f79a528963743",
- "note": "later cut: the picture's level follows the camera above the surface view's ceiling; reader slice on the build running; judging colour strips near the limb",
+ "pushed": "2026-11-26T14:57:27.129Z",
+ "head": "178feb0ad7550b22f5be4014d8e700e86290ed67",
+ "note": "later cut: the picture's level follows the camera; first build showed a white band at the limb from 3258, cured by holding the lift to ground the ceiling could see; reader slice on that build running",
  "looks": [
+  {
+   "time": "2026-11-26T14:57:26.430Z",
+   "file": "20261126145726430-note-crop-b-3257-3265.jpg",
+   "source": "../../../../tmp/crop-b-3257-3265.jpg",
+   "kind": "note",
+   "label": "Jupiter rise 3257 and 3265 at native pixels, far side of the storm: the name (top), the first build (bottom)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T14:57:25.845Z",
+   "file": "20261126145725845-note-pair-c-3257-3262.jpg",
+   "source": "../../../../tmp/pair-c-3257-3262.jpg",
+   "kind": "note",
+   "label": "Jupiter rise 3257 and 3262: the name (top) and the build in work (bottom): the far rim of the storm is lit at 3257 where the name is dark teal",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T14:57:24.988Z",
+   "file": "20261126145724988-note-crop-c-limb.jpg",
+   "source": "../../../../tmp/crop-c-limb.png",
+   "kind": "note",
+   "label": "Jupiter rise limb at 3258, 3262, 3265, 1.5 times: the name (top), the first build (middle, a white band and specks along the limb, a fault) and the build with the lift held to ground the ceiling could see (bottom)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T14:28:49.774Z",
    "file": "20261126142849774-note-crop-b-3248-3250.jpg",
@@ -61,36 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T14:05:34.283Z",
-   "file": "20261126140534283-frame-f02997.jpg",
-   "source": "out/work/jupiter/frames/n1/f02997.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 2997, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 2997,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T14:00:11.320Z",
-   "file": "20261126140011320-note-level-follows-native-3252.jpg",
-   "source": "../../../../tmp/lk/level-follows-native-3252.jpg",
-   "kind": "note",
-   "label": "Jupiter rise 3252 at native pixels, the name beside the build in work (the picture's level follows the camera above the surface view's ceiling)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:00:10.049Z",
-   "file": "20261126140010049-note-held-picture-3254-3266.jpg",
-   "source": "../../../../tmp/lk/held-picture-3254-3266.jpg",
-   "kind": "note",
-   "label": "Jupiter rise 3254, 3258, 3262, 3266, diagnostic only: the approved picture held on at any stretch beside the name; shows the far field is where picture and plates differ",
-   "stop": "jupiter"
   }
  ]
 }
