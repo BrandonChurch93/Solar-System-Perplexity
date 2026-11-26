@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T12:20:34.903Z",
+ "pushed": "2026-11-26T12:40:22.361Z",
  "head": "9055081a19b6e807cd4fd954c050fba10831af67",
- "note": "3866 against main at the same place on the planet: ring and night side level; notes of mail 1468 pushed",
+ "note": "cause of the pattern number at 3857: the same lobe at the ring's tip in both trees, the judged area takes in more of it in mine",
  "looks": [
+  {
+   "time": "2026-11-26T12:40:21.707Z",
+   "file": "20261126124021707-note-fm24.jpg",
+   "source": "../../../../tmp/v/rigid/T1/fm24.jpg",
+   "kind": "note",
+   "label": "rise 3857 at the tip of the lit ring in the shadow, quarter size times 5, the cure above and main below: the frame, the frame times 8, the reader's way (green holds, red the flows do not agree), the reader's pattern field unmasked (dim where not judged)"
+  },
   {
    "time": "2026-11-26T12:20:34.232Z",
    "file": "20261126122034232-note-main_rise_k7620-7632-pops.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/rigid/G1/pat3814_crops.jpg",
    "kind": "note",
    "label": "the place of the largest pattern, 3814 and 3822 on the cure, pixel 1044 to 1364 by 696 to 976 twice enlarged: the dusk above the near ring's inner edge"
-  },
-  {
-   "time": "2026-11-26T11:56:19.810Z",
-   "file": "20261126115619810-note-popwhere_7253.jpg",
-   "source": "../../../../tmp/v/rigid/G1/popwhere_7253.png",
-   "kind": "note",
-   "label": "pair 3626 + 1/2 on the cure, reduced reading: red where it leaves more than the median of the 32 pairs around it, blue where less"
   }
  ]
 }
