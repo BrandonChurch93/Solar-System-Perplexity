@@ -1,9 +1,44 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T19:44:03.033Z",
+ "pushed": "2026-11-26T20:05:31.472Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "The Sun's split frame 205 at review with the seen sky turn: the stars are the draft's points, none doubled; naming the engine change for a later cut",
+ "note": "the Sun's pair 180 and 181 at review with the seen turn: stars are crisp points that step 5 to 11 px a frame, as in the drafts; main 262b9a68 (the fifth cut) merged into agent/engine-sky-seen without a conflict, proofs running",
  "looks": [
+  {
+   "time": "2026-11-26T20:02:42.231Z",
+   "file": "20261126200242231-note-r180-181-ground.jpg",
+   "source": "../../../../tmp/sun/see/r180-181-ground.png",
+   "kind": "note",
+   "label": "Sun 180 and 181 at review, fixed ground box 1300 700 at 1 to 1"
+  },
+  {
+   "time": "2026-11-26T20:02:41.667Z",
+   "file": "20261126200241667-note-r180-z2.jpg",
+   "source": "../../../../tmp/sun/see/r180-z2.png",
+   "kind": "note",
+   "label": "Sun 180 draft beside review in two sky boxes at 2 to 1: same points (correlation 0.990 to 0.997 at shift 0 0)"
+  },
+  {
+   "time": "2026-11-26T20:02:41.013Z",
+   "file": "20261126200241013-note-r181-whole.jpg",
+   "source": "../../../../tmp/sun/see/r181-whole.png",
+   "kind": "note",
+   "label": "Sun 181 at review, whole frame at 0.72, the Sun's plan with the word"
+  },
+  {
+   "time": "2026-11-26T20:02:40.412Z",
+   "file": "20261126200240412-note-r180-whole.jpg",
+   "source": "../../../../tmp/sun/see/r180-whole.png",
+   "kind": "note",
+   "label": "Sun 180 at review, whole frame at 0.72, the Sun's plan with the word (scratch tree, engine f7416333)"
+  },
+  {
+   "time": "2026-11-26T20:02:39.826Z",
+   "file": "20261126200239826-note-r180-181-z2.jpg",
+   "source": "../../../../tmp/sun/see/r180-181-z2.png",
+   "kind": "note",
+   "label": "Sun 180 and 181 at review (16 samples) over the drafts, fixed sky box 1500 120 at 2 to 1, the engine's seen turn on the Sun's plan: the stars are the drafts' own crisp points, 5 to 11 px on from 180 to 181, no star doubled"
+  },
   {
    "time": "2026-11-26T19:44:01.763Z",
    "file": "20261126194401763-note-r205-mid.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/sun/see/r205-tl.png",
    "kind": "note",
    "label": "The Sun 205, top left quarter at 1 to 1: review (left) beside the draft (right): the stars are the same points, none doubled, none streaked; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
-  },
-  {
-   "time": "2026-11-26T19:43:58.406Z",
-   "file": "20261126194358406-note-r205-whole.jpg",
-   "source": "../../../../tmp/sun/see/r205-whole.png",
-   "kind": "note",
-   "label": "The Sun 205, the split frame of the view change, with the sky turning and seen (0.349 degrees a frame): review, 31 samples (left) beside its draft, 1 sample (right), whole at half size; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
-  },
-  {
-   "time": "2026-11-26T19:21:10.091Z",
-   "file": "20261126192110091-note-w212-word-his.jpg",
-   "source": "../../../../tmp/sun/see/w212-word-his.png",
-   "kind": "note",
-   "label": "The Sun 212, draft, whole: the two sky aims and the word (left) beside the Sun's named plan as it stands (right): the ground is the same, the Milky Way stands at the left with the word"
-  },
-  {
-   "time": "2026-11-26T19:01:58.421Z",
-   "file": "20261126190158421-note-p204-207-stars.jpg",
-   "source": "../../../../tmp/sun/see/p204-207-stars.png",
-   "kind": "note",
-   "label": "The Sun 204 to 207 at 2 to 1, a box of sky that follows the stars through the view change 205 | 206; drafts of the scratch tree"
-  },
-  {
-   "time": "2026-11-26T19:01:57.273Z",
-   "file": "20261126190157273-note-p205-206-stars4.jpg",
-   "source": "../../../../tmp/sun/see/p205-206-stars4.png",
-   "kind": "note",
-   "label": "The Sun 205 (surface view) beside 206 (globe view) at 4 to 1, a box of sky that follows the stars: the same stars on both sides of the view change, moved by -14 -9 px (204 to 205: -14 -8; 206 to 207: -16 -10); drafts of the scratch tree"
-  },
-  {
-   "time": "2026-11-26T19:01:56.087Z",
-   "file": "20261126190156087-note-p180-181-fixed.jpg",
-   "source": "../../../../tmp/sun/see/p180-181-fixed.png",
-   "kind": "note",
-   "label": "The Sun 180 beside 181, one fixed crop at 2 to 1 (x 180..520, y 330..550): the stars move 5 to 11 px between the two while the ground stands within 1 px (boxes: spot -1 +1, ground 0 0 and -4 0): the sky's turn by the clock, seen; drafts of the scratch tree"
   }
  ]
 }
