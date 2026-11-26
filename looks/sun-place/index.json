@@ -1,9 +1,49 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T05:47:18.349Z",
- "head": "6bc94020c93f8d051acf65e49d0184423467160c",
- "note": "check",
+ "pushed": "2026-11-26T06:12:52.116Z",
+ "head": "6ada65b9074e177278cc9892bd418ab213843d64",
+ "note": "arcade leaves by size (207 to 234), sky top at 90, arch trial D as lines; sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T06:12:51.003Z",
+   "file": "20261126061251003-note-viz-D.jpg",
+   "source": "../../../../tmp/v/viz-D.jpg",
+   "kind": "note",
+   "label": "arch trial D: the approved above, the trial's field lines projected at 90 below (not a render)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T06:12:50.075Z",
+   "file": "20261126061250075-note-skytop90.jpg",
+   "source": "../../../../tmp/v/skytop90.png",
+   "kind": "note",
+   "label": "top of frame 90 at gain 2.5: approved, main, candidate (the sky behind the arch)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T06:12:49.256Z",
+   "file": "20261126061249256-note-c2-arc-c.jpg",
+   "source": "../../../../tmp/v/c2-arc-c.jpg",
+   "kind": "note",
+   "label": "rise 207 to 234, the arcade leaving by its own size, at 2 to 1 (c2-arc-c.jpg)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T06:12:48.255Z",
+   "file": "20261126061248255-note-c2-arc-b.jpg",
+   "source": "../../../../tmp/v/c2-arc-b.jpg",
+   "kind": "note",
+   "label": "rise 207 to 234, the arcade leaving by its own size, at 2 to 1 (c2-arc-b.jpg)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T06:12:46.810Z",
+   "file": "20261126061246810-note-c2-arc-a.jpg",
+   "source": "../../../../tmp/v/c2-arc-a.jpg",
+   "kind": "note",
+   "label": "rise 207 to 234, the arcade leaving by its own size, at 2 to 1 (c2-arc-a.jpg)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T05:47:10.192Z",
    "file": "20261126054710192-note-c1-rise-a.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/arc-rise.jpg",
    "kind": "note",
    "label": "candidate 6bc94020, the arcade about the spot at 2 to 1 through the rise, before the cure: strands at 221 to 231, haze and two dots at 236, dots from 241",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T05:12:53.675Z",
-   "file": "20261126051253675-note-sky90-pair.jpg",
-   "source": "../../../../tmp/v/sky90-pair.png",
-   "kind": "note",
-   "label": "the sky part at 90 (rows 0 to 324) at 1 to 1: approved above, candidate 6bc94020 at draft below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T05:12:52.479Z",
-   "file": "20261126051252479-note-sky60-pair.jpg",
-   "source": "../../../../tmp/v/sky60-pair.png",
-   "kind": "note",
-   "label": "the sky part at 60 (rows 0 to 324) at 1 to 1: approved above, candidate 6bc94020 at draft below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T05:10:43.308Z",
-   "file": "20261126051043308-note-a-T1-60.jpg",
-   "source": "../../../../tmp/v/a-T1-60.jpg",
-   "kind": "note",
-   "label": "a first trial of the arcade's shape (not in the candidate, for the fourth cut): fewer, looser, more orange strands; too tall, too wide and too flat on top as it stands",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T05:10:42.729Z",
-   "file": "20261126051042729-note-a-base-60.jpg",
-   "source": "../../../../tmp/v/a-base-60.jpg",
-   "kind": "note",
-   "label": "the arcade at 60, 0.75 of full size: approved above, candidate 6bc94020 at draft below: a dense dome of parallel pale strands where the painter has loose crossing orange strands with sparks",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T04:52:15.473Z",
-   "file": "20261126045215473-note-mg-limbR.jpg",
-   "source": "../../../../tmp/v/mg-limbR.jpg",
-   "kind": "note",
-   "label": "limb and right foot at 60, 1 to 1: approved, main final, this state draft (main's ground)",
    "stop": "sun"
   }
  ]
