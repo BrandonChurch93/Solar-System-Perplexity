@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T14:00:03.383Z",
+ "pushed": "2026-11-26T14:25:05.281Z",
  "head": "ac0ffdda4556604bab51364ff72fee4f837d8a0f",
- "note": "14:00 Z52 final 90: whole plain 35.0431 (main 29.6374), rows 0 to 324 14.0528, G17 by the quick reader 0.830 (main 1.283); finals 60, 0, 360 drawing. sun-near 60 at draft: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "note": "Z64 trial at draft: legs land wide and straight (no hook), pool over the strands, foot light by distance from the foot. sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T14:25:04.651Z",
+   "file": "20261126142504651-note-feet-Z64.jpg",
+   "source": "../../../../tmp/v/feet-Z64.jpg",
+   "kind": "note",
+   "label": "sun close 90 feet at 1 to 1, approved left, trial Z64 right (draft)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T14:25:04.086Z",
+   "file": "20261126142504086-note-a-L64-60.jpg",
+   "source": "../../../../tmp/v/a-L64-60.jpg",
+   "kind": "note",
+   "label": "sun close 60, approved above, trial Z64 below (draft)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T14:25:03.488Z",
+   "file": "20261126142503488-note-a-Z64-90.jpg",
+   "source": "../../../../tmp/v/a-Z64-90.jpg",
+   "kind": "note",
+   "label": "sun close 90, approved above, trial Z64 below (draft)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T14:00:02.756Z",
    "file": "20261126140002756-note-r52-A.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/a-Z52-90.jpg",
    "kind": "note",
    "label": "13:22 trial Z52 at draft, frame 90: approved above, this state below (spray from the feet, strands with a higher floor between beads)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T12:55:15.351Z",
-   "file": "20261126125515351-note-foot-Z45.jpg",
-   "source": "../../../../tmp/v/foot-Z45.jpg",
-   "kind": "note",
-   "label": "trial Z45 both feet at twice size beside the approved: fan and soft pool, thin fountain hoops still read as wire",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T12:55:14.627Z",
-   "file": "20261126125514627-note-r46-B.jpg",
-   "source": "../../../../tmp/v/r46-B.jpg",
-   "kind": "note",
-   "label": "trial Z46 rise at draft: 210, 216, 221 above, 225, 229, 233 below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T12:55:13.861Z",
-   "file": "20261126125513861-note-r46-A.jpg",
-   "source": "../../../../tmp/v/r46-A.jpg",
-   "kind": "note",
-   "label": "trial Z46 rise at draft: 181, 190, 200, 204 above, 205, 206, 210, 216 below; the arch leaves by its size, rigid sky",
    "stop": "sun"
   }
  ]
