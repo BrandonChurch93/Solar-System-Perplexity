@@ -11571,3 +11571,64 @@ handover_engineer's box of 16:08 (the night side's blue 47.38 at 4757, 45.24 at 
 NOT RENDERED BY ME: anything at review or final tier but 4707; anything at 3840 (by the code the footprint there is 2 px under 1.5 radii with 1.0; not drawn); no 60 frames a second piece; no frame before 4530 (the name touches no file outside my stop but the entry's line, which is Neptune's own).
 
 Pictures: 1 look-N24.jpg (the approved close picture | 4860 of the name). 2 judged-N24.jpg (the judged four). 3 ctl-rise4-whole.jpg and 4 ctl-rise4-crop.jpg (the control on the patches of the rise: the name | no map cloud in the far look | the map alone; whole frames, and the lower left at 1 to 1). 5 ctl-dive4.jpg (4738: the name | no map cloud in the far look). 6 skylimb-plain.jpg (the sky over the limb 4738 to 4745). 7 pat-4745.jpg (the place of the pattern of dive 2). 8 pop-4713.jpg (the pop's place). 9 ndw-e1.jpg and 10 ndw-e2.jpg (the entry of the dive, 4684 to 4701, every frame).
+
+## 26 Nov, 16:49 to 17:04 UTC: lab log (the exact control on the map's cloud in the far look; the dark ticks placed; no second name on the patches)
+
+- 16:49:50 the notebook to 16:49 pushed (2a30de378; the name's sha stays 7a620a39).
+- A SLIP OF MINE IN THE NAME MAIL, found by reading deep.ts after it was sent: `far.cloud` is the COLOUR of the map's cloud layer
+  in the far look (`farLook = mix(deck, uFarCloud * knot(...) * tint, mapCloud * ...)`), not its cover. Control RG ([0, 0, 0])
+  painted the map's cloud black where it had been white; it did not take it out. The label "no map cloud in the far look" on
+  ctl-rise4-whole.jpg, ctl-rise4-crop.jpg and ctl-dive4.jpg is wrong, and so is the sentence that the hold's bank "would fade
+  out" (it would turn dark). The finding stands. Corrected in the look of 17:04 below.
+- 16:52:02 to 16:55:24 the exact controls (`/tmp/ctl-rise5.sh`; 960 preview, 4978, 4982, 4738, 4860; deep.ts changed as a
+  tool and restored, the tree clean after):
+  - RH, the map's cloud cover in the far look 0 (the line `mapCloud = slabShare > 0.0 && uSlab.x > 0.5 ? slabSum / uSlab.x :
+    mapCloud;` replaced by `mapCloud = 0.0;`): the soft pale patches and the white blob gone at 4978 and 4982, the dive's
+    patches gone at 4738, the white bank under the limb gone at all three. Against the name (`NDx`, `NDw`): 4978 mean 4.912,
+    largest 177, 19.96 percent over 8 levels; 4982 4.440, 161, 16.68 percent; 4738 4.846, 158, 12.50 percent.
+  - RI, that and the map's cloud shadow 0: 4978 4.821, 177, 19.91 percent; 4982 4.347, 161, 16.61 percent; 4738 4.711, 158,
+    12.76 percent. RI against RH: 4978 mean 0.205, largest 19, 0.52 percent; 4982 0.233, 19, 0.57 percent; 4738 0.390, 22,
+    1.78 percent. The dark ticks stay in both.
+  - RG against RH: 4978 mean 0.811, largest 138, 2.73 percent; 4982 0.662, 148, 2.44 percent; 4738 1.077, 147, 5.36 percent.
+  - 16:55:49 to 16:56:58 `RN`: 4860 of the name at 960 preview. RH against it at 4860: mean 0.341, largest 55, 1.68 percent
+    over 8 levels, all in x 373 to 959, y 108 to 253 (the pale bank at the horizon, right). RI: 0.318, 55, 1.64 percent.
+  - `NDx` 4978 is the same bytes as RE's 4978 (so the redraw's frames stand for the name at 960 preview).
+- 16:57:43 to 16:59:53 the ticks (`/tmp/ctl-rise7.sh`, 4978, 4982): RJ deck.relief 0: the ticks stay (4978 mean 3.015, largest
+  95, 17.27 percent; 4982 2.457, 84, 11.87 percent). RK far.most 1: the ticks stay (4978 1.286, 68, 6.28 percent; 4982 0.869,
+  67, 3.89 percent).
+- 17:00:37 to 17:02:37 (`/tmp/ctl-rise8.sh`): RL far.on 2 (the map at every distance, in the scene's shader): the dark streak
+  and its ticks are GONE (4978 mean 6.170, largest 105, 38.82 percent; 4982 4.720, 98, 30.38 percent); the patches stand
+  there as wide soft blobs. RM deck.wisp.light 0: the ticks stay (4978 0.147, 20, 0.08 percent; 4982 0.099, 20, 0.06
+  percent). In RD (the surface view off, the map alone) there is no dark streak and no tick at that place.
+  So the ticks are the surface view's own deck at that ground (the place's own share): a dark streak of its pattern with
+  teeth. Which number of the deck makes the teeth: not found. Not looked for in the terrain's frames.
+- Read in the code, for the next round: deep.json far.distance [3, 8] units of the scene; the radius is 41.806 units
+  (close.json), so the scene's own deck ends 0.072 to 0.191 radii from the place on the ground. Between globe.height 0.9 and
+  0.15 radii the picture is the globe's own (planet.ts, the cloud layer a thin sheet read at one point) under the scene's
+  far look (deep.ts, the slab), so the map's cloud layer is drawn by two shaders there. At 4978 the eye stands 0.1296 radii
+  (5.4 units) up.
+- WHY NO SECOND NAME ON THE PATCHES (decided 17:03): no one value cures them. Taking the layer away by the eye's height or
+  nearness makes cloud come and go in frame; form at that grain wants the scene's own cirrus beyond 8 units from the place
+  or a finer cloud layer of the map; each moves the dive and the rise whole and the far ground at 4860 (MAIL 1475 h keeps
+  it Z5's for this name), and wants the redraw, the rows and the tests, which do not fit before 18:30 with a law still to
+  be written twice. They stand as the first open fault of the name, for Neptune's next round (MAIL 1513 point 1).
+- Pictures: `/tmp/ctl-rise5-whole.jpg`, `/tmp/ctl-rise5-crop.jpg`, `/tmp/ctl-4860-cover.jpg`, `/tmp/ctl-ticks-crop.jpg`,
+  `/tmp/ctl-rise7-crop.jpg`, `/tmp/ctl-rise8-crop.jpg` (all looked at).
+
+## 26 Nov, 17:04 UTC: the look, the correction and the exact control, to the Builder (word for word; sent 17:03:57; attached look-N24.jpg, ctl-rise5-whole.jpg, ctl-rise5-crop.jpg, ctl-4860-cover.jpg, ctl-ticks-crop.jpg, ctl-rise8-crop.jpg; low priority)
+
+LOOK, 17:04 UTC, from neptune_builder (low priority; not a name; the name 7a620a39 stands as sent 16:48; no answer needed).
+
+1. A CORRECTION TO ITEM 1 OF THE OPEN FAULTS OF MY NAME MAIL. The control I called "far.cloud 0" and labelled "no map cloud in the far look" on its pictures 3 to 5 did not take the map's cloud out. I read the shader after I sent: far.cloud is the colour of that layer, so the control painted the map's cloud black over the deck where it had been white. The finding stands (that control moves the map's cloud layer in the far look and nothing else), but two things I wrote were wrong: the label, and the sentence that with it the hold's white bank "would fade out"; it would turn dark.
+
+2. THE EXACT CONTROL, drawn since (16:52 to 16:57; 960 wide, draft tier; the cover of the map's cloud layer in the far look set to 0 in the scene's shader, as a tool; the file restored, the tree clean). Pictures 2 and 3. The soft pale patches and the white blob are gone at 4978 and 4982, the dive's patches are gone at 4738, and so is the white bank under the limb at all three. Against the name: 4978 mean 4.912, largest 177, 19.96 percent of the pixels by more than 8 levels; 4982 4.440, 161, 16.68 percent; 4738 4.846, 158, 12.50 percent. At 4860 the same control moves 1.68 percent of the frame, all of it in x 373 to 959, y 108 to 253 of 960 (the pale bank at the horizon, right; picture 4), mean 0.341, largest 55. So the cause named in the name mail holds by the exact control, and the bank whose lumps go in dive 2 (fault 2) is the same layer, by sight at 4738, not by a row.
+
+3. THE DARK UPRIGHT TICKS (4977 to 4982, lower edge near the middle), cause now placed by control, pictures 5 and 6. They are not the map: with the surface view off (the map alone) they are not there, and with the map drawn at every distance in the scene's shader (far.on 2) they are gone. They stay with: the map's cloud cover 0; that and the map's cloud shadow 0; deck.relief 0; far.most 1; deck.wisp.light 0 (0.08 percent of 4978 moves); the cirrus gain 0; the veil's depth 0. So they are the surface view's own deck at that ground (the place's own share, which is by place alone): a dark streak of its pattern with teeth. Which of the deck's numbers makes the teeth I have not found. By place it is the same ground at every height; I have not looked for it in the terrain's frames.
+
+4. NO SECOND NAME ON THE PATCHES; they stand as listed first, for Neptune's next round. Why, by the code as I read it: (a) the map's cloud layer is drawn by two shaders between 0.9 and 0.15 radii (the globe's own, a thin sheet; the scene's far look, one body with wide footprints), so a cure has to be made twice and matched; (b) taking the layer away by the eye's height or by its nearness makes cloud come and go while it is in frame, which is the fault Brandon names; (c) form at that grain wants the scene's own cirrus beyond 8 units from the place or a finer cloud layer of the map. None of these is one value, and each moves the dive and the rise whole and the far ground at 4860.
+
+5. The look (picture 1): 4860 beside the approved close picture, as in the name (the tree is the name's plus the notebook, 2a30de378): G17 0.972 / 0.659 (main 0.934 / 0.549), plain 21.144 (main 22.986), 92.0 s a draft frame at 1920. The controls at 960: two frames in 65 s with the build.
+
+Nothing renders. Next: handover_engineer's word at 17:20 on 4956, 4953, 4952 at review goes into the notebook; if it or your machines show a fault of the entry that main lacks, I bring the same tree with main's line of config/showcase.json, merged on main's tip and tested, on your word.
+
+Pictures: 1 look-N24.jpg. 2 ctl-rise5-whole.jpg (4978, 4982, 4738: the name | the map's cloud cover 0 in the far look | that and its shadow 0). 3 ctl-rise5-crop.jpg (the lower part of 4978 and 4982 at 1 to 1, the same three). 4 ctl-4860-cover.jpg (4860 at 960: the name | cover 0). 5 ctl-ticks-crop.jpg (the ticks: the name | the map alone | cover 0 and shadow 0). 6 ctl-rise8-crop.jpg (the ticks: the name | far.on 2 | deck.wisp.light 0).
