@@ -1,9 +1,45 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T03:32:42.237Z",
+ "pushed": "2026-11-26T03:54:24.841Z",
  "head": "2d2c669d44c1c493a58b39f7c5554cacb042c69e",
- "note": "finals of the local merge 2d2c669d beside main and the approved; G17 and the reader still running",
+ "note": "limb crops at final; G17 green; the reader is running",
  "looks": [
+  {
+   "time": "2026-11-26T03:54:24.269Z",
+   "file": "20261126035424269-note-n2-limb.jpg",
+   "source": "../../../../tmp/v/n2-limb.jpg",
+   "kind": "note",
+   "label": "the limb at 60 final, 1 to 1, left side above and right side below: approved | main | local merge 2d2c669d. Mine: a smooth pale band (the lab ground's haze) under a thin bright line with fine hairs; the approved: flame tongues over ground that keeps its cells to the limb. G17 at final of 2d2c669d: PASS, 0 median 1.004, 60 0.903, 90 0.896, 360 1.031 (main 0.877, 1.212, 1.276, 1.033). sun-near 60 final: dark 0.140 body 0.589 pale 0.110 white 0.036 | half width 5.5 px, 1409 shapes, fine 0.0527, mean 0.409 | distance 0.154",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T03:53:08.191Z",
+   "file": "20261126035308191-job-frame-00247.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.rise frame 247, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.rise",
+   "frame": 247,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-26T03:37:18.715Z",
+   "file": "20261126033718715-job-frame-00000.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 0, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 0,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-26T03:32:41.059Z",
    "file": "20261126033241059-note-n2-360-three.jpg",
@@ -42,30 +78,6 @@
    "source": "../../../../tmp/v/t2-limb.jpg",
    "kind": "note",
    "label": "limb at 60, 1 to 1, left and right: approved | main final | local cae4735c draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:53:04.548Z",
-   "file": "20261126025304548-note-t2-four.jpg",
-   "source": "../../../../tmp/v/t2-four.jpg",
-   "kind": "note",
-   "label": "frame 60: approved | main 9f153844 final / candidate d377db96 final | local cae4735c draft (the glow from inside in the close view: gas from 0.03 radii, the limb's own glow halved and less red)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:24:39.958Z",
-   "file": "20261126022439958-note-g2-stack.jpg",
-   "source": "../../../../tmp/v/g2-stack.jpg",
-   "kind": "note",
-   "label": "trial g2, frame 60 draft: approved, candidate, candidate with the gas's share from 0.0325 radii (sky part 14.4987 to 12.7081, plain sky level 6.18 to 10.42 against 12.40)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:24:39.413Z",
-   "file": "20261126022439413-note-limb60-left.jpg",
-   "source": "../../../../tmp/v/limb60-left.jpg",
-   "kind": "note",
-   "label": "limb at 60 final, left side, 1 to 1: approved | main 9f153844 | candidate d377db96",
    "stop": "sun"
   }
  ]
