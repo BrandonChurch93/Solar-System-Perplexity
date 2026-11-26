@@ -124,8 +124,6 @@ uniform vec4 uAfter;
 uniform vec3 uAfterTone;
 uniform vec4 uFarFall;
 uniform vec3 uFarCloud;
-uniform vec4 uFarGrain;
-uniform vec2 uFarGrainFall;
 uniform vec4 uAirLaw;
 uniform vec3 uAirDepth;
 uniform vec3 uAirSun;
@@ -1001,37 +999,6 @@ void main() {
       slabSum += layerAt(normalize(dcl + slabRun * (slabShare * (float(j) + 0.5) / uSlab.x)), softCloud * max(slabFeet, 1.0), 0.0, tx).a;
     }
     mapCloud = slabShare > 0.0 && uSlab.x > 0.5 ? slabSum / uSlab.x : mapCloud;
-    // THE MAP'S CLOUD AT ITS LOST GRAIN (MAIL 1513 point 1; deep.json, far.grain). Where the eye is so near that one texel of the
-    // map covers several pixels of the master frame, the map's cloud layer has no form left: soft pale patches and blobs. There
-    // the cover is multiplied by a field fixed on the body: noise of uFarGrain.z texels and finer, each wave half the last and
-    // uFarGrainFall.y as strong, a wave counted only where the master pixel resolves it. The field's mean is 1 before it is cut
-    // at 0, so the cover (no more than 1 of it) keeps its level and breaks into bodies of the size the pixel shows. The measure: the texel's length on
-    // the sheet as the eye sees it (its length times the cosine of the view), in master pixels; none of the field under
-    // uFarGrain.x, all of it over uFarGrain.y. By the place and the view alone: nothing reads the clock or the canvas. At the
-    // hold, and where the far ground is seen flat (the surface view), the cover stands as it was, to the bit.
-    float grainTexel = 2.0 * PI * uRadius / uGMapWidth;
-    float grainFoot = max((dSheet > 0.0 ? -b - sqrt(dSheet) : max(-b, 0.0)) * pix, 1e-9);
-    float grainMu = max(dot(sheetUp, -rd), 0.0);
-    float grainShare = uFarGrain.w > 0.0 ? smoothstep(uFarGrain.x, uFarGrain.y, grainTexel * grainMu / grainFoot) : 0.0;
-    if (grainShare > 0.0) {
-      // WHERE THE FIELD IS READ: at the middle of the same run through the slab at which the cover is read (the mean above),
-      // not at the point where the ray enters the layer. Read at the entry, the cover slid under the field as the slant to one
-      // place changed in the dive and the rise, and the bodies, their product, changed form from frame to frame (measured:
-      // the controls D3 to D6 in the notebook, 26 Nov 18:00 to 18:40). Cover and field now move as one.
-      vec3 grainAt = normalize(dcl + slabRun * (slabShare * 0.5)) * uRadius;
-      float grainSum = 0.0;
-      float grainAll = 0.0;
-      float grainWave = grainTexel * uFarGrain.z;
-      float grainAmp = 1.0;
-      for (int j = 0; j < 8; j++) {
-        if (float(j) >= uFarGrainFall.x) break;
-        grainSum += grainAmp * smoothstep(1.0, 2.5, grainWave * grainMu / grainFoot) * (vnoise(grainAt / grainWave + vec3(float(j) * 17.3)) - 0.5) * 2.0;
-        grainAll += grainAmp;
-        grainWave *= 0.5;
-        grainAmp *= uFarGrainFall.y;
-      }
-      mapCloud = min(mapCloud, 1.0) * max(1.0 + uFarGrain.w * grainShare * grainSum / max(grainAll, 1e-6), 0.0);
-    }
     float mapShadow = 0.6 * min(layerAt(dsa, uGShadow.y, 0.0, tx).a, 1.0) + 0.4 * min(layerAt(dsb, uGShadow.y * 1.8, 0.0, tx).a, 1.0);
     for (int k = 0; k < (uGCirrus.x > 0.0 ? 1 : 0); k++) {
       mapCloud *= keep;
@@ -1455,7 +1422,7 @@ export class Deep {
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
         uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uShade: { value: v4(l.shade, l.shadeFoot, ci.thin[0]!, ci.thin[1]!) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
-        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 1) }, uSlab: { value: new THREE.Vector2(look.far.slab[0]!, look.far.slab[1]!) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uAfter: { value: new THREE.Vector4().fromArray(look.far.after) }, uAfterTone: { value: new THREE.Vector3().fromArray(look.far.afterTone) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) }, uFarGrain: { value: v4(look.far.grain.from[0]!, look.far.grain.from[1]!, look.far.grain.wave, look.far.grain.gain) }, uFarGrainFall: { value: new THREE.Vector2(look.far.grain.octaves, look.far.grain.fall) },
+        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 1) }, uSlab: { value: new THREE.Vector2(look.far.slab[0]!, look.far.slab[1]!) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uAfter: { value: new THREE.Vector4().fromArray(look.far.after) }, uAfterTone: { value: new THREE.Vector3().fromArray(look.far.afterTone) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
         uAirLaw: { value: v4(look.air.top, look.air.scale, look.air.foot, look.air.cirrus) }, uAirDepth: { value: v3(look.air.depth) }, uAirSun: { value: v3(look.air.sun) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
         uDiag: diagUniform,
