@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T19:52:08.459Z",
- "head": "ed11ee09866f428568a3e91dcc8e0f08efb2ab22",
- "note": "pose W with tones refitted beside the approved and main; the near ring at W is the open fault",
+ "pushed": "2026-11-26T20:17:10.544Z",
+ "head": "14fe5a6346f1d8a468ec4a36d26f2905a941fbe2",
+ "note": "pose W: the near ring's grain against the flow; next the lens as a function of the distance for both moves",
  "looks": [
+  {
+   "time": "2026-11-26T20:17:09.992Z",
+   "file": "20261126201709992-note-hatch_w3.jpg",
+   "source": "../../../../tmp/v/w/hatch_w3.jpg",
+   "kind": "note",
+   "label": "3720 near ring three times enlarged: flow 0.59 of main's (hatched dashes) over flow 0.28 (grains nearly round)"
+  },
+  {
+   "time": "2026-11-26T20:17:09.456Z",
+   "file": "20261126201709456-note-fore_w3.jpg",
+   "source": "../../../../tmp/v/w/fore_w3.jpg",
+   "kind": "note",
+   "label": "3720 lower left at one to one: approved over pose W with the slow flow (grains read as pebbles, darker, more contrast)"
+  },
+  {
+   "time": "2026-11-26T20:17:08.853Z",
+   "file": "20261126201708853-note-three_w3.jpg",
+   "source": "../../../../tmp/v/w/three_w3.jpg",
+   "kind": "note",
+   "label": "3720 at final: approved, pose W with the skim's flow at 0.28 of main's and the ring's table of run 3, main 262b9a68"
+  },
   {
    "time": "2026-11-26T19:52:07.863Z",
    "file": "20261126195207863-note-fore_main.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/p1521/foot_app2.jpg",
    "kind": "note",
    "label": "3720 at 2 to 1, box 960,500 to 1440,700: approved close over pose W draft without sheet, tones not yet refitted: the dark band under the globe is missing"
-  },
-  {
-   "time": "2026-11-26T18:58:31.130Z",
-   "file": "20261126185831130-note-hold_final_c.jpg",
-   "source": "../../../../tmp/v/p1521/hold_final_c.jpg",
-   "kind": "note",
-   "label": "hold 3465 finals at 2 to 1, box 620,540 to 980,760: approved hero, no sheet, sheet rising to 0.05 at the rim, to 0.10 at the rim"
-  },
-  {
-   "time": "2026-11-26T18:47:53.234Z",
-   "file": "20261126184753234-note-hold_sheet1.jpg",
-   "source": "../../../../tmp/v/p1521/hold_sheet1.jpg",
-   "kind": "note",
-   "label": "hold 3465, the gap: approved hero, no sheet, sheet rising to 0.05 and 0.10, flat 0.05 (drafts)"
-  },
-  {
-   "time": "2026-11-26T18:47:52.688Z",
-   "file": "20261126184752688-note-foot_sheet2.jpg",
-   "source": "../../../../tmp/v/p1521/foot_sheet2.jpg",
-   "kind": "note",
-   "label": "3720 at pose W, the foot: approved, no sheet, the thin sheet rising from 0 at the globe to 0.05, 0.10, 0.20 at the rim (drafts)"
   }
  ]
 }
