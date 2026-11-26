@@ -1,9 +1,56 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T07:26:16.726Z",
+ "pushed": "2026-11-26T07:52:57.039Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the Mars builder's name at draft: the dark band on the far crest of the dive traced to the stop's fourth count and the ground under the picture",
+ "note": "Idle work: a survey of all 17 changes of view on the third cut at draft, two frames each side; sun, mercury and venus so far",
  "looks": [
+  {
+   "time": "2026-11-26T07:52:48.731Z",
+   "file": "20261126075248731-note-mp-2468-name-ground.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-2468-name-ground.png",
+   "kind": "note",
+   "label": "Mars 2468 at draft, the name 8397bfdc beside the ground under the picture alone (the law returning no share), whole frame at half size"
+  },
+  {
+   "time": "2026-11-26T07:52:47.775Z",
+   "file": "20261126075247775-note-sv-venus-rise.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-venus-rise.png",
+   "kind": "note",
+   "label": "Survey of every change of view on main 35a82888 at draft: venus-rise, four consecutive frames at half size, the change lies between the second and the third",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:52:46.940Z",
+   "file": "20261126075246940-note-sv-venus-dive.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-venus-dive.png",
+   "kind": "note",
+   "label": "Survey of every change of view on main 35a82888 at draft: venus-dive, four consecutive frames at half size, the change lies between the second and the third",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:52:46.010Z",
+   "file": "20261126075246010-note-sv-mercury-rise.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-mercury-rise.png",
+   "kind": "note",
+   "label": "Survey of every change of view on main 35a82888 at draft: mercury-rise, four consecutive frames at half size, the change lies between the second and the third",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-26T07:52:45.177Z",
+   "file": "20261126075245177-note-sv-mercury-dive.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-mercury-dive.png",
+   "kind": "note",
+   "label": "Survey of every change of view on main 35a82888 at draft: mercury-dive, four consecutive frames at half size, the change lies between the second and the third",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-26T07:52:43.918Z",
+   "file": "20261126075243918-note-sv-sun-rise.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-sun-rise.png",
+   "kind": "note",
+   "label": "Survey of every change of view on main 35a82888 at draft: sun-rise, four consecutive frames at half size, the change lies between the second and the third",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T07:26:16.054Z",
    "file": "20261126072616054-note-mp-lawFSN-2468-x3.jpg",
@@ -17,48 +64,6 @@
    "source": "../../../../tmp/pair/sheets/mp-2468-seen-onoff.png",
    "kind": "note",
    "label": "Mars dive 2468 whole at half size, on the Mars builder's name: as named beside the stop's law without its fourth count. Without it the band on the far crest is gone and a pale drawn out sheet stands beside the near mesa"
-  },
-  {
-   "time": "2026-11-26T07:26:14.565Z",
-   "file": "20261126072614565-note-mp-band-2468-three.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-band-2468-three.png",
-   "kind": "note",
-   "label": "Mars dive 2468, the far mesa's crest three times enlarged, on the Mars builder's name: as named; the ground under the picture alone (the stop's law giving nothing); the stop's law without its fourth count (what the picture's eye saw). The dark band of 2460 to 2473 is the ground under the picture, seen where that count takes away the fill behind the cut layer"
-  },
-  {
-   "time": "2026-11-26T07:08:19.800Z",
-   "file": "20261126070819800-note-mp-A-name-2684.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-A-name-2684.png",
-   "kind": "note",
-   "label": "Mars rise 2684, whole frame: the name above, the trial without the field count below"
-  },
-  {
-   "time": "2026-11-26T07:08:19.140Z",
-   "file": "20261126070819140-note-mp-A-right-2683-2685.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-A-right-2683-2685.png",
-   "kind": "note",
-   "label": "Mars rise, the same box and frames, trial with the field count of the stop's law off (scratch, not in any tree): the wall stays, a dark wedge grows in the corner"
-  },
-  {
-   "time": "2026-11-26T07:08:18.483Z",
-   "file": "20261126070818483-note-mp-name-right-2683-2685.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-name-right-2683-2685.png",
-   "kind": "note",
-   "label": "Mars rise, the name at draft, x 1440..1920, y 400..1080, 2683 to 2685: the wall with strata gives way to a smooth dark wall in one frame"
-  },
-  {
-   "time": "2026-11-26T07:08:17.814Z",
-   "file": "20261126070817814-note-mp-sliver-2468-x3.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-sliver-2468-x3.png",
-   "kind": "note",
-   "label": "Mars dive 2468, x 860..1100, y 250..400 at three times, beside the layers view: the band is cut layer C2 (blue) between L0 (red) and L2 (yellow)"
-  },
-  {
-   "time": "2026-11-26T07:08:17.044Z",
-   "file": "20261126070817044-note-mp-sliver-2468-2475.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-sliver-2468-2475.png",
-   "kind": "note",
-   "label": "Mars dive, the same box, 2468 to 2475: the band stands to 2473, a pale rest at 2474 and 2475"
   }
  ]
 }
