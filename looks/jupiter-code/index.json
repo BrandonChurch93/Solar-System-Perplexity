@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T04:17:04.808Z",
+ "pushed": "2026-11-26T04:45:41.097Z",
  "head": "a64c3d06a47f7ee3553e0f99fe5e73499ca1daac",
- "note": "w4: darkness by tall relief, scaffold off",
+ "note": "04:46 UTC: fine cut scaffold on w4 brings line (i) to 8.280; tall relief reads as rock and is going out, next is a low deck with threads along the flow and bright clusters",
  "looks": [
+  {
+   "time": "2026-11-26T04:45:39.626Z",
+   "file": "20261126044539626-note-w4s-r3-3150.jpg",
+   "source": "../work/r26/t/w4s-r3-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, variant w4 with the scaffold at the fine cut 0.02 units, round 3: line (i) 8.280 whole, 16.378 inside the seven cells, 6.563 outside, floor 0.04",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T04:45:38.328Z",
+   "file": "20261126044538328-note-w6-3150.jpg",
+   "source": "../work/r26/t/w6-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, variant w6, towers of 0.16 units in the dark thirds, funnel 0.3 deep, scaffold off: reads as rubble and the eye is a black pit, line (i) 16.114, refused",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T04:45:36.908Z",
+   "file": "20261126044536908-note-w5-3150.jpg",
+   "source": "../work/r26/t/w5-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, variant w5, billows laid in the middle age and three times taller in the dark thirds, scaffold off: reads as mountains, line (i) 15.067, refused",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T04:17:04.134Z",
    "file": "20261126041704134-note-w4-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r25/t/lens-64-50.jpg",
    "kind": "note",
    "label": "State s, frame 3150 at one sample, lens 64 (left) and 50 (right), same eye point and aim. Lines on the ground fit a pinhole within 2.5 and 2.9 px rms of a 1920 frame; the lens is not a fisheye. Lens 40 is drawing",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T01:18:41.613Z",
-   "file": "20261126011841613-note-lab-try1.jpg",
-   "source": "../work/r25/t/lab-try1.png",
-   "kind": "note",
-   "label": "Design aid, not the film: four height laws drawn by a small offline tool against the same Sun (33.3 degrees, ahead left). Upper left is state s (pimples on a plain), upper right is t5 (reads as rock). Neither is cloud yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T01:18:40.747Z",
-   "file": "20261126011840747-note-A-ring-crops.jpg",
-   "source": "../work/r25/t/A-ring-crops.png",
-   "kind": "note",
-   "label": "State s, series at 60 a second, six neighbours enlarged 4 times near the storm rim: at draft (one sample a pixel) the edges crawl in steps. Mean second difference in time 1.75 levels, 3.3 percent of pixels over 8. Not yet shown at final tier",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T00:51:28.840Z",
-   "file": "20261126005128840-note-t2-3150.jpg",
-   "source": "../work/r25/t/t2-3150.png",
-   "kind": "note",
-   "label": "Dev tree, variant t2 at 3150, draft, 960 px (tall tops, fill by the open sky, matter floor 0.03, no solve). Darkness by cast shade works and edges stand 0.12 units before their ground, but it reads as rock and the low band is 25.3 (state s 9.27)",
    "stop": "jupiter"
   }
  ]
