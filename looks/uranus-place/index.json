@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T07:32:40.500Z",
+ "pushed": "2026-11-26T07:58:26.139Z",
  "head": "fb56f76e54fa1bd2688cdb19cebe074367dc2193",
- "note": "07:33 rise 2 of 2 on the head reads 0.82 (main 0.8765); rise 1 of 2 at the reader",
+ "note": "07:59 rise 1 of 2 at the reader; the engine's two sky aims are on main (95b1ba7b), next the merge and the dive's second aim",
  "looks": [
+  {
+   "time": "2026-11-26T07:58:23.428Z",
+   "file": "20261126075823428-note-uranus-rise-p2of2-pops.jpg",
+   "source": "../../../../tmp/n71/out/r2/uranus-rise-p2of2-pops.png",
+   "kind": "note",
+   "label": "reader, rise 2 of 2 on fb56f76e: the pops panel (largest pop 1.11 at 4463, limit 1.2)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T07:32:39.596Z",
    "file": "20261126073239596-note-uranus-rise-p2of2-changes.jpg",
@@ -234,14 +242,6 @@
    "source": "../../../../tmp/n67/six-main-rc.jpg",
    "kind": "note",
    "label": "MAIL 1385 question 3: the Builder's six frames of main's film 4140 to 4152 (left) beside RC 6ef232ea at draft (right): the same sky and the same band, in RC it comes 4 frames later and stays longer (4145 to 4156) because the sky's own turn is spread over the whole dive (MAIL 880 point 4)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T03:43:07.228Z",
-   "file": "20261126034307228-note-rc-4158-4176.jpg",
-   "source": "../../../../tmp/n67/rc-4158-4176.jpg",
-   "kind": "note",
-   "label": "RC 6ef232ea draft, dive 4158 to 4176 every second frame (the row's own frames): the star band in the upper right corner 4160 to 4166, the Sun's glow from 4170",
    "stop": "uranus"
   }
  ]
