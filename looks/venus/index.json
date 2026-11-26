@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T07:12:31.995Z",
+ "pushed": "2026-11-26T07:24:40.209Z",
  "head": "1967a39154d6e10e0e3598b5189dafb1c69463a5",
- "note": "trial P2 whole rise frames against main and the name; trial P3 map from above",
+ "note": "trial P2 at 1545 to 1556 and trial P3's map from above",
  "looks": [
+  {
+   "time": "2026-11-26T07:24:39.559Z",
+   "file": "20261126072439559-note-a4-arc.jpg",
+   "source": "../../../../tmp/v/sh/pl/a4-arc.jpg",
+   "kind": "note",
+   "label": "Trial P3 from above (level a): main's plate times the map with the field past the far end of the far deck, after the tone rule (no dark arc)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:24:38.918Z",
+   "file": "20261126072438918-note-z2.jpg",
+   "source": "../../../../tmp/v/sh/P2/z2.jpg",
+   "kind": "note",
+   "label": "Trial P2: every frame 1553 to 1556 + 1/2 at 1 to 1 (x 640 to 1600, y 110 to 510), the cells of main's ground coming in by height",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:24:38.271Z",
+   "file": "20261126072438271-note-z0.jpg",
+   "source": "../../../../tmp/v/sh/P2/z0.jpg",
+   "kind": "note",
+   "label": "Trial P2: every frame 1545 to 1548 + 1/2 at 1 to 1 (x 640 to 1600, y 110 to 510), the far deck as the eye leaves T",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:24:37.685Z",
+   "file": "20261126072437685-note-seam2.jpg",
+   "source": "../../../../tmp/v/sh/P2/seam2.jpg",
+   "kind": "note",
+   "label": "Trial P2 (main's rise plates times a far deck map, not a name yet): crops of 1545, 1548, 1551 for P2, the lossless trial P1b and the name R, and P2 minus P1b times 8",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T07:12:31.295Z",
    "file": "20261126071231295-note-a4-ov.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/sh/P2/t0.jpg",
    "kind": "note",
    "label": "trial P2 (main's plates times a map of the far deck of T, share by the eye's height), main, and the name 77874d64 at 1548, 1551, 1554, crop x 700 to 1340, y 130 to 450 at 1 to 1",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T06:52:03.697Z",
-   "file": "20261126065203697-note-crop2.jpg",
-   "source": "../../../../tmp/v/sh/pl/crop2.jpg",
-   "kind": "note",
-   "label": "Level b rise plate from above, 760 px at its top left (far end of the far deck of T): main's plate (top left), the plate of 77874d64 (top right), main's plate times the map of 512 rows as WebP (bottom left) and of 256 rows as PNG (bottom right)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T06:52:03.110Z",
-   "file": "20261126065203110-note-e0.jpg",
-   "source": "../../../../tmp/v/sh/P1b/e0.jpg",
-   "kind": "note",
-   "label": "Trial P1, rise 1544 to 1552 + 1/2, every capture frame, right side x 1380 to 1920, y 250 to 560, draft tier. Seen: a brown band grows under the limb from 1546, a bluish field comes in from 1547 + 1/2 to 1549, a cloud ridge with its shadow stands under the limb from 1550; pink and green specks on the near cloud at 1550 + 1/2 to 1551 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T06:52:02.495Z",
-   "file": "20261126065202495-note-pr-c.jpg",
-   "source": "../../../../tmp/v/sh/P1b/pr-c.jpg",
-   "kind": "note",
-   "label": "Same frames and crop: trial P1 left, the name 77874d64 right. Seen: alike at 1542 and 1545; at 1548 P1 shows faint bright streaks the name does not; at 1551 P1 has cells, the name stays smooth",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T06:52:01.700Z",
-   "file": "20261126065201700-note-pm-c.jpg",
-   "source": "../../../../tmp/v/sh/P1b/pm-c.jpg",
-   "kind": "note",
-   "label": "Rise 1542, 1545, 1548, 1551, far deck crop x 500 to 1460, y 180 to 420, draft tier: trial P1 (main's plates times the far deck map of T, 256 rows, share by height) left, main 2344387d right. Seen: alike at 1542 and 1545; at 1548 and 1551 main has crisp bright cells, P1 the same field softer",
    "stop": "venus"
   }
  ]
