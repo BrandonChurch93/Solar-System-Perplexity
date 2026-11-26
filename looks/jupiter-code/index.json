@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T04:45:41.097Z",
+ "pushed": "2026-11-26T05:11:30.237Z",
  "head": "a64c3d06a47f7ee3553e0f99fe5e73499ca1daac",
- "note": "04:46 UTC: fine cut scaffold on w4 brings line (i) to 8.280; tall relief reads as rock and is going out, next is a low deck with threads along the flow and bright clusters",
+ "note": "Variants w7 to w9 of the ground by code at 3150 and w8 with three solve rounds, all preview draft; line (i) still red",
  "looks": [
+  {
+   "time": "2026-11-26T05:05:18.904Z",
+   "file": "20261126050518904-note-w8-r3-3150.jpg",
+   "source": "../work/r26/t/w8-r3-3150.png",
+   "kind": "note",
+   "label": "w8 with the scaffold, three rounds at the fine cut, 3150 preview draft: line (i) 7.873, outside the seven cells 6.606, bands green. Bottom row still 20 too bright at the matter's floor 0.04",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T05:05:17.541Z",
+   "file": "20261126050517541-note-w9-3150.jpg",
+   "source": "../work/r26/t/w9-3150.png",
+   "kind": "note",
+   "label": "w9 3150 preview draft, scaffold off: clusters take the place's light, shade tinted by the orders of scattering. Refused by me: crumbs on marble, too red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T04:57:21.317Z",
+   "file": "20261126045721317-note-w8-3150.jpg",
+   "source": "../work/r26/t/w8-3150.png",
+   "kind": "note",
+   "label": "w8 3150 preview draft, scaffold off: clusters smaller, sunk, none in the shear. Still silk with popcorn; line (i) 18.635",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T04:57:20.133Z",
+   "file": "20261126045720133-note-w7-3150.jpg",
+   "source": "../work/r26/t/w7-3150.png",
+   "kind": "note",
+   "label": "w7 3150 preview draft, scaffold off: low deck, threads along the flow, clusters with their own colour. Refused by me: white popcorn on dark silk, eye a black pit",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T04:45:39.626Z",
    "file": "20261126044539626-note-w4s-r3-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r25/t/t8-3150.png",
    "kind": "note",
    "label": "t8 3150 preview draft, no solve: two step warp, fibres, smaller cumulus. Reads as folded clay; storm less clear. Line (i) 16.870, bands green (0.86 0.85 0.82 0.85). Not a state",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:06:18.319Z",
-   "file": "20261126020618319-note-t7-3150.jpg",
-   "source": "../work/r25/t/t7-3150.png",
-   "kind": "note",
-   "label": "t7 3150 preview draft, no solve: soft light and light passing thin crests added. Reads as satin sand with rock outcrops, not cloud. Line (i) 18.284. Not a state",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T01:47:23.374Z",
-   "file": "20261126014723374-note-t6-3150.jpg",
-   "source": "../work/r25/t/t6-3150.png",
-   "kind": "note",
-   "label": "3150, variant t6 in the second tree (not committed), draft, one sample: silk and cumulus by the new height law. It reads as dunes and dark rock, not as cloud. Line (i) 22.572. Dropped as a look; its laws are kept for the next variant with soft light.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T01:47:22.698Z",
-   "file": "20261126014722698-note-try4.jpg",
-   "source": "../work/r25/lab/try4.png",
-   "kind": "note",
-   "label": "Lab sheet, not the film's shader: billow noise as a height field, lit from the film's side. A form study for the silk between the tops.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T01:18:42.710Z",
-   "file": "20261126011842710-note-lens-64-50.jpg",
-   "source": "../work/r25/t/lens-64-50.jpg",
-   "kind": "note",
-   "label": "State s, frame 3150 at one sample, lens 64 (left) and 50 (right), same eye point and aim. Lines on the ground fit a pinhole within 2.5 and 2.9 px rms of a 1920 frame; the lens is not a fisheye. Lens 40 is drawing",
    "stop": "jupiter"
   }
  ]
