@@ -1,9 +1,47 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T17:20:10.678Z",
- "head": "345d510fde0df10f589b3f6fa0287d1db574e1e1",
- "note": "17:20 UTC: handover tool dive part passes all three lines, rise part at frame 2121 of 2100 to 2174; 1857 night side crop, item 5 stands",
+ "pushed": "2026-11-26T17:51:48.238Z",
+ "head": "7dc041e119310f64914455b9aa96ec22dbc79ace",
+ "note": "17:51 UTC: handover tool green on both moves; merged with main a2bcb2ef (head 7dc041e1), path part green, cut clean; whole units run on the merged tree; 1755 mine beside main's final",
  "looks": [
+  {
+   "time": "2026-11-26T17:51:46.719Z",
+   "file": "20261126175146719-note-pair-1755-mid.jpg",
+   "source": "../../../../tmp/gl/k24/Q/pair-1755-mid.jpg",
+   "kind": "note",
+   "label": "1755 final at 1 to 1, x 580 y 330: mine over main's. Main's Caribbean a brighter teal",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T17:51:45.299Z",
+   "file": "20261126175145299-note-both-1755-half.jpg",
+   "source": "../../../../tmp/gl/k24/Q/both-1755-half.jpg",
+   "kind": "note",
+   "label": "1755 final: mine (345d510f), main's drawn here, difference times 4. Small differences over the whole face, strongest round the place and along the Pacific coast of South America",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T17:34:53.075Z",
+   "file": "20261126173453075-sheet-earth-rise-top.jpg",
+   "source": "out/work/handover/earth-rise-top.png",
+   "kind": "sheet",
+   "label": "earth rise, the globe side alone from straight above the place, 12 frames from the far end to T (frame 2100), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "first": 2100,
+   "last": 2174,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-26T17:31:31.726Z",
+   "file": "20261126173131726-compare-earth-rise-step-in-place.jpg",
+   "source": "out/work/handover/earth-rise-step-in-place.png",
+   "kind": "compare",
+   "label": "earth rise, the largest step of the level in place (2.88): frame 2126, frame 2127, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2127
+  },
   {
    "time": "2026-11-26T17:20:09.907Z",
    "file": "20261126172009907-note-m1857-night.jpg",
@@ -11,17 +49,6 @@
    "kind": "note",
    "label": "1857 final of 345d510f at 1 to 1, night side x 1160 y 330: cloud swirl a soft ghost, round 55 item 5 stands",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T17:11:00.001Z",
-   "file": "20261126171100001-compare-earth-rise-sides.jpg",
-   "source": "out/work/handover/earth-rise-sides.png",
-   "kind": "compare",
-   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.rise",
-   "frame": 2100,
-   "tier": "draft"
   },
   {
    "time": "2026-11-26T17:10:19.022Z",
@@ -51,30 +78,6 @@
    "source": "../../../../tmp/gl/k24/Q/m2156-land.jpg",
    "kind": "note",
    "label": "2156 final 345d510f, x 560 y 120 at 1 to 1: lands soft, specks in the Gulf",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T17:01:10.244Z",
-   "file": "20261126170110244-note-m2156-night.jpg",
-   "source": "../../../../tmp/gl/k24/Q/m2156-night.jpg",
-   "kind": "note",
-   "label": "2156 final 345d510f, x 1100 y 640 at 1 to 1: night lights, some as short dashes",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T17:01:09.205Z",
-   "file": "20261126170109205-note-m2156-limb.jpg",
-   "source": "../../../../tmp/gl/k24/Q/m2156-limb.jpg",
-   "kind": "note",
-   "label": "2156 final 345d510f, x 330 y 400 at 1 to 1: hurricane, clouds drawn out at the left, the hatch at the right edge",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T16:43:08.931Z",
-   "file": "20261126164308931-note-m1857-hatch3.jpg",
-   "source": "../../../../tmp/gl/k24/Q/m1857-hatch3.jpg",
-   "kind": "note",
-   "label": "1857 final, x 900 y 700 w 200 h 140 at 4 for 1: the hatch stands",
    "stop": "earth"
   }
  ]
