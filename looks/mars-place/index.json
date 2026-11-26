@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T09:06:19.929Z",
- "head": "792d4a20450074fe3f1337bb77276e0154b6279a",
- "note": "rise 2681 to 2688 at 792d4a20 and a trial of the margins that is not taken",
+ "pushed": "2026-11-26T10:02:27.181Z",
+ "head": "699a879fd36d8c1e30333c656cb8416f4526baae",
+ "note": "699a879f named: dive sheet, plates from above, band before and after, rise 2684 to 2688",
  "looks": [
   {
-   "time": "2026-11-26T09:06:18.638Z",
-   "file": "20261126090618638-note-g35d-2472.jpg",
-   "source": "../../../../tmp/pm/g35d-2472.png",
+   "time": "2026-11-26T10:02:26.465Z",
+   "file": "20261126100226465-note-g41.jpg",
+   "source": "../../../../tmp/pm/g41.png",
    "kind": "note",
-   "label": "trial not taken, dive 2472, before and with the wider span: drawn out margin paint lower left (bad)",
+   "label": "trials of the law not taken",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T09:06:17.745Z",
-   "file": "20261126090617745-note-g35d-2468.jpg",
-   "source": "../../../../tmp/pm/g35d-2468.png",
+   "time": "2026-11-26T10:02:25.872Z",
+   "file": "20261126100225872-note-g43.jpg",
+   "source": "../../../../tmp/pm/g43.png",
    "kind": "note",
-   "label": "trial not taken, dive 2468, before and with the wider span: pale streaks of the margin upper right (bad)",
+   "label": "2685 count by count: the level line is carried by count 6",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T09:06:16.738Z",
-   "file": "20261126090616738-note-g35-B4.jpg",
-   "source": "../../../../tmp/pm/g35-B4.png",
+   "time": "2026-11-26T10:02:25.227Z",
+   "file": "20261126100225227-note-rise31.jpg",
+   "source": "../../../../tmp/pm/rise31.png",
    "kind": "note",
-   "label": "trial not taken: margins give way over two doublings of the sight; the wall comes as a ghost over four frames",
+   "label": "rise 2684 to 2688 drafts of 699a879f (bad: level line low left, the cap's hill at right)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T09:06:15.815Z",
-   "file": "20261126090615815-note-g35-B0.jpg",
-   "source": "../../../../tmp/pm/g35-B0.png",
+   "time": "2026-11-26T10:02:24.582Z",
+   "file": "20261126100224582-note-band31.jpg",
+   "source": "../../../../tmp/pm/band31.png",
    "kind": "note",
-   "label": "rise 2681 to 2688 at 792d4a20, drafts: at 2684 the ground under the picture shows a dark wall at the right and a level line low left at 2685 (bad)",
+   "label": "band at 2470 three times, before and after the weigh at four texels (bad: the band is still dark)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T08:45:12.095Z",
-   "file": "20261126084512095-note-strip30.jpg",
-   "source": "../../../../tmp/pm/strip30.png",
+   "time": "2026-11-26T10:02:24.003Z",
+   "file": "20261126100224003-note-above31-b.jpg",
+   "source": "../../../../tmp/pm/above31-b.jpg",
    "kind": "note",
-   "label": "792d4a20 strip 2415 to 2450 at draft, native",
+   "label": "plates from above at 1 to 1, main beside 699a879f, second half",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T08:45:11.480Z",
-   "file": "20261126084511480-note-g32a.jpg",
-   "source": "../../../../tmp/pm/g32a.png",
+   "time": "2026-11-26T10:02:23.402Z",
+   "file": "20261126100223402-note-above31-a.jpg",
+   "source": "../../../../tmp/pm/above31-a.jpg",
    "kind": "note",
-   "label": "2468 at 4 times, the dark stepped band on the far mesa's crest: as it stands (left) and with the seen file read finer (right, not taken: the stair stays)",
+   "label": "plates from above at 1 to 1, main beside 699a879f, first half",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T08:45:10.848Z",
-   "file": "20261126084510848-note-g31c.jpg",
-   "source": "../../../../tmp/pm/g31c.png",
+   "time": "2026-11-26T10:02:22.806Z",
+   "file": "20261126100222806-note-dive31-b.jpg",
+   "source": "../../../../tmp/pm/dive31-b.jpg",
    "kind": "note",
-   "label": "2726 at 6 times, before and 792d4a20: bad in both, pale green and pink texels east of the canyon",
+   "label": "dive 2460 to 2476 every second frame, drafts of 699a879f: the dark band at 2464 to 2472 stays, its outline no longer steps",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T08:45:10.230Z",
-   "file": "20261126084510230-note-g31e.jpg",
-   "source": "../../../../tmp/pm/g31e.png",
+   "time": "2026-11-26T10:02:22.170Z",
+   "file": "20261126100222170-note-dive31-a.jpg",
+   "source": "../../../../tmp/pm/dive31-a.jpg",
    "kind": "note",
-   "label": "2441 native: before and 792d4a20; bad in both: pale soft patch south east of the canyon's bend",
+   "label": "dive 2440 to 2458 every second frame, drafts of 699a879f",
    "stop": "mars"
   }
  ]
