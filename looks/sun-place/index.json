@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T11:04:53.785Z",
+ "pushed": "2026-11-26T11:31:42.057Z",
  "head": "ac0ffdda4556604bab51364ff72fee4f837d8a0f",
- "note": "after MAIL 1463: arch trial Z5 at draft 90, fan from the feet with hot pools; sky aim under review (rigid sky turns 0.016 deg a frame in the world); sun-near 60 final of ac0ffdda: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "note": "arch trials after MAIL 1463: fan from each foot, pools, finer strands; colour law being set back to the ladder of the approved | sun-near 60 at the name: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T11:31:40.646Z",
+   "file": "20261126113140646-note-a-Z16-90.jpg",
+   "source": "../../../../tmp/v/a-Z16-90.jpg",
+   "kind": "note",
+   "label": "arch trial Z16 at draft 90, approved above: fine strands in bundles, pools at the feet (a ball of gas on the ground), colour still too pale",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T11:04:53.124Z",
    "file": "20261126110453124-note-a-Z5-90.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/y5-limb.jpg",
    "kind": "note",
    "label": "limb at 90 final",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T09:09:02.036Z",
-   "file": "20261126090902036-note-y5-tri60.jpg",
-   "source": "../../../../tmp/v/y5-tri60.jpg",
-   "kind": "note",
-   "label": "60 final: main, mine, approved",
    "stop": "sun"
   }
  ]
