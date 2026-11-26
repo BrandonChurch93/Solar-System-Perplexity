@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T06:12:52.333Z",
+ "pushed": "2026-11-26T06:15:23.460Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the word both on a sky patch is named (agent/engine-both): off to the bit on 21 frames, and a trial on Neptune with no share of the sky carries the bytes of main on 12 frames",
+ "note": "the word both: the counter picture in the rise (4957 without and with the word)",
  "looks": [
+  {
+   "time": "2026-11-26T06:15:22.381Z",
+   "file": "20261126061522381-note-neptune-rise-first-frame-without-and-with-the-word.jpg",
+   "source": "../../../../tmp/both/sheets/neptune-rise-first-frame-without-and-with-the-word.png",
+   "kind": "note",
+   "label": "The rise's first frame in the globe view, 4957, draft, half size, a trial with no share of the sky. Top: without the word both, no sky picture is drawn in the rise's globe view (552284 px differ from main). Bottom: both patches say both, the surface view's sky picture stays (the bytes of main)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-26T06:12:50.289Z",
    "file": "20261126061250289-note-neptune-word-both-rise-sky-full-size.jpg",
@@ -43,13 +51,6 @@
    "kind": "note",
    "label": "Neptune on main 738549c4 at its change of view, draft, half size: 4741 and 4757 in the globe view, 4758 the first frame of the surface view, 4707 the judged frame. The frames a new engine word (a sky patch drawn in both views) is proved against",
    "stop": "neptune"
-  },
-  {
-   "time": "2026-11-26T04:16:02.809Z",
-   "file": "20261126041602809-note-strip-on-upperleft.jpg",
-   "source": "../../../../tmp/crest/arr/strip-on-upperleft.png",
-   "kind": "note",
-   "label": "draft 4498 to 4503 with the word, the same crop: the flight's stars thin out under the entering picture, no straight edge"
   }
  ]
 }
