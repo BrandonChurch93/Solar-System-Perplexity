@@ -7650,7 +7650,7 @@ MAIL 23:39 (low): time of the tree's name about 00:20, the D1 numbers, the E num
 MAIL 1343 (23:54): NEW MAIN 1f51abc9 (take batches 14 and 15: the far Sun by the kit's law of the frame, 17 files
 with src/core/engine.ts, src/director/film.ts, src/space/sky.ts; the reader writes the ground pop as a number).
 No file of Saturn's in it. Batch 16 under proof at /root changes src/space/travel/path.ts (the roll into
-Saturn): the table of the flight in has to be read again once it is on main. Merged here at 23:58; the proof
+Saturn): the table of the flight in has to be read again once it is on main. Merged here at 23:54 (5909622e); the proof
 copy (mainref) moves to it after the ring trials, then the tree's three judged finals are drawn again there.
 
 RING LEVELS BY ZONE AND SECTOR AT 3465 (ring_levels.py, display luma, hero against rings by code alone, D1): the
@@ -7665,3 +7665,56 @@ SPECK SUSPECT: the sparkle glints of the kept rings (kept/rings.ts 531 to 550, l
 twinkle by uTime with pow(tw, 3): a glint can stand in one frame alone. They show only where the footprint is
 small against the cell (show = 1 - smoothstep(0.12, 0.3, major * foot / cell)), that is close to the plane,
 which is where the specks of 3593 and 3601 are. To be tried: a slice with sparkle 0.
+
+## 00:15 UTC (day 3), where things stand after mail 1343
+
+MAIN: 1f51abc9 is merged into the branch (5909622e, pushed). The stop tree is unchanged since 17aa7329.
+The tree's three judged finals are drawn again on the new main by /tmp/v/rigid/seq12.sh (out: /tmp/v/rigid/T2,
+"TREE FINALS DONE" in seq12.log); they must read fdbf21adf8ff16d1 (3465), 337d20b2a719e357 (3720),
+6d1683433f9faa3b (3866). Then the NAMED mail of the tree under proof goes out (d186), saying it holds 1f51abc9.
+
+THE TREE'S RISE ON 172e7bc (/tmp/v/rigid/Tn): verdict green. Level step 0.04 at 3895 + 1/2 (limit 1.3), pop 1.19
+from 3873 + 1/2 (limit 1.2; on ce8cb68 it read 1.2173 from 3874, main 1.2105), change in place 24.2 from
+3855 + 1/2, pattern 0.35 from 3832 + 1/2, ground change 11.6, pattern 0.12. d312: largest 1.73 levels a frame
+at cosine -0.14, 3826 to 3827 (8 to 16 N).
+
+THE RINGS' LIGHT BY RADIUS AND AZIMUTH IS ALREADY A BODY MAP ON MAIN: src/stops/saturn/azimuth.json (tool
+assets-src/saturn/rings/azimuth.py): five radii, five coefficients each (1, cos, sin, cos 2, sin 2 of the azimuth
+in the body frame), gain about 0.51 to 1.50. The kept set reads it as azGain (kept/rings.ts 271, used at 453),
+the model's far look as keptAzGain (sheet.ts 216). The model's close look does not use it (it would move 3720's
+fit). From B to C (heroLight 1 to 0) the lit rings moved by 0.03 of d296 only: the pose weighted light was a
+matter of the globe, not of the rings. A refit tool exists (/tmp/v/bake/azimuth_refit.py) but its ratios are
+noisy; the residual hero against code by zone and sector is named in the mail, not refitted.
+
+THE SPECK: a dot on the right night limb 4 to 8 px above the equator's end (trial 3593 (1544, 750), trial 3601
+(1575, 755), tree 3601 (1556, 748)), bright in one frame and faint in the next. Likely cause: a star seen
+through the globe's soft edge where the shaded plane's cover ramp (sheet.json shadow.solid [0.992, 1.0]) is
+partial for rays that cross the plane just inside the globe (r 0.997 to 1.0). Trial sS (E + solid [0.96, 0.985])
+is drawn at k 7186 and k 7202 by seq12 (out /tmp/v/rigid/S). Other suspect: sparkle glints.
+
+RINGS BY CODE ALONE AT 3465 (finals, G17 median and lowest quarter; d296 whole):
+  F2 (profile with the hero's lanes, detail bias 0.4)   1.3637, 1.2212; 14.0960
+  F1 (same profile, detail bias 1.2)                    1.2654, 0.9722; 13.1753
+  C  (hero ring pixels on the rigid body)               1.0310, 0.8170; 12.2529
+G17 passes for F1 and F2, but the look is not the hero's: crisp concentric lines like a record, the A ring
+streaked where the hero has fine grain, white streaks in the near part (tiles there 2 to 4 times the hero).
+C looks closest to the hero. A true rigid ring matched at the ansa has denser lanes in the foreshortened parts
+than the hero painted, so rings by code alone need lookdev (grain by code in the A ring, a softer near part)
+before they can stand at the hold.
+
+THE MOTTLED PATCH (x 1590 to 1650, y 540 to 620 at 3465): the hero's ring pixel map (polar-rings.jpg, rows by
+radius 1.42 to 2.48) holds the hero's ragged outer edge of the B ring between r 1.90 and 1.96 (the edge is no
+circle in the hero: the row of the edge wanders by tens of rows along the azimuth, see /tmp/v/rigid/v_polar_div.png).
+On a rigid body the profile's true edge and the map's wandering edge disagree, which shows as the patch.
+Cure in trial sG: the hero's ring pixels are not drawn between r 1.895 and 2.07 (polar.json division
+[1.895, 1.915, 2.05, 2.07], uniform uPolarGap in kept/rings.ts, weight wP): the B ring's outer margin, the
+division and the A ring's inner edge are the profile's own. This is a window by radius in the body's own
+coordinates, at every frame, weighted by nothing.
+
+TRIAL sG = E (rigid shapes, lens law b, baked globe light) + the profile with the hero's lanes under the hero's
+ring pixels (rings-h.bin, trial name) + solid [0.96, 0.985] + the division window. Drawn by /tmp/v/rigid/seq13.sh
+after seq12: finals 3465 and 3720, drafts 3572 and 3601 (out /tmp/v/rigid/G).
+
+OPEN DECISION (by about 01:00): option A = sG as the baked state, with the hero's ring pixels still going out
+by height as on main, named as a red; option B = rings by code alone at every frame, which needs the lookdev
+above. The hold outranks the skim if the two disagree (d296).
