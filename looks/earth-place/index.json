@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T02:27:28.859Z",
- "head": "80cc5f8f0bd77bc36fc631bf1bc5a835760fd6b8",
- "note": "state 80cc5f8f on drafts: island cured, blob gone on the plate; BAD: far band 1884 to 1888 and far towers as shards; rise strip renders",
+ "pushed": "2026-11-26T02:52:06.633Z",
+ "head": "77e5db7634fcb149575f050ad121fbe92b392cb5",
+ "note": "rise strip read: far band red 2124 to 2127 by my quick reader, the round body east of the place cured, state 77e5db76",
  "looks": [
+  {
+   "time": "2026-11-26T02:52:06.065Z",
+   "file": "20261126025206065-note-half.jpg",
+   "source": "../../../../tmp/gl/k20/S9/half.jpg",
+   "kind": "note",
+   "label": "bad: 1866 to 1878 at half size, the place still reads as a region of its own at 1874 and 1878",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T02:52:05.515Z",
+   "file": "20261126025205515-note-blob2.jpg",
+   "source": "../../../../tmp/gl/k20/S9/blob2.png",
+   "kind": "note",
+   "label": "1890 and 1898 twice the size, the strip before above this one: the pale round body east of the place is gone",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T02:52:04.952Z",
+   "file": "20261126025204952-note-x-2127.jpg",
+   "source": "../../../../tmp/gl/k20/R1/tow/x-2127.png",
+   "kind": "note",
+   "label": "bad: rise 2127 to 2130 at 1 to 1, the field is an even dust, pale blue shards, hard white clouds of the map at the right",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T02:52:04.164Z",
+   "file": "20261126025204164-note-top-b.jpg",
+   "source": "../../../../tmp/gl/k20/R1/top-b.png",
+   "kind": "note",
+   "label": "bad: rise 2125 to 2128, top of the frame at 1 to 1, the hold's lands come out from under the close picture's far deck",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T02:27:24.802Z",
    "file": "20261126022724802-note-three.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/k21/j-blob.png",
    "kind": "note",
    "label": "plate at 1 to 1: pale blue blob cut by the rim, bake i left, bake j right (gone whole)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T02:27:20.636Z",
-   "file": "20261126022720636-note-now-1890.jpg",
-   "source": "../../../../tmp/gl/k20/S8/now-1890.jpg",
-   "kind": "note",
-   "label": "1890 draft on the state 80cc5f8f",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T02:27:19.199Z",
-   "file": "20261126022719199-note-block9.jpg",
-   "source": "../../../../tmp/gl/k20/S8/block9.jpg",
-   "kind": "note",
-   "label": "island at the east rim soft again: strips of 00:13, 01:24, 02:04 at 1890, 1894, 1898 (drafts)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T01:47:44.065Z",
-   "file": "20261126014744065-note-block4.jpg",
-   "source": "../../../../tmp/gl/k20/S7/block4.jpg",
-   "kind": "note",
-   "label": "BAD: island right of the place cut straight at the rim since the 00:50 bake (four strips side by side)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T01:47:43.496Z",
-   "file": "20261126014743496-note-q-1896.jpg",
-   "source": "../../../../tmp/gl/k20/S7/tow/q-1896.jpg",
-   "kind": "note",
-   "label": "01:24 strip, 1896 to 1899 at half size, towers rising by distance",
    "stop": "earth"
   }
  ]
