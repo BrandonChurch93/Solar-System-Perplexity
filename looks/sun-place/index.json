@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T03:20:42.601Z",
+ "pushed": "2026-11-26T03:32:42.237Z",
  "head": "2d2c669d44c1c493a58b39f7c5554cacb042c69e",
- "note": "local 2d2c669d (merge of main 77e597e5 over cae4735c), not pushed yet: units green on it (tsc 0, test exit 0), gate and path running, then finals, G17, the reader's rise. The gas's light by frame at draft (mean grey added): 0 4.40, 60 3.32, 120 1.90, 179 2.85, 196 8.29, 206 18.45, 216 28.97, 226 32.08, 241 30.97, 253 26.54; steps a frame in the rise mean 0.494, largest 1.164 between 206 and 211 (before 0.614 and 1.560). sun-near 60 draft: dark 0.154 body 0.576 pale 0.107 white 0.035, half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404, distance 0.145",
+ "note": "finals of the local merge 2d2c669d beside main and the approved; G17 and the reader still running",
  "looks": [
+  {
+   "time": "2026-11-26T03:32:41.059Z",
+   "file": "20261126033241059-note-n2-360-three.jpg",
+   "source": "../../../../tmp/v/n2-360-three.jpg",
+   "kind": "note",
+   "label": "frame 360 at final: approved, main (11.9772), local merge 2d2c669d (11.9851, the same bytes as the state before this step)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T03:32:40.150Z",
+   "file": "20261126033240150-note-n2-four.jpg",
+   "source": "../../../../tmp/v/n2-four.jpg",
+   "kind": "note",
+   "label": "frame 60 at final: approved, main 77e597e5 (33.9556 | 11.5380 | 43.5632), local merge 2d2c669d not yet named (38.2638 | 12.5044 | 49.3035), and its frame 90 (37.0199 | 12.7771 | 47.4097; main 30.0950 | 7.1571 | 39.9255). sun-near 60 final: dark 0.140 body 0.589 pale 0.110 white 0.036 | half width 5.5 px, 1409 shapes, fine 0.0527, mean 0.409 | distance 0.154",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T03:20:41.890Z",
    "file": "20261126032041890-note-arc60-a-t2.jpg",
@@ -51,28 +67,6 @@
    "kind": "note",
    "label": "limb at 60 final, left side, 1 to 1: approved | main 9f153844 | candidate d377db96",
    "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:24:38.629Z",
-   "file": "20261126022438629-note-limb60-right.jpg",
-   "source": "../../../../tmp/v/limb60-right.jpg",
-   "kind": "note",
-   "label": "limb at 60 final, right side, 1 to 1: approved | main 9f153844 | candidate d377db96 (the white band is the lab ground's haze; my jets are hairs where the approved has flame tongues; my glow falls too slowly)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T01:37:01.745Z",
-   "file": "20261126013701745-job-frame-00247.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.rise frame 247, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.rise",
-   "frame": 247,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
