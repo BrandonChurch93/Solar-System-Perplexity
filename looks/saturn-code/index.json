@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T12:40:22.361Z",
+ "pushed": "2026-11-26T12:42:41.090Z",
  "head": "9055081a19b6e807cd4fd954c050fba10831af67",
- "note": "cause of the pattern number at 3857: the same lobe at the ring's tip in both trees, the judged area takes in more of it in mine",
+ "note": "3857 named: the reader's flows slip 6 quarter px along the ring's stripes at the tip in both trees, with the true way the place reads nothing",
  "looks": [
+  {
+   "time": "2026-11-26T12:42:40.470Z",
+   "file": "20261126124240470-note-ft24.jpg",
+   "source": "../../../../tmp/v/rigid/T1/ft24.jpg",
+   "kind": "note",
+   "label": "rise 3857 at the tip of the lit ring, quarter size times 8, the cure above and main below: the frame, the frame 8 later carried back by the reader's way, the same carried back by the ring plane's true way from the poses, the reader's pattern with its own way, the same formula with the true way"
+  },
   {
    "time": "2026-11-26T12:40:21.707Z",
    "file": "20261126124021707-note-fm24.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/rigid/G1/reg3866_excess.png",
    "kind": "note",
    "label": "3866 registered to the hero, where the cure is further than main's"
-  },
-  {
-   "time": "2026-11-26T11:56:20.945Z",
-   "file": "20261126115620945-note-pat3814_crops.jpg",
-   "source": "../../../../tmp/v/rigid/G1/pat3814_crops.jpg",
-   "kind": "note",
-   "label": "the place of the largest pattern, 3814 and 3822 on the cure, pixel 1044 to 1364 by 696 to 976 twice enlarged: the dusk above the near ring's inner edge"
   }
  ]
 }
