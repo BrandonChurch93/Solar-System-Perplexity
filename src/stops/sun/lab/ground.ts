@@ -10,6 +10,7 @@ import ramp from '../convect.json'
 import place from '../place.json'
 import lab from './lab.json'
 import { EDGES, SLOTS, TILE, cellsAt, newCells } from './sim'
+import { jitterOffsets } from '../../../core/jitter'
 
 /**
  * The close ground of the Sun as things. Every cell of a power diagram of moving sites (sim.ts, a life simulated
@@ -342,6 +343,7 @@ out vec3 vN;
 out vec3 vView;
 out vec3 vClip;
 uniform vec4 uLabLens;
+uniform float uLabNear;
 out float vReal;
 out float vPit;
 out float vDeep;
@@ -550,7 +552,7 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   vView = mv.xyz;
   gl_Position = projectionMatrix * mv;
-  gl_Position.xy += uLabLens.xy * max(uLabLens.z - gl_Position.w, -uLabLens.w * gl_Position.w);
+  gl_Position.xy += uLabLens.xy * clamp(uLabLens.z - gl_Position.w, -uLabLens.w * gl_Position.w, uLabNear * gl_Position.w);
   vClip = gl_Position.xyw;
 #ifdef LAB_MAP
   gl_Position = vec4(vG / uLabFar.w * 2.0 - 1.0, 0.9 - tall * 12.0, 1.0);
@@ -685,7 +687,8 @@ vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
   float mu = max(dot(upHere, normalize(uLabEye - here)), 0.0);
 #if ${lab.gas.steps} > 0
   vec2 gas = labGas(here);
-  float tau = gas.y;
+  // the spot's field holds the gas down: a sight line that ends in the spot meets little of it
+  float tau = gas.y * mix(1.0, thin * thin, ${((lab.gas as { spot?: number[] }).spot?.[2] ?? 0).toFixed(2)});
   vec3 glow = texture(uRamp, vec2(clamp(gas.x * uLabHaze.z, 0.0, 1.0), 0.5)).rgb;
   col = col * exp(-tau * ${lab.gas.dim.toFixed(2)}) + inverseFilmic(grade(glow, 0.0)) * (1.0 + uLabHazeTint.w * max(gas.x * uLabHaze.z - 1.0, 0.0)) * (1.0 - exp(-tau));
 #else
@@ -909,10 +912,23 @@ void main() {
   float qHot = 0.0;
   for (int k = 0; k < ${Math.round(Q?.hot?.[6] ?? 3)}; k++) {
     float hs = seed * (3.71 + 2.3 * float(k)) + 0.37 * float(k);
+#if ${(Q?.hot?.[7] ?? 0) > 0 ? 1 : 0}
+    // a clump lives: it wells up small near the crown, rides outward with the gas as it grows and fades on the
+    // flank, and the next comes at another place; each has its own hour, so a cell is never without
+    float hAt = uLabTime.x / (${(Q?.hot?.[7] ?? 1).toFixed(2)} * (0.7 + 0.6 * fract(hs * 2.17))) + fract(hs * 3.3);
+    float hPh = fract(hAt);
+    hs += 1.618 * mod(floor(hAt), 64.0);
+    float hGo = mix(${(Q?.hot?.[8] ?? 0.5).toFixed(2)}, 1.0, hPh);
+    float hOn = clamp(min(hPh, 1.0 - hPh) / ${(Q?.hot?.[9] ?? 0.25).toFixed(3)}, 0.0, 1.0);
+    hOn = hOn * hOn * (3.0 - 2.0 * hOn);
+#else
+    float hGo = 1.0;
+    float hOn = 1.0;
+#endif
     float ha = 6.2831853 * fract(hs * 5.13);
-    vec2 hb = (${(Q?.hot?.[1] ?? 0.2).toFixed(3)} + ${((Q?.hot?.[2] ?? 0.6) - (Q?.hot?.[1] ?? 0.2)).toFixed(3)} * fract(hs * 7.77)) * vec2(cos(ha), sin(ha));
-    float hr = ${(Q?.hot?.[3] ?? 0.15).toFixed(3)} + ${((Q?.hot?.[4] ?? 0.3) - (Q?.hot?.[3] ?? 0.15)).toFixed(3)} * fract(hs * 9.31);
-    qHot = max(qHot, (0.4 + 0.6 * fract(hs * 11.9)) * exp(-dot(d - hb, d - hb) / (hr * hr)));
+    vec2 hb = hGo * (${(Q?.hot?.[1] ?? 0.2).toFixed(3)} + ${((Q?.hot?.[2] ?? 0.6) - (Q?.hot?.[1] ?? 0.2)).toFixed(3)} * fract(hs * 7.77)) * vec2(cos(ha), sin(ha));
+    float hr = (${(Q?.hot?.[3] ?? 0.15).toFixed(3)} + ${((Q?.hot?.[4] ?? 0.3) - (Q?.hot?.[3] ?? 0.15)).toFixed(3)} * fract(hs * 9.31)) * mix(0.7, 1.0, hGo);
+    qHot = max(qHot, hOn * (0.4 + 0.6 * fract(hs * 11.9)) * exp(-dot(d - hb, d - hb) / (hr * hr)));
   }
   cell *= (1.0 + ${(Q?.hot?.[0] ?? 0).toFixed(2)} * qHot) * (1.0 + ${(Q?.hot?.[5] ?? 0).toFixed(2)} * (2.0 * fract(seed * 13.7) - 1.0));
 #endif
@@ -1047,19 +1063,38 @@ void main() {
   float fSum = 0.0;
   for (int k = 0; k < 2; k++) {
     float fN = k == 0 ? ${(4 * Math.round(F?.[1] ?? 5)).toFixed(1)} : ${Math.round(4 * (F?.[1] ?? 5) * (F?.[8] ?? 1.6)).toFixed(1)};
-    float fK = seed * 91.0 + 3.0 + 19.0 * float(k);
+    float fK0 = seed * 91.0 + 3.0 + 19.0 * float(k);
     float fU = (fA + ${(F?.[9] ?? 0).toFixed(3)} * (k == 0 ? 1.0 : -0.7) * (2.0 * step(0.5, fract(seed * 29.0)) - 1.0) * fD) * fN;
     float fCol = mod(floor(fU), fN);
-    float fLot = h1(vec2(fCol, fK));
-    float fX = fract(fU) - 0.5 - 0.3 * (h1(vec2(fCol, fK + 34.0)) - 0.5);
     float fSeen = 1.0 - smoothstep(0.25, 0.6, min(fwidth(fU), fN - fwidth(fU)));
-    float fB = ${(F?.[4] ?? 0.06).toFixed(4)} * (1.0 + ${(F?.[10] ?? 0).toFixed(2)} * (2.0 * h1(vec2(fCol, fK + 51.0)) - 1.0));
-    float fT = (fD - fB) / mix(${((F?.[2] ?? 0.6) * 0.675).toFixed(4)}, ${(F?.[2] ?? 0.6).toFixed(3)} * mix(0.35, 1.0, fLot), fSeen);
-    float fW = ${(F?.[3] ?? 0.3).toFixed(3)} * (0.5 + 0.9 * h1(vec2(fCol, fK + 10.0))) * mix(1.0, 0.4, clamp(fT, 0.0, 1.0));
-    float fS = (1.0 - smoothstep(0.3 * fW, fW, abs(fX))) * step(${(F?.[5] ?? 0.3).toFixed(2)}, fLot) * mix(0.4, 1.0, h1(vec2(fCol, fK + 68.0)));
-    fSum = max(fSum, mix(${(F?.[6] ?? 0.15).toFixed(2)}, fS, fSeen) * smoothstep(0.0, ${(F?.[11] ?? 0.25).toFixed(2)}, fT) * (1.0 - smoothstep(0.45, 1.0, fT)) * (k == 0 ? 1.0 : ${(F?.[12] ?? 0.8).toFixed(2)}));
+    // a streak lives: it comes up short at the dark point, grows to its length and fades as the next comes in its
+    // column; knots of hotter gas ride along it toward the point, where the gas sinks
+    for (int g = 0; g < ${(F?.[17] ?? 0) > 0 ? 2 : 1}; g++) {
+#if ${(F?.[17] ?? 0) > 0 ? 1 : 0}
+      float fAt = uLabTime.x / (${(F?.[17] ?? 1).toFixed(2)} * (0.7 + 0.6 * h1(vec2(fCol, fK0 + 87.0)))) + h1(vec2(fCol, fK0 + 59.0)) + 0.5 * float(g);
+      float fPh = fract(fAt);
+      float fK = fK0 + 7.0 * mod(floor(fAt), 64.0) + 3.5 * float(g);
+      float fOn = min(2.0 - abs(4.0 * fPh - 2.0), 1.0);
+      fOn = fOn * fOn * (3.0 - 2.0 * fOn);
+      float fGrow = mix(${(F?.[18] ?? 0.5).toFixed(2)}, 1.0, smoothstep(0.0, 0.5, fPh));
+#else
+      float fK = fK0;
+      float fOn = 1.0;
+      float fGrow = 1.0;
+#endif
+      float fLot = h1(vec2(fCol, fK));
+      float fX = fract(fU) - 0.5 - 0.3 * (h1(vec2(fCol, fK + 34.0)) - 0.5);
+      float fB = ${(F?.[4] ?? 0.06).toFixed(4)} * (1.0 + ${(F?.[10] ?? 0).toFixed(2)} * (2.0 * h1(vec2(fCol, fK + 51.0)) - 1.0));
+      float fT = (fD - fB) / (fGrow * mix(${((F?.[2] ?? 0.6) * 0.675).toFixed(4)}, ${(F?.[2] ?? 0.6).toFixed(3)} * mix(0.35, 1.0, fLot), fSeen));
+      float fW = ${(F?.[3] ?? 0.3).toFixed(3)} * (0.5 + 0.9 * h1(vec2(fCol, fK + 10.0))) * mix(1.0, 0.4, clamp(fT, 0.0, 1.0));
+      float fS = (1.0 - smoothstep(0.3 * fW, fW, abs(fX))) * step(${(F?.[5] ?? 0.3).toFixed(2)}, fLot) * mix(0.4, 1.0, h1(vec2(fCol, fK + 68.0)));
+#if ${(F?.[14] ?? 0) > 0 ? 1 : 0}
+      fS *= mix(1.0, 0.25 + 1.5 * vn(vec2(fD * ${(F?.[15] ?? 6).toFixed(2)} + uLabTime.x * ${(F?.[16] ?? 1.8).toFixed(2)}, fCol * 5.3 + fK)), ${(F?.[14] ?? 0).toFixed(2)} * fSeen);
+#endif
+      fSum = max(fSum, fOn * mix(${(F?.[6] ?? 0.15).toFixed(2)}, fS, fSeen) * smoothstep(0.0, ${(F?.[11] ?? 0.25).toFixed(2)}, fT) * (1.0 - smoothstep(0.45, 1.0, fT)) * (k == 0 ? 1.0 : ${(F?.[12] ?? 0.8).toFixed(2)}));
+    }
   }
-  heat += ${(F?.[0] ?? 0).toFixed(2)} * fSum * vFan.z * seamOn * (1.0 - pen) * mix(1.0, qSh, ${(F?.[13] ?? 0).toFixed(2)});
+  heat += ${(F?.[0] ?? 0).toFixed(2)} * fSum * vFan.z * seamOn * (1.0 - pen) * mix(1.0, qSh, ${(F?.[13] ?? 0).toFixed(2)}) * mix(${(F?.[19] ?? 1).toFixed(2)}, 1.0, smoothstep(0.35, 0.65, vn(vG * ${(F?.[20] ?? 6).toFixed(2)} + 133.0)));
 #endif
 #endif
   // small hot points in the lanes
@@ -1116,6 +1151,7 @@ out vec2 vG;
 out vec3 vView;
 out vec3 vClip;
 uniform vec4 uLabLens;
+uniform float uLabNear;
 ${SHAPE_GLSL}
 void main() {
 #ifdef LAB_PIT
@@ -1129,7 +1165,7 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   vView = mv.xyz;
   gl_Position = projectionMatrix * mv;
-  gl_Position.xy += uLabLens.xy * max(uLabLens.z - gl_Position.w, -uLabLens.w * gl_Position.w);
+  gl_Position.xy += uLabLens.xy * clamp(uLabLens.z - gl_Position.w, -uLabLens.w * gl_Position.w, uLabNear * gl_Position.w);
   vClip = gl_Position.xyw;
 }`
 
@@ -1324,6 +1360,7 @@ export class LabGround {
       uLabEye: { value: new THREE.Vector3() },
       uLabKeep: { value: 1 },
       uLabLens: { value: new THREE.Vector4(0, 0, 1, 0) },
+      uLabNear: { value: 0 },
       uLabAway: { value: new THREE.Vector4(0, 0, 0, 0) },
       uLabAwayTint: { value: new THREE.Vector3().fromArray(place.onGlobe.red.tint) },
       uLabDome: { value: new THREE.Vector4(THREE.MathUtils.degToRad(d.arc), d.height, d.round, d.flat) },
@@ -1614,6 +1651,8 @@ export class LabGround {
   }
 
   /** Which cells are drawn in this pass and how finely: by what the camera sees and by their size in the picture. */
+  private lensCount = 1
+
   private pick(renderer: THREE.WebGLRenderer, camera: THREE.Camera): void {
     this.mesh.updateWorldMatrix(true, false)
     this.screen.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse).multiply(this.mesh.matrixWorld)
@@ -1632,21 +1671,54 @@ export class LabGround {
     const focal = tall / 2 / Math.tan(THREE.MathUtils.degToRad(fov) / 2)
     const lens = (lab as { lens?: number[] }).lens
     if (lens && lens[0]! > 0) {
-      // a lens with an open aperture: each sample of a frame looks from another point of the aperture (the point is
-      // the sample's own place inside its pixel, laid on a disc), so what lies off the plane of focus is unsharp
-      const a = Math.min(Math.max(2 * (view?.enabled ? view.offsetX : 0), -1), 1)
-      const b = Math.min(Math.max(2 * (view?.enabled ? view.offsetY : 0), -1), 1)
+      // a lens with an open aperture: each sample of a frame looks from its own point of the aperture, so what
+      // lies off the plane of focus is unsharp. lens: the aperture's radius in thousandths of the frame's height,
+      // the distance in focus, the largest disc behind and before the focus in apertures, and the two heights of
+      // the eye between which the aperture closes. The points are a spiral of the sample's index on the disc, less
+      // their mean. A frame with fewer samples than the largest disc needs (one a px of its area) has no lens
+      const across = view?.enabled ? view.fullWidth : target ? target.width : renderer.getDrawingBufferSize(this.size).x
+      const ox = view?.enabled ? view.offsetX : 0
+      const oy = view?.enabled ? view.offsetY : 0
+      let count = 1
+      let index = 0
+      const fits = (n: number): number => {
+        const at = jitterOffsets(n)
+        for (let i = 0; i < n; i++) if (at[2 * i] === ox && at[2 * i + 1] === oy) return i
+        return -1
+      }
+      if (ox !== 0 || oy !== 0) {
+        let i = this.lensCount > 1 ? fits(this.lensCount) : -1
+        if (i < 0) {
+          this.lensCount = 1
+          for (let n = 2; n <= 256 && i < 0; n++) {
+            i = fits(n)
+            if (i >= 0) this.lensCount = n
+          }
+        }
+        if (i >= 0) {
+          count = this.lensCount
+          index = i
+        }
+      }
+      const open = 1 - smooth(lens[4] ?? 0.065, lens[5] ?? 0.1, high)
+      const radius = (lens[0]! / 1000) * tall
+      const most = radius * Math.max(lens[2] ?? 1, lens[3] ?? 1)
       let lx = 0
       let ly = 0
-      if (a !== 0 || b !== 0) {
-        const wide = Math.abs(a) > Math.abs(b)
-        const r = wide ? a : b
-        const phi = wide ? (Math.PI / 4) * (b / a) : Math.PI / 2 - (Math.PI / 4) * (a / b)
-        lx = r * Math.cos(phi)
-        ly = r * Math.sin(phi)
+      if (count >= Math.PI * most * most && open > 0) {
+        let mx = 0
+        let my = 0
+        for (let i = 0; i < count; i++) {
+          const r = Math.sqrt((i + 0.5) / count)
+          mx += r * Math.cos(i * 2.39996322972865332)
+          my += r * Math.sin(i * 2.39996322972865332)
+        }
+        const r = Math.sqrt((index + 0.5) / count)
+        lx = r * Math.cos(index * 2.39996322972865332) - mx / count
+        ly = r * Math.sin(index * 2.39996322972865332) - my / count
       }
-      const across = view?.enabled ? view.fullWidth : target ? target.width : renderer.getDrawingBufferSize(this.size).x
-      ;(this.uniforms.uLabLens!.value as THREE.Vector4).set((lx * lens[0]! * 2) / across, (ly * lens[0]! * 2) / tall, lens[1]!, lens[2] ?? 1)
+      ;(this.uniforms.uLabLens!.value as THREE.Vector4).set((lx * open * radius * 2) / across, (ly * open * radius * 2) / tall, lens[1]!, lens[2] ?? 1)
+      this.uniforms.uLabNear!.value = lens[3] ?? 1
     }
     const d = this.cells.diagram
     const mean = lab.far.cell * focal

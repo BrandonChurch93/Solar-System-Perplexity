@@ -2567,3 +2567,79 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   |2.5 / depth - 1| at 1080 rows, capped 0.5 and 1.12 apertures; lens on when samples >= pi times (largest disc
   px)^2: master 15.8 (16 at final: on; 4 at review: off; rise frames at review draw 16: on), preview 3.94 (review
   4: ON, draft off), uhd 63.05 (final 16: OFF; needs 64).
+- 15:28 UTC. MAIL 1510 (15:16): every name carries the camera path lines of `npx tsx tools/smooth.ts --stop sun
+  --only path` on the named sha (green, or the red lines word for word; a red line main lacks holds the name).
+  MEASURED 15:19 on the working tree of h44: "smooth sun: green" (v/path-h44.txt); run again on the commit. h44
+  flicker MEASURED 15:03: fixed discs 0.186 / 36.4 percent, 0.277 / 39.4, 0.091 / 0.0, 0.163 / 18.2; by cell (440
+  pairs) largest 0.302, median 0.032, 10.2 percent over a tenth; area steady within 0.8 to 1.25 (199 cells) 2.5
+  percent over, largest 0.136; area changed over half (159) 22.6 percent over; overlap over 0.8 (101) 3.0 percent;
+  by size 600 to 2000 px 15.2, 2000 to 6000 6.6, over 6000 4.3 percent. MAIL 1218 not met; cause STATED: cells
+  born, split or swallowed and lives of 2 to 4 s. Film 60 to 120 done 15:09 (v/film-h44.mp4, v/sheet-h44-s.jpg).
+  The rise run draws 27.6 s a frame (91 frames, about 42 min), so the chain ends about 16:15. FOUND for the next
+  cut: the picture's lane is ruled by the shoulder qSh = mix(lane[9], 1, smoothstep(0, lane[8], edgeD)), not by
+  laneWide; trials waiting: t234 lane[8] 1.2, t235 lane[8] 1.2 with lane[9] 0.25 on v/lab-h44.json.
+- 15:56 UTC. THE WHOLE RUN of h44 (master, captures 380 to 470, 75 pairs, v/rise-h44.txt): RED. 24 pairs over
+  0.45, captures 425 to 448, largest 0.823 at capture 436 at [980, 520] (the limb over the spot, the place of d9's
+  red part 2 in MAIL 1267), mean 0.400; before 424 largest 0.396, after 448 0.441. SEEN (v/rise6-h44.jpg,
+  v/rise4c-h44.jpg): between captures 440 and 456 the even gold lab ground gives way to the globe's face: my bake
+  in the middle under the globe's own broad light (white patch left of the spot, dark fields right), the globe's
+  painting outside. The handover law (far.away [0.6, 0.93], far.tone) was not touched in h43 or h44; no master run
+  on any state since d9, so UNKNOWN whether h40 to h42 read the same. Low mail to /root 15:55 with the rows and
+  three pictures. OWED in the name: main's own number for that part by my reader (captures 420 to 456 with
+  "ground": "standing", after the chain). NEXT MAIL DUE 17:25 at the latest.
+- 16:27 UTC. CHAIN of h44 DONE 16:25. MEASURED: five hashes equal (preview, review tier, lens on there): file
+  aefdf481ec669aa1, pixels 69e0b27d65689a28, rows 324 down 57d9ec266c4d6b2e, 0 pixels differ; one line mailed to
+  /root and to sun_builder 16:09. Two finals of 90 the same bytes (sha256 84b09adec8be157a...334f70, lab-90-h44f.png
+  and h44g.png). Final 60 (lab-60-h44f.png): whole low band 13.7362, plain 34.1149 (h42 14.6007, 33.2938); rows 540
+  on 25.2904, 52.1553; cut rows 324 on 20.1466, 43.1644; sky part 11.4417 (main 11.5380); bands 1.266 1.120 1.042
+  0.996 (under 1 px 1.481); G17 median 1.494 (worst tile 0.595 at [4, 5]); rows 640 to 760: 1 to 2 px 1.111, 2 to 4
+  px 1.061. Preview final (lab-90-h44p.png, 16 samples, lens on, 196 s): the master final brought to 960 by 540
+  against it: mean absolute difference 5.57 levels whole, 7.11 on rows 162 on (v/size-h44.jpg: the same cells and
+  the same softness by eye). At 4 times on rows 960 to 1076 of the final (v/weave2-h44f.png): no weave on the
+  faces; a doubled edge on a few borders, lone pixels (one red, one black in the window). SEEN at the Builder's
+  crop of 60 (v/m-h44f-60.jpg): gold nuggets on a brown floor against the approved's dark centred domes in near
+  black valleys. Standing ground run for main's own number of the rise part started 16:25 (v/stand.sh h44,
+  captures 420 to 464, v/rise-stand.txt; lab.json carries "ground": "standing" until it ends, then it is restored
+  and checked SAME).
+- 16:54 UTC. MAIN'S OWN NUMBER of the rise part by my reader (standing ground, "ground": "standing", master,
+  captures 420 to 456, 21 pairs, v/rise-stand.txt; the run was cut at 456 by kill -9, 44 s a frame): largest 0.554
+  at capture 433 at [980, 512], two pairs over 0.45 (432: 0.462, 433: 0.554), 434 to 440 at 0.40 to 0.445. h44 on
+  the same pairs: 0.446 to 0.823, every pair from 425 over. So h44 is worse than main on this part. SEEN
+  (v/stand2.jpg): the standing ground carries the globe's broad light (white field left of the spot, dark field
+  right) already at capture 424; the lab ground at 440 is even gold. CAUSE STATED: labTone's far band (the map's
+  light between far.tone.far.deg 0.55 and broad 4 degrees) comes in by the eye's height between
+  far.tone.far.heights [1.2, 73.7] stage units; the eye is at about 4 units at film frame 210 (0.192 radii; the
+  heights of the lens list are in radii, radius 20.6267) where the far ground begins to give way at the limb
+  (0.6 radii from the eye is the horizon at 3.4 units), so the live ground carries about a fifth of that light
+  when the face with all of it takes over. TRIAL h45 = h44 with far.tone.far.heights [1.2, 3.4] (v/tone.sh h45
+  3.4, captures 424 to 456, v/rise-h45-w.txt, started 16:53). Frames 0 to 179 keep their bytes if the eye stays
+  under 1.2 units there (frame 0: 0.057 radii = 1.176 units, the highest of the segment): to be proven by the hash
+  of 90 against aefdf481ec669aa1. If the trial reads better: twin again (level.py reads the live ground at frame
+  233), captures 380 to 423 and 457 to 470 into the same folder, the whole run read, then the name is h45;
+  if not, the name is h44 with the rise open.
+- 17:13 UTC. TRIAL h45 MEASURED (captures 424 to 456, 17 pairs, v/rise-h45-w.txt): largest 0.593 at 436 at
+  [988, 512] (h44 0.823; main 0.554 at 433); rows 424:0.241 425:0.254 426:0.278 427:0.315 428:0.349 429:0.384
+  430:0.431 431:0.485 432:0.506 433:0.552 434:0.566 435:0.586 436:0.593 437:0.590 438:0.578 439:0.557 440:0.557;
+  ten pairs over where main has two. SEEN (v/tone3.jpg): h45 carries the globe's broad light before the face
+  comes, as the standing ground does. DECISION: the name is h45 = h44 with far.tone.far.heights [1.2, 3.4]
+  (v/lab-h45.json); chain v/proof2.sh h45 started 17:11 (log v/proof-h45.log: TWIN DONE, RISE DONE with
+  v/rise-h45.txt, CHAIN DONE with the hash of 90 alone and after 30, to equal aefdf481ec669aa1). h44's finals of
+  90 and 60, flicker, film and five hashes stand for h45 if that hash is equal. Low mail to /root 17:12 with
+  main's number, the trial and v/tone3.jpg. OPEN: rows 431 to 440 still over main's; cause not found (guess: far
+  cells give way to the globe's painting outside the bake's 40 degrees at the limb). NEXT MAIL DUE 18:40 (the
+  name is due 18:30).
+- 17:53 UTC. CHAIN of h45 DONE 17:45. MEASURED: the far twin baked again has h44's bytes (full 1,740,711, sha256
+  8ab50de51f1203c8...). THE WHOLE RUN of h45 (master, 380 to 470, 75 pairs, v/rise-h45.txt): largest 0.593 at
+  capture 436 at [988, 512], mean 0.311, 16 pairs over 0.45 (431 to 446: 0.485 0.506 0.552 0.566 0.586 0.593 0.590
+  0.578 0.557 0.557 0.565 0.562 0.565 0.534 0.506 0.513); before 431 largest 0.431 (430) and 0.401 (384); after 446
+  largest 0.407. Main by the same reader on pairs 420 to 440: largest 0.554, two pairs over; pairs 441 to 454 of
+  main not read (the standing run was cut at 456). Frame 90 of h45 at preview, review tier, alone and after 30:
+  file aefdf481ec669aa1, pixels 69e0b27d65689a28: the bytes of h44, so h44's finals of 90 and 60, the flicker rows,
+  the film and the five hashes stand for h45. Units MEASURED 17:52: 62 files, 700 tests passed. `npm run cues` and
+  `npm run shots` on this branch change cut/CUES.md and cut/SHOTS.md (the Sun's handover 216 becomes 205: this
+  branch's place.json carries the turned anchor, the sheet of the branch's base does not): shared files, put back
+  with git checkout, not committed, said in the name. Growth 2,718,160 bytes.
+- 17:56 UTC. Gate MEASURED 17:55 (npm run gate -- --only G1,G4,G7,G11,G12,G14): all six pass (G12: 3748 tracked
+  files, 2.92 GB); G2 is the units above; G3 (the engine's own determinism run), G5, G13, G17 by the gate's own
+  tools not run here (G17 by tools/measure/g17.py at final: 90 median 1.509, 60 median 1.494). Commit of h45
+  follows; then the path line on the commit, NAMED mail to /root, the commit to sun_builder.

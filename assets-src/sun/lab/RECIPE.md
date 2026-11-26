@@ -209,9 +209,71 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   uneven the streaks' starts are (share of fan[4]); [11] the share of its length over which a streak rises
   (absent 0.25); [13] (absent 0) the share of the shoulder's law (the fall of a cell's heat toward its border,
   heat.lane[8], [9], [11]) that the fans take too.
-  lens (absent: off) = [k, focus, far]: an open aperture. The engine draws 1, 4 or 16 samples a frame (draft,
-  review, final), each from its own place inside the pixel (camera.view offset, core/jitter.ts). In `pick` that
-  place, times 2 and laid on the unit disc by the concentric map, is the sample's point of the aperture; DOME_VERT
-  and FLOOR_VERT move gl_Position.xy by that point times k px (2 k / width, 2 k / height in clip units) times
-  max(focus - w, -far * w), w the depth in stage units: k (focus / depth - 1) px nearer than the focus, at most
-  far times k px beyond it. The map pass and the far twin are not moved. One sample (a draft): no shift.
+  lens (absent: off) = [aperture, focus, far, near, h0, h1]: an open aperture, after MAIL 1480 (26 Nov, 12:34
+  UTC; replaces the form [k px, focus, far] of 32cf9274). aperture: its radius in thousandths of the frame's
+  height (1.85 is 2.0 px at 1080 and 4.0 px at 2160: the same part of the picture at every size); focus: the
+  distance in focus in stage units; far, near: the largest disc behind and before the focus in apertures; h0, h1
+  (absent: 0.065, 0.1): the heights of the eye between which the aperture closes smoothly to 0 (the terrain
+  frames lie at 0.045 to 0.057; on the rise 0.061 at frame 190, 0.108 at 200, the handover to the globe at 205 is
+  at 0.144, so the lens is shut six frames before it; the focus distance never changes). The engine draws each
+  sample of a frame from its own place inside the pixel (camera.view offset, core/jitter.ts, read only). In
+  `pick` the sample's index i and count n are found by matching that offset against jitterOffsets(n), n from 2
+  to 256; the sample's point of the aperture is r = sqrt((i + 0.5) / n), turned i times the golden angle
+  (2.39996 rad), less the mean of the n points. DOME_VERT and FLOOR_VERT move gl_Position.xy by that point times
+  the aperture (2 a / width, 2 a / height in clip units, a in px) times clamp(focus - w, -far w, near w), w the
+  depth in stage units: a (focus / depth - 1) px, held between -far a and near a. No pass over the frame. The
+  lens is off (no shift) in every frame whose sample count is under pi times the square of the largest disc's
+  radius in px (a times the larger of far and near): one sample a px of the disc, so that the copies tile and no
+  double shows; so draft (1 sample) and review (4) show no lens, final (16) carries 2.26 px, 64 carry 4.5 px, 256
+  carry 9 px. The map pass and the far twin are not moved.
+  heat.cushion.hot[7] (absent or 0: clumps fixed in the cell, as before): the life of a clump in seconds (each
+  0.7 to 1.3 of it, at its own hour); it wells up at [8] (absent 0.5) of its place's distance from the crown,
+  rides outward to it, grows by a half, fades in and out over a quarter of its life each; the next of its slot
+  comes at another place.
+  heat.fan[14] (absent or 0: off): the share by which knots of hotter gas along a streak weigh; [15] knots a
+  cell radius; [16] their speed toward the dark point ([16] / [15] radii a second); [17] (absent or 0: streaks
+  fixed): the life of a streak in seconds (each column 0.7 to 1.3 of it, own hour, two generations, one fading
+  in as the other goes); [18] (absent 0.5): its length at birth as a share of its full length.
+  heat.fan[19] (absent 1: everywhere alike): the share of the fans' heat where a field of the place ([20] its
+  scale, absent 6 a stage unit) is low, so that the fans stand strong round some pits and faint round others.
+  gas.spot[2] (absent: 0, as before): the share by which the veil of gas on a sight line follows the thinness of
+  the place where the line ends, squared (0.01 in the spot to 2 pit widths, 1 from 3.5): with the walked gas of h41 on, the
+  gas of the cells before the spot lay over the umbra as a brown haze (h41, h42: MEASURED rows 620 to 800 middle
+  third, luminance 2nd percentile 0.068 against h40's 0.009 and the approved's 0.046).
+  State h43 (26 Nov, 14:06 UTC; lab.json of the commit): no walked gas (gas.steps 0, skin [5, 0.005], pool [2,
+  0.012], as h40), so the spot's haze cannot return and a frame is faster. heat.lane[3] 0.15: the seam's heat
+  alone over the first 0.15 of the lane's width (a dark bottom of the valley), lane[7] 1.0, cushion.seam [0.005,
+  0.12, 40, 1.0]; cushion.patch [0.9, 1.2, 0.3, 0.7, 0.3] and blob [0.4, 0.8, 0.5, 0.35, 0.3, 0.12, 3, 1.2, 0.3]
+  (larger, softer cool patches; the body outside the light darker); heat.fan [3.0, 12, 0.9, 0.5, 0.08, 0.3, 0.3,
+  0, 1.7, 0.04, 0.8, 0.3, 0.9, 0.3, 0.7, 6, 1.8, 5.0, 0.5, 0.5, 6.0] (12 streaks a quarter turn, short; 7 wide
+  ones read as starbursts and palm leaves); heat.spark[0] 0.5 (at 1.5 white rice grains); spot.ring [0.35, 1.0],
+  spot.gap [0.02, 0.10], spot.hot 1.8, spot.floor [0.008, 0.02] (dark wall near the umbra, light outer rim, darker
+  floor); heat.curve refit on the draft of t224 (curve.py), not after the floor.
+- cellflk.py: `python3 assets-src/sun/lab/cellflk.py DIR MASKDIR X Y W H [least area px]`: MAIL 1218 by the cell
+  itself. DIR an eye held clip (clip.ts --from 180 --to 276 --step 24 --hold 180), MASKDIR the same captures with
+  lab.json "show": "seam" (never committed with that key). A cell is an island of the mask, followed from one
+  capture to the next by the ground they share; its light is the mean of the largest channel inside its own
+  island. flicker.py (fixed discs) counts a border that passes through a disc as a change of light; this does not.
+- State h44 (26 Nov, 14:49 UTC; lab.json of the commit) = h43 and: the spot as a bowl of short tongues: spot.depth
+  0.08 and spot.wall [0.9, 2.3] (the ground sinks by 0.08 stage units between 2.3 and 0.9 umbra radii, so the far
+  wall is seen from the eye of frame 90), spot.tongues [70, 44], spot.ranks [3.4, 2.6], spot.lean 0.34, spot.bend
+  0.35, spot.wave [0.1, 0.02] (short tongues in ranks, each bent, dark between), spot.hot 2.4, spot.gap [0.01,
+  0.05], spot.ring [0.45, 1.0]; heat.cushion.patch[0] 0.5 (the dark clumps on a cell at half their depth: soft
+  mottling, at 0.9 they read as a leopard's coat, with fewer clumps as polished nuggets); heat.curve refit on the
+  draft of that state (curve.py). The far twin is baked again for this state (bake.ts, level.py). Not kept, tried
+  the same hour: sim.slots 1100 (cells 1.23 times wider: larger than the approved's in the Builder's crop), long
+  tongues (a wheel of spokes), heat.lane[4] 0.015 and lane[3] 0.3 (nothing moves in the picture's lane).
+- v/proof.sh (a helper outside the repo, its steps are these commands in this order): bake.ts and level.py; final
+  90; the eye held clip, flicker.py four ways, the same clip with "show": "seam", cellflk.py; the film 60 to 120;
+  clip.ts --from 380 --to 470 and reader.ts --dir; pure.ts --frame 90 --after "30;60;120;495" --format preview
+  --tier review and pure.py; final 60; final 90 a second time and sha256sum of both; final 90 at --format preview.
+- State h45 (26 Nov, 17:11 UTC; lab.json of the commit) = h44 and far.tone.far.heights [1.2, 3.4] (was [1.2,
+  73.7]): the lab ground takes the map's light between far.tone.far.deg and far.tone.far.broad degrees by the
+  eye's height over the stage, a smooth step of the logarithm between these two heights in stage units. The far
+  ground begins to give way to the globe's face at the limb when the eye is 3.4 units up (far.away[0] 0.6 radii is
+  the horizon's distance there), so the light is whole before the face comes. Frames 0 to 179 lie under 1.2 units
+  and keep their bytes. The far twin baked again for this state (bake.ts, level.py) has the same bytes as h44's.
+  Proof steps for such a change: bake.ts and level.py; clip.ts --from 380 --to 470 at master and
+  reader.ts --dir; pure.ts --frame 90 --after "30" --format preview --tier review against the state before. Main's
+  own number for a part of the rise: lab.json "ground": "standing", the same clip.ts and reader.ts, then the
+  state's lab.json back.
