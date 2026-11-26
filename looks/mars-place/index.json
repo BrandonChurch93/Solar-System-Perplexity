@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-25T23:57:39.609Z",
- "head": "1fe9c1a29ae5e74238f238905354a93df42f63db",
- "note": "00:00 the eight pictures the state mail names, in one folder state (the folder keeps the last 8)",
+ "pushed": "2026-11-26T00:51:43.595Z",
+ "head": "5d74180adda79728a95af3ea14ca1fe28a7bb69f",
+ "note": "speck traced to hidden green paint in L0 under L2 and cured in 17 blocks (drafts 2684, 2686); dot traced to L2's rim under C2, cure next",
  "looks": [
+  {
+   "time": "2026-11-26T00:51:42.879Z",
+   "file": "20261126005142879-note-speckfix.jpg",
+   "source": "../../../../tmp/speckfix.png",
+   "kind": "note",
+   "label": "speck cure, 6 times: left the name, right L0 with 17 blocks coded anew; top 2686, bottom 2684",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T00:51:42.325Z",
+   "file": "20261126005142325-note-dot2.jpg",
+   "source": "../../../../tmp/dot2.png",
+   "kind": "note",
+   "label": "2476 dot crop, beauty and layers: one pixel of L2 between L0 and C2 at the lit tip",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T00:51:41.702Z",
+   "file": "20261126005141702-note-c2l0.jpg",
+   "source": "../../../../tmp/c2l0.png",
+   "kind": "note",
+   "label": "L0's painted ground under C2 and C2: the green lit ledge the eye of the picture never saw",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T00:51:41.150Z",
+   "file": "20261126005141150-note-small3e.jpg",
+   "source": "../../../../tmp/small3e.png",
+   "kind": "note",
+   "label": "control: 2686 with C2's alpha out, the speck is brighter, so it lies behind C2",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T00:51:40.552Z",
+   "file": "20261126005140552-note-small3b.jpg",
+   "source": "../../../../tmp/small3b.png",
+   "kind": "note",
+   "label": "2686 speck crop: beauty, no grain, ungraded, layers: it is there before grade and grain",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T00:51:39.890Z",
+   "file": "20261126005139890-note-small3.jpg",
+   "source": "../../../../tmp/small3.png",
+   "kind": "note",
+   "label": "name 21b55bc5 draft: the speck at 2686, 2684 and the dot at 2476, crops enlarged",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T23:57:38.912Z",
    "file": "20261125235738912-note-p19-2686-m0.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/p19-2684-m0.jpg",
    "kind": "note",
    "label": "2684 foot at 1 to 1: the name (tiles of the net) | trial 19 plates (no net; SOFT: still wrong)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T23:57:37.778Z",
-   "file": "20261125235737778-note-dp19-4.jpg",
-   "source": "../../../../tmp/dp19-4.jpg",
-   "kind": "note",
-   "label": "dive 2468 and 2470: the name 47b75341 | this state (veil out, plates of trial 19), draft, half size",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T23:57:37.115Z",
-   "file": "20261125235737115-note-sidesT19.jpg",
-   "source": "../../../../tmp/sidesT19.jpg",
-   "kind": "note",
-   "label": "the side difference at T, draft: globe side | close side | difference times 8 | 1 to 1 round the largest; rows: dive veil OUT (depth 0), dive veil ON, rise veil OUT, rise veil ON. Harness: out dive mean 0.003 max 13, rise 0.002 max 20; on 0.008 and 0.005, the same largest",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T23:57:36.464Z",
-   "file": "20261125235736464-note-veil19-b.jpg",
-   "source": "../../../../tmp/veil19-b.jpg",
-   "kind": "note",
-   "label": "veil ON | veil OUT | difference times 8, draft, 2685, 2686, 2690, 2696, 2702 (largest 123 at 2690, 1 at 2702)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T23:57:35.780Z",
-   "file": "20261125235735780-note-dp19-horizon.jpg",
-   "source": "../../../../tmp/dp19-horizon.jpg",
-   "kind": "note",
-   "label": "dive horizon right at 1 to 1, 2466 to 2474: the name (veil on: milk, a straight hard edge at 2470, 2472) | this state (veil out: the set's hazy far end beside the globe's clear far ground, a soft border in tone at about x 1360 at 2468, 2470; dark flat lens at the horizon). Both bad, named",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T23:57:35.145Z",
-   "file": "20261125235735145-note-veil19-dive-l.jpg",
-   "source": "../../../../tmp/veil19-dive-l.jpg",
-   "kind": "note",
-   "label": "dive horizon left at 1 to 1, 2473 to 2476: veil ON (a pale strip with a straight hard upper edge top left at 2473 to 2475) | veil OUT (gone)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T23:57:34.436Z",
-   "file": "20261125235734436-note-veil19-horizon.jpg",
-   "source": "../../../../tmp/veil19-horizon.jpg",
-   "kind": "note",
-   "label": "rise horizon at 1 to 1, 2683 to 2696: veil ON | veil OUT (this state). ON: a pale strip with a straight hard upper edge at 2684, 2686, milk at 2690. OUT: the globe's far ground darker than the set's hazy far end beside it at 2684, a dark flat streak at the horizon at 2686 (both bad, named)",
    "stop": "mars"
   }
  ]
