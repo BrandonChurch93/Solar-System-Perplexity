@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T00:13:18.658Z",
- "head": "9ee3d9544f8b1db9cfd445c74b423f71f89d3da4",
- "note": "state s on 9ee3d954: the ground by code at 3060, 3149.5, 3239 and 3150; the series at 60 a second is drawing",
+ "pushed": "2026-11-26T00:35:13.538Z",
+ "head": "4076c6532492f4f04f17436516c5578917d41fff",
+ "note": "00:36 UTC 26 Nov: series A of state s is nearly drawn (the mp4 of MAIL 1340 point 5 follows with the lens test); the tall tops and the darkness by relief are being built in a second tree",
  "looks": [
+  {
+   "time": "2026-11-26T00:35:12.127Z",
+   "file": "20261126003512127-note-k006300.jpg",
+   "source": "../work/r24/kA/k006300.png",
+   "kind": "note",
+   "label": "Series A, state s, capture frame 6300 (film 3150), draft, 960 px. Matter floor 0.016. Low band whole frame 9.27, outside the seven cells 8.75",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T00:35:10.936Z",
+   "file": "20261126003510936-note-seriesA-sheet.jpg",
+   "source": "../work/r25/t/seriesA-sheet.jpg",
+   "kind": "note",
+   "label": "Series A, state s, four of the 60 frames at 60 a second (film 3135, 3142, 3149, 3156), draft, V 0.0165. Not film grade yet: reads as wet clay, tops hardly slide against depths (0.26 px a film frame at 1.5 units against a design of 0.82)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T00:13:08.593Z",
    "file": "20261126001308593-note-s4-3150.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r23/guide-near-21h51.jpg",
    "kind": "note",
    "label": "Cure step 1, guide: the near ground from above (20.48 units). Left the plates as painted, right the guide cut at 0.08 units. Not yet in a frame.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T21:32:26.144Z",
-   "file": "20261125213226144-note-noeye-3150.jpg",
-   "source": "../work/r22/t/noeye-3150.png",
-   "kind": "note",
-   "label": "3150 draft no grain with the fit eye's share at zero: what the plates alone draw. Not a take, a measure for the page on the cure",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T21:32:25.426Z",
-   "file": "20261125213225426-note-noeye-sheet.jpg",
-   "source": "../work/r22/t/noeye-sheet.png",
-   "kind": "note",
-   "label": "Measure for the page, draft, no grain. Top 3060 and 3239, bottom left 3150, all with the fit eye's share at zero (plates times tone only, 12.461 by d296); bottom right 3150 of the head (6.2249)",
    "stop": "jupiter"
   }
  ]
