@@ -1,9 +1,39 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T13:51:30.895Z",
+ "pushed": "2026-11-26T14:00:12.603Z",
  "head": "72188491bf42c5b8e13774618ddf4c5b399cf29e",
- "note": "Far strip of the rise: test build A1 reads 0.47 on row 3250 against 1.399, part of it detail lost; next the plates keep the picture's tone through the exchange",
+ "note": "Jupiter rise 3249 to 3258: building the picture's level following the camera above the surface view's ceiling, for the later cut",
  "looks": [
+  {
+   "time": "2026-11-26T14:00:11.320Z",
+   "file": "20261126140011320-note-level-follows-native-3252.jpg",
+   "source": "../../../../tmp/lk/level-follows-native-3252.jpg",
+   "kind": "note",
+   "label": "Jupiter rise 3252 at native pixels, the name beside the build in work (the picture's level follows the camera above the surface view's ceiling)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T14:00:10.049Z",
+   "file": "20261126140010049-note-held-picture-3254-3266.jpg",
+   "source": "../../../../tmp/lk/held-picture-3254-3266.jpg",
+   "kind": "note",
+   "label": "Jupiter rise 3254, 3258, 3262, 3266, diagnostic only: the approved picture held on at any stretch beside the name; shows the far field is where picture and plates differ",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:52:43.631Z",
+   "file": "20261126135243631-frame-f03266.jpg",
+   "source": "out/work/jupiter/frames/ph/f03266.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3266, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3266,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
   {
    "time": "2026-11-26T13:51:30.036Z",
    "file": "20261126135130036-note-rise-cure-f-3258-3266-large.jpg",
@@ -27,36 +57,6 @@
    "kind": "note",
    "label": "Row 3250 to 3258, the reader's pattern as a map, both readings: as is, build A1, picture away, tone and air held",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:51:26.517Z",
-   "file": "20261126135126517-note-rise-build-a1-series-3246-3268.jpg",
-   "source": "../../../../tmp/lk/rise-build-a1-series-3246-3268.jpg",
-   "kind": "note",
-   "label": "Rise 3246 to 3268 every second frame, test build A1, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:51:25.275Z",
-   "file": "20261126135125275-note-rise-cure-f-against-build-a1-3250-3254.jpg",
-   "source": "../../../../tmp/lk/rise-cure-f-against-build-a1-3250-3254.jpg",
-   "kind": "note",
-   "label": "Rise 3250, 3252, 3254: cure F (left) against test build A1, the picture carries the air's change (right), draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:45:15.920Z",
-   "file": "20261126134515920-frame-f03256.jpg",
-   "source": "out/work/jupiter/frames/a2s/f03256.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3256, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3256,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
   },
   {
    "time": "2026-11-26T13:42:30.216Z",
