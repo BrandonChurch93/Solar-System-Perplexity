@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T01:37:59.984Z",
+ "pushed": "2026-11-26T02:08:23.843Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Design (c) is committed and merged with main fb40db96 (suite running). Looking at a thin light line on the cut at the top end of crest D's box, where the sheets close onto the wall",
+ "note": "crests: the cut straight on past a ramp's end; the line at the end of D's box is shorter, one cause left (a lifted vertex beside the end), next the border of the end square to the crest's line",
  "looks": [
+  {
+   "time": "2026-11-26T02:08:23.188Z",
+   "file": "20261126020823188-note-v9-end-2668.jpg",
+   "source": "../../../../tmp/crest/v9-end-2668.png",
+   "kind": "note",
+   "label": "2668 draft, the top end of the box of Mars L1's crest D, 16 times: the frozen build, the crests before the cure (a light line down left of the ring), the crests with the cut carried straight on past the end (the line shorter, not yet gone)"
+  },
   {
    "time": "2026-11-26T01:37:54.596Z",
    "file": "20261126013754596-note-r8-2668-Dend-dbg.jpg",
@@ -17,13 +24,6 @@
    "source": "../../../../tmp/crest/s8-Dend-b.png",
    "kind": "note",
    "label": "Design (c), the top end of crest D's box, frames 2669 to 2672 at draft, 10 to 1: base above, crests below"
-  },
-  {
-   "time": "2026-11-26T01:37:52.058Z",
-   "file": "20261126013752058-note-s8-Dend-a.jpg",
-   "source": "../../../../tmp/crest/s8-Dend-a.png",
-   "kind": "note",
-   "label": "Design (c), the top end of crest D's box, frames 2664 to 2668 at draft, 10 to 1: base above, crests below. A thin light line on the cut where the sheets close onto the wall, strength changes frame to frame"
   }
  ]
 }
