@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T14:01:09.449Z",
+ "pushed": "2026-11-26T14:34:30.536Z",
  "head": "f73602f96c26790928796406d3c1a158f7d32475",
- "note": "whole cure: lead v4 against lead with take 1 of land-1p6 in six frames and from above; slab at 2686 is the cap's own ground",
+ "note": "speck state proof runs; the lead with the three faults in hand, offline plates",
  "looks": [
+  {
+   "time": "2026-11-26T14:34:29.616Z",
+   "file": "20261126143429616-note-plate16-step2-against-lead.jpg",
+   "source": "../../../../tmp/pm/mail/plate16-step2-against-lead.jpg",
+   "kind": "note",
+   "label": "1.6 deg plate whole, half size: step 2 left, lead now right",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:34:28.658Z",
+   "file": "20261126143428658-note-mid16-step2-leadv4-leadnow.jpg",
+   "source": "../../../../tmp/pm/mail/mid16-step2-leadv4-leadnow.png",
+   "kind": "note",
+   "label": "1.6 deg plate 1:1: step 2, lead of 14:02, lead now with take 1 even",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:34:27.732Z",
+   "file": "20261126143427732-note-band07-marble-against-moved.jpg",
+   "source": "../../../../tmp/pm/mail/band07-marble-against-moved.png",
+   "kind": "note",
+   "label": "0.7 deg plate, the soft border at 2 times: ground mirrored (above, thrown away) and moved whole (below)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:34:26.953Z",
+   "file": "20261126143426953-note-tip38-step2-leadv4-leadnow.jpg",
+   "source": "../../../../tmp/pm/mail/tip38-step2-leadv4-leadnow.png",
+   "kind": "note",
+   "label": "3.8 deg plate at the east tip, 1:1: step 2, lead of 14:02, lead now (pits stay the plate's)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:34:25.753Z",
+   "file": "20261126143425753-note-speck-2466-main-against-cure.jpg",
+   "source": "../../../../tmp/pm/mail/speck-2466-main-against-cure.png",
+   "kind": "note",
+   "label": "draft 2466 at 8 times: main left, the speck state right",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T14:01:08.521Z",
    "file": "20261126140108521-note-slab6.jpg",
@@ -26,46 +66,6 @@
    "source": "assets-src/mars/place/takes/i16-take1.png",
    "kind": "note",
    "label": "whole cure: take 1 of round 3 of land-1p6, as it came",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:01:06.525Z",
-   "file": "20261126140106525-note-i16-lead1.jpg",
-   "source": "assets-src/mars/place/takes/i16-lead1.png",
-   "kind": "note",
-   "label": "whole cure: lead of take 1 of land-1p6 (the v4 plate, platelead.py gain 1.36, shade of the heights by canyonlead.py)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:01:05.832Z",
-   "file": "20261126140105832-note-ab16a.jpg",
-   "source": "../../../../tmp/pm/in/ab16a.png",
-   "kind": "note",
-   "label": "whole cure from above, land-1p6 texels x 2300 to 3300, y 500 to 1500 at native size: step 2 f73602f9, lead v4, lead v4 with take 1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:01:04.963Z",
-   "file": "20261126140104963-note-t5-2456.jpg",
-   "source": "../../../../tmp/pm/in/t5-2456.png",
-   "kind": "note",
-   "label": "whole cure, frame 2456: above the lead from the heights v4 without a take, below with take 1 of land-1p6 laid (inside.py --take)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:01:04.189Z",
-   "file": "20261126140104189-note-t5-2452.jpg",
-   "source": "../../../../tmp/pm/in/t5-2452.png",
-   "kind": "note",
-   "label": "whole cure, frame 2452: above the lead from the heights v4 without a take, below with take 1 of land-1p6 laid (inside.py --take)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:01:03.429Z",
-   "file": "20261126140103429-note-t5-2448.jpg",
-   "source": "../../../../tmp/pm/in/t5-2448.png",
-   "kind": "note",
-   "label": "whole cure, frame 2448: above the lead from the heights v4 without a take, below with take 1 of land-1p6 laid (inside.py --take)",
    "stop": "mars"
   }
  ]
