@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T05:23:13.697Z",
+ "pushed": "2026-11-26T05:50:34.541Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the word both on SkyPatch (asked by Neptune): built on the arrive name, units green, byte proofs and the frames across Neptune's change of view are rendering",
+ "note": "the word both on a sky patch (Neptune's ask): off proof done (21 draft frames, the bytes of main), the trial with the word on Neptune is rendering",
  "looks": [
+  {
+   "time": "2026-11-26T05:44:42.471Z",
+   "file": "20261126054442471-note-neptune-no-share-no-word-change-of-view.jpg",
+   "source": "../../../../tmp/both/sheets/neptune-no-share-no-word-change-of-view.png",
+   "kind": "note",
+   "label": "Neptune 4757 and 4758 (the frame before and the first after the change of view), draft. Top: main, the sky shared. Bottom: a trial without share and without the word both: the globe view draws its own sky picture alone, the surface view its own, the band of the sky appears at 4758. This is the case the word both is for",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-26T05:23:02.313Z",
    "file": "20261126052302313-note-neptune-main-change-of-view.jpg",
@@ -25,41 +33,6 @@
    "source": "../../../../tmp/crest/arr/strip-off-upperleft.png",
    "kind": "note",
    "label": "draft 4498 to 4503 without the word, x 0 to 960, y 0 to 540, two thirds size"
-  },
-  {
-   "time": "2026-11-26T04:16:01.612Z",
-   "file": "20261126041601612-note-strip-on-4496-4506.jpg",
-   "source": "../../../../tmp/crest/arr/strip-on-4496-4506.png",
-   "kind": "note",
-   "label": "the same frames with the word on Neptune's patches (scratch copy): the hold's sky picture enters from the upper left by place; the first frame that differs is 4497"
-  },
-  {
-   "time": "2026-11-26T04:16:00.883Z",
-   "file": "20261126041600883-note-strip-off-4496-4506.jpg",
-   "source": "../../../../tmp/crest/arr/strip-off-4496-4506.png",
-   "kind": "note",
-   "label": "the flight in to Neptune, draft 4496 to 4506, consecutive, without the word (the tip's bytes are main's)"
-  },
-  {
-   "time": "2026-11-26T03:49:43.666Z",
-   "file": "20261126034943666-note-arrive-4505-smudge.jpg",
-   "source": "../../../../tmp/crest/arr/arrive-4505-smudge.png",
-   "kind": "note",
-   "label": "draft 4505 at five to one, x 1110 to 1230, y 40 to 140: with the word a faint blue disc of the hold's picture about 14 px wide"
-  },
-  {
-   "time": "2026-11-26T03:49:43.052Z",
-   "file": "20261126034943052-note-arrive-4505-edge.jpg",
-   "source": "../../../../tmp/crest/arr/arrive-4505-edge.png",
-   "kind": "note",
-   "label": "draft 4505 at full size, x 960 to 1680, y 0 to 560, without and with the word: where the patch's feathered edge crosses the frame; no straight edge seen"
-  },
-  {
-   "time": "2026-11-26T03:49:42.453Z",
-   "file": "20261126034942453-note-arrive-on-4505-4510.jpg",
-   "source": "../../../../tmp/crest/arr/arrive-on-4505-4510.png",
-   "kind": "note",
-   "label": "with the word (scratch copy), draft 4505 and 4510 at half size: the hold's sky picture is whole where it lies and enters from the upper left"
   }
  ]
 }
