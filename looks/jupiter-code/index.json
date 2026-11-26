@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T10:57:52.066Z",
- "head": "9f297b47862860038425bc868b2c762963741b70",
- "note": "State wa5 of line A at 9f297b47 after four solve rounds in display values. Frame 3150, preview, draft: line (i) 2.006 whole (main at this tier 3.390), 1.608 outside the seven cells (main 3.208); bands 0.729, 0.877, 0.946, 0.942. Not proved at final master. Wrong, worst first: lower thirds read as ripples and pebbles, not smoke; far right under the limb; glow dim patches; storm rings as contour lines. Joins of dive and rise not drawn again.",
+ "pushed": "2026-11-26T11:12:56.415Z",
+ "head": "9521d95e2d5e1c19c87b610192fcf7717c0bdcfc",
+ "note": "Line A at 9521d95e (9f297b47 merged with main 7bcc072b). RED at master: frame 3150 reads line (i) 3.851 at master draft against 2.006 at preview; the thin pale lines along the flow come with the size of the pixel. Without the solve's paint 15.326. Cost 372 s a master draft frame. Not a candidate for the fourth cut.",
  "looks": [
+  {
+   "time": "2026-11-26T11:12:55.360Z",
+   "file": "20261126111255360-note-wa5-r4-3150.jpg",
+   "source": "../work/r26/t/wa5-r4-3150.png",
+   "kind": "note",
+   "label": "Frame 3150, line A at 9f297b47 (state wa5 after four solve rounds), preview, draft: line (i) 2.006 at this size, 3.851 at master. Not a candidate.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T11:12:54.360Z",
+   "file": "20261126111254360-note-wa5off-3150.jpg",
+   "source": "../work/r26/t/wa5off-3150.png",
+   "kind": "note",
+   "label": "Frame 3150, line A at 9f297b47 without the solve's paint (form, light and the map's colour alone), preview, draft: line (i) 15.326.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T11:12:39.897Z",
+   "file": "20261126111239897-note-sheet-wa5r4-sizes.jpg",
+   "source": "../work/r26/t/sheet-wa5r4-sizes.jpg",
+   "kind": "note",
+   "label": "RED at master: frame 3150 of line A at 9f297b47 at preview draft (line (i) 2.006) beside the same at master draft (3.851), and the master's lower half at 1 to 1. At master the thin pale lines along the flow cover the ground like wood grain; the lower left is 4 to 9 levels lighter.",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T10:57:46.276Z",
    "file": "20261126105746276-note-wa5-r4-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r26/t/w70-3150.png",
    "kind": "note",
    "label": "3150 preview draft, state w70 (sheets 0.4 in the dark ground, heaps cover 0.75) on w68's scaffold: 6.235",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:06:29.693Z",
-   "file": "20261126090629693-note-w72-3150.jpg",
-   "source": "../work/r26/t/w72-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w72 (skin 0.015 units) on w68's scaffold: 6.269, crisper tops",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:06:29.033Z",
-   "file": "20261126090629033-note-w76-3150.jpg",
-   "source": "../work/r26/t/w76-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w76 (heaps cover 0.95 in calm ground, sheets 0.15 in the dark ground) on w68's scaffold: 6.473, more heaps and fewer stripes",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:06:28.370Z",
-   "file": "20261126090628370-note-w69-3150.jpg",
-   "source": "../work/r26/t/w69-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w69 (smoke as height in the dark ground): 7.003, folded stripes, liquid, refused",
    "stop": "jupiter"
   }
  ]
