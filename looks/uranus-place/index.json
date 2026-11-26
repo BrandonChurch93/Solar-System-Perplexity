@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T15:14:23.503Z",
+ "pushed": "2026-11-26T15:41:06.438Z",
  "head": "5fc9bcaa7b62cabd68f23329ae568cc6ed0daa9f",
- "note": "D alone with main merged is 5fc9bcaa (pushed, proofs running): final 4407 has no dark dashes; the lanes stay paler than main's",
+ "note": "5fc9bcaa: units 95 files 1106 tests green, gate green, path green; 11 draft frames keep bcc9d174's bytes; consecutive frames and finals run now",
  "looks": [
+  {
+   "time": "2026-11-26T15:41:03.682Z",
+   "file": "20261126154103682-note-nm-rise.jpg",
+   "source": "../../../../tmp/n80/nm-rise.jpg",
+   "kind": "note",
+   "label": "5fc9bcaa (D alone, main 00b05b53 merged) rise draft 4399, 4403, 4407, 4410, 4413, 4416, 4418, 4422: the same bytes as D's drafts before the merge",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T15:14:18.265Z",
    "file": "20261126151418265-note-fin-4407-strip.jpg",
@@ -240,14 +248,6 @@
    "source": "../../../../tmp/n75/n-r2-e.png",
    "kind": "note",
    "label": "54ae2b6d travel draft 4466 to 4470",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:42:34.708Z",
-   "file": "20261126104234708-note-n-r2-d.jpg",
-   "source": "../../../../tmp/n75/n-r2-d.png",
-   "kind": "note",
-   "label": "54ae2b6d rise and travel draft 4454 to 4465",
    "stop": "uranus"
   }
  ]
