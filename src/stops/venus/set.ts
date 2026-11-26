@@ -92,6 +92,8 @@ export const createSet: SetFactory = async (ctx) => {
     placeRise.push(level.rise === level.dive ? dive : await ctx.texture(base + level.rise, kind))
   }
   const wideTexture = await ctx.texture(base + place.wide.file, { srgb: false, channels: 1 as const, anisotropy: 16 })
+  // The far deck of T as a map in the frame of T, for each handover that has one (plates.json, atT.far.clear).
+  const farMaps = { dive: place.far.files.dive ? await ctx.texture(base + place.far.files.dive, { srgb: false, anisotropy: 16 }) : null, rise: place.far.files.rise ? await ctx.texture(base + place.far.files.rise, { srgb: false, anisotropy: 16 }) : null }
   const limbMap = await ctx.dataTexture(base + look.limb.file, LIMB.azimuth + 1, LIMB.half * 4, 4)
   const globeTurn = new THREE.Quaternion().fromArray(fit.globe.quaternion)
   const holdBack = globeTurn.clone().invert()
@@ -108,7 +110,7 @@ export const createSet: SetFactory = async (ctx) => {
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.full, exact: key === 'full', spot: spotBody, feather: patches.feather, fade: patches.fade },
     air: { deck: ground.deck!.colours, deckSpanDeg: look.relief.air.deckSpanDeg },
-    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), full: place.levels.map((l) => l.full), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, wide: { ...place.wide, texture: wideTexture } },
+    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), full: place.levels.map((l) => l.full), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, far: place.far, wide: { ...place.wide, texture: wideTexture } },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
@@ -158,6 +160,20 @@ export const createSet: SetFactory = async (ctx) => {
     const eye = pose.position.clone().applyQuaternion(plan.turn(time).multiply(globeTurn).invert())
     bodyEyes[kind] = { time, eye }
     return eye
+  }
+  // The level line of sight of that camera in the same frame, and the line to its right: the axes of the map of the far deck of T.
+  const bodyAxes: Partial<Record<'dive' | 'rise', { time: number; fwd: THREE.Vector3; right: THREE.Vector3 }>> = {}
+  const bodyAxesAtT = (kind: 'dive' | 'rise'): { fwd: THREE.Vector3; right: THREE.Vector3 } => {
+    const time = handoverOf(plan.id, kind)?.time ?? (kind === 'dive' ? plan.seg.dive!.end : plan.seg.rise.start)
+    const hit = bodyAxes[kind]
+    if (hit && hit.time === time) return hit
+    const pose = plan.eye(kind, time, 'orbit')
+    const up = pose.position.clone().applyQuaternion(plan.turn(time).multiply(globeTurn).invert()).normalize()
+    const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(plan.turn(time).multiply(globeTurn).invert().multiply(pose.quaternion.clone().multiply(drift(time))))
+    fwd.addScaledVector(up, -fwd.dot(up)).normalize()
+    const axes = { time, fwd, right: new THREE.Vector3().crossVectors(fwd, up) }
+    bodyAxes[kind] = axes
+    return axes
   }
   const carry = { ...ground.carry!, soft: look.veil.sunSoft, tint: look.veil.sunTint }
   // The cover veil is never drawn any more (plan.veilAmount is 0 and plan.release is 1 on every frame of both moves), so its cloud
@@ -310,6 +326,13 @@ export const createSet: SetFactory = async (ctx) => {
       for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
       ;(gu.uToneLook!.value as THREE.Vector4).y = byHeight(place.tone.heights)
+      // The far deck of T: all of it at T, none from far.heights times the height of T upward (plates.json, atT.far.clear).
+      const farMap = farMaps[after ? 'rise' : 'dive']
+      const farAxes = bodyAxesAtT(after ? 'rise' : 'dive')
+      gu.uFar!.value = farMap ?? map
+      ;(gu.uFarLook!.value as THREE.Vector4).x = covering && farMap ? below((camera.length() - 1) / heightT, place.far.heights) : 0
+      ;(gu.uFarFwd!.value as THREE.Vector3).copy(farAxes.fwd)
+      ;(gu.uFarRight!.value as THREE.Vector3).copy(farAxes.right)
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
       // The plates hold the light of the place at the full gain and the full tint,
       // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.
