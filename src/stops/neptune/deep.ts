@@ -1014,7 +1014,11 @@ void main() {
     float grainMu = max(dot(sheetUp, -rd), 0.0);
     float grainShare = uFarGrain.w > 0.0 ? smoothstep(uFarGrain.x, uFarGrain.y, grainTexel * grainMu / grainFoot) : 0.0;
     if (grainShare > 0.0) {
-      vec3 grainAt = (uToBody * sheetUp) * uRadius;
+      // WHERE THE FIELD IS READ: at the middle of the same run through the slab at which the cover is read (the mean above),
+      // not at the point where the ray enters the layer. Read at the entry, the cover slid under the field as the slant to one
+      // place changed in the dive and the rise, and the bodies, their product, changed form from frame to frame (measured:
+      // the controls D3 to D6 in the notebook, 26 Nov 18:00 to 18:40). Cover and field now move as one.
+      vec3 grainAt = normalize(dcl + slabRun * (slabShare * 0.5)) * uRadius;
       float grainSum = 0.0;
       float grainAll = 0.0;
       float grainWave = grainTexel * uFarGrain.z;
