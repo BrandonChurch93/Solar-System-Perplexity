@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T10:02:27.181Z",
+ "pushed": "2026-11-26T10:33:42.745Z",
  "head": "699a879fd36d8c1e30333c656cb8416f4526baae",
- "note": "699a879f named: dive sheet, plates from above, band before and after, rise 2684 to 2688",
+ "note": "rows 2721 and 2401 traced (base map against patch-wide; the moon); step 2 at 2470",
  "looks": [
+  {
+   "time": "2026-11-26T10:33:41.459Z",
+   "file": "20261126103341459-note-m32-rim.jpg",
+   "source": "../../../../tmp/pm/m32-rim.png",
+   "kind": "note",
+   "label": "2470 four times, the far rim: the second stair before and after the outline",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T10:33:40.510Z",
+   "file": "20261126103340510-note-m32-2470.jpg",
+   "source": "../../../../tmp/pm/m32-2470.png",
+   "kind": "note",
+   "label": "2470 three times: 699a879f above, the outline at 2 px a texel below",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T10:33:39.404Z",
+   "file": "20261126103339404-note-row2401-reader.jpg",
+   "source": "../../../../tmp/pm/row2401-reader.png",
+   "kind": "note",
+   "label": "the 2401 pattern line is the moon in front of the globe (the reader's panel)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T10:33:38.273Z",
+   "file": "20261126103338273-note-left21-a.jpg",
+   "source": "../../../../tmp/pm/left21-a.png",
+   "kind": "note",
+   "label": "2721.5 and 2729.5 carried back, x 0..480, y 360..1080: the rings at the left are there and gone",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T10:33:37.139Z",
+   "file": "20261126103337139-note-row2721-ground.jpg",
+   "source": "../../../../tmp/pm/row2721-ground.png",
+   "kind": "note",
+   "label": "the 2721 pattern line: the same ground 11 to 21 deg east and south of the spot at 2721.5, 2725.5, 2729.5 (patch-wide's craters, then the base map's other craters), and the two files (bad, main's own red)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T10:02:26.465Z",
    "file": "20261126100226465-note-g41.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/pm/rise31.png",
    "kind": "note",
    "label": "rise 2684 to 2688 drafts of 699a879f (bad: level line low left, the cap's hill at right)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:02:24.582Z",
-   "file": "20261126100224582-note-band31.jpg",
-   "source": "../../../../tmp/pm/band31.png",
-   "kind": "note",
-   "label": "band at 2470 three times, before and after the weigh at four texels (bad: the band is still dark)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:02:24.003Z",
-   "file": "20261126100224003-note-above31-b.jpg",
-   "source": "../../../../tmp/pm/above31-b.jpg",
-   "kind": "note",
-   "label": "plates from above at 1 to 1, main beside 699a879f, second half",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:02:23.402Z",
-   "file": "20261126100223402-note-above31-a.jpg",
-   "source": "../../../../tmp/pm/above31-a.jpg",
-   "kind": "note",
-   "label": "plates from above at 1 to 1, main beside 699a879f, first half",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:02:22.806Z",
-   "file": "20261126100222806-note-dive31-b.jpg",
-   "source": "../../../../tmp/pm/dive31-b.jpg",
-   "kind": "note",
-   "label": "dive 2460 to 2476 every second frame, drafts of 699a879f: the dark band at 2464 to 2472 stays, its outline no longer steps",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:02:22.170Z",
-   "file": "20261126100222170-note-dive31-a.jpg",
-   "source": "../../../../tmp/pm/dive31-a.jpg",
-   "kind": "note",
-   "label": "dive 2440 to 2458 every second frame, drafts of 699a879f",
    "stop": "mars"
   }
  ]
