@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T14:54:22.326Z",
- "head": "477369325b8e3a7414524f3fd1e7413e1d3f8518",
- "note": "Venus: the ease of the air share kept for the rise only (47736932, in proofs); the dive pair that ruled it out of the dive",
+ "pushed": "2026-11-26T15:52:11.197Z",
+ "head": "d055b01cf5277eeefc0c40b37b562dfcc12b9f0a",
+ "note": "Venus: the rise's handover with the ease (47736932, main d2637685 merged as d055b01c, proofs running); pale cells at the left border from 1543",
  "looks": [
+  {
+   "time": "2026-11-26T15:52:09.998Z",
+   "file": "20261126155209998-note-S2-leftmarks.jpg",
+   "source": "../../../../tmp/v/sh/S2-leftmarks.jpg",
+   "kind": "note",
+   "label": "Same state, left border x 0 to 240, y 660 to 820, three times, 1541 to 1550: pale cells enter from the left border from 1543 and stand as a pale cluster on dark ground by 1546; the ground about them turns smooth tan from 1548. Not yet compared with main's frames at this place.",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T15:52:08.985Z",
+   "file": "20261126155208985-note-S2-ho-ll.jpg",
+   "source": "../../../../tmp/v/sh/S2-ho-ll.jpg",
+   "kind": "note",
+   "label": "Rise 1538 to 1545 at each half frame, lower left (x 0 to 640, y 480 to 1080), draft, the ease of the air share for the rise's T (47736932): the dark near ground and its lit ridges go on from frame to frame, no step seen at the handover (1539 + 1/2); pale cells enter at the left border from 1543 + 1/2.",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T14:54:20.944Z",
    "file": "20261126145420944-note-S1dive-ll.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/cT1-whole-a-s.jpg",
    "kind": "note",
    "label": "Rise 1539, 1541, 1543 (upper pair of rows) and 1545, 1547, 1549 (lower pair): the name 35edb711 above, the trial with the eased air share of the tones below; draft slice, not named",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:57:12.985Z",
-   "file": "20261126125712985-note-Q2-m-1.jpg",
-   "source": "../../../../tmp/v/sh/Q2-m-1.jpg",
-   "kind": "note",
-   "label": "Venus rise, trial Q2 (not named): crops x 800 to 1400, y 100 to 400, every film frame 1554 to 1561, the named state over the trial; a white field without forms; dropped",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:57:12.325Z",
-   "file": "20261126125712325-note-Q2-whole-b.jpg",
-   "source": "../../../../tmp/v/sh/Q2-whole-b.jpg",
-   "kind": "note",
-   "label": "Venus rise, trial Q2 (not named): whole frames 1563 to 1578, the named state (main from 1572) over the trial; the white patch fades by 1569; dropped",
    "stop": "venus"
   }
  ]
