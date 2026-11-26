@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-02.png",
+   "where": "upper-left rim of the central vortex, frames 3010 to 3019",
+   "what": "the same eye continues, but towering self-shadowed cloud clumps pop in where 3010 only has faint low bumps",
+   "fix": "fade that extra relief in across the approach so those ridges gain height continuously instead of appearing between these two samples"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "upper-right limb, frames 3019 to 3027",
+   "what": "the bank from a filled nadir view to the oblique horizon is steepest here, faster than the eased push into and out of the dive",
+   "fix": "spread that pitch over more frames so the limb sweeps in at the same eased rate as the settle into the terrain hold"
+  }
+ ]
+}
