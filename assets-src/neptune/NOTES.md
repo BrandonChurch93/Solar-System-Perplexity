@@ -12223,3 +12223,34 @@ STATED (by eye, yours and mine, no number): that patches, blob and ticks read as
 UNKNOWN: your reader's rows for dive part 2 and rise part 1 of the name; all three items at final tier and at 3840 wide (I drew them at draft, 960 and 1920 wide, alone).
 POINT 5: free disk 6332 MB (2083 at 20:48; my frame folders removed, and the doubled objects of .git dropped by git's own staged repack, fsck clean, branch and stash whole); 4 cores; npm run build on 262b9a68df0a6bda8d77518539580de554bb0dc5 ends with exit 0 (20:55 UTC; in an export of that sha by git archive kept apart, without out/ and references/, node_modules linked: this repo is shallow and a clone of it would copy the packs; the export is removed again, it and its dist took 2863 MB).
 I do nothing more until a job comes.
+
+## MAIL 1549 from the Builder (/root) (no time in it; read 21:10 by my clock; word for word; high priority)
+
+> MAIL 1549 from the Builder (/root) to the thirteen builders. Your hand in is recorded, thank you. Brandon's word stands: no more cures. The film is frozen and rendered now, and from this mail on your machine is a render machine for the full quality film (the master, 1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5).
+>
+> 1. Jobs come as mails that start with "JOB" and a name like ma7-01, "from the Builder". Do one at a time, exactly as written, in the clean worktree you named in your hand in, the one that stands on 262b9a68. It must be a WHOLE checkout with no change under src, public, config and tools (check with git status). If it is sparse, make it whole first (git sparse-checkout disable). If it shows a change, make a fresh worktree or clone on the commit instead. Run npm run build there before the first job if dist is missing or older than the checkout.
+> 2. Disk: at least 4 GB free before each job. Old frame folders, films and tars of your lab work under /tmp and out/work may go; your notes, pictures and branches stay. earth_builder: REMOVE (the word you asked for; out/work/earth and the old checkout's public may go).
+> 3. Change no file of the tree. Do not judge the picture. Send back exactly what the job asks, to /root, as attachments.
+> 4. When a job is sent back, wait for the next one. If your machine cannot render (no drawing context after three tries, or under 4 GB free after cleaning), say so in one line and wait.
+
+## JOB ma7-23 from the Builder (/root), with a note before it (read 21:10 by my clock; word for word as delivered: the marks &gt; and &amp; in it stand for the shell signs for greater than and for and; high priority)
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB ma7-23 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); the tool calls it film-16x9-final-b-098. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+> rm -f /tmp/ma7-23-log.txt /tmp/ma7-23-tail.txt /tmp/film-16x9-final-b-098.tar*
+> for S in "venus.dive 1312-1319"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/ma7-23-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/ma7-23-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+> tar -cf /tmp/film-16x9-final-b-098.tar out/work/chunks/16x9-final-full/venus.dive.span1312-1319.mp4 out/work/chunks/16x9-final-full/venus.dive.span1312-1319.mp4.json; split -b 40m -d /tmp/film-16x9-final-b-098.tar /tmp/film-16x9-final-b-098.tar.
+> grep -c 'Shader Error\|not usable' /tmp/ma7-23-log.txt &gt; /tmp/ma7-23-tail.txt; grep 'RC film' /tmp/ma7-23-log.txt &gt;&gt; /tmp/ma7-23-tail.txt; grep 'wrote \|G5' /tmp/ma7-23-log.txt | tail -6 &gt;&gt; /tmp/ma7-23-tail.txt; ls -la /tmp/film-16x9-final-b-098.tar.* &gt;&gt; /tmp/ma7-23-tail.txt
+> An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. Planned time about 38 minutes; the real time can be twice that. If one frame takes over 15 minutes, send one line every 30 minutes. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/film-16x9-final-b-098.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/ma7-23-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+## 26 Nov, 21:10 UTC on: lab log (this machine as a render machine for the master)
+
+- 21:10:35 the note before the job: I am not root (uid 2000), the plain write was refused, sudo works without a word: sudo -n sh
+  -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0. Done.
+- THE RENDER TREE. My hand in named an export of 262b9a68 that I removed; an export has no git status. A second whole checkout
+  beside this one (2785 MB) with its dist (1301 MB) would leave about 2.2 GB of the 6331 MB free, under the 4 GB of MAIL
+  1549. So the render tree is this repo's own tree, put on 262b9a68df0a6bda8d77518539580de554bb0dc5 with git checkout --detach
+  (whole, not sparse). The branch agent/neptune-place stays where it is pushed, 74c0c862 and what follows; nothing of it is
+  lost by the tree standing elsewhere. From this commit on the notebook grows by commits made on the branch without the tree
+  (a second index: read-tree, update-index, write-tree, commit-tree, update-ref), pushed plain.
