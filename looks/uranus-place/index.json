@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T04:10:09.454Z",
- "head": "af96ecef9b8dfec30c7cd3e0039e37c1b3396497",
- "note": "04:10 UTC: MAIL 1385 measured: the band is the film's sky swept by the turn (control: plates off, band unchanged); six frames main beside RC; arcs come out from behind the limb; aim control clears the dive. Rows: dive part 2 of RC 1.48 (name 1.52, main 1.61); rise part 2 running",
+ "pushed": "2026-11-26T04:29:49.560Z",
+ "head": "788cc8e3045fe99f9c3d72e74203bebb687c9da7",
+ "note": "RC on main 834d5148 (merge 788cc8e3): judged drafts keep bytes; dive part 1 row drawing; rows r1 1.37, r2 0.90, d2 1.48",
  "looks": [
+  {
+   "time": "2026-11-26T04:29:48.931Z",
+   "file": "20261126042948931-note-final-4407-main-rc.jpg",
+   "source": "../../../../tmp/n66/final-4407-main-rc.jpg",
+   "kind": "note",
+   "label": "final 4407, main left, RC right: RC paler teal and softer cloud, open (two laws of light)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T04:29:48.304Z",
+   "file": "20261126042948304-note-uranus-dive-p2of2-changes.jpg",
+   "source": "../../../../tmp/n66/out/d2/uranus-dive-p2of2-changes.png",
+   "kind": "note",
+   "label": "RC dive part 2 of 2, the reader's changes sheet: pattern 1.48 from 4169 + 1/2 against main's 1.61, red along the horizon band",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T04:29:47.473Z",
+   "file": "20261126042947473-note-uranus-rise-p2of2-changes.jpg",
+   "source": "../../../../tmp/n66/out/r2/uranus-rise-p2of2-changes.png",
+   "kind": "note",
+   "label": "RC rise part 2 of 2, the reader's changes sheet: pattern 0.90 from 4422 + 1/2 against main's 0.88, place inside the left limb",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T04:06:02.801Z",
    "file": "20261126040602801-note-arcs-only-4138-4152.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n64/final-4407-pair.png",
    "kind": "note",
    "label": "4407 final tier, the panel's crop 1 to 1: main 555fe096 left, the cure 2583f129 right (no upright lines; 972 s against main's 271 s)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T23:39:45.888Z",
-   "file": "20261125233945888-note-main-final-4407-crop.jpg",
-   "source": "../../../../tmp/n63/main-final-4407-crop.png",
-   "kind": "note",
-   "label": "main 555fe096 final tier 4407, the panel's crop 1 to 1: no upright lines",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T23:39:45.318Z",
-   "file": "20261125233945318-note-full-4407.jpg",
-   "source": "../../../../tmp/n64/full-4407.jpg",
-   "kind": "note",
-   "label": "4407 draft full frame: B1 above, the cure 2583f129 below",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T23:39:44.660Z",
-   "file": "20261125233944660-note-mid-4399-2x.jpg",
-   "source": "../../../../tmp/n64/mid-4399-2x.png",
-   "kind": "note",
-   "label": "4399 draft at 2x: B1, cure long 1 to 2, long 1.5 to 3 (soft streaks stay low left, as on main)",
    "stop": "uranus"
   }
  ]
