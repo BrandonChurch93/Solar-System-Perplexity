@@ -2841,3 +2841,28 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   bright over 0.8 share 0.166 against 0.294, dark under 0.3 share 0.193 against 0.096.
   20:31 t266 (tongues [170, 110], gap [0.012, 0.06], ring [0.35, 1.0]) and t267 (and lean 0.3, ranks [4.6, 3.4])
   started on t264. 20:32 low mail sent with all of this; next mail by 22:00 UTC. Looks pushed (9b48fc71).
+- 20:36 UTC. MAIL 1545: the tree is origin take/e5-t2 b3f98c1b57c1ecd6ed71155867dedd708262be9d (the Sun's name on
+  the fifth cut). MEASURED by git: its place.json says "ground": "main" (the lab's ground is not drawn there), its
+  lab folder is my old commit eccae657; a merge into this branch conflicts in 12 files (add/add on the lab's files,
+  set.ts). Not merged.
+- 20:36 to 20:47 UTC. Trials (drafts of 90): t266, t267 (finer threads, a lit wall): finer, but even stripes
+  still; not taken. t268 (dome.height 0.3), t269 (0.2) on t264: "one direction for all cells" (cells.py) 0.527,
+  0.393, 0.327 against the approved's 0.103: every cell of mine is lighter on its far side. Diagnostic drafts
+  (show "edge") at height 0.45 and 0.03: the crown of each cell lies just under its upper outline in the picture.
+  NEW INSTRUMENT (flat.py), rows 800 to 1080, red channel, Sobel over 8: gradient 25 / 50 / 99 percent: approved
+  0.0196 / 0.0354 / 0.187, h48 final 0.0133 / 0.0286 / 0.240, t264 0.0140 / 0.0299 / 0.218; share of ground
+  flatter than 0.005: approved 0.025, h48 0.074, t264 0.067; dark and flat (under 0.5, gradient under 0.01)
+  0.039 against 0.095; edges over 0.15: 0.026 against 0.035. The picture of it (v/flat-t269.jpg): my flat ground
+  is the pools between the bodies and the crowns; my hard edges are the upper outline of each body where the
+  full heat meets a pool in one step. Levels, colour by level, the spread at every blur from 3 to 40 px all
+  agree with the approved; what differs is this: flat fills with hard edges against soft gradients everywhere.
+  CORRECTION: v/film-h48.mp4 is frames 120 to 240 of sun.terrain, every 4th, at 15 frames a second: 4 s of film
+  shown in 2 s. My mail of 20:32 called it 2 s of the hold; that was wrong.
+- 20:47 UTC. MAIL 1548: BRANDON HAS SAID MOVE ON. No new cure, trial or proof. The freeze is 21:30; the lab's
+  states do not ride and stay on this branch. Asked: commit and push as it stands with a NOTES file at the top
+  of the folder (src/stops/sun/lab/NOTES.md), one mail of ten lines, then the machine renders the master.
+  Done: lab.json set back to h48 (its twin is in the tree and its final 90, flicker rows and film exist); the
+  trial states kept as assets-src/sun/lab/states/*.json; RECIPE entries for olive, lane[17], seam[3]; blobs.py,
+  spotprof.py, flat.py added. Disk: place worktree set to main 262b9a68, npm run build there exit 0; old frames,
+  films and pictures removed; in my own work tree the tracked out/clips, out/posts, out/stills, out/roughcut.mp4
+  and out/preview.mp4 were removed for room and NOT committed (git checkout -- out brings them back).

@@ -673,6 +673,8 @@ ${CURVE_GLSL}}
 // heat. The map carries both (red: the heat, blue: the heat through the curve); share: how much of the far map is
 // in the pixel
 float labMean = 1.0;
+// the hue of the gas at one level: cooled gas that lies thick on a dull cell is less red than the thin gas of a lane
+float labHue = 0.0;
 #if defined(LAB_FRAG) && !defined(LAB_MAP)
 void labMeans(float share) {
   labMean = mix(1.0, clamp(labFarSeen.y / max(labCurve(labFarSeen.x), 1e-4), 0.5, 1.5), share * labFarSeen.z);
@@ -681,6 +683,9 @@ void labMeans(float share) {
 vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
   heat = labCurve(uLabHeat.x + (heat - uLabHeat.x) * labTone(here, (thin - 0.1) / 0.9)) * labMean;
   vec3 shown = texture(uRamp, vec2(clamp(heat, 0.0, 1.0), 0.5)).rgb;
+#if ${(lab.heat as { olive?: number[] }).olive ? 1 : 0}
+  shown.gb *= 1.0 + labHue * vec2(1.0, ${((lab.heat as { olive?: number[] }).olive?.[1] ?? 1.8).toFixed(2)}) * (1.0 - smoothstep(${((lab.heat as { olive?: number[] }).olive?.[2] ?? 0.35).toFixed(2)}, ${((lab.heat as { olive?: number[] }).olive?.[3] ?? 0.7).toFixed(2)}, heat));
+#endif
   vec3 col = inverseFilmic(grade(shown, 0.0)) * (1.0 + uLabHazeTint.w * max(heat - 1.0, 0.0));
   vec3 upHere = normalize(here - ST_CENTRE);
   float over = length(here - ST_CENTRE) - ST_RADIUS;
@@ -857,6 +862,12 @@ void main() {
   float age = vCell.y;
   // a cell is born cool and small in the lane and warms as its ground grows; it cools as it goes
   float life = mix(${lab.heat.life[0]!.toFixed(2)}, ${lab.heat.life[1]!.toFixed(2)}, smoothstep(${lab.heat.life[2]!.toFixed(2)}, ${lab.heat.life[3]!.toFixed(2)}, age)) * mix(${lab.heat.born[0]!.toFixed(2)}, 1.0, smoothstep(${lab.heat.born[1]!.toFixed(2)}, ${lab.heat.born[2]!.toFixed(2)}, vMore.y));
+  float qDull = 1.0;
+  float sDull = 1.0;
+#if ${(lab.heat as { dull?: number[] }).dull ? 1 : 0}
+  sDull = smoothstep(${((lab.heat as { dull?: number[] }).dull?.[3] ?? 0.3).toFixed(2)}, ${((lab.heat as { dull?: number[] }).dull?.[4] ?? 0.6).toFixed(2)}, mix(fract(seed * 13.7), vn(vG * ${((lab.heat as { dull?: number[] }).dull?.[1] ?? 5).toFixed(2)} + 77.0), ${((lab.heat as { dull?: number[] }).dull?.[2] ?? 0.5).toFixed(2)}));
+  qDull = mix(${((lab.heat as { dull?: number[] }).dull?.[0] ?? 1).toFixed(3)}, 1.0, sDull);
+#endif
   // the heat of a cell: the heat of the place, which runs over the borders, combed into hot fibres with cooler
   // matter between them and many small hot points along the fibres
   float wide = 0.6 * vn(vG * uLabJoin.w + 5.3) + 0.4 * vn(vG * uLabJoin.w * 2.3 - 17.1);
@@ -1038,10 +1049,12 @@ void main() {
   seamOn = qSeam;
   qSeam = clamp(qSeam + ${(4 * lab.heat.lane[2]!).toFixed(2)} * (fan - 0.5) * qSeam * (1.0 - qSeam), 0.0, 1.0);
   float qShoulder = ${(lab.heat.lane[14] ?? 0) > 0 ? 'min(clamp(' + (lab.heat.lane[14] ?? 0).toFixed(5) + ' / vCell.z, 0.08, ' + (lab.heat.lane[8] ?? 0.3).toFixed(3) + ') * (1.0 + ' + (lab.heat.lane[15] ?? 0).toFixed(2) + ' * vJunc * pool), 1.0)' : (lab.heat.lane[8] ?? 0.3).toFixed(3)};
-  qSh = mix(1.0, mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, qShoulder, edgeD + ${(lab.heat.lane[13] ?? 0).toFixed(2)} * (fan - 0.5) * ${(lab.heat.lane[14] ?? 0) > 0 ? 'qShoulder' : '1.0'})), mix(${(lab.heat.lane[11] ?? 0).toFixed(2)}, 1.0, pool));
+  float qIn = smoothstep(0.0, qShoulder, edgeD + ${(lab.heat.lane[13] ?? 0).toFixed(2)} * (fan - 0.5) * ${(lab.heat.lane[14] ?? 0) > 0 ? 'qShoulder' : '1.0'});
+  qSh = mix(1.0, ${(lab.heat.lane[16] ?? 0) > 0 ? 'pow(' + (lab.heat.lane[9] ?? 1).toFixed(4) + ', pow(1.0 - qIn, ' + (lab.heat.lane[16] ?? 1).toFixed(2) + ') * mix(' + (lab.heat.lane[17] ?? 1).toFixed(2) + ', 1.0, pool))' : 'mix(' + (lab.heat.lane[9] ?? 1).toFixed(2) + ', 1.0, qIn)'}, mix(${(lab.heat.lane[11] ?? 0).toFixed(2)}, 1.0, pool));
   warm *= qSh;
   warm = mix(uLabHeat.y * ${lab.heat.crease[2]!.toFixed(2)} * (${(Q?.seam?.[0] ?? 0.7).toFixed(2)} + ${(Q?.seam?.[1] ?? 0.6).toFixed(2)} * vn(vG * ${(Q?.seam?.[2] ?? 40).toFixed(1)} + 23.0)) * mix(${(Q?.seam?.[3] ?? 1).toFixed(2)}, 1.0, pool) * (1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc), warm, qSeam);
 #endif
+  warm *= qDull;
   float heat = pen > 0.999 ? uLabHeat.y * bundle : mix(warm, uLabHeat.y * bundle, pen);
 #if ${F ? 1 : 0}
   // where three cells meet the gas of all three runs together and sinks: streaks of hot gas stand round that point
@@ -1094,7 +1107,7 @@ void main() {
       fSum = max(fSum, fOn * mix(${(F?.[6] ?? 0.15).toFixed(2)}, fS, fSeen) * smoothstep(0.0, ${(F?.[11] ?? 0.25).toFixed(2)}, fT) * (1.0 - smoothstep(0.45, 1.0, fT)) * (k == 0 ? 1.0 : ${(F?.[12] ?? 0.8).toFixed(2)}));
     }
   }
-  heat += ${(F?.[0] ?? 0).toFixed(2)} * fSum * vFan.z * seamOn * (1.0 - pen) * mix(1.0, qSh, ${(F?.[13] ?? 0).toFixed(2)}) * mix(${(F?.[19] ?? 1).toFixed(2)}, 1.0, smoothstep(0.35, 0.65, vn(vG * ${(F?.[20] ?? 6).toFixed(2)} + 133.0)));
+  heat += ${(F?.[0] ?? 0).toFixed(2)} * fSum * vFan.z * seamOn * (1.0 - pen) * mix(1.0, qSh, ${(F?.[13] ?? 0).toFixed(2)}) * mix(${(F?.[19] ?? 1).toFixed(2)}, 1.0, smoothstep(0.35, 0.65, vn(vG * ${(F?.[20] ?? 6).toFixed(2)} + 133.0))) * qDull;
 #endif
 #endif
   // small hot points in the lanes
@@ -1139,6 +1152,7 @@ void main() {
     heat = mix(heat, uLabHeat.x + (labFar(vG, vReal, flow, pn, gx, gy) - uLabHeat.x) * lawFar, vSink);
     labMeans(vSink);
   }
+  labHue = ${((lab.heat as { olive?: number[] }).olive?.[0] ?? 0).toFixed(3)} * mix(${((lab.heat as { olive?: number[] }).olive?.[4] ?? 0).toFixed(2)}, 1.0, (1.0 - sDull) * seamOn) * (1.0 - pen) * (1.0 - vSink);
   ${SHOW[(lab as { show?: string }).show ?? ''] ?? ''}
   outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, vPit), vPos, vClip, vView);
 #endif

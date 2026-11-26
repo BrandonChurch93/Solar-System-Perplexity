@@ -297,3 +297,27 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   heat.curve fitted again by curve.py on the draft of 90 (v/tb.sh: render, fit, render), LAB_TAIL 0.6.
   The far twin baked again (bake.ts, level.py).
   Trials that led here, drafts of 90 by v/tb.sh on v/lab-h45.json: t238 to t255 (NOTES, 18:41 to 19:40).
+
+## The tree at the freeze of 26 Nov 2026 (MAIL 1548)
+- src/stops/sun/lab/lab.json is the state h48 (the same as states/lab-h48.json); the far twin in
+  public/assets/sun/{full,web}/lab/place-far-0.jpg was baked from h48 (bake.ts, then level.py; 1,569,474 and
+  467,999 bytes).
+- Code added to ground.ts after h48 was drawn, off without its key, used by the trial states only:
+  heat.olive (absent: off) [amount, blue against green, from, to, share off the dull bodies]: the ramp's green and
+  blue are multiplied under a level (from, to, of the shown heat) by how dull the cell is; not in the lane, the
+  penumbra or a sunk cell. Why: at one level the approved's green over red differs from place to place two to
+  three times more than the lab's, and its darks are less red.
+  heat.lane[17] (absent: 1): the power of the shoulder (lane[16]) times mix(lane[17], 1, pool), so the valley is
+  shallow where the field of the place has no pool and neighbours press against each other.
+  cushion.seam[3]: a factor on the seam's heat where the place has no pool (5.0 in t258: the seam glows brown
+  there and the dark stands in pools only).
+- states/lab-h45.json: the last named state (commit 045a88cb4dc9d7a5235c345552f671dab1d3e3b5).
+- states/lab-t258.json = h48 with heat.lane [.., 16: 1.5, 17: 0.35], cushion.seam [0.005, 0.12, 40, 5.0],
+  heat.olive [0.4, 1.8, 0.35, 0.7, -0.3], heat.curve fitted again on its draft of 90.
+- states/lab-t264.json = t258 with spot.floor [0.001, 0.004], spot.edge [0.75, 0.95], spot.lean 0.2,
+  spot.ring [0.2, 0.9], spot.tongues [110, 70], spot.gap [0.004, 0.03], spot.depth 0.07, spot.wall [0.85, 1.2]:
+  the spot as a hole. Drawn as drafts of frame 90 only. To draw one: copy it over src/stops/sun/lab/lab.json,
+  bake the far twin again (npx tsx assets-src/sun/lab/bake.ts, then python3 assets-src/sun/lab/level.py), render.
+- Instruments added: blobs.py (connected dark and bright parts by rows), spotprof.py (rings about the umbra),
+  flat.py (the share of flat ground and of hard edges, and a picture of where they lie). Each takes pictures
+  under out/work/sun/lab by name and is run from the repo's top folder.
