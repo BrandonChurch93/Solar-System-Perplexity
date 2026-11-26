@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T00:06:11.482Z",
- "head": "2583f12968484aaa2d8659d2907ff8ecbdc5e697",
- "note": "final 4407 of 2583f129 beside main's: lines gone at the final tier; main final 4399 still rendering",
+ "pushed": "2026-11-26T00:33:44.534Z",
+ "head": "6ef232eabadec5b9411bd199613ec3014de9fa8e",
+ "note": "rim as light of the air pushed as 6ef232ea (a state, main 3675234f merged); finals 4035 3.737, 4290 3.226; rows and G running",
  "looks": [
+  {
+   "time": "2026-11-26T00:30:40.693Z",
+   "file": "20261126003040693-note-main-final-4399-mid2x.jpg",
+   "source": "../../../../tmp/n64/main-final-4399-mid2x.png",
+   "kind": "note",
+   "label": "main 555fe096 final tier 4399 at 2x: main draws fine upright blue lines here too (weaker than B1's)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T00:30:38.922Z",
+   "file": "20261126003038922-note-pair-4413.jpg",
+   "source": "../../../../tmp/n65/pair-4413.jpg",
+   "kind": "note",
+   "label": "4413 draft: 2583f129 above, the rim as air 6ef232ea below (features under the limb calmed)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T00:30:33.629Z",
+   "file": "20261126003033629-note-final-4290-band-a.jpg",
+   "source": "../../../../tmp/n65/final-4290-band-a.jpg",
+   "kind": "note",
+   "label": "4290 final tier, horizon 1 to 1: approved, main, B1, 6ef232ea (match 3.849, 3.224, 3.226)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T00:30:27.233Z",
+   "file": "20261126003027233-note-h4186-a.jpg",
+   "source": "../../../../tmp/n65/h4186-a.png",
+   "kind": "note",
+   "label": "4186 draft, horizon 1 to 1: the merge 66694d33 above, the rim as air 6ef232ea below (band under the limb calmer)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T00:06:05.942Z",
    "file": "20261126000605942-note-final-4407-full.jpg",
@@ -216,38 +248,6 @@
    "source": "../../../../tmp/n60/b2-sheet0.jpg",
    "kind": "note",
    "label": "B2 trial, draft 4418 to 4422 in halves: the cover's ground follows the band clock; one body through the series",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:22:37.732Z",
-   "file": "20261125212237732-note-b2-final-pair.jpg",
-   "source": "../../../../tmp/n60/b2-final-pair.jpg",
-   "kind": "note",
-   "label": "B2 trial, a fault found and named: final 4290, B1 left, first form of B2 right. The ground is displaced because the surface view never sets the globe's clock, so the deck read a stale one (0 in a fresh process). Not committed; the corrected form sets the clock on every path and is in test",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:03:39.725Z",
-   "file": "20261125210339725-note-b2-diff.jpg",
-   "source": "../../../../tmp/n60/b2-diff.jpg",
-   "kind": "note",
-   "label": "B2 trial (the deck's ground follows the band clock): difference from the globe alone, cover off, x6. Share over 6 codes at 4420, 4422, 4424: B1 8.4, 7.5, 3.2 percent; B2 4.7, 2.0, 0.2 percent",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T20:52:34.142Z",
-   "file": "20261125205234142-note-r2-changes.jpg",
-   "source": "../../../../tmp/n59/r2-changes.jpg",
-   "kind": "note",
-   "label": "B1 6a0e74bb tool row rise 2 of 2: pattern 0.90 from 4422 + 1/2 on a sliver at the left limb (judged 3 to 4 percent of the frame); name 1.16 from 4418, main 0.88 from 4422",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T20:40:04.317Z",
-   "file": "20261125204004317-note-cover-diff.jpg",
-   "source": "../../../../tmp/n59/cover-diff.jpg",
-   "kind": "note",
-   "label": "B1 draft, cover on minus cover off times 8: outside the place's field p99 1 to 3 codes, inside 20 to 60; emboss at 4420 and 4422 is the clock's catch up",
    "stop": "uranus"
   }
  ]
