@@ -802,6 +802,10 @@ export function eddyWind(eddy: number, seconds: number): number {
   return bounded(e.degPerSecond * body.flow.eddyShare, e.boundDeg, seconds)
 }
 
+export function liftNow(seconds: number): number[] {
+  return seconds < 0 ? body.handover.diveLiftUnits : deck.tone.lift
+}
+
 export function tallNow(height: number): number {
   const f = body.height.fadeHeights
   const x = Math.min(Math.max(Math.log(Math.max(height, 1e-9) / f[0]!) / Math.log(f[1]! / f[0]!), 0), 1)

@@ -6,7 +6,7 @@ import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches } from './assets'
 import { CloudDeck } from './clouds'
-import { ReliefDeck, bandDrift, eddyWind, tallNow, windTurn } from './relief'
+import { ReliefDeck, bandDrift, eddyWind, liftNow, tallNow, windTurn } from './relief'
 import { Globe } from './globe'
 import { Io } from './io'
 import * as look from './look'
@@ -144,6 +144,8 @@ export const createSet: SetFactory = async (ctx) => {
       if (relief) {
         ;(du.uShearFade!.value as THREE.Vector4).z = bandDrift(state.time - terrainMid, height)
         ;(du.uTall!.value as THREE.Vector4).w = tallNow(height)
+        const lift = liftNow(state.time - terrainMid)
+        ;(du.uToneLift!.value as THREE.Vector3).setX(lift[0]!).setY(lift[1]!)
       }
       const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
       const deckShare = !inOrbit ? 1 : own ? low(height, scene.deck) : 0
