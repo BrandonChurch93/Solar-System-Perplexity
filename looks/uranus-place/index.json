@@ -1,9 +1,57 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T09:51:11.882Z",
- "head": "832be54a25cbbe9cce0579d0a5d0b18adda5f58d",
- "note": "09:51 reader dive 2 of 2 at 120 of 146 frames; dive 4172 to 4187 looked at frame by frame: one continuous approach, the star cloud band comes in behind the ring arcs by the camera's turn from 4174",
+ "pushed": "2026-11-26T10:22:26.750Z",
+ "head": "54ae2b6d5f8050eb506f10757b9f18dd96cd796d",
+ "note": "10:23 reader on 832be54a: dive 2 pattern 1.6031 (main 1.6142), rise 2 pattern 0.8779 (main 0.8765, worse by 0.0014 with the clock cure; 0.8239 without). So the clock cure is taken back out of the name (54ae2b6d) and offered on top; rise 2 is being read on 54ae2b6d",
  "looks": [
+  {
+   "time": "2026-11-26T10:22:26.108Z",
+   "file": "20261126102226108-note-uranus-rise-p2of2-changes.jpg",
+   "source": "../../../../tmp/n74/out/r2/uranus-rise-p2of2-changes.png",
+   "kind": "note",
+   "label": "the reader's panel, rise part 2 of 2 on 832be54a: pattern 0.8779 from 4422 + 1/2 (main 0.8765), worse by 0.0014",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:22:25.484Z",
+   "file": "20261126102225484-note-uranus-dive-p2of2-changes.jpg",
+   "source": "../../../../tmp/n74/out/d2/uranus-dive-p2of2-changes.png",
+   "kind": "note",
+   "label": "the reader's panel, dive part 2 of 2 on 832be54a: pattern 1.6031 from 4175 + 1/2 (main 1.6142)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:22:24.816Z",
+   "file": "20261126102224816-note-r2-b.jpg",
+   "source": "../../../../tmp/n75/r2-b.png",
+   "kind": "note",
+   "label": "832be54a (with the clock cure) rise draft 4427 to 4435",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:22:24.121Z",
+   "file": "20261126102224121-note-r2-a.jpg",
+   "source": "../../../../tmp/n75/r2-a.png",
+   "kind": "note",
+   "label": "832be54a (with the clock cure) rise draft 4418 to 4426 from the reader's frames",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:22:23.413Z",
+   "file": "20261126102223413-note-d2-spot.jpg",
+   "source": "../../../../tmp/n75/d2-spot.png",
+   "kind": "note",
+   "label": "832be54a dive, the spot of the reader's largest pattern row (4175 + 1/2, pixel 970, 620) at 1 to 1: 4174 to 4177, 4183, 4184",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:22:22.466Z",
+   "file": "20261126102222466-note-d2-e.jpg",
+   "source": "../../../../tmp/n75/d2-e.png",
+   "kind": "note",
+   "label": "832be54a dive draft 4188 to 4199",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T09:50:34.328Z",
    "file": "20261126095034328-note-d2-d.jpg",
@@ -194,54 +242,6 @@
    "source": "../../../../tmp/n70/tm-a2.png",
    "kind": "note",
    "label": "dive with main's turn law on scale 0.3, 4137 to 4148, band sweeps the left strip",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:35:38.980Z",
-   "file": "20261126063538980-note-t-b.jpg",
-   "source": "../../../../tmp/n69/t-b.png",
-   "kind": "note",
-   "label": "draft 4380, 4390, 4399, 4403, 4416: rows mine 0.1, mine 0.3, mine 0.3 with tops not dimmed, main",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:35:38.307Z",
-   "file": "20261126063538307-note-t-a.jpg",
-   "source": "../../../../tmp/n69/t-a.png",
-   "kind": "note",
-   "label": "tops control, draft 4290, 4399, 4407, 4413: rows mine at 0.3, mine at 0.3 with tops not dimmed by the path, main, main with tops off",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:35:37.485Z",
-   "file": "20261126063537485-note-s-4407-four.jpg",
-   "source": "../../../../tmp/n69/s-4407-four.png",
-   "kind": "note",
-   "label": "4407 draft: mine at air scale 0.1, 0.2, 0.3 and main",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:22:09.546Z",
-   "file": "20261126062209546-note-s-c.jpg",
-   "source": "../../../../tmp/n69/s-c.png",
-   "kind": "note",
-   "label": "air scale sweep, draft 4160, 4170, 4186, 4290: rows mine 0.1, 0.2, 0.3, 0.45, main",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:22:08.884Z",
-   "file": "20261126062208884-note-s-b.jpg",
-   "source": "../../../../tmp/n69/s-b.png",
-   "kind": "note",
-   "label": "air scale sweep, draft 4413 to 4422 and 4395: rows mine 0.1, 0.2, 0.3, 0.45, main",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:22:08.166Z",
-   "file": "20261126062208166-note-s-a.jpg",
-   "source": "../../../../tmp/n69/s-a.png",
-   "kind": "note",
-   "label": "air scale sweep, draft 4399 to 4413: rows mine 0.1, 0.2, 0.3, 0.45, main",
    "stop": "uranus"
   }
  ]
