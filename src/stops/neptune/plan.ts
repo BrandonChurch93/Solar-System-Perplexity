@@ -21,7 +21,7 @@ export const params: MoveParams = {
   travel: { turnDeg: 0, side: 1 },
   arrive: { swingDeg: 0, axis: [0.1, 1, 0.2], from: 0.25, offset: [0.5, 0.2] },
   light: { exposure: 1, skyExposure: 0.65, sunRadiusDeg: 0.14, sunGlare: 0.6, flare: 0 },
-  skyAim: { orbit: [-0.35387, -37.48986, 26.30965], terrain: [-111.84232, 28.36898, 9.4633] },
+  skyAim: { orbit: [-0.35387, -37.48986, 26.30965], terrain: [-109.64232, 127.07272, 57.001] },
   cover: [0.27, 0.43, 0.8],
   handover: { dive: { at: move.dive.at, picture: false, skyFrames: 0, ...move.one.dive }, rise: { at: move.rise.at, picture: false, skyFrames: 0, ...move.one.rise } },
   spinDegPerSecond: 1.3,
@@ -94,8 +94,8 @@ class NeptunePlan extends StopPlan {
   // One sky for both views. The close view's set stands on the globe in the frame its scene is laid in (onGlobe), not in the frame the
   // engine makes from the spot and the heading, which stood 78.669 degrees from it: with that one the same eye had two different skies
   // on the two sides of the change of view, and the stars were turned from one to the other. The scene itself reads this frame nowhere
-  // (its eye is the set's own, its Sun comes by laid()). The turn of the sky is one too: skyAim.orbit above is solved so that this
-  // stop's turn is the ending's own, and nothing turns the stars in the dive, the surface view or the rise but the eye.
+  // (its eye is the set's own, its Sun comes by laid()). skyAim.orbit above is solved so that this stop's turn is the ending's own;
+  // skyAim.terrain is the low turn of the surface view (skyTurnShare below).
   override readonly terrainFrame: THREE.Quaternion = onGlobe.clone()
 
   private steadied(pose: Pose, kind: 'hold' | 'terrain', tRel: number): Pose {
@@ -154,14 +154,25 @@ class NeptunePlan extends StopPlan {
     })
   }
 
+  // The sky's turn between the stop's turn (the ending's own) and the low turn (skyAim.terrain, 150.81 degrees from it). In the dive
+  // by the eye's height between the knots of lowSky, never the clock. In the rise the engine's own law. The low turn is chosen so
+  // that in the dive and in the rise the engine's band never stands within 10 degrees of an open part of the frame (the ending's own
+  // sky holds it at 10.6 at the rise's last frame), the surface view's card covers the whole open sky from 4734 to 4974 and has left
+  // the frame over its edge by 4986, the hold's card covers it to 4734 and has left by 4746, and the sky moves at most 3.18 degrees a
+  // frame in the lens (dive) and 2.92 (rise). With the aim before ([-111.84232, 28.36898, 9.4633], set for the engine's band as the
+  // surface view's sky, which the card now is) the turn carried the band through the top right of the frame from 4984 to 5008.
   override skyTurnShare(seg: Segment, time: number): number | null {
-    if (seg.kind !== 'dive' && seg.kind !== 'rise') return super.skyTurnShare(seg, time)
+    if (seg.kind !== 'dive') return super.skyTurnShare(seg, time)
     return smooth(airAt(lowSky, this.eyeHeight(time), this.id)!.share)
   }
 
-  override skyGain(time: number): number {
-    if (time < this.seg.hold.start || time >= this.seg.rise.end) return 1
-    return airAt(lowSky, this.eyeHeight(time), this.id)!.sky / this.p.light.skyExposure
+  // The sky's level has no law by the eye's height since 26 Nov, 05 h (MAIL 1363 point 2 (b), MAIL 1395 ruling 2): from 4690 to the end
+  // of the rise the sky is the stop's own pictures (sky.json), fixed on the sky at weight 1, and a level by height is a law by height on
+  // their weight. The low knot's level (0.38, above) was set for the engine's own band at the deck; under it the close picture's sky
+  // stood at 0.585 of its own level in the surface view (G17's sky tiles at 4860: 0.51 to 0.66 of the approved image's, main's 0.93 to
+  // 1.10). The knots stay for the share of the sky's turn (skyTurnShare).
+  override skyGain(_time: number): number {
+    return 1
   }
 
   drawnBodies(view: ViewKind, _eye: THREE.Vector3, time: number): { id: string; place: number[]; turn: number[]; reach: number }[] {
