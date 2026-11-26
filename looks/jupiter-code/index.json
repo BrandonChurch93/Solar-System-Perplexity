@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T01:18:43.907Z",
- "head": "31b444c7376afc38c6270ee5ef518549c6bc5f24",
- "note": "A crawl crop, the design aid, lens 64 against 50 at 3150 (state s)",
+ "pushed": "2026-11-26T01:47:24.010Z",
+ "head": "2e9c373e132b99d442e4e8b0451a1ee3bbad13df",
+ "note": "01:48 UTC: t6 (dunes and rock, dropped as a look), the lab's silk study. Next: soft light, the flow's new rates.",
  "looks": [
+  {
+   "time": "2026-11-26T01:47:23.374Z",
+   "file": "20261126014723374-note-t6-3150.jpg",
+   "source": "../work/r25/t/t6-3150.png",
+   "kind": "note",
+   "label": "3150, variant t6 in the second tree (not committed), draft, one sample: silk and cumulus by the new height law. It reads as dunes and dark rock, not as cloud. Line (i) 22.572. Dropped as a look; its laws are kept for the next variant with soft light.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T01:47:22.698Z",
+   "file": "20261126014722698-note-try4.jpg",
+   "source": "../work/r25/lab/try4.png",
+   "kind": "note",
+   "label": "Lab sheet, not the film's shader: billow noise as a height field, lit from the film's side. A form study for the silk between the tops.",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T01:18:42.710Z",
    "file": "20261126011842710-note-lens-64-50.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r23/t/e-3150.png",
    "kind": "note",
    "label": "3150 draft, third state, albedo solved once under the code's light with a floor of 0.07 (no darkness in the guide): low band 28.2625, plain 36.1885, bands 1.18 1.25 1.31 1.37. Bad: the lower right is lit and turns teal, relief still lumps, no spiral bands yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T22:28:37.059Z",
-   "file": "20261125222837059-note-b-3150.jpg",
-   "source": "../work/r23/t/b-3150.png",
-   "kind": "note",
-   "label": "3150 at draft, second state, a bad one on purpose: the code's detail is now height (the march runs through it), lit on its slopes by the one Sun through the deck's curve, with cast shadows marched toward the Sun and one fill. It reads as rock, not cloud (peaked tops, too steep, too large), and far too dark: low band 21.55 (main 3.539), bands 1.21 1.24 1.21 1.15 (inside 0.7 to 1.4), plain 28.61. 66 s at draft. Next: rounded tops, ridges along the streamlines as height, a guide without painted light",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T22:21:14.287Z",
-   "file": "20261125222114287-note-a-3150.jpg",
-   "source": "../work/r23/t/a-3150.png",
-   "kind": "note",
-   "label": "3150 at draft, first state of the new ground, with the three numbers: low band 8.81 (main 3.539), bands 1 to 2: 0.52, 2 to 4: 0.50, 4 to 8: 0.52, 8 to 16: 0.67 (all red, line is 0.7 to 1.4), plain 14.10. Share by the page 1.26. Bad: detail is fur, no relief, no shadows, oval without bands. Relief and light are next",
    "stop": "jupiter"
   }
  ]
