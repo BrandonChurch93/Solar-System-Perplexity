@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T16:54:54.367Z",
+ "pushed": "2026-11-26T17:21:47.330Z",
  "head": "7f13289598cb81abbdd2b81d5d9da877e3abbcff",
- "note": "cure of the four red path lines at the dive: part 1 of the reader green, its pattern line 0.059 over main's at the limb, looking for the cause; part 2 rendering",
+ "note": "3720 beside the approved close and beside the third cut for mail 1518; lens cure sheets of the dive",
  "looks": [
+  {
+   "time": "2026-11-26T17:21:42.006Z",
+   "file": "20261126172142006-note-cure_3594.jpg",
+   "source": "../../../../tmp/v/p1508/sheets/cure_3594.jpg",
+   "kind": "note",
+   "label": "lens cure 7f132895, dive drafts every frame from 3594"
+  },
+  {
+   "time": "2026-11-26T17:21:41.387Z",
+   "file": "20261126172141387-note-cure_3582.jpg",
+   "source": "../../../../tmp/v/p1508/sheets/cure_3582.jpg",
+   "kind": "note",
+   "label": "lens cure 7f132895, dive drafts every frame from 3582"
+  },
+  {
+   "time": "2026-11-26T17:21:40.823Z",
+   "file": "20261126172140823-note-cure_3570.jpg",
+   "source": "../../../../tmp/v/p1508/sheets/cure_3570.jpg",
+   "kind": "note",
+   "label": "lens cure 7f132895, dive drafts every frame from 3570"
+  },
+  {
+   "time": "2026-11-26T17:21:40.238Z",
+   "file": "20261126172140238-note-fit_pair.jpg",
+   "source": "../../../../tmp/v/p1518/fit_pair.jpg",
+   "kind": "note",
+   "label": "approved close with the rigid world drawn over it: main pose (top) and the fit with the contact line weighed in and the lens free (eye 0.33, distance 2.53, lens 48.8)"
+  },
+  {
+   "time": "2026-11-26T17:21:39.659Z",
+   "file": "20261126172139659-note-two_3720_now.jpg",
+   "source": "../../../../tmp/v/p1518/two_3720_now.jpg",
+   "kind": "note",
+   "label": "3720 whole frame: approved close over main now (draft)"
+  },
+  {
+   "time": "2026-11-26T17:21:39.057Z",
+   "file": "20261126172139057-note-two_crop_old_now.jpg",
+   "source": "../../../../tmp/v/p1518/two_crop_old_now.jpg",
+   "kind": "note",
+   "label": "3720 draft, same crop: third cut main 77a7d410 and main now: same eye, lens and ring pixels"
+  },
+  {
+   "time": "2026-11-26T17:21:38.489Z",
+   "file": "20261126172138489-note-three_3720_crop_now.jpg",
+   "source": "../../../../tmp/v/p1518/three_3720_crop_now.jpg",
+   "kind": "note",
+   "label": "3720, x 700 to 1340, y 330 to 810: approved close, main before batch 18 (final), main now (draft): the gap of sky inside the inner rim and the uncovered foot"
+  },
   {
    "time": "2026-11-26T16:54:41.214Z",
    "file": "20261126165441214-note-limb2_cure_3569.jpg",
    "source": "../../../../tmp/v/p1508/sheets/limb2_cure_3569.jpg",
    "kind": "note",
    "label": "the cure 7f132895, frames 3569 to 3584 at the globe's right limb where the far ring arm goes behind it (x 1340 to 1560, y 400 to 580, twice the size): the place of the reader's largest pattern row of dive part 1 (0.3528 at 3573 + 1/2, main 0.2936 at 3574 + 1/2, limit 0.45)"
-  },
-  {
-   "time": "2026-11-26T16:29:04.558Z",
-   "file": "20261126162904558-note-pair_3550.jpg",
-   "source": "../../../../tmp/v/p1508/pair_3550.jpg",
-   "kind": "note",
-   "label": "MAIL 1508 cure 7f132895 rendering (dive rows by the reader, part 1 of 2): frame 3550 at the draft tier, main, the cure, their difference times 8. The lens alone differs (0.007 degrees here), eye and turn are main's"
-  },
-  {
-   "time": "2026-11-26T16:01:24.847Z",
-   "file": "20261126160124847-note-dive_cure2_curves.jpg",
-   "source": "../../../../tmp/v/p1508/dive_cure2_curves.png",
-   "kind": "note",
-   "label": "MAIL 1508 cure, second state, commit 4f413b28, path code only: the reader's speed at the place, the lens and the disc's growth by frame, main (red lines) against the cure. Path part green. The disc's growth dips to 0.104 percent a frame at 3586 and comes back"
-  },
-  {
-   "time": "2026-11-26T15:48:29.131Z",
-   "file": "20261126154829131-note-dive_cure_curves.jpg",
-   "source": "../../../../tmp/v/p1508/dive_cure_curves.png",
-   "kind": "note",
-   "label": "MAIL 1508 cure, path code only: the reader's speed at the place, the lens and the disc's growth by frame, main 9f09a8a3 (red lines) against the cure (swell of the lens law at 4.15 radii, slow start)"
-  },
-  {
-   "time": "2026-11-26T15:24:05.216Z",
-   "file": "20261126152405216-note-dive_speed_cause.jpg",
-   "source": "../../../../tmp/v/p1508/dive_speed_cause.png",
-   "kind": "note",
-   "label": "Saturn dive, mail 1508: the speed at the place on main now against the same path with the old lens law, and the lens rate of both"
-  },
-  {
-   "time": "2026-11-26T15:00:20.210Z",
-   "file": "20261126150020210-note-lag_chart.jpg",
-   "source": "../../../../tmp/v/rigid/T1/t20/lag_chart.png",
-   "kind": "note",
-   "label": "saturn rise 3858.5 to 3862.5: the reader's number against its lag along the lanes, 25 placements, both trees"
-  },
-  {
-   "time": "2026-11-26T15:00:19.510Z",
-   "file": "20261126150019510-note-lag_wide.jpg",
-   "source": "../../../../tmp/v/rigid/T1/t20/lag_wide.png",
-   "kind": "note",
-   "label": "saturn rise 3858.5 to 3862.5: the reader's lag along the ring lanes at the lit arm's tip over 169 whole pixel placements, cure against main"
-  },
-  {
-   "time": "2026-11-26T14:38:11.058Z",
-   "file": "20261126143811058-note-tip_pair.jpg",
-   "source": "../../../../tmp/v/rigid/T1/t20/tip_pair.png",
-   "kind": "note",
-   "label": "the lit ring tip at the globe shadow, cure left, main right, 3858.5, 3862, 3866.5, full size crop"
   }
  ]
 }
