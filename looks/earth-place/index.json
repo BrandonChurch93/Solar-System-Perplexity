@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T02:52:06.633Z",
+ "pushed": "2026-11-26T03:12:04.041Z",
  "head": "77e5db7634fcb149575f050ad121fbe92b392cb5",
- "note": "rise strip read: far band red 2124 to 2127 by my quick reader, the round body east of the place cured, state 77e5db76",
+ "note": "far band studied: cause of both red pattern lines seen, no cure yet",
  "looks": [
+  {
+   "time": "2026-11-26T03:12:03.420Z",
+   "file": "20261126031203420-note-far-right.jpg",
+   "source": "../../../../tmp/gl/k20/S9/far-right.png",
+   "kind": "note",
+   "label": "dive 1886 1890 1894 1898 at 10 degrees right of ahead: the map's islands at the canvas rim go under the veil in 8 frames (red, the pattern at 1889)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T03:12:02.758Z",
+   "file": "20261126031202758-note-pairs.jpg",
+   "source": "../../../../tmp/gl/k20/C9/pairs.jpg",
+   "kind": "note",
+   "label": "rise 2126 2130 2134 the level alone beside the frame: the grey deck of the close ground lies over the map's lands in the far band (red, the cause of the pattern at 2125)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T02:52:06.065Z",
    "file": "20261126025206065-note-half.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k20/S8/shards.png",
    "kind": "note",
    "label": "BAD far towers 1878 to 1886 at 1 to 1: pale blue shards lying flat",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T02:27:22.711Z",
-   "file": "20261126022722711-note-far-pairs.jpg",
-   "source": "../../../../tmp/gl/k20/C8/far-pairs.png",
-   "kind": "note",
-   "label": "BAD far band 1884 to 1888: level without the ground beside the frame; the map's lands and specks under the arriving cloud deck",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T02:27:21.687Z",
-   "file": "20261126022721687-note-j-blob.jpg",
-   "source": "../../../../tmp/gl/k21/j-blob.png",
-   "kind": "note",
-   "label": "plate at 1 to 1: pale blue blob cut by the rim, bake i left, bake j right (gone whole)",
    "stop": "earth"
   }
  ]
