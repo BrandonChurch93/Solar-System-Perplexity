@@ -7724,3 +7724,48 @@ above. The hold outranks the skim if the two disagree (d296).
 src/space/travel/path.ts) is still under proof on the Builder's side: when it lands, the flight in (3340 to 3400)
 must be read again. Trial sH = sG with the old profile, drawn after sG by /tmp/v/rigid/seq14.sh (out
 /tmp/v/rigid/H), so that G against H is the profile alone.
+
+00:47 UTC. STATE AFTER THE NAME.
+
+NAMED at 00:24: 7be04230a268a05ef76e7cf38647c628297b52bd (the tree of 17aa7329 with mains 172e7bc, 1f51abc9 and
+3675234f merged in; the stop tree and the public assets are the bytes of 17aa7329; finals on 1f51abc9 have the
+same bytes as on ce8cb68: 3465 fdbf21adf8ff16d1, 3720 337d20b2a719e357, 3866 6d1683433f9faa3b).
+MAIL 1350 (00:29): the name is logged, its proofs run on the Builder's side as wy1-01 to 07. My order stands:
+the next name is the rigid body with the hero's ring pixels on it (the pixels going out by the lens's height
+stay a named red); rings by code alone come after, as lookdev (grain in the A ring, no record lines). Wanted
+with the next name beside the three stills at 01:30: which frames of the flight in, the hold and the dive it
+moves; the Builder then draws the flight in and the first second of the hold at 60 frames a second (capture
+frames 6630 to 6809). If the shape still changes while the camera comes in: where and by how many px.
+
+TRIAL G READ (finals on 1f51abc9): 3465 d296 12.3397, G17 1.1470 and 0.8410 (C 12.2529; 1.0310, 0.8170).
+3720: d296 28.6024 = band 3.3503 + sheet 3.3613 + rest 21.8908; G17 0.9648 and 0.5940, apart from the foot
+1.0080 and 0.6818 (tree 1.0022, 0.6638; 1.1537, 0.7684; main 0.9739, 0.5652; 1.0329, 0.6130). So G loses fine
+contrast at 3720 against the tree. Trial H (G with the old profile) says whether that is rings-h.bin.
+G AT THE HOLD, LOOKED AT: the window on the division makes the B ring's outer margin a white band and puts
+lines into the division at the left ansa and in the near part. Worse than C against the hero. The patch is
+gone in G, but the window is REJECTED. So is sheet.json solid [0.96, 0.985]: it changes nothing at the dot.
+
+THE PATCH, TRUE CAUSE (replaces the guess above): in polar-rings.jpg (row j is r = 2.48 - (j + 0.5) / h x 1.06,
+column i is azimuth ((i + 0.5) / w - 0.5) x 360) the B margin (r 1.897 to 1.9558) at azimuth -16 to +10 is a
+wedge of radial streaks: there the hero has the globe's shadow on the rings and the map was filled from further
+out. Left of -16 the fill is far lighter (229 at -37 against 126 to 166 at -12 to +60). On the rigid body the
+true shadow edge crosses the margin near azimuth -27 at the hold, so the strip between shows. Hold pixel
+(1620, 580) is r 1.879, azimuth -19.6.
+CURE: the map is repaired, not hidden. Tool /tmp/v/bake/polar_margin.py IN_DIR OUT_DIR [ROOT] (to be committed
+as assets-src/saturn/code/polar_margin.py): reads polar.json "margin" (radius [1.88, 1.892, 1.958, 1.966],
+azimuth [-52, -42, 6, 12], from [13, 33], low 3, level 4, quality 92) and rebuilds the margin inside the sector
+from the mean radial run of the clean columns at azimuth 13 to 33, keeping the sector's own low frequencies.
+Run done: full 2588227 bytes, web 673362; outside the sector the read back changes by at most 9 levels, mean
+0.045 (the JPEG's own). Trial sN = E + the repaired map (trial name polar-rings-m.jpg).
+
+THE BRIGHT PIXEL: attached to the body (it follows the limb, so no star and not Titan). Draft 3601 in E and G:
+(1575, 755) rgb [96, 89, 85], (1575, 756) 74, on the globe's edge column 4 to 8 px above the equator's end,
+where the other edge pixels read 16 to 22. Slice 3593 of C: (1544, 750) lift 82. The tree at 3601: (1556, 748)
+lift 110. 3593 is drawn by the kept set alone (the shared takes run 3599 to 3603), so the cause is in the kept
+set. Trials at 3593, draft, by /tmp/v/rigid/seq15.sh: P0 = E as is, P1 = polarShow 0, P2 = sparkle 0,
+P4 = inner map weight wC 0. If none kills it: the haze shell, the globe's rim terms, the edge cover.
+
+DECISIONS: candidate for the next name = E (rigid shapes, lens law b, heroLight 0, baked globe map uBodyLight
+in both sets) + the repaired polar map + the cure of the pixel. NOT in it: rings-h.bin (unless H says so), the
+division window, the solid change. Disk: 4.4 GB free after clearing old scratch (l0/png, c1/rise_jpg, the
+ray_38xx files, dark/sc_*).
