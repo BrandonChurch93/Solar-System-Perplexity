@@ -1,71 +1,50 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T03:12:48.573Z",
+ "pushed": "2026-11-26T03:25:26.848Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests: the present end rule at the review tier on 2477, 2580, 2668, 2672; teeth gone, the line at the hooked crest's end gone, hold the same",
+ "note": "Crests: the dive strip 2477 to 2482 at draft with the end rule of aa685f58 (the ring at the hooked crest's end no longer flickers), and the red mark at review 2668",
  "looks": [
   {
-   "time": "2026-11-26T03:12:43.051Z",
-   "file": "20261126031243051-note-crest-review-2477-full.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2477-full.png",
+   "time": "2026-11-26T03:25:21.641Z",
+   "file": "20261126032521641-note-crest-review-2668-red-mark.jpg",
+   "source": "../../../../tmp/crest/looks2/crest-review-2668-red-mark.png",
    "kind": "note",
-   "label": "crests, review tier, 2477 whole frame with the present rule (trial numbers, scratch)"
+   "label": "Review 2668, 10 to 1, without and with crests: the teeth are gone, the red mark beside the crest is a speck of the layer's paint drawn out by the fill (the stop's to judge)"
   },
   {
-   "time": "2026-11-26T03:12:42.340Z",
-   "file": "20261126031242340-note-crest-review-2668-full.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2668-full.png",
+   "time": "2026-11-26T03:25:20.298Z",
+   "file": "20261126032520298-note-crest-dive-end-rule-now.jpg",
+   "source": "../../../../tmp/crest/looks2/crest-dive-end-rule-now.png",
    "kind": "note",
-   "label": "crests, review tier, 2668 whole frame with the present rule (trial numbers, scratch)"
+   "label": "The same with the end rule of aa685f58: the ring in all six frames, as without crests"
   },
   {
-   "time": "2026-11-26T03:12:41.651Z",
-   "file": "20261126031241651-note-crest-review-2668-notch.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2668-notch.png",
+   "time": "2026-11-26T03:25:19.135Z",
+   "file": "20261126032519135-note-crest-dive-end-rule-before.jpg",
+   "source": "../../../../tmp/crest/looks2/crest-dive-end-rule-before.png",
    "kind": "note",
-   "label": "crests, review tier, 2668 the notch of the lit crest at 10 to 1: without, the rule before, the present rule"
+   "label": "The same with the end rule of ae90490a: the ring is a slant in 2477, 2478, 2480, 2482 and a ring in 2479, 2481, it flickers"
   },
   {
-   "time": "2026-11-26T03:12:41.093Z",
-   "file": "20261126031241093-note-crest-review-2668-end.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2668-end.png",
+   "time": "2026-11-26T03:25:18.142Z",
+   "file": "20261126032518142-note-crest-dive-end-without.jpg",
+   "source": "../../../../tmp/crest/looks2/crest-dive-end-without.png",
    "kind": "note",
-   "label": "crests, review tier, 2668 the end of the hooked crest at 10 to 1: without, the rule before (thin light line), the present rule (line gone)"
+   "label": "Mars dive 2477 to 2482, draft, 12 to 1, the hooked crest's end at the box, without crests: the small ring left of the lit sliver"
   },
   {
-   "time": "2026-11-26T03:12:40.470Z",
-   "file": "20261126031240470-note-crest-review-2580-hold.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2580-hold.png",
+   "time": "2026-11-26T03:25:17.337Z",
+   "file": "20261126032517337-note-crest-dive-lit-with.jpg",
+   "source": "../../../../tmp/crest/looks2/crest-dive-lit-with.png",
    "kind": "note",
-   "label": "crests, review tier, 2580 (hold) at 8 to 1: without and with, the same by eye"
+   "label": "Mars dive 2477 to 2482, draft, the lit crest with crests (trial numbers): the edge is one stroke, steady over the six frames"
   },
   {
-   "time": "2026-11-26T03:12:39.819Z",
-   "file": "20261126031239819-note-crest-review-2477-lit.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2477-lit.png",
+   "time": "2026-11-26T03:25:16.468Z",
+   "file": "20261126032516468-note-crest-dive-lit-without.jpg",
+   "source": "../../../../tmp/crest/looks2/crest-dive-lit-without.png",
    "kind": "note",
-   "label": "crests, review tier, 2477 (first frame of the ground) lit crest at 12 to 1: without (broken) and with"
-  },
-  {
-   "time": "2026-11-26T03:12:39.076Z",
-   "file": "20261126031239076-note-crest-review-2672-lit.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2672-lit.png",
-   "kind": "note",
-   "label": "crests, review tier, 2672 lit crest at 12 to 1: without and with"
-  },
-  {
-   "time": "2026-11-26T03:12:38.420Z",
-   "file": "20261126031238420-note-crest-review-2668-lit.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2668-lit.png",
-   "kind": "note",
-   "label": "crests, review tier, 2668 lit crest at 12 to 1: without (teeth) and with the present rule (one stroke)"
-  },
-  {
-   "time": "2026-11-26T03:12:37.618Z",
-   "file": "20261126031237618-note-crest-review-2668-three.jpg",
-   "source": "../../../../tmp/crest/r14/crest-review-2668-three.png",
-   "kind": "note",
-   "label": "crests, review tier, 2668 at 3 to 1: without, the rule before, the present end rule"
+   "label": "Mars dive 2477 to 2482, draft, the lit crest without crests: the edge is a stair"
   }
  ]
 }
