@@ -1,9 +1,55 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-26T01:44:12.846Z",
- "head": "3d6d5bb06f7c37ddd7a460e65faf07e292b75968",
- "note": "lab h32: soft net of lanes, tops lose their light to the lane; motion and flicker read",
+ "pushed": "2026-11-26T02:05:36.249Z",
+ "head": "47e9779415b2aaceb61a2c0c383aa786ed5ac7a0",
+ "note": "lab: breaking the plates with a field of the place, skirt cure",
  "looks": [
+  {
+   "time": "2026-11-26T02:05:35.665Z",
+   "file": "20261126020535665-note-blocks2.jpg",
+   "source": "../v/blocks2.png",
+   "kind": "note",
+   "label": "lab cause of the rectangles at junctions: skirts (heat, show edge, show tall, base fall 5)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:05:35.137Z",
+   "file": "20261126020535137-note-strip-t39.jpg",
+   "source": "../v/strip-t39.jpg",
+   "kind": "note",
+   "label": "lab t39 near field at 1 to 1 under the approved",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:05:34.605Z",
+   "file": "20261126020534605-note-x3-t39.jpg",
+   "source": "../v/x3-t39.jpg",
+   "kind": "note",
+   "label": "lab t39 at 3 times under the approved: dark patches on tops, no outlines",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:05:34.056Z",
+   "file": "20261126020534056-note-levels-l.jpg",
+   "source": "../v/levels-l.jpg",
+   "kind": "note",
+   "label": "lab levels: approved, h32, t31, t33 (place field breaks the plates)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:04:25.900Z",
+   "file": "20261126020425900-frame-lab-90-t42.jpg",
+   "source": "out/work/sun/lab/lab-90-t42.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-26T01:44:12.252Z",
    "file": "20261126014412252-note-lab-60-h32.jpg",
@@ -26,46 +72,6 @@
    "source": "../v/trials-k.jpg",
    "kind": "note",
    "label": "lab trials t27 to t30 at 3 times",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T01:44:10.523Z",
-   "file": "20261126014410523-note-sheet-h32.jpg",
-   "source": "../v/sheet-h32.jpg",
-   "kind": "note",
-   "label": "lab h32 film frames 60 to 120",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T01:44:09.952Z",
-   "file": "20261126014409952-note-motion-h32.jpg",
-   "source": "../v/motion-h32.jpg",
-   "kind": "note",
-   "label": "lab h32 motion, eye held, 12 frames apart",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T01:44:09.370Z",
-   "file": "20261126014409370-note-levels-h32f.jpg",
-   "source": "../v/levels-h32f.jpg",
-   "kind": "note",
-   "label": "lab h32 final levels picture under the approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T01:44:08.806Z",
-   "file": "20261126014408806-note-x3-h32f.jpg",
-   "source": "../v/x3-h32f.jpg",
-   "kind": "note",
-   "label": "lab h32 final at 3 times under the approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T01:44:08.149Z",
-   "file": "20261126014408149-note-half-h32f.jpg",
-   "source": "../v/half-h32f.jpg",
-   "kind": "note",
-   "label": "lab h32 final: approved lower half over lab lower half at 1 to 1",
    "stop": "sun"
   }
  ]
