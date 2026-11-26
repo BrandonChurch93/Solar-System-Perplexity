@@ -312,6 +312,42 @@ def reading(onward, back, scale):
     return value, spot, share, wide
 
 
+def setters(onward, back):
+    """The pixels that set the number of a pair: of the reading that stands (reading), those at or over its 99th percentile. Their places on
+    the frame that reading is read on (end 0: frame i, 1: frame i + n) and the places the chain of flows gives them in the other frame.
+    None when no reading stands."""
+    value = patterned(onward[0])[0]
+    end = 0
+    if back is not None:
+        v = patterned(back[0])[0]
+        if v is not None and (value is None or v > value):
+            value, end = v, 1
+    if value is None:
+        return None
+    p, way = (onward, back)[end][0], (onward, back)[end][3]
+    ys, xs = np.nonzero(np.nan_to_num(p, nan=-1.0) >= value)
+    return {'end': end, 'x': xs, 'y': ys, 'mx': way[0][ys, xs], 'my': way[1][ys, xs]}
+
+
+def torn(top, a, b, ends, far, scale):
+    """Whether the number of a pair sits where the chain of flows is torn: on the pixels that set it (setters), how far the place the chain
+    gives a pixel in the other frame lies from the place the camera's own map gives it (carry.py carry; a, b: the two frames as carry.py
+    takes them). Counted on the pixels of a body the map holds. Gives the share of them where that is over far px of the reduced size, the
+    median of it in px of the full size, and the largest the true carry reads on them from the same end (ends of carry.py true; None where
+    it judges none of them). None where the map holds none of them."""
+    import carry as C
+    x, y = (a, b) if top['end'] == 0 else (b, a)
+    wx, wy, _, held = C.carry(x['depth'], x['which'], x['pose'], y['pose'])
+    ys, xs = top['y'], top['x']
+    m = held[ys, xs] & (x['which'][ys, xs] > 0)
+    if not m.any():
+        return None, None, None
+    d = np.hypot(top['mx'] - wx[ys, xs], top['my'] - wy[ys, xs])[m]
+    t = ends[top['end']]['p'][ys, xs][m]
+    t = t[np.isfinite(t)]
+    return float((d > far).mean()), float(np.median(d) / scale), float(t.max()) if t.size else None
+
+
 def leaning(okf, fine, wide):
     """What the two windows of the detail read of a level that only slopes, where the border of the judged area cuts them: cut windows have their
     middles at different places, and a slope read over that distance is no detail. Gives the function of a picture: the plane through its level
@@ -577,6 +613,7 @@ def pictures(job):
     weaveAt = [None] * n
     weaveShare = [None] * n
     weaveBand = [None] * n
+    tops = [None] * n
     full = lambda j: grey(paths[j])
     redraw = again(job, paths, frames, poses, reach) if reach > 0 and job.get('unchanged') and job.get('carry') else None
     if reach > 0:
@@ -593,13 +630,18 @@ def pictures(job):
                 for r in reads:
                     r['shift'][i], r['top'][i], at, r['judged'][i] = changed(d)
                     r['spot'][i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
-                weave[i], weaveAt[i], weaveShare[i], weaveBand[i] = reading(*readings(swapped, fw, bw, i, reach, scale, sigma, wide, low, first, last, lambda j, i=i, made=made: made['full'] if j == i + reach else grey(paths[j]), way, later), scale)
+                both = readings(swapped, fw, bw, i, reach, scale, sigma, wide, low, first, last, lambda j, i=i, made=made: made['full'] if j == i + reach else grey(paths[j]), way, later)
+                weave[i], weaveAt[i], weaveShare[i], weaveBand[i] = reading(*both, scale)
+                tops[i] = setters(*both)
                 continue
             d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last, way)
             for pair, r in zip(carries, reads):
                 r['shift'][i], r['top'][i], at, r['judged'][i] = changed(change(frames, fw, bw, i, reach, sigma, first, last, way, pair(i, i + reach))[0] if pair else d)
                 r['spot'][i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
-            weave[i], weaveAt[i], weaveShare[i], weaveBand[i] = reading(*readings(frames, fw, bw, i, reach, scale, sigma, wide, low, first, last, full, way, later), scale)
+            both = readings(frames, fw, bw, i, reach, scale, sigma, wide, low, first, last, full, way, later)
+            weave[i], weaveAt[i], weaveShare[i], weaveBand[i] = reading(*both, scale)
+            if job.get('carry'):
+                tops[i] = setters(*both)
     for r in reads:
         for i in range(n):
             if not inside(i + 1):
@@ -607,7 +649,7 @@ def pictures(job):
     grounds = lambda r: {'groundLeft': r['earth'], 'groundBase': r['floor'], 'groundPop': r['rise'], 'groundShare': r['part'], 'groundAt': r['place'], 'groundSize': r['size']}
     pops = lambda r: {'residual': r['residual'], 'base': r['base'], 'popAll': r['plain'], 'popCarried': r['masked'], 'pop': r['pop'], 'motionPx': r['moved'], 'unsure': r['unsure'], 'popBlock': r['block'], 'popBlockAt': r['where']}
     changes = lambda r: {'change': r['shift'], 'changeTop': r['top'], 'changeAt': r['spot'], 'changeShare': r['judged']}
-    more = mapped(job, paths, frames, poses, scale, sigma, wide, low, reach, fw, bw, [i for i in range(n - reach) if own[0] <= i + start < own[1] and inside(i + reach) and not any((j + 1) in marks for j in range(i, i + reach))], redraw) if reach > 0 and job.get('carry') else {}
+    more = mapped(job, paths, frames, poses, scale, sigma, wide, low, reach, fw, bw, [i for i in range(n - reach) if own[0] <= i + start < own[1] and inside(i + reach) and not any((j + 1) in marks for j in range(i, i + reach))], redraw, tops) if reach > 0 and job.get('carry') else {}
     for i in range(n if more else 0):
         if more['patternBoth'][i] is None and weave[i] is not None:
             more['patternBoth'][i], more['patternBothBy'][i], more['patternBothMap'][i] = weave[i], 'flow', 0.0
@@ -699,12 +741,12 @@ def again(job, paths, frames, poses, reach):
     return made
 
 
-def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw, rows, redraw=None):
+def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw, rows, redraw=None, tops=None):
     """The pattern of each row's pair read a second way, beside the reader above and judging nothing: the pair carried by the camera's own map,
     the flow on the carried pair, the reading after both (carry.py). Keys of their own: patternMap and what belongs to it."""
     import carry as C
     n = len(paths)
-    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternTrue', 'patternTrueAt', 'patternTrueOn', 'patternTrueShare', 'patternTrueEnds', 'patternTrueHeld', 'patternTrueBy', 'patternTrueRedrawn', 'patternTrueFiner', 'patternTrueSteep', 'patternTrueGraze', 'patternRest', 'patternRestAt', 'patternRestShare', 'patternBoth', 'patternBothBy', 'patternBothMap', 'patternMapBulk', 'patternMapSure', 'patternMapBound', 'patternMapGraze', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn', 'patternMapAlone', 'patternMapMoves', 'patternMapMoved', 'patternMapLit')}
+    keys = {key: [None] * n for key in ('patternMap', 'patternMapAt', 'patternMapShare', 'patternMapOn', 'patternMapBy', 'patternMapRule', 'patternMapLeft', 'patternMapUnits', 'patternTrue', 'patternTrueAt', 'patternTrueOn', 'patternTrueShare', 'patternTrueEnds', 'patternTrueHeld', 'patternTrueBy', 'patternTrueRedrawn', 'patternTrueFiner', 'patternTrueSteep', 'patternTrueGraze', 'patternRest', 'patternRestAt', 'patternRestShare', 'patternBoth', 'patternBothBy', 'patternBothMap', 'patternMapBulk', 'patternMapSure', 'patternMapBound', 'patternMapGraze', 'patternMapApart', 'patternMapNo', 'patternMapRefused', 'patternMapBody', 'patternMapSky', 'patternMapSkyShare', 'patternMapSkyFar', 'patternMapSkyFarShare', 'patternMapSkyTurn', 'patternMapAlone', 'patternMapMoves', 'patternMapMoved', 'patternMapLit', 'patternTorn', 'patternTornPx', 'patternTornTrue')}
     held = {}
     depths = job.get('depths') or [None] * n
 
@@ -731,6 +773,8 @@ def mapped(job, paths, frames, poses, scale, margin, wide, floor, reach, fw, bw,
         keys['patternTrue'][i], keys['patternTrueAt'][i], keys['patternTrueOn'][i], keys['patternTrueShare'][i] = true['value'], true['at'], true['on'], true['share']
         keys['patternTrueEnds'][i], keys['patternTrueHeld'][i], keys['patternTrueBy'][i], keys['patternTrueFiner'][i] = true['ends'], true['held'], true['kind'], true['finer']
         keys['patternTrueSteep'][i], keys['patternTrueGraze'][i] = true['steep'], true['graze']
+        if tops and tops[i]:
+            keys['patternTorn'][i], keys['patternTornPx'][i], keys['patternTornTrue'][i] = torn(tops[i], frame(i), later, ends, wide / 2, scale)
         keys['patternMapAlone'][i], keys['patternMapMoves'][i] = out['alone'], out['moves']
         keys['patternMap'][i], keys['patternMapAt'][i], keys['patternMapShare'][i] = out['value'], out['at'], out['share']
         keys['patternMapOn'][i], keys['patternMapBy'][i], keys['patternMapRule'][i], keys['patternMapLeft'][i], keys['patternMapUnits'][i] = out['on'], out['by'], out['rule'], out['left'], out['units']

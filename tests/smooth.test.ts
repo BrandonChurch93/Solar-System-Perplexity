@@ -13,7 +13,7 @@ import { FilmDirector } from '../src/director/film'
 import { sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
 import { SEAM_OWN, SEAM_REACH, afterRise, curves, eyeCurves, landingCurves, planeHit, ringPlane, sampleLanding, sampleLeave, sampleSeam, sampleWindow, seen, type SeamWindow } from '../tools/smooth/camera'
-import { FULL_PANEL, GROUND, GROUND_NOT, fullLabel, fullNear, fullTop, groundLaw, groundLine, groundOf, groundRuns, groundUnread, groundUnreadLine } from '../tools/smooth/maps'
+import { FULL_PANEL, GROUND, GROUND_NOT, fullLabel, fullNear, fullTop, groundLaw, groundLine, groundOf, groundRuns, groundUnread, groundUnreadLine, TORN_LINE, TORN_SHARE, torn, tornBy } from '../tools/smooth/maps'
 import { missing, partOwn, popContext, popSpan, sliceName, sliceNeed } from '../tools/smooth/slice'
 import { buildFault, differ, gather, gatherFaults, pieceStem, roleOf, runFacts, type Given } from '../tools/smooth/whole'
 import { changeNote, judgeCurve, judgeLanding, judgeLeave, judgeSeam, longestGap, minLeaveOf, parityFrames, peakRows, position, shown, table } from '../tools/smooth/path'
@@ -1309,5 +1309,60 @@ describe('the report of a stop from the files of several machines', () => {
     expect(buildFault(parts, runFacts({ ...run, rate: 1 }))).toContain('differ in the capture rate')
     expect(buildFault(parts, runFacts({ ...run, limits: { rate: 2, pictures: { maxPattern: 0.5 } } }))).toContain('differ in the limits')
     expect(buildFault(runFacts({ ...run, commit: 'abc with changes that are not committed' }), runFacts(run))).toContain('differ in the commit')
+  })
+})
+
+interface MadeTorn { end: number; count: number; share: number | null; px: number | null; true: number | null; disc?: number }
+
+describe('the torn mark: whether the number of a pair sits where the chain of flows parts from the camera\'s map, on made readings of a sphere under a diving camera', () => {
+  let t: Record<string, MadeTorn | null> & { far: number }
+  beforeAll(() => {
+    t = JSON.parse(execFileSync('python3', [fileURLToPath(new URL('../tools/smooth/madetorn.py', import.meta.url))], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 1 << 24 })) as Record<string, MadeTorn | null> & { far: number }
+  }, 300_000)
+
+  it('takes as the pixels that set the number those of the reading that stands at or over its 99th percentile: the disc that reads 0.9, from the first end or from the later one', () => {
+    expect(t.torn!.end).toBe(0)
+    expect(t.torn!.count).toBe(t.torn!.disc)
+    expect(t.back!.end).toBe(1)
+    expect(t.back!.count).toBe(t.back!.disc)
+    expect(t.onward!.end).toBe(0)
+    expect(t.none).toBeNull()
+  })
+
+  it('reads the chain as torn on all of them where it lies 120 px of the full size off the map, on 0.4 of them where only that part does, on none where it lies 16 px off or keeps to the map', () => {
+    expect(t.far).toBe(20)
+    expect(t.torn!.share).toBe(1)
+    expect(t.torn!.px!).toBeCloseTo(120, 3)
+    expect(t.back!.share).toBe(1)
+    expect(t.back!.px!).toBeCloseTo(120, 3)
+    expect(t.some!.share!).toBeGreaterThan(0.35)
+    expect(t.some!.share!).toBeLessThan(0.45)
+    expect(t.near!.share).toBe(0)
+    expect(t.near!.px!).toBeCloseTo(16, 3)
+    expect(t.whole!.share).toBe(0)
+    expect(t.whole!.px!).toBeCloseTo(0, 3)
+  })
+
+  it('gives beside it the largest the true carry reads on those pixels, and nothing where it judges none of them', () => {
+    expect(t.torn!.true!).toBeCloseTo(0.02, 5)
+    expect(t.seen!.true!).toBeCloseTo(0.04, 5)
+    expect(t.unseen!.true).toBeNull()
+    expect(t.unseen!.share).toBe(1)
+  })
+
+  it('marks a row as torn from half of those pixels on, says so in words, and leaves a row without the reading as it was', () => {
+    expect(TORN_SHARE).toBe(0.5)
+    const row = { k: 4888, pattern: 0.47, patternTorn: 0.82, patternTornPx: 174.2, patternTornTrue: 0.04 }
+    expect(torn(row)).toBe(true)
+    expect(tornBy(row, 20)).toBe('; where that number sits the chain is torn: on 0.82 of the pixels that set it the chain parts from the camera\'s map by more than 20 px (median 174.2 px), and the true carry reads at most 0.04 there')
+    expect(tornBy({ ...row, patternTornTrue: null }, 20)).toContain('and the true carry reads nothing there')
+    expect(torn({ ...row, patternTorn: 0.5 })).toBe(true)
+    expect(torn({ ...row, patternTorn: 0.49 })).toBe(false)
+    expect(tornBy({ ...row, patternTorn: 0.49 }, 20)).toBe('')
+    expect(torn({ k: 1, pattern: 0.47 })).toBe(false)
+    expect(torn({ k: 1, pattern: 0.47, patternTorn: null })).toBe(false)
+    expect(tornBy({ k: 1, pattern: 0.47 }, 20)).toBe('')
+    expect(TORN_LINE(20)).toContain('The row is counted as it was')
+    expect(TORN_LINE(20)).not.toMatch(/[\u2014!]/)
   })
 })
