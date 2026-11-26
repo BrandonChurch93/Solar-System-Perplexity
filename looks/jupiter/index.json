@@ -1,67 +1,29 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T10:31:42.119Z",
- "head": "4dbe61edc35984196177cc34eed003a3ca14b7dc",
- "note": "rise: pattern spikes on the sky line; cure prepared",
+ "pushed": "2026-11-26T11:24:19.129Z",
+ "head": "13bebe008afd6d636cbae0da6670d9d6782ee781",
+ "note": "11:25 UTC. Cure F pushed as a candidate, 13bebe00: far rays of the layer march as the deck did. Slice at 3262 green (pattern 0.26, 0.24, 0.19 against the cut's 0.726, 1.638, 0.49). Slice at 3250 running. Whole rows not read yet.",
  "looks": [
   {
-   "time": "2026-11-26T10:31:26.416Z",
-   "file": "20261126103126416-note-limbdots-3262.jpg",
-   "source": "../../../../tmp/limbdots-3262.png",
+   "time": "2026-11-26T11:24:17.955Z",
+   "file": "20261126112417955-note-f-vs-cut-diff.jpg",
+   "source": "../../../../tmp/f-vs-cut-diff.png",
    "kind": "note",
-   "label": "sky line at 3262, 8 times zoom: relief key left, plate key right; single stair pixels differ",
+   "label": "Cure F against the cut, difference at gain 24, frames 3262 and 3250: no line where the two marches meet",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T10:31:25.468Z",
-   "file": "20261126103125468-note-rise-slice-changes.jpg",
-   "source": "../../../../tmp/rise-slice-changes.jpg",
+   "time": "2026-11-26T11:24:16.602Z",
+   "file": "20261126112416602-note-f-edge-panel.jpg",
+   "source": "../../../../tmp/f-edge-panel.png",
    "kind": "note",
-   "label": "rise slice on the cut 4dbe61ed, rows 3250 + 1/2 and 3262: the pattern spikes sit on the sky line, read on 3 percent of the frame",
+   "label": "Far edge of the layer at 3250, 3258, 3262 at 5 times: the cut, cure F, main",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T10:03:23.970Z",
-   "file": "20261126100323970-note-rise-diff4.jpg",
-   "source": "../../../../tmp/rise-diff4.jpg",
-   "kind": "note",
-   "label": "rise 3258, 3262, 3266, 3270: relief key against plate key, absolute difference; from 3266 only the storm's disc differs",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:03:23.269Z",
-   "file": "20261126100323269-note-b3254-left.jpg",
-   "source": "../../../../tmp/b3254-left.jpg",
-   "kind": "note",
-   "label": "rise 3254, left 800 px at 1 to 1: plate key (main) beside the relief; the pale patch is main's place, the flat wall is the relief's",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:03:22.427Z",
-   "file": "20261126100322427-note-rise-head4.jpg",
-   "source": "../../../../tmp/rise-head4.jpg",
-   "kind": "note",
-   "label": "rise on the cut 4dbe61ed, draft: 3258, 3262, 3266, 3270 (the body stands taller at 3258 and 3262 than from 3266 on)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:51:09.423Z",
-   "file": "20261126095109423-frame-f03246.jpg",
-   "source": "out/work/jupiter/frames/cut/f03246.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3246, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3246,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T09:50:12.587Z",
-   "file": "20261126095012587-frame-f03150.jpg",
-   "source": "out/work/jupiter/frames/cut/f03150.png",
+   "time": "2026-11-26T11:09:47.781Z",
+   "file": "20261126110947781-frame-f03150.jpg",
+   "source": "out/work/jupiter/frames/f1/f03150.png",
    "kind": "frame",
    "label": "jupiter.terrain frame 3150, draft tier",
    "stop": "jupiter",
@@ -71,6 +33,56 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T11:09:02.071Z",
+   "file": "20261126110902071-frame-f03258.jpg",
+   "source": "out/work/jupiter/frames/f1/f03258.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3258, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3258,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T10:55:50.409Z",
+   "file": "20261126105550409-still-f03250-16x9-draft-full-layers.jpg",
+   "source": "out/work/stills/f03250-16x9-draft-full-layers.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3250, draft tier, layers view",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3250,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T10:54:50.029Z",
+   "file": "20261126105450029-still-f03262-16x9-draft-full-layers.jpg",
+   "source": "out/work/stills/f03262-16x9-draft-full-layers.png",
+   "kind": "still",
+   "label": "jupiter.rise frame 3262, draft tier, layers view",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3262,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "layers",
+   "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T10:31:26.416Z",
+   "file": "20261126103126416-note-limbdots-3262.jpg",
+   "source": "../../../../tmp/limbdots-3262.png",
+   "kind": "note",
+   "label": "sky line at 3262, 8 times zoom: relief key left, plate key right; single stair pixels differ",
+   "stop": "jupiter"
   },
   {
    "time": "2026-11-26T09:49:22.718Z",
