@@ -1,8 +1,8 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T01:09:52.626Z",
+ "pushed": "2026-11-26T01:10:07.275Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests v8: review proof looked at and measured, the red mark traced to a speck in L1's paint, the line at D's box end; committing next",
+ "note": "crests v8: review proof looked at and measured; the red mark beside crest A traced to a speck in L1's paint (r8-2668-dbg, L1-red-block); the line at D's box end (r8-2668-D2, D3, r8-2672-D2); committing next",
  "looks": [
   {
    "time": "2026-11-26T01:09:43.487Z",
@@ -59,6 +59,41 @@
    "source": "../../../../tmp/crest/r8-2672-z.png",
    "kind": "note",
    "label": "2672 review, crest A's edge, base and crests, 12 to 1"
+  },
+  {
+   "time": "2026-11-26T01:09:38.639Z",
+   "file": "20261126010938639-note-r8-2672-D2.jpg",
+   "source": "../../../../tmp/crest/r8-2672-D2.png",
+   "kind": "note",
+   "label": "2672 review, D's box end, base and crests, 20 to 1"
+  },
+  {
+   "time": "2026-11-26T01:09:38.024Z",
+   "file": "20261126010938024-note-r8-2668-D3.jpg",
+   "source": "../../../../tmp/crest/r8-2668-D3.png",
+   "kind": "note",
+   "label": "2668 review, D's box end, closer"
+  },
+  {
+   "time": "2026-11-26T01:09:37.452Z",
+   "file": "20261126010937452-note-r8-2668-D2.jpg",
+   "source": "../../../../tmp/crest/r8-2668-D2.png",
+   "kind": "note",
+   "label": "2668 review, D's box end, base and crests at zoom: a line 1 px wide where the near sheet closes onto the wall"
+  },
+  {
+   "time": "2026-11-26T01:09:36.877Z",
+   "file": "20261126010936877-note-L1-red-block.jpg",
+   "source": "../../../../tmp/crest/L1-red-block.png",
+   "kind": "note",
+   "label": "L1 colour, texels x 3250..3260 y 872..878: the magenta speck the fill draws out at 2664 to 2672"
+  },
+  {
+   "time": "2026-11-26T01:09:36.245Z",
+   "file": "20261126010936245-note-r8-2668-dbg.jpg",
+   "source": "../../../../tmp/crest/r8-2668-dbg.png",
+   "kind": "note",
+   "label": "2668 trace of the red mark beside crest A: texel place per pixel, the mark is the far end's texel of the fill (a speck in L1's paint), scratch view"
   }
  ]
 }
