@@ -1,9 +1,49 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T16:16:43.034Z",
+ "pushed": "2026-11-26T16:40:55.447Z",
  "head": "04b82e67d37ec981f28da1c28204e67099179d95",
- "note": "whole cure on main's plates in the film (drafts), pairs 2466 and 2470 against main; main's rise slice running",
+ "note": "whole cure on main's plates against main at native size, 2440 to 2462 and 2700; 2427 and 2726 equal main to the pixel at draft",
  "looks": [
+  {
+   "time": "2026-11-26T16:40:54.259Z",
+   "file": "20261126164054259-note-x-2700.jpg",
+   "source": "../../../../tmp/pm/B/x-2700.png",
+   "kind": "note",
+   "label": "pair at native size, frame 2700: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T16:40:53.128Z",
+   "file": "20261126164053128-note-x-2462.jpg",
+   "source": "../../../../tmp/pm/B/x-2462.png",
+   "kind": "note",
+   "label": "pair at native size, frame 2462: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T16:40:52.034Z",
+   "file": "20261126164052034-note-x-2456.jpg",
+   "source": "../../../../tmp/pm/B/x-2456.png",
+   "kind": "note",
+   "label": "pair at native size, frame 2456: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T16:40:51.202Z",
+   "file": "20261126164051202-note-x-2448.jpg",
+   "source": "../../../../tmp/pm/B/x-2448.png",
+   "kind": "note",
+   "label": "pair at native size, frame 2448: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T16:40:50.006Z",
+   "file": "20261126164050006-note-x-2440.jpg",
+   "source": "../../../../tmp/pm/B/x-2440.png",
+   "kind": "note",
+   "label": "pair at native size, frame 2440: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T16:16:42.207Z",
    "file": "20261126161642207-note-A2-2456.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/pm/B/w-2470.png",
    "kind": "note",
    "label": "pair at native size, frame 2470: main left, the whole cure on main's plates right (draft); the black band from the far rim's head is on both",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T16:16:40.136Z",
-   "file": "20261126161640136-note-w-2466.jpg",
-   "source": "../../../../tmp/pm/B/w-2466.png",
-   "kind": "note",
-   "label": "pair at native size, frame 2466: main left, the whole cure on main's plates right (draft)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T15:49:07.591Z",
-   "file": "20261126154907591-note-a8-07.jpg",
-   "source": "../../../../tmp/pm/B/a8-07.png",
-   "kind": "note",
-   "label": "whole cure on main's plates, 0.7 deg plate from above, native crop: left main, right the cure; a pale band stands along the mound's border (the border's ground moved toward the lit ground): not good yet",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T15:49:06.790Z",
-   "file": "20261126154906790-note-a8-16.jpg",
-   "source": "../../../../tmp/pm/B/a8-16.png",
-   "kind": "note",
-   "label": "whole cure on main's plates, 1.6 deg plate from above, native crop: left main, right the cure with take 1 laid as form",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T15:49:05.672Z",
-   "file": "20261126154905672-note-a8-38.jpg",
-   "source": "../../../../tmp/pm/B/a8-38.png",
-   "kind": "note",
-   "label": "whole cure laid on MAIN's plates, 3.8 deg plate from above, native crop: left main's plate, right the plate with the canyon's inside from the heights (not in the film yet)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T15:14:50.573Z",
-   "file": "20261126151450573-note-pairB2470.jpg",
-   "source": "../../../../tmp/pm/mail/pairB2470.png",
-   "kind": "note",
-   "label": "speck state, 2470 draft, native crop x 814 y 138: left main, right the state",
    "stop": "mars"
   }
  ]
