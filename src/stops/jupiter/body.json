@@ -1,0 +1,134 @@
+{
+ "note": "Numbers of the relief (relief.ts and assets-src/jupiter/relief/body.py). height: the deck's own height of the cloud tops (the depth model's log range of the canvas above its 120 px mean, deck.json tool) times a gain by place: gain at and inside nearUnits[0] of the fit camera's foot on the ground, farGain at and past nearUnits[1] up to farUnits[0], 1 at and past farUnits[1], smooth between. The strip of unseen ground that a step of height opens when the camera moves is about the focal length times the move times the step over the eye's height times the range: for the camera's move from 3100 to 3200 (0.59 units by flight of plan.ts) a step of 0.1 units opens about 52 px at range 1 and about 15 px at the storm (range 3.4); reckoned, not measured. So the near field keeps the deck's own height (gain 1), the storm and the middle ground stand farGain times taller, and the far ridges, whose sight line lies flat, keep the sky line of the picture. laid: the haze and its shadows belong to the picture as the deck laid it out, so they are read where the fit camera's line through the point meets the point's own height in the deck's scale (the least sine of that line counted on, the most units moved along it); a band of haze stands before a point whose height in the deck's scale lies under it. fadeHeights: the camera heights (radii) between which the gain goes back to 1, so the globe's own program, which keeps the deck's height, meets the same ground at the change of view. shell and march as look.shell and look.march of deck.json, for the taller ground: march[0], the steepest slope the step law counts on, is taken times the gain of the place, march[3] is the most steps, and a ray that has spent them inside the shell counts as landed where it stands, so the last ground before the sky line shows the picture's own pixels (the deck counts such rays as sky and draws the limb's colour there). imageMarch: the march of the fit camera's own range picture, its slope the deck's times the gain. fill: the ground the picture never saw is filled as the deck fills it (the far ground runs in, the crest is mirrored in at the end), but the fine structure mirrored about the two borders is laid on as a ratio of light (the canvas over its own blur, the blur never under floor), detail times, held within bound; the deck adds it as a difference, which under a taller ground, whose gaps are wide, went below zero and stood as black cracks. viewFine: the laid back view is baked at this many times view.pixels of deck.json. flow: motion by flow, never the turn of a disc (mail 1423). storm: the matter of the storm winds about its centre by an angle that is the bounded law of time (degPerSecond at the fastest radius, never past boundDeg) times a share by radius, 0 at and inside innerUnits[0], full from innerUnits[1] to outerUnits[0], 0 at and past outerUnits[1]; the look up runs backward along the flow and is exact, so nothing smears and the flow is never reset. eddyShare: the two small eddies of deck.json turn at this share of their speed (0: they rest). bands: outside the storm the ground drifts along the jet by unitsPerSecond times the sum of two sines of the place across the jet (waveUnits, phase, second: the share of the second sine), a shear by latitude; it fades in between fromUnits from the storm's centre and is taken off between fadeHeights of the camera (radii) so the globe's own program, which does not shear, meets the same ground. light: the scene's light on the body (d253). The colour of the picture is multiplied per channel by the light now over the light of the picture, each fill plus sun times the facing of the height's normal (wrap) times a soft shadow marched through the height toward the Sun (march: first step in units, growth, bias in units, steps; penumbra: the tangent over which the shadow softens; baseUnits: the normal of the light is the slope of the height over this many units to each side, since the height is the depth model's, smooth in the large, and holds one straight crease at ground x 0.29 through the storm's eye, which the light would draw as a line; the depth tool runs in tiles, tools/ml/depth.py); the picture's Sun stands at light.azimuthDeg of deck.json and elevationDeg here, so with the Sun in its place and no turn of the flow the ratio is exactly 1 and the approved picture stands. Where the storm's wind has turned the matter, the Sun stands turned back by that angle against it; then the shadow is taken as the picture painted it, the same in both lights, and only the facing changes, since two marched shadows a few degrees apart drew dark threads between their edges. With the Sun turned for the proof the shadow is marched anew; bound: the least and the most of the ratio. deep: the blue glow of the deeps as air by depth; under levelUnits the glow grows with the depth times perUnit over the sine of the line of sight, less what the fit camera's own line already holds, so it is zero from the fit pose; minSine bounds the sine; facing: the glow changes only where the ground faces the fit camera by more than this cosine, since the picture says nothing of the air over ground it never shows; floor: the least share of a colour the change may leave. handover.diveLiftUnits: in the dive, the camera heights over the deck between which the tone of the ground beside the picture and the soft rim of the picture go off, in place of the deck's tone.lift (1.35 to 2.4). The dive passes 1.79 units at 3048 and 1.63 at 3050 with the picture's left border close in view; with the deck's range the tone and the soft rim were half gone there and the ground beside the picture stood pale behind a straight border. With this range both stay whole to 3050 and go between 3051 and 3057. The rise keeps the deck's range: there the short range brought streaks in at the right edge within three frames (3248 to 3250). The surface view flies at 1.33 units and lower, where both ranges give 0, so the change of range at its middle is not seen. proof.sunTurnDeg: the Sun turned about the zenith for the proof picture; 0 in every commit.",
+ "height": {
+  "gain": 1.0,
+  "nearUnits": [
+   1.2,
+   3.0
+  ],
+  "farGain": 2.0,
+  "farUnits": [
+   5.5,
+   8.0
+  ],
+  "fadeHeights": [
+   0.006,
+   0.03
+  ],
+  "shell": [
+   -0.65,
+   0.5
+  ],
+  "march": [
+   4.2,
+   0.75,
+   0.25,
+   1200
+  ],
+  "deckUnits": [
+   8.0,
+   12.0
+  ],
+  "imageMarch": [
+   8.4,
+   0.5,
+   0.05,
+   1100
+  ],
+  "laid": [
+   0.02,
+   1.5
+  ],
+  "viewFine": 2,
+  "fill": {
+   "detail": 1.0,
+   "bound": [
+    0.6,
+    1.6
+   ],
+   "floor": 0.002
+  }
+ },
+ "flow": {
+  "storm": {
+   "innerUnits": [
+    0.15,
+    1.1
+   ],
+   "outerUnits": [
+    1.6,
+    2.8
+   ],
+   "degPerSecond": 1.2,
+   "boundDeg": 6
+  },
+  "eddyShare": 0,
+  "bands": {
+   "unitsPerSecond": 0.012,
+   "waveUnits": [
+    5.5,
+    2.3
+   ],
+   "phase": [
+    0.6,
+    2.1
+   ],
+   "second": 0.5,
+   "fromUnits": [
+    2.0,
+    5.0
+   ],
+   "fadeHeights": [
+    0.006,
+    0.03
+   ]
+  }
+ },
+ "light": {
+  "elevationDeg": 20,
+  "fill": [
+   0.3,
+   0.34,
+   0.42
+  ],
+  "sun": [
+   1.0,
+   0.95,
+   0.86
+  ],
+  "wrap": 0.15,
+  "baseUnits": 0.05,
+  "penumbra": 0.12,
+  "march": [
+   0.02,
+   1.4,
+   0.004,
+   14
+  ],
+  "bound": [
+   0.3,
+   2.5
+  ]
+ },
+ "deep": {
+  "levelUnits": 0.0,
+  "perUnit": 1.5,
+  "minSine": 0.05,
+  "facing": 0.15,
+  "floor": 0.6,
+  "glow": [
+   0.012,
+   0.03,
+   0.07
+  ]
+ },
+ "handover": {
+  "diveLiftUnits": [
+   1.35,
+   1.6
+  ]
+ },
+ "proof": {
+  "sunTurnDeg": 0
+ }
+}
