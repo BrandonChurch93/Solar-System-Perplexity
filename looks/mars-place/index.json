@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T13:13:03.682Z",
+ "pushed": "2026-11-26T13:47:08.860Z",
  "head": "f73602f96c26790928796406d3c1a158f7d32475",
- "note": "13:13 speck 2466 traced to blue plate texels; slab 2686 traced to the law's share; canyon inside by the heights",
+ "note": "whole cure: the canyon's inside led from the heights (v4), six film frames as pairs against step 2, 0.7 from above",
  "looks": [
   {
-   "time": "2026-11-26T13:13:02.830Z",
-   "file": "20261126131302830-note-sheet1.6.jpg",
-   "source": "../../../../tmp/pm/in/sheet1.6.png",
+   "time": "2026-11-26T13:47:07.819Z",
+   "file": "20261126134707819-note-p4-rest.jpg",
+   "source": "../../../../tmp/pm/in/p4-rest.png",
    "kind": "note",
-   "label": "canyon inside by the heights at 1.6",
+   "label": "whole cure, lead v4: frames 2427, 2462, 2466",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T13:13:02.155Z",
-   "file": "20261126131302155-note-sheet0.7.jpg",
-   "source": "../../../../tmp/pm/in/sheet0.7.png",
+   "time": "2026-11-26T13:47:07.170Z",
+   "file": "20261126134707170-note-abT07.jpg",
+   "source": "../../../../tmp/pm/in/abT07.png",
    "kind": "note",
-   "label": "canyon inside by the heights at 0.7: plate, heights, cast shade, soft shade of the tools",
+   "label": "whole cure, from above, land-0p7: left step 2, right lead v4",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T13:13:01.454Z",
-   "file": "20261126131301454-note-film-now.jpg",
-   "source": "../../../../tmp/pm/in/film-now.png",
+   "time": "2026-11-26T13:47:06.395Z",
+   "file": "20261126134706395-note-p4-2456.jpg",
+   "source": "../../../../tmp/pm/in/p4-2456.png",
    "kind": "note",
-   "label": "canyon inside in the film now (step 2): 2440, 2444, 2448, 2452",
+   "label": "whole cure, lead from the heights v4 (crisp cast shade and lit inside by law on the baked plates, no take): frame 2456, above step 2 f73602f9, below the lead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T13:13:00.838Z",
-   "file": "20261126131300838-note-slab86-law.jpg",
-   "source": "../../../../tmp/pm/slab86-law.png",
+   "time": "2026-11-26T13:47:05.640Z",
+   "file": "20261126134705640-note-p4-2452.jpg",
+   "source": "../../../../tmp/pm/in/p4-2452.png",
    "kind": "note",
-   "label": "slab 2686 test: left main, right the law returning share 1 (test only), slab gone",
+   "label": "whole cure, lead from the heights v4 (crisp cast shade and lit inside by law on the baked plates, no take): frame 2452, above step 2 f73602f9, below the lead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T13:13:00.177Z",
-   "file": "20261126131300177-note-slab86-time.jpg",
-   "source": "../../../../tmp/pm/slab86-time.png",
+   "time": "2026-11-26T13:47:04.905Z",
+   "file": "20261126134704905-note-p4-2448.jpg",
+   "source": "../../../../tmp/pm/in/p4-2448.png",
    "kind": "note",
-   "label": "slab at 2686 in time on main, 2683 to 2688",
+   "label": "whole cure, lead from the heights v4 (crisp cast shade and lit inside by law on the baked plates, no take): frame 2448, above step 2 f73602f9, below the lead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T13:12:59.520Z",
-   "file": "20261126131259520-note-speck66-test.jpg",
-   "source": "../../../../tmp/pm/speck66-test.png",
+   "time": "2026-11-26T13:47:04.138Z",
+   "file": "20261126134704138-note-p4-2444.jpg",
+   "source": "../../../../tmp/pm/in/p4-2444.png",
    "kind": "note",
-   "label": "speck 2466 test: main's files with the blue texels of the land plates painted over, speck gone",
+   "label": "whole cure, lead from the heights v4 (crisp cast shade and lit inside by law on the baked plates, no take): frame 2444, above step 2 f73602f9, below the lead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T13:12:58.822Z",
-   "file": "20261126131258822-note-speck66-trace.jpg",
-   "source": "../../../../tmp/pm/speck66-trace.png",
+   "time": "2026-11-26T13:47:03.380Z",
+   "file": "20261126134703380-note-p4-2440.jpg",
+   "source": "../../../../tmp/pm/in/p4-2440.png",
    "kind": "note",
-   "label": "violet speck at 2466 traced: beauty, layers, ungraded (main and step 2)",
+   "label": "whole cure, lead from the heights v4 (crisp cast shade and lit inside by law on the baked plates, no take): frame 2440, above step 2 f73602f9, below the lead",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T12:43:40.852Z",
-   "file": "20261126124340852-note-probe35-1.jpg",
-   "source": "../../../../tmp/pm/probe35-1.png",
+   "time": "2026-11-26T13:47:02.508Z",
+   "file": "20261126134702508-note-p4-2436.jpg",
+   "source": "../../../../tmp/pm/in/p4-2436.png",
    "kind": "note",
-   "label": "PROBE not for the tree: 2456, 2460, 2464 step 2 above, shade lifted below: floor and far wall show, the lit ground goes flat",
+   "label": "whole cure, lead from the heights v4 (crisp cast shade and lit inside by law on the baked plates, no take): frame 2436, above step 2 f73602f9, below the lead",
    "stop": "mars"
   }
  ]
