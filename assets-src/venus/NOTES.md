@@ -5176,3 +5176,34 @@ Measured on the kept frames of state A (`fr-A-dive`) and of main (`fr-M1d`), the
 ### 05:41 main moved once more before the name
 
 - 05:40 the notes commit 690287b0 was pushed. 05:40:51 `git ls-remote`: origin main is 2344387d4839730811d867c86699b386753e20e9 (status 363, d355). Fetched at depth 1: against 5ce3856b only kit/PROGRESS.md differs, and it does not speak of Venus. Merged with the queue idle: 32722f8f90c28729ad9198d553a9b2fc2b244ca3, parents 690287b0 and 2344387d. No number moves: the code of main is that of 23f1089b. The name is the commit of this note, on that merge.
+
+### 05:42 NAMED sent; the fourth cut's work starts
+
+- 05:41:30 the name was pushed: 77874d64c316219bcb03b0e9a406c8dd239ee82e (parents: the merge 32722f8f of main 2344387d, on the notes commit 690287b0). `npm run cues` and `npm run shots` on it: exit 0 both, no change under cut/. Against the candidate 27a2f066 the three Venus folders differ only in NOTES.md; against main 15 files, none outside the three folders. Bytes of the three folders: 163386952 against main's 162896224 (+490728; public +184045).
+- 05:42 the NAMED mail went to /root (high): the commit, the main it holds, the 15 files, the numbers of jobs e1, e2, g1, g2, what was seen, the red list (a) to (e), the looks (agent/venus-looks 4ffb91e6).
+- 05:43 jobs f1 (control mapmid1 on state A's dive rows 1303 to 1312; it checks out the six files of 1cdcc809 over the tree, not committed) and f2 (control hue1) are in the queue.
+
+### 05:51 job f1: control mapmid1 on state A's dive rows 1303 to 1312 (the six files of 1cdcc809 over the name's tree)
+
+- Rows, control / A / main: 1303 + 1/2 0.28 / 0.45 / 0.30; 1304 0.27 / 0.36 / 0.30; 1310 0.53 / 0.55 / 0.46; 1310 + 1/2 0.57 / 0.59 / 0.49; 1311 0.65 / 0.67 / 0.55; 1311 + 1/2 0.56 / 0.57 / 0.47; 1312 0.55 / 0.56 / 0.49. Rows over 0.45: 5 of 19 (A 6, main 5), largest 0.65 (A 0.67, main 0.55).
+- RESULT: the map's forms between the two sizes outside the disc are the cause of the row 1303 + 1/2 (0.45 falls to 0.28, under main's 0.30) and of 1304; they are NOT the cause of the rows 1310 to 1312: 0.02 of the 0.12 that A reads over main at 1311. Six controls now leave that row unexplained (cA1, cN1, cFD, cT, cFm, cMM).
+
+### 05:59 job f2: control hue1 on state A's dive rows 1303 to 1312
+
+- Rows 1310 to 1312, control / A / main: 0.58 / 0.55 / 0.46; 0.63 / 0.59 / 0.49; 0.74 / 0.67 / 0.55; 0.55 / 0.57 / 0.47; 0.54 / 0.56 / 0.49. Rows over 0.45: 7 of 19 (A 6, main 5).
+- RESULT: the colour by channel of the plates' forms seen from above is NOT the cause; without it the rows read worse than A. Seven controls (cA1, cN1, cFD, cT, cFm, cMM, cHue) leave A's rows 1310 to 1312 unexplained.
+- SEEN /tmp/v/sh/A/cMM-1318.jpg (A less main, control mapmid1 less main, 1310 to 1319): A less main shows coloured mottle under the limb at 1315, fading by 1319; the control takes the colour out and leaves faint cells in luminance. In the box x 156 to 404, y 192 to 312 the mean difference to main of 255: A 2.98 at 1310, 2.63 at 1311, 1.18 at 1318; control 2.00, 1.83, 0.83.
+- DECIDED (MAIL 707): the fourth cut's line is state R made better, not state A. A's dive reads worse than main's on rows 1310 to 1312 and no control names why, so A's dive cannot be named (MAIL 1399 point 4 b, MAIL 1053). A's rise is read once (job f3) so the choice is on numbers.
+
+### 06:00 to 06:10 R against main seen at 1 to 1 over 1542 to 1557; the plates read
+
+- SEEN /tmp/v/sh/R2/RM-far.jpg, far-1542.jpg, limb-3086.jpg: main brings crisp cells in between 1545 and 1548 above the place; R holds a smooth haze there through 1557 (red a). In R from 1545 + 1/2 a brown band and a blue grey patch come up under the limb (red b): the plates' own ground beyond the far deck step, which starts only at sine 0.035 of the elevation of T.
+- Rows R / main: 1542 0.42 / 0.62; 1543 + 1/2 0.52 / 0.79; 1544 0.45 / 0.71; 1544 + 1/2 0.83 at (613, 287) / 0.75; 1545 0.54 / 0.72; 1546 0.70 at (1855, 426) / 0.83; 1547 0.49 / 0.40; 1548 0.32 / 0.33.
+- The cause of red (a), by the plates themselves (SEEN /tmp/v/pl/w-far.jpg): R's plate files hold the far deck of T as T's picture, a pale smooth deck, at every height. The film's law lets the tones of T go by the angle of the line of sight and the air (globe.ts, same); the forms stay R's, so above the place the ground stays soft until the plates' finer levels give way.
+
+### 06:10 trial P1 (clear): the far deck of T as a map in the frame of T, let go by the height of the eye
+
+- The thought: keep main's plate files to the byte. One small map holds, in the frame of T (across: bearing about the foot of T's camera, 50 degrees to each side of its level line of sight; down: the sine of the elevation of T's camera over the ground point, 0 to 0.22), the logarithm to base 2 of R's plate over main's plate in light. The globe draws main's plates times 2 to the power (map times share); the share is 1 at T and falls to 0 by the height of the eye over the height of T, eased in the logarithm. At T the picture is R's (the seam that is proven); from above it is main's, so 1586 should be main's bytes.
+- Measured on the plates before any render (/tmp/v/far/rho.py, back.py; map 2048 by 256 from level a): the far deck spans bearing minus 46 to plus 46 degrees, sine 0.035 to 0.2; log2 of the ratio at percentiles 0.1 / 1 / 99 / 99.9: -1.26 / -0.61 / 0.64 / 1.24. Main's plate times the map against R's plate, mean of 255 inside the far deck: level a 1.29 (main against R 6.89), level w 2.24 (7.45); outside 0.09 and 0.011. SEEN /tmp/v/far/back-rise-a.jpg: main crisp with white tufts, R hazy, main times the map like R with a fine noise left.
+- Which level holds the far deck at T (cov.py): level a for sine under 0.05, b from 0.05 to 0.2, c about 0.2 and over. The map is put together from the finest level that covers each cell (c over b over a, with the film's feather 0.06) and is none where tlay.py far gave the plate no far deck.
+- Sizes of the map 2048 by 256: PNG 738510 bytes, WebP without loss 590648; 2048 by 512: PNG 1408657. JPEG 4:4:4 at 94: 274707 with a mean error of 0.010 octaves (99th percentile 0.077). The growth word (1.0 MB against a4534656; the name stands at +490728, of which public +184045) leaves about 660 kB for the map in both sets once the eight rise plates are main's again. Not decided before the trial is seen.
