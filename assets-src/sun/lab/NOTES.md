@@ -1284,3 +1284,32 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   STATED, not to be done without a ruling: the approved's cells in the middle distance (rows 680 to 800) are
   about twice as wide as mine while the near ones are alike; the approved does not shrink with distance as a
   true view does. A ground that is really there cannot match both.
+- 00:16 UTC commit 641ccfb2 pushed (h30), looks pushed (8).
+- 00:16 to 00:19 UTC. FLICKER h30: near box disc 26 px 0.360, 63.6 percent; band disc 26 0.360, 51.7; ellipse 90
+  by 45 0.096, 0 percent; ellipse 70 by 35 0.137, 8.0. SEEN at 3 times (v/x3-h30.jpg): the patches true to the
+  px are small dark speckles on a large cell; the approved's are broad and soft, a third to half a cell.
+  ground.ts: cushion.patch[4] says how far the patches are true to the px (0 a share of the cell, 1 px).
+- 00:19 to 00:30 UTC. h31 = h30 with cushion.patch [0.5, 0.3, 0.3, 0.8, 0.3], curve refit (v/lab-h31.json):
+  broader soft dark and light patches on the tops. MEASURED h31 draft frame 90: plain 30.3607, low64 8.824, bands
+  [1.55 1.06 0.96 0.97 1.00 0.93 0.90], percentiles 0.235 0.404 0.584 0.761 0.906 0.965, curve [0.717 0.712 0.701
+  0.68 0.656 0.63 0.593 0.529 0.457 0.392 0.345] (gaps to the approved 0.050 0.050 0.044 0.033 0.037 0.044 0.046
+  0.033 0.024 0.023 0.021: at the edge of 0.05 on the first two tenths), lane 6.1 px (approved 7.08).
+  LEVELS (v/levels-h31.jpg): my lights are more broken than h16's plates but still broader than the approved's
+  blobs; my darks sit as blobs at the crossings with thin lines between, the approved's are a connected net.
+  CHAIN h31 (v/chain-h31.sh, log v/chain-h31.log): fit, film frames 60 to 120 every second frame at preview size
+  (out/work/sun/lab/film-h31, v/film-h31.mp4, v/sheet-h31.jpg), held clip mo-h31, final frame 90, frames 0, 60.
+  FLICKER h31 (h30; b7): near box disc 26 px 0.385 (0.360; 0.211), 75.0 percent (63.6; 37.5); band disc 26 0.385
+  (0.360; 0.255), 53.3 (51.7; 34.2); ellipse 90 by 45 0.126 (0.096; 0.080), 6.7 percent, 1 of 15 (0; 0); ellipse
+  70 by 35 0.146 (0.137; 0.119), 7.1 (8.0; 4). The broad patches cost a little flicker against h30; both are
+  worse than b7. Near rows change in 12 frames, eye held: 35.3 to 36.9 levels (b7 38).
+  SEEN in motion-h31 (eye held, 12 frames apart): cells keep their place, borders creep, patches on the tops
+  come and go, small cells are covered; thin dark crack lines where one cell covers the next; the look is of
+  overlapping scales more than of gas. Nothing slides as one picture.
+- 00:30 to 00:37 UTC. h31 FINAL frame 90 (lab-90-h31f.png): plain 30.7021, low64 8.7907 (main 10.9492), bands
+  [1.45 1.10 0.98 0.98 1.01 0.94 0.91], percentiles 0.235 0.408 0.588 0.765 0.91 0.965, curve [0.719 0.718 0.717
+  0.697 0.671 0.645 0.599 0.537 0.46 0.397 0.348]: gaps 0.052 0.056 0.060 0.050 0.052 0.059 0.052 0.041 0.027 0.028
+  0.024, OUTSIDE 0.05 on six tenths (the draft was at the edge). Lane 6.24 px. Three parts: draft ground 51.7591
+  strip 49.5995 sky 8.5416; final ground 51.8002 strip 49.7223 sky 9.1584 (standing 8.4355 and 9.0457: 0.106 and
+  0.113 over). Frames 0 and 60 draft (v/lab-0-h31.jpg, v/lab-60-h31.jpg): hold, the same faults as 90.
+  SEEN in half-h31f: the approved is a deeper amber with a connected dark net and larger cells in the middle
+  distance; mine is lighter there (rows 620 to 800), gold pebbles.

@@ -48,6 +48,13 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   amplitude, size, two thresholds of the swell field), grain (amplitude, size), seam (the heat of the place on the
   border: level, change, size of its field), rim (fine fibres of the finest count: amplitude, from, to on the way to
   the border, two thresholds, mean). dome.base[5] 0.5 makes the body a bell with no slope at its border.
+  petal (short cooler strokes along the fan: amount, change along the run of two sizes, two thresholds, share of
+  the finer size, how far the thresholds rise toward the border, from where). patch[4] says how far the patches
+  are true to the pixel (0 a share of the cell, 1 a size in stage units). fibre.size (stage units): a cell of
+  that radius has the stated counts; larger cells have more fibres, more change along the run and finer grain, so
+  the texture keeps its size in the picture however large the cell (qSize in the shader, 0.4 to 3). fibre.along
+  is the change of the three fan sizes along the run, a radius of a cell of fibre.size. cushion.fibre[3] is the
+  strength of the thread term (hot threads of the three sizes) on the top.
 - Readers of frame 90 against the approved close image (pictures at 1920 by 1080, none of them writes a file the
   film loads): `python3 assets-src/sun/lab/match.py RENDER.png` (plain match, whole and by rows);
   `python3 assets-src/sun/lab/cells.py RENDER.png|approved [--box X Y W H] [--out OVERLAY.jpg] [--json FILE]`
