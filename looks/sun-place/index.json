@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T16:10:50.254Z",
+ "pushed": "2026-11-26T16:37:59.384Z",
  "head": "1b10c7e763e92846b920cc6c5ca89918bba1052c",
- "note": "Z81 1b10c7e7 final 90: G17 0.8250 p25 0.4887, whole plain 34.0131 (main 29.6374); units green 95 files 1106 tests; path green; sun-near 60 (draft m81): dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 544 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "note": "Z81 1b10c7e7 finals: 60 G17 0.9722 whole plain 35.1217 (main 1.2148, 33.5646); 0 G17 0.8042 (on the line; the median tile is a ground tile, three sky tiles at 0.69 to 0.77); 360 same file as main's 6cb177ca29c2e9be; sun-near 60 (final): dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T16:37:58.223Z",
+   "file": "20261126163758223-note-f0-half.jpg",
+   "source": "../../../../tmp/att/f0-half.jpg",
+   "kind": "note",
+   "label": "Z81 final 0, half size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T16:37:57.040Z",
+   "file": "20261126163757040-note-tri60.jpg",
+   "source": "../../../../tmp/att/tri60.jpg",
+   "kind": "note",
+   "label": "Z81 final 60: approved, main, this state (1b10c7e7)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T16:10:49.027Z",
    "file": "20261126161049027-note-rf-Z81F.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/look-z81-90pair.jpg",
    "kind": "note",
    "label": "Z81 (1b10c7e7) draft 90: approved above, mine below; no second band under the arch",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T15:18:37.695Z",
-   "file": "20261126151837695-note-look-z77-rise.jpg",
-   "source": "../../../../tmp/v/look-z77-rise.jpg",
-   "kind": "note",
-   "label": "Z77 draft rise 221, 225, 229, 233: the arcade and the pools' light leave by size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T15:18:36.988Z",
-   "file": "20261126151836988-note-look-z77-60.jpg",
-   "source": "../../../../tmp/v/look-z77-60.jpg",
-   "kind": "note",
-   "label": "Z77 draft 60 whole",
    "stop": "sun"
   }
  ]
