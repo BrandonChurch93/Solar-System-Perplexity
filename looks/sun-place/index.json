@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T10:32:22.579Z",
- "head": "96de66a9ad816584131777cdfc4796980c6bc55d",
- "note": "units chain runs on 96de66a9 (b13b631b merged on main 7bf2d527); rise 216 to 233 and 221 pair added; sun-near 60 final: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "pushed": "2026-11-26T11:04:53.785Z",
+ "head": "ac0ffdda4556604bab51364ff72fee4f837d8a0f",
+ "note": "after MAIL 1463: arch trial Z5 at draft 90, fan from the feet with hot pools; sky aim under review (rigid sky turns 0.016 deg a frame in the world); sun-near 60 final of ac0ffdda: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T11:04:53.124Z",
+   "file": "20261126110453124-note-a-Z5-90.jpg",
+   "source": "../../../../tmp/v/a-Z5-90.jpg",
+   "kind": "note",
+   "label": "draft 90, arch trial Z5 (fan from each foot, thinner brighter strands): approved above, trial below, 0.75 size",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T10:32:17.553Z",
    "file": "20261126103217553-note-y5-f221-pair.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/y5-tri60.jpg",
    "kind": "note",
    "label": "60 final: main, mine, approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T08:35:56.187Z",
-   "file": "20261126083556187-note-y5-tri90.jpg",
-   "source": "../../../../tmp/v/y5-tri90.jpg",
-   "kind": "note",
-   "label": "final 90, arch trial Y5 (b13b631b): approved, main, this state at 1 to 1",
    "stop": "sun"
   }
  ]
