@@ -1,9 +1,17 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T13:00:24.070Z",
- "head": "ae869236c725501732e00bc507d51995ec0736b5",
- "note": "Dive on cure F: the bank's stepped edge on both trees, the crest at 3051",
+ "pushed": "2026-11-26T13:08:20.072Z",
+ "head": "99d59703705085c740dc7f8e0d28d39145aadc42",
+ "note": "Rise far strip: first test of the air leaving ray by ray, not committed",
  "looks": [
+  {
+   "time": "2026-11-26T13:08:19.161Z",
+   "file": "20261126130819161-note-far_strip_3250_and_3258_air_leaving_ray_by_ray.jpg",
+   "source": "../../../../tmp/lk/far strip 3250 and 3258 air leaving ray by ray.jpg",
+   "kind": "note",
+   "label": "Far strip at 3250 and 3258 (working tree only): as is 1.399; the air leaving by the sine of the line of sight, 0.02 to 0.08: 0.618; with the tone weighted too, 0.05 to 0.2: 0.563",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T13:00:23.500Z",
    "file": "20261126130023500-note-crest_at_pixel_298_950_frames_3050_and_a_half_to_3052_line_B.jpg",
@@ -45,20 +53,6 @@
    "stop": "jupiter",
    "segment": "jupiter.dive",
    "frame": 3051,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T12:36:09.414Z",
-   "file": "20261126123609414-frame-f03284.jpg",
-   "source": "out/work/jupiter/frames/main2/f03284.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3284, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3284,
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
