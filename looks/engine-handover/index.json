@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-25T23:36:13.371Z",
+ "pushed": "2026-11-26T00:06:54.569Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests: the finding mended (a steady slope beside a plain was a ramp without end), the crest of Mars L1 is found whole; drafts of 2668, 2477, 2580, 2672 rendering",
+ "note": "crests: D's dark blob traced to the far sheet under the ground at D's hooked top showing past the layer's rim; a box that ends D under the top cures it; next the unit tests for the new finding, the top rule and the past rule, then the review tier",
  "looks": [
+  {
+   "time": "2026-11-26T00:06:53.947Z",
+   "file": "20261126000653947-note-ov-D7.jpg",
+   "source": "../../../../tmp/crest/ov-D7.png",
+   "kind": "note",
+   "label": "crests: Mars L1 map at D, 6 to 1: ramp near half green, far half red, the cut white, sheet cells yellow, far sheet under kept cells cyan. D's top hooks round the hollow's end 6 texels inside the layer's rim (the diagonal bright ridge is the rim, the striped tan beyond it is outside the matte)"
+  },
+  {
+   "time": "2026-11-26T00:06:53.340Z",
+   "file": "20261126000653340-note-s-q7-a.jpg",
+   "source": "../../../../tmp/crest/s-q7-a.png",
+   "kind": "note",
+   "label": "crests, draft, 2668 x600 y550 6 to 1: base, A and D whole (blob), A and D in a box that ends D under its hooked top (no blob): the known limit, a crest that runs up to the layer's rim is ended with a box"
+  },
+  {
+   "time": "2026-11-26T00:06:52.708Z",
+   "file": "20261126000652708-note-s-dbgD.jpg",
+   "source": "../../../../tmp/crest/s-dbgD.png",
+   "kind": "note",
+   "label": "crests, draft, 2668 x600 y550 8 to 1: left A and D whole with out 0.7 (a dark blob right of the rim), right D alone tinted: red the near sheet, green the far sheet, yellow its fill, blue the far sheet under kept cells. The blob is the far sheet under the ground north of D's hooked top, seen past the layer's rim"
+  },
   {
    "time": "2026-11-25T23:36:12.624Z",
    "file": "20261125233612624-note-ov-n2-wide.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/crest/v4-2668-z3.png",
    "kind": "note",
    "label": "crests v4 draft, frame 2668, z3: base, out 0.35, out 0.5, tinted"
-  },
-  {
-   "time": "2026-11-25T22:01:36.077Z",
-   "file": "20261125220136077-note-v4-2668-z2.jpg",
-   "source": "../../../../tmp/crest/v4-2668-z2.png",
-   "kind": "note",
-   "label": "crests v4 draft, frame 2668, z2: base, out 0.35, out 0.5, tinted"
-  },
-  {
-   "time": "2026-11-25T22:01:35.182Z",
-   "file": "20261125220135182-note-v4-2668-z1.jpg",
-   "source": "../../../../tmp/crest/v4-2668-z1.png",
-   "kind": "note",
-   "label": "crests v4 draft, frame 2668, z1: base, out 0.35, out 0.5, tinted"
-  },
-  {
-   "time": "2026-11-25T22:01:34.199Z",
-   "file": "20261125220134199-note-v4-2668-over.jpg",
-   "source": "../../../../tmp/crest/v4-2668-over.png",
-   "kind": "note",
-   "label": "crests v4 draft, frame 2668, over: base, out 0.35, out 0.5, tinted"
   }
  ]
 }
