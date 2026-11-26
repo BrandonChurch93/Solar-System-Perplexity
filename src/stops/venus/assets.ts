@@ -57,6 +57,9 @@ export const place = {
   dusk: { gain: platesJson.dusk.gain, hue: platesJson.dusk.hue, tint: platesJson.dusk.tint as [number, number, number], heights: platesJson.dusk.heights as [number, number] },
   leave: { heights: platesJson.leave.heights as [number, number] },
   ground: { heights: platesJson.ground.heights as [number, number], bandHeights: platesJson.ground.bandHeights as [number, number], true: platesJson.ground.true as [number, number], skin: platesJson.ground.skin as [number, number], tall: platesJson.ground.tall as [number, number], release: platesJson.ground.release as [number, number], keep: platesJson.ground.keep as [number, number], matte: platesJson.ground.matte, frustum: { margin: platesJson.ground.frustum.margin as [number, number], near: platesJson.ground.frustum.near as [number, number], forms: platesJson.ground.frustum.forms, wide: platesJson.ground.frustum.wide }, flat: { sinElevation: platesJson.ground.flat.sinElevation as [number, number], horizon: platesJson.ground.flat.horizon as [number, number] }, band: [(platesJson.ground.bandDeg[0]! * Math.PI) / 180, (platesJson.ground.bandDeg[1]! * Math.PI) / 180] as [number, number], tone: { broad: platesJson.ground.tone.broad, under: platesJson.ground.tone.under as Record<'dive' | 'rise', [number, number, number]> } },
+  // The far deck of T (plates.json, atT.far.clear): the map of each handover that has one, and the heights over the height of T between
+  // which its share goes from all to none.
+  far: { files: platesJson.atT.far.clear.files as { dive?: string; rise?: string }, azDeg: platesJson.atT.far.clear.azDeg, sine: platesJson.atT.far.clear.sine as [number, number], octaves: platesJson.atT.far.clear.octaves, law: platesJson.atT.far.clear.law, heights: platesJson.atT.far.clear.heights as [number, number] },
   sky: { low: platesJson.sky.low as [number, number], carry: platesJson.sky.carry as [number, number], lift: platesJson.sky.lift },
 }
 

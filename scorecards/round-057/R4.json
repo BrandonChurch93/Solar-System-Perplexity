@@ -1,0 +1,42 @@
+{
+ "critic": "R4",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "planet disk in terrain frames 3744-3776, center and right of the globe",
+   "what": "the distant globe, which serves as the horizon, picks up horizontal smear streaks as if it had the same motion blur as the near ring plane. The horizon should stay sharp while the near ground blurs. Here the cloud bands look like they are swimming or being dragged",
+   "fix": "apply motion blur based on per-pixel screen velocity, not a global directional blur, so that the far globe stays crisp. Check that the planet texture is not being smeared by the ring-plane blur pass"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "lower-left near ring plane in frames 3630-3809",
+   "what": "the near ring texture breaks into dense, high-contrast, aliased striations with speckled noise. In motion this will crawl and shimmer instead of reading as a smooth blur of fine ringlets",
+   "fix": "raise the mip/anisotropic filtering on the ring texture at grazing angles, add temporal accumulation or more motion-blur samples, and fade out sub-pixel ringlet detail with distance"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "sky throughout the terrain segment",
+   "what": "the star field drops to near black for the whole ring skim. Then in the rise (sheet-05, 3830-3850) the Milky Way and stars swell back in, which looks like an exposure change rather than one continuous sky",
+   "fix": "keep a faint, stable star field in the terrain view, or ease the auto-exposure more slowly so the sky stays continuous across the dive, the terrain and the rise"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "upper limb of the planet in frames 3760-3809",
+   "what": "small bright speckles and cell-like spots appear near the terminator and the upper bands, which risks flicker from frame to frame",
+   "fix": "denoise or filter the high-frequency detail in the cloud texture near the limb, and verify that it stays stable over consecutive frames"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 3823-3837",
+   "what": "the camera pivots quickly from the skim to the climb-out. The ring tilt and planet framing change more between 3830 and 3837 than in the neighboring intervals, so the turn may feel abrupt rather than eased",
+   "fix": "lengthen the ease-in on the rise so that the angular velocity ramps up over more frames"
+  }
+ ]
+}

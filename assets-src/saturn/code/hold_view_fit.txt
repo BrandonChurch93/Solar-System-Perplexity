@@ -1,0 +1,51 @@
+edge C inner  middle radius 1.2572 (body 1.2458), sectors read 16, dropped 4
+edge B inner  middle radius 1.4809 (body 1.5237), sectors read 17, dropped 12
+edge B outer  middle radius 1.9484 (body 1.9545), sectors read 43, dropped 0
+edge outer    middle radius 2.3347 (body 2.3389), sectors read 40, dropped 0
+limb: 35 points read, screen angles 171 174 177 180 183 186 189 192 195 198 201 204 234 237 240 243 246 249 252 255 258 261 264 267 270 273 276 279 282 285 288 291 294 297 303
+TODAY (fit.json as it stands; the radii of the two inner edges as the reading gives them): distance 5.5597 radii, lens 30.000 degrees, height over the ring plane 24.729 degrees (eye y 2.3258), roll of the axis 12.540 degrees, globe centre at 1026.1, 527.8 px, disc about 368.5 px
+   camera.position [-0.182312, -0.033514, 5.556652] vfovDeg 30.0000 globe.quaternion [0.2171781, -0.0427061, -0.1107142, 0.9688923] rings.normal [0.195991, 0.881152, 0.430301]
+   radii of the edges on the body: C inner 1.2558 (+0.0100), B inner 1.4855 (-0.0382), B outer 1.9545 (+0.0000), outer 2.3389 (+0.0000)
+   left in px, rms and largest (points): C inner 1.94, 5.21 (16); B inner 6.00, 15.03 (17); B outer 4.61, 8.15 (43); outer 9.72, 21.08 (40); limb 3.28, 10.39 (35); all 6.17
+TODAY, px outward of the true circle by azimuth:
+   C inner  -180:+1.3 -175:+1.4 -170:+1.3 -165:+1.1 100:-5.2 105:+0.2 130:-3.5 135:-2.7 140:-1.6 145:-0.7 150:-0.0 155:+0.5 160:+0.6 165:+0.9 170:+1.2 175:+1.2
+   B inner  -180:+3.1 -160:+15.0 -150:+12.9 -145:+12.1 90:-2.6 95:-2.3 100:-2.2 105:-2.4 110:-2.4 115:-2.3 120:-2.1 125:-1.9 130:-1.5 135:-0.8 165:+1.9 170:+2.7 175:+2.9
+   B outer  -180:+5.5 -175:+4.3 -170:+3.2 -165:+2.3 -160:+1.7 -155:+1.4 -150:+1.2 -145:+0.9 -140:+0.5 -135:+0.2 -130:-0.1 -55:+1.0 -50:+0.1 -45:-0.7 -40:-1.6 -35:-2.6 -30:-4.3 -25:-6.1 -20:-8.2 60:-6.9 65:-4.6 70:-3.9 75:-3.9 80:-3.8 85:-4.5 90:-5.7 95:-6.4 100:-6.5 105:-6.6 110:-6.7 115:-6.8 120:-6.4 125:-5.7 130:-4.5 135:-2.8 140:-0.7 145:+1.2 150:+3.1 155:+4.7 160:+6.3 165:+7.4 170:+7.3 175:+6.7
+   outer    -180:-5.8 -175:-7.2 -170:-7.9 -165:-8.3 -160:-8.2 -155:-7.7 -150:-7.2 -145:-6.8 -140:-6.5 -135:-6.3 -125:-6.0 -120:-5.7 -65:-0.4 -60:-0.3 -55:-0.1 -50:+0.0 -45:-0.2 -40:-0.5 -35:-1.0 -30:-1.7 -25:-3.0 -20:-4.6 -15:-6.9 -10:-9.8 100:+21.1 105:+19.8 110:+18.7 115:+17.3 120:+16.0 125:+14.8 130:+14.5 135:+14.2 140:+13.7 145:+12.9 150:+11.5 155:+9.4 160:+6.4 165:+2.5 170:-1.0 175:-3.9
+   limb (screen angle)  171:-10.4 174:-4.4 177:+0.7 180:+3.5 183:+4.8 186:+4.5 189:+4.1 192:+3.4 195:+2.2 198:+1.0 201:-0.0 204:-0.9 234:+5.9 237:-3.5 240:-3.1 243:-3.2 246:-2.9 249:-2.7 252:-2.4 255:-2.2 258:-1.7 261:-1.1 264:-0.4 267:+0.2 270:+0.7 273:+1.1 276:+1.4 279:+1.9 282:+2.6 285:+2.9 288:+3.0 291:+3.1 294:+2.6 297:+2.5 303:+1.7
+SOLVED (free 0,1,2,3,4,5): distance 5.1204 radii, lens 32.942 degrees, height over the ring plane 24.534 degrees (eye y 2.1261), roll of the axis 12.226 degrees, globe centre at 1020.6, 518.6 px, disc about 363.7 px
+   camera.position [-0.169796, -0.059882, 5.117197] vfovDeg 32.9417 globe.quaternion [0.2181532, -0.0433564, -0.1083148, 0.9689156] rings.normal [0.190979, 0.881354, 0.432136]
+   radii of the edges on the body: C inner 1.2565 (+0.0107), B inner 1.4923 (-0.0314), B outer 1.9545 (+0.0000), outer 2.3389 (+0.0000)
+   left in px, rms and largest (points): C inner 1.87, 6.42 (16); B inner 4.93, 12.77 (17); B outer 5.08, 9.63 (43); outer 3.59, 9.82 (40); limb 4.99, 9.42 (35); all 4.43
+SOLVED, px outward of the true circle by azimuth:
+   C inner  -180:-1.3 -175:-1.3 -170:-1.4 -165:-1.6 100:+1.6 105:+6.4 130:-0.1 135:+0.1 140:+0.6 145:+0.9 150:+0.8 155:+0.6 160:-0.0 165:-0.4 170:-0.7 175:-1.1
+   B inner  -180:-0.2 -160:+12.8 -150:+11.0 -145:+10.3 90:+2.1 95:+1.8 100:+1.2 105:+0.4 110:-0.2 115:-0.7 120:-1.1 125:-1.4 130:-1.6 135:-1.6 165:-1.8 170:-1.0 175:-0.6
+   B outer  -180:+6.5 -175:+5.7 -170:+4.9 -165:+4.2 -160:+3.8 -155:+3.7 -150:+3.6 -145:+3.2 -140:+2.8 -135:+2.5 -130:+2.1 -55:+2.9 -50:+2.2 -45:+1.5 -40:+0.9 -35:+0.1 -30:-1.2 -25:-2.6 -20:-4.2 60:-1.6 65:-0.1 70:-0.3 75:-1.3 80:-2.0 85:-3.5 90:-5.4 95:-6.8 100:-7.6 105:-8.3 110:-9.0 115:-9.6 120:-9.6 125:-9.3 130:-8.3 135:-6.8 140:-4.7 145:-2.6 150:-0.3 155:+1.9 160:+4.3 165:+6.2 170:+7.0 175:+7.0
+   outer    -180:-2.9 -175:-3.6 -170:-3.7 -165:-3.7 -160:-3.4 -155:-2.8 -150:-2.3 -145:-1.9 -140:-1.6 -135:-1.5 -125:-1.4 -120:-1.1 -65:+3.3 -60:+3.4 -55:+3.6 -50:+3.7 -45:+3.5 -40:+3.4 -35:+3.0 -30:+2.4 -25:+1.4 -20:+0.1 -15:-2.0 -10:-4.5 100:+9.8 105:+8.0 110:+6.5 115:+4.8 120:+3.3 125:+2.3 130:+2.3 135:+2.5 140:+3.0 145:+3.5 150:+3.8 155:+3.8 160:+3.0 165:+1.2 170:-0.5 175:-2.0
+   limb (screen angle)  171:-9.0 174:-3.6 177:+0.9 180:+3.2 183:+4.0 186:+3.1 189:+2.3 192:+1.1 195:-0.6 198:-2.3 201:-3.7 204:-4.9 234:+0.1 237:-9.4 240:-9.0 243:-9.0 246:-8.7 249:-8.4 252:-8.0 255:-7.7 258:-7.0 261:-6.2 264:-5.3 267:-4.5 270:-3.8 273:-3.1 276:-2.5 279:-1.7 282:-0.8 285:-0.1 288:+0.3 291:+0.7 294:+0.6 297:+0.8 303:+0.9
+SOLVED: the free ellipse through the hero edge points beside the ellipse of the true circle (centre x, y, half axes, angle of the long axis)
+   C inner  hero 912.2, 561.7; 361.6, 170.8; 18.09 deg (points off it: rms 1.25, most 2.35 px) | circle 1014.2, 561.6; 460.1, 195.8; 13.05 deg
+   B inner  hero 1019.5, 574.0; 557.1, 247.8; 12.97 deg (points off it: rms 1.51, most 4.36 px) | circle 1011.3, 580.6; 552.3, 237.6; 13.07 deg
+   B outer  hero 1007.7, 628.8; 748.6, 326.0; 13.65 deg (points off it: rms 1.86, most 5.34 px) | circle 1003.8, 630.9; 743.5, 328.7; 13.13 deg
+   outer    hero 991.9, 690.1; 913.1, 420.9; 12.84 deg (points off it: rms 2.10, most 4.68 px) | circle 995.1, 689.3; 916.8, 417.6; 13.20 deg
+SOLVED, every radius free too: distance 5.1770 radii, lens 32.851 degrees, height over the ring plane 24.566 degrees (eye y 2.1522), roll of the axis 12.244 degrees, globe centre at 1020.5, 518.4 px, disc about 360.6 px
+   camera.position [-0.170946, -0.061084, 5.173784] vfovDeg 32.8510 globe.quaternion [0.2184621, -0.0433582, -0.1084474, 0.9688311] rings.normal [0.19119, 0.881027, 0.43271]
+   radii of the edges on the body: C inner 1.2666 (+0.0208), B inner 1.5047 (-0.0190), B outer 1.9663 (+0.0118), outer 2.3648 (+0.0259)
+   left in px, rms and largest (points): C inner 2.02, 6.60 (16); B inner 4.71, 12.23 (17); B outer 4.56, 8.23 (43); outer 3.41, 7.71 (40); limb 4.15, 6.92 (35); all 3.99
+the lens held, the other values solved:
+   lens  12.0: distance 12.634, height 22.35 deg, left rms: 18.93 18.51 13.70 42.72 20.66, all 26.691
+   lens  16.0: distance 9.637, height 22.86 deg, left rms: 14.60 15.35 10.50 35.48 15.17, all 21.618
+   lens  20.0: distance 7.865, height 23.34 deg, left rms: 10.27 12.15 7.58 28.24 10.35, all 16.739
+   lens  24.0: distance 6.700, height 23.79 deg, left rms: 6.11 9.14 4.86 21.00 6.35, all 12.094
+   lens  27.0: distance 6.055, height 24.05 deg, left rms: 3.37 7.30 3.24 15.44 4.24, all 8.805
+   lens  30.0: distance 5.538, height 24.29 deg, left rms: 1.46 6.02 3.39 9.35 3.68, all 5.820
+   lens  33.0: distance 5.113, height 24.54 deg, left rms: 1.91 4.91 5.09 3.52 5.03, all 4.432
+   lens  36.0: distance 4.754, height 24.50 deg, left rms: 5.21 3.86 5.30 3.64 7.90, all 5.523
+   lens  40.0: distance 4.360, height 24.48 deg, left rms: 9.63 5.23 6.79 8.54 12.68, all 9.089
+   lens  46.0: distance 3.911, height 24.67 deg, left rms: 14.61 7.71 10.85 19.54 18.54, all 15.609
+   lens  52.0: distance 3.571, height 24.83 deg, left rms: 18.81 10.12 15.86 31.48 23.83, all 22.690
+pictures: OUT-full.jpg OUT-parts.jpg (1886, 1578)
+ESTIMATE, the approved laid straight on the rigid body through the view of today: plain 9.7161 (the ring pixels give 9.0701 of it, their own mean 17.275, share of the frame 0.5250; the limb zone gives 0.6460; 14268 ring pixels take their source from outside the frame and are left as they are)
+ESTIMATE, the approved laid straight on the rigid body through the view of solved: plain 7.7744 (the ring pixels give 7.0897 of it, their own mean 13.359, share of the frame 0.5307; the limb zone gives 0.6847; 7104 ring pixels take their source from outside the frame and are left as they are)
+REAL FRAME K: plain 12.0744 (the ring pixels of the view of today give 10.5128 of it, their own mean 20.023; the rest gives 1.5616)
+REAL FRAME main: plain 4.7669 (the ring pixels of the view of today give 3.4412 of it, their own mean 6.554; the rest gives 1.3258)
