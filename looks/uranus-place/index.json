@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T14:50:31.931Z",
- "head": "e8114e04ebee9f13cd4ca1a7bc5168c56d17ce0b",
- "note": "the layer is out of today's name by the pop at 4418 (MAIL 1507); the name will be D alone; open and shown: the hard cut edges of the cloud group at 4416 and 4418",
+ "pushed": "2026-11-26T15:14:23.503Z",
+ "head": "5fc9bcaa7b62cabd68f23329ae568cc6ed0daa9f",
+ "note": "D alone with main merged is 5fc9bcaa (pushed, proofs running): final 4407 has no dark dashes; the lanes stay paler than main's",
  "looks": [
+  {
+   "time": "2026-11-26T15:14:18.265Z",
+   "file": "20261126151418265-note-fin-4407-strip.jpg",
+   "source": "../../../../tmp/n80/fin-4407-strip.jpg",
+   "kind": "note",
+   "label": "FINAL 4407, the Builder's strip x 560 to 1260, y 830 to 1080 at 1 to 1: main, the name bcc9d174, D alone. Still paler lanes than main's (median green of the lower part 44 against 33): not cured",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T15:14:13.521Z",
+   "file": "20261126151413521-note-fin-4407-crop.jpg",
+   "source": "../../../../tmp/n80/fin-4407-crop.jpg",
+   "kind": "note",
+   "label": "FINAL 4407 at 2 to 1, x 420 to 740, y 700 to 860: main, the name bcc9d174, D alone. The dark dashes of the name are gone with D (count in the strip 0, 11, 0; whole frame 74, 182, 39)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T14:50:26.181Z",
    "file": "20261126145026181-note-grp-D2.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n75/n-r2-d.png",
    "kind": "note",
    "label": "54ae2b6d rise and travel draft 4454 to 4465",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:42:34.060Z",
-   "file": "20261126104234060-note-n-r2-c.jpg",
-   "source": "../../../../tmp/n75/n-r2-c.png",
-   "kind": "note",
-   "label": "54ae2b6d rise draft 4442 to 4453",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:42:33.416Z",
-   "file": "20261126104233416-note-n-r2-b.jpg",
-   "source": "../../../../tmp/n75/n-r2-b.png",
-   "kind": "note",
-   "label": "54ae2b6d rise draft 4430 to 4441",
    "stop": "uranus"
   }
  ]
