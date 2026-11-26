@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T05:13:16.345Z",
+ "pushed": "2026-11-26T05:47:10.794Z",
  "head": "6bc94020c93f8d051acf65e49d0184423467160c",
- "note": "candidate 6bc94020: the sky part at 60 and 90 at 1 to 1 beside the approved (draft tier); sun-near 60 draft: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081; 221 at final is drawing, main's 221 at final after it",
+ "note": "sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081. Dots at the hold: cure by the arcade's own size, hold 360 equals main's bytes; fall in the rise still too fast, being set",
  "looks": [
+  {
+   "time": "2026-11-26T05:47:10.192Z",
+   "file": "20261126054710192-note-c1-rise-a.jpg",
+   "source": "../../../../tmp/v/c1-rise-a.jpg",
+   "kind": "note",
+   "label": "cure first numbers (225 to 480 rows): rise drafts 216 to 241; the arcade falls too fast between 216 and 225, numbers being set again",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T05:47:09.557Z",
+   "file": "20261126054709557-note-hold3.jpg",
+   "source": "../../../../tmp/v/hold3.png",
+   "kind": "note",
+   "label": "cure in the working tree (leave by size, log step): 300, 330, 360 final at 2 to 1 about the spot, main's 360 at the right; 360 equals main's bytes",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T05:47:08.921Z",
+   "file": "20261126054708921-note-arc-rise.jpg",
+   "source": "../../../../tmp/v/arc-rise.jpg",
+   "kind": "note",
+   "label": "candidate 6bc94020, the arcade about the spot at 2 to 1 through the rise, before the cure: strands at 221 to 231, haze and two dots at 236, dots from 241",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T05:12:53.675Z",
    "file": "20261126051253675-note-sky90-pair.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/mg-limbR.jpg",
    "kind": "note",
    "label": "limb and right foot at 60, 1 to 1: approved, main final, this state draft (main's ground)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T04:52:14.495Z",
-   "file": "20261126045214495-note-mg-limbL.jpg",
-   "source": "../../../../tmp/v/mg-limbL.jpg",
-   "kind": "note",
-   "label": "limb and left foot at 60, 1 to 1: approved, main final, this state draft (main's ground)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T04:52:13.375Z",
-   "file": "20261126045213375-note-m12-rise.jpg",
-   "source": "../../../../tmp/v/m12-rise.jpg",
-   "kind": "note",
-   "label": "merge 6bc94020 at draft: 221 main (top left) and this state (top right), 247 this state (bottom left), difference at 221 times 4 (bottom right): the ball's face is main's, the sky parts: my gas glow is a wide grey veil that hides the stars",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T04:41:27.657Z",
-   "file": "20261126044127657-note-n2h-d.jpg",
-   "source": "../../../../tmp/v/n2h-d.jpg",
-   "kind": "note",
-   "label": "rise 217 to 225 at draft, the state before with the lab's ground (2d2c669d)",
    "stop": "sun"
   }
  ]
