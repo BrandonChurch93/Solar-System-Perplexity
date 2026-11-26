@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T12:20:45.342Z",
+ "pushed": "2026-11-26T12:56:32.682Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "The readers of the film's motion carry the sky over the step of a way in by its seen turn (units and both diffs measured, commit follows); proof frames of the step on Neptune at draft",
+ "note": "The cure of the readers is named (3bbb219a); the step of the stars with the line at the review tier, four frames; a pair without the line renders for a sharpness measure",
  "looks": [
+  {
+   "time": "2026-11-26T12:56:31.891Z",
+   "file": "20261126125631891-note-review-step-right.jpg",
+   "source": "../../../../tmp/seen/pics/review-step-right.png",
+   "kind": "note",
+   "label": "The same four review frames 1 to 1, right: the Sun and the stars over 4529 to 4530"
+  },
+  {
+   "time": "2026-11-26T12:56:31.123Z",
+   "file": "20261126125631123-note-review-step-upper-left.jpg",
+   "source": "../../../../tmp/seen/pics/review-step-upper-left.png",
+   "kind": "note",
+   "label": "The same four review frames 1 to 1, upper left: Milky Way, stars and Triton keep their place over 4529 to 4530"
+  },
+  {
+   "time": "2026-11-26T12:56:30.332Z",
+   "file": "20261126125630332-note-review-step-whole.jpg",
+   "source": "../../../../tmp/seen/pics/review-step-whole.png",
+   "kind": "note",
+   "label": "The step of the stars on Neptune with its way in aim at the review tier: 4528 to 4531 whole at half size (16 samples in the travel, 4 in the hold)"
+  },
   {
    "time": "2026-11-26T12:20:37.997Z",
    "file": "20261126122037997-note-step-line.jpg",
@@ -38,13 +59,6 @@
    "source": "../../../../tmp/weigh/near-2468-review.png",
    "kind": "note",
    "label": "Mars 2468 near slope at three times: review tier with the four texel weigh alone (a whole light line), review tier with the outline in the masks (a hairline), draft tier as the stop stands (dots)"
-  },
-  {
-   "time": "2026-11-26T10:39:27.053Z",
-   "file": "20261126103927053-note-grow2-band-2470.jpg",
-   "source": "../../../../tmp/weigh/grow2-band-2470.png",
-   "kind": "note",
-   "label": "Mars 2470 at draft, the head of the band: the matte as sent and carried 2 px outward, the cost of the trial"
   }
  ]
 }
