@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T11:33:59.361Z",
+ "pushed": "2026-11-26T11:52:33.272Z",
  "head": "23087fd30ea977015762d59c4bc5eda4f590a493",
- "note": "Line A: the cause of the red at master is proved by a switch (octaves drawn by the size of the pixel); the thread now fades to its mean; the fine ripples still darken with size. Not a candidate.",
+ "note": "wb5: curls and ropes in the dark ground, solve not fitted yet",
  "looks": [
+  {
+   "time": "2026-11-26T11:52:32.643Z",
+   "file": "20261126115232643-note-wb5-3150.jpg",
+   "source": "../work/r26/t/wb5-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state wb5 (not pushed, solve not fitted)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T11:52:32.062Z",
+   "file": "20261126115232062-note-wb5-crop.jpg",
+   "source": "../work/r26/t/wb5-crop.jpg",
+   "kind": "note",
+   "label": "3150 preview draft: wb4 left, wb5 right, lower halves at twice the size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T11:52:31.442Z",
+   "file": "20261126115231442-note-wb5-vs-appr.jpg",
+   "source": "../work/r26/t/wb5-vs-appr.jpg",
+   "kind": "note",
+   "label": "3150 preview draft: approved left, state wb5 right, lower left at twice the size below (curls and ropes, old solve)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T11:33:58.726Z",
    "file": "20261126113358726-note-wa5-r4-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r26/t/w87-3150.png",
    "kind": "note",
    "label": "3150 preview draft, state w87 before a solve: lanes at 0.08 units of height, pits like craters in the storm; refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:51:14.754Z",
-   "file": "20261126095114754-note-w83-3150.jpg",
-   "source": "../work/r26/t/w83-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w83 before a solve: basins taken from the map at 0.08 units, far too deep, black pits; refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:28:57.800Z",
-   "file": "20261126092857800-note-w82-3150.jpg",
-   "source": "../work/r26/t/w82-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w82 on the scaffold of w77, before its own solve: tints cut (sheet 0.6, fibre 0.4, thread 0.4), the stripes go and it reads softer; band 1 to 2 px 0.653 red; line (i) 7.174",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:28:57.106Z",
-   "file": "20261126092857106-note-w81-3150.jpg",
-   "source": "../work/r26/t/w81-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w81 on the scaffold of w77: sheets finer (tint fall -0.3, aspect 0.02); line (i) 5.882",
    "stop": "jupiter"
   }
  ]
