@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T18:48:34.795Z",
+ "pushed": "2026-11-26T19:01:59.744Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "The Sun's sky turn that is seen (asked by sun_builder for a later cut): the engine's count as a graph, no frame of the Sun drawn yet; Neptune 4951 still drawing",
+ "note": "Neptune 4951 at review (the last onset frame) and the pairs with 4952; the Sun's sky turn that is seen, drafts on a scratch tree: the engine draws it, the stars carry through the view change",
  "looks": [
   {
-   "time": "2026-11-26T18:48:33.562Z",
-   "file": "20261126184833562-note-turn-graph.jpg",
-   "source": "../../../../tmp/sun/turn-graph.png",
+   "time": "2026-11-26T19:01:58.421Z",
+   "file": "20261126190158421-note-p204-207-stars.jpg",
+   "source": "../../../../tmp/sun/see/p204-207-stars.png",
    "kind": "note",
-   "label": "A GRAPH OF NUMBERS, NOT A FRAME: the Sun, how far the sky turns in the film's world from one frame to the next; red main's plan as it stands (largest 2.082 at 238), blue the Sun's named plan 5ccff167 (0.037), green the same plan with the two sky aims and the word seen (0.419 at 212, a corner in the rate at the view change 205 | 206); dashed the limit 0.5 the film refuses to build above"
+   "label": "The Sun 204 to 207 at 2 to 1, a box of sky that follows the stars through the view change 205 | 206; drafts of the scratch tree"
   },
   {
-   "time": "2026-11-26T18:27:51.754Z",
-   "file": "20261126182751754-note-st54-a.jpg",
-   "source": "../../../../tmp/nep/see/st54-a.png",
+   "time": "2026-11-26T19:01:57.273Z",
+   "file": "20261126190157273-note-p205-206-stars4.jpg",
+   "source": "../../../../tmp/sun/see/p205-206-stars4.png",
    "kind": "note",
-   "label": "Neptune 4954, stars at 4 to 1, review beside its draft of one sample: the pairs of stars are the sky's own, each star drawn once"
+   "label": "The Sun 205 (surface view) beside 206 (globe view) at 4 to 1, a box of sky that follows the stars: the same stars on both sides of the view change, moved by -14 -9 px (204 to 205: -14 -8; 206 to 207: -16 -10); drafts of the scratch tree"
   },
   {
-   "time": "2026-11-26T18:27:50.616Z",
-   "file": "20261126182750616-note-p53r-54r-e.jpg",
-   "source": "../../../../tmp/nep/see/p53r-54r-e.png",
+   "time": "2026-11-26T19:01:56.087Z",
+   "file": "20261126190156087-note-p180-181-fixed.jpg",
+   "source": "../../../../tmp/sun/see/p180-181-fixed.png",
    "kind": "note",
-   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: dark deck"
+   "label": "The Sun 180 beside 181, one fixed crop at 2 to 1 (x 180..520, y 330..550): the stars move 5 to 11 px between the two while the ground stands within 1 px (boxes: spot -1 +1, ground 0 0 and -4 0): the sky's turn by the clock, seen; drafts of the scratch tree"
   },
   {
-   "time": "2026-11-26T18:27:49.563Z",
-   "file": "20261126182749563-note-p53r-54r-d.jpg",
-   "source": "../../../../tmp/nep/see/p53r-54r-d.png",
+   "time": "2026-11-26T19:01:54.799Z",
+   "file": "20261126190154799-note-f00212.jpg",
+   "source": "../t-sunf/out/work/blur/sun-word/f00212.png",
    "kind": "note",
-   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: deck streaks"
+   "label": "The Sun 212, globe view, where the sky turns fastest (0.419 degrees a frame, limit 0.5); draft, 1 sample; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
   },
   {
-   "time": "2026-11-26T18:27:48.210Z",
-   "file": "20261126182748210-note-p53r-54r-c.jpg",
-   "source": "../../../../tmp/nep/see/p53r-54r-c.png",
+   "time": "2026-11-26T19:01:53.324Z",
+   "file": "20261126190153324-note-f00206.jpg",
+   "source": "../t-sunf/out/work/blur/sun-word/f00206.png",
    "kind": "note",
-   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: lower clouds"
+   "label": "The Sun 206, the first frame of the globe view, the sky turning (0.363); draft, 1 sample; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
   },
   {
-   "time": "2026-11-26T18:27:47.064Z",
-   "file": "20261126182747064-note-p53r-54r-b.jpg",
-   "source": "../../../../tmp/nep/see/p53r-54r-b.png",
+   "time": "2026-11-26T19:01:52.061Z",
+   "file": "20261126190152061-note-f00205.jpg",
+   "source": "../t-sunf/out/work/blur/sun-word/f00205.png",
    "kind": "note",
-   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: band"
+   "label": "The Sun 205, the last frame of the surface view, the sky turning (0.349); draft, 1 sample; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
   },
   {
-   "time": "2026-11-26T18:27:45.961Z",
-   "file": "20261126182745961-note-p53r-54r-a.jpg",
-   "source": "../../../../tmp/nep/see/p53r-54r-a.png",
+   "time": "2026-11-26T19:01:50.993Z",
+   "file": "20261126190150993-note-f00180.jpg",
+   "source": "../t-sunf/out/work/blur/sun-word/f00180.png",
    "kind": "note",
-   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: small clouds"
+   "label": "The Sun 180, the rise's first frame, the sky turning (0.409 degrees a frame); draft, 1 sample; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
   },
   {
-   "time": "2026-11-26T18:27:44.487Z",
-   "file": "20261126182744487-note-f04954.jpg",
-   "source": "../t-arr/out/work/blur/ne-on/f04954.png",
+   "time": "2026-11-26T19:01:49.741Z",
+   "file": "20261126190149741-note-f00150.jpg",
+   "source": "../t-sunf/out/work/blur/sun-word/f00150.png",
    "kind": "note",
-   "label": "Neptune 4954, review, 24 samples, with the entry of handover.shutterEnds (tree t-arr): the third frame of the rise's onset, whole"
+   "label": "The Sun 150, close view, the sky turning between its two aims and seen (0.324 degrees a frame here); draft, 1 sample; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
   }
  ]
 }
