@@ -215,7 +215,9 @@ export class Arcade {
   readonly strands: number
   /** The arcade's greatest height over the ball, in stage units. */
   readonly tall: number
-  /** How it leaves: by its own height in pixels of a frame of `lines` rows, gone under px[0], whole from px[1].
+  /** How it leaves: by its own height in pixels of a frame of `lines` rows, gone under px[0], whole from px[1], a
+   *  smooth step in the logarithm of that height between them. Under px[0] the strands are thinner than a pixel and
+   *  the body is no longer loops to the eye but a few soft dots (MAIL 1421), so it gives no light from there on.
    *  under: how far under the ball's radius the ball stands that hides a strand where no depth is drawn (stage units). */
   readonly leave: { lines: number; px: number[]; under: number } = data.leave
   private readonly keep: THREE.IUniform<number> = { value: 1 }
@@ -503,10 +505,11 @@ export class Arcade {
   }
 
   /** The share left by the arcade's own size: its height in pixels of a frame of leave.lines rows as the eye (in the
-   *  stage's frame) sees it under the field given; gone under leave.px[0], whole from leave.px[1]. */
+   *  stage's frame) sees it under the field given; gone under leave.px[0], whole from leave.px[1], even steps in the
+   *  logarithm between them and no slope at either end. */
   sized(eye: THREE.Vector3, vfovDeg: number): number {
     const px = this.tall / Math.max(eye.distanceTo(this.place), 1e-6) * this.leave.lines / (2 * Math.tan(THREE.MathUtils.degToRad(vfovDeg) / 2))
-    return THREE.MathUtils.smoothstep(px, this.leave.px[0]!, this.leave.px[1]!)
+    return THREE.MathUtils.smoothstep(Math.log(Math.max(px, 1e-6)), Math.log(this.leave.px[0]!), Math.log(this.leave.px[1]!))
   }
 
   dispose(): void {

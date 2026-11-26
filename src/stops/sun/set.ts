@@ -168,9 +168,10 @@ export const createSet: SetFactory = async (ctx) => {
         standing.position.set(0, 0, 0)
         eyeStage.copy(eye)
       }
-      // the arcade's lines stand still and its plasma runs on the stop's clock. It stands at its full light at every
-      // distance and leaves by its own size alone (MAIL 1070 point 2, arcs.json leave); in the travel the far Sun
-      // takes it over with the globe (below) and draws the same body
+      // the arcade's lines stand still and its plasma runs on the stop's clock. It leaves by its own size alone, a law
+      // of the distance (MAIL 1070 point 2, MAIL 1421, arcs.json leave): whole while its loops can be told apart, gone
+      // before they are a few soft dots. The hold and the travel stand farther than that and hold none of its light;
+      // in the travel the far Sun takes it over with the globe (below) and asks the same law
       loops.update(since, eyeStage, (inOrbit ? state.weight : 1) * loops.sized(eyeStage, view.camera.fov), gain, vignette, aspect)
       const height = Math.max(inOrbit ? world.position.length() - 1 : eye.distanceTo(stage.centre) / stage.radius - 1, 1e-4)
       const above = (r: number[]): number => (rising ? THREE.MathUtils.smoothstep(Math.log(height), Math.log(r[0]!), Math.log(r[1]!)) : inOrbit ? 1 : 0)
