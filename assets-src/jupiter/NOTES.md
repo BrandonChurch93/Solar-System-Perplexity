@@ -2120,3 +2120,18 @@ Also in: the draft frames of e88f4f2b beside 84f2d1e1 (jx1-02): only 3044, 3048,
 - BUILD E = build D plus the switch as it was drawn (relief.ts, four lines after the held reading; nothing else). tsc exit 0 at 18:01:28 (/tmp/tsc-e.log). Path part on the working tree: "smooth jupiter: green." exit 0 at 18:01:58 (/tmp/path-e.log). vitest started 18:01:14 (/tmp/vitest-e.log). Rows k 6494 to 6528 are drawn into set sw1 by /tmp/rows.sh (log /tmp/rows-e.log, niced so the tests keep the cores), table by /tmp/tinttable.py sw1.
 - origin/main moved to 52ff2250 (kit/PROGRESS.md only since 2f5b2eb3; since the merge base b40494a1 only kit and scorecards).
 - Looks pushed 18:02:29 (remote head 8e575cc87fa7).
+- Build E is commit b037e9ee (relief.ts, four lines; these notes). Rows of build E at the half frame (set sw1, draft, rate 2, /tmp/tinttable.py; count and in brackets the largest excess; main, build D, build E):
+  - 3248 + 1/2: 19 (13), 40 (15), 21 (15)
+  - 3249 + 1/2: 22 (12), 555 (16), 27 (13)
+  - 3250 + 1/2: 25 (12), 2926 (22), 352 (13)
+  - 3251 + 1/2: 26 (12), 3884 (25), 1203 (19)
+  - 3252 + 1/2: 40 (13), 3890 (28), 1666 (24)
+  - 3253 + 1/2: 542 (18), 3031 (27), 2009 (23)
+  - 3254 + 1/2: 1840 (21), 2491 (23), 2092 (24)
+  - 3255 + 1/2: 2811 (21), 2118 (23), 1903 (23)
+  - 3256 + 1/2: 1976 (22), 1283 (20), 1227 (20)
+  - Pixels of build E with excess over 22: none up to 3251 + 1/2, then 12 (x 1812 to 1839, y 549 to 563), 7, 2, 1, none at 3256 + 1/2. Build D on k 6502 to 6511: 2, 28, 51, 64, 69, 70, 40, 7, 7, 2.
+  - Far right box mean luma, D then E: 21.69, 21.71; 24.57, 24.60; 28.74, 28.78; 34.55, 34.61; 42.66, 42.73; 53.32, 53.40; 66.31, 66.37; 81.36, 81.40; 98.19, 98.22. The lift's light is kept.
+- A CORRECTION to my 17:35 mail, found by counting all of main's 41 stills k 6494 to 6534: main's largest count is 2811 at k 6511 (3255 + 1/2), but its excess is not at most 22 on these rows. From k 6522 (3261) to k 6534 (3267) main has pixels over 22: 9, 49, 86, 94, 97, 99, 98, 96, 86, 69, 66, 60, 44, the largest excess 29 at k 6527 (3263 + 1/2: count 817, 99 px over 22, x 1699 to 1768, y 516 to 577). Build D is the same there (847, 29, 99). "21 to 22" held only for 3254 + 1/2 to 3256 + 1/2. Build D's largest count over all its stills is 4094 at k 6504 (3252), not 3890.
+- The rows render was stopped by hand at 18:14 (TERM did not end it, kill -9 did) because the tests had 27 of 95 files after 13 minutes beside it. Drawn: k 6497 to 6513 odd. Not drawn on build E: k 6495, 6515 to 6527 odd and every even k.
+- vitest on build E's tree (/tmp/vitest-e.log; started 18:01:14 on b0704bbd plus relief.ts, sha1 df3399f82d57, the file committed in b037e9ee): "Test Files  95 passed (95)", "Tests  1106 passed (1106)", "Duration  1007.45s", "vitest exit 0 18:18:05". Then origin/main (52ff2250, kit and scorecards only) merged and the branch pushed.
