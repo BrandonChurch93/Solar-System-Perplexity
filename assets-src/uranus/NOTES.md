@@ -4289,3 +4289,43 @@ RULING on your 14:17 answer and its 14:20 addendum.
 STATE to me at 15:45, or at once when something reads red."
 
 - What I do on it: the three queued reads (dive 2, dive 1, rise 2) taken out of the queue at 14:21; rise part 1 runs on. After it: finals 4290, 4407, 4137, 4436, 4035 on f5049e07, the control (fibre gain 0 at 4416 and 4418), units, gate.
+
+### 26 Nov, 14:43 to 15:00 UTC: MAIL 1507, the layer out of today's name, the cross check of rise part 1
+
+#### MAIL 1507 (14:43 UTC, high), word for word
+
+"MAIL 1507 from the Builder (/root), 14:43 UTC. To uranus_builder. FIRST FOUR ROWS of your two states, read on my machines against main's rows (rx1-01 and rx1-04). The other four (dive part 2, rise part 1 of each) are still rendering; I send them when they are in.
+
+D ALONE, fdee859b:
+dive part 1 (ua7-01): red in both rows; pop 1.0961 at 4118 against main's 1.5036 at 4144; pattern 0.9873 at 4151 against 1.1696 at 4152; level step 0.0712 at 4139 against 0.3302 at 4142. Every line better.
+rise part 2 (ua7-04): red in both rows; pop 1.1135 at 4463 against 1.1486 at 4417; pattern 0.8239 at 4422 against 0.8765 at 4422; level step 0.2686 at 4465, the same. No line worse.
+
+BOTH STEPS, f5049e07:
+dive part 1 (ub7-01): red in both rows; pop 1.0962 at 4118 against 1.5036; pattern 1.1647 at 4154 against 1.1696 at 4152 (D alone reads 0.9873 there, so the second step gives back nearly all that D won); level step 0.0650 at 4139 against 0.3302.
+rise part 2 (ub7-04): pop 1.2791 at 4418 against main's 1.1486 at 4417: OVER the limit of 1.2 and worse than main's, where D alone reads 1.1135. Pattern 0.8189 at 4422 against 0.8765; level step the same.
+
+RULING SO FAR, by the word of MAIL 1503 point 3: the second step is OUT of the name as it stands, by the pop at 4418 alone (a new red line, d311). If the other two rows of D alone hold, the name is D alone, fdee859b. Do not spend your render on the second step for today's name. If you can name the cause of the pop at 4418 in one line from what you have (it stands at the frames of the cloud group you were to control by 17:00), send it; a second step with its cause cured may ride the later cut as its own name, proved as the others, and is not owed today.
+
+Your state by 15:45 as agreed. The aim NAMED by 16:15 stands."
+
+#### My answer, sent 14:49 (high), word for word
+
+"ANSWER TO MAIL 1507 from uranus_builder, 14:49 UTC.
+TAKEN: the second step is out of today's name. The name will be D alone: a child of f5049e07 that takes the layer back by a commit of its own (never amended), so its stop code is fdee859b's byte for byte, with main merged as it stands then. I take the three finals jobs of f5049e07 out of my queue and draw the finals on D alone instead: 4407 new, and 4290, 4035, 4137, 4436, where D's drafts keep the name's bytes, so I expect the finals of bcc9d174 again and say so by sha256. Then G5 and G17, units, gate, path, cues, shots on the name's tree.
+THE CAUSE OF THE POP AT 4418, one line, by arithmetic from the heights of my own path (no control): with power 2 the air's share under the eye climbs twice as fast a frame just there. Old law 1 - exp(-h / 0.3) against the layer 1 - exp(-(h / 0.3)^2), h = 0.240, 0.267, 0.298 R at 4417, 4418, 4419: old 0.550, 0.590, 0.630 (steps 0.039, 0.040), layer 0.472, 0.548, 0.628 (steps 0.076, 0.079). Both laws have their largest step a frame where h = 0.3 R, which is 4419, and the layer's is twice the old one's (0.080 against 0.040). That share dims the light of every ground point and of the white tops in place, so the layer is the faster change in place that MAIL 1020 point 2 warns of, at the frames where the white cloud group stands large in frame. A layer that keeps the old law's step a frame at 0.3 R is not built; it is not owed today and I do not spend the render on it before the name.
+The read of rise part 1 on f5049e07 on my machine is at 120 of 132 frames; I let it end (about 10 minutes) and send its three numbers as the cross check, then the render goes to D alone."
+
+#### The cross check, sent 14:57 (high), word for word
+
+"CROSS CHECK from uranus_builder, 14:57 UTC: rise part 1 of 2 on both steps, read on my machine (the report's commit line says e8114e04, which is f5049e07 plus notes; draft, rate 2, 99 rows 4368 to 4417).
+- Pop 1.2406 at 4417, RED, 2 rows over 1.2 (4416 + 1/2 1.2139, 4417 1.2406); the rows climb from 4414 (1.0244, 1.0649, 1.1352, 1.1643, 1.1844) into your 1.2791 at 4418 of part 2. Main 1.1787 at 4416, the name bcc9d174 1.0843 at 4395 + 1/2. So the layer is over the limit and over main in part 1 too: the same event as your row, and it agrees with the arithmetic of my 14:49 mail (the air's share steps twice as fast a frame from 4414 on).
+- Pattern 1.5367 at 4411, 72 of 99 rows over 0.45 (first 4380); main 1.6021 at 4399, the name 1.4796 at 4411.
+- Level step 0.1239 at 4414 + 1/2; main 0.1444, the name 0.1873.
+STATE: the layer is taken back on my tree by a commit of its own (883fb201, not pushed yet; git diff against fdee859b over src, public, tools, config, cut, package.json is empty). On it the finals run now in this order: 4407, 4290, 4137, 4436, 4035, then G5 and G17. Main is merged when the finals are drawn; the fourth cut is not on origin main yet (92d23292 at 14:48)."
+
+#### What was done
+
+- 14:48: the units' run on f5049e07 (a first check beside the render) stopped unread; the finals jobs and the controls of f5049e07 taken out of the queue.
+- 14:55:24: the read of rise part 1 on both steps ended (`/tmp/n80/out/r1/`, the report's commit e8114e04). 14:55:33: the layer taken back by 883fb201; pushed 14:57.
+- The heights behind the arithmetic (`out/work/u/alt2.ts rise 4414 4424`): 4414 0.17299, 4415 0.19289, 4416 0.21507, 4417 0.23980, 4418 0.26737, 4419 0.29811, 4420 0.33239, 4421 0.37060, 4422 0.41321 R. The eye's height grows by a factor of 1.115 a frame there, so the step a frame of the old law is (h / s) exp(-h / s) x 0.109 and of the layer 2 (h / s)^2 exp(-(h / s)^2) x 0.109: both largest at h = s, 0.040 and 0.080.
+- Seen at 2 to 1 on the drafts of D alone beside main (`/tmp/n80/grp-D2.jpg`, x 1000 to 1320, y 900 to 1060, 4416 and 4418; on the looks branch): the white cloud group has hard cut edges with a stair step at the big patch's lower right, and cup shapes with the light gathered at the lower edge, where main has soft round patches. Open; the controls (fibre gain 0, the light from above 0, the cover's cloud gain 0, the cover's cloud shade 0, the cover off) follow after the name's proofs.
