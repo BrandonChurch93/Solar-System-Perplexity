@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T17:43:34.129Z",
+ "pushed": "2026-11-26T18:06:41.653Z",
  "head": "5ccff1674ccb3ed7fab80c6f251aee1e8d989d53",
- "note": "17:43 trial Z88 (arcs.json alone, not named, not pushed) at 60, 0, 91, 92 and in the rise beside the named state: strands stand, beads move, the arcade leaves by its size as before | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "note": "18:06 trial S1 (not named, not pushed): the Milky Way behind the arch by a second sky aim that turns from frame 90 to 269, sky in the world at most 0.418 degrees a frame by slide.ts; needs two lines of shared code, so nothing of it is committed | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T18:06:41.045Z",
+   "file": "20261126180641045-note-s1-sky90.jpg",
+   "source": "../../../../tmp/v/s1-sky90.jpg",
+   "kind": "note",
+   "label": "trial S1 not named: the sky at the upper left of frame 90 at 1 to 1, approved above, S1 below",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T18:06:40.387Z",
+   "file": "20261126180640387-note-s1-sheet.jpg",
+   "source": "../../../../tmp/v/s1-sheet.jpg",
+   "kind": "note",
+   "label": "trial S1 not named: drafts 0 to 247, the sky stands to frame 90 and turns to the hold's sky from 90 to 269",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T18:06:39.772Z",
+   "file": "20261126180639772-note-s1-90.jpg",
+   "source": "../../../../tmp/v/s1-90.jpg",
+   "kind": "note",
+   "label": "trial S1 not named (needs two lines of shared code, not committed): approved top left; S1 at 90 top right, at 60 bottom left; Z88 with the rigid sky at 90 bottom right; half size",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T17:43:28.595Z",
    "file": "20261126174328595-note-z88-909192.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/z87-cmp.jpg",
    "kind": "note",
    "label": "trial Z87 (not named, not pushed) draft: approved, Z81 named above; Z87 at 60 and at 90 below: looser band, bold fountain at the left foot",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T17:19:22.750Z",
-   "file": "20261126171922750-note-glint-pair.jpg",
-   "source": "../../../../tmp/v/glint-pair.jpg",
-   "kind": "note",
-   "label": "draft 226 (above) and 229 (below): main's folders left, the name right; the pale glint in the spot is main's too",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T17:19:22.104Z",
-   "file": "20261126171922104-note-r81c-spot.jpg",
-   "source": "../../../../tmp/v/r81c-spot.jpg",
-   "kind": "note",
-   "label": "named 5ccff167, draft rise 222 to 230 every frame, the spot at 1 to 1: the arcade leaves without a pop",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T17:02:31.265Z",
-   "file": "20261126170231265-note-arcleave-211-233.jpg",
-   "source": "../../../../tmp/att/arcleave-211-233.jpg",
-   "kind": "note",
-   "label": "Z81 draft rise 211 to 233: the arcade leaves by its own size",
    "stop": "sun"
   }
  ]
