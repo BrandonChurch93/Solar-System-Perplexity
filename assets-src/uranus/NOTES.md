@@ -4156,3 +4156,76 @@ Sent to /root, high priority, 12:43 UTC, with ten pictures (`/tmp/n78/att/01` to
 > 
 > Pictures attached: 1 the reader's panel, dive 2 of 2; 2 dive 2 of 2 at the largest row, 1 to 1; 3 the reader's panel, rise 1 of 2 (a854dac9); 4 the reader's panel, rise 2 of 2; 5 final 4407, main beside the name, frame size and 1 to 1; 6 4175 beside 4176 at the pop's corner; 7 and 8 the clock's control; 9 final 4436: main, the name, the name with the clock's cure; 10 final 4290: approved, main, the name. The sheets of every frame of the dive and of the rise are on agent/uranus-place-looks (looks head 32ff2420 of 12:41, with final 4186 beside main's).
 
+
+### 26 Nov, 12:43 to 13:32 UTC: after the name; MAIL 1489 and 1490
+
+- 12:44 notes pushed (5c21aa69 on agent/uranus-place; the name stays bcc9d174).
+- 13:11 rise part 1 of 2 read again on the name's code (job 66-r1, 132 draft frames): pattern 1.4796 from 4411 (72 of 99 rows over 0.45, first 4380 + 1/2, last 4417), pop 1.0843 at 4395 + 1/2 (none over 1.2), level step 0.1873 at 4414 + 1/2. The mail's numbers; no mail owed.
+- 13:01 looks pushed (looks head 91a59ec0): final 4407 at 3 times beside main's and the name's draft; the draft at 4403, 4407, 4410.
+
+MAIL 1489 from the Builder (/root), 13:17 UTC (word for word):
+
+"MAIL 1489 from the Builder (/root), 13:17 UTC. To uranus_builder, on your name bcc9d174.
+
+1. MEASURED by my machines so far: dive part 1 every line better than main (pop 1.0961 against 1.5036, pattern 0.9873 against 1.1696, level step 0.0712 against 0.3302); rise part 2 no line worse (pop 1.1135 against 1.1486, pattern 0.8239 against 0.8765, level step equal); G17 PASS on both trees (4290 median 1.067 against 1.100); 17 draft frames outside the stop the same bytes; finals 4035, 4137, 4290, 4436 read and found without a new fault (4290 reads 2.8014 against main 3.4927 beside the approved picture). Still out: dive part 2, rise part 1, units and gate. I rule at 13:30; if those three are green your name is on the fourth cut, made about 14:00.
+
+2. One open point for the later cut (names until 18:30), not a bar for the fourth cut because no judged frame carries it. In the rise, at draft tier at 60 frames a second, your name carries more fine dark hairlines on the bright cloud than main does: my count of pixels darker by 28 levels than their 7 px median reads 415, 732, 915, 485 on the name at 4405, 4408, 4411, 4414 against 300, 225, 242, 138 on main. The picture joined shows the bottom strip (x 560 to 1260, y 830 to 1080) at 1 to 1, main at the left. At the final tier your own pair at 4407 shows the same: softer than main in the cloud band, with dark dashes.
+
+3. Asked, by 14:30, in a few lines: the cause as you measure it (my guess, unproven: the place's fine dark streaks seen small after the handover of 4391, drawn without their smaller copies), whether a cure exists that leaves 4035, 4137, 4290 and 4436 at their bytes, and the hour you would name it. If the cure moves a judged frame, say which and by how much before you build it. Do not hold anything else back for it."
+
+MAIL 1490 from the Builder (/root), 13:23 UTC (word for word):
+
+"MAIL 1490 from the Builder (/root), 13:23 UTC. To uranus_builder, one line more on bcc9d174, answer by 13:50.
+
+MEASURED by my machine (us6-03), rise part 1: pop 1.0843 at 4395 against main 1.1787 at 4416, better; pattern 1.4796 at 4411 against main 1.6021 at 4399, better; level step 0.1873 at 4414 against main 0.1444 at 4414, higher by 0.0429. The level step is under the limit on both and inside d364's twentieth (0.065), so it counts as equal if you name its cause and my eye finds no step. My own reading of the two 60 frames a second draft clips: the mean level climbs through 4412 to 4416 on both trees and bends at 4415 (71.95, 72.89, 73.58, 73.71, 74.00 on your name; 68.96, 70.36, 71.59, 72.32, 73.27 on main, at 4414, 4414 and a half, 4415, 4415 and a half, 4416), a bend of a rising curve, no flicker; by thirds of the frame the step sits in the top (+0.28) and the bottom (-0.28) on both trees.
+
+Asked: the cause in one or two lines, as you measure it or as the code says (what makes the level climb faster on your name up to 4415 and flatten there). That is all I need for the row; with it rise part 1 stands as no worse. Dive part 2 and units and gate are still out."
+
+#### The level step at 4414 + 1/2: measured (answer sent 13:31; its head line says 13:34, my guess of the time ran fast)
+
+- Ten draft half frames 4412 + 1/2 to 4417 on the name's code (`/tmp/n79/f/LH`) and on main's stop tree (`/tmp/n79/f/LM`); mean luma of the frame and of its thirds (`/tmp/n79/thirds.py`). The step (level less the mean of its two neighbours) gives the reader's own numbers: name +0.1534 at 4414, +0.1873 at 4414 + 1/2; main +0.1208, +0.1444.
+- Top third, name: 94.87, 97.92, 100.62, 102.65, 103.57, 103.40, 103.22, 103.25, 103.55, 104.11. Main: 92.48, 95.48, 98.21, 100.37, 101.52, 101.69, 101.94, 102.45, 103.26, 104.36. Bottom third, name: 42.66, 42.72, 43.04, 43.78, 44.58, 45.26, 46.00, 46.49, 46.75, 46.70. Main: 38.85, 39.44, 40.34, 41.76, 43.32, 44.88, 46.62, 48.19, 49.59, 50.64.
+- Step by thirds at 4414 + 1/2, name / main: top +0.545 / +0.487, middle -0.042 / -0.049, bottom +0.059 / -0.004.
+- Looked at (4413, 4414 + 1/2, 4416, `/tmp/n79/lh-top.jpg`): the limb's arc climbs in the frame; at 4413 a strip of sky stands over it along the top edge, at 4414 + 1/2 the limb's bright band touches the top edge at the right, at 4416 it leaves through it. So the bend is the framing, on both trees.
+- Why the name is 0.043 higher: main's half frame gain over mine grows 0.13, 0.23, 0.35 (top third) and 0.69, 0.75, 0.87 (bottom third) at 4414, 4414 + 1/2, 4415: main's hand by the eye's height speeds up there and takes 0.06 off the step in both thirds. The air's share of my law grows evenly there (0.438, 0.456, 0.474).
+- Heights of the rise (`out/work/u/alt.ts`, not committed): 4412 0.139 R, 4413 0.155, 4414 0.173, 4415 0.193, 4416 0.215, 4417 0.240, 4418 0.267; field of view 46.2 to 42.7 degrees; height times pixel 1.10e-4 to 1.93e-4.
+
+MAIL 1493 from the Builder (/root), 13:32 UTC (low; as I kept it, the left out parts marked ...):
+
+"1. The cause of the level step at 4414 and a half is taken as named and measured ... the line counts as equal under d364. It does not hold bcc9d174 back. 2. ... trial of the fourth cut at 13:05; its 11 draft frames at your stop are the same bytes as bcc9d174 (measured at 13:25). Still out for Uranus before the cut at about 14:00: the reader row of the dive part 2 on my machine and units and gate. If both come in green and no worse, bcc9d174 is on the cut. 3. The hairlines over 4405 to 4414 (MAIL 1489): thank you for the first control (not the cover's grain). Your answer by 14:30 stands, with cause, cure and hour for the later cut, whose names are taken until 18:30."
+
+MAIL 1496 from the Builder (/root), 13:44 UTC (word for word):
+
+"MAIL 1496 from the Builder (/root), 13:44 UTC. To uranus_builder. Your last reader row is in: us6-02, the dive's second half on bcc9d174, against main's row.
+
+Pattern 1.6031 at 4175 against main's 1.6142 at 4163: better, red on both.
+Two lines read a little higher than main's, both far under their limits and inside the twentieth of d364:
+(1) pop 1.1228 against 1.1098, both at 4176 (limit 1.2);
+(2) level step 0.0698 against 0.0580, both at 4158 (limit 1.3).
+By d364 they count as equal if you name the cause and my eye finds no step. Name the cause of each in two or three lines, with a measure if you hold one, by 14:10 UTC. A short answer is enough; do not leave your other work for longer than that.
+
+Nothing else changes: the cause at 4414 is taken (MAIL 1493), the answer on the hairlines of 4405 to 4414 stays due 14:30. Your other three rows are no worse than main's on any line (two better on every line)."
+
+#### The dark specks of the rise (MAIL 1489 point 2): the cause by controls
+
+- The count: pixels darker by 28 levels than their 7 px median (`/tmp/n79/hair.py`, not committed), in the Builder's strip (x 560 to 1260, y 830 to 1080) / in the whole frame, draft tier.
+- Main: 4399 69 / 1302; 4403 0 / 766; 4407 3 / 369; 4410 38 / 326; 4413 87 / 197; 4416 58 / 161; 4418 31 / 91; 4422 10 / 50.
+- The name (bcc9d174): 4399 105 / 1414; 4403 38 / 786; 4407 36 / 943; 4410 88 / 1035; 4413 116 / 595; 4416 104 / 413; 4418 59 / 120; 4422 13 / 36.
+- Controls on the name's code, 4403 and 4407 (one value each, the tree restored after): the deck's detail off (tone, relief, fleck 0) 35 / 783 and 36 / 937, no change; the cover's cloud shade 0: 40 / 789 and 36 / 940, no change; the surface picture off (`deck.long` out of range): 34 / 782 and 34 / 936, no change; the cover's cloud gain 0: 0 / 655 and 5 / 281, the specks gone; the cover off (`show.deck` false): 0 / 661 and 3 / 298, the specks gone.
+- Looked at (`/tmp/n79/sp-4407-ctl.png`, x 400 to 700, y 700 to 860 of 4407: main, the name, gain 0, cover off): with the cover's clouds off the white cloud looks like main's, the fine fibres stay, the dots in rows are gone.
+- The cause as measured: in `deck.ts` the cover's small clouds lay their own light over the ground under them (`col = col * (1.0 - veilA) + lVeil * uCloudTint * dq`). The tops' law of bb5537bf adds light to the white tops when the eye looks steeper than the pose did (`max(now - held, 0) * (1 - air)`); that added light stood under the veil's cover, so each small cloud took it away and put its dimmer lane light there: a dark speck on a white cloud. Main has none because main's cover goes out by the eye's height. Not the grain, not the shadow, not the detail, not missing smaller copies of the place's streaks.
+
+#### Cures tried at draft tier (not committed, the tree restored after each)
+
+- D (`/tmp/n79/e-D.py`): the tops' light split in two in `globe.ts`: `topsHeld` (`(1 - held) * air`) stays under the veil's cover; `topsOver` (`max(now - held, 0) * (1 - air)`) is added after the cover in `deck.ts`, times the same shade and cloud shadow as the ground. Counts strip / whole frame: 4399 0 / 1286; 4403 0 / 652; 4407 4 / 285; 4410 31 / 292; 4413 58 / 167; 4416 77 / 192; 4418 59 / 120; 4422 13 / 36. Main's level or under it, 4416's strip aside (77 against 58).
+- D against the name by bytes (sha256 of the draft frames): 4035, 4137, 4150, 4186, 4195, 4200, 4250, 4290, 4350, 4422, 4436 the same bytes; 4155 to 4180 differ a little (4155 no pixel by more than 1 level; 4160 213 pixels over 1 level, largest 7; 4164 1514 pixels, largest 24; 4168 766, largest 11; 4172 54, largest 3; 4176 and 4180 none over 1); 4399 to 4418 differ where the specks stood (4407: 34554 pixels over 1 level, 3951 over 12, largest 81, mean lift 0.09).
+- Looked at (`/tmp/n79/sp-4407-D.png`, `/tmp/n79/sp-4410-D.png`): at 4407 the dots are gone and the white cloud reads as main's; a few faint dashes stay at the right. The lanes stay as pale as the name's (lower part median green 44 against main's 33): D does not touch that.
+- E (`/tmp/n79/e-E.py`): the whole tops' light after the cover. Counts as D (4407 4 / 283, 4410 34 / 283, 4413 57 / 150), but every terrain frame changes (4186 to 4350 all differ from the name's bytes), so the judged 4290 moves. Dropped for D.
+
+#### MAIL 1496: the two lines of the dive's second half, measured (answer sent 13:57)
+
+- Draft half frames 4156 + 1/2 to 4159 + 1/2 and 4175 + 1/2 to 4177 on the name's code (`/tmp/n79/f/PH`) and on main's stop tree (`/tmp/n79/f/PM`).
+- Level step at 4158 (`/tmp/n79/thirds.py`): name +0.0698, main +0.0580, the reader's own numbers. By thirds, name / main: top +0.2238 / +0.1864, middle -0.0185 / -0.0282, bottom +0.0040 / +0.0158. Top third levels, name: 75.231, 77.196, 79.189, 80.925, 82.213, 83.123, 83.707; main: 75.602, 77.459, 79.410, 81.179, 82.575, 83.667, 84.489. Main less name: 0.37, 0.26, 0.22, 0.25, 0.36, 0.54, 0.78.
+- Looked at (`/tmp/n79/p-top.jpg`, the top 400 rows of 4156 + 1/2, 4158, 4159 + 1/2): the top of the limb's bright arc comes in under the top edge at 4158, the dark sky follows it. The framing, on both trees; the mirror of 4414 + 1/2. Heights: 4157 0.267 R, 4158 0.244, 4159 0.223.
+- Pop at 4176 (`/tmp/n79/popreg.py`: left() of `tools/img/smooth.py` at a quarter size on the pairs from 4175 + 1/2, 4176, 4176 + 1/2): whole frame, name 1.699, 1.823, 1.755; main 1.703, 1.829, 1.735. Top third, name 2.380, 2.772, 2.553; main 2.449, 2.840, 2.598. Lower two thirds, name 1.343, 1.329, 1.337; main 1.314, 1.302, 1.284. Rows 0 to 120 of 4176 differ from main's in 1158 of 230400 pixels (mean 0.005 levels), rows 120 to 240 in 6692 (0.029), rows 240 to 360 in 71263 (0.98).
+- What it shows: the peak at 4176 is the top third's on both trees (the rings' arcs and the stars against the carried globe, the report's blocks 12,1 and 13,1), and the sky is the same picture on both. The pair itself reads equal (1.823 against 1.829). Not proven: where the ratio's 0.013 sits (the median of 16 frames is not in three pairs).
