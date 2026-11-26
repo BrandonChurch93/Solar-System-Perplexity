@@ -8016,3 +8016,56 @@ This changes the globe's edge in every frame of the stop, in both sets, so the f
 
 Mail 1390: main cfabcc52 (batch 19 a and b). Mail 1399: the clock; names by 06:45 for the third cut, main is
 5798676c. Disk was at 3.4 GB free at 04:13: cleared old frames of the stopped chain and old copies, 4.4 GB.
+
+## 2026-11-26 04:25 to 04:56 UTC: the candidate 6f74b0fa under proof, the gate's G11 red and its cure, mail 1406
+
+State under proof: agent/saturn-code 6f74b0fac496e8189318073d0efe90fbe827d691 = main 5798676c merged into
+b7ae9359 (K with the lone pixel cures). Outside Saturn's folders the tree is main's; 25 files differ, all in
+Saturn's folders; net +8.380 MB (83.835 against 75.456), nearly all of it globe-light.bin in the two tiers.
+
+Mails: 1400 (04:27) main is 834d5148 (take/hc1, crests of a relief, no stop gives crest), 1405 (04:39) main is
+23f1089b (take/sg2 the sky's field glare, take/hn1 the reader's tools): no picture of mine moves, merge before
+the name. 1406 (04:46): push the candidate as soon as it stands and send one line (sha, base, files), the
+Builder's machines start its proofs before the name; the tracked tree is at 2.93 GB of 3 GB, a name that adds
+more than 5 MB says so and says what it removes. Sent the line at 04:54 (high): 6f74b0fa, base 5798676c, the
+25 files, +8.380 MB, removes nothing, dead files with the next commit.
+
+The proof chain (/tmp/v/rigid/proof_c.sh, out /tmp/v/rigid/PC, the worktree mainref at 6f74b0fa, the stop
+frozen in /tmp/v/rigid/sC):
+- units: 89 files, 1020 of 1020 passed, 785 s (04:36).
+- finals: 3465 f99eb85dca531ebf (K's dbb180046a12205c), 3720 7edb622ded51eff9 (K's 69f1499a74b9ea73).
+  3465 against K's: 33,577 px differ; in the edge band (2 px outside to 5 inside the outline) 4,333, of them
+  879 over 2 levels, 187 over 6, 7 over 16, the largest 90 at (893, 210), where K's limb was hard and bright
+  (213, 200, 163) and is now a soft edge (152, 116, 73) like main's (140, 117, 88); the disc 28,173 px by at
+  most 4; elsewhere 1,071 px by 1. 3720 against K's: 30,916 px, the largest 8 (edge band 343 over 2, 5 over
+  6; disc at most 2; elsewhere at most 1). 3720 against main's: the disc 547,264 px, 159,888 over 2, 23,837
+  over 6, 1,416 over 16, the largest 40 at (1627, 197); elsewhere 35,932 px, 116 over 2, none over 6, the
+  largest 4. Both finals seen whole in four quarters: they read as K's.
+- the flight in 3340 to 3400 at draft, every frame (PC/in, sheets PC/in_sheet_N.jpg), seen frame by frame and
+  3376 whole: one body that grows, true ellipses, the globe's shadow on the rings from the first frame the
+  rings are wider than a few px (3346), Titan from 3351. Nothing swaps.
+- gate: G15 PASS (at most 2 sets per frame; saturn web 275 MB, full 747 MB). G11 FAIL: globe-light.bin of
+  the two tiers had no row in a RECIPE.md. MY FAULT, a file added without its recipe. Cure: a section for
+  public/assets/saturn/<set>/globe-light.bin in assets-src/saturn/RECIPE.md (what it is, the two tools, the
+  inputs, what it does, sha256 7d39fb8bb2d89dd8). G11 alone run again in the repo: PASS. No other byte moves.
+- running at 04:56: the rise (then G17, parity, path, handover, place, G13, finals 3567, 3866, 3572, the
+  dive last, about 07:15).
+
+Points read so far (reader frames, lens at f + 0.125; ring edges, shape, the most px and its azimuth; B
+inner, B outer, outer; then the limb: median px out, half within, nine in ten within):
+ 3562: -1.58 (150), +1.49 (-50), -0.35 (130); limb -0.41, 0.43, 1.47 (K's bytes before the cures, jpg)
+ 3572: -1.59 (150), +1.44 (-50), -0.53 (130); limb -0.37, 0.52, 2.47 (cured, png)
+ 3593: -0.27 (160), +0.35 (-50), -0.36 (120); limb -0.40, 0.39, 1.03 (cured, png)
+ 3601: -0.07 (-170), +0.29 (-140), +0.13 (-40); limb -0.20, 0.55, 6.90 (K's bytes before the cures, jpg)
+The bright pixel of mail 1323 at (1556, 748), 3601: the name on main reads 121 to 124 over a surround of 14,
+K reads 18 over 19.
+
+Size, for the name mail: the name adds 8.380 MB and removes nothing. Dead in this state and to clear in a
+commit of its own after the name: polar-warp.bin (2 x 0.131 MB), close-globe.jpg (0.534 + 0.147 MB),
+close-light.bin (2 x 0.048 MB), and hold-light.bin (2 x 3.686 MB), which is drawn at weight 0 at every frame
+but is the source of the bake (globe_light.py reads the full tier's file): one copy has to stay, in
+assets-src or where it is. Not done before the name: the loading of all four is woven through kept/set.ts
+and the shaders, and a clearing needs its own proof of the same bytes.
+
+Looks pushed 04:52 (pairs of the finals beside main and the approved, the five sheets of the flight in,
+3376 whole).
