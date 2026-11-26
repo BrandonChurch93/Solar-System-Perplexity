@@ -6,7 +6,6 @@ import type { GroundLook, SeetheLook } from './ground'
 import type { FringeLook } from './fringe'
 import type { KnotsLook, LoopsLook } from './loops'
 import { config } from '../../config'
-import { stage } from './stage'
 import fit from './fit.json'
 
 const distance = Math.hypot(fit.camera.position[0]!, fit.camera.position[1]!, fit.camera.position[2]!)
@@ -105,8 +104,6 @@ export const opening: KnotsLook & { fade: [number, number]; seethe: SeetheLook }
   erupt: { from: 0.375 * hook, top: 0.3, time: 0.14 * hook, lean: 0.7, far: 0.08, lanes: 2.5, pick: [0.95, 1.25], outer: [1.47, 1.65, 1], gate: [1.24, 1.36, 1.84, 1.98], gain: [0.4, 1.6], erode: 0.4, thin: 2, fade: [0.24, 0.42], tear: [0.3, 0.5, 0.07], flash: { at: 0.31 * hook, peak: 0.05 * hook, ease: 0.017 * hook, amount: 5, width: 0.13, white: 0.6, wide: 0.3, haze: 0.5, level: 7.5, lane: [1.7, 0.22], tint: [1, 0.82, 0.55], ground: 1.6, veil: 0.12, span: 0.8 } },
   seethe: { amount: 1, rate: 2, spread: 4, near: [2.2, 4.5], far: 0.3, crown: [0.85, 1.25] },
 }
-
-export const skyTerrain: SkyCardDef = { file: 'sky-terrain.webp', vfovDeg: 55, margin: 0.25, gain: 1, centre: stage.skyCentre, edge: 0.05, floor: [0.22, 0.34] }
 
 export const files = { wrap: 'wrap-color.jpg', corona: 'corona.webp', prominence: 'prominence.png', prominenceFlow: 'prominence-flow.png', plate: 'plate.jpg', apron: 'apron.jpg', field: 'field.jpg', loops: 'loops.webp', loopsGlow: 'loops-glow.png', haze: 'haze.png', grade: 'grade.png', cellsPlate: 'cells-plate.png', swellPlate: 'swell-plate.png', cellsApron: 'cells-apron.png', swellApron: 'swell-apron.png' }
 
