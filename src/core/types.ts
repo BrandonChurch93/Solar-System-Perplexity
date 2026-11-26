@@ -146,6 +146,7 @@ export interface Shot {
   skyExposure: number
   skyGlow: number
   skyTurn: THREE.Quaternion
+  skyPlate?: { aim: THREE.Quaternion; turning: boolean }
   skyStars?: number
   skyPatch?: number
   skyLook?: number

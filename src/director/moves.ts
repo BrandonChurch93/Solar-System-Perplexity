@@ -73,7 +73,7 @@ export interface MoveParams {
   // that is not given. Not set: the stop names no body and every frame keeps its sample count.
   near?: NearParams[]
   tint: [number, number, number]
-  skyAim?: { orbit?: [number, number, number]; terrain?: [number, number, number] }
+  skyAim?: { orbit?: [number, number, number]; terrain?: [number, number, number]; dive?: [number, number, number]; turn?: [number, number] }
 }
 
 export interface NearParams { centre: [number, number, number]; radius: number; degPerSecond?: number }
