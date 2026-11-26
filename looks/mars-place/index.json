@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T17:09:05.288Z",
+ "pushed": "2026-11-26T17:25:13.126Z",
  "head": "c3e9a12a3fc956da2633ce69f2d534e22c95388c",
- "note": "speck state named (49851313); whole cure on main's plates under proof: path green, finals of 2325 and 2580 main's bytes",
+ "note": "whole cure on main's plates: units 1106 green, gate and path green, finals main's bytes; reader slices run",
  "looks": [
+  {
+   "time": "2026-11-26T17:25:12.211Z",
+   "file": "20261126172512211-note-x-2452.jpg",
+   "source": "../../../../tmp/pm/B/x-2452.png",
+   "kind": "note",
+   "label": "pair at native size, frame 2452 (dive): main left, the whole cure on main's plates (0d638c07) right; the west stretch (upper left) is a flat field with a hard border, named red",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T17:25:11.469Z",
+   "file": "20261126172511469-note-x-2690.jpg",
+   "source": "../../../../tmp/pm/B/x-2690.png",
+   "kind": "note",
+   "label": "pair at native size, frame 2690 (rise): main left, the whole cure on main's plates (0d638c07) right; 41,502 px differ by more than 8 levels",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T17:09:04.563Z",
    "file": "20261126170904563-note-s-2690.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pm/B/x-2440.png",
    "kind": "note",
    "label": "pair at native size, frame 2440: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T16:16:42.207Z",
-   "file": "20261126161642207-note-A2-2456.jpg",
-   "source": "out/work/place/in7/A2-2456.png",
-   "kind": "note",
-   "label": "the whole cure on main's plates, frame 2456, draft",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T16:16:41.363Z",
-   "file": "20261126161641363-note-A2-2448.jpg",
-   "source": "out/work/place/in7/A2-2448.png",
-   "kind": "note",
-   "label": "the whole cure on main's plates, frame 2448, draft: the canyon's inside as ground from above with a crisp cast shade",
    "stop": "mars"
   }
  ]
