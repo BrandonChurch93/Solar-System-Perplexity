@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T17:21:47.330Z",
- "head": "7f13289598cb81abbdd2b81d5d9da877e3abbcff",
- "note": "3720 beside the approved close and beside the third cut for mail 1518; lens cure sheets of the dive",
+ "pushed": "2026-11-26T17:48:27.827Z",
+ "head": "c8c320b8eb80225cf2bb04d405add53ea09a8055",
+ "note": "the lens cure of mail 1508 on c8c320b8: the judged 3567 final beside main's and the approved; the table of placements is running",
  "looks": [
+  {
+   "time": "2026-11-26T17:48:27.046Z",
+   "file": "20261126174827046-note-s3567_final_crops.jpg",
+   "source": "../../../../tmp/v/p1518/s3567_final_crops.jpg",
+   "kind": "note",
+   "label": "3567 FINAL full size crops: approved, main, the lens cure: the far ring at the limb, and the near ring"
+  },
+  {
+   "time": "2026-11-26T17:48:26.225Z",
+   "file": "20261126174826225-note-s3567_final.jpg",
+   "source": "../../../../tmp/v/p1518/s3567_final.jpg",
+   "kind": "note",
+   "label": "3567 FINAL: approved hero, main, the lens cure c8c320b8, their difference (the cure is main seen 0.65 percent larger; lens 34.58 against 34.79 degrees)"
+  },
+  {
+   "time": "2026-11-26T17:40:30.763Z",
+   "file": "20261126174030763-note-s3567_draft.jpg",
+   "source": "../../../../tmp/v/p1518/s3567_draft.jpg",
+   "kind": "note",
+   "label": "3567 draft pair: approved hero, main, the lens cure, their difference (the cure is main seen 0.65 percent larger)"
+  },
   {
    "time": "2026-11-26T17:21:42.006Z",
    "file": "20261126172142006-note-cure_3594.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/p1518/two_3720_now.jpg",
    "kind": "note",
    "label": "3720 whole frame: approved close over main now (draft)"
-  },
-  {
-   "time": "2026-11-26T17:21:39.057Z",
-   "file": "20261126172139057-note-two_crop_old_now.jpg",
-   "source": "../../../../tmp/v/p1518/two_crop_old_now.jpg",
-   "kind": "note",
-   "label": "3720 draft, same crop: third cut main 77a7d410 and main now: same eye, lens and ring pixels"
-  },
-  {
-   "time": "2026-11-26T17:21:38.489Z",
-   "file": "20261126172138489-note-three_3720_crop_now.jpg",
-   "source": "../../../../tmp/v/p1518/three_3720_crop_now.jpg",
-   "kind": "note",
-   "label": "3720, x 700 to 1340, y 330 to 810: approved close, main before batch 18 (final), main now (draft): the gap of sky inside the inner rim and the uncovered foot"
-  },
-  {
-   "time": "2026-11-26T16:54:41.214Z",
-   "file": "20261126165441214-note-limb2_cure_3569.jpg",
-   "source": "../../../../tmp/v/p1508/sheets/limb2_cure_3569.jpg",
-   "kind": "note",
-   "label": "the cure 7f132895, frames 3569 to 3584 at the globe's right limb where the far ring arm goes behind it (x 1340 to 1560, y 400 to 580, twice the size): the place of the reader's largest pattern row of dive part 1 (0.3528 at 3573 + 1/2, main 0.2936 at 3574 + 1/2, limit 0.45)"
   }
  ]
 }
