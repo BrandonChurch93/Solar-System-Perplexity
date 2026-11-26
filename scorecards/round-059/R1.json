@@ -1,0 +1,70 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "lower-left foreground, below and left of the storm eye (pair-04-b crops D and I)",
+   "what": "A warm, sculpted billow has become a much darker, cooler streak. This loses the sunlit fold and the separation between the overlapping clouds.",
+   "fix": "Bring back the warm raking light and fine ridges on the raised fold; keep the deep black in the valleys around it."
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "diagonal cloud deck between the eye and the horizon (pair-04-b crops A, B, F and H)",
+   "what": "Long blue-gray and nearly black streaks interrupt the lighter cream deck. The distant layers look flatter and more sharply striped than the target.",
+   "fix": "Soften and lift the long dark streaks, and restore the pale, broken cloud texture between the eye and the limb."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "clear sky left of the disc and along the Milky Way at right (pair-02-b crops B–H)",
+   "what": "There are too many conspicuous bright points, even in the target’s darker sky. The extra stars compete with the galactic dust and make the blacks feel less quiet.",
+   "fix": "Dim or thin the added bright points, preserving the target’s dark gaps and the color and structure of the Milky Way."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "sunlit upper-left and lower-left limb, crops B and D",
+   "what": "The upper-left halo reads cooler and grayer than the target’s warm glow. The lower-left halo spills a little farther into the dark sky.",
+   "fix": "Warm the upper-left halo and contain the lower-left spill while retaining the soft falloff and crisp disc edge."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "moon, its cast shadow, and the surrounding mid-disc belts, crop A",
+   "what": "The moon and its shadow sit a little high and left. The shadow’s far edge is harder, and the adjacent cream belts show slightly less fine separation.",
+   "fix": "Set the moon and shadow marginally down and right, soften the shadow’s distal edge, and recover the fine pale and blue cloud filaments."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "dark right limb and polar falloff, crops C, E and I",
+   "what": "Isolated cool blue marks and faint bands show through the terminator more distinctly than in the target. The polar cap is also a little less textured.",
+   "fix": "Subdue the blue marks into the near-black falloff and restore subtle cloud relief on the lit side of the upper cap."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "storm eye and immediate inner and lower-left rims, crops A, B, F and G",
+   "what": "The eye’s position and warm light direction match, but the smallest orange filaments and the warm-to-dark separation on the lower rim are slightly muted.",
+   "fix": "Recover the fine amber filaments and separate the lit rim from the brown interior without lifting the black core."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "diagonal blue limb and sky above it, crops C and H",
+   "what": "Extra bright stars make the black sky and faint Milky Way busier, and the blue fringe across the middle-to-right horizon reads slightly more outlined.",
+   "fix": "Reduce bright point contrast and feather the blue fringe into the sky, keeping the horizon angle and warm-to-cool transition."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "lower-right storm folds around the blue flashes, crop E",
+   "what": "The flashes are in the right places, but the surrounding dark folds have slightly less fine definition.",
+   "fix": "Recover low-level cloud relief selectively around the blue pockets without lifting the whole lower-right corner."
+  }
+ ]
+}
