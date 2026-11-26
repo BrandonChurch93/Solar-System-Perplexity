@@ -1,5 +1,14 @@
 {
   "note": "The close view's own ground in the globe's scene (plan F, MAIL 578). In a dive and a rise the close view's meshes (src/terrain/relief.ts over relief.json) stand on the globe at their true place through the plan's twin frame, with their own light, haze and air, and are drawn by the globe side's eye in the same frame as the globe. presence: how much of them is there by the height of the eye over the unit sphere (radii, log scale): nothing above high, all of them from low down. The band lies where the close ground, a fan built for the close view's eye, fills the frame of the globe side (dive from about 2472, rise to about 2686); above it the place is the globe's own ground (cap.json, country.json). No time is read. The globe's own air (shell, halo, glint) leaves by the same share, so that at the change of view both sides draw the one scene.",
+  "law": {
+    "texel": [1, 2],
+    "air": [1, 2],
+    "farthest": 44.1083,
+    "edgeNote": "edge: over how many pixels of the picture (full size, 5632 by 3168) the picture goes over into the ground beside it at its left, right and lower side, counted inward from the picture's own side; the margins beyond have no share. A quarter of the picture's width and of its height: the middle half is the picture whole. By the sight (law.ts count 3): none of it at the eye at which the surface view takes over.", "edge": [1408, 1408, 792],
+    "seen": { "on": true, "file": "relief-seen.png", "scale": 8, "nearest": 2, "spare": 0.01, "soft": 0.02 },
+    "need": { "on": true, "note": "law.ts count 6: the picture's relief lies on the ground only where a texel of the finest plate of the place (levels.json, the own level of the least width over its full count) is wider on the present screen than law.texel allows, read the other way round: none at or under texel[0] px of the master, whole from texel[1] on, and whole at the eye at which the surface view takes over. The plates hold the same ground from above (plates.json takes.body)." },
+    "gap": { "on": false, "range": 0.5, "px": [0.5, 1], "from": 0.3, "to": 60, "steps": 500, "halvings": 6 }
+  },
   "presence": {
     "high": 0.0034,
     "low": 0.0019
