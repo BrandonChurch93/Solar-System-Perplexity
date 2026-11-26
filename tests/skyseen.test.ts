@@ -9,6 +9,9 @@ type Plan = (typeof plans)[number]
 type Aim = Plan['p']['skyAim']
 const SECOND: [number, number, number] = [50, -15, 50]
 const deg = (a: THREE.Quaternion, b: THREE.Quaternion): number => THREE.MathUtils.radToDeg(a.clone().normalize().angleTo(b.clone().normalize()))
+// An angle between two quaternions is read through an arc cosine near 1, where one unit in the last place of their dot is 1.7e-6 degrees.
+// Two skies that stand still therefore agree to a floor and not to the last digit: under STILL degrees an angle counts as none.
+const STILL = 1e-4
 
 describe('a turn between two sky aims that is seen', () => {
   const law = config.raw.handover.skySeen
@@ -129,7 +132,7 @@ describe('a turn between two sky aims that is seen', () => {
       const s = shot(plain, f)
       if (s.sets[0]!.view === 'terrain') continue
       read++
-      expect(deg(plain.skyInWorld(index, f), s.camera.quaternion.clone().multiply(s.skyQuaternion.clone().invert()).multiply(s.skyTurn))).toBeLessThan(1e-4)
+      expect(deg(plain.skyInWorld(index, f), s.camera.quaternion.clone().multiply(s.skyQuaternion.clone().invert()).multiply(s.skyTurn))).toBeLessThan(STILL)
     }
     expect(read).toBeGreaterThan(10)
   })
@@ -147,7 +150,7 @@ describe('a turn between two sky aims that is seen', () => {
       const back = set.rotation.clone().invert()
       const local = { position: s.camera.position.clone().sub(set.origin).applyQuaternion(back), quaternion: back.clone().multiply(s.camera.quaternion), vfov: s.camera.vfov }
       const lens = globe.rotation.clone().multiply(plan.twin(local, f / config.fps).quaternion)
-      expect(deg(plain.skyInWorld(index, f), lens.clone().multiply(s.skyQuaternion.clone().invert()).multiply(s.skyTurn))).toBeLessThan(1e-4)
+      expect(deg(plain.skyInWorld(index, f), lens.clone().multiply(s.skyQuaternion.clone().invert()).multiply(s.skyTurn))).toBeLessThan(STILL)
       apart = Math.max(apart, deg(lens, s.camera.quaternion))
     }
     expect(read).toBeGreaterThan(10)
@@ -188,8 +191,8 @@ describe('a turn between two sky aims that is seen', () => {
     expect(whole).toBeGreaterThan(1)
     expect(sum(both)).toBeGreaterThan(whole - sum(one) - 1e-3)
     expect(sum(both)).toBeLessThan(whole + sum(one) + 1e-3)
-    expect(both[0]!).toBeCloseTo(one[0]!, 6)
-    expect(both[both.length - 1]!).toBeCloseTo(one[one.length - 1]!, 6)
+    expect(Math.abs(both[0]! - one[0]!)).toBeLessThan(STILL)
+    expect(Math.abs(both[both.length - 1]! - one[one.length - 1]!)).toBeLessThan(STILL)
   })
 
   it('a stop under the limit is built, a stop over it is refused with the two frames and the angle named', () => {
@@ -205,8 +208,8 @@ describe('a turn between two sky aims that is seen', () => {
     }
     expect(said).toContain(id + ': the sky turns by ' + counted[at - from]!.toFixed(3) + ' degrees in the film\'s world from frame ' + at + ' to frame ' + (at + 1))
     expect(said).toContain('handover.skySeen.maxDegPerFrame')
-    // The first pair over the limit is the one named, not the largest: a limit under every pair names the first pair of the stop.
-    const low = Math.min(...counted.filter((x) => x > 0)) * 0.5
+    // The first pair over the limit is the one named, not the largest: a limit under every pair that turns names the first of them.
+    const low = Math.min(...counted.filter((x) => x > STILL)) * 0.5
     const firstOver = from + counted.findIndex((x) => x > low)
     expect(() => build(plan, { ...two, seen: true }, low)).toThrow(new RegExp('from frame ' + firstOver + ' to frame ' + (firstOver + 1)))
   })
