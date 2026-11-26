@@ -1,50 +1,43 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T03:25:26.848Z",
+ "pushed": "2026-11-26T03:49:44.310Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Crests: the dive strip 2477 to 2482 at draft with the end rule of aa685f58 (the ring at the hooked crest's end no longer flickers), and the red mark at review 2668",
+ "note": "the sky patch that arrives whole (asked by Neptune): end to end at draft on the flight in, 4500 to 4520, without and with the word",
  "looks": [
   {
-   "time": "2026-11-26T03:25:21.641Z",
-   "file": "20261126032521641-note-crest-review-2668-red-mark.jpg",
-   "source": "../../../../tmp/crest/looks2/crest-review-2668-red-mark.png",
+   "time": "2026-11-26T03:49:43.666Z",
+   "file": "20261126034943666-note-arrive-4505-smudge.jpg",
+   "source": "../../../../tmp/crest/arr/arrive-4505-smudge.png",
    "kind": "note",
-   "label": "Review 2668, 10 to 1, without and with crests: the teeth are gone, the red mark beside the crest is a speck of the layer's paint drawn out by the fill (the stop's to judge)"
+   "label": "draft 4505 at five to one, x 1110 to 1230, y 40 to 140: with the word a faint blue disc of the hold's picture about 14 px wide"
   },
   {
-   "time": "2026-11-26T03:25:20.298Z",
-   "file": "20261126032520298-note-crest-dive-end-rule-now.jpg",
-   "source": "../../../../tmp/crest/looks2/crest-dive-end-rule-now.png",
+   "time": "2026-11-26T03:49:43.052Z",
+   "file": "20261126034943052-note-arrive-4505-edge.jpg",
+   "source": "../../../../tmp/crest/arr/arrive-4505-edge.png",
    "kind": "note",
-   "label": "The same with the end rule of aa685f58: the ring in all six frames, as without crests"
+   "label": "draft 4505 at full size, x 960 to 1680, y 0 to 560, without and with the word: where the patch's feathered edge crosses the frame; no straight edge seen"
   },
   {
-   "time": "2026-11-26T03:25:19.135Z",
-   "file": "20261126032519135-note-crest-dive-end-rule-before.jpg",
-   "source": "../../../../tmp/crest/looks2/crest-dive-end-rule-before.png",
+   "time": "2026-11-26T03:49:42.453Z",
+   "file": "20261126034942453-note-arrive-on-4505-4510.jpg",
+   "source": "../../../../tmp/crest/arr/arrive-on-4505-4510.png",
    "kind": "note",
-   "label": "The same with the end rule of ae90490a: the ring is a slant in 2477, 2478, 2480, 2482 and a ring in 2479, 2481, it flickers"
+   "label": "with the word (scratch copy), draft 4505 and 4510 at half size: the hold's sky picture is whole where it lies and enters from the upper left"
   },
   {
-   "time": "2026-11-26T03:25:18.142Z",
-   "file": "20261126032518142-note-crest-dive-end-without.jpg",
-   "source": "../../../../tmp/crest/looks2/crest-dive-end-without.png",
+   "time": "2026-11-26T03:49:41.859Z",
+   "file": "20261126034941859-note-arrive-off-4505-4510.jpg",
+   "source": "../../../../tmp/crest/arr/arrive-off-4505-4510.png",
    "kind": "note",
-   "label": "Mars dive 2477 to 2482, draft, 12 to 1, the hooked crest's end at the box, without crests: the small ring left of the lit sliver"
+   "label": "without the word, draft 4505 and 4510 at half size: the hold's sky picture comes in by the travel's clock weight"
   },
   {
-   "time": "2026-11-26T03:25:17.337Z",
-   "file": "20261126032517337-note-crest-dive-lit-with.jpg",
-   "source": "../../../../tmp/crest/looks2/crest-dive-lit-with.png",
+   "time": "2026-11-26T03:49:41.195Z",
+   "file": "20261126034941195-note-arrive-4500-4520.jpg",
+   "source": "../../../../tmp/crest/arr/arrive-4500-4520.png",
    "kind": "note",
-   "label": "Mars dive 2477 to 2482, draft, the lit crest with crests (trial numbers): the edge is one stroke, steady over the six frames"
-  },
-  {
-   "time": "2026-11-26T03:25:16.468Z",
-   "file": "20261126032516468-note-crest-dive-lit-without.jpg",
-   "source": "../../../../tmp/crest/looks2/crest-dive-lit-without.png",
-   "kind": "note",
-   "label": "Mars dive 2477 to 2482, draft, the lit crest without crests: the edge is a stair"
+   "label": "a sky patch that arrives whole, draft 4500 to 4520: above without the word (main's bytes), below with the word on Neptune's pictures in a scratch copy"
   }
  ]
 }
