@@ -12,6 +12,23 @@ export interface CoronaLook {
   hide: { from: number; to: number; amount: number }
 }
 
+// The gas seen from inside (place.json onGlobe.gas.near). The map is the gas as it stands from far, round the line
+// from the far eye to the centre: a thread of it is the light of a whole line of sight. Gas that lies near the eye has
+// no threads of its own from there, and an eye inside the gas stands close to that line, where the turn round it has
+// no meaning (every turn of the map meets in one point of the sky and wheels about it as the eye moves). So gas nearer
+// to the eye than `from` radii (the distance from the eye to the point where the look passes the centre nearest) is
+// read as its ring: the mean of the map round the centre at that distance (corona-ring.json, made from the map by
+// assets-src/sun/place/ring.py). From `from` to `to` radii the map's own threads come in over the ring, read over
+// `wide` of a turn and the same length outward at first and thinner with the distance, and its streams move by the
+// same share. A law of each look's own distance: the hold and the travel stand farther than `to` from all of the gas
+// and read the map as before. A corona made without a ring reads the map as before at every distance
+export interface CoronaNear {
+  from: number
+  to: number
+  wide: number
+}
+export const RING_KNOTS = 64
+
 const VERT = /* glsl */ `
 out vec3 vPos;
 out vec3 vClip;
@@ -38,6 +55,9 @@ uniform vec4 uWave;
 uniform float uDrift;
 uniform vec3 uHide;
 uniform vec3 uVeil;
+uniform vec3 uNear;
+const int RING_KNOTS = ${RING_KNOTS};
+uniform vec3 uRing[RING_KNOTS];
 uniform vec4 uPale;
 uniform float uVignette;
 uniform float uAspect;
@@ -62,6 +82,26 @@ float cells(vec2 p, float wrap) {
 float stream(float u, float lr, float t) {
   return 0.5 * cells(vec2(u * 11.0 + 3.0, lr * uWave.y * 0.45 - t * 0.6 + 5.0), 11.0) + 0.3 * cells(vec2(u * 40.0, lr * uWave.y - t), 40.0) + 0.2 * cells(vec2(u * 96.0 + 7.0, lr * uWave.y * 1.9 - t * 1.6 + 3.0), 96.0);
 }
+const int NEAR_ROUND = 8;
+const int NEAR_OUT = 4;
+float lineLight(float x) {
+  return x / (1.0 + x * x) + atan(x);
+}
+// the ring at a height v of the map: its knots stand at even steps and fall steeply, so the curve through them is
+// taken in the logarithm (a smooth curve through four knots, no corner at a knot)
+vec3 knot(float i) {
+  return log(max(uRing[int(clamp(i, 0.0, float(RING_KNOTS - 1)))], vec3(1e-6)));
+}
+vec3 ring(float v) {
+  float x = clamp(v, 0.0, 1.0) * float(RING_KNOTS) - 0.5;
+  float i = floor(x);
+  float f = x - i;
+  vec3 p0 = knot(i - 1.0);
+  vec3 p1 = knot(i);
+  vec3 p2 = knot(i + 1.0);
+  vec3 p3 = knot(i + 2.0);
+  return exp(p1 + 0.5 * f * (p2 - p0 + f * (2.0 * p0 - 5.0 * p1 + 4.0 * p2 - p3 + f * (3.0 * (p1 - p2) + p3 - p0))));
+}
 vec3 ray(vec2 uv, vec2 dx, vec2 dy) {
   return inverseFilmic(textureGrad(uMap, uv, dx, dy).rgb);
 }
@@ -78,17 +118,44 @@ void main() {
   float u2 = fract(u);
   vec2 dx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v));
   vec2 dy = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v));
+  // the gas from inside (CoronaNear): q is the distance from the eye to the point where the look passes the centre
+  // nearest, far the share of the map's own threads at that distance, wide what they are read over
+  float q = sqrt(max(dot(uCenter, uCenter) - b * b, 0.0));
+  float far = smoothstep(uNear.x, uNear.y, q);
+  float wide = uNear.z * (1.0 - far);
   float height = max(b - 1.0, 0.0);
   float grow = smoothstep(0.0, 0.25, height);
   float sway = uWave.w * grow * (sin(u * TAU * 9.0 + v * 2.5 - uTime * 1.1) - sin(u * TAU * 9.0 + v * 2.5) + 0.6 * (sin(u * TAU * 23.0 - v * 4.0 + uTime * 1.7) - sin(u * TAU * 23.0 - v * 4.0)));
   float turn = uDrift * uTime * grow;
   vec2 uv = vec2(u + sway + turn, clamp(v, 0.0, 1.0));
-  vec3 col = ray(uv, dx, dy);
+  vec3 col = far > 0.0 ? ray(uv, dx, dy) : vec3(0.0);
+  if (far > 0.0 && wide > 0.0) {
+    // the same length both ways on the Sun: wide of a turn round the centre is TAU * wide of the distance from it,
+    // and that share of the distance outward is tall of the map's height (its rows are even steps in the logarithm)
+    float tall = TAU * wide / span;
+    vec2 gx = dx + vec2(wide / float(NEAR_ROUND), 0.0);
+    vec2 gy = dy + vec2(0.0, tall / float(NEAR_OUT));
+    vec3 sum = vec3(0.0);
+    for (int j = 0; j < NEAR_OUT; j++) {
+      float row = clamp(uv.y + ((float(j) + 0.5) / float(NEAR_OUT) - 0.5) * tall, 0.0, 1.0);
+      for (int k = 0; k < NEAR_ROUND; k++) sum += ray(vec2(uv.x + ((float(k) + 0.5) / float(NEAR_ROUND) - 0.5) * wide, row), gx, gy);
+    }
+    col = sum / float(NEAR_ROUND * NEAR_OUT);
+  }
+  if (far < 1.0) col = mix(ring(v), col, far);
+  // a texel of the map is the light of a whole line of sight through the gas, which ends at uRange.y radii. An eye
+  // inside the gas has part of that line behind it: the look holds the part before the eye, of a gas that thins with
+  // the fourth power of the distance from the centre. An eye outside the gas has the whole line before it: 1
+  float line = sqrt(max(uRange.y * uRange.y - b * b, 0.0)) / max(b, 1e-4);
+  float before = min(q / max(b, 1e-4), line);
+  float lift = max(acos(clamp(-dot(uCenter, dir) / max(length(uCenter), 1e-4), 0.0, 1.0)), 0.2);
+  float seen = line > 0.0 ? (t > 0.0 ? 0.5 + 0.5 * lineLight(before) / lineLight(line) : (lift - sin(lift) * cos(lift)) / (3.141592653589793 * pow(sin(lift), 3.0))) : 1.0;
+  col *= seen;
   vec3 raw = col;
   float glare = uHide.z * smoothstep(uHide.x, uHide.y, dot(col, vec3(0.2126, 0.7152, 0.0722)));
   float lr = log(max(b, 1.0));
   float flick = stream(u, lr, uTime * uWave.z) - stream(u, lr, 0.0);
-  col *= max(1.0 + uWave.x * grow * flick, 0.3);
+  col *= max(1.0 + uWave.x * grow * flick * far, 0.3);
   float inside = b < 1.0 ? exp((b - 1.0) / uEdge) : 1.0;
   float out0 = 1.0 - smoothstep(0.92, 1.0, v);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -113,7 +180,8 @@ export class Corona {
   private readonly m4 = new THREE.Matrix4()
   private readonly q = new THREE.Quaternion()
 
-  constructor(map: THREE.Texture, look: CoronaLook) {
+  constructor(map: THREE.Texture, look: CoronaLook, near: CoronaNear = { from: -2, to: -1, wide: 0 }, ring: number[][] = []) {
+    if (ring.length !== 0 && ring.length !== RING_KNOTS) throw new Error(`the corona's ring has ${ring.length} knots, not ${RING_KNOTS}`)
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
@@ -124,7 +192,7 @@ export class Corona {
         uRange: { value: new THREE.Vector2(look.inner, look.outer) },
         uGain: { value: look.gain }, uShow: { value: 1 }, uEdge: { value: look.edge }, uTime: { value: 0 },
         uWave: { value: new THREE.Vector4(look.wave.amount, look.wave.scale, look.wave.speed, look.wave.sway) },
-        uDrift: { value: look.drift }, uHide: { value: new THREE.Vector3(look.hide.from, look.hide.to, look.hide.amount) }, uVeil: { value: new THREE.Vector3(0, 0, 1) }, uPale: { value: new THREE.Vector4(1, 1, 1, 0) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+        uDrift: { value: look.drift }, uHide: { value: new THREE.Vector3(look.hide.from, look.hide.to, look.hide.amount) }, uVeil: { value: new THREE.Vector3(0, 0, 1) }, uNear: { value: ring.length ? new THREE.Vector3(near.from, near.to, near.wide) : new THREE.Vector3(-2, -1, 0) }, uRing: { value: Array.from({ length: RING_KNOTS }, (_, k) => new THREE.Vector3().fromArray(ring[k] ?? [0, 0, 0])) }, uPale: { value: new THREE.Vector4(1, 1, 1, 0) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       },
       side: THREE.BackSide,
       blending: THREE.CustomBlending,
