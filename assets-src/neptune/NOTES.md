@@ -9201,3 +9201,644 @@ patch's weight. Without a share of the stop's own the globe view's patch has wei
   both are out of view 18 frames before T. In the rise at weight 1 the wide picture would come from behind the limb at 4970
   (T of the rise is 4956.75), the card at 5004, and at 5024 they hold 0.72 and 0.18 of the sky in view: the ending, where the
   engine gives a stop's patch no weight, would cut them off in view at 5025.
+
+## From sky_builder, 02:42 UTC, 26 Nov: the far Sun's glare has a name (read 02:43 by my clock; word for word)
+
+> From sky_builder, 02:42 UTC: the far Sun's glare has a name, fadaee55650a82dbd6200adfbb9389e4ecb02618 on agent/flightsky (on origin; it sits on main 8fb3bffe499832a8696a7caf2b0b15045a1aef1a; mailed NAMED to the Builder). Draw on it once the Builder has cut it onto main.
+>
+> What you get: at your sunRadiusDeg 0.14 the sky's Sun carries a round glow, a core and 12 thin warm rays (at 14, 50, 72, 93, 126, 157, 192, 219, 228, 283, 309, 341 degrees counter clockwise from the right; your six are among them read clockwise), fixed to the picture, the same in every frame in which the Sun stands in view. It reads the Sun's radius alone, no clock and no height. Its level follows your sunGlare 0.6. Keep both values; you set nothing. The values are mine in config/showcase.json under travel.sky.flightStrip.sun.star.
+>
+> One thing you must know: a plate that replaces the sky covers the glare by the plate's weight. So with your orbit plate in, the hold keeps main's bytes (4605 and 4675 checked) and you see nothing new; take the plate out, or its Sun, and the law shows.
+>
+> Numbers at 4605 with your orbit plate out, final, ring mean levels hero | law: 0 to 8 px 252 | 255; 8 to 16: 238 | 241; 16 to 32: 170 | 169 (16 to 20: 207 | 209; 28 to 32: 143 | 138); 32 to 64: about 84 | 70; 64 to 80: 52 | 35. Pixels over 200 in your box of 120: 1177 | 1211; over 60: 12050 | 8851. The shortfall from 30 px outward is not glare: over its own background the glow is within 7 percent of the hero's from 12 to 64 px; what is missing is the hero's blue sky (8, 25, 38 far from the Sun) against the engine's sky without a plate (3, 7, 10). If you want that blue in the hold it is the plate's or your stop's sky look, not the Sun. Not made: the hero's fine rainbow fringes on the rays and the small ghost to the lower right.
+>
+> Through your frames with the plate out, the Sun's rings (12 to 16, 20 to 24, 28 to 32, 40 to 48 px): 4525 229, 186, 142, 87; 4535 229, 186, 142, 86; 4605 228, 183, 138, 83; 4675 227, 180, 134, 80. Pictures attached: the Sun near and wide (hero, main with plate, the law without plate, before the law), and six frames of the flight's end, hold and dive.
+
+## From sky_builder, 02:44 UTC, 26 Nov: his correction (read 02:45 by my clock; word for word)
+
+> From sky_builder, 02:44 UTC, a correction to my mail of 02:42: the numbers I gave in your own rings were put together by hand and are off by a level or two. Measured now, 4605 final, your orbit plate out, mean levels hero | law: 0 to 4 px 252 | 255; 4 to 8: 252 | 255; 8 to 16: 237 | 239; 16 to 32: 170 | 168; 32 to 64: 84 | 72; 64 to 128: 39 | 21 (there the hero's blue sky against the engine's dark sky without a plate). The fine rings and the pixel counts in that mail were measured and stand.
+
+## 26 Nov, 02:47 UTC: NAMED, the eleventh name, to the Builder (word for word; attached the bundle `neptune-n19.bundle` and six looks)
+
+> NAMED, the eleventh name, from neptune_builder, 02:47 UTC: 251099e147459de545893d4220d26304f99a34a6 on agent/neptune-place. It is NOT on origin: the push failed seven times from 02:42:10 to 02:46:20 with "could not read Username" (reading works; origin's tip of the branch is still 62498f603f4a1026520ffb3d74e81742da39f8ec). By MAIL 1352 the bundle is attached: neptune-n19.bundle, 32401 bytes, the ref agent/neptune-place at 251099e1; it needs ef0cc1cf430939c842dce4218d88a622373caaaf and 01ce1602d6404af2bfc069bbcfcfaf731a56600c. The looks cannot be pushed either, so they are attached (each 1400 px wide), notes at the end.
+>
+> MAIN in it: 01ce1602d6404af2bfc069bbcfcfaf731a56600c (your 8fb3bffe plus the two PROGRESS commits), by a merge commit. After npm run cues and npm run shots the tree shows no change under cut/.
+>
+> CHANGED on top of ef0cc1cf, my folders only: src/stops/neptune/deep.json, src/stops/neptune/deep.ts, src/stops/neptune/set.ts, assets-src/neptune/check/bands.py, assets-src/neptune/NOTES.md. By cause: ec9e8e7b1 bands.py (a measure); a5df84a4d the eye's wall longer and softer (wall 0.2 to 1.6, ragged 0.5, dark 0.6); 7e6d0b5d2 the place's own share by the eye's height; three commits of notes; the merge.
+>
+> WHAT IT IS (rulings 3 and 4). One law by height (deep.json globe.own [1.6, 0.15]): none at 1.6 radii over the deck and above (the hold stands at 2.13), whole at 0.15 and below, by the logarithm of the height between, the same down and up, no clock. It weighs the place's WHOLE own share, not the eye's dark alone: the scene's own deck round the place with its storm, the cirrus, their shadows, the streak, the blots and the dark of the eye on the globe. So the streak takes the same law without a switch.
+>
+> NUMBERS, my proxies at the draft tier, 1920, read as STATED.
+> 4605 (97427f2a109518c2): the place's box equals main's byte for byte; the dot reads 0.73 of its ring over 50 px, on main and here alike. Plain against the approved 7.548, main 2.931 by the same proxy, the tenth name 7.605: RED, and it is the sky (no plate, no glare; rulings 1 and 2, below). G17 0.675, p25 0.436, main 0.856 and 0.720 by the same tool, gate 0.8: RED; I have not bisected it, the place's box is main's. By scale (bands.py, 0.6/1.2 to 19.2/38.4 px): 0.602, 0.792, 0.870, 0.883, 0.900, 0.940; main 0.782, 0.987, 0.948, 0.961, 0.946, 0.967.
+> 4860 (f37b1b08ae2d6b63): the bytes of the softer wall alone, the own law moves nothing under 0.15 radii (previews 4744 and 4750 equal to the byte as well). Plain 21.652; G17 0.513, p25 0.232, gate 0.8: RED. By scale: 0.449, 0.591, 0.633, 0.724, 0.899, 0.885.
+> 4707 5fc0f552897ed9e6, 5006 ce6ff758b50d2abf. The four judged frames on the merge are the bytes of the tree before the merge.
+> Dive pairs, my copy of the reader, rate 2, preview, limit 0.45: 4702 0.41, 4704 0.17, 4706 0.44, 4708 0.29, 4710 0.28, 4712 0.17, 4714 0.19, 4716 0.22, 4718 0.20, 4720 0.18, 4722 0.17, 4724 0.21, 4726 0.28, 4728 0.31. The tenth name read 0.41, 0.16, 0.44 at the first three; I have no control on it for 4708 to 4728. Your reader had 4706 at 0.4765 on the tenth name: that red stands unchanged (ruling 6, not yet bisected).
+> Rise pairs, the same reader: 4960 0.30, 4962 0.30, 4964 0.18, 4966 0.19, 4968 0.33, 4970 0.24, 4972 0.32, 4974 0.23, 4976 0.20, 4978 0.20, 4980 0.23, 4982 0.23, 4984 0.25, 4986 0.31, 4988 0.35, 4990 0.34, 4992 0.31, 4994 0.26, 4996 0.18.
+> Tests on the merge, alone: tsc 0, my test 5 of 5, G11 passes, the whole run 88 files ok, none not ok. Draft seconds a frame: 4605 20, 4707 27, 4860 92, 5006 14.
+>
+> RULING 2 (a), THE TURN: not free. skyAim in my plan.ts is mine to write, but its value is solved so that the stop's turn is the ending's (LOOKBACK.sky in src/director/film.ts; MAIL 914). The sky is in view in every frame from the hold to 5024 (least 4.3 percent of the frame at 4718, 22 at 4769, 25 at 4860), so a second turn cannot be taken unseen: it turns the stars in view or moves the ending's turn. The ending holds it. I have no number for a best turn: the search without a render (the engine's haze map projected into the hold's frame) fits my own render only to 5 to 8 levels rms on a mean of 13 to 21, too poor to score with. At the present turn the galactic core stands at the hold's upper right.
+>
+> RULING 2 (c), THE WIDE MARGIN: no width does what you ask for the whole dive. The wedge of sky at the upper right moves outward without a gap, in degrees from the hold's aim: 4706 24 to 34, 4714 34 to 41, 4722 43 to 50, 4730 51 to 60, 4738 57 to 67, 4769 66 to 79, 4860 66 to 81. So a border round the hold's aim crosses the wedge in some frames, or the picture is still in view at T (4758.3), where the engine drops the globe view's patch. What I build for the trial: the hero's card (sky_builder's, with his margins) over a recipe sky to 57 degrees (sparse blue grey stars on the card's own floor, no band, no generated picture). By the poses the card is out of view from 4716 and the recipe sky from 4740, 18 frames before T; the recipe's border crosses the wedge from 4726 to 4738, where the engine's sky behind it is sparse as well (the core cloud has left the wedge by about 4722). Border and stars are both fixed on the sky, so no star crosses it and nothing comes with the clock; what is in view is a standing soft step of the floor. Whether that passes your rule (b) is yours to say on the sheet.
+>
+> RULING 2 (d), THE RISE, before it is drawn: at weight 1 the recipe sky comes into view at about 4970 and the card between 5000 and 5006, and at 5024 they hold 0.72 and 0.18 of the sky in view; at 5025 the ending gives a stop's patch no weight (engine), so it would be cut in view there. I draw and read it as ordered and send both readings.
+>
+> RULING 2 (e), THE FLIGHT IN (4455 to 4529): the engine's weight of the patch is a smoothstep on the clock: none until 4501, 4505 0.09, 4510 0.31, 4513 0.47, 4515 0.58, 4520 0.83, 4525 0.98, whole at 4527; the eye is 45 degrees from the hold's aim at 4500, 18 at 4510, 7 at 4515. So with a plate two skies stand over each other in view from 4501 to 4527, middle 4513 to 4514 (the still comes with the trial). With weight 1 through the travel the plate would enter over the frame's edge at about 4484 to 4490 and is out of view at the travel's start. That span is the engine's (travel.sky patchFrom and patchDone in config/showcase.json), not mine: say the word and I send the exact request to handover_engineer.
+>
+> RULING 1, THE SUN: sky_builder's law has a name since 02:42 (fadaee55 on agent/flightsky). He writes that a plate covers the glare by the plate's weight. So the trial's pictures get a round hole at the Sun's place (the patch's own ring, fixed on the sky) through which the engine's Sun shows, and the card is painted flat inside 64 px of the Sun. The hero's wide blue round the Sun from there outward stays in the card as sky (his law does not draw it; it is worth about 1.0 of the plain number by my estimate). If that blue counts as a painted Sun, say so and it goes.
+>
+> REDS, named: 4605 plain 7.548 against main's 2.931 (the sky); G17 at 4605 0.675 and at 4860 0.513 against the gate 0.8; 4860's sky 3.203 against 1.619, its eye floor paler, the teal blots; 4706 at 0.44 by my proxy (0.4765 by yours); a pale round blot in the low cloud at 4976 to 4986, on the earlier names alike; rulings 5 and 6 not begun; the trial not drawn; no push.
+>
+> NEXT: the trial's first stills (4605 beside the hero, 4707) as soon as they exist, the sheet 4690 to 4760 by 04:00, the still at 4513, the rise with weight 1 read both ways.
+>
+> LOOKS attached, each with 4860 beside the approved where it says so:
+> 1. hold-place-sun.jpg: 4605, the place and the Sun: the approved, main, this name.
+> 2. 4860-pair.jpg: 4860 beside the approved image, this name (bytes as before the own law), G17 0.513 against the gate 0.8, red; draft 92 s a frame.
+> 3. dive-a.jpg, dive-b.jpg: the dive 4696 to 4736 on this name, the place's objects growing out of the map by height.
+> 4. rise-a.jpg, rise-b.jpg: the rise 4960 to 5004 in steps of 2, preview frames.
+
+## 26 Nov, 02:54 UTC: the first stills of the trial, to the Builder (word for word; attached 4605 beside the hero, the Sun, 4707)
+
+> FIRST STILLS OF THE TRIAL (MAIL 1363, 2 b), 02:54 UTC. Not a name: nothing of it is committed. Three pictures attached, draft tier, 1920.
+>
+> What the trial is: two pictures fixed on the sky at the hold's aim, weight 1 with no law by clock or height: the filled card with the Sun painted out flat, over a wide continuation by recipe (sparse blue grey stars, no band, tan 1.54). The Sun is sky_builder's law (his fadaee55, not yet on main): I laid his diff over the shared files for the render only and took it off again; my tree shows no change outside my folders. The law is closed by a picture's weight, so the card has a soft hole at the Sun (32 to 60 px) to let it through.
+>
+> 4605 beside the hero (my proxies, STATED; main | eleventh name | trial):
+> - plain 2.931 | 7.548 | 3.056. The sky outside 1.07 radii 2.160 | 12.620 | 2.468.
+> - low band (both blurred by 16 px, my proxy for it) 1.021 | 5.660 | 1.034.
+> - G17 0.856 / p25 0.720 | 0.675 / 0.436 | 0.817 / 0.709. By scale 0.6 to 38.4 px: 0.755, 0.962, 0.944, 0.973, 0.949, 0.966.
+> - the Sun's rings in levels (0 to 8, 8 to 16, 16 to 32, 32 to 64, 64 to 128 px): hero 252, 237, 170, 84, 39; trial 254, 240, 174, 75, 39.
+>
+> RED, named: plain is worse than main's by 0.125, so by your rule it does not pass yet. Half of it (0.061) sits within 128 px of the Sun, and you can see why in the Sun picture: through the hole comes the engine's sky with the law, and at this turn that is the dense warm cloud of the core, so the Sun wears a disc of speckle, and a faint ring stands at the hole's edge. The other half (0.065) is spread over the rest of the sky; I have not found its cause yet.
+>
+> What I do about it: the clean form is the law's glare drawn over the card (no hole, no engine stars, the card's Sun painted out wholly, wide blue and all). That needs one word in sky_builder's Sun block (a picture that says it carries no Sun does not close the glare). I ask him for it now and render the proof with that one line laid over for the render only; the still follows.
+>
+> 4707 (the eleventh name left, the trial right): the warm cloud at the upper right is gone, the sky there is the card's.
+>
+> Draft seconds a frame: 4605 21, 4707 28. Pushes still fail ("could not read Username"); the looks go as these attachments. The sheet of 4690 to 4760 follows by 04:00.
+
+## 26 Nov, 02:55 UTC: to sky_builder, the glare over a picture that carries no Sun (word for word)
+
+> neptune_builder to sky_builder, 02:55 UTC. A request for your Sun block; the Builder has the same in my mail of 02:54.
+>
+> I drew on fadaee55 for a trial render (laid over, not committed). With my orbit pictures in (the filled card with its Sun painted out, weight 1, by the Builder's MAIL 1363), your glare is closed by the picture's weight, as you said. A hole in the card at the Sun lets it through, but with it comes the engine's sky under it: at my turn that is the dense warm cloud of the core, so the Sun wears a disc of speckle against the card's sparse sky (0.06 of plain at 4605).
+>
+> The request, exact: a picture can say that it carries no Sun of its own, and then its weight does not close the far Sun's glare. One optional field on SkyPatch (src/core/types.ts), for example `glare?: boolean`; in your `open` take 0 for such a patch, as you already do for add patches (uPatchMode[i].y > 0.5). Nothing else changes: the engine's stars and band stay covered by the picture, and absent the field every byte is today's.
+>
+> I render the proof now with open forced to 1 for the render only and send you the Sun's rings over the card.
+
+## MAIL 1376 from the Builder, 02:58 UTC, 26 Nov (read 02:59 by my clock; word for word)
+
+> MAIL 1376 from the Builder (/root), 02:58 UTC. Read: the eleventh name 251099e1 with its bundle and six pictures, and the first stills of the trial. Rulings.
+> 1. The eleventh name stays off main as it stands, by its own numbers: 4605 plain 7.548 against main's 2.931 (d296 (2)), G17 0.675 at 4605 and 0.513 at 4860 against 0.8 (d337). It is the ground of the trial, as you say.
+> 2. The trial is the way. sky_builder's law is cut as take/sl1 c7f5ac9ce2934ec0b8b4c8d1c5d0e99084e7b2f6 (on take/kq1, batch 19) and under proof on my machines. Until I mail that it is on main, lay it over for renders only, as you do.
+> 3. The wide blue round the hero's Sun is the Sun's own light, so it belongs to the law and not to the card: paint the card's Sun out wholly, as you plan. The line it must hold is d296 (2) at 4605: plain no worse than main's 2.931. If the law's glare can not carry the wide blue inside that line, the card may keep the low wide part as light of the sky under a level you name, with the law's core and rays drawn over it. Choose by the number and say which.
+> 4. The hole in the card is out: on your Sun picture the trial's Sun wears a disc of speckle and a ring at the hole's edge, and a viewer sees both. The one word in the Sun block is sky_builder's to judge; I told him it is asked (MAIL 1374).
+> 5. The flight in, two skies over each other from 4501 to 4527: yes. Send the exact request to handover_engineer now, with a copy to me. He names a commit and it lands by proof like any other.
+> 6. The turn is not free; the ending holds it. The rise: the patch's cut at 5025 by the engine stays until a sheet shows a fault there.
+> 7. The wide margin, the border crossing the wedge from 4726 to 4738: I judge it on your sheet of 4690 to 4760, due by 04:00. Send it at 1400 px, the trial beside main, and name the rows where the border runs.
+> 8. Main's Sun at 4605 carries a small dark crescent inside its core (your Sun picture, middle panel; sky_builder's sheet too). If you know what it is, say so; the trial does not show it.
+> My eye on your stills: at 4605 the globe, the moon and the band read as the hero's, the stars of the right third are denser and bluer than the hero's; at 4707 the warm cloud at the upper right is gone and the sky is the card's.
+
+## 26 Nov, 03:02 UTC: to handover_engineer, copy to the Builder: the arriving sky picture at weight 1 (word for word)
+
+> neptune_builder to handover_engineer, 03:02 UTC, copy to the Builder. A request for shared code, by the Builder's MAIL 1376 point 5 (and MAIL 1363 point 2 e).
+>
+> What stands today: in the flight in to Neptune (segment uranus.travel, frames 4455 to 4529) the engine gives the arriving stop's orbit sky patch the weight shot.skyPatch = smooth(ramp(0.6, 0.96, u)) (film.ts patchSpanOf, read in engine.ts line 372 as the `base` of an arriving stop in travel): none until 4500, 0.09 at 4505, 0.31 at 4510, 0.53 at 4514, 0.83 at 4520, whole from 4527. In those 26 frames the eye's aim is 45 to 3.7 degrees from the hold's aim, so the picture stands in the frame and two skies lie over each other by the clock.
+>
+> The rule (the Builder's): a sky picture of a stop is fixed on the sky; its weight has no law by clock or by height at any frame where any part of it can be in view; it enters only over the frame's edge or behind the globe.
+>
+> The request, exact: a sky patch can say that it enters by the frame's edge, and then the engine gives it base 1 at every frame of the travel segment in which its stop arrives, in place of shot.skyPatch. One optional field on SkyPatch (src/core/types.ts), for example `arrive?: 'whole'`, read at engine.ts line 372. Only this weight changes. Everything else that reads shot.skyPatch or the span keeps today's values (the look of the engine's own sky in film.ts, the flight strip's patchHold, other stops' sets). Absent the field every byte is today's, on every flight; I set it on Neptune's pictures with the trial's name, so it lands inert.
+>
+> Why the step from 0 to 1 at 4455 is never seen: until 4470 the eye's aim is 103.7 degrees from the hold's aim, 95.7 at 4480, 93.9 at 4481. My widest picture reaches 65.3 degrees from the hold's aim at its corners (tan 1.54), the frame reaches 28.7 degrees from the eye's aim at its corners, so no part of a picture can be in the frame while the aim is over 94.0 degrees away: every frame up to 4480. In the rise of Uranus before it (aim 24 degrees away at 4420) the weight is none as today. From 4481 the picture comes in over the frame's edge as the camera turns.
+>
+> The numbers are from the director by frame (out/work/nep/weave/flightin.ts on my tree: shot.u, shot.skyPatch, the eye's aim against aims.patches.neptune.orbit). Stills of the flight in at weight 1 follow when I have rendered them with the line laid over for the render only.
+
+## From sky_builder, 03:02 UTC, 26 Nov: the one word is granted (read 03:03 by my clock; word for word)
+
+> From sky_builder, 03:02 UTC: your request of 02:55 is granted as you wrote it. SkyPatch gets one optional field `glare?: boolean`; a patch with `glare: true` does not close the far Sun's glare (its weight still covers the engine's stars, band and dust as today); absent or false, every byte is today's. You set it in your set.ts where you push the orbit patch (the terrain patch too if its card carries no Sun; the engine's floored copy keeps the field). Name on top of fadaee55 by 03:50 UTC. One more thing from the Builder's point 5 for your plate: sky-hold.webp has a hole of black inside the painted Sun's core (79 texels, 10 by 11, centre at texel 3578.5, 818.6 in the full file, there since 875f5799); it is the dark crescent at 4605. If your new card has the Sun painted out it goes with it; check that no black is left at that place.
+
+## MAIL 1382 from the Builder, 03:02 UTC, 26 Nov (read 03:05 by my clock; word for word)
+
+> MAIL 1382 from the Builder (/root), 03:02 UTC. 1. Your copy of the request to handover_engineer is read; it is the request I ruled for.
+> 2. The dark crescent in main's Sun at 4605 is a hole in your plate, by sky_builder's reading at 03:02: public/assets/neptune/full/sky-hold.webp has a round hole of black (level 0, 79 texels, 10 wide by 11 high, centre at texel 3578.5, 818.6 of 4928 by 2772) inside its painted Sun's core, there since the plate's first version. In the frame it lies at about 1719.9, 153.1 with a radius of 3.6 px; the engine's Sun disc covers all of it but 2 to 3 px at its upper right, which is the crescent (levels 173 to 223 at x 1721 to 1724, y 149 to 155). His guess at the cause: the recipe took the film's Sun out of the hero where it then stood.
+> 3. The cure is yours and it does not wait for the trial: fill the hole in the plate (every size of it that the film loads) as a small name of its own on main's tree, nothing else in the commit. Send it by bundle with the final frame 4605 before and after and the plain number beside main's 2.931. It lands if only the pixels round the Sun's core move and the plain number is no worse. Say when it comes.
+> 4. sky_builder grants the one word (an optional field glare on SkyPatch, read by the sky's cover); its name comes on top of fadaee55 by 03:50.
+
+## From handover_engineer, 03:07 UTC, 26 Nov: the field arrive is taken (read 03:08 by my clock; word for word)
+
+> handover_engineer to neptune_builder, 03:07 UTC. Your request of 03:02 is read against main 77e597e5 and taken as asked: one optional field on SkyPatch (src/core/types.ts), `arrive?: 'whole'`, read at the one place in src/core/engine.ts where an arriving stop's patch gets its base in a travel (line 372 on main): with the field the base is 1 at every frame of that travel, without it the expression is today's, so every byte without the field stays. shot.skyPatch itself, the span, the engine's own sky look, the stars' lift and the other sets are not touched; your patch's own weight function still multiplies the base. The travel's sets are [leaving, arriving] from its first frame (film.ts line 929), so the step from 0 to 1 is at the travel's first frame and nowhere else. What stays yours: the proof that no part of a picture can be in the frame at that first frame (your 103.7 against 94.0 degrees); the engine does not check it. Order: the crests of a relief are in their review proof now and get named first; your field comes right after, on its own branch off the newest main, with a test of the weight with and without the field, the whole suite and the build. I expect to name it to the Builder about 04:15 UTC and write you the sha then. No answer needed unless the field's name or shape should be another.
+
+## 26 Nov, 03:28 UTC: the fill of the plate's hole, to the Builder (word for word; attached the bundle `neptune-fill.bundle`, 4605 before and after, the Sun at close range)
+
+> NEPTUNE, the fill of MAIL 1382 point 3, 03:28 UTC. It comes now, by bundle (the push still fails: could not read Username).
+>
+> Name: 55dd680426635101f28103d4be1e7ff67a80b56d, branch neptune-fill in the attached neptune-fill.bundle (8925483 bytes, git bundle verify says okay; it needs 77e597e5d84804434f7db290ebd8545de7c826e6, its one parent, the main handover_engineer named at 03:07).
+> Changed files, nothing else in the commit:
+> public/assets/neptune/full/sky-hold.webp
+> public/assets/neptune/web/sky-hold.webp
+> No file of the tree names their size or hash (searched).
+>
+> The plate: 173 texels move in the full file (x 3571 to 3585, y 812 to 826 of 4928 by 2772) and 94 in the web file (x 1784 to 1795, y 404 to 414), which is the full file halved with Lanczos as it was made before (the old web file equals the old full file halved, 0 texels differ). Both stay lossless. The hole was 79 texels of level 0; the least level left within 16 texels of it is 213. The fill: texels within 16 of the hole's middle darker than level 200, grown by 2 for the soft rim, painted from the core round them (cv2.inpaint, Telea, radius 3).
+>
+> Frame 4605, draft, 1920, full assets, rendered on main's tree 77e597e5 with the old files and with the new ones (my proxies, STATED; the old render equals my earlier main render in every pixel):
+> - plain: 2.931 before, 2.931 after. At more places 2.930514 and 2.930626: the fourth place is worse by 0.0001. A red I name; you rule whether the line is read at three places.
+> - low band proxy 1.021 and 1.022. Sky outside 1.07 radii 2.160 and 2.161.
+> - the Sun's innermost ring (0 to 8 px): hero 252, before 248, after 253. Mean error within 8 px of the Sun 5.76 before, 1.76 after.
+> - the crescent: within 12 px the darkest channel was 160 with 8 pixels of a colour spread over 20; after, 228 and none (hero 229 and none). The largest tint left is 11 levels (the hero's own 9).
+> - what moves: 64 pixels by more than one level, all within 9.7 px of the Sun's middle (x 1716 to 1725, y 148 to 157). 12463 more pixels move by exactly one level, nearly all upward, thinning out to 267 px from the Sun; none beyond. I read that as the engine's bloom of a core that is now whole (not proven by a control). It is the whole of the 0.0001: the rings from 24 to 96 px were already 0.6 to 0.9 levels over the hero on main and rise by 0.1 to 0.2.
+> So "only the pixels round the core move" holds for every step larger than one level and does not hold for the one level lift. If that or the fourth place refuses it, I can trim the fill's level until the lift is none; it costs one render.
+>
+> No tests run on it: two picture files, no code. The fill's script (fillcore.py) is not in the commit by your order; it goes into assets-src/neptune with a RECIPE line on my branch.
+>
+> Attached: neptune-fill.bundle; fill-4605-before.jpg and fill-4605-after.jpg (whole frame, 1400 px); fill-sun.png (120 px round the Sun, nearest neighbour times 3.8: before, after, hero).
+>
+> The sheet of 4690 to 4760: main's side is rendering now (it was held up 03:22 to 03:24 by a full disk, cured by deleting old renders of mine; nothing lost). Due 04:00 stands.
+
+## From sky_builder, 03:30 UTC, 26 Nov: the field glare has a name (read 03:31 by my clock; word for word)
+
+> From sky_builder, 03:30 UTC: the field has a name, 89de36a43469cde33a7fd5da08e1847f60f1b8d6 on agent/flightsky (on origin, on top of fadaee55; mailed NAMED to the Builder). SkyPatch has `glare?: boolean` (src/core/types.ts, commit 08c2e9bcc3727569a4cb14305d34e5ddfa6551e2). Where you push a picture in set.ts add `glare: true`; I tried it as `add: def.add, glare: true, ring: ...` on both of your pictures. With it the glare is drawn over the picture at any weight, the picture still covers the engine's stars, band and dust. Proof with main's plate: field absent, 4525, 4535, 4605, 4675, 4700 keep the bytes of fadaee55; field set, 4605 is the same bytes as the law with no cover, and 4740, 4860, 4990 keep their bytes. The glare then adds to whatever your card has at the Sun's place, so the card must be Sunless there and free of the black hole.
+
+## MAIL 1389 from the Builder, 03:33 UTC, 26 Nov (read 03:34 by my clock; word for word)
+
+> MAIL 1389 from the Builder (/root), 03:33 UTC. To neptune_builder. Your fill 55dd6804 is seen (the three panels: the notch with its colour fringe is gone and the core reads as the hero's). RULING: d296 (2) is read as written, at the places the tool prints: 2.930626 against main's 2.930514 is worse, so the name does not go onto main as it stands. I do not round a worse number away. Your offer is taken: trim the fill's level until frame 4605's plain number is at or under 2.930514 (the hero's innermost ring reads 252 and your fill 253, so the trim goes toward the approved and not away from it). One render, then the name again by bundle, on 77e597e5 or on the main that stands then, with the two numbers at six places.
+>
+> What I prove on my machines when it comes: (1) two trees, the same draft frames across your stop (the flight in, hold, dive, ground, rise): bytes may differ only round the far Sun; (2) the reader's rows of the parts whose frames differ, against main's rows; (3) frame 4605 at the final tier on both trees with the plain number by my tool and G17. Units and gate are not run for two picture files that no tracked file names.
+>
+> The script fillcore.py with its RECIPE line on your branch is right. The sheet of 4690 to 4760 at 04:00 stands. News for you: sky_builder named 89de36a4 (the field glare on a replacing sky picture, two files, moves no frame by itself); it goes into the cut after batch 19, so your Sunless card can set it once it is on main.
+>
+> Do not answer this mail; send the trimmed name.
+
+## MAIL 1390 from the Builder, 03:43 UTC, 26 Nov (read 03:44 by my clock; word for word)
+
+> MAIL 1390 from the Builder (/root), 03:43 UTC. To every builder, for information: origin main is now cfabcc52f6dbe1ac02ad4fec5bfe73c709c2e974. On 8fb3bffe (batch 18) and its PROGRESS tip 50ceac93 it holds batch 19 steps (a) and (b) (take/sl1 c7f5ac9c), five files: config/showcase.json, src/space/sky.ts, src/space/travel/field.ts, src/space/travel/path.ts, tests/sunstar.test.ts. Step (a) is the flight into Saturn without the roll back (travel_builder): frames 3331 to 3389 change. Step (b) is the far Sun's glare at Neptune as a law of the sky (sky_builder): in the samples the frames 4510 to 4580 and 4700 to 4712 change (the far Sun alone, 39 to 93 dB), and 4455 to 4505, 4605 to 4690, 4720 to 5399 and all 43 samples from the Sun to Uranus keep their bytes. Its proofs were green: the units and the gate (1020 tests), the two trees jobs, and the reader's rows on Jupiter's rise 2 of 2 and Neptune's dive 1 of 4 and rise 2 of 2, each equal to main's. Cut and out for proof, not yet on main: take/mk1 591224b9 (Mercury's name bd3e416a, 33 files of Mercury alone), take/hn1 4afd5d7f (the harness tools), take/sg2 2434acd7 (the field glare in SkyPatch: src/core/types.ts and src/space/sky.ts), take/hc1 23d19015 (the crests of a relief: src/terrain/crest.ts, src/terrain/relief.ts and two test files; it draws nothing until a stop gives crest in its relief). What this changes for you: nothing in your orders. If your standing order is to merge main before you name, merge this main at your next name; if it is to fetch nothing, keep to it and I cut your name onto main. Do not answer this mail.
+
+## 26 Nov, 03:49 UTC: the sheet of 4690 to 4760, to the Builder (word for word; attached nine sheets `dive-sheet-*.jpg` and `dive-crops.jpg`)
+
+> NEPTUNE, the sheet of 4690 to 4760 (MAIL 1376 point 7), 03:48 UTC. Nine sheets attached, 1400 px wide, 8 frames a sheet, main 77e597e5 left, the trial right; preview format (960 by 540), draft tier. A tenth picture, dive-crops.jpg, holds two crops at close range. Not a name: nothing of the trial is committed. I have looked at every frame of every sheet.
+>
+> WHAT THE TRIAL SIDE IS. Two pictures fixed on the sky at the stop's one turn, weight 1, no law by clock or by height: the hero's card with the Sun painted out, over the recipe sky to 57 degrees. The Sun is sky_builder's law, drawn over the pictures by his field glare (his 89de36a4 laid over the shared files for the render only and taken off again; my tree shows no change outside my folders). Frames 4690 to 4712 carry the newest card; 4713 to 4760 are of the render of 03:06 to 03:20 with the card before it and the glare forced open in place of the field; the two differ only near the Sun: 4710 and 4712 are the same in every pixel in both renders. The trial stands on the eleventh name's tree, so the globe on the right is the eleventh name's globe, not main's; in the upper crops it reads less bright than main's at the same gain. I take that for the eleventh name's globe and not for the pictures; no control yet. It waits for rulings 5 and 6.
+>
+> THE ROWS WHERE THE BORDERS RUN (trial side).
+> 1. 4700 to 4714, the hero card's border onto the recipe sky, by the poses; out of view from 4716. I can not find it by eye, at the film's levels or at 3 times the levels.
+> 2. 4726 to 4738, the recipe sky's border onto the engine's sky, by the poses; out of view from 4740. By eye at 5 times the levels it shows from 4732 at the upper right as a soft change from the recipe's even floor to the engine's faint mottling, with no line. At the film's own levels I first see the engine's sky at 4738 to 4740, at the top left.
+> 3. RED, named: from 4743 to 4760 what stands at the top of the frame is the engine's own sky at this turn, and that is the warm cloud of the galaxy's core, orange brown, where main shows blue grey. It comes over the top edge and across border 2, fixed on the sky, not with the clock; but it is a change of the sky's colour inside the dive and you will see it at once in the last three sheets. It is no picture of mine and the same cloud as in the eleventh name. A wider recipe sky would hide it only until T (4758.3), where the engine drops the globe view's pictures in view.
+> 4. T at 4758.3: nothing of mine is in view there.
+> Main's side, for the comparison (crops, upper half, levels times 3): at 4722 a block of warm stars with a straight edge stands at the top, and from 4728 the dust lanes sweep in.
+>
+> THE SUN IN THE DIVE (crops, lower half). It leaves behind the globe's limb on both sides, not over the frame's edge: on main at 4706 to 4707, in the trial at 4704 to 4705. The law's Sun also moves against the card's stars: against main's painted Sun it stands 3 px left at 4690 and 31 px left, 9 px lower at 4704 (preview px; twice that at 1920). I read that as the engine's Sun standing at its place in the scene while a painted Sun stands on the sky; not proven by a control. The dotted dark line on the limb beside the Sun is on both sides (draft tier). Main's Sun shows the plate's notch as a dark dot in its core, 4702 to 4705.
+>
+> THE CARD'S SUN (ruling 3), by the number, 4605 at 1920 draft (my tools, STATED; main | trial):
+> - plain 2.930514 | 2.980139. RED: worse by 0.0496. The form before it stood at 3.103.
+> - low band proxy 1.021 | 1.029. G17 0.856, p25 0.720 | 0.805, p25 0.700.
+> - Sun rings 0 to 8, 8 to 16, 16 to 32, 32 to 64, 64 to 128, 128 to 256 px: hero 252, 237, 170, 84, 39, 27; trial 254, 239, 172, 83, 39, 27. Ring medians from 32 to 320 px are within 2 levels of the hero's in every ring.
+> Which form: the second of your two. The card keeps the low wide part as light of the sky: the hero less the law's light, under the level [11, 26, 40], smooth inside 76 film px; the law's core and rays are drawn over it. No black is left at the old hole's place (the card reads [11, 26, 40] there). The Sun out wholly was not rendered; my model put it near 3.25.
+> Where the 0.0496 sits: 0.017 inside 64 px, where the law's rays are not the hero's rays (no card can cure that; it is the law's); 0.025 from 64 to 128 px, where the card is smooth out to 92 px and beyond that the law's light is taken off by radius only, so the pattern of its rays stays as error (I have not split the two; next step: take the law's light off as a picture); 0.005 from 128 to 320 px; 0.003 in the far sky. So with the best card I expect about 2.95 to 2.96, not 2.931 (my estimate, not measured). That is a blocker for the line as written and I say it now.
+>
+> YOUR EYE ON THE RIGHT THIRD (stars denser and bluer than the hero's). By count the trial is main's sky within 4 percent, and both stand off the hero the same way: fewer faint points (trial 8 percent, main 5) and more bright ones (trial 5 to 7 percent, main 5 to 10). So if it reads denser, it is so on main too. Pixels over the local floor by 6, 12, 24, 48, 96 levels, sky beyond 256 px of the Sun, x from 1280: hero 18430, 7965, 3054, 1089, 273; main 17440, 7769, 3219, 1188, 299; trial 17023, 7638, 3193, 1164, 287 (measured on the card before the newest; the far sky is the same). Colour of the star light, R and G over B: hero 0.831, 0.881; main 0.886, 0.904; trial 0.904, 0.913 (less blue than the hero, as main).
+>
+> THE FILL (MAIL 1389): not ready. The trim by the fill's share of light passes the number but not the eye: share 0.5 gives 2.930409 and share 0.75 gives 2.930396 against 2.930514, yet a faint grey notch stays in both; the whole fill (2.930626) is the only one that reads clean. The lift is steep near white, so I try next a whole fill under a cap just below white. Main's tree and this trial share one working tree, so it comes after the trial's next render, with the name on cfabcc52.
+>
+> Seconds a frame, preview draft: main 9 to 24, trial 7 to 23; 4605 at 1920 draft 21.
+
+## MAIL 1395 from the Builder, 03:54 UTC, 26 Nov (read 03:55 by my clock; word for word)
+
+> MAIL 1395 from the Builder (/root), 03:54 UTC. Your nine sheets of 4690 to 4760 and the crops are read. I looked at 4700, 4706, 4714, 4732, 4744, 4750 and 4758 whole, at the crops, and at the top strips of 4736 to 4742 on the trial side with the levels lifted. Rulings.
+> 1. Borders 1 and 2: I find no line on the trial side at the film's levels, and none at 4736 to 4742 lifted. The wide margin stands as you have it. On main's side the block of warm stars with the straight edge at 4722, the dust lanes that sweep in from 4728 and the dark dot in the Sun's core at 4702 to 4705 are faults a viewer sees; the trial's sky cures all three.
+> 2. Your RED 3, the warm cloud from 4743: it does not come into the dive. From 4690 to the end of the rise the sky is one set of pictures fixed on the sky at the stop's turn, weight 1. The surface view's sky is the approved close picture's sky as main shows it (blue grey, its own stars), laid where the surface view looks, with the recipe sky between it and the hero's card. Nothing of the sky may change at T (4758.3): the surface view carries the same pictures as the globe view. If two slots are too few, join pictures into one card, or ask handover_engineer for what the engine lacks, with a copy to me. Ruling 6 of MAIL 1376 stands: the turn is the ending's, and the ending's sky begins where its own frames begin.
+> 3. The card's Sun. 2.980139 against 2.930514 does not go on (d296 (2), read as written), and your estimate of 2.95 to 2.96 would not either. You name the cause yourself: the law's rays are not the hero's. So the cure belongs to the law: the law's Sun at this stop drawn with the hero's own light, as a picture (the hero less your card: core, rays and, if the number wants it, the wide part) at the Sun's place and under the law's cover by the limb. Then card plus law is the hero at 4605 by construction, and it stays one Sun from the flight in to its setting at 4704. I put this to sky_builder now (MAIL 1396, you are named in it). Cut him the Sun's picture when he asks, and settle the form between you. The other way, the law's own rays fit to the hero's by numbers, is open to him if it reaches the line. The line is d296 (2) as written, at the places the tool prints.
+> 4. The law's Sun against the card's stars (31 px at 4704): accepted. The Sun stands where the globe's light comes from.
+> 5. The stars of the right third: your counts settle it. The trial is main's sky within 4 percent and both stand off the hero the same way. No change asked.
+> 6. The control: one render of the trial's sky on main's own globe (cfabcc52, nothing of the eleventh name), 4690 to 4712 beside the trial as it is, so the globe's part and the sky's part are read apart. Say then whether the globe reads less bright by the eleventh name or by the pictures.
+> 7. The eleventh name's globe. By your rings the trial's gap at 4605 sits in the Sun and the sky, so the globe at the hold is not what keeps it off. What keeps it off beside the sky is G17 at 4860 (0.513 against 0.8, d337). On your sheets the trial's surface view from 4744 is flat and bright with the storm as a soft oval, where main has the spiral, the shade at the lower left and the pale band above. A twelfth name needs the surface view at 4860 at least as sharp and as formed as main's. Say in your next mail what makes the eleventh name's surface view soft and how you cure it at the cause.
+> 8. The fill: as you say, after the trial's next render, on cfabcc52. The line is 2.930514 as written.
+> Main is cfabcc52 (MAIL 1390): the law is on it, so the lay over for renders is needed only for the field glare (take/sg2 2434acd7, under proof). Your next mail when the control and the third picture are there, by 05:15 at the latest.
+
+## From sky_builder, 03:58 UTC, 26 Nov: the Sun as a picture, its form (read 03:58 by my clock; word for word)
+
+> From sky_builder, 03:58 UTC, by the Builder's MAIL 1396: I take way (a), the law draws the stop's Sun from a picture you cut. A state you can draw on by 05:15 UTC. This is the form of the picture, so you can cut it meanwhile; say at once if any of it does not fit your tools.
+>
+> THE PICTURE. One file of yours (webp lossless or png, 8 bit, sRGB, like a sky picture; you load it with ctx.texture(path, { srgb: true, mips: false, anisotropy: 1 }), default flipY). On the hero's own texel grid, no resampling: a crop of whole texels round the Sun, any size up to 1174 by 1174 (the law ends it inside 400 px of a 1080 line frame: it fades to nothing between 0.85 and 1 of the smaller of 400 px and the crop's shortest reach from the Sun to its border).
+> Its content, per channel: P = srgb(filmic(max(D, 0))), with D = inverseFilmic(lin(hero)) - inverseFilmic(lin(under)). lin is the sRGB decode, filmic and inverseFilmic are the film's own (src/post/chain.ts, a 2.51, b 0.03, c 2.43, d 0.59, e 0.14; inverseFilmic clamps its input at 0.985). under is what your own pictures put into the frame at that texel at 4605 with no Sun at all (your card where it has weight 1, in the card's own 8 bit values at the hero's texel; I think that is simply your Sunless card on the hero's grid). The law lays it as a sky picture is laid: inverseFilmic(texel) times gain times the same exposure and lens term as a replacing picture, added over your pictures. So your card plus the law is the hero at 4605 to the 8 bit step. Where your card is brighter than the hero, D is cut at 0 and the frame is your card.
+> Beyond the hero's top edge (the Sun is 155 px under it at 4605, and 187 px under it at 4535, more in the flight in and the dive) the crop has no hero: fill those texels yourself (the ring mean of D at that radius serves), or leave the crop short at the top and I end the law at that reach all round. Your choice; say which.
+> Stars of the hero that your card lost near the Sun come back with the picture and ride with the Sun; that is right for stars.
+>
+> WHAT YOU NAME, once, where your set loads (a function of src/space/sky.ts, no engine line): nameSunPicture({ texture, at: [x, y], texelPx: 1920 / 2816, gain: 1.538 }). at is the place, in texels of the crop from its top left corner, y down, fractions allowed, that lies under the engine's Sun at 4605 by your card's own lay. Mind: that is not the hero's Sun centre; by your numbers the engine's Sun stands 0.6 px right and 0.2 px above the hero's, so at is the hero's Sun centre in the crop plus (0.6, -0.2) times 2816 / 1920 texels. gain is your card's gain.
+>
+> WHAT THE LAW DOES WITH IT. In every frame in which the law is on (the Sun's radius under 0.19 degrees) it draws the picture at the Sun's place, upright in the frame, in place of its own glow and rays and in place of the engine's small disc. The picture does not follow sunGlare. A sky picture without glare: true closes it; the limb covers it as it covers the sky. Without a named picture everything is as on take/sg2.
+>
+> WHAT I NEED FROM YOU: nothing to start; I prove the state with a trial picture of my own (the hero over the engine's sky). If you have your Sunless card on the hero's grid ready, attach it (or the picture itself) and I prove on yours.
+
+## 26 Nov, 04:07 UTC: NAMED, the trimmed fill, to the Builder (word for word; attached the bundle `neptune-fill2.bundle`, `fill90-sun.png`, `fill90-4605-before.jpg`, `fill90-4605-after.jpg`)
+
+> NAMED, the trimmed fill (MAIL 1389), 04:06 UTC. 1ca0f77e3ff10bb9bd9135c4f0d82a461a7bf063 on main cd51e3f4511271dce0531863dc4f869585a9958c (the main that stands now), by bundle: neptune-fill2.bundle, 8.9 MB, branch neptune-fill2. Changed files, nothing else in the commit: public/assets/neptune/full/sky-hold.webp, public/assets/neptune/web/sky-hold.webp.
+>
+> The trim: every texel of the fill gets its old light plus 0.90 of what the paint adds, in linear light (fillcore.py IN OUT 0.90).
+>
+> Frame 4605, plain, at six places (my tool, STATED; 1920):
+> - draft tier: main 2.930514, the name 2.930444.
+> - final tier: main 2.902983, the name 2.902925.
+> Control: 4605 on cd51e3f4 equals 4605 on 77e597e5 in every pixel (draft).
+>
+> Texels moved: 173 in the full file (x 3571 to 3585, y 812 to 826; their levels after: 227 to 254), 93 in the web file (x 1784 to 1795, y 404 to 414). No other texel of either file.
+> Pixels moved at 4605, final tier: 7327, all within 270 px of the Sun; 60 of them by more than one level (x 1716 to 1726, y 148 to 157, the notch), the others by one level (the bloom).
+>
+> RED, named: the trim leaves a trace. Where the notch was, the name reads at most 8 levels of luma under the whole fill (238 against 246; 20 pixels by more than 4, none by more than 8; draft). The dark crescent and its colour fringe are gone (spread between channels there: main 52, the name 14, the whole fill 11). At 12 times a faint pink grey tint stands at the place, and at 3 times a faint shade at the core's right; see the panels, with the whole fill and the hero beside it.
+> Why 0.90 and not more: at 0.95 the trace is half (at most 4 levels under) but the margin is a hair: 2.930491 at draft, and 2.902980 against 2.902983 at final. I did not send a margin of 0.000003 to another machine. It is cut and rendered; say the word and it comes by bundle.
+> The row of shares, draft: 0.50 2.930409, 0.75 2.930396, 0.85 2.930411, 0.90 2.930444, 0.95 2.930491, whole 2.930626. The lift grows steeply near white because the film reads a texel's light through the inverse tone curve.
+>
+> Not yet done: fillcore.py and its RECIPE line are not on my branch yet; they go with its next commit.
+> Seconds a frame at 4605: draft 24, final 77.
+
+## MAIL 1398 from the Builder, 04:10 UTC, 26 Nov (read 04:10 by my clock; word for word)
+
+> MAIL 1398 from the Builder (/root), 04:10 UTC. Your name 1ca0f77e is taken. The bundle is verified and the name is cut as take/nf1 9e0bfa337729402e2f4d922ef8eaf6553b72d831 on main's code cfabcc52 (your two files, nothing else).
+> 1. Proofs out on the machines: units and gate; two trees at the draft tier over 46 frames (five of other stops, Neptune from 4455 to 5399) to see which frames move; your four judged frames 4605, 4707, 4860 and 5006 at the final tier with G17 on both trees; the reader on dive 1 and 2 of 4 and rise 1 and 2 of 2 (dive 3 and 4 follow if a frame of theirs moved).
+> 2. It goes on if no line of the reader is worse than main's own row, the plain number at each judged frame is no worse than main's by my own reading, and G17 does not turn red where main is green.
+> 3. My eye on your panel fill90-sun: the dark crescent is gone at 3 times. The faint tint at 12 times is accepted as a named red. The cut at 0.95 stays with you; a margin of 0.000003 is not sent to another machine, as you say.
+> 4. fillcore.py and its RECIPE line with your next commit: yes.
+> 5. MAIL 1395 stands (the dive: one set of sky pictures fixed on the sky, the control on main's globe, your mail by 05:15). The sky builder builds the far Sun as a picture taken from the hero and writes to you with its form; read your number on his state when it comes.
+
+## 26 Nov, 04:12 UTC: to sky_builder, the Sun as a picture, my choices (word for word)
+
+> From neptune_builder, 04:12 UTC, to sky_builder (copy in my notes): the Sun as a picture, your form of 03:58. It fits my tools. My choices and three facts.
+>
+> 1. The crop is short and whole: 456 by 456 texels of the hero, x 2288 to 2743, y 0 to 455, no texel invented. The hero's Sun centre is at hero texel 2516.5, 228.1 (texel centres at whole numbers; card texel 3572.5, 822.1 less the margin 1056, 594), so the reach is 227 texels, 155 px, all round, and the law ends there by your rule (fade from 132 to 155 px). Reason: beyond 190 texels the hero's ring median is flat, about [9, 26, 40]; that low wide part stays in my card as light of the sky, as the Builder allowed (MAIL 1376, 3). A crop of 1174 would run 359 texels over the hero's top edge and 287 over its right edge. My card joins the hero's own texels between about 160 and 193 texels from the Sun, so your picture is nothing inside your fade zone and card plus picture is the hero at 4605 whatever the fade's shape.
+> 2. under: my Sunless card on the hero's grid, cut new for this form. Inside the crop it keeps the stars and the flat level under [9, 26, 40]; core, rays and glow are out. So your picture carries the Sun's light and no star I can tell from a ray; the stars stay on the sky when the Sun sets.
+> 3. at: I send it with the file, in your measure (from the crop's top left corner, y down): the Sun centre plus (0.6, -0.2) times 2816 / 1920 texels, about 229.9, 228.3. The web size is the full size halved; there I name texelPx 2 times 1920 / 2816 and at halved.
+> 4. One thing to settle, the cover by the limb. If the picture is covered only as the sky is, texel by texel, its far half stands beside the limb with rays after the Sun's disc has gone behind the globe (the picture reaches 155 px; in the dive the Sun sets at 4704 to 4706). The Builder's word is "under the law's cover by the limb": the picture's whole weight should follow the visible share of the Sun's disc, as your glare does on take/sg2 (there 4704 reads half, 4705 a faint glow, 4706 nothing).
+> 5. A fact for your proof: on main's plan the law's Sun stands on the plate's painted Sun within 1 px of the preview (960 wide) from 4690 to 4706 (my control today: my two pictures and glare: true on main's own globe). On my eleventh name's plan it drifts about 62 px at 1920 against the card by 4704 and sets two frames earlier; that drift is my plan's, not your law's.
+>
+> The file comes when it is cut and read on a frame: public/assets/neptune/full/sky-sun.webp and web, with assets-src/neptune/sky/sun.py. No answer needed unless 1 or 4 does not suit you.
+
+## MAIL 1399 from the Builder, 04:17 UTC, 26 Nov (read 04:19 by my clock; word for word)
+
+> MAIL 1399 from the Builder (/root), 04:17 UTC. To every builder at work. THE CLOCK from here to the end, so that each of you can plan. All times UTC, today 2026-11-26.
+> 1. THE THIRD CUT: names in my hands by 06:45 go onto main as they are proven (about 08:15). The rounds of the stops they change start at 08:30.
+> 2. THE FOURTH CUT: names by 13:30, on main about 15:00, rounds at 15:15.
+> 3. THE FREEZE: 20:30. The last names by 18:30. After the freeze main changes only for faults that the seam review and the gauntlet find.
+> 4. What a name is: your best state that is better than main to the eye and no worse than main by the laws in force: (a) the units and the gate green; (b) the reader by part: of the three numbers of each part (the largest pop, pattern and level step of the part), each one that is over its limit is no worse than main's own number for that part; (c) the plain match at each judged frame no worse than main's; (d) G17 not red where main is green; and the laws of your own stop as they stand. A name need not be your last word. What is still wrong is named red in the mail and goes into the next cut. A state that waits for its last fault to be cured helps no round.
+> 5. A stop without a name at a cut is judged in its next round on what main holds then.
+> 6. If your machine cannot push, send the name as a bundle by attachment and say its base. Pictures as attachments.
+> 7. If you have not written to me since 02:00: three lines now (what you are on, what is measured, when a name can come). Otherwise no answer needed.
+> Main is 5798676c (code cfabcc52).
+
+## From handover_engineer, 04:19 UTC, 26 Nov: the sky patch that arrives whole is named (read 04:20 by my clock; word for word)
+
+> From handover_engineer, 04:19 UTC 26 Nov: your sky patch that arrives whole is named to the Builder (04:19).
+>
+> Branch agent/engine-arrive, commit 51df206df081b87b6733f751862b0a1836d967bc: on take/sg2 2434acd7 (it holds sky_builder's glare field in the same interface), with main 5798676c merged. It lands when the Builder takes it. Build your trial on it, not on main.
+>
+> The field: `arrive?: 'whole'` on SkyPatch (src/core/types.ts), the last field. A patch of the view its set is in, of the stop that arrives, with that word gets base 1 on every frame of the travel segment in place of shot.skyPatch; your own `weight(time, view)` still multiplies it. Nothing else changes: the stop that is left has none, the ending has none, dive, terrain, rise and hold are as they were, and where a dive or a rise shares the sky (skyShare) the word is not read. shot.skyPatch itself, the flight's stars (skyStars), the exposure and the band look still go by the travel's clock beside your patch; those are the sky's, not mine.
+>
+> Measured with the word set in a scratch copy of src/stops/neptune/set.ts (`edge: def.margin / wide, arrive: 'whole' })`; never committed, the file is yours), draft, against main cfabcc52:
+> - 4455, 4470, 4480 and every frame 4490 to 4496: main's bytes (no part of the picture in the frame, as your angles say). 4492 is a judged frame and keeps its bytes.
+> - The first frame that differs is 4497 (2085 px, largest 3, x 0..231, y 0..188). 4498: 30661 px, largest 33. 4499: 98347, 75. 4500: 195696, 132, x 0..1305, y 0..472. 4501: 316854, 222. 4502 to 4506: 444701 to 977206, largest 253 and 254. 4510: 1364810 px, the whole frame. 4520: 1042013, largest 166.
+> - 4527, 4529 and the hold's first frame 4530: main's bytes.
+> Without the word 31 of 31 frames drawn on the tip are main's bytes (among them every frame 4490 to 4506).
+>
+> Seen (looks agent/engine-handover-looks 45d3f981 and 35c2ef4a, nine pictures): the hold's picture comes in from the upper left corner; the flight's stars are dimmed under it by place (the star pass reads the patch's cover) and thin out frame by frame over 4499 to 4503; no straight edge at full size at 4505, and no frame where it steps in the consecutive crops. One thing for you: with the word at 4505 a faint blue disc about 14 px wide stands at frame x 1160, y 86, a thing of your picture that I do not see in main's frame (weight 0.09); look whether it is meant.
+>
+> Yours to answer for: that no part of the patch lies in the frame at the travel's first frame (the engine does not check it), and the entering edge on consecutive frames at review; my frames are draft, one sample, so its motion blur is not seen in them.
+>
+> If your patch lies over the far Sun's place: the Sun's cover reads the patch's cover at the pixel (a patch that adds covers nothing), so a patch that arrives whole hides the glare where it lies from the travel's first frame unless it says glare (sky_builder's field, take/sg2).
+
+## From sky_builder, 04:20 UTC, 26 Nov: the settled measures and the cover by the limb (read 04:21 by my clock; word for word)
+
+> From sky_builder, 04:20 UTC, to neptune_builder. Your 04:12 read. 1, 2, 3 suit me; 4 is granted with one call from you per update. Trial numbers below.
+>
+> A. The trial (not committed): a picture cut from the hero less my engine's own sky, 454 texels square, laid by the law. At 4605, final tier, frame against hero: centres hero 1716.18, 155.08, frame 1716.16, 155.10 (my centroid, both the same way). Mean absolute difference by ring: 0 to 8 px 0.37 levels, 8 to 16 0.43, 16 to 32 1.00, 32 to 64 1.72, 64 to 100 1.11, 100 to 128 0.74. The small rest (about plus 1 to 2 levels at 16 to 100 px) is the post chain's own light round the core, as under your card today. Upright, not mirrored.
+>
+> B. Settled measures.
+> - The gain is 1.538 exactly as for your card (it undoes the sky exposure 0.65 of the hold; the picture rides the sky exposure as your card does). Picture = srgb(filmic(max(D, 0))), no division.
+> - at: from the crop's top left corner, first texel centre at 0.5, 0.5; your 229.9, 228.3 is in that measure. One fact: my trial took at = hero corner texel 2518.853, 227.773 (the engine's Sun 1716.9, 154.8 at 1920, plus half a pixel, times 2816 / 1920) and the centroids agreed to 0.02 px. In your crop (x0 2288, y0 0) that is 230.85, 227.77, one texel right and half a texel up of yours. It holds only if your card lays hero texel t at frame px t times 1920 / 2816 at 4605. Tune at by your number; it is yours.
+> - Reach: the shortest way from at to the crop's border times texelPx, capped at 400 px; fade between 0.85 and 1 of it. Your crop gives 155 px. Good.
+> - With a plate lying over the Sun without glare: true, the picture is covered as the law is.
+>
+> C. The cover by the limb (your 4). The sky knows no globe, and the law on main has no cover other than being sky behind the globe, texel by texel. So the stop says the share, in the same sample, before the sky is drawn (the engine calls set.update before the sky in every sample; I read it in src/core/engine.ts). The form:
+>   import { nameSunPicture, showSunPicture, limbShare } from '../../space/sky'
+>   once at load: nameSunPicture({ texture, at: [x, y], texelPx, gain })
+>   in update(state, shot, view), every call: showSunPicture(limbShare(shot.sun.dir, world.position, R, shot.sun.angularRadius))
+>   where world.position is your globe's centre as the engine has just set it (relative to the lens) and R the radius you want as the limb (your choice: hard globe or the top of the air). limbShare is the plain share of a small disc beyond a straight limb: e = angle(Sun, centre) less asin(R / distance); t = clamp(e / radius, -1, 1); share = 0.5 + (asin(t) + t sqrt(1 - t t)) / pi. You may hand any other number from 0 to 1 instead.
+>   The law: picture weight = star weight times share; the engine's own small disc is taken out with the full star weight, so at share 0 no Sun stands. The call is used by the next sky draw and then forgotten: a sample in which you do not call draws the law as main does today. That is also the fence: the ending and every frame where your set is not live keep their bytes without a word from anyone. So call it in every update of the flight in, hold and dive, or two forms change hands.
+>
+> D. When: the state with A to C on agent/flightsky by 05:15 UTC, sha by mail. Your file and your number at 4605 then decide the name.
+
+## MAIL 1400 from the Builder, 04:27 UTC, 26 Nov (read 04:29 by my clock; word for word)
+
+> MAIL 1400 from the Builder (/root), 04:27 UTC. To every builder. MAIN MOVED: origin main is 834d5148f93966efa2d55c59c4fc02acc375b151, and that commit is also main's code now. Merged at 04:27: take/hc1, the engine's crests of a relief (handover_engineer; src/terrain/crest.ts, src/terrain/relief.ts, tests/crest.test.ts, tests/crest-gl.test.ts). No stop gives crest, and 39 of 39 draft frames from 60 to 5399 are the same bytes as before, so no picture of yours moves. Merge origin main into your tree before you name (MAIL 1314, 1367). Next onto main, as their proofs come in: the sky's field glare (take/sg2), the reader's tools (take/hn1), then the sky patch that arrives whole, Neptune's trimmed fill and Mercury's name. The clock of MAIL 1399 stands. No answer needed.
+
+## From sky_builder, 04:28 UTC, 26 Nov: the call takes the sample's Sun (read 04:29 by my clock; word for word)
+
+> From sky_builder, 04:28 UTC, to neptune_builder. One change to my 04:20 form, and what the built state shows. The code is committed in my tree (merge head 6b64beced7be332b79fe69d5a1c32d259c438161 over main 9f66277f); checks run now; the pushed sha comes by 05:15.
+>
+> 1. The call takes the sample's Sun as second word:
+>    showSunPicture(limbShare(shot.sun.dir, world.position, R, shot.sun.angularRadius), shot.sun)
+>    Reason: a word kept until the next sky draw could leak into a later frame in which your set does not speak. Tied to shot.sun it cannot: the law shows the picture only in the sample whose Sun you named, otherwise it draws as main.
+> 2. Your update is called twice in a sample of the dive where the globe lies under the surface view (view.under === 'globe' first, then the surface view). The sky is drawn after the first call, so the share of the globe view is the one used; the second call does no harm to that sample. In samples with the surface view alone, world.position and R are in that view's measure; hand the share you want there.
+> 3. The fence is yours by where you call: your set is live in the ending's retreat too. Call only in the flight in and in your own stop (shot.segment), or the ending moves. With no call the law draws its own Sun as on main.
+> 4. Trial of the setting with R = 1 at the top of your update, plate out, draft: 4695 to 4704 whole, 4705 dimmer, 4706 faint at the limb, 4708 nothing. Share 1 frames (4525, 4535, 4605, 4675, 4700, 4740) the same bytes as without the share; 5060 the same bytes as with no picture.
+> 5. Bytes with nothing named: 12 frames the same as my head before (4525, 4535, 4605, 4675, 4700, 4740, 4860, 4990, 5060, 5235, 615, 4035). With the picture named and main's plate in (no glare: true), 4605 and 4675 keep their bytes: the plate covers the picture as it covers the law.
+> All else as in my 04:20 mail.
+
+## 26 Nov, 04:34 UTC: to sky_builder, the Sun's picture is cut (word for word; attached `sky-sun.webp`, `sky-sun-web.webp`, `sun-plate-card-picture-x4.jpg`)
+
+> From neptune_builder, 04:34 UTC, to sky_builder. Your 04:20 and 04:28 read. The Sun's picture is cut. Two files attached, with a look.
+>
+> 1. THE FILE. sky-sun.webp, 640 by 640, lossless, 8 bit sRGB (sha256 begins 40cbb87f56ff8d7c). The web size is sky-sun-web.webp, 320 by 320 (the full file halved; texelPx doubles, at halves). I grew the crop from 456 to 640 so that the picture can carry the glow out to 262 texels and my card needs no ring where the two join; the crop reaches 92 texels over the hero's top edge and 20 over its right edge, into your own margin of the plate, where the picture is zero.
+> 2. THE GRID. The crop is whole texels of main's plate (public/assets/neptune/full/sky-hold.webp, 4928 by 2772, the hero's grid shifted by 1056, 594): plate x 3252 to 3891, y 502 to 1141, which is hero x 2196 to 2835, y -92 to 547. No texel is resampled.
+> 3. THE CONTENT. P = srgb(filmic(max(D, 0))), D = inverseFilmic(lin(plate)) less inverseFilmic(lin(card)), a 2.51, b 0.03, c 2.43, d 0.59, e 0.14, input of the inverse clamped at 0.985. The plate is main's with the trimmed fill of the core (take/nf1 9e0bfa33), not the approved png, so the core has no pit. The card is the plate with the Sun out: it keeps the stars (the plate less its opening by lines of 21 texels in 16 directions; none inside 110 texels of the Sun, all from 130) and of the smooth light no more than 8, 25, 38 levels inside 200 texels, and it is the plate's own texel from 262 texels on. So the picture is zero from 262 texels of the Sun on (largest level there 0, at the crop's border 0) and the card plus the picture give the plate back: largest difference 1.00 level, mean 0.107, by the two roundings.
+> 4. THE PLACE. Sun's centre in the crop, your measure (first texel centre at 0.5, 0.5): 321.0, 320.6 (the core's centroid reads 320.84, 320.43). For at I take your own rule, the texel that lies under the engine's Sun at 4605: hero corner texel 2518.853, 227.773 less the crop's corner 2196, -92, so at = [322.853, 319.773], texelPx 1920 / 2816, gain 1.538. Web: at = [161.4265, 159.8865], texelPx 3840 / 2816. With that the reach is 317.1 texels, 216.2 px, and your fade begins at 269.6 texels, beyond the picture's end at 262. I read the place on a frame on your state and tune at then, as you say.
+> 5. THE CALL. As in your 04:28: showSunPicture(limbShare(shot.sun.dir, world.position, R, shot.sun.angularRadius), shot.sun) in every update of the flight in and of my own stop, not in the ending's retreat. R is the hard globe for the first reading; I say if the top of the air reads better at 4704 to 4706.
+> 6. WHAT I STILL OWE YOU: the card itself. My trial card today carries the old painting out (fitted to the law's own glow), so the number at 4605 is read only with the new card and your state together. I build the card into my trial when your sha comes and send plain and low band at 4605 against 2.930514 then.
+>
+> Attached: sky-sun.webp, sky-sun-web.webp, sun-plate-card-picture-x4.jpg (the crop at 4 times: plate, card, picture).
+
+## MAIL 1405 from the Builder, 04:39 UTC, 26 Nov (read 04:39 by my clock; word for word)
+
+> MAIL 1405 from the Builder (/root), 04:39 UTC. To every builder. MAIN MOVED twice: origin main is 23f1089b3cde1279798527c697ef5efbdff9eebf, and that commit is also main's code now. Merged at 04:34: take/sg2, the sky's field glare (sky_builder; src/core/types.ts, src/space/sky.ts; no stop sets it, 40 of 40 draft frames the same bytes as before). Merged at 04:35: take/hn1, the reader's tools (harness_builder; ten files under tools/ and tests/; the reader gives main's own row to the digit on Mercury's rise). No picture of yours moves. Merge origin main into your tree before you name (MAIL 1314, 1367). Next onto main, as their proofs come in: the sky patch that arrives whole, Neptune's trimmed fill and Mercury's name. The preview of main is renewed (04:38). The clock of MAIL 1399 stands. No answer needed.
+
+## MAIL 1406 from the Builder, 04:46 UTC, 26 Nov (read 04:47 by my clock; word for word)
+
+> MAIL 1406 from the Builder (/root), 04:46 UTC. To every builder with a name coming for the third cut. To make 08:15 my machines start a name's proofs before the name. As soon as your candidate state stands (your own units green, the frames you care about seen by you), push it, or send the bundle if you cannot push, and send me one line: its full sha, its base on main and the files it changes. I cut it and start the reader's rows, units and gate, the same bytes outside the stop and the judged frames at final with G17 at once. If you change the state after, say so and I run the changed part again; that costs machines, not you. The name mail by 06:45 then needs only your own numbers, the looks and the red list. Second: the tracked tree stands at 2.93 GB of the 3 GB allowed. A name that adds more than 5 MB of files says so in the name mail and says what it removes. No answer needed.
+
+## MAIL 1407 from the Builder, 04:48 UTC, 26 Nov (read 04:48 by my clock; word for word)
+
+> MAIL 1407 from the Builder (/root), 04:48 UTC. For your dive's red pattern, from harness_builder's own draws (main fb40db96, draft, parts 1 to 3 of 4, 171 rows, measured against the plates' field from tools/x-plates.ts): the red places do NOT sit on the plates' edges. The pattern is over 0.45 on 75 rows in a row, film 4692 + 1/2 to 4729 + 1/2, largest 1.30 from 4721 + 1/2 at pixel 941, 766 (part 1: 0.72 from 4696, 8 rows; part 2: 1.30, all 57 rows; part 3: 1.15 from 4725, 10 rows). Of those 75 places 34 lie on a ramp (chance 29.2) and 18 have a border within the 40 px window (chance 21.0); rank by distance to a border, median 0.49 where 0.5 is chance. They wander over the body. The ground pop reads 1.00 to 1.12 with no row over 1.3 and has nothing to place. So do not look for the cause at the plates' borders or ramps: it is in what the body itself draws through those rows (what changes in place while nothing moves: a level of the body's own detail coming in or going out, or detail under the pixel's size). The list by row is in his notebook's source, b0/out/work/smooth/neptune-dive-pPof4.json, key patternAt; ask him for it if you want it. Three of his pictures are attached: the plates' borders over film 4753 and 4707, and the reader's full size panel of part 3. This is for your fourth cut work; your name for the third cut stands as it is. No answer needed.
+> (attached: plates-k9506.jpg, plates-k9414.jpg, p3-pops-full.jpg, in /home/user/.perplexity/attachments/9b76395c224341109ed0633a1c66a4cb/)
+
+## From sky_builder, 04:50 UTC, 26 Nov: the Sun's picture, his state is pushed (read 04:50 by my clock; word for word)
+
+> From sky_builder, 04:50 UTC, to neptune_builder. The state is pushed: origin agent/flightsky aa518fb1e0377fb061093508e6e42505c5fb67f9, on main 759b7d75a47d4b47e60bdce05b1173d5cd5169d1 by merge. Against that main it changes four files of code: config/showcase.json (one key, sun.star.fade 0.85), src/space/sky.ts, src/space/travel/field.ts (the key's type), tests/sunstar.test.ts; plus my notebook. Nothing under src/stops or public is in it; your picture, card and the two lines of set.ts are yours.
+>
+> The form as built, from '../../space/sky': nameSunPicture({ texture, at, texelPx, gain }) once; showSunPicture(share, shot.sun) per update; limbShare(sunDir, centre, radius, sunRadius). Your 04:34 values fit: 640 by 640, at [322.853, 319.773], texelPx 1920 / 2816, gain 1.538; the law reads the reach from the texture's own size, so the web file needs only its own at and texelPx. A picture that is zero before the fade begins is the cleanest case.
+>
+> Checked on the state before the last merge of main (6b64bece): tsc clean, vitest 89 files 1024 tests, parity green, cut/ unchanged, 11 draft frames the same bytes with nothing named. The same checks run again now on aa518fb1.
+>
+> One thing to watch when you read 4605: my picture stands upright in the frame at a fixed measure (texelPx), your card is fixed on the sky. If the card's lay at 4605 is not hero texel for frame px (a small roll or scale), the picture's rays sit a little off the card's opening; say so with the number and I add what is needed (a roll or a scale word in the picture's name). Send me plain and low band at 4605; I name on your number.
+
+## 26 Nov, 05:00 UTC: to handover_engineer, the ask for the word both on SkyPatch (word for word; attached `both-word.txt`, which follows)
+
+> From neptune_builder, 05:00 UTC, to handover_engineer, copy to the Builder in my mail of this hour (MAIL 1395 ruling 2: "ask handover_engineer for what the engine lacks, with a copy to me"). Noted in my notebook.
+>
+> THE ASK: one word on SkyPatch, `both?: boolean`. A patch that carries it is drawn in both views of its stop (globe view and surface view), each at the aim of its own view, with base 1 through dive, terrain and rise; it never goes through skyShare.
+>
+> WHY: by ruling 2 of MAIL 1395 Neptune's sky from 4690 to the end of the rise is one set of pictures fixed on the sky, weight 1, the same in both views, and nothing of the sky may change at T (4758.3). The engine today has two ways and neither carries it. Unshared: only the patches of the set's own view are drawn, and the rise's globe view gets base 0. Shared (skyShare): the terrain patch gets `low`, the orbit patch gets 0 in the surface view, and the far Sun's share is cut by 1 less skyShare (film.ts line 1105).
+>
+> MY TRIAL LINES are in the attached both-word.txt, old and new: one field in types.ts, two conditions in the unshared branch of engine.ts. On my machine only, never committed. A stop that does not name the word draws as before: both conditions are the old ones when the word is absent.
+>
+> PROVEN WITH IT (preview draft, every frame 4714 to 4764 seen): the close picture's sky enters over the frame's top edge from 4741 and its bright star runs through T on one path, its steps down the frame 5.03, 4.58, 4.40, 3.48, 3.08, 2.61, 2.03 preview px a frame from 4756 to 4762; no jump.
+>
+> TWO THINGS YOU SHOULD KNOW: (1) with `arrive: 'whole'` (your 51df206d) the two words meet only in the stop's own segments: in the travel the surface view's patch is not drawn, as before. (2) In the rise my orbit card is too small from 4995 (its border stands in open sky, the engine's own sky beyond it); that is mine to solve and may bring a second ask (a third slot or a wider card); I say so when I know. No answer needed except yes or no on the word and the branch it lands on.
+
+## 26 Nov, 05:00 UTC: the attachment both-word.txt of the ask (word for word)
+
+> The trial word `both`, as neptune_builder renders with it (26 Nov). Not a commit: three lines for handover_engineer to take or to write his own way.
+>
+> src/core/types.ts, interface SkyPatch, one field more:
+>
+>   both?: boolean
+>
+> src/core/engine.ts, the loop over the sets' sky patches, the branch that is not shared. Old:
+>
+>             if (patch.view !== state.view) continue
+>             const arriving = kind === 'travel' && state.id !== shot.segment.stop
+>             const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+>
+> New:
+>
+>             if (patch.view !== state.view && !(patch.both && (kind === 'dive' || kind === 'terrain' || kind === 'rise'))) continue
+>             const arriving = kind === 'travel' && state.id !== shot.segment.stop
+>             const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' && !patch.both ? 0 : 1
+
+## From handover_engineer, 05:05 UTC, 26 Nov: the word both is taken (read 05:05 by my clock; word for word)
+
+> handover_engineer to neptune_builder, on your ask of 05:00 (the word `both` on SkyPatch).
+>
+> YES. I take the word as you wrote it: a patch that carries `both: true` is drawn in the other view of its stop too, in the dive, on the ground and in the rise, at base 1, and in the rise's globe view it keeps base 1. Absent, both conditions are the old ones.
+>
+> THE BRANCH: agent/engine-both, built on my arrive name (agent/engine-arrive 51df206d) merged with the newest main. So one tree holds `arrive` and `both`. I send you the full sha when it is pushed and proven; the Builder gets it as a name.
+>
+> WHAT THE ENGINE DOES AND DOES NOT DO WITH IT, so that you can plan:
+> 1. Aim: each patch at the aim of its own view (patches[stop][patch.view]), the same in both views. The turn of the sky is still the view's own (orbits or turns, or your skyTurnShare); the word does not touch it.
+> 2. Slots: the sky draws two patches a sample, in the order of your set's list, the same order in both views (no sorting, that is only in the shared branch). The second lies over the first where both replace. A third patch above zero is dropped without a word, as today.
+> 3. Your weight by time, if you give one, is asked with the view of the set that draws (not the patch's view), as the unshared branch does today.
+> 4. Not in the hold and not in a travel: the surface view's patch comes on at base 1 at the dive's first frame and every patch of the stop goes to 0 at the first frame after the rise (the ending for you). The engine does not check that nothing of them lies in the frame at those two frames; that is yours, as with `arrive`.
+> 5. The word is read only in the unshared branch: a sample with skyShare above 0 or skyShareHigh given goes the shared way and ignores it.
+>
+> I prove on a scratch copy of your set.ts with `both: true` (and `arrive: 'whole'`) on both patches, never committed. If you set the word another way (one patch only, or by sky.json), tell me and I prove that instead.
+
+## 26 Nov, 05:05 UTC: the answer to MAIL 1395, to the Builder, first of two (word for word; attached `look-4860-third.jpg`, `storm-1to1.jpg`, `third-wedge-4733.jpg`, `third-wedge-4753.jpg`, `third-T-lawoff.jpg`, `main-wedge-4733.jpg`, `rise-grid.jpg`, `rise-crops.jpg`, `control-sheet-4690-4697.jpg`, `control-sheet-4698-4705.jpg`)
+
+> NEPTUNE, the answer to MAIL 1395, 05:05 UTC. The control and the third picture are there. No name in this mail. The push still fails, so the looks come as attachments in two mails: this one with ten pictures, the next with the sheets of the third picture, every frame 4714 to 4764, main beside the trial.
+>
+> 1. THE CONTROL (ruling 6): the trial's sky on main's own globe. The globe reads less bright by the eleventh name, not by the pictures.
+> 4605 plain: main 2.930514, control 2.980101, trial 2.980139 (control against trial: 4631 px differ, none by more than 1). G17 at 4605: main 0.856 / 0.720, control 0.805 / 0.699, trial 0.805 / 0.700: green, but the pictures cost it 0.05, and the Sun is where I look for it (point 4).
+> The lit globe's mean light in the dive, main | control | trial: 4690 142.76 | 142.71 | 140.83. 4696 142.33 | 142.30 | 137.87. 4700 142.00 | 141.98 | 136.66. 4704 142.92 | 142.89 | 138.42. 4708 142.62 | 142.62 | 139.71. 4712 141.96 | 141.98 | 136.72. Under the trial's sky main's lit globe keeps its level within 0.05. The eleventh's globe is 2 to 5 levels darker, and on 4706 to 4712 it is hazier and flatter to my eye.
+> A correction to my sheet mail of 03:49: the Sun's drift is the eleventh name's plan, not the law's. On main's plan the law's Sun stands on main's painted Sun within 1 preview px and sets at 4706 to 4707. In the trial it stands off (4704: 883.0, 220.2 against 913.8, 211.5) and sets at 4704 to 4705.
+> The three control sheets show main, the control and the trial side by side.
+>
+> 2. THE THIRD PICTURE (ruling 2). Uncommitted, on my machine.
+> WHAT IT IS: two cards, each one picture joined into the middle of its own continuation by the recipe, on the plates' own texel grid (2955.78 texels per unit of tangent), 8192 by 6144, reach 54 degrees to the sides and 46 up and down. Card A at the hold's aim: the hero's plate with the Sun out. Card B at the surface view's aim: main's close sky plate in its middle, and around it the floor under the recipe's stars falls from the recipe's [3, 13, 21] to the close picture's own [2, 6, 8] between 42 and 28 degrees from the aim. Both at weight 1 with no law by clock or height, drawn in both views. That last the engine lacks: asked of handover_engineer at 05:00, one word `both` on SkyPatch; the copy is under point 6.
+> A LAW I FOUND AND TOOK OUT: my plan dimmed the whole sky by the eye's height, 0.65 at 2 radii down to 0.38 at the deck (plan.ts, an older law of mine). Under it the cards stood at 0.585 of their level at 4860. It is a law by height on a picture's weight (MAIL 1363 2 (b)), so skyGain is 1 at every height now. The sheets of 4714 to 4764 were rendered before that: the sky in them dims toward the deck. 4860 and 4740 to 4764 in steps of 2 (third-T-lawoff.jpg) were rendered after it. What the change does at 4605, 4707 and 5006 is not read yet.
+> WHAT IS SEEN:
+> The warm cloud is nowhere from 4714 to 4764, nor at 4860, nor in the rise up to 4992.
+> By the poses the two cards cover every frame from 4690 to 4994 except 0.2 percent of 4719 to 4730 at the lower left corner; on the frames that corner is globe.
+> The close picture's sky (blue grey, its band, its bright star) comes in over the frame's top edge at 4741. On main a band stands in view at 4733 already (main-wedge-4733.jpg): main's dive looks elsewhere than the eleventh's.
+> Through T nothing of the sky changes: the bright star runs on one path, its steps down the frame 5.03, 4.58, 4.40, 3.48, 3.08, 2.61, 2.03 preview px a frame from 4755 to 4762 (T is 4758.3), and the sky's mean light (top 50 rows, right half, red) climbs without a step: 10.66, 11.07, 11.33, 11.42, 11.47, 11.56, 11.55 from 4755 to 4761 under the level law, and 18.24, 19.85, 20.40, 20.62, 20.66 at 4754, 4756, 4758, 4760, 4762 without it.
+> 4860: the sky's top 150 rows read [12.9, 19.3, 27.9], main [12.6, 19.3, 28.5], the approved [11.6, 17.1, 24.6]. Plain 19.701 (main 22.986, the eleventh 21.652), its top quarter 9.013 (main 12.395, the eleventh 16.506). G17 0.560 / 0.232, RED (main 0.934 / 0.549, the eleventh 0.513 / 0.232): point 3.
+> RED IN IT, THE RISE: from 4995 card A is too small. At 5024 36 percent of the frame lies beyond it (the frame's corners stand up to 70 degrees from the hold's aim, the card reaches 54). Beyond the card stands the engine's own sky: its warm cloud at the top right from 4996 to 5008, cut along the card's border and plain to the eye at 5000 and 5004, then a denser and greyer field against the card's dark blue up to 5024 (rise-grid.jpg at plain levels, rise-crops.jpg with the levels lifted). Not cured. A card that reaches 70 degrees at this grain is about 16240 texels wide and the engine takes 8192. The ways I see: a third slot for a far card of coarser grain behind the two (an ask of the engine), or the rise as main has it. I have not rendered main's rise beside mine yet; that is my next render but one, and I ask nothing before it is there.
+> OTHER RED IN IT: at 4988 a faint ring stands in open sky with the levels times 4 (rise-crops.jpg), probably where the cut took the Sun out of card A; not verified. The Sunless card of point 4 replaces that cut. A darker round zone of card B (the floor's fall) shows at 4736 to 4740 with the levels times 3; not yet measured at plain levels. 4690 to 4713 are not rendered again with the new cards (card A alone is in view there). The flight in: card A reaches further than main's plate and is in view from 4489 by the poses; `arrive: 'whole'` is not set, the stills 4484 to 4514 are not rendered, and handover_engineer's faint blue disc at 4505 is not looked at.
+>
+> 3. RULING 7, what makes the eleventh's surface view soft. Read on G17's own tiles at 4860 (12 by 8, film over approved per tile) and on four controls, each one cause.
+> (a) The sky's tiles, 16 of 75: 0.51 to 0.66 under the level law, 0.92 to 1.16 without it (main 0.93 to 1.10). Cured at the cause, see point 2; G17 went from 0.519 to 0.560 by it.
+> (b) The storm, 9 tiles: 0.04 to 0.32 (main 0.45 to 0.98). This is the soft oval. K1, storm.rings 0.7 and arms.light 0.2 as before the hold took them down: G17 0.521 / 0.242, the storm's tiles 0.04 to 0.33, to the eye the same oval. K2, the haze sheet off (fan.veil depth 0): G17 0.552 / 0.200, plain 27.501, and THE DARK OVAL IS GONE (storm-1to1.jpg). Seven of the storm's nine tiles stay at 0.04 to 0.11 with the sheet off, while three tiles of the deck to its right rise from 0.32, 0.42, 0.38 to 0.68, 0.76, 0.84. So at 4860 the storm is no body of the deck: it is a clearing in the smooth haze sheet. The sheet blurs what the deck has beside the storm, and under the storm the deck has nothing fine. By scale (film over approved, median): 0.492 at 0.6 to 1.2 px, 0.705 at 1.2 to 2.4, 0.860 at 2.4 to 4.8, 0.918 at 4.8 to 9.6, 0.983 at 9.6 to 19.2: what lacks lies under 2.4 px. K3, the eye's air off: G17 0.436 / 0.260, plain 44.859: the air is not the cause; without it the view is the hold's, pale and flat.
+> (c) The right lower deck, 7 tiles: 0.16 to 0.34 (main 0.37 to 0.96): the same lack of fine streaks on the plain.
+> (d) Flat and bright, by regions, eleventh | main | approved: the lower left [5, 20, 46] | [3, 14, 36] | [3, 14, 29]. The pale band [53, 86, 125] | [68, 101, 139] | [68, 103, 137]. The storm's box [41, 71, 113] | [59, 97, 141] | [44, 77, 115]. The near deck is too light and too blue and the pale band 15 levels too dark; the storm's own level is the approved's.
+> THE CURE AT THE CAUSE, in this order. First the storm as the deck's own body near the deck: the short wall, the dark of the eye, the arms' light and the winding streaks at full share, by the law of height that ruling 5 of MAIL 1363 names (the hold keeps its values), and the sheet carrying the deck's winding streaks instead of smoothing them. The control before I build: rings 0.7 with the sheet off, to see whether the deck holds streaks under 2.4 px there at all. If it does not, the cause under it is the fall of the octaves (deck.gain 0.5 an octave), and the streaks get a flatter fall down to the pixel's limit. By count 32 of 75 tiles stand at or over 0.8 now and the median needs 38: the storm's 9 carry it if they reach main's. Then the long waves of tone (near deck, pale band) by the air's two numbers and the sheet's light, fitted at 4860 against the approved's regions, never by thinning the air for the number (MAIL 941). I do not promise the number. The control's reading comes with my next mail.
+>
+> 4. THE SUN'S PICTURE (ruling 3): cut and sent to sky_builder at 04:34, 640 by 640 texels, the hero less a new Sunless card (made beside the trial; the tree's card A still has the old cut of the Sun); card plus picture against the plate differ by 1 level at most, 0.107 in the mean, and the picture is zero beyond 262 texels. His state came at 04:50 (agent/flightsky aa518fb1 on main 759b7d75). My reading of 4605 with it, plain and low band against 2.930514, is not there yet: it is the next render after this mail.
+>
+> 5. RED, all of it. The eleventh name stays off main. G17 at 4860 0.560 against 0.8. The trial's plain at 4605 2.980139 against 2.930514 until the Sun's picture is read. The rise from 4995. The trial is uncommitted, has no RECIPE rows, its units are not run, and `both` is not in the engine. The eleventh's globe 2 to 5 levels darker and hazier in the dive, and the Sun's drift by its plan. Rulings 5 and 6 of MAIL 1363 not begun (5 is the first step of the cure above). fillcore.py not on the branch yet. My notebook is behind by the mails since 03:54 and the work since 02:25; I write it up next. No push since 62498f603.
+> For the third cut (06:45): I will not have a twelfth name by then unless the storm's cure and the rise both come in; if they do not, nothing of mine goes onto main in that cut but the fill you took.
+>
+> 6. THE COPY of my ask to handover_engineer, 05:00 (there I wrote 4756 for 4755 at the star's steps): "one word on SkyPatch, both?: boolean. A patch that carries it is drawn in both views of its stop (globe view and surface view), each at the aim of its own view, with base 1 through dive, terrain and rise; it never goes through skyShare." My trial lines went with it (one field in types.ts, two conditions in the unshared branch of engine.ts). I told him the rise may bring a second ask. His answer came while I wrote this (read 05:05): yes, as written, on a branch agent/engine-both built on his arrive name and the newest main; the sha follows from him. His point 4 is mine to prove: the surface view's card comes on at the dive's first frame and every card goes to 0 at the first frame after the rise, and the engine does not check that nothing of them lies in the frame there. Not proven yet.
+>
+> Seconds a frame, draft: 4860 at 1920 108. Preview: 10 to 26 in the dive (16 in the mean over 4714 to 4764), 13 in the rise.
+> Attached here: look-4860-third.jpg (4860 beside the approved, with main and the eleventh), storm-1to1.jpg (approved, main, trial, K1, K2), third-wedge-4733.jpg and third-wedge-4753.jpg (the trial's upper right on consecutive frames, levels times 3, under the level law), third-T-lawoff.jpg (without it), main-wedge-4733.jpg (main's, the same), rise-grid.jpg, rise-crops.jpg, control-sheet-4690-4697.jpg, control-sheet-4698-4705.jpg. The third control sheet goes with the next mail.
+
+## 26 Nov, 05:06 UTC: the answer to MAIL 1395, to the Builder, second of two (word for word; attached seven sheets `third-*.jpg`, `third-wedge-4714.jpg`, `control-sheet-4706-4712.jpg`)
+
+> NEPTUNE, the second mail of two, 05:06 UTC: the sheets to my answer to MAIL 1395. No new finding in this mail.
+> The third picture, every frame 4714 to 4764, main on the left and the trial on the right, preview draft: third-4714-4721.jpg, third-4722-4729.jpg, third-4730-4737.jpg, third-4738-4745.jpg, third-4746-4752.jpg, third-4753-4759.jpg, third-4760-4764.jpg. These were rendered before the level law by height came out of my plan, so the sky in them dims toward the deck (down to 0.585 of its level); the star's path and the cards' places are the same.
+> third-wedge-4714.jpg: the trial's upper right on consecutive frames from 4714, levels times 3.
+> control-sheet-4706-4712.jpg: the third control sheet (main, the control, the trial).
+> I saw every frame of every sheet in both mails myself.
+## 26 Nov, 05:07 UTC: lab log, 03:55 to 05:06 (the control, the third picture, ruling 7)
+
+Written after the mails above; every number here stands in one of them or in the lists below. Proxies are read as STATED.
+
+The trial (uncommitted, on HEAD 251099e1): `src/stops/neptune/sky.json` (two cards, terrain `sky-terrain.webp`, orbit `sky-hold.webp`, each tan [1.385757, 1.039318], edge 0.03, gain 1.538, add false, glare true, both true; block `made`), `src/stops/neptune/set.ts` (the list loader reads `glare` and `both`), `src/stops/neptune/plan.ts` (skyGain 1 at every height, 04:56), `assets-src/neptune/sky/hold.py` (makes the two cards, about 60 s), cards in `public/assets/neptune/{full,web}/`. Shared files are patched only while a trial render runs (`/tmp/trial4.sh`, patch `/tmp/trial4.patch`: the glare law and the trial word `both`) and restored after it; the log's last line reads "shared files that differ from HEAD: 0" each time.
+
+Renders under `out/work/nep/weave/`: MAIN (main 4605, 4860), MAINd (main 4690 to 4760, preview), N19 (the eleventh, the judged four), CT and CTs (the control: the trial's sky on main's globe, 4605 and 4690 to 4712), P3 (trial 4605, 4707), Q2 (trial 4714 to 4764 preview, level law on), Q3 (4860, law on), Q4 (rise 4952 to 5024 in steps of 4, preview, law on), Q5 (4860, law off), Q6 (4740 to 4764 in steps of 2, preview, law off), K1 (rings 0.7, arms.light 0.2), K2 (fan.veil depth 0), K3 (air.top 0.5).
+
+The control (ruling 6 of MAIL 1395): 4605 plain main 2.930514, control 2.980101, trial 2.980139; control against trial 4631 px differ, none by more than 1. G17 at 4605 main 0.856 / 0.720, control 0.805 / 0.699, trial 0.805 / 0.700. The lit globe's mean light main | control | trial: 4690 142.76 | 142.71 | 140.83; 4696 142.33 | 142.30 | 137.87; 4700 142.00 | 141.98 | 136.66; 4704 142.92 | 142.89 | 138.42; 4708 142.62 | 142.62 | 139.71; 4712 141.96 | 141.98 | 136.72. The globe reads less bright by the eleventh name, not by the pictures. The Sun's drift is the eleventh plan's (4704: 883.0, 220.2 against 913.8, 211.5; it sets at 4704 to 4705, on main's plan at 4706 to 4707).
+
+The level law: lowSky in plan.ts gave the sky 0.65 at 2 radii and 0.38 at the deck and dimmed the cards to 0.585 at 4860. Sky, top 150 rows at 4860: law on [7.5, 11.7, 17.8], law off [12.9, 19.3, 27.9], main [12.6, 19.3, 28.5], approved [11.6, 17.1, 24.6]. What the change does at 4605, 4707 and 5006 is not read.
+
+4860, plain | top quarter | G17 median / p25: main 22.986 | 12.395 | 0.934 / 0.549. Eleventh 21.652 | 16.506 | 0.513 / 0.232. Trial law on 20.749 | 12.932 | 0.519 / 0.232. Trial law off 19.701 | 9.013 | 0.560 / 0.232 (RED). K1 21.219 | 12.931 | 0.521 / 0.242. K2 27.501 | 12.935 | 0.552 / 0.200. K3 44.859 | 16.519 | 0.436 / 0.260. The ground rows of the eleventh and the trial at 4860 are the same bytes from row 540 down. Bands of the trial law off (film over approved, median): 0.6 to 1.2 px 0.492; 1.2 to 2.4 0.705; 2.4 to 4.8 0.860; 4.8 to 9.6 0.918; 9.6 to 19.2 0.983; 19.2 to 38.4 0.923.
+
+G17's tiles at 4860 (`/tmp/g17grid.py`, 12 by 8, 75 with a reading): trial law off, 32 at or over 0.8 (38 needed), ground rows 2 to 6 median 0.338 (main 0.696). Storm, row 3 columns 4 to 8 and row 4 columns 5 to 8: trial 0.07 0.04 0.06 0.13 0.32 and 0.22 0.11 0.07 0.13; main 0.51 0.93 0.49 0.97 0.45 and 0.98 0.97 0.72 0.55; K1 0.08 0.04 0.06 0.14 0.33 and 0.26 0.12 0.06 0.16; K2 0.06 0.04 0.05 0.11 0.68 and 0.44 0.06 0.05 0.08. With the sheet off (K2) row 3 columns 8 to 10 rise from 0.32 0.42 0.38 to 0.68 0.76 0.84 and row 4 columns 10 and 11 from 0.64 0.48 to 0.90 0.94, while row 5 columns 9 to 11 fall from 0.34 0.29 0.25 to 0.18 0.11 0.08. Regions eleventh | main | approved: lower left [5.1, 19.8, 46.0] | [3.0, 14.4, 36.2] | [3.1, 13.8, 29.3]; storm [41.4, 71.4, 113.4] | [58.7, 96.6, 141.4] | [44.4, 77.2, 115.3]; pale band [52.6, 86.3, 125.0] | [67.9, 101.3, 138.5] | [67.9, 103.2, 137.3].
+
+Through T (4758.3): the bright star, preview px: 4756 860.11, 76.77; 4757 860.78, 81.36; 4758 861.08, 85.76; 4759 861.53, 89.23; 4760 861.58, 92.31; 4761 861.19, 94.92; 4762 861.01, 96.95. Sky's mean red, top 50 rows, right half: law on 4755 to 4761 10.66, 11.07, 11.33, 11.42, 11.47, 11.56, 11.55; law off 4754 to 4764 in steps of 2: 18.24, 19.85, 20.40, 20.62, 20.66, 20.45.
+
+Cover by the poses: 4690 to 4960 full except 4719 to 4730 (0.2 percent, behind the globe); the rise full to 4994, least 0.633 at 4995, 36 percent beyond card A at 5024; card A in view from 4489 in the flight in. The two aims stand 104.5 degrees apart.
+
+Open after handover_engineer's answer of 05:05 (his point 4): card B comes on at the dive's first frame (4680) and every card goes to 0 at 5025. To prove by poses and stills: no part of card B in the frame at 4680, and what the cut at 5025 shows (ruling 6 of MAIL 1376: it stays until a sheet shows a fault there).
+
+Seconds a frame, draft: 4860 at 1920 108; 4605 24; preview dive 10 to 26; preview rise 13.
+
+## 26 Nov, 05:07 to 05:36 UTC: lab log (the Sun's picture at the hold, the setting, the controls of ruling 7)
+
+- 05:08 to 05:11. `git fetch origin`: main 738549c4, agent/flightsky aa518fb1 (the Sun's picture: `nameSunPicture`, `showSunPicture`, `limbShare`).
+  `hold.py` now cuts the Sun out of card A whole (`sunless`: the plate's Sun replaced by the sky round it along 16 directions from
+  the join, `line` 21 px) and writes the Sun as its own picture, `sky-sun.webp` (640 px, the plate's Sun less the Sunless card, zero
+  beyond the join and at the border). Its print: texels changed 165706; card plus picture against the plate largest 1.00, mean
+  0.107. Card A differs from the one before in the box x 4814 to 5595, y 2117 to 2899. `sky.json` has the key `sun` (file, size, at,
+  texelPx, gain 1.538); `set.ts` names the picture after the sky loop and shows it in the globe view of the stop and in travel with
+  `limbShare(shot.sun.dir, world.position, 1, shot.sun.angularRadius)`. Shared files are laid for the render only (`/tmp/trial5.sh`).
+- 05:12. S1, 4605 at 16x9 draft, 22.3 s: plain 2.923354 (main 2.930514; the trial before 2.980139), low band proxy 1.020 (main
+  1.021), G17 0.856 / 0.720 (main the same), sky outside 1.07 radii 2.143 (main 2.160). Rings of the Sun 0 to 8 ... 128 to 256 px:
+  hero 252 237 170 84 39 27; main 248 236 170 85 39 27; S1 248 235 169 84 39 27. STATED, my machine.
+- 05:14 to 05:16. S2, the setting, preview draft, every frame 4696 to 4708 read at 1:1 and at 3 times beside main's (MAINd): with
+  the picture whole 4696 to 4703, half behind the limb at full weight at 4704 (the globe covers it), nothing from 4705. Main: whole
+  to 4705, half at 4706, a faint glow beyond the limb at 4707, nothing at 4708 (its Sun stands two frames later: the eleventh
+  plan's turn). No second Sun, no ring, no step of the weight while the Sun is whole. The last step, half to none in one frame, is
+  one frame shorter than main's and is not yet read at review tier.
+- 05:16 to 05:18. S3, 4860 on the same state: the bytes of Q5 (`cmp`): the Sunless card and the Sun's picture change nothing at 4860.
+- 05:18 to 05:34. THE CONTROLS OF RULING 7 at 4860, 16x9 draft, about 108 s a frame, one cause each. Plain | top quarter | G17
+  median / p25, then the storm's tiles (row 3 cols 4 to 7; row 4 cols 6 to 9; the approved is 1):
+  - trial (S3 = Q5): 19.701 | 9.013 | 0.560 / 0.232; 0.07 0.04 0.06 0.13; 0.11 0.07 0.13 0.37.
+  - K4, rings 0.7, arms.light 0.2, the sheet off: 26.382 | 9.003 | 0.698 / 0.202; 0.07 0.04 0.05 0.11; 0.06 0.05 0.09 0.18.
+    THE CONTROL SAYS NO: the storm's fine band does not come back with rings and arms.light. Had I built their law of height first
+    it would have been for nothing.
+  - K5, deck.limit 0.75: 19.765 | 9.026 | 0.558 / 0.232; 0.09 0.05 0.07 0.15. Not the filter by the pixel's foot.
+  - K6, deck.gain 0.65: 19.613 | 9.022 | 0.907 / 0.489; 0.26 0.09 0.12 0.44; 0.47 0.31 0.61 1.10. The number goes green by a
+    fine ripple of the near deck (row 5 cols 7 to 11: 1.13 1.45 2.15 1.92 0.96); the storm stays a soft oval.
+  - K7, K4 and wall [0.8, 1.2], dark 0.9: 26.396 | 9.003 | 0.695 / 0.203; a hard smooth dark hole, nothing of the fine band.
+  - K8, K4 and limit 0.75 and gain 0.65: 26.487 | 9.023 | 0.750 / 0.291.
+  - K9, K4 and the low air off (a control, never a cure: MAIL 941, MAIL 1414): 30.521 | 8.241 | 0.938 / 0.264; storm 0.11 0.06
+    0.10 0.21; 0.09 0.07 0.15 0.26. The low air takes about half of the band there; without it the storm still has a tenth.
+  - K12, K4 and far.on 0: the picture of K4 (26.431): the word takes the map from the far field only, not from the place.
+- THE READING OF THE CODE (deep.ts): the deck of the place is the map times one number, the place's detail (its own light over the
+  light of the same deck made of the map's waves alone), and that product then goes through the end's grade of the fall
+  (`fallEnd`: under the pivot every channel to 1 over 2.6, 3.1, 3.7). The map's own colour has that grade undone beforehand
+  (`toGround`); the detail has not. So a detail of 2 to 1 on the deck stands as 1.25 to 1 in the picture (green), and the most
+  the detail may lift (far.most 8) is 1.96. On main the ground had no grade, and a detail of 2 to 1 stood as 2 to 1. That is a
+  reading, not yet a finding: the trial E1 lays the detail after the grade (far.after) and is its control.
+- 05:34. MY MISTAKE: I stopped the script that renders main's rise (to put a trial before it) at the moment it had laid main's
+  tree and started the render. The render went on, on main's tree, with the trial in the stash `trial-0533`. Nothing was edited in
+  that state; a second script waits for the render and runs `/tmp/frommain.sh` (back to the branch, pop). Main's rise at preview
+  draft: 19 frames in 203 s (05:33:51 to 05:37:14), the first three at about 40 s each, the last at 1 to 2 s.
+
+## MAIL 1414 from the Builder, 05:08 UTC, 26 Nov (read 05:08 by my clock; word for word)
+
+> MAIL 1414 from the Builder (/root), 05:08 UTC. Your two mails of 05:05 and 05:06 are read and the pictures filed; I looked at 4860 (look-4860-third.jpg) myself. My eye agrees with your reading: main's storm is a body with a dark eye and sharp arms, the eleventh's and the trial's are a soft oval, and the trial's sky is the approved's while the eleventh's carries a warm cloud the approved does not have. Rulings. (1) Third cut: nothing of yours but the fill (take/nf1; its proofs: units and gate green, dive 1 of 4 no line worse, dive 2 of 4 and rise 2 of 2 equal to main's rows, the same bytes on 34 of 46 frames with the 12 that differ at 67 to 78 dB; the finals with G17 and rise 1 of 2 are still out). (2) Your order of the cure stands as you wrote it: the storm as the deck's own body near the deck first, the control before you build, then the long waves of tone; no thinning of the air for a number. (3) A twelfth name for the fourth cut (in my hands by 13:30) needs at 4860 G17 not red (main is green there, d337) and a plain number no worse than main's 22.986; at 4605 no worse than main's 2.930514 once the Sun's picture is read; the dive and the rise rows no line worse than main's; the rise from 4995 either covered or left as main has it, shown beside main's before you choose. (4) The warm cloud beyond card A at 4996 to 5008 is a pop of the kind the third review note names; it may not reach a name. No answer needed; send the control's reading and the rise beside main's when they are there.
+
+## 26 Nov, 05:13 UTC: to sky_builder, 4605 with the Sun's picture (word for word; attached `sunpic-4605.jpg`, `hold2-S1.jpg`)
+
+> From neptune_builder, 05:13 UTC, to sky_builder. Your 04:50 read. The reading of 4605 with the Sun's picture is there, and it is green.
+>
+> 1. THE NUMBER. 4605 at 1920, draft, 22.3 s, against the approved hero (my tools, STATED):
+> plain 2.923354 against main's 2.930514: better by 0.007160. Before, with the law's own Sun over my old card: 2.980139.
+> low band (both pictures blurred by 16 px, my proxy for it) 1.020 against main's 1.021. Before: 1.029.
+> G17 0.856, p25 0.720; main 0.856, p25 0.720. Before: 0.805, p25 0.700.
+> The sky outside 1.07 radii 2.143 against main's 2.160; the rest 3.472 against 3.472.
+> 2. THE SUN ITSELF. Mean light by ring round the Sun, 0 to 8, 8 to 16, 16 to 32, 32 to 64, 64 to 128, 128 to 256 px: hero 252, 237, 170, 84, 39, 27. Main 248, 236, 170, 85, 39, 27. With the picture 248, 235, 169, 84, 39, 27.
+> Mean absolute difference from the hero by ring, main | with the picture: 0 to 16 px 3.13 | 2.46. 16 to 48 px 2.13 | 1.39. 48 to 96 px 1.35 | 1.08. 96 to 180 px 1.32 | 1.27. 180 to 260 px 1.68 | 1.69. 260 to 400 px 3.66 | 3.66.
+> 3. THE LAY. I see nothing that asks for a roll or a scale word. In the difference from the hero at 8 times (sunpic-4605.jpg, lower row) the picture's rays leave a fainter trace than main's painted Sun leaves, and a dot of a few px at the core, where the film stands under the hero as main does (248 against 252). No doubled ray, no ring where picture and card join.
+> 4. WHAT I RENDERED ON. Not a merge. Over my trial tree (the eleventh name 251099e1 plus the trial; its base on main is older, 01ce1602) I laid for the render only the shared files as they stand on your aa518fb1: config/showcase.json, src/core/types.ts, src/space/sky.ts, src/space/travel/field.ts, and main's src/space/travel/path.ts, src/terrain/relief.ts, src/terrain/crest.ts; then my trial word both on SkyPatch (handover_engineer builds it as agent/engine-both). Restored after.
+> 5. THE VALUES, as in my 04:34: at [322.853, 319.773], texelPx 1920 / 2816, gain 1.538, the file 640 by 640. The file is now made by my hold.py with the card; its pixels are those of the file I sent you (640 by 640 and 320 by 320, each compared), the bytes differ by the encoder's setting only. The web file is read by its own width: at and texelPx follow from it.
+> 6. THE CALL, in my update: if (inOrbit && (shot.segment.stop === plan.id || shot.segment.kind === 'travel')) showSunPicture(limbShare(shot.sun.dir, world.position, 1, shot.sun.angularRadius), shot.sun). So only in the globe view, in the flight in and in my own stop; with the surface view alone I make no call and your law draws as on main.
+> 7. NOT READ YET: the Sun's setting behind the limb with the share (4696 to 4708), the flight in, the rise. The setting is my next render; I send it when I have seen every frame.
+> 8. Nothing of this is committed. A name of mine that carries the call needs your name on main first, since my set.ts imports your three functions.
+>
+> Attached: sunpic-4605.jpg (the Sun at 1 to 1: approved, main, with the picture; below the differences from the approved at 8 times: main, with the picture, the law's Sun over my old card) and hold2-S1.jpg (4605, the hero left, the film right).
+
+## 26 Nov, 05:14 UTC: to the Builder, 4605 with the Sun's picture is green (word for word; attached `sunpic-4605.jpg`, `hold2-S1.jpg`)
+
+> NEPTUNE, 05:14 UTC: the Sun's picture is read at 4605 (ruling 3 of MAIL 1395, point 3 of MAIL 1414). One answer, no name.
+> 4605 at 1920, draft, 22.3 s, my tools, STATED: plain 2.923354 against main's 2.930514, better by 0.007160 (with the law's own Sun over my old card it was 2.980139). Low band, my proxy (both blurred by 16 px): 1.020 against main's 1.021. G17 0.856, p25 0.720, as main's 0.856, p25 0.720 (before: 0.805, p25 0.700). The sky outside 1.07 radii 2.143 against 2.160.
+> What it is: sky_builder's law (his aa518fb1) draws the hero's own Sun as a picture where its Sun stands; my hold card is the plate without that Sun, and card plus picture give the plate back within 1 level. Mean light by ring round the Sun, 0 to 256 px in six rings: hero 252, 237, 170, 84, 39, 27; main 248, 236, 170, 85, 39, 27; with the picture 248, 235, 169, 84, 39, 27. I see no doubled ray and no ring where picture and card join (sunpic-4605.jpg, lower row: the differences from the approved at 8 times).
+> Rendered on: my trial tree with his state's shared files laid over it for the render only, plus the trial word both. Not a merge, not committed. sky_builder has the same numbers from me (05:13).
+> RED and not read: the Sun's setting behind the limb with the picture (4696 to 4708, rendering now), the flight in, the rise. My next mail brings the control's reading and the rise beside main's, as you asked.
+> Attached: sunpic-4605.jpg, hold2-S1.jpg (4605, the hero left, the film right).
+
+## From sky_builder, 05:15 UTC, 26 Nov: named on my number; two things for my renders (read 05:15 by my clock; word for word)
+
+> From sky_builder, 05:15 UTC, to neptune_builder. Your 05:13 read; on your number I have named: 64b51f3c35c4ada5e83d6c46cd56f121cbc06d37 (origin agent/flightsky, on main 738549c4ad88a968b78f23e913271a71104ca00d by merge). The code is the same as aa518fb1; four files against main: config/showcase.json, src/space/sky.ts, src/space/travel/field.ts, tests/sunstar.test.ts. I told the Builder your numbers as STATED by you, and that your name needs mine on main first.
+>
+> Two things for your next renders:
+> 1. With the surface view alone you make no call, so there the law draws its own Sun as on main. If the Sun stands in view at a change from the globe view to the surface view alone, two forms meet. My byte proofs saw no such frame (4740, 4860, 4990 keep their bytes with and without the picture), but I did not walk the dive frame by frame; you will see it at 4696 to 4708 and after.
+> 2. handover_engineer's field both: a replacing patch of the surface view drawn in the globe view covers the picture there unless it says glare: true.
+> No answer needed unless the setting or the flight in shows a fault of the form.
+
+## From handover_engineer, 06:17 UTC, 26 Nov: the word both is named (agent/engine-both b40bd156); what he measured on main's set (read 06:17 by my clock; word for word)
+
+> handover_engineer, 06:17 UTC. The word `both` is NAMED to the Builder: agent/engine-both b40bd156b161aa2d820d17398782f6257b1c1360 (my arrive name 51df206d, the word's commit 6b0d2243 on it, main fd965aab merged in; the tree holds `arrive` and `both`). Your two conditions as you wrote them, moved into ownSkyDrawn and ownSkyWeight (src/core/skyfloor.ts) so that tests hold them. No answer needed.
+>
+> What I measured on Neptune's set of main (draft tier, a trial that is not committed: your plan giving `{ low: 0 }` in dive and rise, both patches saying `arrive: 'whole', both: true`), for what it tells you about your own tree:
+> 1. A plan that returns null from skyShare gets the engine's own share, not none: the word needs `{ low: 0 }` (a share of 0) from the stop in dive and rise. Without the word that trial differs from main at 4757 in 420773 px (sky-hold alone in the globe view, the band of sky-terrain appears at 4758) and at 4957 in 552284 px (no sky picture in the rise's globe view).
+> 2. With the word 12 of 12 frames carry the bytes of main: 4605, 4680, 4741, 4757, 4758, 4759, 4860, 4957, 4958, 5006, 5024, 5025. So at 4741, 4757, 4957, 4958 the word draws sky-terrain in the globe view exactly as main's share of 1 does, and sky-hold under it (slot A, sky.json's order) shows nowhere.
+> 3. The patches go with the sky's turn, as the stars do. On main the low turn stands 124 degrees from the hold's turn and the turn at 5024 stands 144 degrees from the low turn, so at 4680, 5006 and 5024 neither patch lies in the frame (main's bytes there). "Fixed on the sky" is fixed among the stars: a picture stays in the frame only as long as the turn lets it. Whether your new turn keeps your cards in the frame from 4690 to 5024 is yours; the engine does not check what lies in the frame at 4680 (the surface view's patch comes on whole) and at 5025 (both go to 0).
+> 4. Two slots: with the word your two patches fill both in every frame of dive, ground and rise; a third patch above zero is dropped without a word. A third slot is in src/space/sky.ts (sky_builder's).
+> 5. travel_builder's agent/engine-aims (two sky aims a stop, d978b419) changes the same loop; a trial merge with the word names no conflict. Its check that the surface plate hides the turning stars counts a plate only where the surface view's set draws it; I tell travel_builder.
+> 6. One star near x 1264, y 185 moves 7.2 px from 4757 to 4758 and 5.8 px from 4758 to 4759 on main (4756 not drawn, so I do not know the step before): look at the sky's drift across T on your own frames.
+
+## From handover_engineer, 06:21 UTC, 26 Nov, low: point 6 answered, the sky's speed in main's rise (read 06:21 by my clock; word for word)
+
+> handover_engineer, 06:21 UTC, low, no answer needed. Point 6 of my mail of 06:17 (the star near x 1264, y 185) is answered, nothing wrong: I followed that sky direction through main's shots (film.shotAt at mid frame, the sky's quaternion and turn). Its step from frame to frame in the dive: 4755 to 4756 9.29 px, to 4757 8.13, to 4758 6.97 (across the change of view), to 4759 5.83, to 4760 4.69: one even slowing, no step at T (the picture gave 7.18 and 5.78). In the rise: 2.09 px a frame on the ground, then 2.38, 3.52, 5.61, 8.54, 11.69, 14.83, 17.94 (4956 to 4957, across the change of view), 20.20, 21.63: no step there either. For your own judging only: from 4966 the sky's speed climbs again, 22 px a frame at 4966, 48 at 4969, 99 at 4972.
+
+## 26 Nov, 06:36 UTC: to the Builder, the control's reading and the rise beside main's (word for word; attached `look-0637.jpg`, `storm-ctl.jpg`, `storm-K24.jpg`, `fs-a.jpg`, `fs-b.jpg`, `sunset-1to1.jpg`)
+
+> neptune_builder, 26 Nov, 06:35 UTC. The answer you asked for in MAIL 1414: the control's reading and the rise beside main's. Nothing is named. Six pictures attached. All numbers are mine, a proxy, STATED: frame 4860, 16x9, draft, 107 to 130 s a frame; plain | top quarter | G17 median / lower quarter.
+> 
+> 1. THE CONTROL'S READING (storm-ctl.jpg: the storm 1:1, approved, main, trial, D1 to D4; look-0637.jpg: 4860 beside the approved).
+> main d337: 22.986 | 12.395 | 0.934 / 0.549, the storm's tiles 0.45 to 0.98. The trial as it stands (S3): 19.701 | 9.013 | 0.560 / 0.232, the storm's tiles 0.04 to 0.32. RED.
+> (a) The form of the storm is the storm's block of values. D1, the place's own light shown plainly (the sheet off, the low air off) with the trial's block: no storm, a faint ring. D2, the same with main's block (eye 0.25, wall 0.3 to 1.0, depth 0.02, arms.light 0.6, ragged 1.0, rings 0.7, collar 0.3) and main's level 0.55: main's storm, the dark eye, the arms and the streaks, as crisp as main's. So the deck does hold the streaks; the fall of the octaves is not the cause.
+> (b) The sharpness is lost in two steps after the place's light. First: the place's detail multiplies the map's picture before the end's curve, and that curve draws a ratio of 2 to 1 on the deck together to about 1.25 to 1 in the picture (main's ground had no such curve over it). D3, the detail laid on after the curve, the sheet and the low air off, main's block: 30.893 | 8.387 | 0.989 / 0.710, the ground rows' median 0.909, the storm as crisp as main's. Second: the sheet and the low air. D4, D3 with both on as they stand: 29.082 | 9.098 | 0.688 / 0.344, the ground rows 0.472. RED.
+> (c) Not the cause, each by its own control: the mute by the far cover (K20 to K22, within 1 level of their pairs), the soft shadow (K26 shade 1: 0.566 / 0.228; K27 shadeFoot 0: 0.559 / 0.232), the contrast (K17: 0.617 / 0.250). Main's block on the trial without (b) gives the form but washed and soft (K28: 24.003 | 9.042 | 0.513 / 0.273; K29 with level 0.55: 24.923 | 9.060 | 0.564 / 0.252).
+> (d) A rougher deck (deck.gain 0.65, K6: 19.613 | 9.022 | 0.907 / 0.489) wins the median by fine ripple while the storm's tiles stay 0.18 to 0.43 with soft edges (K23). It is not the cure and I do not take it; main stands at 0.5 as the trial does.
+> (e) K24 (storm-K24.jpg): K23 with the detail after the curve, the sheet and the air as they stand: 21.087 | 9.060 | 0.974 / 0.704, the storm's tiles 0.45 to 0.98. It shows the storm's tiles can reach main's with the air untouched; its median leans on the rougher deck of (d), which D4 does not have. Its fault, and D3's and D4's: green and teal patches, cyan in the pale band. The cause as I read the code, not yet a finding: the lift multiplies the map's saturated blue where main's lit streaks are the pale of the deck's own light.
+> WHAT I BUILD NOW, in this order, the air's two numbers untouched: main's block for the storm near the deck by the law of height (the hold keeps its values, ruling 5 of MAIL 1363); the place's detail in the light the eye sees with the lift going to the deck's own pale tone, so no hue is made; then the sheet's own share of the streaks, then the long waves of tone. The map's picture keeps the one curve at every height; the detail is the place's alone and is 1 where the map's share is 1. I do not promise the number.
+> 
+> 2. THE RISE BESIDE MAIN'S (fs-a.jpg 4984 to 5004 and fs-b.jpg 5008 to 5024: main, main with sky_builder's sky, the trial).
+> (a) The warm cloud at the top right of the trial, 4996 to 5008, is not from sky_builder's files: main's Neptune on his whole tree (aa518fb1) gives main's rise byte for byte at the ten frames I rendered (4964, 4984 to 5012 by fours, 5024). It is a cloud of the engine's own field that the trial's turn brings into the frame beyond card A: the trial's sky stands at the ending's turn from 5008 (14.67 degrees from it at 4996, 5.89 at 5000, 0.85 at 5004), main's only at 5024 (44.28, 32.06, 21.87, and 13.68 at 5008).
+> (b) Card A does not cover the frame at the end of the rise: from 5012 to 5024 it stands as a darker box with its border in the frame (fs-b.jpg, right column), and the engine takes it off at 5025. So "covered" is not there with this card.
+> (c) My first form of "as main has it" (T1: card A not drawn in the rise, the turn between the heights 0.03 and 0.055) is refuted: it swept the surface view's card out of the frame by 4964 and showed the field with a warm cloud from 4988 to 5004. The turn turns the cards with it, as handover_engineer wrote at 06:17.
+> (d) Rendering now, two forms of "as main has it", card A not drawn in the rise in both: T5, the turn by the eye's height from 0.03 radii to the height of the rise's end (4.19 radii at 5024), and T6, the engine's own law of the turn as main's plan has it. Preview, 10 to 13 s a frame. I choose when the frames 4960 to 5026 of both (every second, every one from 4994 to 5012) are read beside main's, and send the sheet with the choice. Until then the rise from 4995 is RED: the warm cloud, the card's border, the cut at 5025.
+> (e) The turns, measured: on main the low turn stands 124.36 degrees from the hold's and 143.58 from the ending's; on the trial the hold's turn is the ending's (0.02) and the low turn stands 101.41 from both.
+> 
+> 3. THE SUN'S SETTING IN THE DIVE (sunset-1to1.jpg), read 05:16 on the trial with sky_builder's state: the picture whole 4696 to 4703, half behind the limb at 4704, nothing from 4705; main's whole to 4705, half at 4706, faint at 4707, nothing from 4708. No fault of the form.
+> 
+> 4. REDS STANDING. G17 at 4860 red on the trial and the storm not formed and sharp (cause now named, cure not built). The rise from 4995. The trial is not committed, has no RECIPE rows, the units are not run on it. `both`, `arrive` and the Sun's picture are not on main; on agent/engine-both my plan must give skyShare { low: 0 } in the dive and the rise (handover_engineer, 06:17), not done. The eleventh globe darker and hazier in the dive. The flight in is not read. Ruling 6 of MAIL 1363 (4706) is not begun. No push since 62498f603; my notebook stands at 05:07 on the branch and goes in when no render runs. My mistake of 05:34: I stopped the script that renders main's rise at the moment it had laid main's tree and started the render; the render went on, on main's tree, with the trial in a stash. Nothing was edited in that state; the tree was back on the branch with the trial at 05:37.
+
+## MAIL 1430 from the Builder, 06:37 UTC, 26 Nov (read 06:37 by my clock; word for word)
+
+> MAIL 1430 from the Builder (/root), 06:37 UTC. Your mail of 06:35 is read and look-0637.jpg seen. No ruling is needed on it; your order of work stands. Four things for your clock.
+> 1. THE ENGINE'S WORDS. `arrive` and `both` are cut with travel's two sky aims as one take, take/eb1 ac9be49a1ac5acf54eae34640f06b5fe9d9b5b93 on main 23f1089b; its tests, gate and 39 frames are out. If green it is on main about 08:15 with the rest of the third cut (I mail every builder then). Your fill (take/nf1) goes on with it once its finals are in. Cut your twelfth name on that main.
+> 2. WORTH, in Brandon's order: his note names the whole globe ("still looks really bad") and the surface picture that "pops in" entering and leaving. So first the rise from 4995 to the cut at 5025 and the entry of the dive with no step, no border of a card and no cloud that the turn brings in; then the storm formed and sharp (G17 at 4860 not red, plain no worse than 22.986); then the tones.
+> 3. SEEN by me in your sheet: the trial's storm is softer than main's and the approved's and its eye has no dark core; D4 has the form and carries teal and green patches that neither the approved nor main has. Your reading (the lift multiplies the map's blue) is yours to prove; the line for me is no hue that the approved does not show.
+> 4. NO ITEM HOLDS THE REST. Names close 13:30. If the storm's cure is not green by 12:30, name the state that carries the cure of the rise and of the dive's entry with main's storm as main has it, so that what is cured is not lost with what is not. Say then plainly what stays red.
+
+## 26 Nov, 07:21 UTC: look to the Builder, the low turn of the rise (word for word; attached `look-0637.jpg`, `l1-a.jpg`, `l1-b.jpg`, `l1-pair.jpg`, `l1-sky.jpg`, `l1-sky2.jpg`, `l1d-a.jpg`, `l1d-b.jpg`, `l1d-sky.jpg`)
+
+LOOK, neptune_builder, 07:21 UTC (due 07:05, late by the render that proves it). Nine pictures attached. Not a name.
+
+1. THE WARM CLOUD OF THE RISE: cause found and cured in the tree. It is the engine's own band, carried through the frame by the low turn the trial took over (the aim of MAIL 1099, set when the band itself was the surface view's sky). Measured by geometry at every frame: on main the band stays 10.6 degrees or more from the open sky in the whole rise; on the trial it lay 0.0 to 3.3 degrees from it at 4984 to 5008. The two cures of 06:36 (T5, T6) are refuted by their own sheets (band fainter, still there). Cure: one new low turn for the stop, found by a search of 60000 turns and a refinement: skyAim.terrain [-109.64232, 127.07272, 57.001] (150.81 degrees from the ending's turn, which is not touched), the rise by the engine's own law. By geometry the band is 10.0 degrees or more from the open sky at every rise frame (least 10.0 at 5014, 10.6 at 5024 as main), the sky's step at most 3.18 degrees a frame in the dive and 2.92 in the rise.
+   Rendered (L1, 44 preview frames 4960 to 5026, every frame 4994 to 5012, each looked at; l1-sky2.jpg has 4994 to 5014 frame by frame): no warm cloud. Top right of the frame, mean R G B, main | before | now: 4996 6.0 10.0 13.4 | 21.7 30.3 37.5 | 6.9 11.8 16.3; 5000 9.5 15.0 19.6 | 28.5 36.5 42.9 | 11.4 18.4 25.0; 5008 10.8 16.8 22.7 | 19.9 28.3 35.8 | 12.7 19.5 26.4; 5020 and 5024 equal to main's (11.0 16.8 22.7). What stays over main at 4996 to 5008 is blue and sits at the limb (the trial's air is wider there than main's); it is the globe's, not a card's. l1-pair.jpg: main | before | now at 3 times the levels.
+   THE CHOICE YOU ASKED TO SEE: from 4986 the rise shows no picture of the stop; the sky from 4995 to the cut is the engine's, as main has it. The cut at 5025: against main's tree with the flight sky, 5025 and 5026 differ by 2 levels at most (mean 0.026, 0.043); the step 5024 to 5025 is 3.341 mean levels against 3.327 there. No fault seen at the cut.
+2. RED, A BORDER OF A CARD in the rise: 4976 to 4984 a vertical step crosses the sky from right to left, the surface view's card floor 3 12 19 against the engine's 2 5 6 (levels of 255; l1-sky.jpg at 3 times the levels; I do not see it at 1 times at sheet size). Main has its own at 4964 to 4972 (9..12 14..17 21..25 against 1 5 7). Cure rendering now (L2): the two cards end softly at their borders (hold 0.10, surface view 0.15 of the card, by place on the sky, no clock, no height); by geometry the dive keeps its cover (least 0.99).
+3. THE DIVE with the new turn (L1d, 48 preview frames 4680 to 4772, each looked at; l1d-a, l1d-b beside main, l1d-sky at 3 times): the sky is clean at 1 times; at 3 times a faint border at 4738 to 4742 (hold card's floor 3 13 21 against the surface view's 2 6 8), which the same soft border answers. 4680 is bit equal to before the turn; 4770 and 4772 equal it within 1 level, so 4860 stands as in look-0637.jpg (attached again; not rendered again since: trial plain 19.701, G17 0.560 / 0.232, RED against main's 0.934 / 0.549).
+4. RED AND NEXT, the globe: beside main the trial's globe is hazier and flatter in the dive and the rise (4714 to 4760, 4964 to 4992), its storm an unformed dark oval where main has a crisp spiral, soft white blobs at the lower left (4722 to 4738, 4976 to 4992). This is the storm's work and I go to it as soon as L2 is read. Your point 4 is understood: 12:30 decides between the cured storm and main's storm under the cured sky.
+5. Other reds unchanged: nothing committed (trial in the tree), no push since 62498f603, plan lacks skyShare { low: 0 } for the engine of take/eb1 (at the merge, about 08:15), units not run on this state, flight in not read, ruling 6 of MAIL 1363 not begun, NOTES behind since 05:07 (texts kept, appended when no render runs).
+Seconds per frame: preview rise 6 to 13, preview dive about 10, surface view preview about 25; 4860 16x9 draft 107 to 130.
