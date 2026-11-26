@@ -14,7 +14,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: approved
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: round 59 closed, status 399, d384
+- Last push: round 57 closed
 
 ## Review note of 2026-11-23
 
@@ -1571,7 +1571,7 @@ One entry per long job while it runs: the command, the frame range, the log file
 
 Work for the review note of 2026-11-23, started 06:40 UTC, each agent on its own VM. The spec is `cut/HANDOVER.md`; who owns what and its state is the table "State" in the section "Review note of 2026-11-23"; looks arrive on `agent/<branch folder>-looks`. Fresh agents: `handover_engineer`, `jupiter_coder`, `saturn_coder`. Builders taken up again: `sun_builder`, `mercury_builder`, `venus_builder`, `earth_builder`, `uranus_builder`, `neptune_builder`. If a task starts and one of these is not alive, start a fresh agent for its part with `cut/HANDOVER.md`, `assets-src/shared/STOP-AGENT.md` and the stop's notebook. The draft tier reference of the 47 judged frames on the Builder's own VM finished at 07:28 UTC and the engine's proof on render_01 to render_12 (JOB e1proof) came back at 08:00 UTC; nothing of the note runs on the Builder's VM or on a render machine at 08:02 UTC.
 
-Jobs out at 16:58 UTC, 2026-11-26, 25 machines busy, 0 jobs waiting (round 57 Saturn has all 17 answers and closes next; round 58 Venus waits for two render jobs; Neptune's name is on the machines (rows, finals); Mars's speck name due 17:15). By check name, part and machine: ja6 01 on render_35; jb6 01 on render_28; mc8 02 on render_04, 03 on render_10, 04 on render_29, 05 on render_08; md8 02 on render_15, 03 on render_33, 04 on render_19, 05 on render_26; ms8 01 on render_07, 02 on render_34; mt8 01 on render_16; mz7 02 on render_21; nr8 01 on render_23, 02 on render_17, 03 on render_01, 04 on render_22; ns8 02 on render_27, 03 on render_40, 04 on render_06, 05 on render_12; r58 03 on render_14, 04 on render_18; uf7 01 on render_25.
+Jobs out at 17:01 UTC, 2026-11-26, 24 machines busy, 0 jobs waiting (round 58 Venus waits for two render jobs; Neptune's name is on the machines (rows, finals); Mars's speck name due 17:15; the issues of rounds 59 and 57 go to Jupiter's and Saturn's builders). By check name, part and machine: ja6 01 on render_35; jb6 01 on render_28; mc8 02 on render_04, 03 on render_10, 04 on render_29, 05 on render_08; md8 02 on render_15, 03 on render_33, 04 on render_19, 05 on render_26; ms8 01 on render_07, 02 on render_34; mt8 01 on render_16; mz7 02 on render_21; nr8 01 on render_23, 02 on render_17, 03 on render_01, 04 on render_22; ns8 02 on render_27, 03 on render_40, 04 on render_06, 05 on render_12; r58 03 on render_14, 04 on render_18.
 
 
 
