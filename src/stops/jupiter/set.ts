@@ -5,7 +5,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches } from './assets'
-import { ReliefDeck, bandDrift, eddyWind, liftNow, tallNow, windTurn } from './relief'
+import { ReliefDeck, bandDrift, eddyWind, heldNow, liftNow, tallNow, windTurn } from './relief'
 import { Globe } from './globe'
 import { Io } from './io'
 import * as look from './look'
@@ -143,6 +143,7 @@ export const createSet: SetFactory = async (ctx) => {
       ;(du.uTall!.value as THREE.Vector4).w = tallNow(height)
       const lift = liftNow(state.time - terrainMid)
       ;(du.uToneLift!.value as THREE.Vector3).setX(lift[0]!).setY(lift[1]!)
+      ;(du.uAirHeld!.value as THREE.Vector3).z = heldNow(state.time - terrainMid)
       const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
       const deckShare = !inOrbit ? 1 : own ? low(height, scene.deck) : 0
       const limbShare = !inOrbit ? 1 : own ? low(height, scene.limb) : 0

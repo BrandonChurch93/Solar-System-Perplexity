@@ -171,6 +171,7 @@ uniform sampler2D uAirThrough;
 uniform vec4 uAirKnots;
 uniform vec2 uAirTurn;
 uniform float uAirLift;
+uniform vec3 uAirHeld;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform vec2 uAboveMix;
@@ -364,6 +365,17 @@ vec3 calmAt(vec2 g) {
   vec2 uv = clamp(vec2(g.x - uCalmBox.x, uCalmBox.y - g.y) * uCalmBox.z + 0.5, uToneLift.z, 1.0 - uToneLift.z) * vec2(0.5, 1.0) + vec2(0.5, 0.0);
   return uCalmBox.w * vec3(texture(uTone, vec2(uv.x, uv.y / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 1.0) / 3.0)).r, texture(uTone, vec2(uv.x, (uv.y + 2.0) / 3.0)).r);
 }
+void airAt(float sine, vec3 line, out vec3 through, out vec3 added) {
+  through = vec3(1.0);
+  added = vec3(0.0);
+  for (int i = 0; i < (sine < uAirKnots.z ? 1 : 0); i++) {
+    float row = clamp(log(sine / uAirKnots.x) * uAirKnots.y, 0.0, 1.0) * uAirTurn.x + uAirTurn.y;
+    float column = acos(clamp(dot(line.xy / max(length(line.xy), 1e-6), uSunAz), -1.0, 1.0)) * uAirKnots.w + 0.5 * (1.0 - 3.14159265 * uAirKnots.w);
+    through = vec3(textureLod(uAirThrough, vec2(0.5, row), 0.0).r, textureLod(uAirThrough, vec2(0.5, row + 1.0 / 3.0), 0.0).r, textureLod(uAirThrough, vec2(0.5, row + 2.0 / 3.0), 0.0).r);
+    added = vec3(textureLod(uAir, vec2(column, row), 0.0).r, textureLod(uAir, vec2(column, row + 1.0 / 3.0), 0.0).r, textureLod(uAir, vec2(column, row + 2.0 / 3.0), 0.0).r);
+  }
+}
+
 vec4 sunAt(vec2 g) {
   vec3 low = unfilm(textureLod(uPlateMid, (g - uMid.xy) * uMid.z + 0.5, uHazeLight.w).rgb) * toneAt(g);
   return vec4(low, smoothstep(uHazeLit.x, uHazeLit.y, (low.r - low.b) / max(low.r + low.b, 1e-4)));
@@ -513,6 +525,25 @@ void main() {
     ground *= relit;
     seen.rgb *= relit;
     col = mix(ground * shade * through + added, seen.rgb * fine * shade, seen.a);
+    vec3 liftLow = vec3(0.0);
+    vec3 liftClear = vec3(0.0);
+    float lowered = max(above(E) - uAirHeld.x, 0.0);
+    float carried = lowered > 0.0 ? seen.a * uAirHeld.z : 0.0;
+    for (int i = 0; i < (carried > 0.0 ? 1 : 0); i++) {
+      vec3 held = normalize(there - (E - normalize(E + vec3(0.0, 0.0, uRadius)) * lowered));
+      vec3 throughNow;
+      vec3 addedNow;
+      vec3 throughHeld;
+      vec3 addedHeld;
+      airAt(sine, D, throughNow, addedNow);
+      airAt(max(-dot(held, normalize(there + vec3(0.0, 0.0, uRadius))), 1e-6), held, throughHeld, addedHeld);
+      vec3 lit = ground * shade;
+      vec3 picture = seen.rgb * fine * shade;
+      vec3 was = lit * throughHeld + addedHeld;
+      col += carried * (max(picture + lit * mix(throughNow, vec3(1.0), thin) + addedNow * (1.0 - thin) - was, uAirHeld.y * picture) - picture);
+      liftLow = carried * (max(picture + lit * throughNow + addedNow - was, uAirHeld.y * picture) - picture);
+      liftClear = carried * (max(picture + lit - was, uAirHeld.y * picture) - picture);
+    }
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
       int low = int(min(floor(knot), ${ABOVE_KNOTS - 2}.0));
@@ -521,8 +552,8 @@ void main() {
       vec3 byAir = mix(uAboveAir[low], uAboveAir[low + 1], part);
       col = mix(col, col * byGain + byAir, thin);
       for (int j = 0; j < (thin < 1.0 && uAboveMix.x > 0.0 ? 1 : 0); j++) {
-        vec3 shallow = mix(ground * shade * throughLow + addedLow, seen.rgb * fine * shade, seen.a);
-        vec3 aloft = mix(ground * shade, seen.rgb * fine * shade, seen.a) * byGain + byAir;
+        vec3 shallow = mix(ground * shade * throughLow + addedLow, seen.rgb * fine * shade, seen.a) + liftLow;
+        vec3 aloft = (mix(ground * shade, seen.rgb * fine * shade, seen.a) + liftClear) * byGain + byAir;
         col = mix(col, exp(mix(log(max(shallow, vec3(uAboveMix.y))), log(max(aloft, vec3(uAboveMix.y))), thin)), uAboveMix.x);
       }
     }
@@ -735,6 +766,7 @@ export class ReliefDeck {
       uAirKnots: { value: new THREE.Vector4(air.sinRange[0]!, 1 / Math.log(air.sinRange[1]! / air.sinRange[0]!), air.sinRange[1]!, (ad - 1) / (ad * Math.PI)) },
       uAirTurn: { value: new THREE.Vector2((as - 1) / (3 * as), 0.5 / (3 * as)) },
       uAirLift: { value: 0 },
+      uAirHeld: { value: new THREE.Vector3(body.handover.air.ceilingUnits, body.handover.air.floor, 0) },
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveMix: { value: new THREE.Vector2(deck.above.even, deck.above.floor) },
@@ -819,6 +851,10 @@ export function eddyWind(eddy: number, seconds: number): number {
 
 export function liftNow(seconds: number): number[] {
   return seconds < 0 ? body.handover.diveLiftUnits : deck.tone.lift
+}
+
+export function heldNow(seconds: number): number {
+  return seconds < 0 ? 0 : 1
 }
 
 export function tallNow(height: number): number {
