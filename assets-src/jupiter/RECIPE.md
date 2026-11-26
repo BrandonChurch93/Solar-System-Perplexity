@@ -139,7 +139,7 @@ Sources: `references/approved/jupiter-close.jpg` (never edited), the wide canvas
 11. Image fields. `python3 assets-src/jupiter/deck/image.py` writes `deck-image-wide.jpg` and `deck-image-core.jpg` (JPEG quality `image.quality`, no chroma subsampling) and `deck-image-range.bin`, so a point the fit camera saw takes its colour from the picture at the pixel where that camera saw it. `python3 assets-src/jupiter/deck/view.py` writes `deck-view-color.png` for the ground that camera did not see or saw too steeply (`view` in `deck.json`: hidden zones are carried over from their borders).
 12. Tone field. `python3 assets-src/jupiter/plates/tone.py` writes `deck-tone.bin` (`tone` in `deck.json`): the approved view laid on the ground over the plates, both blurred, carried out smoothly past the seen ground and led back to 1.
 13. Calm field. `python3 assets-src/jupiter/plates/calm.py` writes `deck-calm.bin` (`calm` in `deck.json`) from the finished plates and `deck-tone.bin`, and a before and after picture from straight above to `out/work/jupiter/calm/calm.jpg`.
-14. Measured tables, no picture written: `python3 assets-src/jupiter/deck/air.py` (the air between camera and deck, `deck.json` `air`), `deck/limb.py` (the glow over the limb, `limb`), `deck/lift.py` (the air weight over time in the dive and the rise, `air.lift`), `deck/pace.py` (`place.json` `pace`).
+14. Measured tables, no picture written: `python3 assets-src/jupiter/deck/air.py` (the air between camera and deck, `deck.json` `air`; its line 55 reads `full/deck-view-color.png`, which is out of the tree since the cut of 11-26, see the last section: run step 11 first (`deck/image.py`, then `deck/view.py`) and delete `deck-image-range.bin` and `deck-view-color.png` from both sets after), `deck/limb.py` (the glow over the limb, `limb`), `deck/lift.py` (the air weight over time in the dive and the rise, `air.lift`), `deck/pace.py` (`place.json` `pace`).
 15. One ground from the far plate down (the level check `assets-src/shared/globe-levels.py`). `python3 assets-src/jupiter/plates/upward.py` runs last, after steps 1 to 13: it takes the place as the plates show it from above (fore, near and mid plate nested with `look.join` as the globe nests them), reduces it by area to the far plate's texel and writes it inside one border on the ground (`plates.upward.border`: full within 16.5 units of the vortex, none from 23.5) into `plate-far.png` (in the plates' coding, alpha too), both sets. No image model. It runs once, on the far plate as the steps before wrote it (the globe's own picture at the place); run again on its own output it would carry the border further towards the storm. The same tool can write the place into the globe's wrap and its three patches (`plates.upward.levels` with `wrap` and `patches`: decoded, divided by the grade, times `deck-tone.bin` and `deck-calm.bin`, in the wrap's coding; a texel is carried to the chart through the frozen flow, `globe.flowed` inverted; only the 8 by 8 blocks the border touches are changed, through the JPEG's own coefficients and tables with `jpeglib`). That is not done: `levels` holds `far` alone, because the storm from above is a pale storm with a blue black shade, and the approved hero shows a small orange oval at the place. So the wrap and the patches keep the oval, and the pair of the globe's picture and the far plate is over the limit at the place.
 
 Checks: the level check on the six pairs from the wrap to the fore plate, limit 0.45: the patches 0.02 and 0.01; the globe's own lookups laid on the far plate's ground against the far plate 0.30 (0.07 before step 15); far plate to mid plate 0.00 (0.85 before); mid to near plate 0.05; near plate to the middle of the fore plate 0.36. The globe's picture and the plates are still two pictures of the place: at the mid plate's scale that pair reads 0.85, as the far plate did before step 15. Frame 3150 at the draft tier against the approved image (mean absolute difference 4.56 of 255 at the first build of the plates; G17 median sharpness ratio 1.010); `assets-src/jupiter/deck/texels.ts` (G13) and `npm run handover -- --stop jupiter` on the dive and the rise.
@@ -160,4 +160,54 @@ Files: `public/assets/jupiter/<set>/patch-wide.jpg` (full 5120 square, web 2560)
 10. `build.py write`: JPEG 93 into the full set, half size JPEG 90 into the web set.
 
 Checks: texels view (`npm run still -- --frame N --tier draft --diag texels`) on frames 3010, 3013, 3015, 3278, 3282, 3288; the storm and the bands do not move when a level takes over (beauty stills 3005 to 3015). Weak: a faint fingerprint like swirl east of the storm in the mid level.
+
+
+## The relief of the surface view (mail 1423, Line B): relief-image-range.bin, relief-view-color.png
+
+Used by `src/stops/jupiter/relief.ts`, in frames 3060 to 3239 and on the close side of the dive and the rise. Until the cut of 11-26 (last section) a key `look.ground` chose between this ground and the deck of `clouds.ts`; the key and that deck are gone and the relief is the only ground. No image model made these files and no new picture came in: they are the deck's own image fields baked again over a taller ground. Every number is in `src/stops/jupiter/body.json`; the tool writes `src/stops/jupiter/body-fields.json`.
+
+Files:
+
+- `public/assets/jupiter/<set>/relief-image-range.bin` (the range the fit camera sees along every ray of the canvas; full 2816 x 1584, web 1408 x 792, 16 bit, the deck's own coding)
+- `public/assets/jupiter/<set>/relief-view-color.png` (the laid back view chart with its fill; full 8192 x 3200, web 4096 x 1600; alpha holds the ground length of a texel as in the deck's chart)
+
+Inputs: the deck's height maps, canvas and core (`deck-fore-height.bin`, `deck-near-height.bin`, `deck-mid-height.bin`, `deck-image-wide.jpg`, `deck-image-core.jpg`, all made as the section above tells) and `deck.json`, `deck-fields.json`, `body.json`.
+
+Step: `python3 assets-src/jupiter/relief/body.py > out/work/jupiter/body/body.log` (about 3 minutes on 4 cores; needs numpy and opencv). It runs the deck's own tools (`deck/image.py` `fit_range`, `deck/view.py` `build`) with three changes that live in body.py: the height is the deck's height times the gain by place of `body.json` `height`; the march of the range picture takes the slope `height.imageMarch[0]`; the fill of the ground the picture never saw lays the mirrored fine structure on as a bounded ratio of light (`fill()`), where the deck adds it as a difference. Work files go to `out/work/jupiter/body/` (not in git): `view-need.png` shows what had to be filled (red hidden, green steep), `view-chart.png` the chart.
+
+Takes, by what the bake printed and what the stills showed:
+
+1. Gain 2.2 everywhere: the haze shadow behind the storm moved; the low band at the draft tier read 3.4354 against main's 3.2099. Dropped for the gain by place.
+2. Gain 3.0 near the camera, with a guard (the range picture eroded by 2 texels beside every jump of more than 0.04): bake printed "guard texels 107919 share 0.0242", hidden of seen went from 0.155 to 0.212; low band 3.6450, columns of smear under the horizon. The guard is out of body.py.
+3. Gain 3.0 near, no guard: low band 3.0612, but flat patches of fill stood in the near field at 3100 and 3200, where a step of 0.1 units opens about 35 px.
+4. The fill as a ratio of light (`fill()` in body.py): the deck's `carry_fill` adds the mirrored fine structure as a difference and clamps at zero, which in the wide gaps of a taller ground stood as black cracks. Texels of the chart with a sum under 6: 76321 before, 19846 after.
+5. Kept: gain 1.0 at the camera's foot, `farGain` 2.0 from 3.0 to 5.5 units, back to 1 at 8 units; `viewFine` 2. Bake printed "steep share of seen 0.0778 core share of seen 0.492", "filled 2727917 left 496 longest 84.2", "view chart 8192 3200 seen 0.809 hidden of seen 0.051".
+
+Not used: a depth run of my own on the approved picture at half size, `python3 tools/ml/depth.py --in out/work/jupiter/body/canvas-half.png --out-prefix out/work/jupiter/body/canvas-depth` (2816 x 1584 in 19.84 s, peak RSS 411.7 MiB). It is the same model the deck's height already comes from (`deck/relief.py`), so it brought nothing new; the relief's height is the deck's.
+
+Both sets come from the one run: the full set first, then the web set derived from it. The web chart is the full chart at half size (`deck/view.py`, the loop over `full` and `web`); the web range picture is marched over the same full height maps at the web's shrink (`deck.json` `image.rangeShrink`).
+
+Weak: the fill behind the storm's far wall is soft at 3100 (main is crisper there, since its lower ground opens less).
+
+## The cut of 11-26 (mail 1447): files taken out of public/assets/jupiter
+
+With the relief as the only ground, 14 files (7 names in both sets) that the film no longer reads left `public/assets/jupiter` in one commit. No picture was made or changed for it.
+
+Read by the deck of `clouds.ts` only (class `CloudDeck`, removed in the same commit); the relief reads its own `relief-view-color.png` and `relief-image-range.bin` in their place:
+
+- `deck-view-color.png` (full 28994720 bytes, web 9004876), written by `deck/view.py` (step 11 of the deck's section)
+- `deck-image-range.bin` (full 8921088, web 2230272), written by `deck/image.py` (step 11)
+
+Read by nothing (their one reader, `Deck.load` of `deck.ts`, was called by nothing and went in the same commit):
+
+- `deck-core.jpg` (full 2971024, web 513253) and `deck-wide.jpg` (full 1708164, web 476012), written by `relief/build.py` (step 6 of the section "Terrain deck"). The full set's two files are the same bytes as `assets-src/jupiter/relief/core.jpg` and `assets-src/jupiter/relief/canvas-wide.jpg`, which stay and are the sources of everything later.
+- `deck-dist.bin` (1119540 in both sets), written by `relief/build.py`
+- `deck-tiers.png` (329454 in both sets) and `deck-under.jpg` (full 1497250, web 312204), written by `relief/tiers.py` (step 12 of that section)
+
+What a later run has to know:
+
+- The scripts were not changed. `relief/build.py`, `relief/tiers.py`, `deck/image.py` and `deck/view.py` still write these names into `public/assets/jupiter`; after a run delete them again (`git status` shows them as new files). `deck/image.py` also writes `deck-image-wide.jpg` and `deck-image-core.jpg`, which stay.
+- `relief/body.py` needs none of them: it runs `deck/image.py` and `deck/view.py` as modules with their outputs turned to `out/work/jupiter/body/`.
+- `deck/air.py` (line 55) reads `full/deck-view-color.png`: the `air` table of `deck.json` was measured on that chart, so run step 11 first (`deck/image.py`, then `deck/view.py`, which reads the range the first leaves under `out/work/jupiter/deck/`) to have it again. Reading `relief-view-color.png` there instead would measure the relief's chart, which is another file (not tried, so no number is claimed for it).
+- `relief/edge.ts` and `relief/motion.ts` read `full/deck-dist.bin`: run `relief/build.py` first.
 
