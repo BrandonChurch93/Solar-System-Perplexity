@@ -1,9 +1,41 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T19:16:19.720Z",
- "head": "aec270207ca65b9b9d51ba0a8cbc861f0c33e2ae",
- "note": "S2 after 3019: the far strip's two pictures taken apart by switches; M9 control at the review tier",
+ "pushed": "2026-11-26T19:31:06.850Z",
+ "head": "4fb3814984b4e2dfc1267d5ebb6e3d6e96839e55",
+ "note": "S2 cure as a switch (farGlobe): first stills; M1 and M2 control at 3150",
  "looks": [
+  {
+   "time": "2026-11-26T19:31:00.375Z",
+   "file": "20261126193100375-note-m12-sheet.jpg",
+   "source": "../../../../tmp/eye/m12-sheet.jpg",
+   "kind": "note",
+   "label": "M1 and M2 control at 3150: approved, as it is, haze bands cast no shadow",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:30:59.673Z",
+   "file": "20261126193059673-note-c1-late-a.jpg",
+   "source": "../../../../tmp/eye/c1-late-a.jpg",
+   "kind": "note",
+   "label": "S2 cure, 3040, 3045, 3050: build E left, farGlobe 1 right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:30:58.754Z",
+   "file": "20261126193058754-note-c1-nat-6070.jpg",
+   "source": "../../../../tmp/eye/c1-nat-6070.jpg",
+   "kind": "note",
+   "label": "S2 cure, 3035, far zone native: build E left, farGlobe 1 right",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:30:57.607Z",
+   "file": "20261126193057607-note-s2cure-6055.jpg",
+   "source": "../../../../tmp/eye/s2cure-6055.jpg",
+   "kind": "note",
+   "label": "S2 cure, 3027 + 1/2, far strip native: globe alone, build E, farGlobe 1",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T19:15:50.774Z",
    "file": "20261126191550774-note-lay-sheet.jpg",
@@ -18,38 +50,6 @@
    "source": "../../../../tmp/eye/s2d-6055.jpg",
    "kind": "note",
    "label": "S2 cause, 3027 + 1/2: share 0, share 1, share 1 with the approved picture off, share 1 with the air off",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:15:49.686Z",
-   "file": "20261126191549686-note-s2d-6039.jpg",
-   "source": "../../../../tmp/eye/s2d-6039.jpg",
-   "kind": "note",
-   "label": "S2 cause, 3019 + 1/2: share 0, share 1, share 1 with the approved picture off, share 1 with the air off",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:15:49.078Z",
-   "file": "20261126191549078-note-m9-own-review.jpg",
-   "source": "../../../../tmp/eye/m9-own-review.jpg",
-   "kind": "note",
-   "label": "M9 control at the review tier: 3010 at its own size beside 3019 shrunk 2.53 times onto it",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:54:00.767Z",
-   "file": "20261126185400767-note-m9-own-asis.jpg",
-   "source": "../../../../tmp/eye/m9-own-asis.jpg",
-   "kind": "note",
-   "label": "M9 control: 3010 at its own size beside 3019 shrunk 2.53 times onto it, shown three times enlarged",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:53:59.663Z",
-   "file": "20261126185359663-note-m9-rows.jpg",
-   "source": "../../../../tmp/eye/m9-rows.jpg",
-   "kind": "note",
-   "label": "M9 control: the vortex's upper left rim at 3010, 3013, 3016, 3019 laid onto 3019; as it is, fine function off, march off, placed ground off",
    "stop": "jupiter"
   },
   {
