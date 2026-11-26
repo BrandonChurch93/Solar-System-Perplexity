@@ -1,8 +1,8 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T17:01:24.313Z",
- "head": "025dd7599fb98cdb915f7a5c2c38d5e236a6f405",
- "note": "name candidate 025dd759: dive drafts 4154 to 4181 every frame; finals of judged frames keep main's bytes; tables pending at the Builder",
+ "pushed": "2026-11-26T17:28:34.163Z",
+ "head": "17b4dca97aa1f6765e27bfe7dd5a7d546d77003b",
+ "note": "D held by the tables (MAIL 1516): the name without D is b7f95580 (main's stop code and notes); D alone is its child 17b4dca9; finals 4401 of D and of main drawing now",
  "looks": [
   {
    "time": "2026-11-26T17:01:22.475Z",
