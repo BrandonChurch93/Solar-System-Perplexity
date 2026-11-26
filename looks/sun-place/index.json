@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T05:10:44.021Z",
+ "pushed": "2026-11-26T05:13:16.345Z",
  "head": "6bc94020c93f8d051acf65e49d0184423467160c",
- "note": "candidate 6bc94020 (main's ground, pushed 05:05): 221 and 247 at draft, limb at 60 at 1 to 1, the arcade beside the approved, a first trial of its shape; sun-near 60 draft: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081; 360 final 11.9861 against main 11.9772, all of it the arcade's body on the ball",
+ "note": "candidate 6bc94020: the sky part at 60 and 90 at 1 to 1 beside the approved (draft tier); sun-near 60 draft: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081; 221 at final is drawing, main's 221 at final after it",
  "looks": [
+  {
+   "time": "2026-11-26T05:12:53.675Z",
+   "file": "20261126051253675-note-sky90-pair.jpg",
+   "source": "../../../../tmp/v/sky90-pair.png",
+   "kind": "note",
+   "label": "the sky part at 90 (rows 0 to 324) at 1 to 1: approved above, candidate 6bc94020 at draft below",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T05:12:52.479Z",
+   "file": "20261126051252479-note-sky60-pair.jpg",
+   "source": "../../../../tmp/v/sky60-pair.png",
+   "kind": "note",
+   "label": "the sky part at 60 (rows 0 to 324) at 1 to 1: approved above, candidate 6bc94020 at draft below",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T05:10:43.308Z",
    "file": "20261126051043308-note-a-T1-60.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/n2h-d.jpg",
    "kind": "note",
    "label": "rise 217 to 225 at draft, the state before with the lab's ground (2d2c669d)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T04:41:26.841Z",
-   "file": "20261126044126841-note-mg60.jpg",
-   "source": "../../../../tmp/v/mg60.jpg",
-   "kind": "note",
-   "label": "frame 60 draft: this state with main's ground (left) beside main's final (right)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T04:19:49.523Z",
-   "file": "20261126041949523-note-n2h-c.jpg",
-   "source": "../../../../tmp/v/n2h-c.jpg",
-   "kind": "note",
-   "label": "the reader's own draft frames of the local merge 2d2c669d, every film frame 208 to 216: the arcade one body, shrinking; the gas's glow from inside rises as an even grey veil from about 203; nothing pops by my eye",
    "stop": "sun"
   }
  ]
