@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T10:08:16.671Z",
- "head": "b13b631b32a83375884c26c882221970e975c1aa",
- "note": "b13b631b local. 221 at final stopped after 52 min without a frame (bad); the strip of the arch drawn, the rise drafts running. sun-near 60 final: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "pushed": "2026-11-26T10:32:22.579Z",
+ "head": "96de66a9ad816584131777cdfc4796980c6bc55d",
+ "note": "units chain runs on 96de66a9 (b13b631b merged on main 7bf2d527); rise 216 to 233 and 221 pair added; sun-near 60 final: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T10:32:17.553Z",
+   "file": "20261126103217553-note-y5-f221-pair.jpg",
+   "source": "../../../../tmp/v/y5-f221-pair.jpg",
+   "kind": "note",
+   "label": "221 draft, main left, state right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T10:32:16.336Z",
+   "file": "20261126103216336-note-rise-216-233.jpg",
+   "source": "../../../../tmp/v/rise-216-233.jpg",
+   "kind": "note",
+   "label": "rise 216 to 233 every frame, draft, state b13b631b on main 7bf2d527",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T10:02:27.188Z",
    "file": "20261126100227188-note-strip-part.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/y5-tri90.jpg",
    "kind": "note",
    "label": "final 90, arch trial Y5 (b13b631b): approved, main, this state at 1 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T08:10:39.829Z",
-   "file": "20261126081039829-note-r3-sheet.jpg",
-   "source": "../../../../tmp/v/r3-sheet.jpg",
-   "kind": "note",
-   "label": "rise drafts r3 212 to 247 with the gas floor 0.035",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T08:10:39.118Z",
-   "file": "20261126081039118-note-p90-tri.jpg",
-   "source": "../../../../tmp/v/p90-tri.jpg",
-   "kind": "note",
-   "label": "final 90 on the merge of main 77a7d410: approved, main, this state at 1 to 1",
    "stop": "sun"
   }
  ]
