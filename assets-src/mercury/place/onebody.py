@@ -33,7 +33,11 @@ the level by the hue law), held to `most` and full inside `deg` (full and out, d
 by R and coded; every level is then multiplied by the light's file without R over the light's file with R, both read back as
 the globe reads them (two taps of the file, then the film curve back). So a level carries exactly what the light's file takes
 back: F times L stays the place in its own light to the file's rounding, the one crater in the hero's light above and in the
-place's own light below, and no remainder finer than a cell of the light's file stands between them.
+place's own light below, and no remainder finer than a cell of the light's file stands between them. The light's file without R
+is written beside it as `hero.file` (own.json; only the square `hero.square` of it: left, top and size as shares of the light's
+square, on whole steps of the take's `pad` cells and with `pad` cells to spare round the cells where R is not 1), so the
+globe can take R out of the level by the same two taps: the far ground
+loses the hero's light of the crater by the eye's height (own.json `hero.height`) before the place's own light comes in.
 
 `law` writes src/stops/mercury/hue.json: the map's own colour against its brightness inside the disc (public full/wrap-color.jpg in
 the frame of the first plate, `steps` knots even in the logarithm between the two percentiles `law`, each the mean colour of
@@ -213,10 +217,18 @@ def hero_light(out, light, width, size, spec):
     lit = light.copy()
     lit[box] /= r
     HERO['width'] = width
-    HERO['own'] = M.linear(tone_code(light, spec))
+    HERO['code'] = tone_code(light, spec)
+    HERO['own'] = M.linear(HERO['code'])
     HERO['lit'] = M.linear(tone_code(lit, spec))
     HERO['cells'] = int((HERO['own'] != HERO['lit']).any(-1).sum())
     print('hero: cells of the light that change', HERO['cells'], flush=True)
+    if h.get('file'):
+        m = spec['light']['size']
+        x0, y0, n = (int(round(v * m)) for v in h['square'])
+        ys, xs = np.nonzero((HERO['own'] != HERO['lit']).any(-1))
+        if any(v % h['pad'] for v in (x0, y0, n)) or xs.min() < x0 + h['pad'] or xs.max() >= x0 + n - h['pad'] or ys.min() < y0 + h['pad'] or ys.max() >= y0 + n - h['pad']:
+            sys.exit('hero.square of own.json must stand on whole steps of %d cells and hold the cells %d to %d, %d to %d with %d to spare' % (h['pad'], xs.min(), xs.max(), ys.min(), ys.max(), h['pad']))
+        HERO['file'] = HERO['code'][y0:y0 + n, x0:x0 + n]
     return lit
 
 
@@ -312,6 +324,8 @@ def make(take, spec, only=None):
             coded = tone_code(light, spec)
             for key in ('full', 'web'):
                 Image.fromarray(coded).save(OUT / take / key / spec['light']['file'], optimize=True)
+                if HERO and spec['hero'].get('file'):
+                    Image.fromarray(HERO['file']).save(OUT / take / key / spec['hero']['file'], optimize=True)
             print(take, spec['light']['file'], 'light 1, 50, 99 percentile', np.round(np.percentile(light[::4, ::4], [1, 50, 99]), 3), (OUT / take / 'full' / spec['light']['file']).stat().st_size, flush=True)
 
 

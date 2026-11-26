@@ -636,6 +636,7 @@
     },
     "hero": {
      "overDeg": 0.02,
+     "pad": 16,
      "most": [
       0.125,
       32
@@ -643,7 +644,7 @@
     }
    }
   },
-  "dropped": "s2 (s1 with no disc: the place's bodies gone at the handover), s3 (plain colour, fineDeg 0.05), s4 (s3 with the map's own ground in the first level), s8 (s7 with the middle band free: the cream arc at 615 brighter), s10 (s9 with the second pit painted over by the place's own plain and a bite in the disc: the set shows that pit through the handover, so the globe would hold another ground than the set), s11 (s9 with the law of colour measured inside the disc: no change to see at 615)., s12 (s9 with the map's own colour over 0.6 degrees times the map's law against the bands' sum: half a cure of the warm tint at 615), s13 (s9 with the map's own colour at the same brightness: 615 right, but the disc at 717 grey in the first level's golden ground; the hold's colour went to the globe, src/stops/mercury/hue.json). Kept on disk with their recipes: s1, s5, s6, s7, s9. s5 lays the map's own ground into the first level (`map`): the rims of the left two thirds of 717 go; out from s6 on.",
+  "dropped": "s2 (s1 with no disc: the place's bodies gone at the handover), s3 (plain colour, fineDeg 0.05), s4 (s3 with the map's own ground in the first level), s8 (s7 with the middle band free: the cream arc at 615 brighter), s10 (s9 with the second pit painted over by the place's own plain and a bite in the disc: the set shows that pit through the handover, so the globe would hold another ground than the set), s11 (s9 with the law of colour measured inside the disc: no change to see at 615)., s12 (s9 with the map's own colour over 0.6 degrees times the map's law against the bands' sum: half a cure of the warm tint at 615), s13 (s9 with the map's own colour at the same brightness: 615 right, but the disc at 717 grey in the first level's golden ground; the hold's colour went to the globe, src/stops/mercury/hue.json), s15 (s14 with no `hero`, the place's own light on the crater at every height: the rise's pattern rows 981 to 998 read 0.19 at their largest, but the hero's ring is lost at the hold, mean luma of the ring 38.1 where the approved image has 53.2). Kept on disk with their recipes: s1, s5, s6, s7, s9. s5 lays the map's own ground into the first level (`map`): the rims of the left two thirds of 717 go; out from s6 on.",
   "law": [
    5,
    99.5
