@@ -1,9 +1,47 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T13:08:20.072Z",
- "head": "99d59703705085c740dc7f8e0d28d39145aadc42",
- "note": "Rise far strip: first test of the air leaving ray by ray, not committed",
+ "pushed": "2026-11-26T13:30:23.458Z",
+ "head": "1f36e081c65bcfa8a3d67914b0d817a966a9ed84",
+ "note": "Line B: finding what swaps on the far ground between 3250 and 3260 on the rise (the approved picture gives way to the plates there)",
  "looks": [
+  {
+   "time": "2026-11-26T13:30:22.188Z",
+   "file": "20261126133022188-note-far-strip-image-away.jpg",
+   "source": "../../../../tmp/lk/far-strip-image-away.jpg",
+   "kind": "note",
+   "label": "Far strip at 3250 and 3258: as is, with the picture taken away in both frames, with the tone held on. The dark streaks at 3250 are the approved picture; the cells at 3258 are the plates",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:30:21.258Z",
+   "file": "20261126133021258-note-rise-image-field-map.jpg",
+   "source": "../../../../tmp/lk/rise-image-field-map.jpg",
+   "kind": "note",
+   "label": "Diagnostic, not a film frame: where the approved picture is shown (yellow) and where the plates are (green) at 3244, 3250, 3254, 3258, 3262, 3266. The picture fills the frame to the limb at 3250 and has left the far ground by 3258",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:30:20.145Z",
+   "file": "20261126133020145-note-rise-3242-3270-cure-f.jpg",
+   "source": "../../../../tmp/lk/rise-3242-3270-cure-f.jpg",
+   "kind": "note",
+   "label": "Line B, cure F, the rise every second frame from 3242 to 3270 and a half at draft: the far ground goes from the dark close view to cream between 3250 and 3260",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:30:05.130Z",
+   "file": "20261126133005130-frame-f03254.jpg",
+   "source": "out/work/jupiter/frames/pl/f03254.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3254, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3254,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
   {
    "time": "2026-11-26T13:08:19.161Z",
    "file": "20261126130819161-note-far_strip_3250_and_3258_air_leaving_ray_by_ray.jpg",
@@ -19,44 +57,6 @@
    "kind": "note",
    "label": "The ground pop's patch at 298, 950: a lit strip comes up over the crest of a near mound, 3050 + 1/2 to 3052, line B",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:00:22.882Z",
-   "file": "20261126130022882-note-cloud_bank_shelf_at_3038_draft_main_and_line_B.jpg",
-   "source": "../../../../tmp/lk/cloud bank shelf at 3038 draft main and line B.jpg",
-   "kind": "note",
-   "label": "The stepped lower edge of the bank's shelf at 3038, draft: on main and on line B alike",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:41:32.367Z",
-   "file": "20261126124132367-note-frame_3286_main__line_B_and_their_difference.jpg",
-   "source": "../../../../tmp/lk/frame 3286 main, line B and their difference.jpg",
-   "kind": "note",
-   "label": "Frame 3286 at draft: line B differs from main only in the storm of the close ground (difference times 8)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:41:31.403Z",
-   "file": "20261126124131403-note-cloud_bank_at_3038_draft_main_and_line_B_at_2_times.jpg",
-   "source": "../../../../tmp/lk/cloud bank at 3038 draft main and line B at 2 times.jpg",
-   "kind": "note",
-   "label": "Cloud bank at the storm's lower left, frame 3038, draft: stepped silhouettes on main and on line B",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:37:01.153Z",
-   "file": "20261126123701153-frame-f03051.jpg",
-   "source": "out/work/jupiter/frames/main2/f03051.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3051, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3051,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
   },
   {
    "time": "2026-11-26T11:09:47.781Z",
