@@ -14,7 +14,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: approved
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: status 404, d389
+- Last push: round 58 closed
 
 ## Review note of 2026-11-23
 
@@ -1576,7 +1576,7 @@ One entry per long job while it runs: the command, the frame range, the log file
 
 Work for the review note of 2026-11-23, started 06:40 UTC, each agent on its own VM. The spec is `cut/HANDOVER.md`; who owns what and its state is the table "State" in the section "Review note of 2026-11-23"; looks arrive on `agent/<branch folder>-looks`. Fresh agents: `handover_engineer`, `jupiter_coder`, `saturn_coder`. Builders taken up again: `sun_builder`, `mercury_builder`, `venus_builder`, `earth_builder`, `uranus_builder`, `neptune_builder`. If a task starts and one of these is not alive, start a fresh agent for its part with `cut/HANDOVER.md`, `assets-src/shared/STOP-AGENT.md` and the stop's notebook. The draft tier reference of the 47 judged frames on the Builder's own VM finished at 07:28 UTC and the engine's proof on render_01 to render_12 (JOB e1proof) came back at 08:00 UTC; nothing of the note runs on the Builder's VM or on a render machine at 08:02 UTC.
 
-Jobs out at 18:29 UTC, 2026-11-26, 36 machines busy, 0 jobs waiting (the measures of the names for the cut before the freeze of 20:30 (the Sun, Neptune, Saturn's lens cure, Jupiter's lossless sky plate and build E); round 58 (Venus) waits for its seventeenth critic). By check name, part and machine: jg6 01 on render_38; jm6 02 on render_08; jr6 01 on render_18, 02 on render_25, 03 on render_06, 04 on render_10; js6 02 on render_16; jt6 02 on render_15; ju6 02 on render_30; jv6 02 on render_29, 03 on render_37, 04 on render_24, 05 on render_02; jw6 01 on render_35, 02 on render_26, 03 on render_19; mg8 02 on render_20, 05 on render_11, 06 on render_03, 07 on render_31; nr8 02 on render_17, 03 on render_01; ns8 05 on render_12; sc9 01 on render_21, 02 on render_33, 03 on render_05; sf9 05 on render_34, 06 on render_27, 07 on render_22; st9 01 on render_40, 02 on render_28, 03 on render_23, 04 on render_04; sv9 02 on render_14, 04 on render_13, 05 on render_39.
+Jobs out at 18:32 UTC, 2026-11-26, 35 machines busy, 0 jobs waiting (the measures of the names for the cut before the freeze of 20:30 (the Sun, Neptune, Saturn's lens cure, Jupiter's lossless sky plate and build E); Venus's findings of round 58 go to its builder). By check name, part and machine: jm6 02 on render_08; jr6 01 on render_18, 02 on render_25, 03 on render_06, 04 on render_10; js6 02 on render_16; jt6 02 on render_15; ju6 02 on render_30; jv6 02 on render_29, 03 on render_37, 05 on render_02; jw6 01 on render_35, 02 on render_26, 03 on render_19; jx6 01 on render_09, 02 on render_36, 03 on render_07; mg8 05 on render_11, 06 on render_03, 07 on render_31; nr8 02 on render_17, 03 on render_01; ns8 05 on render_12; sc9 01 on render_21, 02 on render_33, 03 on render_05; sf9 05 on render_34, 06 on render_27, 07 on render_22; st9 01 on render_40, 02 on render_28, 03 on render_23, 04 on render_04; sv9 02 on render_14, 05 on render_39.
 
 
 
