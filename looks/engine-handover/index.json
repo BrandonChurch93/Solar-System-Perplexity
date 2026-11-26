@@ -1,56 +1,50 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T06:15:23.460Z",
+ "pushed": "2026-11-26T06:46:09.846Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the word both: the counter picture in the rise (4957 without and with the word)",
+ "note": "A first look at the Mars name 8397bfdc at draft across both changes of view, beside main",
  "looks": [
   {
-   "time": "2026-11-26T06:15:22.381Z",
-   "file": "20261126061522381-note-neptune-rise-first-frame-without-and-with-the-word.jpg",
-   "source": "../../../../tmp/both/sheets/neptune-rise-first-frame-without-and-with-the-word.png",
+   "time": "2026-11-26T06:46:02.312Z",
+   "file": "20261126064602312-note-rise-main-2686-2688.jpg",
+   "source": "../../../../tmp/pair/sheets/rise-main-2686-2688.png",
    "kind": "note",
-   "label": "The rise's first frame in the globe view, 4957, draft, half size, a trial with no share of the sky. Top: without the word both, no sky picture is drawn in the rise's globe view (552284 px differ from main). Bottom: both patches say both, the surface view's sky picture stays (the bytes of main)",
-   "stop": "neptune"
+   "label": "main, draft, rise: 2686 and 2688, half size, for the comparison"
   },
   {
-   "time": "2026-11-26T06:12:50.289Z",
-   "file": "20261126061250289-note-neptune-word-both-rise-sky-full-size.jpg",
-   "source": "../../../../tmp/both/sheets/neptune-word-both-rise-sky-full-size.png",
+   "time": "2026-11-26T06:46:01.431Z",
+   "file": "20261126064601431-note-mp-rise-2686-2688.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-rise-2686-2688.png",
    "kind": "note",
-   "label": "The same trial, the sky at full size at 4957 and 4958 (the rise's first two frames in the globe view, y 0 to 170; left x 0 to 1220, right x 700 to 1920), both sky pictures at whole weight by the word both. The bytes of main: the surface view's picture with its band is there in the globe view",
-   "stop": "neptune"
+   "label": "Mars name 8397bfdc, draft, rise: 2686 and 2688, half size"
   },
   {
-   "time": "2026-11-26T05:57:52.123Z",
-   "file": "20261126055752123-note-neptune-word-both-rise.jpg",
-   "source": "../../../../tmp/both/sheets/neptune-word-both-rise.png",
+   "time": "2026-11-26T06:46:00.407Z",
+   "file": "20261126064600407-note-mp-rise-right-2682-2685.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-rise-right-2682-2685.png",
    "kind": "note",
-   "label": "The same trial in the rise, half size: 4957 (first frame of the globe view), 4958, 5006 (judged), 5024 (last of the rise), both pictures at whole weight in the globe view by the word. All four carry the bytes of main: at 4957 and 4958 the surface view's sky picture is there as on main, at 5006 and 5024 the sky has turned and neither picture lies in the frame",
-   "stop": "neptune"
+   "label": "Mars name 8397bfdc, draft, rise: x 1440 to 1920, y 400 to 1080 at 2682, 2683, 2684, 2685: a wall comes in at the right between 2683 and 2684"
   },
   {
-   "time": "2026-11-26T05:57:47.235Z",
-   "file": "20261126055747235-note-neptune-word-both-at-the-change-of-view-sky-full-size.jpg",
-   "source": "../../../../tmp/both/sheets/neptune-word-both-at-the-change-of-view-sky-full-size.png",
+   "time": "2026-11-26T06:45:59.363Z",
+   "file": "20261126064559363-note-mp-dive-blackline.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-dive-blackline.png",
    "kind": "note",
-   "label": "The word both on Neptune's two sky pictures, a trial with no share of the sky (draft, the sky's crop x 700 to 1920, y 0 to 330 at full size). Row 1: 4757 without the word, the globe view has its own picture alone. Rows 2 to 4: 4757 (globe view), 4758 and 4759 (surface view) with the word: the same sky on both sides of the change of view; all three carry the bytes of main's frames",
-   "stop": "neptune"
+   "label": "Mars name 8397bfdc, draft, dive: a black stepped sliver with colour fringes on the far crest at 2468, 2470, 2472, a rest at 2474, enlarged twice"
   },
   {
-   "time": "2026-11-26T05:44:42.471Z",
-   "file": "20261126054442471-note-neptune-no-share-no-word-change-of-view.jpg",
-   "source": "../../../../tmp/both/sheets/neptune-no-share-no-word-change-of-view.png",
+   "time": "2026-11-26T06:45:58.429Z",
+   "file": "20261126064558429-note-mp-rise-change.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-rise-change.png",
    "kind": "note",
-   "label": "Neptune 4757 and 4758 (the frame before and the first after the change of view), draft. Top: main, the sky shared. Bottom: a trial without share and without the word both: the globe view draws its own sky picture alone, the surface view its own, the band of the sky appears at 4758. This is the case the word both is for",
-   "stop": "neptune"
+   "label": "Mars name 8397bfdc, draft, the rise's change of view: 2681 surface view over 2682 globe view, half size"
   },
   {
-   "time": "2026-11-26T05:23:02.313Z",
-   "file": "20261126052302313-note-neptune-main-change-of-view.jpg",
-   "source": "../../../../tmp/both/sheets/neptune-main-change-of-view.png",
+   "time": "2026-11-26T06:45:57.138Z",
+   "file": "20261126064557138-note-mp-dive-change.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-dive-change.png",
    "kind": "note",
-   "label": "Neptune on main 738549c4 at its change of view, draft, half size: 4741 and 4757 in the globe view, 4758 the first frame of the surface view, 4707 the judged frame. The frames a new engine word (a sky patch drawn in both views) is proved against",
-   "stop": "neptune"
+   "label": "Mars name 8397bfdc, draft, the dive's change of view: 2476 globe view over 2477 surface view, half size"
   }
  ]
 }
