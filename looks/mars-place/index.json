@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T07:21:57.930Z",
- "head": "95765ae545ea678545296f94c78ad4bb01d6374b",
- "note": "N9 against N7 at the canyon: tinge and pale rim cured by one measure with a grey factor in the shade; proof running",
+ "pushed": "2026-11-26T07:48:53.943Z",
+ "head": "8bb83bd7596c80a7845c6964c5b1a244aea229c3",
+ "note": "candidate 8bb83bd7 on main 77a7d410 (N9); teal texels in the map's made ground found, hue hold in work; bad: specks at 2435, dark stepped band 2460 to 2473",
  "looks": [
+  {
+   "time": "2026-11-26T07:48:53.024Z",
+   "file": "20261126074853024-note-full29.jpg",
+   "source": "../../../../tmp/pm/full29.png",
+   "kind": "note",
+   "label": "candidate 8bb83bd7 frames at draft",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T07:48:52.383Z",
+   "file": "20261126074852383-note-strip29.jpg",
+   "source": "../../../../tmp/pm/strip29.png",
+   "kind": "note",
+   "label": "candidate 8bb83bd7 strip of drafts beside the candidate before",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T07:48:51.538Z",
+   "file": "20261126074851538-note-g30a.jpg",
+   "source": "../../../../tmp/pm/g30a.png",
+   "kind": "note",
+   "label": "map 0.8 to 2.8 degrees south of the canyon: the globe's own, the name's patch-19 with teal and purple texels, the same held in the globe's hue range (in work)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T07:21:57.003Z",
    "file": "20261126072157003-note-judge-N9.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/pm/n8-rim.png",
    "kind": "note",
    "label": "files from above beyond 0.8 degrees: map (flat brown band, pale green rim), N7 plate, base plate; red, cause of the green tinge",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:01:16.063Z",
-   "file": "20261126070116063-note-strip27.jpg",
-   "source": "../../../../tmp/pm/strip27.png",
-   "kind": "note",
-   "label": "N7 (95765ae5) drafts 2415 to 2450, canyon box 1 to 1",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T06:36:11.859Z",
-   "file": "20261126063611859-note-n7-19.jpg",
-   "source": "../../../../tmp/pm/n7-19.png",
-   "kind": "note",
-   "label": "patch-19 middle 2 degrees: main, the name, N7 trial",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T06:36:11.232Z",
-   "file": "20261126063611232-note-n7-four.jpg",
-   "source": "../../../../tmp/pm/n7-four.jpg",
-   "kind": "note",
-   "label": "N7 trial beside the name at 2441 and 2704: hot red rims gone (hot share 0.17 to 0.009 percent at 2441), a pale green rim along the canyon stays",
    "stop": "mars"
   }
  ]
