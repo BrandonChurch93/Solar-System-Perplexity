@@ -72,7 +72,7 @@ def main():
     num = cv2.GaussianBlur((a - f0) * m, (0, 0), sigma)
     den = cv2.GaussianBlur((f - f0) * m, (0, 0), sigma)
     ratio = np.clip(np.maximum(num, 0) / np.maximum(den, 1e-6), cfg['step'][0], cfg['step'][1])
-    if cfg['displayGamma'] > 0:
+    if cfg.get('displayGamma', 0) > 0:
         num = cv2.GaussianBlur(shown(approved, (w, h)) * m, (0, 0), sigma)
         den = cv2.GaussianBlur(shown(frame) * m, (0, 0), sigma)
         ratio = np.clip((np.maximum(num, 0) / np.maximum(den, 1e-6)) ** cfg['displayGamma'], cfg['step'][0], cfg['step'][1])
@@ -84,6 +84,19 @@ def main():
     rays = geom.rays(geom.OX + (xx + 0.5) * geom.W0 / w - 0.5, geom.OY + (yy + 0.5) * geom.H0 / h - 0.5)
     gx, gy = geom.to_chart(rays * t[..., None])
     weight = seen.astype(np.float32)
+    hold = cfg['hold']
+    box = deck['guide']['levels'][hold['level']]
+    hn = hold['pixels']
+    hs = box['size'] / hn
+    hx = np.floor((gx - (box['centre'][0] - box['size'] / 2)) / hs).astype(np.int64)
+    hy = np.floor((gy - (box['centre'][1] - box['size'] / 2)) / hs).astype(np.int64)
+    inbox = seen & (hx >= 0) & (hx < hn) & (hy >= 0) & (hy < hn)
+    mask = np.zeros((hn, hn), np.uint8)
+    mask[hy[inbox], hx[inbox]] = 1
+    k = 2 * int(round(hold['closeUnits'] / hs)) + 1
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k)))
+    outside = cv2.distanceTransform(1 - mask, cv2.DIST_L2, cv2.DIST_MASK_PRECISE) * hs
+    under = geom.to_chart(np.zeros(3))
     for name, level in deck['guide']['levels'].items():
         n = cfg['pixels']
         step = level['size'] / n
@@ -99,6 +112,10 @@ def main():
         out = cv2.GaussianBlur(out, (0, 0), max(cfg['cutUnits'] / step, cfg['leastTexels']), borderType=cv2.BORDER_REPLICATE)
         before = stored(name)
         total = out if before is None else out + (before * 2 - 1) * cfg['rangeLog2']
+        px, py = np.meshgrid((level['centre'][0] - level['size'] / 2 + (np.arange(n) + 0.5) * step).astype(np.float32), (level['centre'][1] - level['size'] / 2 + (np.arange(n) + 0.5) * step).astype(np.float32))
+        away = cv2.remap(outside, (px - (box['centre'][0] - box['size'] / 2)) / hs - 0.5, (py - (box['centre'][1] - box['size'] / 2)) / hs - 0.5, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
+        held = (1 - smoothstep(0, hold['sideUnits'], away)) * (1 - smoothstep(hold['reachUnits'][0], hold['reachUnits'][1], np.hypot(px - under[0], py - under[1])))
+        total = total * held[..., None]
         total = np.clip(total - np.maximum(total.mean(-1, keepdims=True) - cfg['upLog2'], 0), -cfg['rangeLog2'], cfg['rangeLog2'])
         cv2.imwrite(os.path.join(HERE, 'solve-' + name + '.png'), np.round((total / cfg['rangeLog2'] * 0.5 + 0.5) * 65535).astype(np.uint16)[..., ::-1], [cv2.IMWRITE_PNG_COMPRESSION, 9])
         print('solve', name, 'cells seen', round(float((den2 > 0).mean()), 4), 'left at zero', round(float(hole.mean()), 4), 'log2 total: least', round(float(total.min()), 3), 'most', round(float(total.max()), 3))

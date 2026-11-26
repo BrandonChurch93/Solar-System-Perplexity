@@ -83,7 +83,7 @@
     "azimuthDeg": 130
   },
   "look": {
-    "note": "Numbers of the shader in clouds.ts. shell: lowest and highest height of the layer the march runs in. march: slack added to the slope of the ray when a step is sized by the height over the ground, least step in pixel footprints, a hit counts under this many footprints, most steps. foot: least cosine between ray and ground in the footprint, the footprint is cut into taps when it is longer than this times its width, most taps (the haze). blend: share of a height map's half width where it starts to give way to the next and where it ends. join: the same for the levels of the guide. anisotropy: taps of the texture filter. cloud: the detail made by code, see its own note.",
+    "note": "Numbers of the shader in clouds.ts. shell: lowest and highest height of the layer the march runs in. march: slack added to the slope of the ray when a step is sized by the height over the ground, least step in pixel footprints, most steps; the ground is where the ray crosses it, and the crossing is found by halving the span between the last point over the ground and the first under it refine times, in the march and in the medium alike. foot: least cosine between ray and ground in the footprint, the footprint is cut into taps when it is longer than this times its width, most taps (the haze). blend: share of a height map's half width where it starts to give way to the next and where it ends. join: the same for the levels of the guide. anisotropy: taps of the texture filter. cloud: the detail made by code, see its own note.",
     "shell": [
       -0.45,
       0.75
@@ -91,7 +91,6 @@
     "march": [
       5.0,
       0.75,
-      0.25,
       1200
     ],
     "blend": [
@@ -207,13 +206,13 @@
       "pulse": 0.3,
       "silk": {
         "waveUnits": [
-          0.07,
+          0.14,
           0.0,
           0.6
         ],
         "aspect": 0.3784,
         "gain": 1.6,
-        "octaves": 9,
+        "octaves": 10,
         "crease": 0.3,
         "fall": -0.25
       },
@@ -241,11 +240,11 @@
         ]
       },
       "fibre": {
-        "waveUnits": 0.05,
-        "long": 6.0,
-        "octaves": 3,
-        "aspect": 0.15,
-        "tint": 0.4
+        "waveUnits": 0.3,
+        "long": 6,
+        "octaves": 1,
+        "aspect": 0,
+        "tint": 0.8
       },
       "order": {
         "drawn": [
@@ -332,8 +331,9 @@
         "thin": 0.08,
         "wide": 0.25,
         "mostUnits": 0.012,
-        "tint": 0.7,
-        "lane": 0.3
+        "tint": 0.25,
+        "lane": 0,
+        "mean": 0.2326
       },
       "cells": {
         "jitter": 0.7,
@@ -365,7 +365,28 @@
           "soft": 0.06
         },
         "ownGain": 3.5,
-        "first": 0.0
+        "first": 1
+      },
+      "curl": {
+        "units": 0.5,
+        "ratio": 0.45,
+        "levels": 3,
+        "winding": 2.0,
+        "radius": 0.7,
+        "jitter": 0.8,
+        "guard": 0.5,
+        "least": 1.0
+      },
+      "rope": {
+        "waveUnits": 0.5,
+        "octaves": 6,
+        "aspect": 0.1,
+        "tint": 0.0,
+        "fall": 0.3,
+        "mean": 0.0,
+        "front": 0.0,
+        "frontFeet": 0.7,
+        "rimTint": 0.0
       }
     },
     "sun": {
@@ -401,10 +422,10 @@
         "coarse": 0.5
       }
     },
-    "refine": 6,
+    "refine": 10,
     "medium": {
-      "skinUnits": 0.015,
-      "freeUnits": 0.008,
+      "skinUnits": 0.004,
+      "freeUnits": 0.00215,
       "samples": 16,
       "search": 64,
       "stepDepth": 0.4,
@@ -421,13 +442,19 @@
       },
       "orders": {
         "count": 4,
-        "depth": 0.75,
-        "gain": 0.5,
+        "depth": 0.3,
+        "gain": 0.8,
         "narrow": 0.5,
         "forward": 0.5,
         "tint": 0.0
       },
-      "skinTopUnits": 0.006
+      "skinTopUnits": 0.0016,
+      "lean": {
+        "first": 1.0,
+        "later": 0.0,
+        "most": 2.5,
+        "leastSine": 0.2
+      }
     },
     "gas": {
       "levelUnits": -0.1,
@@ -438,6 +465,17 @@
       ],
       "sky": 1.66,
       "leastSine": 0.05
+    },
+    "bake": {
+      "note": "The relief of the code is drawn once a sample into a picture round the point under the camera (turn about that point by the logarithm of the distance, asinh of distance over height), and the march, the medium, the Sun taps and the sky taps read that picture. masterFeet: the size of a texel along the distance in feet of a master pixel at the texel own distance from the camera. cellTexels: the finest cell drawn in texels. mostPixels: the picture is never wider or higher than this. rays: how many rays a side of the frame are asked where the ground stands. reach: the share of the farthest tap kept as margin. wholeDeg: under this gap in the turns the whole circle is drawn.",
+      "masterFeet": 1.0,
+      "cellTexels": 2.0,
+      "mostPixels": 8192,
+      "rays": 16,
+      "reach": 1.0,
+      "wholeDeg": 20.0,
+      "bands": 12,
+      "guard": 4
     }
   },
   "air": {
@@ -455,7 +493,7 @@
       0.3
     ],
     "layer": {
-      "per": 0.014,
+      "per": 0.08,
       "flat": 0.05
     },
     "minTexels": 200,
@@ -1497,7 +1535,7 @@
       "pixels": 1024,
       "rangeLog2": 4,
       "albedo": [
-        0.05,
+        0.02,
         0.7
       ],
       "share": 0.6,
@@ -1509,14 +1547,27 @@
         8.0,
         16.0,
         32.0,
-        64.0
+        64.0,
+        128.0,
+        256.0,
+        512.0
       ],
       "hueShare": 0.5,
       "hueLog2": 0.5,
       "upLog2": 4.0,
       "cutUnits": 0.02,
       "leastTexels": 0.5,
-      "displayGamma": 2.2
+      "displayGamma": 2.2,
+      "hold": {
+        "level": "mid",
+        "pixels": 1024,
+        "closeUnits": 0.5,
+        "sideUnits": 2.0,
+        "reachUnits": [
+          5,
+          9
+        ]
+      }
     },
     "rough": {
       "wideUnits": 0.2,
@@ -1534,7 +1585,7 @@
         2.0
       ],
       "albedo": [
-        0.05,
+        0.02,
         1.2
       ],
       "hueShare": 1.0,

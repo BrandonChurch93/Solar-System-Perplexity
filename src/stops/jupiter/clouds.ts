@@ -110,62 +110,6 @@ float darkAt(vec2 g) {
 `
 
 const DETAIL_GLSL = /* glsl */ `
-uniform vec4 uCloud;
-uniform vec4 uCloudLook;
-uniform vec4 uCloudCell;
-uniform vec4 uCloudShift;
-uniform vec2 uCloudTurn;
-uniform vec3 uCloudTop;
-uniform vec3 uCloudDeep;
-uniform vec2 uCloudSat;
-uniform float uCloudTaps;
-uniform float uCloudWave[${AGES}];
-uniform float uCloudRise[${AGES}];
-uniform vec4 uCloudGeo;
-uniform vec3 uCloudCalm;
-uniform vec4 uCloudDome;
-uniform float uCloudMarch[${AGES}];
-uniform float uCloudCap[${AGES}];
-uniform float uCloudEdge[${AGES}];
-uniform float uCloudTint[${AGES}];
-uniform float uSilkWave[${AGES}];
-uniform vec4 uSilk;
-uniform float uSilkFall;
-uniform float uSilkMost[${AGES}];
-uniform vec4 uWarp;
-uniform vec4 uWarpOld;
-uniform vec4 uFibre;
-uniform vec4 uFibreLook;
-uniform vec4 uCumPatch;
-uniform vec4 uCum;
-uniform vec4 uCumLook;
-uniform vec4 uCumReach;
-uniform vec4 uCumPolar;
-uniform vec4 uCumCover;
-uniform vec4 uOrder;
-uniform vec3 uLife;
-uniform vec2 uCloudSoft;
-uniform vec4 uPass;
-uniform vec4 uSheet;
-uniform vec2 uSheetLook;
-uniform vec4 uTall;
-uniform vec2 uCumField;
-uniform vec4 uThread;
-uniform vec4 uThreadLook;
-uniform vec4 uCumOwn;
-uniform vec4 uCumLift;
-uniform vec3 uCumPack;
-uniform vec4 uCell;
-uniform vec4 uCellLook;
-uniform vec3 uCellPatch;
-uniform float uCellFirst;
-uniform vec4 uCellCover;
-uniform vec2 uCellDrive;
-uniform vec2 uCellOwn;
-uniform vec2 uCellEye;
-uniform float uOrderTint;
-uniform vec4 uBall;
-uniform vec3 uStride;
 uint bits(uint h) {
   h ^= h >> 15;
   h *= 0x2C1B3C6Du;
@@ -193,6 +137,34 @@ vec2 warped(vec2 y, vec4 w) {
   y += w.y * vec2(gnoise(y / w.x, ${OCTAVES * AGES}, 0.0), gnoise(y / w.x + uCloudShift.zw, ${OCTAVES * AGES + 1}, 0.0));
   return y + w.w * vec2(gnoise(y / w.z, ${OCTAVES * AGES + 2}, 0.0), gnoise(y / w.z + uCloudShift.zw, ${OCTAVES * AGES + 3}, 0.0));
 }
+vec3 curled(vec2 x, float least) {
+  vec2 y = x;
+  float strain = 0.0;
+  float eye = smoothstep(uCellEye.x, uCellEye.y, length(x - uFlow.xy) * uFlow.z);
+  for (int l = 0; l < (eye > 0.0 ? int(uCurl.z) : 0); l++) {
+    float size = uCurl.x * pow(uCurl.y, float(l));
+    float use = eye * smoothstep(least, uCloudCell.w * least, size * uCurlLook.x * uCurlLook.w);
+    if (use <= 0.0) break;
+    vec2 p = y / size + uCloudShift.zw * float(l + 3);
+    vec2 base = floor(p);
+    ivec2 cell = ivec2(base);
+    vec2 f = p - base;
+    vec2 moved = vec2(0.0);
+    for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
+      ivec2 c = cell + ivec2(i, j);
+      uint h = bits(uint(c.x) * 0x9E3779B1u ^ uint(c.y) * 0x85EBCA77u ^ uint(l + 4201) * 0xC2B2AE3Du);
+      uint q = bits(h ^ 0x68E31DA4u);
+      vec2 d = f - (vec2(float(i), float(j)) + 0.5 + uCurlLook.y * (vec2(float(h & 0xFFFFu), float(h >> 16)) * (1.0 / 65536.0) - 0.5));
+      float fall = max(1.0 - dot(d, d) / (uCurlLook.x * uCurlLook.x), 0.0);
+      float most = use * uCurl.w * (float(q & 0xFFFFu) * (2.0 / 65536.0) - 1.0);
+      float a = most * fall * fall;
+      moved += vec2(cos(a) * d.x - sin(a) * d.y, sin(a) * d.x + cos(a) * d.y) - d;
+      strain += abs(most) * 4.0 * fall * (1.0 - fall);
+    }
+    y += size * moved;
+  }
+  return vec3(y, strain);
+}
 vec2 billowAt(vec3 y, float least, vec4 law, int seed, float turn) {
   vec2 sum = vec2(0.0);
   for (int k = 0; k < int(law.z); k++) {
@@ -203,6 +175,19 @@ vec2 billowAt(vec3 y, float least, vec4 law, int seed, float turn) {
     sum += use * wave * exp2(-law.w * float(k)) * vec2(min(sqrt(n * n + uSilk.w * uSilk.w) - uSilk.w, 1.0), 1.0);
   }
   return y.z * sum;
+}
+vec3 frontAt(vec3 y, float least, vec4 law, int seed) {
+  vec3 sum = vec3(0.0);
+  for (int k = 0; k < int(law.z); k++) {
+    float wave = law.x * exp2(-float(k));
+    float use = smoothstep(least, uCloudCell.w * least, wave * y.z);
+    if (use <= 0.0) break;
+    float n = gnoise(y.xy / wave + uCloudShift.xy * float(k) + uCloudShift.zw * float(seed), k + ${OCTAVES} * seed, 0.0);
+    float soft = max(law.y, uRopeFront.y * least / (wave * y.z));
+    float side = n * inversesqrt(n * n + soft * soft);
+    sum += use * exp2(-law.w * float(k)) * vec3(wave * side, wave, 2.598 * max(side, 0.0) * (1.0 - side * side));
+  }
+  return vec3(y.z * sum.xy, sum.z);
 }
 vec2 cellsAt(vec3 y, float least, vec4 law, int seed, float turn) {
   vec2 sum = vec2(0.0);
@@ -246,17 +231,21 @@ float fibreAt(vec3 y, float least) {
 }
 float threadAt(vec3 y, float least) {
   float none = 1.0;
+  float mean = 1.0;
   for (int k = 0; k < int(uThread.w); k++) {
     float wave = uThreadLook.z * exp2(-float(k));
     float real = uThread.z * wave * y.z;
-    if (real <= least) break;
-    float use = smoothstep(least, uCloudCell.w * least, real) * (1.0 - smoothstep(uThreadLook.w, 2.0 * uThreadLook.w, real));
-    for (int i = 0; i < (use > 0.0 ? 1 : 0); i++) {
+    float under = 1.0 - smoothstep(uThreadLook.w, 2.0 * uThreadLook.w, real);
+    float use = smoothstep(least, uCloudCell.w * least, real);
+    float line = uThread.y;
+    for (int i = 0; i < (use * under > 0.0 ? 1 : 0); i++) {
       float n = gnoise(vec2(y.x * uFibre.y, y.y) / wave + uCloudShift.zw * float(k), ${OCTAVES * AGES + 20} + k, uFlowTime * uLife.y) / uThread.x;
-      none *= 1.0 - use * exp(-n * n);
+      line = mix(uThread.y, exp(-n * n), use);
     }
+    none *= 1.0 - under * line;
+    mean *= 1.0 - under * uThread.y;
   }
-  return 1.0 - none;
+  return mean - none;
 }
 vec2 sheetAt(vec3 y, float least, float wave, int seed, float turn) {
   vec2 sum = vec2(0.0);
@@ -271,66 +260,6 @@ vec2 sheetAt(vec3 y, float least, float wave, int seed, float turn) {
     weight += part * part;
   }
   return vec2(y.z * sum.x, sum.y * inversesqrt(max(weight, uSheetLook.y)));
-}
-struct Ball { vec3 c; float r; uint h; };
-Ball budOf(Ball p, int m, float least) {
-  uint h = bits(p.h * 0x9E3779B1u + uint(m + 1) * 0x85EBCA77u);
-  float a = (float(m) + float(h & 0xFFFFu) * (1.0 / 65536.0)) * (6.283185307179586 / uCumLook.y);
-  float cosine = mix(uCumPolar.x, uCumPolar.y, float(h >> 16) * (1.0 / 65536.0));
-  uint k = h * 0x9E3779B1u;
-  k ^= k >> 16;
-  float r = p.r * uCum.z * mix(uCumLook.z, 1.0, float(k & 0xFFFFu) * (1.0 / 65536.0));
-  r *= smoothstep(least, uCloudCell.w * least, 2.0 * r * uCum.x);
-  return Ball(p.c + p.r * vec3(sqrt(1.0 - cosine * cosine) * vec2(cos(a), sin(a)), cosine), r, h);
-}
-vec2 ballOn(Ball b, vec2 best) {
-  float d = length(b.c) - b.r;
-  return vec2(min(best.x, d), max(best.y, clamp(-d / (uBall.x * b.r), 0.0, 1.0)));
-}
-vec2 ballsAt(vec3 q, float least, float cover) {
-  vec2 base = floor(q.xy);
-  ivec2 cell = ivec2(base);
-  vec3 f = vec3(q.xy - base, q.z);
-  vec2 best = vec2(uBall.y, 0.0);
-  int buds = int(uCumLook.y);
-  int levels = int(uCumLook.w);
-  for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
-    ivec2 c = cell + ivec2(i, j);
-    uint h = bits(uint(c.x) * 0x9E3779B1u ^ uint(c.y) * 0x85EBCA77u ^ 0xC2B2AE3Du * 977u);
-    uint k = h * 0x9E3779B1u;
-    k ^= k >> 16;
-    float p = fract(uFlowTime / (uCloud.w * (1.0 + float(k & 0xFFFFu) * (1.0 / 65536.0))) + float(k >> 16) * (1.0 / 65536.0));
-    k *= 0x85EBCA77u;
-    k ^= k >> 13;
-    float draw = float(k & 0xFFFFu) * (1.0 / 65536.0);
-    float r1 = uCum.y * smoothstep(0.0, uCloudLook.x, p) * smoothstep(0.0, uCloudLook.x, 1.0 - p) * mix(uCloudDome.x, 1.0, draw) * smoothstep(0.0, uCumCover.z, cover - (1.0 - draw) * (1.0 - uCumCover.z));
-    r1 *= smoothstep(least, uCloudCell.w * least, 2.0 * r1 * uCum.x);
-    if (r1 <= 0.0) continue;
-    Ball b1 = Ball(vec3(vec2(float(i), float(j)) + uCloudCell.y + uCloudCell.z * vec2(float(h & 0xFFFFu), float(h >> 16)) * (1.0 / 65536.0) - f.xy, -uCum.w * r1 - f.z), r1, h);
-    float out1 = length(b1.c) - b1.r * uCumReach.x;
-    if (out1 > uBall.z) { best.x = min(best.x, out1); continue; }
-    best = ballOn(b1, best);
-    for (int m2 = 0; m2 < (levels > 1 ? buds : 0); m2++) {
-      Ball b2 = budOf(b1, m2, least);
-      if (b2.r <= 0.0) continue;
-      float out2 = length(b2.c) - b2.r * uCumReach.y;
-      if (out2 > uBall.z) { best.x = min(best.x, out2); continue; }
-      best = ballOn(b2, best);
-      for (int m3 = 0; m3 < (levels > 2 ? buds : 0); m3++) {
-        Ball b3 = budOf(b2, m3, least);
-        if (b3.r <= 0.0) continue;
-        float out3 = length(b3.c) - b3.r * uCumReach.z;
-        if (out3 > uBall.z) { best.x = min(best.x, out3); continue; }
-        best = ballOn(b3, best);
-        for (int m4 = 0; m4 < (levels > 3 ? buds : 0); m4++) {
-          Ball b4 = budOf(b3, m4, least);
-          if (b4.r <= 0.0) continue;
-          best = ballOn(b4, best);
-        }
-      }
-    }
-  }
-  return best;
 }
 `
 
@@ -356,7 +285,7 @@ void main() {
   vEye = uOwn > 0.5 ? uEye : vec3(dot(q, uEx), dot(q, uEy), dot(q, uEn));
 }`
 
-const FRAG = /* glsl */ `
+const HEAD_GLSL = /* glsl */ `
 precision highp float;
 uniform sampler2D uHeightNear;
 uniform sampler2D uHeightMid;
@@ -380,7 +309,7 @@ uniform vec2 uHeightRange;
 uniform float uHeightTexel;
 uniform float uRadius;
 uniform vec2 uShell;
-uniform vec4 uMarch;
+uniform vec3 uMarch;
 uniform float uRefine;
 uniform float uPixel;
 uniform float uGrad;
@@ -407,6 +336,7 @@ uniform float uSkinTop;
 uniform vec4 uMediumSun;
 uniform vec2 uMediumWide;
 uniform vec4 uOrders;
+uniform vec4 uLean;
 uniform float uThrough;
 uniform vec4 uFill;
 uniform float uFillOpen;
@@ -444,7 +374,145 @@ uniform vec3 uHazeShade;
 uniform float uGain;
 uniform float uVignette;
 uniform float uAspect;
-in vec3 vDir;
+uniform vec4 uCloud;
+uniform vec4 uCloudCell;
+uniform vec4 uCloudShift;
+uniform vec2 uCloudTurn;
+uniform vec3 uCloudTop;
+uniform vec3 uCloudDeep;
+uniform vec2 uCloudSat;
+uniform float uCloudTaps;
+uniform float uCloudWave[${AGES}];
+uniform float uCloudRise[${AGES}];
+uniform vec4 uCloudGeo;
+uniform vec3 uCloudCalm;
+uniform float uCloudMarch[${AGES}];
+uniform float uCloudCap[${AGES}];
+uniform float uCloudEdge[${AGES}];
+uniform float uCloudTint[${AGES}];
+uniform float uSilkWave[${AGES}];
+uniform vec4 uSilk;
+uniform float uSilkFall;
+uniform float uSilkMost[${AGES}];
+uniform vec4 uWarp;
+uniform vec4 uWarpOld;
+uniform vec4 uFibre;
+uniform vec4 uFibreLook;
+uniform vec4 uCumPatch;
+uniform vec4 uCumCover;
+uniform vec4 uOrder;
+uniform vec3 uLife;
+uniform vec2 uCloudSoft;
+uniform vec4 uPass;
+uniform vec4 uSheet;
+uniform vec2 uSheetLook;
+uniform vec4 uTall;
+uniform vec2 uCumField;
+uniform vec4 uThread;
+uniform vec4 uCurl;
+uniform vec4 uCurlLook;
+uniform vec4 uRope;
+uniform vec4 uRopeLook;
+uniform vec2 uRopeFront;
+uniform vec4 uThreadLook;
+uniform vec4 uCumOwn;
+uniform vec4 uCumLift;
+uniform vec3 uCumPack;
+uniform vec4 uCell;
+uniform vec4 uCellLook;
+uniform vec3 uCellPatch;
+uniform float uCellFirst;
+uniform vec4 uCellCover;
+uniform vec2 uCellDrive;
+uniform vec2 uCellOwn;
+uniform vec2 uCellEye;
+uniform float uOrderTint;
+uniform vec3 uStride;
+uniform sampler2D uBaked;
+uniform vec4 uBakeAt;
+uniform vec4 uBakeTurn;
+uniform vec4 uBakeSize;
+uniform vec2 uBakeLeast;
+`
+
+const RELIEF_GLSL = /* glsl */ `vec4 reliefAt(vec2 g, float low, float least, float colour) {
+  float raw = unrest(g);
+  float guard = least * (1.0 + max(max(uWarp.y / uWarp.x, uWarp.w / uWarp.z), max(uWarpOld.y / uWarpOld.x, uWarpOld.w / uWarpOld.z)) * uFibreLook.z);
+  vec3 fresh = woundAt(g, 0);
+  vec3 rolled = curled(g, least);
+  float slack = guard * (1.0 + uCurlLook.z * rolled.z);
+  vec3 old = woundAt(rolled.xy, ${AGES - 1});
+  vec2 young = warped(fresh.xy, uWarp);
+  vec3 aged = vec3(lain(warped(old.xy, uWarpOld), ${AGES - 1}), old.z);
+  float order = smoothstep(uOrder.x, uOrder.y, 1.0 / old.z);
+  float deep = darkAt(g);
+  float rough = mix(uCloudRough.z, 1.0, smoothstep(uCloudRough.x, uCloudRough.y, deep));
+  float tall = smoothstep(uTall.x, uTall.y, deep);
+  float h = 0.0;
+  float pale = 0.0;
+  float crest = 0.0;
+  float drawn = max(rough, uOrder.w * order);
+  float ridge = 0.0;
+  float top = 0.0;
+  for (int i = 0; i < (slack < uSilkWave[${AGES - 1}] ? 1 : 0); i++) {
+    vec2 s = sheetAt(aged, slack, uSilkWave[${AGES - 1}], ${AGES - 1}, uFlowTime * uLife.y);
+    h += uSheet.x * mix(1.0, uTall.z, tall) * drawn * s.x;
+    pale += uCloudTint[${AGES - 1}] * s.y;
+    crest += uSheet.y * s.y;
+    ridge = s.y;
+  }
+  for (int i = 0; i < (slack < uRope.x ? 1 : 0); i++) {
+    vec3 b = uRopeFront.x > 0.0 ? frontAt(aged, slack, vec4(uRope.x, uRopeFront.x, uRope.y, uRopeLook.x), ${AGES + 3}) : vec3(billowAt(aged, slack, vec4(uRope.x, 0.0, uRope.y, uRopeLook.x), ${AGES + 3}, 0.0), 0.0);
+    float rope = (b.x - uRopeLook.y * b.y) / uRopeLook.z;
+    h += uRope.z * drawn * rope;
+    pale += drawn * (uRope.w * rope / uRope.x + uRopeLook.w * b.z);
+    ridge = mix(ridge, b.z, step(1e-9, uRopeFront.x));
+  }
+  float patchy = smoothstep(uCellPatch.x, uCellPatch.y, uCellDrive.x * raw + uCellDrive.y * ridge + uCellCover.z * gnoise(aged.xy / uCellPatch.z, ${OCTAVES * AGES + 13}, 0.0));
+  float wild = rough * mix(1.0, uOrder.z, order) * smoothstep(uCellEye.x, uCellEye.y, length(g - uFlow.xy) * uFlow.z) * mix(uCellOwn.x, 1.0, patchy);
+  float spread = mix(uCellCover.x, uCellCover.y, patchy);
+  for (int i = 0; i < (guard < uSilkWave[0] ? 1 : 0); i++) {
+    vec2 s = cellsAt(vec3(young, fresh.z), guard, vec4(uSilkWave[0], mix(uCellFirst, 1.0, tall), uSilk.z, uSilkFall), 0, uFlowTime * uLife.x);
+    float over = s.x - (1.0 - spread) * s.y;
+    float edge = uCellCover.w * s.y;
+    float up = 0.5 * (over + sqrt(over * over + edge * edge) - edge) / spread;
+    float lift = (up - uCellLook.w * spread * s.y) / uSilkMost[0];
+    h += uSilk.x * mix(1.0, uTall.w, tall) * wild * up;
+    pale += uCloudTint[0] * wild * lift;
+    crest += wild * lift;
+    top = clamp(uCellOwn.y * wild * lift, 0.0, 1.0);
+  }
+  for (int i = 0; i < (slack < uFibre.x ? 1 : 0); i++) {
+    float streak = fibreAt(aged, slack);
+    h += uFibreLook.x * uFibre.x * streak;
+    pale += uFibreLook.y * streak;
+  }
+  for (int i = 0; i < (colour > 0.0 ? 1 : 0); i++) pale += drawn * (uThreadLook.x * threadAt(aged, slack) - uThreadLook.y);
+  float still = smoothstep(uCloudCalm.y, uCloudCalm.z, low);
+  float street = gnoise(aged.xy / uCumPatch.y, ${OCTAVES * AGES + 12}, 0.0);
+  float cover = smoothstep(uCumCover.x, uCumCover.y, raw) * smoothstep(uCumField.x, uCumField.y, uCumPatch.x * street + uSheet.z * crest) * mix(uSheet.w, 1.0, still) * mix(1.0, uCumLift.w, order) * rough;
+  cover = max(cover, tall * uCumPack.x * smoothstep(uCumPack.y, uCumPack.z, street));
+  return vec4(h * mix(uCloudCalm.x, 1.0, still), pale, cover, top);
+}
+`
+
+const BAKE_FRAG = /* glsl */ `${HEAD_GLSL}out vec4 outColor;
+${FLOW_GLSL}${STORED_GLSL}${DETAIL_GLSL}${RELIEF_GLSL}void main() {
+  float turn = uBakeTurn.x - uBakeTurn.y + (gl_FragCoord.x - 0.5) / uBakeTurn.w;
+  float e = exp(uBakeTurn.z + (gl_FragCoord.y - 0.5) / uBakeAt.w);
+  float rho = 0.5 * uBakeAt.z * (e - 1.0 / e);
+  float way = 0.5 * uBakeAt.z * (e + 1.0 / e);
+  vec2 g = carried(uBakeAt.xy + rho * vec2(cos(turn), sin(turn)));
+  float low = stored(g);
+  vec4 rel = reliefAt(g, low, max(uBakeLeast.x * way, uBakeLeast.y * rho), 1.0);
+  outColor = vec4(low + rel.x, rel.y, rel.w, rel.z);
+}`
+
+const BAKE_VERT = /* glsl */ `void main() {
+  gl_Position = vec4(position.xy, 0.0, 1.0);
+}`
+
+const FRAG = /* glsl */ `${HEAD_GLSL}in vec3 vDir;
 in vec3 vEye;
 in vec2 vNdc;
 out vec4 outColor;
@@ -556,76 +624,15 @@ vec4 sunAt(vec2 g) {
   vec3 low = unfilm(textureLod(uGuideMid, (g - uMid.xy) * uMid.z + 0.5, uHazeLight.w).rgb);
   return vec4(low, smoothstep(uHazeLit.x, uHazeLit.y, (low.r - low.b) / max(low.r + low.b, 1e-4)));
 }
-${DETAIL_GLSL}
-vec4 reliefAt(vec2 g, float low, float least, float colour) {
-  float raw = unrest(g);
-  float guard = least * (1.0 + max(max(uWarp.y / uWarp.x, uWarp.w / uWarp.z), max(uWarpOld.y / uWarpOld.x, uWarpOld.w / uWarpOld.z)) * uFibreLook.z);
-  vec3 fresh = woundAt(g, 0);
-  vec3 old = woundAt(g, ${AGES - 1});
-  vec2 young = warped(fresh.xy, uWarp);
-  vec3 aged = vec3(lain(warped(old.xy, uWarpOld), ${AGES - 1}), old.z);
-  float order = smoothstep(uOrder.x, uOrder.y, 1.0 / old.z);
-  float deep = darkAt(g);
-  float rough = mix(uCloudRough.z, 1.0, smoothstep(uCloudRough.x, uCloudRough.y, deep));
-  float tall = smoothstep(uTall.x, uTall.y, deep);
-  float h = 0.0;
-  float pale = 0.0;
-  float crest = 0.0;
-  float drawn = max(rough, uOrder.w * order);
-  float ridge = 0.0;
-  float top = 0.0;
-  for (int i = 0; i < (guard < uSilkWave[${AGES - 1}] ? 1 : 0); i++) {
-    vec2 s = sheetAt(aged, guard, uSilkWave[${AGES - 1}], ${AGES - 1}, uFlowTime * uLife.y);
-    h += uSheet.x * mix(1.0, uTall.z, tall) * drawn * s.x;
-    pale += uCloudTint[${AGES - 1}] * s.y;
-    crest += uSheet.y * s.y;
-    ridge = s.y;
-  }
-  float patchy = smoothstep(uCellPatch.x, uCellPatch.y, uCellDrive.x * raw + uCellDrive.y * ridge + uCellCover.z * gnoise(aged.xy / uCellPatch.z, ${OCTAVES * AGES + 13}, 0.0));
-  float wild = rough * mix(1.0, uOrder.z, order) * smoothstep(uCellEye.x, uCellEye.y, length(g - uFlow.xy) * uFlow.z) * mix(uCellOwn.x, 1.0, patchy);
-  float spread = mix(uCellCover.x, uCellCover.y, patchy);
-  for (int i = 0; i < (guard < uSilkWave[0] ? 1 : 0); i++) {
-    vec2 s = cellsAt(vec3(young, fresh.z), guard, vec4(uSilkWave[0], mix(uCellFirst, 1.0, tall), uSilk.z, uSilkFall), 0, uFlowTime * uLife.x);
-    float over = s.x - (1.0 - spread) * s.y;
-    float edge = uCellCover.w * s.y;
-    float up = 0.5 * (over + sqrt(over * over + edge * edge) - edge) / spread;
-    float lift = (up - uCellLook.w * spread * s.y) / uSilkMost[0];
-    h += uSilk.x * mix(1.0, uTall.w, tall) * wild * up;
-    pale += uCloudTint[0] * wild * lift;
-    crest += wild * lift;
-    top = clamp(uCellOwn.y * wild * lift, 0.0, 1.0);
-  }
-  for (int i = 0; i < (guard < uFibre.x ? 1 : 0); i++) {
-    float streak = fibreAt(aged, guard);
-    h += uFibreLook.x * uFibre.x * streak;
-    pale += uFibreLook.y * streak;
-  }
-  for (int i = 0; i < (colour > 0.0 ? 1 : 0); i++) pale += drawn * (uThreadLook.x * threadAt(aged, guard) - uThreadLook.y);
-  float still = smoothstep(uCloudCalm.y, uCloudCalm.z, low);
-  float street = gnoise(aged.xy / uCumPatch.y, ${OCTAVES * AGES + 12}, 0.0);
-  float cover = smoothstep(uCumCover.x, uCumCover.y, raw) * smoothstep(uCumField.x, uCumField.y, uCumPatch.x * street + uSheet.z * crest) * mix(uSheet.w, 1.0, still) * mix(1.0, uCumLift.w, order) * rough;
-  cover = max(cover, tall * uCumPack.x * smoothstep(uCumPack.y, uCumPack.z, street));
-  return vec4(h * mix(uCloudCalm.x, 1.0, still), pale, cover, top);
+vec4 bakedAt(vec2 x) {
+  vec2 d = x - uBakeAt.xy;
+  float rho = length(d) / uBakeAt.z;
+  float turn = (rho > 0.0 ? atan(d.y, d.x) : 0.0) - uBakeTurn.x;
+  turn -= 6.283185307179586 * floor(turn * 0.15915494309189535 + 0.5);
+  vec2 at = vec2((turn + uBakeTurn.y) * uBakeTurn.w, (log(rho + sqrt(rho * rho + 1.0)) - uBakeTurn.z) * uBakeAt.w);
+  return textureLod(uBaked, (clamp(at, vec2(0.0), uBakeSize.zw) + 0.5) * uBakeSize.xy, 0.0);
 }
-vec4 matterAt(float zeta, vec2 g, float low, float least, float colour) {
-  vec4 rel = reliefAt(g, low, least, colour);
-  zeta -= rel.x;
-  vec4 m = vec4(zeta, clamp(-zeta / mix(uMedium.x, uSkinTop, rel.w), 0.0, 1.0), rel.y, rel.w);
-  for (int i = 0; i < (rel.z > 0.0 ? 1 : 0); i++) {
-    float room = zeta - uBall.w;
-    if (room > uStride.y) { m.x = min(m.x, room * uStride.z); break; }
-    vec2 b = ballsAt(vec3(g / uCum.x, zeta / (uCum.x * uCumLook.x)), least, rel.z);
-    m.x = min(m.x, b.x * uStride.x);
-    m.w = b.y / max(m.y + b.y, 1e-6);
-    m.z = mix(m.z, uCumPatch.z, m.w);
-    m.y = max(m.y, b.y);
-  }
-  return m;
-}
-float bumpsOn(vec2 g, float low, float least) {
-  return reliefAt(g, low, least, 0.0).x;
-}
-float skyAt(vec2 x, float here, float least) {
+float skyAt(vec2 x, float here) {
   float open = 0.0;
   for (int k = 0; k < int(uSky.x); k++) {
     float a = (float(k) + uSky.w) * (6.283185307179586 / uSky.x);
@@ -633,9 +640,7 @@ float skyAt(vec2 x, float here, float least) {
     float rise = 0.0;
     float r = uSkyRing.x;
     for (int m = 0; m < int(uSky.y); m++) {
-      vec2 at = carried(x + d * r);
-      float low = stored(at);
-      rise = max(rise, (low + bumpsOn(at, low, max(least, r * uSkyRing.z)) - here) / r);
+      rise = max(rise, (bakedAt(x + d * r).x - here) / r);
       r *= uSkyRing.y;
     }
     open += 1.0 / (1.0 + rise * rise);
@@ -647,23 +652,35 @@ vec3 sunLit(float ndl) {
   int knotLow = int(min(floor(knotAt), ${CURVE_KNOTS - 2}.0));
   return mix(uSunCurve[knotLow], uSunCurve[knotLow + 1], knotAt - float(knotLow));
 }
-float sunDepth(vec3 from, float least) {
+float crossing(vec3 E, vec3 D, float over, float under) {
+  for (int i = 0; i < int(uRefine); i++) {
+    float tm = 0.5 * (over + under);
+    vec3 p = E + D * tm;
+    if (above(p) - bakedAt(p.xy).x >= 0.0) over = tm;
+    else under = tm;
+  }
+  return under;
+}
+float skinned(float u, float s) {
+  return u <= 0.0 ? 0.0 : (u < s ? 0.5 * u * u / s : u - 0.5 * s);
+}
+float sunDepth(vec3 from, float under, float skin, out float first) {
   float tau = 0.0;
+  first = uShell.y;
   float r = uMediumSun.x;
-  float wide = uMediumWide.x + uMediumWide.y;
   for (int j = 0; j < int(uMediumSun.z); j++) {
     vec3 p = from + uSunChart * r;
     float gap = above(p);
     if (gap > uShell.y) break;
-    vec2 at = carried(p.xy);
-    float low = stored(at);
-    gap -= low;
-    float coarse = max(least, uMediumSun.w * r);
-    float most = coarse < uCloudGeo.x ? uCloudGeo.z : 0.0;
-    float dense = clamp((most - gap) / uMedium.x, 0.0, 1.0);
-    for (int k = 0; k < (most > 0.0 && gap - most < 0.0 ? 1 : 0); k++) dense = matterAt(gap, at, low, coarse, 0.0).y;
-    tau += dense * r * wide;
-    wide = uMediumWide.x;
+    vec4 b = bakedAt(p.xy);
+    gap -= b.x;
+    for (int k = 0; k < (j == 0 ? 1 : 0); k++) {
+      first = gap;
+      float end = mix(under, -gap, uMediumWide.y);
+      float run = under - end;
+      tau += (abs(run) > 1e-7 ? (skinned(under, skin) - skinned(end, skin)) / run : clamp(under / skin, 0.0, 1.0)) * r * uMediumWide.y;
+    }
+    tau += clamp(-gap / mix(uMedium.x, uSkinTop, b.z), 0.0, 1.0) * r * uMediumWide.x;
     r *= uMediumSun.y;
   }
   return tau * uMedium.y;
@@ -689,20 +706,11 @@ void main() {
   float gapPrev = 1.0;
   bool hit = false;
   int steps = 0;
-  for (int i = 0; i < (inside ? int(uMarch.w) : 0); i++) {
+  for (int i = 0; i < (inside ? int(uMarch.z) : 0); i++) {
     vec3 p = E + D * t;
-    vec2 at = carried(p.xy);
-    float low = stored(at);
-    float least = uCloud.y * t * pix;
-    gap = above(p) - low;
-    float most = least < uCloudGeo.x ? uCloudGeo.z : 0.0;
-    for (int k = 0; k < (most > 0.0 && gap - most < uMarch.z * t * pix ? 1 : 0); k++) {
-      gap = matterAt(gap, at, low, least, 0.0).x;
-      most = 0.0;
-    }
-    gap -= most;
+    gap = above(p) - bakedAt(p.xy).x;
     steps = i;
-    if (gap < uMarch.z * t * pix) { hit = true; break; }
+    if (gap < 0.0) { hit = true; break; }
     if (t > t1) break;
     tPrev = t;
     gapPrev = gap;
@@ -710,20 +718,13 @@ void main() {
     t += max(gap / (fall + uMarch.x), uMarch.y * t * pix);
   }
   float approach = t > tPrev ? max((gapPrev - gap) / (t - tPrev), uMediumWide.y * 1e-3) : 1.0;
-  for (int i = 0; i < (hit && gap < 0.0 && gapPrev > 0.0 ? int(uRefine) : 0); i++) {
-    float tm = tPrev + (t - tPrev) * gapPrev / (gapPrev - gap);
-    vec3 p = E + D * tm;
-    vec2 at = carried(p.xy);
-    float low = stored(at);
-    float gm = matterAt(above(p) - low, at, low, uCloud.y * tm * pix, 0.0).x;
-    if (gm > 0.0) { tPrev = tm; gapPrev = gm; gap *= 0.5; } else { t = tm; gap = gm; gapPrev *= 0.5; }
-  }
+  for (int i = 0; i < (hit && t > tPrev ? 1 : 0); i++) t = crossing(E, D, tPrev, t);
   vec2 q = vNdc * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   vec3 col = vec3(0.0);
   float alpha = 0.0;
   float texels = 0.0;
-  vec3 tint = vec3(float(steps) / uMarch.w, 0.0, 0.0);
+  vec3 tint = vec3(float(steps) / uMarch.z, 0.0, 0.0);
   for (int k = 0; k < (hit ? 1 : 0); k++) {
     vec3 there = E + D * t;
     vec2 g = carried(there.xy);
@@ -734,11 +735,9 @@ void main() {
     vec2 gN = carried(there.xy + vec2(0.0, hs));
     vec2 gS = carried(there.xy - vec2(0.0, hs));
     float low = stored(g);
-    float fine = uCloud.y * foot;
     mat2 drift = mat2(gE - gW, gN - gS) * (0.5 / hs);
     float wide = max(foot, uHeightTexel);
     vec2 slope = transpose(drift) * vec2(stored(g + vec2(wide, 0.0)) - stored(g - vec2(wide, 0.0)), stored(g + vec2(0.0, wide)) - stored(g - vec2(0.0, wide))) / (2.0 * wide);
-    float calm = mix(uCloudCalm.x, 1.0, smoothstep(uCloudCalm.y, uCloudCalm.z, low));
     vec3 n = normalize(vec3(there.xy / uRadius - slope, 1.0));
     float facing = min(dot(D, n), -uFoot.x);
     vec3 sx = dFdx(vDir);
@@ -770,7 +769,7 @@ void main() {
       through = mix(through, vec3(1.0), thin);
       added *= 1.0 - thin;
     }
-    vec3 amb = mix(uBounce * sunAt(g).rgb, uFill.rgb, skyAt(there.xy, above(there), fine));
+    vec3 amb = mix(uBounce * sunAt(g).rgb, uFill.rgb, skyAt(there.xy, above(there)));
     float sunUp = dot(normalize(vec3(there.xy / uRadius, 1.0)), uSunChart);
     float toSun = dot(D, uSunChart);
     float order[${ORDERS}];
@@ -785,7 +784,7 @@ void main() {
       forward *= uOrders.z;
       thinning *= uOrders.x;
     }
-    vec3 sunny = sunLit(sunUp) / max(level, 1e-6);
+    vec3 sunny = max(sunLit(sunUp) - uFill.rgb, vec3(0.0)) / max(level, 1e-6);
     vec3 sum = vec3(0.0);
     vec3 last = vec3(0.0);
     vec3 srcPrev = vec3(0.0);
@@ -794,19 +793,29 @@ void main() {
     float lenPrev = 0.0;
     float rhoPrev = 0.0;
     int taken = 0;
+    float zetaPrev = 0.0;
     for (int i = 0; i < int(uMedium.z + uMediumStep.z); i++) {
       vec3 p = E + D * tm;
-      vec2 at = carried(p.xy);
-      float lowAt = stored(at);
-      float clear = above(p) - lowAt;
-      float least = uCloud.y * tm * pix;
-      float most = least < uCloudGeo.x ? uCloudGeo.z : 0.0;
-      vec4 m = vec4(clear - most, clamp((most - clear) / uMedium.x, 0.0, 1.0), 0.0, 0.0);
-      for (int k = 0; k < (most > 0.0 && clear - most < 0.0 ? 1 : 0); k++) m = matterAt(clear, at, lowAt, least, 1.0);
+      vec4 b = bakedAt(p.xy);
+      float zeta = above(p) - b.x;
+      for (int k = 0; k < (i > 0 && zeta < 0.0 && zetaPrev >= 0.0 ? 1 : 0); k++) {
+        float found = crossing(E, D, tm - lenPrev, tm);
+        lenPrev -= tm - found;
+        tm = found;
+        p = E + D * tm;
+        b = bakedAt(p.xy);
+        zeta = above(p) - b.x;
+      }
+      zetaPrev = zeta;
+      vec4 m = vec4(zeta, clamp(-zeta / mix(uMedium.x, uSkinTop, b.z), 0.0, 1.0), b.y, b.z);
       float rho = uMedium.y * m.y;
       vec3 src = srcPrev;
       for (int k = 0; k < (rho > 0.0 ? 1 : 0); k++) {
-        float tau = sunDepth(p, least);
+        vec2 at = carried(p.xy);
+        float clear = above(p) - stored(at);
+        float tap;
+        float tau = sunDepth(p, -m.x, mix(uMedium.x, uSkinTop, b.z), tap);
+        float lean = clamp((tap - m.x) / (uMediumSun.x * max(sunUp, uLean.z)), 0.0, uLean.y);
         float sizeAt;
         vec3 matter = guideAt(at, cx, cy, sizeAt);
         float weight = dot(matter, vec3(0.2126, 0.7152, 0.0722));
@@ -817,7 +826,7 @@ void main() {
         vec3 passed = vec3(1.0);
         float thin = 1.0;
         for (int o = 0; o < ${ORDERS}; o++) {
-          s += order[o] * exp(-thin * tau) * passed;
+          s += order[o] * exp(-thin * tau) * passed * mix(1.0, lean, o == 0 ? uLean.x : uLean.w);
           thin *= uOrders.x;
           passed *= pass;
         }
@@ -847,6 +856,7 @@ void main() {
       lenPrev = len;
       tm += len;
     }
+    if (taken == 0) { hit = false; break; }
     vec3 ground = sum + left * last;
     col = ground * through + added;
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
@@ -932,6 +942,16 @@ export class CloudDeck {
   readonly mesh: THREE.Mesh
   readonly layer: THREE.Mesh
   readonly material: THREE.ShaderMaterial
+  private readonly baker: THREE.ShaderMaterial
+  private readonly stage = new THREE.Scene()
+  private readonly lens = new THREE.Camera()
+  private readonly held = new THREE.WebGLRenderTarget(1, 1, { type: THREE.FloatType, format: THREE.RGBAFormat, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, depthBuffer: false })
+  private readonly through = new THREE.Matrix4()
+  private readonly eye = new THREE.Vector3()
+  private readonly ray = new THREE.Vector3()
+  private readonly turns: number[] = []
+  private readonly was = new Float64Array(12)
+  private readonly now = new Float64Array(12)
 
   private constructor(uniforms: Record<string, THREE.IUniform>) {
     this.material = new THREE.ShaderMaterial({
@@ -953,6 +973,120 @@ export class CloudDeck {
     this.layer = new THREE.Mesh(this.mesh.geometry, this.material)
     this.layer.frustumCulled = false
     this.layer.renderOrder = 1
+    this.baker = new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: BAKE_VERT, fragmentShader: BAKE_FRAG, uniforms, depthTest: false, depthWrite: false })
+    const quad = new THREE.Mesh(this.mesh.geometry, this.baker)
+    quad.frustumCulled = false
+    this.stage.add(quad)
+    this.held.scissorTest = true
+    uniforms.uBaked!.value = this.held.texture
+    this.mesh.onBeforeRender = (renderer, _scene, camera) => this.bake(renderer, camera, this.mesh)
+    this.layer.onBeforeRender = (renderer, _scene, camera) => this.bake(renderer, camera, this.layer)
+  }
+
+  private bake(renderer: THREE.WebGLRenderer, camera: THREE.Camera, drawn: THREE.Mesh): void {
+    const u = this.material.uniforms
+    const bk = deck.look.bake
+    const own = (u.uOwn!.value as number) > 0.5
+    const m = this.through.multiplyMatrices(camera.matrixWorldInverse, drawn.matrixWorld).elements
+    const ex = u.uEx!.value as THREE.Vector3
+    const ey = u.uEy!.value as THREE.Vector3
+    const en = u.uEn!.value as THREE.Vector3
+    const axes = (u.uAxes!.value as THREE.Matrix3).elements
+    const eye = this.eye
+    const ray = this.ray
+    if (own) eye.copy(u.uEye!.value as THREE.Vector3)
+    else {
+      const s = u.uS!.value as THREE.Vector3
+      ray.set(-(m[0]! * m[12]! + m[1]! * m[13]! + m[2]! * m[14]!) - s.x, -(m[4]! * m[12]! + m[5]! * m[13]! + m[6]! * m[14]!) - s.y, -(m[8]! * m[12]! + m[9]! * m[13]! + m[10]! * m[14]!) - s.z)
+      eye.set(ray.dot(ex), ray.dot(ey), ray.dot(en))
+    }
+    const radius = u.uRadius!.value as number
+    const shell = u.uShell!.value as THREE.Vector2
+    const over = eye.lengthSq() + 2 * radius * eye.z
+    const height = over / (Math.sqrt(radius * radius + over) + radius)
+    if (!(height > shell.y)) throw new Error('deck bake: the camera is inside the deck')
+    const turns = this.turns
+    turns.length = 0
+    let near = Infinity
+    for (let k = 0; k < 4 * bk.rays; k++) {
+      const side = Math.floor(k / bk.rays)
+      const along = 2 * (k % bk.rays) / bk.rays - 1
+      ray.set(side === 0 ? along : side === 1 ? 1 : side === 2 ? -along : -1, side === 0 ? -1 : side === 1 ? along : side === 2 ? 1 : -along, -1).applyMatrix4(camera.projectionMatrixInverse)
+      let dx: number, dy: number, dz: number
+      if (own) {
+        dx = axes[0]! * ray.x + axes[3]! * ray.y + axes[6]! * ray.z
+        dy = axes[1]! * ray.x + axes[4]! * ray.y + axes[7]! * ray.z
+        dz = axes[2]! * ray.x + axes[5]! * ray.y + axes[8]! * ray.z
+      } else {
+        const lx = m[0]! * ray.x + m[1]! * ray.y + m[2]! * ray.z
+        const ly = m[4]! * ray.x + m[5]! * ray.y + m[6]! * ray.z
+        const lz = m[8]! * ray.x + m[9]! * ray.y + m[10]! * ray.z
+        dx = lx * ex.x + ly * ex.y + lz * ex.z
+        dy = lx * ey.x + ly * ey.y + lz * ey.z
+        dz = lx * en.x + ly * en.y + lz * en.z
+      }
+      if (dz >= 0) continue
+      near = Math.min(near, (height - shell.y) * Math.hypot(dx, dy) / -dz)
+      turns.push(Math.atan2(dy, dx))
+    }
+    if (turns.length === 0) return
+    turns.sort((a, b) => a - b)
+    let gap = turns[0]! + 2 * Math.PI - turns[turns.length - 1]!
+    let after = turns[0]!
+    for (let i = 1; i < turns.length; i++) if (turns[i]! - turns[i - 1]! > gap) { gap = turns[i]! - turns[i - 1]!; after = turns[i]! }
+    const md = deck.look.medium.sun
+    const sk = deck.look.sun.sky
+    const reach = bk.reach * Math.max(md.firstUnits * md.ratio ** (md.taps - 1), sk.firstUnits * sk.ratio ** (sk.rings - 1))
+    const margin = reach < near ? Math.asin(reach / near) : Math.PI
+    const whole = gap <= 2 * margin + bk.wholeDeg * Math.PI / 180
+    const most = Math.min(bk.mostPixels, renderer.capabilities.maxTextureSize)
+    const far = Math.min(Math.sqrt((radius + height) ** 2 - (radius + shell.x) ** 2) + Math.sqrt((radius + shell.y) ** 2 - (radius + shell.x) ** 2), Math.hypot(eye.x, eye.y) + radius) + reach
+    const first = Math.asinh(Math.max(near - reach, 0) / height)
+    const last = Math.asinh(far / height)
+    const step = Math.max(bk.masterFeet * (u.uPixel!.value as number) * frameUniform.value, (last - first) / (most - 2))
+    const rows = Math.ceil((last - first) / step) + 2
+    let half = Math.PI
+    let across = step
+    let columns = 0
+    if (whole) {
+      const round = Math.min(Math.ceil(2 * Math.PI / step), most - 3)
+      across = 2 * Math.PI / round
+      half = Math.PI + across
+      columns = round + 3
+    } else {
+      half = Math.PI - 0.5 * gap + margin
+      across = Math.max(step, 2 * half / (most - 1))
+      columns = Math.ceil(2 * half / across) + 1
+    }
+    const middle = after + Math.PI - 0.5 * gap
+    const seen = whole && gap <= bk.wholeDeg * Math.PI / 180 ? Math.PI : Math.PI - 0.5 * gap
+    const now = this.now
+    now.set([eye.x, eye.y, height, step, middle, half, first, across, columns, rows, u.uFlowTime!.value as number, seen])
+    let same = true
+    for (let i = 0; i < now.length; i++) same &&= now[i] === this.was[i]
+    if (same) return
+    this.was.set(now)
+    if (columns > this.held.width || rows > this.held.height) this.held.setSize(Math.max(columns, this.held.width), Math.max(rows, this.held.height))
+    this.held.viewport.set(0, 0, columns, rows)
+    ;(u.uBakeAt!.value as THREE.Vector4).set(eye.x, eye.y, height, 1 / step)
+    ;(u.uBakeTurn!.value as THREE.Vector4).set(middle, half, first, 1 / across)
+    ;(u.uBakeSize!.value as THREE.Vector4).set(1 / this.held.width, 1 / this.held.height, columns - 1, rows - 1)
+    ;(u.uBakeLeast!.value as THREE.Vector2).set(bk.cellTexels * step, bk.cellTexels * across)
+    const target = renderer.getRenderTarget()
+    const face = renderer.getActiveCubeFace()
+    const level = renderer.getActiveMipmapLevel()
+    for (let k = 0; k < bk.bands; k++) {
+      const from = Math.floor(rows * k / bk.bands)
+      const to = Math.floor(rows * (k + 1) / bk.bands)
+      const closest = height * Math.sinh(first + Math.max(from - bk.guard, 0) * step)
+      const wide = Math.min(half, seen + (reach < closest ? Math.asin(reach / closest) : Math.PI))
+      const left = Math.max(Math.floor((half - wide) / across) - bk.guard, 0)
+      const right = Math.min(Math.ceil((half + wide) / across) + bk.guard + 1, columns)
+      this.held.scissor.set(left, from, right - left, to - from)
+      renderer.setRenderTarget(this.held)
+      renderer.render(this.stage, this.lens)
+    }
+    renderer.setRenderTarget(target, face, level)
   }
 
   static async load(ctx: SetContext, base: string): Promise<CloudDeck> {
@@ -995,12 +1129,13 @@ export class CloudDeck {
     const silkMost = cl.silk.waveUnits.slice(0, AGES).map((w) => sum(w, cl.silk.octaves, cl.silk.fall))
     const fb = cl.fibre
     const th = cl.thread
+    const ropeMost = sum(1, cl.rope.octaves, cl.rope.fall)
     const cu = cl.cumulus
     const reach = [0, 1, 2, 3].map((k) => { let s = 0; for (let i = 0; i < cu.levels - k; i++) s += cu.ratio ** i; return Math.max(s, 1) })
     const far = 1.5 - 0.5 * cl.cell.jitter - cu.radius * reach[0]!
     if (far < cu.cull) throw new Error('deck cumulus reach too wide for three cells a side')
     const ballMost = cu.waveUnits * cu.squash * cu.radius * (reach[0]! - cu.sink)
-    const most = cl.silk.aspect * Math.max(1, cl.tall.silk) * silkMost[0]! + cl.sheet.aspect * Math.max(1, cl.tall.sheet) * Math.SQRT1_2 * silkMost[AGES - 1]! + fb.aspect * fb.waveUnits * fb.octaves + ballMost
+    const most = cl.silk.aspect * Math.max(1, cl.tall.silk) * silkMost[0]! + cl.sheet.aspect * Math.max(1, cl.tall.sheet) * Math.SQRT1_2 * silkMost[AGES - 1]! + fb.aspect * fb.waveUnits * fb.octaves + cl.rope.aspect * cl.rope.waveUnits + ballMost
     const md = l.medium
     const ownWeight = 0.2126 * cu.own[0]! + 0.7152 * cu.own[1]! + 0.0722 * cu.own[2]!
     const c = fields.chart
@@ -1031,11 +1166,10 @@ export class CloudDeck {
       uHeightTexel: { value: texel[0]! },
       uShell: { value: new THREE.Vector2().fromArray(l.shell) },
       uDepth: { value: new THREE.Vector3(place.scene.depth[0], place.scene.depth[1], l.shell[1]! - l.shell[0]!) },
-      uMarch: { value: new THREE.Vector4().fromArray(l.march) },
+      uMarch: { value: new THREE.Vector3().fromArray(l.march) },
       uRefine: { value: l.refine },
       uPixel: { value: 0.001 },
       uCloud: { value: new THREE.Vector4(cl.waveUnits, cl.leastFeet, cl.fall, cl.lifeSeconds) },
-      uCloudLook: { value: new THREE.Vector4(cl.pulse, 0, 1 / cl.lifeWaveUnits, cl.field.mean) },
       uCloudCell: { value: new THREE.Vector4(1 / (cl.cell.reach * cl.cell.reach), 0.5 - 0.5 * cl.cell.jitter, cl.cell.jitter, cl.fade) },
       uCloudShift: { value: new THREE.Vector4(cl.octaveShift[0]!, cl.octaveShift[1]!, cl.ageShift[0]!, cl.ageShift[1]!) },
       uCloudTurn: { value: new THREE.Vector2(cl.octaveTurn, cl.ageTurn) },
@@ -1047,7 +1181,6 @@ export class CloudDeck {
       uCloudGeo: { value: new THREE.Vector4(Math.max(cu.waveUnits, fb.waveUnits, ...cl.silk.waveUnits), 0, most, 0) },
       uCloudMarch: { value: cl.marchOctaves.slice(0, AGES) },
       uCloudCap: { value: cl.capUnits.slice(0, AGES) },
-      uCloudDome: { value: new THREE.Vector4(cl.dome.least, cl.dome.bare, cl.dome.edge, cl.dome.round) },
       uCloudEdge: { value: cl.dome.profile.slice(0, AGES) },
       uCloudTint: { value: cl.tint.slice(0, AGES) },
       uCloudCalm: { value: new THREE.Vector3().fromArray(cl.calm) },
@@ -1061,10 +1194,6 @@ export class CloudDeck {
       uFibre: { value: new THREE.Vector4(fb.waveUnits, 1 / fb.long, fb.octaves, 0) },
       uFibreLook: { value: new THREE.Vector4(fb.aspect, fb.tint, cl.warp.guard, 0) },
       uCumPatch: { value: new THREE.Vector4(cu.patch.share, cu.patch.units, cu.pale, cu.paleUnits) },
-      uCum: { value: new THREE.Vector4(cu.waveUnits, cu.radius, cu.ratio, cu.sink) },
-      uCumLook: { value: new THREE.Vector4(cu.squash, cu.buds, cu.small, cu.levels) },
-      uCumReach: { value: new THREE.Vector4(reach[0]!, reach[1]!, reach[2]!, reach[3]!) },
-      uCumPolar: { value: new THREE.Vector4(cu.polar[0]!, cu.polar[1]!, 0, 0) },
       uCumCover: { value: new THREE.Vector4(cu.cover[0]!, cu.cover[1]!, cu.soft, cu.rootUnits) },
       uMedium: { value: new THREE.Vector4(md.skinUnits, 1 / md.freeUnits, md.samples, md.stepDepth) },
       uSkinTop: { value: md.skinTopUnits },
@@ -1072,14 +1201,20 @@ export class CloudDeck {
       uMediumSun: { value: new THREE.Vector4(md.sun.firstUnits, md.sun.ratio, md.sun.taps, md.sun.coarse) },
       uMediumWide: { value: new THREE.Vector2(Math.sqrt(md.sun.ratio) - 1 / Math.sqrt(md.sun.ratio), 1 / Math.sqrt(md.sun.ratio)) },
       uOrders: { value: new THREE.Vector4(md.orders.depth, md.orders.gain, md.orders.narrow, md.orders.forward) },
+      uLean: { value: new THREE.Vector4(md.lean.first, md.lean.most, md.lean.leastSine, md.lean.later) },
       uOrder: { value: new THREE.Vector4(cl.order.drawn[0]!, cl.order.drawn[1]!, cl.order.billows, cl.order.ridges) },
       uLife: { value: new THREE.Vector3(2 * Math.PI / cl.life.billowSeconds, 2 * Math.PI / cl.life.ridgeSeconds, 2 * Math.PI / cl.life.curdSeconds) },
       uSheet: { value: new THREE.Vector4(cl.sheet.aspect, cl.sheet.crest, cu.crest, cu.calm) },
       uSheetLook: { value: new THREE.Vector2(cl.sheet.tintFall, cl.sheet.tintLeast) },
       uTall: { value: new THREE.Vector4(cl.tall.range[0]!, cl.tall.range[1]!, cl.tall.sheet, cl.tall.silk) },
       uCumField: { value: new THREE.Vector2(cu.field[0]!, cu.field[1]!) },
-      uThread: { value: new THREE.Vector4(th.thin, 0, th.wide, th.octaves) },
+      uThread: { value: new THREE.Vector4(th.thin, th.mean, th.wide, th.octaves) },
       uThreadLook: { value: new THREE.Vector4(th.tint, th.lane, th.waveUnits, th.mostUnits) },
+      uCurl: { value: new THREE.Vector4(cl.curl.units, cl.curl.ratio, cl.curl.levels, cl.curl.winding) },
+      uCurlLook: { value: new THREE.Vector4(cl.curl.radius, cl.curl.jitter, cl.curl.guard, cl.curl.least) },
+      uRope: { value: new THREE.Vector4(cl.rope.waveUnits, cl.rope.octaves, cl.rope.aspect, cl.rope.tint) },
+      uRopeLook: { value: new THREE.Vector4(cl.rope.fall, cl.rope.mean, ropeMost, cl.rope.rimTint) },
+      uRopeFront: { value: new THREE.Vector2(cl.rope.front, cl.rope.frontFeet) },
       uCumOwn: { value: new THREE.Vector4(cu.own[0]! / ownWeight, cu.own[1]! / ownWeight, cu.own[2]! / ownWeight, cu.ownShare) },
       uCumLift: { value: new THREE.Vector4(cu.lift, cu.least, cu.most, cu.drawn) },
       uCumPack: { value: new THREE.Vector3(cu.pack.share, cu.pack.lane[0]!, cu.pack.lane[1]!) },
@@ -1092,7 +1227,6 @@ export class CloudDeck {
       uCellCover: { value: new THREE.Vector4(cl.cells.cover.sparse, cl.cells.cover.dense, cl.cells.patch.share, cl.cells.cover.soft) },
       uCellEye: { value: new THREE.Vector2(cl.cells.eye[0]!, cl.cells.eye[1]!) },
       uOrderTint: { value: md.orders.tint },
-      uBall: { value: new THREE.Vector4(cu.softShare, far, cu.cull, ballMost) },
       uStride: { value: new THREE.Vector3(cu.waveUnits * Math.min(1, cu.squash) * cu.stride, far * cu.waveUnits * Math.min(1, cu.squash), cu.stride) },
       uPass: { value: new THREE.Vector4(l.sun.pass.share, 1 / l.sun.pass.units, l.sun.pass.cut * l.sun.pass.units, l.sun.pass.coarse * l.sun.shadow.soft) },
       uCloudRough: { value: new THREE.Vector4(cl.rough.range[0]!, cl.rough.range[1]!, cl.rough.least, cl.rough.soft) },
@@ -1157,6 +1291,7 @@ export class CloudDeck {
       uHazeLit: { value: new THREE.Vector3(hz.lit[0]!, hz.lit[1]!, 1) },
       uHazeGlow: { value: new THREE.Vector3().fromArray(hz.glow) },
       uHazeShade: { value: new THREE.Vector3().fromArray(hz.shadowTint) },
+      uBaked: { value: null }, uBakeAt: { value: new THREE.Vector4(0, 0, 1, 1) }, uBakeTurn: { value: new THREE.Vector4(0, 1, 0, 1) }, uBakeSize: { value: new THREE.Vector4(1, 1, 0, 0) }, uBakeLeast: { value: new THREE.Vector2(1, 1) },
       uOwn: { value: 0 }, uEye: { value: new THREE.Vector3() }, uAxes: { value: new THREE.Matrix3() }, uLayer: { value: new THREE.Vector3(1, 1, 0) }, uRim: { value: new THREE.Vector3(0, 1, 1) }, uToChart: { value: new THREE.Matrix3() },
       uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform, uGrad: gradUniform, uFrame: frameUniform,
     })
@@ -1174,5 +1309,7 @@ export class CloudDeck {
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()
+    this.baker.dispose()
+    this.held.dispose()
   }
 }
