@@ -95,7 +95,8 @@ def measure(args):
             ratio = 1 - (1 - v['gain']) * top / np.maximum(low, 1e-6)
             ok = (share > v['least']) & (low.min(axis=2) > 1e-5)
             ok = cv2.erode(ok.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
-            sun = np.log(lit(v['sun']['cos'][str(k)]) / lit(v['sun']['refCos']))
+            # since the set draws its own ground times that factor itself (set.ts sunAt, near.json sun), nothing is taken out: sun.drawn
+            sun = 0.0 if v['sun'].get('drawn') else np.log(lit(v['sun']['cos'][str(k)]) / lit(v['sun']['refCos']))
             lg = (np.log(np.clip(ratio, v['bounds'][0], v['bounds'][1])) - sun) * ok[..., None]
             wt = (np.clip(share, 0, 1) ** 2 * ok / px_km ** 2).astype(np.float32)
             # the ground of every frame pixel from the frame's own depth picture (diag range), so that the relief of the cap is in the place
@@ -211,9 +212,51 @@ def apply(args):
         print('%s: %d px, field mean %.3f, least %.3f, most %.3f, bytes %d to %d' % (name, size, g.mean(), g.min(), g.max(), os.path.getsize(os.path.join(args.dir, name)), os.path.getsize(os.path.join(args.out, name))))
 
 
+LIT = ['patch-19.jpg', 'patch-42.jpg', 'patch-wide.jpg']
+
+
+def maps(args):
+    """The other half of apply (MAIL 1425, MAIL 1056): where a plate keeps its own picture (inside keepDeg, and by the same weight out
+    to fullDeg) the lit levels above the land take the plate's picture as drawn: the map is divided by the field there, in scene
+    values, by the weight 1 - smoothstep(keepDeg, fullDeg). Plate and map then draw one ground at every scale the field resolves,
+    inside as outside. A level coarser than the field's cell takes the field filtered to its own texel."""
+    v = values()
+    wd = widths()
+    field = np.load(args.field)['field'].astype(np.float32) * v['share']
+    n = field.shape[0]
+    os.makedirs(args.out, exist_ok=True)
+    for name in LIT:
+        f = Image.open(os.path.join(args.dir, name))
+        q, sub = dict(f.quantization), JpegImagePlugin.get_sampling(f)
+        src = np.asarray(f.convert('RGB'))
+        size = src.shape[0]
+        per = size / (2 * geom.half_tan(wd[name]))
+        half = int(np.ceil(np.tan(np.radians(v['fullDeg'])) * per)) + 2
+        lo, hi = size // 2 - half, size // 2 + half
+        c = (np.arange(lo, hi, dtype=np.float32) + 0.5 - size / 2) / per
+        dist = np.degrees(np.arctan(np.hypot(c[None, :], c[:, None])))
+        texel_cells = (1 / per) / (2 * geom.half_tan(v['widthDeg']) / n)
+        fl = cv2.GaussianBlur(field, (0, 0), 0.5 * texel_cells, borderType=cv2.BORDER_REPLICATE) if texel_cells > 1 else field
+        u = (0.5 + c / (2 * geom.half_tan(v['widthDeg']))) * n - 0.5
+        mx, my = np.meshgrid(u, u)
+        lf = cv2.remap(fl, mx.astype(np.float32), my.astype(np.float32), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
+        lf = -lf * (1 - geom.smoothstep(v['keepDeg'], v['fullDeg'], dist))[..., None]
+        t = src[lo:hi, lo:hi].astype(np.float32) / 255.0
+        out = np.clip(geom.texel_of(geom.scene_of(t) * np.exp(lf)) * 255 + 0.5, 0, 255).astype(np.uint8)
+        o8 = src.copy()
+        o8[lo:hi, lo:hi] = out
+        Image.fromarray(o8).save(os.path.join(args.out, name), 'JPEG', qtables=q, subsampling=sub, optimize=True)
+        g = np.exp(lf)
+        inside = dist < v['fullDeg']
+        lum = out.astype(np.float32) @ np.array([0.2126, 0.7152, 0.0722], np.float32)
+        print('%s: %d of %d px across, texel %.2f cells of the field, factor mean %.3f, least %.3f, most %.3f; inside %.2f degrees luminance %.0f to %.0f, texels with a channel at 255: %d; bytes %d to %d' % (
+            name, hi - lo, size, texel_cells, g[inside].mean(), g.min(), g.max(), v['fullDeg'], lum[inside].min(), lum[inside].max(), int((out.max(2) >= 255)[inside].sum()),
+            os.path.getsize(os.path.join(args.dir, name)), os.path.getsize(os.path.join(args.out, name))))
+
+
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('step', choices=['dim', 'measure', 'apply'])
+    p.add_argument('step', choices=['dim', 'measure', 'apply', 'maps'])
     p.add_argument('--dir')
     p.add_argument('--out')
     p.add_argument('--poses')
@@ -222,7 +265,7 @@ def main():
     p.add_argument('--c')
     p.add_argument('--field')
     args = p.parse_args()
-    {'dim': dim, 'measure': measure, 'apply': apply}[args.step](args)
+    {'dim': dim, 'measure': measure, 'apply': apply, 'maps': maps}[args.step](args)
 
 
 if __name__ == '__main__':

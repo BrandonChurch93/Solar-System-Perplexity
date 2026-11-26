@@ -693,7 +693,8 @@
   "fullDeg": 0.8,
   "matchDeg": 1.9,
   "broad": false,
-  "sun": {"note": "the cosine of the sun at the place in the globe's light at each measured frame and at the judged surface frame 2580 (refCos), read from the plan (the light stands, the body turns 0.9 degrees a second); curve: the globe's light by that cosine", "curve": "src/stops/mars/curve.json", "refCos": 0.38018, "cos": {"4876": 0.43169, "4878": 0.43134, "4882": 0.43063, "4886": 0.42992, "4890": 0.42921, "5404": 0.33405, "5408": 0.33328, "5412": 0.33251, "5416": 0.33174, "5420": 0.33097}},
+  "sun": {"note": "the cosine of the sun at the place in the globe's light at each measured frame and at the judged surface frame 2580 (refCos), read from the plan (the light stands, the body turns 0.9 degrees a second); curve: the globe's light by that cosine; drawn: true since the set itself draws its own ground times curve(cos now) over curve(refCos) (set.ts, near.json sun), so the measure takes no sun out of a frame; false is the measure of the state before that (the field of 26 November 03:00)", "drawn": true,
+   "curve": "src/stops/mars/curve.json", "refCos": 0.38018, "cos": {"4876": 0.43169, "4878": 0.43134, "4882": 0.43063, "4886": 0.42992, "4890": 0.42921, "5404": 0.33405, "5408": 0.33328, "5412": 0.33251, "5416": 0.33174, "5420": 0.33097}},
   "frames": {"dive": [4876, 4878, 4882, 4886, 4890], "rise": [5404, 5408, 5412, 5416, 5420]}
  },
  "under": {
