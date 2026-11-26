@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-25T23:36:00.431Z",
- "head": "2f89bcbb37768172903374b868d9742d98112493",
- "note": "baked globe light map holds at 3465 and 3720 in drafts; rings by code alone at the hold are poorer than the hero ring pixels, working on the ring profile",
+ "pushed": "2026-11-26T00:11:18.309Z",
+ "head": "5909622efc95196dc9fefde24c560985d788da3a",
+ "note": "rigid body trials at 3465: rings by code alone (F1, F2) against the hero ring pixels on a rigid body (C); the patch and the bright pixel located",
  "looks": [
+  {
+   "time": "2026-11-26T00:11:17.682Z",
+   "file": "20261126001117682-note-sp_C93.jpg",
+   "source": "../../../../tmp/v/rigid/sp_C93.png",
+   "kind": "note",
+   "label": "the same dot in trial C at 3593"
+  },
+  {
+   "time": "2026-11-26T00:11:17.076Z",
+   "file": "20261126001117076-note-sp_tree.jpg",
+   "source": "../../../../tmp/v/rigid/sp_tree.png",
+   "kind": "note",
+   "label": "the bright pixel on the right night limb at 3601, tree, frames in a strip"
+  },
+  {
+   "time": "2026-11-26T00:11:16.471Z",
+   "file": "20261126001116471-note-v_patch.jpg",
+   "source": "../../../../tmp/v/rigid/v_patch.jpg",
+   "kind": "note",
+   "label": "3465 right ansa at the division: hero, trial C (the mottled patch), trial D1 (code rings), tree"
+  },
+  {
+   "time": "2026-11-26T00:11:15.906Z",
+   "file": "20261126001115906-note-v_f2_near.jpg",
+   "source": "../../../../tmp/v/rigid/v_f2_near.jpg",
+   "kind": "note",
+   "label": "3465 near part: hero, trial C, trial F2"
+  },
+  {
+   "time": "2026-11-26T00:11:15.351Z",
+   "file": "20261126001115351-note-v_f2_left.jpg",
+   "source": "../../../../tmp/v/rigid/v_f2_left.jpg",
+   "kind": "note",
+   "label": "3465 left ansa: hero, trial C (rigid, hero ring pixels), trial F2 (rings by code alone, detail bias 0.4)"
+  },
+  {
+   "time": "2026-11-26T00:11:14.788Z",
+   "file": "20261126001114788-note-v_f1_near.jpg",
+   "source": "../../../../tmp/v/rigid/v_f1_near.jpg",
+   "kind": "note",
+   "label": "3465 near part: hero above, trial F1 below (too streaked, no grain)"
+  },
+  {
+   "time": "2026-11-26T00:11:14.036Z",
+   "file": "20261126001114036-note-v_f1_left.jpg",
+   "source": "../../../../tmp/v/rigid/v_f1_left.jpg",
+   "kind": "note",
+   "label": "3465 left ansa: hero above, trial F1 (rings by code alone, lanes of the hero in the profile, detail bias 1.2) below"
+  },
   {
    "time": "2026-11-25T23:35:59.726Z",
    "file": "20261125233559726-note-v_d1f_near.jpg",
    "source": "../../../../tmp/v/rigid/v_d1f_near.jpg",
    "kind": "note",
    "label": "3465 near rings at the final tier: hero, C, D1 (rings by code alone)"
-  },
-  {
-   "time": "2026-11-25T23:35:59.108Z",
-   "file": "20261125233559108-note-v_d1f_left.jpg",
-   "source": "../../../../tmp/v/rigid/v_d1f_left.jpg",
-   "kind": "note",
-   "label": "3465 left ansa at the final tier: hero, C (hero ring pixels on true circles), D1 (rings by code alone): D1 is poorer, not adopted as is"
-  },
-  {
-   "time": "2026-11-25T23:35:58.384Z",
-   "file": "20261125233558384-note-v_e_globe.jpg",
-   "source": "../../../../tmp/v/rigid/v_e_globe.jpg",
-   "kind": "note",
-   "label": "3465 globe crops: hero, B (rigid, projector light), E (rigid, baked globe light map), C (rigid, no hold light)"
-  },
-  {
-   "time": "2026-11-25T23:35:57.664Z",
-   "file": "20261125233557664-note-v_3720_four.jpg",
-   "source": "../../../../tmp/v/rigid/v_3720_four.jpg",
-   "kind": "note",
-   "label": "3720: approved close, tree final, E draft (baked globe light map in both sets), D3 draft (model alone with the projector light)"
-  },
-  {
-   "time": "2026-11-25T23:17:57.840Z",
-   "file": "20261125231757840-note-Cd_a_3540.jpg",
-   "source": "../../../../tmp/v/rigid/sh/Cd_a_3540.jpg",
-   "kind": "note",
-   "label": "trial C (rigid body, lens law b): the dive 3540 to 3627, every third frame"
-  },
-  {
-   "time": "2026-11-25T23:17:56.752Z",
-   "file": "20261125231756752-note-v_d1_left.jpg",
-   "source": "../../../../tmp/v/rigid/v_d1_left.jpg",
-   "kind": "note",
-   "label": "3465 left ansa at full size: approved hero, trial C (hero ring pixels on true circles), trial rings by code alone"
-  },
-  {
-   "time": "2026-11-25T23:17:54.848Z",
-   "file": "20261125231754848-note-v3465.jpg",
-   "source": "../../../../tmp/v/rigid/D1/v3465.jpg",
-   "kind": "note",
-   "label": "trial 3465 draft: rigid body, rings by code alone at the hold (no hero ring pixels); softer, G17 falls"
-  },
-  {
-   "time": "2026-11-25T23:17:53.732Z",
-   "file": "20261125231753732-note-globe-light-vis.jpg",
-   "source": "../../../../tmp/v/bake/out/globe-light-vis.png",
-   "kind": "note",
-   "label": "trial: the hold's light on the globe baked by latitude and longitude from the Sun (not in the tree yet)"
   }
  ]
 }
