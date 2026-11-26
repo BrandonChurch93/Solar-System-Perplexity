@@ -7769,3 +7769,65 @@ DECISIONS: candidate for the next name = E (rigid shapes, lens law b, heroLight 
 in both sets) + the repaired polar map + the cure of the pixel. NOT in it: rings-h.bin (unless H says so), the
 division window, the solid change. Disk: 4.4 GB free after clearing old scratch (l0/png, c1/rise_jpg, the
 ray_38xx files, dark/sc_*).
+
+## 25 Nov, 00:47 to 01:20 UTC: the pixel is a star, the lip, the candidate frozen as K
+
+MAIL 1350 (00:29): the name 7be04230 is logged, proofs wy1-01 to 07 queued. The next name is the rigid body with
+the hero's ring pixels on it (the pixels going out by the lens's height stay a named red). Rings by code alone
+come after, as lookdev. With the next name: say which frames of the flight in, the hold and the dive it moves;
+the Builder then runs the flight in and the first second of the hold at 60 frames a second (capture frames 6630
+to 6809). MAIL 1358 (01:13): every proof of 7be04230 is in, it goes on main as batch 18 after 16 and 17 (about
+01:35), cut as take/sr8 790989f6. The next name is cut on 7be04230 or on take/sr8, Saturn's folders alone.
+LOGIN TEST (00:54): the dry run of a push printed a new branch line, so the login works; answered.
+
+H (E with rings-h.bin taken out again, the old profile): 3465 d296 12.2124, G17 1.1193, 0.8049; 3720 28.5689 =
+3.3503 + 3.3616 + 21.8571, G17 1.0022, 0.6642, apart from the foot 1.1537, 0.7663. G (with rings-h.bin) had
+0.9648, 0.5940 at 3720. So the loss of fine contrast at 3720 came from rings-h.bin: it stays out.
+
+N (E + the repaired polar map) at 3465: d296 12.0741, G17 1.0303, 0.8045. By part: globe day 4.651 (C 5.183,
+B 3.876), twilight and night 2.296 (C 3.565, B 2.136), rings before the globe 20.232, rings in the globe's
+shadow 4.671, 1.25 to 1.53: 25.867, 1.53 to 1.95: 28.834, 1.95 to 2.03: 27.804, 2.03 to 2.27: 16.108, 2.27 to
+2.45: 49.849, sky 2.975. Viewed at full size beside the hero and C: the mottled patch at the right ansa is gone,
+the margin is smooth like the hero's own. Final 3465 of N: dbb180046a12205c.
+
+THE BRIGHT PIXEL IS A STAR. P1 (polarShow 0), P2 (sparkle 0) and P4 (wC 0) leave it as it is. Q1 (the rings'
+group not drawn) shows a star at (1545 to 1546, 750 to 751), level 193, at 3593. With the rings the star is
+hidden at x 1545 and shows on the globe's edge column: (1544, 751) level 132.7, lift 116 over the median of its
+5 by 5. Cause: once the lens has left the hold the shaded plane is solid and hides the sky between the night
+side and the shaded rings, also under the globe's own soft edge (past). But a plane place inside the equator's
+circle (r under 1) was never drawn, so at the two ends of the equator the pixels of the globe's soft edge whose
+view ray meets the plane at r under 1 had the open sky behind them, and a star flashed for one frame as the
+outline passed over it: 3580 (lift 117), 3588, 3589, 3593, 3601 in C's dive, a different star each time. The
+model had the same hole (mine needs r over the inner end 1.0).
+
+CURE (sK, both sets): lip = a place inside the equator's circle whose view ray passes the globe within the
+globe's soft edge (uGraze.z pixels and one more). The shaded plane is drawn there too, black, by the same shade
+as its neighbours with the ramp by radius taken as full. No new number. First try: the near half in the pass
+in front of the globe: it ate up to 3 px of the globe's edge over 20 rows (outline at row 758: 1540.18 against
+1543.48). Second try, kept: the lip is drawn behind the globe in both halves (a place inside the equator's
+circle is inside the globe). Measured, drafts: 3593 the largest lift near the equator's end falls from 116 to
+16 (the 16 is a corner pixel of the outline, level 20), 3601 from 73 to 10; pixels changed against the same
+tree without the lip: 51 at 3593, 51 at 3601 (kept set), 37 at 3610 (model), all within 3 px of the outline
+over about 20 rows at the right end of the equator. What else goes: a bluish shelf of 2 px in the globe's soft
+edge at that place (the night limb's haze and the star's glow behind the edge; everywhere else along that limb
+the solid plane already stood behind the edge), so the outline is now one smooth curve there (rows 734 to 758
+at 3610: steps of 0.5 to 1.2 px per 3 rows; before: a bulge of 1 px at rows 740 to 752).
+Tool: /tmp/v/rigid/outline.py (the outline's x by row), dot.py (largest lift over the 5 by 5 median).
+
+POSE WEIGHTS STILL IN THE KEPT SET (to name with the next name):
+(a) polarW, the hero's ring pixels by the lens's height and distance: 1 to 3578, 0.81 at 3584, 0.54 at 3588,
+    0.28 at 3592, 0 from 3600. As main.
+(b) dove: uSolid.x = smooth(dove / 0.116) and the penumbra's way to penumbraAway: over the first 0.116 radii of
+    the dive (3541 to 3551: 0.001, 0.006, 0.020, 0.055, 0.123, 0.232, 0.384, 0.572, 0.770, 0.935, 1) the
+    shaded plane goes solid and the stars behind it go out. As main.
+(c) the grade by the lens's height (grade.ts bodyShare, zoneShare, gradeShare), ruled as d253.
+(d) dead at every frame the kept set draws: close (handover.kept.close 0), skimW (skimGrow, skimLimb).
+(e) the hero's ring pixels against the code's rings: named, not refitted.
+
+Lens table (trial): Saturn's disc is over 0.6 px from 3344 (1.1 px) to 3916 (112.7 px; 3917 is the next leg,
+0.3 px). 3350: 18.0 px, 3360: 110.2, 3370: 246.2, 3379: 339.6, 3390: 362.9, 3465: 368.5, 3539: 374.2.
+
+FROZEN 01:16: candidate K = sK = E (rigid shapes, lens law b, heroLight 0, baked globe map in both sets, old
+ring profile) + the repaired polar map + the lip. Running: finals of K at 3572, 3720, 3465 and main's 3572
+(/tmp/v/rigid/seq20.sh). Then: the stills to the Builder, the build into the repo on 7be04230 (or take/sr8 once
+it is on main), the full proof, the name.
