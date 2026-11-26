@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T04:29:49.560Z",
- "head": "788cc8e3045fe99f9c3d72e74203bebb687c9da7",
- "note": "RC on main 834d5148 (merge 788cc8e3): judged drafts keep bytes; dive part 1 row drawing; rows r1 1.37, r2 0.90, d2 1.48",
+ "pushed": "2026-11-26T04:57:00.699Z",
+ "head": "4ce4b9cb6142a17e8207fcff0eaa332b69a6de5f",
+ "note": "candidate 4ce4b9cb (RC on main 759b7d75): dive 1 pattern 0.78 pop 1.42, dive 2 1.48, rise 1 1.37, rise 2 0.90; units running alone",
  "looks": [
+  {
+   "time": "2026-11-26T04:56:55.730Z",
+   "file": "20261126045655730-note-final-4290-appr-main-rc.jpg",
+   "source": "../../../../tmp/n68/final-4290-appr-main-rc.jpg",
+   "kind": "note",
+   "label": "final 4290: approved, main (match 3.849), RC (3.226), frame and 1 to 1 crop of the horizon",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T04:56:54.115Z",
+   "file": "20261126045654115-note-uranus-dive-p1of2-changes.jpg",
+   "source": "../../../../tmp/n66/out/d1/uranus-dive-p1of2-changes.png",
+   "kind": "note",
+   "label": "RC dive part 1 of 2, the reader's changes sheet: pattern 0.78 from 4140 + 1/2 (main 1.17), at the left limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T04:56:50.756Z",
+   "file": "20261126045650756-note-uranus-dive-p1of2-pops.jpg",
+   "source": "../../../../tmp/n66/out/d1/uranus-dive-p1of2-pops.png",
+   "kind": "note",
+   "label": "RC dive part 1 of 2, the reader's pops sheet: pop 1.42 from 4151 + 1/2 (main 1.50); what is left is the sky in the left strip, the star cloud band and the place's ring arcs",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T04:29:48.931Z",
    "file": "20261126042948931-note-final-4407-main-rc.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n65/final-4290-band-a.jpg",
    "kind": "note",
    "label": "4290 final tier, horizon 1 to 1: approved, main, B1, 6ef232ea (match 3.849, 3.224, 3.226)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T00:30:27.233Z",
-   "file": "20261126003027233-note-h4186-a.jpg",
-   "source": "../../../../tmp/n65/h4186-a.png",
-   "kind": "note",
-   "label": "4186 draft, horizon 1 to 1: the merge 66694d33 above, the rim as air 6ef232ea below (band under the limb calmer)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T00:06:05.942Z",
-   "file": "20261126000605942-note-final-4407-full.jpg",
-   "source": "../../../../tmp/n64/final-4407-full.jpg",
-   "kind": "note",
-   "label": "4407 final tier full frame: main above, 2583f129 below (paler teal, softer cloud than main's)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T00:06:02.785Z",
-   "file": "20261126000602785-note-final-4407-pair.jpg",
-   "source": "../../../../tmp/n64/final-4407-pair.png",
-   "kind": "note",
-   "label": "4407 final tier, the panel's crop 1 to 1: main 555fe096 left, the cure 2583f129 right (no upright lines; 972 s against main's 271 s)",
    "stop": "uranus"
   }
  ]
