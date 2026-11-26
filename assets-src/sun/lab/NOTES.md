@@ -2866,3 +2866,7 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   spotprof.py, flat.py added. Disk: place worktree set to main 262b9a68, npm run build there exit 0; old frames,
   films and pictures removed; in my own work tree the tracked out/clips, out/posts, out/stills, out/roughcut.mp4
   and out/preview.mp4 were removed for room and NOT committed (git checkout -- out brings them back).
+- 20:53 UTC. Freeze commit b73256f7e07750bdf9f820f1f097d2e5608612d9 pushed (state h48 in lab.json, states/,
+  src/stops/sun/lab/NOTES.md). Mail of ten lines sent to /root (high): branch and head, three open items of the
+  Sun's ground on main, disk 6253 MB, 4 cores, build exit 0 on 262b9a68 in /home/user/workspace/place. Growth
+  2,646,795 bytes. Waiting for a render job; nothing runs. Do not start trials again unless the Builder says so.
