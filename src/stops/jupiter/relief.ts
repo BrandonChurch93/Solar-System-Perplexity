@@ -172,6 +172,7 @@ uniform vec4 uAirKnots;
 uniform vec2 uAirTurn;
 uniform float uAirLift;
 uniform vec4 uAirHeld;
+uniform vec2 uAirFar;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform vec2 uAboveMix;
@@ -528,7 +529,7 @@ void main() {
     vec3 liftLow = vec3(0.0);
     vec3 liftClear = vec3(0.0);
     float lowered = max(above(E) - uAirHeld.x, 0.0);
-    float carried = lowered > 0.0 ? seen.a * uAirHeld.z : 0.0;
+    float carried = lowered > 0.0 ? seen.a * uAirHeld.z * (1.0 - smoothstep(uAirFar.x, uAirFar.y, -dot(normalize(p - uFitEye), normalize(p + vec3(0.0, 0.0, uRadius))))) : 0.0;
     for (int i = 0; i < (carried > 0.0 ? 1 : 0); i++) {
       vec3 held = normalize(there - (E - normalize(E + vec3(0.0, 0.0, uRadius)) * lowered));
       vec3 throughNow;
@@ -769,6 +770,7 @@ export class ReliefDeck {
       uAirTurn: { value: new THREE.Vector2((as - 1) / (3 * as), 0.5 / (3 * as)) },
       uAirLift: { value: 0 },
       uAirHeld: { value: new THREE.Vector4(body.handover.air.ceilingUnits, body.handover.air.floor, 0, body.handover.air.inViewSine) },
+      uAirFar: { value: new THREE.Vector2().fromArray(body.handover.air.farSine) },
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveMix: { value: new THREE.Vector2(deck.above.even, deck.above.floor) },
