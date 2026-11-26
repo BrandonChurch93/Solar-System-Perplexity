@@ -2,7 +2,7 @@ import { afterAll, describe, expect, it } from 'vitest'
 import { config, type Segment } from '../src/config'
 import type { Shot } from '../src/core/types'
 import { forceSide, handoverOf, skyTurnWeight, skyWeight, type SkyShares } from '../src/director/handover'
-import { sharedSkyWeight } from '../src/core/skyfloor'
+import { ownSkyWeight, sharedSkyWeight } from '../src/core/skyfloor'
 import { StopPlan, type MoveParams } from '../src/director/moves'
 import { mix, ramp, smooth } from '../src/director/rig'
 import { FilmDirector } from '../src/director/film'
@@ -124,6 +124,71 @@ describe('the sky shares of a stop that hands over', () => {
         expect(sharedSkyWeight('orbit', 'terrain', 'rise', low, high)).toBe(0)
       }
     }
+  })
+})
+
+describe('the weight of a stop sky patch where no dive or rise shares the sky', () => {
+  // What the engine did before a patch could say how it arrives, written out as it stood in its frame loop.
+  const before = (kind: string, setView: string, arriving: boolean, ending: boolean, clock: number): number => (ending ? 0 : kind === 'travel' ? (arriving ? clock : 0) : kind === 'rise' && setView === 'orbit' ? 0 : 1)
+  const kinds = ['hold', 'dive', 'terrain', 'rise', 'travel', 'retreat', 'lookback', 'fade']
+  const clocks = [0, 0.09, 0.31, 0.53, 0.83, 1]
+
+  it('is the engine own for a patch that says nothing, in every kind of segment, to the bit', () => {
+    for (const kind of kinds) {
+      for (const view of ['orbit', 'terrain']) {
+        for (const arriving of [false, true]) {
+          for (const ending of [false, true]) {
+            for (const clock of clocks) expect(ownSkyWeight(kind, view, arriving, ending, clock, undefined)).toBe(before(kind, view, arriving, ending, clock))
+          }
+        }
+      }
+    }
+    // The cases by name: a travel gives the stop that arrives the clock and the stop that is left nothing; a rise gives the globe
+    // view nothing; the ending has none.
+    expect(ownSkyWeight('travel', 'orbit', true, false, 0.31, undefined)).toBe(0.31)
+    expect(ownSkyWeight('travel', 'orbit', false, false, 0.31, undefined)).toBe(0)
+    expect(ownSkyWeight('rise', 'orbit', false, false, 0.31, undefined)).toBe(0)
+    expect(ownSkyWeight('rise', 'terrain', false, false, 0.31, undefined)).toBe(1)
+    expect(ownSkyWeight('hold', 'orbit', false, false, 0.31, undefined)).toBe(1)
+    expect(ownSkyWeight('travel', 'orbit', true, true, 0.31, undefined)).toBe(0)
+  })
+
+  it('is whole on every frame of the travel for a patch that arrives whole, whatever the clock says, and moves nothing else', () => {
+    for (const clock of clocks) {
+      expect(ownSkyWeight('travel', 'orbit', true, false, clock, 'whole')).toBe(1)
+      // The stop that is left, the ending and every other kind of segment are as without the word.
+      expect(ownSkyWeight('travel', 'orbit', false, false, clock, 'whole')).toBe(0)
+      expect(ownSkyWeight('travel', 'orbit', true, true, clock, 'whole')).toBe(0)
+      for (const kind of kinds) {
+        if (kind === 'travel') continue
+        for (const view of ['orbit', 'terrain']) expect(ownSkyWeight(kind, view, false, false, clock, 'whole')).toBe(before(kind, view, false, false, clock))
+      }
+    }
+  })
+
+  it('finds the stop that arrives in the shot on every frame of every travel, from the first: a patch that arrives whole is whole on all of them, and the director\'s own weight is not', () => {
+    restorePlans()
+    const film = new FilmDirector(plans)
+    let travels = 0
+    for (const segment of config.segments) {
+      const index = plans.findIndex((p) => p.id === segment.stop)
+      if (segment.kind !== 'travel' || index + 1 >= plans.length) continue
+      travels++
+      const next = plans[index + 1]!.id
+      let least = 1
+      for (let f = segment.firstFrame; f < segment.endFrame; f++) {
+        const shot = film.shotAt(f, (f + config.shutterFraction / 2) / fps)
+        const arriving = shot.sets.filter((set) => set.id !== segment.stop)
+        expect(arriving.map((set) => set.id)).toEqual([next])
+        const clock = shot.skyPatch!
+        least = Math.min(least, clock)
+        expect(ownSkyWeight(segment.kind, arriving[0]!.view, true, false, clock, undefined)).toBe(clock)
+        expect(ownSkyWeight(segment.kind, arriving[0]!.view, true, false, clock, 'whole')).toBe(1)
+      }
+      // The director's weight goes by the travel's clock and starts at none, so the word changes what the travel's frames get.
+      expect(least).toBe(0)
+    }
+    expect(travels).toBeGreaterThan(0)
   })
 })
 

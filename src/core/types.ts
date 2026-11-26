@@ -220,6 +220,11 @@ export interface SkyPatch {
   unfold?: [number, number]
   glare?: boolean
   weight?: (time: number, view: ViewKind) => number
+  // How the patch of a stop that arrives comes in on the travel to it. Absent: by the director's weight for the travel (Shot.skyPatch,
+  // which goes by the travel's clock). 'whole': at its whole weight from the travel's first frame on, so that it enters over the
+  // frame's edge as the camera turns to it and never by a weight. The stop answers for no part of the patch lying in the frame at
+  // that first frame; the engine does not ask.
+  arrive?: 'whole'
 }
 
 export interface StopSet {

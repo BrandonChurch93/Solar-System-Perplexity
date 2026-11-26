@@ -132,3 +132,13 @@ export function sharedSkyWeight(patchView: string, setView: string, kind: string
   if (high !== undefined) return high
   return kind === 'rise' ? 0 : 1 - low
 }
+
+// The weight of a stop's sky patch of the view its set is in, where no dive or rise shares the sky, before the patch's own weight by
+// time. The film's ending has none. On a travel the stop that is left has none and the stop that arrives has the director's weight
+// for the travel (clock), or 1 on every frame of the travel where the patch says it arrives whole (SkyPatch.arrive). In a rise the
+// globe view's patch has none, where the sky already turns to the next stop; everywhere else the patch is whole.
+export function ownSkyWeight(kind: string, setView: string, arriving: boolean, ending: boolean, clock: number, arrive: 'whole' | undefined): number {
+  if (ending) return 0
+  if (kind === 'travel') return arriving ? (arrive === 'whole' ? 1 : clock) : 0
+  return kind === 'rise' && setView === 'orbit' ? 0 : 1
+}
