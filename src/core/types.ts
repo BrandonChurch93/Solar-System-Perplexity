@@ -225,6 +225,12 @@ export interface SkyPatch {
   // frame's edge as the camera turns to it and never by a weight. The stop answers for no part of the patch lying in the frame at
   // that first frame; the engine does not ask.
   arrive?: 'whole'
+  // Where no dive or rise of the stop shares the sky: true draws the patch in the other view of its stop too, in the dive, on the ground
+  // and in the rise, at its whole weight (in the rise's globe view as well, where a patch without the word has none), at the aim of the
+  // view it names. So a stop can keep one set of sky pictures through the change of its views. Absent: only in the view it names. Not in
+  // a hold and not on a travel. The sky draws two patches a sample, in the order of the set's list. The stop answers for no part of the
+  // patch lying in the frame at the dive's first frame and at the first frame after the rise; the engine does not ask.
+  both?: boolean
 }
 
 export interface StopSet {

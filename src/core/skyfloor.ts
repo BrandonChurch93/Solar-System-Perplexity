@@ -133,12 +133,20 @@ export function sharedSkyWeight(patchView: string, setView: string, kind: string
   return kind === 'rise' ? 0 : 1 - low
 }
 
-// The weight of a stop's sky patch of the view its set is in, where no dive or rise shares the sky, before the patch's own weight by
+// Whether a stop's sky patch is drawn in the view its set is in, where no dive or rise shares the sky. A patch is drawn in the view it
+// names. One that says both (SkyPatch.both) is drawn in the other view of its stop too, in the dive, on the ground and in the rise, and
+// nowhere else.
+export function ownSkyDrawn(patchView: string, setView: string, kind: string, both: boolean | undefined): boolean {
+  return patchView === setView || (both === true && (kind === 'dive' || kind === 'terrain' || kind === 'rise'))
+}
+
+// The weight of a stop's sky patch that is drawn (ownSkyDrawn), where no dive or rise shares the sky, before the patch's own weight by
 // time. The film's ending has none. On a travel the stop that is left has none and the stop that arrives has the director's weight
 // for the travel (clock), or 1 on every frame of the travel where the patch says it arrives whole (SkyPatch.arrive). In a rise the
-// globe view's patch has none, where the sky already turns to the next stop; everywhere else the patch is whole.
-export function ownSkyWeight(kind: string, setView: string, arriving: boolean, ending: boolean, clock: number, arrive: 'whole' | undefined): number {
+// globe view has none, where the sky already turns to the next stop, unless the patch says both (SkyPatch.both); everywhere else the
+// patch is whole.
+export function ownSkyWeight(kind: string, setView: string, arriving: boolean, ending: boolean, clock: number, arrive: 'whole' | undefined, both: boolean | undefined): number {
   if (ending) return 0
   if (kind === 'travel') return arriving ? (arrive === 'whole' ? 1 : clock) : 0
-  return kind === 'rise' && setView === 'orbit' ? 0 : 1
+  return kind === 'rise' && setView === 'orbit' && both !== true ? 0 : 1
 }

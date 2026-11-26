@@ -2,7 +2,7 @@ import { afterAll, describe, expect, it } from 'vitest'
 import { config, type Segment } from '../src/config'
 import type { Shot } from '../src/core/types'
 import { forceSide, handoverOf, skyTurnWeight, skyWeight, type SkyShares } from '../src/director/handover'
-import { ownSkyWeight, sharedSkyWeight } from '../src/core/skyfloor'
+import { ownSkyDrawn, ownSkyWeight, sharedSkyWeight } from '../src/core/skyfloor'
 import { StopPlan, type MoveParams } from '../src/director/moves'
 import { mix, ramp, smooth } from '../src/director/rig'
 import { FilmDirector } from '../src/director/film'
@@ -138,30 +138,30 @@ describe('the weight of a stop sky patch where no dive or rise shares the sky', 
       for (const view of ['orbit', 'terrain']) {
         for (const arriving of [false, true]) {
           for (const ending of [false, true]) {
-            for (const clock of clocks) expect(ownSkyWeight(kind, view, arriving, ending, clock, undefined)).toBe(before(kind, view, arriving, ending, clock))
+            for (const clock of clocks) expect(ownSkyWeight(kind, view, arriving, ending, clock, undefined, undefined)).toBe(before(kind, view, arriving, ending, clock))
           }
         }
       }
     }
     // The cases by name: a travel gives the stop that arrives the clock and the stop that is left nothing; a rise gives the globe
     // view nothing; the ending has none.
-    expect(ownSkyWeight('travel', 'orbit', true, false, 0.31, undefined)).toBe(0.31)
-    expect(ownSkyWeight('travel', 'orbit', false, false, 0.31, undefined)).toBe(0)
-    expect(ownSkyWeight('rise', 'orbit', false, false, 0.31, undefined)).toBe(0)
-    expect(ownSkyWeight('rise', 'terrain', false, false, 0.31, undefined)).toBe(1)
-    expect(ownSkyWeight('hold', 'orbit', false, false, 0.31, undefined)).toBe(1)
-    expect(ownSkyWeight('travel', 'orbit', true, true, 0.31, undefined)).toBe(0)
+    expect(ownSkyWeight('travel', 'orbit', true, false, 0.31, undefined, undefined)).toBe(0.31)
+    expect(ownSkyWeight('travel', 'orbit', false, false, 0.31, undefined, undefined)).toBe(0)
+    expect(ownSkyWeight('rise', 'orbit', false, false, 0.31, undefined, undefined)).toBe(0)
+    expect(ownSkyWeight('rise', 'terrain', false, false, 0.31, undefined, undefined)).toBe(1)
+    expect(ownSkyWeight('hold', 'orbit', false, false, 0.31, undefined, undefined)).toBe(1)
+    expect(ownSkyWeight('travel', 'orbit', true, true, 0.31, undefined, undefined)).toBe(0)
   })
 
   it('is whole on every frame of the travel for a patch that arrives whole, whatever the clock says, and moves nothing else', () => {
     for (const clock of clocks) {
-      expect(ownSkyWeight('travel', 'orbit', true, false, clock, 'whole')).toBe(1)
+      expect(ownSkyWeight('travel', 'orbit', true, false, clock, 'whole', undefined)).toBe(1)
       // The stop that is left, the ending and every other kind of segment are as without the word.
-      expect(ownSkyWeight('travel', 'orbit', false, false, clock, 'whole')).toBe(0)
-      expect(ownSkyWeight('travel', 'orbit', true, true, clock, 'whole')).toBe(0)
+      expect(ownSkyWeight('travel', 'orbit', false, false, clock, 'whole', undefined)).toBe(0)
+      expect(ownSkyWeight('travel', 'orbit', true, true, clock, 'whole', undefined)).toBe(0)
       for (const kind of kinds) {
         if (kind === 'travel') continue
-        for (const view of ['orbit', 'terrain']) expect(ownSkyWeight(kind, view, false, false, clock, 'whole')).toBe(before(kind, view, false, false, clock))
+        for (const view of ['orbit', 'terrain']) expect(ownSkyWeight(kind, view, false, false, clock, 'whole', undefined)).toBe(before(kind, view, false, false, clock))
       }
     }
   })
@@ -182,13 +182,113 @@ describe('the weight of a stop sky patch where no dive or rise shares the sky', 
         expect(arriving.map((set) => set.id)).toEqual([next])
         const clock = shot.skyPatch!
         least = Math.min(least, clock)
-        expect(ownSkyWeight(segment.kind, arriving[0]!.view, true, false, clock, undefined)).toBe(clock)
-        expect(ownSkyWeight(segment.kind, arriving[0]!.view, true, false, clock, 'whole')).toBe(1)
+        expect(ownSkyWeight(segment.kind, arriving[0]!.view, true, false, clock, undefined, undefined)).toBe(clock)
+        expect(ownSkyWeight(segment.kind, arriving[0]!.view, true, false, clock, 'whole', undefined)).toBe(1)
       }
       // The director's weight goes by the travel's clock and starts at none, so the word changes what the travel's frames get.
       expect(least).toBe(0)
     }
     expect(travels).toBeGreaterThan(0)
+  })
+
+  it('is drawn only in the view the patch names where it says nothing, and in the other view too in the dive, on the ground and in the rise where it says both', () => {
+    for (const kind of kinds) {
+      for (const patchView of ['orbit', 'terrain']) {
+        for (const setView of ['orbit', 'terrain']) {
+          // What the engine did before the word: a patch of the other view was passed over.
+          expect(ownSkyDrawn(patchView, setView, kind, undefined)).toBe(patchView === setView)
+          expect(ownSkyDrawn(patchView, setView, kind, false)).toBe(patchView === setView)
+          expect(ownSkyDrawn(patchView, setView, kind, true)).toBe(patchView === setView || kind === 'dive' || kind === 'terrain' || kind === 'rise')
+        }
+      }
+    }
+    // The cases by name: the surface view's patch in the globe view of a dive and of a rise, the globe view's patch on the ground, and
+    // neither in a hold or on a travel.
+    expect(ownSkyDrawn('terrain', 'orbit', 'dive', true)).toBe(true)
+    expect(ownSkyDrawn('terrain', 'orbit', 'rise', true)).toBe(true)
+    expect(ownSkyDrawn('orbit', 'terrain', 'terrain', true)).toBe(true)
+    expect(ownSkyDrawn('terrain', 'orbit', 'hold', true)).toBe(false)
+    expect(ownSkyDrawn('terrain', 'orbit', 'travel', true)).toBe(false)
+    expect(ownSkyDrawn('terrain', 'orbit', 'dive', undefined)).toBe(false)
+  })
+
+  it('keeps its whole weight in the globe view of a rise for a patch that says both, and moves nothing else', () => {
+    let moved = 0
+    for (const kind of kinds) {
+      for (const view of ['orbit', 'terrain']) {
+        for (const arriving of [false, true]) {
+          for (const ending of [false, true]) {
+            for (const clock of clocks) {
+              for (const arrive of [undefined, 'whole'] as const) {
+                const without = ownSkyWeight(kind, view, arriving, ending, clock, arrive, undefined)
+                expect(ownSkyWeight(kind, view, arriving, ending, clock, arrive, false)).toBe(without)
+                const here = kind === 'rise' && view === 'orbit' && !ending
+                expect(ownSkyWeight(kind, view, arriving, ending, clock, arrive, true)).toBe(here ? 1 : without)
+                if (here) {
+                  expect(without).toBe(0)
+                  moved++
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    expect(moved).toBeGreaterThan(0)
+  })
+
+  it('draws one set of pictures at one weight on every frame from a dive\'s first to its rise\'s last for patches that say both, in both views, where without the word the pictures change with the view, and changes no frame outside them', () => {
+    restorePlans()
+    const film = new FilmDirector(plans)
+    // A stop's two sky patches as its set lists them, and what the engine's loop draws of them in a shot: the patch's view and its weight.
+    const list = ['orbit', 'terrain']
+    const drawn = (shot: Shot, both: boolean | undefined): string => {
+      const kind = shot.segment.kind
+      const out: string[] = []
+      for (const state of shot.sets) {
+        for (const patchView of list) {
+          if (!ownSkyDrawn(patchView, state.view, kind, both)) continue
+          const weight = ownSkyWeight(kind, state.view, kind === 'travel' && state.id !== shot.segment.stop, shot.segment.stop === config.endingId, shot.skyPatch ?? 0.5, undefined, both)
+          if (weight > 0) out.push(state.id + ' ' + patchView + ' ' + weight)
+        }
+      }
+      return out.join(', ')
+    }
+    let stops = 0
+    let outside = 0
+    for (const segment of config.segments) {
+      const own = segment.kind === 'dive' || segment.kind === 'terrain' || segment.kind === 'rise'
+      const views = new Set<string>()
+      const without = new Set<string>()
+      // Every frame of a dive, of the ground and of a rise; every fifth frame of the rest, with its first and its last.
+      const frames: number[] = []
+      for (let f = segment.firstFrame; f < segment.endFrame; f += own ? 1 : 5) frames.push(f)
+      if (frames[frames.length - 1] !== segment.endFrame - 1) frames.push(segment.endFrame - 1)
+      for (const f of frames) {
+        const shot = film.shotAt(f, (f + config.shutterFraction / 2) / fps)
+        if (!own) {
+          expect(drawn(shot, true)).toBe(drawn(shot, undefined))
+          outside++
+          continue
+        }
+        expect(shot.sets.map((set) => set.id)).toEqual([segment.stop])
+        views.add(shot.sets[0]!.view)
+        without.add(drawn(shot, undefined))
+        expect(drawn(shot, true)).toBe(segment.stop + ' orbit 1, ' + segment.stop + ' terrain 1')
+      }
+      if (!own) continue
+      if (segment.kind === 'terrain') {
+        expect([...views]).toEqual(['terrain'])
+        expect([...without]).toEqual([segment.stop + ' terrain 1'])
+      } else if (views.size === 2) {
+        // A dive or a rise that changes its view: without the word the globe view draws its own patch (none in a rise) and the surface
+        // view the other, so the pictures of the sky change where the view does.
+        stops++
+        expect([...without].sort()).toEqual(segment.kind === 'dive' ? [segment.stop + ' orbit 1', segment.stop + ' terrain 1'] : ['', segment.stop + ' terrain 1'])
+      }
+    }
+    expect(stops).toBeGreaterThan(0)
+    expect(outside).toBeGreaterThan(0)
   })
 })
 
