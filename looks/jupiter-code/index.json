@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T15:53:55.057Z",
+ "pushed": "2026-11-26T16:22:03.590Z",
  "head": "14af1ae7ebf4a2fbeb655e42e784804a9c682344",
- "note": "line A at 14af1ae7: the star on the rise found and cured, survey of dive and rise running, proofs not drawn yet",
+ "note": "16:22 UTC. RED: dashes on dive and rise from above, cause in the shade field of the bake, cure in work. 3150 last.",
  "looks": [
+  {
+   "time": "2026-11-26T16:22:02.875Z",
+   "file": "20261126162202875-note-cut-3150.jpg",
+   "source": "../work/r27/t/cut-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft on 14af1ae7, the terrain as it stands",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:22:02.249Z",
+   "file": "20261126162202249-note-baked-3015-crop.jpg",
+   "source": "../work/r27/t/baked-3015-crop.png",
+   "kind": "note",
+   "label": "3015 crop: frame, globe alone, baked height, baked shade field; the speckle sits in the shade field",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:22:01.664Z",
+   "file": "20261126162201664-note-cell4-pair.jpg",
+   "source": "../work/r27/t/cell4-pair.jpg",
+   "kind": "note",
+   "label": "3285 crop: above the state as pushed, below with the band limit of the bake doubled, dashes gone there",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:22:01.079Z",
+   "file": "20261126162201079-note-s-3285.jpg",
+   "source": "../work/r27/sv/s-3285.png",
+   "kind": "note",
+   "label": "RED 3285 preview draft on 14af1ae7: thin dark dashes over the ground on the rise",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:22:00.413Z",
+   "file": "20261126162200413-note-s-3015.jpg",
+   "source": "../work/r27/sv/s-3015.png",
+   "kind": "note",
+   "label": "RED 3015 preview draft on 14af1ae7: thin dark dashes over the ground on the dive, cause being searched",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T15:53:54.437Z",
    "file": "20261126155354437-note-cut-3150.jpg",
@@ -154,46 +194,6 @@
    "source": "../work/r26/t/wi1-3150.png",
    "kind": "note",
    "label": "line A dev state wi1 at 3150, preview draft: line (i) 1.749 whole frame, 1.395 outside the seven cells, bands green, 32.4 s; not in the repo yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:46:13.039Z",
-   "file": "20261126134613039-note-see-mid.jpg",
-   "source": "../work/r26/t/see-mid.png",
-   "kind": "note",
-   "label": "why the wedge: left my solved paint of the mid level seen from above, right the plate of main; the solve turned the whole fan of the view, to be limited to the central patch",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:46:12.248Z",
-   "file": "20261126134612248-note-wi1-2997.jpg",
-   "source": "../work/r26/t/wi1-2997.png",
-   "kind": "note",
-   "label": "line A dev state wi1 at 2997, preview draft: the black disc on the dive is gone (the march now searches the crossing), still red: about 220 black single pixels and the solved paint lying on the globe as a hard wedge",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:18:18.646Z",
-   "file": "20261126131818646-note-wg0s-vs-appr.jpg",
-   "source": "../work/r26/t/wg0s-vs-appr.jpg",
-   "kind": "note",
-   "label": "wg0 beside the approved, 3150: line (i) 1.724 preview draft, 1.658 master draft; bands green; 49.5 s a frame at master draft; dive and rise frames red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:18:18.027Z",
-   "file": "20261126131818027-note-wg1s-vs-appr.jpg",
-   "source": "../work/r26/t/wg1s-vs-appr.jpg",
-   "kind": "note",
-   "label": "wg1 beside the approved, 3150 preview draft: line (i) 1.058 whole frame, outside the seven cells 0.939; band 1 to 2 px 0.684 RED, other bands green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:18:17.415Z",
-   "file": "20261126131817415-note-wh0-3239.jpg",
-   "source": "../work/r26/t/wh0-3239.png",
-   "kind": "note",
-   "label": "wh0 frame 3239 last terrain frame, preview draft, 33.5 s",
    "stop": "jupiter"
   }
  ]
