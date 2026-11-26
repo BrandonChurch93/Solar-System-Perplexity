@@ -1,9 +1,44 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T16:43:09.683Z",
+ "pushed": "2026-11-26T17:01:12.060Z",
  "head": "345d510fde0df10f589b3f6fa0287d1db574e1e1",
- "note": "finals of 1857 and 2156 on 345d510f; main's finals not yet beside them; specks, smear and hatch at 1857 stand; handover tool runs",
+ "note": "2156 final at 1 to 1 on 345d510f: no item of round 55 reads as gone on my final alone; handover tool at frame 1904 of the dive; main's frames follow",
  "looks": [
+  {
+   "time": "2026-11-26T17:01:11.054Z",
+   "file": "20261126170111054-note-m2156-land.jpg",
+   "source": "../../../../tmp/gl/k24/Q/m2156-land.jpg",
+   "kind": "note",
+   "label": "2156 final 345d510f, x 560 y 120 at 1 to 1: lands soft, specks in the Gulf",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T17:01:10.244Z",
+   "file": "20261126170110244-note-m2156-night.jpg",
+   "source": "../../../../tmp/gl/k24/Q/m2156-night.jpg",
+   "kind": "note",
+   "label": "2156 final 345d510f, x 1100 y 640 at 1 to 1: night lights, some as short dashes",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T17:01:09.205Z",
+   "file": "20261126170109205-note-m2156-limb.jpg",
+   "source": "../../../../tmp/gl/k24/Q/m2156-limb.jpg",
+   "kind": "note",
+   "label": "2156 final 345d510f, x 330 y 400 at 1 to 1: hurricane, clouds drawn out at the left, the hatch at the right edge",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T16:43:48.779Z",
+   "file": "20261126164348779-compare-earth-dive-sides.jpg",
+   "source": "out/work/handover/earth-dive-sides.png",
+   "kind": "compare",
+   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1919,
+   "tier": "draft"
+  },
   {
    "time": "2026-11-26T16:43:08.931Z",
    "file": "20261126164308931-note-m1857-hatch3.jpg",
@@ -34,50 +69,6 @@
    "source": "../../../../tmp/gl/k24/Q/look-2010-half.jpg",
    "kind": "note",
    "label": "finals 2010 and 1755 of 345d510f, half size; both the candidate's bytes again",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T16:21:26.294Z",
-   "file": "20261126162126294-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T16:15:39.952Z",
-   "file": "20261126161539952-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T16:00:12.729Z",
-   "file": "20261126160012729-note-1857-draft-half.jpg",
-   "source": "../../../../tmp/gl/k24/Q/1857-draft-half.jpg",
-   "kind": "note",
-   "label": "1857 at the draft tier, half size: 345d510f above, main below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T15:33:39.604Z",
-   "file": "20261126153339604-note-cr-4295.jpg",
-   "source": "../../../../tmp/gl/k24/A/cr-4295.jpg",
-   "kind": "note",
-   "label": "rise 2147 + 1/2 to 2154 + 1/2, every half frame, 345d510f, half size",
    "stop": "earth"
   }
  ]
