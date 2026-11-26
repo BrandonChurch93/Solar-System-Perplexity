@@ -1,9 +1,101 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T19:43:56.331Z",
- "head": "594567e7c85b2f0de0830952ad96b2318fcb1c87",
- "note": "Item 3 a: the pair [1.12, 1.65] for the wide level alone. Rows of the dive 2984 to 3010 and of the rise 3282 to 3297 green, no row worse than main's same slice in the rise. One cost named: the repaint's ring pattern right of the spot shows two frames longer on each side. Not committed yet.",
+ "pushed": "2026-11-26T20:08:23.425Z",
+ "head": "c6d64f97ce25da553ebe32e850e76281020c827f",
+ "note": "Item 3 a is a commit on main 262b9a68 (c6d64f97), its tests and rows run now; frames of the commit have the bytes of the trial shown at 19:44. Item 3 b: two tests of new detail for the ring of the wide patch, both from code and the film's own picture; test 1 too weak, test 2 crisper with a stipple fault. Nothing of 3 b is committed.",
  "looks": [
+  {
+   "time": "2026-11-26T20:08:22.737Z",
+   "file": "20261126200822737-note-v-k05-a.jpg",
+   "source": "../work/r29/b2/v-k05-a.png",
+   "kind": "note",
+   "label": "Test 2 with a weaker pull to coherent pieces: the same finish, the same stipple. A still of 2997 with this asset is queued.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:08:22.050Z",
+   "file": "20261126200822050-note-v-k2-b.jpg",
+   "source": "../work/r29/b2/v-k2-b.png",
+   "kind": "note",
+   "label": "Item 3 b, test 2 (the change the repaint made in the centre, carried by example to the ring, in code): top row the wrap beside the repaint in the centre, rows 2 to 4 three places of the ring, the wrap beside the wrap with the carried finish. Edges crisper, finest band of the ring 0.72 to 2.48 (centre 3.98). A fault I see: a fine stipple of dabs on flat cream ground; the repaint's curls do not form.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:08:21.423Z",
+   "file": "20261126200821423-note-zoom-c.jpg",
+   "source": "../work/r29/b/zoom-c.png",
+   "kind": "note",
+   "label": "Test 1 close: the wide level as shipped, and two gains of the half scale forms. A small gain, no new forms.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:08:20.818Z",
+   "file": "20261126200820818-note-t-left.jpg",
+   "source": "../work/r29/b/t-left.png",
+   "kind": "note",
+   "label": "Item 3 b, test 1 (the wrap's own forms at half scale laid into the ring): 2997 master at one to one, the left side. The ring gains 1.28 to 1.34 times in the finest band and stays visibly softer than the centre. I do not build this out.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:08:20.246Z",
+   "file": "20261126200820246-note-zones-2997.jpg",
+   "source": "../work/r29/b/zones-2997.png",
+   "kind": "note",
+   "label": "Item 3 b, a map of 2997: dark green the repainted centre (mid level nested in the wide patch), light green its feather, orange the ring of the wide patch that holds only the enlarged wrap, red the ring blending with the wrap, purple the wrap alone. By ground: centre 0.561, feather 0.146, ring 0.163, ring blend 0.076, wrap alone 0.052. The ring's finest band holds about 0.27 of the centre's.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:08:19.647Z",
+   "file": "20261126200819647-note-jupiter-dive-k6021-6048-changes.jpg",
+   "source": "../work/r28/sm/l2/jupiter-dive-k6021-6048-changes.png",
+   "kind": "note",
+   "label": "Smooth, pictures of the dive, frames 3010 + 1/2 to 3024 with the pair [1.12, 1.65]: RED, and it is main's known red, not new: pattern 0.84 at 3019 + 1/2 (main's own row of round 59 reads 0.84 there, first frame over the limit 3017 on both). The white patch is the ground at the horizon that leaves the frame.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:08:19.068Z",
+   "file": "20261126200819068-note-l2-3010-m-corner.jpg",
+   "source": "../work/r29/s/l2-3010-m-corner.png",
+   "kind": "note",
+   "label": "The same pair, 3010 master at one to one, the upper right: main beside the commit.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:08:18.376Z",
+   "file": "20261126200818376-note-l2-3010-m-limb.jpg",
+   "source": "../work/r29/s/l2-3010-m-limb.png",
+   "kind": "note",
+   "label": "Item 3 a, now the commit c6d64f97 on main 262b9a68 (not named yet, its tests run). 3010 master draft, one sample, three times enlarged, the limb at the upper right: main, the wide level on [1.12, 1.65], the difference times 4. The streaks of the grazing ground are finer and the edge of the limb is cleaner. 18 preview frames of the commit have the bytes of the same trial on the last main.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:06:30.240Z",
+   "file": "20261126200630240-frame-f02820.jpg",
+   "source": "out/work/jupiter/frames/c3b/f02820.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2820, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "a455bc02904b0d42"
+  },
+  {
+   "time": "2026-11-26T19:45:15.485Z",
+   "file": "20261126194515485-frame-f03283.jpg",
+   "source": "out/work/jupiter/frames/fa-mainx/f03283.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3283, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3283,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
   {
    "time": "2026-11-26T19:43:55.055Z",
    "file": "20261126194355055-note-jupiter-dive-k5968-6020-changes.jpg",
@@ -107,20 +199,6 @@
    "engine": "e1ac861ce101f79f"
   },
   {
-   "time": "2026-11-26T19:36:23.790Z",
-   "file": "20261126193623790-frame-f03282.jpg",
-   "source": "out/work/jupiter/frames/fa-l2x/f03282.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3282, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3282,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
-  },
-  {
    "time": "2026-11-26T19:19:26.473Z",
    "file": "20261126191926473-note-l2-dive-xb.jpg",
    "source": "../work/r29/s/l2-dive-xb.png",
@@ -134,96 +212,6 @@
    "source": "../work/r29/s/main-dive-xb2.png",
    "kind": "note",
    "label": "Dive on main 594567e7, same crop, every frame 2992 to 2997.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:19:24.828Z",
-   "file": "20261126191924828-note-l2-dive-xa.jpg",
-   "source": "../work/r29/s/l2-dive-xa.png",
-   "kind": "note",
-   "label": "Dive, third trial (the wide level alone on [1.12, 1.65], short axis), same crop, every frame 2986 to 2991. Frames up to 2985 and 3296 to 3305 keep main's bytes.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:19:23.829Z",
-   "file": "20261126191923829-note-main-dive-xa2.jpg",
-   "source": "../work/r29/s/main-dive-xa2.png",
-   "kind": "note",
-   "label": "Dive on main 594567e7, preview draft, one to one crop, every frame 2986 to 2991.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:19:22.795Z",
-   "file": "20261126191922795-note-l1-3296-spot.jpg",
-   "source": "../work/r29/s/l1-3296-spot.png",
-   "kind": "note",
-   "label": "Item 3 a, second trial with the pair [1.6, 2.0] at 3296, one to one: main beside the trial. A FAULT I NAME: the trial draws the wide level at part weight here and a ring pattern like a fingerprint shows right of the spot under Io. It is the repaint's own weak place, carried early into a judged frame. So this pair is rejected; the next trial ends the pair at 1.65, which leaves 3296 main's bytes.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:19:22.149Z",
-   "file": "20261126191922149-note-l1-2997-right.jpg",
-   "source": "../work/r29/s/l1-2997-right.png",
-   "kind": "note",
-   "label": "Item 3 a, second trial, 2997 master draft at one to one, the right side: main 594567e7 beside the trial (the wide level alone on its own pair, read on the short axis of the pixel's footprint in closed form). The hold keeps its bytes with this one (26 frames hashed).",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:17:11.671Z",
-   "file": "20261126191711671-frame-f03315.jpg",
-   "source": "out/work/jupiter/frames/fa-l2/f03315.png",
-   "kind": "frame",
-   "label": "jupiter.travel frame 3315, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.travel",
-   "frame": 3315,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
-  },
-  {
-   "time": "2026-11-26T19:14:50.874Z",
-   "file": "20261126191450874-frame-f02800.jpg",
-   "source": "out/work/jupiter/frames/fa-l2/f02800.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2800, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2800,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
-  },
-  {
-   "time": "2026-11-26T18:50:47.223Z",
-   "file": "20261126185047223-frame-f02820.jpg",
-   "source": "out/work/jupiter/frames/fa-b/f02820.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2820, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2820,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
-  },
-  {
-   "time": "2026-11-26T18:49:56.569Z",
-   "file": "20261126184956569-note-l0-2997-centre.jpg",
-   "source": "../work/r28/fa/l0-2997-centre.jpg",
-   "kind": "note",
-   "label": "Item 3 a, 2997 at one to one, the centre: main beside the trial. The spot keeps main's picture.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:49:55.950Z",
-   "file": "20261126184955950-note-l0-2997-left.jpg",
-   "source": "../work/r28/fa/l0-2997-left.jpg",
-   "kind": "note",
-   "label": "Item 3 a, 2997 at one to one, the left: main beside the trial. The left edge of the wide patch's square stands inside the disc here; left of it both show the wrap alone (the rest of item 3 b).",
    "stop": "jupiter"
   }
  ]
