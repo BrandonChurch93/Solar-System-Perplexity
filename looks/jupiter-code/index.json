@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T10:32:19.392Z",
- "head": "0c012e25580c46cfaaf0b2486fbf9a0c2e3c0f5e",
- "note": "26 Nov 10:33 UTC, line A at 3150: state wa1 after four rounds of the solve reads 3.434 on line (i) at preview draft (main 3.390 at this tier), outside the seven cells 2.772 (main 3.208), bands green; reds: lamps soft and too bright, lower left heaps lit where the approved is dark, far right under the limb too light",
+ "pushed": "2026-11-26T10:57:52.066Z",
+ "head": "9f297b47862860038425bc868b2c762963741b70",
+ "note": "State wa5 of line A at 9f297b47 after four solve rounds in display values. Frame 3150, preview, draft: line (i) 2.006 whole (main at this tier 3.390), 1.608 outside the seven cells (main 3.208); bands 0.729, 0.877, 0.946, 0.942. Not proved at final master. Wrong, worst first: lower thirds read as ripples and pebbles, not smoke; far right under the limb; glow dim patches; storm rings as contour lines. Joins of dive and rise not drawn again.",
  "looks": [
+  {
+   "time": "2026-11-26T10:57:46.276Z",
+   "file": "20261126105746276-note-wa5-r4-3150.jpg",
+   "source": "../work/r26/t/wa5-r4-3150.png",
+   "kind": "note",
+   "label": "Frame 3150, state wa5 after four solve rounds in display values, preview, draft, 1 sample. Line (i) 2.006. Wrong: ripples at bottom centre, far right under the limb, pebbly heaps.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:57:45.505Z",
+   "file": "20261126105745505-note-sheet-wa5-3150.jpg",
+   "source": "../work/r26/t/sheet-wa5-3150.jpg",
+   "kind": "note",
+   "label": "Sheet for 11:15: frame 3150 of state wa5 after four solve rounds beside main and the approved, preview, draft. Line (i) 2.006 whole, 1.608 outside the seven cells; main at this tier 3.390 and 3.208.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:48:32.823Z",
+   "file": "20261126104832823-note-wa4-glow.jpg",
+   "source": "../work/r26/t/wa4-glow.png",
+   "kind": "note",
+   "label": "3150 the glow at 1.5 to 1, the approved (left) beside state wa4 before its rounds (right): the steady light now falls on the matter in the march and is no longer added over the picture; dim patches, one green",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:48:31.649Z",
+   "file": "20261126104831649-note-wa4-far.jpg",
+   "source": "../work/r26/t/wa4-far.png",
+   "kind": "note",
+   "label": "3150 far right under the limb at 2 to 1, the approved (left) beside state wa4 before its rounds (right): a dotted limb, combed stripes and false colour where the solve stands at its limit; reds",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T10:32:13.083Z",
    "file": "20261126103213083-note-wa1-r4-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r26/t/w69-3150.png",
    "kind": "note",
    "label": "3150 preview draft, state w69 (smoke as height in the dark ground): 7.003, folded stripes, liquid, refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:54:45.668Z",
-   "file": "20261126085445668-note-w68-r2-3150.jpg",
-   "source": "../work/r26/t/w68-r2-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w68 after 2 solve rounds: line (i) 6.446, bands green, lower middle reads as marbled liquid",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:54:44.656Z",
-   "file": "20261126085444656-note-w68s-3239.jpg",
-   "source": "../work/r26/t/w68s-3239.png",
-   "kind": "note",
-   "label": "3239 preview draft, state w68: whole, same faults as 3060",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:54:43.313Z",
-   "file": "20261126085443313-note-w68s-3060.jpg",
-   "source": "../work/r26/t/w68s-3060.png",
-   "kind": "note",
-   "label": "3060 preview draft, state w68 (gas, basins outside the storm, solved 2 rounds): whole, zebra streaks in the lower half",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:45:14.695Z",
-   "file": "20261126084514695-note-w68-r1-3150.jpg",
-   "source": "../work/r26/t/w68-r1-3150.png",
-   "kind": "note",
-   "label": "w68 3150 preview draft after one solve round: the gas with basins that start at a wide light of 0.075; 7.199 (main 3.390), the lower two rows still 4 to 17 too dark, second round running",
    "stop": "jupiter"
   }
  ]
