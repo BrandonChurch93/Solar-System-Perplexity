@@ -1,4 +1,7 @@
 {
+  "ground": "main",
+  "groundNote": "which ground the close view draws (set.ts): main is the ground that main draws (convect.ts over the plate), lab is the lab's ground (lab/ground.ts with its far level on the globe's face). The anchor below (stage.toBody, globe, twin; plan.ts params.spot) is main's. The lab's ground wants the anchor in anchorForLab: the place 0.14 degrees west and 0.71 south over the map, where the map's knot lies under the lab's spot.",
+  "anchorForLab": {"toBody": [0.52684854, 0.09583326, -0.05272437, 0.84289189], "spot": [0.23625665, 0.2013716, 0.95059575], "north": [-0.04857035, 0.97951492, -0.19542631], "mapSpot": [0.23705697, 0.20143148, 0.95038379], "mapNorth": [-0.04873491, 0.97950261, -0.19544706], "patchNorthOffDeg": 0.00089, "twinPosition": [0.24631051, 0.10063652, 1.01415754], "planSpot": [0.569554, 0.396149]},
   "source": "references/approved/sun-close.jpg",
   "measured": "The limb of the approved close image is a conic in the picture. With the lens of the terrain view (vfov below, 16:9) every limb point is a ray from the camera, and the rays of a sphere limb lie on a cone round the nadir. assets-src/sun/terrain/fit.py fitted that cone to the limb read from two clean takes registered to the approved image (the direction of the nadir and the half angle, src/stops/sun/terrain.json down and alphaDeg). The half angle gives the dip and the height: dip = 90 - alpha, height = 1 / cos(dip) - 1. Pitch and roll are the angles of the camera axes to the nadir. The spot is the centre of the umbra (terrain.json spot), its ray met with the sphere. Heading: the far direction through the spot is the north of the globe at the spot (dive.headingDeg 0), so the aim has the bearing below. assets-src/sun/place/limb.py reads the limb again from the approved image itself and gives the residual below; assets-src/sun/place/solve.ts wrote this file.",
   "frame": 90,
@@ -32,35 +35,35 @@
       -2.447574
     ],
     "toBody": [
-      0.52684854,
-      0.09583326,
-      -0.05272437,
-      0.84289189
+      0.52156164,
+      0.09735748,
+      -0.05269083,
+      0.84600157
     ],
     "note": "a stage point p is the body point toBody * (p - centre) / radius; body axes are the world axes of the orbit view at the middle of the hold, the globe turns about its axis from there"
   },
   "globe": {
     "spot": [
-      0.23625665,
-      0.2013716,
-      0.95059575
+      0.23800208,
+      0.21349373,
+      0.94751013
     ],
     "north": [
-      -0.04857035,
-      0.97951492,
-      -0.19542631
+      -0.0520111,
+      0.97694443,
+      -0.20706139
     ],
     "mapSpot": [
-      0.23705697,
-      0.20143148,
-      0.95038379
+      0.23879979,
+      0.21355341,
+      0.94729594
     ],
     "mapNorth": [
-      -0.04873491,
-      0.97950261,
-      -0.19544706
+      -0.05218545,
+      0.97693139,
+      -0.20707907
     ],
-    "patchNorthOffDeg": 0.00089,
+    "patchNorthOffDeg": 0.0009,
     "note": "spot and north in body axes; mapSpot and mapNorth in the axes of the globe map (the mesh turned back by its fit), where the patch levels are laid: east = Y x mapSpot, north = mapSpot x east"
   },
   "plates": {
@@ -80,15 +83,15 @@
   },
   "twin": {
     "position": [
-      0.24631051,
-      0.10063652,
-      1.01415754
+      0.24851743,
+      0.11356079,
+      1.0122525
     ],
     "quaternion": [
-      0.52684854,
-      0.09583326,
-      -0.05272437,
-      0.84289189
+      0.52156164,
+      0.09735748,
+      -0.05269083,
+      0.84600157
     ],
     "vfovDeg": 55,
     "note": "the camera of the approved image on the unit sphere, body axes; the terrain view passes through it at frame 90"
