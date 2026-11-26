@@ -244,6 +244,13 @@ float eyeShade(vec3 p, float field) {
   float x = length(p - uEyeAt.xyz) / uEyeAt.w;
   return 1.0 - uEyeMake.x * (1.0 - smoothstep(uEyeMake.y, uEyeMake.z, x * (1.0 + uEyeMake.w * field)));
 }
+// The same shade by colour (deep.json, storm.hue: a power for red, green and blue). One share for all three keeps the hue of the
+// deck round it, and the eye was a smoky grey oval on the blue (4860: 21 36 58 on a surround of 72 126 183, where the approved
+// close image has 10 34 67 on 90 139 184): a deep deck loses its red first and its blue last. All 1: the one share, to the bit.
+vec3 eyeDark(vec3 p, float field) {
+  float s = eyeShade(p, field);
+  return any(notEqual(uEyeHue, vec3(1.0))) ? pow(vec3(s), uEyeHue) : vec3(s);
+}
 vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
   float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
   float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
@@ -286,7 +293,7 @@ ${fetches(shownFrom)}
   return c;
 }`
 
-export const MAP_UNIFORMS = ['uMap', 'uMapWidth', 'uGrad', 'uSpotN', 'uSpotE', 'uSpotU', 'uPatchCount', 'uPatchScale', 'uPatchSize', 'uPatchFull', 'uMapFull', 'uFeather', 'uFeatherOwn', 'uPatchFade', 'uLine', 'uPatchOff', 'uHoldMap', 'uHoldBox', 'uHold', 'uMendMap', 'uMendBox', 'uEnd', 'uSpin', 'uStream', 'uShear', 'uStormAxis', 'uStormRadius', 'uStormAngle', 'uEyeAt', 'uEyeMake', 'uCloudHeight', 'uCloudSoft', 'uCirrusPx', 'uFarMap', 'uCirrus', 'uClump', 'uCode', 'uShadow', 'uTint', 'uDeck', 'uCloud', ...Array.from({ length: MAX_LEVELS }, (_, i) => 'uPatch' + i)]
+export const MAP_UNIFORMS = ['uMap', 'uMapWidth', 'uGrad', 'uSpotN', 'uSpotE', 'uSpotU', 'uPatchCount', 'uPatchScale', 'uPatchSize', 'uPatchFull', 'uMapFull', 'uFeather', 'uFeatherOwn', 'uPatchFade', 'uLine', 'uPatchOff', 'uHoldMap', 'uHoldBox', 'uHold', 'uMendMap', 'uMendBox', 'uEnd', 'uSpin', 'uStream', 'uShear', 'uStormAxis', 'uStormRadius', 'uStormAngle', 'uEyeAt', 'uEyeMake', 'uEyeHue', 'uCloudHeight', 'uCloudSoft', 'uCirrusPx', 'uFarMap', 'uCirrus', 'uClump', 'uCode', 'uShadow', 'uTint', 'uDeck', 'uCloud', ...Array.from({ length: MAX_LEVELS }, (_, i) => 'uPatch' + i)]
 export const MAP_DECL = /* glsl */ `
 uniform sampler2D uMap;
 ${SAMPLERS}
@@ -314,6 +321,7 @@ uniform float uStormRadius;
 uniform float uStormAngle;
 uniform vec4 uEyeAt;
 uniform vec4 uEyeMake;
+uniform vec3 uEyeHue;
 uniform float uCloudHeight;
 uniform float uCloudSoft;
 uniform sampler2D uHoldMap;
@@ -366,6 +374,7 @@ uniform float uStormRadius;
 uniform float uStormAngle;
 uniform vec4 uEyeAt;
 uniform vec4 uEyeMake;
+uniform vec3 uEyeHue;
 uniform float uCloudHeight;
 uniform vec3 uShadow;
 uniform float uCloudSoft;
@@ -543,7 +552,7 @@ ${FALL_GLSL}void main() {
     albedo *= mix(1.0, pow(own, uEndBoost.x), uEnd.x - dark);
     alpha = mix(alpha, min(alpha * uEndBoost.y, 1.0), uEnd.x);
   }
-  vec3 deck = albedo * eyeShade(p, 0.0) * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * (1.0 - placed) * shadow * lit * (1.0 - min(alpha, 1.0)));
+  vec3 deck = albedo * eyeDark(p, 0.0) * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * (1.0 - placed) * shadow * lit * (1.0 - min(alpha, 1.0)));
   for (int k = 0; k < (shown.a > 0.0 ? 1 : 0); k++) {
     vec3 plate = min(shown.rgb / shown.a * exp2(uToneAmt * (textureLod(uTone, toneUv, 0.0).rgb - 0.5)), vec3(0.98));
     vec3 seen = inverseFilmic(plate) / (uNearTint.rgb * uNear.y);
@@ -676,7 +685,7 @@ export class NeptunePlanet {
         uPlace: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[1] ?? 1)), 0) },
         uPatchOff: { value: levels.map(offset) }, uShown: { value: 0 }, uTone: { value: p?.tone ?? o.map }, uToneAmt: { value: 0 }, uVivid: { value: new THREE.Vector2(p?.vivid?.[0] ?? 1e9, p?.vivid?.[1] ?? 2e9) }, uCirrusPx: { value: 0 }, uHomeN: { value: p?.home ?? new THREE.Vector3(0, 0, 1) }, uPlain: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[1] ?? 1)), 0) },
         uSpin: { value: 0 }, uStream: { value: 0 }, uShear: { value: new THREE.Vector2(o.clouds.shear, o.clouds.shearBands) },
-        uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 }, uEyeAt: { value: new THREE.Vector4(0, 1, 0, 1) }, uEyeMake: { value: new THREE.Vector4(0, 0.3, 1, 0) },
+        uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 }, uEyeAt: { value: new THREE.Vector4(0, 1, 0, 1) }, uEyeMake: { value: new THREE.Vector4(0, 0.3, 1, 0) }, uEyeHue: { value: new THREE.Vector3(1, 1, 1) },
         uCloudHeight: { value: o.clouds.height }, uCloudSoft: { value: o.clouds.soft }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uFallPivot: { value: new THREE.Vector3(1, 1, 1) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uFallBlue: { value: 1e6 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },

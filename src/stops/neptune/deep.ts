@@ -67,6 +67,7 @@ uniform vec4 uWind;
 uniform vec4 uCirrusWind;
 uniform vec4 uDeckWave;
 uniform vec4 uDeckMake;
+uniform float uDeckRelief;
 uniform vec4 uSpiral;
 uniform vec3 uNight;
 uniform vec3 uBlue;
@@ -119,6 +120,8 @@ uniform vec2 uSlab;
 uniform vec3 uFarTone;
 uniform vec3 uFarPower;
 uniform vec2 uOwn;
+uniform vec4 uAfter;
+uniform vec3 uAfterTone;
 uniform vec4 uFarFall;
 uniform vec3 uFarCloud;
 uniform vec4 uAirLaw;
@@ -134,6 +137,7 @@ ${globe(mapGlsl(patches.place.shownFrom))}
 ${FALL_GLSL}
 ${COUNT_GLSL}// The thin bright streaks of the deck at the place deckField was last asked about (0 to about 1): the ridges of its finer octaves.
 float gWisp = 0.0;
+float gRelief = 0.0;
 // The deck's structure at the point the ray meets the deck (0 where the deck's own block is not run): it moves the wall of the
 // storm's eye in and out (planet.ts, eyeShade).
 float gEyeField = 0.0;
@@ -310,6 +314,8 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
   float local = (r + uArms.w) / uSpiral.x;
   float sum = 0.0;
   float amp = 1.0;
+  float high = 0.0;
+  float highAmp = 1.0;
   float thin = 0.0;
   float thinAmp = 1.0;
   float lam = uDeckWave.x;
@@ -362,6 +368,7 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
       rw = keepW * pow(1.0 - abs(2.0 * n - 1.0), uWisp.y);
     }
     sum += amp * mix(z, w, m);
+    high += highAmp * mix(z, w, m);
     carry += uArmMake.w * 2.0 * lam * mix(z, w, m);
     if (float(k) >= uWisp.x) {
       thin += thinAmp * mix(rz, rw, m);
@@ -369,9 +376,16 @@ float deckField(vec2 uv, vec3 least, float t, out float finest) {
     }
     finest = lam * mix(1.0, local, m);
     amp *= uDeckMake.x;
+    highAmp *= lam > uDeckRelief ? uDeckMake.x : 0.5;
     lam *= 0.5;
   }
   gWisp = thin * (1.0 - uWisp.z);
+  // The same octaves weighed for the relief, the height of the deck (deep.json, deck.reliefKnee). The slope of an octave is its
+  // weight over its wavelength: with a gain of 0.5 every octave slopes alike, and over 0.5 each shorter octave slopes more, so
+  // the shortest ones a pixel still holds carry the slope and near the eye, where a pixel holds them all, the light of the relief
+  // falls to nothing on every lee side: thin dark lines in the near ground under a low Sun (gain 0.65 drew them, 4860 lower
+  // left). So the relief follows the gain down to a wavelength and from there on every shorter octave slopes as that one does.
+  gRelief = high * (1.0 - uDeckMake.x) * 2.0;
   return sum * (1.0 - uDeckMake.x) * 2.0;
 }
 // The height of the deck over the smooth sphere, and (out) the parts the colour needs: field (structure, round 0), arm (0 to 1 on an
@@ -381,6 +395,7 @@ float deckHeight(vec2 uv, vec3 least, float t, out vec4 parts, out float finest)
   float r = length(d);
   float x = r / uStorm.z;
   float field = deckField(uv, least, t, finest);
+  float relief = gRelief;
   // The wall of the bowl is ragged: the winding streaks of the deck move it in and out.
   float eye = 1.0 - smoothstep(uBowl.y, uBowl.z, x * (1.0 + uBowl.w * field));
   float rho = log(r + uArms.w);
@@ -388,7 +403,7 @@ float deckHeight(vec2 uv, vec3 least, float t, out vec4 parts, out float finest)
   float arm = 0.5 + 0.5 * cos(uArms.x * turn + uArmMake.x * 6.2831853 * field);
   float armShare = smoothstep(uArmIn.x, uArmIn.y, x) * exp(-(r * r) / (uStorm.w * uStorm.w));
   parts = vec4(field, arm * armShare, eye, r);
-  return -uBowl.x * eye + uArms.z * armShare * arm + uDeckWave.z * field * (1.0 - 0.6 * eye);
+  return -uBowl.x * eye + uArms.z * armShare * arm + uDeckWave.z * relief * (1.0 - 0.6 * eye);
 }
 // Cirrus. The body of each streamer is a line along the band (bowed across it by bow at its middle) with a width, an underside and a
 // thickness, thick and thin along its length; it rides the cirrus wind whole. lee (out): how far out on its fringe a point lies, 1 on the
@@ -721,6 +736,22 @@ vec3 toGround(vec3 y) {
 }
 // The end's curve (deep.json, globe.fall) on a colour that has the film's gain: the scene's colours brought to the hold's look,
 // by 1 over the full powers at every height (way C). None where the power is 1.
+// The end's grade undone, exactly: the light that fallEnd shows as y. fallEnd rises with its light in every channel (a power under
+// 0.6 of the pivot, the light itself over 1.2, one mixed into the other between), so the place is found by halving.
+vec3 fallBack(vec3 y) {
+  if (!any(notEqual(uFallPower, vec3(1.0)))) return y;
+  vec3 want = max(y, vec3(0.0)) / uFallPivot;
+  vec3 lo = vec3(0.0);
+  vec3 hi = max(want, vec3(1.2));
+  for (int i = 0; i < 22; i++) {
+    vec3 m = 0.5 * (lo + hi);
+    vec3 less = vec3(lessThan(mix(pow(m, uFallPower), m, smoothstep(0.6, 1.2, m)), want));
+    lo = mix(lo, m, less);
+    hi = mix(m, hi, less);
+  }
+  return 0.5 * (lo + hi) * uFallPivot;
+}
+
 vec3 fallEnd(vec3 c) {
   if (!any(notEqual(uFallPower, vec3(1.0)))) return c;
   vec3 x = max(c, vec3(0.0)) / uFallPivot;
@@ -897,14 +928,21 @@ void main() {
     vec3 coarse = max(fine, vec3(uOwn.x));
     float em = max(e, 0.25 * uOwn.x);
     float cm = deckField(g.xy, coarse, t, f1);
-    float cmE = deckField(g.xy + vec2(em, 0.0), coarse, t, f1);
-    float cmN = deckField(g.xy + vec2(0.0, em), coarse, t, f1);
-    vec3 nrmM = normalize(up - east * (uDeckWave.z * (cmE - cm) / em) - north * (uDeckWave.z * (cmN - cm) / em));
+    float hm = gRelief;
+    deckField(g.xy + vec2(em, 0.0), coarse, t, f1);
+    float hmE = gRelief;
+    deckField(g.xy + vec2(0.0, em), coarse, t, f1);
+    float hmN = gRelief;
+    vec3 nrmM = normalize(up - east * (uDeckWave.z * (hmE - hm) / em) - north * (uDeckWave.z * (hmN - hm) / em));
     float brightM = clamp(uDeckTone.y + uDeckTone.x * cm * mix(1.0, uArmMake.z, exp(-(p0.w * p0.w) / (uStorm.w * uStorm.w))), 0.0, 1.0);
     vec3 albedoM = brightM < 0.5 ? mix(uNight, uBlue, brightM * 2.0) : mix(uBlue, uPale, brightM * 2.0 - 1.0);
     vec3 lightM = albedoM * (sunOpen * clamp((dot(nrmM, uSun) + uLight.w) / (1.0 + uLight.w), 0.0, 1.0) + uSkyLight * (0.5 + 0.5 * dot(nrmM, up)));
     // One number for all three colours, so the map keeps its own hue under the detail.
     deckDetail = vec3(clamp(dot(deckLight, vec3(0.2126, 0.7152, 0.0722)) / max(dot(lightM, vec3(0.2126, 0.7152, 0.0722)), 1e-7), 0.0, uOwn.y));
+    // Its second number: the part of it that is the deck's own tone (the storm's whirl, its rings and arms, the streaks), the
+    // albedo of the place over the albedo of the same deck made of the map's waves alone. What is left of the detail is light:
+    // the slope of the relief to the Sun, its own shadow and the cirrus' shadow.
+    deckDetail.y = clamp(dot(albedo, vec3(0.2126, 0.7152, 0.0722)) / max(dot(albedoM, vec3(0.2126, 0.7152, 0.0722)), 1e-7), 0.0, uOwn.y);
   }
 
   // The map is read where the ray meets the deck itself (its relief stands over the smooth planet), so the map lies on the relief
@@ -940,7 +978,7 @@ void main() {
       keep = mix(1.0, far.r * smoothstep(uGClump.x, uGClump.y, far.b) * mix(uGCirrus.w, 1.0, smoothstep(uGClump.y, uGClump.z, far.b)), uGCirrus.x);
       deepen = 1.0 + uGCirrus.x * uGCirrus.z * (1.0 - smoothstep(0.9, 1.0, far.b));
     }
-    vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode * eyeShade(pb, gEyeField);
+    vec3 mapDeck = layerAt(dd, 1.0, 0.0, tx).rgb / uGCode * eyeDark(pb, gEyeField);
     farTexels = tx;
     float softCloud = max(uGCloudSoft, uGCirrusPx);
     float mapCloud = layerAt(dcl, softCloud, 0.0, tx).a;
@@ -984,7 +1022,27 @@ void main() {
   // The deck's colour is the map's at every place, as the globe's own lines light it (their Sun and their air are in it already, so
   // neither is laid on it a second time); the place's own detail lies on it by the place's share.
   for (int once = 0; once < (deckHit ? 1 : 0); once++) {
-    deckLight = farLook * mix(deckDetail, vec3(1.0), max(farW, farCover));
+    // The place's own detail (deckDetail, one number for the three colours) lies on the map in the light the film shows. Before the
+    // end's grade a ratio of 2 to 1 on the deck stood as 1.25 to 1 in the picture (the end draws every channel to its own root),
+    // which is why the storm of the place was soft and its eye had no dark core. deep.json, far.after: [the power a, the most m,
+    // the power b]. The detail up to m (low) lies after the end's grade by the power a: under 1 it multiplies the shown colour,
+    // so a darker deck keeps the map's hue; over 1 (only where m is over 1) it adds the shown luminance times a pale tone
+    // (far.afterTone). What is left of it, low to the power 1 less a and the detail over m to the power b, lies before the grade
+    // as it always did. The fourth number: the share of the detail's light (the relief's slope to the Sun and the shadows) that
+    // goes with its tone into this law; 0 the tone alone, 1 the whole detail (the fine creases of the relief stood as hairline
+    // cracks in the near ground with 1). [0, 1, 1, 0] is the law before. The grade is undone exactly for it (fallBack), so the rest of this shader
+    // reads the deck as before.
+    float detail = max(mix(deckDetail.x, 1.0, max(farW, farCover)), 1e-6);
+    float tone = max(mix(deckDetail.y, 1.0, max(farW, farCover)), 1e-6);
+    float from = tone * pow(detail / tone, uAfter.w);
+    float low = min(from, uAfter.y);
+    deckLight = farLook * (detail / from) * pow(low, 1.0 - uAfter.x) * pow(from / low, uAfter.z);
+    for (int after = 0; after < (uAfter.x > 0.0 ? 1 : 0); after++) {
+      float d = pow(low, uAfter.x);
+      vec3 shown = fallEnd(deckLight * uGain);
+      vec3 lit = d < 1.0 ? shown * d : shown + (d - 1.0) * dot(shown, vec3(0.2126, 0.7152, 0.0722)) * uAfterTone;
+      deckLight = fallBack(lit) / max(uGain, 1e-6);
+    }
     deckUnder *= 1.0 - farW;
   }
 
@@ -1306,7 +1364,7 @@ export class Deep {
         uWind: { value: v4(w.deck.speed, w.deck.jet, 1 / w.deck.jetWidth, w.deck.phase) },
         uCirrusWind: { value: v4(w.cirrus.speed, w.cirrus.shear, ci.castWave, look.steps.cirrusLimit) },
         uDeckWave: { value: v4(d.wave, d.stretch, d.relief, d.lump) },
-        uDeckMake: { value: v4(d.gain, d.octaves, d.life, w.row) },
+        uDeckMake: { value: v4(d.gain, d.octaves, d.life, w.row) }, uDeckRelief: { value: d.reliefKnee },
         uSpiral: { value: v4(d.spiral.across, d.spiral.along, look.steps.lightGrow, look.steps.lightLimit) },
         uNight: { value: v3(d.night) }, uBlue: { value: v3(d.blue) }, uPale: { value: v3(d.pale) },
         uDeckTone: { value: v4(d.contrast, d.level, 0, d.march) },
@@ -1341,7 +1399,7 @@ export class Deep {
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
         uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uShade: { value: v4(l.shade, l.shadeFoot, ci.thin[0]!, ci.thin[1]!) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
-        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 1) }, uSlab: { value: new THREE.Vector2(look.far.slab[0]!, look.far.slab[1]!) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
+        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 1) }, uSlab: { value: new THREE.Vector2(look.far.slab[0]!, look.far.slab[1]!) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uAfter: { value: new THREE.Vector4().fromArray(look.far.after) }, uAfterTone: { value: new THREE.Vector3().fromArray(look.far.afterTone) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
         uAirLaw: { value: v4(look.air.top, look.air.scale, look.air.foot, look.air.cirrus) }, uAirDepth: { value: v3(look.air.depth) }, uAirSun: { value: v3(look.air.sun) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
         uDiag: diagUniform,

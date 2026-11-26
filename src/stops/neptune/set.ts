@@ -149,6 +149,7 @@ export const createSet: SetFactory = async (ctx) => {
   const toBody = new THREE.Quaternion()
   const eyeAt = new THREE.Vector3()
   ;(planet.material.uniforms.uEyeMake!.value as THREE.Vector4).set(deepLook.on ? deepLook.storm.dark : 0, deepLook.storm.wall[0]!, deepLook.storm.wall[1]!, deepLook.storm.ragged)
+  ;(planet.material.uniforms.uEyeHue!.value as THREE.Vector3).fromArray(deepLook.storm.hue)
   const seen = new THREE.Vector3()
   const offGround = (time: number): number => THREE.MathUtils.radToDeg(plan.twin(plan.terrain(time - plan.seg.terrain.start), time).position.angleTo(holdPose.position))
   const groundOff = [offGround(plan.seg.terrain.start), offGround(plan.seg.terrain.end)]
