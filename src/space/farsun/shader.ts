@@ -35,6 +35,17 @@ uniform float uGrad;
 uniform float uMaster;
 uniform sampler2D uMap;
 uniform float uMapOn;
+uniform float uGasOn;
+uniform sampler2D uGasMap;
+uniform sampler2D uPromMap;
+uniform sampler2D uPromFlow;
+uniform mat3 uGasTurn;
+uniform vec2 uGasRange;
+uniform vec3 uGasBy;
+uniform vec4 uGasWave;
+uniform vec3 uGasHide;
+uniform vec4 uPromPlane;
+uniform vec3 uPromMove;
 uniform float uMapWidth;
 uniform vec2 uHoldLimb;
 uniform vec3 uHoldRim;
@@ -307,6 +318,31 @@ float loopGas(vec3 q, int i, float soft, out float heat) {
   }
   return sum;
 }
+float gasHash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+float gasCells(vec2 p, float wrap) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float x0 = mod(i.x, wrap);
+  float x1 = mod(i.x + 1.0, wrap);
+  return mix(mix(gasHash(vec2(x0, i.y)), gasHash(vec2(x1, i.y)), f.x), mix(gasHash(vec2(x0, i.y + 1.0)), gasHash(vec2(x1, i.y + 1.0)), f.x), f.y);
+}
+float gasStream(float u, float lr, float t) {
+  return 0.5 * gasCells(vec2(u * 11.0 + 3.0, lr * uGasWave.y * 0.45 - t * 0.6 + 5.0), 11.0) + 0.3 * gasCells(vec2(u * 40.0, lr * uGasWave.y - t), 40.0) + 0.2 * gasCells(vec2(u * 96.0 + 7.0, lr * uGasWave.y * 1.9 - t * 1.6 + 3.0), 96.0);
+}
+vec4 promStrand(vec2 uv, float phase, vec2 dx, vec2 dy, vec2 fx, vec2 fy) {
+  vec3 f = textureGrad(uPromFlow, uv, fx, fy).rgb;
+  vec2 v = (f.xy - 0.5) * 2.0 * uPromMove.x;
+  vec2 p = uv - v * phase * 0.5;
+  vec3 f2 = textureGrad(uPromFlow, p, fx, fy).rgb;
+  p -= (f2.xy - 0.5) * 2.0 * uPromMove.x * phase * 0.5;
+  vec4 c = textureGrad(uPromMap, p, dx, dy);
+  return vec4(inverseFilmic(c.rgb), c.a);
+}
 void main() {
   vec3 rayCam = vec3((vNdc.x + uProj.z) / uProj.x, (vNdc.y + uProj.w) / uProj.y, -1.0);
   vec3 rd = normalize(uBody * (uCam * rayCam));
@@ -575,10 +611,55 @@ void main() {
     }
     gas += burnWhite(uKnotLight.rgb * (sum * dt * uKnotBy[n].z)) * smoothstep(-0.2, 0.05, dot(knotDir, ro) - 1.0);
   }
-  gas *= dim;
+  float worn = uWear * uGasOn;
+  gas *= (1.0 - worn) * dim;
   col += gas;
   alpha = max(alpha, 1.0 - exp(-dot(gas, vec3(0.3, 0.5, 0.2)) * 0.5));
   alpha = max(alpha, uBurn.w * (1.0 - smoothstep(uHide.x, uHide.y, x)) * ahead);
+  for (int k = 0; k < (worn > 0.0 ? 1 : 0); k++) {
+    vec3 nearest = ro + rd * max(-b, 0.0);
+    float off = length(nearest);
+    vec3 n = uGasTurn * (nearest / max(off, 1e-5));
+    float span = log(uGasRange.y / uGasRange.x);
+    float u = atan(n.y, n.x) / 6.283185307179586;
+    float v = log(max(off, 1e-4) / uGasRange.x) / span;
+    float u2 = fract(u);
+    vec2 dx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v));
+    vec2 dy = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v));
+    float grow = smoothstep(0.0, 0.25, max(off - 1.0, 0.0));
+    float sway = uGasWave.w * grow * (sin(u * 6.283185307179586 * 9.0 + v * 2.5 - uHoldTime * 1.1) - sin(u * 6.283185307179586 * 9.0 + v * 2.5) + 0.6 * (sin(u * 6.283185307179586 * 23.0 - v * 4.0 + uHoldTime * 1.7) - sin(u * 6.283185307179586 * 23.0 - v * 4.0)));
+    vec3 ray = inverseFilmic(textureGrad(uGasMap, vec2(u + sway + uGasBy.z * uHoldTime * grow, clamp(v, 0.0, 1.0)), dx, dy).rgb);
+    float hide = uGasHide.z * smoothstep(uGasHide.x, uGasHide.y, dot(ray, vec3(0.2126, 0.7152, 0.0722)));
+    float lr = log(max(off, 1.0));
+    ray *= max(1.0 + uGasWave.x * grow * (gasStream(u, lr, uHoldTime * uGasWave.z) - gasStream(u, lr, 0.0)), 0.3);
+    float edge = (off < 1.0 ? exp((off - 1.0) / uGasBy.y) : 1.0) * (1.0 - smoothstep(0.92, 1.0, v)) * step(off, uGasRange.y);
+    col = col * (1.0 - hide * edge * worn) + ray * (uGasBy.x * edge * worn);
+    alpha = 1.0 - (1.0 - alpha) * (1.0 - hide * edge * worn);
+    vec3 eyeSet = uGasTurn * ro;
+    vec3 raySet = uGasTurn * rd;
+    float cs = cos(uSpin);
+    float sn = sin(uSpin);
+    vec3 eyeOn = vec3(eyeSet.x * cs - eyeSet.z * sn, eyeSet.y, eyeSet.x * sn + eyeSet.z * cs);
+    vec3 rayOn = vec3(raySet.x * cs - raySet.z * sn, raySet.y, raySet.x * sn + raySet.z * cs);
+    float reach = (uPromPlane.y - eyeOn.z) / (abs(rayOn.z) > 1e-6 ? rayOn.z : 1e-6);
+    vec2 at = (eyeOn.xy + rayOn.xy * reach) / (2.0 * uPromPlane.x) + 0.5;
+    vec2 fx = dFdx(at);
+    vec2 fy = dFdy(at);
+    vec2 px = fx * uGrad;
+    vec2 py = fy * uGrad;
+    float seen = step(0.0, reach) * step(abs(at.x - 0.5), 0.5) * step(abs(at.y - 0.5), 0.5) * (near2 < 1.0 && b < 0.0 ? step(reach, hit) : 1.0);
+    for (int j = 0; j < (seen > 0.0 ? 1 : 0); j++) {
+      float pa = fract(uHoldTime / uPromMove.y + 0.5) - 0.5;
+      float pb = fract(uHoldTime / uPromMove.y) - 0.5;
+      vec4 c = mix(promStrand(at, pa * uPromMove.y, px, py, fx, fy), promStrand(at, pb * uPromMove.y, px, py, fx, fy), abs(pa) * 2.0);
+      vec4 f = textureGrad(uPromFlow, at, fx, fy);
+      float s = f.a * 6.283185307179586;
+      float run = 0.55 * (sin(s * 9.0 - uHoldTime * 1.7) - sin(s * 9.0)) + 0.3 * (sin(s * 23.0 - uHoldTime * 3.1) - sin(s * 23.0)) + 0.25 * (sin(s * 14.0 + uHoldTime * 1.1) - sin(s * 14.0));
+      c.rgb *= exp2(uPromMove.z * f.b * run);
+      col = col * (1.0 - c.a * worn) + c.rgb * (uPromPlane.z * worn);
+      alpha = 1.0 - (1.0 - alpha) * (1.0 - c.a * worn);
+    }
+  }
   for (int k = 0; k < ((uParts & 8) != 0 ? 1 : 0); k++) {
     float o = max(x, 1.0) - 1.0;
     float inside = 1.0 - smoothstep(0.6, 1.0, x);
