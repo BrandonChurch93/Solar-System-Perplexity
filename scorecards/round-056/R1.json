@@ -1,0 +1,35 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "lower half of frame, foreground cliff face and canyon floor (lower left and lower center)",
+   "what": "shadows are lifted and a little warmer/redder than the target, so the blacks are shallower and the foreground depth is reduced (lower-third luminance about 8% higher)",
+   "fix": "pull the shadows and low mids back down toward the target, and take a little red out of the shadow grade"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "left foreground cliff strata and mid-left canyon wall (crops D and A in pair-04)",
+   "what": "fine rock texture and strata edges are slightly softer than the target (high-frequency detail about 5-10% lower)",
+   "fix": "restore fine detail on the foreground rock, either with light sharpening or less denoise/smoothing, matched to the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "whole frame, overall grade",
+   "what": "slightly brighter overall with a mild warm shift compared with the target",
+   "fix": "lower overall exposure a touch and neutralize the warm shift to match the target grade"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet limb and right-hand sky",
+   "what": "no visible loss: composition, moon, polar cap, limb glow and stars match. Fine detail is equal or a hair higher, and grain in the dark sky is very slightly stronger",
+   "fix": "optional: ease off grain/sharpening in the dark sky so it matches the target exactly"
+  }
+ ]
+}
