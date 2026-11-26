@@ -1,0 +1,99 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "nearly the entire Mars surface and dust storm outside central Valles Marineris (image-06.png crops B, C, D, E, H, I; image-07.png crops J, K, L, M, N, O, R; image-08.png crops S, T, U, V, W, X)",
+      "what": "roughly 80% of the visible globe surface and cloud layer is blurry, upscaled, and airbrushed-looking at native size because the base planetary texture lacks resolution for this close camera distance",
+      "fix": "use higher-resolution spherical albedo, displacement, and cloud maps or procedural detail tiles across the entire visible hemisphere so every surface crop resolves crisply at 1:1"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "margins around central Valles Marineris (image-06.png crops A, F, G; image-07.png crops O, P, Q)",
+      "what": "visible borders of a localized high-resolution detail patch over central Valles Marineris where crisp micro-relief abruptly drops off into soft, low-resolution surrounding terrain",
+      "fix": "extend uniform high-frequency terrain and normal-map detail across the full visible surface and seamlessly blend multi-resolution tile boundaries so no patch edge is visible"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "eastern Valles Marineris and outer corners (image-06.png crops E, H, I; image-07.png crop R; image-08.png crops S, W, X)",
+      "what": "heavy directional texture stretching, radial smearing, and cyan-red color fringing turn the canyon walls and outer terrain into blurry streaks",
+      "fix": "remove radial edge blur and chromatic aberration post-effects, check UV projection and displacement at oblique angles, and maintain crisp full-resolution detail out to the frame edges"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "upper-right limb (image-07.png crops M and N)",
+      "what": "a doubled edge and dark concentric gap separate a floating outer haze/cloud shell from the planet surface, with noisy jagged pixels along the outer shell rim",
+      "fix": "replace the offset shell layer with a continuous volumetric atmosphere anchored to the planetary surface and anti-alias the grazing limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "foreground moon Phobos and its large right-side crater (image-02.png crop G; image-03.png crops P, Q; image-04.png crop V)",
+      "what": "the moon surface looks softer and more plastic than the sharper Mars terrain behind it, with a harsh cutout lit patch and jagged shadow edge inside Stickney crater plus slight aliasing along the lit upper-left silhouette",
+      "fix": "increase subdivision displacement and fine regolith micro-detail on Phobos to match or exceed background sharpness, smooth the crater shadow geometry, and anti-alias the moon silhouette"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "lit left and upper limb and north polar cap (image-02.png crops B, D; image-03.png crops K, L; image-04.png crop U)",
+      "what": "the solid globe edge meets the blue atmospheric glow in a hard, slightly stair-stepped bright rim line, and the white polar cap edge shows slight pixel stair-stepping",
+      "fix": "soften optical limb extinction across the horizon edge and apply higher supersampling to the planet silhouette and polar ice mask"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "Milky Way background sky on the left and right (image-02.png crops B, H, I; image-03.png crops J, R)",
+      "what": "the nebula background plate shows soft, slightly blocky blotches and multi-pixel blobby star clusters beneath the sharper point stars",
+      "fix": "replace or clean up the background Milky Way plate at native resolution so nebula dust and faint star clusters are free of upscaling blotches and blobby stars"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower right limb, polar ice",
+      "what": "the white ice and the terrain under it are smeared along one diagonal, while the stars beside the limb stay sharp",
+      "fix": "rebuild that ice and limb terrain without the directional stretch, at the same sharpness as the canyon"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crop E, polar ice on the limb",
+      "what": "at native size the ice and surface are parallel diagonal streaks; the starfield in the same crop is not",
+      "fix": "replace the stretched polar texture so the ice holds up at native size"
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "crops U and V, polar ice at the limb",
+      "what": "the bright ice is stretched and streaked into the limb",
+      "fix": "resample the polar cap without radial stretch and match the sharper cratered terrain in crop T"
+     }
+    ]
+   }
+  }
+ ]
+}
