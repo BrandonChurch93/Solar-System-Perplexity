@@ -1,9 +1,57 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T01:47:44.648Z",
- "head": "aca87ea3a82ad7f8041b4cc317032a0804d989b8",
- "note": "01:24 strip on bake f: canvas end has no line at 1882; island at the right rim is cut straight (cause found, cure next)",
+ "pushed": "2026-11-26T02:27:28.859Z",
+ "head": "80cc5f8f0bd77bc36fc631bf1bc5a835760fd6b8",
+ "note": "state 80cc5f8f on drafts: island cured, blob gone on the plate; BAD: far band 1884 to 1888 and far towers as shards; rise strip renders",
  "looks": [
+  {
+   "time": "2026-11-26T02:27:24.802Z",
+   "file": "20261126022724802-note-three.jpg",
+   "source": "../../../../tmp/gl/k20/S8/three.jpg",
+   "kind": "note",
+   "label": "1870, 1874, 1878 drafts half size on the state 80cc5f8f",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T02:27:23.933Z",
+   "file": "20261126022723933-note-shards.jpg",
+   "source": "../../../../tmp/gl/k20/S8/shards.png",
+   "kind": "note",
+   "label": "BAD far towers 1878 to 1886 at 1 to 1: pale blue shards lying flat",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T02:27:22.711Z",
+   "file": "20261126022722711-note-far-pairs.jpg",
+   "source": "../../../../tmp/gl/k20/C8/far-pairs.png",
+   "kind": "note",
+   "label": "BAD far band 1884 to 1888: level without the ground beside the frame; the map's lands and specks under the arriving cloud deck",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T02:27:21.687Z",
+   "file": "20261126022721687-note-j-blob.jpg",
+   "source": "../../../../tmp/gl/k21/j-blob.png",
+   "kind": "note",
+   "label": "plate at 1 to 1: pale blue blob cut by the rim, bake i left, bake j right (gone whole)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T02:27:20.636Z",
+   "file": "20261126022720636-note-now-1890.jpg",
+   "source": "../../../../tmp/gl/k20/S8/now-1890.jpg",
+   "kind": "note",
+   "label": "1890 draft on the state 80cc5f8f",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T02:27:19.199Z",
+   "file": "20261126022719199-note-block9.jpg",
+   "source": "../../../../tmp/gl/k20/S8/block9.jpg",
+   "kind": "note",
+   "label": "island at the east rim soft again: strips of 00:13, 01:24, 02:04 at 1890, 1894, 1898 (drafts)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T01:47:44.065Z",
    "file": "20261126014744065-note-block4.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/gl/k20/S7/tow/q-1896.jpg",
    "kind": "note",
    "label": "01:24 strip, 1896 to 1899 at half size, towers rising by distance",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T01:47:42.937Z",
-   "file": "20261126014742937-note-crop-1882.jpg",
-   "source": "../../../../tmp/gl/k20/S7/sheets/crop-1882.jpg",
-   "kind": "note",
-   "label": "01:24 strip, 1882 below the place 1 to 1: no line at the canvas end, tufts go on outside",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T01:47:41.987Z",
-   "file": "20261126014741987-note-now-1882.jpg",
-   "source": "../../../../tmp/gl/k20/S7/sheets/now-1882.jpg",
-   "kind": "note",
-   "label": "01:24 strip, 1882 whole frame, bake f with towers patch",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T01:14:43.881Z",
-   "file": "20261126011443881-note-p3-e.jpg",
-   "source": "../../../../tmp/gl/k21/p3-e.jpg",
-   "kind": "note",
-   "label": "plate, near rim at 1 to 1, 01:10: tone meets at the rim; the canvas's end still reads by ripple and brightness 60 px in; soft bluish bodies from pale air laid on dark sea are a fault (cure next: a body is laid only on sea of its own air tone)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T01:14:42.707Z",
-   "file": "20261126011442707-note-p3-s.jpg",
-   "source": "../../../../tmp/gl/k21/p3-s.jpg",
-   "kind": "note",
-   "label": "plate, south rim at 1 to 1, 01:10: line at the rim cured by cause (halo of the canvas's own clouds); a navy band with a wavy outline stays inside the canvas, cause found (the hold's flat sea laid over the held canvas), cure in the bake",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T00:49:06.133Z",
-   "file": "20261126004906133-note-torim-e.jpg",
-   "source": "../../../../tmp/gl/k20/torim-e.jpg",
-   "kind": "note",
-   "label": "00:42 12 degree plate at the near rim, before left, with the canvas to its rim right (before the skirt)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T00:49:05.576Z",
-   "file": "20261126004905576-note-torim-s.jpg",
-   "source": "../../../../tmp/gl/k20/torim-s.jpg",
-   "kind": "note",
-   "label": "00:42 12 degree plate at the south rim, before above, with the canvas to its rim below (before the skirt)",
    "stop": "earth"
   }
  ]
