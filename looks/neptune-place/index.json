@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-26T00:35:44.929Z",
- "head": "eca8904bbf157f29ddbd849c794ba3e9eb65bf50",
- "note": "Neptune 00:41: main's own pair 4760 to 4768 drawn and read (0.07), its shadow beside mine; the name ef0cc1cf stands; 4860 beside the approved in the set, G17 0.507, 90 s the draft frame",
+ "pushed": "2026-11-26T00:54:03.450Z",
+ "head": "d03c90d9c076afcb9659b5af06d3fe0c5a71627b",
+ "note": "00:54 UTC the eye, chosen E8 (wall 0.2 to 1.6, ragged 0.5, dark 0.6): hold dot 0.55 of its ring (name 0.47, main 0.73), soft whirl, still a dark spot the approved hero has not; 4860 whole 21.652 (name 22.420, main 22.986), G17 0.513 / 0.232 (main 0.934, RED); 4860 draft 90 s a frame; proofs drawing",
  "looks": [
+  {
+   "time": "2026-11-26T00:53:57.271Z",
+   "file": "20261126005357271-note-eye2-hold.jpg",
+   "source": "../../../../tmp/eye2-hold.jpg",
+   "kind": "note",
+   "label": "4605 the eye at 4x: main | name ef0cc1cf | E5 | chosen E8 | E9",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T00:53:56.677Z",
+   "file": "20261126005356677-note-eye2-4860.jpg",
+   "source": "../../../../tmp/eye2-4860.jpg",
+   "kind": "note",
+   "label": "4860 storm, 1920 draft crops: approved | name ef0cc1cf | trial E5 / chosen E8 | trial E9 | the hold's eye at 4x: name, E5, E8, E9",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-26T00:31:22.455Z",
    "file": "20261126003122455-note-rchain-4760.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/shadow-N14e.jpg",
    "kind": "note",
    "label": "The cause at 4760: the first streamer's shadow on the deck, frames 4759 to 4761 after the cure (thick and thin parts read at twice castWave): the dark streak under the streamer's foot is gone",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T23:58:42.750Z",
-   "file": "20261125235842750-note-pair-N14.jpg",
-   "source": "../../../../tmp/pair-N14.jpg",
-   "kind": "note",
-   "label": "4860 at 1920 on the cure of the knot at 4760 (merge ef0cc1cf, main 1f51abc9): approved left, mine right; whole 22.420, sky 3.203, band 1.616, ground 17.601 (main 22.986, 1.619, 1.607, 19.759); G17 0.507 / 0.232 by my draft reader; 90.0 s the draft frame",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T23:16:38.360Z",
-   "file": "20261125231638360-note-end-frames-after.jpg",
-   "source": "../../../../tmp/end-frames-after.jpg",
-   "kind": "note",
-   "label": "Every frame 4752 to 4769 in the knot's place on the cure's tree (levels times 2.5). My pattern at every half step 4753 to 4761: 0.16 to 0.24 (before 0.25 to 0.78), limit 0.45",
    "stop": "neptune"
   }
  ]
