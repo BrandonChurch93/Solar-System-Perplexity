@@ -1,64 +1,65 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T17:52:59.281Z",
+ "pushed": "2026-11-26T18:27:53.030Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune rise onset with the entry: review 4952 beside review 4953 in boxes that follow the content; no step named, nothing doubled",
+ "note": "Neptune 4954 at review with the entry looked at whole, in tiles and beside 4953 (no double exposure, softness as 4953); building sun_builder's request: a second sky aim whose turn is seen, held to 0.5 degrees a frame",
  "looks": [
   {
-   "time": "2026-11-26T17:52:58.040Z",
-   "file": "20261126175258040-note-p53d-53r.jpg",
-   "source": "../../../../tmp/nep/see/p53d-53r.png",
+   "time": "2026-11-26T18:27:51.754Z",
+   "file": "20261126182751754-note-st54-a.jpg",
+   "source": "../../../../tmp/nep/see/st54-a.png",
    "kind": "note",
-   "label": "Neptune 4953, draft beside review (ends 0.475) at 4 to 1: small clouds, band, deck streaks"
+   "label": "Neptune 4954, stars at 4 to 1, review beside its draft of one sample: the pairs of stars are the sky's own, each star drawn once"
   },
   {
-   "time": "2026-11-26T17:52:56.695Z",
-   "file": "20261126175256695-note-p52r-53r.jpg",
-   "source": "../../../../tmp/nep/see/p52r-53r.png",
+   "time": "2026-11-26T18:27:50.616Z",
+   "file": "20261126182750616-note-p53r-54r-e.jpg",
+   "source": "../../../../tmp/nep/see/p53r-54r-e.png",
    "kind": "note",
-   "label": "Neptune rise onset, review 4952 (ends 0.105) beside review 4953 (ends 0.475) at 4 to 1 in four boxes that follow the content: small clouds, band, lower clouds, deck streaks"
+   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: dark deck"
   },
   {
-   "time": "2026-11-26T17:52:55.467Z",
-   "file": "20261126175255467-note-s4952-12.jpg",
-   "source": "../../../../tmp/nep/see/s4952-12.png",
+   "time": "2026-11-26T18:27:49.563Z",
+   "file": "20261126182749563-note-p53r-54r-d.jpg",
+   "source": "../../../../tmp/nep/see/p53r-54r-d.png",
    "kind": "note",
-   "label": "4952 review, the rise's onset, tile 12 at 1 to 1"
+   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: deck streaks"
   },
   {
-   "time": "2026-11-26T17:52:54.445Z",
-   "file": "20261126175254445-note-s4952-11.jpg",
-   "source": "../../../../tmp/nep/see/s4952-11.png",
+   "time": "2026-11-26T18:27:48.210Z",
+   "file": "20261126182748210-note-p53r-54r-c.jpg",
+   "source": "../../../../tmp/nep/see/p53r-54r-c.png",
    "kind": "note",
-   "label": "4952 review, the rise's onset, tile 11 at 1 to 1"
+   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: lower clouds"
   },
   {
-   "time": "2026-11-26T17:52:53.351Z",
-   "file": "20261126175253351-note-s4952-10.jpg",
-   "source": "../../../../tmp/nep/see/s4952-10.png",
+   "time": "2026-11-26T18:27:47.064Z",
+   "file": "20261126182747064-note-p53r-54r-b.jpg",
+   "source": "../../../../tmp/nep/see/p53r-54r-b.png",
    "kind": "note",
-   "label": "4952 review, the rise's onset, tile 10 at 1 to 1"
+   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: band"
   },
   {
-   "time": "2026-11-26T17:52:52.286Z",
-   "file": "20261126175252286-note-s4952-02.jpg",
-   "source": "../../../../tmp/nep/see/s4952-02.png",
+   "time": "2026-11-26T18:27:45.961Z",
+   "file": "20261126182745961-note-p53r-54r-a.jpg",
+   "source": "../../../../tmp/nep/see/p53r-54r-a.png",
    "kind": "note",
-   "label": "4952 review, the rise's onset, tile 02 at 1 to 1"
+   "label": "Neptune 4953 beside 4954 at review with the entry, 4 to 1, a box that follows the content: small clouds"
   },
   {
-   "time": "2026-11-26T17:52:51.086Z",
-   "file": "20261126175251086-note-s4952-01.jpg",
-   "source": "../../../../tmp/nep/see/s4952-01.png",
+   "time": "2026-11-26T18:27:44.487Z",
+   "file": "20261126182744487-note-f04954.jpg",
+   "source": "../t-arr/out/work/blur/ne-on/f04954.png",
    "kind": "note",
-   "label": "4952 review, the rise's onset, tile 01 at 1 to 1"
+   "label": "Neptune 4954, review, 24 samples, with the entry of handover.shutterEnds (tree t-arr): the third frame of the rise's onset, whole"
   },
   {
-   "time": "2026-11-26T17:52:49.897Z",
-   "file": "20261126175249897-note-s4952-00.jpg",
-   "source": "../../../../tmp/nep/see/s4952-00.png",
+   "time": "2026-11-26T18:26:01.892Z",
+   "file": "20261126182601892-note-sun-sky-turn.jpg",
+   "source": "../../../../tmp/sun/sun-sky-turn.png",
    "kind": "note",
-   "label": "4952 review, the rise's onset, tile 00 at 1 to 1"
+   "label": "the Sun 0 to 269, numbers only: the sky's turn in the film's world a frame with the second sky aim sun_builder asks for (0.419 at 212) against the limit 0.5 the engine would hold a seen turn to",
+   "stop": "sun"
   }
  ]
 }
