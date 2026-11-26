@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T00:35:13.538Z",
+ "pushed": "2026-11-26T00:51:30.290Z",
  "head": "4076c6532492f4f04f17436516c5578917d41fff",
- "note": "00:36 UTC 26 Nov: series A of state s is nearly drawn (the mp4 of MAIL 1340 point 5 follows with the lens test); the tall tops and the darkness by relief are being built in a second tree",
+ "note": "00:52 UTC 26 Nov: two steps of the tall relief in the second tree (bad ones too); series A of state s is drawn, the lens test at 50 and 40 degrees is drawing, the mp4 follows by mail",
  "looks": [
+  {
+   "time": "2026-11-26T00:51:28.840Z",
+   "file": "20261126005128840-note-t2-3150.jpg",
+   "source": "../work/r25/t/t2-3150.png",
+   "kind": "note",
+   "label": "Dev tree, variant t2 at 3150, draft, 960 px (tall tops, fill by the open sky, matter floor 0.03, no solve). Darkness by cast shade works and edges stand 0.12 units before their ground, but it reads as rock and the low band is 25.3 (state s 9.27)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T00:51:27.605Z",
+   "file": "20261126005127605-note-t4-3150.jpg",
+   "source": "../work/r25/t/t4-3150.png",
+   "kind": "note",
+   "label": "Dev tree, variant t4 at 3150, draft, 960 px (round towers 0.36 units wide, fill by the open sky, matter floor 0.03, no solve). Not film grade: reads as boulders, not cloud; the ceiling flattens the fine billows. Kept only as a step",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T00:35:12.127Z",
    "file": "20261126003512127-note-k006300.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r23/t/a-3150.png",
    "kind": "note",
    "label": "3150 at draft, first state of the new ground: no eye, the guide (cut 0.08 units), the flow, code detail carried in three ages of wound coordinates. Light still as before, no slopes, no shadows",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T21:51:38.701Z",
-   "file": "20261125215138701-note-noeye-3150.jpg",
-   "source": "../work/r22/t/noeye-3150.png",
-   "kind": "note",
-   "label": "3150 at draft with the fit eye off (plates and tone only), as pushed at 21:32: the state before the guide and the flow",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T21:51:38.092Z",
-   "file": "20261125215138092-note-guide-near-21h51.jpg",
-   "source": "../work/r23/guide-near-21h51.jpg",
-   "kind": "note",
-   "label": "Cure step 1, guide: the near ground from above (20.48 units). Left the plates as painted, right the guide cut at 0.08 units. Not yet in a frame.",
    "stop": "jupiter"
   }
  ]
