@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "whole close-up frame, most visible in crops B, C, D, E, I, J, M, O, T, W (image-06 to image-08)",
+      "what": "large parts of the globe are soft and smeared at native size, like an upscaled low-res image. Cloud detail turns to mush toward the limb and lower half, and Io (crops E, H, R) is blurry with no sharp edge",
+      "fix": "render or generate the close-up at full native resolution with real fine detail across the disc. Keep the focus falloff physically plausible and keep the moon tack-sharp"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "belts north-west of the Great Red Spot and the upper band (crops A, F, K, L, P, U, V)",
+      "what": "clouds look like embossed, extruded plaster or clay. Hard specular glints and 3D relief make the gas giant surface look plastic and solid rather than like atmosphere",
+      "fix": "remove the bump/normal relief and specular highlights from the cloud layer and use soft, diffuse, flowing cloud shading"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "dark sky everywhere, most visible in crops H, M, R, S, T, U, V (image-02 to image-04)",
+      "what": "a faint regular square grid or block pattern shows in the black background behind the stars (compression or tiling artifact). Stars are slightly soft blobs rather than points",
+      "fix": "regenerate the starfield at native resolution with dithering and no block compression, and render stars as sharp point sources"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "lower part of the globe near the terminator (crops S, T in image-04)",
+      "what": "the lower band shows crater-like round pits that read as a rocky moon texture, not Jupiter cloud. The texture there also looks stretched and low detail",
+      "fix": "replace the southern band texture with proper zonal cloud structure that matches the rest of the disc"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "Io and its shadow, centre right (crop A, O)",
+      "what": "Io's surface looks airbrushed and low detail. The shadow on the cloud tops is a big, hard-edged smear offset well to the side, which looks pasted on",
+      "fix": "give Io sharper volcanic surface detail and cast a correctly projected, softer-edged elliptical shadow that matches the light direction"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "lower right limb behind Io (crop W, image-08)",
+      "what": "a dark curved shape cuts across the planet edge, giving a doubled, halo-like edge where the limb, shadow and sky meet",
+      "fix": "clean up the composite at the limb so it has one smooth falloff into space"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "foreground moon (crops P and Q in image-15.png, crop C in image-14.png)",
+      "what": "the moon surface is blurry and horizontally smeared, with visible pixel stair-stepping and orange color fringing along its sunlit left edge",
+      "fix": "render the moon from a higher-resolution surface map without directional blur and anti-alias its limb cleanly"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Jupiter sunlit globe and Great Red Spot (crops A and C in image-14.png, crops J, K, and P in image-15.png)",
+      "what": "the cloud bands and storm vortex look soft, airbrushed, and directionally smeared at native crop size, clashing with the sharp single-pixel background stars",
+      "fix": "use higher-resolution planetary cloud textures and volumetric detail so the globe holds up at 1:1 scale alongside the starfield"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Jupiter sunlit left limb (crop A in image-14.png, crops J and P in image-15.png)",
+      "what": "highlights along the left limb blow out to a flat featureless cream band, and the outer limb edge shows stair-stepped pixel aliasing against space",
+      "fix": "roll off the sunlit limb exposure to preserve cloud texture and render a smooth anti-aliased atmospheric falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "near-foreground dark clouds and lightning at bottom (crops D and E in image-10.png, crop P in image-11.png, crops S, T, and U in image-12.png)",
+      "what": "the closest dark cloud tops turn into soft, painterly swirls that lack the crisp relief of the mid-ground, with noisy bright pixel speckles around the blue lightning",
+      "fix": "sharpen fine cloud structure in the near foreground and replace the speckled lightning noise with clean volumetric illumination inside the clouds"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "lower-right nightside limb and adjacent sky (crop E in image-14.png, crop V in image-16.png)",
+      "what": "a stray bluish-grey hazy smudge sits in empty space right under the dark limb, creating a hard dark cutout edge along the unlit globe",
+      "fix": "remove the stray sky smudge below the planet and keep the background space black and uniform past the nightside limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "upper-left sunlit cloud deck and horizon sky (crop B in image-10.png, crop J in image-11.png)",
+      "what": "the sunlit clouds in the upper-left corner clip to a flat cream-white patch with lost relief, and a grainy grey haze bleeds into the sky above the limb",
+      "fix": "compress highlight exposure in the upper-left clouds to retain cloud-top detail and clean up the noisy haze above the horizon"
+     }
+    ]
+   }
+  }
+ ]
+}
