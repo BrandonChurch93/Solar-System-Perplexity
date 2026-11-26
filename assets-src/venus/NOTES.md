@@ -5420,7 +5420,7 @@ Measured on the kept frames of state A (`fr-A-dive`) and of main (`fr-M1d`), the
   - cB1 (job z9): the named state with the air under the horizon off alone: the strip's share of the named state's rows.
 - No value of the named state has moved.
 
-## 26 Nov, 11:34 to 11:58 UTC: the two controls read, the cause seen in the frames, the cure that follows
+## 26 Nov, 11:34 to 11:45 UTC: the two controls read, the cause seen in the frames, the cure that follows
 
 - MEASURED, rise rows by the smooth reader (draft, pattern limit 0.45, pop limit 1.2):
   - cEB (cE1 and ground.bandHeights to [0.0001, 0.0002], rows 1538 to 1548, job z8): 2 of 21 over, largest 0.54 at 1547 at (986, 257), 0.48 at 1548; rows 1542 to 1546 + 1/2 read 0.23 to 0.41. Pop 1.17 at 1539 + 1/2, 1.05 at 1540, 1.11 at 1540 + 1/2. So the strip of air is what cE1 still read.
@@ -5431,3 +5431,24 @@ Measured on the kept frames of state A (`fr-A-dive`) and of main (`fr-M1d`), the
 - THE CAUSE of the thin band, as it now stands: the far band of the surface view and the plates times the map are two pictures of the same ground at the handover's height, 16 to 50 of 255 apart in patches, and the ground gives way to the plates there between 1542 and 1547. Every control that moves the exchange moves the red with it (cE1, cH0, cR) or hides it from the reader (cEB).
 - THE CURE that follows (asset pass, MAIL 1256 point 4), under way: the map takes what still parts the two. At the film's camera of the rise just over the handover the globe side is drawn with the ground and without it (shutter closed, no grain), both are laid back through that camera into the cells of the map, and the map takes the logarithm of the one over the other on top of what it holds. A second draw measures what is left. The film's eight rise plates stay a4534656's. It is no value moved to a reader's number: it is the picture of T on the plates at the height where the two change hands.
 - No value of the named state has moved.
+
+## 26 Nov, 11:46 to 12:12 UTC: the ratio map fitted to the ground fails (trial F3); the picture formulation
+
+Nothing here is named. The name stands at 35edb711; the tree holds a trial.
+
+- Tools: fcam.ts takes --time SECONDS (the film's camera of that time, as a record); /tmp/v/fitdraw.sh FRAME WHAT draws one still of the globe side at the film's camera of FRAME (uhd, draft, shutter closed, no grain): a = with the ground and without the air under the horizon, b = without the ground, b0 = without the ground and without the map. Cameras: out/work/venus/place/fit/cam-1540.json (height 0.021742 radii) and cam-1543.json.
+- SEEN in draw a at 1540: the first 6 to 12 uhd px under the globe's limb show the air under the horizon in the sky's colour (dark at the left), then the ground's far edge as a bright line. The ground of the surface view ends at a sine of T of about 0.03 to 0.047 and its horizon lies 3 to 6 px (1080) under the globe's limb. The strip of air is no ground.
+- MEASURED, the ratio version of farfit.py (the map takes the logarithm of a over b on top of what it holds):
+  - the draws answer the map with a gain of 0.497, 0.471, 0.425 (b, g, r), about 0.5 at every level (the film's curve and the tone law of the plates stand between);
+  - the map lies in the frame where the tool expects it: best shift 0 cells across, 1 cell up;
+  - a over b, mean size in octaves: 0.253 before, 0.115, 0.077, 0.061 after runs 1, 2, 3; 4.2 percent of the cells at the map's limit of 2 octaves;
+  - files 493995 and 154082 bytes: 122 KB over the old ones, more than the 92 KB the allowance has left.
+- MEASURED, trial F3 (the map of run 3 in the tree; rise rows 1538 to 1552, draft; /tmp/v/probe/F3-venus-rise-k3076-3104.json): 21 of 29 rows over, largest 0.72 (the named state 10 of 29, 0.72). 0.46 at 1540; 0.72 and 0.70 at 1542 and 1542 + 1/2; 1547 + 1/2 to 1552 read 0.52 to 0.67 at about (1340 to 1500, 260 to 320), where the named state reads 0.20 to 0.49. Ground pop 1.916 at 1539 + 1/2.
+- SEEN, F3 beside the named state (/tmp/v/sh/F3-mid-a.jpg, F3-mid-b.jpg, x 660 to 1260, looks of 12:12, 731caa51): 1540 to 1546 nearly equal, with thin white and greenish lines on the limb in F3 at 1545 and 1546. 1547 to 1552: the named state has the plates' mottled tan field with a dark olive patch and a tan band at the limb; F3 stays pale with pink and green rippled patches. Wrong to the eye and worse by the reader: F3 is dropped.
+- Why (READ in globe.ts, not measured): a ratio cancels the plates' fine forms only where the plate's footprint in the frame is the one of 1540. From above the plate is filtered otherwise and is drawn by the live law (seen = mix(under * forms, seen, same)), so the ratio's fine part no longer meets its counterpart and shows by itself as ripples and colour.
+- THE NEXT DESIGN, the picture formulation (in the tree as a trial, 12:08 to 12:12):
+  - the file place3-far-rise.jpg holds the far deck itself as the surface view shows it (display values), in the same frame of T (bearing 50 degrees to each side, sine 0 to 0.22, 2048 by 512);
+  - globe.ts: stored *= pow(picture / stored, share), share = uFarLook.x (by the height of the eye, as before) times the ends on the ground: in at the far end over sines 0 to 0.03, out at the near end over 0.12 to 0.18, out at the sides over bearings 40 to 45 degrees. From T the far deck is the picture whatever the plates hold; the fine forms of the plates come in with height, not against a ratio. uFarLaw and octaves are gone; the dive has no file and its share is 0;
+  - farfit.py: first run lays draw a into the cells; later runs multiply the picture by (a over b) to the power 1 / gain; above the sine 0.047 (where the ground of the surface view ends) each column holds the mean of its 10 rows from there on; beside the frame a row holds its last measured cell;
+  - first picture: 259744 and 86248 bytes (180 KB under the old map files), 72 percent of the cells with a measure. SEEN (/tmp/v/sh/pic0-view.jpg, look of 12:12): the pale deck with its banks at the near end, streaks beside the frame where the share is none.
+- If the picture does not stand to the eye over 1540 to 1556 the trial is dropped as F3 was and the thin band stays named red.
