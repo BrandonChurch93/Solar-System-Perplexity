@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T12:33:49.308Z",
+ "pushed": "2026-11-26T12:54:37.117Z",
  "head": "23087fd30ea977015762d59c4bc5eda4f590a493",
- "note": "12:37 line A: cost down from about 400 s to 87.7 s at master draft and the content no longer goes with the pixel; the look is still wrong and is next",
+ "note": "12:55 line A: first state with line i and the bands green at preview draft (2.268, bands green), 32 s a frame; master and final not measured yet",
  "looks": [
+  {
+   "time": "2026-11-26T12:54:36.424Z",
+   "file": "20261126125436424-note-wd6s-3150.jpg",
+   "source": "../work/r26/t/wd6s-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, baked relief, soft light, line i 2.268, bands green; forms still folds, clusters next",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:54:35.784Z",
+   "file": "20261126125435784-note-wd6s-vs-appr.jpg",
+   "source": "../work/r26/t/wd6s-vs-appr.jpg",
+   "kind": "note",
+   "label": "3150 preview draft beside the approved, baked relief, soft light, matter solved between 0.02 and 0.7, line i 2.268 whole and 1.779 outside the seven cells, bands green, 32 s a frame at preview",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:54:35.091Z",
+   "file": "20261126125435091-note-wd5-vs-appr.jpg",
+   "source": "../work/r26/t/wd5-vs-appr.jpg",
+   "kind": "note",
+   "label": "3150 preview draft beside the approved, baked relief, soft light, heaps where the map is lit, old paint so too bright, 11.468, bands green",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T12:33:48.685Z",
    "file": "20261126123348685-note-wc2-3150-master-small.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r26/t/wa1-r2-seven.png",
    "kind": "note",
    "label": "3150 the seven cells: the approved (top), state wa1 after two rounds (middle), signed error at sigma 8 px (bottom): the lamps stand at the approved's glints but as soft round lamps and too bright; a red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:32:11.894Z",
-   "file": "20261126103211894-note-wa1-r2-left.jpg",
-   "source": "../work/r26/t/wa1-r2-left.png",
-   "kind": "note",
-   "label": "3150 lower left, the approved (left) beside state wa1 after two rounds (right): my heaps stand lit and pink where the approved is dark with thin lit crests; a red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:32:11.277Z",
-   "file": "20261126103211277-note-w99-3150.jpg",
-   "source": "../work/r26/t/w99-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w99: a low bumpy deck with groups of larger bulbs; line (i) 4.565 before its rounds; bands green 0.725 0.865 0.923 0.921",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:10:39.702Z",
-   "file": "20261126101039702-note-w90-r2-3150.jpg",
-   "source": "../work/r26/t/w90-r2-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w90 after two rounds of the solve: line (i) 4.292 whole, 3.389 outside the seven cells (main 3.390 and 3.208); bands 0.686 0.820 0.894 0.905, the first red",
    "stop": "jupiter"
   }
  ]
