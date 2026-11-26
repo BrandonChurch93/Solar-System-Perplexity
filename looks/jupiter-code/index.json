@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T14:58:24.926Z",
+ "pushed": "2026-11-26T15:25:20.645Z",
  "head": "a96e1334fcd22697225a9dfcf691f66bbc5957c9",
- "note": "second tree only: level cure from above, stronger air being tried; not solved, no candidate",
+ "note": "state wo2 of the second tree, going into the repo now; proofs not drawn yet",
  "looks": [
+  {
+   "time": "2026-11-26T15:25:19.940Z",
+   "file": "20261126152519940-note-wo2-3150-master-draft.jpg",
+   "source": "../work/r26/t/wo2-3150-master-draft.png",
+   "kind": "note",
+   "label": "3150 master draft, solved four rounds with the denser air: line (i) 2.126 whole, 2.037 outside the seven cells, bands green, 49.6 s",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:25:19.378Z",
+   "file": "20261126152519378-note-adds-wo2-2997.jpg",
+   "source": "../work/r26/t/adds-wo2-2997.png",
+   "kind": "note",
+   "label": "2997 second tree: the globe alone left, with my layer right, preview draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:25:18.807Z",
+   "file": "20261126152518807-note-adds-wo2-3296.jpg",
+   "source": "../work/r26/t/adds-wo2-3296.png",
+   "kind": "note",
+   "label": "3296 second tree: the globe alone left, with my layer right, preview draft",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:25:18.254Z",
+   "file": "20261126152518254-note-kwo2-lowleft.jpg",
+   "source": "../work/r26/t/kwo2-lowleft.jpg",
+   "kind": "note",
+   "label": "terrain, twelve consecutive capture frames 3148 to 3153 and a half, lower left at 1.6 times, preview draft",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T14:58:23.529Z",
    "file": "20261126145823529-note-wo2-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r26/t/wd6s-vs-appr.jpg",
    "kind": "note",
    "label": "3150 preview draft beside the approved, baked relief, soft light, matter solved between 0.02 and 0.7, line i 2.268 whole and 1.779 outside the seven cells, bands green, 32 s a frame at preview",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:54:35.091Z",
-   "file": "20261126125435091-note-wd5-vs-appr.jpg",
-   "source": "../work/r26/t/wd5-vs-appr.jpg",
-   "kind": "note",
-   "label": "3150 preview draft beside the approved, baked relief, soft light, heaps where the map is lit, old paint so too bright, 11.468, bands green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:33:48.685Z",
-   "file": "20261126123348685-note-wc2-3150-master-small.jpg",
-   "source": "../work/r26/t/wc2-3150-master-small.png",
-   "kind": "note",
-   "label": "3150 master draft made small, baked relief at 0.7 master feet, old paint, 15.501, bands 2.09 and 1.73 red: too many thin lit lines, not cloud",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:33:47.728Z",
-   "file": "20261126123347728-note-wc2-master-vs-preview.jpg",
-   "source": "../work/r26/t/wc2-master-vs-preview.jpg",
-   "kind": "note",
-   "label": "3150 lower left, the relief drawn once a sample into a picture: preview enlarged beside master, same content at both sizes, 87.7 s at master draft, old paint, line i no result",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:11:44.117Z",
-   "file": "20261126121144117-note-wb10-3150.jpg",
-   "source": "../work/r26/t/wb10-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state wb10 (dev tree, solve not fitted)",
    "stop": "jupiter"
   }
  ]
