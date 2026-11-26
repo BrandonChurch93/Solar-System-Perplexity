@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T16:37:59.384Z",
- "head": "1b10c7e763e92846b920cc6c5ca89918bba1052c",
- "note": "Z81 1b10c7e7 finals: 60 G17 0.9722 whole plain 35.1217 (main 1.2148, 33.5646); 0 G17 0.8042 (on the line; the median tile is a ground tile, three sky tiles at 0.69 to 0.77); 360 same file as main's 6cb177ca29c2e9be; sun-near 60 (final): dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "pushed": "2026-11-26T17:02:31.851Z",
+ "head": "acf33bba9af90da16ec75ed9bee5e6bac85fda77",
+ "note": "17:03 named state Z81 on acf33bba: strips, the arcade's leaving, 495 beside main. sun-near frame 60 final: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T17:02:31.265Z",
+   "file": "20261126170231265-note-arcleave-211-233.jpg",
+   "source": "../../../../tmp/att/arcleave-211-233.jpg",
+   "kind": "note",
+   "label": "Z81 draft rise 211 to 233: the arcade leaves by its own size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T17:02:30.709Z",
+   "file": "20261126170230709-note-strip-part.jpg",
+   "source": "../../../../tmp/att/strip-part.jpg",
+   "kind": "note",
+   "label": "Z81 draft strip of the arch, every tenth frame 60 to 150, part at 1 to 1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T17:02:30.153Z",
+   "file": "20261126170230153-note-pair495.jpg",
+   "source": "../../../../tmp/att/pair495.jpg",
+   "kind": "note",
+   "label": "travel out 495 at draft: main's Sun folders left, this branch right (corona and prominences differ since d377db96)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T16:37:58.223Z",
    "file": "20261126163758223-note-f0-half.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/att/tri90.jpg",
    "kind": "note",
    "label": "Z81 final 90: approved, main, this state (1b10c7e7)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T15:43:21.493Z",
-   "file": "20261126154321493-note-look-z81-top.jpg",
-   "source": "../../../../tmp/v/look-z81-top.jpg",
-   "kind": "note",
-   "label": "Z81 draft 90, 91, 92 right shoulder at 1 to 1: strands stand, beads move",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T15:43:20.755Z",
-   "file": "20261126154320755-note-look-z81-60.jpg",
-   "source": "../../../../tmp/v/look-z81-60.jpg",
-   "kind": "note",
-   "label": "Z81 draft 60 whole",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T15:43:19.885Z",
-   "file": "20261126154319885-note-look-z81-90pair.jpg",
-   "source": "../../../../tmp/v/look-z81-90pair.jpg",
-   "kind": "note",
-   "label": "Z81 (1b10c7e7) draft 90: approved above, mine below; no second band under the arch",
    "stop": "sun"
   }
  ]
