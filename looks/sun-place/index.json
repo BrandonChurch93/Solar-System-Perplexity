@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T17:19:23.396Z",
+ "pushed": "2026-11-26T17:35:57.544Z",
  "head": "5ccff1674ccb3ed7fab80c6f251aee1e8d989d53",
- "note": "17:19 after the name 5ccff167: rise 222 to 230 frame by frame, the glint against main. sun-near frame 60 final: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "note": "17:35 trials after the name (Z87, Z88, drafts, not pushed): looser band, bold fountain at the left foot, warmer legs. sun-near frame 60 of the named final: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T17:35:56.864Z",
+   "file": "20261126173556864-note-z88-cmp.jpg",
+   "source": "../../../../tmp/v/z88-cmp.jpg",
+   "kind": "note",
+   "label": "trial Z88 (not named, not pushed) draft 90 at 1 to 1: approved, Z87, Z88; left foot, right foot, top of the band",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T17:34:08.566Z",
+   "file": "20261126173408566-note-z87-cmp.jpg",
+   "source": "../../../../tmp/v/z87-cmp.jpg",
+   "kind": "note",
+   "label": "trial Z87 (not named, not pushed) draft: approved, Z81 named above; Z87 at 60 and at 90 below: looser band, bold fountain at the left foot",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T17:19:22.750Z",
    "file": "20261126171922750-note-glint-pair.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/att/f0-half.jpg",
    "kind": "note",
    "label": "Z81 final 0, half size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T16:37:57.040Z",
-   "file": "20261126163757040-note-tri60.jpg",
-   "source": "../../../../tmp/att/tri60.jpg",
-   "kind": "note",
-   "label": "Z81 final 60: approved, main, this state (1b10c7e7)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T16:10:49.027Z",
-   "file": "20261126161049027-note-rf-Z81F.jpg",
-   "source": "../../../../tmp/v/rf-Z81F.jpg",
-   "kind": "note",
-   "label": "Z81 final 90 right foot: approved, this state",
    "stop": "sun"
   }
  ]
