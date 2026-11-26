@@ -2824,3 +2824,20 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   lab: the frames of rise-h44, rise-h45 (their rows are in v/rise-h45.txt and above), old films, old mo- sets and
   all trial pictures before t255. 3.5 GB free at 20:08. Watch it: a trial that ends with "No such file" for its
   own picture means the harness refused to start.
+  20:13 t258 (lane [.. 16: 1.5, 17: 0.35], cushion.seam [0.005, 0.12, 40, 5.0], olive [0.4, 1.8, 0.35, 0.7, -0.3])
+  on h48: net largest part 0.24, more one sheet; TAKEN AS BASE (v/lab-t258.json). t259 (finer patch) did little
+  for the highlight size (652 px against 343): not taken. t258 curve: 0.672 0.669 0.657 0.64 0.615 0.571 0.512
+  0.443 0.365 0.317 0.288 against 0.667 0.662 0.657 0.647 0.619 0.586 0.547 0.496 0.433 0.369 0.324: edge too
+  dark by up to 0.068 at tenths 0.7 to 0.9: to ease. Counter: 52 cells against 129 in the approved's box, widths
+  21.5 26.3 36.3 44.3 60.4 against 18.2 21.9 34.7 55.7 76.8: the large cells are missing.
+  THE SPOT (20:19 to 20:31). t261 = t258 + spot.floor [0.001, 0.004], edge [0.9, 1.15], lean 0.2, ring [0.2, 0.9],
+  tongues [110, 70], gap [0.004, 0.03]: a dark bowl with a black umbra. t262 depth 0, t263 depth 0.16
+  (v/spot-depth.jpg): a deep pit gives a crisp near rim and a long far wall, a flat one lifts the umbra in the
+  picture. t264 = t261 + depth 0.07, wall [0.85, 1.2], edge [0.75, 0.95]: umbra 17587 px (approved 19047), centre
+  (0.525, 0.614) against (0.524, 0.612), x extent 0.104 (0.122), y 0.054 (0.052), mean 0.075 (0.075). BEST SO
+  FAR, base of the next trials (v/lab-t264.json). t265 (depth 0.1, wall [0.8, 1.3]) sits lower (0.62): not taken.
+  Still wrong in t264 (v/spot-wall.jpg): threads are broad flat ribbons, striped like a fan; near side at 1.0 to
+  1.4 umbra radii 0.07/0.19/0.55 and 0.08/0.25/0.64 against 0.08/0.26/0.76 and 0.20/0.40/0.81; rows 620 to 800
+  bright over 0.8 share 0.166 against 0.294, dark under 0.3 share 0.193 against 0.096.
+  20:31 t266 (tongues [170, 110], gap [0.012, 0.06], ring [0.35, 1.0]) and t267 (and lean 0.3, ranks [4.6, 3.4])
+  started on t264. 20:32 low mail sent with all of this; next mail by 22:00 UTC. Looks pushed (9b48fc71).
