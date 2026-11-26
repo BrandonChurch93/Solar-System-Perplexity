@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T16:07:31.378Z",
+ "pushed": "2026-11-26T16:28:04.392Z",
  "head": "5fc9bcaa7b62cabd68f23329ae568cc6ed0daa9f",
- "note": "D alone held on rise part 1 pattern row (MAIL 1511): reader slice 4398 to 4401 + 1/2 on D and on main runs, then pixel controls",
+ "note": "cloud group control at 4416 and 4418: fibre gain 0 takes the dark slashes (strip 59 to 3, 50 to 7), the hard cut edge stays; the ground under rows 4401 and 4398 + 1/2 is the same on D and main",
  "looks": [
+  {
+   "time": "2026-11-26T16:28:03.649Z",
+   "file": "20261126162803649-note-zone-4401.jpg",
+   "source": "../../../../tmp/n81/zone-4401.jpg",
+   "kind": "note",
+   "label": "the ground that carries rows 4401 and 4398 + 1/2 of rise part 1: D, main, their difference times 64 (at most 1 level)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T16:28:02.955Z",
+   "file": "20261126162802955-note-group-4418.jpg",
+   "source": "../../../../tmp/n81/group-4418.jpg",
+   "kind": "note",
+   "label": "4418 cloud group, 2 to 1: main, D, and four controls",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T16:28:02.190Z",
+   "file": "20261126162802190-note-group-4416.jpg",
+   "source": "../../../../tmp/n81/group-4416.jpg",
+   "kind": "note",
+   "label": "4416 cloud group, 2 to 1: main, D, and four controls (fibre gain 0 takes the dark slashes, the hard cut lower edge stays)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T16:07:25.487Z",
    "file": "20261126160725487-note-rsD-changes.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n78/pop-4175-4176.png",
    "kind": "note",
    "label": "54ae2b6d draft 4175 beside 4176, 1 to 1 at the upper right: the corner of the dive's largest pop (1.1228, main 1.1098): the Sun's glare, the ring arcs, the band's stars; no step",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T11:02:32.107Z",
-   "file": "20261126110232107-note-head-4436-v.jpg",
-   "source": "../../../../tmp/n78/head-4436-v.jpg",
-   "kind": "note",
-   "label": "54ae2b6d final 4436",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T11:02:28.385Z",
-   "file": "20261126110228385-note-head-4137-v.jpg",
-   "source": "../../../../tmp/n78/head-4137-v.jpg",
-   "kind": "note",
-   "label": "54ae2b6d final 4137, the second aim's dark sky",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T11:02:23.602Z",
-   "file": "20261126110223602-note-head-4290-v.jpg",
-   "source": "../../../../tmp/n78/head-4290-v.jpg",
-   "kind": "note",
-   "label": "54ae2b6d final 4290: match with uranus-close.jpg 3.178 (main 3.849)",
    "stop": "uranus"
   }
  ]
