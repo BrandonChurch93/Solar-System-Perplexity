@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T09:38:12.047Z",
+ "pushed": "2026-11-26T10:08:16.671Z",
  "head": "b13b631b32a83375884c26c882221970e975c1aa",
- "note": "b13b631b local. 221 at final 40 min in, no frame yet (bad); drafts of the rise and the strip of the arch follow. sun-near 60 final: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "note": "b13b631b local. 221 at final stopped after 52 min without a frame (bad); the strip of the arch drawn, the rise drafts running. sun-near 60 final: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T10:02:27.188Z",
+   "file": "20261126100227188-note-strip-part.jpg",
+   "source": "../../../../tmp/v/strip-part.jpg",
+   "kind": "note",
+   "label": "the arch's right shoulder every tenth frame at 1 to 1, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T10:02:26.138Z",
+   "file": "20261126100226138-note-strip-whole.jpg",
+   "source": "../../../../tmp/v/strip-whole.jpg",
+   "kind": "note",
+   "label": "the arch every tenth frame 60 to 150, draft, half size",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T09:38:10.844Z",
    "file": "20261126093810844-note-y5-f360-pair.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/p90-tri.jpg",
    "kind": "note",
    "label": "final 90 on the merge of main 77a7d410: approved, main, this state at 1 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T07:44:43.940Z",
-   "file": "20261126074443940-note-r2-221.jpg",
-   "source": "../../../../tmp/v/r2-221.jpg",
-   "kind": "note",
-   "label": "221 draft with gas share from 0.3 beside main: veil gone, stars stand",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T07:44:42.983Z",
-   "file": "20261126074442983-note-E16-limb.jpg",
-   "source": "../../../../tmp/v/E16-limb.jpg",
-   "kind": "note",
-   "label": "trial X limb and fringe at 90, draft",
    "stop": "sun"
   }
  ]
