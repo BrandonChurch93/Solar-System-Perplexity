@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T18:58:32.406Z",
+ "pushed": "2026-11-26T19:27:21.994Z",
  "head": "ed11ee09866f428568a3e91dcc8e0f08efb2ab22",
- "note": "thin sheet by one law: finals of the hold without and with it; next the tones of 3720 at pose W",
+ "note": "pose W of MAIL 1535 at final with the old tones; ring and globe tones being refitted",
  "looks": [
+  {
+   "time": "2026-11-26T19:27:20.498Z",
+   "file": "20261126192720498-note-full_w0.jpg",
+   "source": "../../../../tmp/v/w/full_w0.jpg",
+   "kind": "note",
+   "label": "3720: approved close over pose W final with the old tones, sheet rising to 0.05"
+  },
   {
    "time": "2026-11-26T18:58:31.807Z",
    "file": "20261126185831807-note-foot_app2.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/p1518/foot_pair.jpg",
    "kind": "note",
    "label": "the contact line: approved close against main's 3720 draft, the same box x 860 to 1920, y 400 to 860"
-  },
-  {
-   "time": "2026-11-26T18:21:47.946Z",
-   "file": "20261126182147946-note-four_trials.jpg",
-   "source": "../../../../tmp/v/p1521/four_trials.jpg",
-   "kind": "note",
-   "label": "3720 pose study: approved close, trial lens 54, trial lens 58, trial lens 62.06 with the old sheet code at depth 0.05 (drafts, tones not refitted)"
   }
  ]
 }
