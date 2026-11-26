@@ -59,6 +59,7 @@ export interface LimbParams {
 export interface PatchSet {
   textures: THREE.Texture[]
   widthsDeg: number[]
+  counts: number[]
   spot: THREE.Vector3
   feather: number
   featherOwn?: number
@@ -75,6 +76,7 @@ export interface PatchSet {
 export interface NeptuneOptions {
   map: THREE.Texture
   mapWidth: number
+  mapCount: number
   code: number
   deck: number[][]
   cloud: number[][]
@@ -112,20 +114,23 @@ void main() {
 
 const SAMPLERS = Array.from({ length: MAX_LEVELS }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-// The texel count of the texels view (diag only, no colour depends on it). A level of the globe's own pyramid counts where its weight is
+// Two counts (decision d253 b, 25 Nov). The count that brings a level in (parent) is the FULL set's texels in both sets, from
+// patches.json (texels, mapTexels), so the web set's levels arrive at the same height as the full set's and are only softer; until
+// 25 Nov it was the loaded picture's own width, half in the web set, so its levels arrived at twice the height.
+// The texel count of the texels view (diag only, no colour depends on it) stays the loaded picture's own. A level of the globe's own pyramid counts where its weight is
 // at least a half. A shown plate counts by what is drawn of it, its weight times its alpha, summed from the deepest plate up: the plate at
 // which half of the pixel is reached sets the count. Until 23 Nov 15:50 a shown plate counted by its weight alone, also where its alpha had
 // ended (the corners of the widest plate's square), so the view called ground sharp that only the globe's own levels drew.
 const weights = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, i) => i < shownFrom ? `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
       w${i} = front * smoothstep(0.5, 0.5 - uFeatherOwn, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uLine));
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      texels = mix(texels, parent, step(0.5, w${i}));
+      parent = gd * uPatchScale[${i}] * uPatchFull[${i}];
+      texels = mix(texels, gd * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w${i}));
     }` : `    if (uPatchCount > ${i}.5) {
       vec2 q = (g - uPatchOff[${i}]) * uPatchScale[${i}];
       w${i} = shown * front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)))${i === shownFrom ? '' : ' * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uLine))'};
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
-      t${i} = parent;
+      parent = gd * uPatchScale[${i}] * uPatchFull[${i}];
+      t${i} = gd * uPatchScale[${i}] * uPatchSize[${i}];
     }`).join('\n')
 
 const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }, (_, n) => MAX_LEVELS - 1 - n).map((i) => i < shownFrom ? `  float k${i} = w${i} * rest;
@@ -138,12 +143,211 @@ const fetches = (shownFrom: number): string => Array.from({ length: MAX_LEVELS }
   texels = mix(texels, t${i}, step(0.5, gShown.a) * (1.0 - counted));
   counted = max(counted, step(0.5, gShown.a));`).join('\n')
 
+// The globe's own map as functions: the turn of the deck and of the cloud layer, and the reading of the wrap and of the levels round the
+// place at a direction of the body. The globe draws with them, and the scene from code (deep.ts) reads the same map by the same lines, so
+// what the scene shows from afar is the globe's own picture and no second one. MAP_UNIFORMS: the uniforms these lines read.
+// The grade of the fall (deep.json, globe.fall), one text for the globe and for the far look of the scene (deep.ts). A colour on
+// the line from black to the pivot is drawn as pivot times (colour over pivot) to the power, channel by channel, unchanged over
+// the pivot. A colour off that line was drawn so too, and its distance from the line was raised to the powers with it: the dim
+// white cloud of the night side and of the twilight came out orange and lilac (its red stands over the red of the pivot and was
+// left, its green and blue were taken down). So the level of a colour is its green over the pivot's, and red and blue go no
+// further from the line toward white and warm than that level carries them: red is the smaller of its own channel's value and
+// the colour times what the grade does at that level, blue the larger. A colour bluer than the line (red under it, blue over
+// it: the deck) is drawn channel by channel as it was, to the bit. A white keeps its hue: what the grade does at a level
+// differs by channel for the pivot's own red against blue and for bluer, and is the green's for a neutral colour and for
+// warmer. blueMost: the most blue the graded colour keeps as a multiple of its green, with a soft knee (the pale band stands
+// far under it and is not touched).
+export const FALL_GLSL = /* glsl */ `vec3 fallGrade(vec3 colour, vec3 pivot, vec3 power, float blueMost) {
+  vec3 c = max(colour, vec3(0.0));
+  vec3 x = c / pivot;
+  vec3 own = pivot * mix(pow(x, power), x, smoothstep(0.6, 1.2, x));
+  float level = max(x.g, 1e-6);
+  vec3 by = max(mix(pow(vec3(level), power), vec3(level), smoothstep(0.6, 1.2, level)) / level, vec3(1e-9));
+  float whiteAt = pivot.b / pivot.r;
+  float hue = clamp((whiteAt - x.r / max(x.b, 1e-6)) / max(whiteAt - 1.0, 1e-6), 0.0, 1.0);
+  vec3 led = c * pow(by, vec3(hue)) * pow(by.g, 1.0 - hue);
+  vec3 graded = vec3(min(led.r, own.r), own.g, max(led.b, own.b));
+  float most = blueMost * graded.g + 1e-5;
+  float over = graded.b / most;
+  graded.b = most * (over < 0.75 ? over : 0.75 + 0.25 * (1.0 - exp(-(over - 0.75) / 0.25)));
+  return graded;
+}
+`
+
+export const mapGlsl = (shownFrom: number): string => /* glsl */ `vec4 gShown;
+vec2 gToneUv;
+vec3 spinY(vec3 d, float a) {
+  float c = cos(a), s = sin(a);
+  return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
+}
+vec3 turnAbout(vec3 d, vec3 axis, float a) {
+  float c = cos(a), s = sin(a);
+  return d * c + cross(axis, d) * s + axis * dot(axis, d) * (1.0 - c);
+}
+vec3 knot(vec3 k[${KNOTS}], float ndl) {
+  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * ${KNOTS - 1}.0;
+  int i = int(min(floor(x), ${KNOTS - 2}.0));
+  return mix(k[i], k[i + 1], x - float(i));
+}
+float stormTurn(vec3 d) {
+  float ang = acos(clamp(dot(d, uStormAxis), -1.0, 1.0)) / uStormRadius;
+  return uStormAngle / (1.0 + ang * ang * ang * ang);
+}
+vec3 deckDir(vec3 p) {
+  vec3 d = spinY(p, uSpin);
+  return turnAbout(d, uStormAxis, stormTurn(d));
+}
+vec3 cloudDir(vec3 p) {
+  float lat = asin(clamp(p.y, -1.0, 1.0));
+  vec3 d = spinY(p, uSpin + uStream * (1.0 + uShear.x * sin(lat * uShear.y)));
+  return turnAbout(d, uStormAxis, stormTurn(d));
+}
+vec3 bend(vec3 d, float a) {
+  float c0 = sqrt(max(1.0 - d.y * d.y, 1e-6));
+  float y1 = clamp(d.y + a * c0, -1.0, 1.0);
+  float s = sqrt(max(1.0 - y1 * y1, 0.0)) / c0;
+  return vec3(d.x * s, y1, d.z * s);
+}
+float endHash(vec2 p) {
+  uvec2 q = uvec2(p);
+  uint h = q.x * 1664525u + q.y * 22695477u + 1013904223u;
+  h ^= h >> 16u;
+  h *= 2246822519u;
+  h ^= h >> 13u;
+  h *= 3266489917u;
+  h ^= h >> 16u;
+  return float(h >> 8u) / 16777216.0;
+}
+// A run (a step of the map's direction from dd) in footprints of a read at dd: its length over the length of that read's
+// footprint along it, from the same derivatives the read uses. Both are measured in the map's texels (u counts twice v).
+// The scene from code asks it for the ray's run through the cloud layer (deep.ts); the globe does not.
+float runFeet(vec3 dd, float soft, vec3 run) {
+  float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
+  float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
+  float u2 = fract(u + 0.5) - 0.5;
+  vec2 mx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v)) * uGrad * soft;
+  vec2 my = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v)) * uGrad * soft;
+  float level = max(dd.x * dd.x + dd.z * dd.z, 1e-8);
+  vec2 r = vec2((dd.z * run.x - dd.x * run.z) / (PI * level), run.y / (PI * sqrt(level)));
+  float len = length(r);
+  vec2 e = r / max(len, 1e-12);
+  float ax = dot(vec2(2.0 * mx.x, mx.y), e);
+  float ay = dot(vec2(2.0 * my.x, my.y), e);
+  return len / max(sqrt(ax * ax + ay * ay), 1e-12);
+}
+// The eye of the place's storm (deep.json, storm) as one body at every height: what the deck's colour keeps at a direction p of the
+// body. uEyeAt: the eye's middle as a direction of the body and its radius as an angle; uEyeMake: the share of its light the deck
+// loses on the eye's floor, the shares of the radius between which the wall falls, and how far the deck's structure (field) moves
+// the wall in and out. The globe reads it with field 0, the mean of the ragged wall the scene from code shows: the coarser level
+// is the finer one filtered. By the place alone: nothing reads the eye's height or the clock.
+float eyeShade(vec3 p, float field) {
+  float x = length(p - uEyeAt.xyz) / uEyeAt.w;
+  return 1.0 - uEyeMake.x * (1.0 - smoothstep(uEyeMake.y, uEyeMake.z, x * (1.0 + uEyeMake.w * field)));
+}
+// The same shade by colour (deep.json, storm.hue: a power for red, green and blue). One share for all three keeps the hue of the
+// deck round it, and the eye was a smoky grey oval on the blue (4860: 21 36 58 on a surround of 72 126 183, where the approved
+// close image has 10 34 67 on 90 139 184): a deep deck loses its red first and its blue last. All 1: the one share, to the bit.
+vec3 eyeDark(vec3 p, float field) {
+  float s = eyeShade(p, field);
+  return any(notEqual(uEyeHue, vec3(1.0))) ? pow(vec3(s), uEyeHue) : vec3(s);
+}
+vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
+  float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
+  float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
+  float u2 = fract(u + 0.5) - 0.5;
+  vec2 mx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v)) * uGrad * soft;
+  vec2 my = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v)) * uGrad * soft;
+  texels = diagTexelsDir(dd, uMapWidth);
+  float dn = dot(dd, uSpotN);
+  vec2 g = vec2(dot(dd, uSpotE), dot(dd, uSpotU)) / max(dn, 0.05);
+  vec2 gx = dFdx(g);
+  vec2 gy = dFdy(g);
+  float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
+  gx *= uGrad * soft;
+  gy *= uGrad * soft;
+  float front = step(0.3, dn);
+  float parent = diagTexelsDir(dd, uMapFull);
+${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;\n  float t' + i + ' = 0.0;').join('\n')}
+${weights(shownFrom)}
+  float rest = 1.0;
+  float counted = 0.0;
+  vec4 c = vec4(0.0);
+  gShown = vec4(0.0);
+  gToneUv = (g - uPatchOff[${Math.min(shownFrom, MAX_LEVELS - 1)}]) * uPatchScale[${Math.min(shownFrom, MAX_LEVELS - 1)}] + 0.5;
+${fetches(shownFrom)}
+  for (int k = 0; k < (rest > 0.0 ? 1 : 0); k++) {
+    vec4 base = textureGrad(uMap, vec2(u, v), mx, my);
+    vec2 hq = (vec2(u, v) - uHoldBox.xy) * uHoldBox.zw;
+    float hw = uHold.x * step(0.0, min(min(hq.x, hq.y), min(1.0 - hq.x, 1.0 - hq.y)));
+    for (int j = 0; j < (hw > 0.0 ? 1 : 0); j++) {
+      vec4 held = textureGrad(uHoldMap, hq, mx * uHoldBox.zw, my * uHoldBox.zw);
+      base = mix(base, vec4(held.rgb, held.a * uHold.y), hw);
+    }
+    for (int j = 0; j < (uEnd.x > 0.0 ? 1 : 0); j++) {
+      vec2 mq = (vec2(u, v) - uMendBox.xy) * uMendBox.zw;
+      vec4 mend = textureGrad(uMendMap, mq, mx * uMendBox.zw, my * uMendBox.zw);
+      base.rgb = mix(base.rgb, mend.rgb, uEnd.x * mend.a * step(0.0, min(min(mq.x, mq.y), min(1.0 - mq.x, 1.0 - mq.y))));
+    }
+    c += rest * base;
+  }
+  return c;
+}`
+
+export const MAP_UNIFORMS = ['uMap', 'uMapWidth', 'uGrad', 'uSpotN', 'uSpotE', 'uSpotU', 'uPatchCount', 'uPatchScale', 'uPatchSize', 'uPatchFull', 'uMapFull', 'uFeather', 'uFeatherOwn', 'uPatchFade', 'uLine', 'uPatchOff', 'uHoldMap', 'uHoldBox', 'uHold', 'uMendMap', 'uMendBox', 'uEnd', 'uSpin', 'uStream', 'uShear', 'uStormAxis', 'uStormRadius', 'uStormAngle', 'uEyeAt', 'uEyeMake', 'uEyeHue', 'uCloudHeight', 'uCloudSoft', 'uCirrusPx', 'uFarMap', 'uCirrus', 'uClump', 'uCode', 'uShadow', 'uTint', 'uDeck', 'uCloud', ...Array.from({ length: MAX_LEVELS }, (_, i) => 'uPatch' + i)]
+export const MAP_DECL = /* glsl */ `
+uniform sampler2D uMap;
+${SAMPLERS}
+uniform float uPatchScale[${MAX_LEVELS}];
+uniform float uPatchSize[${MAX_LEVELS}];
+uniform float uPatchFull[${MAX_LEVELS}];
+uniform float uMapFull;
+uniform float uPatchCount;
+uniform float uFeather;
+uniform float uFeatherOwn;
+uniform vec2 uPatchFade;
+uniform float uLine;
+uniform vec3 uSpotN;
+uniform vec3 uSpotE;
+uniform vec3 uSpotU;
+uniform vec2 uPatchOff[${MAX_LEVELS}];
+uniform float uMapWidth;
+uniform float uGrad;
+uniform float uCode;
+uniform float uSpin;
+uniform float uStream;
+uniform vec2 uShear;
+uniform vec3 uStormAxis;
+uniform float uStormRadius;
+uniform float uStormAngle;
+uniform vec4 uEyeAt;
+uniform vec4 uEyeMake;
+uniform vec3 uEyeHue;
+uniform float uCloudHeight;
+uniform float uCloudSoft;
+uniform sampler2D uHoldMap;
+uniform vec4 uHoldBox;
+uniform vec2 uHold;
+uniform sampler2D uMendMap;
+uniform vec4 uMendBox;
+uniform sampler2D uFarMap;
+uniform vec4 uCirrus;
+uniform vec3 uClump;
+uniform vec3 uEnd;
+uniform float uCirrusPx;
+uniform vec3 uShadow;
+uniform vec3 uTint;
+uniform vec3 uDeck[${KNOTS}];
+uniform vec3 uCloud[${KNOTS}];
+`
+
 const frag = (shownFrom: number): string => /* glsl */ `
 precision highp float;
 uniform sampler2D uMap;
 ${SAMPLERS}
 uniform float uPatchScale[${MAX_LEVELS}];
 uniform float uPatchSize[${MAX_LEVELS}];
+uniform float uPatchFull[${MAX_LEVELS}];
+uniform float uMapFull;
 uniform float uPatchCount;
 uniform float uFeather;
 uniform float uFeatherOwn;
@@ -168,6 +372,9 @@ uniform vec2 uShear;
 uniform vec3 uStormAxis;
 uniform float uStormRadius;
 uniform float uStormAngle;
+uniform vec4 uEyeAt;
+uniform vec4 uEyeMake;
+uniform vec3 uEyeHue;
 uniform float uCloudHeight;
 uniform vec3 uShadow;
 uniform float uCloudSoft;
@@ -219,6 +426,7 @@ uniform vec3 uClump;
 uniform sampler2D uField;
 uniform vec4 uFieldRange;
 uniform vec4 uFieldSide;
+uniform vec4 uFieldEye;
 uniform vec2 uDarkEdge;
 uniform vec3 uEnd;
 uniform vec2 uEndCloud;
@@ -257,92 +465,8 @@ ${EQUIRECT_GLSL}
 ${DIAG_GLSL}
 ${AIR_GLSL}
 ${INVERSE_FILMIC_GLSL}
-vec4 gShown;
-vec2 gToneUv;
-vec3 spinY(vec3 d, float a) {
-  float c = cos(a), s = sin(a);
-  return vec3(c * d.x - s * d.z, d.y, s * d.x + c * d.z);
-}
-vec3 turnAbout(vec3 d, vec3 axis, float a) {
-  float c = cos(a), s = sin(a);
-  return d * c + cross(axis, d) * s + axis * dot(axis, d) * (1.0 - c);
-}
-vec3 knot(vec3 k[${KNOTS}], float ndl) {
-  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * ${KNOTS - 1}.0;
-  int i = int(min(floor(x), ${KNOTS - 2}.0));
-  return mix(k[i], k[i + 1], x - float(i));
-}
-float stormTurn(vec3 d) {
-  float ang = acos(clamp(dot(d, uStormAxis), -1.0, 1.0)) / uStormRadius;
-  return uStormAngle / (1.0 + ang * ang * ang * ang);
-}
-vec3 deckDir(vec3 p) {
-  vec3 d = spinY(p, uSpin);
-  return turnAbout(d, uStormAxis, stormTurn(d));
-}
-vec3 cloudDir(vec3 p) {
-  float lat = asin(clamp(p.y, -1.0, 1.0));
-  vec3 d = spinY(p, uSpin + uStream * (1.0 + uShear.x * sin(lat * uShear.y)));
-  return turnAbout(d, uStormAxis, stormTurn(d));
-}
-vec3 bend(vec3 d, float a) {
-  float c0 = sqrt(max(1.0 - d.y * d.y, 1e-6));
-  float y1 = clamp(d.y + a * c0, -1.0, 1.0);
-  float s = sqrt(max(1.0 - y1 * y1, 0.0)) / c0;
-  return vec3(d.x * s, y1, d.z * s);
-}
-float endHash(vec2 p) {
-  uvec2 q = uvec2(p);
-  uint h = q.x * 1664525u + q.y * 22695477u + 1013904223u;
-  h ^= h >> 16u;
-  h *= 2246822519u;
-  h ^= h >> 13u;
-  h *= 3266489917u;
-  h ^= h >> 16u;
-  return float(h >> 8u) / 16777216.0;
-}
-vec4 layerAt(vec3 dd, float soft, float shown, out float texels) {
-  float u = atan(dd.x, dd.z) / (2.0 * PI) + 0.5;
-  float v = asin(clamp(dd.y, -1.0, 1.0)) / PI + 0.5;
-  float u2 = fract(u + 0.5) - 0.5;
-  vec2 mx = vec2(abs(dFdx(u)) < abs(dFdx(u2)) ? dFdx(u) : dFdx(u2), dFdx(v)) * uGrad * soft;
-  vec2 my = vec2(abs(dFdy(u)) < abs(dFdy(u2)) ? dFdy(u) : dFdy(u2), dFdy(v)) * uGrad * soft;
-  texels = diagTexelsDir(dd, uMapWidth);
-  float dn = dot(dd, uSpotN);
-  vec2 g = vec2(dot(dd, uSpotE), dot(dd, uSpotU)) / max(dn, 0.05);
-  vec2 gx = dFdx(g);
-  vec2 gy = dFdy(g);
-  float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
-  gx *= uGrad * soft;
-  gy *= uGrad * soft;
-  float front = step(0.3, dn);
-  float parent = texels;
-${Array.from({ length: MAX_LEVELS }, (_, i) => '  float w' + i + ' = 0.0;\n  float t' + i + ' = 0.0;').join('\n')}
-${weights(shownFrom)}
-  float rest = 1.0;
-  float counted = 0.0;
-  vec4 c = vec4(0.0);
-  gShown = vec4(0.0);
-  gToneUv = (g - uPatchOff[${Math.min(shownFrom, MAX_LEVELS - 1)}]) * uPatchScale[${Math.min(shownFrom, MAX_LEVELS - 1)}] + 0.5;
-${fetches(shownFrom)}
-  for (int k = 0; k < (rest > 0.0 ? 1 : 0); k++) {
-    vec4 base = textureGrad(uMap, vec2(u, v), mx, my);
-    vec2 hq = (vec2(u, v) - uHoldBox.xy) * uHoldBox.zw;
-    float hw = uHold.x * step(0.0, min(min(hq.x, hq.y), min(1.0 - hq.x, 1.0 - hq.y)));
-    for (int j = 0; j < (hw > 0.0 ? 1 : 0); j++) {
-      vec4 held = textureGrad(uHoldMap, hq, mx * uHoldBox.zw, my * uHoldBox.zw);
-      base = mix(base, vec4(held.rgb, held.a * uHold.y), hw);
-    }
-    for (int j = 0; j < (uEnd.x > 0.0 ? 1 : 0); j++) {
-      vec2 mq = (vec2(u, v) - uMendBox.xy) * uMendBox.zw;
-      vec4 mend = textureGrad(uMendMap, mq, mx * uMendBox.zw, my * uMendBox.zw);
-      base.rgb = mix(base.rgb, mend.rgb, uEnd.x * mend.a * step(0.0, min(min(mq.x, mq.y), min(1.0 - mq.x, 1.0 - mq.y))));
-    }
-    c += rest * base;
-  }
-  return c;
-}
-void main() {
+${mapGlsl(shownFrom)}
+${FALL_GLSL}void main() {
   vec3 p = normalize(vLocal);
   vec3 n = normalize(vWorldN);
   vec3 dir = normalize(vPos);
@@ -428,7 +552,7 @@ void main() {
     albedo *= mix(1.0, pow(own, uEndBoost.x), uEnd.x - dark);
     alpha = mix(alpha, min(alpha * uEndBoost.y, 1.0), uEnd.x);
   }
-  vec3 deck = albedo * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * (1.0 - placed) * shadow * lit * (1.0 - min(alpha, 1.0)));
+  vec3 deck = albedo * eyeDark(p, 0.0) * knot(uDeck, ndd) * shade * (1.0 - uShadow.x * (1.0 - placed) * shadow * lit * (1.0 - min(alpha, 1.0)));
   for (int k = 0; k < (shown.a > 0.0 ? 1 : 0); k++) {
     vec3 plate = min(shown.rgb / shown.a * exp2(uToneAmt * (textureLod(uTone, toneUv, 0.0).rgb - 0.5)), vec3(0.98));
     vec3 seen = inverseFilmic(plate) / (uNearTint.rgb * uNear.y);
@@ -470,7 +594,12 @@ void main() {
   float dw = smoothstep(uDarkEdge.x, uDarkEdge.y, dot(n, uDarkDir));
   float dm = 0.6 + 0.4 * dw;
   col *= 1.0 - uLimbDark.x * pow(dw, 0.7) * (1.0 - smoothstep(uLimbDark.y * dm, uLimbDark.z * dm, mu));
-  vec2 fuv = vec2(clamp(mu / uFieldRange.x, 0.5 / uFieldRange.z, 1.0 - 0.5 / uFieldRange.z) * 0.5, (ndl - uFieldRange.y) / (1.0 - uFieldRange.y));
+  // The held field lies on the body. In the hold it is read by the eye's own angle to the ground (mu). From the dive's first moment
+  // on it is read by the angle of the eye the dive began at, which is carried with the body (uFieldEye: its place from the body's
+  // middle in the world's axes; w says that it is set): every point of the ground keeps the share the hold gave it, so the field's
+  // bands near the limb do not run over the ground with the closing horizon (the Builder's MAIL 1207, point 3).
+  float muField = uFieldEye.w > 0.0 ? clamp(dot(n, normalize(uFieldEye.xyz - n)), 0.0, 1.0) : mu;
+  vec2 fuv = vec2(clamp(muField / uFieldRange.x, 0.5 / uFieldRange.z, 1.0 - 0.5 / uFieldRange.z) * 0.5, (ndl - uFieldRange.y) / (1.0 - uFieldRange.y));
   vec3 fa = textureLod(uField, fuv, 0.0).rgb;
   vec3 fb = textureLod(uField, fuv + vec2(0.5, 0.0), 0.0).rgb;
   vec3 field = exp2((mix(fa, fb, smoothstep(-0.06, 0.06, dot(n, uFieldSide.xyz))) - 0.5) * uFieldRange.w);
@@ -504,13 +633,7 @@ void main() {
   float moved = uStream + stormTurn(spinY(p, uSpin)) * 4.0;
   // The grade of the fall (deep.json, globe.fall): none where the power is 1, so the hold keeps its bytes.
   if (any(notEqual(uFallPower, vec3(1.0)))) {
-    vec3 fallX = max(col, vec3(0.0)) / uFallPivot;
-    col = mix(pow(fallX, uFallPower), fallX, smoothstep(0.6, 1.2, fallX)) * uFallPivot;
-    // The powers draw a blue of the map out to cobalt: the graded blue keeps at most uFallBlue times its green, with a soft knee
-    // (the pale band stands far under it and is not touched).
-    float fallMost = uFallBlue * col.g + 1e-5;
-    float fallOver = col.b / fallMost;
-    col.b = fallMost * (fallOver < 0.75 ? fallOver : 0.75 + 0.25 * (1.0 - exp(-(fallOver - 0.75) / 0.25)));
+    col = fallGrade(col, uFallPivot, uFallPower, uFallBlue);
   }
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, mix(vec3(0.1, 0.3, 0.9), vec3(0.95, 0.95, 0.9), min(alpha, 1.0)), vec2(moved * 8.0 * min(alpha, 1.0), shadow), length(vView));
 }`
@@ -536,6 +659,7 @@ export class NeptunePlanet {
       return w ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(w) / 2)) : 1
     }
     const size = (i: number): number => (p?.textures[i]?.image as unknown as { width: number } | undefined)?.width ?? 1
+    const full = (i: number): number => p?.counts[i] ?? size(i)
     const shownFrom = Math.min(p?.shownFrom ?? MAX_LEVELS, MAX_LEVELS)
     const offset = (i: number): THREE.Vector2 => new THREE.Vector2(Math.tan(THREE.MathUtils.degToRad(p?.offsetsDeg?.[i]?.[0] ?? 0)), Math.tan(THREE.MathUtils.degToRad(p?.offsetsDeg?.[i]?.[1] ?? 0)))
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
@@ -554,14 +678,14 @@ export class NeptunePlanet {
         uFlowMap: { value: o.flow ?? o.map }, uFlow: { value: 0 },
         uFarMap: { value: o.far ?? o.map }, uCirrus: { value: new THREE.Vector4(0, 0, 0, 1) }, uClump: { value: new THREE.Vector3(0, 0.5, 1) },
         ...Object.fromEntries(levels.map((i) => ['uPatch' + i, { value: tex(i) }])),
-        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) },
+        uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchFull: { value: levels.map(full) }, uMapFull: { value: o.mapCount },
         uPatchCount: { value: p?.textures.length ?? 0 },
         uFeather: { value: p?.feather ?? 0.12 }, uFeatherOwn: { value: p?.featherOwn ?? p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uLine: { value: 1 },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uPlace: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.clearDeg?.[1] ?? 1)), 0) },
         uPatchOff: { value: levels.map(offset) }, uShown: { value: 0 }, uTone: { value: p?.tone ?? o.map }, uToneAmt: { value: 0 }, uVivid: { value: new THREE.Vector2(p?.vivid?.[0] ?? 1e9, p?.vivid?.[1] ?? 2e9) }, uCirrusPx: { value: 0 }, uHomeN: { value: p?.home ?? new THREE.Vector3(0, 0, 1) }, uPlain: { value: new THREE.Vector3(Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[0] ?? 0)), Math.cos(THREE.MathUtils.degToRad(p?.plainDeg?.[1] ?? 1)), 0) },
         uSpin: { value: 0 }, uStream: { value: 0 }, uShear: { value: new THREE.Vector2(o.clouds.shear, o.clouds.shearBands) },
-        uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 },
+        uStormAxis: { value: o.storm.axis.clone().normalize() }, uStormRadius: { value: THREE.MathUtils.degToRad(o.storm.radiusDeg) }, uStormAngle: { value: 0 }, uEyeAt: { value: new THREE.Vector4(0, 1, 0, 1) }, uEyeMake: { value: new THREE.Vector4(0, 0.3, 1, 0) }, uEyeHue: { value: new THREE.Vector3(1, 1, 1) },
         uCloudHeight: { value: o.clouds.height }, uCloudSoft: { value: o.clouds.soft }, uShadow: { value: new THREE.Vector3(o.clouds.shadow, o.clouds.shadowSoft, 0.12) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uFallPivot: { value: new THREE.Vector3(1, 1, 1) }, uFallPower: { value: new THREE.Vector3(1, 1, 1) }, uFallBlue: { value: 1e6 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uDeck: { value: knots(o.deck) }, uCloud: { value: knots(o.cloud) },
@@ -578,7 +702,7 @@ export class NeptunePlanet {
         uTwi: { value: new THREE.Vector3().fromArray(l.twilight) }, uTwiSun: { value: new THREE.Vector4().fromArray(l.twilightSun) }, uAirShade: { value: new THREE.Vector4(l.shade[0], l.shade[1], l.shade[2], 1) }, uAirGround: { value: 1 }, uDistant: { value: new THREE.Vector4(0, 0.1, 0.5, 4) }, uDistantAir: { value: new THREE.Vector4(1, 1, 1, 0) },
         uForward: { value: new THREE.Vector3().fromArray(l.forward) }, uForwardShape: { value: new THREE.Vector2(l.forwardWidth, l.forwardPower) },
         uNear: { value: new THREE.Vector4(0, 1, o.near.power, o.near.saturation) }, uNearTint: { value: new THREE.Vector4(o.near.tint[0], o.near.tint[1], o.near.tint[2], o.near.pivot) }, uNearFall: { value: new THREE.Vector3(0, 1, 1) },
-        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) }, uMelt: { value: new THREE.Vector2(l.melt[0], l.melt[2]) }, uNight: { value: new THREE.Vector4(0, o.night.edge[0], o.night.edge[1], Math.log2(o.mapWidth / o.night.texels)) },
+        uField: { value: o.field.texture }, uFieldRange: { value: new THREE.Vector4(o.field.muMax, o.field.ndlMin, o.field.width, o.field.span) }, uFieldSide: { value: new THREE.Vector4(1, 0, 0, 0) }, uFieldEye: { value: new THREE.Vector4(0, 0, 0, 0) }, uMelt: { value: new THREE.Vector2(l.melt[0], l.melt[2]) }, uNight: { value: new THREE.Vector4(0, o.night.edge[0], o.night.edge[1], Math.log2(o.mapWidth / o.night.texels)) },
         uBodyToWorld: { value: this.bodyToWorld },
         uDiag: diagUniform, uGrad: gradUniform,
       },

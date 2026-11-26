@@ -1,0 +1,54 @@
+{
+ "how": "The five shown plates of the place as they stood in src/stops/neptune/patches.json (levels 3 to 7) until 24 Nov, when they were taken out of the stop: with deep.json on true they were loaded and never drawn. shown.py bake needs these entries back in patches.json after the three levels of the globe, with place.shownFrom 3.",
+ "levels": [
+  {
+   "file": "place-26.webp",
+   "widthDeg": 26,
+   "offsetDeg": [
+    0,
+    0
+   ],
+   "texels": 3392
+  },
+  {
+   "file": "place-16.webp",
+   "widthDeg": 16,
+   "offsetDeg": [
+    0,
+    -1.5
+   ],
+   "texels": 3520,
+   "takeOffsetDeg": [
+    0,
+    0
+   ]
+  },
+  {
+   "file": "place-10.webp",
+   "widthDeg": 10,
+   "offsetDeg": [
+    1,
+    -1.5
+   ],
+   "texels": 3328
+  },
+  {
+   "file": "place-6.webp",
+   "widthDeg": 6,
+   "offsetDeg": [
+    1.6,
+    -2.8
+   ],
+   "texels": 3712
+  },
+  {
+   "file": "place-3.5.webp",
+   "widthDeg": 3.5,
+   "offsetDeg": [
+    2,
+    -3.2
+   ],
+   "texels": 4096
+  }
+ ]
+}
