@@ -1,9 +1,57 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T03:44:51.321Z",
- "head": "57c7e81dd489a4a15e3cd4f3bd6c031c56f86018",
- "note": "trial R's whole rise beside main: 16 red rows against 19, two worse, soft round the place at 1557 to 1563",
+ "pushed": "2026-11-26T04:27:19.153Z",
+ "head": "27a2f066970d366f9f0b2b2f9a7ac2509bfe2cb3",
+ "note": "State A against main at dive rows 1310 to 1312; state R against main at rise 1566 and 1572; state R is the commit 27a2f066 under proof",
  "looks": [
+  {
+   "time": "2026-11-26T04:27:18.499Z",
+   "file": "20261126042718499-note-R-M-1566z.jpg",
+   "source": "../../../../tmp/v/sh/A/R-M-1566z.jpg",
+   "kind": "note",
+   "label": "State R (left) against main (right), rise 1566 and 1572, x 640 to 1240, y 120 to 560 at 1.3: R's middle distance is the plate's soft deck, main's the hold's cells enlarged",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T04:27:17.695Z",
+   "file": "20261126042717695-note-d1317.jpg",
+   "source": "../../../../tmp/v/sh/A/d1317.jpg",
+   "kind": "note",
+   "label": "State A (left), main (middle), difference times 8 (right), dive 1316 to 1318 + 1/2, x 0 to 520, y 160 to 360: the builds differ in a band under the limb",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T04:11:05.158Z",
+   "file": "20261126041105158-note-A-M1d-limb.jpg",
+   "source": "../../../../tmp/v/sh/A/A-M1d-limb.jpg",
+   "kind": "note",
+   "label": "State A (left) against main (right) at the left limb, dive frames 1312, 1314, 1316, 1318, 1320, crop x 0 to 560, y 150 to 350: A holds coloured cells and a brighter rim under the limb to about 1316; alike from 1318",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T04:11:04.612Z",
+   "file": "20261126041104612-note-map-2622.jpg",
+   "source": "../../../../tmp/v/sh/A/map-2622.jpg",
+   "kind": "note",
+   "label": "The reader's own map of row 1311 of the dive (its poses, its rows to the digit) at x 80 to 500, y 140 to 340: frame 1311, frame 1319 carried onto it, the detail of each, the reading (white is 1). Top state A (row 0.675), bottom main (row 0.555): in both the reading rises to 1 at the border of the judged ground next to the limb",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T04:11:04.018Z",
+   "file": "20261126041104018-note-A-M1d-1310-d.jpg",
+   "source": "../../../../tmp/v/sh/A/A-M1d-1310-d.jpg",
+   "kind": "note",
+   "label": "State A, main and their difference times 6 at dive frames 1310, 1311, 1318, 1319 (same crop): the difference is cells of 20 to 50 px in the far ground at 1310 and 1311 and next to nothing at 1318 and 1319",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T04:11:03.408Z",
+   "file": "20261126041103408-note-A-M1d-1310.jpg",
+   "source": "../../../../tmp/v/sh/A/A-M1d-1310.jpg",
+   "kind": "note",
+   "label": "State A (left) against main (right), dive frames 1307, 1310, 1311, 1315, 1318, 1319, crop x 120 to 520, y 120 to 320, three times: A shows red and green cells and a brighter top in the far ground at 1307 to 1311, main a plain gold; alike from 1318",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T03:44:50.449Z",
    "file": "20261126034450449-note-R-M1-late.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/v/sh/R/r-3094-back.jpg",
    "kind": "note",
    "label": "Trial R, row 1547 (0.49 against main's 0.40): the patch the reader marks on the later frame 1555 (upper left, red), R at 1555 and 1554, main at 1554. The marked patch lies under the far ridge where the plate's far deck ends; main shows crisp cells and bright patches below where R shows the plate's soft deck",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T03:13:51.114Z",
-   "file": "20261126031351114-note-R-M1-pair.jpg",
-   "source": "../../../../tmp/v/sh/R/R-M1-pair.jpg",
-   "kind": "note",
-   "label": "Trial R, not named: main's Venus code with the far deck of T in the rise's eight plate files. Left R, right main, rise 1542 to 1557 by threes, draft frames at half size, band y 150 to 560. Rows 1541 to 1546 + 1/2 by the reader, R then main: 0.12 0.44, 0.18 0.41, 0.42 0.62, 0.47 0.67, 0.49 0.54, 0.52 0.79, 0.45 0.71, 0.83 0.75, 0.54 0.72, 0.62 0.73, 0.70 0.83, 0.48 0.58; row 1547 0.49 against 0.40. Two rows worse than main's, so no name",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T02:41:51.156Z",
-   "file": "20261126024151156-note-A-M1-1311-x4.jpg",
-   "source": "../../../../tmp/v/sh/A-M1-1311-x4.jpg",
-   "kind": "note",
-   "label": "state A left, main middle, difference times 6 right: 1311 and 1308, x 140 to 400, y 140 to 290 at 2.4 times, the place of the row 1311 (A 0.67, main 0.55)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T02:41:50.184Z",
-   "file": "20261126024150184-note-A-M1-diff-a.jpg",
-   "source": "../../../../tmp/v/sh/A-M1-diff-a.jpg",
-   "kind": "note",
-   "label": "state A left, main's Venus on the same tree middle, their difference times 8 right: 1275, 1305, 1311, 1320, 1332",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T02:41:48.708Z",
-   "file": "20261126024148708-note-d06.jpg",
-   "source": "../../../../tmp/v/sh/A/d06.jpg",
-   "kind": "note",
-   "label": "state A f8c764b5, the dive, every frame at rate 2 from 1310 to 1317 + 1/2, quarter size",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T01:55:03.038Z",
-   "file": "20261126015503038-note-mgD-changes.jpg",
-   "source": "../../../../tmp/v/sh/mgD-changes.jpg",
-   "kind": "note",
-   "label": "merged reader on the candidate's dive: its picture of the rows 1322, 1330 + 1/2, 1338 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T01:55:01.970Z",
-   "file": "20261126015501970-note-cF0D-cand-L.jpg",
-   "source": "../../../../tmp/v/sh/cF0D-cand-L.jpg",
-   "kind": "note",
-   "label": "control without the far deck in the dive's plates left, with it right, 1321, 1322, 1329, 1330, x 0 to 760, y 250 to 640",
    "stop": "venus"
   }
  ]
