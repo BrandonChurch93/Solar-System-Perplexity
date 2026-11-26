@@ -1,9 +1,41 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T18:54:02.155Z",
+ "pushed": "2026-11-26T19:16:19.720Z",
  "head": "aec270207ca65b9b9d51ba0a8cbc861f0c33e2ae",
- "note": "18:54 UTC: S2 and M9 controls; M1 and M2 switches drawing",
+ "note": "S2 after 3019: the far strip's two pictures taken apart by switches; M9 control at the review tier",
  "looks": [
+  {
+   "time": "2026-11-26T19:15:50.774Z",
+   "file": "20261126191550774-note-lay-sheet.jpg",
+   "source": "../../../../tmp/eye/lay-sheet.jpg",
+   "kind": "note",
+   "label": "S2 cause: where the relief shows the approved picture (white on the right) at 3019 + 1/2 and 3027 + 1/2, share held at 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:15:50.237Z",
+   "file": "20261126191550237-note-s2d-6055.jpg",
+   "source": "../../../../tmp/eye/s2d-6055.jpg",
+   "kind": "note",
+   "label": "S2 cause, 3027 + 1/2: share 0, share 1, share 1 with the approved picture off, share 1 with the air off",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:15:49.686Z",
+   "file": "20261126191549686-note-s2d-6039.jpg",
+   "source": "../../../../tmp/eye/s2d-6039.jpg",
+   "kind": "note",
+   "label": "S2 cause, 3019 + 1/2: share 0, share 1, share 1 with the approved picture off, share 1 with the air off",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:15:49.078Z",
+   "file": "20261126191549078-note-m9-own-review.jpg",
+   "source": "../../../../tmp/eye/m9-own-review.jpg",
+   "kind": "note",
+   "label": "M9 control at the review tier: 3010 at its own size beside 3019 shrunk 2.53 times onto it",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T18:54:00.767Z",
    "file": "20261126185400767-note-m9-own-asis.jpg",
@@ -18,38 +50,6 @@
    "source": "../../../../tmp/eye/m9-rows.jpg",
    "kind": "note",
    "label": "M9 control: the vortex's upper left rim at 3010, 3013, 3016, 3019 laid onto 3019; as it is, fine function off, march off, placed ground off",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:40:39.254Z",
-   "file": "20261126184039254-note-s2-reader.jpg",
-   "source": "../../../../tmp/eye/s2-reader.jpg",
-   "kind": "note",
-   "label": "S2 control: the reader's own sheet for 3019 + 1/2 to 3027 + 1/2, as it is, share 0, share 1; last column the change of the pattern, white is 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:40:38.700Z",
-   "file": "20261126184038700-note-s2-place.jpg",
-   "source": "../../../../tmp/eye/s2-place.jpg",
-   "kind": "note",
-   "label": "S2 control: frames 3019 + 1/2 and 3027 + 1/2 as it is, with the relief's share held at 0 and at 1; the far zone toward the limb",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:35:55.032Z",
-   "file": "20261126183555032-note-n2.jpg",
-   "source": "../../../../tmp/eye/n2.jpg",
-   "kind": "note",
-   "label": "Rise 3255, 3256, 3257 at native pixels, corner x 1440 to 1920, y 400 to 620: main above, build E below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:35:54.318Z",
-   "file": "20261126183554318-note-n1.jpg",
-   "source": "../../../../tmp/eye/n1.jpg",
-   "kind": "note",
-   "label": "Rise 3252, 3253, 3254 at native pixels, corner x 1440 to 1920, y 400 to 620: main above, build E below",
    "stop": "jupiter"
   },
   {
