@@ -1,71 +1,71 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T00:26:56.631Z",
- "head": "61f683604e59583c7ac2c4c6254cee34287ce85f",
- "note": "candidate whole dive: red, 26 rows over 0.45 (main 25), largest 0.60 at 1322 (main 0.62); worse than main at 1303.5, 1310, 1321 to 1324, 1330.5; no name",
+ "pushed": "2026-11-26T00:45:28.930Z",
+ "head": "727de90a2b58114b321985287127d4d32682eaf5",
+ "note": "candidate dive at the reader's pixels, main beside it; the merge of main 1f51abc9 changes the sky alone",
  "looks": [
   {
-   "time": "2026-11-26T00:26:47.141Z",
-   "file": "20261126002647141-note-cand-d-ll1.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-ll1.jpg",
+   "time": "2026-11-26T00:45:27.802Z",
+   "file": "20261126004527802-note-merge-diff.jpg",
+   "source": "../../../../tmp/v/sh/merge-diff.jpg",
    "kind": "note",
-   "label": "candidate 6b9c2f89 dive cand-d-ll1",
+   "label": "candidate dive merge-diff",
    "stop": "venus"
   },
   {
-   "time": "2026-11-26T00:26:46.449Z",
-   "file": "20261126002646449-note-cand-d-w4.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-w4.jpg",
+   "time": "2026-11-26T00:45:26.691Z",
+   "file": "20261126004526691-note-m0-cand-d-E.jpg",
+   "source": "../../../../tmp/v/sh/m0-cand-d-E.jpg",
    "kind": "note",
-   "label": "candidate 6b9c2f89 dive cand-d-w4",
+   "label": "candidate dive m0-cand-d-E",
    "stop": "venus"
   },
   {
-   "time": "2026-11-26T00:26:45.791Z",
-   "file": "20261126002645791-note-cand-d-w3.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-w3.jpg",
+   "time": "2026-11-26T00:45:25.589Z",
+   "file": "20261126004525589-note-m0-cand-d-C.jpg",
+   "source": "../../../../tmp/v/sh/m0-cand-d-C.jpg",
    "kind": "note",
-   "label": "candidate 6b9c2f89 dive cand-d-w3",
+   "label": "candidate dive m0-cand-d-C",
    "stop": "venus"
   },
   {
-   "time": "2026-11-26T00:26:45.082Z",
-   "file": "20261126002645082-note-cand-d-w2.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-w2.jpg",
+   "time": "2026-11-26T00:45:24.697Z",
+   "file": "20261126004524697-note-m0-cand-d-A.jpg",
+   "source": "../../../../tmp/v/sh/m0-cand-d-A.jpg",
    "kind": "note",
-   "label": "candidate 6b9c2f89 dive cand-d-w2",
+   "label": "candidate dive m0-cand-d-A",
    "stop": "venus"
   },
   {
-   "time": "2026-11-26T00:26:44.353Z",
-   "file": "20261126002644353-note-cand-d-w1.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-w1.jpg",
+   "time": "2026-11-26T00:45:23.845Z",
+   "file": "20261126004523845-note-cand-d-E.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-E.jpg",
    "kind": "note",
-   "label": "candidate 6b9c2f89 dive cand-d-w1",
+   "label": "candidate dive cand-d-E",
    "stop": "venus"
   },
   {
-   "time": "2026-11-26T00:00:53.784Z",
-   "file": "20261126000053784-note-cand-m0-1575.jpg",
-   "source": "../../../../tmp/v/sh/cand-m0-1575.jpg",
+   "time": "2026-11-26T00:45:22.998Z",
+   "file": "20261126004522998-note-cand-d-D.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-D.jpg",
    "kind": "note",
-   "label": "rise 1575 and 1581: main (left), candidate (right)",
+   "label": "candidate dive cand-d-D",
    "stop": "venus"
   },
   {
-   "time": "2026-11-26T00:00:52.710Z",
-   "file": "20261126000052710-note-cand-r-w2.jpg",
-   "source": "../../../../tmp/v/sh/cand-r-w2.jpg",
+   "time": "2026-11-26T00:45:22.128Z",
+   "file": "20261126004522128-note-cand-d-C.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-C.jpg",
    "kind": "note",
-   "label": "candidate rise 1552 to 1563, every frame",
+   "label": "candidate dive cand-d-C",
    "stop": "venus"
   },
   {
-   "time": "2026-11-26T00:00:51.659Z",
-   "file": "20261126000051659-note-cand-r-w1.jpg",
-   "source": "../../../../tmp/v/sh/cand-r-w1.jpg",
+   "time": "2026-11-26T00:45:20.894Z",
+   "file": "20261126004520894-note-cand-d-A.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-A.jpg",
    "kind": "note",
-   "label": "candidate rise 1540 to 1551, every frame",
+   "label": "candidate dive cand-d-A",
    "stop": "venus"
   }
  ]
