@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T17:34:19.407Z",
+ "pushed": "2026-11-26T17:40:54.426Z",
  "head": "c9766f990a881dbfcb3e4ec184d21092bea5ae85",
- "note": "answer to MAIL 1517: controls for M3 and M5 (the approved hold picture carries both), 3150 of the candidate c9766f99 at master final beside the approved at one to one",
+ "note": "S1 control: 2997 at master, draft beside final: the globe is crisp with one sample and smeared by the open shutter (14 px kept at the fastest place)",
  "looks": [
+  {
+   "time": "2026-11-26T17:40:53.187Z",
+   "file": "20261126174053187-note-s1-2997-small.jpg",
+   "source": "../work/r27/t/s1-2997-small.jpg",
+   "kind": "note",
+   "label": "S1 control, 2997 on c9766f99 at master, half size: above the draft (one sample at the shutter's middle, 36.9 s), below the final (64 samples across the open shutter, 1432.5 s): the same globe, crisp with one sample, smeared by the shutter",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:40:52.259Z",
+   "file": "20261126174052259-note-s1-2997-half-left.jpg",
+   "source": "../work/r27/t/s1-2997-half-left.jpg",
+   "kind": "note",
+   "label": "S1 control, 2997 master one to one, half width left (the Red Spot): left the draft, right the final; fine detail final over draft 0.45",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:40:51.151Z",
+   "file": "20261126174051151-note-s1-2997-top.jpg",
+   "source": "../work/r27/t/s1-2997-top.jpg",
+   "kind": "note",
+   "label": "S1 control, 2997 master one to one, top middle: left the draft, right the final; fine detail final over draft 0.45; the smear runs along the lines from the frame's centre",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:40:49.953Z",
+   "file": "20261126174049953-note-s1-2997-centre.jpg",
+   "source": "../work/r27/t/s1-2997-centre.jpg",
+   "kind": "note",
+   "label": "S1 control, 2997 master one to one, frame centre: left the draft (one sample at the shutter's middle), right the final (64 samples); fine detail final over draft 0.80",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T17:34:18.257Z",
    "file": "20261126173418257-note-f-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r27/t/sh-c-3275.jpg",
    "kind": "note",
    "label": "3275 enlarged, preview draft: left 14af1ae7 with the dashes, right the cure",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:51:17.166Z",
-   "file": "20261126165117166-note-sh-c-3285.jpg",
-   "source": "../work/r27/t/sh-c-3285.jpg",
-   "kind": "note",
-   "label": "3285 enlarged, preview draft: left 14af1ae7 with the thin dark dashes, right the cure in the working tree (the shade of a wave follows the camera's height), not committed yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:22:02.875Z",
-   "file": "20261126162202875-note-cut-3150.jpg",
-   "source": "../work/r27/t/cut-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft on 14af1ae7, the terrain as it stands",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:22:02.249Z",
-   "file": "20261126162202249-note-baked-3015-crop.jpg",
-   "source": "../work/r27/t/baked-3015-crop.png",
-   "kind": "note",
-   "label": "3015 crop: frame, globe alone, baked height, baked shade field; the speckle sits in the shade field",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:22:01.664Z",
-   "file": "20261126162201664-note-cell4-pair.jpg",
-   "source": "../work/r27/t/cell4-pair.jpg",
-   "kind": "note",
-   "label": "3285 crop: above the state as pushed, below with the band limit of the bake doubled, dashes gone there",
    "stop": "jupiter"
   }
  ]
