@@ -3616,3 +3616,97 @@ Answered 00:56 with the dry run's two lines (the push worked then).
 "MAIL 1361 from the Builder (/root), 01:29 UTC. To every builder, for information: origin main is now fb40db962c77add634dabe98d9a6ac1519fbb59d. It holds batch 16 (take/ea6: the keel of the flight into Saturn and the way out of Mercury in src/space/travel/path.ts; the air's light along both paths in src/terrain/air.ts and src/terrain/relief.ts with two tests; the cue and shot sheets as the tool writes them) and batch 17 (take/sb1: the subtitle layer drawn by the page itself behind the switch subs=1, src/subs, src/main.ts, src/core/engine.ts, assets-src/subs, one test). With the switch off every judged frame is the same bytes as before. Batch 18 (Saturn's surface view by code, take/sr8 790989f6) follows when its four proofs are green. What this changes for you: nothing in your orders. If your standing order is to merge main before you name, merge this main at your next name; if it is to fetch nothing, keep to it and I cut your name onto main. The sheets cut/CUES.md and cut/SHOTS.md are no longer stale: after npm run cues and npm run shots your tree should show no change under cut/; if it does, say so with your name. Do not answer this mail."
 
 "MAIL 1367 from the Builder (/root), 01:58 UTC. To every builder, for information: origin main is now 8fb3bffe499832a8696a7caf2b0b15045a1aef1a. On fb40db96 (batches 16 and 17) and its PROGRESS tip a4944f12 it holds batch 18 (take/sr8 790989f6: Saturn's surface view drawn by code, saturn_coder's name 7be04230). It changes 35 files, all Saturn's own: src/stops/saturn (16 files, 4 of them under kept) and assets-src/saturn (19 files). No shared file moves: nothing under src/core, src/space, src/terrain, src/subs, tools, config or cut. Its four proofs were green: the units and the gate (1017 tests passed), the finals of 3465, 3567, 3720 and 3866 with the name's bytes, and the reader on rise part 2 of 2. What this changes for you: nothing in your orders. If your standing order is to merge main before you name, merge this main at your next name; if it is to fetch nothing, keep to it and I cut your name onto main. Do not answer this mail."
+
+
+### My report of 02:47 UTC (answer to MAIL 1326 B), word for word
+
+"ANSWER to MAIL 1326 B (the table's step) from uranus_builder, 02:47 UTC, and where RC stands. No name: the name stays 9c8a46df.
+
+1. RC 6ef232ea is a state, not a name. Tool row, rise part 1 of 2: pattern 1.37 from 4403 (73 frames over, first 4381; pop 1.07, level step 0.24). The name 1.29 from 4387, main and B1 1.60. By your rule of 1326 C it is not named.
+
+2. Your question, the table. RC leaves light.bin as it is: it takes the ground's pattern out of the light above the plain light, so the step is still in the table and still a step of level in the picture. It lays calm light over the step, it does not cure it. The control you asked for, a smooth law (rows 1 to 19, view cosine 0 to 0.157, one cubic from the limb's value to row 20's value and slope), on RC's tree:
+- 4035 final: match with uranus-hero.png 3.730 (RC 3.737, main 3.743). 5888 px differ from RC's by over 1 level, largest 32, all on the limb. G5 PASS. G17 PASS: 4035 median 1.170 (RC and main 1.178), p25 1.082 (unchanged); 4290 1.076 and 0.960 (unchanged).
+- The row: my chain of the tool's code gives the tool's table to the digit on RC at the 10 rows I compared. With the smooth table, 41 rows from 4383 to 4403: mean 0.95 against RC's 1.00, largest 1.47 from 4400 against RC's 1.37. Not a cure of the row.
+- 4290 at draft: no pixel moves by more than 1 level. The hard band on the horizon at 4290 is not this table's; the terrain view does not read those rows.
+- So the table law is not committed. By 1275 point 3 as written the fall of the median by 0.008 keeps it out. The cause of the fall is known: the limb's thin bright line is 12 to 15 percent lower in its first two pixels (arithmetic), which is also why the match gets better. Tool, value and recipe line are kept ready outside the tree. Picture 1: the limb at 4035, final, 4x: approved, main, RC, the smooth table.
+- CORRECTION: my looks note of 01:52 said the table's step is the cause of the rise's red. I had read two rows. With every row read it does not hold; the looks note of 02:16 says so.
+
+3. What the row is made of (controls on RC's tree, my chain):
+- All hand layers off (terrain picture, billow shade, veil, tops): 4383 to 4385 + 1/2 read 1.26 to 1.51 (RC 1.10 to 1.34). The hands are not the cause. Picture 2.
+- The billow shade taken off the air's share of the light: mean of 18 rows 1.12 against 1.14. Not a cure, not kept.
+- That same control changes no pixel by more than 5 levels at the three frames I compared (at most 8401 px by over 1 level), and 9 of its 18 rows move by 0.13 to 0.35 (4390 + 1/2 from 1.36 to 1.01, 4389 + 1/2 from 1.14 to 1.33, 4399 from 0.94 to 1.13). The row is the 99th percentile over 3 to 21 percent of the frame at quarter size and the tool's line is the largest of 99 rows. So 1.37 against 1.29 is inside the row's own scatter. The level is what differs: mean of the 41 tool rows from 4383 to 4403: B1 1.14, RC 1.00.
+- What is left is what I named on B at 22:30: the limb's bright band lifts off a ground point as the eye rises and its detail comes out of the air, the air's own change by the path (the made case read 0.71). I hold no cure by cause for it that does not bend the law of air or put the far ground under the reader's floor, as the name's flat far ground did. Picture 3 is that ground at 4403, 4407, 4411.
+
+4. Push: my login is out since 02:44 (fatal: could not read Username; the looks push of 02:16 still went through). Attached: a bundle of 6ef232ea..af96ecef9b8dfec30c7cd3e0039e37c1b3396497 on agent/uranus-place (needs 6ef232ea and main a4944f12): the merge of main a4944f12 as 766c9258 (no frame moved: 4035, 4137, 4290, 4436, 4186, 4407 at draft are 6ef232ea's bytes; tsc clean), then the notes. And the three pictures as the looks that did not go up.
+
+5. Running now, without waiting: final 4407 and RC's rows dive part 2, rise part 2, dive part 1 on 766c9258. Then the list of 1275 point 2 and 1343, first the soft streaks at 4399."
+
+Sent with four attachments: the bundle `uranus-place-af96ecef.bundle`, `limb-4035-table-4x.png`, `pat-EA-8770.jpg`, `far-RC.png`.
+
+### MAIL 1377, word for word
+
+"MAIL 1377 from the Builder (/root), 02:58 UTC. Read: your 02:47. No name; 9c8a46df stays the name and stays off main by its rise part 2 of 2 (1.16 against main's 0.88); RC 6ef232ea is a state; the correction of your 01:52 note is taken; the bundle and the three pictures are filed. Your sign in being out does not hold you up: bundles by attachment are enough, and a name goes the same way. When the final 4407 and RC's rows are in, send the rows beside the name's and main's own and say whether RC becomes a name."
+
+### 02:47 to 03:02 UTC: final 4407 on the merge, the push back
+
+- Final 4407 on `766c9258` (956.4 s, 64 samples; `/tmp/n66/out/final-4407.png`): lines measure 0.64 / 0.95 (main's final 0.54 / 0.87, 2583f129's final 0.65 / 0.99). Against 2583f129's final: mean 0.315, 219032 px by over 1 level, 50443 over 4, 6787 over 10, largest 29. Against main's final: mean 12.4. Mean RGB of the frame: main 37.82, 70.77, 82.54; RC 40.51, 83.40, 93.93.
+- By eye, main beside RC at frame size and at 1 to 1 (`/tmp/n66/final-4407-main-rc.jpg`, `-crop.png`): main is a deep blue with crisp white cloud and dark shadow; RC is a paler teal, its cloud softer and greyer, with short fine streaks in the lower middle. Main's frame is the better picture there. Cause as written at 23:40: at this height main shows its bare globe and RC the cover, lit by the deck's law (the item two laws of light), in the name and in B1 alike. Open.
+- 03:01 the pushes went through again: looks head a76ec358f293, agent/uranus-place 6ef232ea..af96ecef.
+
+### MAIL 1385, word for word
+
+"MAIL 1385 from the Builder (/root), 03:16 UTC. A finding from the film of main, not a ruling on your RC. Answer inside your next mail, do not stop what you run.
+
+Attached: six frames of main's film at 960 by 540, frames 4140, 4144, 4146, 4148, 4150, 4152 (commit 172e7bcd, whose Uranus is main 8fb3bffe's). What I see by eye:
+- 4140: the sky left of the limb is dark, blue black, no cloud of stars.
+- 4144: a bright brown band of the star cloud fills the whole left strip of the frame beside the limb.
+- 4146: the band runs on a slant from the bottom left to the top; a first faint arc of the rings shows.
+- 4148: the band is down in the bottom left corner; the ring arcs are plain.
+- 4150, 4152: the band is gone, the arcs stand at the upper left.
+So inside 8 film frames (a quarter of a second) a bright band comes into the strip beside the limb and leaves it, and the ring arcs come in behind it. At speed that reads as something flashing in at the edge, which is what Brandon's notes call a moment where things load in.
+
+Three questions, by measure:
+1. Is the band the sky itself swept through the edge by the camera's turn (give the turn of the view per film frame in degrees at 4140 to 4152, and the roll apart from it), or a patch or plate whose weight moves? Name the file and the lines.
+2. Are the ring arcs entering by the frame's edge with their full strength, or fading in?
+3. The same six frames from your present state beside these.
+
+If it is the turn: the cure belongs at the path (a turn that does not sweep the bright band through the frame in a quarter of a second, or one that keeps it out of frame), not at the sky's brightness. Say whose lines those are if they are not yours and I rule on the owner.
+"
+
+His picture is kept as `/tmp/n66/builder-dive-4140-4152.jpg` (1400 by 1184, 2 columns by 3 rows).
+
+### MAIL 1390, word for word
+
+"MAIL 1390 from the Builder (/root), 03:43 UTC. To every builder, for information: origin main is now cfabcc52f6dbe1ac02ad4fec5bfe73c709c2e974. On 8fb3bffe (batch 18) and its PROGRESS tip 50ceac93 it holds batch 19 steps (a) and (b) (take/sl1 c7f5ac9c), five files: config/showcase.json, src/space/sky.ts, src/space/travel/field.ts, src/space/travel/path.ts, tests/sunstar.test.ts. Step (a) is the flight into Saturn without the roll back (travel_builder): frames 3331 to 3389 change. Step (b) is the far Sun's glare at Neptune as a law of the sky (sky_builder): in the samples the frames 4510 to 4580 and 4700 to 4712 change (the far Sun alone, 39 to 93 dB), and 4455 to 4505, 4605 to 4690, 4720 to 5399 and all 43 samples from the Sun to Uranus keep their bytes. Its proofs were green: the units and the gate (1020 tests), the two trees jobs, and the reader's rows on Jupiter's rise 2 of 2 and Neptune's dive 1 of 4 and rise 2 of 2, each equal to main's. Cut and out for proof, not yet on main: take/mk1 591224b9 (Mercury's name bd3e416a, 33 files of Mercury alone), take/hn1 4afd5d7f (the harness tools), take/sg2 2434acd7 (the field glare in SkyPatch: src/core/types.ts and src/space/sky.ts), take/hc1 23d19015 (the crests of a relief: src/terrain/crest.ts, src/terrain/relief.ts and two test files; it draws nothing until a stop gives crest in its relief). What this changes for you: nothing in your orders. If your standing order is to merge main before you name, merge this main at your next name; if it is to fetch nothing, keep to it and I cut your name onto main. Do not answer this mail.
+"
+
+### 03:00 to 04:10 UTC: RC's row of dive part 2, and MAIL 1385 measured
+
+Row (tool, on af96ecef, whose picture tree is 766c9258):
+- Dive part 2 of 2: pattern 1.48 from 4169 + 1/2 (68 of 114 rows over, first 4155, last 4188 + 1/2); pop 1.12 at 4178 + 1/2 (0 over 1.2); level step 0.11 at 4156; ground pop 1.033 from 4196 + 1/2, 0 of 113 rows over 1.3; 2985 s. The name 9c8a46df: 1.52 from 4180 (68 over). Main: 1.61 from 4163 (65 over).
+
+MAIL 1385, tools (all under `out/work/u/`, not committed): `band6.ts FROM TO [main span]` (turns and plate weights by frame), `band7.ts` (map of the band's part of the sky against the share of the sky's own turn and the frame), `band8.ts` (the rise's shares), `band9.ts LAT` (search of surface aims; env `LAW=main|rc|const:S|flat:S,A1,A2`, `AIMS="a,t,l;..."`, `FINE=a0,a1,l0,l1,t0,t1,step`, `NOSEARCH=1`). Outputs in `/tmp/n67/` (`band6-main.txt`, `band6-rc.txt`, `band7.txt`, `band9.txt`, `band9.json`).
+
+Question 1, what the band is:
+- It is the film's own sky: the star cloud of the band map near the galactic plane and the core, drawn by `src/space/sky.ts` (sky direction `sd = uFrame * dir`, lines 264 to 267 on the main my branch holds, a4944f12), swept through the frame by the turn. No plate has weight on it.
+- Control by render (RC's tree, `look.show.sky` false, so the stop's two sky plates, the glow and the veil are off; `/tmp/n67/ns-ctl.jpg`, `ns2-ctl.jpg`): at 4148, 4150, 4152, 4154 the band does not change; what changes is the limb's blue glow alone (largest 8, 30, 62 levels at 4148, 4150, 4152). The surface plate lays a dark blue wash with its own stars over the sky by its weight by height (0 to 4150, 0.032 at 4151, 0.108 at 4152, 0.219, 0.353, 0.498, 0.644 at 4153 to 4156); the eye sees it from 4156.
+- The hold's plate (`sky-hold.webp`, weight 1 through 4150) has its footprint out of the frame from 4140 (6 of 1451 sky points at 4139, 0 after).
+- The turn in degrees a film frame, 4140 to 4152. The camera (the path; `plan.ts` and `path.json` do not differ from main's): view axis 1.92 to 1.75, roll about the axis 1.34 to 1.40, all 2.34 to 2.24. The sky's own turn (`src/stops/uranus/plan.ts` lines 215 to 222, `look.ts` `place.skyDive.turn`; carried by `src/director/film.ts` lines 1055 to 1061): main's law [0.2, 4.55] 2.05 to 2.07; mine [0.01544, 4.597] (since f4a2489d, by MAIL 880 point 4) 1.13 to 1.14. The view against the sky: main axis 3.49 to 3.42, roll 2.42 to 2.02, all 4.25 to 3.97 (100 to 85 px a frame at the middle, 1080 lines); mine axis 2.76 to 2.61, roll 1.93 to 1.74, all 3.37 to 3.14 (79 to 65 px).
+- Where the band is, by arithmetic (sky points within 6 degrees of the galactic plane): main's law has it enter by the upper left corner at 4141, fill the strip 4143 to 4145, leave by the bottom left corner at 4149, none at 4150. That is the Builder's six frames to the frame. Mine: it enters at 4145, is strong 4148 to 4153, a remnant to 4156, a thin part in the upper right corner 4160 to 4166. Seen on RC's drafts 4138 to 4176 (`/tmp/n67/rc-4138-4152-ul.jpg`, `rc-4147-4159-ul.jpg`, `rc-4158-4176.jpg`).
+- A fault of my state, found here: with the turn spread over the whole dive the band is still in the frame while the two painted skies exchange by height (0.5 to 0.2 R, 4151 to 4160). On main's law the band has left by 4150 and the exchange runs over dark sky (the lay of 8503e765). So RC and the name 9c8a46df show two skies exchanging with the band in the frame over 4153 to 4156 where main does not (MAIL 780).
+
+Question 2, the ring arcs (control by render: RC with `look.show.rings` false, the difference is the rings' own light; `/tmp/n67/arcs-only-4138-4152.jpg`):
+- 4138 to 4142: the orbit's rings leave by the top edge (pixels over 4 levels: 2961, 1470, 542, 156, 41). Their weight is 1 there; it falls by height from 4146 (0.979, 0.881 at 4148, 0.726, 0.539 at 4152, 0.175 at 4156) when they are out of the frame.
+- The place's arcs (`set.ts` lines 285 to 310, weight `reach(place.arcs.dive [1, 2], height)`: 0.804 at 4140, 0.998 at 4142, 1 from 4143; cut at the ball by `place.onSky [0.97, 1]`; these lines are the same on main) first show at 4143 inside the frame at the limb, at x 348 to 391, y 431 to 541 (168 px over 4 levels, largest 36), then 4144 largest 108, 4145 largest 170 (box x 285 to 566, y 149 to 556), and from 4145 on the largest level stays (169, 158, 183, 190, 199, 199, 194). They reach the top edge at 4147. So they do not come in by the frame's edge and they do not fade in by a weight: they come out from behind the globe's limb at full weight, through the 3 percent feather at the ball, and their seen length grows from 110 px to the frame's top in 4 frames because the sky moves 3.3 degrees a frame against the limb. On main the same laws with the faster sky: first faint at 4146, plain at 4148 (the Builder's frames).
+
+Question 3: `/tmp/n67/six-main-rc.jpg`, the Builder's six frames beside RC's drafts in the same layout.
+
+The cure, what is open and whose lines:
+- The camera's path (mine, `path.json`, `plan.ts`): it alone turns the view 2.3 degrees a frame there and 126.8 degrees over the dive. With no own turn of the sky at all the band is still in the frame for 37 frames (sky held at the hold's pose) or 32 (held at the surface pose). MAIL 311 and MAIL 1097 keep the path as it is.
+- The law of the sky's own turn (mine): every law by height crosses the band, since the two end poses are fixed and the band lies between them. Frames with a band point within 13.5 degrees of the plane in the frame: main's law 16 (4139 to 4150), mine 30 (4143 to 4172), constant share 0.5: 50, a law with a level stretch 49. A slower turn only keeps the band longer in the frame.
+- The surface aim (mine, `plan.ts` line 37 `skyAim.terrain`): 3361 of 14688 aims of a grid keep the band out of every dive frame 4110 to 4185. Control by render with (50, -15, 50), not committed (`/tmp/n67/am-4138-4176.jpg`): the dive 4138 to 4176 has a dark sky to the end, the band is at least 20.6 degrees outside the frame, the sky's own turn in the dive is 48.4 degrees against 57.6; judged 4290 moves by at most 1 level at draft (the plate covers the star field there); judged 4137 moves (stars; 101345 px by over 1 level), 4186 moves in the whole sky. The cost: every such aim is at least 86.7 degrees from Neptune's sky, which the rise turns to (5.0 now; 106.8 for this one), and the rise's look changes with it (now the band crosses the rise 4421 to 4445 and fills up to a quarter of the seen sky at 4431 to 4437, with judged 4436 in it). 866 aims keep the band out of the dive and of the rise, at 116 degrees or more of own turn in the rise.
+- Two aims, one for the dive's end and one for the rise's start, with the star field turned between them where the plate hides it (at 4290 it is hidden to the level): the dive would be clean and the rise would keep its bytes. The engine holds one turn a stop (`src/director/film.ts` lines 247 to 266, 1034, 1055 to 1061, `src/space/aim.ts` `SkyAims.turns`): not my lines.
+- The hold's sky is Saturn's shared sky (`film.sky.follows.uranus = saturn`, `film.ts` lines 232 to 235, Saturn's `skyAim.orbit`): not my lines.
+- Nothing of this is changed in the tree.
+
+04:06 the looks push failed three times (the login was out again: could not read Username). 04:10 it went through (looks head 8083b7ecafbc). Origin main is 5798676c2670615b902ba0ec75e5569fbaafac8b at 04:09 (status commits on cfabcc52); a trial with `git merge-tree` shows no conflict with my branch. Not merged while the rows run on 766c9258's tree.
