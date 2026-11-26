@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T07:54:47.839Z",
+ "pushed": "2026-11-26T08:19:30.635Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "07:55 UTC: tops as a hierarchy of sizes (w48, w51), large heaps in the dark ground (w55, w57); w57 with a smaller glow goes into the solve now",
+ "note": "08:20 UTC. w58 solved reads 7.344 at 3150 (preview, draft; main 3.390), bands green. w59 to w62 are refused trials (crags, rock, blurred fibres). Next: the dark of the lower thirds by depth under an absorbing gas, w63.",
  "looks": [
+  {
+   "time": "2026-11-26T08:19:29.839Z",
+   "file": "20261126081929839-note-w62-3150.jpg",
+   "source": "../work/r26/t/w62-3150.png",
+   "kind": "note",
+   "label": "w62 3150 preview draft: a turbulent tint of seven sizes in the flow's coordinates on the crag state (8.208): the streaks break up, the storm's fibres blur; not taken as it is",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:18:49.447Z",
+   "file": "20261126081849447-note-w61-3150.jpg",
+   "source": "../work/r26/t/w61-3150.png",
+   "kind": "note",
+   "label": "w61 3150 preview draft, refused: thin skin (0.02 units) and grey matter in the dark ground read as rock (8.248)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:18:48.045Z",
+   "file": "20261126081848045-note-w59-3150.jpg",
+   "source": "../work/r26/t/w59-3150.png",
+   "kind": "note",
+   "label": "w59 3150 preview draft, refused: heaps twice as tall read as crags (7.873 on the w58 scaffold)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:09:20.150Z",
+   "file": "20261126080920150-note-w58-r3-3150.jpg",
+   "source": "../work/r26/t/w58-r3-3150.png",
+   "kind": "note",
+   "label": "w58 3150 preview draft after three solve rounds: 7.344 (main 3.390 at this tier), bands green; heaps over the dark ground, the right third far too light",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T07:54:47.202Z",
    "file": "20261126075447202-note-w57-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r26/t/w19-3150.png",
    "kind": "note",
    "label": "w19 at 3150, preview, draft, no scaffold: rolls, curls, small tops on crests; line i 17.687, bands green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:15:34.953Z",
-   "file": "20261126061534953-note-w20-3150.jpg",
-   "source": "../work/r26/t/w20-3150.png",
-   "kind": "note",
-   "label": "w20 at 3150, preview, draft, no scaffold: tops driven by the picture's unrest; line i 17.979, bands green; lower left reads as pebbles",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:15:34.291Z",
-   "file": "20261126061534291-note-w18-3150.jpg",
-   "source": "../work/r26/t/w18-3150.png",
-   "kind": "note",
-   "label": "w18 at 3150, preview, draft, no scaffold: rolls with warp, no lumps; line i 17.600, bands green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:00:24.417Z",
-   "file": "20261126060024417-note-w17-3150.jpg",
-   "source": "../work/r26/t/w17-3150.png",
-   "kind": "note",
-   "label": "w17 at 3150, preview, draft, no scaffold: long rolls along the flow carry the dark field, tops only on their crests (too weak to see here). Reads as flowing satin with strata, not cloud yet. Line (i) 17.686",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:00:23.734Z",
-   "file": "20261126060023734-note-w16-3150.jpg",
-   "source": "../work/r26/t/w16-3150.png",
-   "kind": "note",
-   "label": "w16 at 3150, preview, draft, no scaffold: softer skin, pointed tops, bright painted rims cut. Dark field reads as teeth; too soft, band line red. Refused.",
    "stop": "jupiter"
   }
  ]
