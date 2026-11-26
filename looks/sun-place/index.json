@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T03:54:24.841Z",
+ "pushed": "2026-11-26T04:19:50.227Z",
  "head": "2d2c669d44c1c493a58b39f7c5554cacb042c69e",
- "note": "limb crops at final; G17 green; the reader is running",
+ "note": "rise 190 to 216 of the local merge, the reader still running; sun-near 60 final: dark 0.140 body 0.589 pale 0.110 white 0.036 | half width 5.5 px, 1409 shapes, fine 0.0527, mean 0.409 | distance 0.154",
  "looks": [
+  {
+   "time": "2026-11-26T04:19:49.523Z",
+   "file": "20261126041949523-note-n2h-c.jpg",
+   "source": "../../../../tmp/v/n2h-c.jpg",
+   "kind": "note",
+   "label": "the reader's own draft frames of the local merge 2d2c669d, every film frame 208 to 216: the arcade one body, shrinking; the gas's glow from inside rises as an even grey veil from about 203; nothing pops by my eye",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T04:19:48.744Z",
+   "file": "20261126041948744-note-n2h-b.jpg",
+   "source": "../../../../tmp/v/n2h-b.jpg",
+   "kind": "note",
+   "label": "the reader's own draft frames of the local merge 2d2c669d, every film frame 199 to 207: the arcade one body, shrinking; the gas's glow from inside rises as an even grey veil from about 203; nothing pops by my eye",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T04:19:47.496Z",
+   "file": "20261126041947496-note-n2h-a.jpg",
+   "source": "../../../../tmp/v/n2h-a.jpg",
+   "kind": "note",
+   "label": "the reader's own draft frames of the local merge 2d2c669d, every film frame 190 to 198: the arcade one body, shrinking; the gas's glow from inside rises as an even grey veil from about 203; nothing pops by my eye",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T03:54:24.269Z",
    "file": "20261126035424269-note-n2-limb.jpg",
@@ -54,30 +78,6 @@
    "source": "../../../../tmp/v/n2-four.jpg",
    "kind": "note",
    "label": "frame 60 at final: approved, main 77e597e5 (33.9556 | 11.5380 | 43.5632), local merge 2d2c669d not yet named (38.2638 | 12.5044 | 49.3035), and its frame 90 (37.0199 | 12.7771 | 47.4097; main 30.0950 | 7.1571 | 39.9255). sun-near 60 final: dark 0.140 body 0.589 pale 0.110 white 0.036 | half width 5.5 px, 1409 shapes, fine 0.0527, mean 0.409 | distance 0.154",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T03:20:41.890Z",
-   "file": "20261126032041890-note-arc60-a-t2.jpg",
-   "source": "../../../../tmp/v/arc60-a-t2.jpg",
-   "kind": "note",
-   "label": "the arcade at 60, 1 to 1: approved above, local state (draft) below. Mine: a flat dome of even fine strands, wide dim feet; the approved: a taller arch of thick and fine strands, narrow white feet, loose strands flying off. The next step after this name",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:53:05.798Z",
-   "file": "20261126025305798-note-t2-sheet.jpg",
-   "source": "../../../../tmp/v/t2-sheet.jpg",
-   "kind": "note",
-   "label": "local cae4735c draft: frames 0, 30, 90, 120, 150, 179, 180, 200, 221 (the sky's glow by the eye's height: top right mean red 9.9 at 0, 7.1 at 60, 4.3 at 120, 5.4 at 179, 18.1 at 200, 26.7 at 221)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:53:05.180Z",
-   "file": "20261126025305180-note-t2-limb.jpg",
-   "source": "../../../../tmp/v/t2-limb.jpg",
-   "kind": "note",
-   "label": "limb at 60, 1 to 1, left and right: approved | main final | local cae4735c draft",
    "stop": "sun"
   }
  ]
