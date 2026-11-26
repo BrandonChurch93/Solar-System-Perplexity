@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T13:22:56.630Z",
+ "pushed": "2026-11-26T13:53:20.296Z",
  "head": "902785257fd7487a517634318aab515a0c1cffef",
- "note": "trial: air share of the tones eased, ground pop at the rise handover 1.92 to 0.97 on a slice; proofs running",
+ "note": "eased air share: whole rise read, 0 of 197 rows over the ground pop limit to come, pattern largest 0.73; dive and finals running",
  "looks": [
+  {
+   "time": "2026-11-26T13:53:18.786Z",
+   "file": "20261126135318786-note-S1-1549-b.jpg",
+   "source": "../../../../tmp/v/sh/S1-1549-b.jpg",
+   "kind": "note",
+   "label": "Rise 1552, 1553, 1554: the name 35edb711 above, the eased air share (90278525) below; the reader's pop reads 1.10 at 1553 against 1.07",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T13:53:17.922Z",
+   "file": "20261126135317922-note-S1-1549-a.jpg",
+   "source": "../../../../tmp/v/sh/S1-1549-a.jpg",
+   "kind": "note",
+   "label": "Rise 1549, 1550, 1551: the name 35edb711 above, the eased air share (90278525) below; draft frames of the whole rise, not named",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T13:22:55.909Z",
    "file": "20261126132255909-note-cT1-ll-s.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/r1-mid.png",
    "kind": "note",
    "label": "trial, not named: the globe side at the film's camera of 1540, still: with the ground (top), without the ground and with the picture of the far deck after one fitting run (middle), their difference times 3 (bottom); middle third of the frame",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:36:33.886Z",
-   "file": "20261126123633886-note-Q1-rm-2.jpg",
-   "source": "../../../../tmp/v/sh/Q1-rm-2.jpg",
-   "kind": "note",
-   "label": "trial Q1, not named (the far deck as a picture in place of the plates at the height of T, share by height 1.5 to 12): the named state over the trial, x 1100 to 1700, y 150 to 450, 1552 to 1557: the trial is a white field without forms at 1552 to 1554, then the plates' forms come through it. Reader: 24 of 37 rows over, largest 1.21 at 1550 + 1/2 (named 10 of 37, 0.72)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:36:33.250Z",
-   "file": "20261126123633250-note-Q1-rm-1.jpg",
-   "source": "../../../../tmp/v/sh/Q1-rm-1.jpg",
-   "kind": "note",
-   "label": "trial Q1, not named (the far deck as a picture in place of the plates at the height of T, share by height 1.5 to 12): the named state over the trial, x 1100 to 1700, y 150 to 450, 1546 to 1551: the named state goes from the pale deck to the plates' mottled tan field with a blue white patch within 1546 to 1549; the trial stays pale. Reader: 24 of 37 rows over, largest 1.21 at 1550 + 1/2 (named 10 of 37, 0.72)",
    "stop": "venus"
   }
  ]
