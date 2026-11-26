@@ -198,7 +198,7 @@ describe.skipIf(!have)('the globe options in a WebGL2 browser', () => {
 
   afterAll(async () => {
     await browser?.close()
-  })
+  }, 60000)
 
   it('reads the same values from a mask loaded as one channel, at every mip level and between texels', async () => {
     const four = await call<MaskRead>('mask', 'mask.png', W, H, { srgb: false })

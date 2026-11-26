@@ -64,13 +64,13 @@ export const createSet: SetFactory = async (ctx) => {
   const capLevels = []
   for (const l of country.levels) {
     const size = l.size[key]
-    capLevels.push({ height: heightTexture(ctx, new Uint16Array(await ctx.buffer(base + l.height)), size), size, count: l.size.full, widthDeg: l.widthDeg, low: l.low, high: l.high })
+    capLevels.push({ height: heightTexture(ctx, new Uint16Array(await ctx.buffer(base + l.height)), size), size, widthDeg: l.widthDeg, low: l.low, high: l.high })
   }
   const planet = new Planet({
-    map, mapWidth: wrap.sets.full.color[0], height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
+    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
     cap: { levels: capLevels, border: capJson.border as [number, number], from: capJson.from as [number, number], cells: capJson.cells, pixel: THREE.MathUtils.degToRad(60) / 1080, fine: capJson.fine, reachDeg: capJson.reachDeg, feather: patches.feather, fade: patches.fade, light: capJson.light,
       ...(detailJson.wired ? { detail: { text: groundDetailText, uniforms: groundDetailUniforms(direction(patches.spot.lon, patches.spot.lat)) } } : {}) },
-    patches: { textures: patchTextures, counts: patches.levels.map((l) => l.full), widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
       ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
