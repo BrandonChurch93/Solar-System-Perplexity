@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T16:44:54.224Z",
+ "pushed": "2026-11-26T16:53:43.302Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune 4956, the rise's split frame at review tier with the entry on: whole, six tiles at 1 to 1, four zooms at 3 to 1; drafts of 4955 and 4957 next to tell the small clouds' lower lobe",
+ "note": "Neptune 4956 split frame: drafts of 4955 (terrain alone) and 4957 (orbit alone) beside it; the lower lobe of the small clouds is in both views, no second copy; chain goes on with 4953",
  "looks": [
+  {
+   "time": "2026-11-26T16:53:42.596Z",
+   "file": "20261126165342596-note-p56d-56r-band.jpg",
+   "source": "../../../../tmp/nep/see/p56d-56r-band.png",
+   "kind": "note",
+   "label": "4956 draft over 4956 review, the cloud band, 3 to 1: the hatch of the draft stays faintly at review"
+  },
+  {
+   "time": "2026-11-26T16:53:41.580Z",
+   "file": "20261126165341580-note-p56d-56r-spot.jpg",
+   "source": "../../../../tmp/nep/see/p56d-56r-spot.png",
+   "kind": "note",
+   "label": "4956 draft over 4956 review, deck right of the dark spot, 3 to 1"
+  },
+  {
+   "time": "2026-11-26T16:53:40.329Z",
+   "file": "20261126165340329-note-p55d-56r-smallcl.jpg",
+   "source": "../../../../tmp/nep/see/p55d-56r-smallcl.png",
+   "kind": "note",
+   "label": "4955 draft (terrain alone) over 4956 review (split frame): same clouds, same lobe, no second copy, 3 to 1"
+  },
+  {
+   "time": "2026-11-26T16:53:38.847Z",
+   "file": "20261126165338847-note-p55-56-57d-smallcl.jpg",
+   "source": "../../../../tmp/nep/see/p55-56-57d-smallcl.png",
+   "kind": "note",
+   "label": "Neptune 4955, 4956, 4957 at draft (terrain alone, the split frame's one sample, orbit alone): the small clouds have the same lower lobe in both views, 3 to 1"
+  },
   {
    "time": "2026-11-26T16:44:48.257Z",
    "file": "20261126164448257-note-z4956-band.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/nep/see/z4956-deckR.png",
    "kind": "note",
    "label": "4956 review, split frame of the rise, deckR at 3 to 1"
-  },
-  {
-   "time": "2026-11-26T16:44:45.720Z",
-   "file": "20261126164445720-note-s4956-12.jpg",
-   "source": "../../../../tmp/nep/see/s4956-12.png",
-   "kind": "note",
-   "label": "4956 review, split frame of the rise, tile 12 at 1 to 1"
-  },
-  {
-   "time": "2026-11-26T16:44:45.033Z",
-   "file": "20261126164445033-note-s4956-11.jpg",
-   "source": "../../../../tmp/nep/see/s4956-11.png",
-   "kind": "note",
-   "label": "4956 review, split frame of the rise, tile 11 at 1 to 1"
-  },
-  {
-   "time": "2026-11-26T16:44:44.435Z",
-   "file": "20261126164444435-note-s4956-10.jpg",
-   "source": "../../../../tmp/nep/see/s4956-10.png",
-   "kind": "note",
-   "label": "4956 review, split frame of the rise, tile 10 at 1 to 1"
-  },
-  {
-   "time": "2026-11-26T16:44:43.847Z",
-   "file": "20261126164443847-note-s4956-02.jpg",
-   "source": "../../../../tmp/nep/see/s4956-02.png",
-   "kind": "note",
-   "label": "4956 review, split frame of the rise, tile 02 at 1 to 1"
   }
  ]
 }
