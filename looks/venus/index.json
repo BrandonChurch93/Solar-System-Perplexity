@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T10:30:30.809Z",
- "head": "2f044d9c2ae71c40620ca615692a7b51d9c0d808",
- "note": "seam cure seen, thin band strip, dive lower edge",
+ "pushed": "2026-11-26T11:20:02.386Z",
+ "head": "35edb711d537313db20bc33818b0bb6b2564e05f",
+ "note": "thin band controls: ground held, named state, plates alone, 1540 to 1552",
  "looks": [
+  {
+   "time": "2026-11-26T11:20:01.498Z",
+   "file": "20261126112001498-note-cG-1540.jpg",
+   "source": "../../../../tmp/v/sh/cG-1540.jpg",
+   "kind": "note",
+   "label": "1540, the first frame of the globe side: plates times the map with no ground, the named state, their difference times 4, three crops across",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T11:20:00.410Z",
+   "file": "20261126112000410-note-cG-left.jpg",
+   "source": "../../../../tmp/v/sh/cG-left.jpg",
+   "kind": "note",
+   "label": "Thin band, left under the limb (x 20 to 420, y 270 to 400, times 2), 1540 to 1548: plates times the map with no ground beside the named state. The ground's far deck is smooth streaks with a bank on the limb, the plates hold fine forms from 1541 on; alike from 1547",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T11:19:59.221Z",
+   "file": "20261126111959221-note-cRX-mid.jpg",
+   "source": "../../../../tmp/v/sh/cRX-mid.jpg",
+   "kind": "note",
+   "label": "Thin band, middle under the limb (x 440 to 700, y 230 to 340, times 2), 1542 to 1552: ground never giving way, the named state, plates times the map with no ground. Pale smooth far deck of the ground to 1546, the plates' cells from 1548",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T11:19:58.143Z",
+   "file": "20261126111958143-note-cRX-right.jpg",
+   "source": "../../../../tmp/v/sh/cRX-right.jpg",
+   "kind": "note",
+   "label": "Thin band, right side under the limb (x 1500 to 1760, y 310 to 420, times 2), 1542 to 1552: the ground never giving way (control), the named state, the plates times the map with no ground (control). The named state follows the ground to 1546 and is the plates from 1548",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T10:30:29.967Z",
    "file": "20261126103029967-note-Ds-dive.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/sh/cE-end.jpg",
    "kind": "note",
    "label": "The seam at the rise's end: main, the cure cE, their difference times 8 at 1602, 1604 + 1/2, 1605",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T09:46:45.472Z",
-   "file": "20261126094645472-note-cR-right.jpg",
-   "source": "../../../../tmp/v/sh/cR-right.jpg",
-   "kind": "note",
-   "label": "Control cR beside the named state, right side under the limb, 1543 to 1553: with the ground kept, the far band unfolds as pale streaks",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T09:22:46.594Z",
-   "file": "20261126092246594-note-end-step.jpg",
-   "source": "../../../../tmp/v/sh/Mn/end-step.jpg",
-   "kind": "note",
-   "label": "main's own ground pop at 1604 + 1/2 (2.69, the same on P2c): left 1604 + 1/2, right the step to 1605 less the mean of its neighbours, times 20 about grey: gain along the lit limb upper left, loss lower right; cause not yet proven by a control",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T09:22:45.620Z",
-   "file": "20261126092245620-note-pat1544.jpg",
-   "source": "../../../../tmp/v/sh/P2m/pat1544.jpg",
-   "kind": "note",
-   "label": "P2c 1544, 1548, 1552 enlarged, the place of the largest pattern row (0.72 at 1544, read against 1552) in the ring: the thin far band under the limb opens into cells",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T09:22:44.831Z",
-   "file": "20261126092244831-note-z2.jpg",
-   "source": "../../../../tmp/v/sh/Mn/z2.jpg",
-   "kind": "note",
-   "label": "the far middle enlarged, 1556 to 1564, P2c left, main right: P2c's cells carry a pale outline at their left and tints (red, named); main's field is soft",
    "stop": "venus"
   }
  ]
