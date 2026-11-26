@@ -12,6 +12,7 @@ export const globe = {
   cloudFine: 4,
   sharp: [0.3, 0.8] as [number, number],
   wrapSoft: 2.2,
+  rimDeg: 1.40625,
   soft: 0,
   diveSoft: [0, 2.3, 4.55] as [number, number, number],
   away: 1,

@@ -201,6 +201,7 @@ uniform float uSoft;
 uniform vec2 uSharp;
 uniform float uWrapSoft;
 uniform float uShadeMix;
+uniform vec2 uRimLevel;
 uniform float uVignette;
 uniform sampler2D uFaceMap;
 uniform vec4 uFace;
@@ -332,18 +333,18 @@ ${PLATE_LEVELS}
     for (int i = 0; i < 9; i++) light += lightAt(ndl + uSoft * (float(i) / 4.0 - 1.0), mu);
     light /= 9.0;
   }
-  vec3 plain = vec3(1.0);
-  for (int k = 0; k < (uHaze.x < 1.0 ? 1 : 0); k++) {
-    vec3 up = lightAt(ndl, 1.0);
-    for (int j = 0; j < (uSoft > 0.0 ? 1 : 0); j++) {
-      up = vec3(0.0);
-      for (int i = 0; i < 9; i++) up += lightAt(ndl + uSoft * (float(i) / 4.0 - 1.0), 1.0);
-      up /= 9.0;
-    }
-    plain = up / max(light, vec3(1e-6));
+  vec3 up = lightAt(ndl, 1.0);
+  for (int j = 0; j < (uSoft > 0.0 ? 1 : 0); j++) {
+    up = vec3(0.0);
+    for (int i = 0; i < 9; i++) up += lightAt(ndl + uSoft * (float(i) / 4.0 - 1.0), 1.0);
+    up /= 9.0;
   }
-  light *= mix(vec3(1.0), shadeAt(d0), uShadeMix);
-  vec3 col = albedo * light * max(vec3(1.0) - cloud.g * uShadowTint, vec3(0.04));
+  vec3 plain = vec3(1.0);
+  for (int k = 0; k < (uHaze.x < 1.0 ? 1 : 0); k++) plain = up / max(light, vec3(1e-6));
+  vec3 calm = inverseFilmic(textureLod(uMap, vec2(atan(d.x, d.z) / 6.28318530718 + 0.5, asin(clamp(d.y, -1.0, 1.0)) / 3.14159265359 + 0.5), uRimLevel.x).rgb);
+  vec3 shade = mix(vec3(1.0), shadeAt(d0), uShadeMix);
+  vec3 col = (albedo * min(light, up) + calm * max(light - up, vec3(0.0))) * shade * max(vec3(1.0) - cloud.g * uShadowTint, vec3(0.04));
+  light *= shade;
   float lit = smoothstep(-0.02, 0.32, ndl);
   col = mix(col, uCloudWhite * (0.02 + 0.98 * lit), cloud.r);
   float sn = dot(uRingSun, uRingN);
@@ -381,6 +382,7 @@ export interface GlobeOptions {
   cloudFine: number
   sharp: [number, number]
   wrapSoft: number
+  rimDeg: number
   mapWidth: number
   patches: { textures: THREE.Texture[]; sizes: number[]; widthsDeg: number[]; spot: THREE.Vector3; feather: number; fade: [number, number] }
   face: { map: THREE.Texture; centre: [number, number, number]; reachDeg: number; fadeDeg: [number, number]; gain: number }
@@ -430,7 +432,7 @@ export class Globe {
         uPatchSize: { value: p.sizes },
         uFeather: { value: p.feather }, uPatchRim: { value: new THREE.Vector2(p.feather, 0) }, uPatchFade: { value: new THREE.Vector2().fromArray(p.fade) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
-        uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uWrapSoft: { value: o.wrapSoft }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 },
+        uSpin: { value: 0 }, uTime: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uNear: { value: new THREE.Vector3(1, 1, 1) }, uSoft: { value: 0 }, uSharp: { value: new THREE.Vector2(o.sharp[0], o.sharp[1]) }, uWrapSoft: { value: o.wrapSoft }, uToRing: { value: new THREE.Matrix4() }, uRingProfile: { value: null }, uRingShade: { value: new THREE.Vector3(0, 1, 2) }, uRingN: { value: new THREE.Vector3(0, 1, 0) }, uRingSun: { value: new THREE.Vector3(0, 1, 0) }, uShadeMix: { value: 1 }, uRimLevel: { value: new THREE.Vector2(Math.log2((o.rimDeg * o.mapWidth) / 360), Math.log2((THREE.MathUtils.degToRad(o.rimDeg) * p.sizes[0]!) / (2 * Math.tan(THREE.MathUtils.degToRad(p.widthsDeg[0]!) / 2)))) },
         uSunW: { value: new THREE.Vector3(1, 0, 0) },
         uCloudWhite: { value: new THREE.Vector3(o.cloudWhite, o.cloudWhite, o.cloudWhite) },
         uShadowTint: { value: new THREE.Vector3().fromArray(o.shadowTint) },
@@ -509,7 +511,7 @@ export class Globe {
     out.uOwnLight = u.uLight!
     out.uOwnLightSize = u.uLightSize!
     for (let i = 0; i < PLATE_COUNT; i++) out['uPlate' + i] = u['uPlate' + i]!
-    for (const name of ['uPatchScale', 'uFeather', 'uSpotN', 'uSpotE', 'uSpotU', 'uBandRate', 'uPlaceRef']) out[name] = u[name]!
+    for (const name of ['uPatchScale', 'uFeather', 'uSpotN', 'uSpotE', 'uSpotU', 'uBandRate', 'uPlaceRef', 'uRimLevel']) out[name] = u[name]!
     for (let i = 0; i < PATCH_COUNT; i++) out['uPatch' + i] = u['uPatch' + i]!
     return out
   }

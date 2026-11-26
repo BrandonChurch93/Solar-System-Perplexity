@@ -3530,3 +3530,32 @@ Nothing else changes: the rim goes on as a state as agreed in 1326."
 - What gives way: under the rise from about 4399 the far cloud is the plates' and the map's, softer than the picture's (4407: main's cloud reads a little crisper). No seam seen at 4399, 4403, 4407, 4413 at frame size.
 - Not cured: at 4399 soft upright streaks several px tall stay in the lower middle where a texel is under 1 master px long. They are the picture's own features pulled 2.3 times along the sight, not texel strips; main draws them too at 4399 (0.89 / 1.89 against 0.74 / 1.63 here). A law by the picture's stretch (the ratio of its two axes on the frame) would take them and would change 4186; not tried.
 - `npx tsc --noEmit -p .` clean; `npx vitest run tests/globe-cap.test.ts` alone: 1 file, 30 passed; `npm run -s smooth -- --stop uranus --only path`: "smooth uranus: green. out/work/smooth/uranus.md", "VERDICT: green. No number is over its limit."
+
+### 23:53 to 00:10 UTC: my answer to MAIL 1333, MAIL 1343, the finals of 4407 and main's 4399
+
+- 23:53 my answer to MAIL 1333 went out (text kept in `/tmp/n64/mail-2353.txt`): the four points as in the section above, the correction of my 22:41 claim about the limb band at 4399 (no measure, take it as not shown), 1326 B as it stands, the rim's plan (RC), net +0.167 MB.
+
+MAIL 1343, word for word:
+
+"MAIL 1343 from the Builder (/root), 23:54 UTC, to every builder with open work. No answer needed.
+For you besides: your answer to mail 1333 of 23:53 is read. The cause (the terrain picture standing under higher eyes than it can bear since the cover law of d253) and the cure by the texel's stretch (2583f129) are taken as the way; go on with RC on it as you say. With the name I need: your final 4407 beside main's, the four rows drawn on the commit, and the judged frame 4186 at the final tier beside B1's with its match and G17, since it changes. The soft streaks left at 4399 stay on your list behind the rim, named as open.
+NEW MAIN: code tip 1f51abc9a151db2cffca8eb0cb1aec99eed1f7f7. Merged since 172e7bcd:
+take batch 14 at 23:39 (the far Sun by the kit's law of the frame; 17 files: assets-src/farsun, src/space/farsun, src/core/engine.ts, src/director/film.ts, src/space/sky.ts, src/stops/mercury/set.ts, tests/farsun-share.test.ts);
+take batch 15 at 23:49 (the reader writes the ground pop as a number beside the verdict; tests/smooth.test.ts, tools/img/smooth.py, tools/smooth.ts, tools/smooth/madeground.py, tools/smooth/madepop.py, tools/smooth/maps.ts).
+Merge origin main before your next name and say in the name mail which main it holds.
+Under proof now: take batch 16, take/ea6 1f351f70 (the air's light along both paths with no stop using it yet, the cue and shot sheets as the tool writes them, and two changes of src/space/travel/path.ts: the way out of Mercury and the roll into Saturn). Once it is on main, cut/CUES.md and cut/SHOTS.md are no longer stale, and a clean units and gate run leaves an empty after list."
+
+- Final tier 4407 on 2583f129: 972.6 s, 64 samples (main's 271.3 s: the cover costs more per sample than the bare globe). Lines measure 0.65 / 0.99 (main's final 0.54 / 0.87, B1's draft 1.85 / 4.34): no upright lines at the final tier. Beside main's the frame is a paler teal with softer, greyer cloud (the cover's law of light against the globe's; the item "two laws of light" of my list, in the name and in B1 alike).
+- Main's final 4399 (713.7 s, 64 samples): 0.81 / 1.64. Main does draw fine upright blue lines at 4399 at the final tier, weaker than B1's draft (1.34 / 2.74) and about what 2583f129 draws at draft (0.74 / 1.63). So at 4399 they are a flaw of the film as it stands; at 4407 main is clean.
+- 00:08 main `3675234fe1ba7618dadcd48454f4ee69085d4670` (holds the code tip 1f51abc9) merged as `66694d332173672558a40d5842b9b2e960be104f`, no fast forward, trailer; no Uranus file changed by the merge; tsc clean.
+
+### 00:11 to 00:20 UTC: the rim as light of the air, form RC, as its own commit on the merge (a state, not a name)
+
+- What it is (MAIL 1097 point 1, MAIL 1275 point 3, MAIL 1326 C): the light a point gets above its light seen from straight over it (`max(light - up, 0)`, the rim's part by the view cosine) no longer falls on the point's own albedo but on a calm one, the map read coarse (`look.globe.rimDeg` 1.40625 degrees of ground a texel, one value for the globe's map and the place's patch): `col = (albedo * min(light, up) + calm * max(light - up, 0)) * shade`. On the deck the same split on the map part of the ground only (`aS * min(plain, 1) + calmS * max(1 - plain, 0)`); the terrain picture's part is left as it is, because the form that takes the rim off the picture too (RD) cost 4290 at the final tier (3.249 against 3.224).
+- Files: `src/stops/uranus/globe.ts` (the split, uniform `uRimLevel`, option `rimDeg`), `deck.ts` (the split on `aS`, uniform `uRimLevel` shared from the globe), `look.ts` (`globe.rimDeg`).
+- It does not change `light.bin`: the step of the table across view cosine 0 to 0.077 stays (MAIL 1326 B); the control with a smooth law there is run on this commit.
+- Judged draft frames, sha256 first 16, before (the merge 66694d33, the bytes of B1 and of 2583f129) / after: 4035 45c0542e84eacac3 / 22b4815479f18654, changed on purpose (the limb). 4137 f584697198aa0913 / e3a91f73e4881baf, changed on purpose (the limb). 4290 7d4bd3af6435318b / 7edd2d14e949c8fe, changed on purpose: 14615 px by over 1 level, 1276 by over 10, largest 26, mean 0.023, all in the band under the horizon. 4436 5dde74d5c137b391 / 54c8f90a461a0fea, changed on purpose (the limb).
+- 4186 at draft against the merge: 96894 px by over 1 level, 11880 by over 10, largest 41, mean 0.134: the band under the limb reads calmer, its bright streaks lower; the horizon line itself and the ground below it as before to the eye at 1 to 1.
+- The merge by itself moved no frame of mine: 4035, 4137, 4290, 4436, 4186, 4407 at draft are the bytes of 2583f129.
+- `npx tsc --noEmit -p .` clean; `npx vitest run tests/globe-cap.test.ts` alone: 1 file, 30 passed; `npm run -s smooth -- --stop uranus --only path`: "smooth uranus: green. out/work/smooth/uranus.md", "VERDICT: green. No number is over its limit."
+- Finals, G5, G17 and the tool's four rows are drawn on the pushed commit and go into the mail.
