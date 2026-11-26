@@ -750,14 +750,15 @@ void main() {
   // than the map's waves and its objects (the storm, the cirrus), which end by place. Nothing is weighed by the eye's height or by
   // the distance from a picture's foot. The ground: the scene's own deck and cirrus stand round the place (whole within uFar.x
   // units of it on the ground, none beyond uFar.y), so no point of the ground changes its picture because the eye moves over it.
-  // own is that share by the ground. whole is the share the scene has over the globe: uShow, the scene as a whole (its air, its
+  // own is that share by the ground, times uFar.w: the place's own share by the eye's height (deep.json globe.own: none at the
+  // hold's height, whole near the deck; MAIL 1359, 1363). whole is the share the scene has over the globe: uShow, the scene as a whole (its air, its
   // limb, the map as its far look; deep.json globe.height: a law by height that is kept and named), and above it the place's
   // own share.
   float dSphere = uRadius * uRadius - rt2;
   float tFar = dSphere > 0.0 ? -b - sqrt(dSphere) : max(-b, 0.0);
   vec3 farUp = normalize(oc + rd * tFar);
   float nearGround = 1.0 - smoothstep(uFar.x, uFar.y, uRadius * length(farUp - uPlaceUp));
-  float own = uFar.z > 0.5 && uFar.z < 1.5 ? nearGround : 0.0;
+  float own = uFar.z > 0.5 && uFar.z < 1.5 ? nearGround * uFar.w : 0.0;
   float whole = max(uShow, own);
   // Where the scene has no share of the pixel the map alone is asked, which costs nothing of the code.
   float farW = uFar.z > 1.5 || whole <= 0.0 ? 1.0 : uFar.z * (1.0 - min(own / whole, 1.0));
@@ -1340,7 +1341,7 @@ export class Deep {
         uSkyLight: { value: v3(l.sky) }, uCloudLight: { value: v3(l.cloud) },
         uLightMake: { value: v4(look.steps.deck, look.steps.shade, look.steps.cast, l.shadow) }, uShade: { value: v4(l.shade, l.shadeFoot, ci.thin[0]!, ci.thin[1]!) }, uThrough: { value: new THREE.Vector3(l.through[0], l.through[1], ci.cast ?? 1) },
         uToBody: { value: new THREE.Matrix3() },
-        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 0) }, uSlab: { value: new THREE.Vector2(look.far.slab[0]!, look.far.slab[1]!) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
+        uFar: { value: v4(look.far.distance[0]!, look.far.distance[1]!, look.far.on, 1) }, uSlab: { value: new THREE.Vector2(look.far.slab[0]!, look.far.slab[1]!) }, uOwn: { value: new THREE.Vector2(look.far.wave, look.far.most) }, uFarFall: { value: v4(look.globe.fall.power[0]!, look.globe.fall.power[1]!, look.globe.fall.power[2]!, look.globe.fall.blue / 1e-4) }, uFarTone: { value: v3(look.far.tone) }, uFarPower: { value: v3(look.far.power) }, uFarCloud: { value: v3(look.far.cloud) },
         uAirLaw: { value: v4(look.air.top, look.air.scale, look.air.foot, look.air.cirrus) }, uAirDepth: { value: v3(look.air.depth) }, uAirSun: { value: v3(look.air.sun) },
         ...Object.fromEntries(MAP_UNIFORMS.map((name) => [globe(name), map[name]!])),
         uDiag: diagUniform,
@@ -1385,6 +1386,11 @@ export class Deep {
     ;(this.material.uniforms.uFallPower!.value as THREE.Vector3).copy(power)
     ;(this.material.uniforms.uFarFall!.value as THREE.Vector4).w = blueMost
     return this.seat.copy(camera).applyQuaternion(this.back.copy(turn).invert()).multiplyScalar(fit.radius).add(this.centre)
+  }
+
+  // The place's own share by the eye's height (deep.json globe.own; the set gives it at every frame, never by the clock).
+  ownShare(share: number): void {
+    ;(this.material.uniforms.uFar!.value as THREE.Vector4).w = share
   }
 
   dispose(): void {
