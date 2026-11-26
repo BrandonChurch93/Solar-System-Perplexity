@@ -1,55 +1,55 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T19:50:39.574Z",
- "head": "6653757544734f05f7e102e0017c6858f8d28111",
- "note": "S2 cure: reader's rows of the dive running; M1 and M2: choosing the haze bands' shade (previews), renders queued",
+ "pushed": "2026-11-26T20:19:06.447Z",
+ "head": "16c37e70dbf3a2a8390b93f1772e53318e8529fc",
+ "note": "M1 and M2: the haze bands' shade warm and shallow (41de45ce) on main 262b9a68; proofs drawing",
  "looks": [
+  {
+   "time": "2026-11-26T20:19:05.193Z",
+   "file": "20261126201905193-note-m12b-m2-2.jpg",
+   "source": "../../../../tmp/eye/m12b-m2-2.jpg",
+   "kind": "note",
+   "label": "M2 box at 3150 draft, sheet 2",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:19:04.037Z",
+   "file": "20261126201904037-note-m12b-m2-1.jpg",
+   "source": "../../../../tmp/eye/m12b-m2-1.jpg",
+   "kind": "note",
+   "label": "M2 box at 3150 draft, sheet 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:19:02.887Z",
+   "file": "20261126201902887-note-m12b-m1.jpg",
+   "source": "../../../../tmp/eye/m12b-m1.jpg",
+   "kind": "note",
+   "label": "M1 box at 3150 draft: the states of shadowTint beside approved",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:19:01.853Z",
+   "file": "20261126201901853-note-s2-rows.jpg",
+   "source": "../../../../tmp/eye/s2-rows.png",
+   "kind": "note",
+   "label": "S2 rows K 6034 to 6105: the cure against main (old base)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T20:19:00.792Z",
+   "file": "20261126201900792-note-m12b-sheet.jpg",
+   "source": "../../../../tmp/eye/m12b-sheet.jpg",
+   "kind": "note",
+   "label": "M1 and M2 at 3150 draft: approved, main 262b9a68, the shadow off, the warm shade at depth 0.35 (41de45ce)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T19:50:38.969Z",
    "file": "20261126195038969-note-r1-far.jpg",
    "source": "../../../../tmp/eye/r1-far.jpg",
    "kind": "note",
    "label": "S2 cure, far zone at K 6068, 6076, 6084: plates' field gives way to the laid back picture (second group, still red)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:50:37.821Z",
-   "file": "20261126195037821-note-m12-sim-m1.jpg",
-   "source": "../../../../tmp/eye/m12-sim-m1.jpg",
-   "kind": "note",
-   "label": "M1 crop at 3150, previews only (not renders): approved, as it is, haze shadow off, warm shade at depth 0.20, 0.35, 0.50",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:50:36.785Z",
-   "file": "20261126195036785-note-m12-sim-m2.jpg",
-   "source": "../../../../tmp/eye/m12-sim-m2.jpg",
-   "kind": "note",
-   "label": "M2 crop at 3150, previews only (not renders): approved, as it is, haze shadow off, warm shade at depth 0.20, 0.35, 0.50",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:31:00.375Z",
-   "file": "20261126193100375-note-m12-sheet.jpg",
-   "source": "../../../../tmp/eye/m12-sheet.jpg",
-   "kind": "note",
-   "label": "M1 and M2 control at 3150: approved, as it is, haze bands cast no shadow",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:30:59.673Z",
-   "file": "20261126193059673-note-c1-late-a.jpg",
-   "source": "../../../../tmp/eye/c1-late-a.jpg",
-   "kind": "note",
-   "label": "S2 cure, 3040, 3045, 3050: build E left, farGlobe 1 right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:30:58.754Z",
-   "file": "20261126193058754-note-c1-nat-6070.jpg",
-   "source": "../../../../tmp/eye/c1-nat-6070.jpg",
-   "kind": "note",
-   "label": "S2 cure, 3035, far zone native: build E left, farGlobe 1 right",
    "stop": "jupiter"
   },
   {
