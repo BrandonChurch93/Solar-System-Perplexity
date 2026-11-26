@@ -113,6 +113,16 @@ export class FilmDirector implements Director {
   private sunStart = 1
   private sunSwap = 1
   sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, dives: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '', follows: {}, open: {} }
+  // The way in of a stop that gives the sky an aim for it (StopParams.skyAim.arrive): turn is the sky's turn in the rise of the stop
+  // before and on the travel to the stop, where the film reads the stop's orbit turn otherwise; orbit is the aim the stop's orbit
+  // pictures stand by on that travel, so that they keep their place in the lens while the stars step to the stop's own turn at the
+  // first frame of its hold. The engine draws that step only under a picture of the stop that hides the stars (skyStep in
+  // src/core/skyfloor.ts). No entry: the stop arrives on its orbit turn.
+  arrivals: Record<string, { turn: THREE.Quaternion; orbit: THREE.Quaternion }> = {}
+  // The steps of the sky's turn in the film's order, one for each stop of arrivals: frame is the first frame of the stop's hold, where
+  // the turn steps from the one of the way in to the stop's own; back, laid after the turn of any shot from that frame on, gives the
+  // turn with this step and every step before it taken out (Shot.skyTurnSeen).
+  private skySteps: { frame: number; back: THREE.Quaternion }[] = []
 
   constructor(plans: StopPlan[]) {
     shutterScales(this.shutterOf)
@@ -273,12 +283,46 @@ export class FilmDirector implements Director {
       }
       out.patches[p.id] = { orbit: round(orbit), terrain: round(low) }
     })
+    const arrivals: FilmDirector['arrivals'] = {}
+    const steps: FilmDirector['skySteps'] = []
+    this.plans.forEach((p, i) => {
+      const want = p.p.skyAim?.arrive
+      if (!want) return
+      const hold = judged(p.id + '.hold')
+      if (i < 2 || hold === null || !own[i]) throw new Error(p.id + ': a sky aim for the way in needs an orbit aim of the stop\'s own and a stop before it that turns the sky in its rise (not the first stop, and not one whose turn this stop follows)')
+      const aim = aimAt(want[0], want[1], want[2])
+      const turn = round(cam(hold).multiply(aim.clone().invert()).multiply(f))
+      arrivals[p.id] = { turn, orbit: round(aim) }
+      const back = own[i]!.clone().invert().multiply(turn)
+      const passed = steps[steps.length - 1]
+      steps.push({ frame: config.segments.find((s) => s.id === p.id + '.hold')!.firstFrame, back: (passed ? back.multiply(passed.back) : back).normalize() })
+    })
+    this.arrivals = arrivals
+    this.skySteps = steps
     const back = judged(config.endingId + '.lookback')
     const lastId = this.plans[this.plans.length - 1]!.id
     const kept = out.orbits[lastId]
     if (back !== null && !out.open[lastId]) out.orbits[config.endingId] = round(this.skyAnchor(back).multiply(aimAt(LOOKBACK.sky[0], LOOKBACK.sky[1], LOOKBACK.sky[2]).invert()).multiply(f))
     else if (kept) out.orbits[config.endingId] = kept
     return out
+  }
+
+  // The orbit turn of the sky in the frames of a stop: the stop's own, and in its rise, but for the first stop, the turn of the
+  // way in of what comes next (turnIn).
+  private orbitTurn(index: number, kind: Segment['kind']): THREE.Quaternion | undefined {
+    return kind === 'rise' && index > 0 ? this.turnIn(this.plans[index + 1]?.id ?? config.endingId) : this.sky.orbits[this.plans[index]!.id]
+  }
+
+  // The sky's turn on the way in to a stop: the one of the aim the stop gives for it (arrivals), else the stop's orbit turn.
+  private turnIn(id: string): THREE.Quaternion | undefined {
+    return this.arrivals[id]?.turn ?? this.sky.orbits[id]
+  }
+
+  // What the sky's turn has stepped by up to a segment (skySteps), or undefined before the first step of the film.
+  private steppedBack(segment: Segment): THREE.Quaternion | undefined {
+    let back: THREE.Quaternion | undefined
+    for (const s of this.skySteps) if (segment.firstFrame >= s.frame) back = s.back
+    return back
   }
 
   private lowTurn(id: string, time: number): THREE.Quaternion | undefined {
@@ -956,7 +1000,7 @@ export class FilmDirector implements Director {
       dustLook = smoother(ramp(DUST_LOOK.span[0], DUST_LOOK.span[1], u)) * (1 - smoother(ramp(DUST_LOOK.span[2], DUST_LOOK.span[3], u)))
       dust = Math.sin(Math.PI * smooth(u)) * (1 - (1 - (index === 0 ? DUST_LOOK.first : DUST_LOOK.level)) * dustLook)
       flare = mix(a.p.light.flare, b.p.light.flare, k)
-      const t = this.sky.orbits[b.id]
+      const t = this.turnIn(b.id)
       if (t) skyTurn = t
     } else {
       const p = this.plans[index]!
@@ -1020,7 +1064,7 @@ export class FilmDirector implements Director {
         const t = this.lowTurn(p.id, time)
         if (t) skyTurn = t
       } else {
-        const t = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id]
+        const t = this.orbitTurn(index, segment.kind)
         if (t) skyTurn = t
       }
       const lent = segment.kind === 'rise' ? this.passAhead(index, time) : null
@@ -1078,7 +1122,7 @@ export class FilmDirector implements Director {
       if (segment.kind === 'dive' || segment.kind === 'rise') {
         const share = p.skyTurnShare(segment, time)
         if (share !== null) {
-          const high = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id] ?? NO_TURN
+          const high = this.orbitTurn(index, segment.kind) ?? NO_TURN
           const low = this.lowTurn(p.id, time) ?? NO_TURN
           skyTurn = share <= 0 ? high : share >= 1 ? low : high.clone().slerp(low, share)
         }
@@ -1132,6 +1176,8 @@ export class FilmDirector implements Director {
     const own = index >= 0 && (segment.kind === 'hold' || segment.kind === 'dive' || segment.kind === 'terrain' || segment.kind === 'rise') ? sets.find((s) => s.id === segment.stop) : undefined
     const air = own ? this.plans[index]!.air(own.height) : null
     if (air) out.air = air
+    const stepped = this.steppedBack(segment)
+    if (stepped) out.skyTurnSeen = skyTurn.clone().multiply(stepped)
     if (skyShare !== undefined) out.skyShare = skyShare
     if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
     if (skyFloor) out.skyFloor = skyFloor

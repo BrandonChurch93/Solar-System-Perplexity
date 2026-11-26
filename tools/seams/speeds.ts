@@ -13,6 +13,7 @@ import { WINDOW, type Step } from './rule'
 //   limb    the shift of the body's centre plus the change of its outline's radius, read only where the outline crosses the picture and
 //           the stop's set is drawn
 //   mean    the same reading at 48 by 27 points spread over the picture, averaged (the reader's kind of measure)
+// A point off every body is carried with the sky as it is seen: by the shot's skyTurnSeen where the film gives one, else by its skyTurn.
 
 const zero = new THREE.Vector3()
 
@@ -31,7 +32,7 @@ function at(film: FilmDirector, stop: string, k: number, rate: number): At {
     const back = s.rotation.clone().invert()
     return { id: s.id, pose: { position: shot.camera.position.clone().sub(s.origin).applyQuaternion(back), quaternion: back.clone().multiply(shot.camera.quaternion), vfov: shot.camera.vfov } as Pose }
   })
-  return { k, inShot: shot.sets.some((x) => x.id === stop && x.weight > 0), body, others, sky: shot.skyTurn.clone().invert().multiply(shot.skyQuaternion), vfov: shot.camera.vfov }
+  return { k, inShot: shot.sets.some((x) => x.id === stop && x.weight > 0), body, others, sky: (shot.skyTurnSeen ?? shot.skyTurn).clone().invert().multiply(shot.skyQuaternion), vfov: shot.camera.vfov }
 }
 
 function point(a: At, b: At, stop: string, x: number, y: number, s: Size): { px: number; on: string } {

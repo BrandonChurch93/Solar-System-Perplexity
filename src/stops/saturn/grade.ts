@@ -81,7 +81,16 @@ export const zoneShare = (height: number): number => byHeight(grade.by.heights, 
 export const duskAt = (height: number, into: THREE.Vector4, grey: THREE.Vector2, tint: THREE.Vector4): void => {
   const w = bodyShare(height)
   tint.w = w
-  into.set(dusk.from, dusk.to, THREE.MathUtils.lerp(dusk.amount[0]!, dusk.amount[1]!, w), THREE.MathUtils.lerp(dusk.night[0]!, dusk.night[1]!, w))
+  // the cut of the twilight slides (dusk.slide): its two cosines go with the share from a pair in the night past
+  // the hold's last light to the close image's pair (by one less the power slide.power of what is left of the
+  // share), and the cut shows whole from the share slide.whole on, by a straight line under it. The terminator
+  // of the hold is a crisp ridge of the globe's own light just past the boundary; with the cut fading in on
+  // fixed cosines the ridge and the cut twilight stood side by side at part strength over the whole way, two
+  // ends of the day in one place, where the inner edge of the ring crosses them and the lens moves fastest.
+  // Now the day ends at one place over most of the way and that place moves off the ridge near the hold
+  const way = 1 - Math.pow(1 - w, dusk.slide.power)
+  const cut = Math.min(w / dusk.slide.whole, 1)
+  into.set(THREE.MathUtils.lerp(dusk.slide.from, dusk.from, way), THREE.MathUtils.lerp(dusk.slide.to, dusk.to, way), THREE.MathUtils.lerp(dusk.amount[0]!, dusk.amount[1]!, cut), THREE.MathUtils.lerp(dusk.night[0]!, dusk.night[1]!, w))
   grey.set(THREE.MathUtils.lerp(dusk.grey[0]!, dusk.grey[1]!, w), dusk.greyPower)
 }
 

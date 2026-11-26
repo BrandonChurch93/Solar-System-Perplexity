@@ -146,6 +146,12 @@ export interface Shot {
   skyExposure: number
   skyGlow: number
   skyTurn: THREE.Quaternion
+  // The turn of the sky as it is seen from frame to frame, for a reader of the film's motion; nothing is drawn by it. skyTurn steps
+  // once where a stop gives the sky an aim for its way in (FilmDirector.arrivals): at the first frame of that stop's hold, under a
+  // picture of the stop that hides the stars and keeps its place in the lens. This is skyTurn with every such step up to the shot
+  // taken out, so along the film it never steps and the lens against it (its inverse times skyQuaternion) goes from frame to frame as
+  // the seen sky does. Not given before the first step and in a film without one: the seen turn is then skyTurn itself.
+  skyTurnSeen?: THREE.Quaternion
   skyPlate?: { aim: THREE.Quaternion; turning: boolean }
   skyStars?: number
   skyPatch?: number

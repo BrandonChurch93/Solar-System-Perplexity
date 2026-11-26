@@ -30,6 +30,8 @@ export interface PoseRecord {
   time: number
   view: ViewKind
   camera: { p: number[]; q: number[]; vfov: number; near: number; width: number; height: number }
+  // The lens against the sky as it is seen: the sky camera of the shot with the seen turn of the sky taken out (Shot.skyTurnSeen, the
+  // shot's skyTurn where the film gives none), so that two records carry the sky between them as the picture does.
   sky: { q: number[] }
   range: { low: number; octaves: number; units: number[] }
   bodies: [PoseBody, ...PoseNear[]]
@@ -61,7 +63,7 @@ export function poseRecord(film: FilmDirector, plan: StopPlan, k: number, rate: 
     time,
     view: c.side,
     camera: { p: c.pose.position.toArray(), q: lens.toArray(), vfov: c.pose.vfov, near: shot.near * (c.side === 'terrain' && two ? close : 1), width: size.width, height: size.height },
-    sky: { q: shot.skyTurn.clone().invert().multiply(shot.skyQuaternion).toArray() },
+    sky: { q: (shot.skyTurnSeen ?? shot.skyTurn).clone().invert().multiply(shot.skyQuaternion).toArray() },
     range: { low: RANGE_LOW, octaves: RANGE_OCTAVES, units: two ? [1, close] : [1] },
     bodies: [{ id: plan.id, place: form?.place ?? [0, 0, 0], turn: (drawn ? drawn.call(plan, time) : plan.turn(time)).toArray(), scale: globe?.scale ?? [1, 1, 1], axes: globe?.quaternion ?? [0, 0, 0, 1], ...(form ? { shape: form.shape } : {}), ...(some(flows) ? { flows } : {}), ...(some(light) ? { light } : {}) }, ...others],
   }
