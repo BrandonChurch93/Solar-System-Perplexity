@@ -107,10 +107,7 @@ uniform vec4 uPatchBox;
 uniform vec2 uPatchSize;
 uniform float uVignette;
 uniform float uAspect;
-uniform sampler2D uHoldLight;
-uniform mat4 uHoldM;
-uniform vec3 uHoldCam;
-uniform float uHoldW;
+uniform sampler2D uBodyLight;
 uniform sampler2D uSkimLight;
 uniform mat4 uSkimM;
 uniform vec3 uSkimCam;
@@ -130,6 +127,13 @@ ${LIMB_GLSL}
 ${DUST_SHADE_GLSL}
 ${DUST_AIR_GLSL}
 ${LAT_TONE_GLSL}
+// the hold's light as a property of the body (globe-light.json): by latitude and by longitude from the Sun, the
+// same at every pose of the lens
+vec3 bodyLight(vec3 p) {
+  float u = (atan(p.z, p.x) - atan(uLightL.z, uLightL.x)) / 6.283185307 + 0.5;
+  float v = asin(clamp(p.y, -1.0, 1.0)) / 3.141592654 + 0.5;
+  return texture(uBodyLight, vec2(u, v)).rgb;
+}
 vec3 shotLight(sampler2D tex, mat4 m, vec3 cam, float w, vec3 P, vec3 n) {
   vec4 c = m * vec4(P, 1.0);
   vec2 uv = c.xy / max(c.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
@@ -232,7 +236,7 @@ void main() {
     col = col * through + uDustInk * ((1.0 - through) * dustAir(p, normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z))));
   }
   col *= mix(1.0, smoothstep(-0.03, 0.0, p.y), uClose);
-  for (int k = 0; k < (uHoldW > 0.0 ? 1 : 0); k++) col *= shotLight(uHoldLight, uHoldM, uHoldCam, uHoldW, P, nL);
+  col *= bodyLight(p);
   for (int k = 0; k < (uSkimW > 0.0 ? 1 : 0); k++) col *= shotLight(uSkimLight, uSkimM, uSkimCam, uSkimW, P, nL);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -257,7 +261,7 @@ export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, patch: GlobePatch, lights: { hold: ShotLight; skim: ShotLight }, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
+  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, patch: GlobePatch, lights: { body: THREE.Texture; skim: ShotLight }, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
@@ -274,7 +278,7 @@ export class Globe {
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
         uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
         uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
-        uHoldLight: { value: lights.hold.texture }, uHoldM: { value: lights.hold.matrix }, uHoldCam: { value: lights.hold.camera }, uHoldW: lights.hold.weight,
+        uBodyLight: { value: lights.body },
         uSkimLight: { value: lights.skim.texture }, uSkimM: { value: lights.skim.matrix }, uSkimCam: { value: lights.skim.camera }, uSkimW: lights.skim.weight,
       },
       transparent: true, premultipliedAlpha: true,

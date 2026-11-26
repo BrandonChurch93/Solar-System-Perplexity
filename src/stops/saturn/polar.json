@@ -20,5 +20,14 @@
    4096,
    512
   ]
+ },
+ "margin": {
+  "radius": [1.88, 1.892, 1.958, 1.966],
+  "azimuth": [-52, -42, 6, 12],
+  "from": [13, 33],
+  "low": 3,
+  "level": 4,
+  "quality": 92,
+  "note": "the outer margin of the B ring in the hero's ring pixel map, laid again along the bands by assets-src/saturn/code/polar_margin.py. radius: the rows it takes in (in from the first to the second, out from the third to the fourth, planet radii); azimuth: the sector it takes in, degrees in the body frame (in from the first to the second, out from the third to the fourth); from: the clean sector the fine structure comes from, mirrored back and forth; low: the width in degrees of the blur along the azimuth that parts level from fine structure; level: the width in degrees at the clean sector's near end whose mean is the level of each row; quality: of the file written"
  }
 }

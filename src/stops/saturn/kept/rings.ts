@@ -211,6 +211,7 @@ uniform vec3 uFoot;
 uniform float uSeam;
 uniform float uPolarW;
 uniform float uPolarShape;
+uniform float uPolarBend;
 uniform vec2 uPolarOuter;
 uniform vec2 uShapeFit;
 uniform vec4 uOuterFit;
@@ -359,9 +360,9 @@ void main() {
   bool disc = r < 1.0;
   float rp = disc ? max(lay.x, mix(r, uEdge.x + 0.006, lay.z)) : lay.x;
   float azd = degrees(atan(vLocal.z, vLocal.x));
-  rp += (disc || far) ? 0.0 : (uInner.z * smoothstep(45.0, 60.0, azd) + uInner.w * smoothstep(80.0, 95.0, azd)) * uPolarShape * (1.0 - smoothstep(uInner.x, uInner.y, azd)) * (1.0 - smoothstep(1.2, 1.45, rp));
+  rp += (disc || far) ? 0.0 : (uInner.z * smoothstep(45.0, 60.0, azd) + uInner.w * smoothstep(80.0, 95.0, azd)) * uPolarBend * (1.0 - smoothstep(uInner.x, uInner.y, azd)) * (1.0 - smoothstep(1.2, 1.45, rp));
   float shape = 0.0;
-  for (int k = 0; k < ((uPolarShape > 0.0 && !far && !disc) ? 1 : 0); k++) shape = uPolarShape * textureLod(uPolarWarp, vec2(atan(vLocal.z, vLocal.x) / 6.283185307 + 0.5, (rp - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
+  for (int k = 0; k < ((uPolarBend > 0.0 && !far && !disc) ? 1 : 0); k++) shape = uPolarBend * textureLod(uPolarWarp, vec2(atan(vLocal.z, vLocal.x) / 6.283185307 + 0.5, (rp - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
   float rs = rp - shape;
   float rq = rp - shape * smoothstep(uShapeFit.x, uShapeFit.y, rp);
   float x = far ? -1.0 : ringRadius(rq);
@@ -394,13 +395,28 @@ void main() {
   float held = (hidden || disc) ? 1.0 : mix(1.0, smoothstep(uSkimUnder.x, uSkimUnder.y, rim), uSkimGap * behind * smoothstep(uSkimFill.y, uSkimFill.z, r));
   wS *= held;
   wF *= (hidden || disc) ? 0.0 : 1.0 - mix(1.0, smoothstep(uSkimUnder.x, uSkimUnder.y, rim), 1.0 - smoothstep(0.55, 0.95, km.g)) * mix(1.0 - behind, 1.0, km.r) * held;
-  bool top = disc || hidden;
-  bool split = uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top);
+  vec3 oc = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
+  vec3 ov = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - oc;
+  float oa = dot(ov, ov);
+  float ob = dot(oc, ov);
+  float od = (ob * ob - oa * (dot(oc, oc) - 1.0)) / oa;
+  float bb = sqrt(max(1.0 - od, 0.0));
+  float bw = max(length(vec2(dFdx(bb), dFdy(bb))) * uFoot.x, 1e-5);
+  // the shaded plane does not end at the globe's outline: it goes on under the globe's own soft edge (lip: a
+  // place inside the equator's circle whose view ray passes the globe within that edge, uGraze.z pixels and one
+  // more, as past below). Without it the sky had a window there, between the plane and the globe's outline at
+  // the two ends of the equator, and a star behind the plane flashed up for one frame as the outline passed it.
+  // Such a place lies inside the globe, so it is drawn behind the globe in both halves of the plane: the
+  // globe's edge keeps its own shape and has the shaded plane behind it in place of the sky
+  bool lip = disc && !span && bb > 1.0 - (uGraze.z + 1.0) * bw;
+  bare = bare || (lip && wS <= 0.0 && wC <= 0.0 && uPolarShape * uPolarW <= 0.0);
+  bool top = (disc && !lip) || hidden;
+  bool split = lip ? uPass > 0.5 : (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top));
   gone = gone || split;
   float fr = length(vec2(dFdx(rq), dFdy(rq)));
   float frTrue = length(vec2(dFdx(r), dFdy(r)));
   float texels = ringTexels(fr);
-  float pose = uPolarShape * (1.0 - uClose);
+  float pose = uPolarBend * (1.0 - uClose);
   float edgeCut = smoothstep(uEdge.y + uOuterFit.w, uEdge.y + uOuterFit.w + 0.002, rq);
   float xo = ringRadius(rq - pose * uOuterFit.x * smoothstep(uOuterFit.y, uOuterFit.z, rq));
   // the level of the profile is picked by its texels in a pixel of the master (uFoot.x), and so are the
@@ -410,20 +426,13 @@ void main() {
   for (int k = 0; k < ((pose > 0.0 && span && !disc && !gone && rq > uEdge.y + 0.02) ? 1 : 0); k++) {
     float ua = atan(vLocal.z, vLocal.x) / 6.283185307 + 0.5;
     float re = uEdge.y + uOuterFit.x;
-    float e1 = re + uPolarShape * textureLod(uPolarWarp, vec2(ua, (re - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
-    float e2 = re + uPolarShape * textureLod(uPolarWarp, vec2(ua, (e1 - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
+    float e1 = re + uPolarBend * textureLod(uPolarWarp, vec2(ua, (re - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
+    float e2 = re + uPolarBend * textureLod(uPolarWarp, vec2(ua, (e1 - uPolarSpan.x) * uPolarSpan.y), 0.0).r;
     float along = smoothstep(uArcAz.x, uArcAz.y, azd) + 1.0 - smoothstep(uArcAz.z, uArcAz.w, azd);
     float rl = uArc.x + (rp - e2 - uArc.y) * uArc.z;
     s += pose * uArc.w * along * smoothstep(uEdge.y + 0.02, uEdge.y + 0.04, rl) * (rl < uReach ? 1.0 : 0.0) * profAt(ringRadius(rl), lodP * uArc.z * min(1.0, uSeam * frTrue / max(fr, 1e-9)));
   }
   float mu = abs(V.y);
-  vec3 oc = vec3(uCamL.x, uCamL.y / uPolar, uCamL.z);
-  vec3 ov = vec3(vLocal.x, vLocal.y / uPolar, vLocal.z) - oc;
-  float oa = dot(ov, ov);
-  float ob = dot(oc, ov);
-  float od = (ob * ob - oa * (dot(oc, oc) - 1.0)) / oa;
-  float bb = sqrt(max(1.0 - od, 0.0));
-  float bw = max(length(vec2(dFdx(bb), dFdy(bb))) * uFoot.x, 1e-5);
   bool fore = uClose < 1.0 && !disc && !far && -ob > oa;
   // what the globe behind the sheet adds to the hold's look of the ice in front of it (the strands over the
   // globe, the thin sheet at the inner rim, its glow and the shine) holds while the view on the plane is steep:
@@ -552,12 +561,12 @@ void main() {
   float along = dot(vLocal, ss);
   float miss = length(vLocal - ss * along);
   float mw = 0.75 * length(vec2(dFdx(miss), dFdy(miss))) * uFoot.x;
-  float lit = disc ? smoothstep(-0.3, 0.15, along) : (along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0) + uPenumbraFar.y * max(-along - uPenumbraFar.x, 0.0), miss));
+  float lit = (disc && !lip) ? smoothstep(-0.3, 0.15, along) : (along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0) + uPenumbraFar.y * max(-along - uPenumbraFar.x, 0.0), miss));
   float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * uPolarShape * (1.0 - uSolid.x) * (disc ? 0.0 : 1.0);
   over *= lit;
   float through = sheetAt(rs, uSheetT) * (1.0 - uSheetFit.w * uPolarShape * smoothstep(uSheetFit.z, 1.0, bb));
   float bx = max(bb - uFillet.x, 0.0);
-  float rin = uEdge.x - uPolarShape * (uFillet.y * bx + uFillet.z * bx * bx * bx * bx);
+  float rin = uEdge.x - uPolarBend * (uFillet.y * bx + uFillet.z * bx * bx * bx * bx);
   float bout = mix(1.0, uWedge.w, uPolarShape);
   vec3 on = oc + ov * ((-ob - sqrt(max(od * oa, 0.0))) / oa);
   float bulge = uLimbW > 0.0 ? max(limbAt(normalize(on), uPolar, uSunL), 0.0) : 0.0;
@@ -569,7 +578,7 @@ void main() {
   // star shows between the night side and the shaded rings. Where the view ray ends on the globe the true depth
   // counts, so the night side is the body's own ellipse behind the empty space and behind thin ice, unless the
   // view grazes the plane (uGraze)
-  float shade = uSolid.x * uSolid.y * (1.0 - lit) * (1.0 - uClose) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) * smoothstep(uShadeRamp.x, uShadeRamp.y, r) * past;
+  float shade = uSolid.x * uSolid.y * (1.0 - lit) * (1.0 - uClose) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) * (lip ? 1.0 : smoothstep(uShadeRamp.x, uShadeRamp.y, r)) * past;
   alpha = max(alpha, shade);
   float day = smoothstep(-0.05, 0.25, dot(normalize(vec3(on.x, on.y / uPolar, on.z)), normalize(uSunL)));
   vec3 wedge = mix(uSheetGlow.rgb, uWedge.rgb * uPolarShape, smoothstep(uWedgeIn.x, uWedgeIn.y, bb)) * sheetAt(rs, uWedgeG) * sheet * day;

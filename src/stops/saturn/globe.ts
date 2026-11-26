@@ -123,10 +123,7 @@ uniform vec3 uDustInk;
 uniform int uProbe;
 uniform float uVignette;
 uniform float uAspect;
-uniform sampler2D uHoldLight;
-uniform mat4 uHoldM;
-uniform vec3 uHoldCam;
-uniform float uHoldW;
+uniform sampler2D uBodyLight;
 uniform float uEdgePx;
 uniform float uEdgeLin;
 in vec3 vLocal;
@@ -143,12 +140,12 @@ ${LIMB_GLSL}
 ${DUST_SHADE_GLSL}
 ${DUST_AIR_GLSL}
 ${LAT_TONE_GLSL}
-vec3 shotLight(sampler2D tex, mat4 m, vec3 cam, float w, vec3 P, vec3 n) {
-  vec4 c = m * vec4(P, 1.0);
-  vec2 uv = c.xy / max(c.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
-  vec2 e = min(uv, 1.0 - uv);
-  float k = w * (c.w > 1e-3 ? smoothstep(0.0, 0.03, min(e.x, e.y)) : 0.0) * smoothstep(0.03, 0.2, dot(n, normalize(cam - P)));
-  return mix(vec3(1.0), texture(tex, uv).rgb, k);
+// the hold's light as a property of the body (globe-light.json): by latitude and by longitude from the Sun, the
+// same at every pose of the lens
+vec3 bodyLight(vec3 p) {
+  float u = (atan(p.z, p.x) - atan(uLightL.z, uLightL.x)) / 6.283185307 + 0.5;
+  float v = asin(clamp(p.y, -1.0, 1.0)) / 3.141592654 + 0.5;
+  return texture(uBodyLight, vec2(u, v)).rgb;
 }
 vec3 spinY(vec3 d, float a) {
   float c = cos(a), s = sin(a);
@@ -292,7 +289,7 @@ void main() {
     float through = exp(-uDust.x * (1.0 - smoothstep(uDust.y, uDust.z, abs(P.y))));
     col = col * through + uDustInk * ((1.0 - through) * dustAir(p, normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z))));
   }
-  for (int k = 0; k < (uHoldW > 0.0 ? 1 : 0); k++) col *= shotLight(uHoldLight, uHoldM, uHoldCam, uHoldW, P, nL);
+  col *= bodyLight(p);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   vec3 layer = vec3(0.15, 0.45, 0.9);
@@ -316,7 +313,7 @@ export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, hold: ShotLight, look: GlobeLook, haze: HazeParams, field: Record<string, THREE.IUniform>, polar: number) {
+  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, body: THREE.Texture, look: GlobeLook, haze: HazeParams, field: Record<string, THREE.IUniform>, polar: number) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
@@ -336,7 +333,7 @@ export class Globe {
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
         uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
-        uHoldLight: { value: hold.texture }, uHoldM: { value: hold.matrix }, uHoldCam: { value: hold.camera }, uHoldW: hold.weight,
+        uBodyLight: { value: body },
       },
       transparent: true, premultipliedAlpha: true,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,

@@ -15,7 +15,7 @@ import apronJson from '../apron.json'
 import bloomJson from '../bloom.json'
 import toneJson from '../skim-tone.json'
 import closeGlobe from '../closeGlobe.json'
-import holdLight from '../hold-light.json'
+import globeLight from '../globe-light.json'
 import skimLight from '../skim-light.json'
 import layoutJson from '../layout.json'
 import innerJson from '../inner.json'
@@ -56,10 +56,10 @@ export const createKept: SetFactory = async (ctx) => {
     size: new THREE.Vector2(patchSize[0], patchSize[1]),
   }
   const toTilt = tilt.quaternion.clone().invert()
-  const heroPose = plan.hold(plan.holdMid - plan.seg.hold.start)
-  const heroL = heroPose.position.clone().applyQuaternion(toTilt)
-  const heroM = shotMatrix(heroL, toTilt.clone().multiply(heroPose.quaternion), heroPose.vfov, 16 / 9)
   const poseW = { value: 0 }
+  // the share of the hero picture's ring layout that is drawn (look.shapeShow): the rings are one rigid body,
+  // true circles about the axis at every pose of the lens, so this is 0
+  const bendW = { value: 0 }
   const holdEndFar = plan.hold(plan.seg.hold.end - plan.seg.hold.start).position.length()
   const polarW = { value: 0 }
   const skimL = plan.skimPosition.clone().applyQuaternion(toTilt)
@@ -69,8 +69,12 @@ export const createKept: SetFactory = async (ctx) => {
   const skimJoin = skimL.clone().addScaledVector(skimRay, -skimL.y / skimRay.y)
   const joinA = new THREE.Vector3()
   const joinB = new THREE.Vector3()
+  // the hold's light on the globe, a map of the body by latitude and by longitude from the Sun (globe-light.json)
+  const bodyLight = await ctx.dataTexture(base + globeLight.file, globeLight.width, globeLight.height, 4)
+  bodyLight.wrapS = THREE.RepeatWrapping
+  bodyLight.needsUpdate = true
   const lights = {
-    hold: { texture: await ctx.dataTexture(base + holdLight.file, holdLight.width, holdLight.height, 4), matrix: heroM, camera: heroL, weight: poseW },
+    body: bodyLight,
     skim: { texture: await ctx.dataTexture(base + skimLight.file, skimLight.width, skimLight.height, 4), matrix: skimM, camera: skimL, weight: skimW },
   }
   const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, patch, lights, look.globe, look.haze, profile, polar)
@@ -97,7 +101,7 @@ export const createKept: SetFactory = async (ctx) => {
   const polarSize = polarJson.sets[key] as [number, number]
   const innerMap = await ctx.texture(base + innerJson.file, { srgb: true, anisotropy: 16, repeat: true })
   const innerSize = innerJson.sets[key] as [number, number]
-  const ringMap = { uPolarMap: { value: polarMap }, uPolarWarp: { value: polarWarp }, uPolarSpan: { value: new THREE.Vector2(polarJson.span[0], 1 / (polarJson.span[1]! - polarJson.span[0]!)) }, uPolarSize: { value: new THREE.Vector2(polarSize[0], polarSize[1]) }, uPolarFit: { value: new THREE.Vector4(look.polarEdge[0], look.polarEdge[1], look.polarDensity[0], look.polarDensity[1]) }, uInnerMap: { value: innerMap }, uInnerSpan: { value: new THREE.Vector2(innerJson.span[0], 1 / (innerJson.span[1]! - innerJson.span[0]!)) }, uInnerSize: { value: new THREE.Vector2(innerSize[0], innerSize[1]) }, uPolarW: polarW, uPolarShape: poseW, uPolarOuter: { value: new THREE.Vector2(polarJson.edge - look.polarOuter[0], polarJson.edge - look.polarOuter[1]) } }
+  const ringMap = { uPolarMap: { value: polarMap }, uPolarWarp: { value: polarWarp }, uPolarSpan: { value: new THREE.Vector2(polarJson.span[0], 1 / (polarJson.span[1]! - polarJson.span[0]!)) }, uPolarSize: { value: new THREE.Vector2(polarSize[0], polarSize[1]) }, uPolarFit: { value: new THREE.Vector4(look.polarEdge[0], look.polarEdge[1], look.polarDensity[0], look.polarDensity[1]) }, uInnerMap: { value: innerMap }, uInnerSpan: { value: new THREE.Vector2(innerJson.span[0], 1 / (innerJson.span[1]! - innerJson.span[0]!)) }, uInnerSize: { value: new THREE.Vector2(innerSize[0], innerSize[1]) }, uPolarW: polarW, uPolarShape: poseW, uPolarBend: bendW, uPolarOuter: { value: new THREE.Vector2(polarJson.edge - look.polarOuter[0], polarJson.edge - look.polarOuter[1]) } }
   const apronSize = apronJson.sets[key] as [number, number]
   const apronBox = new THREE.Vector4(-apronJson.left, -apronJson.below, 1 / (1 + apronJson.left + apronJson.right), 1 / (1 + apronJson.below))
   const apron = { uApronMap: { value: await ctx.texture(base + apronJson.file, { srgb: true, anisotropy: 16 }) }, uApronMask: { value: await ctx.texture(base + apronJson.mask, { srgb: false, anisotropy: 16 }) }, uApron: { value: apronBox }, uApronSize: { value: new THREE.Vector2(apronSize[0], apronSize[1]) }, uApronFit: { value: new THREE.Vector4(look.rings.apronEdge[0], look.rings.apronEdge[1], look.rings.apronEdge[2], 0) }, uBloomMap: { value: await ctx.texture(base + bloomJson.file, { srgb: false }) }, uDebloom: { value: new THREE.Vector2(look.rings.debloom, bloomJson.scale) }, uSkimHigh: { value: new THREE.Vector4().fromArray(look.rings.skimHigh) }, uSkimTone: { value: await ctx.dataTexture(base + toneJson.file, toneJson.width, toneJson.height, 4) }, uSkimToneW: { value: look.rings.skimTone } }
@@ -176,7 +180,9 @@ export const createKept: SetFactory = async (ctx) => {
       light.copy(plan.lightDir).applyQuaternion(total).lerp(shot.sun.dir, lit).normalize()
       sunL.copy(light).applyQuaternion(toRing)
       close.value = 1 - smooth((Math.log(Math.max(Math.abs(camL.y), 1e-3)) - logLo) / (logHi - logLo))
-      poseW.value = 1 - smooth((camL.distanceTo(heroL) - look.heroRange[0]) / (look.heroRange[1] - look.heroRange[0]))
+      // the hero's light is a property of the body, the same share at every pose of the lens (look.heroLight)
+      poseW.value = look.heroLight
+      bendW.value = poseW.value * look.shapeShow
       polarW.value = Math.max(smooth((Math.abs(camL.y) - look.polarHeight[0]) / (look.polarHeight[1] - look.polarHeight[0])), smooth((camL.length() - look.polarFar[0]) / (look.polarFar[1] - look.polarFar[0]))) * look.polarShow
       // this set stays the far picture: the model takes the picture over before the lens is near, so what this
       // set shows only near the sheet (the close layout, the skim's haze, the ice) is held out. None of it shows
