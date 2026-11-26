@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T04:24:57.272Z",
+ "pushed": "2026-11-26T04:52:34.306Z",
  "head": "6f74b0fac496e8189318073d0efe90fbe827d691",
- "note": "lone pixels cured at the cause (the ray of each pixel from the lens); commit 6f74b0fa with main 5798676c merged; proof chain running",
+ "note": "rigid body with the baked light and the lone pixel cures (6f74b0fa): finals 3465 and 3720 beside main, the flight in frame by frame; proofs running for the name",
  "looks": [
   {
-   "time": "2026-11-26T04:24:56.012Z",
-   "file": "20261126042456012-note-z_c_3584.jpg",
-   "source": "../../../../tmp/v/rigid/CY/z_c_3584.jpg",
+   "time": "2026-11-26T04:52:33.441Z",
+   "file": "20261126045233441-note-in_full_3376.jpg",
+   "source": "../../../../tmp/v/rigid/PC/in_full_3376.jpg",
    "kind": "note",
-   "label": "3584 night limb x8, lifted 4 times: unit mesh (lone pixel), larger mesh, lens ray (clean)"
+   "label": "6f74b0fa frame 3376 of the flight in, draft, whole"
   },
   {
-   "time": "2026-11-26T04:24:54.999Z",
-   "file": "20261126042454999-note-z_b_3581.jpg",
-   "source": "../../../../tmp/v/rigid/CY/z_b_3581.jpg",
+   "time": "2026-11-26T04:52:32.771Z",
+   "file": "20261126045232771-note-in_sheet_3388.jpg",
+   "source": "../../../../tmp/v/rigid/PC/in_sheet_3388.jpg",
    "kind": "note",
-   "label": "3581 north limb x8: unit mesh (dark pixels), larger mesh, lens ray (clean)"
+   "label": "6f74b0fa flight in 3388 to 3399, every frame, draft"
   },
   {
-   "time": "2026-11-26T04:24:53.847Z",
-   "file": "20261126042453847-note-z_a_3567.jpg",
-   "source": "../../../../tmp/v/rigid/CY/z_a_3567.jpg",
+   "time": "2026-11-26T04:52:32.025Z",
+   "file": "20261126045232025-note-in_sheet_3376.jpg",
+   "source": "../../../../tmp/v/rigid/PC/in_sheet_3376.jpg",
    "kind": "note",
-   "label": "3567 north limb x8: unit mesh, larger mesh (dark pixel), lens ray (clean)"
+   "label": "6f74b0fa flight in 3376 to 3387, every frame, draft"
   },
   {
-   "time": "2026-11-26T04:06:36.622Z",
-   "file": "20261126040636622-note-z_b_3581.jpg",
-   "source": "../../../../tmp/v/rigid/CX/z_b_3581.jpg",
+   "time": "2026-11-26T04:52:31.349Z",
+   "file": "20261126045231349-note-in_sheet_3364.jpg",
+   "source": "../../../../tmp/v/rigid/PC/in_sheet_3364.jpg",
    "kind": "note",
-   "label": "3581 north limb: the unit mesh has dark specks near the pole, the larger mesh none"
+   "label": "6f74b0fa flight in 3364 to 3375, every frame, draft"
   },
   {
-   "time": "2026-11-26T04:06:36.062Z",
-   "file": "20261126040636062-note-z_a_3567.jpg",
-   "source": "../../../../tmp/v/rigid/CX/z_a_3567.jpg",
+   "time": "2026-11-26T04:52:30.672Z",
+   "file": "20261126045230672-note-in_sheet_3352.jpg",
+   "source": "../../../../tmp/v/rigid/PC/in_sheet_3352.jpg",
    "kind": "note",
-   "label": "3567 north limb: the larger mesh brings dark specks near the pole, not accepted"
+   "label": "6f74b0fa flight in 3352 to 3363, every frame, draft"
   },
   {
-   "time": "2026-11-26T04:06:35.504Z",
-   "file": "20261126040635504-note-z_night_3584.jpg",
-   "source": "../../../../tmp/v/rigid/CX/z_night_3584.jpg",
+   "time": "2026-11-26T04:52:29.920Z",
+   "file": "20261126045229920-note-in_sheet_3340.jpg",
+   "source": "../../../../tmp/v/rigid/PC/in_sheet_3340.jpg",
    "kind": "note",
-   "label": "3584 night limb x4: lip cure only against larger mesh, the lone pixel is gone"
+   "label": "6f74b0fa flight in 3340 to 3351, every frame, draft"
   },
   {
-   "time": "2026-11-26T04:06:34.934Z",
-   "file": "20261126040634934-note-z3584.jpg",
-   "source": "../../../../tmp/v/rigid/CT/z3584.jpg",
+   "time": "2026-11-26T04:52:29.236Z",
+   "file": "20261126045229236-note-pair_3720.jpg",
+   "source": "../../../../tmp/v/rigid/PC/pair_3720.jpg",
    "kind": "note",
-   "label": "lone pixel at 3584 on the night limb, frames 3582 to 3586, before the cure"
+   "label": "6f74b0fa final 3720 beside main and the approved close"
   },
   {
-   "time": "2026-11-26T03:28:13.648Z",
-   "file": "20261126032813648-note-spot_3589.jpg",
-   "source": "../../../../tmp/v/rigid/PK/spot_3589.jpg",
+   "time": "2026-11-26T04:52:28.426Z",
+   "file": "20261126045228426-note-pair_3465.jpg",
+   "source": "../../../../tmp/v/rigid/PC/pair_3465.jpg",
    "kind": "note",
-   "label": "K dive: one lone pixel on the night limb at 3589 and 3598 (levels 85, 40), 4 times, levels times 4: cause found, cure in work"
+   "label": "6f74b0fa final 3465 beside main and the approved hero"
   }
  ]
 }
