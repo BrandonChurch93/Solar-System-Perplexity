@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T14:37:08.062Z",
+ "pushed": "2026-11-26T14:51:56.935Z",
  "head": "345d510fde0df10f589b3f6fa0287d1db574e1e1",
- "note": "MAIL 1504 (3): judged areas of the back reading on both trees at 2134 and a half, and the white flecks at 2126 and a half; proof chain on the rise line",
+ "note": "rise line at 150 of 230 frames: no jump seen frame to frame 2080 to 2139.5 at half size; seen and on the list: place as a paler patch, flat white flecks at the left from 2121, dark islands with a white fleck at their tip",
  "looks": [
+  {
+   "time": "2026-11-26T14:51:55.870Z",
+   "file": "20261126145155870-note-cr-4250.jpg",
+   "source": "../../../../tmp/gl/k24/A/cr-4250.jpg",
+   "kind": "note",
+   "label": "rise 2125 to 2132 every half frame, the proof line's own draft frames",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T14:51:54.846Z",
+   "file": "20261126145154846-note-cr-4235.jpg",
+   "source": "../../../../tmp/gl/k24/A/cr-4235.jpg",
+   "kind": "note",
+   "label": "rise 2117.5 to 2124.5 every half frame, the proof line's own draft frames",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T14:37:06.946Z",
    "file": "20261126143706946-note-dots-marked-4253-win2.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k24/A/top-4253-4269.jpg",
    "kind": "note",
    "label": "rise 2126 + 1/2 to 2134 + 1/2 at the top of the frame, 1 to 1, cure beside main: the far land under the limb widens (the ground of the back reading, counted at 0.5017 on mine, 0.5415 uncounted on main)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T14:13:10.661Z",
-   "file": "20261126141310661-note-earth-dive-changes.jpg",
-   "source": "../../../../tmp/gl/k24/P/earth-dive-changes.png",
-   "kind": "note",
-   "label": "cure, the tool's own sheet of the whole dive line (rate 2)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T14:13:09.843Z",
-   "file": "20261126141309843-note-col-3752-3756.jpg",
-   "source": "../../../../tmp/gl/k24/A/col-3752-3756.jpg",
-   "kind": "note",
-   "label": "cure beside main 1876 to 1878 at the south shore, 1 to 1",
    "stop": "earth"
   }
  ]
