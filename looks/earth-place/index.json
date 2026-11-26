@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T15:33:40.774Z",
+ "pushed": "2026-11-26T16:00:13.485Z",
  "head": "345d510fde0df10f589b3f6fa0287d1db574e1e1",
- "note": "15:36 proof of 345d510f: units 1096 passed, path part green, gate running; two sheets of the rise round 2144 to 2148 where the full size line beside the verdict reads pop 1.28",
+ "note": "16:00 gate of 345d510f: G1 and G2 pass, G3 (determinism) running since 15:36; path part green; 1857 draft of both trees for the list of round 55's items",
  "looks": [
+  {
+   "time": "2026-11-26T16:00:12.729Z",
+   "file": "20261126160012729-note-1857-draft-half.jpg",
+   "source": "../../../../tmp/gl/k24/Q/1857-draft-half.jpg",
+   "kind": "note",
+   "label": "1857 at the draft tier, half size: 345d510f above, main below",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T15:33:39.604Z",
    "file": "20261126153339604-note-cr-4295.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/gl/k24/A/dots-marked-4253-win2.jpg",
    "kind": "note",
    "label": "2126 and a half at 2 for 1: white flecks of the cure boxed, cure above, main below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T14:37:05.877Z",
-   "file": "20261126143705877-note-judged-main-4269.jpg",
-   "source": "../../../../tmp/gl/k24/A/judged-main-4269.jpg",
-   "kind": "note",
-   "label": "main 2134 and a half: the same two areas on main's frame",
    "stop": "earth"
   }
  ]
