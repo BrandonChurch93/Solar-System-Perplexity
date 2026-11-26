@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T00:51:30.290Z",
- "head": "4076c6532492f4f04f17436516c5578917d41fff",
- "note": "00:52 UTC 26 Nov: two steps of the tall relief in the second tree (bad ones too); series A of state s is drawn, the lens test at 50 and 40 degrees is drawing, the mp4 follows by mail",
+ "pushed": "2026-11-26T01:18:43.907Z",
+ "head": "31b444c7376afc38c6270ee5ef518549c6bc5f24",
+ "note": "A crawl crop, the design aid, lens 64 against 50 at 3150 (state s)",
  "looks": [
+  {
+   "time": "2026-11-26T01:18:42.710Z",
+   "file": "20261126011842710-note-lens-64-50.jpg",
+   "source": "../work/r25/t/lens-64-50.jpg",
+   "kind": "note",
+   "label": "State s, frame 3150 at one sample, lens 64 (left) and 50 (right), same eye point and aim. Lines on the ground fit a pinhole within 2.5 and 2.9 px rms of a 1920 frame; the lens is not a fisheye. Lens 40 is drawing",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T01:18:41.613Z",
+   "file": "20261126011841613-note-lab-try1.jpg",
+   "source": "../work/r25/t/lab-try1.png",
+   "kind": "note",
+   "label": "Design aid, not the film: four height laws drawn by a small offline tool against the same Sun (33.3 degrees, ahead left). Upper left is state s (pimples on a plain), upper right is t5 (reads as rock). Neither is cloud yet",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T01:18:40.747Z",
+   "file": "20261126011840747-note-A-ring-crops.jpg",
+   "source": "../work/r25/t/A-ring-crops.png",
+   "kind": "note",
+   "label": "State s, series at 60 a second, six neighbours enlarged 4 times near the storm rim: at draft (one sample a pixel) the edges crawl in steps. Mean second difference in time 1.75 levels, 3.3 percent of pixels over 8. Not yet shown at final tier",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T00:51:28.840Z",
    "file": "20261126005128840-note-t2-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r23/t/a-3150.png",
    "kind": "note",
    "label": "3150 at draft, first state of the new ground, with the three numbers: low band 8.81 (main 3.539), bands 1 to 2: 0.52, 2 to 4: 0.50, 4 to 8: 0.52, 8 to 16: 0.67 (all red, line is 0.7 to 1.4), plain 14.10. Share by the page 1.26. Bad: detail is fur, no relief, no shadows, oval without bands. Relief and light are next",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T22:21:13.596Z",
-   "file": "20261125222113596-note-a-3239.jpg",
-   "source": "../work/r23/t/a-3239.png",
-   "kind": "note",
-   "label": "3239 at draft, first state of the new ground. Low band 12.57, bands 0.52 0.50 0.52 0.67. Share by the page 1.26",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T22:21:12.887Z",
-   "file": "20261125222112887-note-a-3060.jpg",
-   "source": "../work/r23/t/a-3060.png",
-   "kind": "note",
-   "label": "3060 at draft, first state of the new ground (stage 1: guide, flow, code detail, old light). Low band 13.68, bands 0.52 0.50 0.52 0.66 against the approved 3150. Share of detail by code as the page defines it 1.25: over 1, because the flat guide colour is brighter than the dark ground, so the measure needs the ground alone and the guide alone beside it; both follow",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T22:10:38.787Z",
-   "file": "20261125221038787-note-a-3150.jpg",
-   "source": "../work/r23/t/a-3150.png",
-   "kind": "note",
-   "label": "3150 at draft, first state of the new ground: no eye, the guide (cut 0.08 units), the flow, code detail carried in three ages of wound coordinates. Light still as before, no slopes, no shadows",
    "stop": "jupiter"
   }
  ]
