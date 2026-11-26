@@ -1,9 +1,17 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T03:31:56.751Z",
+ "pushed": "2026-11-26T03:55:31.470Z",
  "head": "a64c3d06a47f7ee3553e0f99fe5e73499ca1daac",
- "note": "state t at 1400 px: 3060, 3239, 3150 (master draft). Faults as in MAIL 1387; item 1 measure next",
+ "note": "w1: first state after MAIL 1387 and 1388, a working picture",
  "looks": [
+  {
+   "time": "2026-11-26T03:55:30.820Z",
+   "file": "20261126035530820-note-w1-3150.jpg",
+   "source": "../work/r26/t/w1-3150.png",
+   "kind": "note",
+   "label": "w1 at 3150, preview draft, no scaffold: cloud tops as bodies of density in space, the storm wound from signed sheets, balls laid on the ground. Faults I see: stripes too hard and regular, puffs read as pasted on, right half not dark enough",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T03:31:56.104Z",
    "file": "20261126033156104-note-t-3150-1400.jpg",
@@ -186,14 +194,6 @@
    "source": "../work/r25/t/t4-3150.png",
    "kind": "note",
    "label": "Dev tree, variant t4 at 3150, draft, 960 px (round towers 0.36 units wide, fill by the open sky, matter floor 0.03, no solve). Not film grade: reads as boulders, not cloud; the ceiling flattens the fine billows. Kept only as a step",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T00:35:12.127Z",
-   "file": "20261126003512127-note-k006300.jpg",
-   "source": "../work/r24/kA/k006300.png",
-   "kind": "note",
-   "label": "Series A, state s, capture frame 6300 (film 3150), draft, 960 px. Matter floor 0.016. Low band whole frame 9.27, outside the seven cells 8.75",
    "stop": "jupiter"
   }
  ]
