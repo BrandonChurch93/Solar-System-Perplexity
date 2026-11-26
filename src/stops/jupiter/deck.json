@@ -185,7 +185,7 @@
         0.04
       ],
       "tint": [
-        0.8,
+        2.5,
         0.6,
         2.0
       ],
@@ -207,15 +207,15 @@
       "pulse": 0.3,
       "silk": {
         "waveUnits": [
-          0.36,
+          0.24,
           0.0,
           0.6
         ],
-        "aspect": 0.3,
+        "aspect": 0.3784,
         "gain": 1.6,
-        "octaves": 7,
+        "octaves": 9,
         "crease": 0.3,
-        "fall": 0.3
+        "fall": -0.25
       },
       "soft": {
         "units": 0.03,
@@ -227,10 +227,18 @@
           0.25
         ],
         "reach": [
-          0.45,
+          0.15,
+          0.06
+        ],
+        "guard": 0.6,
+        "oldUnits": [
+          0.9,
           0.3
         ],
-        "guard": 0.6
+        "oldReach": [
+          0.4,
+          0.1
+        ]
       },
       "fibre": {
         "waveUnits": 0.05,
@@ -244,8 +252,8 @@
           1.5,
           4.0
         ],
-        "billows": 0.6,
-        "ridges": 0.7
+        "billows": 1.0,
+        "ridges": 0.3
       },
       "life": {
         "billowSeconds": 24.0,
@@ -256,8 +264,8 @@
         "waveUnits": 0.07,
         "radius": 0.45,
         "ratio": 0.5,
-        "sink": 0.6,
-        "squash": 0.85,
+        "sink": 0.3,
+        "squash": 1.5,
         "buds": 6,
         "levels": 4,
         "polar": [
@@ -273,7 +281,7 @@
         "rootUnits": 0.05,
         "patch": {
           "share": 0.4,
-          "units": 0.5
+          "units": 0.35
         },
         "pale": 0.9,
         "paleUnits": 0.05,
@@ -283,26 +291,37 @@
         "cull": 0.1,
         "stride": 3.0,
         "field": [
-          0.05,
-          0.3
+          9.0,
+          10.0
         ],
         "own": [
-          0.42,
-          0.33,
-          0.24
+          1.0,
+          0.78,
+          0.55
         ],
-        "ownShare": 0.7
+        "ownShare": 0.8,
+        "lift": 8.0,
+        "least": 0.05,
+        "most": 0.75,
+        "drawn": 0.5,
+        "pack": {
+          "share": 0.0,
+          "lane": [
+            -0.25,
+            -0.05
+          ]
+        }
       },
       "sheet": {
-        "aspect": 0.25,
+        "aspect": 0.035,
         "crest": 1.0,
         "tintFall": 0.3,
         "tintLeast": 0.5
       },
       "tall": {
         "range": [
-          0.7,
-          0.95
+          0.3,
+          0.8
         ],
         "sheet": 1.0,
         "silk": 1.0
@@ -315,13 +334,45 @@
         "mostUnits": 0.012,
         "tint": 1.2,
         "lane": 0.3
+      },
+      "cells": {
+        "jitter": 0.7,
+        "radius": 0.75,
+        "least": 0.55,
+        "breath": 0.3,
+        "blend": 0.3,
+        "power": 0.55,
+        "ride": 0.3,
+        "mean": 0.5,
+        "patch": {
+          "range": [
+            -0.1,
+            0.35
+          ],
+          "units": 0.5,
+          "share": 0.5,
+          "unrest": 0.0,
+          "ridge": 1.0,
+          "least": 0.35
+        },
+        "eye": [
+          1.3,
+          2.3
+        ],
+        "cover": {
+          "sparse": 0.5,
+          "dense": 0.8,
+          "soft": 0.06
+        },
+        "ownGain": 3.5,
+        "first": 0.0
       }
     },
     "sun": {
       "fill": [
-        0.05,
-        0.06,
-        0.08
+        0.03,
+        0.04,
+        0.06
       ],
       "open": [
         0.7,
@@ -342,7 +393,7 @@
         "coarse": 0.25,
         "phase": 0.25
       },
-      "bounce": 0.35,
+      "bounce": 0.15,
       "pass": {
         "share": 0.7,
         "units": 0.012,
@@ -352,8 +403,8 @@
     },
     "refine": 6,
     "medium": {
-      "skinUnits": 0.015,
-      "freeUnits": 0.006,
+      "skinUnits": 0.035,
+      "freeUnits": 0.008,
       "samples": 16,
       "search": 64,
       "stepDepth": 0.4,
@@ -370,11 +421,23 @@
       },
       "orders": {
         "count": 4,
-        "depth": 0.5,
+        "depth": 0.75,
         "gain": 0.5,
         "narrow": 0.5,
-        "forward": 0.5
-      }
+        "forward": 0.5,
+        "tint": 0.0
+      },
+      "skinTopUnits": 0.012
+    },
+    "gas": {
+      "levelUnits": -0.1,
+      "perUnit": [
+        3.0,
+        2.5,
+        1.9
+      ],
+      "sky": 1.66,
+      "leastSine": 0.05
     }
   },
   "air": {
@@ -1097,7 +1160,7 @@
         "longAtBirth": [
           1.0,
           5.0,
-          10.0
+          3.0
         ]
       }
     },
@@ -1329,14 +1392,26 @@
         }
       ],
       "glow": [
-        0.3,
-        0.42,
-        0.6
+        0.15,
+        0.35,
+        0.7
       ],
       "core": {
         "tight": 8,
         "spill": 0.2,
         "floor": 0.02
+      },
+      "steady": {
+        "gain": 0.12,
+        "tight": 25.0,
+        "deepUnits": [
+          -0.06,
+          0.04
+        ],
+        "halo": [
+          0.2,
+          4.0
+        ]
       }
     }
   },
@@ -1344,6 +1419,19 @@
     "note": "The colour of the matter, written by assets-src/jupiter/deck/guide.py: the ground the plates paint (the plates joined as before, times the tone and the calm field, in the scene's light), cut by a Gaussian of cutUnits on the ground, in the chart of the body. Nothing finer than the cut is in it and no eye is in it: every program reads it by the ground point alone. levels: centre and size in units, pixels of the stored picture for the full and the web set, work: the grid the cut is made on. Beyond the mid level the far plate is the guide as it is (its own texel is wider than the cut).",
     "cutUnits": 0.08,
     "levels": {
+      "fore": {
+        "centre": [
+          0,
+          -1.875
+        ],
+        "size": 6.144,
+        "pixels": {
+          "full": 2048,
+          "web": 1024
+        },
+        "work": 2048,
+        "paintOnly": true
+      },
       "near": {
         "centre": [
           0,
@@ -1354,7 +1442,11 @@
           "full": 1024,
           "web": 512
         },
-        "work": 4096
+        "work": 4096,
+        "paint": {
+          "full": 2048,
+          "web": 1024
+        }
       },
       "mid": {
         "centre": [
@@ -1371,10 +1463,10 @@
     },
     "relief": {
       "datum": 0.0,
-      "floorUnits": -0.22,
+      "floorUnits": -0.14,
       "floorEdge": [
-        0.3,
-        1.0
+        0.25,
+        1.2
       ],
       "crestUnits": 0.04,
       "crestAt": 1.75,
@@ -1383,13 +1475,18 @@
       "laneKnee": 0.4,
       "laneFloor": 0.05,
       "laneWideUnits": 0.6,
-      "basinUnits": 0.0,
+      "basinUnits": 0.12,
       "basinWideUnits": 0.3,
       "basinLight": 0.25,
       "basinRange": [
-        -0.3,
-        0.04
-      ]
+        -0.33,
+        0.0
+      ],
+      "basinEdge": [
+        1.3,
+        2.3
+      ],
+      "basinFrom": 0.075
     },
     "solve": {
       "lowPx": 16,
@@ -1400,7 +1497,7 @@
       "pixels": 1024,
       "rangeLog2": 4,
       "albedo": [
-        0.04,
+        0.05,
         0.7
       ],
       "share": 0.8,
@@ -1427,6 +1524,28 @@
       "pixels": 256,
       "darkStops": 3.0,
       "darkShare": 0.8
+    },
+    "paint": {
+      "share": 0.5,
+      "range": [
+        0.25,
+        2.0
+      ],
+      "albedo": [
+        0.05,
+        1.2
+      ],
+      "hueShare": 1.0,
+      "hueRange": [
+        0.7,
+        1.4
+      ],
+      "deep": 1.0,
+      "woundShare": 1.0,
+      "woundEdge": [
+        1.4,
+        2.4
+      ]
     }
   }
 }

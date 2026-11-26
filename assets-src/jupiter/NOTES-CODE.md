@@ -3121,3 +3121,214 @@ READ FIRST AFTER A COMPACTION: the tree now holds variant w8 with its three solv
 2. The storm: lower ring relief, fibres as tint drawn along the flow, the eye lower than its rim but not a pit.
 3. The steady blue glow low and right of the storm (the approved shows it at preview x 512 to 580, y 392 to 503), in the shader at the flash sites.
 4. Then the scaffold again, line (i), the pair at 60 a second, the slices, and a name in MAIL 508's order on top of a merge of origin main (fetch with depth 1 only).
+
+
+## 26 Nov, 05:25 UTC on: the state mail is out (8d5b7cbe), w11 refused, cells instead of folds (w12)
+
+- 05:21 UTC: commit `8d5b7cbec865c5586cdc536c259ff47c95866f98` (w8 with its scaffold) pushed to `agent/jupiter-code`; looks pushed (fe1efca2). Whole test run on that tree, nothing beside it: 81 files, 917 tests, all pass (05:11:48 to 05:23:39 UTC; `work/r13/qdone/12-vitest.sh.log`); tsc green.
+- 05:25 UTC: the state mail for MAIL 1413 went to /root (`work/r26/mail/STATE-0545.txt`), with the three sheets attached. I said: not ready for the third cut; I aim at 13:30 and cannot promise it; AT 09:30 UTC I MAIL THE NUMBER AND THE PICTURE AS THEY STAND THEN so that the Builder can rule before the proofs are drawn. That promise is binding.
+- w11 (packed dim balls in the dark field): refused. Seen: tan nuggets strewn over dark wax, the storm deep red. Line (i) 18.680 without scaffold. Lesson: separate balls read as things lying on a surface at any density and any albedo. The tops have to be the surface itself.
+- w12 (`work/r26/mk/w12.py`, from w11, balls switched off by numbers: `cumulus.field` [9, 10], `pack.share` 0, `orders.tint` 0): the youngest age's relief is no longer the billow of gradient noise (its zero lines are long open curves: they read as folds, and squeezed by the shear as contour lines) but a field of round tops, one to a cell, `cellsAt` in `clouds.ts`: per octave the nine nearest cells each give a dome r times (1 minus d squared over r squared) to the power `cells.power`, joined by a smooth largest of width `cells.blend`; the next octave rides on the one before (`cells.ride`); each top's radius breathes with the film's time at the billow's rate (`cells.breath`, `life.billowSeconds`, a cosine: no step and no seam). Numbers: `look.cloud.cells` (jitter 0.7, radius 0.8, least 0.55, breath 0.3, blend 0.12, power 0.6, ride 0.7, mean 0.5); `silk.waveUnits[0]` 0.12, `silk.aspect` 0.6, 6 octaves, fall 0.15; `tall.silk` 1.5. The height bound in the TS stays valid (each octave is at most its wave times its fall).
+- w12 seen (05:32 UTC): the first state in which the lower left and the right third are dark by relief and shade and not by paint. Line (i) 17.964 without scaffold (inside the seven cells mean 11.488; w8 without scaffold 18.635). It reads as rock or lava: long lumps all leaning one way (the warp of the young frame draws them out), hard creases, grey black. Not cloud yet. Next numbers: less warp, rounder and softer tops, a softer skin (w12b).
+
+> MAIL 1422 from the Builder (/root), 05:28 UTC, word for word: "Your state mail of 05:25 is read and the three pictures seen. I agree with your own reading: in a still it is worse than main (folded cloth, contour rings round a pit, popcorn), and line (i) is red at 7.873. RULED: 1. The third cut carries nothing of Jupiter's. Aim at 13:30; mail at 09:30 as you say. 2. From now two lines run. Yours is line A, wholly code. Line B is the relief: the approved picture as the ground's colour on a true height, with the scene's light and with flow, built by jupiter_builder in files of his own (a new src/stops/jupiter/relief.ts and his set and look files). He does not touch clouds.ts or deck.json; you do not touch his. I rule between A and B on pictures at 09:30 and again at 11:30, and the better one is named for 13:30. That is no verdict on your work: the fourth note needs a ground that reads as matter with depth before the freeze, and one line alone is too thin a thread. 3. What I look for in yours at 09:30, in your own order: cloud that reads as cloud (your point 1) before anything else. If the colour of the small forms is what makes it cloth, you may read the matter's own colour by place from the approved picture through the 3150 view onto your tops, as a map in the ground's coordinates that rides on your flow, with the picture's light taken out as far as your solve allows. Every globe of the film has such a map; form, depth, shadow, glow and motion stay code. Your call; say which way you went. 4. Merge main 5ce3856bbbe5e0f57276df6d3489b897f42a34f9 (its code commit is 23f1089b) before a candidate."
+
+What follows from MAIL 1422 (the mail is kept in `work/r26/mail/MAIL-1422.txt`):
+- I do not touch `src/stops/jupiter/relief.ts` or any set or look file of jupiter_builder; he does not touch `clouds.ts` or `deck.json`.
+- Mail at 09:30 UTC (pictures; the Builder rules between the lines), again at 11:30; a name by 13:30 on a merge of main 5ce3856b.
+- The map (item 3) is my call. I try both and look: w12 and w12b are wholly code; w13 (`work/r26/mk/w13.py BASE NAME`) adds the map: `guide.py` writes the matter's colour finer than the cut (the plates' own detail as a ratio to their cut, times the solved low band; `guide.paint`: share, range of the ratio, albedo limits) into a new level `fore` (centre [0, -1.875], 6.144 units, 2048 px, 0.003 units a texel, the fore plate's own) and into the near level at 2048 px; `clouds.ts` reads `guide-fore.png` first (`uGuideFore`, `uFore`; 14 samplers). The solve works as before on the low band. The map is read at the carried point, so it rides on the flow.
+
+
+## 26 Nov, 05:34 to 06:25 UTC: the map is on, variants w13 to w22 (second tree, 3150, preview, draft, no scaffold)
+
+The way taken on MAIL 1422 item 3: THE MAP IS ON from w13. `guide.py` writes the matter's colour finer than the cut into the fore level (`guide-fore.png`) and the near level; the picture's own light is taken out by half (`guide.paint.share` 0.5 on the luminance of the fine ratio), the hue of the fine ratio is kept (`hueShare` 1.0). The map is read at the carried point, so it rides on the flow. Form, depth, shadow, glow and motion stay code.
+
+Line (i) without the scaffold and what I saw (pictures `work/r26/t/wN-3150.png`; main reads 3.390 at this size and tier, the scaffold takes about 10 off these numbers):
+
+| variant | line (i) | bands | what it is | what I saw |
+| --- | --- | --- | --- | --- |
+| w12b | 17.275 | green | cells everywhere, softer, wholly code | soft pillows |
+| w13 | 18.247 | green | w12 with the map | lava with painted embers |
+| w13b | 17.557 | green | w12b with the map | painted pillows, the storm richer |
+| w14 | 17.499 | green | luminance share 0.5, no cells in the storm (`cells.eye`) | the storm reads as wound fibres round a lower eye; the left terraced, lumps in the dark field |
+| w15 | 18.711 | green | tops only over a threshold | boulders |
+| w16 | 18.066 | red | softer skin (0.05 and 0.012) | too soft, teeth at the limb of forms; refused |
+| w17 | 17.686 | red | rolls along the flow first, cells on their crests | satin with strata |
+| w18 | 17.600 | green | w17 with the old frame warped (`warp.oldUnits`, `oldReach`) | brushed flowing marble, no lumps |
+| w19 | 17.687 | green | w18 with small tops on crests | flow streaks with curls, an eddy below the storm, small lumpy tops; orange painted spots, the right third pebbly blue grey |
+| w20 | 17.979 | green | tops' cover driven by the picture's unrest | the lower left a field of grey pebbles; worse than w19 |
+| w21 | 19.788 | green | the picture's light and hue swings taken out of the map where the ground is dark (`guide.paint.deep` 1.0), tops on the rolls' crests (`cells.patch.ridge` 1.0, `unrest` 0.5), `tint.0` 4.0, `cover.sparse` 0.12 | the embers are gone from the dark thirds; the lower left is a dark flowing surface with a few pale tufts; reads as liquid with stones, not yet as cloud |
+| w22 | 20.181 | green | w21 with tall relief in the dark (`tall.sheet` 5, `tall.silk` 2, `tall.range` [0.3, 0.7]) | spires and cones in the dark thirds; refused. Taller cells are not the way |
+
+Lessons kept:
+- The approved's lower half is fluid rolls with fibres and lumpy lit crests. Cells everywhere read as pillows or rock; rolls alone read as satin; rolls with warp, small tops on their crests and the map is the working line.
+- The embers (saturated orange spots) were the picture's lit rims read as the matter's hue at half luminance. In dark ground the fine ratio above 1 is light, not matter: `guide.paint.deep` closes the upper range and the hue range there.
+- The skin (0.035 units) smears every lump finer than itself, so tops of 0.09 units cannot show smaller billows on them: pebbles. Cauliflower needs tops several skins wide or a thinner skin on the tops.
+
+## 26 Nov, 06:25 to 06:40 UTC: curd on the rolls' crests (w26), the base I keep
+
+- w23 (`mk/w23.py`): `reliefAt` returns a fourth value, the top's share (the cells' lift times their strength, clamped); `matterAt` hands it on as the matter's fourth value, so the tops take the colour law that the balls had: their own warm colour (`look.cloud.cumulus.own`, `ownShare`) at a brightness of `cumulus.lift` times the ground's, between `cumulus.least` and `cumulus.most`. The balls stay switched off by numbers.
+- w24 (`mk/w24.py`): the skin is thinner on the tops (`look.medium.skinTopUnits` 0.012 against `skinUnits` 0.035, mixed by the top's share), so that lumps finer than the sheet's skin can show. With tops 0.24 units wide: clay boulders, line (i) 21.063. Refused; the tops must be small.
+- w26 (`mk/w26.py`): THE BASE. The crest drive (`patchy`: the rolls' ridge value plus noise in the aged frame, `cells.patch.range` [-0.1, 0.35], `ridge` 1.0, `share` 0.5) now sets both the tops' cover (`cells.cover.sparse` 0.5 to `dense` 0.8) and their strength (`cells.patch.least` 0.0 in the troughs), so the troughs are bare rolls and the crests carry fine curd (`silk.waveUnits.0` 0.06). `cells.ownGain` 2.5 scales the top's share. `guide.rough.darkShare` back to 0.8, `guide.paint.hueRange` [0.7, 1.4]. Line (i) 16.011 without the scaffold (the best so far), bands green. Seen: rolls along the flow with bands of fine curd on their crests; the lower left reads as cloud streets for the first time. Still wrong: the lumps are all one size (beads in rows in the right third), they are grey where they should be warm, the right third is too light, the storm and the cream zone are smooth as agate where the approved has lumpy rims on every ring and cumulus rows in the cream.
+
+
+## 26 Nov, 06:26 to 06:45 UTC: the scaffold on w26 (6.611), w28 refused, the light is the next cause
+
+READ FIRST AFTER A COMPACTION: the base is w26 (`work/r26/v/w26/`, its three solve rounds in `work/r26/v/w26/solve/`). Nothing after w8 is in the repo yet. The 09:30 UTC mail to /root is owed (number and picture as they stand, the way taken on the colour map: ON since w13).
+
+### w26 with the scaffold (three rounds, `bash work/r26/solvejob.sh w26 3`)
+
+| round | line (i), whole | of it inside the seven cells | outside | mean outside | mean inside |
+| --- | --- | --- | --- | --- | --- |
+| off | 16.011 | 2.952 | 13.060 | | |
+| 1 | 9.090 | 2.859 | 6.232 | 7.554 | 16.335 |
+| 2 | 7.130 | 2.771 | 4.359 | 5.283 | 15.837 |
+| 3 | 6.611 | 2.730 | 3.881 | 4.704 | 15.599 |
+
+Main reads 3.390 at this size and tier (3.539 at final master by the Builder). Red by 3.2.
+
+By cell after round 3 (mean absolute difference; rows top to bottom): 5.5 3.6 3.1 1.2 0.9 0.8 0.6 0.3; 6.8 7.4 5.5 8.7 2.4 2.6 1.3 1.1; 7.5 6.5 3.8 4.4 3.6 2.8 2.8 6.3; 9.1 6.2 5.2 4.0 5.5 11.2 8.2 17.7; 10.3 6.9 7.3 7.5 12.2 11.1 26.3 26.1. Signed (frame minus approved), bottom row: +8 +3 +3 +5 +8 +8 +26 +26; the row above: +8 +3 +3 0 +2 +10 +6 +18. The lower right corner is the worst: lit ground at the albedo floor reads 60 to 70 of 255 where the approved reads 15 to 30.
+
+### Why level lit ground cannot be as dark as the approved (numbers of the shader)
+
+- Lit level ground returns the matter's colour times the Sun's curve. An albedo of 0.04 gives about 0.055 linear, 66 of 255 after the transfer. The approved's dark thirds read 15 to 30, a linear 0.004 to 0.013: five to ten times less light than the floor in the Sun gives. So the dark is shade or it is nothing (MAIL 1340 (2)).
+- The shade of this shader is weak for two reasons. The orders of scattering: four orders, each with half the depth of the one before (`look.medium.orders.depth` 0.5) and half its share: at an optical depth of 8 along the Sun's ray the sum still returns 4.7 percent of the lit value, 26 percent after the transfer. And the ambient: `look.sun.fill` 0.05 to 0.08 under open sky and `look.sun.bounce` 0.35 times the place's own colour in closed places.
+- The rolls are low: `sheet.aspect` 0.1 times a wave of 0.6 units gives about 0.02 units of amplitude over 0.4 units of half wave, a slope of 0.1; times `tall.sheet` 2.5 in the dark field 0.25. A gap is in full shade from 0.66 (MAIL 1340). So no trough of the rolls is in shade anywhere.
+
+### w28 (larger tops of 0.12 units, curd in pale ground and on the storm's rings, steady glow), refused
+
+Line (i) 9.106 on the scaffold of w26 (w26 itself 6.611). Seen: sparse lumps like pebbles on silk; the cloud streets of w26 are gone. The steady glow reads as one more pale blue lump because the ground round it is light. Tops stay at 0.06 units.
+
+### Next (queued 06:41)
+
+- w30 = w26 with deeper shade: `look.medium.orders.depth` 0.75, `look.sun.fill` [0.015, 0.02, 0.03], `look.sun.bounce` 0.15.
+- w31 = w30 with paler tops over darker deeps: `look.cloud.top` 1.0, `look.cloud.deep` 2.6.
+- w32 = w30 with tall rolls in the dark field: `tall.sheet` 6, `tall.range` [0.3, 0.8], tops never darker than 0.25 (`cumulus.least`).
+
+### 06:42 to 06:50 UTC, all on the scaffold of w26 (keep mode), 3150 preview draft
+
+| variant | line (i) whole | mean inside the seven cells | mean outside | what it is | what I see |
+| --- | --- | --- | --- | --- | --- |
+| w26 | 6.611 | 15.599 | 4.704 | the base | cloud streets, flat light, right third light blue grey |
+| w28 | 9.106 | 21.928 | 6.386 | tops 0.12 units, also in pale ground | pebbles on silk, refused |
+| w29 | 9.792 | 12.813 | 9.151 | w28 with tall tops over the whole dark field (`patchy = max(tall, ...)`, `tall.silk` 1.6, `tall.range` [0.5, 0.8]) | the first state with the approved's fall of light in the lower thirds (dark masses, lit rims, black shade), but crags and teeth: rock, not cloud |
+| w30 | 6.621 | 13.620 | 5.137 | w26 with deeper shade (orders 0.75, fill a third, bounce 0.15) | a little crisper, shaded sides darker; kept |
+| w31 | 9.145 | 13.141 | 8.297 | w30 with `cloud.top` 1.0 and `cloud.deep` 2.6 | marble; not taken |
+| w32 | 7.829 | 11.732 | 7.001 | w30 with `tall.sheet` 6 over `tall.range` [0.3, 0.8] | large forms with shaded sides and black troughs in the lower thirds; smooth as dunes where no curd stands; kept as the ground of the towers |
+
+The teeth of w29 have a cause: the tops' profile is `(1 - d^2 / r^2)^0.7` and the cover law cuts each dome to its cap and divides by the cover, which stretches a cap by up to 2; times `tall.silk` 1.6 that is a cone.
+
+### w33 and w34: towers as a second field of tops (code)
+
+`mk/w33.py`: `cellsAt` takes the profile's power from its law (`law.y`); a second call with seed 1 draws towers of `look.cloud.tower.waveUnits` 0.16 with a round profile (`power` 0.5, `aspect` 0.9: hemispheres), riders on them by the same law as the curd (`octaves` 5), only in the dark field and there in rows (`tower.row`: a noise in the aged frame plus the rolls' ridge value, range and units). Their height joins the march's bound (`most`). w33 = w30 with the towers; w34 = w32 (tall rolls) with the towers on the rolls' crests (`row.ridge` 0.6, `row.range` [0.0, 0.3]) and `cumulus.least` 0.08 so that the scaffold can still set the tops' brightness by place.
+
+### 06:51 to 06:57 UTC: the towers refused, w32 is the ground, the solve goes on from w26's pictures
+
+- w33 (towers in rows on w30): 11.065, bands red. Thumbs and potatoes of pale beige, also in the storm's eye. Refused.
+- w34 (towers on the crests of w32's tall rolls): 9.787. Teeth along every crest. Refused. Tops of 0.12 units and more read as rock whatever their profile; only curd of 0.06 units reads as cloud. The towers' code stays out (it lives only in `mk/w33.py`).
+- The tones of the lower thirds as numbers (luminance of 255, percentiles 5, 50, 95, 99): the approved lower left 11, 29, 111, 168; lower middle 11, 26, 70, 122; lower right 6, 13, 42, 69. w32 on the old scaffold: lower left 2, 29, 97, 130; lower middle 3, 26, 66, 98; lower right 1, 21, 59, 78. So with the tall rolls the middle tone of the lower left is the approved's, the shade is too black (fill too low now), the lights are too short (tops not bright enough) and the lower right is still 8 levels too light in the middle.
+- w35 = w32 with `cumulus.least` 0.05, `cumulus.lift` 4 and THE MATTER'S FLOOR AT 0.05 (`guide.solve.albedo.0` and `guide.paint.albedo.0`; history 0.016, 0.03, 0.04; the paint's own floor stood at 0.02 since w13 and is closed now). `solvejob2.sh w35 3` runs three more rounds on top of w26's solve pictures (it keeps them, draws the variant's own range view and bare frame).
+- Built and waiting: w36 (`mk/w36.py`): the curd's patch threshold rises in the dark field (`cells.patch.tall` 0.25: fewer, sparser clusters there), tops never darker than 0.3, and the steady blue glow as light in the deep: `flashAt` returns a third value, the sum of the sites' steady cores (`life.flash.steady.gain`, `tight`), and the frame adds it only where the hit lies low (`steady.deepUnits` [-0.06, 0.04] against the stored ground), so the glow sits in the troughs and the crests stand dark before it. w37: w35 with the balls switched on in the dark field (`cumulus.pack.share` 1, lane [0.0, 0.25]).
+
+
+## 26 Nov, 06:57 to 07:20 UTC: w35 solved, w36 to w40, what reads as cloud and what does not
+
+READ FIRST AFTER A COMPACTION: no variant after w8 is in the repo yet. The 09:30 UTC mail to /root is owed. The base for texture trials is w30 (w26 with deeper shade) on w26's scaffold (`v/w26/solve/`); w35 (tall rolls, floor 0.05) has its own scaffold in `v/w35/solve/`. A variant's `pre.sh` copies the scaffold it wants into the second tree before the guide runs.
+
+| variant | line (i) whole | mean inside the seven cells | mean outside | what it is | what I see |
+| --- | --- | --- | --- | --- | --- |
+| w35, three more solve rounds | 8.136, 7.830, 7.674 | 16.183 | 5.868 | w32 with the matter's floor at 0.05 | tall rolls read as liquid or wax with pebbles on them; worse than w26 (6.611) by number and by eye |
+| w36 | 15.119 | 50.390 | 7.637 | curd threshold up in the dark field, steady glow as light in the deep with gain 1.0 | the glow is a huge white blue flare (gain far too high, 0.03 is the order), the curd is nearly gone; without curd the ground is liquid marble. Refused |
+| w37 | 10.709 | 21.636 | 8.391 | w35 with the balls on in the dark field | cotton tufts that float over the ground, also in the storm's eye; one tuft alone reads as cloud, the field reads as popcorn. Refused |
+| w38 | 14.950 | 31.916 | 11.352 | w37 with balls twice the size and more fill | larger tufts, same fault. Refused |
+| w39 | 8.308 | 17.913 | 6.271 | w35 with `fibre.aspect` 1.0 and more fill | grooves along the flow: fluted cloth or wax, not cloud |
+| w40 | 7.977 | 16.796 | 6.106 | w39 with all of the fine light of the approved kept in the map (`guide.paint.share` 1.0) | the storm gains its thin rings of rust and pale; the rest as w39 |
+
+What I learn:
+
+- Anything long and smooth along the flow (rolls, grooves) reads as liquid, cloth or wax. Only lumps that are as long as wide and stand at several sizes at once (curd, the buds of the balls) read as cloud. The flow may order where the lumps stand, it may not be their surface.
+- The fine light of the approved inside the storm is matter (fibres of rust and pale), not light on relief: keeping it there (share 1 inside about 1.4 flow scales of the centre, falling to the old 0.5 by 2.4) gives the wound spiral. `mk/w46.py` builds that.
+- The lower right cannot reach the approved's dark by relief under a Sun 33.3 degrees up with the matter's floor at 0.05: lit matter at the floor reads 66 of 255, the approved's median there is 13, so four fifths of the ground would have to lie in shade, which needs tops two to three times as tall as wide (towers; refused as rock in w33 and w34). This stays a red in line (i): the seven cells alone cost 2.7 to 2.8 of it.
+
+Queued at 07:20: w41 (`mk/w41.py`: fibres from 0.3 units down over seven halvings, each as tall as it is wide times `fibre.aspect`, crests by `fibre.crest`, scaled by the stretch of the old coordinates) on w30; w42 (curd everywhere, `cells.patch.least` 0.35); w43 (w41's fibres on w35); w44 and w45 (curd as a hierarchy from 0.24 and 0.12 units with `silk.fall` -0.4 so the small lumps on a large one are taller for their size).
+
+### 07:20 to 07:43 UTC, all at 3150, preview, draft, on the scaffold of w26 unless said
+
+| variant | line (i) whole | mean inside the seven cells | mean outside | what it is | what I see |
+| --- | --- | --- | --- | --- | --- |
+| w41 | 7.418 | 13.752 | 6.075 | w30 with fibres as relief of seven sizes (`mk/w41.py`) | grooves along the flow: fluted, refused |
+| w42 | 7.144 | 12.467 | 6.015 | w30 with curd everywhere (`cells.patch.least` 0.35) | pebbles of one size over everything: popcorn. Signed by cell: the middle rows read 4 to 11 levels darker than the approved (the scaffold was solved with more fill), bottom right +19 +20 |
+| w43 | 8.383 | 16.385 | 6.686 | w41's fibres on w35 (scaffold of w35) | fluted wax, refused |
+| w44 | 7.563 | 11.009 | 6.831 | curd as a hierarchy from 0.24 units, nine sizes, `silk.fall` -0.4, `silk.aspect` 0.3 | large rounded masses with smaller lumps on them; the first state whose lower thirds read as heaped cloud; heavy in the pale ground |
+| w45 | 7.129 | 11.857 | 6.126 | the same from 0.12 units, eight sizes, aspect 0.45 | cloud heaps in rows; the rolls between them still cloth |
+| w47 | 9.096 | 17.243 | 7.368 | w41 with the storm's fine light kept (`mk/w46.py`), curd everywhere, floor 0.05 | storm rings fine and wound; pebbles |
+| w48 | 7.965 | 11.354 | 7.246 | w45 with `cells.ride` 0.3 and curd everywhere | the middle left reads as a field of cumulus seen from above (the best cloud so far); the lower left has crags where the tall rolls carry cells |
+| w49 | 8.915 | 19.730 | 6.621 | w42 with the storm's fine light, the steady glow (`mk/glow.py`, gain 0.2, tight 10) and floor 0.05 | the glow is a broad pale blue haze, not small; region mean (b, g, r) 48.8 38.7 24.3 against the approved's 39.4 31.8 19.6, 99th percentile 114 against 145, most 136 against 246: the approved has small sparks on black |
+| w50 | 9.331 | 17.360 | 7.628 | w48 with the storm's fine light, glow and floor 0.05 | as w48 with a finer storm |
+| w51 | 9.388 | 18.707 | 7.411 | w50 with `silk.fall` -0.25, `cells.power` 0.55, `tall.sheet` 1.5 | softer heaps; the rolls where no heap stands still read as cloth or liquid |
+
+The way from here: the relief is carried by the heaps (a hierarchy of round tops), the rolls go down to a third (`sheet.aspect` 0.035) so that the flow shows by the order of the heaps and by the colour riding on it, not by folds. Large heaps (0.24 units) only in the dark field (`mk/w55.py`: the first size of the hierarchy is weighted by the dark field through `cells.first`). The glow: small cores (tight 40) with a faint halo (`mk/glow2.py`).
+
+### 07:43 to 07:55 UTC: w52 to w57, the pick is w57, its solve runs as w58
+
+| variant | line (i) whole | mean inside the seven cells | mean outside | what it is | what I see |
+| --- | --- | --- | --- | --- | --- |
+| w52 | 9.333 | 18.909 | 7.302 | w51 with brighter tops (`cumulus.lift` 8, `most` 0.75) and `order.ridges` 0.3 | as w51 |
+| w53 | 9.625 | 20.511 | 7.316 | w52 with the glow as small cores and a faint halo (`mk/glow2.py`: gain 0.8, tight 40, halo 0.12 at tight 5) | two soft white blue smudges on light ground: pasted on. The glow needs dark ground and heaps in front of it |
+| w55 | 9.183 | 17.577 | 7.403 | w53 with the hierarchy starting at 0.24 units, the first size weighted by the dark field (`mk/w55.py`, `cells.first` 0, `silk.aspect` 0.3784 so the smaller sizes keep their height) | dark heaped masses with pale tops in the lower left and the middle left: the first lower left that reads as heavy cloud. Rolls between the masses still cloth |
+| w56 | 9.574 | 21.139 | 7.120 | w53 with the rolls at a third (`sheet.aspect` 0.035, `tall.sheet` 1.0) | flatter; the storm's rings lose their grooves and read by colour; the swirls read as streaky paint with small lumps |
+| w57 | 9.669 | 18.161 | 7.868 | w55 with the rolls at a third and the dark field wider (`tall.range` [0.3, 0.8]) | the lower half is filled with heaped masses, dark and warm on the left, blue grey on the right; the storm reads by colour; glow smudges too white; a few pale teeth where a cap is stretched. THE PICK |
+
+w58 = w57 with `life.flash.steady.gain` 0.3, `look.sun.fill` [0.03, 0.04, 0.06] (the shade read 2 to 5 where the approved reads 11) and `cells.ownGain` 3.5 (paler tops on the large heaps). `solvejob2.sh w58 3` started 07:54:35 on top of w26's solve pictures (the numbers above are all before a solve of their own, so they are not to be compared with w26's 6.611).
+
+Main moved at 07:45 (MAIL 1435): origin main is 77a7d4108df57439c565c1223315eb5250b03fa2 (code 35a82888, engine hash d3654c5e8dff3fa6). Fetched with depth 1 at 07:45; nothing differs in the three Jupiter folders between 8481213 and it, so `/tmp/merge.sh 77a7d4108df57439c565c1223315eb5250b03fa2` is safe. The second tree still holds the older engine; proofs for a name are drawn in the repo on the merge.
+
+Files no program reads at run time (checked by grep 07:55): `deck-view-color.png` (29.0 MB full, 9.0 MB web), `deck-fore-height.bin` (33.6 and 8.4 MB), `deck-image-core.jpg`, `deck-image-wide.jpg`, `deck-image-range.bin` (15.7 and 4.6 MB): they are read only by builders under `assets-src/jupiter` (`deck/view.py`, `deck/air.py`, `deck/image.py`, `plates/tone.py`, `plates/beyond.py`). `wisp.png` is named in `set.ts`, `deck-core.jpg`, `deck-wide.jpg` and `deck-under.jpg` in `deck.ts` (and Neptune names a `deck-wide.jpg` of its own): check before touching.
+
+### 07:55 to 08:09 UTC: w58 solved (7.344), what the approved's lower thirds are
+
+`solvejob2.sh w58 3`: 9.268 before, then 7.842, 7.481, 7.344 (inside the seven cells 2.918 of it, outside 4.426; means 16.675 and 5.364), bands green. Its solve pictures are in `v/w58/solve/`. Signed by cell after round 1: the bottom row +8 +10 +6 +6 +13 +13 +26 +26, the row above 0 -5 -2 -2 +1 +10 +5 +14: the whole bottom row is too light, the matter stands at its floor there and is lit.
+
+Crops beside the approved at twice the size (`work/r26/cmp.py NAME` writes `t/NAME-cmp-ll.png` and `-lr.png`):
+
+- The approved's lower left is a dark smoky mass with fine curled wisps at low contrast and a few small clusters of bright warm tops lit from behind (rims). Its lower right is blue black with dim curled smoke, a few warm lit crests and small sharp blue white sparks low and right of the storm.
+- Mine: large smooth lumps with pale tops, laminar streaks between them (marbled liquid), the right third lit blue grey.
+- We look toward the Sun's side (the Sun is far left and ahead). Slopes that face the camera steeper than 0.66 lie in their own shade, so tall packed heaps show their dark sides with lit rims: that is the approved's fall of light. The heaps must be about as tall as wide for it (`tall.silk` 2).
+- The blue of the approved's dark right is the colour of shade under the sky, not of the matter (its lit crests there are warm or neutral: 57 60 57). The map took the shade's blue as the matter's hue. Cure in the guide: where the ground is dark and the hue is cool, the matter goes toward grey (`guide.paint.deepGrey`, `coolRange`; `mk/w60.py`).
+- The two pale teeth at the bottom of w55 to w58 are the steady glow's cores seen between crests, far too white: gain down to 0.12, colour bluer.
+
+Queued 08:03 to 08:08, keep mode on w58's scaffold: w59 (`tall.silk` 2.0, glow dimmer and bluer), w60 (w59 with `cells.cover.sparse` 0.7 and the grey pull), w61 (w60 with the skin at 0.02 and 0.006 on tops), w62 (`mk/w62.py`: smoke, a field of seven sizes whose every size bends the finer ones, as colour of the matter only, with the threads at half).
+
+
+### 08:09 to 08:25 UTC: w59 to w63, the gas
+
+All at 3150, preview, draft, in keep mode on w58's scaffold (w58 solved reads 7.344).
+
+- w59 (`tall.silk` 2.0, glow dimmer and bluer): 7.873. The heaps twice as tall read as crags. Refused.
+- w60 (w59 with the grey pull of `mk/w60.py` and `cells.cover.sparse` 0.7): 8.204. The right third becomes a grey rock field: the blue of the deep belongs to the picture. Refused.
+- w61 (w60 with the skin at 0.02 and 0.006 on tops): 8.248. Harder, reads as rock. Refused: the skin stays at 0.035 or thicker.
+- w62 (`mk/w62.py`, smoke as a tint on w60): 8.208. The laminar streaks break up, but the storm's fibres blur too. Not taken as it is; if it comes back, only in the rough field.
+- w63 (`mk/w63.py` on w58): THE GAS. Under a level (`look.gas.levelUnits`) the air absorbs. Every light at a point of matter is cut by exp(-`perUnit` times the depth under the level over the sine of its way): the Sun's beam by the Sun's sine at the place, the sky's light by `sky` times the depth, the way to the eye by the ray's sine at the ground. A law of the ray, the place's height and the light; no eye height, no clock, no table. With it the basins are on again (`guide.relief.basinUnits` 0.1 a stop under `basinLight`, down to -0.33): dark matter lies deep, and the depth is dark because the gas above it takes the light. First draw 16.014: the eye a black hole (dish plus basin), the lower right black. But the tops that stand out of the gas fall softly into the dark: the first state whose lower left reads as cloud with depth.
+- w64 (`mk/w64.py`): the basin only outside the storm (`guide.relief.basinEdge` [1.3, 2.3] in flow scales), `perUnit` [3.0, 2.5, 1.9] (red goes first: the deep is blue black). Drawn, then solved 3 rounds on w58's scaffold.
+
+### 08:25 to 08:40 UTC: w64 solved, why the basins were too broad, w68
+
+- w64 before the solve 14.245; rounds 11.044, 9.507, 8.910 (inside the seven cells 1.974 of it, outside 6.936), bands green. The picture has the approved's fall of light for the first time: lit upper left, a dark eye, tops standing out of a dark deep at the lower left, the right half down to blue black. Signed by cell after round 2, fourth row: 0 -11 -22 -30 -19 -23 -21 -13: too dark where the solve cannot lift further (albedo at its cap of 0.7).
+- Cause: with `basinLight` 0.25 and 0.1 units a stop, everything under a wide light of 0.12 lies under the gas level, also the middle ground (wide light 0.05 to 0.1), and the eye's ray is flat there (sine about 0.25: the way through the gas is 4 times the depth). The guide's wide light (0.3 units) on the ground: upper left 0.3 to 0.43, the eye 0.055, the middle ground 0.05 to 0.12, the lower middle 0.02 to 0.06, the lower right 0.004 to 0.012.
+- w68 (`mk/w68.py` on w64): the basin starts at its own light, `guide.relief.basinFrom` 0.075 (the dark field for the tall tops keeps `basinLight` 0.25), 0.12 units a stop, range [-0.33, 0]: wide light 0.05 lies at -0.07 (over the gas level of -0.1), 0.025 at -0.19, 0.0125 and under at -0.31 to -0.33. Solved 2 rounds from w58's scaffold, then 3060 and 3239 drawn.
+- Waiting: `mk/w67.py` (smoke as height in the dark field: a turbulent field of 6 sizes, each bends the finer ones, 0.05 units; under the gas a change of height is a change of light without an edge), the floor at 0.1 (`v/w66`), the gas's own scattered blue (`mk/w65.py`).
+
+### 08:40 to 08:50 UTC: w68 solved (6.446), the zebra, the wax
+
+- w68 on w58's scaffold before its own solve 8.706; rounds 7.199 and 6.446 (inside the seven cells 1.884 of it, outside 4.561; means 10.768 and 5.529), bands green. The best number of line A so far (w26: 6.611, w58: 7.344). Its solve pictures are in `v/w68/solve/`; `v/w68/pre.sh` now copies them. One frame costs 110 s at preview draft.
+- Signed by cell after round 2: third row +4 -3 -2 -4 -1 -2 -3 +6, fourth row +3 -9 -6 -8 -6 -13 -15 -9, bottom row -3 -8 -5 -12 -16 -9 -5 -6. The lower rows are now too dark, not too light: the solve still has room to lift.
+- By eye: the fall of light is the approved's. But the lower middle is a zebra of laminar streaks: under the gas a change of height is a change of light, so the long sheets and threads along the flow read stronger than before, as marbled liquid.
+- Crops at twice the size beside the approved (`t/w68-cmp-ll.png`, `-lr.png`): the approved's dark masses are full of fine grain (clusters of 1 to 4 preview pixels that catch warm light, curled wisps); mine are smooth blobs and smooth streaks. Cause of the wax: the skin. Density rises over `skinUnits` 0.035 and the free path at full density is `freeUnits` 0.008, so the Sun's light enters about sqrt(2 times 0.035 times 0.008) = 0.024 units, a fifth of a heap of 0.12: every form finer than that is lit from inside like wax. w61 (thin skin) read as rock because it stood on the crags of w59 with grey matter, not because of the skin.
+- Queued 08:46, all drawn on w68's scaffold: w70 (`tall.sheet` 0.4, `cells.cover.sparse` 0.75), w69 (`mk/w67.py`: smoke as height in the dark field), w74 (`mk/w74.py` on w69: sheets, sheet tint and threads at a quarter in the dark field, `tall.streak` 0.25), w72 (skin 0.015, 0.006 on tops), w73 (skin 0.008, tops 0.004, free path 0.004: the light enters 0.008), w71 (glow as sparks: gain 0.8, tight 150).
+
+### 08:50 UTC: w68 goes into the repo as the candidate state (not a name)
+
+- Installed by `work/r26/install.sh w68`: `clouds.ts`, `deck.json`, `deck/guide.py`, the three solve pictures (`solve-near.png`, `solve-mid.png`, `solve-fore.png`), and what the guide writes (`guide-near.png`, `guide-mid.png`, `guide-fore.png`, both height files, full and web). The guide's output in the repo is the same bytes as in the second tree.
+- Line (i) at 3150, preview, draft: 6.446 over the whole frame (main 3.390 at this tier): red. Bands green. The scaffold (A) is in it, the floor of the matter is 0.05 and did not rise: red.
+- Not drawn on this state: the pair at 60 a second, the slices of dive and rise, the hold's hash, parity, G17, finals. Named red until drawn.
+- New files add 13.2 MB to the three folders against 8d5b7cbe (the fore map and the fore solve picture, larger maps).
