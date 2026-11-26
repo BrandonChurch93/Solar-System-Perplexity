@@ -1,0 +1,11 @@
+import { plan } from '../../../src/stops/uranus/plan'
+import * as look from '../../../src/stops/uranus/look'
+const fps = 30
+const kind = process.argv[2] as 'dive' | 'rise'
+const a = Number(process.argv[3]), b = Number(process.argv[4])
+for (let f = a; f <= b; f++) {
+  const p = plan.flown(kind, f / fps)
+  const h = p.position.length() - 1
+  const pixel = Math.tan((p.vfov * Math.PI) / 360) / 540
+  console.log(f, 'h', h.toFixed(5), 'h*pixel', (h * pixel).toExponential(3), 'cover', h * pixel < (look.place.deck.pixel as number[])[1] ? 'drawn' : 'off', 'above pose', h > 0.01513 ? 'yes' : 'no')
+}

@@ -1,0 +1,20 @@
+import { mkdirSync, writeFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { DIST, args, ensureBuild, formatId, loadConfig } from '../../../tools/lib/common'
+import { openCapture, renderPng } from '../../../tools/lib/browser'
+import { setCapture } from '../../../src/core/clock'
+
+const cfg = loadConfig()
+const a = args()
+const r = 2
+const dir = a.dir!
+mkdirSync(dir, { recursive: true })
+setCapture(r)
+ensureBuild()
+const s = await openCapture({ dist: DIST, format: formatId(cfg, undefined), assets: 'full', diag: 'beauty', query: '&rate=' + r })
+for (const f of String(a.frames).split(',').map(Number)) {
+  const k = Math.round(f * r)
+  const { png } = await renderPng(s.page, k, 'draft')
+  writeFileSync(join(dir, 'k' + String(k).padStart(6, '0') + '-r' + r + '-draft.png'), png)
+}
+await s.close()

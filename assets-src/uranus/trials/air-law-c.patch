@@ -1,0 +1,39 @@
+diff --git a/src/stops/uranus/look.ts b/src/stops/uranus/look.ts
+index 306f55d0..a8d8693c 100644
+--- a/src/stops/uranus/look.ts
++++ b/src/stops/uranus/look.ts
+@@ -126,7 +126,7 @@ export const deck: DeckLook = {
+   cloud: { height: 0.4, tile: 0.7, stretch: 1.4, group: 1.2, cover: [0.44, 0.6], curve: [0.14, 0.45], drift: 0.03, gain: 1.5, shade: 0.35, reach: [0.3, 0.62], tint: [2.16, 1.92, 1.8], lit: [0.02, 0.12] },
+ }
+ 
+-export const place = { air: { scale: 0.3, steps: 1048576, floor: 0.025, depth: 0.15, bare: [0.04, 0.03, 0.09] as [number, number, number] }, tops: { sun: [-0.2, 0.2] as [number, number], white: [1.15, 1.06, 0.94] as [number, number, number], fine: [3, 0.002] as [number, number], lane: [0.45, 0.45, 0.45] as [number, number, number] }, rim: { span: [3.2, 4.55] as [number, number], near: [0.75, 1.3] as [number, number], feather: 0.3, wave: 0.08 }, sky: [0.2, 0.7] as [number, number], skyPicture: [0.25, 1.5] as [number, number], skyTurn: [0.2, 4.55] as [number, number], skyDive: { picture: [0.2, 0.5] as [number, number], turn: [0.2, 4.55] as [number, number], soft: 0.2 }, lift: 0.03, round: [0.7, 4.55] as [number, number], under: 0.003, deck: { pixel: [2.3e-4, 4.6e-4] as [number, number], grain: [1.9e-4, 2.3e-4] as [number, number], border: [0.42, 0.56] as [number, number] }, arcs: { dive: [1, 2] as [number, number] }, onSky: [0.97, 1] as [number, number], rings: { dive: [0.2, 0.8] as [number, number] }, ringMove: { span: [0.022, 1.2] as [number, number], match: [1.0, 1.56] as [number, number], arch: [0.45, 1] as [number, number], spread: [0.02, 0.9] as [number, number], hoops: { arch: [0.8952, 0.9081, 1.0001] as [number, number, number], rings: [1.29, 1.3526, 1.5601] as [number, number, number] }, show: 0.012, hand: [1.2, 2.4] as [number, number] }, fixedEye: false }
++export const place = { air: { scale: 0.3, base: [0.016, 0.25] as [number, number], span: [0.05, 1.4] as [number, number], ease: [0.8, 0.6] as [number, number], steps: 1048576, floor: 0.025, depth: 0.15, bare: [0.04, 0.03, 0.09] as [number, number, number] }, tops: { sun: [-0.2, 0.2] as [number, number], white: [1.15, 1.06, 0.94] as [number, number, number], fine: [3, 0.002] as [number, number], lane: [0.45, 0.45, 0.45] as [number, number, number] }, rim: { span: [3.2, 4.55] as [number, number], near: [0.75, 1.3] as [number, number], feather: 0.3, wave: 0.08 }, sky: [0.2, 0.7] as [number, number], skyPicture: [0.25, 1.5] as [number, number], skyTurn: [0.2, 4.55] as [number, number], skyDive: { picture: [0.2, 0.5] as [number, number], turn: [0.2, 4.55] as [number, number], soft: 0.2 }, lift: 0.03, round: [0.7, 4.55] as [number, number], under: 0.003, deck: { pixel: [2.3e-4, 4.6e-4] as [number, number], grain: [1.9e-4, 2.3e-4] as [number, number], border: [0.42, 0.56] as [number, number] }, arcs: { dive: [1, 2] as [number, number] }, onSky: [0.97, 1] as [number, number], rings: { dive: [0.2, 0.8] as [number, number] }, ringMove: { span: [0.022, 1.2] as [number, number], match: [1.0, 1.56] as [number, number], arch: [0.45, 1] as [number, number], spread: [0.02, 0.9] as [number, number], hoops: { arch: [0.8952, 0.9081, 1.0001] as [number, number, number], rings: [1.29, 1.3526, 1.5601] as [number, number, number] }, show: 0.012, hand: [1.2, 2.4] as [number, number] }, fixedEye: false }
+ 
+ export const near = { tint: [1, 1, 1] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
+ 
+diff --git a/src/stops/uranus/set.ts b/src/stops/uranus/set.ts
+index c21959a5..8f8afd58 100644
+--- a/src/stops/uranus/set.ts
++++ b/src/stops/uranus/set.ts
+@@ -32,7 +32,20 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
+   return out
+ }
+ 
+-const hazeUnder = (h: number): number => Math.round((1 - Math.exp(-Math.max(h, 0) / look.place.air.scale)) * look.place.air.steps) / look.place.air.steps
++const hazeUnder = (h: number): number => {
++  const a = look.place.air
++  const up = Math.max(h, 0)
++  const over = Math.log(Math.max(up, a.base[0]) / a.base[0])
++  const held = Math.min(up, a.base[0]) * Math.exp(a.base[1] * (1 - Math.exp(-over / a.base[1])))
++  const low = 1 - Math.exp(-held / a.scale)
++  const range = Math.log(a.span[1] / a.span[0])
++  const x = Math.min(Math.log(Math.max(up, a.span[0]) / a.span[0]) / range, 1)
++  const e0 = a.ease[0] / range
++  const e1 = a.ease[1] / range
++  const m = 1 / (1 - (e0 + e1) / 2)
++  const s = x < e0 ? (m * x * x) / (2 * e0) : x < 1 - e1 ? m * (x - e0 / 2) : 1 - (m * (1 - x) * (1 - x)) / (2 * e1)
++  return Math.round((low + (1 - low) * s) * a.steps) / a.steps
++}
+ 
+ export const createSet: SetFactory = async (ctx) => {
+   const holdBand = await bandHold(plan.id)

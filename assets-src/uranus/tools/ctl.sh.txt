@@ -1,0 +1,10 @@
+#!/bin/bash
+# usage: ctl.sh NAME FRAMES [EDIT.py]
+cd /home/user/workspace/repo
+[ "$(git status --short | wc -l)" = "0" ] || { echo "tree not clean"; exit 3; }
+trap 'git checkout HEAD -- src/stops/uranus; git status --short | wc -l > /tmp/n79/out/'$1'.restored' EXIT
+if [ -n "$3" ]; then python3 $3 || exit 5; fi
+npx tsc --noEmit -p . > /tmp/n79/out/$1-tsc.out 2>&1 || { echo "tsc red"; exit 6; }
+git diff HEAD --stat > /tmp/n79/out/$1.stat
+nice npx tsx out/work/u/dfr.ts --frames $2 --dir /tmp/n79/f/$1 > /tmp/n79/out/$1-render.log 2>&1
+echo done > /tmp/n79/out/$1.done
