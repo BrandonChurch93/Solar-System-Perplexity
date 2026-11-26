@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T06:50:28.098Z",
+ "pushed": "2026-11-26T07:17:16.569Z",
  "head": "2bcd599a0760e31cb73cb31b46b6f7798fdb5676",
- "note": "06:50 rise level alone after first cure reads 0.35 at 2118 by the quick reader; odds law for the far band coded, main 2d4176fd merged, real strips rendering",
+ "note": "07:18 odds law on merged tree (main 2d4176fd): quick reader dive 0.28 at 1889, rise 0.21 at 2123; rest of both moves rendering, then units",
  "looks": [
+  {
+   "time": "2026-11-26T07:17:15.276Z",
+   "file": "20261126071715276-note-r1-3.jpg",
+   "source": "../../../../tmp/gl/k23/r1-3.jpg",
+   "kind": "note",
+   "label": "rise 2128 to 2135 every frame, same state; still a swap of two pictures in the far band, paced by the air path",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T07:17:14.029Z",
+   "file": "20261126071714029-note-r1-2.jpg",
+   "source": "../../../../tmp/gl/k23/r1-2.jpg",
+   "kind": "note",
+   "label": "rise 2120 to 2127 every frame, same state; quick reader largest 0.21 from 2123",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T07:17:12.727Z",
+   "file": "20261126071712727-note-d1-2.jpg",
+   "source": "../../../../tmp/gl/k23/d1-2.jpg",
+   "kind": "note",
+   "label": "dive 1896 to 1903 every frame, same state",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T07:17:11.453Z",
+   "file": "20261126071711453-note-d1-1.jpg",
+   "source": "../../../../tmp/gl/k23/d1-1.jpg",
+   "kind": "note",
+   "label": "dive 1888 to 1895 every frame, odds law for the far band (half 0.10, power 1.5, from 0.032, ring 9 to 13.5 degrees), draft, shutter off; quick reader largest 0.28 from 1889",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T06:50:11.791Z",
    "file": "20261126065011791-note-rise-level-alone.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/k22/SIM/cure-dive-b.jpg",
    "kind": "note",
    "label": "dive 1892 to 1903 every frame, first cure with the ground, draft tier, shutter off",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T05:55:00.637Z",
-   "file": "20261126055500637-note-cure-dive-a.jpg",
-   "source": "../../../../tmp/gl/k22/SIM/cure-dive-a.jpg",
-   "kind": "note",
-   "label": "dive 1880 to 1891 every frame, first cure with the ground, draft tier, shutter off",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T05:24:08.118Z",
-   "file": "20261126052408118-note-cw-blob.jpg",
-   "source": "../../../../tmp/gl/k22/SIM/cw-blob.jpg",
-   "kind": "note",
-   "label": "level alone after the cure 1885 to 1897 at 2 for 1: shallows stay teal, no cyan; reader 0.45 at 1889 from 0.76",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T05:24:07.030Z",
-   "file": "20261126052407030-note-cw-sea.jpg",
-   "source": "../../../../tmp/gl/k22/SIM/cw-sea.jpg",
-   "kind": "note",
-   "label": "BAD level alone 1888 and 1896 at 2 for 1: above without the low veil, below with it after the cure: the veil still wipes the sea's texture to a flat pale fill in 8 frames",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T04:59:45.829Z",
-   "file": "20261126045945829-note-g0-1892.jpg",
-   "source": "../../../../tmp/gl/k22/SIM/g0-1892.jpg",
-   "kind": "note",
-   "label": "BAD level alone, 1880 above and 1892 below, half size: the far band turns pale and the shallows cyan in place",
    "stop": "earth"
   }
  ]
