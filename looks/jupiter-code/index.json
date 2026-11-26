@@ -1,9 +1,65 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T16:51:22.283Z",
- "head": "14af1ae7ebf4a2fbeb655e42e784804a9c682344",
- "note": "line A: cause of the dashes found (the shade of the sheet and of the fibre, seen from above as thin dark lanes), cure in the working tree, survey of dive and rise running; nothing committed or measured at final yet",
+ "pushed": "2026-11-26T17:16:50.433Z",
+ "head": "c9766f990a881dbfcb3e4ec184d21092bea5ae85",
+ "note": "line A candidate c9766f99 (dashes cured, sent 17:07): 3150 at final measured, finals of 2997, 3296, 2895 drawing; the Builder's machines draw the rows",
  "looks": [
+  {
+   "time": "2026-11-26T17:16:48.914Z",
+   "file": "20261126171648914-note-f-3150.jpg",
+   "source": "../work/r27/final/f-3150.png",
+   "kind": "note",
+   "label": "3150 master final without grain on c9766f99, sha256 739da3f2441f20d9",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:16:47.686Z",
+   "file": "20261126171647686-note-f3150-small.jpg",
+   "source": "../work/r27/t/f3150-small.jpg",
+   "kind": "note",
+   "label": "3150: above the approved picture, below c9766f99 at master final (591 s): line (i) 2.165 whole frame, 2.069 outside the seven cells, main 3.539; bands 0.8225 0.7899 0.8459 0.9035 0.9592 green; mean absolute RGB against the approved 11.87",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:16:46.479Z",
+   "file": "20261126171646479-note-f3150-ll.jpg",
+   "source": "../work/r27/t/f3150-ll.jpg",
+   "kind": "note",
+   "label": "3150 lower left at one to one: above the approved picture, below c9766f99 at master final; soft lumpy heaps and dark flat blots where the approved has crisp sculpted billows",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:16:45.158Z",
+   "file": "20261126171645158-note-two-2997-3296.jpg",
+   "source": "../work/r27/t/two-2997-3296.jpg",
+   "kind": "note",
+   "label": "2997 above, 3296 below, preview draft on c9766f99; my layer stands as a small dark eye on the pale oval",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:16:44.176Z",
+   "file": "20261126171644176-note-pair-3255.jpg",
+   "source": "../work/r27/t/pair-3255.jpg",
+   "kind": "note",
+   "label": "3255 preview draft: above 14af1ae7, below c9766f99; the storm a little softer",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:16:43.017Z",
+   "file": "20261126171643017-note-pair-3010.jpg",
+   "source": "../work/r27/t/pair-3010.jpg",
+   "kind": "note",
+   "label": "3010 preview draft: above 14af1ae7 with the dashes, below c9766f99",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:16:41.745Z",
+   "file": "20261126171641745-note-pair-3025.jpg",
+   "source": "../work/r27/t/pair-3025.jpg",
+   "kind": "note",
+   "label": "3025 preview draft: above 14af1ae7 (dashes and dark wavy veins), below the candidate c9766f99 (the shade of a wave follows the camera's height)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T16:51:21.482Z",
    "file": "20261126165121482-note-c-3150.jpg",
@@ -138,62 +194,6 @@
    "source": "../work/r27/t/star-3270.png",
    "kind": "note",
    "label": "rise 3270 after the cure (14af1ae7), preview draft: the baked relief starts at the point under the camera, no star seen",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:53:51.153Z",
-   "file": "20261126155351153-note-k6540-pole.jpg",
-   "source": "../work/r27/t/k6540-pole.jpg",
-   "kind": "note",
-   "label": "rise 3270 at b092c2b9, master draft: RED, a star of straight streaks round the point under the camera; cause was the baked relief starting its first row at the nearest ground of the border rays",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:25:19.940Z",
-   "file": "20261126152519940-note-wo2-3150-master-draft.jpg",
-   "source": "../work/r26/t/wo2-3150-master-draft.png",
-   "kind": "note",
-   "label": "3150 master draft, solved four rounds with the denser air: line (i) 2.126 whole, 2.037 outside the seven cells, bands green, 49.6 s",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:25:19.378Z",
-   "file": "20261126152519378-note-adds-wo2-2997.jpg",
-   "source": "../work/r26/t/adds-wo2-2997.png",
-   "kind": "note",
-   "label": "2997 second tree: the globe alone left, with my layer right, preview draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:25:18.807Z",
-   "file": "20261126152518807-note-adds-wo2-3296.jpg",
-   "source": "../work/r26/t/adds-wo2-3296.png",
-   "kind": "note",
-   "label": "3296 second tree: the globe alone left, with my layer right, preview draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:25:18.254Z",
-   "file": "20261126152518254-note-kwo2-lowleft.jpg",
-   "source": "../work/r26/t/kwo2-lowleft.jpg",
-   "kind": "note",
-   "label": "terrain, twelve consecutive capture frames 3148 to 3153 and a half, lower left at 1.6 times, preview draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:58:23.529Z",
-   "file": "20261126145823529-note-wo2-3150.jpg",
-   "source": "../work/r26/t/wo2-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, level cure and stronger air being tried, solve not yet fitted, line (i) 3.032, bands green, 33.4 s",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:58:22.582Z",
-   "file": "20261126145822582-note-wo2-dive-sheet.jpg",
-   "source": "../work/r26/t/wo2-dive-sheet.jpg",
-   "kind": "note",
-   "label": "dive 3030 3040 3050 3059 with the stronger air being tried, second tree, solve not yet fitted",
    "stop": "jupiter"
   }
  ]
