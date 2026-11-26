@@ -10,7 +10,7 @@ import { patches, place, relief as reliefDefs, wrap } from './assets'
 import { Globe } from './globe'
 import * as look from './look'
 import { below, deck, plan, veil as timing } from './plan'
-import { CloudRelief, dryable } from './relief'
+import { CloudRelief } from './relief'
 import { HoldRim, LIMB, Rim, limbFrame } from './rim'
 import skyJson from './sky.json'
 import { Veil } from './veil'
@@ -108,12 +108,10 @@ export const createSet: SetFactory = async (ctx) => {
     swirl: { axis: direction(look.swirl.lon, look.swirl.lat), wideDeg: look.swirl.wideDeg },
     patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.full, exact: key === 'full', spot: spotBody, feather: patches.feather, fade: patches.fade },
     air: { deck: ground.deck!.colours, deckSpanDeg: look.relief.air.deckSpanDeg },
-    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), full: place.levels.map((l) => l.full), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, show: place.show, wide: { ...place.wide, texture: wideTexture } },
+    place: { textures: placeTextures, rim: place.rim, widthsDeg: place.levels.map((l) => l.widthDeg), full: place.levels.map((l) => l.full), centre: new THREE.Vector3().fromArray(place.centre), feather: place.feather, fade: place.fade, forms: place.forms, tone: place.tone, wide: { ...place.wide, texture: wideTexture } },
     flow: { map: flowMap, strength: look.drift.strength, shadow: look.drift.shadow, shadowOffset: look.drift.shadowOffset },
     bolts: { map: boltMap, center: direction(wrap.bolt.lon, wrap.bolt.lat), widthDeg: wrap.bolt.widthDeg, gain: 1, color: look.boltColor, cells: look.cells.map((c) => ({ dir: direction(c.lon, c.lat), radiusDeg: c.radiusDeg, painted: c.painted })) },
   })
-  // The hold's picture over the close side (globe.ts, over) is made in the hold as the ground is: drawn dry out of a move.
-  dryable(globe.over)
   globe.mesh.quaternion.copy(globeTurn)
   globe.mesh.scale.fromArray(fit.globe.scale)
   const rim = new Rim(limbMap, look.limb.radius, diagUniform, look.bloom.hide, holdRim)
@@ -161,9 +159,6 @@ export const createSet: SetFactory = async (ctx) => {
     bodyEyes[kind] = { time, eye }
     return eye
   }
-  // The nearest eye of the hold in the frame of the body: its last (globe.ts, arrive).
-  const heldEye = plan.hold(plan.seg.hold.end - plan.seg.hold.start).position.clone().applyQuaternion(plan.turn(plan.seg.hold.end).multiply(globeTurn).invert())
-  const heldFov = plan.hold(plan.seg.hold.end - plan.seg.hold.start).vfov
   const carry = { ...ground.carry!, soft: look.veil.sunSoft, tint: look.veil.sunTint }
   // The cover veil is never drawn any more (plan.veilAmount is 0 and plan.release is 1 on every frame of both moves), so its cloud
   // picture is not loaded: the sheet keeps a texture it never shows.
@@ -281,21 +276,21 @@ export const createSet: SetFactory = async (ctx) => {
       airTurn.copy(plan.turn(state.time)).multiply(plan.terrainFrame)
       airEye.copy(localP).applyQuaternion(airBack.copy(airTurn).invert()).multiplyScalar(deck.radius)
       ground.updateGlobe(airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, covering ? state.weight : 0, place.air.field, sunOn * state.weight, covering ? below(camera.length() - 1, place.air.exactHeights) : 0, gain, shot.post.vignette, view, shot.sun.dir, own)
-      // The ground of the close side itself: at the handover the globe side is the close side's scene. In both moves it stands whole on
-      // the plates, and the hold's picture goes over both by the share it still has (globe.ts, uOver). No height is read.
+      // The ground of the close side itself, in below the heights of plates.json (ground): at the handover the globe side is the close side's scene.
       const heightT = eyeAtT(state.time > terrainMid ? 'rise' : 'dive').length() / deck.radius - 1
-      // The tones of the ground by the law of the plates (plates.json, tone): the share of its stored tones goes by the angle and the air
-      // alone (no height of the camera is read), over the globe's colour at the place (ground.tone.under, as it stands at the near end of
-      // dusk.heights) at the exposure of this height.
+      // The tones of the ground by the law of the plates (plates.json, tone): the share of its stored tones by the height of the camera, and
+      // the globe's colour at the place (ground.tone.under, as it stands at the near end of dusk.heights) at the exposure of this height.
       const groundPl = plan.placeLook(state.segment, camera.length() - 1)
+      const groundHeight = Math.log(Math.max(camera.length() - 1, 1e-4))
+      const toneShare = 1 - smooth((groundHeight - Math.log(place.tone.heights[0])) / (Math.log(place.tone.heights[1]) - Math.log(place.tone.heights[0])))
       const underAt = place.ground.tone.under[state.time > terrainMid ? 'rise' : 'dive']
-      const groundTone = { look: [place.tone.air, 0, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
+      const groundTone = { look: [place.tone.air, toneShare, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
       // Inside the frame of T true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is
       // the surface view. The border of the ground and its far limit outside that frame stand still (plates.json, ground.frustum).
       // The near ground, which the camera of T sees from above (ground.keep), keeps all of its picture at every height, so no crest of
       // it goes out by height while the flat plate stands.
       const held = Math.max(1 - below((camera.length() - 1) / heightT, place.ground.release), 1e-6)
-      const share = { weight: covering ? state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: place.ground.true as [number, number], skin: place.ground.skin as [number, number], tall: place.ground.tall, held, keep: place.ground.keep, atT: camAtT(state.time > terrainMid ? 'rise' : 'dive'), frustum: [place.ground.frustum.margin[0]!, place.ground.frustum.margin[1]!, place.ground.frustum.wide] as [number, number, number], near: [place.ground.frustum.near[0]!, place.ground.frustum.near[1]!, place.ground.frustum.forms] as [number, number, number], flat: [place.ground.flat.sinElevation[0]!, place.ground.flat.sinElevation[1]!, place.ground.flat.horizon[1]!, place.ground.flat.horizon[0]!] as [number, number, number, number], matte: [place.ground.matte.width, place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
+      const share = { weight: covering ? below(camera.length() - 1, place.ground.heights) * state.weight : 0, under: covering ? below(camera.length() - 1, place.ground.bandHeights) * state.weight : 0, band: place.ground.band, true: place.ground.true as [number, number], skin: place.ground.skin as [number, number], tall: place.ground.tall, held, keep: place.ground.keep, atT: camAtT(state.time > terrainMid ? 'rise' : 'dive'), frustum: [place.ground.frustum.margin[0]!, place.ground.frustum.margin[1]!, place.ground.frustum.wide] as [number, number, number], near: [place.ground.frustum.near[0]!, place.ground.frustum.near[1]!, place.ground.frustum.forms] as [number, number, number], flat: [place.ground.flat.sinElevation[0]!, place.ground.flat.sinElevation[1]!, place.ground.flat.horizon[1]!, place.ground.flat.horizon[0]!] as [number, number, number, number], matte: [place.ground.matte.width, place.ground.matte.forms, place.ground.matte.level, place.ground.matte.scale] as [number, number, number, number], tone: groundTone }
       ground.updateGround(share, state.time - terrainMid, airEye, eyeAtT(state.time > terrainMid ? 'rise' : 'dive'), airTurn, deck.centre, gain, shot.post.vignette, view, shot.sun.dir, own)
       const vignette = shot.post.vignette * (1 - low * (1 - lensOn))
       hazeTurn.copy(state.rotation).multiply(airTurn)
@@ -307,24 +302,14 @@ export const createSet: SetFactory = async (ctx) => {
       gu.uCarryOn!.value = 1 - released
       const pl = plan.placeLook(state.segment, camera.length() - 1)
       const duskGain = Math.pow(place.dusk.gain, pl.dusk)
-      // The place is a thing of the planet: its plates stand at every height. What they show goes by the distance of the eye to the
-      // ground point and by place, read through the footprint of the pixel on the deck (globe.ts, show). The angle of a pixel of the
-      // master frame at the middle of the frame, and how many of those a pixel of this buffer is.
-      gu.uPlaceOn!.value = pl.on
-      // One exchange at a pixel (globe.ts, uOver): in a move the globe lays the plates whole under the ground and its mesh over draws
-      // the hold's picture over both by the share it still has. Out of a move the globe is as it was and the mesh over is dry.
-      gu.uOver!.value = covering ? 1 : 0
-      globe.over.visible = covering || own
-      globe.over.userData.dry = !covering
-      const pixelAngle = 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height
-      ;(gu.uFoot!.value as THREE.Vector3).x = pixelAngle * frameScale
-      ;(gu.uFoot!.value as THREE.Vector3).z = 1 / frameScale
+      // The weight of the place grows with nearness, from the first frame of the dive on, and is gone in the rise before the travel.
+      const height = Math.log(Math.max(camera.length() - 1, 1e-4))
+      const byHeight = (h: [number, number]): number => 1 - smooth((height - Math.log(h[0])) / (Math.log(h[1]) - Math.log(h[0])))
+      gu.uPlaceOn!.value = pl.near ? pl.on * byHeight(place.show.heights) : pl.on
       const after = state.time > terrainMid
       for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
-      ;(gu.uHeldEye!.value as THREE.Vector3).copy(heldEye)
-      // The angle of a pixel of the hold's last frame over the present one (globe.ts, soft).
-      gu.uHeldFoot!.value = Math.tan(THREE.MathUtils.degToRad(heldFov) / 2) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
+      ;(gu.uToneLook!.value as THREE.Vector4).y = byHeight(place.tone.heights)
       ;(gu.uDusk!.value as THREE.Vector4).set(duskGain * Math.pow(place.dusk.tint[0], pl.dusk), duskGain * Math.pow(place.dusk.tint[1], pl.dusk), duskGain * Math.pow(place.dusk.tint[2], pl.dusk), duskGain / place.dusk.gain)
       // The plates hold the light of the place at the full gain and the full tint,
       // so they are drawn with the share of both that the globe has now: the place and the globe about it keep one colour at every exposure.

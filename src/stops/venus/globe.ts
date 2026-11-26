@@ -46,10 +46,6 @@ export interface GlobePlace {
   // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
   // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
   tone: { cos: [number, number]; power: number; air: number; live: { sigmaDeg: number; contrast: number; colour: number; gain: number; most: number } }
-  // One ground for every height (plates.json, show). sigmaDeg: the size under which a form is fine. discDeg: the disc of the place,
-  // whole inside the first angle from the centre of the place and ended by the second. minCos: the least cosine between the line of
-  // sight and the normal of the deck that the footprint of a pixel counts.
-  show: { sigmaDeg: number; discDeg: [number, number]; minCos: number }
 }
 
 export interface GlobeFlow {
@@ -128,7 +124,7 @@ const PLACE_SAMPLERS = Array.from({ length: PLACE_LEVELS }, (_, i) => 'uniform s
 // it does not, it is sampled here.
 const COLOUR_GIVERS = [...new Set(placeDef.levels.map((l) => l.colourOf).filter((j) => j >= 0))]
 const PLACE_COLOURS = COLOUR_GIVERS.map((j) => `    vec3 hue${j} = vec3(0.0);\n    float got${j} = 0.0;`).join('\n')
-const placeSample = (i: number): string => `textureGrad(uPlace${i}, pg * uPlaceScale[${i}] + 0.5, pgx * (uPlaceScale[${i}] * uGrad * uFoot.z), pgy * (uPlaceScale[${i}] * uGrad * uFoot.z))`
+const placeSample = (i: number): string => `textureGrad(uPlace${i}, pg * uPlaceScale[${i}] + 0.5, pgx * uPlaceScale[${i}] * uGrad, pgy * uPlaceScale[${i}] * uGrad)`
 const placeColour = (i: number): string => {
   const j = placeDef.levels[i]?.colourOf ?? -1
   if (j < 0) return `vec3 c = ${placeSample(i)}.rgb;${COLOUR_GIVERS.includes(i) ? `\n        hue${i} = c;\n        got${i} = 1.0;` : ''}`
@@ -141,12 +137,12 @@ const placeColour = (i: number): string => {
 
 const PLACE_GLSL = Array.from({ length: PLACE_LEVELS }, (_, i) => `    {
       vec2 q = pg * uPlaceScale[${i}];
-      float w = ${i > 0 ? 'smoothstep(0.5, 0.5 - uPlaceLook.x, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPlaceLook.y, uPlaceLook.z, parentPlace))' : 'smoothstep(0.5, 0.5 - uPlaceLook.w, length(q) + uPlaceForms.x * clamp(0.5 + dot(textureLod(uPlace0, q + 0.5, uPlaceForms.y).rgb, vec3(0.2126, 0.7152, 0.0722)) / max(dot(textureLod(uPlace0, q + 0.5, uPlaceForms.z).rgb, vec3(0.2126, 0.7152, 0.0722)), 1e-3) - 1.0, 0.0, 1.0))'};
+      float w = ${i > 0 ? 'smoothstep(0.5, 0.5 - uPlaceLook.x, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPlaceLook.y, uPlaceLook.z, parentPlace * uFrame))' : 'smoothstep(0.5, 0.5 - uPlaceLook.w, length(q) + uPlaceForms.x * clamp(0.5 + dot(textureLod(uPlace0, q + 0.5, uPlaceForms.y).rgb, vec3(0.2126, 0.7152, 0.0722)) / max(dot(textureLod(uPlace0, q + 0.5, uPlaceForms.z).rgb, vec3(0.2126, 0.7152, 0.0722)), 1e-3) - 1.0, 0.0, 1.0))'};
       for (int k = 0; k < (w > 0.0 ? 1 : 0); k++) {
         ${placeColour(i)}
         laid = laid * (1.0 - w) + c * w;
         cover = cover * (1.0 - w) + w;
-        placeTexels = mix(placeTexels, pgd * uFoot.z * uPlaceScale[${i}] * uPlaceSize[${i}], w);
+        placeTexels = mix(placeTexels, pgd * uPlaceScale[${i}] * uPlaceSize[${i}], w);
       }
       parentPlace = pgd * uPlaceScale[${i}] * uPlaceFull[${i}];
     }`).join('\n')
@@ -174,14 +170,7 @@ uniform float uPlaceFull[${PLACE_LEVELS}];
 uniform vec4 uPlaceLook;
 uniform vec3 uPlaceForms;
 uniform float uPlaceOn;
-uniform vec2 uShow;
-uniform vec3 uFoot;
-uniform vec2 uDisc;
-uniform float uShowMap;
 uniform vec3 uToneEye;
-uniform vec3 uHeldEye;
-uniform float uOver;
-uniform float uHeldFoot;
 uniform vec4 uToneLook;
 uniform float uTonePower;
 uniform vec4 uDusk;
@@ -312,15 +301,6 @@ void main() {
   float mu = clamp(dot(n, -dir), 0.0, 1.0);
   float ndl = dot(n, uSunW);
   float grad = uGrad * uSmear * (1.0 + uGraze.x * smoothstep(uGraze.y, uGraze.z, mu));
-  // Scale by scale (plates.json, show): the mesh over (uOver 2) reads the hold's picture through the footprint of the hold's last eye
-  // at this ground point, never a smaller one, so it shows no form the hold did not show. soft is that footprint over the present
-  // one: the two distances to the ground point times the angle of a pixel of the hold's last frame over the present one (uHeldFoot).
-  float soft = 1.0;
-  if (uOver > 1.5) {
-    vec3 dp0 = spinY(onSphere(uCamObj, normalize(vLocal - uCamObj)), uSpin);
-    soft = max(length(dp0 - uHeldEye) * uHeldFoot / max(length(dp0 - spinY(uCamObj, uSpin)), 1e-9), 1.0);
-    grad *= soft;
-  }
   vec3 albedo = equirectGrad(uMap, dc, grad).rgb;
   float texels = diagTexelsDir(uSwirl.w != 0.0 ? dc : d, uMapWidth);
   float dn = dot(dc, uSpotN);
@@ -407,18 +387,10 @@ ${TAP_LEVELS}
   // flow: the place seen from above is a region of this cloud deck, so its tone and its colour are these (plates.json, tone.live). It goes
   // through the same air, limb light and exposure as the globe below.
   vec3 under = col;
-  // The same colour with the forms of the map between the two sizes left in it (the map at the level uShowMap), over under.
-  vec3 mapMid = vec3(1.0);
   for (int pass = 0; pass < (uPlaceOn > 0.0 ? 1 : 0); pass++) {
     vec3 wideMap = textureLod(uMap, lonLat(dc), uLive.y).rgb;
-    vec3 midMap = textureLod(uMap, lonLat(dc), uShowMap).rgb;
-    mapMid = clamp((midMap * midMap) / max(wideMap * wideMap, vec3(1e-6)), vec3(0.125), vec3(8.0));
-    // Where the hold look stands (held), the globe's own colour is that look: the map at the hold's level in place of the level of
-    // uLive.y, and below the picture of the hold over it (fine), as on the globe about the place. The place seen from the hold is
-    // then a region of the approved globe and not of the bare map.
-    vec3 baseMap = mix(wideMap, textureLod(uMap, lonLat(dc), max(uHoldMap.w, uLive.y)).rgb, held);
-    float wideLift = max(textureLod(uFlow, lonLat(dc), uLiveLook.y).g - uLift.x, 0.0) * uLift.y * smoothstep(uLift.z, uLift.w, max(baseMap.r, max(baseMap.g, baseMap.b)));
-    under = baseMap * baseMap * ${wrap.top.toFixed(1)} * exp2(wideLift) * curveAt(ndl) * uTint;
+    float wideLift = max(textureLod(uFlow, lonLat(dc), uLiveLook.y).g - uLift.x, 0.0) * uLift.y * smoothstep(uLift.z, uLift.w, max(wideMap.r, max(wideMap.g, wideMap.b)));
+    under = wideMap * wideMap * ${wrap.top.toFixed(1)} * exp2(wideLift) * curveAt(ndl) * uTint;
   }
   for (int pass = 0; pass < (uShade.x * uLimbFar > 0.0 ? 1 : 0); pass++) {
     vec3 wide = equirectGrad(uMap, dc, max(uShade.y, grad)).rgb;
@@ -492,7 +464,6 @@ ${TAP_LEVELS}
   vec3 past = uCam - dir * dot(uCam, dir);
   for (int pass = 0; pass < (uHoldRimMap.w > 0.0 && b > ${(holdJson.rim.from - 0.02).toFixed(3)} ? 1 : 0); pass++) fine *= holdRim(past, false);
   col *= fine;
-  under *= fine;
   for (int k = 0; k < (uCarryOn > 0.0 ? 1 : 0); k++) {
     float cl = max(dot(col, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
     col = mix(col, mix(vec3(cl), col, uCarry.x) * pow(cl / uCarry.z, uCarry.y - 1.0) * uCarry.w * uCarryTint, uCarryOn);
@@ -503,106 +474,22 @@ ${TAP_LEVELS}
   under *= uDusk.xyz;
   vec3 dp = spinY(onSphere(uCamObj, normalize(vLocal - uCamObj)), uSpin);
   float pn = dot(dp, uPlaceN);
-  float pnn = max(pn, 0.05);
-  vec2 pg = vec2(dot(dp, uPlaceE), dot(dp, uPlaceU)) / pnn;
-  // The footprint of the pixel on the deck (plates.json, show): what one pixel of the master frame covers of the ground at this point.
-  // It follows from the distance of the eye to the ground point and from the angle of the line of sight to the deck alone: across the
-  // line of sight the distance times the angle of a pixel (uFoot.x, less toward the border of the frame), along it that over the cosine
-  // between the line of sight and the normal of the deck (not under uFoot.y). It is not read from the derivatives of the screen: those
-  // are wrong in single pixels along a line of the globe's mesh and turn with the screen. Every level of the place is read through
-  // this footprint, the long axis first, and the levels give way to one another by it (uFoot.z: pixels of the master frame a pixel
-  // of this buffer, for the reading alone).
-  vec3 eyeP = spinY(uCamObj, uSpin);
-  vec3 ray = dp - eyeP;
-  float eyeL = max(length(ray), 1e-9);
-  vec3 los = ray / eyeL;
-  float sink = dot(los, dp);
-  vec3 alongDeck = normalize(los - dp * sink + 1e-7 * uPlaceE);
-  vec3 acrossDeck = cross(dp, alongDeck);
-  float offAxis = clamp(-vView.z / max(length(vView), 1e-9), 0.0, 1.0);
-  float footMin = eyeL * uFoot.x * offAxis * sqrt(offAxis);
-  float footMaj = footMin / max(-sink, uFoot.y);
-  vec3 gMaj = alongDeck * footMaj;
-  vec3 gMin = acrossDeck * footMin;
-  vec2 pgx = (vec2(dot(gMaj, uPlaceE), dot(gMaj, uPlaceU)) - pg * dot(gMaj, uPlaceN)) / pnn;
-  vec2 pgy = (vec2(dot(gMin, uPlaceE), dot(gMin, uPlaceU)) - pg * dot(gMin, uPlaceN)) / pnn;
+  vec2 pg = vec2(dot(dp, uPlaceE), dot(dp, uPlaceU)) / max(pn, 0.05);
+  vec2 pgx = dFdx(pg);
+  vec2 pgy = dFdy(pg);
   float pgd = sqrt(max(dot(pgx, pgx), dot(pgy, pgy)));
-  float heldShare = 0.0;
   for (int pass = 0; pass < (uPlaceOn > 0.0 && pn > 0.3 ? 1 : 0); pass++) {
-    // Two approved pictures show this ground: the hold picture from the eyes of the hold and the close picture from the eye of T
-    // (uToneEye). They do not show the same forms (proofs D1 and D2 in the notes: the plates seen from the hold are not the hold
-    // picture), so one must give way to the other on the way between the two. The share of the close picture (arrive) is the place
-    // of the eye's distance to the ground point between the distance of the nearest eye of the hold (uHeldEye, its last) and the
-    // distance of the eye of T, counted in octaves: each halving of the distance gives the same share (plates.json, show). None of
-    // it stands at the hold's distances and beyond, so the whole hold shows the hold picture alone; all of it stands at the
-    // distance of T and nearer. Every form of the plates and of the ring comes by this one weight. No clock and no height is read,
-    // and the law has no number of its own: its two ends are two eyes.
-    float heldLen = length(dp - uHeldEye);
-    float arrive = clamp(log(heldLen / eyeL) / max(log(heldLen / max(length(dp - uToneEye), 1e-6)), 1e-3), 0.0, 1.0);
-    // The disc of the place (plates.json, show.discDeg): a region of the ground about the centre of the place, whole inside the first
-    // angle and ended by the second. Inside it the forms of the place stand at every height and every distance.
-    float inner = 1.0 - smoothstep(uDisc.x, uDisc.y, length(pg));
     // The wide ring (plates.json, wide): the forms of the place carried on round its widest plate, as light over that colour. Its
     // border follows its own cloud forms and eases out over uWideLook.y.
     for (int ring = 0; ring < (uWideLook.x > 0.0 ? 1 : 0); ring++) {
       vec2 q = pg * uWideLook.x;
       float m = uPlaceOn * smoothstep(0.5, 0.5 - uWideLook.y, length(q) + uWideForms.x * clamp(0.5 + textureLod(uWide, q + 0.5, uWideForms.y).r / max(textureLod(uWide, q + 0.5, uWideForms.z).r, 1e-3) - 1.0, 0.0, 1.0));
-      for (int k = 0; k < (m * arrive > 0.0 ? 1 : 0); k++) {
-        float ringOwn = inverseFilmic(vec3(textureGrad(uWide, q + 0.5, pgx * (uWideLook.x * uGrad * uFoot.z), pgy * (uWideLook.x * uGrad * uFoot.z)).r)).r;
-        float ringLow = inverseFilmic(vec3(textureLod(uWide, q + 0.5, uShow.y).r)).r;
-        col = mix(col, under * mapMid * (uLiveLook.x * pow(clamp(ringOwn / max(ringLow, 1e-5), 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)), m * arrive);
-        texels = mix(texels, pgd * uFoot.z * uWideLook.x * uWideLook.w, m * arrive);
+      for (int k = 0; k < (m > 0.0 ? 1 : 0); k++) {
+        float ringOwn = inverseFilmic(vec3(textureGrad(uWide, q + 0.5, pgx * uWideLook.x * uGrad, pgy * uWideLook.x * uGrad).r)).r;
+        float ringLow = inverseFilmic(vec3(textureLod(uWide, q + 0.5, uWideLook.z).r)).r;
+        col = mix(col, under * pow(max(col, vec3(1e-5)) / max(under, vec3(1e-5)), vec3(uWideForms.w)) * (uLiveLook.x * pow(clamp(ringOwn / max(ringLow, 1e-5), 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)), m);
+        texels = mix(texels, pgd * uWideLook.x * uWideLook.w, m);
       }
-    }
-    // One exchange at a pixel (uOver). In a move the close side is laid whole: the plates here at their full share wherever any of
-    // them has come (uOver 1), and the ground of the surface view over them (relief.ts). The hold's picture is then drawn over the
-    // whole of it by the share it still has, 1 - arrive (uOver 2, the mesh over): the same picture as the plates alone give by arrive
-    // where no ground stands, and under the ground no second, flat picture of what the ground shows in relief. The air below and
-    // the gain are the same in both, so the sum is the sum under them. Out of a move uOver is 0 and nothing here differs.
-    heldShare = 1.0 - arrive;
-    // Scale by scale (uOver 2). The forms of the close picture finer than the hold's footprint were never the hold's: no picture
-    // gives way for them. They stand at their full share from the first frame of a move and come as their cells come to the
-    // footprint of the pixel: the plates read through the present footprint over the plates read through the hold's (soft), as light
-    // over the hold's picture. With the eye at the hold's last eye the two readings are one and nothing is added. The forms the hold
-    // did show give way by arrive alone.
-    if (uOver > 1.5) {
-      vec3 fineLaid = vec3(0.0);
-      float fineCover = 0.0;
-      {
-        vec3 laid = vec3(0.0);
-        float cover = 0.0;
-        float parentPlace = 0.0;
-        float placeTexels = texels;
-${PLACE_COLOURS}
-${PLACE_GLSL}
-        fineLaid = laid;
-        fineCover = cover;
-      }
-      vec3 softLaid = vec3(0.0);
-      float softCover = 0.0;
-      vec2 sgx = pgx * soft;
-      vec2 sgy = pgy * soft;
-      float sgd = pgd * soft;
-      {
-        vec2 pgx = sgx;
-        vec2 pgy = sgy;
-        float pgd = sgd;
-        vec3 laid = vec3(0.0);
-        float cover = 0.0;
-        float parentPlace = 0.0;
-        float placeTexels = texels;
-${PLACE_COLOURS}
-${PLACE_GLSL}
-        softLaid = laid;
-        softCover = cover;
-      }
-      float both = min(fineCover, softCover);
-      for (int k = 0; k < (both > 0.0 ? 1 : 0); k++) {
-        float fineLum = max(dot(inverseFilmic(fineLaid / fineCover), vec3(0.2126, 0.7152, 0.0722)), 1e-5);
-        float softLum = max(dot(inverseFilmic(softLaid / softCover), vec3(0.2126, 0.7152, 0.0722)), 1e-5);
-        col *= mix(1.0, pow(clamp(fineLum / softLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z), both * uPlaceOn);
-      }
-      break;
     }
     vec3 laid = vec3(0.0);
     float cover = 0.0;
@@ -610,7 +497,7 @@ ${PLACE_GLSL}
     float placeTexels = texels;
 ${PLACE_COLOURS}
 ${PLACE_GLSL}
-    for (int k = 0; k < (cover * arrive > 0.0 ? 1 : 0); k++) {
+    for (int k = 0; k < (cover > 0.0 ? 1 : 0); k++) {
       // From above the place has the tones of the globe about it. The tones of the close view (the far deck pale under its haze, the near
       // towers dark against the Sun) belong to the line of sight of the close view: they come in as the line of sight nears the one of T.
       vec3 own = inverseFilmic(laid / cover);
@@ -623,38 +510,21 @@ ${PLACE_GLSL}
       // How far the camera sees a ground point as the camera at T does (same): by the angle between the two lines of sight, and by the air
       // on the line of sight, which goes with one over the sine of the camera's elevation above the ground point. The pale haze over the far
       // deck of the close view belongs to the low line of sight of T; a camera that stands steeper over that deck sees less air there.
-      // The share by the air leaves the eye of T with no rate: q + q * q - q * q * q of the ratio q of the two sines, the one cubic
-      // that is 1 with no slope at the eye of T and is the ratio itself far from it. The plain ratio stood at 1 for every eye of the
-      // surface view and fell at the full rate of the eye's rise from the first frame past T (MAIL 1181).
-      vec3 toEye = -los;
+      vec3 toEye = normalize(spinY(uCamObj, uSpin) - dp);
       vec3 toT = normalize(uToneEye - dp);
-      float thin = clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0);
-      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * pow(thin * (1.0 + thin * (1.0 - thin)), uToneLook.x);
+      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * uToneLook.y * pow(clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0), uToneLook.x);
       vec3 seen = light * uPlaceDusk.xyz;
-      for (int t = 0; t < 1; t++) {
-        // One ground for every height and every line of sight (plates.json, show). The forms of the ground are, by their size on the
-        // ground: over the level uLive.x the globe's own; between the levels uLive.x and uShow.x the globe's own outside the disc
-        // of the place and the plates' inside it; under the level uShow.x the plates'. All of them come by the one share of the close picture
-        // (arrive, below). Nothing here reads a height. The share by
-        // the line of sight (same) moves the tone at the level uLive.x alone, from the globe's (under) to the plates', and no form.
+      for (int t = 0; t < (same < 1.0 ? 1 : 0); t++) {
+        // From above the plates give the forms alone, over the globe's own colour (under): their light over their own light at the
+        // same scale (the widest plate at the mip level uLive.x), the luminance to the power uLive.z and the colour to the power uLive.w.
         vec3 low = inverseFilmic(textureLod(uPlace0, pg * uPlaceScale[0] + 0.5, uLive.x).rgb);
-        vec3 mid = inverseFilmic(textureLod(uPlace0, pg * uPlaceScale[0] + 0.5, uShow.x).rgb);
         float lowLum = max(dot(low, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
-        float midLum = max(dot(mid, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
         float ownLum = max(dot(own, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
-        vec3 fineHue = clamp((own / ownLum) / max(mid / midLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
-        vec3 midHue = clamp((mid / midLum) / max(low / lowLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
-        vec3 fineForms = pow(clamp(ownLum / midLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z) * pow(fineHue, vec3(uLive.w));
-        vec3 outside = under * mapMid;
-        // Inside the disc the forms between the two sizes are the place's own.
-        vec3 inside = under * pow(clamp(midLum / lowLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z) * pow(midHue, vec3(uLive.w));
-        vec3 above = mix(outside, inside, inner) * fineForms * uLiveLook.x;
-        float aboveForms = max(dot(above, vec3(0.2126, 0.7152, 0.0722)), 1e-5) / max(dot(under, vec3(0.2126, 0.7152, 0.0722)), 1e-5);
-        seen *= clamp(aboveForms * lowLum / ownLum, 1.0 / uLiveLook.z, uLiveLook.z);
-        seen = mix(above, seen, same);
+        vec3 hue = clamp((own / ownLum) / max(low / lowLum, vec3(1e-3)), vec3(0.25), vec3(4.0));
+        seen = mix(under * (uLiveLook.x * pow(clamp(ownLum / lowLum, 1.0 / uLiveLook.z, uLiveLook.z), uLive.z)) * pow(hue, vec3(uLive.w)), seen, same);
       }
-      col = mix(col, seen, cover * uPlaceOn * (uOver > 0.5 ? 1.0 : arrive));
-      texels = mix(texels, placeTexels, uPlaceOn * arrive);
+      col = mix(col, seen, cover * uPlaceOn);
+      texels = mix(texels, placeTexels, uPlaceOn);
     }
   }
   for (int pass = 0; pass < (uAirHaze.x > 0.0 ? 1 : 0); pass++) {
@@ -676,20 +546,11 @@ ${PLACE_GLSL}
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.9, 0.75, 0.3), vec2(drift + uDrift.y * band, 0.0) * 8.0, length(vView));
   if (dot(past, past) >= 1.0) discard;
-  if (uOver > 1.5) {
-    if (heldShare <= 0.0 || uDiag >= 2) discard;
-    outColor.a = heldShare;
-  }
 }`
-
-// The place of the mesh over in the order of the globe side: after every layer of the ground (relief.ts, 7 and up).
-const OVER_ORDER = 40
 
 export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
-  // The hold's picture over the close side in a move (FRAG, uOver): the same sphere and the same uniforms, drawn after the ground.
-  readonly over: THREE.Mesh
   private readonly cells: THREE.Vector4[]
   private readonly amps: THREE.Vector2[]
   private readonly inverse = new THREE.Quaternion()
@@ -760,15 +621,8 @@ export class Globe {
         uPlaceLook: { value: new THREE.Vector4(o.place.feather, o.place.fade[0], o.place.fade[1], o.place.rim * 0.5) },
         uPlaceForms: { value: new THREE.Vector3(o.place.forms[0], Math.max(o.place.forms[1] - formsUnder, 0), Math.max(o.place.forms[2] - formsUnder, 0)) },
         uPlaceOn: { value: 0 },
-        uShow: { value: new THREE.Vector2(Math.log2(Math.max(THREE.MathUtils.degToRad(o.place.show.sigmaDeg) * ((o.place.textures[0]?.image as unknown as { width: number } | undefined)?.width ?? 1) / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[0] ?? 90) / 2)), 1)), Math.log2(Math.max(o.place.show.sigmaDeg * widePerDeg, 1))) },
-        uFoot: { value: new THREE.Vector3(1e-3, o.place.show.minCos, 1) },
-        uShowMap: { value: Math.log2(Math.max(o.place.show.sigmaDeg * o.mapWidth / 360, 1)) },
-        uDisc: { value: new THREE.Vector2(Math.tan(THREE.MathUtils.degToRad(o.place.show.discDeg[0])), Math.tan(THREE.MathUtils.degToRad(o.place.show.discDeg[1]))) },
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
-        uHeldEye: { value: new THREE.Vector3(0, 0, 5) },
-        uOver: { value: 0 },
-        uHeldFoot: { value: 1 },
-        uToneLook: { value: new THREE.Vector4(o.place.tone.air, 0, o.place.tone.cos[0], o.place.tone.cos[1]) },
+        uToneLook: { value: new THREE.Vector4(o.place.tone.air, 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: o.place.tone.power },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) }, uAirField: { value: new THREE.Vector3(1e3, 2e3, 1) },
         uDusk: { value: new THREE.Vector4(1, 1, 1, 1) }, uPlaceDusk: { value: new THREE.Vector4(1, 1, 1, 0) },
@@ -802,10 +656,6 @@ export class Globe {
     })
     const seg = o.segments ?? 320
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1 / Math.cos(Math.PI / seg) + 2e-4, seg, seg / 2), this.material)
-    this.over = new THREE.Mesh(this.mesh.geometry, new THREE.ShaderMaterial({ glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG, uniforms: { ...this.material.uniforms, uOver: { value: 2 } }, transparent: true, depthTest: false, depthWrite: false }))
-    this.over.renderOrder = OVER_ORDER
-    this.over.visible = false
-    this.mesh.add(this.over)
   }
 
   update(camera: THREE.Vector3, sun: THREE.Vector3, world: THREE.Quaternion, spin: number, drift: number, flow: number, amps: number[], gain: number, weight: number): void {
@@ -849,6 +699,5 @@ export class Globe {
   dispose(): void {
     this.mesh.geometry.dispose()
     this.material.dispose()
-    ;(this.over.material as THREE.Material).dispose()
   }
 }

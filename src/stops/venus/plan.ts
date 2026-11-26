@@ -146,12 +146,12 @@ class VenusPlan extends StopPlan {
   }
 
   // The plates and the exposure of the globe side: on is the weight of the plates, dusk the share (0 to 1,
-  // in the logarithm) of the gain of plates.json, by the height of the camera over the cloud tops. The share dusk is 0 outside the dive and the rise of this stop.
-  // on: whether the plates of the place are drawn at all. They stand at every height and in every segment (plates.json, show); only a probe turns them off.
-  placeLook(seg: Segment, height: number): { on: number; dusk: number } {
+  // in the logarithm) of the gain of plates.json, by the height of the camera over the cloud tops. Both are 0 outside the dive and the rise of this stop.
+  // on: whether the plates of the place are drawn at all; near: whether their weight follows the height of the camera (plates.json, show).
+  placeLook(seg: Segment, height: number): { on: number; near: boolean; dusk: number } {
     const pr = probe()
     const mine = seg.stop === this.id && (seg.kind === 'dive' || seg.kind === 'rise')
-    return { on: pr?.on ?? 1, dusk: pr?.dusk ?? (mine ? below(height, place.dusk.heights) : 0) }
+    return { on: pr?.on ?? (mine ? 1 : 0), near: pr?.on === undefined, dusk: pr?.dusk ?? (mine ? below(height, place.dusk.heights) : 0) }
   }
 
   // The engine's three sky schedules of the globe side, by the height of the camera (plates.json, sky).
