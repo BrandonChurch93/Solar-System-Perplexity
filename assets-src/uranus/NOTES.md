@@ -3710,3 +3710,218 @@ The cure, what is open and whose lines:
 - Nothing of this is changed in the tree.
 
 04:06 the looks push failed three times (the login was out again: could not read Username). 04:10 it went through (looks head 8083b7ecafbc). Origin main is 5798676c2670615b902ba0ec75e5569fbaafac8b at 04:09 (status commits on cfabcc52); a trial with `git merge-tree` shows no conflict with my branch. Not merged while the rows run on 766c9258's tree.
+
+### MAIL 1399 and MAIL 1400, word for word
+
+"MAIL 1399 from the Builder (/root), 04:17 UTC. To every builder at work. THE CLOCK from here to the end, so that each of you can plan. All times UTC, today 2026-11-26.
+1. THE THIRD CUT: names in my hands by 06:45 go onto main as they are proven (about 08:15). The rounds of the stops they change start at 08:30.
+2. THE FOURTH CUT: names by 13:30, on main about 15:00, rounds at 15:15.
+3. THE FREEZE: 20:30. The last names by 18:30. After the freeze main changes only for faults that the seam review and the gauntlet find.
+4. What a name is: your best state that is better than main to the eye and no worse than main by the laws in force: (a) the units and the gate green; (b) the reader by part: of the three numbers of each part (the largest pop, pattern and level step of the part), each one that is over its limit is no worse than main's own number for that part; (c) the plain match at each judged frame no worse than main's; (d) G17 not red where main is green; and the laws of your own stop as they stand. A name need not be your last word. What is still wrong is named red in the mail and goes into the next cut. A state that waits for its last fault to be cured helps no round.
+5. A stop without a name at a cut is judged in its next round on what main holds then.
+6. If your machine cannot push, send the name as a bundle by attachment and say its base. Pictures as attachments.
+7. If you have not written to me since 02:00: three lines now (what you are on, what is measured, when a name can come). Otherwise no answer needed.
+Main is 5798676c (code cfabcc52)."
+
+"MAIL 1400 from the Builder (/root), 04:27 UTC. To every builder. MAIN MOVED: origin main is 834d5148f93966efa2d55c59c4fc02acc375b151, and that commit is also main's code now. Merged at 04:27: take/hc1, the engine's crests of a relief (handover_engineer; src/terrain/crest.ts, src/terrain/relief.ts, tests/crest.test.ts, tests/crest-gl.test.ts). No stop gives crest, and 39 of 39 draft frames from 60 to 5399 are the same bytes as before, so no picture of yours moves. Merge origin main into your tree before you name (MAIL 1314, 1367). Next onto main, as their proofs come in: the sky's field glare (take/sg2), the reader's tools (take/hn1), then the sky patch that arrives whole, Neptune's trimmed fill and Mercury's name. The clock of MAIL 1399 stands. No answer needed."
+
+### 04:10 to 04:35 UTC: RC's row of rise part 2, two merges of main, the proofs that need no render
+
+- Rise part 2 of 2 (tool, on 557c24ed, whose picture tree is 766c9258; 1154 s): pattern 0.90 (0.8996) from 4422 + 1/2 to 8 film frames later (21 of 99 rows over, first 4417 + 1/2, last 4427 + 1/2); pop 1.11 at 4463 (0 over 1.2); level step 0.27 at 4465 + 1/2; ground pop 1.081. The name 9c8a46df: 1.16 from 4418 (21 over). Main: 0.88 from 4422 (16 over, first 4417 + 1/2). B1 6a0e74bb read 0.90 (0.9008) from the same row.
+- Row by row, B1 / RC: 4417 + 1/2 0.79 / 0.50; 4418 0.86 / 0.77; 4420 + 1/2 0.75 / 0.56; 4421 0.82 / 0.59; 4421 + 1/2 0.58 / 0.86; 4422 0.50 / 0.81; 4422 + 1/2 0.90 / 0.90; 4423 0.64 / 0.72; 4425 0.70 / 0.62; 4427 + 1/2 0.47 / 0.50; 4428 under the limit on both.
+- Where it sits (the tool's sheet, looked at in full): at 4422 + 1/2 the change of the pattern is one patch inside the left limb, on the read of the two frames on the later one. That is the place and the read MAIL 1257 point 1 names for main's 0.88. The three later rows of the sheet (4436, 4447, 4456) read 0.31, 0.04, 0.07.
+- The aim control in terrain and rise (am2) was ended by hand at 04:25 after 3 frames to free the render for the name's rows. Not finished, no finding from it.
+- 04:25 main `9f66277f1d57ec2abc5b0fdb62978da7d0c57d57` merged as `a8c6f5131c726d2f106722708a831fa2e928f3b2` (no fast forward, trailer). It brings batch 18 (Saturn's surface by code), batch 19 steps a and b (`config/showcase.json`, `src/space/sky.ts`, `src/space/travel/field.ts`, `path.ts`, `tests/sunstar.test.ts`) and PROGRESS. No file of my folders changed. tsc clean. Draft frames on it: 4035, 4137, 4290, 4436, 4186, 4407 are RC's bytes (4150 and 4170 drawn too).
+- 04:29 main `834d5148f93966efa2d55c59c4fc02acc375b151` (MAIL 1400, the engine's crests) merged as `788cc8e3045fe99f9c3d72e74203bebb687c9da7` (no fast forward, trailer; `src/terrain/crest.ts`, `relief.ts`, two tests). tsc clean. Draft frames on it: 4035 22b4815479f18654, 4137 e3a91f73e4881baf, 4290 7edd2d14e949c8fe, 4436 54c8f90a461a0fea, RC's bytes. Pushed 04:30.
+- A dive part 1 run started on a8c6f513 at 04:28 was ended by hand after 39 s when MAIL 1400 came, and started again on 788cc8e3 at 04:30.
+- On a8c6f513: `npm run -s smooth -- --stop uranus --only path`: "smooth uranus: green. out/work/smooth/uranus.md". `npm run gate -- --phase 6 --only G11,G15 --g15-stops uranus`: "PASS G11  every asset has a row or a recipe", "PASS G15  at most 2 sets per frame; finished stops: uranus/web 311 MB, uranus/full 1220 MB". `npx vitest run tests/globe-cap.test.ts` alone (beside a render): 1 file, 30 passed. Net of my folders against main: 85.068 MB against 84.862 MB in 150 files each, + 0.206 MB.
+- On 788cc8e3: `npm run cues` and `npm run shots` leave the tree without a change (cut/CUES.md: 46 segments, 0 covers, 17 handovers, 9 of 9 posts with key times).
+- 04:30 looks pushed, head b7b156ba8f9f (the two changes sheets, final 4407 main beside RC).
+
+### MAIL 1405 and MAIL 1406, word for word, and my line of 04:50
+
+"MAIL 1405 from the Builder (/root), 04:39 UTC. To every builder. MAIN MOVED twice: origin main is 23f1089b3cde1279798527c697ef5efbdff9eebf, and that commit is also main's code now. Merged at 04:34: take/sg2, the sky's field glare (sky_builder; src/core/types.ts, src/space/sky.ts; no stop sets it, 40 of 40 draft frames the same bytes as before). Merged at 04:35: take/hn1, the reader's tools (harness_builder; ten files under tools/ and tests/; the reader gives main's own row to the digit on Mercury's rise). No picture of yours moves. Merge origin main into your tree before you name (MAIL 1314, 1367). Next onto main, as their proofs come in: the sky patch that arrives whole, Neptune's trimmed fill and Mercury's name. The preview of main is renewed (04:38). The clock of MAIL 1399 stands. No answer needed."
+
+"MAIL 1406 from the Builder (/root), 04:46 UTC. To every builder with a name coming for the third cut. To make 08:15 my machines start a name's proofs before the name. As soon as your candidate state stands (your own units green, the frames you care about seen by you), push it, or send the bundle if you cannot push, and send me one line: its full sha, its base on main and the files it changes. I cut it and start the reader's rows, units and gate, the same bytes outside the stop and the judged frames at final with G17 at once. If you change the state after, say so and I run the changed part again; that costs machines, not you. The name mail by 06:45 then needs only your own numbers, the looks and the red list. Second: the tracked tree stands at 2.93 GB of the 3 GB allowed. A name that adds more than 5 MB of files says so in the name mail and says what it removes. No answer needed."
+
+My line of 04:50, word for word: "CANDIDATE (answer to MAIL 1406) from uranus_builder, 04:50 UTC. Sha 788cc8e3045fe99f9c3d72e74203bebb687c9da7 on agent/uranus-place, pushed. Base on main: 834d5148f93966efa2d55c59c4fc02acc375b151 merged in (your 23f1089b is not in it yet; I merge it when my dive row has ended, since it changes the reader's tools under a running job). Files it changes against main: src/stops/uranus/deck.ts, globe.ts, look.ts, set.ts, and assets-src/uranus/NOTES.md. No asset, net + 0.206 MB (the notes). It is RC 6ef232ea (the old name 9c8a46df plus B1 2d9e542c, the texel's stretch 2583f129, the rim as light of the air 6ef232ea) with three merges of main that moved no draft byte of 4035, 4137, 4290, 4436. Known before you start: rise part 2 of 2 reads pattern 0.90 (0.8996) from 4422 + 1/2 with 21 rows over against main's 0.88 with 16, at the patch inside the left limb of your MAIL 1257 point 1; rise 1 1.37, dive 2 1.48, both under main's; dive 1 is drawing now. My units run beside that render: three failures so far, all in files not mine and all looking like time outs under load (pass, way-gl, subs); I run them alone when the render ends. tsc clean, globe-cap alone 30 passed, path green, G11 and G15 pass, cues and shots leave no change. The name mail with the rows, the finals, the looks, the red list and the answers to 1385 follows before 06:45."
+
+### 04:35 to 05:00 UTC: RC's row of dive part 1, main 759b7d75 merged
+
+- Dive part 1 of 2 (tool, on 788cc8e3, 1392 s): "dive: pop score 1.42 from frame 4151 + 1/2 to the next, limit 1.2 (8 frames over it, first 4148 + 1/2)", "dive: the pattern of the picture changes in place by 0.78 from frame 4140 + 1/2 to 8 film frames later, band 8 px, limit 0.45 (33 frames over it, first 4124)", "smooth uranus: ground pop, no limit: largest 1.024 from frame 4126 to the next, most at pixel 1142, 614, a patch of 76 by 60 px; 0 of 114 rows read over 1.3 (dive)". Level step 0.13 at 4147. Main: pattern 1.17 from 4152 + 1/2 (32 over, first 4136 + 1/2), pop 1.50 from 4144 + 1/2 (6 over, first 4141 + 1/2). The name 9c8a46df: pattern 0.98 from 4151 (37 over), pop 1.42 from 4151 + 1/2 (8 over).
+- Rows over in pop: 4148 + 1/2 1.25; 4149 1.39; 4149 + 1/2 1.37; 4150 1.41; 4150 + 1/2 1.35; 4151 1.39; 4151 + 1/2 1.42; 4152 1.42. Rows over in pattern: 4124 0.50; 4137 to 4145 0.47 to 0.78 (largest 0.78 at 4140 + 1/2); 4147 + 1/2 to 4154 + 1/2 0.46 to 0.76 (0.76 at 4150 + 1/2).
+- The pops sheet (every panel seen, 4149, 4150, 4151 + 1/2, 4152): what is left without the motion is the sky in the left strip: the star cloud band and the place's thin ring arcs; on the globe only faint specks at the place's cloud. So the dive's pop is the thing of MAIL 1385: the sky moves at its own rate beside the globe. Main's pop rows (from 4141 + 1/2, largest at 4144 + 1/2) lie where main's law of the turn has the band in frame (4141 to 4149), mine (4148 + 1/2 to 4152) where mine has it strong (4148 to 4153).
+- The changes sheet (seen in full): the pattern's change at 4140 + 1/2 and at 4150 + 1/2 sits at the left limb, on the onward read.
+- The units run beside the render had three failures by 04:53 (tests/pass.test.ts "never takes the level down under a Sun that comes into the frame to stay" 7504 ms, tests/way-gl.test.ts "follows the way of each pixel own point" 5894 ms, tests/subs.test.ts "gives the haze grid of subs.py at seven times" 16587 ms); ended by hand at 04:53 to merge main and run them again without a render beside them.
+- 04:54 main `759b7d75a47d4b47e60bdce05b1173d5cd5169d1` (23f1089b plus PROGRESS: the sky's field glare, the reader's tools) merged as `4ce4b9cb6142a17e8207fcff0eaa332b69a6de5f` (no fast forward, trailer; 13 files, none of mine). tsc clean. Pushed 04:54. Draft frames on it: 4035, 4137, 4290, 4436, 4186, 4407 are RC's bytes. Path part: "VERDICT: green. No number is over its limit.", "smooth uranus: green. out/work/smooth/uranus.md". Net of my folders against main + 0.206 MB.
+- 04:57 looks pushed, head afd1bae4a7f6 (the two sheets of dive part 1, final 4290 approved beside main and RC).
+- Final 4035, RC against main's final (`/tmp/n55/main-4035.png`, sha256 0e29f7824a1f3e8b): mean 0.0165, 9149 px by over 1 level, 662 over 4, 13 over 10, largest 25; none inside half the disc's radius, 13 px between 0.5 and 0.8, the rest from 0.8 outward and on the limb.
+
+### 04:58 MAIL 1409 (high), word for word
+
+"Your candidate 788cc8e3 (answer to MAIL 1406). By your own reading rise 2 of 2 carries pattern 0.8996 with 21 rows over; main's row has 0.88 with 16. That is a line worse than main's own row (d311 and d318: the limit is 0.45, both are over it, yours is the larger). As it stands the name does not go onto main with the third cut. Two ways. (1) Cure rise 2 at its cause so that its row reads no worse than main's (pattern at most 0.88, largest pop and level step no worse than main's own) and send the sha by 06:45; my machines then read all four parts, the finals 4035, 4137, 4290 and 4436 on both trees with G17, units and gate and the same bytes outside Uranus. (2) If the cure needs longer, the name goes to the fourth cut (in my hands by 13:30). Say by 05:30 which of the two, and with it the frames of rise 2 where the 21 rows sit and what in the picture sets them (plate edges, the deck, the globe's limb), measured and not guessed. What reads better than main's (rise 1 of 2 at 1.37, dive 2 of 2 at 1.48) is noted."
+
+### 05:00 to 05:17 where the 21 rows sit and the first controls
+
+The reader gives for each row the place of the largest pattern change "in the full size of frame i" (tools/img/smooth.py, `reading`), so the pixel belongs to the row's first frame. Put on the ground with the camera's pose of that frame (and, for comparison only, of the frame 8 later):
+
+```
+row      pattern  at(px)      | on the first frame: h, deg from place, view cos, px inside limb | on the later frame (f+8): same
+4417+    0.497   835, 111  | h 0.257   24.6 deg  mu 0.220    46 px | h 0.613   25.9 deg  mu 0.521   179 px  share 0.042
+4418     0.767   510, 285  | h 0.271   27.1 deg  mu 0.179    30 px | h 0.647   33.0 deg  mu 0.374    88 px  share 0.038
+4418+    0.622   508, 277  | h 0.286   28.1 deg  mu 0.176    28 px | h 0.684   34.3 deg  mu 0.368    83 px  share 0.036
+4419     0.554   493, 283  | h 0.302   28.7 deg  mu 0.179    28 px | h 0.722   36.0 deg  mu 0.355    75 px  share 0.033
+4419+    0.619   466, 296  | h 0.319   30.0 deg  mu 0.170    25 px | h 0.762   38.5 deg  mu 0.324    61 px  share 0.043
+4420     0.569   315, 464  | h 0.337   30.5 deg  mu 0.179    27 px | h 0.805   52.1 deg  mu 0.077     3 px  share 0.040
+4420+    0.555   337, 426  | h 0.356   32.1 deg  mu 0.163    22 px | h 0.850   51.7 deg  mu 0.106     6 px  share 0.042
+4421     0.586   338, 425  | h 0.376   32.8 deg  mu 0.168    22 px | h 0.897   54.7 deg  mu 0.074     3 px  share 0.044
+4421+    0.857   330, 427  | h 0.397   34.4 deg  mu 0.152    18 px | h 0.947    sky deg  mu   -      -7 px  share 0.044
+4422     0.814   340, 415  | h 0.419   35.0 deg  mu 0.160    20 px | h 1.000    sky deg  mu   -      -7 px  share 0.040
+4422+    0.900   446, 292  | h 0.442   33.9 deg  mu 0.202    30 px | h 1.056   49.5 deg  mu 0.247    30 px  share 0.040
+4423     0.716   445, 296  | h 0.467   34.0 deg  mu 0.219    35 px | h 1.115   51.3 deg  mu 0.237    26 px  share 0.041
+4423+    0.691   347, 414  | h 0.493   36.5 deg  mu 0.188    25 px | h 1.178    sky deg  mu   -     -17 px  share 0.040
+4424     0.686   349, 413  | h 0.521   37.2 deg  mu 0.194    26 px | h 1.243    sky deg  mu   -     -22 px  share 0.039
+4424+    0.599   355, 409  | h 0.550   37.6 deg  mu 0.206    28 px | h 1.313    sky deg  mu   -     -24 px  share 0.039
+4425     0.619   338, 437  | h 0.581   38.9 deg  mu 0.200    26 px | h 1.385    sky deg  mu   -     -39 px  share 0.037
+4425+    0.562   344, 437  | h 0.613   39.2 deg  mu 0.216    30 px | h 1.461    sky deg  mu   -     -41 px  share 0.034
+4426     0.575   345, 442  | h 0.647   39.9 deg  mu 0.224    31 px | h 1.540    sky deg  mu   -     -46 px  share 0.033
+4426+    0.590   346, 448  | h 0.684   40.7 deg  mu 0.231    32 px | h 1.622    sky deg  mu   -     -52 px  share 0.037
+4427     0.525   351, 449  | h 0.722   41.3 deg  mu 0.242    34 px | h 1.707    sky deg  mu   -     -55 px  share 0.035
+4427+    0.498   352, 460  | h 0.762   41.9 deg  mu 0.252    36 px | h 1.794    sky deg  mu   -     -60 px  share 0.031
+4428     0.420   355, 471  | h 0.805   42.3 deg  mu 0.265    39 px | h 1.884    sky deg  mu   -     -64 px  share 0.029
+```
+
+Controls on the 37 half frames 4417 + 1/2 to 4435 + 1/2 (draft, rate 2, `out/work/u/pat5.ts`, the reader of 788cc8e3, the tool's settings). Pattern, candidate 4ce4b9cb / cover off (`look.show.deck` false) / main's stop tree (src/stops/uranus of 759b7d75):
+
+```
+frame    candidate  cover off  main
+ 4417.5       0.50       0.59   0.56
+ 4418.0       0.77       0.88   0.35
+ 4418.5       0.62       0.60   0.42
+ 4419.0       0.55       0.59   0.42
+ 4419.5       0.62       0.66   0.75
+ 4420.0       0.57       0.56   0.38
+ 4420.5       0.56       0.57   0.86
+ 4421.0       0.59       0.58   0.80
+ 4421.5       0.86       0.84   0.65
+ 4422.0       0.81       0.83   0.88
+ 4422.5       0.90       0.83   0.73
+ 4423.0       0.72       0.72   0.51
+ 4423.5       0.69       0.67   0.43
+ 4424.0       0.69       0.68   0.57
+ 4424.5       0.60       0.66   0.62
+ 4425.0       0.62       0.62   0.66
+ 4425.5       0.56       0.56   0.63
+ 4426.0       0.57       0.57   0.64
+ 4426.5       0.59       0.59   0.55
+ 4427.0       0.53       0.53   0.51
+ 4427.5       0.50       0.50   0.47
+```
+
+Rows over 0.45 and the largest: candidate 21 of 21, 0.90 at 4422 + 1/2; cover off 21 of 21, 0.88 at 4418; main 16 of 21, 0.88 at 4422. Means 0.64 / 0.65 / 0.59. So the deck does not set the rows and no plate edge does; it is the globe's own ground at the left limb, in main's tree as in mine. Which of my layers on the globe sets the five rows that main has under the limit was not proven at 05:18.
+
+### 05:19 my answer to MAIL 1409, word for word (high, ten pictures attached)
+
+ANSWER TO MAIL 1409 from uranus_builder, 05:18 UTC. WAY (2): the name goes to the fourth cut (in your hands by 13:30). No name for the third cut. The state stays 4ce4b9cb6142a17e8207fcff0eaa332b69a6de5f on agent/uranus-place (the candidate 788cc8e3 plus the merge of main 759b7d75, no file of mine changed, drafts of the judged frames keep their bytes). This mail also carries the answers still owed: MAIL 1377 (the rows, point 3), 1343 (4407 and 4186, point 4) and 1385 (point 5).
+
+1. WHERE THE 21 ROWS SIT, measured. Every half frame from 4417 + 1/2 to 4427 + 1/2, each read against the frame 8 film frames later, on the back read (the two frames read on the later, nearer one). For each row I took the pixel of the largest pattern change from the reader's own JSON and put it on the ground with the camera's pose of the row's first frame:
+- all 21 lie 18 to 46 px inside the LEFT limb of the globe, where the ground is seen at a view cosine of 0.15 to 0.25. The judged share of the frame is 0.031 to 0.044 in these rows: a strip along the limb and nothing else (from 4429 the reader reads onward with a share of 0.79 and is under the limit).
+- angle on the ground from the place: rows 4417 + 1/2 to 4420 + 1/2 (7 rows) 24.6 to 32.1 degrees, which is inside the cover's border ring (look.place.deck.border, 24.1 to 32.1 degrees); rows 4421 to 4427 + 1/2 (14 rows) 32.8 to 41.9 degrees, beyond the cover, the globe's own ground. The largest, 0.8996 at 4422 + 1/2, is at px 446, 292: 33.9 degrees from the place, view cosine 0.202, 30 px inside the limb.
+- no plate edge: the plates' field is 0 from 10.4 degrees. Eye heights 0.257 R at 4417 + 1/2 to 0.762 R at 4427 + 1/2.
+
+2. WHAT SETS THEM, by control (three renders of the same 37 half frames 4417 + 1/2 to 4435 + 1/2, draft, rate 2, read by the tool's reader as of 788cc8e3 with the tool's settings; the candidate's rows come out as the tool's to two places, 0.90 and 21 rows, and main's as the tool's, 0.88 from 4422 and 16 rows). Pattern row by row, candidate / the same tree with the cover off (look.show.deck false) / main's stop tree (src/stops/uranus of 759b7d75):
+4417 + 1/2 0.50 / 0.59 / 0.56; 4418 0.77 / 0.88 / 0.35; 4418 + 1/2 0.62 / 0.60 / 0.42; 4419 0.55 / 0.59 / 0.42; 4419 + 1/2 0.62 / 0.66 / 0.75; 4420 0.57 / 0.56 / 0.38; 4420 + 1/2 0.56 / 0.57 / 0.86; 4421 0.59 / 0.58 / 0.80; 4421 + 1/2 0.86 / 0.84 / 0.65; 4422 0.81 / 0.83 / 0.88; 4422 + 1/2 0.90 / 0.83 / 0.73; 4423 0.72 / 0.72 / 0.51; 4423 + 1/2 0.69 / 0.67 / 0.43; 4424 0.69 / 0.68 / 0.57; 4424 + 1/2 0.60 / 0.66 / 0.62; 4425 0.62 / 0.62 / 0.66; 4425 + 1/2 0.56 / 0.56 / 0.63; 4426 0.57 / 0.57 / 0.64; 4426 + 1/2 0.59 / 0.59 / 0.55; 4427 0.53 / 0.53 / 0.51; 4427 + 1/2 0.50 / 0.50 / 0.47.
+Rows over 0.45 and the largest: candidate 21 of 21, 0.90 at 4422 + 1/2; cover off 21 of 21, 0.88 at 4418; main 16 of 21, 0.88 at 4422. Mean of the 21 rows: 0.64 / 0.65 / 0.59.
+What that proves and what it does not:
+- NOT the deck. With the cover off all 21 rows stay over, with the same mean. The cover moves single rows both ways (4418 down from 0.88 to 0.77, 4422 + 1/2 up from 0.83 to 0.90; that row's point is 1.8 degrees of ground outside the border ring; whether the ring reaches into the reader's pattern window there I have not measured).
+- NOT a plate edge (point 1).
+- IT IS THE GLOBE'S OWN GROUND AT THE LEFT LIMB, seen at a slant, in my tree and in main's alike: the same strip, the same frames, the same kind of patch on the panels (pictures 1 to 3). It is the strip of your MAIL 1257.
+- What is mine in it: five rows that main has under the limit and I have over (4418, 4418 + 1/2, 4419, 4420, 4423 + 1/2), Over all 21 rows mine is the larger in 12 and main's in 9 (4417 + 1/2, 4419 + 1/2, 4420 + 1/2, 4421, 4422, 4424 + 1/2 to 4426). Main's row jumps between neighbours by up to 0.48 (0.38, 0.86 at 4420 and 4420 + 1/2), mine by up to 0.27. Which of my layers on the globe sets the five rows is NOT proven yet. They differ from main's at that strip in three laws: the air by the path (MAIL 1020), the rim as light of the air (MAIL 1097) and the far ground of B1. That is a guess until each is taken out alone (the plateau rule, MAIL 1230), so I do not call it a cause.
+Why way (2) and not (1): the surplus over main is 0.02 at the largest row and five rows of count, in a strip whose reading moves by more than that between neighbouring half frames. I have no cause for it proven, so a cure by 06:45 would be a number tuned to the reader (MAIL 401), on laws that set the judged frames 4035 and 4290. I will not do that.
+What I do for 13:30, in this order: the three controls above one at a time on these 37 frames (about 7 minutes each); the layer whose absence brings the five rows to main's or under gets its law by place cured; then all four parts, the finals of the four judged frames with match and G17, units and gate. If the first control names one layer and its cure is a law by place that leaves the judged frames as they are, I send that sha before 06:45 and say so; do not plan on it.
+
+3. THE ROWS (MAIL 1377; tool, draft, rate 2, the reader before hn1; from 788cc8e3 to 759b7d75 tools/img/smooth.py changes only in the drawing of panels). Candidate / main's own / the name 9c8a46df.
+- dive 1 of 2: pattern 0.78 from 4140 + 1/2 (33 of 114 rows over, first 4124, last 4154 + 1/2) / 1.17 from 4152 + 1/2 (32 over) / 0.98 from 4151 (37). Pop 1.42 from 4151 + 1/2 (8 rows over, 4148 + 1/2 to 4152) / 1.50 from 4144 + 1/2 (6 over, first 4141 + 1/2) / 1.42 (8). Level step 0.13.
+- dive 2 of 2: pattern 1.48 from 4169 + 1/2 (68 of 114 over, first 4155, last 4188 + 1/2) / 1.61 from 4163 (65) / 1.52 from 4180 (68). Pop 1.12, level step 0.11.
+- rise 1 of 2: pattern 1.37 from 4403 (73 of 99 over, first 4381) / 1.60 from 4399 + 1/2 (63) / 1.29 from 4387. Pop 1.07, level step 0.24.
+- rise 2 of 2: pattern 0.90 (0.8996) from 4422 + 1/2 (21 of 99 over) / 0.88 from 4422 (16) / 1.16 from 4418 (21). Pop 1.11, level step 0.27.
+Of the five numbers over their limits four are smaller than main's and one is larger (rise 2). Named beside it: the candidate has more rows over the limit than main in every part (33 against 32, 68 against 65, 73 against 63, 21 against 16; pop 8 against 6), each smaller in size but for rise 2. Against the name 9c8a46df rise 1 is larger by 0.08.
+The dive's pop is the sky in the left strip (the star cloud band and the place's ring arcs, point 5): main's at 4141 + 1/2 to 4144 + 1/2, where main's law has the band in frame, mine at 4148 + 1/2 to 4152. The dive's pattern red of part 1 sits at the left limb, of part 2 along the horizon band.
+Finals (drawn on 6ef232ea; the drafts keep their bytes over the four merges, the finals were not drawn again): 4035 against uranus-hero.png 3.737, main 3.743; against main's final 9149 px differ by over 1 level, 13 by over 10, largest 25, none inside half the disc's radius, 13 px between 0.5 and 0.8 of it, the rest from 0.8 outward and on the limb. 4290 against uranus-close.jpg 3.226, main 3.849: main's hard white band on the horizon is gone (picture 4). G5 PASS. G17 PASS: 4035 median 1.177913424648752, p25 1.0821114578678723 over 70 tiles (main 1.178 and 1.0821135621887694); 4290 median 1.076, p25 0.960 over 59 tiles.
+Units, gate, path: tsc clean on each merge; path part on 4ce4b9cb "VERDICT: green. No number is over its limit." and "smooth uranus: green. out/work/smooth/uranus.md"; tests/globe-cap.test.ts alone 1 file, 30 passed (on a8c6f513); G11 and G15 PASS on a8c6f513; cues and shots leave no change under cut/ (788cc8e3). NOT DONE on 4ce4b9cb: the units as a whole alone (19 of 91 files had passed with no failure when I ended the run to draw the controls; beside a render earlier three time outs, tests/pass.test.ts 7504 ms, tests/way-gl.test.ts 5894 ms, tests/subs.test.ts 16587 ms), G5 and G17 on the head, the gate's G1 and G12. Net of my folders against main + 0.206 MB (85.068 against 84.862 MB), all of it notes.
+
+4. MAIL 1343. Final 4407 beside main's (pictures 5 and 6): the upright lines measure 0.64 / 0.95 against main's final 0.54 / 0.87 (B1's draft 1.85 / 4.34), none at the final tier. But main's frame is the better picture there: a deep blue with crisp white cloud, mine a paler teal with softer, greyer cloud and short fine streaks in the lower middle (mean RGB main 37.8, 70.8, 82.5, mine 40.5, 83.4, 93.9). Cause: at that height main shows its bare globe and mine the cover, lit by the deck's law (two laws of light). RED, open. Main's final 4399 draws fine upright lines of its own (0.81 / 1.64), which mine does not. Final 4186 (picture 7: main, B1, the candidate): against B1's final mean absolute difference 0.131, 97042 px by over 1 level, largest 39, all in the band under the limb, which reads calmer; its fine streaks at the lower right are gone, detail given up there. No approved picture exists for 4186; G17's measure with B1's final as the reference: median 1.0, p25 0.993 over 53 tiles, lowest tile 0.598.
+
+5. MAIL 1385, by measure. Nothing of it is changed in the tree.
+Q1. It is the film's own sky swept through the edge by the turn, no plate. The band is the star cloud drawn by src/space/sky.ts (the sky direction uFrame times dir; lines 264 to 267 as of main a4944f12). Control by render (look.show.sky false: the stop's two sky plates, the glow and the veil off; picture 9): the band is unchanged at 4148 to 4154, only the limb's blue glow changes. The hold plate's footprint is out of the frame from 4140. The surface plate has weight 0 to 4150, then 0.032, 0.108, 0.219, 0.353, 0.498, 0.644 at 4151 to 4156.
+The turn in degrees a film frame, 4140 to 4152: the camera (the path, the same on main and mine): view axis 1.92 to 1.75, roll about it 1.34 to 1.40, all 2.34 to 2.24. The sky's own turn: main's law [0.2, 4.55] 2.05 to 2.07; mine [0.01544, 4.597] 1.13 to 1.14 (since f4a2489d, MAIL 880 point 4). The view against the sky: main axis 3.49 to 3.42, roll 2.42 to 2.02, all 4.25 to 3.97 (100 to 85 px a frame at the middle); mine axis 2.76 to 2.61, roll 1.93 to 1.74, all 3.37 to 3.14 (79 to 65 px). Lines: src/stops/uranus/plan.ts 215 to 222 and look.ts place.skyDive.turn (mine), carried by src/director/film.ts 1055 to 1061 (the engine's).
+Where the band is, by arithmetic and seen on drafts: main's law has it enter at 4141, fill the strip 4143 to 4145, leave at 4149: your six frames. Mine: enters 4145, strong 4148 to 4153, a remnant to 4156, a thin part in the upper right corner 4160 to 4166.
+Q2. The ring arcs come out from behind the globe's limb at full weight; they neither enter by the frame's edge nor fade in. Control by render (look.show.rings false, the difference is the rings' own light; picture 10): the orbit's rings leave by the top edge 4138 to 4142 at weight 1 (their fade by height starts at 4146, out of frame). The place's arcs (set.ts 285 to 310, weight by height place.arcs.dive [1, 2]: 0.804 at 4140, 1 from 4143; cut at the ball by place.onSky [0.97, 1]; the same lines on main) first show at 4143 inside the frame at the limb (x 348 to 391, y 431 to 541, largest level 36), then 108 at 4144, 170 at 4145, then level (158 to 199), and reach the top edge at 4147.
+Q3. Picture 8: your six frames beside mine in the same layout.
+The cure and whose lines. (a) The camera's path is mine and is frozen by MAIL 311 and 1097; alone, with no own turn of the sky, it keeps the band in frame 32 to 37 frames. (b) The law of the own turn is mine: every law by height crosses the band, because both end poses are fixed and the band lies between them (frames with the band in frame: main's law 16, mine 30, a constant share 50). (c) The surface aim is mine (plan.ts line 37, skyAim.terrain): 3361 of 14688 aims of a grid keep the band out of the whole dive. Control by render with (50, -15, 50), not committed (I hold the picture, it is not attached): the dive 4138 to 4176 has a dark sky to its end, the band at least 20.6 degrees outside the frame, own turn 48.4 degrees against 57.6; judged 4290 moves by at most 1 level at draft, 4137 moves in its stars, 4186 in its whole sky. Its cost is the rise: such an aim is at least 86.7 degrees from Neptune's sky (5.0 now, 106.8 for this one), so the rise's own turn grows about twentyfold and the rise's look with judged 4436 changes. (d) The clean cure is two aims, one at the dive's end and one at the rise's start, with the star field turned between them while the surface plate hides it (at 4290 it is hidden to the level). The engine holds one turn a stop: src/director/film.ts 247 to 266, 1034, 1055 to 1061, src/space/aim.ts SkyAims.turns, and the plates are fixed to the star field in src/core/engine.ts 376 to 377. Not my lines; your ruling on the owner. (e) The hold's sky is Saturn's shared sky (film.ts 232 to 235): not mine.
+The fault of my own state there, RED: with my law of the turn the band is still in frame while the two painted skies exchange by height, 4153 to 4156, where main's law has it gone by 4150 (MAIL 780). It is in the name since f4a2489d (MAIL 880 point 4). Main's law can be put back in one line of look.ts (place.skyDive.turn) if you rule so; that gives back main's quarter second sweep.
+
+6. RED, named, in the order I take them for the fourth cut: rise 2 of 2 (points 1 and 2); the other three parts red in pattern and dive 1 in pop, each smaller than main's; the dive's sky (point 5); 4407 to 4416 paler than main's; the soft streaks left at 4399; the clock's catch up from 4417 + 3/8; the cloud and shadow maps beyond the place's field, the wrap map beyond 32 degrees; the critics' list as it stood (the knot at 4035, the pasted vortex, the smeared disc, the ring strands, R4's blur).
+
+7. PICTURES attached: 1 the reader's panel of the candidate's largest row (4422 + 1/2); 2 the same control with the cover off; 3 the same on main's stop tree; 4 final 4290 approved, main, candidate; 5 and 6 final 4407 main beside mine, frame and 1 to 1; 7 final 4186 main, B1, candidate; 8 your six frames 4140 to 4152 beside mine; 9 the control with the sky plates off; 10 the rings' own light 4138 to 4152. Looks pushed to agent/uranus-place-looks at 05:18, head 40170a774bfe.
+
+### 05:22 MAIL 1418 (high), word for word
+
+"MAIL 1418 from the Builder (/root), 05:22 UTC.
+Your mail of 05:18 is read whole. RULED:
+1. Way (2) stands: Uranus stays main's in the third cut; your name is for the fourth, in my hands by 13:30. Not tuning a number to the reader without a proven cause is right.
+2. Point 5 (d), two sky aims a stop, is the cure by cause of the dive's sky. Owner: travel_builder (MAIL 1419, asked now). You do not touch src/director/film.ts, src/space/aim.ts or src/core/engine.ts. When his change is on main you name the second aim in your plan and prove the dive; if it is not on main by 11:00, the dive keeps one aim in the fourth cut.
+3. With one aim, which law of the turn: read both laws on your tree with the reader (dive, both parts) and take the one whose largest pop is smaller, with the star cloud band out of frame during the exchange of the two painted skies 4153 to 4156. If they tie within 0.02, main's law, because it has the band gone by 4150. State both rows in the name mail.
+4. Your order for 13:30 is accepted with one change: 4407 to 4416 paler than main's comes directly after rise 2 of 2. Two laws of light meeting inside the rise is a seam a viewer sees, and the third review note asks for none. Cure it by cause: one law of light for the globe and the cover at that height.
+5. The three controls one at a time on the 37 frames: go. A sha before 06:45 only if the first control names one layer and the judged frames keep their look, as you say; I do not plan on it.
+The proofs I run on the name: the reader on all four parts against main's rows, finals of 4035, 4137, 4290, 4436 on both trees with bands and G17, units and gate, same bytes outside 3885 to 4529."
+
+### 05:31 mail from travel_builder (low, a peer; backed by MAIL 1418 point 2), word for word
+
+"From travel_builder, 05:31 UTC, by the Builder's MAIL 1419 and 1424: the key for the second sky aim is fixed (branch agent/engine-aims on main 5ce3856b; not yet named, I name by 09:00). In your plan's params: skyAim: { orbit: [...], terrain: [...], dive: [along, tilt, lift], turn: [firstFrame, lastFrame] }.
+- terrain stays what it is today and is now the rise's aim. Your rise keeps its bytes as long as the turn is over before the rise's first sample.
+- dive is the second aim, read exactly as terrain is read (the star field's aim at the judged frame of uranus.terrain), so your measure of (50, -15, 50) as a surface aim holds as it stands. The dive turns towards it wherever it turned towards terrain before (skyTurnShare, skyCarryShare, the surface view).
+- turn is two whole film frames, both inclusive: the star field turns from dive's aim to terrain's by smoother(ramp(first / 30, (last + 1) / 30, time)), a function of time (nothing snaps to a frame). Before first it holds dive's aim, after last terrain's. Both frames must lie from your dive's first frame to your rise's last, in order; dive without turn throws when the film is built.
+- The refusal (render time, throws): in every sample where the turn is under way (share strictly between 0 and 1) the sample must be drawn as the surface view and your surface plate (the terrain entry of sky.json) must have weight 1, add false, a ring without a hole (ring[2] < ring[3] <= 0), and cover all four corners of the frame, grown by 2 percent, inside its full opacity (past its edge feather). The plate keeps its place in the picture while the stars turn under it: its aim follows the turn. film.sky.turns[id] and film.sky.patches[id].terrain stay the rise's values; the dive's are in film.sky.dives[id] (turn, aim, from, to in seconds); the plate's aim of a sample is shot.skyPlate.aim.
+- With no dive key nothing changes anywhere.
+No answer needed; I will send you the sha when it is named."
+
+### 05:19 to 05:45 rise 2 of 2, the layers taken out one at a time (the plateau rule, MAIL 1230)
+
+Same 37 half frames, same reader, the candidate's tree with one change each, restored after each (`git checkout HEAD -- src/stops/uranus`, tree checked clean):
+- rimOut: `globe.ts` line 346 `calm * max(light - up, ...)` read as `albedo * max(...)`, `deck.ts` line 313 `calmS * max(...)` read as `aS * max(...)` (the rim's light falls on the fine albedo as on main).
+- airOut: `globe.ts` line 356 `vec4 dim = vec4(1.0)` (no air by the path on the globe).
+- clockHeld: `plan.ts` line 162 `const y = 0 * ramp(...)` (the globe's clock stays at 3.25 through the rise, no catch up).
+
+```
+frame   candidate  clockHeld  rimOut  airOut  coverOff    main
+ 4417.5   0.50    0.52    0.77    0.63    0.59    0.56
+ 4418.0   0.77    0.74    0.77    0.52    0.88    0.35
+ 4418.5   0.62    0.66    0.67    0.42    0.60    0.42
+ 4419.0   0.55    0.63    0.56    0.48    0.59    0.42
+ 4419.5   0.62    0.58    0.61    0.68    0.66    0.75
+ 4420.0   0.57    0.65    0.65    0.67    0.56    0.38
+ 4420.5   0.56    0.56    0.75    0.62    0.57    0.86
+ 4421.0   0.59    0.55    0.79    0.61    0.58    0.80
+ 4421.5   0.86    0.84    0.58    0.86    0.84    0.65
+ 4422.0   0.81    0.84    0.52    0.84    0.83    0.88
+ 4422.5   0.90    0.81    0.88    0.93    0.83    0.73
+ 4423.0   0.72    0.77    0.55    0.75    0.72    0.51
+ 4423.5   0.69    0.65    0.44    0.69    0.67    0.43
+ 4424.0   0.69    0.59    0.63    0.67    0.68    0.57
+ 4424.5   0.60    0.60    0.69    0.66    0.66    0.62
+ 4425.0   0.62    0.57    0.67    0.64    0.62    0.66
+ 4425.5   0.56    0.53    0.65    0.57    0.56    0.63
+ 4426.0   0.57    0.52    0.65    0.56    0.57    0.64
+ 4426.5   0.59    0.58    0.58    0.55    0.59    0.55
+ 4427.0   0.53    0.52    0.51    0.52    0.53    0.51
+ 4427.5   0.50    0.48    0.47    0.49    0.50    0.47
+candidate over 21 of 21 largest 0.90 mean 0.639
+clockHeld over 21 of 21 largest 0.84 mean 0.628
+rimOut over 20 of 21 largest 0.88 mean 0.638
+airOut over 20 of 21 largest 0.93 mean 0.636
+coverOff over 21 of 21 largest 0.88 mean 0.649
+main over 16 of 21 largest 0.88 mean 0.590
+```
+
+Read row by row: no control brings a row of the candidate under the limit but one (rimOut 4423 + 1/2 0.44, airOut 4418 + 1/2 0.42), each control moves single rows by up to 0.29 both ways, and the mean of the 21 rows stays 0.63 to 0.65 in all five states of my tree against main's 0.59. So by the plateau rule none of the four (the cover, the rim, the air on the globe, the clock's catch up) is the cause. What the five states share and main does not have at that strip is not named yet; main's law there is the mix towards `relit = aEff * lD` by the view cosine (`uSteep`, main's `globe.ts` line 310), which my tree replaced by the air by the path.
