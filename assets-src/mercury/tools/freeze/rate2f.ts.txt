@@ -1,0 +1,25 @@
+import { mkdirSync, writeFileSync } from 'node:fs'
+import { DIST, ensureBuild, loadConfig, formatId } from '../../../../../tools/lib/common'
+import { openCapture, renderPng } from '../../../../../tools/lib/browser'
+const [out, fmt, set, ...ks] = process.argv.slice(2)
+const cfg = loadConfig()
+ensureBuild()
+mkdirSync(out!, { recursive: true })
+const open = () => openCapture({ dist: DIST, format: formatId(cfg, fmt as any), assets: set as any, diag: (process.env.DIAG ?? 'beauty') as any, query: "&rate=" + (process.env.RATE ?? "2") + (process.env.Q ?? "") })
+let s = await open()
+for (const k of ks.map(Number)) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const { png, seconds } = await renderPng(s.page, k, (process.env.TIER ?? 'draft') as any)
+      writeFileSync(out + '/k' + String(k).padStart(6, '0') + '.png', png)
+      console.log('done', k, seconds.toFixed(1) + 's')
+      break
+    } catch (e) {
+      if (attempt >= 3) throw e
+      await s.close().catch(() => {})
+      s = await open()
+    }
+  }
+}
+await s.close()
+console.log('ALLDONE')
