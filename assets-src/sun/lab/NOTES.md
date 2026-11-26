@@ -1362,3 +1362,54 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   at the crossings; the level on the border stays the same from both sides). Trials t22 (lane 0.007 units, swell
   1.5, junc radius 0.025, seam [0.15,0.4,40], pit 0), t23 (lane 0.006, swell 2.5, seam [0.08,0.35,40]), t24 (t22
   with heat.pit 0.5 and junc radius 0.02); v/trials-i.jpg, v/strip-t24.jpg.
+- 01:15 to 01:22 UTC. MEASURED t22: 30.4851, 10.0959, [1.72 1.19 1.05 0.98 0.91 0.80 0.87]; t23: 30.7575, 9.9312;
+  t24: 30.6219, 10.0124. SEEN (v/trials-i.jpg, v/strip-t24.jpg): dark lanes with a glow, swelling at the crossings,
+  no facets; but the tops are light up to the lane, so the frame reads as cobbles in dark mortar, and the lanes
+  are too wide (0.007 units is the width of ONE side: 13 px across).
+  ground.ts: heat.lane[8], [9]: a shoulder, the top's heat falls to the share lane[9] over the outer lane[8] of
+  the radius (smoothstep), before the seam. t25 (lane 0.004, swell 2.0, shoulder 0.45 to 0.6): 30.3586, 9.0637,
+  [1.62 1.13 1.02 1.00 0.96 0.84 0.84]; t26 (also blob 0.75, rim 0.3): 30.5063, 9.1367, [1.57 1.09 0.99 1.00 0.99
+  0.86 0.82]; t27 (shoulder 0.6 to 0.5, cushion.fibre[3] 0.4): 30.2632, 9.1322, [1.53 1.06 0.97 0.97 0.96 0.85
+  0.81]. SEEN (v/trials-j.jpg, v/strip-t27.jpg): t27 is the softest: the tops lose their light toward the lane,
+  the lanes are a connected dark red brown net that glows; deeper amber, nearer the approved than h31. Still
+  wrong: small cells as lit pebbles with a crisp far side, lights on the tops broader than the approved's.
+  Trials t28 (lane 0.0035, swell 1.0, shoulder 0.7 to 0.45), t29 (thread 0.2, rim 0.25, blob 0.8), t30 (dome
+  height 0.26): v/trials-k.jpg, v/strip-t30.jpg.
+- 01:22 to 01:26 UTC. MEASURED t28: 30.2635, 10.2125, [1.48 1.02 0.92 0.94 0.94 0.83 0.79]; t29: 30.5377, 9.6404,
+  [1.51 1.05 0.96 0.99 0.99 0.86 0.81]; t30 (height 0.26): 30.3435, 9.237, no gain to the eye over t27.
+  SEEN (v/trials-k.jpg, v/strip-t30.jpg): t28 and t29 are soft cushions with thin dark lanes that glow; the
+  foil is gone at 3 times. Small bright posts (1 px wide, about 7 px tall) stand under some corners: a wall of
+  the skirt lit by a spark or the seam's glow; to find.
+- 01:26 UTC. STATE h32 = h31 with heat.pit 0, dome.base[7] 0 and [8] 0.025, cushion.seam [0.12,0.4,40], heat.lane
+  [0.19,0.08,0.8,0.0,0.0035,0.06,0.6,1.0,0.7,0.45], cushion.fibre[3] 0.3, cushion.rim[0] 0.25, cushion.blob[0] 0.8,
+  curve refit (v/lab-h32.json). Chain v/chain-h32.sh (log v/chain-h32.log).
+  MEASURED h32 draft frame 90: plain 30.2863, low64 7.874 (main 10.9492), bands [1.58 1.08 0.98 1.02 1.03 0.91
+  0.84], percentiles 0.259 0.416 0.584 0.761 0.906 0.961 (approved 0.231 0.404 0.58 0.761 0.906 0.965), curve
+  [0.795 0.789 0.774 0.759 0.738 0.702 0.652 0.58 0.5 0.409 0.352]: gaps to the approved 0.128 0.127 0.117 0.112
+  0.119 0.116 0.105 0.084 0.067 0.040 0.028, OUTSIDE 0.05 on nine tenths and worse than h31 (the shoulder gathers
+  the light in the middle of each top; the percentiles of the whole ground match, so the approved carries its
+  contrast in patches across the tops and not from middle to border). Lane 5.59 px (approved 7.08), lane depth
+  0.303.
+  SEEN (v/x3-h32.jpg, v/levels-h32.jpg): soft cushions, no foil, no facets; but in the levels picture every cell
+  is a light plate inside an even dark net (cobbles), where the approved's lights are irregular blobs of half a
+  cell and its darks are broad areas that take in parts of the tops. NEXT: the light of a top as an off centre
+  blob of about half the cell whose dark side runs into the lane (blob lobes larger, shoulder gentler), then the
+  curve again.
+- 01:29 UTC. MAIL 1361 from /root (no answer): origin main is now fb40db962c77add634dabe98d9a6ac1519fbb59d
+  (batches 16 and 17). Nothing changes in my orders: merge this main (or a newer one) before my next NAMED mail
+  and say which main it holds. After the merge `npm run cues` and `npm run shots` should leave no change under
+  cut/; if they do, say so with the name.
+- 01:28 to 01:43 UTC. CHAIN h32 done. FLICKER h32 (h31; b7): near box disc 26 px 0.257 (0.385; 0.211), 56.2 percent
+  (75.0; 37.5); band disc 26 0.257 (0.385; 0.255), 41.3 (53.3; 34.2); ellipse 90 by 45 0.076 (0.126; 0.080), 0 of 13
+  (6.7; 0); ellipse 70 by 35 0.159 (0.146; 0.119), 3.1 percent, 1 of 32 (7.1; 4). Better than h31 on seven of
+  eight, at b7's level on the band's largest and both ellipse shares; worse than b7 on the near box and on the
+  70 by 35 largest.
+  h32 FINAL frame 90 (lab-90-h32f.png): plain 30.6185, low64 7.789 (main 10.9492), bands [1.50 1.12 1.00 1.02
+  1.03 0.91 0.85], percentiles 0.259 0.42 0.588 0.765 0.906 0.961, curve [0.801 0.79 0.775 0.761 0.743 0.709
+  0.656 0.583 0.499 0.409 0.351]: gaps 0.134 0.128 0.118 0.114 0.124 0.123 0.109 0.087 0.066 0.040 0.027, OUTSIDE
+  0.05 on nine tenths. Lane 5.56 px, depth 0.299. Three parts: draft ground 51.5061 strip 50.8236 sky 8.5528;
+  final ground 51.5178 strip 51.0563 sky 9.1715 (standing 8.4355 and 9.0457: 0.117 and 0.126 over).
+  SEEN (v/half-h32f.jpg, v/x3-h32f.jpg, v/motion-h32.jpg, v/sheet-h32.jpg): soft lumps of dough in an even dark
+  net; no foil, no facets, no black; the approved is darker on the tops, with its dark in broad areas. In motion,
+  eye held: cells keep their place, borders creep, a large cell swells, small ones are covered; thin cover lines
+  remain where a crest hides the lane behind it; nothing slides as one picture.

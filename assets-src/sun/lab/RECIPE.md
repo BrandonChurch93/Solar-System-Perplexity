@@ -55,6 +55,14 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   the texture keeps its size in the picture however large the cell (qSize in the shader, 0.4 to 3). fibre.along
   is the change of the three fan sizes along the run, a radius of a cell of fibre.size. cushion.fibre[3] is the
   strength of the thread term (hot threads of the three sizes) on the top.
+  fibre.span is the least and the most of qSize. The lane (heat.lane): [4] the width of one side of the lane in
+  stage units (0: a share of the radius as before), [5] and [6] its least and most as a share of the cell's radius,
+  [7] how much wider it is where three cells meet (the junc field of the dome: from the ways to the two nearest
+  borders of the own cell, radius dome.base[8]), [8] and [9] the shoulder: over the outer share [8] of the radius
+  the top's heat falls smoothly to the share [9], then to the seam's heat on the border, which is the same from
+  both sides. With heat.pit 0 and dome.base[7] 0 the junc field carries no step in heat or height.
+  lab.json "show" (junc, edge, deep, cell, tall, seam) draws one field of the dome as heat, for finding a cause;
+  absent in the film.
 - Readers of frame 90 against the approved close image (pictures at 1920 by 1080, none of them writes a file the
   film loads): `python3 assets-src/sun/lab/match.py RENDER.png` (plain match, whole and by rows);
   `python3 assets-src/sun/lab/cells.py RENDER.png|approved [--box X Y W H] [--out OVERLAY.jpg] [--json FILE]`
