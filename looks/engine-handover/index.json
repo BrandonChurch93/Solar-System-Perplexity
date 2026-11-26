@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T00:50:38.616Z",
+ "pushed": "2026-11-26T01:09:44.144Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests v8 at the review tier: 2668 and 2672 have no teeth (0 and 2 jumps against 5 and 4), 2580 holds; a dark red mark shows on the far ground beside crest A that the teeth covered, tracing it before any name",
+ "note": "crests v8: review proof looked at and measured, the red mark traced to a speck in L1's paint, the line at D's box end; committing next",
  "looks": [
   {
-   "time": "2026-11-26T00:50:29.235Z",
-   "file": "20261126005029235-note-r8-2580.jpg",
-   "source": "../../../../tmp/crest/r8-2580.png",
+   "time": "2026-11-26T01:09:43.487Z",
+   "file": "20261126010943487-note-s8-dive-2480.jpg",
+   "source": "../../../../tmp/crest/s8-dive-2480.png",
    "kind": "note",
-   "label": "crests, review tier, 2580, 6 to 1: base | crests (71 px over 8 steps, all on the border of A's upper piece)"
+   "label": "draft strip of the dive from 2480, base over crests"
   },
   {
-   "time": "2026-11-26T00:50:28.648Z",
-   "file": "20261126005028648-note-r8-2477.jpg",
-   "source": "../../../../tmp/crest/r8-2477.png",
+   "time": "2026-11-26T01:09:42.816Z",
+   "file": "20261126010942816-note-s8-dive-2477.jpg",
+   "source": "../../../../tmp/crest/s8-dive-2477.png",
    "kind": "note",
-   "label": "crests, review tier, 2477, 5 to 1: base | crests"
+   "label": "draft strip of the dive from 2477, base over crests"
   },
   {
-   "time": "2026-11-26T00:50:28.071Z",
-   "file": "20261126005028071-note-r8-2672-low.jpg",
-   "source": "../../../../tmp/crest/r8-2672-low.png",
+   "time": "2026-11-26T01:09:42.176Z",
+   "file": "20261126010942176-note-s8-rise-2670.jpg",
+   "source": "../../../../tmp/crest/s8-rise-2670.png",
    "kind": "note",
-   "label": "crests, review tier, 2672, lower A, 4 to 1: base | crests"
+   "label": "draft strip of the rise from 2670, base over crests"
   },
   {
-   "time": "2026-11-26T00:50:27.507Z",
-   "file": "20261126005027507-note-r8-2672-up.jpg",
-   "source": "../../../../tmp/crest/r8-2672-up.png",
+   "time": "2026-11-26T01:09:41.573Z",
+   "file": "20261126010941573-note-s8-rise-2667.jpg",
+   "source": "../../../../tmp/crest/s8-rise-2667.png",
    "kind": "note",
-   "label": "crests, review tier, 2672, upper A and D, 4 to 1: base | crests; the same red mark"
+   "label": "draft strip of the rise from 2667, base over crests"
   },
   {
-   "time": "2026-11-26T00:50:26.928Z",
-   "file": "20261126005026928-note-r8-2668-red.jpg",
-   "source": "../../../../tmp/crest/r8-2668-red.png",
+   "time": "2026-11-26T01:09:40.936Z",
+   "file": "20261126010940936-note-s8-rise-2664.jpg",
+   "source": "../../../../tmp/crest/s8-rise-2664.png",
    "kind": "note",
-   "label": "crests, review tier, 2668 at 12 to 1: a dark red mark on the far ground beside A that the teeth covered in the base; not traced yet"
+   "label": "draft strip of the rise from 2664, base over crests"
   },
   {
-   "time": "2026-11-26T00:50:26.355Z",
-   "file": "20261126005026355-note-r8-2668-low.jpg",
-   "source": "../../../../tmp/crest/r8-2668-low.png",
+   "time": "2026-11-26T01:09:40.359Z",
+   "file": "20261126010940359-note-r8-2477-c51.jpg",
+   "source": "../../../../tmp/crest/r8-2477-c51.png",
    "kind": "note",
-   "label": "crests, review tier, 2668, lower A, 4 to 1: base | crests"
+   "label": "2477 review, crest D, base (dashes) and crests (one stroke), 20 to 1"
   },
   {
-   "time": "2026-11-26T00:50:25.745Z",
-   "file": "20261126005025745-note-r8-2668-z.jpg",
-   "source": "../../../../tmp/crest/r8-2668-z.png",
+   "time": "2026-11-26T01:09:39.787Z",
+   "file": "20261126010939787-note-r8-2477-z.jpg",
+   "source": "../../../../tmp/crest/r8-2477-z.png",
    "kind": "note",
-   "label": "crests, review tier, 2668, the teeth at 10 to 1: base | crests"
+   "label": "2477 review, the fold, base and crests at zoom"
   },
   {
-   "time": "2026-11-26T00:50:25.141Z",
-   "file": "20261126005025141-note-r8-2668-up.jpg",
-   "source": "../../../../tmp/crest/r8-2668-up.png",
+   "time": "2026-11-26T01:09:39.221Z",
+   "file": "20261126010939221-note-r8-2672-z.jpg",
+   "source": "../../../../tmp/crest/r8-2672-z.png",
    "kind": "note",
-   "label": "crests, review tier, 2668, upper A and D, 4 to 1: base | crests (L1: step 0.002, walk 2, under 4, out 0.7, a box and two named crests)"
+   "label": "2672 review, crest A's edge, base and crests, 12 to 1"
   }
  ]
 }
