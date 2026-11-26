@@ -1,0 +1,127 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crop S (lower-left sunlit clouds in image-05.png)",
+      "what": "Bright cloud crests smear sideways into stacked, blunt rectangular dashes; individual edges no longer hold up at native size.",
+      "fix": "Reduce the directional blur on the cloud layer and render the close-up with enough sampling to preserve the smaller cloud edges."
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "crops T and U (lower center of the close-up globe)",
+      "what": "The fine relief stretches into tightly spaced, parallel ridges, especially across the bronze patch in T. It reads as combed texture rather than irregular surface detail.",
+      "fix": "Check texture filtering and projection at this camera distance, and add irregular detail at several scales to break up the parallel ridges."
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop H, center and lower left",
+      "what": "A smooth gray diagonal swath cuts across much coarser dark relief with an abrupt change in texture, making it look like a separate patch.",
+      "fix": "Blend the transition and carry some of the neighboring fine relief through the swath."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crop V, lower globe limb",
+      "what": "A thin cool-gray arc runs alongside the warm atmospheric glow, giving parts of the silhouette a faint doubled edge.",
+      "fix": "Align the atmospheric falloff with the globe silhouette and taper its outer edge into the sky."
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "crops S and T, star field",
+      "what": "Some brighter stars are soft colored blobs or tiny slanted dashes instead of clean points.",
+      "fix": "Tighten the star cores and sample them at final output resolution, reserving visible bloom for the brightest stars."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "globe surface, whole disc (crops A, B, F, J, K, O in image-14/15)",
+      "what": "cloud texture is smeared into directional streaks and comb-like strokes, as if motion-blurred or warped; at native size it reads as painterly brushwork rather than cloud structure",
+      "fix": "regenerate the surface texture at higher resolution and map it without warping; replace the streaked detail with crisp cloud bands and cells"
+     },
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "top of the globe near the pole (crops B, J)",
+      "what": "texture converges into a pinched fan of streaks, the classic pole-pinch of a stretched equirectangular map",
+      "fix": "use a cube-map or pole-corrected projection, or blend a dedicated polar cap texture"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "right-centre vortex (crops A, K)",
+      "what": "the storm is made of concentric doubled, ghosted rings with stepped bright fragments, like a swirl filter on the texture rather than a cloud system",
+      "fix": "replace the swirl with a modelled cyclone with spiral arms and soft-edged cloud tops"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower-left and bottom limb (crops D, H, P, T in image-14/15/16)",
+      "what": "the limb goes soft and blurry with a smeared, doubled rim and a muddy halo against the stars; the edge is not sharp the way the upper right limb is",
+      "fix": "keep the planet's edge sharp all the way round and fade the atmosphere glow out evenly"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "dark hemisphere, centre-left (crops D, N, O)",
+      "what": "night side is a flat, mottled brown with fibrous noise and almost no readable form; the light falls off with no clear terminator",
+      "fix": "set a defined terminator with a gradual falloff and keep some large-scale cloud structure visible on the dark side"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "upper-left frame edge",
+      "what": "the globe is cut off by the top of the frame, so the pinched pole area dominates the composition",
+      "fix": "reframe so the pole falls inside the frame or is hidden by the angle of view"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "bottom quarter of the cloud deck (crops T, V, W, X in image-12)",
+      "what": "the foreground clouds turn into muddy, low-contrast mush with soft smeared detail and faint blocky noise in the darkest areas",
+      "fix": "lift shadow detail and add sharper cloud structure in the foreground; denoise without blocking"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "sun at upper right (crops C, M, N)",
+      "what": "the horizontal lens streak runs straight across the limb and sky as a flat line and the sun bloom clips into a large flat white area",
+      "fix": "tone down the anamorphic streak and roll off the highlights so the bloom has a gradient"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "god rays from the central cloud towers (crops A, E, Q)",
+      "what": "the rays are evenly spaced and slightly airbrushed, which reads as a post effect",
+      "fix": "vary the width and strength of the rays and break them up with cloud gaps"
+     }
+    ]
+   }
+  }
+ ]
+}
