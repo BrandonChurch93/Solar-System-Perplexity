@@ -106,6 +106,9 @@ void main() {
   // the ringlets' amplitude by radius, as the sheet has it (grade.ts iceFine)
   for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) sheetFine = vec4(iceFine(r), uGradeFine);
   sheetAt(q, r, fp, fpl, tau, lum, thin, ink, tint, zone);
+  // a grain is ice of the ring: the thin sheet inside the inner rim is powder and holds none (sheet.ts)
+  tau *= 1.0 - sheetThin;
+  lum *= 1.0 - sheetGlow;
   float spokes = iceSpokes(r, atan(q.y, q.x) / 6.2831853);
   lum *= exp(spokes * uIceOrbit.z);
   lum *= pow(clamp(zone.y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));

@@ -168,14 +168,18 @@ void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum,
     // globe's air (grade.ts dustAir, on the globe made round)
     rings *= dustAir(vec3(q.x, 0.0, q.y), normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z)));
     glow = uInner2.x * like.y / max(ringSat(like.x * uRfLight.x), 1e-4) * ringSat(dust * uRfLight.x) * rings;
-    knots += vec2(dust, glow);
   }
-  sheetThin = dust / max(knots.x, 1e-9);
-  sheetGlow = glow / max(knots.y, 1e-9);
   tau = knots.x;
   lum = knots.y;
   // and the ringlets of the ladder by the same amplitude
   ringFine(r, fp, fpl, ink.a * (1.0 + sheetFine.x), thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
+  // the thin sheet inside the inner rim is added after the ladder: the ladder's strengths go with the nearness
+  // of the lens (field.ts set), and nothing of that sheet may read the height of the lens (one matter, one law:
+  // its depth and its light follow the radius, the slant of the view and the Sun's direction alone)
+  tau += dust;
+  lum += glow;
+  sheetThin = dust / max(tau, 1e-9);
+  sheetGlow = glow / max(lum, 1e-9);
 }`
 
 // The far look of the sheet: the sheet as the set of the kept build draws it once its picture of the hold has
@@ -444,6 +448,9 @@ void main() {
     // zones, the grade) touches it
     float dustLum = lum * sheetGlow;
     lum -= dustLum;
+    // and so is its depth: the sand and the grains near the lens, which come with the nearness of the lens, are
+    // the ring's and take nothing of it
+    float dustTau = tau * sheetThin;
     float turn = atan(q.y, q.x) / 6.2831853;
     // the spokes show only near the sheet
     float spokes = 0.0;
@@ -456,14 +463,15 @@ void main() {
     // the thin sheet inside the inner rim is powder with no grain to see
     for (int j = 0; j < (uInner.y > 0.0 ? 1 : 0); j++) sand *= smoothstep(uInner.x - uInner.w, uInner.x, r);
     lum *= exp(sand.x);
-    tau *= exp(sand.x * uIceFit.z);
+    tau = (tau - dustTau) * exp(sand.x * uIceFit.z) + dustTau;
+    sheetThin = dustTau / max(tau, 1e-9);
     float dist = length(ray);
     float mu = max(abs(ray.y) / dist, 1e-3);
     float mu0 = max(abs(uSunL.y), 0.02);
     bool same = uCamL.y * uSunL.y > 0.0;
     // near the lens a share of the ice is seen grain by grain (grains.ts): the sheet is what is left of it, and
     // it lies in the shade of those grains
-    float taken = grainTaken(grainCells(tau), dist);
+    float taken = grainTaken(grainCells(tau - dustTau), dist);
     float left = tau - taken;
     float shade = exp(-taken / mu0);
     float seen = same ? shade * ringSat(left * (1.0 / mu0 + 1.0 / mu)) / max(ringSat(tau * uRfLight.x), 1e-6) : uShade.w * exp(-tau / mu0) * ringSat(tau / mu) / max(ringSat(tau * uRfLight.x), 1e-6);
@@ -498,7 +506,7 @@ void main() {
     // alone, with the colour, the saturation and the gain the ring has from afar (uThinFar: the far tint of the
     // dense ice and the far saturation; uThinFar2: the far tint of the thin ice and the far gain), the same in
     // every take of the stop and at every height of the lens
-    vec3 own = dustLum * (seen * law) * mix(vec3(1.0), ink.rgb, uThinFar.w * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uThinFar.rgb, uThinFar2.rgb, thin) * mix(uFloor, vec3(1.0), lit) * uThinFar2.w;
+    vec3 own = dustLum * (seen * law) * mix(vec3(1.0), ink.rgb, uThinFar.w * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * mix(uThinFar.rgb, uThinFar2.rgb, thin) * mix(uFloor, vec3(1.0), lit) * uThinFar2.w;
     col = col * under + own;
     inside.rgb = own;
   }
