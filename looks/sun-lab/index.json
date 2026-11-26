@@ -1,77 +1,71 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-26T01:15:36.590Z",
- "head": "9d560e797efa76da410b9f7d8a534532f6d17df9",
- "note": "lab: hard edges by cause, lanes as a soft net of even width (trials)",
+ "pushed": "2026-11-26T01:44:12.846Z",
+ "head": "3d6d5bb06f7c37ddd7a460e65faf07e292b75968",
+ "note": "lab h32: soft net of lanes, tops lose their light to the lane; motion and flicker read",
  "looks": [
   {
-   "time": "2026-11-26T01:15:35.983Z",
-   "file": "20261126011535983-note-trials-s.jpg",
-   "source": "../v/trials-s.jpg",
+   "time": "2026-11-26T01:44:12.252Z",
+   "file": "20261126014412252-note-lab-60-h32.jpg",
+   "source": "../v/lab-60-h32.jpg",
    "kind": "note",
-   "label": "lab show fields: junc, tall, cell, seam (cause of the facets)",
+   "label": "lab h32 frame 60 draft",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T01:15:35.378Z",
-   "file": "20261126011535378-note-trials-h.jpg",
-   "source": "../v/trials-h.jpg",
+   "time": "2026-11-26T01:44:11.707Z",
+   "file": "20261126014411707-note-lab-0-h32.jpg",
+   "source": "../v/lab-0-h32.jpg",
    "kind": "note",
-   "label": "lab trials: approved, h31, t20, t21 at 3 times (lanes from the seam, no pits: too flat and light)",
+   "label": "lab h32 frame 0 draft",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T01:13:24.129Z",
-   "file": "20261126011324129-frame-lab-90-t21.jpg",
-   "source": "out/work/sun/lab/lab-90-t21.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-26T00:37:33.593Z",
-   "file": "20261126003733593-note-lab-90-h31f.jpg",
-   "source": "../v/lab-90-h31f.jpg",
+   "time": "2026-11-26T01:44:11.128Z",
+   "file": "20261126014411128-note-trials-k.jpg",
+   "source": "../v/trials-k.jpg",
    "kind": "note",
-   "label": "lab lab-90-h31f 00:37",
+   "label": "lab trials t27 to t30 at 3 times",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T00:37:33.049Z",
-   "file": "20261126003733049-note-lab-60-h31.jpg",
-   "source": "../v/lab-60-h31.jpg",
+   "time": "2026-11-26T01:44:10.523Z",
+   "file": "20261126014410523-note-sheet-h32.jpg",
+   "source": "../v/sheet-h32.jpg",
    "kind": "note",
-   "label": "lab lab-60-h31 00:37",
+   "label": "lab h32 film frames 60 to 120",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T00:37:32.504Z",
-   "file": "20261126003732504-note-lab-0-h31.jpg",
-   "source": "../v/lab-0-h31.jpg",
+   "time": "2026-11-26T01:44:09.952Z",
+   "file": "20261126014409952-note-motion-h32.jpg",
+   "source": "../v/motion-h32.jpg",
    "kind": "note",
-   "label": "lab lab-0-h31 00:37",
+   "label": "lab h32 motion, eye held, 12 frames apart",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T00:37:31.957Z",
-   "file": "20261126003731957-note-motion-h31.jpg",
-   "source": "../v/motion-h31.jpg",
+   "time": "2026-11-26T01:44:09.370Z",
+   "file": "20261126014409370-note-levels-h32f.jpg",
+   "source": "../v/levels-h32f.jpg",
    "kind": "note",
-   "label": "lab motion-h31 00:37",
+   "label": "lab h32 final levels picture under the approved",
    "stop": "sun"
   },
   {
-   "time": "2026-11-26T00:37:31.286Z",
-   "file": "20261126003731286-note-sheet-h31.jpg",
-   "source": "../v/sheet-h31.jpg",
+   "time": "2026-11-26T01:44:08.806Z",
+   "file": "20261126014408806-note-x3-h32f.jpg",
+   "source": "../v/x3-h32f.jpg",
    "kind": "note",
-   "label": "lab sheet-h31 00:37",
+   "label": "lab h32 final at 3 times under the approved",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T01:44:08.149Z",
+   "file": "20261126014408149-note-half-h32f.jpg",
+   "source": "../v/half-h32f.jpg",
+   "kind": "note",
+   "label": "lab h32 final: approved lower half over lab lower half at 1 to 1",
    "stop": "sun"
   }
  ]
