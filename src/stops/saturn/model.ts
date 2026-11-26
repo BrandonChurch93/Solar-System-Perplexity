@@ -12,8 +12,7 @@ import { iceField } from './ice'
 import * as look from './look'
 import { plan } from './plan'
 import { Sheet } from './sheet'
-import { shotMatrix } from './shot'
-import holdLight from './hold-light.json'
+import globeLight from './globe-light.json'
 import iceJson from './ice.json'
 import lightJson from './light.json'
 import ringsJson from './rings.json'
@@ -46,12 +45,12 @@ export const createModel: SetFactory = async (ctx) => {
   const map = await ctx.texture(base + 'wrap-color.jpg', { srgb: true, anisotropy: 16, repeat: true })
   const table = await ctx.dataTexture(base + lightJson.file, lightJson.width, lightJson.height, 4)
   const toTilt = tilt.quaternion.clone().invert()
-  const heroPose = plan.hold(plan.holdMid - plan.seg.hold.start)
-  const heroL = heroPose.position.clone().applyQuaternion(toTilt)
-  const heroM = shotMatrix(heroL, toTilt.clone().multiply(heroPose.quaternion), heroPose.vfov, 16 / 9)
   const poseW = { value: 0 }
-  const hold = { texture: await ctx.dataTexture(base + holdLight.file, holdLight.width, holdLight.height, 4), matrix: heroM, camera: heroL, weight: poseW }
-  const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, hold, look.globe, look.haze, field.uniforms, polar)
+  // the hold's light on the globe, a map of the body by latitude and by longitude from the Sun (globe-light.json)
+  const bodyLight = await ctx.dataTexture(base + globeLight.file, globeLight.width, globeLight.height, 4)
+  bodyLight.wrapS = THREE.RepeatWrapping
+  bodyLight.needsUpdate = true
+  const globe = new Globe(map, (map.image as unknown as { width: number }).width, table, bodyLight, look.globe, look.haze, field.uniforms, polar)
   const shell = new Shell(look.shell, look.globe, field.uniforms, polar, look.shellReach)
   // the edge of the day of the haze as the shell was built with it: its look in the hold (grade.ts hazeDayAt)
   const hazeDayFar = (shell.material.uniforms.uHazeEdge!.value as THREE.Vector2).clone()
@@ -170,7 +169,7 @@ export const createModel: SetFactory = async (ctx) => {
       gu.uNightBlur!.value = (look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * closeGlobe) * foot
       gu.uEdgePx!.value = look.globe.edgePx * foot
       su.uLimbW!.value = gu.uLimbW!.value
-      gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
+      gu.uInflate!.value = look.globe.limbInflate
       // the fine structure of the bands from functions is drawn only when the lens is near enough for any of it
       ;(gu.uBandFine!.value as THREE.Vector3).x = camS.length() - 1 < skimJson.globeFine.reach[1]! ? 1 : 0
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)

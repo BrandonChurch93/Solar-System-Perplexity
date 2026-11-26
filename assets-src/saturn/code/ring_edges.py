@@ -14,6 +14,8 @@ import sys, json, os, numpy as np
 from PIL import Image
 PLANE_H = float(os.environ.get('PLANE_H', '0'))   # a test only: the height over the ring plane at which the edges are read
 ZONES = [('B inner', +1, 1.40, 1.66), ('B outer', -1, 1.84, 2.06), ('outer', -1, 2.20, 2.46)]
+SECTOR = int(os.environ.get('SECTOR_STEP', '10'))   # a test only: the step of the sectors of azimuth in degrees
+R_LOW = float(os.environ.get('R_LOW', '1.25'))       # a test only: the least radius that is laid back (for a zone further in)
 STEP = 0.001; REACH = 0.10
 def rotq(q, v):
     u = np.array(q[:3]); t = 2 * np.cross(u, v); return v + q[3] * t + np.cross(u, t)
@@ -44,7 +46,7 @@ def read(s, pol, sun, file):
     with np.errstate(divide='ignore', invalid='ignore'):
         tp = np.where(np.abs(d[:, 1]) > 1e-9, (PLANE_H - e[1]) / d[:, 1], -1.0)
     p = e + d * tp[:, None]; r = np.hypot(p[:, 0], p[:, 2])
-    keep = (tp > 0) & (r > 1.25) & (r < 2.62)
+    keep = (tp > 0) & (r > R_LOW) & (r < 2.62)
     idx = np.flatnonzero(keep); p = p[idx]; r = r[idx]; lum = lum[idx]
     az = np.degrees(np.arctan2(p[:, 2], p[:, 0]))
     hit, t, ln = blocked(e[None, :], p - e, pol); hid = hit & (t < ln)
@@ -52,7 +54,7 @@ def read(s, pol, sun, file):
     for zi, (name, sign, lo, hi) in enumerate(ZONES):
         r0 = (lo + hi) / 2; grid = np.arange(lo - REACH, hi + REACH + STEP / 2, STEP)
         secs = []
-        for a in range(-180, 180, 10):
+        for a in range(-180, 180, SECTOR):
             rr = np.linspace(lo - REACH, hi + REACH, 7)
             pts = np.concatenate([ring_pt([a - 4.0, a, a + 4.0], x) for x in rr]) / 1.04   # the globe 4 percent larger: its penumbra too
             if blocked(pts, np.tile(sun, (len(pts), 1)), pol)[0].any(): continue    # the globe's shadow lies in this sector
