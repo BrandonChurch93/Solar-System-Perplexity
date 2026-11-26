@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T02:09:44.937Z",
+ "pushed": "2026-11-26T02:24:53.213Z",
  "head": "e463865a080ce64c59f68cdff358011e9dc1b180",
- "note": "cause hunt for the 0.12 of true carry at 2708: broad tone of land-8p5 against the map",
+ "note": "2708: the map alone at both frames reads 0.9365 by the true carry; the name 0.9648; main's plate 0.8094",
  "looks": [
+  {
+   "time": "2026-11-26T02:24:52.333Z",
+   "file": "20261126022452333-note-ends-B-V0-E1.jpg",
+   "source": "../../../../tmp/pm/ends-B-V0-E1.png",
+   "kind": "note",
+   "label": "true carry at 2708, end on 2716's grid: map alone at both frames 0.9365, the name 0.9648, main's plate 0.8094; 2716, 2708 carried, their details, the pattern",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T02:24:51.694Z",
+   "file": "20261126022451694-note-ab-2708.jpg",
+   "source": "../../../../tmp/pm/ab-2708.png",
+   "kind": "note",
+   "label": "rise 2708, same camera with and without land-8p5 (the map alone): the name, main's plate in the name, trial E2; difference at 32 and 128 px, red where the plate is brighter than the map as drawn",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T02:09:34.752Z",
    "file": "20261126020934752-note-true-MN.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pm/blob-main-name.png",
    "kind": "note",
    "label": "rise 2708 draft, crop x 240 to 640, y 180 to 440: main above, name below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T01:46:21.247Z",
-   "file": "20261126014621247-note-blob-chain-MN.jpg",
-   "source": "../../../../tmp/pm/blob-chain-MN.png",
-   "kind": "note",
-   "label": "rise 2708, the area the pattern row reads: main above, name below; frame 2708, frame 2716 carried back by the chain of 16 flows, pattern. The chain tears in both",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T01:21:55.448Z",
-   "file": "20261126012155448-note-paint7.jpg",
-   "source": "../../../../tmp/paint7.png",
-   "kind": "note",
-   "label": "paint test: L2 under C2, rim magenta, rest green, feather blue at 2681, 2678, 2476",
    "stop": "mars"
   }
  ]
