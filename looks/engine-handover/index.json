@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T14:07:03.849Z",
+ "pushed": "2026-11-26T14:36:28.517Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune's night side at 4707: the stop's grade of the fall is off on its tip (set.ts, const fall = 0); with main's law put back it reads as main's",
+ "note": "Neptune's entry in handover.shutterEnds as one commit (c2a57cd6 on agent/engine-ends-neptune): the plan by frame while the whole suite runs; review frames next",
  "looks": [
+  {
+   "time": "2026-11-26T14:36:27.546Z",
+   "file": "20261126143627546-note-ends-plan.jpg",
+   "source": "../../../../tmp/nep/ends-plan.png",
+   "kind": "note",
+   "label": "Neptune, the entry in handover.shutterEnds asked by its builder: the plan of the review tier by frame, px seen and ends, main's Neptune and its tip; no picture rendered yet, the suite runs"
+  },
   {
    "time": "2026-11-26T14:07:03.187Z",
    "file": "20261126140703187-note-fall-4700.jpg",
@@ -53,13 +60,6 @@
    "source": "../../../../tmp/seen/pics/edge-span.png",
    "kind": "note",
    "label": "Neptune level edge at eleven frames 4490 to 4610, gain 3 (draft, tip 2b9dbf28 with the cure)"
-  },
-  {
-   "time": "2026-11-26T13:56:35.581Z",
-   "file": "20261126135635581-note-wrap-seam.jpg",
-   "source": "../../../../tmp/seen/pics/wrap-seam.png",
-   "kind": "note",
-   "label": "Neptune map wrap.webp stretched, with the frame rows of 4529 drawn on it: 1033 yellow, 1079 red, 1005 white; the level edge is the border of the detailed footprint"
   }
  ]
 }
