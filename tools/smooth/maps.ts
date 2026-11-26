@@ -1,4 +1,4 @@
-export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null; patternMapAlone?: number | null; patternMapMoves?: number | null; patternMapMoved?: number | null; patternMapBound?: number | null }
+export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null; patternMapAlone?: number | null; patternMapMoves?: number | null; patternMapMoved?: number | null; patternMapBound?: number | null; patternTorn?: number | null; patternTornPx?: number | null; patternTornTrue?: number | null }
 
 export const NOT_CARRIED = 'the range does not carry the pattern'
 
@@ -12,6 +12,16 @@ export const moving = (row: Read): boolean => (row.patternMapMoves ?? null) !== 
 // The picture's own way along the flows parts from the map on a moving body (patternMapMoved) by more than its drawer names: more than the
 // surface's own motion is in it.
 export const outrun = (row: Read): boolean => moving(row) && (row.patternMapMoved ?? null) !== null && row.patternMapMoved! > row.patternMapMoves!
+
+export const TORN_SHARE = 0.5
+
+// The number of the row sits where the chain of flows is torn: on that share or more of the pixels that set it the chain parts from the
+// camera's map by more than half the pattern's wide window (patternTorn). The row is counted as before; the mark only says what its number is made of.
+export const torn = (row: Read): boolean => (row.patternTorn ?? null) !== null && row.patternTorn! >= TORN_SHARE
+
+export const tornBy = (row: Read, px: number): string => (!torn(row) ? '' : '; where that number sits the chain is torn: on ' + row.patternTorn!.toFixed(2) + ' of the pixels that set it the chain parts from the camera\'s map by more than ' + px + ' px (median ' + row.patternTornPx!.toFixed(1) + ' px), and the true carry reads ' + ((row.patternTornTrue ?? null) === null ? 'nothing' : 'at most ' + row.patternTornTrue!.toFixed(2)) + ' there')
+
+export const TORN_LINE = (px: number): string => 'TORN before a pattern: the number of that row sits where the chain of flows is torn. On ' + TORN_SHARE + ' or more of the pixels that set it (those at or over its 99th percentile) the place the chain gives a pixel in the other frame lies more than ' + px + ' px (half the pattern\'s wide window) from the place the camera\'s map gives it. The row is counted as it was: a torn row over the limit stays over it, and nothing is left out of what is judged.'
 
 export const NOT_FOLLOWED = 'the picture\'s own flow is not measured on a body whose surface moves by itself'
 

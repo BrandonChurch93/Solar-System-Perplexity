@@ -96,6 +96,10 @@ uniform vec3 uSunTint;
 uniform vec3 uSunWarm;
 uniform vec3 uSunRoot;
 uniform vec2 uPatchSun;
+uniform sampler2D uSunPic;
+uniform vec4 uSunPicAt;
+uniform vec4 uSunPicLaw;
+uniform float uSunPicShare;
 uniform vec3 uSunRays[12];
 uniform float uTerrainBand;
 uniform float uTerrain;
@@ -453,6 +457,13 @@ void main() {
       rays *= smoothstep(0.4 * uSunRoot.z, uSunRoot.z, r) * (1.0 + uSunRoot.x * exp(-max(r, uSunRoot.z) / uSunRoot.y)) * (1.0 - smoothstep(uSunRay.z, uSunRay.w, r));
       float open = (1.0 - (uPatchMode[0].y > 0.5 ? 0.0 : pa.z * uPatchSun.x)) * (1.0 - (uPatchMode[1].y > 0.5 ? 0.0 : pb.z * uPatchSun.y));
       col += uSunStar.x * open * uSunGlare * glow * (uSunTint + uSunBurst.w * rays * uSunWarm);
+    }
+    for (int j = 0; j < (uSunPicLaw.x > 0.0 ? 1 : 0); j++) {
+      vec2 q = (vUv * 2.0 - 1.0 - uSunSpot.xy) * vec2(540.0 * uLens.y, 540.0);
+      float open = (1.0 - (uPatchMode[0].y > 0.5 ? 0.0 : pa.z * uPatchSun.x)) * (1.0 - (uPatchMode[1].y > 0.5 ? 0.0 : pb.z * uPatchSun.y));
+      float share = uSunPicLaw.x * open * (1.0 - smoothstep(uSunPicLaw.z, uSunPicLaw.w, length(q)));
+      vec3 light = inverseFilmic(patchTexel(uSunPic, vec3(uSunPicAt.xy + q * uSunPicAt.zw, 1.0))) * (uSunPicLaw.y * pk);
+      col += share * (uSunPicShare * light - uSunColor * (uSunGlare * (1.0 - uSunFar)) * (disc * (face * limb * 3.6 * big + core) + (1.0 - disc) * corona));
     }
   }
   outColor = vec4(col, 0.0);
@@ -814,6 +825,35 @@ export async function bandHold(id: string): Promise<(u: number) => void> {
   return (u: number) => holdBand(id, u)
 }
 
+export interface SunPicture { texture: THREE.Texture; at: [number, number]; texelPx: number; gain: number }
+let sunPicture: SunPicture | null = null
+let sunShown: { share: number; sun: SunState } | null = null
+
+export function nameSunPicture(picture: SunPicture | null): void {
+  sunPicture = picture
+}
+
+export function showSunPicture(share: number, sun: SunState): void {
+  sunShown = { share: THREE.MathUtils.clamp(share, 0, 1), sun }
+}
+
+export function sunPictureShare(sun: SunState): number {
+  const shown = sunShown
+  return sunPicture && shown && (shown.sun === sun || (sun.far !== undefined && shown.sun.far === sun.far)) ? shown.share : -1
+}
+
+export function limbShare(sunDir: THREE.Vector3, centre: THREE.Vector3, radius: number, sunRadius: number): number {
+  const distance = centre.length()
+  if (distance <= radius) return sunDir.dot(centre) < 0 ? 1 : 0
+  const t = THREE.MathUtils.clamp((sunDir.angleTo(centre) - Math.asin(radius / distance)) / sunRadius, -1, 1)
+  return 0.5 + (Math.asin(t) + t * Math.sqrt(1 - t * t)) / Math.PI
+}
+
+export function sunPictureLay(width: number, height: number, at: [number, number], texelPx: number, cap: number, fade: number): { at: [number, number, number, number]; reach: [number, number] } {
+  const reach = Math.min(cap, texelPx * Math.min(at[0], width - at[0], at[1], height - at[1]))
+  return { at: [at[0] / width, 1 - at[1] / height, 1 / (texelPx * width), 1 / (texelPx * height)], reach: [fade * reach, reach] }
+}
+
 export const sunStar = (radius: number, small: number, span: number[]): number => (1 - THREE.MathUtils.smoothstep(THREE.MathUtils.radToDeg(radius), span[0]!, span[1]!)) * (1 - small)
 
 export const flightSwap = (lift: number, power: number): number => 1 - Math.pow(1 - Math.min(Math.max(lift, 0), 1), power)
@@ -884,7 +924,7 @@ export class Sky {
     this.pass = new Pass(SKY_FRAG, {
       uImplicit: implicitUniform, uSky: { value: null }, uInvProj: { value: new THREE.Matrix4() }, uRot: { value: this.rot }, uTint: { value: new THREE.Vector3().fromArray(skyFrame.grade.tint) }, uFloor: { value: new THREE.Vector3().fromArray(skyFrame.grade.floor) }, uGamma: { value: skyFrame.grade.gamma }, uBand: { value: null }, uGal: { value: galactic() }, uBandMap: { value: bandMap() }, uBandWiden: { value: 1 / skyFrame.band.widen }, uBandFadeEnd: { value: skyFrame.band.fadeEnd }, uBandGrade: { value: new THREE.Vector4(skyFrame.band.gain, skyFrame.band.gamma, skyFrame.band.regionRef, skyFrame.band.offGain) }, uBandTint: { value: new THREE.Vector4(skyFrame.band.tint[0], skyFrame.band.tint[1], skyFrame.band.tint[2], skyFrame.band.saturation) }, uFrame: { value: new THREE.Matrix3().setFromMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion())) }, uExposure: { value: 1 },
       uSunDir: { value: new THREE.Vector3(0, 0, 1) }, uSunColor: { value: new THREE.Vector3(1, 1, 1) }, uSunRadius: { value: 0.01 }, uSunGlare: { value: 0 }, uSunFar: { value: 0 }, uSunSmall: { value: new THREE.Vector2() }, uSunSpot: this.sunSpot, uSunStar: { value: new THREE.Vector4() }, uSunBurst: { value: new THREE.Vector4(1, 0, 1, 0) }, uSunRay: { value: new THREE.Vector4(1, 0, 0, 1) }, uSunTint: { value: new THREE.Vector3(1, 1, 1) }, uSunWarm: { value: new THREE.Vector3(1, 1, 1) }, uSunRoot: { value: new THREE.Vector3(0, 1, 1) }, uSunRays: { value: Array.from({ length: 12 }, () => new THREE.Vector3(1, 0, 0)) }, uPixel: { value: 1 }, uSunPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uGlow: { value: 1 }, uNamed: { value: new THREE.Vector2(1, 1) }, uTerrainBand: { value: skyFrame.band.terrainGain }, uTerrain: { value: 0 }, uBandClean: { value: new THREE.Vector3(skyFrame.band.cleanRadius, skyFrame.band.cleanKeep, skyFrame.band.cleanBlur) },
-      uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold }, uPatchSun: { value: this.patchSun },
+      uLens: { value: new THREE.Vector2(0, 16 / 9) }, uPatchA: { value: this.blank }, uPatchB: { value: this.blank }, uPatchM: { value: this.patchM }, uPatchLens: { value: this.patchLens }, uPatchRing: { value: this.patchRing }, uPatchMode: { value: this.patchMode }, uPatchFold: { value: this.patchFold }, uPatchSun: { value: this.patchSun }, uSunPic: { value: this.blank }, uSunPicAt: { value: new THREE.Vector4() }, uSunPicLaw: { value: new THREE.Vector4(0, 1, 0, 1) }, uSunPicShare: { value: 1 },
       uBandGlow: { value: this.blank }, uFlightStrip: { value: new THREE.Vector3() }, uBandLift: { value: new THREE.Vector2() }, uFlightEdge: { value: new THREE.Vector3(0, 1, 0) }, uFlightFeather: { value: new THREE.Vector4(0, 1, 1, 0) }, uFlightRough: { value: new THREE.Vector2() }, uFlightDetail: { value: new THREE.Vector4() }, uFlightLane: { value: new THREE.Vector4(1, 2, 0, 0) }, uFlightFill: { value: new THREE.Vector4() }, uFlightOctave: { value: new THREE.Vector3(2, 0.5, 0.5) }, uFlightKnee: { value: new THREE.Vector2(1, 1) }, uFlightRim: { value: new THREE.Vector4() }, uFlightWarm: { value: new THREE.Vector4() }, uFlightSpread: { value: new THREE.Vector3() }, uFlightNoise: { value: this.noise }, uStopBand: { value: new THREE.Vector4(0, 0, 0, 0.7) }, uStopPoint: { value: new THREE.Vector4(1, 1, 0, 1) }, uStopGrain: { value: new THREE.Vector4(1, 1, 0, 1) }, uStopLaw: { value: new THREE.Vector4(1, 1, 1, 1) }, uStopTint: { value: new THREE.Vector4(0, 0, 1, 2) }, uStopCalm: { value: new THREE.Vector2(0, 6) },
       uFlightMap: { value: this.blank }, uFlightGlow: { value: new THREE.Vector4() }, uFlightHaze: { value: new THREE.Vector4() }, uFlightBandWidth: { value: 1 }, uFlightOff: { value: new THREE.Vector3(1, 1, 1) }, uFlightDust: { value: new THREE.Vector3(1, 1, 1) }, uFlightLight: { value: new THREE.Vector3(1, 1, 1) }, uFlightBand: { value: new THREE.Vector4(0, 1, 0, 1) }, uFlightLook: { value: new THREE.Vector2(0, 1) }, uFlightVeil: { value: new THREE.Vector4() }, uFlightVeilWarm: { value: new THREE.Vector4() },
     }, BEHIND)
@@ -1315,7 +1355,19 @@ export class Sky {
     this.v3.applyMatrix4(camera.projectionMatrix)
     this.sunSpot.value.set(this.v3.x, this.v3.y, far ? far.sun.stars[0]! : 0, far ? far.sun.stars[1]! : 1)
     this.sunHalf.value.set(540 * aspect, 540, ahead ? small : 0)
-    ;(u.uSunStar!.value as THREE.Vector4).x = far && ahead && sun.glare > 0 ? sunStar(sun.angularRadius, small, far.sun.star.radiusDeg) : 0
+    const star = far && ahead && sun.glare > 0 ? sunStar(sun.angularRadius, small, far.sun.star.radiusDeg) : 0
+    const shown = star > 0 ? sunPictureShare(sun) : -1
+    const pic = shown >= 0 ? sunPicture : null
+    ;(u.uSunStar!.value as THREE.Vector4).x = pic ? 0 : star
+    ;(u.uSunPicLaw!.value as THREE.Vector4).x = pic ? star : 0
+    u.uSunPic!.value = pic ? pic.texture : this.blank
+    if (pic) {
+      const { width, height } = pic.texture.image as { width: number; height: number }
+      const lay = sunPictureLay(width, height, pic.at, pic.texelPx, far!.sun.star.glow[3]!, far!.sun.star.fade)
+      ;(u.uSunPicAt!.value as THREE.Vector4).fromArray(lay.at)
+      ;(u.uSunPicLaw!.value as THREE.Vector4).set(star, pic.gain, lay.reach[0], lay.reach[1])
+      u.uSunPicShare!.value = shown
+    }
     this.starLaw.value.w = swap
     const sky = this.pass.material
     if (('PATCH_IMPLICIT' in sky.defines) !== this.cull) {
