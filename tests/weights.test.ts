@@ -6,6 +6,7 @@ import { eyeHeightAt, eyeHeights, type Handover, type HandoverSide, handoverOf, 
 import { StopPlan } from '../src/director/moves'
 import { plans } from '../src/director/plans'
 import { COVERED, coveredFit, coveredParams, coveredPlan, filmWith, restorePlans } from './lib/covered'
+import { bothViews, sayBoth, skyDrawn } from './lib/skyword'
 
 // The engine's own two weights of a dive and a rise (the share of the close view's sky on the globe side, the weight of the place picture)
 // read the height of the eye and never the clock. The clock's laws, as they stood, are written out here: the two ends of each span must
@@ -35,7 +36,8 @@ const clockPlace = (seg: Segment, h: Handover, time: number): number => {
   const full = (h.lastFrame + 1) / fps
   return time < full ? 1 : smooth((to - time) / (to - full))
 }
-interface Span { plan: StopPlan; kind: 'dive' | 'rise'; seg: Segment; h: Handover; full: number; farSky: number; farPlace: number; own: boolean }
+// word: the views named by the sky pictures of the plan's stop that say both (SkyPatch.both); none where the stop does not carry the word.
+interface Span { plan: StopPlan; kind: 'dive' | 'rise'; seg: Segment; h: Handover; full: number; farSky: number; farPlace: number; own: boolean; word: string[] }
 // The span of a plan's dive or rise as the handover in force gives it, or null where the plan has no such move or does not hand over.
 const spanOf = (plan: StopPlan, kind: 'dive' | 'rise'): Span | null => {
   const seg = plan.seg[kind]
@@ -43,7 +45,7 @@ const spanOf = (plan: StopPlan, kind: 'dive' | 'rise'): Span | null => {
   if (!seg || !h) return null
   const full = kind === 'dive' ? h.firstFrame / fps : (h.lastFrame + 1) / fps
   const farSky = kind === 'dive' ? Math.max(full - h.skyFrames / fps, seg.start) : Math.min(full + h.skyFrames / fps, seg.end)
-  return { plan, kind, seg, h, full, farSky, farPlace: kind === 'dive' ? h.placeFirstFrame / fps : (h.placeLastFrame + 1) / fps, own: plan.skyShare(seg, (seg.start + seg.end) / 2) !== null }
+  return { plan, kind, seg, h, full, farSky, farPlace: kind === 'dive' ? h.placeFirstFrame / fps : (h.placeLastFrame + 1) / fps, own: plan.skyShare(seg, (seg.start + seg.end) / 2) !== null, word: bothViews(plan) }
 }
 const spans: Span[] = []
 for (const plan of plans) {
@@ -101,6 +103,14 @@ class OwnSky extends StopPlan {
   }
 }
 const owner = (kind: Kind): Span => madeSpan(new OwnSky(COVERED, coveredFit, { ...coveredParams(), ...sideOf(kind, { skyFrames: 24, placeFrames: 12, picture: false }) }), kind, 'a span with a share of its own', (s) => s.own && !s.h.picture)
+// A plan whose sky pictures say both (SkyPatch.both), as a stop's may: it gives the engine no share to read in its dive and its rise,
+// a share of 0 of the close view's sky and none of the globe view's.
+class NoShare extends StopPlan {
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    return seg.kind === 'dive' || seg.kind === 'rise' ? { low: 0 } : super.skyShare(seg, time)
+  }
+}
+const wordSky = (kind: Kind): Span => madeSpan(sayBoth(new NoShare(COVERED, coveredFit, { ...coveredParams(), ...sideOf(kind, { skyFrames: 24, placeFrames: 12, picture: false }) }), ['orbit', 'terrain']), kind, 'a span whose sky pictures say both', (s) => s.own && !s.h.picture && s.word.length === 2)
 
 describe('the weights of a dive and a rise by the height of the eye', () => {
   afterEach(() => {
@@ -348,13 +358,31 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
     expect(parseProbe('beauty/nosky').noSky).toBe(true)
     for (const text of ['beauty/nosky', 'beauty/side=orbit/nosky', 'beauty/noplace/nosky']) expect(probeString(parseProbe(text))).toBe(text)
     for (const bad of ['beauty/nosky=on', 'beauty/nosky=1', 'beauty/nosky=']) expect(() => parseProbe(bad)).toThrow()
+    // How many spans were held to the law of both, below.
+    let worded = 0
     const law = (film: FilmDirector, s: Span): void => {
       const frames = framesOf(s)
       const shares = (): (number | undefined)[] => frames.map((f) => film.shotAt(f, mid(f), 'orbit').skyShare)
       const highs = (): (number | undefined)[] => frames.map((f) => film.shotAt(f, mid(f), 'orbit').skyShareHigh)
       const plain = shares()
       const plainHigh = highs()
-      expect(plain.some((x) => x !== undefined && x > 0)).toBe(true)
+      // The engine's dissolve gives the globe side a share of the close view's sky on some frame of the span, which the probe then
+      // takes. So it is for every stop whose sky pictures do not say both (SkyPatch.both).
+      if (s.word.length === 0) expect(plain.some((x) => x !== undefined && x > 0)).toBe(true)
+      else {
+        // The law of both, for a stop whose sky pictures say it: the engine is given no share to read, of either sky, on any frame
+        // of the span, and the pictures that say the word stand at their whole weight in both views. The probe finds no share to
+        // take there (the lines below hold as they stand), and a picture that is not weighed by a share is not moved by it.
+        worded++
+        for (const x of plain) expect(x).toBe(0)
+        for (const x of plainHigh) expect(x).toBe(undefined)
+        for (const f of frames) {
+          for (const side of ['orbit', 'terrain'] as const) {
+            const shot = film.shotAt(f, mid(f), side)
+            for (const view of s.word) expect(skyDrawn(shot, view, true)).toBe(1)
+          }
+        }
+      }
       applyProbe(parseProbe('beauty/nosky'))
       for (const x of shares()) expect(x).toBe(0)
       for (const x of highs()) expect(x).toBe(undefined)
@@ -364,12 +392,22 @@ describe('the weights of a dive and a rise by the height of the eye', () => {
     }
     const film = theFilm()
     for (const s of spans) law(film, s)
-    // in memory: a span that leaves its sky to the engine and one with a share of its own
-    for (const make of [whole, owner]) {
+    expect(worded).toBe(spans.filter((s) => s.word.length > 0).length)
+    // in memory: a span that leaves its sky to the engine, one with a share of its own and one whose sky pictures say both
+    for (const make of [whole, owner, wordSky]) {
       for (const kind of both) {
         const s = make(kind)
         law(filmWith(s.plan), s)
       }
+    }
+    expect(worded).toBe(spans.filter((s) => s.word.length > 0).length + both.length)
+    // The word is no way round the law. A span that gives no share on any frame and does not say the word is refused as before,
+    // and so is one that says the word and gives a share.
+    for (const kind of both) {
+      const silent = madeSpan(new NoShare(COVERED, coveredFit, { ...coveredParams(), ...sideOf(kind, { skyFrames: 24, placeFrames: 12, picture: false }) }), kind, 'a span without a share and without the word', (s) => s.own && s.word.length === 0)
+      expect(() => law(filmWith(silent.plan), silent)).toThrow(/^expected false to be true /)
+      const shared = madeSpan(sayBoth(new OwnSky(COVERED, coveredFit, { ...coveredParams(), ...sideOf(kind, { skyFrames: 24, placeFrames: 12, picture: false }) }), ['orbit', 'terrain']), kind, 'a span with a share of its own that says the word', (s) => s.own && s.word.length === 2)
+      expect(() => law(filmWith(shared.plan), shared)).toThrow(/^expected 0\.\d+ to be \+0 /)
     }
   })
 })
