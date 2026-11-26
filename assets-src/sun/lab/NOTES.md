@@ -2346,3 +2346,62 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   the approved's, rows 800 to 900 still crisp; at 3 times a faint regular weave of the 16 samples.
 - 12:22 UTC. High mail to /root: the question whether a lens is allowed, t199L's numbers and pictures, my list.
   Next mail due by 13:52. Until the ruling: the dark near flank, points, middle field, flow along the fans.
+- 12:24 UTC. v/lenscal.py, v/lens.py: a stand in for the lens on a draft (a disc blur by row; never a
+  deliverable). Calibrated on t199 draft against t199L final: depth about 926 / (row - 320) in the lens' units,
+  so with [2.0, 2.5, 0.5] the unsharpness is 0 at row 690, 0.6 px at 800, 1.2 at 920, 1.9 at 1040; rows 520 and
+  up are the far twin's and are not moved. Residual of the stand in against the final 3.7 to 4.0 levels on rows
+  680 on (the draft itself: 5.6 to 7.5).
+- 12:26 UTC. Stand in with [3.5, 2.6, 0.4] on t199 and t202: Seen: t202 (the dark margin all round, which read as
+  nuggets when crisp) reads as soft glowing bodies with dark valleys; the judgement of several "failed" looks
+  hung on the crisp edge. Missing in both: near white on the crowns and bright points.
+- 12:27 UTC. t203: t202 with clumps [5.0,0.15,0.75,0.08,0.18,0.1,6], fan heat 2.2, sparks [0.8,0.02,0.5,6,1,0.3,
+  1.5,1.5,0,0.6,0.95,0] (more, less white, also inside), lens key [3.5,2.6,0.4] (a draft shows none). t204: the
+  same with shoulder [8],[9],[11] = 0.3, 0.35, 0.8 and fans half under it.
+- 12:27 UTC. MAIL 1480 (Builder, 12:24): "RULING: YES, a lens by geometry is allowed, as you built it (each
+  sample of a frame looks from its own point of an aperture, no pass over the frame)." Conditions, "each to be
+  shown, not stated": "1. The same picture at every size: the aperture and the far cap are set in parts of the
+  frame's height, not in px, so that the 3840 by 2160 export shows what 1920 by 1080 shows. Proof: one final crop
+  at both sizes side by side. 2. No pattern from the sample set: your own item, the faint weave at 3 times, must
+  be gone at 1 to 1 at the export size too. If 16 points do not carry a disc of that width, say how many would,
+  and I ask the engine's owner for more samples at the Sun. Cost is no limit here ... 3. Tiers: where a tier
+  draws fewer samples than a disc needs (draft has 1), the lens is off there and NOTES say so, so that no tier
+  shows ghost doubles. The 60 fps proof clips of the lab are then made at a tier that shows the lens. 4. In the
+  film: focus distance and aperture are continuous in the frame number (no jump of focus), and the aperture is
+  zero where the lab ground hands over to the globe, on the dive and on the rise, so the lens adds no step at a
+  seam. 5. The plane of focus stays as sharp as the form gives: G17 green at 60 and 90 at final, and the bands 1
+  to 2 and 2 to 4 px inside the rows in focus do not fall under the approved's. 6. Determinism: two final renders
+  of 90 the same bytes." His eye on t199L: "(a) the cells are still solid bodies with dark cracks between them,
+  gold stones; in the approved the lanes glow and the cells are lit from within; (b) rows 620 to 800 are too
+  dark, as you say; (c) nothing yet says gas in motion: the flow along the fans and the boil of the cells (cells
+  that swell, split and fade over seconds) is what the owner's words ask for ..., and it weighs more than the
+  lens. The Sun is not on the fourth cut. Names for the later cut by 18:30 UTC, with the proof list."
+- 12:30 UTC. t203, t204 MEASURED: cut low band 19.27, 19.42; plain 38.86, 38.73; side +0.020, +0.011; lane 6.16,
+  6.09; curve t204 0.665 0.662 0.658 0.654 0.644 0.630 0.592 0.540 0.466 0.375 0.314. Colour by level (v/sat.py)
+  MEASURED: the mean RGB of each tenth of luminance and the share of px in it are the approved's within 0.02 and
+  3 points in his crop, so palette and levels are not what differs; the arrangement is: the approved's bright is
+  gathered on a part of each cell (a streaked crown), the rest of the cell dark amber; mine are evenly lit plates.
+- 12:33 UTC. Heights of the eye by frame (plan.ts, MEASURED by a tsx script): terrain 0.057 (f0), 0.052 (f60),
+  0.0485 (f90), 0.045 (f120), 0.049 (f179); rise 0.051 (f185), 0.061 (f190), 0.080 (f195), 0.108 (f200), 0.144
+  (f205, where the lab ground hands over), 0.192 (f210).
+- 12:34 UTC. Code (v/patch-flow.py), all off when the keys are absent:
+  (1) LENS after MAIL 1480. "lens": [aperture's radius in thousandths of the frame's height, focus, largest disc
+  behind the focus in apertures, the same before the focus, the two heights of the eye between which the aperture
+  closes (absent: 0.065, 0.1)]. So the disc is the same part of the frame at every size (condition 1); the
+  aperture is 1 on the terrain frames, falls from frame 191 and is 0 from frame 199, six frames before the
+  handover at 205, a smooth law of the eye's height, the focus distance constant (condition 4). The points of
+  the aperture are a spiral by the sample's index (r = sqrt((i + 0.5) / n), turn i times the golden angle), less
+  their mean: no lattice directions (condition 2). The sample's index and count are found by matching the
+  camera's view offset against jitterOffsets(n) of src/core/jitter.ts (imported, not edited), n from 2 to 256.
+  The lens is off in any frame whose sample count is under pi times the largest disc's radius squared in px (one
+  sample a px of the disc, so the copies of a sharp point tile and no double shows; condition 3): 16 samples
+  carry 2.26 px, 64 carry 4.5 px, 256 carry 9 px. With [1.85, 2.5, 0.5, 1.12]: 2.0 px radius of aperture at 1080,
+  largest disc 2.24 px: carried by final's 16 at 1920 by 1080; draft (1) and review (4) show no lens; at 3840 by
+  2160 the same disc is 4.5 px and needs 63 samples, so with 16 the lens is off there. STATED until rendered.
+  (2) heat.cushion.hot[7]: the life of a clump in seconds (each 0.7 to 1.3 of it, own hour), [8]: where it starts
+  as a share of its place; it wells up near the crown, rides outward, grows a little, fades in and out over a
+  quarter of its life, the next at another place.
+  (3) heat.fan[14] share of knots that ride along a streak toward the dark point, [15] knots a cell radius,
+  [16] their speed (radii a second times [15]), [17] life of a streak in seconds (two generations a column, one
+  fading in as the other goes), [18] its length at birth as a share.
+  t205 = t204 with hot [..,4.0,0.5], fan [..,0.5,0.7,6,1.8,5.0,0.5], lens [1.85,2.5,0.5,1.12,0.065,0.1]; then the
+  film 60 to 120 of it.
