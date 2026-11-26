@@ -150,3 +150,14 @@ export function ownSkyWeight(kind: string, setView: string, arriving: boolean, e
   if (kind === 'travel') return arriving ? (arrive === 'whole' ? 1 : clock) : 0
   return kind === 'rise' && setView === 'orbit' && both !== true ? 0 : 1
 }
+
+// The stop whose stars step at an edge of a frame, or null. A stop that gives the sky an aim for its way in (FilmDirector.arrivals) has
+// the turn of that aim to the last frame of the travel to it and its own turn from the first frame of its hold: between those two
+// frames the stars step. The engine draws the two only where an orbit picture of that stop hides the stars (starShare).
+export function skyStep(segment: { kind: string; stop: string; firstFrame: number; endFrame: number }, frame: number, sets: { id: string }[], arrivals: Record<string, unknown> | undefined): string | null {
+  if (!arrivals) return null
+  const f = Math.floor(frame)
+  if (segment.kind === 'hold') return f === segment.firstFrame && arrivals[segment.stop] ? segment.stop : null
+  if (segment.kind !== 'travel' || f !== segment.endFrame - 1) return null
+  return sets.find((x) => x.id !== segment.stop && arrivals[x.id])?.id ?? null
+}
