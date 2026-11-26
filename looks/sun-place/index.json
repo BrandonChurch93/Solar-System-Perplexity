@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T11:49:56.232Z",
+ "pushed": "2026-11-26T12:14:43.318Z",
  "head": "ac0ffdda4556604bab51364ff72fee4f837d8a0f",
- "note": "arch trial Z25 (not a name): inner arches lean in from the left foot, strands wide and white at the ground, pool under them; rows 0 to 324 plain 11.5266, low band 5.5183. sun-near 60 at the name ac0ffdda: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "note": "Z34 trial: arch nearer the approved in form, left foot still wrong (cables, egg). sun-near 60 at the name: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T12:14:42.754Z",
+   "file": "20261126121442754-note-foot-Z34.jpg",
+   "source": "../../../../tmp/v/foot-Z34.jpg",
+   "kind": "note",
+   "label": "trial Z34 left foot twice size beside the approved: fountain reads as cables and the pool as an egg, to be cured next",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T12:14:42.161Z",
+   "file": "20261126121442161-note-a-Z34-90.jpg",
+   "source": "../../../../tmp/v/a-Z34-90.jpg",
+   "kind": "note",
+   "label": "trial Z34 draft 90 under the approved: strands ripple and cross, ropes unlike in light, low arches thin; rigid dark sky",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T11:49:55.617Z",
    "file": "20261126114955617-note-a-Z25-90.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/strip-part.jpg",
    "kind": "note",
    "label": "the arch's right shoulder every tenth frame at 1 to 1, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T10:02:26.138Z",
-   "file": "20261126100226138-note-strip-whole.jpg",
-   "source": "../../../../tmp/v/strip-whole.jpg",
-   "kind": "note",
-   "label": "the arch every tenth frame 60 to 150, draft, half size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T09:38:10.844Z",
-   "file": "20261126093810844-note-y5-f360-pair.jpg",
-   "source": "../../../../tmp/v/y5-f360-pair.jpg",
-   "kind": "note",
-   "label": "360 final beside main: the same file",
    "stop": "sun"
   }
  ]
