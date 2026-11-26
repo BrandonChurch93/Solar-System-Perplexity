@@ -1,9 +1,53 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T12:34:18.764Z",
- "head": "b251bfd1daba4448d4855b025d8f4b0be1b59252",
- "note": "Far strip of the rise: variants of the pair 3250 and 3258 with the height driven weights held one at a time",
+ "pushed": "2026-11-26T12:41:33.584Z",
+ "head": "ae869236c725501732e00bc507d51995ec0736b5",
+ "note": "Dive: the bank at 3038 on both trees; rise: 3286 against main",
  "looks": [
+  {
+   "time": "2026-11-26T12:41:32.367Z",
+   "file": "20261126124132367-note-frame_3286_main__line_B_and_their_difference.jpg",
+   "source": "../../../../tmp/lk/frame 3286 main, line B and their difference.jpg",
+   "kind": "note",
+   "label": "Frame 3286 at draft: line B differs from main only in the storm of the close ground (difference times 8)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:41:31.403Z",
+   "file": "20261126124131403-note-cloud_bank_at_3038_draft_main_and_line_B_at_2_times.jpg",
+   "source": "../../../../tmp/lk/cloud bank at 3038 draft main and line B at 2 times.jpg",
+   "kind": "note",
+   "label": "Cloud bank at the storm's lower left, frame 3038, draft: stepped silhouettes on main and on line B",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:37:01.153Z",
+   "file": "20261126123701153-frame-f03051.jpg",
+   "source": "out/work/jupiter/frames/main2/f03051.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 3051, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 3051,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T12:36:09.414Z",
+   "file": "20261126123609414-frame-f03284.jpg",
+   "source": "out/work/jupiter/frames/main2/f03284.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3284, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3284,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
   {
    "time": "2026-11-26T12:34:17.424Z",
    "file": "20261126123417424-note-far_strip_3250_and_3258_main_and_line_B.jpg",
@@ -18,44 +62,6 @@
    "source": "../../../../tmp/lk/far strip 3250 and 3258 as is, air gone, tone and air held, all held.jpg",
    "kind": "note",
    "label": "Far strip at 3250 and 3258: as is 1.399, air gone 0.39, tone and air held 0.162, all three held 0.127 (my replay of the reader's row)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:33:50.855Z",
-   "file": "20261126123350855-frame-f03284.jpg",
-   "source": "out/work/jupiter/frames/f2/f03284.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3284, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3284,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T11:52:01.833Z",
-   "file": "20261126115201833-note-cov-f-rise-changes.jpg",
-   "source": "../../../../tmp/cov-f-rise-changes.png",
-   "kind": "note",
-   "label": "Line B cure F, reader panel across the change of view 3240 to 3241 (rise): green, pattern 0.13, 0.15, 0.17",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T11:24:17.955Z",
-   "file": "20261126112417955-note-f-vs-cut-diff.jpg",
-   "source": "../../../../tmp/f-vs-cut-diff.png",
-   "kind": "note",
-   "label": "Cure F against the cut, difference at gain 24, frames 3262 and 3250: no line where the two marches meet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T11:24:16.602Z",
-   "file": "20261126112416602-note-f-edge-panel.jpg",
-   "source": "../../../../tmp/f-edge-panel.png",
-   "kind": "note",
-   "label": "Far edge of the layer at 3250, 3258, 3262 at 5 times: the cut, cure F, main",
    "stop": "jupiter"
   },
   {
