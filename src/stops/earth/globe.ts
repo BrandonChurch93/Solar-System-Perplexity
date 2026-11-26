@@ -418,10 +418,13 @@ ${PATCH_LEVELS}
       vec3 dark = 1.0 - uStandTone.rgb;
       albedo = fromCode(toCode(albedo) * (1.0 - body * face * dark) * (1.0 - uStandLight.z * shadow * dark));
     }
+    vec3 bare = toCode(albedo);
+    vec3 mist = vec3(0.0);
     for (int k = 0; k < (share > 0.0 ? 1 : 0); k++) {
       for (int j = 0; j < (frontH > 0.0 ? 1 : 0); j++) {
         vec4 air = textureLod(uLowVeil, qp * uLowVeilWin + 0.5, 0.0);
-        albedo = fromCode(clamp(toCode(albedo) * (1.0 - frontH * share * air.a) + frontH * share * air.rgb, 0.0, 1.0));
+        mist = frontH * share * air.rgb;
+        albedo = fromCode(clamp(toCode(albedo) * (1.0 - frontH * share * air.a) + mist, 0.0, 1.0));
       }
     }
     float lifted = unveiled(length(uEyeBody - d));
@@ -429,18 +432,22 @@ ${PATCH_LEVELS}
       vec4 tone = textureLod(uTone, own * uToneScale + 0.5, 0.0);
       place = share * frontH * tone.a * ramp(uPlaceDay, ndl);
       vec3 code = toCode(albedo);
+      vec3 sunk = bare;
       vec2 gq = (qp - uGlint.xy) * uGlint.z;
       float unseen = inside * laid * smoothstep(0.5, 0.5 - uGlint.w, max(abs(gq.x), abs(gq.y))) * (1.0 - smoothstep(uGlintSeen.x, uGlintSeen.y, dot(normalize(uEyeBody - d), normalize(uTwinEye - d))));
       for (int j = 0; j < (unseen > 0.0 ? 1 : 0); j++) {
         vec3 still = textureLod(uGlintSea, gq + 0.5, 0.0).rgb;
         float water = 1.0 - smoothstep(uGlintCloud.x, uGlintCloud.y, min(code.r, min(code.g, code.b))) * (1.0 - smoothstep(uGlintCloud.z, uGlintCloud.w, code.r - code.b));
         float glow = smoothstep(uGlintGlow.x, uGlintGlow.y, (code.r - still.r) / max(code.g - still.g, uGlintGlow.z));
-        code = mix(code, max(code - textureLod(uGlintLight, gq + 0.5, 0.0).rgb * (glow * water), min(code, still)), unseen);
+        vec3 off = textureLod(uGlintLight, gq + 0.5, 0.0).rgb * (glow * water);
+        code = mix(code, max(code - off, min(code, still)), unseen);
+        sunk = mix(sunk, max(sunk - off, min(sunk, still)), unseen);
       }
-      float top = max(code.r, max(code.g, code.b));
-      float sea = (1.0 - smoothstep(uToneCloud.x, uToneCloud.y, min(code.r, min(code.g, code.b)))) * smoothstep(uToneGrey.x, uToneGrey.y, (top - min(code.r, min(code.g, code.b))) / max(top, 1e-3));
+      float top = max(sunk.r, max(sunk.g, sunk.b));
+      float sea = (1.0 - smoothstep(uToneCloud.x, uToneCloud.y, min(sunk.r, min(sunk.g, sunk.b)))) * smoothstep(uToneGrey.x, uToneGrey.y, (top - min(sunk.r, min(sunk.g, sunk.b))) / max(top, 1e-3));
       vec3 held = code - inside * laid * tone.rgb;
-      albedo = fromCode(clamp(mix(code, held * mix(vec3(1.0), uAirGain, lifted) + inside * laid * share * frontH * (code - held * uAirGain), sea), 0.0, 1.0));
+      vec3 lit = mix(vec3(1.0), uAirGain, lifted);
+      albedo = fromCode(clamp(mix(code, held * lit + inside * laid * share * frontH * (code - held * uAirGain) + (1.0 - inside * laid) * mist * (1.0 - lit), sea), 0.0, 1.0));
     }
   }
   float deep = uAway * ramp(uNightFlat.xy, ndl) * past;

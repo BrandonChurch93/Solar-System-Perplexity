@@ -30,7 +30,7 @@ export interface GroundLook {
   plain: [number, number]
 }
 
-export interface GroundOnGlobe { farDeg: number[]; mapDeg: number[]; rim: number[]; rimNear: number[]; arrive: number[]; share: number[]; level: number[]; rise: number[]; behind: number; toneTimes: number; light: Record<string, THREE.IUniform>; veil: { map: THREE.Texture; broad: THREE.Texture; plane: THREE.Matrix3; fromDeg: number[]; times: number } }
+export interface GroundOnGlobe { farDeg: number[]; mapDeg: number[]; rim: number[]; rimNear: number[]; arrive: number[]; share: number[]; level: number[]; air: number[]; rise: number[]; behind: number; toneTimes: number; light: Record<string, THREE.IUniform>; veil: { map: THREE.Texture; broad: THREE.Texture; plane: THREE.Matrix3; fromDeg: number[]; times: number } }
 
 function unpack(buffer: ArrayBuffer, size: number, file: string): Float32Array {
   const count = new Uint32Array(buffer, 0, 1)[0]!
@@ -152,6 +152,8 @@ uniform sampler2D uGlintSea;
 uniform vec4 uArrive;
 uniform vec3 uShare;
 uniform vec4 uCome;
+uniform vec4 uAirBand;
+uniform float uAirPower;
 uniform vec3 uAir;
 uniform vec3 uAirGain;
 uniform vec3 uLevel;
@@ -238,6 +240,13 @@ vec3 lightOn() {
   vec3 shade = mix(uCurve[i], uCurve[i + 1], x - float(i)) * (1.0 + uTwilight * exp(-band * band)) * uTint;
   return mix(shade, uPlaceGain, own) / uPlaceGain;
 }
+float held(vec3 at, float near) {
+  vec3 up = normalize(at - uSea.xyz);
+  float path = max(airMass(dot(up, normalize(uEye - at))) - 1.0, 0.0) / max(min(airMass(dot(up, normalize(-at))), uShare.y) - 1.0, uShare.z);
+  float odds = pow(max(path - uAirBand.z, 0.0) / uAirBand.w, uAirPower);
+  float air = odds / (1.0 + odds);
+  return mix(air, near, smoothstep(uAirBand.x, uAirBand.y, dot(up, normalize(-uSea.xyz))));
+}
 float shown() {
   if (uShow.x <= 0.0) return 1.0;
   vec3 up = vLocal - uSea.xyz;
@@ -249,7 +258,7 @@ float shown() {
   vec3 at = seaAt();
   float reach = length(uEye - at);
   float way = log(uCome.x / max(reach / uSea.w * uArrive.z, 1e-9)) / max(log(uCome.x / (length(at) / uSea.w * uLevel.z)), 1e-3);
-  return mix(eased(way / uLevel.x, uLevel.y) * far, 1.0, uShow.w) * rim;
+  return mix(held(at, eased(way / uLevel.x, uLevel.y)) * far, 1.0, uShow.w) * rim;
 }
 vec3 masks() {
   vec2 mq = (vImage - uMaskBox.xy) / uMaskBox.zw;
@@ -454,7 +463,7 @@ export class Ground {
           uLayer: { value: new THREE.Vector3().fromArray(tint) }, uDiag: diagUniform, uGrad: gradUniform, uFine: fineUniform, uPerLine: frameUniform, uBias: biasUniform,
           uEye: { value: new THREE.Vector3() }, uSea: { value: new THREE.Vector4(centre.x, centre.y, centre.z, def.radius) }, uLock: { value: new THREE.Vector2().fromArray(look.lock) },
           uShow: { value: new THREE.Vector4(0, 0, 1, 1) }, uReach: { value: new THREE.Vector4(cos(globe.farDeg[1]!), cos(globe.farDeg[0]!), globe.rim[0]!, globe.rim[1]!) }, uRimNear: { value: new THREE.Vector2(globe.rimNear[0]!, globe.rimNear[1]!) }, uOwn: { value: new THREE.Vector4(2, 3, 2, 3) }, uCanvas: { value: new THREE.Vector4().fromArray(def.ground.box) },
-          uVeil: { value: globe.veil.map }, uVeilBroad: { value: globe.veil.broad }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, uVeilTimes: { value: globe.veil.times }, uArrive: { value: new THREE.Vector4(globe.arrive[0]!, 1 / Math.log(globe.arrive[0]! / globe.arrive[1]!), 1, 1) }, uShare: { value: new THREE.Vector3().fromArray(globe.share) }, uCome: { value: new THREE.Vector4(globe.share[3]!, globe.share[4]!, globe.share[5]!, globe.share[6]!) }, uAir: { value: new THREE.Vector3(globe.share[7]!, globe.share[8]!, globe.share[9]!) }, uAirGain: { value: new THREE.Vector3(globe.share[10]!, globe.share[11]!, globe.share[12]!) }, uLevel: { value: new THREE.Vector3().fromArray(globe.level) }, uRise: { value: new THREE.Vector3().fromArray(globe.rise) }, uToneK: { value: globe.toneTimes }, uSunAt: { value: new THREE.Vector3(0, 1, 0) }, ...globe.light, ...extra,
+          uVeil: { value: globe.veil.map }, uVeilBroad: { value: globe.veil.broad }, uVeilPlane: { value: globe.veil.plane }, uVeilFrom: { value: new THREE.Vector2(cos(globe.veil.fromDeg[1]!), cos(globe.veil.fromDeg[0]!)) }, uVeilTimes: { value: globe.veil.times }, uArrive: { value: new THREE.Vector4(globe.arrive[0]!, 1 / Math.log(globe.arrive[0]! / globe.arrive[1]!), 1, 1) }, uShare: { value: new THREE.Vector3().fromArray(globe.share) }, uCome: { value: new THREE.Vector4(globe.share[3]!, globe.share[4]!, globe.share[5]!, globe.share[6]!) }, uAir: { value: new THREE.Vector3(globe.share[7]!, globe.share[8]!, globe.share[9]!) }, uAirGain: { value: new THREE.Vector3(globe.share[10]!, globe.share[11]!, globe.share[12]!) }, uLevel: { value: new THREE.Vector3().fromArray(globe.level) }, uAirBand: { value: new THREE.Vector4(cos(globe.air[1]!), cos(globe.air[0]!), globe.air[2]!, globe.air[3]!) }, uAirPower: { value: globe.air[4]! }, uRise: { value: new THREE.Vector3().fromArray(globe.rise) }, uToneK: { value: globe.toneTimes }, uSunAt: { value: new THREE.Vector3(0, 1, 0) }, ...globe.light, ...extra,
         },
         transparent: true,
         blending: THREE.CustomBlending,
