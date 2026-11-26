@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T05:21:01.865Z",
- "head": "1ecda673575bf45da59713dbb2ba3a6aea2471e7",
- "note": "state R on main 23f1089b: the rise beside main, far deck and mid rise, and the four finals",
+ "pushed": "2026-11-26T05:29:21.505Z",
+ "head": "a462c3a88c01d45a6a79bc5702e32dc0423a0363",
+ "note": "state R: the four finals; 1185, 1287, 1440 the same bytes as main's; 1586 beside main",
  "looks": [
+  {
+   "time": "2026-11-26T05:29:20.752Z",
+   "file": "20261126052920752-note-R-M-1586.jpg",
+   "source": "../../../../tmp/v/fin/R-M-1586.jpg",
+   "kind": "note",
+   "label": "State R, main and their difference times 8 at the final 1586, x 560 to 820, y 400 to 560, 3 times: single scattered pixels in the dark ground round the place (22 pixels over 8 of 255), the crops read the same",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T05:21:25.168Z",
+   "file": "20261126052125168-note-R-finals.jpg",
+   "source": "../../../../tmp/v/fin/R-finals.jpg",
+   "kind": "note",
+   "label": "State R on main 23f1089b, the four judged frames at the final tier (1185, 1287, 1440, 1586) at 0.37 size: whole; 1185 equals main's final to the byte",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T04:51:39.283Z",
    "file": "20261126045139283-note-r4.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/A/d1317.jpg",
    "kind": "note",
    "label": "State A (left), main (middle), difference times 8 (right), dive 1316 to 1318 + 1/2, x 0 to 520, y 160 to 360: the builds differ in a band under the limb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T04:11:05.158Z",
-   "file": "20261126041105158-note-A-M1d-limb.jpg",
-   "source": "../../../../tmp/v/sh/A/A-M1d-limb.jpg",
-   "kind": "note",
-   "label": "State A (left) against main (right) at the left limb, dive frames 1312, 1314, 1316, 1318, 1320, crop x 0 to 560, y 150 to 350: A holds coloured cells and a brighter rim under the limb to about 1316; alike from 1318",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T04:11:04.612Z",
-   "file": "20261126041104612-note-map-2622.jpg",
-   "source": "../../../../tmp/v/sh/A/map-2622.jpg",
-   "kind": "note",
-   "label": "The reader's own map of row 1311 of the dive (its poses, its rows to the digit) at x 80 to 500, y 140 to 340: frame 1311, frame 1319 carried onto it, the detail of each, the reading (white is 1). Top state A (row 0.675), bottom main (row 0.555): in both the reading rises to 1 at the border of the judged ground next to the limb",
    "stop": "venus"
   }
  ]
