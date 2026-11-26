@@ -1,9 +1,50 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T17:01:12.060Z",
+ "pushed": "2026-11-26T17:20:10.678Z",
  "head": "345d510fde0df10f589b3f6fa0287d1db574e1e1",
- "note": "2156 final at 1 to 1 on 345d510f: no item of round 55 reads as gone on my final alone; handover tool at frame 1904 of the dive; main's frames follow",
+ "note": "17:20 UTC: handover tool dive part passes all three lines, rise part at frame 2121 of 2100 to 2174; 1857 night side crop, item 5 stands",
  "looks": [
+  {
+   "time": "2026-11-26T17:20:09.907Z",
+   "file": "20261126172009907-note-m1857-night.jpg",
+   "source": "../../../../tmp/gl/k24/Q/m1857-night.jpg",
+   "kind": "note",
+   "label": "1857 final of 345d510f at 1 to 1, night side x 1160 y 330: cloud swirl a soft ghost, round 55 item 5 stands",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T17:11:00.001Z",
+   "file": "20261126171100001-compare-earth-rise-sides.jpg",
+   "source": "out/work/handover/earth-rise-sides.png",
+   "kind": "compare",
+   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-26T17:10:19.022Z",
+   "file": "20261126171019022-sheet-earth-dive-top.jpg",
+   "source": "out/work/handover/earth-dive-top.png",
+   "kind": "sheet",
+   "label": "earth dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1919), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1830,
+   "last": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-26T17:07:08.843Z",
+   "file": "20261126170708843-compare-earth-dive-step-in-place.jpg",
+   "source": "out/work/handover/earth-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "earth dive, the largest step of the level in place (2.75): frame 1887, frame 1888, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1888
+  },
   {
    "time": "2026-11-26T17:01:11.054Z",
    "file": "20261126170111054-note-m2156-land.jpg",
@@ -29,46 +70,11 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-26T16:43:48.779Z",
-   "file": "20261126164348779-compare-earth-dive-sides.jpg",
-   "source": "out/work/handover/earth-dive-sides.png",
-   "kind": "compare",
-   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1919,
-   "tier": "draft"
-  },
-  {
    "time": "2026-11-26T16:43:08.931Z",
    "file": "20261126164308931-note-m1857-hatch3.jpg",
    "source": "../../../../tmp/gl/k24/Q/m1857-hatch3.jpg",
    "kind": "note",
    "label": "1857 final, x 900 y 700 w 200 h 140 at 4 for 1: the hatch stands",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T16:43:07.820Z",
-   "file": "20261126164307820-note-mine-2156-half.jpg",
-   "source": "../../../../tmp/gl/k24/Q/mine-2156-half.jpg",
-   "kind": "note",
-   "label": "2156 at the final tier on 345d510f, half size",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T16:43:07.006Z",
-   "file": "20261126164307006-note-mine-1857-half.jpg",
-   "source": "../../../../tmp/gl/k24/Q/mine-1857-half.jpg",
-   "kind": "note",
-   "label": "1857 at the final tier on 345d510f, half size",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T16:29:50.628Z",
-   "file": "20261126162950628-note-look-2010-half.jpg",
-   "source": "../../../../tmp/gl/k24/Q/look-2010-half.jpg",
-   "kind": "note",
-   "label": "finals 2010 and 1755 of 345d510f, half size; both the candidate's bytes again",
    "stop": "earth"
   }
  ]
