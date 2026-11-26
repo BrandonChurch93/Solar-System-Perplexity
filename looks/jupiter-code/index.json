@@ -1,9 +1,45 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T18:04:34.827Z",
+ "pushed": "2026-11-26T18:29:26.840Z",
  "head": "594567e7c85b2f0de0830952ad96b2318fcb1c87",
- "note": "M4: the hold sky lossless (594567e7 on main 2f5b2eb3): 2895 final beside main's, the dark sky at 4 times size and 10 times exposure",
+ "note": "Item 3 a: the reach of the wide patch under three fade pairs at 2895, 2997, 3296 (a computed map, not a render); pictures of the pairs follow",
  "looks": [
+  {
+   "time": "2026-11-26T18:29:26.124Z",
+   "file": "20261126182926124-note-reach-map.jpg",
+   "source": "../work/r28/fa/reach-map.png",
+   "kind": "note",
+   "label": "S1, item 3 a: where the wide patch draws, computed from the film's camera with the shader's own rule (white the patch at full weight, grey the wrap alone, blue the sky). Rows 2895, 2997, 3296; columns main's fade [1.02, 1.5], [1.6, 2.0], the switch [3, 4.5]. The wrap's least texels for one master pixel in the hold are 2.097 (frame 2969), so a pair ending at or under 2.09 leaves the hold's bytes alone; [3, 4.5] draws the patch on 0.673 of the disc at 2895",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:27:36.018Z",
+   "file": "20261126182736018-frame-f02800.jpg",
+   "source": "out/work/jupiter/frames/m4old/f02800.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2800, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2800,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
+  {
+   "time": "2026-11-26T18:24:37.263Z",
+   "file": "20261126182437263-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/m4new/f02895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
   {
    "time": "2026-11-26T18:04:33.962Z",
    "file": "20261126180433962-note-diff-2895-x40-half.jpg",
@@ -170,30 +206,6 @@
    "source": "../work/r27/t/pair-3025.jpg",
    "kind": "note",
    "label": "3025 preview draft: above 14af1ae7 (dashes and dark wavy veins), below the candidate c9766f99 (the shade of a wave follows the camera's height)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:51:21.482Z",
-   "file": "20261126165121482-note-c-3150.jpg",
-   "source": "../work/r27/sh/c-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft with the cure: line (i) 2.239 whole frame, 2.144 outside the seven cells, bands 0.7702 0.7228 0.8262 0.8956 0.9531 green; before the cure 2.208",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:51:20.894Z",
-   "file": "20261126165120894-note-c-3020.jpg",
-   "source": "../work/r27/sh/c-3020.png",
-   "kind": "note",
-   "label": "3020 preview draft with the cure, whole frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:51:20.243Z",
-   "file": "20261126165120243-note-c-3265.jpg",
-   "source": "../work/r27/sh/c-3265.png",
-   "kind": "note",
-   "label": "3265 preview draft with the cure, whole frame",
    "stop": "jupiter"
   }
  ]
