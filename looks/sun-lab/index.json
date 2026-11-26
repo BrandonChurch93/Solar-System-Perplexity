@@ -1,9 +1,47 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-26T19:53:00.134Z",
- "head": "1c595a9335c44b48567ad427ca1e4e79e08ba37b",
- "note": "h48: dull cells beside bright ones, crown in the middle, proof chain running",
+ "pushed": "2026-11-26T20:32:38.627Z",
+ "head": "0552a6a365b974618821edd6497d434bd8cbd31e",
+ "note": "t264: spot as a hole, net half broken; not a name",
  "looks": [
+  {
+   "time": "2026-11-26T20:32:37.690Z",
+   "file": "20261126203237690-note-c-t264.jpg",
+   "source": "../v/c-t264.jpg",
+   "kind": "note",
+   "label": "lab c-t264 draft 90 old base, 20:32 UTC",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T20:32:36.934Z",
+   "file": "20261126203236934-note-spot-wall.jpg",
+   "source": "../v/spot-wall.jpg",
+   "kind": "note",
+   "label": "lab spot-wall draft 90 old base, 20:32 UTC",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T20:32:36.142Z",
+   "file": "20261126203236142-note-whole-t264.jpg",
+   "source": "../v/whole-t264.jpg",
+   "kind": "note",
+   "label": "lab whole-t264 draft 90 old base, 20:32 UTC",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T20:30:44.848Z",
+   "file": "20261126203044848-frame-lab-90-t265.jpg",
+   "source": "out/work/sun/lab/lab-90-t265.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-26T19:52:59.017Z",
    "file": "20261126195259017-note-z-h48f.jpg",
@@ -34,44 +72,6 @@
    "source": "../v/levels-h48f.jpg",
    "kind": "note",
    "label": "sun lab h48 final 90: levels-h48f",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T19:52:55.722Z",
-   "file": "20261126195255722-note-c-h48f.jpg",
-   "source": "../v/c-h48f.jpg",
-   "kind": "note",
-   "label": "sun lab h48 final 90: c-h48f",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T19:47:03.616Z",
-   "file": "20261126194703616-frame-lab-90-h48f.jpg",
-   "source": "out/work/sun/lab/lab-90-h48f.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, final tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-26T19:16:24.946Z",
-   "file": "20261126191624946-note-diag3.jpg",
-   "source": "../v/diag3.jpg",
-   "kind": "note",
-   "label": "sun lab h46 trial: diag3",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T19:16:24.032Z",
-   "file": "20261126191624032-note-lab-90-h46f.jpg",
-   "source": "../v/lab-90-h46f.jpg",
-   "kind": "note",
-   "label": "sun lab h46 trial: lab-90-h46f",
    "stop": "sun"
   }
  ]
