@@ -1034,11 +1034,13 @@ export class CloudDeck {
     let gap = turns[0]! + 2 * Math.PI - turns[turns.length - 1]!
     let after = turns[0]!
     for (let i = 1; i < turns.length; i++) if (turns[i]! - turns[i - 1]! > gap) { gap = turns[i]! - turns[i - 1]!; after = turns[i]! }
+    const under = gap < Math.PI
+    if (under) near = 0
     const md = deck.look.medium.sun
     const sk = deck.look.sun.sky
     const reach = bk.reach * Math.max(md.firstUnits * md.ratio ** (md.taps - 1), sk.firstUnits * sk.ratio ** (sk.rings - 1))
     const margin = reach < near ? Math.asin(reach / near) : Math.PI
-    const whole = gap <= 2 * margin + bk.wholeDeg * Math.PI / 180
+    const whole = under || gap <= 2 * margin + bk.wholeDeg * Math.PI / 180
     const most = Math.min(bk.mostPixels, renderer.capabilities.maxTextureSize)
     const far = Math.min(Math.sqrt((radius + height) ** 2 - (radius + shell.x) ** 2) + Math.sqrt((radius + shell.y) ** 2 - (radius + shell.x) ** 2), Math.hypot(eye.x, eye.y) + radius) + reach
     const first = Math.asinh(Math.max(near - reach, 0) / height)
@@ -1059,7 +1061,7 @@ export class CloudDeck {
       columns = Math.ceil(2 * half / across) + 1
     }
     const middle = after + Math.PI - 0.5 * gap
-    const seen = whole && gap <= bk.wholeDeg * Math.PI / 180 ? Math.PI : Math.PI - 0.5 * gap
+    const seen = under || (whole && gap <= bk.wholeDeg * Math.PI / 180) ? Math.PI : Math.PI - 0.5 * gap
     const now = this.now
     now.set([eye.x, eye.y, height, step, middle, half, first, across, columns, rows, u.uFlowTime!.value as number, seen])
     let same = true
