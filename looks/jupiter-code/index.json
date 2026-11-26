@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T10:10:41.046Z",
+ "pushed": "2026-11-26T10:32:19.392Z",
  "head": "0c012e25580c46cfaaf0b2486fbf9a0c2e3c0f5e",
- "note": "10:12 UTC: state w90 (gas thinned, floor 0.05, heaps in clusters where the map is lit) after two rounds: line (i) 4.292 whole, 3.389 outside the seven cells; lower thirds still read as streaked liquid with heaps too coarse",
+ "note": "26 Nov 10:33 UTC, line A at 3150: state wa1 after four rounds of the solve reads 3.434 on line (i) at preview draft (main 3.390 at this tier), outside the seven cells 2.772 (main 3.208), bands green; reds: lamps soft and too bright, lower left heaps lit where the approved is dark, far right under the limb too light",
  "looks": [
+  {
+   "time": "2026-11-26T10:32:13.083Z",
+   "file": "20261126103213083-note-wa1-r4-3150.jpg",
+   "source": "../work/r26/t/wa1-r4-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state wa1 after four rounds: line (i) 3.434 whole (inside the seven cells 0.662, outside 2.772); main at this tier 3.390 (outside 3.208); bands green 0.720 0.864 0.928 0.929",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:32:12.505Z",
+   "file": "20261126103212505-note-wa1-r2-seven.jpg",
+   "source": "../work/r26/t/wa1-r2-seven.png",
+   "kind": "note",
+   "label": "3150 the seven cells: the approved (top), state wa1 after two rounds (middle), signed error at sigma 8 px (bottom): the lamps stand at the approved's glints but as soft round lamps and too bright; a red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:32:11.894Z",
+   "file": "20261126103211894-note-wa1-r2-left.jpg",
+   "source": "../work/r26/t/wa1-r2-left.png",
+   "kind": "note",
+   "label": "3150 lower left, the approved (left) beside state wa1 after two rounds (right): my heaps stand lit and pink where the approved is dark with thin lit crests; a red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:32:11.277Z",
+   "file": "20261126103211277-note-w99-3150.jpg",
+   "source": "../work/r26/t/w99-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w99: a low bumpy deck with groups of larger bulbs; line (i) 4.565 before its rounds; bands green 0.725 0.865 0.923 0.921",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T10:10:39.702Z",
    "file": "20261126101039702-note-w90-r2-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r26/t/w68-r1-3150.png",
    "kind": "note",
    "label": "w68 3150 preview draft after one solve round: the gas with basins that start at a wide light of 0.075; 7.199 (main 3.390), the lower two rows still 4 to 17 too dark, second round running",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:36:16.335Z",
-   "file": "20261126083616335-note-w64-r3-3150.jpg",
-   "source": "../work/r26/t/w64-r3-3150.png",
-   "kind": "note",
-   "label": "w64 3150 preview draft after three solve rounds: the gas (air under a level absorbs along the Sun's ray and the eye's ray) with basins outside the storm; 8.910, bands green; too dark in the fourth row, the basins start too high",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:19:29.839Z",
-   "file": "20261126081929839-note-w62-3150.jpg",
-   "source": "../work/r26/t/w62-3150.png",
-   "kind": "note",
-   "label": "w62 3150 preview draft: a turbulent tint of seven sizes in the flow's coordinates on the crag state (8.208): the streaks break up, the storm's fibres blur; not taken as it is",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:18:49.447Z",
-   "file": "20261126081849447-note-w61-3150.jpg",
-   "source": "../work/r26/t/w61-3150.png",
-   "kind": "note",
-   "label": "w61 3150 preview draft, refused: thin skin (0.02 units) and grey matter in the dark ground read as rock (8.248)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:18:48.045Z",
-   "file": "20261126081848045-note-w59-3150.jpg",
-   "source": "../work/r26/t/w59-3150.png",
-   "kind": "note",
-   "label": "w59 3150 preview draft, refused: heaps twice as tall read as crags (7.873 on the w58 scaffold)",
    "stop": "jupiter"
   }
  ]
