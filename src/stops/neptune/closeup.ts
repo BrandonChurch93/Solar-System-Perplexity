@@ -283,7 +283,7 @@ void main() {
     col = max(col - wide * uBloomPre.x, 0.0) / (1.0 - uBloomPre.x * uBloomPre.y);
   }
   col = col * uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  outColor = diagOut(vec4(col, alpha), texels, counted, layer, vec2(0.0), depth);
+  outColor = diagOut(vec4(col, alpha), texels, counted, layer, vec2(0.0), depth / uRadius);
   for (int k = 0; k < (uLay.x > 0.0 ? 1 : 0); k++) {
     outColor *= layCover;
   }
