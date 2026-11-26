@@ -2651,3 +2651,31 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   ruling on the flicker law (steady cells only or all). sun_builder told 17:59 (the commit, twin, spot depth,
   heights). NEXT: shoulder trials t234 (heat.lane[8] 1.2) and t235 (lane[8] 1.2, lane[9] 0.25) on
   v/lab-h45.json by v/tb.sh. NEXT MAIL DUE 19:28 at the latest.
+- 18:04 UTC. Trials on h45 (drafts of 90): t234 (heat.lane[8] 1.2) and t235 (lane[8] 1.2, lane[9] 0.25): the
+  picture does not change to the eye (mean absolute difference to h44's draft 5.3 and 4.5 levels on rows 700 on;
+  the same pebbles with a hard outline on a flat brown floor). READ in the code: qSh = mix(lane[9], 1,
+  smoothstep(0, lane[8], edgeD + lane[13] (fan - 0.5))) with lane[13] 1.2: where a fan is bright the full heat
+  reaches the border, so the fall toward the edge is not all round and the bright strokes end on the silhouette.
+  SEEN on the approved at 3 times (v/z-t235.jpg): the crowns are the duller part (olive, mottled), the brightest
+  light is the fibres that start at the dark junctions of the lanes and fan up the flanks, the lanes are near
+  black with points. Trials t236 (lane[13] 0: the fall is all round over 0.8 of the radius) and t237 (lane[13] 0,
+  lane[8] 0.5) started 18:04.
+- 18:22 UTC. t236 (heat.lane[13] 0) and t237 (lane[13] 0, lane[8] 0.5) READ (v/c-t236.jpg, v/z-t237.jpg; cut
+  low band 18.8514 / plain 39.8421 and 19.1593 / 40.1774): no change to the eye: bodies with a hard outline on a
+  flat brown floor. The shoulder numbers lane[8], [9], [13] are not the lever as the law stands. lab.json put back
+  to v/lab-h45.json.
+  WHY, READ in the code and in lab.json: (1) the fans add 3.0 times their streak and take only 0.3 of the
+  shoulder (heat.fan[13]), so the brightest light does not fall toward the border; (2) heat.curve, fitted to the
+  approved's percentiles, is steep at the dark end (heat 0.027 shows 0.116, 0.048 shows 0.21, 0.15 shows 0.33,
+  0.98 shows 0.72): a shoulder that falls in a straight mix from 1 to 0.12 of the heat ends at about 0.31 shown
+  on the border, and the seam's heat (0.28 times 0.005 to 0.12) shows 0.03 to 0.1 beside it: a step over the
+  lane's own thin width. That step is the outline, and the even seam heat is the flat floor.
+  NEXT CUT (STATED, not yet made): the shoulder falls by a ratio, not by a difference (heat times
+  lane[9]^(1 - s)^lane[16], s the way in from the border over lane[8]), down to the seam's own heat, so the shown
+  level falls evenly through gold, brown, near black over a width that can be seen; the fans take the whole
+  shoulder (fan[13] 1); the curve fitted again after.
+- 18:22 UTC. MAIN'S OWN NUMBER, THE REST (standing ground, master, captures 457 to 470 added to rise-stand, 35
+  pairs 420 to 454, v/rise-stand.txt): largest 0.554 at 433 at [980, 512], mean 0.315, two pairs over 0.45 (432:
+  0.462, 433: 0.554); 434 to 440: 0.440 0.433 0.437 0.445 0.435 0.422 0.395; 441 to 454: 0.388 falling to 0.160.
+  h45 on the same pairs: 16 over (431 to 446, 0.485 to 0.593). So h45 is worse than main on pairs 431 and 434 to
+  446, equal within 0.05 on 432 and 433. Pairs 380 to 419 of main not read.
