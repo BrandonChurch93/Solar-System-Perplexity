@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T02:53:06.438Z",
- "head": "cae4735c2b93b9100a30f58463ed32fdbe8b150a",
- "note": "local cae4735c on the merge 6a388395 (main 01ce1602), not pushed: the glow from inside now stands in the close view (gas from 0.03 radii), the limb's own glow halved. Frame 60 draft against the approved: top 30 percent 14.4987 to 12.4315 (main 11.5380), whole 38.7760 to 38.1573; 360 and 495 keep their bytes; order proof of 90 four times ba7762eaa1f17dc8. sun-near 60 draft: dark 0.154 body 0.576 pale 0.107 white 0.035, half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404, distance 0.145. Rendering the gas's light by frame now",
+ "pushed": "2026-11-26T03:20:42.601Z",
+ "head": "2d2c669d44c1c493a58b39f7c5554cacb042c69e",
+ "note": "local 2d2c669d (merge of main 77e597e5 over cae4735c), not pushed yet: units green on it (tsc 0, test exit 0), gate and path running, then finals, G17, the reader's rise. The gas's light by frame at draft (mean grey added): 0 4.40, 60 3.32, 120 1.90, 179 2.85, 196 8.29, 206 18.45, 216 28.97, 226 32.08, 241 30.97, 253 26.54; steps a frame in the rise mean 0.494, largest 1.164 between 206 and 211 (before 0.614 and 1.560). sun-near 60 draft: dark 0.154 body 0.576 pale 0.107 white 0.035, half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404, distance 0.145",
  "looks": [
+  {
+   "time": "2026-11-26T03:20:41.890Z",
+   "file": "20261126032041890-note-arc60-a-t2.jpg",
+   "source": "../../../../tmp/v/arc60-a-t2.jpg",
+   "kind": "note",
+   "label": "the arcade at 60, 1 to 1: approved above, local state (draft) below. Mine: a flat dome of even fine strands, wide dim feet; the approved: a taller arch of thick and fine strands, narrow white feet, loose strands flying off. The next step after this name",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T02:53:05.798Z",
    "file": "20261126025305798-note-t2-sheet.jpg",
@@ -61,20 +69,6 @@
    "stop": "sun",
    "segment": "sun.rise",
    "frame": 247,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-26T01:01:00.703Z",
-   "file": "20261126010100703-job-frame-00090.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
    "tier": "final",
    "format": "16x9",
    "diag": "nograin",
