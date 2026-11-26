@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T07:10:53.137Z",
+ "pushed": "2026-11-26T07:36:02.586Z",
  "head": "d65bfcbc0f77ca551a025d1066de534e296d0526",
- "note": "solved view at the hold, state one: one shadow direction, tone by latitude laid again at 3720 (plain 28.5167 against main 28.5419); drafts of dive, rise and arrival rendering",
+ "note": "state one (solved view, one shadow direction, tone by latitude laid again): drafts of dive and rise at every frame, arrival and flights rendering",
  "looks": [
   {
-   "time": "2026-11-26T07:10:51.950Z",
-   "file": "20261126071051950-note-globe3720-F.jpg",
-   "source": "../../../../tmp/v/rigid/SV/globe3720-F.jpg",
+   "time": "2026-11-26T07:35:57.481Z",
+   "file": "20261126073557481-note-lr4.jpg",
+   "source": "../../../../tmp/v/rigid/SV/lr4.jpg",
    "kind": "note",
-   "label": "3720 final globe: approved, state one after the tone by latitude laid again, K, main"
+   "label": "lower right lifted 4: the shadowed ring against the sky"
   },
   {
-   "time": "2026-11-26T07:10:50.977Z",
-   "file": "20261126071050977-note-d3720-KE.jpg",
-   "source": "../../../../tmp/v/rigid/SV/d3720-KE.jpg",
+   "time": "2026-11-26T07:35:56.645Z",
+   "file": "20261126073556645-note-rimA.jpg",
+   "source": "../../../../tmp/v/rigid/SV/rimA.jpg",
    "kind": "note",
-   "label": "3720 final: where the solved view moves K's bytes (stars, globe; ring the same)"
+   "label": "outer edge at 1 to 1: approved, state one, main, K (the rim)"
   },
   {
-   "time": "2026-11-26T07:10:50.069Z",
-   "file": "20261126071050069-note-near-D.jpg",
-   "source": "../../../../tmp/v/rigid/SV/near-D.jpg",
+   "time": "2026-11-26T07:35:55.744Z",
+   "file": "20261126073555744-note-moonS_3608.jpg",
+   "source": "../../../../tmp/v/rigid/SV/sh/moonS_3608.jpg",
    "kind": "note",
-   "label": "3465 final, state D beside the approved at 1 to 1"
+   "label": "state one drafts, every frame: moonS_3608"
   },
   {
-   "time": "2026-11-26T07:10:48.876Z",
-   "file": "20261126071048876-note-lowmap-D.jpg",
-   "source": "../../../../tmp/v/rigid/SV/lowmap-D.jpg",
+   "time": "2026-11-26T07:35:54.535Z",
+   "file": "20261126073554535-note-rise_3865.jpg",
+   "source": "../../../../tmp/v/rigid/SV/sh/rise_3865.jpg",
    "kind": "note",
-   "label": "3465 final, state D: low band 16 px, signed, against the approved (3.7568, limit 3.50)"
+   "label": "state one drafts, every frame: rise_3865"
   },
   {
-   "time": "2026-11-26T06:47:22.252Z",
-   "file": "20261126064722252-note-globe-ones.jpg",
-   "source": "../../../../tmp/v/rigid/SV/globe-ones.jpg",
+   "time": "2026-11-26T07:35:53.750Z",
+   "file": "20261126073553750-note-rise_3841.jpg",
+   "source": "../../../../tmp/v/rigid/SV/sh/rise_3841.jpg",
    "kind": "note",
-   "label": "3465 globe box: approved, film with the globe's light map at ones in the solved view, A, K"
+   "label": "state one drafts, every frame: rise_3841"
   },
   {
-   "time": "2026-11-26T06:47:21.681Z",
-   "file": "20261126064721681-note-d3465-sheet.jpg",
-   "source": "../../../../tmp/v/rigid/SV/d3465-sheet.jpg",
+   "time": "2026-11-26T07:35:52.767Z",
+   "file": "20261126073552767-note-rise_3805.jpg",
+   "source": "../../../../tmp/v/rigid/SV/sh/rise_3805.jpg",
    "kind": "note",
-   "label": "3465: approved, solved view draft, K, difference"
+   "label": "state one drafts, every frame: rise_3805"
   },
   {
-   "time": "2026-11-26T06:47:21.119Z",
-   "file": "20261126064721119-note-shadowfit.jpg",
-   "source": "../../../../tmp/v/rigid/SV/shadowfit.jpg",
+   "time": "2026-11-26T07:35:51.596Z",
+   "file": "20261126073551596-note-dive_3624.jpg",
+   "source": "../../../../tmp/v/rigid/SV/sh/dive_3624.jpg",
    "kind": "note",
-   "label": "approved with the shadow edges read (yellow), cast by the globe's Sun (cyan), by shadow.json (magenta), by the fit (green)"
+   "label": "state one drafts, every frame: dive_3624"
   },
   {
-   "time": "2026-11-26T06:47:20.469Z",
-   "file": "20261126064720469-note-lr-plain.jpg",
-   "source": "../../../../tmp/v/rigid/SV/lr-plain.jpg",
+   "time": "2026-11-26T07:35:50.713Z",
+   "file": "20261126073550713-note-dive_3588.jpg",
+   "source": "../../../../tmp/v/rigid/SV/sh/dive_3588.jpg",
    "kind": "note",
-   "label": "3465 lower right at 1 to 1: approved, K, solved view A (shadow as main), solved view B (one light)"
+   "label": "state one drafts, every frame: dive_3588"
   }
  ]
 }
