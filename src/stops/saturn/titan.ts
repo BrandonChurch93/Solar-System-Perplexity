@@ -111,7 +111,10 @@ export class Titan {
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(radius * 1.6, 48, 24), this.material)
-    this.mesh.renderOrder = 4
+    // the moon stands below the ring plane and far behind the globe, the lens above the plane: every ray to it
+    // crosses the plane first. So it is drawn before the halo (1), both halves of the rings (2, 6) and the globe
+    // (3), which then lie over it; after the veil (0)
+    this.mesh.renderOrder = 0.5
   }
 
   dispose(): void {
