@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T10:52:21.236Z",
- "head": "4da3d8c2ecfb23dcb5027a756b3da5fb87305a17",
- "note": "cure for the rise's pattern: the cut of the twilight slides with the share; slice of rise part 1 runs",
+ "pushed": "2026-11-26T11:16:39.255Z",
+ "head": "8ed55e3f4e5511090906eda915df73f2c03b7fc6",
+ "note": "cure 8ed55e3f on state two: the dusk's cut slides by the share; rise part 1 read green at 0.2623; every frame of the rise 3816 to 3862 looked at; rise part 2 being read",
  "looks": [
   {
-   "time": "2026-11-26T10:52:20.465Z",
-   "file": "20261126105220465-note-iso_cmp.jpg",
-   "source": "../../../../tmp/v/rigid/G1/iso_cmp.jpg",
+   "time": "2026-11-26T11:16:38.103Z",
+   "file": "20261126111638103-note-cure_rise_3852.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sheets/cure_rise_3852.jpg",
    "kind": "note",
-   "label": "3822 at the reader's spot: main, state two, map smoothed 3 degrees"
+   "label": "cure 8ed55e3f: every whole frame of the rise from 3852, twelve a sheet"
   },
   {
-   "time": "2026-11-26T10:52:19.767Z",
-   "file": "20261126105219767-note-sl2_tail.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sl2_tail.jpg",
+   "time": "2026-11-26T11:16:37.139Z",
+   "file": "20261126111637139-note-cure_rise_3840.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sheets/cure_rise_3840.jpg",
    "kind": "note",
-   "label": "rise 3848 to 3860 at the foot of the terminator: first slide (top) against state two (bottom)"
+   "label": "cure 8ed55e3f: every whole frame of the rise from 3840, twelve a sheet"
   },
   {
-   "time": "2026-11-26T10:52:19.027Z",
-   "file": "20261126105219027-note-sl2_whole.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sl2_whole.jpg",
+   "time": "2026-11-26T11:16:36.071Z",
+   "file": "20261126111636071-note-cure_rise_3828.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sheets/cure_rise_3828.jpg",
    "kind": "note",
-   "label": "rise 3836 to 3852: cut sliding (top), state two (middle), difference times 4 (bottom)"
+   "label": "cure 8ed55e3f: every whole frame of the rise from 3828, twelve a sheet"
   },
   {
-   "time": "2026-11-26T10:01:54.210Z",
-   "file": "20261126100154210-note-cmp_a.jpg",
-   "source": "../../../../tmp/v/rigid/G1/cmp_a.jpg",
+   "time": "2026-11-26T11:16:35.446Z",
+   "file": "20261126111635446-note-cure_rise_3816.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sheets/cure_rise_3816.jpg",
    "kind": "note",
-   "label": "rise 3820 to 3834 at the reader spot: main, state two, difference times 4"
+   "label": "cure 8ed55e3f: every whole frame of the rise from 3816, twelve a sheet"
   },
   {
-   "time": "2026-11-26T10:01:53.638Z",
-   "file": "20261126100153638-note-iso3_changes.jpg",
-   "source": "../../../../tmp/v/rigid/G1/iso3_changes.jpg",
+   "time": "2026-11-26T11:16:34.633Z",
+   "file": "20261126111634633-note-cure_spot_3840.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sheets/cure_spot_3840.jpg",
    "kind": "note",
-   "label": "rise rows 7643 to 7645 with the light map smoothed 3 degrees: the pattern red stays, 0.49 at the globe foot"
+   "label": "cure 8ed55e3f: every frame from 3840, twelve a sheet, the dusk by the ring's inner edge at full size (crop 1000 to 1480, 690 to 960)"
   },
   {
-   "time": "2026-11-26T09:41:24.249Z",
-   "file": "20261126094124249-note-sh_in.jpg",
-   "source": "../../../../tmp/v/rigid/S2/sh_in.jpg",
+   "time": "2026-11-26T11:16:33.414Z",
+   "file": "20261126111633414-note-cure_spot_3828.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sheets/cure_spot_3828.jpg",
    "kind": "note",
-   "label": "state two 4da3d8c2, way in 3340 to 3400, drafts every fourth frame"
+   "label": "cure 8ed55e3f: every frame from 3828, twelve a sheet, the dusk by the ring's inner edge at full size (crop 1000 to 1480, 690 to 960)"
   },
   {
-   "time": "2026-11-26T09:41:23.655Z",
-   "file": "20261126094123655-note-sh_dive_start.jpg",
-   "source": "../../../../tmp/v/rigid/S2/sh_dive_start.jpg",
+   "time": "2026-11-26T11:16:32.434Z",
+   "file": "20261126111632434-note-cure_spot_3816.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sheets/cure_spot_3816.jpg",
    "kind": "note",
-   "label": "state two 4da3d8c2, dive 3540 to 3594, drafts every third frame"
+   "label": "cure 8ed55e3f: every frame from 3816, twelve a sheet, the dusk by the ring's inner edge at full size (crop 1000 to 1480, 690 to 960)"
   },
   {
-   "time": "2026-11-26T09:41:22.970Z",
-   "file": "20261126094122970-note-sh_rise_3836.jpg",
-   "source": "../../../../tmp/v/rigid/S2/sh_rise_3836.jpg",
+   "time": "2026-11-26T11:16:31.428Z",
+   "file": "20261126111631428-note-cure_rise_changes.jpg",
+   "source": "../../../../tmp/v/rigid/G1/cure_rise_changes.png",
    "kind": "note",
-   "label": "state two 4da3d8c2, rise 3836 to 3858, drafts every second frame"
+   "label": "cure 8ed55e3f: the reader's changes picture of rise part 1, frames 3816 to 3840, green, pattern at most 0.2623"
   }
  ]
 }
