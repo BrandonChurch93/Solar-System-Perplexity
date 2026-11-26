@@ -1,0 +1,19 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars in low evening light, north at the top, about 225 km across.
+
+The middle of image 1 (the square that takes the middle 42 percent of its width and height) is right and must stay exactly as it is: rocky plateau country with a rocky ridge at the centre and a deep shadowed canyon running from the centre to the upper right.
+
+Everything around that middle is only a rough sketch. It is right about where the land is light and dark and where its scarps, ridges, troughs and craters lie, and wrong about what they look like: it is covered by an etched pattern of thin wavy lines, and left of the middle it is smeared into soft blobs with false green, yellow, red and blue stains. From the left of the middle a second leg of the canyon runs to the lower left edge; in the sketch it is a dark grey smear.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking west. It shows what this land is made of: dark brown layered bedrock, cliffs with strata, spurs, gullies, talus aprons, and beyond them sunlit orange plateaus cut by side canyons, with mesas and ridges.
+
+Task: redraw image 1 as one seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. The middle stays as it is, every cliff and every light and dark patch where it is.
+
+2. The land around it is the same land carried on, without a seam, a step, a frame or a change of sharpness at the border of the middle: rocky plateau country with scarps, ridges, mesas, troughs, gullies, side canyons and sheets of rust coloured sand. Every broad form of the sketch keeps its place and its brightness: a scarp stays a scarp where it is, dark land stays dark, light land stays light.
+
+3. The canyon leg to the lower left keeps its course and its width and is drawn like the canyon in the middle: stepped walls of layered rock, spurs and gullies, talus at the foot, the shadowed side very dark with the ground in it still to be made out.
+
+4. No smear, no blur, no streaks, no flat cells, no etched lines, no bright outlines, no green, no yellow stain, no blue, no white. No pure black. No mist, no cloud, no water. No fan, no long parallel lines, nothing that radiates from one point. No new craters.
+
+Light: a low Sun, soft long shadows, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.
