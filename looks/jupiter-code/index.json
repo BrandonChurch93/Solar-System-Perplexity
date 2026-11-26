@@ -1,9 +1,127 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T18:49:57.169Z",
+ "pushed": "2026-11-26T19:19:27.195Z",
  "head": "594567e7c85b2f0de0830952ad96b2318fcb1c87",
- "note": "The 3296 pair (one sample against the final), the plate at 2997 beside main's, and the first pictures of item 3 a: the wide level alone on the pair [1.6, 2.0] on the minor axis at 2997 beside main (a first trial that still touches a few limb pixels of the hold; the cure is rendering)",
+ "note": "Item 3 a in trial: the wide patch level alone on its own pair, read on the short axis of a pixel's footprint. The pair [1.6, 2.0] is rejected for a ring pattern it brings into 3296; the pair [1.12, 1.65] keeps the hold, 3296 and the frames up to 2985 at main's bytes. Rows not run yet.",
  "looks": [
+  {
+   "time": "2026-11-26T19:19:26.473Z",
+   "file": "20261126191926473-note-l2-dive-xb.jpg",
+   "source": "../work/r29/s/l2-dive-xb.png",
+   "kind": "note",
+   "label": "Dive, third trial, same crop, every frame 2992 to 2997. The ring pattern right of the spot (the repaint's weak place) stands from 2993 here, from 2995 on main; at the judged 2997 both show it alike.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:19:25.578Z",
+   "file": "20261126191925578-note-main-dive-xb2.jpg",
+   "source": "../work/r29/s/main-dive-xb2.png",
+   "kind": "note",
+   "label": "Dive on main 594567e7, same crop, every frame 2992 to 2997.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:19:24.828Z",
+   "file": "20261126191924828-note-l2-dive-xa.jpg",
+   "source": "../work/r29/s/l2-dive-xa.png",
+   "kind": "note",
+   "label": "Dive, third trial (the wide level alone on [1.12, 1.65], short axis), same crop, every frame 2986 to 2991. Frames up to 2985 and 3296 to 3305 keep main's bytes.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:19:23.829Z",
+   "file": "20261126191923829-note-main-dive-xa2.jpg",
+   "source": "../work/r29/s/main-dive-xa2.png",
+   "kind": "note",
+   "label": "Dive on main 594567e7, preview draft, one to one crop, every frame 2986 to 2991.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:19:22.795Z",
+   "file": "20261126191922795-note-l1-3296-spot.jpg",
+   "source": "../work/r29/s/l1-3296-spot.png",
+   "kind": "note",
+   "label": "Item 3 a, second trial with the pair [1.6, 2.0] at 3296, one to one: main beside the trial. A FAULT I NAME: the trial draws the wide level at part weight here and a ring pattern like a fingerprint shows right of the spot under Io. It is the repaint's own weak place, carried early into a judged frame. So this pair is rejected; the next trial ends the pair at 1.65, which leaves 3296 main's bytes.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:19:22.149Z",
+   "file": "20261126191922149-note-l1-2997-right.jpg",
+   "source": "../work/r29/s/l1-2997-right.png",
+   "kind": "note",
+   "label": "Item 3 a, second trial, 2997 master draft at one to one, the right side: main 594567e7 beside the trial (the wide level alone on its own pair, read on the short axis of the pixel's footprint in closed form). The hold keeps its bytes with this one (26 frames hashed).",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:18:26.133Z",
+   "file": "20261126191826133-frame-f02985.jpg",
+   "source": "out/work/jupiter/frames/fa-l3/f02985.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2985, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2985,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
+  {
+   "time": "2026-11-26T19:17:11.671Z",
+   "file": "20261126191711671-frame-f03315.jpg",
+   "source": "out/work/jupiter/frames/fa-l2/f03315.png",
+   "kind": "frame",
+   "label": "jupiter.travel frame 3315, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.travel",
+   "frame": 3315,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
+  {
+   "time": "2026-11-26T19:16:22.817Z",
+   "file": "20261126191622817-frame-f03241.jpg",
+   "source": "out/work/jupiter/frames/fa-l2/f03241.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3241, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3241,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
+  {
+   "time": "2026-11-26T19:14:50.874Z",
+   "file": "20261126191450874-frame-f02800.jpg",
+   "source": "out/work/jupiter/frames/fa-l2/f02800.png",
+   "kind": "frame",
+   "label": "mars.travel frame 2800, draft tier",
+   "stop": "mars",
+   "segment": "mars.travel",
+   "frame": 2800,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
+  {
+   "time": "2026-11-26T18:50:47.223Z",
+   "file": "20261126185047223-frame-f02820.jpg",
+   "source": "out/work/jupiter/frames/fa-b/f02820.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2820, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2820,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
   {
    "time": "2026-11-26T18:49:56.569Z",
    "file": "20261126184956569-note-l0-2997-centre.jpg",
@@ -101,111 +219,11 @@
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T18:48:32.158Z",
-   "file": "20261126184832158-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/fa-d/f02895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
-  },
-  {
-   "time": "2026-11-26T18:45:35.060Z",
-   "file": "20261126184535060-frame-f02800.jpg",
-   "source": "out/work/jupiter/frames/fa-l0/f02800.png",
-   "kind": "frame",
-   "label": "mars.travel frame 2800, draft tier",
-   "stop": "mars",
-   "segment": "mars.travel",
-   "frame": 2800,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
-  },
-  {
    "time": "2026-11-26T18:29:26.124Z",
    "file": "20261126182926124-note-reach-map.jpg",
    "source": "../work/r28/fa/reach-map.png",
    "kind": "note",
    "label": "S1, item 3 a: where the wide patch draws, computed from the film's camera with the shader's own rule (white the patch at full weight, grey the wrap alone, blue the sky). Rows 2895, 2997, 3296; columns main's fade [1.02, 1.5], [1.6, 2.0], the switch [3, 4.5]. The wrap's least texels for one master pixel in the hold are 2.097 (frame 2969), so a pair ending at or under 2.09 leaves the hold's bytes alone; [3, 4.5] draws the patch on 0.673 of the disc at 2895",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:04:33.962Z",
-   "file": "20261126180433962-note-diff-2895-x40-half.jpg",
-   "source": "../work/r28/t/diff-2895-x40-half.png",
-   "kind": "note",
-   "label": "M4, 2895 final master: the change between the two times 40, half size: no pixel of the body changes, the sky changes by the lossy file's error (mean 0.33 of 255, largest 10)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:04:33.120Z",
-   "file": "20261126180433120-note-pair-2895-small.jpg",
-   "source": "../work/r28/t/pair-2895-small.jpg",
-   "kind": "note",
-   "label": "M4, 2895 final master at half size: left main 2f5b2eb3, right the same tree with the lossless plate; plain match against the approved 3.919 and 3.862",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:04:32.275Z",
-   "file": "20261126180432275-note-dark1-old-new-x4-exp10.jpg",
-   "source": "../work/r28/t/dark1-old-new-x4-exp10.png",
-   "kind": "note",
-   "label": "M4, the same pair left of the planet (box x 0 y 540): the fine colour speckle of the lossy file is gone; the larger purple and green patches are the approved picture's own blocks (16 px of the hero, 10.9 film px) and stay",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:04:31.399Z",
-   "file": "20261126180431399-note-dark0-old-new-x4-exp10.jpg",
-   "source": "../work/r28/t/dark0-old-new-x4-exp10.png",
-   "kind": "note",
-   "label": "M4, 2895 final master without grain, lower left corner (box x 0 y 870, 240 x 150 px) at 4 times size and 10 times exposure: left main's lossy plate, right the lossless plate of 594567e7; the straight edged colour squares of about 5 px are gone, soft colour patches of the approved picture's own sky stay",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:40:53.187Z",
-   "file": "20261126174053187-note-s1-2997-small.jpg",
-   "source": "../work/r27/t/s1-2997-small.jpg",
-   "kind": "note",
-   "label": "S1 control, 2997 on c9766f99 at master, half size: above the draft (one sample at the shutter's middle, 36.9 s), below the final (64 samples across the open shutter, 1432.5 s): the same globe, crisp with one sample, smeared by the shutter",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:40:52.259Z",
-   "file": "20261126174052259-note-s1-2997-half-left.jpg",
-   "source": "../work/r27/t/s1-2997-half-left.jpg",
-   "kind": "note",
-   "label": "S1 control, 2997 master one to one, half width left (the Red Spot): left the draft, right the final; fine detail final over draft 0.45",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:40:51.151Z",
-   "file": "20261126174051151-note-s1-2997-top.jpg",
-   "source": "../work/r27/t/s1-2997-top.jpg",
-   "kind": "note",
-   "label": "S1 control, 2997 master one to one, top middle: left the draft, right the final; fine detail final over draft 0.45; the smear runs along the lines from the frame's centre",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:40:49.953Z",
-   "file": "20261126174049953-note-s1-2997-centre.jpg",
-   "source": "../work/r27/t/s1-2997-centre.jpg",
-   "kind": "note",
-   "label": "S1 control, 2997 master one to one, frame centre: left the draft (one sample at the shutter's middle), right the final (64 samples); fine detail final over draft 0.80",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:34:18.257Z",
-   "file": "20261126173418257-note-f-3150.jpg",
-   "source": "../work/r27/final/f-3150.png",
-   "kind": "note",
-   "label": "3150 master final without grain on c9766f99, sha256 739da3f2441f20d9; line (i) 2.165 whole frame, bands green",
    "stop": "jupiter"
   }
  ]
