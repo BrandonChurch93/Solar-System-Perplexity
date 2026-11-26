@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T19:16:44.441Z",
+ "pushed": "2026-11-26T19:34:08.636Z",
  "head": "5ccff1674ccb3ed7fab80c6f251aee1e8d989d53",
- "note": "19:16 trials after the name, not named, not pushed: the strands' colour across the tube and their light summed | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "note": "19:34 trial Z112 not named, not pushed: strands add by their own light, thick and thin with pale cores; it leaves in the rise like the named state | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T19:34:08.029Z",
+   "file": "20261126193408029-note-z112-arch3.jpg",
+   "source": "../../../../tmp/v/z112-arch3.jpg",
+   "kind": "note",
+   "label": "trial Z112 draft 90 arch beside the approved and main",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T19:34:07.491Z",
+   "file": "20261126193407491-note-z112-risepair.jpg",
+   "source": "../../../../tmp/v/z112-risepair.jpg",
+   "kind": "note",
+   "label": "the arcade leaving in the rise at 211, 221, 225, 229, 1 to 1: named state above, trial Z112 below",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T19:34:06.854Z",
+   "file": "20261126193406854-note-z112-sheet.jpg",
+   "source": "../../../../tmp/v/z112-sheet.jpg",
+   "kind": "note",
+   "label": "trial Z112 (not named, not pushed) drafts 0, 60, 211, 221, 225, 229, 92: two passes, strands add by their own light",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T19:16:43.826Z",
    "file": "20261126191643826-note-z104-sheet.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/z92-rf.jpg",
    "kind": "note",
    "label": "trial Z92, not named, not pushed: right foot at 90 draft, approved, Z89, Z92",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T18:23:10.135Z",
-   "file": "20261126182310135-note-z92-211.jpg",
-   "source": "../../../../tmp/v/z92-211.jpg",
-   "kind": "note",
-   "label": "trial Z92, not named, not pushed: frame 211 draft, the named state above, Z92 below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T18:23:09.184Z",
-   "file": "20261126182309184-note-z92-60-11.jpg",
-   "source": "../../../../tmp/v/z92-60-11.jpg",
-   "kind": "note",
-   "label": "trial Z92, not named, not pushed: frame 60 draft, trial Z88 above, Z92 below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T18:06:41.045Z",
-   "file": "20261126180641045-note-s1-sky90.jpg",
-   "source": "../../../../tmp/v/s1-sky90.jpg",
-   "kind": "note",
-   "label": "trial S1 not named: the sky at the upper left of frame 90 at 1 to 1, approved above, S1 below",
    "stop": "sun"
   }
  ]
