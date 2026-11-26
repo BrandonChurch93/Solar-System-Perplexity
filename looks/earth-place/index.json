@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T09:16:26.845Z",
+ "pushed": "2026-11-26T09:47:19.660Z",
  "head": "a5e46e815452cc68eaf7a90ed57edbcebb2d9ae9",
- "note": "BAD: candidate a5e46e81 far band 1879 to 1887 and the hump at 1867 with glint and share held; reader slices run",
+ "note": "BAD: the candidate's far zone to the limb goes pale faster than main's, tool slices at 1879 and 2126; main's slices rendering",
  "looks": [
+  {
+   "time": "2026-11-26T09:47:18.429Z",
+   "file": "20261126094718429-note-cand-3758-spot.jpg",
+   "source": "../../../../tmp/gl/k24/A/cand-3758-spot.png",
+   "kind": "note",
+   "label": "BAD candidate a5e46e81 dive 1879 at 1 to 1 at the reader's spot",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T09:47:17.631Z",
+   "file": "20261126094717631-note-cand-4252-back-crop.jpg",
+   "source": "../../../../tmp/gl/k24/A/cand-4252-back-crop.jpg",
+   "kind": "note",
+   "label": "BAD candidate a5e46e81 rise 2126: the tool's back reading, three patches along the limb",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T09:47:16.643Z",
+   "file": "20261126094716643-note-cand-3758-onward.jpg",
+   "source": "../../../../tmp/gl/k24/A/cand-3758-onward.jpg",
+   "kind": "note",
+   "label": "BAD candidate a5e46e81 dive 1879: where the tool's pattern line is set, far zone at the limb outside the place",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T09:16:16.446Z",
    "file": "20261126091616446-note-held-vs-b.jpg",
@@ -46,36 +70,6 @@
    "segment": "earth.rise",
    "frame": 2100,
    "tier": "draft"
-  },
-  {
-   "time": "2026-11-26T08:45:15.906Z",
-   "file": "20261126084515906-sheet-earth-dive-top.jpg",
-   "source": "out/work/handover/earth-dive-top.png",
-   "kind": "sheet",
-   "label": "earth dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1919), place picture off, draft tier",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "first": 1830,
-   "last": 1919,
-   "tier": "draft"
-  },
-  {
-   "time": "2026-11-26T08:42:10.271Z",
-   "file": "20261126084210271-compare-earth-dive-step-in-place.jpg",
-   "source": "out/work/handover/earth-dive-step-in-place.png",
-   "kind": "compare",
-   "label": "earth dive, the largest step of the level in place (2.67): frame 1889, frame 1890, the ground that is new in it, and the change on the ground both show times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1890
-  },
-  {
-   "time": "2026-11-26T08:23:12.988Z",
-   "file": "20261126082312988-note-p12-rim-a.jpg",
-   "source": "../../../../tmp/gl/k23/N/p12-rim-a.jpg",
-   "kind": "note",
-   "label": "BAD, the plate at 1 to 1 with the canvas's rim drawn yellow: the canvas's own tufts south of the glint are the same tan dust as the sown field, which goes on about a degree past the rim and stops; past it bare sea and the map's hard white clouds",
-   "stop": "earth"
   }
  ]
 }
