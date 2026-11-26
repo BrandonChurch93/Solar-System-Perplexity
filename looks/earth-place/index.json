@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T05:55:02.190Z",
+ "pushed": "2026-11-26T06:23:05.880Z",
  "head": "77e5db7634fcb149575f050ad121fbe92b392cb5",
- "note": "dive 1880 to 1903 every frame with the first cure of the level, quick reader largest 0.45 at 1894, bad parts still to cure",
+ "note": "BAD the far band at 1 to 1: the hold's map and the far deck are two pictures, the swap is what the reader counts; laws for its pace in the simulator now",
  "looks": [
+  {
+   "time": "2026-11-26T06:23:05.089Z",
+   "file": "20261126062305089-note-b1889.jpg",
+   "source": "../../../../tmp/gl/k22/SIM/b1889.jpg",
+   "kind": "note",
+   "label": "BAD 1885 to 1897 at 1 to 1, far end of the canvas: level alone, ground whole without ring, both; Yucatan gives way to the far deck",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T06:23:04.194Z",
+   "file": "20261126062304194-note-b1893.jpg",
+   "source": "../../../../tmp/gl/k22/SIM/b1893.jpg",
+   "kind": "note",
+   "label": "BAD 1889 to 1901 at 1 to 1, 7.5 degrees: level alone, ground whole, both; the map's white cloud goes pale while the ground's tufts come through it",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T05:55:01.462Z",
    "file": "20261126055501462-note-cure-dive-b.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k22/SIM/g0-tl.jpg",
    "kind": "note",
    "label": "BAD level alone 1884 to 1896 top left at 1 to 1: shallows go luminous cyan, sea darkens, a pale veil grows",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T04:59:43.605Z",
-   "file": "20261126045943605-note-pm-two.jpg",
-   "source": "../../../../tmp/gl/k22/SIM/pm-two.jpg",
-   "kind": "note",
-   "label": "BAD the reader's pattern map: ground whole at 1890 above, level alone at 1888 below; the red sits on the level's own far band",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T04:21:36.317Z",
-   "file": "20261126042136317-note-x-top.jpg",
-   "source": "../../../../tmp/gl/k22/E5/x-top.jpg",
-   "kind": "note",
-   "label": "BAD E5 dive 1885 to 1903 top right: deck front climbs over Florida and the bright shallows, reader 0.62 at 1893",
    "stop": "earth"
   }
  ]
