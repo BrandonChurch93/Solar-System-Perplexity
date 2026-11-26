@@ -1,9 +1,41 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-26T01:31:23.016Z",
- "head": "d03c90d9c076afcb9659b5af06d3fe0c5a71627b",
- "note": "01:33 UTC: name refused at 4605 by d296 (sky plate gone, glare missing, the eye's dot); answers sent 01:31; building the eye's height law now, plate trial after; 4860 21.652 by my proxy, G17 0.513, 90 s a draft frame",
+ "pushed": "2026-11-26T01:52:05.565Z",
+ "head": "62498f603f4a1026520ffb3d74e81742da39f8ec",
+ "note": "The place's whole own share (eye, curl, streak, blots) now by height alone, same down and up, no clock: at 4605 the place equals main byte for byte; 4860 unchanged, G17 0.513 red (gate 0.8). Pairs of dive and rise drawing now. Draft seconds a frame: 4605 36, 4707 23, 4736 42, 4860 90, 5006 23.",
  "looks": [
+  {
+   "time": "2026-11-26T01:51:59.686Z",
+   "file": "20261126015159686-note-pair-N16.jpg",
+   "source": "../../../../tmp/pair-N16.jpg",
+   "kind": "note",
+   "label": "4860 beside the approved image, G17 0.513 (gate 0.8, red), unchanged by this law",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T01:51:58.662Z",
+   "file": "20261126015158662-note-n18-b.jpg",
+   "source": "../../../../tmp/n18-b.jpg",
+   "kind": "note",
+   "label": "dive 4716 to 4736, the own share by height, 1920 draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T01:51:57.608Z",
+   "file": "20261126015157608-note-n18-a.jpg",
+   "source": "../../../../tmp/n18-a.jpg",
+   "kind": "note",
+   "label": "dive 4696 to 4712, the own share by height, 1920 draft",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T01:51:56.559Z",
+   "file": "20261126015156559-note-n18-hold.jpg",
+   "source": "../../../../tmp/n18-hold.jpg",
+   "kind": "note",
+   "label": "4605 at the place and at the Sun: approved, main, the name, the eye alone by height, the place's whole own share by height (equals main byte for byte in the place's box)",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-26T01:31:22.448Z",
    "file": "20261126013122448-note-eye2-hold-1400.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/n16-eye-4707-5006.jpg",
    "kind": "note",
    "label": "the eye at 4707 and at 5006, enlarged: name ef0cc1cf | cure, twice",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-26T01:16:40.472Z",
-   "file": "20261126011640472-note-n16-judged.jpg",
-   "source": "../../../../tmp/n16-judged.jpg",
-   "kind": "note",
-   "label": "judged four with the eye's cure: 4605, 4707 / 4860, 5006 (1920 draft, halved)",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-26T01:16:39.305Z",
-   "file": "20261126011639305-note-n16e-1.jpg",
-   "source": "../../../../tmp/n16e-1.jpg",
-   "kind": "note",
-   "label": "dive 4757 to 4769 with the eye's cure, every frame, preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-26T01:16:38.191Z",
-   "file": "20261126011638191-note-n16e-0.jpg",
-   "source": "../../../../tmp/n16e-0.jpg",
-   "kind": "note",
-   "label": "dive 4744 to 4756 with the eye's cure, every frame, preview",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-26T01:16:36.912Z",
-   "file": "20261126011636912-note-pair-N16.jpg",
-   "source": "../../../../tmp/pair-N16.jpg",
-   "kind": "note",
-   "label": "4860: approved | the eye's cure on the tree (N16), 1920 draft, 90 s a frame; G17 0.513 / 0.232 (main 0.934 / 0.549: RED)",
    "stop": "neptune"
   }
  ]
