@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T00:46:14.126Z",
- "head": "7be04230a268a05ef76e7cf38647c628297b52bd",
- "note": "rigid body: patch cause found in the hero ring map and repaired, bright pixel at the limb under test, baked globe light trial",
+ "pushed": "2026-11-26T01:10:10.983Z",
+ "head": "52323582bf87df95a2c7f72cdc9a9fd86e1805d2",
+ "note": "bright pixel at 3601 found: a star through the globe soft edge where the shaded plane ends at the equator; cure under test",
  "looks": [
+  {
+   "time": "2026-11-26T01:10:10.394Z",
+   "file": "20261126011010394-note-v_k_lip.jpg",
+   "source": "../../../../tmp/v/rigid/v_k_lip.png",
+   "kind": "note",
+   "label": "3593 and 3601 x6: the star in the globe edge before and after the first try of the cure (near half still eats the edge, being fixed)"
+  },
+  {
+   "time": "2026-11-26T01:10:09.831Z",
+   "file": "20261126011009831-note-v_n_shadow.jpg",
+   "source": "../../../../tmp/v/rigid/v_n_shadow.jpg",
+   "kind": "note",
+   "label": "3465 globe shadow on the rings: hero, main, N"
+  },
+  {
+   "time": "2026-11-26T01:10:09.195Z",
+   "file": "20261126011009195-note-v_n_patch_x4.jpg",
+   "source": "../../../../tmp/v/rigid/v_n_patch_x4.png",
+   "kind": "note",
+   "label": "3465 right ansa outer margin x4: the mottled patch before and after the repair of the polar map margin"
+  },
+  {
+   "time": "2026-11-26T01:10:08.539Z",
+   "file": "20261126011008539-note-v_n_left.jpg",
+   "source": "../../../../tmp/v/rigid/v_n_left.jpg",
+   "kind": "note",
+   "label": "3465 left ansa: hero, C, N (rigid body, baked globe light, repaired polar margin)"
+  },
+  {
+   "time": "2026-11-26T01:10:07.808Z",
+   "file": "20261126011007808-note-sp_P0_Q1.jpg",
+   "source": "../../../../tmp/v/rigid/sp_P0_Q1.png",
+   "kind": "note",
+   "label": "3593 draft: the bright pixel at the end of the equator is a star seen through the globe soft edge (left with rings, right rings off)"
+  },
   {
    "time": "2026-11-26T00:46:10.079Z",
    "file": "20261126004610079-note-margin-full.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/rigid/sp_S93.png",
    "kind": "note",
    "label": "the same pixel at 3593 with the shaded plane's cover changed: still there"
-  },
-  {
-   "time": "2026-11-26T00:46:08.193Z",
-   "file": "20261126004608193-note-sp_E01_wide.jpg",
-   "source": "../../../../tmp/v/rigid/sp_E01_wide.png",
-   "kind": "note",
-   "label": "the bright pixel at 3601 on the globe's edge above the equator's end, draft, enlarged"
-  },
-  {
-   "time": "2026-11-26T00:46:07.599Z",
-   "file": "20261126004607599-note-v_g_patch.jpg",
-   "source": "../../../../tmp/v/rigid/v_g_patch.jpg",
-   "kind": "note",
-   "label": "hold 3465 right ansa: the mottled patch on the B margin in C, gone in G"
-  },
-  {
-   "time": "2026-11-26T00:46:06.982Z",
-   "file": "20261126004606982-note-v_g_near.jpg",
-   "source": "../../../../tmp/v/rigid/v_g_near.jpg",
-   "kind": "note",
-   "label": "hold 3465 near part of the rings: hero, C, trial G (rejected)"
-  },
-  {
-   "time": "2026-11-26T00:46:06.342Z",
-   "file": "20261126004606342-note-v_g_left.jpg",
-   "source": "../../../../tmp/v/rigid/v_g_left.jpg",
-   "kind": "note",
-   "label": "hold 3465 left ansa: hero, rigid body C, trial G with a window on the division (rejected: white band on the B margin)"
-  },
-  {
-   "time": "2026-11-26T00:11:17.682Z",
-   "file": "20261126001117682-note-sp_C93.jpg",
-   "source": "../../../../tmp/v/rigid/sp_C93.png",
-   "kind": "note",
-   "label": "the same dot in trial C at 3593"
   }
  ]
 }
