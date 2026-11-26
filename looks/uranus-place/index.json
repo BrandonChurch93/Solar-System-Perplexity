@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T16:28:04.392Z",
+ "pushed": "2026-11-26T16:34:42.241Z",
  "head": "5fc9bcaa7b62cabd68f23329ae568cc6ed0daa9f",
- "note": "cloud group control at 4416 and 4418: fibre gain 0 takes the dark slashes (strip 59 to 3, 50 to 7), the hard cut edge stays; the ground under rows 4401 and 4398 + 1/2 is the same on D and main",
+ "note": "answer to MAIL 1511: rows 4398 to 4402 + 1/2 are the reader's back reading on far ground that is the same on D and main; drafts 4396 to 4404 D beside main",
  "looks": [
+  {
+   "time": "2026-11-26T16:34:39.344Z",
+   "file": "20261126163439344-note-pair-3.jpg",
+   "source": "../../../../tmp/n81/pair-3.jpg",
+   "kind": "note",
+   "label": "drafts D beside main, sheet 3 of 3 of frames 4396 to 4404",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T16:34:32.779Z",
+   "file": "20261126163432779-note-pair-2.jpg",
+   "source": "../../../../tmp/n81/pair-2.jpg",
+   "kind": "note",
+   "label": "drafts D beside main, sheet 2 of 3 of frames 4396 to 4404",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T16:34:29.876Z",
+   "file": "20261126163429876-note-pair-1.jpg",
+   "source": "../../../../tmp/n81/pair-1.jpg",
+   "kind": "note",
+   "label": "drafts D beside main, sheet 1 of 3 of frames 4396 to 4404",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T16:34:23.446Z",
+   "file": "20261126163423446-note-cause-4401.jpg",
+   "source": "../../../../tmp/n81/cause-4401.jpg",
+   "kind": "note",
+   "label": "row 4401 of rise part 1: the reading per pixel on D and on main (top 1 percent red) sits on the far ground under the limb; D minus main times 32 is all in the lower picture",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T16:28:03.649Z",
    "file": "20261126162803649-note-zone-4401.jpg",
@@ -210,44 +242,6 @@
    "source": "../../../../tmp/n78/f4137.jpg",
    "kind": "note",
    "label": "final 4137: main beside the name (the second aim's sky)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T11:53:30.583Z",
-   "file": "20261126115330583-note-f4035.jpg",
-   "source": "../../../../tmp/n78/f4035.jpg",
-   "kind": "note",
-   "label": "final 4035: the approved, main (match 3.743), the name (match 3.737)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T11:53:26.257Z",
-   "file": "20261126115326257-note-10-final-4290-approved-main-name.jpg",
-   "source": "../../../../tmp/n78/att/10-final-4290-approved-main-name.jpg",
-   "kind": "note",
-   "label": "final 4290: the approved, main (match 3.847), the name 38f6b059 (match 3.178)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T11:38:09.265Z",
-   "file": "20261126113809265-job-frame-04035.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-26T11:24:07.659Z",
-   "file": "20261126112407659-note-pop-4175-4176.jpg",
-   "source": "../../../../tmp/n78/pop-4175-4176.png",
-   "kind": "note",
-   "label": "54ae2b6d draft 4175 beside 4176, 1 to 1 at the upper right: the corner of the dive's largest pop (1.1228, main 1.1098): the Sun's glare, the ring arcs, the band's stars; no step",
    "stop": "uranus"
   }
  ]
