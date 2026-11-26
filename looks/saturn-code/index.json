@@ -1,8 +1,8 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T02:34:54.427Z",
- "head": "5abf67625ee09869b0164ddf1d90699d13d4b63d",
- "note": "K (rigid body, baked globe light) proof running: the flight in 3344 to 3400 at draft, every frame; ring edges and limb read on the true shapes; dive and rise rendering",
+ "pushed": "2026-11-26T03:05:46.134Z",
+ "head": "b61cc026e2ba3b97f001c8ac51ef257ecb7210d2",
+ "note": "K proof: the dive is drawn and being measured, the rise is next; rings read frame against frame through each frame's own lens (flight in on K: under 0.1 px from 3368)",
  "looks": [
   {
    "time": "2026-11-26T02:34:49.457Z",
