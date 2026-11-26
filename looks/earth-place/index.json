@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T08:48:28.522Z",
+ "pushed": "2026-11-26T09:16:17.354Z",
  "head": "a5e46e815452cc68eaf7a90ed57edbcebb2d9ae9",
- "note": "hump of the pattern line at 1867 located at the glint streak, cause being measured; handover tool running",
+ "note": "BAD: candidate a5e46e81 far band 1879 to 1887 and the hump at 1867 with glint and share held; reader slices run",
  "looks": [
+  {
+   "time": "2026-11-26T09:16:16.446Z",
+   "file": "20261126091616446-note-held-vs-b.jpg",
+   "source": "../../../../tmp/gl/k24/C1/held-vs-b.png",
+   "kind": "note",
+   "label": "BAD hump at 1867: glint and share held, streak and pale sheet still brighten 1867 to 1875",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T09:16:15.596Z",
+   "file": "20261126091615596-note-w-1879-1887.jpg",
+   "source": "../../../../tmp/gl/k24/w-1879-1887.jpg",
+   "kind": "note",
+   "label": "BAD candidate a5e46e81 draft 1879 1883 1887 half size: far band and the place's pale sheet come in while the camera moves",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T08:48:27.710Z",
    "file": "20261126084827710-note-p12-sw.jpg",
@@ -60,28 +76,6 @@
    "kind": "note",
    "label": "BAD, the plate at 1 to 1 with the canvas's rim drawn yellow: the canvas's own tufts south of the glint are the same tan dust as the sown field, which goes on about a degree past the rim and stops; past it bare sea and the map's hard white clouds",
    "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T08:23:11.700Z",
-   "file": "20261126082311700-note-1755-disc4.jpg",
-   "source": "../../../../tmp/gl/k23/N/1755-disc4.jpg",
-   "kind": "note",
-   "label": "1755 at final, the disc at 4 for 1: approved, main, ee321270, the final of 22:46, the candidate a5e46e81. One pale yellow speck new at the disc's south (hold px 986, 536), not yet checked for twinkle: RED until checked",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T08:17:39.594Z",
-   "file": "20261126081739594-still-f02010-16x9-final-full.jpg",
-   "source": "out/work/stills/f02010-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.terrain frame 2010, final tier",
-   "stop": "earth",
-   "segment": "earth.terrain",
-   "frame": 2010,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
   }
  ]
 }
