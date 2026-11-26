@@ -6,6 +6,7 @@ import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { patches } from './assets'
 import { CloudDeck } from './clouds'
+import { ReliefDeck, bandDrift, eddyWind, tallNow, windTurn } from './relief'
 import { Globe } from './globe'
 import { Io } from './io'
 import * as look from './look'
@@ -42,7 +43,8 @@ export const createSet: SetFactory = async (ctx) => {
   const patchTextures: THREE.Texture[] = []
   for (const level of patches.levels) patchTextures.push(await ctx.texture(base + level.file, { srgb: true, anisotropy: 16 }))
 
-  const ground = await CloudDeck.load(ctx, base)
+  const relief = (look.ground as string) === 'relief'
+  const ground = relief ? await ReliefDeck.load(ctx, base) : await CloudDeck.load(ctx, base)
   terrain.add(ground.mesh)
   orbit.add(ground.layer)
 
@@ -134,11 +136,15 @@ export const createSet: SetFactory = async (ctx) => {
       const share = lowEven(height, scene.grade, scene.gradeRound)
       const r = ratio(state.time)
       const du = ground.material.uniforms
-      du.uStormTurn!.value = stormTurn(state.time - terrainMid)
+      du.uStormTurn!.value = relief ? windTurn(state.time - terrainMid) : stormTurn(state.time - terrainMid)
       const eddies = du.uEddyTurn!.value as number[]
-      for (let i = 0; i < eddies.length; i++) eddies[i] = eddyTurn(i, state.time - terrainMid)
+      for (let i = 0; i < eddies.length; i++) eddies[i] = relief ? eddyWind(i, state.time - terrainMid) : eddyTurn(i, state.time - terrainMid)
       const seams = du.uSeam!.value as THREE.Vector3[]
-      for (let i = 0; i < seams.length; i++) seams[i]!.z = ringTurn(i, state.time - terrainMid)
+      for (let i = 0; i < seams.length; i++) seams[i]!.z = relief ? (i === 0 ? -windTurn(state.time - terrainMid) : 0) : ringTurn(i, state.time - terrainMid)
+      if (relief) {
+        ;(du.uShearFade!.value as THREE.Vector4).z = bandDrift(state.time - terrainMid, height)
+        ;(du.uTall!.value as THREE.Vector4).w = tallNow(height)
+      }
       const own = state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
       const deckShare = !inOrbit ? 1 : own ? low(height, scene.deck) : 0
       const limbShare = !inOrbit ? 1 : own ? low(height, scene.limb) : 0

@@ -5,6 +5,7 @@ import flowJson from './flow.json'
 import hazeJson from './haze.json'
 import limbJson from './limb.json'
 
+export const ground: 'plate' | 'relief' = 'relief'
 export const curve = fitted.curve as number[][]
 export const limb = limbJson.limb as number[][]
 export const jet = flowJson.jet as number[]

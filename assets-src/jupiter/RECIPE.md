@@ -161,3 +161,30 @@ Files: `public/assets/jupiter/<set>/patch-wide.jpg` (full 5120 square, web 2560)
 
 Checks: texels view (`npm run still -- --frame N --tier draft --diag texels`) on frames 3010, 3013, 3015, 3278, 3282, 3288; the storm and the bands do not move when a level takes over (beauty stills 3005 to 3015). Weak: a faint fingerprint like swirl east of the storm in the mid level.
 
+
+## The relief of the surface view (mail 1423, Line B): relief-image-range.bin, relief-view-color.png
+
+Used by `src/stops/jupiter/relief.ts` when `look.ground` is `relief`, in frames 3060 to 3239 and on the close side of the dive and the rise. No image model made these files and no new picture came in: they are the deck's own image fields baked again over a taller ground. Every number is in `src/stops/jupiter/body.json`; the tool writes `src/stops/jupiter/body-fields.json`.
+
+Files:
+
+- `public/assets/jupiter/<set>/relief-image-range.bin` (the range the fit camera sees along every ray of the canvas; full 1408 x 792, web 704 x 396, the deck's own coding)
+- `public/assets/jupiter/<set>/relief-view-color.png` (the laid back view chart with its fill; full 8192 x 3200, web 4096 x 1600; alpha holds the ground length of a texel as in the deck's chart)
+
+Inputs: the deck's height maps, canvas and core (`deck-fore-height.bin`, `deck-near-height.bin`, `deck-mid-height.bin`, `deck-image-wide.jpg`, `deck-image-core.jpg`, all made as the section above tells) and `deck.json`, `deck-fields.json`, `body.json`.
+
+Step: `python3 assets-src/jupiter/relief/body.py > out/work/jupiter/body/body.log` (about 3 minutes on 4 cores; needs numpy and opencv). It runs the deck's own tools (`deck/image.py` `fit_range`, `deck/view.py` `build`) with three changes that live in body.py: the height is the deck's height times the gain by place of `body.json` `height`; the march of the range picture takes the slope `height.imageMarch[0]`; the fill of the ground the picture never saw lays the mirrored fine structure on as a bounded ratio of light (`fill()`), where the deck adds it as a difference. Work files go to `out/work/jupiter/body/` (not in git): `view-need.png` shows what had to be filled (red hidden, green steep), `view-chart.png` the chart.
+
+Takes, by what the bake printed and what the stills showed:
+
+1. Gain 2.2 everywhere: the haze shadow behind the storm moved; the low band at the draft tier read 3.4354 against main's 3.2099. Dropped for the gain by place.
+2. Gain 3.0 near the camera, with a guard (the range picture eroded by 2 texels beside every jump of more than 0.04): bake printed "guard texels 107919 share 0.0242", hidden of seen went from 0.155 to 0.212; low band 3.6450, columns of smear under the horizon. The guard is out of body.py.
+3. Gain 3.0 near, no guard: low band 3.0612, but flat patches of fill stood in the near field at 3100 and 3200, where a step of 0.1 units opens about 35 px.
+4. The fill as a ratio of light (`fill()` in body.py): the deck's `carry_fill` adds the mirrored fine structure as a difference and clamps at zero, which in the wide gaps of a taller ground stood as black cracks. Texels of the chart with a sum under 6: 76321 before, 19846 after.
+5. Kept: gain 1.0 at the camera's foot, `farGain` 2.0 from 3.0 to 5.5 units, back to 1 at 8 units; `viewFine` 2. Bake printed "steep share of seen 0.0778 core share of seen 0.492", "filled 2727917 left 496 longest 84.2", "view chart 8192 3200 seen 0.809 hidden of seen 0.051".
+
+Not used: a depth run of my own on the approved picture at half size, `python3 tools/ml/depth.py --in out/work/jupiter/body/canvas-half.png --out-prefix out/work/jupiter/body/canvas-depth` (2816 x 1584 in 19.84 s, peak RSS 411.7 MiB). It is the same model the deck's height already comes from (`deck/relief.py`), so it brought nothing new; the relief's height is the deck's.
+
+Both sets come from the one run: the full set first, then the web set derived from it. The web chart is the full chart at half size (`deck/view.py`, the loop over `full` and `web`); the web range picture is marched over the same full height maps at the web's shrink (`deck.json` `image.rangeShrink`).
+
+Weak: the fill behind the storm's far wall is soft at 3100 (main is crisper there, since its lower ground opens less).
