@@ -11882,3 +11882,213 @@ LOOK, neptune_builder, 18:15 UTC (low; no answer needed). The name stands: 7a620
 4. The look (picture 1): 4860 of the name beside the approved, G17 0.972 / 0.659 (main 0.934 / 0.549), plain 21.144 (main 22.986); 92.0 s a draft frame at 1920. At 960 the trial frames take 10 to 28 s each.
 
 Pictures: 1 look-N24.jpg. 2 d3-dive.jpg (the lower half of 4720 to 4726 at 960: the name | the control D3).
+
+## 26 Nov, 18:24 to 19:38 UTC: lab log (why the trial's pattern changed: two causes, each with its control; a state with the first cure drawn and NOT proven; taken out again)
+
+Nothing here is named. The name stays 7a620a39. All controls are tools at 960 preview draft (the trial text swapped into deep.ts
+or deep.json for the draw and put back); "the pair" is frame i with frame i + 8 by my proxy (pic2.py, whole frames); a pair is a
+reading only where both frames are the control's.
+
+- 18:25:19 to 18:31:16 CONTROL D5 = D3 with the field read at the middle of the cover's own run,
+  normalize(dcl + slabRun * (slabShare * 0.5)). Frames 4972 to 4984, 4718 to 4732. Pattern by frame, D5 | the name | the first trial:
+  rise 4972 0.2761 | 0.2783 | 0.2500; 4973 0.2242 | 0.2962 | 0.3463; 4974 0.2034 | 0.2169 | 0.2883; 4975 0.1723 | 0.1942 | 0.5071;
+  4976 0.1877 | 0.2078 | 0.5057. dive 4718 0.1709 | 0.1707 | 0.2768; 4719 0.1915 | 0.1931 | 0.3381; 4720 0.1778 | 0.1773 | 0.4306;
+  4721 0.1333 | 0.1308 | 0.5143; 4722 0.1117 | 0.1128 | 0.5541; 4723 0.1058 | 0.1059 | 0.6156; 4724 0.1253 | 0.1317 | 0.5986.
+  And D5 draws the field: against the name's picture at 960, 4720 mean 1.927, largest 105, 7.14 percent of the pixels over 8 levels
+  (D3 1.918, 106, 7.14); 4723 2.713, 116, 9.67 (D3 2.682, 114, 9.57); 4975 2.337, 114, 9.13 (D3 2.274, 115, 8.83);
+  4978 2.949, 154, 11.24 (D3 2.804, 116, 10.64).
+  FINDING, CAUSE 1: the guess of 18:22 holds. Read at the ray's entry, the field stood still on its shell while the cover (the
+  mean of the map along the run through the slab) slid under it with the slant; read where the cover is read, the bodies
+  keep their pattern.
+- 18:31:16 to 18:37:08 CONTROL D6 (no slab: the cover as read at the entry, the field at dcl; the flat sheet, only a control):
+  rise 4972 0.3801; 4973 0.3125; 4974 0.2792; 4975 0.2360; 4976 0.2289. dive 4718 0.1698; 4719 0.1903; 4720 0.1764; 4721 0.1370;
+  4722 0.1331 at (652, 80); 4723 0.2195 at (672, 84); 4724 0.2806 at (680, 84). Against the name: 4720 mean 2.679, largest 111,
+  9.60 percent; 4723 4.004, 127, 12.58; 4975 4.152, 178, 12.85; 4978 4.924, 176, 15.41. The same finding by another way.
+- 18:38 d5-rise.jpg and d5-dive.jpg looked at (the lower half of 4973 to 4979 and of 4720 to 4726, the name | D5): the soft
+  patches have form and grain in the control. The small white blob at the lower edge from 4976 is the same lone blob, only
+  more ragged: not cured by any of this. Also seen, in BOTH columns (so in the name): a small dark comb of teeth at the lower
+  middle at 4977 to 4985, about x 490 to 590, y 480 to 505 of 960 by 540 at 4978 (read off the sheet, not measured; not
+  checked against main). An open fault for the next round's list.
+- 18:41:50 and 18:42:01 two commits in my tree, not pushed: c0de5ce82 (the trial far.grain back in as it was in e130dbf04) and
+  3a66ee760 (the field read at the middle of the cover's run; deep.ts one line and its comment, deep.json the how).
+- 18:42:19 to 18:45:27 the judged four on 3a66ee760 at 1920, draft (N26): 22.2, 28.8, 90.1, 13.5 s the frame.
+  4605 21b475da05086981 and 5006 f9d1bfe65547e1ee: the name's bytes. 4707 c89fa699017b49f2: 582 px differ from the name's by
+  1 level (x 628 to 1141, y 745 to 1078). 4860 62cabb83ad4ba51d: 46496 px differ, mean 0.023, largest 4.
+  meas: 4605 plain 2.923, G17 0.856 / 0.720; 4860 plain 21.144 (top quarter 9.035), G17 0.972 / 0.659 (main 2.931, 0.856 / 0.720;
+  22.986 (12.395), 0.934 / 0.549). Bands of 4860, film over approved, median: 0.6 to 1.2 px 0.884; 1.2 to 2.4 1.073; 2.4 to 4.8
+  1.099; 4.8 to 9.6 1.161; 9.6 to 19.2 1.146; 19.2 to 38.4 1.010.
+- 18:45:27 to 18:59:26 the rise of 3a66ee760, 4948 to 5004 at whole frames, 960 (NHx). 4998 to 5004 the name's bytes; 4948 to
+  4997 differ (50 frames). Rows: rise 1 (4948 to 4987) pattern 0.4267 at 4983 at (286, 346), pop 1.1291 at 4967 (plain 1.1468 at
+  4968, carried 1.1379 at 4965), full pop 1.1954 at 4967, level step 0.3244 at 4969. Rise 2 pattern 0.3665 at 4991, pop 1.0482 at
+  5029, level step 0.1494 at 4999. (The name at whole frames: 0.3863 at 4971, 1.1231, 0.3211; 0.3672, 1.0482, 0.1494.)
+  By frame, the state | the name | the first trial: 4968 0.3473 | 0.3713 | 0.3848; 4969 0.2650 | 0.2663 | 0.2577; 4970 0.2525 |
+  0.2544 | 0.2670; 4971 0.3867 | 0.3863 | 0.3862; 4972 0.2916 | 0.2783 | 0.2500; 4973 0.2386 | 0.2962 | 0.3463; 4974 0.2088 |
+  0.2169 | 0.2883; 4975 0.1777 | 0.1942 | 0.5071; 4976 0.1862 | 0.2078 | 0.5057; 4977 0.2022 | 0.1937 | 0.3791; 4978 0.2125 |
+  0.1856 | 0.4071; 4979 0.2995 | 0.2105 | 0.3678; 4980 0.3715 | 0.2089 | 0.3166; 4981 0.3060 | 0.2067 | 0.3023; 4982 0.3447 |
+  0.2022 | 0.2792; 4983 0.4267 | 0.2268 | 0.2703; 4984 0.3635 | 0.2215 | 0.2377; 4985 0.2990 | 0.2252 | 0.2326; 4986 0.2488 |
+  0.2496 | 0.2510; from 4986 on within 0.003 of the name's.
+  So 4973 to 4978 are cured and 4979 to 4985 are a NEW hump, under the limit and 0.04 above the name's row.
+- 19:03 the dive's redraw of that state stopped (23 of 69 frames in NHw; no reading taken).
+- 19:04 nh-hump.jpg looked at (the name | the state, 4979 to 4991 by twos, x 60 to 580, y 220 to 480): the bodies dissolve
+  back into the soft patches between 4983 and 4987; at 4989 and 4991 the two columns are one picture.
+- 19:03:59 to 19:08:13 CONTROL E1 = the state with the field at the middle of the WHOLE run, normalize(dcl + slabRun * 0.5)
+  (fixed in the slab; the cover's middle is that point less one footprint wherever the run is longer than uSlab.y feet,
+  uSlab being [4, 2]: a reading of the code). 4972 to 4992. By frame: 4972 0.2686; 4973 0.2302; 4974 0.2143; 4975 0.1820;
+  4976 0.1891; 4977 0.2012; 4978 0.2069; 4979 0.2610; 4980 0.3772; 4981 0.3095; 4982 0.3618; 4983 0.4135 at (286, 348);
+  4984 0.3532. FINDING: the hump stays; it is not the field's place.
+- 19:09:56 to 19:14:52 CONTROL G1 = E1 with the grain's values from [0.2, 0.4] (in effect no onset by the texel: each wave
+  counts where the master pixel resolves it, 1 to 2.5 px) and wave 3 (octaves 6, fall 0.65, gain 4 as before). Frames 4668,
+  4707, 4860, 5006, 4972 to 4992. Against the name at 960: 4668 and 5006 the same picture; 4707 13836 px, mean 0.037,
+  largest 20, 0.01 percent over 8 levels, y 176 to 539; 4860 28065 px, mean 0.249, largest 49, 0.94 percent over 8, y 8 to 524
+  (the far ground of the surface view moves: against MAIL 1475 h); 4975 mean 2.170, largest 119, 8.67 percent; 4978 2.798, 160,
+  11.00; 4983 2.429, 144, 8.70; 4990 0.805, 88, 2.55. By frame: 4972 0.2435; 4973 0.2625; 4974 0.2069; 4975 0.1731;
+  4976 0.1821; 4977 0.1709; 4978 0.1854; 4979 0.1993; 4980 0.1894; 4981 0.2276; 4982 0.2753 at (624, 250); 4983 0.2718;
+  4984 0.2406.
+  FINDING, CAUSE 2: no hump. The hump of the state is its onset: by the size of one texel of the map in master pixels
+  (3.5 down to 1.5) the grain goes out while its bodies are large (the longest wave 8 texels, so 28 down to 12 px). A grain
+  whose every wave comes and goes at the size of a pixel holds its pattern.
+  SEEN (g1-c2.jpg, g1-hump.jpg): the patches are an even field of small clumps with dark holes; it gets finer as the eye
+  rises and nothing dissolves; but it reads as made noise (harsh at gain 4 with the cut at 0), not as the bank beside it.
+- 19:16:36 the two commits reverted in one (ca6c81753); the state kept as assets-src/neptune/check/far-grain-mid-run.patch
+  (the diff of bf786cf94 to 3a66ee760 over src/stops/neptune). The stop's files are the name's again (git diff 7a620a39 over
+  src/stops/neptune, public/assets/neptune, config: empty). Controls after this draw from /tmp/state-3a66 (ctl-h.sh).
+- 19:16:48 to 19:21:43 CONTROL G2 = the state's onset kept (from [1.5, 3.5]), wave 2, the field at the middle of the whole
+  run. Against the name at 960: 4668 and 5006 the same picture; 4707 82 px by 1 level; 4860 12754 px, mean 0.026, largest 4;
+  4975 mean 1.129, largest 95, 4.71 percent over 8 levels; 4978 1.688, 172, 6.92; 4983 1.159, 129, 4.24; 4990 0.123, 46, 0.10.
+  By frame: 4972 0.2456; 4973 0.2354; 4974 0.2100; 4975 0.1915; 4976 0.1915; 4977 0.1866; 4978 0.2082; 4979 0.2086;
+  4980 0.2171; 4981 0.2216; 4982 0.2303; 4983 0.2283; 4984 0.2218: the name's level throughout, and 4860 kept.
+  SEEN (g2-c2.jpg, g2-hump.jpg): a fine speckle laid over the patches, clearly made; no form. Not a cure to the eye.
+- WHERE THAT LEAVES THE PATCHES (for the next round): motion is understood (cause 1: read the field where the cover is read;
+  cause 2: nothing may come or go while its bodies are large). Form is not: bodies of 8 texels give the better cloud in
+  stills but must then stand at every height where a pixel resolves them, and that moves the far ground of 4860 (0.90 to
+  0.94 percent of the pixels over 8 levels at 960) and 4707, which needs the Builder's ruling against (h); waves of 2 to 3
+  texels keep 4860 (with the onset) and the pattern but look like noise. Untried: a wave between (4 or 5 texels) with the
+  onset, a lower gain without the cut at 0, shade from the field's gradient toward the Sun, the map's cloud shadow moved
+  with the field.
+- 19:22:59 to 19:27:51 CONTROL G3 = G2 with wave 4 (the onset from [1.5, 3.5] kept, the field at the middle of the whole run).
+  Against the name at 960: 4668 and 5006 the same picture; 4707 119 px by 1 level; 4860 13396 px, mean 0.027, largest 4;
+  4975 mean 1.111, largest 94, 4.60 percent over 8 levels; 4978 1.676, 168, 6.69; 4983 1.152, 111, 4.29; 4990 0.123, 29, 0.08.
+  By frame: 4972 0.3242 at (796, 324); 4973 0.2386; 4974 0.2134; 4975 0.1815; 4976 0.1968; 4977 0.1837; 4978 0.2513;
+  4979 0.2869; 4980 0.3365; 4981 0.4124 at (68, 538); 4982 0.2921; 4983 0.2495; 4984 0.2464.
+  FINDING: with the onset kept, bodies of 4 texels make the hump again (0.4124 at 4981; the state's 8 texels 0.4267 at 4983;
+  2 texels none). So under that onset only a grain of 2 texels or finer holds its pattern, and that one has no form.
+  SEEN (g3-c2.jpg, g3-hump.jpg): the best form of the three that keep 4860: the patches read as broken small cloud at 4975 to
+  4979. The white blob at the lower edge from 4976 gets dark holes in it and reads worse than the name's.
+- 19:29:33 CONTROL G4 started (ctl-i.sh): no onset by the texel (from [0.2, 0.4]), wave 8, the field at the middle of the
+  whole run; 960 frames and then the judged four at 1920, to see what 4860 and 4707 become when the bodies stand at every
+  height (the picture a ruling on (h) would be about).
+- 19:29:33 to 19:36:30 CONTROL G4, the results. 960 frames done 19:33:43; the judged four at 1920 draft: 22.2, 28.5, 91.7,
+  13.8 s. The two files put back by git checkout; git status clean after it.
+  Against the name at 960: 4668 and 5006 the same picture; 4975 mean 1.745, largest 115, 9.31 percent over 8 levels;
+  4978 2.304, 153, 11.46; 4983 2.003, 133, 9.06; 4990 0.692, 75, 3.05.
+  By frame (composite over the name's rise, pairs 4972 to 4984), G4 | the name | the first trial | the state 3a66ee76:
+  4972 0.2851 at (764, 466) | 0.2783 | 0.2500 | 0.2916; 4973 0.2301 | 0.2962 | 0.3463 | 0.2386; 4974 0.2048 | 0.2169 | 0.2883 | 0.2088;
+  4975 0.1725 | 0.1942 | 0.5071 | 0.1777; 4976 0.1806 | 0.2078 | 0.5057 | 0.1862; 4977 0.1723 | 0.1937 | 0.3791 | 0.2022;
+  4978 0.1815 | 0.1856 | 0.4071 | 0.2125; 4979 0.1973 | 0.2105 | 0.3678 | 0.2995; 4980 0.2176 | 0.2089 | 0.3166 | 0.3715;
+  4981 0.2302 | 0.2067 | 0.3023 | 0.3060; 4982 0.2404 | 0.2022 | 0.2792 | 0.3447; 4983 0.2751 at (0, 398) | 0.2268 | 0.2703 | 0.4267;
+  4984 0.2521 | 0.2215 | 0.2377 | 0.3635.
+  The judged four at 1920 draft against the name's (N24): 4605 and 5006 the same bytes (21b475da05086981, f9d1bfe65547e1ee);
+  4707 56666 px differ, mean 0.026, largest 22, 0.010 percent over 8 levels, 0.275 percent over 2; 4860 114302 px differ,
+  mean 0.164, largest 50, 0.939 percent over 8 levels, 1.849 percent over 2, the pixels over 8 all inside x 740 to 1919,
+  y 216 to 506 (by rows of 135: 1292 in 135 to 269, 11238 in 270 to 404, 6943 in 405 to 539).
+  G17 of G4 at 4860: 0.985 / 0.753 over 75 tiles, plain 21.151 (the name 0.972 / 0.659, 21.144); 4605 plain 2.923, G17 0.856 / 0.720
+  over 65 tiles. Bands at 4860, film over approved, median: 0.6 to 1.2 px 0.899; 1.2 to 2.4 px 1.074; 2.4 to 4.8 px 1.099;
+  4.8 to 9.6 px 1.160; 9.6 to 19.2 px 1.153; 19.2 to 38.4 px 1.006.
+  FINDING: without the onset, bodies of 8 texels hold the pattern at the name's level through 4972 to 4984 (no hump): cause 2
+  stands a second time (G1 with 3 texels, G4 with 8).
+  SEEN (g4-c2.jpg 4973 to 4979, g4-hump.jpg 4979 to 4991 by twos, every frame of both; g4-4860pair.jpg; look-G4.jpg): the patches
+  read as small broken cloud whose bodies stay from frame to frame; nothing dissolves between 4983 and 4987; the best form of
+  all the controls. At 4860 the far ground right of the eye toward the limb gets darker streaks and flecks along the bands:
+  it reads as a broken deck, not as noise, but it is a change of the far ground and stands against (h) of MAIL 1475. The white
+  blob at the lower edge from 4976 is not cured (its edge frays). The small dark comb of teeth near the lower middle at 4977
+  to 4985 is in the name and in G4 alike (seen on the sheets; not measured, not checked against main).
+- THE END OF THIS LOG, FOR THE NEXT ROUND. Controlled: cause 1 (D5, D6), cause 2 (G1, G3, G4; G2 as the fine end). By this road
+  form and an untouched 4860 exclude each other: either (h) is opened for this layer (then G4's kind is the candidate; still to
+  prove: the dive, whole and half frames, the tests, the path lines, review tier), or the patches stay the named red of the
+  name. Untried: a lower gain without the cut at 0, shade from the field's gradient toward the Sun, the map's cloud shadow moved
+  with the field. Open beside it: the white blob from 4976; the dark comb 4977 to 4985; handover_engineer's offer of fromPx 3 for
+  Neptune's entry and his mesh of period 2 px in the bright wisp (his mail of 18:56, below).
+
+## 26 Nov, 18:42 UTC: the look, the first cause found with its controls, to the Builder (word for word; sent about 18:41:15; attached look-N24.jpg, d5-rise.jpg, d5-dive.jpg; low priority)
+
+LOOK, neptune_builder, 18:42 UTC (low; no answer needed). The name stands alone: 7a620a3966314e7abeecc70b206990d2cc588499. Nothing below is named; it is past your close of 18:30 and I know it.
+
+1. WHY THE TRIAL OF THE PALE PATCHES FAILED IN MOTION: FOUND, WITH ITS CONTROLS (tools at 960, draft; the pairs are frame i and frame i + 8 by my proxy; the tree holds the name's files).
+- D4, the field with no coming in of any kind (every wave on at every size): the same pattern as before, 0.5383 at 4975 and 0.6086 at 4723 (the first trial 0.5071 and 0.6156, the name 0.1942 and 0.1059). So nothing that comes in makes it; my line of 17:46 is wrong twice over.
+- READ IN THE CODE THEN: the trial's field was read at the point where the eye's ray enters the cloud layer, while the cover it shapes is the mean of the map along the ray's run through the layer (ONE BODY), so its middle lies deeper, by an amount that goes with the slant. In the dive and the rise the slant to one place changes fast, the cover slides under the field, and the clumps, their product, change form.
+- D5, the same field read at the middle of the cover's own run (one line): the pattern is the name's. Rise 4972 to 4976: 0.2761, 0.2242, 0.2034, 0.1723, 0.1877 (the name 0.2783, 0.2962, 0.2169, 0.1942, 0.2078). Dive 4718 to 4724: 0.1709, 0.1915, 0.1778, 0.1333, 0.1117, 0.1058, 0.1253 (the name 0.1707, 0.1931, 0.1773, 0.1308, 0.1128, 0.1059, 0.1317). And it is not the name's picture: 4723 differs from the name in 9.67 percent of the pixels by more than 8 levels, 4975 in 9.13 percent (D3, which failed: 9.57 and 8.83).
+- D6, a second control only (cover and field both at the entry point, no slab, the flat sheet you took out): 0.2360 at 4975; the dive to 0.2806 at 4724, at (680, 84), where the map without its slab changes.
+
+2. SEEN (pictures 2 and 3, the lower half of 4973 to 4979 and of 4720 to 4726, the name | D5): the soft pale patches at the lower left have form and grain in the trial, as in the first trial's stills. STILL THERE: the small white blob at the lower edge from 4976 is the same lone blob, only more ragged; this does not cure it.
+
+3. WHAT IT IS NOT YET. Twelve pairs at 960 draft and nothing more. D5 is the control without the onset by distance, the kind that moves 4860's far ground (D3: 0.90 percent of the pixels over 8 levels at 960, against MAIL 1475 h); the state to prove is the first trial (far.grain, which kept 4605 and 5006 to the byte and 4860 at mean 0.029, G17 unchanged) with this one line. I draw and measure it now: the four rows at whole frames, the judged four at 1920 with G17, the hold's bytes, the unit tests; about an hour. It is not a name of this cut. It is meant to open Neptune's next round as a measured state with its reds named, and I mail it only if it holds.
+
+4. The look (picture 1): 4860 of the name beside the approved, G17 0.972 / 0.659 (main 0.934 / 0.549); 92.0 s a draft frame at 1920; the control frames at 960 take 10 to 12 s away from the ground.
+
+Pictures: 1 look-N24.jpg. 2 d5-rise.jpg (4973 to 4979, the name | the control D5). 3 d5-dive.jpg (4720 to 4726, the name | the control D5).
+
+## Mail from handover_engineer, 18:56 UTC (read 18:58 by my clock; word for word; low priority; no picture attached)
+
+> FROM /root/handover_engineer to /root/neptune_builder, 18:56 UTC, LOW. Neptune's rise onset at review with the entry (handover.shutterEnds): the last two frames, 4954 and 4951. Nothing here asks anything of today's cut.
+>
+> 4954 (24 samples; the frame's largest blur capped at 14 px by a shutter share of 0.80; ends 0.5). Seen whole, in six tiles at 1 to 1, beside 4953 in five boxes at 4 to 1 that follow the content. No double exposure: every star, the limb and every cloud edge is drawn once. No difference in softness to 4953 that I can name. Review over its own draft (mean gradient) in the eight boxes: small clouds 0.959, band 0.937, lower clouds 0.958, deck streaks 1.081, dark deck 0.929, band left 0.873, deck left top 1.049, deck right top 1.012; the largest move from 4953 is 0.013.
+>
+> 4951 (16 samples; largest blur 4.0 px; no ends, so the entry does not act on this frame: it is what 4952 is held against). Seen the same way. No double exposure. It is the crispest frame of the onset, and the step from it to 4952 is the largest of the onset:
+> - whole frame, review over its own draft: 1.041 (4951), 1.019 (4952), 1.026 (4953), 1.023 (4954), 1.022 (4956). Planet rows alone: 1.037, 1.007, 1.016, 1.011, 1.010.
+> - the boxes, 4951 then 4952: small clouds 1.003, 0.962; band 0.948, 0.915; lower clouds 0.946, 0.949; deck streaks 1.102, 1.061; dark deck 0.953, 0.934; band left 0.922, 0.866; deck left top 1.044, 1.018; deck right top 1.012, 1.010.
+> - to the eye: at 4 to 1 and at 2 to 1 the cloud edges are a little crisper at 4951 than at 4952 (small clouds, band left). Side by side at 1 to 1 (two boxes of 680 x 440) I cannot name it.
+>
+> Why, by the frame plans of the review tier: the frame's largest blur reads 2.0 px at 4950, 4.0 at 4951, 8.4 at 4952, 12.9 at 4953, then 14 (capped); the ends' share 0, 0, 0.105, 0.475, 0.5. The picture softens where the blur doubles from 4.0 to 8.4 px while the ends hold only 0.105 of the weight; from 4952 on the detail stays level (1.019 to 1.026) though the blur grows to 12.9 and 14. Without the entry 4951 is the same frame and 4952 has no ends at all; that frame is not drawn in this tree, so I have not seen it.
+>
+> One thing that could be tried for a later cut, computed only, not drawn: Neptune's own fromPx under 6 (the entry is a block of its own per stop), so the ends take hold earlier in the onset. With fromPx 3 the share would read 0.011 at 4951, 0.241 at 4952 and 0.487 at 4953. It costs three review frames to see (4951 to 4953, about 1.5 hours here). Say so if you want it; I do not change your stop's entry unasked.
+>
+> Also seen at 4 to 1 in 4951 and 4952: a faint mesh of period 2 px in the bright wisp of the band at left (around x 630, y 600). It is in the draft too and stronger there (checker count at 1.5 of 255: 5185 px in the draft, 878 at review, top 3.4 of 255); not from the shutter.
+>
+> Still red, as said 17:55: no frame without the entry at 4952 and 4953 in this tree; 4955 is not drawn at review.
+> Looks: engine-handover, the push after this mail (4951 whole, six tiles, the pairs with 4952).
+
+## 26 Nov, 19:11 UTC: the look, the state 3a66ee76 does NOT hold, to the Builder (word for word; sent about 19:10:45; attached look-N26.jpg, nh-hump.jpg; low priority)
+
+LOOK, neptune_builder, 19:11 UTC (low; no answer needed). The name stands alone: 7a620a3966314e7abeecc70b206990d2cc588499. Nothing here is named or pushed; it is the work I announced at 18:42, and it does NOT hold yet.
+
+1. THE STATE I SAID I WOULD PROVE (the first trial far.grain with the field read where the cover is read; 3a66ee76 in my tree, two commits on the notebook tip):
+- the judged four at 1920, draft: 4605 and 5006 the name's bytes; 4707 differs in 582 px by 1 level; 4860 in 46496 px, mean 0.023, the largest 4 levels; G17 at 4860 0.972 / 0.659, plain 21.144 (the name's numbers; main 0.934 / 0.549, 22.986). 90.1 s the draft frame of 4860.
+- the rise at whole frames, 960, my proxy: part 1 pattern 0.4267 at 4983 (the name 0.3863 at 4971), pop 1.1291 at 4967 (1.1231), level step 0.3244 at 4969 (0.3211); part 2 0.3665 at 4991, 1.0482 at 5029, 0.1494 at 4999 (the name 0.3672, 1.0482, 0.1494).
+- CURED, where the first trial failed: 4973 to 4978 read 0.2386, 0.2088, 0.1777, 0.1862, 0.2022, 0.2125 (the first trial 0.3463, 0.2883, 0.5071, 0.5057, 0.3791, 0.4071; the name 0.2962, 0.2169, 0.1942, 0.2078, 0.1937, 0.1856).
+- RED, new and mine: 4979 to 4984 read 0.2995, 0.3715, 0.3060, 0.3447, 0.4267, 0.3635 where the name reads 0.2105, 0.2089, 0.2067, 0.2022, 0.2268, 0.2215. Under the limit, but 0.04 above the name's row, and my eye sees it (picture 2, the name | the state, 4979 to 4991 by twos, x 60 to 580, y 220 to 480 of 960 by 540): the bodies the grain makes dissolve back into the soft patches between 4983 and 4987 as the eye rises. The grain's onset (by the size of one texel of the map in pixels, 3.5 down to 1.5) ends while its bodies are still large (its longest wave is 8 texels): a thing going out while it is in frame and large.
+- CONTROL E1 (the field at the middle of the whole run instead, fixed in the slab): the same, 0.4135 at 4983. So it is not the place of the field any more; it is the onset.
+- I stopped the dive's redraw of this state at 19:03; it would have shown the same going in.
+
+2. DRAWING NOW (control G1): the grain without that onset, its longest wave 3 texels of the map instead of 8, each wave coming in at its own size of a pixel, so nothing comes or goes large; with 4668, 4707, 4860 and 5006 beside it for the bytes of the hold and the far ground of 4860.
+
+3. handover_engineer's word of 18:56 on the entry at review (his tree): 4954 and 4951 are seen, no double exposure in either; that closes the seven frames 4951 to 4954, 4956, 4757, 4758. 4951 (the frame before the entry acts) is the crispest of the onset and the step to 4952 the largest (review over its own draft, whole frame: 1.041, then 1.019, 1.026, 1.023); at 1 to 1 he cannot name it by eye, at 2 to 1 he can. He offers a trial of Neptune's own fromPx 3 for a later cut (three review frames, about 1.5 hours of his machine); I have not asked for it. Still red by him: no review frame without the entry at 4952 and 4953; 4955 not drawn at review; the mesh of period 2 px in the bright wisp (5185 px at 1.5 of 255 in the draft of 4951, 878 at review) stays an open fault of the name.
+
+Pictures: 1 look-N26.jpg (the approved | 4860 of the state 3a66ee76; to the eye the name's 4860). 2 nh-hump.jpg (the red of point 1).
+
+## 26 Nov, 19:17 UTC: the answer to handover_engineer on his mail of 18:56 (word for word; sent about 19:17:05; low priority; no picture)
+
+FROM /root/neptune_builder to /root/handover_engineer, 19:17 UTC, LOW. Your mail of 18:56 is read (4954 and 4951 at review with the entry) and goes into Neptune's notebook word for word.
+
+fromPx 3 for Neptune's own entry: NOT NOW. I do not ask for the three review frames today; nothing of it can ride this cut and your machine has better use. I list it for Neptune's next round as an open point with your numbers: the step from 4951 to 4952 (review over its own draft 1.041 to 1.019; seen by you at 2 to 1 and 4 to 1, not at 1 to 1), and the share fromPx 3 would give (0.011, 0.241, 0.487 at 4951 to 4953), computed and not drawn. If the round opens I ask you then.
+
+The mesh of period 2 px in the bright wisp stays listed as an open fault of the name (mine, in the draft and weaker at review; not the shutter's). No answer needed.
+
+## 26 Nov, 19:38 UTC: the look, the control G4 and what the next round must rule, to the Builder (word for word; sent about 19:38:15; attached look-N24.jpg, look-G4.jpg, g4-4860pair.jpg, g4-c2.jpg, g4-hump.jpg; low priority)
+
+NEPTUNE: LOOK, 19:38 UTC (low; no name, nothing asks an answer today). The tree holds the name 7a620a39's stop files unchanged; this is research for Neptune's next round on the pale patches of 4973 to 4991.
+
+1. The name at 4860 beside the approved image (look-N24.jpg): G17 0.972 / 0.659 (main 0.934 / 0.549). 92.0 s a draft frame at 1920.
+
+2. Control G4 (a tool run, not committed): the grain field standing at every height (its onset by texel size taken out), bodies of 8 texels, read at the middle of the run. Pictures: look-G4.jpg (4860 beside the approved), g4-4860pair.jpg (4860, the name over G4, 1 to 1, x 520 to 1920, y 216 to 506), g4-c2.jpg (4973 to 4979, the name left, G4 right), g4-hump.jpg (4979 to 4991 by twos).
+- Rise, pattern by frame at 960 (frame i against i+8), 4972 to 4984: G4 0.2851, 0.2301, 0.2048, 0.1725, 0.1806, 0.1723, 0.1815, 0.1973, 0.2176, 0.2302, 0.2404, 0.2751, 0.2521; the name 0.2783, 0.2962, 0.2169, 0.1942, 0.2078, 0.1937, 0.1856, 0.2105, 0.2089, 0.2067, 0.2022, 0.2268, 0.2215. No hump (the reverted state 3a66ee76 had 0.4267 at 4983).
+- My eye on every frame of both sheets: the patches read as small broken cloud with bodies that stay from frame to frame; nothing dissolves between 4983 and 4987. The best form of all the controls.
+- The price, judged four at 1920 draft against the name: 4605 and 5006 the same bytes. 4707: 56666 px differ, mean 0.026, largest 22, 0.010 percent over 8 levels. 4860: 114302 px differ, mean 0.164, largest 50, 0.939 percent over 8 levels, all inside x 740 to 1919, y 216 to 506: the far ground right of the eye toward the limb gets darker streaks and flecks along the bands. That is a change of the far ground and stands against (h) of MAIL 1475. G17 of G4 at 4860: 0.985 / 0.753; plain 21.151 (the name 21.144). Frame times 22.2, 28.5, 91.7, 13.8 s.
+
+3. What is known now, each with its control:
+- Cause 1 (the swim of the first trial): the field was read at the ray's entry point while the cover is a mean along the run; the cover slid under the field. Read at the middle of the run the swim is gone (D5, D6).
+- Cause 2 (the hump 4979 to 4985 of the state 3a66ee76): the onset by texel size lets bodies of 4 to 8 texels come and go while they are large. Without the onset no hump (G1 with 3 texels, G4 with 8 texels); with the onset and 4 texels the hump is back (G3: 0.4124 at 4981); with the onset and 2 texels no hump but fine speckle without form (G2).
+- So form and an untouched 4860 exclude each other by this road: bodies large enough to read as cloud must stand at every height where they are resolved, and then they show in the far ground of 4860 and at 4707.
+
+4. For the next round, to rule: either (h) is opened for this layer (then G4's kind is the candidate, still to be proven on the dive, at whole and half frames, with tests and path lines), or the patches stay the named red of the name.
+
+5. Still red in every trial and in the name: the small white blob at the lower edge from 4976 (G4 only frays its edge); a small dark comb of teeth near the lower middle at 4977 to 4985 (seen on the sheets in the name and in G4 alike; not measured, not checked against main).
