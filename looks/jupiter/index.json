@@ -1,9 +1,33 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T19:31:06.850Z",
- "head": "4fb3814984b4e2dfc1267d5ebb6e3d6e96839e55",
- "note": "S2 cure as a switch (farGlobe): first stills; M1 and M2 control at 3150",
+ "pushed": "2026-11-26T19:50:39.574Z",
+ "head": "6653757544734f05f7e102e0017c6858f8d28111",
+ "note": "S2 cure: reader's rows of the dive running; M1 and M2: choosing the haze bands' shade (previews), renders queued",
  "looks": [
+  {
+   "time": "2026-11-26T19:50:38.969Z",
+   "file": "20261126195038969-note-r1-far.jpg",
+   "source": "../../../../tmp/eye/r1-far.jpg",
+   "kind": "note",
+   "label": "S2 cure, far zone at K 6068, 6076, 6084: plates' field gives way to the laid back picture (second group, still red)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:50:37.821Z",
+   "file": "20261126195037821-note-m12-sim-m1.jpg",
+   "source": "../../../../tmp/eye/m12-sim-m1.jpg",
+   "kind": "note",
+   "label": "M1 crop at 3150, previews only (not renders): approved, as it is, haze shadow off, warm shade at depth 0.20, 0.35, 0.50",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T19:50:36.785Z",
+   "file": "20261126195036785-note-m12-sim-m2.jpg",
+   "source": "../../../../tmp/eye/m12-sim-m2.jpg",
+   "kind": "note",
+   "label": "M2 crop at 3150, previews only (not renders): approved, as it is, haze shadow off, warm shade at depth 0.20, 0.35, 0.50",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T19:31:00.375Z",
    "file": "20261126193100375-note-m12-sheet.jpg",
@@ -26,30 +50,6 @@
    "source": "../../../../tmp/eye/c1-nat-6070.jpg",
    "kind": "note",
    "label": "S2 cure, 3035, far zone native: build E left, farGlobe 1 right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:30:57.607Z",
-   "file": "20261126193057607-note-s2cure-6055.jpg",
-   "source": "../../../../tmp/eye/s2cure-6055.jpg",
-   "kind": "note",
-   "label": "S2 cure, 3027 + 1/2, far strip native: globe alone, build E, farGlobe 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:15:50.774Z",
-   "file": "20261126191550774-note-lay-sheet.jpg",
-   "source": "../../../../tmp/eye/lay-sheet.jpg",
-   "kind": "note",
-   "label": "S2 cause: where the relief shows the approved picture (white on the right) at 3019 + 1/2 and 3027 + 1/2, share held at 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T19:15:50.237Z",
-   "file": "20261126191550237-note-s2d-6055.jpg",
-   "source": "../../../../tmp/eye/s2d-6055.jpg",
-   "kind": "note",
-   "label": "S2 cause, 3027 + 1/2: share 0, share 1, share 1 with the approved picture off, share 1 with the air off",
    "stop": "jupiter"
   },
   {
