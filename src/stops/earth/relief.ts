@@ -212,7 +212,7 @@ vec4 thin(vec4 c, float deck) {
   vec2 qp = on * uVeilTimes;
   float inside = step(0.3, q.z) * smoothstep(0.5, 0.5 - uFeather, max(abs(qp.x), abs(qp.y)));
   vec2 gq = (qp - uGlint.xy) * uGlint.z;
-  float unseen = inside * smoothstep(0.5, 0.5 - uGlint.w, max(abs(gq.x), abs(gq.y))) * (1.0 - smoothstep(uGlintSeen.x, uGlintSeen.y, dot(normalize(uEye - at), normalize(-at))));
+  float unseen = inside * smoothstep(0.5, 0.5 - uGlint.w, max(abs(gq.x), abs(gq.y))) * (1.0 - seenBy(dot(normalize(uEye - at), normalize(-at)), uGlintSeen));
   for (int j = 0; j < (unseen > 0.0 ? 1 : 0); j++) {
     vec3 still = textureLod(uGlintSea, gq + 0.5, 0.0).rgb;
     float water = 1.0 - smoothstep(uGlintCloud.x, uGlintCloud.y, min(code.r, min(code.g, code.b))) * (1.0 - smoothstep(uGlintCloud.z, uGlintCloud.w, code.r - code.b));

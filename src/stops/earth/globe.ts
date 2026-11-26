@@ -93,6 +93,9 @@ float eased(float t, float a) {
 float unveiled(float far) {
   return eased(log(uAir.x / max(far, 1e-9)) * uAir.y, uAir.z);
 }
+float seenBy(float c, vec2 lim) {
+  return smoothstep(0.0, 1.0, (lim.x - acos(clamp(c, -1.0, 1.0))) * lim.y);
+}
 float pathShare(float eyeUp, float twinUp) {
   return eased(pow(max(airMass(eyeUp) - 1.0, 0.0) / max(uShare.x * (min(airMass(twinUp), uShare.y) - 1.0), uShare.z), uCome.z), uCome.w);
 }
@@ -155,6 +158,7 @@ uniform vec3 uShare;
 uniform vec4 uCome;
 uniform vec3 uAir;
 uniform vec3 uAirGain;
+uniform vec2 uAirPast;
 uniform vec4 uGlint;
 uniform vec2 uGlintSeen;
 uniform vec4 uGlintCloud;
@@ -419,22 +423,23 @@ ${PATCH_LEVELS}
       albedo = fromCode(toCode(albedo) * (1.0 - body * face * dark) * (1.0 - uStandLight.z * shadow * dark));
     }
     vec3 bare = toCode(albedo);
+    float within = smoothstep(uAirPast.x, uAirPast.y, dot(d, normalize(uTwinEye)));
     vec3 mist = vec3(0.0);
     for (int k = 0; k < (share > 0.0 ? 1 : 0); k++) {
       for (int j = 0; j < (frontH > 0.0 ? 1 : 0); j++) {
         vec4 air = textureLod(uLowVeil, qp * uLowVeilWin + 0.5, 0.0);
-        mist = frontH * share * air.rgb;
-        albedo = fromCode(clamp(toCode(albedo) * (1.0 - frontH * share * air.a) + mist, 0.0, 1.0));
+        mist = frontH * share * within * air.rgb;
+        albedo = fromCode(clamp(toCode(albedo) * (1.0 - frontH * share * within * air.a) + mist, 0.0, 1.0));
       }
     }
-    float lifted = unveiled(length(uEyeBody - d));
+    float lifted = unveiled(length(uEyeBody - d)) * within;
     for (int k = 0; k < (near > 0.0 || lifted > 0.0 ? 1 : 0); k++) {
       vec4 tone = textureLod(uTone, own * uToneScale + 0.5, 0.0);
       place = share * frontH * tone.a * ramp(uPlaceDay, ndl);
       vec3 code = toCode(albedo);
       vec3 sunk = bare;
       vec2 gq = (qp - uGlint.xy) * uGlint.z;
-      float unseen = inside * laid * smoothstep(0.5, 0.5 - uGlint.w, max(abs(gq.x), abs(gq.y))) * (1.0 - smoothstep(uGlintSeen.x, uGlintSeen.y, dot(normalize(uEyeBody - d), normalize(uTwinEye - d))));
+      float unseen = inside * laid * smoothstep(0.5, 0.5 - uGlint.w, max(abs(gq.x), abs(gq.y))) * (1.0 - seenBy(dot(normalize(uEyeBody - d), normalize(uTwinEye - d)), uGlintSeen));
       for (int j = 0; j < (unseen > 0.0 ? 1 : 0); j++) {
         vec3 still = textureLod(uGlintSea, gq + 0.5, 0.0).rgb;
         float water = 1.0 - smoothstep(uGlintCloud.x, uGlintCloud.y, min(code.r, min(code.g, code.b))) * (1.0 - smoothstep(uGlintCloud.z, uGlintCloud.w, code.r - code.b));
@@ -598,7 +603,7 @@ export class Globe {
         uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) }, uPerLine: { value: 1 },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uPatchPlace: { value: levels.map((i) => (i >= from ? 1 : 0)) }, uPlaceN: { value: centre }, uPlaceE: { value: centreEast }, uPlaceU: { value: centreNorth },
-        uTone: { value: p?.place?.tone ?? null }, uTwinEye: { value: p?.place?.twin.clone() ?? new THREE.Vector3(0, 0, 2) }, uEyeBody: { value: new THREE.Vector3(0, 0, 4) }, uLowVeil: { value: p?.place?.veil.map ?? null }, uAbove: { value: p?.place?.above?.map ?? null }, uAboveAt: { value: p?.place?.above ? new THREE.Vector4(Math.cos(rad(p.place.above.fromDeg[1]!)), Math.cos(rad(p.place.above.fromDeg[0]!)), Math.log2((2 * Math.PI * p.place.above.size) / (o.mapWidth * rad(p.widthsDeg[from] ?? 12))), 1) : new THREE.Vector4(2, 3, 0, 0) }, uAboveWin: { value: from < MAX_PATCHES ? new THREE.Vector3(shift(from).x, shift(from).y, scale(from)) : new THREE.Vector3(0, 0, 1) }, uWedge: { value: p?.place?.wedge?.map ?? null }, uWedgeWin: { value: p?.place?.wedge ? new THREE.Vector3(1 / (2 * Math.tan(rad(p.place.wedge.widthDeg) / 2)), Math.log2((2 * Math.PI * p.place.wedge.size) / (o.mapWidth * rad(p.place.wedge.widthDeg))), 1) : new THREE.Vector3(1, 0, 0) }, uStand: { value: p?.place?.stand.map ?? null }, uStandAt: { value: new THREE.Vector4((from < MAX_PATCHES ? plane(from) : 1) / (p?.place?.stand.times ?? 1), (p?.place?.stand.km ?? 0) / 6371, p?.place?.stand.graze ?? 1, (p?.place?.stand.bodyKm ?? 1) / 6371) }, uStandLight: { value: new THREE.Vector4(p?.place?.stand.slope ?? 0, (p?.place?.stand.slopeKm ?? 1) / 6371, p?.place?.stand.shadow ?? 0, (p?.place?.stand.softKm ?? 1) / 6371) }, uStandTone: { value: new THREE.Vector4(p?.place?.stand.shade[0] ?? 1, p?.place?.stand.shade[1] ?? 1, p?.place?.stand.shade[2] ?? 1, p?.place?.stand.sunFloor ?? 0.1) }, uStandSteps: { value: new THREE.Vector2(p?.place?.stand.steps ?? 1, p?.place?.stand.shadowSteps ?? 1) }, uGraze: { value: 0 }, uLowVeilWin: { value: 1 / (p?.place?.veil.times ?? 1) }, uArrive: { value: new THREE.Vector4(p?.place?.arrive[0] ?? 1, 1 / Math.log((p?.place?.arrive[0] ?? 2) / (p?.place?.arrive[1] ?? 1)), 1, 0) }, uShare: { value: new THREE.Vector3().fromArray(p?.place?.share ?? [1, 2, 1]) }, uCome: { value: new THREE.Vector4(p?.place?.share[3] ?? 1, p?.place?.share[4] ?? 1, p?.place?.share[5] ?? 1, p?.place?.share[6] ?? 0.5) }, uAir: { value: new THREE.Vector3(p?.place?.share[7] ?? 1e-9, p?.place?.share[8] ?? 1, p?.place?.share[9] ?? 0.5) }, uAirGain: { value: new THREE.Vector3(p?.place?.share[10] ?? 1, p?.place?.share[11] ?? 1, p?.place?.share[12] ?? 1) }, uToneScale: { value: p?.place ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.place.toneDeg) / 2)) : 1 }, uPlaceScale: { value: from < MAX_PATCHES ? plane(from) : 1 }, uEarlyScale: { value: p?.place && from < MAX_PATCHES ? Math.tan(rad((p.widthsDeg[from] ?? p.place.earlyDeg) / 2)) / Math.tan(rad(p.place.earlyDeg / 2)) : 1 }, uToneCloud: { value: new THREE.Vector2().fromArray(p?.place?.toneCloud ?? [1, 2]) }, uToneGrey: { value: new THREE.Vector2().fromArray(p?.place?.toneGrey ?? [-2, -1]) }, uGlint: { value: new THREE.Vector4(p?.place?.glint?.at[0] ?? 0, p?.place?.glint?.at[1] ?? 0, p?.place?.glint?.win ?? 1, p?.place?.glint?.feather ?? 0.04) }, uGlintSeen: { value: p?.place?.glint ? new THREE.Vector2(Math.cos(rad(p.place.glint.seenDeg[0]!)), Math.cos(rad(p.place.glint.seenDeg[1]!))) : new THREE.Vector2(-3, -2) }, uGlintCloud: { value: new THREE.Vector4().fromArray([...(p?.place?.glint?.cloud ?? [254, 255]), ...(p?.place?.glint?.warm ?? [0, 1])]).multiplyScalar(1 / 255) }, uGlintGlow: { value: new THREE.Vector3(p?.place?.glint?.glow[0] ?? 0, p?.place?.glint?.glow[1] ?? 1, (p?.place?.glint?.floor ?? 1) / 255) }, uGlintLight: { value: p?.place?.glint?.light ?? null }, uGlintSea: { value: p?.place?.glint?.sea ?? null }, uPlaceGain: { value: new THREE.Vector3().fromArray(p?.place?.gain ?? [1, 1, 1]) }, uPlaceDay: { value: new THREE.Vector2().fromArray(p?.place?.day ?? [0, 1]) },
+        uTone: { value: p?.place?.tone ?? null }, uTwinEye: { value: p?.place?.twin.clone() ?? new THREE.Vector3(0, 0, 2) }, uEyeBody: { value: new THREE.Vector3(0, 0, 4) }, uLowVeil: { value: p?.place?.veil.map ?? null }, uAbove: { value: p?.place?.above?.map ?? null }, uAboveAt: { value: p?.place?.above ? new THREE.Vector4(Math.cos(rad(p.place.above.fromDeg[1]!)), Math.cos(rad(p.place.above.fromDeg[0]!)), Math.log2((2 * Math.PI * p.place.above.size) / (o.mapWidth * rad(p.widthsDeg[from] ?? 12))), 1) : new THREE.Vector4(2, 3, 0, 0) }, uAboveWin: { value: from < MAX_PATCHES ? new THREE.Vector3(shift(from).x, shift(from).y, scale(from)) : new THREE.Vector3(0, 0, 1) }, uWedge: { value: p?.place?.wedge?.map ?? null }, uWedgeWin: { value: p?.place?.wedge ? new THREE.Vector3(1 / (2 * Math.tan(rad(p.place.wedge.widthDeg) / 2)), Math.log2((2 * Math.PI * p.place.wedge.size) / (o.mapWidth * rad(p.place.wedge.widthDeg))), 1) : new THREE.Vector3(1, 0, 0) }, uStand: { value: p?.place?.stand.map ?? null }, uStandAt: { value: new THREE.Vector4((from < MAX_PATCHES ? plane(from) : 1) / (p?.place?.stand.times ?? 1), (p?.place?.stand.km ?? 0) / 6371, p?.place?.stand.graze ?? 1, (p?.place?.stand.bodyKm ?? 1) / 6371) }, uStandLight: { value: new THREE.Vector4(p?.place?.stand.slope ?? 0, (p?.place?.stand.slopeKm ?? 1) / 6371, p?.place?.stand.shadow ?? 0, (p?.place?.stand.softKm ?? 1) / 6371) }, uStandTone: { value: new THREE.Vector4(p?.place?.stand.shade[0] ?? 1, p?.place?.stand.shade[1] ?? 1, p?.place?.stand.shade[2] ?? 1, p?.place?.stand.sunFloor ?? 0.1) }, uStandSteps: { value: new THREE.Vector2(p?.place?.stand.steps ?? 1, p?.place?.stand.shadowSteps ?? 1) }, uGraze: { value: 0 }, uLowVeilWin: { value: 1 / (p?.place?.veil.times ?? 1) }, uArrive: { value: new THREE.Vector4(p?.place?.arrive[0] ?? 1, 1 / Math.log((p?.place?.arrive[0] ?? 2) / (p?.place?.arrive[1] ?? 1)), 1, 0) }, uShare: { value: new THREE.Vector3().fromArray(p?.place?.share ?? [1, 2, 1]) }, uCome: { value: new THREE.Vector4(p?.place?.share[3] ?? 1, p?.place?.share[4] ?? 1, p?.place?.share[5] ?? 1, p?.place?.share[6] ?? 0.5) }, uAir: { value: new THREE.Vector3(p?.place?.share[7] ?? 1e-9, p?.place?.share[8] ?? 1, p?.place?.share[9] ?? 0.5) }, uAirGain: { value: new THREE.Vector3(p?.place?.share[10] ?? 1, p?.place?.share[11] ?? 1, p?.place?.share[12] ?? 1) }, uAirPast: { value: new THREE.Vector2(p?.place?.share[13] ?? -3, p?.place?.share[14] ?? -2) }, uToneScale: { value: p?.place ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.place.toneDeg) / 2)) : 1 }, uPlaceScale: { value: from < MAX_PATCHES ? plane(from) : 1 }, uEarlyScale: { value: p?.place && from < MAX_PATCHES ? Math.tan(rad((p.widthsDeg[from] ?? p.place.earlyDeg) / 2)) / Math.tan(rad(p.place.earlyDeg / 2)) : 1 }, uToneCloud: { value: new THREE.Vector2().fromArray(p?.place?.toneCloud ?? [1, 2]) }, uToneGrey: { value: new THREE.Vector2().fromArray(p?.place?.toneGrey ?? [-2, -1]) }, uGlint: { value: new THREE.Vector4(p?.place?.glint?.at[0] ?? 0, p?.place?.glint?.at[1] ?? 0, p?.place?.glint?.win ?? 1, p?.place?.glint?.feather ?? 0.04) }, uGlintSeen: { value: p?.place?.glint ? new THREE.Vector2(rad(p.place.glint.seenDeg[0]!), 1 / (rad(p.place.glint.seenDeg[0]!) - rad(p.place.glint.seenDeg[1]!))) : new THREE.Vector2(10, 1) }, uGlintCloud: { value: new THREE.Vector4().fromArray([...(p?.place?.glint?.cloud ?? [254, 255]), ...(p?.place?.glint?.warm ?? [0, 1])]).multiplyScalar(1 / 255) }, uGlintGlow: { value: new THREE.Vector3(p?.place?.glint?.glow[0] ?? 0, p?.place?.glint?.glow[1] ?? 1, (p?.place?.glint?.floor ?? 1) / 255) }, uGlintLight: { value: p?.place?.glint?.light ?? null }, uGlintSea: { value: p?.place?.glint?.sea ?? null }, uPlaceGain: { value: new THREE.Vector3().fromArray(p?.place?.gain ?? [1, 1, 1]) }, uPlaceDay: { value: new THREE.Vector2().fromArray(p?.place?.day ?? [0, 1]) },
         uMapWidth: { value: o.mapWidth }, uMapFull: { value: o.mapFull },
         uSpin: { value: 0 }, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uTint: { value: new THREE.Vector3(1, 1, 1) },
         uCurve: { value: l.curve.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },
