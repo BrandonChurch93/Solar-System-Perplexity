@@ -42,6 +42,18 @@ export interface GlobePatches {
   lean: number
   nearDeg: number
   place?: { from: number; ownDeg: [number, number]; gain: number; fade?: [number, number]; light?: [number, number, number]; hold?: [number, number] }
+  tilt?: GlobeTilt
+  tone?: { map: THREE.Texture; dark: number }
+  hue?: { floor: number; at: [number, number]; rgb: number[][] }
+  hero?: { at: [number, number]; deg: [number, number]; tint: [number, number, number]; own?: THREE.Texture; square?: [number, number, number] }
+}
+
+export interface GlobeTilt {
+  map: THREE.Texture
+  widthDeg: number
+  zero: number
+  step: number
+  sun: readonly [number, number, number]
 }
 
 export interface GlobeOptions {
@@ -71,6 +83,7 @@ export const FINE_LEVELS = 2
 
 export const SHELL = 1.3
 export const MAX_PATCHES = 6
+const HUE_KNOTS = 16
 
 const VERT = /* glsl */ `
 out vec3 vPos;
@@ -91,7 +104,7 @@ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPat
       float edge = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y)));
       float drive = mix(mix(parent, thin, uPatchLean), placeDrive, uPlaceEarly * step(abs(${i}.0 - uPlaceFrom - 1.0), 0.25));
       placeDrive = mix(placeDrive, drive, first);
-${i === 0 ? '      stays = uPlaceHold.z * (1.0 - smoothstep(uPlaceHold.x, uPlaceHold.y, ring));\n' : ''}      float w = edge * mix(${i === 0 ? 'max(1.0 - smoothstep(mix(uPatchFade.x, uMend.w, mend), uPatchFade.y, parent), stays)' : '1.0 - smoothstep(uPatchFade.x, uPatchFade.y, drive)'}, sin(turn) / (sin(turn) + cos(turn)), first * uPlaceFade.z);
+${i === 0 ? '      stays = uPlaceHold.z * front * (1.0 - smoothstep(uPlaceHold.x, uPlaceHold.y, ring));\n      mapHue = stays * edge * smoothstep(mix(uPatchFade.x, uMend.w, mend), uPatchFade.y, parent);\n' : ''}      float w = edge * mix(${i === 0 ? 'max(1.0 - smoothstep(mix(uPatchFade.x, uMend.w, mend), uPatchFade.y, parent), stays)' : '1.0 - smoothstep(uPatchFade.x, uPatchFade.y, drive)'}, sin(turn) / (sin(turn) + cos(turn)), first * uPlaceFade.z);
       float lightTurn = smoothstep(0.0, 1.0, (log(uPlaceLight.y) - log(max(mix(parent, thin, uPatchLean), 1e-6))) / (log(uPlaceLight.y) - log(uPlaceLight.x)));
       shone = mix(shone, edge * pow(lightTurn, uPlaceLight.z), first);
       vec3 tx = albedo;
@@ -198,6 +211,19 @@ uniform vec3 uPlaceFade;
 uniform vec3 uPlaceLight;
 uniform vec3 uPlaceHold;
 uniform float uPlaceEarly;
+uniform sampler2D uTilt;
+uniform vec4 uTiltCode;
+uniform vec3 uTiltSun;
+uniform sampler2D uTone;
+uniform vec2 uToneSet;
+uniform vec3 uHue[${HUE_KNOTS}];
+uniform vec3 uHueAt;
+uniform vec4 uHero;
+uniform vec3 uHeroTint;
+uniform sampler2D uHeroOwn;
+uniform float uHeroTurn;
+uniform vec3 uHeroBox;
+uniform float uToneDark;
 uniform sampler2D uClose;
 uniform mat3 uCloseCam;
 uniform vec3 uCloseUp;
@@ -410,8 +436,14 @@ void main() {
   float placed = 0.0;
   float shone = 0.0;
   float stays = 0.0;
+  float mapHue = 0.0;
   float placeDrive = 0.0;
   float ring = 0.0;
+  float tilt = 0.0;
+  vec3 toneOwn = vec3(0.0);
+  vec3 turned = vec3(1.0);
+  float core = 0.0;
+  float gold = 0.0;
   if (uPatchCount > 0.5) {
     float inv = 1.0 / max(dn, 0.05);
     vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
@@ -430,6 +462,17 @@ void main() {
     float parent = diagTexelsDir(d, uMapFull) * uFrame;
     float thin = parent;
     float mend = 1.0 - smoothstep(0.55 * uMend.z, uMend.z, length(g - uMend.xy));
+    core = uPlace.y * front * (1.0 - smoothstep(uPlace.z, uPlace.w, ring));
+    gold = 1.0 - smoothstep(uHero.z, uHero.w, length(g - uHero.xy));
+    vec2 tq = g * uTiltCode.x;
+    float code = uTiltCode.y / 255.0;
+    for (int k = 0; k < (uTiltCode.w * front > 0.0 && max(abs(tq.x), abs(tq.y)) < 0.5 ? 1 : 0); k++) {
+      code = textureGrad(uTilt, tq + 0.5, gx * uTiltCode.x, gy * uTiltCode.x).r;
+      for (int j = 0; j < (uSmear > 0.0 && bare ? 1 : 0); j++) code = streak(uTilt, tq + 0.5, sx * uTiltCode.x, sy * uTiltCode.x, along, lat).r;
+    }
+    tilt = (code * 255.0 - uTiltCode.y) * uTiltCode.z * max(dot(d, uTiltSun) + uWrap, 0.06) * (1.0 - uToneSet.y);
+    for (int k = 0; k < (uToneSet.y * front > 0.0 && max(abs(tq.x), abs(tq.y)) < 0.5 ? 1 : 0); k++) toneOwn = inverseFilmic(textureGrad(uTone, tq + 0.5, gx * uTiltCode.x, gy * uTiltCode.x).rgb);
+    for (int k = 0; k < (uHeroTurn * gold * uToneSet.y * front > 0.0 && max(abs(tq.x), abs(tq.y)) < 0.5 ? 1 : 0); k++) turned = pow(toneOwn / max(inverseFilmic(textureGrad(uHeroOwn, (tq + 0.5 - uHeroBox.xy) * uHeroBox.z, gx * uTiltCode.x * uHeroBox.z, gy * uTiltCode.x * uHeroBox.z).rgb), vec3(1e-4)), vec3(uHeroTurn));
 ${PATCH_LEVELS}
 ${FINE}
   }
@@ -457,7 +500,7 @@ ${FINE}
   float dusk = 1.0 - smoothstep(uReliefRange.x, uReliefRange.y, ndl0);
   float strength = mix(mix(uRelief.z, uRelief.x, dusk), uRelief.y, near) * smoothstep(0.0, 0.12, mu) * (1.0 - stays);
   vec3 np = normalize(n - slopeW * strength);
-  float ndl = dot(np, uSunW);
+  float ndl = dot(np, uSunW) + tilt;
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), uLift.x, uLift.y);
   float inn = c > 0.0 ? max(1.0 - uSink + crest - s, 0.0) : 1.0;
   float side = smoothstep(uLineSide.x, uLineSide.y, dot(n, uLineW)) * smoothstep(uLineSun.x, uLineSun.y, ndl0);
@@ -466,8 +509,15 @@ ${FINE}
   float brim = (1.0 - uLine.w * max(smoothstep(uLineDip.z, uLineDip.w, ndl0), side) * (1.0 - smoothstep(uLineDip.x * tight, uLineDip.y * tight, inn))) * (1.0 + uLine.x * kick * (1.0 - smoothstep(uLine.y, uLine.z, inn)));
   vec3 lit = max(curveAt(ndl0) - uNight, vec3(0.0)) * mix(vec3(1.0), limbAt(mu) * brim, toward) * (1.0 + lift);
   fine = mix(1.0, fine, mix(uFineShade.z, 1.0, smoothstep(uFineShade.x, uFineShade.y, dot(albedo, vec3(0.2126, 0.7152, 0.0722)))));
-  vec3 ground = inverseFilmic(albedo) * fine;
-  float inRing = placed * uPlace.y * (1.0 - smoothstep(uPlace.z, uPlace.w, ring));
+  vec3 ground = inverseFilmic(albedo) * turned;
+  float ringed = gold * (1.0 - uHeroTurn);
+  for (int k = 0; k < (mapHue * uHueAt.z > 0.0 ? 1 : 0); k++) {
+    float lum = dot(ground, vec3(0.2126, 0.7152, 0.0722));
+    float knot = clamp((log(lum + uHueAt.z) - uHueAt.x) * uHueAt.y, 0.0, ${HUE_KNOTS - 1}.0 - 1e-3);
+    ground = mix(ground, mix(lum * mix(uHue[int(knot)], uHue[int(knot) + 1], fract(knot)), ground * pow(uHeroTint, vec3(ringed)), ringed), mapHue);
+  }
+  ground *= fine;
+  float inRing = placed * uPlace.y * (1.0 - smoothstep(uPlace.z, uPlace.w, ring)) * (1.0 - uToneSet.y);
   float pm = inRing * min(1.0, shone / max(placed, 1e-4));
   vec3 baked = vec3(0.0);
   for (int k = 0; k < (inRing > 0.0 ? 1 : 0); k++) {
@@ -485,7 +535,12 @@ ${FINE}
   vec3 dim = mix(vec3(uNightFlat.x), calm, uNightFlat.y) + max(ground - uDuskFrom, vec3(0.0)) * (band * (1.0 - uNightFlat.y));
   vec3 col = (ground * lit + dim * uNight * uNightDim * (1.0 + uNightFlat.z * smoothstep(uNightFlat.w, 1.0, mu))) * uTint;
   col = mix(col, dot(col, vec3(0.2126, 0.7152, 0.0722)) * uPlain, uCarry.z);
-  col = mix(col, baked * uPlace.x, pm);
+  vec3 plate = baked * uPlace.x;
+  col = mix(col, plate, pm);
+  for (int k = 0; k < (core * uToneSet.y * uToneSet.x > 0.0 ? 1 : 0); k++) {
+    float grade = core * uToneSet.x;
+    col = pow(col + uToneDark, vec3(1.0 - grade)) * pow(ground / turned * toneOwn * uPlace.x + uToneDark, vec3(grade)) - uToneDark;
+  }
   col *= uCarry.x / (1.0 + max(col.r, max(col.g, col.b)) * (uCarry.x - 1.0) * uCarry.y);
   col *= 1.0 / (1.0 + uShoulder.y * max(max(col.r, max(col.g, col.b)) - uShoulder.x, 0.0));
   col *= 1.0 / (1.0 + uKnee.y * max(max(col.r, max(col.g, col.b)) - uKnee.x, 0.0));
@@ -496,9 +551,10 @@ ${CLOSE_DRAWS}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   float k = uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   float hole = smoothstep(uHole.x, uHole.y, acos(clamp(dot(dc, uCloseUp), -1.0, 1.0)));
-  vec4 beauty = vec4((col * cov + rim) * k, cov) * (uShow * (uHole.w > 1.5 ? 1.0 - hole : 1.0 - uHole.w * (1.0 - uHole.z * hole)));
+  float shown = uHole.w > 1.5 ? 1.0 - hole : 1.0 - uHole.w * (1.0 - uHole.z * hole);
+  vec4 beauty = vec4((col * cov + rim) * k, cov) * (uShow * shown);
   outColor = diagOut(beauty, texels, 1.0, vec3(0.55, 0.5, 0.45), vec2(0.0), t);
-  if (uDiag >= 2 ? cov < 0.5 : cov <= 0.0 && dot(rim, vec3(1.0)) < 1e-6) discard;
+  if (uDiag >= 2 ? min(cov, shown) < 0.5 : cov <= 0.0 && dot(rim, vec3(1.0)) < 1e-6) discard;
 }`
 
 export class Globe {
@@ -524,6 +580,7 @@ export class Globe {
     this.toLight = l.rim.toLight
     this.line = [l.line.width[0], l.line.width[1], l.line.dipWidth[0], l.line.dipWidth[1]]
     if ((p?.textures.length ?? 0) > MAX_PATCHES) throw new Error('too many patch levels')
+    if (p?.hue && p.hue.rgb.length !== HUE_KNOTS) throw new Error('the hue law has ' + HUE_KNOTS + ' knots')
     const tex = (i: number): THREE.Texture | null => p?.textures[i] ?? p?.textures[0] ?? null
     const scale = (i: number): number => {
       const w = p?.widthsDeg[i]
@@ -554,6 +611,12 @@ export class Globe {
         uPatchScale: { value: levels.map(scale) }, uPatchSize: { value: levels.map(size) }, uPatchFull: { value: levels.map((i) => p?.full[i] ?? size(i)) },
         uPatchNear: { value: levels.map((i) => ((p?.widthsDeg[i] ?? 360) <= (p?.nearDeg ?? 0) ? 1 : 0)) },
         uPatchCount: { value: p?.textures.length ?? 0 },
+        uTilt: { value: p?.tilt?.map ?? o.map },
+        uTiltCode: { value: new THREE.Vector4(p?.tilt ? 1 / (2 * Math.tan(THREE.MathUtils.degToRad(p.tilt.widthDeg) / 2)) : 1, p?.tilt?.zero ?? 0, p?.tilt?.step ?? 0, p?.tilt ? 1 : 0) },
+        uTiltSun: { value: new THREE.Vector3(...(p?.tilt?.sun ?? [0, 0, 1])).normalize() },
+        uHero: { value: new THREE.Vector4(Math.tan(THREE.MathUtils.degToRad(p?.hero?.at[0] ?? 0)), Math.tan(THREE.MathUtils.degToRad(p?.hero?.at[1] ?? 0)), p?.hero ? Math.tan(THREE.MathUtils.degToRad(p.hero.deg[0])) : -2, p?.hero ? Math.tan(THREE.MathUtils.degToRad(p.hero.deg[1])) : -1) }, uHeroTint: { value: new THREE.Vector3().fromArray(p?.hero?.tint ?? [1, 1, 1]) }, uHeroOwn: { value: p?.hero?.own ?? p?.tone?.map ?? o.map }, uHeroTurn: { value: 0 }, uHeroBox: { value: p?.hero?.square ? new THREE.Vector3(p.hero.square[0], 1 - p.hero.square[1] - p.hero.square[2], 1 / p.hero.square[2]) : new THREE.Vector3(0, 0, 1) },
+        uTone: { value: p?.tone?.map ?? o.map }, uToneSet: { value: new THREE.Vector2(0, p?.tone ? 1 : 0) }, uToneDark: { value: p?.tone?.dark ?? 1 },
+        uHue: { value: Array.from({ length: HUE_KNOTS }, (_, i) => new THREE.Vector3().fromArray(p?.hue?.rgb[i] ?? [1, 1, 1])) }, uHueAt: { value: new THREE.Vector3(p?.hue?.at[0] ?? 0, p?.hue ? (HUE_KNOTS - 1) / (p.hue.at[1] - p.hue.at[0]) : 0, p?.hue?.floor ?? 0) },
         uFineMap: { value: f?.texture ?? o.map }, uFine: { value: new THREE.Vector2(f && p ? 1 : 0, f?.top ?? 1) },
         uFineScale: { value: Array.from({ length: FINE_LEVELS }, (_, i) => (f && p ? (2 ** (i + 1) * scale(p.textures.length - 1) * size(p.textures.length - 1)) / f.period : 1)) },
         uFineSize: { value: f?.period ?? 1 }, uFineFull: { value: f?.full ?? f?.period ?? 1 }, uFineShift: { value: new THREE.Vector2(f?.shift[0] ?? 0, f?.shift[1] ?? 0) },
@@ -588,6 +651,14 @@ export class Globe {
   plates(levels: readonly number[], textures: readonly THREE.Texture[], early = false): void {
     levels.forEach((level, i) => { this.material.uniforms['uPatch' + level]!.value = textures[i]! })
     this.material.uniforms.uPlaceEarly!.value = early ? 1 : 0
+  }
+
+  heroTurn(share: number): void {
+    this.material.uniforms.uHeroTurn!.value = share
+  }
+
+  tone(grade: number): void {
+    ;(this.material.uniforms.uToneSet!.value as THREE.Vector2).x = grade
   }
 
   place(gain: number, on: number): void {
