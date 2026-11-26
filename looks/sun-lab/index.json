@@ -1,9 +1,55 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-26T02:05:36.249Z",
- "head": "47e9779415b2aaceb61a2c0c383aa786ed5ac7a0",
- "note": "lab: breaking the plates with a field of the place, skirt cure",
+ "pushed": "2026-11-26T02:25:56.492Z",
+ "head": "e285903a57bafb8d8271a621aa6849c58673dc02",
+ "note": "02:26 UTC lab trials t46 to t57 (pools, thin lanes, fingers)",
  "looks": [
+  {
+   "time": "2026-11-26T02:25:55.914Z",
+   "file": "20261126022555914-note-trials-p.jpg",
+   "source": "../v/trials-p.jpg",
+   "kind": "note",
+   "label": "02:13 FAILED trials t46 to t48: raised seam heat between fused tops reads as a pale bed",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:25:55.357Z",
+   "file": "20261126022555357-note-levels-s.jpg",
+   "source": "../v/levels-s.jpg",
+   "kind": "note",
+   "label": "02:25 levels picture: approved, t55, t56, t57",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:25:54.815Z",
+   "file": "20261126022554815-note-trials-s.jpg",
+   "source": "../v/trials-s.jpg",
+   "kind": "note",
+   "label": "02:25 trials t55 t56 t57 at 3 to 1 under the approved: the shoulder ends in fingers along the fan",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:25:54.232Z",
+   "file": "20261126022554232-note-trials-q.jpg",
+   "source": "../v/trials-q.jpg",
+   "kind": "note",
+   "label": "02:17 trials t49 t50 t51 at 3 to 1 under the approved: pools at the crossings, thin lanes between some tops",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:24:48.300Z",
+   "file": "20261126022448300-frame-lab-90-t57.jpg",
+   "source": "out/work/sun/lab/lab-90-t57.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-26T02:05:35.665Z",
    "file": "20261126020535665-note-blocks2.jpg",
@@ -26,52 +72,6 @@
    "source": "../v/x3-t39.jpg",
    "kind": "note",
    "label": "lab t39 at 3 times under the approved: dark patches on tops, no outlines",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:05:34.056Z",
-   "file": "20261126020534056-note-levels-l.jpg",
-   "source": "../v/levels-l.jpg",
-   "kind": "note",
-   "label": "lab levels: approved, h32, t31, t33 (place field breaks the plates)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T02:04:25.900Z",
-   "file": "20261126020425900-frame-lab-90-t42.jpg",
-   "source": "out/work/sun/lab/lab-90-t42.png",
-   "kind": "frame",
-   "label": "sun.terrain frame 90, draft tier",
-   "stop": "sun",
-   "segment": "sun.terrain",
-   "frame": 90,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "822cc1bfb7014138"
-  },
-  {
-   "time": "2026-11-26T01:44:12.252Z",
-   "file": "20261126014412252-note-lab-60-h32.jpg",
-   "source": "../v/lab-60-h32.jpg",
-   "kind": "note",
-   "label": "lab h32 frame 60 draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T01:44:11.707Z",
-   "file": "20261126014411707-note-lab-0-h32.jpg",
-   "source": "../v/lab-0-h32.jpg",
-   "kind": "note",
-   "label": "lab h32 frame 0 draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T01:44:11.128Z",
-   "file": "20261126014411128-note-trials-k.jpg",
-   "source": "../v/trials-k.jpg",
-   "kind": "note",
-   "label": "lab trials t27 to t30 at 3 times",
    "stop": "sun"
   }
  ]
