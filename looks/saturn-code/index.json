@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T05:50:04.169Z",
+ "pushed": "2026-11-26T06:17:14.576Z",
  "head": "d65bfcbc0f77ca551a025d1066de534e296d0526",
- "note": "the hold against the approved: which rigid body stands closest; estimates laid from the approved, a real frame of the approved's own shape as a rigid body is rendering",
+ "note": "ruling d356 (7) taken: building the solved hold view (distance 5.12 radii, lens 32.94) in fit.json; reading the shadow of the globe on the near ring against the approved",
  "looks": [
+  {
+   "time": "2026-11-26T06:17:13.995Z",
+   "file": "20261126061713995-note-shadow-lift.jpg",
+   "source": "../../../../tmp/v/rigid/VF/shadow-lift.jpg",
+   "kind": "note",
+   "label": "3465 lower right lifted: approved, main, K: the globe's shadow on the near ring"
+  },
+  {
+   "time": "2026-11-26T06:17:13.351Z",
+   "file": "20261126061713351-note-k4-all.jpg",
+   "source": "../../../../tmp/v/rigid/VF/k4-all.jpg",
+   "kind": "note",
+   "label": "3465 final, the approved's own shape as a rigid body (fourth kind), beside approved, main and K: not the ruled aim, shown for the record"
+  },
   {
    "time": "2026-11-26T05:50:03.537Z",
    "file": "20261126055003537-note-one-r-b.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/rigid/PC/lip1_3596.jpg",
    "kind": "note",
    "label": "58113814 dive 3596 to 3607 at the right end of the equator, full size"
-  },
-  {
-   "time": "2026-11-26T05:33:18.160Z",
-   "file": "20261126053318160-note-lip1_3572.jpg",
-   "source": "../../../../tmp/v/rigid/PC/lip1_3572.jpg",
-   "kind": "note",
-   "label": "58113814 dive 3572 to 3583 at the right end of the equator, full size: no lone bright point"
-  },
-  {
-   "time": "2026-11-26T05:33:17.607Z",
-   "file": "20261126053317607-note-fit1-parts.jpg",
-   "source": "../../../../tmp/v/rigid/VF/fit1-parts.jpg",
-   "kind": "note",
-   "label": "the same at full size: lower left, right ansa, upper left; today left, solved right"
   }
  ]
 }
