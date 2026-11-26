@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T14:34:30.536Z",
- "head": "f73602f96c26790928796406d3c1a158f7d32475",
- "note": "speck state proof runs; the lead with the three faults in hand, offline plates",
+ "pushed": "2026-11-26T14:59:43.976Z",
+ "head": "04b82e67d37ec981f28da1c28204e67099179d95",
+ "note": "the state 04b82e67 in the film, drafts as pairs against step 2",
  "looks": [
+  {
+   "time": "2026-11-26T14:59:43.377Z",
+   "file": "20261126145943377-note-vA4.jpg",
+   "source": "../../../../tmp/pm/in/vA4.jpg",
+   "kind": "note",
+   "label": "the state 04b82e67, drafts 2466 and 2468",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:59:42.767Z",
+   "file": "20261126145942767-note-vA2.jpg",
+   "source": "../../../../tmp/pm/in/vA2.jpg",
+   "kind": "note",
+   "label": "the state 04b82e67, drafts 2444 and 2462",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:59:42.101Z",
+   "file": "20261126145942101-note-far-rim-2470-main-above-state-below.jpg",
+   "source": "../../../../tmp/pm/mail/far-rim-2470-main-above-state-below.png",
+   "kind": "note",
+   "label": "draft 2470, the far rim's head at 2 times: main above, the state 04b82e67 below (the black band stands in both)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:59:41.499Z",
+   "file": "20261126145941499-note-pair-2456-step2-above-state-below.jpg",
+   "source": "../../../../tmp/pm/mail/pair-2456-step2-above-state-below.jpg",
+   "kind": "note",
+   "label": "draft 2456 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:59:40.681Z",
+   "file": "20261126145940681-note-pair-2452-step2-above-state-below.jpg",
+   "source": "../../../../tmp/pm/mail/pair-2452-step2-above-state-below.jpg",
+   "kind": "note",
+   "label": "draft 2452 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:59:39.863Z",
+   "file": "20261126145939863-note-pair-2448-step2-above-state-below.jpg",
+   "source": "../../../../tmp/pm/mail/pair-2448-step2-above-state-below.jpg",
+   "kind": "note",
+   "label": "draft 2448 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T14:59:39.005Z",
+   "file": "20261126145939005-note-pair-2440-step2-above-state-below.jpg",
+   "source": "../../../../tmp/pm/mail/pair-2440-step2-above-state-below.jpg",
+   "kind": "note",
+   "label": "draft 2440 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T14:34:29.616Z",
    "file": "20261126143429616-note-plate16-step2-against-lead.jpg",
    "source": "../../../../tmp/pm/mail/plate16-step2-against-lead.jpg",
    "kind": "note",
    "label": "1.6 deg plate whole, half size: step 2 left, lead now right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:34:28.658Z",
-   "file": "20261126143428658-note-mid16-step2-leadv4-leadnow.jpg",
-   "source": "../../../../tmp/pm/mail/mid16-step2-leadv4-leadnow.png",
-   "kind": "note",
-   "label": "1.6 deg plate 1:1: step 2, lead of 14:02, lead now with take 1 even",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:34:27.732Z",
-   "file": "20261126143427732-note-band07-marble-against-moved.jpg",
-   "source": "../../../../tmp/pm/mail/band07-marble-against-moved.png",
-   "kind": "note",
-   "label": "0.7 deg plate, the soft border at 2 times: ground mirrored (above, thrown away) and moved whole (below)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:34:26.953Z",
-   "file": "20261126143426953-note-tip38-step2-leadv4-leadnow.jpg",
-   "source": "../../../../tmp/pm/mail/tip38-step2-leadv4-leadnow.png",
-   "kind": "note",
-   "label": "3.8 deg plate at the east tip, 1:1: step 2, lead of 14:02, lead now (pits stay the plate's)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:34:25.753Z",
-   "file": "20261126143425753-note-speck-2466-main-against-cure.jpg",
-   "source": "../../../../tmp/pm/mail/speck-2466-main-against-cure.png",
-   "kind": "note",
-   "label": "draft 2466 at 8 times: main left, the speck state right",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:01:08.521Z",
-   "file": "20261126140108521-note-slab6.jpg",
-   "source": "../../../../tmp/pm/in/slab6.png",
-   "kind": "note",
-   "label": "slab at 2686, main's files, half size: main, share 1, without field count, without texel count, without air count, without need count",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:01:07.914Z",
-   "file": "20261126140107914-note-slabcap.jpg",
-   "source": "../../../../tmp/pm/in/slabcap.png",
-   "kind": "note",
-   "label": "slab at 2686, main's files, x 960 to 1920, y 200 to 1000: left main, right the cap alone (law returns 0, no relief): the slab is the cap's own ground",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:01:07.207Z",
-   "file": "20261126140107207-note-i16-take1.jpg",
-   "source": "assets-src/mars/place/takes/i16-take1.png",
-   "kind": "note",
-   "label": "whole cure: take 1 of round 3 of land-1p6, as it came",
    "stop": "mars"
   }
  ]
