@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T09:09:03.859Z",
+ "pushed": "2026-11-26T09:38:12.047Z",
  "head": "b13b631b32a83375884c26c882221970e975c1aa",
- "note": "b13b631b local, finals 0 60 90 360 done, 221 rendering. sun-near 60 final: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "note": "b13b631b local. 221 at final 40 min in, no frame yet (bad); drafts of the rise and the strip of the arch follow. sun-near 60 final: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T09:38:10.844Z",
+   "file": "20261126093810844-note-y5-f360-pair.jpg",
+   "source": "../../../../tmp/v/y5-f360-pair.jpg",
+   "kind": "note",
+   "label": "360 final beside main: the same file",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T09:09:02.747Z",
    "file": "20261126090902747-note-y5-limb.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/E16-limb.jpg",
    "kind": "note",
    "label": "trial X limb and fringe at 90, draft",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T07:44:41.843Z",
-   "file": "20261126074441843-note-E16-pair.jpg",
-   "source": "../../../../tmp/v/E16-pair.jpg",
-   "kind": "note",
-   "label": "trial X draft 90 beside the approved, arch fitted round with crossing bundles, sky aim turned",
    "stop": "sun"
   }
  ]
