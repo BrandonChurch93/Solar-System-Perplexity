@@ -17,13 +17,15 @@ const apartBy = (a: THREE.Quaternion, b: THREE.Quaternion): number => Math.max(.
 describe('the pose record of a capture frame', () => {
   afterAll(() => setCapture(1))
 
+  // The turn taken out is the one the sky is seen by: the shot's skyTurnSeen where the film gives one (after a stop's aim for its way
+  // in), else its skyTurn.
   it('names the sky as the film draws it: the sky camera of the shot with the turn of the sky frame taken out', () => {
     for (const [id, k] of [['mercury', 1434], ['mars', 4814], ['earth', 3680], ['venus', 2516]] as [string, number][]) {
       const r = poseRecord(film, plan(id), k, 2, 30, size)
       const at = k / 2
       const seg = segmentAtFrame(at)
       const shot = film.shotAt(at, r.time, seg.stop === id && (seg.kind === 'dive' || seg.kind === 'rise') ? sideAt(seg, r.time) : undefined)
-      expect(apartBy(q(r.sky.q), shot.skyTurn.clone().invert().multiply(shot.skyQuaternion))).toBeLessThan(1e-12)
+      expect(apartBy(q(r.sky.q), (shot.skyTurnSeen ?? shot.skyTurn).clone().invert().multiply(shot.skyQuaternion))).toBeLessThan(1e-12)
     }
   })
 
