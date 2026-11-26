@@ -1,9 +1,57 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T10:22:26.750Z",
+ "pushed": "2026-11-26T10:42:36.727Z",
  "head": "54ae2b6d5f8050eb506f10757b9f18dd96cd796d",
- "note": "10:23 reader on 832be54a: dive 2 pattern 1.6031 (main 1.6142), rise 2 pattern 0.8779 (main 0.8765, worse by 0.0014 with the clock cure; 0.8239 without). So the clock cure is taken back out of the name (54ae2b6d) and offered on top; rise 2 is being read on 54ae2b6d",
+ "note": "10:43 rise 2 of 2 read on 54ae2b6d: pattern 0.8239 (main 0.8765), pop 1.1135 (main 1.1486); every frame 4418 to 4470 looked at; finals of the judged frames are being drawn on both trees",
  "looks": [
+  {
+   "time": "2026-11-26T10:42:35.965Z",
+   "file": "20261126104235965-note-uranus-rise-p2of2-changes.jpg",
+   "source": "../../../../tmp/n77/out/r2/uranus-rise-p2of2-changes.png",
+   "kind": "note",
+   "label": "the reader's panel, rise part 2 of 2 on 54ae2b6d: pattern 0.8239 from 4422 + 1/2 (main 0.8765)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:42:35.354Z",
+   "file": "20261126104235354-note-n-r2-e.jpg",
+   "source": "../../../../tmp/n75/n-r2-e.png",
+   "kind": "note",
+   "label": "54ae2b6d travel draft 4466 to 4470",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:42:34.708Z",
+   "file": "20261126104234708-note-n-r2-d.jpg",
+   "source": "../../../../tmp/n75/n-r2-d.png",
+   "kind": "note",
+   "label": "54ae2b6d rise and travel draft 4454 to 4465",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:42:34.060Z",
+   "file": "20261126104234060-note-n-r2-c.jpg",
+   "source": "../../../../tmp/n75/n-r2-c.png",
+   "kind": "note",
+   "label": "54ae2b6d rise draft 4442 to 4453",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:42:33.416Z",
+   "file": "20261126104233416-note-n-r2-b.jpg",
+   "source": "../../../../tmp/n75/n-r2-b.png",
+   "kind": "note",
+   "label": "54ae2b6d rise draft 4430 to 4441",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:42:32.720Z",
+   "file": "20261126104232720-note-n-r2-a.jpg",
+   "source": "../../../../tmp/n75/n-r2-a.png",
+   "kind": "note",
+   "label": "54ae2b6d (the name's tree) rise draft 4418 to 4429 from the reader's frames",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T10:22:26.108Z",
    "file": "20261126102226108-note-uranus-rise-p2of2-changes.jpg",
@@ -194,54 +242,6 @@
    "source": "../../../../tmp/n71/tl-e.png",
    "kind": "note",
    "label": "dive 4150 to 4180 draft: main, scale 0.3, new tops' law (both lower rows with my turn law)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T07:13:14.430Z",
-   "file": "20261126071314430-note-tl-d.jpg",
-   "source": "../../../../tmp/n71/tl-d.png",
-   "kind": "note",
-   "label": "4390, 4395, 4399 draft: main above, new tops' law below",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T07:13:13.841Z",
-   "file": "20261126071313841-note-tl-c.jpg",
-   "source": "../../../../tmp/n71/tl-c.png",
-   "kind": "note",
-   "label": "rise start 4380 to 4395, draft: scale 0.3 above, new tops' law below; the white comes in with the view, no band on the horizon",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T07:13:13.202Z",
-   "file": "20261126071313202-note-tl-b.jpg",
-   "source": "../../../../tmp/n71/tl-b.png",
-   "kind": "note",
-   "label": "rise 4413 to 4436, draft: main, scale 0.3, with the new tops' law",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T07:13:12.360Z",
-   "file": "20261126071312360-note-tl-a.jpg",
-   "source": "../../../../tmp/n71/tl-a.png",
-   "kind": "note",
-   "label": "low rise 4399 to 4410, draft: main, scale 0.3, scale 0.3 with the tops' light by the eye's view through the lanes (bb5537bf)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:55:43.799Z",
-   "file": "20261126065543799-note-tm-b2.jpg",
-   "source": "../../../../tmp/n70/tm-b2.png",
-   "kind": "note",
-   "label": "dive with main's turn law on scale 0.3, 4150 to 4186, band gone by 4150",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:55:38.052Z",
-   "file": "20261126065538052-note-tm-a2.jpg",
-   "source": "../../../../tmp/n70/tm-a2.png",
-   "kind": "note",
-   "label": "dive with main's turn law on scale 0.3, 4137 to 4148, band sweeps the left strip",
    "stop": "uranus"
   }
  ]
