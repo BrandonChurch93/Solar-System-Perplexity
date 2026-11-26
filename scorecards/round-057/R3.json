@@ -1,0 +1,78 @@
+{
+ "critic": "R3",
+ "score": 7,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 9,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "upper right moon",
+      "what": "the lit face is only a smooth orange gradient, about 54 pixels across, with no mottling in the haze, so it reads as a shaded ball",
+      "fix": "break the smooth gradient with a little uneven haze brightness"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "upper right moon",
+      "what": "the lit face is the same smooth orange gradient, with no mottling in the haze",
+      "fix": "break the smooth gradient with a little uneven haze brightness"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crops A and C, sunlit globe above the foreground rings",
+      "what": "Broad cream-colored areas lose most of their cloud structure and look airbrushed beside the sharply resolved rings.",
+      "fix": "Pull back the highlight rolloff and preserve fine cloud texture through the brightest bands."
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "crops S and T, foreground rings",
+      "what": "The near rings resolve into smooth, lengthwise smears. The bright bands vary across the rings but have very little visible texture along them, making the foreground read as a stretched stripe map.",
+      "fix": "Preserve the radial bands, but add subtle variation along the arcs and retain that detail with higher-resolution sampling."
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "crops D and F, lower-left planetary limb just behind the ring",
+      "what": "A narrow copper strip has a conspicuously sharp inner edge against the bright cloud deck, making it look like a separate layer.",
+      "fix": "Blend the color and brightness transition into the adjacent clouds while retaining a crisp planetary silhouette."
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "crops J and K, small orange moon above the planet",
+      "what": "The lit side is mostly a smooth orange gradient with little legible surface detail, giving the moon a plastic look.",
+      "fix": "Add restrained surface variation on the lit side without sharpening the silhouette."
+     },
+     {
+      "severity": "minor",
+      "file": "image-16.png",
+      "where": "crops V and W, dense star field beside the dark outer ring",
+      "what": "Several of the brightest stars swell into soft round dots rather than retaining a compact bright core.",
+      "fix": "Tighten the brightest star cores and reduce their bloom while keeping the faint background points."
+     }
+    ]
+   }
+  }
+ ]
+}
