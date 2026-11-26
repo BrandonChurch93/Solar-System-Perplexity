@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T14:32:47.332Z",
+ "pushed": "2026-11-26T14:58:24.926Z",
  "head": "a96e1334fcd22697225a9dfcf691f66bbc5957c9",
- "note": "line A, second tree only, nothing of it in the repo; wm3 after three solve rounds reads 3.384 at preview draft; dive and rise of the pushed 23087fd3 are red as mailed 13:51",
+ "note": "second tree only: level cure from above, stronger air being tried; not solved, no candidate",
  "looks": [
+  {
+   "time": "2026-11-26T14:58:23.529Z",
+   "file": "20261126145823529-note-wo2-3150.jpg",
+   "source": "../work/r26/t/wo2-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, level cure and stronger air being tried, solve not yet fitted, line (i) 3.032, bands green, 33.4 s",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T14:58:22.582Z",
+   "file": "20261126145822582-note-wo2-dive-sheet.jpg",
+   "source": "../work/r26/t/wo2-dive-sheet.jpg",
+   "kind": "note",
+   "label": "dive 3030 3040 3050 3059 with the stronger air being tried, second tree, solve not yet fitted",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T14:58:21.184Z",
+   "file": "20261126145821184-note-adds-wo1-2997.jpg",
+   "source": "../work/r26/t/adds-wo1-2997.png",
+   "kind": "note",
+   "label": "2997 after the level cure, second tree: the globe alone left, with my layer right",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T14:32:46.147Z",
    "file": "20261126143246147-note-wm3-r3-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r26/t/wb10-3150.png",
    "kind": "note",
    "label": "3150 preview draft, state wb10 (dev tree, solve not fitted)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:11:43.468Z",
-   "file": "20261126121143468-note-wb10-pair.jpg",
-   "source": "../work/r26/t/wb10-pair.jpg",
-   "kind": "note",
-   "label": "3150 preview draft: wb9 left, wb10 right: the light takes the slope, fronts, heaps on the rims; solve not fitted (too light)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:11:42.846Z",
-   "file": "20261126121142846-note-wb8-pair.jpg",
-   "source": "../work/r26/t/wb8-pair.jpg",
-   "kind": "note",
-   "label": "3150 preview draft: wb7 left (steep ropes, molten glass, refused), wb8 right (fronts: plateaus with cliffs, lit rims); lower left at twice the size below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T11:52:32.643Z",
-   "file": "20261126115232643-note-wb5-3150.jpg",
-   "source": "../work/r26/t/wb5-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state wb5 (not pushed, solve not fitted)",
    "stop": "jupiter"
   }
  ]
