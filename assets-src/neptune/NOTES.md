@@ -8851,3 +8851,30 @@ All pair numbers are my proxy (the report's own path on my preview frames, 960 w
 - Looks: two added 00:31 (the sheet and main's pair). The push failed three times, four times running, with "could not
   read Username for https://github.com" (a dry run of a push of my own branch fails the same way; ls-remote works).
   Tried again later (MAIL 621).
+
+## 26 Nov, 00:33 UTC: main's own pair at 4760, to the Builder (word for word)
+
+> From neptune_builder, 00:33 UTC: main's own pair at 4760 with the cast off (your MAIL 1346 point 1, promised by 01:15). The name ef0cc1cf stands unchanged.
+>
+> HOW: main 1f51abc9 checked out detached on my machine, its poses from its own plan, frames 4755 to 4768 at half steps (about 22 s the preview frame), then 4760 to 4768 again with main's cirrus.cast at 0; back on my branch, tree clean. My proxy, STATED.
+>
+> MEASURED:
+> - Main's pairs: 4755 0.12 (your reader 0.1357), 4756 0.09, 4757 0.08, 4758 0.07, 4759 0.07, 4760 0.07. With the cast off: 4760 0.07. On main the cirrus's shadow adds nothing the reader sees.
+> - The shadow alone (cast off minus cast on, 960 px) at 4760 and 4768. Main: 99th percentile 5.3 and 6.0 levels, px over 8 levels 2670 and 3152, the ground it falls on 36 and 40 levels. My tree before the cure: 10.0 and 9.7, 6762 and 6610, ground 59 and 58. The name: 6.7 and 6.7, 3804 and 4197, ground 65 and 65.
+> - Main's camera at these frames is not mine (the eye stands about 0.12 of a radius aside), so a place of the frame is not the same place of the ground.
+>
+> READ: the same streamer's shadow lies on main's ground too, its thick and thin parts whole, and its blots change between 4760 and 4768 there as well. Main's near ground stands at 36 to 40 levels where mine stands at 58 to 65 (deck.level 0.55 against 0.75, low haze 0.008 against 0.065, no air of the eye), so the same shadow takes about half the levels. NOT CONTROLLED: I did not darken my ground to main's level to see the number fall; that the level alone makes main green is a reading of two measures, not a finding. After the cure the name's shadow stands near main's by levels.
+>
+> CORRECTION of my mail of 00:10, point 1: "Main's deep.ts has no castWave law" is wrong as written. Main has castWave as the shortest wave of the shadow's noise; what it lacks is the law on the thick and thin parts, which came with 985341693. The old name 27624e6f lacked it too: there the parts stood whole in the shadow (your 0.6171); on my tree before the cure they stood at half (my 0.78).
+>
+> A RED, named: since 00:31 every push from this machine fails with "could not read Username for https://github.com" (looks and my own branch alike; reading works). The sheet (main's shadow beside mine) and the notes commit eca8904bb are local only until it comes back; I try again at each step. Not a blocker for the eye, which I begin now (by 02:00).
+
+## MAIL 1352 from the Builder, 00:35 UTC, 26 Nov (read 00:35 by my clock; word for word)
+
+> MAIL 1352 from the Builder (/root), 00:35 UTC. Your mail of 00:33 is read: main's own pair at 4760 (0.07 with and without the cast, your proxy) and the correction on castWave are in my ledger. Your pushes: my own push still answers (dry run 00:34); earth_builder's machine lost its login earlier, so I take it for a login that ran out on your machine, not a fault of yours. Do not wait for it. When a name is ready and the push still fails: make a bundle of the commits on top of the base I hold (git bundle create NAME.bundle ef0cc1cf430939c842dce4218d88a622373caaaf..HEAD, under 50 MiB) and send it to me as an attachment with the full sha and the list of changed files; looks go as attached pictures (each at most 1400 px wide) with their notes as text in the mail. Never force, never rebase. The proofs of ef0cc1cf (nt1-01 to 08) are all out; rows go to you when they are in. The eye by 02:00 stands. No answer needed.
+
+Read: if a push fails when a name is ready, a bundle on top of ef0cc1cf goes to him as an attachment with the full sha and
+the list of changed files, and looks go as attached pictures at most 1400 px wide. Never force, never rebase.
+- The pushes answered again at 00:35: eca8904bb went up (cf3a13eb8..eca8904bb), the looks at 00:35:47 (39ef451b, 8 looks:
+  main's shadow beside mine, main's pair, 4860 beside the approved). A slip of mine, named: the note of that looks push
+  says 00:41; it was 00:35:47. I wrote a time without reading the clock first.
