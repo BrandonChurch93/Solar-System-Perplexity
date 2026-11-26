@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T17:35:57.544Z",
+ "pushed": "2026-11-26T17:43:34.129Z",
  "head": "5ccff1674ccb3ed7fab80c6f251aee1e8d989d53",
- "note": "17:35 trials after the name (Z87, Z88, drafts, not pushed): looser band, bold fountain at the left foot, warmer legs. sun-near frame 60 of the named final: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "note": "17:43 trial Z88 (arcs.json alone, not named, not pushed) at 60, 0, 91, 92 and in the rise beside the named state: strands stand, beads move, the arcade leaves by its size as before | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T17:43:28.595Z",
+   "file": "20261126174328595-note-z88-909192.jpg",
+   "source": "../../../../tmp/v/z88-909192.jpg",
+   "kind": "note",
+   "label": "trial Z88 not named: 90, 91, 92 draft, the right shoulder at 1 to 1, strands stand, beads move",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T17:43:28.015Z",
+   "file": "20261126174328015-note-z88-rise.jpg",
+   "source": "../../../../tmp/v/z88-rise.jpg",
+   "kind": "note",
+   "label": "trial Z88 not named: rise 211, 221, 229 draft, named Z81 left, Z88 right, 1 to 1",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T17:43:27.395Z",
+   "file": "20261126174327395-note-z88-60-11.jpg",
+   "source": "../../../../tmp/v/z88-60-11.jpg",
+   "kind": "note",
+   "label": "trial Z88 not named: frame 60 draft, named Z81 above, Z88 below, 1 to 1",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T17:35:56.864Z",
    "file": "20261126173556864-note-z88-cmp.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/att/arcleave-211-233.jpg",
    "kind": "note",
    "label": "Z81 draft rise 211 to 233: the arcade leaves by its own size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T17:02:30.709Z",
-   "file": "20261126170230709-note-strip-part.jpg",
-   "source": "../../../../tmp/att/strip-part.jpg",
-   "kind": "note",
-   "label": "Z81 draft strip of the arch, every tenth frame 60 to 150, part at 1 to 1",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T17:02:30.153Z",
-   "file": "20261126170230153-note-pair495.jpg",
-   "source": "../../../../tmp/att/pair495.jpg",
-   "kind": "note",
-   "label": "travel out 495 at draft: main's Sun folders left, this branch right (corona and prominences differ since d377db96)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T16:37:58.223Z",
-   "file": "20261126163758223-note-f0-half.jpg",
-   "source": "../../../../tmp/att/f0-half.jpg",
-   "kind": "note",
-   "label": "Z81 final 0, half size",
    "stop": "sun"
   }
  ]
