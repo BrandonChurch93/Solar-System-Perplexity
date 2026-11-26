@@ -3,7 +3,6 @@
     {"file": "patch-wide.jpg", "full": 4096, "widthDeg": 96},
     {"file": "patch-42.jpg", "full": 4096, "widthDeg": 42},
     {"file": "patch-19.jpg", "full": 4096, "widthDeg": 19},
-    {"file": "land-8p5.jpg", "full": 3686, "widthDeg": 8.5, "own": true},
     {"file": "land-3p8.jpg", "full": 4096, "widthDeg": 3.8, "own": true},
     {"file": "land-1p6.jpg", "full": 3686, "widthDeg": 1.6, "own": true},
     {"file": "land-0p7.jpg", "full": 3277, "widthDeg": 0.7, "own": true},
