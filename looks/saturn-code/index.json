@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T05:15:25.877Z",
+ "pushed": "2026-11-26T05:33:19.281Z",
  "head": "58113814f09ea169a28219ea49e031593a81298a",
- "note": "candidate 58113814 (rigid body, baked light, lone pixel cures): the dive 3540 to 3640 frame by frame at draft; the rise renders next",
+ "note": "mail 1416: solving the hold's view against the approved hero; result: no rigid view lays circles on the hero's ring (best 4.43 px rms, lens 32.9 from 5.12 radii)",
  "looks": [
+  {
+   "time": "2026-11-26T05:33:18.725Z",
+   "file": "20261126053318725-note-lip1_3596.jpg",
+   "source": "../../../../tmp/v/rigid/PC/lip1_3596.jpg",
+   "kind": "note",
+   "label": "58113814 dive 3596 to 3607 at the right end of the equator, full size"
+  },
+  {
+   "time": "2026-11-26T05:33:18.160Z",
+   "file": "20261126053318160-note-lip1_3572.jpg",
+   "source": "../../../../tmp/v/rigid/PC/lip1_3572.jpg",
+   "kind": "note",
+   "label": "58113814 dive 3572 to 3583 at the right end of the equator, full size: no lone bright point"
+  },
+  {
+   "time": "2026-11-26T05:33:17.607Z",
+   "file": "20261126053317607-note-fit1-parts.jpg",
+   "source": "../../../../tmp/v/rigid/VF/fit1-parts.jpg",
+   "kind": "note",
+   "label": "the same at full size: lower left, right ansa, upper left; today left, solved right"
+  },
+  {
+   "time": "2026-11-26T05:33:16.964Z",
+   "file": "20261126053316964-note-fit1-full.jpg",
+   "source": "../../../../tmp/v/rigid/VF/fit1-full.jpg",
+   "kind": "note",
+   "label": "the approved hero with the true circles of today's view (top) and of the solved view (bottom): the ring is not a view of circles, 4.43 px rms left"
+  },
   {
    "time": "2026-11-26T05:15:24.750Z",
    "file": "20261126051524750-note-dive1_sheet_3636.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3600.jpg",
    "kind": "note",
    "label": "58113814 dive 3600 to 3611, every film frame, draft"
-  },
-  {
-   "time": "2026-11-26T05:15:20.613Z",
-   "file": "20261126051520613-note-dive1_sheet_3588.jpg",
-   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3588.jpg",
-   "kind": "note",
-   "label": "58113814 dive 3588 to 3599, every film frame, draft"
-  },
-  {
-   "time": "2026-11-26T05:15:19.516Z",
-   "file": "20261126051519516-note-dive1_sheet_3576.jpg",
-   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3576.jpg",
-   "kind": "note",
-   "label": "58113814 dive 3576 to 3587, every film frame, draft"
-  },
-  {
-   "time": "2026-11-26T05:15:18.717Z",
-   "file": "20261126051518717-note-dive1_sheet_3564.jpg",
-   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3564.jpg",
-   "kind": "note",
-   "label": "58113814 dive 3564 to 3575, every film frame, draft"
-  },
-  {
-   "time": "2026-11-26T05:15:17.869Z",
-   "file": "20261126051517869-note-dive1_sheet_3552.jpg",
-   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3552.jpg",
-   "kind": "note",
-   "label": "58113814 dive 3552 to 3563, every film frame, draft"
   }
  ]
 }
