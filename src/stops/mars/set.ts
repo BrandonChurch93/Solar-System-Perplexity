@@ -156,11 +156,24 @@ export const createSet: SetFactory = async (ctx) => {
   let eyeScaled = false
 
   const tintLow = new THREE.Vector3().fromArray(look.descent.tint)
-  const hazeLow = new THREE.Vector3().fromArray(look.descent.hazeDay)
-  const shellLow = new THREE.Vector3().fromArray(look.descent.shellDay)
-  const shellTwilightLow = new THREE.Vector3().fromArray(look.descent.shellTwilight)
-  const edgeLow = new THREE.Vector2().fromArray(look.descent.edge)
-  const edge = new THREE.Vector2()
+  const hazeNear = new THREE.Vector3().fromArray(nearJson.air.hazeDay)
+  const shellNear = new THREE.Vector3().fromArray(nearJson.air.shellDay)
+  const shellTwilightNear = new THREE.Vector3().fromArray(nearJson.air.shellTwilight)
+  const edgeNear = new THREE.Vector2().fromArray(nearJson.air.edge)
+  // The sun on the own ground (near.json sun): the globe's light by the cosine of the sun at the place now, against the same at the
+  // judged surface frame. The plan gives the body's turn at the frame's time; nothing else of the clock is read.
+  const sunSpot = new THREE.Vector3()
+  const sunCurve = look.light.curve as number[][]
+  const sunTone: [number, number, number] = [1, 1, 1]
+  const litBy = (mu: number, c: number): number => {
+    const x = Math.min(Math.max(mu * 0.5 + 0.5, 0), 1) * 32
+    const i = Math.min(Math.floor(x), 31)
+    return sunCurve[i]![c]! + (sunCurve[i + 1]![c]! - sunCurve[i]![c]!) * (x - i)
+  }
+  const sunAt = (time: number): void => {
+    const mu = plan.lightDir.dot(sunSpot.copy(plan.spot).normalize().applyQuaternion(plan.turn(time)))
+    for (let c = 0; c < 3; c++) sunTone[c] = litBy(mu, c) / litBy(nearJson.sun.refCos, c)
+  }
   // a range under every value of a cosine: the planet's veil at a grazing sight line then holds on every side and under every Sun
   const everywhere = new THREE.Vector2(-3, -2)
   // the glow of the close view's low Sun, as a direction in the stop's frame: from the twin of the dive at T
@@ -248,6 +261,8 @@ export const createSet: SetFactory = async (ctx) => {
         terrain.scale.setScalar(1)
         closeScene(false)
         lawAir.value.z = 0
+        sunAt(state.time)
+        lawTone.value.fromArray(sunTone)
         ground.presence(1, { air: 1 })
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         return
@@ -263,8 +278,6 @@ export const createSet: SetFactory = async (ctx) => {
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
       const pu = planet.material.uniforms
       ;(pu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
-      ;(pu.uHazeDay!.value as THREE.Vector3).fromArray(look.haze.day).lerp(hazeLow, low)
-      pu.uHazeTau!.value = look.haze.depth * (1 + (d.hazeDepth - 1) * low)
       ;(pu.uGrazingShape!.value as THREE.Vector4).x = look.grazing.depth * (1 - low)
       const detail = look.obliqueDetail
       const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
@@ -277,24 +290,23 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uGrazingSun!.value as THREE.Vector3).copy(grazingHome).applyQuaternion(state.rotation)
       ;(pu.uGrazingSide!.value as THREE.Vector3).copy(grazingSide).applyQuaternion(state.rotation)
       const su = shell.material.uniforms
-      ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shellHaze.day).lerp(shellLow, low)
-      ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shellHaze.twilight).lerp(shellTwilightLow, low)
-      su.uHazeH!.value = THREE.MathUtils.lerp(look.shellHaze.scaleHeight, d.shellScaleHeight, low)
-      su.uHazeTau!.value = THREE.MathUtils.lerp(look.shellHaze.depth, d.shellBaseDepth * d.shellDepth, low)
-      edge.set(look.haze.dayFrom ?? -0.16, look.haze.dayTo ?? 0.34).lerp(edgeLow, low)
-      ;(pu.uHazeEdge!.value as THREE.Vector2).copy(edge)
-      ;(su.uHazeEdge!.value as THREE.Vector2).set(look.shellHaze.dayFrom ?? -0.16, look.shellHaze.dayTo ?? 0.34).lerp(edgeLow, low)
       const n = nearJson
       const near = ending || diveT === undefined ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(n.low)) / (Math.log(n.high) - Math.log(n.low)))
       const mix = (v: THREE.Vector3, by: number[]): void => { v.set(v.x * (1 + (by[0]! - 1) * near), v.y * (1 + (by[1]! - 1) * near), v.z * (1 + (by[2]! - 1) * near)) }
       mix(pu.uTint!.value as THREE.Vector3, n.tint)
-      mix(pu.uHazeDay!.value as THREE.Vector3, n.hazeDay)
-      mix(su.uHazeDay!.value as THREE.Vector3, n.shellDay)
-      mix(su.uHazeTwilight!.value as THREE.Vector3, n.shellTwilight)
-      pu.uHazeTau!.value *= 1 + (n.hazeDepth - 1) * near
-      su.uHazeTau!.value *= 1 + (n.shellDepth - 1) * near
-      su.uHazeH!.value *= 1 + (n.shellScaleHeight - 1) * near
+      // One air (MAIL 1383): the globe's air is the hold's at every height, its colour, depth, scale height and day edge, and the tint
+      // of the ground lies on the air's light as well. No value of the air follows the eye's height above near.high. From there down
+      // the far air of the close view comes in by the weight near (near.json air), which is still a height and is named as open.
+      const tint = pu.uTint!.value as THREE.Vector3
+      ;(pu.uHazeDay!.value as THREE.Vector3).fromArray(look.haze.day).multiply(tint).lerp(hazeNear, near)
+      pu.uHazeTau!.value = THREE.MathUtils.lerp(look.haze.depth, n.air.hazeDepth, near)
       pu.uHazeH!.value = look.haze.scaleHeight * (1 + (n.hazeScaleHeight - 1) * near)
+      ;(pu.uHazeEdge!.value as THREE.Vector2).set(look.haze.dayFrom ?? -0.16, look.haze.dayTo ?? 0.34).lerp(edgeNear, near)
+      ;(su.uHazeDay!.value as THREE.Vector3).fromArray(look.shellHaze.day).multiply(tint).lerp(shellNear, near)
+      ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shellHaze.twilight).multiply(tint).lerp(shellTwilightNear, near)
+      su.uHazeH!.value = THREE.MathUtils.lerp(look.shellHaze.scaleHeight, n.air.shellScaleHeight, near)
+      su.uHazeTau!.value = THREE.MathUtils.lerp(look.shellHaze.depth, n.air.shellDepth, near)
+      ;(su.uHazeEdge!.value as THREE.Vector2).set(look.shellHaze.dayFrom ?? -0.16, look.shellHaze.dayTo ?? 0.34).lerp(edgeNear, near)
       // the far ground's veil of the close view, by the angle of the sight line to the ground (near.json grazing): the planet's veil at a
       // grazing sight line is the hold's above descent.low and is out below it (depth times 1 - low), so from there down its uniforms
       // carry the close view's far haze, by the weight near. No time is read.
@@ -322,6 +334,7 @@ export const createSet: SetFactory = async (ctx) => {
       const table = state.time > terrainMid ? n.ownGain.rise : n.ownGain.dive
       const height = Math.log(Math.max(camera.length() - 1, 1e-5))
       ownGain[0] = ownGain[1] = ownGain[2] = 1
+      sunAt(state.time)
       if (!ending && diveT !== undefined) {
         let i = 0
         while (i < table.length - 2 && height < Math.log(table[i + 1]!.height)) i++
@@ -331,7 +344,7 @@ export const createSet: SetFactory = async (ctx) => {
         // a lit level is multiplied with the descent tint, 1 high up and descent.tint near the ground, where the plates
         // were made: the own levels follow it by tintFollow
         // and the tint of near.json the same way: the plates hold the look at the height of the place picture
-        for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1)) * ((1 + (n.tint[c]! - 1) * near) / n.tint[c]!)
+        for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1)) * ((1 + (n.tint[c]! - 1) * near) / n.tint[c]!) * sunTone[c]!
       }
       if (hasOwn) planet.setOwnGain(ownGain)
       // The body's turn goes into the mesh, in double precision, and the planet is handed what is left of the spin, by the eye's height

@@ -50,15 +50,11 @@ export const storm = { degPerSecond: 1.1 }
 export const descent = {
   high: 0.7,
   low: 0.05,
-  tint: [0.4, 0.335, 0.28] as [number, number, number],
-  hazeDay: [0.4, 0.29, 0.22] as [number, number, number],
-  hazeDepth: 1.5,
-  shellDay: [0.42, 0.32, 0.26] as [number, number, number],
-  shellTwilight: [0.045, 0.055, 0.075] as [number, number, number],
-  shellScaleHeight: 0.016,
-  shellBaseDepth: 0.016,
-  shellDepth: 1.6,
-  edge: [-0.3, 0.12] as [number, number],
+  // One ground under one air (MAIL 1383): the air of the globe is the hold's at every height, and this tint lies on the ground and on
+  // the air's light alike, so it is a grade of the planet's picture and no second look of the ground. Its value is the one at which
+  // the lit map is drawn as the land plates are where both show the same ground (asdrawn.py, the common part: 0.4, 0.335, 0.28 times
+  // 1.2047, 1.4879, 1.5352).
+  tint: [0.4819, 0.4984, 0.4299] as [number, number, number],
 }
 
 export const relief = {

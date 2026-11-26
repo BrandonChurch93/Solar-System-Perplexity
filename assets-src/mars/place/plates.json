@@ -678,6 +678,24 @@
   "knee": 0.09,
   "power": 0.3
  },
+ "asdrawn": {
+  "note": "asdrawn.py: the land plates take the globe's map as it is drawn (MAIL 1370). The field lit / own on the ground of land-8p5 (widthDeg), measured on the reader's frames (rate 2, draft tier) of `frames` in three draws: the tree, the tree without the land plates, the tree with the land plates times gain (scene values). grid: cells of the field across widthDeg. mapTexels: the Gaussian of the measure on the ground, in texels of patch-19, so that only what the map resolves is taken. least: the least share of the plate in a frame pixel that is measured. leastWeight: a cell counts as measured from this share of the median weight of the measured cells. bounds: of the factor. seamCells: the measured field goes into the carried one over this many cells. share: of the field that is applied. keepDeg, fullDeg: null, or the distance from the spot inside which the plates keep their own picture and from which the field is whole. broad: true would apply the field through the Gaussian of under.broadTexels texels of the map (the broad tone alone); it is false, because the judge of d344 then fails (mean abs to 3.66, 99th to 24 at 2708) where the whole field passes: the plate has to carry the map's picture at every scale the map resolves. matchDeg: the mean of the field over the measured ground within this distance of the spot is taken out of it and belongs to the tint of the lit levels (look.ts descent.tint).",
+  "widthDeg": 8.5,
+  "grid": 1024,
+  "gain": 0.8,
+  "mapTexels": 1.0,
+  "least": 0.25,
+  "leastWeight": 0.05,
+  "bounds": [0.3, 3.0],
+  "seamCells": 6,
+  "share": 1.0,
+  "keepDeg": 0.35,
+  "fullDeg": 0.8,
+  "matchDeg": 1.9,
+  "broad": false,
+  "sun": {"note": "the cosine of the sun at the place in the globe's light at each measured frame and at the judged surface frame 2580 (refCos), read from the plan (the light stands, the body turns 0.9 degrees a second); curve: the globe's light by that cosine", "curve": "src/stops/mars/curve.json", "refCos": 0.38018, "cos": {"4876": 0.43169, "4878": 0.43134, "4882": 0.43063, "4886": 0.42992, "4890": 0.42921, "5404": 0.33405, "5408": 0.33328, "5412": 0.33251, "5416": 0.33174, "5420": 0.33097}},
+  "frames": {"dive": [4876, 4878, 4882, 4886, 4890], "rise": [5404, 5408, 5412, 5416, 5420]}
+ },
  "under": {
   "note": "landunder.py: the land levels take the forms of the map (patch-19) outside the place. keepDeg, fullDeg: the weight by the distance from the spot; broadTexels, fineTexels: the band of forms taken, in texels of the map; share: of the map forms; gain: bounds of the factor; plateauDeg, depthKm, besideDeg: the made canyon and the trough keep their own picture (ground lower than depthKm under the highest ground within plateauDeg, widened by besideDeg); aboveDeg: the lit levels above take the forms of the place out to here (fading from the first to the second)",
   "keepDeg": 0.35,

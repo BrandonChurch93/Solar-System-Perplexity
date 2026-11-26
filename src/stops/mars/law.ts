@@ -47,7 +47,8 @@
 //    that eye, whichever is smaller. By the distance of the eye to the ground point alone; no time, no height.
 // The tone (lawTone): the layers' colour times uLawTone, which the set gives as the factor the globe's own ground round the picture
 // is drawn with at the present eye (set.ts, ownGain), so the picture and the ground it lies on are one tone on the way down.
-// In the surface view the set turns the law off (uLawAir.z under 0.5): the share is exactly 1 and the tone exactly 1.
+// In the surface view the set turns the law off (uLawAir.z under 0.5): the share is exactly 1, and the tone is the sun's on the own
+// ground (near.json sun), exactly 1 at the judged surface frame.
 // The sine of a ray to the level is held at or above uLawTexel.w, the flattest ground the relief holds (1 / its largest distance).
 // The numbers stand in close.json (law); the text holds to the contract of Relief.presenceLaw (src/terrain/relief.ts).
 export const closeLaw = `
@@ -143,7 +144,6 @@ float lawShare(vec3 P, vec3 E, vec2 image) {
   return texel * air * field * seen * gap * need;
 }
 vec3 lawTone(vec3 P, vec3 E, vec2 image) {
-  if (uLawAir.z < 0.5) return vec3(1.0);
   return uLawTone;
 }
 `

@@ -3089,3 +3089,183 @@ after the forms on the five land plates, and on the levels above by the share of
 - NEXT: the plate equal to the map as drawn at the same camera (level and bands), judged by the same camera pair at 2700, 2704, 2708 and 2437 to 2441; the dive slice at 4924 on both trees; /root's ruling on the test.
 - Looks pushed 02:09 (bcdea0f8) and 02:25 (f0b83dc2).
 - handover_engineer's ask of 01:04 (one speck of L1's paint, relief-L1-color.jpg full x 3250 to 3260, y 872 to 878) is still open.
+
+### 02:27 to 02:50 UTC, 26 Nov: MAIL 1370 (ruling d344) and 1371, the control states, the tool of the cure
+- MAIL 1370 of /root: it is (a). The test "true carry at 2708 at or under main's 0.840" is withdrawn (main's number lies under the map alone). THE JUDGE OF THE CURE is the same camera test: the frame with the plate and without it at 2700, 2704, 2708 (rise) and 2437, 2439, 2441 (dive), and on each side the frame where the plate's weight is one half. Targets at each: signed mean within 1 grey level; mean abs at most 2.9, 99th at most 9.8; band 32 to 160 px at most 0.036 mean and 0.090 at the 99th; band 128 to 640 px no worse than 0.025 and 0.038. What the map cannot resolve at that camera is free. The made ground is not smoothed to meet a target (MAIL 839). The eight pairs go as one sheet with the name. THE READER'S LINE: at rise 2 of 2 and dive 2 of 2 the bar becomes the row of the tree without the plate if /root's machines confirm (C2 over main's own row; the name no worse than C1 plus 0.03; the full size carry points the same way). The line stays red for main and for the name (limit 0.45).
+- CONTROL STATES pushed to agent/mars-place-ctl (never merged, made by git plumbing, not checked out): C1 6c636bf0 (74971266 without the land-8p5 row), C2 9ab7b489 (main 8fb3bffe without it), C3 32ec899e (74971266 without the rows of land-8p5, 3p8, 1p6, 0p7), C4 3a1f5874 (main without the four). /root's machines read them (MAIL 1371: mo1 to mo4).
+- CAVEAT FOUND AND SENT (02:31): a level leaves by the texel of its parent. With the land-8p5 row out, land-3p8's parent is patch-19 and land-3p8 stays drawn to a frame pixel of 280 to 412 m, inside 1.9 degrees of the spot. So my reading 0.9365 "of the map alone" is of the map only outside 1.9 degrees. For the same camera test: "without the plate" is C1's state, each number named as judging land-8p5 outside 1.9 degrees; at 2708 the pair against C3's state stands beside it for the middle (MAIL 1371 agrees).
+- THE TOOL: assets-src/mars/place/asdrawn.py, values in plates.json block asdrawn. It measures on the reader's own frames the field lit / own on the ground of land-8p5 by three draws (A the tree, B without the four land rows, C the land plates times 0.8 in scene values): lit / own = 1 - 0.2 x LP(A - B) / LP(A - C) in scene values of the frames; the plate's weight, the air and the film curve drop out. The ground of a frame pixel comes from the frame's own depth picture (diag range).
+- A FAULT OF MINE FOUND ON THE WAY: out/work/place/geometry.json is stale (frame 2708 at 113 km; the film has 313 km there). The reader's cameras in the map's frame come from out/work/place/posek.ts now: body = inverse(globe axes) x inverse(turn) x the carried camera. Check: the spot lands at pixel 774, 466 of frame 2708 (the measure of 01:40 had 773, 465).
+- WHY THE DEPTH PICTURE: the plate carried through the camera onto frame 2708 and correlated with the drawn frame (detail 2 to 12 px): on the sphere 0.555 outside 1.9 degrees and 0.840 inside; with the depth picture 0.874 and 0.924. The cap's ground stands from -5.6 km (1st percentile) to +0.09 km there, so the sphere misplaces the trough by several pixels.
+- DIVE SLICE AT 4924 (frame 2462 against 2470), tree 74971266: reader's chain 1.3040 at pixel 440, 24 (full size 1760, 96), and the chain parts from the camera's map on the body by 38.4 px there; true carry, the map's part 1.2016 at full size pixel 1324, 100 (ends 1.2016 / 1.0550), 0.302 where no ground is under a cosine of 0.25 (0.39 of the body leaves out); the flow's part 1.402 at 444, 16; by the map alone 0.533; "two grounds" 0.546. Main's Mars data is drawing (about 03:05).
+- Looks pushed 02:45 (9674d609).
+
+### 02:50 to 03:10 UTC, 26 Nov: MAIL 1379, the dive slice on main's data, the cause of the streaks
+- MAIL 1379 of /root (02:58): two runs of main 8fb3bffe beside 74971266 at draft. (1) dive 2440 and 2444: main's ground round the canyon is flat sand, mine keeps the relief: the cure's direction shows. (2) at 2444 lower right third and 2696 right third straight streaks fan out toward the corner as a stretched picture: name the cause, cure it there, not by a blur. (3) at 2696 and 2702 my ground is darker and rougher than main's, hard shadow in every fold: send the plain number of the judged surface frame against the approved image; a state that reads worse than main's there does not go on. (4) 2708 close. First control row: C2 rise 2 of 2 pattern 0.9841 (main 1.1095), pop 1.3823 (1.2944), level step 0.2041 (0.2331).
+- DIVE SLICE AT 4924 ON MAIN'S MARS DATA (same code, same reader): chain 1.0850 at 1424, 288 (chain parts from the map by 145.6 px); true carry 1.1592 at 928, 36 (ends 1.1592 / 1.0855); on ground seen at a cosine of 0.25 or more 0.971 (the name's tree 0.302); by the map alone 1.129; pop 0.892; level step 0.078. Reading: the name is worse only on the grazing far ground at the top edge, where the veil is out and the far ground shows its pattern; on all ground seen at a cosine of 0.25 or more it reads 0.30 against 0.97. Tied to the open air item. Picture /tmp/pm/top2462.png, in the looks of 03:08.
+- THE PLAIN NUMBER AT 2580 (final tier, approved image area resized, mean abs of the 8 bit difference; my formula): state 7.21272 against the kept final of main 7.21347 (rms 14.25716). On /root's formula the last pair was 7.1140 (47b75341) against main 7.1148.
+- THE CAUSE OF THE STREAKS (measured, my first guess was wrong): I had guessed the approved picture's ground carried into the plates (bodyfull.py) and stretched along its sight line. The picture looks to azimuth -114 degrees (west south west) with 91.5 degrees across, so its field is the west of the place. The streaks stand elsewhere: frame 2444 lower right third is ground 0.9 to 1.7 degrees east and south east of the spot (frame pixel 941, 917 is 0.9 east, 0.9 south; pixel there 183 to 208 m across, cosine 0.78 to 0.89, so the camera does not stretch it); frame 2696 right third is ground 0.4 to 1.1 degrees north of the spot seen at a cosine of 0.57 down to 0.17. From above land-3p8 holds there bundles of parallel strands aimed at the place (south east), a herringbone (east) and long swirls (north). They are in the plate of 9cb92e38f (the takes as one body), before bodyfull.py and before walls.py, and in the take's file b38-take1.png and in its lead b38-lead1.png (from s38-take2): painted forms of the 3.8 degree take, kept by the prompt's rule "every form stays". Main's plate holds strands of its own there. Pictures /tmp/pm/hist38se.png, b38.png, top2700.png.
+- A LINE FOUND WITH IT: from above land-3p8 changes its kind on a straight line at 0.8 degrees north of the spot (the border of the 1.6 degree field): fine rim ground inside, the take's strands outside. Frame 2700 laid on the ground shows the change of kind there, weaker. Goes on the list of what is wrong.
+- CURE OF THE STREAKS (not built): the second take of b38 (1 of 2 spent), led by the plate with the strands named as the fault, and the chain from stage N on (6.4 GB and 27 minutes for the 1.6 and 3.8 levels; the disk holds 3.5 GB now). Not a blur.
+- Looks pushed 03:08 (962fa3d4). Scratch frames of the slices deleted for the disk (3.5 GB free).
+
+### 03:10 to 03:20 UTC, 26 Nov: MAIL 1383 and 1386, the order of work changes
+- MAIL 1383 of /root (03:14): harness_builder measured the cause of the rise's pattern line at 2708 on main: a change in the picture, not the reader's scale (true carry of 2708 against 2716 0.66 on the near grid, 0.84 on the far grid; one patch carries it, the trough and its north wall: the near frame is paler and flatter and shows other detail). Read in the source: src/stops/mars/set.ts drives one blend `low` by the log of the camera's height between 0.05 and 0.7 radii (look.ts descent): tint, haze colour, haze depth, grazing haze, grazing detail blur, the shell, the day edge. The camera goes from 313 to 1341 km in this pair, the blend from 0.86 to 0.12. ORDER: mine to cure at the cause; first the draws with one term off, the pair 2708 and 2716 beside main at each, first in the interim. The law asked for: what the air does to a piece of ground follows from the path of sight through the air and from the Sun, a smooth function of the pose, with one look of the ground under it; no second tint, no second detail, no blur that switches; d336 stands (nothing laid over the picture to hide the change). Row 2444 of the dive (0.47) is the reader's own chain astray in the haze, harness_builder's.
+- MAIL 1386 of /root (03:17): the four controls complete. Rise 2 of 2 (pop, pattern, level step): main 1.2944, 1.1095, 0.2331; C1 1.2433, 0.9867, 0.2211; C2 1.3823, 0.9841, 0.2041; C3 1.3311, 1.1156, 0.2471; C4 1.3309, 1.0754, 0.2465. Dive 2 of 2: main 1.8056, 1.2990, 0.4947; C1 1.2623, 1.2492, 0.1418; C2 1.7831, 1.2927, 0.4967; C3 1.3476, 1.2795, 0.1729; C4 1.8761, 1.3254, 0.6267. (a) The exception of d344 (3) does not hold (C2 does not read over main's row in the pattern): a name stays held to main's rows at both lines, d311 as it stands. (b) C1 reads under main in all three numbers on both parts: the land-8p5 row costs the tree. (c) C1 is a candidate as it stands; /root needs: what the frames lose without the row at 2437, 2439, 2441, 2444, 2700, 2704, 2708 as C1 beside my state and main at 1400 px; its parts 1 of 2 on both moves; the judged frames beside the approved image with the plain number and G17. (d) the pattern line is the air of MAIL 1383, first in my order.
+- THE SWITCH FOR THE AIR DRAWS (scratch, never committed): /tmp/pm/airpatch.py puts into set.ts a reading of ?airoff=NAME[,NAME] (and airat, default 1): the named term takes the value AT in place of `low`. Terms: tint (uTint and the own gain's follow), hazeday, hazetau, grazing (depth of the hold's grazing veil), blur (weight of the grazing detail blur), shell (colour, twilight, scale height, depth), edge (day edge of haze and shell), all. Drawn by out/work/place/air1.sh N|M (reader frames 5416 and 5432 at draft, depth pictures, tree restored by git restore). The switch is inert without the query.
+- THE MEASURED FIELD OF asdrawn.py (cure1b.sh, done 03:16): measured by the dive on 0.568 of the grid, by the rise 0.526, by both 0.497; dive against rise where both: mean abs 0.2097, 99th 0.3695 in the log: the two moves do not ask for the same plate, by a fifth. Field mean (0.833, 0.739, 0.754), 1st percentile 0.32, 99th 1.79 (red), 1.44, 1.49: at the map's own sharpness the plate and the map as drawn are two different pictures (out/work/place/asdrawn-field.png). Not applied yet (cure2.sh N1 waits for the air draws).
+- WHAT C1 LOSES, first look (my frames of C1's state, m-B1): at 2704 at native size the border of the 3.8 degree plate reads as a line east of the canyon: detailed ground inside, the map's flat smooth sand outside (picture /tmp/pm/b1a-2704n.png, in the looks). With the row the ground runs on. So the reader's rows favour C1 and the picture does not: MAIL 1327 (no border you can see) stands against naming it.
+
+### 03:20 to 03:32 UTC, 26 Nov: the air term by term on my state, the interim
+- TRUE CARRY OF THE PAIR 2708 / 2716 (reader frames 5416, 5432, draft, state 74971266) with one term of the descent look held at its near ground value at both frames (/tmp/pm/pairjob.py: the job of the rise slice with the pair's own frames as stand ins for the others; with nothing held it gives the 0.9648 of 01:40 again): none 0.9648 (ends 0.645, 0.965); all 0.3545 (0.354, 0.327); edge 0.5513 (0.441, 0.551); tint 0.8591 (0.440, 0.859); hazetau 0.9385; hazeday 0.9511; blur 0.9648; grazing 0.9651; shell 0.9648. The day edge of the haze (look.ts descent.edge against the default -0.16..0.34) carries 0.41 of the 0.61, the tint 0.11, the haze depth 0.03. Sheet /tmp/pm/air-N.png, looks 03:30 (97489042).
+- Main's draws (air-M, with the seven frames for the C1 sheets into out/work/place/m-M) started 03:24:40.
+- INTERIM SENT 03:31 to /root (high): the term numbers, C1's border at 2704, the field's numbers, the dive slice, the plain number, the streaks' cause, my hour moved: 04:30 the next mail (main's term numbers, C1 sheets at 1400 px, trials of one edge and one tint at 2325 and 2580, N1's judge), name estimated 06:30.
+- NEXT: (1) numbers on air-M when AIRDONE M; (2) k4888 for m-A and m-B1, texels at 5392, 5400, 5408 with and without the row; c1sheet.py; (3) trials: edge and tint one value at all heights, both ways, at 2325 and 2580 (final or review) and the pair; (4) cure2.sh N1.
+
+### 03:33 to 03:42 UTC, the air read in the source and on main (MAIL 1383, 1386)
+
+- MAIL 1383 (air first: draws term by term, then one law by the path of sight and the sun, one look of the ground) and MAIL 1386
+  (the four controls; C1 is a candidate, the exception of the pattern line does not hold) are the orders in force.
+- My pair tool on main's Mars reads 0.8404 (ends 0.6645, 0.8404): harness_builder's 0.66 and 0.84. The tool agrees.
+- Main, true carry of 2708 against 2716, one term held at its near ground value in both frames: none 0.8404, all 0.3947,
+  day edge 0.4449, tint 0.7022, haze depth 0.8012, haze colour 0.8408, blur 0.8404. (grazing, shell follow.)
+  Mine at 74971266: none 0.9648, all 0.3545, edge 0.5513, tint 0.8591, haze depth 0.9385, haze colour 0.9511.
+- Read in the source, by sunmu.ts: the sun's cosine at the place in the globe's light is 0.471 at every frame. The hold's ground haze
+  has the day edge -0.3 to 0.95 (haze.json ground), the descent's -0.3 to 0.12 (look.ts). At 0.471 the day factor squared is 0.452
+  at the hold and 1 low down. So the edge is not a matter of the terminator far away: it more than doubles the air's light on the
+  place itself on the way down, while the tint takes the ground under it to 0.4.
+- Thought, from the source, to be measured by the trial `grade`: air light times depth over the place seen from above, against the
+  ground's tint (red): hold 0.0149 on 1; between 102 and 170 km 0.0396 on 0.4; at T 0.0040 on 0.266. The veil against the ground
+  is 6.6 times the hold's in the middle of the path and comes back to the hold's at T. A bump of pale air in the middle of the
+  dive and of the rise, keyed to height. That is the "paler and flatter" near frame of the pair.
+- Trials queued (scratch patch, never committed): et0, et1, e0, e1, all0 (next1.sh, next2.sh), then `grade` and `gradenear`
+  (next3.sh, lawpatch.py): the air is the hold's at every height (colour, depth, scale height, day edge) and the tint by height is
+  laid on ground and air alike. This is still a grade by height: whether it is allowed is /root's to rule; the trial says what it
+  reads and what T and the hold look like.
+- 03:43 mail from handover_engineer (no answer needed): crests of a relief named to /root on agent/engine-crest 451b7264 (not on
+  main; do not build on it before /root takes it). Key in the relief's motion: `crest: [{ layer, step, walk, under, out, boxes, at }]`.
+  Trial numbers for Mars L1 that passed at review: step 0.002, walk 2, under 4, out 0.7, boxes [[0.60, 0.269, 0.75, 0.47]],
+  at [[0.6545, 0.3387], [0.6220, 0.2755]]. The speck in L1's paint (colour texels x 3250 to 3260, y 872 to 878) becomes a streak
+  under it (2668 x 730 to 741, y 696 to 704): still mine to cure in the paint. A second crest with teeth at 2668 is on L0
+  (x 690 to 730, y 560 to 595). The pair with motion.airLaw and the globe's airLaw both on is still owed to him by sha.
+- MAIL 1390 (03:43): origin main is cfabcc52f6dbe1ac02ad4fec5bfe73c709c2e974 (batch 19 steps a and b; no Mars file). Merge this
+  main at the next name.
+- MAIL 1392 (03:43), rulings on the interim: 1 go on to 04:30, name by my estimate 06:30. 2 the second take of b38 with the
+  strands named as the fault is granted. 3 "C1 is not the name as it stands: the plate's border shows at 2704 (b1a-2704n). Cure
+  it at its cause, not by a cover." 4 d336 stands, d347 (4) stands: a Mars name is held to main's rows on dive 1, dive 2, rise 1
+  and rise 2, and to the plain number at the judged frames. 5 crests: use once take/hc1 23d19015 is on main, or build on it by
+  sha and say so; the magenta speck in L1's paint and the second crest with teeth on L0 at 2668 are mine.
+
+### 03:42 to 03:52 UTC, C1 sheets, soft shares, the first trials of one tint and one edge
+
+- Main's last terms: grazing 0.8407, shell 0.8404. Sheet /tmp/pm/air-NM.png (state left, main right) in the looks of 03:48.
+- Soft share of the frame by the texels picture (draft): state 2444 0.00%, 2696 0.32%, 2700 0.01%, 2704 3.80%; C1 (no land-8p5
+  row) 2444 25.01%, 2696 0.74%, 2700 0.38%, 2704 18.60%. C1 sheets /tmp/pm/c1/c1-FRAME.jpg (three tiles of 1400 px), all seven
+  looked at as stacks. Seen: C1 shows the border of the 3.8 plate at 2441, 2444, 2704 (detail inside, the map's smooth sand
+  outside); the state washes the map's own forms flat at 2708 (the dark troughs west of the canyon and the bright patch at the
+  lower edge are in C1 and in main, not in the state) and at 2441 (the bright patch at the right edge). That is the land-8p5
+  plate's own broad tone in place of the map's: landunder.py takes the map's forms only between 1 and 60 texels of patch-19
+  ("each land plate keeps its own broad tone"). The broad tone is what replaces. N1 (the field as drawn) is the cure on trial.
+- Trial et0 (tint and day edge at the hold's value at every height): frames 2477, 2681 and 2580 keep their bytes (mean abs 0.000:
+  the globe's ground is not in them). True carry of 2708 against 2716: 0.2635 (ends 0.181, 0.264). 2708 reads as the ground of
+  2716. At 2696 the ground goes pale blue white: near.json tint was made on top of the descent tint.
+- Trial et1 (both at the near value): the hold 2325 goes dark (mean abs 10.7, 99th 49). Not a way.
+- By the poses: the descent look runs over film frames 2426 to 2445 (dive) and 2705 to 2718 (rise); the near terms over about
+  2450 to 2476 and 2686 to 2702.
+- The knot, thought: the hold and the close view at T are both approved and show the same ground 1 to (0.266, 0.463, 0.717)
+  apart (descent tint times near tint). With one ground and one air that difference can only be a grade of the whole picture.
+  Trial `grade` reads what it costs.
+
+### 03:52 to 04:03 UTC, more trials, the speck in L1, N1's judge
+
+- Trials e0 (the haze's and shell's day edge alone at the hold's value) 0.3529; all0 (every term) 0.2852; e1 0.5513. Sheets
+  /tmp/pm/t-e0.jpg, t-all0.jpg, t-et1.jpg looked at: e0 at 2696 and 2700 is dark and clear, near the close view's tone.
+- Trial `grade` (scratch lawpatch.py, `?airlaw=grade`: the air is the hold's at every height and the tint by height is laid on
+  ground and air alike): true carry of 2708 against 2716 0.2448 (ends 0.2236, 0.2448; by the map alone 0.1950). `gradenear`
+  (the same, near.json's air kept) reads the same at this pair, 0.2448. 2325, 2580, 2477 and 2681 keep their bytes (mean abs
+  0.000). Sheet /tmp/pm/t-grade.jpg looked at (8 rows): 2708 reads as the ground of 2716; 2716 itself moves by mean abs 3.4; 2696
+  and 2700 lose the pale band at the horizon and go dark and contrasty (mean abs 20 and 35 against the state).
+- Queued and running: near terms one by one at the dive's pair 2462 against 2470 (next4.sh, air-D), trial a0 (next5.sh).
+- Disk was 2.7 GB free at 04:00; deleted out/work/place/s19, t1, r1 and /tmp/pre: 3.1 GB.
+- The speck in L1's paint: tool assets-src/mars/relief/speckfix.py, run on copies (/tmp/pm/l1fix): full 164 chroma samples
+  set, 704 texels changed in the box, largest change 23, bytes 2540436 to 2540559 (+123); web 43 samples, 389 texels, largest
+  15, bytes 927332 to 927435 (+103). The speck's strongest texel (55, 38, 37) before, (35, 25, 28) after. Pair
+  /tmp/pm/speck-l1-pair4.png looked at: the magenta and green blot is gone, a few dull orange and violet texels are left. Not
+  yet in the tree: +226 bytes to pay and 2580's bytes to check.
+- N1 (the field as drawn, asdrawn.py, on the five land plates; frames m-N1) by the judge of MAIL 1370, land-8p5 outside the 3.8
+  plate against C1's state (signed mean, mean abs, 99th in grey levels; band 32 to 160 px mean, 99th; band 128 to 640 px):
+    2700: before +5.18, 5.24, 20.0; 0.089, 0.374; 0.003, 0.006. N1 -1.12, 3.12, 17.0; 0.064, 0.246; 0.018, 0.021.
+    2704: before +6.75, 6.97, 23.0; 0.175, 0.508; 0.028, 0.038. N1 +0.54, 2.61, 14.0; 0.083, 0.355; 0.018, 0.022.
+    2708: before +5.06, 5.75, 20.0; 0.134, 0.257; 0.025, 0.038. N1 +2.02, 2.51, 7.0; 0.037, 0.154; 0.009, 0.012.
+    2710: before +1.52, 1.65, 5.0; 0.009, 0.018. N1 +1.03, 1.10, 5.0; 0.004, 0.012.
+    2437: before +2.47, 2.76, 17.0; 0.023, 0.044. N1 -0.48, 0.85, 5.0; 0.002, 0.004.
+    2438: before +2.88, 3.89, 25.0; 0.088, 0.295. N1 -0.88, 1.30, 6.0; 0.005, 0.013.
+    2439: before +2.38, 4.13, 24.0; 0.135, 0.568. N1 -1.44, 1.90, 8.0; 0.015, 0.050.
+    2441: before +2.16, 4.76, 23.0; 0.192, 0.679; 0.034, 0.053. N1 -2.51, 3.02, 15.0; 0.051, 0.178; 0.020, 0.034.
+  The middle at 2708 against C3's state: before +5.31, 5.95, 19.0; 0.135, 0.255; 0.032, 0.048. N1 +2.43, 2.58, 7.0; 0.010,
+  0.022; 0.010, 0.014.
+  Against the targets (signed within 1; 2.9; 9.8; 0.036, 0.090; 0.025, 0.038): 2437 and 2438 meet all; 2710 misses the signed
+  mean by 0.03; 2439 misses the signed mean; 2708 misses the signed mean and the fine band; 2700, 2704 and 2441 miss the 99th
+  and the fine band. The rise reads plus and the dive minus after one field for both: the two sides do not see the same ratio
+  of plate to map (dive against rise mean abs 0.21 log in the field). Sheets judge-before and judge-N1 looked at: the ring of
+  the 8.5 plate goes pale in N1, the square of the 3.8 plate goes blue (N1 also dims land-3p8 by 0.77 and land-1p6 by 0.86 in
+  the mean, which C1 does not have). N1 is better, not a pass.
+
+### 04:03 to 04:14 UTC, the cause of the wash found: the sun on the map and not on the plates
+
+- The globe's light stands and the body turns 0.9 degrees a second. The cosine of the sun at the place (plan.lightDir against
+  plan.spot under plan.turn(time), scratch out/work/place/sunmu.ts): 0.4708 at the hold 2325, 0.4320 at 2437, 0.4232 at 2462,
+  0.4178 at 2477, 0.3802 at 2580, 0.3421 at 2681, 0.3348 at 2700, 0.3317 at 2708, 0.3178 at 2744. The lit map is drawn times
+  curve.json at that cosine: (0.462, 0.442, 0.352) at the hold, (0.381, 0.393, 0.330) at 2437, (0.270, 0.321, 0.307) at 2708. The
+  land plates and the close view's picture carry painted light and are drawn the same at every frame (cap.json light own 0).
+- MEASURED (asdrawn.py with the two sides kept apart): the factor from plate to map on the same ground, dive (2438 to 2445)
+  minus rise (2702 to 2710), log, red green blue: 0.3402, 0.2025, 0.0772 (median 0.3444, 0.2045, 0.0761). The curve between the
+  two cosines gives 0.344, 0.201, 0.073. Mean log of the factor: dive -0.070, -0.261, -0.312; rise -0.410, -0.463, -0.390.
+  So one field cannot serve both sides (N1 took the mean: the rise read plus, the dive minus), and the wash and the border are
+  at their cause the map standing in another light than the plates, a light that moves between the dive and the rise.
+- With the sun taken out of each frame (factor curve(cos now) over curve(cos at 2580)): dive minus rise signed 0.0021, 0.0056,
+  0.0062; mean abs 0.0473 (was 0.2097). What is left is common to all the ground: plate to map (0.8301, 0.6721, 0.6514) within
+  1.9 degrees, in every ring of distance between 0.6 and 0.95 (red), 0.59 and 0.77 (green). That part is no plate's to take
+  (it would put a bowl round the place, the centre being kept): it is the tint of the lit levels near the ground.
+- STATE N2 (in the tree, not committed):
+  1. set.ts: the land plates and the close view's picture are drawn times curve(cos now) over curve(cos at 2580) (near.json
+     sun.refCos, full digits so that 2580 is 1). On the globe side through ownGain, in the hand over through the law's tone
+     (which already takes ownGain), in the surface view through the same tone (law.ts lawTone no longer returns 1 there).
+     At 2477 that is (1.163, 1.087, 1.030), at 2681 (0.893, 0.933, 0.975), at 2580 1. The surface view dims with the sinking sun.
+  2. look.ts descent.tint (0.4, 0.335, 0.28) times (1.2047, 1.4879, 1.5352) = (0.4819, 0.4984, 0.4299).
+  3. The field of asdrawn.py with the sun and the common part taken out, on the five land plates of both sets
+     (out/work/place/asdrawn-field2.npz; plates.json asdrawn.sun, matchDeg).
+  4. One air (MAIL 1383): above near.high (102 km) the globe's air is the hold's at every height (colour, depth, scale
+     height, day edge of ground haze and shell) and the tint lies on its light as on the ground. look.ts descent keeps the
+     tint alone; its seven air values are gone. From near.high down the far air of the close view comes in by the weight
+     near as before, now as whole values (near.json air: the old products). That part is still a height: open.
+  Running: out/work/place/n2.sh (log n2.log): frames m-N2, the same without the land-8p5 row m-N2B1, the judge.
+- Near terms of near.json one by one at the dive's pair 2462 against 2470 (true carry; each held at 1 in both frames): none
+  1.2016, all 1.2013, tint 1.2058, haze 1.1958, shell 1.2017, veil 1.2016, glow 1.2039; by the map alone 0.533. Place of the
+  largest in all: x 1324, y 100 (the far ground at the top right). The near terms do not carry the dive's pattern at 2462.
+- 04:15 looks pushed (458a7bfb): t-grade, t-2462, N1 judge, C1 at 2704 and 2441.
+- N2 first numbers: true carry of 2708 against 2716 0.1318 (ends 0.1318, 0.0814; by the map alone 0.0220). State 0.9648, main
+  0.8404, limit 0.45. Sheets /tmp/pm/n2-pair.jpg, n2-2708.jpg, n2-2704.jpg looked at: 2708 and 2704 read as the ground of
+  2716, dark and clear, the pale veil gone; the map's own forms west of the canyon and at the lower edge are in the frame; no
+  square border seen at these sizes (to be looked at 1 to 1).
+- MAIL 1399 (/root, 04:17), the clock: names in /root's hands by 06:45 go on main about 08:15 (third cut, rounds 08:30);
+  fourth cut names by 13:30; freeze 20:30, last names 18:30. A name: the best state that is better than main to the eye and no
+  worse than main by the laws in force: (a) units and gate green; (b) the reader by part: each of pop, pattern, level that is
+  over its limit no worse than main's own number for the part; (c) the plain match at each judged frame no worse than main's;
+  (d) G17 not red where main is green; the laws of the stop. "A name need not be your last word. What is still wrong is named
+  red in the mail and goes into the next cut." Bundle by attachment if the push fails. Main is 5798676c (code cfabcc52).
+
+### 04:22 N2 judged, N3 started
+- N2 judge (with the land-8p5 row against the same tree without it, footprint of the old pair): 2700 signed +0.36, mean abs 1.20, 99th 6.0, band 32 to 160 px 0.002/0.005, band 128 to 640 px 0.000/0.000; 2704 +0.13, 1.27, 6.0, 0.005/0.040, 0.001/0.001; 2708 +0.14, 1.06, 7.0, 0.001/0.003; 2710 +0.26, 0.46, 3.0; 2437 +0.43, 1.00, 7.0, 0.001/0.002; 2438 +0.37, 1.32, 9.0, 0.003/0.009; 2439 +0.22, 1.32, 8.0, 0.003/0.011; 2441 -0.17, 1.47, 9.0, 0.004/0.019, 0.001/0.001. Every number inside the targets of MAIL 1370 (d344).
+- Seen in N2: 2441 has hot red orange rims at the canyon's north rim and the lower left trough (pixels with red over 200 and at least twice green: 0.1616 percent of the frame, state 0.0005 percent). Cause: the field of asdrawn carries the difference of forms too (plate minus map at each place), where landunder.py already gave the plates the map's forms up to under.broadTexels. Cure at the cause: key asdrawn.broad (true): the field goes through the same Gaussian of under.broadTexels texels of the map before it is applied, so it carries the broad tone alone. Also: a plate whose field is 1 everywhere keeps its file.
+- Seen in N2 at 2700 (58 km): dark and clear, the canyon's shade near black where the state had a pale haze in it. 2681: same picture, a little dimmer and cooler (the sun tone).
+- N3 = N2 with asdrawn.broad; n3.sh started 04:21 (log out/work/place/n3.log; same markers).
+- 04:23 mail to /root sent (term by term, the sun cause, N2 numbers and judge, hot rims, three things to rule, name planned 06:30).
+
+### 04:30 N3 judged and dropped, the name's state is N2
+- N3 (field through the broad Gaussian): hot share at 2441 falls to 0.0250 percent, the pair 2708 against 2716 reads 0.1321, but the judge of d344 fails: 2700 +0.09, 2.50, 14.0; 2704 +0.10, 2.56, 14.0, band 0.031/0.150; 2708 -0.65, 3.66, 24.0; 2437 +0.47, 1.83, 11.0; 2438 +0.16, 3.04, 17.0; 2439 -0.21, 3.35, 20.0; 2441 -0.69, 3.64, 21.0.
+- The hot rims at 2441 are the map's own: the same tree without the land-8p5 row reads 0.1644 percent hot at 2441 (N2 0.1616, state 0.0005, C1 0.0989). N2 gives the plate the map's picture at every scale the map resolves, which is the law (MAIL 963, 1056). So asdrawn.broad is false and stays in plates.json with its reason. The rims are named red as the map's lit rims under the hold's air.
+- asdrawn.py apply now saves with optimize (same pixels, the file's own entropy tables) and keeps a file whose field is 1 everywhere (land-0p3 full and web keep their bytes). Plates against the state: full 8p5 -53826, 3p8 -110909, 1p6 -60100, 0p7 -46700, 0p3 0; web 8p5 -50253, 3p8 -58748, 1p6 -31007, 0p7 -15066, 0p3 0; sum -426,609. Pixels equal to the N2 files drawn and judged (checked per file).
+- speckfix applied to public full and web relief-L1-color.jpg (+123, +103 bytes).
+- MAIL 1400 (04:27): origin main is 834d5148f93966efa2d55c59c4fc02acc375b151 (crests merged, no stop gives crest). Merge it before the name.
+- 04:30 handover_engineer told of the commit (set.ts, look.ts, near.json, law.ts, plates, L1 colour).
