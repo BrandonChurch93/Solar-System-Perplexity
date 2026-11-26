@@ -1,9 +1,51 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T06:46:09.846Z",
+ "pushed": "2026-11-26T07:08:26.785Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "A first look at the Mars name 8397bfdc at draft across both changes of view, beside main",
+ "note": "a look at the Mars builder's name across both changes of view: a dark band on cut layer C2 in the dive (2460 to 2473) and a pop at the right of the rise (2683 to 2684) traced to the field count of the stop's law",
  "looks": [
+  {
+   "time": "2026-11-26T07:08:19.800Z",
+   "file": "20261126070819800-note-mp-A-name-2684.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-A-name-2684.png",
+   "kind": "note",
+   "label": "Mars rise 2684, whole frame: the name above, the trial without the field count below"
+  },
+  {
+   "time": "2026-11-26T07:08:19.140Z",
+   "file": "20261126070819140-note-mp-A-right-2683-2685.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-A-right-2683-2685.png",
+   "kind": "note",
+   "label": "Mars rise, the same box and frames, trial with the field count of the stop's law off (scratch, not in any tree): the wall stays, a dark wedge grows in the corner"
+  },
+  {
+   "time": "2026-11-26T07:08:18.483Z",
+   "file": "20261126070818483-note-mp-name-right-2683-2685.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-name-right-2683-2685.png",
+   "kind": "note",
+   "label": "Mars rise, the name at draft, x 1440..1920, y 400..1080, 2683 to 2685: the wall with strata gives way to a smooth dark wall in one frame"
+  },
+  {
+   "time": "2026-11-26T07:08:17.814Z",
+   "file": "20261126070817814-note-mp-sliver-2468-x3.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-sliver-2468-x3.png",
+   "kind": "note",
+   "label": "Mars dive 2468, x 860..1100, y 250..400 at three times, beside the layers view: the band is cut layer C2 (blue) between L0 (red) and L2 (yellow)"
+  },
+  {
+   "time": "2026-11-26T07:08:17.044Z",
+   "file": "20261126070817044-note-mp-sliver-2468-2475.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-sliver-2468-2475.png",
+   "kind": "note",
+   "label": "Mars dive, the same box, 2468 to 2475: the band stands to 2473, a pale rest at 2474 and 2475"
+  },
+  {
+   "time": "2026-11-26T07:08:16.179Z",
+   "file": "20261126070816179-note-mp-sliver-2456-2467.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-sliver-2456-2467.png",
+   "kind": "note",
+   "label": "Mars dive, the Mars builder's name 8397bfdc at draft, x 860..1340, y 200..440: a dark stepped band at the far mesa's crest from 2460 on (frames 2456, 2460, 2462, 2464, 2466, 2467)"
+  },
   {
    "time": "2026-11-26T06:46:02.312Z",
    "file": "20261126064602312-note-rise-main-2686-2688.jpg",
@@ -17,34 +59,6 @@
    "source": "../../../../tmp/pair/sheets/mp-rise-2686-2688.png",
    "kind": "note",
    "label": "Mars name 8397bfdc, draft, rise: 2686 and 2688, half size"
-  },
-  {
-   "time": "2026-11-26T06:46:00.407Z",
-   "file": "20261126064600407-note-mp-rise-right-2682-2685.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-rise-right-2682-2685.png",
-   "kind": "note",
-   "label": "Mars name 8397bfdc, draft, rise: x 1440 to 1920, y 400 to 1080 at 2682, 2683, 2684, 2685: a wall comes in at the right between 2683 and 2684"
-  },
-  {
-   "time": "2026-11-26T06:45:59.363Z",
-   "file": "20261126064559363-note-mp-dive-blackline.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-dive-blackline.png",
-   "kind": "note",
-   "label": "Mars name 8397bfdc, draft, dive: a black stepped sliver with colour fringes on the far crest at 2468, 2470, 2472, a rest at 2474, enlarged twice"
-  },
-  {
-   "time": "2026-11-26T06:45:58.429Z",
-   "file": "20261126064558429-note-mp-rise-change.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-rise-change.png",
-   "kind": "note",
-   "label": "Mars name 8397bfdc, draft, the rise's change of view: 2681 surface view over 2682 globe view, half size"
-  },
-  {
-   "time": "2026-11-26T06:45:57.138Z",
-   "file": "20261126064557138-note-mp-dive-change.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-dive-change.png",
-   "kind": "note",
-   "label": "Mars name 8397bfdc, draft, the dive's change of view: 2476 globe view over 2477 surface view, half size"
   }
  ]
 }
