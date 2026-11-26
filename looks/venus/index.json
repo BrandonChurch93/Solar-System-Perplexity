@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T01:26:35.208Z",
- "head": "7d73fd56e37b2aa7395329b57c3229c24a9838cc",
- "note": "main's rise by the merged reader: 19 red rows, largest 0.83; the candidate lower on the far deck rows; main's dive being read; no name",
+ "pushed": "2026-11-26T01:55:04.154Z",
+ "head": "d85938eda5c3cb3e82edade8b0b3f7000500f182",
+ "note": "control: the far deck in the dive's plates lifts the left edge 0.51 to 0.60; state A f8c764b5 without it, whole runs under way; main fb40db96 merged; no name yet",
  "looks": [
+  {
+   "time": "2026-11-26T01:55:03.038Z",
+   "file": "20261126015503038-note-mgD-changes.jpg",
+   "source": "../../../../tmp/v/sh/mgD-changes.jpg",
+   "kind": "note",
+   "label": "merged reader on the candidate's dive: its picture of the rows 1322, 1330 + 1/2, 1338 + 1/2",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T01:55:01.970Z",
+   "file": "20261126015501970-note-cF0D-cand-L.jpg",
+   "source": "../../../../tmp/v/sh/cF0D-cand-L.jpg",
+   "kind": "note",
+   "label": "control without the far deck in the dive's plates left, with it right, 1321, 1322, 1329, 1330, x 0 to 760, y 250 to 640",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T01:55:00.917Z",
+   "file": "20261126015500917-note-m1-cand-L.jpg",
+   "source": "../../../../tmp/v/sh/m1-cand-L.jpg",
+   "kind": "note",
+   "label": "main left, candidate with the far deck in the dive's plates right, 1320 and 1323, x 0 to 760, y 250 to 640: main's pale patch and small towers",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T01:26:34.080Z",
    "file": "20261126012634080-note-cand-d-1303L.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/mgR-changes.jpg",
    "kind": "note",
    "label": "merged reader, rise slice 1540 to 1552: its picture of its largest row, 1545, pattern 0.70",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:59:05.212Z",
-   "file": "20261126005905212-note-m0-cand-d-R.jpg",
-   "source": "../../../../tmp/v/sh/m0-cand-d-R.jpg",
-   "kind": "note",
-   "label": "main left, candidate right, dive 1329, 1332, 1335 at the right edge",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:59:04.535Z",
-   "file": "20261126005904535-note-cand-d-B.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-B.jpg",
-   "kind": "note",
-   "label": "candidate dive 1309 to 1318 + 1/2, every half frame, the place",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:45:27.802Z",
-   "file": "20261126004527802-note-merge-diff.jpg",
-   "source": "../../../../tmp/v/sh/merge-diff.jpg",
-   "kind": "note",
-   "label": "candidate dive merge-diff",
    "stop": "venus"
   }
  ]
