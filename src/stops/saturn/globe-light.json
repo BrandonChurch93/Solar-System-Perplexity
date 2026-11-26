@@ -21,22 +21,22 @@
   "trustNote": "the cosine of the angle of view at the hero lens over which a point takes what the hero saw (the numbers the shader had); edge: the same for the border of the hero frame; bins: the fill table, by the angle of the Sun and by latitude; sure: the cosine of the angle of view over which a point counts for the fill table; least: the least weight of a bin of the table as a share of the heaviest",
   "hero": {
     "eye": [
-      0.02326,
-      2.325769,
-      5.049852
+      0.036631,
+      2.126122,
+      4.657938
     ],
     "q": [
-      -0.217178,
-      0.042706,
-      0.110714,
-      0.968892
+      -0.218153,
+      0.043356,
+      0.108315,
+      0.968916
     ],
-    "vfov": 30
+    "vfov": 32.9417
   },
   "sun": [
     -0.909631,
     0.271968,
     -0.314013
   ],
-  "share": 0.216
+  "share": 0.2081
 }

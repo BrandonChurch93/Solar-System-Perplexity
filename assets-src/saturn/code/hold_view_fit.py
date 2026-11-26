@@ -230,7 +230,54 @@ def layback(s, pts):
     return np.hypot(p[:, 0], p[:, 2]), np.degrees(np.arctan2(p[:, 2], p[:, 0])), t, d
 
 
-def laid_straight(full, H, zones=(0, 2, 3), step=1):
+def edge_radius(c, azdeg):
+    """The distance from the globe's axis to a circle of the ring plane with its own centre (cx, cz) and radius, by azimuth."""
+    u = np.stack([np.cos(np.radians(azdeg)), np.sin(np.radians(azdeg))], -1); b = u @ np.array(c[:2])
+    return b + np.sqrt(np.maximum(c[2] ** 2 - (c[0] ** 2 + c[1] ** 2) + b * b, 0))
+
+
+def circ_res(s, pts, c):
+    """Px by which points of the picture leave a circle of the ring plane with its own centre and radius (c: cx, cz,
+    radius, and if given the tilt of its plane about the x and the z axis in degrees, the plane through the centre of
+    the globe), across the edge, outward positive."""
+    e = np.array(s['eye']); th = np.tan(np.radians(s['vfov']) / 2)
+    d = np.stack([((pts[:, 0] - 960) / 540) * th, -((pts[:, 1] - 540) / 540) * th, -np.ones(len(pts))], -1); d = e4.rotq(s['q'], d)
+    tx, tz = (np.radians(c[3]), np.radians(c[4])) if len(c) > 3 else (0.0, 0.0)
+    n = np.array([np.sin(tz), 1.0, -np.sin(tx)]); n /= np.linalg.norm(n)
+    u = np.array([1.0, 0, 0]) - n[0] * n; u /= np.linalg.norm(u); v = np.cross(u, n); v = v if v[2] > 0 else -v
+    t = -(e @ n) / (d @ n); p = e + d * t[:, None]; qx, qz = p @ u - c[0], p @ v - c[1]; ph = np.arctan2(qz, qx); rad = np.hypot(qx, qz)
+    def at(phi): return e4.proj(s, (c[0] + c[2] * np.cos(phi))[:, None] * u + (c[1] + c[2] * np.sin(phi))[:, None] * v)
+    x0, y0 = at(ph); x1, y1 = at(ph + 1e-3); ax, ay = x1 - x0, y1 - y0; an = np.maximum(np.hypot(ax, ay), 1e-9)
+    return np.sign(rad - c[2]) * np.abs((pts[:, 0] - x0) * ay / an - (pts[:, 1] - y0) * ax / an)
+
+
+def third_kind(now):
+    """Each ring edge a circle of its own (its own centre in the ring plane and its own radius; then also its own
+    plane), solved to the approved's edge points through the view of today. Prints what is left and the estimate."""
+    s = view(now)[0]; H = np.asarray(Image.open(HERO).convert('RGB').resize((1920, 1080), Image.LANCZOS)).astype(np.float32)
+    circ = {}; tilt = {}; print('THIRD KIND, the view of today, each edge a circle of its own in the ring plane (centre x, z and radius, in radii), and with its own plane:')
+    for zi in range(4):
+        m = K == zi
+        if m.sum() < 6: continue
+        r0 = REF[zi] + now[7 + zi]
+        a = least_squares(lambda c: circ_res(s, P[m], c), [0.0, 0.0, r0], loss='soft_l1', f_scale=4.0, x_scale=[0.02, 0.02, 0.02]).x
+        b = least_squares(lambda c: circ_res(s, P[m], c), [a[0], a[1], a[2], 0.0, 0.0], loss='soft_l1', f_scale=4.0, x_scale=[0.02, 0.02, 0.02, 0.3, 0.3]).x
+        ra = circ_res(s, P[m], a); rb = circ_res(s, P[m], b); z0 = circ_res(s, P[m], [0.0, 0.0, r0]); circ[zi] = a; tilt[zi] = b
+        print('   %-8s centre %+.4f, %+.4f (%.4f off the axis toward azimuth %.0f), radius %.4f (body %.4f): left rms %.2f, largest %.2f px (about the axis: %.2f, %.2f) | own plane too: centre %+.4f, %+.4f, radius %.4f, tilt %+.3f, %+.3f degrees: left %.2f, %.2f' % (
+            e4.ZONES[zi][0], a[0], a[1], np.hypot(a[0], a[1]), np.degrees(np.arctan2(a[1], a[0])), a[2], r0, np.sqrt((ra ** 2).mean()), np.abs(ra).max(), np.sqrt((z0 ** 2).mean()), np.abs(z0).max(),
+            b[0], b[1], b[2], b[3], b[4], np.sqrt((rb ** 2).mean()), np.abs(rb).max()))
+    allr = np.concatenate([circ_res(s, P[K == zi], circ[zi]) for zi in circ]); print('   all ring points: rms %.2f px in the ring plane; %.2f with own planes' % (np.sqrt((allr ** 2).mean()), np.sqrt((np.concatenate([circ_res(s, P[K == zi], tilt[zi]) for zi in tilt]) ** 2).mean())))
+    g = np.arange(0.0, 360.0, 30.0)
+    for zi in circ: print('   %-8s the edge off the axis by azimuth (0, 30 ... 330): ' % e4.ZONES[zi][0] + ' '.join('%.3f' % v for v in edge_radius(circ[zi], g)))
+    zs = tuple(z for z in (0, 2, 3) if z in circ)
+    out, ring, glob, lost = laid_straight(now, H, zones=zs, circ=circ); d = np.abs(out - H)
+    print('ESTIMATE, the approved laid on the third kind of body (circles of their own in the ring plane) through the view of today: plain %.4f (the ring pixels give %.4f of it, the limb zone %.4f)' % (d.mean(), d[ring].sum() / d.size, d[glob].sum() / d.size))
+    Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8)).save(OUT + '-laid-third.jpg', quality=92)
+    json.dump({str(k): v.tolist() for k, v in circ.items()}, open(OUT + '-third.json', 'w'))
+    return circ
+
+
+def laid_straight(full, H, zones=(0, 2, 3), step=1, circ=None):
     """An estimate, not a frame of the film: the approved as a rigid body would show it through a view. Each pixel of
     the ring plane takes the approved's pixel of the same azimuth at the radius moved by what the approved's edges
     leave their true circles there (between the edges by a straight line in radius, held beyond them, to nothing at
@@ -247,12 +294,15 @@ def laid_straight(full, H, zones=(0, 2, 3), step=1):
     for zi in zones:
         m = K == zi
         if m.sum() < 3: continue
-        o = np.argsort(pa[m] % 360); knots.append(REF[zi] + full[7 + zi]); tab.append(np.interp(g, (pa[m] % 360)[o], (pr[m] - (REF[zi] + full[7 + zi]))[o], period=360))
+        body = np.full(len(g), REF[zi] + full[7 + zi]) if circ is None else edge_radius(circ[zi], g)   # the body's edge by azimuth
+        o = np.argsort(pa[m] % 360); knots.append(body); tab.append(np.interp(g, (pa[m] % 360)[o], (pr[m] - np.interp(pa[m] % 360, g, body, period=360))[o], period=360))
     knots = np.array(knots); tab = np.array(tab)
     i = np.flatnonzero(ring); a = az[i] % 360; a0 = np.floor(a).astype(int) % 360; a1 = (a0 + 1) % 360; fa = a - np.floor(a)
     wk = tab[:, a0] * (1 - fa) + tab[:, a1] * fa                      # by knot, at each pixel's azimuth
-    rr = r[i]; j = np.clip(np.searchsorted(knots, rr) - 1, 0, len(knots) - 2); f = np.clip((rr - knots[j]) / (knots[j + 1] - knots[j]), 0, 1)
-    w = wk[j, np.arange(len(i))] * (1 - f) + wk[j + 1, np.arange(len(i))] * f
+    kn = knots[:, a0] * (1 - fa) + knots[:, a1] * fa
+    rr = r[i]; w = wk[0].copy()
+    for j in range(len(knots) - 1):
+        f = np.clip((rr - kn[j]) / (kn[j + 1] - kn[j]), 0, 1); w = np.where(rr > kn[j], wk[j] * (1 - f) + wk[j + 1] * f, w)
     w = w * np.clip((2.75 - rr) / (2.75 - 2.45), 0, 1)
     sx, sy = e4.proj(s, e4.ring_pt(az[i], rr + w))
     srcx = pix[:, 0].copy(); srcy = pix[:, 1].copy()
@@ -328,3 +378,4 @@ if __name__ == '__main__':
                'edgePoints': [[e4.ZONES[int(p[0])][0], p[1], round(p[2], 2), round(p[3], 2)] for p in PTS.tolist()],
                'limbPoints': [[p[0], round(p[1], 2), round(p[2], 2)] for p in LIMB.tolist()]}, open(OUT + '.json', 'w'), indent=0)
     if ARG.get('est') == '1': estimate(now, new)
+    if ARG.get('third') == '1': third_kind(now)

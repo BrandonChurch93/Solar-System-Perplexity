@@ -470,7 +470,9 @@ void main() {
     float deg = degrees(acos(clamp(dot(ray, uSunL) / -dist, -1.0, 1.0)));
     float law = sheetLaw(thin, mu, mu0, deg);
     vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uTintDense, uTintThin, thin);
-    vec3 lit = globeShadow(P, uSunL, uPolar);
+    // the globe's shadow on the ring is cast from one direction in every look and at every height of the lens:
+    // that of shadow.json, the one the far look takes (uKShadowL)
+    vec3 lit = globeShadow(P, uKShadowL, uPolar);
     // stars do not show through any part of the sheet that holds ice; the globe shows through by the depth
     // itself, at every height of the lens
     float bn = dot(cs, ds) / length(ds);

@@ -8134,3 +8134,199 @@ outline): today's view plain 9.7161 (the ring pixels give 9.0701, the limb zone 
 4.7669 (3.4412, 1.3258). So the estimate reads 14 percent under the real ring part, and the solved view
 would bring a real frame to about 9.8 by my reader. No rigid body reaches main's 4.77: main's number is
 bought by the bend.
+
+## 2026-11-26 05:40 to 05:55 UTC: the tool pushed (d65bfcbc), the third kind of rigid body, the approved's own shape as a rigid body
+
+MAIL 1426 (05:37): push the tool now (done: d65bfcbc, no frame changes), and by 06:40 a mail with (a) the plain
+number each rigid view reaches, (b) a third kind of rigid body (each edge a circle of its own, fixed to the globe),
+(c) what the solved view costs, (d) my reading at 1 to 1; in parallel the rise's pattern at 3817 and the level at 3720.
+
+Added to hold_view_fit.py: `third=1` (functions edge_radius, circ_res, third_kind; laid_straight takes `circ`).
+Scratch, not in the repo: /tmp/v/rigid/VF/moves.py (px a band moves in a frame for the third kind), crops.py.
+
+MEASURED (logs /tmp/v/rigid/VF/fit6.log, fit7.log):
+- Estimates of the plain number at 3465 (the approved laid on each body, so the lay alone): true circles in the view
+  of today 9.7161; solved view 7.7744; rings alone view (lens 34.19 from 4.952) 7.7491; least by the simplex 7.5338;
+  third kind in the view of today 6.4492. Real frames by my reader: K 12.0744, main 4.7669.
+- Third kind, the view of today, each edge a circle in the ring plane: C inner centre 0.0164 radii off the axis
+  (left rms 1.12, largest 3.63 px), B inner 0.0835 (2.49, 5.75), B outer 0.0222 (2.42, 4.67), outer 0.0584 toward
+  azimuth 82, which is toward the camera (2.84, 8.03); all ring points 2.46 px rms (6.17 about the axis); with a
+  plane of its own for each edge (tilts up to 1.2 degrees) 1.73.
+- The camera stays between azimuth 85.5 and 106.3 from frame 3360 to 3890 and its height angle runs 47 (3360), 23 to
+  26 (hold), 7.3 (3750), 27 (3884): the whole stop sees the body from one side.
+- By how much a band sits elsewhere than on true circles with the third kind (mean, largest px): 3360 1.8, 5.4;
+  3375 5.8, 20; 3465 6.7, 23; 3567 7.5, 29; 3600 10.1, 41.5; 3629 14.6, 62; 3720 17.3, 141; 3780 9.3, 51;
+  3866 5.2, 21. So the skim's judged frame is laid anew by the shape, or the code's profile slides against the
+  hero's pixels at the changeover.
+- K's shadow edge of the globe on the rings is where the approved's is (last lit x by row within 2 to 15 px): my
+  first reading of a reduced crop was wrong, the bands had moved and not the shadow. Where K's 12.07 comes from:
+  the box x 0 to 900, y 600 to 1080 gives 4.47 of it (main 1.12), the right ansa box 1.11 (0.62).
+- THE FOURTH KIND, a real frame: in mainref, set.ts line 185 `bendW.value = look.shapeShow` and look.ts shapeShow 1
+  (the table polar-warp.bin and the layout terms at one weight in every frame, weighted by nothing), final tier,
+  3465: plain 5.0127 by my reader (main 4.7669, K 12.0744); against main's frame mean 0.5592, largest 189.
+  /tmp/v/rigid/VF/k4_3465.png; 3720 and 3567 at final and 3600, 3629 at draft are rendering (kind4.sh).
+
+The disk fell to 2.2 GB free and the render refused: removed old test frames in /tmp/v (CT, CY, PK/in, PK/dive_jpg,
+PC/in, pictures of dark and x). 3.5 GB free after.
+
+## 2026-11-26 06:10 to 06:57 UTC: d356 (7), the solved view built; the shadow's two directions; ruling (c)
+
+Mail 1428 (05:57): d356 (7) replaces d296 (2) for the ring at the hold: (i) the hold's view is the fit's best
+(tool on the candidate's fit.json within 1 px rms of 4.43), (ii) low band 16 px at 3465 no worse than 3.50,
+(iii) bands within 0.7 and 1.4, (iv) the Builder's eye. Mail 1431 (06:48): the shadow's light is ruled (c): two
+directions as main has them, the shadow's fitted in the solved view; lines: ONE direction of the shadow in the
+body's frame for every frame that draws the ring, no blend with the Sun; 3720 the same bytes as K's or say what
+moved it; the notes name it in plain words. Names close 13:30; the first whole state is pushed with its sha at
+once; say what both flights do with the lens of 32.94, one draft frame each.
+
+Built in the scratch tree mainref (base K's bytes), not yet in the repo:
+- fit.json: vfovDeg 32.9417, camera.position [-0.169796, -0.059882, 5.117197], globe.quaternion
+  [0.2181532, -0.0433564, -0.1083148, 0.9689156], rings.normal [0.190979, 0.881354, 0.432136], sunDir
+  [-0.791705, 0.577633, -0.198854] (the Sun keeps its place on the body: [-0.909631, 0.271968, -0.314013] there),
+  moons[0].position [8.270506, 4.231762, -16.162631]. look.ts and kept/look.ts titan.home
+  [8.267512, 4.240938, -16.162627] (Titan stays on its pixel 1684.16, 170.87 at 31.96 px). sky.json
+  orbit.vfovDeg 32.9417. Made by /tmp/v/rigid/SV/newfit.py and apply.sh.
+- The hold now stands at 2.0375 to 2.2044 radii over the ring plane (K 2.228 to 2.412). The plan's proofs threw
+  four times; set by cause in skim.json: sky.heights top 2.2 to 2.03; light.body.heights and
+  light.grade.by.heights re-laid to that top by code/top_height.py (same shares, same places on the rise);
+  sky.hero.reach 1.2 to 1.08 (the rise passes 1.0868 from the hold's path at 3864); sky.lift.heights upper
+  2.9377 to 2.9275 (the rise's end height).
+- Lens by frame of the new tree (/tmp/v/rigid/SV/lens_sv.json): 3629 to 3810 equal to K's to 3 decimals; hold
+  distance 5.197 to 5.044; the rise ends at the stop's lens 32.94 (3866: 33.37, K 30.55).
+
+Read at 3465 final (one reader, the code of hold_bands.py; plain, low band 16 px):
+- main 4.7669, 2.0222. K 12.0744, 4.4833.
+- A (solved view, K's maps, shadow.json as main): 11.8813, 4.5921. The ring gained, the globe lost: its light was
+  a map laid through the old view and the globe stands (-5.5, -9.2) px from there and 4.8 px smaller.
+- C (the globe's map laid again through the solved view): 11.4524, 4.0631.
+- D (and the shadow fitted): 11.1424, 3.7568; bands 1.032 0.947 0.927 0.964 0.986 0.987 0.981; registered plain
+  10.2831 at a shift of -0.49, -0.38 px. Line (ii) is still red by 0.26. Sent 06:55 with the frame and the parts.
+- By part for D (boxes overlap): lower left 1.273, right tip 0.364, lower right 0.981, globe 0.916, rest 0.727.
+  What is left by the signed low band picture (/tmp/v/rigid/SV/lowmap-D.jpg): the ring's edges at the left (true
+  circles), the globe's upper left limb (5 px), and tone: the near ring in front of the globe and the lower right
+  corner brighter than the approved, a darker band on the far ring at the right. The ring's picture at the hold
+  (polar-rings.jpg) was laid through the old view; its working files are gone. Offered: lay its broad tone
+  again. Not started without the Builder's word.
+
+How the globe's map was laid again (RECIPE to be updated):
+1. globe-light.bin set to ones (rgb), 3465 final rendered: /tmp/v/rigid/SV/film_ones.png.
+2. `python3 assets-src/saturn/shot/light.py hero FILM.png erode=9 two=1 noshift=1`: new option two=1
+   (hero_mask_two): the ratio approved over film is taken only where BOTH pictures show the globe in the open (the
+   picture's own fit assets-src/saturn/fit.json and the film's src/stops/saturn/fit.json, neither ring in
+   front), since the lost file out/work/saturn/shot/web/hero-rings-mask.png is no longer needed that way.
+   noshift: the film is not moved onto the picture (it printed film offset -6.37, -10.55 px, the globe's move).
+3. `python3 assets-src/saturn/code/globe_light.py /tmp/v/rigid/SV/lens_sv.json OUT`: seen share 0.208.
+
+The shadow (code/shadow_view_fit.py): the globe's Sun azimuth -160.955, elevation 15.781 leaves the near edge
+71 px along the circles; fitted azimuth -156.668, elevation 12.862 (5.077 degrees from the Sun, 1.262 from main's
+shadow.json; 12.9 px rms, mean 0); main's shadow.json 18.45 rms, mean -12.7. The terminator read at a fifth of
+the day's most gives azimuth -175.6, elevation 12.3, but moves by 10 degrees with the level: no angle from it.
+shadow.json rewritten with the fitted direction and a note in plain words (line iii of 1431).
+
+FOUND for line (i): K and main do not cast the shadow from one direction. kept/set.ts 255 and model.ts 223 (far
+look) take shadow.json; the lerp in set.ts has the weight handover.kept.close = 0 (dead). The sheet's near look
+(sheet.ts globeShadow(P, uSunL)) and the grains (grains.ts) took the Sun itself, so the shadow's edge turned by
+4.0 degrees where the far look goes over to the near (handover.kept.far, heights 0.93 to 0.6), down and up.
+Changed in mainref: both now take uKShadowL (the far look's uniform, shadow.json). Still on the Sun: dustAir
+(the twilight of the globe's air on the inner dust, sheet.ts 169 and globe.ts 298). 3720 final is rendering
+against K's bytes.
+
+## 2026-11-26 06:57 to 07:16 UTC: mail 1432 (state one to push, the tone as state two); 3720 against K; the tone by latitude laid again
+
+MAIL 1432 (07:00): frame D seen beside the approved at 1 to 1: line (iv) is good for the body. Three tone
+findings: (a) the approved's thin bright rim along the outer edge of the A ring at the left and lower left is
+missing and a faint line stands outside it; (b) lower right: the shadowed ring shows as a dark disc with an
+outline against the sky where the approved goes to black; (c) the near ring in front of the globe is a little
+brighter. RULED: line (ii) stays 3.50; D (3.7568) is the FIRST WHOLE STATE, to be pushed with the one direction
+as soon as its drafts stand, sha by mail, proofs start on it (d353). The ring's tone laid again is the SECOND
+STATE, by 10:00, on five terms: (i) by radius and azimuth on the body, never by screen place; (ii) broad only,
+nothing finer than the 16 px low band; (iii) only where both pictures show the lit ring: nothing inside the
+shadow's fall, nothing within 8 px of a ring edge or the limb in the hold frame; (iv) out at the same height as
+the picture it corrects, by the same weight: say the first frame of the dive and the last of the rise at which
+it is out; (v) the rim of (a) only if the approved shows it at one radius along the whole visible arc. If state
+two reads 3.50 or under it is the name; if over, both frames and the signed picture go to the Builder. No third
+state on the ring's tone. Order: one direction, 3720, drafts of arrival, dive and rise at every frame, both
+flights' draft frames, push of state one, then the tone. Names close 13:30.
+
+3720 FINAL with the solved view and the one direction (E) is not K's bytes: 1,058,686 px differ, largest 205,
+mean 1.5557. What moves: the stars (the body stands turned 0.302 degrees in the world with the solved view) and
+the globe (globe-light.bin multiplies the globe at every height, col *= bodyLight(p) in globe.ts 300 and
+kept/globe.ts 247); the ring's region is the same bytes. By my reader (z3720.py; plain, then globe, ring, sky):
+main 28.5419 (6.8355 signed +0.24, 20.4685, 1.2380); K 28.5687 (6.8435 signed -0.25, 20.4866, 1.2387);
+E 28.6548 (6.9797 signed +2.85, 20.4384, 1.2367).
+
+THE TONE BY LATITUDE LAID AGAIN (state F = E and this): lat_tone.py on E's 3720 final (plain measure), then
+lat_tone.py --again with the bell of 10 degrees and the knots under 12 as the one at 12, put_table.py
+light.tone.gain; the measure kept as code/lat_tone_solved.json. The smoothed factor on the kept table is 0.93 to
+1.02 (red 0.96 at the equator, 1.02 at 32 to 40, blue 0.93 to 0.99). F's 3720 final: plain 28.5167 (globe 6.8342
+signed +1.60, ring 20.4447, sky 1.2378): under main's and K's plain by my reader. The tone's share is 0 at every
+height of the hold (light.body, top knot 2.03; the hold stands at 2.038 to 2.204), so 3465 keeps D's bytes
+(to be checked on a final of the pushed tree).
+
+In the repo for state one: fit.json, look.ts, kept/look.ts, sky.json, skim.json (knots by height, sky.hero.reach,
+sky.lift.heights, light.tone.gain, two notes), shadow.json, globe-light.json, sheet.ts and grains.ts (the one
+direction), the two bins in both sets, shot/light.py (two=1), code tools hold_view_fit.py (third=1),
+hold_view_put.py (the scratch newfit.py with the view as arguments), top_height.py, shadow_view_fit.py,
+lat_tone_solved.json, RECIPE.md (hold-light.bin, globe-light.bin, a section on the solved view).
+Drafts of state one are rendering in mainref since 07:10 (dive 3540 to 3640, rise 3805 to 3888, arrival 3340 to
+3400 at every frame, then the flights every 5 frames): /tmp/v/rigid/SV/s1/{dive,rise,in,fl}.
+
+## 2026-11-26 07:16 to 07:46 UTC: state one's drafts looked at, what stays red, the tone's first reading
+
+Drafts of state one, every frame, each sheet looked at (/tmp/v/rigid/SV/sh): dive 3540 to 3640, rise 3805 to
+3888, arrival 3340 to 3400; flights 3315 to 3335 and 3890 to 3960 every 5th (sh/flights.jpg).
+Frame to frame (ff.py: mean abs change of luminance, largest change of a 48 px cell's mean):
+- dive: no frame stands out; mean abs 3.598 to 9.484 (K 3.642 to 9.713); largest cell change 21.66 levels at
+  3576 (K 23.85 at 3578).
+- rise: one frame stands out, 3828 (the far ring's tip enters at the right border, x 1896; K the same at 3829);
+  mean abs 6.670 to 13.385 (K 7.238 to 13.632); largest cell change 87.66 at 3847 (K 86.02 at 3847).
+- arrival: no frame stands out; mean abs 3.663 to 16.274.
+Disc growth in the dive positive at every frame (least 0.00020 at 3540, most 0.00264 at 3630), largest change
+of rate 0.00022 (K 0.00033).
+
+THE MOON (red, K's and main's draw order, worse with the solved home): Titan is drawn after the far half of the
+rings (renderOrder 4, titan.ts 114; far rings 2, shell 2.5, near rings 6, grains 7; the rings do not test
+depth), though it stands 1.66 radii under the ring plane and 18.64 radii from the globe, behind the far ring.
+With the solved home [8.267512, 4.240938, -16.162627] it crosses the far ring's upper edge with its night side
+drawn over the ring from 3613 to 3629 and goes behind the night limb 3619 to 3629 (gone at 3630, by occlusion).
+K: over the ring's edge 3608 to 3611, behind the limb 3611 to 3619. On the rise it comes out from behind the
+globe's limb at 3844 to 3846, clear of the ring. Not cured in state one: an order under 2 would let the far ring
+blend over it, but needs both flights checked for a frame where the moon is nearer than the ring.
+
+THE RIM (a), measured, left out: rim.py on the approved: a bright rim just inside the outer edge at every visible
+azimuth (left and lower left +49 to +62 levels over the A ring, far side +7 to +38, right +29 to +66), 1 to 2 px
+wide on the screen at every azimuth. The polar picture holds part of it (rows 2.320 to 2.332 are 210 against
+155 to 200 inside, at the left) but goes out over the last 0.012 radii before the edge (polarOuter), where the
+model's true circle draws a dull edge. A rim by radius would have to stand in the model, at every height, or it
+would be a ringlet that fades in the dive (mail 298). Not done.
+
+THE DARK DISC (b), cause found, offered: main's shadowThin [1.85, 2.08, 0.85] (kept/look.ts 83, kept/rings.ts
+565: the ring beyond 1.85 to 2.08 radii is 0.85 thinner inside the globe's shadow) stood on the pose weight,
+which is 0 since K (mail 1298). The film's shadowed ring reads 11.5 to 12.5 against its sky 9 to 10; the
+approved 13 to 16 everywhere, no outline. The hero's lens streaks are off for the same reason (kept/set.ts 299,
+300). To bring it back it would have to stand on the dive's distance alone (dove, out over 0.116 radii, 3541
+to 3551): inside the shadow's fall and it strengthens a red K named. Offered, not done.
+
+FLIGHTS AND THE LENS: 30.0001 at 3315, 30.32 at 3330, 31.05 at 3345, 31.92 at 3360, 32.65 at 3375, 32.94 at
+3389; 32.90 at 3890, 32.63 at 3900, 31.89 at 3915, 31.02 at 3930, 30.30 at 3945, 30.0009 at 3959 (K: 30
+throughout). Jupiter is still in frame from 3315 to about 3337 and is seen through 30.00 to 30.6; Uranus comes
+in from about 3935 and is seen through 30.7 to 30.0. Same bytes outside 3315 to 3959 not checked here.
+
+THE SHADOW'S EDGE in K and now at 3612, 1 to 1: sh/shadow_edge_3612.jpg (K's near look took the Sun, state one
+takes shadow.json's direction, 5.077 degrees from it; the edge is as crisp, it lies a little steeper).
+
+THE TONE OF THE SECOND STATE, design and first reading (tool: code/hold_ring_tone.py, settings in polar.json
+`tone`; NOT in state one's commit; the scratch copies wait in /tmp/v/rigid/SV/tone/keep). A slip on the way: I
+wrote the tool first under the name of a tracked tool, code/ring_tone.py (the tone by radius at 3720), and
+restored that file from HEAD at once; the new tool has its own name.
+The factor: approved over film in scene light per zone (C 1.2458 to 1.5237, B 1.5237 to 1.9545, A 2.05 to
+2.3389), normalised sums under a gaussian of 16 px over the mask (lit ring of the same zone in the film's lens
+and in the picture's own fit, 8 px off every zone edge and the limb in both, 24 px off the shadow's fall), put on
+the body (1440 by 276, radius 1.10 to 2.48), weight 0 within 8 px of each zone edge rising over 16 px, 0 in the
+shadow rising over 24 px; across the limb's strip and outside the frame carried along the band, because the hold
+pans 0.56 radii and a factor that went to 1 along the limb of 3465 would leave the limb's mark on the body.
+First reading on D's 3465 (predicted in the tool, not rendered): low band 3.7552 to 3.5847 (the tool's resize
+of the approved differs from the reader's by 0.0016). The lit ring measured holds 0.899 of the 3.755 and comes
+to 0.776: most of the ring's low band is the 3.5 to 5 px of the edges spread by the 16 px, which the tone may
+not paint. The tone alone will not bring 3.50. The factor map is streaked along the radius at the near side
+(16 px there is 1.3 degrees of azimuth but 0.1 radii) and hits its limits in the C ring (0.6): to be looked at.
