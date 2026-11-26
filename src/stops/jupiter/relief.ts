@@ -171,7 +171,7 @@ uniform sampler2D uAirThrough;
 uniform vec4 uAirKnots;
 uniform vec2 uAirTurn;
 uniform float uAirLift;
-uniform vec3 uAirHeld;
+uniform vec4 uAirHeld;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform vec2 uAboveMix;
@@ -536,13 +536,15 @@ void main() {
       vec3 throughHeld;
       vec3 addedHeld;
       airAt(sine, D, throughNow, addedNow);
-      airAt(max(-dot(held, normalize(there + vec3(0.0, 0.0, uRadius))), 1e-6), held, throughHeld, addedHeld);
+      float heldSine = -dot(held, normalize(there + vec3(0.0, 0.0, uRadius)));
+      float inView = carried * smoothstep(0.0, uAirHeld.w, heldSine);
+      airAt(max(heldSine, 1e-6), held, throughHeld, addedHeld);
       vec3 lit = ground * shade;
       vec3 picture = seen.rgb * fine * shade;
       vec3 was = lit * throughHeld + addedHeld;
-      col += carried * (max(picture + lit * mix(throughNow, vec3(1.0), thin) + addedNow * (1.0 - thin) - was, uAirHeld.y * picture) - picture);
-      liftLow = carried * (max(picture + lit * throughNow + addedNow - was, uAirHeld.y * picture) - picture);
-      liftClear = carried * (max(picture + lit - was, uAirHeld.y * picture) - picture);
+      col += inView * (max(picture + lit * mix(throughNow, vec3(1.0), thin) + addedNow * (1.0 - thin) - was, uAirHeld.y * picture) - picture);
+      liftLow = inView * (max(picture + lit * throughNow + addedNow - was, uAirHeld.y * picture) - picture);
+      liftClear = inView * (max(picture + lit - was, uAirHeld.y * picture) - picture);
     }
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
@@ -766,7 +768,7 @@ export class ReliefDeck {
       uAirKnots: { value: new THREE.Vector4(air.sinRange[0]!, 1 / Math.log(air.sinRange[1]! / air.sinRange[0]!), air.sinRange[1]!, (ad - 1) / (ad * Math.PI)) },
       uAirTurn: { value: new THREE.Vector2((as - 1) / (3 * as), 0.5 / (3 * as)) },
       uAirLift: { value: 0 },
-      uAirHeld: { value: new THREE.Vector3(body.handover.air.ceilingUnits, body.handover.air.floor, 0) },
+      uAirHeld: { value: new THREE.Vector4(body.handover.air.ceilingUnits, body.handover.air.floor, 0, body.handover.air.inViewSine) },
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveMix: { value: new THREE.Vector2(deck.above.even, deck.above.floor) },

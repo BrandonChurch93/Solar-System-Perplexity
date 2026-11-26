@@ -129,7 +129,8 @@
   ],
   "air": {
    "ceilingUnits": 1.335,
-   "floor": 0.5
+   "floor": 0.5,
+   "inViewSine": 0.01
   }
  },
  "proof": {
