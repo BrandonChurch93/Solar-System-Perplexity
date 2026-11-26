@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T15:10:49.064Z",
+ "pushed": "2026-11-26T15:33:40.774Z",
  "head": "345d510fde0df10f589b3f6fa0287d1db574e1e1",
- "note": "whole rise line read: red, pattern 0.5017 at 2126 + 1/2; beside it pop 1.28 at 2145 at the full size carry; every frame 2080 to 2194.5 looked at, no jump seen. The last note's count was wrong: 133 of 230 frames stood then, not 150",
+ "note": "15:36 proof of 345d510f: units 1096 passed, path part green, gate running; two sheets of the rise round 2144 to 2148 where the full size line beside the verdict reads pop 1.28",
  "looks": [
+  {
+   "time": "2026-11-26T15:33:39.604Z",
+   "file": "20261126153339604-note-cr-4295.jpg",
+   "source": "../../../../tmp/gl/k24/A/cr-4295.jpg",
+   "kind": "note",
+   "label": "rise 2147 + 1/2 to 2154 + 1/2, every half frame, 345d510f, half size",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T15:33:38.662Z",
+   "file": "20261126153338662-note-cr-4280.jpg",
+   "source": "../../../../tmp/gl/k24/A/cr-4280.jpg",
+   "kind": "note",
+   "label": "rise 2140 to 2147, every half frame, 345d510f, half size",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T15:10:48.023Z",
    "file": "20261126151048023-note-earth-rise-changes-s.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k24/A/judged-main-4269.jpg",
    "kind": "note",
    "label": "main 2134 and a half: the same two areas on main's frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T14:37:04.721Z",
-   "file": "20261126143704721-note-judged-cure-4269.jpg",
-   "source": "../../../../tmp/gl/k24/A/judged-cure-4269.jpg",
-   "kind": "note",
-   "label": "cure 2134 and a half: judged ground of the back reading, yellow cure, magenta main",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T14:24:04.473Z",
-   "file": "20261126142404473-note-cd-3750.jpg",
-   "source": "../../../../tmp/gl/k24/A/cd-3750.jpg",
-   "kind": "note",
-   "label": "cure, whole dive line, every frame 1875 to 1882 small",
    "stop": "earth"
   }
  ]
