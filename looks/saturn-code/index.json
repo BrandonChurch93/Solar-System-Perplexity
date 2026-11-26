@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T16:01:27.667Z",
- "head": "4f413b281c53557c936f909b230ee928c845cb7e",
- "note": "MAIL 1508: the cure is committed locally (4f413b28), path part green on it; main's dive rows still rendering, the cure's rows next",
+ "pushed": "2026-11-26T16:29:11.267Z",
+ "head": "7f13289598cb81abbdd2b81d5d9da877e3abbcff",
+ "note": "MAIL 1508: the cure 7f132895 (local) is path green; its dive rows by the reader are rendering, part 1 of 2; hold frames to 3539 and a half are main's bytes",
  "looks": [
+  {
+   "time": "2026-11-26T16:29:04.558Z",
+   "file": "20261126162904558-note-pair_3550.jpg",
+   "source": "../../../../tmp/v/p1508/pair_3550.jpg",
+   "kind": "note",
+   "label": "MAIL 1508 cure 7f132895 rendering (dive rows by the reader, part 1 of 2): frame 3550 at the draft tier, main, the cure, their difference times 8. The lens alone differs (0.007 degrees here), eye and turn are main's"
+  },
   {
    "time": "2026-11-26T16:01:24.847Z",
    "file": "20261126160124847-note-dive_cure2_curves.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/rigid/T1/t20/lag_chart.png",
    "kind": "note",
    "label": "rise rows 3858.5 to 3862.5, cure against main over the placements: the reader number, its lag behind the ring plane true way along the lanes, the number against the lag"
-  },
-  {
-   "time": "2026-11-26T14:12:54.705Z",
-   "file": "20261126141254705-note-pv_cure.jpg",
-   "source": "../../../../tmp/v/rigid/T1/t20/pv_cure.png",
-   "kind": "note",
-   "label": "the reader's own fields at the lit left limb, cure: still 3854 against 3861.5 and 3862, 3858 against the same two: the judged area, the pattern, the detail of both"
   }
  ]
 }
