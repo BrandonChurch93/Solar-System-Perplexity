@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T07:58:26.139Z",
- "head": "fb56f76e54fa1bd2688cdb19cebe074367dc2193",
- "note": "07:59 rise 1 of 2 at the reader; the engine's two sky aims are on main (95b1ba7b), next the merge and the dive's second aim",
+ "pushed": "2026-11-26T08:16:48.796Z",
+ "head": "f94de477e7dcca8a0707fb641dc9d4563df1d921",
+ "note": "08:17 second sky aim on the dive (f94de477 local), reader dive 1 of 2 running",
  "looks": [
+  {
+   "time": "2026-11-26T08:16:38.388Z",
+   "file": "20261126081638388-note-a2-b.jpg",
+   "source": "../../../../tmp/n71/a2-b.png",
+   "kind": "note",
+   "label": "one aim beside two aims at 4145, 4150, 4155",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T08:16:36.162Z",
+   "file": "20261126081636162-note-a2-a.jpg",
+   "source": "../../../../tmp/n71/a2-a.png",
+   "kind": "note",
+   "label": "two sky aims: 4137, 4150, 4186 with the dive aim",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T07:58:23.428Z",
    "file": "20261126075823428-note-uranus-rise-p2of2-pops.jpg",
@@ -226,22 +242,6 @@
    "source": "../../../../tmp/n67/am-4138-4176.jpg",
    "kind": "note",
    "label": "Control, not committed: surface sky aim (50, -15, 50) in place of (22.6, 20.4, -46.7), dive 4138 to 4176 every second frame at draft: no band in the dive; 4290 moves by at most 1 level; the cost is in the rise (the sky's own turn there 106.8 degrees against 5.0)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:05:58.625Z",
-   "file": "20261126040558625-note-ns-ctl.jpg",
-   "source": "../../../../tmp/n67/ns-ctl.jpg",
-   "kind": "note",
-   "label": "Control, RC at 4148, 4150, 4152: left RC, middle with my stop's sky plates, glow and veil off (look.show.sky false), right the difference times 8: the band does not change, only the limb's blue glow does. The band is the film's sky, no plate",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:05:53.884Z",
-   "file": "20261126040553884-note-six-main-rc.jpg",
-   "source": "../../../../tmp/n67/six-main-rc.jpg",
-   "kind": "note",
-   "label": "MAIL 1385 question 3: the Builder's six frames of main's film 4140 to 4152 (left) beside RC 6ef232ea at draft (right): the same sky and the same band, in RC it comes 4 frames later and stays longer (4145 to 4156) because the sky's own turn is spread over the whole dive (MAIL 880 point 4)",
    "stop": "uranus"
   }
  ]
