@@ -1,43 +1,36 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T03:49:44.310Z",
+ "pushed": "2026-11-26T04:16:03.516Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the sky patch that arrives whole (asked by Neptune): end to end at draft on the flight in, 4500 to 4520, without and with the word",
+ "note": "the patch that arrives whole, named: consecutive draft frames 4496 to 4506 across the entering, without and with the word",
  "looks": [
   {
-   "time": "2026-11-26T03:49:43.666Z",
-   "file": "20261126034943666-note-arrive-4505-smudge.jpg",
-   "source": "../../../../tmp/crest/arr/arrive-4505-smudge.png",
+   "time": "2026-11-26T04:16:02.809Z",
+   "file": "20261126041602809-note-strip-on-upperleft.jpg",
+   "source": "../../../../tmp/crest/arr/strip-on-upperleft.png",
    "kind": "note",
-   "label": "draft 4505 at five to one, x 1110 to 1230, y 40 to 140: with the word a faint blue disc of the hold's picture about 14 px wide"
+   "label": "draft 4498 to 4503 with the word, the same crop: the flight's stars thin out under the entering picture, no straight edge"
   },
   {
-   "time": "2026-11-26T03:49:43.052Z",
-   "file": "20261126034943052-note-arrive-4505-edge.jpg",
-   "source": "../../../../tmp/crest/arr/arrive-4505-edge.png",
+   "time": "2026-11-26T04:16:02.220Z",
+   "file": "20261126041602220-note-strip-off-upperleft.jpg",
+   "source": "../../../../tmp/crest/arr/strip-off-upperleft.png",
    "kind": "note",
-   "label": "draft 4505 at full size, x 960 to 1680, y 0 to 560, without and with the word: where the patch's feathered edge crosses the frame; no straight edge seen"
+   "label": "draft 4498 to 4503 without the word, x 0 to 960, y 0 to 540, two thirds size"
   },
   {
-   "time": "2026-11-26T03:49:42.453Z",
-   "file": "20261126034942453-note-arrive-on-4505-4510.jpg",
-   "source": "../../../../tmp/crest/arr/arrive-on-4505-4510.png",
+   "time": "2026-11-26T04:16:01.612Z",
+   "file": "20261126041601612-note-strip-on-4496-4506.jpg",
+   "source": "../../../../tmp/crest/arr/strip-on-4496-4506.png",
    "kind": "note",
-   "label": "with the word (scratch copy), draft 4505 and 4510 at half size: the hold's sky picture is whole where it lies and enters from the upper left"
+   "label": "the same frames with the word on Neptune's patches (scratch copy): the hold's sky picture enters from the upper left by place; the first frame that differs is 4497"
   },
   {
-   "time": "2026-11-26T03:49:41.859Z",
-   "file": "20261126034941859-note-arrive-off-4505-4510.jpg",
-   "source": "../../../../tmp/crest/arr/arrive-off-4505-4510.png",
+   "time": "2026-11-26T04:16:00.883Z",
+   "file": "20261126041600883-note-strip-off-4496-4506.jpg",
+   "source": "../../../../tmp/crest/arr/strip-off-4496-4506.png",
    "kind": "note",
-   "label": "without the word, draft 4505 and 4510 at half size: the hold's sky picture comes in by the travel's clock weight"
-  },
-  {
-   "time": "2026-11-26T03:49:41.195Z",
-   "file": "20261126034941195-note-arrive-4500-4520.jpg",
-   "source": "../../../../tmp/crest/arr/arrive-4500-4520.png",
-   "kind": "note",
-   "label": "a sky patch that arrives whole, draft 4500 to 4520: above without the word (main's bytes), below with the word on Neptune's pictures in a scratch copy"
+   "label": "the flight in to Neptune, draft 4496 to 4506, consecutive, without the word (the tip's bytes are main's)"
   }
  ]
 }
