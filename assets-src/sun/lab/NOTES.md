@@ -1232,3 +1232,55 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   SEEN in half-h23f: my cells in the middle distance (rows 680 to 800) are about half as wide as the approved's;
   my penumbra's near side is about twice as long as the approved's and pale; the whole reads as gold pebbles,
   light all over with dark gaps, where the approved is darker amber with a thin net of lanes and lit rims.
+- 23:53 UTC. MAIL to /root: state h23 with the motion (commit 44adf48f): mp4, sheet, held clips, words, flicker
+  worse than b7 on every line, curve outside 0.05, next mail by 00:50 UTC.
+- 23:54 UTC. MAIL 1343 from /root (no answer needed): NEW MAIN code tip 1f51abc9a151db2cffca8eb0cb1aec99eed1f7f7
+  (take batches 14 and 15). Merge origin main before the next name and say which main it holds.
+- 23:54 to 23:57 UTC. FLICKER BY CAUSE, trial t1 = h23 with patch, petal, grain, blob's swell and sparks all 0
+  (the cushion texture off, the cells and borders as they are). t1 (h23; b7): near box disc 26 px 0.226 (0.387;
+  0.211), 50.0 percent over a tenth (81.2; 37.5); band disc 26 0.337 (0.387; 0.255), 44.3 (63.0; 34.2); ellipse
+  90 by 45 0.084 (0.141; 0.080), 0 percent (18.2); ellipse 70 by 35 0.128 (0.179; 0.119), 3.4 (24.1; 4).
+  READING: the base (borders that creep and the cells' own life) is at b7's level; the large texture on the
+  tops (patch 0.55, swell 1.2) about doubled it. Mean change of the near rows in 12 frames t1 37 levels (h23 36):
+  that number comes from the cells and the fan, not from the cushion texture. SEEN in t1 capture 5: thin dark
+  crack lines over cells (edges where one cell covers another).
+  REMEDY: carry the texture by fine fibres (they average out in a disc of 26 px), lower patch and swell.
+- 23:57 to 00:05 UTC. ground.ts qRise: cushion.petal[6] shifts the petals' thresholds toward the border from
+  petal[7] on. h24 = h23 with petal [0.3,3,5,0.3,0.6,0.5,0.1,0.3], blob swell 0.4, patch 0.25: a clear net of
+  lanes but smooth stones; plain 31.04 low64 7.7475 bands [1.63 1.12 1.01 1.05 1.09 0.99 0.89], middle 0.09 too
+  light. h25 = h24 with thread fibres (cushion.fibre[3] 0.7, counts [2,4,7], thick 0.5): fibres seen; 30.6842,
+  8.2214, [1.63 1.09 0.97 0.99 1.05 0.98 0.91], 0.10 too light. h26 = h25 with fibre[3] 1.0, heat.lane [0.19,
+  0.08], navel [0.6, 0.4], curve refit: cushions with fine bright threads fanning from the middle and a net of
+  lanes, the closest so far, but still light and lumpy, washed middle tones. MEASURED h26 draft: plain 30.5791,
+  low64 8.3698, bands [1.66 1.11 0.97 0.96 1.01 0.95 0.91], curve [0.713 0.707 0.701 0.69 0.668 0.634 0.591 0.532
+  0.457 0.381 0.339] inside 0.05 at every tenth (largest gap 0.049, all on the light side), lane 6.19 px; parts
+  ground 52.2784 strip 48.7545 sky 8.5354. Copy of the json: v/lab-h26.json.
+- 00:05 to 00:07 UTC, 26 Nov. PENUMBRA: h27 = h26 with spot.depth 0.035, spot.hot 1.9, spot.strand [2.5, 1.0].
+  SEEN beside the approved (v/pen3.jpg): darker and shorter, the strands no longer pale hair, near the
+  approved's tone; still wider to the sides than the approved's and the strands still hard. MEASURED h27 draft:
+  plain 30.2268, low64 9.5799 (main 10.9492; h26 8.37), bands [1.44 0.99 0.91 0.94 0.99 0.93 0.89], parts ground
+  51.5449 strip 48.7646 sky 8.5349.
+- 00:07 to 00:10 UTC. FLICKER h27 (h23; t1; b7): near box disc 26 px 0.380 (0.387; 0.226; 0.211), 76.9 percent
+  over a tenth (81.2; 50.0; 37.5); band disc 26 0.380 (0.387; 0.337; 0.255), 50.0 (63.0; 44.3; 34.2); ellipse 90
+  by 45 0.104 (0.141; 0.084; 0.080), 15.4 (18.2; 0; 0); ellipse 70 by 35 0.124 (0.179; 0.128; 0.119), 3.7 (24.1;
+  3.4; 4). The ellipses (a cell's own outline) are back near b7; the small disc is not. The largest change of
+  the disc (0.38 at [437, 950]) is a border that creeps into the disc (a dark gap opens beside a cell), not a
+  cell that changes its light: the fixed disc of 26 px reads borders on cells of 100 to 200 px.
+  SEEN in the held box (v/box-h27.jpg): cells keep their place, borders creep, a small cell is covered; the tops
+  carry long bright streaks from the middle to the edge, like the ribs of a shell (satin again, by the thread
+  term at 1.0 with fibre.along under 1.2 a radius).
+- 00:10 to 00:16 UTC. ground.ts: the fan's change along the run (fibre.along) and the patches (cushion.patch)
+  are true to the px too (times qSize). h28 = h27 with that only. h29 = h28 with fibre.along [1.5, 2.5, 4.0],
+  cushion.fibre[3] 0.8: the streaks broken into short strokes; draft plain 30.2032 low64 9.5522 bands [1.44 1.00
+  0.91 0.94 0.98 0.92 0.89] (v/lab-h29.json). SEEN at 3 times beside the approved (v/x3-h29.jpg): the
+  approved's tops have dark soft patches and bright dabs toward the lanes, bokeh points in the lanes, nothing
+  crisp; mine are of one middle tone, fleshy, with crisp lines where one cell covers another.
+  h30 = h29 with cushion.patch [0.45, 0.4, 0.3, 0.8], spot.hot 2.2, spot.strand [2.3, 1.0], curve refit: tops
+  with dark patches beside light dabs, nearer the approved's tones inside a cell, but it leans toward crumpled
+  foil. MEASURED h30 draft: plain 30.2111, low64 8.9564, bands [1.56 1.06 0.94 0.94 0.97 0.92 0.90], curve
+  [0.696 0.701 0.699 0.686 0.666 0.635 0.59 0.533 0.465 0.394 0.345] (inside 0.05, largest gap 0.049), percentiles
+  0.235 0.412 0.584 0.757 0.906 0.961. The darker penumbra of h27 cost 1.2 on the low band (9.58); hot 2.2 gives
+  it back in part. v/lab-h30.json.
+  STATED, not to be done without a ruling: the approved's cells in the middle distance (rows 680 to 800) are
+  about twice as wide as mine while the near ones are alike; the approved does not shrink with distance as a
+  true view does. A ground that is really there cannot match both.

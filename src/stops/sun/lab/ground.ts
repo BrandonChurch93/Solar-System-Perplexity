@@ -747,9 +747,9 @@ void main() {
   vec3 per = max(floor(uLabCount.xyz * 6.2831853 * qSize + 0.5), 3.0);
   vec2 across = vec2(-v.y, v.x) / max(dot(v, v), 1e-8);
   float wa = length(vec2(dot(dFdx(v), across), dot(dFdy(v), across)));
-  float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (run - flow) * ${lab.fibre.along[0]!.toFixed(2)} + seed), per.x);
-  float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (run - flow) * ${lab.fibre.along[1]!.toFixed(2)} - seed), per.y);
-  float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (run - flow) * ${lab.fibre.along[2]!.toFixed(2)} + seed * 2.0), per.z);
+  float fa = vnp(vec2(turn * per.x + floor(seed * 31.0), (run - flow) * qSize * ${lab.fibre.along[0]!.toFixed(2)} + seed), per.x);
+  float fb = vnp(vec2(turn * per.y + floor(seed * 77.0), (run - flow) * qSize * ${lab.fibre.along[1]!.toFixed(2)} - seed), per.y);
+  float fc = vnp(vec2(turn * per.z + floor(seed * 13.0), (run - flow) * qSize * ${lab.fibre.along[2]!.toFixed(2)} + seed * 2.0), per.z);
   float ka = 1.0 - smoothstep(0.17, 0.33, wa * per.x / 6.2831853);
   float kb = 1.0 - smoothstep(0.17, 0.33, wa * per.y / 6.2831853);
   float kc = 1.0 - smoothstep(0.17, 0.33, wa * per.z / 6.2831853);
@@ -816,11 +816,12 @@ void main() {
   float qLobe = vnq(vec2(tb.w * ${(Q?.blob[6] ?? 4).toFixed(1)} + floor(seed * 23.0), seed * 11.0), ${(Q?.blob[6] ?? 4).toFixed(1)});
   float qEdge = ${(Q?.blob[0] ?? 0.6).toFixed(3)} + ${(Q?.blob[1] ?? 0).toFixed(3)} * (qLobe - 0.5) + ${(Q?.blob[2] ?? 0).toFixed(3)} * (qWell - 0.5) + ${(Q?.blob[3] ?? 0).toFixed(3)} * (fan - 0.5) * smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr);
   float qBlob = 1.0 - smoothstep(qEdge - ${(Q?.blob[4] ?? 0.2).toFixed(3)}, qEdge + ${(Q?.blob[4] ?? 0.2).toFixed(3)}, plan);
-  float qPatch = smoothstep(${(Q?.patch[2] ?? 0.5).toFixed(2)}, ${(Q?.patch[3] ?? 0.7).toFixed(2)}, labWell(d * ${((Q?.patch[1] ?? 0.5) * 1.7).toFixed(2)}, seed + 0.53, uLabTime.x));
+  float qPatch = smoothstep(${(Q?.patch[2] ?? 0.5).toFixed(2)}, ${(Q?.patch[3] ?? 0.7).toFixed(2)}, labWell(d * qSize * ${((Q?.patch[1] ?? 0.5) * 1.7).toFixed(2)}, seed + 0.53, uLabTime.x));
   cell = (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide) * mix(${(Q?.navel[0] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(Q?.navel[1] ?? 0.4).toFixed(2)}, tr)) * mix(${(Q?.blob[5] ?? 0.4).toFixed(2)}, 1.0, qBlob) * (1.0 - ${(Q?.patch[0] ?? 0).toFixed(2)} * qPatch) * max(1.0 + smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (${(2 * (Q?.fibre[0] ?? 0)).toFixed(3)} * (fan - 0.5) + ${(Q?.fibre[3] ?? 0).toFixed(3)} * (thread - 0.3)), 0.25) * (1.0 + ${(2 * (Q?.grain?.[0] ?? 0)).toFixed(3)} * (labWell(d * qSize * ${(Q?.grain?.[1] ?? 2).toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5)) * (1.0 + ${(Q?.rim?.[0] ?? 0).toFixed(2)} * smoothstep(${(Q?.rim?.[1] ?? 0.5).toFixed(2)}, ${(Q?.rim?.[2] ?? 0.75).toFixed(2)}, plan) * (smoothstep(${(Q?.rim?.[3] ?? 0.45).toFixed(2)}, ${(Q?.rim?.[4] ?? 0.7).toFixed(2)}, mix(0.5, fc, kc)) - ${(Q?.rim?.[5] ?? 0.35).toFixed(2)}));
+  float qRise = ${(Q?.petal?.[6] ?? 0).toFixed(3)} * smoothstep(${(Q?.petal?.[7] ?? 0.3).toFixed(2)}, 1.0, plan);
   float qPa = vnp(vec2(turn * per.y + floor(seed * 19.0), (run - flow) * qSize * ${(Q?.petal?.[1] ?? 3).toFixed(2)} + seed * 5.0), per.y);
   float qPb = vnp(vec2(turn * per.z + floor(seed * 47.0), (run - flow) * qSize * ${(Q?.petal?.[2] ?? 5).toFixed(2)} - seed * 3.0), per.z);
-  cell *= 1.0 - ${(Q?.petal?.[0] ?? 0).toFixed(3)} * smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (1.0 - smoothstep(${(Q?.petal?.[3] ?? 0.4).toFixed(2)}, ${(Q?.petal?.[4] ?? 0.6).toFixed(2)}, ${(1 - (Q?.petal?.[5] ?? 0.5)).toFixed(2)} * mix(0.5, qPa, kb) + ${(Q?.petal?.[5] ?? 0.5).toFixed(2)} * mix(0.5, qPb, kc)));
+  cell *= 1.0 - ${(Q?.petal?.[0] ?? 0).toFixed(3)} * smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (1.0 - smoothstep(${(Q?.petal?.[3] ?? 0.4).toFixed(2)} + qRise, ${(Q?.petal?.[4] ?? 0.6).toFixed(2)} + qRise, ${(1 - (Q?.petal?.[5] ?? 0.5)).toFixed(2)} * mix(0.5, qPa, kb) + ${(Q?.petal?.[5] ?? 0.5).toFixed(2)} * mix(0.5, qPb, kc)));
 #endif
   float c0 = ${lab.heat.crease[0]!.toFixed(3)} * (vn(vG * uLabJoin.w * 2.9 + 41.0) + 0.5 * vn(vG * uLabJoin.w * 7.3 - 13.0)) / 1.5;
   float deep = isnan(vDeep) || isinf(vDeep) ? 1.0 : vDeep;
