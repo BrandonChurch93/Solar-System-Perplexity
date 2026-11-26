@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T08:19:30.635Z",
+ "pushed": "2026-11-26T08:45:15.416Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "08:20 UTC. w58 solved reads 7.344 at 3150 (preview, draft; main 3.390), bands green. w59 to w62 are refused trials (crags, rock, blurred fibres). Next: the dark of the lower thirds by depth under an absorbing gas, w63.",
+ "note": "08:46 UTC. New law, the gas: air under a level absorbs along the Sun's ray and the eye's ray, and dark ground lies deep again. w64 (8.910 after three rounds) had the basins too broad; w68 reads 7.199 after one round. Next: thinner skin, smoke as height, sparks.",
  "looks": [
+  {
+   "time": "2026-11-26T08:45:14.695Z",
+   "file": "20261126084514695-note-w68-r1-3150.jpg",
+   "source": "../work/r26/t/w68-r1-3150.png",
+   "kind": "note",
+   "label": "w68 3150 preview draft after one solve round: the gas with basins that start at a wide light of 0.075; 7.199 (main 3.390), the lower two rows still 4 to 17 too dark, second round running",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:36:16.335Z",
+   "file": "20261126083616335-note-w64-r3-3150.jpg",
+   "source": "../work/r26/t/w64-r3-3150.png",
+   "kind": "note",
+   "label": "w64 3150 preview draft after three solve rounds: the gas (air under a level absorbs along the Sun's ray and the eye's ray) with basins outside the storm; 8.910, bands green; too dark in the fourth row, the basins start too high",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T08:19:29.839Z",
    "file": "20261126081929839-note-w62-3150.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r26/t/w24-3150.png",
    "kind": "note",
    "label": "w24 at 3150, preview, draft, no scaffold: tops 0.24 units wide read as clay boulders; refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:27:18.765Z",
-   "file": "20261126062718765-note-w22-3150.jpg",
-   "source": "../work/r26/t/w22-3150.png",
-   "kind": "note",
-   "label": "w22 at 3150, preview, draft, no scaffold: tall relief in the dark thirds gives spires; refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:15:35.550Z",
-   "file": "20261126061535550-note-w19-3150.jpg",
-   "source": "../work/r26/t/w19-3150.png",
-   "kind": "note",
-   "label": "w19 at 3150, preview, draft, no scaffold: rolls, curls, small tops on crests; line i 17.687, bands green",
    "stop": "jupiter"
   }
  ]
