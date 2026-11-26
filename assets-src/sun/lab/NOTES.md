@@ -1953,3 +1953,233 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   My read at 1 to 1 (v/c-h40f.jpg): bodies with depth, dark mottled tops, the light in fans on the facing flank,
   creases with depth. Wrong: caps of one make (mushrooms, shells), paler and more even than the approved, no
   white gold against dark brown, small cells bare, no hot points; at 960 the ground reads as petals.
+- 06:16 UTC. MAIL to /root (high): state h40, commit 62bda846 pushed, eight pictures, not a name.
+- 06:21 UTC. Code: heat.lane[3] now also in the seam (a flat dark bottom of that share of the lane's width),
+  dome.vary (a cell's height differs by its seed), dome.drop (the whole lab ground lower by that many stage
+  units, for the limb line). t121 (blob floor 2.0: the top is the dark field inside the blob's lobed outline,
+  fans narrower and whiter) and t122 (the same, lane[3] 0.25, pits 0.5 within 0.03): to my eye the nearest to
+  the approved's light so far, white gold fans on dark brown, wide dark creases; but the threads are thin white
+  lines (scratches) and the low band 16 px of the cut is 24.17 (draft; h40 22.06, standing 23.48): over.
+  WHERE THE LOW BAND'S ERROR LIES, MEASURED (blur 16 px, rows 324 to 1080, in boxes of 320 by 126): the penumbra
+  and its surround (rows 576 to 828, cols 640 to 1600) are 25 to 55 levels darker than the approved in t122
+  (h39 12 to 35), and the place right of the spot (rows 576 to 954, cols 1600 to 1920) 40 to 60 darker in every
+  state and in the standing ground too. The near ground itself is within 20. So line (i) is the spot's
+  brightness: the refit with dark tops pushed the penumbra down (medians 0.25 0.18 0.18 against the approved's
+  0.62 0.47 0.49). t123: heat.pen 1.1, spot.edge [0.35, 0.7], threads thicker with a glow between them (0.55).
+  t124: the same with spot.depth 0.07, wall [0.8, 2.2], dome.drop 0.004.
+- 06:32 UTC. t123 to t126, MEASURED: tone halved ([0.35, 0.3]) with the blob floor 2.0 brings the penumbra back
+  (medians 0.37 0.33 0.29 at pen 0.9); spot.tongues [100, 64], hot 2.4, gap [0.05, 0.3] give 0.46 0.41 0.41 and
+  an umbra of 14393 px; low band 16 px of my cut 22.45 and 21.70. dome.drop 0.004 moved the limb by under a
+  pixel. THE LIMB, MEASURED by rows about the mask's last sky row: with the bodies 0.75 high the lab's limb
+  stands 4 to 6 rows higher on the left (cols 0 to 480: 123 against the standing's 91 at six rows above the
+  mask's line); a px at the limb is about 0.008 stage units, so dome.drop about 0.012 would bring it back.
+- 06:33 UTC. MAIL 1429 from /root (high), kept in full in the thread; its core: h40 is the base (not h39), not
+  in the name as it stands. RIGHT and to keep: the size of the near cells, the hidden far flank, the far field's
+  density, THE SPOT, the arcade. WRONG: (2) EDGE: a crisp pale rim over a thin seam, caps that lie ON a floor;
+  the approved's glow falls into the lane over a visible width (gold, brown, near black), neighbours press
+  against each other, a net of valleys. (3) FACE: evenly pale, chalk; the approved has fine fibres from the lane
+  up the flank toward the crown, the crown mottled, brightest where the fibres meet, only small parts near
+  white. (4) LANES: empty; the approved has small bright points and thin bright threads at the corners.
+  (5) the largest contrast must be crown to lane, not cap to seam. ASKED by cause: (a) hot crown, cooler flank,
+  cold lane, the fall over a width, no rim line; (b) fibres on the flanks as flow lines of the field that moves
+  the cells; (c) bright points and threads in the lanes; (d) no cap may slide as a body: swell, split, sink.
+  One state mail when a state does 2 to 4 to my own eye: 60 and 90 at FINAL beside the approved at HIS CROP
+  (x 0.28 to 0.62, y 0.62 to 0.96 = cols 538 to 1190, rows 670 to 1037), the low band whole and on rows 540 and
+  under (his numbers with bands.py: main 15.303 whole, 27.289 rows 540 and under; h40 14.653, 25.873; bands of
+  h40 1.111 0.977 0.969 0.981), the bands, my list. Name the box of my own low band (mine was the cut of rows
+  324 to 1080). TELL sun_builder at the same time which commit he takes: his name closes 13:30.
+  So the dark tops of MAIL 1412 are overruled by "hot crown": the trials t121 to t126 (dark field on top) stop.
+  t127, t128: the blob back as the cell's own heat (hot crown, wide fall), threads from the crown down the
+  flank that keep their heat on the cooler flank, no flat lane bottom, lane 0.009.
+- 06:40 UTC. t127, t128 READ at 1 to 1 and at the Builder's crop: hairy caps on a TAN floor. The lane was not the
+  coldest place: the seam's heat ([0.12, 0.4]) lay over the cooled flank's, and the refit curve lifts the low end,
+  so the lanes came out tan and the bodies stood on a floor. The thin threads (18 round the crown, 4 px a column)
+  on a dark flank are hairs. Views of the shader (lab.json "show": edge, seam, tall, cell, deep, junc; v/show.sh)
+  showed the lanes where they should be; the haze is not the cause (tau 0.0006 in the near field).
+- 06:50 UTC. t129, t130 (seam [0.03, 0.1], lane 0.007, threads 12 and 9 round the crown, 8 and 12 px a column,
+  half width 0.6 and 0.75 at the top so the fibres are broad soft streaks with thin dark gaps, crown smoother
+  (weave[14] 0.3), blob floor 0.35): the floor is gone, the lanes are dark, the fibres read as streaks of gas and
+  no more as hair. MEASURED t130 draft: curve [0.685 0.687 0.687 0.684 0.673 0.648 0.608 0.553 0.475 0.384 0.323]
+  (largest gap to the approved 0.062 at 0.5 to 0.7; h40 0.082), lane 5.55 px, cut low band 22.14, sky 8.70.
+  Still wrong: each body has a dark outline all round and a crisp silhouette: polished pebbles in a pile.
+- 06:56 UTC. t131, t132 (profile 2.0 / 1.1, a parabola, at height 0.75 and 0.9): pointed mounds, nuggets. FAILED,
+  the profile stays 2.2 / 1.5.
+- 06:57 UTC. Code: heat.corner [heat of the fibre ends where three cells meet, from which share of the way, to
+  which, how many times stronger the small hot points are there]. t133: lane 0.004 (black only in the bottom of
+  the valley), shoulder 0.6 within 0.4, corner [1.2, 0.7, 0.9, 3], sparks 0.6 of 1.5 to 3 px near the border.
+  t134: the same, blob floor 0.5, seam [0.03, 0.25, 15] (a glow in places).
+- 07:02 UTC. t133, t134 READ: the black is only in the bottom of the valley now and the bodies press closer; the
+  corner points are too few to judge at the draft tier (draft pixels are 2 px). Still polished solids: crisp
+  silhouettes, a clean cut at every base.
+- 07:05 UTC. THE GAS MARCH BACK ON (gas.steps 12; it was built at f1 and never tuned). t135 = t133 with skin
+  [20, 0.005], pool [30, 0.012]: the bases of the bodies fade into glowing gas, silhouettes softer, the first
+  state where the fall into the lane has a width by cause. MEASURED t135 draft: curve [0.68 0.682 0.678 0.664
+  0.649 0.622 0.572 0.521 0.454 0.386 0.34], largest gap to the approved 0.036 (inside 0.05 at every tenth for
+  the first time), lane 6.18 px (7.08), sky part 8.4711 (standing 9.0457), plain 29.9162, cut low band 21.56.
+  Wrong: the glow is tan and hides the dark of the lanes; the umbra fills (4657 px against 14301).
+  Code: gas.spot [from, to] in pit widths (the gas thins toward the spot; was 2.0 to 3.5 fixed);
+  weave[23], [24]: the fibres bend toward the nearest point where three cells meet on their way down the flank
+  (vBend from the vertex shader: the turn to the meeting point of the two nearest borders, nothing at the middle
+  of a border); [23] the share of that turn at the border, [24] from which share of the way.
+  t136: gas skin 12, pool 20, glow level 0.6 (haze.level; the gas glows cooler than the ground), spot [3, 5],
+  bend 0.4 from 0.3. t137: glow level 0.9, pool 30.
+- 07:11 UTC. t136, t137 READ: the fibres gather into fans toward the corners. MEASURED draft: plain 30.44 / 30.32,
+  sky 8.49, cut low band 21.91 / 21.92, umbra 11388 / 7847 px, curve gap 0.075 / 0.066 at 0.6 to 0.7.
+- 07:18 UTC. t138 (skin [40, 0.008]), t139 (skin [80, 0.008], dome.vary 0.25): softer, the bases dissolve.
+  MEASURED t139 draft: plain 30.2009, sky 8.4065, cut low band 22.57, umbra 2617 px (too small: the refit curve
+  lifts the darks to 0.10), lane 5.88 px, curve gap about 0.065, bands [1.57 0.98 0.86 0.88 0.95 0.94 0.83].
+  To my eye still glazed bulbs with crisp upper silhouettes. Config kept as v/lab-t139.json.
+- 07:19 UTC. THE CAUSE OF "A CAP SLIDES AS A BODY", MEASURED from the table (tool slide.ts: frames 60, 75, 90,
+  cells with a radius over 0.05): the way of a cell's middle in 1 s is 0.493 of its radius at the median, 0.958
+  at the 90th, 1.951 at the most; the change of its radius is 0.157 / 0.494. The caps travel three times more
+  than they swell, because crown and pattern hang on the centroid of a ground that changes with every birth and
+  death next door. With the crown at the cell's site (clamped to 0.6 of the way to any border): relax 0.3:
+  0.420 / 0.863; relax 0.1: 0.195 / 0.754; relax 0.03: 0.174 / 0.624; relax 0: 0.189 / 0.611.
+  Code: dome.anchor [share of the way from the centroid to the site, most share of the way to any border].
+- 07:26 UTC. t140 (anchor [1.0, 0.5]), t141 (the same, sim.relax 0.1; the table changes, so the far twin must be
+  baked again before a name). MEASURED draft: t140 plain 30.3298, sky 8.4344, cut low band 22.3146, curve
+  [0.666 0.674 0.657 0.636 0.625 0.607 0.565 0.515 0.452 0.389 0.329] (largest gap 0.021: inside 0.05 at every
+  tenth), lane 6.09 px, umbra 2664; t141 plain 30.331, sky 8.439, cut 22.4036, curve [0.681 0.671 0.664 0.66
+  0.645 0.617 0.581 0.531 0.464 0.387 0.332] (largest gap 0.035), lane 5.83 px, umbra 2873.
+  READ: no lopsided dunes; the layout holds. Still wrong to my eye: glazed bulbs, hard streaks, crisp silhouettes,
+  the dark of the lanes filled by the gas glow.
+- 07:27 UTC. Code sim.heir (a cell that is no split wells up beside the cell nearest its end): slide with the
+  centroid 0.417 / 0.846 at 0.5 and 0.421 / 0.846 at 1.0 against 0.493 / 0.958. A small gain; the neighbours'
+  growth moves the centroid, not the births. Key left out of lab.json (off).
+- 07:28 UTC. Final of t141 running (v/t141f.log) to judge at 1 to 1; draft pixels are 2 px.
+- 07:38 UTC. FINAL of t141 (605 s with the gas, 16 samples; the draft tier is 1 sample at full size, so its
+  hardness is aliasing). READ at 1 to 1: tall mounds with marbled patches, polished agate; hardly any dark net
+  between them because every body hides the valley behind it. Not points 2 to 4. G17 by tools/measure/g17.py on
+  my final picture (with grain; the gate uses no grain): median 1.347 for t141f and for h40f (line 0.8).
+- 07:40 UTC. Code heat.cushion.root [depth, threads round a cell 0.05 wide, where the longest and the shortest
+  end (0 crown, 1 border), half width at the lane in columns, longer at three cell points, wider there, columns a
+  pixel where they fade to their mean, share of the turn to the three cell point, from which share of the way,
+  unevenness of the ends, mean]: dark threads of sunk gas rooted in the lane (labRoot).
+  t142 (root), t143 (root, no dark sectors, gas glow 0.6): fine dark hair on the flanks, lanes darker; plain
+  30.76 / 31.38, cut low band 22.83 / 22.97, sky 8.43 / 8.47. Still mounds.
+- 07:52 UTC. t144 (height 0.45), t145 (height 0.3): the dark net of lanes shows on all sides, but 0.3 is cracked
+  mud and 0.45 a quilt of pads with hairline lanes. cut low band 24.53 / 25.66 (over the standing 23.48), sky
+  8.21 / 8.28. FAILED as they stand.
+- 07:56 UTC. WHERE THE LOW BAND IS LOST (v/rows.py: low band and mean by bands of 108 rows): rows 540 to 756 are
+  27 to 36 levels darker than the approved (lab 88 / 75, approved 118 / 102) in every state from h40 to t146;
+  rows 864 on are level. The far field and the ground round the spot are too dark and too brown: the approved's
+  far field is bright gold and fine. Tall bodies at a grazing look show their dark bases; the gas glow at 0.6
+  takes more.
+- 07:59 UTC. t146 (height 0.45, weave weak, tone wider, roots at corners), t147 (the same at 0.75): pads with
+  thin lanes / satin boulders with wood grain (the ends of the roots follow the well noise: contour lines).
+  Code gas.heat [heat of the gas over the cells, heat of the gas sunk in the valleys] as shares of the ground's
+  heat under it: the hot gas wells up over the cells and glows, the cooled gas lies in the lanes.
+  t148: height 0.45, valley black 0.012 wide, shoulder 0.4, gas heat [1.3, 0.5]. t149: height 0.75, gas [1.4, 0.5].
+  NOTE: ground.ts was edited while t147 rendered (gas.heat, default [1, 1], the same picture); not again.
+- 08:05 UTC. t148 READ: the first state that is one sheet of pressed cushions with soft dark valleys (height
+  0.45, the valley's black 0.012 wide, shoulder to 0.4, hot gas over the cells and cool gas in the valleys).
+  Wrong: wood grain on the faces, the lanes muddy. t149 (0.75, gas heat 1.4): golden nuggets, the umbra filled.
+  MEASURED t148 / t149: plain 30.96 / 30.48, cut low band 22.26 / 21.52, sky 8.30 / 8.54.
+- 08:11 UTC. t150 (t148, weave without contrast: [7] 1, [17] 1, [20] 0, [21] 1; roots straight ended, 14 round,
+  pool heat 0.35, gas.spot [5, 9]), t151 (the same, height 0.55): clean pillows pressed together, dark valleys
+  with combed threads. plain 30.35 / 30.21, cut 22.17 / 21.98, sky 8.27 / 8.28, curve gap 0.07 at the middle
+  (the crown too light), lane 5.54 / 5.73 px. The umbra is a brown star (474 px): the refit curve lifts heat
+  0.04 to level 0.12 because the valleys are cold, and the strands' ends in the umbra (0.04 of their heat)
+  come up with it. Code spot.dark (that share, 0.04 before).
+- 08:18 UTC. t152, t153 (seam heat [0.3, 0.3], patches smaller and sharper, limb law [1.4, 0.5]): FAILED to the
+  eye though the numbers were the best (plain 29.70, cut 20.69): the valleys turn into an orange floor
+  (mushrooms on a floor, the tan floor again) and the patches are leopard dabs. The seam stays cold [0.03, 0.1].
+  Kept: the limb law [1.4, 0.5, 0] (rows 540 to 648 six levels lighter).
+  Code root[12], [13]: hot tongues between the dark threads; the number of threads round a cell from its seed
+  (0.7 to 1.3 of root[1]) and no more from its size, so no thread pops in or out as a cell grows.
+- 08:24 UTC. t154 (t151, limb law, tongues 0.6, patch [0.4, 0.5, 0.35, 0.75, 0.3]), t155 (crown against flank
+  stronger): plain 29.85 / 30.28, cut 20.83 / 21.45, sky 8.37 / 8.32, lane 5.54 px, bands 0.92 0.86 0.94 1.04.
+  READ: pillows of one sheet, soft valleys; but matte like dough or leather: the skin gas (80 by 0.008 is an
+  optical depth of 0.64 over every body, more aslant) lays an even tan veil over the tops. t156: skin 30,
+  spot.dark 0.012. t157: also corner 2.0, sparks 1.2, tongues 1.2.
+- 08:30 UTC. t156 (skin gas 30, spot.dark 0.012), t157 (also corner 2.0, sparks 1.2, tongues 1.2): plain
+  29.81 / 29.74, cut low band 20.64 / 20.57, sky 8.45 / 8.45, lane 5.4 px, umbra 1416 / 1490 px (474 before),
+  bands of t157 1.02 0.88 0.91 0.97. To the eye nearly the picture of t154: the veil was not the cause.
+- 08:27 UTC. MAIL 1439 (Builder, seen c-t154): the form is the right direction (one sheet of bodies pressed
+  together, soft dark valleys). What reads as a solid is the light: every cushion has a lit flank toward the
+  upper left and a shaded flank away from it, with a sheen. Asked: take the side light and the sheen out, the
+  level of a point follows its heat alone (crown, fibre, flank, lane); roundness by the heat falling toward the
+  edge, not by a shadow. MAIL 1412 stands (no merge). State by 10:00, ruling 11:30.
+- 08:32 UTC. THE SIDE LIGHT MEASURED (v/side.py: in the Builder's box, the mean light 6 to 24 px from a lane
+  pixel in eight directions; a lane pixel is one under 0.55 of the 12 px mean): the approved has below a lane
+  0.284 and above it 0.287 (difference -0.003); t154 0.325 and 0.274 (+0.051), t157 +0.060, t141f +0.030,
+  h40f +0.012. Right against left is level in all (0.003 to 0.008). CAUSE: no lamp is in the code (the only
+  term of the eye is the limb law by the ground's up). It is the form with the heat: a tall body seen aslant
+  shows its top and its near flank, the far flank is hidden; the heat falls smoothly from crown to lane (blob
+  floor 0.35 outside 0.45 of the way, shoulder to 0.4 over 0.4 of the way), so every body is pale above and
+  dark below, a smooth gradient that reads as a lamp from behind. The gas over the tops at 1.3 of the ground's
+  heat adds a pale band where the look runs longest through it (the far edge of each top): the sheen.
+  t158: blob floor 0.8, shoulder 0.25 wide, gas heat [1.0, 0.35]. t159: also the dark threads climb higher
+  (root ends 0.15 to 0.6 of the way).
+- 08:38 UTC. t158, t159 READ: FAILED. Side measure +0.046 / +0.057 (no better); t159 is draped satin cloth (the
+  dark threads climbing to 0.15 of the way: wood grain again). plain 29.91 / 30.18, cut 21.51 / 20.96.
+  So the smooth fall of the body's heat is not the whole cause. Older pictures by the same measure: t144 +0.034,
+  t145 +0.025, t148 +0.028 (height 0.45, weave contrast on, pool heat 0.5), t150 +0.052 (the same without
+  weave contrast, pool heat 0.35), t151 +0.060, h40 +0.010 to 0.012.
+  READ of the approved at 2 to 1 (v/ap2x.jpg): its near white is not on whole crowns. It is in streaks 3 to 5 px
+  wide and 20 to 50 px long on the flanks, in fans that run together toward the dark points where three cells
+  meet; the crowns are mid orange with dark mottles; the far edge of a cell is as dark as its near edge. In the
+  lab the top quarter of the levels is whole pale tops (tan), so the tops read lit and the flanks shaded.
+- 08:45 UTC. t160 (t158 with height 0.45, corner threads [2.5, 0.3, 0.8, 3], patch 0.55), t161 (also pool gas
+  3): side +0.039 / +0.038, plain 29.50 / 29.46, cut 20.72 / 20.67, sky not read. Still foil nuggets: pale
+  blotched tops. t162: the weave with contrast again but on the flank only and no dark sectors (between threads
+  0.45, threads 0.3 of their spacing wide at the border, none on the crown, the threads keep 1.35 of the tone
+  where the body cools, blob floor 0.6). t163: the same without the dark roots.
+- 08:51 UTC. t162 / t163 MEASURED: plain 29.31 / 29.16, cut low band 19.81 / 20.18, side +0.030 / +0.034, bands
+  1 to 16 px 1.20 0.94 0.82 0.76 (too little at 4 to 16 px), lane 5.43 / 5.56 px. READ: fibres on the flanks,
+  still nuggets with pale blotched tops; pale lines along the borders from the corner threads (a rim line: wrong).
+  At 3 to 1 (z-t162): the dark threads that bend to the three cell points draw arcs like wood grain.
+- 08:57 UTC. t164 (t162 with tone spread [0.8, 0.4], corner 1.2, between threads 0.3, threads 1.6 of the tone from
+  0.2 to 0.6 of the way, patch 0.35), t165 (the same at height 0.35, valley black 0.008): plain 29.49 / 29.45,
+  cut low band 19.34 / 19.29 (best so far), side +0.021 / +0.018, bands 1.20 0.97 0.87 0.82 / 1.22 0.98 0.86
+  0.79, lane 5.65 / 5.43 px. READ: bright streaks now on the flanks and the tops less pale; still crumpled foil
+  to my eye: the streaks are smooth satin bands, the tops carry wavy pale bands.
+- 08:57 UTC. Code heat.fan [strength, streaks in a quarter turn, length in cell radii, half width in columns,
+  where they begin, share of columns left empty, mean where too fine]: streaks of hot gas round each point where
+  three cells meet, like a fan about that point (the approved's bright fans run together to the dark points
+  between three cells, not to the crowns). Vertex: vFan (the turn about the point from the ways to the two
+  nearest borders, the way from it, and a fade where the second nearest border changes). None in the lane (times
+  the seam's share). t166: fan [1.0, 5, 0.6, 0.3, 0.06, 0.3, 0.15]. t167: [2.0, 7, 0.8, 0.25, ...], corner off.
+- 09:03 UTC. t166 / t167 (fans): plain 29.30 / 29.23, cut low band 19.14 / 18.94, side +0.021 / +0.013, lane
+  5.49 / 5.69 px. READ t167: the dark net of valleys shows on all sides and fans stand round the three cell
+  points, but the streaks are 2 px lines (scratches) and the tops still carry wavy pale bands. The wavy bands are
+  heat.cushion.grain [0.45, 1.5] (a flowing noise of plus and minus 45 percent over the top: reads as foil).
+- 09:09 UTC. t168 (t167 with grain 0.2, patches [0.5, 0.7, 0.4, 0.8, 0.3], fan [2.0, 5, 0.9, 0.4, 0.06, 0.25,
+  0.15]: fewer, wider, longer streaks), t169 (fan 3.0, blob floor 0.85). MEASURED draft: t168 plain 29.2215,
+  low64 7.394, cut low band 18.5531 (standing 23.48, h40 22.06), side +0.005 (approved -0.003), bands
+  [2.27 1.28 0.99 0.84 0.76 0.72 0.82], curve [0.622 0.621 0.619 0.621 0.616 0.601 0.579 0.537 0.472 0.38 0.309]
+  (largest gap 0.045 at the middle: inside 0.05 at every tenth), lane 5.81 px, umbra 1617 px.
+  t169: plain 29.40, cut 18.36, side +0.002, curve middle 0.589 (gap 0.078: out), umbra 3152.
+  READ t168 at 1 to 1: no lit side by the measure and little by the eye, a dark net of valleys, fans at the three
+  cell points. Still wrong: it reads as crumpled gold foil, hard and crisp where the approved is soft and glows;
+  the bodies overlap like leaves at 3 to 1; arcs like wood grain where the dark threads bend; a red orange speck
+  about 4 by 10 px at frame col 942, row 965 (a spark of middle heat in a dark valley, cause not proven).
+- 09:09 UTC. STATE h41 = t168 (v/lab-h41.json). Chain v/chain-h41.sh: final 90, final 60, film 60 to 120 with
+  the flicker rows (markers FINAL90 DONE, FINAL60 DONE, MOV DONE, CHAIN DONE; log v/chain-h41.log).
+- 09:19 UTC. FINAL of h41 at 90 (16 samples). MEASURED with v/bands.py against sun-close.jpg: whole frame low
+  band 16 px 12.1024 (h40 14.7244; the standing ground by the same tool 15.592; the Builder's main 15.303), plain
+  29.6361 (h40 30.5521; standing 30.4864; the Builder's main 29.558); rows 540 on: low band 24.4501 (h40 25.873 by
+  the Builder, main 27.289; standing by my tool 31.6089), plain 49.2355 (main 49.735); bands 1 to 2, 2 to 4, 4 to
+  8, 8 to 16 px: 1.289 1.040 0.879 0.791 (green; under 1 px 1.547); cut rows 324 on: low band 18.3481 (standing
+  23.4775), plain 38.5862 (40.1645); sky part rows 0 to 324 plain 7.0417, the same as the standing ground's
+  (nothing of the ground is in those rows at 90). By my readers: plain 29.3095, low64 7.265, curve [0.617 0.62
+  0.623 0.62 0.614 0.6 0.581 0.551 0.484 0.394 0.315] (largest gap 0.055 at the 0.7 tenth, 0.05 at the middle),
+  lane 5.61 px (quartiles 3.83, 7.71; approved 7.08), side +0.005, G17 by g17.py with grain median 1.698.
+  Rows by 108: 540: -13 levels, 648: -18, 756: -10, 864: 0, 972: +7 (the far field and round the spot still
+  too dark).
+- 09:29 UTC. FINAL of h41 at 60. whole low band 13.7685, plain 32.912, bands 1.304 1.068 0.909 0.832; rows 540
+  on: low band 25.2373, plain 50.4149; cut rows 324 on: low band 19.9201 (h40 draft 24.2083); sky part rows 0
+  to 324 plain 11.4421 (main's own 11.5380 by the Builder).
+  READ at 1 to 1 (m-h41f.jpg, z-h41f.jpg, lab-90-h41f.jpg): no lamp from a side, a dark net of valleys, fans of
+  streaks at the three cell points. But the ground reads as crumpled gold foil with cracks: the streaks are
+  crisp, the bodies end in hard silhouettes over one another (the valley behind a body is hidden), the outlines
+  are angular, the lanes are thin cracks with black pools at the corners. The levels picture says why: in the
+  approved the top level lies in round blobs in the middle of the cells and the dark levels in broad soft bands
+  round every cell, on the far side too; in h41 the top level lies in streaks and planes and the dark in thin
+  lines. So the approved's cells are low and their heat falls to the lane over a broad width on all sides.
+  NEXT (t170, t171): height 0.3 / 0.4, shoulder 0.55 wide down to 0.25, valley black 0.014, blob floor 0.45, the
+  dark on the bodies weaker (roots 0.35, patches 0.3, between threads 0.5), so the dark levels gather round the
+  lanes. Then the fan about the meeting point itself (v/patch-fan2.py: the turn in the place's own frame, so no
+  pop when a cell's border list changes).
+  The red speck (col 946, row 970, rgb 200 79 32) moves with the cells (h40f had one at 901, 993): likely a
+  spark under the cool valley gas, which glows red over it. Not proven.

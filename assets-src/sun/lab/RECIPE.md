@@ -123,3 +123,59 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   rim would show as a rise, a fall and a second rise). `--cells PLOT.png` reads the same by cell (the pieces
   between lanes, the largest of the near field): the profile of each, the dip of each (a fall after a rise) and
   the share of cells with a dip over 0.04, the approved's beside it.
+  STATE h41 (26 Nov). New keys, all in lab.json:
+  heat.lane[3]: the share of the lane's width from which the cell's own heat comes in over the seam's (0: from
+  the border). dome.vary: how much the height of a body differs from cell to cell (by its seed). dome.drop: the
+  whole ground lowered by that many stage units (0: off; it brings the limb back when the bodies are tall).
+  dome.anchor [a, b]: the crown and the pattern of a cell stand at its site and not at the centroid of its
+  ground: a is the share of the way from the centroid to the site, b the most share of the way to any border.
+  The ground grows and shrinks round the site as the neighbours come and go, so a cell swells on one side and
+  gives way on another and does not travel as a body (measured with slide.ts). sim.relax 0.1 (was 0.3): the
+  sites follow the centroids of their grounds more slowly; this changes the table, so place-far-0.jpg is baked
+  again (bake.ts). sim.heir (absent: 0): the share of new cells that are no splits and well up beside the cell
+  nearest its end; measured as a small gain and left off.
+  heat.corner [k, from, to, sparks]: where three cells meet the ends of the fibres are hot: k times the thread
+  profile of the weave times the nearness of the three cell point, between the shares from and to of the way to
+  the border; sparks: the factor on the small hot points there.
+  weave[23], [24]: the fibres bend toward the nearest point where three cells meet on their way down the flank
+  ([23] the share of the turn reached at the border, [24] from which share of the way). The turn comes from the
+  vertex shader (vBend: the angle to the meeting point of the two nearest borders, nothing at mid border). In
+  h41 the weave has contrast on the flank only and no dark sectors (weave[7] 0.3 between the threads, [14] 0.1 on
+  the crown, [15], [16] = 0.2, 0.6 where it comes in, [17] 1, [21] 1, [19], [20] = 1.6, 0.7: a thread keeps 1.6 of
+  the tone where the body round it has cooled), so the near white of the picture lies in streaks on the flanks
+  and not on whole tops. The marbling of dark sectors on tall bodies read as polished stone.
+  heat.fan [k, streaks in a quarter turn, length in cell radii, half width as a share of a column, where they
+  begin in cell radii, share of columns left empty, mean where a column is finer than the picture shows]: streaks
+  of hot gas round each point where three cells meet, like a fan about that point, each of its own length, width
+  and heat; none in the dark point itself and none in the lane (times the seam's share). The turn about the point
+  and the way from it come from the vertex shader (vFan: from the ways to the two nearest borders of the cell,
+  faded where the second nearest border changes).
+  heat.cushion.grain [0.2, 1.5] (was 0.45): the flowing unevenness of the top; at 0.45 it drew wavy pale bands
+  that read as foil. heat.tone [0.8, 0.4] (was [0.55, 0.9]): the broad tone from cell to cell.
+  spot.dark (absent: 0.04): the share of a strand's heat left where it ends in the umbra. With cold valleys the
+  fitted curve lifts low heat, and at 0.04 the strand ends filled the umbra with a brown star.
+  side.py: `python3 assets-src/sun/lab/side.py PICTURE ...`: is a cell lit from a side (the mean light below and
+  above a lane pixel, and in six more directions). MEASURED: approved -0.003, h40 +0.012, t154 +0.051, h41 draft
+  +0.005. The cause of the lit side was no lamp: the top quarter of the levels lay on whole tops of tall bodies,
+  of which the eye sees the top and the near flank but not the far flank.
+  heat.cushion.root [0] depth, [1] threads round a cell, [2] and [3] where the longest and the shortest end (0
+  crown, 1 border), [4] half a thread's width at the lane as a share of its column, [5] how much longer they are
+  where three cells meet and [6] how much wider, [7] the columns per pixel from which a rank fades to its mean,
+  [8] the share of the turn to the three cell point and [9] from which share of the way, [10] unevenness of the
+  ends by the cell's swells (0: the ends drew contour lines), [11] the mean, [12] the heat added between the
+  threads (the hot gas pressed into tongues) and [13] its share away from the three cell points. `labRoot`: the
+  gas that has cooled sinks back down the flank in thin dark threads rooted in the lane, two ranks, each thread
+  of its own height and width.
+  dome.height 0.45, blob floor 0.6, shoulder (lane[8]) 0.25, valley black (lane[4]) 0.012.
+  gas.steps 12: the march through the gas over the ground is on (it was built at f1 and off since). gas.skin
+  [density, height scale] is the gas over the bodies, gas.pool the gas lying in the valleys, gas.spot [from, to]
+  in pit widths where the gas thins toward the spot, gas.heat [skin, pool] the heat of each as a share of the
+  ground's heat under it: the gas that wells up over the cells is hot and glows, the gas that has sunk into the
+  lanes has cooled. haze.level is the factor on both. With gas.steps over 0 the analytic haze is not used.
+  heat.graze [at a look along the surface, the cosine at which it is 1, 0]: the limb law, the only term that
+  knows the eye; it uses the ground's own up and no body's normal ([2] = 0), so no body has a lit side.
+  "show": edge | seam | tall | cell | deep | junc in lab.json draws that quantity alone (a debug view, absent in
+  a state).
+  slide.ts: `npx tsx assets-src/sun/lab/slide.ts`: from the table alone, the way of a cell's middle (as the
+  ground places it, with dome.anchor) in 1 s of film against the change of its radius, for the cells wider than
+  0.05 and for all.

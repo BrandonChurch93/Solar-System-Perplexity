@@ -366,12 +366,23 @@ export function life(): Life {
           if (d.on[j] && d.area[j]! > most) { most = d.area[j]!; host = j }
         }
       }
+      // a cell that is no split wells up where another is about to end: of a few cells, the one nearest the end of
+      // its life; it takes that ground over as the old cell sinks, so the cells round them stay where they are
+      const heir = pick >= S.split && hash(i, gen[i]! * 7 + 10) < ((S as { heir?: number }).heir ?? 0)
+      if (heir) {
+        let most = -1
+        for (let k = 0; k < 24; k++) {
+          const j = Math.floor(hash(i, gen[i]! * 37 + k) * n)
+          const u = (t + S.step - born[j]!) / span[j]!
+          if (j !== i && d.on[j] && u < 1 && u > most) { most = u; host = j }
+        }
+      }
       for (let k = 0; k < n && !d.on[host]; k++) host = (host + 1) % n
       const e = Math.floor(hash(i, gen[i]! * 7 + 6) * d.count[host]!)
       const ex = d.edges[(host * EDGES + e) * 2]!
       const ey = d.edges[(host * EDGES + e) * 2 + 1]!
       const inv = ex * ex + ey * ey
-      const reach = (pick < S.split ? 0.55 : 1) * (0.5 + hash(i, gen[i]! * 7 + 8))
+      const reach = (pick < S.split ? 0.55 : heir ? 0.3 : 1) * (0.5 + hash(i, gen[i]! * 7 + 8))
       const lean = (hash(i, gen[i]! * 7 + 9) - 0.5) * 0.9
       let px = d.mid[host * 2]! + (reach * (ex - lean * ey)) / inv
       let py = d.mid[host * 2 + 1]! + (reach * (ey + lean * ex)) / inv
