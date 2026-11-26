@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T18:22:35.843Z",
+ "pushed": "2026-11-26T18:37:26.482Z",
  "head": "b7f9558077fb3565f41555bbd5cbd4735978fc3e",
- "note": "D finals 4400 and 4401 consecutive, no dashes; the cloud group's stair cut edge at 8 to 1 with five controls",
+ "note": "final pair 4400: main's dark dashes in the white body, none on D (held); cloud group controls and the placements' frames in the queue",
  "looks": [
+  {
+   "time": "2026-11-26T18:37:20.954Z",
+   "file": "20261126183720954-note-pair-4400-full.jpg",
+   "source": "../../../../tmp/n82/pair-4400-full.jpg",
+   "kind": "note",
+   "label": "final 4400 whole frame: main (the name) left, D right",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T18:37:20.188Z",
+   "file": "20261126183720188-note-pair-4400-strip.jpg",
+   "source": "../../../../tmp/n82/pair-4400-strip.jpg",
+   "kind": "note",
+   "label": "final 4400, the strip x 560 to 1260, y 830 to 1080 at 2 to 1: main (the name b7f95580) above, D (17b4dca9) below; main has rows of short dark dashes in the white body at lower right, D none",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T18:22:32.396Z",
    "file": "20261126182232396-note-grp-zoom.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n79/sp-4407-ctl.jpg",
    "kind": "note",
    "label": "draft 4407 controls: main, the name, the cover's cloud gain 0, the cover off: the dark specks are the cover's small clouds",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T13:49:34.796Z",
-   "file": "20261126134934796-note-sp-4407-D.jpg",
-   "source": "../../../../tmp/n79/sp-4407-D.jpg",
-   "kind": "note",
-   "label": "draft 4407, x 400 to 700, y 700 to 860: main, the name bcc9d174, cure D (the tops' light over the pose's kept over the small clouds)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T13:31:23.017Z",
-   "file": "20261126133123017-note-lh-top.jpg",
-   "source": "../../../../tmp/n79/lh-top.jpg",
-   "kind": "note",
-   "label": "the name, draft 4413, 4414 + 1/2, 4416: the limb's bright band reaches the top edge at 4414 + 1/2 and leaves through it, the cause of the level's bend at 4415 on both trees",
    "stop": "uranus"
   }
  ]
