@@ -1,9 +1,39 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T00:33:44.534Z",
+ "pushed": "2026-11-26T00:50:35.170Z",
  "head": "6ef232eabadec5b9411bd199613ec3014de9fa8e",
- "note": "rim as light of the air pushed as 6ef232ea (a state, main 3675234f merged); finals 4035 3.737, 4290 3.226; rows and G running",
+ "note": "6ef232ea RC proof: G5 and G17 pass (4035 1.178 and 1.082, 4290 1.076 and 0.960); final 4186 beside main and B1; rows drawing",
  "looks": [
+  {
+   "time": "2026-11-26T00:50:34.567Z",
+   "file": "20261126005034567-note-final-4186-c.jpg",
+   "source": "../../../../tmp/n65/final-4186-c.png",
+   "kind": "note",
+   "label": "final 4186 right edge at 2x: main, B1, RC; the band under the limb is calmer in RC, fine streaks given up",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T00:50:33.921Z",
+   "file": "20261126005033921-note-final-4186-a.jpg",
+   "source": "../../../../tmp/n65/final-4186-a.png",
+   "kind": "note",
+   "label": "final 4186 limb band: main, B1 2583f129, RC 6ef232ea (top to bottom)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T00:41:43.135Z",
+   "file": "20261126004143135-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-26T00:30:40.693Z",
    "file": "20261126003040693-note-main-final-4399-mid2x.jpg",
@@ -165,20 +195,6 @@
    "stop": "uranus"
   },
   {
-   "time": "2026-11-25T22:24:37.004Z",
-   "file": "20261125222437004-job-frame-04035.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
    "time": "2026-11-25T22:18:11.794Z",
    "file": "20261125221811794-note-pair-HA.jpg",
    "source": "../../../../tmp/n61/pair-HA.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n60/pat-B1-8798.jpg",
    "kind": "note",
    "label": "chain read B1 from 4399: back side 1.60 on 0.13 of the frame, red sits in the far ground under the limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:48:11.681Z",
-   "file": "20261125214811681-note-b1-4399-sheet.jpg",
-   "source": "../../../../tmp/n60/b1-4399-sheet.jpg",
-   "kind": "note",
-   "label": "B1 6a0e74bb draft 4399 to 4407, the rise part 1 row 1.60 from 4399",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:22:38.554Z",
-   "file": "20261125212238554-note-b2-sheet0.jpg",
-   "source": "../../../../tmp/n60/b2-sheet0.jpg",
-   "kind": "note",
-   "label": "B2 trial, draft 4418 to 4422 in halves: the cover's ground follows the band clock; one body through the series",
    "stop": "uranus"
   }
  ]
