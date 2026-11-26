@@ -1,55 +1,55 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T17:07:53.202Z",
- "head": "2cb008f1a8965aac41a810e3ae01f656e88cf890",
- "note": "17:08 UTC: build D (the lift held to the far strip, sha 2cb008f1) pushed to agent/jupiter-relief; crops of the far strip against main and build C, the own sine tint, the lower left towers 3250 to 3255",
+ "pushed": "2026-11-26T17:30:39.244Z",
+ "head": "e3a7103fd7a9a67e55283e9e579e8d094b6e651a",
+ "note": "17:31 UTC: build D at 60 frames a second being drawn; S1 control 1 (which level draws where at 2997) done",
  "looks": [
+  {
+   "time": "2026-11-26T17:30:38.029Z",
+   "file": "20261126173038029-note-d-evens.jpg",
+   "source": "../../../../tmp/d-evens.jpg",
+   "kind": "note",
+   "label": "build D beside main's stop, even frames 3249 to 3263 at draft: the lift on the far strip",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:30:36.767Z",
+   "file": "20261126173036767-note-s1-texels-2997.jpg",
+   "source": "../../../../tmp/s1-texels-2997.jpg",
+   "kind": "note",
+   "label": "S1 control 1: frame 2997 draft tinted by texels of the drawn level per pixel, orange 1.25 to 1.5, green 1.5 to 2, blue 2 and more",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:17:36.088Z",
+   "file": "20261126171736088-note-s1-draft-2997.jpg",
+   "source": "../../../../tmp/s1-draft-2997.jpg",
+   "kind": "note",
+   "label": "Frame 2997 at draft with one sample, native crops (round 59 S1, M3)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:17:34.867Z",
+   "file": "20261126171734867-note-m1-3150.jpg",
+   "source": "../../../../tmp/m1-3150.jpg",
+   "kind": "note",
+   "label": "Frame 3150: the approved picture beside main's stop, lower left at native pixels (round 59 M1)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:17:33.475Z",
+   "file": "20261126171733475-note-towers-proof.jpg",
+   "source": "../../../../tmp/towers-proof.jpg",
+   "kind": "note",
+   "label": "Lower left towers 3252 to 3254: main above, the tone term of the picture's rim held at 0 below. The tower comes up either way",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T16:54:33.499Z",
    "file": "20261126165433499-note-towers-ll-3250-3255.jpg",
    "source": "../../../../tmp/towers-ll-3250-3255.jpg",
    "kind": "note",
    "label": "Main's stop, the lower left (x 0 to 760, y 480 to 1080) at frames 3250 to 3255, native pixels: the plates' cream tower comes up in place from 3252",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:54:32.631Z",
-   "file": "20261126165432631-note-dbg-ownsine.jpg",
-   "source": "../../../../tmp/dbg-ownsine.jpg",
-   "kind": "note",
-   "label": "Debug tint, not a film picture: the sine of the picture's own sight line where the picture has a share, frames 3250, 3254, 3263, 3266 (red under 0.04, yellow to 0.063, green to 0.08, cyan to 0.1, blue to 0.126, magenta to 0.16, white to 0.2, darkened from 0.2)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:54:31.666Z",
-   "file": "20261126165431666-note-crop-d1-far.jpg",
-   "source": "../../../../tmp/crop-d1-far.jpg",
-   "kind": "note",
-   "label": "Build D (the lift held to the far strip, farSine 0.075 to 0.1) between main's stop and the held build C, frames 3254 and 3258, native pixels of x 1000 to 1920, y 180 to 700",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:37:36.621Z",
-   "file": "20261126163736621-note-sliver-row-3262.jpg",
-   "source": "../../../../tmp/sliver-row-3262.jpg",
-   "kind": "note",
-   "label": "Held build e5051fcc, row 3262 (the new red line): the second reading of the pair, frame 3262 carried onto frame 3270, name and build; the two trees carry one lobe up to 58 px apart after the way is set right, though frame 3270 is the same there",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:13:50.662Z",
-   "file": "20261126161350662-note-sheet-m-3268-3276.jpg",
-   "source": "../../../../tmp/sheet-m-3268-3276.jpg",
-   "kind": "note",
-   "label": "Build e5051fcc at 3268, 3271, 3274, 3276, draft",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:13:49.475Z",
-   "file": "20261126161349475-note-storm-diff-3263-3266.jpg",
-   "source": "../../../../tmp/storm-diff-3263-3266.jpg",
-   "kind": "note",
-   "label": "Storm patch at 3263 and 3266: name, build e5051fcc, build minus name 3 times (grey is no change)",
    "stop": "jupiter"
   },
   {
