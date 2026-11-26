@@ -1,9 +1,49 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T00:00:55.175Z",
- "head": "3230e0435a32e3b2ed84e96df994da968c4cee8a",
- "note": "candidate's whole rise: rows 17 red (main 17), largest 0.66 (main 0.85); three rows worse than main's",
+ "pushed": "2026-11-26T00:26:47.974Z",
+ "head": "61f683604e59583c7ac2c4c6254cee34287ce85f",
+ "note": "candidate whole dive: red, 26 rows over 0.45 (main 25), largest 0.60 at 1322 (main 0.62); worse than main at 1303.5, 1310, 1321 to 1324, 1330.5; no name",
  "looks": [
+  {
+   "time": "2026-11-26T00:26:47.141Z",
+   "file": "20261126002647141-note-cand-d-ll1.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-ll1.jpg",
+   "kind": "note",
+   "label": "candidate 6b9c2f89 dive cand-d-ll1",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:26:46.449Z",
+   "file": "20261126002646449-note-cand-d-w4.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-w4.jpg",
+   "kind": "note",
+   "label": "candidate 6b9c2f89 dive cand-d-w4",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:26:45.791Z",
+   "file": "20261126002645791-note-cand-d-w3.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-w3.jpg",
+   "kind": "note",
+   "label": "candidate 6b9c2f89 dive cand-d-w3",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:26:45.082Z",
+   "file": "20261126002645082-note-cand-d-w2.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-w2.jpg",
+   "kind": "note",
+   "label": "candidate 6b9c2f89 dive cand-d-w2",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:26:44.353Z",
+   "file": "20261126002644353-note-cand-d-w1.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-w1.jpg",
+   "kind": "note",
+   "label": "candidate 6b9c2f89 dive cand-d-w1",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T00:00:53.784Z",
    "file": "20261126000053784-note-cand-m0-1575.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/sh/cand-r-w1.jpg",
    "kind": "note",
    "label": "candidate rise 1540 to 1551, every frame",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:00:50.279Z",
-   "file": "20261126000050279-note-cand-m0-fardeck.jpg",
-   "source": "../../../../tmp/v/sh/cand-m0-fardeck.jpg",
-   "kind": "note",
-   "label": "rise far deck 1545 to 1557: main (left), candidate (right)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:40:24.475Z",
-   "file": "20261125234024475-note-cand-rise.jpg",
-   "source": "../../../../tmp/v/sh/cand-rise.jpg",
-   "kind": "note",
-   "label": "candidate stills 1541, 1547, 1555 + 1/2, 1566",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:40:23.510Z",
-   "file": "20261125234023510-note-cand-1555.jpg",
-   "source": "../../../../tmp/v/sh/cand-1555.jpg",
-   "kind": "note",
-   "label": "rise 1555 + 1/2 under the limb: state before, far deck trial, scale by scale, candidate (both)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:31:44.712Z",
-   "file": "20261125233144712-note-cand-dive-end.jpg",
-   "source": "../../../../tmp/v/sh/cand-dive-end.jpg",
-   "kind": "note",
-   "label": "candidate 1338, 1341, 1343: main's dive plates with the far deck of T",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:31:43.803Z",
-   "file": "20261125233143803-note-v1-crop-b.jpg",
-   "source": "../../../../tmp/v/sh/v1-crop-b.jpg",
-   "kind": "note",
-   "label": "dive 1312 and 1320 at 1 to 1: state before, hold's picture soft (control), scale by scale",
    "stop": "venus"
   }
  ]
