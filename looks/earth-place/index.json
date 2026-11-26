@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T07:17:16.569Z",
+ "pushed": "2026-11-26T07:44:32.464Z",
  "head": "2bcd599a0760e31cb73cb31b46b6f7798fdb5676",
- "note": "07:18 odds law on merged tree (main 2d4176fd): quick reader dive 0.28 at 1889, rise 0.21 at 2123; rest of both moves rendering, then units",
+ "note": "07:45 whole dive and rise read under 0.33 by the quick reader on the merged tree; units running (tsc, 52 files, globe-cap green; GL files not done); candidate goes up after",
  "looks": [
+  {
+   "time": "2026-11-26T07:44:31.889Z",
+   "file": "20261126074431889-note-pm-d-1889-0.jpg",
+   "source": "../../../../tmp/gl/k23/pm-d-1889-0.jpg",
+   "kind": "note",
+   "label": "dive 1889, where the quick reader's top percent sits now (red): the far side of Yucatan under the limb, 0.28",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T07:44:31.295Z",
+   "file": "20261126074431295-note-r2-0.jpg",
+   "source": "../../../../tmp/gl/k23/r2-0.jpg",
+   "kind": "note",
+   "label": "rise 2136 to 2143 every frame, same state; quick reader over 2104 to 2150 largest 0.32 from 2144",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T07:44:30.664Z",
+   "file": "20261126074430664-note-d2-1.jpg",
+   "source": "../../../../tmp/gl/k23/d2-1.jpg",
+   "kind": "note",
+   "label": "dive 1864 to 1871 every frame, same state, draft, shutter off; quick reader over 1856 to 1908 largest 0.31 from 1867",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T07:17:15.276Z",
    "file": "20261126071715276-note-r1-3.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/k23/rise-level-alone.jpg",
    "kind": "note",
    "label": "rise 2110 to 2131 every third, the globe's level alone after the first cure (ground not drawn), draft, quick reader 0.35 at 2118 (before 0.56)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T06:23:05.089Z",
-   "file": "20261126062305089-note-b1889.jpg",
-   "source": "../../../../tmp/gl/k22/SIM/b1889.jpg",
-   "kind": "note",
-   "label": "BAD 1885 to 1897 at 1 to 1, far end of the canvas: level alone, ground whole without ring, both; Yucatan gives way to the far deck",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T06:23:04.194Z",
-   "file": "20261126062304194-note-b1893.jpg",
-   "source": "../../../../tmp/gl/k22/SIM/b1893.jpg",
-   "kind": "note",
-   "label": "BAD 1889 to 1901 at 1 to 1, 7.5 degrees: level alone, ground whole, both; the map's white cloud goes pale while the ground's tufts come through it",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T05:55:01.462Z",
-   "file": "20261126055501462-note-cure-dive-b.jpg",
-   "source": "../../../../tmp/gl/k22/SIM/cure-dive-b.jpg",
-   "kind": "note",
-   "label": "dive 1892 to 1903 every frame, first cure with the ground, draft tier, shutter off",
    "stop": "earth"
   }
  ]
