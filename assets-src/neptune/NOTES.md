@@ -8797,3 +8797,57 @@ Read: main is merged again before the name, and the name mail says which main it
 > 9. REDS I know, besides those above: the teal blots at 4860 (15.7 and 7.5); the comb of the shadow's 48 taps, faint; 4744 at 0.39 with no layer named.
 
 Promised in it: main's own pair 4760 to 4768 by 01:15 UTC; the eye's cure (c) in its own commit and name by 02:00 UTC.
+
+## MAIL 1346 from the Builder, 00:16 UTC, 26 Nov (read 00:17 by my clock, while main's pair drew; word for word)
+
+> MAIL 1346 from the Builder (/root), 00:16 UTC.
+> Your tenth name ef0cc1cf430939c842dce4218d88a622373caaaf is logged. Its proofs are at the front of my queue as nt1-01 to 08: the dive's four reader parts, the rise's two, the units and gate of a round start, and the finals 4605 and 4860 on main 1f51abc9 and on the name. I send every row and picture as it comes; they are judged by d311 and d318 against main's own rows (dive mb1-05 to 08, rise mb5-01 and mb1-03).
+> Rulings and answers, by your points:
+> (5) and (4), G17 at 4860 and 4605. G17 is a gate of the pass bar. If my gate reads it red at a judged frame where main is green, the name does not go on main, whatever the reader rows say. So after the storm's eye your next cause is the missing fine detail of the deck and of the globe by code: real structure at the approved's finest scale (fibres, blots, the grain of the bands), drawn by the shader. Never a sharpening pass, never a plate, never a change of the measure. Say with your next name what the detail measure reads by scale (bands.py against the approved) so we both see which octaves are missing.
+> (6b) the Sun at the hold, (6a) and (6d) the sky: mine to settle with the sky's owner. The kit says a bright star with a small glare at Neptune, and the approved shows glare and spikes; a bare ball of 12 px is a fault of the engine's far Sun, not of your folders. I look at the finals of nt1-08 beside the approved first and then give the order to sky_builder; you get its tree to draw on when it has a name. Build nothing for it in your folders.
+> (6c) the eye: go on, by 02:00 as you say.
+> (3) 4706 and 4744: go on by cause. A number over the limit that main does not have is a line; under the limit it is none.
+> (1) main's own pair at 4760 with the cast off, by 01:15: wanted.
+
+Read: (1) the name is logged and under proof as nt1-01 to 08. (2) G17 is a gate: red at a judged frame where main is green
+keeps the name off main whatever the rows say. After the eye my next cause is the missing fine detail of the deck and of
+the globe by code, at the approved's finest scale; never a sharpening pass, a plate or a change of the measure; with the
+next name the detail measure by scale (bands.py against the approved). (3) The Sun and the sky of the hold are his to
+settle with the sky's owner; I build nothing for them in my folders. (4) The eye by 02:00. (5) 4706 and 4744 by cause; a
+number under the limit is no line. (6) Main's own pair with the cast off by 01:15: wanted.
+
+## Lab log 00:13 to 00:33 UTC, 26 Nov: main's own pair at the dive's end, drawn here; why main is green at 4760
+
+All pair numbers are my proxy (the report's own path on my preview frames, 960 wide, draft, rate 2), STATED.
+
+- HOW: `/tmp/mainpair.sh` on a clean tree: `git checkout --detach origin/main` (1f51abc9a), poses by a copy of weave.ts with
+  main's own plan (`W/weave-main.ts`, `W/poses-main.json`), frames 4755 to 4768 at half steps into `W/MAINe` (00:13:17 to
+  00:23:17, about 22 s a frame), the pair 4760 to 4768 again with main's cirrus.cast 2.0 at 0.0 into `W/MAINc` (to 00:30:14),
+  then back on agent/neptune-place cf3a13eb8, tree clean. One process.
+- MAIN'S PAIRS: 4755 0.12 at (1666, 854) (the Builder's reader on main: 0.1357 at 4755), 4756 0.09, 4757 0.08, 4758 0.07,
+  4759 0.07, 4760 0.07 at (936, 940). With the cirrus's cast off: 4760 0.07 at (1704, 516). So on main the shadow of the
+  cirrus adds nothing the reader sees.
+- MAIN'S CAMERA at these frames is not mine (4760: p 0.226, 0.257, 0.967 against my 0.180, 0.147, 1.000; height 0.0259
+  against 0.0263), so a place of the frame is not the same place of the ground.
+- THE SHADOW ALONE (the frame with the cast off minus the frame with it, mean of RGB, 960 px, rows 200 to 540), at 4760 and
+  4768 (sheet `/tmp/main-shadow.jpg`: the frame's lower half, the shadow x12 at 4760, at 4768):
+  - main: 99th percentile 5.33 and 6.00 levels; px over 4 levels 9862 and 9386, over 8 levels 2670 and 3152; the ground the
+    shadow falls on (cast off, where it takes over 4): 36.0 and 40.5 levels.
+  - my tree before the cure (N13w against W1): 99th 10.00 and 9.67; over 4: 14880 and 14512; over 8: 6762 and 6610; the
+    ground 59.3 and 58.4.
+  - the name (N14e against W1): 99th 6.67 and 6.67; over 4: 12260 and 11780; over 8: 3804 and 4197; the ground 64.6 and 65.4.
+  The deepest point (70 to 78 levels at about (620, 232)) is the far streamer's shadow line in all three.
+- READ: the first streamer's shadow lies on main's ground too, with its thick and thin parts whole, and its blots change
+  between 4760 and 4768 there as well (seen on the sheet). But main's near ground stands at 36 to 40 levels where mine
+  stands at 58 to 65 (deck.level 0.55 against my 0.75, low haze 0.008 against 0.065, no air of the eye), so the same
+  shadow takes about half the levels and the reader's pattern stays at 0.07. NOT CONTROLLED: I did not darken my own
+  ground to main's level to see the number fall, so that the level alone makes main green is a reading of two measures,
+  not a finding. After the cure the name's shadow stands near main's by levels (over 8: 3804 against 2670).
+- CORRECTION of a sentence in my mail of 00:10 ("Main's deep.ts has no castWave law (the streamer's shadow whole)"): main
+  has castWave as the shortest wave of the shadow's noise (its line 639, the footprint handed to cirrusInside); what it
+  does not have is the law on the thick and thin parts (gShadow), which came with 985341693. The old name 27624e6f did not
+  have it either: there the parts stood whole in the shadow (the Builder's 0.6171), on my tree before the cure at half
+  (my 0.78).
+- Looks: two added 00:31 (the sheet and main's pair). The push failed three times, four times running, with "could not
+  read Username for https://github.com" (a dry run of a push of my own branch fails the same way; ls-remote works).
+  Tried again later (MAIL 621).
