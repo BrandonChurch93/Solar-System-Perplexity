@@ -419,11 +419,22 @@ const SOLID = 'if (uDiag >= 2 && alpha < 0.5) discard;'
 export const AIR_LAW_KNOT_LEAST = 1e-5
 export const AIR_LAW_LAYER = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  col = airLaw(col, uAirLight * uGain * vig, airLawFactorSeen(airLawDepth((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y), airLawDepth(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y), uAirNumbers.x, uAirNumbers.z));\n  '
 
-export const AIR_LAW_LAYER_KNOTS = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  vec3 airEye = (vEye - uAirCentre.xyz) * uAirCentre.w;\n  vec3 airWas = -uAirCentre.xyz * uAirCentre.w;\n  float airSeen = airLawDepth(airWas, airPoint, uAirNumbers.y);\n  col = airLawSeen(col, uAirLight * uGain * vig, airLawFactorSeen(airLawDepth(airEye, airPoint, uAirNumbers.y), airSeen, uAirNumbers.x, uAirNumbers.z), airLawGather(airEye, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airLawHeld(airLawGather(airWas, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airSeen, uAirNumbers.x, uAirNumbers.z));\n  '
+export const AIR_LAW_LAYER_KNOTS = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  float airSeen = airLawDepth(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y);\n  float airNow = airLawDepth((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y);\n  col = airLawSeen(col, uAirLight * uGain * vig, airLawFactorSeen(airNow, airSeen, uAirNumbers.x, uAirNumbers.z), vAirShare.x * (1.0 - airLawFactor(airNow, uAirNumbers.x)), airLawHeld(vAirShare.y * (1.0 - airLawFactor(airSeen, uAirNumbers.x)), airSeen, uAirNumbers.x, uAirNumbers.z));\n  '
 
 export function withAirLaw(source: string, knots = false): string {
   if (source.split(MAIN).length !== 2 || source.split(SOLID).length !== 2 || source.includes('uAirCentre')) throw new Error('the relief shader has no single place for the air law')
-  return source.replace(MAIN, AIR_LAW_UNIFORMS.slice(1) + (knots ? AIR_LAW_KNOT_UNIFORMS : '') + AIR_LAW_GLSL + (knots ? AIR_LAW_KNOTS_GLSL : '') + '\n' + MAIN).replace(SOLID, (knots ? AIR_LAW_LAYER_KNOTS : AIR_LAW_LAYER) + SOLID)
+  return source.replace(MAIN, AIR_LAW_UNIFORMS.slice(1) + (knots ? '\n' + AIR_LAW_SHARE_IN : '') + AIR_LAW_GLSL + (knots ? AIR_LAW_KNOTS_GLSL : '') + '\n' + MAIN).replace(SOLID, (knots ? AIR_LAW_LAYER_KNOTS : AIR_LAW_LAYER) + SOLID)
+}
+
+// The layers' vertex shader with the light by height: the share of the light along the present path and along the picture's path
+// (airLawPathShare), taken at the mesh's vertices. The eye's line stays as it is, so the scale of the eye still finds it.
+export const AIR_LAW_SHARE_OUT = 'out vec2 vAirShare;'
+export const AIR_LAW_SHARE_IN = 'in vec2 vAirShare;'
+export const AIR_LAW_SHARE = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  vAirShare = vec2(airLawPathShare((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airLawPathShare(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares));'
+
+export function withAirLawShare(source: string): string {
+  if (source.split(EYE_OUT).length !== 2 || source.split(EYE).length !== 2 || source.includes('uAirCentre')) throw new Error('the relief shader has no single place for the share of the air law')
+  return source.replace(EYE_OUT, EYE_OUT + '\n' + AIR_LAW_SHARE_OUT + AIR_LAW_UNIFORMS + AIR_LAW_KNOT_UNIFORMS + AIR_LAW_GLSL + AIR_LAW_KNOTS_GLSL).replace(EYE, EYE + '\n  ' + AIR_LAW_SHARE)
 }
 
 export const AIR_LAW_VERT = AIR_VERT.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vAirEye;\nuniform float uAirEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vAirEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uAirEyeScale;')
@@ -1046,7 +1057,7 @@ export class Relief {
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3,
         ...(apronTexture ? { defines: { RELIEF_APRON: 1 } } : {}),
-        vertexShader: VERT,
+        vertexShader: law?.uAirHeights ? withAirLawShare(VERT) : VERT,
         fragmentShader: law ? withAirLaw(FRAG, !!law.uAirHeights) : FRAG,
         uniforms: {
           ...(law ?? {}),
