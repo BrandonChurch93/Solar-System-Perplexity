@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T20:05:31.591Z",
- "head": "b7f9558077fb3565f41555bbd5cbd4735978fc3e",
- "note": "20:06 both cures drawn at draft over 28 frames. The relief that cannot fold softens the lower edge at 4350 and 4416 to 4422 but takes the body of the white tops at 4186 to 4250 (the raised ground covers the tops' faces from the low eye): not taken. Finals of 4195 (name, cure) and of 4416 with gain 1 alone are being drawn. Main 262b9a68 is merged in the next gap.",
+ "pushed": "2026-11-26T20:25:37.134Z",
+ "head": "262b9a68df0a6bda8d77518539580de554bb0dc5",
+ "note": "20:26 UTC, base main 262b9a68 merged (57d6c0a1): cloud group is a draft tier fault, fibre gain 1 and the fold cure not taken; pale lanes next (air law control running)",
  "looks": [
+  {
+   "time": "2026-11-26T20:25:36.391Z",
+   "file": "20261126202536391-note-pl-4407.jpg",
+   "source": "../../../../tmp/n84/pl-4407.jpg",
+   "kind": "note",
+   "label": "4407 draft: old main before the fourth cut, the name (pale lanes, open)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T20:25:35.641Z",
+   "file": "20261126202535641-note-fg-4160.jpg",
+   "source": "../../../../tmp/n85/fg-4160.jpg",
+   "kind": "note",
+   "label": "4160 draft, 2 to 1: the name, fibre gain 1 (softer cloud, fine texture lost)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T20:25:34.818Z",
+   "file": "20261126202534818-note-fin-4416-fibre.jpg",
+   "source": "../../../../tmp/n85/fin-4416-fibre.jpg",
+   "kind": "note",
+   "label": "4416 cloud group, 2 to 1: the name's final, its draft, the draft with fibre gain 1 (base main 262b9a68)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T20:05:28.460Z",
    "file": "20261126200528460-note-c-8390.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n81/cause-4401.jpg",
    "kind": "note",
    "label": "row 4401 of rise part 1: the reading per pixel on D and on main (top 1 percent red) sits on the far ground under the limb; D minus main times 32 is all in the lower picture",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T16:28:03.649Z",
-   "file": "20261126162803649-note-zone-4401.jpg",
-   "source": "../../../../tmp/n81/zone-4401.jpg",
-   "kind": "note",
-   "label": "the ground that carries rows 4401 and 4398 + 1/2 of rise part 1: D, main, their difference times 64 (at most 1 level)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T16:28:02.955Z",
-   "file": "20261126162802955-note-group-4418.jpg",
-   "source": "../../../../tmp/n81/group-4418.jpg",
-   "kind": "note",
-   "label": "4418 cloud group, 2 to 1: main, D, and four controls",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T16:28:02.190Z",
-   "file": "20261126162802190-note-group-4416.jpg",
-   "source": "../../../../tmp/n81/group-4416.jpg",
-   "kind": "note",
-   "label": "4416 cloud group, 2 to 1: main, D, and four controls (fibre gain 0 takes the dark slashes, the hard cut lower edge stays)",
    "stop": "uranus"
   }
  ]
