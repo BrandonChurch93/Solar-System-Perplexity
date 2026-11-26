@@ -1,55 +1,55 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T17:30:39.244Z",
- "head": "e3a7103fd7a9a67e55283e9e579e8d094b6e651a",
- "note": "17:31 UTC: build D at 60 frames a second being drawn; S1 control 1 (which level draws where at 2997) done",
+ "pushed": "2026-11-26T18:02:22.916Z",
+ "head": "b0704bbd31988372f45fe93e3778e6d60ac6c80f",
+ "note": "18:02 UTC: build D's green and blue stripes: cause proved by a switch (the air table's channels step at different knots), the cure is being measured row by row; S1 controls done",
  "looks": [
   {
-   "time": "2026-11-26T17:30:38.029Z",
-   "file": "20261126173038029-note-d-evens.jpg",
-   "source": "../../../../tmp/d-evens.jpg",
+   "time": "2026-11-26T18:02:21.202Z",
+   "file": "20261126180221202-note-main-far-4.jpg",
+   "source": "../../../../tmp/main-far-4.jpg",
    "kind": "note",
-   "label": "build D beside main's stop, even frames 3249 to 3263 at draft: the lift on the far strip",
+   "label": "Main's far strip at 3254 + 1/2, 3256 + 1/2, 3258 + 1/2, 3260 + 1/2: where the lift is going",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T17:30:36.767Z",
-   "file": "20261126173036767-note-s1-texels-2997.jpg",
-   "source": "../../../../tmp/s1-texels-2997.jpg",
+   "time": "2026-11-26T18:02:19.272Z",
+   "file": "20261126180219272-note-sw3-6505-corner.jpg",
+   "source": "../../../../tmp/sw3-6505-corner.jpg",
    "kind": "note",
-   "label": "S1 control 1: frame 2997 draft tinted by texels of the drawn level per pixel, orange 1.25 to 1.5, green 1.5 to 2, blue 2 and more",
+   "label": "Build D, the tint: main, build D, the grey switch and a tried law of the hue (not kept), 3252 + 1/2",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T17:17:36.088Z",
-   "file": "20261126171736088-note-s1-draft-2997.jpg",
-   "source": "../../../../tmp/s1-draft-2997.jpg",
+   "time": "2026-11-26T18:02:17.708Z",
+   "file": "20261126180217708-note-sw1-6505-corner.jpg",
+   "source": "../../../../tmp/sw1-6505-corner.jpg",
    "kind": "note",
-   "label": "Frame 2997 at draft with one sample, native crops (round 59 S1, M3)",
+   "label": "Build D, the tint: far right corner at 3252 + 1/2, main, build D, the switch with the lift's air read as luma",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T17:17:34.867Z",
-   "file": "20261126171734867-note-m1-3150.jpg",
-   "source": "../../../../tmp/m1-3150.jpg",
+   "time": "2026-11-26T17:44:31.408Z",
+   "file": "20261126174431408-note-s1-final-vs-one-3296.jpg",
+   "source": "../../../../tmp/s1-final-vs-one-3296.jpg",
    "kind": "note",
-   "label": "Frame 3150: the approved picture beside main's stop, lower left at native pixels (round 59 M1)",
+   "label": "S1 control 2: frame 3296, Io and the storm, one sample beside final, two to one",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T17:17:33.475Z",
-   "file": "20261126171733475-note-towers-proof.jpg",
-   "source": "../../../../tmp/towers-proof.jpg",
+   "time": "2026-11-26T17:44:30.338Z",
+   "file": "20261126174430338-note-s1-final-vs-one-2997.jpg",
+   "source": "../../../../tmp/s1-final-vs-one-2997.jpg",
    "kind": "note",
-   "label": "Lower left towers 3252 to 3254: main above, the tone term of the picture's rim held at 0 below. The tower comes up either way",
+   "label": "S1 control 2: frame 2997, Io and a belt, one sample beside final with 64 samples, two to one",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T16:54:33.499Z",
-   "file": "20261126165433499-note-towers-ll-3250-3255.jpg",
-   "source": "../../../../tmp/towers-ll-3250-3255.jpg",
+   "time": "2026-11-26T17:36:27.065Z",
+   "file": "20261126173627065-note-s1-two-crops.jpg",
+   "source": "../../../../tmp/s1-two-crops.jpg",
    "kind": "note",
-   "label": "Main's stop, the lower left (x 0 to 760, y 480 to 1080) at frames 3250 to 3255, native pixels: the plates' cream tower comes up in place from 3252",
+   "label": "S1: frame 2997 one sample, native crops inside the patches' bound and outside it (the wrap)",
    "stop": "jupiter"
   },
   {
