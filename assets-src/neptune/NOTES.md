@@ -10624,3 +10624,452 @@ RED, new, found by me in the crop: a blue dot about 8 pixels wide at 1177, 741 (
 STILL TO DO before 13:15: the dot, the whole of vitest on the sha, the judged four on the final sha, a sample of dive and rise frames to say which frames the cure moves.
 
 THE LOOK: approved | main | cc6cdad9b at 4860 (first picture); whole frames main | cc6cdad9b; the crop at 2 times, main above. Seconds per draft frame at 1920: 4605 23.1, 4707 29.2, 4860 93.2, 5006 13.4; 4860 at preview 46.3.
+
+
+## 26 Nov, lab log 12:38 to 12:55 UTC (the tests on 2b9dbf280, the push, main moved)
+
+- 12:38:56 to 12:53:40, alone, on 2b9dbf280cb388195c38338f9cab50ee08726ee4 (/tmp/tests15.sh): tsc exit 0 with no line; my own test (assets-src/neptune/vitest.config.ts) 5 of 5; the whole of `npx vitest run` exit 0, "Test Files  95 passed (95)", "Tests  1103 passed (1103)", "Duration  875.39s (tests 98%, import 2%)"; gate G11 PASS; `npm run cues` and `npm run shots` exit 0, `git status --short` empty after them (no change under cut/).
+- A fault of my own in that run: at 12:41 I started a reader (a median filter over three frames) beside the tests, against my own rule that the tests run alone. Load went to 7.6 on 4 cores. I killed it at 12:43:18 without a result. No test went red by it.
+- 12:53 pushed 2b9dbf280 to agent/neptune-place (cc6cdad9b..2b9dbf280).
+- 12:53 fetched origin main: it went from 51f0941f4 to e31cd2098 by three commits (Status 384 to 386, decisions d373 to d375) that touch kit/PROGRESS.md alone. My branch touches no file under kit. Not merged before the name, so that the vitest line is of the sha named; said so in the mail.
+- Checked for the mail: 45 files changed against 51f0941f4; outside my three folders the 8 files of the merge of 39d2bc42 and no other; in my folders since 4fb99c91: NOTES.md, deep.ts, plan.ts.
+
+## 26 Nov, 12:54 UTC: THE ONE SHA of MAIL 1475, to the Builder (word for word; attached look-1228.jpg, n23-whole.jpg, n23-crop.jpg, z4-a.jpg, z4-b.jpg, zs-1.jpg)
+
+neptune_builder to the Builder, 26 Nov, 12:54 UTC. THE ONE SHA of MAIL 1475, with what is red in it. It is not all green: (a) reads 3.5 against your 3, and I found a blue dot. You rule whether it goes to the fourth cut or to the later one.
+
+SHA 2b9dbf280cb388195c38338f9cab50ee08726ee4 on agent/neptune-place (pushed). Base: origin main 51f0941f4, merged (366d9cbed); agent/engine-wayin 39d2bc42 merged (949ba265f); the one line in plan.ts, skyAim.arrive (da84ca191). Since then origin main went to e31cd2098 (fetched 12:53) by three commits in kit/PROGRESS.md alone (Status 384 to 386); my branch touches no file under kit, so that merge is clean and moves no source; I did not add it, so that the vitest line is of the sha named. Files changed against main: 45. Shared ones, all by the merge of 39d2bc42 and none by my hand: src/core/engine.ts, src/core/skyfloor.ts, src/director/film.ts, src/director/moves.ts, tests/lib/skyword.ts, tests/place.test.ts, tests/skyarrive.test.ts, tests/weights.test.ts. The other 37 lie in my three folders (since 4fb99c91: plan.ts, deep.ts, NOTES.md). The tree is 943350 bytes smaller than main's.
+
+THE CURE, four commits in deep.ts alone, no value of a JSON file changed:
+- c3d956986, a0db21cf7, cc6cdad9b, the green: the veil's part of the deck's light was read by channel in the ground's colours, where the veil is far brighter than the deck; wherever a thin veil lay, the lit deck under it took the veil's gain and stood at the hold's full level in red and green. Now the part is read in the hold's colours, and the veil's light and the deck's each take their own gain.
+- 678652cf3, the tint: the cirrus's light went under the fall, a power by channel under its pivot; its crest stayed white, its grey shade came out cyan and lifted, its thin edge lavender. Now the cirrus's light is added after the fall, at every height.
+
+(a) GREEN at 4860, 1920 draft, the place 900 to 1500 by 600 to 900, largest G minus the mean of R and B on the deck: main -1.5, before 20.0, now 3.5. RED by half a level: 4 pixels of 136872 are over 3 (1318, 723; 1321, 726; 1325, 726; 1141, 732; RGB 62 112 155). No blotch by my eye (crop and the map of that measure attached). With fan.veil.own 0 it reads 3.0, so what is left is the deck's own colour under the hold's one curve and half a level of the veil's. I did not turn a value to win the half level.
+(b) CLOUD, the same place: chroma mean 10.1 (main 13.1, before 26.1), p90 19 (main 23, before 63). The grey shade inside is back by my eye.
+(c) VITEST on the sha, whole, last line: "Test Files  95 passed (95)", "Tests  1103 passed (1103)", "Duration  875.39s (tests 98%, import 2%)"; exit 0. On the same sha: tsc exit 0; G11 PASS; npm run cues and npm run shots exit 0 and leave git status clean, no change under cut/.
+The two tests of MAIL 1473, "meet at T: the globe camera is the twin, the sky and the light are the same on both sides" (tests/place.test.ts, expected +0 to be 1) and "leave the globe side without the close view's sky when the harness asks (nosky)" (tests/weights.test.ts, expected false to be true): red on 4fb99c91 because my plan gives skyShare { low: 0 } in the dive and the rise, as the word both needs, and the two tests stated the dissolve for every stop. Cure: handover_engineer's 26d2e07f (tests alone), in the sha by the merge; not the aim.
+(d) 4860 at draft whole beside main's, and the crop at 2 times: attached.
+(e) THE JUDGED FOUR, 1920 draft, my measure:
+- 4605: the same bytes as on 4fb99c91 (21b475da05086981). Plain 2.923 (main 2.931), G17 0.856 / 0.720 (main the same).
+- 4707: the same bytes as on 4fb99c91 (9f8419a62b77d4d4), so your numbers stand: plain 47.1815 against main's 46.9066, finest band 0.631. RED, worse than main.
+- 4860: plain 21.151 (main 22.986), G17 0.972 / 0.659 (main 0.934 / 0.549).
+- 5006: the same bytes as on 4fb99c91 (f9d1bfe65547e1ee): your 52.3809 against main's 53.8172.
+Seconds a frame: 23.1, 29.2, 93.2, 13.4.
+
+RED, named:
+1. Green 3.5 against the bar of 3 (above).
+2. A BLUE DOT at 4860, about 8 pixels wide at 1177, 741: RGB 57 103 173 on a surround of 52 98 150. Main has a spot there too, 6 to 9 levels over its surround, every channel alike. It is a bright spot of the deck itself: it stays with no cirrus, no veil, no haze, and with twice the steps of the march no pixel changes. With the air's law off it is every channel alike (12, 11, 10 levels at preview); under the air's law red and green come down with the plain and blue stays up (3, 4, 12). Which line of the air's law does that there: not found.
+3. THE ROWS of the dive and the rise are NOT READ on this state. The cure moves frames of both: sample at preview against the state before, pixels moved by more than 8 levels: 4712 none (same bytes), 4720 0.09 %, 4728 0.55 %, 4736 1.76 %, 4744 4.41 %, 4972 2.32 %, 4980 0.35 %, 4988 0.01 %. By my eye the bank is whiter and nothing else changed (sheet attached). Your clips show the state before the cure.
+4. 4707 softer than main (above); the pop of dive part 1 over main's (your 1.1113 at 4713), its place not read yet.
+5. Before 4530 I have no pixel check of my own; handover_engineer's dump reads 0 rows different from main's.
+6. Standing from the mails before: the ground paler and bluer than main's 4706 to 4758; at 4860 the bank in lumps, the oval shorter than the approved's, the dark halo gone; 4605 not main's bytes round the Sun; ruling 6 of MAIL 1363 not begun.
+
+4707 (MAIL 1475, 3 f), what I would build: at 4707 (0.957 radii up) only the globe's map is drawn; the place's own code starts at 0.9 radii (deep.json, globe.height). The map there is not magnified (1.35 to 2 texels a pixel), it is soft in itself. So: the place's own fields (the deck's octaves along the wind, the storm's arms, the bank) drawn on the globe from higher up, each octave weighted by its wavelength in pixels (in at about 3 pixels, full at 6), so that detail comes in as the lens resolves it and never by the clock or by a height; under 3 pixels at the hold's distance, so 4605 keeps its bytes. First a trial of one value (globe.height's first number over 4707's height), about 10 minutes, to see what the place's code gives there as it is; I send its number by 13:30. The whole: about 3.5 hours with the rows of the dive drawn again; its risks are the pattern row and the seconds a frame.
+
+PICTURES: 1 approved | main | the sha at 4860. 2 whole frames, main | the sha. 3 the crop at 2 times, main above. 4 the place 1240 to 1380 by 680 to 780 at 3 times, main | before | now, with the map of the green measure under it. 5 the dot's place at 6 times, the same three. 6 the sample of the dive and the rise, before | now.
+
+
+## MAIL 1486 from the Builder (/root), 12:58 UTC (read 12:59 by my clock; word for word)
+
+> MAIL 1486 from the Builder (/root), 12:58 UTC. To neptune_builder. Your one sha 2b9dbf28 of 12:54 is taken in whole, with its reds named by you; that is how a name should come. Fetched; my diff against main's code: 45 files, the shared eight by the engine's merge alone, as you say.
+> RULED now (written as d376 at 13:30):
+> 1. 2b9dbf28 DOES NOT GO ON THE FOURTH CUT. Main keeps its Neptune there. What decides it, in this order: (i) 4707 is a judged frame and reads under the band line on my machines (finest band 0.631 against the line 0.7, main 0.933) and softer than main's by my eye; d296 (2) binds every take and is not bent. (ii) The rows of this state are not read, and at Neptune's seconds a picture they cannot be read before the cut's proofs close at 15:00. (iii) Your own measure of the green reads 3.5 against the 3 I set. Half a level in 4 pixels alone would not have decided it; you were right not to turn a value for it.
+> MY EYE on your pictures: at 4860 the bank reads white and grey again, the grey shade inside is back; the sha is nearer the approved than main (your plain 21.151 against 22.986). The blue dot at 6 times is faint; at the film's size I would not find it. It stays a red of yours until its cause is known.
+> 2. THE LATER CUT (names by 18:30, earlier is better: every half hour gives my proofs more room before the freeze at 20:30). BUILD THE CURE OF 4707 AS YOU DESCRIBE IT, now: the place's own fields on the globe from higher up, each octave weighted by its wavelength in pixels, so that detail comes in as the lens resolves it and never by the clock or by a height. That is the right kind of cure. Its bars: 4605 keeps its bytes; 4707's finest band at or over 0.7 and its plain no worse than main's 46.9066; the rows of the dive no worse than main's by d311 as read by d364 and d374 (3); no step where the fields come in (your own half frames over the heights where the first octave arrives). The trial's number by 13:30 as you say.
+> 3. WITH THE SAME NAME: the pop at 4713 named from its place when the dive is drawn again; the blue dot's cause (give it one hour; if it is not found, name it open with its numbers and I rule on it by eye at final); the green's last half level only by cause, never by a value.
+> 4. MY PROOFS START NOW on 2b9dbf28 (d353), so that the slow rows do not wait for 18:30: my reader's rows of the dive and the rise in six jobs (nf6: dive 1 of 2, rise 2 of 2, and the low parts in quarters: dive 3 of 4 and 4 of 4, rise 1 of 4 and 2 of 4). SAY WITH YOUR NAME, by sha of your own stills, which frames of the dive and the rise the cure of 4707 leaves the same bytes as 2b9dbf28: for those spans the rows read now stand for the name, and only the rest is read again.
+> 5. What stands from before stays: the far ground is Z5's; the trial behind air.close stays out; ruling 6 of MAIL 1363 not begun is noted, it does not bar the name.
+> Answer only with the trial's number at 13:30 and your own estimate of the hour of the name. No other mail is owed before the name.
+
+
+## Mail from handover_engineer, 13:03 UTC (read 13:03 by my clock; word for word)
+
+> handover_engineer to neptune_builder, 13:03 UTC. One thing before your name, no answer needed.
+> Your tip 2b9dbf280cb388195c38338f9cab50ee08726ee4 gives the line (plan.ts 27, arrive: [25.78793, 56.89437, -50.63077]) and stands on 39d2bc42 (outside your stop, your pictures and scorecards it differs from 39d2bc42 in kit/PROGRESS.md alone, read by git diff). It does NOT hold the cure of the two readers: agent/engine-seen 3bbb219ad10a915fc48128a981e14b0ed69249bf, ONE commit on 39d2bc42, seven files, none of yours (src/core/types.ts, src/director/film.ts, tools/smooth/pose.ts, tools/seams/speeds.ts, tests/skyarrive.test.ts, tests/skyaims.test.ts, tests/globe-pose.test.ts). It draws nothing: 4526 to 4532 at draft are the same sha256 with and without it.
+> Why it matters to your sha: with your line and without that commit both readers of the film's motion read the stars' step at your hold's first frame as motion (MEASURED on your files of this morning: pose record 4529 to 4530 112.839 degrees, seams step at 4529 1/2 a mean of 12982 px; with the commit 0.0467 degrees and 0.2938 px). /root ruled (MAIL 1476) that the cure comes before any stop gives the line. So merge origin agent/engine-seen into your branch before you name (a plain merge, it should not conflict: you hold its parent), or say in your name's mail that 3bbb219a must lie under your sha. /root has the sha since 12:32 and the full mail since 12:49.
+> With the commit and your line (your 11 files and six pictures of this morning): the whole of vitest 1106 of 1106. One unit of mine, tests/skyaims.test.ts, is changed by the commit BECAUSE of your line: do not be surprised by it.
+> At the review tier with your line, 4528 to 4531 (16, 16, 4, 4 samples): 114 stars tracked move 1.69, 1.52, 1.34 px a frame, the pair over the step between its neighbours; looked at 1 to 1, the stars, the band, Triton and the Sun keep their place. Seen there and yours to weigh, also on main's Neptune: a level tone edge across the planet's lower part near y 1033, x 1240 to 1660, about 2 levels of luma from one row to the next (4529 and 4530).
+
+
+## 26 Nov, lab log 12:55 to 13:32 UTC (the trial of the 4707 proposal fails; the cause is cirrus.px; the blue at 4707 is the hero's own)
+
+All at 1920, draft, one sample, frame 4707 unless said; finest band = median over the kept tiles of the 0.6 to 1.2 px band against the approved close picture (`/tmp/tilemap.py`, the measure of `check/bands.py`). Main 0.947, the sha 2b9dbf280 0.625 (the Builder's reader: 0.933 and 0.631). Each trial turns one value of the tree and lays it back (`git checkout --`); `git status --short` empty after each chain.
+
+- DA1 (12:55) deep.json globe.height [1.3, 0.15] (the scene's share from higher up): 0.614. 4605 the same bytes (21b475da05086981). The scene's share at 4707 is only 0.055.
+- DA2, DA4 (12:57 to 13:00) globe.height and globe.own [3.0, 1.0]: not a picture (the globe goes, sky and a moon show through); no evidence.
+- DA3 air.top 0: the same bytes as the sha at 4707. The air's law is not in the picture there.
+- DB1 (13:03) globe.own [1.6, 0.9] (the place's own share about 0.97 at 4707 for 0.217): 0.625, six tiles of 75 move. DB2 the same with far.distance [8, 16]: 0.604 and dark blotches over the plain.
+- Why (seen in `/tmp/c4707db1.jpg`): the place's own things (deck, a whirl about 40 px wide, a cirrus line) lie in a small disc south of the map's big storm. The bank and the eye that read soft at 4707 are the globe's map (1.35 to 2 texels a pixel, not magnified). The proposal of the 12:54 mail (the place's fields from higher up) cannot reach them. NOT BUILT.
+- THE CAUSE: move.json cirrus.px 2.0, height [1.5, 2.3] (set.ts cirrusPx; planet.ts and deep.ts `softCloud = max(uCloudSoft, uCirrusPx)`): in the dive and the rise the globe's cirrus opacity is read with a footprint of up to 2 px (my law of round 39 against square copies under the shutter). Main has the same law, but its plates stand over the map where the eye looks (`alpha = layerAt(...).a * (1.0 - placed)`), so it did not show there.
+- cirrus.px by value, 4707: 2.0 (the sha) 0.625 | 1.5 (TP3) 0.754 | 1.25 (TP4) 0.836 | 1.0 (TP1) 0.950. Seconds a frame 46.5, 48.4, 48.7 (another reader ran beside).
+- TP2 (the globe's finer levels patch-26, 16, 10 as levels 3 to 5 of patches.json, shownFrom 6): the same bytes as the sha at 4605 and at 4707 (9f8419a62b77d4d4): the levels are not reached there. Dropped.
+- cirrus.px 1.0 at the other judged frames (TP1): 4605 21b475da05086981 and 5006 f9d1bfe65547e1ee, the sha's bytes; 4860 0024010e3f61eaa2 against 97c79a491e3a61fd: 1.87 percent of the pixels differ, none by more than 3 levels (the most at x 1447 to 1734, y 363 to 451); plain 21.144 for 21.151, G17 0.972 / 0.659 as before. 98.2 s and 13.3 s.
+- The plain at 4707 against the approved hero (my reader; the Builder's 46.9066 main, 47.1815 mine): main 46.8820, the sha 47.2517, 1.0 47.2576, 1.25 47.2509, 1.5 47.2494. cirrus.px does not move it.
+- TR1 (13:15 to 13:27): review tier, 4707, cirrus.px 1.0: 716.5 s, 28 samples. Finest band of that frame 0.394 (the shutter's blur; not the Builder's measure). Looked at `/tmp/tr1-crops.jpg`, `/tmp/tr1-near.jpg`, `/tmp/tr1-near2.jpg` (nearest, 2.66 times, the sha draft | 1.0 draft | 1.0 review): the bank's upper edge and the bits in the eye are short continuous streaks, no row of copies; one cluster of thin lines at x 1470 to 1525, y 570 to 615 reads as pale bars with square ends. No review frame of 2.0 or 1.5 yet (TR2, TR3 started 13:30).
+- THE BLUE AT 4707 (my word "veil" in the 13:23 mail was wrong). Mean RGB. Night side of the globe: the approved hero (x 422 to 614, y 454 to 842) 1.5, 7.3, 20.5; 4605 main and mine 1.2, 7.5, 20.7; mine at 4707 (x 77 to 365, y 432 to 907) 1.9, 8.7, 21.2; main 0.8, 1.4, 2.1. Main by frame (MAIN3d, 960): 4688 1.6, 5.1, 11.9 | 4692 1.4, 5.0, 12.6 | 4696 1.1, 4.4, 11.5 | 4700 0.8, 2.8, 6.5 | 4704 0.7, 1.5, 2.6 | 4708 0.7, 1.4, 2.2 | 4712 1.3, 2.9, 5.5 | 4714 1.7, 4.2, 9.0. Sky, top right corner (x 1780 to 1920, y 0 to 120): approved hero 8.5, 25.1, 37.3; 4605 main 8.1, 24.7, 37.0, mine 8.0, 24.7, 36.9; mine at 4707 8.2, 25.2, 38.9 (median 8, 25, 39); main 1.5, 5.1, 7.2; main by frame 4692 21.6, 36.9, 48.7 | 4696 8.5, 23.8, 35.8 | 4700 4.4, 16.6, 26.5 | 4704 2.2, 8.6, 13.7 | 4708 1.4, 4.7, 6.6. The same night side in DA1, DB1, DB2, TP1 to a tenth of a level: not the scene's share, not the place's share, not cirrus.px.
+- The plain's gap is NOT in the dark part (control): with main's pixels laid into mine wherever main's largest channel is under 20 (0.251 of the frame) my plain reads 47.6991 for 47.2517; the gap summed over the dark part is -0.4474, over the rest +0.8170. Lit side toward the limb (x 700 to 1100, y 60 to 160): mine 52.7, 139.2, 210.5, main 33.6, 101.5, 200.4.
+- READ IN THE CODE (13:31): main's set.ts has `const fall = ... 1 - smooth(log(high / fall.height[1]) / log(fall.height[0] / fall.height[1]))` with deep.json globe.fall height [1.9, 0.25], pivot [0.17, 0.37, 0.68], power [2.6, 3.1, 3.7]; mine has `const fall = 0` (MAIL 1011 ruling 2 (a), way C). At 0.957 radii main's share is 0.27 (powers 1.43, 1.56, 1.72). Control by a render still to run.
+
+
+## 26 Nov, 13:23 UTC: the trial's number and the hour of the name, answer to MAIL 1486, to the Builder (word for word; attached c4707px.jpg, c4707db1.jpg, w4707.jpg, look-1228.jpg)
+
+neptune_builder to the Builder, 13:23 UTC. ANSWER TO MAIL 1486: the trial's number and the hour of the name. Four pictures attached.
+
+1. THE TRIAL'S NUMBER. Frame 4707 at 1920, draft, finest band (0.6 to 1.2 px) by my reader: main 0.947, the sha 0.625 (yours 0.933 and 0.631).
+- The place's own fields whole on the globe from higher up (globe.own [1.6, 0.9], the place's share about 0.97 at 4707 for 0.217 now): 0.625. Six tiles of 75 move.
+- The same with the far ground pushed out (far.distance [8, 16]): 0.604 and dark blotches over the plain.
+- The scene's share from higher up (globe.height [1.3, 0.15]): 0.614.
+THE CURE AS I DESCRIBED IT FAILS AND I DO NOT BUILD IT. Why, seen in picture 2: the place's own things (its deck, a whirl about 40 px wide, a cirrus line) lie in a small disc south of the big storm. The bank and the eye that read soft at 4707 are the globe's own map, and the map is not magnified there (1.35 to 2 texels a pixel). No field of the place reaches them.
+
+2. THE CAUSE, FOUND. My own law cirrus.px 2.0 in move.json (round 39, against cloud edges that the shutter lays out as square copies at 4707): in the dive and the rise below 2.3 radii the globe's cloud opacity is read with a footprint of up to 2 pixels. Main holds the same law, but there the plates stand over the map where the eye looks and carry their own opacity (read in the shader, not measured on main); with the plates gone the law softens every cloud edge of the map. One value turned at a time, all else the sha, 4707:
+cirrus.px 2.0 (the sha) 0.625 | 1.5: 0.754 | 1.25: 0.836 | 1.0: 0.950.
+4605 keeps its bytes in the trials (21b475da05086981): the law bites only below about 1.9 radii, and 4605 stands at 2.127.
+Picture 1: the bank and the eye at 2 times in the four states.
+
+3. WHAT I BUILD INSTEAD: that law taken back to what the lens needs (1.0, or the least footprint that still holds the squares off; the band needs 1.5 or less for 0.7). No plate, no new picture, no clock, no height that brings anything in: the same map of the hold's globe, read sharper. NOT YET PROVEN, and each is read before the name:
+(a) the square copies under the shutter at review tier (the reason the law was made); the first review frame renders now;
+(b) 4860: the same law reads the far ground's clouds on the terrain side, so 4860 moves; G17, the plain and the green are read again there;
+(c) the rows of the dive and the rise at half steps against main's, with the place of the pop at 4713;
+(d) THE PLAIN AT 4707 DOES NOT MOVE WITH IT: 47.25 in all four states by my reader against main's 46.88 (yours 47.1815 against 46.9066). The gap is tone, not detail (picture 3, main beside the sha, whole). Measured, mean RGB, mine | main: the night side on the left (x 0 to 300, y 400 to 1000) 1.6, 7.7, 19.9 | 0.6, 1.0, 1.2; the sky in the top right corner 8.2, 25.2, 38.9 | 1.5, 5.1, 7.2; the whole frame 41.7, 82.8, 127.9 | 38.9, 72.5, 115.6. So mine carries a blue veil over the dark parts at 4707 that main does not. Not its cause, by control: the air's law (air.top off gives the same bytes), the scene's share and the place's share (the same night side to a tenth of a level in each trial). The cause is not found yet. RED until it is.
+
+4. THE HOUR OF THE NAME, my estimate: 16:30. In it: the review check and the value (to 14:00), the plain's cause at 4707 and the blue dot (to 15:00, one hour as you set; what is not found then is named open with its numbers), the judged four and the rows of the dive and the rise at half steps (to 16:00), the merges (engine-seen 3bbb219a, origin main), the whole of vitest and the list of frames that keep the bytes of 2b9dbf28 (to 16:30). If the squares come back at 1.0 and at 1.25 the estimate does not hold and I say so at once.
+
+THE LOOK (picture 4): 4860 beside the approved, the sha's state, unchanged since 12:28: G17 median 0.972, p25 0.659. Seconds a draft frame: 4605 23.1, 4707 29.2 (31 to 49 in the trials), 4860 93.2, 5006 13.4.
+
+
+## MAIL 1491 from the Builder (/root), 13:23 UTC (read 13:24 by my clock; word for word)
+
+> MAIL 1491 from the Builder (/root), 13:23 UTC. To neptune_builder, on your answer of 13:23.
+>
+> 1. Agreed: the plate cure is dropped; the footprint law cirrus.px goes back toward what the lens needs, with your proofs (a) to (d) read before the name. The bar at 4707 stays as MAIL 1486 set it: the finest band at or over 0.7, or no lower than main's by my reader.
+>
+> 2. The blue veil at 4707 is a bar of its own, not a point to name open. A sky corner that reads 8, 25, 39 where main reads 1.5, 5, 7, and a night side that reads 1.6, 7.7, 19.9 against 0.6, 1.0, 1.2, is light where there is none; the dark of space and of the night side must read as main's within a level or two at 4707 and at every dive and rise frame you look at. One hour as you set (to 15:00); if the cause is not found then, tell me at 15:00 with the controls you ran, and I rule whether Neptune keeps main's dive and rise on the later cut and takes only what is proven.
+>
+> 3. Your hour 16:30 stands as your estimate; the later cut takes names until 18:30. If the squares come back at 1.0 and 1.25, say so at once, as you wrote.
+>
+> 4. My reader rows on 2b9dbf28 (dive and rise in quarters, six jobs) keep running: they will not stand for the name, since the law changes every cloud edge below 2.3 radii, but they map where the red lines of the place state are. I send you each row file as it comes. The rows of the name itself are read again by my machines after you name it.
+
+
+## 26 Nov, 13:30 UTC: the cause of the blue at 4707, answer to MAIL 1491 point 2, to the Builder (word for word; attached veil-2.jpg, veil-1.jpg, tr1-near.jpg, tr1-near2.jpg)
+
+neptune_builder to the Builder, 13:30 UTC. ANSWER TO MAIL 1491 point 2: THE CAUSE OF THE BLUE AT 4707 IS FOUND, and my word "veil" at 13:23 was wrong. You set a bar on it, so you have it now and not at 15:00. Four pictures attached.
+
+1. IT IS THE APPROVED HERO'S OWN NIGHT SIDE AND OWN SKY, KEPT. Nothing is added in the dive. Measured, mean RGB at 1920:
+- The night side of the globe. The approved hero itself (x 422 to 614, y 454 to 842): 1.5, 7.3, 20.5. The hold at 4605, main and mine (the same bytes there): 1.2, 7.5, 20.7. Mine at 4707 (x 77 to 365, y 432 to 907): 1.9, 8.7, 21.2. Main at 4707: 0.8, 1.4, 2.1.
+- Main's night side by frame (same place, my render of main at 960): 4692 1.4, 5.0, 12.6 | 4696 1.1, 4.4, 11.5 | 4700 0.8, 2.8, 6.5 | 4704 0.7, 1.5, 2.6 | 4708 0.7, 1.4, 2.2 | 4712 1.3, 2.9, 5.5 | 4714 1.7, 4.2, 9.0. Main's night side goes from the hero's blue to black in eight frames. I read it as main's plates coming in over the globe (in picture 1 the storm grows with it); no trial on main proves that.
+- The sky, top right corner (x 1780 to 1920, y 0 to 120). The approved hero: 8.5, 25.1, 37.3. The hold at 4605, main | mine: 8.1, 24.7, 37.0 | 8.0, 24.7, 36.9. Mine at 4707: 8.2, 25.2, 38.9, median 8, 25, 39 (a floor, not stars). Main by frame: 4696 8.5, 23.8, 35.8 | 4700 4.4, 16.6, 26.5 | 4704 2.2, 8.6, 13.7 | 4708 1.4, 4.7, 6.6. Mine is the hold's sky card fixed on the sky at weight 1 (ruling 2 of MAIL 1395). Main's sky falls to black in those twelve frames; by its card's border or by its weight, I did not separate the two.
+Picture 1: 4605 and main's 4696, 4700, 4704 with levels times 5. Picture 2: main beside mine at 4707, times 5 above, plain below.
+
+2. SO THE BAR OF MAIL 1491 POINT 2 AS WRITTEN (dark as main's within a level or two at 4707) asks the night side and the sky to change by height between the hold and 4707. That is what MAIL 772 (one Neptune at every height), MAIL 1011 (one tone curve at every height), ruling 2 (b) of MAIL 1363 and ruling 2 of MAIL 1395 forbid, and what the hold shows is the approved hero. I DO NOT BUILD IT UNLESS YOU RULE IT. Your ruling, one word: KEEP (the hero's night side and sky stay through the dive and the rise), or DARK (say by which law they may fall).
+
+3. THE PLAIN AT 4707: I WAS WRONG AT 13:23 THAT ITS GAP IS THE DARK PARTS. Control: with main's own pixels laid into mine wherever main is darker than 20 (a quarter of the frame), my plain gets worse, 47.70 for 47.25; in the dark parts mine is nearer the approved hero than main is, by 0.447 of the plain. The gap lies in the lit part (0.817 of the plain there): mine is paler over the lit side toward the limb (x 700 to 1100, y 60 to 160: 52.7, 139.2, 210.5 against main's 33.6, 101.5, 200.4). That is the hazier lit side your eye named on 87a54d12. Its cause is not found yet; I run its controls next (the limb's glow, the haze layers, the rim, one at a time). It stays RED, and I will not thin the air for it (MAIL 941).
+
+4. THE SQUARES, as promised at once: review tier, 4707, cirrus.px 1.0, 28 samples, 716 s. The bank's edge and the bits in the eye are short continuous streaks, no copies (picture 3). One cluster of thin lines at x 1470 to 1525, y 570 to 615 reads as pale bars with square ends (picture 4, top right). I have no review frame of the sha (2.0) or of 1.5 to hold beside it yet; both render next, 12 minutes each. Finest band by value stands as sent (1.5 gives 0.754, 1.25 gives 0.836). The estimate 16:30 holds if you rule KEEP; DARK costs a new law and its proofs and I would say the hour then.
+
+
+## 26 Nov, 13:32 UTC: addendum to the 13:30 answer (main's grade by height), to the Builder, low priority (word for word; no picture)
+
+neptune_builder to the Builder, 13:32 UTC. ADDENDUM to my 13:30 answer, points 1 and 3, for your ruling KEEP or DARK. Read in the code, not yet controlled by a render:
+Main's set.ts grades the globe by the eye's height: deep.json globe.fall, height [1.9, 0.25] radii, powers 2.6, 3.1, 3.7 about the pivot 0.17, 0.37, 0.68. By that law the share at 4707 (0.957 radii) is 0.27, so the powers there are 1.43, 1.56, 1.72: darks go to black, the lit side goes deeper. Mine has that share at 0 at every height: your MAIL 1011 ruling 2 (a), "One tone curve at every height: the one the hold has", way C, because "a curve that changes with the eye's height is a look that changes" and its red stretches 4696 to 4714 and 4987 to 5003 were the place of Brandon's words.
+So what main shows at 4707 (black night side, deeper lit side, and with it the plain of 46.9066) is the grade you ruled out, plus its plates. The control (4707 with main's law laid back in as a tool, nothing else changed) runs when the two review frames are done, about 14:00; I send its numbers only if it does NOT confirm this.
+
+
+## MAIL 1492 from the Builder (/root), 13:32 UTC (read 13:33 by my clock; word for word)
+
+> MAIL 1492 from the Builder (/root), 13:32 UTC. To neptune_builder, on your mail of 13:30. THE RULING: KEEP.
+>
+> 1. KEEP. The night side and the sky of the approved hero stay through the dive and the rise. I read both myself before ruling: the approved hero at 1920 reads 1.5, 7.3, 20.5 on its night side and 8.5, 25.1, 37.3 in its top right corner; my own frames of 4707 read 0.3, 1.2, 1.9 and 1.2, 5.0, 7.2 on main and 1.9, 8.7, 21.2 and 8.2, 25.2, 38.9 on your sha. So the blue is the approved picture's own, and main's fall to black inside eight to twelve frames is one of the things the review note calls the picture popping in. One Neptune at every height (MAIL 772, 1011, 1363, 1395) stands.
+>
+> 2. The bar of MAIL 1491 point 2 is withdrawn as written; it stood on the word veil. In its place, the same thought the other way round: over the dive and the rise the night side (your place) and the sky corner read as the hold's within two levels at every frame you read (4692 to 4716 by fours, and the judged four), and neither steps from frame to frame. Send me that small table with the name.
+>
+> 3. What stays RED is the lit side toward the limb at 4707: 52.8, 139.2, 210.6 on your sha against main's 33.8, 101.8, 200.8 by my own read at x 700 to 1100, y 60 to 160. The approved hero's lit side toward its limb is deep blue with a thin bright rim, not pale. One control first, since it tells which of the two is the hero's own: the same place on the globe at the hold (the same bytes on both trees), read from the hold's frame. If the hold reads pale there, yours is the hero's and main is the one that changes; if the hold reads deep, a law of your dive lays light on it, and that law is the cause to find. No thinning of the air for the number: agreed (MAIL 941).
+>
+> 4. The pale bars with square ends at x 1470 to 1525, y 570 to 615 at review tier with the footprint 1.0: hold 1.0, 1.25, 1.5 and 2.0 beside each other there, and name the least footprint that shows no bars and no copies. The band line at 4707 stays: at or over 0.7 or no lower than main's by my reader. If the two cannot both be had by the footprint alone, say so with the pictures and I rule.
+>
+> 5. Your hour 16:30 stands. Names for the later cut are taken until 18:30.
+
+
+## MAIL 1494 from the Builder (/root), 13:37 UTC, low priority (read 13:37 by my clock; word for word; attached neptune-rise-p2of2.md, not copied here)
+
+> MAIL 1494 from the Builder (/root), 13:37 UTC. To neptune_builder: the first of my reader rows on 2b9dbf28, as promised; the file is attached.
+>
+> Rise part 2 of 2 (frames 4985 to 5034 at half steps), my machine: GREEN. Pop 1.0496 at 5034 against main's 1.1301 at 5000; pattern 0.3886 at 4991 against main's 1.4761 at 4993 (main is red there); level step 0.0487 at 5000 against 0.0997 at 4987. Every line better than main's row. Ground pop beside it: largest 1.018 at 5030 and a half.
+>
+> The other five rows (dive in three parts, rise part 1, and the far span) are still drawing; they follow as they come. They map the place state and do not stand for the name once the footprint law has moved.
+
+
+## 26 Nov, lab log 13:32 to 13:48 UTC (the control of MAIL 1492 point 3; the near grade by height is the cause on mine, main's fall on main)
+
+- 13:30:37 the review chain pxr2 (4707 at cirrus.px 1.5 and 2.0, 28 samples) began. TR2 (1.5) done 13:42:32, 694.8 s. To get the
+  two controls of the lit side out 12 minutes sooner I stopped the chain at once after TR2 (swap.sh: the chain's script killed
+  before TR3 had drawn, move.json laid back, `git status --short` empty), ran the two controls (draft, 46.9 and 46.3 s) and
+  started the review chain again in the order 1.25 (TR4, from 13:45:00), then 2.0 (TR3).
+- 13:33 to 13:36 THE CONTROL OF MAIL 1492 POINT 3 (place.py, CPU): the ground of 4707's box x 700 to 1100, y 60 to 160, carried on
+  the unit sphere by the poses of weave-main.ts and the ground's turn (laid), lies at 4605 at x 833 to 1044, y 315 to 420. The
+  hold reads there 36.0, 130.2, 207.1 on both trees (the approved hero itself at that box 37.8, 130.5, 206.9); cosine of the view
+  0.745 (0.658 to 0.796) at 4605 and 0.546 (0.434 to 0.618) at 4707. Mine at 4707 52.4, 138.8, 210.3 on the carried grid (52.7,
+  139.2, 210.5 on the whole box); main 33.6, 101.3, 200.0 (33.6, 101.5, 200.4).
+- 13:44 place2.py: the same ground by frame through my dive (Z5w, 960 px, the frames of 10:42; real files to 4699.5, the links
+  from 4700 on are dead since Z5s was removed): 4668 39.3, 136.7, 212.1 | 4674 40.0, 137.5, 212.7 | 4679 40.0, 137.8, 212.9 |
+  4680 40.1, 137.9, 213.0 | 4684 40.2, 138.2, 213.2 | 4688 40.2, 138.2, 213.3 | 4690 40.5, 138.4, 213.4 | 4692 40.9, 138.5, 213.6
+  | 4694 41.2, 138.5, 213.4 | 4696 41.8, 138.5, 213.2 | 4698 42.9, 138.7, 213.1 | 4699.5 43.7, 138.6, 212.8 | 4707 52.4, 138.8,
+  210.3. Main's own frames (MAIN3d, 960, read by my poses): 4679 40.0, 137.8, 212.9; 4680 40.1, 137.9, 213.0; 4684 39.9, 137.9,
+  213.3; 4688 39.0, 137.3, 213.4. So the hold itself moves that ground from 36.0, 130.2, 207.1 (4605) to 40.0, 137.8, 212.9
+  (4679), alike on both trees: cause NOT LOOKED AT (the streams of the globe drift in the hold, look.ts stream; a guess).
+  The near grade's share by height (set.ts tone, closeup.json lay.tone [2.06, 0.13]): 0.001 at 4688, 0.007 at 4692, 0.025 at
+  4696, 0.054 at 4699.5, 0.188 at 4707.
+- 13:42 to 13:45 TWO CONTROLS AT 4707 (lit.sh, draft 1920, each one change, laid back by git checkout; litread.py: lit box,
+  night side x 77 to 365 y 432 to 907, sky corner x 1780 to 1920 y 0 to 120, plain against the hero, mean level):
+  N23 (the sha)  lit 52.7 139.2 210.5 | night 1.9 8.7 21.2 | sky 8.2 25.2 38.9 | plain 47.2517 | level 84.15
+  NG0            lit 41.4 140.0 214.3 | night 1.7 9.2 22.9 | sky 8.2 25.2 38.9 | plain 47.6037 | level 84.21
+  FALL           lit 34.3 114.7 206.7 | night 0.6 1.0 1.2  | sky 8.2 25.2 38.9 | plain 44.0507 | level 66.72
+  MAIN           lit 33.6 101.5 200.4 | night 0.8 1.4 2.1  | sky 1.5 5.1 7.2   | plain 46.8820 | level 75.64
+  TP1 (px 1.0)   lit 52.7 139.1 210.5 | night 1.9 8.7 21.2 | sky 8.2 25.2 38.9 | plain 47.2576 | level 84.01
+  NG0: closeup.json lay.tone [2.06, 0.13] to [0.9, 0.13], the near grade's share 0 at 4707. FALL: set.ts `const fall = 0`
+  replaced by main's law by the eye's height [1.9, 0.25]. Read: the near grade by height is the whole cause of mine over the
+  hold (the red; NG0 is the hold's last frame within 2.2 levels); main's fall alone makes the lit side deep and the night side
+  black. The approved hero at 4707's box (x 700 to 1100, y 60 to 160) shows its own limb and sky, 43.5, 68.1, 93.5 (4605 there
+  40.3, 66.4, 93.5): the plain there rewards a darker frame.
+- 13:36 to 13:40 THE SKY'S FRAME, not solved: stars of 4707's top right carried by the camera's turn alone fall outside 4605's
+  frame (skycheck.py); between 4690 and 4699 (Z5w) a patch of stars at 60, 30 (960 px) is found 22, -32 px from where the
+  camera's turn alone puts it (correlation 0.651), one at 200, 25 at 21, -34 (0.359): the sky is drawn by the engine's own sky
+  turn (src/space/sky.ts render: skyQuaternion, turn), which weave-main.ts does not give. So a patch fixed on the sky cannot be
+  carried by my poses; for the table of MAIL 1492 point 2 the sky is read at the screen corner, with what stands in it named,
+  or followed by matching. The corner at ZS 4712 and 4716 (20.0, 39.5, 57.4 and 28.1, 48.1, 67.3) by eye (zs-sheet.jpg): at
+  4712 a bright cloud of the sky's own picture stands in the corner, at 4716 the limb's glow has come into it.
+- 13:37 MAIL 1494: the Builder's reader on 2b9dbf28, rise part 2 of 2 (4985 to 5034): GREEN, every line better than main's row
+  (file kept as /tmp/rows-rise-p2of2.md).
+- 13:41 the look's 4860 at footprint 1.0 measured again (meas.py TP1): plain 21.144, G17 0.972 / 0.659; 4605 2.923, 0.856 / 0.720.
+
+
+## 26 Nov, 13:47 UTC: the control of MAIL 1492 point 3, the cause on each tree, the look, to the Builder (word for word; attached lit-2.jpg, look-1353.jpg)
+
+neptune_builder to the Builder, 13:47 UTC. ANSWER TO MAIL 1492 point 3: THE CONTROL YOU ASKED FOR, THE CAUSE ON EACH TREE, and the look. Two pictures attached. One ruling asked at point 5; the footprint work goes on meanwhile, it does not hang on it.
+
+1. THE CONTROL. The ground of 4707's box (x 700 to 1100, y 60 to 160), carried on the globe by pose and the ground's turn, lies in the hold at 4605 at x 833 to 1044, y 315 to 420 and at 4679 at x 833 to 1049, y 326 to 430. Mean RGB of that same ground:
+- the approved hero itself, at the 4605 place: 37.8, 130.5, 206.9
+- the hold at 4605, both trees: 36.0, 130.2, 207.1
+- the hold at 4679, its last frame, mine and main alike: 40.0, 137.8, 212.9 (the hold's own slow change over 74 frames; its cause not looked at)
+- mine at 4707: 52.7, 139.2, 210.5
+- main at 4707 (same box; main's eye stands 0.03 radii lower): 33.6, 101.5, 200.4
+So the hold reads neither pale nor deep there: a mid blue. Against the hold's last frame mine is +12.7, +1.4, -2.4: the red alone. Main is -6.4, -36.3, -12.5. Both trees change it; main more, and in every channel.
+
+2. THE CAUSE ON MINE: ONE LAW, FOUND AND CONTROLLED, AND I NAME IT AGAINST MYSELF. The near grade of the globe by the eye's height (look.ts near.dive: gain 0.86, saturation 0.45, tint 0.78, 0.97, 1; its share by the log of the height from 2.06 to 0.13 radii, closeup.json lay.tone). Its share at 4707 is 0.188.
+- Control NG0 (the range 2.06 to 0.9 so that the share is 0 at 4707, nothing else changed): 41.4, 140.0, 214.3. That is the hold's last frame within 2.2 levels in every channel.
+- By frame, the same ground in my dive (960 px frames of 10:42, before the cure at 4860, which left 4712 the same bytes; 4707 from the sha): 40.1, 137.9, 213.0 at 4680; 40.9, 138.5, 213.6 at 4692; 41.8, 138.5, 213.2 at 4696; 43.7, 138.6, 212.8 at 4699 and a half; 52.4, 138.8, 210.3 at 4707. The red climbs with that share and with nothing else; the cosine of the view at that ground goes from 0.77 to 0.55 and does nothing. No cloud, no air and no light is laid on it.
+- It is a curve by the eye's height in the sense of your MAIL 1011 (a). At way C I took the fall out and left this one standing; I did not see it as one until this control. What it does: at its full share (0.13 radii, from 4736 down) it brings the globe's hero blue to the approved close picture's paler blue for all ground the terrain shows beyond the scene; it begins at 2.06 radii because your MAIL 242 item 2 named it at 4704 to 4712 as a thing that came in while in frame and large. The same law stands on main.
+
+3. THE CAUSE ON MAIN: its grade by height (deep.json globe.fall, my 13:32 addendum). Control FALL (main's law laid into my tree as a tool, nothing else changed): lit side 34.3, 114.7, 206.7; night side 0.6, 1.0, 1.2; mean level of the frame 66.7 for 84.2. That one law makes the lit side deep and the night side black. It confirms the addendum.
+
+4. THE PLAIN AT 4707 against the approved hero, my reader: mine 47.2517 | NG0 47.6037 | FALL 44.0507 | main 46.8820. In 4707's box the approved hero itself shows its limb and sky (43.5, 68.1, 93.5), so the measure there rewards a darker frame, whatever darkens it: main's law by height laid into mine wins 3.2, and taking my near grade away loses 0.35. I know no thing of the place that brings the 0.37 to main's number, and I turn no value for it.
+
+5. THE RULING I ASK:
+(K) The near grade stays as it is for this name. The lit side at 4707 keeps +12.7 of red over the hold's, the other channels are the hold's; the plain at 4707 stays over main's (0.37 by my reader, 0.275 by yours) and is named red with this cause.
+(L) The near grade begins lower, so that 4707 is the hold's in every channel. Then it comes in from about 4708 to 4736 while the ground is large in frame, which MAIL 242 item 2 forbade, and the plain reads 47.60.
+(M) The near grade goes out at every height, the full reading of MAIL 1011 (a). Then the far ground of 4860 and every row of the dive and the rise change. I cannot prove that by 16:30 and would not put it into this name.
+My proposal is K. I go on by K until you rule.
+
+6. THE LOOK (picture 2): 4860 at the footprint 1.0 beside the approved, draft, 98.2 s the frame: G17 0.972 / 0.659, plain 21.144. The review frames of 4707 for your point 4: 1.0 (716.5 s) and 1.5 (694.8 s) are done; 1.25 renders since 13:45, then 2.0, done about 14:09. The four beside each other follow then.
+
+Picture 1: 4707 mine, NG0, FALL, main with the box; below the same ground in the hold at 4605 and 4679.
+
+
+## MAIL 1497 from the Builder (/root), 13:48 UTC (read 13:49 by my clock; word for word)
+
+> MAIL 1497 from the Builder (/root), 13:48 UTC. To neptune_builder, on your mail of 13:47. RULED: K. The near grade stays as it is for this name.
+>
+> 1. Your control NG0 names the cause by measure: the +12.7 of red on the lit side at 4707 is the near grade's share of 0.188 and nothing else. Taken. The line "paler toward the limb, cause not found" is closed with it.
+> 2. The grade is the way the globe's hero blue reaches the close picture's paler blue. The review note asks that nothing pops in entering and leaving, so that way must be long and by degrees. L packs it into 4708 to 4736 while the ground is large in frame; MAIL 242 item 2 stands and forbids that. M changes 4860 and every row and cannot be proved in time.
+> 3. My eye on your picture 1: your 4707 reads a shade milkier than the hold's last frame, by degrees, no fault at the frame. Main's 4707 reads deeper than the hold in every channel: its fall by height, the pop of the note.
+> 4. The plain line at 4707 (0.275 over main's by my reader) is read with reason under d296 (2): the note asks the trade, the cause is named, and the measure in that box rewards a darker frame whatever darkens it, as your FALL control shows. It goes into the next decision so.
+>
+> One thing for the later cut, no work on it before the name: the red climbs 8.7 levels over the seven and a half frames from 4699 and a half to 4707, faster than before, as the camera gains speed. Say in your name mail whether the share's rate over time is even or peaks, by your own numbers.
+>
+> The four footprints beside each other at about 14:09, as you say; I rule on the footprint then. Your hour for the name stays 16:30.
+
+
+## Mail from handover_engineer, 13:58 UTC, low priority, no answer needed (read 13:58 by my clock; word for word)
+
+> handover_engineer to neptune_builder, 13:58 UTC, LOW, no answer needed. Two measured things on your stop. Neither is the engine's; both are yours to take or leave.
+>
+> 1. THE LEVEL TONE EDGE across the globe's lower part on the way in and in the hold (red 2 of my name's mail; main has it too). Cause found: it is the lower right border of the approved picture's footprint in your map public/assets/neptune/full/wrap.webp (8192 x 4096, blob f61cf4eb, the same file on main), in rgb and in alpha.
+> - Draft, your tip 2b9dbf28 with my seven reader files. The edge's row in the frame: y 1017 at 4520, 1033 at 4529, 1040 at 4540, 1047 at 4550, 1053 at 4560, 1059 at 4570, 1065 at 4580, 1071 at 4590, 1077 at 4600, below the frame at 4610; x about 1380 to 1560. At 4529 the luma steps from row 1032 to 1033 by 5.57 levels (mean over x 1384 to 1458) and by 2.31 (x 1487 to 1548).
+> - The deck's u and v written out per pixel at 4529 and the map read through them: the frame's row 1033 runs on the map from texel (5047, 2872) at x 1384 to (5486, 2569) at x 1560, row 0 on top, within 7 texels of the straight line between them. The map's own luma under the frame's rows, mean over x 1384 to 1458: 82.2, 82.9, 83.4, 84.2 under rows 1029 to 1032, then 77.1, 76.5, 76.7, 76.7 under rows 1033 to 1036. Its alpha there: 0.64, 0.47, 0.12 under rows 1029 to 1031 and 0.0 from row 1032 on. The frame's own step between rows 1032 and 1033 is 5.57 there.
+> - Ruled out at 4529 in a scratch tree between 13:15 and 13:40 (your files changed and put back, checked by sha256): ring hidden, the edge stays (5.49; two other level edges at y 1054, x 1301 to 1370 and y 1078, x 1607 to 1670 are the ring's and go with it); air hidden, stays; held.amount 0, stays (5.55); laid and deep hidden, the same bytes. The edge follows no latitude or longitude of the body, and the body's features move with it.
+>
+> 2. THE BLUE AT 4707 (d376 point 5). I looked only to learn whether the engine has a hand in it. It has not: my two trees (your tip with the cure; 3bbb219a with main's Neptune) differ outside your folders in kit/PROGRESS.md and scorecards alone, so every difference of the two pictures comes from your files. What I measured at draft:
+> - THE SKY CORNER IS THE HOLD'S CARD ITSELF. 4707, top right 64 px box: 8.6, 25.1, 38.3. By the film's pose and your aims that corner lies on sky-hold.webp at texel (5040, 2378); the file there holds 8.4, 24.8, 37.8 (96 px box; median 8, 25, 38). Top left: frame 2.3, 7.2, 12.1; texel (2279, 2356); file 2.3, 7.0, 11.8. So the sky of 4707 is the card at weight 1 and at its own level (0.65 times 1.538), as your words ask.
+> - WHY THAT PART OF THE CARD STANDS IN THE CORNER: the card's Sun place (texel 5206, 2508) and the law's Sun part in the dive. Apart in frame px: 0.0 at 4680, 4.4 at 4690, 28 at 4694, 70 at 4697, 143 at 4700, 259 at 4703, 430 at 4706, 502 at 4707, where the law's Sun is at (1737, 545) behind the globe and the card's place at (2011, 125), 91 px right of the frame. The sky turns from a height of 2 radii down (skyTurnShare over lowSky) while the Sun stays with the light. So the brightest part of the hero's sky, the glow round its Sun, capped at made.sun.cap, stands in the frame's corner without its Sun, which is in the sky at 4703 and behind the limb at 4706. At 4700 the card's place reads 9, 27, 41 in the frame with the Sun 143 px from it.
+> - ON MAIN the plate's Sun place stays under the law's Sun (0.1 px or less at 4690, 4700, 4705, 4707, 4715; move.json sky.height 0.4 to 0.2). At 4707 the frame's corner lies on main's plate at texel (3672, 60), 60 texels under its top row, where its soft edge leaves it a weight of 0.03: main shows the engine's own sky there, 1.3, 4.3, 5.7.
+> - BEYOND THE PLATE: the darkest twentieth of your 4730 is 3.2, 13.0, 21.5, the recipe's floor 3, 13, 21; main's is 0.0, 2.5, 8.0. The hero's own dark sky on the card's left is 2.1, 6.1, 10.1 (texel 2507, 2327).
+> - THE GLOBE'S NIGHT SIDE (box x 200 to 300, y 900 to 1000). Yours: 2.7, 7.4, 14.3 at 4690; 2.0, 7.9, 17.9 at 4694; 1.4, 8.2, 20.7 at 4697; 1.3, 7.6, 21.1 at 4700; 1.4, 7.0, 19.2 at 4707. Main's: 2.7, 7.7, 14.9 at 4690; 0.8, 0.9, 0.8 at 4707. Yours changes between 4690 and 4700 (height 1.88 to 1.37 radii): red halves, blue rises by half, green stays; main's goes to black. I did not look for the line of your shader that does it.
+>
+> Pictures in my looks (engine-handover): edge-4529-zoom, noring-4529, grid-4529-whole, wrap-stretch, wrap-seam (the map with the frame's rows drawn on it), edge-span (the edge at eleven frames, gain 3), veil-pairs (4690, 4707, 4730 on both trees), veil-4707-corner, veil-4707-left, veil-sun-row (4690 to 4706, the Sun leaving the card's place).
+
+
+## Mail from handover_engineer, 14:08 UTC, low priority, no answer needed (read 14:08 by my clock; word for word)
+
+> 14:08 UTC, LOW, no answer needed. From handover_engineer. Second part to my mail of 13:58: the night side at 4707 has its cause. Engine files are not in it.
+>
+> 1. THE CAUSE: your set.ts line 278, `const fall = 0` (your comment there: one curve at every height, way C of MAIL 1011). Main's set.ts line 201 grades the globe by the eye's height (deep.json globe.fall.height [1.9, 0.25], powers 2.6, 3.1, 3.7 about the pivot) and that grade takes the night side to black on main. On your tip the night side keeps the hold's curve all the way down.
+>
+> 2. MEASURED at draft, scratch tree (your tip 2b9dbf28 with 3bbb219a; the one line of set.ts changed to main's law with 1.9 and 0.25 written in, then put back, sha256 696e0e29 checked). Mean of the box x 200..300, y 900..1000:
+>    frame | tip | tip with main's law of the fall | main's Neptune
+>    4690 | 2.7, 7.4, 14.3 | 2.7, 7.3, 14.3 | 2.7, 7.7, 14.9
+>    4700 | 1.3, 7.6, 21.1 | 0.9, 3.8, 9.7 | 0.8, 3.0, 7.1
+>    4707 | 1.4, 7.0, 19.2 | 0.5, 0.8, 1.0 | 0.8, 0.9, 0.8
+>    Darkest twentieth of the frame at 4707: 0.5, 5.6, 16.9 | 0, 0, 0 | 0, 0, 0.
+>    The sky corner does not move with it: top right 8.6, 25.1, 38.3 at 4707 with and without the law of the fall (main 1.3, 4.3, 5.7). That part is the hold's card, as in my mail of 13:58.
+>
+> 3. So the blue at 4707 against main is two things, both in the stop's files: the globe is no longer graded by height, and the sky is the hold's card at full weight while the sky turns off the Sun.
+>
+> 4. NOT MEASURED: why the box grows bluer on the tip from 4690 to 4700 (blue 14.3 to 21.1, red 2.7 to 1.3) with the grade off; the box stands still in the frame while the globe grows, so it sees another place.
+>
+> Pictures (looks, agent/engine-handover-looks 2548724d): "Neptune 4707, left half lower 640 px" and "Neptune 4700, same crop": tip, tip with main's law, main, side by side at 1 to 1.
+
+
+## 26 Nov, 13:48 to 14:11 UTC: lab log (K ruled; the share's rate; the four footprints at review tier; the cause of the bars)
+
+- 13:49 MAIL 1497 read: K. The near grade stays for this name. Owed with the name: whether the share's rate over time is even or peaks.
+- THE SHARE'S RATE (look.ts near.dive, share = smooth(log(2.06/h)/log(2.06/0.13)), closeup.json lay.tone [2.06, 0.13], heights by my poses). Share: 0.001 at 4688, 0.007 at 4692, 0.025 at 4696, 0.060 at 4700, 0.121 at 4704, 0.164 at 4706, 0.215 at 4708, 0.344 at 4712, 0.498 at 4716, 0.654 at 4720, 0.799 at 4724, 0.915 at 4728, 1.0 from 4736. Rate a frame: 0.0057 into 4696, 0.011 into 4700, 0.018 into 4704, 0.022 into 4706, 0.031 into 4710, 0.035 into 4712, largest 0.0395 into 4717 (0.039 from 4714 to 4720), 0.034 into 4724, 0.026 into 4728, 0.013 into 4732, 0 from 4736. It PEAKS: one smooth hump, not even. Rise: share 0.986 at 4980, 0.886 at 4984, 0.716 at 4988, 0.511 at 4992, 0.304 at 4996, 0.128 at 5000, 0.020 at 5004, 0 at 5008; largest fall 0.0530 a frame into 4993.
+- THE BAND BY FOOTPRINT (assets-src/neptune/check/bands.py against references/approved/neptune-close.jpg, 0.6 to 1.2 px, 4707). Draft (1 sample): 1.0: 0.950 | 1.25: 0.836 | 1.5: 0.754 | 2.0 (the sha): 0.625 | main 0.947. Review (28 samples): 1.0: 0.394 | 1.25: 0.393 | 1.5: 0.390 | 2.0: 0.383; the band of G17 (0.6 to 2.0 px) 0.509, 0.511, 0.504, 0.490. Under the shutter the blur of the motion holds that band; the 0.7 line is a line of the draft tier.
+- Review renders of 4707, seconds: TR1 (1.0) 716.5, TR2 (1.5) 694.8, TR4 (1.25) 708.0 (done 13:57:05), TR3 (2.0) 692.9 (done 14:08:56).
+- 13:58 handover_engineer's mail read (the tone edge near y 1033 is the border of the approved picture's footprint in wrap.webp, also on main; the blue sky corner at 4707 is the hold's card at weight 1 while the sky turns off the Sun). 14:08 his second part (the night side: my `const fall = 0`; his control with main's law of the fall agrees with mine of 13:44).
+- 13:59 /tmp/boxband.py (rms of the luma's detail, 0.6 to 1.2 px, and the difference from the first folder), the box of the bars x 1440 to 1615, y 555 to 655: review 1.0: 3.25 | 1.25: 3.18 (mean difference 0.09 levels, 0.0 percent over 8 levels) | 1.5: 3.13 (0.17, 0.1 percent) | 2.0: 3.00 (0.38, 0.8 percent). Draft: 1.0: 5.07 | 1.25: 4.60 | 1.5: 4.28 | 2.0: 3.79.
+- 14:01 THE CAUSE OF THE BARS (/tmp/smear.py, poses at 4707, 4707.25, 4707.5): over half a frame the ground under 1500, 590 moves +11.1, -0.3 px (11.2 px, 1 degree from the row); the bank's edge at 1280, 350 moves 8.7 px at 44 degrees, the eye at 1180, 450 6.9 px at 52 degrees, the centre 5.2 px. The cirrus opacity is nearly two valued, a thin line is a chain of hard bits of about 2 by 3 px, and the shutter draws each bit out along the row: a bar about 3 px high, about 10 px long, with the bit's own hard top and bottom. Not copies (28 samples over 11 px). The share of the shutter the dive keeps at 4707 (E6) is not read.
+- 14:09 LOOKED AT (four-4.jpg, cluster-4.jpg, cluster-dr.jpg): the bars stand at review tier at 1.0, 1.25, 1.5 AND 2.0, nearly alike; no copies at any; the bank's edge and the eye's bits are unbroken streaks in all four. So the law of round 39 does not cure the bars at review tier at any value to 2.0.
+- 14:02 queued behind the frames of the sha (SB): main's own 4707 at review tier into MAINR (/tmp/mainrev.sh, e31cd2098).
+
+## 26 Nov, 14:11 UTC: the four footprints at review tier, to the Builder (word for word; attached four-4.jpg, cluster-4.jpg, cluster-dr.jpg, look-1353.jpg; high priority)
+
+NEPTUNE, 14:11 UTC: the four footprints at review tier, 4707 (your MAIL 1492 point 4, MAIL 1497). No name. A RULING IS ASKED (point 4).
+
+Pictures: 1 four-4.jpg: review tier (28 samples of the shutter), cirrus.px 1.0, 1.25, 1.5, 2.0 beside each other at 2 times; row 1 the place of the bars (x 1440 to 1615, y 555 to 655), row 2 the bank's edge, row 3 the eye. 2 cluster-4.jpg: the bars alone (x 1460 to 1576, y 560 to 636) at 6 times in the four. 3 cluster-dr.jpg: the same place, draft above (1.0, 2.0), review below (1.0, 2.0). 4 look-1353.jpg: the look, 4860 beside the approved (the same picture as at 13:47; no 4860 has been drawn since).
+
+1. THE BARS STAND AT ALL FOUR. At review tier the pale bars with square ends are there at 1.0, 1.25, 1.5 and 2.0, nearly alike (picture 2). There is no least footprint without bars among the four. I see no copies at any of the four: the bank's edge and the bits in the eye are unbroken streaks in all four (picture 1, rows 2 and 3).
+Measured in the box of the bars (x 1440 to 1615, y 555 to 655), review tier, against 1.0: mean difference 0.09 levels at 1.25, 0.17 at 1.5, 0.38 at 2.0; pixels that differ by more than 8 levels: 0.0, 0.1, 0.8 percent. Rms of the luma's detail from 0.6 to 1.2 px there: 3.25, 3.18, 3.13, 3.00 levels. At draft the same box reads 5.07 at 1.0 and 3.79 at 2.0.
+
+2. THE CAUSE, by my poses: over the shutter of 4707 (half a frame) the ground at 1500, 590 moves 11.2 px across the frame, within 1 degree of the row (+11.1, -0.3). The cirrus opacity of the globe's levels is nearly two valued, so a thin cloud line is a chain of hard bits about 2 by 3 px (picture 3, top left). The shutter draws each bit out along the row: a bar about 3 px high and about 10 px long, its top and bottom the bit's own hard edges, which the motion does not cross. 28 samples over 11 px are 0.4 px apart: no copies. A footprint of 2 softens the bit by a fraction of a pixel and leaves the 11 px: the bar stays (picture 3, bottom row). The share of the shutter that the dive keeps at 4707 is not read; the bars measure about 10 px in the picture. So the law of round 39 does not do at review tier what it was made for, at any value to 2.0.
+
+3. THE BAND at 4707 (0.6 to 1.2 px, my reader, against the approved close picture):
+draft: 1.0: 0.950 | 1.25: 0.836 | 1.5: 0.754 | 2.0 (the sha): 0.625 | main 0.947.
+review: 1.0: 0.394 | 1.25: 0.393 | 1.5: 0.390 | 2.0: 0.383 (the band of G17 there 0.509, 0.511, 0.504, 0.490). No review frame of main read yet.
+So under the shutter that band is held by the blur of the motion and the footprint hardly moves it; at draft the footprint is the whole of it.
+
+4. SO THE TWO CANNOT BOTH BE HAD BY THE FOOTPRINT ALONE, and the footprint buys nothing against the bars. MY PROPOSAL: 1.0. The law is then void (the set takes the larger of the hold's 1 and this), one footprint at every height, the hold's. With it, measured: the band at 4707 0.950 at draft (main 0.947); 4605 and 5006 keep the sha's bytes (21b475da05086981, f9d1bfe65547e1ee); 4860 G17 0.972 / 0.659, plain 21.144 (the sha 21.151, main 22.986), 1.87 percent of its pixels move by at most 3 levels. The bars go into the name as a red with this cause; their cure is the cirrus opacity itself, not its footprint, and belongs to the next cut.
+Your ruling: 1.0, or another value. Until it comes I go on with 1.0: the merges, the judged four, then the redraw of the dive and the rise at half steps, which starts at about 14:40 and takes 60 minutes; another value after that costs the redraw again.
+
+5. RENDERING NOW, to about 14:24: main's own 4707 at review tier (e31cd2098), to say whether main shows the same bars at that place. I send the crop beside mine when it is there.
+
+Seconds: review 4707 692.9 to 716.5 a frame; draft 4860 98.2, 4707 29.2. G17 at 4860: 0.972 / 0.659. The hour of the name stays 16:30.
+
+
+## MAIL 1501 from the Builder (/root), 14:12 UTC (read 14:13 by my clock; word for word)
+
+> MAIL 1501 from the Builder (/root), 14:12 UTC. To neptune_builder. RULING on your mail of 14:11.
+>
+> 1. THE FOOTPRINT IS 1.0. Taken as you propose: the law of round 39 is void, one footprint at every height, the hold's. Reason: by your four frames at review tier it does not do what it was made for at any value, and at draft it costs the band (0.625 at 2.0 against 0.950 at 1.0, main 0.947). A law that does not cure is not kept. Go on with 1.0.
+>
+> 2. THE BARS. I looked at cluster-dr.jpg and cluster-4.jpg: at draft a chain of hard white bits in a stair, at review each bit a pale bar with square ends, the same at all four. Your cause is taken: the opacity of the cirrus is nearly two valued, so each bit has hard edges above and below that the motion along the row does not cross. Your crop of main's own 4707 at review tier decides one thing: if main shows the same bars they are main's fault and the name is no worse; if main does not show them they are a new fault at a judged frame and the name cannot go on with them.
+>
+> 3. THE CURE BY CAUSE IS ASKED IN THIS NAME, not in a next cut: the later cut is the last one before the freeze at 20:30, there is no cut after it. One trial, before your redraw: make the cirrus opacity's step soft where it is drawn (a ramp about as wide as the picture's own pixel there, by the field's change from pixel to pixel, so that a thin line is a soft line and not a chain of hard bits), at every height by one law, no new switch by the eye's height. Judge it at 4707 at review tier in the same boxes (bars, the bank's edge, the eye) and at draft with your band. It goes into the name if the square ends are gone at review tier, 4605 and 5006 keep their bytes or you can name why they move, and G17 stays green at 4707 and 4860. If the one trial fails, the name goes with 1.0 and the bars named red with this cause, and you tell me what the trial showed.
+>
+> 4. THE HOUR. With the trial the name may come as late as 17:30; without it 16:30 stands. Do the redraw of the dive and the rise once, after the trial is decided, not before. Send the main crop and the trial's crop as they come; no other answer is needed from me to go on.
+
+
+## 26 Nov, 14:11 to 14:23 UTC: lab log (main at review tier; the cause of the square ends is the shutter that opens and shuts at once; the trial)
+
+- 14:08:58 to 14:10:54 the sha's own frames (SB: HEAD 2b9dbf280, cirrus.px 2.0, 4686 to 4692 and 5002 to 5008 at half steps, preview, rate 2). FOUND: all 13 dive frames of SB are the bytes of Z5w (the state of 10:42), so Z5w's files 4668 to 4699.5 stand for the sha there (proven 4686 to 4692 only).
+- 14:10:56 to 14:14:11 MAIN'S OWN 4707 AT REVIEW TIER (MAINR, e31cd2098, /tmp/mainrev.sh; the tree laid back, status empty): 137.9 s, 31 samples. Band 0.6 to 1.2 px against the approved close picture 0.497, the band of G17 0.721 (mine at review 0.394 and 0.509 at 1.0).
+- LOOKED AT (cluster-main.jpg, four-main.jpg, mainr-whole.jpg, mainr-bits.jpg, mine-bits.jpg, main-limb.jpg): at the place of my bars main shows its plate (a soft bank, no thin lines): no bars there. Where main shows its own cirrus (near the limb, about x 155 to 325, y 125 to 155) it shows a row of pale square blocks; mine shows pale bars at the same clouds (about x 220 to 280, y 57 to 83) and at x 300 to 500, y 215 to 250.
+- 14:13 MAIL 1501 read: the footprint is 1.0; the cure by cause is asked in this name, one trial before the redraw; the name may come as late as 17:30 with the trial.
+- READ IN THE CODE (14:16 to 14:20):
+  - The opacity of the cirrus is NOT two valued in the pictures themselves: alpha of patch-40, patch-64, patch-96, wrap.webp and hold.webp is 0 in 81 to 89 percent of the texels and spread from 0.02 to 0.75 in the rest (hold.json head 1.5 lifts the held map's alpha in the shader); at alpha 0.3 to 0.7 the gradient a texel is 0.03 to 0.05 at the median and 0.12 to 0.15 at the 90th percentile. The thin lines are the steep tail of that. No step of the shader makes them hard (planet.ts: alpha = layerAt(...).a * (1 - placed) * keep; keep is read from far.png, 2048 wide, magnified).
+  - src/core/engine.ts GRAD_FLOOR 0.5 and src/diagnostics/diag.ts setSamples: at more than one sample every lookup of a sample is read at max(1 / sqrt(count), 0.5) of a pixel. handover.sharpCover names only earth, so at review tier (28 samples) every sample of Neptune reads at half a pixel. My footprint law is multiplied by uGrad in layerAt, so cirrus.px 2.0 at review tier was a ramp of one pixel in each sample and 1.0 half a pixel: that is why the four review frames are nearly alike, and it is the Builder's trial as worded (TR3), which shows the bars.
+  - src/core/sampler.ts at samplesFor: "A shutter that is open at once and shut at once draws a small light that moves as a bar with hard ends, and a field of such lights as a mosaic of bars. With ends each sample weighs as far as the shutter is open at its time (shutterOpen), so the bar fades in and out." config/showcase.json handover.shutterEnds names earth, mercury and mars with {share 0.5, fromPx 6, toPx 14}; Neptune is not named. src/core/motion.ts (endsLawOf, endsBy, framePlan): the law reads only the frame's motion across its open shutter; it holds in every frame of the stop (hold, dive, surface view, rise) and in the flight that leaves it; under fromPx the frame is the frame it was.
+- 14:21:11 THE TRIAL started (/tmp/ends.sh): config/showcase.json handover.shutterEnds.neptune = {share 0.5, fromPx 6, toPx 14} and move.json cirrus.px 1.0, both laid in the working tree for the render only and laid back by git checkout; nothing of config is committed by me. 4707 at draft into TSD: 46.5 s, sha256 e2607a46b14acafa, THE SAME BYTES as TP1 (px 1.0 without the entry): the draft frame does not move by the entry. 4707 at review into TS1 from 14:22:15.
+- SHARED FILE REQUEST noted: asked handover_engineer at 14:22 for the entry as one commit on a branch I can merge (text below). It goes on only on the Builder's word.
+
+## 26 Nov, 14:22 UTC: main at review tier, the cause and the trial, to the Builder (word for word; attached cluster-main.jpg, main-limb.jpg; high priority)
+
+NEPTUNE, 14:22 UTC: main's 4707 at review tier, the cause of the square ends found in the engine's own text, and the one trial, which renders now. No name. Nothing asked unless you object to the trial.
+
+Pictures: 1 cluster-main.jpg: the place of the bars (x 1460 to 1576, y 560 to 636) at 6 times: main e31cd2098 at draft and at review, mine (1.0) at draft and at review. 2 main-limb.jpg: main at review where its own cirrus is seen (x 100 to 566, y 100 to 253), mine at review at the same clouds, and a second place of mine, 3 times.
+
+1. MAIN AT THAT PLACE: NO BARS. Main shows another picture there: its plate stands over the ground where I show the globe's own map, so at the place of my bars main shows a soft bank and no thin lines (picture 1, left). By your ruling 2 the bars at that place are new. WHERE MAIN SHOWS ITS OWN CIRRUS it has the same fault: near the limb at about x 155 to 325, y 125 to 155 a row of pale square blocks (picture 2, top); mine shows pale bars at the same clouds (picture 2, middle). Main's review frame took 137.9 s with 31 samples; mine 692.9 to 716.5 s with 28.
+
+2. YOUR TRIAL AS WORDED IS ALREADY RENDERED, AND IT FAILS: it is the 2.0 frame of 14:11 (TR3). Read in the engine (src/core/engine.ts, GRAD_FLOOR 0.5; src/diagnostics/diag.ts, setSamples): at more than one sample every lookup of a sample is read at 1 / sqrt(count) of a pixel, down to a half. At review tier Neptune's samples read at half a pixel (handover.sharpCover names only earth). My footprint law is multiplied by that, so cirrus.px 2.0 at review tier was the cirrus opacity read with a ramp of exactly one pixel in every sample, and 1.0 was half a pixel. The bars stand in both. That is also why the four frames were nearly alike.
+
+3. THE CAUSE BY THE ENGINE'S OWN WORDS (src/core/sampler.ts, at samplesFor): "A shutter that is open at once and shut at once draws a small light that moves as a bar with hard ends, and a field of such lights as a mosaic of bars. With ends each sample weighs as far as the shutter is open at its time (shutterOpen), so the bar fades in and out." The engine has the cure, by stop, in config/showcase.json: handover.shutterEnds names earth, mercury and mars with the law {share 0.5, fromPx 6, toPx 14}. Neptune is not named, so its shutter opens and shuts at once.
+
+4. THE ONE TRIAL, rendering since 14:21: Neptune named in handover.shutterEnds with the same law as the other three, cirrus.px 1.0, 4707 at draft (to prove the draft keeps its bytes: one sample has no shutter) and at review. The config is laid in my working tree for the render only and laid back; I commit nothing of it. Result at about 14:35, with the crops in the same boxes.
+What the law is, by the engine's text: by the frame's own motion across its open shutter in px, not by time, segment, tier or height; under 6 px a frame is the frame it was, to the bit (the hold). It bites in every frame of the stop that moves more than 6 px at more than one sample: the dive, the surface view, the rise, and the flight that leaves Neptune (the engine counts that flight as the stop's). The flight that arrives is the stop's it leaves (Uranus), so by the engine's text no frame before Neptune's own can move by it; not measured.
+If it cures: the change is one entry in a shared file, not mine to commit. I ask handover_engineer for it now so that it is ready, and merge his sha only on your word. All draft numbers (the band, G17, the rows, the bytes of 4605 and 5006) cannot move by it; I prove that on 4707.
+If it does not cure: the name goes with 1.0 and the bars named red with this cause, as you ruled.
+
+
+## 26 Nov, 14:22 UTC: request for a shared file, to handover_engineer (word for word; no picture; high priority)
+
+14:22 UTC, from neptune_builder. A REQUEST FOR A SHARED FILE, to prepare now; it goes on only on the Builder's word (his MAIL 1501 asks the cure by cause in this name).
+
+THE CHANGE, one entry: config/showcase.json, handover.shutterEnds, add
+"neptune": {"share": 0.5, "fromPx": 6, "toPx": 14}
+(the same law earth, mercury and mars have).
+
+WHY: Neptune's judged 4707 at review tier shows thin cloud lines as pale bars with square ends (x 1470 to 1525, y 570 to 615; the ground there moves 11.2 px along the row over the shutter). That is the fault your text at samplesFor names ("a small light that moves as a bar with hard ends ... a mosaic of bars"); Neptune is not named, so its shutter opens and shuts at once. Four footprints of the cirrus (1.0 to 2.0) do not cure it. My trial with the entry laid in my working tree renders now; its result at about 14:35, I tell you at once whether it cures.
+
+WHAT I ASK OF YOU, if you can have it by about 15:00:
+1. The entry as one commit on a branch I can merge by a plain merge (on 3bbb219a or on main, your choice; say the full sha).
+2. What tests/shutter-ends.test.ts and the whole of vitest say with it.
+3. Which frames outside Neptune's dive, surface view and rise it can move at more than one sample: by your text the flight that leaves Neptune is the stop's. From which frame to which does that flight move more than 6 px, and does the ending's turn (MAIL 914) lie in it?
+4. Whether any frame before 4500 can move (I read: no, the arriving flight is Uranus's).
+
+I commit nothing under config. Noted in my notebook.
+
+
+## 26 Nov, 14:23 to 14:39 UTC: lab log (the trial's result: the square ends are gone with the shutter's ends; which frames the entry can move)
+
+- 14:22:15 to 14:34:01 TS1: 4707 at review tier with the entry and cirrus.px 1.0: 694.2 s, 28 samples, sha256 c329652e1ffd6a5d (TR1, the same without the entry: 8d5134c5a0233aba). The tree laid back, status empty.
+- LOOKED AT (cluster-ends.jpg at 6 times, bars12.jpg at 12 times, four-ends.jpg, limb-ends.jpg, limb2-ends.jpg): with the entry the pale bars with flat ends are gone at the cluster and near the limb. Each thin cloud line is a thin line in its own direction, 2 to 3 px wide, crisp, with the stair of a pixel on its slope; small clouds are spots that fade to both sides along the motion; the fringe of the bank's edge is many small crisp flecks where it was smeared blocks; the specks at the eye are crisper.
+- READ:
+  - bands.py against the approved close picture, review tier: 0.6 to 1.2 px 0.394 (TR1) to 0.553 (TS1); the band of G17 0.509 to 0.725; main at review (MAINR) 0.497 and 0.721. Draft at 1.0 (TP1): 0.950 and 1.056.
+  - boxband.py (rms of detail 0.6 to 1.2 and 1.2 to 2.4 px, levels): cluster 3.25, 5.11 to 4.22, 5.85; bank edge 2.63, 3.95 to 3.55, 4.71; eye 3.24, 4.14 to 3.90, 4.41; whole frame 1.85, 2.65 to 2.19, 2.94. TS1 against TR1: mean absolute difference 0.92 levels over the frame, 2.4 percent of the pixels over 8 levels (cluster 2.80 and 11.2 percent, bank edge 2.52 and 13.3 percent, eye 1.45 and 3.9 percent).
+  - endgrad.py (new, /tmp: the steps of the luma along the row and across it, 90th, 99th percentile and largest, levels a pixel) in the bars' box x 1470 to 1525, y 570 to 615: TR1 along 18.5, 42.3, 67.8, across 24.6, 53.1, 72.4; TS1 along 28.3, 54.7, 72.3, across 32.3, 63.9, 93.0; main at review (another picture there) along 9.5, 21.4, 32.7, across 17.3, 35.4, 50.3. So the picture with ends is sharper and its steps are larger: what is gone is the shape of the bar, not the hardness of the line.
+- WHY IT IS SHARPER (read in src/core/sampler.ts shutterOpen and src/core/motion.ts framePlan, endsBy): the engine's plan of 4707 at review tier is 28 samples, raw motion 32.92 px, the shutter capped to the share 0.500, 16.46 px seen across the open shutter; the law {0.5, 6, 14} is whole from 14 px, so the shutter opens and closes as one wave of a cosine with no rest and the samples near its ends weigh little.
+- THE ENGINE'S PLAN OF EVERY FRAME 4440 to 5200 at review tier (out/work/nep/weave/plan-seen.ts, untracked, prints framePlan and what endsBy would give; /tmp/plan-seen.txt):
+  - hold 4530 to 4679: 4 samples, 0.38 to 0.44 px seen: no ends, the frame it was.
+  - dive: over 6 px from 4687 to 4767 (the share by the law 0.007 at 4687, 0.056, 0.140, 0.239, 0.339, 0.424, 0.482, whole 0.5 from 4694 to 4763, then 0.481, 0.332, 0.124, 0.004 at 4767). The shutter is capped (seen held at 14 px) from 4694; the share of the shutter 0.5 from 4704.
+  - surface view 4770 to 4949: 4 samples, 2.05 to 2.23 px: no ends.
+  - rise: over 6 px from 4952 to 5022 (0.105, 0.475, whole from 4954 to 5019, 0.393, 0.146, 0.0003 at 5022). 5006: 46 samples, 27.06 px seen, whole. Most samples of the stop 77 at 4972 (46.1 px seen).
+  - from 5025 the segment's stop is "ending" (retreat to 5144, then lookback), not neptune: the entry cannot move it (largest motion there 11.71 px at 5079). Before 4530 the stop is uranus. My sentence of 14:22 that the flight that leaves Neptune is the stop's was wrong by the plan and is corrected in the 14:38 mail.
+  - the plan splits the samples between the two views at one frame of the dive (4758) and one of the rise (4956); with a law the engine deals them by weight (splitSides). Not rendered with the entry.
+- 14:38 the trial's crop, the verdict and the look sent to the Builder (the mail's head says 14:39, it left at 14:38:18); 14:38 the result sent to handover_engineer with the request for the commit.
+
+## 26 Nov, 14:38 UTC: the trial's crop and the look, to the Builder (word for word; attached cluster-ends.jpg, bars12.jpg, four-ends.jpg, limb-ends.jpg, look-1353.jpg; high priority)
+
+NEPTUNE, 14:39 UTC: THE TRIAL'S CROP AND THE LOOK. No name. The square ends are gone with the shutter's ends; I go on (merges, the 1.0 commit, tests, the redraw once). One correction of my 14:22 mail in point 3.
+
+Pictures: 1 cluster-ends.jpg: the place of the bars (x 1460 to 1576, y 560 to 636) at 6 times, review tier: 1.0 with the shutter as it is, 1.0 with ends (the trial), main, 2.0 with the shutter as it is. 2 bars12.jpg: x 1470 to 1525, y 570 to 615 at 12 times, as it is and the trial. 3 four-ends.jpg: your three boxes (bars, the bank's edge, the eye): as it is, the trial, main. 4 limb-ends.jpg: the far clouds near the limb (x 200 to 430, y 40 to 130) at 3 times, as it is and the trial. 5 look-1353.jpg: THE LOOK, 4860 beside the approved image (the frame of 13:53; the trial cannot move it, point 3).
+
+1. WHAT THE TRIAL SHOWS (4707, review tier, 28 samples, 694.2 s; cirrus.px 1.0; the one entry "neptune": {share 0.5, fromPx 6, toPx 14} in handover.shutterEnds laid for the render only and laid back, my tree is clean):
+- The pale bars with flat ends are gone at the cluster (pictures 1, 2) and near the limb (picture 4). Each thin cloud line is a thin line again in its own direction; a small cloud is a spot that fades to both sides along the way of the motion.
+- The frame is sharper by it, not softer: finest band 0.6 to 1.2 px against the approved close picture at review tier 0.394 as it is, 0.553 with ends (main at review 0.497); the band of G17 at review tier 0.509 as it is, 0.725 with ends (main 0.721). Cause, by the engine's plan of 4707: the frame moves 16.46 px across its open shutter, so the law is whole (0.5) and the shutter opens and closes as one wave with no rest.
+- What stands and is named: the thin lines are 2 to 3 px wide and crisp, on their slope they show the stair of a pixel (picture 2, right); the fringe of the bank's edge is many small crisp flecks where it was smeared blocks (picture 3, middle row). The steps along the row in the bars' box are larger: 99th percentile 42.3 levels a pixel as it is, 54.7 with ends. The frame differs from the one without ends by 0.92 levels in the mean, 2.4 percent of its pixels by more than 8.
+- The draft frame does not move: 4707 at draft with the entry is the bytes of 4707 at 1.0 without it (sha256 e2607a46b14acafa both). So the band at draft (0.950; band of G17 1.056), G17, the rows and your readers at draft tier read the same frames with or without the entry.
+
+2. YOUR THREE CONDITIONS. The square ends are gone at review tier: yes, by pictures 1, 2, 4. 4605 and 5006 keep their bytes: at draft yes (one sample has no shutter; proven on 4707, and the judged four are drawn again on the name's sha). At review tier 4605 cannot move (the engine's plan: the hold moves 0.38 to 0.44 px a frame, under the law's 6), 5006 does move (27.06 px, the law whole): the cause is the law itself, it is a frame of the rise at its fastest. G17 at 4707 and 4860: read at draft, the same bytes; 4860 cannot move at any tier (the surface view moves 2.05 to 2.23 px a frame over all of 4770 to 4949, under the law's 6).
+
+3. WHICH FRAMES THE ENTRY CAN MOVE, by the engine's own plan (framePlan at review tier, read for 4440 to 5200): the frames of Neptune that move more than 6 px: 4687 to 4767 and 4952 to 5022; whole from 4694 to 4763 and from 4954 to 5019. It comes in and goes out with the motion, not with the clock (the share: 0.007 at 4687, 0.056, 0.140, 0.239, 0.339, 0.424, 0.482, 0.5 at 4694). CORRECTION of my 14:22 mail: the flight after 5024 is NOT Neptune's by the plan: its frames belong to the stop "ending", which the entry does not name. So no frame after 5024 and no frame before 4530 can move, and the ending's turn is not touched.
+NOT RENDERED with the entry, named: 5006 at review tier; the two frames where the plan splits the samples between the two views (4758 and 4956; with a law the engine deals the samples to the views by weight); any run of consecutive frames at review tier. If you want one of these before the name, say which; each costs about 10 to 12 minutes of the one render.
+
+4. HOW IT COMES INTO THE NAME. The entry is one line in config/showcase.json, not mine to commit. I asked handover_engineer at 14:22 for it as a commit I can merge, with tests/shutter-ends.test.ts and the whole of vitest on it. I merge his sha before the name and run vitest on the result. If it is not there in time or a test is red with it, the name goes with 1.0 and says that the entry must come on top, with the bars named red.
+The redraw of the dive and the rise is at draft tier and does not depend on the entry; it starts after the merges and the tests.
+
+THE LOOK (picture 5): 4860 at 1.0, G17 0.972 / 0.659 (main 0.934 / 0.549), plain 21.144 (main 22.986), 98.2 s a draft frame. Reds as in my 14:11 mail; the bars now with their cause and the cure above.
+
+
+## 26 Nov, 14:38 UTC: the trial's result and the request for the commit, to handover_engineer (word for word; no picture; high priority)
+
+14:38 UTC, from neptune_builder, to my request of 14:22. THE TRIAL CURES: with the entry at 4707 at review tier the bars with flat ends are gone (thin lines again, small clouds fade along the motion); finest band at review 0.394 to 0.553, the band of G17 0.509 to 0.725 (main at review 0.721). The draft frame keeps its bytes with the entry (sha256 e2607a46b14acafa both). The Builder has the crops.
+So I ask for the commit as soon as you have it: the full sha, on which base, and the last line of vitest on it. I merge it before my redraw's name and run vitest on the result.
+What I read from framePlan at review tier, 4440 to 5200, for your check: with the law {0.5, 6, 14} Neptune's frames over 6 px are 4687 to 4767 and 4952 to 5022; hold 0.38 to 0.44 px and surface view 2.05 to 2.23 px stay under it. The frames from 5025 are the stop "ending" by segmentAtFrame, so I read that nothing after 5024 can move, against my question 3. Say if you read it otherwise. The plan splits at 4758 and at 4956 only; with a law those two frames get sides by splitSides: not rendered by me.
