@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T02:24:40.557Z",
- "head": "6a388395ab71ac32e1160844521eb9dc043ed4c7",
- "note": "merged main 01ce1602 as 6a388395 (local): the six draft hashes 0, 60, 90, 221, 247, 360 the same as before. Main's reader rows 217 to 224 on this machine: body by the map 0.31 at the most, pop 1.07, level step 0.10 (mine 0.63 red, 1.04, 0.08). Trial of the gas's share in the close view: sky part 14.4987 to 12.7081 at draft. sun-near 60 final of the candidate: dark 0.140 body 0.589 pale 0.110 white 0.036, half width 5.5 px, 1409 shapes, fine 0.0527, mean 0.409, distance 0.154",
+ "pushed": "2026-11-26T02:53:06.438Z",
+ "head": "cae4735c2b93b9100a30f58463ed32fdbe8b150a",
+ "note": "local cae4735c on the merge 6a388395 (main 01ce1602), not pushed: the glow from inside now stands in the close view (gas from 0.03 radii), the limb's own glow halved. Frame 60 draft against the approved: top 30 percent 14.4987 to 12.4315 (main 11.5380), whole 38.7760 to 38.1573; 360 and 495 keep their bytes; order proof of 90 four times ba7762eaa1f17dc8. sun-near 60 draft: dark 0.154 body 0.576 pale 0.107 white 0.035, half width 5.4 px, 2022 shapes, fine 0.0566, mean 0.404, distance 0.145. Rendering the gas's light by frame now",
  "looks": [
+  {
+   "time": "2026-11-26T02:53:05.798Z",
+   "file": "20261126025305798-note-t2-sheet.jpg",
+   "source": "../../../../tmp/v/t2-sheet.jpg",
+   "kind": "note",
+   "label": "local cae4735c draft: frames 0, 30, 90, 120, 150, 179, 180, 200, 221 (the sky's glow by the eye's height: top right mean red 9.9 at 0, 7.1 at 60, 4.3 at 120, 5.4 at 179, 18.1 at 200, 26.7 at 221)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:53:05.180Z",
+   "file": "20261126025305180-note-t2-limb.jpg",
+   "source": "../../../../tmp/v/t2-limb.jpg",
+   "kind": "note",
+   "label": "limb at 60, 1 to 1, left and right: approved | main final | local cae4735c draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T02:53:04.548Z",
+   "file": "20261126025304548-note-t2-four.jpg",
+   "source": "../../../../tmp/v/t2-four.jpg",
+   "kind": "note",
+   "label": "frame 60: approved | main 9f153844 final / candidate d377db96 final | local cae4735c draft (the glow from inside in the close view: gas from 0.03 radii, the limb's own glow halved and less red)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T02:24:39.958Z",
    "file": "20261126022439958-note-g2-stack.jpg",
@@ -55,30 +79,6 @@
    "format": "16x9",
    "diag": "nograin",
    "job": "measure"
-  },
-  {
-   "time": "2026-11-26T00:53:15.138Z",
-   "file": "20261126005315138-note-limb-trio90.jpg",
-   "source": "../../../../tmp/v/limb-trio90.jpg",
-   "kind": "note",
-   "label": "limb at 90 final, 1 to 1: approved | main 9f153844 | candidate d377db96",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T00:39:03.034Z",
-   "file": "20261126003903034-note-top3.jpg",
-   "source": "../../../../tmp/v/top3.jpg",
-   "kind": "note",
-   "label": "the top 30 percent of frame 60 at final: the approved, main 9f153844, the candidate",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T00:39:01.858Z",
-   "file": "20261126003901858-note-arc-duo90.jpg",
-   "source": "../../../../tmp/v/arc-duo90.jpg",
-   "kind": "note",
-   "label": "the arcade at 1 to 1, frame 90 at final: the approved above, the candidate (tree 42958a00) below. Mine is a flat dense dome of even fine strands; the approved a tall arch of fewer thick strands that meet in two narrow feet with white fountains",
-   "stop": "sun"
   }
  ]
 }
