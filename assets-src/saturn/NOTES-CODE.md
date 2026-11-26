@@ -7666,7 +7666,7 @@ twinkle by uTime with pow(tw, 3): a glint can stand in one frame alone. They sho
 small against the cell (show = 1 - smoothstep(0.12, 0.3, major * foot / cell)), that is close to the plane,
 which is where the specks of 3593 and 3601 are. To be tried: a slice with sparkle 0.
 
-## 00:15 UTC (day 3), where things stand after mail 1343
+## 00:12 UTC (day 3), where things stand after mail 1343
 
 MAIN: 1f51abc9 is merged into the branch (5909622e, pushed). The stop tree is unchanged since 17aa7329.
 The tree's three judged finals are drawn again on the new main by /tmp/v/rigid/seq12.sh (out: /tmp/v/rigid/T2,
@@ -7718,3 +7718,9 @@ after seq12: finals 3465 and 3720, drafts 3572 and 3601 (out /tmp/v/rigid/G).
 OPEN DECISION (by about 01:00): option A = sG as the baked state, with the hero's ring pixels still going out
 by height as on main, named as a red; option B = rings by code alone at every frame, which needs the lookdev
 above. The hold outranks the skim if the two disagree (d296).
+
+00:14 UTC: main's tip moved to 3675234f (kit/PROGRESS.md only, status 344 and d336; the code tip is still
+1f51abc9). Merged into the branch (83f34269). Batch 16 (take/ea6, with the roll into Saturn in
+src/space/travel/path.ts) is still under proof on the Builder's side: when it lands, the flight in (3340 to 3400)
+must be read again. Trial sH = sG with the old profile, drawn after sG by /tmp/v/rigid/seq14.sh (out
+/tmp/v/rigid/H), so that G against H is the profile alone.
