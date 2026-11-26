@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T02:21:30.445Z",
+ "pushed": "2026-11-26T02:34:54.427Z",
  "head": "5abf67625ee09869b0164ddf1d90699d13d4b63d",
- "note": "the committed tree keeps the bytes of the three stills on today's main, units 1017 of 1017; the flight in, dive and rise are being drawn for the tables",
+ "note": "K (rigid body, baked globe light) proof running: the flight in 3344 to 3400 at draft, every frame; ring edges and limb read on the true shapes; dive and rise rendering",
  "looks": [
   {
-   "time": "2026-11-26T02:21:29.575Z",
-   "file": "20261126022129575-note-circles_ra.jpg",
-   "source": "../../../../tmp/v/rigid/m66/circles_ra.jpg",
+   "time": "2026-11-26T02:34:49.457Z",
+   "file": "20261126023449457-note-limb_in.jpg",
+   "source": "../../../../tmp/v/rigid/m66/limb_in.jpg",
    "kind": "note",
-   "label": "3465 right ansa at full size, true circles drawn: the hero above (its edge ends about 15 px inside the circle), K below"
+   "label": "K 3369, 3371, 3374: the limb at 3 times with the true spheroid dotted green (lower left behind the near ring, top against the far ring)"
   },
   {
-   "time": "2026-11-26T02:21:28.107Z",
-   "file": "20261126022128107-note-circles_ll.jpg",
-   "source": "../../../../tmp/v/rigid/m66/circles_ll.jpg",
+   "time": "2026-11-26T02:34:48.253Z",
+   "file": "20261126023448253-note-binner_3376.jpg",
+   "source": "../../../../tmp/v/rigid/m66/binner_3376.jpg",
    "kind": "note",
-   "label": "3465 lower left at full size, true circles drawn through the lens: the approved hero above (its outer edge lies about 22 px outside the circle), K below (on the circle)"
+   "label": "K 3376 and 3390 at the left ansa, 3 times: true circles dashed (green 1.5237 B inner, yellow 1.2458, magenta 1.9545)"
   },
   {
-   "time": "2026-11-26T01:55:18.768Z",
-   "file": "20261126015518768-note-v_k_lip2.jpg",
-   "source": "../../../../tmp/v/rigid/v_k_lip2.png",
+   "time": "2026-11-26T02:34:47.570Z",
+   "file": "20261126023447570-note-in_full_ra.jpg",
+   "source": "../../../../tmp/v/rigid/PK/in_full_ra.jpg",
    "kind": "note",
-   "label": "3593 and 3610 at the equator's end: without and with the lip behind the globe, gain 5"
+   "label": "K flight in 3373 to 3378 at full size, right ansa"
   },
   {
-   "time": "2026-11-26T01:55:17.673Z",
-   "file": "20261126015517673-note-v_3720_globe2.jpg",
-   "source": "../../../../tmp/v/rigid/v_3720_globe2.jpg",
+   "time": "2026-11-26T02:34:46.587Z",
+   "file": "20261126023446587-note-in_full_ll.jpg",
+   "source": "../../../../tmp/v/rigid/PK/in_full_ll.jpg",
    "kind": "note",
-   "label": "3720 globe at full size: the name above, K below"
+   "label": "K flight in 3373 to 3378 at full size, near ring lower left"
   },
   {
-   "time": "2026-11-26T01:55:16.536Z",
-   "file": "20261126015516536-note-v_3572_gap3.jpg",
-   "source": "../../../../tmp/v/rigid/v_3572_gap3.jpg",
+   "time": "2026-11-26T02:34:45.762Z",
+   "file": "20261126023445762-note-in_sheet_3392.jpg",
+   "source": "../../../../tmp/v/rigid/PK/in_sheet_3392.jpg",
    "kind": "note",
-   "label": "3572 gap between the night limb and the C ring: old main (stars), the name, K"
+   "label": "K flight in 3392 to 3400, draft, every frame"
   },
   {
-   "time": "2026-11-26T01:55:14.946Z",
-   "file": "20261126015514946-note-v_3465_patch3.jpg",
-   "source": "../../../../tmp/v/rigid/v_3465_patch3.jpg",
+   "time": "2026-11-26T02:34:45.039Z",
+   "file": "20261126023445039-note-in_sheet_3380.jpg",
+   "source": "../../../../tmp/v/rigid/PK/in_sheet_3380.jpg",
    "kind": "note",
-   "label": "3465 right ansa margin at twice the size: hero, name, K (the mottled patch repaired)"
+   "label": "K flight in 3380 to 3391, draft, every frame"
   },
   {
-   "time": "2026-11-26T01:55:13.429Z",
-   "file": "20261126015513429-note-v_3465_right3.jpg",
-   "source": "../../../../tmp/v/rigid/v_3465_right3.jpg",
+   "time": "2026-11-26T02:34:43.903Z",
+   "file": "20261126023443903-note-in_sheet_3368.jpg",
+   "source": "../../../../tmp/v/rigid/PK/in_sheet_3368.jpg",
    "kind": "note",
-   "label": "3465 right part: approved hero, the name, K (K's ansa lies about 20 px further out, on the true circle)"
+   "label": "K flight in 3368 to 3379, draft, every frame"
   },
   {
-   "time": "2026-11-26T01:55:11.839Z",
-   "file": "20261126015511839-note-v_3465_left2.jpg",
-   "source": "../../../../tmp/v/rigid/v_3465_left2.jpg",
+   "time": "2026-11-26T02:34:42.729Z",
+   "file": "20261126023442729-note-in_sheet_3356.jpg",
+   "source": "../../../../tmp/v/rigid/PK/in_sheet_3356.jpg",
    "kind": "note",
-   "label": "3465 left ansa at full size: approved hero, the name, K (the bright rim is out)"
+   "label": "K flight in 3356 to 3367, draft, every frame"
   }
  ]
 }
