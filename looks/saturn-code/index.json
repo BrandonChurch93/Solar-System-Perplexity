@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T14:38:16.399Z",
+ "pushed": "2026-11-26T15:00:26.072Z",
  "head": "d13f80620a9cba3b45519b048fe2d95cbe14bd73",
- "note": "the cause owed by mail 1498: the reader number on the lit ring tip is its own lag along the lanes, larger on the cure stills in the middle of the placements; the globe limb adds little",
+ "note": "saturn rise: the cause of the cure's middle standing above main's; the reader's lag along the lanes at the lit arm's tip, lens turn and drift experiments on the cached stills (no render)",
  "looks": [
+  {
+   "time": "2026-11-26T15:00:20.210Z",
+   "file": "20261126150020210-note-lag_chart.jpg",
+   "source": "../../../../tmp/v/rigid/T1/t20/lag_chart.png",
+   "kind": "note",
+   "label": "saturn rise 3858.5 to 3862.5: the reader's number against its lag along the lanes, 25 placements, both trees"
+  },
+  {
+   "time": "2026-11-26T15:00:19.510Z",
+   "file": "20261126150019510-note-lag_wide.jpg",
+   "source": "../../../../tmp/v/rigid/T1/t20/lag_wide.png",
+   "kind": "note",
+   "label": "saturn rise 3858.5 to 3862.5: the reader's lag along the ring lanes at the lit arm's tip over 169 whole pixel placements, cure against main"
+  },
   {
    "time": "2026-11-26T14:38:11.058Z",
    "file": "20261126143811058-note-tip_pair.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/rigid/T1/placements_rise2.png",
    "kind": "note",
    "label": "Saturn rise part 2, frames 3853 to 3858: the reader's pattern rows read again on the same stills moved by one or two whole pixels, 25 placements, the cure left and main right; red is the stills as they are"
-  },
-  {
-   "time": "2026-11-26T12:52:40.006Z",
-   "file": "20261126125240006-note-ringstack_1.jpg",
-   "source": "../../../../tmp/v/rigid/T1/ringstack_1.png",
-   "kind": "note",
-   "label": "3856 to 3862 from the top, the cure left and main right, in the ring's own coordinates, same points"
-  },
-  {
-   "time": "2026-11-26T12:52:39.426Z",
-   "file": "20261126125239426-note-ringstack_0.jpg",
-   "source": "../../../../tmp/v/rigid/T1/ringstack_0.png",
-   "kind": "note",
-   "label": "3850 to 3856 from the top, the cure left and main right, each frame redrawn in the ring's own coordinates round the same point (across: angle round the ring, light to the right; down: radius): what is fixed on the ring stands in one column"
   }
  ]
 }
