@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T18:08:32.820Z",
+ "pushed": "2026-11-26T18:31:22.508Z",
  "head": "498513133f001112164442409cd35fd8a6395ff7",
- "note": "whole cure, cause found on the 0.3 plate: the heights' line leaves the plate's own shade border by up to 0.77 km; the law must not draw where the heights do not hold the plate's forms",
+ "note": "whole cure: my plate crop of 18:09 was the wrong ground; the lower right place of 2692 proved by control on the 0.7 and 1.6 plates; reader control running",
  "looks": [
+  {
+   "time": "2026-11-26T18:31:21.506Z",
+   "file": "20261126183121506-note-ag07.jpg",
+   "source": "../../../../tmp/pm/B/ag07.png",
+   "kind": "note",
+   "label": "draft outside the tree, not taken: the 0.7 plate, main, the whole cure, the line kept only where it agrees with the plate's border, and that share",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T18:31:20.514Z",
+   "file": "20261126183120514-note-h1.jpg",
+   "source": "../../../../tmp/pm/B/h1.png",
+   "kind": "note",
+   "label": "the lower right place of 2692 named by a control, not by likeness: draft 2692 lower right (main, the whole cure, the control with main's texels on one ground box: 9 px left), and that ground on the 0.7 and 1.6 plates, main and the whole cure. The place is the shade north of the canyon where the 0.7 plate ends; the heights' line there is crisp with pointed teeth",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T18:08:32.030Z",
    "file": "20261126180832030-note-p03c.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pm/B/x-2690.png",
    "kind": "note",
    "label": "pair at native size, frame 2690 (rise): main left, the whole cure on main's plates (0d638c07) right; 41,502 px differ by more than 8 levels",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T17:09:04.563Z",
-   "file": "20261126170904563-note-s-2690.jpg",
-   "source": "../../../../tmp/pm/B/s-2690.png",
-   "kind": "note",
-   "label": "pair at native size, frame 2690: main left, the speck state (named 49851313) right; 93 px differ by more than 8 levels in the whole frame, blue specks gone to the ground's hue",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T16:40:54.259Z",
-   "file": "20261126164054259-note-x-2700.jpg",
-   "source": "../../../../tmp/pm/B/x-2700.png",
-   "kind": "note",
-   "label": "pair at native size, frame 2700: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
    "stop": "mars"
   }
  ]
