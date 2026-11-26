@@ -841,9 +841,10 @@ void main() {
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
   
   float edgeD = 1.0 - plan;
+  float pool = ${(lab.heat.lane[10] ?? 0) > 0 ? 'smoothstep(0.3, 0.7, vn(vG * ' + (lab.heat.lane[10] ?? 0).toFixed(2) + ' + 61.0))' : '1.0'};
   float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
 #if ${(lab.heat.lane[4] ?? 0) > 0 ? 1 : 0}
-  laneWide = clamp(laneWide * ${(lab.heat.lane[4] ?? 0).toFixed(5)} / (${lab.heat.lane[0]!.toFixed(3)} * vCell.z), ${(lab.heat.lane[5] ?? 0.1).toFixed(3)}, ${(lab.heat.lane[6] ?? 0.45).toFixed(3)}) * (1.0 + ${(lab.heat.lane[7] ?? 0).toFixed(2)} * vJunc);
+  laneWide = clamp(laneWide * ${(lab.heat.lane[4] ?? 0).toFixed(5)} / (${lab.heat.lane[0]!.toFixed(3)} * vCell.z), ${(lab.heat.lane[5] ?? 0.1).toFixed(3)}, ${(lab.heat.lane[6] ?? 0.45).toFixed(3)}) * (1.0 + ${(lab.heat.lane[7] ?? 0).toFixed(2)} * vJunc * pool) * mix(${(lab.heat.lane[12] ?? 1).toFixed(2)}, 1.0, pool);
 #endif
 #if ${T.on ? 1 : 0}
   float laneTube = ${T.finger[3]!.toFixed(2)} * (1.0 - smoothstep(0.0, 0.8, 1.0 - abs(tb.x)));
@@ -878,8 +879,8 @@ void main() {
   // there; the cell's own heat comes in over the lane's width, sooner along a fibre
   float qSeam = smoothstep(0.0, laneWide, edgeD);
   qSeam = clamp(qSeam + ${(4 * lab.heat.lane[2]!).toFixed(2)} * (fan - 0.5) * qSeam * (1.0 - qSeam), 0.0, 1.0);
-  warm *= mix(1.0, mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(lab.heat.lane[8] ?? 0.3).toFixed(3)}, edgeD)), ${(lab.heat.lane[10] ?? 0) > 0 ? 'mix(' + (lab.heat.lane[11] ?? 0).toFixed(2) + ', 1.0, smoothstep(0.3, 0.7, vn(vG * ' + (lab.heat.lane[10] ?? 0).toFixed(2) + ' + 61.0)))' : '1.0'});
-  warm = mix(uLabHeat.y * ${lab.heat.crease[2]!.toFixed(2)} * (${(Q?.seam?.[0] ?? 0.7).toFixed(2)} + ${(Q?.seam?.[1] ?? 0.6).toFixed(2)} * vn(vG * ${(Q?.seam?.[2] ?? 40).toFixed(1)} + 23.0)) * (1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc), warm, qSeam);
+  warm *= mix(1.0, mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(lab.heat.lane[8] ?? 0.3).toFixed(3)}, edgeD + ${(lab.heat.lane[13] ?? 0).toFixed(2)} * (fan - 0.5))), mix(${(lab.heat.lane[11] ?? 0).toFixed(2)}, 1.0, pool));
+  warm = mix(uLabHeat.y * ${lab.heat.crease[2]!.toFixed(2)} * (${(Q?.seam?.[0] ?? 0.7).toFixed(2)} + ${(Q?.seam?.[1] ?? 0.6).toFixed(2)} * vn(vG * ${(Q?.seam?.[2] ?? 40).toFixed(1)} + 23.0)) * mix(${(Q?.seam?.[3] ?? 1).toFixed(2)}, 1.0, pool) * (1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc), warm, qSeam);
 #endif
   float heat = pen > 0.999 ? uLabHeat.y * bundle : mix(warm, uLabHeat.y * bundle, pen);
   // small hot points in the lanes

@@ -1460,3 +1460,42 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   top, steeper flank), t44 base[5] 0.75 (narrower valley), t45 both with lane swell 0.4; v/trials-o.jpg.
   NOTE: the commit of 02:05 holds ground.ts with the skirt cure and lab.json of h32, so its frame differs from
   the mailed h32 on the skirts only.
+- 02:08 UTC. MAIL 1368 from /root on h32 (no answer needed before my mail of 03:10; "take from this what your own
+  eye confirms and leave the rest"), core verbatim: "1. THE RIM. In your half of the levels picture nearly every
+  cell has a bright band just inside its lane, a darker ring inside that, then the bright top. That is the
+  profile of a pebble with a bevel, and it is what makes the net read as cobbles lit from one side. In the
+  approved half no cell has a rim: the light falls from the top toward the edge and breaks into fibres before
+  it reaches the lane. If the rim comes from a term that lights the slope (a normal, a height derivative, a side
+  light), that term is the cause; plasma is lit by its own heat alone, so brightness should follow height or
+  heat and nothing that knows a direction. 2. THE SPREAD OF SIZES. Your cells keep to one size at one distance.
+  In the approved the largest are about three times the smallest side by side, small ones gather in groups, and
+  bright tops fuse over a thin lane into one larger patch. 3. THE LANES. Yours have one width. In the approved
+  they swell into dark pools where three or more cells meet and thin to nothing between fused tops; your trials
+  on dark areas that cross lanes point the same way. 4. THE TOPS. The approved tops are not domes: a bright blob
+  off the centre with fibres running from it to the edge, and the fibres of neighbours run on across the lane
+  here and there. 5. MOTION, when the still holds: cells that are born, grow, split and fade over the hold, with
+  the fibres streaming outward, not a fixed net that boils in place. A fixed net is what reads as a picture.
+  The low band is the right number to watch for 2 and 3; for 1 a profile across ten cells (level against the
+  distance from the lane, yours beside the approved) would show it at once."
+- 02:09 to 02:18 UTC. rim.py written (level against the distance from the nearest lane; lanes = darkest 12 percent
+  after 1 px blur; box 260 820 1400 260; mean, quartiles, share of pixels far from a lane; plot with --out).
+  MEASURED mean level at 1 2 3 4 5 6 8 10 12 16 20 25 30 40 px: approved 0.310 0.376 0.435 0.491 0.531 0.559
+  0.599 0.627 0.646 0.672 0.690 0.702 0.714 0.742; h32 final 0.382 0.469 0.516 0.552 0.583 0.608 0.653 0.691
+  0.718 0.757 0.771 0.774 0.781 0.760; t39 0.373 0.458 0.505 0.542 0.575 0.599 0.641 0.675 0.702 0.732 0.749
+  0.751 0.769 0.789. No fall after a rise in the mean or the upper quartile of any (the mean shows no rim; the
+  reader cannot see a rim that sits at a changing distance). What it does show: mine is 0.06 to 0.08 lighter at
+  every distance and rises faster in the first 2 px (the approved loses its light slowly toward the lane); share
+  of pixels over 10 px from a lane: approved 0.538, h32 0.420, t39 0.437 (my dark is spread into the tops, the
+  approved's is gathered in lanes and pools).
+  STATED: no term in the lab's heat knows a direction: heat.graze[2] is 0 (the limb law does not use the dome's
+  normal), no lamp, no height derivative. The band inside the lane in h32 came from heat.thin (a hot thread on the
+  border) and the sparks at 0.75 to 0.95 of the radius; both are out or down since t39.
+  New in ground.ts (uncommitted at 02:18): `pool` = smoothstep(0.3, 0.7, vn(vG * lane[10] + 61)), the same slow
+  place field as the shoulder's; lane[7] (swell at crossings) is multiplied by pool, lane[12] is the lane's width
+  where pool is 0 (lanes thin between fused tops), cushion.seam[3] the factor on the seam's heat where pool is 0.
+  t46 to t48 (seam[3] 5 and 9): the lanes between fused tops become a flat pale bed with a light outline, reads as
+  mortar; FAILED, do not repeat (v/trials-p.jpg). t49 (lane [..,3.0,0.8,0.35,10,0.1,0.35], seam[3] 1), t50 (lane[4]
+  0.0045, seam[3] 2), t51 (lane [..,3.0,0.9,0.28,10,0.1,0.35]): dark pools at the crossings, thin lanes between
+  some tops, no mortar (v/trials-q.jpg, v/levels-q.jpg). t51 nearest to the approved's profile: mean 0.337 0.420
+  0.468 0.508 0.545 0.572 0.616 0.650 0.679 0.708 0.725, far share 0.490; plain 31.0888 low64 8.0656 (no refit).
+  v/lab-t51.json. Still lumps with smooth lights: the approved's tops are a small light with fibres to the edge.

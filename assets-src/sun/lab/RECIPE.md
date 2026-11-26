@@ -61,6 +61,14 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   borders of the own cell, radius dome.base[8]), [8] and [9] the shoulder: over the outer share [8] of the radius
   the top's heat falls smoothly to the share [9], then to the seam's heat on the border, which is the same from
   both sides. With heat.pit 0 and dome.base[7] 0 the junc field carries no step in heat or height.
+  heat.lane[10] is the scale of a slow field of the place (0: off; `pool` in the shader, 0 to 1), [11] the least
+  share of the shoulder where that field is low, [12] the lane's width there as a share (lanes thin between tops
+  that fuse; the swell [7] at the crossings counts only where the field is high, so the lanes gather into dark
+  pools in some places and nearly close in others), [13] how far the shoulder's start moves with the fan (the top's
+  light ends in fingers along its fibres, not on a ring). cushion.seam[3] is a factor on the seam's heat where the
+  field is low (1: none; over 2 it reads as a pale bed, do not use). Beyond its border a cell's skirt carries the
+  seam's heat alone (no lit points, threads or sparks), so the small holes between three rounded corners show no
+  bright posts.
   lab.json "show" (junc, edge, deep, cell, tall, seam) draws one field of the dome as heat, for finding a cause;
   absent in the film.
 - Readers of frame 90 against the approved close image (pictures at 1920 by 1080, none of them writes a file the
@@ -71,3 +79,6 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   part mask: 255 ground, 128 the strip between the film's limb and the approved's, 0 sky; --film reads the film's
   limb again from a lab frame with haze.air off and a standing ground frame, else the cubic stored in the file);
   `python3 assets-src/sun/lab/parts.py PARTS.png FRAME.png ...` (plain match on each part).
+  `python3 assets-src/sun/lab/rim.py RENDER.png ... [--out PLOT.png] [--box X Y W H] [--dark SHARE]` (level against
+  the distance from the nearest lane, the approved first: mean, quartiles, the share of pixels far from a lane; a
+  rim would show as a rise, a fall and a second rise).
