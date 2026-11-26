@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T06:15:36.147Z",
+ "pushed": "2026-11-26T06:27:21.319Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "looks 06:20 UTC: w18 to w20, colour map on, no scaffold; dark thirds still lit too broadly, tops dim and grey",
+ "note": "looks 06:30 UTC: w21 to w26, colour map on, no scaffold; w26 is the base I keep",
  "looks": [
+  {
+   "time": "2026-11-26T06:27:20.657Z",
+   "file": "20261126062720657-note-w26-3150.jpg",
+   "source": "../work/r26/t/w26-3150.png",
+   "kind": "note",
+   "label": "w26 at 3150, preview, draft, no scaffold: rolls along the flow with fine curd on their crests, warm tops of their own colour; line i 16.011, bands green; right third too light, lumps too even in size",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:27:20.058Z",
+   "file": "20261126062720058-note-w21-3150.jpg",
+   "source": "../work/r26/t/w21-3150.png",
+   "kind": "note",
+   "label": "w21 at 3150, preview, draft, no scaffold: the picture's light taken out of the map in dark ground, embers gone there; lower left reads as liquid with stones",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:27:19.409Z",
+   "file": "20261126062719409-note-w24-3150.jpg",
+   "source": "../work/r26/t/w24-3150.png",
+   "kind": "note",
+   "label": "w24 at 3150, preview, draft, no scaffold: tops 0.24 units wide read as clay boulders; refused",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:27:18.765Z",
+   "file": "20261126062718765-note-w22-3150.jpg",
+   "source": "../work/r26/t/w22-3150.png",
+   "kind": "note",
+   "label": "w22 at 3150, preview, draft, no scaffold: tall relief in the dark thirds gives spires; refused",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T06:15:35.550Z",
    "file": "20261126061535550-note-w19-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r26/t/w6-3150.png",
    "kind": "note",
    "label": "3150 preview draft, variant w6, towers of 0.16 units in the dark thirds, funnel 0.3 deep, scaffold off: reads as rubble and the eye is a black pit, line (i) 16.114, refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T04:45:36.908Z",
-   "file": "20261126044536908-note-w5-3150.jpg",
-   "source": "../work/r26/t/w5-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, variant w5, billows laid in the middle age and three times taller in the dark thirds, scaffold off: reads as mountains, line (i) 15.067, refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T04:17:04.134Z",
-   "file": "20261126041704134-note-w4-3150.jpg",
-   "source": "../work/r26/t/w4-3150.png",
-   "kind": "note",
-   "label": "w4 at 3150, preview, draft, scaffold off, floor 0.03: tall relief where the guide is dark. Line (i) 15.297 whole frame, bands green. Wrong: the dark thirds read as draped ridges, not as fine billows with lit rims; right third too bright by 9 to 29",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T03:55:30.820Z",
-   "file": "20261126035530820-note-w1-3150.jpg",
-   "source": "../work/r26/t/w1-3150.png",
-   "kind": "note",
-   "label": "w1 at 3150, preview draft, no scaffold: cloud tops as bodies of density in space, the storm wound from signed sheets, balls laid on the ground. Faults I see: stripes too hard and regular, puffs read as pasted on, right half not dark enough",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T03:31:56.104Z",
-   "file": "20261126033156104-note-t-3150-1400.jpg",
-   "source": "../work/r25/t/t-3150-1400.png",
-   "kind": "note",
-   "label": "state t, master draft, frame 3150 at 1400 px",
    "stop": "jupiter"
   }
  ]
