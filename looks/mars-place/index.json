@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T08:45:13.000Z",
+ "pushed": "2026-11-26T09:06:19.929Z",
  "head": "792d4a20450074fe3f1337bb77276e0154b6279a",
- "note": "candidate 792d4a20 (map's hues held); bad: dark stepped band at 2468, pale soft patch at 2441, speckle at 2726",
+ "note": "rise 2681 to 2688 at 792d4a20 and a trial of the margins that is not taken",
  "looks": [
+  {
+   "time": "2026-11-26T09:06:18.638Z",
+   "file": "20261126090618638-note-g35d-2472.jpg",
+   "source": "../../../../tmp/pm/g35d-2472.png",
+   "kind": "note",
+   "label": "trial not taken, dive 2472, before and with the wider span: drawn out margin paint lower left (bad)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T09:06:17.745Z",
+   "file": "20261126090617745-note-g35d-2468.jpg",
+   "source": "../../../../tmp/pm/g35d-2468.png",
+   "kind": "note",
+   "label": "trial not taken, dive 2468, before and with the wider span: pale streaks of the margin upper right (bad)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T09:06:16.738Z",
+   "file": "20261126090616738-note-g35-B4.jpg",
+   "source": "../../../../tmp/pm/g35-B4.png",
+   "kind": "note",
+   "label": "trial not taken: margins give way over two doublings of the sight; the wall comes as a ghost over four frames",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T09:06:15.815Z",
+   "file": "20261126090615815-note-g35-B0.jpg",
+   "source": "../../../../tmp/pm/g35-B0.png",
+   "kind": "note",
+   "label": "rise 2681 to 2688 at 792d4a20, drafts: at 2684 the ground under the picture shows a dark wall at the right and a level line low left at 2685 (bad)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T08:45:12.095Z",
    "file": "20261126084512095-note-strip30.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/pm/g31e.png",
    "kind": "note",
    "label": "2441 native: before and 792d4a20; bad in both: pale soft patch south east of the canyon's bend",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T08:45:09.593Z",
-   "file": "20261126084509593-note-g31a.jpg",
-   "source": "../../../../tmp/pm/g31a.png",
-   "kind": "note",
-   "label": "2435 at 3 times: candidate before (left) with dark teal specks south of the canyon, 792d4a20 (right) without",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:48:53.024Z",
-   "file": "20261126074853024-note-full29.jpg",
-   "source": "../../../../tmp/pm/full29.png",
-   "kind": "note",
-   "label": "candidate 8bb83bd7 frames at draft",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:48:52.383Z",
-   "file": "20261126074852383-note-strip29.jpg",
-   "source": "../../../../tmp/pm/strip29.png",
-   "kind": "note",
-   "label": "candidate 8bb83bd7 strip of drafts beside the candidate before",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T07:48:51.538Z",
-   "file": "20261126074851538-note-g30a.jpg",
-   "source": "../../../../tmp/pm/g30a.png",
-   "kind": "note",
-   "label": "map 0.8 to 2.8 degrees south of the canyon: the globe's own, the name's patch-19 with teal and purple texels, the same held in the globe's hue range (in work)",
    "stop": "mars"
   }
  ]
