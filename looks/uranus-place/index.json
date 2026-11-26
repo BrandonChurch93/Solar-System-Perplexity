@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T12:41:25.640Z",
- "head": "bcc9d174645e627fd19f866d3c9e6f91ef5a39ae",
- "note": "name bcc9d174: final 4186 beside main's, final 4436 with the clock cure for the ruling",
+ "pushed": "2026-11-26T13:01:01.712Z",
+ "head": "5c21aa69b6276474d126bca53c88234dcbaed917",
+ "note": "13:01 name bcc9d174 sent 12:43; open: 4407 specks and pale lanes, controls queued behind the rise 1 reread",
  "looks": [
+  {
+   "time": "2026-11-26T13:00:59.002Z",
+   "file": "20261126130059002-note-d-dots-3.jpg",
+   "source": "../../../../tmp/n79/d-dots-3.jpg",
+   "kind": "note",
+   "label": "the name, draft 4403, 4407, 4410 at 2 times, x 700 to 1100, y 700 to 1000: the dark specks in rows on the near ground, cause being read by controls",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T12:50:05.225Z",
+   "file": "20261126125005225-note-d-4407-dash.jpg",
+   "source": "../../../../tmp/n78/d-4407-dash.png",
+   "kind": "note",
+   "label": "final 4407 at 3 times, x 800 to 1020, y 760 to 960: main final, the name final, the name draft. Fine dark dashes in the name only; at draft they are dots",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T12:41:23.349Z",
    "file": "20261126124123349-note-09-final-4436-main-name-cure.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n75/d2-c.png",
    "kind": "note",
    "label": "832be54a dive draft 4172 to 4180 from the reader's frames",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T09:27:54.081Z",
-   "file": "20261126092754081-note-d2-b.jpg",
-   "source": "../../../../tmp/n75/d2-b.png",
-   "kind": "note",
-   "label": "832be54a dive draft 4164 to 4171",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T09:27:48.489Z",
-   "file": "20261126092748489-note-d2-a.jpg",
-   "source": "../../../../tmp/n75/d2-a.png",
-   "kind": "note",
-   "label": "832be54a dive draft 4155 to 4163 from the reader's own frames, two aims, clock cure",
    "stop": "uranus"
   }
  ]
