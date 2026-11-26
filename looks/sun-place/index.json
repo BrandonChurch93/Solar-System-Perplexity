@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T12:14:43.318Z",
+ "pushed": "2026-11-26T12:36:55.830Z",
  "head": "ac0ffdda4556604bab51364ff72fee4f837d8a0f",
- "note": "Z34 trial: arch nearer the approved in form, left foot still wrong (cables, egg). sun-near 60 at the name: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "note": "Z41 trial: thin strands in crossing ropes, fan and pool at the feet; strands stand and beads move over frames 60 to 150. sun-near 60 at the name: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T12:36:55.219Z",
+   "file": "20261126123655219-note-foot-Z41.jpg",
+   "source": "../../../../tmp/v/foot-Z41.jpg",
+   "kind": "note",
+   "label": "trial Z41 both feet at twice size beside the approved",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T12:36:54.606Z",
+   "file": "20261126123654606-note-m41-A.jpg",
+   "source": "../../../../tmp/v/m41-A.jpg",
+   "kind": "note",
+   "label": "trial Z41 the arch every tenth frame 60 to 150, draft, half size",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T12:36:53.943Z",
+   "file": "20261126123653943-note-a-Z41-90.jpg",
+   "source": "../../../../tmp/v/a-Z41-90.jpg",
+   "kind": "note",
+   "label": "trial Z41 draft 90 under the approved: thinner strands, ropes cross with dark gaps, fan and pool at each foot, rigid dark sky",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T12:14:42.754Z",
    "file": "20261126121442754-note-foot-Z34.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/a-Z5-90.jpg",
    "kind": "note",
    "label": "draft 90, arch trial Z5 (fan from each foot, thinner brighter strands): approved above, trial below, 0.75 size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T10:32:17.553Z",
-   "file": "20261126103217553-note-y5-f221-pair.jpg",
-   "source": "../../../../tmp/v/y5-f221-pair.jpg",
-   "kind": "note",
-   "label": "221 draft, main left, state right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T10:32:16.336Z",
-   "file": "20261126103216336-note-rise-216-233.jpg",
-   "source": "../../../../tmp/v/rise-216-233.jpg",
-   "kind": "note",
-   "label": "rise 216 to 233 every frame, draft, state b13b631b on main 7bf2d527",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T10:02:27.188Z",
-   "file": "20261126100227188-note-strip-part.jpg",
-   "source": "../../../../tmp/v/strip-part.jpg",
-   "kind": "note",
-   "label": "the arch's right shoulder every tenth frame at 1 to 1, draft",
    "stop": "sun"
   }
  ]
