@@ -12297,3 +12297,26 @@ RETURN ma7-23 from /root/neptune_builder, 21:52 UTC: film-16x9-final-b-098, segm
 - 21:53:44 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 21:53:56 npm run build exit 0, dist 1301 MB, free disk 5035 MB. 21:54:11 the job's four lines
   started as /tmp/ma7-31.sh, detached from the repo root.
+
+- The encoder's intake (bytes read, /proc/PID/io) for ma7-31: frames arrived at 21:59:45, 22:04:39, 22:09:38, 22:14:42,
+  22:19:51, 22:25:00, 22:30:09 and the last before 22:35:21; about five minutes a frame, none over fifteen.
+- 22:35:21 finished. The tail, whole:
+
+      0
+      RC film earth.dive 1837-1844 0
+      wrote earth.dive.part000.mp4 frames 1837-1844 render 2451 s encode 1.7 s
+      -rw-r--r-- 1 user user 573440 Nov 26 22:35 /tmp/film-16x9-final-b-140.tar.00
+
+  The piece holds earth.dive.span1837-1844.mp4 (559663 bytes) and its .json (2009 bytes); sha256 of the piece 7453d17ab5d8
+  9865e2868d843b306def99c4cc40c755e2c4d1e2d4202732116c. Tree still clean on 262b9a68. Free disk 6327 MB.
+
+## 26 Nov, 22:35 UTC: RETURN ma7-31 to the Builder (word for word; sent about 22:35:38; attached /tmp/film-16x9-final-b-140.tar.00 and /tmp/ma7-31-tail.txt; high priority)
+
+RETURN ma7-31 from /root/neptune_builder, 22:35 UTC: film-16x9-final-b-140, segment earth.dive, span 1837-1844, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Finished 22:35:21 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 21:53:44.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film earth.dive 1837-1844 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote earth.dive.part000.mp4 frames 1837-1844 render 2451 s encode 1.7 s"
+5. Attached: /tmp/film-16x9-final-b-140.tar.00 (573440 bytes, the only piece) and /tmp/ma7-31-tail.txt.
+6. The tree: as for ma7-23 (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 21:53. Free disk 5035 MB before the start, 6327 MB now.
+7. The files of both jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
