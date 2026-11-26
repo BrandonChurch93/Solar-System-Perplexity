@@ -1,0 +1,84 @@
+{
+ "critic": "R1",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "ring plane perspective and inner ring gap (full frame; crops A, F, G in pair-04-b.png)",
+   "what": "camera elevation above the ring plane is much too high, opening a wide star-filled gap between the inner ring and Saturn's left limb and bending the rings into a steep ellipse instead of the low grazing angle in -a",
+   "fix": "lower the camera closer to the ring plane to flatten the ring ellipse, close the open sky gap inside the inner C-ring against Saturn's left limb, and raise the far-left ring horizon into the shallower, broader sweep of -a"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "Saturn globe scale, placement, and ring occlusion (full frame; crops A, C, E, H in pair-04-b.png)",
+   "what": "Saturn's globe is much too large and extends too far down-right into crop E while casting a tall black void across the top half of crop H, whereas in -a the globe is smaller, sits higher/farther back, and is occluded higher up by the foreground rings",
+   "fix": "reduce Saturn's apparent radius and shift the globe slightly up and back so the foreground rings cross in front of its lower hemisphere at mid-frame, restoring lit foreground rings across crop E and soft grazing shadow along the top of crop H"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "Saturn lower-left sunlit limb and equatorial ring-crossing zone (crop A in pair-04-b.png)",
+   "what": "missing the crisp horizontal dark ring-shadow bands across Saturn's lower lit globe and the translucent inner C-ring overlap at the base of the globe, while the sunlit left limb has an overly wide warm-orange bloom",
+   "fix": "render the thin dark ring-shadow bands onto Saturn's lower equatorial globe just above the ring crossing, show subtle globe continuation behind the inner C-ring, and tighten and cool the sunlit limb glow"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "Saturn upper hemisphere cloud bands and terminator (crop C in pair-04-b.png)",
+   "what": "cloud textures are soft, stretched, and tilted too steeply, losing the sharp fine-scale horizontal bands, scalloped eddies, distinct oval storm near the right terminator, and subtle blue-grey polar tones of -a",
+   "fix": "increase planetary texture resolution and micro-contrast, flatten the band tilt to match -a, add crisp storm/eddy detail near the terminator, and restore cool blue-grey shading toward the upper pole"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "Cassini Division, outer A-ring, and F-ring horizon (crops B, D, F, I in pair-04-b.png)",
+   "what": "the wide black Cassini Division is too narrow and pushed too far down-left, the outer A-ring lacks cool slate-teal coloration and a sharp Encke gap, the ringlets lack fine icy grain, and the faint outer F-ring arc and ring-plane dust haze above the horizon in crop B are missing",
+   "fix": "widen and deepen the Cassini Division along the higher diagonal path of -a, shift the outer A-ring toward cool slate-teal with a crisp Encke gap, add fine particulate micro-grain across the rings, and restore the thin outer F-ring thread and subtle haze above the horizon in crop B"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "Saturn lower-left limb behind inner C-ring (crop G in pair-02-b.png)",
+   "what": "Saturn's lower-left globe fades into dark shadow before reaching the inner rings instead of continuing visibly behind translucent C-ring bands, and warm limb bloom bleeds slightly into the inner gap",
+   "fix": "extend the crisp lit lower-left limb behind the semi-transparent inner C-ring so faint C-ring ringlets and dark bands cross visibly over the globe edge, and tighten the warm left-limb glow"
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "Saturn lit cloud belts and eddies (crop A in pair-02-b.png)",
+   "what": "mid- and lower-latitude cloud bands on the globe are noticeably softer and lower-contrast than -a, losing fine horizontal striations and small storm detail toward the lower-left limb and terminator",
+   "fix": "increase planetary texture sharpness and high-frequency contrast across the lower-left cloud belts and along the terminator falloff"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper-left starfield and Milky Way haze (crop B in pair-04-b.png)",
+   "what": "stars are distributed too densely and uniformly and lack the soft bluish-violet Milky Way dust cloud left of Saturn's upper limb in -a",
+   "fix": "thin uniform faint stars, vary star brightnesses, and add the faint bluish Milky Way nebula haze in the upper-center-left sky"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "north polar crown and upper-right night limb (full frame; crop C in pair-02-b.png)",
+   "what": "the atmospheric glow at the top crown of Saturn is warm orange-tan rather than cool pale cyan-white as in -a, and the upper-right night limb has slightly weaker cool blue rim light",
+   "fix": "shift the upper polar limb haze from warm amber to cool pale cyan-white and slightly strengthen the subtle blue rim along the upper-right dark limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "planet shadow on right-side rings and lower-right corner (full frame; crop E in pair-02-b.png)",
+   "what": "the shadow edge on the rings sits slightly lower-left and lacks both the soft warm scattered light band just inside the shadow in crop E and the faint horizontal blue anamorphic flare streak at bottom-right in -a",
+   "fix": "nudge the planet shadow boundary slightly up-right, add subtle warm ringshine transition inside the shadow edge, and add the faint horizontal blue optical flare across the lower-right shadow boundary"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "outer F-ring and outer A-ring glints (crops D, F, I in pair-02-b.png)",
+   "what": "the thin outer F-ring outside the main A-ring is too dim and diffuse (nearly invisible in crops D and I), and tiny bright specular glints across the outer A-ring in crop D are subdued",
+   "fix": "brighten and tighten the narrow outer F-ring thread around the left and lower-left perimeter and add crisp fine ice glints on the outer A-ring"
+  }
+ ]
+}
