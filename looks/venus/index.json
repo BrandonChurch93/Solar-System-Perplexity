@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T02:50:07.673Z",
- "head": "885e4de273e1398e29097a22f3b62295f6d8b29d",
- "note": "state A's dive read whole: 22 red rows, largest 0.67 at 1311 (main 28, 0.62); 2 rows red that main has green, 10 red rows higher than main's; far deck and scale by scale are not the cause (controls); no name",
+ "pushed": "2026-11-26T03:13:52.404Z",
+ "head": "bc119b82cf73f3327e15d02bfb5a89bd3df26ac3",
+ "note": "trial R: main's code with the rise's far deck plates, beside main; two rows worse than main's, not named",
  "looks": [
+  {
+   "time": "2026-11-26T03:13:51.767Z",
+   "file": "20261126031351767-note-r-3094-back.jpg",
+   "source": "../../../../tmp/v/sh/R/r-3094-back.jpg",
+   "kind": "note",
+   "label": "Trial R, row 1547 (0.49 against main's 0.40): the patch the reader marks on the later frame 1555 (upper left, red), R at 1555 and 1554, main at 1554. The marked patch lies under the far ridge where the plate's far deck ends; main shows crisp cells and bright patches below where R shows the plate's soft deck",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T03:13:51.114Z",
+   "file": "20261126031351114-note-R-M1-pair.jpg",
+   "source": "../../../../tmp/v/sh/R/R-M1-pair.jpg",
+   "kind": "note",
+   "label": "Trial R, not named: main's Venus code with the far deck of T in the rise's eight plate files. Left R, right main, rise 1542 to 1557 by threes, draft frames at half size, band y 150 to 560. Rows 1541 to 1546 + 1/2 by the reader, R then main: 0.12 0.44, 0.18 0.41, 0.42 0.62, 0.47 0.67, 0.49 0.54, 0.52 0.79, 0.45 0.71, 0.83 0.75, 0.54 0.72, 0.62 0.73, 0.70 0.83, 0.48 0.58; row 1547 0.49 against 0.40. Two rows worse than main's, so no name",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T02:41:51.156Z",
    "file": "20261126024151156-note-A-M1-1311-x4.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/m1-cand-L.jpg",
    "kind": "note",
    "label": "main left, candidate with the far deck in the dive's plates right, 1320 and 1323, x 0 to 760, y 250 to 640: main's pale patch and small towers",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T01:26:34.080Z",
-   "file": "20261126012634080-note-cand-d-1303L.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-1303L.jpg",
-   "kind": "note",
-   "label": "candidate dive 1300 to 1315, every film frame, the upper left (x 0 to 640, y 0 to 480)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T01:26:33.064Z",
-   "file": "20261126012633064-note-cand-d-1322L.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-1322L.jpg",
-   "kind": "note",
-   "label": "candidate dive 1320 to 1331, every film frame, the left edge (x 0 to 400, y 280 to 620)",
    "stop": "venus"
   }
  ]
