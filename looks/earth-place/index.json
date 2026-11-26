@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T00:49:17.650Z",
+ "pushed": "2026-11-26T01:14:44.836Z",
  "head": "aca87ea3a82ad7f8041b4cc317032a0804d989b8",
- "note": "canvas held to its rim in the plate, field at full wanted cover: bake done, strip follows",
+ "note": "01:15 plate after the rim line cure: band inside the canvas and cold bodies named, both in cure",
  "looks": [
+  {
+   "time": "2026-11-26T01:14:43.881Z",
+   "file": "20261126011443881-note-p3-e.jpg",
+   "source": "../../../../tmp/gl/k21/p3-e.jpg",
+   "kind": "note",
+   "label": "plate, near rim at 1 to 1, 01:10: tone meets at the rim; the canvas's end still reads by ripple and brightness 60 px in; soft bluish bodies from pale air laid on dark sea are a fault (cure next: a body is laid only on sea of its own air tone)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T01:14:42.707Z",
+   "file": "20261126011442707-note-p3-s.jpg",
+   "source": "../../../../tmp/gl/k21/p3-s.jpg",
+   "kind": "note",
+   "label": "plate, south rim at 1 to 1, 01:10: line at the rim cured by cause (halo of the canvas's own clouds); a navy band with a wavy outline stays inside the canvas, cause found (the hold's flat sea laid over the held canvas), cure in the bake",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T00:49:06.133Z",
    "file": "20261126004906133-note-torim-e.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k20/S5/sheets/crop-1890.jpg",
    "kind": "note",
    "label": "1890 near rim at 1 to 1: 23:40 above, now below (field by kind of sea tone, curls out). The canvas's end still reads",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T00:21:34.653Z",
-   "file": "20261126002134653-note-step-1878.jpg",
-   "source": "../../../../tmp/gl/k20/S5/sheets/step-1878.jpg",
-   "kind": "note",
-   "label": "1878 draft shutter closed: 23:40 state beside now (low picture thinned, violet patch and lavender gone; strong violet px 4010 to 1022)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T23:45:43.439Z",
-   "file": "20261125234543439-note-step-1878.jpg",
-   "source": "../../../../tmp/gl/k20/S4/sheets/step-1878.jpg",
-   "kind": "note",
-   "label": "1878 draft, dd5dd07a beside now (23:40); the violet at the glint's far end not yet cured",
    "stop": "earth"
   }
  ]
