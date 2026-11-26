@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T19:01:59.744Z",
+ "pushed": "2026-11-26T19:21:11.445Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune 4951 at review (the last onset frame) and the pairs with 4952; the Sun's sky turn that is seen, drafts on a scratch tree: the engine draws it, the stars carry through the view change",
+ "note": "The Sun's sky turn that is seen: suite green, main merged, branch pushed; the split frame 205 is drawing at review",
  "looks": [
+  {
+   "time": "2026-11-26T19:21:10.091Z",
+   "file": "20261126192110091-note-w212-word-his.jpg",
+   "source": "../../../../tmp/sun/see/w212-word-his.png",
+   "kind": "note",
+   "label": "The Sun 212, draft, whole: the two sky aims and the word (left) beside the Sun's named plan as it stands (right): the ground is the same, the Milky Way stands at the left with the word"
+  },
   {
    "time": "2026-11-26T19:01:58.421Z",
    "file": "20261126190158421-note-p204-207-stars.jpg",
@@ -52,13 +59,6 @@
    "source": "../t-sunf/out/work/blur/sun-word/f00180.png",
    "kind": "note",
    "label": "The Sun 180, the rise's first frame, the sky turning (0.409 degrees a frame); draft, 1 sample; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
-  },
-  {
-   "time": "2026-11-26T19:01:49.741Z",
-   "file": "20261126190149741-note-f00150.jpg",
-   "source": "../t-sunf/out/work/blur/sun-word/f00150.png",
-   "kind": "note",
-   "label": "The Sun 150, close view, the sky turning between its two aims and seen (0.324 degrees a frame here); draft, 1 sample; scratch tree: the engine's 899c0b6d with the Sun's folders of 5ccff167 and, laid on its plan, skyAim.dive [70, 156.637, -6.267], turn [90, 269], seen: true; no named state of the Sun"
   }
  ]
 }
