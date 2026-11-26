@@ -2870,3 +2870,32 @@ READ FIRST AFTER A COMPACTION: the mp4 of MAIL 1340 point 5 is still owed. The q
 - Frame to frame steps of series A (half a film frame, one sample a pixel): ground mean 2.7 to 2.8 levels, 99th percentile 28 to 30, about 2300 px over 40 levels, all along moving edges. That is one sample aliasing of the draft tier; the review tier has 4 samples and the final 16. Black specks along steep edges remain in s.
 - The straight dark lines at 3060 (lower left, bottom middle): the border of the fit eye's frustum in the plain guide. Inside it the plates hold the approved picture's ground, outside it the old fill of the wedge. To cure in `guide.py`.
 - Looks 91e5efc5 (00:13): the ends of s and their top views, s4 at 3150 last.
+
+### 00:30 to 01:10 UTC (26 Nov): series A drawn, the mp4 tools, variants t1 to t5 in the second tree, the shade table
+
+READ FIRST AFTER A COMPACTION: the tree is still state s (9ee3d95, nothing of state t is in it). The mp4s of state s are in `work/r25/mp4` (built by `python3 work/r25/specs.py s`, then `python3 work/r24/mp4.py work/r25/mp4/NAME.json`): `jupiter-surface-60-a-second-state-s.mp4` (series A), `jupiter-ground-seen-from-above-3060-3149-3239-state-s.mp4` (spec `ends-s.json`), the two lens films once `work/r24/kL40` is whole, the V pair once `work/r24/kB` is whole. The mail of MAIL 1340 point 5 goes out with them (text kept in `work/r25/mail`). The next state is developed in `/home/user/workspace/dev` as variants under `work/r25/v/NAME` (`clouds.ts`, `deck.json`, `guide.py`); `bash work/r25/devjob.sh NAME [guide] [frames]` as a queue job named `00-dev-NAME.sh` installs one and draws 3150 with its range view into `work/r25/t`.
+
+- 00:54: the Builder's login test (a dry run push to `login-test-jupiter-coder`) answered: the push would go through.
+- Series A (capture 6270 to 6329, state s, V 0.0165) is whole in `work/r24/kA`, 30.5 s a frame. Steps between neighbours (a 60th of a second, one sample a pixel): mean 2.6 to 2.8 levels, 99th percentile 28 to 31, pixels over 40 levels 2863 at the start and 6869 at the end of the second.
+- `work/r24/mp4.py` now wraps long titles (the first build cut the title at the frame's edge).
+- The lens is a pinhole by construction (`VERT` in `clouds.ts` takes the ray from the inverse projection at the corners and the rasteriser lays it out linearly). Measured on frames with `python3 work/r25/conic.py RANGEVIEW K [VFOV]` (the limb against the outline a pinhole gives of the deck's sphere, one free height; beside it the same for an equal angle fisheye): 64 degrees: rms 2.51 px of a 1920 frame (worst 8.4, tops on the horizon), a fisheye would miss by 32.3 rms; 50 degrees: 2.92 (fisheye 18.1). The limb's bow against a straight line is 43 px at 64 and 28 px at 50: it is a sphere's outline.
+- Variants so far (all at 3150, preview, draft, matter's floor 0.03, no solve):
+
+| variant | change | line (i) whole | edges at 1.5 units | eye |
+|---|---|---|---|---|
+| t2 | tall tops under a ceiling (`ceilingUnits` 0.38, caps 0.06, 0.25, 0.4, reach 0.6), hit refinement, fill by the open sky (`skyAt`: six directions, three rings, open = mean of 1 over 1 plus rise squared; fill = mix(bounce 0.35 times the wide guide, sky fill 0.05 to 0.08, open)) | 25.311 (outside the seven cells 26.913, inside 17.758) | 0.37 percent of the pairs, far side 0.12 units behind, slide median 0.23 (ninetieth 0.72) | darkness by cast shade works, deep shade in the lower left, lit rims. Reads as rock or lava, not cloud; dark dimples on the small tops in the lower right; too dark left of the storm |
+| t4 | round towers 0.36 wide for the youngest age (caps 0.3, 0.1, 0.08), a top stands only where the guide's unrest exceeds its own draw (`rough.soft`) | not read | not read | boulders; the tanh ceiling flattens every finer billow on a tall top. Dropped |
+| t5 | no ceiling; flat life pulse (`look.cloud.pulse` 0.3: rises 30 percent of its life, stands, sinks); youngest age as masses 0.72 wide with six octaves down to 0.0225 (rise 0.66, cap 0.16, fall 0, bare 0.25, reach 0.7); the two older ages as low streaks 0.18 and 0.36 wide (caps 0.03, 0.04) stretched 5 and 10 times along the jets at birth (`life.flow.wound.longAtBirth`, in `woundAt`); shell top 0.75 | queued 01:07 | | |
+
+- The stored unrest (`guide-near-rough.bin`, seen through the frame with `python3 work/r24/roughview.py RANGEVIEW OUT.jpg`): 0.8 flat over the whole dark right and lower part (the darkness term at its limit), 1.0 in blobs left of the storm and in the lower left, low only in thin strips: median 0.8. So nearly every cell passes the gate. It follows the approved picture's darkness, which is what the Builder's ruling asks (towers where the picture is dark).
+- How dark a field of packed round tops reads from the film's side (`python3 work/r25/lab/shade.py`, `shade2.py`: a height field of cells as in `puffs`, parallel rays dipping 12, 20 and 33 degrees, Sun 33.3 up and 40 degrees left of the view ahead, direct light only, against flat lit ground):
+
+| tops | cap over wave 0.33 | 0.66 | 1.0 | 1.5 |
+|---|---|---|---|---|
+| bell profile, bell pulse, reach 0.75 (state s) | 0.68 to 0.78 | 0.47 to 0.62 | 0.35 to 0.49 | 0.22 to 0.32 |
+| round, flat pulse, reach 0.6, least 0.6 | 0.55 to 0.67 | 0.34 to 0.45 | 0.23 to 0.31 | 0.16 to 0.20 |
+| round, flat pulse, reach 0.75, three octaves of equal steepness | (0.5) 0.30 to 0.40 | 0.23 to 0.30 | 0.15 to 0.18 | |
+| the same, reach 0.6 | | 0.18 to 0.22 | | |
+
+  So three octaves of round tops two thirds as tall as wide leave about a fifth of the flat ground's direct light, with a third to two fifths of the seen surface still in sunlight (lit crests over shade). With the fill by the open sky (0.05 to 0.08 against state s's 0.26 to 0.34) a matter of 0.05 then reads near 9, where the approved picture's dark thirds read 7 to 16. That is the way to raise the matter's floor.
+- Why t2 and t4 read as rock: smooth single tops (the finer octaves are gated to the crowns by `dome.bare` and flattened by the ceiling), hard black shade, no streaks. The approved picture's cumulus puffs are about 0.02 units wide in clusters of 0.1 to 0.3 on masses of 0.5 to 1; its silk is long streaks. t5 goes there.
