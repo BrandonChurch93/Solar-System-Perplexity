@@ -1413,3 +1413,50 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   net; no foil, no facets, no black; the approved is darker on the tops, with its dark in broad areas. In motion,
   eye held: cells keep their place, borders creep, a large cell swells, small ones are covered; thin cover lines
   remain where a crest hides the lane behind it; nothing slides as one picture.
+- 01:45 UTC. MAIL to /root: state h32 (commit 3d6d5bb0, not a name): cause of the hard edges (jumping junction
+  field, pits, seam width as a share of the radius), what h32 does, final numbers, motion words, flicker rows,
+  honest list (cobbles: every cell a light plate in an even ring; curve outside 0.05 on nine tenths; sky 0.126
+  over; finest band 1.50; flicker against b7 not met). Growth 2,663,313. Next mail by 03:10 UTC.
+- 01:44 UTC. ground.ts: heat.lane[10] the scale of a slow field of the place (0 off) and lane[11] the least share:
+  the shoulder acts in full only where the field is high, so the dark areas cross lanes and take in parts of
+  tops. Trials on h32 (v/t31.sh): t31 (shoulder 0.8 to 0.4, field 10, least 0.2), t32 (field 6), t33 (t31 with
+  patch[0] 0.65 and blob [0.65,0.8,0.4,0.3,0.25,0.5,2]); v/trials-l.jpg, v/strip-t33.jpg, v/levels-t31..33.jpg.
+- 01:47 to 01:56 UTC. MEASURED (drafts on h32's curve, no refit): t31 30.0489, 8.2432, [1.60 1.08 0.96 0.97 0.98
+  0.91 0.88], curve [0.776 .. 0.357]; t32 30.0965, 8.4631; t33 30.491, 9.3947, [1.57 1.06 0.94 0.94 0.94 0.90
+  0.88], curve [0.728 0.714 0.691 0.673 0.647 0.621 0.579 0.522 0.451 0.381 0.331] (gaps to the approved at most
+  0.061); t34 (field 8, least 0, shoulder 0.9 to 0.35) 30.4007, 9.8323, curve [0.729 .. 0.325]; t35 (t33 with
+  blob [0.55,1.0,0.5,0.3,0.3,0.45,2], patch[0] 0.7) 31.1508, 12.5336 (too dark before a refit: percentiles 0.2
+  0.318 0.467 0.639 0.867 0.949), curve [0.677 0.663 0.648 0.626 0.594 0.567 0.529 0.48 0.421 0.362 0.315] (gaps
+  at most 0.025, before the refit); t36 (lane 0.0045, seam [0.1,0.5,40], spark 0.3) 30.4181, 9.4732, lane 5.43
+  (the lane's width param does not move the read width much).
+  SEEN (v/levels-l.jpg, v/strip-t33.jpg, v/strip-t36.jpg, v/trials-m.jpg): the place field with the off centre
+  blob breaks the plates: t33 and more so t35 have lights as uneven blobs and dark areas that take in parts of
+  tops, as the approved has. v/lab-t33.json, v/lab-t35.json.
+  FOUND (v/blocks.png, v/blocks2.png, crop 800 812 160 50 at 6 times; show edge, show tall): rectangles of 10 by
+  6 px with straight sides and bright posts at junctions are the SKIRTS (the part of a body beyond its border,
+  falling to 0 over 0.025 of the radius) in the small holes where three rounded corners meet: walls, and on
+  them each cell's own sparks and lane threads, differing from skirt to skirt. dome.base[6] 5 (t37) takes the
+  walls away but leaves a rectangle (skirt and body too near in depth). CURE in ground.ts: beyond its border a
+  body carries only the seam's heat of the place (no points, threads, sparks), the same for every cell.
+  Trial t38 = t35 with this, curve refit (v/t38.sh).
+- 01:58 UTC. MAIL 1367 from /root (no answer): origin main is now 8fb3bffe499832a8696a7caf2b0b15045a1aef1a
+  (batch 18, Saturn's own files only). Merge the newest main before my next NAMED mail and say which.
+- 01:56 to 01:59 UTC. t38 (t35 with skirts carrying only the seam's heat, curve refit; v/lab-t38.json): plain
+  30.3551, low64 7.6526, bands [1.69 1.10 0.96 0.96 0.97 0.95 0.93], percentiles 0.247 0.416 0.592 0.757 0.902
+  0.957, curve [0.706 0.704 0.696 0.689 0.668 0.639 0.606 0.558 0.49 0.411 0.354]: gaps 0.039 0.042 0.039 0.042
+  0.049 0.053 0.059 0.062 0.057 0.042 0.030 (outside 0.05 on four tenths by at most 0.012; h32 was 0.134), lane
+  5.4. SEEN (v/x3-t38.jpg, v/levels-t38.jpg, v/blocks-t38.png): tops with dark patches and uneven lights, the
+  rectangles gone but for small wedges; a thin light line runs along many borders (heat.thin, the hot thread in
+  the lane) and reads as an outline; sparks are white beads. Trial t39 = t38 with heat.thin[0] 0, spark[0] 0.25.
+- 01:59 to 02:05 UTC. t39 (thin 0, spark 0.25, refit; v/lab-t39.json): plain 30.7564, low64 7.7108, bands [1.62
+  1.09 0.98 1.00 1.02 0.99 0.95], percentiles 0.235 0.404 0.58 0.757 0.906 0.965 (the approved's), curve [0.745
+  0.735 0.728 0.712 0.69 0.66 0.617 0.557 0.48 0.401 0.346]: gaps up to 0.078 (t38 0.062: the reader's pieces
+  change when the light line on the borders goes), lane 5.45. SEEN (v/x3-t39.jpg, v/strip-t39.jpg): no outline
+  round the cells, lanes soft and dark with a glow; cells still read as polished lumps (smooth lights, little
+  fine structure), lanes as a flat brown bed where they are wide.
+  t40 (fan 0.28), t41 (fan 0.28, grain 0.45, rim 0.4), t42 (fan 0.2, thread 0.5, height 0.27): 30.77 to 30.86,
+  low64 7.71 to 7.82, bands as t39; to the eye nearly the same (v/trials-n.jpg). v/lab-t41b.json = t39 with
+  fibre [0.28,0.15,0.5,0.4], grain [0.45,1.5]. Trials on it of the body's shape (v/t43.sh): t43 base[4] 3 (flatter
+  top, steeper flank), t44 base[5] 0.75 (narrower valley), t45 both with lane swell 0.4; v/trials-o.jpg.
+  NOTE: the commit of 02:05 holds ground.ts with the skirt cure and lab.json of h32, so its frame differs from
+  the mailed h32 on the skirts only.

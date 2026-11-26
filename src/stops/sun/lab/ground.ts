@@ -878,7 +878,7 @@ void main() {
   // there; the cell's own heat comes in over the lane's width, sooner along a fibre
   float qSeam = smoothstep(0.0, laneWide, edgeD);
   qSeam = clamp(qSeam + ${(4 * lab.heat.lane[2]!).toFixed(2)} * (fan - 0.5) * qSeam * (1.0 - qSeam), 0.0, 1.0);
-  warm *= mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(lab.heat.lane[8] ?? 0.3).toFixed(3)}, edgeD));
+  warm *= mix(1.0, mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(lab.heat.lane[8] ?? 0.3).toFixed(3)}, edgeD)), ${(lab.heat.lane[10] ?? 0) > 0 ? 'mix(' + (lab.heat.lane[11] ?? 0).toFixed(2) + ', 1.0, smoothstep(0.3, 0.7, vn(vG * ' + (lab.heat.lane[10] ?? 0).toFixed(2) + ' + 61.0)))' : '1.0'});
   warm = mix(uLabHeat.y * ${lab.heat.crease[2]!.toFixed(2)} * (${(Q?.seam?.[0] ?? 0.7).toFixed(2)} + ${(Q?.seam?.[1] ?? 0.6).toFixed(2)} * vn(vG * ${(Q?.seam?.[2] ?? 40).toFixed(1)} + 23.0)) * (1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc), warm, qSeam);
 #endif
   float heat = pen > 0.999 ? uLabHeat.y * bundle : mix(warm, uLabHeat.y * bundle, pen);
@@ -886,11 +886,12 @@ void main() {
   vec2 gq = vG * 90.0;
   vec2 gi = floor(gq);
   float lit = step(${lab.heat.points.toFixed(2)}, h1(gi + 17.0)) * (1.0 - smoothstep(0.1, 0.16 + 0.26 * h1(gi + 3.0), length(gq - gi - 0.3 - 0.4 * vec2(h1(gi), h1(gi + 5.0)))));
-  heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.02, 0.2, edgeD)) * (1.0 - pen);
+  float own = 1.0 - smoothstep(1.0, 1.01, plan);
+  heat += uLabHeatMore.w * lit * (1.0 - smoothstep(0.02, 0.2, edgeD)) * (1.0 - pen) * own;
   // thin hot threads stand in the bottom of the lane, here and there
-  heat += ${lab.heat.thin[0]!.toFixed(2)} * (1.0 - smoothstep(0.0, ${lab.heat.thin[1]!.toFixed(3)}, abs(edgeD))) * smoothstep(0.58, 0.78, vn(vG * ${lab.heat.thin[2]!.toFixed(1)} + 11.0)) * (1.0 - pen);
+  heat += ${lab.heat.thin[0]!.toFixed(2)} * (1.0 - smoothstep(0.0, ${lab.heat.thin[1]!.toFixed(3)}, abs(edgeD))) * smoothstep(0.58, 0.78, vn(vG * ${lab.heat.thin[2]!.toFixed(1)} + 11.0)) * (1.0 - pen) * own;
   vec2 sq = d * vCell.z;
-  heat += ${(lab.heat.spark?.[0] ?? 0).toFixed(2)} * labSparks(sq, seed, uLabTime.x, max(length(dFdx(sq)), length(dFdy(sq)))) * mix(${(lab.heat.spark?.[5] ?? 0.3).toFixed(2)}, 1.0, smoothstep(${(lab.heat.spark?.[9] ?? 0.45).toFixed(2)}, ${(lab.heat.spark?.[10] ?? 0.85).toFixed(2)}, plan)) * (1.0 - ${(lab.heat.spark?.[11] ?? 1).toFixed(2)} * smoothstep(0.93, 1.0, plan)) * (1.0 - pen);
+  heat += ${(lab.heat.spark?.[0] ?? 0).toFixed(2)} * labSparks(sq, seed, uLabTime.x, max(length(dFdx(sq)), length(dFdy(sq)))) * mix(${(lab.heat.spark?.[5] ?? 0.3).toFixed(2)}, 1.0, smoothstep(${(lab.heat.spark?.[9] ?? 0.45).toFixed(2)}, ${(lab.heat.spark?.[10] ?? 0.85).toFixed(2)}, plan)) * (1.0 - ${(lab.heat.spark?.[11] ?? 1).toFixed(2)} * smoothstep(0.93, 1.0, plan)) * (1.0 - pen) * own;
   heat *= pn.z;
   // (b) the angle of view: the ground has no lamp. A look that meets the surface aslant meets shallower, cooler gas:
   // the heat times a darkening by the angle between the surface's normal and the eye (heat.graze: at a look along
