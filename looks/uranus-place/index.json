@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T06:22:10.354Z",
- "head": "251ba8146f46b8f376d12df3416b9f2ac1f5b4d3",
- "note": "4407 to 4416: the cause is the air's scale height (0.1 R lets the table light go by 4407); sweep 0.2, 0.3, 0.45 beside main, 0.3 is as deep as main from 4407 to 4416 and nearer main in the dive at 4160 and 4170; 4290 and 4186 keep their look",
+ "pushed": "2026-11-26T06:35:39.726Z",
+ "head": "e794e5f2301286bf58d71b7027675c5a8327cfb6",
+ "note": "air scale 0.3 taken (local e794e5f2): ground as deep as main from 4407 to 4416, 4290 draft match 3.175 (was 3.225, main 3.824), hold bytes kept; open and named: the cloud of the low rise is the tops' light, dimmed by the path since D1, so it is greyer than main's until 4413; undimmed it brings back the white band at 4290 (3.822)",
  "looks": [
+  {
+   "time": "2026-11-26T06:35:38.980Z",
+   "file": "20261126063538980-note-t-b.jpg",
+   "source": "../../../../tmp/n69/t-b.png",
+   "kind": "note",
+   "label": "draft 4380, 4390, 4399, 4403, 4416: rows mine 0.1, mine 0.3, mine 0.3 with tops not dimmed, main",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T06:35:38.307Z",
+   "file": "20261126063538307-note-t-a.jpg",
+   "source": "../../../../tmp/n69/t-a.png",
+   "kind": "note",
+   "label": "tops control, draft 4290, 4399, 4407, 4413: rows mine at 0.3, mine at 0.3 with tops not dimmed by the path, main, main with tops off",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T06:35:37.485Z",
+   "file": "20261126063537485-note-s-4407-four.jpg",
+   "source": "../../../../tmp/n69/s-4407-four.png",
+   "kind": "note",
+   "label": "4407 draft: mine at air scale 0.1, 0.2, 0.3 and main",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T06:22:09.546Z",
    "file": "20261126062209546-note-s-c.jpg",
@@ -218,36 +242,6 @@
    "source": "../../../../tmp/n66/pair-4137.png",
    "kind": "note",
    "label": "limb at 4137, draft, 2x: left RC 6ef232ea, right the table made smooth across view cosine 0 to 0.157 (trial, not committed)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T02:15:49.346Z",
-   "file": "20261126021549346-job-frame-04035.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
-  },
-  {
-   "time": "2026-11-26T01:52:29.381Z",
-   "file": "20261126015229381-note-limb-4035-ls1-4x.jpg",
-   "source": "../../../../tmp/n65/limb-4035-ls1-4x.png",
-   "kind": "note",
-   "label": "limb at 4035, final tier, 4x: approved hero, RC 6ef232ea (match 3.737), control LS1 (match 3.731; main 3.743)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T01:52:28.627Z",
-   "file": "20261126015228627-note-ls1-rise-pairs.jpg",
-   "source": "../../../../tmp/n65/ls1-rise-pairs.png",
-   "kind": "note",
-   "label": "control LS1 (light table smooth across view cosine 0 to 0.157): 4399, 4403, 4411, left RC 6ef232ea, right LS1; chain reads 0.94 to 0.63 and 1.37 to 0.85",
    "stop": "uranus"
   }
  ]
