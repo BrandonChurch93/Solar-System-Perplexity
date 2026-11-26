@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T07:08:26.785Z",
+ "pushed": "2026-11-26T07:26:16.726Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "a look at the Mars builder's name across both changes of view: a dark band on cut layer C2 in the dive (2460 to 2473) and a pop at the right of the rise (2683 to 2684) traced to the field count of the stop's law",
+ "note": "the Mars builder's name at draft: the dark band on the far crest of the dive traced to the stop's fourth count and the ground under the picture",
  "looks": [
+  {
+   "time": "2026-11-26T07:26:16.054Z",
+   "file": "20261126072616054-note-mp-lawFSN-2468-x3.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-lawFSN-2468-x3.png",
+   "kind": "note",
+   "label": "Mars dive 2468, the far crest twice enlarged, one count of the stop's law at a time: the field alone, what the eye saw alone, the need alone. Only the count of what the eye saw shows the band"
+  },
+  {
+   "time": "2026-11-26T07:26:15.408Z",
+   "file": "20261126072615408-note-mp-2468-seen-onoff.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-2468-seen-onoff.png",
+   "kind": "note",
+   "label": "Mars dive 2468 whole at half size, on the Mars builder's name: as named beside the stop's law without its fourth count. Without it the band on the far crest is gone and a pale drawn out sheet stands beside the near mesa"
+  },
+  {
+   "time": "2026-11-26T07:26:14.565Z",
+   "file": "20261126072614565-note-mp-band-2468-three.jpg",
+   "source": "../../../../tmp/pair/sheets/mp-band-2468-three.png",
+   "kind": "note",
+   "label": "Mars dive 2468, the far mesa's crest three times enlarged, on the Mars builder's name: as named; the ground under the picture alone (the stop's law giving nothing); the stop's law without its fourth count (what the picture's eye saw). The dark band of 2460 to 2473 is the ground under the picture, seen where that count takes away the fill behind the cut layer"
+  },
   {
    "time": "2026-11-26T07:08:19.800Z",
    "file": "20261126070819800-note-mp-A-name-2684.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/pair/sheets/mp-sliver-2468-2475.png",
    "kind": "note",
    "label": "Mars dive, the same box, 2468 to 2475: the band stands to 2473, a pale rest at 2474 and 2475"
-  },
-  {
-   "time": "2026-11-26T07:08:16.179Z",
-   "file": "20261126070816179-note-mp-sliver-2456-2467.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-sliver-2456-2467.png",
-   "kind": "note",
-   "label": "Mars dive, the Mars builder's name 8397bfdc at draft, x 860..1340, y 200..440: a dark stepped band at the far mesa's crest from 2460 on (frames 2456, 2460, 2462, 2464, 2466, 2467)"
-  },
-  {
-   "time": "2026-11-26T06:46:02.312Z",
-   "file": "20261126064602312-note-rise-main-2686-2688.jpg",
-   "source": "../../../../tmp/pair/sheets/rise-main-2686-2688.png",
-   "kind": "note",
-   "label": "main, draft, rise: 2686 and 2688, half size, for the comparison"
-  },
-  {
-   "time": "2026-11-26T06:46:01.431Z",
-   "file": "20261126064601431-note-mp-rise-2686-2688.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-rise-2686-2688.png",
-   "kind": "note",
-   "label": "Mars name 8397bfdc, draft, rise: 2686 and 2688, half size"
   }
  ]
 }
