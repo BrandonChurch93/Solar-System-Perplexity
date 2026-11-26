@@ -5382,3 +5382,21 @@ Measured on the kept frames of state A (`fr-A-dive`) and of main (`fr-M1d`), the
 - SEEN (/tmp/v/sh/lt-test.jpg, the strip x 0 to 700 that follows the limb, 1542 to 1552, P2c beside main): in both the far band is soft streaks to 1546 and cells stand in it from 1547 at the lower left and spread; P2c's cells are finer.
 - Control cH0 queued (job z2): release [1.0, 3.0] to [0.01, 0.02], true and skin in full at every height: inside the frame of T the far band is the plates' from the handover on and the limit moves by angle and distance alone. It tells two things: how far the plates stand from the ground at the handover (1539 + 1/2 and 1540 against P2c's frames), and whether the rows read green without the release.
 - Control cRB queued (job z3): cR and cB at once; it tells whether the rows 1543 to 1545 that stay red in cR are the air under the horizon giving way.
+
+### 10:16 to 10:47 proofs of P2e (job z1) and the name
+- Whole rise of P2e (09:56 to 10:16) against main's whole rise (smooth-Mn) and P2c's (smooth-P2m):
+  - parts 1, 2, 3, 4, 6 of 6: 0 numbers over the limit and worse than main's.
+  - pattern largest 0.7169 at 1544 against main 0.8266; rows over 0.45: 17 of 182 against 16, largest 0.72 against 0.83 (as P2c).
+  - 1604 + 1/2: ground pop 0.99 against main 2.69; pop at the full size 0.88 against 1.30. Ground pop rows over 1.3: 1 of 197 (1539 + 1/2, 1.92, main's own) against 2.
+  - pop of part 6: 1.1442 at 1610 + 1/2 against main's 1.1409, under 1.2, higher by 0.0033 (inside the floor 0.06 of d364). Cause: that row compares the travel's frame with the rise's frame 1602 + 1/2, whose limb glow is now read for the eye the film flies; the travel's frames are main's to the byte.
+  - pops at the full size 1553 1.26 against 1.24 and 1553 + 1/2 1.21 against 1.19, as in P2c.
+  - verdict lines as main's: red 1 (pattern); beside it red 2 (pop score 1.62 at 1539 + 1/2 and pattern).
+  - the kept draft frames of P2c (42, k 3076 to 3138) equal to the byte in P2e; P2e against main at 1602 to 1604 + 1/2 differs on the limb's ring (largest 24 to 31 of 255, 59000 to 74522 px over 2), 1605 to 1607 equal to the byte.
+  - SEEN (/tmp/v/sh/P2e-seam.jpg, 1603 to 1606, frames and consecutive frame differences times 8, main beside P2e): main's step 1604 + 1/2 to 1605 shows a brighter ring at the limb; P2e's step is like its neighbours.
+- Finals (10:16 to 10:26): 1185 ca51e902, 1287 1693ad33, 1440 a1ec9a62, 1586 6b984e3f: all four P2c's bytes; 1185, 1287, 1440 main's bytes; 1586 differs from main's as P2c's does (the far deck).
+- Dive slice k 2664 to 2682 (10:26 to 10:32): 52 of 52 draft frames equal to P2c's to the byte; the slice reads as main's (0.55 at 1332, the near ground at the lower edge).
+- tsc 0. vitest 94 files, 1096 tests pass (10:46). Path: red 2, main's own (the rise's speed climbs again by 0.095 and 0.098 of the mean after 1573, limit 0.03). Handover path, dive and rise, every frame: pass. G11 pass, G15 pass. cues 0, shots 0, nothing changed under cut/.
+- Bytes of the three folders: HEAD 163804397, main 163386952, a4534656 162896224: 417445 over main (the notes grew), 0.908 MB over a4534656 (allowed: 1.0 MB).
+- Main moved to 8a2149c7, ab81c252 and 7bcc072b while the proofs ran (kit/PROGRESS.md alone each time). Merged 7bcc072b at 10:47 (176896c9, parents 2f044d9c and 7bcc072b). The proofs ran on 2f044d9c, whose tree differs from the name's only in kit/PROGRESS.md and this notebook.
+- Looks pushed 10:30 (e51ec15e): the seam sheet, the strip of the thin band, the dive's lower edge.
+- Control cH0 (job z2) started 10:46; cRB (job z3) behind it.
