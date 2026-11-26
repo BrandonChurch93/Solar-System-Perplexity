@@ -1,9 +1,41 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T18:02:22.916Z",
- "head": "b0704bbd31988372f45fe93e3778e6d60ac6c80f",
- "note": "18:02 UTC: build D's green and blue stripes: cause proved by a switch (the air table's channels step at different knots), the cure is being measured row by row; S1 controls done",
+ "pushed": "2026-11-26T18:35:55.790Z",
+ "head": "e2ddf4c201921b949544e2969d93ebf47f4423a4",
+ "note": "18:35 UTC: build E's rise looked at by eye beside main's at every half frame; S2 switches drawing",
  "looks": [
+  {
+   "time": "2026-11-26T18:35:55.032Z",
+   "file": "20261126183555032-note-n2.jpg",
+   "source": "../../../../tmp/eye/n2.jpg",
+   "kind": "note",
+   "label": "Rise 3255, 3256, 3257 at native pixels, corner x 1440 to 1920, y 400 to 620: main above, build E below",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:35:54.318Z",
+   "file": "20261126183554318-note-n1.jpg",
+   "source": "../../../../tmp/eye/n1.jpg",
+   "kind": "note",
+   "label": "Rise 3252, 3253, 3254 at native pixels, corner x 1440 to 1920, y 400 to 620: main above, build E below",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:35:53.080Z",
+   "file": "20261126183553080-note-slit.jpg",
+   "source": "../../../../tmp/eye/slit.jpg",
+   "kind": "note",
+   "label": "Rise, frames 3247 to 3267 at every half frame: four picture rows through time (time runs down), main, build D, build E",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:35:51.896Z",
+   "file": "20261126183551896-note-e-corner-4rows.jpg",
+   "source": "../../../../tmp/e-corner-4rows.jpg",
+   "kind": "note",
+   "label": "Build E against main and build D: corner x 1440 to 1920, y 400 to 620 on four rows of the rise",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T18:02:21.202Z",
    "file": "20261126180221202-note-main-far-4.jpg",
@@ -18,38 +50,6 @@
    "source": "../../../../tmp/sw3-6505-corner.jpg",
    "kind": "note",
    "label": "Build D, the tint: main, build D, the grey switch and a tried law of the hue (not kept), 3252 + 1/2",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:02:17.708Z",
-   "file": "20261126180217708-note-sw1-6505-corner.jpg",
-   "source": "../../../../tmp/sw1-6505-corner.jpg",
-   "kind": "note",
-   "label": "Build D, the tint: far right corner at 3252 + 1/2, main, build D, the switch with the lift's air read as luma",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:44:31.408Z",
-   "file": "20261126174431408-note-s1-final-vs-one-3296.jpg",
-   "source": "../../../../tmp/s1-final-vs-one-3296.jpg",
-   "kind": "note",
-   "label": "S1 control 2: frame 3296, Io and the storm, one sample beside final, two to one",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:44:30.338Z",
-   "file": "20261126174430338-note-s1-final-vs-one-2997.jpg",
-   "source": "../../../../tmp/s1-final-vs-one-2997.jpg",
-   "kind": "note",
-   "label": "S1 control 2: frame 2997, Io and a belt, one sample beside final with 64 samples, two to one",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:36:27.065Z",
-   "file": "20261126173627065-note-s1-two-crops.jpg",
-   "source": "../../../../tmp/s1-two-crops.jpg",
-   "kind": "note",
-   "label": "S1: frame 2997 one sample, native crops inside the patches' bound and outside it (the wrap)",
    "stop": "jupiter"
   },
   {
