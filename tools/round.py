@@ -426,13 +426,27 @@ def smooth_line(k, stop, i):
     return '%d. smooth %s, severe, %s: "%s"' % (k, stop, i['file'], str(i['what']).replace('"', "'"))
 
 
+TAKE_UP = 'Take up of a stopped run: remove nothing first, the command draws only what this build does not hold yet. '
+
+
+def take_up(n, names):
+    have = {j['name']: j for j in json.loads((rdir(n) / 'jobs.json').read_text())}
+    odd = [x for x in names.split(',') if x not in have]
+    if odd:
+        sys.exit('--take-up: not a job of round %d: %s' % (n, ', '.join(odd)))
+    for x in names.split(','):
+        print(have[x].get('takeUp') or have[x]['message'])
+
+
 def jobs(a):
     n = a.round
+    if a.take_up:
+        return take_up(n, a.take_up)
     s = state(n)
     stop = a.stop or s['stop']
     sha = s['commit']
     r = rid(n)
-    tar = lambda name, paths: 'When the commands have finished: `tar -cf /tmp/%s.tar %s` from the repo root, then `split -b 40m -d /tmp/%s.tar /tmp/%s.tar.` and send the pieces as attachments (at most 10 per message). Nothing else is sent.' % (name, ' '.join(paths), name, name)
+    tar = lambda name, paths: 'When the commands have finished: `tar -cf /tmp/%s.tar --exclude=\'.frames*\' %s` from the repo root, then `split -b 40m -d /tmp/%s.tar /tmp/%s.tar.` and send the pieces as attachments (at most 10 per message). Nothing else is sent.' % (name, ' '.join(paths), name, name)
     out = []
     extra = (' --no-cover ' + stop if a.no_cover else '') + tiers(s, 'measure')
     name = 'r%d-%s-measure' % (n, stop)
@@ -443,7 +457,8 @@ def jobs(a):
         if 'stills' in only:
             paths.append('out/work/stills/f*-16x9-%s-full.png out/work/stills/f*-16x9-%s-full.png.json' % (still_tier(s), still_tier(s)))
         pre = 'Before the command: `rm -rf out/work/packs/.cache/%s out/work/stills/*-%s-full.png*`. ' % (r, still_tier(s))
-        out.append({'name': name, 'message': 'JOB %s. Commit %s. %sCommand: `npm run pack -- --phase %d --round %d --stop %s --only %s%s`. %s' % (name, sha, pre, s['phase'], n, stop, ','.join(only), tiers(s, 'pack'), tar(name, paths))})
+        text = lambda before: 'JOB %s. Commit %s. %sCommand: `npm run pack -- --phase %d --round %d --stop %s --only %s%s`. %s' % (name, sha, before, s['phase'], n, stop, ','.join(only), tiers(s, 'pack'), tar(name, paths))
+        out.append({'name': name, 'message': text(pre), 'takeUp': text(TAKE_UP)})
     if not a.no_smooth_job:
         name, cmd, pre, paths = smooth_job(n, stop)
         out.append({'name': name, 'message': 'JOB %s. Commit %s. %sCommand: `%s`. %s' % (name, sha, pre, cmd, tar(name, [paths]))})
@@ -919,7 +934,7 @@ def close(a):
 MACHINE = 'G1,G2,G3,G4,G6,G7,G10,G11,G12,G14,G15'
 FILM = {'whole': (5, 'whole film', 'round', 'wholeFilmMaxRounds'), 'record': (6, 'record round', 'run', 'recordRoundMaxRuns'), 'polish': (6, 'polish', 'round', 'polishMaxRounds')}
 FOLDER = re.compile(r'^(R[1-8])(?:-(?!part\d)([a-z]+))?(?:-part(\d+))?$')
-TAR = 'When the commands have finished: `tar -cf /tmp/%s.tar %s` from the repo root, then `split -b 40m -d /tmp/%s.tar /tmp/%s.tar.` and send the pieces as attachments (at most 10 per message). Nothing else is sent.'
+TAR = 'When the commands have finished: `tar -cf /tmp/%s.tar --exclude=\'.frames*\' %s` from the repo root, then `split -b 40m -d /tmp/%s.tar /tmp/%s.tar.` and send the pieces as attachments (at most 10 per message). Nothing else is sent.'
 
 
 def pix(p):
@@ -1018,6 +1033,8 @@ def film_start(a):
 
 def film_jobs(a):
     n = a.round
+    if a.take_up:
+        return take_up(n, a.take_up)
     s = state(n)
     c = cfg()
     sha, r, st = s['commit'], rid(n), still_tier(s)
@@ -1040,7 +1057,8 @@ def film_jobs(a):
     out = []
 
     def add(name, cmd, paths, samples, before=''):
-        out.append({'name': name, 'worker': 0, 'minutes': round(samples * per / 60, 1), 'message': 'JOB %s. Commit %s. %sCommand: `%s`. %s' % (name, sha, before, cmd, TAR % (name, ' '.join(paths), name, name))})
+        text = lambda first: 'JOB %s. Commit %s. %sCommand: `%s`. %s' % (name, sha, first, cmd, TAR % (name, ' '.join(paths), name, name))
+        out.append({'name': name, 'worker': 0, 'minutes': round(samples * per / 60, 1), 'message': text(before), **({'takeUp': text(TAKE_UP)} if before else {})})
 
     def groups(items):
         res, cur, total = [], [], 0
@@ -1761,6 +1779,7 @@ for name in STEPS:
     q.add_argument('--measure-minutes', type=float, default=20)
     q.add_argument('--smooth-minutes', type=float, default=30)
     q.add_argument('--no-smooth-job', action='store_true')
+    q.add_argument('--take-up')
     q.add_argument('--smooth')
     q.add_argument('--no-mirror', action='store_true')
     q.add_argument('--allow-red', action='store_true')
