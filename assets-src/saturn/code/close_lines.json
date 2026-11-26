@@ -1,0 +1,7 @@
+{
+  "note": "Lines of the approved close image (references/approved/saturn-close.jpg at 1920 by 1080), read by hand from column profiles of its luminance on 2026-11-26. litEnd: the row where the fully lit globe ends over the ring, per column (from 1040 on: at 960 the line meets the limb). bInner: the row where the bright lanes of the B ring begin under the dark inner band, per column. pose_fit3.py fits them with the circles of radius contactRadius and bInnerRadius of the ring plane (the nearer arc).",
+  "contactRadius": 1.0,
+  "bInnerRadius": 1.48,
+  "litEnd": [[1040, 520], [1120, 542], [1200, 558], [1280, 574], [1360, 590], [1440, 606]],
+  "bInner": [[960, 584], [1040, 608], [1120, 624], [1200, 648], [1280, 672], [1360, 688], [1440, 712], [1520, 728], [1600, 744]]
+}
