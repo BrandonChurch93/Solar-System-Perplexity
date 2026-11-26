@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T06:35:39.726Z",
+ "pushed": "2026-11-26T06:55:53.340Z",
  "head": "e794e5f2301286bf58d71b7027675c5a8327cfb6",
- "note": "air scale 0.3 taken (local e794e5f2): ground as deep as main from 4407 to 4416, 4290 draft match 3.175 (was 3.225, main 3.824), hold bytes kept; open and named: the cloud of the low rise is the tops' light, dimmed by the path since D1, so it is greyer than main's until 4413; undimmed it brings back the white band at 4290 (3.822)",
+ "note": "06:56 scale 0.3 held locally; dive 1 of 2 with main's turn law at the reader; a new tops' law is queued for a draft test",
  "looks": [
+  {
+   "time": "2026-11-26T06:55:43.799Z",
+   "file": "20261126065543799-note-tm-b2.jpg",
+   "source": "../../../../tmp/n70/tm-b2.png",
+   "kind": "note",
+   "label": "dive with main's turn law on scale 0.3, 4150 to 4186, band gone by 4150",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T06:55:38.052Z",
+   "file": "20261126065538052-note-tm-a2.jpg",
+   "source": "../../../../tmp/n70/tm-a2.png",
+   "kind": "note",
+   "label": "dive with main's turn law on scale 0.3, 4137 to 4148, band sweeps the left strip",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T06:35:38.980Z",
    "file": "20261126063538980-note-t-b.jpg",
@@ -226,22 +242,6 @@
    "source": "../../../../tmp/x/pat-LM-8779.jpg",
    "kind": "note",
    "label": "rise from 4389 + 1/2 with the smooth table, my chain of the reader: red stays in the far ground under the limb (back read 1.38)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T02:15:58.267Z",
-   "file": "20261126021558267-note-pair-4436.jpg",
-   "source": "../../../../tmp/n66/pair-4436.png",
-   "kind": "note",
-   "label": "limb at 4436, draft, 2x: left RC 6ef232ea, right the smooth table (trial, not committed)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T02:15:55.827Z",
-   "file": "20261126021555827-note-pair-4137.jpg",
-   "source": "../../../../tmp/n66/pair-4137.png",
-   "kind": "note",
-   "label": "limb at 4137, draft, 2x: left RC 6ef232ea, right the table made smooth across view cosine 0 to 0.157 (trial, not committed)",
    "stop": "uranus"
   }
  ]
