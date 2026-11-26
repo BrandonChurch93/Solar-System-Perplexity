@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T15:25:20.645Z",
- "head": "a96e1334fcd22697225a9dfcf691f66bbc5957c9",
- "note": "state wo2 of the second tree, going into the repo now; proofs not drawn yet",
+ "pushed": "2026-11-26T15:53:55.057Z",
+ "head": "14af1ae7ebf4a2fbeb655e42e784804a9c682344",
+ "note": "line A at 14af1ae7: the star on the rise found and cured, survey of dive and rise running, proofs not drawn yet",
  "looks": [
+  {
+   "time": "2026-11-26T15:53:54.437Z",
+   "file": "20261126155354437-note-cut-3150.jpg",
+   "source": "../work/r27/t/cut-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, drawn at b092c2b9: line (i) 2.208 whole frame, 2.121 outside the seven cells, bands green; master final not drawn yet, not redrawn after the cure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:53:53.823Z",
+   "file": "20261126155353823-note-s-3260.jpg",
+   "source": "../work/r27/sv/s-3260.png",
+   "kind": "note",
+   "label": "rise 3260 at 14af1ae7, preview draft, from the survey of every fifth frame of dive and rise",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:53:53.229Z",
+   "file": "20261126155353229-note-s-3250.jpg",
+   "source": "../work/r27/sv/s-3250.png",
+   "kind": "note",
+   "label": "rise 3250 at 14af1ae7, preview draft, from the survey of every fifth frame of dive and rise",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:53:52.302Z",
+   "file": "20261126155352302-note-star-3270.jpg",
+   "source": "../work/r27/t/star-3270.png",
+   "kind": "note",
+   "label": "rise 3270 after the cure (14af1ae7), preview draft: the baked relief starts at the point under the camera, no star seen",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:53:51.153Z",
+   "file": "20261126155351153-note-k6540-pole.jpg",
+   "source": "../work/r27/t/k6540-pole.jpg",
+   "kind": "note",
+   "label": "rise 3270 at b092c2b9, master draft: RED, a star of straight streaks round the point under the camera; cause was the baked relief starting its first row at the nearest ground of the border rays",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T15:25:19.940Z",
    "file": "20261126152519940-note-wo2-3150-master-draft.jpg",
@@ -154,46 +194,6 @@
    "source": "../work/r26/t/wh0-3239.png",
    "kind": "note",
    "label": "wh0 frame 3239 last terrain frame, preview draft, 33.5 s",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:18:16.747Z",
-   "file": "20261126131816747-note-wh0-3060.jpg",
-   "source": "../work/r26/t/wh0-3060.png",
-   "kind": "note",
-   "label": "wh0 frame 3060 first terrain frame, preview draft, 31.6 s",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:18:16.098Z",
-   "file": "20261126131816098-note-wh0-3296.jpg",
-   "source": "../work/r26/t/wh0-3296.png",
-   "kind": "note",
-   "label": "wh0 frame 3296 rise, preview draft: RED, dark crescent on the globe; same fault as 2997",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:18:15.409Z",
-   "file": "20261126131815409-note-wh0-2997.jpg",
-   "source": "../work/r26/t/wh0-2997.png",
-   "kind": "note",
-   "label": "wh0 frame 2997 dive, preview draft: RED, a dark disc with a wedge cut out lies on the globe, speckles round its edge; cause not found yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:54:36.424Z",
-   "file": "20261126125436424-note-wd6s-3150.jpg",
-   "source": "../work/r26/t/wd6s-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, baked relief, soft light, line i 2.268, bands green; forms still folds, clusters next",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:54:35.784Z",
-   "file": "20261126125435784-note-wd6s-vs-appr.jpg",
-   "source": "../work/r26/t/wd6s-vs-appr.jpg",
-   "kind": "note",
-   "label": "3150 preview draft beside the approved, baked relief, soft light, matter solved between 0.02 and 0.7, line i 2.268 whole and 1.779 outside the seven cells, bands green, 32 s a frame at preview",
    "stop": "jupiter"
   }
  ]
