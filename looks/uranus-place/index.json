@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T19:20:27.208Z",
+ "pushed": "2026-11-26T19:39:56.748Z",
  "head": "b7f9558077fb3565f41555bbd5cbd4735978fc3e",
- "note": "cloud group 4416: the hard lower edge is the deck's relief folding over (173 mesh steps run backward seen from above); a relief that cannot fold cures it; the coarse term is not the cause (correction of the last note); fibre gain 1 takes the dark dashes",
+ "note": "19:40 the name's final of 4416 is drawn (64 samples, 1312 s): in the final the cloud group is soft, 0 dark px over 28 in the box against 60 in draft; the stair of the fold still shows faintly at the lower edge. Draft with the relief that cannot fold has round lower edges. Drafts of both cures over 28 frames are being drawn. Placements answer sent 19:30.",
  "looks": [
+  {
+   "time": "2026-11-26T19:39:50.933Z",
+   "file": "20261126193950933-note-N4416-fin-zoom.jpg",
+   "source": "../../../../tmp/n84/N4416-fin-zoom.jpg",
+   "kind": "note",
+   "label": "4416 at 5 to 1: the name's final, the name's draft, draft with the relief that cannot fold (ground raised)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T19:39:50.185Z",
+   "file": "20261126193950185-note-N4416-fin-grp.jpg",
+   "source": "../../../../tmp/n84/N4416-fin-grp.jpg",
+   "kind": "note",
+   "label": "4416 the name: final tier left (64 samples, 0 dark px over 28 in the box), draft right (60)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T19:20:16.263Z",
    "file": "20261126192016263-note-fg1-grp.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n80/seq-r1.jpg",
    "kind": "note",
    "label": "5fc9bcaa (D alone) rise draft, every frame 4398 to 4408",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T15:41:03.682Z",
-   "file": "20261126154103682-note-nm-rise.jpg",
-   "source": "../../../../tmp/n80/nm-rise.jpg",
-   "kind": "note",
-   "label": "5fc9bcaa (D alone, main 00b05b53 merged) rise draft 4399, 4403, 4407, 4410, 4413, 4416, 4418, 4422: the same bytes as D's drafts before the merge",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T15:14:18.265Z",
-   "file": "20261126151418265-note-fin-4407-strip.jpg",
-   "source": "../../../../tmp/n80/fin-4407-strip.jpg",
-   "kind": "note",
-   "label": "FINAL 4407, the Builder's strip x 560 to 1260, y 830 to 1080 at 1 to 1: main, the name bcc9d174, D alone. Still paler lanes than main's (median green of the lower part 44 against 33): not cured",
    "stop": "uranus"
   }
  ]
