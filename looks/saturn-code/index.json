@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T20:39:02.080Z",
- "head": "52e8d97ecf27c96c3e6d79863261f88439497bdc",
- "note": "lens law by distance for both moves coded and the paces searched; the white strip's cause found (table clipped at its bound), W5 renders with main's warm table, softer ringlets and finer sand",
+ "pushed": "2026-11-26T20:54:56.833Z",
+ "head": "4056b6f358ca0f49fe92ffdedd85caabcaeb7148",
+ "note": "stopped by the freeze: the state as it stands is pushed with the notes of the stop; W5 is the last picture, not proven",
  "looks": [
+  {
+   "time": "2026-11-26T20:54:56.079Z",
+   "file": "20261126205456079-note-fore_w5.jpg",
+   "source": "../../../../tmp/v/w/fore_w5.jpg",
+   "kind": "note",
+   "label": "3720 lower left: approved, W5 (the near ring too dark, dark lanes), W3"
+  },
+  {
+   "time": "2026-11-26T20:54:55.309Z",
+   "file": "20261126205455309-note-strip_w5.jpg",
+   "source": "../../../../tmp/v/w/strip_w5.jpg",
+   "kind": "note",
+   "label": "3720 at one to one, the outer edge of the dense ring: approved, W5 (main's warm table, softer ringlets, finer sand), W3, main"
+  },
   {
    "time": "2026-11-26T20:39:01.318Z",
    "file": "20261126203901318-note-three_w0.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/w/fore_w3.jpg",
    "kind": "note",
    "label": "3720 lower left at one to one: approved over pose W with the slow flow (grains read as pebbles, darker, more contrast)"
-  },
-  {
-   "time": "2026-11-26T20:17:08.853Z",
-   "file": "20261126201708853-note-three_w3.jpg",
-   "source": "../../../../tmp/v/w/three_w3.jpg",
-   "kind": "note",
-   "label": "3720 at final: approved, pose W with the skim's flow at 0.28 of main's and the ring's table of run 3, main 262b9a68"
-  },
-  {
-   "time": "2026-11-26T19:52:07.863Z",
-   "file": "20261126195207863-note-fore_main.jpg",
-   "source": "../../../../tmp/v/w/fore_main.jpg",
-   "kind": "note",
-   "label": "3720 lower left at one to one: main"
   }
  ]
 }
