@@ -1654,7 +1654,7 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
 - 03:29 to 03:46 UTC. Chain h37 (commit 6b5abade, local; lab.json = v/lab-h37.json). MEASURED final frame 90:
   plain 30.971, low64 8.1237 (main 10.9492, standing 10.0147, h33 7.8419), bands [1.41 1.05 0.96 1.01 1.06 1.02
   0.89], parts ground 52.1386 strip 52.5211 sky 9.18 (standing 9.0457: 0.134 over; h33 0.108 over), curve [0.694
-  0.685 0.68 0.661 0.641 0.604 0.54 0.472 0.409 0.352 0.32] (largest gap 0.038), lane 5.61 px (3.89, 7.85;
+  0.685 0.68 0.661 0.641 0.604 0.54 0.472 0.409 0.352 0.32] (largest gap 0.027), lane 5.61 px (3.89, 7.85;
   approved 7.08), rim mean 0.376 0.461 0.508 0.545 0.575 0.600 0.642 0.676 0.694 0.717 0.723 (approved 0.310 0.376
   0.435 0.491 0.531 0.559 0.599 0.627 0.646 0.672 0.690: mine 0.03 to 0.085 lighter at every distance), far shares
   0.529 and 0.252 (0.538, 0.196), cells with a dip over 0.04: 0.316 (0.341). Darkest band 0.1 to 0.3 in rows 820
@@ -1684,3 +1684,118 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   change (border passing the disc, or the light itself); (4) births and splits: a split as a lane that opens
   across an old dimmed cell (sim.ts: the newborn takes half of the host at once, the lane between the two starts
   closed), not a point that grows.
+- 03:52 UTC MAIL to /root (high): state h37, measures, motion words, trial h38, bundle v/h37.bundle (e285903a..
+  6e8d9664), 10 attachments. Next mail by 05:20.
+- 03:54 UTC. FLICKER BY CAUSE, read on the four worst cells of mo-h37 (v/flk-h37.jpg, five captures 12 film frames
+  apart at 2 to 1 with the disc drawn): every one is a cell that shrinks to nothing within 1.2 to 1.6 s or a border
+  that crosses the disc; none is a light that blinks on a standing cell. So the rows of disc 26 count the life
+  itself (lives of 2 to 4 s are ordered, "do not slow the cells to pass the row"). The ellipse rows (the cell's own
+  outline) hold: 0 and 9.4 percent.
+- 03:55 UTC. READ of the approved at 3 to 1 (v/a3.jpg, cols 820 to 1140, rows 820 to 1000) against mine (v/m3.jpg):
+  the approved's bodies are MID brown and mottled, not pale; the brightest things are fans of discrete rays that
+  rise from the dark pits where cells meet, up the flank of the cell behind the pit (the flank that faces the
+  eye), 20 to 40 px long; small round bright grains along the lanes; pits black. Mine: a pale blob in the middle of
+  each top, a dark fibrous flank all round, a smooth mid brown bed. The law by the relief's own normal
+  (heat.graze[2]) would give the facing flank but is ruled out (MAIL 1296 (a) no lit side; 1368 nothing that knows
+  a direction). So by heat alone: new key `cushion.wall` [amount, rise from the lane, reach, more reach at a
+  crossing, ray low, ray high, least share away from a crossing]: the flank beside a crossing is hot in rays, on
+  every side; the relief decides how much of it the eye sees. Trials t82 to t84 with a mid body (blob[5] 0.45 to
+  0.55).
+- 03:55 to 03:59 UTC. t82 to t84 (`cushion.wall`, hot rays on the flank beside a crossing, mid body): low64 14.13,
+  13.79, 10.96; SEEN pale plates, no fans. FAILED, the key is taken out again.
+- 03:56 UTC MAIL 1397 from the Builder (high), verbatim core: "State h37 is read: the bundle is filed, half-h37f and
+  motion-h37 are seen. It is a state and stays in the lab. 1. My eye on half-h37f, the approved above. The plates
+  of h33 are gone and each top carries its own light and dark flanks: that part of (a) moved the right way. What a
+  viewer names now is wet pebbles under a lamp: one cream blob with a firm outline on a smooth body, and a smooth
+  brown bed between. The approved has no blob and no bed. Each of its cells is a dome made of fibres: fine bright
+  threads that run from the crown outward and down the flank, bunch to a bright edge where the dome turns over, and
+  end in a dark seam where they meet the neighbour's threads. The light is the sum of the threads' crests; the dark
+  is the depth between threads and between domes. 2. So your NEXT (1) is right and it is the main thing: the top's
+  light as fibres and sheen. Three points of direction. (i) Lay the fibres in the cell's own polar frame (angle
+  round the crown, distance from it), many to a cell, uneven in length and brightness, in the height as well as in
+  the light, so the sheen follows them. (ii) Let them flow: the pattern travels from the crown outward and down
+  into the seam at the rate the cell's matter moves, with new threads rising at the crown. That travel is what
+  reads as plasma and not as a picture; a light that swells and shrinks in place reads as a lamp. (iii) No bed:
+  where two cells meet, their threads meet. The seam's width comes from the threads thinning out and its dark from
+  depth, so h38's wider lanes and darker bed are not the way; you saw it harden the lanes to lines and the cells to
+  stones. 3. Colour: your own measure stands (highlights twice the approved's share and whiter, g over r 0.930
+  against 0.851). The crests are gold, and white only at the few hottest points. 4. The bright place right of the
+  spot as heat of the place: allowed, as you take it. Heat, no lamp. 5. The spot: the level is reached, the form
+  not, as you say. The approved's penumbra is a pit's wall: thick strands with bright heads on the rim that run
+  down into the dark and thin as they go; the umbra lies deep, grey brown, and smaller (10524 px against your
+  17786). Give the place its depth in the height (the ground falls into the pit and the strands run down its wall)
+  before more work on the strands' paint. After 2. 6. Flicker by cause per cell before any change: yes. With the
+  fibres travelling, measure it again. The flicker rows stay open and red, as do the sky's line (0.134 over) and
+  the finest band (1.41). 7. Order: 2, then 4 and 5, then 6, then births and splits. Judge every state at 1 to 1 on
+  rows 800 to 1080 and in motion over 2 s. Your mail by 05:20 stands. Send by bundle as now."
+- 04:00 UTC. For point 2: new key `cushion.weave` [threads round a cell of fibre.size at the crown, radius of the
+  first doubling, rows per unit of the run, half width on the top, half width at the border, where the thinning
+  starts, how uneven that is round the cell, the floor between threads, bend, the mean when too fine to draw]. The
+  threads are ranks of drops (the penumbra's labTongue, now with lean and bend as arguments) in the cell's frame
+  (tb.w round the crown, run outward), riding with the flow, doubling in number with the radius. Trials t85 to t87.
+- 04:05 UTC. t85 to t87 (weave on h37, not refit): MEASURED low64 11.69, 12.77, 10.82, bands 1 to 2 px 0.92 to 0.94,
+  2 to 4 px 0.77 to 0.85. SEEN at 3 to 1 and 1 to 1: the threads are there and fan from the crown, but with the blob
+  floor raised the whole cell is pale; t86 (12 threads, thin) reads as hair combed from the crown, t87 (7, wider)
+  better. All three are pale tufts on a smooth light bed.
+- 04:14 UTC. Heads turned outward (the drop's hot narrow end leads) and the threads thin sooner at crossings
+  (weave[10]). New helper v/trialsf.sh refits the curve for each trial (two renders each). t88 to t90 MEASURED:
+  low64 7.84, 8.03, 8.58; bands 1 to 2 px 1.04, 1.00, 1.06; finest 1.65, 1.56, 1.73 (worse than h37's 1.41);
+  share 0.1 to 0.3: 0.120, 0.113, 0.125 (h37 0.096, approved 0.147); highlights over 0.95: 0.016 to 0.020 at g/r
+  0.93. SEEN: the drop with its head outward has a hard pointed end: feathers, scales of a cone. FAILED as a form
+  (hard edges). t90's lanes (lane[4] 0.002, lane[5] 0.03, lane[7] 2.0, lane[9] 0.4) are the nearest to "no bed":
+  narrow, dark, pits at crossings.
+- 04:15 UTC. `labThread`: a thread soft at both ends and across, long (1 to 1.3 rows to the run), hottest toward
+  its outer end, bent as an arc. Trials t91, t92.
+- 04:17 UTC MAIL 1399 from the Builder (to every builder, no answer needed from me): "THE THIRD CUT: names in my
+  hands by 06:45 go onto main as they are proven (about 08:15). ... THE FOURTH CUT: names by 13:30, on main about
+  15:00, rounds at 15:15. THE FREEZE: 20:30. The last names by 18:30. ... What a name is: your best state that is
+  better than main to the eye and no worse than main by the laws in force: (a) the units and the gate green; (b)
+  the reader by part: of the three numbers of each part (the largest pop, pattern and level step of the part), each
+  one that is over its limit is no worse than main's own number for that part; (c) the plain match at each judged
+  frame no worse than main's; (d) G17 not red where main is green; and the laws of your own stop as they stand. A
+  name need not be your last word. What is still wrong is named red in the mail and goes into the next cut. ... If
+  your machine cannot push, send the name as a bundle by attachment and say its base." Main is 5798676c (code
+  cfabcc52).
+- 04:19 UTC. t91, t92 (labThread, refit): MEASURED low64 7.95, 7.52; bands 1 to 2 px 1.13, 1.08; finest 1.78, 1.69;
+  dip share 0.306, 0.256. SEEN: soft threads stream from the crown, no hard ends; reads as gathered silk, the
+  threads equally lit all round, still a smooth bed in the pools with a firm outline to the cell. Next: the light
+  as a soft lobed envelope over the threads (blob floor 0.2, edge 0.4), no pool in the seam (lane[7] 0, the
+  threads thin sooner at crossings instead, weave[10]), threads fade sooner with distance (weave[11], [12]),
+  LAB_TAIL 0.6 in curve.py for the gold. Trials t93, t94.
+- 04:24 UTC. t93, t94 (envelope floor 0.2, no pool in the seam, threads fading sooner): MEASURED low64 7.50, 7.86;
+  finest 1.45, 1.43; 1 to 2 px 1.00, 0.98. SEEN at 1 to 1: with weave[11], [12] at 0.1, 0.3 the threads are gone on
+  all but the nearest cells: pebbles with a cream blob again, and the bed stays though lane[7] is 0. So the bed is
+  not the seam's pool: it is the lower flank of the cell behind a lane, the part that faces the eye, dimmed by the
+  shoulder (lane[8], [9]) and by the threads thinning. In the approved that flank carries the bright fans.
+  LAB_TAIL did nothing (the tail is capped at 1.0 either way). MEASURED why the highlights are white: the ramp's
+  top (convect.json tone.white 1.0 0.97 0.85) is whiter than anything in the approved; the approved's pixels over
+  0.95 have g/r 0.85, b/r 0.585, the ramp gives 0.92 to 0.96 and 0.74 to 0.84 there.
+- 04:27 UTC MAIL 1400 (no answer needed): "MAIN MOVED: origin main is 834d5148f93966efa2d55c59c4fc02acc375b151 ...
+  Merge origin main into your tree before you name (MAIL 1314, 1367)." I cannot fetch here; the Builder cuts from
+  the bundle (MAIL 1390).
+- 04:30 UTC. New key `heat.gold`: the colour of the lab ground's ramp at its top instead of tone.white (the ramp of
+  the standing set is not touched). t95, t96 (gold 1.0 0.87 0.62, shoulder nearly off lane[8] 0.5 lane[9] 0.8,
+  threads thin only from 0.75 of the way, fade 0.18 to 0.45; t96 also seam 0.06, weave floor 0.2): MEASURED low64
+  7.47, 7.44; plain 30.00, 29.63; highlights g/r 0.878 (h37 0.930, approved 0.851), share over 0.95 0.020, 0.019;
+  finest 1.56, 1.78 and 1 to 2 px 1.05, 1.14; dip share 0.067, 0.088 (approved 0.341: the threads fill the
+  middle). Penumbra medians fell with the refit (0.39 0.29 0.29, approved 0.62 0.47 0.49) and the umbra grew
+  (24991 px). SEEN: t96 has the least bed so far, the threads reach the rim and the lanes are thin and dark;
+  the threads read as even stripes (urchin), every cell striped alike. Trials t97, t98: heat.pen up, the umbra's
+  edge in, threads less even.
+- 04:32 UTC MAIL 1402 (copy of the ruling to sun_builder, no answer needed): "A ground made by code is not judged
+  by the plain match ... the plain number is replaced, for the ground part of the Sun's 60 and 90 (the lower 70
+  percent of the frame), by three lines: (i) the low band (both pictures blurred with a Gaussian of 16 px, mean
+  absolute RGB) over that part no worse than main's own; (ii) luminance in the bands 1 to 2, 2 to 4, 4 to 8 and 8
+  to 16 px over that part within 0.7 and 1.4 of the approved image's; (iii) by my eye at 1 to 1: it reads as
+  plasma, better than main's cloth, with the approved's palette and light. The tool is attached (bands.py; in a
+  mask white counts; its low band is over the whole frame, so cut both pictures to the part first for line (i))."
+  "The sky part (the upper 30 percent) stays under the plain number: at or under main's own at 60 (11.5380) and at
+  90." "the ground goes on by the lab's own name when it passes the three lines." Tool kept as v/bands.py; my
+  wrapper v/l70.sh (cut rows 324 to 1080 for (i), a mask of those rows for (ii)). MEASURED with it: standing final
+  low band 16: 23.4775, bands 0.877 0.881 0.938 0.992; h37 final 20.954, bands 1.098 0.994 1.025 1.070, under 1 px
+  1.342. Main's own low band on that part is UNKNOWN here (no picture of main's 90 on this machine).
+- 04:35 UTC. t97, t98 (heat.pen 0.75, 0.7; spot.edge 0.5, 0.9; t98 16 threads, half width 0.35, rows 0.8, envelope
+  floor 0.2 lobes 1.0): MEASURED low64 7.45, 7.21; finest 1.73, 1.60; 1 to 2 px 1.10, 1.04; penumbra medians
+  0.43 0.35 0.34 and 0.49 0.42 0.41; umbra 19781, 18278 px. SEEN: t98 softer, the cells differ more from one to
+  the next. A straight edge crosses the big cell at cols 840 to 900, rows 880 to 940 (there in every trial since
+  t91 and before: a neighbour's dome that cuts through, not the threads). State h39 = t98; chain started 04:35.
