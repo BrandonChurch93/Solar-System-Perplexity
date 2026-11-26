@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T03:05:46.134Z",
+ "pushed": "2026-11-26T03:28:14.566Z",
  "head": "b61cc026e2ba3b97f001c8ac51ef257ecb7210d2",
- "note": "K proof: the dive is drawn and being measured, the rise is next; rings read frame against frame through each frame's own lens (flight in on K: under 0.1 px from 3368)",
+ "note": "K (rigid body) dive by the reader viewed frame by frame; five lone pixels left on the night limb, cause found (the lip is not drawn in the near half), cure next",
  "looks": [
+  {
+   "time": "2026-11-26T03:28:13.648Z",
+   "file": "20261126032813648-note-spot_3589.jpg",
+   "source": "../../../../tmp/v/rigid/PK/spot_3589.jpg",
+   "kind": "note",
+   "label": "K dive: one lone pixel on the night limb at 3589 and 3598 (levels 85, 40), 4 times, levels times 4: cause found, cure in work"
+  },
+  {
+   "time": "2026-11-26T03:28:12.563Z",
+   "file": "20261126032812563-note-dove_lift.jpg",
+   "source": "../../../../tmp/v/rigid/PK/dove_lift.jpg",
+   "kind": "note",
+   "label": "K dive 3540 to 3552 at full size, levels times 4: the shaded plane goes solid (dove), a named red"
+  },
+  {
+   "time": "2026-11-26T03:28:11.808Z",
+   "file": "20261126032811808-note-dive_sheet_3610.jpg",
+   "source": "../../../../tmp/v/rigid/PK/dive_sheet_3610.jpg",
+   "kind": "note",
+   "label": "K dive 3610 to 3621, every frame"
+  },
+  {
+   "time": "2026-11-26T03:28:10.949Z",
+   "file": "20261126032810949-note-dive_sheet_3586.jpg",
+   "source": "../../../../tmp/v/rigid/PK/dive_sheet_3586.jpg",
+   "kind": "note",
+   "label": "K dive 3586 to 3597, every frame: the hero's ring pixels go out 3579 to 3600"
+  },
+  {
+   "time": "2026-11-26T03:28:10.055Z",
+   "file": "20261126032810055-note-dive_sheet_3562.jpg",
+   "source": "../../../../tmp/v/rigid/PK/dive_sheet_3562.jpg",
+   "kind": "note",
+   "label": "K dive 3562 to 3573, the reader's frames, every frame (rigid body, lens law b)"
+  },
   {
    "time": "2026-11-26T02:34:49.457Z",
    "file": "20261126023449457-note-limb_in.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/rigid/PK/in_full_ra.jpg",
    "kind": "note",
    "label": "K flight in 3373 to 3378 at full size, right ansa"
-  },
-  {
-   "time": "2026-11-26T02:34:46.587Z",
-   "file": "20261126023446587-note-in_full_ll.jpg",
-   "source": "../../../../tmp/v/rigid/PK/in_full_ll.jpg",
-   "kind": "note",
-   "label": "K flight in 3373 to 3378 at full size, near ring lower left"
-  },
-  {
-   "time": "2026-11-26T02:34:45.762Z",
-   "file": "20261126023445762-note-in_sheet_3392.jpg",
-   "source": "../../../../tmp/v/rigid/PK/in_sheet_3392.jpg",
-   "kind": "note",
-   "label": "K flight in 3392 to 3400, draft, every frame"
-  },
-  {
-   "time": "2026-11-26T02:34:45.039Z",
-   "file": "20261126023445039-note-in_sheet_3380.jpg",
-   "source": "../../../../tmp/v/rigid/PK/in_sheet_3380.jpg",
-   "kind": "note",
-   "label": "K flight in 3380 to 3391, draft, every frame"
-  },
-  {
-   "time": "2026-11-26T02:34:43.903Z",
-   "file": "20261126023443903-note-in_sheet_3368.jpg",
-   "source": "../../../../tmp/v/rigid/PK/in_sheet_3368.jpg",
-   "kind": "note",
-   "label": "K flight in 3368 to 3379, draft, every frame"
-  },
-  {
-   "time": "2026-11-26T02:34:42.729Z",
-   "file": "20261126023442729-note-in_sheet_3356.jpg",
-   "source": "../../../../tmp/v/rigid/PK/in_sheet_3356.jpg",
-   "kind": "note",
-   "label": "K flight in 3356 to 3367, draft, every frame"
   }
  ]
 }
