@@ -1,9 +1,58 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T08:23:13.849Z",
+ "pushed": "2026-11-26T08:48:28.522Z",
  "head": "a5e46e815452cc68eaf7a90ed57edbcebb2d9ae9",
- "note": "08:24 candidate a5e46e81: 2010 final is byte equal to the final of 22:51 (4.286 against main's 4.555); 1755 final 4.8818 (main 5.3500), 866 px differ from the final of 22:46, 848 of them inside 5 degrees; handover tool runs",
+ "note": "hump of the pattern line at 1867 located at the glint streak, cause being measured; handover tool running",
  "looks": [
+  {
+   "time": "2026-11-26T08:48:27.710Z",
+   "file": "20261126084827710-note-p12-sw.jpg",
+   "source": "../../../../tmp/gl/k23/N/p12-sw.jpg",
+   "kind": "note",
+   "label": "BAD: field outside the canvas on the plate reads as tan dust of one size",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T08:48:26.816Z",
+   "file": "20261126084826816-note-heat-1867.jpg",
+   "source": "../../../../tmp/gl/k24/pm/heat-1867.png",
+   "kind": "note",
+   "label": "BAD: candidate draft 1867 and 1868 at the spot the reader names, with the pattern map: the glint streak and the place's tufts come in on the globe",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T08:45:56.464Z",
+   "file": "20261126084556464-compare-earth-rise-sides.jpg",
+   "source": "out/work/handover/earth-rise-sides.png",
+   "kind": "compare",
+   "label": "earth rise, both sides at T (frame 2100) and their difference times 8",
+   "stop": "earth",
+   "segment": "earth.rise",
+   "frame": 2100,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-26T08:45:15.906Z",
+   "file": "20261126084515906-sheet-earth-dive-top.jpg",
+   "source": "out/work/handover/earth-dive-top.png",
+   "kind": "sheet",
+   "label": "earth dive, the globe side alone from straight above the place, 12 frames from the far end to T (frame 1919), place picture off, draft tier",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "first": 1830,
+   "last": 1919,
+   "tier": "draft"
+  },
+  {
+   "time": "2026-11-26T08:42:10.271Z",
+   "file": "20261126084210271-compare-earth-dive-step-in-place.jpg",
+   "source": "out/work/handover/earth-dive-step-in-place.png",
+   "kind": "compare",
+   "label": "earth dive, the largest step of the level in place (2.67): frame 1889, frame 1890, the ground that is new in it, and the change on the ground both show times 8",
+   "stop": "earth",
+   "segment": "earth.dive",
+   "frame": 1890
+  },
   {
    "time": "2026-11-26T08:23:12.988Z",
    "file": "20261126082312988-note-p12-rim-a.jpg",
@@ -21,17 +70,6 @@
    "stop": "earth"
   },
   {
-   "time": "2026-11-26T08:18:55.676Z",
-   "file": "20261126081855676-compare-earth-dive-sides.jpg",
-   "source": "out/work/handover/earth-dive-sides.png",
-   "kind": "compare",
-   "label": "earth dive, both sides at T (frame 1919) and their difference times 8",
-   "stop": "earth",
-   "segment": "earth.dive",
-   "frame": 1919,
-   "tier": "draft"
-  },
-  {
    "time": "2026-11-26T08:17:39.594Z",
    "file": "20261126081739594-still-f02010-16x9-final-full.jpg",
    "source": "out/work/stills/f02010-16x9-final-full.png",
@@ -44,44 +82,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T08:11:49.895Z",
-   "file": "20261126081149895-still-f01755-16x9-final-full.jpg",
-   "source": "out/work/stills/f01755-16x9-final-full.png",
-   "kind": "still",
-   "label": "earth.hold frame 1755, final tier",
-   "stop": "earth",
-   "segment": "earth.hold",
-   "frame": 1755,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T08:10:29.306Z",
-   "file": "20261126081029306-note-c1884.jpg",
-   "source": "../../../../tmp/gl/k23/c1884.jpg",
-   "kind": "note",
-   "label": "BAD dive 1884 at 1 to 1, this state: the field outside the canvas reads as sown tan dust, smaller and more even than the canvas's own tufts and without their shadows",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T08:10:28.379Z",
-   "file": "20261126081028379-note-c1876.jpg",
-   "source": "../../../../tmp/gl/k23/c1876.jpg",
-   "kind": "note",
-   "label": "BAD dive 1876 at 1 to 1, this state: the place as a patch of its own; tan specks of the field around the canvas, pale blue shards of far towers above the glint, the map's hard white clouds at the left",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T07:44:31.889Z",
-   "file": "20261126074431889-note-pm-d-1889-0.jpg",
-   "source": "../../../../tmp/gl/k23/pm-d-1889-0.jpg",
-   "kind": "note",
-   "label": "dive 1889, where the quick reader's top percent sits now (red): the far side of Yucatan under the limb, 0.28",
-   "stop": "earth"
   }
  ]
 }
