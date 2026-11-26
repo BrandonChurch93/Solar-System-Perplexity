@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T20:17:10.544Z",
- "head": "14fe5a6346f1d8a468ec4a36d26f2905a941fbe2",
- "note": "pose W: the near ring's grain against the flow; next the lens as a function of the distance for both moves",
+ "pushed": "2026-11-26T20:39:02.080Z",
+ "head": "52e8d97ecf27c96c3e6d79863261f88439497bdc",
+ "note": "lens law by distance for both moves coded and the paces searched; the white strip's cause found (table clipped at its bound), W5 renders with main's warm table, softer ringlets and finer sand",
  "looks": [
+  {
+   "time": "2026-11-26T20:39:01.318Z",
+   "file": "20261126203901318-note-three_w0.jpg",
+   "source": "../../../../tmp/v/w/three_w0.jpg",
+   "kind": "note",
+   "label": "3720: approved, W with main's tables (warm), W3 (refitted, white strip)"
+  },
+  {
+   "time": "2026-11-26T20:39:00.605Z",
+   "file": "20261126203900605-note-strip_w3.jpg",
+   "source": "../../../../tmp/v/w/strip_w3.jpg",
+   "kind": "note",
+   "label": "3720 at one to one, the outer edge of the dense ring: approved, W3 (white strip, the table at its bound in all three colours), main"
+  },
+  {
+   "time": "2026-11-26T20:38:59.956Z",
+   "file": "20261126203859956-note-hatch_w4.jpg",
+   "source": "../../../../tmp/v/w/hatch_w4.jpg",
+   "kind": "note",
+   "label": "3720 at three to one, W3 above (pebbles), the sand at half size below (none drawn)"
+  },
+  {
+   "time": "2026-11-26T20:38:59.110Z",
+   "file": "20261126203859110-note-fore_w4.jpg",
+   "source": "../../../../tmp/v/w/fore_w4.jpg",
+   "kind": "note",
+   "label": "3720 lower left, approved above, W with the sand at half its size below: no sand is left, smooth hard stripes; thrown out"
+  },
   {
    "time": "2026-11-26T20:17:09.992Z",
    "file": "20261126201709992-note-hatch_w3.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/w/fore_main.jpg",
    "kind": "note",
    "label": "3720 lower left at one to one: main"
-  },
-  {
-   "time": "2026-11-26T19:52:07.256Z",
-   "file": "20261126195207256-note-fore_w1.jpg",
-   "source": "../../../../tmp/v/w/fore_w1.jpg",
-   "kind": "note",
-   "label": "3720 lower left at one to one: approved over pose W (near ring darker, coarser, smeared)"
-  },
-  {
-   "time": "2026-11-26T19:52:06.631Z",
-   "file": "20261126195206631-note-three_w1.jpg",
-   "source": "../../../../tmp/v/w/three_w1.jpg",
-   "kind": "note",
-   "label": "3720 at final: approved, pose W with the ring and globe tones refitted, main"
-  },
-  {
-   "time": "2026-11-26T19:27:20.498Z",
-   "file": "20261126192720498-note-full_w0.jpg",
-   "source": "../../../../tmp/v/w/full_w0.jpg",
-   "kind": "note",
-   "label": "3720: approved close over pose W final with the old tones, sheet rising to 0.05"
-  },
-  {
-   "time": "2026-11-26T18:58:31.807Z",
-   "file": "20261126185831807-note-foot_app2.jpg",
-   "source": "../../../../tmp/v/p1521/foot_app2.jpg",
-   "kind": "note",
-   "label": "3720 at 2 to 1, box 960,500 to 1440,700: approved close over pose W draft without sheet, tones not yet refitted: the dark band under the globe is missing"
   }
  ]
 }
