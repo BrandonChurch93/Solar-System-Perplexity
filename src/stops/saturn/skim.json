@@ -51,7 +51,7 @@
     }
   },
   "light": {
-    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. halo.day: the two cosines of the Sun's angle between which the day light of that glow comes in with the lens near the plane (with the lens high the haze keeps its own, look.ts shell dayFrom and dayTo; the share between them is the share of the grade of the rings, by the height of the lens, grade.ts hazeDayAt, in the kept set and in the model alike): near the sheet the glow draws back toward the Sun and dies away along the limb well before the terminator, as in the approved close, where the limb far from the Sun is a clean edge. dusk: on the globe the light between these two cosines of the Sun's angle is cut down by a smooth step, by this amount, so the terminator is narrower near the sheet and the night side dark, as in the approved close; dusk.night is the factor on the floor of light the night side keeps. dusk.grey: how far the night side is grey rather than the colour of the clouds in the last red light; the share follows the cut of the light to the power greyPower, so with a power above one the colour goes later than the light and the last light keeps its brown. Each pair of the dusk is the value with the lens high and the value with the lens near the plane, and the share between them is the share of the grade of the rings (grade.ts: by the height of the lens over the ring plane between the two heights of sky.heights), in the kept set and in the model alike; it does not follow globeNear. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close. flatten.bands: the power on the brightness of a band of the dense rings (the model averaged over band radii) over that of its zone (averaged over width), far and near, counted no further from 1 than bandReach times: near the sheet the bands stand out less from their zone, as in the approved close; ringlets narrower than a band keep their contrast.",
+    "note": "exposure of the globe and of the rings and how much of its colour the ice keeps, first in the hold and then in the skim, blended by the logarithm of the camera's height between the two heights (the lower height is the skim); the strengths of the ladder of ringlets are blended the same way (ringfine.json near). tint: the factor on the colour of the dense and of the thin rings, far in the hold and near in the skim: both approved images have the thin rings brighter and less red than the model's ink, and the close has its dense rings a little darker. halo: the factor on the scale height and on the brightness of the glow outside the globe's limb. halo.day: the two cosines of the Sun's angle between which the day light of that glow comes in with the lens near the plane (with the lens high the haze keeps its own, look.ts shell dayFrom and dayTo; the share between them is the one share of the globe's light, by the height of the lens, grade.ts bodyShare and hazeDayAt, in the kept set and in the model alike): near the sheet the glow draws back toward the Sun and dies away along the limb well before the terminator, as in the approved close, where the limb far from the Sun is a clean edge. dusk: on the globe the light between these two cosines of the Sun's angle (from, to) is cut down by a smooth step by amount, one number at every height of the lens, and that number is 0: the boundary of day and night is the body's own, the same in the hold and in the skim, and does not move over the clouds as the lens comes down or goes up; dusk.lean: see its own note. dusk.night is the factor on the floor of light the night side keeps, and it alone follows heights of its own (dusk.nightHeights, planet radii, the lower the skim; grade.ts nightShare): the night side keeps the light of the hold while the dust inside the inner rim comes in over it and sinks only low in the skim, where the lens goes slowly. dusk.grey: how far the night side is grey rather than the colour of the clouds in the last red light; the share follows the cut of the light to the power greyPower, so with a power above one the colour goes later than the light and the last light keeps its brown. The pairs of the dusk (night, grey) are the value with the lens high and the value with the lens near the plane, and the share between the two of grey is the share of the grade of the rings (grade.ts: by the height of the lens over the ring plane between the two heights of sky.heights), in the kept set and in the model alike; it does not follow globeNear. flatten: the brightness of the dense rings averaged over width radii, over pivot (no further from 1 than reach times or one over reach), is raised to power: near the sheet the broad zones are evener, as in the approved close. flatten.bands: the power on the brightness of a band of the dense rings (the model averaged over band radii) over that of its zone (averaged over width), far and near, counted no further from 1 than bandReach times: near the sheet the bands stand out less from their zone, as in the approved close; ringlets narrower than a band keep their contrast. dusk.tint: the factor on the colour of the clouds in the low light toward the terminator (colour), in full where the cosine of the Sun's angle is at from or under it and none from to on, by the share of the grade of the rings (none with the lens high): the approved close has that light less red and less blue than the clouds' own colour. tone: see its own note.",
     "heights": [
       0.6,
       1.8
@@ -90,361 +90,438 @@
         0.55
       ],
       "radial": {
-        "note": "the tone of the rings by radius with the lens in the skim: the factors on red, green and blue at the radii first, first plus step and so on (planet radii; straight lines between; inward of the first radius the first factors hold and outward of the last the last, 1), by the same share of the height as the rest of the grade. Measured by assets-src/saturn/code/ring_radial.py: the middle value of the scene light of the approved close image over that of the model at frame 3720, per ring of radii of the fitted pose, on the lit sheet where no globe lies in front and where the law of the low view (low, below) leaves the light alone; held between 0.4 and 4.5 (between 0.55 and 1.8 outward of radius 1.56, where the ice is dense, and on a straight line across the dark gap from 1.92 to 2.10, whose edges lie at other radii in the approved image than in the model: the table carries the broad tone, never the place of an edge) and evened over three knots.",
+        "note": "the tone of the rings by radius with the lens in the skim: the factors on red, green and blue at the radii first, first plus step and so on (planet radii; straight lines between; inward of the first radius the first factors hold and outward of the last the last, 1), by the same share of the height as the rest of the grade. Measured by assets-src/saturn/code/ring_radial.py: the middle value of the scene light of the approved close image over that of the model at frame 3720, per ring of radii of the fitted pose, on the lit sheet where no globe lies in front and where the law of the low view (low, below) leaves the light alone; held between 0.4 and 4.5 (between 0.55 and 1.8 outward of radius 1.56, where the ice is dense, and on a straight line across the dark gap from 1.92 to 2.10, whose edges lie at other radii in the approved image than in the model: the table carries the broad tone, never the place of an edge) and evened over three knots; then fitted once more by assets-src/saturn/code/ring_tone.py on the frame at the final tier, where the grains of the near rings stand as the film shows them: a broad factor on that table, one free value every 0.06 radii from 1.27 outward with straight lines between in the logarithm, none inside the dark gap, within the same bounds, the one which brings the frame nearest to the approved close image in the mean absolute level of the frame. Inward of the inner rim (the knots from 1.03 to 1.25) the table holds one factor: the sheet there is the dust (inner), which the approved close image has in slate grey, and the factors measured there followed the glow of the globe and the edge of its shadow, not the dust; the one factor is set against the approved close image at frame 3720.",
         "first": 1.03,
         "step": 0.02,
         "gain": [
           [
-            3.92,
-            3.286,
-            3.286
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            3.874,
-            3.345,
-            3.433
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.15,
-            3.741,
-            3.84
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.427,
-            4.278,
-            4.314
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.48,
-            4.335,
-            4.391
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.4,
-            3.906,
-            4.059
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.36,
-            3.806,
-            3.946
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.44,
-            4.232,
-            4.277
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.5,
-            4.39,
-            4.419
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.5,
-            4.246,
-            4.324
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.5,
-            4.306,
-            4.391
+            2.97,
+            3.2085,
+            3.6
           ],
           [
-            4.5,
-            4.196,
-            4.15
-          ],
-          [
-            4.5,
-            3.798,
-            3.539
+            2.97,
+            3.2085,
+            3.6
           ],
           [
             4.5,
-            3.749,
-            3.335
+            4.5,
+            4.237
           ],
           [
             4.5,
-            3.964,
-            3.458
+            4.5,
+            3.914
           ],
           [
             4.5,
-            4.166,
-            3.699
+            4.5,
+            3.978
           ],
           [
-            4.467,
-            4.19,
-            3.862
+            4.5,
+            4.5,
+            4.171
           ],
           [
-            4.194,
-            3.76,
-            3.469
+            4.5,
+            4.5,
+            4.226
           ],
           [
-            3.441,
-            3.075,
-            2.849
+            4.5,
+            4.325,
+            3.684
           ],
           [
-            2.403,
-            2.321,
-            2.257
+            3.998,
+            3.265,
+            2.936
           ],
           [
-            2.084,
-            2.122,
-            2.096
+            2.82,
+            2.514,
+            2.373
           ],
           [
-            2.736,
-            2.715,
-            2.616
+            2.47,
+            2.345,
+            2.248
           ],
           [
-            2.723,
-            2.697,
-            2.625
+            3.276,
+            3.061,
+            2.862
           ],
           [
-            2.236,
-            2.246,
-            2.194
+            3.293,
+            3.071,
+            2.872
           ],
           [
-            2.193,
-            2.175,
-            2.086
+            2.731,
+            2.584,
+            2.401
           ],
           [
-            1.549,
-            1.562,
-            1.551
+            2.705,
+            2.527,
+            2.282
           ],
           [
-            0.952,
-            0.973,
-            1.013
+            1.836,
+            1.726,
+            1.631
           ],
           [
-            1.113,
+            1.084,
+            1.023,
+            1.023
+          ],
+          [
+            1.218,
             1.088,
-            1.105
-          ],
-          [
-            1.112,
-            1.131,
-            1.184
-          ],
-          [
-            0.924,
-            1.008,
-            1.11
-          ],
-          [
-            0.797,
-            0.874,
-            0.979
-          ],
-          [
-            0.826,
-            0.868,
-            0.947
-          ],
-          [
-            1.143,
-            1.169,
-            1.234
-          ],
-          [
-            1.257,
-            1.291,
-            1.371
-          ],
-          [
-            1.113,
-            1.144,
-            1.218
-          ],
-          [
-            1.012,
-            1.031,
-            1.086
-          ],
-          [
-            0.77,
-            0.794,
-            0.863
-          ],
-          [
-            0.656,
-            0.681,
-            0.757
-          ],
-          [
-            0.768,
-            0.799,
-            0.86
-          ],
-          [
-            0.837,
-            0.854,
-            0.887
-          ],
-          [
-            0.986,
-            0.971,
-            0.964
-          ],
-          [
-            1.075,
-            1.081,
             1.072
           ],
           [
-            0.896,
-            0.925,
-            0.939
+            1.279,
+            1.165,
+            1.172
           ],
           [
-            0.82,
-            0.822,
-            0.818
+            1.117,
+            1.07,
+            1.121
           ],
           [
-            0.985,
-            0.968,
-            0.926
-          ],
-          [
-            1.057,
-            1.044,
-            0.991
-          ],
-          [
-            1.004,
-            0.998,
-            0.951
-          ],
-          [
-            0.952,
-            0.951,
-            0.911
-          ],
-          [
-            0.899,
-            0.904,
-            0.871
-          ],
-          [
-            0.846,
-            0.857,
-            0.831
-          ],
-          [
-            0.794,
-            0.811,
-            0.791
-          ],
-          [
-            0.741,
-            0.764,
-            0.751
-          ],
-          [
-            0.689,
-            0.717,
-            0.711
-          ],
-          [
-            0.636,
-            0.671,
-            0.671
-          ],
-          [
-            0.717,
-            0.772,
-            0.778
-          ],
-          [
-            0.981,
-            1.036,
-            1.04
-          ],
-          [
-            1.27,
-            1.26,
-            1.246
-          ],
-          [
-            1.498,
-            1.428,
-            1.387
-          ],
-          [
-            1.494,
-            1.424,
-            1.369
-          ],
-          [
-            1.255,
-            1.207,
-            1.154
-          ],
-          [
-            1.099,
-            1.062,
+            1.013,
+            0.956,
             1.009
           ],
           [
-            1.082,
-            1.052,
-            0.995
+            1.05,
+            0.959,
+            0.976
           ],
           [
-            1.112,
-            1.12,
-            1.069
+            1.453,
+            1.305,
+            1.272
           ],
           [
-            1.062,
-            1.123,
-            1.105
+            1.598,
+            1.456,
+            1.413
           ],
           [
-            0.81,
+            1.359,
+            1.264,
+            1.255
+          ],
+          [
+            1.188,
+            1.117,
+            1.119
+          ],
+          [
             0.868,
-            0.879
+            0.843,
+            0.889
           ],
           [
-            0.786,
-            0.784,
-            0.763
+            0.785,
+            0.76,
+            0.812
           ],
           [
-            1.247,
-            1.178,
-            1.072
+            0.976,
+            0.938,
+            0.96
           ],
           [
-            1.533,
-            1.439,
-            1.298
+            1.13,
+            1.054,
+            1.031
           ],
           [
-            1.306,
-            1.249,
-            1.168
+            1.318,
+            1.162,
+            1.087
+          ],
+          [
+            1.422,
+            1.256,
+            1.173
+          ],
+          [
+            1.174,
+            1.043,
+            0.997
+          ],
+          [
+            1.022,
+            0.893,
+            0.841
+          ],
+          [
+            1.168,
+            1.013,
+            0.921
+          ],
+          [
+            1.192,
+            1.052,
+            0.955
+          ],
+          [
+            1.077,
+            0.969,
+            0.887
+          ],
+          [
+            0.971,
+            0.889,
+            0.822
+          ],
+          [
+            0.872,
+            0.814,
+            0.761
+          ],
+          [
+            0.781,
+            0.743,
+            0.703
+          ],
+          [
+            0.697,
+            0.677,
+            0.648
+          ],
+          [
+            0.619,
+            0.615,
+            0.595
+          ],
+          [
+            0.55,
+            0.556,
+            0.55
+          ],
+          [
+            0.55,
+            0.55,
+            0.55
+          ],
+          [
+            0.55,
+            0.555,
+            0.559
+          ],
+          [
+            0.795,
+            0.84,
+            0.843
+          ],
+          [
+            1.161,
+            1.152,
+            1.139
+          ],
+          [
+            1.544,
+            1.471,
+            1.429
+          ],
+          [
+            1.464,
+            1.368,
+            1.289
+          ],
+          [
+            1.17,
+            1.081,
+            0.993
+          ],
+          [
+            0.975,
+            0.887,
+            0.794
+          ],
+          [
+            0.989,
+            0.905,
+            0.807
+          ],
+          [
+            1.047,
+            0.993,
+            0.893
+          ],
+          [
+            1.031,
+            1.026,
+            0.951
+          ],
+          [
+            0.67,
+            0.697,
+            0.691
+          ],
+          [
+            0.554,
+            0.552,
+            0.55
+          ],
+          [
+            0.749,
+            0.729,
+            0.704
+          ],
+          [
+            1.38,
+            1.257,
+            1.084
+          ],
+          [
+            1.763,
+            1.541,
+            1.24
           ],
           [
             1.0,
             1.0,
             1.0
           ]
-        ]
+        ],
+        "fine": {
+          "note": "the ringlets' amplitude by radius (d323): its own term of the one law by radius, apart from the level. The tone above moves the level of a zone; this moves the contrast of the ringlets inside it: the light of a pixel over the light of its zone (a zone: wide footprints of the pixel along the radius), held inside ratio, is raised to the power gain holds at that radius (grade.ts iceFine and iceRinglets; the far look of sheet.ts and kept/rings.ts on their profile, the near look of sheet.ts and grains.ts on the model's profile and its ladder). It has the share of the tone by height (grade.by), so the hold has nothing of it. gain is fit by assets-src/saturn/code/ring_fine.py against the approved close image at frame 3720, final tier: the fine contrast as tools/measure/g17.py counts it, where the ring plane is first on the view; one free value every 0.06 radii from the inner rim out, straight lines between, none inside the gap 1.92 to 2.10, never under 1 (where the film has as much fine contrast as the approved image or more it is left: crisp ringlets are not taken back), never over 1.6. Three steps from a trial of 1.3 at every radius; the last step would move no value by more than 0.018. What stands over 1: 1.6 at 1.27, 1.22 at 1.33, 1.26 at 1.87, 1.24 at 2.17, 1.6 at 2.23 and 2.29; at 1.27, 2.23 and 2.29 the film still has 0.62, 0.77 and 0.84 of the approved image's fine contrast. Measured on the final frame 3720 with and without the term: the reader's median over all 62 tiles 1.0022 against 0.8427 (main 0.9739), apart from the nine tiles of the foot 1.1537 against 1.0205 (main 1.0329); the frame's number outside the two parts read apart 21.8276 against 21.3247 (main 22.0921): contrast that does not lie where the approved image has it costs level, 0.50 here.",
+          "wide": 16,
+          "ratio": [0.5, 2],
+          "gain": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.6,
+            1.4747,
+            1.3493,
+            1.224,
+            1.1493,
+            1.0747,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0858,
+            1.1717,
+            1.2575,
+            1.236,
+            1.2146,
+            1.1931,
+            1.1717,
+            1.1502,
+            1.1288,
+            1.1073,
+            1.0858,
+            1.0644,
+            1.0429,
+            1.0215,
+            1.0,
+            1.0785,
+            1.157,
+            1.2355,
+            1.357,
+            1.4785,
+            1.6,
+            1.6,
+            1.6,
+            1.6,
+            1.4,
+            1.2,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
       },
       "low": {
         "note": "the thin inner ring by the angle of the view, with the lens in the skim: in the approved close image the inner ring and the dust inside it are as bright as the dense ring where the view meets the plane steeply, near the lens, and fall to near black where it runs low over the plane, on the far side by the globe. So inward of zone[0] (planet radii; none of it outward of zone[1]) the light of the sheet is multiplied by the cosine of the view to the normal of the plane over cosine, to the power power, never under least and never over 1; by the same share of the height as the rest of the grade, so none of it in the hold, and by the angle alone, never by the clock.",
@@ -564,22 +641,36 @@
         0.9
       ]
     },
+    "body": {
+      "note": "the one share of the light of the globe by the height of the lens over the ring plane (planet radii): none at the upper height and above, where every height of the hold lies (the hold stands at 2.228 to 2.412), all at the lower and under, where frame 3720 lies (0.3622); between them a step in the logarithm of the height, flat at both ends, the same on the way down and on the way up (grade.ts bodyShare): straight lines in the logarithm of the height between the knots heights, with the share at each. The two approved pictures show two terminators (level of the clouds at the cosine -0.14 of the Sun's angle: 85 in the hero, 15 in the close image), and both are kept: everything of the globe that differs between them (dusk amount, lean, night floor, grey, tint, the tone by latitude, the calm of the small features and the day edge of the haze) follows this share and no other, so no number of the globe has a window of heights of its own. The knots are made by assets-src/saturn/code/body_pace.py from the measured answer of the globe (body_response.json). The level on the screen does not follow the share in a straight line: a place in the twilight at 8 to 16 N makes 41 percent of its 81 levels in the first 16 percent of the share, one at 26 to 40 N nearly none of it early. With the share an eased straight line in the logarithm of the height (ease 0.1) the same places of the body changed by up to 2.82 levels from one film frame to the next on the rise (8 to 16 N at the cosine -0.14, frame 3819 to 3820), with a cubic step by more, and before the one share, when the dusk, the lean, the grey, the tint and the tone followed the grade of the rings (heights 0.6 to 2.2) and the night floor heights of its own (0.36 to 0.6), by as much as 38 levels between the frames 3830 and 3838. The knots lay the share along the rise, the fastest passage of the lens through these heights, so that the place of the body that changes fastest changes evenly from frame to frame, with eased ends; the dive passes the same heights in more frames and changes less. By the measured answer the knots read 1.69 levels a frame at the most on the rise, 1.68 in the skim and 1.21 on the dive; what the film itself reads with them stands in assets-src/saturn/NOTES-CODE.md.",
+      "heights": [0.365, 0.3721, 0.3797, 0.3879, 0.3966, 0.4058, 0.4153, 0.425, 0.4352, 0.4488, 0.4677, 0.4923, 0.5227, 0.5591, 0.602, 0.6516, 0.7084, 0.7726, 0.8444, 0.9238, 1.0106, 1.1036, 1.2009, 1.3012, 1.4036, 1.5072, 1.6114, 1.7152, 1.8178, 1.9177, 2.0149, 2.109, 2.2],
+      "share": [1.0, 0.996, 0.9851, 0.9702, 0.9543, 0.9382, 0.9211, 0.9029, 0.8837, 0.8633, 0.8418, 0.8188, 0.7944, 0.7684, 0.7405, 0.7106, 0.6784, 0.644, 0.6077, 0.5698, 0.5308, 0.49, 0.4465, 0.4001, 0.3517, 0.3015, 0.2489, 0.1938, 0.1391, 0.082, 0.0365, 0.0091, 0.0]
+    },
     "dusk": {
       "from": -0.1,
       "to": 0.16,
-      "amount": [
-        0,
-        1
-      ],
-      "night": [
-        1,
-        1.3
-      ],
-      "grey": [
-        0,
-        1
-      ],
-      "greyPower": 2
+      "amount": [0, 1],
+      "night": [1, 0.8],
+      "grey": [0, 1],
+      "greyPower": 2,
+      "tint": {
+        "colour": [
+          1.0,
+          1.1,
+          0.93
+        ],
+        "from": 0.0,
+        "to": 0.3
+      },
+      "lean": {
+        "note": "near the sheet the boundary of day and night on the globe stands more upright, as in the approved close image, where it lies later by the equator and earlier toward the pole than the Sun of the film draws it: the cosine of the Sun's angle on the clouds gets low more by the equator and falls by fall toward the pole, between the two sines of the latitude lat; times the one share of the globe's light by the height of the lens (grade.ts bodyShare, leanAt), so none of it in the hold. Measured on rows of frame 3720 against the approved close image: the place where the light has fallen to the floor lay 30 to 40 px too far toward the Sun at the rows 540 and under and 30 to 45 px too far from it at the rows 140 to 300 (one radian of the globe is about 566 px there).",
+        "low": 0.05,
+        "fall": 0.08,
+        "lat": [
+          0.15,
+          0.6
+        ]
+      }
     },
     "flatten": {
       "pivot": 0.42,
@@ -595,6 +686,423 @@
       ],
       "bandReach": 8,
       "band": 0.006
+    },
+    "tone": {
+      "note": "the factor on the colour of the clouds by latitude near the sheet: gain, one knot of three numbers (red, green, blue, scene linear) per step degrees of latitude from first, either side of the equator, straight lines between the knots and flat outside them (the knots stand in a row of texels, grade.ts latToneRow), raised to the one share of the globe's light by the height of the lens (grade.ts bodyShare, the knots of light.body: a step in the logarithm of the height from the hold to the skim), so it is 1 with the lens high and the hold keeps its picture. Measured by assets-src/saturn/code/lat_tone.py: the lit globe of the approved close image over the lit globe of frame 3720 by whole degrees, in two passes (assets-src/saturn/code/lat_tone_raw.json), then smoothed along the latitude with a bell of 10 degrees, the knots under 12 degrees taken as the one at 12 (lat_tone.py --smooth); then one pass more on the final frame drawn with that table (lat_tone.py --again: the table times the plain measure of that frame, assets-src/saturn/code/lat_tone_again.json, smoothed in the same way, so the table stays as smooth as it was): the tone comes with the height of the lens, so it changes the broad palette of the globe by latitude and no band of it. The approved close is pale cream with a grey blue band near the top limb and calm bands; the map of the hold is more orange and busier. calm: near the sheet the small features of the map stand out less: the map is mixed by amount with itself averaged over texels of its texels, and the boost of its small features (look.ts globe fine) is taken back by fine; both times the same one share.",
+      "first": 0,
+      "step": 1,
+      "gain": [
+        [
+          1.244,
+          1.437,
+          1.363
+        ],
+        [
+          1.242,
+          1.434,
+          1.361
+        ],
+        [
+          1.238,
+          1.428,
+          1.358
+        ],
+        [
+          1.232,
+          1.42,
+          1.352
+        ],
+        [
+          1.225,
+          1.408,
+          1.344
+        ],
+        [
+          1.217,
+          1.396,
+          1.337
+        ],
+        [
+          1.207,
+          1.381,
+          1.327
+        ],
+        [
+          1.197,
+          1.365,
+          1.317
+        ],
+        [
+          1.187,
+          1.348,
+          1.306
+        ],
+        [
+          1.177,
+          1.332,
+          1.295
+        ],
+        [
+          1.167,
+          1.315,
+          1.285
+        ],
+        [
+          1.158,
+          1.299,
+          1.274
+        ],
+        [
+          1.15,
+          1.284,
+          1.265
+        ],
+        [
+          1.144,
+          1.271,
+          1.255
+        ],
+        [
+          1.138,
+          1.259,
+          1.248
+        ],
+        [
+          1.135,
+          1.248,
+          1.24
+        ],
+        [
+          1.133,
+          1.24,
+          1.234
+        ],
+        [
+          1.133,
+          1.234,
+          1.228
+        ],
+        [
+          1.135,
+          1.229,
+          1.224
+        ],
+        [
+          1.138,
+          1.226,
+          1.22
+        ],
+        [
+          1.143,
+          1.225,
+          1.217
+        ],
+        [
+          1.149,
+          1.225,
+          1.214
+        ],
+        [
+          1.156,
+          1.226,
+          1.211
+        ],
+        [
+          1.163,
+          1.228,
+          1.209
+        ],
+        [
+          1.171,
+          1.23,
+          1.206
+        ],
+        [
+          1.178,
+          1.233,
+          1.203
+        ],
+        [
+          1.184,
+          1.236,
+          1.2
+        ],
+        [
+          1.189,
+          1.237,
+          1.197
+        ],
+        [
+          1.192,
+          1.238,
+          1.192
+        ],
+        [
+          1.194,
+          1.238,
+          1.188
+        ],
+        [
+          1.193,
+          1.236,
+          1.183
+        ],
+        [
+          1.19,
+          1.232,
+          1.179
+        ],
+        [
+          1.184,
+          1.227,
+          1.173
+        ],
+        [
+          1.174,
+          1.219,
+          1.168
+        ],
+        [
+          1.162,
+          1.21,
+          1.162
+        ],
+        [
+          1.146,
+          1.199,
+          1.157
+        ],
+        [
+          1.127,
+          1.186,
+          1.151
+        ],
+        [
+          1.106,
+          1.171,
+          1.146
+        ],
+        [
+          1.082,
+          1.154,
+          1.141
+        ],
+        [
+          1.055,
+          1.137,
+          1.136
+        ],
+        [
+          1.028,
+          1.117,
+          1.132
+        ],
+        [
+          0.997,
+          1.097,
+          1.128
+        ],
+        [
+          0.968,
+          1.076,
+          1.125
+        ],
+        [
+          0.936,
+          1.054,
+          1.121
+        ],
+        [
+          0.905,
+          1.033,
+          1.118
+        ],
+        [
+          0.874,
+          1.011,
+          1.113
+        ],
+        [
+          0.843,
+          0.988,
+          1.109
+        ],
+        [
+          0.812,
+          0.965,
+          1.105
+        ],
+        [
+          0.784,
+          0.944,
+          1.099
+        ],
+        [
+          0.756,
+          0.921,
+          1.092
+        ],
+        [
+          0.729,
+          0.899,
+          1.085
+        ],
+        [
+          0.703,
+          0.877,
+          1.075
+        ],
+        [
+          0.678,
+          0.855,
+          1.063
+        ],
+        [
+          0.655,
+          0.833,
+          1.05
+        ],
+        [
+          0.633,
+          0.811,
+          1.035
+        ],
+        [
+          0.613,
+          0.79,
+          1.018
+        ],
+        [
+          0.592,
+          0.769,
+          0.999
+        ],
+        [
+          0.574,
+          0.747,
+          0.978
+        ],
+        [
+          0.556,
+          0.727,
+          0.957
+        ],
+        [
+          0.54,
+          0.706,
+          0.934
+        ],
+        [
+          0.524,
+          0.686,
+          0.91
+        ],
+        [
+          0.508,
+          0.667,
+          0.884
+        ],
+        [
+          0.494,
+          0.647,
+          0.861
+        ],
+        [
+          0.481,
+          0.629,
+          0.836
+        ],
+        [
+          0.468,
+          0.612,
+          0.813
+        ],
+        [
+          0.456,
+          0.595,
+          0.789
+        ],
+        [
+          0.445,
+          0.579,
+          0.768
+        ],
+        [
+          0.435,
+          0.564,
+          0.747
+        ],
+        [
+          0.425,
+          0.551,
+          0.728
+        ],
+        [
+          0.416,
+          0.538,
+          0.711
+        ],
+        [
+          0.408,
+          0.526,
+          0.694
+        ],
+        [
+          0.401,
+          0.516,
+          0.681
+        ],
+        [
+          0.394,
+          0.507,
+          0.668
+        ],
+        [
+          0.388,
+          0.499,
+          0.656
+        ],
+        [
+          0.383,
+          0.492,
+          0.648
+        ],
+        [
+          0.378,
+          0.486,
+          0.64
+        ],
+        [
+          0.375,
+          0.481,
+          0.633
+        ],
+        [
+          0.372,
+          0.477,
+          0.628
+        ],
+        [
+          0.37,
+          0.474,
+          0.624
+        ],
+        [
+          0.369,
+          0.473,
+          0.621
+        ],
+        [
+          0.367,
+          0.472,
+          0.62
+        ]
+      ],
+      "calm": {
+        "texels": 12,
+        "amount": 0.6,
+        "fine": 1.0
+      }
     }
   },
   "outer": {
@@ -638,87 +1146,21 @@
     }
   },
   "inner": {
-    "note": "near the sheet its inner rim is no edge either: inside the rim (ringfield.json inner, where the ice of the model begins) dark dust goes on to the globe, so the dark inner ring runs into the planet as in the approved close image and no sky shows between the two. depth: its normal optical depth at the rim and at the globe (end: the radius of the globe at the plane); fade: the length over which it dies away outward of the rim; light: the brightness that dust too deep to see through returns, at the rim and by the globe (it falls between the two radii of dark, planet radii: by the globe the dust is dark, as the dark inner ring of the approved close image that runs into the planet), as a share of what the ice at the radius like (planet radii, over the width of a zone) would return if it were too deep to see through, so the dust is the stuff of the thin inner ring; inset: its colour is that of the ice this far outside the rim; by: the share of its depth at the heights of the lens over the ring plane (planet radii), straight lines in the logarithm of the height between the knots: none at the height over which the model draws the far look alone (handover.kept.far) and above, so none of it in the hold, all with the lens low in the skim; the shares are set from the measured change of the pattern in the rise, the fastest way through these heights (the report of the pictures, 8 film frames apart), so that the lens passes equal changes of that measure in equal times: the dust never comes or goes within a few frames. The dust has all its depth with the lens at 0.35 and under, the lowest part of the skim; at the height of the approved close image (pose.height) it has 0.65 of it. It follows the height alone, the same way down and up. bands: it lies in ringlets, the plateaus of the ice past the outer rim (outer.bands): over, the distance inward of the rim over which the share that is a gap grows to gap; floor, the share of the depth a gap keeps. foot: the dust is a layer with a soft thickness, and with the lens low over the plane the view runs a long way through it in front of the foot of the globe: depth, its depth on that view at the plane with the lens in the skim (it is the same dust, so it has the same share of its depth at every height of the lens, by); height, the two heights over the plane (planet radii) between which it ends; ink, the light it returns in the Sun (scene linear).",
+    "note": "The thin sheet inside the inner rim (ringfield.json inner) is one body with the ring: the same matter with the same depth and the same ice at every height of the lens, in the hold, the dive, the skim and the rise alike. One law covers it and the ring: the cover of a point of the plane for a ray is 1 - exp(-tau(r) / |sin e|), tau the depth straight through the plane at the radius r and e the angle of the ray to the plane. Nothing of it follows the height of the lens, the distance or the clock. depth: tau at the rim and at the cloud tops (radius 1), a straight line between them. fade: the length inward of the rim over which the sheet ends, so that it lies inside the rim alone. ice: the sheet is dark ice of its own; where it is too deep to see through it returns this share of what the ice of the thin inner ring at the radius like returns there, the same at every radius. So against the black of the hold its own light is small, and in front of the lit globe of the skim, where the flat view runs a long way through it, it is a veil that takes light away. The same depth shades the globe behind it on the Sun's ray (grade.ts dustShadeAt) and is shaded by the globe (sheet.ts globeShadow); neither has a share of its own. The sheet takes no part in the grade of the rings by the height of the lens (light.grade). inset: the colour of the sheet's ice is read this far outside the rim. bands: the plateaus of its depth, as past the outer rim (over: the length inward of the rim over which they come in, gap: the share of them that is thinner, floor: the share of its depth a thinner one keeps). rings: the finer ringlets of its light, about the same mean (waves: their three widths, seed, gap: the share that is dark, floor: the share of its light a dark one keeps, amount: how far they show, soft, filter, lines, width: their edges as sheet.ts sheetBandsOf takes them). air: the sheet by the globe lies in the globe's twilight, where the Sun's light comes to it through the globe's air (depth straight up from the ground, and the height over which the air thins by e; grade.ts dustAir). end: the radius the plane is drawn from. foot: a layer of dust on the globe itself by the plane (depth on the view at the plane, the two heights over the plane between which it ends, its colour); its depth is 0, the film holds no such layer. The measurements stand in assets-src/saturn/NOTES-CODE.md.",
     "end": 1.0,
-    "depth": [
-      0.3,
-      0.6
-    ],
+    "depth": [0, 0],
     "fade": 0.02,
-    "light": [
-      0.3,
-      0.12
-    ],
+    "join": [0.0038, 0.0042],
+    "ice": 0.05,
+    "iceNote": "the thin sheet inside the inner rim is not drawn: depth 0 (ruled, d323). The numbers below it stay for the record of what was tried: depth is the depth at the rim and at the cloud tops, a straight line between, the same at every height of the lens; cover of a point for a ray = 1 - exp(-depth / sine of the ray to the plane), the law of the whole ring; ice is what its ice returns of the light the bright rings return at the same depth; join the two widths over which the sheet ends at the rim. Measured at the final tier, mean absolute level against the approved pictures at the frames 3465 and 3720 (main 4.7807 and 27.7989): no sheet 4.7768 and 28.0406; depth 0.05 with ice 0.05 (dark ice) 4.7784 and 28.0507; depth 0.05 with ice 1 (bright ice) 4.9556 and 27.7928. No sheet is the best of the three at the hold and better than the dark sheet at both frames; the bright sheet gains 0.25 at 3720 and loses 0.18 at the hold, where it puts bright ringlets on the black that the approved hero has between the globe and the rings. The approved close image has lit ring matter where the plane inward of the rim lies at this pose (its rings cross the globe about 6 degrees higher than a true plane does): one matter in one light cannot give that without filling the gap of the hold, so that part of frame 3720 is read apart",
     "inset": 0.012,
-    "by": {
-      "heights": [
-        0.35,
-        0.355,
-        0.359,
-        0.365,
-        0.37,
-        0.376,
-        0.383,
-        0.389,
-        0.396,
-        0.403,
-        0.411,
-        0.418,
-        0.426,
-        0.435,
-        0.444,
-        0.458,
-        0.475,
-        0.495,
-        0.519,
-        0.548,
-        0.58,
-        0.616,
-        0.657,
-        0.701,
-        0.751,
-        0.806,
-        0.866,
-        0.93
-      ],
-      "depth": [
-        1.0,
-        0.82,
-        0.702,
-        0.603,
-        0.539,
-        0.467,
-        0.407,
-        0.362,
-        0.329,
-        0.303,
-        0.28,
-        0.26,
-        0.243,
-        0.224,
-        0.211,
-        0.195,
-        0.18,
-        0.166,
-        0.151,
-        0.136,
-        0.123,
-        0.109,
-        0.095,
-        0.079,
-        0.061,
-        0.04,
-        0.02,
-        0.0
-      ]
-    },
     "bands": {
       "over": 0.12,
       "gap": 0.5,
-      "floor": 0.45
+      "floor": 0.75
     },
     "foot": {
-      "depth": 3.2,
+      "depth": 0,
       "height": [
         0.05,
         0.09
@@ -730,10 +1172,25 @@
       ]
     },
     "like": 1.33,
-    "dark": [
-      1.0,
-      1.06
-    ]
+    "rings": {
+      "waves": [
+        0.027,
+        0.014,
+        0.0075
+      ],
+      "seed": 41,
+      "gap": 0.5,
+      "floor": 0.6,
+      "amount": 1,
+      "soft": 0.3,
+      "filter": 0.7,
+      "lines": 0.5,
+      "width": 0.2
+    },
+    "air": {
+      "depth": 0.4,
+      "height": 0.09
+    }
   },
   "handover": {
     "note": "the dive and the rise: one flight through one world, no picture is swapped and no cover is drawn. at: the share of the dive or the rise at which the engine changes from the view in the frame of the globe to the view in the frame of the skim (both show the same world from the same lens); The sky does not follow that change nor any clock (sky below). Each move (the dive, the rise) is one move in four measures, each with one pace (plan.ts Pace): the rate of the measure goes from its rate in the motion before the move up to one largest value and down to its rate in the motion after it, by a steady change a frame on both sides; peak is the share of the move at which the rate turns at the top, or two shares between which the rate stays level at its largest value (a level top), and round the share of the move over which each of its turns is rounded: one share for all turns, or one for each turn in order (three with one peak: the start, the top, the end; four with a level top: the start, the two ends of the level, the end). reach: the distance of the lens to the globe's surface (its logarithm). climb: the height over the ring plane (its logarithm); in the rise it turns before the reach: the lens, which draws back from the end of the skim on (path.bend), lifts off the plane first and then draws back faster. round: the angle of the foot of the lens round the globe. view: the turn of the camera from the one motion's to the other's, and the field of view with it. rise.carry: the speed over the drift of the way out (planet radii a second, on that drift's own line) with which the rise ends: the rise ends in the middle of its brake, it does not speed up at its end, and the travel of the engine takes that speed and that brake over (src/director/film.ts carryOf), so the picture does not come to rest between the rise and the travel; the place at the end of the rise is the same with or without it. place.ahead: the place the tool watches is the point of the ring plane this far ahead of the foot of the lens at the middle of the skim.",
@@ -812,7 +1269,10 @@
         1
       ],
       "close": 0,
-      "view": 0.43,
+      "view": 0.55,
+      "model": 0.43,
+      "floor": 0.02,
+      "lawNote": "the one law of cover (ruled 12:23 UTC): the ring is one body at every height of the lens, so every view ray that crosses its plane is covered by 1 - exp(-depth / sine), sine that of the angle between the ray and the plane, floored only against the division (floor). The depth at a radius is the kept ring's own: what gives the kept opacity at the sine of the hold's eye (view: the sine from the lens of the judged hold frame 3465 to the ring where it passes in front of the globe, 0.52 at the inner rim, 0.55 at radius 1.5, 0.59 at radius 1.9). model: the sine at which assets-src/saturn/code/ring_model.py turned the kept opacity into the model's depth, so the model near the sheet counts its depth view / model times and reads the same law. The kept set (kept/rings.ts), the far look and the model near the sheet (sheet.ts) all read it: no share, no window, no height of the lens and no clock is in the cover. In front of the lit globe the kept ring lets 0.015 of the globe through at the sine of the hold's eye (kept/look.ts sheetThrough): that is the ring's own opacity there, and the same law carries it to every sine, in all three",
       "seam": 2,
       "seamNote": "the thin line outside the outer edge (the look's arc) is drawn at a footprint of at most this many times the footprint of the true radius of the plane, and only inside the span of the profile. At the reach of the profile the hero's shape ends, so the bent radius jumps there and the frame to frame measure of the footprint was huge on the pixel pairs that lie across that jump: the arc then read the coarsest level of the profile and drew a line of dashes there that moved with the pixel grid from frame to frame. Elsewhere the footprint is as before",
       "alone": "",
