@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T17:16:50.433Z",
+ "pushed": "2026-11-26T17:34:19.407Z",
  "head": "c9766f990a881dbfcb3e4ec184d21092bea5ae85",
- "note": "line A candidate c9766f99 (dashes cured, sent 17:07): 3150 at final measured, finals of 2997, 3296, 2895 drawing; the Builder's machines draw the rows",
+ "note": "answer to MAIL 1517: controls for M3 and M5 (the approved hold picture carries both), 3150 of the candidate c9766f99 at master final beside the approved at one to one",
  "looks": [
+  {
+   "time": "2026-11-26T17:34:18.257Z",
+   "file": "20261126173418257-note-f-3150.jpg",
+   "source": "../work/r27/final/f-3150.png",
+   "kind": "note",
+   "label": "3150 master final without grain on c9766f99, sha256 739da3f2441f20d9; line (i) 2.165 whole frame, bands green",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:34:17.069Z",
+   "file": "20261126173417069-note-f3150-lr.jpg",
+   "source": "../work/r27/t/f3150-lr.jpg",
+   "kind": "note",
+   "label": "3150 lower right at one to one: above the approved picture, below c9766f99 at master final; soft, glow blobs with reddish rims",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:34:15.785Z",
+   "file": "20261126173415785-note-f3150-ul.jpg",
+   "source": "../work/r27/t/f3150-ul.jpg",
+   "kind": "note",
+   "label": "3150 upper left at one to one: above the approved picture, below c9766f99 at master final; the storm flat and smeared where the approved has tall billows on its rim",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:34:14.794Z",
+   "file": "20261126173414794-note-m5-band.jpg",
+   "source": "../work/r27/t/m5-band.jpg",
+   "kind": "note",
+   "label": "M5 control, lower band near the night line: above the approved hold picture, below my hold 2895 at master final (1.5 times); the round pits stand in the approved picture at the same places",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:34:13.579Z",
+   "file": "20261126173413579-note-m5-band-l.jpg",
+   "source": "../work/r27/t/m5-band-l.jpg",
+   "kind": "note",
+   "label": "M5 control, lower band left: above the approved hold picture, below my hold 2895 at master final (1.5 times); the round pits stand in the approved picture",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T17:34:12.349Z",
+   "file": "20261126173412349-note-hero-belt.jpg",
+   "source": "../work/r27/t/hero-belt.jpg",
+   "kind": "note",
+   "label": "M3 control: the approved hold picture itself (references/approved/jupiter-hero.png, one to one), the belt north west of the Red Spot: the pressed folds and glints are painted in it",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T17:16:48.914Z",
    "file": "20261126171648914-note-f-3150.jpg",
@@ -146,54 +194,6 @@
    "source": "../work/r27/t/cell4-pair.jpg",
    "kind": "note",
    "label": "3285 crop: above the state as pushed, below with the band limit of the bake doubled, dashes gone there",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:22:01.079Z",
-   "file": "20261126162201079-note-s-3285.jpg",
-   "source": "../work/r27/sv/s-3285.png",
-   "kind": "note",
-   "label": "RED 3285 preview draft on 14af1ae7: thin dark dashes over the ground on the rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:22:00.413Z",
-   "file": "20261126162200413-note-s-3015.jpg",
-   "source": "../work/r27/sv/s-3015.png",
-   "kind": "note",
-   "label": "RED 3015 preview draft on 14af1ae7: thin dark dashes over the ground on the dive, cause being searched",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:53:54.437Z",
-   "file": "20261126155354437-note-cut-3150.jpg",
-   "source": "../work/r27/t/cut-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, drawn at b092c2b9: line (i) 2.208 whole frame, 2.121 outside the seven cells, bands green; master final not drawn yet, not redrawn after the cure",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:53:53.823Z",
-   "file": "20261126155353823-note-s-3260.jpg",
-   "source": "../work/r27/sv/s-3260.png",
-   "kind": "note",
-   "label": "rise 3260 at 14af1ae7, preview draft, from the survey of every fifth frame of dive and rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:53:53.229Z",
-   "file": "20261126155353229-note-s-3250.jpg",
-   "source": "../work/r27/sv/s-3250.png",
-   "kind": "note",
-   "label": "rise 3250 at 14af1ae7, preview draft, from the survey of every fifth frame of dive and rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:53:52.302Z",
-   "file": "20261126155352302-note-star-3270.jpg",
-   "source": "../work/r27/t/star-3270.png",
-   "kind": "note",
-   "label": "rise 3270 after the cure (14af1ae7), preview draft: the baked relief starts at the point under the camera, no star seen",
    "stop": "jupiter"
   }
  ]
