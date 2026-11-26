@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T12:55:16.070Z",
+ "pushed": "2026-11-26T13:22:28.344Z",
  "head": "ac0ffdda4556604bab51364ff72fee4f837d8a0f",
- "note": "Z46 state set (level 0.8), rise drafts looked at every frame of the sheet; finals 90, 60, 0, 360 drawing. sun-near 60 at the name: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "note": "13:23 Z52 at draft: fountains end in the air as a spray, floor 0.9 so thin strands are lines with beads, pools yellower. Finals of Z46 stopped after 90 (whole plain 35.0962, main 29.6374); chain for Z52 runs. sun-near 60 of the name ac0ffdda (ground unchanged): dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T13:22:27.293Z",
+   "file": "20261126132227293-note-foot-Z52.jpg",
+   "source": "../../../../tmp/v/foot-Z52.jpg",
+   "kind": "note",
+   "label": "13:22 trial Z52 at draft, frame 90, both feet at twice size: approved left, this state right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T13:22:26.617Z",
+   "file": "20261126132226617-note-a-Z52-90.jpg",
+   "source": "../../../../tmp/v/a-Z52-90.jpg",
+   "kind": "note",
+   "label": "13:22 trial Z52 at draft, frame 90: approved above, this state below (spray from the feet, strands with a higher floor between beads)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T12:55:15.351Z",
    "file": "20261126125515351-note-foot-Z45.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/a-Z41-90.jpg",
    "kind": "note",
    "label": "trial Z41 draft 90 under the approved: thinner strands, ropes cross with dark gaps, fan and pool at each foot, rigid dark sky",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T12:14:42.754Z",
-   "file": "20261126121442754-note-foot-Z34.jpg",
-   "source": "../../../../tmp/v/foot-Z34.jpg",
-   "kind": "note",
-   "label": "trial Z34 left foot twice size beside the approved: fountain reads as cables and the pool as an egg, to be cured next",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T12:14:42.161Z",
-   "file": "20261126121442161-note-a-Z34-90.jpg",
-   "source": "../../../../tmp/v/a-Z34-90.jpg",
-   "kind": "note",
-   "label": "trial Z34 draft 90 under the approved: strands ripple and cross, ropes unlike in light, low arches thin; rigid dark sky",
    "stop": "sun"
   }
  ]
