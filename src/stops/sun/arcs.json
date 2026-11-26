@@ -1,0 +1,458 @@
+{
+  "note": "The arcade as bodies in space (MAIL 1010, MAIL 1029 point 2 and 3). Lengths are stage units (the ball's radius is terrain.json radius), angles degrees, speeds stage units a second along the strand. Every strand is a fixed line; what moves is the plasma along it, at one steady speed for each strand. least: the half width of a strand's tube, in pixels of the master's frame, under which it is no line any more. thin: over this range of a tube's true half width against least (0.45 down to 0.15) its light goes from the line of a tube to one soft bell over its whole band, with the same sum across in linear light. band: the least half width in pixels of the whole band a strand is drawn with, tube and sheath together; a band that would be narrower keeps that width and its light falls by the same share. The least belongs to the band and not to the tube, so a wider sheath does not widen what a far strand is drawn with. along: the pattern of the plasma along a strand goes to its own mean over this range of its steps under one pixel (0.25: four pixels to a step, 1: one), the sparks by their own finer steps, so a far strand gives the same light and does not glitter. light sheath: how many times the tube's width the thin sheath around it is wide, and its light against the most the tube's own gas gives there (never more than light most). light cool and hot: the colour of a faint and of a bright strand as the finished frame shows it, in linear light. leave lines and px (MAIL 1421): the arcade gives its whole light while it stands at least px[1] rows tall in a frame of lines rows, and none under px[0]; between them its share is a smooth step in the logarithm of that size, one law of the distance at every frame. Measured through the film's own shot (assets-src/sun/place/arcsize.ts, rows of 2160): 679 at frame 0, 744 at 60, 788 at 90, 832 at 120, 789 at 179, 535 at 203, 451 at 208, 434 at 209, 418 at 210, 327 at 216, 261 at 221, 216 at 225, 178 at 229, 146 at 233, 140 at 234, 133 at 235, 116 at 238, 68 at the hold. Its loops can be told apart down to about 150 rows; from about 120 the body is a haze with a few soft dots. So it is whole in the close view and up to frame 209, falls over the 25 frames after and gives nothing from frame 235 on, at the hold and in the travel. leave under: where the ball is not in the depth buffer (the far Sun draws the arcade in a pass without depth) a strand behind a ball this far under the true radius, as the eye sees it, gives no light. shape (MAIL 1427 b, fitted to the approved close picture as frame 90 shows it): height the height in stage units that the heights of the kinds are shares of; power the form of the rise, the height times the sine to this power (1 a round top, more a narrower one), each strand its own between the two values; bulge how much wider than its feet an arch stands at its top (under 0: drawn in); skew how far the top leans toward one foot; wave the turn out of its plane; sink how far its ends stand under the ground. shape side: the two sides are not alike, the left foot's side first: bulge is added at the shoulder (by the square of the height), round stands out beyond the foot low down (most at half the height, nothing at the foot and at the top). main bundles and unlike: the bundles are of unlike size, a strand takes bundle floor(x to the power unlike times bundles) for x from 0 to 1, so the first hold the most. main inBundle: the share of the arches that run in a bundle; the rest stand alone (loose radius and gain: their share of the radius and of the light; loose heights: their own range of heights). main heights and shell: the range of a bundle's height and how many stand near the outer shell (shell under 1: most). main feet: how far from the foot's middle a bundle may stand, along the axis and across it. main spread wide: a bundle is as wide as spread times this, the largest bundle the first value, the smallest the second; spread shape: how far a strand's own form may differ from its bundle's. main gain and dim: a strand's light between the two values by x to the power dim, so few are bright; thinGain: the share of that light a strand of the least radius keeps (a thick one keeps all). main back: the share of the arches whose plasma runs the other way. drips: lines that leave an arch and fall inside it: from where along the arch, inward how far toward the middle of the arcade they come down, hook how far a line runs on along the arch before it falls; begin and fall: the line is drawn from begin along the way down for the share fall, open at both ends, so it is a streak in the air and not a post to the ground. fountains: short arcs thrown out of a foot (foot 0 the left): reach how far, tall how high against the reach, most the greatest height, turnDeg the fan about the axis away from the other foot, leanDeg the lean of a throw, power and skew its form (the top nearer the foot than the place it falls to). fountains spray: the share of the throws that do not come down as a whole loop but end in the air (part: after this share of the way, each its own; skew: the form of such a throw, which flies out as it rises); such a throw has its full light at the foot and fades toward its open end only, so a foot throws a spray and a few loops close. light foot: how many times brighter a strand is at a foot of the arcade and the distance from the nearer foot over which that falls away (the distance from the foot and not the height over the ground: a throw or a drip that comes down somewhere else lands thin and dim). light floor, blobs and sparks: the plasma along a strand is the floor, plus the first value of blobs times its slow pattern to the power of the second, plus the same of sparks for the fine one; the floor is the light of the strand between two beads, so with a high floor a thin strand is a line with beads on it and not a row of dots. ground beat: the share of the stage's glow map under the feet that the arcade lights; 0, the map's red and green show as a patch at more. MAIL 1463 (a body whose beads move along standing strands; the fan from each foot, the pool at the foot, thinner strands, ropes that cross): shape inner: a low arch has its top nearer the second foot than a high one, by this share of its height at the lowest, so the inner arches lean in over the hollow from the first foot. shape outer (the first foot's side and the second's): added to round for the highest arches and nothing for the lowest, so the outer arches leave a foot outward and the inner ones inward, a fan from the foot. shape ripple: the height of a strand goes up and down along it by two slow waves of its own, in shares of its height, nothing at the feet, so the strands of one rope cross and part again. feet in: how far inside the two places of the ground the legs come down, toward the other foot (the first foot's and the second's); the place between the feet and the axis stay those of the ground. main low: an arch lower than heights[0] of the shape's height keeps the share gain of its light and the share radius of its radius, one higher than heights[1] all of both, a smooth step between, so the band has no hard inner edge and the inner arches are fine lines. main low spread: a low rope is looser than a high one, its strands so many times further apart in height and in lean at the lowest, so under the band stands a fan of single lines and not one more rope with an edge. main leanDeg: the range of the lean of an arch out of the plane of the feet; with a lean of 20 and more to the first value's side two bright ropes stood under the band in frame 90 as a second band with a hard edge, so that side ends at 12. main spread twist: the strands of a rope wind about it, this far off its middle at the top (times the rope's width) and this many turns from foot to foot, each rope one way or the other. main spread gain: each rope has a level of light of its own between the two values, so a few burn and others are dim. light cover: the power of a strand's light by which it hides what is behind it (1: by its light), so a bright strand hides the stars and the strands behind it and a faint one does not. light wide: a tube is 1 plus this many times as wide at a foot, falling off over this distance from the nearer foot, so the strands of a leg close into one body at the foot. pools: the white hot gas a leg stands in, bells of gas at a foot (foot 0 the first): size how wide along the ground and how high, lift how far over the ground its middle stands, card how many widths the card that carries it is wide, level its light. A pool is drawn over the strands (the look passes through its gas before it comes to them, so the lowest part of a leg stands inside its light and the strands come out of it above) and its light at a pixel is the gas the look passes through before the ground ends it. pools shift: how far further out along the axis than the foot a pool stands. light pool: the light at which a pool's gas stands halfway between the cool colour and the hot one, the most a channel may hold, and the share of what is behind it that a pool at its fullest hides (it lights the ground more than it hides it). feet fan: a high arch stands further out at a foot than a low one, by so many stage units at the highest (the first foot's and the second's), so a leg is a broad sheet that opens outward and not one rope. haze: the thin gas the strands stand in, count round balls of the pools' own kind along the middle arch from foot to foot (height: its top over the ground; skew: its lean toward the first foot, in shares of the height; size: the width of a ball; card and level as a pool's), drawn under the strands: a faint body of light about the arcade and in the hollow under it, fixed in the stage, that leaves with the arcade by the same share. lit: the light of the pools on what stands in them and behind them, balls as the pools' (foot, size, lift, card, shift; level: by how much of itself a thing in the middle of the ball is seen brighter, before the ground cuts the look). It is laid on the picture after the strands and under the pools' own gas: the ground about a foot keeps its cells and is brighter, the strands of a leg are white hot at the foot by their own light, and where only the sky is behind it it adds nothing. It leaves with the arcade by the same share. Feet as frame 90 shows them (whitest box of 50 pixels at 1920): approved (744, 542) and (1371, 577); this arcade at draft is read again in the notebook with each state.",
+  "seed": 9173,
+  "least": 0.7,
+  "band": 2.45,
+  "thin": [
+    0.15,
+    0.45
+  ],
+  "along": [
+    0.25,
+    1.0
+  ],
+  "shape": {
+    "height": 1.14,
+    "power": [
+      1.0,
+      1.4
+    ],
+    "bulge": [
+      -0.08,
+      0.08
+    ],
+    "skew": [
+      -0.41,
+      0.09
+    ],
+    "wave": [
+      0.1,
+      0.045
+    ],
+    "sink": 0.02,
+    "side": {
+      "bulge": [
+        0.0,
+        0.0
+      ],
+      "round": [
+        0.08,
+        0.03
+      ]
+    },
+    "inner": 0.3,
+    "ripple": [
+      0.06,
+      0.03
+    ],
+    "outer": [
+      0.05,
+      0.02
+    ]
+  },
+  "main": {
+    "count": 150,
+    "segments": 64,
+    "bundles": 9,
+    "inBundle": 0.72,
+    "leanDeg": [
+      -12,
+      24
+    ],
+    "heights": [
+      0.55,
+      1.0
+    ],
+    "shell": 0.55,
+    "feet": [
+      0.1,
+      0.05
+    ],
+    "unlike": 1.6,
+    "spread": {
+      "leanDeg": 4.5,
+      "height": 0.045,
+      "feet": 0.03,
+      "wide": [
+        0.8,
+        0.3
+      ],
+      "shape": 0.6,
+      "twist": [
+        0.05,
+        0.35
+      ],
+      "gain": [
+        0.3,
+        2.2
+      ]
+    },
+    "loose": {
+      "radius": 0.7,
+      "gain": 0.4,
+      "heights": [
+        0.6,
+        1.08
+      ]
+    },
+    "radius": [
+      0.0008,
+      0.0045
+    ],
+    "gain": [
+      0.12,
+      1.0
+    ],
+    "speed": [
+      0.2,
+      0.42
+    ],
+    "back": 0.22,
+    "clump": [
+      0.05,
+      0.2
+    ],
+    "dim": 3.0,
+    "thinGain": 0.6,
+    "low": {
+      "heights": [
+        0.62,
+        0.95
+      ],
+      "gain": 0.3,
+      "radius": 0.55,
+      "spread": 3.0
+    }
+  },
+  "drips": {
+    "count": 110,
+    "segments": 22,
+    "from": [
+      0.15,
+      0.85
+    ],
+    "heights": [
+      0.5,
+      1.0
+    ],
+    "leanDeg": [
+      -34,
+      28
+    ],
+    "inward": 0.3,
+    "radius": [
+      0.0008,
+      0.0018
+    ],
+    "gain": [
+      0.25,
+      0.7
+    ],
+    "speed": [
+      0.45,
+      0.8
+    ],
+    "clump": [
+      0.04,
+      0.12
+    ],
+    "hook": 0.2,
+    "fall": [
+      0.25,
+      0.7
+    ],
+    "begin": [
+      0.0,
+      0.2
+    ]
+  },
+  "fountains": [
+    {
+      "foot": 0,
+      "count": 80,
+      "segments": 26,
+      "reach": [
+        0.08,
+        0.75
+      ],
+      "tall": [
+        1.2,
+        3.0
+      ],
+      "most": 0.6,
+      "turnDeg": [
+        -70,
+        60
+      ],
+      "feet": 0.02,
+      "radius": [
+        0.0008,
+        0.0022
+      ],
+      "gain": [
+        0.15,
+        0.5
+      ],
+      "speed": [
+        0.35,
+        0.7
+      ],
+      "clump": [
+        0.1,
+        0.26
+      ],
+      "leanDeg": 10,
+      "power": [
+        1.3,
+        2.0
+      ],
+      "skew": [
+        -0.45,
+        -0.1
+      ],
+      "spray": {
+        "share": 0.65,
+        "part": [
+          0.2,
+          0.55
+        ],
+        "skew": [
+          0.0,
+          0.4
+        ]
+      }
+    },
+    {
+      "foot": 1,
+      "count": 40,
+      "segments": 22,
+      "reach": [
+        0.08,
+        0.32
+      ],
+      "tall": [
+        0.7,
+        1.6
+      ],
+      "most": 0.45,
+      "turnDeg": [
+        -80,
+        80
+      ],
+      "feet": 0.02,
+      "radius": [
+        0.0008,
+        0.002
+      ],
+      "gain": [
+        0.15,
+        0.5
+      ],
+      "speed": [
+        0.35,
+        0.7
+      ],
+      "clump": [
+        0.1,
+        0.24
+      ],
+      "leanDeg": 20,
+      "power": [
+        1.3,
+        2.0
+      ],
+      "skew": [
+        -0.45,
+        -0.1
+      ],
+      "spray": {
+        "share": 0.85,
+        "part": [
+          0.2,
+          0.55
+        ],
+        "skew": [
+          0.0,
+          0.4
+        ]
+      }
+    }
+  ],
+  "light": {
+    "level": 0.52,
+    "floor": 0.9,
+    "blobs": [
+      1.2,
+      2.2
+    ],
+    "sparks": [
+      2.0,
+      9.0
+    ],
+    "fine": 7.0,
+    "foot": [
+      7,
+      0.5
+    ],
+    "ends": 0.18,
+    "cool": [
+      1.0,
+      0.24,
+      0.03
+    ],
+    "hot": [
+      1.0,
+      0.86,
+      0.52
+    ],
+    "knee": 4.5,
+    "most": 0.97,
+    "thick": 1.0,
+    "sheath": [
+      6.0,
+      0.03
+    ],
+    "cover": 0.6,
+    "wide": [
+      2.5,
+      0.3
+    ],
+    "pool": [
+      3.5,
+      0.97,
+      0.2
+    ]
+  },
+  "ground": {
+    "beat": 0.0
+  },
+  "leave": {
+    "lines": 2160,
+    "px": [
+      135,
+      420
+    ],
+    "under": 0.04
+  },
+  "pools": [
+    {
+      "foot": 0,
+      "size": [
+        0.14,
+        0.05
+      ],
+      "lift": 0.02,
+      "card": 3.2,
+      "level": 2.4,
+      "shift": 0.012
+    },
+    {
+      "foot": 0,
+      "size": [
+        0.22,
+        0.05
+      ],
+      "lift": 0.0,
+      "card": 3.2,
+      "level": 1.1,
+      "shift": 0.012
+    },
+    {
+      "foot": 0,
+      "size": [
+        0.5,
+        0.1
+      ],
+      "lift": 0.0,
+      "card": 3.2,
+      "level": 0.08,
+      "shift": 0.012
+    },
+    {
+      "foot": 1,
+      "size": [
+        0.13,
+        0.05
+      ],
+      "lift": 0.02,
+      "card": 3.2,
+      "level": 2.2,
+      "shift": 0.01
+    },
+    {
+      "foot": 1,
+      "size": [
+        0.2,
+        0.045
+      ],
+      "lift": 0.0,
+      "card": 3.2,
+      "level": 1.0,
+      "shift": 0.01
+    },
+    {
+      "foot": 1,
+      "size": [
+        0.42,
+        0.09
+      ],
+      "lift": 0.0,
+      "card": 3.2,
+      "level": 0.07,
+      "shift": 0.01
+    },
+    {
+      "foot": 0,
+      "size": [
+        0.2,
+        0.3
+      ],
+      "lift": 0.16,
+      "card": 3.2,
+      "level": 0.05,
+      "shift": 0.0
+    }
+  ],
+  "feet": {
+    "in": [
+      0.11,
+      0.0
+    ],
+    "fan": [
+      0.03,
+      0.11
+    ]
+  },
+  "haze": {
+    "count": 11,
+    "height": 0.95,
+    "skew": -0.16,
+    "size": 0.3,
+    "card": 3.2,
+    "level": 0.015
+  },
+  "lit": [
+    {
+      "foot": 0,
+      "size": [
+        0.4,
+        0.08
+      ],
+      "lift": 0.0,
+      "card": 3.2,
+      "level": 14,
+      "shift": 0.012
+    },
+    {
+      "foot": 1,
+      "size": [
+        0.36,
+        0.075
+      ],
+      "lift": 0.0,
+      "card": 3.2,
+      "level": 12,
+      "shift": 0.01
+    }
+  ]
+}

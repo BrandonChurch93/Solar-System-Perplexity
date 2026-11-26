@@ -17,13 +17,13 @@ export const params: MoveParams = {
   terrain: { vfov: 55, gather: -0.5, forward: 2.0, rise: -0.1, side: 0.7, yawDeg: 8, pitchDeg: 8, horizonDeg: 3.2, dipDeg: 17.5, entryHeight: 0.9, entryBack: 1.1, entryPitchDeg: 4.8, exitHeight: 1.6, exitForward: -0.6, exitPitchDeg: -12, ground: 0.6 },
   rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.6, offset: [0, 0], driftSpeed: 0.05, rollDeg: 0, settle: 2 },
   travel: { turnDeg: 26, side: 1 },
-  light: { exposure: 1, skyExposure: 0.45, sunRadiusDeg: 5, sunGlare: 1, flare: 0.35 },
+  light: { exposure: 1, skyExposure: 0.45, terrainSkyGlow: place.onGlobe.closeSky.glow, sunRadiusDeg: 5, sunGlare: 1, flare: 0.35 },
   cover: [2.8, 1.05, 0.28],
   handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames, skyFrames: place.rise.skyFrames, picture: place.rise.picture, pace: place.rise.law.pace as HandoverSide['pace'], turn: place.rise.law.turn as HandoverSide['turn'], liftPower: place.rise.law.liftPower } },
   spinDegPerSecond: 3.4,
   moonDegPerSecond: 0,
   tint: [1, 0.8, 0.4],
-  skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: [8.48669, -141.8932, 32.09218] },
+  skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: place.onGlobe.skyAim as [number, number, number] },
 }
 
 export const climb = { ease: { over: 1.3, speed: 0.095 } }
@@ -206,6 +206,15 @@ export class SunPlan extends StopPlan {
     if (seg.kind !== 'rise') return null
     const [from, to] = place.onGlobe.heights.sky as [number, number]
     return { low: 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to)) }
+  }
+
+  // The sky's turn from the close view's frame to the hold's is read from the height of the lens as well (place.json
+  // onGlobe.heights.carry, a smooth step in the logarithm of the height), not from the clock (MAIL 1146 point 3):
+  // 1 is the close view's sky, 0 the hold's
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    if (seg.kind !== 'rise') return null
+    const [from, to] = place.onGlobe.heights.carry as [number, number]
+    return 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to))
   }
 }
 
