@@ -277,7 +277,6 @@ export const createSet: SetFactory = async (ctx) => {
       const d = look.descent
       const low = ending ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-4)) - Math.log(d.low)) / (Math.log(d.high) - Math.log(d.low)))
       const pu = planet.material.uniforms
-      ;(pu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, low)
       ;(pu.uGrazingShape!.value as THREE.Vector4).x = look.grazing.depth * (1 - low)
       const detail = look.obliqueDetail
       const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
@@ -292,6 +291,9 @@ export const createSet: SetFactory = async (ctx) => {
       const su = shell.material.uniforms
       const n = nearJson
       const near = ending || diveT === undefined ? 0 : 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(n.low)) / (Math.log(n.high) - Math.log(n.low)))
+      // One grade (MAIL 1401 (a)): the tint is the hold's own, 1, at every height above near.high. From there down it goes with the rest
+      // of the near blend to the close view's, on ground and air alike.
+      ;(pu.uTint!.value as THREE.Vector3).set(1, 1, 1).lerp(tintLow, near)
       const mix = (v: THREE.Vector3, by: number[]): void => { v.set(v.x * (1 + (by[0]! - 1) * near), v.y * (1 + (by[1]! - 1) * near), v.z * (1 + (by[2]! - 1) * near)) }
       mix(pu.uTint!.value as THREE.Vector3, n.tint)
       // One air (MAIL 1383): the globe's air is the hold's at every height, its colour, depth, scale height and day edge, and the tint
@@ -341,10 +343,10 @@ export const createSet: SetFactory = async (ctx) => {
         const a = table[i]!
         const b = table[i + 1]!
         const k = Math.min(Math.max((Math.log(a.height) - height) / (Math.log(a.height) - Math.log(b.height)), 0), 1)
-        // a lit level is multiplied with the descent tint, 1 high up and descent.tint near the ground, where the plates
+        // a lit level is multiplied with the descent tint, 1 above near.high and descent.tint at the ground, where the plates
         // were made: the own levels follow it by tintFollow
         // and the tint of near.json the same way: the plates hold the look at the height of the place picture
-        for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * low) / d.tint[c]! - 1)) * ((1 + (n.tint[c]! - 1) * near) / n.tint[c]!) * sunTone[c]!
+        for (let c = 0; c < 3; c++) ownGain[c] = (a.gain[c]! + (b.gain[c]! - a.gain[c]!) * k) * (1 + n.ownGain.tintFollow * ((1 + (d.tint[c]! - 1) * near) / d.tint[c]! - 1)) * ((1 + (n.tint[c]! - 1) * near) / n.tint[c]!) * sunTone[c]!
       }
       if (hasOwn) planet.setOwnGain(ownGain)
       // The body's turn goes into the mesh, in double precision, and the planet is handed what is left of the spin, by the eye's height

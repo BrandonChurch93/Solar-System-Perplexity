@@ -50,8 +50,9 @@ export const storm = { degPerSecond: 1.1 }
 export const descent = {
   high: 0.7,
   low: 0.05,
-  // One ground under one air (MAIL 1383): the air of the globe is the hold's at every height, and this tint lies on the ground and on
-  // the air's light alike, so it is a grade of the planet's picture and no second look of the ground. Its value is the one at which
+  // One ground under one air (MAIL 1383, 1401): above near.high (near.json) the air of the globe is the hold's and the grade is the
+  // hold's, 1. This tint comes in with the near blend from there down and lies on the ground and on the air's light alike. high and
+  // low here key only the hold's grazing veil, its detail blur, the vignette and the halo. The tint's value is the one at which
   // the lit map is drawn as the land plates are where both show the same ground (asdrawn.py, the common part: 0.4, 0.335, 0.28 times
   // 1.2047, 1.4879, 1.5352).
   tint: [0.4819, 0.4984, 0.4299] as [number, number, number],
