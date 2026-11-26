@@ -1,9 +1,51 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T11:25:27.659Z",
+ "pushed": "2026-11-26T11:56:26.890Z",
  "head": "8ed55e3f4e5511090906eda915df73f2c03b7fc6",
- "note": "cure 8ed55e3f named at 11:24; 3866 side by side with main; rise part 2 read green at 0.2486",
+ "note": "the two places mail 1468 asks about, from the reader's own rows: 3814 in the rise and 3626 in the dive",
  "looks": [
+  {
+   "time": "2026-11-26T11:56:21.598Z",
+   "file": "20261126115621598-note-reg3866_excess.jpg",
+   "source": "../../../../tmp/v/rigid/G1/reg3866_excess.png",
+   "kind": "note",
+   "label": "3866 registered to the hero, where the cure is further than main's"
+  },
+  {
+   "time": "2026-11-26T11:56:20.945Z",
+   "file": "20261126115620945-note-pat3814_crops.jpg",
+   "source": "../../../../tmp/v/rigid/G1/pat3814_crops.jpg",
+   "kind": "note",
+   "label": "the place of the largest pattern, 3814 and 3822 on the cure, pixel 1044 to 1364 by 696 to 976 twice enlarged: the dusk above the near ring's inner edge"
+  },
+  {
+   "time": "2026-11-26T11:56:19.810Z",
+   "file": "20261126115619810-note-popwhere_7253.jpg",
+   "source": "../../../../tmp/v/rigid/G1/popwhere_7253.png",
+   "kind": "note",
+   "label": "pair 3626 + 1/2 on the cure, reduced reading: red where it leaves more than the median of the 32 pairs around it, blue where less"
+  },
+  {
+   "time": "2026-11-26T11:56:18.635Z",
+   "file": "20261126115618635-note-popwhere_7629.jpg",
+   "source": "../../../../tmp/v/rigid/G1/popwhere_7629.png",
+   "kind": "note",
+   "label": "pair 3814 + 1/2 on the cure, reduced reading: red where it leaves more than the median of the 32 pairs around it, blue where less"
+  },
+  {
+   "time": "2026-11-26T11:56:17.462Z",
+   "file": "20261126115617462-note-cure_dive_k7244-7258-pops.jpg",
+   "source": "../../../../tmp/v/rigid/G1/cure_dive_k7244-7258-pops.png",
+   "kind": "note",
+   "label": "the reader's pops on the cure, dive 3622 to 3629: what is left lies on the near ring arm's lanes"
+  },
+  {
+   "time": "2026-11-26T11:56:16.110Z",
+   "file": "20261126115616110-note-cure_rise_k7620-7632-pops.jpg",
+   "source": "../../../../tmp/v/rigid/G1/cure_rise_k7620-7632-pops.png",
+   "kind": "note",
+   "label": "the reader's pops on the cure, rise 3810 to 3816: what is left lies on the near ring arm's lanes and the limb line"
+  },
   {
    "time": "2026-11-26T11:25:27.083Z",
    "file": "20261126112527083-note-cure_rise2_changes.jpg",
@@ -17,48 +59,6 @@
    "source": "../../../../tmp/v/rigid/G1/sbs_3866_crops.jpg",
    "kind": "note",
    "label": "3866 draft at full size, main above, cure 8ed55e3f below: day side, dusk, far ring arm, near ring arm"
-  },
-  {
-   "time": "2026-11-26T11:25:25.995Z",
-   "file": "20261126112525995-note-sbs_3866_whole.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sbs_3866_whole.jpg",
-   "kind": "note",
-   "label": "3866 draft, main left, cure 8ed55e3f right: equal lens and size, the globe 25.5 px left and 6.4 px down, the ring lower and greyer"
-  },
-  {
-   "time": "2026-11-26T11:16:38.103Z",
-   "file": "20261126111638103-note-cure_rise_3852.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sheets/cure_rise_3852.jpg",
-   "kind": "note",
-   "label": "cure 8ed55e3f: every whole frame of the rise from 3852, twelve a sheet"
-  },
-  {
-   "time": "2026-11-26T11:16:37.139Z",
-   "file": "20261126111637139-note-cure_rise_3840.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sheets/cure_rise_3840.jpg",
-   "kind": "note",
-   "label": "cure 8ed55e3f: every whole frame of the rise from 3840, twelve a sheet"
-  },
-  {
-   "time": "2026-11-26T11:16:36.071Z",
-   "file": "20261126111636071-note-cure_rise_3828.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sheets/cure_rise_3828.jpg",
-   "kind": "note",
-   "label": "cure 8ed55e3f: every whole frame of the rise from 3828, twelve a sheet"
-  },
-  {
-   "time": "2026-11-26T11:16:35.446Z",
-   "file": "20261126111635446-note-cure_rise_3816.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sheets/cure_rise_3816.jpg",
-   "kind": "note",
-   "label": "cure 8ed55e3f: every whole frame of the rise from 3816, twelve a sheet"
-  },
-  {
-   "time": "2026-11-26T11:16:34.633Z",
-   "file": "20261126111634633-note-cure_spot_3840.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sheets/cure_spot_3840.jpg",
-   "kind": "note",
-   "label": "cure 8ed55e3f: every frame from 3840, twelve a sheet, the dusk by the ring's inner edge at full size (crop 1000 to 1480, 690 to 960)"
   }
  ]
 }
