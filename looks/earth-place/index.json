@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T19:20:16.689Z",
+ "pushed": "2026-11-26T19:51:33.011Z",
  "head": "774abe6a9a625ca12ecfece9d2420d36ee1a1c30",
- "note": "19:22 ruling (i) begun: main's puffs over the Gulf read as a cover for the field's bodies; bake running, nothing drawn yet",
+ "note": "sea bodies: second bake too thin, cause found in the cover's cloud rule, third bake running",
  "looks": [
+  {
+   "time": "2026-11-26T19:51:32.377Z",
+   "file": "20261126195132377-note-dbg2.jpg",
+   "source": "../../../../tmp/gl/k24/R/dbg2.jpg",
+   "kind": "note",
+   "label": "19:50 the cause: main's level, its cloud read as brighter than the hold's level (rise 0.1 to 0.3), kept over sea, the hold's level; the rule before read only the brightest rims",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T19:51:31.477Z",
+   "file": "20261126195131477-note-p24-gulf2-new.jpg",
+   "source": "../../../../tmp/gl/k24/R/p24-gulf2-new.jpg",
+   "kind": "note",
+   "label": "19:45 second bake of the sea bodies, level 24 crop over the Gulf: mine left, main right; mine far under main's amount",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T19:20:15.165Z",
    "file": "20261126192015165-note-sea-look.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k24/Q/ctl3-3776-half.jpg",
    "kind": "note",
    "label": "1888 (k3776) draft, shutter closed: as it stands beside the standing bodies off. The sown field of specks over the dark sea stays, so it is not the standing law",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T18:32:23.822Z",
-   "file": "20261126183223822-note-pair-1857-hatch-x3.jpg",
-   "source": "../../../../tmp/gl/k24/Q/pair-1857-hatch-x3.jpg",
-   "kind": "note",
-   "label": "1857 final, cloud west of Central America at 3 times: mine left carries a comb, main right does not",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T18:32:23.197Z",
-   "file": "20261126183223197-note-pair-1857-gulf.jpg",
-   "source": "../../../../tmp/gl/k24/Q/pair-1857-gulf.jpg",
-   "kind": "note",
-   "label": "1857 final, Gulf window: mine left, main right (main's drawn on the merged tree)",
    "stop": "earth"
   }
  ]
