@@ -1,0 +1,44 @@
+# Far Sun wiring for the sky and the engine (src/space/sky.ts, src/core/engine.ts), asked in MAIL 1176.
+# The sky's pass is drawn through the sky orientation of the middle of the shutter, and the far Sun was set
+#   and drawn through that same camera: its body, corona, loops, rays and lens light stood still across
+#   the shutter while the camera turned, so a turn gave a sharp limb where the film asks for a smooth blur.
+# The engine hands the sky the orientation of the sample it draws as one more argument, and the sky turns
+#   its camera to it for the far Sun's set and draw alone. The stars and the band keep the middle one.
+# Where the two are the same bits (every frame of one sample, every sample of a camera that does not turn)
+#   the frame keeps its bytes. Without the argument the sky uses the middle one, as before.
+#   tests/farsun-share.test.ts holds each half with a test of its own and is red until both are laid.
+diff --git a/src/core/engine.ts b/src/core/engine.ts
+index 07dcf5f6..e5e9750e 100644
+--- a/src/core/engine.ts
++++ b/src/core/engine.ts
+@@ -390,7 +390,7 @@ export class Engine {
+       const glare = this.director?.glareOf?.(mid)
+       const sun = glare ? { ...shot.sun, dir: glare } : shot.sun
+       this.sky.setTerrain(shot.skyShare === undefined ? null : shot.skyGlow < 1 ? shot.skyShare : 0)
+-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open)
++      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open, shot.skyQuaternion)
+       if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, base, sun)
+       cam.fov = shot.camera.vfov
+       cam.updateProjectionMatrix()
+diff --git a/src/space/sky.ts b/src/space/sky.ts
+index 0e86b0bf..3073a2d9 100644
+--- a/src/space/sky.ts
++++ b/src/space/sky.ts
+@@ -1196,7 +1196,7 @@ export class Sky {
+ 
+   private readonly farCentre = new THREE.Vector3()
+ 
+-  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number, open: Tiles | null): void {
++  render(renderer: THREE.WebGLRenderer, target: THREE.WebGLRenderTarget, camera: THREE.PerspectiveCamera, skyQuaternion: THREE.Quaternion, exposure: number, glow: number, turn: THREE.Quaternion, height: number, sun: SunState, vignette: number, aspect: number, open: Tiles | null, sunQuaternion: THREE.Quaternion = skyQuaternion): void {
+     if (this.canvas !== renderer.domElement) {
+       this.canvas = renderer.domElement
+       this.canvas.addEventListener('webglcontextrestored', () => { this.stale = true })
+@@ -1333,6 +1333,8 @@ export class Sky {
+     const fs = sun.far
+     if (fs && farShare > 0 && (!fs.centre || fs.share >= 1)) {
+       const centre = fs.centre ?? this.farCentre.copy(fs.dir ?? sun.dir).multiplyScalar(1 / Math.sin(Math.min(Math.max(sun.angularRadius, 1e-5), 1.5)))
++      camera.quaternion.copy(sunQuaternion)
++      camera.updateMatrixWorld(true)
+       farSun.set({ camera, centre, body: fs.body, spin: fs.spin, time: fs.time, holdTime: fs.holdTime, exposure: fs.exposure, burn: fs.burn, vignette, aspect, height }, farShare, 0)
+       farSun.render(renderer, target)
+     }
