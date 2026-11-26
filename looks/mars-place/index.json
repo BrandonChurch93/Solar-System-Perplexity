@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T18:05:04.846Z",
- "head": "c3e9a12a3fc956da2633ce69f2d534e22c95388c",
- "note": "no second name: the whole cure's shade border at the lower right of 2692 to 2694 is cut out lobes and a spike (red); the speck state is held by the table and rides the next cut",
+ "pushed": "2026-11-26T18:08:32.820Z",
+ "head": "498513133f001112164442409cd35fd8a6395ff7",
+ "note": "whole cure, cause found on the 0.3 plate: the heights' line leaves the plate's own shade border by up to 0.77 km; the law must not draw where the heights do not hold the plate's forms",
  "looks": [
+  {
+   "time": "2026-11-26T18:08:32.030Z",
+   "file": "20261126180832030-note-p03c.jpg",
+   "source": "../../../../tmp/pm/B/p03c.png",
+   "kind": "note",
+   "label": "the cause of the whole cure's cut out border, on the plate itself: land-0p3 (full) at 1 to 1, main, the whole cure, and the heights as the cap draws them. The heights hold none of the plate's rocky rim, so the heights' line is a smooth lobe that cuts across the plate's own forms and leaves a flat filled patch",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T18:05:04.171Z",
    "file": "20261126180504171-note-lr5.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/pm/B/x-2700.png",
    "kind": "note",
    "label": "pair at native size, frame 2700: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T16:40:53.128Z",
-   "file": "20261126164053128-note-x-2462.jpg",
-   "source": "../../../../tmp/pm/B/x-2462.png",
-   "kind": "note",
-   "label": "pair at native size, frame 2462: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
    "stop": "mars"
   }
  ]
