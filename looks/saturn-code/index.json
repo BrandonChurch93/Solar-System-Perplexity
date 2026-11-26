@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T11:56:26.890Z",
- "head": "8ed55e3f4e5511090906eda915df73f2c03b7fc6",
- "note": "the two places mail 1468 asks about, from the reader's own rows: 3814 in the rise and 3626 in the dive",
+ "pushed": "2026-11-26T12:20:34.903Z",
+ "head": "9055081a19b6e807cd4fd954c050fba10831af67",
+ "note": "3866 against main at the same place on the planet: ring and night side level; notes of mail 1468 pushed",
  "looks": [
+  {
+   "time": "2026-11-26T12:20:34.232Z",
+   "file": "20261126122034232-note-main_rise_k7620-7632-pops.jpg",
+   "source": "../../../../tmp/v/rigid/G1/main_rise_k7620-7632-pops.png",
+   "kind": "note",
+   "label": "main's own tree, the reader's pops picture of rise rows 3810 to 3816"
+  },
+  {
+   "time": "2026-11-26T12:20:33.692Z",
+   "file": "20261126122033692-note-dusk3814_cure_ab.jpg",
+   "source": "../../../../tmp/v/rigid/G1/dusk3814_cure_ab.jpg",
+   "kind": "note",
+   "label": "the cure, the day's end by the ring's inner edge at 3814 and 3822, full size"
+  },
+  {
+   "time": "2026-11-26T12:20:33.163Z",
+   "file": "20261126122033163-note-night_ab.jpg",
+   "source": "../../../../tmp/v/rigid/T1/night_ab.jpg",
+   "kind": "note",
+   "label": "3866 night side, levels times 3: main (left), the cure at the same place (right)"
+  },
+  {
+   "time": "2026-11-26T12:20:32.542Z",
+   "file": "20261126122032542-note-lev3866_diff.jpg",
+   "source": "../../../../tmp/v/rigid/T1/lev3866_diff.png",
+   "kind": "note",
+   "label": "3866: main minus the cure at the same place, times 4 about mid grey, after a Gaussian of 8 px"
+  },
+  {
+   "time": "2026-11-26T12:20:31.998Z",
+   "file": "20261126122031998-note-lev3866_side.jpg",
+   "source": "../../../../tmp/v/rigid/T1/lev3866_side.jpg",
+   "kind": "note",
+   "label": "3866 draft: main (left) against the cure moved onto main's place, 25 px right and 6 px up (right)"
+  },
   {
    "time": "2026-11-26T11:56:21.598Z",
    "file": "20261126115621598-note-reg3866_excess.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/rigid/G1/popwhere_7253.png",
    "kind": "note",
    "label": "pair 3626 + 1/2 on the cure, reduced reading: red where it leaves more than the median of the 32 pairs around it, blue where less"
-  },
-  {
-   "time": "2026-11-26T11:56:18.635Z",
-   "file": "20261126115618635-note-popwhere_7629.jpg",
-   "source": "../../../../tmp/v/rigid/G1/popwhere_7629.png",
-   "kind": "note",
-   "label": "pair 3814 + 1/2 on the cure, reduced reading: red where it leaves more than the median of the 32 pairs around it, blue where less"
-  },
-  {
-   "time": "2026-11-26T11:56:17.462Z",
-   "file": "20261126115617462-note-cure_dive_k7244-7258-pops.jpg",
-   "source": "../../../../tmp/v/rigid/G1/cure_dive_k7244-7258-pops.png",
-   "kind": "note",
-   "label": "the reader's pops on the cure, dive 3622 to 3629: what is left lies on the near ring arm's lanes"
-  },
-  {
-   "time": "2026-11-26T11:56:16.110Z",
-   "file": "20261126115616110-note-cure_rise_k7620-7632-pops.jpg",
-   "source": "../../../../tmp/v/rigid/G1/cure_rise_k7620-7632-pops.png",
-   "kind": "note",
-   "label": "the reader's pops on the cure, rise 3810 to 3816: what is left lies on the near ring arm's lanes and the limb line"
-  },
-  {
-   "time": "2026-11-26T11:25:27.083Z",
-   "file": "20261126112527083-note-cure_rise2_changes.jpg",
-   "source": "../../../../tmp/v/rigid/G1/cure_rise2_changes.png",
-   "kind": "note",
-   "label": "cure 8ed55e3f: the reader's changes picture of rise part 2, 3841 to 3860, green, pattern at most 0.2486 at 3857 on the ring's far arm"
-  },
-  {
-   "time": "2026-11-26T11:25:26.555Z",
-   "file": "20261126112526555-note-sbs_3866_crops.jpg",
-   "source": "../../../../tmp/v/rigid/G1/sbs_3866_crops.jpg",
-   "kind": "note",
-   "label": "3866 draft at full size, main above, cure 8ed55e3f below: day side, dusk, far ring arm, near ring arm"
   }
  ]
 }
