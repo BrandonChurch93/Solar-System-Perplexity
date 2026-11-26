@@ -179,3 +179,24 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   slide.ts: `npx tsx assets-src/sun/lab/slide.ts`: from the table alone, the way of a cell's middle (as the
   ground places it, with dome.anchor) in 1 s of film against the change of its radius, for the cells wider than
   0.05 and for all.
+  h42 (26 Nov, 10:42 UTC), on top of h41:
+  heat.fan: the turn is now the angle about the meeting point itself in the place's frame (vFan = the place minus
+  the meeting point of the two nearest borders, and the fade), 4 N columns round the full turn; the pattern no
+  longer depends on the order of a cell's border list, so it cannot flip when that list changes. The length key
+  is the true distance in cell radii (0.75 for what was 0.9). heat.fan[7] (absent: 0): a streak's half width as a
+  fixed share of the cell's radius instead of a share of its column; tried and left off (asterisks).
+  heat.cushion.hot [gain, nearest, farthest from the crown, least, largest size, a cell's own tone]: three soft
+  hot clumps a cell, each at its own place (by the seed), size and heat, the largest of the three times the gain
+  added to the cell's heat; [5]: each cell's heat times 1 plus or minus this share by its seed. In h42
+  [2.5, 0.1, 0.5, 0.25, 0.45, 0.35]. Reason, MEASURED: the percentiles of all three channels of h41 on the 1 to 1
+  strip were the approved's within 0.03, but the approved's top levels lie in clumps of 10 to 30 px and it has
+  whole bright and whole dark cells; h41 had the same mix in every cell.
+  weave[11], [12] = 0.12, 0.25 and root[7] = 0.12 (were 0.22, 0.4 and 0.25): threads and roots are drawn only
+  where they are wider than about 4 to 8 px, finer ones are their mean; crisp hairlines read as a solid.
+  heat.graze[3], [4] (absent: off) = 0.3, 0.7: the limb law on a cell's own body: where the skin is seen more
+  aslant than the ground itself the heat shown falls to the share [3] (the ratio of the law by the skin's normal
+  to the law by the ground's up, never over 1, the cosine [4] from which it is 1). A far cell, seen as the
+  ground, is unchanged. dome.soft [0.9, 1.0]: the skin's normal holds to 0.9 of the way to the border.
+  MEASURED side.py: without it +0.026, with it +0.015.
+  dome.base[10], [11] (absent: 0): the body's outline pulled in round the directions of the cell's corners; tried
+  (t174, t175) and left off: islands on a floor.

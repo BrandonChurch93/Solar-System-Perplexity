@@ -2183,3 +2183,63 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   pop when a cell's border list changes).
   The red speck (col 946, row 970, rgb 200 79 32) moves with the cells (h40f had one at 901, 993): likely a
   spark under the cool valley gas, which glows red over it. Not proven.
+- 09:46 UTC. h41 film 60 to 120: flicker rows (largest, share over a tenth): near box disc 26: 0.093, 0 of 13;
+  band disc 26: 0.175, 33.9 percent of 59 (RED); ellipse 90 by 45: 0.084, 0; ellipse 70 by 35: 0.142, 17.2
+  percent (RED). slide.ts: cells over 0.05 wide: way of the middle 0.210 radius a second at the median (0.754
+  at the 90th), change of the radius 0.152 (0.485).
+  Commit 28a3e0b2e136382957354dd50bf15559558f4b3d pushed (state h41, not a name). Growth 2,781,121 bytes.
+- 09:48 UTC. High mail to /root (state h41, said plainly that to my eye it reads as foil and does not pass his
+  third line) with nine attachments; low mail to sun_builder (take nothing yet; far twin not baked again).
+  Next mail due by 11:15 at the latest.
+- 09:47 UTC. Code (after the commit): the fan's turn is the angle about the meeting point itself in the place's
+  frame (vFan = here minus the point, and the fade), columns 4 N round the full turn; no pop when a cell's border
+  list changes. Length key now in true distance (0.75 for what was 0.9).
+  t170 (height 0.3), t171 (height 0.4): shoulder 0.55 wide down to 0.25 at full strength 0.8 outside pools,
+  valley black 0.014, blob floor 0.45, roots 0.35, patches 0.3, between threads 0.5, fan length 0.75.
+- 09:53 UTC. t170, t171 MEASURED: side +0.029, +0.030 (worse than h41's +0.005), cut low band 19.71, 19.61, curve
+  over by 0.06 to 0.07 at tenths 0.5 to 0.8. Seen: satin pillows with small star sparkles. Cause of the side
+  number: a wide heat fall on the near flank is seen at full length, the far flank's is foreshortened, at any
+  height (t172 at height 0.18 still +0.024).
+- 09:54 UTC. t172, t173 (height 0.18, fan 4 per quarter, width 0.55, length 1.1; t173 with grain [0.35, 4]):
+  FAILED to the eye: the fans became daisy petals (a wedge grows with its distance), bodies flat angular plates.
+- 10:01 UTC. Code (v/patch-round.py): dome.base[10], [11]: the body's outline is pulled in round the directions of
+  the cell's corners (edge times 1 + [10] * smoothstep([11], 1, corner)), so a body has no corners and a pool is
+  left where three cells meet; the ground under the pool stands on the base height. heat.fan[7]: a streak's half
+  width as a fixed share of the cell's radius (a fibre, not a wedge). t174 (0.25, 0.6), t175 (0.4, 0.5, blob
+  floor 0.3, tone [0.7, 0.6]); both fan [2.0,7,0.9,0.4,0.06,0.3,0.15,0.025], base t170.
+- 10:07 UTC. t174, t175 FAILED: the pulled in outline leaves islands on a flat floor (the pebbles again, floor
+  seen), side +0.043, +0.029. dome.base[10] stays 0 (key kept, off). The fixed width 0.025 gives scratches.
+- 10:09 UTC. t176, t177: base t170 (no pull), fan 6 per quarter, fixed half width 0.045, 15 percent empty, length
+  1.0; grain [0.35, 4], patch 0.45; t177 with fan 2.5, blob floor 0.3, tone [0.7, 0.6].
+- 10:13 UTC. t176, t177 FAILED to the eye: fans of 6 fixed width streaks read as asterisks, shells with drawn
+  stars (side +0.019, +0.017, cut 19.72, 19.84). Fans must stay few, uneven and short.
+- 10:15 UTC. t178 (base t170): threads and roots shown only where wider than about 4 to 8 px (weave [11],[12]
+  0.12, 0.25, root [7] 0.12), fan 1.5 with half the columns empty, tone [0.65, 0.7], blob floor 0.35, grain
+  [0.35, 4], patch [0.5, 0.5]. t179 (base h41): the same thread limits and the new fan code, nothing else.
+  Thought: the approved is soft with its contrast at 8 to 64 px; mine is crisp with its contrast under 2 px
+  (bands at final: under 1 px 1.55, 1 to 2 px 1.29, 8 to 16 px 0.79). Crisp reads as a solid.
+- 10:17 UTC. t178: still polished pillows (side +0.032, cut 19.82). 10:19 t179 (h41 with the thread limits and
+  the new fan): side +0.011, cut 18.64, curve gap 0.066 at tenth 0.7: about h41, a little softer.
+- 10:21 UTC. Decision: no chain for a state that is not better to the eye; h41 stands for the 11:30 ruling.
+  Code (v/patch-hot.py): heat.cushion.hot [gain, nearest, farthest from the crown, least, largest size]: three
+  soft hot clumps a cell, each at its own place and size, so the top level lies in round blobs as in the
+  approved's levels picture and not in streaks. t180 (base t179), t181 (base t178), hot [1.2,0.15,0.55,0.18,0.32].
+- 10:26 UTC. t180 (h41 softened plus clumps 1.2): the softest so far, side +0.015, cut 19.01; t181 (low bodies)
+  worse (+0.034). MEASURED on the 1 to 1 strip (cols 500 to 1500, rows 800 to 1080): the percentiles of all three
+  channels of t180, t179 and h41 are the approved's within 0.03 (5, 25, 50, 75, 90, 95, 99), so the levels are
+  right and what differs is where they lie: the approved has whole bright cells and whole dark ones and its
+  bright in clumps of 10 to 30 px; mine has the same mix in every cell (bands 8 to 64 px 0.78 to 0.86, under 2 px
+  1.2 to 2.0).
+  Code: heat.cushion.hot[5]: a cell's own tone (plus and minus this share, by its seed).
+  t182: hot [2.5,0.1,0.5,0.25,0.45,0.35]; t183: the same with heat.tone [0.6,0.8]. Base t180.
+- 10:32 UTC. t182 (clumps 2.5 of size 0.25 to 0.45, a cell's own tone 0.35): better to my eye than h41: soft
+  bright clumps, bright and dark cells, bands 4 to 64 px 0.90 to 0.93 (draft), cut 19.75, side +0.026. t183
+  (tone of the place wider) the same, +0.028.
+- 10:34 UTC. Code: heat.graze[3], [4]: the limb law on a cell's own body (the share left where the look runs along
+  the skin, the cosine from which it is 1). It is the one law that may know the eye (MAIL 949). Aim: the far rim
+  of a body, now bright against the valley behind it, falls off as the approved's cells do on all sides.
+  t184 [0.45, 0.5], t185 [0.3, 0.7], dome.soft [0.9, 1.0]; base t182.
+- 10:39 UTC. t184, t185 (limb law on the body): side +0.024, +0.013 (t182 +0.026), but the cut's low band worse
+  (20.38, 21.32 against 19.75): the law darkened the whole far field, which is seen along the ground. Code now:
+  only where the skin is seen more aslant than the ground itself (the ratio of the two, never over 1). t186 =
+  t182 with graze [1.4,0.5,0.0,0.3,0.7], dome.soft [0.9,1.0].

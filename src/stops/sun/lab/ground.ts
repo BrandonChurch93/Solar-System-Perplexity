@@ -72,7 +72,7 @@ const W = (lab.heat as { cushion?: { weave?: number[] } }).cushion?.weave
 const SP = lab.spot as { ring?: number[]; edge?: number[]; lean?: number; bend?: number; wave?: number[] }
 const GH = (lab.gas as { heat?: number[] }).heat ?? [1, 1]
 const R = (lab.heat as { cushion?: { root?: number[] } }).cushion?.root
-const Q = (lab.heat as { cushion?: { navel: number[]; fibre: number[]; patch: number[]; blob: number[]; grain?: number[]; seam?: number[]; rim?: number[]; petal?: number[] } }).cushion
+const Q = (lab.heat as { cushion?: { navel: number[]; fibre: number[]; patch: number[]; blob: number[]; grain?: number[]; hot?: number[]; seam?: number[]; rim?: number[]; petal?: number[] } }).cushion
 const CU = (lab.dome as { base?: number[] }).base
 const K = (lab.heat as { corner?: number[] }).corner
 const F = (lab.heat as { fan?: number[] }).fan
@@ -422,11 +422,17 @@ vec3 dome(vec3 s) {
     float way = len > 1e-6 ? abs(1.0 - dot(here, edges[j])) / len : 1e3;
     if (way < d1) { d3 = d2; d2 = d1; k2 = k1; d1 = way; k1 = j; } else if (way < d2) { d3 = d2; d2 = way; k2 = j; } else if (way < d3) { d3 = way; }
   }
-  fan3 = vec3(k1 < k2 ? atan(d1, d2) : atan(d2, d1), sqrt(d1 * d1 + d2 * d2), smoothstep(0.0, 0.35, (d3 - d2) / max(d3, 1e-6)));
+  vec2 fa = edges[k1];
+  vec2 fb = edges[k2];
+  float fdet = fa.x * fb.y - fa.y * fb.x;
+  fan3 = abs(fdet) > 1e-9 ? vec3(here - vec2(fb.y - fa.y, fa.x - fb.x) / fdet, smoothstep(0.0, 0.35, (d3 - d2) / max(d3, 1e-6))) : vec3(0.0);
   junc = 1.0 - smoothstep(0.0, ${CU ? (CU[8] ?? 0.03).toFixed(4) : '0.03'}, sqrt(d1 * d1 + d2 * d2));
   // the dome is a round body that reaches over the border of its cell into its neighbours: the sheet is the upper
   // side of all of them, a lane the valley where two bodies meet. edge: the way to the cell's own border, 1 on it
   edge = r * wide * uLabMore.x / max(rad * pow(max(invP, 1e-9), -0.125), 1e-6);
+  float edgeOwn = edge;
+  // a body of gas has no corners: its outline is rounder than its cell, and where three cells meet a pool is left
+  edge *= 1.0 + ${CU ? (CU[10] ?? 0).toFixed(3) : '0.0'} * smoothstep(${CU ? (CU[11] ?? 0.6).toFixed(2) : '0.6'}, 1.0, corner);
   // the borders are no straight lines: the ground itself is pushed about a little by a field of the place, the
   // same for both sides of a border
   place += ${lab.join.wobble.toFixed(4)} * (vec2(vn(place * 13.0 + 3.1) + 0.5 * vn(place * 29.0 - 7.0), vn(place * 13.0 - 21.7) + 0.5 * vn(place * 29.0 + 15.3)) - 0.75);
@@ -457,7 +463,7 @@ vec3 dome(vec3 s) {
   float tn = floor(${T.count[0]!.toFixed(1)} + ${(T.count[1]! - T.count[0]! + 1).toFixed(1)} * fract(seed * 5.317));
   shape *= mix(1.0, labTubeBody(labTubes(u * rho, seed, q), tr, edge, age, seed, q, smoothstep(2.0, 4.0, 6.2831853 * tr / (tn * max(uLabMesh.x, uLabMesh.y * rho)))), tubes);
 #endif
-  float h = edge <= 1.0 ? base + max(high * low - base, ${CU ? (CU[9] ?? 0).toFixed(2) : '0.0'} * base) * shape : base * max(1.0 - ${CU ? CU[6]!.toFixed(1) : '1.0'} * (edge - 1.0), 0.0);
+  float h = edgeOwn <= 1.0 ? base + max(high * low - base, ${CU ? (CU[9] ?? 0).toFixed(2) : '0.0'} * base) * shape : base * max(1.0 - ${CU ? CU[6]!.toFixed(1) : '1.0'} * (edgeOwn - 1.0), 0.0);
   deep = shape;
   tall = h;
 #else
@@ -895,6 +901,19 @@ void main() {
   float qBlob = 1.0 - smoothstep(qEdge - ${(Q?.blob[4] ?? 0.2).toFixed(3)}, qEdge + ${(Q?.blob[4] ?? 0.2).toFixed(3)}, plan);
   float qPatch = smoothstep(${(Q?.patch[2] ?? 0.5).toFixed(2)}, ${(Q?.patch[3] ?? 0.7).toFixed(2)}, labWell(d * mix(1.0, qSize, ${(Q?.patch[4] ?? 0).toFixed(2)}) * ${((Q?.patch[1] ?? 0.5) * 1.7).toFixed(2)}, seed + 0.53, uLabTime.x));
   cell = (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide) * mix(${(Q?.navel[0] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(Q?.navel[1] ?? 0.4).toFixed(2)}, tr)) * mix(${(Q?.blob[5] ?? 0.4).toFixed(2)}, 1.0, qBlob) * (1.0 - ${(Q?.patch[0] ?? 0).toFixed(2)} * qPatch) * max(1.0 + smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (${(2 * (Q?.fibre[0] ?? 0)).toFixed(3)} * (fan - 0.5) + ${(Q?.fibre[3] ?? 0).toFixed(3)} * (thread - 0.3)), 0.25) * (1.0 + ${(2 * (Q?.grain?.[0] ?? 0)).toFixed(3)} * (labWell(d * qSize * ${(Q?.grain?.[1] ?? 2).toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5)) * (1.0 + ${(Q?.rim?.[0] ?? 0).toFixed(2)} * smoothstep(${(Q?.rim?.[1] ?? 0.5).toFixed(2)}, ${(Q?.rim?.[2] ?? 0.75).toFixed(2)}, plan) * (smoothstep(${(Q?.rim?.[3] ?? 0.45).toFixed(2)}, ${(Q?.rim?.[4] ?? 0.7).toFixed(2)}, mix(0.5, fc, kc)) - ${(Q?.rim?.[5] ?? 0.35).toFixed(2)}));
+#if ${(Q?.hot?.[0] ?? 0) > 0 ? 1 : 0}
+  // the hottest gas of a cell stands in a few soft clumps, each at its own place off the crown and of its own
+  // size and heat: where the gas wells up fastest
+  float qHot = 0.0;
+  for (int k = 0; k < 3; k++) {
+    float hs = seed * (3.71 + 2.3 * float(k)) + 0.37 * float(k);
+    float ha = 6.2831853 * fract(hs * 5.13);
+    vec2 hb = (${(Q?.hot?.[1] ?? 0.2).toFixed(3)} + ${((Q?.hot?.[2] ?? 0.6) - (Q?.hot?.[1] ?? 0.2)).toFixed(3)} * fract(hs * 7.77)) * vec2(cos(ha), sin(ha));
+    float hr = ${(Q?.hot?.[3] ?? 0.15).toFixed(3)} + ${((Q?.hot?.[4] ?? 0.3) - (Q?.hot?.[3] ?? 0.15)).toFixed(3)} * fract(hs * 9.31);
+    qHot = max(qHot, (0.4 + 0.6 * fract(hs * 11.9)) * exp(-dot(d - hb, d - hb) / (hr * hr)));
+  }
+  cell *= (1.0 + ${(Q?.hot?.[0] ?? 0).toFixed(2)} * qHot) * (1.0 + ${(Q?.hot?.[5] ?? 0).toFixed(2)} * (2.0 * fract(seed * 13.7) - 1.0));
+#endif
 #if ${W ? 1 : 0}
   // the top is made of threads: ranks of them round the crown in the cell's own frame, each of its own length and
   // heat, twice as many from one doubling of the radius to the next; they ride outward with the cell's matter,
@@ -1007,14 +1026,14 @@ void main() {
 #if ${F ? 1 : 0}
   // where three cells meet the gas of all three runs together and sinks: streaks of hot gas stand round that point
   // like a fan, each of its own length, width and heat, none in the dark point itself and none in the lane
-  float fD = vFan.y / max(vCell.z, 1e-6);
-  float fU = vFan.x / 1.5707963 * ${(F?.[1] ?? 5).toFixed(2)} + floor(seed * 53.0);
-  float fCol = floor(fU);
+  float fD = length(vFan.xy) / max(vCell.z, 1e-6);
+  float fU = (atan(vFan.y, vFan.x) / 6.2831853 + 0.5) * ${(4 * Math.round(F?.[1] ?? 5)).toFixed(1)};
+  float fCol = mod(floor(fU), ${(4 * Math.round(F?.[1] ?? 5)).toFixed(1)});
   float fLot = h1(vec2(fCol, seed * 91.0 + 3.0));
   float fX = fract(fU) - 0.5 - 0.3 * (h1(vec2(fCol, seed * 37.0 + 5.0)) - 0.5);
-  float fSeen = 1.0 - smoothstep(0.25, 0.6, fwidth(fU));
+  float fSeen = 1.0 - smoothstep(0.25, 0.6, min(fwidth(fU), ${(4 * Math.round(F?.[1] ?? 5)).toFixed(1)} - fwidth(fU)));
   float fT = fD / mix(${((F?.[2] ?? 0.6) * 0.675).toFixed(4)}, ${(F?.[2] ?? 0.6).toFixed(3)} * mix(0.35, 1.0, fLot), fSeen);
-  float fW = ${(F?.[3] ?? 0.3).toFixed(3)} * (0.5 + 0.9 * h1(vec2(fCol, seed * 13.0 + 7.0))) * mix(1.0, 0.4, clamp(fT, 0.0, 1.0));
+  float fW = ${(F?.[7] ?? 0) > 0 ? 'min(' + (F?.[7] ?? 0).toFixed(4) + ' / max(fD * ' + (6.2831853 / (4 * Math.round(F?.[1] ?? 5))).toFixed(5) + ', 1e-5), 0.48)' : (F?.[3] ?? 0.3).toFixed(3)} * (0.5 + 0.9 * h1(vec2(fCol, seed * 13.0 + 7.0))) * mix(1.0, ${(F?.[7] ?? 0) > 0 ? '0.7' : '0.4'}, clamp(fT, 0.0, 1.0));
   float fS = (1.0 - smoothstep(0.3 * fW, fW, abs(fX))) * step(${(F?.[5] ?? 0.3).toFixed(2)}, fLot) * mix(0.4, 1.0, h1(vec2(fCol, seed * 71.0 + 11.0)));
   heat += ${(F?.[0] ?? 0).toFixed(2)} * mix(${(F?.[6] ?? 0.15).toFixed(2)}, fS, fSeen) * smoothstep(${(0.5 * (F?.[4] ?? 0.06)).toFixed(4)}, ${(F?.[4] ?? 0.06).toFixed(4)}, fD) * (1.0 - smoothstep(0.45, 1.0, fT)) * vFan.z * seamOn * (1.0 - pen);
 #endif
@@ -1044,6 +1063,11 @@ void main() {
   vec3 nn = normalize(mix(vN, up, max(smoothstep(${lab.dome.soft[0]!.toFixed(2)}, ${lab.dome.soft[1]!.toFixed(2)}, plan), vSink)));
   float lawFar = mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, clamp(abs(dot(up, toEye)) / ${lab.heat.graze[1]!.toFixed(2)}, 0.0, 1.0));
   float law = mix(lawFar, mix(${lab.heat.graze[0]!.toFixed(2)}, 1.0, clamp(abs(dot(nn, toEye)) / ${lab.heat.graze[1]!.toFixed(2)}, 0.0, 1.0)), ${(lab.heat.graze[2] ?? 1).toFixed(2)});
+#if ${(lab.heat.graze[3] ?? 0) > 0 ? 1 : 0}
+  // the same law on a cell's own body: where the look runs along its skin more than along the ground it meets the
+  // cooler gas of the skin; a far cell, seen as the ground, is as before
+  law *= min(mix(${(lab.heat.graze[3] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(lab.heat.graze[4] ?? 0.5).toFixed(2)}, abs(dot(nn, toEye)))) / mix(${(lab.heat.graze[3] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(lab.heat.graze[4] ?? 0.5).toFixed(2)}, abs(dot(up, toEye)))), 1.0);
+#endif
 #endif
   heat = uLabHeat.x + heat * law;
 #ifdef LAB_MAP
