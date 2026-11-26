@@ -1,9 +1,49 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T07:13:59.809Z",
+ "pushed": "2026-11-26T07:54:47.839Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "07:14 UTC: w35 solved reads 7.674 and its tall rolls read as liquid; w36 and w37 refused; fibres and curd by code are being tried on the w26 base",
+ "note": "07:55 UTC: tops as a hierarchy of sizes (w48, w51), large heaps in the dark ground (w55, w57); w57 with a smaller glow goes into the solve now",
  "looks": [
+  {
+   "time": "2026-11-26T07:54:47.202Z",
+   "file": "20261126075447202-note-w57-3150.jpg",
+   "source": "../work/r26/t/w57-3150.png",
+   "kind": "note",
+   "label": "w57 3150 preview draft: rolls down to a third, large heaps over the dark ground, glow still too white (9.669 before its own solve); the base of the next solve",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T07:50:46.969Z",
+   "file": "20261126075046969-note-w55-3150.jpg",
+   "source": "../work/r26/t/w55-3150.png",
+   "kind": "note",
+   "label": "w55 3150 preview draft: large heaps in the dark ground, glow far too white (9.183 before its own solve)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T07:50:45.905Z",
+   "file": "20261126075045905-note-w51-3150.jpg",
+   "source": "../work/r26/t/w51-3150.png",
+   "kind": "note",
+   "label": "w51 3150 preview draft: softer heaps, storm keeps the fine light of the map, rolls still read as cloth (9.388 before its own solve)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T07:50:44.652Z",
+   "file": "20261126075044652-note-w48-3150.jpg",
+   "source": "../work/r26/t/w48-3150.png",
+   "kind": "note",
+   "label": "w48 3150 preview draft: tops as a hierarchy of sizes, the middle left reads as heaped cloud (7.965)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T07:50:43.511Z",
+   "file": "20261126075043511-note-w42-3150.jpg",
+   "source": "../work/r26/t/w42-3150.png",
+   "kind": "note",
+   "label": "w42 3150 preview draft: curd of one size everywhere, reads as pebbles (7.144)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T07:13:48.392Z",
    "file": "20261126071348392-note-w35-r3-3150.jpg",
@@ -154,46 +194,6 @@
    "source": "../work/r26/t/w16-3150.png",
    "kind": "note",
    "label": "w16 at 3150, preview, draft, no scaffold: softer skin, pointed tops, bright painted rims cut. Dark field reads as teeth; too soft, band line red. Refused.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:54:01.860Z",
-   "file": "20261126055401860-note-w15-3150.jpg",
-   "source": "../work/r26/t/w15-3150.png",
-   "kind": "note",
-   "label": "w15 at 3150, preview, draft, no scaffold: tops only where the field is over a threshold, flat deck between. Dark field reads as boulders, not cloud. Line (i) 18.711",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:54:00.614Z",
-   "file": "20261126055400614-note-w14-3150.jpg",
-   "source": "../work/r26/t/w14-3150.png",
-   "kind": "note",
-   "label": "w14 at 3150, preview, draft, no scaffold: map with half its light taken out, no tops inside the storm. The storm reads as wound fibres round a lower eye; left side still terraced, dark field still lumps. Line (i) 17.499",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:53:59.252Z",
-   "file": "20261126055359252-note-w13b-3150.jpg",
-   "source": "../work/r26/t/w13b-3150.png",
-   "kind": "note",
-   "label": "w13b at 3150, preview, draft, no scaffold: w12b with the fine colour map of MAIL 1422 item 3 (the picture's detail as colour on the code's tops). Reads as painted pillows; the storm gains its fibres. Line (i) 17.557",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:36:38.020Z",
-   "file": "20261126053638020-note-w12b-3150.jpg",
-   "source": "../work/r26/t/w12b-3150.png",
-   "kind": "note",
-   "label": "w12b at 3150, preview, draft, no scaffold: the same tops rounder and softer, less warp. Reads as a field of soft cloud pillows; storm rings and eye still wrong. Line (i) 17.275",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:36:37.380Z",
-   "file": "20261126053637380-note-w12-3150.jpg",
-   "source": "../work/r26/t/w12-3150.png",
-   "kind": "note",
-   "label": "w12 at 3150, preview, draft, no scaffold: round tops as the surface itself (one dome to a cell, octaves riding), no balls. Dark thirds dark by shade for the first time; reads as rock. Line (i) 17.964",
    "stop": "jupiter"
   }
  ]
