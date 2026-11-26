@@ -12335,3 +12335,31 @@ RETURN ma7-31 from /root/neptune_builder, 22:35 UTC: film-16x9-final-b-140, segm
 - 22:36:36 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 22:36:37 npm run build exit 0, dist 1301 MB, free disk 5031 MB. 22:37:08 the job's four lines
   started as /tmp/mc7-51.sh, detached from the repo root.
+
+- The tool's own lines for mc7-51 (one every ten frames):
+
+      mars.terrain frame 2499 part 0: 10/30 done, 46.37 s/frame (sanity 0.076, grab 0.323), about 16 min left
+      mars.terrain frame 2509 part 0: 20/30 done, 44.82 s/frame (sanity 0.069, grab 0.311), about 8 min left
+      mars.terrain frame 2519 part 0: 30/30 done, 44.33 s/frame (sanity 0.065, grab 0.305), about 0 min left
+
+  So about 45 seconds a frame, none over fifteen minutes.
+- 22:59:41 finished. The tail, whole:
+
+      0
+      RC film mars.terrain 2490-2519 0
+      wrote mars.terrain.part000.mp4 frames 2490-2519 render 1330 s encode 5.2 s
+      -rw-r--r-- 1 user user 3072000 Nov 26 22:59 /tmp/film-16x9-final-b-201.tar.00
+
+  The piece holds mars.terrain.span2490-2519.mp4 (3057980 bytes) and its .json (3594 bytes); sha256 of the piece bc932a00a161
+  2821905ede70b72b1e7b142e0f3c9d62a0ea1b15061d5f748558. Tree still clean on 262b9a68. Free disk 6316 MB.
+
+## 26 Nov, 23:00 UTC: RETURN mc7-51 to the Builder (word for word; sent about 23:00:07; attached /tmp/film-16x9-final-b-201.tar.00 and /tmp/mc7-51-tail.txt; high priority)
+
+RETURN mc7-51 from /root/neptune_builder, 23:00 UTC: film-16x9-final-b-201, segment mars.terrain, span 2490-2519, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Finished 22:59:41 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 22:36:36.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film mars.terrain 2490-2519 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote mars.terrain.part000.mp4 frames 2490-2519 render 1330 s encode 5.2 s"
+5. Attached: /tmp/film-16x9-final-b-201.tar.00 (3072000 bytes, the only piece) and /tmp/mc7-51-tail.txt.
+6. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 22:36. Free disk 5031 MB before the start, 6316 MB now.
+7. The files of all three jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
