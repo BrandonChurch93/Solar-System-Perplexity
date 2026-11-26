@@ -127,14 +127,15 @@ export const createSet: SetFactory = async (ctx) => {
   const lawOver = { value: new THREE.Vector4(...(closeJson.law.edge.map((e, i) => (e > 0 ? (i < 2 ? imageW : imageH) / e : 0)) as [number, number, number]), 0) }
   // what the picture's own eye saw (seenby.py): 255 x nearest / front where two layers stand at one place of the picture
   const lawSeen = { value: await ctx.texture(base + closeJson.law.seen.file, { srgb: false, mips: false, anisotropy: 1, channels: 1 } as TextureOptions) }
-  const lawSight = { value: new THREE.Vector4(closeJson.law.seen.on ? 1 : 0, 1 / closeJson.law.seen.nearest, closeJson.law.seen.soft, 0) }
+  const lawSight = { value: new THREE.Vector4(closeJson.law.seen.on ? 1 : 0, 1 / closeJson.law.seen.nearest, closeJson.law.seen.soft, closeJson.law.seen.outline.on ? 1 : 0) }
+  const lawOutline = { value: new THREE.Vector2(closeJson.law.seen.outline.edge[0]!, closeJson.law.seen.outline.edge[1]!) }
   // the gap of the cap from the picture's ground along the picture's rays (the lower half of the same file), and the picture's size
   const lawGap = { value: new THREE.Vector4(closeJson.law.gap.on ? 1 : 0, closeJson.law.gap.range, closeJson.law.gap.px[0]!, closeJson.law.gap.px[1]!) }
   const lawPicture = { value: new THREE.Vector2(imageW, imageH) }
   // the eye at which the surface view takes over, in the relief's own frame: the one move's eye at the time of the change of view
   const takenDive = plan.closePose('dive', handoverOf(plan.id, 'dive')!.time).position.clone()
   const takenRise = plan.closePose('rise', handoverOf(plan.id, 'rise')!.time).position.clone()
-  ground.presenceLaw(closeLaw, { uLawTexel: lawTexel, uLawAir: lawAir, uLawEye: lawEye, uLawSide: lawSide, uLawOver: lawOver, uLawTone: lawTone, uLawSight: lawSight, uLawGap: lawGap, uLawPicture: lawPicture, uLawSeen: lawSeen }, { whole: () => lawAir.value.z < 0.5, tone: true })
+  ground.presenceLaw(closeLaw, { uLawTexel: lawTexel, uLawAir: lawAir, uLawEye: lawEye, uLawSide: lawSide, uLawOver: lawOver, uLawTone: lawTone, uLawSight: lawSight, uLawOutline: lawOutline, uLawGap: lawGap, uLawPicture: lawPicture, uLawSeen: lawSeen }, { whole: () => lawAir.value.z < 0.5, tone: true })
   // In the globe's scene the close ground stands in front of the globe's own ground of the same place (the cap), which holds a made
   // ground where the close view's eye saw none: the depth is cleared between the close view's air and its meshes, so the meshes are
   // tested against each other only and the air, tested against the globe, lies on the sky alone. The whole of it is drawn after the

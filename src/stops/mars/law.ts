@@ -25,7 +25,9 @@
 // 4. What the picture's eye saw (uLawSeen, uLawSight; close.json law.seen, the file of assets-src/mars/place/seenby.py): where two
 //    layers stand at one place of the picture, the ground behind the front one is drawn out ground for an eye beside the picture's
 //    eye and was never seen. A point farther from the picture's eye than the front there (by the spare) has no share; uLawSight.z
-//    is the breadth over which that goes, a share of the distance. uLawSight.x under 0.5: the count is off. The surface view
+//    is the breadth over which that goes, a share of the distance. uLawSight.x under 0.5: the count is off. The answer is taken
+//    at the file's four texels round the place and weighed; where hidden ground begins is read from the outline in the blue of
+//    the relief's masks (uLawOutline, close.json law.seen.outline), four times as fine as the file. The surface view
 //    itself shows a band of that ground, as wide as its eye stands beside the picture's eye; so the count is whole for a sight
 //    that stands no farther off the picture's ray than the sight of that eye, and as above from twice that angle on (the
 //    limits of the air count): the two sides agree at T, measured by `npm run handover -- --stop mars --only sides`.
@@ -59,6 +61,7 @@ uniform vec4 uLawSide;
 uniform vec4 uLawOver;
 uniform vec3 uLawTone;
 uniform vec4 uLawSight;
+uniform vec2 uLawOutline;
 uniform vec4 uLawGap;
 uniform vec2 uLawPicture;
 uniform sampler2D uLawSeen;
@@ -148,6 +151,14 @@ float lawShare(vec3 P, vec3 E, vec2 image) {
       }
     }
     seen = 1.0 - hidden;
+    // the outline of that ground is a value of its own (uLawSight.w over 0.5; close.json law.seen.outline, the blue of the relief's
+    // masks at 2 pixels of the picture a texel, assets-src/mars/place/outline.py; the masks and their box are the relief's own, read
+    // as its contract allows): the file above holds the front's distance carried on beyond its outline, and hidden ground begins
+    // where the outline says, between uLawOutline.x and uLawOutline.y of it
+    if (uLawSight.w > 0.5) {
+      vec2 mq = (image - uMaskBox.xy) / uMaskBox.zw;
+      seen = 1.0 - (1.0 - seen) * smoothstep(uLawOutline.x, uLawOutline.y, textureLod(uMasks, vec2(mq.x, 1.0 - mq.y), 0.0).b);
+    }
     // the surface view shows that ground as far as its own eye looks past the front: by the angle between the picture's ray and
     // the sight, whole up to the angle of the eye at which the surface view takes over, as the count was before from twice it on
     seen = 1.0 - (1.0 - seen) * off;
