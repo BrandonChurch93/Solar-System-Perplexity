@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T19:51:33.011Z",
- "head": "774abe6a9a625ca12ecfece9d2420d36ee1a1c30",
- "note": "sea bodies: second bake too thin, cause found in the cover's cloud rule, third bake running",
+ "pushed": "2026-11-26T20:19:57.666Z",
+ "head": "1acc67d1cd96f65384096b60b27cc3fd6a06e8f2",
+ "note": "sea bodies: third bake laid bodies over Yucatan by a shifted hold level, cured in the cover, fourth bake running",
  "looks": [
+  {
+   "time": "2026-11-26T20:19:57.065Z",
+   "file": "20261126201957065-note-d3-4253-limb.jpg",
+   "source": "../../../../tmp/gl/k24/R/d3-4253-limb.jpg",
+   "kind": "note",
+   "label": "20:12 third bake, k4253 draft 1 to 1, mine above main: my bodies under the limb read whiter and harder than main's puffs",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T20:19:51.367Z",
+   "file": "20261126201951367-note-dbg7-yuc.jpg",
+   "source": "../../../../tmp/gl/k24/R/dbg7-yuc.jpg",
+   "kind": "note",
+   "label": "20:18 the cause cured: main's level, the hold's level laid by its own window, the kept cover in red: none over the land",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T20:19:50.692Z",
+   "file": "20261126201950692-note-d3-4312-gulf2.jpg",
+   "source": "../../../../tmp/gl/k24/R/d3-4312-gulf2.jpg",
+   "kind": "note",
+   "label": "20:10 third bake, 2156 (k4312) draft 2 to 1 beside the held state's final: bodies over the Gulf, and a cluster over Yucatan that must not be there",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T19:51:32.377Z",
    "file": "20261126195132377-note-dbg2.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/k24/R/p24-where.jpg",
    "kind": "note",
    "label": "level 24: red is main's cloud that mine lacks, green mine only",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T19:00:13.339Z",
-   "file": "20261126190013339-note-pair-lobe4.jpg",
-   "source": "../../../../tmp/gl/k24/R/pair-lobe4.jpg",
-   "kind": "note",
-   "label": "2126 + 1/2 to 2134 + 1/2 (k4253, k4261, k4269) under the limb, mine above main: the far land rises, my sea in front of it is bare",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T19:00:12.678Z",
-   "file": "20261126190012678-note-p12-whole.jpg",
-   "source": "../../../../tmp/gl/k24/Q/p12-whole.jpg",
-   "kind": "note",
-   "label": "the place level place-12.jpg, mine beside main's: my file carries the dense field of small specks and the near black sea",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T19:00:11.993Z",
-   "file": "20261126190011993-note-ctl3-3776-half.jpg",
-   "source": "../../../../tmp/gl/k24/Q/ctl3-3776-half.jpg",
-   "kind": "note",
-   "label": "1888 (k3776) draft, shutter closed: as it stands beside the standing bodies off. The sown field of specks over the dark sea stays, so it is not the standing law",
    "stop": "earth"
   }
  ]
