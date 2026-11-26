@@ -34,6 +34,11 @@ import data from './arcs.json'
  * hollow. The light of a pool on what stands in it and behind it (data.lit, the same balls laid so that what is there
  * grows brighter by the ball's share): the ground about a foot is lit with its own cells and the strands of a leg are
  * white hot where they meet, by their own light, so the gas of the pool itself can be small and thin. None of it moves.
+ *
+ * The strands are drawn in two passes over the same lines. First the shade: each strand hides what stands behind the
+ * whole arcade (sky, stars, ground, haze) and lays no light. Then the light: a strand hides the strands behind it only
+ * by its own light's share of the most, so strands over each other add up to the most and a faint flank takes nothing
+ * from a bright core behind it. The colour follows the light at each place across a tube: a pale core, cool flanks.
  */
 
 const VERT = /* glsl */ `
@@ -103,6 +108,7 @@ uniform vec2 uThin;
 uniform vec4 uAlong;
 uniform vec3 uCam;
 uniform vec4 uBall;
+uniform float uShade;
 in vec4 vAcross;
 in vec4 vStrand;
 in vec4 vFlow;
@@ -123,9 +129,18 @@ float an(float x, float seed) {
   return mix(ah(i, seed), ah(i + 1.0, seed), f);
 }
 // the colour of gas that gives g of the white: the cool colour where it gives little, toward the hot one as it gives
-// more (uTone.x: the light at which it stands halfway between them)
+// more (uTone.x: the light at which it stands halfway between them; by the square of the light, so a faint strand
+// keeps the cool colour whole and a strand near the white is gold)
 vec3 heat(float g) {
-  return mix(uCool, uHot, g / (g + uTone.x)) * g;
+  return mix(uCool, uHot, g * g / (g * g + uTone.x * uTone.x)) * g;
+}
+// no channel passes uTone.y of the white. A light over it keeps its own colour at that level and goes toward the hot
+// colour by the share it stands over, so the brightest gas is pale gold and never the yellow of two channels at
+// their limit with the third behind
+vec3 limit(vec3 c) {
+  float m = max(c.r, max(c.g, c.b));
+  float over = 1.0 - min(uTone.y / max(m, 1e-6), 1.0);
+  return mix(c * (1.0 - over), uHot * uTone.y, over);
 }
 void main() {
   if (uDiag >= 2) discard;
@@ -162,10 +177,10 @@ void main() {
   // so a strand that is many times over the white in its core keeps a faint sheath and does not grow into a white post
   // (it is cooler than the tube: its colour is the cool end of the heat's, whatever the core's is)
   vec3 thin = uCool * (min(gives, uTone.y) * uHalo.y);
-  // the tube has one colour across its width, that of the light on its middle line; each channel stands at uTone.y
-  // of the white at the most, so a strand many times over the white goes from the cool colour through yellow to pale
-  vec3 base = heat(gives);
-  vec3 lit = inverseFilmic(min(base * max(1.0 - x * x, 0.0) + thin * (sheath * sheath), vec3(uTone.y)));
+  // the tube's colour follows the light it gives at each place across its width: the core of a bright strand is
+  // pale and its flanks are the cool colour. No channel stands over uTone.y of the white (limit), so a strand many
+  // times over the white goes from the cool colour through gold to pale gold
+  vec3 lit = inverseFilmic(limit(heat(gives * max(1.0 - x * x, 0.0)) + thin * (sheath * sheath)));
   // a strand thinner than a pixel is not a line any more: the light of its tube and sheath, summed across the band
   // in linear light (three points over the tube, two over the sheath beyond it), is laid as one bell over the whole
   // band. The sum across is the same as the tube's own, so the strand gives the pixel the share of it that its true
@@ -178,7 +193,7 @@ void main() {
       float a = edge * (k == 0 ? 0.1127017 : k == 1 ? 0.5 : 0.8872983);
       float s = 1.0 - a * a;
       float t = a * uHalo.x;
-      sum += edge * (k == 1 ? 0.4444444 : 0.2777778) * inverseFilmic(min(base * (1.0 - t * t) + thin * (s * s), vec3(uTone.y)));
+      sum += edge * (k == 1 ? 0.4444444 : 0.2777778) * inverseFilmic(limit(heat(gives * (1.0 - t * t)) + thin * (s * s)));
     }
     for (int k = 0; k < 2; k++) {
       float a = edge + (1.0 - edge) * (k == 0 ? 0.2113249 : 0.7886751);
@@ -190,13 +205,19 @@ void main() {
   vec3 col = lit * (vStrand.y * uKeep);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
-  // the thick limit: gas that lies over gas does not add without end. Each layer covers what is behind it, the face
-  // too, by the share its own light has of the most a body of this heat can give (uThick times the white of the heat's
-  // curve), so a bundle burns up to that white and no further, at every distance, and the bloom has no more to spread
-  // (uThick.y: the power of that share. Under 1 a faint strand covers more than its light's share: it is gas that
-  // stands before the stars and the strands behind it, and they do not show through it as points on it)
-  float cover = min(pow(max(col.r, max(col.g, col.b)) / inverseFilmic(vec3(uTone.y)).r, uThick.y) / uThick.x, 1.0);
-  outColor = vec4(col, cover);
+  // the thick limit: gas that lies over gas does not add without end. Each layer of light covers the strands behind
+  // it by the share its own light has of the most a body of this heat can give (uThick.x times the white of the heat's
+  // curve), so strands that lie over each other add their light up to that white and no further, at every distance:
+  // a leg where many meet burns white by their own light and the bloom has no more to spread
+  float share = max(col.r, max(col.g, col.b)) / inverseFilmic(vec3(uTone.y)).r;
+  float own = min(share / uThick.x, 1.0);
+  // what stands behind the whole arcade (the sky and its stars, the ground, the haze) a strand hides by more than
+  // that: by its share to the power uThick.y (under 1). It is gas that stands before the stars, and they do not show
+  // through it as points on it. That is the shade, drawn for all strands before any gives its light (uShade 1: it
+  // lays no light and hides by what is left of that after the light's own cover), so no strand's light is taken
+  // away by the shade of another
+  float all = max(min(pow(share, uThick.y) / uThick.x, 1.0), own);
+  outColor = uShade > 0.5 ? vec4(0.0, 0.0, 0.0, (all - own) / max(1.0 - own, 1e-6)) : vec4(col, own);
 }`
 
 /**
@@ -354,6 +375,8 @@ export class Arcade {
   /** The material of the pools at the feet (it shares the strands' eye, light and share). */
   readonly poolMaterial: THREE.ShaderMaterial
   private readonly litMaterial: THREE.ShaderMaterial
+  private readonly shadeMaterial: THREE.ShaderMaterial
+  private readonly shade: THREE.Mesh
   private readonly pool: THREE.Mesh
   private readonly lit: THREE.Mesh
   private readonly haze: THREE.Mesh
@@ -649,6 +672,7 @@ export class Arcade {
         uHot: { value: new THREE.Vector3().fromArray(l.hot) },
         uTone: { value: new THREE.Vector2(l.knee, l.most) },
         uThick: { value: new THREE.Vector2(l.thick, l.cover) },
+        uShade: { value: 0 },
       },
       blending: THREE.CustomBlending,
       blendEquation: THREE.AddEquation,
@@ -663,6 +687,27 @@ export class Arcade {
     this.mesh = new THREE.Mesh(geometry, this.material)
     this.mesh.renderOrder = 5
     this.mesh.frustumCulled = false
+    // the shade of the strands on what is behind the arcade (see FRAG): the same lines and the same shader, drawn
+    // after the haze and before the strands' own light
+    this.shadeMaterial = new THREE.ShaderMaterial({
+      glslVersion: THREE.GLSL3,
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      uniforms: { ...this.material.uniforms, uShade: { value: 1 } },
+      blending: THREE.CustomBlending,
+      blendEquation: THREE.AddEquation,
+      blendSrc: THREE.OneFactor,
+      blendDst: THREE.OneMinusSrcAlphaFactor,
+      blendSrcAlpha: THREE.ZeroFactor,
+      blendDstAlpha: THREE.OneFactor,
+      transparent: true,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    })
+    this.shade = new THREE.Mesh(geometry, this.shadeMaterial)
+    this.shade.renderOrder = 4.8
+    this.shade.frustumCulled = false
+    this.mesh.add(this.shade)
 
     // the pools at the feet and the haze about the arcade: each a card that faces the eye about the ball's middle (see
     // POOL_FRAG). A pool stands at a foot (shift: so many stage units further out along the axis than the foot).
@@ -840,5 +885,6 @@ export class Arcade {
     this.lit.geometry.dispose()
     this.poolMaterial.dispose()
     this.litMaterial.dispose()
+    this.shadeMaterial.dispose()
   }
 }
