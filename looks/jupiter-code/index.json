@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T09:08:43.039Z",
+ "pushed": "2026-11-26T09:28:58.473Z",
  "head": "0c012e25580c46cfaaf0b2486fbf9a0c2e3c0f5e",
- "note": "09:08 UTC: w68 is pushed as the candidate state (0c012e2, not a name); w70, w72, w76 are better on its scaffold; smoke as height and the thinnest skin refused",
+ "note": "09:30 w80 pebbles refused, w81 finer sheets, w82 tints cut: the stripes are tint",
  "looks": [
+  {
+   "time": "2026-11-26T09:28:57.800Z",
+   "file": "20261126092857800-note-w82-3150.jpg",
+   "source": "../work/r26/t/w82-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w82 on the scaffold of w77, before its own solve: tints cut (sheet 0.6, fibre 0.4, thread 0.4), the stripes go and it reads softer; band 1 to 2 px 0.653 red; line (i) 7.174",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:28:57.106Z",
+   "file": "20261126092857106-note-w81-3150.jpg",
+   "source": "../work/r26/t/w81-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w81 on the scaffold of w77: sheets finer (tint fall -0.3, aspect 0.02); line (i) 5.882",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:28:56.391Z",
+   "file": "20261126092856391-note-w80-3150.jpg",
+   "source": "../work/r26/t/w80-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w80 on the scaffold of w77: heaps from 0.06 units read as pebbles, refused; line (i) 6.302",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T09:08:42.319Z",
    "file": "20261126090842319-note-w70-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r26/t/w35-r3-3150.png",
    "kind": "note",
    "label": "w35 3150 preview draft after three more solve rounds: 7.674, tall rolls read as liquid, not kept as base",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T07:13:46.990Z",
-   "file": "20261126071346990-note-w37-3150.jpg",
-   "source": "../work/r26/t/w37-3150.png",
-   "kind": "note",
-   "label": "w37 3150 preview draft: balls in the dark field read as floating popcorn, refused (10.709)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T07:13:45.673Z",
-   "file": "20261126071345673-note-w36-3150.jpg",
-   "source": "../work/r26/t/w36-3150.png",
-   "kind": "note",
-   "label": "w36 3150 preview draft: steady glow far too strong and curd thinned, refused (15.119)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:49:13.455Z",
-   "file": "20261126064913455-note-w32-3150.jpg",
-   "source": "../work/r26/t/w32-3150.png",
-   "kind": "note",
-   "label": "w32, w30 with rolls six times taller in the dark field, same scaffold: shade and large forms in the lower thirds, still smooth as dunes, line i 7.829",
    "stop": "jupiter"
   }
  ]
