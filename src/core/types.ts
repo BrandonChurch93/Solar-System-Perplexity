@@ -218,6 +218,7 @@ export interface SkyPatch {
   ring: [number, number, number, number]
   edge: number
   unfold?: [number, number]
+  glare?: boolean
   weight?: (time: number, view: ViewKind) => number
   // How the patch of a stop that arrives comes in on the travel to it. Absent: by the director's weight for the travel (Shot.skyPatch,
   // which goes by the travel's clock). 'whole': at its whole weight from the travel's first frame on, so that it enters over the
