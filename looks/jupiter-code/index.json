@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-25T23:52:57.325Z",
- "head": "2b862255d34c569d3c81de5974ddf1ecd8a729eb",
- "note": "23:53 UTC: the q series (terrain to cumulus, no solve) and state r at master. Round tops on all ages plus cast shadows read as cloud; darkness now comes from the Sun's cast shadows. Next: calmer storm, finer heads, then the solve again",
+ "pushed": "2026-11-26T00:13:18.658Z",
+ "head": "9ee3d9544f8b1db9cfd445c74b423f71f89d3da4",
+ "note": "state s on 9ee3d954: the ground by code at 3060, 3149.5, 3239 and 3150; the series at 60 a second is drawing",
  "looks": [
+  {
+   "time": "2026-11-26T00:13:08.593Z",
+   "file": "20261126001308593-note-s4-3150.jpg",
+   "source": "../work/r23/t/s4-3150.png",
+   "kind": "note",
+   "label": "state s, 3150 at preview size, draft: matter's floor 0.016, three solve rounds; low band 9.27 whole frame, 8.75 outside the seven cells; bands 1.15 1.10 0.99 0.90",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T00:13:07.442Z",
+   "file": "20261126001307442-note-top-ends-s.jpg",
+   "source": "../work/r24/t/top-ends-s.jpg",
+   "kind": "note",
+   "label": "state s laid back on the ground chart (camera taken out), 3060 beside 3239, rings at 0.45, 0.9, 1.6 and 2.5 units: turn of the picture by ring 0.13 0.42 0.98 0.99 0.70 0.44 0.25 0.11 0.08 degrees a second, the flow law 0.41 0.83 1.15 1.15 0.82 0.46 0.23 0.13 0.10",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T00:13:06.568Z",
+   "file": "20261126001306568-note-ends-s.jpg",
+   "source": "../work/r24/t/ends-s.jpg",
+   "kind": "note",
+   "label": "state s, frames 3060, 3149.5 and 3239 at preview size, draft: the ground by code from three eye points",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-25T23:52:56.539Z",
    "file": "20261125235256539-note-r-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r22/t/noeye-sheet.png",
    "kind": "note",
    "label": "Measure for the page, draft, no grain. Top 3060 and 3239, bottom left 3150, all with the fit eye's share at zero (plates times tone only, 12.461 by d296); bottom right 3150 of the head (6.2249)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:57:36.190Z",
-   "file": "20261125205736190-note-k006300-r2-draft.jpg",
-   "source": "../work/r21/mine/k006300-r2-draft.png",
-   "kind": "note",
-   "label": "O answer: my head b660882, frame 3150, draft tier, 1 to 1",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:57:35.494Z",
-   "file": "20261125205735494-note-k006478-r2-draft.jpg",
-   "source": "../work/r21/mine/k006478-r2-draft.png",
-   "kind": "note",
-   "label": "O answer: my head b660882, frame 3239, draft tier, 1 to 1 (the eye inside 0.9 units stands still, the collar is dragged up to 15.2 degrees)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T20:57:34.831Z",
-   "file": "20261125205734831-note-k006120-r2-draft.jpg",
-   "source": "../work/r21/mine/k006120-r2-draft.png",
-   "kind": "note",
-   "label": "O answer: my head b660882, frame 3060, draft tier, 1 to 1",
    "stop": "jupiter"
   }
  ]
