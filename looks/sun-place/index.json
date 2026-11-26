@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T08:35:57.681Z",
+ "pushed": "2026-11-26T09:09:03.859Z",
  "head": "b13b631b32a83375884c26c882221970e975c1aa",
- "note": "final 90 of b13b631b (not pushed yet): arch of 120 strands in crossing bundles with gaps, one fountain at the left foot; G17 by the gate's reader on the beauty 1.0890 (main 1.2777); rows 0 to 324 plain 11.9001, low band 4.7513, bands 1.256, 1.121, 0.975, 1.012; whole plain 34.1815 against main's 29.6374, still worse. sun-near 60 (draft r3, ground unchanged since): dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "note": "b13b631b local, finals 0 60 90 360 done, 221 rendering. sun-near 60 final: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T09:09:02.747Z",
+   "file": "20261126090902747-note-y5-limb.jpg",
+   "source": "../../../../tmp/v/y5-limb.jpg",
+   "kind": "note",
+   "label": "limb at 90 final",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T09:09:02.036Z",
+   "file": "20261126090902036-note-y5-tri60.jpg",
+   "source": "../../../../tmp/v/y5-tri60.jpg",
+   "kind": "note",
+   "label": "60 final: main, mine, approved",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T08:35:56.187Z",
    "file": "20261126083556187-note-y5-tri90.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/E16-pair.jpg",
    "kind": "note",
    "label": "trial X draft 90 beside the approved, arch fitted round with crossing bundles, sky aim turned",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:56:23.947Z",
-   "file": "20261126065623947-note-E9-limb.jpg",
-   "source": "../../../../tmp/v/E9-limb.jpg",
-   "kind": "note",
-   "label": "limb at 90, approved left, working state right",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:56:23.343Z",
-   "file": "20261126065623343-note-E9-pair.jpg",
-   "source": "../../../../tmp/v/E9-pair.jpg",
-   "kind": "note",
-   "label": "frame 90 draft, approved above, working state E9 below (arch refit, sky aim and level, fringe)",
    "stop": "sun"
   }
  ]
