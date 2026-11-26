@@ -11,12 +11,14 @@ export const LIMB_KNOTS = 17
 export const JET_KNOTS = 129
 export const MAX_PATCHES = 6
 
+export interface PatchFade { first: [number, number]; rest: [number, number]; minor: boolean }
+
 export interface PatchSet {
   center: THREE.Vector3
   textures: THREE.Texture[]
   widthsDeg: number[]
   feather: number
-  fade: [number, number]
+  fade: PatchFade
 }
 
 export interface SpotShape {
@@ -81,9 +83,11 @@ void main() {
 
 const PATCH_SAMPLERS = Array.from({ length: MAX_PATCHES }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
+const PATCH_FADE = (i: number): string => i > 0 ? '(1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uFrame))' : '(1.0 - soft * uPatchFirst.z) * (1.0 - smoothstep(uPatchFirst.x, uPatchFirst.y, mix(parent, fine, uPatchFirst.z) * uFrame))'
+
 const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
       vec2 q = g * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, parent * uFrame));
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * ${PATCH_FADE(i)};
       if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
       texels = mix(texels, parent, step(0.5, w));
@@ -104,6 +108,8 @@ uniform vec3 uPatchE;
 uniform vec3 uPatchU;
 uniform float uFeather;
 uniform vec2 uPatchFade;
+uniform vec3 uPatchFirst;
+uniform float uMapAniso;
 uniform float uFrame;
 uniform vec3 uSpotN;
 uniform vec3 uSpotE;
@@ -256,6 +262,14 @@ void main() {
     gy *= uGrad;
     float front = step(0.3, dn);
     float parent = texels;
+    vec3 rx = dFdx(dir);
+    vec3 ry = dFdy(dir);
+    float reach = along - sqrt(max(1.0 - rt * rt, 0.0));
+    float lean = max(mu, 1e-4);
+    vec3 jx = reach * (rx + dir * (dot(n, rx) / lean));
+    vec3 jy = reach * (ry + dir * (dot(n, ry) / lean));
+    float most = sqrt(max(dot(jx, jx), dot(jy, jy)));
+    float fine = max(length(cross(jx, jy)) / max(most, 1e-20), most / uMapAniso) * uMapWidth / 6.283185307;
 ${PATCH_LEVELS}
   }
   vec3 lin = inverseFilmic(albedo);
@@ -356,7 +370,7 @@ export class Globe {
         uPatchCount: { value: p?.textures.length ?? 0 },
         uPatchN: { value: pn }, uPatchE: { value: pe }, uPatchU: { value: pu },
         uVeil: { value: new THREE.Vector4(0, o.veil.height, o.veil.repeats, 0) }, uVeilColor: { value: new THREE.Vector3().fromArray(o.veil.color) },
-        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade[0] ?? 1.1, p?.fade[1] ?? 1.7) },
+        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade.rest[0] ?? 1.1, p?.fade.rest[1] ?? 1.7) }, uPatchFirst: { value: new THREE.Vector3(p?.fade.first[0] ?? 1.1, p?.fade.first[1] ?? 1.7, p?.fade.minor ? 1 : 0) }, uMapAniso: { value: Math.max(o.map.anisotropy, 1) },
         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
         uSpotShape: { value: new THREE.Vector4(Math.sin(rad(o.spot.axesDeg[0])), Math.sin(rad(o.spot.axesDeg[1])), o.spot.core, o.spot.reach) },
         uMapWidth: { value: o.mapWidth },

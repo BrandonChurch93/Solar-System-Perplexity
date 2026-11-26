@@ -5,7 +5,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { handoverOf } from '../../director/handover'
 import { smooth } from '../../director/rig'
-import { bandHold } from '../../space/sky'
+import { bandHold, limbShare, nameSunPicture, showSunPicture } from '../../space/sky'
 import { Air } from './air'
 import { close, farMap, flowMap, held, mended, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
@@ -56,9 +56,9 @@ export const createSet: SetFactory = async (ctx) => {
   const toneMap = await ctx.texture(base + patches.place.tone.file, { srgb: false, mips: false })
   const planet = new NeptunePlanet({
     field, near: look.near.dive, night: look.night,
-    map, mapWidth: (map.image as unknown as { width: number }).width, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
+    map, mapWidth: (map.image as unknown as { width: number }).width, mapCount: patches.mapTexels, code: look.code, deck: look.deck, cloud: look.cloud, air: look.air, limb: look.limb, clouds: look.clouds,
     storm: { axis: direction(look.storm.lon, look.storm.lat), radiusDeg: look.storm.radiusDeg },
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, featherOwn: patches.featherOwn, fade: [patches.fade[0]!, patches.fade[1]!], clearDeg: [patches.place.clearDeg[0]!, patches.place.clearDeg[1]!], shownFrom: patches.place.shownFrom, home: direction(place.camera.lonDeg, place.camera.latDeg), plainDeg: [patches.place.plainDeg[0]!, patches.place.plainDeg[1]!], vivid: [patches.place.vivid[0]!, patches.place.vivid[1]!], offsetsDeg: patches.levels.map((l) => [l.offsetDeg[0]!, l.offsetDeg[1]!] as [number, number]), tone: toneMap },
+    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), counts: patches.levels.map((l) => l.texels), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, featherOwn: patches.featherOwn, fade: [patches.fade[0]!, patches.fade[1]!], clearDeg: [patches.place.clearDeg[0]!, patches.place.clearDeg[1]!], shownFrom: patches.place.shownFrom, home: direction(place.camera.lonDeg, place.camera.latDeg), plainDeg: [patches.place.plainDeg[0]!, patches.place.plainDeg[1]!], vivid: [patches.place.vivid[0]!, patches.place.vivid[1]!], offsetsDeg: patches.levels.map((l) => [l.offsetDeg[0]!, l.offsetDeg[1]!] as [number, number]), tone: toneMap },
     hold: { map: holdMap, box: look.held.box, head: look.held.head },
     mend: { map: mendMap, box: look.mended.box },
     flow,
@@ -104,10 +104,10 @@ export const createSet: SetFactory = async (ctx) => {
     fine: await ctx.texture(base + close.fine, { srgb: false, anisotropy: 16 }),
   }
   const closeup = new Closeup(closeMaps)
-  const deepView = new Deep()
+  const deepView = new Deep(false, planet.material.uniforms)
   terrain.add(deepLook.on ? deepView.mesh : closeup.mesh)
   const deepSun = new THREE.Vector3()
-  const deepLaid = new Deep(true)
+  const deepLaid = new Deep(true, planet.material.uniforms)
   const fallGlobePower = new THREE.Vector3(1, 1, 1)
   const fallScenePower = new THREE.Vector3(1, 1, 1)
   if (deepLook.on) orbit.add(deepLaid.mesh)
@@ -138,13 +138,55 @@ export const createSet: SetFactory = async (ctx) => {
     return plan.eye(kind, time, 'orbit').position.clone().applyQuaternion(plan.laid(time).invert())
   }
   const layRef = { dive: seatAt('dive'), rise: seatAt('rise') }
+  // The eye the dive begins at, in the body's own frame (the body's turn taken out): the held field is read by it through the dive.
+  const diveEye = plan.eye('dive', plan.seg.dive!.start, 'orbit').position.clone().applyQuaternion(plan.turn(plan.seg.dive!.start).invert())
+  const fieldEye = new THREE.Vector3()
+  // The scene from code reads the globe's own map (deep.json, far). toBody: the turn from the scene's frame to the globe's. In the view
+  // from the ground the globe is not drawn, so the state of its map is set there for the scene alone, by the same laws: the hold's
+  // share by the eye's angle from the hold's axis as in the dive, and through the surface view down to none at the angle the rise
+  // begins at, since the rise shows the globe without it (the eye travels from groundOff[0] to groundOff[1] degrees there, one way).
+  const bodyBack = planet.mesh.quaternion.clone().invert()
+  const toBody = new THREE.Quaternion()
+  const eyeAt = new THREE.Vector3()
+  ;(planet.material.uniforms.uEyeMake!.value as THREE.Vector4).set(deepLook.on ? deepLook.storm.dark : 0, deepLook.storm.wall[0]!, deepLook.storm.wall[1]!, deepLook.storm.ragged)
+  ;(planet.material.uniforms.uEyeHue!.value as THREE.Vector3).fromArray(deepLook.storm.hue)
+  const seen = new THREE.Vector3()
+  const offGround = (time: number): number => THREE.MathUtils.radToDeg(plan.twin(plan.terrain(time - plan.seg.terrain.start), time).position.angleTo(holdPose.position))
+  const groundOff = [offGround(plan.seg.terrain.start), offGround(plan.seg.terrain.end)]
+  const streamAt = (elapsed: number): number => THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds)
+  const stormAt = (elapsed: number): number => THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds)
+  const homeAt = (offAxis: number): number => 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
+  const cirrusPx = (high: number): number => move.cirrus.px * bufferFrame() * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!)))
+  // The place's own share (the scene's own deck round the place with its storm, its cirrus and their shadows, and the dark of the
+  // storm's eye on the globe) by the eye's height over the deck in radii (deep.json, globe.own): none at the hold's height, whole near
+  // the deck, by the logarithm of the height, the same down and up, never by the clock. The hold shows the approved hero's own map at
+  // the place, and on the way down the place's objects grow out of the map's texture (MAIL 1359, MAIL 1363 points 3 and 4).
+  const ownAt = (high: number): number => 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.own[1]!) / Math.log(deepLook.globe.own[0]! / deepLook.globe.own[1]!))
 
   const sky: SkyPatch[] = []
-  for (const [view, def] of Object.entries(skyJson)) {
-    const wide = 1 + 2 * def.margin
-    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+  // The stop's sky (sky.json, MAIL 1363 point 2, MAIL 1395 ruling 2): two cards made by assets-src/neptune/sky/hold.py, the approved
+  // hero's own sky with the Sun taken off at the hold's aim and the approved close picture's sky at the aim of the surface view, each
+  // in the middle of its continuation by recipe. Both are fixed on the sky at the stop's one turn, are drawn in both views (both) and
+  // carry no weight of their own: no law by clock or by height, so they leave and enter only behind the globe or over the frame's
+  // edge. The Sun and its glare are the engine's, drawn over the pictures (glare in sky.json).
+  type SkyDef = { file: string; vfovDeg?: number; margin?: number; tan?: number[]; edge?: number; gain: number; add: boolean; glare?: boolean; both?: boolean; ring: number[] }
+  for (const [view, defs] of Object.entries(skyJson as unknown as Record<string, SkyDef[] | object>)) {
+    if (!Array.isArray(defs)) continue
+    for (const def of defs as SkyDef[]) {
+      const margin = def.margin ?? 0
+      const wide = 1 + 2 * margin
+      const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg ?? 0) / 2) * wide
+      sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: def.tan ? [def.tan[0]!, def.tan[1]!] : [t * 16 / 9, t], gain: def.gain, add: def.add, glare: def.glare === true, both: def.both === true, ring: def.ring as [number, number, number, number], edge: def.edge ?? margin / wide })
+    }
   }
+
+  // The hold's Sun (sky.json, sun; MAIL 1395 ruling 3): the hero's own Sun as a picture, what the hold's card gave up (hold.py,
+  // sunless). The sky's law draws it where its Sun stands and hides it behind the globe's limb with the Sun (update below). The
+  // smaller file of the web assets is the same picture at half the measure, read by its own width.
+  const sunDef = (skyJson as unknown as { sun: { file: string; size: number; at: number[]; texelPx: number; gain: number } }).sun
+  const sunMap = await ctx.texture(base + sunDef.file, { srgb: true, mips: false, anisotropy: 1 })
+  const sunScale = sunDef.size / (sunMap.image as unknown as { width: number }).width
+  nameSunPicture({ texture: sunMap, at: [sunDef.at[0]! / sunScale, sunDef.at[1]! / sunScale], texelPx: sunDef.texelPx * sunScale, gain: sunDef.gain })
 
   return {
     id: plan.id,
@@ -152,28 +194,58 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
+      // The Sun's picture is shown in the flight in and in this stop only (the ending's Sun is the ending's), by the share of the
+      // Sun's disc that stands clear of the globe's hard limb as the globe view sees it.
+      if (inOrbit && (shot.segment.stop === plan.id || shot.segment.kind === 'travel')) showSunPicture(limbShare(shot.sun.dir, world.position, 1, shot.sun.angularRadius), shot.sun)
       if (shot.segment.stop === plan.id && shot.segment.kind === 'rise') holdBand(shot.u)
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
       const gain = 1 / shot.post.exposure
+      // The eye of the place's storm rides the globe with the scene: its middle in the globe's frame, for both shaders (planet.ts, eyeShade).
+      eyeAt.copy(deepView.eyeUp).applyQuaternion(toBody.copy(bodyBack).multiply(plan.laid(state.time)))
+      ;(planet.material.uniforms.uEyeAt!.value as THREE.Vector4).set(eyeAt.x, eyeAt.y, eyeAt.z, deepView.eyeAngle)
       if (!inOrbit) {
         camera.copy(world.position).negate().applyQuaternion(turn.copy(state.rotation).invert())
-        if (deepLook.on) deepView.update(camera, deepSun.copy(plan.lightDir).applyQuaternion(plan.laid(state.time).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain, shot.post.vignette, view.format.width / view.format.height)
+        if (deepLook.on) {
+          const pu = planet.material.uniforms
+          const kind = state.segment.kind
+          seen.copy(camera).sub(deepView.centre).applyQuaternion(plan.laid(state.time))
+          const offAxis = THREE.MathUtils.radToDeg(seen.angleTo(holdPose.position))
+          const home = kind === 'rise' ? 0 : homeAt(offAxis) * (kind === 'terrain' ? 1 - smooth((offAxis - groundOff[0]!) / (groundOff[1]! - groundOff[0]!)) : 1)
+          const elapsed = state.time - plan.holdMid
+          pu.uSpin!.value = plan.spin(state.time)
+          pu.uStream!.value = streamAt(elapsed)
+          pu.uStormAngle!.value = stormAt(elapsed)
+          ;(pu.uHold!.value as THREE.Vector2).x = home * look.held.amount
+          ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
+          ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
+          pu.uCirrusPx!.value = cirrusPx(seen.length() / (deepView.centre.length() - 1) - 1)
+          const own = ownAt(seen.length() / (deepView.centre.length() - 1) - 1)
+          ;(pu.uEyeMake!.value as THREE.Vector4).x = deepLook.storm.dark * own
+          deepView.ownShare(own)
+          ;(pu.uShadow!.value as THREE.Vector3).y = look.clouds.shadowSoft * bufferFrame()
+          pu.uLine!.value = bufferFrame()
+          ;(pu.uEnd!.value as THREE.Vector3).x = 0
+          deepView.update(camera, deepSun.copy(plan.lightDir).applyQuaternion(plan.laid(state.time).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain, shot.post.vignette, view.format.width / view.format.height, toBody.copy(bodyBack).multiply(plan.laid(state.time)))
+        }
         else closeup.update(camera, state.time - terrainMid, gain, shot.post.vignette, view.format.width / view.format.height, shot.post.bloomStrength)
         return
       }
       const ending = state.segment.stop !== plan.id && state.segment.kind !== 'travel'
-      const lit = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0
+      const lit = state.lookback ?? (ending ? (state.segment.kind === 'retreat' ? smooth(state.u * 1.5) : 1) : 0)
       const end = ending ? (state.segment.kind === 'retreat' ? smooth(state.u * endLook.blend) : 1) : 0
       light.copy(plan.lightDir).applyQuaternion(state.rotation).lerp(shot.sun.dir, lit).normalize()
       camera.copy(world.position).negate()
       const elapsed = state.time - plan.holdMid
       const offAxis = THREE.MathUtils.radToDeg(camera.angleTo(holdDirection.copy(holdPose.position).applyQuaternion(state.rotation)))
       const rising = state.segment.kind === 'rise'
-      const home = ending || rising ? 0 : 1 - smooth((offAxis - look.holdness.fromDeg) / (look.holdness.toDeg - look.holdness.fromDeg))
+      const home = ending || rising ? 0 : homeAt(offAxis)
       const pu = planet.material.uniforms
       const grade = rising ? look.near.rise : look.near.dive
       const high = camera.length() - 1
+      const own = deepLook.on && !ending ? ownAt(high) : 0
+      ;(pu.uEyeMake!.value as THREE.Vector4).x = deepLook.storm.dark * own
+      deepLaid.ownShare(own)
       const tone = smooth(Math.log(closeLook.lay.tone[0]! / Math.max(high, 1e-6)) / Math.log(closeLook.lay.tone[0]! / closeLook.lay.tone[1]!))
       const low = tone
       const closeLight = Math.pow(tone, closeLook.lay.lightPower)
@@ -184,6 +256,9 @@ export const createSet: SetFactory = async (ctx) => {
       const line = 1 - smooth((look.lineFade[0] - high) / (look.lineFade[0] - look.lineFade[1]))
       const kind = state.segment.kind
       const show = deepLook.on && !ending ? 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.height[1]!) / Math.log(deepLook.globe.height[0]! / deepLook.globe.height[1]!)) : 0
+      // The place's own picture is drawn wherever its share by the eye's height is over none (ownAt above; MAIL 774's one field by
+      // place alone stood here at every height until MAIL 1359 ruled the hold).
+      const placed = deepLook.far.on === 1 && own > 0
       const lay = ending || deepLook.on ? 0 : kind === 'dive' ? smooth((state.u - closeLook.lay.dive[0]!) / (closeLook.lay.dive[1]! - closeLook.lay.dive[0]!)) : kind === 'rise' ? 1 - smooth((state.u - closeLook.lay.rise[0]!) / (closeLook.lay.rise[1]! - closeLook.lay.rise[0]!)) : kind === 'terrain' ? 1 : 0
       const settle = ending ? 0 : 1 - smooth((high - closeLook.lay.settle[1]!) / (closeLook.lay.settle[0]! - closeLook.lay.settle[1]!))
       const limb = ending ? 0 : 1 - smooth(Math.log(Math.max(high, 1e-6) / closeLook.lay.glow[1]!) / Math.log(closeLook.lay.glow[0]! / closeLook.lay.glow[1]!))
@@ -198,7 +273,9 @@ export const createSet: SetFactory = async (ctx) => {
         layOut.copy(pu.uSpotN!.value as THREE.Vector3).applyAxisAngle(spinAxis, spin).applyQuaternion(layTurn)
         laid.toned(layEast, layNorth, layOut, (pu.uPatchOff!.value as THREE.Vector2[])[patches.place.shownFrom]!, (pu.uPatchScale!.value as number[])[patches.place.shownFrom]!, patches.place.tone.stops * (1 - closeLight))
       }
-      const fall = deepLook.on && !ending ? 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.fall.height[1]!) / Math.log(deepLook.globe.fall.height[0]! / deepLook.globe.fall.height[1]!)) : 0
+      // One curve at every height, the hold's (the Builder's MAIL 1011, way C): the globe is not graded by the eye's height and the
+      // scene's end takes its ground colours back to the hold's by the full powers. What differs down there is the air (deep.ts).
+      const fall = 0
       for (let c = 0; c < 3; c++) {
         const p = deepLook.globe.fall.power[c]!
         fallGlobePower.setComponent(c, 1 + fall * (p - 1))
@@ -207,9 +284,9 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uFallPivot!.value as THREE.Vector3).fromArray(deepLook.globe.fall.pivot)
       ;(pu.uFallPower!.value as THREE.Vector3).copy(fallGlobePower)
       pu.uFallBlue!.value = deepLook.globe.fall.blue / Math.max(fall, 1e-4)
-      if (show > 0) {
+      if (show > 0 || placed) {
         laySeat.copy(camera).applyQuaternion(layBack.copy(state.rotation).invert())
-        deepLaid.update(deepLaid.lay(laySeat, plan.laid(state.time), show, fallScenePower), deepSun.copy(plan.lightDir).applyQuaternion(layBack.copy(plan.laid(state.time)).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain * state.weight, lens, view.format.width / view.format.height)
+        deepLaid.update(deepLaid.lay(laySeat, plan.laid(state.time), show, fallScenePower, pu.uFallBlue!.value as number), deepSun.copy(plan.lightDir).applyQuaternion(layBack.copy(plan.laid(state.time)).invert()), state.time - terrainMid, 2 * Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / view.format.height, gain * state.weight, lens, view.format.width / view.format.height, toBody.copy(bodyBack).multiply(plan.laid(state.time)))
       }
       const thin = ending ? 1 : smooth(Math.sqrt(high * (high + 2)) / look.airThin.reach)
       const moving = kind === 'dive' || kind === 'rise' ? 1 - smooth((high - move.near.height[0]!) / (move.near.height[1]! - move.near.height[0]!)) : 0
@@ -221,7 +298,7 @@ export const createSet: SetFactory = async (ctx) => {
       pu.uFlow!.value = look.flow.amount * (1 - home * (1 - deep)) * (1 - end * (1 - endLook.limb.flow))
       ;(pu.uCirrus!.value as THREE.Vector4).set(look.cirrus.amount * (1 - home) * (1 - end), look.cirrus.bend, look.cirrus.shadow, look.cirrus.floor)
       ;(pu.uClump!.value as THREE.Vector3).fromArray(look.cirrus.clump)
-      pu.uCirrusPx!.value = kind === 'dive' || kind === 'rise' ? move.cirrus.px * bufferFrame() * (1 - smooth((high - move.cirrus.height[0]!) / (move.cirrus.height[1]! - move.cirrus.height[0]!))) : 0
+      pu.uCirrusPx!.value = kind === 'dive' || kind === 'rise' ? cirrusPx(high) : 0
       ;(pu.uShadow!.value as THREE.Vector3).y = look.clouds.shadowSoft * bufferFrame()
       // The plate levels come in by the texels of their parent a 1080th of the frame's height (an angle), not a pixel of the format
       // that happens to be drawn, so the film is one picture at 1920 and at 3840 wide (the Builder's note 501). The factor is the
@@ -244,12 +321,18 @@ export const createSet: SetFactory = async (ctx) => {
       ;(pu.uEdgeWideDir!.value as THREE.Vector3).copy(edgeSun).multiplyScalar(Math.cos(edgeTurn)).addScaledVector(side, -Math.sin(edgeTurn))
       ;(pu.uEdgeShape!.value as THREE.Vector4).w = home * look.limb.edge.amount * line
       ;(pu.uFieldSide!.value as THREE.Vector4).set(side.x, side.y, side.z, home * look.field.amount * (1 - low))
+      // The held field on the body (planet.ts, uFieldEye): in the dive it is read by the eye the dive began at, carried with the body.
+      if (kind === 'dive' && !ending) {
+        fieldEye.copy(diveEye).applyQuaternion(plan.turn(state.time)).applyQuaternion(state.rotation)
+        ;(pu.uFieldEye!.value as THREE.Vector4).set(fieldEye.x, fieldEye.y, fieldEye.z, 1)
+      }
+      else (pu.uFieldEye!.value as THREE.Vector4).w = 0
       ;(pu.uHold!.value as THREE.Vector2).x = home * look.held.amount
       ;(pu.uPlace!.value as THREE.Vector3).z = lay
       pu.uShown!.value = lay
       pu.uToneAmt!.value = patches.place.tone.stops * closeLight
       ;(pu.uPlain!.value as THREE.Vector3).z = lay * tone
-      planet.update(plan.spin(state.time), THREE.MathUtils.degToRad(look.stream.degPerSecond) * eased(elapsed, look.stream.fullSeconds, look.stream.easeSeconds), THREE.MathUtils.degToRad(look.storm.degPerSecond) * eased(elapsed, look.storm.fullSeconds, look.storm.easeSeconds), gain, state.weight, near, grade.gain)
+      planet.update(plan.spin(state.time), streamAt(elapsed), stormAt(elapsed), gain, state.weight, near, grade.gain)
       ;(pu.uNearFall!.value as THREE.Vector3).set(THREE.MathUtils.degToRad(grade.fall[0]!), THREE.MathUtils.degToRad(grade.fall[1]!), 1 - (1 - grade.fall[2]!) * (1 - smooth((high - grade.fallAltitude[0]!) / (grade.fallAltitude[1]! - grade.fallAltitude[0]!))))
       ;(pu.uNear!.value as THREE.Vector4).z = grade.power
       ;(pu.uNear!.value as THREE.Vector4).w = grade.saturation
@@ -280,7 +363,7 @@ export const createSet: SetFactory = async (ctx) => {
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
       const visible = radiusPx > 0.6 * bufferFrame()
       planet.mesh.visible = visible && show < 1
-      deepLaid.mesh.visible = visible && show > 0
+      deepLaid.mesh.visible = visible && (show > 0 || placed)
       air.mesh.visible = visible
       triton.mesh.visible = visible
       ring.mesh.visible = visible

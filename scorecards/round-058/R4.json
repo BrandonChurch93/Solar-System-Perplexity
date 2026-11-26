@@ -1,0 +1,56 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 1309 to 1325, sky above the limb and upper right horizon",
+   "what": "entering the dive cover pops from black space above a left-lit globe to a bright sun and starry sky on the shadowed right side, with a clipped sun glow at the top of 1317, a hard horizontal flare-card edge across the sky in 1325, a sharp tan patch seam under the right limb, and an exposure spike",
+   "fix": "align the 3D globe sun direction and skybox with the terrain view, remove the rectangular sky/flare card border, feather the spherical terrain patch, and match exposure across the cover"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 1550 to 1604, upper-right horizon sun and full planet disk",
+   "what": "between 1550 and 1557 the sun and atmospheric glow abruptly cut out to black space, and the pulled-back globe finishes lit from the upper right with the horizontal Milky Way band gone—reversing the left-lit globe and galactic backdrop established in sheet-01.png",
+   "fix": "keep a single consistent world-space sun and galactic skybox from hold through rise, and let the sun pass smoothly off-frame or behind the limb instead of cutting off the sky layer"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-03.png",
+   "where": "frames 1337 to 1345, lower right corner and lower left margin",
+   "what": "edges of the displaced terrain picture enter the frame during the dive cover, showing a sharp horizontal black cut with diagonal clamped-pixel stripes under the lower-right clouds and a blocky vertical smeared wall on the lower-left border",
+   "fix": "add overscan/outpainting around the terrain image and depth mesh or tighten the cover framing so no source border or edge-clamp region enters the viewport"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-06.png",
+   "where": "frames 1540 to 1545, lower left edge and upper sky through the sun halo",
+   "what": "pulling back across the exit cover brings the left border of the terrain image into frame as horizontal edge-clamped streaks at the lower left and reveals a hard horizontal band edge cutting through the upper sun glow",
+   "fix": "expand terrain overscan, extend and feather the upper sun/atmosphere glow without a rectangular top boundary, and complete the globe blend before the terrain edges come into view"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 1557 to 1570, lower left surface of the globe",
+   "what": "the terrain decal mapped onto the sphere shows a visible circular seam and heavy radial texture stretching/smearing across the lower-left foreground next to sharp interior cloud detail (also visible during dive in sheet-02.png frames 1300 to 1317)",
+   "fix": "use a wider multi-resolution spherical patch with feathered cloud blending so the landing-zone skirt neither stretches into radial smears nor shows a circular boundary"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "frames 1415 to 1529, lower-left cloud ridge and central backlit cloud towers",
+   "what": "parallax across steep depth steps stretches the dark undersides of backlit clouds into long diagonal rubber-sheet smears as the camera advances",
+   "fix": "soften steep depth-map transitions or separate foreground cloud layers over inpainted background clouds to prevent mesh stretching along shadow slopes"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-03.png",
+   "where": "frames 1344 to 1348, horizon and sun drift into sheet-04.png frame 1350",
+   "what": "camera motion decelerates nearly to a stop at the end of the cover (with slight horizontal sun-drift reversal when terrain starts at 1350) instead of carrying momentum smoothly into the terrain glide",
+   "fix": "match the outgoing velocity and direction of the dive cover to the incoming velocity of the terrain camera so the handoff reads as one unbroken eased move"
+  }
+ ]
+}

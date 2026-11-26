@@ -8,6 +8,13 @@
     1.02,
     1.5
   ],
+  "first": {
+    "fade": [
+      1.12,
+      1.65
+    ],
+    "minor": true
+  },
   "levels": [
     {
       "id": "wide",

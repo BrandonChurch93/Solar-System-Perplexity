@@ -298,8 +298,12 @@ export class SaturnPlan extends StopPlan {
   // of the first frame of the skim and nearer, and between the two the tangent of half the field of view is a
   // power of the distance. The exponent of that power rises from nothing over the first lens.ease[0] of the
   // logarithm of the distance at the skim's end of the span and falls to nothing over the last lens.ease[1] at
-  // the hold's end. So the disc of the globe grows at every frame in which the eye comes nearer, and its
-  // growth has no step where the law begins or ends. Both distances and both lenses are read from the path.
+  // the hold's end. About the distance lens.swell.at it stands higher by lens.swell.gain of its level, and
+  // that swell falls off to nothing over lens.swell.reach of the logarithm on either side as half a cosine:
+  // there the eye's own way moves the picture on the screen least, and the faster lens keeps the picture's
+  // speed from falling before its climb into the skim (skim.json lens says what was measured). So the disc of
+  // the globe grows at every frame in which the eye comes nearer, and its growth has no step where the law
+  // begins or ends. Both distances and both lenses are read from the path.
   private lensSpan: { near: number; far: number; wide: number; long: number } | null = null
 
   private lensAt(distance: number): number {
@@ -314,12 +318,20 @@ export class SaturnPlan extends StopPlan {
     if (x <= near) return wide
     if (x >= far) return long
     const [rise, fall] = skimJson.lens.ease as [number, number]
-    // the way done by an exponent that rises over the length rise, stays, and falls over the length fall
+    const swell = skimJson.lens.swell
+    const mid = Math.log(swell.at)
+    if (!(swell.reach > 0) || mid - swell.reach < near || mid + swell.reach > far) throw new Error(this.id + ': the swell of the lens (skim.json lens.swell) leaves the span of the law, ' + Math.exp(near).toFixed(4) + ' to ' + Math.exp(far).toFixed(4))
+    // the way a flank of the swell has done at the length s from its top: the sum of half of one and a cosine
+    const flank = (s: number): number => (s + (swell.reach / Math.PI) * Math.sin((Math.PI * s) / swell.reach)) / 2
+    // the way done by an exponent that rises over the length rise, stays, and falls over the length fall, with
+    // the swell laid on it
     const done = (at: number): number => {
       const up = Math.min(at - near, rise)
       const level = Math.max(Math.min(at, far - fall) - (near + rise), 0)
       const down = Math.max(at - (far - fall), 0)
-      return (rise > 0 ? (up * up) / (2 * rise) : 0) + level + (fall > 0 ? down - (down * down) / (2 * fall) : 0)
+      const below = Math.min(Math.max(mid - at, 0), swell.reach)
+      const above = Math.min(Math.max(at - mid, 0), swell.reach)
+      return (rise > 0 ? (up * up) / (2 * rise) : 0) + level + (fall > 0 ? down - (down * down) / (2 * fall) : 0) + swell.gain * (flank(swell.reach) - flank(below) + flank(above))
     }
     const half = (deg: number) => Math.tan(THREE.MathUtils.degToRad(deg) / 2)
     return 2 * THREE.MathUtils.radToDeg(Math.atan(half(wide) * Math.pow(half(long) / half(wide), done(x) / done(far))))

@@ -1,0 +1,63 @@
+{
+ "critic": "R1",
+ "score": 8,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "native cloud crops, especially tile A vortex",
+   "what": "fine filament and ridge micro-contrast is lower than pair-02-a; steep cloud peaks sit a few levels lower and slightly wider, and finest-scale energy is about 60-75 percent of the target across the grid",
+   "fix": "restore high-frequency cloud detail and ridge highlight contrast to the target, without changing large-scale cloud shapes"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-02-b.png",
+   "where": "star and dust crops, tiles F and G",
+   "what": "star points and dust-lane grain are softer than the target and less locked to it; finest-scale correlation drops and bright point peaks jitter by about a pixel",
+   "fix": "sharpen star points and dust lanes back to the target point spread and keep them registered"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "cloud deck",
+   "what": "same framing, limb, and grade as pair-01-a, but fine cloud detail is attenuated (about 76 percent of the target fine energy in the cloud body)",
+   "fix": "bring cloud micro-contrast up to the target; leave framing, limb glow, and color alone"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "upper sky starfield",
+   "what": "stars are systematically dimmer than pair-03-a, worse on the brighter ones (about 9 to 12 levels down above luminance 70; about 18 percent fewer pixels above 80)",
+   "fix": "raise star peak brightness to the target, especially the brighter stars, without lifting the sky black"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "sun core in tile C",
+   "what": "flare width matches, but the white-hot core is less clipped than pair-04-a (peak about 237 versus 255; about 26 percent fewer pixels above 250)",
+   "fix": "push the sun core back to the target clipped peak and restore the hottest core area; do not widen the flare"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "overall grade, strongest in the cloud deck",
+   "what": "a slight warm lift versus the target (about +0.9 red on the full frame, up to about +1.8 red in the pair-04 cloud crops)",
+   "fix": "cool the red channel slightly and pull midtones back to the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "sky and thin-limb crop, tile G",
+   "what": "finest detail is attenuated versus pair-04-a (about 58 percent of the target finest-scale energy) even though framing matches",
+   "fix": "restore star and airglow micro-detail to the target"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-04-b.png",
+   "where": "cloud crops, tiles A, D, and H",
+   "what": "fine grain is slightly higher than the target and does not lock to it (finest-scale energy about 110-116 percent, correlation about 0.81)",
+   "fix": "remove the extra fine grain so those crops match the target texture instead of looking crunchier"
+  }
+ ]
+}
