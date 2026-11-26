@@ -12,6 +12,7 @@ export const globe = {
   cloudFine: 4,
   sharp: [0.3, 0.8] as [number, number],
   wrapSoft: 2.2,
+  rimDeg: 1.40625,
   soft: 0,
   diveSoft: [0, 2.3, 4.55] as [number, number, number],
   away: 1,
@@ -120,10 +121,12 @@ export const deck: DeckLook = {
   bloom: 1,
   detail: { tone: 0.2, relief: 0.4, fleck: 0.3, scale: 1.0, stretch: [0.3, 0.8] },
   near: [1.0, 1.25],
+  coarse: [3, 6],
+  long: [1, 2],
   cloud: { height: 0.4, tile: 0.7, stretch: 1.4, group: 1.2, cover: [0.44, 0.6], curve: [0.14, 0.45], drift: 0.03, gain: 1.5, shade: 0.35, reach: [0.3, 0.62], tint: [2.16, 1.92, 1.8], lit: [0.02, 0.12] },
 }
 
-export const place = { light: { up: [0.08, 0.8] as [number, number], down: [0.06, 0.8] as [number, number], soft: 1 }, steep: [0.7, 0.9] as [number, number], steepLow: [1, 1.2] as [number, number], tops: { sun: [-0.2, 0.2] as [number, number], white: [1.15, 1.06, 0.94] as [number, number, number], fine: [3, 0.002] as [number, number], lane: [0.45, 0.45, 0.45] as [number, number, number] }, rim: { span: [3.2, 4.55] as [number, number], near: [0.75, 1.3] as [number, number], feather: 0.3, wave: 0.08 }, sky: [0.2, 0.7] as [number, number], skyPicture: [0.25, 1.5] as [number, number], skyTurn: [0.2, 4.55] as [number, number], skyDive: { picture: [0.2, 0.5] as [number, number], turn: [0.2, 4.55] as [number, number], soft: 0.2 }, lift: 0.03, round: [0.7, 4.55] as [number, number], under: 0.003, deck: { span: [0.0235, 0.06] as [number, number], border: [0.42, 0.56] as [number, number], calm: 0.0625 }, arcs: { dive: [1, 2] as [number, number] }, onSky: [0.97, 1] as [number, number], rings: { dive: [0.2, 0.8] as [number, number] }, ringMove: { span: [0.022, 1.2] as [number, number], match: [1.0, 1.56] as [number, number], arch: [0.45, 1] as [number, number], spread: [0.02, 0.9] as [number, number], hoops: { arch: [0.8952, 0.9081, 1.0001] as [number, number, number], rings: [1.29, 1.3526, 1.5601] as [number, number, number] }, show: 0.012, hand: [1.2, 2.4] as [number, number] }, fixedEye: false }
+export const place = { air: { scale: 0.3, steps: 1048576, floor: 0.025, depth: 0.15, bare: [0.04, 0.03, 0.09] as [number, number, number] }, tops: { sun: [-0.2, 0.2] as [number, number], white: [1.15, 1.06, 0.94] as [number, number, number], fine: [3, 0.002] as [number, number], lane: [0.45, 0.45, 0.45] as [number, number, number] }, rim: { span: [3.2, 4.55] as [number, number], near: [0.75, 1.3] as [number, number], feather: 0.3, wave: 0.08 }, sky: [0.2, 0.7] as [number, number], skyPicture: [0.25, 1.5] as [number, number], skyTurn: [0.2, 4.55] as [number, number], skyDive: { picture: [0.2, 0.5] as [number, number], turn: [0.2, 4.55] as [number, number], soft: 0.2 }, lift: 0.03, round: [0.7, 4.55] as [number, number], under: 0.003, deck: { pixel: [2.3e-4, 4.6e-4] as [number, number], grain: [1.9e-4, 2.3e-4] as [number, number], border: [0.42, 0.56] as [number, number] }, arcs: { dive: [1, 2] as [number, number] }, onSky: [0.97, 1] as [number, number], rings: { dive: [0.2, 0.8] as [number, number] }, ringMove: { span: [0.022, 1.2] as [number, number], match: [1.0, 1.56] as [number, number], arch: [0.45, 1] as [number, number], spread: [0.02, 0.9] as [number, number], hoops: { arch: [0.8952, 0.9081, 1.0001] as [number, number, number], rings: [1.29, 1.3526, 1.5601] as [number, number, number] }, show: 0.012, hand: [1.2, 2.4] as [number, number] }, fixedEye: false }
 
 export const near = { tint: [1, 1, 1] as [number, number, number], halo: 0.6, span: [0.12, 1] as [number, number] }
 

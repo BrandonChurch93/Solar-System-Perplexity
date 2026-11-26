@@ -1,15 +1,16 @@
 import * as THREE from 'three'
 import { afterAll, describe, expect, it } from 'vitest'
-import { config } from '../src/config'
+import { config, type Segment } from '../src/config'
 import { needs } from '../src/core/caps'
 import { edgeReach, Place, placeCamera, placeGeometry, placeLayout, placeSkyGrad, placeUv, toneGrid, toneReach, type PlaceLayout } from '../src/core/place'
 import type { Pose, Shot } from '../src/core/types'
 import { parseProbe, probeString } from '../src/diagnostics/probe'
 import { FilmDirector } from '../src/director/film'
-import { forceTop, handoverOf, placeWeight, skyTurnWeight, skyWeight, type HandoverParams } from '../src/director/handover'
-import { trapeze } from '../src/director/moves'
+import { forceTop, handoverOf, placeWeight, skyTurnWeight, skyWeight, type HandoverParams, type SkyShares } from '../src/director/handover'
+import { StopPlan, trapeze } from '../src/director/moves'
 import { plans } from '../src/director/plans'
-import { coveredPlan, filmWith, restorePlans } from './lib/covered'
+import { COVERED, coveredFit, coveredParams, coveredPlan, filmWith, restorePlans } from './lib/covered'
+import { bothViews, sayBoth, skyDrawn } from './lib/skyword'
 
 const fps = config.fps
 const c = config.raw.handover
@@ -400,10 +401,40 @@ describe('the projection of a place picture', () => {
 // A plan may find its twin by a numeric solve: the two cameras may differ by a share of the height that is far below a pixel.
 const near = (position: THREE.Vector3): number => 1e-5 * Math.max(position.length() - 1, 1e-6)
 
+// Plans made in memory for the law of both (SkyPatch.both). A stop whose sky pictures say the word gives the engine no share to read
+// in its dive and its rise: a share of 0 of the close view's sky and none of the globe view's.
+const moving = (seg: Segment): boolean => seg.kind === 'dive' || seg.kind === 'rise'
+class NoShare extends StopPlan {
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    return moving(seg) ? { low: 0 } : super.skyShare(seg, time)
+  }
+}
+// Three that do give one: a share on every frame, a share on the one frame in the middle of the move, and a share of the globe
+// view's sky beside none of the close view's.
+class SomeShare extends StopPlan {
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    return moving(seg) ? { low: 0.25 } : super.skyShare(seg, time)
+  }
+}
+class ShareOnce extends StopPlan {
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    if (!moving(seg)) return super.skyShare(seg, time)
+    return Math.floor(time * fps + 1e-9) === Math.floor((seg.firstFrame + seg.endFrame) / 2) ? { low: 0.5 } : { low: 0 }
+  }
+}
+class HighShare extends StopPlan {
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    return moving(seg) ? { low: 0, high: 1 } : super.skyShare(seg, time)
+  }
+}
+
 describe('the two sides of a stop that hands over', () => {
   it('meet at T: the globe camera is the twin, the sky and the light are the same on both sides', () => {
     expect(handing.length).toBeGreaterThan(0)
-    for (const p of handing) {
+    // The law is tried on each stop of the film and, below, on stops made in memory: film is the film the stop p flies in. worded: how
+    // many moves were held to the law of both.
+    let worded = 0
+    const meet = (film: FilmDirector, p: StopPlan): void => {
       for (const kind of kinds) {
         const h = handoverOf(p.id, kind)
         if (!h) continue
@@ -420,7 +451,36 @@ describe('the two sides of a stop that hands over', () => {
         expect(globe.skyGlow).toBeCloseTo(close.skyGlow, 9)
         expect(globe.skyStars ?? 0).toBeCloseTo(close.skyStars ?? 0, 6)
         expect(globe.skyLook ?? 0).toBeCloseTo(close.skyLook ?? 0, 9)
-        expect(globe.skyShare).toBe(1)
+        // The engine's dissolve of the two skies is whole at T: the globe side shows the close view's sky and nothing of its own. So
+        // it is for every stop whose sky pictures do not say both (SkyPatch.both).
+        const word = bothViews(p)
+        if (word.length === 0) expect(globe.skyShare).toBe(1)
+        else {
+          // The law of both, for a stop whose sky pictures say it: the engine is given no share to read, of either sky, on any frame
+          // of the move, so nothing of the sky is weighed against anything; and the pictures that say the word stand at their whole
+          // weight on both sides, at T and on every frame of the move.
+          worded++
+          const s = p.seg[kind]!
+          expect(globe.skyShare).toBe(0)
+          expect(globe.skyShareHigh).toBeUndefined()
+          for (const view of word) {
+            expect(skyDrawn(globe, view, true)).toBe(1)
+            expect(skyDrawn(close, view, true)).toBe(1)
+          }
+          for (let f = s.firstFrame; f < s.endFrame; f++) {
+            const time = (f + config.shutterFraction / 2) / fps
+            const high = film.shotAt(f, time, 'orbit')
+            const low = film.shotAt(f, time, 'terrain')
+            expect(high.skyShare).toBe(0)
+            expect(high.skyShareHigh).toBeUndefined()
+            expect(low.skyShare).toBeUndefined()
+            expect(low.skyShareHigh).toBeUndefined()
+            for (const view of word) {
+              expect(skyDrawn(high, view, true)).toBe(1)
+              expect(skyDrawn(low, view, true)).toBe(1)
+            }
+          }
+        }
         expect(globe.camera.vfov).toBeCloseTo(close.camera.vfov, 9)
         expect(JSON.stringify(globe.post)).toBe(JSON.stringify(close.post))
         expect(globe.cover.amount).toBe(0)
@@ -442,6 +502,40 @@ describe('the two sides of a stop that hands over', () => {
         expect(globe.camera.position.distanceTo(place.centre)).toBeGreaterThan(place.radius)
       }
     }
+    for (const p of handing) meet(film, p)
+    const inFilm = worded
+    expect(inFilm).toBe(handing.reduce((n, p) => n + (bothViews(p).length > 0 ? kinds.filter((kind) => handoverOf(p.id, kind)).length : 0), 0))
+    // The law of both on a stop that carries it, whatever the film holds: the covered stop made in memory, with no share for the
+    // engine to read in its dive and its rise and with both of its sky pictures saying the word. With a share of 0 the engine carries
+    // nothing of the close view's light to the globe side either (the glow and the level of the low sky go by the share), so the stop
+    // made here has neither of its own.
+    const light = (): StopPlan['p']['light'] => {
+      const { terrainSkyGlow: _glow, skyLow: _low, ...rest } = coveredParams().light
+      return rest
+    }
+    const made = <T extends StopPlan>(Plan: new (...args: ConstructorParameters<typeof StopPlan>) => T, more: Partial<StopPlan['p']> = {}): T => new Plan(COVERED, coveredFit, { ...coveredParams(), light: light(), handover: { dive: { picture: false }, rise: { picture: false } }, ...more })
+    const carries = sayBoth(made(NoShare), ['orbit', 'terrain'])
+    meet(filmWith(carries), carries)
+    expect(worded).toBe(inFilm + 2)
+    // One picture alone may say it, as a stop may keep the picture of its hold out of its surface view.
+    const one = sayBoth(made(NoShare), ['terrain'])
+    meet(filmWith(one), one)
+    expect(worded).toBe(inFilm + 4)
+    // The word is no way round the dissolve. A stop that gives no share and does not say the word is held to the dissolve as before;
+    // one that says the word and gives a share on any frame, or a share of the globe view's sky, is refused by the law of both.
+    const silent = made(NoShare)
+    expect(() => meet(filmWith(silent), silent)).toThrow(/^expected \+0 to be 1 /)
+    const shared = sayBoth(made(SomeShare), ['orbit', 'terrain'])
+    expect(() => meet(filmWith(shared), shared)).toThrow(/^expected 0\.25 to be \+0 /)
+    const once = sayBoth(made(ShareOnce), ['orbit', 'terrain'])
+    expect(() => meet(filmWith(once), once)).toThrow(/^expected 0\.5 to be \+0 /)
+    const high = sayBoth(made(HighShare), ['orbit', 'terrain'])
+    expect(() => meet(filmWith(high), high)).toThrow(/^expected 1 to be undefined/)
+    // Nor does the word carry the close view's light: a stop that says it and keeps a glow and a low level of the sky of its own
+    // (the covered stop's) differs at T in the lines above, where the sky's level and glow of the two sides are held together.
+    const lit = sayBoth(made(NoShare, { light: coveredParams().light }), ['orbit', 'terrain'])
+    expect(() => meet(filmWith(lit), lit)).toThrow(/ to be close to /)
+    restorePlans()
   })
   it('carries the place only inside its window, on the globe side, with a weight that follows the place weight', () => {
     for (const p of handing) {
