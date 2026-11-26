@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T05:29:00.352Z",
- "head": "2f9e51a607d4b4b908a4812429bdf11a906fffac",
- "note": "2f9e51a6: gash grows into the canyon without a step; bright patch and hard edge are the map's own paint (red); judge 99th 11 at 2438 to 2441 (red)",
+ "pushed": "2026-11-26T05:49:07.065Z",
+ "head": "91f10629062116a2fddd5dd73de93605481a6df5",
+ "note": "MAIL 1425: the map levels held inside the globe's tones; glow gone at 2726 and 2427, pale rim and green tinge still there",
  "looks": [
+  {
+   "time": "2026-11-26T05:49:06.177Z",
+   "file": "20261126054906177-note-maptop-19.jpg",
+   "source": "../../../../tmp/pm/maptop-19.png",
+   "kind": "note",
+   "label": "patch-19 middle 1.5 degrees: main's (the globe's own), before maptop, after maptop",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T05:49:05.471Z",
+   "file": "20261126054905471-note-strip24.jpg",
+   "source": "../../../../tmp/pm/strip24.png",
+   "kind": "note",
+   "label": "MAIL 1417 (a) after the cure: 1 to 1 strips of the place at 2415 to 2450, drafts",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T05:49:04.700Z",
+   "file": "20261126054904700-note-g24.jpg",
+   "source": "../../../../tmp/pm/g24.png",
+   "kind": "note",
+   "label": "2726 (top, 4 to 1) and 2427 (bottom, 2 to 1): 2f9e51a6 left, after maptop right; the yellow white glow is gone, a pale rim and a green tinge stay",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T05:28:58.542Z",
    "file": "20261126052858542-note-st-over.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/pm/strip23.png",
    "kind": "note",
    "label": "N5 gash at 1 to 1, 2415 to 2450 every fifth frame, draft (MAIL 1417 a)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T04:55:22.195Z",
-   "file": "20261126045522195-note-above22.jpg",
-   "source": "../../../../tmp/pm/above22.jpg",
-   "kind": "note",
-   "label": "plates from above, state beside N5",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T04:55:21.176Z",
-   "file": "20261126045521176-note-shade22.jpg",
-   "source": "../../../../tmp/pm/shade22.jpg",
-   "kind": "note",
-   "label": "N5 shade boxes at 2325 2700 2580",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T04:55:20.108Z",
-   "file": "20261126045520108-note-dv1.jpg",
-   "source": "../../../../tmp/pm/dv1.jpg",
-   "kind": "note",
-   "label": "N5 dive 2458 to 2474 every second frame draft",
    "stop": "mars"
   }
  ]
