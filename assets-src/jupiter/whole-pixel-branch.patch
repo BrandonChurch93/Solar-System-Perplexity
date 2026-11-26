@@ -1,0 +1,69 @@
+--- a/src/stops/jupiter/assets.ts
++++ b/src/stops/jupiter/assets.ts
+@@ -8,5 +8,5 @@
+   center: patchJson.centre,
+   levels: patchJson.levels.map((l) => ({ file: l.file, widthDeg: l.widthDeg })),
+   feather: patchJson.feather,
+-  fade: { first: patchJson.first.fade as [number, number], rest: patchJson.fade as [number, number], minor: patchJson.first.minor },
++  fade: { first: patchJson.first.fade as [number, number], rest: patchJson.fade as [number, number], minor: patchJson.first.minor, whole: patchJson.first.whole },
+ }
+--- a/src/stops/jupiter/globe.ts
++++ b/src/stops/jupiter/globe.ts
+@@ -11,7 +11,7 @@
+ export const JET_KNOTS = 129
+ export const MAX_PATCHES = 6
+ 
+-export interface PatchFade { first: [number, number]; rest: [number, number]; minor: boolean }
++export interface PatchFade { first: [number, number]; rest: [number, number]; minor: boolean; whole: boolean }
+ 
+ export interface PatchSet {
+   center: THREE.Vector3
+@@ -88,7 +88,7 @@
+ const PATCH_LEVELS = Array.from({ length: MAX_PATCHES }, (_, i) => `    if (uPatchCount > ${i}.5) {
+       vec2 q = g * uPatchScale[${i}];
+       float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * ${PATCH_FADE(i)};
+-      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb, w);
++      if (w > 0.0) albedo = mix(albedo, textureGrad(uPatch${i}, q + 0.5, ${i > 0 ? 'gx' : 'hx'} * uPatchScale[${i}], ${i > 0 ? 'gy' : 'hy'} * uPatchScale[${i}]).rgb, w);
+       parent = gd * uPatchScale[${i}] * uPatchSize[${i}];
+       texels = mix(texels, parent, step(0.5, w));
+     }`).join('\n')
+@@ -108,7 +108,7 @@
+ uniform vec3 uPatchU;
+ uniform float uFeather;
+ uniform vec2 uPatchFade;
+-uniform vec3 uPatchFirst;
++uniform vec4 uPatchFirst;
+ uniform float uMapAniso;
+ uniform float uFrame;
+ uniform vec3 uSpotN;
+@@ -258,6 +258,9 @@
+     vec2 gx = dFdx(g);
+     vec2 gy = dFdy(g);
+     float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));
++    float whole = mix(uGrad, 1.0, uPatchFirst.w);
++    vec2 hx = gx * whole;
++    vec2 hy = gy * whole;
+     gx *= uGrad;
+     gy *= uGrad;
+     float front = step(0.3, dn);
+@@ -370,7 +373,7 @@
+         uPatchCount: { value: p?.textures.length ?? 0 },
+         uPatchN: { value: pn }, uPatchE: { value: pe }, uPatchU: { value: pu },
+         uVeil: { value: new THREE.Vector4(0, o.veil.height, o.veil.repeats, 0) }, uVeilColor: { value: new THREE.Vector3().fromArray(o.veil.color) },
+-        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade.rest[0] ?? 1.1, p?.fade.rest[1] ?? 1.7) }, uPatchFirst: { value: new THREE.Vector3(p?.fade.first[0] ?? 1.1, p?.fade.first[1] ?? 1.7, p?.fade.minor ? 1 : 0) }, uMapAniso: { value: Math.max(o.map.anisotropy, 1) },
++        uFeather: { value: p?.feather ?? 0.12 }, uPatchFade: { value: new THREE.Vector2(p?.fade.rest[0] ?? 1.1, p?.fade.rest[1] ?? 1.7) }, uPatchFirst: { value: new THREE.Vector4(p?.fade.first[0] ?? 1.1, p?.fade.first[1] ?? 1.7, p?.fade.minor ? 1 : 0, p?.fade.whole ? 1 : 0) }, uMapAniso: { value: Math.max(o.map.anisotropy, 1) },
+         uSpotN: { value: spot }, uSpotE: { value: east }, uSpotU: { value: north },
+         uSpotShape: { value: new THREE.Vector4(Math.sin(rad(o.spot.axesDeg[0])), Math.sin(rad(o.spot.axesDeg[1])), o.spot.core, o.spot.reach) },
+         uMapWidth: { value: o.mapWidth },
+--- a/src/stops/jupiter/patches.json
++++ b/src/stops/jupiter/patches.json
+@@ -13,7 +13,8 @@
+       1.12,
+       1.65
+     ],
+-    "minor": true
++    "minor": true,
++    "whole": true
+   },
+   "levels": [
+     {
