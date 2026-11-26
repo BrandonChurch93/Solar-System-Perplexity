@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T18:21:49.702Z",
- "head": "5075e26dc59b7c65c4ba58cded94a3274c82b9cc",
- "note": "pose study of 3720 for mail 1521 point 4: trial drafts at lower, nearer eyes with wider lenses beside the approved close",
+ "pushed": "2026-11-26T18:47:53.859Z",
+ "head": "2d1a8099f38cde6e1e27df31f6be90b2eb0381f0",
+ "note": "the thin sheet by one law: trial depths at the hold and at pose W of 3720 (drafts), pose W ruled by mail 1535",
  "looks": [
+  {
+   "time": "2026-11-26T18:47:53.234Z",
+   "file": "20261126184753234-note-hold_sheet1.jpg",
+   "source": "../../../../tmp/v/p1521/hold_sheet1.jpg",
+   "kind": "note",
+   "label": "hold 3465, the gap: approved hero, no sheet, sheet rising to 0.05 and 0.10, flat 0.05 (drafts)"
+  },
+  {
+   "time": "2026-11-26T18:47:52.688Z",
+   "file": "20261126184752688-note-foot_sheet2.jpg",
+   "source": "../../../../tmp/v/p1521/foot_sheet2.jpg",
+   "kind": "note",
+   "label": "3720 at pose W, the foot: approved, no sheet, the thin sheet rising from 0 at the globe to 0.05, 0.10, 0.20 at the rim (drafts)"
+  },
+  {
+   "time": "2026-11-26T18:47:52.122Z",
+   "file": "20261126184752122-note-foot_sheet1.jpg",
+   "source": "../../../../tmp/v/p1521/foot_sheet1.jpg",
+   "kind": "note",
+   "label": "3720 at pose W, the foot: approved, no sheet, the thin sheet flat 0.05 and 0.10 with plateaus, flat 0.05 without (drafts)"
+  },
   {
    "time": "2026-11-26T18:21:49.094Z",
    "file": "20261126182149094-note-fit3_free.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/p1508/bump_strip.png",
    "kind": "note",
    "label": "the bump's place at full size, consecutive whole frames 3569 to 3578: main (top), the lens cure (bottom): the far arm's lanes slide down along the dark limb by even steps, no jump on either tree"
-  },
-  {
-   "time": "2026-11-26T17:55:23.193Z",
-   "file": "20261126175523193-note-map_setters.jpg",
-   "source": "../../../../tmp/v/p1508/map_setters.jpg",
-   "kind": "note",
-   "label": "the reader's pattern map, rows 3573 to 3574 and a half, main (left) and the lens cure (right): red are the pixels that set the number, all in one blob at the far arm by the right limb"
-  },
-  {
-   "time": "2026-11-26T17:55:22.213Z",
-   "file": "20261126175522213-note-bump_crops.jpg",
-   "source": "../../../../tmp/v/p1508/bump_crops.jpg",
-   "kind": "note",
-   "label": "the reader's bump of dive part 1 at full size (x 1330 to 1530, y 380 to 560, twice): main frames 3572 to 3575 over 3580 to 3583, then the lens cure the same: the far arm's lit lanes end at the dark limb"
-  },
-  {
-   "time": "2026-11-26T17:48:27.046Z",
-   "file": "20261126174827046-note-s3567_final_crops.jpg",
-   "source": "../../../../tmp/v/p1518/s3567_final_crops.jpg",
-   "kind": "note",
-   "label": "3567 FINAL full size crops: approved, main, the lens cure: the far ring at the limb, and the near ring"
   }
  ]
 }
