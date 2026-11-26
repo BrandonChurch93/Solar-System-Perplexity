@@ -1,21 +1,123 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T18:29:26.840Z",
+ "pushed": "2026-11-26T18:49:57.169Z",
  "head": "594567e7c85b2f0de0830952ad96b2318fcb1c87",
- "note": "Item 3 a: the reach of the wide patch under three fade pairs at 2895, 2997, 3296 (a computed map, not a render); pictures of the pairs follow",
+ "note": "The 3296 pair (one sample against the final), the plate at 2997 beside main's, and the first pictures of item 3 a: the wide level alone on the pair [1.6, 2.0] on the minor axis at 2997 beside main (a first trial that still touches a few limb pixels of the hold; the cure is rendering)",
  "looks": [
   {
-   "time": "2026-11-26T18:29:26.124Z",
-   "file": "20261126182926124-note-reach-map.jpg",
-   "source": "../work/r28/fa/reach-map.png",
+   "time": "2026-11-26T18:49:56.569Z",
+   "file": "20261126184956569-note-l0-2997-centre.jpg",
+   "source": "../work/r28/fa/l0-2997-centre.jpg",
    "kind": "note",
-   "label": "S1, item 3 a: where the wide patch draws, computed from the film's camera with the shader's own rule (white the patch at full weight, grey the wrap alone, blue the sky). Rows 2895, 2997, 3296; columns main's fade [1.02, 1.5], [1.6, 2.0], the switch [3, 4.5]. The wrap's least texels for one master pixel in the hold are 2.097 (frame 2969), so a pair ending at or under 2.09 leaves the hold's bytes alone; [3, 4.5] draws the patch on 0.673 of the disc at 2895",
+   "label": "Item 3 a, 2997 at one to one, the centre: main beside the trial. The spot keeps main's picture.",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T18:27:36.018Z",
-   "file": "20261126182736018-frame-f02800.jpg",
-   "source": "out/work/jupiter/frames/m4old/f02800.png",
+   "time": "2026-11-26T18:49:55.950Z",
+   "file": "20261126184955950-note-l0-2997-left.jpg",
+   "source": "../work/r28/fa/l0-2997-left.jpg",
+   "kind": "note",
+   "label": "Item 3 a, 2997 at one to one, the left: main beside the trial. The left edge of the wide patch's square stands inside the disc here; left of it both show the wrap alone (the rest of item 3 b).",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:55.384Z",
+   "file": "20261126184955384-note-l0-2997-bottom.jpg",
+   "source": "../work/r28/fa/l0-2997-bottom.jpg",
+   "kind": "note",
+   "label": "Item 3 a, 2997 at one to one, the bottom: main beside the trial.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:54.816Z",
+   "file": "20261126184954816-note-l0-2997-top.jpg",
+   "source": "../work/r28/fa/l0-2997-top.jpg",
+   "kind": "note",
+   "label": "Item 3 a, 2997 at one to one, the top: main beside the trial.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:54.203Z",
+   "file": "20261126184954203-note-l0-2997-right.jpg",
+   "source": "../work/r28/fa/l0-2997-right.jpg",
+   "kind": "note",
+   "label": "Item 3 a, 2997 at one to one, the right side: main beside the trial.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:53.528Z",
+   "file": "20261126184953528-note-l0-2997-sheet.jpg",
+   "source": "../work/r28/fa/l0-2997-sheet.png",
+   "kind": "note",
+   "label": "Item 3 a, 2997 master draft without grain: main beside the trial, the change times 6, and below the weight of the wide patch on both (white full, black the wrap alone, blue the sky). The first trial: the wide level alone on the pair [1.6, 2.0], read on the minor axis with the cap of the sampler as Mars reads its levels, the limb's softening kept; mid and near stay on main's pair. Its fault, measured: read from screen derivatives it changes 1 to 25 limb pixels of hold frames by 1 to 2 levels (2800, 2820, 2895, 3305, 3315, 3330), so the next trial computes the same axis in closed form for the sphere. Fine contrast against main: 1.29 times in the ring main blends (0.387 of the disc), 1.63 times where main draws no patch (0.148). Where both draw the patch in full, 1775 of 467,564 pixels differ, each by 1.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:52.883Z",
+   "file": "20261126184952883-note-pair-limb.jpg",
+   "source": "../work/r28/p3296/pair-limb.jpg",
+   "kind": "note",
+   "label": "3296 pair, the lit limb at two to one: one sample above, the final below. Ratio of fine detail 0.97.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:52.128Z",
+   "file": "20261126184952128-note-pair-spot.jpg",
+   "source": "../work/r28/p3296/pair-spot.jpg",
+   "kind": "note",
+   "label": "3296 pair, the spot at two to one: one sample above, the final below. Ratio of fine detail 0.90.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:51.513Z",
+   "file": "20261126184951513-note-pair-belt.jpg",
+   "source": "../work/r28/p3296/pair-belt.jpg",
+   "kind": "note",
+   "label": "3296 pair, the belt above the spot at two to one: one sample above, the final below. Ratio of fine detail 0.71.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:50.930Z",
+   "file": "20261126184950930-note-pair-moon.jpg",
+   "source": "../work/r28/p3296/pair-moon.jpg",
+   "kind": "note",
+   "label": "3296 pair, Io at two to one: one sample above, the final below. Ratio of fine detail 0.62.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:50.309Z",
+   "file": "20261126184950309-note-pair-small.jpg",
+   "source": "../work/r28/p3296/pair-small.jpg",
+   "kind": "note",
+   "label": "S1 pair at 3296 on 594567e7, master without grain: one sample above, the final below (64 samples, shutter 0.6583). Fine detail of the final over the one sample: Io 0.62, the belt above the spot 0.71, the spot 0.90, the lit limb 0.97.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:49:49.684Z",
+   "file": "20261126184949684-note-pair-2997-plate.jpg",
+   "source": "../work/r28/f/pair-2997-plate.png",
+   "kind": "note",
+   "label": "The sky plate at 2997, master draft without grain: main 2f5b2eb3 with the lossy plate, 594567e7 with the lossless plate, the change times 40. Inside the disc 65 of 1,684,272 pixels differ, each by 1; the sky beyond differs on 0.239 of its pixels, mean 0.258.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:48:32.158Z",
+   "file": "20261126184832158-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/fa-d/f02895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "preview",
+   "diag": "beauty",
+   "engine": "e1ac861ce101f79f"
+  },
+  {
+   "time": "2026-11-26T18:45:35.060Z",
+   "file": "20261126184535060-frame-f02800.jpg",
+   "source": "out/work/jupiter/frames/fa-l0/f02800.png",
    "kind": "frame",
    "label": "mars.travel frame 2800, draft tier",
    "stop": "mars",
@@ -27,18 +129,12 @@
    "engine": "e1ac861ce101f79f"
   },
   {
-   "time": "2026-11-26T18:24:37.263Z",
-   "file": "20261126182437263-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/m4new/f02895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "preview",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
+   "time": "2026-11-26T18:29:26.124Z",
+   "file": "20261126182926124-note-reach-map.jpg",
+   "source": "../work/r28/fa/reach-map.png",
+   "kind": "note",
+   "label": "S1, item 3 a: where the wide patch draws, computed from the film's camera with the shader's own rule (white the patch at full weight, grey the wrap alone, blue the sky). Rows 2895, 2997, 3296; columns main's fade [1.02, 1.5], [1.6, 2.0], the switch [3, 4.5]. The wrap's least texels for one master pixel in the hold are 2.097 (frame 2969), so a pair ending at or under 2.09 leaves the hold's bytes alone; [3, 4.5] draws the patch on 0.673 of the disc at 2895",
+   "stop": "jupiter"
   },
   {
    "time": "2026-11-26T18:04:33.962Z",
@@ -110,102 +206,6 @@
    "source": "../work/r27/final/f-3150.png",
    "kind": "note",
    "label": "3150 master final without grain on c9766f99, sha256 739da3f2441f20d9; line (i) 2.165 whole frame, bands green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:34:17.069Z",
-   "file": "20261126173417069-note-f3150-lr.jpg",
-   "source": "../work/r27/t/f3150-lr.jpg",
-   "kind": "note",
-   "label": "3150 lower right at one to one: above the approved picture, below c9766f99 at master final; soft, glow blobs with reddish rims",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:34:15.785Z",
-   "file": "20261126173415785-note-f3150-ul.jpg",
-   "source": "../work/r27/t/f3150-ul.jpg",
-   "kind": "note",
-   "label": "3150 upper left at one to one: above the approved picture, below c9766f99 at master final; the storm flat and smeared where the approved has tall billows on its rim",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:34:14.794Z",
-   "file": "20261126173414794-note-m5-band.jpg",
-   "source": "../work/r27/t/m5-band.jpg",
-   "kind": "note",
-   "label": "M5 control, lower band near the night line: above the approved hold picture, below my hold 2895 at master final (1.5 times); the round pits stand in the approved picture at the same places",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:34:13.579Z",
-   "file": "20261126173413579-note-m5-band-l.jpg",
-   "source": "../work/r27/t/m5-band-l.jpg",
-   "kind": "note",
-   "label": "M5 control, lower band left: above the approved hold picture, below my hold 2895 at master final (1.5 times); the round pits stand in the approved picture",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:34:12.349Z",
-   "file": "20261126173412349-note-hero-belt.jpg",
-   "source": "../work/r27/t/hero-belt.jpg",
-   "kind": "note",
-   "label": "M3 control: the approved hold picture itself (references/approved/jupiter-hero.png, one to one), the belt north west of the Red Spot: the pressed folds and glints are painted in it",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:16:48.914Z",
-   "file": "20261126171648914-note-f-3150.jpg",
-   "source": "../work/r27/final/f-3150.png",
-   "kind": "note",
-   "label": "3150 master final without grain on c9766f99, sha256 739da3f2441f20d9",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:16:47.686Z",
-   "file": "20261126171647686-note-f3150-small.jpg",
-   "source": "../work/r27/t/f3150-small.jpg",
-   "kind": "note",
-   "label": "3150: above the approved picture, below c9766f99 at master final (591 s): line (i) 2.165 whole frame, 2.069 outside the seven cells, main 3.539; bands 0.8225 0.7899 0.8459 0.9035 0.9592 green; mean absolute RGB against the approved 11.87",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:16:46.479Z",
-   "file": "20261126171646479-note-f3150-ll.jpg",
-   "source": "../work/r27/t/f3150-ll.jpg",
-   "kind": "note",
-   "label": "3150 lower left at one to one: above the approved picture, below c9766f99 at master final; soft lumpy heaps and dark flat blots where the approved has crisp sculpted billows",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:16:45.158Z",
-   "file": "20261126171645158-note-two-2997-3296.jpg",
-   "source": "../work/r27/t/two-2997-3296.jpg",
-   "kind": "note",
-   "label": "2997 above, 3296 below, preview draft on c9766f99; my layer stands as a small dark eye on the pale oval",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:16:44.176Z",
-   "file": "20261126171644176-note-pair-3255.jpg",
-   "source": "../work/r27/t/pair-3255.jpg",
-   "kind": "note",
-   "label": "3255 preview draft: above 14af1ae7, below c9766f99; the storm a little softer",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:16:43.017Z",
-   "file": "20261126171643017-note-pair-3010.jpg",
-   "source": "../work/r27/t/pair-3010.jpg",
-   "kind": "note",
-   "label": "3010 preview draft: above 14af1ae7 with the dashes, below c9766f99",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T17:16:41.745Z",
-   "file": "20261126171641745-note-pair-3025.jpg",
-   "source": "../work/r27/t/pair-3025.jpg",
-   "kind": "note",
-   "label": "3025 preview draft: above 14af1ae7 (dashes and dark wavy veins), below the candidate c9766f99 (the shade of a wave follows the camera's height)",
    "stop": "jupiter"
   }
  ]
