@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T10:23:09.619Z",
+ "pushed": "2026-11-26T10:39:41.887Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the contract (a law may read the masks) named; the Mars builder's weigh drawn under my matte in scratch: nothing against it",
+ "note": "the Mars builder's four texel weigh drawn alone and with the matte on the near slope at 2468 and 2470; a trial of the matte carried outward and its cost",
  "looks": [
+  {
+   "time": "2026-11-26T10:39:27.053Z",
+   "file": "20261126103927053-note-grow2-band-2470.jpg",
+   "source": "../../../../tmp/weigh/grow2-band-2470.png",
+   "kind": "note",
+   "label": "Mars 2470 at draft, the head of the band: the matte as sent and carried 2 px outward, the cost of the trial"
+  },
+  {
+   "time": "2026-11-26T10:39:26.157Z",
+   "file": "20261126103926157-note-grow2-near-2470.jpg",
+   "source": "../../../../tmp/weigh/grow2-near-2470.png",
+   "kind": "note",
+   "label": "Mars 2470 at draft, the near slope: the matte as sent and the matte carried 2 px outward (a trial, not taken)"
+  },
+  {
+   "time": "2026-11-26T10:39:25.250Z",
+   "file": "20261126103925250-note-near-2470-x3.jpg",
+   "source": "../../../../tmp/weigh/near-2470-x3.png",
+   "kind": "note",
+   "label": "Mars 2470 at draft, the near slope: as it stands, the weigh alone, the weigh with the matte"
+  },
+  {
+   "time": "2026-11-26T10:39:24.184Z",
+   "file": "20261126103924184-note-near-2468-a.jpg",
+   "source": "../../../../tmp/weigh/near-2468-a.png",
+   "kind": "note",
+   "label": "Mars 2468, the near slope three ways: the four texel weigh alone at draft, with the matte at draft, with the matte at the review tier"
+  },
   {
    "time": "2026-11-26T10:23:04.761Z",
    "file": "20261126102304761-note-band-2472.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/law/lm-tip-sheet.png",
    "kind": "note",
    "label": "the contract's bit proof: six draft frames (Mars 2470, 2477, 2580, 2683, Mercury 759, 850) drawn with the contract's relief file, each the same bytes as with main's relief file"
-  },
-  {
-   "time": "2026-11-26T09:55:56.430Z",
-   "file": "20261126095556430-note-review9-2468-whole.jpg",
-   "source": "../../../../tmp/stair/review9-2468-whole.png",
-   "kind": "note",
-   "label": "Mars dive 2468 whole at the review tier (61 samples) with the outline trial, scaled to 0.7"
-  },
-  {
-   "time": "2026-11-26T09:55:55.159Z",
-   "file": "20261126095555159-note-review9-2468-rim.jpg",
-   "source": "../../../../tmp/stair/review9-2468-rim.png",
-   "kind": "note",
-   "label": "Mars dive 2468, the far rim of the plateau at three times: review tier with the outline trial, the same at draft, as it stands at draft"
-  },
-  {
-   "time": "2026-11-26T09:55:53.262Z",
-   "file": "20261126095553262-note-review9-2468-band.jpg",
-   "source": "../../../../tmp/stair/review9-2468-band.png",
-   "kind": "note",
-   "label": "Mars dive 2468, the far band at three times: review tier (61 samples) with the outline trial over the same state at draft"
-  },
-  {
-   "time": "2026-11-26T09:45:59.832Z",
-   "file": "20261126094559832-note-m9-2474.jpg",
-   "source": "../../../../tmp/stair/m9-2474.png",
-   "kind": "note",
-   "label": "Mars dive 2474: above as it stands, below the trial with the outline at 2 px a texel. Draft tier"
   }
  ]
 }
