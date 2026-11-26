@@ -1592,3 +1592,95 @@ Design of the relief (`relief.ts`, class `ReliefDeck`, the deck's program copied
 - Chain 17 (state r11): 3048 the same bytes as r10; 3250 and 3150 the same bytes as r9.
 - `npx tsc --noEmit -p .` exit 0. `tools/shaderaudit.py . src/stops/jupiter` exit 0: clouds.ts 8, globe.ts 2, relief.ts 8, as at 08:05, none added.
 - Chain 17, bytes outside the touched range: 2895, 2990 and 3310 of r11 are the same bytes as the relief key before the cure and as the plate key on this tree (`cmp` against `m9` and `mainm`); 3046 the same bytes as r10.
+
+### 08:52 to 08:56 UTC: head e88f4f2b, second bundle, follow up mail, the rows started
+
+- Commit e95103f124b2a69f0d05e3bf8d6c3944f559fb18 (the cure: body.json, relief.ts, set.ts, notes). Origin main had moved to 0a57117ac46140455b27c27c46e43dbcc7ca6785 (against 231103de only `kit/PROGRESS.md`, status 373 and d365); merged: head e88f4f2bcfbdd71d5c596751998aa7fb362c40bd. Against 0a57117a the head changes 12 files, all mine.
+- Status 373 on main lists machine jobs on line B: jv1 01 to 12 (the surface view at 60 a second), and jf1, jq1, jr1 whose meaning I do not know (jr1 01 to 04 may be the reader's four rows of 84f2d1e1).
+- Bundle `/tmp/mail/jupiter-relief-2.bundle`: 40772882 bytes (38.88 MiB), needs 0a57117a, 231103de, 1ff06ddc, verify okay.
+- Rows chain 16 started 08:52:20 on e88f4f2b (`/tmp/chain16.sh`, log `/tmp/chain16.log`): dive 2 of 2, rise 1 of 2, dive 1 of 2, rise 2 of 2; logs `/tmp/rows-KIND-NofM.log`. Nothing else may render beside it.
+- FOLLOW UP MAIL sent 08:55 (high priority) with the second bundle and two pictures (`/tmp/mail/cure-dive-lower-left-3044-3048-3050-3054-main-r9-cure.jpg`, `/tmp/mail/rise-3250-left-and-right-edges-state-mail-left-short-range-right.png`); text in `/tmp/mail/followup-0855.txt`. It says: skylift green, the cure with its numbers, why the rise keeps the deck's range, checks not rerun on this head (vitest, cues, shots), rows under way, weak points (towers stretched at 3040 to 3046, the rise's border at 3254, the points of 08:35).
+- Owed: each row beside main's as it lands; vitest, cues, shots on the head before a name; names by 13:30.
+- The baseline for the rows is not round 46's scorecard but main's own rows of today, from kit/PROGRESS.md (d363 (6) and the line on mb4-05): dive part 1 green; dive part 2 RED, pattern 0.85 from 3019 + 1/2, 40 frames over, first 3017; rise part 1 RED, pattern 1.3408 at 3254; rise part 2 green, pop 1.1879 at 3278, pattern 0.4095 at 3286, level step 0.3613 at 3282. The other lines of dive 2 and rise 1 are not in that file; I must ask for them or read them from the Builder's answer.
+- The stamp of a rows frame is the engine hash and the stops' hashes (src/stops/ID and public/assets/ID), so notes do not change it; the report names the commit, so no commit while the chain runs.
+
+### 08:56 to 09:08 UTC: MAIL 1443 (the Builder's answer to the second state) and my answer
+
+- MAIL 1443 (08:56): e88f4f2b is on origin as agent/jupiter-relief (the Builder pushed the bundle); the tree stands at 2.9686 GB against 3 GB. jr1 01 to 04 are the reader's four rows on 84f2d1e1 on his machines: so on my machine dive part 2 on e88f4f2b alone, then stop the reader (`/tmp/stop16.sh` kills chain 16 when the part has written its exit line; started 09:00). His measures on 84f2d1e1: 3150 final low band 3.413 against 3.539, plain 6.5038 against 6.6676, luminance bands inside 0.7 to 1.4; 3296 final the same bytes as main's; 2997 final differs in 659 pixels (at most 17 levels summed, x 720 to 840, y 600 to 720); dive part 1 green (pop 1.0943 at 2972 equal, pattern 0.2760 at 3007 against 0.2756, level step 0.2982 equal); rise part 2 green (pop 1.1876 at 3278 against 1.1879, pattern 0.4209 at 3286 against 0.4095, level step 0.3613 equal); both pattern lines inside d364's floor, the cause to be named. His order for my machine after dive part 2: (a) units, cues, shots on the head to be named; (b) main's 3254 beside mine; (c) the web set on the cure; (d) the towers at 3040 to 3046 only if 3150 and the surface view keep their bytes. d365: if line B goes onto main the plate's files go out in the same name; which files, read from the code. Rulings 09:30 (line B leads so far) and 11:30 (the 60 a second clip decides).
+- My answer, sent 09:08 (text `/tmp/mail/answer-1443.txt`), all numbers from this hour's outputs:
+  - The paler horizon at 3150 is meant: relief.ts line 408 counts a ray that has spent its steps inside the body as landed (body.json note, shell and march); clouds.ts counts it as sky. Hit distance pictures (`/tmp/range-plate-3150.png`, `/tmp/range-relief-3150.png`): 11255 px are ground in the relief only, the first ground row 5 to 7 rows higher (54, 129, 210, 299, 398 against 47, 123, 205, 294, 393 at x 200 to 1400). Finals against the approved picture, red: x 800 approved 214, main 186, relief 217; x 1100 184, 138, 186; x 1400 102, 83, 103. Low band where the relief is over main by more than 1.5 levels of red (6.51 percent of the frame): main less approved -4.211, -7.082, -9.119 (b, g, r), relief -3.224, -3.991, -3.722.
+  - 2997 and the two pattern lines (3007, 3286) have one cause: globe.ts draws the close ground under 1.3 radii (place.json scene.ground 0.52 to 1.3) with the ground's own uniforms, so under the relief key the storm there follows the wind's law (uStorm, uSeam, uEddy as made; uStormTurn, uEddyTurn, uSeam's turn per frame). Heights in radii (`/tmp/eyeh2.ts`): 2990 1.9027, 2994 1.4758, 2997 1.1776, 3007 0.4406, 3283 0.5825, 3286 0.8676, 3289 1.2295. Turns in degrees (`/tmp/turns.ts`), plate then relief: 2997 -6.846 and -4.623; 3007 -6.654 and -4.452; 3286 6.492 and 4.312; the relief's eddies rest (eddyShare 0).
+  - Files (d365). A, read under the plate key only: deck-view-color.png (full 28994720, web 9004876), deck-image-range.bin (8921088, 2230272), sum 49150956 bytes. B, read under neither key (only by Deck.load of deck.ts, which nothing calls): deck-core.jpg (2971024, 513253), deck-wide.jpg (1708164, 476012), deck-under.jpg (1497250, 312204), deck-tiers.png (329454, 329454), deck-dist.bin (1119540, 1119540), sum 10375895 bytes. full/deck-core.jpg and full/deck-wide.jpg are the same bytes as assets-src/jupiter/relief/core.jpg and canvas-wide.jpg. With A out: full 177.7, web 50.5 MB; with A and B out: 170.1 and 47.7 MB. The rise reads none of them. assets-src: nothing can go; deck/air.py line 55 reads full/deck-view-color.png and needs a recipe line. The plate key can go: look.ts line 8, set.ts's CloudDeck import and six choices; clouds.ts must stay for its four shader parts; its class CloudDeck (lines 577 to 752) I leave unless the Builder says cut. No test imports a Jupiter module or reads a Jupiter asset.
+  - Order I take unless told otherwise: (b) first (needs the plate key), then the cut as one commit on e88f4f2b proved by bytes, then (a) on that head, (c), (d).
+
+### 09:09 to 09:15 UTC: MAIL 1447 (the cut is ordered) and the cut prepared beside the tree
+
+MAIL 1447 from the Builder, 09:09, word for word:
+
+"Your answer to MAIL 1443 is read and taken whole.
+1. My word on the plate key: yes, it goes, in the cut commit, if line B is named. In that ONE commit on top of e88f4f2b: the files of A and B out of public/assets/jupiter full and web; the plate branch out of set.ts and look.ts; the class CloudDeck out of clouds.ts with whatever only it uses (the shader parts ABOVE_GLSL, CALM_GLSL, DETAIL_GLSL, STORED_GLSL and everything relief.ts and globe.ts import stay byte for byte); Deck.load out of deck.ts with whatever only it uses (the type DeckLook stays); RECIPE.md with the air.py line. The bar of MAIL 1423 on clouds.ts is lifted for this cut alone.
+2. Prove it by bytes on your six draft frames against e88f4f2b plus 3246 and 3296, then the whole unit run, the gate, cues and shots on that head.
+3. The order as you set it, (b) first.
+4. The horizon: taken as meant; your rows of the approved beside both trees go into my ruling as you measured them.
+5. Frame 2997 under both keys with the place marked: only after the cut is proved. My eye at 1 to 1 finds no step there.
+6. Send the cut's sha the minute it is pushed. My proofs start on it before your name mail.
+The ruling of 09:30 is written on what is in by then. The 60 fps clip of the surface view decides at 11:30."
+
+- The tree is NOT touched while the reader's dive part 2 runs (its stamps are the engine hash and the stop hash). The cut is prepared in a scratch copy, `/tmp/cutsrc` (src, tools, tests, config, tsconfig, a link to node_modules), and the five changed files lie in `/tmp/cut/` (clouds.ts, deck.ts, look.ts, set.ts, plan.ts) with `/tmp/cut/RECIPE.md`.
+- clouds.ts after the cut: 102 lines. Lines 13 to 110 of the head (EDDIES, SEAMS, CALM_GLSL, ABOVE_GLSL, STORED_GLSL, DETAIL_GLSL) are lines 5 to 102 of the cut, the same bytes by `cmp`; above them only the import of deck.json and `OCTAVES` (DETAIL_GLSL uses it). Out: VERT, FRAG, the types, `heightMap`, class `CloudDeck`, the imports and constants only they used.
+- deck.ts after the cut: 24 lines: the import of the type `PallLook`, `Vortex`, `Flash`, `DeckLook` (lines 15 to 36 of the head, the same bytes by `cmp`). Out: `DeckMeta`, `DeckTiers` (nothing else names them), the shaders, class `Deck`.
+- look.ts: line 8 (`ground`) out. set.ts: the import of CloudDeck, `const relief`, the choice of the loader, the three `relief ?` choices and the `if (relief)` frame around the four lines of the relief, which now always run.
+- plan.ts: `stormTurn`, `eddyTurn`, `ringTurn` out (19 lines of diff). Only the plate branch of set.ts called them. This file is NOT in the Builder's list; I take it as "whatever only it uses" and say so in the mail of the cut. deck.json is not touched (the bar of mail 1423 on it stands), so the keys only those three read stay in it and are named in the mail.
+- In the scratch copy: `npx tsc --noEmit -p .` exit 0; `tools/shaderaudit.py /tmp/cutsrc src/stops/jupiter`: globe.ts 2 lines, relief.ts 8 lines, clouds.ts none any more.
+- RECIPE.md prepared: step 14 says what `deck/air.py` needs; the relief's section no longer speaks of a key; a last section lists the 14 files taken out with their bytes, their writers and their readers. `relief/body.py` reads none of them (it runs image.py and view.py as modules into `out/work/jupiter/body/`). `relief/edge.ts` and `relief/motion.ts` read `full/deck-dist.bin`.
+- Order after dive part 2: the row to the Builder; (b) the plate key's 3246, 3250, 3254, 3260 as `mainm`; r11's 2997, 3246, 3296 on the head; then the cut applied, frames `cut` at 2895, 2997, 3048, 3150, 3250, 3310, 3246, 3296 compared by `cmp` with r11; commit, bundle, mail; then units, gate, cues, shots.
+- 09:15: mail to the Builder (high): state (82 of 146 frames of dive part 2 at 09:14, end reckoned near 09:40), the cut as prepared, the point on plan.ts (goes unless he says no before about 09:45), deck.json untouched with its unread keys named, the RECIPE's content, the order after the part. Chain for after the part: `/tmp/chain18.sh` ((b) into `mainm`, the head's 2997, 3246, 3296 into `r11`, the cut applied from `/tmp/cut/`, the 14 files out by `git rm`, tsc, audit, eight frames into `cut`, `cmp` against `r11`).
+
+### 09:17 UTC: MAIL 1448 (plan.ts goes; G15 red on the Builder's machine)
+
+MAIL 1448 from the Builder, 09:17, word for word:
+
+"Two things, no answer needed to the first.
+1. plan.ts: the three functions go in the cut commit as you describe. deck.json stays as it is.
+2. A red to look at in your chain. My machine's run of units and gate on 84f2d1e1 (job jq1-01): units 1096 pass, G1 G2 G4 G6 G7 G10 G11 G12 G14 pass (G12 reads 3983 tracked files, 2.97 GB), and G15 reads FAIL with "Error: page.evaluate: Target crashed". The same run on e88f4f2b is still out on another machine. On main the round's checks were green on G15 at 08:53. Run G15 alone on e88f4f2b on your machine before the cut and again on the cut, and tell me what it reads: the sets per frame, and the estimated texture memory of Jupiter's set in full and web against maxSetMemoryMb. If the page falls over on your machine too, find what the relief key loads that the plate key did not (the three height maps and the relief's own plates beside the deck's) and say what the set weighs. A crash of the page is a red machine check and holds the name until it reads green."
+
+- So before the cut: `npm run -s gate -- --phase 4 --only G15` on e88f4f2b (after dive part 2), then the same on the cut.
+- G15 read (tools/gate.ts lines 233 to 272): it counts the sets per frame from the timeline, then for each finished stop and each asset set opens a page at the master format, renders the first frame of the hold at the draft tier and reads `showcase.memory().perSet[stop]` against `assetSets.SET.maxSetMemoryMb` (config: full 1400, web 450; `sets.maxLoaded` 2). The Stops table of kit/PROGRESS.md marks no stop finished, so the plain gate opens no page; a round runs it with `--g15-stops` and its own stop (tools/round.py line 233). So the test here is `npm run -s gate -- --phase 4 --only G15 --g15-stops jupiter`: on the head (relief key), under the plate key, and on the cut. Chain 18 carries the three.
+- The web set under the relief key was never drawn on my machine before this (item (c) is still owed); G15's second page is the first time it loads.
+- RECIPE fix prepared with the cut: the relief's range picture is full 2816 x 1584, web 1408 x 792 (body-fields.json `range.pixels`; the file sizes 8921088 and 2230272 bytes are two bytes a texel of exactly those). The section said 1408 x 792 and 704 x 396, which was wrong.
+
+### 09:24 UTC: MAIL 1451 (rise part 1 holds the name: spikes at 3261 to 3262 and at 3250)
+
+MAIL 1451 from the Builder, 09:24, word for word:
+
+"The reader's row of your rise part 1 of 2 on 84f2d1e1 is in (my job jr1-03) beside main's (rx1-07), and it holds the name as it stands.
+MEASURED, take against main: pattern 1.6378 at 3262 against 1.3408 at 3254, WORSE; pop 1.1103 at 3265 against 1.1098 at 3264, a hair over, inside the floor; level step 0.4196 against 0.4201 at 3266, better. Rows over 0.45: 31 against main's 29.
+By row, take / main (the two reads of each frame): 3249 0.60, 1.23 / 1.06, 0.85; 3250 0.79, 1.43 / 1.02, 1.01; 3251 1.06, 1.03 / 1.27, 1.12; 3252 1.00, 1.10 / 0.97, 1.11; 3253 1.14, 1.28 / 1.19, 0.99; 3254 0.91, 1.29 / 1.34, 1.16; 3255 0.79, 0.71 / 0.84, 0.80; 3256 0.58, 0.81 / 0.58, 0.76; 3257 0.76, 0.78 / 0.80, 0.72; 3261 0.73 / under the limit; 3262 1.64, 0.49 / 0.54, 1.10; 3266 0.50 / 0.47.
+So the hand back at 3249 to 3257 is main's own red, about equal in yours, and yours adds a spike at 3261 to 3262 and one at 3250.
+The bar for the name (d311 as read by d364): the worst pattern of rise part 1 no higher than main's 1.3408. Brandon's note asks for more: this rise should have no jump at all. So in your chain, before the cut commit if it is one cause, after it if not: name what jumps at 3261 to 3262 and at 3250 under the relief key (the storm on the close ground giving way to the globe's own, or the lift), cure it, and send your own row of rise part 1 on the cured head. If the cure of 3249 to 3257 itself is in reach by the same law, take it: it is the part of his note still open on main.
+Also in: the draft frames of e88f4f2b beside 84f2d1e1 (jx1-02): only 3044, 3048, 3050, 3054 differ, as you said. G17 passes on 84f2d1e1 (3150 median 1.053 against main's 1.028)."
+
+- Bar: the worst pattern of rise part 1 at or under 1.3408; wanted: no jump at all. The limit of the pattern line is 0.45.
+
+### 09:35 UTC, the rise: what the reader's pattern row compares (read, not yet drawn)
+
+- tools/smooth.ts: the pattern row at frame F is F against F + 8 film frames (config smooth.pictures.changeFrames 8), the later one carried back; two reads a frame are k = 2F and 2F + 1. So the red rows of MAIL 1451 are not one half frame flips: row 3262 is 3262 against 3270 (eye 5.808 to 21.029 units), row 3261 is 3261 against 3269, row 3250 is 3250 against 3258 (eye 1.554 to 3.386 units).
+- Laws at those frames (/tmp/riseh.ts): 3250 tall 1.0000, air 0.9905; 3258 tall 0.7455, air 0.6575; 3261 tall 0.3863; 3262 tall 0.2615, air 0.3147; 3266 tall 0, air 0.0330, deck share 0.9868; 3269 deck share 0.4656; 3270 deck share 0.2411.
+- The flow is the same ground in the relief and in the globe's own program: relief.ts FLOW_GLSL is clouds.ts CALM_GLSL after the band shear, on the same uniforms (uStormTurn, uEddyTurn, uSeam are the place's own, globe.ts line 552). The band shear is 0 from 3265.5.
+- Relief only across 3262 to 3270: the body falls from 1 + 0.2615 of its gain to the deck's height; the band drift 0.01169 units to 0. Across 3250 to 3258: the tone lift (main's own), tall 1 to 0.7455.
+- Stills of the reader are kept by build stamp (out/work/smooth/jupiter/frames/kNNNNNN-r2-draft.png), so a slice on the same build draws only what is missing.
+- Next: the head's 3258, 3262, 3266, 3270 beside the plate key's (chain 18 draws both), then the reader on a slice.
+
+### 09:39 UTC, the dive's row part 2 of 2 on e88f4f2b (my machine), mailed
+
+- RED, pattern 0.717560 at k 6039 (3019 + 1/2), 41 frames over 0.45, first 3017; main's line 0.85 at 3019 + 1/2, 40 over, first 3017. Pop 1.0748 from 3037 + 1/2, level step 0.3125 at 3027.
+- Three runs over the limit: 3017 to 3024, 3031 to 3038 (0.71 at 3034), 3047 to 3051 (0.62 at 3051). Beside it at the full size: pop 1.2545 from 3037 + 1/2, 7 frames over.
+- Files kept in /tmp/mail/dive2 and out/work/smooth/jupiter-dive-p2of2.*.
+- Chain 18 started 09:38:49.
+
+### 09:53 UTC, chain 18: G15, item (b), the cut proved by bytes
+
+- G15 on Jupiter alone (`npm run -s gate -- --phase 4 --only G15 --g15-stops jupiter`) on e88f4f2b, my machine: "PASS G15  at most 2 sets per frame; finished stops: jupiter/web 288 MB, jupiter/full 1206 MB" (limits 450 and 1400). Under the plate key on the same tree: the same line, 288 MB and 1206 MB. No crash of the page here.
+- Item (b), frame 3254, the take (r9) beside the plate key on the merged tree (mainm), 1 to 1 at the left 800 px: the pale patch at the left edge is in both; under the plate key it is soft and low, in the relief it stands as a smooth bright face about 100 px wide with a hard upper edge. So the place is main's, the flat bright wall is the relief's (a stretched tower face, the same family as 3040 to 3046).
+- The relief against the plate key at 3258, 3262, 3266, 3270 (mean absolute difference 10.703, 5.880, 2.333, 0.741 of 255): at 3266 and 3270 only the disc of the storm differs, which is the two keys' different turn of the storm (windTurn against the old stormTurn), not the body.
+- The cut applied from /tmp/cut (clouds.ts, deck.ts, look.ts, set.ts, plan.ts, RECIPE.md) and the 14 files removed: tsc exit 0, shaderaudit exit 0. Ten draft frames of the cut against the head's (r11), cmp: 2895, 2997, 3048, 3150, 3250, 3310, 3246, 3296, 3262, 3270 all the same bytes.
