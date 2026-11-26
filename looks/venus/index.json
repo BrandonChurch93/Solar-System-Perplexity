@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T06:19:09.972Z",
- "head": "77874d64c316219bcb03b0e9a406c8dd239ee82e",
- "note": "fourth cut: R against main above the place, the far deck map trial on the plates, control mapmid1 on A's dive",
+ "pushed": "2026-11-26T06:52:04.315Z",
+ "head": "688df998492160e7913a17d65290a0a1e0905175",
+ "note": "trial P1: main's rise plates times a far deck map in the frame of T, slice 1538 to 1570 seen",
  "looks": [
+  {
+   "time": "2026-11-26T06:52:03.697Z",
+   "file": "20261126065203697-note-crop2.jpg",
+   "source": "../../../../tmp/v/sh/pl/crop2.jpg",
+   "kind": "note",
+   "label": "Level b rise plate from above, 760 px at its top left (far end of the far deck of T): main's plate (top left), the plate of 77874d64 (top right), main's plate times the map of 512 rows as WebP (bottom left) and of 256 rows as PNG (bottom right)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T06:52:03.110Z",
+   "file": "20261126065203110-note-e0.jpg",
+   "source": "../../../../tmp/v/sh/P1b/e0.jpg",
+   "kind": "note",
+   "label": "Trial P1, rise 1544 to 1552 + 1/2, every capture frame, right side x 1380 to 1920, y 250 to 560, draft tier. Seen: a brown band grows under the limb from 1546, a bluish field comes in from 1547 + 1/2 to 1549, a cloud ridge with its shadow stands under the limb from 1550; pink and green specks on the near cloud at 1550 + 1/2 to 1551 + 1/2",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T06:52:02.495Z",
+   "file": "20261126065202495-note-pr-c.jpg",
+   "source": "../../../../tmp/v/sh/P1b/pr-c.jpg",
+   "kind": "note",
+   "label": "Same frames and crop: trial P1 left, the name 77874d64 right. Seen: alike at 1542 and 1545; at 1548 P1 shows faint bright streaks the name does not; at 1551 P1 has cells, the name stays smooth",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T06:52:01.700Z",
+   "file": "20261126065201700-note-pm-c.jpg",
+   "source": "../../../../tmp/v/sh/P1b/pm-c.jpg",
+   "kind": "note",
+   "label": "Rise 1542, 1545, 1548, 1551, far deck crop x 500 to 1460, y 180 to 420, draft tier: trial P1 (main's plates times the far deck map of T, 256 rows, share by height) left, main 2344387d right. Seen: alike at 1542 and 1545; at 1548 and 1551 main has crisp bright cells, P1 the same field softer",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T06:19:08.827Z",
    "file": "20261126061908827-note-cMM-1318.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/fin/R-M-1586.jpg",
    "kind": "note",
    "label": "State R, main and their difference times 8 at the final 1586, x 560 to 820, y 400 to 560, 3 times: single scattered pixels in the dark ground round the place (22 pixels over 8 of 255), the crops read the same",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T05:21:25.168Z",
-   "file": "20261126052125168-note-R-finals.jpg",
-   "source": "../../../../tmp/v/fin/R-finals.jpg",
-   "kind": "note",
-   "label": "State R on main 23f1089b, the four judged frames at the final tier (1185, 1287, 1440, 1586) at 0.37 size: whole; 1185 equals main's final to the byte",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T04:51:39.283Z",
-   "file": "20261126045139283-note-r4.jpg",
-   "source": "../../../../tmp/v/sh/R2/r4.jpg",
-   "kind": "note",
-   "label": "State R, every draft frame of the rise 1558 to 1569 + 1/2 at quarter size",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T04:51:38.484Z",
-   "file": "20261126045138484-note-r3.jpg",
-   "source": "../../../../tmp/v/sh/R2/r3.jpg",
-   "kind": "note",
-   "label": "State R, every draft frame of the rise 1546 to 1557 + 1/2 at quarter size",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T04:51:37.370Z",
-   "file": "20261126045137370-note-R2-M1-mid.jpg",
-   "source": "../../../../tmp/v/sh/R2/R2-M1-mid.jpg",
-   "kind": "note",
-   "label": "State R left, main right, rise 1551 1557 1563 1569, x 300 to 1620 y 200 to 900: R's middle distance is the plate's soft deck, main's a crisp mottled patch; alike by 1569",
    "stop": "venus"
   }
  ]
