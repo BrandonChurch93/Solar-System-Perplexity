@@ -132,3 +132,32 @@ export function sharedSkyWeight(patchView: string, setView: string, kind: string
   if (high !== undefined) return high
   return kind === 'rise' ? 0 : 1 - low
 }
+
+// Whether a stop's sky patch is drawn in the view its set is in, where no dive or rise shares the sky. A patch is drawn in the view it
+// names. One that says both (SkyPatch.both) is drawn in the other view of its stop too, in the dive, on the ground and in the rise, and
+// nowhere else.
+export function ownSkyDrawn(patchView: string, setView: string, kind: string, both: boolean | undefined): boolean {
+  return patchView === setView || (both === true && (kind === 'dive' || kind === 'terrain' || kind === 'rise'))
+}
+
+// The weight of a stop's sky patch that is drawn (ownSkyDrawn), where no dive or rise shares the sky, before the patch's own weight by
+// time. The film's ending has none. On a travel the stop that is left has none and the stop that arrives has the director's weight
+// for the travel (clock), or 1 on every frame of the travel where the patch says it arrives whole (SkyPatch.arrive). In a rise the
+// globe view has none, where the sky already turns to the next stop, unless the patch says both (SkyPatch.both); everywhere else the
+// patch is whole.
+export function ownSkyWeight(kind: string, setView: string, arriving: boolean, ending: boolean, clock: number, arrive: 'whole' | undefined, both: boolean | undefined): number {
+  if (ending) return 0
+  if (kind === 'travel') return arriving ? (arrive === 'whole' ? 1 : clock) : 0
+  return kind === 'rise' && setView === 'orbit' && both !== true ? 0 : 1
+}
+
+// The stop whose stars step at an edge of a frame, or null. A stop that gives the sky an aim for its way in (FilmDirector.arrivals) has
+// the turn of that aim to the last frame of the travel to it and its own turn from the first frame of its hold: between those two
+// frames the stars step. The engine draws the two only where an orbit picture of that stop hides the stars (starShare).
+export function skyStep(segment: { kind: string; stop: string; firstFrame: number; endFrame: number }, frame: number, sets: { id: string }[], arrivals: Record<string, unknown> | undefined): string | null {
+  if (!arrivals) return null
+  const f = Math.floor(frame)
+  if (segment.kind === 'hold') return f === segment.firstFrame && arrivals[segment.stop] ? segment.stop : null
+  if (segment.kind !== 'travel' || f !== segment.endFrame - 1) return null
+  return sets.find((x) => x.id !== segment.stop && arrivals[x.id])?.id ?? null
+}

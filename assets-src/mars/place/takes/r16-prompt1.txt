@@ -1,0 +1,21 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars in low evening light, north at the top, about 95 km across.
+
+The middle of image 1 (the square that takes the middle 44 percent of its width and height) is right and must stay exactly as it is: dark brown rocky high ground with cliffs, ledges and sunlit orange faces, and a deep shadowed canyon across its upper part.
+
+Everything around that middle is only a rough sketch, right about where things are light and dark and wrong about what they look like. The left third is high plateau land west of the rocky ground, sunlit and orange; in the sketch it is smeared into soft blobs and shards with false blue, grey and white streaks and a pale bar at the upper left. From the middle the canyon runs on to the upper right edge; in the sketch it is drawn as flat grey steps with a black floor. All the rest is a flat orange plain covered by an etched pattern of thin wavy lines.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking west. It shows what this land is made of: dark brown layered bedrock, cliffs with strata, spurs, buttresses, gullies, talus aprons, and beyond them sunlit orange plateaus cut by side canyons, with mesas and ridges.
+
+Task: redraw image 1 as one seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. The middle stays as it is, every cliff and every light and dark patch where it is.
+
+2. The land around it is the same land carried on, without a seam, a step, a frame or a change of sharpness at the border of the middle: rugged rocky plateau country of fractured bedrock, ledges, low mesas, shallow gullies and small side canyons, with thin sheets of rust coloured sand in the hollows. It is dark brown close to the middle and grows lighter, to a rusty orange, toward the edges, as the sketch does.
+
+3. The left third is a sunlit high plateau cut by gullies, side canyons and scarps, with a few mesas: lit orange where the sketch is orange, dark where the sketch is dark. Its forms are sharp and natural.
+
+4. The canyon runs on from the middle to the upper right edge with the same width and course as in the sketch, drawn like the canyon in the middle: stepped walls of layered rock, spurs and gullies, talus at the foot, the shadowed side very dark with the ground in it still to be made out.
+
+5. No smear, no blur, no streaks, no shards, no flat cells, no etched lines, no bright outlines, no blue, no white. No pure black. No mist, no cloud, no water. No fan, no long parallel lines, nothing that radiates from one point. No round pits, no fields of craters.
+
+Light: a low Sun, soft long shadows, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.

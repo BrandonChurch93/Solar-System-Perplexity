@@ -37,6 +37,7 @@ uniform float uSat;
 uniform vec3 uTintDense;
 uniform vec3 uTintThin;
 uniform vec3 uFloor;
+uniform vec3 uKShadowL;
 uniform vec3 uGrainView;
 uniform vec4 uGrainLook[${GRAIN_LEVELS}];
 uniform vec4 uGrainLit;
@@ -120,7 +121,8 @@ void main() {
   float deg = degrees(acos(clamp(-dot(dir, uSunL), -1.0, 1.0)));
   float law = sheetLaw(thin, mu, mu0, deg);
   vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uTintDense, uTintThin, thin);
-  vec3 under = mix(uFloor, vec3(1.0), globeShadow(pos, uSunL, uPolar)) * uShade.z;
+  // the globe's shadow from the one direction of shadow.json, as the sheet casts it
+  vec3 under = mix(uFloor, vec3(1.0), globeShadow(pos, uKShadowL, uPolar)) * uShade.z;
   float up = (uCamL.y > 0.0 ? 1.0 : -1.0) * pos.y;
   float deep = clamp(0.5 - 0.5 * up / uGrainFoot.z, 0.0, 1.0);
   float lit = exp(-deep * taken / mu0);

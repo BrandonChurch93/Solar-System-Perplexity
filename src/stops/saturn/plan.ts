@@ -13,14 +13,23 @@ export const params: MoveParams = {
   dive: { headingDeg: -35, altitude: 0.03, back: 0.1, ahead: 0.3, bow: -0.12, rollDeg: -4 },
   terrain: { vfov: skimJson.pose.vfov, forward: skimJson.path.forward, rise: -skimJson.pose.height * (Math.sqrt(skimJson.path.descent) - 1 / Math.sqrt(skimJson.path.descent)), side: skimJson.path.side, yawDeg: skimJson.path.yawDeg, pitchDeg: skimJson.path.pitchDeg, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6, ground: 0 },
   rise: { azimuthDeg: -14, elevationDeg: 6, distance: 6.6, offset: [-0.28, -0.12], driftSpeed: 0.08, rollDeg: 0 },
-  travel: { turnDeg: 88, side: -1, turnEnd: 0.5 },
-  arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.25, 0.1] },
+  // The engine lays the next stop at the half degree step of its search that stands nearest this turn, counted from
+  // this stop's own way out. 87 (88 before the hold's view of the fit) is the number at which that step is the one
+  // it took before, so Uranus and Neptune keep their turn in the world (RECIPE.md, the sky's turn)
+  travel: { turnDeg: 87, side: -1, turnEnd: 0.5 },
+  // The offset is the one at which the way in points the same way in the world as before the hold's view of the
+  // fit ([-0.25, 0.1] then), so Jupiter's rise, which flies ahead along it, keeps its own camera at every frame
+  arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.218592631, 0.081382357] },
   light: { exposure: 1, skyExposure: 0.55, sunRadiusDeg: 0.32, sunGlare: 0.7, flare: 0.1 },
   cover: [0.9, 0.82, 0.66],
   spinDegPerSecond: 1.4,
   moonDegPerSecond: 0.3,
   tint: [0.92, 0.82, 0.6],
-  skyAim: { orbit: [-14, 153, -7.3] },
+  // The whole sky's turn at this stop is laid from the camera at the judged hold frame and from this aim, and
+  // Jupiter's rise turns its sky to it from frame 3268 on. The hold's view of the fit turned that camera in the
+  // world, so the aim is the place of the sky that the turned camera sees with the turn left where it stood
+  // ([-14, 153, -7.3] before): no star moves in a frame before this stop's own (RECIPE.md, the sky's turn)
+  skyAim: { orbit: [-13.970238, 153.184663, -7.081804] },
   handover: {
     // skyFrames 0: the engine crosses no sky by the clock here (see heroSky)
     dive: { at: skimJson.handover.dive.at, picture: false, skyFrames: 0 },
@@ -115,6 +124,9 @@ export class SaturnPlan extends StopPlan {
 
   constructor(id: string, f: Fit, p: MoveParams) {
     super(id, f, p)
+    // The rise ends on the lens of the flights (skim.json, lens.out), not on the hold's lens of the fit: the flight
+    // out takes its lens from this pose and keeps it to the next hold
+    this.riseEnd.vfov = skimJson.lens.out
     const rad = THREE.MathUtils.degToRad
     const pose = skimJson.pose
     const n = this.normal.clone()
@@ -269,7 +281,7 @@ export class SaturnPlan extends StopPlan {
   }
 
   // The pose at the share u of such a move; a and b are the poses of the two motions at the same time.
-  private move(law: Law, a: Pose, b: Pose, u: number): Pose {
+  private move(law: Law, a: Pose, b: Pose, u: number, lens: string): Pose {
     if (u <= 0) return a
     if (u >= 1) return b
     const far = 1 + Math.exp(law.reach0 + law.reach.at(u))
@@ -278,7 +290,51 @@ export class SaturnPlan extends StopPlan {
     const foot = Math.sqrt(Math.max(far * far - h * h, 0))
     const position = new THREE.Vector3().addScaledVector(law.e1, foot * Math.cos(phi)).addScaledVector(law.e2, foot * Math.sin(phi)).addScaledVector(this.ringNormal, h)
     const w = law.view.at(u)
-    return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: a.vfov * Math.pow(b.vfov / a.vfov, w) }
+    return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: lens === 'distance' ? this.lensAt(far) : a.vfov * Math.pow(b.vfov / a.vfov, w) }
+  }
+
+  // The lens as a function of the eye's distance from the planet's centre and of nothing else (skim.json lens):
+  // the hold's lens at the distance of the last frame of the hold and beyond, the skim's lens at the distance
+  // of the first frame of the skim and nearer, and between the two the tangent of half the field of view is a
+  // power of the distance. The exponent of that power rises from nothing over the first lens.ease[0] of the
+  // logarithm of the distance at the skim's end of the span and falls to nothing over the last lens.ease[1] at
+  // the hold's end. About the distance lens.swell.at it stands higher by lens.swell.gain of its level, and
+  // that swell falls off to nothing over lens.swell.reach of the logarithm on either side as half a cosine:
+  // there the eye's own way moves the picture on the screen least, and the faster lens keeps the picture's
+  // speed from falling before its climb into the skim (skim.json lens says what was measured). So the disc of
+  // the globe grows at every frame in which the eye comes nearer, and its growth has no step where the law
+  // begins or ends. Both distances and both lenses are read from the path.
+  private lensSpan: { near: number; far: number; wide: number; long: number } | null = null
+
+  private lensAt(distance: number): number {
+    const d = this.seg.dive!
+    if (this.lensSpan === null) {
+      const last = this.hold(d.start - this.seg.hold.start)
+      const first = this.skimAt(d.end)
+      this.lensSpan = { near: Math.log(first.position.length()), far: Math.log(last.position.length()), wide: first.vfov, long: last.vfov }
+    }
+    const { near, far, wide, long } = this.lensSpan
+    const x = Math.log(distance)
+    if (x <= near) return wide
+    if (x >= far) return long
+    const [rise, fall] = skimJson.lens.ease as [number, number]
+    const swell = skimJson.lens.swell
+    const mid = Math.log(swell.at)
+    if (!(swell.reach > 0) || mid - swell.reach < near || mid + swell.reach > far) throw new Error(this.id + ': the swell of the lens (skim.json lens.swell) leaves the span of the law, ' + Math.exp(near).toFixed(4) + ' to ' + Math.exp(far).toFixed(4))
+    // the way a flank of the swell has done at the length s from its top: the sum of half of one and a cosine
+    const flank = (s: number): number => (s + (swell.reach / Math.PI) * Math.sin((Math.PI * s) / swell.reach)) / 2
+    // the way done by an exponent that rises over the length rise, stays, and falls over the length fall, with
+    // the swell laid on it
+    const done = (at: number): number => {
+      const up = Math.min(at - near, rise)
+      const level = Math.max(Math.min(at, far - fall) - (near + rise), 0)
+      const down = Math.max(at - (far - fall), 0)
+      const below = Math.min(Math.max(mid - at, 0), swell.reach)
+      const above = Math.min(Math.max(at - mid, 0), swell.reach)
+      return (rise > 0 ? (up * up) / (2 * rise) : 0) + level + (fall > 0 ? down - (down * down) / (2 * fall) : 0) + swell.gain * (flank(swell.reach) - flank(below) + flank(above))
+    }
+    const half = (deg: number) => Math.tan(THREE.MathUtils.degToRad(deg) / 2)
+    return 2 * THREE.MathUtils.radToDeg(Math.atan(half(wide) * Math.pow(half(long) / half(wide), done(x) / done(far))))
   }
 
   private diveLaw: Law | null = null
@@ -317,9 +373,9 @@ export class SaturnPlan extends StopPlan {
     const d = this.seg.dive!
     const r = this.seg.rise
     if (time < d.start) return this.hold(time - this.seg.hold.start)
-    if (time < d.end) return this.move(this.diving(), this.hold(time - this.seg.hold.start), this.skimAt(time), (time - d.start) / (d.end - d.start))
+    if (time < d.end) return this.move(this.diving(), this.hold(time - this.seg.hold.start), this.skimAt(time), (time - d.start) / (d.end - d.start), skimJson.lens.moves.dive)
     if (time < r.start) return this.skimAt(time)
-    return this.move(this.rising(), this.skimAt(time), this.after(time), (time - r.start) / (r.end - r.start))
+    return this.move(this.rising(), this.skimAt(time), this.after(time), (time - r.start) / (r.end - r.start), skimJson.lens.moves.rise)
   }
 
   // The two views of the handover show the same world from the same lens: the close view is the flight seen in

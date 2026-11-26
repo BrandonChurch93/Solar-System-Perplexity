@@ -146,6 +146,13 @@ export interface Shot {
   skyExposure: number
   skyGlow: number
   skyTurn: THREE.Quaternion
+  // The turn of the sky as it is seen from frame to frame, for a reader of the film's motion; nothing is drawn by it. skyTurn steps
+  // once where a stop gives the sky an aim for its way in (FilmDirector.arrivals): at the first frame of that stop's hold, under a
+  // picture of the stop that hides the stars and keeps its place in the lens. This is skyTurn with every such step up to the shot
+  // taken out, so along the film it never steps and the lens against it (its inverse times skyQuaternion) goes from frame to frame as
+  // the seen sky does. Not given before the first step and in a film without one: the seen turn is then skyTurn itself.
+  skyTurnSeen?: THREE.Quaternion
+  skyPlate?: { aim: THREE.Quaternion; turning: boolean }
   skyStars?: number
   skyPatch?: number
   skyLook?: number
@@ -220,6 +227,17 @@ export interface SkyPatch {
   unfold?: [number, number]
   glare?: boolean
   weight?: (time: number, view: ViewKind) => number
+  // How the patch of a stop that arrives comes in on the travel to it. Absent: by the director's weight for the travel (Shot.skyPatch,
+  // which goes by the travel's clock). 'whole': at its whole weight from the travel's first frame on, so that it enters over the
+  // frame's edge as the camera turns to it and never by a weight. The stop answers for no part of the patch lying in the frame at
+  // that first frame; the engine does not ask.
+  arrive?: 'whole'
+  // Where no dive or rise of the stop shares the sky: true draws the patch in the other view of its stop too, in the dive, on the ground
+  // and in the rise, at its whole weight (in the rise's globe view as well, where a patch without the word has none), at the aim of the
+  // view it names. So a stop can keep one set of sky pictures through the change of its views. Absent: only in the view it names. Not in
+  // a hold and not on a travel. The sky draws two patches a sample, in the order of the set's list. The stop answers for no part of the
+  // patch lying in the frame at the dive's first frame and at the first frame after the rise; the engine does not ask.
+  both?: boolean
 }
 
 export interface StopSet {

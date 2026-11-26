@@ -12,7 +12,7 @@ import { captureFrames, captureRate, shutterSeconds, spanMid, wholeFrame } from 
 import { samplesFor, type Sample } from './sampler'
 import { SetLoader } from './sets'
 import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
-import { floorRing, sharedSkyWeight } from './skyfloor'
+import { floorRing, ownSkyDrawn, ownSkyWeight, sharedSkyWeight, skyStep } from './skyfloor'
 import { Place, placeCamera, placeLayout, type PlaceMode, type PlacePicture } from './place'
 import { gradUniform, isRaw, setDiag, setFine, setSamples, setWay, type Way } from '../diagnostics/diag'
 import { applyProbe, parseProbe, type Probe } from '../diagnostics/probe'
@@ -22,7 +22,7 @@ import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
 import { setFrame, setPass } from './frame'
-import type { SkyAims } from '../space/aim'
+import { STAR_LEVEL, starShare, type SkyAims } from '../space/aim'
 import { Cover, coverReaches } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
 import type { Trim } from '../bodies/trim'
@@ -33,6 +33,7 @@ export interface Director {
   shotAt(frame: number, time: number, side?: ViewKind): Shot
   glareOf?(shot: Shot): THREE.Vector3 | null
   readonly sky?: SkyAims
+  readonly arrivals?: Record<string, { turn: THREE.Quaternion; orbit: THREE.Quaternion }>
 }
 
 export interface Sanity { invalid: number; coverage: number }
@@ -359,25 +360,35 @@ export class Engine {
       const share = shot.skyShare ?? 0
       const high = shot.skyShareHigh
       const shared = share > 0 || high !== undefined
+      const plate = mid.skyPlate
+      let hid = !plate?.turning
+      const arrivals = this.director!.arrivals
+      const step = skyStep(shot.segment, shot.frame, shot.sets, arrivals)
+      let stepHid = step === null
       for (const state of shot.sets) {
         for (const patch of this.sets.get(state.id)?.sky ?? []) {
           const kind = shot.segment.kind
+          const arriving = kind === 'travel' && state.id !== shot.segment.stop
           let weight: number
           if (shared) {
             const w = sharedSkyWeight(patch.view, state.view, kind, share, high)
             weight = w > 0 ? w * (patch.weight ? patch.weight(shot.time, patch.view === 'terrain' ? 'terrain' : state.view) : 1) : 0
           } else {
-            if (patch.view !== state.view) continue
-            const arriving = kind === 'travel' && state.id !== shot.segment.stop
-            const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+            if (!ownSkyDrawn(patch.view, state.view, kind, patch.both)) continue
+            const base = ownSkyWeight(kind, state.view, arriving, shot.segment.stop === config.endingId, shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8), patch.arrive, patch.both)
             weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
           }
           if (weight <= 0) continue
-          const aim = aims?.patches[state.id]?.[patch.view]
+          const wayIn = arriving && patch.view === 'orbit' ? arrivals?.[state.id]?.orbit : undefined
+          const aim = (plate && patch.view === 'terrain' && state.id === shot.segment.stop ? plate.aim : undefined) ?? wayIn ?? aims?.patches[state.id]?.[patch.view]
           if (aim) patch.aim.copy(aim)
+          if (!stepHid && aims && state.id === step && patch.view === 'orbit') stepHid = starShare(patch, weight, mid, aims.frame, width / height) <= STAR_LEVEL
+          if (!hid && aims && patch.view === 'terrain' && state.view === 'terrain') hid = starShare(patch, weight, mid, aims.frame, width / height) <= STAR_LEVEL
           this.skyPatches.push({ patch: share > 0 && shot.skyFloor && patch.view === 'terrain' ? this.floored(patch, shot.skyFloor) : patch, weight })
         }
       }
+      if (!hid) throw new Error(shot.segment.stop + ': the stars turn between two sky aims in a sample where the surface plate does not hide them')
+      if (!stepHid) throw new Error(step + ': the stars step from the turn of the way in to the stop\'s own turn in a frame where no orbit picture of the stop hides them')
       if (shared && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)

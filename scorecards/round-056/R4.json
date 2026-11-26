@@ -1,0 +1,28 @@
+{
+ "critic": "R4",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "frames 2684–2687, foreground ridge at lower center-left",
+   "what": "As the camera lifts, a translucent second ridge contour becomes visible over the receding rock. The foreground reads as two views dissolving rather than one cliff moving past camera.",
+   "fix": "Align the overlapping terrain views at the ridge, or cover the handoff with a single geometry render. Use motion-vector blur rather than blending separate ridge positions."
+  },
+  {
+   "severity": "major",
+   "file": "sheet-05.png",
+   "where": "frames 2690–2697, horizon band and central canyon; the reverse change is visible on sheet-02.png at 2457–2465",
+   "what": "The amber horizon haze gives way to a steel-blue atmospheric band as the canyon switches to a brighter red view. The change in haze and contrast makes the ascent read as a shot handoff instead of a continuous climb.",
+   "fix": "Match atmospheric tint, exposure and canyon shadow contrast across both views. Carry a continuous horizon and haze falloff through the overlap in both directions."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 2250–2399, dust spiral above the equatorial canyon",
+   "what": "The foreground moon crosses the disk, but the dust spiral and wisps mostly hold their shape and registration against the rock. The atmosphere reads more like part of the surface than an independent layer.",
+   "fix": "Add subtle independent advection to the dust layer, with slow drift and gradual deformation relative to the canyon."
+  }
+ ]
+}
