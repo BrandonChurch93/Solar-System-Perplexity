@@ -1,9 +1,81 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T14:00:12.603Z",
- "head": "72188491bf42c5b8e13774618ddf4c5b399cf29e",
- "note": "Jupiter rise 3249 to 3258: building the picture's level following the camera above the surface view's ceiling, for the later cut",
+ "pushed": "2026-11-26T14:28:51.113Z",
+ "head": "c7fdadc4b8b1234108c6a60cc98f79a528963743",
+ "note": "later cut: the picture's level follows the camera above the surface view's ceiling; reader slice on the build running; judging colour strips near the limb",
  "looks": [
+  {
+   "time": "2026-11-26T14:28:49.774Z",
+   "file": "20261126142849774-note-crop-b-3248-3250.jpg",
+   "source": "../../../../tmp/crop-b-3248-3250.jpg",
+   "kind": "note",
+   "label": "the build at 3248 to 3250 beside the name, far right crop: a pale wedge comes in from 3249",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T14:28:48.286Z",
+   "file": "20261126142848286-note-crop-b-wedge2.jpg",
+   "source": "../../../../tmp/crop-b-wedge2.png",
+   "kind": "note",
+   "label": "far right at 3252, 3254, 3256, 1.5 times: the name (top) and the build with the picture's level following the camera (bottom); colour strips under the limb to be judged",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T14:15:49.821Z",
+   "file": "20261126141549821-frame-f03244.jpg",
+   "source": "out/work/jupiter/frames/b1/f03244.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3244, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3244,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T14:14:36.893Z",
+   "file": "20261126141436893-frame-f03200.jpg",
+   "source": "out/work/jupiter/frames/b1/f03200.png",
+   "kind": "frame",
+   "label": "jupiter.terrain frame 3200, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.terrain",
+   "frame": 3200,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T14:12:39.534Z",
+   "file": "20261126141239534-frame-f02895.jpg",
+   "source": "out/work/jupiter/frames/b1/f02895.png",
+   "kind": "frame",
+   "label": "jupiter.hold frame 2895, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.hold",
+   "frame": 2895,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
+  {
+   "time": "2026-11-26T14:05:34.283Z",
+   "file": "20261126140534283-frame-f02997.jpg",
+   "source": "out/work/jupiter/frames/n1/f02997.png",
+   "kind": "frame",
+   "label": "jupiter.dive frame 2997, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.dive",
+   "frame": 2997,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
   {
    "time": "2026-11-26T14:00:11.320Z",
    "file": "20261126140011320-note-level-follows-native-3252.jpg",
@@ -19,72 +91,6 @@
    "kind": "note",
    "label": "Jupiter rise 3254, 3258, 3262, 3266, diagnostic only: the approved picture held on at any stretch beside the name; shows the far field is where picture and plates differ",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:52:43.631Z",
-   "file": "20261126135243631-frame-f03266.jpg",
-   "source": "out/work/jupiter/frames/ph/f03266.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3266, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3266,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T13:51:30.036Z",
-   "file": "20261126135130036-note-rise-cure-f-3258-3266-large.jpg",
-   "source": "../../../../tmp/lk/rise-cure-f-3258-3266-large.jpg",
-   "kind": "note",
-   "label": "Rise, cure F at 3258, 3260, 3262, 3266, draft: the hand back as it stands",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:51:29.239Z",
-   "file": "20261126135129239-note-rise-cure-f-3250-3256-large.jpg",
-   "source": "../../../../tmp/lk/rise-cure-f-3250-3256-large.jpg",
-   "kind": "note",
-   "label": "Rise, cure F at 3250, 3252, 3254, 3256, draft: the hand back as it stands",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:51:27.740Z",
-   "file": "20261126135127740-note-rise-row-3250-pattern-maps.jpg",
-   "source": "../../../../tmp/lk/rise-row-3250-pattern-maps.jpg",
-   "kind": "note",
-   "label": "Row 3250 to 3258, the reader's pattern as a map, both readings: as is, build A1, picture away, tone and air held",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:42:30.216Z",
-   "file": "20261126134230216-frame-f03150.jpg",
-   "source": "out/work/jupiter/frames/a2s/f03150.png",
-   "kind": "frame",
-   "label": "jupiter.terrain frame 3150, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.terrain",
-   "frame": 3150,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T09:49:22.718Z",
-   "file": "20261126094922718-frame-f02895.jpg",
-   "source": "out/work/jupiter/frames/cut/f02895.png",
-   "kind": "frame",
-   "label": "jupiter.hold frame 2895, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.hold",
-   "frame": 2895,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
   }
  ]
 }
