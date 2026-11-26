@@ -1,0 +1,7 @@
+# Far Sun wiring for sun_builder (src/stops/sun/set.ts), asked in MAIL 1065 items 2 and 3.
+# The Sun is one body at every distance and the stop's corona and prominences are the judged ones, so the
+#   far Sun wears them. The loaded pictures and the globe's turn live inside the set, and a second load
+#   would be a second copy and a frame that hangs on the far Sun's own load. So the set lends them with
+#   the map: one more field `gas` in the object handed to farSun.wear, optional in FarSunHold.
+# Without it the far Sun keeps its own gas. With it the far Sun draws the stop's corona and prominence
+#   card by the stop's own laws, weighted by the wear. Nothing in the stop's drawing changes.

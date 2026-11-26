@@ -5,7 +5,8 @@ import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 import { GROUND_AIR_GLSL, hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
-import { setHazeAir, type GlobeAir } from './air'
+import { AIR_LAW_GLSL, AIR_LAW_KNOTS_GLSL } from '../terrain/air'
+import { airLawUniforms, setHazeAir, type AirLaw, type GlobeAir } from './air'
 import { ReliefCap, capDetail, type CapOptions } from './cap'
 import { LimbAir, type LimbAirParams } from './limb'
 
@@ -77,6 +78,7 @@ export interface PlanetOptions {
   cap?: CapOptions
   exactSpin?: boolean
   limbAir?: LimbAirParams
+  airLaw?: AirLaw
 }
 
 const VERT = /* glsl */ `
@@ -106,7 +108,7 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean; turn?: boolean; detail?: string }
+export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean; turn?: boolean; detail?: string; law?: boolean; knots?: boolean }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
@@ -210,7 +212,12 @@ out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
-${hazeGlsl(o.glow)}${o.cap ? GROUND_AIR_GLSL : ''}
+${hazeGlsl(o.glow)}${o.cap ? GROUND_AIR_GLSL : ''}${o.law ? `
+uniform vec3 uAirLight;
+uniform vec4 uAirLaw;
+${AIR_LAW_GLSL}${o.knots ? `
+uniform vec3 uAirKnots;
+uniform vec3 uAirShares;${AIR_LAW_KNOTS_GLSL}` : ''}` : ''}
 ${o.turn ? `vec3 spinBy(vec3 d, vec2 t) {
   return vec3(t.x * d.x - t.y * d.z, d.y, t.y * d.x + t.x * d.z);
 }` : `vec3 spinY(vec3 d, float a) {
@@ -316,7 +323,8 @@ ${patchLevels(o)}
     lin *= mix(1.0, 2.0 / (1.0 + l / uNightFlat.x), dark);
   }
   vec3 col = lin * shade * uTint;${o.own ? `
-  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}${o.detail ? ' * ground.rgb' : ''}${o.capLight ? ` * (1.0 + clamp((dot(normalize(n + nc * uCapLight.y${o.detail ? ' + nt' : ''}), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))` : o.detail ? ' * (nt == vec3(0.0) ? 1.0 : 1.0 + clamp((dot(normalize(n + nt), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))' : ''}, own);` : ''}${o.cap ? `
+  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}${o.detail ? ' * ground.rgb' : ''}${o.capLight ? ` * (1.0 + clamp((dot(normalize(n + nc * uCapLight.y${o.detail ? ' + nt' : ''}), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))` : o.detail ? ' * (nt == vec3(0.0) ? 1.0 : 1.0 + clamp((dot(normalize(n + nt), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))' : ''}, own);` : ''}${o.law ? `
+  ${o.knots ? `col = max(col * airLawFactor(airLawDepth(uCam, ${o.cap ? 'n * (1.0 + vCapH)' : 'n'}, uAirLaw.y), uAirLaw.x) + uAirLight * smoothstep(uAirLaw.z, uAirLaw.w, ndl0) * airLawGather(uCam, ${o.cap ? 'n * (1.0 + vCapH)' : 'n'}, uAirLaw.y, uAirLaw.x, uAirKnots, uAirShares), vec3(0.0));` : `col = airLaw(col, uAirLight * smoothstep(uAirLaw.z, uAirLaw.w, ndl0), airLawFactor(airLawDepth(uCam, ${o.cap ? 'n * (1.0 + vCapH)' : 'n'}, uAirLaw.y), uAirLaw.x));`}` : `${o.cap ? `
   float tau = airDepth(length(uCam) - 1.0, dot(dir, normalize(uCam)), vCapH, dot(dir, n), uHazeH, uHazeTau);` : `
   vec3 at;
   float tau = hazeDepth(dir, true, at);`}
@@ -328,7 +336,7 @@ ${patchLevels(o)}
     float highlight = smoothstep(uGrazingRange.x, uGrazingRange.y, dot(n, uGrazingSun));
     vec3 pale = mix(uGrazingDusk, uGrazingFill + uGrazingHighlight * highlight, grazingDay) * hazeForward(dir);
     col = mix(pale, col, transmit);
-  }
+  }`}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(flow * 8.0, 0.0), length(vView));${o.minor ? `
@@ -389,13 +397,15 @@ export class Planet {
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
-    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true, ...(centres ? { centres: true } : {}), ...(o.exactSpin ? { turn: true } : {}) }
+    if (o.airLaw && g) throw new Error('one air: a planet with the air law carries no grazing air')
+    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true, ...(centres ? { centres: true } : {}), ...(o.exactSpin ? { turn: true } : {}), ...(o.airLaw ? { law: true } : {}), ...(o.airLaw?.knots ? { knots: true } : {}) }
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
       fragmentShader: planetFrag(o.cap ? { ...text, cut: true } : text),
       uniforms: {
         ...hazeUniforms(o.haze),
+        ...(o.airLaw ? airLawUniforms(o.airLaw) : {}),
         uGrazingShape: { value: new THREE.Vector4(g?.depth ?? 0, g?.width ?? 1, g?.duskWidth ?? 1, g?.power ?? 1) },
         uGrazingDay: { value: new THREE.Vector2(g?.dayFrom ?? 0, g?.dayTo ?? 1) },
         uGrazingFill: { value: new THREE.Vector3().fromArray(g?.fill ?? [0, 0, 0]) },

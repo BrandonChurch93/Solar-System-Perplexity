@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { hazeHidden, keepTriangles, type Trim } from './trim'
-import { setHazeAir, type HazeAir } from './air'
+import { AIR_LAW_GLSL, AIR_LAW_KNOTS_GLSL } from '../terrain/air'
+import { airLawUniforms, setHazeAir, type AirLaw, type HazeAir } from './air'
 
 interface HazeCore {
   scaleHeight: number
@@ -166,6 +167,31 @@ void main() {
   outColor = vec4(col * uGain, 0.0);
 }`
 
+const lawFrag = (knots: boolean): string => /* glsl */ `
+precision highp float;
+in vec3 vPos;
+uniform float uGain;
+uniform int uDiag;
+uniform vec3 uCam;
+uniform vec3 uSunW;
+uniform vec3 uAirLight;
+uniform vec4 uAirLaw;
+out vec4 outColor;
+${AIR_LAW_GLSL}${knots ? `
+uniform vec3 uAirKnots;
+uniform vec3 uAirShares;${AIR_LAW_KNOTS_GLSL}` : ''}
+void main() {
+  if (uDiag >= 2) discard;
+  vec3 dir = normalize(vPos);
+  float r = length(uCam);
+  float b = -dot(uCam, dir);
+  float rt2 = r * r - b * b;
+  if (b > 0.0 && rt2 < 0.99) discard;
+  float through = 1.0 - airLawFactor(airLawDepthOut(uCam, dir, uAirLaw.y), uAirLaw.x);
+  vec3 at = b > 0.0 ? normalize(uCam + dir * b) : uCam / r;
+  outColor = vec4(uAirLight * smoothstep(uAirLaw.z, uAirLaw.w, dot(at, uSunW)) * ${knots ? 'airLawGatherOut(uCam, dir, uAirLaw.y, uAirLaw.x, uAirKnots, uAirShares)' : 'through'} * uGain, through);
+}`
+
 export function hazeUniforms(p: HazeParams): Record<string, THREE.IUniform> {
   return {
     uCam: { value: new THREE.Vector3(0, 0, 3) },
@@ -189,20 +215,22 @@ export class HazeShell implements Trim {
   private readonly lean = new THREE.BufferGeometry()
   private readonly hidden: Uint8Array
 
-  constructor(p: HazeParams, diag: THREE.IUniform<number>) {
+  constructor(p: HazeParams, diag: THREE.IUniform<number>, law?: AirLaw) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
-      fragmentShader: frag(p.glow === true),
+      fragmentShader: law ? lawFrag(law.knots !== undefined) : frag(p.glow === true),
       uniforms: {
         ...hazeUniforms(p), uGain: { value: 1 }, uDiag: diag,
         uCoreHeight: { value: p.core?.scaleHeight ?? 0 },
         uCoreDay: { value: new THREE.Vector3().fromArray(p.core?.day ?? [0, 0, 0]) },
         uCoreSun: { value: new THREE.Vector3() },
         uCoreRange: { value: new THREE.Vector2(p.core?.dayFrom ?? 0, p.core?.dayTo ?? 1) },
+        ...(law ? airLawUniforms(law) : {}),
       },
       side: THREE.BackSide,
-      blending: THREE.AdditiveBlending,
+      blending: law ? THREE.CustomBlending : THREE.AdditiveBlending,
+      ...(law ? { blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.ZeroFactor, blendDstAlpha: THREE.OneFactor } : {}),
       premultipliedAlpha: true,
       transparent: true,
       depthWrite: false,
