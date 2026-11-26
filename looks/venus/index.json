@@ -1,71 +1,71 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T07:57:33.101Z",
- "head": "aef09351f694e1f6c476a6f390ab8db6f8d3a889",
- "note": "P3c dropped, the grey blob of P2 at 1551, main's dive far deck",
+ "pushed": "2026-11-26T08:54:14.103Z",
+ "head": "460e05899fadadf2efc3368ebebc8e40614ab8d2",
+ "note": "P2c on main 77a7d410: rise 1540 to 1575 seen, grey tuft at 1551 traced, final 1586 beside main's",
  "looks": [
+  {
+   "time": "2026-11-26T08:54:13.134Z",
+   "file": "20261126085413134-note-P-N-1586-crop.jpg",
+   "source": "../../../../tmp/v/fin/P-N-1586-crop.jpg",
+   "kind": "note",
+   "label": "final 1586, x 560 to 820, y 400 to 560 at 3 times: top P2c (the bytes of a4534656's final), middle main 77a7d410, bottom the difference times 14 (largest 17 of 255)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T08:54:12.421Z",
+   "file": "20261126085412421-note-at-b.jpg",
+   "source": "../../../../tmp/v/sh/P2m/at-b.jpg",
+   "kind": "note",
+   "label": "level b cells round 1493, 631: film plate, step 11 plate with the grey tuft, film times map, film times 0.85 map; below: 0.85 exact, map log2, exact log2, mask",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T08:54:11.334Z",
+   "file": "20261126085411334-note-blobR.jpg",
+   "source": "../../../../tmp/v/sh/P2m/blobR.jpg",
+   "kind": "note",
+   "label": "x 1490 to 1690, y 420 to 520 at 3 times, frames 1548, 1551, 1554: left P2c, right the step 11 state (main's) on the old engine: the same dark tuft at 1548, P2c keeps it with an edge at 1551, gone at 1554",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T08:54:10.549Z",
+   "file": "20261126085410549-note-d.jpg",
+   "source": "../../../../tmp/v/sh/P2m/d.jpg",
+   "kind": "note",
+   "label": "P2c on the merged tree, upper part at 0.34, frames 1567 to 1575 + 1/2",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T08:54:09.655Z",
+   "file": "20261126085409655-note-c.jpg",
+   "source": "../../../../tmp/v/sh/P2m/c.jpg",
+   "kind": "note",
+   "label": "P2c on the merged tree, upper part at 0.34, frames 1558 to 1566 + 1/2",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T08:54:08.895Z",
+   "file": "20261126085408895-note-b.jpg",
+   "source": "../../../../tmp/v/sh/P2m/b.jpg",
+   "kind": "note",
+   "label": "P2c on the merged tree, upper part at 0.34, frames 1549 to 1557 + 1/2",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T08:54:07.537Z",
+   "file": "20261126085407537-note-a.jpg",
+   "source": "../../../../tmp/v/sh/P2m/a.jpg",
+   "kind": "note",
+   "label": "P2c on the merged tree (main 77a7d410), upper part at 0.34, frames 1540 to 1548 + 1/2, every half frame",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T07:57:32.013Z",
    "file": "20261126075732013-note-M-dive-top.jpg",
    "source": "../../../../tmp/v/sh/D/M-dive-top.jpg",
    "kind": "note",
    "label": "Main's dive 1326 to 1347 every third frame, left half, top: the far ground has small cells and a whitish patch at 1326, is smoother at 1329 and a pale smooth deck from 1332. The dive has no far map yet.",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:57:31.028Z",
-   "file": "20261126075731028-note-specks2.jpg",
-   "source": "../../../../tmp/v/sh/D/specks2.jpg",
-   "kind": "note",
-   "label": "Frame 1551, x 1530 to 1650, y 435 to 505 at 5 times: main before the third cut (top left), P2 (top right), main now (bottom left), P2 minus old main times 4 (bottom right). P2 shows a grey blob where the others show a lilac patch; open, to be seen again in P2c.",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:57:29.664Z",
-   "file": "20261126075729664-note-p0.jpg",
-   "source": "../../../../tmp/v/sh/P3c/p0.jpg",
-   "kind": "note",
-   "label": "Rise 1546 to 1556 every second frame, half size: left the trial P3c (map carried past the far end of the place), right P2 (map inside the place). P3c shows a pale band ending at a line under the limb from 1550; dropped.",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:24:39.559Z",
-   "file": "20261126072439559-note-a4-arc.jpg",
-   "source": "../../../../tmp/v/sh/pl/a4-arc.jpg",
-   "kind": "note",
-   "label": "Trial P3 from above (level a): main's plate times the map with the field past the far end of the far deck, after the tone rule (no dark arc)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:24:38.918Z",
-   "file": "20261126072438918-note-z2.jpg",
-   "source": "../../../../tmp/v/sh/P2/z2.jpg",
-   "kind": "note",
-   "label": "Trial P2: every frame 1553 to 1556 + 1/2 at 1 to 1 (x 640 to 1600, y 110 to 510), the cells of main's ground coming in by height",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:24:38.271Z",
-   "file": "20261126072438271-note-z0.jpg",
-   "source": "../../../../tmp/v/sh/P2/z0.jpg",
-   "kind": "note",
-   "label": "Trial P2: every frame 1545 to 1548 + 1/2 at 1 to 1 (x 640 to 1600, y 110 to 510), the far deck as the eye leaves T",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:24:37.685Z",
-   "file": "20261126072437685-note-seam2.jpg",
-   "source": "../../../../tmp/v/sh/P2/seam2.jpg",
-   "kind": "note",
-   "label": "Trial P2 (main's rise plates times a far deck map, not a name yet): crops of 1545, 1548, 1551 for P2, the lossless trial P1b and the name R, and P2 minus P1b times 8",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:12:31.295Z",
-   "file": "20261126071231295-note-a4-ov.jpg",
-   "source": "../../../../tmp/v/sh/pl/a4-ov.jpg",
-   "kind": "note",
-   "label": "level a of the rise from above: main's plate, the far deck plate, main's plate times the map of trial P3 (the map goes on past the far end of the far deck with the tone of that end)",
    "stop": "venus"
   }
  ]
