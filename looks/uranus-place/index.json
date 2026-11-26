@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T09:27:55.549Z",
+ "pushed": "2026-11-26T09:51:11.882Z",
  "head": "832be54a25cbbe9cce0579d0a5d0b18adda5f58d",
- "note": "09:29 head 832be54a pushed (second aim, clock cure); reader dive 2 of 2 running; dive 4155 to 4171 looked at frame by frame",
+ "note": "09:51 reader dive 2 of 2 at 120 of 146 frames; dive 4172 to 4187 looked at frame by frame: one continuous approach, the star cloud band comes in behind the ring arcs by the camera's turn from 4174",
  "looks": [
+  {
+   "time": "2026-11-26T09:50:34.328Z",
+   "file": "20261126095034328-note-d2-d.jpg",
+   "source": "../../../../tmp/n75/d2-d.png",
+   "kind": "note",
+   "label": "832be54a dive draft 4181 to 4187",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T09:50:29.174Z",
+   "file": "20261126095029174-note-d2-c.jpg",
+   "source": "../../../../tmp/n75/d2-c.png",
+   "kind": "note",
+   "label": "832be54a dive draft 4172 to 4180 from the reader's frames",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T09:27:54.081Z",
    "file": "20261126092754081-note-d2-b.jpg",
@@ -226,22 +242,6 @@
    "source": "../../../../tmp/n69/s-a.png",
    "kind": "note",
    "label": "air scale sweep, draft 4399 to 4413: rows mine 0.1, 0.2, 0.3, 0.45, main",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:03:06.775Z",
-   "file": "20261126060306775-note-k-a.jpg",
-   "source": "../../../../tmp/n69/k-a.png",
-   "kind": "note",
-   "label": "4399 to 4416 draft rows: mine, air share 1, table glow off, bare off, main",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T06:03:06.110Z",
-   "file": "20261126060306110-note-l-4407-a.jpg",
-   "source": "../../../../tmp/n69/l-4407-a.png",
-   "kind": "note",
-   "label": "4407 draft: mine, mine cover off, main, main cover off",
    "stop": "uranus"
   }
  ]
