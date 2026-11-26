@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T17:48:27.827Z",
- "head": "c8c320b8eb80225cf2bb04d405add53ea09a8055",
- "note": "the lens cure of mail 1508 on c8c320b8: the judged 3567 final beside main's and the approved; the table of placements is running",
+ "pushed": "2026-11-26T17:59:50.054Z",
+ "head": "5075e26dc59b7c65c4ba58cded94a3274c82b9cc",
+ "note": "the name 5075e26d (the lens cure): the bump of dive part 1 at its place, both trees, consecutive frames and the reader's map",
  "looks": [
+  {
+   "time": "2026-11-26T17:58:02.743Z",
+   "file": "20261126175802743-note-bump_strip.jpg",
+   "source": "../../../../tmp/v/p1508/bump_strip.png",
+   "kind": "note",
+   "label": "the bump's place at full size, consecutive whole frames 3569 to 3578: main (top), the lens cure (bottom): the far arm's lanes slide down along the dark limb by even steps, no jump on either tree"
+  },
+  {
+   "time": "2026-11-26T17:55:23.193Z",
+   "file": "20261126175523193-note-map_setters.jpg",
+   "source": "../../../../tmp/v/p1508/map_setters.jpg",
+   "kind": "note",
+   "label": "the reader's pattern map, rows 3573 to 3574 and a half, main (left) and the lens cure (right): red are the pixels that set the number, all in one blob at the far arm by the right limb"
+  },
+  {
+   "time": "2026-11-26T17:55:22.213Z",
+   "file": "20261126175522213-note-bump_crops.jpg",
+   "source": "../../../../tmp/v/p1508/bump_crops.jpg",
+   "kind": "note",
+   "label": "the reader's bump of dive part 1 at full size (x 1330 to 1530, y 380 to 560, twice): main frames 3572 to 3575 over 3580 to 3583, then the lens cure the same: the far arm's lit lanes end at the dark limb"
+  },
   {
    "time": "2026-11-26T17:48:27.046Z",
    "file": "20261126174827046-note-s3567_final_crops.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/p1508/sheets/cure_3582.jpg",
    "kind": "note",
    "label": "lens cure 7f132895, dive drafts every frame from 3582"
-  },
-  {
-   "time": "2026-11-26T17:21:40.823Z",
-   "file": "20261126172140823-note-cure_3570.jpg",
-   "source": "../../../../tmp/v/p1508/sheets/cure_3570.jpg",
-   "kind": "note",
-   "label": "lens cure 7f132895, dive drafts every frame from 3570"
-  },
-  {
-   "time": "2026-11-26T17:21:40.238Z",
-   "file": "20261126172140238-note-fit_pair.jpg",
-   "source": "../../../../tmp/v/p1518/fit_pair.jpg",
-   "kind": "note",
-   "label": "approved close with the rigid world drawn over it: main pose (top) and the fit with the contact line weighed in and the lens free (eye 0.33, distance 2.53, lens 48.8)"
-  },
-  {
-   "time": "2026-11-26T17:21:39.659Z",
-   "file": "20261126172139659-note-two_3720_now.jpg",
-   "source": "../../../../tmp/v/p1518/two_3720_now.jpg",
-   "kind": "note",
-   "label": "3720 whole frame: approved close over main now (draft)"
   }
  ]
 }
