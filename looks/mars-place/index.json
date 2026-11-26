@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T03:07:17.718Z",
+ "pushed": "2026-11-26T03:29:59.568Z",
  "head": "749712666e01f152e8b073b465d095f807347546",
- "note": "03:08 UTC dive slice 2462, cause of the streaks (the take of 3.8 degrees), cure of the wash in work",
+ "note": "03:30 UTC the air term by term on the pair 2708 and 2716 (state), C1 at 2704 beside the state",
  "looks": [
+  {
+   "time": "2026-11-26T03:29:58.775Z",
+   "file": "20261126032958775-note-air-N.jpg",
+   "source": "../../../../tmp/pm/air-N.png",
+   "kind": "note",
+   "label": "MAIL 1383, state 74971266 at draft: the pair 2708 and 2716 with one term of the descent look held at its near ground value, the true carry of the pair on each: none 0.965, all 0.355, day edge 0.551, tint 0.859, haze depth 0.939, haze colour 0.951, blur, grazing veil and shell 0.965",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:18:54.827Z",
+   "file": "20261126031854827-note-air-a.jpg",
+   "source": "../../../../tmp/pm/air-a.png",
+   "kind": "note",
+   "label": "MAIL 1383: the pair 2708 and 2716 of state 74971266 at draft, above as it stands, below with every term of the descent look held at its near ground value (main's half follows)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:18:54.148Z",
+   "file": "20261126031854148-note-b1a-2704n.jpg",
+   "source": "../../../../tmp/pm/b1a-2704n.png",
+   "kind": "note",
+   "label": "frame 2704 at native size, 800 px right of the canyon: C1 (the tree without the land-8p5 row) left, state 74971266 right: without the row the border of the 3.8 degree plate reads as a line and the ground beyond it is the map's flat sand: bad for C1",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T03:07:16.888Z",
    "file": "20261126030716888-note-f2445.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/pm/ends-B-V0-E1.png",
    "kind": "note",
    "label": "true carry at 2708, end on 2716's grid: map alone at both frames 0.9365, the name 0.9648, main's plate 0.8094; 2716, 2708 carried, their details, the pattern",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T02:24:51.694Z",
-   "file": "20261126022451694-note-ab-2708.jpg",
-   "source": "../../../../tmp/pm/ab-2708.png",
-   "kind": "note",
-   "label": "rise 2708, same camera with and without land-8p5 (the map alone): the name, main's plate in the name, trial E2; difference at 32 and 128 px, red where the plate is brighter than the map as drawn",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T02:09:34.752Z",
-   "file": "20261126020934752-note-true-MN.jpg",
-   "source": "../../../../tmp/pm/true-MN.png",
-   "kind": "note",
-   "label": "true carry maps at 2708: main, the name",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T02:09:33.535Z",
-   "file": "20261126020933535-note-tone-MN.jpg",
-   "source": "../../../../tmp/pm/tone-MN.png",
-   "kind": "note",
-   "label": "broad tone ratio land-8p5 over patch-19 at 60 texels: main, the name (rings 0.8, 2.8, 4.2 degrees)",
    "stop": "mars"
   }
  ]
