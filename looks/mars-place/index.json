@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T17:41:29.300Z",
+ "pushed": "2026-11-26T18:05:04.846Z",
  "head": "c3e9a12a3fc956da2633ce69f2d534e22c95388c",
- "note": "whole cure: the lower right place at 2692 is the cast shade's border on the foot ground; reads worse than main by the Builder's table, not named",
+ "note": "no second name: the whole cure's shade border at the lower right of 2692 to 2694 is cut out lobes and a spike (red); the speck state is held by the table and rides the next cut",
  "looks": [
+  {
+   "time": "2026-11-26T18:05:04.171Z",
+   "file": "20261126180504171-note-lr5.jpg",
+   "source": "../../../../tmp/pm/B/lr5.png",
+   "kind": "note",
+   "label": "the lower right place of the rise at native size, frames 2692, 2693, 2694: main above, the whole cure (0d638c07) below. Main's soft frayed border of the shade is a hard line with scalloped lobes and a spike in the whole cure: named red",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T17:41:28.382Z",
    "file": "20261126174128382-note-lr3.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/pm/B/x-2462.png",
    "kind": "note",
    "label": "pair at native size, frame 2462: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T16:40:52.034Z",
-   "file": "20261126164052034-note-x-2456.jpg",
-   "source": "../../../../tmp/pm/B/x-2456.png",
-   "kind": "note",
-   "label": "pair at native size, frame 2456: main 686da341 left, the whole cure on main's plates (state 0d638c07) right, drafts",
    "stop": "mars"
   }
  ]
