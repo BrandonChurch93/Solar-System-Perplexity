@@ -723,7 +723,10 @@
    "topPercentile": 99,
    "floorPercentile": 1,
    "toe": 1.5,
-   "clipFrom": 235
+   "clipFrom": 235,
+   "hueNote": "maphue.py (26 November): within aboveDeg[1] every texel of the three lit levels is held, at its own luminance, between the huePercentile pair of green over red and of blue over red of the globe's own picture, read in hueBins bins of luminance (equal counts) and taken between the bins by luminance. It ends the dark teal and purple texels in the shade of the made forms (factors by channel on a pale texel).",
+   "hueBins": 16,
+   "huePercentile": [1, 99]
   }
  },
  "reach": {
