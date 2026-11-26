@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T02:28:07.541Z",
- "head": "2e9c373e132b99d442e4e8b0451a1ee3bbad13df",
- "note": "u1 and u2: the deck lit as a medium, dev variants, not yet in the tree",
+ "pushed": "2026-11-26T02:59:54.401Z",
+ "head": "47948a6b2448f86cc0c1ab0138c1e7350e918403",
+ "note": "02:59 UTC: u3 dropped (worse), curl warp pattern study, u2 stays the base while u4 draws (curl warp, orders by albedo, cumulus riding on the silk)",
  "looks": [
+  {
+   "time": "2026-11-26T02:59:53.746Z",
+   "file": "20261126025953746-note-u2-3150.jpg",
+   "source": "../work/r25/t/u2-3150.png",
+   "kind": "note",
+   "label": "dev u2 at 3150, preview draft, no solve: line (i) 16.119, bands green, storm reads as a flat dish, cells as boulders",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T02:59:53.074Z",
+   "file": "20261126025953074-note-pat1.jpg",
+   "source": "../work/r25/lab2/pat1.png",
+   "kind": "note",
+   "label": "lab pattern study of the curl warp seen from above (numpy, not the film's shader): marbled folds at reach 0.5, 0.2, 0.06",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T02:59:52.426Z",
+   "file": "20261126025952426-note-u3-3150.jpg",
+   "source": "../work/r25/t/u3-3150.png",
+   "kind": "note",
+   "label": "dev u3 at 3150, preview draft: taller towers read as a mountain range again, line (i) 21.328, dropped",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T02:28:06.923Z",
    "file": "20261126022806923-note-u2-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r23/t/q4-3150.png",
    "kind": "note",
    "label": "3150 preview draft, state q4: taller tops with plateaus. Eroded rock, wrong; the cast shadows darken the lower left by the Sun alone",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:46:36.273Z",
-   "file": "20261125234636273-note-q3-3150.jpg",
-   "source": "../work/r23/t/q3-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state q3: waves 0.12 units and a flatter spectrum. Finer streaks along the streamlines, still rock",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:46:35.588Z",
-   "file": "20261125234635588-note-q1-3150.jpg",
-   "source": "../work/r23/t/q1-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state q1: uncut unrest gates the billows, hue law, no solve yet. Lumps of 100 px and more, reads as terrain",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:28:30.330Z",
-   "file": "20261125232830330-note-n-3150.jpg",
-   "source": "../work/r23/t/n-3150.png",
-   "kind": "note",
-   "label": "3150 draft state n: billows gated by the guide's own unrest (far field calm, streaks), lanes take the matter's hue, solve by range; low band 4.801 (main 3.539), plain 14.7584, bands 0.93 0.92 0.87 0.86 (under 1 px 1.19), 146.8 s; soft glows of the solve in the lower left, lower right 30 against 8",
    "stop": "jupiter"
   }
  ]
