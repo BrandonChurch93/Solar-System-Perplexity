@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T00:52:06.657Z",
+ "pushed": "2026-11-26T01:21:56.454Z",
  "head": "5d74180adda79728a95af3ea14ca1fe28a7bb69f",
- "note": "speck traced to hidden green paint in L0 under L2 and cured in 17 blocks (drafts 2684, 2686); dot traced to L2's rim under C2, cure next",
+ "note": "01:22 the row at 2708: the pair 2708 and 2716 of the name; the dot cures that did not hold",
  "looks": [
+  {
+   "time": "2026-11-26T01:21:55.448Z",
+   "file": "20261126012155448-note-paint7.jpg",
+   "source": "../../../../tmp/paint7.png",
+   "kind": "note",
+   "label": "paint test: L2 under C2, rim magenta, rest green, feather blue at 2681, 2678, 2476",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T01:21:54.684Z",
+   "file": "20261126012154684-note-rim6.jpg",
+   "source": "../../../../tmp/rim6.png",
+   "kind": "note",
+   "label": "dot cure v3 (colour of the parent's rim), NOT kept: dot gone at 2476 and 2477, bright dash at 2681 and 2678",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T01:21:53.677Z",
+   "file": "20261126012153677-note-r1-2708-2716.jpg",
+   "source": "../../../../tmp/r1-2708-2716.png",
+   "kind": "note",
+   "label": "name 21b55bc5, draft, frames 2708 and 2716 at the place of the pattern row (x 250 to 700, y 120 to 470), 2 times: the pair the reader's row 2708 compares",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T00:51:42.879Z",
    "file": "20261126005142879-note-speckfix.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/small3b.png",
    "kind": "note",
    "label": "2686 speck crop: beauty, no grain, ungraded, layers: it is there before grade and grain",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T00:51:39.890Z",
-   "file": "20261126005139890-note-small3.jpg",
-   "source": "../../../../tmp/small3.png",
-   "kind": "note",
-   "label": "name 21b55bc5 draft: the speck at 2686, 2684 and the dot at 2476, crops enlarged",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T23:57:38.912Z",
-   "file": "20261125235738912-note-p19-2686-m0.jpg",
-   "source": "../../../../tmp/p19-2686-m0.jpg",
-   "kind": "note",
-   "label": "2686 foot at 1 to 1: the name | trial 19 plates (no net, no hair; soft blobs, flat chute at right: still wrong)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T23:57:38.364Z",
-   "file": "20261125235738364-note-p19-2684-m0.jpg",
-   "source": "../../../../tmp/p19-2684-m0.jpg",
-   "kind": "note",
-   "label": "2684 foot at 1 to 1: the name (tiles of the net) | trial 19 plates (no net; SOFT: still wrong)",
    "stop": "mars"
   }
  ]
