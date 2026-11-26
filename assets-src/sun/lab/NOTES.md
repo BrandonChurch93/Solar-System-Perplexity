@@ -2781,7 +2781,7 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   mostly a cell that is cut or joined between two captures (the label changes, not the light).
   The law of MAIL 1218 (no cell over a tenth) is still not met: 4.5 percent.
   Chain goes on: film, rise, five hashes, final 60, two finals.
-- 20:12 UTC. THE CHAIN OF h48 WAS STOPPED BY ME at 19:59 after B DONE (twin, final 90, flicker rows and the
+- 20:08 UTC. THE CHAIN OF h48 WAS STOPPED BY ME at 19:59 after B DONE (twin, final 90, flicker rows and the
   draft film v/film-h48.mp4 are in; rise, five hashes, final 60, two finals are NOT). Why: the whole frame at a
   quarter size beside the approved (v/whole-h48f.jpg) still reads as pale stones in a brown net, and I found by
   measure what the eye sees, so a name on h48 would cost the Builder a reading for a state I already know how to
@@ -2814,3 +2814,13 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   MAIL 1540 (20:03): main is 262b9a68, merge it. Tried 20:08: one conflict, src/stops/sun/place.json ("surface"
   3 against 3.0, the same value). Merge aborted, the file name sent to /root as the mail asks, nothing else.
   Until the answer I build on the old base (merge base d91c0f63).
+  MAIL 1541 (20:07) RULED: (1) do not resolve the conflict now, the lab goes on on its own base; (2) a state to
+  be named is built on the Sun's name 5ccff1674ccb3ed7fab80c6f251aee1e8d989d53 merged with main 262b9a68 (the
+  Builder sends the sha of that tree when the Sun's take is on main): take that tree's place.json whole and lay
+  my own changes on it by hand, field by field, never the other way round; (3) the naming mail lists every field
+  of place.json I change with its old and new value. So: NO NAME before that sha comes; until then states, with
+  low mails.
+  DISK: the fetch of main filled the disk (1.3 GB free, the harness refuses under 3). Deleted under out/work/sun/
+  lab: the frames of rise-h44, rise-h45 (their rows are in v/rise-h45.txt and above), old films, old mo- sets and
+  all trial pictures before t255. 3.5 GB free at 20:08. Watch it: a trial that ends with "No such file" for its
+  own picture means the harness refused to start.
