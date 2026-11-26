@@ -5,7 +5,7 @@ import { openCapture, renderPngFresh, type Session } from '../../../tools/lib/br
 import { Capture, padFrame } from '../../../tools/lib/render'
 
 // Stills of a list of frames into out/work/jupiter/frames/NAME.
-//   npx tsx assets-src/jupiter/deck/frames.ts --frames 2895,3150 --name NAME [--tier draft] [--rate 2]
+//   npx tsx assets-src/jupiter/deck/frames.ts --frames 2895,3150 --name NAME [--tier draft] [--rate 2] [--diag layers]
 // With --rate the numbers count capture frames (film frame times the rate) and the files are kNNNNNN.png.
 
 const cfg = loadConfig()
@@ -27,7 +27,7 @@ try {
     let count = 0
     const file = join(dir, (rate > 1 ? 'k' + String(frame).padStart(6, '0') : 'f' + padFrame(frame)) + '.png')
     if (rate > 1) {
-      const { png, samples } = await renderPngFresh(() => openCapture({ dist: DIST, format: capture.format, assets: 'full', diag: 'beauty', query: '&rate=' + rate }), held, frame, tier)
+      const { png, samples } = await renderPngFresh(() => openCapture({ dist: DIST, format: capture.format, assets: 'full', diag: String(a.diag ?? 'beauty'), query: '&rate=' + rate }), held, frame, tier)
       writeFileSync(file, png)
       count = samples
     } else count = Number((await capture.still(frame, tier, file)).record.extra?.samples ?? 0)
