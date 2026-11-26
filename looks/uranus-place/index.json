@@ -1,9 +1,47 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T01:52:33.546Z",
+ "pushed": "2026-11-26T02:16:04.888Z",
  "head": "766c925834b1afa49df5bf5e63c13f01ea6b4c03",
- "note": "control LS1: the step of the light table is the cause of the rise's red under the limb (1.37 to 0.85 from 4403) and the hold's match gets better (3.731); the table law goes on as its own commit on main a4944f12",
+ "note": "correction of my 01:52 note: with every row read the smooth table moves the rise's rows only inside their own wobble (4399 to 4403: RC mean 1.06 largest 1.37, control mean 0.94 largest 1.21, table law mean 1.04 largest 1.47; 4383 to 4393: 1.13 against 1.09); not a cure of the row, RC stays un-named",
  "looks": [
+  {
+   "time": "2026-11-26T02:16:01.539Z",
+   "file": "20261126021601539-note-pat-LM-8779.jpg",
+   "source": "../../../../tmp/x/pat-LM-8779.jpg",
+   "kind": "note",
+   "label": "rise from 4389 + 1/2 with the smooth table, my chain of the reader: red stays in the far ground under the limb (back read 1.38)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T02:15:58.267Z",
+   "file": "20261126021558267-note-pair-4436.jpg",
+   "source": "../../../../tmp/n66/pair-4436.png",
+   "kind": "note",
+   "label": "limb at 4436, draft, 2x: left RC 6ef232ea, right the smooth table (trial, not committed)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T02:15:55.827Z",
+   "file": "20261126021555827-note-pair-4137.jpg",
+   "source": "../../../../tmp/n66/pair-4137.png",
+   "kind": "note",
+   "label": "limb at 4137, draft, 2x: left RC 6ef232ea, right the table made smooth across view cosine 0 to 0.157 (trial, not committed)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T02:15:49.346Z",
+   "file": "20261126021549346-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-26T01:52:29.381Z",
    "file": "20261126015229381-note-limb-4035-ls1-4x.jpg",
@@ -59,20 +97,6 @@
    "kind": "note",
    "label": "final 4186 limb band: main, B1 2583f129, RC 6ef232ea (top to bottom)",
    "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T00:41:43.135Z",
-   "file": "20261126004143135-job-frame-04035.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
-   "stop": "uranus",
-   "segment": "uranus.hold",
-   "frame": 4035,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   },
   {
    "time": "2026-11-26T00:30:40.693Z",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n61/band-B1-8798.jpg",
    "kind": "note",
    "label": "uranus B1 4407 beside 4399 carried by the plan's own ground: reading green but for the band under the limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T22:34:38.382Z",
-   "file": "20261125223438382-note-rim1-limb-4035.jpg",
-   "source": "../../../../tmp/n61/rim1-limb-4035.jpg",
-   "kind": "note",
-   "label": "uranus 4035 final, four limb crops: approved, main, rim as light of the air (trial), difference times 8",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T22:18:11.794Z",
-   "file": "20261125221811794-note-pair-HA.jpg",
-   "source": "../../../../tmp/n61/pair-HA.jpg",
-   "kind": "note",
-   "label": "uranus control HA: 4407 beside 4399 carried by the ground",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T22:18:10.783Z",
-   "file": "20261125221810783-note-truth2-HA-8798.jpg",
-   "source": "../../../../tmp/n61/truth2-HA-8798.jpg",
-   "kind": "note",
-   "label": "uranus 4399 to 4407 control HA: reader carry against ground carry",
    "stop": "uranus"
   }
  ]
