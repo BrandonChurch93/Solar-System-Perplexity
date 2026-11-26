@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T13:53:20.296Z",
+ "pushed": "2026-11-26T14:22:08.139Z",
  "head": "902785257fd7487a517634318aab515a0c1cffef",
- "note": "eased air share: whole rise read, 0 of 197 rows over the ground pop limit to come, pattern largest 0.73; dive and finals running",
+ "note": "cubic ease read on the whole dive: rows 1327 to 1331 rise over the limit; a narrower ease is next, the base dive is drawing",
  "looks": [
+  {
+   "time": "2026-11-26T14:22:06.906Z",
+   "file": "20261126142206906-note-S1-1557-s.jpg",
+   "source": "../../../../tmp/v/sh/S1-1557-s.jpg",
+   "kind": "note",
+   "label": "Rise 1557, 1560, 1563, 1566: the name 35edb711 above, the cubic ease of the air share (90278525, not named) below; the blue white patch under the limb is a little weaker below",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T13:53:18.786Z",
    "file": "20261126135318786-note-S1-1549-b.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/sh/Q2-whole-a.jpg",
    "kind": "note",
    "label": "Venus rise, trial Q2 (not named): whole frames 1542 to 1560, the named state over the trial; the picture of the far deck stands as a white patch on the golden globe from 1554 on; dropped",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:36:34.544Z",
-   "file": "20261126123634544-note-r1-mid.jpg",
-   "source": "../../../../tmp/v/sh/r1-mid.png",
-   "kind": "note",
-   "label": "trial, not named: the globe side at the film's camera of 1540, still: with the ground (top), without the ground and with the picture of the far deck after one fitting run (middle), their difference times 3 (bottom); middle third of the frame",
    "stop": "venus"
   }
  ]
