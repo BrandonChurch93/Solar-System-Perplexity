@@ -1831,3 +1831,125 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   a column) instead of fading them to the mean; (2) the top darker and the fans on the flank that faces the eye
   (curve 0.099 over); (3) a strip of 2 s at 1920 on a box, every frame, to see the travel; (4) the straight edge
   in the big cell (a neighbour's dome cutting through); then points 4 and 5 of MAIL 1397.
+- 04:54 UTC MAIL to /root (high): state h39 with the bundle (e285903a..0c3c1c5d) and nine pictures; no name for
+  the third cut. 04:46 MAIL 1406 (pre-flight of names for the third cut; none from me). 04:39 MAIL 1405: main is
+  23f1089b3cde1279798527c697ef5efbdff9eebf.
+- 04:55 UTC. The number of threads follows the picture: weave[13] = least pixels to a column (the count is the
+  cell's own count, halved until a column is that wide; base count 3 to 6 times a power of two, so the committed
+  h39 config gives a slightly different picture from now on: 7 threads became 8, and so on), weave[14] = a
+  thread's heat at the crown as a share of its heat from 0.7 of the way outward (the threads bunch to a brighter
+  edge). t99 (4 px, 1.0), t100 (3 px, 0.6, thinner, floor 0.22) MEASURED: finest band 1.95, 2.17 (h39 1.43; RED,
+  wrong way), 1 to 2 px 1.08, 1.10, low64 7.97, 7.46, penumbra medians 0.55 0.50 0.49 and 0.56 0.53 0.52, umbra
+  15234, 13385 px. SEEN on rows 480 to 1080: every cell is ribbed now, to the limb; t100 is darker and nearer to
+  the approved's tone, but the ribs are thin, hard and many: scratches, zebra shells. The approved grows softer
+  with distance. Trials t101, t102: 6 and 8 px to a column, fading from 7 and 10 px.
+- 05:03 UTC MAIL 1412 from the Builder (high), verbatim core: "Your state h39, read by me at 1 to 1 (one-h39f.jpg)
+  and whole (lab-90-h39f.jpg). Not a name, as you say yourself. What my eye names: flat pale caps with ribs, like
+  shells, every cell alike, each a separate body with a firm outline; the approved above it shows cushions with
+  dark mottled tops, the light gathered in short fans on the flank that faces the eye, and wide lanes with depth
+  between them. So the ribs are right as matter but wrong in place and in light: in the approved they do not run
+  from the crown over the whole top, they sit on the shoulder and the flank. Order of work, changed in one place
+  only: your point 2 first (tops darker and uneven, the light in fans on the facing flank, the curve inside 0.05,
+  the lanes back to about 7 px), then your point 1 (threads at every distance, never under about 3 px a column),
+  then the flicker by cause (0.284 and 70.0 percent are red and went the wrong way: a disc that sees threads pass
+  must still read steady, so the threads' travel has to be slow against their width or their heat has to change
+  smoothly, found by measure and not by slowing everything), then your 2 s strip at 1920, then points 4 and 5,
+  births and splits. The sky part 0.174 over the standing ground: find the cause before the next state, it moved
+  with no change of yours in the sky. The clock: this ground is out of the third cut; for the fourth cut a state
+  has to pass line (iii) of MAIL 1402 by my eye before 11:30 so that handover, bake, reader rows and the master
+  run fit before 13:30. You do not merge main: when a state passes I cut your files onto main's code myself. Your
+  bundle h39 was not unpacked: it stands on e285903a, which I do not hold. When a state is a candidate, send one
+  bundle that holds every commit from 0c3c1c5d's first parent chain that I lack, or simply the whole branch from
+  the last commit of yours that is on origin. Send the next state when point 2 reads at 1 to 1, with the same
+  pictures and numbers as this mail; no answer needed before that."
+- 05:04 UTC. t101, t102 (6 and 8 px to a column): finest 1.88, 1.81; dip share 0.194, 0.103. Not looked at
+  further: MAIL 1412 moves the threads off the top first.
+- 05:05 UTC. `git fetch origin` and `git push origin agent/sun-lab` work again (MEASURED: e285903a..0c3c1c5d
+  pushed, no force). Told /root in one low line. I do not merge main (MAIL 1412).
+- 05:06 UTC. THE SKY PART'S CAUSE, MEASURED on the finals of frame 90 (h39 0.174 over the standing ground): 0.095
+  of it lies in the three rows just above the mask's limb (0.6 percent of the sky's pixels): there the lab's
+  picture is 17 levels lighter than the standing's, because the lab's ground stands 1 to 3 px higher at the limb
+  and its last rows are 245 to 250 where the standing's are about 215 (the approved is 110 to 150 there, its limb
+  lies lower). The other 0.08 lies in rows 3 to 200 above the limb, where the lab's picture is 0.06 to 2.2 levels
+  lighter (the gas and haze over the limb take light from the ground under them). h39 against h37 (0.04): rows 3
+  to 100 above the limb 0.15 to 0.7 levels lighter, mostly at cols 0 to 480; the 3 rows at the limb only 0.004.
+  So it moved with the ground's last rows before the limb getting lighter (the refit curve and heat.gold), not
+  with anything in the sky's own code. Draft against final adds 0.62 for every ground (the corona's samples).
+  Cure to try: heat.graze[0] 1.3 toward 1.1 (the ground at a grazing look less hot), and the dome's height
+  toward the limb.
+- 05:07 UTC. For MAIL 1412 point 2: weave[14] to [16] (a thread's heat at the crown as a share, and between which
+  shares of the way to the border it comes to full), weave[17], [18] (fans: the heat of the threads in the dark
+  sectors as a share, and how much of the round is dark; the sectors are the three lobes of the cell moved by
+  the swells). The blob is off (floor 1.0) or weak, patches on the top 0.3, lane[4] 0.004. Trials t103, t104.
+- 05:11 UTC. t103, t104 (threads only from the shoulder outward, in fans, blob off, patches 0.3, lane 0.004): at
+  1 to 1 still flat plates with a firm outline, the fans all round each plate like a daisy; curve 0.63 to 0.70
+  flat to 0.7 of the way and then a cliff; lane 4.6 to 4.8 px; under 1 px 2.2 to 2.5 times the approved's. FAILED.
+- 05:17 UTC. weave[19], [20] (a thread on the flank keeps its own heat where the cushion has cooled). t105 (h37's
+  blob, 12 threads, wider) and t106 (the same, dome.height 0.45): softer, still plates. heat.graze[0] 1.15
+  brings the draft's sky part from 8.6004 to 8.542 (standing 8.4355).
+- 05:18 UTC. WHAT THE APPROVED SHOWS AT 2 TO 1 (v/ap2x.jpg, rows 820 to 1080), written down so I do not lose it:
+  cushions pressed together, their tops dark amber and mottled; the light is in fans of short streaks that run
+  down the flank into a dark pit, and it is always the flank on the far side of the pit, the one that faces the
+  eye; the near cell shows its dark top and hides its own far flank. Between two cells there is often only a
+  soft crease; the dark is in the pits where three meet. Many hot points of 1 to 3 px on flanks and creases.
+  WHY MINE ARE PLATES, MEASURED in the code: the body is (1 - e^2)^2 times dome.height times the radius, a bell:
+  its steepest slope is 1.54 times 0.32 = 0.49 (26 degrees) at 0.58 of the way and it is flat at the border.
+  The eye looks down at about 36 degrees there, so no flank is ever hidden and every lane is seen all round:
+  that is the firm outline and the plate. A flank that faces the eye can only stand out without any rule that
+  knows the eye if the far flank is truly hidden, so the body has to be a cushion that is steep at its border.
+  Trials t107 (dome.base[4], [5] = 2.2, 1.5: (1 - e^2.2)^0.667, height 0.36) and t108 ((1 - e^2.2), 0.45), with
+  dark tops (navel 0.45 to 0.65 of the way, blob off) and hot threads on the flank only.
+- 05:23 UTC. t107, t108 (cushion profile at heights 0.36 and 0.45, dark tops, hot threads on the flank): still
+  plates, now with a light rim all round (a bevel, MAIL 1368 forbids it). The far flank is hidden only where the
+  slope is over the eye's 36 to 45 degrees, at these heights the last 7 percent of the way. FAILED.
+- 05:28 UTC. t109 (dome.height 0.7, body (1 - e^2.2)^0.667) and t110 (height 1.0, (1 - e^2.2)). t109 is the
+  first picture in which the cells are bodies: cushions that stand before the ones behind them, the far flank
+  hidden, the near flank wide and carrying the threads, so the light sits on the flank that faces the eye with
+  no rule that knows the eye. t110 is haystacks, too pointed: FAILED. Draft numbers of t109: sky part 8.5101
+  (standing 8.4355, h39 8.6004), strip 41.72 (h39 about 52), low64 11.54 (worse, the tops are dark), curve
+  [0.604 0.59 0.597 0.616 0.625 0.619 0.614 0.595 0.565 0.493 0.37], lane 4.85 px, under 1 px 1.92.
+  Still wrong in t109: the threads are short white dabs, the lanes are thin cracks, the tops too even.
+- 05:34 UTC. t111 (height 0.7, threads long: 1.2 rows a unit run, from 0.45 of the way outward) and t112 (height
+  0.55, body exponent 1/1.3): t111 reads as cushions with dark mottled tops and threads running down the near
+  flank; t112 is flatter and falls back toward plates. Height 0.7 or more it is.
+- 05:39 UTC. t113 (lane[4] 0.009, seam 0.12, tone [0.8, 0.4]) and t114 (lane 0.013, height 0.6): the lower flank
+  now darkens softly into the crease, lanes with depth; lane 5.6 px, curve [0.597 0.605 0.618 0.621 0.626 0.624
+  0.602 0.571 0.523 0.436 0.328]. MEASURED palette by level (rows 800 to 1080): the same as the approved's within
+  0.02 at every tenth of red, so what differs is where the light lies, not its colour: bands 4 to 8 px 0.77,
+  8 to 16 px 0.74, under 1 px 1.72.
+- 05:44 UTC. weave[21] (the flank's heat in the dark sectors as a share: the fans are broad lit sectors, the
+  threads a finer comb on top of them). t115 (weave[21] 0.45, threads weak 0.65) and t116 (the same, height 0.8,
+  dome.base[7] 0.5: the bodies stand lower where three meet, pits): bands 4 to 8 px 0.92, 8 to 16 px 0.92,
+  under 1 px 1.46 to 1.51; curve of t116 [0.668 0.669 0.67 0.667 0.662 0.648 0.623 0.582 0.53 0.437 0.346]
+  (largest gap 0.097 at 0.8 of the way), lane 5.6 px. To my eye the form is now the approved's (round bodies
+  pressed together, pits) but with weak threads they read as boulders: the fibre is what makes it gas. t117,
+  t118: stronger and finer threads on the lit flank.
+- 05:50 UTC. t117, t118 (threads stronger and finer on the lit flank, height 0.75, pits 0.3): mushroom caps with
+  fine fibre; the light too even over the body. weave[22] added (the light begins further up the top in a lit
+  sector).
+- 05:55 UTC. t119 (navel [0.4, 0.7]) and t120 (navel [0.3, 0.8], crest 1.4): the tops dark and mottled, the light
+  in fans on the flank that faces the eye, the threads running down into the crease. t120 draft: curve [0.646
+  0.652 0.65 0.646 0.642 0.625 0.599 0.57 0.523 0.437 0.362] (largest gap 0.09 at 0.8 of the way: the lit flank
+  is where the approved's cell is already falling), lane 5.6 px, bands [1.64 1.0 0.90 0.92 0.96 0.96 0.96],
+  low64 9.46, sky part 8.5858 (standing 8.4355), strip 43.4. STATE h40 = t120; chain started 05:55.
+  Read of t120 by me: the form is the approved's kind for the first time (bodies, depth, a facing flank). Still
+  wrong: paler and more even than the approved (its fans are white gold against dark brown, mine tan on tan),
+  the bodies read as caps of one make, small cells have no threads, no hot points.
+- 06:14 UTC. STATE h40 (= t120 after its own refit), MEASURED. Final frame 90: plain 30.5521, low64 9.4256 (h39
+  7.1483, main 10.9492), bands [1.41 1.02 0.92 0.94 0.98 0.98 0.98], parts ground 51.8701 strip 43.6791 (h39
+  52.07) sky 9.2068 (h39 9.2196, standing 9.0457), curve [0.637 0.633 0.629 0.632 0.631 0.623 0.598 0.561 0.515
+  0.434 0.358] (largest gap 0.082 at 0.8 of the way, RED; 0.065 at 0.7 and 0.9), lane 5.62 px, quartiles 3.6
+  and 7.6 (approved 7.08, RED), dip share 0.195 (approved 0.341), over 0.95: 0.022 at g/r 0.871, penumbra medians
+  0.40 0.35 0.32 (approved 0.62 0.47 0.49: darker than h39's), umbra 23616 px (approved 10524, worse).
+  MAIL 1402 lines at 90: low band 16 on the cut 22.0579 (h39 19.5061, h37 20.954, standing 23.4775), bands
+  1.073 0.963 0.965 0.980, under 1 px 1.320. Frame 60 draft: low band 16 24.2083 (h39 21.5176), sky part plain
+  11.1763 (main's 11.5380), bands green.
+  FLICKER (largest, share over a tenth): near box disc 26: 0.158, 14.3 percent of 7 cells (h39 0.284, 70.0);
+  band disc 26: 0.216, 27.8 percent of 54 (h39 0.284, 43.5); ellipse 90 by 45: 0.075, 0; ellipse 70 by 35:
+  0.087, 0 (h39 0.116, 9.7). Not by slowing anything: the threads are now on the flank and the disc sits on a
+  top that is dark and even.
+  The sky part: heat.graze[0] 1.15 gave 0.013 only. The rest is the three rows at the limb (the lab's ground
+  stands 1 to 3 px higher than the standing ground's there) and the light of the gas over it: still open.
+  My read at 1 to 1 (v/c-h40f.jpg): bodies with depth, dark mottled tops, the light in fans on the facing flank,
+  creases with depth. Wrong: caps of one make (mushrooms, shells), paler and more even than the approved, no
+  white gold against dark brown, small cells bare, no hot points; at 960 the ground reads as petals.

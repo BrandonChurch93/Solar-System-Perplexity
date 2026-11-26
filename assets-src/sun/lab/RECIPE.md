@@ -88,6 +88,22 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   the fibres), so new ones rise at the crown and old ones go down at the seam. They are in the heat only: the
   mesh carries the tubes, not threads of 2 to 6 px. `labTongue` (the penumbra's strand) takes its lean and bend as
   arguments now (spot.lean, spot.bend).
+  weave[13] the least pixels a column of threads may have (their number round the cell is 3 to 6 times a power of
+  two and halves until a column has that many pixels), [14] a thread's heat at the crown as a share, [15] and [16]
+  between which shares of the way to the border the threads (and the fans) come to their full heat, [17] the heat
+  of the threads in the dark sectors as a share, [18] how much of the round is dark (the sectors are the lobes of
+  cushion.blob[6] moved by the swells), [19] the heat of a thread's crest on the flank as a share of the top's
+  tone and [20] how far it keeps that heat where the cushion round it has cooled, [21] the heat of the whole flank
+  in the dark sectors as a share (the fans are broad lit sectors and the threads a comb on them), [22] how much
+  further up the top the light begins in a lit sector.
+  The body of a cell: dome.height times its radius, times (1 - e^base[4])^(1/base[5]) with e the share of the way
+  to the border. With height 0.32 and base[5] 0.5 it was a bell with a slope of 26 degrees at most and none at
+  the border, so at the eye's 36 to 45 degrees over the near ground no flank was ever hidden and a cell was a
+  plate; with height 0.7 to 0.8 and base[4], [5] = 2.2, 1.5 it is a cushion that is steep at its border and
+  hides its own far flank, so the flank that faces the eye shows wide and the lane behind a cell lies in its
+  depth. base[7] lowers the body where three cells meet (within base[8] of the corner): pits.
+  heat.graze[0] 1.3 to 1.15: the ground at a grazing look, at the limb, less hot (the sky part's rows above the
+  limb take their light from it).
   heat.gold (absent: the ramp's own tone.white): the colour of the lab ground's ramp at its top. The ramp of
   src/stops/sun/convect.json is not edited; its top is whiter than any pixel of the approved (MEASURED: the
   approved's pixels over 0.95 have g/r 0.85 and b/r 0.585).

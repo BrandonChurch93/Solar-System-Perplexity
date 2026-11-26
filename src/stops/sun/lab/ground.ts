@@ -855,12 +855,19 @@ void main() {
 #if ${W ? 1 : 0}
   // the top is made of threads: ranks of them round the crown in the cell's own frame, each of its own length and
   // heat, twice as many from one doubling of the radius to the next; they ride outward with the cell's matter,
-  // thin toward the border and end there, each at its own place, sooner where three cells meet
+  // thin toward the border and end there, each at its own place, sooner where three cells meet; there are never more
+  // of them than the picture can show, so a far cell has few broad ones. They are hottest on the shoulder and
+  // the flank and gathered into fans: in some sectors round the cell they are hot, in the others nearly dark;
+  // a thread on the flank keeps its own heat where the cushion round it has cooled
   float wN = max(floor(${(W?.[0] ?? 9).toFixed(2)} * qSize + 0.5), 3.0);
-  float wL = log2(max(tr / ${(W?.[1] ?? 0.2).toFixed(3)}, 1.0));
-  float wO = min(floor(wL), 4.0);
+  float wO0 = floor(log2(wN / 3.0));
+  float wB = floor(wN / exp2(wO0) + 0.5);
+  float wLr = wO0 + log2(max(tr / ${(W?.[1] ?? 0.2).toFixed(3)}, 1.0));
+  float wLp = log2(max(6.2831853 / (${(W?.[13] ?? 0.001).toFixed(3)} * max(wa, 1e-6) * wB), 1e-3));
+  float wL = clamp(min(wLr, wLp), 0.0, wO0 + 4.0);
+  float wO = floor(wL);
   float wM = smoothstep(0.25, 0.75, wL - wO);
-  float wA = wN * exp2(wO);
+  float wA = wB * exp2(wO);
   float wTurn = (turn - 0.5) * 6.2831853;
   float wRun = run * qSize;
   float wFlow = flow * qSize * ${(W?.[2] ?? 3).toFixed(2)};
@@ -870,7 +877,12 @@ void main() {
   float wCa = max(labThread(wTurn, wRun, wA, ${(W?.[2] ?? 3).toFixed(2)}, 3.0 + seed, wFlow, wLean, ${(W?.[8] ?? 0.2).toFixed(2)}).x, 0.9 * labThread(wTurn, wRun, floor(wA * 0.62 + 0.5), ${((W?.[2] ?? 3) * 0.75).toFixed(2)}, 11.0 + seed, wFlow * 0.75, wLean, ${(W?.[8] ?? 0.2).toFixed(2)}).x);
   float wCb = max(labThread(wTurn, wRun, 2.0 * wA, ${(W?.[2] ?? 3).toFixed(2)}, 5.0 + seed, wFlow, wLean, ${(W?.[8] ?? 0.2).toFixed(2)}).x, 0.9 * labThread(wTurn, wRun, floor(wA * 1.24 + 0.5), ${((W?.[2] ?? 3) * 0.75).toFixed(2)}, 13.0 + seed, wFlow * 0.75, wLean, ${(W?.[8] ?? 0.2).toFixed(2)}).x);
   float wC = mix(mix(${(W?.[9] ?? 0.4).toFixed(2)}, wCa, wKa), mix(${(W?.[9] ?? 0.4).toFixed(2)}, wCb, wKb), wM);
-  cell *= mix(${(W?.[7] ?? 0.45).toFixed(3)}, 1.0, wC) / mix(${(W?.[7] ?? 0.45).toFixed(3)}, 1.0, ${(W?.[9] ?? 0.4).toFixed(2)});
+  float wFan = smoothstep(${((W?.[18] ?? 0.5) - 0.15).toFixed(2)}, ${((W?.[18] ?? 0.5) + 0.15).toFixed(2)}, qLobe + 0.3 * (qWell - 0.5));
+  float wOut = smoothstep(${(W?.[15] ?? 0.15).toFixed(2)}, ${(W?.[16] ?? 0.7).toFixed(2)}, plan + ${(W?.[22] ?? 0).toFixed(2)} * (wFan - 0.5));
+  float wT = wC * mix(${(W?.[14] ?? 1).toFixed(2)}, 1.0, wOut) * mix(${(W?.[17] ?? 1).toFixed(2)}, 1.0, wFan);
+  cell *= mix(1.0, mix(${(W?.[21] ?? 1).toFixed(2)}, 1.0, wFan), wOut);
+  cell *= mix(${(W?.[7] ?? 0.45).toFixed(3)}, 1.0, wT) / mix(${(W?.[7] ?? 0.45).toFixed(3)}, 1.0, ${(W?.[9] ?? 0.4).toFixed(2)});
+  cell = mix(cell, (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide) * ${(W?.[19] ?? 1).toFixed(2)}, ${(W?.[20] ?? 0).toFixed(2)} * wT * wOut);
 #endif
   float qRise = ${(Q?.petal?.[6] ?? 0).toFixed(3)} * smoothstep(${(Q?.petal?.[7] ?? 0.3).toFixed(2)}, 1.0, plan);
   float qPa = vnp(vec2(turn * per.y + floor(seed * 19.0), (run - flow) * qSize * ${(Q?.petal?.[1] ?? 3).toFixed(2)} + seed * 5.0), per.y);
