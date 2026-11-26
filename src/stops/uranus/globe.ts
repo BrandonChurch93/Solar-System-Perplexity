@@ -145,17 +145,10 @@ float topsSeen(vec3 p, vec3 n) {
   }
   return best;
 }
-vec3 topsHeld(float share, float sun, float seen, vec3 air) {
-  vec3 held = exp(-uTopLane * (1.0 / max(seen, 1e-3) - 1.0));
-  return uTopWhite * (share * smoothstep(uTops.x, uTops.y, sun)) * ((1.0 - held) * air);
-}
-vec3 topsOver(float share, float sun, float seen, float mu, vec3 air) {
+vec3 topsLight(float share, float sun, float seen, float mu, vec3 air) {
   vec3 held = exp(-uTopLane * (1.0 / max(seen, 1e-3) - 1.0));
   vec3 now = exp(-uTopLane * (1.0 / max(mu, 1e-3) - 1.0));
-  return uTopWhite * (share * smoothstep(uTops.x, uTops.y, sun)) * (max(now - held, vec3(0.0)) * (1.0 - air));
-}
-vec3 topsLight(float share, float sun, float seen, float mu, vec3 air) {
-  return topsHeld(share, sun, seen, air) + topsOver(share, sun, seen, mu, air);
+  return uTopWhite * (share * smoothstep(uTops.x, uTops.y, sun)) * ((1.0 - held) * air + max(now - held, vec3(0.0)) * (1.0 - air));
 }`
 
 const FRAG = /* glsl */ `

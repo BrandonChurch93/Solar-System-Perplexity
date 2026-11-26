@@ -310,9 +310,7 @@ ${MAP_LEVELS}
   float fl = smoothstep(0.08, 0.3, c0) * (1.0 - smoothstep(0.12, 0.35, fw * 4.0)) * smoothstep(0.5, 0.85, soft(g * 4.0 + 5.0));
   float shade = 1.0 + wD * (uDetail.x * 2.0 * c0 + uDetail.y * clamp((c0 - c1) * 5.0, -1.0, 1.0) + uDetail.z * fl);
   vec3 calmS = inverseFilmic(textureLod(uPatch0, mg * uPatchScale[0] + 0.5, uRimLevel.y).rgb) / field.rgb;
-  float topShare = topsAt(pg, px, py);
-  float topSeen = topsSeen(p, n);
-  vec3 col = (mix(aS * min(plain, vec3(1.0)) + calmS * max(vec3(1.0) - plain, vec3(0.0)), aT, wT) * lNow + topsHeld(topShare, dot(n, uTopSun), topSeen, bared(mu, plain).rgb)) * max(shade, 0.3);
+  vec3 col = (mix(aS * min(plain, vec3(1.0)) + calmS * max(vec3(1.0) - plain, vec3(0.0)), aT, wT) * lNow + topsLight(topsAt(pg, px, py), dot(n, uTopSun), topsSeen(p, n), mu, bared(mu, plain).rgb)) * max(shade, 0.3);
   vec3 oc = uCamL - uCentre;
   float rs = uRadius + uCloudA.x;
   float bq = dot(oc, dv);
@@ -329,7 +327,7 @@ ${MAP_LEVELS}
   vec3 sunlitQ = field.rgb * ownLight(n, muQ);
   vec3 plainQ = plainOver(n, muQ);
   vec3 lVeil = sunlitQ * bared(muQ, plainQ).rgb + airGlow(sunlitQ, muQ, psi, plainQ);
-  col = col * (1.0 - veilA) + lVeil * uCloudTint * dq + topsOver(topShare, dot(n, uTopSun), topSeen, mu, bared(mu, plain).rgb) * (max(shade, 0.3) * (1.0 - uCloudB.y * under));
+  col = col * (1.0 - veilA) + lVeil * uCloudTint * dq;
   float cloudT = diagTexels(gq * uCloudA.y * vec2(uCloudD.y, 1.0) * uCloudWidth);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
