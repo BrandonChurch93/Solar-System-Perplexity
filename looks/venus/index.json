@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T12:57:13.582Z",
- "head": "ee476f53034fe0630ad11ef220566696acb96a89",
- "note": "Venus trial Q2: the far deck as a picture cleared slowly by height is a white patch from above; dropped, the name stays 35edb711",
+ "pushed": "2026-11-26T13:22:56.630Z",
+ "head": "902785257fd7487a517634318aab515a0c1cffef",
+ "note": "trial: air share of the tones eased, ground pop at the rise handover 1.92 to 0.97 on a slice; proofs running",
  "looks": [
+  {
+   "time": "2026-11-26T13:22:55.909Z",
+   "file": "20261126132255909-note-cT1-ll-s.jpg",
+   "source": "../../../../tmp/v/sh/cT1-ll-s.jpg",
+   "kind": "note",
+   "label": "Rise 1541, 1544, 1547, 1550, lower left of the frame (x 0 to 900, y 400 to 1080): the name above, the eased air share below; the dark near ground pales later and without the kink at the handover",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T13:22:55.142Z",
+   "file": "20261126132255142-note-cT1-whole-a-s.jpg",
+   "source": "../../../../tmp/v/sh/cT1-whole-a-s.jpg",
+   "kind": "note",
+   "label": "Rise 1539, 1541, 1543 (upper pair of rows) and 1545, 1547, 1549 (lower pair): the name 35edb711 above, the trial with the eased air share of the tones below; draft slice, not named",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T12:57:12.985Z",
    "file": "20261126125712985-note-Q2-m-1.jpg",
@@ -51,28 +67,6 @@
    "kind": "note",
    "label": "trial Q1, not named (the far deck as a picture in place of the plates at the height of T, share by height 1.5 to 12): the named state over the trial, x 1100 to 1700, y 150 to 450, 1546 to 1551: the named state goes from the pale deck to the plates' mottled tan field with a blue white patch within 1546 to 1549; the trial stays pale. Reader: 24 of 37 rows over, largest 1.21 at 1550 + 1/2 (named 10 of 37, 0.72)",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:36:32.625Z",
-   "file": "20261126123632625-note-Q1-rm-0.jpg",
-   "source": "../../../../tmp/v/sh/Q1-rm-0.jpg",
-   "kind": "note",
-   "label": "trial Q1, not named (the far deck as a picture in place of the plates at the height of T, share by height 1.5 to 12): the named state over the trial, x 1100 to 1700, y 150 to 450, 1540 to 1545: equal to the eye, the far band pale and smooth in both. Reader: 24 of 37 rows over, largest 1.21 at 1550 + 1/2 (named 10 of 37, 0.72)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:19:50.968Z",
-   "file": "20261126121950968-frame-rise-1540-br1.jpg",
-   "source": "out/work/venus/place/fit/rise-1540-br1.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1540, draft tier, nograin/side=orbit/t=51.333333333333336 view",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1540,
-   "tier": "draft",
-   "format": "uhd",
-   "diag": "nograin/side=orbit/t=51.333333333333336",
-   "engine": "d3654c5e8dff3fa6"
   }
  ]
 }
