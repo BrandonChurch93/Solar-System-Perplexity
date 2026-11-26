@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T09:56:02.270Z",
+ "pushed": "2026-11-26T10:23:09.619Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "The contract that a law of a stop may read the masks of the relief is on agent/engine-lawmasks; the whole suite runs on it. Mars 2468 at the review tier with the outline trial: no step at the band's far edge, the band as dark as before",
+ "note": "the contract (a law may read the masks) named; the Mars builder's weigh drawn under my matte in scratch: nothing against it",
  "looks": [
+  {
+   "time": "2026-11-26T10:23:04.761Z",
+   "file": "20261126102304761-note-band-2472.jpg",
+   "source": "../../../../tmp/weigh/band-2472.png",
+   "kind": "note",
+   "label": "Mars 2472 at draft four times, the band's far edge: the matte with one read above, with the four texel weigh below; to my eye the same"
+  },
+  {
+   "time": "2026-11-26T10:23:03.911Z",
+   "file": "20261126102303911-note-p2474.jpg",
+   "source": "../../../../tmp/weigh/p2474.png",
+   "kind": "note",
+   "label": "Mars 2474 at draft ten times: as it stands, the matte with one read, the matte with the four texel weigh; the weigh takes the top off one small lit patch, the rest reads the same"
+  },
+  {
+   "time": "2026-11-26T10:23:03.081Z",
+   "file": "20261126102303081-note-rim-2470-x9.jpg",
+   "source": "../../../../tmp/weigh/rim-2470-x9.png",
+   "kind": "note",
+   "label": "Mars 2470 at draft, the far outline of the hidden side nine times: the matte with one read, the matte with the Mars builder's four texel weigh, and as it stands; scratch, the stop's files are its builder's"
+  },
+  {
+   "time": "2026-11-26T10:23:02.124Z",
+   "file": "20261126102302124-note-lm-tip-sheet.jpg",
+   "source": "../../../../tmp/law/lm-tip-sheet.png",
+   "kind": "note",
+   "label": "the contract's bit proof: six draft frames (Mars 2470, 2477, 2580, 2683, Mercury 759, 850) drawn with the contract's relief file, each the same bytes as with main's relief file"
+  },
   {
    "time": "2026-11-26T09:55:56.430Z",
    "file": "20261126095556430-note-review9-2468-whole.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/stair/m9-2474.png",
    "kind": "note",
    "label": "Mars dive 2474: above as it stands, below the trial with the outline at 2 px a texel. Draft tier"
-  },
-  {
-   "time": "2026-11-26T09:45:59.030Z",
-   "file": "20261126094559030-note-arc9-2468.jpg",
-   "source": "../../../../tmp/stair/arc9-2468.png",
-   "kind": "note",
-   "label": "Mars dive 2468, the head of the band, enlarged: the light arc of an earlier trial is not in the trial that is kept. Draft tier"
-  },
-  {
-   "time": "2026-11-26T09:45:58.188Z",
-   "file": "20261126094558188-note-tip9-2472.jpg",
-   "source": "../../../../tmp/stair/tip9-2472.png",
-   "kind": "note",
-   "label": "Mars dive 2472, the tip of the band, enlarged: the trial that is kept has no hook and no dark line down from the tip. Draft tier"
-  },
-  {
-   "time": "2026-11-26T09:45:57.310Z",
-   "file": "20261126094557310-note-rim9b-2472.jpg",
-   "source": "../../../../tmp/stair/rim9b-2472.png",
-   "kind": "note",
-   "label": "Mars dive 2472, the far rim of the plateau, three times: above as it stands with the dark stepped line, below the trial without it. Draft tier"
-  },
-  {
-   "time": "2026-11-26T09:45:56.536Z",
-   "file": "20261126094556536-note-rim9-2470.jpg",
-   "source": "../../../../tmp/stair/rim9-2470.png",
-   "kind": "note",
-   "label": "Mars dive 2470, the far rim of the plateau, x 1080 to 1520, three times: above as it stands, a dark stepped line along the rim; below the trial, the line gone. Draft tier"
   }
  ]
 }
