@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T18:37:26.482Z",
+ "pushed": "2026-11-26T19:02:29.330Z",
  "head": "b7f9558077fb3565f41555bbd5cbd4735978fc3e",
- "note": "final pair 4400: main's dark dashes in the white body, none on D (held); cloud group controls and the placements' frames in the queue",
+ "note": "cloud group 4416: the hard lower edge came with the deck's matter by pixel size (f4a2489d to 2eb8c53d), not the long law; controls running",
  "looks": [
+  {
+   "time": "2026-11-26T19:02:28.578Z",
+   "file": "20261126190228578-note-L-grp.jpg",
+   "source": "../../../../tmp/n82/L-grp.jpg",
+   "kind": "note",
+   "label": "4416 cloud group, layers view: lines of no terrain weight along the cut edges",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T19:02:27.863Z",
+   "file": "20261126190227863-note-F-zoom.jpg",
+   "source": "../../../../tmp/n82/F-zoom.jpg",
+   "kind": "note",
+   "label": "4416 cloud group 8 to 1: the dark dashes inside the bright body are the fibre term's",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T19:02:27.116Z",
+   "file": "20261126190227116-note-NL-grp.jpg",
+   "source": "../../../../tmp/n82/NL-grp.jpg",
+   "kind": "note",
+   "label": "4416 cloud group, draft: name, long law off (same cut), lift 0 (soft, like old main), old main",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T19:02:26.390Z",
+   "file": "20261126190226390-note-AT-grp.jpg",
+   "source": "../../../../tmp/n82/AT-grp.jpg",
+   "kind": "note",
+   "label": "4416 cloud group by commit, draft, 3 to 1: old main soft; from 2eb8c53d on the hard cut lower edge stands",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T18:37:20.954Z",
    "file": "20261126183720954-note-pair-4400-full.jpg",
@@ -216,38 +248,6 @@
    "source": "../../../../tmp/n79/dg-d.jpg",
    "kind": "note",
    "label": "draft 4150, 4160, 4168, 4176: main, the name, both steps",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T14:17:18.174Z",
-   "file": "20261126141718174-note-dg-r2.jpg",
-   "source": "../../../../tmp/n79/dg-r2.jpg",
-   "kind": "note",
-   "label": "draft 4416, 4418, 4422, 4428: main, the name, both steps",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T14:17:17.521Z",
-   "file": "20261126141717521-note-dg-r.jpg",
-   "source": "../../../../tmp/n79/dg-r.jpg",
-   "kind": "note",
-   "label": "draft 4403, 4407, 4410, 4413: main, the name, both steps",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T14:17:16.782Z",
-   "file": "20261126141716782-note-dg-4407.jpg",
-   "source": "../../../../tmp/n79/dg-4407.jpg",
-   "kind": "note",
-   "label": "draft 4407 at 2 to 1: main, the name bcc9d174, both steps (the tops' gain over the cover, the air as a layer): specks gone, lanes deep",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T13:49:35.776Z",
-   "file": "20261126134935776-note-sp-4407-ctl.jpg",
-   "source": "../../../../tmp/n79/sp-4407-ctl.jpg",
-   "kind": "note",
-   "label": "draft 4407 controls: main, the name, the cover's cloud gain 0, the cover off: the dark specks are the cover's small clouds",
    "stop": "uranus"
   }
  ]
