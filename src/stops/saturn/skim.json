@@ -2,19 +2,19 @@
   "source": "the camera of the skim over the ring plane and how the light changes with the camera's height. Lengths in planet radii, angles in degrees. Read by plan.ts and set.ts.",
   "pose": {
     "note": "the middle of the skim: where the camera stands (azimuth from the Sun's side, radius of its foot on the plane, height), and how it looks (the globe this far right of the view axis, tilt down, roll) and the height of its lens (vfov, degrees). Fitted by assets-src/saturn/code/pose_fit2.py so that the true world lies on the approved close image: the lit limb of the globe (within 15 pixels of 1920 on the rays from 80 to 165 degrees round its middle, 6.6 as the root of the mean square) and the left horizon of the rings (within 5 pixels from x 4 to 836, 6.0 over all of it), with the edge of night and the two edges of the dark gap as lighter terms. The foot of the lit globe of the approved image lies 55 to 65 pixels above the line where this globe meets the plane (x 1040 to 1140): no flat plane round a globe gives that, so no pose fits limb, horizon and foot together; the foot is closed by ring matter instead (inner, below).",
-    "azimuthDeg": 8.62,
-    "foot": 2.688,
-    "height": 0.3618,
-    "yawDeg": 21.18,
-    "tiltDeg": 8.68,
-    "rollDeg": -9.54,
-    "vfov": 41.77
+    "azimuthDeg": -2.92,
+    "foot": 2.269,
+    "height": 0.215,
+    "yawDeg": 25.98,
+    "tiltDeg": 9.99,
+    "rollDeg": -6.70,
+    "vfov": 62.06
   },
   "path": {
     "note": "travel over the whole skim: forward is the length of the way along the view axis on the plane that the straight skim has over its whole time; descent is the height at the start over the height at the end. The height falls by the same share in every frame and the speed over the plane goes with the height, so the sheet passes under the lens at the same number of pixels a frame, all the way to the bend (bend, below), where the direction of the way turns and the rule of the speed stays; side is the travel sideways, yawDeg and pitchDeg the turn of the camera over the skim. The straight skim heads 28 degrees to the left of its view axis (forward 1.36 cos 28, side minus 1.36 sin 28: eight tenths of the length of way of the pose before, since the lens of this pose stands lower and looks through a longer lens, so the sheet passes at about the same number of pixels a frame): at the judged frame the lens then runs more along the ringlets than across them (5.889e-3 radii a frame across in place of 8.521e-3), and the smear of the film's shutter lies along the lines (ruling 2 of mail 577). The pose at the middle of the judged frame's shutter is the pose it was.",
-    "forward": 1.2008,
+    "forward": 0.3362,
     "descent": 2.2,
-    "side": -0.6385,
+    "side": -0.1788,
     "yawDeg": 0,
     "pitchDeg": 0,
     "bend": {
@@ -96,238 +96,238 @@
         "gain": [
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
             2.97,
-            3.2085,
+            3.208,
             3.6
           ],
           [
-            4.5,
-            4.5,
-            4.237
+            0.621,
+            0.68,
+            0.669
           ],
           [
-            4.5,
-            4.5,
-            3.914
+            0.722,
+            0.766,
+            0.718
           ],
           [
-            4.5,
-            4.5,
-            3.978
+            0.839,
+            0.864,
+            0.848
           ],
           [
-            4.5,
-            4.5,
-            4.171
+            0.974,
+            0.974,
+            1.034
           ],
           [
-            4.5,
-            4.5,
-            4.226
+            0.89,
+            1.034,
+            1.146
           ],
           [
-            4.5,
-            4.325,
-            3.684
+            0.814,
+            1.056,
+            1.093
           ],
           [
-            3.998,
-            3.265,
-            2.936
+            0.661,
+            0.846,
+            0.953
           ],
           [
-            2.82,
-            2.514,
-            2.373
+            0.61,
+            0.829,
+            0.95
           ],
           [
-            2.47,
-            2.345,
-            2.248
+            0.701,
+            0.982,
+            1.111
           ],
           [
-            3.276,
-            3.061,
-            2.862
+            1.217,
+            1.63,
+            1.745
           ],
           [
-            3.293,
-            3.071,
-            2.872
+            1.487,
+            1.929,
+            2.096
           ],
           [
-            2.731,
-            2.584,
-            2.401
+            1.498,
+            1.914,
+            2.098
           ],
           [
-            2.705,
-            2.527,
-            2.282
+            1.804,
+            2.208,
+            2.387
           ],
           [
-            1.836,
-            1.726,
-            1.631
+            1.628,
+            1.946,
+            2.042
           ],
           [
-            1.084,
-            1.023,
-            1.023
+            1.278,
+            1.488,
+            1.533
           ],
           [
-            1.218,
-            1.088,
-            1.072
+            1.8,
+            1.8,
+            1.8
           ],
           [
-            1.279,
-            1.165,
-            1.172
+            1.753,
+            1.8,
+            1.757
           ],
           [
-            1.117,
-            1.07,
-            1.121
+            1.337,
+            1.36,
+            1.404
           ],
           [
-            1.013,
-            0.956,
-            1.009
+            1.06,
+            1.0,
+            1.055
           ],
           [
-            1.05,
-            0.959,
-            0.976
+            1.461,
+            1.417,
+            1.084
           ],
           [
-            1.453,
-            1.305,
-            1.272
+            1.596,
+            1.621,
+            1.5
           ],
           [
-            1.598,
-            1.456,
-            1.413
+            1.503,
+            1.573,
+            1.77
           ],
           [
-            1.359,
-            1.264,
-            1.255
+            1.596,
+            1.645,
+            1.458
           ],
           [
-            1.188,
-            1.117,
-            1.119
+            1.653,
+            1.601,
+            1.206
           ],
           [
-            0.868,
+            0.908,
             0.843,
             0.889
           ],
           [
-            0.785,
-            0.76,
-            0.812
+            0.885,
+            0.807,
+            0.849
           ],
           [
-            0.976,
-            0.938,
-            0.96
+            1.186,
+            1.058,
+            1.05
           ],
           [
-            1.13,
-            1.054,
-            1.031
+            1.48,
+            1.262,
+            1.18
           ],
           [
-            1.318,
-            1.162,
-            1.087
+            1.8,
+            1.8,
+            1.8
           ],
           [
-            1.422,
-            1.256,
-            1.173
+            1.8,
+            1.8,
+            1.8
           ],
           [
-            1.174,
-            1.043,
-            0.997
+            1.8,
+            1.8,
+            1.8
           ],
           [
-            1.022,
-            0.893,
-            0.841
+            1.8,
+            1.8,
+            1.8
           ],
           [
-            1.168,
-            1.013,
-            0.921
+            1.8,
+            1.8,
+            1.8
           ],
           [
-            1.192,
-            1.052,
-            0.955
+            1.8,
+            1.8,
+            1.8
           ],
           [
-            1.077,
-            0.969,
-            0.887
+            1.8,
+            1.8,
+            1.8
           ],
           [
             0.971,
@@ -355,9 +355,44 @@
             0.595
           ],
           [
-            0.55,
-            0.556,
-            0.55
+            0.876,
+            0.912,
+            0.863
+          ],
+          [
+            0.85,
+            0.863,
+            0.806
+          ],
+          [
+            0.825,
+            0.832,
+            0.766
+          ],
+          [
+            1.8,
+            1.8,
+            1.8
+          ],
+          [
+            1.8,
+            1.8,
+            1.8
+          ],
+          [
+            1.8,
+            1.8,
+            1.8
+          ],
+          [
+            1.8,
+            1.8,
+            1.8
+          ],
+          [
+            0.841,
+            0.777,
+            0.672
           ],
           [
             0.55,
@@ -366,78 +401,43 @@
           ],
           [
             0.55,
-            0.555,
-            0.559
+            0.55,
+            0.55
           ],
           [
-            0.795,
-            0.84,
-            0.843
+            0.55,
+            0.55,
+            0.55
           ],
           [
-            1.161,
-            1.152,
-            1.139
+            0.688,
+            0.654,
+            0.606
           ],
           [
-            1.544,
-            1.471,
-            1.429
+            0.55,
+            0.557,
+            0.552
           ],
           [
-            1.464,
-            1.368,
-            1.289
-          ],
-          [
-            1.17,
-            1.081,
-            0.993
-          ],
-          [
-            0.975,
-            0.887,
-            0.794
-          ],
-          [
-            0.989,
-            0.905,
-            0.807
-          ],
-          [
-            1.047,
-            0.993,
-            0.893
-          ],
-          [
-            1.031,
-            1.026,
-            0.951
-          ],
-          [
-            0.67,
-            0.697,
-            0.691
-          ],
-          [
-            0.554,
+            0.55,
             0.552,
             0.55
           ],
           [
-            0.749,
-            0.729,
-            0.704
+            0.897,
+            0.913,
+            0.882
           ],
           [
-            1.38,
-            1.257,
-            1.084
+            1.8,
+            1.8,
+            1.8
           ],
           [
-            1.763,
-            1.541,
-            1.24
+            1.8,
+            1.8,
+            1.8
           ],
           [
             1.0,
@@ -663,409 +663,409 @@
       "step": 1,
       "gain": [
         [
-          1.194,
-          1.372,
-          1.274
+          0.857,
+          0.941,
+          0.854
         ],
         [
-          1.192,
-          1.368,
-          1.272
+          0.856,
+          0.939,
+          0.853
         ],
         [
-          1.187,
-          1.361,
-          1.268
+          0.852,
+          0.935,
+          0.852
         ],
         [
-          1.179,
-          1.351,
-          1.262
+          0.847,
+          0.929,
+          0.849
         ],
         [
-          1.17,
-          1.337,
-          1.254
+          0.84,
+          0.92,
+          0.846
         ],
         [
-          1.16,
-          1.322,
-          1.247
+          0.833,
+          0.911,
+          0.844
         ],
         [
-          1.148,
-          1.304,
-          1.237
+          0.824,
+          0.901,
+          0.841
         ],
         [
-          1.136,
-          1.285,
-          1.227
+          0.816,
+          0.89,
+          0.839
         ],
         [
-          1.124,
-          1.266,
-          1.217
+          0.808,
+          0.88,
+          0.837
         ],
         [
-          1.112,
-          1.247,
-          1.206
+          0.8,
+          0.87,
+          0.835
         ],
         [
-          1.101,
-          1.229,
-          1.198
+          0.794,
+          0.862,
+          0.836
         ],
         [
-          1.092,
-          1.211,
-          1.189
+          0.789,
+          0.855,
+          0.837
         ],
         [
-          1.083,
-          1.196,
-          1.182
+          0.784,
+          0.85,
+          0.841
         ],
         [
-          1.078,
-          1.183,
-          1.175
+          0.783,
+          0.848,
+          0.845
         ],
         [
-          1.073,
-          1.171,
-          1.171
+          0.783,
+          0.847,
+          0.852
         ],
         [
-          1.072,
-          1.162,
-          1.166
+          0.785,
+          0.849,
+          0.859
         ],
         [
-          1.073,
-          1.156,
-          1.164
+          0.79,
+          0.853,
+          0.869
         ],
         [
-          1.076,
-          1.153,
-          1.162
+          0.797,
+          0.861,
+          0.88
         ],
         [
-          1.082,
-          1.151,
-          1.163
+          0.807,
+          0.871,
+          0.894
         ],
         [
-          1.09,
-          1.152,
-          1.163
+          0.818,
+          0.883,
+          0.907
         ],
         [
-          1.101,
-          1.156,
-          1.164
+          0.833,
+          0.898,
+          0.923
         ],
         [
-          1.113,
-          1.161,
-          1.166
+          0.849,
+          0.915,
+          0.939
         ],
         [
-          1.126,
-          1.167,
-          1.167
+          0.866,
+          0.933,
+          0.955
         ],
         [
-          1.14,
-          1.175,
-          1.168
+          0.884,
+          0.953,
+          0.972
         ],
         [
-          1.155,
-          1.183,
-          1.169
+          0.903,
+          0.974,
+          0.989
         ],
         [
-          1.169,
-          1.191,
-          1.168
+          0.922,
+          0.994,
+          1.004
         ],
         [
-          1.181,
-          1.2,
-          1.168
+          0.94,
+          1.016,
+          1.021
         ],
         [
-          1.193,
-          1.206,
-          1.166
+          0.957,
+          1.035,
+          1.036
         ],
         [
-          1.202,
-          1.211,
-          1.163
+          0.973,
+          1.052,
+          1.049
         ],
         [
-          1.21,
-          1.216,
-          1.159
-        ],
-        [
-          1.213,
-          1.217,
-          1.154
-        ],
-        [
-          1.214,
-          1.216,
-          1.15
-        ],
-        [
-          1.211,
-          1.214,
-          1.143
-        ],
-        [
-          1.203,
-          1.207,
-          1.137
-        ],
-        [
-          1.192,
-          1.2,
-          1.13
-        ],
-        [
-          1.176,
-          1.189,
-          1.124
-        ],
-        [
-          1.156,
-          1.176,
-          1.117
-        ],
-        [
-          1.133,
-          1.161,
-          1.11
-        ],
-        [
-          1.106,
-          1.143,
-          1.105
-        ],
-        [
-          1.076,
-          1.125,
-          1.099
-        ],
-        [
-          1.045,
-          1.104,
-          1.095
-        ],
-        [
-          1.011,
-          1.083,
-          1.091
-        ],
-        [
-          0.978,
-          1.06,
-          1.088
-        ],
-        [
-          0.942,
-          1.037,
-          1.085
-        ],
-        [
-          0.907,
-          1.015,
-          1.083
-        ],
-        [
-          0.873,
-          0.992,
-          1.079
-        ],
-        [
-          0.839,
-          0.968,
-          1.077
-        ],
-        [
-          0.805,
-          0.945,
-          1.075
-        ],
-        [
-          0.775,
-          0.923,
-          1.072
-        ],
-        [
-          0.745,
-          0.9,
-          1.067
-        ],
-        [
-          0.717,
-          0.878,
+          0.987,
+          1.07,
           1.062
         ],
         [
-          0.69,
-          0.856,
-          1.054
+          0.997,
+          1.083,
+          1.074
         ],
         [
-          0.664,
-          0.834,
-          1.044
+          1.005,
+          1.094,
+          1.086
         ],
         [
-          0.641,
-          0.812,
-          1.033
+          1.009,
+          1.103,
+          1.095
         ],
         [
-          0.619,
+          1.008,
+          1.107,
+          1.105
+        ],
+        [
+          1.004,
+          1.11,
+          1.113
+        ],
+        [
+          0.995,
+          1.109,
+          1.121
+        ],
+        [
+          0.982,
+          1.104,
+          1.128
+        ],
+        [
+          0.967,
+          1.097,
+          1.134
+        ],
+        [
+          0.947,
+          1.086,
+          1.142
+        ],
+        [
+          0.924,
+          1.075,
+          1.147
+        ],
+        [
+          0.9,
+          1.06,
+          1.154
+        ],
+        [
+          0.873,
+          1.044,
+          1.16
+        ],
+        [
+          0.847,
+          1.026,
+          1.167
+        ],
+        [
+          0.818,
+          1.008,
+          1.172
+        ],
+        [
           0.79,
-          1.019
+          0.99,
+          1.178
         ],
         [
-          0.599,
-          0.769,
-          1.003
+          0.763,
+          0.971,
+          1.181
         ],
         [
-          0.579,
-          0.748,
-          0.984
+          0.736,
+          0.951,
+          1.186
         ],
         [
-          0.562,
+          0.71,
+          0.932,
+          1.189
+        ],
+        [
+          0.686,
+          0.914,
+          1.191
+        ],
+        [
+          0.663,
+          0.894,
+          1.191
+        ],
+        [
+          0.642,
+          0.876,
+          1.189
+        ],
+        [
+          0.621,
+          0.857,
+          1.184
+        ],
+        [
+          0.601,
+          0.839,
+          1.176
+        ],
+        [
+          0.584,
+          0.82,
+          1.167
+        ],
+        [
+          0.567,
+          0.801,
+          1.153
+        ],
+        [
+          0.553,
+          0.782,
+          1.137
+        ],
+        [
+          0.537,
+          0.764,
+          1.118
+        ],
+        [
+          0.525,
+          0.744,
+          1.096
+        ],
+        [
+          0.511,
           0.726,
-          0.963
-        ],
-        [
-          0.544,
-          0.706,
-          0.941
-        ],
-        [
-          0.529,
-          0.685,
-          0.917
-        ],
-        [
-          0.514,
-          0.665,
-          0.892
+          1.072
         ],
         [
           0.499,
-          0.646,
-          0.865
+          0.707,
+          1.046
         ],
         [
-          0.486,
-          0.625,
-          0.84
+          0.488,
+          0.688,
+          1.019
         ],
         [
-          0.474,
-          0.607,
-          0.814
+          0.475,
+          0.67,
+          0.988
         ],
         [
-          0.462,
-          0.59,
-          0.789
+          0.465,
+          0.65,
+          0.961
         ],
         [
-          0.451,
-          0.572,
-          0.764
+          0.455,
+          0.632,
+          0.931
         ],
         [
-          0.441,
-          0.556,
-          0.741
+          0.445,
+          0.616,
+          0.903
         ],
         [
-          0.431,
-          0.541,
-          0.719
+          0.435,
+          0.598,
+          0.875
         ],
         [
-          0.422,
+          0.427,
+          0.582,
+          0.848
+        ],
+        [
+          0.418,
+          0.567,
+          0.823
+        ],
+        [
+          0.41,
+          0.553,
+          0.8
+        ],
+        [
+          0.401,
+          0.54,
+          0.781
+        ],
+        [
+          0.395,
           0.528,
-          0.699
+          0.76
         ],
         [
-          0.413,
-          0.515,
-          0.682
+          0.388,
+          0.517,
+          0.745
         ],
         [
-          0.406,
-          0.503,
-          0.664
-        ],
-        [
-          0.399,
-          0.493,
-          0.651
-        ],
-        [
-          0.393,
-          0.484,
-          0.638
-        ],
-        [
-          0.387,
-          0.476,
-          0.626
-        ],
-        [
-          0.382,
-          0.469,
-          0.618
+          0.383,
+          0.508,
+          0.73
         ],
         [
           0.377,
-          0.463,
-          0.61
+          0.5,
+          0.716
         ],
         [
-          0.374,
-          0.458,
-          0.603
+          0.372,
+          0.492,
+          0.707
         ],
         [
-          0.371,
-          0.454,
-          0.598
+          0.368,
+          0.486,
+          0.698
         ],
         [
-          0.37,
-          0.452,
-          0.594
+          0.365,
+          0.481,
+          0.69
         ],
         [
-          0.369,
-          0.451,
-          0.591
+          0.362,
+          0.477,
+          0.684
         ],
         [
-          0.367,
-          0.45,
-          0.59
+          0.361,
+          0.475,
+          0.679
+        ],
+        [
+          0.36,
+          0.474,
+          0.676
+        ],
+        [
+          0.358,
+          0.473,
+          0.674
         ]
       ],
       "calm": {
@@ -1118,7 +1118,7 @@
   "inner": {
     "note": "The thin sheet inside the inner rim (ringfield.json inner) is one body with the ring: the same matter with the same depth and the same ice at every height of the lens, in the hold, the dive, the skim and the rise alike. One law covers it and the ring: the cover of a point of the plane for a ray is 1 - exp(-tau(r) / |sin e|), tau the depth straight through the plane at the radius r and e the angle of the ray to the plane. Nothing of it follows the height of the lens, the distance or the clock. depth: tau at the rim and at the cloud tops (radius 1), a straight line between them. fade: the length inward of the rim over which the sheet ends, so that it lies inside the rim alone. ice: the sheet is dark ice of its own; where it is too deep to see through it returns this share of what the ice of the thin inner ring at the radius like returns there, the same at every radius. So against the black of the hold its own light is small, and in front of the lit globe of the skim, where the flat view runs a long way through it, it is a veil that takes light away. The same depth shades the globe behind it on the Sun's ray (grade.ts dustShadeAt) and is shaded by the globe (sheet.ts globeShadow); neither has a share of its own. The sheet takes no part in the grade of the rings by the height of the lens (light.grade). inset: the colour of the sheet's ice is read this far outside the rim. bands: the plateaus of its depth, as past the outer rim (over: the length inward of the rim over which they come in, gap: the share of them that is thinner, floor: the share of its depth a thinner one keeps). rings: the finer ringlets of its light, about the same mean (waves: their three widths, seed, gap: the share that is dark, floor: the share of its light a dark one keeps, amount: how far they show, soft, filter, lines, width: their edges as sheet.ts sheetBandsOf takes them). air: the sheet by the globe lies in the globe's twilight, where the Sun's light comes to it through the globe's air (depth straight up from the ground, and the height over which the air thins by e; grade.ts dustAir). end: the radius the plane is drawn from. foot: a layer of dust on the globe itself by the plane (depth on the view at the plane, the two heights over the plane between which it ends, its colour); its depth is 0, the film holds no such layer. The measurements stand in assets-src/saturn/NOTES-CODE.md.",
     "end": 1.0,
-    "depth": [0, 0],
+    "depth": [0.05, 0],
     "fade": 0.02,
     "join": [0.0038, 0.0042],
     "ice": 0.05,
