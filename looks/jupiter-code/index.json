@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T12:11:44.819Z",
+ "pushed": "2026-11-26T12:33:49.308Z",
  "head": "23087fd30ea977015762d59c4bc5eda4f590a493",
- "note": "wb8 to wb10: slope light, fronts with lit rims, heaps on the rims; solve not fitted",
+ "note": "12:37 line A: cost down from about 400 s to 87.7 s at master draft and the content no longer goes with the pixel; the look is still wrong and is next",
  "looks": [
+  {
+   "time": "2026-11-26T12:33:48.685Z",
+   "file": "20261126123348685-note-wc2-3150-master-small.jpg",
+   "source": "../work/r26/t/wc2-3150-master-small.png",
+   "kind": "note",
+   "label": "3150 master draft made small, baked relief at 0.7 master feet, old paint, 15.501, bands 2.09 and 1.73 red: too many thin lit lines, not cloud",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:33:47.728Z",
+   "file": "20261126123347728-note-wc2-master-vs-preview.jpg",
+   "source": "../work/r26/t/wc2-master-vs-preview.jpg",
+   "kind": "note",
+   "label": "3150 lower left, the relief drawn once a sample into a picture: preview enlarged beside master, same content at both sizes, 87.7 s at master draft, old paint, line i no result",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T12:11:44.117Z",
    "file": "20261126121144117-note-wb10-3150.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r26/t/w90-r2-3150.png",
    "kind": "note",
    "label": "3150 preview draft, state w90 after two rounds of the solve: line (i) 4.292 whole, 3.389 outside the seven cells (main 3.390 and 3.208); bands 0.686 0.820 0.894 0.905, the first red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:10:38.402Z",
-   "file": "20261126101038402-note-w90-r2-err.jpg",
-   "source": "../work/r26/t/w90-r2-err.png",
-   "kind": "note",
-   "label": "3150 state w90 after two rounds, the approved, and where line (i) lies",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:10:37.347Z",
-   "file": "20261126101037347-note-w90-r2-deep.jpg",
-   "source": "../work/r26/t/w90-r2-deep.png",
-   "kind": "note",
-   "label": "3150 lower right at twice the size, state w90 after two rounds above, approved below: my ground is smooth streaks, the glow four soft lamps",
    "stop": "jupiter"
   }
  ]
