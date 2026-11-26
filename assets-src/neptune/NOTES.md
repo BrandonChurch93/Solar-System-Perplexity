@@ -11073,3 +11073,299 @@ THE LOOK (picture 5): 4860 at 1.0, G17 0.972 / 0.659 (main 0.934 / 0.549), plain
 14:38 UTC, from neptune_builder, to my request of 14:22. THE TRIAL CURES: with the entry at 4707 at review tier the bars with flat ends are gone (thin lines again, small clouds fade along the motion); finest band at review 0.394 to 0.553, the band of G17 0.509 to 0.725 (main at review 0.721). The draft frame keeps its bytes with the entry (sha256 e2607a46b14acafa both). The Builder has the crops.
 So I ask for the commit as soon as you have it: the full sha, on which base, and the last line of vitest on it. I merge it before my redraw's name and run vitest on the result.
 What I read from framePlan at review tier, 4440 to 5200, for your check: with the law {0.5, 6, 14} Neptune's frames over 6 px are 4687 to 4767 and 4952 to 5022; hold 0.38 to 0.44 px and surface view 2.05 to 2.23 px stay under it. The frames from 5025 are the stop "ending" by segmentAtFrame, so I read that nothing after 5024 can move, against my question 3. Say if you read it otherwise. The plan splits at 4758 and at 4956 only; with a law those two frames get sides by splitSides: not rendered by me.
+
+
+## Mail from handover_engineer, 14:40 UTC (read 14:40 by my clock; word for word)
+
+> 14:40 UTC, handover_engineer to neptune_builder: THE COMMIT, to your mails of 14:22 and 14:38. Nothing of it is on main; it goes on only on the Builder's word, and I name it to him when the whole suite is in.
+>
+> 1. THE SHA AND ITS BASE. Branch agent/engine-ends-neptune, pushed 14:35, tip 5c13e91bd87c8792f0e2b7d30396a115d261130b. The entry is the one commit c2a57cd63076538e3535e0cdb84221269ddc8f52: one line of config/showcase.json, "neptune": {"share": 0.5, "fromPx": 6, "toPx": 14} in handover.shutterEnds. Under it 53f22a0d (the cure 3bbb219a with main df87bc48 merged), on top of it 5c13e91b (main 5af8a408, status 391, merged: kit/PROGRESS.md only). So the base is main 5af8a408 with the cure 3bbb219a; GitHub's compare against main says ahead 7, behind 0. Merge the tip.
+> A plain merge into your tip 2b9dbf28, tried here without a work tree, with the two bases your history and mine share (39d2bc42 and main 51f0941f) named by hand because my clone is shallow: no conflict. Against your tip it changes nine files and none of your folders: config/showcase.json (the line), kit/PROGRESS.md (main's), and the cure's seven (src/core/types.ts, src/director/film.ts, tests/globe-pose.test.ts, tests/skyaims.test.ts, tests/skyarrive.test.ts, tools/seams/speeds.ts, tools/smooth/pose.ts). Your own merge is the proof.
+>
+> 2. TESTS SO FAR, on a tree equal to c2a57cd6 (the tip differs from it in kit/PROGRESS.md only, which no test reads): tests/shutter-ends.test.ts 28 of 28 and tests/shutter.test.ts 16 of 16, run alone at 14:28; the seams record (tools/seams.ts) is the same bytes as 3bbb219a's. THE WHOLE OF VITEST RUNS since 14:29 and is not in yet: its last line, the build, cues and shots follow in one more mail, in a few minutes.
+>
+> 3. I READ IT AS YOU DO. framePlan of all 5400 frames at the draft, review and final tiers, before and after the entry, on main's Neptune (3bbb219a) and on your tip with the cure's seven files laid in: on your tip the plans differ in 4687 to 4767 and in 4952 to 5022 and in no other frame (main's Neptune: 4687 to 4766 and 4952 to 5022). Nothing from 5023 on can move: the three segments of the ending name the stop "ending", and the law is read by the segment's stop (endsLawOf(segment.stop) in src/core/motion.ts); my text on the flight that leaves a stop holds for the eight travels only. Their plans are the same bytes at every tier. For your question: the retreat moves more than 6 px from 5042 to 5106 (most 11.71 px at 5079), under a shutter that opens and shuts at once, as on main. The ending's turn (MAIL 914, LOOKBACK.sky) is not touched: no file of the director changes. What does lie in your rise: the retreat's glides begin 0.1 s before the seam (LOOKBACK.ahead), in 5022 to 5024; of those 5022 gets ends 0.0002 (6.10 px), 5023 and 5024 none.
+>
+> 4. BEFORE 4500: no frame. The first plan that changes is 4687. uranus.travel 4455 to 4529 names uranus, which has no entry.
+>
+> BESIDE, on your tip:
+> - ends by frame. Dive: 0.007 at 4687, 0.056, 0.140, 0.239, 0.339, 0.424, 0.482, the full 0.5 from 4694 to 4763, then 0.481, 0.332, 0.124, 0.004 at 4767. Rise: 0.105 at 4952, 0.475 at 4953, the full 0.5 from 4954 to 5019, then 0.393, 0.146, 0.0002 at 5022. The largest step from one frame to the next: 0.208 in the dive, 0.370 in the rise (4952 to 4953, where the motion itself goes from 8.37 to 12.92 px).
+> - No count of samples changes at any tier (review: dive 16 to 38, rise 16 to 77). 4707 keeps its 28 samples and its shutter of 0.5.
+> - The two split frames 4758 and 4956 (24 samples each at review, 64 at final): before, each sample took the view of its time; with the entry the samples take the two views in turn over the whole shutter (terrain, orbit, terrain and so on), each view with the share of the light the handover gives it, as the split frames of mercury and mars do (760, 977, 2477, 2681; earth's two, 1919 and 2100, move under 6 px and have none. My commit's text says "of the three named stops" there, which is one too many). Your set reads state.weight and no list of samples (src/stops/neptune/set.ts on main and on your tip), so I see nothing for you to change. NOT RENDERED YET by me either: I draw 4757 to 4759 and 4951 to 4957 at review on your tip with the entry as soon as the suite is off the machine, and 4707, 4758, 4956 without it beside, look at them at 1 to 1 and tell you what I see.
+
+
+## MAIL 1505 from the Builder (/root), 14:40 UTC (read 14:41 by my clock; word for word)
+
+> MAIL 1505 from the Builder (/root), 14:40 UTC. To neptune_builder. RULING on your trial of 14:39.
+>
+> 1. THE ENTRY IS TAKEN. I looked at cluster-ends.jpg and four-ends.jpg at their full size. With the shutter as it is, each bit of cirrus is a pale block with flat ends in a stair; with the ends, each is a thin line in its own direction that fades along the way of the motion, and the blocks at the bank's edge are small flecks. That is what a small bright cloud does under a shutter that opens and closes as a wave, and it is the law Earth, Mercury and Mars already fly under. Neptune joins them. I have told handover_engineer so (MAIL 1506): he commits the one entry with its test, you merge his sha before the name.
+>
+> 2. WHAT I TAKE MYSELF, so your one render stays on the redraw. Push your state to agent/neptune-place as soon as the merges, the 1.0 commit and the engine's entry are in and vitest is green on it, before the redraw, and send me the sha in one line. On that sha my machines draw at once, at review tier: 5006 (a judged frame that moves by your own count, 27.06 px), 4956 and 4758 (the two frames where the samples are split between the views), and the run 4703 to 4711; with the same frames on main's code beside them. The judged four at final tier follow with the name as usual. If 5006 or a split frame shows a fault that main does not have, the name goes without the entry and says so, as you wrote in point 4.
+>
+> 3. TWO THINGS NAMED RED BY YOU STAND AS RED UNTIL THEY HAVE A CAUSE. (a) The stair of a pixel on the slope of the thin lines (bars12.jpg, right). One line from you by the name: how many pixels wide is one cell of the cirrus field at 4707, and is the stair the cell's edge under an opacity that is nearly two valued? If yes, the cure by cause is the opacity's step taken over the width of a cell, one number, and it may ride the name if your rows and 4707's band do not get worse; if it does not fit before 17:30, name without it and list it. (b) The steps along the row in the bars' box, 54.7 levels a pixel against 42.3: read by my machines on the run of point 2, not by you.
+>
+> 4. THE CLOCK STANDS: the name by 17:30 with the entry, the rows of the name read on my machines (nf6 reads 2b9dbf28 now and is for the record of the footprint only). No answer is needed to this mail except the sha of point 2.
+
+
+## Mail from handover_engineer, 14:45 UTC (read 14:46 by my clock; word for word)
+
+> 14:45 UTC, handover_engineer to neptune_builder: THE WHOLE SUITE on the entry, as promised at 14:40. On a tree equal to c2a57cd63076538e3535e0cdb84221269ddc8f52 (the tip 5c13e91bd87c8792f0e2b7d30396a115d261130b differs from it in kit/PROGRESS.md only): vitest, the whole of it, 14:29 to 14:43: tests 1106, passed 1106, failed 0, files 95, failed files 0. npm run build exit 0. npm run cues and npm run shots exit 0, and no file under cut/ differs from the commit's. tests/shutter-ends.test.ts alone 28 of 28.
+> THE BUILDER'S WORD came at 14:40 (his MAIL 1506): the entry is taken; he wants it as one commit on main as it will be after the fourth cut, which he merges in the next half hour, and its sha in one line to you and to him. So: when the cut's sha is out I merge that main into the same branch agent/engine-ends-neptune (a merge, no rebase; c2a57cd6 stays the entry's commit), run the two again on the merged tree and send you the new tip in one line. Both trials of the cut (take/d4-dry4, take/d4-dry5) hold my thirteen engine files with the blobs of my tip and main's config, so that tip will be the cut's tree with the one line. If you merge 5c13e91b now you lose nothing: the later tip contains it.
+
+
+## 26 Nov, 14:39 to 15:00 UTC: lab log (the entry taken; the merges, the 1.0 commit, the tests, the push; the redraw started; the cell of the cirrus at the bars)
+
+- 14:39 the notebook to 14:38 committed (f17696066).
+- 14:40 the merges, each a plain merge with its own commit: the engine's cure 3bbb219a from origin agent/engine-seen (bb18eeaf8: its seven shared files), origin main 5af8a408 (330064578: kit/PROGRESS.md only; main had moved from e31cd2098 by five status commits).
+- 14:40 cirrus.px 1.0 with its how text revised (8762c8812, /tmp/setpx2.py, by text replacement): the text no longer says that the opacity is nearly two valued, which the pictures' own numbers do not bear; it names the shutter that opens and shuts at once as the cause of the bars and the trial.
+- 14:40 MAIL 1505: the entry is taken. 14:40 handover_engineer's commit c2a57cd6 on his branch agent/engine-ends-neptune, tip 5c13e91b, merged by a plain merge (823bb4cdd: config/showcase.json, one line). I committed nothing under config by my own hand.
+- 14:41:02 to 14:55:55 the tests alone on 823bb4cdda88091a71af811f3bdacb480b46e882 (/tmp/tests15.sh): tsc exit 0; my own test 5 of 5; npx vitest run: Test Files 95 passed (95), Tests 1106 passed (1106), 883.77 s; gate G11 PASS; npm run cues and npm run shots exit 0; git status empty after.
+- 14:56 pushed (2b9dbf280..823bb4cdd). 14:56:46 the sha sent to the Builder in one line (its head says 14:57).
+- 14:56:38 THE REDRAW started on 823bb4cdd (/tmp/rd6.sh: the dive 4668 to 4768 into NDw, the rise 4948 to 5037 into NDx, half steps, preview, draft tier, rate 2; poses into /tmp/poses-name.json).
+- THE CELL OF THE CIRRUS AT THE BARS (MAIL 1505 point 3 (a)); /tmp/cell.py, new: by the pose of 4707 (the camera on the unit sphere, the globe's own turn from fit.json, the spot from patches.json) and the set's law of the levels as I read it in planet.ts (a level is whole where its parent has under 1.1 texels a pixel and none from 1.6; uLine taken as 1; the cloud layer's own spin not applied):
+  - bars (1497, 592): 17.9 degrees from the spot; a pixel 0.0393 by 0.0344 degrees of ground; wrap 0.94 texels a pixel (a texel 1.06 px), share 0; patch-96 share 0.73, 1.43 texels a pixel (a texel 0.70 px); patch-64 share 0.27, 2.54 texels a pixel (0.39 px); patch-40 share 0.
+  - bank edge (1280, 350): 11.0 degrees; patch-96 0.68 (a texel 0.71 px), patch-64 0.32 (0.40 px). eye (1180, 450): 6.8 degrees; patch-96 0.06 (0.85 px), patch-64 0.94 (0.48 px). centre (960, 540): 4.9 degrees; patch-64 1.00 (0.54 px). limb clouds (250, 70): 34.7 degrees; wrap alone, 2.86 texels a pixel (a texel 0.35 px).
+  - A FIRST RUN of cell.py with the turn of the laid close view instead of the globe's own put the eye 99.9 degrees from the spot: wrong frame, thrown away; the numbers above are with fit.json globe.quaternion, which puts the frame's centre 4.9 degrees from the spot.
+  - the alpha of the pictures: patch-96: alpha over 0.02 in 10.8 percent of the texels; of those the alpha 0.09, 0.36, 0.69 at the 50th, 90th, 99th percentile; its change a texel 0.011, 0.054, 0.200, largest 0.632. patch-64: 12.1 percent; 0.10, 0.43, 0.83; change 0.012, 0.060, 0.199, largest 0.591. wrap.webp: 19.0 percent; 0.16, 0.50, 0.76; change 0.031, 0.110, 0.256, largest 0.601.
+  - the edge in the frame, bars' box x 1470 to 1525, y 570 to 615, luma 99th less 10th percentile over the largest central difference: draft at 1.0 (TP1) 120 levels over 103.6 a pixel: 1.2 px; review with ends (TS1) 112 over 83.8: 1.3 px; review as it was (TR1) 99 over 67.8: 1.5 px. endgrad.py on TP1 in the bars' box: along the row 44.8, 85.8, 103.0; across 39.1, 82.3, 109.2.
+  - LOOKED AT stair-scales.jpg (the trial's frame at the bars at 1 to 1, 2, 4, 9 times): at 1 to 1 thin crisp white lines, no stair seen; the stair shows from 4 times on.
+- 14:58:49 the line of point 3 (a) and the look sent to the Builder (its head says 14:59).
+
+## 26 Nov, 14:56 UTC: the sha of MAIL 1505 point 2, to the Builder (word for word; no picture; high priority)
+
+NEPTUNE, 14:57 UTC, the sha of MAIL 1505 point 2, NOT A NAME: 823bb4cdda88091a71af811f3bdacb480b46e882 on agent/neptune-place (pushed), main 5af8a40802ec482ae7175f71e5a4704383c06440 merged in; against 2b9dbf28 it changes src/stops/neptune/move.json (cirrus.px 1.0), config/showcase.json (the entry: handover_engineer's c2a57cd6, by a merge of his tip 5c13e91b), the engine cure's seven files (3bbb219a, by a merge), kit/PROGRESS.md (main's) and my notebook; npx vitest run on it, last lines: Test Files 95 passed (95), Tests 1106 passed (1106); tsc clean, G11 PASS, cues and shots exit 0 and leave the tree clean. The redraw of the dive and the rise runs on this sha since 14:56.
+
+
+## 26 Nov, 14:58 UTC: the line of MAIL 1505 point 3 (a) and the look, to the Builder (word for word; attached stair-scales.jpg, look-1353.jpg; high priority)
+
+NEPTUNE, 14:59 UTC: THE LINE OF MAIL 1505 POINT 3 (a), AND THE LOOK. No name. The redraw runs since 14:56 on 823bb4cd.
+
+Pictures: 1 stair-scales.jpg: the trial's frame (review, 1.0, with ends) at the bars at 1 to 1, 2, 4 and 9 times. 2 look-1353.jpg: THE LOOK, 4860 beside the approved image.
+
+THE LINE: at the bars of 4707 one cell of the cirrus pictures is 0.4 to 0.7 px wide, and the opacity is not nearly two valued; so the stair is NOT a cell's edge, it is the frame's own pixel on a line whose edge is 1.2 to 1.3 px wide. No number of the opacity cures it; I name it without a cure.
+
+The numbers behind it, all read by me, none by the engine's own counters:
+- The cell. By the pose of 4707 and the set's law of the levels (computed beside the engine, the factor of the frame's size taken as 1): the bars lie 17.9 degrees from the spot, a pixel is 0.039 by 0.034 degrees of ground there. Drawn there: patch-96 with the share 0.73, one texel 0.70 px, and patch-64 with the share 0.27, one texel 0.39 px. The wrap's texel would be 1.06 px and is not drawn there.
+- The opacity. patch-96: of the texels with any cloud (alpha over 0.02, 10.8 percent of the picture) the alpha is 0.09 at the median, 0.36 at the 90th and 0.69 at the 99th percentile; its change a texel 0.011, 0.054 and 0.200, largest 0.632. patch-64: 0.10, 0.43, 0.83; change 0.012, 0.060, 0.199, largest 0.591. Spread, not two valued; the thin lines are its steepest pieces.
+- The edge in the frame. In the bars' box the lines stand 112 levels over the ground and the largest change is 83.8 levels a pixel at review tier with ends: an edge of 1.3 px. At draft (one sample): 120 levels and 103.6: 1.2 px. That is about 2 to 3 cells. A step of the opacity taken over one cell is under a pixel and is already inside the footprint of one pixel the cirrus is read with.
+- What would soften it is a wider footprint, which is the law you ruled void: at draft it costs the finest band of 4707 0.836 at 1.25, 0.754 at 1.5, 0.625 at 2.0 against 0.950.
+At 1 to 1 (picture 1, top left) I see thin crisp white lines, no stair; it shows from 4 times on. Named red by me as a thing seen at 12 times; yours to rule whether it is a fault.
+
+THE LOOK (picture 2): 4860 at this state, G17 0.972 / 0.659 (main 0.934 / 0.549), plain 21.144 (main 22.986), 98.2 s a draft frame at 1920. The frame is the one of 13:53: nothing since moves it (the entry cannot: the surface view moves 2.05 to 2.23 px a frame). It is drawn again on the name's sha with the judged four.
+
+## 26 Nov, 15:00 to 15:17 UTC: lab log (the footprint is a law by the frame's size; the redraw's first rows; the night side by frame; the pop's place)
+
+- 14:59 to 15:01: the redraw `NDw` (px 1.0) is the same bytes as `Z5w` (the state of 10:43) at all 64 frames 4668 to 4699.5 and as
+  `SB` (my preview stills of 2b9dbf28) at all 13 frames 4686 to 4692. At 4712 and 4716 it differs from `ZS` (cc6cdad9b) and `Z5d`
+  (older states; expected, the cures since moved those frames).
+- 15:05 the code read for it: planet.ts 510 and deep.ts 983 `softCloud = max(uCloudSoft, uCirrusPx)`; uCloudSoft is look.ts
+  clouds.soft (1, not scaled by the frame); set.ts 159 `cirrusPx = move.cirrus.px * bufferFrame() * (1 - smooth(...))`, bufferFrame
+  (src/core/frame.ts) is the drawn height over the master's: one half at the preview, 1 at 16x9, 2 at 3840 wide. So at 960 wide
+  2.0 gave at most 1.0 (void); at 1920 wide 2.0 bit where 2.0 times the share is over 1 (the eye under 1.9 radii); at 3840 wide 1.0
+  gives 2 pixels of that frame under 1.5 radii against the hold's 1 (not void there; one angle with 1920). Main's move.json has
+  cirrus px 2.0, height [1.5, 2.3]. The how text of cirrus in move.json ("void ... at every height") is exact up to 1920 wide only:
+  to be corrected after the redraw (`/tmp/setpx3.py`, one sentence, no number).
+- Heights by my poses (`/tmp/poses-name.json`): the hold 2.003 (4686); 1.9 radii crossed 4689 (1.913) to 4689.5 (1.895) and 5005.5
+  (1.867) to 5006 (1.948); 1.5 radii 4697.5 (1.509) to 4698 (1.481) and 5003 (1.486) to 5003.5 (1.559); 2.3 radii 5008 (2.281) to
+  5008.5 (2.366), never in the dive; 4707 0.957.
+- 15:06 my 1920 draft stills, `TP1` (1.0) against `N23` (the sha): 4605 and 5006 the same bytes; 4707 mean 0.524, largest 90, 2.03 %
+  of the pixels by more than 8 levels, at 480 wide (box filter) mean 0.234, largest 24.0, 0.47 %, means of the 16 by 9 blocks up to
+  1.609 levels, frame mean 84.395 (sha) against 84.258; 4860 mean 0.009, largest 3, block means up to 0.144, frame mean 69.140
+  against 69.148.
+- 15:07 to 15:10 sheets of the redraw, every whole frame looked at: `/tmp/ndw-s1.jpg` (4668 to 4692), `/tmp/ndw-s2.jpg` (4693 to
+  4717), `/tmp/ndw-b1.jpg` (4703 to 4711, three a row), `/tmp/ndw-s3.jpg` (4718 to 4729). No step and no border seen at that size.
+  The fields come in at the lower left from about 4706 as a soft pale patch that grows. A thin straight line with small white
+  knots from 4720 on, left of the small eddy: `/tmp/line-1.jpg` (4724 and 4728, crop x 240 to 640, y 300 to 540 of 960) shows it
+  the same in `NDw`, `ZS` (cc6cdad9b) and `Z5d` (Z5); main's own frames (`MAIN3d`) show another picture there (the night side
+  black, white streaks). It is the far form of a streamer; not new.
+- 15:08 the night side by frame (`/tmp/table2.py /tmp/poses-name.json`, the ground of 4707's box x 77 to 365, y 432 to 907 carried
+  by pose, on `NDw`, 960 px; `/tmp/night-dive.txt`, every half frame 4680 to 4714.5): 4680 to 4690 1.6, 9.1, 23.1 (4690 23.0);
+  4692 1.6, 9.1, 23.0; 4694 22.8; 4696 1.6, 9.1, 22.7; 4698 1.7, 9.0, 22.6; 4700 1.7, 9.0, 22.4; 4702 1.8, 8.9, 22.1; 4704 1.8,
+  8.8, 21.8; 4706 1.9, 8.7, 21.3; 4707 1.9, 8.6, 21.1; 4708 1.9, 8.5, 20.8; 4708.5 2.0, 8.5, 20.7 (0.97 of it in frame); 4709 2.0,
+  8.6, 20.8 (0.88); 4710 2.2, 8.9, 21.1 (0.70); 4711 2.4, 9.3, 21.5 (0.52); 4712 2.7, 9.7, 22.3 (0.35); 4713 2.9, 10.5, 23.7
+  (0.18); 4714 3.4, 13.2, 29.1 (0.05); from 4715 not in frame. Largest step between half frames while all of it is in frame: 0.2
+  levels (the table prints one decimal). RED by the bar of two levels (MAIL 1492): blue 2.0 under the hold's at 4707, 2.4 under at
+  4708.5. The control of 13:44 at 4707 (NG0: 1.7, 9.2, 22.9 against 1.9, 8.7, 21.2) names the near grade; at 4708 not controlled.
+- The screen corner x 1780 to 1920, y 0 to 120 (of 1920) on the same frames, mean | tenth percentile: 4668 52.8, 66.2, 77.4 | 15,
+  33, 44; 4676 57.7, 70.6, 81.5 | 17, 34, 46; 4684 58.6, 71.4, 82.0 | 17, 34, 45; 4688 45.2, 58.9, 69.8 | 14, 31, 42; 4692 20.7,
+  36.5, 48.5 | 8, 25, 38; 4694 13.1, 29.5, 41.7 | 7, 22, 35; 4696 9.1, 25.5, 38.0 | 6, 21, 33; 4698 8.3, 24.3, 36.8 | 5, 20, 32;
+  4700 8.1, 24.1, 36.4 | 5, 20, 32; 4702 8.3, 24.2, 36.5 | 5, 20, 32; 4704 8.3, 24.3, 36.8 | 5, 20, 32; 4706 8.2, 24.7, 37.8 | 5,
+  21, 33; 4707 8.2, 25.1, 38.7 | 5, 21, 34; 4708 8.7, 26.3, 40.6 | 6, 22, 36; 4710 11.1, 30.3, 46.4 | 7, 25, 40; 4712 19.6, 39.6,
+  57.7 | 8, 27, 41; 4714 34.0, 46.8, 59.9 | 8, 20, 31; 4716 30.9, 51.1, 70.5 | 11, 27, 41; 4718 5.1, 19.8, 32.7 | 1, 13, 25; 4720
+  2.6, 12.4, 22.4 | 0, 7, 17; 4722 1.7, 7.8, 17.0; 4724 2.2, 6.4, 14.0; 4726 1.3, 4.4, 10.6. The corner is not one piece of sky:
+  the Sun's glow stands in it to about 4690; from 4712 the limb, then the ground.
+- The Sun's place on `NDw` (the compact blob over 240, 960 px): 915.8, 60.1 at 4668; 923.5, 58.1 at 4676; 927.4, 57.2 at 4680;
+  931.0, 57.4 at 4684; 931.4, 64.3 at 4688; 929.8, 72.2 at 4690; 926.5, 83.6 at 4692; 922.1, 98.0 at 4694; 916.5, 115.8 at 4696;
+  909.6, 136.8 at 4698; 901.5, 160.9 at 4700; 892.8, 188.2 at 4702; 883.1, 218.7 at 4704; not found at 4706.
+- The sky by matching (`/tmp/skytrack.py`, pairs of `NDw`, patches of 960 px, change of the mean RGB of the same patch of stars):
+  4680 to 4688 match 0.998 -0.5, -0.4, -0.4; 0.996 +0.3; 0.994 +0.5, +0.4, +0.4. 4688 to 4692: 0.998 -0.5; 0.976 -2.1, -2.1, -2.2;
+  0.970 +7.8, +7.0, +6.5 (the patch at 912, 108 to 910, 122, 48 px under the Sun and 38 px under it after: the Sun's glow, the
+  Sun moves against the stars). 4692 to 4696: 0.994 -1.0, -0.9, -0.9; 0.970 +11.3, +10.8, +10.8 (888, 96 to 883, 127, beside the
+  Sun); 0.905 0.0. 4696 to 4700: 0.998 +0.3, +0.7, +1.2; 0.919 0.0; 0.863 +0.4, +1.0, +1.7. 4700 to 4704: 0.893 +0.1, +0.2, +0.4;
+  0.802 0.0, +0.1, +0.2. 4704 to 4708: only 0.423 (+3.6, +6.9, +9.9: not a reading). 4708 to 4712: 0.527, 0.462 (not readings).
+  4712 to 4716: 0.559 (not a reading). 4716 to 4720: no patch of sky in both.
+- 15:11 `git fetch origin main agent/engine-ends-neptune`: origin main 00b05b531 ("Status 393 and decision d378"; the fourth cut
+  is on it), 145 files against the merge base 5af8a4080; against my tree, in src/core, src/director, src/space, src/terrain,
+  config, tests, tools, cut and kit, only config/showcase.json (1 line: my entry is not on main), cut/SHOTS.md (8 lines) and
+  kit/PROGRESS.md differ. The entry's branch on origin is still at 5c13e91b. The fetch printed "stopped background processes this
+  command left running" (git's own housekeeping, as I read it); the render went on (139 frames at 15:11:54). Disk 1.4 G free.
+- 15:13 to 15:15 the rows of dive 1 on the redraw (`/tmp/pic2.py /tmp/poses-name.json out/work/nep/weave/NDw 4668 4724.5 0.5
+  /tmp/pic-nd-dive1.json`, 114 frames, 960 wide, 2 min 2 s beside the render): pattern 0.3732 at 4707 (limit 0.45; main 1.3008 at
+  4721), pop 1.0932 at 4713.5 (plain 1.1681, carried 1.0932; limit 1.20; main 1.0405 at 4718), full pop 1.0984 at 4711, level step
+  0.1728 at 4704.5 (limit 1.30; main 0.4864). The same as Z5's rows of 10:43 but the pop's fourth decimal (1.0934 then).
+- 15:16 the pop's place (popBlock, popBlockAt of the same file): the ten largest 1.0932 at 4713.5, 1.0874 at 4713, 1.0839 at 4711,
+  1.0735 at 4714, 1.0632 at 4712.5, 1.0599 at 4712, 1.0494 at 4711.5, 1.0467 at 4714.5, 1.0388 at 4710.5, 1.0336 at 4696.5. The
+  block with the largest pop, column and row of 16 by 9: [11, 3] at 4709.5 and 4710; [3, 1] at 4710.5 to 4711.5; [12, 3] at 4712,
+  4712.5 and 4713.5 (block pop 2.170 at 4713.5); [9, 8] at 4713; [3, 7] at 4714; [2, 0] at 4714.5 and 4715; [6, 1] from 4715.5.
+  Block [12, 3] is x 1440 to 1560, y 360 to 480 of 1920: the lower edge of the white bank over the dark oval, which slides through
+  the block (its mean 174.32 at 4711, 164.59 at 4712, 157.57, 149.54 at 4713, 140.48 at 4713.5, 130.35 at 4714, 120.89, 112.31 at
+  4715; share over 200: 0.353, 0.301, 0.268, 0.232, 0.186, 0.135, 0.095, 0.060); by eye (`/tmp/pop-4713.jpg`, the eight frames at
+  the block) the bank keeps its form and nothing comes in. The frame's mean level climbs 79.20 at 4709.5, 79.50, 79.83, 80.21 at
+  4711, 80.52, 80.76, 80.97, 81.24 at 4713, 81.57, 81.82 at 4714, 81.88 at 4714.5 and stands (81.85, 81.80, 81.60 at 4716): the
+  frames in which the night side leaves the frame (its box 0.70 in frame at 4710, none at 4715). Read by place, not by a control.
+- 15:17 MAIL 1510 read. `npx tsx tools/smooth.ts --stop neptune --only path` on 823bb4cdd (5.3 s, beside the render; the path part
+  opens no page and builds nothing, tools/smooth.ts): "smooth neptune: green. out/work/smooth/neptune.md", exit 0.
+
+## 26 Nov, 15:13 UTC: the look and the finding on the footprint by size, to the Builder (word for word; attached look-1353.jpg, ndw-s1.jpg, ndw-s2.jpg, ndw-b1.jpg, ndw-s3.jpg; low priority)
+
+> NEPTUNE, 15:13 UTC: THE LOOK, while the redraw runs. No name; no answer needed. One finding on how my numbers are to be read.
+>
+> Pictures: 1 look-1353.jpg: THE LOOK, 4860 beside the approved image (the picture of 13:53; 4860 has not been drawn since; what changed since is the entry, which at draft left 4707 the same bytes). 2 ndw-s1.jpg, 3 ndw-s2.jpg: the redraw, every whole frame 4668 to 4717. 4 ndw-b1.jpg: 4703 to 4711 larger. 5 ndw-s3.jpg: 4718 to 4729.
+>
+> THE REDRAW (823bb4cd, 960 wide, draft, half steps): 144 of 380 frames at 15:13, the dive at 4739.5; 1.6 s a frame to 4690, 7.5 s at 4700 to 4710, 12.2 s at 4730 to 4740. It will end about 16:10, not 15:55 as I planned.
+>
+> THE FINDING: the footprint of the cirrus is a law by the size of the frame, and at 960 wide it was void all along.
+> - The law (set.ts, planet.ts): the cirrus is read with the larger of the hold's 1 pixel of the frame that is drawn and px times the frame's height over 1080 times the share by height (none over 2.3 radii, whole under 1.5). At 960 wide 2.0 gave at most 1.0: nothing. Proof: the redraw at 1.0 is the same bytes as my stills of 2b9dbf28 at all 13 frames 4686 to 4692.
+> - At 1920 wide 2.0 bit where the eye is under 1.9 radii: from 4689.5 to 5005.5 by my poses (4689 1.913, 4689.5 1.895; 5005.5 1.867, 5006 1.948), growing from 1 px to 2 px between 4689.5 and 4698 (1.5 radii) and back between 5003 and 5005.5. My draft stills at 1920, 1.0 against the sha: 4605 and 5006 the same bytes; 4707 mean 0.524, largest 90, 2.03 percent of the pixels by more than 8 levels; 4860 mean 0.009, largest 3 (the far look of the scene reads the same law).
+> - At 3840 wide 1.0 is 2 pixels of that frame under 1.5 radii against the hold's 1: there the law is not void (by the code; not drawn). It is one angle with 1920, and main is built the same (4 against 1). The how text in move.json says void at every height; that is exact up to 1920 wide only. I correct that sentence after the redraw (no pixel) and keep 1.0 as you ruled.
+> What follows:
+> - Which frames keep 2b9dbf28's bytes has an answer by size. At 960: every frame I hold of both (13 of 13 so far; 5002 to 5008 follow). At 1920 draft: up to 4689 and from 5006, by the law; I draw 4689, 4690 and 5005 at 1920 on both states after the redraw and send the sha256 with the name. At review tier the entry moves 4687 to 4767 and 4952 to 5022 besides, by the engine's plan.
+> - My rows proxy reads 960 frames. It never saw the footprint 2.0: the rows I stated from my redraws were rows of footprint 1, so the proxy stands for the name's state as it is. What it could not see is what your reader at 1920 had on the sha and on main: the footprint growing from 1 to 2 px over 4689.5 to 4698. At 4707 the two footprints differ by up to 1.609 levels on the means of the 16 by 9 blocks of the 480 px picture (frame mean 84.395 against 84.258). The name has no such change by height any more. Which way your rows move by it is not known to me; I do not draw dive 1 at 1920 for it (114 frames, about half an hour of the one render by my seconds).
+>
+> WHAT I SAW in the redraw so far (every whole frame 4668 to 4729, at the size of the sheets):
+> - No step and no border seen at that size. The fields come in at the lower left from about 4706 as a soft pale patch that grows; no frame where it is suddenly there, by eye.
+> - A thin straight line with small white knots from 4720 on, left of the small eddy (picture 5). Not new: the same in my frames 4724 and 4728 of Z5 (the state of 10:43) and of cc6cdad9. It is the far form of a streamer. Named, not cured.
+> - The night side for your table (the ground of 4707's box carried by pose; 960 px): 1.6, 9.1, 23.1 from 4680 to 4690; 4692 1.6, 9.1, 23.0; 4696 1.6, 9.1, 22.7; 4700 1.7, 9.0, 22.4; 4704 1.8, 8.8, 21.8; 4707 1.9, 8.6, 21.1; 4708 1.9, 8.5, 20.8; lowest blue 20.7 at 4708.5; from there it leaves the frame (0.70 of it at 4710, 0.35 at 4712, gone at 4715). Largest step between half frames while all of it is in frame: 0.2 levels. RED by your bar of two levels: blue is 2.0 under the hold's at 4707 and 2.4 under at 4708.5. Cause by the control of 13:44 at 4707 (1920 draft): with the near grade's share at 0 the same box reads 1.7, 9.2, 22.9 against 1.9, 8.7, 21.2. That is the near grade you ruled K; at 4708 not controlled.
+> - The sky's part of the table comes with the name. The corner of the screen is not one piece of sky: the Sun's glow stands in it to about 4690 and moves out (the Sun at 931, 64 at 4688; 917, 116 at 4696; 883, 219 at 4704, of 960 px).
+>
+> THE LOOK (picture 1): 4860, 16x9 draft, 98.2 s: G17 0.972 / 0.659 (main 0.934 / 0.549), plain 21.144 (main 22.986). Unchanged since 13:53; it is drawn again after the merges, with the judged four.
+>
+> STILL RED, as at 14:58: the stair on the thin lines at 12 times; the steps along the row in the bars' box (yours to read); the plain at 4707 over main's; the lit side by the near grade (K); the green 3.5; the blue dot; the rows not read on this state (they come from this redraw, as a proxy); the pop of dive 1 by its place; the tone edge; the hold's slow change; ruling 6 of MAIL 1363 not begun.
+>
+> NEXT: the redraw to its end; then the notes, the merge of origin main (00b05b53, fetched 15:11: in src/core, src/director, src/space, src/terrain, config, tests, tools, cut and kit it differs from my tree only in config/showcase.json by my entry, in cut/SHOTS.md and in kit/PROGRESS.md) and of handover_engineer's new tip when it comes; the whole suite; the judged four at draft; the name by 17:30.
+
+## MAIL 1510 from the Builder (/root), 15:16 UTC (read 15:17 by my clock; word for word)
+
+> MAIL 1510 from the Builder (/root), 15:16 UTC. To every builder who owes a name. THE PATH PART WITH EVERY NAME. No answer needed now.
+>
+> 1. MEASURED today: the fourth cut brought four red lines of the camera path check onto main at Saturn's dive, because the name's proofs held the picture rows alone. From now on a name holds, in the mail that names it, the lines of this run on the named sha, by its builder: npx tsx tools/smooth.ts --stop STOP --only path (seconds, it draws nothing; it exits 1 and prints the red lines when a line is over its limit). Say green, or quote the red lines word for word.
+>
+> 2. A red path line that main lacks holds the name (d311, d375). Main's own lines at 9f09a8a3: green on seven stops; Venus's rise two known lines (0.095 and 0.098, with travel_builder); Saturn's dive four lines (with saturn_coder).
+>
+> 3. If your change touches a shared file of the path (src/space/travel, src/director, the engine's handover), run all nine stops and send every red line.
+>
+> 4. I run the same on all nine stops on the cut's tree before it goes on main. Nothing else changes in what a name must hold.
+
+## Mail from handover_engineer, about 15:22 UTC (read 15:23 by my clock; word for word)
+
+> THE ENTRY ON THE FOURTH CUT (MAIL 1506 of /root). All measured by me; times UTC.
+> SHA: agent/engine-ends-neptune 04b50f90973e6f063a20183b06a5b4b1198b08ce, pushed. It is my tip 5c13e91b (you hold it since 14:40 in 823bb4cd, with the entry c2a57cd6) merged with the fourth cut, main 6b6136fc042710ef116d01441ac4caa6bb6e68a0. Against that main it differs in the entry's one line of config/showcase.json and in nothing else. So merging 04b50f90 gives you the cut and nothing new of mine. Main has gone on to 9f09a8a3 (three round starts, kit/PROGRESS.md only).
+> TESTS on a tree equal to 04b50f90 (1834 tracked files outside assets-src, audio, references and out, by blob hash; no test file names those folders): tests/shutter-ends.test.ts 28 of 28; tests/shutter.test.ts 16 of 16; the whole of vitest 15:01:09 to 15:16:02: tests 1106, passed 1106, failed 0, files 95, failed files 0; npm run build exit 0; npm run cues and npm run shots exit 0 and leave cut/ unchanged (3 files, 0 differ; npm run cues -- --check: PASS) with the commit's own 18 records out/posts/*.json in the tree (my export tree lacked them at first and the posts table of cut/CUES.md then said no intro record: my tree's lack, not the commit's).
+> TRIAL MERGE of 04b50f90 into your 823bb4cd (git merge-tree, base 5c13e91b): no conflict, tree 70a748fd3b43de0e2561200251b1aa8ce1fcb345. 132 files change against your tip, none in src/stops/neptune, assets-src/neptune, public/assets/neptune; against 04b50f90 the result differs only in those three folders (37 files). vitest on that tree is yours: not run by me.
+> FRAMES by the engine's plan (framePlan of 5400 frames at draft, review, final) on that merged tree, with the entry against without: only the key ends differs, in 4687 to 4767 and 4952 to 5022 (152 frames); the sample counts are the same; no frame of another stop, none of the ending. On main's Neptune (04b50f90 against 6b6136fc): 4687 to 4766 and 4952 to 5022.
+> PATH (MAIL 1510 of /root, 15:16): npx tsx tools/smooth.ts --stop STOP --only path on all nine stops, on 04b50f90 and on the code of main 6b6136fc: the same bytes printed on every stop: green on sun, mercury, earth, mars, jupiter, uranus, neptune; venus red 2 lines (rise, 0.095 and 0.098, limit 0.03) and saturn red 4 lines (dive): main's own. Neptune's line there is main's Neptune, not your tip: yours to run on your name.
+> RED UNTIL SEEN: the split frames 4758 and 4956 and the rise's onset 4951 to 4954 at review tier. They render on my VM on your old tip 2b9dbf28 with the entry; a split frame takes over 16 minutes here. I mail you what I see, also if it is nothing. Draft 4700 and 4707 keep their bytes with the entry (cb671363, 9f8419a6).
+
+## 26 Nov, 15:17 to 15:41 UTC: lab log (the dive whole: rows, sheets; the pattern of dive 2 over the limit by my proxy; the sky over the limb)
+
+- 15:33:00 the dive of the redraw is whole (`NDw`, 201 frames, 14:56:39 to 15:33:00); the rise (`NDx`) runs, 8 frames in the
+  first 5 min 19 s (about 40 s a frame in the low part, my readers beside it).
+- Seconds a frame of the redraw (960 wide, draft, rate 2, by the files' times): 1.6 s from 4670 to 4690; 7.5 s at 4700 to 4710; 8.7
+  s at 4710 to 4720; 11.0 s at 4720 to 4730; 12.2 s at 4730 to 4740.
+- 15:33 to 15:37 the whole dive in one run (`/tmp/pic2.py /tmp/poses-name.json out/work/nep/weave/NDw 4668 4768 0.5
+  /tmp/pic-nd-dive-whole.json`, 201 frames, 4 min beside the render): dive 1 (4668 to 4724.5) pattern 0.3732 at 4707, pop 1.0932
+  at 4713.5 (plain 1.1681 at 4713.5), level step 0.1728 at 4704.5, full pop 1.0984 at 4711; dive 2 (4725 to 4768) pattern 0.4695
+  at 4745, pop 1.0790 at 4746.5 (plain 1.0865 at 4732.5, carried 1.1284 at 4747), level step 0.1086 at 4732.5, full pop 1.1413 at
+  4746. Main's rows (MAIL 1446, 1449): dive 1 pattern 1.3008, pop 1.0405, level step 0.4864; dive 2 pattern 1.1468, pop 1.0657,
+  level step 0.1051.
+- RED, new, by my proxy: the pattern of dive 2 over the limit 0.45: 4743 0.4359 at [758, 328], 4744 0.4517 at [594, 138], 4745
+  0.4695 at [598, 138], 4746 0.4330 at [606, 140], 4747 0.3615. On Z5 (`/tmp/pic-z5-dive-whole.json`, 10:43) the same frames:
+  0.3906, 0.3854, 0.3784, 0.3486, 0.3191, at the same places from 4744 on. Whole table Z5 | now, pattern: 4738 0.3406 | 0.3412;
+  4739 0.3815 | 0.3958; 4740 0.3427 | 0.3159; 4741 0.2923 | 0.2961; 4742 0.3353 | 0.3487; 4748 0.3334 | 0.3350; 4749 0.3367 |
+  0.3444; 4750 0.3735 | 0.3721; 4751 0.3771 | 0.3883; 4752 0.4205 | 0.3858; 4753 0.4014 | 0.4133; 4754 0.3765 | 0.4002; 4755
+  0.3273 | 0.3771; 4756 0.2787 | 0.2975. The frame's mean level Z5 | now: 4738 87.73 | 87.32; 4744 83.24 | 82.24; 4745 82.15 |
+  81.02; 4750 73.96 | 72.33; 4753 69.36 | 67.62; first frame where the level differs by over 0.01: 4720; largest 1.74 at 4753.5.
+  The place (598, 138 of 960; `/tmp/pat-4745.jpg`, crop x 418 to 778, y 48 to 228 at 4737, 4739, 4741, 4743, 4745, 4747, 4749,
+  4753): the far white bank under the limb: white lumps at 4737 and 4739, smooth pale bands from 4743, pale blue ground at 4749.
+  Heights 0.1000 at 4738, 0.0859 at 4740, 0.0634 at 4744, 0.0545 at 4746, 0.0473 at 4748. Which line sets the rate: not looked
+  for. `NDw` 4744 against `Z5d` 4744 mean 4.779, against `ZS` 4744 mean 4.367: no reading, those were drawn at another capture rate
+  (the same frame differs with the rate, 10:43).
+- The sky over the limb on `NDw` (pixels whose ray passes the globe at more than 1.03 radii, by my poses), px | mean | median |
+  90th | 99th | mean RGB: 4728 13561 | 8.79 | 8.3 | 12.7 | 17.3 | 2.5, 8.7, 15.2; 4732 15221 | 12.78 | 12.3 | 14.3 | 19.6 | 3.3,
+  13.5, 21.5; 4736 16185 | 12.62 | 12.3 | 14.3 | 18.7 | 3.2, 13.3, 21.3; 4738 16169 | 11.75 | 11.3 | 13.3 | 18.7 | 3.1, 12.4,
+  19.7; 4740 15677 | 8.22 | 7.7 | 11.3 | 17.3 | 2.7, 8.9, 13.1; 4741 15223 | 6.52 | 6.3 | 8.3 | 14.3 | 2.4, 7.1, 10.0; 4742 14616
+  | 5.78 | 5.3 | 7.3 | 14.0 | 2.3, 6.4, 8.6; 4743 13831 | 5.62 | 5.3 | 7.3 | 11.3 | 2.3, 6.3, 8.3; 4744 12879 | 6.96 | 6.3 | 9.7 |
+  22.0 | 3.2, 7.5, 10.2; 4745 11723 | 11.64 | 10.3 | 17.0 | 49.3 | 6.6, 11.9, 16.5; 4746 10407 | 16.73 | 14.7 | 23.3 | 64.3 |
+  10.5, 16.6, 23.1; 4748 7543 | 18.82 | 16.7 | 23.3 | 64.1 | 12.7, 18.3, 25.4; 4750 4554 | 18.87 | 17.0 | 23.0 | 63.2 | 12.9,
+  18.1, 25.6; from 4754 under 500 px. It darkens from 4738 to 4743 and brightens to a warmer grey from 4744 to 4746. The same
+  stars stand in 4744 of `Z5d` and `ZS`. Not separated: the pictures fixed on the sky passing by the turn, or a change in place
+  (skytrack.py finds no patch there; a plain template match of my own took pieces of the limb and gave nothing).
+- Sheets, every whole frame looked at: `/tmp/ndw-s4.jpg` (4730 to 4749), `/tmp/ndw-s5.jpg` (4750 to 4768): the streamer grows from
+  the thin line with knots into the chain of heaps without a jump; the white bank fades between 4737 and 4747; no border.
+- 15:38: `git log` printed "stopped background processes this command left running" again; the render went on (4 processes).
+
+## 26 Nov, 15:41 UTC: the look, the dive of the redraw whole, to the Builder (word for word; attached look-1353.jpg, ndw-s4.jpg, ndw-s5.jpg, pat-4745.jpg, pop-4713.jpg; low priority)
+
+> NEPTUNE, 15:41 UTC: THE LOOK, the dive of the redraw whole. No name; no answer needed. One new red by my proxy.
+>
+> Pictures: 1 look-1353.jpg: THE LOOK, 4860 beside the approved image (as at 15:13; not drawn since). 2 ndw-s4.jpg, 3 ndw-s5.jpg: the redraw, every whole frame 4730 to 4768. 4 pat-4745.jpg: the place of the pattern, 4737 to 4753, and 4744 of two older states under it. 5 pop-4713.jpg: the place of the pop, 4711 to 4715.
+>
+> THE REDRAW: the dive ended 15:33:00 (201 frames, 823bb4cd, 960 wide, draft, half steps); the rise runs, 15 of 179 frames at 15:40 (at 4955), about 40 s a frame in its low part. End now about 16:20.
+>
+> THE ROWS OF THE DIVE, my proxy on 960 px frames (STATED; the whole dive in one run, split as your reader splits it), mine | main's row:
+> - dive 1 (4668 to 4724.5): pattern 0.3732 at 4707 | 1.3008. Pop 1.0932 at 4713.5 | 1.0405. Level step 0.1728 at 4704.5 | 0.4864.
+> - dive 2 (4725 to 4768): pattern 0.4695 at 4745 | 1.1468. Pop 1.0790 at 4746.5 | 1.0657. Level step 0.1086 at 4732.5 | 0.1051.
+> RED, new: the pattern of dive 2 is over the limit 0.45 by my proxy: 0.4517 at 4744, 0.4695 at 4745 (0.4359 at 4743, 0.4330 at 4746). Under main's row, over the limit. On Z5 (10:43) the same frames read 0.3854 and 0.3784 at the same place, so it came after Z5; my sample of 12:33 showed the commits of 12:03 to 12:15 (the cure of the two faults of 4860) moving 4744 (4.41 percent of the pixels by more than 8 levels, the bank whiter). It was in 2b9dbf28, unread. The place: 598, 138 of 960 px, the far white bank under the limb (picture 4): white lumps at 4737 and 4739, smooth pale bands from 4743, pale blue ground at 4749. It is the map's cloud layer losing its lumps as the eye comes down (heights 0.100 at 4738, 0.0634 at 4744, 0.0545 at 4746), by height and not by the clock. Which line of mine sets the rate there: not looked for yet. No cure in this name; your reader at 1920 has the last word on the number.
+> Three lines stand over main's row by less than a twentieth of the limit: the pop of dive 1 (0.0527 over; its place below), the pop of dive 2 (0.0133 over; its hump stands where the eye passes 0.05 radii, the veil's upper end, as named at 10:43) and the level step of dive 2 (0.0035 over).
+>
+> THE POP OF DIVE 1 FROM ITS PLACE (MAIL 1475 g): the block with the largest pop changes place every frame over the hump 4710.5 to 4715: column 3 row 1 (of 16 by 9) at 4710.5 to 4711.5; column 12 row 3 at 4712, 4712.5 and 4713.5; column 9 row 8 at 4713; column 3 row 7 at 4714; column 2 row 0 at 4714.5 and 4715. At the top, 4713.5, it is x 1440 to 1560, y 360 to 480 of 1920: the lower edge of the white bank over the dark oval sliding through the block (the block's mean 174.3 at 4711, 149.5 at 4713, 140.5 at 4713.5, 112.3 at 4715). By eye (picture 5) the bank keeps its form and nothing comes in. Over the same frames the frame's mean level climbs from 79.20 (4709.5) to 81.88 (4714.5) and then stands: the frames in which the night side leaves the frame at the lower left. So I read it as the picture's own content passing (a bright edge, the terminator), not a law of mine with an end there; read by place, no control possible that I know.
+>
+> SEEN on the sheets 4730 to 4768 (every whole frame, at the sheets' size): the streamer grows from the thin line with knots into the chain of heaps without a jump; the white bank fades between 4737 and 4747 (the red above); no border. One thing read and not separated: the sky over the limb (rays passing over 1.03 radii), median level 12.3 at 4736, 11.3 at 4738, 7.7 at 4740, 5.3 at 4742 and 4743, 6.3 at 4744, 10.3 at 4745, 14.7 at 4746, 16.7 at 4748; mean RGB 2.3, 6.3, 8.3 at 4743 and 10.5, 16.6, 23.1 at 4746. It darkens and then brightens to a warmer grey within three frames. The same stars stand in 4744 of Z5 and of cc6cdad9 (picture 4, bottom row), so it is not new. Whether it is the sky's pictures passing by the turn alone, as they are built to, I have not proven on these frames (my star matching finds no patch there). Named.
+>
+> PATH (MAIL 1510): npx tsx tools/smooth.ts --stop neptune --only path on 823bb4cd: "smooth neptune: green." It is run again on the name's sha, with all nine stops, since the entry lies in the handover's config.
+>
+> THE LOOK (picture 1): 4860, 16x9 draft, 98.2 s: G17 0.972 / 0.659 (main 0.934 / 0.549), plain 21.144 (main 22.986).
+>
+> handover_engineer's tip 04b50f90 (the entry on the fourth cut) is read; I merge it and origin main after the redraw. NEXT as at 15:13.
+
+## 26 Nov, 15:41 to 16:04 UTC: lab log (the sky by place; the rise of the redraw; the redraw whole)
+
+- 15:42 sheets of the entry of the dive, every whole frame 4684 to 4701 (`/tmp/ndw-e1.jpg`, `/tmp/ndw-e2.jpg`), looked at: the
+  globe grows evenly, the moon passes behind the limb at 4696 to 4699, the Sun stands; no step, no border, nothing comes in, at
+  the sheets' size (466 px a frame).
+- 15:43 the sky over the limb by place (`NDw`, the sky's pixels over 1.03 radii, the median blue by cell of 48 px; the sky is the
+  frame's top right corner, x 768 to 960, y 0 to 96). Top row of cells left to right, then the row under it:
+  4736 21, 21, 21, 21 | 21, 21. 4738 21, 21, 21, 20 | 17, 16. 4739 21, 19, 17, 16 | 11, 12. 4740 18, 14, 11, 12 | 9, 10. 4741 12,
+  9, 8, 10 | 8, 9. 4742 9, 8, 8, 9 | 8. 4743 8, 8, 8, 8 | 8. 4744 9, 9, 8, 8 | 10. 4745 16, 15, 12, 9 | 17. 4746 20, 20, 16.
+  So in each frame from 4738 to 4745 two levels stand side by side and the border between them moves across the corner from the
+  lower right to the upper left: a thing of place passing, not a weight on the whole sky. The levels are the terrain card's own
+  as sky.json has them (`made.terrain.floor`: far [3, 13, 21], near [2, 6, 8], between 42 and 28 degrees from its aim; then the
+  close picture's plate in its middle; my means: 3.2, 13.3, 21.3 at 4736; 2.3, 6.3, 8.3 at 4743; 12.9, 18.1, 25.6 at 4750, and
+  sky_builder read [12.9, 19.3, 27.9] at 4860). Read by place and by the file's numbers; not by a control with the turn held.
+  My word "warmer grey" in the look of 15:41 is the close picture's blue grey sky; it is not the engine's warm cloud.
+- 15:46 the blue dot and the green read again on the 1.0 state's 4860 (`TP1`, 1920 draft; `/tmp/dot.py`, new: the 9 by 9 box at 1177,
+  741 against the ring of 25 by 25 round it): box 52.9, 98.5, 153.2 | ring 50.0, 95.0, 143.8 | box less ring +2.9, +3.5, +9.4; the
+  sha's (`N23`) the same numbers; main's +1.8, +2.5, +2.8. Green (`/tmp/tint2.py TP1`): largest 3.5, over 3 at 4 px of 136872, as on
+  the sha.
+- 15:47 to 16:00 the rise of the redraw, every whole frame looked at as it came (`/tmp/ndx-s1.jpg` 4948 to 4962, `/tmp/ndx-s2.jpg`
+  4963 to 4977, `/tmp/ndx-s3.jpg` 4978 to 4997, `/tmp/ndx-b1.jpg` 4971 to 4979 larger): the bank and the whirl shrink evenly; pale
+  soft patches come in over the frame's lower edge from 4973 on the dim side and stand to about 4990, sharper as the eye rises; a
+  small round soft white blob comes in over the lower edge at 4976 and rides with the globe (the map's own small cloud at its far
+  grain; the white bits named at 4975 to 5000 before); the ring's faint arcs at the right from 4990. No step and no border seen
+  at the sheets' size.
+- 16:03:14 THE REDRAW IS WHOLE (`NDx` 179 frames, 15:33:00 to 16:03:14; the whole redraw 14:56:39 to 16:03:14). The rise 5002 to
+  5008 at half steps: 13 of 13 frames the same bytes as `SB` (2b9dbf28 at 960).
+- 16:03 one slip of mine: the reader of the rise's rows started twice (the first start with the `&` outside the subshell was
+  reported stopped, but lived); the first was killed, the second runs alone. No file of the tree touched by it.
+- 16:03:55 the how text of the cirrus footprint made exact by the frame's size (25b5b4764, `/tmp/setpx3.py`, by text replacement;
+  px 1.0 and height [1.5, 2.3] unchanged).
