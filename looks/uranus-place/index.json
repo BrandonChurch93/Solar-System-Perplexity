@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T01:25:50.627Z",
- "head": "6ef232eabadec5b9411bd199613ec3014de9fa8e",
- "note": "6ef232ea rise part 1 row: 1.37 from 4403, smaller than main's 1.60, larger than the name's 1.29: not a name yet; control with a smooth light table queued",
+ "pushed": "2026-11-26T01:52:33.546Z",
+ "head": "766c925834b1afa49df5bf5e63c13f01ea6b4c03",
+ "note": "control LS1: the step of the light table is the cause of the rise's red under the limb (1.37 to 0.85 from 4403) and the hold's match gets better (3.731); the table law goes on as its own commit on main a4944f12",
  "looks": [
+  {
+   "time": "2026-11-26T01:52:29.381Z",
+   "file": "20261126015229381-note-limb-4035-ls1-4x.jpg",
+   "source": "../../../../tmp/n65/limb-4035-ls1-4x.png",
+   "kind": "note",
+   "label": "limb at 4035, final tier, 4x: approved hero, RC 6ef232ea (match 3.737), control LS1 (match 3.731; main 3.743)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T01:52:28.627Z",
+   "file": "20261126015228627-note-ls1-rise-pairs.jpg",
+   "source": "../../../../tmp/n65/ls1-rise-pairs.png",
+   "kind": "note",
+   "label": "control LS1 (light table smooth across view cosine 0 to 0.157): 4399, 4403, 4411, left RC 6ef232ea, right LS1; chain reads 0.94 to 0.63 and 1.37 to 0.85",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T01:25:45.683Z",
    "file": "20261126012545683-note-uranus-rise-p1of2-changes.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n61/truth2-HA-8798.jpg",
    "kind": "note",
    "label": "uranus 4399 to 4407 control HA: reader carry against ground carry",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:53:44.844Z",
-   "file": "20261125215344844-note-pat-RIM2-8798.jpg",
-   "source": "../../../../tmp/n60/pat-RIM2-8798.jpg",
-   "kind": "note",
-   "label": "chain read control RIM2 from 4399: 0.94 on 0.10 of the frame (B1 1.60 on 0.13), share over the limit 0.12 (B1 0.29)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:53:43.931Z",
-   "file": "20261125215343931-note-rim2-4399-crops.jpg",
-   "source": "../../../../tmp/n60/rim2-4399-crops.jpg",
-   "kind": "note",
-   "label": "far ground under the limb 4399 to 4407, left B1, right control RIM2 (rim as light of the air, in globe and deck): wisps at the limb calmer",
    "stop": "uranus"
   }
  ]
