@@ -842,7 +842,9 @@ def changes(job):
 
 
 def panel(job):
-    """Rows of three: a frame, the next one, and what is left of their difference once the motion is taken out, times the gain."""
+    """Rows of three: a frame, the next one, and what is left of their difference once the motion is taken out, times the gain. A pair with
+    a ring (x, y, radius in px of the full size) has that ring drawn on all three, and with a line for it a second row of the same three at
+    the frames' own pixels about the ring."""
     scale = job.get('scale', 0.25)
     gain = job.get('gain', 8)
     rows = []
@@ -854,7 +856,17 @@ def panel(job):
         ca = np.asarray(Image.open(item['a']).convert('RGB').resize((a.shape[1], a.shape[0]), Image.LANCZOS))
         cb = np.asarray(Image.open(item['b']).convert('RGB').resize((a.shape[1], a.shape[0]), Image.LANCZOS))
         dd = np.repeat(np.clip(d * gain, 0, 255).astype(np.uint8)[..., None], 3, axis=2)
+        if item.get('ring'):
+            x, y, radius = item['ring']
+            ca, cb, dd = (cv2.circle(np.array(c), (round(x * scale), round(y * scale)), max(round(radius * scale), 3) + 2, (255, 255, 255), 1, cv2.LINE_AA) for c in (ca, cb, dd))
         rows.append((item['label'], np.concatenate([ca, cb, dd], axis=1)))
+        if item.get('ring') and item.get('near'):
+            h, w = a.shape
+            fa, fb = (np.asarray(Image.open(item[key]).convert('RGB')) for key in ('a', 'b'))
+            fd = np.repeat(cv2.resize(np.clip(d * gain, 0, 255).astype(np.uint8), (fa.shape[1], fa.shape[0]), interpolation=cv2.INTER_NEAREST)[..., None], 3, axis=2)
+            x0 = int(min(max(round(x) - w // 2, 0), fa.shape[1] - w))
+            y0 = int(min(max(round(y) - h // 2, 0), fa.shape[0] - h))
+            rows.append((item['near'], np.concatenate([cv2.circle(np.array(c[y0:y0 + h, x0:x0 + w]), (round(x) - x0, round(y) - y0), round(radius) + 4, (255, 255, 255), 1, cv2.LINE_AA) for c in (fa, fb, fd)], axis=1)))
     if not rows:
         return {'written': False}
     return {'written': True, 'size': write_sheet(rows, job['output'], job.get('limit'))}
