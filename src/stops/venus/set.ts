@@ -303,7 +303,7 @@ export const createSet: SetFactory = async (ctx) => {
       const groundHeight = Math.log(Math.max(camera.length() - 1, 1e-4))
       const toneShare = 1 - smooth((groundHeight - Math.log(place.tone.heights[0])) / (Math.log(place.tone.heights[1]) - Math.log(place.tone.heights[0])))
       const underAt = place.ground.tone.under[state.time > terrainMid ? 'rise' : 'dive']
-      const groundTone = { look: [place.tone.air, toneShare, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], ease: place.tone.ease[state.time > terrainMid ? 'rise' : 'dive'], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
+      const groundTone = { look: [place.tone.air, toneShare, place.tone.cos[0], place.tone.cos[1]] as [number, number, number, number], power: place.tone.power, broad: place.ground.tone.broad, most: place.tone.live.most, contrast: place.tone.live.contrast, colour: place.tone.live.colour, under: underAt.map((v, i) => v * Math.pow(place.dusk.gain * place.dusk.tint[i]!, groundPl.dusk - 1)) as [number, number, number] }
       // Inside the frame of T true and skin hold in full above the heights of ground.release and are let go at T, where the globe side is
       // the surface view. The border of the ground and its far limit outside that frame stand still (plates.json, ground.frustum).
       // The near ground, which the camera of T sees from above (ground.keep), keeps all of its picture at every height, so no crest of
@@ -328,7 +328,6 @@ export const createSet: SetFactory = async (ctx) => {
       const after = state.time > terrainMid
       for (let i = 0; i < placeTextures.length; i++) gu['uPlace' + i]!.value = (after ? placeRise : placeTextures)[i]
       ;(gu.uToneEye!.value as THREE.Vector3).copy(bodyEyeAtT(after ? 'rise' : 'dive'))
-      gu.uToneEase!.value = place.tone.ease[after ? 'rise' : 'dive']
       ;(gu.uToneLook!.value as THREE.Vector4).y = byHeight(place.tone.heights)
       // The far deck of T: all of it at T, none from far.heights times the height of T upward (plates.json, atT.far.clear).
       const farMap = farMaps[after ? 'rise' : 'dive']
