@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T17:31:25.031Z",
+ "pushed": "2026-11-26T17:52:59.281Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune rise onset with the entry: drafts 4951 to 4954 drawn, review 4953 seen, review 4952 drawing",
+ "note": "Neptune rise onset with the entry: review 4952 beside review 4953 in boxes that follow the content; no step named, nothing doubled",
  "looks": [
   {
-   "time": "2026-11-26T17:30:21.921Z",
-   "file": "20261126173021921-note-d51-55-follow.jpg",
-   "source": "../../../../tmp/nep/see/d51-55-follow.png",
+   "time": "2026-11-26T17:52:58.040Z",
+   "file": "20261126175258040-note-p53d-53r.jpg",
+   "source": "../../../../tmp/nep/see/p53d-53r.png",
    "kind": "note",
-   "label": "Neptune rise onset, drafts 4955 back to 4951 in boxes that follow the content (small clouds, band): what the review frames are held against"
+   "label": "Neptune 4953, draft beside review (ends 0.475) at 4 to 1: small clouds, band, deck streaks"
   },
   {
-   "time": "2026-11-26T17:20:36.445Z",
-   "file": "20261126172036445-note-s4953-12.jpg",
-   "source": "../../../../tmp/nep/see/s4953-12.png",
+   "time": "2026-11-26T17:52:56.695Z",
+   "file": "20261126175256695-note-p52r-53r.jpg",
+   "source": "../../../../tmp/nep/see/p52r-53r.png",
    "kind": "note",
-   "label": "4953 review, the rise's onset, tile 12 at 1 to 1"
+   "label": "Neptune rise onset, review 4952 (ends 0.105) beside review 4953 (ends 0.475) at 4 to 1 in four boxes that follow the content: small clouds, band, lower clouds, deck streaks"
   },
   {
-   "time": "2026-11-26T17:20:35.181Z",
-   "file": "20261126172035181-note-s4953-11.jpg",
-   "source": "../../../../tmp/nep/see/s4953-11.png",
+   "time": "2026-11-26T17:52:55.467Z",
+   "file": "20261126175255467-note-s4952-12.jpg",
+   "source": "../../../../tmp/nep/see/s4952-12.png",
    "kind": "note",
-   "label": "4953 review, the rise's onset, tile 11 at 1 to 1"
+   "label": "4952 review, the rise's onset, tile 12 at 1 to 1"
   },
   {
-   "time": "2026-11-26T17:20:33.977Z",
-   "file": "20261126172033977-note-s4953-10.jpg",
-   "source": "../../../../tmp/nep/see/s4953-10.png",
+   "time": "2026-11-26T17:52:54.445Z",
+   "file": "20261126175254445-note-s4952-11.jpg",
+   "source": "../../../../tmp/nep/see/s4952-11.png",
    "kind": "note",
-   "label": "4953 review, the rise's onset, tile 10 at 1 to 1"
+   "label": "4952 review, the rise's onset, tile 11 at 1 to 1"
   },
   {
-   "time": "2026-11-26T17:20:32.716Z",
-   "file": "20261126172032716-note-s4953-02.jpg",
-   "source": "../../../../tmp/nep/see/s4953-02.png",
+   "time": "2026-11-26T17:52:53.351Z",
+   "file": "20261126175253351-note-s4952-10.jpg",
+   "source": "../../../../tmp/nep/see/s4952-10.png",
    "kind": "note",
-   "label": "4953 review, the rise's onset, tile 02 at 1 to 1"
+   "label": "4952 review, the rise's onset, tile 10 at 1 to 1"
   },
   {
-   "time": "2026-11-26T17:20:31.508Z",
-   "file": "20261126172031508-note-s4953-01.jpg",
-   "source": "../../../../tmp/nep/see/s4953-01.png",
+   "time": "2026-11-26T17:52:52.286Z",
+   "file": "20261126175252286-note-s4952-02.jpg",
+   "source": "../../../../tmp/nep/see/s4952-02.png",
    "kind": "note",
-   "label": "4953 review, the rise's onset, tile 01 at 1 to 1"
+   "label": "4952 review, the rise's onset, tile 02 at 1 to 1"
   },
   {
-   "time": "2026-11-26T17:20:30.231Z",
-   "file": "20261126172030231-note-s4953-00.jpg",
-   "source": "../../../../tmp/nep/see/s4953-00.png",
+   "time": "2026-11-26T17:52:51.086Z",
+   "file": "20261126175251086-note-s4952-01.jpg",
+   "source": "../../../../tmp/nep/see/s4952-01.png",
    "kind": "note",
-   "label": "4953 review, the rise's onset, tile 00 at 1 to 1"
+   "label": "4952 review, the rise's onset, tile 01 at 1 to 1"
   },
   {
-   "time": "2026-11-26T17:20:28.836Z",
-   "file": "20261126172028836-note-f04953.jpg",
-   "source": "../t-arr/out/work/blur/ne-on/f04953.png",
+   "time": "2026-11-26T17:52:49.897Z",
+   "file": "20261126175249897-note-s4952-00.jpg",
+   "source": "../../../../tmp/nep/see/s4952-00.png",
    "kind": "note",
-   "label": "Neptune 4953 review tier, 22 samples, the rise's onset, the entry's share 0.475 (tree: Neptune's old tip with the cure and the entry)"
+   "label": "4952 review, the rise's onset, tile 00 at 1 to 1"
   }
  ]
 }
