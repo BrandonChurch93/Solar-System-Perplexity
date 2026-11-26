@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T01:12:51.816Z",
+ "pushed": "2026-11-26T01:25:50.627Z",
  "head": "6ef232eabadec5b9411bd199613ec3014de9fa8e",
- "note": "6ef232ea RC proof: limb at 4035 and band at 4290 at the final tier beside main and the approved; rise rows drawing",
+ "note": "6ef232ea rise part 1 row: 1.37 from 4403, smaller than main's 1.60, larger than the name's 1.29: not a name yet; control with a smooth light table queued",
  "looks": [
+  {
+   "time": "2026-11-26T01:25:45.683Z",
+   "file": "20261126012545683-note-uranus-rise-p1of2-changes.jpg",
+   "source": "../../../../tmp/n65/out/r1/uranus-rise-p1of2-changes.png",
+   "kind": "note",
+   "label": "6ef232ea tool row, rise part 1 of 2: red, pattern 1.37 from 4403 (name 1.29 from 4387, main and B1 1.60 from 4399); red sits in the far ground under the limb",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T01:12:50.399Z",
    "file": "20261126011250399-note-final-4290-band-a.jpg",
@@ -240,14 +248,6 @@
    "source": "../../../../tmp/n60/rim2-4399-crops.jpg",
    "kind": "note",
    "label": "far ground under the limb 4399 to 4407, left B1, right control RIM2 (rim as light of the air, in globe and deck): wisps at the limb calmer",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:48:15.074Z",
-   "file": "20261125214815074-note-ha-4399-crops.jpg",
-   "source": "../../../../tmp/n60/ha-4399-crops.jpg",
-   "kind": "note",
-   "label": "far ground under the limb 4399 to 4407, left B1, right control HA: same wisps at the limb in both; coloured streak grain in the middle ground of B1 is gone in HA",
    "stop": "uranus"
   }
  ]
