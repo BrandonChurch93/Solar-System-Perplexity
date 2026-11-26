@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T16:29:11.267Z",
+ "pushed": "2026-11-26T16:54:42.099Z",
  "head": "7f13289598cb81abbdd2b81d5d9da877e3abbcff",
- "note": "MAIL 1508: the cure 7f132895 (local) is path green; its dive rows by the reader are rendering, part 1 of 2; hold frames to 3539 and a half are main's bytes",
+ "note": "cure of the four red path lines at the dive: part 1 of the reader green, its pattern line 0.059 over main's at the limb, looking for the cause; part 2 rendering",
  "looks": [
+  {
+   "time": "2026-11-26T16:54:41.214Z",
+   "file": "20261126165441214-note-limb2_cure_3569.jpg",
+   "source": "../../../../tmp/v/p1508/sheets/limb2_cure_3569.jpg",
+   "kind": "note",
+   "label": "the cure 7f132895, frames 3569 to 3584 at the globe's right limb where the far ring arm goes behind it (x 1340 to 1560, y 400 to 580, twice the size): the place of the reader's largest pattern row of dive part 1 (0.3528 at 3573 + 1/2, main 0.2936 at 3574 + 1/2, limit 0.45)"
+  },
   {
    "time": "2026-11-26T16:29:04.558Z",
    "file": "20261126162904558-note-pair_3550.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/rigid/T1/t20/tip_pair.png",
    "kind": "note",
    "label": "the lit ring tip at the globe shadow, cure left, main right, 3858.5, 3862, 3866.5, full size crop"
-  },
-  {
-   "time": "2026-11-26T14:38:10.249Z",
-   "file": "20261126143810249-note-lag_chart.jpg",
-   "source": "../../../../tmp/v/rigid/T1/t20/lag_chart.png",
-   "kind": "note",
-   "label": "rise rows 3858.5 to 3862.5, cure against main over the placements: the reader number, its lag behind the ring plane true way along the lanes, the number against the lag"
   }
  ]
 }
