@@ -7,23 +7,20 @@
   ],
   "high": 0.03,
   "low": 0.0022,
-  "hazeDay": [
-    0.4,
-    0.4,
-    0.4
-  ],
-  "hazeDepth": 0.25,
-  "shellDay": [
-    0.8,
-    0.8,
-    0.8
-  ],
-  "shellTwilight": [
-    1,
-    1,
-    1
-  ],
-  "shellDepth": 0.5,
+  "air": {
+    "note": "The far air of the close view on the globe side, as whole values at the weight near of 1 (until 26 November they were the descent values of look.ts times factors of this file; the numbers are those products). Above `high` the air of the globe is the hold's (haze.json) at every height under the tint; from `high` down each value goes from the hold's to this one by the weight near. Still keyed to the eye's height, and open: the cure is the air law of the engine, one source for the set and the globe.",
+    "hazeDay": [0.16, 0.116, 0.088],
+    "hazeDepth": 0.02475,
+    "edge": [-0.3, 0.12],
+    "shellDay": [0.336, 0.256, 0.208],
+    "shellTwilight": [0.045, 0.055, 0.075],
+    "shellScaleHeight": 0.00064,
+    "shellDepth": 0.0128
+  },
+  "sun": {
+    "note": "The light on the own ground. The globe's light stands and the body turns 0.9 degrees a second, so the cosine of the sun at the place falls through the stop (0.4708 at the hold 2325, 0.4178 at 2477, 0.3802 at 2580, 0.3421 at 2681, 0.3317 at 2708) and the lit map darkens with it by curve.json. The land plates and the close view's picture carry painted light; they are drawn times curve(cosine now) over curve(refCos), refCos being the cosine at the judged surface frame 2580 at the middle of its shutter at the film's rate (the tone is then 1 there and the frame keeps its picture), so the plates, the picture and the map stand in one light at every frame. MEASURED before it: the factor from plate to map read by the dive (2438 to 2445) and by the rise (2702 to 2710) on the same ground differed by 0.3402, 0.2025, 0.0772 (log, red green blue); the curve gives 0.344, 0.201, 0.073.",
+    "refCos": 0.38013854397642277
+  },
   "glow": {
     "ground": {
       "rightDeg": 45,
@@ -46,7 +43,6 @@
       "power": 3
     }
   },
-  "shellScaleHeight": 0.04,
   "hazeScaleHeight": 0.6,
   "ownGain": {
     "note": "Gain on the levels with their own light (linear look values). tintFollow: how far they follow the descent tint of the lit levels (look.ts descent.tint: a lit level is multiplied with 1 high up and with the tint below descent.low, where the plates were made; 1 follows it in full). dive and rise: a further gain by height above the surface (radii, between entries by log height, held beyond the ends) for the way down and the way up. Measured with owngain.py: see assets-src/mars/PLACE-NOTES.md.",
@@ -87,5 +83,24 @@
       }
     ],
     "tintFollow": 1.0
+  },
+  "grazing": {
+    "note": "The far ground's veil of the close view on the globe side, by the angle of the sight line to the ground (the planet's veil at a grazing sight line, src/bodies/planet.ts: path = exp(-(mu / width) ^ power), the ground gives way to the colour fill by 1 - exp(-depth x near x path); mu is the cosine between the sight line and the vertical of the ground it meets). The close view's picture has its far ground in a pale haze that the globe's air by height cannot give without veiling the near ground too; with this veil the made ground of the place (the land plates) holds the ground itself and not the haze, so from above the far ground is ground. Used only below descent.low of look.ts, where the hold's own veil is out. light, lightRightDeg, lightFrom, lightTo: the veil is lit toward the low Sun of the close view, where the close view's far plateau stands pale: the colour light is added to fill by the place of the ground, none where the ground lies under lightFrom and whole over lightTo, counted as the sine of the ground's distance from the eye of the dive twin at T along the direction lightRightDeg to the right of its heading. The direction lies on the ground and turns with the body; no height and no time weighs it. Found by the side difference at T with the globe's ground alone: dive 11.15 to 10.2, rise 12.94 to 12.0. OUT since 25 November (depth 0; MAIL 1330, 1338): the veil is weighed by near, so it thinned as the eye climbed and the far ground changed its pattern in place with the height (control G, the state 47b75341 with depth 0 alone: the pattern of the rise from 2688 + 1/2 to 2700 + 1/2 fell from a mean of 1.03 to 0.50, main 0.64). The close set now holds the frame at T in both views, so the sides at T stand without it (draft, dive mean 0.003, largest 13; rise mean 0.002, largest 20; with the veil 0.008 and 0.005, the same largest). A veil of the far ground is the air law's to give, by the sight line at every height.",
+    "depth": 0,
+    "width": 0.08,
+    "power": 1.5,
+    "fill": [
+      0.3,
+      0.23,
+      0.17
+    ],
+    "light": [
+      0.5,
+      0.33,
+      0.2
+    ],
+    "lightRightDeg": 70,
+    "lightFrom": 0.003,
+    "lightTo": 0.02
   }
 }

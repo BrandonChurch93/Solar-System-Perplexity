@@ -1,0 +1,21 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 225 km across. Its forms, its light and its darkness are right. The Sun stands low in the upper left (north west). The deep canyon and the ground at the feet of its walls lie in the cast shadow of the walls and are nearly black; only ground that the Sun reaches is lit. The picture is rough: parts of the shadow are flat, even patches with soft or straight outlines, some parts are blurred or smeared, some carry a pattern of tiles and steps, and there are seams where parts of different sharpness meet.
+
+Image 2 is an oblique aerial photograph taken low over the very same land, looking west. It shows the rock, the colours and the air of this land: dark brown and umber layered bedrock, warm orange only where the low Sun strikes, a canyon floor in deep shadow that is nearly black with the ground in it just to be made out.
+
+Task: repaint image 1 as one seamless, sharp nadir orbital photograph of this land, with the same framing, the same scale and north at the top.
+
+1. The middle of image 1 (the square that takes eight nineteenths of its width, centred) is already final. Keep it as it is: every form, every shadow and its brightness. Carry its forms, its light and its shadows on outward, so that no border of that square can be seen.
+
+2. Every form stays exactly where it is and keeps its size and outline: the canyon, its rims, every cliff, ledge, spur, mesa, gully and ridge. Nothing is moved, added or taken away.
+
+3. Light and dark stay where they are. What is dark in image 1 stays just as dark, what is lit stays lit, at the same brightness. Do not brighten the shadows and do not darken the lit ground. The whole picture keeps the brightness of image 1.
+
+4. The shadowed canyon floor and the shadowed feet of the walls are nearly black, with stepped walls, talus and boulders just to be made out in them, as the shadowed floor in image 2. The shadow is one body that follows the canyon: it has the shape of the canyon's floor and of the feet of its walls.
+
+5. The outlines of the shadows become natural: ragged along the ground, following ledges and spurs, cast toward the lower right. Never straight, never a soft blob, never a flat even patch.
+
+6. Seams and blurred, smeared or tiled parts get the same sharp natural rock as the rest, so that no border between parts can be seen.
+
+7. Sharp natural detail everywhere, the same sharpness over the whole picture. No tiles, no blocks, no grid, no rows of equal boulders, no smear, no blur, no streaks, no etched lines, no bright outlines, no blue, no white. No cloud, no water. No new craters.
+
+A photograph from orbit: no horizon, no sky, no text, no border, no vignette.
