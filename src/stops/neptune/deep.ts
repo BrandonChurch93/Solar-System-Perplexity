@@ -1199,14 +1199,17 @@ void main() {
   // light over the fine structure of the ground and hide it. Where the ray ends on no deck the sheet has the Sun's light alone.
   veilLight *= mix(1.0, min(mix(deckDetail.x, 1.0, max(farW, farCover)), uVeilBelow.y), deckHit ? uVeilBelow.x : 0.0);
   vec3 veiled = underAir(deckLight, toHold(veilLight) * (1.0 - veilClear), vec3(veilClear));
-  // What of that sum is the veil's own light, and not the deck seen through it (for the air's law below).
-  // The sum is made in the hold's colours (underAir), and so is the share: the sheet's light over the deck's that comes through it,
-  // each as the hold shows it, ONE number for the three channels. Read in the ground's colours (the law till 26 Nov, 12 h) the
-  // sheet was a thousand times the deck (a power of 2.6 to 3.7 lies between the two) and the share near 1 wherever any sheet
-  // lay: a thin sheet gave the lit deck under it the sheet's gain, and the deck's own azure stood at the hold's full level in
-  // blotches, teal and green where the share was read by channel (the Builder's MAIL 1474, fault 1).
+  // What of that sum is the veil's own light, and what the deck seen through it (for the air's law below). The sum is made in
+  // the hold's colours (underAir), and so are its two parts: the sheet's light and the deck's that comes through it, each as the
+  // hold shows it. veilPart is the sheet's part of the sum by channel, so that each of the two lights keeps its own colour under
+  // its own gain; veilShare is the same as ONE number (the sums of the three), for the air's light in front of them. Read in the
+  // ground's colours (the law till 26 Nov, 12 h) the sheet was a thousand times the deck (a power of 2.6 to 3.7 lies between
+  // the two) and its part near 1 wherever any sheet lay: a thin sheet gave the lit deck under it the sheet's gain, and the deck's
+  // own azure stood at the hold's full level in blotches, teal and green (the Builder's MAIL 1474, fault 1).
   vec3 veilAdd = toHold(veilLight) * (1.0 - veilClear);
-  float veilShare = uVeilOwn > 0.0 ? clamp(dot(veilAdd, vec3(1.0)) / max(dot(toHold(deckLight) * veilClear + veilAdd, vec3(1.0)), 1e-9), 0.0, 1.0) : 0.0;
+  vec3 deckThrough = toHold(deckLight) * veilClear;
+  vec3 veilPart = uVeilOwn > 0.0 ? clamp(veilAdd / max(deckThrough + veilAdd, vec3(1e-9)), 0.0, 1.0) : vec3(0.0);
+  float veilShare = uVeilOwn > 0.0 ? clamp(dot(veilAdd, vec3(1.0)) / max(dot(deckThrough + veilAdd, vec3(1.0)), 1e-9), 0.0, 1.0) : 0.0;
   // The air is light ADDED along the path (MAIL 840 point 4, MAIL 914): L = L0 * T + S * (1 - T), T one number for the three
   // channels, S the lit air's own colour. It is added in the light the film shows at this height: what lies under it and the
   // air's own colour each take the end's grade of the fall alone, and the sum is made after it. Under the grade (a power by
@@ -1279,9 +1282,12 @@ void main() {
     // The veil's own light (deep.json, fan.veil.own): the same for the sheet of ice haze. It lies on the deck by place, beyond the
     // storm and the bank, so the plain there is pale and the near deck, where no sheet lies, stays dark. Its share of the thing's
     // light takes its own gain, the rest the ground's. Own 0: the law till 25 Nov, 16 h, to the bit.
-    // The share is the veil's light over the whole light of the deck with its veil (veilShare, in the hold's colours).
-    vec3 thingGain = uVeilOwn > 0.0 ? mix(deckGain, airGain(kc, thingAir, behind, vec3(uVeilOwn)), veilShare) : deckGain;
-    vec3 airsGain = uHazeLow.w > 0.0 ? airGain(kc, thingAir, behind, vec3(uHazeLow.w)) : cover * cloudGain + (1.0 - cover) * thingGain;
+    // Each of the two lights of the deck with its veil takes its own gain (veilPart, in the hold's colours); the air's light in
+    // front of them the mean of the two by the one number (veilShare) and, over a cirrus, the cirrus's by its cover.
+    vec3 veilGain = airGain(kc, thingAir, behind, vec3(uVeilOwn));
+    vec3 thingGain = uVeilOwn > 0.0 ? mix(deckGain, veilGain, veilPart) : deckGain;
+    vec3 underGain = uVeilOwn > 0.0 ? mix(deckGain, veilGain, veilShare) : deckGain;
+    vec3 airsGain = uHazeLow.w > 0.0 ? airGain(kc, thingAir, behind, vec3(uHazeLow.w)) : cover * cloudGain + (1.0 - cover) * underGain;
     col = deckCol * thingGain + cloudOwn * cloudGain + airCol * airsGain;
   }
   // On the globe the scene ends at a border on the ground: by the angle from the place of what the ray meets (or passes nearest).
