@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T17:59:50.054Z",
+ "pushed": "2026-11-26T18:21:49.702Z",
  "head": "5075e26dc59b7c65c4ba58cded94a3274c82b9cc",
- "note": "the name 5075e26d (the lens cure): the bump of dive part 1 at its place, both trees, consecutive frames and the reader's map",
+ "note": "pose study of 3720 for mail 1521 point 4: trial drafts at lower, nearer eyes with wider lenses beside the approved close",
  "looks": [
+  {
+   "time": "2026-11-26T18:21:49.094Z",
+   "file": "20261126182149094-note-fit3_free.jpg",
+   "source": "../../../../tmp/v/p1518/fit3_free.jpg",
+   "kind": "note",
+   "label": "pose_fit3 free fit (lens 62.06) drawn over the approved close"
+  },
+  {
+   "time": "2026-11-26T18:21:48.502Z",
+   "file": "20261126182148502-note-foot_pair.jpg",
+   "source": "../../../../tmp/v/p1518/foot_pair.jpg",
+   "kind": "note",
+   "label": "the contact line: approved close against main's 3720 draft, the same box x 860 to 1920, y 400 to 860"
+  },
+  {
+   "time": "2026-11-26T18:21:47.946Z",
+   "file": "20261126182147946-note-four_trials.jpg",
+   "source": "../../../../tmp/v/p1521/four_trials.jpg",
+   "kind": "note",
+   "label": "3720 pose study: approved close, trial lens 54, trial lens 58, trial lens 62.06 with the old sheet code at depth 0.05 (drafts, tones not refitted)"
+  },
+  {
+   "time": "2026-11-26T18:21:47.377Z",
+   "file": "20261126182147377-note-three_W.jpg",
+   "source": "../../../../tmp/v/p1521/three_W.jpg",
+   "kind": "note",
+   "label": "3720 pose study: approved close, trial pose W (lens 62.06, eye 0.2149 over the plane, 2.279 from the centre; draft, no sheet, tones not refitted), main's 3720 draft"
+  },
   {
    "time": "2026-11-26T17:58:02.743Z",
    "file": "20261126175802743-note-bump_strip.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/p1518/s3567_final_crops.jpg",
    "kind": "note",
    "label": "3567 FINAL full size crops: approved, main, the lens cure: the far ring at the limb, and the near ring"
-  },
-  {
-   "time": "2026-11-26T17:48:26.225Z",
-   "file": "20261126174826225-note-s3567_final.jpg",
-   "source": "../../../../tmp/v/p1518/s3567_final.jpg",
-   "kind": "note",
-   "label": "3567 FINAL: approved hero, main, the lens cure c8c320b8, their difference (the cure is main seen 0.65 percent larger; lens 34.58 against 34.79 degrees)"
-  },
-  {
-   "time": "2026-11-26T17:40:30.763Z",
-   "file": "20261126174030763-note-s3567_draft.jpg",
-   "source": "../../../../tmp/v/p1518/s3567_draft.jpg",
-   "kind": "note",
-   "label": "3567 draft pair: approved hero, main, the lens cure, their difference (the cure is main seen 0.65 percent larger)"
-  },
-  {
-   "time": "2026-11-26T17:21:42.006Z",
-   "file": "20261126172142006-note-cure_3594.jpg",
-   "source": "../../../../tmp/v/p1508/sheets/cure_3594.jpg",
-   "kind": "note",
-   "label": "lens cure 7f132895, dive drafts every frame from 3594"
-  },
-  {
-   "time": "2026-11-26T17:21:41.387Z",
-   "file": "20261126172141387-note-cure_3582.jpg",
-   "source": "../../../../tmp/v/p1508/sheets/cure_3582.jpg",
-   "kind": "note",
-   "label": "lens cure 7f132895, dive drafts every frame from 3582"
   }
  ]
 }
