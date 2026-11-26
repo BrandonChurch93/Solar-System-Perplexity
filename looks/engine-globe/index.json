@@ -1,9 +1,17 @@
 {
  "folder": "engine-globe",
- "pushed": "2026-11-25T15:22:48.995Z",
- "head": "09f21ce4c09ab3a890b93b46b30776f3ae75c366",
- "note": "15:24 UTC. Crops of the light by height on the Mars scratch. Code at ba0d1fc8, test limits at 09f21ce4 (local). The gate's G2 on 8961dd4f passes here, 838 of 838.",
+ "pushed": "2026-11-26T01:15:49.434Z",
+ "head": "b6ade94bd8a0a7b101fbc4864363c8aad2a6aee5",
+ "note": "01:16 UTC, 26 November. The air law's file as named laid (local); off frames 11 of 11 byte equal, Mars scratch with knots 4 of 4 byte equal. No picture changed.",
  "looks": [
+  {
+   "time": "2026-11-26T01:15:48.160Z",
+   "file": "20261126011548160-note-mars-knots-crops.jpg",
+   "source": "../m1140/mars-knots-crops.jpg",
+   "kind": "note",
+   "label": "No new picture. The air law's file as named (blob b6e3a7ec) is laid: the four Mars scratch stills with knots are byte equal to those before it. These are the crops of 15:24 again.",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-25T15:22:48.155Z",
    "file": "20261125152248155-note-mars-knots-crops.jpg",
@@ -58,14 +66,6 @@
    "source": "../m1072/mars-1072-crops.jpg",
    "kind": "note",
    "label": "Mars dive, air off: what stays. Far ground at 2460 and 2464 against 8 frames later, near ground at 2468 against 8 frames later, 1 to 1 times 3",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-25T12:36:40.860Z",
-   "file": "20261125123640860-note-mars-1072-sheet.jpg",
-   "source": "../m1072/mars-1072-sheet.jpg",
-   "kind": "note",
-   "label": "Mars dive 2458 to 2472, MAIL 1072: 22820b17 against the control with the air off in both frames of each pair; heat is the real pair by the range way",
    "stop": "mars"
   }
  ]
