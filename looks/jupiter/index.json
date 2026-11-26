@@ -1,9 +1,25 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T10:03:25.245Z",
+ "pushed": "2026-11-26T10:31:33.016Z",
  "head": "4dbe61edc35984196177cc34eed003a3ca14b7dc",
- "note": "line B: the cut a53f5fd5 pushed (head 4dbe61ed); the reader runs on the rise rows 3249 to 3262; a cure of the rise in work",
+ "note": "rise: the reader's pattern spikes at 3250 and 3262 sit on the sky line; cure of the spent rays at the horizon prepared, chain 19 (gate, cues, shots on the cut) still running",
  "looks": [
+  {
+   "time": "2026-11-26T10:31:26.416Z",
+   "file": "20261126103126416-note-limbdots-3262.jpg",
+   "source": "../../../../tmp/limbdots-3262.png",
+   "kind": "note",
+   "label": "sky line at 3262, 8 times zoom: relief key left, plate key right; single stair pixels differ",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:31:25.468Z",
+   "file": "20261126103125468-note-rise-slice-changes.jpg",
+   "source": "../../../../tmp/rise-slice-changes.jpg",
+   "kind": "note",
+   "label": "rise slice on the cut 4dbe61ed, rows 3250 + 1/2 and 3262: the pattern spikes sit on the sky line, read on 3 percent of the frame",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T10:03:23.970Z",
    "file": "20261126100323970-note-rise-diff4.jpg",
@@ -69,34 +85,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T08:49:47.082Z",
-   "file": "20261126084947082-frame-f03048.jpg",
-   "source": "out/work/jupiter/frames/r11/f03048.png",
-   "kind": "frame",
-   "label": "jupiter.dive frame 3048, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.dive",
-   "frame": 3048,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-22T18:50:19.517Z",
-   "file": "20261122185019517-job-frame-03296.jpg",
-   "source": "memory",
-   "kind": "job",
-   "label": "jupiter.rise frame 3296, final tier, nograin view, from the running measure job",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3296,
-   "tier": "final",
-   "format": "16x9",
-   "diag": "nograin",
-   "job": "measure"
   }
  ]
 }
