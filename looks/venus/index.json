@@ -1,9 +1,25 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T15:52:11.197Z",
+ "pushed": "2026-11-26T16:25:52.677Z",
  "head": "d055b01cf5277eeefc0c40b37b562dfcc12b9f0a",
- "note": "Venus: the rise's handover with the ease (47736932, main d2637685 merged as d055b01c, proofs running); pale cells at the left border from 1543",
+ "note": "main against the take at the left border of the rise, 1542 to 1552",
  "looks": [
+  {
+   "time": "2026-11-26T16:25:51.908Z",
+   "file": "20261126162551908-note-S2-Mn-left-b.jpg",
+   "source": "../../../../tmp/v/sh/S2-Mn-left-b.jpg",
+   "kind": "note",
+   "label": "rise 1547 to 1552, the same box: main above, the take below; the same forms, the pale cells pass and the ground turns smooth tan from 1548 on both",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T16:25:51.226Z",
+   "file": "20261126162551226-note-S2-Mn-left-a.jpg",
+   "source": "../../../../tmp/v/sh/S2-Mn-left-a.jpg",
+   "kind": "note",
+   "label": "rise 1542 to 1546, left border x 0 to 240, y 660 to 820, twice: main d2637685 above, the take with the ease of the air share for the rise below; the same forms on both, the pale cells enter from the left border from 1543 on both, the take a little darker",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T15:52:09.998Z",
    "file": "20261126155209998-note-S2-leftmarks.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/sh/S1-1549-a.jpg",
    "kind": "note",
    "label": "Rise 1549, 1550, 1551: the name 35edb711 above, the eased air share (90278525) below; draft frames of the whole rise, not named",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T13:22:55.909Z",
-   "file": "20261126132255909-note-cT1-ll-s.jpg",
-   "source": "../../../../tmp/v/sh/cT1-ll-s.jpg",
-   "kind": "note",
-   "label": "Rise 1541, 1544, 1547, 1550, lower left of the frame (x 0 to 900, y 400 to 1080): the name above, the eased air share below; the dark near ground pales later and without the kink at the handover",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T13:22:55.142Z",
-   "file": "20261126132255142-note-cT1-whole-a-s.jpg",
-   "source": "../../../../tmp/v/sh/cT1-whole-a-s.jpg",
-   "kind": "note",
-   "label": "Rise 1539, 1541, 1543 (upper pair of rows) and 1545, 1547, 1549 (lower pair): the name 35edb711 above, the trial with the eased air share of the tones below; draft slice, not named",
    "stop": "venus"
   }
  ]
