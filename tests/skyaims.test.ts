@@ -34,9 +34,12 @@ describe('two sky aims of a stop', () => {
   const rest = (s: Shot): string => {
     const o = JSON.parse(JSON.stringify(s)) as Record<string, unknown>
     delete o.skyTurn
+    delete o.skyTurnSeen
     delete o.skyPlate
     return JSON.stringify(o)
   }
+  // What a shot's seen turn of the sky takes out of its star turn (Shot.skyTurnSeen, given after a stop's aim for its way in).
+  const stepOut = (s: Shot): THREE.Quaternion => s.skyTurn.clone().invert().multiply(s.skyTurnSeen!)
 
   it('a stop that names one aim has no second turn and its shots carry no plate aim', () => {
     expect(base.sky.dives[id]).toBeUndefined()
@@ -90,6 +93,9 @@ describe('two sky aims of a stop', () => {
       expect(rest(b)).toBe(rest(a))
       expect(b.sun.dir.toArray()).toEqual(a.sun.dir.toArray())
       expect(b.skyQuaternion.toArray()).toEqual(a.skyQuaternion.toArray())
+      // The seen turn is the star turn with a step taken out: it moves with the star turn, and the step is the same.
+      expect(b.skyTurnSeen === undefined).toBe(a.skyTurnSeen === undefined)
+      if (a.skyTurnSeen) expect(deg(stepOut(b), stepOut(a))).toBeLessThan(1e-5)
     }
   })
 
