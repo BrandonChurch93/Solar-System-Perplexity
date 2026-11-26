@@ -1,0 +1,17 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars in low evening light, north at the top, about 41 km across. It is only a rough sketch, made by throwing a low oblique photograph onto the ground, and it is right about where things are and wrong about what they look like.
+
+What the sketch holds. The left half is rocky high ground: a plateau with cliffs, a butte and broken rock, with sunlit orange faces and dark shadowed faces. In the sketch it is smeared into streaks and shards, with false blue, grey and white streaks. Across the top a deep canyon runs from the upper middle to the upper right edge, its floor and near wall in black shadow, drawn as flat grey steps. The right half and the lower right are a flat brown plain covered by an etched pattern of thin wavy lines, darker toward the middle of the picture.
+
+Image 2 is an oblique aerial photograph taken low over the same land, looking west. It shows what this land is made of: dark brown layered bedrock, cliffs with strata, spurs, buttresses, gullies, talus aprons, rubble, and sunlit orange rock faces.
+
+Task: redraw image 1 as one seamless nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. Everything keeps its place and its brightness: where image 1 is dark the land stays dark, where it is lit orange it stays lit orange. The rocky high ground of the left half keeps its outline, its lit faces and its shadowed faces, drawn as real fractured bedrock, ledges and cliffs seen from straight above, sharp and natural.
+
+2. The canyon keeps its course and its width. Draw it as a real canyon seen from above: stepped walls of layered rock, spurs and gullies running down from the rim, talus at the foot, rubble on the floor. Its shadowed side stays very dark but the ground in it can still be made out.
+
+3. The flat etched plain of the right half and the lower right becomes the same land as the left: a rugged rocky plateau top of dark brown bedrock, with fractures, low ledges, shallow gullies, boulder fields and thin drifts of rust coloured sand in the hollows. It joins the rocky ground of the left half without a seam, a step or an edge, and it is as dark as the sketch is there: dark brown near the middle of the picture, a little lighter toward the right and lower edges.
+
+4. No smear, no blur, no streaks, no shards, no flat cells, no etched lines, no bright outlines, no blue, no white. No pure black. No mist, no cloud, no water. No fan, no long parallel lines, nothing that radiates from one point. No round pits, no fields of craters.
+
+Light: a low Sun, soft long shadows, the same everywhere. A photograph from orbit: no horizon, no sky, no text, no border, no vignette.
