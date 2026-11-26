@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T07:44:44.951Z",
- "head": "6ada65b9074e177278cc9892bd418ab213843d64",
- "note": "trial X arch and sky aim, gas from 0.3 clears the veil at 221; sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "pushed": "2026-11-26T08:10:45.039Z",
+ "head": "5088e724c68d6d847dda1280951754e4e2c20051",
+ "note": "final 90 on the merge of main 77a7d410 (not pushed yet): G17 by the gate's reader 1.0125 at 90; sky aim turned so the Milky Way stands behind the arch; gas floor 0.035 clears the veil at 221. sun-near 60 (draft r3): dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T08:10:39.829Z",
+   "file": "20261126081039829-note-r3-sheet.jpg",
+   "source": "../../../../tmp/v/r3-sheet.jpg",
+   "kind": "note",
+   "label": "rise drafts r3 212 to 247 with the gas floor 0.035",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T08:10:39.118Z",
+   "file": "20261126081039118-note-p90-tri.jpg",
+   "source": "../../../../tmp/v/p90-tri.jpg",
+   "kind": "note",
+   "label": "final 90 on the merge of main 77a7d410: approved, main, this state at 1 to 1",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T07:44:43.940Z",
    "file": "20261126074443940-note-r2-221.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/limb-R2.jpg",
    "kind": "note",
    "label": "limb right at 90: approved, main final, trial draft; fringe taller and more even than the approved, to be cut",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:33:37.094Z",
-   "file": "20261126063337094-note-E3-pair.jpg",
-   "source": "../../../../tmp/v/E3-pair.jpg",
-   "kind": "note",
-   "label": "frame 90 draft, arch trial K with the sky aim turned, beside the approved: dome still flat on top, pale straw, right foot hooks; not a name",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:12:51.003Z",
-   "file": "20261126061251003-note-viz-D.jpg",
-   "source": "../../../../tmp/v/viz-D.jpg",
-   "kind": "note",
-   "label": "arch trial D: the approved above, the trial's field lines projected at 90 below (not a render)",
    "stop": "sun"
   }
  ]
