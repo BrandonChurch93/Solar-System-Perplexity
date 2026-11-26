@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T09:51:18.327Z",
+ "pushed": "2026-11-26T10:10:41.046Z",
  "head": "0c012e25580c46cfaaf0b2486fbf9a0c2e3c0f5e",
- "note": "09:52 w83 and w87 refused (height from the map at fine scale gives pits), w86 solved 7.122",
+ "note": "10:12 UTC: state w90 (gas thinned, floor 0.05, heaps in clusters where the map is lit) after two rounds: line (i) 4.292 whole, 3.389 outside the seven cells; lower thirds still read as streaked liquid with heaps too coarse",
  "looks": [
+  {
+   "time": "2026-11-26T10:10:39.702Z",
+   "file": "20261126101039702-note-w90-r2-3150.jpg",
+   "source": "../work/r26/t/w90-r2-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w90 after two rounds of the solve: line (i) 4.292 whole, 3.389 outside the seven cells (main 3.390 and 3.208); bands 0.686 0.820 0.894 0.905, the first red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:10:38.402Z",
+   "file": "20261126101038402-note-w90-r2-err.jpg",
+   "source": "../work/r26/t/w90-r2-err.png",
+   "kind": "note",
+   "label": "3150 state w90 after two rounds, the approved, and where line (i) lies",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:10:37.347Z",
+   "file": "20261126101037347-note-w90-r2-deep.jpg",
+   "source": "../work/r26/t/w90-r2-deep.png",
+   "kind": "note",
+   "label": "3150 lower right at twice the size, state w90 after two rounds above, approved below: my ground is smooth streaks, the glow four soft lamps",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T10:10:36.075Z",
+   "file": "20261126101036075-note-w88-3150.jpg",
+   "source": "../work/r26/t/w88-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w88: heaps only where the map is lit above its surround; line (i) 9.249; boulders in a river, refused",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T09:51:17.229Z",
    "file": "20261126095117229-note-w86-r2-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r26/t/w59-3150.png",
    "kind": "note",
    "label": "w59 3150 preview draft, refused: heaps twice as tall read as crags (7.873 on the w58 scaffold)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T08:09:20.150Z",
-   "file": "20261126080920150-note-w58-r3-3150.jpg",
-   "source": "../work/r26/t/w58-r3-3150.png",
-   "kind": "note",
-   "label": "w58 3150 preview draft after three solve rounds: 7.344 (main 3.390 at this tier), bands green; heaps over the dark ground, the right third far too light",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T07:54:47.202Z",
-   "file": "20261126075447202-note-w57-3150.jpg",
-   "source": "../work/r26/t/w57-3150.png",
-   "kind": "note",
-   "label": "w57 3150 preview draft: rolls down to a third, large heaps over the dark ground, glow still too white (9.669 before its own solve); the base of the next solve",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T07:50:46.969Z",
-   "file": "20261126075046969-note-w55-3150.jpg",
-   "source": "../work/r26/t/w55-3150.png",
-   "kind": "note",
-   "label": "w55 3150 preview draft: large heaps in the dark ground, glow far too white (9.183 before its own solve)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T07:50:45.905Z",
-   "file": "20261126075045905-note-w51-3150.jpg",
-   "source": "../work/r26/t/w51-3150.png",
-   "kind": "note",
-   "label": "w51 3150 preview draft: softer heaps, storm keeps the fine light of the map, rolls still read as cloth (9.388 before its own solve)",
    "stop": "jupiter"
   }
  ]
