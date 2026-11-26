@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T05:11:30.237Z",
- "head": "a64c3d06a47f7ee3553e0f99fe5e73499ca1daac",
- "note": "Variants w7 to w9 of the ground by code at 3150 and w8 with three solve rounds, all preview draft; line (i) still red",
+ "pushed": "2026-11-26T05:21:14.448Z",
+ "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
+ "note": "State for MAIL 1413 (8d5b7cbe, not a name): frames 3100, 3200 and 3150 at preview draft beside main and the approved; line (i) 7.873 against 3.390, red; bands green",
  "looks": [
+  {
+   "time": "2026-11-26T05:12:22.847Z",
+   "file": "20261126051222847-note-state-w8-3150.jpg",
+   "source": "../work/r26/t/state-w8-3150.jpg",
+   "kind": "note",
+   "label": "State for MAIL 1413, frame 3150, preview, draft: this state with three solve rounds (top left), main (top right), approved (bottom). Line (i) 7.873 against main 3.390 at the same tier: red. Bands green",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T05:12:21.231Z",
+   "file": "20261126051221231-note-state-w8-3200.jpg",
+   "source": "../work/r26/t/state-w8-3200.jpg",
+   "kind": "note",
+   "label": "State for MAIL 1413, frame 3200, preview, draft: this state (left) beside main (right). Storm rings read as contour lines with a pit for an eye; right third is blue cloth",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T05:12:19.505Z",
+   "file": "20261126051219505-note-state-w8-3100.jpg",
+   "source": "../work/r26/t/state-w8-3100.jpg",
+   "kind": "note",
+   "label": "State for MAIL 1413, frame 3100, preview, draft: this state (left) beside main (right). Worse than main to my eye: cloth folds and popcorn clusters, no dark deep",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T05:05:18.904Z",
    "file": "20261126050518904-note-w8-r3-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r25/t/u1-3150.png",
    "kind": "note",
    "label": "dev variant u1 at 3150, preview, draft: first film variant with the medium light; reads as cloud; every cell too bright; line (i) 27.548",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:28:05.678Z",
-   "file": "20261126022805678-note-try5.jpg",
-   "source": "../work/r25/lab/try5.png",
-   "kind": "note",
-   "label": "lab study try5 (not the film's shader): the same height field under a surface light (reads as rock) and as a medium lit through itself (reads as cumulus)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:06:19.522Z",
-   "file": "20261126020619522-note-t9-3150.jpg",
-   "source": "../work/r25/t/t9-3150.png",
-   "kind": "note",
-   "label": "t9 3150 preview draft, no solve: billows that swell by a law of the film's time, curds for the balls. Reads as a mountain range, worse than t8; lower left darker than approved by shade alone (11 and 9 against 17 and 27). Line (i) 18.756. Not a state",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:06:18.926Z",
-   "file": "20261126020618926-note-t8-3150.jpg",
-   "source": "../work/r25/t/t8-3150.png",
-   "kind": "note",
-   "label": "t8 3150 preview draft, no solve: two step warp, fibres, smaller cumulus. Reads as folded clay; storm less clear. Line (i) 16.870, bands green (0.86 0.85 0.82 0.85). Not a state",
    "stop": "jupiter"
   }
  ]
