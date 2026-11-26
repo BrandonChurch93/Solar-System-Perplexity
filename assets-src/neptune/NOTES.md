@@ -12195,3 +12195,31 @@ NEPTUNE: LOOK, 19:50 UTC (low; no name, nothing asks an answer today). The tree 
   tools and sheets at its top stay): 3281 MB free. 4 cores. .git is 10545 MB in 62 packs; the objects my refs reach are
   6740 MB on disk (40780 objects; 22629 objects stand in more than one pack), so about 3.8 GB of it is doubles. A full
   repack needs more room than the disk has.
+
+## 26 Nov, 20:56 to 20:58 UTC: lab log (the disk brought over 6000 MB; the repo checked after it)
+
+- 20:56:04 pushed 060adee60 (the NOTES file of the stop, MAIL 1540 and MAIL 1548, the lab log before this one).
+- The stop hash: tools/lib/hashes.ts walks every file under src/stops/neptune, so the new NOTES.md there changes Neptune's
+  stop hash on this branch. Main is untouched by it. Said in the answer.
+- 20:56:28 git multi-pack-index write, then expire: one pack that held nothing of its own went (52 MB): 61 packs, 3331 MB free.
+- 20:56:30 to 20:57:36 one round of git's own staged repack (git multi-pack-index repack --batch-size=1200m, then expire;
+  tool /tmp/midx.sh): packs 61 to 21, the pack folder 10494 to 7493 MB, free 6332 MB. Nothing is removed that stands only
+  once: the objects that stood in more than one pack are written once and the old packs dropped by git itself.
+- 20:57:48 to 20:57:51 the check after it: git fsck --connectivity-only exit 0 with no line but dangling ones; the objects
+  my refs, reflogs and the stash reach: 40789 (40780 before the last commit); HEAD 060adee60; the tree clean; the old stash
+  there (1 line).
+- 4 cores (nproc). Free disk at the answer: 6332 MB.
+- From here: nothing more until a job comes (MAIL 1548 point 5).
+
+## 26 Nov, 20:58 UTC: the answer to MAIL 1548, to the Builder (word for word; sent about 20:58:10; high priority; no picture)
+
+NEPTUNE to MAIL 1548, 20:58 UTC. Branch agent/neptune-place, head 060adee60b4748c8181b192f1d01cf3229b53edd, pushed: yes (plain). Main 262b9a68 is merged in without conflict (MAIL 1540); against it differ only the notebook, two patch files and the new src/stops/neptune/NOTES.md (that file changes Neptune's stop hash on my branch alone, since hashes.ts walks every file of the stop). One notebook commit with this mail's text follows on top.
+THE THREE WORST OPEN ITEMS of Neptune on main as it stands (the name 7a620a39):
+1. Leaving the surface, frames 4973 to 4991: soft pale patches drift in over the lower left edge, a small round white blob sits at the lower edge from 4976, and a short row of dark ticks stands beside it at 4977 to 4985. They look laid on the picture, not like cloud of the planet.
+2. Arriving, frames 4736 to 4747: the same soft patches at the lower left (4736 to 4740), and the far white cloud bank under the planet's edge loses its lumps as the camera comes down (4737 to 4747).
+3. Arriving, frames 4741 to 4745: in the upper right corner of the sky the star field of the surface view slides in with a visible edge, many stars on one side of it and few on the other.
+MEASURED (by me, draft tier, 960 wide): the patches and the blob are the planet's own map's cloud layer in the far look (gone with far.cloud 0 at 4974, 4978, 4982, 4986 and at 4738). In item 1 the pattern by frame is 0.19 to 0.30 against the limit 0.45: it is form, not motion. In item 2 my proxy reads 0.4695 at 4745 at half frames, over 0.45 (0.4091 at 4743 at whole frames). No cure of item 1 leaves 4860 as it is (controls G4, G5 of today; in the NOTES file).
+STATED (by eye, yours and mine, no number): that patches, blob and ticks read as laid on; the edge of star density of item 3. The cause of the ticks is not found.
+UNKNOWN: your reader's rows for dive part 2 and rise part 1 of the name; all three items at final tier and at 3840 wide (I drew them at draft, 960 and 1920 wide, alone).
+POINT 5: free disk 6332 MB (2083 at 20:48; my frame folders removed, and the doubled objects of .git dropped by git's own staged repack, fsck clean, branch and stash whole); 4 cores; npm run build on 262b9a68df0a6bda8d77518539580de554bb0dc5 ends with exit 0 (20:55 UTC; in an export of that sha by git archive kept apart, without out/ and references/, node_modules linked: this repo is shallow and a clone of it would copy the packs; the export is removed again, it and its dist took 2863 MB).
+I do nothing more until a job comes.
