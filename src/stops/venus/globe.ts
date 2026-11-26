@@ -45,7 +45,7 @@ export interface GlobePlace {
   // The look of the place from above (plates.json, tone): the light of the plates, not below floor, raised to the power of the tone map
   // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
   // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
-  tone: { cos: [number, number]; power: number; air: number; live: { sigmaDeg: number; contrast: number; colour: number; gain: number; most: number } }
+  tone: { cos: [number, number]; power: number; air: number; ease: { dive: number; rise: number }; live: { sigmaDeg: number; contrast: number; colour: number; gain: number; most: number } }
   // The far deck of T (plates.json, atT.far.clear): the width of its map in bearing to each side (degrees), the sines of the elevation at
   // its far and its near edge, the octaves its channels hold to each side of 1. The map itself is given with each frame (uFar).
   far: { azDeg: number; sine: [number, number]; octaves: number; law: number }
@@ -176,6 +176,7 @@ uniform float uPlaceOn;
 uniform vec3 uToneEye;
 uniform vec4 uToneLook;
 uniform float uTonePower;
+uniform float uToneEase;
 uniform sampler2D uFar;
 uniform vec4 uFarLook;
 uniform float uFarLow;
@@ -537,7 +538,7 @@ ${PLACE_GLSL}
       vec3 toEye = normalize(spinY(uCamObj, uSpin) - dp);
       vec3 toT = normalize(uToneEye - dp);
       float thin = clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0);
-      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * uToneLook.y * pow(thin * thin * (3.0 - 2.0 * thin), uToneLook.x);
+      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * uToneLook.y * pow(mix(thin, thin * thin * (3.0 - 2.0 * thin), uToneEase), uToneLook.x);
       vec3 seen = light * uPlaceDusk.xyz;
       for (int t = 0; t < (same < 1.0 ? 1 : 0); t++) {
         // From above the plates give the forms alone, over the globe's own colour (under): their light over their own light at the
@@ -649,6 +650,7 @@ export class Globe {
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
         uToneLook: { value: new THREE.Vector4(o.place.tone.air, 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: o.place.tone.power },
+        uToneEase: { value: 0 },
         uFar: { value: o.map }, uFarLook: { value: new THREE.Vector4(0, o.place.far.octaves, 0.5 / THREE.MathUtils.degToRad(o.place.far.azDeg), 1 / (o.place.far.sine[1] - o.place.far.sine[0])) }, uFarLow: { value: o.place.far.sine[0] }, uFarLaw: { value: 1 / o.place.far.law },
         uFarFwd: { value: new THREE.Vector3(0, 0, 1) }, uFarRight: { value: new THREE.Vector3(1, 0, 0) },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) }, uAirField: { value: new THREE.Vector3(1e3, 2e3, 1) },
