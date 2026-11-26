@@ -5,6 +5,7 @@ import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
 import { RING_FIELD_GLSL } from './field'
 import { DUST_AIR_GLSL, DUST_SHADE_GLSL, LAT_TONE_GLSL, latToneUniforms } from './grade'
+import { lensRay } from './ray'
 import skim from './skim.json'
 
 export interface GlobeLook {
@@ -125,6 +126,7 @@ uniform float uVignette;
 uniform float uAspect;
 uniform sampler2D uBodyLight;
 uniform float uEdgePx;
+uniform mat3 uRay;
 uniform float uEdgeLin;
 in vec3 vLocal;
 in vec3 vView;
@@ -206,10 +208,16 @@ float zonal(float lat) {
   return 0.55 * sin(lat * 7.0 + 0.4) + 0.3 * sin(lat * 17.0 + 1.9) + 0.15 * sin(lat * 31.0 + 0.6);
 }
 void main() {
-  vec3 dirS = normalize(vLocal - uCam);
+  // the ray of this pixel comes from the lens alone (uRay, ray.ts), not from the triangle that covers the pixel:
+  // its change from pixel to pixel is then the same on every triangle, and the soft edge at the end, which is
+  // built on that change, no longer shows the slivers of the mesh at the poles and at the outline
+  vec3 dirS = normalize(uRay * vec3(gl_FragCoord.xy, 1.0));
   float along = -dot(uCam, dirS);
   float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
-  vec3 p = normalize(uLimbW > 0.0 ? uCam + dirS * (along - sqrt(max(1.0 - rt * rt, 0.0))) : vLocal);
+  // the surface point is where the ray meets the globe itself. The mesh only says which pixels are shaded: it is
+  // a little larger than the globe at every frame (uInflate, look limbInflate), so its outline never lies on
+  // the globe's outline, and outside the globe's outline nothing of it is drawn (the discard at the end)
+  vec3 p = normalize(uCam + dirS * (along - sqrt(max(1.0 - rt * rt, 0.0))));
   vec3 nL = normalize(vec3(p.x, p.y / uPolar, p.z));
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
@@ -300,8 +308,8 @@ void main() {
   }
   float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView) * (uLimbW > 0.0 && rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vLocal - uCam) : 1.0));
-  if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
+  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView) * (rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vLocal - uCam) : 1.0));
+  if (rt >= 1.0 + dl) discard;
 }`
 
 export function curveUniform(curve: number[][]): THREE.Vector3[] {
@@ -331,7 +339,7 @@ export class Globe {
         uBandMore: { value: new THREE.Vector4(skim.globeFine.pixels[0]!, skim.globeFine.pixels[1]!, skim.globeFine.fall, skim.globeFine.seed) }, uBandTint: { value: new THREE.Vector3().fromArray(skim.globeFine.tint) },
         uTerm: { value: new THREE.Vector3().fromArray(look.termShift) }, uLean: { value: new THREE.Vector4(0, 0, 0, 1) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
-        uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
+        uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 }, uRay: { value: new THREE.Matrix3() },
         uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
         uBodyLight: { value: body },
       },
@@ -339,6 +347,7 @@ export class Globe {
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 384, 192), this.material)
+    lensRay(this.mesh, this.material.uniforms.uRay!.value as THREE.Matrix3)
     this.mesh.scale.set(1, polar, 1)
     this.mesh.renderOrder = 3
   }

@@ -7,6 +7,7 @@
 #   more), in px on screen at that azimuth in this frame. A body whose shape in its own plane does not change with the
 #   camera gives 0 at every sector, whatever the camera does between the two frames.
 #   Printed by frame and zone: sectors read, the middle of the absolute shift, the largest shift with its azimuth.
+#   PLANE_H in the environment (a test, as in ring_edges.py): the height over the ring plane at which the picture is read.
 # SRC: a folder of fNNNN.jpg, or a pattern with %d.
 import sys, json, os, numpy as np
 from PIL import Image
@@ -22,7 +23,7 @@ def sectors(s, pol, sun, file):
     d = np.stack([((xs + 0.5 - 960) / 540) * th, -((ys + 0.5 - 540) / 540) * th, -np.ones(xs.shape)], -1).reshape(-1, 3)
     d = e4.rotq(s['q'], d); e = np.array(s['eye'])
     with np.errstate(divide='ignore', invalid='ignore'):
-        tp = np.where(np.abs(d[:, 1]) > 1e-9, -e[1] / d[:, 1], -1.0)
+        tp = np.where(np.abs(d[:, 1]) > 1e-9, (e4.PLANE_H - e[1]) / d[:, 1], -1.0)
     p = e + d * tp[:, None]; r = np.hypot(p[:, 0], p[:, 2])
     keep = (tp > 0) & (r > 1.25) & (r < 2.62)
     idx = np.flatnonzero(keep); p = p[idx]; r = r[idx]; lum = lum[idx]

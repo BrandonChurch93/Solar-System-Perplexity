@@ -7965,3 +7965,54 @@ Tools of this round, now in assets-src/saturn/code: hold_bands.py (items 1 and 2
 coarse grid of item 2), ring_where.py (item 4, by azimuth; FRAME and ONLY in the environment), ring_circles.py
 (the pictures), lens_table.py (the lens by frame with the edge readings beside), ring_rigid.py (frame against
 the frame before). They read the lens from a JSON made by lens_by_frame.ts and find ring_edges.py beside them.
+
+## 2026-11-26 02:40 to 04:25 UTC: lone pixels in K's dive, three causes found, cured at the cause; main moved (1390, 1399)
+
+Where the lens stands in a frame (do not mix): the finals and the rate 1 frames of many.ts are taken at film
+frame f + 0.25, the reader's rate 2 frames (capture 2f) at f + 0.125. Lens files of lens_by_frame.ts carry the
+offset in their name (s0.25, s0.125).
+
+Measured on K before the cures (bytes of 5abf6762, main a4944f12):
+- Dive, ring_rigid (frame against the frame before, per sector): middle of the absolute shift at most 0.03 px
+  (B inner), 0.02 (B outer), 0.04 (outer) a frame; largest single sector +0.59 px at 3610, the reading's error.
+  The name 7be04230 on the same reading: middle up to 0.33, 0.31, 0.42, largest -1.38 px a frame (outer edge,
+  azimuth 110, 3578).
+- Dive, d312 through each state's own lens: K largest -1.27 levels a frame (latitude 26 to 40 north, 3601 to
+  3602), the name -1.25 (3607 to 3608). K's dive row of the reader was green.
+- The flight in read on a4944f12 is void: main cfabcc52 changes frames 3331 to 3389 (the roll back is out).
+
+03:30: the proof chain on K was stopped, because K's dive had lone pixels, each for one frame at one sample a
+frame (the draft tier shows them at full strength, the final tier thins them 16 times):
+
+1. Five at the right end of the equator (3563, 3568, 3575, 3589, 3598), plane radius 0.98 to 1.01. Cause: the
+   cull of the near half of the kept rings dropped a triangle of the lip only when all three corners lay beyond
+   the circle that splits near from far; a triangle with all three corners inside the globe's disc was kept and
+   one pixel of it came through the soft edge. Cure: kept/rings.ts, the cull drops a triangle whose three
+   corners lie inside the disc as well. Proof on 36 reader frames 3563 to 3598: the five are gone, and against
+   K only 2 to 18 px a frame move by over 4 levels, all at plane radius 0.984 to 1.013.
+2. One on the night limb at 3584 (x 1515, y 660; level 47 over 27). Not a star. Traced by painting the passes
+   one by one (debug renders, /tmp/v/rigid/dbg): the globe's soft edge is one minus the miss distance over its
+   change from pixel to pixel, and that change (dFdx, dFdy of a value interpolated over the mesh) was nearly
+   zero in that one pixel, so the pixel counted as wholly covered.
+3. Dark pixels 4 to 6 px inside the lit north limb, near the pole, in some frames (3581 on the mesh of the
+   globe's own size; 3567 and 3569 on a mesh 1.02 times larger, which I tried first as the cure of 2 and which
+   only moved the fault to other frames).
+
+2 and 3 are one fault. A value interpolated over a triangle is right at the pixel, but its change to the next
+pixel is taken along the plane of that one triangle; where triangles are slivers thinner than a pixel (the 384
+at each pole of the sphere, and every triangle at the outline, where it stands edge on) the change comes out
+wrong by any factor. On the mesh of the globe's own size (K, since the limb fit went out) the whole outline was
+such a place: about 880 px a frame in the edge band differ by over 6 levels between that mesh and the larger
+one.
+
+Cure at the cause (src/stops/saturn/ray.ts, used by kept/globe.ts and globe.ts): the ray of each pixel comes
+from the lens alone, a 3 by 3 matrix laid at each draw from the camera, the mesh's place and the viewport, times
+the pixel's place in the buffer. Its change from pixel to pixel is then the same on every triangle. The surface
+point is where that ray meets the globe; the mesh only says which pixels are shaded and is 1.02 times the globe
+at every frame (look limbInflate), with a discard outside the globe's outline. Proof on the same 36 frames
+(/tmp/v/rigid/CY): no lone pixel at 3584, no dark pixel near the pole in 3567, 3569, 3581, the limb an even
+soft edge; against the larger mesh the disc moves by at most 3 levels, outside the globe by at most 1.
+This changes the globe's edge in every frame of the stop, in both sets, so the finals of K change bytes.
+
+Mail 1390: main cfabcc52 (batch 19 a and b). Mail 1399: the clock; names by 06:45 for the third cut, main is
+5798676c. Disk was at 3.4 GB free at 04:13: cleared old frames of the stopped chain and old copies, 4.4 GB.

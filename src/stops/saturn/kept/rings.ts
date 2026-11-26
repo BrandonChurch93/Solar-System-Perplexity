@@ -749,7 +749,12 @@ export class Rings {
         if (Math.hypot(x[k]! - cx, z[k]! - cz) < rad - eps) inK++
         if (Math.hypot(x[k]!, z[k]!) < 1 - eps) inD++
       }
-      const drop0 = inK === 3 || inD === 3
+      // the far pass leaves out a triangle that lies wholly in the near half or wholly under the globe. One that
+      // lies in the near half and meets the equator's circle stays in it: it holds the lip (the shaded plane
+      // under the globe's own soft edge, drawn behind the globe in both halves), and every other place of it is
+      // taken out by the shader as before. Left out, the lip was missing on the near side of the two ends of the
+      // equator and a star flashed there for one frame as the outline passed it
+      const drop0 = (inK === 3 && far(x, z, 0, 0) > 1 + eps) || inD === 3
       const drop1 = close <= 0 && far(x, z, cx, cz) > rad + eps && far(x, z, 0, 0) > 1 + eps
       for (let pass = 0; pass < 2; pass++) {
         if (pass === 0 ? drop0 : drop1) continue

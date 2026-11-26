@@ -169,7 +169,7 @@ export const createModel: SetFactory = async (ctx) => {
       gu.uNightBlur!.value = (look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * closeGlobe) * foot
       gu.uEdgePx!.value = look.globe.edgePx * foot
       su.uLimbW!.value = gu.uLimbW!.value
-      gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
+      gu.uInflate!.value = look.globe.limbInflate
       // the fine structure of the bands from functions is drawn only when the lens is near enough for any of it
       ;(gu.uBandFine!.value as THREE.Vector3).x = camS.length() - 1 < skimJson.globeFine.reach[1]! ? 1 : 0
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)

@@ -222,7 +222,7 @@ export const createKept: SetFactory = async (ctx) => {
       ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - close.value) * fineShare(camL.y))
       gu.uNightBlur!.value = (look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * close.value) * foot
       su.uLimbW!.value = gu.uLimbW!.value
-      gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
+      gu.uInflate!.value = look.globe.limbInflate
       ;(gu.uSunW!.value as THREE.Vector3).copy(sunS)
       ;(gu.uSunL!.value as THREE.Vector3).copy(sunL)
       ;(gu.uLightL!.value as THREE.Vector3).copy(lightL)
