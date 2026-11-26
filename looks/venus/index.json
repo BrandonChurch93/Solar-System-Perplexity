@@ -1,9 +1,55 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T12:12:06.467Z",
- "head": "7edb1af33ed331acb71201e0862e3ff20440ca4d",
- "note": "the thin band: named against the control without ground, the failed ratio trial F3, the first picture of the far deck as the surface view shows it",
+ "pushed": "2026-11-26T12:36:35.306Z",
+ "head": "4cfbc4acbbfe828414ac475822a5dd8d378f1cf1",
+ "note": "trial Q1: the far deck as a picture; clean at the handover, the reader reads its clearing into the plates 1.21",
  "looks": [
+  {
+   "time": "2026-11-26T12:36:34.544Z",
+   "file": "20261126123634544-note-r1-mid.jpg",
+   "source": "../../../../tmp/v/sh/r1-mid.png",
+   "kind": "note",
+   "label": "trial, not named: the globe side at the film's camera of 1540, still: with the ground (top), without the ground and with the picture of the far deck after one fitting run (middle), their difference times 3 (bottom); middle third of the frame",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T12:36:33.886Z",
+   "file": "20261126123633886-note-Q1-rm-2.jpg",
+   "source": "../../../../tmp/v/sh/Q1-rm-2.jpg",
+   "kind": "note",
+   "label": "trial Q1, not named (the far deck as a picture in place of the plates at the height of T, share by height 1.5 to 12): the named state over the trial, x 1100 to 1700, y 150 to 450, 1552 to 1557: the trial is a white field without forms at 1552 to 1554, then the plates' forms come through it. Reader: 24 of 37 rows over, largest 1.21 at 1550 + 1/2 (named 10 of 37, 0.72)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T12:36:33.250Z",
+   "file": "20261126123633250-note-Q1-rm-1.jpg",
+   "source": "../../../../tmp/v/sh/Q1-rm-1.jpg",
+   "kind": "note",
+   "label": "trial Q1, not named (the far deck as a picture in place of the plates at the height of T, share by height 1.5 to 12): the named state over the trial, x 1100 to 1700, y 150 to 450, 1546 to 1551: the named state goes from the pale deck to the plates' mottled tan field with a blue white patch within 1546 to 1549; the trial stays pale. Reader: 24 of 37 rows over, largest 1.21 at 1550 + 1/2 (named 10 of 37, 0.72)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T12:36:32.625Z",
+   "file": "20261126123632625-note-Q1-rm-0.jpg",
+   "source": "../../../../tmp/v/sh/Q1-rm-0.jpg",
+   "kind": "note",
+   "label": "trial Q1, not named (the far deck as a picture in place of the plates at the height of T, share by height 1.5 to 12): the named state over the trial, x 1100 to 1700, y 150 to 450, 1540 to 1545: equal to the eye, the far band pale and smooth in both. Reader: 24 of 37 rows over, largest 1.21 at 1550 + 1/2 (named 10 of 37, 0.72)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T12:19:50.968Z",
+   "file": "20261126121950968-frame-rise-1540-br1.jpg",
+   "source": "out/work/venus/place/fit/rise-1540-br1.png",
+   "kind": "frame",
+   "label": "venus.rise frame 1540, draft tier, nograin/side=orbit/t=51.333333333333336 view",
+   "stop": "venus",
+   "segment": "venus.rise",
+   "frame": 1540,
+   "tier": "draft",
+   "format": "uhd",
+   "diag": "nograin/side=orbit/t=51.333333333333336",
+   "engine": "d3654c5e8dff3fa6"
+  },
   {
    "time": "2026-11-26T12:12:01.452Z",
    "file": "20261126121201452-note-pic0-view.jpg",
@@ -26,52 +72,6 @@
    "source": "../../../../tmp/v/sh/F3-mid-a.jpg",
    "kind": "note",
    "label": "rise 1540 to 1546, x 660 to 1260: the named state beside the failed trial F3 (ratio map fitted to the ground at 1540): nearly equal, thin white and greenish lines on the limb in F3 at 1545 and 1546",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:11:59.651Z",
-   "file": "20261126121159651-note-PG-mid.jpg",
-   "source": "../../../../tmp/v/sh/PG-mid.jpg",
-   "kind": "note",
-   "label": "rise 1540 to 1548, middle of the frame: the named state over the control without ground and strip, and their difference times 2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T11:58:22.924Z",
-   "file": "20261126115822924-frame-rise-1540-b3.jpg",
-   "source": "out/work/venus/place/fit/rise-1540-b3.png",
-   "kind": "frame",
-   "label": "venus.rise frame 1540, draft tier, nograin/side=orbit/t=51.333333333333336 view",
-   "stop": "venus",
-   "segment": "venus.rise",
-   "frame": 1540,
-   "tier": "draft",
-   "format": "uhd",
-   "diag": "nograin/side=orbit/t=51.333333333333336",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T11:40:31.312Z",
-   "file": "20261126114031312-note-ground-where.jpg",
-   "source": "../../../../tmp/v/sh/ground-where.jpg",
-   "kind": "note",
-   "label": "Where the ground of the surface view is drawn in the named state, 1540 to 1548 (named state against the control without ground)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T11:40:30.709Z",
-   "file": "20261126114030709-note-cEB-right.jpg",
-   "source": "../../../../tmp/v/sh/cEB-right.jpg",
-   "kind": "note",
-   "label": "Control cEB beside the named state, right limb, same frames: a tan band and blue white streaks from 1540 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T11:40:30.103Z",
-   "file": "20261126114030103-note-cEB-mid.jpg",
-   "source": "../../../../tmp/v/sh/cEB-mid.jpg",
-   "kind": "note",
-   "label": "Control cEB beside the named state, middle of the limb, same frames: at 1540 + 1/2 tan bands with pale streaks stand where the named state stays cream",
    "stop": "venus"
   }
  ]
