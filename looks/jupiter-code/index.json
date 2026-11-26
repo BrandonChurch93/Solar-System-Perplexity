@@ -1,9 +1,25 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T14:02:14.145Z",
- "head": "6696b4afe40189fc3cee6d950ef07f34bf11da12",
- "note": "14:03 UTC line A, second tree: wedge from above cured by holding the solve near the view; line (i) at 3150 rises to 3.094 for it",
+ "pushed": "2026-11-26T14:32:47.332Z",
+ "head": "a96e1334fcd22697225a9dfcf691f66bbc5957c9",
+ "note": "line A, second tree only, nothing of it in the repo; wm3 after three solve rounds reads 3.384 at preview draft; dive and rise of the pushed 23087fd3 are red as mailed 13:51",
  "looks": [
+  {
+   "time": "2026-11-26T14:32:46.147Z",
+   "file": "20261126143246147-note-wm3-r3-3150.jpg",
+   "source": "../work/r26/t/wm3-r3-3150.png",
+   "kind": "note",
+   "label": "line A second tree only, 14:32 UTC: 3150 preview draft, state wm3 (thin skin, larger heaps, wide pale bands, no fibre relief) after three solve rounds, line (i) 3.384 whole frame, not at master final yet",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T14:32:45.250Z",
+   "file": "20261126143245250-note-wm1-vs-appr-lowleft.jpg",
+   "source": "../work/r26/t/wm1-vs-appr-lowleft.jpg",
+   "kind": "note",
+   "label": "line A second tree only, 14:20 UTC: lower left at master size, approved beside state wm1 (heaps twice as large); not there, approved has few small crisp lit clusters and curling strands",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T14:02:13.366Z",
    "file": "20261126140213366-note-wj0-r3-3150.jpg",
@@ -178,22 +194,6 @@
    "source": "../work/r26/t/wb5-3150.png",
    "kind": "note",
    "label": "3150 preview draft, state wb5 (not pushed, solve not fitted)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T11:52:32.062Z",
-   "file": "20261126115232062-note-wb5-crop.jpg",
-   "source": "../work/r26/t/wb5-crop.jpg",
-   "kind": "note",
-   "label": "3150 preview draft: wb4 left, wb5 right, lower halves at twice the size",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T11:52:31.442Z",
-   "file": "20261126115231442-note-wb5-vs-appr.jpg",
-   "source": "../work/r26/t/wb5-vs-appr.jpg",
-   "kind": "note",
-   "label": "3150 preview draft: approved left, state wb5 right, lower left at twice the size below (curls and ropes, old solve)",
    "stop": "jupiter"
   }
  ]
