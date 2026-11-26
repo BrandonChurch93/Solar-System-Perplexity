@@ -218,6 +218,7 @@ export interface SkyPatch {
   ring: [number, number, number, number]
   edge: number
   unfold?: [number, number]
+  glare?: boolean
   weight?: (time: number, view: ViewKind) => number
 }
 
