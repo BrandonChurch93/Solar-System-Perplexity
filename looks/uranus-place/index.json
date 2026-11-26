@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T03:43:12.080Z",
+ "pushed": "2026-11-26T04:10:09.454Z",
  "head": "af96ecef9b8dfec30c7cd3e0039e37c1b3396497",
- "note": "03:46 UTC: dive part 2 row of RC running (120 of 146 frames); MAIL 1385 measured by arithmetic: the band is the sky swept by the turn, no plate on it; frames and control queued",
+ "note": "04:10 UTC: MAIL 1385 measured: the band is the film's sky swept by the turn (control: plates off, band unchanged); six frames main beside RC; arcs come out from behind the limb; aim control clears the dive. Rows: dive part 2 of RC 1.48 (name 1.52, main 1.61); rise part 2 running",
  "looks": [
+  {
+   "time": "2026-11-26T04:06:02.801Z",
+   "file": "20261126040602801-note-arcs-only-4138-4152.jpg",
+   "source": "../../../../tmp/n67/arcs-only-4138-4152.jpg",
+   "kind": "note",
+   "label": "MAIL 1385 question 2: the rings' own light (RC minus the same frame with rings off, times 4), 4138 to 4152: the orbit's rings leave by the top edge to 4142; the place's arcs come out from behind the limb inside the frame from 4143 at full weight and reach the top edge at 4147",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T04:06:01.490Z",
+   "file": "20261126040601490-note-am-4138-4176.jpg",
+   "source": "../../../../tmp/n67/am-4138-4176.jpg",
+   "kind": "note",
+   "label": "Control, not committed: surface sky aim (50, -15, 50) in place of (22.6, 20.4, -46.7), dive 4138 to 4176 every second frame at draft: no band in the dive; 4290 moves by at most 1 level; the cost is in the rise (the sky's own turn there 106.8 degrees against 5.0)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T04:05:58.625Z",
+   "file": "20261126040558625-note-ns-ctl.jpg",
+   "source": "../../../../tmp/n67/ns-ctl.jpg",
+   "kind": "note",
+   "label": "Control, RC at 4148, 4150, 4152: left RC, middle with my stop's sky plates, glow and veil off (look.show.sky false), right the difference times 8: the band does not change, only the limb's blue glow does. The band is the film's sky, no plate",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T04:05:53.884Z",
+   "file": "20261126040553884-note-six-main-rc.jpg",
+   "source": "../../../../tmp/n67/six-main-rc.jpg",
+   "kind": "note",
+   "label": "MAIL 1385 question 3: the Builder's six frames of main's film 4140 to 4152 (left) beside RC 6ef232ea at draft (right): the same sky and the same band, in RC it comes 4 frames later and stays longer (4145 to 4156) because the sky's own turn is spread over the whole dive (MAIL 880 point 4)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T03:43:07.228Z",
    "file": "20261126034307228-note-rc-4158-4176.jpg",
@@ -216,38 +248,6 @@
    "source": "../../../../tmp/n64/mid-4399-2x.png",
    "kind": "note",
    "label": "4399 draft at 2x: B1, cure long 1 to 2, long 1.5 to 3 (soft streaks stay low left, as on main)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T23:39:43.960Z",
-   "file": "20261125233943960-note-lines-4407-3x.jpg",
-   "source": "../../../../tmp/n64/lines-4407-3x.png",
-   "kind": "note",
-   "label": "4407 draft at 3x: main, B1 (upright lines), cure long 1 to 2, long 1.5 to 3",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T23:16:07.045Z",
-   "file": "20261125231607045-note-lines-b1-4407-3x.jpg",
-   "source": "../../../../tmp/n62/lines-b1-4407-3x.png",
-   "kind": "note",
-   "label": "4407 draft B1 6a0e74bb, crop x 960 to 1300 y 440 to 620 at 3x: the upright coloured lines named in MAIL 1333",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T23:16:05.841Z",
-   "file": "20261125231605841-note-rd-final-4290-band.jpg",
-   "source": "../../../../tmp/n62/rd-final-4290-band.jpg",
-   "kind": "note",
-   "label": "4290 final, left horizon 1 to 1: approved above, B1 6a0e74bb middle, rim exact form (trial, not committed) below; match 3.224 to 3.249, main 3.849",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T23:05:00.877Z",
-   "file": "20261125230500877-note-rc-4290-horizon.jpg",
-   "source": "../../../../tmp/n62/rc-4290-horizon.jpg",
-   "kind": "note",
-   "label": "4290 horizon at 2x, draft: B1 above, rim trial below",
    "stop": "uranus"
   }
  ]
