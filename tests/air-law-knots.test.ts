@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { describe, expect, it } from 'vitest'
 import type { SetContext } from '../src/core/types'
-import { AIR_LAW_GLSL, AIR_LAW_KNOTS_GLSL, AIR_LAW_KNOT_HALF, AIR_LAW_KNOT_RATE, AIR_LAW_KNOT_STEP, AIR_LAW_TOP, airLawDepth, airLawDepthOut, airLawFactor, airLawFactorSeen, airLawGather, airLawGatherError, airLawGatherOut, airLawHeld, airLawSeen, airLawShare, type AirKnots, type AirVec } from '../src/terrain/air'
-import { AIR_LAW_FRAG, AIR_LAW_FRAG_KNOTS, AIR_LAW_KNOT_LEAST, AIR_LAW_KNOT_UNIFORMS, AIR_LAW_LAYER, AIR_LAW_LAYER_KNOTS, Relief, airLawKnots, withAirLaw, type ReliefAirLaw, type ReliefDef, type ReliefMotion } from '../src/terrain/relief'
+import { AIR_LAW_GLSL, AIR_LAW_KNOTS_GLSL, AIR_LAW_KNOT_HALF, AIR_LAW_KNOT_RATE, AIR_LAW_KNOT_STEP, AIR_LAW_TOP, airLawDepth, airLawDepthOut, airLawFactor, airLawFactorSeen, airLawGather, airLawGatherError, airLawGatherOut, airLawHeld, airLawPathShare, airLawSeen, airLawShare, type AirKnots, type AirVec } from '../src/terrain/air'
+import { AIR_LAW_FRAG, AIR_LAW_FRAG_KNOTS, AIR_LAW_KNOT_LEAST, AIR_LAW_KNOT_UNIFORMS, AIR_LAW_LAYER, AIR_LAW_LAYER_KNOTS, AIR_LAW_SHARE, AIR_LAW_SHARE_IN, AIR_LAW_SHARE_OUT, Relief, airLawKnots, withAirLaw, withAirLawShare, type ReliefAirLaw, type ReliefDef, type ReliefMotion } from '../src/terrain/relief'
 
 // The air's light by height (MAIL 1117): three knots, and what a path gathers where each stretch of air shines with the share of its
 // own height. The twins of src/terrain/air.ts against the numerical integral, the picture term with it, and the relief's field. The
@@ -233,6 +233,45 @@ describe('the light by height: what a path gathers', () => {
     expect(() => airLawGather([0, 1.2, 0], [0, 1, 0], 0.2, 1, HEIGHTS, SHARES)).toThrow('measured')
     expect(() => airLawGatherOut([0, 1.2, 0], [0, 1, 0], 0.0001, 1, HEIGHTS, SHARES)).toThrow('measured')
   })
+
+  it('the share of the light along a path is what the path gathers over what it takes from the factor, between the lowest and the highest share', () => {
+    let worst = 0
+    let alike = 0
+    let low = 1
+    let high = 0
+    let count = 0
+    for (const H of [0.001, 0.0045, 0.02]) {
+      for (const p of paths(H)) {
+        if (p.out) continue
+        for (const density of [5, 45, 400]) {
+          const took = 1 - airLawFactor(airLawDepth(p.a, p.b, H), density)
+          const share = airLawPathShare(p.a, p.b, H, density, HEIGHTS, SHARES)
+          expect(share).toBeGreaterThanOrEqual(SHARES[0])
+          expect(share).toBeLessThanOrEqual(SHARES[2])
+          // times what the path takes it is the gather again, to the float: the mesh carries the share and the fragment its own factor
+          worst = Math.max(worst, Math.abs(share * took - airLawGather(p.a, p.b, H, density, HEIGHTS, SHARES)))
+          alike = Math.max(alike, Math.abs(airLawPathShare(p.a, p.b, H, density, HEIGHTS, [0.37, 0.37, 0.37]) - 0.37))
+          low = Math.min(low, share)
+          high = Math.max(high, share)
+          count++
+        }
+      }
+    }
+    console.log('AIR-KNOTS the share of the light along ' + count + ' paths: from ' + low.toFixed(4) + ' to ' + high.toFixed(4) + ', times one minus the factor off the gather by up to ' + worst.toExponential(3) + ', every share alike off that share by up to ' + alike.toExponential(3))
+    expect(count).toBeGreaterThan(900)
+    expect(worst).toBeLessThan(1e-9)
+    expect(alike).toBeLessThan(1e-9)
+    // the paths reach from the canyon's floor to over its rim, so the share goes nearly from the lowest knot to the highest
+    expect(low).toBeLessThan(0.35)
+    expect(high).toBeGreaterThan(0.95)
+    // a path of no length and a path through no air take nothing: the share is a number in the range, never an inf or a NaN
+    for (const [a, b, density] of [[[0, 1.0001, 0], [0, 1.0001, 0], 45], [[0, 1.2, 0], [0.4, 1.3, 0], 0], [[0, 50, 0], [0, 40, 0], 45]] as [AirVec, AirVec, number][]) {
+      const share = airLawPathShare(a, b, 0.0045, density, HEIGHTS, SHARES)
+      expect(Number.isFinite(share)).toBe(true)
+      expect(share).toBeGreaterThanOrEqual(SHARES[0])
+      expect(share).toBeLessThanOrEqual(SHARES[2])
+    }
+  })
 })
 
 describe('the light by height: a picture that holds its air', () => {
@@ -408,7 +447,18 @@ describe('the light by height in a relief', () => {
       expect(count(m.fragmentShader, AIR_LAW_LAYER_KNOTS)).toBe(1)
       expect(count(m.fragmentShader, AIR_LAW_LAYER)).toBe(0)
       expect(m.fragmentShader.indexOf(AIR_LAW_KNOTS_GLSL)).toBeGreaterThan(m.fragmentShader.indexOf(AIR_LAW_GLSL))
-      expect(m.fragmentShader.length).toBe(plain[i]!.fragmentShader.length + AIR_LAW_GLSL.length + AIR_LAW_KNOTS_GLSL.length + AIR_LAW_LAYER_KNOTS.length + '\nuniform vec4 uAirCentre;\nuniform vec3 uAirLight;\nuniform vec3 uAirNumbers;'.length + AIR_LAW_KNOT_UNIFORMS.length)
+      // the fragment: the first chunk's three uniforms, the share from the vertices, the two chunks and the one line; no knot of its own
+      expect(m.fragmentShader.length).toBe(plain[i]!.fragmentShader.length + AIR_LAW_GLSL.length + AIR_LAW_KNOTS_GLSL.length + AIR_LAW_LAYER_KNOTS.length + '\nuniform vec4 uAirCentre;\nuniform vec3 uAirLight;\nuniform vec3 uAirNumbers;'.length + '\n'.length + AIR_LAW_SHARE_IN.length)
+      expect(count(m.fragmentShader, AIR_LAW_SHARE_IN)).toBe(1)
+      expect(/uAirHeights|uAirShares/.test(m.fragmentShader)).toBe(false)
+      // the vertices: the plain vertex shader with the knots' uniforms, the two chunks and the one line of the share
+      expect(m.vertexShader).toBe(withAirLawShare(plain[i]!.vertexShader))
+      expect(count(m.vertexShader, AIR_LAW_SHARE)).toBe(1)
+      expect(count(m.vertexShader, AIR_LAW_SHARE_OUT)).toBe(1)
+      expect(count(m.vertexShader, AIR_LAW_KNOT_UNIFORMS)).toBe(1)
+      expect(count(m.vertexShader, AIR_LAW_GLSL)).toBe(1)
+      expect(count(m.vertexShader, AIR_LAW_KNOTS_GLSL)).toBe(1)
+      expect(m.vertexShader.length).toBe(plain[i]!.vertexShader.length + '\n'.length + AIR_LAW_SHARE_OUT.length + '\nuniform vec4 uAirCentre;\nuniform vec3 uAirLight;\nuniform vec3 uAirNumbers;'.length + AIR_LAW_KNOT_UNIFORMS.length + AIR_LAW_GLSL.length + AIR_LAW_KNOTS_GLSL.length + '\n  '.length + AIR_LAW_SHARE.length)
       expect((m.uniforms.uAirHeights!.value as THREE.Vector3).toArray().map((v) => v * 972.27)).toEqual([-1.5, -0.5, 0.5].map((v) => (v / 972.27) * 972.27))
       expect((m.uniforms.uAirShares!.value as THREE.Vector3).toArray()).toEqual([0.3, 0.6, 1])
     })
@@ -420,11 +470,17 @@ describe('the light by height in a relief', () => {
     expect(AIR_LAW_FRAG_KNOTS.includes('vec3 glow = uAirLight * cut;')).toBe(false)
     expect(AIR_LAW_FRAG_KNOTS.includes('float cut = 1.0 - airLawFactor(airLawDepthOut((vAirEye - uAirCentre.xyz) * uAirCentre.w, d, uAirNumbers.y), uAirNumbers.x);')).toBe(true)
     expect(AIR_LAW_FRAG_KNOTS.length).toBe(AIR_LAW_FRAG.length + AIR_LAW_KNOT_UNIFORMS.length + AIR_LAW_KNOTS_GLSL.length + 'airLawGatherOut((vAirEye - uAirCentre.xyz) * uAirCentre.w, d, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares)'.length - 'cut'.length)
-    // the layer's line: the two paths to the same point, by the two eyes, and nothing by the clock or by a height alone
-    expect(AIR_LAW_LAYER_KNOTS.includes('airLawGather(airEye, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares)')).toBe(true)
-    expect(AIR_LAW_LAYER_KNOTS.includes('airLawHeld(airLawGather(airWas, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airSeen, uAirNumbers.x, uAirNumbers.z)')).toBe(true)
-    expect(AIR_LAW_LAYER_KNOTS.includes('vec3 airEye = (vEye - uAirCentre.xyz) * uAirCentre.w;')).toBe(true)
-    expect(AIR_LAW_LAYER_KNOTS.includes('vec3 airWas = -uAirCentre.xyz * uAirCentre.w;')).toBe(true)
-    for (const word of ['uUpL', 'uUp', 'uTime', 'smoothstep', 'clamp', 'mix(']) expect(AIR_LAW_LAYER_KNOTS.includes(word)).toBe(false)
+    // the vertices' line: the share of the light along the two paths to the same point, by the two eyes
+    expect(AIR_LAW_SHARE.includes('airLawPathShare((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares)')).toBe(true)
+    expect(AIR_LAW_SHARE.includes('airLawPathShare(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares)')).toBe(true)
+    expect(AIR_LAW_SHARE.includes('vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;')).toBe(true)
+    // the layer's line: each share times what the fragment's own path takes, the two depths by the two eyes at the fragment, and
+    // nothing by the clock or by a height alone in either line
+    expect(AIR_LAW_LAYER_KNOTS.includes('float airSeen = airLawDepth(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y);')).toBe(true)
+    expect(AIR_LAW_LAYER_KNOTS.includes('float airNow = airLawDepth((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y);')).toBe(true)
+    expect(AIR_LAW_LAYER_KNOTS.includes('vAirShare.x * (1.0 - airLawFactor(airNow, uAirNumbers.x))')).toBe(true)
+    expect(AIR_LAW_LAYER_KNOTS.includes('airLawHeld(vAirShare.y * (1.0 - airLawFactor(airSeen, uAirNumbers.x)), airSeen, uAirNumbers.x, uAirNumbers.z)')).toBe(true)
+    expect(AIR_LAW_LAYER_KNOTS.includes('airLawFactorSeen(airNow, airSeen, uAirNumbers.x, uAirNumbers.z)')).toBe(true)
+    for (const word of ['uUpL', 'uUp', 'uTime', 'smoothstep', 'clamp', 'mix(', 'airLawGather']) expect((AIR_LAW_LAYER_KNOTS + AIR_LAW_SHARE).includes(word)).toBe(false)
   })
 })
