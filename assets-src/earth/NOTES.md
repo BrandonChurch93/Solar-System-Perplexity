@@ -6793,3 +6793,25 @@ Units on the tree as committed below (merged tree 2bcd599a plus the law), 07:28:
 Looks pushed 07:44 (4a8ac5ba): dive 1864 to 1871, rise 2136 to 2143, the pattern map of 1889. Its note said "52 files" for the units from memory before I had read the log; the log says 89 files. Wrong word of mine in a looks note, set right here and in the next note.
 
 The candidate is committed on main 2d4176fd, which was origin main when the strips and the units ran. Main moved at 07:45 to 77a7d410 (MAIL 1435, the third cut). The candidate goes up as it was measured, with its base said (MAIL 561, 1406); the merge of 77a7d410, the units on it and a check of frames against these strips follow at once and come before the name.
+
+### 07:45 to 07:50 UTC: the candidate pushed, main 77a7d410 merged
+
+Committed 07:45 as 3f88db62411750d6520eff2fbb8dc833449a90a2 (five files: globe.ts, relief.ts, set.ts, place.json, NOTES.md) and pushed to agent/earth-place ("77e5db76..3f88db62"). The one line of MAIL 1406 sent to /root at 07:46: sha, base main 2d4176fd, the five files, units, the quick reader's two largest rows.
+
+Main fetched with depth 1: 77a7d4108df57439c565c1223315eb5250b03fa2 ("Status 370 and decision d362"). Against 2d4176fd it changes 200 files, none in my three folders (the three folder trees are the same in both). Merged by hand in a second index: commit d2701f50313f6e86876938f78d19f50e0a137249, parents 3f88db62 and 77a7d410; 0 names differ from main outside the three folders, 0 from 3f88db62 inside. tsc clean. Not pushed yet.
+
+One word of the how of onGlobe.air set right after the merge (no pixel reads it): "its odds against the map grow by one fixed factor for each doubling of the path past from" (it said "of the path").
+
+Check of pictures across the merge, started 07:47:36: 1858, 1867, 1889, 1900, 2123, 2144, 2156 at draft, shutter off, on d2701f50, against the same frames of the strips rendered on 2bcd599a. Then the units on d2701f50.
+
+Disk: the merge took 430 MiB (2838 MiB free after); the simulator's inputs of the dive (CQ, CW, CY frames, their .pat kept) deleted, 3175 MiB free.
+
+### 07:50 to 07:55 UTC: the disk ran full once (git's own repack), cured; no picture moves across the merge
+
+The check run stopped after its fifth frame ("page.evaluate: NotReadableError: The requested file could not be read") and a second start failed in the build: the disk stood at 3 MiB free. Cause found: .git/objects/pack/tmp_pack_10Jv3o, 3276 MB, written to 07:50:23 by git's automatic repack (51 packs lie in the store after the many shallow fetches, over git's limit of 50, so each commit, merge and fetch starts one; no git process was alive any more). The temporary pack deleted, the automatic repack switched off for this clone (git config gc.auto 0, a setting of my clone, no tracked file). 3280 MiB free after; "git fsck --connectivity-only" printed nothing; the tree and the head are as before (d2701f50, place.json and NOTES.md changed). Nothing was lost; six minutes were.
+
+Across the merge, draft, shutter off, d2701f50 against the strips on 2bcd599a: 1858, 1867, 1889, 1900, 2123, 2144, 2156 each "differ 0 largest 0". So no picture of mine moves with main 77a7d410 on these seven frames, and the quick reader's rows stand.
+
+Units on d2701f50 with the word set right started 07:53.
+
+Units on d2701f50 with the word set right, 07:53:26 to 08:08:58: "tsc exit 0"; all files but globe-cap and the three GL files "Test Files  90 passed (90)", "Tests  1034 passed (1034)", "Duration  344.59s"; `tests/globe-cap.test.ts` alone "Test Files  1 passed (1)", "Tests  30 passed (30)", "Duration  33.41s"; the three GL files "Test Files  3 passed (3)", "Tests  32 passed (32)", "Duration  544.00s".
