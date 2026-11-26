@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T11:56:44.566Z",
+ "pushed": "2026-11-26T12:20:32.155Z",
  "head": "f73602f96c26790928796406d3c1a158f7d32475",
- "note": "step 2 f73602f9 pushed; dive 2462 pattern still over main's, lies in the far ground of land-8p5; main and a hybrid render now to find the cause",
+ "note": "2462 pattern: top band is the plates' canyon against the picture's far plain in main and in step 2; hybrid with main's plate reads 1.21, main 1.09, step 1.27; all under what a slid ground reads",
  "looks": [
+  {
+   "time": "2026-11-26T12:20:30.913Z",
+   "file": "20261126122030913-note-top62-MHS.jpg",
+   "source": "../../../../tmp/pm/top62-MHS.png",
+   "kind": "note",
+   "label": "dive 2462 x 340..700 y 0..130 times 3: main, step 2 with main's land-8p5, step 2",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T12:20:29.679Z",
+   "file": "20261126122029679-note-top62-color.jpg",
+   "source": "../../../../tmp/pm/top62-color.png",
+   "kind": "note",
+   "label": "dive top band x 150..1050 y 0..220 native: main 2462, step 2 2462, main 2470, step 2 2470 (the pair the reader's row 2462 compares)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T11:56:43.280Z",
    "file": "20261126115643280-note-q32-2466-rim.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pm/q32-2472-band.png",
    "kind": "note",
    "label": "2472 the band at twice: 699a879f above, with the matte below (outline smoother, the thin dark line under the tip gone; tip still stepped)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T11:02:41.664Z",
-   "file": "20261126110241664-note-p32-2468-near.jpg",
-   "source": "../../../../tmp/pm/p32-2468-near.png",
-   "kind": "note",
-   "label": "2468 x 380..700 y 480..700 four times: 699a879f draws a whole light line on the near slope (bad, missed before the name), with the matte a row of faint dots",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T10:33:41.459Z",
-   "file": "20261126103341459-note-m32-rim.jpg",
-   "source": "../../../../tmp/pm/m32-rim.png",
-   "kind": "note",
-   "label": "2470 four times, the far rim: the second stair before and after the outline",
    "stop": "mars"
   }
  ]
