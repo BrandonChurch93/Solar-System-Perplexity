@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T11:32:01.428Z",
+ "pushed": "2026-11-26T11:49:56.232Z",
  "head": "ac0ffdda4556604bab51364ff72fee4f837d8a0f",
- "note": "arch trials after MAIL 1463: fan from each foot, pools, finer strands; colour law being set back to the ladder of the approved | sun-near 60 at the name: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "note": "arch trial Z25 (not a name): inner arches lean in from the left foot, strands wide and white at the ground, pool under them; rows 0 to 324 plain 11.5266, low band 5.5183. sun-near 60 at the name ac0ffdda: dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T11:49:55.617Z",
+   "file": "20261126114955617-note-a-Z25-90.jpg",
+   "source": "../../../../tmp/v/a-Z25-90.jpg",
+   "kind": "note",
+   "label": "arch trial Z25 at draft 90, approved above: fan from the left foot, tubes wide at the ground, gas pool under the strands",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T11:31:40.646Z",
    "file": "20261126113140646-note-a-Z16-90.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/y5-f360-pair.jpg",
    "kind": "note",
    "label": "360 final beside main: the same file",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T09:09:02.747Z",
-   "file": "20261126090902747-note-y5-limb.jpg",
-   "source": "../../../../tmp/v/y5-limb.jpg",
-   "kind": "note",
-   "label": "limb at 90 final",
    "stop": "sun"
   }
  ]
