@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T15:43:22.289Z",
+ "pushed": "2026-11-26T16:10:50.254Z",
  "head": "1b10c7e763e92846b920cc6c5ca89918bba1052c",
- "note": "Z81 = 1b10c7e7 (on main 686da341), units running, finals next. The lean ends at 12 degrees on one side and a low rope is loose, so no second band with a hard edge under the arch. sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 544 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "note": "Z81 1b10c7e7 final 90: G17 0.8250 p25 0.4887, whole plain 34.0131 (main 29.6374); units green 95 files 1106 tests; path green; sun-near 60 (draft m81): dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 544 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T16:10:49.027Z",
+   "file": "20261126161049027-note-rf-Z81F.jpg",
+   "source": "../../../../tmp/v/rf-Z81F.jpg",
+   "kind": "note",
+   "label": "Z81 final 90 right foot: approved, this state",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T16:10:47.845Z",
+   "file": "20261126161047845-note-lf-Z81F.jpg",
+   "source": "../../../../tmp/v/lf-Z81F.jpg",
+   "kind": "note",
+   "label": "Z81 final 90 left foot: approved, this state",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T16:10:46.501Z",
+   "file": "20261126161046501-note-tri90.jpg",
+   "source": "../../../../tmp/att/tri90.jpg",
+   "kind": "note",
+   "label": "Z81 final 90: approved, main, this state (1b10c7e7)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T15:43:21.493Z",
    "file": "20261126154321493-note-look-z81-top.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/look-z77-60.jpg",
    "kind": "note",
    "label": "Z77 draft 60 whole",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T15:18:36.375Z",
-   "file": "20261126151836375-note-look-z77-feet.jpg",
-   "source": "../../../../tmp/v/look-z77-feet.jpg",
-   "kind": "note",
-   "label": "Z77 draft 90 feet at 1 to 1: approved left, mine right; the pools light the ground and the strands",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T15:18:35.676Z",
-   "file": "20261126151835676-note-look-z77-90pair.jpg",
-   "source": "../../../../tmp/v/look-z77-90pair.jpg",
-   "kind": "note",
-   "label": "Z77 (3d60aa0d) draft 90: approved above, mine below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T14:47:51.907Z",
-   "file": "20261126144751907-note-look-z73-0.jpg",
-   "source": "../../../../tmp/v/look-z73-0.jpg",
-   "kind": "note",
-   "label": "Z73 draft 0 whole",
    "stop": "sun"
   }
  ]
