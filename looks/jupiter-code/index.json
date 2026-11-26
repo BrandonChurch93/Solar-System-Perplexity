@@ -1,9 +1,81 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T08:45:15.416Z",
- "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "08:46 UTC. New law, the gas: air under a level absorbs along the Sun's ray and the eye's ray, and dark ground lies deep again. w64 (8.910 after three rounds) had the basins too broad; w68 reads 7.199 after one round. Next: thinner skin, smoke as height, sparks.",
+ "pushed": "2026-11-26T09:08:43.039Z",
+ "head": "0c012e25580c46cfaaf0b2486fbf9a0c2e3c0f5e",
+ "note": "09:08 UTC: w68 is pushed as the candidate state (0c012e2, not a name); w70, w72, w76 are better on its scaffold; smoke as height and the thinnest skin refused",
  "looks": [
+  {
+   "time": "2026-11-26T09:08:42.319Z",
+   "file": "20261126090842319-note-w70-3150.jpg",
+   "source": "../work/r26/t/w70-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w70 (sheets 0.4 in the dark ground, heaps cover 0.75) on w68's scaffold: 6.235, best number of line A so far",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:08:41.637Z",
+   "file": "20261126090841637-note-w73-3150.jpg",
+   "source": "../work/r26/t/w73-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w73 (skin 0.008 units): 6.751, hard and glossy like rock, refused",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:06:30.313Z",
+   "file": "20261126090630313-note-w70-3150.jpg",
+   "source": "../work/r26/t/w70-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w70 (sheets 0.4 in the dark ground, heaps cover 0.75) on w68's scaffold: 6.235",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:06:29.693Z",
+   "file": "20261126090629693-note-w72-3150.jpg",
+   "source": "../work/r26/t/w72-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w72 (skin 0.015 units) on w68's scaffold: 6.269, crisper tops",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:06:29.033Z",
+   "file": "20261126090629033-note-w76-3150.jpg",
+   "source": "../work/r26/t/w76-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w76 (heaps cover 0.95 in calm ground, sheets 0.15 in the dark ground) on w68's scaffold: 6.473, more heaps and fewer stripes",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:06:28.370Z",
+   "file": "20261126090628370-note-w69-3150.jpg",
+   "source": "../work/r26/t/w69-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w69 (smoke as height in the dark ground): 7.003, folded stripes, liquid, refused",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:54:45.668Z",
+   "file": "20261126085445668-note-w68-r2-3150.jpg",
+   "source": "../work/r26/t/w68-r2-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w68 after 2 solve rounds: line (i) 6.446, bands green, lower middle reads as marbled liquid",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:54:44.656Z",
+   "file": "20261126085444656-note-w68s-3239.jpg",
+   "source": "../work/r26/t/w68s-3239.png",
+   "kind": "note",
+   "label": "3239 preview draft, state w68: whole, same faults as 3060",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:54:43.313Z",
+   "file": "20261126085443313-note-w68s-3060.jpg",
+   "source": "../work/r26/t/w68s-3060.png",
+   "kind": "note",
+   "label": "3060 preview draft, state w68 (gas, basins outside the storm, solved 2 rounds): whole, zebra streaks in the lower half",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T08:45:14.695Z",
    "file": "20261126084514695-note-w68-r1-3150.jpg",
@@ -122,78 +194,6 @@
    "source": "../work/r26/t/w32-3150.png",
    "kind": "note",
    "label": "w32, w30 with rolls six times taller in the dark field, same scaffold: shade and large forms in the lower thirds, still smooth as dunes, line i 7.829",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:46:39.197Z",
-   "file": "20261126064639197-note-w26-r3-3150.jpg",
-   "source": "../work/r26/t/w26-r3-3150.png",
-   "kind": "note",
-   "label": "w26 with its scaffold, 3150 preview draft, the base as it stands at 06:47 UTC: line i 6.611 against main 3.390 at this tier",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:46:38.499Z",
-   "file": "20261126064638499-note-w31-3150.jpg",
-   "source": "../work/r26/t/w31-3150.png",
-   "kind": "note",
-   "label": "w31, w30 with paler tops over darker deeps, same scaffold: reads as marble, not taken, line i 9.145",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:45:31.738Z",
-   "file": "20261126064531738-note-w30-3150.jpg",
-   "source": "../work/r26/t/w30-3150.png",
-   "kind": "note",
-   "label": "w30, w26 with deeper shade by the light law, same scaffold, line i 6.621",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:45:30.473Z",
-   "file": "20261126064530473-note-w29-3150.jpg",
-   "source": "../work/r26/t/w29-3150.png",
-   "kind": "note",
-   "label": "w29 on the scaffold of w26, tall tops in the dark field: first state with shade and depth in the lower thirds, but crags and teeth, not cloud, line i 9.792",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:40:10.401Z",
-   "file": "20261126064010401-note-w28-3150.jpg",
-   "source": "../work/r26/t/w28-3150.png",
-   "kind": "note",
-   "label": "w28 on the scaffold of w26, larger tops 0.12 units: sparse lumps on silk, refused, line i 9.106",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:40:09.728Z",
-   "file": "20261126064009728-note-w26-r3-3150.jpg",
-   "source": "../work/r26/t/w26-r3-3150.png",
-   "kind": "note",
-   "label": "w26 with its scaffold solved three rounds, 3150 preview draft: line i 6.611, main 3.390 at this tier",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:27:20.657Z",
-   "file": "20261126062720657-note-w26-3150.jpg",
-   "source": "../work/r26/t/w26-3150.png",
-   "kind": "note",
-   "label": "w26 at 3150, preview, draft, no scaffold: rolls along the flow with fine curd on their crests, warm tops of their own colour; line i 16.011, bands green; right third too light, lumps too even in size",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:27:20.058Z",
-   "file": "20261126062720058-note-w21-3150.jpg",
-   "source": "../work/r26/t/w21-3150.png",
-   "kind": "note",
-   "label": "w21 at 3150, preview, draft, no scaffold: the picture's light taken out of the map in dark ground, embers gone there; lower left reads as liquid with stones",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T06:27:19.409Z",
-   "file": "20261126062719409-note-w24-3150.jpg",
-   "source": "../work/r26/t/w24-3150.png",
-   "kind": "note",
-   "label": "w24 at 3150, preview, draft, no scaffold: tops 0.24 units wide read as clay boulders; refused",
    "stop": "jupiter"
   }
  ]
