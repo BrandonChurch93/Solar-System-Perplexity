@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T11:12:56.415Z",
- "head": "9521d95e2d5e1c19c87b610192fcf7717c0bdcfc",
- "note": "Line A at 9521d95e (9f297b47 merged with main 7bcc072b). RED at master: frame 3150 reads line (i) 3.851 at master draft against 2.006 at preview; the thin pale lines along the flow come with the size of the pixel. Without the solve's paint 15.326. Cost 372 s a master draft frame. Not a candidate for the fourth cut.",
+ "pushed": "2026-11-26T11:33:59.361Z",
+ "head": "23087fd30ea977015762d59c4bc5eda4f590a493",
+ "note": "Line A: the cause of the red at master is proved by a switch (octaves drawn by the size of the pixel); the thread now fades to its mean; the fine ripples still darken with size. Not a candidate.",
  "looks": [
+  {
+   "time": "2026-11-26T11:33:58.726Z",
+   "file": "20261126113358726-note-wa5-r4-3150.jpg",
+   "source": "../work/r26/t/wa5-r4-3150.png",
+   "kind": "note",
+   "label": "Frame 3150, line A at 23087fd3 (state wa5 after four solve rounds, unchanged picture), preview, draft: line (i) 2.006 at this size, 3.851 at master. Not a candidate. The whole test run on the merge: 94 files, 1096 tests, all passed.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T11:33:58.156Z",
+   "file": "20261126113358156-note-wa7-3150.jpg",
+   "source": "../work/r26/t/wa7-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft with the thread fading to its mean (0.2326 an octave) in place of to nothing; the solve is not fitted to it yet, so the picture stands too light (line (i) 15.9). Halving the least pixel feet now moves the low band by 1.57 where it moved 2.70.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T11:33:57.627Z",
+   "file": "20261126113357627-note-e23-crop.jpg",
+   "source": "../work/r26/t/e23-crop.jpg",
+   "kind": "note",
+   "label": "3150 lower left without the thread's tint, least pixel feet 2 (left) and 1 (right): the finer ripples of the relief alone darken the picture by 1.3 levels in the mean. A red: the ripples come and go with the size of the pixel.",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T11:33:56.810Z",
+   "file": "20261126113356810-note-e1-crop.jpg",
+   "source": "../work/r26/t/e1-crop.jpg",
+   "kind": "note",
+   "label": "Cause of the red at master, proved by a switch: 3150 lower left at preview (left), at preview with the least pixel feet halved so that it draws master's octaves (middle, line (i) 4.040), and master brought to preview (right, 3.851). Middle and right differ by 0.37 in the low band.",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T11:12:55.360Z",
    "file": "20261126111255360-note-wa5-r4-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r26/t/w81-3150.png",
    "kind": "note",
    "label": "3150 preview draft, state w81 on the scaffold of w77: sheets finer (tint fall -0.3, aspect 0.02); line (i) 5.882",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:28:56.391Z",
-   "file": "20261126092856391-note-w80-3150.jpg",
-   "source": "../work/r26/t/w80-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w80 on the scaffold of w77: heaps from 0.06 units read as pebbles, refused; line (i) 6.302",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:08:42.319Z",
-   "file": "20261126090842319-note-w70-3150.jpg",
-   "source": "../work/r26/t/w70-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w70 (sheets 0.4 in the dark ground, heaps cover 0.75) on w68's scaffold: 6.235, best number of line A so far",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:08:41.637Z",
-   "file": "20261126090841637-note-w73-3150.jpg",
-   "source": "../work/r26/t/w73-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w73 (skin 0.008 units): 6.751, hard and glossy like rock, refused",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T09:06:30.313Z",
-   "file": "20261126090630313-note-w70-3150.jpg",
-   "source": "../work/r26/t/w70-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state w70 (sheets 0.4 in the dark ground, heaps cover 0.75) on w68's scaffold: 6.235",
    "stop": "jupiter"
   }
  ]
