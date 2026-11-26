@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T18:54:49.596Z",
+ "pushed": "2026-11-26T19:16:44.441Z",
  "head": "5ccff1674ccb3ed7fab80c6f251aee1e8d989d53",
- "note": "18:54 trials Z93 to Z98 after the name (not named, not pushed): more and thinner strands that cross, a colour law that keeps the hue at the limit (gold, no yellow of two clipped channels), the tube's colour by the light across its width | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "note": "19:16 trials after the name, not named, not pushed: the strands' colour across the tube and their light summed | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T19:16:43.826Z",
+   "file": "20261126191643826-note-z104-sheet.jpg",
+   "source": "../../../../tmp/v/z104-sheet.jpg",
+   "kind": "note",
+   "label": "trial Z104, not named, not pushed: draft 0, 60, 211, 221, 229, 92 with the strands' new colour law",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T19:16:43.261Z",
+   "file": "20261126191643261-note-z107-arch3.jpg",
+   "source": "../../../../tmp/v/z107-arch3.jpg",
+   "kind": "note",
+   "label": "trial, not named, not pushed: draft 90, the approved above, Z106 middle, Z107 below (strands add their light up to the most, cover by their own share)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T18:54:48.977Z",
    "file": "20261126185448977-note-z92f-arch3.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/s1-sky90.jpg",
    "kind": "note",
    "label": "trial S1 not named: the sky at the upper left of frame 90 at 1 to 1, approved above, S1 below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T18:06:40.387Z",
-   "file": "20261126180640387-note-s1-sheet.jpg",
-   "source": "../../../../tmp/v/s1-sheet.jpg",
-   "kind": "note",
-   "label": "trial S1 not named: drafts 0 to 247, the sky stands to frame 90 and turns to the hold's sky from 90 to 269",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T18:06:39.772Z",
-   "file": "20261126180639772-note-s1-90.jpg",
-   "source": "../../../../tmp/v/s1-90.jpg",
-   "kind": "note",
-   "label": "trial S1 not named (needs two lines of shared code, not committed): approved top left; S1 at 90 top right, at 60 bottom left; Z88 with the rigid sky at 90 bottom right; half size",
    "stop": "sun"
   }
  ]
