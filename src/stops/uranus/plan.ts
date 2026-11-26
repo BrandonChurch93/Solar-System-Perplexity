@@ -34,7 +34,7 @@ export const params: MoveParams = {
   spinDegPerSecond: -1,
   moonDegPerSecond: 0.6,
   tint: [0.6, 0.9, 0.95],
-  skyAim: { orbit: [145.41987, -22.38676, 20.05787], terrain: [22.60603, 20.42393, -46.69144] },
+  skyAim: { orbit: [145.41987, -22.38676, 20.05787], terrain: [22.60603, 20.42393, -46.69144], dive: [50, -15, 50], turn: [4281, 4298] },
 }
 
 export const move = {
