@@ -22,7 +22,7 @@ import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
 import { setFrame, setPass } from './frame'
-import type { SkyAims } from '../space/aim'
+import { STAR_LEVEL, starShare, type SkyAims } from '../space/aim'
 import { Cover, coverReaches } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
 import type { Trim } from '../bodies/trim'
@@ -359,6 +359,8 @@ export class Engine {
       const share = shot.skyShare ?? 0
       const high = shot.skyShareHigh
       const shared = share > 0 || high !== undefined
+      const plate = mid.skyPlate
+      let hid = !plate?.turning
       for (const state of shot.sets) {
         for (const patch of this.sets.get(state.id)?.sky ?? []) {
           const kind = shot.segment.kind
@@ -373,11 +375,13 @@ export class Engine {
             weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
           }
           if (weight <= 0) continue
-          const aim = aims?.patches[state.id]?.[patch.view]
+          const aim = (plate && patch.view === 'terrain' && state.id === shot.segment.stop ? plate.aim : undefined) ?? aims?.patches[state.id]?.[patch.view]
           if (aim) patch.aim.copy(aim)
+          if (!hid && aims && patch.view === 'terrain' && state.view === 'terrain') hid = starShare(patch, weight, mid, aims.frame, width / height) <= STAR_LEVEL
           this.skyPatches.push({ patch: share > 0 && shot.skyFloor && patch.view === 'terrain' ? this.floored(patch, shot.skyFloor) : patch, weight })
         }
       }
+      if (!hid) throw new Error(shot.segment.stop + ': the stars turn between two sky aims in a sample where the surface plate does not hide them')
       if (shared && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)

@@ -112,7 +112,7 @@ export class FilmDirector implements Director {
   private lookbackSide = new THREE.Vector3()
   private sunStart = 1
   private sunSwap = 1
-  sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '', follows: {}, open: {} }
+  sky: SkyAims = { frame: new THREE.Quaternion(), turns: {}, dives: {}, orbits: {}, patches: {}, fitted: { frame: 0, terrainFrame: 0 }, anchor: '', follows: {}, open: {} }
 
   constructor(plans: StopPlan[]) {
     shutterScales(this.shutterOf)
@@ -226,7 +226,7 @@ export class FilmDirector implements Director {
     const anchor = aimAt(a.along, a.tilt, a.lift)
     const frame = judged(a.stop + '.hold')!
     const f = anchor.clone().multiply(cam(frame).invert())
-    const out: SkyAims = { frame: round(f), turns: {}, orbits: {}, patches: {}, fitted: { frame, terrainFrame: judged(a.tstop + '.terrain')! }, anchor: a.stop, follows: {}, open: {} }
+    const out: SkyAims = { frame: round(f), turns: {}, dives: {}, orbits: {}, patches: {}, fitted: { frame, terrainFrame: judged(a.tstop + '.terrain')! }, anchor: a.stop, follows: {}, open: {} }
     const bare = (q: StopPlan, seg?: Segment): boolean => q.coverBare(seg)
     this.plans.forEach((p, i) => {
       const before = this.plans[i - 1]
@@ -263,6 +263,13 @@ export class FilmDirector implements Director {
           low = mine.clone().multiply(tcam)
           if (t) out.turns[p.id] = t
         }
+        const second = p.p.skyAim?.dive
+        if (second) {
+          const span = p.p.skyAim?.turn
+          const aim = aimAt(second[0], second[1], second[2])
+          if (!span || !(span[0] <= span[1]) || span[0] < (p.seg.dive?.firstFrame ?? Infinity) || span[1] >= p.seg.rise.endFrame || !out.turns[p.id]) throw new Error(p.id + ': a second sky aim needs the frames of its turn, in order and within the stop\'s dive, surface view and rise, and a low turn to end in')
+          out.dives[p.id] = { turn: round(tcam.clone().multiply(aim.clone().invert()).multiply(f)), aim: round(aim), from: span[0] / config.fps, to: (span[1] + 1) / config.fps }
+        }
       }
       out.patches[p.id] = { orbit: round(orbit), terrain: round(low) }
     })
@@ -272,6 +279,22 @@ export class FilmDirector implements Director {
     if (back !== null && !out.open[lastId]) out.orbits[config.endingId] = round(this.skyAnchor(back).multiply(aimAt(LOOKBACK.sky[0], LOOKBACK.sky[1], LOOKBACK.sky[2]).invert()).multiply(f))
     else if (kept) out.orbits[config.endingId] = kept
     return out
+  }
+
+  private lowTurn(id: string, time: number): THREE.Quaternion | undefined {
+    const to = this.sky.turns[id]
+    const d = this.sky.dives[id]
+    if (!d || !to) return to
+    const k = smoother(ramp(d.from, d.to, time))
+    return k <= 0 ? d.turn : k >= 1 ? to : d.turn.clone().slerp(to, k)
+  }
+
+  private skyPlate(id: string, time: number): { aim: THREE.Quaternion; turning: boolean } | undefined {
+    const d = this.sky.dives[id]
+    const to = this.sky.patches[id]?.terrain
+    if (!d || !to) return undefined
+    const k = smoother(ramp(d.from, d.to, time))
+    return { aim: k <= 0 ? d.aim : k >= 1 ? to : d.aim.clone().slerp(to, k), turning: k > 0 && k < 1 }
   }
 
   private skyAnchor(frame: number): THREE.Quaternion {
@@ -994,7 +1017,7 @@ export class FilmDirector implements Director {
       const s = state(index, view)
       if (view === 'terrain') {
         skyGlow = p.p.light.terrainSkyGlow ?? 1
-        const t = this.sky.turns[p.id]
+        const t = this.lowTurn(p.id, time)
         if (t) skyTurn = t
       } else {
         const t = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id]
@@ -1031,7 +1054,7 @@ export class FilmDirector implements Director {
         if (own && own.high !== undefined && !noSkyForced()) skyShareHigh = own.high
         if (hand.skyFloor && skyShare > 0) skyFloor = this.skyFloorOf(index, kind, hand.time)
         skyGlow = mix(1, p.p.light.terrainSkyGlow ?? 1, skyShare)
-        const low = this.sky.turns[p.id] ?? NO_TURN
+        const low = this.lowTurn(p.id, time) ?? NO_TURN
         skyTurn = turned <= 0 ? skyTurn : turned >= 1 ? low : skyTurn.clone().slerp(low, turned)
         const f = this.frames[index]!
         if (turned > 0) {
@@ -1056,7 +1079,7 @@ export class FilmDirector implements Director {
         const share = p.skyTurnShare(segment, time)
         if (share !== null) {
           const high = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id] ?? NO_TURN
-          const low = this.sky.turns[p.id] ?? NO_TURN
+          const low = this.lowTurn(p.id, time) ?? NO_TURN
           skyTurn = share <= 0 ? high : share >= 1 ? low : high.clone().slerp(low, share)
         }
       }
@@ -1112,6 +1135,8 @@ export class FilmDirector implements Director {
     if (skyShare !== undefined) out.skyShare = skyShare
     if (skyShareHigh !== undefined) out.skyShareHigh = skyShareHigh
     if (skyFloor) out.skyFloor = skyFloor
+    const plate = index >= 0 && (segment.kind === 'dive' || segment.kind === 'terrain' || segment.kind === 'rise') ? this.skyPlate(segment.stop, time) : undefined
+    if (plate) out.skyPlate = plate
     if (place) out.place = place
     if (under) out.under = under
     return out
