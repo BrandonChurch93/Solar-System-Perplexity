@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T20:25:37.134Z",
+ "pushed": "2026-11-26T20:47:15.140Z",
  "head": "262b9a68df0a6bda8d77518539580de554bb0dc5",
- "note": "20:26 UTC, base main 262b9a68 merged (57d6c0a1): cloud group is a draft tier fault, fibre gain 1 and the fold cure not taken; pale lanes next (air law control running)",
+ "note": "pale lanes: control B of the air law by ln h drawn at draft on main 262b9a68, not a state yet; control C (terrain held to the bit) rendering",
  "looks": [
+  {
+   "time": "2026-11-26T20:47:14.508Z",
+   "file": "20261126204714508-note-air2-dive-b.jpg",
+   "source": "../../../../tmp/n86/air2-dive-b.jpg",
+   "kind": "note",
+   "label": "pale lanes control B dive 4168 to 4180: old main, main, law B",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T20:47:13.897Z",
+   "file": "20261126204713897-note-air2-rise-b.jpg",
+   "source": "../../../../tmp/n86/air2-rise-b.jpg",
+   "kind": "note",
+   "label": "pale lanes control B rise 4416 to 4428: old main, main, law B",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T20:47:13.282Z",
+   "file": "20261126204713282-note-air2-rise-a.jpg",
+   "source": "../../../../tmp/n86/air2-rise-a.jpg",
+   "kind": "note",
+   "label": "pale lanes control B rise 4403 to 4413: old main, main 262b9a68, law B",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T20:25:36.391Z",
    "file": "20261126202536391-note-pl-4407.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n81/pair-3.jpg",
    "kind": "note",
    "label": "drafts D beside main, sheet 3 of 3 of frames 4396 to 4404",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T16:34:32.779Z",
-   "file": "20261126163432779-note-pair-2.jpg",
-   "source": "../../../../tmp/n81/pair-2.jpg",
-   "kind": "note",
-   "label": "drafts D beside main, sheet 2 of 3 of frames 4396 to 4404",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T16:34:29.876Z",
-   "file": "20261126163429876-note-pair-1.jpg",
-   "source": "../../../../tmp/n81/pair-1.jpg",
-   "kind": "note",
-   "label": "drafts D beside main, sheet 1 of 3 of frames 4396 to 4404",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T16:34:23.446Z",
-   "file": "20261126163423446-note-cause-4401.jpg",
-   "source": "../../../../tmp/n81/cause-4401.jpg",
-   "kind": "note",
-   "label": "row 4401 of rise part 1: the reading per pixel on D and on main (top 1 percent red) sits on the far ground under the limb; D minus main times 32 is all in the lower picture",
    "stop": "uranus"
   }
  ]
