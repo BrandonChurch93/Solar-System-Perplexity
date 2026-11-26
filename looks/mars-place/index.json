@@ -1,9 +1,57 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T03:48:17.442Z",
+ "pushed": "2026-11-26T04:14:53.278Z",
  "head": "749712666e01f152e8b073b465d095f807347546",
- "note": "air term by term on main and state, C1 beside state and main at 2444 2704 2708, trial et0 of one tint and one edge",
+ "note": "air trials: grade 0.2448 at the pair 2708 and 2716 (state 0.9648); N1 judge; cause of the wash found: the sun curve on the map, not on the plates",
  "looks": [
+  {
+   "time": "2026-11-26T04:14:52.322Z",
+   "file": "20261126041452322-note-c1-2441.jpg",
+   "source": "../../../../tmp/pm/c1/c1-2441.jpg",
+   "kind": "note",
+   "label": "C1 beside the state and main at 2441, 1400 px tiles",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T04:14:51.560Z",
+   "file": "20261126041451560-note-c1-2704.jpg",
+   "source": "../../../../tmp/pm/c1/c1-2704.jpg",
+   "kind": "note",
+   "label": "C1 beside the state and main at 2704, 1400 px tiles",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T04:14:50.865Z",
+   "file": "20261126041450865-note-judge-N1-field.jpg",
+   "source": "../../../../tmp/pm/judge-N1-field.jpg",
+   "kind": "note",
+   "label": "N1 (one field for both sides) judged against the tree without land-8p5: rise 2700 to 2710 left, dive 2437 to 2441 right; not a pass",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T04:14:50.212Z",
+   "file": "20261126041450212-note-t-2462.jpg",
+   "source": "../../../../tmp/pm/t-2462.jpg",
+   "kind": "note",
+   "label": "2462: state, trial grade, trial gradenear (near terms on the hold's air)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T04:14:49.325Z",
+   "file": "20261126041449325-note-t-grade.jpg",
+   "source": "../../../../tmp/pm/t-grade.jpg",
+   "kind": "note",
+   "label": "trial grade (one air, the hold's, tint on ground and air alike) beside the state: 2708, 2716, 2700, 2696, 2445, 2462, 2580, 2325",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:53:13.743Z",
+   "file": "20261126035313743-note-t-e0.jpg",
+   "source": "../../../../tmp/pm/t-e0.jpg",
+   "kind": "note",
+   "label": "trials (scratch) at 2696, 2700, 2708: state 74971266 left; e0 = day edge of the air at the hold's value at every height, middle; et0 = edge and tint at the hold's value, right. True carry 2708 against 2716: state 0.9648, e0 0.3529, et0 0.2635",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T03:48:16.521Z",
    "file": "20261126034816521-note-t-et0.jpg",
@@ -18,54 +66,6 @@
    "source": "../../../../tmp/pm/c1/v-2708.jpg",
    "kind": "note",
    "label": "frame 2708 draft: C1 (tree without the land-8p5 row) on top, state 74971266 in the middle, main below. C1 shows the 3.8 plate's border, the state washes the map's forms flat",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:46:03.016Z",
-   "file": "20261126034603016-note-v-2704.jpg",
-   "source": "../../../../tmp/pm/c1/v-2704.jpg",
-   "kind": "note",
-   "label": "frame 2704 draft: C1 (tree without the land-8p5 row) on top, state 74971266 in the middle, main below. C1 shows the 3.8 plate's border, the state washes the map's forms flat",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:46:01.854Z",
-   "file": "20261126034601854-note-v-2444.jpg",
-   "source": "../../../../tmp/pm/c1/v-2444.jpg",
-   "kind": "note",
-   "label": "frame 2444 draft: C1 (tree without the land-8p5 row) on top, state 74971266 in the middle, main below. C1 shows the 3.8 plate's border, the state washes the map's forms flat",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:42:13.670Z",
-   "file": "20261126034213670-note-air-NM.jpg",
-   "source": "../../../../tmp/pm/air-NM.png",
-   "kind": "note",
-   "label": "air term by term at 2708 and 2716, state 74971266 left, main right; rows none, all, day edge, tint, haze depth, haze colour held at the near ground value; true carry on the 2716 tiles",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:29:58.775Z",
-   "file": "20261126032958775-note-air-N.jpg",
-   "source": "../../../../tmp/pm/air-N.png",
-   "kind": "note",
-   "label": "MAIL 1383, state 74971266 at draft: the pair 2708 and 2716 with one term of the descent look held at its near ground value, the true carry of the pair on each: none 0.965, all 0.355, day edge 0.551, tint 0.859, haze depth 0.939, haze colour 0.951, blur, grazing veil and shell 0.965",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:18:54.827Z",
-   "file": "20261126031854827-note-air-a.jpg",
-   "source": "../../../../tmp/pm/air-a.png",
-   "kind": "note",
-   "label": "MAIL 1383: the pair 2708 and 2716 of state 74971266 at draft, above as it stands, below with every term of the descent look held at its near ground value (main's half follows)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T03:18:54.148Z",
-   "file": "20261126031854148-note-b1a-2704n.jpg",
-   "source": "../../../../tmp/pm/b1a-2704n.png",
-   "kind": "note",
-   "label": "frame 2704 at native size, 800 px right of the canyon: C1 (the tree without the land-8p5 row) left, state 74971266 right: without the row the border of the 3.8 degree plate reads as a line and the ground beyond it is the map's flat sand: bad for C1",
    "stop": "mars"
   }
  ]
