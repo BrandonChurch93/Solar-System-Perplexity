@@ -1,4 +1,4 @@
-"""ring_tone.py FILM OUT.json [EVERY]: the broad tone of the rings by radius against the approved close image.
+"""ring_tone.py FILM OUT.json [EVERY] [REACH] [LAST]: the broad tone of the rings by radius against the approved close image.
 
 FILM is frame 3720 of the film at the final tier (1920 by 1080), drawn with the table that
 src/stops/saturn/skim.json light.grade.radial holds now. The script looks for the factor on that table which
@@ -36,7 +36,8 @@ GAP = (1.92, 2.10)
 RIM = 1.2458
 DUST = 1.25  # the last knot of the one factor of the dust inward of the rim
 SWEEPS = 3
-GRID = np.linspace(-0.6, 0.6, 41)
+REACH = float(ARGV[4]) if len(ARGV) > 4 and not ARGV[1] == '--write' else 0.6  # the largest step of the logarithm of the factor in one run
+GRID = np.linspace(-REACH, REACH, 41 if REACH <= 0.6 else 81)
 
 
 def write(table_file):
@@ -90,12 +91,20 @@ def main():
     free = [i for i in range(first_knot, count - 1, every) if not (GAP[0] < knots[i] < GAP[1])]
     if free[-1] < count - 2:
         free.append(count - 2)
+    # LAST: no free value outward of that radius; the factor falls to 1 over the next EVERY knots and the
+    # knots beyond keep their numbers (at a pose where the approved image has its dark gap at other radii
+    # than the model, the table must not paint that gap)
+    last = float(ARGV[5]) if len(ARGV) > 5 else None
+    anchor = None
+    if last is not None:
+        free = [i for i in free if knots[i] <= last + 1e-9]
+        anchor = min(free[-1] + every, count - 1)
     free = np.array(free)
 
     def fine(v):
         x = np.zeros((count, 3))
         for c in range(3):
-            x[:, c] = np.interp(knots, knots[free], v[:, c])
+            x[:, c] = np.interp(knots, knots[free], v[:, c]) if anchor is None else np.interp(knots, np.append(knots[free], knots[anchor]), np.append(v[:, c], 0.0))
         x[:first_knot] = 0
         x[-1] = 0
         return x

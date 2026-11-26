@@ -16,6 +16,9 @@
 # is the film's table (skim.json light.tone.gain) times that measure smoothed in the same way, so the table
 # stays as smooth as it was and takes only the broad rest of the difference. Put it into skim.json with
 # put_table.py light.tone.gain OUT.json.
+# Both take one more number, LAST: the knots over LAST degrees are taken as the mean of the measure over the last
+# SIGMA degrees up to LAST. The measure fills the latitudes the frame does not show with the last one it shows,
+# which lies at the limb; without LAST that one knot would count for every knot up to the pole.
 import sys, json, os
 import numpy as np
 from PIL import Image
@@ -24,9 +27,11 @@ REPO = os.path.normpath(os.path.join(HERE, '..', '..', '..'))
 sys.path.insert(0, HERE)
 args = sys.argv[1:]
 sys.argv = ['x']
-def even(raw, sigma, first):
+def even(raw, sigma, first, last=None):
     raw = raw.copy()
     raw[:first] = raw[first]
+    if last is not None:
+        raw[last + 1:] = raw[max(first, last - int(sigma)):last + 1].mean(0)
     n = len(raw)
     at = np.arange(n)
     wide = np.concatenate([raw[::-1], raw, raw[::-1]])
@@ -40,7 +45,7 @@ def even(raw, sigma, first):
 
 if args and args[0] in ('--smooth', '--again'):
     raw = np.log(np.array(json.load(open(args[1])), float))
-    out = even(raw, float(args[3]), int(args[4]))
+    out = even(raw, float(args[3]), int(args[4]), int(args[5]) if len(args) > 5 else None)
     if args[0] == '--again':
         kept = json.load(open(os.path.join(REPO, 'src', 'stops', 'saturn', 'skim.json')))['light']['tone']['gain']
         print('factor on the kept table ' + ' '.join('%d:%.2f/%.2f/%.2f' % (i, *np.exp(out[i])) for i in range(0, len(out), 8)))

@@ -85,6 +85,11 @@ def residuals(p, feats, w):
 if __name__ == '__main__':
     args = [a for a in argv[1:] if '=' not in a]
     opts = dict(a.split('=') for a in argv[1:] if '=' in a)
+    # contact=R and bInner=R try another radius of the ring model for the two hand read lines
+    if 'contact' in opts:
+        LINES['contactRadius'] = float(opts.pop('contact'))
+    if 'bInner' in opts:
+        LINES['bInnerRadius'] = float(opts.pop('bInner'))
     img, lum = p2.lum_of(geom.CLOSE)
     f0 = pf.features()
     feats = (p2.limb_points(lum), f0[2], f0[3], f0[4], p2.horizon_points(lum), np.array(LINES['litEnd'], float), np.array(LINES['bInner'], float))
