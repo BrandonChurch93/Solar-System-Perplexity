@@ -2781,3 +2781,36 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   mostly a cell that is cut or joined between two captures (the label changes, not the light).
   The law of MAIL 1218 (no cell over a tenth) is still not met: 4.5 percent.
   Chain goes on: film, rise, five hashes, final 60, two finals.
+- 20:12 UTC. THE CHAIN OF h48 WAS STOPPED BY ME at 19:59 after B DONE (twin, final 90, flicker rows and the
+  draft film v/film-h48.mp4 are in; rise, five hashes, final 60, two finals are NOT). Why: the whole frame at a
+  quarter size beside the approved (v/whole-h48f.jpg) still reads as pale stones in a brown net, and I found by
+  measure what the eye sees, so a name on h48 would cost the Builder a reading for a state I already know how to
+  better. h45 stays the named commit. h48 is a state with a part of its proofs, not a name.
+  WHAT THE EYE SEES AT A QUARTER SIZE, each with its measure (rows 800 to 1080 of the 1080 frame, max channel):
+  (1) levels and mean colour are the same as the approved's at every size (percentiles 1 to 99 within 0.03 from
+      the 5th up; mean rgb 0.574 0.326 0.138 against 0.565 0.326 0.140); the bands 1 to 16 px are 1.0 to 1.1 of
+      the approved's. So what is wrong is not how much dark or how much fine detail, it is where it lies.
+  (2) THE DARK IS A NET IN MINE AND POCKETS IN THE APPROVED (v/blobs.py: connected parts under a level). Under
+      0.3: approved 579 parts, half of the dark lies in parts of 1072 px or less, the largest part holds 0.08 of
+      it; h48 final 1784 parts, 3575 px, the largest 0.41. Under 0.4: 5773 px and 0.34 against 22311 px and 0.43.
+      In the approved two cells that press against each other have a brown border (0.3 to 0.45) and the near
+      black stands in pools where three meet and along some stretches.
+  (3) THE NEAR WHITE IS IN SMALLER PIECES IN THE APPROVED: over 0.8: 343 px against 693 px.
+  (4) THE HUE: at one level the approved's green to red differs from place to place two to three times more
+      than mine (standard deviation of g/r in the near rows 0.05 to 0.08 against 0.02 to 0.03) and its darks are
+      less red (g/r 0.354 to 0.378 at the levels 0.2 to 0.4 against 0.316 to 0.350; b/r 0.184 against 0.142).
+      Dull bodies are olive, lanes red brown. Mine has one hue for a level.
+  (5) THE SPOT (v/h48f-spot.jpg): the approved's is a dark bowl with a large black umbra and thin bright hairs on
+      a dark red brown wall; mine is a pale rosette of wide ribbons with a small mottled umbra. Wide open.
+  CODE (ground.ts, not committed): heat.olive [amount, blue against green, from, to, share off the dull bodies]:
+  labHue multiplies green and blue of the ramp's colour under a level, by how dull the cell is (sDull), not in
+  the lane, the penumbra or a sunk cell. heat.lane[17]: the shoulder's power times mix(lane[17], 1, pool), so
+  the valley is shallow where the field of the place has no pool. Both off without their keys.
+  t256 (lane[17] 0.35), t257 (and olive [0.5, 1.8, 0.35, 0.7, 0]) on h48: SEEN (v/c-t257.jpg): neighbours press
+  against each other with a thin dark line between and pools elsewhere; the dull cells go olive. Still a net by
+  the measure (largest 0.39): the thin line itself is under 0.3. Mean green rose 0.325 to 0.340 (approved 0.326).
+  NEXT t258: and cushion.seam[3] 5 (the seam off a pool glows brown), olive [0.4, 1.8, 0.35, 0.7, -0.3]; t259:
+  and patch [0.5, 2.0, 0.25, 0.75, 0.3] (finer cool patches on the crown).
+  MAIL 1540 (20:03): main is 262b9a68, merge it. Tried 20:08: one conflict, src/stops/sun/place.json ("surface"
+  3 against 3.0, the same value). Merge aborted, the file name sent to /root as the mail asks, nothing else.
+  Until the answer I build on the old base (merge base d91c0f63).
