@@ -1,0 +1,25 @@
+diff --git a/src/stops/sun/place.json b/src/stops/sun/place.json
+index 0cbf6e2b..e323f7de 100644
+--- a/src/stops/sun/place.json
++++ b/src/stops/sun/place.json
+@@ -120,6 +120,7 @@
+     "gasNote": "gas: the share of the corona's and the prominences' light that the lens holds beside the bright ground, by the eye's height alone (radii of the ball), the same law down and up and in every segment (set.ts gasAt). Under the height 'from' it is the constant 'low': the glow from inside that the surface view holds, brighter toward the horizon by the look's angle (corona.ts), the same at every frame of the close view (the eye stands between 0.045 and 0.057 radii there). From 'from' to 'to' it rises to 1 by a smooth step in the logarithm of the height, no slope at either end; 'to' lies under the height of the hold, so the hold and the travel stand at the whole share. MAIL 1415: with from at 0.03 the rise held 0.36 of the gas at frame 212 and 0.61 at 221, a wide grey veil over the stars while the ground still filled the frame; with from at 0.3 the share is the floor up to frame 216, 0.097 at 221, 0.242 at 225, 0.429 at 229, 0.620 at 233, 0.874 at 240, 0.980 at 247, 1 at 256 (assets-src/sun/place/gasshare.ts). The gas itself is seated on the ball at every height, in the close view in the stage's frame as the arcade is.",
+     "skyAim": [71.83722, 136.56647, 27.5002],
+     "skyAimNote": "skyAim: the aim of the film's sky in the close view (plan.ts skyAim.terrain). MAIL 1463: the rigid sky is taken. This aim (found by onesky.ts) is the one at which the close view's sky and the hold's are one sky, so the film's sky stands still in the world from frame 0 to the hold and what turns against the Sun's body is the body's own spin. Measured (out/work/sun/skyt/slide.ts now, the sky's turn from one frame to the next, degrees): against the Sun's body 0.106 to 0.118 and in the world at most 0.016 at every row it prints from frame 162 to 264 but the row of frame 205; the stars' step in the picture from 204 to 205 and from 205 to 206, where the view of the close stage gives way to the globe's, is alike (12.2 and 14.3 pixels against 13.0 and 15.8 at the upper left of a draft frame), so the row of that frame in slide.ts is the change of the frame it counts in and no step of the sky. What skystep-aim.ts calls the largest own turn (0.518 at frame 224, low against high 13.879) is the step of plan.ts skyTurn that keeps the sky still while the frame of the close stage gives way to the globe's by the eye's height over heights.carry; it is no turn of the sky in the world. What it costs: the Milky Way does not stand behind the arcade, the sky there is stars on black, and the band shows at the left edge of the frame only. The aim that puts the band where the approved close picture has it (70, 156.637, -6.267, by skysolve.ts) stands 39.0 degrees of true turn from this sky: carried by the eye's height it turned the sky against the body by up to 1.998 degrees a frame; spread evenly over the 90 frames of the rise by the clock (tried in plan.ts and taken out again) it turned 0.606 degrees at every frame, also at frames 186 to 204 where the camera turns against the body by 0.07 to 0.55, over the bound of 0.5 and a slide a viewer can see. An aim under the bound (84.392, 122.459, 3.093: 0.459 at every frame) showed a faint band at the upper left of the frame and none behind the arch.",
++    "skyClose": { "note": "TRIAL, not named: the second aim of the film's sky (plan.ts skyAim.dive and turn, the engine's law of a second aim): the close view up to frame turn[0] looks at the sky by aim, at which the Milky Way stands behind the arch as in the approved picture, and from turn[0] to turn[1] the sky turns to skyAim, the one sky of the hold.", "aim": [70, 156.637, -6.267], "turn": [90, 269] },
+     "closeSky": { "note": "the light of the film's sky that the lens holds in the close view, beside the bright ground (the engine's terrainSkyGlow, with its star law of a surface view): 1 is the open sky of the orbit. It returns to 1 by height alone, over heights.sky", "glow": 0.3 },
+     "heights": {
+       "tidy": [
+diff --git a/src/stops/sun/plan.ts b/src/stops/sun/plan.ts
+index f825039f..ee203253 100644
+--- a/src/stops/sun/plan.ts
++++ b/src/stops/sun/plan.ts
+@@ -23,7 +23,7 @@ export const params: MoveParams = {
+   spinDegPerSecond: 3.4,
+   moonDegPerSecond: 0,
+   tint: [1, 0.8, 0.4],
+-  skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: place.onGlobe.skyAim as [number, number, number] },
++  skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: place.onGlobe.skyAim as [number, number, number], dive: place.onGlobe.skyClose.aim as [number, number, number], turn: place.onGlobe.skyClose.turn as [number, number] },
+ }
+ 
+ export const climb = { ease: { over: 1.3, speed: 0.095 } }
