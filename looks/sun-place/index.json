@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T06:33:38.321Z",
+ "pushed": "2026-11-26T06:56:24.504Z",
  "head": "6ada65b9074e177278cc9892bd418ab213843d64",
- "note": "arch trial K and limb crops at 90; sun-near 60 of the pushed state: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "note": "working state on 6ada65b9, not committed: arch refit to the approved at 90 (rows 0 to 324 plain 11.9993, low band 5.1086), sky aim turned so the Milky Way runs behind the arch, fringe doubled in count. sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T06:56:23.947Z",
+   "file": "20261126065623947-note-E9-limb.jpg",
+   "source": "../../../../tmp/v/E9-limb.jpg",
+   "kind": "note",
+   "label": "limb at 90, approved left, working state right",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T06:56:23.343Z",
+   "file": "20261126065623343-note-E9-pair.jpg",
+   "source": "../../../../tmp/v/E9-pair.jpg",
+   "kind": "note",
+   "label": "frame 90 draft, approved above, working state E9 below (arch refit, sky aim and level, fringe)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T06:33:37.757Z",
    "file": "20261126063337757-note-limb-R2.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/c2-arc-b.jpg",
    "kind": "note",
    "label": "rise 207 to 234, the arcade leaving by its own size, at 2 to 1 (c2-arc-b.jpg)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:12:46.810Z",
-   "file": "20261126061246810-note-c2-arc-a.jpg",
-   "source": "../../../../tmp/v/c2-arc-a.jpg",
-   "kind": "note",
-   "label": "rise 207 to 234, the arcade leaving by its own size, at 2 to 1 (c2-arc-a.jpg)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T05:47:10.192Z",
-   "file": "20261126054710192-note-c1-rise-a.jpg",
-   "source": "../../../../tmp/v/c1-rise-a.jpg",
-   "kind": "note",
-   "label": "cure first numbers (225 to 480 rows): rise drafts 216 to 241; the arcade falls too fast between 216 and 225, numbers being set again",
    "stop": "sun"
   }
  ]
