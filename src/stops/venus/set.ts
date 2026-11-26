@@ -209,9 +209,12 @@ export const createSet: SetFactory = async (ctx) => {
     const eye = plan.eyeShot(move, at, 'orbit').pose.position.clone().applyQuaternion(back)
     const s = new THREE.Vector3()
     const t = new THREE.Vector3()
-    limbFrame(eye, plan.lightDir.clone().applyQuaternion(back), s, t)
-    return { eye, s, t }
+    const sun = plan.lightDir.clone().applyQuaternion(back)
+    limbFrame(eye, sun, s, t)
+    return { eye, s, t, sun }
   })
+  const limbOff = new THREE.Vector3()
+  const limbSun = new THREE.Vector3()
   const limbT = new THREE.Vector3()
   const camera = new THREE.Vector3()
   const amps: number[] = look.cells.map(() => 0)
@@ -364,6 +367,18 @@ export const createSet: SetFactory = async (ctx) => {
         limbEye.copy(heldLimb.eye).applyQuaternion(limbTurn)
         limbS.copy(heldLimb.s).applyQuaternion(limbTurn)
         limbT.copy(heldLimb.t).applyQuaternion(limbTurn)
+        // The film may lay the camera off the plan's own move: the pass of the travel begins in the last frames of the rise, after its
+        // judged frame (film.ts, passAhead). The far end of the move as the film flies it then lies off the plan's by that step, and the
+        // travel reads the glow for its camera from its first frame. So the eye the glow is read for takes the same step: the camera less
+        // the plan's own camera at this time. Where the film flies the plan's move the step is nothing and nothing is changed.
+        const own = plan.eyeShot(kind === 'dive' ? 'dive' : 'rise', state.time)
+        if (own.view === 'orbit') {
+          limbOff.copy(own.pose.position).applyQuaternion(state.rotation).negate().add(camera)
+          if (limbOff.lengthSq() >= 1e-16) {
+            limbEye.add(limbOff)
+            limbFrame(limbEye, limbSun.copy(heldLimb.sun).applyQuaternion(limbTurn), limbS, limbT)
+          }
+        }
       } else limbFrame(camera, light, limbS, limbT)
       gu.uVignette!.value = vignette
       gu.uAspect!.value = aspect
