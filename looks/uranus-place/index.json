@@ -1,9 +1,49 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T06:55:53.340Z",
- "head": "e794e5f2301286bf58d71b7027675c5a8327cfb6",
- "note": "06:56 scale 0.3 held locally; dive 1 of 2 with main's turn law at the reader; a new tops' law is queued for a draft test",
+ "pushed": "2026-11-26T07:13:15.790Z",
+ "head": "a854dac9456f1d21a603d3c66a55b6470a8f45f5",
+ "note": "07:14 tops' law bb5537bf and main's turn law 9fef204d committed, main 8c8bf870 merged (a854dac9); reader on all four parts running",
  "looks": [
+  {
+   "time": "2026-11-26T07:13:15.052Z",
+   "file": "20261126071315052-note-tl-e.jpg",
+   "source": "../../../../tmp/n71/tl-e.png",
+   "kind": "note",
+   "label": "dive 4150 to 4180 draft: main, scale 0.3, new tops' law (both lower rows with my turn law)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T07:13:14.430Z",
+   "file": "20261126071314430-note-tl-d.jpg",
+   "source": "../../../../tmp/n71/tl-d.png",
+   "kind": "note",
+   "label": "4390, 4395, 4399 draft: main above, new tops' law below",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T07:13:13.841Z",
+   "file": "20261126071313841-note-tl-c.jpg",
+   "source": "../../../../tmp/n71/tl-c.png",
+   "kind": "note",
+   "label": "rise start 4380 to 4395, draft: scale 0.3 above, new tops' law below; the white comes in with the view, no band on the horizon",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T07:13:13.202Z",
+   "file": "20261126071313202-note-tl-b.jpg",
+   "source": "../../../../tmp/n71/tl-b.png",
+   "kind": "note",
+   "label": "rise 4413 to 4436, draft: main, scale 0.3, with the new tops' law",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T07:13:12.360Z",
+   "file": "20261126071312360-note-tl-a.jpg",
+   "source": "../../../../tmp/n71/tl-a.png",
+   "kind": "note",
+   "label": "low rise 4399 to 4410, draft: main, scale 0.3, scale 0.3 with the tops' light by the eye's view through the lanes (bb5537bf)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T06:55:43.799Z",
    "file": "20261126065543799-note-tm-b2.jpg",
@@ -202,46 +242,6 @@
    "source": "../../../../tmp/n67/mine-4148-4152.jpg",
    "kind": "note",
    "label": "RC draft 4148 4150 4152 for MAIL 1385",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T03:01:51.691Z",
-   "file": "20261126030151691-note-limb-4035-table-4x.jpg",
-   "source": "../../../../tmp/n66/limb-4035-table-4x.png",
-   "kind": "note",
-   "label": "limb at 4035, final, 4x: approved, main, RC, the smooth table (control, not committed; match 3.730, G17 median 1.170)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T03:01:46.689Z",
-   "file": "20261126030146689-note-final-4407-main-rc.jpg",
-   "source": "../../../../tmp/n66/final-4407-main-rc.jpg",
-   "kind": "note",
-   "label": "final 4407: main left, RC (766c9258, the frames of 6ef232ea) right. RC is paler (mean RGB 40.5 83.4 93.9 against 37.8 70.8 82.5) and its cloud softer: the two laws of light, open",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T02:44:54.288Z",
-   "file": "20261126024454288-note-far-RC.jpg",
-   "source": "../../../../tmp/n66/far-RC.png",
-   "kind": "note",
-   "label": "RC 6ef232ea, far ground under the limb at 4403, 4407, 4411, draft 1 to 1: what the reader calls red from 4403",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T02:44:53.641Z",
-   "file": "20261126024453641-note-pat-EA-8770.jpg",
-   "source": "../../../../tmp/x/pat-EA-8770.jpg",
-   "kind": "note",
-   "label": "rise from 4385, control EA (terrain picture, billow shade, veil and tops all off): the reader stays red in the far ground under the limb (1.51; RC 1.10), so the hand layers are not the cause",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T02:16:01.539Z",
-   "file": "20261126021601539-note-pat-LM-8779.jpg",
-   "source": "../../../../tmp/x/pat-LM-8779.jpg",
-   "kind": "note",
-   "label": "rise from 4389 + 1/2 with the smooth table, my chain of the reader: red stays in the far ground under the limb (back read 1.38)",
    "stop": "uranus"
   }
  ]
