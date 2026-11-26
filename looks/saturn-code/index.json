@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T08:18:32.744Z",
+ "pushed": "2026-11-26T08:56:14.538Z",
  "head": "b28d29a882862711ad1033614fee83f5dd77cf55",
- "note": "state two in work: ring's broad tone laid by radius and azimuth, thin shadowed ring on the picture's weight, moon behind the rings",
+ "note": "state two: tone, thin, moon order, sky turn and world as main, rise lens to 30; reading the rise",
  "looks": [
+  {
+   "time": "2026-11-26T08:56:13.682Z",
+   "file": "20261126085613682-note-s1pop_3870.jpg",
+   "source": "../../../../tmp/v/rigid/R2/s1pop_3870.jpg",
+   "kind": "note",
+   "label": "state one rise 3870 to 3881, lower right at full size: the shadowed ring leaves and uncovers the bright sky"
+  },
+  {
+   "time": "2026-11-26T08:56:12.629Z",
+   "file": "20261126085612629-note-lr5.jpg",
+   "source": "../../../../tmp/v/rigid/S2/lr5.jpg",
+   "kind": "note",
+   "label": "3465 lower right, plain above and lifted by 4 below: approved, state one, tone alone, thin 0.5, thin 0.85"
+  },
+  {
+   "time": "2026-11-26T08:56:11.036Z",
+   "file": "20261126085611036-note-u4_3465.jpg",
+   "source": "../../../../tmp/v/rigid/S2/u4_3465.png",
+   "kind": "note",
+   "label": "3465 final, state two as it stands: ring tone laid again, thin 0.5 on the weight of the picture, moon behind the rings, sky turn as on main"
+  },
   {
    "time": "2026-11-26T08:18:32.180Z",
    "file": "20261126081832180-note-shadow_edge_3612.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/rigid/S2/lr_thin.jpg",
    "kind": "note",
    "label": "3465 lower right: tone only, tone with the thin shadowed ring, approved"
-  },
-  {
-   "time": "2026-11-26T08:18:29.307Z",
-   "file": "20261126081829307-note-tri_B.jpg",
-   "source": "../../../../tmp/v/rigid/S2/tri_B.jpg",
-   "kind": "note",
-   "label": "3465 final at 1 to 1, lower part: state one, tone laid, approved"
-  },
-  {
-   "time": "2026-11-26T08:18:28.713Z",
-   "file": "20261126081828713-note-tri_L.jpg",
-   "source": "../../../../tmp/v/rigid/S2/tri_L.jpg",
-   "kind": "note",
-   "label": "3465 final at 1 to 1, left: state one, tone laid, approved"
-  },
-  {
-   "time": "2026-11-26T07:35:57.481Z",
-   "file": "20261126073557481-note-lr4.jpg",
-   "source": "../../../../tmp/v/rigid/SV/lr4.jpg",
-   "kind": "note",
-   "label": "lower right lifted 4: the shadowed ring against the sky"
   }
  ]
 }
