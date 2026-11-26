@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T08:10:45.039Z",
- "head": "5088e724c68d6d847dda1280951754e4e2c20051",
- "note": "final 90 on the merge of main 77a7d410 (not pushed yet): G17 by the gate's reader 1.0125 at 90; sky aim turned so the Milky Way stands behind the arch; gas floor 0.035 clears the veil at 221. sun-near 60 (draft r3): dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "pushed": "2026-11-26T08:35:57.681Z",
+ "head": "b13b631b32a83375884c26c882221970e975c1aa",
+ "note": "final 90 of b13b631b (not pushed yet): arch of 120 strands in crossing bundles with gaps, one fountain at the left foot; G17 by the gate's reader on the beauty 1.0890 (main 1.2777); rows 0 to 324 plain 11.9001, low band 4.7513, bands 1.256, 1.121, 0.975, 1.012; whole plain 34.1815 against main's 29.6374, still worse. sun-near 60 (draft r3, ground unchanged since): dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T08:35:56.187Z",
+   "file": "20261126083556187-note-y5-tri90.jpg",
+   "source": "../../../../tmp/v/y5-tri90.jpg",
+   "kind": "note",
+   "label": "final 90, arch trial Y5 (b13b631b): approved, main, this state at 1 to 1",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T08:10:39.829Z",
    "file": "20261126081039829-note-r3-sheet.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/E9-pair.jpg",
    "kind": "note",
    "label": "frame 90 draft, approved above, working state E9 below (arch refit, sky aim and level, fringe)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:33:37.757Z",
-   "file": "20261126063337757-note-limb-R2.jpg",
-   "source": "../../../../tmp/v/limb-R2.jpg",
-   "kind": "note",
-   "label": "limb right at 90: approved, main final, trial draft; fringe taller and more even than the approved, to be cut",
    "stop": "sun"
   }
  ]
