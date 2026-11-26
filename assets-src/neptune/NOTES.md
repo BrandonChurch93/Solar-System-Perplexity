@@ -12254,3 +12254,31 @@ I do nothing more until a job comes.
   (whole, not sparse). The branch agent/neptune-place stays where it is pushed, 74c0c862 and what follows; nothing of it is
   lost by the tree standing elsewhere. From this commit on the notebook grows by commits made on the branch without the tree
   (a second index: read-tree, update-index, write-tree, commit-tree, update-ref), pushed plain.
+
+- 21:11 the tree put on 262b9a68 with git checkout --detach: git status empty, not sparse, no change under src, public,
+  config and tools; lock file as on the branch (no npm ci). 21:11:36 npm run build: exit 0, dist 1301 MB, free disk 5040 MB.
+  (The push of the commit before this one failed twice with "could not read Username" and went through at 21:12:44.)
+- 21:12:30 the job's four lines started as /tmp/ma7-23.sh, detached from the repo root. The tool's own line 21:12:40: "film:
+  1 units to render, 8 frames, 16x9 final full". The tool writes no line per frame; I watched the bytes the encoder had read
+  (/proc/PID/io): steps of about 4.14 MB at 21:37:27, 21:42:20, 21:47:24, so about five minutes a frame; no frame over
+  fifteen minutes, so no half hour line was due.
+- 21:52:24 finished. The tail, whole:
+
+      0
+      RC film venus.dive 1312-1319 0
+      wrote venus.dive.part000.mp4 frames 1312-1319 render 2374 s encode 1.8 s
+      -rw-r--r-- 1 user user 450560 Nov 26 21:52 /tmp/film-16x9-final-b-098.tar.00
+
+  The piece holds venus.dive.span1312-1319.mp4 (446155 bytes) and its .json (2011 bytes); sha256 of the piece e8b1dd75afa9
+  de3e2938d5e7d3fa3b038be8bae79903675bf3320f69629a1f76. Tree still clean on 262b9a68. Free disk 6332 MB.
+
+## 26 Nov, 21:53 UTC: RETURN ma7-23 to the Builder (word for word; sent about 21:53:03; attached /tmp/film-16x9-final-b-098.tar.00 and /tmp/ma7-23-tail.txt; high priority)
+
+RETURN ma7-23 from /root/neptune_builder, 21:52 UTC: film-16x9-final-b-098, segment venus.dive, span 1312-1319, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Finished 21:52:24 UTC. (If the usual first line has a set form, it was not sent to me; this is mine.)
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 21:10:35.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film venus.dive 1312-1319 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote venus.dive.part000.mp4 frames 1312-1319 render 2374 s encode 1.8 s"
+5. Attached: /tmp/film-16x9-final-b-098.tar.00 (450560 bytes, the only piece) and /tmp/ma7-23-tail.txt.
+6. The tree: the export I named in my hand in was removed and had no git status, so the render tree is this repo's own tree, put on 262b9a68 with git checkout --detach: whole, not sparse, git status empty before and after the job. Lock file as on my branch, so no npm ci; npm run build exit 0 at 21:12. Free disk 5040 MB before the start, 6332 MB now.
+7. The two files under out/work/chunks/16x9-final-full are kept. I wait for the next job.
