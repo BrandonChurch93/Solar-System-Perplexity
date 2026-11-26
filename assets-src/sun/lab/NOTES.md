@@ -1531,3 +1531,18 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   the crossings up the flanks as fibres and the tops carry one small light); lanes still a flat brown bed where
   wide; in motion cells swell, shrink and close and the lights move outward, but the net is the same net over
   2 s (few births in the near field in 60 frames).
+- 02:41 UTC. The session was resumed; the sandbox lost its git identity and its git and gh sign in
+  (~/.perplexity/cli-config gone; push says "could not read Username"). Identity set again in the repo's own
+  config (the same as the earlier commits). PUSH BLOCKED since then: commit 41e13272 (lab.json of h33, notes) is
+  local only, origin agent/sun-lab at e285903a. Retry the push with every commit; do not rebuild access by hand.
+  Disk was full at 02:43 (renders refuse under 3 GB free): old runs and trial pngs under out/work/sun/lab removed
+  (kept: b7, b7f, h14, h14f, h23f, h31, h31f, h32, h32f, h33, h33f, standing, standingf, t38, t39, t51, t56, t58).
+- 02:43 to 02:50 UTC. t58 to t60 on h33 (smaller light on the tops; v/trials-t.jpg, levels-t.jpg). t60 = blob
+  [0.35,1.0,0.5,0.3,0.2,0.3,2], patch [0.2,0.3,0.3,0.8,0.3], navel [0.5,0.3]; refit as h34 (v/lab-h34.json, draft
+  only): plain 30.9434, low64 7.8334, bands [1.59 1.04 0.93 0.97 1.02 1.05 0.98], curve [0.694 0.683 0.67 0.651
+  0.628 0.593 0.537 0.467 0.4 0.346 0.321] (all gaps inside 0.05), lane 5.88, rim mean 0.370 0.462 0.508 0.542
+  0.573 0.595 0.628 0.659 0.676 0.700 0.719, far shares 0.507 and 0.225. SEEN: levels picture nearer the
+  approved's (lights as blobs with dark between); at full size one pale light per cell, risk of polished nuggets.
+- 02:51 UTC. MAIL to /root (high, because of the push block): state h33, not a name; patch of 41e13272 attached;
+  rim profile, motion words (fixed net that boils: point 5 of 1368 not met), flicker, list. Promised: per cell
+  rim profile, the tops (h34 direction), then births and splits; next mail by 04:20.
