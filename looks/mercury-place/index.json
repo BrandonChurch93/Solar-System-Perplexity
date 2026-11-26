@@ -1,9 +1,25 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-25T23:48:22.517Z",
- "head": "6591d862db3bc824abcce8ddf9fabd3611294bda",
- "note": "23:51 handover 742 to 760 under the law: the name's rows, largest 0.37 at 744 (the level's handover, not the crater); dive 731 to 740 fall to 0.07 to 0.16 from the name's 0.13 to 0.26; chain tn at 170 of 207",
+ "pushed": "2026-11-26T00:10:35.809Z",
+ "head": "0a034c446bd940870e359b8cdc9cfe1081b464bc",
+ "note": "00:11 chain tn done on 172e7bcd; main moved again to 3675234f (the far Sun's new law, the reader changed): merged, a sample of 23 master stills is being drawn on the merge to see which frames keep tn's bytes",
  "looks": [
+  {
+   "time": "2026-11-26T00:08:44.774Z",
+   "file": "20261126000844774-note-tn-hand-960.jpg",
+   "source": "../../../../tmp/m/tn-hand-960.jpg",
+   "kind": "note",
+   "label": "handover 960 to 975, whole master frames under the law on merged main: rows 0.23, 0.24, 0.24, 0.23, 0.22, 0.21, 0.19 falling to 0.07",
+   "stop": "mercury"
+  },
+  {
+   "time": "2026-11-26T00:04:34.456Z",
+   "file": "20261126000434456-note-tn-dive-700.jpg",
+   "source": "../../../../tmp/m/tn-dive-700.jpg",
+   "kind": "note",
+   "label": "dive 698 to 710 under the law, x 640 to 1080, y 520 to 820 at 2 times: rows 0.32 to 0.41 at 702 to 707 sit in the dark band left of the crater (the hold's ground giving way to the levels), not in the crater: the law moves at most 5 codes there, inside the crater's box only",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-25T23:48:21.880Z",
    "file": "20261125234821880-note-tn-hand-745.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/m/tn-rise-989.jpg",
    "kind": "note",
    "label": "rise 989 to 998 at rate 2, whole master frames under the law: the crater keeps the set's light all the way; rate 2 rows 0.08 to 0.24 (the name 0.48 to 0.51 at 989 to 992)",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T22:56:11.157Z",
-   "file": "20261125225611157-note-tn-rise-1009.jpg",
-   "source": "../../../../tmp/m/tn-rise-1009.jpg",
-   "kind": "note",
-   "label": "rise 1009 to 1020 whole master frames on merged main 172e7bcd under the law (every second K): steady, the far Sun comes in at the top right; rate 2 rows of this stretch follow with the name",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T22:32:12.837Z",
-   "file": "20261125223212837-note-tn-rise-cr1b.jpg",
-   "source": "../../../../tmp/m/tn-rise-cr1b.jpg",
-   "kind": "note",
-   "label": "rise 997 to 1007 at rate 2, master, the crater at 1.1 times under the law hero.height 3.1 to 0.3: the set's pale terraces fade into the hold's thin ring over 999 to 1006 while the crater shrinks; no step between neighbours; rows 981 to 998 read 0.20 at most (name 0.49)",
    "stop": "mercury"
   }
  ]
