@@ -2135,3 +2135,48 @@ Also in: the draft frames of e88f4f2b beside 84f2d1e1 (jx1-02): only 3044, 3048,
 - A CORRECTION to my 17:35 mail, found by counting all of main's 41 stills k 6494 to 6534: main's largest count is 2811 at k 6511 (3255 + 1/2), but its excess is not at most 22 on these rows. From k 6522 (3261) to k 6534 (3267) main has pixels over 22: 9, 49, 86, 94, 97, 99, 98, 96, 86, 69, 66, 60, 44, the largest excess 29 at k 6527 (3263 + 1/2: count 817, 99 px over 22, x 1699 to 1768, y 516 to 577). Build D is the same there (847, 29, 99). "21 to 22" held only for 3254 + 1/2 to 3256 + 1/2. Build D's largest count over all its stills is 4094 at k 6504 (3252), not 3890.
 - The rows render was stopped by hand at 18:14 (TERM did not end it, kill -9 did) because the tests had 27 of 95 files after 13 minutes beside it. Drawn: k 6497 to 6513 odd. Not drawn on build E: k 6495, 6515 to 6527 odd and every even k.
 - vitest on build E's tree (/tmp/vitest-e.log; started 18:01:14 on b0704bbd plus relief.ts, sha1 df3399f82d57, the file committed in b037e9ee): "Test Files  95 passed (95)", "Tests  1106 passed (1106)", "Duration  1007.45s", "vitest exit 0 18:18:05". Then origin/main (52ff2250, kit and scorecards only) merged and the branch pushed.
+
+### 18:31 UTC, build E pushed (f0688395) and taken for the cut; all 35 rows counted
+
+- Push 18:18:32: 2cb008f1..f0688395 on agent/jupiter-relief (b0704bbd notes, b037e9ee the four lines of relief.ts, 9432c7c7 notes, f0688395 merge of main 52ff2250), ls-remote shows f068839539f4686c9ac4953d85d12bb71b95c11f. On the merged tree: tsc exit 0 at 18:18:26, path part "smooth jupiter: green." exit 0 at 18:18:28. Mailed 18:19 with /tmp/e-corner-4rows.jpg.
+- MAIL 1532 (18:21, the Builder): build E f0688395 is taken as my name for this cut. The 22 no longer stands as the bar for the whole span (main's own excess reaches 29); what decides is the eye at 60 frames a second: no stripe on E that main does not show, none earlier and none stronger. He draws E's flight out at 60 frames a second (K 6472 to 6600) and runs its four rows (jr6), the tables of seven placements (js6, jt6, ju6) and the finals of the four judged frames with G17 (jv6). What would hold it: a row line green on main and over the limit on E; a line red on both where E's table stands above main's in the worst, the middle or the least; a new visible fault at a judged frame; a stripe at 60 frames a second. A further state does not ride this cut. Asked: the table of the missing rows.
+- All 35 stills K 6494 to 6528 of build E (set sw1; /tmp/rows.sh then /tmp/rows2.sh, ended 18:29:26; table /tmp/e-rows-table.txt; mailed 18:30). Count and in brackets the largest excess; main, build D, build E:
+  - 3247: 18 (12), 18 (12), 18 (12)
+  - 3247 + 1/2: 14 (13), 13 (14), 13 (12)
+  - 3248: 21 (13), 27 (12), 22 (12)
+  - 3248 + 1/2: 19 (13), 40 (15), 21 (15)
+  - 3249: 17 (12), 82 (16), 22 (13)
+  - 3249 + 1/2: 22 (12), 555 (16), 27 (13)
+  - 3250: 22 (12), 1783 (19), 92 (13)
+  - 3250 + 1/2: 25 (12), 2926 (22), 352 (13)
+  - 3251: 20 (12), 3493 (23), 750 (15)
+  - 3251 + 1/2: 26 (12), 3884 (25), 1203 (19)
+  - 3252: 26 (13), 4094 (27), 1440 (22)
+  - 3252 + 1/2: 40 (13), 3890 (28), 1666 (24)
+  - 3253: 125 (14), 3396 (28), 1869 (25)
+  - 3253 + 1/2: 542 (18), 3031 (27), 2009 (23)
+  - 3254: 1287 (20), 2645 (25), 1963 (23)
+  - 3254 + 1/2: 1840 (21), 2491 (23), 2092 (24)
+  - 3255: 2468 (21), 2415 (24), 2128 (23)
+  - 3255 + 1/2: 2811 (21), 2118 (23), 1903 (23)
+  - 3256: 2577 (22), 1685 (21), 1578 (21)
+  - 3256 + 1/2: 1976 (22), 1283 (20), 1227 (20)
+  - 3257: 1265 (20), 913 (18), 898 (18)
+  - 3257 + 1/2: 893 (17), 669 (17), 669 (17)
+  - 3258: 710 (16), 588 (16), 592 (16)
+  - 3258 + 1/2: 588 (17), 547 (17), 550 (17)
+  - 3259: 580 (19), 579 (19), 578 (19)
+  - 3259 + 1/2: 725 (20), 719 (20), 718 (20)
+  - 3260: 948 (21), 947 (21), 947 (21)
+  - 3260 + 1/2: 1111 (22), 1123 (22), 1113 (22)
+  - 3261: 1082 (23), 1099 (23), 1086 (23)
+  - 3261 + 1/2: 934 (25), 966 (25), 958 (25)
+  - 3262: 859 (27), 920 (27), 904 (27)
+  - 3262 + 1/2: 829 (27), 903 (27), 883 (27)
+  - 3263: 880 (28), 895 (28), 902 (28)
+  - 3263 + 1/2: 817 (29), 847 (29), 849 (29)
+  - 3264: 814 (29), 826 (29), 836 (29)
+  - Over all 35 rows E's largest count is 2128 at 3255 (main 2811 at 3255 + 1/2, D 4094 at 3252); on the stripe's rows E's largest excess is 25 at 3253.
+  - Pixels with excess over 22 on K 6505 to 6511: E 12, 18, 7, 3, 2, 2, 1; D on K 6502 to 6511: 2, 28, 51, 64, 69, 70, 40, 7, 7, 2; main none. From K 6522 to 6528 all three: 9, 49, 86, 94, 97, 99, 98.
+  - K 6494 (3247): E is main's and D's still to the byte. K 6495: E against D 73898 px differ, largest 6. K 6528: E against D 23980 px, largest 2; against main 61129 px, largest 10.
+- Running: /tmp/chain-e2.sh (log /tmp/e2.log): K 6529 to 6534 on E into set sw1, then the S2 sets s2zero, s2one, s2pall (switch /tmp/s2-switch.py, restored by `git checkout HEAD -- src/stops/jupiter` after each) and s2asis, K 6039 and 6055; ends "CHAIN E2 done". No edit under src/stops/jupiter until then.
