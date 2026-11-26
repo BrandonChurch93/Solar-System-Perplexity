@@ -1,9 +1,41 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T01:22:09.512Z",
+ "pushed": "2026-11-26T01:46:23.735Z",
  "head": "5d74180adda79728a95af3ea14ca1fe28a7bb69f",
- "note": "01:23 the row at 2708: the pair 2708 and 2716 of the name; the dot cures that did not hold",
+ "note": "rise 2708 pattern row: reads a tear of the flow chain on equal pictures, name and main",
  "looks": [
+  {
+   "time": "2026-11-26T01:46:23.002Z",
+   "file": "20261126014623002-note-M-row0016.jpg",
+   "source": "../../../../tmp/pm/M-row0016.png",
+   "kind": "note",
+   "label": "rise 2708 main's Mars data: frame, 2716 carried by the chain, pattern heat, difference",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T01:46:22.444Z",
+   "file": "20261126014622444-note-N-row0016.jpg",
+   "source": "../../../../tmp/pm/N-row0016.png",
+   "kind": "note",
+   "label": "rise 2708 name: frame, 2716 carried by the chain, pattern heat, difference; top 1 percent outlined",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T01:46:21.811Z",
+   "file": "20261126014621811-note-blob-main-name.jpg",
+   "source": "../../../../tmp/pm/blob-main-name.png",
+   "kind": "note",
+   "label": "rise 2708 draft, crop x 240 to 640, y 180 to 440: main above, name below",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T01:46:21.247Z",
+   "file": "20261126014621247-note-blob-chain-MN.jpg",
+   "source": "../../../../tmp/pm/blob-chain-MN.png",
+   "kind": "note",
+   "label": "rise 2708, the area the pattern row reads: main above, name below; frame 2708, frame 2716 carried back by the chain of 16 flows, pattern. The chain tears in both",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T01:21:55.448Z",
    "file": "20261126012155448-note-paint7.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/speckfix.png",
    "kind": "note",
    "label": "speck cure, 6 times: left the name, right L0 with 17 blocks coded anew; top 2686, bottom 2684",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T00:51:42.325Z",
-   "file": "20261126005142325-note-dot2.jpg",
-   "source": "../../../../tmp/dot2.png",
-   "kind": "note",
-   "label": "2476 dot crop, beauty and layers: one pixel of L2 between L0 and C2 at the lit tip",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T00:51:41.702Z",
-   "file": "20261126005141702-note-c2l0.jpg",
-   "source": "../../../../tmp/c2l0.png",
-   "kind": "note",
-   "label": "L0's painted ground under C2 and C2: the green lit ledge the eye of the picture never saw",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T00:51:41.150Z",
-   "file": "20261126005141150-note-small3e.jpg",
-   "source": "../../../../tmp/small3e.png",
-   "kind": "note",
-   "label": "control: 2686 with C2's alpha out, the speck is brighter, so it lies behind C2",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T00:51:40.552Z",
-   "file": "20261126005140552-note-small3b.jpg",
-   "source": "../../../../tmp/small3b.png",
-   "kind": "note",
-   "label": "2686 speck crop: beauty, no grain, ungraded, layers: it is there before grade and grain",
    "stop": "mars"
   }
  ]
