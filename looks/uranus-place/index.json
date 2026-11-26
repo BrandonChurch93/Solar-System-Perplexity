@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T04:57:00.699Z",
+ "pushed": "2026-11-26T05:17:37.052Z",
  "head": "4ce4b9cb6142a17e8207fcff0eaa332b69a6de5f",
- "note": "candidate 4ce4b9cb (RC on main 759b7d75): dive 1 pattern 0.78 pop 1.42, dive 2 1.48, rise 1 1.37, rise 2 0.90; units running alone",
+ "note": "rise 2 of 2: the 21 rows sit 18 to 46 px inside the left limb; cover off keeps 21 of 21 over (largest 0.88), main's tree 16 of 21 (0.88), candidate 21 (0.90)",
  "looks": [
+  {
+   "time": "2026-11-26T05:17:36.478Z",
+   "file": "20261126051736478-note-mn-panel.jpg",
+   "source": "../../../../tmp/n68/mn-panel.png",
+   "kind": "note",
+   "label": "rise 2 of 2 control mn: rc the candidate, co cover off, mn main's stop tree; the back read's strip at the left limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T05:17:35.910Z",
+   "file": "20261126051735910-note-co-panel.jpg",
+   "source": "../../../../tmp/n68/co-panel.png",
+   "kind": "note",
+   "label": "rise 2 of 2 control co: rc the candidate, co cover off, mn main's stop tree; the back read's strip at the left limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T05:17:35.350Z",
+   "file": "20261126051735350-note-rc-panel.jpg",
+   "source": "../../../../tmp/n68/rc-panel.png",
+   "kind": "note",
+   "label": "rise 2 of 2 control rc: rc the candidate, co cover off, mn main's stop tree; the back read's strip at the left limb",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T04:56:55.730Z",
    "file": "20261126045655730-note-final-4290-appr-main-rc.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n65/final-4186-a.png",
    "kind": "note",
    "label": "final 4186 limb band: main, B1 2583f129, RC 6ef232ea (top to bottom)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T00:30:40.693Z",
-   "file": "20261126003040693-note-main-final-4399-mid2x.jpg",
-   "source": "../../../../tmp/n64/main-final-4399-mid2x.png",
-   "kind": "note",
-   "label": "main 555fe096 final tier 4399 at 2x: main draws fine upright blue lines here too (weaker than B1's)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T00:30:38.922Z",
-   "file": "20261126003038922-note-pair-4413.jpg",
-   "source": "../../../../tmp/n65/pair-4413.jpg",
-   "kind": "note",
-   "label": "4413 draft: 2583f129 above, the rim as air 6ef232ea below (features under the limb calmed)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T00:30:33.629Z",
-   "file": "20261126003033629-note-final-4290-band-a.jpg",
-   "source": "../../../../tmp/n65/final-4290-band-a.jpg",
-   "kind": "note",
-   "label": "4290 final tier, horizon 1 to 1: approved, main, B1, 6ef232ea (match 3.849, 3.224, 3.226)",
    "stop": "uranus"
   }
  ]
