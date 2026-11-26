@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T04:41:37.360Z",
+ "pushed": "2026-11-26T04:55:28.453Z",
  "head": "522708ba962227e5d09acb954ba9fa926fbf4dcf",
- "note": "N5: one air, the hold's grade above 102 km, sun on the own ground; pair 2708/2716 reads 0.0726; rims and patch traced to the map",
+ "note": "N5 522708ba: dive and rise at draft in the hold's grade; shade still dark at 2696 to 2700; from 2462 down the near range darkens by height (red)",
  "looks": [
   {
-   "time": "2026-11-26T04:41:36.709Z",
-   "file": "20261126044136709-note-n2-2477.jpg",
-   "source": "../../../../tmp/pm/n2-2477.jpg",
+   "time": "2026-11-26T04:55:22.195Z",
+   "file": "20261126045522195-note-above22.jpg",
+   "source": "../../../../tmp/pm/above22.jpg",
    "kind": "note",
-   "label": "2477 draft: state top, N2 bottom (sun tone)",
+   "label": "plates from above, state beside N5",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:41:36.083Z",
-   "file": "20261126044136083-note-n2-2681.jpg",
-   "source": "../../../../tmp/pm/n2-2681.jpg",
+   "time": "2026-11-26T04:55:21.176Z",
+   "file": "20261126045521176-note-shade22.jpg",
+   "source": "../../../../tmp/pm/shade22.jpg",
    "kind": "note",
-   "label": "2681 draft: state top, N2 bottom (sun tone)",
+   "label": "N5 shade boxes at 2325 2700 2580",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:41:35.446Z",
-   "file": "20261126044135446-note-judge-N2.jpg",
-   "source": "../../../../tmp/pm/judge-N2.jpg",
+   "time": "2026-11-26T04:55:20.108Z",
+   "file": "20261126045520108-note-dv1.jpg",
+   "source": "../../../../tmp/pm/dv1.jpg",
    "kind": "note",
-   "label": "N2 judge sheet: with the land-8p5 row, without, difference x 8, eight frames",
+   "label": "N5 dive 2458 to 2474 every second frame draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:41:34.721Z",
-   "file": "20261126044134721-note-n3-2441-crop.jpg",
-   "source": "../../../../tmp/pm/n3-2441-crop.jpg",
+   "time": "2026-11-26T04:55:19.281Z",
+   "file": "20261126045519281-note-dv0.jpg",
+   "source": "../../../../tmp/pm/dv0.jpg",
    "kind": "note",
-   "label": "2441 crop: N2 left, N3 right (N3 dropped: fails the judge)",
+   "label": "N5 dive 2440 to 2456 every second frame draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:41:34.079Z",
-   "file": "20261126044134079-note-n2-2441-crop.jpg",
-   "source": "../../../../tmp/pm/n2-2441-crop.jpg",
+   "time": "2026-11-26T04:55:18.239Z",
+   "file": "20261126045518239-note-N-pair-main.jpg",
+   "source": "../../../../tmp/pm/N-pair-main.jpg",
    "kind": "note",
-   "label": "2441 crop: state left, N2 right (hot rims)",
+   "label": "main 8fb3bffe beside N5 522708ba at 2708 and 2716 draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:41:33.486Z",
-   "file": "20261126044133486-note-n5m-2704.jpg",
-   "source": "../../../../tmp/pm/n5m-2704.jpg",
+   "time": "2026-11-26T04:55:17.452Z",
+   "file": "20261126045517452-note-N-rise4b.jpg",
+   "source": "../../../../tmp/pm/N-rise4b.jpg",
    "kind": "note",
-   "label": "2704 draft: the map alone top, N5 bottom (green tinge at the canyon's west rim is the map's)",
+   "label": "N5 522708ba 2708 2712 2716 and 2477 draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:41:32.865Z",
-   "file": "20261126044132865-note-n5m-2441.jpg",
-   "source": "../../../../tmp/pm/n5m-2441.jpg",
+   "time": "2026-11-26T04:55:16.369Z",
+   "file": "20261126045516369-note-N-rise4.jpg",
+   "source": "../../../../tmp/pm/N-rise4.jpg",
    "kind": "note",
-   "label": "2441 draft: the map alone top, N5 bottom (pale patch, hot rims are the map's)",
+   "label": "N5 522708ba rise 2696 2700 2704 2708 draft",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:41:32.220Z",
-   "file": "20261126044132220-note-n5-2704.jpg",
-   "source": "../../../../tmp/pm/n5-2704.jpg",
+   "time": "2026-11-26T04:55:15.360Z",
+   "file": "20261126045515360-note-N-dive4.jpg",
+   "source": "../../../../tmp/pm/N-dive4.jpg",
    "kind": "note",
-   "label": "2704 draft: N2 top, N5 bottom",
+   "label": "N5 522708ba dive 2437 2439 2441 2444 draft",
    "stop": "mars"
   }
  ]
