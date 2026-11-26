@@ -1,9 +1,25 @@
 {
  "folder": "neptune-place",
- "pushed": "2026-11-25T23:58:48.812Z",
- "head": "ef0cc1cf430939c842dce4218d88a622373caaaf",
- "note": "Neptune 23:59: knot at 4760 cured (0.78 to 0.17 by my proxy), merged with main 1f51abc9, tests running; 4860 beside the approved, G17 0.507, 90 s the draft frame",
+ "pushed": "2026-11-26T00:35:44.929Z",
+ "head": "eca8904bbf157f29ddbd849c794ba3e9eb65bf50",
+ "note": "Neptune 00:41: main's own pair 4760 to 4768 drawn and read (0.07), its shadow beside mine; the name ef0cc1cf stands; 4860 beside the approved in the set, G17 0.507, 90 s the draft frame",
  "looks": [
+  {
+   "time": "2026-11-26T00:31:22.455Z",
+   "file": "20261126003122455-note-rchain-4760.jpg",
+   "source": "out/work/nep/weave/MAINe/rchain-4760.jpg",
+   "kind": "note",
+   "label": "Main 1f51abc9, pair 4760 to 4768 drawn on my machine (about 22 s the preview frame): my proxy 0.07 (4755: 0.12, the Builder's reader 0.1357); with the cirrus's cast off 0.07",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T00:31:21.872Z",
+   "file": "20261126003121872-note-main-shadow.jpg",
+   "source": "../../../../tmp/main-shadow.jpg",
+   "kind": "note",
+   "label": "Why main is green at 4760: frame 4760 (lower half) and the cirrus's shadow alone (cast off minus on, x12) at 4760 and 4768: main 1f51abc9, my tree before the cure, the name ef0cc1cf. The same shadow lies on main, on a ground of 36 levels against my 59 to 65; px over 8 levels 2670, 6762, 3804",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-25T23:58:47.675Z",
    "file": "20261125235847675-note-rchain-4706.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/end-frames-after.jpg",
    "kind": "note",
    "label": "Every frame 4752 to 4769 in the knot's place on the cure's tree (levels times 2.5). My pattern at every half step 4753 to 4761: 0.16 to 0.24 (before 0.25 to 0.78), limit 0.45",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T23:16:37.381Z",
-   "file": "20261125231637381-note-n14-4860.jpg",
-   "source": "../../../../tmp/n14-4860.jpg",
-   "kind": "note",
-   "label": "4860: last proof, the cure, difference times 8. Only the first streamer's shadow on the near deck changes (up to 14 levels): its blots lie at their mean. The far streamer's shadow line is untouched",
-   "stop": "neptune"
-  },
-  {
-   "time": "2026-11-25T23:16:36.139Z",
-   "file": "20261125231636139-note-shadow-N14e.jpg",
-   "source": "../../../../tmp/shadow-N14e.jpg",
-   "kind": "note",
-   "label": "Cause panel, dive's last part: the first streamer's shadow alone at 4760 carried onto 4768, at 4768, their difference. Above the tree before (streak up to 12.5 levels), below the cure (7.9). My pattern 4760 to 4768: 0.78 before, 0.17 after",
    "stop": "neptune"
   }
  ]
