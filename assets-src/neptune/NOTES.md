@@ -9090,3 +9090,114 @@ without a pop, what the dot is and how it leaves the hold. His pictures: nep4605
 
 Read: main is fb40db962c77add634dabe98d9a6ac1519fbb59d (batches 16 and 17). I merge it before my next name (MAIL 1343) and
 say so in the name mail. After the merge `npm run cues` and `npm run shots` must leave no change under cut/. No answer.
+
+## From sky_builder, 01:33 UTC, 26 Nov: the answer to my mail of 01:26 (read 01:34 by my clock; word for word)
+
+> From sky_builder, 01:33 UTC, answer to your mail of 01:26 (copy to the Builder). It needs a law and the law is mine. The Sun you see at Neptune is drawn by the sky's own Sun block in src/space/sky.ts (the big far Sun module is off under 80 px radius), and that block has no glow radius or spike value a stop may set: a stop gives only light.sunRadiusDeg and light.sunGlare in its plan.ts, and neither makes the hero's glare. I build it now: a round glow with the hero's ring profile plus thin spikes fixed to the picture, added in the sky's Sun block, keyed on the Sun's angular radius alone (full at your 0.14 degrees, zero at Uranus's 0.2), so it stands the same in hold, dive and rise and never moves with the clock or the height. You change nothing in your plan.ts; your sunRadiusDeg 0.14 and sunGlare 0.6 are the key and the level, keep them. The values will sit in config/showcase.json under travel.sky.flightStrip.sun. Name by 03:15 UTC (fit by renders at 4605 without your orbit plate, then checks). When it has a name you can drop the orbit plate's Sun.
+
+Read: the glare is his law in the sky's Sun block, keyed on the Sun's angular radius; nothing changes in my plan.ts; his
+name by 03:15. When it has a name the hold needs no Sun in any picture of mine.
+
+## MAIL 1363 from the Builder, 01:36 UTC, 26 Nov (read 01:37 by my clock; word for word)
+
+> MAIL 1363 from the Builder (/root), 01:36 UTC. To neptune_builder: rulings on your answer of 01:31. Your account of what popped on main is taken as the record (the plate weighed by clock and height while it stood in view; the terrain plate; the carry).
+>
+> 1. THE SUN: agreed. The far Sun is right in place to 0.6 px; the glare is sky_builder's law by the Sun's angular radius, named by 03:15 (his mail of 01:33). No Sun is painted into anything of yours: use the filled card (the Sun painted out) wherever a sky picture is used at all.
+>
+> 2. THE SKY, in this order.
+> (a) FIRST, measured before the plate: the engine's own sky by a chosen turn. Since 277b45e5 the stop has one turn of the stars from 4605 to 5030. If that turn is free to choose (yours or sky_builder's to give), search it: project the engine's sky into the hold's frame for turns on a grid (no render needed, the sky's own picture and the hold's pose do it) and score the sky's tiles outside 1.07 radii against the hero's by the low band of bands.py: a sparse field, the faint band at the upper left, no core at the upper right. Report the best turn's number beside main's 2.6398 and the name's 7.3727 (whole frame, plain), and say what the flight in from Uranus must then carry. A true sky that needs no picture at all is the first choice if it comes close: nothing can pop that is not there. If the turn is not free, say who holds it and why in one line.
+> (b) SECOND, the trial as you propose, approved under your own conditions, which I make the rule: the picture is fixed on the sky at the stop's one turn; its weight has no law by clock or by height at any frame where any part of it can be in view; it leaves and enters only behind the globe or over the frame's edge. MAILS 1078 point 5, 1126 point 2 and 1207 are lifted for the hold's sky under these conditions alone; the terrain plate stays out.
+> (c) Do not wait for the trial to ask for the wide margin: your control of 25 Nov already showed the feathered edge at 4707, a judged frame. Build the continuation in the hero's own kind of sky (sparse blue grey stars by recipe, no band) at once, wide enough that the border to the engine's sky is behind the limb before it could be seen in the dive.
+> (d) Try the rise with the same weight 1 (the picture is then simply part of the sky: the same direction shows the same stars before the dive, after the rise and at the film's last frames). It is kept only if rise 1 and rise 2 stay green by the reader; send both readings (rise with it, rise without).
+> (e) The flight in: say what the engine's fade by smoothstep does between the two skies there (the frames, and one still at the middle of the fade). If two skies stand over each other in any frame of the flight in, the flight in takes the rule of (b): weight 1, entering over the frame's edge.
+> The numbers that decide: 4605 plain and low band no worse than main's (d296 (2)); dive 1 to 4 and rise 1 and 2 with no line worse than main's rows (d311); G17 at 4605 green as on main (d337). Send the first stills (4605 beside the hero, and 4707) the minute they exist; the sheet of 4690 to 4760 by 04:00 as you say.
+>
+> 3. THE DOT: the law by height for the eye's dark and its collar is confirmed (MAIL 1359 is the later ruling over 774 point 3, for this object): by height alone, the same down and up, no clock, and smooth, with no step in it that the reader sees (dive 1 of 4 and dive 2 of 4 are its judges). Name by 03:15 as you say.
+> 4. THE STREAK: it stays if 4605's plain and low band are no worse than main's with it in the frame; if they are worse and the streak is the cause (switch it off once to know), it takes the same law by height.
+> 5. 4860: the same law by height may carry storm.rings and arms.light back near the deck (full near the deck, none at the hold's height), since it was the hold that forced them down. That is the cause you name for the bowl's missing streaks and rim; build it with the eye if it is one law.
+> 6. 4706: bisect after the eye as you say; if it is the globe's map under the lens, write to globe_engineer with a copy to me.
+>
+> No answer needed before your next numbers.
+
+## MAIL 1367 from the Builder, 01:58 UTC, 26 Nov (read 01:58 by my clock; word for word)
+
+> MAIL 1367 from the Builder (/root), 01:58 UTC. To every builder, for information: origin main is now 8fb3bffe499832a8696a7caf2b0b15045a1aef1a. On fb40db96 (batches 16 and 17) and its PROGRESS tip a4944f12 it holds batch 18 (take/sr8 790989f6: Saturn's surface view drawn by code, saturn_coder's name 7be04230). It changes 35 files, all Saturn's own: src/stops/saturn (16 files, 4 of them under kept) and assets-src/saturn (19 files). No shared file moves: nothing under src/core, src/space, src/terrain, src/subs, tools, config or cut. Its four proofs were green: the units and the gate (1017 tests passed), the finals of 3465, 3567, 3720 and 3866 with the name's bytes, and the reader on rise part 2 of 2. What this changes for you: nothing in your orders. If your standing order is to merge main before you name, merge this main at your next name; if it is to fetch nothing, keep to it and I cut your name onto main. Do not answer this mail.
+
+Read: main is 8fb3bffe499832a8696a7caf2b0b15045a1aef1a, all Saturn's own, no shared file. I merge it before my next name. No answer.
+
+## Lab log 01:32 to 02:25 UTC, 26 Nov: the place's own share by height (N18), and what the sky rulings of MAIL 1363 rest on
+
+**The own law (MAIL 1363 points 3 and 4), in the tree as `globe.own: [1.6, 0.15]` (deep.json), `uFar.w` and `ownShare` (deep.ts),
+`ownAt` (set.ts).** It weighs the place's WHOLE own share, not the eye's dark alone: the scene's own deck round the place with
+its storm, the cirrus and their shadows, the streak, the blots, and the dark of the eye on the globe. None at 1.6 radii over
+the deck and above (the hold stands at 2.13), whole at 0.15 radii and below, by the logarithm of the height between, the same
+down and up, never the clock. Where the share is none the scene's pass is not drawn at all.
+
+- 4605 at 1920 (N18): the place's box equals MAIN byte for byte; the dot reads 0.73 over 50 px as on main. The streak is gone
+  with it, so ruling 4 needs no switch. Whole frame against the approved 7.548 by my proxy (main 2.931, the name N15 7.605):
+  the rest is the sky (no plate, no glare), which is rulings 1 and 2.
+- 4860 (N18): hash f37b1b08ae2d6b63, the bytes of N16. Preview frames 4744 (e73681b9ed37e716) and 4750 (c6b0f0be754c3787)
+  equal N16e's bytes: under 0.15 radii nothing moved.
+- Hashes at 1920: 4605 97427f2a109518c2, 4707 5fc0f552897ed9e6, 5006 ce6ff758b50d2abf.
+- Dive pairs by my copy of the reader (rate 2, preview, limit 0.45; a proxy): 4702 0.41 at (356, 176); 4704 0.17; 4706 0.44
+  at (1500, 248); 4708 0.29; 4710 0.28; 4712 0.17; 4714 0.19; 4716 0.22; 4718 0.20; 4720 0.18; 4722 0.17; 4724 0.21; 4726 0.28
+  at (1022, 678); 4728 0.31 at (1016, 708). The name's: 4702 0.41, 4704 0.16, 4706 0.44. No control on the name for 4708 to 4728.
+- Rise pairs (the same reader): 4960 0.30 at (1760, 492); 4962 0.30; 4964 0.18; 4966 0.19; 4968 0.33 at (1564, 564); 4970 0.24;
+  4972 0.32 at (1528, 928); 4974 0.23; 4976 0.20; 4978 0.20; 4980 0.23; 4982 0.23; 4984 0.25; 4986 0.31 at (1848, 988); 4988 0.35
+  at (1124, 408); 4990 0.34 at (928, 440); 4992 0.31; 4994 0.26; 4996 0.18. Earlier names read 4960 0.25, 4962 0.33, 4968 0.35,
+  4970 0.24, 4992 0.33. DONE 02:23:35.
+- Sheets seen frame by frame: the dive 4696 to 4736 (n18-a, n18-b, the 1:1 crop of 4716 and 4720: the streamer comes as a thin
+  pale line with no hard edge), the rise 4960 to 5004 in steps of 2 (n18-r0, n18-r1: the eye and the streamer shrink without a
+  step and are a faint mark by 4984). A pale round blot stands in the low cloud at 4976 to 4986 (lower middle); it is on the
+  earlier names alike (N12q and N14q at 4978, the same blot), not from this law.
+- Looks 01:52:10 (2b31e64a, 8 looks) and 02:19:30 (0e7fc151, 8 looks).
+
+**Ruling 2 (a), the turn.** `skyAim` in plan.ts is mine to write, but its value is solved so that the stop's turn is the
+ending's (LOOKBACK.sky in src/director/film.ts; MAIL 914 forbids touching the ending's turn). The sky is in view in every frame
+from the hold to 5024 (rays that miss the globe: least 4.3 percent of the frame at 4718, 22 percent at 4769, 25 at 4860), so
+there is no frame in which a second turn could be taken unseen: another turn at the hold either turns the stars in view on
+the way to the ending or moves the ending's turn. The turn is not free; the ending holds it. At the present turn the galactic
+core stands at the hold's upper right (frame middle lon -0.3, lat 26.3; upper right corner lon 10.5, lat -0.3). I tried a
+number without a render (the engine's haze map projected into the hold's frame, /tmp/sky/proj.py): the projection fits my own
+render to 5 to 8 levels rms on a mean of 13 to 21, too poor to score turns with. No number for a best turn exists.
+
+**The sky in view by frame** (angle from the hold's aim, least to most; poses of the film, /tmp/sky/vis.py): 4605 11 to 29;
+4706 24 to 34; 4710 29 to 37; 4714 34 to 41; 4718 39 to 46; 4722 43 to 50; 4726 48 to 55; 4730 51 to 60; 4738 57 to 67;
+4744 61 to 71; 4769 66.5 to 79; 4860 66 to 81; 4950 65 to 83; 4980 53 to 70; 4990 48 to 68; 5000 43 to 68; 5006 26 to 69;
+5024 17.5 to 70. The wedge of sky at the upper right of the dive moves outward without a gap, so no width of a picture round
+the hold's aim puts its border behind the limb for the whole dive (ruling 2 (c)): either the border crosses the wedge in some
+frames, or the picture is still in view at T, where the engine drops the globe view's patch.
+
+**Ruling 2 (e), the flight in** (segment uranus.travel, frames 4455 to 4529). The engine's patch weight (film.ts patchSpanOf,
+a smoothstep on the clock): 0 until about 4501; 4503 0.03; 4505 0.09; 4508 0.21; 4510 0.31; 4513 0.47; 4515 0.58; 4518 0.74;
+4520 0.83; 4523 0.94; 4525 0.98; 4527 1.0. The eye's aim from the hold's aim: 103.7 degrees at 4455 to 4465, 85 at 4485, 72 at
+4490, 58 at 4495, 45 at 4500, 31 at 4505, 18 at 4510, 7 at 4515, 4.4 at 4520, 3.6 at 4529. So with a plate the two skies stand
+over each other from 4501 to 4527 with the plate in view (middle 4513 to 4514). With weight 1 through the travel the plate
+would enter over the frame's edge at about 4484 to 4490 and is out of view at the travel's start. The span is the engine's
+(config/showcase.json travel.sky patchFrom, patchDone; src/space/travel/path.ts patchEnd), not mine.
+
+**The engine's patch, as read** (src/core/engine.ts 354 to 380, src/core/skyfloor.ts sharedSkyWeight, src/space/sky.ts
+patchCoord and patched): a flat picture on the tangent plane at the stop's aim (`tan`, a feather `edge` as a share of the
+picture, `gain`), two slots, the second over the first, both under the Sun's glare; the engine's stars are hidden by the
+patch's weight. Without a share of the stop's own the globe view's patch has weight 1 in the hold and in the dive up to T
+(frame 4758.3), the travel's weight above, and none in the rise and in the ending.
+
+**The plate trial, built outside the tree until the name is out** (/tmp/sky/hold.py, to live in assets-src/neptune/sky/):
+- `sky-hold.webp`: sky_builder's filled card (4928 by 2772: the hero's frame is the middle 2816 by 1584, the rest his margins)
+  with the Sun taken off by code. The glow is the median level by distance from the Sun's middle (card 3572.5, 822.1) in the
+  open sector to the right, never rising outwards, over the level at 600 card pixels ([2, 13, 21]); it is subtracted inside
+  that radius, so stars and the band stay; inside 56 to 80 pixels the picture is that flat level. Measured glow of the card,
+  RGB medians by ring: 16 to 24 px 231; 32 to 48 [143, 153, 162]; 64 to 80 [68, 80, 91]; 96 to 128 [33, 48, 61]; 160 to 200
+  [14, 32, 45]; 256 to 320 [6, 22, 34]; 400 to 480 [4, 17, 28]; 560 to 640 [3, 14, 24]; right of it [2, 13, 21].
+- `sky-wide.webp`: the continuation by recipe, 6144 px square over tan 1.54 to each side (57 degrees): 13100 stars a steradian
+  (the card's open parts hold 3 to 5 a square degree over 8 levels), levels over the floor from 8 to 230 by a power law of
+  slope 0.75 (the card's: 9, 11, 18, 40, 100, 210 at the 10th to 99th percentile), round on the sky with sigma 0.018 degrees,
+  eight tints from white to blue grey, on the floor [3, 13, 21] of the card's upper right. Beside the card's upper right
+  margin at the same scale of sky: pixels over the floor by 8 levels 4816 (card) against 5117, by 20 1962 against 1839, by 60
+  524 against 362. No band, no picture generated.
+- Where the two borders cross the sky in view (poses, /tmp/sky/wts.py; mean weight over the sky in view): the card with its
+  margin 0.94 at 4700, 0.73 at 4704, 0.52 at 4706, 0.30 at 4708, 0.13 at 4710, 0.03 at 4712, none from 4716; the wide picture
+  whole until 4724, 0.98 at 4726, 0.80 at 4728, 0.48 at 4730, 0.20 at 4732, 0.07 at 4734, 0.01 at 4736, none from 4740. So
+  both are out of view 18 frames before T. In the rise at weight 1 the wide picture would come from behind the limb at 4970
+  (T of the rise is 4956.75), the card at 5004, and at 5024 they hold 0.72 and 0.18 of the sky in view: the ending, where the
+  engine gives a stop's patch no weight, would cut them off in view at 5025.
