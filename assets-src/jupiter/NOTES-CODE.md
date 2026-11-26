@@ -2946,3 +2946,21 @@ MAIL 1367 (01:58, for information, no answer wanted): origin main is now `8fb3bf
 - u2 (`work/r25/mk/u2.py`): the sum of the orders is divided by its own value on flat ground for this ray, so a flat deck returns the globe's light toward every eye (the frame law at the dive's top stays whole). Skin 0.015, free path 0.006. At 3150: line (i) 16.119 (outside the seven cells 15.450, inside 19.271), bands 1.03 (under 1 px), 0.89, 0.93, 0.94, 0.96 green; slide 0.11 at 2.5 units, 0.06 at 4. By eye beside the approved picture: the storm is a flat red dish with fine streaks and no spiral terraces; the cumulus cells are low domes (cap over width 0.37), lit all over, so they read as smooth grey boulders; the right third is flat and lit (61, 37, 37 against 21, 14, 7). Looks 35040239 (02:28).
 - What the approved picture's dark thirds are, in numbers: display 7 to 21 is linear 0.0004 to 0.004, its lit rims near 200 are 0.59. So the rims are a few percent of the pixels and the shade is nearly black: pale matter seen against the light, tall and packed. With the matter's floor at 0.03 (lit flat about 36 display, in full shade about 6) a cell reads 15 when 13 percent of its seen surface is lit; with 0.06, 6 percent; with 0.1, 2.5 percent. That is the room for the matter's floor to rise, and it needs relief with gaps deeper than 0.66 of their width everywhere in the dark thirds.
 - u3 (queued 02:36): silk aspect 0.8 (deep creases where the guide is dark or wild), cumulus as hemispheres on the ground with squash 1.4, cell 0.16, ratio 0.5 (cap over width near 1.4), full cover where the stored unrest is 0.75 or more, skin 0.01 and free path 0.004, stored lanes 0.1 units (`guide.relief.laneUnits`, was 0.03; my page says lanes at minus 0.25 and they were never built).
+
+## State t as it stands (03:10 UTC 26 Nov, MAIL 1380)
+
+MAIL 1380 (03:00 UTC): "Your state t of Jupiter's ground by code was due at 02:40 and is not in. Send it now as it stands: the commit on your branch or a bundle, frame 3150 and two more frames of the surface view at 1400 px, the three lines of d329 (4) as you read them (the low band at 16 px beside main's, the luminance bands from 1 to 16 px as ratios to the approved's, and the composition), and what is still wrong by frame and place. If something holds you up, name it. By 03:25."
+
+State t is the second tree's variant u2 taken into the repo as it is:
+- clouds.ts and deck.json of work/r25/v/u2; wound.py (2 min 14 s) and guide.py run again for the new flow numbers.
+- Flow: life.flow.scaleUnits 0.75, unitsPerSecond 0.01378. By the law V x 2 s^2 / (1 + s^4): fastest ring 1.20 degrees a second at 0.57 units, 0.30 at 1.4 units, 0.25 at 1.5, 0.16 at 1.75 (the oval's rim lies between 1.4 and 1.8 units); 7.2 degrees at most over the 6 seconds. Not yet measured on frames.
+- The scaffold is off: solve-near.png and solve-mid.png are removed, guide.solve.albedo[0] is 0.03 (state s: 0.016 with the scaffold). Line (i) of state s (9.259) was read with the scaffold; this state has none.
+- Light: the deck is a medium (skin under the top, Sun taps, orders of scattering). Cumulus cells with their own life, fibres, silk.
+
+Variants after u2, both dropped:
+- u3 (silk aspect 0.8, tall cumulus, lanes 0.1): line (i) 21.328, a mountain range, the storm hidden.
+- u4 (curl warp at three scales, orders weighted by the matter's albedo, pale ceiling, cumulus riding on the silk): line (i) 28.205. The warp at reach 0.5, 0.2, 0.06 tears the fine relief into combed stripes; the tops go white. The lab pattern from above looked right, the film's view at a low angle does not: the warp has to act on the colour and the large folds only, not on the fine heights.
+
+Cost at preview, draft, one frame in a kept session (u2): 45.4 s as it is; 34.9 s with one medium sample and no search; 41.5 s with one sky direction; 45.7 s with one Sun tap. So the first march and the height function cost about 35 s of the 45; the Sun taps cost nothing that shows.
+
+Lesson of the queue: a job file put into the queue starts at once when the queue is empty. Put it there only after the tree is ready (wound.py was still writing when the first try of the state t job started; it was killed and queued again).

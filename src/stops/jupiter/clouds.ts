@@ -11,6 +11,7 @@ import woundJson from './wound.json'
 const OCTAVES = deck.look.cloud.octaves
 const ABOVE_KNOTS = deck.above.gain.length
 const CURVE_KNOTS = curve.curve.length
+const ORDERS = deck.look.medium.orders.count
 const FLASHES = deck.life.flash.sites.length
 const HAZE_TAPS = deck.life.haze.thick.taps
 const AGES = deck.life.flow.wound.turnDeg.length
@@ -48,6 +49,7 @@ uniform vec4 uWoundCode[${AGES}];
 uniform float uWoundAge[${AGES}];
 uniform vec4 uWoundShape;
 uniform float uWoundDrawn[${AGES}];
+uniform float uWoundLong[${AGES}];
 vec3 woundAt(vec2 x, int j) {
   vec2 o = x - uFlow.xy;
   float r = length(o);
@@ -63,6 +65,9 @@ vec3 woundAt(vec2 x, int j) {
     y = mix(vec3(uFlow.xy + (r + dr) * vec2(cos(a + da), sin(a + da)), exp2(-ls)), y, smoothstep(uWoundShape.z, uWoundShape.w, r));
   }
   return y;
+}
+vec2 lain(vec2 y, int j) {
+  return vec2(dot(y, uJet.xy) * uWoundLong[j], dot(y, uJet.zw));
 }
 `
 
@@ -82,7 +87,7 @@ const STORED_GLSL = /* glsl */ `float stored(vec2 g) {
   for (int k = 0; k < (wm > 0.0 ? 1 : 0); k++) h += wm * textureLod(uHeightMid, (g - uMid.xy) * uMid.z + 0.5, 0.0).r;
   return uHeightRange.x * (wn + wm) + h * uHeightRange.y;
 }
-float rough(vec2 g) {
+float unrest(vec2 g) {
   vec2 a = abs(g - uNear.xy) * (2.0 * uNear.z);
   vec2 b = abs(g - uMid.xy) * (2.0 * uMid.z);
   float wn = 1.0 - smoothstep(uJoin.x, uJoin.y, max(a.x, a.y));
@@ -90,7 +95,7 @@ float rough(vec2 g) {
   float r = 0.0;
   for (int k = 0; k < (wn > 0.0 ? 1 : 0); k++) r += wn * textureLod(uRoughNear, (g - uNear.xy) * uNear.z + 0.5, 0.0).r;
   for (int k = 0; k < (wm > 0.0 ? 1 : 0); k++) r += wm * textureLod(uRoughMid, (g - uMid.xy) * uMid.z + 0.5, 0.0).r;
-  return mix(uCloudRough.z, 1.0, smoothstep(uCloudRough.x, uCloudRough.y, r));
+  return r;
 }
 `
 
@@ -108,70 +113,130 @@ uniform float uCloudWave[${AGES}];
 uniform float uCloudRise[${AGES}];
 uniform vec4 uCloudGeo;
 uniform vec3 uCloudCalm;
-uniform vec3 uCloudDome;
+uniform vec4 uCloudDome;
 uniform float uCloudMarch[${AGES}];
 uniform float uCloudCap[${AGES}];
 uniform float uCloudEdge[${AGES}];
 uniform float uCloudTint[${AGES}];
-vec3 puffs(vec2 q, int seed, float life, float edge) {
+uniform float uSilkWave[${AGES}];
+uniform vec4 uSilk;
+uniform float uSilkFall;
+uniform float uSilkMost[${AGES}];
+uniform vec4 uWarp;
+uniform vec4 uFibre;
+uniform vec4 uFibreLook;
+uniform vec4 uCumPatch;
+uniform vec4 uCum;
+uniform vec4 uCumLook;
+uniform vec4 uCumReach;
+uniform vec4 uCumPolar;
+uniform vec4 uCumCover;
+uniform vec4 uOrder;
+uniform vec3 uLife;
+uniform vec2 uCloudSoft;
+uniform vec4 uPass;
+uint bits(uint h) {
+  h ^= h >> 15;
+  h *= 0x2C1B3C6Du;
+  h ^= h >> 12;
+  h *= 0x297A2D39u;
+  h ^= h >> 15;
+  return h;
+}
+float gnoise(vec2 p, int seed, float turn) {
+  vec2 base = floor(p);
+  ivec2 cell = ivec2(base);
+  vec2 f = p - base;
+  vec2 u = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+  vec4 n = vec4(0.0);
+  for (int k = 0; k < 4; k++) {
+    ivec2 o = ivec2(k & 1, k >> 1);
+    ivec2 c = cell + o;
+    uint h = bits(uint(c.x) * 0x9E3779B1u ^ uint(c.y) * 0x85EBCA77u ^ uint(seed) * 0xC2B2AE3Du);
+    float a = float(h) * (6.283185307179586 / 4294967296.0) + turn * (0.5 + float(h & 0xFFFFu) * (0.5 / 65536.0)) * (float((h >> 16) & 1u) * 2.0 - 1.0);
+    n[k] = dot(vec2(cos(a), sin(a)), f - vec2(o));
+  }
+  return mix(mix(n.x, n.y, u.x), mix(n.z, n.w, u.x), u.y);
+}
+vec2 warped(vec2 y) {
+  y += uWarp.y * vec2(gnoise(y / uWarp.x, ${OCTAVES * AGES}, 0.0), gnoise(y / uWarp.x + uCloudShift.zw, ${OCTAVES * AGES + 1}, 0.0));
+  return y + uWarp.w * vec2(gnoise(y / uWarp.z, ${OCTAVES * AGES + 2}, 0.0), gnoise(y / uWarp.z + uCloudShift.zw, ${OCTAVES * AGES + 3}, 0.0));
+}
+vec2 billowAt(vec3 y, float least, vec4 law, int seed, float turn) {
+  vec2 sum = vec2(0.0);
+  for (int k = 0; k < int(law.z); k++) {
+    float wave = law.x * exp2(-float(k));
+    float use = smoothstep(least, uCloudCell.w * least, wave * y.z);
+    if (use <= 0.0) break;
+    float n = uSilk.y * gnoise(y.xy / wave + uCloudShift.xy * float(k) + uCloudShift.zw * float(seed), k + ${OCTAVES} * seed, turn);
+    sum += use * wave * exp2(-law.w * float(k)) * vec2(min(sqrt(n * n + uSilk.w * uSilk.w) - uSilk.w, 1.0), 1.0);
+  }
+  return y.z * sum;
+}
+float fibreAt(vec3 y, float least) {
+  float sum = 0.0;
+  for (int k = 0; k < int(uFibre.z); k++) {
+    float wave = uFibre.x * exp2(-float(k));
+    float use = smoothstep(least, uCloudCell.w * least, wave * y.z);
+    if (use <= 0.0) break;
+    sum += use * gnoise(vec2(y.x * uFibre.y, y.y) / wave + uCloudShift.zw * float(k), ${OCTAVES * AGES + 4} + k, uFlowTime * uLife.y);
+  }
+  return sum;
+}
+struct Ball { vec2 c; float z; float r; uint h; };
+Ball budOf(Ball p, int m, float least) {
+  uint h = bits(p.h * 0x9E3779B1u + uint(m + 1) * 0x85EBCA77u);
+  float a = (float(m) + float(h & 0xFFFFu) * (1.0 / 65536.0)) * (6.283185307179586 / uCumLook.y);
+  float cosine = mix(uCumPolar.x, uCumPolar.y, float(h >> 16) * (1.0 / 65536.0));
+  uint k = h * 0x9E3779B1u;
+  k ^= k >> 16;
+  float r = p.r * uCum.z * mix(uCumLook.z, 1.0, float(k & 0xFFFFu) * (1.0 / 65536.0));
+  r *= smoothstep(least, uCloudCell.w * least, 2.0 * r * uCum.x);
+  return Ball(p.c + p.r * sqrt(1.0 - cosine * cosine) * vec2(cos(a), sin(a)), p.z + p.r * cosine, r, h);
+}
+float capOf(Ball b) {
+  float d = b.r * b.r - dot(b.c, b.c);
+  return d > 0.0 ? b.z + sqrt(d) : 0.0;
+}
+float cumulusAt(vec2 y, float least, float cover) {
+  vec2 q = y / uCum.x;
   vec2 base = floor(q);
   ivec2 cell = ivec2(base);
   vec2 f = q - base;
-  vec3 best = vec3(0.0);
-  ivec2 first = ivec2(f.x < 0.5 ? -1 : 0, f.y < 0.5 ? -1 : 0);
-  for (int j = first.y; j <= first.y + 1; j++) for (int i = first.x; i <= first.x + 1; i++) {
+  float best = 0.0;
+  int buds = int(uCumLook.y);
+  int levels = int(uCumLook.w);
+  for (int j = -1; j <= 1; j++) for (int i = -1; i <= 1; i++) {
     ivec2 c = cell + ivec2(i, j);
-    uint h = uint(c.x) * 0x9E3779B1u ^ uint(c.y) * 0x85EBCA77u ^ uint(seed) * 0xC2B2AE3Du;
-    h ^= h >> 15;
-    h *= 0x2C1B3C6Du;
-    h ^= h >> 12;
-    h *= 0x297A2D39u;
-    h ^= h >> 15;
-    vec2 r = vec2(float(i), float(j)) + uCloudCell.y + uCloudCell.z * vec2(float(h & 0xFFFFu), float(h >> 16)) * (1.0 / 65536.0) - f;
-    float d = 1.0 - dot(r, r) * uCloudCell.x;
-    for (int m = 0; m < (d > 0.0 ? 1 : 0); m++) {
-      uint k = h * 0x9E3779B1u;
-      k ^= k >> 16;
-      float p = fract(uFlowTime / (life * (1.0 + float(k & 0xFFFFu) * (1.0 / 65536.0))) + float(k >> 16) * (1.0 / 65536.0));
-      k *= 0x85EBCA77u;
-      k ^= k >> 13;
-      float up = 16.0 * p * p * (1.0 - p) * (1.0 - p) * mix(uCloudDome.x, 1.0, float(k & 0xFFFFu) * (1.0 / 65536.0));
-      float t = min(d / edge, 1.0);
-      float v = up * t * t * (3.0 - 2.0 * t);
-      for (int n = 0; n < (v > best.z ? 1 : 0); n++) best = vec3(r * (12.0 * uCloudCell.x * up * t * (1.0 - t) / edge), v);
+    uint h = bits(uint(c.x) * 0x9E3779B1u ^ uint(c.y) * 0x85EBCA77u ^ 0xC2B2AE3Du * 977u);
+    uint k = h * 0x9E3779B1u;
+    k ^= k >> 16;
+    float p = fract(uFlowTime / (uCloud.w * (1.0 + float(k & 0xFFFFu) * (1.0 / 65536.0))) + float(k >> 16) * (1.0 / 65536.0));
+    k *= 0x85EBCA77u;
+    k ^= k >> 13;
+    float draw = float(k & 0xFFFFu) * (1.0 / 65536.0);
+    float grow = smoothstep(0.0, uCloudLook.x, p) * smoothstep(0.0, uCloudLook.x, 1.0 - p) * mix(uCloudDome.x, 1.0, draw) * smoothstep(0.0, uCumCover.z, cover - (1.0 - draw) * (1.0 - uCumCover.z));
+    Ball b1 = Ball(vec2(float(i), float(j)) + uCloudCell.y + uCloudCell.z * vec2(float(h & 0xFFFFu), float(h >> 16)) * (1.0 / 65536.0) - f, 0.0, uCum.y * grow, h);
+    b1.z = -uCum.w * b1.r;
+    if (b1.r <= 0.0 || dot(b1.c, b1.c) > b1.r * b1.r * uCumReach.x * uCumReach.x) continue;
+    best = max(best, capOf(b1));
+    for (int m2 = 0; m2 < (levels > 1 ? buds : 0); m2++) {
+      Ball b2 = budOf(b1, m2, least);
+      if (b2.r <= 0.0 || dot(b2.c, b2.c) > b2.r * b2.r * uCumReach.y * uCumReach.y) continue;
+      best = max(best, capOf(b2));
+      for (int m3 = 0; m3 < (levels > 2 ? buds : 0); m3++) {
+        Ball b3 = budOf(b2, m3, least);
+        if (b3.r <= 0.0 || dot(b3.c, b3.c) > b3.r * b3.r * uCumReach.z * uCumReach.z) continue;
+        best = max(best, capOf(b3));
+        for (int m4 = 0; m4 < (levels > 3 ? buds : 0); m4++) {
+          Ball b4 = budOf(b3, m4, least);
+          if (b4.r <= 0.0 || dot(b4.c, b4.c) > b4.r * b4.r) continue;
+          best = max(best, capOf(b4));
+        }
+      }
     }
   }
-  return best;
-}
-float bumpAt(vec3 y, float least, int age, int most) {
-  float sum = 0.0;
-  float gate = 1.0;
-  for (int k = 0; k < most; k++) {
-    float wave = uCloudWave[age] * exp2(-float(k));
-    float use = smoothstep(least, uCloudCell.w * least, wave) * exp2(-float(k) * uCloud.z);
-    if (use <= 0.0) break;
-    float a = uCloudTurn.x * float(k) + uCloudTurn.y * float(age);
-    mat2 turn = mat2(cos(a), sin(a), -sin(a), cos(a));
-    float b = puffs((turn * y.xy) / wave + uCloudShift.xy * float(k) + uCloudShift.zw * float(age), k + ${OCTAVES} * age, uCloud.w * (1.0 + wave * uCloudLook.z), uCloudEdge[age]).z;
-    sum += use * gate * min(uCloudRise[age] * wave * y.z, uCloudCap[age]) * b;
-    gate *= mix(uCloudDome.y, 1.0, smoothstep(0.0, uCloudDome.z, b));
-  }
-  return sum;
-}
-vec4 cloudAt(vec2 y, float drawn, float least, int age, int from) {
-  int k1 = min(int(ceil(log2(uCloudWave[age] / least))), ${OCTAVES - 1});
-  vec4 sum = vec4(0.0);
-  float gate = 1.0;
-  for (int k = 0; k <= k1; k++) {
-    float wave = uCloudWave[age] * exp2(-float(k));
-    float use = smoothstep(least, uCloudCell.w * least, wave) * exp2(-float(k) * uCloud.z);
-    float a = uCloudTurn.x * float(k) + uCloudTurn.y * float(age);
-    mat2 turn = mat2(cos(a), sin(a), -sin(a), cos(a));
-    vec3 b = puffs((turn * y) / wave + uCloudShift.xy * float(k) + uCloudShift.zw * float(age), k + ${OCTAVES} * age, uCloud.w * (1.0 + wave * uCloudLook.z), uCloudEdge[age]);
-    sum += use * gate * vec4(k < from ? vec2(0.0) : (min(uCloudRise[age] * wave * drawn, uCloudCap[age]) / wave) * (b.xy * turn), b.z - uCloudLook.w, use);
-    gate *= mix(uCloudDome.y, 1.0, smoothstep(0.0, uCloudDome.z, b.z));
-  }
-  return sum;
+  return best * uCum.x * uCumLook.x;
 }
 `
 
@@ -203,7 +268,7 @@ uniform sampler2D uHeightNear;
 uniform sampler2D uHeightMid;
 uniform sampler2D uRoughNear;
 uniform sampler2D uRoughMid;
-uniform vec3 uCloudRough;
+uniform vec4 uCloudRough;
 uniform float uCloudObey[${AGES}];
 uniform sampler2D uGuideNear;
 uniform sampler2D uGuideMid;
@@ -218,6 +283,7 @@ uniform float uHeightTexel;
 uniform float uRadius;
 uniform vec2 uShell;
 uniform vec4 uMarch;
+uniform float uRefine;
 uniform float uPixel;
 uniform float uGrad;
 uniform float uFrame;
@@ -237,9 +303,17 @@ uniform vec2 uAboveMix;
 uniform vec3 uSunCurve[${CURVE_KNOTS}];
 uniform vec3 uSunChart;
 uniform vec4 uShadow;
+uniform vec4 uMedium;
+uniform vec4 uMediumStep;
+uniform vec4 uMediumSun;
+uniform vec2 uMediumWide;
+uniform vec4 uOrders;
 uniform float uThrough;
 uniform vec4 uFill;
 uniform float uFillOpen;
+uniform vec4 uSky;
+uniform vec3 uSkyRing;
+uniform float uBounce;
 uniform vec3 uLayer;
 uniform vec3 uRim;
 uniform vec3 uDepth;
@@ -365,41 +439,91 @@ vec4 sunAt(vec2 g) {
   return vec4(low, smoothstep(uHazeLit.x, uHazeLit.y, (low.r - low.b) / max(low.r + low.b, 1e-4)));
 }
 ${DETAIL_GLSL}
-float bumpsOn(vec2 g, float low, float least) {
+vec2 reliefAt(vec2 g, float low, float least) {
+  float raw = unrest(g);
+  float guard = least * (1.0 + uWarp.y / uWarp.x * uFibreLook.z);
+  vec3 fresh = woundAt(g, 0);
+  vec3 old = woundAt(g, ${AGES - 1});
+  vec2 young = warped(fresh.xy);
+  vec3 aged = vec3(lain(warped(old.xy), ${AGES - 1}), old.z);
+  float order = smoothstep(uOrder.x, uOrder.y, 1.0 / old.z);
+  float rough = mix(uCloudRough.z, 1.0, smoothstep(uCloudRough.x, uCloudRough.y, raw));
   float h = 0.0;
-  float wild = rough(g);
-  for (int j = 0; j < ${AGES}; j++) for (int i = 0; i < (least < uCloudWave[j] && uCloudMarch[j] > 0.0 ? 1 : 0); i++) {
-    h += mix(1.0, wild, uCloudObey[j]) * bumpAt(woundAt(g, j), least, j, int(uCloudMarch[j]));
+  float pale = 0.0;
+  float wild = rough * mix(1.0, uOrder.z, order);
+  for (int i = 0; i < (guard < uSilkWave[0] ? 1 : 0); i++) {
+    vec2 s = billowAt(vec3(young, fresh.z), guard, vec4(uSilkWave[0], 0.0, uSilk.z, uSilkFall), 0, uFlowTime * uLife.x);
+    h += uSilk.x * wild * s.x;
+    pale += uCloudTint[0] * mix(uOrder.w, 1.0, wild) * (s.x - uCloudLook.w * s.y) / uSilkMost[0];
   }
-  return h * mix(uCloudCalm.x, 1.0, smoothstep(uCloudCalm.y, uCloudCalm.z, low));
+  float drawn = max(rough, uOrder.w * order);
+  for (int i = 0; i < (guard < uSilkWave[${AGES - 1}] ? 1 : 0); i++) {
+    vec2 s = billowAt(aged, guard, vec4(uSilkWave[${AGES - 1}], 0.0, uSilk.z, uSilkFall), ${AGES - 1}, uFlowTime * uLife.y);
+    h += uSilk.x * drawn * s.x;
+    pale += uCloudTint[${AGES - 1}] * (s.x - uCloudLook.w * s.y) / uSilkMost[${AGES - 1}];
+  }
+  for (int i = 0; i < (guard < uFibre.x ? 1 : 0); i++) {
+    float streak = fibreAt(aged, guard);
+    h += uFibreLook.x * uFibre.x * streak;
+    pale += uFibreLook.y * streak;
+  }
+  float cover = smoothstep(uCumCover.x, uCumCover.y, raw + uCumPatch.x * gnoise(young / uCumPatch.y, ${OCTAVES * AGES + 12}, 0.0));
+  float cum = 0.0;
+  for (int i = 0; i < (cover > 0.0 ? 1 : 0); i++) cum = cumulusAt(young, guard, cover);
+  for (int i = 0; i < (cum > 0.0 ? 1 : 0); i++) {
+    pale = mix(pale, uCumPatch.z, smoothstep(0.0, uCumPatch.w, cum + uCumCover.w - h));
+    h = max(h, cum + uCumCover.w);
+  }
+  return vec2(h, pale) * mix(uCloudCalm.x, 1.0, smoothstep(uCloudCalm.y, uCloudCalm.z, low));
+}
+float bumpsOn(vec2 g, float low, float least) {
+  return reliefAt(g, low, least).x;
+}
+float skyAt(vec2 x, float here, float least) {
+  float open = 0.0;
+  for (int k = 0; k < int(uSky.x); k++) {
+    float a = (float(k) + uSky.w) * (6.283185307179586 / uSky.x);
+    vec2 d = vec2(cos(a), sin(a));
+    float rise = 0.0;
+    float r = uSkyRing.x;
+    for (int m = 0; m < int(uSky.y); m++) {
+      vec2 at = carried(x + d * r);
+      float low = stored(at);
+      rise = max(rise, (low + bumpsOn(at, low, max(least, r * uSkyRing.z)) - here) / r);
+      r *= uSkyRing.y;
+    }
+    open += 1.0 / (1.0 + rise * rise);
+  }
+  return open / uSky.x;
 }
 vec3 sunLit(float ndl) {
   float knotAt = clamp(sign(ndl) * sqrt(abs(ndl)) * 0.5 + 0.5, 0.0, 1.0) * ${CURVE_KNOTS - 1}.0;
   int knotLow = int(min(floor(knotAt), ${CURVE_KNOTS - 2}.0));
   return mix(uSunCurve[knotLow], uSunCurve[knotLow + 1], knotAt - float(knotLow));
 }
-float shadowAt(vec3 from, float least, float start) {
-  float lit = 1.0;
-  float tau = start;
-  for (int i = 0; i < int(uShadow.w); i++) {
-    vec3 p = from + uSunChart * tau;
+float sunDepth(vec3 from, float least) {
+  float tau = 0.0;
+  float r = uMediumSun.x;
+  float wide = uMediumWide.x + uMediumWide.y;
+  for (int j = 0; j < int(uMediumSun.z); j++) {
+    vec3 p = from + uSunChart * r;
     float gap = above(p);
     if (gap > uShell.y) break;
     vec2 at = carried(p.xy);
     float low = stored(at);
     gap -= low;
-    float most = least < uCloudGeo.x ? uCloudGeo.z : 0.0;
-    for (int k = 0; k < (most > 0.0 && gap - most < uShadow.y * tau ? 1 : 0); k++) {
-      gap -= bumpsOn(at, low, least);
+    float coarse = max(least, uMediumSun.w * r);
+    float most = coarse < uCloudGeo.x ? uCloudGeo.z : 0.0;
+    for (int k = 0; k < (most > 0.0 && gap - most < 0.0 ? 1 : 0); k++) {
+      gap -= bumpsOn(at, low, coarse);
       most = 0.0;
     }
     gap -= most;
-    lit = min(lit, gap / (uShadow.y * tau));
-    if (lit <= -uThrough) break;
-    tau += max(abs(gap) / uShadow.z, start);
+    tau += clamp(-gap / uMedium.x, 0.0, 1.0) * r * wide;
+    wide = uMediumWide.x;
+    r *= uMediumSun.y;
   }
-  lit = clamp((lit + uThrough) / (1.0 + uThrough), 0.0, 1.0);
-  return lit * lit * (3.0 - 2.0 * lit);
+  return tau * uMedium.y;
 }
 void main() {
   vec3 D = normalize(vDir);
@@ -442,13 +566,14 @@ void main() {
     float fall = max(-(D.z + (D.x * p.x + D.y * p.y) / uRadius), 0.0);
     t += max(gap / (fall + uMarch.x), uMarch.y * t * pix);
   }
-  for (int i = 0; i < (hit ? 3 : 0); i++) {
-    float tm = gapPrev > 0.0 && gap < gapPrev ? tPrev + (t - tPrev) * gapPrev / (gapPrev - gap) : 0.5 * (t + tPrev);
+  float approach = t > tPrev ? max((gapPrev - gap) / (t - tPrev), uMediumWide.y * 1e-3) : 1.0;
+  for (int i = 0; i < (hit && gap < 0.0 && gapPrev > 0.0 ? int(uRefine) : 0); i++) {
+    float tm = tPrev + (t - tPrev) * gapPrev / (gapPrev - gap);
     vec3 p = E + D * tm;
     vec2 at = carried(p.xy);
     float low = stored(at);
     float gm = above(p) - low - bumpsOn(at, low, uCloud.y * tm * pix);
-    if (gm > 0.0) { tPrev = tm; gapPrev = gm; } else { t = tm; gap = gm; }
+    if (gm > 0.0) { tPrev = tm; gapPrev = gm; gap *= 0.5; } else { t = tm; gap = gm; gapPrev *= 0.5; }
   }
   vec2 q = vNdc * 0.5 * vec2(uAspect, 1.0);
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
@@ -470,7 +595,6 @@ void main() {
     mat2 drift = mat2(gE - gW, gN - gS) * (0.5 / hs);
     float wide = max(foot, uHeightTexel);
     vec2 slope = transpose(drift) * vec2(stored(g + vec2(wide, 0.0)) - stored(g - vec2(wide, 0.0)), stored(g + vec2(0.0, wide)) - stored(g - vec2(0.0, wide))) / (2.0 * wide);
-    vec2 steep = vec2(stored(gE) + bumpsOn(gE, stored(gE), fine) - stored(gW) - bumpsOn(gW, stored(gW), fine), stored(gN) + bumpsOn(gN, stored(gN), fine) - stored(gS) - bumpsOn(gS, stored(gS), fine)) / (2.0 * hs);
     float calm = mix(uCloudCalm.x, 1.0, smoothstep(uCloudCalm.y, uCloudCalm.z, low));
     vec3 n = normalize(vec3(there.xy / uRadius - slope, 1.0));
     float facing = min(dot(D, n), -uFoot.x);
@@ -485,33 +609,10 @@ void main() {
     float major = sqrt(0.5 * (dot(cx, cx) + dot(cy, cy)) + sqrt(0.25 * (dot(cx, cx) - dot(cy, cy)) * (dot(cx, cx) - dot(cy, cy)) + dot(cx, cy) * dot(cx, cy)));
     float sizeGuide;
     vec3 guide = guideAt(g, cx, cy, sizeGuide);
-    float tall = 0.0;
-    float on = 0.0;
-    float wild = rough(g);
-    for (int j = 0; j < ${AGES}; j++) {
-      vec3 wound = woundAt(g, j);
-      vec2 y = wound.xy;
-      mat2 strain = mat2(woundAt(g + vec2(hs, 0.0), j).xy - y, woundAt(g + vec2(0.0, hs), j).xy - y) * drift * (1.0 / hs);
-      vec2 wx = strain * dx;
-      vec2 wy = strain * dy;
-      float m00 = wx.x * wx.x + wy.x * wy.x;
-      float m11 = wx.y * wx.y + wy.y * wy.y;
-      float m01 = wx.x * wx.y + wy.x * wy.y;
-      float mean = 0.5 * (m00 + m11);
-      float diff = sqrt(0.25 * (m00 - m11) * (m00 - m11) + m01 * m01);
-      float wide = sqrt(mean + diff);
-      float narrow = sqrt(max(mean - diff, 1e-14));
-      vec2 lie = normalize(m00 > m11 ? vec2(mean + diff - m11, m01) : vec2(m01, mean + diff - m00 + 1e-20));
-      float taps = clamp(ceil(wide / (uFoot.y * narrow)), 1.0, uCloudTaps);
-      float least = uCloud.y * max(narrow, wide / taps);
-      vec4 sum = vec4(0.0);
-      for (int i = 0; i < (least < uCloudWave[j] ? int(taps) : 0); i++) sum += cloudAt(y + lie * (wide * ((float(i) + 0.5) / taps - 0.5)), wound.z, least, j, int(uCloudMarch[j]));
-      sum /= taps;
-      float obey = mix(1.0, wild, uCloudObey[j]);
-      tall += obey * uCloudTint[j] * sum.z;
-      steep += obey * calm * (transpose(strain) * sum.xy);
-      on = max(on, smoothstep(least, uCloudCell.w * least, uCloudWave[j]));
-    }
+    vec2 relief = reliefAt(g, low, fine);
+    float tall = relief.y;
+    float on = 1.0;
+    float stands = relief.x;
     vec3 through = vec3(1.0);
     vec3 added = vec3(0.0);
     float sine = max(-dot(D, normalize(there + vec3(0.0, 0.0, uRadius))), 1e-6);
@@ -529,9 +630,84 @@ void main() {
       through = mix(through, vec3(1.0), thin);
       added *= 1.0 - thin;
     }
-    vec3 lit = sunLit(dot(normalize(vec3(there.xy / uRadius - steep, 1.0)), uSunChart)) * shadowAt(there, fine, uShadow.x * hs);
     vec3 hue = max(guide / max(dot(guide, vec3(0.2126, 0.7152, 0.0722)), 1e-5), vec3(1e-3));
-    vec3 ground = guide * exp(uCloudTop * max(tall, 0.0) - uCloudDeep * max(-tall, 0.0)) * pow(hue, vec3(-min(uCloudSat.x * tall, uCloudSat.y))) * (lit + uFill.rgb * clamp(uFill.w + uFillOpen * tall, 0.0, 1.0));
+    vec3 amb = mix(uBounce * sunAt(g).rgb, uFill.rgb, skyAt(there.xy, low + stands, fine));
+    float sunUp = dot(normalize(vec3(there.xy / uRadius, 1.0)), uSunChart);
+    float toSun = dot(D, uSunChart);
+    float order[${ORDERS}];
+    float forward = uOrders.w;
+    float share = 1.0;
+    float thinning = 1.0;
+    float level = 0.0;
+    for (int o = 0; o < ${ORDERS}; o++) {
+      order[o] = share * (1.0 - forward * forward) / pow(1.0 + forward * forward - 2.0 * forward * toSun, 1.5);
+      level += order[o] * max(sunUp, 0.0) / (max(sunUp, 0.0) + thinning * sine);
+      share *= uOrders.y;
+      forward *= uOrders.z;
+      thinning *= uOrders.x;
+    }
+    vec3 sunny = sunLit(sunUp) / max(level, 1e-6);
+    vec3 sum = vec3(0.0);
+    vec3 last = vec3(0.0);
+    vec3 srcPrev = vec3(0.0);
+    float left = 1.0;
+    float tm = t;
+    float lenPrev = 0.0;
+    float rhoPrev = 0.0;
+    float depthPrev = 0.0;
+    int taken = 0;
+    for (int i = 0; i < int(uMedium.z + uMediumStep.z); i++) {
+      vec3 p = E + D * tm;
+      vec2 at = carried(p.xy);
+      float lowAt = stored(at);
+      float clear = above(p) - lowAt;
+      float least = uCloud.y * tm * pix;
+      vec2 rel = vec2(0.0);
+      float most = least < uCloudGeo.x ? uCloudGeo.z : 0.0;
+      for (int k = 0; k < (most > 0.0 && clear - most < 0.0 ? 1 : 0); k++) {
+        rel = reliefAt(at, lowAt, least);
+        clear -= rel.x;
+        most = 0.0;
+      }
+      clear -= most;
+      float rho = uMedium.y * clamp(-clear / uMedium.x, 0.0, 1.0);
+      vec3 src = srcPrev;
+      for (int k = 0; k < (rho > 0.0 ? 1 : 0); k++) {
+        float tau = sunDepth(p, least);
+        float s = 0.0;
+        float thin = 1.0;
+        for (int o = 0; o < ${ORDERS}; o++) {
+          s += order[o] * exp(-thin * tau);
+          thin *= uOrders.x;
+        }
+        src = guide * exp(uCloudTop * max(rel.y, 0.0) - uCloudDeep * max(-rel.y, 0.0)) * pow(hue, vec3(-min(uCloudSat.x * rel.y, uCloudSat.y))) * (sunny * s + amb);
+        last = src;
+        taken++;
+      }
+      float dTau = 0.5 * (rho + rhoPrev) * lenPrev;
+      for (int k = 0; k < (dTau > 0.0 ? 1 : 0); k++) {
+        float w = left * (1.0 - exp(-dTau));
+        sum += w * (rhoPrev * srcPrev + rho * src) / (rhoPrev + rho);
+        left -= w;
+      }
+      if (left < uMediumStep.w || taken >= int(uMedium.z) || tm > t1) break;
+      float len = 0.0;
+      if (clear < 0.0) {
+        float rate = lenPrev > 0.0 ? (-clear - depthPrev) / lenPrev : approach;
+        float grow = -clear < uMedium.x ? uMedium.y / uMedium.x * rate : 0.0;
+        len = grow > 1e-6 ? (sqrt(rho * rho + 2.0 * grow * uMedium.w) - rho) / grow : uMedium.w / max(rho, 1e-6);
+        len = clamp(len, uMediumStep.x, uMediumStep.y);
+      } else {
+        float fall = max(-(D.z + (D.x * p.x + D.y * p.y) / uRadius), 0.0);
+        len = max(clear / (fall + uMarch.x), uMarch.y * tm * pix);
+      }
+      rhoPrev = rho;
+      srcPrev = src;
+      depthPrev = -clear;
+      lenPrev = len;
+      tm += len;
+    }
+    vec3 ground = sum + left * last;
     col = ground * through + added;
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
@@ -670,8 +846,14 @@ export class CloudDeck {
     const cl = l.cloud
     if (cl.cell.reach > 1 - 0.5 * cl.cell.jitter) throw new Error('deck cloud cell reach too wide for two cells a side')
     const waves = cl.ageWaves.slice(0, AGES).map((a) => a * cl.waveUnits)
-    let most = 0
-    for (let j = 0; j < AGES; j++) for (let k = 0; k < cl.marchOctaves[j]!; k++) most += Math.min(cl.ages[j]! * cl.rise * waves[j]! * 2 ** -k, cl.capUnits[j]!) * 2 ** (-k * cl.fall)
+    const sum = (w: number, octaves: number, fall: number) => { let t = 0; for (let k = 0; k < octaves; k++) t += w * 2 ** (-k * (1 + fall)); return Math.max(t, 1e-9) }
+    const silkMost = cl.silk.waveUnits.slice(0, AGES).map((w) => sum(w, cl.silk.octaves, cl.silk.fall))
+    const fb = cl.fibre
+    const cu = cl.cumulus
+    const reach = [0, 1, 2, 3].map((k) => { let s = 0; for (let i = 0; i < cu.levels - k; i++) s += cu.ratio ** i; return Math.max(s, 1) })
+    if (cu.radius * reach[0]! > 1.5 - 0.5 * cl.cell.jitter) throw new Error('deck cumulus reach too wide for three cells a side')
+    const most = Math.max(cl.silk.aspect * (silkMost[0]! + silkMost[AGES - 1]!) + fb.aspect * fb.waveUnits * fb.octaves, cu.rootUnits + cu.waveUnits * cu.squash * cu.radius * (reach[0]! - cu.sink))
+    const md = l.medium
     const c = fields.chart
     const az = THREE.MathUtils.degToRad(deck.light.azimuthDeg)
     const lk = fields.limb.knots
@@ -701,9 +883,10 @@ export class CloudDeck {
       uShell: { value: new THREE.Vector2().fromArray(l.shell) },
       uDepth: { value: new THREE.Vector3(place.scene.depth[0], place.scene.depth[1], l.shell[1]! - l.shell[0]!) },
       uMarch: { value: new THREE.Vector4().fromArray(l.march) },
+      uRefine: { value: l.refine },
       uPixel: { value: 0.001 },
       uCloud: { value: new THREE.Vector4(cl.waveUnits, cl.leastFeet, cl.fall, cl.lifeSeconds) },
-      uCloudLook: { value: new THREE.Vector4(0, 0, 1 / cl.lifeWaveUnits, cl.field.mean) },
+      uCloudLook: { value: new THREE.Vector4(cl.pulse, 0, 1 / cl.lifeWaveUnits, cl.field.mean) },
       uCloudCell: { value: new THREE.Vector4(1 / (cl.cell.reach * cl.cell.reach), 0.5 - 0.5 * cl.cell.jitter, cl.cell.jitter, cl.fade) },
       uCloudShift: { value: new THREE.Vector4(cl.octaveShift[0]!, cl.octaveShift[1]!, cl.ageShift[0]!, cl.ageShift[1]!) },
       uCloudTurn: { value: new THREE.Vector2(cl.octaveTurn, cl.ageTurn) },
@@ -712,18 +895,43 @@ export class CloudDeck {
       uCloudSat: { value: new THREE.Vector2(cl.saturate, cl.pale) },
       uCloudWave: { value: waves },
       uCloudRise: { value: cl.ages.slice(0, AGES).map((a) => a * cl.rise) },
-      uCloudGeo: { value: new THREE.Vector4(Math.max(...waves), 0, most, 0) },
+      uCloudGeo: { value: new THREE.Vector4(Math.max(cu.waveUnits, fb.waveUnits, ...cl.silk.waveUnits), 0, most, 0) },
       uCloudMarch: { value: cl.marchOctaves.slice(0, AGES) },
       uCloudCap: { value: cl.capUnits.slice(0, AGES) },
-      uCloudDome: { value: new THREE.Vector3(cl.dome.least, cl.dome.bare, cl.dome.edge) },
+      uCloudDome: { value: new THREE.Vector4(cl.dome.least, cl.dome.bare, cl.dome.edge, cl.dome.round) },
       uCloudEdge: { value: cl.dome.profile.slice(0, AGES) },
       uCloudTint: { value: cl.tint.slice(0, AGES) },
       uCloudCalm: { value: new THREE.Vector3().fromArray(cl.calm) },
-      uCloudRough: { value: new THREE.Vector3(cl.rough.range[0]!, cl.rough.range[1]!, cl.rough.least) },
+      uSilkWave: { value: cl.silk.waveUnits.slice(0, AGES) },
+      uSilk: { value: new THREE.Vector4(cl.silk.aspect, cl.silk.gain, cl.silk.octaves, cl.silk.crease) },
+      uCloudSoft: { value: new THREE.Vector2(cl.soft.units, cl.soft.share) },
+      uSilkFall: { value: cl.silk.fall },
+      uSilkMost: { value: silkMost },
+      uWarp: { value: new THREE.Vector4(cl.warp.units[0]!, cl.warp.reach[0]!, cl.warp.units[1]!, cl.warp.reach[1]!) },
+      uFibre: { value: new THREE.Vector4(fb.waveUnits, 1 / fb.long, fb.octaves, 0) },
+      uFibreLook: { value: new THREE.Vector4(fb.aspect, fb.tint, cl.warp.guard, 0) },
+      uCumPatch: { value: new THREE.Vector4(cu.patch.share, cu.patch.units, cu.pale, cu.paleUnits) },
+      uCum: { value: new THREE.Vector4(cu.waveUnits, cu.radius, cu.ratio, cu.sink) },
+      uCumLook: { value: new THREE.Vector4(cu.squash, cu.buds, cu.small, cu.levels) },
+      uCumReach: { value: new THREE.Vector4(reach[0]!, reach[1]!, reach[2]!, reach[3]!) },
+      uCumPolar: { value: new THREE.Vector4(cu.polar[0]!, cu.polar[1]!, 0, 0) },
+      uCumCover: { value: new THREE.Vector4(cu.cover[0]!, cu.cover[1]!, cu.soft, cu.rootUnits) },
+      uMedium: { value: new THREE.Vector4(md.skinUnits, 1 / md.freeUnits, md.samples, md.stepDepth) },
+      uMediumStep: { value: new THREE.Vector4(md.stepShare[0]! * md.skinUnits, md.stepShare[1]! * md.skinUnits, md.search, md.cut) },
+      uMediumSun: { value: new THREE.Vector4(md.sun.firstUnits, md.sun.ratio, md.sun.taps, md.sun.coarse) },
+      uMediumWide: { value: new THREE.Vector2(Math.sqrt(md.sun.ratio) - 1 / Math.sqrt(md.sun.ratio), 1 / Math.sqrt(md.sun.ratio)) },
+      uOrders: { value: new THREE.Vector4(md.orders.depth, md.orders.gain, md.orders.narrow, md.orders.forward) },
+      uOrder: { value: new THREE.Vector4(cl.order.drawn[0]!, cl.order.drawn[1]!, cl.order.billows, cl.order.ridges) },
+      uLife: { value: new THREE.Vector3(2 * Math.PI / cl.life.billowSeconds, 2 * Math.PI / cl.life.ridgeSeconds, 2 * Math.PI / cl.life.curdSeconds) },
+      uPass: { value: new THREE.Vector4(l.sun.pass.share, 1 / l.sun.pass.units, l.sun.pass.cut * l.sun.pass.units, l.sun.pass.coarse * l.sun.shadow.soft) },
+      uCloudRough: { value: new THREE.Vector4(cl.rough.range[0]!, cl.rough.range[1]!, cl.rough.least, cl.rough.soft) },
       uCloudObey: { value: cl.rough.obey.slice(0, AGES) },
       uShadow: { value: new THREE.Vector4(l.sun.shadow.startFeet, l.sun.shadow.soft, l.sun.shadow.closing, l.sun.shadow.steps) },
       uFill: { value: new THREE.Vector4(l.sun.fill[0]!, l.sun.fill[1]!, l.sun.fill[2]!, l.sun.open[0]!) },
       uFillOpen: { value: l.sun.open[1]! },
+      uSky: { value: new THREE.Vector4(l.sun.sky.dirs, l.sun.sky.rings, 0, l.sun.sky.phase) },
+      uSkyRing: { value: new THREE.Vector3(l.sun.sky.firstUnits, l.sun.sky.ratio, l.sun.sky.coarse) },
+      uBounce: { value: l.sun.bounce },
       uThrough: { value: l.sun.shadow.through },
       uCloudTaps: { value: cl.taps },
       uFoot: { value: new THREE.Vector3().fromArray(l.foot) },
@@ -749,6 +957,7 @@ export class CloudDeck {
       uFlowTime: { value: 0 },
       uWound: { value: ctx.floatTexture(wound, wc, 3 * AGES * wr, true) },
       uWoundDrawn: { value: woundJson.ranges.map((r) => r[4]!) },
+      uWoundLong: { value: fw.wound.longAtBirth.slice(0, AGES).map((v) => 1 / v) },
       uWoundCode: { value: woundJson.ranges.map((r) => new THREE.Vector4(r[0]!, r[1]! - r[0]!, r[2]!, r[3]! - r[2]!)) },
       uWoundAge: { value: wd.turnDeg.map((t) => THREE.MathUtils.degToRad(t) * fw.jets.share * fw.scaleUnits / (1.5 * 3 ** -0.25)) },
       uWoundShape: { value: new THREE.Vector4(1 / wd.reachUnits, 0.5 / wr, wd.closedUnits[0]!, wd.closedUnits[1]!) },

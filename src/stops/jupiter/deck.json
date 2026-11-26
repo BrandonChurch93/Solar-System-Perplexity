@@ -86,13 +86,13 @@
     "note": "Numbers of the shader in clouds.ts. shell: lowest and highest height of the layer the march runs in. march: slack added to the slope of the ray when a step is sized by the height over the ground, least step in pixel footprints, a hit counts under this many footprints, most steps. foot: least cosine between ray and ground in the footprint, the footprint is cut into taps when it is longer than this times its width, most taps (the haze). blend: share of a height map's half width where it starts to give way to the next and where it ends. join: the same for the levels of the guide. anisotropy: taps of the texture filter. cloud: the detail made by code, see its own note.",
     "shell": [
       -0.45,
-      0.4
+      0.75
     ],
     "march": [
-      2.75,
+      5.0,
       0.75,
       0.25,
-      240
+      400
     ],
     "blend": [
       0.75,
@@ -115,11 +115,11 @@
       "leastFeet": 2.0,
       "fade": 1.6,
       "taps": 8,
-      "fall": 0.2,
+      "fall": 0.0,
       "ages": [
         1.0,
-        0.85,
-        0.7
+        1.0,
+        1.0
       ],
       "lifeSeconds": 16,
       "lifeWaveUnits": 0.1,
@@ -134,22 +134,22 @@
         3.1
       ],
       "cell": {
-        "reach": 0.75,
+        "reach": 0.7,
         "jitter": 0.5
       },
       "field": {
-        "mean": 0.2353,
+        "mean": 0.3,
         "variance": 0.0564,
         "slopeVariance": 0.6068
       },
       "ageWaves": [
-        1.0,
-        4.0,
-        8.0
+        8.0,
+        2.0,
+        4.0
       ],
-      "rise": 0.45,
+      "rise": 0.66,
       "marchOctaves": [
-        4,
+        6,
         3,
         3
       ],
@@ -169,45 +169,121 @@
         1.6
       ],
       "dome": {
-        "least": 0.45,
-        "bare": 0.1,
+        "least": 0.5,
+        "bare": 0.25,
         "edge": 0.4,
         "profile": [
           1.0,
           1.0,
           1.0
-        ]
+        ],
+        "round": 1.0
       },
       "capUnits": [
-        0.14,
-        0.12,
-        0.14
+        0.16,
+        0.03,
+        0.04
       ],
       "tint": [
-        0.25,
-        0.4,
-        0.6
+        0.8,
+        0.6,
+        0.8
       ],
       "rough": {
         "range": [
-          0.45,
-          0.95
+          0.3,
+          0.8
         ],
         "least": 0.15,
         "obey": [
           1.0,
-          0.7,
-          0.3
-        ]
+          0.0,
+          0.0
+        ],
+        "soft": 0.3
       },
       "saturate": 0.8,
-      "pale": 0.3
+      "pale": 0.3,
+      "pulse": 0.3,
+      "silk": {
+        "waveUnits": [
+          0.24,
+          0.0,
+          0.16
+        ],
+        "aspect": 0.4,
+        "gain": 1.6,
+        "octaves": 6,
+        "crease": 0.08,
+        "fall": 0.4
+      },
+      "soft": {
+        "units": 0.03,
+        "share": 0.7
+      },
+      "warp": {
+        "units": [
+          0.8,
+          0.25
+        ],
+        "reach": [
+          0.45,
+          0.12
+        ],
+        "guard": 1.0
+      },
+      "fibre": {
+        "waveUnits": 0.05,
+        "long": 6.0,
+        "octaves": 3,
+        "aspect": 0.15,
+        "tint": 1.2
+      },
+      "order": {
+        "drawn": [
+          1.5,
+          4.0
+        ],
+        "billows": 0.2,
+        "ridges": 0.7
+      },
+      "life": {
+        "billowSeconds": 24.0,
+        "ridgeSeconds": 72.0,
+        "curdSeconds": 24.0
+      },
+      "cumulus": {
+        "waveUnits": 0.24,
+        "radius": 0.5,
+        "ratio": 0.45,
+        "sink": 0.3,
+        "squash": 1.0,
+        "buds": 7,
+        "levels": 4,
+        "polar": [
+          0.15,
+          0.95
+        ],
+        "small": 0.6,
+        "cover": [
+          0.6,
+          0.9
+        ],
+        "soft": 0.3,
+        "rootUnits": 0.05,
+        "patch": {
+          "share": 0.4,
+          "units": 0.9
+        },
+        "pale": 0.6,
+        "paleUnits": 0.05
+      }
     },
     "sun": {
       "fill": [
-        0.26,
-        0.29,
-        0.34
+        0.05,
+        0.06,
+        0.08
       ],
       "open": [
         0.7,
@@ -219,6 +295,47 @@
         "closing": 1.75,
         "steps": 32,
         "through": 0.5
+      },
+      "sky": {
+        "dirs": 6,
+        "rings": 3,
+        "firstUnits": 0.05,
+        "ratio": 3.0,
+        "coarse": 0.25,
+        "phase": 0.25
+      },
+      "bounce": 0.35,
+      "pass": {
+        "share": 0.7,
+        "units": 0.012,
+        "cut": 4.0,
+        "coarse": 0.5
+      }
+    },
+    "refine": 6,
+    "medium": {
+      "skinUnits": 0.015,
+      "freeUnits": 0.006,
+      "samples": 12,
+      "search": 48,
+      "stepDepth": 0.4,
+      "stepShare": [
+        0.1,
+        0.6
+      ],
+      "cut": 0.02,
+      "sun": {
+        "firstUnits": 0.004,
+        "ratio": 1.8,
+        "taps": 10,
+        "coarse": 0.2
+      },
+      "orders": {
+        "count": 4,
+        "depth": 0.5,
+        "gain": 0.5,
+        "narrow": 0.5,
+        "forward": 0.5
       }
     }
   },
@@ -877,8 +994,8 @@
     },
     "flow": {
       "note": "The matter of the place moves in one steady flow, the curl of one stream function, so nothing gathers and nothing thins; no part of it is a rigid body. unitsPerSecond: the fastest speed of the storm's own turn, V. Storm: about life.storm.centre the speed at the distance r is V times 2 s^2 / (1 + s^4), s = r over scaleUnits, counter clockwise seen from above; the turn in degrees a second is fastest at 0.76 of scaleUnits and nothing at the centre, so every ring shears against its neighbours; between the two fadeUnits the storm's own speed goes to nothing. jets: zonal winds, east on the storm's south flank and west on its north flank, share of V at their fastest, one whole wave of east and west every acrossUnits across the belts; their stream function is led to nothing inside the two partUnits from the storm's centre, so the jets part and pass round the oval. eddies: small vortices of the same form at their own centres, share of V (negative is clockwise), each led to nothing between its fadeUnits. Every carried field (heights, guide, detail) is read where its matter stood at the middle of the surface view (frame 3150): the place is carried back along the flow by the midpoint rule over the whole time, which runs on without a bound and without a reset. wound: the detail made by code is read in wound coordinates, the place where its matter stood before the fastest ring of the storm had turned by turnDeg (one age each), so the shear of the flow itself has drawn every form out along its streamline. assets-src/jupiter/deck/wound.py follows the flow back from every point of a polar grid about the storm's centre out to reachUnits (pixels: round, then out, the rows even in the square root of the distance) in steps of stepSeconds and writes deck-wound.bin with its ranges in wound.json; beyond the storm's reach the flow is the straight jets and the same place is found in closed form, and between the two closedUnits, where both hold, the program passes from the one to the other.",
-      "unitsPerSecond": 0.0165,
-      "scaleUnits": 0.9,
+      "unitsPerSecond": 0.01378,
+      "scaleUnits": 0.75,
       "fadeUnits": [
         5.0,
         8.0
@@ -938,7 +1055,12 @@
             256
           ]
         },
-        "stepSeconds": 1.0
+        "stepSeconds": 1.0,
+        "longAtBirth": [
+          1.0,
+          5.0,
+          10.0
+        ]
       }
     },
     "proof": {
@@ -1240,7 +1362,7 @@
       "pixels": 1024,
       "rangeLog2": 4,
       "albedo": [
-        0.016,
+        0.03,
         0.7
       ],
       "share": 0.8,
