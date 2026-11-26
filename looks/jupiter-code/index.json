@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T02:06:20.179Z",
+ "pushed": "2026-11-26T02:28:07.541Z",
  "head": "2e9c373e132b99d442e4e8b0451a1ee3bbad13df",
- "note": "t7 to t9: look development for state t in the second tree, none of them a state. The forms still read as clay or rock; next is a study of rounder tops and softer light before the next draw.",
+ "note": "u1 and u2: the deck lit as a medium, dev variants, not yet in the tree",
  "looks": [
+  {
+   "time": "2026-11-26T02:28:06.923Z",
+   "file": "20261126022806923-note-u2-3150.jpg",
+   "source": "../work/r25/t/u2-3150.png",
+   "kind": "note",
+   "label": "dev variant u2 at 3150, preview, draft, no solve: medium light levelled to flat ground; line (i) 16.119 (state s 9.259 with the solve, main 3.539); bands green; right third still too bright (61 against 21), cumulus cells read as slabs, no spiral bands round the eye yet",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T02:28:06.350Z",
+   "file": "20261126022806350-note-u1-3150.jpg",
+   "source": "../work/r25/t/u1-3150.png",
+   "kind": "note",
+   "label": "dev variant u1 at 3150, preview, draft: first film variant with the medium light; reads as cloud; every cell too bright; line (i) 27.548",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T02:28:05.678Z",
+   "file": "20261126022805678-note-try5.jpg",
+   "source": "../work/r25/lab/try5.png",
+   "kind": "note",
+   "label": "lab study try5 (not the film's shader): the same height field under a surface light (reads as rock) and as a medium lit through itself (reads as cumulus)",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T02:06:19.522Z",
    "file": "20261126020619522-note-t9-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r23/t/n-3150.png",
    "kind": "note",
    "label": "3150 draft state n: billows gated by the guide's own unrest (far field calm, streaks), lanes take the matter's hue, solve by range; low band 4.801 (main 3.539), plain 14.7584, bands 0.93 0.92 0.87 0.86 (under 1 px 1.19), 146.8 s; soft glows of the solve in the lower left, lower right 30 against 8",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:28:29.677Z",
-   "file": "20261125232829677-note-v1-3150.jpg",
-   "source": "../work/r23/t/v1-3150.png",
-   "kind": "note",
-   "label": "3150 preview state v1: state k with the floor of the matter's light at 0.07 (no matter darker than a dark cloud): low band 28.98 at preview size; the right third and the bottom lit pale blue",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:11:12.621Z",
-   "file": "20261125231112621-note-k-3150.jpg",
-   "source": "../work/r23/t/k-3150.png",
-   "kind": "note",
-   "label": "3150 draft state k: guide solved by range in four damped rounds, low band 5.547 (main 3.539), plain 15.9608, bands 1.00 0.99 0.93 0.86 (under 1 px 1.29), 138.9 s; limb ragged, far field lumpy, lower right 30 against 8",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:11:12.009Z",
-   "file": "20261125231112009-note-j1-3150.jpg",
-   "source": "../work/r23/t/j1-3150.png",
-   "kind": "note",
-   "label": "3150 preview state j1: the plain guide with no solve, relief from the plain guide, low band 17.42 at preview size",
    "stop": "jupiter"
   }
  ]
