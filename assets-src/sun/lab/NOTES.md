@@ -1651,3 +1651,36 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   (approved about 0.06 and 0.055: mine half, the strands are still too fine or too faint). Umbra under 0.12:
   16866 px (approved 10524), level 0.079 (0.078), g/r 0.34 (0.60).
   Chain h37 started 03:29.
+- 03:29 to 03:46 UTC. Chain h37 (commit 6b5abade, local; lab.json = v/lab-h37.json). MEASURED final frame 90:
+  plain 30.971, low64 8.1237 (main 10.9492, standing 10.0147, h33 7.8419), bands [1.41 1.05 0.96 1.01 1.06 1.02
+  0.89], parts ground 52.1386 strip 52.5211 sky 9.18 (standing 9.0457: 0.134 over; h33 0.108 over), curve [0.694
+  0.685 0.68 0.661 0.641 0.604 0.54 0.472 0.409 0.352 0.32] (largest gap 0.038), lane 5.61 px (3.89, 7.85;
+  approved 7.08), rim mean 0.376 0.461 0.508 0.545 0.575 0.600 0.642 0.676 0.694 0.717 0.723 (approved 0.310 0.376
+  0.435 0.491 0.531 0.559 0.599 0.627 0.646 0.672 0.690: mine 0.03 to 0.085 lighter at every distance), far shares
+  0.529 and 0.252 (0.538, 0.196), cells with a dip over 0.04: 0.316 (0.341). Darkest band 0.1 to 0.3 in rows 820
+  to 1080: 0.096 (approved 0.147, h33 0.105): NOT moved. Level over 0.95: share 0.024 g/r 0.930 (0.011, 0.851).
+  Penumbra boxes medians 0.57 0.52 0.50 (approved 0.62 0.47 0.49), g/r 0.521 0.544 0.473 (0.564 0.520 0.537), band
+  power 2 to 4 px 0.033 0.049 0.024, 4 to 8 px 0.028 0.034 0.020 (approved about 0.06, 0.055). Umbra 17786 px
+  (10524). Draft: plain 30.6909, low64 8.2854, sky 8.5593.
+  FLICKER h37 (largest, percent over a tenth): 0.246, 58.3 / 0.246, 42.4 / 0.069, 0 / 0.138, 9.4 (h33 0.183, 50.0 /
+  0.264, 36.4 / 0.068, 0 / 0.179, 3.8; b7 0.211, 37.5 / 0.255, 34.2 / 0.080, 0 / 0.119, 4). Worse than h33 in three
+  shares: a smaller light on a top makes the mean of a disc of 26 px move more as the border moves.
+  Low band, where (blur 64 of the level, mine minus approved): the right side rows 660 to 900, cols 1360 to 1840 is
+  0.15 to 0.26 DARKER than the approved (a bright region right of the spot in the approved, level 0.73 to 0.77,
+  mine about 0.5), the near middle 0.04 to 0.10 lighter, and the penumbra now 0.05 to 0.12 darker at its sides
+  (h33 was 0.06 to 0.08 lighter below the spot). The fit trades the dark right side against a lighter near field.
+  The fit reads rows 778 to 1080 over the whole width; there the share under 0.3 is equal (0.112, 0.122).
+- 03:43 UTC. MAIL 1390: origin main is now cfabcc52f6dbe1ac02ad4fec5bfe73c709c2e974 (nothing changes for the lab;
+  merge this main at the next name, or the Builder cuts the name onto main; no fetch is possible here now).
+- 03:46 to 03:51 UTC. Trial h38 (v/lab-h38.json, not committed) = h37 + lane[4] 0.0043 (wider), seam [0.06,0.3,40,
+  1.0] (darker bed), blob[2] 0.15 (a steadier outline of the light), blob[7] 1.0. MEASURED (draft): plain 30.6566,
+  low64 8.0748, bands [1.49 1.01 0.94 1.01 1.08 1.03 0.88], lane 5.87 px, darkest band 0.106, dips 0.111, rim mean
+  0.363 0.447 0.490 0.527 0.560 0.586 0.625 0.658 0.680 0.711 0.734. FLICKER 0.261, 63.6 / 0.261, 40.0 / 0.065, 0 /
+  0.140, 10.3: no better, so the well in the light's reach (blob[2]) is not the cause. SEEN (v/one-h38.jpg): the
+  bed is darker and the tops hold more mid tone, nearer the approved in tone; but the lanes turn to thin dark
+  lines and the cells read as rounded stones.
+- NEXT (after the mail of 03:55): (1) the light of a top as fibres and sheen, not one cream blob with an outline;
+  (2) the bright region right of the spot as heat of the place (low band); (3) flicker by cause: read which cells
+  change (border passing the disc, or the light itself); (4) births and splits: a split as a lane that opens
+  across an old dimmed cell (sim.ts: the newborn takes half of the host at once, the lane between the two starts
+  closed), not a point that grows.
