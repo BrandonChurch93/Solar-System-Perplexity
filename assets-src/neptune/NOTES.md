@@ -10263,3 +10263,364 @@ STILL RED IN THE STORM, by my eye: the dark halo round the eye is wider than the
 > 5. WHAT I DO NEXT unless you say otherwise: the row of 4744 to 4768; then the name's proofs on Z5 as it stands (merge of origin main b3ae0e5e2, units, the four judged frames, 4605 against main's bytes, megabytes), so that a name is in your hands well before 13:30; trials on (a), (c), (d) at 4860 only after that, and they reach a second name only if the rows above hold.
 >
 > Seconds a frame, draft, preview format: dive 7 at 4706, 10 at 4720, 14 at 4740, about 23 from 4744; rise 22 at 4960, 13 at 4980, 6 at 5000, about 2.5 from 5008. 4860 at 1920: 109.8.
+
+## 26 Nov, lab log 10:19 to 10:43 UTC (the low dive, the commits of the cards, the merge, the rise's first frames)
+
+- 10:25: `assets-src/neptune/sky/hold.py` run again from its sources: all six card files equal by bytes to the tree's (full 7780832, 3719030, 117416; web 2540392, 1431736, 32380).
+- 10:29:30: Z5's low dive 4744 to 4768 at half steps is in (`out/work/nep/weave/Z5t`, 49 frames, about 23 s a frame). Pairs 8 frames apart at half steps: 4744 0.39 at (1176, 272); 4746 0.35; 4748 0.33; 4750 0.37 at (1736, 428); 4752 0.42 at (1772, 416); 4754 0.38 at (1780, 420); 4756 0.28 at (1552, 356); 4758 0.20 at (1580, 364); 4760 0.17 at (1016, 992). All under 0.45.
+- 10:29:41: commits 3a19773ed (the six card files, RECIPE rows, `sky/fillcore.py`) and 3e03cfc6d (notes to the 10:19 mail). 10:29:50: merge 87a54d129 of origin main 7bf2d527e (differs from 77a7d4108 by kit/PROGRESS.md only: statuses 371 to 378, decisions d363 to d369).
+- d364 on main, read: a line under the limit in both rows that differs from main's by less than a twentieth of the limit (pop 0.06, pattern 0.0225, level step 0.065) counts as equal where the builder names the cause and the Builder's eye finds no step; a line over the limit must be no worse than main's.
+- The joined dive 4700 to 4768 (Z5u, links to Z5s and Z5t; 4744 is the same bytes in both), pictures() in one run (`/tmp/pic-z5-dive-all.json`): dive 1 (4700 to 4724.5) pattern 0.3732 at 4707, pop 1.0934 at 4713.5, level step 0.1728 at 4704.5; dive 2 (4725 to 4768) pattern 0.4205 at 4752, pop 1.0839 at 4746.5 (carried 1.1465 at 4747, full pictures 1.1418 at 4745.5), level step 0.1095 at 4732.5. The pop at 4743.5 reads 1.0176 now: the climb to 1.2618 was the cut window. Hump 4745.5 to 4748: 1.0773, 1.0790, 1.0839, 1.0642, 1.0674, 1.0704. At the swap: pop 0.9778 at 4758, level step 0.0492 at 4758.5.
+- Step 2, like for like with main's control, Z5 4738 to 4760 by 2: 0.2088, 0.2852, 0.3168, 0.3312, 0.2497, 0.2495, 0.2233, 0.1760, 0.1526, 0.1208, 0.0879, 0.0847 (main: 0.1488, 0.1381, 0.1736, 0.1519, 0.1111, 0.1042, 0.1046, 0.0711, 0.0391, 0.0319, 0.0303, 0.0303).
+- Consecutive differences 4744 to 4768: 9.956, 10.127, 10.154, 10.083, 9.941, 9.723, 9.517, 9.326, 9.070, 8.918, 8.823, 8.733, 8.519, 8.278 (4757 to 4758), 8.019, 7.735, 7.543, 7.317, 7.117, 6.876, 6.563, 6.169, 5.751, 5.327. No jump at T.
+- 10:29:56 to 10:41:06: the rise's first frames 4948 to 4959.5 at half steps (`Z5v`, 24 frames, about 27 s a frame with a reader beside; 4960 to 4968 linked from Z5q). Pairs at half steps 4948 to 4958 by 2: 0.1574 at (972, 1068), 0.2045, 0.1587, 0.2725 at (1696, 444), 0.3669 at (1812, 476), 0.2932 at (1776, 484). pictures() on 4948 to 4968 alone: pattern 0.3702 at 4959, level step 0.0548 at 4959, pop 1.1410 at 4967.5 on a cut window (plain 1.2212, full pictures 1.4290): not a row. Consecutive differences 4948 to 4968: 4.823, 4.825, 4.915, 5.285, 5.950, 6.642, 7.204, 7.686, 8.098, 8.412, 8.681, 9.110, 9.353, 9.574, 9.723, 9.830, 9.897, 9.865, 9.901, 9.998.
+- Megabytes: `git ls-tree -r -l`: origin main 7bf2d527e 2919348433 bytes, 87a54d129 2918312550 (1035883 under). 37 files differ from origin main, all in my three folders: 12 added, 10 deleted, 15 changed.
+- 10:41:16: `/tmp/rd4.sh` started: the entry 4668 to 4699.5 (`Z5w`) and 5024.5 to 5037 (`Z5x`) at half steps, joined with what is held; poses `/tmp/poses-z5-whole.json`.
+
+## 26 Nov, 10:43 UTC: the row of 4744 to 4768 and a look, to the Builder (word for word; attached look-0932.jpg, zd-c1.jpg, zd-d1.jpg, zd-x3.jpg, zr-f1.jpg)
+
+> THE ROW OF 4744 TO 4768 (promised at 10:19) AND A LOOK, 26 Nov 10:43 UTC, neptune_builder. State Z5 = 4db76e70e, the picture unchanged since 10:19. On top of it now, none of them pushed: 3a19773ed (the sky's two cards and the Sun's picture as tracked files with their recipe; the frames already drew them), 3e03cfc6d (notes), 87a54d129 (merge of origin main 7bf2d527e, which differs from 77a7d4108 by kit/PROGRESS.md only). Not a name yet. Five pictures.
+>
+> 1. DIVE 2 WHOLE, by my copy, a proxy, STATED (as at 10:19: pictures() of main's tools/img/smooth.py on my frames at half steps, preview format, draft). Frames 4700 to 4768 joined and read in one run.
+>
+> part | your row of main | Z5 by my copy
+> dive 1 (4700 to 4724 + 1/2) | pattern 1.3008 at 4721, pop 1.0405 at 4718, level step 0.4864 at 4721 | unchanged: pattern 0.3732 at 4707, pop 1.0934 at 4713 + 1/2, level step 0.1728 at 4704 + 1/2
+> dive 2 (4725 to 4768) | pattern 1.1468 at 4725, pop 1.0657 at 4746, level step 0.1051 at 4731 | pattern 0.4205 at 4752, pop 1.0839 at 4746 + 1/2 (the carried reading 1.1465 at 4747, on the full pictures 1.1418 at 4745 + 1/2), level step 0.1095 at 4732 + 1/2
+>
+> 2. THE RED (a) OF 10:19 IS ANSWERED: it was the cut window. With the frames to 4768 in, the pop at 4743 + 1/2 reads 1.0176 (it read 1.2618 on the cut window). What stands is a low broad hump from 4745 + 1/2 to 4748 (1.077, 1.079, 1.084, 1.064, 1.067, 1.070), at the frame of main's own line (1.0657 at 4746): 0.0182 over main's, inside the twentieth (0.06) of d364, under the limit. Its cause I have not found. It is not the swap of the views at T (4758.3): the pop reads 0.978 at 4758; the level step there is 0.0492 at 4758 + 1/2, the largest after 4736 (limit 1.3).
+>
+> 3. RED, under the limit: the pattern at 4744 to 4754 reads over main's at the same frames. Half steps, pairs 8 frames apart, 4744 to 4760 by 2: 0.39, 0.35, 0.33, 0.37, 0.42, 0.38, 0.28, 0.20, 0.17. Like for like at step 2, 4738 to 4760 by 2: Z5 0.2088, 0.2852, 0.3168, 0.3312, 0.2497, 0.2495, 0.2233, 0.1760, 0.1526, 0.1208, 0.0879, 0.0847; main's own frames with main's own poses 0.1488, 0.1381, 0.1736, 0.1519, 0.1111, 0.1042, 0.1046, 0.0711, 0.0391, 0.0319, 0.0303, 0.0303. About twice main's there. The row's line is 0.4205 against main's 1.1468, 0.03 under the limit. The readings stand at (1176, 272) to (1780, 420) of 1920, between the eye and the horizon at the right, where Z5 has a pale streaked far ground and main a dark one. That this ground is the cause is not proven by a control.
+>
+> 4. BY THE EYE, 4740 to 4768 (zd-c1.jpg main | Z5 4740 to 4758; zd-d1.jpg 4760 to 4768; zd-x3.jpg Z5 alone, larger, 4746 to 4756 by 2 and 4757, 4758, 4759 in a row; every frame looked at): no step in Z5, at T or elsewhere. Eye, bank and the far streak hold their places and grow with the nearing; the lower left darkens steadily from 4752. Mean difference of consecutive frames: 9.956 (4744 to 4745), 10.154 (4746 to 4747), then falling every frame: 8.278 (4757 to 4758), 8.019 (4758 to 4759), 7.735, down to 5.327 (4767 to 4768). RED by the eye: Z5's ground is paler and bluer than main's on every frame of these sheets up to 4758 (main's lower left is near black, Z5's is dark blue with the pale sheet above; main's whirl has bright arms, Z5's eye is a dark oval with thin streaks). From 4760 the two agree in form; Z5 stays a little paler at the left.
+>
+> 5. THE RISE'S FIRST FRAMES, 4948 to 4968 (zr-f1.jpg, Z5 alone, every frame 4948 to 4963; I hold no frames of main before 4960). The views swap between 4956 and 4956 + 1/2. No step by the eye. Consecutive differences 4.823, 4.825, 4.915, 5.285, 5.950, 6.642, 7.204, 7.686, then 8.098 (4956 to 4957), 8.412, 8.681, 9.110, 9.353: no jump. Pairs at half steps, 4948 to 4958 by 2: 0.1574, 0.2045, 0.1587, 0.2725, 0.3669, 0.2932. pictures() on 4948 to 4968 alone: pattern 0.3702 at 4959, level step 0.0548 at 4959; its pop ends on a cut window again (1.1410 at 4967 + 1/2, on the full pictures 1.4290), so I do not quote it as a row. The rise is being joined from 4948 to 5037 and the dive from 4668 to 4768 (the entry 4668 to 4700 and the frames after the cut, 5024 + 1/2 to 5037, render now), each to be read in one run; those rows come with the name. 4938 to 4948 stays unread by me.
+>
+> 6. 4860 beside the approved: look-0932.jpg, the same picture as at 10:19, nothing moved: Z5 plain 21.581 (main 22.986), G17 median 0.920 / p25 0.529, green (main 0.934 / 0.549). Your (a), (c), (d) of MAIL 1446 stand red.
+>
+> 7. NEXT: units on the merge, the four judged frames with 4605 against main's bytes, cues and shots, then the name as a bundle. Megabytes, measured: the tree of 87a54d129 is 2918312550 bytes, origin main's 2919348433: 1.04 MB under main's (main's ten place plates go, 5969934 bytes; the six card files stand at 15621786 bytes where main's four stand at 11670988).
+>
+> Seconds a frame, draft, preview format: 4744 to 4768 about 23; 4948 to 4959 + 1/2 about 27 with a reader running beside; the entry 4668 to 4700 about 3. 4860 at 1920: 109.8.
+
+## MAIL 1461 from the Builder (/root), 10:46 UTC (read 10:48 by my clock; word for word)
+
+> MAIL 1461 from the Builder (/root), 10:46 UTC.
+> To neptune_builder. Your row of 10:43 is read; the sheets are filed. Ten of my machines stand free now and none of them can reach your state: push 87a54d129 (the merge on Z5) to agent/neptune-place on origin NOW, as a plain branch push, not a name, and send me its full sha alone in one line. On that sha I start at once: the reader's four parts beside main's own rows, G17, the four judged frames at final (4605 against main's bytes), units and gate, cues and shots, and a 60 fps clip of the dive and of the rise for my eye on the swap of the views. The name mail can follow as you planned. Your red by the eye (the ground paler and bluer than main's until 4758) and the pattern at 4744 to 4754 standing at twice main's on like frames are yours to answer in the name mail: say what the pale streaked far ground is made of and whether it is meant. Ruling 12:30 as set.
+
+## 26 Nov, 10:49 UTC: the sha, to the Builder (word for word)
+
+> 87a54d1293d96bb209eb3349592bfbf90541e4ca
+
+- 10:49:02: the push went through this time (62498f603..87a54d129, plain, to agent/neptune-place); `git ls-remote` shows 87a54d1293d96bb209eb3349592bfbf90541e4ca on origin. The first push since 02:42.
+
+## 26 Nov, lab log 10:43 to 10:59 UTC (the whole rows, the judged four, the far ground's control, G11 red and cured)
+
+- 10:41 to 10:45: `/tmp/rd4.sh`: the entry 4668 to 4699.5 (`Z5w`, 64 frames, about 3 s a frame) and 5024.5 to 5037 (`Z5x`, 26 frames) at half steps; joined with Z5u (dive) and Z5v, Z5q (rise). Poses `/tmp/poses-z5-whole.json` (400 frames).
+- The whole dive 4668 to 4768 in one run (`/tmp/pic-z5-dive-whole.json`): dive 1 (4668 to 4724.5) pattern 0.3732 at 4707, pop 1.0934 at 4713.5, level step 0.1728 at 4704.5; the entry alone (4668 to 4699.5) pattern 0.2759 at 4684.5, pop 1.0336 at 4696.5, level step 0.0162 at 4698; dive 2 (4725 to 4768) pattern 0.4205 at 4752, pop 1.0839 at 4746.5, level step 0.1095 at 4732.5.
+- The whole rise 4948 to 5037 in one run (`/tmp/pic-z5-rise-whole.json`): rise 1 (4948 to 4987) pattern 0.3702 at 4959, pop 1.0856 at 4968 (full pictures 1.1646 at 4968.5), level step 0.1011 at 4968.5; rise 2 (4987.5 to 5037) pattern 0.3937 at 4989.5, level step 0.0499 at 5000, pop 1.0479 up to 5029 (carried 1.1156 at 4996.5) and 1.1141, 1.1116, 1.0800, 1.0977, 1.1250, 1.1325, 1.1084 at 5030 to 5036, where the window is cut at 5037 (its base stands at 1.695 from 5029 on); full pictures 1.3097 at 5036 on the same cut window. The hump of rise 1 at 4964 to 4971 is not a cut window.
+- Heights (my poses): 4713.5 0.62293, 4714 0.60086; 4732.5 0.15190; 4746 0.05451, 4747 0.05069, 4748 0.04727; 4968 0.05054, 4968.5 0.05265. So the pop's hump of dive 2 (4745.5 to 4748) and of rise 1 (4964 to 4971) both stand where the eye passes 0.05 radii, the upper end of the veil (fan.veil.height [0.0, 0.05]). At 4713 to 4714 no law of mine has an end (0.60 radii); the frame's mean level climbs to 4714 (80.21 at 4711, 81.82 at 4714) and stands from there (81.88, 81.85, 81.80, 81.60 at 4716): level step 0.0979 at 4714. Cause of the pop there (1.0934 at 4713.5) not found.
+- Rate 1 against rate 2: the same frame differs with the capture rate (4750: mean 3.601 between Z5t at rate 2 and CF0 at rate 1), so frames of different rates are never compared by bytes. Main at rate 1 against Y1 at rate 1 (preview): the hold 4674 to 4680 mean 0.084 to 0.092, max 157, about 33000 px (the Sun's picture); after the cut 5025 mean 0.026 max 2 (31935 px), 5026 mean 0.043 max 2 (45302 px).
+- 10:45 to 10:48: `/tmp/name20.sh N20` on 87a54d129, 16x9 draft: 4605 21b475da05086981 (24.5 s), 4707 9f8419a62b77d4d4 (31.5 s), 4860 07d3bcfecc3386c5 (100.7 s), 5006 f9d1bfe65547e1ee (15.2 s). Main's 4605 83b90a552b1ba6dc, 4860 ddfef016998d2c22.
+  - 4605: plain 2.923354 (main 2.930514), top quarter 3.037 (3.064), G17 0.856 / 0.720 on both. 65940 px differ from main's (3.2 %), max 69; by 2 or more 9751 px, all in the box x 1553 to 1848, y 9 to 327 (the Sun, middle about 1721, 152); farther than 100 px from it 40514 px, max 5; farther than 200 px 5276 px, max 1. Sun: peak 254 (main 255, approved 255), px over 200 1145 (main 1163, approved 1177), over 60 12142 (main 12172, approved 11940). Bands by scale, median over the approved, name | main: 0.6 to 2.0 px 0.856 | 0.856; 0.6 to 1.2 0.782 | 0.782; 1.2 to 2.4 0.971 | 0.987; 2.4 to 4.8 0.948 | 0.948; 4.8 to 9.6 0.960 | 0.961; 9.6 to 19.2 0.941 | 0.946; 19.2 to 38.4 0.967 | 0.967; p25 equal in every band.
+  - 4860: plain 21.581 (main 22.986), top quarter 9.034 (12.395), G17 0.920 / 0.529 (main 0.934 / 0.549). Bands by scale, median (p25), name | main: 0.6 to 1.2 px 0.861 (0.529) | 0.834 (0.507); 1.2 to 2.4 0.993 (0.506) | 1.086 (0.591); 2.4 to 4.8 0.918 (0.505) | 1.101 (0.674); 4.8 to 9.6 1.005 (0.578) | 1.235 (0.866); 9.6 to 19.2 1.038 (0.646) | 1.446 (0.976); 19.2 to 38.4 0.993 (0.560) | 1.127 (0.800). Lilac 0.98 % of the brights; darks 3.18 %; lines 8363 | 2177 | 590.
+- 10:50 to 10:54, control of the far ground at 4750 (preview, rate 1; `CF0` Z5, `CF1` fan.veil.depth 0, `CF2` far.on 0, `CF3` both; sheet `/tmp/cf-1.jpg`): with the veil off the pale streaked sheet between the eye and the bank and round the eye is gone (mean light of the middle right blocks 123 and 143 down to 96 and 113; difference to Z5 26.5 and 29.4 there); with the map off almost nothing moves (mean 1.105). So the pale streaked ground is the veil (fan.veil: the sheet of ice haze, wound into the storm's arms since 25 Nov, bands along the flow), not the map. Main has the same veil lying beyond the storm alone (from 1.3, to 3.0, west [-5.2, -2.4], wave 2.0, long 3).
+- 10:55 to 10:57, control of the pattern (`CG1`: fan.veil.depth 0, frames 4744 to 4752 by 2 at rate 2): step 2, 4744 to 4752 reads 0.1311 at (1544, 900) with the veil off; Z5 0.3312 at (1196, 296); main's own frames 0.1519. The veil is the cause of the pattern there. The veil is a sheet with height (0 to 0.05 radii, 5 taps): it shifts against the deck as the eye comes down, and the reader carries the deck.
+- 10:57:22: `/tmp/tests14.sh` on 87a54d129: tsc exit 0; my test 5 passed; G11 FAIL: "missing: public/assets/neptune/full/sky-sun.webp, public/assets/neptune/web/sky-sun.webp, public/assets/neptune/web/sky-terrain.webp" (tools/gate.ts G11 wants each file's path, or its path with <set>, in a RECIPE.md; my heading gave the path to the first file only).
+- 10:58: cure: one line `- Files:` in RECIPE.md with the three paths; G11 PASS; commit 4fb99c9164fe6db39b19986ca65ac4bc131f4a8e, pushed (87a54d129..4fb99c916). No test reads RECIPE.md (grep), so the whole unit run that was going stands.
+
+## 26 Nov, 10:59 UTC: G11 red on 87a54d129 and its cure, to the Builder (word for word)
+
+> A RED ON 87a54d129 THAT I FOUND AND CURED, 26 Nov 10:59 UTC, neptune_builder. G11 is red on 87a54d129: "missing: public/assets/neptune/full/sky-sun.webp, public/assets/neptune/web/sky-sun.webp, public/assets/neptune/web/sky-terrain.webp". Cause: my recipe named the three sky files in one heading and only the first with its path. Cure: 4fb99c9164fe6db39b19986ca65ac4bc131f4a8e, pushed to agent/neptune-place (plain, 87a54d129..4fb99c916), one commit on top: one line added to assets-src/neptune/RECIPE.md, nothing else. G11 on it by my run: PASS, "every asset has a row or a recipe". No picture and no source moved, so every frame, row and number your machines draw on 87a54d129 stands for 4fb99c916; only the gate's G11 needs the newer sha. tsc and my own test are green on 87a54d129; the whole unit run is still going here. The name mail follows on 4fb99c916.
+
+## MAIL 1464 from the Builder (/root), 10:59 UTC (read 10:59 by my clock; word for word)
+
+> MAIL 1464 from the Builder (/root), 10:59 UTC.
+> To neptune_builder. 87a54d12 is fetched and the machines are on it since 10:54: the reader's four parts, the four judged frames at final with G17, units and gate with 26 frames outside your stop, and two 60 fps clips (4695 to 4770, 4940 to 5040).
+> MY EYE on your sheet zd-c1 (4740 to 4758, main beside Z5): yours holds its place without a step; main's is the deeper picture until 4756. Main: navy ground that falls to near black at the lower left, a whirl with bright arms, hard white bank. Yours: a pale milky blue over the whole ground, the eye a flat dark oval, the bank dimmer. A viewer sees about eighteen frames of a paler planet that then deepens. That is a loss in look beside a gain in steadiness, and the ruling at 12:30 weighs the two.
+> ASKED, with the name: (1) what makes the ground pale before 4758 in your terms (which plate or card, which term), and (2) whether the far ground can carry the close view's own levels, that is the same picture seen from farther, so that the dive shows one ground from its first frame to its last. If (2) can be built by cause in one commit before 12:15, build it and send its sha alone; if not, say so and name Z5 as it stands.
+
+## 26 Nov, 11:12 UTC: ask to handover_engineer, two lines of shared tests (word for word)
+
+> neptune_builder to handover_engineer, 11:12 UTC. ASK, two lines of shared tests, short and exact.
+> My name's tree (4fb99c9164fe6db39b19986ca65ac4bc131f4a8e on origin main 7bf2d527e) is red in two units, both by `skyShare { low: 0 }` that my plan returns in the dive and the rise, as your word `both` needs (yours of 06:17, MAIL 1435). On main they pass because main's Neptune does not carry `both` yet.
+> 1. tests/place.test.ts line 423, `expect(globe.skyShare).toBe(1)` ("expected +0 to be 1"). Asked: `expect(globe.skyShare).toBe(p.skyShare(p.seg[kind]!, h.time)?.low ?? 1)`, as line 458 already reads a stop that gives the share itself.
+> 2. tests/weights.test.ts line 357, `expect(plain.some((x) => x !== undefined && x > 0)).toBe(true)` in the law of test 9 (nosky), run over the film's spans ("expected false to be true"). Asked: the line holds only for a span whose plan gives no share of its own of 0 on every frame (for one that does: all 0 with and without the probe, which the next lines already check).
+> Nothing else is red in the whole run on my tree (92 files ok, these 2 not), tsc clean. I do not touch tests/.
+
+## 26 Nov, 11:12 UTC: the red of the units on the name, to the Builder (word for word; no pictures)
+
+> neptune_builder to the Builder, 11:12 UTC. A RED OF THE UNITS ON THE NAME, known and named (a blocker of the name by law (a)).
+> The whole run on 87a54d129 (my machine, alone, 10:57 to 11:11): tsc clean, 92 files ok, 2 not ok. G11 was the third red and is cured in 4fb99c916 (sent 10:59).
+> 1. tests/place.test.ts line 423: `expect(globe.skyShare).toBe(1)`, "expected +0 to be 1".
+> 2. tests/weights.test.ts line 357 (test 9, nosky): `expect(plain.some((x) => x !== undefined && x > 0)).toBe(true)`, "expected false to be true".
+> ONE CAUSE: my plan returns `skyShare { low: 0 }` in the dive and the rise, which the engine's word `both` needs (handover_engineer 06:17, your MAIL 1435): the sky's pictures stand at weight 1 in both views and never go through the share. Both lines state the engine's dissolve as the law of every stop that hands over. Main passes them because main's Neptune does not carry `both`. The cure is two lines of shared tests, not mine to write: asked of handover_engineer now, exact lines given. Nothing in my folders can make them green without leaving `both`.
+> On (2) of MAIL 1464: the build is in trial now (the air's law by an eye at the close view's height on the same ray, behind a key, off = the name to the bit); I say by 11:40 whether it holds.
+
+## MAIL 1465 from the Builder (/root), 11:16 UTC (read 11:17 by my clock; word for word)
+
+> MAIL 1465 from the Builder (/root), 11:16 UTC.
+> To neptune_builder. A RED ON 87a54d12 FOUND BY MY MACHINE (job ny5-02: 26 draft frames outside your stop, main 7bcc072b against 87a54d12). 22 are the same bytes. FOUR DIFFER, all in the end of Uranus's stop: 4436 (PSNR 25.3), 4480 (21.7), 4510 (26.2), 4525 (51.7). 4290 and every frame before it, and 5105 to 5399, are the same bytes.
+> WHAT I SEE on the pairs: the star field is another one. At 4436 main shows the Milky Way at the left edge of the frame and yours shows none; at 4480 main shows none and yours shows it at the right edge. 4436 is Uranus's judged frame of the rise. MEASURED on the draft pair against Uranus's approved picture: the band lines of the frame fall from 0.99 to 0.62 under 1 px and from 1.01 to 0.65 at 1 to 2 px, under the floor of 0.7.
+> THE RULE: a candidate moves no frame outside its own stop, and never another stop's judged frame for the worse (d296). Your mail of the name must not come before this is cured.
+> ASKED, by 11:40 with your word on the far ground: (1) the cause in your terms: which of your files turns or changes the sky before frame 4530, and from which frame on; (2) the cure by cause, so that every frame up to 4529 keeps main's bytes: if it lies in your folders, one commit and its sha; if it lies in the engine's reading of the next stop's plan, say so to handover_engineer and to me with the exact lines. I do not rule out your sky inside your own stop.
+
+## 26 Nov, 11:23 UTC: ask to handover_engineer, the turn of the way in (word for word)
+
+> neptune_builder to handover_engineer, 11:23 UTC, copy to the Builder. ASK for shared code, by the Builder's MAIL 1465 (a red on my name outside my stop). Short and exact.
+> THE RED: on my tree the star field of Uranus's rise and of the flight in to Neptune is another one than main's. Measured in memory (out/work/nep/sky/turns2.ts, no file changed): the film's skyTurn with my `skyAim.orbit` against the same tree with main's value differs by 8.80 degrees at 4420, 91.48 at 4436, 112.83 from 4454 to 4530; 0.02 at 4415 and before.
+> THE CAUSE: src/stops/neptune/plan.ts, `params.skyAim.orbit`: main [25.78793, 56.89437, -50.63077], mine [-0.35387, -37.48986, 26.30965] (solved so that my stop's turn is the ending's own; my sky pictures stand on that turn from the hold to the end of the rise). The engine reads the NEXT stop's orbit turn for the frames of the stop before:
+> - src/director/film.ts line 1023: `const t = this.sky.orbits[segment.kind === 'rise' && index > 0 ? this.plans[index + 1]?.id ?? config.endingId : p.id]` (the globe side of Uranus's rise);
+> - src/director/film.ts line 959: `const t = this.sky.orbits[b.id]` (the travel).
+> THE ASK: one more aim a stop may give, the turn of its way in. `skyAim?: { ...; arrive?: [number, number, number] }` (src/director/moves.ts line 76); solved as `own` is (film.ts lines 236 to 241: `cam(hold) * aimAt(arrive)^-1 * f`) into `sky.arrivals[id]`; read at the two lines above as `this.sky.arrivals[id] ?? this.sky.orbits[id]` (line 1023 only in its rise branch, for the next stop's id; never for the stop's own frames from its hold on). The arriving stop's sky picture on the travel (shot.skyPatch) stands by that aim there, so that it keeps its place in the lens. A stop that gives none is as now, to the bit.
+> Neptune then gives `arrive: [25.78793, 56.89437, -50.63077]`, main's own value: every frame to 4499 has main's stars again, and my stop from 4530 keeps its bytes. The step of the stars at 4529 to 4530 lies under my hold's card, which is whole there (skyPatch 1.0000 from 4528, the card not additive).
+
+## 26 Nov, 11:23 UTC: answer to MAIL 1465 and the word on the far ground, to the Builder (word for word; attached ck-1.jpg, ck-4732.jpg, look-0932.jpg)
+
+> neptune_builder to the Builder, 11:23 UTC. ANSWER to MAIL 1465 (the red outside my stop) and my word on the far ground (MAIL 1464). Three pictures.
+> 1. THE CAUSE, in my terms. One value of mine: src/stops/neptune/plan.ts, `params.skyAim.orbit`. Main has [25.78793, 56.89437, -50.63077]; mine is [-0.35387, -37.48986, 26.30965] since 277b45e5 (25 Nov), solved so that my stop's sky turn is the ending's own: the sky pictures of rulings 1363 2 (b) and 1395 2 stand on that one turn from the hold to the end of the rise. The engine gives the frames of the stop BEFORE the next stop's orbit turn: the globe side of Uranus's rise (src/director/film.ts line 1023) and the travel (line 959). MEASURED in memory, no file changed (out/work/nep/sky/turns2.ts: the film's skyTurn on my tree against the same tree with main's value): 0.02 degrees at 4290 to 4415 (cause of that 0.02 not found; your machine reads 4290 as the same bytes), 8.80 at 4420, 91.48 at 4436, 112.83 from 4454 to 4530. So the stars differ from about frame 4416 on. That is your Milky Way at 4436 and 4480. I did not see it: I never drew a frame before 4530 on this value. The red is mine.
+> 2. A SECOND CAUSE on 4500 to 4529, smaller: the engine fades the arriving stop's sky picture in on the flight in (shot.skyPatch by my reading: 0.0003 at 4500, 0.3229 at 4510, 0.8438 at 4520, 0.9879 at 4525, 1.0000 from 4528). Mine is the hold's card (the hero's sky without its Sun), main's is its plate with the Sun painted in. That is your 51.7 dB at 4525. With any hold sky other than main's plate those thirty frames can not be main's bytes; frames to 4499 can.
+> 3. THE CURE lies in the engine's reading of the next stop's plan, not in my folders. Asked of handover_engineer now, exact lines: one more aim a stop may give, `skyAim.arrive`, the turn of its way in, read at film.ts lines 1023 (rise branch) and 959 in place of the orbit turn; Neptune gives main's own value there. Then every frame to 4499 has main's stars and my stop from 4530 keeps its bytes; the step of the stars at 4529 to 4530 lies under the hold's card, whole there and not additive. IN MY FOLDERS the only cure is main's value back in `skyAim.orbit`: then the sky of my dive turns from another start (112.83 degrees off) and every frame of the dive's sky must be solved and read again; I can not prove that before 13:30. Say if you want it instead.
+> 4. THE FAR GROUND (MAIL 1464, point 2): it can be built, and the trial stands in my tree behind one key (deep.json air.close, 0 = the name to the bit: 4750 with the key off is the same file as Z5's, sha256 equal). The law: above the close view's height (1.25 units, just over the terrain's highest eye, 1.174) a thing the ray ends on is shown through the air as an eye at that height on the same ray sees it. No new law by height: it comes in by the scene's own share (globe.own, globe.height). ck-1.jpg: 4716, 4724, 4732, 4740, 4750, main | Z5 | trial. ck-4732.jpg: Z5 | trial at 4732, larger. By my eye: the ground is navy from 4716 on and falls to near black at the lower left as main's, the storm is a whirl with arms, the bank is white. NEW RED of the trial: the far cloud streaks at the upper right go lilac, one patch olive, at 4724 to 4740 (the air's depth by colour on bright far cloud; the same term that makes your (c) at 4860). Not cured.
+> The rows on the trial (even frames 4696 to 4768 and 4950 to 5004) are rendering now, 12 to 19 s a draft frame at 4732 to 4750; read by about 11:45, then the units. I send the sha alone by 12:15 only if no line is worse; if not I say so and Z5 stands.
+> 5. THE LOOK at 4860 (look-0932.jpg, unchanged: approved | main | Y1 | Z5): G17 0.920 / 0.529, main 0.934 / 0.549, gate 0.8; plain 21.581, main 22.986; about 101 s a draft frame at 1920.
+
+## 26 Nov, lab log 10:59 to 11:30 UTC (units red by two shared tests, the red before 4530, the far ground's trial)
+
+- 10:57 to 11:11 the whole unit run on 87a54d129 (alone): tsc clean, my test 5 passed, G11 red (cured 4fb99c916), whole run 92 files
+  ok, 2 not ok: tests/place.test.ts line 423 (`expect(globe.skyShare).toBe(1)`, "expected +0 to be 1") and tests/weights.test.ts
+  line 357 (test 9, nosky: `expect(plain.some((x) => x !== undefined && x > 0)).toBe(true)`). One cause: plan.ts skyShare
+  `{ low: 0 }` in the dive and the rise, which the engine's word `both` needs. Both asked of handover_engineer and named to the
+  Builder at 11:12 (above). I had not run the units since 1febb8d47 (07:52): the red stood four hours unseen. Mine.
+- 11:05 to 11:13 the air's block read for MAIL 1464 point 2; built behind a key: deep.json `air.close` (0 = off), deep.ts: above that
+  height a thing the ray ends on (deck, cirrus) takes the air's gain of an eye at that height on the same ray (`closeEye`, `he`, `me`
+  of the block); a ray that ends on nothing keeps the real eye. Local commit 9d13077b0 (key 0, NOT pushed; squashed before any push).
+- 11:13 CONTROL CK0 (key 0, 4750, preview, rate 1): sha256 equal to CF0's f4750.png (Z5). Off is the name to the bit there.
+- 11:14 to 11:16 CK1 (air.close 1.25; 4716, 4724, 4732, 4740, 4750): 12.2 s at 4732, 13.7 at 4740, 19.0 at 4750. Sheet /tmp/ck-1.jpg
+  (main | Z5 | trial), /tmp/ck-4732.jpg, /tmp/ck-4724.jpg. Eye: ground navy from 4716, near black at the lower left as main's, the
+  storm a whirl with arms, bank white. New red: the far cloud streaks at the upper right lilac, one patch olive, 4724 to 4740.
+- 11:16 MAIL 1465 (the star field before 4530). Read in the engine: film.ts line 1023 (rise: the NEXT stop's orbit turn) and 959
+  (travel). `out/work/nep/sky/turns.ts`: Uranus's rise T at frame 4391.25; the film's turn to Neptune's is 108.75 degrees to 4400,
+  100.27 at 4420, 51.19 at 4430, 20.58 at 4436, 7.91 at 4440, 0.02 from 4454. `turns2.ts` (in memory, my tree against my tree
+  with main's skyAim.orbit [25.78793, 56.89437, -50.63077]): 0.0000 at 4100, 0.0229 at 4290 to 4415, 8.7976 at 4420, 91.4802 at
+  4436, 112.8262 at 4454 to 4605, 116.7329 at 4700, 0.0000 at 4760 to 4960, 0.0185 at 5000, 0.0221 at 5024 to 5100. `patch.ts`:
+  shot.skyPatch on the flight in 0 to 4490, 0.0003 at 4500, 0.3229 at 4510, 0.8438 at 4520, 0.9879 at 4525, 1.0000 from 4528.
+  NOT EXPLAINED: the 0.02 degrees at 4290 to 4415 and at 5024 to 5100 (the ending) between the two values; and turns.ts reads
+  0.0242 degrees between my turn at 4605 and at 4455 to 4530, 0.0231 to the ending at 5100.
+- 11:16 to 11:26 CK3 (air.close 1.25, the dive 4696 to 4768, even frames, preview, rate 1). Step 2 rows by /tmp/pic.py (a proxy,
+  STATED; like frames; main's on MAIN3d with main's own poses), trial | Z5 | main:
+  4696 to 4724: pattern 0.6193 at 4716 | 0.2297 at 4708 | 0.9711 at 4710; pop 1.0363 at 4720 | 1.0529 at 4716 | 1.1982 at 4720;
+  level step 1.2671 at 4714 | 0.6423 at 4714 | 1.3277 at 4722.
+  4726 to 4768: pattern 0.3720 at 4726 | 0.3312 at 4744 | 1.0226 at 4726; pop 1.1582 at 4758 | 1.1174 at 4748 | 2.3799 at 4726;
+  level step 1.2119 at 4756 | 0.4472 at 4746 | 0.8609 at 4730.
+  Frame's mean level, trial: 64.4 at 4696, 78.2 at 4710, 46.5 at 4730, 65.5 at 4756, 64.2 at 4758, 62.5 at 4764. Z5: 64.2, 79.5,
+  87.8, 66.1, 64.3, 62.5. Main: 64.9, 65.9, 51.9, 55.8, 55.8, 58.2. So the trial has main's own shape (a dip, then up as the view
+  flattens) and a kink at T: up to 4756 by the trial's eye at 1.25 units, then down as the real eye sinks from 1.174 units (4758)
+  to 0.970 (4769). The surface view flies at 0.9701 (4770) to 1.0333 units (4949).
+- 11:28 CK3's rise chain stopped (CK4, nothing drawn). CK5, CK6 started: air.close 1.034 (the surface view's highest eye, so 4770
+  to 4949 keep their law), the dive 4696 to 4768 and the rise 4950 to 5004, even frames.
+- 11:29 step 2 rows of the rise on like frames, Z5 | main: 4950 to 4986 (main from 4960): pattern 0.4518 at 4960 | 0.8175 at 4978;
+  pop 1.2114 at 4966 | 2.4195 at 4984; level step 0.9343 at 4978 | 1.3015 at 4980. 4988 to 5004: pattern 0.3578 at 4992 | 1.4536
+  at 4994; pop 1.1076 at 4988 | 1.0070 at 4990; level step 0.4572 at 4996 | 0.6742 at 4998.
+
+## 26 Nov, lab log 11:30 to 11:57 UTC (the disk, the far ground at the surface's own height, 4707's fine band, the two faults at 4860)
+
+- 11:28 to 11:33 THE DISK WAS FULL (df: 1.9 MB free). CK5 failed at its build twice (ENOSPC copying public to dist), nothing
+  drawn. Cause read in tools/lib/common.ts line 99 (linkDist): dist is hard links onto public, so every build needs room for one
+  whole copy of public (1.34 G) for a moment; the free room had sunk to 1.3 G under the morning's render folders. Cure: folders
+  Z5s, Z5q, Z5t, L1, L1d, MAINd, Y1d, Y1r, CKx under out/work/nep/weave deleted (kept: MAIN, MAIN3d, MAIN3r, N20, Z5w, Z5x, CF0,
+  CK0, CK1, CK3), the half copied dist deleted; 2.0 G free. CK5 started again 11:33:07, the build passed.
+  My fault: Z5s held the files that Z5w, Z5u and Z5x link to: 137 frames of Z5w and 129 of Z5x are broken links now, so Z5's
+  half step sheets of the dive and the rise must be drawn again before any whole row can be read on them.
+- 11:33 to 11:42 CK5 (air.close 1.034, the dive 4696 to 4768, even frames, preview). Rows on like frames (step 2, proxy, STATED),
+  trial | Z5 | main: 4696 to 4724 pattern 0.6805 at 4716 | 0.2297 | 0.9711; pop 1.1172 at 4720 | 1.0529 | 1.1982; level step
+  1.3452 at 4714 | 0.6423 | 1.3277. 4726 to 4768 pattern 0.5607 at 4728 | 0.3312 | 1.0226; pop 1.2239 at 4726 | 1.1174 | 2.3799;
+  level step 0.9817 at 4730 | 0.4472 | 0.8609. Mean levels of the trial: 64.4 (4696), 78.1 (4710), 48.3 (4724), 39.6 (4730),
+  rising smoothly to 62.7 (4768): the kink at T is gone. By eye: a lilac far bank and an olive patch 4722 to 4738; the white bank
+  greyish blue from 4714. VERDICT: not in any name; Z5's far ground stands. CK6 (the rise) not drawn.
+- 11:43 main's own 4707 at 1920 draft (23.6 s; /tmp/main4707.sh; hash 31c3f3b3654d903c). Bands against the approved close
+  (check/bands.py): 0.6 to 1.2 px main 0.947, name 0.625; G17's band 1.099 against 0.716; 19.2 to 38.4 px 0.784 against 0.376.
+  By tile the name is lowest (0.08 to 0.44 of main's energy) along the storm's bank and eye, over main in sky and night tiles.
+  Main's and the name's frames at 4707 differ in framing (different dive paths). Trials: CM1 (globe.own [0.9, 0.15]: the map
+  alone at 4707) 0.625; CM2 (globe.own [30, 3]: the place's own whole) 0.625, p25 0.242 against 0.215. Texel view at 4707: at
+  least 1.349 texels a pixel, mean 1.785 (clamped at 2). own at 4707 by set.ts line 164 is about 0.12. So: not the share's law,
+  not a magnified map. STATED, not measured: the name shows the hold's globe under the hold's curve where main shows its plate.
+- 11:50 to 11:55 trials at 4860 (preview) by /tmp/tint.py (the place 900 to 1500 by 600 to 900; green: largest G minus the mean
+  of R and B on the deck; cloud: chroma of the pixels of luma over 150): main green -1.5, chroma mean 13.1, p90 23, R-G -5.1,
+  B-G 8.0; the name (CN0, N20's law) green 19.0, chroma 26.0, p90 63; CN1 air.cirrus 1: 19.0, 29.5; CN2 fan.veil.own 0: 2.5,
+  19.8, p90 48 (but the plain goes navy and the storm's pale spiral goes); CN3 air.depth and air.sun grey: 16.5, 28.6.
+
+
+## MAIL 1467 from the Builder (/root), 11:36 UTC (read 11:37 by my clock; word for word)
+
+> MAIL 1467 from the Builder (/root), 11:36 UTC. To handover_engineer and neptune_builder, the same text. RULED as d372 (8), pushed on main as fd7ed4c6 (kit/PROGRESS.md alone).
+> 1. Neptune's candidate does not go on while a frame before 4500 differs from main's. Uranus's judged frame 4436 loses the Milky Way at its left edge (0.62 against 0.99 on the finest band against its approved picture).
+> 2. The cure is the engine's, as neptune_builder asked: one more aim a stop may give, skyAim.arrive, read for the way in where the next stop's orbit turn is read now (src/director/film.ts, the rise branch near line 1023 and the travel near line 959). handover_engineer writes it, in the engine's files alone, with its law in a test. Bars: (a) with no stop giving it, all 5400 sky rows are main's to the last digit (your measure of 11:20, both states in one tree); (b) with Neptune giving main's value [25.78793, 56.89437, -50.63077] there, every row before 4500 is main's and every row from 4530 on is the candidate's; (c) nothing else in the commit and no test weakened; (d) the units green.
+> 3. One tree for my proofs: handover_engineer pushes the engine commit on his own branch (on main's code, say branch and sha to both of us); neptune_builder merges that sha into agent/neptune-place (a merge, no rebase), adds the one line in plan.ts and names ONE sha to me.
+> 4. Frames 4500 to 4529 may differ from main's (the hold's sky card fading in). At 4529 to 4530 the stars' turn changes from the arrive turn to the orbit turn. handover_engineer: measure and say in one line whether the hold's card covers the whole frame at weight 1 from 4528 to 4530, so that no star outside it can jump there. I read it too, on a 60 fps clip across 4490 to 4560.
+> 5. Clock: the one sha by 12:15 for the ruling of 12:30. If the change turns out larger than this, say so at once; then Neptune is ruled at 13:30, the last hour for names of the fourth cut, and after that it stays open to 18:30.
+> 6. neptune_builder: if the trial (air.close) is sent at 12:15, send it WITH the engine commit and the arrive line under it, one sha, so that I prove one tree. My proofs on 87a54d12 are slow in your dive (355 to 1710 s a picture at the film shutter with 24 samples), so the new sha will be read in small parts on the machines that are free then. So far on 87a54d12: rise part 2 green where main is red (pattern 0.3886 against 1.4761); 4605 at final plain 2.6349 against main's 2.6398; 5006 plain 52.3809 against 53.8172; 4707 plain 47.1815 against 46.9066 with the finest band at 0.631 (main 0.933): say what makes 4707's finest detail lower than main's.
+> 7. handover_engineer: the test cure of MAIL 1466 rides as its own commit in the same push.
+
+
+## MAIL 1473 from the Builder (/root), 11:45 UTC (read 11:47 by my clock; word for word)
+
+> MAIL 1473 from the Builder (/root), 11:45 UTC. To neptune_builder and handover_engineer. MEASURED by my machine on 4fb99c91 (the candidate 87a54d12 plus the G11 cure), job sy5-01: build 0, cues 0, shots 0, the cut unchanged, G11 now passes with G1, G4, G6, G7, G10, G12, G14, G15. RED: vitest RC 1 and so G2. Two tests fail: "meet at T: the globe camera is the twin, the sky and the light are the same on both sides" and "leave the globe side without the close view's sky when the harness asks (nosky)". The detail of the two is not printed on that machine (Node 20 has no Map.groupBy, vitest's own printer stops there).
+> A red machine check is a bug: no sha goes on with it. The ONE sha due at 12:15 must have the whole of vitest green, these two tests named in your mail with what made them red on 4fb99c91 and what cures it. If the cause is the same number (skyAim) the engine aim may cure both; say so measured, not supposed. Run npx vitest run yourselves on the sha before you name it and paste its last line.
+> Also in, MEASURED on 87a54d12: dive part 1 is green where main is red: pattern 0.4302 at 4707 against main's 1.3008 at 4721, level step 0.1712 against 0.4864; pop 1.1113 at 4713 against main's 1.0405 at 4718, under the limit and over main's: neptune_builder names its cause from the place (pixel and what lies there) with the name mail. My eye on the pair at 4707 at final: the candidate is softer and hazier than main over the whole lit side and the storm's fine spiral is fainter; the answer I asked for in MAIL 1467 (what makes the finest band lower) is still owed.
+
+
+## MAIL 1474 from the Builder (/root), 11:48 UTC (read 11:49 by my clock; word for word; its picture kept as /tmp/att-1474.jpg, not in the tree)
+
+> MAIL 1474 from the Builder (/root), 11:48 UTC. To neptune_builder. MEASURED by my machine, job nf4-03: frame 4860 at final on 87a54d12 against main. By the numbers the candidate is nearer the approved close: plain 21.5278, low 16.74, bands 1.167, 1.029, 0.97, 1.018, 1.028 against main's 22.935, 17.6039, bands 1.089 to 1.245.
+> MY EYE on the pair (the place is attached at 2 times, main above, the candidate below; frame pixels 900 to 1500 by 600 to 900): TWO NEW FAULTS that main does not have and the approved close does not have.
+> 1. GREEN PATCHES on the deck, a loose band of teal and green blotches at about x 1050 to 1350, y 680 to 730 (largest green excess over the mean of red and blue: 23.5 of 255 at pixel 1193, 754).
+> 2. THE WHITE CLOUD IS TINTED: pink and lavender on its edges, cyan inside, where main's and the approved's cloud is neutral white with grey shading. It also lost the grey shading that gives main's cloud its body.
+> A take does not go on with a new visible fault at a judged frame. For the ONE sha of 12:15: name the cause of each from the place (which term puts green on the deck there, which one tints the cloud), cure them, and send 4860 at draft tier whole beside main's with the same crop at 2 times. If the cure cannot be in the sha of 12:15, say so by 12:10 with what you can prove by 13:30; then the engine aim alone goes to proof now and Neptune's name moves to the later cut (names by 18:30).
+> (attached: 3-neptune-4860-crop.jpg)
+
+
+## Mail from handover_engineer, 11:53 UTC (read 11:54 by my clock; word for word)
+
+> handover_engineer to the Builder and neptune_builder, 11:53 UTC, the same text. The engine aim of MAIL 1467 is pushed.
+>
+> BRANCH agent/engine-wayin, TIP 39d2bc422668c3da672385e47ded21ba92b14e8e: main 348c86a7 merged (kit/PROGRESS.md alone on main's side since 06c5f16f) over two commits on main 06c5f16f:
+> - 26d2e07f64e400306a50befbfacc5d0578afc4df, the test cure of MAIL 1466, tests alone: tests/lib/skyword.ts (new), tests/place.test.ts, tests/weights.test.ts.
+> - c33fd1b4415f38fff1ded286ee94481afacd33e1, the aim: src/director/moves.ts, src/director/film.ts, src/core/skyfloor.ts, src/core/engine.ts, tests/skyarrive.test.ts (new).
+> neptune_builder: merge 39d2bc42 and add to skyAim in plan.ts: arrive: [25.78793, 56.89437, -50.63077]. Nothing else is needed.
+>
+> WHAT IT DOES. skyAim.arrive is read as skyAim.orbit is. FilmDirector.arrivals[id] = { turn, orbit }. The rise of the stop before (the globe side's turn and the high end of skyTurnShare, both lines) and the travel read arrivals[id].turn, else sky.orbits[id] as now. On the travel the arriving stop's orbit pictures stand by arrivals[id].orbit, so they keep their place in the lens. From the first frame of the hold everything is the stop's own. In the last frame of the travel and the first of the hold the engine refuses a sample in which no orbit picture of the stop hides the stars (starShare at most 0.01, the measure the surface plate is held to). The aim is refused on the first two stops, on a stop that follows the turn of the stop before, on the stop the sky is fitted on and on a stop without an orbit aim of its own.
+>
+> BARS, measured (the dump: every shot of all 5400 frames, the natural one and both sides in dives and rises, 6810 rows; turn, sky camera, exposure, stars, look, glow, picture weight, share, high; at full digits):
+> (a) main's Neptune, the new engine against the old: 0 rows differ. The candidate's 11 files without the line, new against old: 0 rows differ.
+> (b) the candidate's files with the line: 0 rows before 4530 differ from main's (so 4500 to 4529 too), 0 rows from 4530 on differ from the candidate's. Against the candidate 153 rows differ, 4416 to 4529; against main 660 rows, 4530 to 5024.
+> (c) nothing else in the commit; no expectation deleted or loosened.
+> (d) on the candidate's files with the line: 83 of 83 in tests/skyarrive, place, weights, skyshare, skyaims, skyframe. The whole run on the tip is running now; its last line follows in a second mail. The cure commit alone (26d2e07f): 1096 of 1096 in 94 files, build 0, cues 0, shots 0, cut unchanged.
+> The law's teeth, each by hand and taken back: the way in reading the orbit turn: 3 of 7 red; the travel line alone as before: 3 red; the picture left on its own aim: 2 red.
+>
+> POINT 4 of MAIL 1467, measured on the candidate with the line: yes. The hold's card (sky.json orbit: half extents 1.385757 by 1.039318, soft end 0.1 of the card, not additive) has weight 1.0000000 from 4527.0 on (4526: 0.9960 to 0.9990). At five moments of each frame 4527 to 4531 all four corners of the lens (30 degrees) lie 0.2987 to 0.3006 of the card inside its border: cover 1.0000000 at every corner, starShare 0. No sky pixel of 4528, 4529 or 4530 lies outside the whole card. The card itself goes on through the step at the pace of the frames before (a corner moves 0.00017 of the card per half frame before, over and after it). In the sky's shader a whole card that is not additive replaces the sky under it and takes the stars to 0; the Sun and its glare are drawn by the Sun's direction, not by the turn.
+>
+> THE TWO RED UNITS of MAIL 1473 (meet at T; nosky) are cured by 26d2e07f, not by the aim. Measured on the candidate's 11 files in main's tree: main's tests 2 failed ("expected +0 to be 1" in place, "expected false to be true" in weights), with the cure 61 of 61 in place, weights, skyshare. Cause: the plan gives skyShare { low: 0 } in the dive and the rise, as the word both needs, and the two lines stated the dissolve for every stop. They state it still for every stop without the word and hold a stop with the word to the law of both.
+>
+> RED, named:
+> 1. Readers that carry the sky by the shot's turn read a false jump at the step. tools/seams (a report, no gate): mean of the frame at 4529 1/2 reads 12982 px with the line, 0.294 without; its last column goes from "rest from 4527" to "yes, 4527 to 4529 1/2". tools/smooth/pose.ts writes the same quantity (skyTurn taken out of the sky camera) into the pose record: a pair 4529 to 4530 carried by it compares pixels 112.83 degrees apart, while the picture under the card does not move. Not my files. The true carry over that one pair is the sky camera's own turn; I can give the shot a field for it if the reader's owner wants one.
+> 2. The refusal in the engine's sample (the throw) has no unit: it needs a GL context. Which frames it guards (skyStep) is in the units.
+> 3. src/stops/mercury/set.ts line 138 reads sky.orbits of the stop after it for its rise: right while Venus gives no arrive.
+> sky_builder is told of the field (MAIL 1394).
+
+
+## 26 Nov, 11:57 UTC: answer to MAIL 1474, with the look, to the Builder (word for word; attached, in the order of the mail's numbers, crop4860-mn.jpg, cn-crops.jpg, cn-whole.jpg, ck5-a.jpg, ck5-b.jpg, j4707-crop.jpg, look-0932.jpg)
+
+neptune_builder to the Builder, 11:57 UTC. ANSWER to MAIL 1474 (asked by 12:10), with the look and the answers owed to MAIL 1464 (2), 1467 (6) and 1473. No name in this mail.
+
+1. THE CURE OF THE TWO FAULTS AT 4860 CANNOT BE IN THE SHA OF 12:15. My own draft frame shows both in the same place (picture 1: main above, the name below, N20's bytes), so they are in the candidate and not in your machine. No name from me at 12:15; the engine aim alone can go to proof.
+
+2. CAUSES SO FAR, each by one trial at 4860 (preview, draft; the place 900 to 1500 by 600 to 900 of the 1920 frame; green = G minus the mean of R and B on the deck; cloud = pixels of luma over 150, chroma = largest minus smallest channel):
+main: green largest -1.5; cloud chroma mean 13.1, p90 23.
+name: green largest 19.0; chroma 26.0, p90 63.
+fan.veil.own 0: green largest 2.5; chroma 19.8, p90 48.
+air.cirrus 1: green 19.0; chroma 29.5, p90 74.
+the air grey (air.depth and air.sun one number for the three channels): green 16.5; chroma 28.6, p90 65.
+(a) THE GREEN ON THE DECK: the veil's own light (deep.json fan.veil.own; deep.ts, the line of thingGain in the air's block). The veil's share of a pixel's light is taken channel by channel, so red, green and blue get three different mixes of the veil's gain and the ground's. With the term off the green is gone, but the pale plain and the storm's pale spiral go with it (picture 2, lower left), so the cure is not the term off: the share as one number for the three channels. Not built yet.
+(b) THE CLOUD'S TINT: not the air's colours and not air.cirrus (both trials leave it or make it worse). The veil's own term gives a part of it (26.0 to 19.8). The rest (19.8 against main's 13.1, and the flat pale blue inside where main has grey shade) is NOT FOUND yet (picture 3). Next trial: the cloud's shade under the one curve by channel (globe.fall, power 2.6, 3.1, 3.7).
+
+3. WHAT I CAN PROVE BY 13:30: the rest of (b) by trial; both cured by cause in one commit on the merge of 39d2bc42 with the arrive line; 4860 at draft whole beside main's with the same crop at 2 times, G17 and plain; the judged four; the whole of vitest with its last line. NOT by 13:30: the whole rows of the dive and of the rise on the cured state (see 7); they come after.
+
+4. THE FAR GROUND (MAIL 1464, 2): built behind a key (air.close), NOT in any name. Measured at 1.034 units (the surface view's highest eye), the dive on even frames, like frames, a proxy, STATED, trial | Z5 | main. 4696 to 4724: level step 1.3452 at 4714 | 0.6423 | 1.3277 (limit 1.3); pattern 0.6805 | 0.2297 | 0.9711; pop 1.1172 | 1.0529 | 1.1982. 4726 to 4768: level step 0.9817 at 4730 | 0.4472 | 0.8609; pop 1.2239 at 4726 | 1.1174 | 2.3799; pattern 0.5607 | 0.3312 | 1.0226. Both level steps are worse than main's, every line is over Z5's, and by eye the far bank is lilac with an olive patch at 4722 to 4738 (pictures 4, 5: main | trial 1.25 | trial 1.034). The kink at T is gone at 1.034. So: it can be built and it is not better yet. Z5's far ground stands.
+
+5. 4707, THE FINEST BAND (MAIL 1467 (6), 1473). Measured at 1920 draft against the approved close, 0.6 to 1.2 px: main 0.947, name 0.625 (yours 0.933, 0.631); G17's own band 1.099 against 0.716. By tile the name is lowest (0.08 to 0.44 of main's energy) along the storm's bank and round the eye, and over main's in the sky and on the night side. Two trials: the globe's map alone at 4707 (globe.own none there) 0.625; the place's own deck and cirrus whole round the storm 0.625 (p25 0.242 against 0.215). The texel view: 1.35 texels a pixel at the least, mean 1.78. So it is not the law of the share and not a magnified map. What is left is STATED from the files, not proven by a trial: at 4707 the eye is 0.957 radii up and the name shows the hold's own globe (its map and cloud sheet under the hold's curve) where main shows its plate for that height, with harder flecks and a near black eye (rms of that band in the bank's tiles 4 to 5.7 levels against 1 to 2). The name has no plate (MAIL 772). A red of the name (picture 6, 1 to 1).
+
+6. THE TWO RED UNITS: as handover_engineer measured at 11:53: my plan gives skyShare { low: 0 } in the dive and the rise, as the word both needs; cured by his 26d2e07f, not by the aim. I merge 39d2bc42 now, add the arrive line and run the whole of vitest; its last line and the sha follow (not a name).
+
+7. MY FAULT, named: at 11:31 my disk was full (1.9 MB free; a build needs room for a whole copy of public for a moment). In freeing it I deleted the folder that held Z5's half step frames of the dive and the rise. The rows stand in the notebook; the sheets must be drawn again for any new reading (about 60 minutes of drawing).
+
+8. THE POP AT 4713 (MAIL 1473): its place is not read yet (it needs those frames). Owed.
+
+THE LOOK (picture 7: approved | main | Y1 | Z5 at 4860, 1920 draft): name G17 0.920 / 0.529, plain 21.581; main 0.934 / 0.549, plain 22.986. Seconds a draft frame: 4860 100.7 at 1920 and 45 at preview; the dive about 15 at preview (37 frames in 559 s with the build).
+
+
+## MAIL 1475 from the Builder (/root), 11:58 UTC (read 11:59 by my clock; word for word)
+
+> MAIL 1475 from the Builder (/root), 11:58 UTC. To neptune_builder. Your mail of 11:57 is taken in whole; thank you for naming the two faults in your own draft and your own fault with the disk. RULED now, written as d373 at 12:30:
+> 1. NO NEPTUNE NAME AT 12:15. The engine aim alone is in proof on my machines (39d2bc42: units and gate, and 26 draft frames over the whole film on both trees).
+> 2. THE FOURTH CUT (names by 13:30) takes a Neptune name only if ALL of this is in ONE sha with your mail by 13:15, so that my proofs can run on it before 15:00: (a) the green on the deck cured by cause, your own measure at 4860 back at main's (green largest no more than 3); (b) the cloud's tint cured by cause, cloud chroma at main's (mean no more than 15, p90 no more than 27) and the grey shade inside the cloud back by my eye; (c) the whole of vitest green with its last line; (d) 4860 at draft whole beside main's and the crop at 2 times; (e) the judged four by your own measure. If any of it is not in by 13:15, send no half name: Neptune goes to the later cut, names by 18:30, and main keeps its Neptune on the fourth cut.
+> 3. FOR THE LATER CUT the name must also carry: (f) 4707. My eye agrees with your point 5: the candidate is softer than main along the storm's bank and round the eye, and its finest band reads 0.631 against the line 0.7. That is a red of the name, not a matter of taste. The cure is detail made in code at that height on the hold's own globe (fine structure in the bank and the eye that the eye's height brings in smoothly), not a plate: a plate is what popped. Say by 13:30 what you would build and what it costs. (g) The pop at 4713 named from the place. (h) The far ground stays Z5's; the trial behind air.close stays out of any name until it beats Z5 on every line.
+> 4. Your rows of 87a54d12 by my reader so far: dive part 1 green (pattern 0.4302, level step 0.1712, pop 1.1113), rise part 2 green (pattern 0.3886). Dive part 2 and rise part 1 are still on my machines, and my 60 fps clips of the dive (4695 to 4770) and of the rise (4940 to 5040) run at 400 to 1700 s a picture; they stay on, as the evidence of motion for the state you cure the colour of.
+
+## 26 Nov, lab log 11:57 to 12:38 UTC (the merges, the cure of the two faults of MAIL 1474 at 4860, the blue dot)
+
+- 11:57 merged agent/engine-wayin 39d2bc42 (949ba265f) and origin main 51f0941f4 (366d9cbed); plan.ts: skyAim.arrive
+  [25.78793, 56.89437, -50.63077] (da84ca191). tsc clean. `out/work/nep/sky/turns3.ts` (in memory, the tree against main's orbit
+  value without arrive): 0.0000 at 4100, 0.0229 degrees at 4290 to 4416, 0.0211 at 4420, 0.0082 at 4436, 0.0085 at 4454 to 4529,
+  112.8262 at 4530 and 4605, 116.7329 at 4700, 0.0000 at 4760 to 4960, 0.0185 at 5000, 0.0221 at 5024 to 5100. Not zero before
+  4530 in this control, and the control is not exact (it changes one value in a built plan); handover's dump on the real trees
+  reads 0 rows different before 4530. No pixel check of my own on frames before 4530.
+- 11:58 to 12:01 N22: the judged four on the merged tree (da84ca191), 1920 draft: 4605 21b475da05086981, 4707 9f8419a62b77d4d4,
+  4860 07d3bcfecc3386c5, 5006 f9d1bfe65547e1ee: the same four hashes as N20 (the tree of 4fb99c91). The merges and the arrive
+  line move none of the judged four. Seconds: 22.5, 28.2, 91.8, 13.5.
+- 12:01 to 12:17 THE CURE, four commits in deep.ts alone (a platform error took this turn's own words; what follows is read from
+  the commits, the logs /tmp/CP.log, CQ.log, CR.log, CS.log and the folders). Measure /tmp/tint.py at 4860, preview, the place
+  900 to 1500 by 600 to 900: green = largest G minus the mean of R and B on the deck (luma under 110); cloud = chroma (max minus
+  min of the channels) of the pixels of luma over 150.
+  c3d956986 "the veil's share of the thing's light is one number for the three channels" (the green's first cause: by channel
+  the share was near 1 in red and green over a dark blue deck and small in blue).
+  678652cf3 "Neptune cirrus: its light is added after the fall, not under it" (the tint: the fall is a power by channel under
+  its pivot; the cirrus's lit crest stayed white, its grey shade came out cyan and lifted, its thin edge lavender). CP2 (this
+  state): green 10.0, chroma mean 22.8, p90 40. CP1 (the same with the cirrus under the fall again): 10.5, 25.4, 62. CP6 (this
+  state, fan.veil.own 0): green 3.0, chroma 11.2, p90 20. CP3 (grey air), CP4 (haze.high.depth 0), CP5 (haze.low.depth 0): not
+  read again here.
+  a0db21cf7 "its share is read in the hold's colours; the deck under a cirrus takes the fall first, the cover after". CR1:
+  green 8.0, chroma 10.8, p90 20.
+  cc6cdad9b "the veil's light and the deck's under it each take their own gain". CS1: green 3.5, chroma 9.9, p90 19.
+  Main by the same measure: green -1.5, chroma 13.1, p90 23. The candidate before (CN0): 19.0, 26.0, 63.
+- 12:17 to 12:20 N23: the judged four on cc6cdad9b, 1920 draft. 4605 21b475da05086981 and 4707 9f8419a62b77d4d4 and 5006
+  f9d1bfe65547e1ee: the same bytes as before the cure. 4860 97c79a491e3a61fd: plain 21.151 (main 22.986, N20 21.581), G17 0.972 /
+  0.659 (main 0.934 / 0.549, N20 0.920 / 0.529); bands against the approved close: 0.6 to 1.2 px 0.884 (main 0.834), 9.6 to
+  19.2 px 1.146 (main 1.446). tint.py at 1920: green largest 3.5 (4 px of 136872 over 3: 1318, 723; 1321, 726; 1325, 726; 1141,
+  732; pale places of the lit plain, RGB 62 112 155 at the first two, 64 114 157, 50 99 141; main's deck of luma 90 to 110 has
+  the mean 67 107 154 in the place, the candidate's 64 103 149), chroma mean
+  10.1, p90 19.0. Seconds: 23.1, 29.2, 93.2, 13.4. Pictures /tmp/n23-whole.jpg, /tmp/n23-crop.jpg, /tmp/look-1228.jpg.
+  The Builder's bar (MAIL 1475, 2 a) is green no more than 3: 0.5 over. With fan.veil.own 0 (CU1, preview) it reads 3.0, with
+  0.5 (CU2) 2.5: what is left is the deck's own colour under the hold's one curve, and half a level of the veil's.
+- 12:20 to 12:37 A BLUE DOT, found by me in the crop at 2 times: about 8 px wide at 1177, 741 (1920 px frame): RGB 57 103 173
+  on a surround of 52 98 150. Main has a spot there too, 53 96 149 on 47 87 140: 6 to 9 levels, every channel alike. Trials at
+  4860, preview, the dot's box against its surround (R, G, B): CS1 (cc6cdad9b) +3.0 +4.4 +12.4; fan.veil.own 0 (CU1) +5.4 +8.5
+  +21.0; the air's light over a cirrus by the ground's gain alone (CV1, a line of the shader, taken back) no change; the
+  cirrus's light black (CW1) +3.2 +4.6 +12.3; no cirrus at all (CW2, cirrus.gain 0) +3.2 +4.4 +12.5; no veil at all (CX1,
+  fan.veil.depth 0) +6.6 +10.9 +24.7; no haze (CX2) +5.1 +7.2 +15.7; the air's law off (CY1, air.top 0) +12.0 +11.2 +10.5;
+  steps.deck 400 (CZ1): no pixel of the frame differs from CS1, so the march does not run out of steps anywhere at 4860.
+  So: a bright spot of the deck itself (it is there without cirrus, veil and haze, and in main); without the air's law it is
+  every channel alike; under the air's law its red and green come down with the plain and its blue stays up. Which line of the
+  air's law does that at that place: NOT FOUND. RED.
+- 12:33 to 12:36 ZS: a sample of the dive and the rise on cc6cdad9b (preview) against the same frames of Z5 (Z5d, the state
+  before the cure): 4712 the same bytes; 4716 largest difference 7 levels; pixels moved by more than 8 levels: 4720 0.09 %,
+  4724 0.26 %, 4728 0.55 %, 4732 1.05 %, 4736 1.76 %, 4744 4.41 % (mean level 90.2 to 89.1), 4972 2.32 %, 4980 0.35 %, 4988
+  0.01 %. By eye (/tmp/zs-1.jpg): the bank whiter, nothing else. So the cure moves the dive from 4716 on and the rise to about
+  4988, and the rows read on Z5 are not rows of this state. NOT READ on this state: every row of the dive and the rise.
+
+
+## MAIL 1479 from the Builder (/root), 12:19 UTC (read 12:19 by my clock; word for word)
+
+> MAIL 1479 from the Builder (/root), 12:19 UTC. Your last turn ended with an error on the platform's side: I got only one line that the turn failed, and no reply of yours. Nothing in your work is in question. Carry on from where you stood, by your own notes and your branch. MAIL 1475 stands as written: ONE sha by 13:15 UTC with the green patches gone, the tint's cause found and cured, vitest green, 4860 whole and the judged four frames, or else the later cut (names by 18:30 UTC), which also has to cure 4707 by detail from code and name the pop at 4713. If the reply that was lost held findings, send them again in short plain words: what you measured, what you changed, the sha. Keep it short.
+
+
+## 26 Nov, 12:30 UTC: answer to MAIL 1479 with the look, to the Builder (word for word; attached look-1228.jpg, n23-whole.jpg, n23-crop.jpg)
+
+neptune_builder to the Builder, 26 Nov, 12:30 UTC. Answer to MAIL 1479, short, with the look. NOT A NAME YET: the ONE sha with vitest's last line follows by 13:15.
+
+WHERE IT STANDS: branch agent/neptune-place, pushed, tip cc6cdad9bab19ccd28eb7ae2723b3ccbda0412e7. It holds the merge of agent/engine-wayin 39d2bc42, the merge of origin main 51f0941f4, the arrive line in plan.ts (da84ca191), and four commits in deep.ts alone, one per cause.
+
+WHAT I CHANGED (all in the shader of the place, no value in a JSON file changed):
+1. c3d956986 and a0db21cf7, the green (fault 1). Cause: the veil's part of the deck's light was read by channel in the ground's colours, where the veil is far brighter than the deck, so wherever any thin veil lay the lit deck under it took the veil's gain and stood at the hold's full level in red and green. Now the part is read in the hold's colours.
+2. 678652cf3, the cloud's tint (fault 2). Cause: the cirrus's light went under the fall (a power by channel under its pivot): its lit crest stayed white, its grey shade came out cyan and lifted, its thin edge lavender. Now the cirrus's light is added after the fall, at every height.
+3. cc6cdad9b: the veil's light and the deck's under it each take their own gain.
+
+WHAT I MEASURED at 4860, 1920 draft, the place 900 to 1500 by 600 to 900, main | the candidate before (the tree of 4fb99c91) | cc6cdad9b:
+- green on the deck, largest G minus the mean of R and B: -1.5 | 20.0 | 3.5. Your bar is 3: it is 0.5 over, at 4 pixels of 136872 (1318 to 1325, 723 to 726, and 1141, 732). RED until I have it under 3 or you rule.
+- cloud chroma mean: 13.1 | 26.1 | 10.1; p90: 23 | 63 | 19. Inside your bar (15 and 27). The grey shade inside the cloud is back by my eye (crop attached).
+- whole frame: plain 22.986 | 21.581 | 21.151. G17 0.934 / 0.549 | 0.920 / 0.529 | 0.972 / 0.659.
+- 4605, 4707, 5006: the same bytes as on the name before (hashes 21b475da, 9f8419a6, f9d1bfe6), on the merged tree too.
+
+RED, new, found by me in the crop: a blue dot about 8 pixels wide at 1177, 741 (blue 20 levels over its surround). Main has none there. It is not the cirrus (it stays with no cirrus at all) and not the veil's own gain (it stays with fan.veil.own 0). I am on its cause now.
+
+STILL TO DO before 13:15: the dot, the whole of vitest on the sha, the judged four on the final sha, a sample of dive and rise frames to say which frames the cure moves.
+
+THE LOOK: approved | main | cc6cdad9b at 4860 (first picture); whole frames main | cc6cdad9b; the crop at 2 times, main above. Seconds per draft frame at 1920: 4605 23.1, 4707 29.2, 4860 93.2, 5006 13.4; 4860 at preview 46.3.
