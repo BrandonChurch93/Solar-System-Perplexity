@@ -1,9 +1,30 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T02:08:23.843Z",
+ "pushed": "2026-11-26T02:30:20.451Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests: the cut straight on past a ramp's end; the line at the end of D's box is shorter, one cause left (a lifted vertex beside the end), next the border of the end square to the crest's line",
+ "note": "crests: curing the light line at the end of crest D's box; end rule v10 cures it but breaks two other places, next rule in work",
  "looks": [
+  {
+   "time": "2026-11-26T02:30:16.370Z",
+   "file": "20261126023016370-note-s10-c3.jpg",
+   "source": "../../../../tmp/crest/s10-c3.png",
+   "kind": "note",
+   "label": "2668 draft, v9 against v10 beside crest A: v10 bulges the near sheet 2 to 5 px, so v10 is not kept"
+  },
+  {
+   "time": "2026-11-26T02:30:15.793Z",
+   "file": "20261126023015793-note-s10-c2.jpg",
+   "source": "../../../../tmp/crest/s10-c2.png",
+   "kind": "note",
+   "label": "2668 draft, v9 against v10 at the chevron apex: v10 leaves one light pixel at 688,627, so v10 is not kept"
+  },
+  {
+   "time": "2026-11-26T02:30:15.195Z",
+   "file": "20261126023015195-note-s10-end.jpg",
+   "source": "../../../../tmp/crest/s10-end.png",
+   "kind": "note",
+   "label": "crest D end at 2668, draft: without crests, end rule v9, end rule v10 (v10 cures the light line at the box end)"
+  },
   {
    "time": "2026-11-26T02:08:23.188Z",
    "file": "20261126020823188-note-v9-end-2668.jpg",
