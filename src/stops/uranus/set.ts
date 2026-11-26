@@ -32,6 +32,8 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
   return out
 }
 
+const hazeUnder = (h: number): number => Math.round((1 - Math.exp(-Math.max(h, 0) / look.place.air.scale)) * look.place.air.steps) / look.place.air.steps
+
 export const createSet: SetFactory = async (ctx) => {
   const holdBand = await bandHold(plan.id)
   const key = ctx.assets === 'full' ? 'full' : 'web'
@@ -66,7 +68,7 @@ export const createSet: SetFactory = async (ctx) => {
   const flight = plan.seg.terrain.end - plan.seg.terrain.start
   const topPath = Array.from({ length: TOP_PATH }, (_, i) => plan.terrain(flight * i / (TOP_PATH - 1)).position.clone())
   const place = {
-    textures: plateTextures, sizes: look.texels.plates, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, steep: look.place.steep, relitSoft: look.place.light.soft, topLight: { ...look.place.tops, path: topPath }, feather: platesJson.feather,
+    textures: plateTextures, sizes: look.texels.plates, halfTans: platesJson.levels.map((l) => l.halfTan), frame: platesJson, rot: plan.terrainFrame.clone().invert().multiply(globeTurn), field: await ctx.dataTexture(base + platesJson.field.file, platesJson.field.size, platesJson.field.size, 4), clockRef: platesJson.clockRef, aMax: platesJson.aMax, air: { ...look.place.air, under: hazeUnder(Math.hypot(...deckJson.centre) / deckJson.radius - 1) }, topLight: { ...look.place.tops, path: topPath }, feather: platesJson.feather,
     deck: { centre: deckJson.centre, radius: deckJson.radius, f0: deckJson.f0, r0: deckJson.r0, sun: deckJson.sun, flow: look.deck.flow, flowAngle: deckJson.flowAngle, light: deckLight, lightSize: deckJson.lightSize, psiMax: deckJson.psiMax },
   }
   const globe = new Globe({ map, mapWidth: look.texels.map, cloud, shadow, light, shade, patches, face, place, ...look.globe })
@@ -128,7 +130,7 @@ export const createSet: SetFactory = async (ctx) => {
     height: await ctx.dataTexture(base + 'deck-height.bin', deckJson.heightSize[0]!, deckJson.heightSize[1]!, 1),
     light: deckLight,
     halo: deckHalo,
-  }, look.texels, look.deck, globe.plates(), look.place.deck.calm)
+  }, look.texels, look.deck, globe.plates())
   terrain.add(deck.group)
   const terrainMid = (plan.seg.terrain.start + plan.seg.terrain.end) / 2
   const deckCentre = new THREE.Vector3().fromArray(deckJson.centre)
@@ -161,7 +163,6 @@ export const createSet: SetFactory = async (ctx) => {
   over.add(deck.cover, glow.mesh, lowArcs.mesh, riseArcs.mesh, riseRings.mesh)
   const coverEye = new THREE.Vector3()
   const eyeNow = new THREE.Vector3()
-  const steep: [number, number] = [look.place.steep[0], look.place.steep[1]]
   const origin = new THREE.Vector3()
   const ball = new THREE.Vector3()
   const seated = new THREE.Quaternion()
@@ -179,10 +180,12 @@ export const createSet: SetFactory = async (ctx) => {
     eye.set(0, 0, 0).applyMatrix4(inverse.copy(world.matrix).invert())
   }
   const reach = below
+  const air = (h: number): void => globe.air(hazeUnder(h))
   const fixed = (time: number): void => {
     skyTurn.copy(frameInverse).multiply(turn.copy(plan.turn(time)).invert()).multiply(turnMid).multiply(plan.terrainFrame)
   }
   const ground = (time: number, sunDir: THREE.Vector3, gain: number, lines: number, vignette: number, aspect: number, bloom: number, pictured: boolean, lens: [number, number]): void => {
+    air(eye.distanceTo(deckCentre) / deckJson.radius - 1)
     deck.update(eye, time - terrainMid, gain, vignette, aspect, 1, bloom, lens)
     fixed(time)
     arcs.mesh.quaternion.copy(skyTurn)
@@ -214,14 +217,15 @@ export const createSet: SetFactory = async (ctx) => {
       orbit.visible = inOrbit && state.weight > 0
       const gain = 1 / shot.post.exposure
       const aspect = view.format.width / view.format.height
-      globe.tops(topSun.copy(plan.lightDir).applyQuaternion(plan.deckFrame(state.time).invert()))
+      globe.tops(topSun.copy(plan.lightDir).applyQuaternion(plan.deckFrame(state.time).invert()), plan.spin(state.time))
       terrain.visible = !inOrbit
       if (!inOrbit) {
         placeEye()
         const seg = shot.segment
         const moving = seg.stop === plan.id && (seg.kind === 'dive' || seg.kind === 'rise')
         ground(state.time, shot.sun.dir, gain, moving ? reach(look.place.sky, eye.distanceTo(deckCentre) / deckJson.radius - 1) : 1, shot.post.vignette, aspect, shot.post.bloomStrength, view.place === true, view.place === true && view.camera.view ? [view.camera.view.fullWidth / view.camera.view.width, view.camera.view.fullHeight / view.camera.view.height] : [1, 1])
-        deck.spread(0, look.place.deck.border)
+        deck.grain(Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / 540, look.place.deck.grain)
+        deck.spread(0, look.place.deck.pixel, look.place.deck.border)
         lowArcs.mesh.visible = false
         riseArcs.mesh.visible = false
         riseRings.mesh.visible = false
@@ -250,17 +254,16 @@ export const createSet: SetFactory = async (ctx) => {
       const nearing = mine && kind === 'dive' ? look.globe.diveSoft[0] * (1 - smooth(ramp(Math.log(look.globe.diveSoft[1]), Math.log(look.globe.diveSoft[2]), Math.log(Math.max(altitude, 1e-4))))) : 0
       globe.soften(left ? look.globe.soft : nearing, left ? look.globe.awayShade : 1)
       globe.near(look.near.tint, near)
-      const relit = low && !look.show.down
       globe.rim(low ? reach(look.place.rim.span, altitude) * (1 - reach(look.place.rim.near, altitude)) : 0, look.place.rim.feather, look.place.rim.wave)
-      const flat = low ? reach(look.place.light.down, altitude) : 0
-      steep[0] = look.place.steep[0] + (look.place.steepLow[0] - look.place.steep[0]) * flat
-      steep[1] = look.place.steep[1] + (look.place.steepLow[1] - look.place.steep[1]) * flat
+      const pixel = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) / 540
       if (low) {
         const from = look.place.fixedEye ? eyes[kind as 'dive' | 'rise'] : eyeAt(kind as 'dive' | 'rise', state.time)
-        globe.place(relit ? reach(look.place.light.up, altitude) : 0, relit ? flat : 0, state.time - terrainMid, from, steep)
+        globe.place(state.time - terrainMid, from)
+        air(from.length() - 1)
       } else {
         placeEye()
-        globe.place(0, 0, state.time - terrainMid, eyeNow.copy(eye).applyQuaternion(turn.copy(plan.deckFrame(state.time)).invert()), steep)
+        globe.place(state.time - terrainMid, eyeNow.copy(eye).applyQuaternion(turn.copy(plan.deckFrame(state.time)).invert()))
+        air(eyeNow.length() - 1)
       }
       globe.face(left ? look.face.weight : 0)
       halo.update(sun, gain * state.weight * (1 + (look.near.halo - 1) * near) * (1 - sky), plan.spin(state.time), clock)
@@ -269,14 +272,15 @@ export const createSet: SetFactory = async (ctx) => {
       glow.turn(seated)
       glow.update(eye, origin, 1, gain * state.weight * sky, shot.post.vignette, aspect)
       glow.mesh.visible = sky > 0 && look.show.sky
-      const spread = low && look.show.deck ? reach(look.place.deck.span, altitude) : 0
-      if (spread > 0) {
-        deck.update(coverEye.copy(eye).applyQuaternion(turn.copy(seated).invert()).multiplyScalar(deckJson.radius).add(deckCentre), state.time - terrainMid, gain * state.weight, shot.post.vignette, aspect, 1, shot.post.bloomStrength)
+      const spread = low && look.show.deck && altitude * pixel < look.place.deck.pixel[1]
+      if (spread) {
+        deck.update(coverEye.copy(eye).applyQuaternion(turn.copy(seated).invert()).multiplyScalar(deckJson.radius).add(deckCentre), state.time - terrainMid, gain * state.weight, shot.post.vignette, aspect, 1, shot.post.bloomStrength, [1, 1])
         deck.cover.position.copy(deckCentre).multiplyScalar(-1 / deckJson.radius).applyQuaternion(seated)
         deck.cover.quaternion.copy(seated)
         deck.cover.scale.setScalar(1 / deckJson.radius)
       }
-      deck.spread(spread, look.place.deck.border)
+      deck.grain(pixel, look.place.deck.grain)
+      deck.spread(spread ? pixel : 0, look.place.deck.pixel, look.place.deck.border)
       fixed(state.time)
       lowArcs.mesh.position.copy(arcCentre).applyQuaternion(skyTurn).sub(deckCentre).divideScalar(deckJson.radius).applyQuaternion(seated)
       lowArcs.mesh.quaternion.copy(seated).multiply(skyTurn)
