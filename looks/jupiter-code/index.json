@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T06:27:21.319Z",
+ "pushed": "2026-11-26T06:46:39.842Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "looks 06:30 UTC: w21 to w26, colour map on, no scaffold; w26 is the base I keep",
+ "note": "06:47 UTC: w26 with scaffold 6.611 (red against main 3.390), trials w28 to w31 for shade and tops; all 3150 preview draft",
  "looks": [
+  {
+   "time": "2026-11-26T06:46:39.197Z",
+   "file": "20261126064639197-note-w26-r3-3150.jpg",
+   "source": "../work/r26/t/w26-r3-3150.png",
+   "kind": "note",
+   "label": "w26 with its scaffold, 3150 preview draft, the base as it stands at 06:47 UTC: line i 6.611 against main 3.390 at this tier",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:46:38.499Z",
+   "file": "20261126064638499-note-w31-3150.jpg",
+   "source": "../work/r26/t/w31-3150.png",
+   "kind": "note",
+   "label": "w31, w30 with paler tops over darker deeps, same scaffold: reads as marble, not taken, line i 9.145",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:45:31.738Z",
+   "file": "20261126064531738-note-w30-3150.jpg",
+   "source": "../work/r26/t/w30-3150.png",
+   "kind": "note",
+   "label": "w30, w26 with deeper shade by the light law, same scaffold, line i 6.621",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:45:30.473Z",
+   "file": "20261126064530473-note-w29-3150.jpg",
+   "source": "../work/r26/t/w29-3150.png",
+   "kind": "note",
+   "label": "w29 on the scaffold of w26, tall tops in the dark field: first state with shade and depth in the lower thirds, but crags and teeth, not cloud, line i 9.792",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:40:10.401Z",
+   "file": "20261126064010401-note-w28-3150.jpg",
+   "source": "../work/r26/t/w28-3150.png",
+   "kind": "note",
+   "label": "w28 on the scaffold of w26, larger tops 0.12 units: sparse lumps on silk, refused, line i 9.106",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:40:09.728Z",
+   "file": "20261126064009728-note-w26-r3-3150.jpg",
+   "source": "../work/r26/t/w26-r3-3150.png",
+   "kind": "note",
+   "label": "w26 with its scaffold solved three rounds, 3150 preview draft: line i 6.611, main 3.390 at this tier",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T06:27:20.657Z",
    "file": "20261126062720657-note-w26-3150.jpg",
@@ -146,54 +194,6 @@
    "source": "../work/r26/t/state-w8-3100.jpg",
    "kind": "note",
    "label": "State for MAIL 1413, frame 3100, preview, draft: this state (left) beside main (right). Worse than main to my eye: cloth folds and popcorn clusters, no dark deep",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:05:18.904Z",
-   "file": "20261126050518904-note-w8-r3-3150.jpg",
-   "source": "../work/r26/t/w8-r3-3150.png",
-   "kind": "note",
-   "label": "w8 with the scaffold, three rounds at the fine cut, 3150 preview draft: line (i) 7.873, outside the seven cells 6.606, bands green. Bottom row still 20 too bright at the matter's floor 0.04",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:05:17.541Z",
-   "file": "20261126050517541-note-w9-3150.jpg",
-   "source": "../work/r26/t/w9-3150.png",
-   "kind": "note",
-   "label": "w9 3150 preview draft, scaffold off: clusters take the place's light, shade tinted by the orders of scattering. Refused by me: crumbs on marble, too red",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T04:57:21.317Z",
-   "file": "20261126045721317-note-w8-3150.jpg",
-   "source": "../work/r26/t/w8-3150.png",
-   "kind": "note",
-   "label": "w8 3150 preview draft, scaffold off: clusters smaller, sunk, none in the shear. Still silk with popcorn; line (i) 18.635",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T04:57:20.133Z",
-   "file": "20261126045720133-note-w7-3150.jpg",
-   "source": "../work/r26/t/w7-3150.png",
-   "kind": "note",
-   "label": "w7 3150 preview draft, scaffold off: low deck, threads along the flow, clusters with their own colour. Refused by me: white popcorn on dark silk, eye a black pit",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T04:45:39.626Z",
-   "file": "20261126044539626-note-w4s-r3-3150.jpg",
-   "source": "../work/r26/t/w4s-r3-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, variant w4 with the scaffold at the fine cut 0.02 units, round 3: line (i) 8.280 whole, 16.378 inside the seven cells, 6.563 outside, floor 0.04",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T04:45:38.328Z",
-   "file": "20261126044538328-note-w6-3150.jpg",
-   "source": "../work/r26/t/w6-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, variant w6, towers of 0.16 units in the dark thirds, funnel 0.3 deep, scaffold off: reads as rubble and the eye is a black pit, line (i) 16.114, refused",
    "stop": "jupiter"
   }
  ]
