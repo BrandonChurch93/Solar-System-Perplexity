@@ -1,9 +1,39 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T11:52:03.104Z",
- "head": "401bca9c8c0f366ea81a0183f1cda3590f975ca8",
- "note": "Line B: reading the change of view (3240 to 3241, 3059 to 3060) on cure F and on the cut; first slice green",
+ "pushed": "2026-11-26T12:34:18.764Z",
+ "head": "b251bfd1daba4448d4855b025d8f4b0be1b59252",
+ "note": "Far strip of the rise: variants of the pair 3250 and 3258 with the height driven weights held one at a time",
  "looks": [
+  {
+   "time": "2026-11-26T12:34:17.424Z",
+   "file": "20261126123417424-note-far_strip_3250_and_3258_main_and_line_B.jpg",
+   "source": "../../../../tmp/lk/far strip 3250 and 3258 main and line B.jpg",
+   "kind": "note",
+   "label": "Far strip at 3250 and 3258 on main and on line B (draft): the same hand back on both",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:34:16.138Z",
+   "file": "20261126123416138-note-far_strip_3250_and_3258_as_is__air_gone__tone_and_air_held__.jpg",
+   "source": "../../../../tmp/lk/far strip 3250 and 3258 as is, air gone, tone and air held, all held.jpg",
+   "kind": "note",
+   "label": "Far strip at 3250 and 3258: as is 1.399, air gone 0.39, tone and air held 0.162, all three held 0.127 (my replay of the reader's row)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T12:33:50.855Z",
+   "file": "20261126123350855-frame-f03284.jpg",
+   "source": "out/work/jupiter/frames/f2/f03284.png",
+   "kind": "frame",
+   "label": "jupiter.rise frame 3284, draft tier",
+   "stop": "jupiter",
+   "segment": "jupiter.rise",
+   "frame": 3284,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "d3654c5e8dff3fa6"
+  },
   {
    "time": "2026-11-26T11:52:01.833Z",
    "file": "20261126115201833-note-cov-f-rise-changes.jpg",
@@ -40,48 +70,6 @@
    "tier": "draft",
    "format": "16x9",
    "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T11:09:02.071Z",
-   "file": "20261126110902071-frame-f03258.jpg",
-   "source": "out/work/jupiter/frames/f1/f03258.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3258, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3258,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T10:55:50.409Z",
-   "file": "20261126105550409-still-f03250-16x9-draft-full-layers.jpg",
-   "source": "out/work/stills/f03250-16x9-draft-full-layers.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3250, draft tier, layers view",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3250,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "layers",
-   "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T10:54:50.029Z",
-   "file": "20261126105450029-still-f03262-16x9-draft-full-layers.jpg",
-   "source": "out/work/stills/f03262-16x9-draft-full-layers.png",
-   "kind": "still",
-   "label": "jupiter.rise frame 3262, draft tier, layers view",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3262,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "layers",
    "engine": "d3654c5e8dff3fa6"
   },
   {
