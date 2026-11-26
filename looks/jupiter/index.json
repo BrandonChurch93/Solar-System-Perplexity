@@ -1,46 +1,56 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T15:24:04.570Z",
- "head": "c99efb5718f32878b52883d70052b3b88f939f86",
- "note": "later cut: the build with the lift held to ground the ceiling could see; reader slice running; twelve draft frames keep the name's bytes",
+ "pushed": "2026-11-26T15:46:00.140Z",
+ "head": "4fe62ed99fcc4d5ee9fb559561766f43b23a02de",
+ "note": "15:46 UTC. Build for the later cut (ca38ff89, merged with main as 4fe62ed9, local, branch not released): the picture's level follows the camera above the surface view's ceiling. By seven placements 53 of 60 comparisons are lower than the name's, 7 higher, all on rows 3256 + 1/2 to 3258 + 1/2, where the reader's place lies off the frame in both trees. Units and G15 on the merged tree are still running",
  "looks": [
   {
-   "time": "2026-11-26T15:24:03.204Z",
-   "file": "20261126152403204-note-place-3257.jpg",
-   "source": "../../../../tmp/place-3257.jpg",
+   "time": "2026-11-26T15:45:53.899Z",
+   "file": "20261126154553899-note-map5-c.jpg",
+   "source": "../../../../tmp/map5-c.jpg",
    "kind": "note",
-   "label": "Jupiter rise, where the reader's row 3257 is red, 3 times: frame 3257 and frame 3265, the name (top) and the build (bottom); the 3265 place lies off the right edge of frame 3257",
+   "label": "Rows 3257 and 3258, name then build, my replay of the reader's back reading. Right: judged pixels from green (0) to red (0.9), magenta where the settled place lies outside the earlier frame. Left: earlier and later frame at the highest place inside the frame. Correction to place-3257.jpg of 15:24: its left crops are not the counterpart of its right crops, the reader's place lies off the 1920 wide frame",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T15:24:02.316Z",
-   "file": "20261126152402316-note-pair-c-3265.jpg",
-   "source": "../../../../tmp/pair-c-3265.jpg",
+   "time": "2026-11-26T15:45:52.666Z",
+   "file": "20261126154552666-note-sheet-c-b2.jpg",
+   "source": "../../../../tmp/sheet-c-b2.jpg",
    "kind": "note",
-   "label": "Jupiter rise 3265 and 3266: the name (top) and the build in work (bottom)",
+   "label": "The build ca38ff89, frames 3260, 3262, 3264, 3266",
    "stop": "jupiter"
   },
   {
-   "time": "2026-11-26T15:24:01.136Z",
-   "file": "20261126152401136-note-pair-c-3250-3258.jpg",
+   "time": "2026-11-26T15:45:52.036Z",
+   "file": "20261126154552036-note-sheet-c-a2.jpg",
+   "source": "../../../../tmp/sheet-c-a2.jpg",
+   "kind": "note",
+   "label": "The build ca38ff89, frames 3252, 3254, 3256, 3258",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:45:51.345Z",
+   "file": "20261126154551345-note-crop-far-3258.jpg",
+   "source": "../../../../tmp/crop-far-3258.jpg",
+   "kind": "note",
+   "label": "Far band at native pixels, frames 3258 and 3266, name above, build below: at 3258 the build's rim towers are lit as both show them at 3266",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:45:50.554Z",
+   "file": "20261126154550554-note-pair-c-3252-3256.jpg",
+   "source": "../../../../tmp/pair-c-3252-3256.jpg",
+   "kind": "note",
+   "label": "Name 13bebe00 above, the build ca38ff89 below, frames 3252 and 3256: the far strip brightens sooner in the build",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T15:45:49.105Z",
+   "file": "20261126154549105-note-pair-c-3250-3258.jpg",
    "source": "../../../../tmp/pair-c-3250-3258.jpg",
    "kind": "note",
-   "label": "Jupiter rise 3250 and 3258: the name 13bebe00 (top) and the build in work, the picture's level following the camera (bottom)",
+   "label": "Name 13bebe00 above, the build ca38ff89 below (local, not pushed), frames 3250 and 3258",
    "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T15:01:03.291Z",
-   "file": "20261126150103291-frame-f03244.jpg",
-   "source": "out/work/jupiter/frames/c2/f03244.png",
-   "kind": "frame",
-   "label": "jupiter.rise frame 3244, draft tier",
-   "stop": "jupiter",
-   "segment": "jupiter.rise",
-   "frame": 3244,
-   "tier": "draft",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "d3654c5e8dff3fa6"
   },
   {
    "time": "2026-11-26T14:59:53.858Z",
@@ -69,22 +79,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T14:57:26.430Z",
-   "file": "20261126145726430-note-crop-b-3257-3265.jpg",
-   "source": "../../../../tmp/crop-b-3257-3265.jpg",
-   "kind": "note",
-   "label": "Jupiter rise 3257 and 3265 at native pixels, far side of the storm: the name (top), the first build (bottom)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:57:25.845Z",
-   "file": "20261126145725845-note-pair-c-3257-3262.jpg",
-   "source": "../../../../tmp/pair-c-3257-3262.jpg",
-   "kind": "note",
-   "label": "Jupiter rise 3257 and 3262: the name (top) and the build in work (bottom): the far rim of the storm is lit at 3257 where the name is dark teal",
-   "stop": "jupiter"
   }
  ]
 }
