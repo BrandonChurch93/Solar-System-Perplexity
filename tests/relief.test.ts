@@ -830,4 +830,79 @@ describe('the law of a stop on its relief', () => {
     expect(withLaw(colour, tone, true)).toBe('precision highp float;\nin vec2 vImage;\nout vec4 outColor;\nuniform float uLawFocal;\nuniform float uLawFrame;\n' + tone + '\nvoid main() {\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);\n  vec3 reliefTone = max(lawTone(vLocal, vEye, vImage), vec3(0.0));\n  if (alpha < 0.004) discard;\n  if (reliefLaw <= 0.0) discard;\n  ' + VIG + '\n  vec3 col = inverseFilmic(texel.rgb) * uGain * vig * reliefTone;\n  outColor = vec4(col * alpha, alpha) * reliefLaw;\n}')
     expect(withLaw(colour, share)).toBe(withLaw(one, share).replace('  outColor', '  vec3 col = inverseFilmic(texel.rgb) * uGain * vig;\n  outColor'))
   })
+
+  it('may read the masks of the relief: both names stand above its text in every program of a layer, the layers read the red and the green of them alone, and the law does not declare them', async () => {
+    const DECLARED = ['uniform sampler2D uMasks;', 'uniform vec4 uMaskBox;']
+    const share = 'float lawShare(vec3 P, vec3 E, vec2 image) { return 1.0; }'
+    const masked = 'uniform float uLawOn;\nfloat lawShare(vec3 P, vec3 E, vec2 image) {\n  vec2 q = (image - uMaskBox.xy) / uMaskBox.zw;\n  return uLawOn > 0.5 ? textureLod(uMasks, vec2(q.x, 1.0 - q.y), 0.0).b : 1.0;\n}'
+    // The layers' own read of the masks: one read, into m, and of m the red and the green and no other part. The air reads none.
+    const boxed: ReliefDef = { ...def, maskBox: [8, 4, 16, 8] }
+    const plain = materials(await Relief.load(ctx, '', boxed, motion(true)))
+    expect(plain.filter((m) => litOf(m) === LIT).length).toBe(2)
+    for (const m of plain) {
+      if (litOf(m) === AIR_LIT) {
+        expect(m.fragmentShader.includes('uMask')).toBe(false)
+        continue
+      }
+      const text = m.fragmentShader
+      const body = text.slice(text.indexOf(MAIN))
+      expect(text.split('uMasks').length).toBe(3)
+      expect(body.split('vec3 m = texture(uMasks, vec2(mq.x, 1.0 - mq.y), uBias).rgb;').length).toBe(2)
+      expect([...new Set([...body.matchAll(/\bm\.(\w+)/g)].map((x) => x[1]))].sort()).toEqual(['g', 'r'])
+      expect(body.split(/\bm\b(?!\.)/).length).toBe(2)
+      // The box is told in the whole picture, 0 to 1, and the picture is one object for every layer.
+      expect((m.uniforms.uMaskBox!.value as THREE.Vector4).toArray()).toEqual([0.25, 0.25, 0.5, 0.5])
+      expect(m.uniforms.uMasks!.value).toBeInstanceOf(THREE.Texture)
+    }
+    // With a law that reads them, beside a presence and an edge in any order: the two lines once, above the law's text, in every program
+    // of a layer, and the picture and the box are the layer's own uniforms.
+    for (const order of [['law', 'presence', 'edge'], ['presence', 'edge', 'law'], ['edge', 'law', 'presence']]) {
+      const r = await Relief.load(ctx, '', boxed, motion(true))
+      const before = materials(r).map((m) => [m.uniforms.uMasks, m.uniforms.uMaskBox])
+      for (const step of order) {
+        if (step === 'law') r.presenceLaw(masked, { uLawOn: { value: 1 } })
+        if (step === 'presence') r.presence(0.5)
+        if (step === 'edge') r.presenceEdge([4, 4, 4, 0])
+      }
+      let read = 0
+      materials(r).forEach((m, i) => {
+        const text = m.fragmentShader
+        if (litOf(m) === AIR_LIT) {
+          expect(text.includes('uMask')).toBe(false)
+          return
+        }
+        const at = text.indexOf(masked)
+        expect(at).toBeGreaterThan(0)
+        expect(at).toBeLessThan(text.indexOf(MAIN))
+        for (const line of DECLARED) {
+          expect(text.split(line).length).toBe(2)
+          expect(text.indexOf(line)).toBeLessThan(at)
+        }
+        expect([m.uniforms.uMasks, m.uniforms.uMaskBox]).toEqual(before[i])
+        expect(m.uniforms.uMasks).toBe(before[i]![0])
+        read++
+      })
+      expect(read).toBe(2)
+    }
+    // The names are the relief's: a law that declares one is refused, and nothing is changed by it.
+    const bare = await Relief.load(ctx, '', def, motion(true))
+    const texts = materials(bare).map((m) => m.fragmentShader)
+    expect(() => bare.presenceLaw('uniform sampler2D uMasks;\n' + share, { uMasks: { value: null } })).toThrow(/named uLaw and a name of its own, not uMasks/)
+    expect(() => bare.presenceLaw('uniform vec4 uMaskBox;\n' + share, { uMaskBox: { value: null } })).toThrow(/named uLaw and a name of its own, not uMaskBox/)
+    expect(materials(bare).map((m) => m.fragmentShader)).toEqual(texts)
+    // The shader is asked for the two lines only by a law that names them, and then above the law's text.
+    const one = 'precision highp float;\nuniform sampler2D uMasks;\nuniform vec4 uMaskBox;\nin vec2 vImage;\nout vec4 outColor;\nvoid main() {\n  if (alpha < 0.004) discard;\n  ' + VIG + '\n  outColor = vec4(col * alpha, alpha);\n}'
+    const reads = 'float lawShare(vec3 P, vec3 E, vec2 image) { return texture(uMasks, (image - uMaskBox.xy) / uMaskBox.zw).b; }'
+    expect(withLaw(one, reads).includes(LAW_GLSL.slice(1) + '\n' + reads + '\n' + MAIN)).toBe(true)
+    for (const line of DECLARED) {
+      const without = one.replace(line + '\n', '')
+      expect(without.length).toBe(one.length - line.length - 1)
+      expect(() => withLaw(without, reads)).toThrow(/reads the masks and the relief shader does not declare them above it/)
+      expect(() => withLaw(without + '\n' + line, reads)).toThrow(/does not declare them above it/)
+      expect(withLaw(without, share)).toBe(withLaw(one, share).replace(line + '\n', ''))
+      // A word in a comment of the law is no read.
+      expect(withLaw(without, '// neither uMasks nor uMaskBox /* uMasks */\n' + share).includes(share + '\n' + MAIN)).toBe(true)
+      expect(() => withLaw(without, '/* a note */ ' + reads)).toThrow(/does not declare them above it/)
+    }
+  })
 })

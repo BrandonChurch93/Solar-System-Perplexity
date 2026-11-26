@@ -187,6 +187,30 @@ describe('the air law in a relief: with the other shares', () => {
     }
   })
 
+  it('a law of a stop that reads the masks of the relief finds the two names above its text in the layers with the air law, with the light by height too', async () => {
+    const masked = 'float lawShare(vec3 P, vec3 E, vec2 image) {\n  vec2 q = (image - uMaskBox.xy) / uMaskBox.zw;\n  return textureLod(uMasks, vec2(q.x, 1.0 - q.y), 0.0).b;\n}'
+    for (const knots of [false, true]) {
+      const r = await Relief.load(ctx, '', def, { ...motion(true, true), ...(knots ? { airLaw: { ...law, knots: [[-1.5, 0.3], [0.5, 1]] } } : {}) })
+      r.presenceLaw(masked)
+      const layers = materials(r).filter((m) => !isAir(m))
+      expect(layers.length).toBe(2)
+      for (const m of layers) {
+        const text = m.fragmentShader
+        expect(m.vertexShader.includes('uAirHeights')).toBe(knots)
+        expect(text.includes('vAirShare')).toBe(knots)
+        expect(count(text, AIR_LAW_GLSL)).toBe(1)
+        const at = text.indexOf(masked)
+        expect(at).toBeGreaterThan(text.indexOf(AIR_LAW_GLSL))
+        expect(at).toBeLessThan(text.indexOf('void main() {'))
+        for (const line of ['uniform sampler2D uMasks;', 'uniform vec4 uMaskBox;']) {
+          expect(count(text, line)).toBe(1)
+          expect(text.indexOf(line)).toBeLessThan(at)
+        }
+      }
+      for (const m of materials(r).filter(isAir)) expect(m.fragmentShader.includes('uMask')).toBe(false)
+    }
+  })
+
   it('a scaled group gives the eye of the layers and of the law dome the same scale, with one number for both', async () => {
     const r = await Relief.load(ctx, '', def, motion(false, true))
     const all = materials(r)

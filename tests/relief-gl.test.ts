@@ -19,9 +19,11 @@ import { frameUniform } from ${at('src/core/frame.ts')}
 
 const renderer = new THREE.WebGLRenderer({ canvas: document.createElement('canvas') })
 
+// A picture of 8 by 8: one texel for all of it, or its 64 texels row by row from the bottom up, as the loader hands a picture on.
 function flat(rgba, srgb) {
   const data = new Uint8Array(8 * 8 * 4)
-  for (let i = 0; i < 64; i++) data.set(rgba, i * 4)
+  if (rgba.length === data.length) data.set(rgba)
+  else for (let i = 0; i < 64; i++) data.set(rgba, i * 4)
   const tex = new THREE.DataTexture(data, 8, 8, THREE.RGBAFormat, THREE.UnsignedByteType)
   tex.minFilter = tex.magFilter = THREE.LinearFilter
   if (srgb) tex.colorSpace = THREE.SRGBColorSpace
@@ -606,6 +608,51 @@ describe.skipIf(!have)('the presence of a relief in a WebGL2 browser', () => {
     const plain2 = await shoot(big)
     const back2 = await shoot({ ...big, drawn: false })
     for (let c = 0; c < 4; c++) expect(at2(half2, 1, 1)[c]).toBeCloseTo(0.5 * at2(plain2, 1, 1)[c]! + 0.5 * at2(back2, 1, 1)[c]!, 4)
+    expect(errors).toEqual([])
+  }, 120000)
+
+  it('a law may read the masks of the relief: the blue at the place in the picture, through the box and with y turned, and the layers themselves take no blue', async () => {
+    // The masks as a picture of 8 by 8 whose upper left quarter has the blue (the rows from the bottom up, as the loader hands them on).
+    const quarter = (red: number, green: number): number[] => {
+      const out: number[] = []
+      for (let row = 0; row < 8; row++) for (let col = 0; col < 8; col++) out.push(red, green, row >= 4 && col < 4 ? 255 : 0, 255)
+      return out
+    }
+    const text = 'float lawShare(vec3 P, vec3 E, vec2 image) {\n  vec2 q = (image - uMaskBox.xy) / uMaskBox.zw;\n  return textureLod(uMasks, vec2(q.x, 1.0 - q.y), 0.0).b > 0.5 ? 1.0 : 0.25;\n}'
+    const plain = await shoot(base)
+    const back = await shoot({ ...base, drawn: false })
+    // Where the far layer alone is drawn: the picture is the relief times the share plus the ground times the rest. px, py: the place
+    // in the picture, y down (the frame is read back from the bottom up).
+    const mixed = (got: number[], share: (px: number, py: number) => number): number[] => {
+      const read = [0, 0]
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          if (x >= 7 && x <= 24 && y >= 3 && y <= 12) continue
+          const k = share(x, H - 1 - y)
+          read[k === 1 ? 0 : 1]!++
+          for (let c = 0; c < 4; c++) expect(pixel(got, x, y)[c]).toBeCloseTo(k * pixel(plain, x, y)[c]! + (1 - k) * pixel(back, x, y)[c]!, 5)
+        }
+      }
+      return read
+    }
+    const withMasks = (masks: number[], maskBox: number[]): Shot => ({ ...base, def: { ...base.def, maskBox }, files: { ...base.files, 'masks.png': masks } })
+    // The box the whole picture: the blue is the picture's upper left quarter.
+    const whole = await shoot({ ...withMasks(quarter(0, 0), [0, 0, W, H]), law: { text } })
+    expect(mixed(whole, (px, py) => (px < 16 && py < 8 ? 1 : 0.25))).toEqual([83, 249])
+    // The box the picture's lower right quarter: the blue's quarter lies at x 16 to 24, y 8 to 12, and beyond the box the border of the
+    // masks is held, so the blue is all of the picture left of 24 and above 12.
+    const boxed = await shoot({ ...withMasks(quarter(0, 0), [16, 8, 16, 8]), law: { text } })
+    expect(mixed(boxed, (px, py) => (px < 24 && py < 12 ? 1 : 0.25))).toEqual([135, 197])
+    expect(boxed).not.toEqual(whole)
+    // Without a law that reads it the blue is nothing to the relief: the picture of the masks without it, to the bit.
+    expect(await shoot(withMasks(quarter(0, 0), [0, 0, W, H]))).toEqual(plain)
+    // The layers take the red of the masks (the valley's mist is as deep as the red says) and the green, and no blue: with the mist
+    // drawn, the blue full or in a quarter is the picture with none, to the bit, and another red is another picture.
+    const mist = (masks: number[]): Shot => ({ ...misted, files: { ...misted.files, 'masks.png': masks } })
+    const none = await shoot(mist([128, 64, 0, 255]))
+    expect(await shoot(mist([128, 64, 255, 255]))).toEqual(none)
+    expect(await shoot(mist(quarter(128, 64)))).toEqual(none)
+    expect(await shoot(mist([0, 64, 0, 255]))).not.toEqual(none)
     expect(errors).toEqual([])
   }, 120000)
 

@@ -355,6 +355,12 @@ export function withEdgeEye(source: string): string {
 // on the linear colour of the layer where it is made, before the valley mist and before the share, held at or above 0, so the picture's
 // colour can go with the eye as the ground round it does. The mist's own colour and the air do not take it. Built when a relief asks;
 // a relief that never asks keeps the shaders above to the letter.
+// The masks: a law may read the masks of the relief as well, uMasks (the picture def.masks names) and uMaskBox (its box in the whole
+// picture, 0 to 1). The place of a fragment in it is q = (image - uMaskBox.xy) / uMaskBox.zw and the read is at vec2(q.x, 1.0 - q.y),
+// y turned. The picture is loaded as its bytes stand, without mips, read between its texels and held at its border. The layers read
+// its red (how far the mist moves the texels) and its green (the dust) and nothing else of it, so the blue is the stop's own, for a
+// field of its law at the pitch of the masks. Both names stand above the law's text in every program of a layer, and the law does not
+// declare them; withLaw refuses a shader that lacks one of them for a law that names them.
 const MAIN = 'void main() {'
 
 // The sheets of a crest: the layer's own shaders with the cut. aSheet is 1 on the near sheet, 0 on the far sheet that stands in place
@@ -423,10 +429,15 @@ const LAW_SHARE = /\bfloat\s+lawShare\s*\(\s*vec3\s+\w+\s*,\s*vec3\s+\w+\s*,\s*v
 const LAW_TONE = /\bvec3\s+lawTone\s*\(\s*vec3\s+\w+\s*,\s*vec3\s+\w+\s*,\s*vec2\s+\w+\s*\)\s*\{/g
 const COL = 'vec3 col = inverseFilmic(texel.rgb) * uGain * vig;'
 const LAW_UNIFORM = /\buniform\s+(?:(?:lowp|mediump|highp)\s+)?\w+\s+(\w+)\s*(?:\[[^\]]*\])?\s*;/g
+// The words by which a law reads the masks of the relief, and the two lines of the layers' shader that declare them.
+const LAW_MASKS = /\buMask(?:s|Box)\b/
+const MASKS_IN = ['uniform sampler2D uMasks;', 'uniform vec4 uMaskBox;']
+// The text of a law without its comments.
+const lawCode = (source: string): string => source.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ')
 
 // The uniforms a law declares, by name. Throws for a text that is no law, and for one whose tone does not go with what the set asked.
 export function lawUniforms(source: string, tone = false): string[] {
-  const text = source.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ')
+  const text = lawCode(source)
   if ((text.match(LAW_SHARE) ?? []).length !== 1) throw new Error('the law of a relief defines float lawShare(vec3 P, vec3 E, vec2 image) once')
   const tones = (text.match(LAW_TONE) ?? []).length
   if (tone && tones !== 1) throw new Error('the law of a relief with a tone defines vec3 lawTone(vec3 P, vec3 E, vec2 image) once')
@@ -444,6 +455,8 @@ export function lawUniforms(source: string, tone = false): string[] {
 export function withLaw(source: string, text: string, tone = false): string {
   if (source.split(MAIN).length !== 2 || source.split(VIG).length !== 2 || source.split(LIT).length !== 2 || (tone && source.split(COL).length !== 2) || source.includes('lawShare')) throw new Error('the relief shader has no single place for a law')
   lawUniforms(text, tone)
+  const head = source.slice(0, source.indexOf(MAIN))
+  if (LAW_MASKS.test(lawCode(text)) && MASKS_IN.some((line) => head.split(line).length !== 2)) throw new Error('the law of a relief reads the masks and the relief shader does not declare them above it')
   const read = '\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);' + (tone ? '\n  vec3 reliefTone = max(lawTone(vLocal, vEye, vImage), vec3(0.0));' : '')
   const made = source.replace(MAIN, LAW_GLSL.slice(1) + '\n' + text.trim() + '\n' + MAIN + read).replace(VIG, 'if (reliefLaw <= 0.0) discard;\n  ' + VIG).replace(LIT, LIT + ' * reliefLaw')
   return tone ? made.replace(COL, COL.slice(0, -1) + ' * reliefTone;') : made
@@ -954,6 +967,7 @@ export class Relief {
   // which is asked whenever the shield is: while it answers true the relief shields as one that never asked, and the set stands for
   // it that the law gives exactly 1 then. With tone the text also gives the factor on the layers' colour (lawTone, LAW_GLSL above).
   // The law answers by place and by eye; a value that follows a frame number is not a law.
+  // Beside its own uniforms the text may read the masks of the relief, uMasks and uMaskBox (the terms are above MAIN).
   presenceLaw(text: string, uniforms: Record<string, THREE.IUniform> = {}, options: { whole?: () => boolean; tone?: boolean } = {}): void {
     if (this.lawed) throw new Error('the law of a relief is given once, where the set is built')
     const tone = options.tone === true

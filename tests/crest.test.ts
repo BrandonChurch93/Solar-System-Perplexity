@@ -1145,6 +1145,29 @@ describe('the sheets of a relief', () => {
     r.dispose()
   })
 
+  it('give a law of the stop that reads the masks of the relief the two names above its text, in the program of the sheets as in the layer own', async () => {
+    const masked = 'float lawShare(vec3 P, vec3 E, vec2 image) {\n  vec2 q = (image - uMaskBox.xy) / uMaskBox.zw;\n  return textureLod(uMasks, vec2(q.x, 1.0 - q.y), 0.0).b;\n}'
+    const r = await Relief.load(ctx, '', def, motion(true))
+    const [back, layer, sheets] = meshes(r).map((m) => m.material as THREE.ShaderMaterial) as [THREE.ShaderMaterial, THREE.ShaderMaterial, THREE.ShaderMaterial]
+    r.presenceLaw(masked)
+    expect(sheets.fragmentShader.includes(SHEET_GLSL.slice(1))).toBe(true)
+    expect(layer.fragmentShader.includes('uCut')).toBe(false)
+    for (const m of [back, layer, sheets]) {
+      const text = m.fragmentShader
+      const at = text.indexOf(masked)
+      expect(at).toBeGreaterThan(0)
+      expect(at).toBeLessThan(text.indexOf('void main() {'))
+      for (const line of ['uniform sampler2D uMasks;', 'uniform vec4 uMaskBox;']) {
+        expect(text.split(line).length).toBe(2)
+        expect(text.indexOf(line)).toBeLessThan(at)
+      }
+    }
+    // The sheets read the picture and the box of their layer.
+    expect(sheets.uniforms).toBe(layer.uniforms)
+    expect(sheets.uniforms.uMasks!.value).toBe(back.uniforms.uMasks!.value)
+    r.dispose()
+  })
+
   it('take the points and the boxes of a stop as shares of the layer own box, whatever size its map has', async () => {
     const map = pairMap(W, 12, 48)
     const two = { texture: async () => picture(), buffer: async (path: string) => (path === 'relief-step-dist.bin' ? map : new Float32Array(4).fill(40)).buffer } as unknown as SetContext
