@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T02:16:04.888Z",
- "head": "766c925834b1afa49df5bf5e63c13f01ea6b4c03",
- "note": "correction of my 01:52 note: with every row read the smooth table moves the rise's rows only inside their own wobble (4399 to 4403: RC mean 1.06 largest 1.37, control mean 0.94 largest 1.21, table law mean 1.04 largest 1.47; 4383 to 4393: 1.13 against 1.09); not a cure of the row, RC stays un-named",
+ "pushed": "2026-11-26T03:01:53.658Z",
+ "head": "af96ecef9b8dfec30c7cd3e0039e37c1b3396497",
+ "note": "RC stays a state (rise part 1 1.37, the name 1.29, main 1.60); final 4407 beside main's; the table law is out of the tree; RC's other rows are being drawn",
  "looks": [
+  {
+   "time": "2026-11-26T03:01:51.691Z",
+   "file": "20261126030151691-note-limb-4035-table-4x.jpg",
+   "source": "../../../../tmp/n66/limb-4035-table-4x.png",
+   "kind": "note",
+   "label": "limb at 4035, final, 4x: approved, main, RC, the smooth table (control, not committed; match 3.730, G17 median 1.170)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T03:01:46.689Z",
+   "file": "20261126030146689-note-final-4407-main-rc.jpg",
+   "source": "../../../../tmp/n66/final-4407-main-rc.jpg",
+   "kind": "note",
+   "label": "final 4407: main left, RC (766c9258, the frames of 6ef232ea) right. RC is paler (mean RGB 40.5 83.4 93.9 against 37.8 70.8 82.5) and its cloud softer: the two laws of light, open",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T02:44:54.288Z",
+   "file": "20261126024454288-note-far-RC.jpg",
+   "source": "../../../../tmp/n66/far-RC.png",
+   "kind": "note",
+   "label": "RC 6ef232ea, far ground under the limb at 4403, 4407, 4411, draft 1 to 1: what the reader calls red from 4403",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T02:44:53.641Z",
+   "file": "20261126024453641-note-pat-EA-8770.jpg",
+   "source": "../../../../tmp/x/pat-EA-8770.jpg",
+   "kind": "note",
+   "label": "rise from 4385, control EA (terrain picture, billow shade, veil and tops all off): the reader stays red in the far ground under the limb (1.51; RC 1.10), so the hand layers are not the cause",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T02:16:01.539Z",
    "file": "20261126021601539-note-pat-LM-8779.jpg",
@@ -216,38 +248,6 @@
    "source": "../../../../tmp/n62/rd-pair-limb.jpg",
    "kind": "note",
    "label": "4399 and 4407 under the limb, draft, B1 left, the rim as light of the air right (state not committed yet)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T22:39:42.098Z",
-   "file": "20261125223942098-note-pat-PL-8798.jpg",
-   "source": "../../../../tmp/n60/pat-PL-8798.jpg",
-   "kind": "note",
-   "label": "uranus control PL (no air law, no layers) 4399 to 4407: reader 0.06",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T22:39:41.443Z",
-   "file": "20261125223941443-note-pat-MC1-8798.jpg",
-   "source": "../../../../tmp/n61/pat-MC1-8798.jpg",
-   "kind": "note",
-   "label": "made case: standing ground under an exact air by the path, 4399 to 4407, tool reader 0.71",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T22:34:40.605Z",
-   "file": "20261125223440605-note-b1-rim2-look.jpg",
-   "source": "../../../../tmp/n61/b1-rim2-look.jpg",
-   "kind": "note",
-   "label": "uranus 4399 and 4407 draft: B1 left, rim as light of the air right",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T22:34:39.434Z",
-   "file": "20261125223439434-note-band-B1-8798.jpg",
-   "source": "../../../../tmp/n61/band-B1-8798.jpg",
-   "kind": "note",
-   "label": "uranus B1 4407 beside 4399 carried by the plan's own ground: reading green but for the band under the limb",
    "stop": "uranus"
   }
  ]
