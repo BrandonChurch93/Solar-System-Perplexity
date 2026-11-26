@@ -1,9 +1,39 @@
 {
  "folder": "sun-lab",
- "pushed": "2026-11-26T00:37:34.150Z",
- "head": "2c088771768931bad7739cf8e0006e40a5a04825",
- "note": "h31: draft and final 90, motion 60 to 120, frames 0 and 60",
+ "pushed": "2026-11-26T01:15:36.590Z",
+ "head": "9d560e797efa76da410b9f7d8a534532f6d17df9",
+ "note": "lab: hard edges by cause, lanes as a soft net of even width (trials)",
  "looks": [
+  {
+   "time": "2026-11-26T01:15:35.983Z",
+   "file": "20261126011535983-note-trials-s.jpg",
+   "source": "../v/trials-s.jpg",
+   "kind": "note",
+   "label": "lab show fields: junc, tall, cell, seam (cause of the facets)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T01:15:35.378Z",
+   "file": "20261126011535378-note-trials-h.jpg",
+   "source": "../v/trials-h.jpg",
+   "kind": "note",
+   "label": "lab trials: approved, h31, t20, t21 at 3 times (lanes from the seam, no pits: too flat and light)",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T01:13:24.129Z",
+   "file": "20261126011324129-frame-lab-90-t21.jpg",
+   "source": "out/work/sun/lab/lab-90-t21.png",
+   "kind": "frame",
+   "label": "sun.terrain frame 90, draft tier",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "draft",
+   "format": "16x9",
+   "diag": "beauty",
+   "engine": "822cc1bfb7014138"
+  },
   {
    "time": "2026-11-26T00:37:33.593Z",
    "file": "20261126003733593-note-lab-90-h31f.jpg",
@@ -42,30 +72,6 @@
    "source": "../v/sheet-h31.jpg",
    "kind": "note",
    "label": "lab sheet-h31 00:37",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T00:37:30.715Z",
-   "file": "20261126003730715-note-half-h31f.jpg",
-   "source": "../v/half-h31f.jpg",
-   "kind": "note",
-   "label": "lab half-h31f 00:37",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T00:37:30.168Z",
-   "file": "20261126003730168-note-levels-h31f.jpg",
-   "source": "../v/levels-h31f.jpg",
-   "kind": "note",
-   "label": "lab levels-h31f 00:37",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T00:37:29.591Z",
-   "file": "20261126003729591-note-x3-h31f.jpg",
-   "source": "../v/x3-h31f.jpg",
-   "kind": "note",
-   "label": "lab x3-h31f 00:37",
    "stop": "sun"
   }
  ]
