@@ -12092,3 +12092,57 @@ NEPTUNE: LOOK, 19:38 UTC (low; no name, nothing asks an answer today). The tree 
 4. For the next round, to rule: either (h) is opened for this layer (then G4's kind is the candidate, still to be proven on the dive, at whole and half frames, with tests and path lines), or the patches stay the named red of the name.
 
 5. Still red in every trial and in the name: the small white blob at the lower edge from 4976 (G4 only frays its edge); a small dark comb of teeth near the lower middle at 4977 to 4985 (seen on the sheets in the name and in G4 alike; not measured, not checked against main).
+
+## 26 Nov, 19:40 to 19:50 UTC: lab log (one more control for the next round: can a border fixed on the globe divide the rise's patches from the far ground of 4860; it cannot)
+
+Nothing here is named. The name stays 7a620a39; the tree's stop files are the name's.
+
+- 19:40:59 to 19:48:16 CONTROL G5 (tool /tmp/ctl-j.sh = ctl-i.sh plus one line after the grain's share:
+  grainShare *= 1.0 - smoothstep(3.0, 8.0, uRadius * length(sheetUp - uPlaceUp)); values as G4: from [0.2, 0.4], wave 8,
+  octaves 6, fall 0.65, gain 4; the field at the middle of the whole run). The two distances are far.distance of deep.json,
+  the same measure by which nearGround is taken in deep.ts. 960 frames done 19:45:23; the judged four at 1920 draft: 23.1,
+  29.9, 94.1, 14.4 s. The two files put back by git checkout; git status clean after it.
+  Against the name at 960: 4668 and 5006 the same picture; 4973 mean 0.532, largest 94, 2.88 percent over 8 levels;
+  4975 1.145, 96, 6.11; 4978 1.507, 153, 7.41; 4981 1.121, 140, 5.30; 4983 0.904, 133, 4.05; 4987 0.391, 95, 1.57;
+  4990 0.184, 69, 0.63. Against G4 at 960, percent of the pixels over 8 levels: 4973 3.15 (largest 91); 4975 3.41 (90);
+  4978 3.69 (108); 4981 4.21 (115); 4983 4.53 (114); 4987 3.85 (98); 4990 2.13 (75).
+  By frame (composite over the name's rise, pairs 4972 to 4984): 4972 0.2856 at (0, 538); 4973 0.2246; 4974 0.2077;
+  4975 0.1702; 4976 0.1840; 4977 0.1725; 4978 0.1736; 4979 0.2137; 4980 0.2216; 4981 0.2273; 4982 0.2301; 4983 0.2316;
+  4984 0.2245.
+  The judged four at 1920 draft against the name's (N24): 4605 and 5006 no pixel differs; 4707 43891 px, mean 0.019,
+  largest 18, 0.007 percent over 8 levels, 0.187 over 2; 4860 107645 px, mean 0.124, largest 46, 0.679 percent over 8
+  levels, 1.644 over 2; over 8 inside x 838 to 1919, y 229 to 506; over 2 inside x 217 to 1919, y 159 to 519 (by rows of 135:
+  2973 in 135 to 269, 18577 in 270 to 404, 12530 in 405 to 539). G17 at 4860 0.974 / 0.727 over 75 tiles, plain 21.148.
+  FINDING: the border does not divide them. Most of what G4 changes in the far ground of 4860 lies within 8 units of the
+  place (0.679 of G4's 0.939 percent stays), and the same border takes the field from part of the rise's patches. The ground
+  whose patches are seen leaving in 4973 to 4991 is the ground that is the far ground of 4860. Only this one pair of
+  distances was drawn; a tighter border would spare more of 4860 and leave less of the patches.
+  SEEN (g5-4860trio.jpg: 4860 of the name, G4, G5 at 1 to 1, x 520 to 1920, y 216 to 506; g5-g4.jpg: whole frames 4975, 4979,
+  4983, 4987, 4991 at 960, G4 left, G5 right): at 4860 G5 still shows the darker streaks toward the limb, a little fewer
+  than G4; in the rise the lower left patches are softer again in part (4983, 4987).
+- A SECOND PRICE OF G4, seen 19:49 (g4-limb.jpg: the upper left quarter of 4979, 4983, 4987 at 960, the name left, G4 right):
+  the long bright streaks toward the limb break into ragged flecks with holes. The name's long streaks there are the approved
+  image's kind; G4 loses them. G5 keeps them (they lie beyond its border). So G4 as it stands is not a candidate without a
+  cure for that: the field would have to spare the bright streaks (by the cover's level, or by the cirrus share) and that is
+  not tried.
+- WHERE THE PATCHES STAND AT THE FREEZE: the named red of 7a620a39 (MAIL 1513 point 1: an issue of Neptune's next round).
+  The next round has from today: cause 1 and cause 2 with their controls; the fact that the rise's patches and the far
+  ground of 4860 are one ground; G4 as the best form, with its two prices (4860's far ground against (h), the streaks at the
+  limb). Tools kept in /tmp only (ctl-i.sh, ctl-j.sh, rowsE.sh, cropG.py); the two patches of the trial are in
+  assets-src/neptune/check (far-grain-trial.patch, far-grain-mid-run.patch).
+
+## 26 Nov, 19:50 UTC: the look, the control G5 (a border fixed on the globe does not divide them), to the Builder (word for word; sent about 19:50:10; attached look-N24.jpg, g5-4860trio.jpg, g5-g4.jpg, g4-limb.jpg; low priority)
+
+NEPTUNE: LOOK, 19:50 UTC (low; no name, nothing asks an answer today). The tree holds the name 7a620a39's stop files unchanged and is pushed (notebook tip 82c801388 at 19:39; this look goes in after it).
+
+1. The name at 4860 beside the approved image (look-N24.jpg): G17 0.972 / 0.659 (main 0.934 / 0.549). 92.0 s a draft frame at 1920 (this run's control frame: 94.1 s).
+
+2. One more control for the next round, G5 (a tool run, not committed): G4 of my look of 19:38, with the field only on the ground near the place, fixed on the globe: all of it within 3 scene units of the place, none beyond 8 (the two distances of far.distance in deep.json). The question: can a border fixed on the globe keep the far ground of 4860 as it is and still give the patches of the rise their form. ANSWER: NO.
+- 4860 at 1920 draft against the name: 107645 px differ, mean 0.124, largest 46, 0.679 percent over 8 levels (G4: 114302, 0.164, 50, 0.939), the pixels over 8 inside x 838 to 1919, y 229 to 506. So most of what G4 changes in the far ground of 4860 lies within 8 units of the place. G17 0.974 / 0.727. 4707: 43891 px, mean 0.019, largest 18, 0.007 percent over 8. 4605 and 5006 the name's bytes.
+- The rise at 960 against G4: 3.15 percent of the pixels over 8 levels at 4973, 3.41 at 4975, 3.69 at 4978, 4.21 at 4981, 4.53 at 4983, 3.85 at 4987, 2.13 at 4990: the border takes the field from part of the very patches it is for. Pattern by frame 4972 to 4984: 0.17 to 0.29 (0.2856, 0.2246, 0.2077, 0.1702, 0.1840, 0.1725, 0.1736, 0.2137, 0.2216, 0.2273, 0.2301, 0.2316, 0.2245), the name's level.
+- My eye (g5-4860trio.jpg: 4860 of the name, G4, G5, 1 to 1; g5-g4.jpg: whole frames 4975 to 4991 by fours, G4 left, G5 right): at 4860 G5 still shows the darker streaks toward the limb, a little fewer than G4; in the rise the lower left patches are softer again in part (4983, 4987).
+- So the ground whose patches Brandon sees leaving in 4973 to 4991 is the same ground that is the far ground of 4860. Only one pair of distances was drawn; a tighter border would spare more of 4860 and leave less of the patches.
+
+3. Seen now and not said at 19:38, a second price of G4 (g4-limb.jpg: the upper left quarter of 4979, 4983, 4987 at 960, the name left, G4 right): the long bright streaks toward the limb break into ragged flecks with holes. The name's long streaks there are the approved image's kind; G4 loses them. G5 keeps them (they lie beyond its border).
+
+4. This closes my research before the freeze. For Neptune's next round the patches need one of two things, and both are in the notebook with their controls: (h) of MAIL 1475 opened for this layer (candidate G4, with the flecks of point 3 to cure and the whole proof still to do), or another road to form than a field multiplied onto the cover. Until then they stand as the named red of 7a620a39. I draw nothing more today unless you ask.
