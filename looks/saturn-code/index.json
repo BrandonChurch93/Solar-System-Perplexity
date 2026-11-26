@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T15:48:37.993Z",
- "head": "434083c8d5e997cc920f5837984ea4d374145707",
- "note": "MAIL 1508 cure in work",
+ "pushed": "2026-11-26T16:01:27.667Z",
+ "head": "4f413b281c53557c936f909b230ee928c845cb7e",
+ "note": "MAIL 1508: the cure is committed locally (4f413b28), path part green on it; main's dive rows still rendering, the cure's rows next",
  "looks": [
+  {
+   "time": "2026-11-26T16:01:24.847Z",
+   "file": "20261126160124847-note-dive_cure2_curves.jpg",
+   "source": "../../../../tmp/v/p1508/dive_cure2_curves.png",
+   "kind": "note",
+   "label": "MAIL 1508 cure, second state, commit 4f413b28, path code only: the reader's speed at the place, the lens and the disc's growth by frame, main (red lines) against the cure. Path part green. The disc's growth dips to 0.104 percent a frame at 3586 and comes back"
+  },
   {
    "time": "2026-11-26T15:48:29.131Z",
    "file": "20261126154829131-note-dive_cure_curves.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/rigid/T1/t20/pv_cure.png",
    "kind": "note",
    "label": "the reader's own fields at the lit left limb, cure: still 3854 against 3861.5 and 3862, 3858 against the same two: the judged area, the pattern, the detail of both"
-  },
-  {
-   "time": "2026-11-26T14:12:53.951Z",
-   "file": "20261126141253951-note-part_view.jpg",
-   "source": "../../../../tmp/v/rigid/T1/t20/part_view.png",
-   "kind": "note",
-   "label": "rise 3854, 3861.5, 3862, 3870, cure above main: cyan the cell at the lit left limb where the reader reads the cure higher, yellow the part where the inner ring passes before the globe and the reader's flows disagree"
   }
  ]
 }
