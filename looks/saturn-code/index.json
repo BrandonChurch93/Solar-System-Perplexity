@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T13:18:09.411Z",
- "head": "13a7a4788097e0399cc252c4185c1d733f05e818",
- "note": "while the fourth cut is ruled: the reader's own rows at 3857 under 25 placements of the same stills, both trees; the difference between the trees lies inside the spread",
+ "pushed": "2026-11-26T13:48:35.966Z",
+ "head": "3433863e989cb0e57670ff5e1dc9d7c29aed2340",
+ "note": "the placements table on 20 rows of rise part 2, both trees; after 3858 the cure's middle stands 0.01 to 0.03 above main's, cause looked for",
  "looks": [
+  {
+   "time": "2026-11-26T13:48:35.295Z",
+   "file": "20261126134835295-note-placements_rise2_20rows.jpg",
+   "source": "../../../../tmp/v/rigid/T1/placements_rise2_20rows.png",
+   "kind": "note",
+   "label": "Saturn rise part 2, frames 3853 to 3862 and a half: the reader's pattern rows under 25 placements of the same stills, the cure left and main right; red is the stills as they are. From 3858 and a half on the placements close into one falling curve on both trees"
+  },
   {
    "time": "2026-11-26T13:18:08.765Z",
    "file": "20261126131808765-note-placements_rise2.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/rigid/T1/ft24.jpg",
    "kind": "note",
    "label": "rise 3857 at the tip of the lit ring, quarter size times 8, the cure above and main below: the frame, the frame 8 later carried back by the reader's way, the same carried back by the ring plane's true way from the poses, the reader's pattern with its own way, the same formula with the true way"
-  },
-  {
-   "time": "2026-11-26T12:40:21.707Z",
-   "file": "20261126124021707-note-fm24.jpg",
-   "source": "../../../../tmp/v/rigid/T1/fm24.jpg",
-   "kind": "note",
-   "label": "rise 3857 at the tip of the lit ring in the shadow, quarter size times 5, the cure above and main below: the frame, the frame times 8, the reader's way (green holds, red the flows do not agree), the reader's pattern field unmasked (dim where not judged)"
   }
  ]
 }
