@@ -1,8 +1,9 @@
-import { copyFileSync, existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs'
-import { basename, join } from 'node:path'
+import { copyFileSync, existsSync, readFileSync, readdirSync, rmSync } from 'node:fs'
+import { basename, join, relative } from 'node:path'
 import type { Segment, StopDef } from '../src/config'
 import { judgedFrames } from '../src/director/timeline'
 import { samplesOf } from './lib/samples'
+import { framesFolder, leave } from './pack/frames'
 import { polishBuilds, type Selection } from './select'
 import { args, loadConfig, recordMatches, requireDisk, ROOT, WORK, writeRecord, type OutputRecord } from './lib/common'
 import { Capture, cached, chunk, filmSheets, fingerprint, image, imageRevision, json, judged, outputFolder, padFrame, padImage, safeRecord, sheetFrames, spread, stopDependencies, type FrameSpec, type Rect } from './lib/render'
@@ -26,7 +27,10 @@ const allPacks = outputFolder(join(WORK, 'packs'))
 const roundDir = outputFolder(join(allPacks, roundId))
 const privateDir = outputFolder(join(allPacks, 'keys'))
 const stage = outputFolder(join(allPacks, '.cache', roundId))
-const temp = mkdtempSync(join(stage, '.frames-'))
+const waiting = framesFolder(stage)
+const temp = waiting.dir
+const used = new Set<string>()
+if (waiting.waiting.length > 0) console.log('pack ' + roundId + ': frames of a stopped run under ' + relative(ROOT, temp) + ' with their records: ' + waiting.waiting.length + ', taken up where this build asks for them')
 const capture = new Capture(cfg, a.format ?? (phase === 2 ? 'preview' : 'master'))
 const tier = a.tier ?? (phase === 2 ? 'draft' : 'final')
 const motionTier = a['motion-tier'] ?? (phase === 2 ? tier : a.tier === 'final' ? 'final' : 'review')
@@ -52,6 +56,7 @@ function renderSegment(segment: Segment, fallback: string): Promise<Source> {
 
 async function renderSource(frame: number, fallback: string, keep: boolean): Promise<Source> {
   const specific = keep ? undefined : join(temp, 'f' + padFrame(frame) + '-' + fallback + '.png')
+  if (specific) used.add(specific)
   const still = await capture.still(frame, fallback, specific)
   return { path: still.file, record: still.record, key: { kind: 'frame', frame, segment: cfg.segments.find((s) => frame >= s.firstFrame && frame < s.endFrame)?.id } }
 }
@@ -452,6 +457,7 @@ async function polish(): Promise<void> {
 }
 
 let rendered = false
+let good = false
 try {
   if (a.plan) console.log('PLAN ' + JSON.stringify(plan()))
   else if (a.join) {
@@ -495,7 +501,11 @@ try {
   }
   const inside = capture as unknown as { session?: object; held?: { session?: object } }
   rendered = inside.session !== undefined || inside.held?.session !== undefined
+  good = true
 } finally {
-  try { await capture.close() } finally { rmSync(temp, { recursive: true, force: true }) }
+  try { await capture.close() } finally {
+    const left = leave(temp, used, good)
+    if (left.length > 0) console.log('pack ' + roundId + ': frames kept under ' + relative(ROOT, temp) + ' with their records for the next run: ' + left.length)
+  }
 }
 console.log('pack ' + roundId + (only ? ' part ' + [...only].join(',') : '') + ': ' + (rendered ? 'frames were rendered' : 'nothing was rendered, no render session was opened') + ', ' + ((Date.now() - started) / 1000).toFixed(1) + ' s')

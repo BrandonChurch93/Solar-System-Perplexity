@@ -10,7 +10,7 @@ The film runs 03:00.000, 5400 frames at 30 frames per second, with no sound. Tim
 | --- | --- | --- | --- | --- | --- |
 | `sun.terrain` | start of terrain | 00:00.000 | 00:00:00:00 | 0 | The film opens here at full level, with no fade in. The hush: music drops to a quiet bed on the first frame, under a soft air tone. Plasma: a low roar with crackle, loudest here. |
 | `sun.rise` | start of rise | 00:06.000 | 00:00:06:00 | 180 | A shorter rush that peaks at the handover and opens out after it. |
-| `sun.rise` | the handover | 00:07.208 | 00:00:07:06 | 216 | The peak of the rush. The view changes in frame 216 with no cover: the place stays in view. |
+| `sun.rise` | the handover | 00:06.842 | 00:00:06:25 | 205 | The peak of the rush. The view changes in frame 205 with no cover: the place stays in view. |
 | `sun.hold` | start of hold | 00:09.000 | 00:00:09:00 | 270 | Music lands on the first frame and carries the hold. Plasma: a low roar, further off. |
 | `sun.travel` | start of travel | 00:15.000 | 00:00:15:00 | 450 | Music builds from the first frame toward the next hold. |
 | `mercury.hold` | start of hold | 00:18.000 | 00:00:18:00 | 540 | Music lands on the first frame and carries the hold. |
@@ -79,7 +79,7 @@ The film runs 03:00.000, 5400 frames at 30 frames per second, with no sound. Tim
 - Music builds through every travel, from its first frame to the first frame of the next hold: 00:15.000 to 00:18.000, 00:34.500 to 00:37.000, 00:53.500 to 00:56.000, 01:12.500 to 01:15.000, 01:31.500 to 01:34.000, 01:50.500 to 01:53.000, 02:09.500 to 02:12.000, 02:28.500 to 02:31.000.
 - Music lands on the first frame of every hold: 00:09.000 sun, 00:18.000 mercury, 00:37.000 venus, 00:56.000 earth, 01:15.000 mars, 01:34.000 jupiter, 01:53.000 saturn, 02:12.000 uranus, 02:31.000 neptune.
 - Music drops to a quiet bed for every terrain view, the hush: 00:00.000 to 00:06.000, 00:26.000 to 00:32.000, 00:45.000 to 00:51.000, 01:04.000 to 01:10.000, 01:23.000 to 01:29.000, 01:42.000 to 01:48.000, 02:01.000 to 02:07.000, 02:20.000 to 02:26.000, 02:39.000 to 02:45.000.
-- A rush of air peaks at every handover: 00:07.208, 00:25.342, 00:32.575, 00:44.775, 00:51.308, 01:03.975, 01:10.008, 01:22.575, 01:29.375, 01:41.975, 01:48.008, 01:59.642, 02:08.408, 02:19.542, 02:26.375, 02:38.608, 02:45.208.
+- A rush of air peaks at every handover: 00:06.842, 00:25.342, 00:32.575, 00:44.775, 00:51.308, 01:03.975, 01:10.008, 01:22.575, 01:29.375, 01:41.975, 01:48.008, 01:59.642, 02:08.408, 02:19.542, 02:26.375, 02:38.608, 02:45.208.
 - The ending: music lands for the last time at 02:51.500, the start of the lookback, and fades with the picture from 02:57.500 to silence at 03:00.000.
 
 ## The clips
@@ -90,7 +90,7 @@ A clip is cut from the same frames as the film. Its cues are the film's cues cou
 | --- | --- | --- | --- | --- | --- |
 | `sun` | `sun.terrain` | start of terrain | 00:00.000 | 0 | 00:00.000 |
 | `sun` | `sun.rise` | start of rise | 00:06.000 | 180 | 00:06.000 |
-| `sun` | `sun.rise` | the handover | 00:07.208 | 216 | 00:07.208 |
+| `sun` | `sun.rise` | the handover | 00:06.842 | 205 | 00:06.842 |
 | `sun` | `sun.hold` | start of hold | 00:09.000 | 270 | 00:09.000 |
 | `sun` | | end of the clip | 00:15.000 | 450 | 00:15.000 |
 | `mercury` | `mercury.hold` | start of hold | 00:00.000 | 0 | 00:18.000 |
@@ -184,7 +184,7 @@ The clip's cues inside each post, after the cut:
 | --- | --- | --- | --- | --- |
 | `sun` | `sun.terrain` | start of terrain | 00:04.567 | 137 |
 | `sun` | `sun.rise` | start of rise | 00:10.567 | 317 |
-| `sun` | `sun.rise` | the handover | 00:11.775 | 353 |
+| `sun` | `sun.rise` | the handover | 00:11.408 | 342 |
 | `sun` | `sun.hold` | start of hold | 00:13.567 | 407 |
 | `mercury` | `mercury.hold` | start of hold | 00:04.767 | 143 |
 | `mercury` | `mercury.dive` | start of dive | 00:09.767 | 293 |

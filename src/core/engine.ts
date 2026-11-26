@@ -55,6 +55,7 @@ export class Engine {
   private asked_ = 'beauty'
   private probe: Probe = parseProbe('beauty')
   director: Director | null = null
+  subs: ((frame: number) => void) | null = null
   private readonly place = new Place()
   private readonly over = new THREE.Scene()
   private readonly camera = new THREE.PerspectiveCamera(30, 16 / 9, 0.01, 1000)
@@ -287,6 +288,7 @@ export class Engine {
     this.way = null
     applyProbe(null)
     this.post.render(this.renderer, this.accumulator.texture, mid.post, f, probe.view, samples.length > 1)
+    this.subs?.(f)
     this.lastShot = mid
     this.sampleCount = samples.length
     this.flush()
@@ -302,6 +304,7 @@ export class Engine {
     this.renderSample(shot, shot, ONE_SAMPLE, 0, 1)
     this.accumulator.add(this.renderer, this.sampleTarget.texture, 1)
     this.post.render(this.renderer, this.accumulator.texture, shot.post, shot.frame, this.probe.view)
+    this.subs?.(shot.frame)
     this.lastShot = shot
     this.sampleCount = 1
   }
@@ -390,7 +393,7 @@ export class Engine {
       const glare = this.director?.glareOf?.(mid)
       const sun = glare ? { ...shot.sun, dir: glare } : shot.sun
       this.sky.setTerrain(shot.skyShare === undefined ? null : shot.skyGlow < 1 ? shot.skyShare : 0)
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open)
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open, shot.skyQuaternion)
       if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, base, sun)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()

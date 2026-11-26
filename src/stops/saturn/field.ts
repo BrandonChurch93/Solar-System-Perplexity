@@ -32,6 +32,7 @@ uniform vec4 uRfGrooveFit;
 uniform vec4 uRfWide;
 uniform vec4 uRfWideFit;
 uniform float uRfWideDark;
+uniform float uRfWideFirst;
 uniform float uRfFoot;
 uniform vec4 uRfBunch;
 uniform vec4 uRfLine;
@@ -173,8 +174,9 @@ void ringFine(float r, float fp, float fpl, float amp, float thin, float side, i
       float lanes = float(o) < uRfLanes.x ? 0.0 : uRfLanes.y;
       // near the sheet a ringlet that is many footprints wide on screen is drawn stronger, with a crisper edge
       // and less hue of its own (uRfWide, nothing of it in the hold): the picture then has ringlets at every
-      // width on screen, as a sheet with structure at every scale has, and no broad bands of pastel colour
-      float wide = float(o) <= uRfWaveFit.w ? 0.0 : smoothstep(uRfWide.x, uRfWide.y, wave / fpl);
+      // width on screen, as a sheet with structure at every scale has. The octaves before uRfWideFirst are
+      // left as they are: near the sheet they are the wide soft lanes of the approved close image
+      float wide = float(o) < uRfWideFirst ? 0.0 : smoothstep(uRfWide.x, uRfWide.y, wave / fpl);
       vec3 q = ringOctave(r / wave + float(o) * uRfAmp.w, uint(o) + 1u, max(uRfMore[o].x - (uRfMore[o].x - uRfWideFit.x) * (wide * uRfWideFit.y), uRfGrooveFit.w * fp / wave), lanes, h, b);
       float held = smoothstep(uRfBunch.x, uRfBunch.y, bunch);
       vec4 span = float(o) < uRfLine.w ? uRfRough[0] : uRfRough[1];
@@ -187,7 +189,7 @@ void ringFine(float r, float fp, float fpl, float amp, float thin, float side, i
       float et = e * uRfAmp.y;
       float l = g * mix(a.z * uRfBunch.z, uRfMore[o].y * uRfBunch.w, thin);
       float mean = mix(1.0 / 6.0, uRfAmp.x, lanes);
-      float wider = float(o) <= uRfWaveFit.w ? 0.0 : smoothstep(uRfWideFit.z, uRfWideFit.w, wave / fpl);
+      float wider = float(o) < uRfWideFirst ? 0.0 : smoothstep(uRfWideFit.z, uRfWideFit.w, wave / fpl);
       kl *= exp(e * q.x + g * a.y * side * q.y + l * q.z * (q.z > 0.0 ? uRfGrooveFit.y : uRfGrooveFit.x) - uRfWideDark * wider * g * (0.5 + 0.5 * q.x)) / ((1.0 + e * e * (mean + e * e / 120.0)) * (1.0 + l * uRfGrooveFit.z));
       kt *= exp(et * q.x + l * q.z * uRfLine.x) / (1.0 + et * et * (mean + et * et / 120.0));
       // a ringlet has a hue of its own, and a brighter one is warmer
@@ -350,6 +352,7 @@ export function ringField(ctx: SetContext, profile: THREE.DataTexture, key: 'ful
       uRfWide: { value: wide },
       uRfWideFit: { value: wideFit },
       uRfWideDark: wideDark,
+      uRfWideFirst: { value: near.wide.first },
       uRfFoot: footU,
       uRfBunch: { value: new THREE.Vector4(fine.bunch[0], fine.bunch[1], groove.dense, groove.thin) },
       uRfLine: { value: new THREE.Vector4(groove.open, fine.jitter[0], fine.jitter[1], fine.even.from) },
