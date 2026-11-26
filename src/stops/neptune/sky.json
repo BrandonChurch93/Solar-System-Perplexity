@@ -1,1 +1,16 @@
-{}
+{
+ "how": "The stop's sky (MAIL 1363 point 2, MAIL 1395 ruling 2): two cards, each a flat picture on the tangent plane at one of the stop's two sky aims, fixed on the sky at the stop's one turn, with no weight by clock or by height. sky-hold.webp at the hold's aim: the approved hero's own sky (frame plus margin, without its Sun) in the middle of its continuation by recipe. sky-terrain.webp at the aim of the surface view: the approved close picture's sky as main carries it, in the middle of the same kind of recipe sky, whose floor goes from the close picture's dark floor to the hold card's floor with the angle from the aim. Both cards stand on the texel grid of their plates (made.texelsPerTan texels for a tangent of 1), so no texel of a plate is resampled. tan: half extent of a card on the tangent plane. edge: the share of the card over which it ends softly at its border. both: the card is drawn in both views of the stop in the dive, the surface view and the rise (the engine's word); the surface view's card has it, the hold's card has not, so the engine draws the hold's card in the hold and in the globe view of the dive and never in the rise. ring: unused (the whole card stands). sun: the hero's own Sun as a picture (MAIL 1395 ruling 3), what the hold's card gave up, drawn by the sky's law where its Sun stands and hidden behind the limb with it; size: the full file's width in texels; at: the texel under the law's Sun at 4605 (first texel centre at 0.5, 0.5); texelPx: frame px at 1920 for one texel (1920 / 2816, the hero's grid); gain as the cards'. A smaller file of the same picture (web) is read by its own width. made: what assets-src/neptune/sky/hold.py reads to make the files; the film reads none of it.",
+ "terrain": [
+  { "file": "sky-terrain.webp", "tan": [1.385757, 1.039318], "edge": 0.15, "gain": 1.538, "add": false, "glare": true, "both": true, "ring": [0.5, 0.5, -1, 0] }
+ ],
+ "orbit": [
+  { "file": "sky-hold.webp", "tan": [1.385757, 1.039318], "edge": 0.1, "gain": 1.538, "add": false, "glare": true, "ring": [0.5, 0.5, -1, 0] }
+ ],
+ "sun": { "file": "sky-sun.webp", "size": 640, "at": [322.853, 319.773], "texelPx": 0.6818181818181818, "gain": 1.538 },
+ "made": {
+  "sun": { "at": [3572.5, 822.1], "crop": [3252, 502, 640], "core": [110, 130], "join": [200, 262], "cap": [8, 25, 38], "line": 21, "directions": 16 },
+  "texelsPerTan": 2955.784239594551,
+  "hold": { "size": [8192, 6144], "plateEdge": 0.2142857142857143, "recipe": { "seed": 4605, "perSteradian": 13100, "least": 8, "most": 230, "slope": 0.75, "sigmaDeg": 0.018, "sigmaSpread": 0.3, "floor": [3, 13, 21], "tints": [[0.93, 0.97, 1.0], [1.0, 0.97, 0.94], [0.72, 0.86, 1.0], [0.95, 0.98, 1.0], [1.0, 0.9, 0.8], [0.85, 0.93, 1.0], [1.0, 1.0, 1.0], [0.8, 0.9, 1.0]] } },
+  "terrain": { "size": [8192, 6144], "plateEdge": 0.1, "floor": { "near": [2, 6, 8], "far": [3, 13, 21], "deg": [28, 42] }, "recipe": { "seed": 4860, "perSteradian": 13100, "least": 8, "most": 230, "slope": 0.75, "sigmaDeg": 0.018, "sigmaSpread": 0.3, "floor": [3, 13, 21], "tints": [[0.93, 0.97, 1.0], [1.0, 0.97, 0.94], [0.72, 0.86, 1.0], [0.95, 0.98, 1.0], [1.0, 0.9, 0.8], [0.85, 0.93, 1.0], [1.0, 1.0, 1.0], [0.8, 0.9, 1.0]] } }
+ }
+}

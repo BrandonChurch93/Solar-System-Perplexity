@@ -5,7 +5,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
 import { handoverOf } from '../../director/handover'
 import { smooth } from '../../director/rig'
-import { bandHold } from '../../space/sky'
+import { bandHold, limbShare, nameSunPicture, showSunPicture } from '../../space/sky'
 import { Air } from './air'
 import { close, farMap, flowMap, held, mended, moon as moonAsset, ringBands, ringGrain, ringMap, wrap } from './assets'
 import { Closeup } from './closeup'
@@ -163,12 +163,29 @@ export const createSet: SetFactory = async (ctx) => {
   const ownAt = (high: number): number => 1 - smooth(Math.log(Math.max(high, 1e-6) / deepLook.globe.own[1]!) / Math.log(deepLook.globe.own[0]! / deepLook.globe.own[1]!))
 
   const sky: SkyPatch[] = []
-  // sky.json is empty since 25 Nov: the stop has no sky plate of its own, the engine's one sky stands at every height (MAIL 774, 878).
-  for (const [view, def] of Object.entries(skyJson as Record<string, { file: string; vfovDeg: number; margin: number; gain: number; add: boolean; ring: number[] }>)) {
-    const wide = 1 + 2 * def.margin
-    const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2) * wide
-    sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: [t * 16 / 9, t], gain: def.gain, add: def.add, ring: def.ring as [number, number, number, number], edge: def.margin / wide })
+  // The stop's sky (sky.json, MAIL 1363 point 2, MAIL 1395 ruling 2): two cards made by assets-src/neptune/sky/hold.py, the approved
+  // hero's own sky with the Sun taken off at the hold's aim and the approved close picture's sky at the aim of the surface view, each
+  // in the middle of its continuation by recipe. Both are fixed on the sky at the stop's one turn, are drawn in both views (both) and
+  // carry no weight of their own: no law by clock or by height, so they leave and enter only behind the globe or over the frame's
+  // edge. The Sun and its glare are the engine's, drawn over the pictures (glare in sky.json).
+  type SkyDef = { file: string; vfovDeg?: number; margin?: number; tan?: number[]; edge?: number; gain: number; add: boolean; glare?: boolean; both?: boolean; ring: number[] }
+  for (const [view, defs] of Object.entries(skyJson as unknown as Record<string, SkyDef[] | object>)) {
+    if (!Array.isArray(defs)) continue
+    for (const def of defs as SkyDef[]) {
+      const margin = def.margin ?? 0
+      const wide = 1 + 2 * margin
+      const t = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg ?? 0) / 2) * wide
+      sky.push({ view: view as ViewKind, texture: await ctx.texture(base + def.file, { srgb: true, mips: false, anisotropy: 1 }), aim: new THREE.Quaternion(), tan: def.tan ? [def.tan[0]!, def.tan[1]!] : [t * 16 / 9, t], gain: def.gain, add: def.add, glare: def.glare === true, both: def.both === true, ring: def.ring as [number, number, number, number], edge: def.edge ?? margin / wide })
+    }
   }
+
+  // The hold's Sun (sky.json, sun; MAIL 1395 ruling 3): the hero's own Sun as a picture, what the hold's card gave up (hold.py,
+  // sunless). The sky's law draws it where its Sun stands and hides it behind the globe's limb with the Sun (update below). The
+  // smaller file of the web assets is the same picture at half the measure, read by its own width.
+  const sunDef = (skyJson as unknown as { sun: { file: string; size: number; at: number[]; texelPx: number; gain: number } }).sun
+  const sunMap = await ctx.texture(base + sunDef.file, { srgb: true, mips: false, anisotropy: 1 })
+  const sunScale = sunDef.size / (sunMap.image as unknown as { width: number }).width
+  nameSunPicture({ texture: sunMap, at: [sunDef.at[0]! / sunScale, sunDef.at[1]! / sunScale], texelPx: sunDef.texelPx * sunScale, gain: sunDef.gain })
 
   return {
     id: plan.id,
@@ -176,6 +193,9 @@ export const createSet: SetFactory = async (ctx) => {
     sky,
     update: (state, shot, view) => {
       const inOrbit = state.view === 'orbit'
+      // The Sun's picture is shown in the flight in and in this stop only (the ending's Sun is the ending's), by the share of the
+      // Sun's disc that stands clear of the globe's hard limb as the globe view sees it.
+      if (inOrbit && (shot.segment.stop === plan.id || shot.segment.kind === 'travel')) showSunPicture(limbShare(shot.sun.dir, world.position, 1, shot.sun.angularRadius), shot.sun)
       if (shot.segment.stop === plan.id && shot.segment.kind === 'rise') holdBand(shot.u)
       orbit.visible = inOrbit && state.weight > 0
       terrain.visible = !inOrbit
