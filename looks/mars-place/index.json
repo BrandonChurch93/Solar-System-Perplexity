@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T02:24:53.213Z",
- "head": "e463865a080ce64c59f68cdff358011e9dc1b180",
- "note": "2708: the map alone at both frames reads 0.9365 by the true carry; the name 0.9648; main's plate 0.8094",
+ "pushed": "2026-11-26T02:45:19.774Z",
+ "head": "749712666e01f152e8b073b465d095f807347546",
+ "note": "dive slice at 2462 on the name's tree: 1.30 at the top edge, the chain parts from the map by 38 px; cure of the plate against the map as drawn is being measured",
  "looks": [
+  {
+   "time": "2026-11-26T02:45:18.014Z",
+   "file": "20261126024518014-note-mars-dive-k4924-4924-changes.jpg",
+   "source": "../../../../tmp/pm/diveN/mars-dive-k4924-4924-changes.png",
+   "kind": "note",
+   "label": "dive slice at 4924 on the tree 74971266: frame 2462 against 2470 by the reader, pattern 1.30 at the far ground at the top edge; the chain parts from the camera's map by 38.4 px there",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T02:24:52.333Z",
    "file": "20261126022452333-note-ends-B-V0-E1.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/pm/N-row0016.png",
    "kind": "note",
    "label": "rise 2708 name: frame, 2716 carried by the chain, pattern heat, difference; top 1 percent outlined",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T01:46:21.811Z",
-   "file": "20261126014621811-note-blob-main-name.jpg",
-   "source": "../../../../tmp/pm/blob-main-name.png",
-   "kind": "note",
-   "label": "rise 2708 draft, crop x 240 to 640, y 180 to 440: main above, name below",
    "stop": "mars"
   }
  ]
