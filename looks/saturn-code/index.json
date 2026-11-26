@@ -1,9 +1,16 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T15:24:24.831Z",
+ "pushed": "2026-11-26T15:48:29.969Z",
  "head": "434083c8d5e997cc920f5837984ea4d374145707",
- "note": "mail 1508: the dive's red path lines read on my tree; cause is the lens law by the distance; cure of the lens in work",
+ "note": "MAIL 1508: cure of the dive's four red path lines in work: lens law of the dive with a swell where the path's own motion is least; path part green on the working tree; main's dive rows rendering for the comparison",
  "looks": [
+  {
+   "time": "2026-11-26T15:48:29.131Z",
+   "file": "20261126154829131-note-dive_cure_curves.jpg",
+   "source": "../../../../tmp/v/p1508/dive_cure_curves.png",
+   "kind": "note",
+   "label": "MAIL 1508 cure, path code only: the reader's speed at the place, the lens and the disc's growth by frame, main 9f09a8a3 (red lines) against the cure (swell of the lens law at 4.15 radii, slow start)"
+  },
   {
    "time": "2026-11-26T15:24:05.216Z",
    "file": "20261126152405216-note-dive_speed_cause.jpg",
@@ -52,13 +59,6 @@
    "source": "../../../../tmp/v/rigid/T1/t20/part_view.png",
    "kind": "note",
    "label": "rise 3854, 3861.5, 3862, 3870, cure above main: cyan the cell at the lit left limb where the reader reads the cure higher, yellow the part where the inner ring passes before the globe and the reader's flows disagree"
-  },
-  {
-   "time": "2026-11-26T13:48:35.295Z",
-   "file": "20261126134835295-note-placements_rise2_20rows.jpg",
-   "source": "../../../../tmp/v/rigid/T1/placements_rise2_20rows.png",
-   "kind": "note",
-   "label": "Saturn rise part 2, frames 3853 to 3862 and a half: the reader's pattern rows under 25 placements of the same stills, the cure left and main right; red is the stills as they are. From 3858 and a half on the placements close into one falling curve on both trees"
   }
  ]
 }
