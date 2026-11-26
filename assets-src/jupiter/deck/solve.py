@@ -21,6 +21,13 @@ def scene(path, size=None):
     return inverse_filmic(srgb_to_linear(im[..., ::-1].astype(np.float64) / 255)).astype(np.float32)
 
 
+def shown(path, size=None):
+    im = cv2.imread(path, cv2.IMREAD_UNCHANGED)[..., :3]
+    if size is not None and (im.shape[1], im.shape[0]) != size:
+        im = cv2.resize(im, size, interpolation=cv2.INTER_AREA)
+    return im[..., ::-1].astype(np.float32) / 255
+
+
 def smoothstep(a, b, x):
     t = np.clip((x - a) / (b - a), 0, 1)
     return t * t * (3 - 2 * t)
@@ -65,6 +72,10 @@ def main():
     num = cv2.GaussianBlur((a - f0) * m, (0, 0), sigma)
     den = cv2.GaussianBlur((f - f0) * m, (0, 0), sigma)
     ratio = np.clip(np.maximum(num, 0) / np.maximum(den, 1e-6), cfg['step'][0], cfg['step'][1])
+    if cfg['displayGamma'] > 0:
+        num = cv2.GaussianBlur(shown(approved, (w, h)) * m, (0, 0), sigma)
+        den = cv2.GaussianBlur(shown(frame) * m, (0, 0), sigma)
+        ratio = np.clip((np.maximum(num, 0) / np.maximum(den, 1e-6)) ** cfg['displayGamma'], cfg['step'][0], cfg['step'][1])
     logr = np.log2(ratio)
     even = logr.mean(-1, keepdims=True)
     logr = cfg['share'] * even + cfg['hueShare'] * np.clip(logr - even, -cfg['hueLog2'], cfg['hueLog2'])

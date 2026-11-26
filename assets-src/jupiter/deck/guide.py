@@ -149,7 +149,10 @@ def main():
         high = relief(plain, deck, level)
         stops = np.log2(np.maximum(cv2.GaussianBlur(plain @ np.float32([0.2126, 0.7152, 0.0722]), (0, 0), cfg['relief']['basinWideUnits'] / (level['size'] / n), borderType=cv2.BORDER_REPLICATE), 1e-6) / cfg['relief']['basinLight'])
         dark = cv2.resize(np.clip(-stops / rc['darkStops'], 0, 1), (rc['pixels'], rc['pixels']), interpolation=cv2.INTER_AREA) * rc['darkShare']
-        coarse = np.round(np.clip(np.maximum(wild / rc['most'], dark), 0, 1)[::-1] * 65535).astype(np.uint16)
+        calm = plain @ np.float32([0.2126, 0.7152, 0.0722])
+        around = cv2.GaussianBlur(calm, (0, 0), cfg['relief']['laneWideUnits'] / (level['size'] / n), borderType=cv2.BORDER_REPLICATE)
+        lit = cv2.resize(np.clip(np.tanh((calm - around) / (around + cfg['relief']['laneFloor']) / cfg['relief']['laneKnee']), 0, 1), (rc['pixels'], rc['pixels']), interpolation=cv2.INTER_AREA)
+        coarse = np.round(np.clip(rc['lit'] * lit + (1 - rc['lit']) * np.maximum(wild / rc['most'], dark), 0, 1)[::-1] * 65535).astype(np.uint16)
         for folder in (FULL, WEB):
             coarse.tofile(os.path.join(folder, 'guide-' + name + '-rough.bin'))
         deep = np.round(np.clip(dark / rc['darkShare'], 0, 1)[::-1] * 65535).astype(np.uint16)

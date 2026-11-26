@@ -3338,3 +3338,149 @@ All at 3150, preview, draft, in keep mode on w58's scaffold (w58 solved reads 7.
 - `public/assets/jupiter/full/deck-view-color.png` (29.0 MB) and `web/deck-view-color.png` (9.0 MB) are removed: no program reads them at run time and no test names them. `assets-src/jupiter/deck/view.py` writes them again; `plates/beyond.py` and `deck/air.py` read them, so run `view.py` first when the plates are built again.
 - `deck-image-core.jpg` (3.9 MB full, 1.2 MB web) is removed too: only `deck/image.py` names it, as its writer.
 - Net of the three folders against main 77a7d41 after this: 3.4 MB added (source 7.2 MB, mostly the three solve pictures; public 1.2 MB less 5.0 MB).
+
+### 08:50 to 09:00 UTC: the candidate is pushed (0c012e2), w70 better, smoke as height refused
+
+- Pushed 08:57: `agent/jupiter-code` at 0c012e25 = w68 (ceb9449) + merge of main 77a7d41 (359c49d1) + the removal of two pictures. `npx tsc --noEmit` green on it; the whole test run is queued behind the draws (`72-tests.sh`, result in `work/r26/t/tests.json`).
+- 3060 and 3239 of w68 (`t/w68s-3060.png`, `t/w68s-3239.png`): whole, the camera is not inside matter, the storm reads; the lower half is a zebra of streaks in both.
+- All on w68's scaffold, 3150, preview, draft:
+
+| state | change | line (i) | eye |
+| --- | --- | --- | --- |
+| w68 | | 6.446 | zebra of streaks in the lower middle |
+| w70 | `tall.sheet` 0.4, `cells.cover.sparse` 0.75 | 6.235 | more heaps, fewer streaks: better, still soft as if out of focus |
+| w69 | smoke as height (`mk/w67.py`) | 7.003 | broad folded stripes, liquid: refused |
+| w74 | w69 with sheets and threads at a quarter in the dark field | 7.172 | the stripes are the smoke itself: refused |
+
+- Why the stripes are so strong under the gas: with k = 3 per unit, the Sun's way (1 over 0.549) and the eye's way (1 over 0.25 in the fourth row) a ridge that stands 0.03 units over its trough is exp(3 times 0.03 times 5.8) = 1.7 times as light. Good for heaps, bad for every long ridge along the flow. So in the dark ground the relief must be heaps only.
+- Beside the approved at twice the size (`t/w70-cmp-ll.png`): mine is soft, as if out of focus; the approved is crisp to the pixel with fine wisps everywhere. The dotted pattern in my lit tops is the march at 1 sample, not detail; at final tier it goes and the finest band may fall.
+
+### 09:00 to 09:20 UTC: w76, w72, w73, w77; the 09:30 mail is out; what the approved's dark ground is
+
+| state | change (on w68's scaffold unless said) | line (i) | eye |
+| --- | --- | --- | --- |
+| w75 | w70 with sheet tint and threads at a quarter in the dark field (`mk/w74.py`) | 7.703 | no gain, not taken |
+| w76 | w70 with `cells.cover.sparse` 0.95, `tall.sheet` 0.15 | 6.473 | packed mounds: a brain |
+| w72 | w68 with skin 0.015, top skin 0.006 | 6.269 | crisper tops: taken |
+| w73 | w68 with skin 0.008, top 0.004, free path 0.004 | 6.751 | hard and glossy, rock: refused |
+| w77 | w76 with w72's skin | 6.379 | crisper brain |
+| w77, one solve round of its own | | 5.428 | best number of line A (outside the seven cells 3.877) |
+
+- w77's solve pictures: `v/w77/solve/`; its pre.sh copies them. Bands of w77 after the round: 0.881, 1.028, 1.077, 0.999.
+- By cell on w77 after its round: the fourth row reads 9.8, 12.6, 9.5, 5.3, 4.4, 8.9, 10.2, 10.6 mean absolute with signed means of +8, -3, -1, -1, -1, -8, -9, -8. So in the lower left the pattern is wrong, not the level: heaps placed by chance are lit where the approved is dark. A dome of 0.24 units is 40 px wide at 2.5 units: it lies in the low band. Heaps under 0.06 units average out inside the 16 px blur and leave the low band to the albedo and the broad fields.
+- The approved's lower left at its own size (2816 wide, `t/appr-ll-native.png`): dark smoky strands along the flow, 1 to 3 of its pixels wide (under 1 px at preview), low in contrast, on large soft folds; on the crests few small crisp cauliflower clusters, lit warm; black gaps. So streaks are right there, but fine and dim; and the heaps are small, sparse and bright. w70 to w77 went the wrong way (more and larger mounds).
+- Why my stripes are a zebra: the sheets' height and tint are both carried by their largest octaves (0.6, 0.3, 0.15 units across): height falls as w to the power 0.75, the tint's weight as 2 to the power -0.3 k. Under the gas 0.02 units of height are a factor 1.4.
+- Sent 09:19: the state mail for MAIL 1422 (`work/r26/mail/STATE-0930.txt`) with `t/state-w77-3150.jpg` and `t/state-w68-ends.jpg`. It says: not a candidate for main; the map taken; the gas and the basins put to the Builder for a ruling; red list.
+- Queued: w79 (w77 with `tall.range` [0.05, 0.5]) on w68's scaffold; w80 (w79 with heaps from 0.06 units down, `silk.aspect` 0.6, `cells.first` 1, `cover.sparse` 0.6) and w81 (w79 with `sheet.tintFall` -0.3, `sheet.aspect` 0.02) on w77's scaffold; then the whole test run on 0c012e2; then w71.
+
+### 09:20 to 09:32 UTC: MAIL 1450; the stripes are tint; the plan to 11:15
+
+- MAIL 1450 (09:22, `work/r26/mail/MAIL-1450.txt`): the gas is allowed as a law of light (one law wherever the ground is drawn, the globe's close ground too, or say where the two part); the basins are allowed as form and must be named as a height taken from the map's wide light, rule and numbers in NOTES.md; line B leads at 09:30 (d367); the 11:30 ruling names the Jupiter of the fourth cut. Until 11:15: line (i) by form at 30 to 100 px, then the lower thirds as cloud; one sheet by 11:15 (3150 beside main and the approved, line (i) whole and outside the seven cells, line (ii), the cost a frame).
+- On w77's scaffold, 3150, preview, draft:
+
+| state | change | line (i) | eye |
+| --- | --- | --- | --- |
+| w79 | w77 with `tall.range` [0.05, 0.5] | 6.340 | the same picture |
+| w80 | w79 with heaps from 0.06 units, `silk.aspect` 0.6, `cells.first` 1, `cover.sparse` 0.6 | 6.302 | a mat of pebbles: refused |
+| w81 | w79 with `sheet.tintFall` -0.3, `sheet.aspect` 0.02 | 5.882 | finer stripes, still stripes |
+| w82 | w79 with `tint.2` 0.6, `fibre.tint` 0.4, `thread.tint` 0.4 | 7.174 before its own solve | the stripes go, it reads as soft cloud; band 1 to 2 px 0.653 red, the others 0.765, 0.850, 0.944 |
+
+- So the zebra is the tint (the sheets' tint of 2.0 in the logarithm), not the height. With the tint cut the fine band falls: the crisp detail has to come back in the approved's way (strands, cluster edges), not as stripes everywhere.
+- The whole test run started by itself at 09:27 when the queue ran empty; stopped at 09:28:41 to keep the renderer for the draws; the job is parked (`work/r13/parked/99-tests.sh`). Not run on 0c012e2.
+- Queued on w82: w83 (basins from the map's light at the guide's own cut of 0.08 units and not at 0.3: `mk/w83.py`, `basinFormUnits` 0, `basinUnits` 0.0625 a stop under `basinFrom` 0.21, `basinRange` [-0.36, 0], gas level -0.03), w84 (`thread.tint` 1.2), w85 (`guide.paint.share` 0.9).
+- Looks pushed 09:29:04 (39f6f5f1).
+
+### 09:32 to 09:57 UTC: height from the map at fine scale refused; the matter's floor; heaps steered by the map's lit places
+
+All 3150, preview, draft. Scaffold of w77 unless said.
+
+| state | change | line (i) | eye |
+| --- | --- | --- | --- |
+| w83 | w82, basins from the map at 0.08 units (`mk/w83.py`: 0.0625 a stop under 0.21, range -0.36 to 0, gas level -0.03) | 12.841 before a solve | black pits, rounded hills, a landscape: refused |
+| w84 | w82, `thread.tint` 1.2 | 7.045 | a few fine strands more; band 1 to 2 px 0.664 |
+| w85 | w82, `guide.paint.share` 0.9 | 7.477 | hardly a change; band 1 to 2 px 0.679 |
+| w86 | w82, `thread.tint` 1.2, `paint.share` 0.9, `tint.2` 0.9, `guide.solve.albedo.0` 0.14 | 8.045 bare of its solve; 7.351 after one round, 7.122 after two | bands green (0.772, 0.910, 0.981, 0.987); the deep reads, the far right is too light |
+| w87 | w86, `guide.relief.laneUnits` 0.08 | 9.302 | pits like craters in and round the storm: refused |
+| w88 | w86, heaps where the map is lit above its surround (`mk/w88.py`: `guide.rough.lit` 1; `cells.patch.unrest` 1, `ridge` 0, `share` 0.15, `range` [0.15, 0.5], `least` 0.1; `cover.sparse` 0.5), glow as sparks, `cumulus.lift` 2 | 9.249 on w86's scaffold | few large brown masses on a smooth streaked ground: boulders in a river; they do stand where the approved has its clusters; the glow is four blue lamps |
+| w89 | w88, `tall.range` [0, 0.2] | 9.244 | the same picture |
+
+- Why w77 was too dark in the bottom rows and why more rounds would not cure it: there the albedo stands at the floor (0.05) or at the top (0.7) and the gas with basins of 0.33 takes about 3 stops more than the approved has. By cell (luma against the approved): bottom row -3 -11 -2 -9 -13 -8 -4 -5; fourth row right -8 -10 -8.
+- The floor at 0.14 (w86) cures the bottom rows (-2 -9 1 -3 -5 -2 1 -2) and breaks two places where the matter is dark by itself: the dark red under the eye (+11, +10) and the far right under the limb (+15, +29, heaps standing out of the gas with tops at 0.75). So the floor goes back to 0.05 and the gas is thinned instead: `look.gas.perUnit` times 0.55.
+- The heaps' tops did not obey the solve: their own colour stood at clamp(8 times albedo, 0.05, 0.75), which is 0.75 from an albedo of 0.094 up. `cumulus.lift` 8 to 4 (w90).
+- Height taken from the map at fine scale (w83, w87) reads as terrain: pits and hills. Not taken. What is taken from the map at fine scale is only where heaps stand (w88).
+- Disk: 3.3 GB free at 09:55; removed `out/clips`, `out/posts` and two films of `out/` (not tracked): 4.1 GB.
+- Looks pushed 09:51:27 (7acf8baa).
+
+### 09:57 to 10:15 UTC: w90 after two rounds is the best number so far; where line (i) lies
+
+All 3150, preview, draft.
+
+| state | change | line (i) | eye |
+| --- | --- | --- | --- |
+| w90 | w88, floor 0.05, gas times 0.55 (`look.gas.perUnit` [1.65, 1.375, 1.045]), heaps' wave 0.1, `cumulus.lift` 4, steady glow gain 0.3 | 6.469 on w77's scaffold; 4.862 after one round; 4.292 after two (inside the seven cells 0.902, outside 3.389) | heaps in groups where the map is lit; ground between them smooth streaks, reads as liquid; bands 0.686, 0.820, 0.894, 0.905: the first red |
+| w91 | w90, `sheet.aspect` 0.12, `tall.sheet` 0.4 | 4.274 | the same picture |
+| w92 | w90, `cells.patch.least` 0.25 | 4.419 | hardly a change |
+| w94 | w90, `warp.oldUnits` [0.9, 0.22], `warp.oldReach` [0.4, 0.25] | 4.629 | the streaks meander, still smooth silk |
+| w95 | w90, heaps' wave 0.05 | 4.930 | groups of small bulbs, read as gravel; bands green 0.705, 0.854, 0.916, 0.911 |
+
+- Main at this tier: 3.390 whole, 3.208 outside the seven cells. w90 after two rounds stands 0.18 over main outside the seven cells and 0.72 over it inside.
+- Where w90's line (i) lies (`cells.py`, mean absolute by cell, 8 by 5): left column rows 2 to 4: 6.3, 7.9, 8.9 (main 1.8, 3.0, 3.3; mine too light by 5 to 8 of luma); bottom row 5.4, 8.9, 6.5, 4.2, 8.3, 4.7, 5.7, 3.2 (main 5.9, 8.6, 9.0, 2.0, 1.5, 1.4, 0.8, 0.3); far right under the limb, row 3: 7.3 (main 0.5); the storm 5.2 and 1.8 (main 18.3 and 12.6).
+- `clip.py NAME` (new): by cell, the solve's mean turn and the share of the ground that stands at the floor, at the top or at the turn's limit. w90: far right under the limb 97 percent at the floor and 75 percent at the limit of 4 stops, and still 7.6 of luma too light: the tops there stand out of the gas in full Sun. Not cured; no law of light I have makes the far right dark without a dial by place. Bottom row right: 82 to 99 percent at the floor.
+- Inside the seven cells the mean signed error is small (under 4 of luma); the absolute error is pattern: my lamps stand where the approved has none and the approved's brightest glints (pixels 617 391, 517 464, 581 498, 561 488, 668 436 of 960 by 540) have no lamp. The sites of `life.flash.sites` were never at those places. w97 moves them there (ground 1.342 -2.186; 0.682 -2.673; 0.9 -2.76; 1.542 -2.411; 0.78 -2.745) and lets the steady light show only in the troughs (`steady.deepUnits` [-0.025, -0.005], halo [0.6, 3.0], gain 1.0, tight 30).
+- The ground between the heaps is nearly flat: `sheet.aspect` 0.035 on a wave of 0.6 units gives heights of about 0.006 units. What reads there is painted stripe, not relief. That is the liquid.
+- Looks pushed 10:10:50 (65791aeb).
+
+### 10:15 to 10:50 UTC: the low deck, the glints' places, the solve's rounds; where line (i) stands
+
+All 3150, preview, draft. Main at this tier: 3.390 whole, 3.208 outside the seven cells, 0.182 inside.
+
+| state | change | line (i) | eye |
+| --- | --- | --- | --- |
+| w96 | w90, steady glow nearly off | 4.180 (inside 0.800, outside 3.379) | the lamps cost about 0.1 inside the seven cells |
+| w97b | w90, sites moved to the approved's glints, gain 0.8, halo 0.6 | 7.428 | places right, far too strong |
+| w99 | w90, `silk.waveUnits.0` 0.07, `cells.patch.least` 0.35, `cells.cover.sparse` 0.72, `thread.tint` 0.7 | 4.565 before its rounds; bands green 0.725, 0.865, 0.923, 0.921 | a low bumpy deck everywhere with groups of larger bulbs; reads more as cloud than the streaked liquid; the form kept |
+| wa1 | w99, the five sites at the approved's glints (ground 1.342 -2.186; 0.682 -2.673; 0.9 -2.76; 1.542 -2.411; 0.78 -2.745), steady gain 0.35, tight 60, halo 0.12 | 4.549; after one round 3.904, two 3.668, three 3.532, four 3.434 (inside 0.662, outside 2.772); bands green 0.720, 0.864, 0.928, 0.929 | outside the seven cells 0.44 under main; inside 0.48 over it; the lamps are soft round discs |
+| wa2 | wa1, glow gated to `deepUnits` 0.001 to 0.008, gain 0.5, tight 40, `cumulus.lift` 2 | 3.567 on wa1's fourth round | the gate cuts nothing (the hit lies on the stored relief there); lamps larger; stopped |
+| wa3 | wa1, steady gain 0.5, tight 150, halo 0.015 | see the next block | small glints |
+
+- The solve's rounds on wa1 went 4.549, 3.904, 3.668, 3.532, 3.434: each round still pays. A round costs one draw (90 s).
+- wa1 after four rounds by cell (`cells.py`, mean absolute, 8 by 5): row 1: 5.1 3.1 2.8 1.1 0.9 0.8 0.6 0.3; row 2: 4.8 5.3 2.9 4.4 1.5 1.9 1.2 1.1; row 3: 5.5 3.6 3.2 4.2 2.6 1.9 1.2 7.5; row 4: 7.3 7.5 4.7 1.6 2.0 1.8 3.1 4.9; row 5: 4.7 7.7 5.9 3.4 6.4 2.7 3.9 2.2.
+- The lamps' cell (row 5, column 5): my excess over the approved is 2.9, 5.1, 9.3 in red, green, blue: the glow's own colour (0.25, 0.5, 0.85). The matter there stands at its floor (77 percent). So the excess is the steady glow itself. Less light, smaller: wa3.
+- Far right under the limb (row 3, column 8): the approved reads 12.5, 22.5, 28.7; mine 25.5, 29.1, 30.6; the air alone (matter black) 3.1, 6.8, 9.7. The error is red: the matter stands brown at its floor (0.05) in full Sun where the approved is blue black. The map's wide light there is 0.25 to 0.35 (the old tone table lifts the far field), so the basin's rule gives no basin and the ground stands at height 0, above the gas. Not cured. A lawful cure would be a basin there (the map's light without the tone table) and more air; both untested.
+- Lower left: my heaps stand lit and pink at about pixel 40 to 160 by 320 to 430, where the approved is dark with thin lit crests and a few small lit clusters (about 150 465). The heaps' colour is their own cream times clamp(lift times the matter's light, 0.05, 0.75): with lift 4 it stands at the top wherever the matter is over 0.19, so the solve hardly steers it. Lift 2 (wa2) changed little to the eye.
+- Looks pushed 10:32:24 (cdb97a1f).
+
+## What the surface view takes from the map, and the gas (for MAIL 1450, items 1 and 2)
+
+NOTES.md in this folder is the notebook of the builder of line B, so the rules stand here.
+
+The map is the approved picture laid on the ground through the 3150 view (`deck/guide.py`, `ground()`), blurred by `guide.cutUnits` 0.08 units. L is its luminance. s is the distance from the storm's centre in flow scales (0.75 units).
+
+Heights taken from the map's light (`guide.py relief()`, numbers in `deck.json guide.relief`):
+
+| name | rule | numbers |
+| --- | --- | --- |
+| basin | height = clip(basinUnits times log2(L blurred by basinWideUnits over basinFrom), basinRange) times smoothstep(basinEdge, s) | 0.12 units a stop under 0.075; blur 0.3 units; range -0.33 to 0; from 1.3 to 2.3 flow scales outward |
+| lanes | height = laneUnits times tanh((L minus W) over (W plus laneFloor) over laneKnee), W = L blurred by laneWideUnits | 0.03 units; floor 0.05; knee 0.4; blur 0.6 units |
+
+Heights not taken from the map: the datum 0; the storm's floor (`floorUnits` -0.14 inside 0.25 to 1.2 flow scales); the storm's crest (`crestUnits` 0.04 at 1.75 flow scales, width 0.25); every form finer than 0.08 units (sheets, heaps, fibres: code on the flow's coordinates).
+
+Fields taken from the map that steer the code's forms (`guide-*-dark.bin`, `guide-*-rough.bin`, 256 px): dark = clip(-log2(L blurred by 0.3 units over `basinLight` 0.25) over `rough.darkStops` 3, 0, 1): it sets how strongly the sheets are drawn (`look.cloud.rough`) and where the tall ground is (`look.cloud.tall`). The second (`guide.rough.lit` 1.0) holds where the map is lit above its surround: clip(tanh((L minus W) over (W plus 0.05) over 0.4), 0, 1) with W = L blurred by 0.6 units. It sets where the heaps stand in groups (`cells.patch.unrest` 1.0, `cells.patch.range` 0.05 to 0.35) and where they stand low and thin (outside the groups their height is `cells.patch.least` of the full one). This is form steered by the map: the heaps themselves, their size, their bulbs and their motion are code.
+
+Colour taken from the map (MAIL 1422, point 3): albedo = map times the solve's turn, held between `guide.solve.albedo` (the matter's floor and its top), times the map's fine part to the power `guide.paint.share` (0.9 outside the storm, 1.0 inside 1.4 to 2.4 flow scales); in the dark field the fine part may only darken (`paint.deep` 1.0), so no lit rim is painted there.
+
+The gas (`clouds.ts`, where the light of a sample is set; numbers in `deck.json look.gas`): with u = max(levelUnits minus the sample's height, 0) and k = perUnit, the Sun's light is cut by exp(-k u over max(sine of the Sun, leastSine)), the sky's by exp(-k u sky), and what leaves toward the eye by exp(-k u over max(sine of the ray, leastSine)). Numbers: level -0.1 units, k [1.65, 1.375, 1.045] a unit (red, green, blue), sky 1.66, least sine 0.05. No eye height, no clock, no table. It stands in the deck's shader only: wherever `clouds.ts` draws the ground (the surface view, and the deck in dive and rise) it is the same law. The globe (`globe.ts`) has none: the two part where the globe's own ground gives way to the deck. That join is not drawn again since the gas and the basins came in.
+
+## 26 Nov, 10:25 to 10:57 UTC: glow as light on the matter, solve in display values (states wa1 to wa5)
+
+All numbers at frame 3150, preview (960 x 540), draft, 1 sample. Main at this tier on this machine: line (i) 3.390 whole, 3.208 outside the seven cells, 0.182 inside. The bar is main at final master, 3.539; nothing here is proved at that tier.
+
+- wa1 (w99 with the five glow sites moved to the approved's glints, steady gain 0.35, tight 60, halo 0.12 and 4.0): four solve rounds 3.904, 3.668, 3.532, 3.434 (inside 0.662, outside 2.772). The glow read as soft round lamps laid over the picture and too bright.
+- wa2 (the added glow gated by the stored relief, lift 2): 3.567, the gate cut nothing, lamps larger. Dropped.
+- wa3 (wa1 with gain 0.5, tight 150, halo 0.015): 3.515 before rounds, small dots that still read as lamps. Dropped.
+- wa4: the steady glow is no longer added over the picture. clouds.ts has a new deepAt(ground, clear): the sum over the sites of exp(-q tight) plus halo.x exp(-q halo.y), times the steady gain, times exp(-clear over flash deepUnits.y), times the glow colour; it is added to the light on the matter inside the march. clear is the height of the sample above the stored relief. Numbers: steady gain 6.0, tight 60, halo 0.15 and 4.0, deepUnits 0.0 and 0.04. Before rounds 3.447, r1 3.330, r2 3.239 (inside 0.586, outside 2.653); bands 0.721, 0.865, 0.931, 0.931.
+- Why the rounds stalled: solve.py took its ratio from scene light (the frame through the inverse of the grade), where a few bright pixels outweigh the dark ground in every blur, while line (i) is read on display values. Whole cells stood 5 to 8 too light or too dark round after round.
+- wa5: solve.py reads display values when guide.solve.displayGamma is over 0: ratio = (blur of the approved's display values over blur of the frame's display values) to the power displayGamma (2.2), clipped to guide.solve.step; guide.solve.share 0.6. Started from wa4's second round. Rounds: 2.703, 2.492, 2.370, and with guide.solve.upLog2 4.0 (was 3.0) the fourth 2.006 (inside 0.398, outside 1.608). Bands at the fourth round: 1 to 2 px 0.729, 2 to 4 px 0.877, 4 to 8 px 0.946, 8 to 16 px 0.942 (main 0.765, 0.924, 0.979, 0.998).
+- By cell after the fourth round (mean absolute, 8 by 5): worst is the far right under the limb, 7.5, and it does not move: the approved there is blue black (12.5, 22.5, 28.7), mine 25.5, 29.1, 30.6, the air alone 3.1, 6.8, 9.7. The matter stands at its floor 0.05 in full Sun, the map's wide light there is 0.25 to 0.35 so no basin forms, and the hue turn stands at its limit. Next worst: bottom row second cell 5.5, top left 4.1, bottom left 3.9.
+- Cost: a draw 90 s, a round with its guide about 1 min 50 s.
+- What is wrong at this state, worst first: the lower thirds are thin parallel ripples and pebbly bulbs, not smoke; nothing crisp to the pixel; far right under the limb (combed stripes, false colour bands, dotted limb at 1 sample); the glow is dim patches; the storm's rings read as contour lines; the matter's floor did not rise; dive and rise joins not drawn since the gas and the basins came in; tests not run.

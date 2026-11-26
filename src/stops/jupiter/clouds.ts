@@ -543,6 +543,15 @@ vec3 flashAt(vec2 g, vec3 c) {
   float lum = dot(c, vec3(0.2126, 0.7152, 0.0722));
   return vec3(s * smoothstep(uFlashLook.x, uFlashLook.y, (c.b - c.r) / max(c.b + c.r, uFlashCore.z)) * mix(uFlashShare, 1.0, smoothstep(uFlashLook.z, uFlashLook.w, lum)), (t + uFlashCore.y * s) * sqrt(max(lum, 0.0)), uFlashSteady.x * still);
 }
+vec3 deepAt(vec2 g, float clear) {
+  float still = 0.0;
+  for (int i = 0; i < ${FLASHES}; i++) {
+    vec2 d = g - uFlash[i].xy;
+    float q = dot(d, d) * uFlash[i].z;
+    still += exp(-q * uFlashSteady.y) + uFlashHalo.x * exp(-q * uFlashHalo.y);
+  }
+  return uFlashGlow * (uFlashSteady.x * still * exp(-max(clear, 0.0) / uFlashDeep.y));
+}
 vec4 sunAt(vec2 g) {
   vec3 low = unfilm(textureLod(uGuideMid, (g - uMid.xy) * uMid.z + 0.5, uHazeLight.w).rgb);
   return vec4(low, smoothstep(uHazeLit.x, uHazeLit.y, (low.r - low.b) / max(low.r + low.b, 1e-4)));
@@ -813,7 +822,7 @@ void main() {
           passed *= pass;
         }
         float under = max(uGas.x - above(p), 0.0);
-        src = stuff * (sunny * s * exp(-uGasDepth * (under / max(sunUp, uGas.z))) + amb * exp(-uGasDepth * (under * uGas.y))) * exp(-uGasDepth * (under / max(sine, uGas.z)));
+        src = stuff * (sunny * s * exp(-uGasDepth * (under / max(sunUp, uGas.z))) + amb * exp(-uGasDepth * (under * uGas.y)) + deepAt(at, clear)) * exp(-uGasDepth * (under / max(sine, uGas.z)));
         last = src;
         taken++;
       }
@@ -850,7 +859,7 @@ void main() {
       for (int j = 0; j < (thin < 1.0 && uAboveMix.x > 0.0 ? 1 : 0); j++) col = mix(col, exp(mix(log(max(ground * throughLow + addedLow, vec3(uAboveMix.y))), log(max(ground * byGain + byAir, vec3(uAboveMix.y))), thin)), uAboveMix.x);
     }
     vec3 flash = flashAt(g, col);
-    col = col * exp(flash.x) + uFlashGlow * (flash.y + flash.z * (1.0 - smoothstep(uFlashDeep.x, uFlashDeep.y, above(there) - low)));
+    col = col * exp(flash.x) + uFlashGlow * flash.y;
     for (int i = 0; i < (uHazeLit.z > 0.0 ? 1 : 0); i++) {
       float zg = above(there);
       float shadow = 0.0;
