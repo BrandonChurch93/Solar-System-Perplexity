@@ -1,9 +1,17 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T19:50:46.638Z",
- "head": "2938704dd4ec69c66fe81f1a7c78bbde0628aeee",
- "note": "19:50 candidate Z113 not named, not pushed: 115 arches, thick and thin with pale cores, strands add by their own light; the chain runs on it (finals 0, 90, units next) | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "pushed": "2026-11-26T20:19:14.122Z",
+ "head": "59cdcaea47bde238469e831a1ccb40a58ca65c09",
+ "note": "20:19 candidate Z113 on main d1bfb03e (local 59cdcaea, not named, not pushed): final 90 arch beside the approved and the named; drafts 0 60 90 91 92 360 same files across the merge of the fifth cut; units running | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T20:19:12.734Z",
+   "file": "20261126201912734-note-z113f-arch3.jpg",
+   "source": "../../../../tmp/v/z113f-arch3.jpg",
+   "kind": "note",
+   "label": "candidate Z113, not named, not pushed: the arch at final 90, top the approved, middle the named 5ccff167, bottom Z113 (115 arches, two passes, pale cores)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T19:50:45.251Z",
    "file": "20261126195045251-note-m113-sheet.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/z107-arch3.jpg",
    "kind": "note",
    "label": "trial, not named, not pushed: draft 90, the approved above, Z106 middle, Z107 below (strands add their light up to the most, cover by their own share)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T18:54:48.977Z",
-   "file": "20261126185448977-note-z92f-arch3.jpg",
-   "source": "../../../../tmp/v/z92f-arch3.jpg",
-   "kind": "note",
-   "label": "trial Z92 at final 90, not named: approved above, the named state in the middle, Z92 below",
    "stop": "sun"
   }
  ]
