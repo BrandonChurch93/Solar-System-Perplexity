@@ -540,6 +540,10 @@ void main() {
       float heldSine = -dot(held, normalize(there + vec3(0.0, 0.0, uRadius)));
       float inView = carried * smoothstep(0.0, uAirHeld.w, heldSine);
       airAt(max(heldSine, 1e-6), held, throughHeld, addedHeld);
+      throughNow = vec3(dot(throughNow, vec3(0.2126, 0.7152, 0.0722)));
+      addedNow = vec3(dot(addedNow, vec3(0.2126, 0.7152, 0.0722)));
+      throughHeld = vec3(dot(throughHeld, vec3(0.2126, 0.7152, 0.0722)));
+      addedHeld = vec3(dot(addedHeld, vec3(0.2126, 0.7152, 0.0722)));
       vec3 lit = ground * shade;
       vec3 picture = seen.rgb * fine * shade;
       vec3 was = lit * throughHeld + addedHeld;
