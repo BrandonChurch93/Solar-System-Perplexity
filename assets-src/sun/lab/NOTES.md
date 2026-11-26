@@ -2679,3 +2679,65 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   0.462, 433: 0.554); 434 to 440: 0.440 0.433 0.437 0.445 0.435 0.422 0.395; 441 to 454: 0.388 falling to 0.160.
   h45 on the same pairs: 16 over (431 to 446, 0.485 to 0.593). So h45 is worse than main on pairs 431 and 434 to
   446, equal within 0.05 on 432 and 433. Pairs 380 to 419 of main not read.
+- 18:41 UTC. CODE (ground.ts, one line): heat.lane[16] over 0 makes the shoulder a ratio: heat times
+  lane[9]^((1 - s)^lane[16]), s the smooth way in from the border over lane[8] of the radius; lane[16] 0 keeps
+  the old straight mix (h45's bytes: to be proven by the hash of 90 before any name).
+  TRIALS on v/lab-h45.json, drafts of 90, the curve fitted again each time (v/tb.sh):
+  t238: lane[9] 0.03, lane[16] 1.5, lane[13] 0, fan[13] 1 (the fans take the whole shoulder). t239: the same with
+  lane[13] 1.2. SEEN: the first change of the outline since h41: the far side of each body now melts into the
+  dark; the near silhouettes stay crisp. Curve t238 0.703 0.698 0.7 0.693 0.674 0.654 0.619 0.565 0.493 0.414
+  0.364, lane 5.83 px, cut low band 19.5153, plain 39.6476. The refit made the curve steeper still at the dark
+  end (0.047 shows 0.33).
+  t240, t241 = t238 with the bell (dome.base[4], [5] = 2.0, 0.5) at height 0.3 and 0.45: softer; still crisp
+  silhouettes. t242 = t240 with heat.graze[3] 0 (the skin law by the eye off: heat alone); t243 = t242 with
+  lane[8] 0.55. Curve t243 0.734 0.73 0.724 0.715 0.696 0.669 0.622 0.552 0.469 0.38 0.337, lane 6.16 px (7.08),
+  cut 19.5681 / 40.9386.
+  CAUSE OF THE OUTLINE, SEEN in two diagnostic drafts of t243 (show "edge" and "tall", v/diag1.jpg): on rows 900
+  to 1050 the middle of each cell lies just under its upper silhouette: the whole far half of every body is
+  hidden behind its own crown, and every near body covers the lower flank and the lane of the one behind. So what
+  reads as an outline is an occlusion edge, crisp by nature, and no law of the heat can soften it. The slope is
+  larger than height times 1.54 says because the way to the border is shorter than the radius in most directions
+  of a cell that is not round. The approved shows every cell whole with its lane all round.
+  NEXT: lower bodies with the ratio shoulder carrying the roundness: t244 (dome.height 0.15), t245 (0.21) on
+  v/lab-t243.json, started 18:40. Known risk: flat plates (h7); the difference now is that the heat falls by a
+  ratio over a visible width.
+- 18:54 UTC. CORRECTION of the 18:41 entry, MEASURED by trial: the outline is NOT an occlusion edge. t244 (height
+  0.15), t245 (0.21), t246 (0.03) on v/lab-t243.json: the picture on rows 900 to 1050 is the same to the eye at
+  height 0.3 and at 0.03 (v/diag3.jpg; curve and lane numbers equal to the third place), and place.json says
+  why: the eye looks down 40 to 47 degrees on those rows (pitch 20.56, lens 55), far steeper than any flank. So
+  on the near rows everything the eye reads as form is the heat, and the height only shows toward the horizon.
+  THE CAUSE FOUND: dome.anchor [1.0, 0.5] puts the crown of a cell at its site, up to half the way to a border,
+  and in this frame nearly all crowns sit toward the upper right border of their cell (v/diag2.jpg, show "edge").
+  Every law that runs from the crown to the border (shoulder, fibres, fans, weave) is then squeezed to nothing on
+  that side: the full heat meets the lane in one step. That step is the hard outline, the shell, the pebble.
+  t247 = t243 with dome.height 0.15 and dome.anchor [0.0, 0.5] (crown in the middle of the cell's ground): SEEN
+  (v/c-t247.jpg, v/lab-90-t247.jpg): for the first time glowing bodies with a soft dark valley all round, mottled
+  faces, readable at reduced size as domes with dark gaps. Curve 0.754 0.755 0.744 0.729 0.708 0.678 0.625 0.553
+  0.467 0.386 0.344 (approved 0.667 to 0.324: over by 0.06 to 0.09 at the tenths 0 to 0.5: the crowns are too
+  light or the fit lifts them), lane 6.24 px (7.08), cut low band 19.1706, plain 40.866.
+  Still wrong in t247: toward the horizon the ground is a flat pavement (height 0.15 is too low there); white
+  ovals of 6 to 10 px on the flanks (the sparks, laid on the skin, now standing in the dark); too much dark, the
+  bodies are islands; why the sites lie to one side is not known (the sim's drift is the guess).
+  UNKNOWN: what the middle anchor does to the motion (the anchor was put at the site at h3x so that a cell does
+  not travel as a body when a neighbour comes or goes): a clip must be read before any name.
+  NEXT: t248 (t247 at height 0.45, bell), t249 (height 0.45, the cushion 2.2 / 1.5), started 18:54.
+- 19:16 UTC. t248 (t247 at height 0.45, bell) and t249 (height 0.45, cushion 2.2 / 1.5): the bell keeps the
+  domes toward the horizon without the crisp stone silhouettes of the cushion. TRIAL STATE h46 = t248
+  (v/lab-h46.json): h45 with heat.lane [.., [8] 0.55, [9] 0.03, .., [13] 0, 0, 0, [16] 1.5], heat.fan[13] 1,
+  heat.graze[3] 0, dome.base[4], [5] = 2.0, 0.5, dome.anchor [0.0, 0.5], dome.height 0.45, the curve fitted again
+  ([[0,0],[0.0206,0.1155],..] in the file), the far twin baked again (full 1,664,437, web 471,448 bytes).
+  Draft film v/film-h46.mp4 (frames 120 to 240 every 4th): cells swell and give way as before; nothing new seen
+  at draft.
+  h46 at FINAL, frame 90, lens on (lab-90-h46f.png) MEASURED: lower 70 percent low band 18.6155 (h45 18.7397),
+  plain 40.383 (40.0465); sky 7.0415; bands 1.177 1.064 1.048; G17 median 1.432 (worst tile 0.683 at [6, 5]);
+  curve 0.735 0.742 0.732 0.721 0.701 0.672 0.627 0.563 0.483 0.396 0.345 (largest gap 0.086, over 0.05 at the
+  tenths 0 to 0.8: crowns too light); lane 6.09 px, depth 0.315.
+  SEEN (v/c-h46f.jpg, v/z-h46f.jpg, v/levels-h46f.jpg): glowing bodies in soft dark valleys; the levels picture
+  shows islands with graded bands, not plates ringed by a line. Wrong: white ovals like grains of rice (sparks);
+  a few crisp edges left of x 700; the dark a net of even bands; islands whole cells, not mottled.
+  Growth of the four folders MEASURED by find: 2,654,058 bytes.
+  Low mail to /root 19:15 with six attachments. NEXT MAIL DUE 20:45.
+  h47 = h46 with heat.spark [0.5, 0.02, 0.5, 6.0, 1.0, 0.0, 1.0, 1.2, 0.0, 0.8, 0.97, 0.0] (sparks of 1 to 2.2 px
+  radius, only from 0.8 of the way to the border on): final 90 started 19:15 (v/go-h47f.log).
+  THEN: the whole proof list (v/proof.sh) on the state that stands; the first thing to read is the flicker rows
+  and cellflk (the middle anchor's cost in motion is UNKNOWN).
