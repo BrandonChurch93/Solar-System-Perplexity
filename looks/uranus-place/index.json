@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T00:50:35.170Z",
+ "pushed": "2026-11-26T01:12:51.816Z",
  "head": "6ef232eabadec5b9411bd199613ec3014de9fa8e",
- "note": "6ef232ea RC proof: G5 and G17 pass (4035 1.178 and 1.082, 4290 1.076 and 0.960); final 4186 beside main and B1; rows drawing",
+ "note": "6ef232ea RC proof: limb at 4035 and band at 4290 at the final tier beside main and the approved; rise rows drawing",
  "looks": [
+  {
+   "time": "2026-11-26T01:12:50.399Z",
+   "file": "20261126011250399-note-final-4290-band-a.jpg",
+   "source": "../../../../tmp/n65/final-4290-band-a.jpg",
+   "kind": "note",
+   "label": "final 4290 band under the horizon: approved, main, B1, RC 6ef232ea (match 3.226, B1 3.224, main 3.849)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T01:12:47.573Z",
+   "file": "20261126011247573-note-limb-4035.jpg",
+   "source": "../../../../tmp/n65/limb-4035.png",
+   "kind": "note",
+   "label": "limb at 4035, final tier, 2x: approved hero, main, RC 6ef232ea (match 3.737 against main 3.743)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T00:50:34.567Z",
    "file": "20261126005034567-note-final-4186-c.jpg",
@@ -232,22 +248,6 @@
    "source": "../../../../tmp/n60/ha-4399-crops.jpg",
    "kind": "note",
    "label": "far ground under the limb 4399 to 4407, left B1, right control HA: same wisps at the limb in both; coloured streak grain in the middle ground of B1 is gone in HA",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:48:13.902Z",
-   "file": "20261125214813902-note-pat-HA-8798.jpg",
-   "source": "../../../../tmp/n60/pat-HA-8798.jpg",
-   "kind": "note",
-   "label": "control HA (deck image, billow shade, veil, tops all off) from 4399: still 1.05, so the cause is outside those four layers",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-25T21:48:12.750Z",
-   "file": "20261125214812750-note-pat-B1-8798.jpg",
-   "source": "../../../../tmp/n60/pat-B1-8798.jpg",
-   "kind": "note",
-   "label": "chain read B1 from 4399: back side 1.60 on 0.13 of the frame, red sits in the far ground under the limb",
    "stop": "uranus"
   }
  ]
