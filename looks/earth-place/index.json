@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T05:24:09.062Z",
+ "pushed": "2026-11-26T05:55:02.190Z",
  "head": "77e5db7634fcb149575f050ad121fbe92b392cb5",
- "note": "cause found: the veil lifted the texel before the sea law read its kind; cure in globe.ts takes the level alone from 0.76 to 0.45, not green yet",
+ "note": "dive 1880 to 1903 every frame with the first cure of the level, quick reader largest 0.45 at 1894, bad parts still to cure",
  "looks": [
+  {
+   "time": "2026-11-26T05:55:01.462Z",
+   "file": "20261126055501462-note-cure-dive-b.jpg",
+   "source": "../../../../tmp/gl/k22/SIM/cure-dive-b.jpg",
+   "kind": "note",
+   "label": "dive 1892 to 1903 every frame, first cure with the ground, draft tier, shutter off",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T05:55:00.637Z",
+   "file": "20261126055500637-note-cure-dive-a.jpg",
+   "source": "../../../../tmp/gl/k22/SIM/cure-dive-a.jpg",
+   "kind": "note",
+   "label": "dive 1880 to 1891 every frame, first cure with the ground, draft tier, shutter off",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T05:24:08.118Z",
    "file": "20261126052408118-note-cw-blob.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k22/E5/x-top.jpg",
    "kind": "note",
    "label": "BAD E5 dive 1885 to 1903 top right: deck front climbs over Florida and the bright shallows, reader 0.62 at 1893",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T04:21:35.750Z",
-   "file": "20261126042135750-note-y-tl.jpg",
-   "source": "../../../../tmp/gl/k22/E5/y-tl.jpg",
-   "kind": "note",
-   "label": "BAD E5 dive 1886 to 1896 top left: the far deck still covers Yucatan and the shallows inside 8 frames, reader 0.55",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T04:21:35.057Z",
-   "file": "20261126042135057-note-p-1878-1886.jpg",
-   "source": "../../../../tmp/gl/k22/E5/p-1878-1886.jpg",
-   "kind": "note",
-   "label": "E5 dive 1878 to 1886, before beside the air law: lands stay longer, deck comes by the air path",
    "stop": "earth"
   }
  ]
