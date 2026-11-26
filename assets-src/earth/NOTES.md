@@ -7691,3 +7691,45 @@ Read 20:49. Nothing of mine was running (the nine drafts with the haze cure had 
 - Disk read 20:54:47 after the removals: "/dev/root 25189 23639 1279 95% /". Removed: files over 60 kB under /tmp/gl that are not scripts or text, main's tree copy /tmp/gl/k24/main, the worktree /home/user/workspace/mwt, out/work/{stills,sheets,smooth,samebytes,crops,handover}, out/work/earth/place/field-{colour,alpha,shade}.npy (deck.py writes them again), my dist. Kept: out/work/earth (2418 MB), the takes in out/work/earth/place/takes.
 - Main 262b9a68 `src/stops/earth/place.json` read in the worktree: plates.low height [1.3, 0.034], mid 0.065, power 1.5; no plates.stand.
 - The draft commit before this entry: 93825a558aab56e9d0af498cd332654b40798846, pushed 20:53:27.
+
+### 20:57 UTC: the answer went out
+
+- The ANSWER to MAIL 1548 was sent to /root at 20:56 with the head 61727065671f647adc623aa917bb963028e6d941 (pushed 20:56:07, read back from origin). One clause differs from the copy above: in item 3 the mail says "so they are part of the map's picture and do not stand;" where the copy says "so they cannot shift against the ground;". The text as sent is `/tmp/gl/k24/R/mail1548-send.txt`.
+- This entry is not committed, so the head stays the one named in the mail. Nothing runs; nothing more is started until a job comes (MAIL 1548 point 5).
+
+### MAIL 1549 from /root (copied on arrival, verbatim)
+
+MAIL 1549 from the Builder (/root) to the thirteen builders. Your hand in is recorded, thank you. Brandon's word stands: no more cures. The film is frozen and rendered now, and from this mail on your machine is a render machine for the full quality film (the master, 1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5).
+
+1. Jobs come as mails that start with "JOB" and a name like ma7-01, "from the Builder". Do one at a time, exactly as written, in the clean worktree you named in your hand in, the one that stands on 262b9a68. It must be a WHOLE checkout with no change under src, public, config and tools (check with git status). If it is sparse, make it whole first (git sparse-checkout disable). If it shows a change, make a fresh worktree or clone on the commit instead. Run npm run build there before the first job if dist is missing or older than the checkout.
+2. Disk: at least 4 GB free before each job. Old frame folders, films and tars of your lab work under /tmp and out/work may go; your notes, pictures and branches stay. earth_builder: REMOVE (the word you asked for; out/work/earth and the old checkout's public may go).
+3. Change no file of the tree. Do not judge the picture. Send back exactly what the job asks, to /root, as attachments.
+4. When a job is sent back, wait for the next one. If your machine cannot render (no drawing context after three tries, or under 4 GB free after cleaning), say so in one line and wait.
+
+### JOB ma7-20 from /root (copied on arrival, verbatim; the mail came with `&gt;` for the greater sign and `&amp;` for the and sign, kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB ma7-20 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); the tool calls it film-16x9-final-b-092. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+rm -f /tmp/ma7-20-log.txt /tmp/ma7-20-tail.txt /tmp/film-16x9-final-b-092.tar*
+for S in "venus.dive 1267-1274"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/ma7-20-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/ma7-20-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+tar -cf /tmp/film-16x9-final-b-092.tar out/work/chunks/16x9-final-full/venus.dive.span1267-1274.mp4 out/work/chunks/16x9-final-full/venus.dive.span1267-1274.mp4.json; split -b 40m -d /tmp/film-16x9-final-b-092.tar /tmp/film-16x9-final-b-092.tar.
+grep -c 'Shader Error\|not usable' /tmp/ma7-20-log.txt &gt; /tmp/ma7-20-tail.txt; grep 'RC film' /tmp/ma7-20-log.txt &gt;&gt; /tmp/ma7-20-tail.txt; grep 'wrote \|G5' /tmp/ma7-20-log.txt | tail -6 &gt;&gt; /tmp/ma7-20-tail.txt; ls -la /tmp/film-16x9-final-b-092.tar.* &gt;&gt; /tmp/ma7-20-tail.txt
+An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. Planned time about 38 minutes; the real time can be twice that. If one frame takes over 15 minutes, send one line every 30 minutes. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/film-16x9-final-b-092.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/ma7-20-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+### 21:11 UTC: render machine from here on (MAIL 1549), job ma7-20 runs
+
+- Both mails above were copied on arrival. No cure, trial or proof run is started; the machine renders the master for /root.
+- NOTE of the job: `sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'` ended with rc 0 at 21:10:33 (uid 2000, sudo works without a password).
+- REMOVE (the word of MAIL 1549): `out/work/earth` removed, save two things moved to `out/work/earth-keep/` (160 MB): `takes/` (the generated takes, not in git) and `tmp/` (my scratch tools and sheets, the `.npy` arrays deleted). The bake's work files are gone: a bake of a later day starts again from `assets-src/earth/place` (order in the state block at the top).
+- `public/` of THIS checkout (the old one, `/home/user/workspace/repo`) was removed from disk. It is whole in git under the head 61727065671f647adc623aa917bb963028e6d941: `git status` here now lists its files as deleted. Never stage that. To get it back when no render runs and the disk allows 1289 MB: `git checkout -- public`.
+- Free disk after that: 4825 MB (`df -m /`, 21:10:35).
+- The render worktree is `/home/user/workspace/main-262b9a68`: HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, not sparse ("fatal: this worktree is not sparse"), `git status --porcelain` shows only `?? node_modules` (the link to this repo's node_modules; package-lock.json is the same file in both). `npm run build` there: rc 0, 21:10:40 to 21:10:49.
+- Job ma7-20 (film-16x9-final-b-092, venus.dive span 1267-1274, final tier, master): the job's lines stand in `/tmp/ma7-20.sh` with the mail's `&gt;` and `&amp;` read as the greater sign and the and sign; started detached from the worktree's root at 21:10:59. Log `/tmp/ma7-20-log.txt`, tail `/tmp/ma7-20-tail.txt`, pieces `/tmp/film-16x9-final-b-092.tar.NN`.
+- Keep `out/work/chunks/16x9-final-full` of the worktree until /root says it can go.
+
+### 21:43 UTC: job ma7-20 sent back
+
+- The tail file reads, whole: "0", "RC film venus.dive 1267-1274 0", "wrote venus.dive.part000.mp4 frames 1267-1274 render 1869 s encode 1.7 s", and the one piece `/tmp/film-16x9-final-b-092.tar.00` of 481280 bytes. The tar holds `venus.dive.span1267-1274.mp4` (476125 bytes) and its `.json` (2010 bytes).
+- Sent to /root at 21:43 with the piece and the tail attached. Free disk 6118 MB after the job (`df -m /`, 21:42:49).
+- `out/work/chunks/16x9-final-full` of the render worktree stays until /root says it can go. Nothing runs. Waiting for the next job.
