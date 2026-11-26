@@ -10071,3 +10071,195 @@ STILL RED IN THE STORM, by my eye: the dark halo round the eye is wider than the
 > 3. THE PLANET VIEW ITSELF (4605): at final on main it matches the approved closely (plain 2.6398, low band 1.0179). Do not move it: the name must leave 4605 the same bytes as main's, or no worse by the same measure.
 >
 > Times stand: dive and rise beside main by 10:30, ruling 12:30, names by 13:30.
+
+## MAIL 1449 from the Builder (/root), 09:18 UTC, high priority (read 09:17 by my clock; word for word)
+
+> MAIL 1449 from the Builder (/root), 09:18 UTC. No answer needed. The fourth row of main's Neptune at the reader is in (dive part 2 of 2, job rx1-10): RED, pattern 1.1468 at frame 4725 (limit 0.45), pop 1.0657 at 4746, level step 0.1051 at 4731. So main is red on all four parts of Neptune's dive and rise, each on the pattern line: dive 1 1.3008 at 4721, dive 2 1.1468 at 4725, rise 1 1.3434 at 4986 + 1/2, rise 2 1.4761 at 4993. Your dive and rise beside main are due by 10:30; a take goes on if no line is worse than main's own row, and the note of 2026-11-24 asks for more than that: no pop of the surface picture on the way in or out.
+
+## 26 Nov, 09:08 to 09:30 UTC: lab log (main's dive and rise on my machine; the storm's halo is the sheet's clearing)
+
+- 09:07:33 to 09:22:16. `/tmp/m3.sh`: the working tree laid as origin main 77a7d4108 (`/tmp/tomain.sh`; the six card files in the stash
+  "trial-0907"), main's dive into `out/work/nep/weave/MAIN3d` (4674 to 4692 every frame, 4694 to 4772 every second, 59 frames, 1.3 to
+  23.2 s a frame) and main's rise into `MAIN3r` (4960 to 4992 every second, 4994 to 5026 every frame, 50 frames), preview format,
+  draft; then `/tmp/frommain.sh`. After it: branch agent/neptune-place, HEAD 1f13c39e5, six untracked card files equal to
+  `/tmp/cards-keep` by bytes, the stash list holds the old stash only.
+- Tools written: `/tmp/versus.py A B F...` (one frame of two trees: mean difference, the dark part, the worst 48 px tile, the mean
+  level of each); `/tmp/skyrow.py DIR F [Y0 Y1]` (medians of the top rows by 80 px blocks); `/tmp/rd.sh` (the reader's pattern by my
+  copy on the tree as it stands; env N names the render dirs).
+- Entry 4674 to 4692, mean difference of consecutive frames (`/tmp/steps.py`), main | Y1: 4674 to 4680 2.588 to 2.603 | 2.587 to 2.602;
+  4680 to 4681 2.618 | 2.595; 4681 to 4682 2.818 | 2.784; then 3.210 | 3.209, 3.624 | 3.657, 4.072 | 4.196, 4.552 | 4.775,
+  4.992 | 5.267, 5.362 | 5.685, 5.730 | 6.082, 6.069 | 6.474, 6.411 | 6.854, 6.743 | 7.217. Y1 against main (`versus.py`): 4674 mean
+  0.084, 4680 0.092, 4684 1.956, 4688 5.919, 4692 9.043, 4700 16.860, 4708 29.530, 4712 37.587; mean level of the frame at 4704
+  main 70.67, Y1 74.82; 4708 67.59 | 78.23; 4712 64.79 | 80.78.
+- The sheets main | Y1 (`/tmp/pair-entry-3a.jpg`, `-3b`, `/tmp/pair-dive-a1` to `-d1`, `/tmp/pair-rise-a1` to `-e1`, `-a3`, `-b3`,
+  `-c3`), every frame looked at. Main: the map's storm with its white streak gives way in place to the surface view's whirl and bank
+  at 4720 to 4726, and comes back in place at 4984 to 4990; its globe is dark with contrast from 4706; its whirl has bright arms.
+  Y1: no change in place; the map's storm stays and the surface view's eye and bank grow beside it by height; the globe is paler and
+  flatter from 4706 and from 4968; grey patches lower left 4722 to 4738, pale blobs lower left 4976 to 4992, a small white dot low
+  in the frame 4976 to 4986; the eye is a dark spot without bright arms. 4997 to 5026 the two read alike.
+- The rise's end, Y1 against main: 4996 mean 18.305, 5000 12.059, 5004 11.354, 5008 9.697, 5012 7.379, 5016 5.191, 5020 3.752,
+  5024 0.124 (largest 121), 5025 0.026 (largest 2), 5026 0.043 (largest 2). Steps main | Y1: 5021 to 5022 4.702 | 4.027; 5022 to 5023
+  4.156 | 3.237; 5023 to 5024 2.743 | 2.959; 5024 to 5025 3.327 | 3.341; 5025 to 5026 3.727 | 3.725.
+- Sky, top 40 rows, medians R G B by 80 px blocks from the left (`skyrow.py`). 4966 main: 5 11 19 | 8 16 24 | 11 18 26 | 13 18 25 |
+  16 22 29 | 13 20 28 | 13 18 26 | 11 17 24 | 10 16 23 | 10 15 23 | 5 9 14 | 1 5 7. 4966 Y1: 5 9 16 | 6 12 20 | 9 16 25 | 19 30 41 |
+  23 32 42 | 14 19 27 | 12 16 22 | 10 15 23 | 10 14 19 | 3 8 12 | 2 9 14 | 3 12 18. Both end the band's light near the right edge;
+  mine dips (the card's near floor) and comes back to the far floor.
+- 09:22 to 09:29. The storm's form at 4860, preview format, words on Y1 (`/tmp/z.sh`, `/tmp/z2.sh`; 46 to 48 s a frame with the
+  start): Z1 storm.wall [0.2, 1.2]; Z2 the same with storm.rings 1.0 and arms.light 0.35; Z3 storm.wall [0.3, 1.0] and collar's third
+  0.3 (main's); Z4 Z1 with fan.veil.storm [1, 1, 1.2, 0.45]; Z5 Z1 with fan.veil.storm [1, 1, 1.0, 0.45] and collar's third 0.2; Z6 Z1
+  with fan.veil.storm [0.6, 1, 1.2, 0.45]. By the eye beside the approved (`/tmp/z-a.jpg`, `z-b.jpg`, `z-c.jpg`): Z1 to Z3 give a
+  crisper flat core and keep the wide round dark halo; Z4 to Z6 take the halo away: it is the clearing of the pale sheet round the
+  eye (reach 1.8 eye radii), not the wall. Z5 reads best: a flat dark oval with the pale sheet wound close round it. Z6 lifts the
+  core. No numbers at this format.
+- 09:29 to 09:34. `/tmp/z3.sh`: Z5 at 4860, 16x9 draft, 109.8 s: plain 21.581 | top quarter 9.034 | G17 median 0.920 / p25 0.529
+  (Y1 19.935 | 9.035 | 0.856 / 0.502; main 22.986 | 12.395 | 0.934 / 0.549). Lilac (`/tmp/pink.py`, red over green by 2) 0.98 % of
+  the brights, darks with red over 0.42 of blue 3.18 % (approved 0.17 % and 5.93 %). Lines (`/tmp/lines.py`, under by 3 | 5 | 8)
+  8363 | 2177 | 590 (Y1 8604 | 2193 | 519; main 3871 | 1711 | 778). The plain number is 1.646 worse than Y1's and 1.405 better than
+  main's: the pale sheet now stands where Y1 had the dark halo. Crops 1:1 (`/tmp/z5-eye.jpg`): a flat dark oval with arms winding in;
+  the approved's oval is longer and flatter (about 520 by 120 px at 1920 against about 300 by 110).
+- Z5 in the dive, preview (`Z5d`: 4712 to 4744, 4972, 4980, 4988) against Y1 (`versus.py`): 4712 mean 0.028, 4716 0.070, 4720 0.136,
+  4724 0.239, 4728 0.365, 4732 0.495, 4736 0.642, 4744 1.115; the dark part (the sky) 0.000 to 0.061. Sheet `/tmp/z5d-a.jpg`: the
+  same dive, the eye with a pale ring from 4732.
+- 09:34. Z5 laid into `src/stops/neptune/deep.json` by `/tmp/layz5.py` (storm.wall [0.2, 1.2], storm.collar's third 0.2,
+  fan.veil.storm's third 1.0, two "how" sentences) and committed: 4db76e70e. 09:34:38 `/tmp/rd.sh` started on it (N=Z5: rise 4960 to
+  5024 and dive 4700 to 4744 at half steps, preview, draft, rate 2; pairs 8 frames apart by `chainr.py`).
+
+## 26 Nov, 09:29 UTC: look to the Builder, main's dive and rise beside mine, the storm's halo (word for word; attached `z-c.jpg`, `z-b.jpg`, `pair-entry-3b.jpg`, `pair-dive-b1.jpg`, `pair-dive-c1.jpg`, `pair-rise-a1.jpg`, `pair-rise-b1.jpg`, `pair-rise-c1.jpg`, `pair-rise-a3.jpg`)
+
+> NEPTUNE, look, 09:29 UTC (not a name). Nine pictures. MAIL 1446 and 1449 are read.
+>
+> 1. MAIN'S DIVE AND RISE ARE RENDERED ON MY MACHINE (origin main 77a7d410, preview format, draft; dive 4674 to 4692 every frame and 4694 to 4772 every second; rise 4960 to 4992 every second and 4994 to 5026 every frame), so every sheet from now on is main beside mine. I looked at every frame of the sheets attached, at 1 time and at 3 times the levels.
+>
+> 2. WHAT THE EYE FINDS, main | Y1 (the state of 08:57, commit 7787416bc):
+> - Entry 4674 to 4692: both without a step. Mean difference of consecutive frames, main | Y1: 2.59 | 2.59 in the hold, 2.82 | 2.78 at 4681 to 4682, rising evenly to 6.74 | 7.22 at 4691 to 4692. Y1 against main at 4680: mean 0.092.
+> - Dive 4714 to 4732: main changes one storm for another in place (the map's storm with its white streak goes, the surface view's whirl and bank come: 4720 to 4726). Y1 has no such change: the map's storm stays where it is and the surface view's eye and bank grow out of the map beside it by height. RED in Y1: the globe is paler and flatter than main's from about 4706 (mean level of the frame at 4712: main 64.8, Y1 80.8), grey patches lower left 4722 to 4738, and the eye comes as a dark spot without main's bright whirl.
+> - Rise 4960 to 4996: main changes back in place at 4984 to 4990. Y1 does not. RED in Y1: pale, flat globe from 4968, pale blobs lower left 4976 to 4992, a small white dot low in the frame 4976 to 4986.
+> - Rise 4997 to 5026: the two read alike. Y1 against main: 5020 mean 3.752, 5024 mean 0.124, 5025 mean 0.026; step 5024 to 5025 main 3.327, Y1 3.341. No cloud beyond a card, no border at 3 times.
+> - Sky at 4960 to 4970, top 40 rows, medians by 80 px blocks, right end: main 4966 ... 10 15 23 | 5 9 14 | 1 5 7; Y1 4966 ... 10 14 19 | 3 8 12 | 2 9 14 | 3 12 18. Both end the band's light near the right edge; mine dips and comes back to the far floor. Named, not cured.
+>
+> 3. THE STORM AT 4860 (b), preview format, six trials of words on Y1 (two sheets): the wide round dark halo is the clearing of the pale sheet round the eye (fan.veil.storm, reach 1.8 eye radii), not the wall. With the reach at 1.0, the wall 0.2 to 1.2 and the collar 0.2 (Z5) the eye is a flat dark oval with the pale sheet wound close round it. Z3 (main's wall and collar, clearing as Y1) keeps the halo. I take Z5 on if G17 at 1920 stays green and its dive and rise frames read no worse; both render now (G17 of Y1 at 4860: 0.856, plain 19.935; main 0.934, 22.986). No number of Z5 yet.
+>
+> 4. NEXT: the reader's pattern by my copy on the state I keep (rise 4960 to 5024, dive 4700 to 4744, half steps), to you by 10:30 beside your four rows of main.
+>
+> Seconds a frame, draft: 4860 at preview 47 (with the start), main's dive at preview 1.3 to 23.2, 4860 at 1920 about 111.
+
+## 26 Nov, 09:34 to 09:57 UTC: lab log (Z5's rise by my copy of the reader, beside main's own frames)
+
+- 09:34:38. `N=Z5 /tmp/rd.sh` on HEAD 4db76e70e: the rise 4960 to 5024 at half steps (129 frames, preview, draft, rate 2) into
+  `out/work/nep/weave/Z5q`, rendered 09:35:42 to 09:53:14 (22 s a frame at 4960, 13 at 4980, 6 at 5000, about 2.5 from 5008); pairs
+  8 frames apart by `W/chainr.py` with the poses of my tree (`W/poses-y1.json`); then the dive 4700 to 4744 into `Z5s`.
+- 09:36. Fetch: origin main b3ae0e5e2cba7f74f850fff3904dfb2abae8eba2; against 77a7d4108 only kit/PROGRESS.md differs.
+- Control of my copy on main's own frames. Main's poses differ from mine in the dive (height at 4700 main 1.33831, mine 1.36503;
+  4720 0.35944 | 0.38782; 4744 0.05593 | 0.06339; equal at 4768 and in the rise; the ground's turn differs in all), so main's frames
+  are read with main's poses: `git archive origin/main src tools config package.json tsconfig.json` unpacked into `/tmp/maintree`
+  (a plain copy, no worktree; node_modules by a link), `weave-main.ts` run there, `/tmp/poses-main-b3ae.json`. I hold main at every
+  second frame only (`MAIN3d`, `MAIN3r`), so the control is at step 2 (`chainr.py ... 2`), pairs 8 frames apart.
+  Main's dive, pairs from 4700 by 2: 0.60, 0.63, 0.86, 0.91, 0.69, 0.97, 0.84, 0.82, 0.67, 0.74, 0.97 (4720), 1.18 (4722), 1.02,
+  1.02, 0.70 (4728), 0.21, 0.17, 0.17, 0.13 (4736); from 4738 by 2: 0.1488, 0.1381, 0.1736, 0.1519, 0.1111, 0.1042, 0.1046, 0.0711,
+  0.0391, 0.0319, 0.0303, 0.0303 (4760). Main's rise, pairs from 4960 by 2: 0.11, 0.10, 0.10, 0.11, 0.07, 0.05, 0.07, 0.50 (4974),
+  0.69, 0.82, 0.52, 0.76, 1.23 (4984), 1.09, 0.92, 0.91, 1.39 (4992), 1.45 (4994), 1.14, 0.91, 0.70, 0.74 (5002), 0.14, 0.04, 0.03,
+  0.02, 0.03, 0.03, 0.03 (5016). The Builder's rows of main: dive 1.3008 at 4721 and 1.1468 at 4725, rise 1.3434 at 4986 + 1/2 and
+  1.4761 at 4993. So the copy finds main's red at its place and near its size.
+- Z5's rise at half steps, pairs from 4960 by 2: 0.26, 0.25, 0.20, 0.22, 0.29, 0.26, 0.30, 0.22, 0.21, 0.20, 0.20, 0.20, 0.23, 0.26,
+  0.33 (4988), 0.34, 0.38 (4992; 0.3792 at (928, 432) of 1920), 0.32, 0.21, 0.17, 0.19, 0.15, 0.11, 0.04, 0.04, 0.02, 0.03, 0.02,
+  0.08 (5016). All under 0.45.
+- Z5's rise at step 2 (like main's control): 0.45 (0.4518 at (1736, 484)), 0.42 (0.4201), 0.35, 0.23, 0.29, 0.33, 0.34, 0.21, 0.18,
+  0.19, 0.19, 0.21, 0.22, 0.29, 0.28, 0.35, 0.36 (4992), 0.28, 0.22, 0.16, 0.32 (5000), 0.15, 0.09, 0.04, 0.03, 0.02, 0.02, 0.02,
+  0.03. RED: at 4960 to 4972 mine reads over main's at this step, and 0.4518 is over the limit by 0.0018; the place is the pale far
+  ground under the horizon at the right (`/tmp/zr-spot.jpg`); the eye finds no step; cause not found.
+- Sheets main | Z5 of the rise, every frame looked at: `/tmp/zr-a1.jpg` (4960 to 4978), `zr-b1.jpg` (4980 to 4996), `zr-c1.jpg`
+  (4997 to 5006), `zr-d1.jpg` (5007 to 5016), `zr-e1.jpg` (5017 to 5024); `zr-x1.jpg` Z5 alone 4993 to 5001, larger. Z5 has no change
+  in place; the map's storm and streaks stay from 4960 to 5024. Mean difference of consecutive frames in Z5 (`steps.py`), 4988 to
+  5004: 8.218, 7.901, 7.609, 7.422, 7.308, 7.247, 7.159, 7.018, 6.835, 6.625, 6.432, 6.448, 6.510, 6.556, 6.639, 6.736 (main 4994
+  to 5004: 10.809, 10.323, 9.624, 8.925, 8.449, 8.021, 7.804, 7.629, 7.425, 7.174). Reds as in Y1: the globe paler and flatter than
+  main's from 4968 to about 4992, pale blobs lower left 4976 to 4992, a small white dot low in the frame 4976 to 4988, the eye a
+  small dark spot without main's bright arms. From 4997 the two read alike; 5007 to 5024 alike.
+- New tools: `/tmp/chainr4.py` (chainr.py with four digits, writes nothing), `/tmp/pic.py POSES DIR A B [STEP] [OUT.json]` (the
+  report's own `pictures()` on my frames: pop, level step and pattern by row; scale 0.5 on frames 960 wide so the small pictures
+  are 480 wide, the blur and the pattern width halved with it), `/tmp/poses-z5-half.json` (my tree's poses at half steps).
+
+## 26 Nov, 09:57 UTC: look to the Builder, the rise beside main and my copy's rows (word for word; attached `look-0932.jpg`, `zr-a1.jpg`, `zr-b1.jpg`, `zr-c1.jpg`, `zr-x1.jpg`, `zr-spot.jpg`)
+
+> LOOK, 26 Nov 09:57 UTC (neptune_builder). Not a name. State: Z5 = 4db76e70e on agent/neptune-place (not pushed; base origin main 77a7d4108). Six pictures.
+>
+> 1. 4860 beside the approved (look-0932.jpg, 16x9 draft): approved | main 77a7d410 | Y1 | Z5. Z5 (storm.wall [0.2, 1.2], the sheet's clearing round the eye 1.0 eye radii in place of 1.8, collar's third 0.2): plain 21.581 (main 22.986, Y1 19.935), top quarter 9.034 (main 12.395), G17 median 0.920 / p25 0.529 (main 0.934 / 0.549; green). The wide round dark halo of your point 2 (b) is gone: it was the pale sheet's clearing, not the wall. Still red there: the oval is shorter than the approved's, the bank is lumps and lilac, the blue at the left is lifted.
+>
+> 2. THE RISE, reader's pattern by my copy (the report's own functions, tools/img/smooth.py as on main; preview frames 960 wide, draft, rate 2; pairs 8 frames apart, every second frame from 4960 to 5016; STATED, a proxy):
+> - Z5 at half steps, as your reader steps: all 29 pairs under the limit 0.45. Largest 0.3792 at pair 4992 to 5000, place (928, 432) of 1920; then 0.34 at 4990, 0.33 at 4988, 0.32 at 4994, 0.30 at 4972, 0.29 at 4968, 0.26 at 4960, 4970 and 4986; from 5004 on 0.11 and under.
+> - Control, the same copy on main's own frames (main 77a7d410, my render of 09:07, main's own poses; I have main at every second frame only, so step 2): 0.50 at 4974, 0.69, 0.82, 0.52, 0.76, 1.23 at 4984, 1.09, 0.92, 0.91, 1.39 at 4992, 1.45 at 4994, 1.14, 0.91, 0.70, 0.74 at 5002; 0.14 and under from 5004; 0.05 to 0.11 from 4960 to 4972. Your rows: 1.3434 at 4986 + 1/2 and 1.4761 at 4993. So my copy finds main's red at its place and near its size.
+> - Z5 at the same step 2: 0.4518 at 4960, 0.42 at 4962, 0.35 at 4964, then 0.15 to 0.36 up to 5002 (0.36 at 4992, 0.28 at 4994), 0.09 and under from 5004.
+> - RED, named: at 4960 to 4972 mine reads higher than main's at step 2 (0.45, 0.42, 0.35, 0.23, 0.29, 0.33, 0.34 against 0.11, 0.10, 0.10, 0.11, 0.07, 0.05, 0.07), and 0.4518 is over the limit by 0.0018 at that step; at half steps the same pairs read 0.26, 0.25, 0.20, 0.22, 0.29, 0.26, 0.30. The place is the pale far ground under the horizon at the right, (1736, 484) of 1920 (zr-spot.jpg, main above, Z5 below, with the spot doubled). My eye finds no step there in either. Cause not found yet.
+>
+> 3. THE RISE BY THE EYE, main | Z5, every frame looked at (zr-a1.jpg 4960 to 4978, zr-b1.jpg 4980 to 4996, zr-c1.jpg 4997 to 5006; zr-x1.jpg Z5 alone, 4993 to 5001, larger):
+> - Main: the surface view's whirl and bank give way in place to the map's storm with its white streak at 4984 to 4990.
+> - Z5: no change in place. The eye and the bank shrink with height on the globe that is already there; the map's storm and its streaks stay where they are from 4960 to 5024. Mean difference of consecutive frames 4988 to 5004 runs 8.218, 7.901, 7.609, 7.422, 7.308, 7.247, 7.159, 7.018, 6.835, 6.625, 6.432, 6.448, 6.510, 6.556, 6.639, 6.736: no jump (main 4994 to 5004: 10.809 down to 7.174).
+> - RED in Z5, as in Y1: the globe is paler and flatter than main's from 4968 to about 4992; pale blobs in the lower left from 4976 to 4992; a small white dot low in the frame from 4976 to 4988; the eye is a small dark spot without main's bright arms. From 4997 the two read alike.
+>
+> 4. Running now: the dive 4700 to 4744 at half steps (89 frames), then its pairs; then 4744 to 4768. The mail of 10:30 carries the dive beside main and all rows.
+>
+> Seconds a frame, draft, preview format: the rise 22 at 4960, 13 at 4980, 6 at 5000, about 2.5 from 5008; the dive about 7 at 4706. 4860 at 1920: 109.8.
+
+## 26 Nov, 09:57 to 10:19 UTC: lab log (pop and level step by the report's own function; Z5's dive; the Sun's picture at 4704)
+
+- `/tmp/pic.py` on Z5's rise (`Z5q`, 4960 to 5024, 129 frames, half steps; 09:59 to 10:06 beside the render): pattern 0.3937 at
+  4989.5 | pop 1.0856 at 4968 (plain 1.0888 at 4968.5, carried 1.1156 at 4996.5) | on the full pictures pop 1.1646 at 4968.5 | level
+  step 0.1011 at 4968.5. By part: rise 1 (4960 to 4987) pattern 0.3197 at 4968.5, pop 1.0856 at 4968, level step 0.1011 at 4968.5;
+  rise 2 (4987.5 to 5023.5) pattern 0.3937 at 4989.5, pop 1.0459 at 5014 (carried 1.1156 at 4996.5, full 1.0902 at 5005), level
+  step 0.0499 at 5000. The level's climb changes slope at 4968.5 to 4969 (83.510, 83.892, 84.082): height 0.0527 radii, the end of
+  fan.veil.height [0.0, 0.05].
+- 10:10:34. `rd.sh` done. Z5's dive 4700 to 4744 at half steps (`Z5s`, 89 frames, 7 s a frame at 4706, 10 at 4720, 14 at 4740),
+  pairs 8 frames apart from 4700 by 2: 0.18, 0.31, 0.24, 0.32, 0.35 (4708), 0.27, 0.17, 0.18, 0.21, 0.23, 0.16, 0.12, 0.18, 0.20,
+  0.22, 0.29, 0.34 (4732), 0.30, 0.25. At step 2: 0.0640, 0.1680, 0.1813, 0.2044, 0.2297, 0.1870, 0.1545, 0.1645, 0.1947, 0.2006,
+  0.1374, 0.1047, 0.1033, 0.1329, 0.1605, 0.2085, 0.2542, 0.1960, 0.1983.
+- 10:10:47. `N=Z5 /tmp/rd2.sh` started (4744 to 4768 at half steps into `Z5t`, about 23 s a frame).
+- `pic.py` on Z5's dive (`Z5s`, 4700 to 4744): pattern 0.3732 at 4707 | pop 1.2618 at 4743.5 (carried 1.2783) | full 1.5989 at
+  4743.5 | level step 0.1728 at 4704.5. By part: dive 1 (4700 to 4724.5) pattern 0.3732 at 4707, pop 1.0934 at 4713.5 (plain
+  1.1682), full 1.0970 at 4711, level step 0.1728 at 4704.5; dive 2 (4725 to 4743.5) pattern 0.3425 at 4732, level step 0.1095 at
+  4732.5, pop 1.0076 up to 4736 and climbing from 1.021 at 4737 to 1.2618 at 4743.5 (what is left after the motion 1.713 to 2.110,
+  the window's median 1.672: my window ends at 4744, the reader's reaches 8 frames further; not decided until 4744 to 4768 is in).
+  The level's knee at 4732.5: height 0.1519, the end of globe.height [0.9, 0.15] and globe.own [1.6, 0.15].
+- The level step at 4704 to 4704.5 is the Sun's picture: at 4704 it stands on the limb, cut by it, its core clear; at 4704.5 it is
+  gone (`/tmp/zd-sun.jpg`, `/tmp/zd-sun4.jpg`). `set.ts` shows it by `limbShare(shot.sun.dir, world.position, 1,
+  shot.sun.angularRadius)` of src/space/sky.ts, the share of the Sun's disc (0.14 degrees) clear of the hard limb: the engine's law.
+  Main's Sun stands the same way on the limb at 4706 and is gone at 4708 (I hold main's even frames only).
+- Sheets of the dive, every frame looked at: `/tmp/zd-a1.jpg` (main | Z5, 4700 to 4718), `zd-b1.jpg` (4720 to 4738), `zd-x1.jpg`
+  (Z5 alone, 4714 to 4726), `zd-x2.jpg` (4728 to 4744). Steps of consecutive frames in Z5 4700 to 4744: 10.379 rising to 14.226 at
+  4713 to 4714, falling to 9.074 at 4734 to 4735, 9.705 at 4743 to 4744.
+- The tracked tree: origin main 2919338856 bytes, HEAD 2902616247; HEAD lacks main's ten place plates and four sky cards (17640922
+  bytes) and adds 29799 bytes of new files; with the six cards (15621786 bytes) the tree is about 1.1 MB under main's.
+
+## 26 Nov, 10:19 UTC: the dive and the rise beside main, to the Builder (word for word; attached `zd-a1.jpg`, `zd-b1.jpg`, `zd-x1.jpg`, `zd-x2.jpg`, `zr-a1.jpg`, `zr-b1.jpg`, `zr-c1.jpg`, `zr-x1.jpg`, `zd-sun4.jpg`, `look-0932.jpg`)
+
+> DIVE AND RISE BESIDE MAIN (the answer due 10:30), 26 Nov 10:19 UTC, neptune_builder. State Z5 = 4db76e70e on agent/neptune-place (not pushed; on the merge of origin main 77a7d4108; origin main b3ae0e5e2 differs from it by kit/PROGRESS.md only). Not a name yet. Ten pictures.
+>
+> 1. THE ROWS. Mine are a proxy, STATED: the report's own function pictures() of tools/img/smooth.py as on main, called on my frames at half steps (preview format, 960 wide, draft; scale 0.5 so the small pictures are 480 wide as yours, blur and pattern width halved with it; my tree's poses). My frames cover 4700 to 4744 and 4960 to 5024 only, so each part is read on the frames it has, and the pop near the ends of my windows is read against a cut window.
+>
+> part | your row of main | Z5 by my copy
+> dive 1 | pattern 1.3008 at 4721, pop 1.0405 at 4718, level step 0.4864 at 4721 | pattern 0.3732 at 4707, pop 1.0934 at 4713 + 1/2, level step 0.1728 at 4704 + 1/2 (frames 4700 to 4724 + 1/2)
+> dive 2 | pattern 1.1468 at 4725, pop 1.0657 at 4746, level step 0.1051 at 4731 | pattern 0.3425 at 4732, level step 0.1095 at 4732 + 1/2, pop 1.0076 up to 4736 (frames 4725 to 4743 + 1/2; see the red below for the pop after 4737)
+> rise 1 | pattern 1.3434 at 4986 + 1/2, pop 1.0816 at 4963, level step 0.1591 at 4979 | pattern 0.3197 at 4968 + 1/2, pop 1.0856 at 4968, level step 0.1011 at 4968 + 1/2 (frames 4960 to 4987)
+> rise 2 | pattern 1.4761 at 4993, pop 1.1301 at 5000, level step 0.0997 at 4987 | pattern 0.3937 at 4989 + 1/2, pop 1.0459 at 5014, level step 0.0499 at 5000 (frames 4987 + 1/2 to 5023 + 1/2)
+>
+> So by my copy the pattern line is under 0.45 in all four parts (0.37, 0.34, 0.32, 0.39) where main's is 1.15 to 1.48.
+>
+> Control of the copy: the same pattern function on main's own frames with main's own poses (I hold main at every second frame, so step 2, pairs 8 frames apart): dive 0.60 to 0.97 from 4700 to 4720, 1.18 at 4722, 1.02 at 4724 and 4726, 0.70 at 4728, then 0.13 to 0.21; rise 0.50 at 4974, 1.23 at 4984, 1.39 at 4992, 1.45 at 4994, 0.74 at 5002, then 0.14 and under. It finds your reds at their places and near their sizes. Z5 at that same step 2: dive 0.06 to 0.25; rise 0.4518 at 4960, 0.42 at 4962, 0.35 at 4964, then 0.15 to 0.36, 0.09 and under from 5004.
+>
+> 2. REDS IN THE ROWS, named:
+> (a) Pop at the end of my dive window: the pop climbs from 1.02 at 4737 to 1.2618 at 4743 + 1/2 (limit 1.2; the carried reading 1.2783). What is left after the motion grows there from 1.713 to 2.110 while the median of the cut window stands at 1.672; the window of your reader reaches 8 frames beyond 4743 + 1/2 and mine ends there. Whether it is a hump or the cut window is not known until the frames 4744 to 4768 are in (rendering now, done about 10:31); I send that row the minute it exists. Main's own line there is 1.0657 at 4746.
+> (b) Pop, dive 1: 1.0934 at 4713 + 1/2 against main's 1.0405: 0.0529 over main's, inside the twentieth (0.06) of d364, under the limit. A broad hump from 4710 to 4716, no single frame.
+> (c) Pop, rise 1: 1.0856 against main's 1.0816 (0.004 over). The reading on the full pictures there is 1.1646 at 4968 + 1/2; if your row quotes that reading, mine is 0.083 over main's and over the twentieth. A broad hump 4964 to 4971.
+> (d) Level step, dive 2: 0.1095 against main's 0.1051 (0.0044 over, inside the twentieth 0.065). It is a knee, not a blink: the frame's mean level stops climbing at 4732 + 1/2, where the height passes 0.15 radii, the end of two of my laws by height (globe.height [0.9, 0.15] and globe.own [1.6, 0.15]). The same kind of knee stands at 4968 + 1/2 (height 0.053, the end of fan.veil.height [0.0, 0.05]): 0.1011. Both are ramps that end with a corner.
+> (e) Level step 0.1728 at 4704 to 4704 + 1/2 (dive 1; main's line 0.4864): the Sun's picture goes out within half a frame as the Sun's disc passes behind the hard limb (the engine's limbShare with the disc of 0.14 degrees; zd-sun4.jpg: 4703 + 1/2, 4704, 4704 + 1/2, and main's 4706 where its Sun stands the same way on the limb). At 4704 the picture is cut by the limb and its core still stands clear of it; at 4704 + 1/2 it is gone. That is the engine's law for the Sun, not a word of mine.
+> (f) At step 2 only, 4960 to 4972 read over main's (0.45, 0.42, 0.35 against 0.11, 0.10, 0.10), 0.4518 over the limit by 0.0018; at half steps the same pairs read 0.20 to 0.30. The place is the pale far ground under the horizon at the right. No step by my eye. Cause not found.
+> (g) Not read by my copy at all: 4668 to 4700, 4744 to 4782 (4744 to 4768 running), 4938 to 4960, 5024 to 5037.
+>
+> 3. BY THE EYE, main | Z5, every frame of every sheet looked at at this size and larger:
+> - The dive (zd-a1.jpg 4700 to 4718, zd-b1.jpg 4720 to 4738; zd-x1.jpg and zd-x2.jpg Z5 alone, larger, 4714 to 4744). Main: the map's storm gives way in place to the surface view's whirl and bank at 4720 to 4726; the dark shape of the map's storm stays above it. Z5: nothing changes in place. The map's storm with its white streak stays where it is and drifts out over the top edge; the eye is first seen as a faint ring at 4714 and grows with the height; the bank is first seen at 4719 as a thin line and grows the same way. Mean difference of consecutive frames 4700 to 4744 runs 10.379 up to 14.226 at 4713 to 4714 and down to 9.074 at 4734 to 4735, then 9.705 at 4743 to 4744; no jump.
+> - The rise (zr-a1.jpg 4960 to 4978, zr-b1.jpg 4980 to 4996, zr-c1.jpg 4997 to 5006; zr-x1.jpg Z5 alone 4993 to 5001; 5007 to 5024 looked at, alike). Main: the whirl and bank give way in place to the map's storm at 4984 to 4990. Z5: no change in place; from 4997 the two read alike.
+> - RED in Z5 by the eye: the globe is paler and flatter than main's from 4706 to 4744 and from 4968 to about 4992 (one tone curve at every height, MAIL 1011; main still has the grade by height); grey smudges in the lower left 4720 to 4738 and pale blobs there 4976 to 4992 (the map's own clouds, enlarged and soft); one white blob low in the frame 4714 to 4730 and a white dot 4976 to 4988 (the map's); the eye is a small dark swirl without main's bright arms; a pale ring round the eye from 4732; the sky's border at 4960 to 4972 as before. The entry 4674 to 4692 was shown at 09:29 with Y1 (no step in either); Z5 against Y1 at 4712 is 0.028 mean, so it stands for Z5, not rendered again.
+>
+> 4. 4860 (look-0932.jpg, approved | main | Y1 | Z5, 16x9 draft): Z5 plain 21.581 (main 22.986), top quarter 9.034 (main 12.395), G17 median 0.920 / p25 0.529 (main 0.934 / 0.549), green. Your (b) is answered by the eye: the wide round halo was the pale sheet's clearing; it is 1.0 eye radii now. Your (a), (c), (d) stand red.
+>
+> 5. WHAT I DO NEXT unless you say otherwise: the row of 4744 to 4768; then the name's proofs on Z5 as it stands (merge of origin main b3ae0e5e2, units, the four judged frames, 4605 against main's bytes, megabytes), so that a name is in your hands well before 13:30; trials on (a), (c), (d) at 4860 only after that, and they reach a second name only if the rows above hold.
+>
+> Seconds a frame, draft, preview format: dive 7 at 4706, 10 at 4720, 14 at 4740, about 23 from 4744; rise 22 at 4960, 13 at 4980, 6 at 5000, about 2.5 from 5008. 4860 at 1920: 109.8.
