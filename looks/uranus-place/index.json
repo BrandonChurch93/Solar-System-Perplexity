@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T07:13:15.790Z",
- "head": "a854dac9456f1d21a603d3c66a55b6470a8f45f5",
- "note": "07:14 tops' law bb5537bf and main's turn law 9fef204d committed, main 8c8bf870 merged (a854dac9); reader on all four parts running",
+ "pushed": "2026-11-26T07:32:40.500Z",
+ "head": "fb56f76e54fa1bd2688cdb19cebe074367dc2193",
+ "note": "07:33 rise 2 of 2 on the head reads 0.82 (main 0.8765); rise 1 of 2 at the reader",
  "looks": [
+  {
+   "time": "2026-11-26T07:32:39.596Z",
+   "file": "20261126073239596-note-uranus-rise-p2of2-changes.jpg",
+   "source": "../../../../tmp/n71/out/r2/uranus-rise-p2of2-changes.png",
+   "kind": "note",
+   "label": "reader, rise 2 of 2 on fb56f76e (draft, rate 2): pattern 0.82 from 4422 + 1/2 (18 over, first 4418), main 0.8765 at 4422; the red lies in a sliver inside the left limb",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T07:13:15.052Z",
    "file": "20261126071315052-note-tl-e.jpg",
@@ -234,14 +242,6 @@
    "source": "../../../../tmp/n67/rc-4158-4176.jpg",
    "kind": "note",
    "label": "RC 6ef232ea draft, dive 4158 to 4176 every second frame (the row's own frames): the star band in the upper right corner 4160 to 4166, the Sun's glow from 4170",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T03:27:05.676Z",
-   "file": "20261126032705676-note-mine-4148-4152.jpg",
-   "source": "../../../../tmp/n67/mine-4148-4152.jpg",
-   "kind": "note",
-   "label": "RC draft 4148 4150 4152 for MAIL 1385",
    "stop": "uranus"
   }
  ]
