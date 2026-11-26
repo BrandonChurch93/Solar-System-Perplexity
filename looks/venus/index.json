@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T06:52:04.315Z",
- "head": "688df998492160e7913a17d65290a0a1e0905175",
- "note": "trial P1: main's rise plates times a far deck map in the frame of T, slice 1538 to 1570 seen",
+ "pushed": "2026-11-26T07:12:31.995Z",
+ "head": "1967a39154d6e10e0e3598b5189dafb1c69463a5",
+ "note": "trial P2 whole rise frames against main and the name; trial P3 map from above",
  "looks": [
+  {
+   "time": "2026-11-26T07:12:31.295Z",
+   "file": "20261126071231295-note-a4-ov.jpg",
+   "source": "../../../../tmp/v/sh/pl/a4-ov.jpg",
+   "kind": "note",
+   "label": "level a of the rise from above: main's plate, the far deck plate, main's plate times the map of trial P3 (the map goes on past the far end of the far deck with the tone of that end)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:12:30.614Z",
+   "file": "20261126071230614-note-z1.jpg",
+   "source": "../../../../tmp/v/sh/P2/z1.jpg",
+   "kind": "note",
+   "label": "trial P2 every frame 1549 to 1552 + 1/2, crop x 640 to 1600, y 110 to 510 at 1 to 1",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:12:29.938Z",
+   "file": "20261126071229938-note-t1.jpg",
+   "source": "../../../../tmp/v/sh/P2/t1.jpg",
+   "kind": "note",
+   "label": "the same three at 1557, 1560, 1563: P2 is main's ground by 1563, the name keeps the far deck's smooth field",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:12:28.922Z",
+   "file": "20261126071228922-note-t0.jpg",
+   "source": "../../../../tmp/v/sh/P2/t0.jpg",
+   "kind": "note",
+   "label": "trial P2 (main's plates times a map of the far deck of T, share by the eye's height), main, and the name 77874d64 at 1548, 1551, 1554, crop x 700 to 1340, y 130 to 450 at 1 to 1",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T06:52:03.697Z",
    "file": "20261126065203697-note-crop2.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/sh/P1b/pm-c.jpg",
    "kind": "note",
    "label": "Rise 1542, 1545, 1548, 1551, far deck crop x 500 to 1460, y 180 to 420, draft tier: trial P1 (main's plates times the far deck map of T, 256 rows, share by height) left, main 2344387d right. Seen: alike at 1542 and 1545; at 1548 and 1551 main has crisp bright cells, P1 the same field softer",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T06:19:08.827Z",
-   "file": "20261126061908827-note-cMM-1318.jpg",
-   "source": "../../../../tmp/v/sh/A/cMM-1318.jpg",
-   "kind": "note",
-   "label": "Dive 1310 to 1319, state A less main and control mapmid1 less main: the control takes the coloured mottle under the limb out, faint cells in luminance stay; not the cause of rows 1310 to 1312",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T06:19:07.753Z",
-   "file": "20261126061907753-note-back-rise-a.jpg",
-   "source": "../../../../tmp/v/far/back-rise-a.jpg",
-   "kind": "note",
-   "label": "Trial P1, plates only, no render: main's plate a, the name's plate a, main's plate times the far deck map in the frame of T, their difference times 4. Mean difference in the far deck 1.29 of 255 (main against the name's plate 6.89)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T06:19:06.699Z",
-   "file": "20261126061906699-note-RM-far.jpg",
-   "source": "../../../../tmp/v/sh/R2/RM-far.jpg",
-   "kind": "note",
-   "label": "Rise 1542 to 1551 above the place at 1 to 1, the name (R) beside main: main brings crisp cells in between 1545 and 1548, R holds a smooth haze there (red a of the name)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T05:29:20.752Z",
-   "file": "20261126052920752-note-R-M-1586.jpg",
-   "source": "../../../../tmp/v/fin/R-M-1586.jpg",
-   "kind": "note",
-   "label": "State R, main and their difference times 8 at the final 1586, x 560 to 820, y 400 to 560, 3 times: single scattered pixels in the dark ground round the place (22 pixels over 8 of 255), the crops read the same",
    "stop": "venus"
   }
  ]
