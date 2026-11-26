@@ -72,7 +72,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import geom  # noqa: E402
 import countrytake as ct  # noqa: E402
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+ROOT = os.getcwd()
 R = 3389.5
 Image.MAX_IMAGE_PIXELS = None
 
@@ -140,6 +140,48 @@ def beds(level, thick, row, warp, edge, crisp, lateral):
     return tone0 * (1 - c) + tone * c, (-0.5 * hard0) * (1 - t) + hard * (0.5 - f) * t
 
 
+def bands(level, thick, row, warp):
+    """The uneven bed of thickness `thick` that the height `level` (km) lies in, as in beds(): its number and the share of
+    the bed below the height (0 at its foot, 1 at its top)."""
+    u = level / thick
+    i = np.floor(u)
+    f = u - i
+    f = f * f * (3 - 2 * f)
+    u = u + warp * ((hash2(i, np.full_like(i, row + 0.5)) * (1 - f) + hash2(i + 1, np.full_like(i, row + 0.5)) * f) - 0.5)
+    i = np.floor(u)
+    return i, u - i
+
+
+def streaks(ke, kn, ue, un, size, length, steps, turn, seed, band, row):
+    """The ground's noise of cell `size` (km) drawn out along the fall line (ue, un) over `length` sizes each way in `steps`
+    steps, mean 0.5. Every bed (`band`, a number per texel) reads a field of its own: the noise is moved by a hash of the
+    bed, so a strand ends where its bed ends."""
+    ca, sa = np.cos(turn), np.sin(turn)
+    rw = np.full_like(band, row)
+    oe, on = 97.0 * hash2(band, rw), 89.0 * hash2(band, rw + 1.3)
+    acc = np.zeros(ke.shape, np.float32)
+    for q in np.linspace(-length * size, length * size, steps):
+        pe, pn = (ke + q * ue) / size, (kn + q * un) / size
+        acc += noise(ca * pe - sa * pn + seed[0] + oe, sa * pe + ca * pn + seed[1] + on).astype(np.float32)
+    return acc / steps
+
+
+def broken(ke, kn, ue, un, size, length, steps, turn, seed, level, thick, row, warp, end, least):
+    """Streaks that end: the beds of thickness `thick` (km of height) break them. Over the upper `end` of a bed its field
+    goes over into that of the bed above, so the heights stay whole. A bed's hardness (a hash of the bed, from `least` to
+    1) is the strength of its streaks: a hard bed stands fluted, a soft one is a plain slope. Returns the field about 0."""
+    i, f = bands(level, thick, row, warp)
+    t = sm((f - (1 - end)) / end).astype(np.float32)
+    rw = np.full_like(i, row + 3.7)
+    hard = lambda j: (least + (1 - least) * hash2(j, rw)).astype(np.float32)
+    out = (streaks(ke, kn, ue, un, size, length, steps, turn, seed, i, row) - 0.5) * hard(i)
+    m = t > 0
+    if m.any():
+        up = (streaks(ke[m], kn[m], ue[m], un[m], size, length, steps, turn, seed, i[m] + 1, row) - 0.5) * hard(i + 1)[m]
+        out[m] = out[m] * (1 - t[m]) + up * t[m]
+    return out
+
+
 def flow(height, zone, source):
     """What gathers at every cell of a grid inside `zone`: the sum of `source` over the cells that drain through it, itself
     included. A cell drains to one of the two neighbours on either side of its fall line, the nearer the likelier, chosen by
@@ -197,6 +239,31 @@ def skylight(height_km, cell_km, reach_km, steps):
         mid = (rim + np.pi / 2) / 2
         acc += (1 - np.sin(rim)) * np.maximum((-(hx * cx + hy * cy) * np.cos(mid) + np.sin(mid)) / norm, 0)
     return (acc / (8 * np.sqrt(0.5))).astype(np.float32)
+
+
+def craters(ke, kn, size, cell, share, depth, rim, worn, reach, seed):
+    """Small craters of about `size` km across, at most one to a cell of `cell` sizes of the ground (km east and north of
+    the place, so the same crater on every level): a cell holds one with the chance `share`, at a place, of a width (0.6 to
+    1.4 sizes) and of a wear (0 fresh to 1) that are hashes of the cell. A bowl of `depth` and a rim of `rim` diameters,
+    less by up to `worn` with the wear; the rim falls off outside with the third power, counted to `reach` radii. km."""
+    c = size * cell
+    gx, gy = ke / c + seed, kn / c + 0.37 * seed
+    ix, iy = np.floor(gx), np.floor(gy)
+    out = np.zeros(ke.shape, np.float32)
+    for dx in (-1, 0, 1):
+        for dy in (-1, 0, 1):
+            cx, cy = ix + dx, iy + dy
+            there = hash2(cx + 0.31, cy + 0.17) < share
+            if not there.any():
+                continue
+            ox = cx + 0.15 + 0.7 * hash2(cx + 3.1, cy + 7.7)
+            oy = cy + 0.15 + 0.7 * hash2(cx + 5.3, cy + 2.9)
+            rad = 0.5 * size * (0.6 + 0.8 * hash2(cx + 11.3, cy + 5.9))
+            k_ = 2 * rad * (1 - worn * hash2(cx + 23.1, cy + 1.3))
+            r = np.hypot(gx - ox, gy - oy) * c / rad
+            prof = np.where(r < 1, -depth * k_ * (1 - r * r) + rim * k_ * r * r, rim * k_ / np.maximum(r, 1) ** 3)
+            out += np.where(there & (r < reach), prof, 0).astype(np.float32)
+    return out
 
 
 def main():
@@ -290,6 +357,7 @@ def main():
         # not where the picture's own ground lies on the plate as fine as the plate
         stem = os.path.join(a.top, 't%g' % w)
         own = 0.0
+        own_p = np.zeros((n, n), np.float32)
         if os.path.exists(stem + '-height.npy'):
             seen = np.isfinite(np.load(stem + '-height.npy'))
             lies = np.where(seen, np.load(stem + '-reach.npy') / (w / n), 1e9).astype(np.float32)
@@ -299,6 +367,7 @@ def main():
             keep = cv2.GaussianBlur(sm((keep - 0.35) / 0.3).astype(np.float32), (0, 0), 2.0)
             own = float((keep * wall).sum() / max(float(wall.sum()), 1.0))
             wall, talus = wall * (1 - keep), talus * (1 - keep)
+            own_p = cv2.GaussianBlur((seen * (1 - sm((lies - grain) / grain))).astype(np.float32), (0, 0), 3.0)
             del seen, lies, keep
         if only and str(w) not in only:
             continue
@@ -316,24 +385,8 @@ def main():
         ue, un = (fx / fl).astype(np.float64), (-fy / fl).astype(np.float64)
         del hs, fx, fy, fl
         ke, kn = kx.astype(np.float64), ky.astype(np.float64)
-        streak = np.zeros((n, n), np.float32)
-        drawn = []
-        for k, size in enumerate(W['fluteKm']):
-            wgt = float(sm((size / tex_km - grain) / grain))
-            if wgt <= 0:
-                continue
-            drawn.append('%g km %.2f' % (size, wgt))
-            acc = np.zeros((n, n), np.float32)
-            ca, sa = np.cos(0.6 + 1.1 * k), np.sin(0.6 + 1.1 * k)   # each octave's lattice is turned, so no lattice reads
-            for q in np.linspace(-W['fluteLen'] * size, W['fluteLen'] * size, W['fluteSteps']):
-                pe, pn = (ke + q * ue) / size, (kn + q * un) / size
-                acc += noise(ca * pe - sa * pn + 31.0 + 7.3 * k, sa * pe + ca * pn + 17.0 + 3.1 * k).astype(np.float32)
-            del pe, pn
-            acc = np.clip((acc / W['fluteSteps'] - 0.5) * W['fluteGain'], -1, 1) * wgt
-            if size <= W['broadKm']:   # a flute wider than broadKm is the heights' own form and does not move them
-                cut += (W['fluteDepth'] * size) * acc
-            streak += (W['fluteTone'] * W['fluteShare'] ** k) * acc
-            del acc
+        wander = ((noise(ke / D['strata']['wanderCellKm'], kn / D['strata']['wanderCellKm']) - 0.5) * D['strata']['wanderKm']).astype(np.float32)
+        level0 = (h * R + wander).astype(np.float64)   # the height the beds are read at, before gullies and flutes
         # joints: columns down the fall line, each with its beds at a height of its own
         size = W['jointKm']
         wj = float(sm((size / (2 * W['jointCount']) / tex_km - grain) / grain))
@@ -354,20 +407,174 @@ def main():
             del jv, k3
             jog = ((np.modf(np.sin(col * 12.9898 + 4.1) * 43758.5453)[0] % 1.0 - 0.5) * wj).astype(np.float32)
             del col
-        # the rock's own grain (MAIL 1247): the ground's noise of grainCellTexels texels drawn out along the fall line
-        gsz = W['grainCellTexels'] * tex_km
+        # flutes (MAIL 1266 2c): each octave's strands are broken by beds of fluteBeds times its size, the beds by the
+        # joints (a column reads them at a height of its own), and a bed's hardness is the strength of its flutes: flutes
+        # of several widths and of lengths that end, not parallel strands
+        streak = np.zeros((n, n), np.float32)
+        drawn = []
+        for k, size in enumerate(W['fluteKm']):
+            wgt = float(sm((size / tex_km - grain) / grain))
+            if wgt <= 0:
+                continue
+            drawn.append('%g km %.2f' % (size, wgt))
+            th = W['fluteBeds'] * size
+            acc = broken(ke, kn, ue, un, size, W['fluteLen'], W['fluteSteps'], 0.6 + 1.1 * k, (31.0 + 7.3 * k, 17.0 + 3.1 * k),
+                         level0 + W['jointShift'] * th * jog, th, 41.0 + 9.0 * k, W['warp'], W['fluteEnd'], W['fluteSoft'])
+            acc = np.clip(acc * W['fluteGain'], -1, 1) * wgt
+            if size <= W['broadKm']:   # a flute wider than broadKm is the heights' own form and does not move them
+                cut += (W['fluteDepth'] * size) * acc
+            streak += (W['fluteTone'] * W['fluteShare'] ** k) * acc
+            del acc
+        # the rock's own grain (MAIL 1247, 1266 2c): the ground's noise of grainCellTexels texels, a share grainIso of it
+        # as it is and the rest drawn out along the fall line (`grainLen` cells each way) and broken by beds of
+        # grainBedTexels texels of height, each of its own hardness
+        rms = lambda f_: max(float(np.sqrt((wall * f_ * f_).sum() / max(float(wall.sum()), 1.0))), 1e-9)
         gc = np.zeros((n, n), np.float32)
-        for q in np.linspace(-W['grainLen'] * gsz, W['grainLen'] * gsz, W['grainSteps']):
-            pe, pn = (ke + q * ue) / gsz, (kn + q * un) / gsz
-            gc += noise(0.62 * pe - 0.78 * pn + 91.0, 0.78 * pe + 0.62 * pn + 37.0).astype(np.float32)
-        del pe, pn
-        gc = gc / W['grainSteps'] - 0.5
-        del ke, kn, ue, un
+        for j, (cells, sh) in enumerate(zip(W['grainCells'], W['grainShares'])):
+            gsz = cells * tex_km
+            th = W['grainBedTexels'] * gsz
+            gs = broken(ke, kn, ue, un, gsz, W['grainLen'], W['grainSteps'], 0.9 + 1.3 * j, (91.0 + 5.7 * j, 37.0 + 2.9 * j), level0 + W['jointShift'] * th * jog, th, 77.0 + 6.0 * j, W['warp'], W['fluteEnd'], W['fluteSoft'])
+            gi = (noise(0.62 * ke / gsz - 0.78 * kn / gsz + 13.0 + 4.1 * j, 0.78 * ke / gsz + 0.62 * kn / gsz + 29.0 + 1.7 * j) - 0.5).astype(np.float32)
+            gc += sh * ((1 - W['grainIso']) * gs / rms(gs) + W['grainIso'] * gi / rms(gi))
+        # chutes (trial 13): between rim and foot (pos 0 to 1, read on the heights within relKm) the wall is cut by chutes
+        # of loose ground running down the fall line, none at the rim, all of it at the foot; between them the rock stands
+        s8 = max(n // 272, 1)
+        hg = cv2.resize(h, (n // s8, n // s8), interpolation=cv2.INTER_AREA)
+        rad = max(int(round(W['relKm'] / (tex_km * s8))), 1)
+        ker = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * rad + 1, 2 * rad + 1))
+        top = cv2.resize(cv2.GaussianBlur(cv2.dilate(hg, ker), (0, 0), rad / 2), (n, n), interpolation=cv2.INTER_CUBIC)
+        foot = cv2.resize(cv2.GaussianBlur(cv2.erode(hg, ker), (0, 0), rad / 2), (n, n), interpolation=cv2.INTER_CUBIC)
+        pos = np.clip((top - h) / np.maximum(top - foot, 1e-9), 0, 1).astype(np.float32)
+        del hg, top, foot
+        cf = np.zeros((n, n), np.float32)
+        for k, (size, sh) in enumerate(zip(W['chuteKm'], W['chuteShares'])):
+            wgt = float(sm((size / tex_km - grain) / grain))
+            if wgt <= 0:
+                continue
+            cf += sh * wgt * np.clip((streaks(ke, kn, ue, un, size, W['chuteLen'], W['chuteSteps'], 0.4 + 0.9 * k, (211.0 + 3.3 * k, 157.0 + 5.9 * k), np.zeros_like(ke), 5.0) - 0.5) * W['chuteGain'], -1, 1)
+        chute = sm((cf + W['chuteBias'] * (pos - W['chuteFrom'])) / W['chuteSoft'] + 0.5).astype(np.float32)
+        del cf
+        # the plain (MAIL 1290 item 1): its fine ground by code at true scale, read on the place's own east and north
+        # in km, so every level draws the same forms and a finer one only adds: roughness in octaves of one slope,
+        # small craters, low scarps (beds of the plateau that step), ripples in the hollows
+        PN = P['plain']
+        # plain.levels: the plates whose take's fine ground gives way to the code's; on the others the take's ground stays
+        plain_on = any(abs(float(w) - float(x)) < 1e-6 for x in PN['levels'])
+        # plain.parent: the ground under the code's is the parent plate's own (the next coarser level of --dir, enlarged as
+        # pyramid.py enlarges it), and the code adds only what the parent's texel does not carry: each size by one minus the
+        # parent's share of it, the same law by the texel that says what a level draws (MAIL 1056 ONE BODY, MAIL 1327)
+        par = None
+        ptex = tex_km
+        if plain_on and PN['parent']:
+            pl_ = min((l for l in country['levels'] if l['widthDeg'] > w + 1e-9), key=lambda l: l['widthDeg'])
+            pim = np.asarray(Image.open(os.path.join(a.dir, 'land-%s.jpg' % str(pl_['widthDeg']).replace('.', 'p'))).convert('RGB')).astype(np.float32)
+            pn_ = pim.shape[0]
+            m_ = int(round(pn_ * ct.half(w) / ct.half(pl_['widthDeg'])))
+            if (m_ - pn_) % 2:
+                m_ += 1
+            x0_ = (pn_ - m_) // 2
+            par = cv2.resize(pim[x0_:x0_ + m_, x0_:x0_ + m_], (n, n), interpolation=cv2.INTER_CUBIC)
+            ptex = tex_km * n / m_
+            del pim
+
+        def carried(size, g):
+            return float(sm((size / ptex - g) / g)) if par is not None else 0.0
+        if plain_on:
+            mp = np.zeros((n, n), np.float32)
+            said = []
+            for k, size in enumerate(PN['roughKm']):
+                wgt = float(sm((size / tex_km - grain) / grain)) * (1 - carried(size, grain))
+                if wgt <= 0:
+                    continue
+                ca, sa = np.cos(0.7 + 1.3 * k), np.sin(0.7 + 1.3 * k)
+                mp += (wgt * 0.5 * PN['roughSlope'] * size) * (2 * noise((ca * ke - sa * kn) / size + 301.0 + 7.7 * k, (sa * ke + ca * kn) / size + 211.0 + 3.9 * k) - 1).astype(np.float32)
+            said.append('rough rms %.1f m' % (float(mp.std()) * 1000))
+            cr = np.zeros((n, n), np.float32)
+            for k, (size, sh) in enumerate(zip(PN['craterKm'], PN['craterShare'])):
+                wgt = float(sm((size / tex_km - 2 * grain) / (2 * grain))) * (1 - carried(size, 2 * grain))
+                if wgt <= 0:
+                    continue
+                cr += wgt * craters(ke, kn, size, PN['craterCell'], sh, PN['craterDepth'], PN['craterRim'], PN['craterWorn'], PN['craterReach'], 57.0 + 13.0 * k)
+            mp += cr
+            said.append('craters to %.1f m deep' % (-float(cr.min()) * 1000))
+            del cr
+            # scarps: each is ONE line of the ground, the place where a field of the ground's noise (its own to each scarp,
+            # sizes scarpFieldKm in shares scarpFieldShares) passes its level scarpAt: a low table stands on one side, by
+            # scarpM metres, the riser scarpWideKm wide. No family of lines along a height, so nothing reads as contours.
+            tone_p = np.zeros((n, n), np.float32)
+            for k, (rise, at) in enumerate(zip(PN['scarpM'], PN['scarpAt'])):
+                fb = np.zeros((n, n), np.float64)
+                for j, (size, sh) in enumerate(zip(PN['scarpFieldKm'], PN['scarpFieldShares'])):
+                    sz = size * PN['scarpScale'][k]
+                    ca, sa = np.cos(1.1 + 2.3 * k + 0.9 * j), np.sin(1.1 + 2.3 * k + 0.9 * j)
+                    fb += sh * (noise((ca * ke - sa * kn) / sz + 401.0 + 9.1 * k + 3.3 * j, (sa * ke + ca * kn) / sz + 173.0 + 4.3 * k + 1.7 * j) - 0.5)
+                fb /= sum(PN['scarpFieldShares'])
+                wide_f = PN['scarpWideKm'] * 1.5 / (PN['scarpFieldKm'][0] * PN['scarpScale'][k])
+                wgt = float(sm((PN['scarpWideKm'] / tex_km - 0.5 * grain) / (0.5 * grain))) * (1 - carried(PN['scarpWideKm'], 0.5 * grain))
+                if wgt <= 0:
+                    continue
+                # a scarp dies out along its line: the table's height goes with a field of the ground of scarpHardKm
+                hardk = sm((noise(ke / PN['scarpHardKm'] + 91.0 + 6.1 * k, kn / PN['scarpHardKm'] + 33.0 + 2.9 * k) - PN['scarpHardFrom']) / PN['scarpHardSoft'])
+                tbl = (sm((fb - at) / wide_f + 0.5) * hardk).astype(np.float32)
+                del hardk
+                mp += (wgt * rise / 1000.0) * (tbl - 0.5)
+                tone_p += (wgt * PN['scarpTone']) * (tbl - 0.5)
+                said.append('scarp of %g m at %.2f, its table on %.3f' % (rise, wgt, float(tbl.mean())))
+                del tbl, fb
+            # ripples: in the hollows of the level's own heights and of a field of the ground, crests across the wind
+            hb = cv2.GaussianBlur(h, (0, 0), PN['rippleHollowKm'] / tex_km)
+            lowness = sm(0.5 - (h - hb) * R / PN['rippleHollowDepthKm']).astype(np.float32)
+            del hb
+            patch = noise(ke / PN['ripplePatchKm'] + 19.0, kn / PN['ripplePatchKm'] + 47.0).astype(np.float32)
+            rip_w = (sm((0.5 * patch + 0.5 * lowness - PN['rippleFrom']) / PN['rippleSoft']) * (1 - sm((sin - PN['rippleSin'][0]) / (PN['rippleSin'][1] - PN['rippleSin'][0])))).astype(np.float32)
+            del patch, lowness
+            wb_, wn_ = np.sin(np.radians(PN['windBearingDeg'])), np.cos(np.radians(PN['windBearingDeg']))
+            along = ke * wb_ + kn * wn_
+            across = ke * wn_ - kn * wb_
+            bend = PN['rippleWarp'] * (noise(ke / PN['rippleWarpKm'] + 71.0, kn / PN['rippleWarpKm'] + 13.0) - 0.5)
+            for k, (wl, sh) in enumerate(zip(PN['rippleKm'], PN['rippleShares'])):
+                wgt = float(sm((wl / tex_km - 2 * grain) / (2 * grain))) * (1 - carried(wl, 2 * grain))
+                if wgt <= 0:
+                    continue
+                ph = along / wl + bend * PN['rippleKm'][0] / wl + 0.37 * k
+                crest = 1 - np.abs(2 * fract(ph) - 1)
+                # crests end: a crest stands only where a field of the ground, long across the wind, lets it
+                ends = sm((noise(along / (wl * PN['rippleEndAlong']) + 17.0 + 3.0 * k, across / (wl * PN['rippleEndAcross']) + 53.0 + 7.0 * k) - PN['rippleEndFrom']) / PN['rippleEndSoft']).astype(np.float32)
+                mp += (wgt * sh * PN['rippleHeight'] * wl) * rip_w * ends * (crest ** 1.5 - 0.4).astype(np.float32)
+                del ends
+                said.append('ripples of %g m at %.2f' % (wl * 1000, wgt))
+            # the dust: streaks of the ground's noise drawn out along the wind, lighter in the lee and in the hollows
+            dust_p = np.zeros((n, n), np.float32)
+            for k, (size, sh) in enumerate(zip(PN['streakKm'], PN['streakShares'])):
+                dust_p += (1 - carried(size, grain)) * sh * (2 * noise(along / (size * PN['streakLong']) + 83.0 + 5.1 * k, across / size + 39.0 + 2.7 * k) - 1).astype(np.float32)
+            gp = (2 * noise(ke / tex_km * 0.83 + 7.0, kn / tex_km * 0.83 + 3.0) - 1).astype(np.float32)
+            # the mottle: darker sand and lighter dust in patches with an edge, by a field of the ground in octaves
+            mt = np.zeros((n, n), np.float64)
+            mw = 0.0
+            for k, (size, sh) in enumerate(zip(PN['mottleKm'], PN['mottleShares'])):
+                wgt = float(sm((size / tex_km - grain) / grain)) * (1 - carried(size, grain))
+                mt += wgt * sh * (noise(ke / size + 141.0 + 8.3 * k, kn / size + 77.0 + 5.9 * k) - 0.5)
+                mw += sh
+            mottle_p = (2 * sm(mt / mw / PN['mottleSoft'] + 0.5) - 1).astype(np.float32)
+            del mt
+            del along, across, bend
+        else:
+            mp = np.zeros((n, n), np.float32); tone_p = np.zeros((n, n), np.float32); rip_w = np.zeros((n, n), np.float32)
+            dust_p = np.zeros((n, n), np.float32); mottle_p = np.zeros((n, n), np.float32); gp = np.zeros((n, n), np.float32)
+            said = ['none on this level (plain.levels): the take\'s ground stays']
+        del gs, gi, ke, kn, ue, un, level0
         # beds on the heights with their gullies and flutes
-        level = (h * R + W['bedShift'] * cut * wall + ((noise(kx.astype(np.float64) / D['strata']['wanderCellKm'], ky.astype(np.float64) / D['strata']['wanderCellKm']) - 0.5) * D['strata']['wanderKm']).astype(np.float32)).astype(np.float32)
+        level = (h * R + W['bedShift'] * cut * wall + wander).astype(np.float32)
+        del wander
         rcell = max(W['roughKm'], 3 * tex_km)
         ragged = (noise(kx.astype(np.float64) / rcell + 9.0, ky.astype(np.float64) / rcell + 4.0) - 0.5).astype(np.float32)
         lateral = noise(kx.astype(np.float64) / W['lateralKm'] + 5.0, ky.astype(np.float64) / W['lateralKm'] + 2.0)
+        # the handover (MAIL 1266 2b): the take and the rock are not both drawn. The rock stands where the wall's weight
+        # passes a half, the line roughened by the ground's noise of handTexels texels (by handRough of the weight) and
+        # soft over handSoft of the weight, about a texel: on one side the take with its own grain, on the other the rock
+        # with its own
+        hc = W['handTexels'] * tex_km
+        hand = sm((wall - 0.5 - W['handRough'] * (2 * noise(kx.astype(np.float64) / hc + 3.0, ky.astype(np.float64) / hc + 8.0) - 1)) / W['handSoft'] + 0.5).astype(np.float32)
         del kx, ky
         strata = np.zeros((n, n), np.float32)
         step = np.zeros((n, n), np.float32)
@@ -387,12 +594,17 @@ def main():
         if jw is not None:
             step *= jw
         del jw
-        d = (step + cut) * wall + W['fanShare'] * (W['gullyDepthKm'] * (gul - 0.5) + cut + W['gullyDepthKm'] * gul) * talus
+        d = (step + cut) * wall * (1 - W['chuteFill'] * chute) + W['fanShare'] * (W['gullyDepthKm'] * (gul - 0.5) + cut + W['gullyDepthKm'] * gul) * talus
         # only what is finer than broadKm is added to the heights (coarser they hold as they are): the displacement's
         # own mean over the wall and the talus within broadKm is taken out, so no cliff stands where the wall ends
         zone = np.clip(wall + talus, 0, 1)
         d -= zone * cv2.GaussianBlur(d, (0, 0), W['broadKm'] / tex_km) / np.maximum(cv2.GaussianBlur(zone, (0, 0), W['broadKm'] / tex_km), 1e-4)
         del zone
+        plain_w = (np.clip(1 - wall, 0, 1) * (1 - own_p)).astype(np.float32)
+        d += mp * plain_w
+        if a.look:
+            cv2.imwrite(os.path.join(a.look, name[:-4] + '-relief.png'), np.clip(128 + d * (127 / 0.06), 0, 255).astype(np.uint8))
+            cv2.imwrite(os.path.join(a.look, name[:-4] + '-streak.png'), np.clip(128 + streak * 127, 0, 255).astype(np.uint8))
         d = d / R
         h2 = hsoft + d.astype(np.float32)
         del hsoft
@@ -402,6 +614,8 @@ def main():
         del hx, hy
         lift = np.clip((ns - up) / max(up + Lg['wrap'], 0.06), -0.85, 1.6).astype(np.float32)
         del ns
+        if a.look:
+            cv2.imwrite(os.path.join(a.look, name[:-4] + '-lift.png'), np.clip((lift + 0.85) * (255 / 2.45), 0, 255).astype(np.uint8))
         m = min(n, 1024)
         cm = ((np.arange(m) + 0.5) / m * 2 - 1) * t
         xm = np.broadcast_to(cm[None, :], (m, m)).astype(np.float32)
@@ -442,10 +656,22 @@ def main():
         tk = [0.0, 0.0]
         sb = W['broadKm'] / tex_km
         wb = np.maximum(cv2.GaussianBlur(wall, (0, 0), sb), 1e-4)
+        so = W['dustKm'] / tex_km
+        wopen = (np.clip(1 - wall - talus, 0, 1) * lit0).astype(np.float32)
+        bo = cv2.GaussianBlur(wopen, (0, 0), so)
+        cmark = np.exp(W['chuteTone'] * streak)
         for ch in range(3):
             both = (sunp ** pw + (2 * W['shadowWall'][ch] * shade) ** pw) ** (1 / pw)
             law = (RK['wall'][ch] * both * mark).astype(np.float32)
             take = geom.scene_of(img[..., ch] / 255.0).astype(np.float32)
+            # the chute's ground: the open ground's own colour beside the wall (within dustKm) under the light of the
+            # softened slope, over the light of level ground
+            mean_open = float((take * wopen).sum() / max(float(wopen.sum()), 1.0))
+            dust = np.where(bo > 0.02, cv2.GaussianBlur(take * wopen, (0, 0), so) / np.maximum(bo, 1e-4), mean_open)
+            soft = ((lit0 * cap) ** pw + (2 * W['shadowWall'][ch] * shade) ** pw) ** (1 / pw)
+            level_ = (1 + (2 * W['shadowWall'][ch]) ** pw) ** (1 / pw)
+            law = (law * (1 - chute) + (W['chuteAlbedo'] * dust * soft / level_ * cmark) * chute).astype(np.float32)
+            del dust, soft
             tk[0] += float((take * wall).sum())
             tk[1] += float((law * wall).sum())
             # coarser than broadKm the wall keeps the take's tone, finer it is the law's rock
@@ -472,7 +698,9 @@ def main():
         g2 = float((wall * m_g * m_g).sum() / max(float(wall.sum()), 1.0))
         del m_r, m_g
         amp = np.sqrt(np.maximum(t2 - r2, 0) / max(g2, 1e-12)) * (blur(rl, grain) + 4) / np.maximum(blur(rl, grain), 4)
-        rock *= np.clip(1 + amp * gc, 0.6, 1.6)[..., None]
+        if a.look:
+            cv2.imwrite(os.path.join(a.look, name[:-4] + '-rock0.jpg'), cv2.cvtColor(np.clip(rock + 0.5, 0, 255).astype(np.uint8), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 92])
+        rock *= np.clip(1 + W['grainOf'] * (1 - W['chuteCalm'] * chute) * amp * gc, 0.6, 1.6)[..., None]
         g_now = part(rock.mean(2))
         on_ = wall > 0.5
         grain_says = 'grain under %g texels (root mean square): the take on the ground beside %.4f, the rock without its grain %.4f, with it %.4f' % (
@@ -482,8 +710,33 @@ def main():
         # talus: the take's broad tone times what the fine relief adds to the light of the softened heights
         rel = light / ((lit0 * cap) ** pw + fm ** pw) ** (1 / pw)
         scree = geom.texel_of(geom.scene_of(np.clip(tone_talus, 0, 255) / 255.0) * (rel * np.exp(W['fanTone'] * (gul - 0.5) + W['fanShare'] * streak))[..., None]) * 255.0 * fine
-        del lift, rel, lit0
-        res = img * (1 - wall - talus)[..., None] + rock * wall[..., None] + scree * talus[..., None]
+        lift_p, lit0_p = lift, lit0
+        del rel
+        tal0 = np.clip(talus / np.maximum(1 - wall, 1e-3), 0, 1)[..., None]
+        res = (img * (1 - tal0) + scree * tal0) * (1 - hand)[..., None] + rock * hand[..., None]
+        # the plain: the take's broad tone (its mean over the open ground within broadPx px of the take) under what the
+        # fine relief adds to the light, with the dust
+        sbp = PN['broadPx'] * n / 1254.0
+        wo = np.clip(1 - wall - talus, 0, 1).astype(np.float32)
+        bo2 = np.maximum(cv2.GaussianBlur(wo, (0, 0), sbp), 1e-4)
+        mpf = (mp - cv2.GaussianBlur(mp, (0, 0), PN['hollowKm'] / tex_km)) / PN['hollowDepthKm']
+        alb = np.exp(PN['streakTone'] * dust_p + PN['mottleTone'] * mottle_p + tone_p - PN['hollowTone'] * np.clip(mpf, -1, 1) + PN['rippleTone'] * (1 - carried(PN['ripplePatchKm'], grain)) * rip_w) * (1 + PN['grain'] * gp)
+        del mpf
+        up_l = np.maximum(1 + lift_p, least)
+        shd_l = np.maximum(1 + PN['shadeLift'] * lift_p, least)
+        plain = np.empty_like(img)
+        for ch in range(3):
+            take = geom.scene_of(img[..., ch] / 255.0).astype(np.float32)
+            broad = geom.scene_of(np.clip(par[..., ch], 0, 255) / 255.0).astype(np.float32) if par is not None else cv2.GaussianBlur(take * wo, (0, 0), sbp) / bo2
+            relp = (lit * up_l + (1 - lit) * Lg['fill'][ch] * shd_l) / (lit0_p * cap + (1 - lit0_p) * Lg['fill'][ch])
+            plain[..., ch] = geom.texel_of(broad * relp * alb) * 255.0
+        del take, broad, relp, alb, up_l, shd_l, wo, bo2
+        if a.look:
+            cv2.imwrite(os.path.join(a.look, name[:-4] + '-plain.jpg'), cv2.cvtColor(np.clip(plain + 0.5, 0, 255).astype(np.uint8), cv2.COLOR_RGB2BGR), [cv2.IMWRITE_JPEG_QUALITY, 92])
+        pk = ((1 - own_p) * (1.0 if plain_on else 0.0))[..., None]
+        res = ((img * (1 - pk) + plain * pk) * (1 - tal0) + scree * tal0) * (1 - hand)[..., None] + rock * hand[..., None]
+        del tal0, plain, pk
+        print('  the plain: ' + '; '.join(said) + ('; under it the parent plate enlarged %.2f times (its texel %.1f m)' % (n / m_, ptex * 1000) if par is not None else ''), flush=True)
         Image.fromarray(np.clip(res + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(a.out, name), qtables=kept[0], subsampling=kept[1])
         ws = max(float(wall.sum()), 1.0)
         on = wall > 0.5
@@ -495,6 +748,9 @@ def main():
         if a.look:
             tag = os.path.join(a.look, name[:-4])
             cv2.imwrite(tag + '-wall.png', (wall * 255).astype(np.uint8))
+            cv2.imwrite(tag + '-hand.png', (hand * 255).astype(np.uint8))
+            cv2.imwrite(tag + '-chute.png', (chute * 255).astype(np.uint8))
+            cv2.imwrite(tag + '-pos.png', (pos * 255).astype(np.uint8))
             cv2.imwrite(tag + '-talus.png', (talus * 255).astype(np.uint8))
             cv2.imwrite(tag + '-gully.png', (gul * 255).astype(np.uint8))
             cv2.imwrite(tag + '-light.png', np.clip(light * 96, 0, 255).astype(np.uint8))
