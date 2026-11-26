@@ -126,7 +126,16 @@
   "diveLiftUnits": [
    1.35,
    1.6
-  ]
+  ],
+  "air": {
+   "ceilingUnits": 1.335,
+   "floor": 0.5,
+   "inViewSine": 0.01,
+   "farSine": [
+    0.075,
+    0.1
+   ]
+  }
  },
  "proof": {
   "sunTurnDeg": 0
