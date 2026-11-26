@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T06:03:07.836Z",
+ "pushed": "2026-11-26T06:22:10.354Z",
  "head": "251ba8146f46b8f376d12df3416b9f2ac1f5b4d3",
- "note": "4407 to 4416 paler than main: controls by layer; main holds the table light by height, mine lets it go by the air path",
+ "note": "4407 to 4416: the cause is the air's scale height (0.1 R lets the table light go by 4407); sweep 0.2, 0.3, 0.45 beside main, 0.3 is as deep as main from 4407 to 4416 and nearer main in the dive at 4160 and 4170; 4290 and 4186 keep their look",
  "looks": [
+  {
+   "time": "2026-11-26T06:22:09.546Z",
+   "file": "20261126062209546-note-s-c.jpg",
+   "source": "../../../../tmp/n69/s-c.png",
+   "kind": "note",
+   "label": "air scale sweep, draft 4160, 4170, 4186, 4290: rows mine 0.1, 0.2, 0.3, 0.45, main",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T06:22:08.884Z",
+   "file": "20261126062208884-note-s-b.jpg",
+   "source": "../../../../tmp/n69/s-b.png",
+   "kind": "note",
+   "label": "air scale sweep, draft 4413 to 4422 and 4395: rows mine 0.1, 0.2, 0.3, 0.45, main",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T06:22:08.166Z",
+   "file": "20261126062208166-note-s-a.jpg",
+   "source": "../../../../tmp/n69/s-a.png",
+   "kind": "note",
+   "label": "air scale sweep, draft 4399 to 4413: rows mine 0.1, 0.2, 0.3, 0.45, main",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T06:03:06.775Z",
    "file": "20261126060306775-note-k-a.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n65/ls1-rise-pairs.png",
    "kind": "note",
    "label": "control LS1 (light table smooth across view cosine 0 to 0.157): 4399, 4403, 4411, left RC 6ef232ea, right LS1; chain reads 0.94 to 0.63 and 1.37 to 0.85",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T01:25:45.683Z",
-   "file": "20261126012545683-note-uranus-rise-p1of2-changes.jpg",
-   "source": "../../../../tmp/n65/out/r1/uranus-rise-p1of2-changes.png",
-   "kind": "note",
-   "label": "6ef232ea tool row, rise part 1 of 2: red, pattern 1.37 from 4403 (name 1.29 from 4387, main and B1 1.60 from 4399); red sits in the far ground under the limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T01:12:50.399Z",
-   "file": "20261126011250399-note-final-4290-band-a.jpg",
-   "source": "../../../../tmp/n65/final-4290-band-a.jpg",
-   "kind": "note",
-   "label": "final 4290 band under the horizon: approved, main, B1, RC 6ef232ea (match 3.226, B1 3.224, main 3.849)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T01:12:47.573Z",
-   "file": "20261126011247573-note-limb-4035.jpg",
-   "source": "../../../../tmp/n65/limb-4035.png",
-   "kind": "note",
-   "label": "limb at 4035, final tier, 2x: approved hero, main, RC 6ef232ea (match 3.737 against main 3.743)",
    "stop": "uranus"
   }
  ]
