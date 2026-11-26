@@ -1,9 +1,55 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T10:42:36.727Z",
+ "pushed": "2026-11-26T11:02:35.082Z",
  "head": "54ae2b6d5f8050eb506f10757b9f18dd96cd796d",
- "note": "10:43 rise 2 of 2 read on 54ae2b6d: pattern 0.8239 (main 0.8765), pop 1.1135 (main 1.1486); every frame 4418 to 4470 looked at; finals of the judged frames are being drawn on both trees",
+ "note": "11:03 the four judged frames at the final tier on 54ae2b6d (the name's tree): 4035 match 3.737 (main 3.743), 4290 match 3.178 (main 3.849); ten rise drafts keep the bytes of the tree the rise 1 read was made on; G17, units and gate are running",
  "looks": [
+  {
+   "time": "2026-11-26T11:02:32.107Z",
+   "file": "20261126110232107-note-head-4436-v.jpg",
+   "source": "../../../../tmp/n78/head-4436-v.jpg",
+   "kind": "note",
+   "label": "54ae2b6d final 4436",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T11:02:28.385Z",
+   "file": "20261126110228385-note-head-4137-v.jpg",
+   "source": "../../../../tmp/n78/head-4137-v.jpg",
+   "kind": "note",
+   "label": "54ae2b6d final 4137, the second aim's dark sky",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T11:02:23.602Z",
+   "file": "20261126110223602-note-head-4290-v.jpg",
+   "source": "../../../../tmp/n78/head-4290-v.jpg",
+   "kind": "note",
+   "label": "54ae2b6d final 4290: match with uranus-close.jpg 3.178 (main 3.849)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T11:02:20.051Z",
+   "file": "20261126110220051-note-head-4035-v.jpg",
+   "source": "../../../../tmp/n78/head-4035-v.jpg",
+   "kind": "note",
+   "label": "54ae2b6d final 4035: match with uranus-hero.png 3.737 (main 3.743)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T10:57:54.277Z",
+   "file": "20261126105754277-job-frame-04035.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "uranus.hold frame 4035, final tier, nograin view, from the running measure job",
+   "stop": "uranus",
+   "segment": "uranus.hold",
+   "frame": 4035,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
   {
    "time": "2026-11-26T10:42:35.965Z",
    "file": "20261126104235965-note-uranus-rise-p2of2-changes.jpg",
@@ -202,46 +248,6 @@
    "source": "../../../../tmp/n73/d1-a.png",
    "kind": "note",
    "label": "head f94de477, two sky aims, dive drafts consecutive, sheet a of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T08:16:38.388Z",
-   "file": "20261126081638388-note-a2-b.jpg",
-   "source": "../../../../tmp/n71/a2-b.png",
-   "kind": "note",
-   "label": "one aim beside two aims at 4145, 4150, 4155",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T08:16:36.162Z",
-   "file": "20261126081636162-note-a2-a.jpg",
-   "source": "../../../../tmp/n71/a2-a.png",
-   "kind": "note",
-   "label": "two sky aims: 4137, 4150, 4186 with the dive aim",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T07:58:23.428Z",
-   "file": "20261126075823428-note-uranus-rise-p2of2-pops.jpg",
-   "source": "../../../../tmp/n71/out/r2/uranus-rise-p2of2-pops.png",
-   "kind": "note",
-   "label": "reader, rise 2 of 2 on fb56f76e: the pops panel (largest pop 1.11 at 4463, limit 1.2)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T07:32:39.596Z",
-   "file": "20261126073239596-note-uranus-rise-p2of2-changes.jpg",
-   "source": "../../../../tmp/n71/out/r2/uranus-rise-p2of2-changes.png",
-   "kind": "note",
-   "label": "reader, rise 2 of 2 on fb56f76e (draft, rate 2): pattern 0.82 from 4422 + 1/2 (18 over, first 4418), main 0.8765 at 4422; the red lies in a sliver inside the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T07:13:15.052Z",
-   "file": "20261126071315052-note-tl-e.jpg",
-   "source": "../../../../tmp/n71/tl-e.png",
-   "kind": "note",
-   "label": "dive 4150 to 4180 draft: main, scale 0.3, new tops' law (both lower rows with my turn law)",
    "stop": "uranus"
   }
  ]
