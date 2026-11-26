@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T20:19:57.666Z",
+ "pushed": "2026-11-26T20:43:43.741Z",
  "head": "1acc67d1cd96f65384096b60b27cc3fd6a06e8f2",
- "note": "sea bodies: third bake laid bodies over Yucatan by a shifted hold level, cured in the cover, fourth bake running",
+ "note": "sea bodies, fourth bake: none over land; under the limb they clip to flat white by the veil's light, cause proved by control, cure in work",
  "looks": [
+  {
+   "time": "2026-11-26T20:43:43.159Z",
+   "file": "20261126204343159-note-d4-3714-gulf-row.jpg",
+   "source": "../../../../tmp/gl/k24/R/d4-3714-gulf-row.jpg",
+   "kind": "note",
+   "label": "20:37 fourth bake, 1857 (k3714) 1 to 1: mine draft, the held state draft, main's final",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T20:43:42.613Z",
+   "file": "20261126204342613-note-d4-4312-gulf2.jpg",
+   "source": "../../../../tmp/gl/k24/R/d4-4312-gulf2.jpg",
+   "kind": "note",
+   "label": "20:37 fourth bake, 2156 (k4312) draft 2 to 1: mine, main, the held state's final",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T20:43:42.035Z",
+   "file": "20261126204342035-note-c4-m0-limb.jpg",
+   "source": "../../../../tmp/gl/k24/R/c4-m0-limb.jpg",
+   "kind": "note",
+   "label": "20:41 the cause of the flat white, control at k4253: as it stands above, the low veil's light off below: the bodies keep light and shade",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T20:43:41.231Z",
+   "file": "20261126204341231-note-d4-4253-limb.jpg",
+   "source": "../../../../tmp/gl/k24/R/d4-4253-limb.jpg",
+   "kind": "note",
+   "label": "20:36 fourth bake, 2126 + 1/2 (k4253) draft 1 to 1, mine above main: no body over the land now, but the bodies under the limb read as flat white marks",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T20:19:57.065Z",
    "file": "20261126201957065-note-d3-4253-limb.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/k24/R/dbg2.jpg",
    "kind": "note",
    "label": "19:50 the cause: main's level, its cloud read as brighter than the hold's level (rise 0.1 to 0.3), kept over sea, the hold's level; the rule before read only the brightest rims",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T19:51:31.477Z",
-   "file": "20261126195131477-note-p24-gulf2-new.jpg",
-   "source": "../../../../tmp/gl/k24/R/p24-gulf2-new.jpg",
-   "kind": "note",
-   "label": "19:45 second bake of the sea bodies, level 24 crop over the Gulf: mine left, main right; mine far under main's amount",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T19:20:15.165Z",
-   "file": "20261126192015165-note-sea-look.jpg",
-   "source": "out/work/earth/place/sea/sea-look.jpg",
-   "kind": "note",
-   "label": "sea cover for ruling (i): main level 24 with the envelope, the kept cover in red on the hold's level",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T19:20:14.578Z",
-   "file": "20261126192014578-note-p24-gulf-1to1.jpg",
-   "source": "../../../../tmp/gl/k24/R/p24-gulf-1to1.jpg",
-   "kind": "note",
-   "label": "level 24 at 1 to 1 near western Cuba: mine left, main right",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T19:20:13.964Z",
-   "file": "20261126192013964-note-p24-where.jpg",
-   "source": "../../../../tmp/gl/k24/R/p24-where.jpg",
-   "kind": "note",
-   "label": "level 24: red is main's cloud that mine lacks, green mine only",
    "stop": "earth"
   }
  ]
