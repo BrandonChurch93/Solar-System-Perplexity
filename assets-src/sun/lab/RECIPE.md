@@ -76,6 +76,22 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   side, less: dark between), spot.hot and spot.gap (heat of a strand and of the dark between), spot.ring (factor on
   that heat at the umbra's edge and from 2.2 umbra radii outward), spot.edge (the two radii of the umbra's edge in
   umbra radii), spot.floor (heat of the umbra's floor and of its dots), heat.pen (the level of the whole ring).
+  The threads of a top: heat.cushion.weave (absent: off) = [0] threads round the crown of a cell of fibre.size,
+  [1] the radius (0 to 1 of the way to the border) of the first doubling of their number, [2] rows of threads per
+  unit of the run (fewer: longer threads), [3] a thread's half width as a share of its column on the top and [4]
+  at the border, [5] where the thinning starts, [6] how uneven that is round the cell, [7] the heat between
+  threads as a share of a thread's, [8] bend (a thread is an arc), [9] the mean when a column is too fine to
+  draw, [10] how much sooner the threads thin where three cells meet, [11] and [12] the columns per pixel between
+  which a rank fades to its mean. The threads are ranks of `labThread` in the cell's own frame (the angle round
+  the crown, the run outward), two ranks at each of two counts, each thread of its own length and heat, soft at
+  both ends and across, hottest toward its outer end; they ride outward with the cell's flow (the same flow as
+  the fibres), so new ones rise at the crown and old ones go down at the seam. They are in the heat only: the
+  mesh carries the tubes, not threads of 2 to 6 px. `labTongue` (the penumbra's strand) takes its lean and bend as
+  arguments now (spot.lean, spot.bend).
+  heat.gold (absent: the ramp's own tone.white): the colour of the lab ground's ramp at its top. The ramp of
+  src/stops/sun/convect.json is not edited; its top is whiter than any pixel of the approved (MEASURED: the
+  approved's pixels over 0.95 have g/r 0.85 and b/r 0.585).
+  LAB_TAIL in the environment of curve.py scales the slope of the curve past the 99th percentile (1 if not set).
   lab.json "show" (junc, edge, deep, cell, tall, seam) draws one field of the dome as heat, for finding a cause;
   absent in the film.
 - Readers of frame 90 against the approved close image (pictures at 1920 by 1080, none of them writes a file the

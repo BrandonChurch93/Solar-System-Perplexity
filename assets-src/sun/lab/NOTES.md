@@ -1799,3 +1799,35 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   0.43 0.35 0.34 and 0.49 0.42 0.41; umbra 19781, 18278 px. SEEN: t98 softer, the cells differ more from one to
   the next. A straight edge crosses the big cell at cols 840 to 900, rows 880 to 940 (there in every trial since
   t91 and before: a neighbour's dome that cuts through, not the threads). State h39 = t98; chain started 04:35.
+- 04:53 UTC. STATE h39 (= t98, refit; lab.json in the tree, v/lab-h39.json). Keys new against h37: heat.cushion.weave
+  [16,0.25,0.8,0.35,0.15,0.75,0.4,0.3,0.6,0.45,0.2,0.18,0.45], heat.gold [1.0,0.87,0.62], blob
+  [0.55,1.0,0.3,0.35,0.4,0.2,3,0.6,0.3], cushion.fibre [0.2,0.1,0.4,0.2], petal[0] 0, cushion.seam [0.06,0.4,40,1.0],
+  lane [0.19,0.08,0.8,0.0,0.002,0.03,0.6,0.0,0.5,0.8,10,0.1,0.35,1.2], heat.pen 0.7, spot.edge [0.5,0.9].
+  MEASURED final frame 90: plain 30.2146, low64 7.1483 (h37 8.1237, main 10.9492), bands [1.43 1.05 0.94 0.98 1.04
+  0.99 0.96], parts ground 50.5606 strip 52.0738 sky 9.2196 (standing 9.0457: 0.174 over; h37 9.18), curve middle
+  to border [0.735 0.75 0.747 0.74 0.718 0.683 0.631 0.569 0.491 0.418 0.355] (approved [0.667 0.662 0.657 0.647
+  0.619 0.586 0.547 0.496 0.433 0.369 0.324]: largest gap 0.099 at 0.3 of the way, the limit is 0.05: RED, h37
+  0.027), lane 4.98 px (3.36, 7.01; approved 7.08: RED, h37 5.61), rim mean px 1 2 3 4 5 6 8 10 12 16 20: 0.382
+  0.458 0.500 0.535 0.567 0.593 0.639 0.676 0.704 0.750 0.781 (approved 0.310 0.376 0.435 0.491 0.531 0.559 0.599
+  0.627 0.646 0.672 0.690), far shares 0.433, 0.132 (0.538, 0.196), cells with a dip over 0.04: 0.059 (0.341),
+  darkest band 0.094 (0.147), highlights over 0.95: 0.022 at g/r 0.872 (0.011, 0.851; h37 0.024, 0.930), near mean
+  rgb 0.595 0.350 0.151 (0.555 0.315 0.135), penumbra medians 0.51 0.45 0.44 (0.62 0.47 0.49), umbra 18174 px
+  level 0.068 g/r 0.32 (10524, 0.078, 0.60). MAIL 1402's lines at 90 on the lower 70 percent (v/l70.sh): low band
+  16: 19.5061 (h37 20.954, standing 23.4775, main's UNKNOWN here), bands 1 to 2: 1.090, 2 to 4: 0.974, 4 to 8:
+  0.999, 8 to 16: 1.053, under 1 px 1.339. At 60 (draft): low band 16 on that part 21.5176, sky part plain 11.176.
+  Draft 90: plain 29.9409, low64 7.1278.
+  FLICKER (near box disc 26 / band disc 26 / ellipse 90 by 45 / ellipse 70 by 35; largest, percent over a tenth):
+  h39 0.284, 70.0 / 0.284, 43.5 / 0.074, 0 / 0.116, 9.7 (h37 0.246, 58.3 / 0.246, 42.4 / 0.069, 0 / 0.138, 9.4).
+  The two disc rows are worse: RED.
+  SEEN at 1 to 1 rows 800 to 1080: the near cells carry soft threads from the crown to the rim, the bed is nearly
+  gone and the lanes are thin and dark, the lights are gold. What a viewer names: shells or mushroom caps with
+  ribs, each a separate body with a firm outline, lighter than the approved all over the top. From row 800 upward
+  (cells under about 40 px) the threads are under the fade limit and not drawn: pale stones with a blob, as h37.
+  At the film's preview size (960) no thread is drawn at all, so the mp4 shows stones that change shape.
+  SEEN in motion (five captures 12 film frames apart at 1920, eye held): the threads of a cell are different in
+  each capture, the cells swell and change outline, lanes open and close; whether the threads travel or jump is
+  UNKNOWN from captures 0.4 s apart.
+  NEXT: (1) threads at every distance: choose the count of threads by their width in the picture (never under 3 px
+  a column) instead of fading them to the mean; (2) the top darker and the fans on the flank that faces the eye
+  (curve 0.099 over); (3) a strip of 2 s at 1920 on a box, every frame, to see the travel; (4) the straight edge
+  in the big cell (a neighbour's dome cutting through); then points 4 and 5 of MAIL 1397.

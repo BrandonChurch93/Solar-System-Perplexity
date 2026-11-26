@@ -41,7 +41,7 @@ function rampTexture(): THREE.DataTexture {
   const n = 256
   const px = new Float32Array(n * 4)
   const lo = stops[0]!
-  const hi = ramp.tone.white as number[]
+  const hi = (lab.heat as { gold?: number[] }).gold ?? (ramp.tone.white as number[])
   for (let i = 0; i < n; i++) {
     const l = i / (n - 1)
     let c: number[]
@@ -68,6 +68,7 @@ function rampTexture(): THREE.DataTexture {
 }
 
 const T = lab.tubes
+const W = (lab.heat as { cushion?: { weave?: number[] } }).cushion?.weave
 const SP = lab.spot as { ring?: number[]; edge?: number[]; lean?: number; bend?: number; wave?: number[] }
 const Q = (lab.heat as { cushion?: { navel: number[]; fibre: number[]; patch: number[]; blob: number[]; grain?: number[]; seam?: number[]; rim?: number[]; petal?: number[] } }).cushion
 const CU = (lab.dome as { base?: number[] }).base
@@ -212,7 +213,7 @@ float labJoin(vec2 chartPlace) {
 // edge of the umbra
 // a rank of tongues round the spot: n side by side, each a drop with its head toward the umbra, of its own length,
 // bend and heat. x: its heat, y: the lot of its column
-vec2 labTongue(float turnS, float lr, float n, float rows, float salt, float flow) {
+vec2 labTongue(float turnS, float lr, float n, float rows, float salt, float flow, float lean, float bendBy) {
   float uu = (turnS / 6.2831853 + 0.5) * n;
   float col = mod(floor(uu), n);
   float fu = fract(uu) - 0.5;
@@ -221,11 +222,29 @@ vec2 labTongue(float turnS, float lr, float n, float rows, float salt, float flo
   float row = floor(v);
   float fv = fract(v);
   float id = h1(vec2(col + 17.0 * row, salt + row));
-  float wide = ${(SP.lean ?? 0.5).toFixed(3)} * (0.2 + 0.8 * smoothstep(0.0, 0.5, fv)) * (1.0 - 0.5 * smoothstep(0.7, 1.0, fv));
-  float bend = ${(SP.bend ?? 0.3).toFixed(3)} * (h1(vec2(col * 1.7 + row, salt + 9.0)) - 0.5) * (fv - 0.4);
+  float wide = lean * (0.2 + 0.8 * smoothstep(0.0, 0.5, fv)) * (1.0 - 0.5 * smoothstep(0.7, 1.0, fv));
+  float bend = bendBy * (h1(vec2(col * 1.7 + row, salt + 9.0)) - 0.5) * (fv - 0.4);
   float x = abs(fu + bend) / max(wide, 1e-3);
   float body = 1.0 - smoothstep(0.3, 1.0, x);
   return vec2(body * mix(1.0, 0.45, smoothstep(0.05, 0.95, fv)) * mix(0.5, 1.0, id) * step(0.08, id), lot);
+}
+// a rank of threads round a cell's crown: n side by side, each of its own length, bend and heat, soft at both ends
+// and across, hottest near its outer end. x: its heat, y: the lot of its column
+vec2 labThread(float turnS, float lr, float n, float rows, float salt, float flow, float lean, float bendBy) {
+  float uu = (turnS / 6.2831853 + 0.5) * n;
+  float col = mod(floor(uu), n);
+  float fu = fract(uu) - 0.5;
+  float lot = h1(vec2(col, salt));
+  float v = lr * rows + 3.0 * lot - flow;
+  float row = floor(v);
+  float fv = fract(v);
+  float id = h1(vec2(col + 17.0 * row, salt + row));
+  float along = smoothstep(0.0, 0.35, fv) * (1.0 - smoothstep(0.72, 1.0, fv));
+  float wide = lean * (0.35 + 0.65 * along);
+  float bend = bendBy * (h1(vec2(col * 1.7 + row, salt + 9.0)) - 0.5) * sin(3.1415927 * fv);
+  float x = abs(fu + bend) / max(wide, 1e-3);
+  float body = 1.0 - smoothstep(0.15, 1.0, x);
+  return vec2(body * along * mix(0.55, 1.0, smoothstep(0.2, 0.8, fv)) * mix(0.35, 1.0, id) * step(0.1, id), lot);
 }
 vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy) {
   vec2 sp = chartPlace - uLabSpot.xy;
@@ -253,8 +272,8 @@ vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy
   float ld = mix(0.5, smoothstep(0.35, 0.65, pd), kpd);
   pb = mix(0.5, pb, kpb);
   pc = mix(0.5, pc, kpc);
-  vec2 t1 = labTongue(turnS, lr, ${lab.spot.tongues[0]!.toFixed(1)}, ${lab.spot.ranks[0]!.toFixed(2)}, 3.0, flow);
-  vec2 t2 = labTongue(turnS, lr, ${lab.spot.tongues[1]!.toFixed(1)}, ${lab.spot.ranks[1]!.toFixed(2)}, 11.0, flow);
+  vec2 t1 = labTongue(turnS, lr, ${lab.spot.tongues[0]!.toFixed(1)}, ${lab.spot.ranks[0]!.toFixed(2)}, 3.0, flow, ${(SP.lean ?? 0.5).toFixed(3)}, ${(SP.bend ?? 0.3).toFixed(3)});
+  vec2 t2 = labTongue(turnS, lr, ${lab.spot.tongues[1]!.toFixed(1)}, ${lab.spot.ranks[1]!.toFixed(2)}, 11.0, flow, ${(SP.lean ?? 0.5).toFixed(3)}, ${(SP.bend ?? 0.3).toFixed(3)});
   float kt1 = 1.0 - smoothstep(0.25, 0.6, wp * ${(lab.spot.tongues[0]! / 6.2831853).toFixed(3)});
   float kt2 = 1.0 - smoothstep(0.25, 0.6, wp * ${(lab.spot.tongues[1]! / 6.2831853).toFixed(3)});
   float strand = max(mix(0.22, t1.x, kt1), 0.9 * mix(0.22, t2.x, kt2)) * mix(0.7, 1.15, lb) * mix(0.8, 1.1, la);
@@ -833,6 +852,26 @@ void main() {
   float qBlob = 1.0 - smoothstep(qEdge - ${(Q?.blob[4] ?? 0.2).toFixed(3)}, qEdge + ${(Q?.blob[4] ?? 0.2).toFixed(3)}, plan);
   float qPatch = smoothstep(${(Q?.patch[2] ?? 0.5).toFixed(2)}, ${(Q?.patch[3] ?? 0.7).toFixed(2)}, labWell(d * mix(1.0, qSize, ${(Q?.patch[4] ?? 0).toFixed(2)}) * ${((Q?.patch[1] ?? 0.5) * 1.7).toFixed(2)}, seed + 0.53, uLabTime.x));
   cell = (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide) * mix(${(Q?.navel[0] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(Q?.navel[1] ?? 0.4).toFixed(2)}, tr)) * mix(${(Q?.blob[5] ?? 0.4).toFixed(2)}, 1.0, qBlob) * (1.0 - ${(Q?.patch[0] ?? 0).toFixed(2)} * qPatch) * max(1.0 + smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (${(2 * (Q?.fibre[0] ?? 0)).toFixed(3)} * (fan - 0.5) + ${(Q?.fibre[3] ?? 0).toFixed(3)} * (thread - 0.3)), 0.25) * (1.0 + ${(2 * (Q?.grain?.[0] ?? 0)).toFixed(3)} * (labWell(d * qSize * ${(Q?.grain?.[1] ?? 2).toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5)) * (1.0 + ${(Q?.rim?.[0] ?? 0).toFixed(2)} * smoothstep(${(Q?.rim?.[1] ?? 0.5).toFixed(2)}, ${(Q?.rim?.[2] ?? 0.75).toFixed(2)}, plan) * (smoothstep(${(Q?.rim?.[3] ?? 0.45).toFixed(2)}, ${(Q?.rim?.[4] ?? 0.7).toFixed(2)}, mix(0.5, fc, kc)) - ${(Q?.rim?.[5] ?? 0.35).toFixed(2)}));
+#if ${W ? 1 : 0}
+  // the top is made of threads: ranks of them round the crown in the cell's own frame, each of its own length and
+  // heat, twice as many from one doubling of the radius to the next; they ride outward with the cell's matter,
+  // thin toward the border and end there, each at its own place, sooner where three cells meet
+  float wN = max(floor(${(W?.[0] ?? 9).toFixed(2)} * qSize + 0.5), 3.0);
+  float wL = log2(max(tr / ${(W?.[1] ?? 0.2).toFixed(3)}, 1.0));
+  float wO = min(floor(wL), 4.0);
+  float wM = smoothstep(0.25, 0.75, wL - wO);
+  float wA = wN * exp2(wO);
+  float wTurn = (turn - 0.5) * 6.2831853;
+  float wRun = run * qSize;
+  float wFlow = flow * qSize * ${(W?.[2] ?? 3).toFixed(2)};
+  float wLean = mix(${(W?.[3] ?? 0.7).toFixed(3)}, ${(W?.[4] ?? 0.12).toFixed(3)}, smoothstep(${(W?.[5] ?? 0.45).toFixed(2)}, 1.0, plan + ${(W?.[6] ?? 0.4).toFixed(2)} * (qLobe - 0.5) + 0.3 * (fan - 0.5) + ${(W?.[10] ?? 0).toFixed(2)} * vJunc * pool));
+  float wKa = 1.0 - smoothstep(${(W?.[11] ?? 0.25).toFixed(2)}, ${(W?.[12] ?? 0.6).toFixed(2)}, wa * wA / 6.2831853);
+  float wKb = 1.0 - smoothstep(${(W?.[11] ?? 0.25).toFixed(2)}, ${(W?.[12] ?? 0.6).toFixed(2)}, wa * wA / 3.1415927);
+  float wCa = max(labThread(wTurn, wRun, wA, ${(W?.[2] ?? 3).toFixed(2)}, 3.0 + seed, wFlow, wLean, ${(W?.[8] ?? 0.2).toFixed(2)}).x, 0.9 * labThread(wTurn, wRun, floor(wA * 0.62 + 0.5), ${((W?.[2] ?? 3) * 0.75).toFixed(2)}, 11.0 + seed, wFlow * 0.75, wLean, ${(W?.[8] ?? 0.2).toFixed(2)}).x);
+  float wCb = max(labThread(wTurn, wRun, 2.0 * wA, ${(W?.[2] ?? 3).toFixed(2)}, 5.0 + seed, wFlow, wLean, ${(W?.[8] ?? 0.2).toFixed(2)}).x, 0.9 * labThread(wTurn, wRun, floor(wA * 1.24 + 0.5), ${((W?.[2] ?? 3) * 0.75).toFixed(2)}, 13.0 + seed, wFlow * 0.75, wLean, ${(W?.[8] ?? 0.2).toFixed(2)}).x);
+  float wC = mix(mix(${(W?.[9] ?? 0.4).toFixed(2)}, wCa, wKa), mix(${(W?.[9] ?? 0.4).toFixed(2)}, wCb, wKb), wM);
+  cell *= mix(${(W?.[7] ?? 0.45).toFixed(3)}, 1.0, wC) / mix(${(W?.[7] ?? 0.45).toFixed(3)}, 1.0, ${(W?.[9] ?? 0.4).toFixed(2)});
+#endif
   float qRise = ${(Q?.petal?.[6] ?? 0).toFixed(3)} * smoothstep(${(Q?.petal?.[7] ?? 0.3).toFixed(2)}, 1.0, plan);
   float qPa = vnp(vec2(turn * per.y + floor(seed * 19.0), (run - flow) * qSize * ${(Q?.petal?.[1] ?? 3).toFixed(2)} + seed * 5.0), per.y);
   float qPb = vnp(vec2(turn * per.z + floor(seed * 47.0), (run - flow) * qSize * ${(Q?.petal?.[2] ?? 5).toFixed(2)} - seed * 3.0), per.z);
