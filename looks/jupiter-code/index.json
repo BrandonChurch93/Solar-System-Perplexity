@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T09:28:58.473Z",
+ "pushed": "2026-11-26T09:51:18.327Z",
  "head": "0c012e25580c46cfaaf0b2486fbf9a0c2e3c0f5e",
- "note": "09:30 w80 pebbles refused, w81 finer sheets, w82 tints cut: the stripes are tint",
+ "note": "09:52 w83 and w87 refused (height from the map at fine scale gives pits), w86 solved 7.122",
  "looks": [
+  {
+   "time": "2026-11-26T09:51:17.229Z",
+   "file": "20261126095117229-note-w86-r2-3150.jpg",
+   "source": "../work/r26/t/w86-r2-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w86 after two solve rounds: sheet tint 0.9, thread tint 1.2, paint share 0.9, matter floor 0.14; bands green; line (i) 7.122, worse than w77 (5.428): the floor lifts the far right and the dark red under the eye",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:51:15.987Z",
+   "file": "20261126095115987-note-w87-3150.jpg",
+   "source": "../work/r26/t/w87-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w87 before a solve: lanes at 0.08 units of height, pits like craters in the storm; refused",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T09:51:14.754Z",
+   "file": "20261126095114754-note-w83-3150.jpg",
+   "source": "../work/r26/t/w83-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft, state w83 before a solve: basins taken from the map at 0.08 units, far too deep, black pits; refused",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T09:28:57.800Z",
    "file": "20261126092857800-note-w82-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r26/t/w51-3150.png",
    "kind": "note",
    "label": "w51 3150 preview draft: softer heaps, storm keeps the fine light of the map, rolls still read as cloth (9.388 before its own solve)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T07:50:44.652Z",
-   "file": "20261126075044652-note-w48-3150.jpg",
-   "source": "../work/r26/t/w48-3150.png",
-   "kind": "note",
-   "label": "w48 3150 preview draft: tops as a hierarchy of sizes, the middle left reads as heaped cloud (7.965)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T07:50:43.511Z",
-   "file": "20261126075043511-note-w42-3150.jpg",
-   "source": "../work/r26/t/w42-3150.png",
-   "kind": "note",
-   "label": "w42 3150 preview draft: curd of one size everywhere, reads as pebbles (7.144)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T07:13:48.392Z",
-   "file": "20261126071348392-note-w35-r3-3150.jpg",
-   "source": "../work/r26/t/w35-r3-3150.png",
-   "kind": "note",
-   "label": "w35 3150 preview draft after three more solve rounds: 7.674, tall rolls read as liquid, not kept as base",
    "stop": "jupiter"
   }
  ]
