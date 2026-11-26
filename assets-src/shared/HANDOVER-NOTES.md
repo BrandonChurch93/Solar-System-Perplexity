@@ -2400,6 +2400,29 @@ Looks pushed 00:07 (33a4a3c9).
 
 Next: rewrite the two unit tests, add tests with teeth for rules 1 to 3, rerun the GL tests, back up as v8, review tier (base and the variant with the box and out 0.7) on 2477, 2668, 2672, 2580, look at every frame, commit, merge origin main, whole suite, build, push, NAMED.
 
+### 00:07 to 00:28 UTC (26 Nov), the crests v8: the tests rewritten, three with teeth, 34 of 34, the review proof started
+
+State: nothing of design (c) is committed yet. `crest-wt` (branch agent/engine-crest at b75720ab) holds v8 uncommitted; backups `/tmp/crest/crest.v8.ts`, `relief.v8.ts`, `crest.test.v8.ts`, `crest-gl.test.v8.ts`; `t-air4` has the same crest.ts and relief.ts.
+
+What changed since the last entry:
+- Code: none. Comments only in crest.ts (the header says what `step` means now: what the two ends of a ramp differ by beyond what ground as even as its sides does over the way; a second step within a cell is one ramp with the first; past a ramp's end there is no other side; `side`, `near`, `far` of the interface; the square sieve `zone` is named a sieve) and in relief.ts at `ReliefCrest` (step between the two ends of a ramp; a crest that leaves a box closes onto the wall over its last cell or two).
+- `tests/crest.test.ts`, 24 tests now. Rewritten: "give a sheet the vertex of the mesh to the bit where the ground round it is the sheet side, and keep every vertex on its ray" (each crest has `beyond` rows of vertices, where the columns 3 to 5 are past the end and both sheets have the mesh's vertex; `edge` rows, where the vertex in the wall lies half way; counts `closed`, `gone`, `met`, `behind`; third crest: closed [6, 1, 2], gone [2, 3, 2], met 3, behind 8).
+- Three new tests, each checked to FAIL without its rule (`/tmp/crest/teeth-rules.sh` swaps the variant in, runs the finding's tests and restores):
+  - "finds a step whose near side is a steady slope, and no ramp in the slope itself": fails on v7 (no new finding).
+  - "ends a ramp beyond the step itself: a second, smaller step on a shelf beside it is no ramp with the shelf for its far end": fails without `k >= top`.
+  - "has no other side past a ramp end: on along the line of the crest both sheets keep the distance of the map": fails without the past branch (and on v7).
+  - Without the past branch the tests of the ends and of the ring fail too; so each rule is held by a test.
+- A fact the foot test showed: a shelf narrower than a cell beside a step is no even ground by the range, so the ramp's near end lies beyond the second step (near 4.22 against the shelf's 5 on that map). That is the limit "two steps within a cell are one ramp"; written into the header.
+- `npx vitest run tests/crest.test.ts tests/crest-gl.test.ts` at 00:25: 34 of 34 (24 and 10). chk.py clean on the four files.
+
+Review proof: `/tmp/crest/rev8.sh`, detached at 00:25:52, log `/tmp/crest/rev8.log`: `b0-review` (no numbers) then `q8-review` (words `L1 0.002 2 4 0.7 0.60,0.269,0.75,0.47 0.6545,0.3387;0.6220,0.2755`), frames 2477, 2580, 2668, 2672, folders under `t-air4/out/work/blur/`. Then: `teeth4.py` on 2477, 2668, 2672, `cmp4.py` on 2580, every frame at full size.
+
+Mail: mars_place_builder 00:17 (NAMED agent/mars-place 21b55bc5 on main 1f51abc9; asks whether the globe's ground takes the air law and by which key; its list for the widest hand over). Answered 00:19 (my mail says 00:21, the clock read 00:19): the globe takes it through `PlanetOptions.airLaw` and the third argument of `HazeShell` (globe_engineer's code, on main), the set through `motion.airLaw`; `airLawKnots(law)` of relief.ts gives the globe's form of the knots; two differences to close with numbers (the globe's day edge, the set's gain and vignette; the set's radius and eyeHeight against the fit). Mars's set.ts gives neither today.
+
+Push: at 00:26 the looks push failed three times, "could not read Username" (MAIL 621: no other credential, no waiting; a bundle or attached pictures with the mail; in the past it came back within minutes). Six pictures are added to the looks and wait for the push.
+
+Next: wait for the review frames; numbers and every frame; commit on agent/engine-crest; merge origin main (3675234f at 00:18, take the latest); whole suite and build; push or bundle; NAMED with the main it holds; a line to mars_place_builder and mercury_builder.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
