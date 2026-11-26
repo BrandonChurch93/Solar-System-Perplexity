@@ -1546,3 +1546,108 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
 - 02:51 UTC. MAIL to /root (high, because of the push block): state h33, not a name; patch of 41e13272 attached;
   rim profile, motion words (fixed net that boils: point 5 of 1368 not met), flicker, list. Promised: per cell
   rim profile, the tops (h34 direction), then births and splits; next mail by 04:20.
+- 02:52 to 02:57 UTC. rim.py cell by cell (watershed of the way from the lane, pieces of 1200 to 14000 px, the dip
+  = fall between a crest within 8 px of the lane and a later rise; `--cells PLOT.png` draws the ten largest of each
+  picture). MEASURED: share of cells with a dip over 0.04: approved 0.341 (41 cells; its tops have dark middles),
+  h32 final 0.161 (31), h33 final 0.286 (42), h34 0.200 (25). So a bevel band is not a common thing in h32 or h33
+  by this reader. What the plot shows instead (v/rimcells-h33.png): the approved's large cells are PLATEAUS, the
+  level climbs over about 8 px from the lane and is flat from there; mine are RAMPS, the level climbs all the way
+  to the middle (a dome). Cause: the shoulder is a share of the radius (lane[8] 0.9 in h33), so a large cell loses
+  its light over its whole flank. New lane[14]: the shoulder's width in stage units (0: the share as before; least
+  0.08 of the radius, most lane[8]); lane[15]: how much wider the shoulder is at a crossing in a pool (the dark
+  climbs from the crossings up the flanks, in fingers along the fan by lane[13]).
+  t61 (lane[14] 0.012), t62 (0.02), t63 (lane[4] 0.0045, shoulder level 0.2, lane[14] 0.015, blob 0.45 with outside
+  0.4): profiles of the large cells are plateaus (v/rimcells-u.png); low64 8.83, 8.26, 7.65; to the eye the tops
+  are flatter and more evenly light, lanes narrow: reads as plates more than before (v/trials-u.jpg). Not chosen.
+- 02:58 UTC. MAIL 1378 from /root on h33 and h34, core verbatim: "1. The sign in: I can not restore it and you
+  were right not to rebuild it by hand. It does not hold your work up. Keep committing locally; with each state
+  mail send the patch as now, or a bundle of the code commits since e285903a without the looks. A name goes the
+  same way and I cut from the bundle. The patch of 41e13272 is filed. 2. My eye on half-h33f, the approved above
+  and h33 below, in the order of weight. (a) The tops are flat pale plates of one height with a thin brown seam,
+  so the field reads as hammered brass or paving, as you say yourself; in the approved each cell is a dome whose
+  light sits in a crown and falls into a dark flank, and the dark between the cells is wide and deep with a red
+  orange glow in it. (b) The whole field is paler and more yellow than the approved, most of all from the middle
+  rows to the horizon, where the approved closes into dark amber with small bright grains and yours stays a field
+  of pale lumps. (c) The spot: the approved's penumbra is a wide dark ring of thick orange strands with dark
+  between them; yours is pale straw, fine and even, round a small hard umbra, so the spot reads as laid on. (d)
+  The two flares at the limb read alike. 3. Direction: the way of h34 (a smaller light on each top, dark between)
+  is right, with the dark climbing the flanks from the crossings. Judge it at 1 to 1 on rows 800 to 1080 and in
+  motion. Bring the share of the darkest band (0.109 against the approved's 0.147) up by the flanks, not by wider
+  lanes. The penumbra's level and the width of its strands belong to the next state, not to a later one. 4. Then
+  the births and the splits, as you plan. The sky's line (0.108 over) and the flicker lines stay open and red.
+  5. The rim profile by cell, ten cells: yes. Mail by 04:20, as you say."
+  So: no push is possible; with each state mail send `git bundle` of the code commits since e285903a (or the
+  patch). A name goes by bundle too.
+- 02:57 to 03:01 UTC. t64, t65 (lane[15] 3 and 6 on t63), t66 (large blob): t66 low64 11.46, FAILED (pale plates).
+- 03:01 UTC. MEASURED for points (b) and (c) of MAIL 1378 (frame 90, boxes rows r0 r1, cols c0 c1; level = largest
+  channel). Middle rows left (640 to 820, 200 to 700): approved mean rgb about 0.65 0.39 0.175, level 5 25 50 75
+  95 = 0.33 0.51 0.67 0.82 0.95; h33 final 0.58 to 0.61 0.33 to 0.37 0.15 to 0.17, 0.27 0.42 0.56 to 0.62 0.76 to
+  0.80 0.94 (mine is NOT lighter there by the mean; g/r equal within 0.03). Right (640 to 760, 1250 to 1800):
+  approved 0.736 0.468 0.210, mine 0.539 0.273 0.103 (mine darker and redder). Near box (820 to 1080, 260 to 1660):
+  approved 0.555 0.315 0.135 median 0.55, h33 0.590 0.347 0.151 median 0.60 (mine lighter). So "paler from the
+  middle rows to the horizon" is not in the means; it is the pattern (small pale lumps with thin seams against
+  bright grains on wide dark).
+  Penumbra (left 650 720 720 820; below 705 745 880 1040; right 650 720 1150 1250): approved medians 0.62 0.47
+  0.49, g/r 0.564 0.520 0.537, band power (difference of blurs) 1 to 2, 2 to 4, 4 to 8 px about 0.05 0.06 0.06;
+  h33 medians 0.75 0.61 0.62, g/r 0.646 0.566 0.544, bands 0.05 to 0.07, 0.033 to 0.058, 0.031 to 0.042. So mine
+  is 0.13 lighter, more yellow on the left, and has half the power at 2 to 8 px: strands too fine. Umbra (level
+  under 0.12 in 700..1300 by 560..800): approved 10524 px, mine 14217 px; approved umbra g/r 0.72 at level 0.06
+  (a grey brown), mine 0.33 at 0.03 (red black).
+- 03:01 to 03:05 UTC. `cushion.blob[7]` (the light's reach shortened at crossings, by vJunc) and `blob[8]` (share
+  of that where the pool is low). t67 to t69 on h34. MEASURED (draft, not refit): t67 31.1532, 7.721, rim mean at
+  1 px 0.375, dips over 0.04 0.241; t68 32.0921, 8.0011, 0.341, 0.406; t69 (blob [0.45,0.8,0.5,0.5,0.15,0.2,3,
+  0.5,0.3], fibre [0.5,0.1,0.4,0.5], patch[0] 0) 33.3372, 9.0548, rim mean 0.307 0.399 0.454 0.494 0.526 0.554
+  0.595 0.629 0.650 0.677 0.695 (the approved's 0.310 0.376 0.435 0.491 0.531 0.559 0.599 0.627 0.646 0.672 0.690),
+  dips 0.429. SEEN: a smaller light on each top, dark flanks that end in fingers, dark wedges at the crossings.
+- 03:05 to 03:08 UTC. h35 = t69 refit (draft). MEASURED: plain 31.2392, low64 8.1088, bands [1.59 1.08 0.99 1.02
+  1.05 1.03 0.93], curve [0.659 0.66 0.653 0.643 0.621 0.59 0.539 0.48 0.411 0.356 0.32] (every gap inside 0.02),
+  lane 5.53 px, far shares 0.488 and 0.212, dips over 0.04: 0.366 (approved 0.341). SEEN at 1 to 1 (v/one-h35.jpg
+  beside v/one-approved.jpg, rows 800 to 1080): the light on each top has a HARD cut edge and is cream white, so
+  tops read as glossy enamel; the approved's light is gold, soft, and its flanks keep fine bright edges. So the
+  numbers are met and the eye is not: soften the light's edge (blob[4]) next.
+- 03:08 UTC. Penumbra, MEASURED on a line through the spot (rows 660 to 700, median level by 25 px): approved 0.45
+  to 0.52 over 125 to 250 px beside the umbra, even; h35 0.36 to 0.56 beside the umbra then 0.75 to 0.82 at 100 to
+  150 px out (a pale outer ring). Below the spot: approved 0.43 to 0.51, mine 0.64 to 0.80. New keys `spot.ring`
+  [inner, outer factor on the strands' heat, was fixed 0.5 and 1.0] and `spot.edge` [the two radii of the umbra's
+  edge in umbra radii, was fixed 0.72 and 0.88]. Trials t70 to t72: heat.pen 0.5 to 0.6, tongues fewer (thicker
+  strands), ring flat, softer umbra edge, floor of the umbra up.
+- 03:08 to 03:12 UTC. t70 to t72 on h35 (softer light's edge blob[4] 0.3 to 0.4; pen 0.5 to 0.6, tongues [90,58] to
+  [130,84], ring flat, edge soft). MEASURED (not refit): t70 29.6806, 7.5578; t71 30.5342, 7.4829; t72 30.0582,
+  7.4578; dips 0.267 0.214 0.244. SEEN (v/pen-x.jpg): the penumbra darker but its strands are short pale leaves
+  side by side, not strands on dark. The tops keep dark dabs with hard edges.
+- 03:12 to 03:16 UTC. New key `spot.lean` (a strand's half width as a share of its column). t73 to t75: lean 0.3 to
+  0.38, ranks down to [2.0,1.5] (longer), hot 1.8 to 2.6. MEASURED: 29.2358, 9.0208; 29.5172, 8.7543; 29.6347,
+  7.9787. SEEN (v/pen-y.jpg): long strands on dark, the ring reads dark as the approved's does; but the strands
+  wave like hair and narrow to lines at the umbra. t74 (tongues [100,64], lean 0.3, ranks [2.4,1.8], hot 1.8, pen
+  0.55) the thickest.
+- 03:16 to 03:20 UTC. t76 to t78: the flank's floor blob[5] raised to 0.3 to 0.4 with a lower seam (0.06, 0.08).
+  MEASURED: 28.6778, 8.8795; 28.5299, 9.2233; 28.9279, 8.9634; rim mean at 1 px 0.51 to 0.54, dips 0.071 0.056
+  0.176. SEEN: pale plates with a thin dark seam again (paving). FAILED: the dark of the flanks comes from the low
+  floor of the light; keep blob[5] at 0.2.
+- 03:20 to 03:23 UTC. h36 = h35 + blob [0.42,0.8,0.5,0.35,0.24,0.2,3,0.6,0.3], petal[0] 0.15, rim[0] 0.1 (the
+  bright band inside the lane, MAIL 1368 point 1, taken down), penumbra of t74 with ring [0.8,0.7], edge [0.6,1.0],
+  floor [0.012,0.03]; refit. MEASURED (draft): plain 30.7422, low64 8.6241, bands [1.47 1.03 0.97 1.01 1.05 1.00
+  0.88], curve [0.678 0.669 0.661 0.641 0.62 0.591 0.531 0.467 0.404 0.348 0.32] (gaps inside 0.02), lane 5.71 px,
+  far shares 0.517 and 0.245, dips over 0.04: 0.333 (approved 0.341), rim mean 0.380 0.475 0.523 0.558 0.587 0.609
+  0.646 0.675 0.691 0.712 0.722. SEEN at 1 to 1 (v/one-h36.jpg, v/pen-h36.jpg): each top carries a smaller light
+  and dark flanks, the field is darker between; but the lights are cream with a firm outline (glossy, like enamel
+  or wet metal), the lanes are a mid brown bed, and the approved's fine bright edges and sheen along fibres are
+  not there. The penumbra is a dark ring with strands on dark, but they wave like lashes and lie flat.
+  New key `spot.bend` (was fixed 0.3). t79 to t81: straighter, more strands.
+- 03:23 to 03:27 UTC. t79 to t81 (bend 0.1 and 0, tongues [120,76] to [160,100]): the strands still wave, the wave
+  comes from the warp of the angle, not from `spot.bend`. New key `spot.wave` [0.06, 0.02 were fixed]. t80 (blob
+  floor 0.15, edge 0.3): low64 9.7118, darker and blotched, FAILED. t79 (lane[13] 1.2): softer fingers, dips 0.333.
+- 03:27 UTC. MEASURED, why the darkest band's share does not move: the fit pins the percentiles of the fit's near
+  ground, so the share of levels 0.1 to 0.3 in my box (rows 820 to 1080) stays near 0.10 (h33f 0.105, h36 0.097,
+  h37 0.098; approved 0.147) however dark the flanks are. By rows of 40 (cols 100 to 1820) the approved's share
+  under 0.3 is 0.07 to 0.10 in rows 680 to 920 and 0.18, 0.18, 0.15 in rows 920 to 1040; mine is even (0.10 to 0.13
+  everywhere in h33). So the approved is darker in the nearest rows and lighter in the middle rows than mine: the
+  cure is a slope of the dark with the nearness (larger cells show more flank), not the fit. Open.
+- 03:27 to 03:29 UTC. h37 = h36 + lane[13] 1.2, spot.bend 0.05, wave [0.025,0.004], tongues [160,100], lean 0.36,
+  ranks [2.8,2.0]; refit. MEASURED (draft): plain 30.6518, low64 8.2907, bands [1.51 1.02 0.95 1.00 1.06 1.01
+  0.88], curve [0.681 0.678 0.668 0.646 0.628 0.593 0.529 0.464 0.401 0.348 0.317], lane 5.49 px. Penumbra boxes
+  (left, below, right) medians 0.56 0.49 0.46 (approved 0.62 0.47 0.49; h33 0.75 0.61 0.62), g/r 0.523 0.545
+  0.478 (approved 0.564 0.520 0.537), band power 2 to 4 px 0.033 0.047 0.024 and 4 to 8 px 0.028 0.033 0.019
+  (approved about 0.06 and 0.055: mine half, the strands are still too fine or too faint). Umbra under 0.12:
+  16866 px (approved 10524), level 0.079 (0.078), g/r 0.34 (0.60).
+  Chain h37 started 03:29.

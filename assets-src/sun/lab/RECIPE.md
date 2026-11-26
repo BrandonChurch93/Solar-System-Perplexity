@@ -68,7 +68,14 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   light ends in fingers along its fibres, not on a ring). cushion.seam[3] is a factor on the seam's heat where the
   field is low (1: none; over 2 it reads as a pale bed, do not use). Beyond its border a cell's skirt carries the
   seam's heat alone (no lit points, threads or sparks), so the small holes between three rounded corners show no
-  bright posts.
+  bright posts. heat.lane[14] (the shoulder's width in stage units, 0: off) and [15] (wider at crossings in a pool)
+  gave plates and stay 0. cushion.blob[7] shortens the reach of a top's light where three cells meet (the dark
+  climbs the flanks from the crossings), [8] is the share of that where the place field is low.
+  The penumbra: spot.tongues (strands round the spot, two ranks), spot.ranks (rows of strands per doubling of the
+  radius: fewer rows, longer strands), spot.lean (a strand's half width as a share of its column, 0.5: side by
+  side, less: dark between), spot.hot and spot.gap (heat of a strand and of the dark between), spot.ring (factor on
+  that heat at the umbra's edge and from 2.2 umbra radii outward), spot.edge (the two radii of the umbra's edge in
+  umbra radii), spot.floor (heat of the umbra's floor and of its dots), heat.pen (the level of the whole ring).
   lab.json "show" (junc, edge, deep, cell, tall, seam) draws one field of the dome as heat, for finding a cause;
   absent in the film.
 - Readers of frame 90 against the approved close image (pictures at 1920 by 1080, none of them writes a file the
@@ -81,4 +88,6 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   `python3 assets-src/sun/lab/parts.py PARTS.png FRAME.png ...` (plain match on each part).
   `python3 assets-src/sun/lab/rim.py RENDER.png ... [--out PLOT.png] [--box X Y W H] [--dark SHARE]` (level against
   the distance from the nearest lane, the approved first: mean, quartiles, the share of pixels far from a lane; a
-  rim would show as a rise, a fall and a second rise).
+  rim would show as a rise, a fall and a second rise). `--cells PLOT.png` reads the same by cell (the pieces
+  between lanes, the largest of the near field): the profile of each, the dip of each (a fall after a rise) and
+  the share of cells with a dip over 0.04, the approved's beside it.

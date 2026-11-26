@@ -68,6 +68,7 @@ function rampTexture(): THREE.DataTexture {
 }
 
 const T = lab.tubes
+const SP = lab.spot as { ring?: number[]; edge?: number[]; lean?: number; bend?: number; wave?: number[] }
 const Q = (lab.heat as { cushion?: { navel: number[]; fibre: number[]; patch: number[]; blob: number[]; grain?: number[]; seam?: number[]; rim?: number[]; petal?: number[] } }).cushion
 const CU = (lab.dome as { base?: number[] }).base
 const smooth = (a: number, b: number, x: number): number => {
@@ -220,8 +221,8 @@ vec2 labTongue(float turnS, float lr, float n, float rows, float salt, float flo
   float row = floor(v);
   float fv = fract(v);
   float id = h1(vec2(col + 17.0 * row, salt + row));
-  float wide = 0.5 * (0.2 + 0.8 * smoothstep(0.0, 0.5, fv)) * (1.0 - 0.5 * smoothstep(0.7, 1.0, fv));
-  float bend = 0.3 * (h1(vec2(col * 1.7 + row, salt + 9.0)) - 0.5) * (fv - 0.4);
+  float wide = ${(SP.lean ?? 0.5).toFixed(3)} * (0.2 + 0.8 * smoothstep(0.0, 0.5, fv)) * (1.0 - 0.5 * smoothstep(0.7, 1.0, fv));
+  float bend = ${(SP.bend ?? 0.3).toFixed(3)} * (h1(vec2(col * 1.7 + row, salt + 9.0)) - 0.5) * (fv - 0.4);
   float x = abs(fu + bend) / max(wide, 1e-3);
   float body = 1.0 - smoothstep(0.3, 1.0, x);
   return vec2(body * mix(1.0, 0.45, smoothstep(0.05, 0.95, fv)) * mix(0.5, 1.0, id) * step(0.08, id), lot);
@@ -231,7 +232,7 @@ vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy
   float turnS = atan(sp.y, sp.x);
   float rs = real / uLabPit.w;
   float rp = pit / uLabPit.w;
-  turnS += 0.06 * (vn(vec2(turnS * 7.0, rs * 1.3)) - 0.5) + 0.02 * sin(rs * 5.0 + turnS * 9.0);
+  turnS += ${(SP.wave?.[0] ?? 0.06).toFixed(3)} * (vn(vec2(turnS * 7.0, rs * 1.3)) - 0.5) + ${(SP.wave?.[1] ?? 0.02).toFixed(3)} * sin(rs * 5.0 + turnS * 9.0);
   float pa = vn(vec2(turnS * 9.0, rs * 0.5 - flow));
   float lr = log2(max(rs, 0.6));
   float oct = floor(lr);
@@ -259,8 +260,8 @@ vec4 labPen(vec2 chartPlace, float real, float pit, float flow, vec2 gx, vec2 gy
   float strand = max(mix(0.22, t1.x, kt1), 0.9 * mix(0.22, t2.x, kt2)) * mix(0.7, 1.15, lb) * mix(0.8, 1.1, la);
   float pen = 1.0 - smoothstep(-0.5, 0.5, rs - uLabJoin.y - uLabJoin.z * (pb - 0.5) - 0.5 * uLabJoin.z * (vn(chartPlace * 23.0 + 1.7) - 0.5));
   float tongue = smoothstep(0.62, 0.8, pa) * smoothstep(0.5, 0.7, pc);
-  float bundle = uLabHeatMore.z * mix(mix(${lab.spot.gap[0]!.toFixed(3)}, ${lab.spot.gap[1]!.toFixed(3)}, smoothstep(1.2, 3.0, rp)), ${lab.spot.hot.toFixed(2)}, strand) * mix(0.6, 1.1, smoothstep(0.3, 0.7, pa)) * mix(0.5, 1.0, smoothstep(1.0, 2.2, rs));
-  return vec4(pen, bundle, mix(0.04, 1.0, smoothstep(0.72 + 0.3 * t1.y, 0.88 + 0.4 * t1.y, rp + 0.2 * (pa - 0.5))), rp - 1.14 - 0.1 * (pb - 0.5) - 0.06 * (pc - 0.5));
+  float bundle = uLabHeatMore.z * mix(mix(${lab.spot.gap[0]!.toFixed(3)}, ${lab.spot.gap[1]!.toFixed(3)}, smoothstep(1.2, 3.0, rp)), ${lab.spot.hot.toFixed(2)}, strand) * mix(0.6, 1.1, smoothstep(0.3, 0.7, pa)) * mix(${(SP.ring?.[0] ?? 0.5).toFixed(2)}, ${(SP.ring?.[1] ?? 1).toFixed(2)}, smoothstep(1.0, 2.2, rs));
+  return vec4(pen, bundle, mix(0.04, 1.0, smoothstep(${(SP.edge?.[0] ?? 0.72).toFixed(2)} + 0.3 * t1.y, ${(SP.edge?.[1] ?? 0.88).toFixed(2)} + 0.4 * t1.y, rp + 0.2 * (pa - 0.5))), rp - 1.14 - 0.1 * (pb - 0.5) - 0.06 * (pc - 0.5));
 }
 #endif
 // the width of a mean cell at a place in pixels of a 1080 frame
@@ -821,13 +822,14 @@ void main() {
   top *= 1.0 - ${lab.heat.dimple[0]!.toFixed(2)} * exp(-rho * rho / ${(lab.heat.dimple[1]! * lab.heat.dimple[1]!).toFixed(4)});
   float cell = top * mix(1.0, mix(${lab.fibre.cold.toFixed(2)}, uLabHeat.w, thread), uLabHeatB.z * smoothstep(${(T.on ? T.silk[0]! : 0.04).toFixed(2)}, ${(T.on ? T.silk[1]! : 0.4).toFixed(2)}, along));
   cell *= 1.0 + ${(2 * lab.heat.fine[0]!).toFixed(3)} * (labWell(d * ${lab.heat.fine[1]!.toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5);
+  float pool = ${(lab.heat.lane[10] ?? 0) > 0 ? 'smoothstep(0.3, 0.7, vn(vG * ' + (lab.heat.lane[10] ?? 0).toFixed(2) + ' + 61.0))' : '1.0'};
 #if ${Q && T.on ? 1 : 0}
   // a cell as a cushion: its light is one broad soft blob with an uneven outline, lobed round the cell, moved by
   // the swells that ride outward and fringed by the fine fibres; round it the gas is cooler down to the seam. On
   // the top lie soft cooler patches that ride outward too, and a cooler navel where the gas wells up
   float qWell = labWell(d * ${(Q?.patch[1] ?? 0.5).toFixed(2)}, seed, uLabTime.x);
   float qLobe = vnq(vec2(tb.w * ${(Q?.blob[6] ?? 4).toFixed(1)} + floor(seed * 23.0), seed * 11.0), ${(Q?.blob[6] ?? 4).toFixed(1)});
-  float qEdge = ${(Q?.blob[0] ?? 0.6).toFixed(3)} + ${(Q?.blob[1] ?? 0).toFixed(3)} * (qLobe - 0.5) + ${(Q?.blob[2] ?? 0).toFixed(3)} * (qWell - 0.5) + ${(Q?.blob[3] ?? 0).toFixed(3)} * (fan - 0.5) * smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr);
+  float qEdge = ${(Q?.blob[0] ?? 0.6).toFixed(3)} + ${(Q?.blob[1] ?? 0).toFixed(3)} * (qLobe - 0.5) + ${(Q?.blob[2] ?? 0).toFixed(3)} * (qWell - 0.5) + ${(Q?.blob[3] ?? 0).toFixed(3)} * (fan - 0.5) * smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) - ${(Q?.blob[7] ?? 0).toFixed(3)} * vJunc * mix(${(Q?.blob[8] ?? 1).toFixed(2)}, 1.0, pool);
   float qBlob = 1.0 - smoothstep(qEdge - ${(Q?.blob[4] ?? 0.2).toFixed(3)}, qEdge + ${(Q?.blob[4] ?? 0.2).toFixed(3)}, plan);
   float qPatch = smoothstep(${(Q?.patch[2] ?? 0.5).toFixed(2)}, ${(Q?.patch[3] ?? 0.7).toFixed(2)}, labWell(d * mix(1.0, qSize, ${(Q?.patch[4] ?? 0).toFixed(2)}) * ${((Q?.patch[1] ?? 0.5) * 1.7).toFixed(2)}, seed + 0.53, uLabTime.x));
   cell = (${lab.heat.tone[0]!.toFixed(2)} + ${lab.heat.tone[1]!.toFixed(2)} * wide) * mix(${(Q?.navel[0] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(Q?.navel[1] ?? 0.4).toFixed(2)}, tr)) * mix(${(Q?.blob[5] ?? 0.4).toFixed(2)}, 1.0, qBlob) * (1.0 - ${(Q?.patch[0] ?? 0).toFixed(2)} * qPatch) * max(1.0 + smoothstep(${(Q?.fibre[1] ?? 0.05).toFixed(2)}, ${(Q?.fibre[2] ?? 0.4).toFixed(2)}, tr) * (${(2 * (Q?.fibre[0] ?? 0)).toFixed(3)} * (fan - 0.5) + ${(Q?.fibre[3] ?? 0).toFixed(3)} * (thread - 0.3)), 0.25) * (1.0 + ${(2 * (Q?.grain?.[0] ?? 0)).toFixed(3)} * (labWell(d * qSize * ${(Q?.grain?.[1] ?? 2).toFixed(2)}, seed + 0.37, uLabTime.x) - 0.5)) * (1.0 + ${(Q?.rim?.[0] ?? 0).toFixed(2)} * smoothstep(${(Q?.rim?.[1] ?? 0.5).toFixed(2)}, ${(Q?.rim?.[2] ?? 0.75).toFixed(2)}, plan) * (smoothstep(${(Q?.rim?.[3] ?? 0.45).toFixed(2)}, ${(Q?.rim?.[4] ?? 0.7).toFixed(2)}, mix(0.5, fc, kc)) - ${(Q?.rim?.[5] ?? 0.35).toFixed(2)}));
@@ -841,7 +843,6 @@ void main() {
   float lane = smoothstep(c0 * (1.0 - join), c0 * (1.0 - join) + ${lab.heat.crease[1]!.toFixed(3)}, deep);
   
   float edgeD = 1.0 - plan;
-  float pool = ${(lab.heat.lane[10] ?? 0) > 0 ? 'smoothstep(0.3, 0.7, vn(vG * ' + (lab.heat.lane[10] ?? 0).toFixed(2) + ' + 61.0))' : '1.0'};
   float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
 #if ${(lab.heat.lane[4] ?? 0) > 0 ? 1 : 0}
   laneWide = clamp(laneWide * ${(lab.heat.lane[4] ?? 0).toFixed(5)} / (${lab.heat.lane[0]!.toFixed(3)} * vCell.z), ${(lab.heat.lane[5] ?? 0.1).toFixed(3)}, ${(lab.heat.lane[6] ?? 0.45).toFixed(3)}) * (1.0 + ${(lab.heat.lane[7] ?? 0).toFixed(2)} * vJunc * pool) * mix(${(lab.heat.lane[12] ?? 1).toFixed(2)}, 1.0, pool);
@@ -879,7 +880,8 @@ void main() {
   // there; the cell's own heat comes in over the lane's width, sooner along a fibre
   float qSeam = smoothstep(0.0, laneWide, edgeD);
   qSeam = clamp(qSeam + ${(4 * lab.heat.lane[2]!).toFixed(2)} * (fan - 0.5) * qSeam * (1.0 - qSeam), 0.0, 1.0);
-  warm *= mix(1.0, mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, ${(lab.heat.lane[8] ?? 0.3).toFixed(3)}, edgeD + ${(lab.heat.lane[13] ?? 0).toFixed(2)} * (fan - 0.5))), mix(${(lab.heat.lane[11] ?? 0).toFixed(2)}, 1.0, pool));
+  float qShoulder = ${(lab.heat.lane[14] ?? 0) > 0 ? 'min(clamp(' + (lab.heat.lane[14] ?? 0).toFixed(5) + ' / vCell.z, 0.08, ' + (lab.heat.lane[8] ?? 0.3).toFixed(3) + ') * (1.0 + ' + (lab.heat.lane[15] ?? 0).toFixed(2) + ' * vJunc * pool), 1.0)' : (lab.heat.lane[8] ?? 0.3).toFixed(3)};
+  warm *= mix(1.0, mix(${(lab.heat.lane[9] ?? 1).toFixed(2)}, 1.0, smoothstep(0.0, qShoulder, edgeD + ${(lab.heat.lane[13] ?? 0).toFixed(2)} * (fan - 0.5) * ${(lab.heat.lane[14] ?? 0) > 0 ? 'qShoulder' : '1.0'})), mix(${(lab.heat.lane[11] ?? 0).toFixed(2)}, 1.0, pool));
   warm = mix(uLabHeat.y * ${lab.heat.crease[2]!.toFixed(2)} * (${(Q?.seam?.[0] ?? 0.7).toFixed(2)} + ${(Q?.seam?.[1] ?? 0.6).toFixed(2)} * vn(vG * ${(Q?.seam?.[2] ?? 40).toFixed(1)} + 23.0)) * mix(${(Q?.seam?.[3] ?? 1).toFixed(2)}, 1.0, pool) * (1.0 - ${(lab.heat.pit ?? 0).toFixed(2)} * vJunc), warm, qSeam);
 #endif
   float heat = pen > 0.999 ? uLabHeat.y * bundle : mix(warm, uLabHeat.y * bundle, pen);
