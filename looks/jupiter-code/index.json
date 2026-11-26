@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T06:46:39.842Z",
+ "pushed": "2026-11-26T07:13:59.809Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "06:47 UTC: w26 with scaffold 6.611 (red against main 3.390), trials w28 to w31 for shade and tops; all 3150 preview draft",
+ "note": "07:14 UTC: w35 solved reads 7.674 and its tall rolls read as liquid; w36 and w37 refused; fibres and curd by code are being tried on the w26 base",
  "looks": [
+  {
+   "time": "2026-11-26T07:13:48.392Z",
+   "file": "20261126071348392-note-w35-r3-3150.jpg",
+   "source": "../work/r26/t/w35-r3-3150.png",
+   "kind": "note",
+   "label": "w35 3150 preview draft after three more solve rounds: 7.674, tall rolls read as liquid, not kept as base",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T07:13:46.990Z",
+   "file": "20261126071346990-note-w37-3150.jpg",
+   "source": "../work/r26/t/w37-3150.png",
+   "kind": "note",
+   "label": "w37 3150 preview draft: balls in the dark field read as floating popcorn, refused (10.709)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T07:13:45.673Z",
+   "file": "20261126071345673-note-w36-3150.jpg",
+   "source": "../work/r26/t/w36-3150.png",
+   "kind": "note",
+   "label": "w36 3150 preview draft: steady glow far too strong and curd thinned, refused (15.119)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T06:49:13.455Z",
+   "file": "20261126064913455-note-w32-3150.jpg",
+   "source": "../work/r26/t/w32-3150.png",
+   "kind": "note",
+   "label": "w32, w30 with rolls six times taller in the dark field, same scaffold: shade and large forms in the lower thirds, still smooth as dunes, line i 7.829",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T06:46:39.197Z",
    "file": "20261126064639197-note-w26-r3-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r26/t/w12-3150.png",
    "kind": "note",
    "label": "w12 at 3150, preview, draft, no scaffold: round tops as the surface itself (one dome to a cell, octaves riding), no balls. Dark thirds dark by shade for the first time; reads as rock. Line (i) 17.964",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:36:36.726Z",
-   "file": "20261126053636726-note-w11-3150.jpg",
-   "source": "../work/r26/t/w11-3150.png",
-   "kind": "note",
-   "label": "w11 at 3150, preview, draft, no scaffold: packed dim balls in the dark field. Refused: nuggets strewn over wax. Line (i) 18.680",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:12:22.847Z",
-   "file": "20261126051222847-note-state-w8-3150.jpg",
-   "source": "../work/r26/t/state-w8-3150.jpg",
-   "kind": "note",
-   "label": "State for MAIL 1413, frame 3150, preview, draft: this state with three solve rounds (top left), main (top right), approved (bottom). Line (i) 7.873 against main 3.390 at the same tier: red. Bands green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:12:21.231Z",
-   "file": "20261126051221231-note-state-w8-3200.jpg",
-   "source": "../work/r26/t/state-w8-3200.jpg",
-   "kind": "note",
-   "label": "State for MAIL 1413, frame 3200, preview, draft: this state (left) beside main (right). Storm rings read as contour lines with a pit for an eye; right third is blue cloth",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T05:12:19.505Z",
-   "file": "20261126051219505-note-state-w8-3100.jpg",
-   "source": "../work/r26/t/state-w8-3100.jpg",
-   "kind": "note",
-   "label": "State for MAIL 1413, frame 3100, preview, draft: this state (left) beside main (right). Worse than main to my eye: cloth folds and popcorn clusters, no dark deep",
    "stop": "jupiter"
   }
  ]
