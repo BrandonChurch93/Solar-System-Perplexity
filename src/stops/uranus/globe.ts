@@ -145,8 +145,10 @@ float topsSeen(vec3 p, vec3 n) {
   }
   return best;
 }
-vec3 topsLight(float share, float sun, float seen) {
-  return uTopWhite * (share * smoothstep(uTops.x, uTops.y, sun)) * (1.0 - exp(-uTopLane * (1.0 / max(seen, 1e-3) - 1.0)));
+vec3 topsLight(float share, float sun, float seen, float mu, vec3 air) {
+  vec3 held = exp(-uTopLane * (1.0 / max(seen, 1e-3) - 1.0));
+  vec3 now = exp(-uTopLane * (1.0 / max(mu, 1e-3) - 1.0));
+  return uTopWhite * (share * smoothstep(uTops.x, uTops.y, sun)) * ((1.0 - held) * air + max(now - held, vec3(0.0)) * (1.0 - air));
 }`
 
 const FRAG = /* glsl */ `
@@ -360,10 +362,10 @@ ${PLATE_LEVELS}
   vec3 tops = vec3(0.0);
   float topShare = 0.0;
   for (int k = 0; k < (pn > 0.5 ? 1 : 0); k++) topShare = topsAt(pg, px, py);
-  for (int k = 0; k < (topShare > 0.0 ? 1 : 0); k++) tops = topsLight(topShare, dot(pD, uTopSun), topsSeen(uDeckCentre + uDeckRadius * pD, pD));
+  for (int k = 0; k < (topShare > 0.0 ? 1 : 0); k++) tops = topsLight(topShare, dot(pD, uTopSun), topsSeen(uDeckCentre + uDeckRadius * pD, pD), muD, dim.rgb);
   col = own;
   for (int k = 0; k < (dim.a < 1.0 ? 1 : 0); k++) col = own * (base + airGlow(sunlit, muD, psiD, plain)) / base;
-  col += uNear * tops * dim.rgb;
+  col += uNear * tops;
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(bandTurn, cloudTurn) * 4.0, length(vView));
 }`
