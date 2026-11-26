@@ -1,9 +1,41 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T11:11:15.965Z",
+ "pushed": "2026-11-26T11:41:44.514Z",
  "head": "a5e46e815452cc68eaf7a90ed57edbcebb2d9ae9",
- "note": "trial z1 (veil and sea gain ended past the terrain horizon) read on rows 1879 and 2126; 1867 reading is the glint streak",
+ "note": "trial, not a name: streak law read on the angle; row 1870 0.2852 against 0.3209 at 1867 before; main's part row 0.2902. z0 against z1 rendering now",
  "looks": [
+  {
+   "time": "2026-11-26T11:41:43.609Z",
+   "file": "20261126114143609-note-bottom-z1.jpg",
+   "source": "../../../../tmp/gl/k24/A/bottom-z1.jpg",
+   "kind": "note",
+   "label": "bottom edge 1877 to 1879, trial z1 beside main: the place's cloud bank leaves the frame (level step at 1878)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T11:41:42.704Z",
+   "file": "20261126114142704-note-z1m-3740.jpg",
+   "source": "../../../../tmp/gl/k24/A/z1m-3740.jpg",
+   "kind": "note",
+   "label": "1870: trial z1 over main, half size",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T11:41:41.872Z",
+   "file": "20261126114141872-note-sheet-1865-1869-cand-main.jpg",
+   "source": "../../../../tmp/gl/k24/A/sheet-1865-1869-cand-main.jpg",
+   "kind": "note",
+   "label": "1865 to 1869 at 1 to 1 around [948, 476]: candidate a5e46e81 beside main",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T11:41:41.047Z",
+   "file": "20261126114141047-note-sheet-1865-1869-g1-main.jpg",
+   "source": "../../../../tmp/gl/k24/A/sheet-1865-1869-g1-main.jpg",
+   "kind": "note",
+   "label": "1865 to 1869 at 1 to 1 around [948, 476]: trial g1 (zone + streak law on the angle) beside main",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T11:11:08.769Z",
    "file": "20261126111108769-note-d1-pair.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/gl/k24/A/bottom-3756.jpg",
    "kind": "note",
    "label": "1877 to 1879 bottom edge, candidate over main: bright clouds leave the frame (level step)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T11:11:03.837Z",
-   "file": "20261126111103837-note-z1d-4252.jpg",
-   "source": "../../../../tmp/gl/k24/A/z1d-4252.jpg",
-   "kind": "note",
-   "label": "2126 trial z1 over main, half size",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T11:11:01.951Z",
-   "file": "20261126111101951-note-z1d-3774.jpg",
-   "source": "../../../../tmp/gl/k24/A/z1d-3774.jpg",
-   "kind": "note",
-   "label": "1887 trial z1 over main, half size: veil and sea gain ended past the terrain horizon, edge not yet judged",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T10:37:34.865Z",
-   "file": "20261126103734865-note-a1-4252.jpg",
-   "source": "../../../../tmp/gl/k24/A/a1-4252.jpg",
-   "kind": "note",
-   "label": "2126 candidate, main, trial a1",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T10:37:33.449Z",
-   "file": "20261126103733449-note-a1-3758.jpg",
-   "source": "../../../../tmp/gl/k24/A/a1-3758.jpg",
-   "kind": "note",
-   "label": "1879 candidate, main, trial a1 (sea gain undone outside the canvas)",
    "stop": "earth"
   }
  ]
