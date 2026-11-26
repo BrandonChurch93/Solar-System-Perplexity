@@ -1,9 +1,33 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T05:50:34.541Z",
+ "pushed": "2026-11-26T06:12:52.333Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the word both on a sky patch (Neptune's ask): off proof done (21 draft frames, the bytes of main), the trial with the word on Neptune is rendering",
+ "note": "the word both on a sky patch is named (agent/engine-both): off to the bit on 21 frames, and a trial on Neptune with no share of the sky carries the bytes of main on 12 frames",
  "looks": [
+  {
+   "time": "2026-11-26T06:12:50.289Z",
+   "file": "20261126061250289-note-neptune-word-both-rise-sky-full-size.jpg",
+   "source": "../../../../tmp/both/sheets/neptune-word-both-rise-sky-full-size.png",
+   "kind": "note",
+   "label": "The same trial, the sky at full size at 4957 and 4958 (the rise's first two frames in the globe view, y 0 to 170; left x 0 to 1220, right x 700 to 1920), both sky pictures at whole weight by the word both. The bytes of main: the surface view's picture with its band is there in the globe view",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T05:57:52.123Z",
+   "file": "20261126055752123-note-neptune-word-both-rise.jpg",
+   "source": "../../../../tmp/both/sheets/neptune-word-both-rise.png",
+   "kind": "note",
+   "label": "The same trial in the rise, half size: 4957 (first frame of the globe view), 4958, 5006 (judged), 5024 (last of the rise), both pictures at whole weight in the globe view by the word. All four carry the bytes of main: at 4957 and 4958 the surface view's sky picture is there as on main, at 5006 and 5024 the sky has turned and neither picture lies in the frame",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T05:57:47.235Z",
+   "file": "20261126055747235-note-neptune-word-both-at-the-change-of-view-sky-full-size.jpg",
+   "source": "../../../../tmp/both/sheets/neptune-word-both-at-the-change-of-view-sky-full-size.png",
+   "kind": "note",
+   "label": "The word both on Neptune's two sky pictures, a trial with no share of the sky (draft, the sky's crop x 700 to 1920, y 0 to 330 at full size). Row 1: 4757 without the word, the globe view has its own picture alone. Rows 2 to 4: 4757 (globe view), 4758 and 4759 (surface view) with the word: the same sky on both sides of the change of view; all three carry the bytes of main's frames",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-26T05:44:42.471Z",
    "file": "20261126054442471-note-neptune-no-share-no-word-change-of-view.jpg",
@@ -26,13 +50,6 @@
    "source": "../../../../tmp/crest/arr/strip-on-upperleft.png",
    "kind": "note",
    "label": "draft 4498 to 4503 with the word, the same crop: the flight's stars thin out under the entering picture, no straight edge"
-  },
-  {
-   "time": "2026-11-26T04:16:02.220Z",
-   "file": "20261126041602220-note-strip-off-upperleft.jpg",
-   "source": "../../../../tmp/crest/arr/strip-off-upperleft.png",
-   "kind": "note",
-   "label": "draft 4498 to 4503 without the word, x 0 to 960, y 0 to 540, two thirds size"
   }
  ]
 }
