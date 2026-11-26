@@ -1,9 +1,73 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T16:22:03.590Z",
+ "pushed": "2026-11-26T16:51:22.283Z",
  "head": "14af1ae7ebf4a2fbeb655e42e784804a9c682344",
- "note": "16:22 UTC. RED: dashes on dive and rise from above, cause in the shade field of the bake, cure in work. 3150 last.",
+ "note": "line A: cause of the dashes found (the shade of the sheet and of the fibre, seen from above as thin dark lanes), cure in the working tree, survey of dive and rise running; nothing committed or measured at final yet",
  "looks": [
+  {
+   "time": "2026-11-26T16:51:21.482Z",
+   "file": "20261126165121482-note-c-3150.jpg",
+   "source": "../work/r27/sh/c-3150.png",
+   "kind": "note",
+   "label": "3150 preview draft with the cure: line (i) 2.239 whole frame, 2.144 outside the seven cells, bands 0.7702 0.7228 0.8262 0.8956 0.9531 green; before the cure 2.208",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:51:20.894Z",
+   "file": "20261126165120894-note-c-3020.jpg",
+   "source": "../work/r27/sh/c-3020.png",
+   "kind": "note",
+   "label": "3020 preview draft with the cure, whole frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:51:20.243Z",
+   "file": "20261126165120243-note-c-3265.jpg",
+   "source": "../work/r27/sh/c-3265.png",
+   "kind": "note",
+   "label": "3265 preview draft with the cure, whole frame",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:51:19.679Z",
+   "file": "20261126165119679-note-pair-3260.jpg",
+   "source": "../work/r27/t/pair-3260.jpg",
+   "kind": "note",
+   "label": "3260 preview draft whole frame: above 14af1ae7, below the cure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:51:19.067Z",
+   "file": "20261126165119067-note-sh-c-3015.jpg",
+   "source": "../work/r27/t/sh-c-3015.jpg",
+   "kind": "note",
+   "label": "3015 enlarged, preview draft: left 14af1ae7 with the dotted rows of dark specks, right the cure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:51:18.460Z",
+   "file": "20261126165118460-note-sh-c-3265.jpg",
+   "source": "../work/r27/t/sh-c-3265.jpg",
+   "kind": "note",
+   "label": "3265 enlarged, preview draft: left 14af1ae7 with the dashes, right the cure; the storm reads softer and its thin rings are gone",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:51:17.868Z",
+   "file": "20261126165117868-note-sh-c-3275.jpg",
+   "source": "../work/r27/t/sh-c-3275.jpg",
+   "kind": "note",
+   "label": "3275 enlarged, preview draft: left 14af1ae7 with the dashes, right the cure",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T16:51:17.166Z",
+   "file": "20261126165117166-note-sh-c-3285.jpg",
+   "source": "../work/r27/t/sh-c-3285.jpg",
+   "kind": "note",
+   "label": "3285 enlarged, preview draft: left 14af1ae7 with the thin dark dashes, right the cure in the working tree (the shade of a wave follows the camera's height), not committed yet",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T16:22:02.875Z",
    "file": "20261126162202875-note-cut-3150.jpg",
@@ -130,70 +194,6 @@
    "source": "../work/r26/t/wo2-dive-sheet.jpg",
    "kind": "note",
    "label": "dive 3030 3040 3050 3059 with the stronger air being tried, second tree, solve not yet fitted",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:58:21.184Z",
-   "file": "20261126145821184-note-adds-wo1-2997.jpg",
-   "source": "../work/r26/t/adds-wo1-2997.png",
-   "kind": "note",
-   "label": "2997 after the level cure, second tree: the globe alone left, with my layer right",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:32:46.147Z",
-   "file": "20261126143246147-note-wm3-r3-3150.jpg",
-   "source": "../work/r26/t/wm3-r3-3150.png",
-   "kind": "note",
-   "label": "line A second tree only, 14:32 UTC: 3150 preview draft, state wm3 (thin skin, larger heaps, wide pale bands, no fibre relief) after three solve rounds, line (i) 3.384 whole frame, not at master final yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:32:45.250Z",
-   "file": "20261126143245250-note-wm1-vs-appr-lowleft.jpg",
-   "source": "../work/r26/t/wm1-vs-appr-lowleft.jpg",
-   "kind": "note",
-   "label": "line A second tree only, 14:20 UTC: lower left at master size, approved beside state wm1 (heaps twice as large); not there, approved has few small crisp lit clusters and curling strands",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:02:13.366Z",
-   "file": "20261126140213366-note-wj0-r3-3150.jpg",
-   "source": "../work/r26/t/wj0-r3-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state wj0 after three rounds: line (i) 3.094 whole frame, of it 2.907 outside the seven cells (the far right limb is not solved any more), bands green, 33 s",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:02:12.731Z",
-   "file": "20261126140212731-note-wj0-3296.jpg",
-   "source": "../work/r26/t/wj0-3296.png",
-   "kind": "note",
-   "label": "3296 preview draft, state wj0, second tree",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:02:12.120Z",
-   "file": "20261126140212120-note-wj0-2997.jpg",
-   "source": "../work/r26/t/wj0-2997.png",
-   "kind": "note",
-   "label": "2997 preview draft, state wj0 (march cured, solve held), second tree, not in the repo",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T14:02:11.435Z",
-   "file": "20261126140211435-note-wj0-vs-wi2-2997-crop.jpg",
-   "source": "../work/r26/t/wj0-vs-wi2-2997-crop.png",
-   "kind": "note",
-   "label": "2997 four times enlarged: left the state before (wedge of the solve seen from above), right with the solve held to the ground near the view (state wj0, second tree)",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T13:46:13.777Z",
-   "file": "20261126134613777-note-wi1-3150.jpg",
-   "source": "../work/r26/t/wi1-3150.png",
-   "kind": "note",
-   "label": "line A dev state wi1 at 3150, preview draft: line (i) 1.749 whole frame, 1.395 outside the seven cells, bands green, 32.4 s; not in the repo yet",
    "stop": "jupiter"
   }
  ]
