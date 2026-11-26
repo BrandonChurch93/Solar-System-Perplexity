@@ -2336,6 +2336,70 @@ under; helpers `frameOf`, `open`); its rerun after the rim's mend started 23:05.
 file is the sky's and the far Sun is batch 14 on the Builder's list; the plumbing through src/director or src/core is mine on
 request. Nothing sent to /root (MAIL 520).
 
+## 23:10 to 23:21 UTC, 25 Nov: design (c) on b75720ab (main 172e7bcd), the air law on the sheets tested, the render tree is t-air4
+
+**State of the code (uncommitted, in `crest-wt`, branch `agent/engine-crest` fast forwarded to b75720ab):** `src/terrain/crest.ts`
+(new), `src/terrain/relief.ts` (my v6 merged three ways onto b75720ab's, clean), `tests/crest.test.ts`, `tests/crest-gl.test.ts`.
+Backups `/tmp/crest/crest.v7.ts`, `relief.v7.ts`, `crest.test.v7.ts`, `crest-gl.test.v7.ts`. The sheets use
+`withSheets(material.vertexShader)`, so the air's share of the light at the vertices (b75720ab) comes along onto the sheets.
+
+**Tests at 23:18: 31 of 31** (`tests/crest-gl.test.ts` 10, `tests/crest.test.ts` 21), on the merged tree. The GL file had been
+9 of 9 at 23:08 before the merge.
+
+**The tenth GL test (the air law on the sheets)**: 'under the air law with its light by height each sheet wears the air of its
+own ground, up to the cut'. Law: light [0.31, 0.52, 0.08], density 4, scaleHeight 0.04 radii, radius 50, eyeHeight 0.5, knots
+[[-1, 0.3], [0.5, 0.7], [1.5, 1]]; eye [-SIDE, 2 * SIDE, 0] (a pure dolly changes near and far air almost alike, a raised eye
+parts them). Measured (probe 23:15): the near ground begins at pixel 140 or 141 (rigid 140.4) on all 126 rows and every pixel
+from there is the near ground's within 0.002; before it at most 2 pixels a row are not the far ground's, the faint one at most
+0.023. Teeth, the least over the frame: 0.030 (far paint on the near distance, in the gap), 0.053 (near paint on the far
+distance), 0.045 and 0.038 (the sheets without the law).
+
+**A faint line that is the paint's, not the law's**: with out 0 and the painted border half a texel beyond the step's middle,
+the far sheet carries 1 px of its own painted border in the gap: 0.013 to 0.023 linear, 3.5 percent of the colour step, with the
+law as without. `out` is its cure (the cut moves out to where the paint ends).
+
+**Mail**: mars_place_builder 23:10 (notice): about 00:30 to 00:45 it commits five land plates (land-0p3, 0p7, 1p6, 3p8, 8p5) on
+agent/mars-place on top of the merge of main 172e7bcd; nothing in src/stops/mars changes; the air law stays off on its side (no
+airLaw key) until /root writes it is green; /root weighs near.json grazing (control G ea1c7421, grazing.depth 0) against the rise
+rows 2695 to 2707. It sends the sha when it stands. No answer owed.
+
+**Render tree**: `t-air4` (export of b75720ab) from now on, since main moved to the fourth cut and the name is built on it.
+Scratch there: `out/work/tmp/lawframes.ts` (copied), `src/stops/mars/look.ts` (original saved as `/tmp/crest/air4.look.orig.ts`;
+the trial numbers go in by `/tmp/crest/setlook4.py`, never committed, the file is mars_place_builder's). Tools: `/tmp/crest/exp4.sh
+LABEL "LOOK WORDS" "[frames]" tier`. Labels: `b0-draft` is b75720ab pure (started 23:19:53: 2668, 2477, 2580, 2672);
+`c0-draft` will be v7 laid in without numbers (must equal b0 by sha256); then the trial numbers.
+`t-c2a` (old tree on the second cut) keeps `k0-draft`, `r35-draft`, `rt-draft`, `fin5-*` until the new base stands.
+
+## 23:21 to 00:07 UTC, 25 to 26 Nov: the finding rewritten (three rules), D's blob traced to the layer's rim, a box cures it
+
+State: ALL UNCOMMITTED in `crest-wt` (branch agent/engine-crest at b75720ab). Backups of the state before this entry: `/tmp/crest/crest.v7.ts`, `relief.v7.ts`, `crest.test.v7.ts`, `crest-gl.test.v7.ts`.
+
+What changed in `src/terrain/crest.ts` since v7, and why:
+1. The finding (23:25). The old finding (zone by the range against the least range within a walk, both ends by the first texel under a threshold) made a false ramp on a steady slope beside a plain (2668: a break at x 733..768 y 712..727 and a dark notch at 765..775, 726..730). New: the way from a texel is walked whole to either side (`wayAt`), an end is where the range falls no further by more than a step as far as the way goes on, and a step counts only by what the two ends differ by, less what ground as even as the two sides would do anyway over the way between them.
+2. The top rule (23:40). An end closed on the step itself (far 7.4 percent off at map (1562,383..384): an orange blob at 2668 (690,653) and a jump of 7 px at rows 653..655). Now `top` is the place of the greatest range within a cell along the way, and an end lies at or beyond it.
+3. The past rule (23:52). A band texel that lies on along the crest's line past a ramp's end (no way across the nearest ramp texel leads to it to within half a right angle) has no other side: both sheets keep the map's own distance, and the texel is the near side's where its own ground is nearer than the middle of the step at the end. So the cut goes on from an end along the height of the middle, and the sheets lie on the mesh's own surface there.
+
+Measured at the draft tier (t-air4, Mars L1, step 0.002, walk 2, under 4, at A `0.6545,0.3387` and D `0.6220,0.2755`), teeth script on crest A:
+- base (b0; the same picture as the switch off, c0, by sha256): 2668 5 jumps, rms 2.00 px; 2672 4 jumps, largest 10, rms 2.04; 2477 left jump of 12, 2 rows with no lit pixel, rms 3.10.
+- with rules 1 to 3 and out 0.7 (p7) or out 0.35 (t35): 2668 0 jumps, rms 0.59; 2672 2 jumps of 2 px at rows 641 and 667, rms 0.56; 2477 right (599, 2), left (586, 9), rms 2.04.
+- 2580 (the frame that is to hold): against the base largest 21 with A and D whole, largest 14 with the box below; over 32: 0.
+
+The thin orange line beside A's lower piece (2668 about 745..840, 711..765) is the painted border's halo on the far sheet at the cut. At pixel (770,725): out 0 (63,42,33), out 0.35 (42,26,20), out 0.7 (34,23,21) against ground (30,24,24). So out 0.7 is the stop's number for A. `border.py`: A's painted border lies 0.12 texels (upper piece) and 0.88 texels (lower piece) beyond the middle at the median, 99 percent within 3.63; D's lies 1.25 texels INSIDE the middle.
+
+D's dark blob (2668 frame 646..661, 584..602), found and cured without code:
+- A tinted render (near sheet red, far sheet green, its fill yellow, far sheet under kept cells blue; `/tmp/crest/s-dbgD.png`, in the looks) shows the blob is the far sheet under kept cells.
+- The map (`/tmp/crest/ov-D7.png`, in the looks; L1's alpha printed): D's top hooks round the end of the hollow, and the layer's rim (the bright diagonal ridge; beyond it the matte is 0 and the colour file holds drawn out stripes) passes 6 texels from the hook. The far sheet under the ground north of the hook lies at the hollow's distance; from the moved eye it shows past the rim, where the mesh draws nothing.
+- That is the limit already written at `ReliefCrest` in relief.ts: a crest that runs up to a rim is ended with a box. With boxes `0.60,0.269,0.75,0.47` (ends D at row 332, under the hook; holds all of A) the blob is gone (q7; `/tmp/crest/s-q7-a.png`, in the looks) and A's numbers are the same.
+- I thought through an engine cure (let the fill under a kept cell show only where the eye's move has carried it across the cut, by the shift of the vertex on the screen against the way to the far side). Not built: it needs the distance to the cut beyond the 4 texels the byte holds, and it changes every crest's picture the night before the proof. The limit stays the stop's, with the box.
+
+Unit tests with rules 1 to 3: 19 of 21. The two that fail are to be rewritten to the new behaviour (values in the summary above this entry's time, from `out/work/tmp/dbg-ends.mts`): "names the vertices where the sheets end with a step left, and none beside a crest that runs on" and "give a sheet the vertex of the mesh to the bit where the ground round it is the sheet side, and keep every vertex on its ray". GL tests not rerun since v7.
+
+Mail: mars_place_builder 23:10 (five land plates on agent/mars-place about 00:30 to 00:45, air law off on its side until /root writes it is green), 23:41 (near.json grazing.depth 1.5 to 0); /root MAIL 1343 23:54 (main 1f51abc9; take batch 16, take/ea6 1f351f70 under proof). At 00:07 origin main is 3675234f.
+
+Looks pushed 00:07 (33a4a3c9).
+
+Next: rewrite the two unit tests, add tests with teeth for rules 1 to 3, rerun the GL tests, back up as v8, review tier (base and the variant with the box and out 0.7) on 2477, 2668, 2672, 2580, look at every frame, commit, merge origin main, whole suite, build, push, NAMED.
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
