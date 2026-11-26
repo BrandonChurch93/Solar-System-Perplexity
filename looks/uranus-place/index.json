@@ -1,9 +1,25 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T09:09:30.740Z",
+ "pushed": "2026-11-26T09:27:55.549Z",
  "head": "832be54a25cbbe9cce0579d0a5d0b18adda5f58d",
- "note": "09:10 turn law tie (pop 1.0961 main's law, 1.0973 mine, two aims): main's law stays; clock held through the rise committed 832be54a; reader dive 2 of 2 running",
+ "note": "09:29 head 832be54a pushed (second aim, clock cure); reader dive 2 of 2 running; dive 4155 to 4171 looked at frame by frame",
  "looks": [
+  {
+   "time": "2026-11-26T09:27:54.081Z",
+   "file": "20261126092754081-note-d2-b.jpg",
+   "source": "../../../../tmp/n75/d2-b.png",
+   "kind": "note",
+   "label": "832be54a dive draft 4164 to 4171",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T09:27:48.489Z",
+   "file": "20261126092748489-note-d2-a.jpg",
+   "source": "../../../../tmp/n75/d2-a.png",
+   "kind": "note",
+   "label": "832be54a dive draft 4155 to 4163 from the reader's own frames, two aims, clock cure",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T09:09:30.018Z",
    "file": "20261126090930018-note-clock-c.jpg",
@@ -226,22 +242,6 @@
    "source": "../../../../tmp/n69/l-4407-a.png",
    "kind": "note",
    "label": "4407 draft: mine, mine cover off, main, main cover off",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T05:17:36.478Z",
-   "file": "20261126051736478-note-mn-panel.jpg",
-   "source": "../../../../tmp/n68/mn-panel.png",
-   "kind": "note",
-   "label": "rise 2 of 2 control mn: rc the candidate, co cover off, mn main's stop tree; the back read's strip at the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T05:17:35.910Z",
-   "file": "20261126051735910-note-co-panel.jpg",
-   "source": "../../../../tmp/n68/co-panel.png",
-   "kind": "note",
-   "label": "rise 2 of 2 control co: rc the candidate, co cover off, mn main's stop tree; the back read's strip at the left limb",
    "stop": "uranus"
   }
  ]
