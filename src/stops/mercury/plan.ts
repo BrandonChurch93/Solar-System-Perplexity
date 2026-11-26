@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { SkyShares } from '../../director/handover'
-import { mix, ramp, slerpDir } from '../../director/rig'
+import { drift, mix, ramp, slerpDir, smooth } from '../../director/rig'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { anchor, closeAhead, closeRadius, closeUp, type Anchor } from './close'
@@ -136,6 +136,15 @@ export class Plan extends StopPlan {
     return { position: closeAhead.clone().multiplyScalar(along + x.forward * b).addScaledVector(closeUp, up + x.height * b), quaternion: new THREE.Quaternion(), vfov: this.p.terrain.vfov }
   }
 
+  override hold(tRel: number): Pose {
+    const pose = super.hold(tRel)
+    const half = (this.seg.hold.end - this.seg.hold.start) / 2
+    const w = smooth(1 - Math.abs(tRel / half - 1))
+    if (w <= 0) return pose
+    const q = pose.quaternion
+    return { ...pose, position: pose.position.clone().applyQuaternion(q.clone().multiply(new THREE.Quaternion().slerp(drift(this.holdMid), w)).multiply(q.clone().invert())) }
+  }
+
   low(time: number): Pose {
     if (time < this.seg.terrain.start) return this.untwin(this.path('dive', time), time)
     if (time > this.seg.terrain.end) return this.untwin(this.path('rise', time), time)
@@ -155,7 +164,9 @@ export class Plan extends StopPlan {
 
   override skyShare(seg: Segment, time: number): SkyShares | null {
     if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
-    return { low: 1 - smoother(ramp(Math.log(sky.height[0]), Math.log(sky.height[1]), Math.log(this.path(seg.kind, time).position.length() - 1))) }
+    const height = Math.log(this.path(seg.kind, time).position.length() - 1)
+    const low = 1 - smoother(ramp(Math.log(sky.height[0]), Math.log(sky.height[1]), height))
+    return seg.kind === 'dive' ? { low, high: smoother(ramp(Math.log(sky.leave[0]), Math.log(sky.leave[1]), height)) } : { low }
   }
 
   override skyCarryShare(seg: Segment, time: number): number | null {
