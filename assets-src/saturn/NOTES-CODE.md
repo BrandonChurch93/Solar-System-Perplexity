@@ -8069,3 +8069,68 @@ and the shaders, and a clearing needs its own proof of the same bytes.
 
 Looks pushed 04:52 (pairs of the finals beside main and the approved, the five sheets of the flight in,
 3376 whole).
+
+## 2026-11-26 04:56 to 05:40 UTC: mail 1410, 1416 and 1420; K is refused at 3465 by d296 (2); the hold's view solved against the hero
+
+Mail 1410 (04:58): 58113814 is cut by the Builder as take/rb1 1c8d37dd on main's code 23f1089b; his machines
+run the reader (dive 1 and 2 of 2, rise 1 and 2 of 2), the finals 3465, 3567, 3720, 3866 with G17, units,
+gate and the same bytes on 50 frames. So at 05:00 I killed my own chain and started a shorter one
+(/tmp/v/rigid/proof_d.sh): the dive at draft, every film frame 3540 to 3640 (PC/dive1), then the rise 3805 to
+3888 (PC/rise1). All nine sheets of the dive seen: one continuous move, no swap, no lone bright point at the
+right end of the equator (PC/lip1_*.jpg at full size, 3560 to 3607). Lone pixel reader on the cured dive:
+only the tip where the lit C ring's inner edge meets the limb (r 1.21 to 1.24, az -31; 3558, 3570, 3571,
+3574, 3579), a thing that stays from frame to frame, not a pop. The rise frames are drawn (84), not yet seen.
+
+Mail 1416 (05:15), the Builder measured on his machine at the final tier: 3465 against the approved, main plain
+4.5694, K 11.5669. RULED by d296 (2): a take whose judged frame matches the approved worse than main's does
+not go onto main, so K does not go on as it stands. He read the near side of my ring as far larger than the
+approved's and asked: solve the hold's view (distance, lens, height over the ring plane, roll, where it looks)
+so that the true circles fall on the approved's ring, body rigid, light the globe's; send the residual, a
+picture and the plain number; if the approved's ring is not a possible view of circles, say so.
+My answer 05:20: the fit as a result by 06:40 yes, a cured sha by 06:40 no (fourth cut). Mail 1420 accepted it.
+
+Mail 1420 (05:25), his reader on take/rb1 against main's rows: dive 1 of 2 green (pop 1.0785 at 3542,
+pattern 0.3064, step 0.0116), dive 2 of 2 green (1.0365, 0.1988, 0.0112), rise 2 of 2 green (1.1881 at 3873,
+0.2147, 0.0436). RED: rise 1 of 2, pattern 0.4697 at 3817 against main's green 0.3524 at 3832 (limit 0.45):
+a line worse than main's row, to find and cure before the next sha. 3720 at final: plain 28.0263 against
+main's 27.9994: a hair worse, to bring level. 3866 differs from main's (mean 0.64, largest 110).
+
+The tool: assets-src/saturn/code/hold_view_fit.py (new). ring_edges.py got two test switches from the
+environment (SECTOR_STEP, R_LOW; the defaults are the old values, so every old reading stands).
+What it does: reads in the approved hero at 1920 x 1080 the ring edge points in sectors of 5 degrees (outer
+edge 40 points, B outer 43, B inner 17, C inner 16) and 35 points of the lit limb, then solves the view in
+the frame of fit.json by least squares (soft L1, 4 px): the camera's place (3), the lens (1), the tilt of
+the axis (2). The radii of the body are held for B outer and outer; the two inner edges are a double step in
+the reader, their radius is free.
+
+RESULT, measured:
+- today's view (fit.json: distance 5.560, lens 30, height 24.73 degrees, roll 12.54, globe centre 1026.1,
+  527.8): px left, rms and largest: outer 9.72, 21.08; B outer 4.61, 8.15; B inner 6.00, 15.03; C inner 1.94,
+  5.21; limb 3.28, 10.39; all 6.17.
+- solved (six free): distance 5.120, lens 32.94, height 24.53, roll 12.23, globe centre 1020.6, 518.6, disc
+  363.7 px: outer 3.59, 9.82; B outer 5.08, 9.63; B inner 4.93, 12.77; C inner 1.87, 6.42; limb 4.99, 9.42;
+  all 4.43. fit.json would hold camera.position [-0.169796, -0.059882, 5.117197], vfovDeg 32.9417,
+  globe.quaternion [0.2181532, -0.0433564, -0.1083148, 0.9689156].
+- the lens held, the rest solved, rms of all: 20 degrees 16.74, 24: 12.09, 27: 8.81, 30: 5.82, 33: 4.43,
+  36: 5.52, 40: 9.09. A longer lens from further away is worse: the hero has more perspective than 30
+  degrees gives, not less.
+- rings alone (limb weight 0.001): lens 34.19 from 4.952: outer 2.74, 6.29; B outer 4.44, 8.43; the limb then
+  7.26, 12.42. Limb weight 3: lens 31.29 from 5.331: outer 6.61, 17.67; limb 3.47.
+- each edge by itself is an ellipse to 1.3 to 2.1 px rms, but the ellipses are not of one view: the Cassini
+  edge's long axis at 13.65 degrees and the outer edge's at 12.84 (circles of one view 13.13 and 13.20), short
+  to long axis 0.4355 and 0.4610 (one view 0.4421 and 0.4555). At azimuth 100 to 125 the hero's outer edge is
+  5 to 10 px outside its circle and its Cassini edge 8 to 10 px inside; at the left ansa the reverse.
+So: the approved's ring is not a possible view of circles about the globe's centre. Sent 05:33 with the two
+pictures (VF/fit1-full.jpg, VF/fit1-parts.jpg).
+
+The Builder's reading of my frame was not the picture's: lit ring along the bottom 12 rows (luma over 70):
+approved x 762 to 1671, main 767 to 1662, K 845 to 1724; lit tip at the right: approved (1842, 724), main
+(1844, 722), K (1867, 735); no lit ring at the right edge of the frame in any of the three. Said in the mail.
+
+The estimate (hold_view_fit.py est=1; a picture made from the approved alone, not a frame of the film: the
+approved's ring pixels laid straight onto the true circles of a view, the limb zone moved onto the true
+outline): today's view plain 9.7161 (the ring pixels give 9.0701, the limb zone 0.6460); solved view 7.7744
+(7.0897, 0.6847). Real frames by the same split: K 12.0744 (ring pixels 10.5128, the rest 1.5616), main
+4.7669 (3.4412, 1.3258). So the estimate reads 14 percent under the real ring part, and the solved view
+would bring a real frame to about 9.8 by my reader. No rigid body reaches main's 4.77: main's number is
+bought by the bend.
