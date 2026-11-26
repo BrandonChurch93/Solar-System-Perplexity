@@ -4,6 +4,8 @@ import { frameUniform } from '../core/frame'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { MAX_MARK, reach, reachNeeded, uniformCells } from './shield'
+import { AIR_LAW_GLSL, AIR_LAW_KNOTS_GLSL, AIR_LAW_SCALE_HEIGHT, type AirKnots } from './air'
+import { CREST_BEHIND, crestCells, crestEnds, crestField, crestRim, crestRing, crestTexels, type CrestNumbers } from './crest'
 
 export interface ReliefLayerDef {
   color: string
@@ -39,12 +41,45 @@ export interface ReliefAir {
   drift?: [number, number, number, number]
 }
 
+// The air law for a set (src/terrain/air.ts): the three numbers, the same as on the globe, and where the planet lies in the relief's
+// frame. radius is the radius of the datum and eyeHeight the height of the picture's eye over it, both in the relief's unit; up is the
+// relief's own (pitchDeg). scaleHeight is in radii, like on the globe. least: what the layers' texels hold of their air at the least
+// (airLawFactorSeen), 0 where it is left out. knots: the air's light by height, two or three [height over the datum in the relief's
+// unit, share of the light], rising; straight lines between them, held under the lowest and over the highest. Left out: one light at
+// every height.
+export interface ReliefAirLaw { light: [number, number, number]; density: number; scaleHeight: number; radius: number; eyeHeight: number; least?: number; knots?: [number, number][] }
+
 export interface ReliefValley { top: number; soft: number; strength: number; color: [number, number, number]; wind: [number, number]; speed: number; scale: number; stretch: number; churn: number; mask: [number, number]; cut: [number, number] }
 
 interface ReliefApron { padding: number; fullWidth: number; mips: boolean; baseAlphaNoMips: string[]; resolution: { full: number; web: number }; layers: { layer: string; atlas: string; depth: string; edges: number[]; bottomColorShear: number[]; rightColorShear: number[] }[] }
 interface ReliefRidge { layer: string; center: number[]; radius: number[]; core: number; slope: number; interval: number[]; taps: number[] }
 
-export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; valley?: ReliefValley; pitchDeg?: number; apron?: ReliefApron; ridge?: ReliefRidge }
+// The crests of a layer (src/terrain/crest.ts has the finding and the numbers). The mesh of a layer draws a step of its distances
+// as a wall between the two sides, and from any eye but the picture's the wall is drawn out with the picture's texels on it. A layer
+// named here draws the cells of its steps as two sheets in place of the wall: the far side carried on under the near side at the far
+// side's distance, with the far side's own ground beside the step standing for what the near side hides, and over it the near side
+// carried on at its own distance and cut where the stop says its paint ends (out texels beyond the step's middle). Each sheet is
+// rigid with its side; from the picture's eye they lie on one another as the picture has them. The sheets ask the layer's matte:
+// a step whose near side is no ground is a rim, and its texels ride with the far side; a far side that is no ground draws nothing;
+// nothing is put under ground that is not opaque. layer is the layer's name as in its files (relief-NAME-color.jpg). Left out, or
+// a layer not named: the mesh, the index and the shaders to the letter.
+// The numbers are counted in cells of the layer's mesh, so they mean the same at every size the layer's files come in: step as in
+// crest.ts (the least step of the inverse distance between the two ends of a ramp), walk, under and out in cells, out at most 1 (a
+// walk comes to one texel of the map at the least, where a map is coarser than its mesh). Under the near side the far sheet lies on
+// the far side's distance for the cells under and comes up to the near side's ground over one cell more: an eye that looks in
+// further than under has reckoned with sees the fill rise to the ground, and never through the layer. boxes: the parts of the
+// layer its crests are cut in, each [left, top, right, bottom] as shares of the layer's own box (0 to 1, x to the right, y down); a
+// crest outside every box stays the mesh's wall, and so does the part of a crest that leaves a box: there the two sheets close onto
+// the wall over their last cell or two. Left out: the whole layer. at: the crests that are cut, each named by a point on it, [x, y]
+// as shares of the layer's own box: the step that lies within one cell of the point, as far as it runs unbroken (inside the boxes,
+// if there are any). Left out: every step.
+// A stop that names nothing takes every step of the layer, and two things then show from a moved eye: where two crests lie nearer
+// to one another than a few cells the sheets of one get the other's distances and a wall of their own, and where the far
+// sheet under the near side reaches the layer's rim it shows past the rim. So a stop names the crests it has looked at, one by
+// one, and ends one with a box where it runs into another or up to a rim.
+export interface ReliefCrest { layer: string; step: number; walk: number; under: number; out?: number; boxes?: [number, number, number, number][]; at?: [number, number][] }
+
+export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; airLaw?: ReliefAirLaw; valley?: ReliefValley; pitchDeg?: number; apron?: ReliefApron; ridge?: ReliefRidge; crest?: ReliefCrest[] }
 
 export const NOISE_GLSL = /* glsl */ `
 float vhash(vec3 p) {
@@ -321,6 +356,63 @@ export function withEdgeEye(source: string): string {
 // colour can go with the eye as the ground round it does. The mist's own colour and the air do not take it. Built when a relief asks;
 // a relief that never asks keeps the shaders above to the letter.
 const MAIN = 'void main() {'
+
+// The sheets of a crest: the layer's own shaders with the cut. aSheet is 1 on the near sheet, 0 on the far sheet that stands in place
+// of a cell and -1 on the far sheet that lies under a cell the mesh keeps. uCut and uCutBack hold, for a window of the layer's
+// distance map (uCutBox: its corner and its size in texels of the map; uCutMap: the size of the whole map and the texels one step of
+// a byte is), the distance to the cut, the way to the far side's ground and the way to the near side's ground (crestTexels of
+// src/terrain/crest.ts). The distance is taken in pixels of the screen (by its own slope across the pixel), so the cut is as sharp as
+// the lens draws it whatever size a texel has. Two lines, a pixel apart: the far sheet's own paint ends on the cut, soft over the
+// one pixel about it, and the far end's texel comes in there in its place; the near sheet ends a pixel beyond the cut, soft over
+// the one pixel about that line. So wherever the near sheet is not whole the far sheet under it holds the layer's own texel, and
+// wherever the far sheet holds the far end's texel the near sheet over it is whole: from the picture's eye the sheets lie on one
+// another and give the layer's texel back, at the cut as beside it, and nothing of the far end's texel is in the picture. Under
+// a texel that is not opaque the far sheet's part is what the near sheet leaves of it (cutRest), so the layer's matte comes back
+// as well; the far end's texel is put only under a texel that is opaque (CREST_SOLID), there by at most a quarter of that.
+// Whether the near side is ground at all is read from the matte at the near end, all or nothing: where it is not (the map's
+// ground outside the matte), the near sheet draws nothing and the far sheet is the layer's texel whole, so a rim rides with its
+// own ground. The far sheet under a kept cell draws the far end's texel alone. From a moved eye the near sheet carries the pixel
+// of paint beyond the cut with it, and the far sheet has the paint up to the cut. No branch: every read has the derivatives of
+// the layer's own place.
+// How far from opaque a texel may be and still get the far side's ground under it: two steps of a byte. Under a texel that lets more
+// through, the ground of this layer would show where the picture shows what lies behind the layer.
+export const CREST_SOLID = 2 / 255
+const SHEET_IN = 'in vec2 aImage;'
+const SHEET_SET = 'vImage = aImage;'
+const SHEET_AT = 'float texels = diagTexels(uv * uSize);'
+export const SHEET_GLSL = /* glsl */ `
+  vec2 cutAt = vec2(vUv.x, 1.0 - vUv.y) * uCutMap.xy - uCutBox.xy;
+  float cutSoft = texture(uCut, cutAt / uCutBox.zw).r;
+  float cutPx = (cutSoft - 0.5) / max(length(vec2(dFdx(cutSoft), dFdy(cutSoft))), 1e-6);
+  float cutShare = clamp(cutPx + 1.5, 0.0, 1.0);
+  float cutIn = clamp(cutPx + 0.5, 0.0, 1.0);
+  ivec2 cutCell = ivec2(clamp(floor(cutAt), vec2(0.0), uCutBox.zw - 1.0));
+  vec2 cutWay = (texelFetch(uCut, cutCell, 0).gb * 255.0 - 128.0) * uCutMap.z / uCutMap.xy;
+  vec2 cutBack = (texelFetch(uCutBack, cutCell, 0).rg * 255.0 - 128.0) * uCutMap.z / uCutMap.xy;
+  vec2 cutTo = vec2(cutWay.x, -cutWay.y);
+  vec2 cutFrom = vec2(cutBack.x, -cutBack.y);
+  vec4 cutTexel = textureGrad(uColor, uv + cutTo, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad);
+  float cutAlpha = uHasAlpha > 0.5 ? textureGrad(uAlpha, vUv + cutTo, dFdx(vUv) * exp2(uBias), dFdy(vUv) * exp2(uBias)).r : cutTexel.a;
+  float cutGround = step(0.5, uHasAlpha > 0.5 ? textureGrad(uAlpha, vUv + cutFrom, dFdx(vUv) * exp2(uBias), dFdy(vUv) * exp2(uBias)).r : textureGrad(uColor, uv + cutFrom, dFdx(vUv) * uGrad, dFdy(vUv) * uGrad).a);
+  float cutNear = step(0.5, vSheet);
+  float cutUnder = step(vSheet, -0.5);
+  float cutOwn = cutShare * cutGround;
+  float cutPut = cutIn * cutGround;
+  float cutSolid = clamp((alpha - 1.0) / ${CREST_SOLID.toFixed(8)} + 1.0, 0.0, 1.0);
+  float cutFill = (1.0 - cutNear) * cutPut * cutSolid;
+  float cutRest = max((1.0 - cutOwn) / max(1.0 - cutOwn * alpha, 1e-6), (1.0 - cutPut) * cutSolid);
+  float cutMine = alpha * mix(cutRest, cutOwn, cutNear) * (1.0 - cutUnder);
+  float cutLent = cutAlpha * cutFill;
+  alpha = cutMine + cutLent;
+  texel = mix(texel, cutTexel, cutLent / max(alpha, 1e-6));
+`
+
+export function withSheets(source: string): string {
+  if (source.includes('vSheet')) throw new Error('the relief shader has its sheets already')
+  if (source.split(SHEET_IN).length === 2 && source.split(SHEET_SET).length === 2) return source.replace(SHEET_IN, SHEET_IN + '\nin float aSheet;\nout float vSheet;').replace(SHEET_SET, SHEET_SET + '\n  vSheet = aSheet;')
+  if (source.split(IMAGE_IN).length !== 2 || source.split(SHEET_AT).length !== 2) throw new Error('the relief shader has no single place for the sheets of a crest')
+  return source.replace(IMAGE_IN, IMAGE_IN + '\nin float vSheet;\nuniform sampler2D uCut;\nuniform sampler2D uCutBack;\nuniform vec4 uCutBox;\nuniform vec3 uCutMap;').replace(SHEET_AT, SHEET_GLSL.slice(1) + '  ' + SHEET_AT)
+}
 const VIG = 'vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);'
 export const LAW_GLSL = /* glsl */ `
 uniform float uLawFocal;
@@ -381,6 +473,129 @@ export function withEyeScale(source: string): string {
   return source.replace(EYE_OUT, EYE_OUT + '\nuniform float uEyeScale;').replace(EYE, EYE.slice(0, -1) + ' * uEyeScale;')
 }
 
+// The relief under the air law (ReliefMotion.airLaw; the law and its chunk are src/terrain/air.ts). The planet's centre lies straight
+// under the picture's eye, which is the origin of the relief's frame, so a point p of that frame is (p - centre) / radius from the
+// centre in radii, and that is all the law is given. The eye's height is in the eye's place and nowhere else.
+// The layers: their texels hold the picture's far air, so a texel is read as its point seen through the law from the picture's eye and
+// drawn through the law from the present eye (airLawFactorSeen), after the valley's mist. From the picture's eye the factor is 1 at
+// every fragment, so the picture comes back for any numbers. Where the present eye is the nearer one the factor is over 1: the law's
+// floor at black holds, and nothing here cuts what leaves the range upward.
+// The air: with the law the dome draws the law and nothing else, premultiplied: the light times one minus the factor of the whole path
+// from the present eye along the sight line out of the shell, over everything behind it times that factor. A star in the pale band is
+// dim by the same factor. A sight line that enters the ball has the depth of its whole chord, so the band closes under the horizon
+// without a step. The dome's old terms (by the angle, by the clock) are not drawn. The sky's air is drawn once: a set that stands in a
+// scene whose globe draws its own shell under the law gives its own air the share 0 there (presence).
+// The light by height (ReliefAirLaw.knots): each stretch of air shines with the share of its own height, so a path gathers its light
+// stretch by stretch (airLawGather) and the layers take what the present path gathers less the factor times what the picture's path
+// gathered (airLawSeen, airLawHeld); the dome takes what the path out gathers. From the picture's eye the two paths are one path and
+// the picture comes back as before. Without knots no word of this is in a shader: the second chunk (AIR_LAW_KNOTS_GLSL) is not taken.
+// Not asked: the shaders above to the letter.
+export const AIR_LAW_UNIFORMS = /* glsl */ `
+uniform vec4 uAirCentre;
+uniform vec3 uAirLight;
+uniform vec3 uAirNumbers;`
+export const AIR_LAW_KNOT_UNIFORMS = /* glsl */ `
+uniform vec3 uAirHeights;
+uniform vec3 uAirShares;`
+const SOLID = 'if (uDiag >= 2 && alpha < 0.5) discard;'
+// The least step between two knots of the light by height, in radii.
+export const AIR_LAW_KNOT_LEAST = 1e-5
+export const AIR_LAW_LAYER = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  col = airLaw(col, uAirLight * uGain * vig, airLawFactorSeen(airLawDepth((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y), airLawDepth(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y), uAirNumbers.x, uAirNumbers.z));\n  '
+
+export const AIR_LAW_LAYER_KNOTS = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  float airSeen = airLawDepth(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y);\n  float airNow = airLawDepth((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y);\n  col = airLawSeen(col, uAirLight * uGain * vig, airLawFactorSeen(airNow, airSeen, uAirNumbers.x, uAirNumbers.z), vAirShare.x * (1.0 - airLawFactor(airNow, uAirNumbers.x)), airLawHeld(vAirShare.y * (1.0 - airLawFactor(airSeen, uAirNumbers.x)), airSeen, uAirNumbers.x, uAirNumbers.z));\n  '
+
+export function withAirLaw(source: string, knots = false): string {
+  if (source.split(MAIN).length !== 2 || source.split(SOLID).length !== 2 || source.includes('uAirCentre')) throw new Error('the relief shader has no single place for the air law')
+  return source.replace(MAIN, AIR_LAW_UNIFORMS.slice(1) + (knots ? '\n' + AIR_LAW_SHARE_IN : '') + AIR_LAW_GLSL + (knots ? AIR_LAW_KNOTS_GLSL : '') + '\n' + MAIN).replace(SOLID, (knots ? AIR_LAW_LAYER_KNOTS : AIR_LAW_LAYER) + SOLID)
+}
+
+// The layers' vertex shader with the light by height: the share of the light along the present path and along the picture's path
+// (airLawPathShare), taken at the mesh's vertices. The eye's line stays as it is, so the scale of the eye still finds it.
+export const AIR_LAW_SHARE_OUT = 'out vec2 vAirShare;'
+export const AIR_LAW_SHARE_IN = 'in vec2 vAirShare;'
+export const AIR_LAW_SHARE = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  vAirShare = vec2(airLawPathShare((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airLawPathShare(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares));'
+
+export function withAirLawShare(source: string): string {
+  if (source.split(EYE_OUT).length !== 2 || source.split(EYE).length !== 2 || source.includes('uAirCentre')) throw new Error('the relief shader has no single place for the share of the air law')
+  return source.replace(EYE_OUT, EYE_OUT + '\n' + AIR_LAW_SHARE_OUT + AIR_LAW_UNIFORMS + AIR_LAW_KNOT_UNIFORMS + AIR_LAW_GLSL + AIR_LAW_KNOTS_GLSL).replace(EYE, EYE + '\n  ' + AIR_LAW_SHARE)
+}
+
+export const AIR_LAW_VERT = AIR_VERT.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vAirEye;\nuniform float uAirEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vAirEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uAirEyeScale;')
+
+export const AIR_LAW_FRAG = /* glsl */ `
+precision highp float;${AIR_LAW_UNIFORMS}
+uniform float uGain;
+uniform float uVignette;
+uniform float uAspect;
+uniform int uDiag;
+in vec3 vDir;
+in vec3 vClip;
+in vec3 vAirEye;
+out vec4 outColor;${AIR_LAW_GLSL}
+void main() {
+  if (uDiag >= 2) discard;
+  vec3 d = normalize(vDir);
+  float cut = 1.0 - airLawFactor(airLawDepthOut((vAirEye - uAirCentre.xyz) * uAirCentre.w, d, uAirNumbers.y), uAirNumbers.x);
+  vec3 glow = uAirLight * cut;
+  vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
+  outColor = vec4(glow * uGain * vig, cut);
+}`
+
+// The dome with the light by height: the light times what the whole path out gathers; the cover is the same.
+const AIR_LAW_GLOW = 'vec3 glow = uAirLight * cut;'
+export const AIR_LAW_FRAG_KNOTS = AIR_LAW_FRAG.replace(AIR_LAW_UNIFORMS, AIR_LAW_UNIFORMS + AIR_LAW_KNOT_UNIFORMS).replace(AIR_LAW_GLSL, AIR_LAW_GLSL + AIR_LAW_KNOTS_GLSL).replace(AIR_LAW_GLOW, 'vec3 glow = uAirLight * airLawGatherOut((vAirEye - uAirCentre.xyz) * uAirCentre.w, d, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares);')
+
+// The knots of a relief's air law as the chunk takes them: three heights in radii over the datum and three shares. Two knots are given
+// a third one step higher with the upper share. null where the law has one light at every height.
+export function airLawKnots(law: ReliefAirLaw): { heights: AirKnots; shares: AirKnots } | null {
+  const knots = law.knots
+  if (knots === undefined) return null
+  const good = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
+  const bad = (): Error => new Error('the knots of the air law of a relief are two or three [height, share] with rising heights and shares of 0 or more, not ' + JSON.stringify(knots))
+  if (!(Array.isArray(knots) && (knots.length === 2 || knots.length === 3) && knots.every((k) => Array.isArray(k) && k.length === 2 && good(k[0]) && good(k[1]) && k[1] >= 0))) throw bad()
+  const h = knots.map((k) => k[0] / law.radius)
+  const v = knots.map((k) => k[1])
+  for (let i = 1; i < h.length; i++) if (!(h[i]! - h[i - 1]! >= AIR_LAW_KNOT_LEAST)) throw bad()
+  if (h.length === 2) {
+    h.push(h[1]! + (h[1]! - h[0]!))
+    v.push(v[1]!)
+  }
+  return { heights: [h[0]!, h[1]!, h[2]!], shares: [v[0]!, v[1]!, v[2]!] }
+}
+
+// The planet's centre in the relief's frame and one over its radius: what the shader's uAirCentre holds.
+export function airLawCentre(law: ReliefAirLaw, pitchDeg: number): [number, number, number, number] {
+  const far = -(law.radius + law.eyeHeight)
+  const pitch = THREE.MathUtils.degToRad(pitchDeg)
+  return [0, far * Math.cos(pitch), far * Math.sin(pitch), 1 / law.radius]
+}
+
+// A point of the relief's frame as the law takes it: from the planet's centre, in radii. The shader's own line, for the tests and for
+// whoever fits the law's numbers against a picture.
+export function airLawPoint(p: readonly [number, number, number], law: ReliefAirLaw, pitchDeg: number): [number, number, number] {
+  const c = airLawCentre(law, pitchDeg)
+  return [(p[0] - c[0]) * c[3], (p[1] - c[1]) * c[3], (p[2] - c[2]) * c[3]]
+}
+
+function airLawUniforms(law: ReliefAirLaw, pitchDeg: number): Record<string, THREE.IUniform> {
+  const good = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
+  if (!(Array.isArray(law.light) && law.light.length === 3 && law.light.every((v) => good(v) && v >= 0))) throw new Error('the light of the air law of a relief is three numbers of 0 or more, not ' + JSON.stringify(law.light))
+  if (!(good(law.density) && law.density >= 0)) throw new Error('the density of the air law of a relief is a number of 0 or more, not ' + law.density)
+  if (!(good(law.scaleHeight) && law.scaleHeight >= AIR_LAW_SCALE_HEIGHT[0] && law.scaleHeight <= AIR_LAW_SCALE_HEIGHT[1])) throw new Error('the scale height of the air law of a relief is ' + AIR_LAW_SCALE_HEIGHT[0] + ' to ' + AIR_LAW_SCALE_HEIGHT[1] + ' radii, not ' + law.scaleHeight)
+  if (!(good(law.radius) && law.radius > 0)) throw new Error('the radius of the air law of a relief is a length over 0 in the unit of the relief, not ' + law.radius)
+  if (!good(law.eyeHeight)) throw new Error('the eye height of the air law of a relief is a length in the unit of the relief, not ' + law.eyeHeight)
+  const least = law.least ?? 0
+  if (!(good(least) && least >= 0 && least <= 1)) throw new Error('the least of the air law of a relief is a share from 0 to 1, not ' + law.least)
+  const knots = airLawKnots(law)
+  return {
+    uAirCentre: { value: new THREE.Vector4().fromArray(airLawCentre(law, pitchDeg)) },
+    uAirLight: { value: new THREE.Vector3().fromArray(law.light) },
+    uAirNumbers: { value: new THREE.Vector3(law.density, law.scaleHeight, least) },
+    ...(knots ? { uAirHeights: { value: new THREE.Vector3().fromArray(knots.heights) }, uAirShares: { value: new THREE.Vector3().fromArray(knots.shares) } } : {}),
+  }
+}
+
 interface Grid {
   cols: number
   rows: number
@@ -409,7 +624,16 @@ interface Grid {
   image: Float32Array
 }
 
-interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial; grid: Grid }
+// sheets: the sheets of the layer's crests, one mesh that is drawn after the layer's own (the far sheet's cells first in its index,
+// those in place of a cell and those under a kept cell, then the near sheet's), with the layer's shaders and the cut, on the layer's
+// own uniforms. far, under and near count the cells of each. Null for a layer no crest names.
+interface Sheets { mesh: THREE.Mesh; material: THREE.ShaderMaterial; cut: THREE.DataTexture; back: THREE.DataTexture; far: number; under: number; near: number }
+interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial; grid: Grid; sheets: Sheets | null }
+
+// The programs of a layer: its own and, where it has crests, the one of its sheets.
+function skins(l: Layer): THREE.ShaderMaterial[] {
+  return l.sheets ? [l.material, l.sheets.material] : [l.material]
+}
 
 const scratch = new THREE.Matrix4()
 
@@ -453,7 +677,7 @@ export class Relief {
   }
 
   owns(o: THREE.Object3D): boolean {
-    return this.layers.some((l) => l.mesh === o)
+    return this.layers.some((l) => l.mesh === o || l.sheets?.mesh === o)
   }
 
   private ready(renderer: THREE.WebGLRenderer): boolean {
@@ -646,7 +870,7 @@ export class Relief {
     if (air !== undefined && !(air >= 0 && air <= 1)) throw new Error('the presence of the air of a relief is a share from 0 to 1, not ' + air)
     if (!this.fades) {
       this.fades = true
-      const parts: [THREE.ShaderMaterial, string][] = this.layers.map((l) => [l.material, LIT])
+      const parts: [THREE.ShaderMaterial, string][] = this.layers.flatMap((l) => skins(l).map((m): [THREE.ShaderMaterial, string] => [m, LIT]))
       if (this.air) parts.push([this.air.material, AIR_LIT])
       for (const [material, lit] of parts) {
         material.fragmentShader = withPresence(material.fragmentShader, lit)
@@ -687,11 +911,11 @@ export class Relief {
       this.edgeAir = options.air !== false
       const th = Math.tan(rad(this.def.vfovDeg) / 2)
       this.edgeFar.value.set(this.far, 1 / (th * W / H), 1 / th)
-      for (const l of this.layers) {
-        l.material.fragmentShader = withEdge(l.material.fragmentShader, LIT)
-        l.material.uniforms.uEdgeSide = this.edgeSide
-        l.material.uniforms.uEdgeOver = this.edgeOver
-        l.material.needsUpdate = true
+      for (const material of this.layers.flatMap(skins)) {
+        material.fragmentShader = withEdge(material.fragmentShader, LIT)
+        material.uniforms.uEdgeSide = this.edgeSide
+        material.uniforms.uEdgeOver = this.edgeOver
+        material.needsUpdate = true
       }
       if (this.air && this.edgeAir) {
         const m = this.air.material
@@ -739,12 +963,12 @@ export class Relief {
     for (const name of given) if (!names.includes(name)) throw new Error('the set gives the law of a relief ' + name + ', which its text does not declare')
     this.lawed = true
     this.lawWhole = options.whole ?? null
-    for (const l of this.layers) {
-      l.material.fragmentShader = withLaw(l.material.fragmentShader, text, tone)
-      for (const name of names) l.material.uniforms[name] = uniforms[name]!
-      l.material.uniforms.uLawFocal = this.lawFocal
-      l.material.uniforms.uLawFrame = this.lawFrame
-      l.material.needsUpdate = true
+    for (const material of this.layers.flatMap(skins)) {
+      material.fragmentShader = withLaw(material.fragmentShader, text, tone)
+      for (const name of names) material.uniforms[name] = uniforms[name]!
+      material.uniforms.uLawFocal = this.lawFocal
+      material.uniforms.uLawFrame = this.lawFrame
+      material.needsUpdate = true
     }
   }
 
@@ -754,7 +978,30 @@ export class Relief {
     const masks = await ctx.texture(base + def.masks, { srgb: false, mips: false })
     const th = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2)
     const aspect = W / H
-    const a = motion.air
+    const law = motion.airLaw ? airLawUniforms(motion.airLaw, motion.pitchDeg ?? 0) : null
+    const a = law ? undefined : motion.air
+    if (law) {
+      const material = new THREE.ShaderMaterial({
+        glslVersion: THREE.GLSL3,
+        vertexShader: AIR_LAW_VERT,
+        fragmentShader: law.uAirHeights ? AIR_LAW_FRAG_KNOTS : AIR_LAW_FRAG,
+        uniforms: { ...law, uAirEyeScale: r.eyeScale, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform },
+        transparent: true,
+        blending: THREE.CustomBlending,
+        blendSrc: THREE.OneFactor,
+        blendDst: THREE.OneMinusSrcAlphaFactor,
+        blendSrcAlpha: THREE.OneFactor,
+        blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+        side: THREE.BackSide,
+        depthTest: false,
+        depthWrite: false,
+      })
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 48), material)
+      mesh.frustumCulled = false
+      mesh.renderOrder = -1
+      r.group.add(mesh)
+      r.air = { mesh, material }
+    }
     if (a) {
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3,
@@ -795,6 +1042,7 @@ export class Relief {
       const nx = Math.max(2, Math.round(bw >= bh ? motion.mesh : (motion.mesh * bw) / bh))
       const ny = Math.max(2, Math.round(bw >= bh ? (motion.mesh * bh) / bw : motion.mesh))
       const apron = motion.apron?.layers.find((a) => l.color === `relief-${a.layer}-color.jpg`)
+      const crest = motion.crest?.find((c) => l.color === `relief-${c.layer}-color.jpg`)
       const ridge = l.color === `relief-${motion.ridge?.layer}-color.jpg` ? motion.ridge : undefined
       const apronScale = W / (motion.apron?.fullWidth ?? W)
       const apronResolution = motion.apron?.resolution[apronScale === 1 ? 'full' : 'web'] ?? 1
@@ -829,13 +1077,17 @@ export class Relief {
         const d = data[(iy + 1) * width + ix + 1]!
         return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + d * tx) * ty
       }
+      const ridgeWeight = (fx: number, fy: number): number => {
+        if (!ridge) return 0
+        const y = (y0 + fy * bh) / H - ridge.center[1]!
+        const x = (x0 + fx * bw) / W - ridge.center[0]! - ridge.slope * y
+        return 1 - THREE.MathUtils.smoothstep(Math.hypot(x / ridge.radius[0]!, y / ridge.radius[1]!), ridge.core, 1)
+      }
       const distance = (fx: number, fy: number): number => {
         if (!apronDist || (fx >= 0 && fx <= 1 && fy <= 1)) {
           const d = sample(dist, dw, dh, fx * dw, fy * dh)
           if (!ridge) return d
-          const y = (y0 + fy * bh) / H - ridge.center[1]!
-          const x = (x0 + fx * bw) / W - ridge.center[0]! - ridge.slope * y
-          const weight = 1 - THREE.MathUtils.smoothstep(Math.hypot(x / ridge.radius[0]!, y / ridge.radius[1]!), ridge.core, 1)
+          const weight = ridgeWeight(fx, fy)
           if (!weight) return d
           const mid = (ridge.taps.length - 1) / 2
           let sum = 0
@@ -902,9 +1154,10 @@ export class Relief {
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3,
         ...(apronTexture ? { defines: { RELIEF_APRON: 1 } } : {}),
-        vertexShader: VERT,
-        fragmentShader: FRAG,
+        vertexShader: law?.uAirHeights ? withAirLawShare(VERT) : VERT,
+        fragmentShader: law ? withAirLaw(FRAG, !!law.uAirHeights) : FRAG,
         uniforms: {
+          ...(law ?? {}),
           ...(apron && apronTexture && apronSize ? {
             uApron: { value: apronTexture }, uApronSize: { value: new THREE.Vector2(apronSize.width / apronResolution, apronSize.height / apronResolution) },
             uApronEdges: { value: new THREE.Vector4(left, right, bottom, pad) },
@@ -931,6 +1184,140 @@ export class Relief {
       mesh.frustumCulled = false
       mesh.renderOrder = k
       r.group.add(mesh)
+      let sheets: Sheets | null = null
+      if (crest) {
+        // The cells of the layer's steps leave the mesh (three times one vertex is no triangle, so they draw nothing and mark nothing in
+        // the shield) and come back as the two sheets. A sheet's vertex is the mesh's own vertex with the distance of the sheet's side,
+        // read with the mesh's own sampler: where the texels round a vertex lie on one side, that side's sheet has the mesh's vertex to
+        // the bit. A cell the ridge has a hand in keeps its place in the mesh. Round the cells that have a far sheet lies a ring of
+        // one cell (crestRing) that keeps the mesh's own cell too: over it the far sheet comes up from where it lies under the near
+        // side to the ground, so what is under the near side is shut all round.
+        const cell = Math.max(dw / nx, dh / ny)
+        const numbers: CrestNumbers = { step: crest.step, walk: Math.max(1, crest.walk * cell), under: crest.under * cell, out: (crest.out ?? 0) * cell, ...(crest.boxes ? { boxes: crest.boxes.map((q): [number, number, number, number] => [q[0] * dw, q[1] * dh, q[2] * dw, q[3] * dh]) } : {}), ...(crest.at ? { at: crest.at.map((q): [number, number] => [q[0] * dw, q[1] * dh]) } : {}) }
+        const field = crestField(dist, dw, dh, cell, numbers)
+        const kinds = crestRing(crestCells(field, nx, ny, numbers.out), nx, ny)
+        if (ridge) {
+          for (let cj = 0; cj < ny; cj++) {
+            for (let bi = 0; bi < nx; bi++) {
+              if (kinds[cj * nx + bi] && (ridgeWeight(bi / nx, cj / ny) || ridgeWeight((bi + 1) / nx, cj / ny) || ridgeWeight(bi / nx, (cj + 1) / ny) || ridgeWeight((bi + 1) / nx, (cj + 1) / ny))) kinds[cj * nx + bi] = 0
+            }
+          }
+        }
+        const ends = crestEnds(field, kinds, nx, ny)
+        const rim = crestRim(kinds, nx, ny)
+        const sp: number[] = []
+        const su: number[] = []
+        const si: number[] = []
+        const ss: number[] = []
+        const sx: number[] = []
+        // The three sheets share no vertex: -1 the far sheet under a kept cell, 0 the far sheet in place of a cell, 1 the near sheet.
+        const made = [new Map<number, number>(), new Map<number, number>(), new Map<number, number>()]
+        const vertex = (sheet: number, bi: number, cj: number): number => {
+          const key = cj * (nx + 1) + bi
+          const have = made[sheet + 1]!.get(key)
+          if (have !== undefined) return have
+          const fx = bi / nx
+          const fy = cj / ny
+          const ix = (x0 + fx * bw) / W
+          const iy = (y0 + fy * bh) / H
+          const dir = new THREE.Vector3((2 * ix - 1) * th * aspect, (1 - 2 * iy) * th, -1).normalize()
+          // Where the sheets end against the mesh's wall (crestEnds) they take the mesh's own vertex, and so does the far sheet
+          // where it ends (crestRim). The far sheet under a cell the mesh keeps lies behind that cell's own vertex everywhere, so
+          // its fill never stands in the mesh's own surface.
+          const own = distance(fx, fy)
+          const shut = ends[key] === 1 || (sheet !== 1 && rim[key] === 1)
+          const side = shut ? own : sample(sheet === 1 ? field.near : field.far, dw, dh, fx * dw, fy * dh)
+          const dd = sheet === -1 ? Math.max(side, own * (1 + CREST_BEHIND)) : side
+          const n = ss.length
+          sp.push(dir.x * dd, dir.y * dd, dir.z * dd)
+          su.push(fx, 1 - fy)
+          si.push(ix, iy)
+          ss.push(sheet)
+          made[sheet + 1]!.set(key, n)
+          return n
+        }
+        let x0c = dw
+        let x1c = 0
+        let y0c = dh
+        let y1c = 0
+        const counts = [0, 0, 0]
+        for (const pass of [0, 1]) {
+          for (let cj = 0; cj < ny; cj++) {
+            for (let bi = 0; bi < nx; bi++) {
+              const kind = kinds[cj * nx + bi]!
+              if (kind === 0 || (pass === 1 && kind !== 1)) continue
+              const sheet = pass === 1 ? 1 : kind === 1 ? 0 : -1
+              const a = vertex(sheet, bi, cj)
+              const b = vertex(sheet, bi + 1, cj)
+              const c = vertex(sheet, bi, cj + 1)
+              const d = vertex(sheet, bi + 1, cj + 1)
+              sx.push(a, c, b, b, c, d)
+              counts[sheet + 1]!++
+              x0c = Math.min(x0c, Math.floor((bi * dw) / nx) - 2)
+              x1c = Math.max(x1c, Math.ceil(((bi + 1) * dw) / nx) + 2)
+              y0c = Math.min(y0c, Math.floor((cj * dh) / ny) - 2)
+              y1c = Math.max(y1c, Math.ceil(((cj + 1) * dh) / ny) + 2)
+              if (pass === 1) {
+                const at = (cj * (cols - 1) + bi + nl) * 6
+                index.fill(index[at]!, at, at + 6)
+              }
+            }
+          }
+        }
+        if (counts[2]! > 0) {
+          x0c = Math.max(0, x0c)
+          y0c = Math.max(0, y0c)
+          const cw = Math.min(dw, x1c) - x0c
+          const ch = Math.min(dh, y1c) - y0c
+          const whole = crestTexels(field)
+          const windowOf = (all: Uint8Array, smooth: boolean): THREE.DataTexture => {
+            const window = new Uint8Array(cw * ch * 4)
+            for (let y = 0; y < ch; y++) window.set(all.subarray(((y0c + y) * dw + x0c) * 4, ((y0c + y) * dw + x0c + cw) * 4), y * cw * 4)
+            const t = new THREE.DataTexture(window, cw, ch, THREE.RGBAFormat, THREE.UnsignedByteType)
+            t.magFilter = smooth ? THREE.LinearFilter : THREE.NearestFilter
+            t.minFilter = smooth ? THREE.LinearFilter : THREE.NearestFilter
+            t.generateMipmaps = false
+            t.needsUpdate = true
+            return t
+          }
+          const cut = windowOf(whole.cut, true)
+          const back = windowOf(whole.back, false)
+          material.uniforms.uCut = { value: cut }
+          material.uniforms.uCutBack = { value: back }
+          material.uniforms.uCutBox = { value: new THREE.Vector4(x0c, y0c, cw, ch) }
+          material.uniforms.uCutMap = { value: new THREE.Vector3(dw, dh, field.reach / 127) }
+          const sheetGeo = new THREE.BufferGeometry()
+          sheetGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(sp), 3))
+          sheetGeo.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(su), 2))
+          sheetGeo.setAttribute('aImage', new THREE.BufferAttribute(new Float32Array(si), 2))
+          sheetGeo.setAttribute('aSheet', new THREE.BufferAttribute(new Float32Array(ss), 1))
+          sheetGeo.setIndex(new THREE.BufferAttribute(new Uint32Array(sx), 1))
+          const sheetMaterial = new THREE.ShaderMaterial({
+            glslVersion: THREE.GLSL3,
+            ...(apronTexture ? { defines: { RELIEF_APRON: 1 } } : {}),
+            vertexShader: withSheets(material.vertexShader),
+            fragmentShader: withSheets(material.fragmentShader),
+            uniforms: material.uniforms,
+            transparent: true,
+            blending: THREE.CustomBlending,
+            blendSrc: THREE.OneFactor,
+            blendDst: THREE.OneMinusSrcAlphaFactor,
+            blendSrcAlpha: THREE.OneFactor,
+            blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+            side: THREE.DoubleSide,
+            depthTest: true,
+            depthWrite: true,
+          })
+          const sheetMesh = new THREE.Mesh(sheetGeo, sheetMaterial)
+          sheetMesh.frustumCulled = false
+          // After the layer's own mesh and before the next layer's: the renderer sorts the meshes of one render order by the depth
+          // of the middle of their bounds, which is the mesh's first from one eye and the sheets' from another, and a sheet drawn
+          // before the mesh shuts the mesh out behind the soft edge of its paint.
+          sheetMesh.renderOrder = k + 0.5
+          r.group.add(sheetMesh)
+          sheets = { mesh: sheetMesh, material: sheetMaterial, cut, back, far: counts[1]!, under: counts[0]!, near: counts[2]! }
+        }
+      }
       const part = (): THREE.BufferGeometry => {
         const copy = new THREE.BufferGeometry()
         for (const name of ['position', 'uv', 'aImage']) copy.setAttribute(name, geo.getAttribute(name))
@@ -950,7 +1337,7 @@ export class Relief {
         r.probes.add(m)
       }
       const cellCount = (cols - 1) * (rows - 1)
-      r.layers.push({ mesh, material, grid: {
+      r.layers.push({ mesh, material, sheets, grid: {
         cols, rows, left: nl, nx, ny, position, index, alpha, one: new Uint8Array(0), zero: new Uint8Array(0), du: 1, dv: 1, full: geo, lean: part(), probe, veil,
         sx: new Float64Array(cols * rows), sy: new Float64Array(cols * rows), cells: new Uint32Array(cellCount), solid: new Uint8Array(cellCount), box: new Int16Array(cellCount * 4), kept: 0, inside: null, image,
       } })
@@ -967,10 +1354,10 @@ export class Relief {
     const plain = Math.abs(s2 - 1) < EYE_PLAIN
     if (!plain && !this.scaled) {
       this.scaled = true
-      for (const l of this.layers) {
-        l.material.vertexShader = withEyeScale(l.material.vertexShader)
-        l.material.uniforms.uEyeScale = this.eyeScale
-        l.material.needsUpdate = true
+      for (const material of this.layers.flatMap(skins)) {
+        material.vertexShader = withEyeScale(material.vertexShader)
+        material.uniforms.uEyeScale = this.eyeScale
+        material.needsUpdate = true
       }
     }
     this.eyeScale.value = plain ? 1 : 1 / s2
@@ -983,7 +1370,7 @@ export class Relief {
     if (this.air) {
       const u = this.air.material.uniforms
       const f = m.air?.drift
-      if (f) (u.uDrift!.value as THREE.Vector4).set(f[0], f[1], f[2] * dt + 40, f[3])
+      if (f && u.uDrift) (u.uDrift.value as THREE.Vector4).set(f[0], f[1], f[2] * dt + 40, f[3])
       u.uGain!.value = gain
       u.uVignette!.value = vignette
       u.uAspect!.value = view.format.width / view.format.height
@@ -1019,6 +1406,12 @@ export class Relief {
       l.grid.probe.geometry.dispose()
       ;(l.grid.probe.material as THREE.Material[])[1]!.dispose()
       l.material.dispose()
+      if (l.sheets) {
+        l.sheets.mesh.geometry.dispose()
+        l.sheets.material.dispose()
+        l.sheets.cut.dispose()
+        l.sheets.back.dispose()
+      }
     }
   }
 }

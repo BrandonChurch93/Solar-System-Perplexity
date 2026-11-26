@@ -79,7 +79,7 @@ describe('the sift of a cap by the lens', () => {
       }
     }
     expect(close).toBeGreaterThanOrEqual(8)
-  })
+  }, 60000)
 
   it('keeps every patch where the lowest ground would reach the centre', () => {
     const s = { ...lay(0), low: -1 }

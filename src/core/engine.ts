@@ -12,7 +12,7 @@ import { captureFrames, captureRate, shutterSeconds, spanMid, wholeFrame } from 
 import { samplesFor, type Sample } from './sampler'
 import { SetLoader } from './sets'
 import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
-import { floorRing, sharedSkyWeight } from './skyfloor'
+import { floorRing, ownSkyDrawn, ownSkyWeight, sharedSkyWeight } from './skyfloor'
 import { Place, placeCamera, placeLayout, type PlaceMode, type PlacePicture } from './place'
 import { gradUniform, isRaw, setDiag, setFine, setSamples, setWay, type Way } from '../diagnostics/diag'
 import { applyProbe, parseProbe, type Probe } from '../diagnostics/probe'
@@ -22,7 +22,7 @@ import { Dust } from '../space/dust'
 import { Sky } from '../space/sky'
 import { implicitUniform } from './texel'
 import { setFrame, setPass } from './frame'
-import type { SkyAims } from '../space/aim'
+import { STAR_LEVEL, starShare, type SkyAims } from '../space/aim'
 import { Cover, coverReaches } from '../terrain/cover'
 import type { Relief } from '../terrain/relief'
 import type { Trim } from '../bodies/trim'
@@ -55,6 +55,7 @@ export class Engine {
   private asked_ = 'beauty'
   private probe: Probe = parseProbe('beauty')
   director: Director | null = null
+  subs: ((frame: number) => void) | null = null
   private readonly place = new Place()
   private readonly over = new THREE.Scene()
   private readonly camera = new THREE.PerspectiveCamera(30, 16 / 9, 0.01, 1000)
@@ -287,6 +288,7 @@ export class Engine {
     this.way = null
     applyProbe(null)
     this.post.render(this.renderer, this.accumulator.texture, mid.post, f, probe.view, samples.length > 1)
+    this.subs?.(f)
     this.lastShot = mid
     this.sampleCount = samples.length
     this.flush()
@@ -302,6 +304,7 @@ export class Engine {
     this.renderSample(shot, shot, ONE_SAMPLE, 0, 1)
     this.accumulator.add(this.renderer, this.sampleTarget.texture, 1)
     this.post.render(this.renderer, this.accumulator.texture, shot.post, shot.frame, this.probe.view)
+    this.subs?.(shot.frame)
     this.lastShot = shot
     this.sampleCount = 1
   }
@@ -356,6 +359,8 @@ export class Engine {
       const share = shot.skyShare ?? 0
       const high = shot.skyShareHigh
       const shared = share > 0 || high !== undefined
+      const plate = mid.skyPlate
+      let hid = !plate?.turning
       for (const state of shot.sets) {
         for (const patch of this.sets.get(state.id)?.sky ?? []) {
           const kind = shot.segment.kind
@@ -364,17 +369,19 @@ export class Engine {
             const w = sharedSkyWeight(patch.view, state.view, kind, share, high)
             weight = w > 0 ? w * (patch.weight ? patch.weight(shot.time, patch.view === 'terrain' ? 'terrain' : state.view) : 1) : 0
           } else {
-            if (patch.view !== state.view) continue
+            if (!ownSkyDrawn(patch.view, state.view, kind, patch.both)) continue
             const arriving = kind === 'travel' && state.id !== shot.segment.stop
-            const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+            const base = ownSkyWeight(kind, state.view, arriving, shot.segment.stop === config.endingId, shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8), patch.arrive, patch.both)
             weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
           }
           if (weight <= 0) continue
-          const aim = aims?.patches[state.id]?.[patch.view]
+          const aim = (plate && patch.view === 'terrain' && state.id === shot.segment.stop ? plate.aim : undefined) ?? aims?.patches[state.id]?.[patch.view]
           if (aim) patch.aim.copy(aim)
+          if (!hid && aims && patch.view === 'terrain' && state.view === 'terrain') hid = starShare(patch, weight, mid, aims.frame, width / height) <= STAR_LEVEL
           this.skyPatches.push({ patch: share > 0 && shot.skyFloor && patch.view === 'terrain' ? this.floored(patch, shot.skyFloor) : patch, weight })
         }
       }
+      if (!hid) throw new Error(shot.segment.stop + ': the stars turn between two sky aims in a sample where the surface plate does not hide them')
       if (shared && this.skyPatches.length > 1) this.skyPatches.sort((a, b) => (a.patch.view === 'terrain' ? 0 : 1) - (b.patch.view === 'terrain' ? 0 : 1))
       if (aims) this.sky.setFrame(aims.frame)
       this.sky.setPatches(this.skyPatches)
@@ -390,7 +397,7 @@ export class Engine {
       const glare = this.director?.glareOf?.(mid)
       const sun = glare ? { ...shot.sun, dir: glare } : shot.sun
       this.sky.setTerrain(shot.skyShare === undefined ? null : shot.skyGlow < 1 ? shot.skyShare : 0)
-      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open)
+      this.sky.render(r, this.sampleTarget, cam, mid.skyQuaternion, shot.skyExposure, shot.skyGlow, mid.skyTurn, height, sun, shot.post.vignette, width / height, open, shot.skyQuaternion)
       if (shot.dust > 0) this.dust.render(r, this.sampleTarget, this.director!, shot, base, sun)
       cam.fov = shot.camera.vfov
       cam.updateProjectionMatrix()

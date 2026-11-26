@@ -1,4 +1,4 @@
-export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null; patternMapAlone?: number | null; patternMapMoves?: number | null; patternMapMoved?: number | null; patternMapBound?: number | null }
+export interface Read { k: number; pattern: number | null; patternMap?: number | null; patternMapNo?: string | null; patternMapBody?: number | null; patternMapRefused?: number | null; patternMapSky?: number | null; patternMapSkyFar?: number | null; patternMapAlone?: number | null; patternMapMoves?: number | null; patternMapMoved?: number | null; patternMapBound?: number | null; patternTorn?: number | null; patternTornPx?: number | null; patternTornTrue?: number | null }
 
 export const NOT_CARRIED = 'the range does not carry the pattern'
 
@@ -12,6 +12,16 @@ export const moving = (row: Read): boolean => (row.patternMapMoves ?? null) !== 
 // The picture's own way along the flows parts from the map on a moving body (patternMapMoved) by more than its drawer names: more than the
 // surface's own motion is in it.
 export const outrun = (row: Read): boolean => moving(row) && (row.patternMapMoved ?? null) !== null && row.patternMapMoved! > row.patternMapMoves!
+
+export const TORN_SHARE = 0.5
+
+// The number of the row sits where the chain of flows is torn: on that share or more of the pixels that set it the chain parts from the
+// camera's map by more than half the pattern's wide window (patternTorn). The row is counted as before; the mark only says what its number is made of.
+export const torn = (row: Read): boolean => (row.patternTorn ?? null) !== null && row.patternTorn! >= TORN_SHARE
+
+export const tornBy = (row: Read, px: number): string => (!torn(row) ? '' : '; where that number sits the chain is torn: on ' + row.patternTorn!.toFixed(2) + ' of the pixels that set it the chain parts from the camera\'s map by more than ' + px + ' px (median ' + row.patternTornPx!.toFixed(1) + ' px), and the true carry reads ' + ((row.patternTornTrue ?? null) === null ? 'nothing' : 'at most ' + row.patternTornTrue!.toFixed(2)) + ' there')
+
+export const TORN_LINE = (px: number): string => 'TORN before a pattern: the number of that row sits where the chain of flows is torn. On ' + TORN_SHARE + ' or more of the pixels that set it (those at or over its 99th percentile) the place the chain gives a pixel in the other frame lies more than ' + px + ' px (half the pattern\'s wide window) from the place the camera\'s map gives it. The row is counted as it was: a torn row over the limit stays over it, and nothing is left out of what is judged.'
 
 export const NOT_FOLLOWED = 'the picture\'s own flow is not measured on a body whose surface moves by itself'
 
@@ -39,10 +49,88 @@ export const flowJudges = (row: Read): boolean => !worded(row) || byFlow(row) ||
 // row read without the map (the flag off) keeps main's words as they are.
 export const FULL = { softPx: 1, settlePx: 8, edge: 4 }
 
-export const carriedFull = (scale: number): string[] => [
-  'Read with --carry-full. What is left of a frame in the next, the pop, the pop of one block and the change in place take the later frame onto the first at the full size and reduce after: both frames through the same filter of ' + FULL.softPx + ' px, the way of the flows taken to the full size and set right once by the flow at half the full size, smoothed over ' + FULL.settlePx + ' px, then both reduced the same way. Carried at the reduced size, a picture that only slides by a part of a pixel leaves a difference that is the reader\'s and not the film\'s (a reduced picture is not the reduced picture of the same ground a part of a pixel on); carried so, it leaves nothing. Not counted in what is left: the outermost ' + 1 / scale + ' px of either frame and what arrives within ' + FULL.edge / scale + ' px of the edge from farther inside, where the picture enters. The pattern keeps its own carry.',
+const fullLaw = (scale: number): string[] => [
+  'What is left of a frame in the next, the pop, the pop of one block and the change in place take the later frame onto the first at the full size and reduce after: both frames through the same filter of ' + FULL.softPx + ' px, the way of the flows taken to the full size and set right once by the flow at half the full size, smoothed over ' + FULL.settlePx + ' px, then both reduced the same way. Carried at the reduced size, a picture that only slides by a part of a pixel leaves a difference that is the reader\'s and not the film\'s (a reduced picture is not the reduced picture of the same ground a part of a pixel on); carried so, it leaves nothing. Not counted in what is left: the outermost ' + 1 / scale + ' px of either frame and what arrives within ' + FULL.edge / scale + ' px of the edge from farther inside, where the picture enters. The pattern keeps its own carry.',
   'The limits are the config\'s, and they were set while the reader counted its own resampling into every median: a pop is read against a smaller median here, so it stands higher where the film changes and lower where only the slide changed.',
 ]
+
+export const carriedFull = (scale: number): string[] => fullLaw(scale).map((line, i) => (i === 0 ? 'Read with --carry-full. ' + line : line))
+
+export const besideFull = (scale: number): string[] => [
+  'The same frames and the same flows read a second time, beside the reader above. ' + fullLaw(scale)[0]!,
+  fullLaw(scale)[1]!,
+  'The level step and the pattern are one reading and stand in both. The reader above is the one that counts: its lines in red make the verdict and the exit code. The lines in red here make the verdict beside it.',
+]
+
+export const GROUND = { named: 1.3, insidePx: 20, near: 2, share: 0.02, blurPx: 20 }
+
+export const groundLaw = (floor: number): string => 'The ground pop stands beside these and has no limit: it makes no verdict and no exit code; ' + GROUND.named + ' is named as the limit to come. It is what is left of a frame in the next on every pixel of the ground both frames show, with the carry at the full size, over the median of the same count in the ' + GROUND.near + ' rows before and the ' + GROUND.near + ' after (floor ' + floor + '). The ground is the globe by the pose record, flattened as the stop draws it, ' + GROUND.insidePx + ' px inside its edge, the rings and what they cover left out; without a pose record it is the frame. A row is not read with fewer than ' + GROUND.near + ' such rows in its run of frames or with ground on less than ' + GROUND.share + ' of the frame; every row not read is named by its frame with why, and says nothing of that frame. Its place is where the row has most more than those rows at the same pixel, smoothed over ' + GROUND.blurPx + ' px; its patch is what stays over half of that round the place.'
+
+export interface GroundMost { k: number; frame: number; value: number; at: [number, number] | null; size: [number, number] | null; over: number; rows: number }
+
+export function groundOf(rows: { k: number; frame: number; groundPop?: number | null; groundAt?: [number, number] | null; groundSize?: [number, number] | null }[]): GroundMost | null {
+  const read = rows.filter((x) => (x.groundPop ?? null) !== null)
+  if (read.length === 0) return null
+  const top = read.reduce((a, b) => (b.groundPop! > a.groundPop! ? b : a))
+  return { k: top.k, frame: top.frame, value: top.groundPop!, at: top.groundAt ?? null, size: top.groundSize ?? null, over: read.filter((x) => x.groundPop! > GROUND.named).length, rows: read.length }
+}
+
+export const GROUND_NOT = 'It is not the line "The ground beside it" of the pictures: that line gives the change in place and the pattern on the surface view before a rise or after a dive, this number is read on the globe\'s ground through the move itself.'
+
+export const FULL_PANEL = 'The largest pops with the carry at the full size and the largest ground pop, each with the next frame and what is left without the motion by that carry'
+
+export function fullTop(pops: number[], ground: number | null): number[] {
+  return [...new Set(ground === null ? pops : [...pops, ground])].sort((a, b) => a - b)
+}
+
+export function fullLabel(what: string, from: string, row: { pop?: number | null; residual?: number | null; base?: number | null }): string {
+  const pop = (row.pop ?? null) !== null ? ': pop ' + row.pop!.toFixed(2) + ', left ' + row.residual!.toFixed(2) + ' against ' + row.base!.toFixed(2) : ': no pop read'
+  return what + ' frame ' + from + ' and the next, with the carry at the full size, and what is left without the motion times 8' + pop
+}
+
+export function fullNear(row: { groundPop?: number | null; groundAt?: [number, number] | null; groundSize?: [number, number] | null }): string {
+  return 'the same three at the frames\' own pixels about the ring: the largest ground pop ' + row.groundPop!.toFixed(3) + ' at pixel ' + row.groundAt!.join(', ') + ', a patch of ' + row.groundSize!.join(' by ') + ' px'
+}
+
+export type GroundWhy = 'end' | 'pair' | 'share' | 'near'
+
+export interface GroundUnread { k: number; frame: number; code: GroundWhy; share: number | null; why: string }
+
+export const groundWhy = (code: GroundWhy, share: number | null = null, most: number | null = share): string =>
+  code === 'end' ? 'the last frame of the window, no next frame to carry onto it'
+    : code === 'pair' ? 'the pair with the next frame is not read (the frames drawn end there or a break follows)'
+      : code === 'share' ? 'ground on ' + share!.toFixed(3) + (most !== share ? ' to ' + most!.toFixed(3) : '') + ' of the frame, under ' + GROUND.share
+        : 'fewer than ' + GROUND.near + ' of its ' + 2 * GROUND.near + ' nearest rows have a count in its run of frames'
+
+export function groundUnread(rows: { k: number; frame: number; groundLeft?: number | null; groundPop?: number | null; groundShare?: number | null }[], last: number): GroundUnread[] {
+  return rows.filter((x) => (x.groundPop ?? null) === null).map((x) => {
+    const share = x.groundShare ?? null
+    const code: GroundWhy = x.k === last ? 'end' : share === null ? 'pair' : (x.groundLeft ?? null) === null ? 'share' : 'near'
+    return { k: x.k, frame: x.frame, code, share: code === 'share' ? share : null, why: groundWhy(code, share) }
+  })
+}
+
+export function groundRuns(list: GroundUnread[], step = 1): GroundUnread[][] {
+  const runs: GroundUnread[][] = []
+  for (const row of list) {
+    const run = runs.at(-1)
+    if (run && run[0]!.code === row.code && run.at(-1)!.k + step === row.k) run.push(row)
+    else runs.push([row])
+  }
+  return runs
+}
+
+export function groundUnreadLine(list: GroundUnread[], rows: number, from: (k: number) => string, step = 1): string {
+  if (list.length === 0) return 'Ground pop: every one of the ' + rows + ' rows is read.'
+  const said = groundRuns(list, step).map((run) => {
+    const shares = run.flatMap((x) => (x.share === null ? [] : [x.share]))
+    const why = groundWhy(run[0]!.code, shares.length ? Math.min(...shares) : null, shares.length ? Math.max(...shares) : null)
+    return (run.length === 1 ? 'frame ' + from(run[0]!.k) : 'frames ' + from(run[0]!.k) + ' to ' + from(run.at(-1)!.k) + ' (' + run.length + ' rows)') + ': ' + why
+  })
+  return 'Ground pop NOT READ on ' + list.length + ' of ' + rows + ' rows, which says nothing of them, quiet or not: ' + said.join('; ') + '.'
+}
+
+export const groundLine = (g: GroundMost, from: string): string => g.value.toFixed(3) + ' from frame ' + from + ' to the next' + (g.at ? ', most at pixel ' + g.at.join(', ') : '') + (g.size ? ', a patch of ' + g.size.join(' by ') + ' px' : '') + '; ' + g.over + ' of ' + g.rows + ' rows read over ' + GROUND.named
 
 export const chained = (row: Read, flows: number): string => (row.patternMap === undefined ? '' : ', the later frame carried by the chain of the ' + flows + ' flows from frame to frame' + ((row.patternMapMoved ?? null) !== null ? ' (that chain parts from the camera\'s map on the body by ' + row.patternMapMoved!.toFixed(1) + ' px)' : ''))
 

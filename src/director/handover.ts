@@ -12,7 +12,16 @@ export interface Sidestep { right: number; up: number; by: number }
 // fromDive (the rise only): the close view of the rise leaves from the eye of the dive. From the start of the rise the stop's own close path is led
 // over to the pose the dive handed over at, by the share of the way to T raised to this power (1 or more: it starts from rest), so at T the camera
 // of the rise stands where the twin of the dive stood. Plates of the globe that are true from that one eye are then true in both handovers.
-export interface PathOptions { rise?: number; fall?: number; turnRise?: number; turnFall?: number; level?: boolean; levelBy?: number; sidestep?: Sidestep; fromDive?: number }
+// plumb (off unless the stop asks): the glide carries the plumb of the camera, the angle of the body's centre off the camera's upright plane
+// (the plane of its up and forward axes; plumbOf of moves.ts), from the far end's to the near end's by the share its attitude turns with: at
+// every time it is the mix of the two ends' own plumb as they stand at that time, and nothing swells between them. Without it the two
+// attitudes are turned into each other about the look at the place alone, and a far end that stands rolled against the vertical plane the
+// close view flies in leans the ball to one side in the middle of the move (the rise of the Sun: 4.4 degrees at frame 227 between ends of
+// 1.0 and 0.0). It turns the camera and nothing else: the eye's path, its height and the lens stay, so the
+// rate of the fall is the same and the turn and the speed of the picture are not; a stop that asks for it searches its law again
+// (tools/law.ts). It is read by the glide, so it holds on the one move and on the generic path of the class; a class that flies a path
+// of its own does not read it.
+export interface PathOptions { rise?: number; fall?: number; turnRise?: number; turnFall?: number; level?: boolean; levelBy?: number; sidestep?: Sidestep; fromDive?: number; plumb?: boolean }
 // pace: the flanks of the engine's one move (plan E) for this side, where the stop wants other than handover.pace: rise is the share of the
 // segment over which the rate comes up from the far end, fall the share over which it goes down to the surface view, corner the share of a
 // flank over which its slope comes in and goes out. turn: flanks of the same kind for the eye's direction from the place and the camera's

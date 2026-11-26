@@ -1,0 +1,13 @@
+diff --git a/src/stops/sun/set.ts b/src/stops/sun/set.ts
+index 29dd61de..df286247 100644
+--- a/src/stops/sun/set.ts
++++ b/src/stops/sun/set.ts
+@@ -56,7 +56,7 @@ export const createSet: SetFactory = async (ctx) => {
+ 
+   const far = new FarPoint()
+   orbit.add(far.points)
+-  farSun.wear({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, limb: look.globe.limb, rim: look.globe.rim, boil: look.globe.boil, hot: look.globe.hot, pulse: look.globe.pulse, cell: look.globe.cell })
++  farSun.wear({ map, grade, mapWidth: (map.image as unknown as { width: number }).width, limb: look.globe.limb, rim: look.globe.rim, boil: look.globe.boil, hot: look.globe.hot, pulse: look.globe.pulse, cell: look.globe.cell, gas: { corona: corona.material.uniforms.uMap!.value as THREE.Texture, coronaLook: look.corona, prominence: prominences.material.uniforms.uMap!.value as THREE.Texture, flow: prominences.material.uniforms.uFlow!.value as THREE.Texture, prominenceLook: look.prominence, turn: fitTurn } })
+   world.add(farSun.mesh)
+   const farBody = new THREE.Quaternion()
+ 
