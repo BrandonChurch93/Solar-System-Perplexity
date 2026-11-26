@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T14:13:11.514Z",
+ "pushed": "2026-11-26T14:24:05.301Z",
  "head": "6eb9a2fcbd1b74b66f0895f8cff014348be83d82",
- "note": "cure: whole dive line read green on the kit's limits, level step at 1878 0.2850 against main 0.1930 named; rise line rendering",
+ "note": "cure: rise row 2126 + 1/2 counted at 0.5017 (over 0.45), told to root; whole dive looked at frame by frame; rise line rendering",
  "looks": [
+  {
+   "time": "2026-11-26T14:24:04.473Z",
+   "file": "20261126142404473-note-cd-3750.jpg",
+   "source": "../../../../tmp/gl/k24/A/cd-3750.jpg",
+   "kind": "note",
+   "label": "cure, whole dive line, every frame 1875 to 1882 small",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T14:24:03.620Z",
+   "file": "20261126142403620-note-pair-cure-4253.jpg",
+   "source": "../../../../tmp/gl/k24/A/pair-cure-4253.jpg",
+   "kind": "note",
+   "label": "the reader's back pair at 2126 + 1/2 on the cure: frame 2134 + 1/2, the earlier frame carried onto it, the judged px",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T14:24:02.679Z",
+   "file": "20261126142402679-note-top-4253-4269.jpg",
+   "source": "../../../../tmp/gl/k24/A/top-4253-4269.jpg",
+   "kind": "note",
+   "label": "rise 2126 + 1/2 to 2134 + 1/2 at the top of the frame, 1 to 1, cure beside main: the far land under the limb widens (the ground of the back reading, counted at 0.5017 on mine, 0.5415 uncounted on main)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T14:13:10.661Z",
    "file": "20261126141310661-note-earth-dive-changes.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/k24/A/border-3758-3764.jpg",
    "kind": "note",
    "label": "Bottom border x 640 to 1400, cure k3758 to 3764 at 1 to 1",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T13:31:10.604Z",
-   "file": "20261126133110604-note-border-3752-3758.jpg",
-   "source": "../../../../tmp/gl/k24/A/border-3752-3758.jpg",
-   "kind": "note",
-   "label": "Bottom border x 640 to 1400, bottom 170 rows, cure k3752 to 3758 at 1 to 1: island, bank and towers slide out, no blink seen",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T13:02:23.251Z",
-   "file": "20261126130223251-note-d2-final-3756.jpg",
-   "source": "../../../../tmp/gl/k24/A/d2-final-3756.jpg",
-   "kind": "note",
-   "label": "Second difference of grey at k3756 on the cure (level step 0.2850)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T13:02:22.657Z",
-   "file": "20261126130222657-note-low-3754-cure-main.jpg",
-   "source": "../../../../tmp/gl/k24/A/low-3754-cure-main.jpg",
-   "kind": "note",
-   "label": "k3754 (1877) lower part at 1 to 1, cure over main",
    "stop": "earth"
   }
  ]
