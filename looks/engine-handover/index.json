@@ -1,50 +1,29 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T02:30:20.451Z",
+ "pushed": "2026-11-26T02:51:43.237Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests: curing the light line at the end of crest D's box; end rule v10 cures it but breaks two other places, next rule in work",
+ "note": "crests design c: choosing the end rule of the crest field between two candidates that both cure the light line at one crest's end; draft strips at three places, nothing at review yet",
  "looks": [
   {
-   "time": "2026-11-26T02:30:16.370Z",
-   "file": "20261126023016370-note-s10-c3.jpg",
-   "source": "../../../../tmp/crest/s10-c3.png",
+   "time": "2026-11-26T02:51:42.640Z",
+   "file": "20261126025142640-note-s12-apex2.jpg",
+   "source": "../../../../tmp/crest/s12-apex2.png",
    "kind": "note",
-   "label": "2668 draft, v9 against v10 beside crest A: v10 bulges the near sheet 2 to 5 px, so v10 is not kept"
+   "label": "crests design c, draft 2668 at the apex where a step runs out into a slope: the frozen relief, the end rule before, the end rule now"
   },
   {
-   "time": "2026-11-26T02:30:15.793Z",
-   "file": "20261126023015793-note-s10-c2.jpg",
-   "source": "../../../../tmp/crest/s10-c2.png",
+   "time": "2026-11-26T02:51:42.045Z",
+   "file": "20261126025142045-note-st13-c.jpg",
+   "source": "../../../../tmp/crest/st13-c.png",
    "kind": "note",
-   "label": "2668 draft, v9 against v10 at the chevron apex: v10 leaves one light pixel at 688,627, so v10 is not kept"
+   "label": "crests design c, draft frames 2664 to 2672 at the end of crest D (screen 648..680 x 616..642 at 8 times): top the frozen relief, middle and bottom two candidate end rules"
   },
   {
-   "time": "2026-11-26T02:30:15.195Z",
-   "file": "20261126023015195-note-s10-end.jpg",
-   "source": "../../../../tmp/crest/s10-end.png",
+   "time": "2026-11-26T02:51:41.435Z",
+   "file": "20261126025141435-note-st13-a.jpg",
+   "source": "../../../../tmp/crest/st13-a.png",
    "kind": "note",
-   "label": "crest D end at 2668, draft: without crests, end rule v9, end rule v10 (v10 cures the light line at the box end)"
-  },
-  {
-   "time": "2026-11-26T02:08:23.188Z",
-   "file": "20261126020823188-note-v9-end-2668.jpg",
-   "source": "../../../../tmp/crest/v9-end-2668.png",
-   "kind": "note",
-   "label": "2668 draft, the top end of the box of Mars L1's crest D, 16 times: the frozen build, the crests before the cure (a light line down left of the ring), the crests with the cut carried straight on past the end (the line shorter, not yet gone)"
-  },
-  {
-   "time": "2026-11-26T01:37:54.596Z",
-   "file": "20261126013754596-note-r8-2668-Dend-dbg.jpg",
-   "source": "../../../../tmp/crest/r8-2668-Dend-dbg.png",
-   "kind": "note",
-   "label": "Design (c), 2668 at the top end of crest D's box: review base, review crests, the sheets tinted (near red, fill green), the texel shown"
-  },
-  {
-   "time": "2026-11-26T01:37:53.413Z",
-   "file": "20261126013753413-note-s8-Dend-b.jpg",
-   "source": "../../../../tmp/crest/s8-Dend-b.png",
-   "kind": "note",
-   "label": "Design (c), the top end of crest D's box, frames 2669 to 2672 at draft, 10 to 1: base above, crests below"
+   "label": "crests design c, draft frames 2664 to 2672 at the notch of the crest (screen 754..786 x 716..742 at 8 times, the box goes with the ground): top the frozen relief, middle and bottom two candidate end rules of the crest field"
   }
  ]
 }
