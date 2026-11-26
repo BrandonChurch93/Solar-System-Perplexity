@@ -1,71 +1,71 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T08:54:14.103Z",
- "head": "460e05899fadadf2efc3368ebebc8e40614ab8d2",
- "note": "P2c on main 77a7d410: rise 1540 to 1575 seen, grey tuft at 1551 traced, final 1586 beside main's",
+ "pushed": "2026-11-26T09:22:47.909Z",
+ "head": "d963024fc8330dfb9db5c21e99e65d6d54c854d4",
+ "note": "P2c d963024f beside main, rise 1542 to 1569, and main's own step at 1604 + 1/2",
  "looks": [
+  {
+   "time": "2026-11-26T09:22:46.594Z",
+   "file": "20261126092246594-note-end-step.jpg",
+   "source": "../../../../tmp/v/sh/Mn/end-step.jpg",
+   "kind": "note",
+   "label": "main's own ground pop at 1604 + 1/2 (2.69, the same on P2c): left 1604 + 1/2, right the step to 1605 less the mean of its neighbours, times 20 about grey: gain along the lit limb upper left, loss lower right; cause not yet proven by a control",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T09:22:45.620Z",
+   "file": "20261126092245620-note-pat1544.jpg",
+   "source": "../../../../tmp/v/sh/P2m/pat1544.jpg",
+   "kind": "note",
+   "label": "P2c 1544, 1548, 1552 enlarged, the place of the largest pattern row (0.72 at 1544, read against 1552) in the ring: the thin far band under the limb opens into cells",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T09:22:44.831Z",
+   "file": "20261126092244831-note-z2.jpg",
+   "source": "../../../../tmp/v/sh/Mn/z2.jpg",
+   "kind": "note",
+   "label": "the far middle enlarged, 1556 to 1564, P2c left, main right: P2c's cells carry a pale outline at their left and tints (red, named); main's field is soft",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T09:22:43.923Z",
+   "file": "20261126092243923-note-z1.jpg",
+   "source": "../../../../tmp/v/sh/Mn/z1.jpg",
+   "kind": "note",
+   "label": "the far middle enlarged, 1550 to 1556, P2c left, main right: the cells arrive in place by height",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T09:22:42.953Z",
+   "file": "20261126092242953-note-p3.jpg",
+   "source": "../../../../tmp/v/sh/Mn/p3.jpg",
+   "kind": "note",
+   "label": "P2c (left) beside main (right), 1556 to 1569: P2c the film's cells, tinted pink, orange and bluish white; main an out of focus patch between crisp towers; alike at 1566 and 1569",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T09:22:41.958Z",
+   "file": "20261126092241958-note-p2.jpg",
+   "source": "../../../../tmp/v/sh/Mn/p2.jpg",
+   "kind": "note",
+   "label": "P2c (left) beside main (right), 1549 to 1555: the film's cells come up in the far middle of P2c from 1550, main's far middle stays a smooth field",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T09:22:40.965Z",
+   "file": "20261126092240965-note-p1.jpg",
+   "source": "../../../../tmp/v/sh/Mn/p1.jpg",
+   "kind": "note",
+   "label": "P2c d963024f (left) beside main (right), rise 1542 to 1548, whole frames: alike by eye, the brown band under the limb from 1546 + 1/2 on both",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T08:54:13.134Z",
    "file": "20261126085413134-note-P-N-1586-crop.jpg",
    "source": "../../../../tmp/v/fin/P-N-1586-crop.jpg",
    "kind": "note",
    "label": "final 1586, x 560 to 820, y 400 to 560 at 3 times: top P2c (the bytes of a4534656's final), middle main 77a7d410, bottom the difference times 14 (largest 17 of 255)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T08:54:12.421Z",
-   "file": "20261126085412421-note-at-b.jpg",
-   "source": "../../../../tmp/v/sh/P2m/at-b.jpg",
-   "kind": "note",
-   "label": "level b cells round 1493, 631: film plate, step 11 plate with the grey tuft, film times map, film times 0.85 map; below: 0.85 exact, map log2, exact log2, mask",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T08:54:11.334Z",
-   "file": "20261126085411334-note-blobR.jpg",
-   "source": "../../../../tmp/v/sh/P2m/blobR.jpg",
-   "kind": "note",
-   "label": "x 1490 to 1690, y 420 to 520 at 3 times, frames 1548, 1551, 1554: left P2c, right the step 11 state (main's) on the old engine: the same dark tuft at 1548, P2c keeps it with an edge at 1551, gone at 1554",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T08:54:10.549Z",
-   "file": "20261126085410549-note-d.jpg",
-   "source": "../../../../tmp/v/sh/P2m/d.jpg",
-   "kind": "note",
-   "label": "P2c on the merged tree, upper part at 0.34, frames 1567 to 1575 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T08:54:09.655Z",
-   "file": "20261126085409655-note-c.jpg",
-   "source": "../../../../tmp/v/sh/P2m/c.jpg",
-   "kind": "note",
-   "label": "P2c on the merged tree, upper part at 0.34, frames 1558 to 1566 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T08:54:08.895Z",
-   "file": "20261126085408895-note-b.jpg",
-   "source": "../../../../tmp/v/sh/P2m/b.jpg",
-   "kind": "note",
-   "label": "P2c on the merged tree, upper part at 0.34, frames 1549 to 1557 + 1/2",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T08:54:07.537Z",
-   "file": "20261126085407537-note-a.jpg",
-   "source": "../../../../tmp/v/sh/P2m/a.jpg",
-   "kind": "note",
-   "label": "P2c on the merged tree (main 77a7d410), upper part at 0.34, frames 1540 to 1548 + 1/2, every half frame",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:57:32.013Z",
-   "file": "20261126075732013-note-M-dive-top.jpg",
-   "source": "../../../../tmp/v/sh/D/M-dive-top.jpg",
-   "kind": "note",
-   "label": "Main's dive 1326 to 1347 every third frame, left half, top: the far ground has small cells and a whitish patch at 1326, is smoother at 1329 and a pale smooth deck from 1332. The dive has no far map yet.",
    "stop": "venus"
   }
  ]
