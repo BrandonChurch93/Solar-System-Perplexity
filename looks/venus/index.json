@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T04:27:19.153Z",
- "head": "27a2f066970d366f9f0b2b2f9a7ac2509bfe2cb3",
- "note": "State A against main at dive rows 1310 to 1312; state R against main at rise 1566 and 1572; state R is the commit 27a2f066 under proof",
+ "pushed": "2026-11-26T05:21:01.865Z",
+ "head": "1ecda673575bf45da59713dbb2ba3a6aea2471e7",
+ "note": "state R on main 23f1089b: the rise beside main, far deck and mid rise, and the four finals",
  "looks": [
+  {
+   "time": "2026-11-26T04:51:39.283Z",
+   "file": "20261126045139283-note-r4.jpg",
+   "source": "../../../../tmp/v/sh/R2/r4.jpg",
+   "kind": "note",
+   "label": "State R, every draft frame of the rise 1558 to 1569 + 1/2 at quarter size",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T04:51:38.484Z",
+   "file": "20261126045138484-note-r3.jpg",
+   "source": "../../../../tmp/v/sh/R2/r3.jpg",
+   "kind": "note",
+   "label": "State R, every draft frame of the rise 1546 to 1557 + 1/2 at quarter size",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T04:51:37.370Z",
+   "file": "20261126045137370-note-R2-M1-mid.jpg",
+   "source": "../../../../tmp/v/sh/R2/R2-M1-mid.jpg",
+   "kind": "note",
+   "label": "State R left, main right, rise 1551 1557 1563 1569, x 300 to 1620 y 200 to 900: R's middle distance is the plate's soft deck, main's a crisp mottled patch; alike by 1569",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T04:51:36.065Z",
+   "file": "20261126045136065-note-R2-M1-far.jpg",
+   "source": "../../../../tmp/v/sh/R2/R2-M1-far.jpg",
+   "kind": "note",
+   "label": "State R left, main right, rise 1542 1545 1548 1551, x 500 to 1500 y 120 to 420 at 1 to 1: R keeps the far deck's soft forms where main brings crisp cells in place",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T04:27:18.499Z",
    "file": "20261126042718499-note-R-M-1566z.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/sh/A/map-2622.jpg",
    "kind": "note",
    "label": "The reader's own map of row 1311 of the dive (its poses, its rows to the digit) at x 80 to 500, y 140 to 340: frame 1311, frame 1319 carried onto it, the detail of each, the reading (white is 1). Top state A (row 0.675), bottom main (row 0.555): in both the reading rises to 1 at the border of the judged ground next to the limb",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T04:11:04.018Z",
-   "file": "20261126041104018-note-A-M1d-1310-d.jpg",
-   "source": "../../../../tmp/v/sh/A/A-M1d-1310-d.jpg",
-   "kind": "note",
-   "label": "State A, main and their difference times 6 at dive frames 1310, 1311, 1318, 1319 (same crop): the difference is cells of 20 to 50 px in the far ground at 1310 and 1311 and next to nothing at 1318 and 1319",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T04:11:03.408Z",
-   "file": "20261126041103408-note-A-M1d-1310.jpg",
-   "source": "../../../../tmp/v/sh/A/A-M1d-1310.jpg",
-   "kind": "note",
-   "label": "State A (left) against main (right), dive frames 1307, 1310, 1311, 1315, 1318, 1319, crop x 120 to 520, y 120 to 320, three times: A shows red and green cells and a brighter top in the far ground at 1307 to 1311, main a plain gold; alike from 1318",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T03:44:50.449Z",
-   "file": "20261126034450449-note-R-M1-late.jpg",
-   "source": "../../../../tmp/v/sh/R/R-M1-late.jpg",
-   "kind": "note",
-   "label": "Trial R, not named: left R (main's code, the far deck of T in the rise's plates), right main, rise 1557, 1563, 1569, 1575, draft frames at half size. In R the ground round the place is soft at 1557 and 1563 where main shows the hold's crisp cells; by 1575 the two are alike. By the reader R's rise has 16 red rows against main's 19, two of them worse than main's (1544 + 1/2 0.83 against 0.75, 1547 0.49 against 0.40)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T03:13:51.767Z",
-   "file": "20261126031351767-note-r-3094-back.jpg",
-   "source": "../../../../tmp/v/sh/R/r-3094-back.jpg",
-   "kind": "note",
-   "label": "Trial R, row 1547 (0.49 against main's 0.40): the patch the reader marks on the later frame 1555 (upper left, red), R at 1555 and 1554, main at 1554. The marked patch lies under the far ridge where the plate's far deck ends; main shows crisp cells and bright patches below where R shows the plate's soft deck",
    "stop": "venus"
   }
  ]
