@@ -1,9 +1,49 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T19:47:22.680Z",
- "head": "0d69f4f4c948c7f294b609dadba401f87f6ef81b",
- "note": "MAIL 1534 (a): cause by controls and the draft of the cure (ground flat at its end, dive plates of g1 back)",
+ "pushed": "2026-11-26T20:15:01.331Z",
+ "head": "c9bb399ca86bba589fff8d2106d5c7e0422a2a2d",
+ "note": "MAIL 1539 (2): the cumulus under the end of the ground at 1327 to 1335 beside main's at one to one (draft)",
  "looks": [
+  {
+   "time": "2026-11-26T20:15:00.199Z",
+   "file": "20261126201500199-note-cum-11-1335.jpg",
+   "source": "../../../../tmp/v/sh/cum-11-1335.png",
+   "kind": "note",
+   "label": "MAIL 1539 (2), frame 1335, one to one, draft: main above (the straight end of the ground over small crisp cells of another picture, 1329 to 1335), the take below (no cut; the cumulus under the end of the ground larger, paler and softer than the ground beside it: red)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T20:14:59.048Z",
+   "file": "20261126201459048-note-cum-11-1333.jpg",
+   "source": "../../../../tmp/v/sh/cum-11-1333.png",
+   "kind": "note",
+   "label": "MAIL 1539 (2), frame 1333, one to one, draft: main above (the straight end of the ground over small crisp cells of another picture, 1329 to 1335), the take below (no cut; the cumulus under the end of the ground larger, paler and softer than the ground beside it: red)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T20:14:58.205Z",
+   "file": "20261126201458205-note-cum-11-1331.jpg",
+   "source": "../../../../tmp/v/sh/cum-11-1331.png",
+   "kind": "note",
+   "label": "MAIL 1539 (2), frame 1331, one to one, draft: main above (the straight end of the ground over small crisp cells of another picture, 1329 to 1335), the take below (no cut; the cumulus under the end of the ground larger, paler and softer than the ground beside it: red)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T20:14:56.971Z",
+   "file": "20261126201456971-note-cum-11-1329.jpg",
+   "source": "../../../../tmp/v/sh/cum-11-1329.png",
+   "kind": "note",
+   "label": "MAIL 1539 (2), frame 1329, one to one, draft: main above (the straight end of the ground over small crisp cells of another picture, 1329 to 1335), the take below (no cut; the cumulus under the end of the ground larger, paler and softer than the ground beside it: red)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T20:14:55.578Z",
+   "file": "20261126201455578-note-cum-11-1327.jpg",
+   "source": "../../../../tmp/v/sh/cum-11-1327.png",
+   "kind": "note",
+   "label": "MAIL 1539 (2), frame 1327, one to one, draft: main above (the straight end of the ground over small crisp cells of another picture, 1329 to 1335), the take below (no cut; the cumulus under the end of the ground larger, paler and softer than the ground beside it: red)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T19:47:21.596Z",
    "file": "20261126194721596-note-g1only-1338-z.jpg",
@@ -26,46 +66,6 @@
    "source": "../../../../tmp/v/sh/A1g-ll-k2668.jpg",
    "kind": "note",
    "label": "MAIL 1534 (a), lower left 1334 and 1335: main above, A1 with the plates of g1 below. The dark straight strip under the cumulus is gone; the tower at the left stands softer (state A2 is that block)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:47:18.618Z",
-   "file": "20261126194718618-note-A1g-full-b.jpg",
-   "source": "../../../../tmp/v/sh/A1g-full-b.jpg",
-   "kind": "note",
-   "label": "MAIL 1534 (a), whole frames 1333 and 1336 at 0.45: main above, A1 with the plates of g1 below",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:47:17.678Z",
-   "file": "20261126194717678-note-A1g-lr-k2662.jpg",
-   "source": "../../../../tmp/v/sh/A1g-lr-k2662.jpg",
-   "kind": "note",
-   "label": "MAIL 1534 (a), lower right 1331 and 1332: main, A1 alone, A1 with the plates of g1. Named red: the cumulus of the take under the end of the ground is paler and softer than the ground beside it",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:47:16.594Z",
-   "file": "20261126194716594-note-A1g-lr-b.jpg",
-   "source": "../../../../tmp/v/sh/A1g-lr-b.jpg",
-   "kind": "note",
-   "label": "MAIL 1534 (a), lower right 1337 and 1338, draft rate 2: main above, A1 alone (ground laid flat at its end) in the middle, A1 with the ten dive plates of g1 below. The straight cut stays with A1 alone and is gone with the plates",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:06:41.282Z",
-   "file": "20261126190641282-note-b-g0-left.jpg",
-   "source": "../../../../tmp/v/sh/b-g0-left.jpg",
-   "kind": "note",
-   "label": "control, rise, left edge 1539 to 1546: M main, G0 ground off: the pale cells that enter at the left edge from 1543 stand with the ground off, so they are in the plates",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:06:39.485Z",
-   "file": "20261126190639485-note-b-band.jpg",
-   "source": "../../../../tmp/v/sh/b-band.jpg",
-   "kind": "note",
-   "label": "main's rise at draft tier, the Sun's glow 1539 to 1546: no band at 1539 and 1540, level bands left and right of the Sun from 1541 on",
    "stop": "venus"
   }
  ]
