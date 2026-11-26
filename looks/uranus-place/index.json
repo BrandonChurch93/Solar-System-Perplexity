@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T15:41:06.438Z",
+ "pushed": "2026-11-26T16:07:31.378Z",
  "head": "5fc9bcaa7b62cabd68f23329ae568cc6ed0daa9f",
- "note": "5fc9bcaa: units 95 files 1106 tests green, gate green, path green; 11 draft frames keep bcc9d174's bytes; consecutive frames and finals run now",
+ "note": "D alone held on rise part 1 pattern row (MAIL 1511): reader slice 4398 to 4401 + 1/2 on D and on main runs, then pixel controls",
  "looks": [
+  {
+   "time": "2026-11-26T16:07:25.487Z",
+   "file": "20261126160725487-note-rsD-changes.jpg",
+   "source": "../../../../tmp/n81/rsD-changes.png",
+   "kind": "note",
+   "label": "5fc9bcaa (D alone) the reader's own panel of the row 4401 (pattern 1.51): read on the far ground under the horizon",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T16:07:23.383Z",
+   "file": "20261126160723383-note-seq-r2.jpg",
+   "source": "../../../../tmp/n80/seq-r2.jpg",
+   "kind": "note",
+   "label": "5fc9bcaa (D alone) rise draft, every frame 4409 to 4419",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T16:07:19.649Z",
+   "file": "20261126160719649-note-seq-r1.jpg",
+   "source": "../../../../tmp/n80/seq-r1.jpg",
+   "kind": "note",
+   "label": "5fc9bcaa (D alone) rise draft, every frame 4398 to 4408",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T15:41:03.682Z",
    "file": "20261126154103682-note-nm-rise.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n78/head-4290-v.jpg",
    "kind": "note",
    "label": "54ae2b6d final 4290: match with uranus-close.jpg 3.178 (main 3.849)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T11:02:20.051Z",
-   "file": "20261126110220051-note-head-4035-v.jpg",
-   "source": "../../../../tmp/n78/head-4035-v.jpg",
-   "kind": "note",
-   "label": "54ae2b6d final 4035: match with uranus-hero.png 3.737 (main 3.743)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:42:35.965Z",
-   "file": "20261126104235965-note-uranus-rise-p2of2-changes.jpg",
-   "source": "../../../../tmp/n77/out/r2/uranus-rise-p2of2-changes.png",
-   "kind": "note",
-   "label": "the reader's panel, rise part 2 of 2 on 54ae2b6d: pattern 0.8239 from 4422 + 1/2 (main 0.8765)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:42:35.354Z",
-   "file": "20261126104235354-note-n-r2-e.jpg",
-   "source": "../../../../tmp/n75/n-r2-e.png",
-   "kind": "note",
-   "label": "54ae2b6d travel draft 4466 to 4470",
    "stop": "uranus"
   }
  ]
