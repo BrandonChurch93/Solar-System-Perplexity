@@ -413,25 +413,25 @@
   "farGlow": 0.25
  },
  "jets": {
-  "count": 80000,
+  "count": 160000,
   "seed": 20261123,
   "band": [
    4.6,
    9.5
   ],
   "segments": 6,
-  "length": 0.2,
-  "width": 0.016,
-  "gain": 1.6,
+  "length": 0.1,
+  "width": 0.013,
+  "gain": 2.0,
   "period": [
    2.5,
    5
   ],
-  "share": 0.8,
+  "share": 0.95,
   "lean": 0.5,
   "sway": 0.06,
   "root": 0.02,
-  "bend": 0.35,
+  "bend": 0.8,
   "graze": -0.04,
   "hot": [
    1.0,
@@ -446,15 +446,15 @@
   "group": {
    "note": "the jets by the place of their root: scale groups to a stage unit; gaps the share of the ground that holds none; tall how much taller than the rest the few tall ones are; spread how far one jet may turn off the lean of its group, in turns",
    "scale": 1.2,
-   "gaps": 0.3,
+   "gaps": 0.1,
    "tall": 1.2,
-   "spread": 0.2
+   "spread": 0.3
   }
  },
  "glow": {
   "tight": [
-   0.0,
-   0.035
+   0.6,
+   0.03
   ],
   "wide": [
    0.04,

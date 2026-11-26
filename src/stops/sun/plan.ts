@@ -17,7 +17,7 @@ export const params: MoveParams = {
   terrain: { vfov: 55, gather: -0.5, forward: 2.0, rise: -0.1, side: 0.7, yawDeg: 8, pitchDeg: 8, horizonDeg: 3.2, dipDeg: 17.5, entryHeight: 0.9, entryBack: 1.1, entryPitchDeg: 4.8, exitHeight: 1.6, exitForward: -0.6, exitPitchDeg: -12, ground: 0.6 },
   rise: { azimuthDeg: 0, elevationDeg: 0, distance: 4.6, offset: [0, 0], driftSpeed: 0.05, rollDeg: 0, settle: 2 },
   travel: { turnDeg: 26, side: 1 },
-  light: { exposure: 1, skyExposure: 0.45, sunRadiusDeg: 5, sunGlare: 1, flare: 0.35 },
+  light: { exposure: 1, skyExposure: 0.45, terrainSkyGlow: place.onGlobe.closeSky.glow, sunRadiusDeg: 5, sunGlare: 1, flare: 0.35 },
   cover: [2.8, 1.05, 0.28],
   handover: { rise: { at: place.rise.at, dissolveFrames: place.rise.dissolveFrames, placeFrames: place.rise.placeFrames, skyFrames: place.rise.skyFrames, picture: place.rise.picture, pace: place.rise.law.pace as HandoverSide['pace'], turn: place.rise.law.turn as HandoverSide['turn'], liftPower: place.rise.law.liftPower } },
   spinDegPerSecond: 3.4,

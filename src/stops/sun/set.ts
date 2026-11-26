@@ -112,9 +112,10 @@ export const createSet: SetFactory = async (ctx) => {
   // the share of the corona's and the prominences' light that the lens holds beside the ground, by the eye's height
   // alone: a smooth step in the logarithm of the height between place.json onGlobe.gas from and to, no slope at
   // either end, the same law down and up and in every segment (MAIL 1146 point 2, MAIL 1199 point 3a, MAIL 1219
-  // point 3). The gas itself stands on the ball at every height
+  // point 3). Under the height from the share is the constant gas.low, the glow that the close view holds, and from
+  // the height to on it is 1. The gas itself stands on the ball at every height
   const gas = place.onGlobe.gas
-  const gasAt = (height: number): number => THREE.MathUtils.smoothstep(Math.log(height), Math.log(gas.from), Math.log(gas.to))
+  const gasAt = (height: number): number => gas.low + (1 - gas.low) * THREE.MathUtils.smoothstep(Math.log(height), Math.log(gas.from), Math.log(gas.to))
   const seatQ = new THREE.Quaternion()
   const seatR = new THREE.Quaternion()
   const seatS = new THREE.Vector3()

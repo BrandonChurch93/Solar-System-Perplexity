@@ -195,6 +195,14 @@ function fixed(seed: number): (id: number, slot: number) => number {
   return (id, slot) => mix((mix((id + seed) | 0) + Math.imul(slot + 1, 0x9e3779b9)) | 0) / 4294967296
 }
 
+interface Shape {
+  sided: boolean
+  bulge: number
+  skew: number
+  power: number
+  wave: number[]
+}
+
 interface Strand {
   line: THREE.Vector3[]
   seed: number
@@ -248,7 +256,14 @@ export class Arcade {
     const s = data.shape
 
     /** An arch from a to b on the ground: h its height, lean how far its plane tips toward the eye, id its number. */
-    const arch = (a: THREE.Vector3, b: THREE.Vector3, h: number, lean: number, segments: number, id: number): THREE.Vector3[] => {
+    const shapeOf = (id: number, sided = true): Shape => ({
+      sided,
+      bulge: between(s.bulge, rnd(id, 20)),
+      skew: between(s.skew, rnd(id, 21)),
+      power: between(s.power, rnd(id, 26)),
+      wave: [rnd(id, 22) * 6.2831853, rnd(id, 23) * 6.2831853, 1.5 + 2 * rnd(id, 24), 4 + 4 * rnd(id, 25)],
+    })
+    const arch = (a: THREE.Vector3, b: THREE.Vector3, h: number, lean: number, segments: number, shape: Shape): THREE.Vector3[] => {
       const span = b.clone().sub(a)
       const length = span.length()
       const mid = a.clone().add(b).multiplyScalar(0.5)
@@ -258,15 +273,18 @@ export class Arcade {
       if (side.dot(toward) < 0) side.negate()
       const lift = out.clone().multiplyScalar(Math.cos(lean)).addScaledVector(side, Math.sin(lean))
       const off = along.clone().cross(lift).normalize()
-      const bulge = between(s.bulge, rnd(id, 20))
-      const skew = between(s.skew, rnd(id, 21))
-      const power = between(s.power, rnd(id, 26))
-      const wave = [rnd(id, 22) * 6.2831853, rnd(id, 23) * 6.2831853, 1.5 + 2 * rnd(id, 24), 4 + 4 * rnd(id, 25)]
+      const { bulge, skew, power, wave } = shape
+      const sided = shape.sided ? 1 : 0
       const line: THREE.Vector3[] = []
       for (let i = 0; i <= segments; i++) {
         const th = (Math.PI * i) / segments
         const w = Math.max(Math.sin(th), 0)
-        const x = -Math.cos(th) * 0.5 * length * (1 + bulge * w * w) + skew * h * w * w
+        // the two sides of an arch are not alike (shape.side, the left foot's side and the right's): a side may be
+        // broad at the shoulder (bulge, by the square of the height) or stand out beyond its foot low down (round,
+        // most at half the height, nothing at the foot and at the top)
+        const k = th < Math.PI / 2 ? 0 : 1
+        const low = 4 * w * (1 - w)
+        const x = -Math.cos(th) * 0.5 * length * (1 + (bulge + sided * s.side.bulge[k]!) * w * w + sided * s.side.round[k]! * low) + skew * h * w * w
         const y = h * Math.pow(w, power) - s.sink * (1 - w)
         const z = w * (s.wave[0]! * Math.sin(wave[2]! * th + wave[0]!) + s.wave[1]! * Math.sin(wave[3]! * th + wave[1]!)) * Math.min(h / s.height, 1)
         line.push(mid.clone().addScaledVector(along, x).addScaledVector(lift, y).addScaledVector(off, z))
@@ -283,36 +301,46 @@ export class Arcade {
     const m = data.main
     const deg = THREE.MathUtils.degToRad
     // an arch of the arcade: its height (many near the outer shell), its lean and where its two feet stand
-    const mainArch = (id: number): { h: number; lean: number; a: THREE.Vector3; b: THREE.Vector3 } => ({
-      h: s.height * between(m.heights, 1 - Math.pow(rnd(id, 0), 1 / m.shell)),
+    const mainArch = (id: number, heights: number[]): { h: number; lean: number; a: THREE.Vector3; b: THREE.Vector3; shape: Shape } => ({
+      h: s.height * between(heights, 1 - Math.pow(rnd(id, 0), 1 / m.shell)),
       lean: deg(between(m.leanDeg, rnd(id, 1))),
       a: foot(footA, id, 2, m.feet),
       b: foot(footB, id, 4, m.feet),
+      shape: shapeOf(id),
     })
     for (let k = 0; k < m.count; k++) {
       const id = 1000 + k
-      let p = mainArch(id)
+      let p = mainArch(id, m.loose.heights)
       const bundled = rnd(id, 6) < m.inBundle
       if (bundled) {
-        // a strand of a bundle: the bundle's arch, a little off it. The bundles are of unlike size: the first ones
-        // hold the most strands, and a bundle of many strands is wider than one of few
+        // a strand of a bundle: the bundle's arch, a little off it, with the bundle's own form (its bulge, its skew,
+        // its roundness and its waves), so the strands of one rope run side by side and two ropes cross. The bundles
+        // are of unlike size: the first ones hold the most strands, and a bundle of many strands is wider than one of few
         const n = Math.min(Math.floor(Math.pow(rnd(id, 7), m.unlike) * m.bundles), m.bundles - 1)
-        const g = mainArch(100 + n)
+        const g = mainArch(100 + n, m.heights)
         const wide = between(m.spread.wide, n / Math.max(m.bundles - 1, 1))
+        const off = wide * m.spread.shape
         p = {
           h: g.h * (1 + wide * m.spread.height * (2 * rnd(id, 8) - 1)),
           lean: g.lean + deg(wide * m.spread.leanDeg) * (2 * rnd(id, 9) - 1),
           a: foot(g.a, id, 10, [wide * m.spread.feet, wide * m.spread.feet]),
           b: foot(g.b, id, 12, [wide * m.spread.feet, wide * m.spread.feet]),
+          shape: {
+            sided: true,
+            bulge: g.shape.bulge + off * (s.bulge[1]! - s.bulge[0]!) * (2 * rnd(id, 27) - 1),
+            skew: g.shape.skew + off * (s.skew[1]! - s.skew[0]!) * (2 * rnd(id, 28) - 1),
+            power: g.shape.power + off * (s.power[1]! - s.power[0]!) * (2 * rnd(id, 29) - 1),
+            wave: [g.shape.wave[0]! + off * 6.2831853 * (2 * rnd(id, 30) - 1), g.shape.wave[1]! + off * 6.2831853 * (2 * rnd(id, 31) - 1), g.shape.wave[2]!, g.shape.wave[3]!],
+          },
         }
       }
       const thick = Math.pow(rnd(id, 14), 2)
       all.push({
-        line: arch(p.a, p.b, p.h, p.lean, m.segments, id),
+        line: arch(p.a, p.b, p.h, p.lean, m.segments, p.shape),
         seed: rnd(id, 15),
         // a strand of no bundle is thinner and dimmer than one of a rope
         radius: between(m.radius, thick) * (bundled ? 1 : m.loose.radius),
-        gain: between(m.gain, rnd(id, 16)) * (0.7 + 0.3 * thick) * (bundled ? 1 : m.loose.gain),
+        gain: between(m.gain, Math.pow(rnd(id, 16), m.dim)) * (m.thinGain + (1 - m.thinGain) * thick) * (bundled ? 1 : m.loose.gain),
         speed: between(m.speed, rnd(id, 17)) * (rnd(id, 18) < m.back ? -1 : 1),
         clump: between(m.clump, rnd(id, 19)),
         open: 0,
@@ -323,18 +351,24 @@ export class Arcade {
     for (let k = 0; k < d.count; k++) {
       const id = 5000 + k
       const h = s.height * between(d.heights, rnd(id, 0))
-      const over = arch(foot(footA, id, 2, m.feet), foot(footB, id, 4, m.feet), h, deg(between(d.leanDeg, rnd(id, 1))), m.segments, id)
+      const over = arch(foot(footA, id, 2, m.feet), foot(footB, id, 4, m.feet), h, deg(between(d.leanDeg, rnd(id, 1))), m.segments, shapeOf(id))
       const at = Math.round(between(d.from, rnd(id, 6)) * m.segments)
       const from = over[at]!
       const downhill = at < m.segments / 2 ? -1 : 1
       const tangent = over[at + downhill]!.clone().sub(from).normalize()
       const under = onBall(from.clone().lerp(this.place, d.inward * rnd(id, 7)), s.sink)
       const fall = from.distanceTo(under)
-      const c1 = from.clone().addScaledVector(tangent, 0.3 * fall)
+      const c1 = from.clone().addScaledVector(tangent, d.hook * fall)
       const c2 = under.clone().addScaledVector(under.clone().sub(stage.centre).normalize(), 0.45 * fall)
       const curve = new THREE.CubicBezierCurve3(from, c1, c2, under)
+      // the rain is a spray of short falls: each is drawn over a share of the way down (fall) that begins somewhere
+      // below the arch (begin), and dies at both ends by the law of an open end
+      const begin = between(d.begin, rnd(id, 9))
+      const share = Math.min(between(d.fall, rnd(id, 8)), 1 - begin)
+      const rain: THREE.Vector3[] = []
+      for (let i = 0; i <= d.segments; i++) rain.push(curve.getPoint(begin + (i / d.segments) * share))
       all.push({
-        line: curve.getPoints(d.segments),
+        line: rain,
         seed: rnd(id, 15),
         radius: between(d.radius, rnd(id, 14)),
         gain: between(d.gain, rnd(id, 16)),
@@ -359,7 +393,9 @@ export class Arcade {
         const b = onBall(a.clone().addScaledVector(dir, reach))
         const h = Math.min(reach * between(f.tall, rnd(id, 4)), f.most)
         all.push({
-          line: arch(a, b, h, deg(20 * (2 * rnd(id, 5) - 1)), f.segments, id),
+          // a fountain is a throw: its top stands nearer the foot than the place it falls to (skew) and it is no
+          // half circle (power)
+          line: arch(a, b, h, deg(f.leanDeg * (2 * rnd(id, 5) - 1)), f.segments, { ...shapeOf(id, false), power: between(f.power, rnd(id, 26)), skew: between(f.skew, rnd(id, 21)) }),
           seed: rnd(id, 15),
           radius: between(f.radius, Math.pow(rnd(id, 14), 2)),
           gain: between(f.gain, rnd(id, 16)),
