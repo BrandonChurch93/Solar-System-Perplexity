@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T18:23:11.565Z",
+ "pushed": "2026-11-26T18:54:49.596Z",
  "head": "5ccff1674ccb3ed7fab80c6f251aee1e8d989d53",
- "note": "18:23 trial Z92 (arcs.json alone, not named, not pushed): thinner strands, longer throws at the right foot; finals 0, 90, 60 of it are drawing | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "note": "18:54 trials Z93 to Z98 after the name (not named, not pushed): more and thinner strands that cross, a colour law that keeps the hue at the limit (gold, no yellow of two clipped channels), the tube's colour by the light across its width | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T18:54:48.977Z",
+   "file": "20261126185448977-note-z92f-arch3.jpg",
+   "source": "../../../../tmp/v/z92f-arch3.jpg",
+   "kind": "note",
+   "label": "trial Z92 at final 90, not named: approved above, the named state in the middle, Z92 below",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T18:54:48.317Z",
+   "file": "20261126185448317-note-z98-arch3.jpg",
+   "source": "../../../../tmp/v/z98-arch3.jpg",
+   "kind": "note",
+   "label": "trial Z98, not named, not pushed: draft 90 at 1 to 1, approved above, Z97 in the middle, Z98 below (strands that cross, thinner, pale cores with cool flanks)",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T18:23:10.809Z",
    "file": "20261126182310809-note-z92-rf.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/s1-90.jpg",
    "kind": "note",
    "label": "trial S1 not named (needs two lines of shared code, not committed): approved top left; S1 at 90 top right, at 60 bottom left; Z88 with the rigid sky at 90 bottom right; half size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T17:43:28.595Z",
-   "file": "20261126174328595-note-z88-909192.jpg",
-   "source": "../../../../tmp/v/z88-909192.jpg",
-   "kind": "note",
-   "label": "trial Z88 not named: 90, 91, 92 draft, the right shoulder at 1 to 1, strands stand, beads move",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T17:43:28.015Z",
-   "file": "20261126174328015-note-z88-rise.jpg",
-   "source": "../../../../tmp/v/z88-rise.jpg",
-   "kind": "note",
-   "label": "trial Z88 not named: rise 211, 221, 229 draft, named Z81 left, Z88 right, 1 to 1",
    "stop": "sun"
   }
  ]
