@@ -1,0 +1,21 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars, north at the top, about 500 km across. Its forms, its light and its darkness are right. The Sun stands low in the upper left (north west). A deep narrow canyon runs from the upper right of the middle to the lower left; it lies in the cast shadow of its own walls and is nearly black. Along the bottom runs a far larger trough system from west to east. The picture is rough: outside its middle the ground is smeared and blurred, with soft blotches and flat even patches, and a sharp square stands in the middle like a pasted tile.
+
+Image 2 is an oblique aerial photograph taken low over the very same land, looking west. It shows the rock, the colours and the air of this land: dark brown and umber layered bedrock, warm orange only where the low Sun strikes, a canyon floor in deep shadow that is nearly black with the ground in it just to be made out.
+
+Task: repaint image 1 as one seamless, sharp nadir orbital photograph of this land, with the same framing, the same scale and north at the top.
+
+1. The middle of image 1 (the square that takes thirty eight eighty fifths of its width, centred) is already final. Keep it as it is: every form, every shadow and its brightness. Carry its ridges, its valleys, its light and its shadows on outward into the land around it, at the same sharpness, so that no border of that square can be seen and the middle no longer reads as a tile. The ground around the square gets the same kind of ridged, eroded relief in the same low light, and its brightness and colour pass without a step into those of the square.
+
+2. The narrow black canyon goes on beyond the square to the lower left as the same canyon: the same width, the same black cast shadow, the same ragged rims, down to where it meets the large trough at the bottom. No pale or bright streak beside it.
+
+3. The bright orange glow at the left side of the square is a fault. Make it the same ground as the land around it.
+
+4. Every large form stays exactly where it is and keeps its size and outline: the narrow canyon, the large trough system along the bottom with its walls and floors, the broad dark and light regions of the plain. Nothing is moved, added or taken away.
+
+5. Light and dark stay where they are. What is dark in image 1 stays just as dark, what is lit stays lit, at the same brightness. Do not brighten the shadows and do not darken the lit ground. Along the four outer edges of the picture the brightness and the colour stay exactly as they are in image 1.
+
+6. The outlines of the shadows are natural: ragged along the ground, following ledges and spurs, cast toward the lower right. Never straight, never a soft blob, never a flat even patch.
+
+7. Sharp natural detail everywhere, the same sharpness over the whole picture. No tiles, no blocks, no grid, no smear, no blur, no streaks, no combed parallel lines, no etched lines, no bright outlines, no blue, no white. No cloud, no haze, no water. No new craters.
+
+A photograph from orbit: no horizon, no sky, no text, no border, no vignette.
