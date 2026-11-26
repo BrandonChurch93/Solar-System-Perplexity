@@ -102,7 +102,7 @@ uniform vec4 uCloudShift;
 uniform vec2 uCloudTurn;
 uniform vec3 uCloudTop;
 uniform vec3 uCloudDeep;
-uniform float uCloudSat;
+uniform vec2 uCloudSat;
 uniform float uCloudTaps;
 uniform float uCloudWave[${AGES}];
 uniform float uCloudRise[${AGES}];
@@ -237,6 +237,7 @@ uniform vec2 uAboveMix;
 uniform vec3 uSunCurve[${CURVE_KNOTS}];
 uniform vec3 uSunChart;
 uniform vec4 uShadow;
+uniform float uThrough;
 uniform vec4 uFill;
 uniform float uFillOpen;
 uniform vec3 uLayer;
@@ -394,10 +395,10 @@ float shadowAt(vec3 from, float least, float start) {
     }
     gap -= most;
     lit = min(lit, gap / (uShadow.y * tau));
-    if (lit <= 0.0) break;
-    tau += max(gap / uShadow.z, start);
+    if (lit <= -uThrough) break;
+    tau += max(abs(gap) / uShadow.z, start);
   }
-  lit = clamp(lit, 0.0, 1.0);
+  lit = clamp((lit + uThrough) / (1.0 + uThrough), 0.0, 1.0);
   return lit * lit * (3.0 - 2.0 * lit);
 }
 void main() {
@@ -529,9 +530,8 @@ void main() {
       added *= 1.0 - thin;
     }
     vec3 lit = sunLit(dot(normalize(vec3(there.xy / uRadius - steep, 1.0)), uSunChart)) * shadowAt(there, fine, uShadow.x * hs);
-    float sunk = max(-tall, 0.0);
     vec3 hue = max(guide / max(dot(guide, vec3(0.2126, 0.7152, 0.0722)), 1e-5), vec3(1e-3));
-    vec3 ground = guide * exp(uCloudTop * max(tall, 0.0) - uCloudDeep * sunk) * pow(hue, vec3(uCloudSat * sunk)) * (lit + uFill.rgb * clamp(uFill.w + uFillOpen * tall, 0.0, 1.0));
+    vec3 ground = guide * exp(uCloudTop * max(tall, 0.0) - uCloudDeep * max(-tall, 0.0)) * pow(hue, vec3(-min(uCloudSat.x * tall, uCloudSat.y))) * (lit + uFill.rgb * clamp(uFill.w + uFillOpen * tall, 0.0, 1.0));
     col = ground * through + added;
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
@@ -709,7 +709,7 @@ export class CloudDeck {
       uCloudTurn: { value: new THREE.Vector2(cl.octaveTurn, cl.ageTurn) },
       uCloudTop: { value: new THREE.Vector3().fromArray(cl.top) },
       uCloudDeep: { value: new THREE.Vector3().fromArray(cl.deep) },
-      uCloudSat: { value: cl.saturate },
+      uCloudSat: { value: new THREE.Vector2(cl.saturate, cl.pale) },
       uCloudWave: { value: waves },
       uCloudRise: { value: cl.ages.slice(0, AGES).map((a) => a * cl.rise) },
       uCloudGeo: { value: new THREE.Vector4(Math.max(...waves), 0, most, 0) },
@@ -724,6 +724,7 @@ export class CloudDeck {
       uShadow: { value: new THREE.Vector4(l.sun.shadow.startFeet, l.sun.shadow.soft, l.sun.shadow.closing, l.sun.shadow.steps) },
       uFill: { value: new THREE.Vector4(l.sun.fill[0]!, l.sun.fill[1]!, l.sun.fill[2]!, l.sun.open[0]!) },
       uFillOpen: { value: l.sun.open[1]! },
+      uThrough: { value: l.sun.shadow.through },
       uCloudTaps: { value: cl.taps },
       uFoot: { value: new THREE.Vector3().fromArray(l.foot) },
       uSunAz: { value: new THREE.Vector2(Math.cos(az), Math.sin(az)) },

@@ -2780,3 +2780,81 @@ More rows of the table above (3150, draft):
 - Lanes take the matter's own hue: `look.cloud.saturate` (the guide over its own light, to the power of saturate times the depth of the detail), `deep` is now the same number on the three channels. Before it the lanes lost red most, which greyed the storm.
 - Where the low band still departs in k (parts of the 5.547 by cell of an 8 by 5 grid): the six cells of the lower right hold 2.29; there the frame reads 23 to 32 and the approved image 7 to 16. The floor of the matter's light (0.012) binds there: lit level ground reads the matter's light times 1.3.
 - Share of detail by code in state k at preview size (`work/r23/share2.py`): frames 3060, 3150, 3239: contrast 0.8449, 0.8718, 0.8585; the page's measure (absolute detail of the flat guide's frame over the full frame's) prints 1.5315, 1.5126, 1.5212 because the flat guide is lighter than the solved one in the dark parts; matched 1.0722, 1.1325, 1.1289.
+
+### 23:25 to 23:40 UTC: state n, the answer to MAIL 1310, commit 2b86225, state p begun
+
+READ FIRST AFTER A COMPACTION: stage 2 is committed and pushed as 2b86225 (state n). The answer to MAIL 1310 went to /root at 23:31 (kept word for word in `work/r24/mail/OUT-2331-answer-1310.txt`). A ruling is asked there and not yet given: (A) dark matter allowed with the floor of the matter's light at 0.012, (B) dark matter down to about 0.004, (C) floor 0.07 and line (i) dropped for the frame. I build on (A) until the Builder rules.
+
+| state | file in `work/r23/t` | seconds | plain | low band | bands 1 to 2, 2 to 4, 4 to 8, 8 to 16 | eye |
+|---|---|---|---|---|---|---|
+| n | n-3150.png | 147 | 14.7584 | 4.801 | 0.93 0.92 0.87 0.86 (under 1 px 1.19) | k with the gate and three more rounds: a deck with depth, far field smooth with streaks. Wrong: soft orange glows where the solve painted lit rims into the matter, lower left smooth folds (dunes, not cumulus), storm disc brown orange without rings, lower right 29 to 32 against 7 to 16, black specks along steep edges |
+
+- Of n's 4.801 the seven cells of the lower right hold 2.307 and all the rest 2.494 (8 by 5 grid). Bottom row frame over approved: 16/16 27/26 29/28 23/19 32/24 29/16 29/8 31/7.
+- After the commit (working tree, state p):
+  - The unrest that gates the billows is now taken from the uncut ground (the plates before the cut): the root mean square of its light against the cut guide's, over the guide's light plus `guide.rough.floor`, averaged over `guide.rough.wideUnits`, kept in `out/work/jupiter/guide/wild-NAME.npy`. This is the detail the cut removes, so it marks where the approved image has cumulus. Seen in the frame (`work/r24/roughview.py RANGE OUT`): the lower left is full, the storm's rim high, the far field low.
+  - Dark matter is rough too: the stored value is the larger of the unrest over `most` and `darkShare` times the guide's wide darkness in stops under `guide.relief.basinLight` over `darkStops`. Tall tops seen against the Sun show their shaded sides: darkness cast by the Sun and not held in the matter.
+  - `solve.py`: each round is cut at the guide's own cut (`guide.cutUnits`) before it is added, so the solve cannot carry anything finer than the guide; the mean of the three channels is held under `guide.solve.upLog2` (no painted lit rims).
+  - The hue law is one line over the whole range of the detail's height: the matter's hue to the power of minus `saturate` times the height (tops paler, lanes deeper), the paling held at `pale`. `look.cloud.top` is the same number on the three channels.
+
+### 23:38 to 23:50 UTC: the q series (3150, preview, draft, no solve): from terrain to cumulus
+
+The first run of state p (with `pale` 0.8) drained the near field to grey and read as rock; chain p was stopped. The q series changed one thing a picture, all without a solve (the deck.json of each is kept as `work/r24/deck-qN.json`, the pictures as `work/r23/t/qN-3150.png`):
+
+| state | change | low band (preview) | eye |
+|---|---|---|---|
+| q1 | `pale` 0.3, `saturate` 0.8 | 15.79 | colour back; lumps of 100 px and more, terrain |
+| q2 | `waveUnits` 0.25 to 0.12 | | finer forms, streaks along the streamlines |
+| q3 | `fall` 0.42 to 0.2 | | more fine relief, still rock |
+| q4 | `rise` 0.3 to 0.45, `capUnits` [0.14, 0.12, 0.14], `dome.bare` 0.1 | 16.84 | eroded rock with terraces: wrong. But the cast shadows alone darken the lower left |
+| q5 | `dome.profile` [1, 1, 1] (round tops on every age, no plateaus) | 16.98 | the first state that reads as cumulus: lit tops, shaded gaps |
+| q6 | `sun.shadow.soft` 0.15 to 0.4 | 18.08 | as q5, softer; chosen |
+| q7 | `dome.bare` 0.3, cell reach 0.6, jitter 0.8 | | bubbles, foam: not taken |
+
+- What q6 shows by the grid with no solve at all (frame over approved, bottom row): 19/16 14/26 14/28 8/19 18/24 20/16 22/8 22/7. The lower left is now darker than the approved image by the Sun's cast shadows alone, and the lower right fell from 29 to 31 down to 22. So rough ground under this Sun at 33.3 degrees is dark by itself, and the darkness the solve has to hold in the matter shrinks. The storm's bands and the far side are too dark now (56 against 93): they must be calmer (the gate's range).
+- The plateaus (profile under 1) were the cause of the look of rock terraces. Round tops on all three ages read as cloud.
+
+### MAIL 1340 (23:53 UTC, binding, word for word): the ruling on the dark thirds, and motion first
+
+> MAIL 1340 from the Builder (/root), 23:53 UTC. RULING on your question 3. I have looked at state n at 3150 myself; Brandon was shown it at 23:46 as a draft (status 343).
+>
+> (1) Neither line gives way. (B) and (C) are out.
+>
+> (2) Why: the approved picture's dark thirds show lit rims over shade, so its darkness is relief: tall tops with the depths in their cast shade. At the Sun's 33.3 degrees a gap is in full shade when it is deeper than 0.66 of its width. Build the darkness that way.
+>
+> (3) (A) is the scaffold only. Report the matter's floor with every state; it has to rise with every state. Until the matter stands without the scaffold, read line (i) both over the whole frame and outside the seven cells. A name needs the whole frame.
+>
+> (4) The solve may not paint lit rims into the matter. Rims come from light on relief.
+>
+> (5) MOTION BEFORE DARKNESS. Brandon's words of 20:21: "Jupiter storm is spinning on the surface view. Also looks like an image that is being warped by like a fisheye or something. It shouldn't look like that. It should look like it's made out of 3JS." So your next state is the 60 fps series with the lens test, sent as an mp4: the storm's cloud moves by the flow field and does not turn as a disc, tops slide against depths, and straight lines stay straight through the lens.
+>
+> (6) Cost is no bar; 146.8 s a frame is fine. Brandon: "you can make an expensive 3JS budget".
+>
+> (7) NEW MAIN: code tip 1f51abc9a151db2cffca8eb0cb1aec99eed1f7f7 (take batches 14 and 15 merged at 23:39 and 23:49; batch 14 touches src/core/engine.ts, src/director/film.ts and src/space/sky.ts, none of your files). Merge origin main before your name and say which main it holds.
+
+READ FIRST AFTER A COMPACTION: the next state owed is the 60 a second series with the lens test, sent as an mp4 (point 5). Darkness comes after it and is built by relief (point 2), with the matter's floor (`guide.solve.albedo[0]`) reported with every state and rising with every state (point 3): n 0.012, s 0.016. Line (i) is read both over the whole frame and outside the seven cells of the lower right. Main to merge before the name: 1f51abc9a151db2cffca8eb0cb1aec99eed1f7f7.
+
+What I read from it for the build:
+
+- The mp4 holds: the 60 frames at 60 a second round 3150 (capture frames k 6270 to 6329 at rate 2, film 3135 to 3164 and a half) at V 0.0165, the same at my V 0.051 beside it (MAIL 1307 a), and the lens test (MAIL 1307 e: the same 20 film frames 3141 to 3160 at 64, 50 and 40, same eye point and aim).
+- Tool: `npx tsx work/r24/kseries.ts DIR FORMAT FROM TO [STEP]` from `/home/user/workspace` (one session, draft tier, rate 2, no grain unless `DIAG` says otherwise, kept files are skipped). Pure render time at preview size is 43 s a frame, so 60 frames take 43 minutes.
+- The dark thirds by relief, worked out before building: the approved picture's dark thirds read 7 to 16 in the shade and 60 to 120 on thin rims. Matter of 0.07 fully lit reads about 95 to 140, and in full shade with the fill shut about 6 to 17. So the picture is matter of about 0.07 with no more than a tenth of the seen surface lit: towers at least twice as tall as wide with unequal heights, gaps deeper than 0.66 of their width, seen from their shaded side (the Sun stands 40 degrees left of the aim, up to 88 degrees at the right edge of the frame). With round tops as tall as wide about a quarter to a third of the seen surface is lit, which reads 40 and more: not dark enough. Today's tops are a fifth to a half as tall as wide.
+
+### 23:50 to 00:06 UTC (26 Nov): q8 to q10, the solved states r and s, the tools of the series
+
+READ FIRST AFTER A COMPACTION: the tree is state s (q10 with the matter's floor at 0.016 and three solve rounds; `work/r24/deck-s.json`, `work/r24/clouds-s.ts`, `work/r24/solve-s/`). It is the ground of the 60 a second series. Nothing after 2b86225 is committed until this section's commit.
+
+| state | change | size | plain | low band | bands 1 to 2, 2 to 4, 4 to 8, 8 to 16 | eye |
+|---|---|---|---|---|---|---|
+| q8 | `rough.range` [0.3, 0.9] to [0.45, 0.95] (calmer gate) | preview | | | | far field and bands calmer |
+| q9 | `waveUnits` 0.12 to 0.09 | preview | | 16.26 | | fine spiral streaks in the storm, larger sense of scale |
+| q10 | light through thin crests (`sun.shadow.through` 0.5: a crest shades only below that depth) | preview | 22.90 | 15.69 | 1.15 1.10 1.01 0.97 | chosen look without a solve |
+| r | q6 and three solve rounds, floor 0.012 | master | 19.765 | 11.2592 | 1.11 1.05 0.96 0.90 (under 1 px 1.48) | far cumulus banks read as film; storm a lumpy clay bowl; right third lit grey blue lumps; near tops large and smooth. 147.0 s |
+| s1 | q10, floor 0.016, no solve | preview | 23.43 | 16.24 | 1.15 1.10 1.02 0.98 | |
+| s4 | s1 and three solve rounds (solve total down to -4.0 stops in places) | preview | 18.99 | 9.27 | 1.15 1.10 0.99 0.90 (under 1 px 1.31) | a sculpted deck with depth, no painted look. Wrong: reads as wet clay more than cloud, bubbles everywhere where the approved image is silky streaks with cumulus only on band edges; lower left dark smooth lumps; right third grey blue |
+
+- The matter's floor (MAIL 1340 point 3): n 0.012, r 0.012, s 0.016.
+- Line (i) both ways, tool `python3 work/r24/line1.py FRAME` (from `/home/user/workspace`). The seven cells are, in the 8 by 5 grid counted from 1: the bottom row's columns 4 to 8 and the row above it columns 7 and 8 (this split gives n's 2.307 and 2.493 again). n (master): whole 4.799, mean outside the seven cells 3.022, inside 13.180. s4 (preview, read at 1920): whole 9.269, outside 8.751, inside 11.714. s1: whole 16.239, outside 16.716. Main's own draft of 3150 (`work/r21/mainf/k006300-r2-draft.png`) by the same tool: whole 3.208, outside 3.689, inside 0.940.
+- So the rougher ground of q10 costs line (i) about 4.5 against n outside the cells: row 2's left half and row 3 are too dark (126 against 148, 105 against 130, 72 against 100) with the solve at its limit. To cure after the motion: calmer streaked sheets where the approved image is silky, cumulus only where its bands break.
+- Seen at 3060 (first frame of the series' ends): two straight dark lines in the lower left and at the bottom middle. Not the solve (the relief is built from the plain guide, `high = relief(plain, ...)`). To trace: the edge of the fit eye's frustum in the plates the plain guide is cut from.
+- Tools written: `work/r24/kseries.ts DIR FORMAT FROM TO [STEP]` (run from the repo folder: `npx tsx /home/user/workspace/work/r24/kseries.ts ...`; `tools/lib/common` fixes its root when it is loaded, so a start from another folder fails with a missing `config/showcase.json`); `work/r24/tc2.json` (cameras of all capture frames 6120 to 6479 at rate 2 in chart units, made by `work/r21/tcams2-mine.ts` run from the repo folder); `work/r24/mapview.py` (a frame laid back on the ground chart through its own camera and range view: the top view, camera taken out); `work/r24/turn.py DIR KA KB [HALF PPU]` (optical flow between two top views, the picture's turn by ring against the flow law); `work/r24/mp4.py SPEC.json` (panels with labels, loops, x264); `work/r24/line1.py`.
+- Eye path over the series' second (capture 6270 to 6329): 0.2055 units forward, 0.0081 sideways, 0.0112 down; over the whole view (6120 to 6478): (0.3051, 0.4019, -0.1945).

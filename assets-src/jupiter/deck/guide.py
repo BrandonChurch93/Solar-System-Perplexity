@@ -97,8 +97,11 @@ def main():
     for name, level in cfg['levels'].items():
         n = level['pixels']['full']
         kept = os.path.join(WORK, 'plain-' + name + '.npy')
-        if os.path.exists(kept) and '--fresh' not in sys.argv:
+        stir = os.path.join(WORK, 'wild-' + name + '.npy')
+        rc = cfg['rough']
+        if os.path.exists(kept) and os.path.exists(stir) and '--fresh' not in sys.argv:
             plain = np.load(kept)
+            wild = np.load(stir)
         else:
             if made is None:
                 made = ({key: scene(os.path.join(FULL, 'plate-' + key + '.png')) for key in ['fore', 'near', 'mid', 'far']}, table('deck-tone.bin', deck['tone']), table('deck-calm.bin', deck['calm']))
@@ -106,6 +109,11 @@ def main():
             lin = ground(deck, fields, made[0], made[1], made[2], level['centre'], level['size'], fine)
             plain = cv2.resize(cv2.GaussianBlur(lin, (0, 0), cfg['cutUnits'] / (level['size'] / fine), borderType=cv2.BORDER_REPLICATE), (n, n), interpolation=cv2.INTER_AREA)
             np.save(kept, plain)
+            light = lin @ np.float32([0.2126, 0.7152, 0.0722])
+            even = cv2.GaussianBlur(light, (0, 0), cfg['cutUnits'] / (level['size'] / fine), borderType=cv2.BORDER_REPLICATE)
+            part = (light - even) / (even + rc['floor'])
+            wild = cv2.resize(np.sqrt(cv2.GaussianBlur(part * part, (0, 0), rc['wideUnits'] / (level['size'] / fine), borderType=cv2.BORDER_REPLICATE)), (rc['pixels'], rc['pixels']), interpolation=cv2.INTER_AREA)
+            np.save(stir, wild)
         low = plain
         solved = os.path.join(HERE, 'solve-' + name + '.png')
         if os.path.exists(solved):
@@ -114,15 +122,12 @@ def main():
         lum = low @ np.float32([0.2126, 0.7152, 0.0722])
         low = low * (np.clip(lum, cfg['solve']['albedo'][0], cfg['solve']['albedo'][1]) / np.maximum(lum, 1e-6))[..., None]
         high = relief(plain, deck, level)
-        rc = cfg['rough']
-        logs = np.log2(np.maximum(plain @ np.float32([0.2126, 0.7152, 0.0722]), rc['floor']))
-        wide = rc['wideUnits'] / (level['size'] / n)
-        part = logs - cv2.GaussianBlur(logs, (0, 0), wide, borderType=cv2.BORDER_REPLICATE)
-        wild = np.sqrt(cv2.GaussianBlur(part * part, (0, 0), wide, borderType=cv2.BORDER_REPLICATE))
-        coarse = np.round(np.clip(cv2.resize(wild, (rc['pixels'], rc['pixels']), interpolation=cv2.INTER_AREA) / rc['most'], 0, 1)[::-1] * 65535).astype(np.uint16)
+        stops = np.log2(np.maximum(cv2.GaussianBlur(plain @ np.float32([0.2126, 0.7152, 0.0722]), (0, 0), cfg['relief']['basinWideUnits'] / (level['size'] / n), borderType=cv2.BORDER_REPLICATE), 1e-6) / cfg['relief']['basinLight'])
+        dark = cv2.resize(np.clip(-stops / rc['darkStops'], 0, 1), (rc['pixels'], rc['pixels']), interpolation=cv2.INTER_AREA) * rc['darkShare']
+        coarse = np.round(np.clip(np.maximum(wild / rc['most'], dark), 0, 1)[::-1] * 65535).astype(np.uint16)
         for folder in (FULL, WEB):
             coarse.tofile(os.path.join(folder, 'guide-' + name + '-rough.bin'))
-        print('rough', name, 'tenth', round(float(np.percentile(wild, 10)), 3), 'median', round(float(np.median(wild)), 3), 'ninetieth', round(float(np.percentile(wild, 90)), 3))
+        print("rough", name, "wild tenth", round(float(np.percentile(wild, 10)), 3), "median", round(float(np.median(wild)), 3), "ninetieth", round(float(np.percentile(wild, 90)), 3), "dark share over 0.25", round(float((dark > 0.25).mean()), 3))
         for folder, key in ((FULL, 'full'), (WEB, 'web')):
             m = level['pixels'][key]
             out = np.round(np.clip(display(cv2.resize(low, (m, m), interpolation=cv2.INTER_AREA)), 0, 1) * 255).astype(np.uint8)
