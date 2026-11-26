@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T14:00:21.313Z",
+ "pushed": "2026-11-26T14:13:11.514Z",
  "head": "6eb9a2fcbd1b74b66f0895f8cff014348be83d82",
- "note": "Whole dive line of the cure: 240 of 260 frames rendered, reader not yet run",
+ "note": "cure: whole dive line read green on the kit's limits, level step at 1878 0.2850 against main 0.1930 named; rise line rendering",
  "looks": [
+  {
+   "time": "2026-11-26T14:13:10.661Z",
+   "file": "20261126141310661-note-earth-dive-changes.jpg",
+   "source": "../../../../tmp/gl/k24/P/earth-dive-changes.png",
+   "kind": "note",
+   "label": "cure, the tool's own sheet of the whole dive line (rate 2)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T14:13:09.843Z",
+   "file": "20261126141309843-note-col-3752-3756.jpg",
+   "source": "../../../../tmp/gl/k24/A/col-3752-3756.jpg",
+   "kind": "note",
+   "label": "cure beside main 1876 to 1878 at the south shore, 1 to 1",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T14:13:09.049Z",
+   "file": "20261126141309049-note-border-mid-3746-3753.jpg",
+   "source": "../../../../tmp/gl/k24/A/border-mid-3746-3753.jpg",
+   "kind": "note",
+   "label": "cure, whole dive line, bottom border 1873 to 1876 + 1/2 at 1 to 1, frame by frame",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T14:00:20.556Z",
    "file": "20261126140020556-note-dive-line-contact.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/k24/A/low-3754-cure-main.jpg",
    "kind": "note",
    "label": "k3754 (1877) lower part at 1 to 1, cure over main",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T13:02:21.989Z",
-   "file": "20261126130221989-note-bot150.jpg",
-   "source": "../../../../tmp/gl/k24/A/bot150.jpg",
-   "kind": "note",
-   "label": "Level step at 1878: bottom 150 rows x 700 to 1400 at 1 to 1, cure k3755 to 3757 over main k3755 to 3757; towers and island leave the bottom border over the unveiled sea",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T12:28:44.631Z",
-   "file": "20261126122844631-note-z16-z22-3758.jpg",
-   "source": "../../../../tmp/gl/k24/A/z16-z22-3758.jpg",
-   "kind": "note",
-   "label": "1879: zone 13.5 to 16 over zone 13.5 to 22 with the streak law",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T12:28:44.092Z",
-   "file": "20261126122844092-note-pair-f1-4252.jpg",
-   "source": "../../../../tmp/gl/k24/A/pair-f1-4252.jpg",
-   "kind": "note",
-   "label": "the reader's back pair at 2126: frame 2134, frame 2126 carried onto it (a smear at the old horizon), where it judges (2.28 percent of the frame, value 0.40; main 0.58 on 1.38 percent, not counted)",
    "stop": "earth"
   }
  ]
