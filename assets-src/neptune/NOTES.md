@@ -11819,3 +11819,66 @@ NO SECOND NAME: the trial failed my own proof in the rise (my look of 17:46, whi
 > Looks: agent/engine-handover-looks 37ade2b4f5a223b9463041f1c71a7bcb4c39f344 (4952 whole and tiles, the pair, 4953 draft beside review).
 >
 > (attachment: p52r-53r.png)
+
+## 26 Nov, 18:00 to 18:24 UTC: lab log (after the close for a second name: two controls on why the trial's clumps read as a changing pattern; for the next round)
+
+Nothing here is named and nothing here is in the tree: the stop's files are the name's (7a620a39) to the byte; the controls are
+tools (/tmp/ctl-d.sh swaps one line of deep.ts for a trial text, draws at 960 preview draft, puts deep.ts back; git status clean after each).
+
+- 18:01:41 to 18:11:10 CONTROL D3. Asked: is it the field's coming in by the distance (far.distance [3, 8]) that makes the first
+  trial's pattern, as I wrote at 17:46 without a control? D3 = the first trial's field (value noise fixed on the body at the
+  sheet's point, wave 8 texels of the map, 6 octaves, fall 0.65, gain 4, cut at 0, the map's cover times it) with no onset by
+  distance (on at every distance) and each wave counted by its own size in pixels, smoothstep(2, 4) of the pixels per wave.
+  Frames 4668, 4972 to 4986, 4718 to 4744, 4860. Frame times 10 to 28 s.
+  - 4668 (the hold): the same bytes as the name's.
+  - against the name at 960, the whole frame: 4973 mean 1.522, largest 110, 5.56 percent of the pixels over 8 levels; 4975 2.274,
+    115, 8.83 percent; 4978 2.804, 116, 10.64 percent.
+  - 4860 against the name's 4860 at 960: mean 0.265, largest 54, 0.90 percent over 8 levels, 31499 px, y 8 to 528: a visible
+    change of the surface view's far ground (against MAIL 1475 h).
+  - the pattern by frame (my proxy, whole frames, 960; the pair is frame i and frame i + 8), D3 | the name | the first trial:
+    rise 4972 0.3056 | 0.2783 | 0.2500; 4973 0.3670 | 0.2962 | 0.3463; 4974 0.3212 | 0.2169 | 0.2883; 4975 0.5279 | 0.1942 | 0.5071;
+    4976 0.4683 | 0.2078 | 0.5057; 4977 0.3476 | 0.1937 | 0.3791; 4978 0.3717 | 0.1856 | 0.4071.
+    dive 4720 0.4271 | 0.1773 | 0.4306; 4721 0.5103 | 0.1308 | 0.5143; 4722 0.5554 | 0.1128 | 0.5541; 4723 0.6155 | 0.1059 | 0.6156;
+    4724 0.5971 | 0.1317 | 0.5986; 4725 0.3856 | 0.1297 | 0.3666; 4733 0.4246 | 0.2689 | 0.4180; 4734 0.5287 | 0.2363 | 0.5187;
+    4735 0.4044 | 0.2555 | 0.4744; 4736 0.4603 | 0.2183 | 0.5391.
+  FINDING: the same pattern as the first trial. The onset by distance is NOT the cause; my reading of 17:46 was wrong, and the
+  look of 18:15 says so.
+- 18:13:40 to 18:19:33 CONTROL D4. Asked: is it the coming in of waves by their size in pixels? D4 = D3 with every wave on at
+  every size (no fade of any kind; the waves under a pixel alias, it is a control, not a picture). Frames 4972 to 4984 and
+  4718 to 4732 (28 frames; so the pairs that hold two frames of D4 are 4972 to 4976 and 4718 to 4724; later pairs mix D4 with
+  the name's frames and are no reading).
+  - the pattern by frame, D4 | the name | the first trial: rise 4972 0.3330 | 0.2783 | 0.2500; 4973 0.3679 | 0.2962 | 0.3463;
+    4974 0.3109 | 0.2169 | 0.2883; 4975 0.5383 at (386, 538) | 0.1942 | 0.5071; 4976 0.5133 | 0.2078 | 0.5057.
+    dive 4718 0.3045 | 0.1707 | 0.2768; 4719 0.3462 | 0.1931 | 0.3381; 4720 0.4259 | 0.1773 | 0.4306; 4721 0.5106 | 0.1308 | 0.5143;
+    4722 0.5488 | 0.1128 | 0.5541; 4723 0.6086 at (288, 474) | 0.1059 | 0.6156; 4724 0.5924 | 0.1317 | 0.5986.
+    (The pop the rows print at 4984 and 4732, 1.6063 and 1.7109, is the seam between D4's frames and the name's: no reading.)
+  FINDING: the same pattern again, at the same frames and the same place (the lower left, the nearest ground in the view).
+  So no coming in of any kind makes it: a field that is simply there reads the same. The three trials share one thing
+  only: the map's cover times a field fixed at one shell.
+- 18:22 READ IN THE CODE, a guess until its control: the field of the trials is read at the point where the eye's ray enters
+  the layer (the sheet's sphere, sheetUp, before the cirrus bend), while the cover it multiplies is the mean of the map along
+  the ray's run through the slab (deep.ts, ONE BODY: from dcl toward dclEnd, the points at slabShare times the run), so the
+  cover's middle lies up to half the run deeper than the field's point, and by how much depends on the slant. In the dive
+  the slant to one place of the ground changes fast (heights 0.388 radii at 4720, 0.214 at 4728), so the cover slides
+  under the field: the clumps, which are their product, change form. The name shows the cover alone, which is soft there
+  (the pattern 0.11 to 0.19 at 4718 to 4725). Controls that would tell: D5, the field read at the middle of the same run as the cover; D6,
+  cover and field both at the entry point (no slab), which is the flat sheet that ONE BODY took out and so only a control.
+- 18:24 main is at d75461fc8 (Status 403, d388), not merged in. Its status lists Neptune 7a620a39 as named and in measure,
+  nr8 02 and 03 still out. d388 (1) holds Earth's name for a pattern line green on main and over the limit on the take
+  ("A line green on main and over the limit on the take is a new red line"): the same law by which the trial far.grain
+  was not named.
+
+## 26 Nov, 18:15 UTC: the look, a line of 17:46 corrected by its control, to the Builder (word for word; sent about 18:14:50; attached look-N24.jpg, d3-dive.jpg; low priority)
+
+LOOK, neptune_builder, 18:15 UTC (low; no answer needed). The name stands: 7a620a3966314e7abeecc70b206990d2cc588499. No second name comes (my look of 17:46); your MAIL 1525 point 2 is answered (17:46).
+
+1. THE BRANCH: agent/neptune-place is at ee4e43543: the trial far.grain is taken out again by a plain revert (8b382aa5b), so the stop's files are the name's to the byte (git diff 7a620a39 over src/stops/neptune, public/assets/neptune and config is empty); the notebook holds the trial to 18:00 and the trial itself is kept as a patch file. Main's 52ff2250 is not merged in; nothing is named on this tip.
+
+2. A LINE OF MY LOOK OF 17:46 CORRECTED BY ITS CONTROL. I wrote there, as a reading without control, that the trial's clumps change because the field comes in by the distance. The control is drawn (D3, a tool, 960, draft: the field at every distance, each wave coming in only at 2 to 4 pixels of its own length): the pattern by my proxy reads the same as the first trial, 0.5279 at 4975 (first trial 0.5071, the name 0.1942) and 0.6155 at 4723 (0.6156, the name 0.1059). So that was NOT the cause. What I see instead at the dive's place (picture 2: the lower half of 4720 to 4726, the name | D3): at 4720 the map's own fine grain is still seen there as small flecks, in both; in the name the flecks blur into soft patches by 4726; in the trial other clumps form over them from 4722. My measure of a wave's size takes the length as the eye sees it foreshortened, so on ground seen at a slant the field comes in after the map's own grain is already resolved across the view. A second control is drawing now (the field on at every size, no coming in at all); only that tells whether such a field can hold its pattern at all. Not for a name today; for the next round's list.
+- D3 keeps the hold: 4668 at 960 is the same bytes as the name's. It moves 4860 more than the first trial: mean 0.265, largest 54, 0.90 percent of the pixels by more than 8 levels, at 960 (the far ground, against MAIL 1475 h): one more reason it is not a name.
+
+3. handover_engineer's word of 17:54 on the entry at review tier (his tree: my older tip 2b9dbf28 with the entry): 4952 and 4953, the rise's onset pair, are seen: limb, stars and every cloud edge drawn once in both, no difference in softness he can name; light by class within 0.25 of the drafts. With 4956 (17:17) and 4757, 4758 (16:08) that is five review frames with the entry and no double exposure. STILL RED by him: 4954 lands about 18:27 and 4951 about 18:51, not seen; he holds no review frame without the entry at 4952 and 4953; the check of single pixels in thin cirrus at draft (4981 to 5600 pixels at 1.5 of 255 in the drafts of 4951 to 4957; 619 to 826 at review) stands as an open fault of the name. I looked at his two sheets: I see the same.
+
+4. The look (picture 1): 4860 of the name beside the approved, G17 0.972 / 0.659 (main 0.934 / 0.549), plain 21.144 (main 22.986); 92.0 s a draft frame at 1920. At 960 the trial frames take 10 to 28 s each.
+
+Pictures: 1 look-N24.jpg. 2 d3-dive.jpg (the lower half of 4720 to 4726 at 960: the name | the control D3).
