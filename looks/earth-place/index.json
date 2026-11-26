@@ -1,9 +1,17 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T17:51:48.238Z",
- "head": "7dc041e119310f64914455b9aa96ec22dbc79ace",
- "note": "17:51 UTC: handover tool green on both moves; merged with main a2bcb2ef (head 7dc041e1), path part green, cut clean; whole units run on the merged tree; 1755 mine beside main's final",
+ "pushed": "2026-11-26T18:08:34.454Z",
+ "head": "774abe6a9a625ca12ecfece9d2420d36ee1a1c30",
+ "note": "named 774abe6a at 18:07 with the rise row 2126 + 1/2 red over the limit first on the list; main's finals of 1857 and 2156 are drawing now for the answer",
  "looks": [
+  {
+   "time": "2026-11-26T18:08:33.712Z",
+   "file": "20261126180833712-note-finals-both.jpg",
+   "source": "../../../../tmp/gl/k24/Q/finals-both.jpg",
+   "kind": "note",
+   "label": "name 774abe6a: my four finals beside main's final of 1755 and main's kept stills",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T17:51:46.719Z",
    "file": "20261126175146719-note-pair-1755-mid.jpg",
@@ -71,14 +79,6 @@
    "stop": "earth",
    "segment": "earth.dive",
    "frame": 1888
-  },
-  {
-   "time": "2026-11-26T17:01:11.054Z",
-   "file": "20261126170111054-note-m2156-land.jpg",
-   "source": "../../../../tmp/gl/k24/Q/m2156-land.jpg",
-   "kind": "note",
-   "label": "2156 final 345d510f, x 560 y 120 at 1 to 1: lands soft, specks in the Gulf",
-   "stop": "earth"
   }
  ]
 }
