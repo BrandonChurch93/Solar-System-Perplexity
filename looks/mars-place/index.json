@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T14:59:43.976Z",
+ "pushed": "2026-11-26T15:14:51.586Z",
  "head": "04b82e67d37ec981f28da1c28204e67099179d95",
- "note": "the state 04b82e67 in the film, drafts as pairs against step 2",
+ "note": "15:16 speck state pairs 2466 and 2470 against main; state 04b82e67: gate PASS, finals 2325 and 2580 byte equal, units running",
  "looks": [
+  {
+   "time": "2026-11-26T15:14:50.573Z",
+   "file": "20261126151450573-note-pairB2470.jpg",
+   "source": "../../../../tmp/pm/mail/pairB2470.png",
+   "kind": "note",
+   "label": "speck state, 2470 draft, native crop x 814 y 138: left main, right the state",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T15:14:49.717Z",
+   "file": "20261126151449717-note-pairB2466.jpg",
+   "source": "../../../../tmp/pm/mail/pairB2466.png",
+   "kind": "note",
+   "label": "speck state, 2466 draft, native crop x 732 y 113: left main, right the state (29 px over 8 levels in the crop, the violet specks only)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T14:59:43.377Z",
    "file": "20261126145943377-note-vA4.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pm/mail/pair-2448-step2-above-state-below.jpg",
    "kind": "note",
    "label": "draft 2448 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:59:39.005Z",
-   "file": "20261126145939005-note-pair-2440-step2-above-state-below.jpg",
-   "source": "../../../../tmp/pm/mail/pair-2440-step2-above-state-below.jpg",
-   "kind": "note",
-   "label": "draft 2440 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:34:29.616Z",
-   "file": "20261126143429616-note-plate16-step2-against-lead.jpg",
-   "source": "../../../../tmp/pm/mail/plate16-step2-against-lead.jpg",
-   "kind": "note",
-   "label": "1.6 deg plate whole, half size: step 2 left, lead now right",
    "stop": "mars"
   }
  ]
