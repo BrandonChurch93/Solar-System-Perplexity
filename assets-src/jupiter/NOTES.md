@@ -1,7 +1,52 @@
 # Jupiter stop: lab notebook
 
-Agent: jupiter_builder. Branch `agent/jupiter`, looks on `agent/jupiter-looks`. Builder is `/root`.
+Agent: jupiter_builder. Branch `agent/jupiter-relief` (at the start `agent/jupiter`), looks on `agent/jupiter-looks`. Builder is `/root`.
 After a compaction: read `assets-src/shared/STOP-AGENT.md`, then this file, then carry on at "Next".
+
+## THE STATE AT THE FREEZE (26 Nov 2026, written 20:55 UTC after MAIL 1548). Read this first.
+
+MAIL 1548 (20:47): Brandon said move on; the quality loops end; the freeze is at 21:30; nothing of Jupiter's rides; every state stays on its branch "for a later day if Brandon asks". All renders and measures of this machine were stopped at 20:48.
+
+### What the state is
+
+- Branch `agent/jupiter-relief`, pushed. Base: main 262b9a68df0a6bda8d77518539580de554bb0dc5 (the fifth cut, engine a455bc02904b0d42), merged at 07fe3ca9 with no conflict. Looks on `agent/jupiter-looks`.
+- Against main the branch differs in six files: this notebook, `assets-src/jupiter/deck/frames.ts` (a still tool), and `body.json`, `relief.ts`, `set.ts`, `deck.json` under `src/stops/jupiter`. They hold three changes, one on top of the other:
+  1. Build E (commit b037e9ee, named f0688395; HELD by MAIL 1536) with its forerunners, the name e5051fcc and build D: the lift of the far strip's air in the rise, read as luma (`body.json` handover.air, `relief.ts` uAirHeld, `set.ts` heldNow). It lies under the two below and is NOT on main. My mail of 20:18 named only the two below; the mail of the freeze corrects that.
+  2. S2's cure (4fb38149): above the air the deck's far strip shows the globe's own pixels (`body.json` handover.farGlobe {dive 1, rise 0}; `relief.ts` uFarGlobe, standIn, given; `set.ts` farGlobeNow). Ruled by MAIL 1544: the far strip is cured, it stays under the stack.
+  3. The shade (41de45ce): `deck.json` life.haze.shadowTint [0.274, 0.301, 0.305] in place of [1.0, 0.9, 0.75], for items 4 and 5 of round 59 (the dark cool streaks at 3150). Ruled by MAIL 1544: (b) is taken, the depth stays at 0.35.
+
+### What is proven, and where
+
+- The shade at 3150, on base 262b9a68, this machine (entries of 20:18 and 20:42 below): against the approved picture, px darker by more than 16 in the M1 box (x 75 to 675, y 600 to 975), the M2 box (x 750 to 1650, y 225 to 600) and the whole frame at the review tier: main 18.2, 11.9, 6.4 percent; the state 4.4, 4.8, 2.9. Plain match at review: main 6.8978, the state 5.7204; the state's final 5.6864 (sha 3a6efc6a7617dd60; main's final 3150 was not drawn here).
+- The other three judged frames, finals on base 262b9a68: 2895 (52f4e787a768c1f2), 2997 (1754cd4264a29a67) and 3296 (69073d9d570dbf68) are byte for byte main's, with all three changes in.
+- S2's cure, on the OLD base only (66537575 over main 9f09a8a3; entry of 20:18): the reader's slice K 6034 to 6105: the far strip's rows K 6034 to 6049 have 0 over the limit 0.45 against main's 13 (largest 0.360 at K 6042 against 0.840 at K 6039).
+- Build E: its rows and what the eye found are in the entries of 18:03, 18:31 and 18:42 below.
+- tsc exit 0 at the merge 07fe3ca9 (20:12). The value of 41de45ce is one array in a json file.
+
+### What is NOT proven (stopped at 20:48 by MAIL 1548)
+
+- On base 262b9a68: the reader's rows of the state (the dive's part 2 of 2 and the rise's part 1 of 2 were queued, not started); G17 on the state's 3150 (the nograin final was being drawn); the units (vitest); the path part; the hold's frames K 6300, 6301, 6360, 6361 that were to show the shade moves with its band and does not flicker.
+- So it is unknown whether the shade moves any row of the dive from frame 3026 on or of the rise to 3267 (the air weight that scales the haze and its shade is over 0 only there, and at 1 through the whole surface view).
+
+### What is still wrong, by frame and place
+
+On main 262b9a68 and on this branch unless said. The reader's numbers of main are those of round 59 (main 9f09a8a3); between the two mains Jupiter changed only in the sky patch of the hold.
+
+1. Dive, the judged frame 2997 (round 59 items 1 and 6, by the critic): parts of the globe soft and smeared at native size, Io soft, and the belts north west of the storm like embossed plaster. Not this line's work (line A, `agent/jupiter-code`).
+2. Dive, frames 3017 to 3024 + 1/2, the far strip of the deck under the horizon: main's pattern 0.84 at 3019 + 1/2. Cured on this branch by S2's cure (old base rows).
+3. Dive, frames 3032 to 3038 (K 6064 to 6076), about [1412, 384]: pattern 0.571 at K 6068 on this branch, 0.732 on main, limit 0.45. Cause by a control: the second handover, the plates under the stand in against the approved picture laid back from the fit camera (0.322 with the laid back picture off). No cure built. The Builder's lean (MAIL 1544): one picture leads through the whole of 3026 to 3051 and the other only adds where the two agree.
+4. Dive, frames 3047 to 3051 + 1/2 (K 6094 to 6103), about [1676, 992]: pattern 0.604 at K 6102, main 0.612 at K 6098. Cause by a control: the dive's tone goes from whole to none between 3051 and 3057 (0.180 with the tone held whole). No cure built. The Builder's lean: the tone goes over a stretch that ends where the fit view begins. At the full size the pop is 1.25 at 3051 + 1/2 (limit 1.2) on both.
+5. Rise, frames 3244 + 1/2 to about 3262, the far strip at the right: main's pattern 1.40 at 3250, 29 frames over the limit. Build E is the work on it and is held: on E a pale green patch fixed to the ground at the far right (about x 1790 to 1860, y 540 to 570) is in view at 3252 to 3255, earlier than main's 3254 to 3256. E rides only on the three conditions of MAIL 1536 point 3 (quoted in the entry of 19:22).
+6. Dive, frames 3010 to 3019, the upper left rim of the storm (round 59 item 12, the towers): my control found no extra relief coming in between 3010 and 3019 (entry of 18:53); the towers at K 6506 in the rise are open.
+7. Terrain, 3150 and the whole surface view, on MAIN only: dark blue grey streaks across the cream deck between the storm and the horizon and a dark cool streak in place of the lit billow at the lower left (round 59 items 4 and 5). Cured on this branch by the shade.
+
+### How to go on, if Brandon asks
+
+1. Merge main, `npm run build`, then the proofs that were stopped, on the state as it stands: `npm run smooth -- --stop jupiter --kind dive --only pictures --part 2/2` and `--kind rise --only pictures --part 1/2` beside main's own two parts on the same sha; `npm run -s still -- --frame 3150 --tier final --diag nograin --out F` then `python3 tools/measure/g17.py F references/approved/jupiter-close.jpg`; `npx vitest run` alone; the path part.
+2. Because build E lies under the stack, the rise's part 1 will carry E's change. To offer S2's cure and the shade without E, take the lift out first: everything of `body.json` handover.air and what reads it in `relief.ts` and `set.ts` (the name e5051fcc, build D, build E; the entries of 16:00 to 18:31 say what each added), then prove the four judged frames again.
+3. Then a form for each of items 3 and 4 above, each as a switch with a picture, before any edit; `deck.json`, `place.json` and `plan.ts` were not to be edited for S3.
+4. Scratch on this machine was cleared for the master render at the freeze: the reader's stills, all frame sets, my repo's `dist`, and under `out/work/jupiter` every `.npy` canvas (relief, far-canvas, far-known, quilt-known) and the sky scratch. Kept there: `gen`, `patches`, `body`. The shipped assets are in git; the canvases are remade by the scripts under `assets-src/jupiter` as their RECIPE.md files say.
+5. Main's code for the master is in a worktree apart: `/home/user/workspace/main-262b9a68` (public, references and assets-src hard linked from this tree, `git status` clean, main's tracked `out/` not checked out, `npm run build` exit 0 at 20:50).
 
 ## Facts (read from disk, do not trust memory)
 
