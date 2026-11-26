@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T06:09:35.176Z",
- "head": "91f10629062116a2fddd5dd73de93605481a6df5",
- "note": "the name 91f10629: frames after the cure and the judge sheet (99th red at five of eight)",
+ "pushed": "2026-11-26T06:36:12.714Z",
+ "head": "8397bfdccd2c16ede6467fb9e64d41d8714d43b7",
+ "note": "N7 trial: judge of d344 inside every target at all eight (99th 4 to 7), hot rims gone; 2726 and 2427 hardly change",
  "looks": [
+  {
+   "time": "2026-11-26T06:36:11.859Z",
+   "file": "20261126063611859-note-n7-19.jpg",
+   "source": "../../../../tmp/pm/n7-19.png",
+   "kind": "note",
+   "label": "patch-19 middle 2 degrees: main, the name, N7 trial",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T06:36:11.232Z",
+   "file": "20261126063611232-note-n7-four.jpg",
+   "source": "../../../../tmp/pm/n7-four.jpg",
+   "kind": "note",
+   "label": "N7 trial beside the name at 2441 and 2704: hot red rims gone (hot share 0.17 to 0.009 percent at 2441), a pale green rim along the canyon stays",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T06:36:10.589Z",
+   "file": "20261126063610589-note-g27.jpg",
+   "source": "../../../../tmp/pm/g27.png",
+   "kind": "note",
+   "label": "N7 trial (map takes the plate inside 0.8 degrees, plates' field measured again) beside the name at 2726 and 2427: hardly a change at these two",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T06:00:05.190Z",
    "file": "20261126060005190-note-judge-N6.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/pm/g24.png",
    "kind": "note",
    "label": "2726 (top, 4 to 1) and 2427 (bottom, 2 to 1): 2f9e51a6 left, after maptop right; the yellow white glow is gone, a pale rim and a green tinge stay",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T05:28:58.542Z",
-   "file": "20261126052858542-note-st-over.jpg",
-   "source": "../../../../tmp/pm/st-over.jpg",
-   "kind": "note",
-   "label": "N5 whole frames 2415 to 2450 draft",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T05:28:57.389Z",
-   "file": "20261126052857389-note-judge-N5.jpg",
-   "source": "../../../../tmp/pm/judge-N5.jpg",
-   "kind": "note",
-   "label": "judge d344 on N5: eight pairs with and without land-8p5, difference x8",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T05:28:56.268Z",
-   "file": "20261126052856268-note-map-centre.jpg",
-   "source": "../../../../tmp/pm/map-centre.jpg",
-   "kind": "note",
-   "label": "patch-19 middle 2.4 degrees beside land-0p3: the bright patch is the map's paint",
    "stop": "mars"
   }
  ]
