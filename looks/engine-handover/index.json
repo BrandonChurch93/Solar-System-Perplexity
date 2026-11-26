@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T14:36:28.517Z",
+ "pushed": "2026-11-26T15:01:57.188Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune's entry in handover.shutterEnds as one commit (c2a57cd6 on agent/engine-ends-neptune): the plan by frame while the whole suite runs; review frames next",
+ "note": "15:02 UTC: the entry neptune of handover.shutterEnds merged onto main's fourth cut 6b6136fc (tip 04b50f90, not pushed yet); shutter-ends 28 of 28 on it; the whole suite runs; the review frames of the split frames 4758 and 4956 are held meanwhile",
  "looks": [
+  {
+   "time": "2026-11-26T15:01:55.310Z",
+   "file": "20261126150155310-note-f04707.jpg",
+   "source": "../t-arr/out/work/blur/ne-on-draft/f04707.png",
+   "kind": "note",
+   "label": "Neptune 4707 at draft tier on Neptune's tip 2b9dbf28 with the engine's cure and the entry neptune in handover.shutterEnds: sha256 9f8419a62b77d4d4, the same bytes as before the entry (one sample, so the ends weigh nothing)"
+  },
   {
    "time": "2026-11-26T14:36:27.546Z",
    "file": "20261126143627546-note-ends-plan.jpg",
@@ -53,13 +60,6 @@
    "source": "../../../../tmp/seen/pics/veil-pairs.png",
    "kind": "note",
    "label": "Neptune 4690, 4707, 4730 at draft: left tip 2b9dbf28 with the cure, right main's Neptune with the cure"
-  },
-  {
-   "time": "2026-11-26T13:56:36.220Z",
-   "file": "20261126135636220-note-edge-span.jpg",
-   "source": "../../../../tmp/seen/pics/edge-span.png",
-   "kind": "note",
-   "label": "Neptune level edge at eleven frames 4490 to 4610, gain 3 (draft, tip 2b9dbf28 with the cure)"
   }
  ]
 }
