@@ -38,7 +38,7 @@ export const params: MoveParams = {
 }
 
 export const move = {
-  clockRise: 0.5,
+  clockRise: 1,
 }
 
 export function below(span: [number, number], altitude: number): number {
@@ -157,10 +157,11 @@ export class UranusPlan extends StopPlan {
       const x = Math.min((e - from) / (2 * (ref - from)), 1)
       return from + 2 * (ref - from) * (x - x * x * x + (x * x * x * x) / 2)
     }
-    const end = rise.end - this.holdMid
+    const end = (this.seg.travel ?? rise).end - this.holdMid
     if (e >= end) return e
-    const y = ramp(move.clockRise, 1, (time - rise.start) / (rise.end - rise.start))
-    const s = ((1 - move.clockRise) * (rise.end - rise.start)) / (end - ref)
+    const held = rise.start + move.clockRise * (rise.end - rise.start) - this.holdMid
+    const y = ramp(held, end, e)
+    const s = (end - held) / (end - ref)
     return ref + (end - ref) * ((3 - s) * y * y + (s - 2) * y * y * y)
   }
 
