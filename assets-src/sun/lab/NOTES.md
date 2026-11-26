@@ -1313,3 +1313,52 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   0.113 over). Frames 0 and 60 draft (v/lab-0-h31.jpg, v/lab-60-h31.jpg): hold, the same faults as 90.
   SEEN in half-h31f: the approved is a deeper amber with a connected dark net and larger cells in the middle
   distance; mine is lighter there (rows 620 to 800), gold pebbles.
+- 00:38 UTC. MAIL to /root: state h31 (commit 2c088771, not a name): motion (film-h31.mp4, sheet, held group),
+  flicker rows (better than h23, worse than b7), curve outside 0.05 at final on six tenths, sky 0.11 over, the
+  middle distance stated as a matter of true view, list of what is wrong. Growth 2,651,165. NEXT stated: the crisp
+  cover lines and the lanes as one soft net, the middle 0.05 darker, the limb, flicker. Next mail by 02:05 UTC.
+- 00:39 UTC. MAIL 1353 from /root (no answer needed), core verbatim: "RULING on your question: keep the true
+  view. ... the approved picture's cells that do not shrink with distance are a property of a painted picture
+  and are not copied. Where your measures against the approved (the widths in rows 620 to 800) come from this
+  alone, state it beside the number and it is no fault. MY EYE ...: (1) the tops read as metal foil, not as
+  gas, and the cause I see is the hard edge: bright streaks with sharp borders on the tops and a hard line where
+  one cell covers the next. Gas has no surface that can crease. A top should lose its light smoothly from its
+  middle to the lane, and the lane should be a soft dark band of even width that still glows, never a line. Your
+  next step (the cover lines and the lanes as one soft net) is the right one; the fine hot threads must not read
+  as scratches, so judge them at 1 to 1 after that step and take them back if they do. (2) The penumbra's
+  strands read as fibres and are the best part of the frame; leave their form. (3) Flicker against b7 stays a
+  line: not met, as you say. No date changes: next mail by 02:05. Nothing goes on main from the lab before a
+  name with the merge of main 1f51abc9 (batch 16 follows on main soon; merge the newest main then)."
+- 00:39 to 01:02 UTC. THE HARD EDGES, by cause. Trials on h31 (v/trials.sh BASE.json name 'k=v' ...: one draft
+  frame 90 each, lab.json restored at the end; v/trials-a.jpg to trials-e.jpg, crop 860 900 320 160 at 3 times):
+  heat.fold 0 (t2), heat.crease 0 (t3), dome.lobe 0 (t5), heat.ring and breaks 0 (t6), tubes.finger and depth 0
+  (t12, t13: no change at all, the cushion body does not use the tubes' body), fibre thread 0.4 with qSize from 1
+  (t10): none takes the facets of the small cells away. tubes.on false (t4) is another law (not tuned). dome.over
+  1.0 (t7, t9): black floor between the cells (failed, as before). dome.height 0.2 (t8): little change.
+  heat.pit 0 (t14): the lanes turn light brown: most of the lanes' dark came from the pits at the crossings, not
+  from the seam. That is why the darks sat as blobs at the crossings with thin lines between.
+  ground.ts: lab.json "show" (junc, edge, deep, cell, tall, seam) draws one field of the dome as heat, for
+  finding a cause; absent in the film. FOUND with it (v/trials-s.jpg): vJunc, the way to the point where three
+  cells meet, was taken from the two nearest edges of the look's direction and JUMPED where the second nearest
+  edge changed: wedges and shards with straight sides, in the heat (pit 0.9) and in the height (base[7] 0.4),
+  with a radius of 0.04 units (38 px near), so a small cell was all pits and facets. This is the debris and a
+  large part of the crisp lines. The seam field itself (show seam) is a soft band, but its width is a share of
+  the cell's radius: 20 px round a large cell, a hairline round a small one.
+  CURE: junc from the nearest edge with both its neighbours (the larger of the two pits, no jump where they
+  change); heat.lane[4] a lane width in stage units (lane[5], [6]: least and most as a share of the radius), so
+  the lane is of even width; fibre.span the range of qSize.
+- 01:02 to 01:14 UTC. Show fields s5 to s7 of the new junc (two nearest borders of the own cell, root of the sum
+  of squares): no jump inside a cell, but with a radius of 0.04 units it is bright along all borders and over
+  whole small cells, and it differs across a border (each side reads its own second border). So it may not carry
+  a strong pit in heat or height; usable for a soft swell of the lane's width (same level on the border).
+  t16 (lane of even width alone, pits kept): 30.4066, 8.80. t18, t19 (pits weaker): low64 10.42, 9.90, bands
+  16 to 32 at 0.80. t20 (heat.pit 0, base[7] 0, lane 0.009 units, seam [0.4,0.5,40]): plain 29.8675, low64
+  10.5985, bands [1.67 1.14 0.99 0.91 0.84 0.75 0.86]; t21 (lane 0.012, seam [0.25,0.5,40]): 30.1443, 10.0366,
+  [1.68 1.16 1.03 0.96 0.89 0.79 0.87], 5th percentile 0.318 (approved 0.231).
+  SEEN (v/trials-h.jpg, v/strip-t21.jpg): the facets and shards are gone, but the lanes are wide, flat, light
+  brown bands with a plain border to the tops: stones in mortar (a way that failed before). The lane must be
+  darker and narrower, with a soft shoulder, and swell where three cells meet.
+- 01:15 UTC. ground.ts: heat.lane[7], the lane's width grows by this share where the junc field is high (a swell
+  at the crossings; the level on the border stays the same from both sides). Trials t22 (lane 0.007 units, swell
+  1.5, junc radius 0.025, seam [0.15,0.4,40], pit 0), t23 (lane 0.006, swell 2.5, seam [0.08,0.35,40]), t24 (t22
+  with heat.pit 0.5 and junc radius 0.02); v/trials-i.jpg, v/strip-t24.jpg.

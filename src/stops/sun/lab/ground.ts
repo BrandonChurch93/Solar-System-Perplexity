@@ -339,15 +339,13 @@ vec3 dome(vec3 s) {
   float invP = 0.0;
   float m1 = 0.0;
   float m2 = 0.0;
-  vec2 ea = vec2(0.0);
-  vec2 eb = vec2(0.0);
   for (int j = 0; j < ${EDGES}; j++) {
     float e = max(dot(u, edges[j]) * rad, 0.0);
     inv += pow(e, uLabDome.z);
     float e2 = e * e;
     float e4 = e2 * e2;
     invP += e4 * e4;
-    if (e > m1) { m2 = m1; m1 = e; eb = ea; ea = edges[j]; } else if (e > m2) { m2 = e; eb = edges[j]; }
+    if (e > m1) { m2 = m1; m1 = e; } else if (e > m2) { m2 = e; }
   }
   corner = m2 / max(m1, 1e-6);
   float r = rad * pow(max(inv, 1e-9), -1.0 / uLabDome.z);
@@ -360,10 +358,17 @@ vec3 dome(vec3 s) {
   r = rad * pow(max(invP, 1e-9), -0.125);
 #endif
   vec2 place = mid + u * (r * wide * uLabMore.x);
-  // the way from the place to the point where this cell and its two nearest neighbours meet: the same point and
-  // the same way for all three, so a pit there is one pit
-  float det = ea.x * eb.y - ea.y * eb.x;
-  junc = m2 > 0.0 && abs(det) > 1e-6 ? 1.0 - smoothstep(0.0, ${CU ? (CU[8] ?? 0.03).toFixed(4) : '0.03'}, length(u * (r * wide * uLabMore.x) - vec2(eb.y - ea.y, ea.x - eb.x) / det)) : 0.0;
+  // how near the place is to a point where three cells meet: from its ways to the two nearest borders of its own
+  // cell, a field with no jump inside the cell
+  vec2 here = u * (r * wide * uLabMore.x);
+  float d1 = 1e3;
+  float d2 = 1e3;
+  for (int j = 0; j < ${EDGES}; j++) {
+    float len = length(edges[j]);
+    float way = len > 1e-6 ? abs(1.0 - dot(here, edges[j])) / len : 1e3;
+    if (way < d1) { d2 = d1; d1 = way; } else if (way < d2) { d2 = way; }
+  }
+  junc = 1.0 - smoothstep(0.0, ${CU ? (CU[8] ?? 0.03).toFixed(4) : '0.03'}, sqrt(d1 * d1 + d2 * d2));
   // the dome is a round body that reaches over the border of its cell into its neighbours: the sheet is the upper
   // side of all of them, a lane the valley where two bodies meet. edge: the way to the cell's own border, 1 on it
   edge = r * wide * uLabMore.x / max(rad * pow(max(invP, 1e-9), -0.125), 1e-6);
@@ -643,6 +648,14 @@ vec4 labOut(float heat, float thin, vec3 here, vec3 clip, vec3 view) {
   return diagOut(vec4(col * held, held), 1.0, 1.0, vec3(0.9, 0.5, 0.1), vec2(0.0), length(view));
 }`
 
+const SHOW: Record<string, string> = {
+  junc: 'heat = 0.1 + 0.9 * vJunc;',
+  edge: 'heat = 0.05 + 0.6 * plan;',
+  deep: 'heat = 0.05 + 0.9 * vDeep;',
+  cell: 'heat = 0.7 * cell;',
+  tall: 'heat = 0.05 + 40.0 * vTall;',
+  seam: 'heat = 0.1 + 0.8 * smoothstep(0.0, laneWide, edgeD);',
+}
 const DOME_FRAG = /* glsl */ `
 precision highp float;
 #define LAB_FRAG
@@ -743,7 +756,7 @@ void main() {
   vec4 tb = labTubes(d, seed, run - flow);
   turn = tb.w;
 #endif
-  float qSize = ${((lab.fibre as { size?: number }).size ?? 0) > 0 ? 'clamp(vCell.z / ' + ((lab.fibre as { size?: number }).size ?? 1).toFixed(4) + ', 0.4, 3.0)' : '1.0'};
+  float qSize = ${((lab.fibre as { size?: number }).size ?? 0) > 0 ? 'clamp(vCell.z / ' + ((lab.fibre as { size?: number }).size ?? 1).toFixed(4) + ', ' + ((lab.fibre as { span?: number[] }).span?.[0] ?? 0.4).toFixed(2) + ', ' + ((lab.fibre as { span?: number[] }).span?.[1] ?? 3).toFixed(2) + ')' : '1.0'};
   vec3 per = max(floor(uLabCount.xyz * 6.2831853 * qSize + 0.5), 3.0);
   vec2 across = vec2(-v.y, v.x) / max(dot(v, v), 1e-8);
   float wa = length(vec2(dot(dFdx(v), across), dot(dFdy(v), across)));
@@ -829,6 +842,9 @@ void main() {
   
   float edgeD = 1.0 - plan;
   float laneWide = (${lab.heat.lane[0]!.toFixed(3)} + ${lab.heat.lane[1]!.toFixed(3)} * smoothstep(0.4, 0.75, c0 / ${lab.heat.crease[0]!.toFixed(3)})) * (1.0 - 0.7 * join);
+#if ${(lab.heat.lane[4] ?? 0) > 0 ? 1 : 0}
+  laneWide = clamp(laneWide * ${(lab.heat.lane[4] ?? 0).toFixed(5)} / (${lab.heat.lane[0]!.toFixed(3)} * vCell.z), ${(lab.heat.lane[5] ?? 0.1).toFixed(3)}, ${(lab.heat.lane[6] ?? 0.45).toFixed(3)}) * (1.0 + ${(lab.heat.lane[7] ?? 0).toFixed(2)} * vJunc);
+#endif
 #if ${T.on ? 1 : 0}
   float laneTube = ${T.finger[3]!.toFixed(2)} * (1.0 - smoothstep(0.0, 0.8, 1.0 - abs(tb.x)));
 #else
@@ -898,6 +914,7 @@ void main() {
     heat = mix(heat, uLabHeat.x + (labFar(vG, vReal, flow, pn, gx, gy) - uLabHeat.x) * lawFar, vSink);
     labMeans(vSink);
   }
+  ${SHOW[(lab as { show?: string }).show ?? ''] ?? ''}
   outColor = labOut(heat, 0.1 + 0.9 * smoothstep(uLabPit.w * 2.0, uLabPit.w * 3.5, vPit), vPos, vClip, vView);
 #endif
 }`
