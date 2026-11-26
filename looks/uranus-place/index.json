@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T17:28:34.163Z",
- "head": "17b4dca97aa1f6765e27bfe7dd5a7d546d77003b",
- "note": "D held by the tables (MAIL 1516): the name without D is b7f95580 (main's stop code and notes); D alone is its child 17b4dca9; finals 4401 of D and of main drawing now",
+ "pushed": "2026-11-26T17:52:47.271Z",
+ "head": "b7f9558077fb3565f41555bbd5cbd4735978fc3e",
+ "note": "pair 4401 final: main's rows of dark dashes against D's none; judged finals on the name give main's bytes",
  "looks": [
+  {
+   "time": "2026-11-26T17:47:11.940Z",
+   "file": "20261126174711940-note-pair-4401-right.jpg",
+   "source": "../../../../tmp/n82/pair-4401-right.jpg",
+   "kind": "note",
+   "label": "final 4401, x 1040 to 1680, y 810 to 1080 at 2 to 1: main above with rows of dark dashes, D below without",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T17:45:28.477Z",
+   "file": "20261126174528477-note-pair-4401-strip.jpg",
+   "source": "../../../../tmp/n82/pair-4401-strip.jpg",
+   "kind": "note",
+   "label": "final 4401, strip x 560 to 1260, y 830 to 1080 at 2 to 1: main above with dark dashes (6 px darker by 28, 120 by 14), D below without (0 and 5)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T17:45:27.811Z",
+   "file": "20261126174527811-note-pair-4401-full.jpg",
+   "source": "../../../../tmp/n82/pair-4401-full.jpg",
+   "kind": "note",
+   "label": "final 4401: main (the name b7f95580) beside D (17b4dca9), frame size: the same picture",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T17:01:22.475Z",
    "file": "20261126170122475-note-dive-2.jpg",
@@ -224,30 +248,6 @@
    "source": "../../../../tmp/n78/d-4407-dash.png",
    "kind": "note",
    "label": "final 4407 at 3 times, x 800 to 1020, y 760 to 960: main final, the name final, the name draft. Fine dark dashes in the name only; at draft they are dots",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T12:41:23.349Z",
-   "file": "20261126124123349-note-09-final-4436-main-name-cure.jpg",
-   "source": "../../../../tmp/n78/att/09-final-4436-main-name-cure.jpg",
-   "kind": "note",
-   "label": "final 4436: main, the name, the name with the clock cure 832be54a (not in the name)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T12:41:21.360Z",
-   "file": "20261126124121360-note-p-4186.jpg",
-   "source": "../../../../tmp/n78/p-4186.jpg",
-   "kind": "note",
-   "label": "final 4186 main (25 Nov) beside the name bcc9d174: mean difference 0.678, the sky is main's",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T12:11:49.743Z",
-   "file": "20261126121149743-note-06-dive-4175-4176-pop-corner.jpg",
-   "source": "../../../../tmp/n78/att/06-dive-4175-4176-pop-corner.jpg",
-   "kind": "note",
-   "label": "dive 4175 beside 4176 at the pop corner, name",
    "stop": "uranus"
   }
  ]
