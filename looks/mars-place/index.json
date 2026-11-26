@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T16:40:55.447Z",
- "head": "04b82e67d37ec981f28da1c28204e67099179d95",
- "note": "whole cure on main's plates against main at native size, 2440 to 2462 and 2700; 2427 and 2726 equal main to the pixel at draft",
+ "pushed": "2026-11-26T17:09:05.288Z",
+ "head": "c3e9a12a3fc956da2633ce69f2d534e22c95388c",
+ "note": "speck state named (49851313); whole cure on main's plates under proof: path green, finals of 2325 and 2580 main's bytes",
  "looks": [
+  {
+   "time": "2026-11-26T17:09:04.563Z",
+   "file": "20261126170904563-note-s-2690.jpg",
+   "source": "../../../../tmp/pm/B/s-2690.png",
+   "kind": "note",
+   "label": "pair at native size, frame 2690: main left, the speck state (named 49851313) right; 93 px differ by more than 8 levels in the whole frame, blue specks gone to the ground's hue",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T16:40:54.259Z",
    "file": "20261126164054259-note-x-2700.jpg",
@@ -58,14 +66,6 @@
    "source": "out/work/place/in7/A2-2448.png",
    "kind": "note",
    "label": "the whole cure on main's plates, frame 2448, draft: the canyon's inside as ground from above with a crisp cast shade",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T16:16:40.763Z",
-   "file": "20261126161640763-note-w-2470.jpg",
-   "source": "../../../../tmp/pm/B/w-2470.png",
-   "kind": "note",
-   "label": "pair at native size, frame 2470: main left, the whole cure on main's plates right (draft); the black band from the far rim's head is on both",
    "stop": "mars"
   }
  ]
