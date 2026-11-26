@@ -1,9 +1,25 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T13:02:32.026Z",
+ "pushed": "2026-11-26T13:31:13.084Z",
  "head": "6eb9a2fcbd1b74b66f0895f8cff014348be83d82",
- "note": "Level step at 1878 taken apart: the island and its towers leave the bottom border over the dark sea; not cured",
+ "note": "Whole dive line of the cure renders (160 of 260 frames); bottom border looked at frame by frame, no blink seen; level step line still 0.285 against 0.258",
  "looks": [
+  {
+   "time": "2026-11-26T13:31:11.700Z",
+   "file": "20261126133111700-note-border-3758-3764.jpg",
+   "source": "../../../../tmp/gl/k24/A/border-3758-3764.jpg",
+   "kind": "note",
+   "label": "Bottom border x 640 to 1400, cure k3758 to 3764 at 1 to 1",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T13:31:10.604Z",
+   "file": "20261126133110604-note-border-3752-3758.jpg",
+   "source": "../../../../tmp/gl/k24/A/border-3752-3758.jpg",
+   "kind": "note",
+   "label": "Bottom border x 640 to 1400, bottom 170 rows, cure k3752 to 3758 at 1 to 1: island, bank and towers slide out, no blink seen",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T13:02:23.251Z",
    "file": "20261126130223251-note-d2-final-3756.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/gl/k24/A/f1-lobe-top.jpg",
    "kind": "note",
    "label": "2126 to 2134 at 1 to 1 near the limb: cure build (zone 13.5 to 22) beside main",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T12:12:07.004Z",
-   "file": "20261126121207004-note-z0m-3714.jpg",
-   "source": "../../../../tmp/gl/k24/A/z0m-3714.jpg",
-   "kind": "note",
-   "label": "1857 z0 over main: darker sea round the place past 13.5 degrees",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T12:12:05.526Z",
-   "file": "20261126121205526-note-bottom-z0-3756.jpg",
-   "source": "../../../../tmp/gl/k24/A/bottom-z0-3756.jpg",
-   "kind": "note",
-   "label": "1877.5 to 1878.5 bottom strip of z0: bright clouds and a pale island leave the frame, the cause of the level step",
    "stop": "earth"
   }
  ]
