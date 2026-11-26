@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T16:29:51.374Z",
+ "pushed": "2026-11-26T16:43:09.683Z",
  "head": "345d510fde0df10f589b3f6fa0287d1db574e1e1",
- "note": "16:29 gate green on 345d510f (G1 G2 G3 G4 G14, and G7 G10 G11 G12 G15 alone); finals 1755 and 2010 are the candidate's bytes; 1857 and 2156 at final running",
+ "note": "finals of 1857 and 2156 on 345d510f; main's finals not yet beside them; specks, smear and hatch at 1857 stand; handover tool runs",
  "looks": [
+  {
+   "time": "2026-11-26T16:43:08.931Z",
+   "file": "20261126164308931-note-m1857-hatch3.jpg",
+   "source": "../../../../tmp/gl/k24/Q/m1857-hatch3.jpg",
+   "kind": "note",
+   "label": "1857 final, x 900 y 700 w 200 h 140 at 4 for 1: the hatch stands",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T16:43:07.820Z",
+   "file": "20261126164307820-note-mine-2156-half.jpg",
+   "source": "../../../../tmp/gl/k24/Q/mine-2156-half.jpg",
+   "kind": "note",
+   "label": "2156 at the final tier on 345d510f, half size",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T16:43:07.006Z",
+   "file": "20261126164307006-note-mine-1857-half.jpg",
+   "source": "../../../../tmp/gl/k24/Q/mine-1857-half.jpg",
+   "kind": "note",
+   "label": "1857 at the final tier on 345d510f, half size",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T16:29:50.628Z",
    "file": "20261126162950628-note-look-2010-half.jpg",
@@ -54,30 +78,6 @@
    "source": "../../../../tmp/gl/k24/A/cr-4295.jpg",
    "kind": "note",
    "label": "rise 2147 + 1/2 to 2154 + 1/2, every half frame, 345d510f, half size",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T15:33:38.662Z",
-   "file": "20261126153338662-note-cr-4280.jpg",
-   "source": "../../../../tmp/gl/k24/A/cr-4280.jpg",
-   "kind": "note",
-   "label": "rise 2140 to 2147, every half frame, 345d510f, half size",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T15:10:48.023Z",
-   "file": "20261126151048023-note-earth-rise-changes-s.jpg",
-   "source": "../../../../tmp/gl/k24/P/earth-rise-changes-s.jpg",
-   "kind": "note",
-   "label": "the tool's panel of the whole rise line: the pattern row 2126 + 1/2 reads 0.50 over the limit 0.45 (counted on the back reading)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T15:10:46.668Z",
-   "file": "20261126151046668-note-earth-rise-pops-full-s.jpg",
-   "source": "../../../../tmp/gl/k24/P/earth-rise-pops-full-s.jpg",
-   "kind": "note",
-   "label": "the tool's panel beside its verdict, rise read with the carry at the full size: pop 1.28 at 2145 (limit 1.2, a line that does not count), main's not read yet",
    "stop": "earth"
   }
  ]
