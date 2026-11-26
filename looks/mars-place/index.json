@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T19:54:28.641Z",
+ "pushed": "2026-11-26T20:22:28.350Z",
  "head": "498513133f001112164442409cd35fd8a6395ff7",
- "note": "19:51 the place on the 0.7 against the 1.6 plate, main and whole cure; reader slice K 5384 runs",
+ "note": "20:23 the reader's maps of K 5384, main and whole cure; the carried picture does not hold the frame's form at the lower right in either",
  "looks": [
+  {
+   "time": "2026-11-26T20:22:27.678Z",
+   "file": "20261126202227678-note-rMA4maps.jpg",
+   "source": "../../../../tmp/pm/B/rMA4maps.png",
+   "kind": "note",
+   "label": "reader maps of K 5384 (2692 against 2700 carried), lower right: top main, bottom whole cure; left the frame, middle the carried frame, right the pattern map",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T19:54:27.571Z",
    "file": "20261126195427571-note-lv.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/pm/B/lr3.png",
    "kind": "note",
    "label": "the whole cure (0d638c07), frames 2691, 2692, 2693, lower right at native size, the cross at the reader's place 1808, 952: the shade's border crosses it at 2692",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T17:41:27.447Z",
-   "file": "20261126174127447-note-lr4.jpg",
-   "source": "../../../../tmp/pm/B/lr4.png",
-   "kind": "note",
-   "label": "the lower right place of the rise, frame 2691, x 1400 y 680 at native size: main, the whole cure (0d638c07), the difference times 4; below both with levels times 3. Main's half shade at the shade's border is full shade up to one line in the whole cure",
    "stop": "mars"
   }
  ]
