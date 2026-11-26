@@ -1,9 +1,57 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T08:16:48.796Z",
+ "pushed": "2026-11-26T08:42:41.656Z",
  "head": "f94de477e7dcca8a0707fb641dc9d4563df1d921",
- "note": "08:17 second sky aim on the dive (f94de477 local), reader dive 1 of 2 running",
+ "note": "08:45 reader dive 1 of 2 on f94de477 (two aims): pop 1.10 green (main 1.5036), pattern 0.99 (main 1.1696); aim proof 4280 to 4299; clock control running",
  "looks": [
+  {
+   "time": "2026-11-26T08:42:39.759Z",
+   "file": "20261126084239759-note-aim-4200x3.jpg",
+   "source": "../../../../tmp/n73/aim-4200x3.png",
+   "kind": "note",
+   "label": "4200 at draft, upper half times 3: two aims (top), one aim (middle), difference times 4 (bottom): only the stars beside the plate at the top and right edge differ, no band enters; 4280 to 4298 differ by at most 1 level (3 at two pixels of 4284), 4299 keeps its bytes",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T08:36:04.963Z",
+   "file": "20261126083604963-note-uranus-dive-p1of2-changes.jpg",
+   "source": "../../../../tmp/n72/out/d1/uranus-dive-p1of2-changes.png",
+   "kind": "note",
+   "label": "reader dive part 1 of 2 on f94de477: pattern 0.99 from 4151 (28 of 114 over), pop 1.10 (0 over; main 1.5036), level 0.07; the red patch lies at the left limb",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T08:35:59.678Z",
+   "file": "20261126083559678-note-d1-d.jpg",
+   "source": "../../../../tmp/n73/d1-d.png",
+   "kind": "note",
+   "label": "head f94de477, two sky aims, dive drafts consecutive, sheet d of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T08:35:53.534Z",
+   "file": "20261126083553534-note-d1-c.jpg",
+   "source": "../../../../tmp/n73/d1-c.png",
+   "kind": "note",
+   "label": "head f94de477, two sky aims, dive drafts consecutive, sheet c of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T08:35:52.016Z",
+   "file": "20261126083552016-note-d1-b.jpg",
+   "source": "../../../../tmp/n73/d1-b.png",
+   "kind": "note",
+   "label": "head f94de477, two sky aims, dive drafts consecutive, sheet b of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T08:35:48.946Z",
+   "file": "20261126083548946-note-d1-a.jpg",
+   "source": "../../../../tmp/n73/d1-a.png",
+   "kind": "note",
+   "label": "head f94de477, two sky aims, dive drafts consecutive, sheet a of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T08:16:38.388Z",
    "file": "20261126081638388-note-a2-b.jpg",
@@ -194,54 +242,6 @@
    "source": "../../../../tmp/n66/out/d1/uranus-dive-p1of2-changes.png",
    "kind": "note",
    "label": "RC dive part 1 of 2, the reader's changes sheet: pattern 0.78 from 4140 + 1/2 (main 1.17), at the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:56:50.756Z",
-   "file": "20261126045650756-note-uranus-dive-p1of2-pops.jpg",
-   "source": "../../../../tmp/n66/out/d1/uranus-dive-p1of2-pops.png",
-   "kind": "note",
-   "label": "RC dive part 1 of 2, the reader's pops sheet: pop 1.42 from 4151 + 1/2 (main 1.50); what is left is the sky in the left strip, the star cloud band and the place's ring arcs",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:29:48.931Z",
-   "file": "20261126042948931-note-final-4407-main-rc.jpg",
-   "source": "../../../../tmp/n66/final-4407-main-rc.jpg",
-   "kind": "note",
-   "label": "final 4407, main left, RC right: RC paler teal and softer cloud, open (two laws of light)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:29:48.304Z",
-   "file": "20261126042948304-note-uranus-dive-p2of2-changes.jpg",
-   "source": "../../../../tmp/n66/out/d2/uranus-dive-p2of2-changes.png",
-   "kind": "note",
-   "label": "RC dive part 2 of 2, the reader's changes sheet: pattern 1.48 from 4169 + 1/2 against main's 1.61, red along the horizon band",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:29:47.473Z",
-   "file": "20261126042947473-note-uranus-rise-p2of2-changes.jpg",
-   "source": "../../../../tmp/n66/out/r2/uranus-rise-p2of2-changes.png",
-   "kind": "note",
-   "label": "RC rise part 2 of 2, the reader's changes sheet: pattern 0.90 from 4422 + 1/2 against main's 0.88, place inside the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:06:02.801Z",
-   "file": "20261126040602801-note-arcs-only-4138-4152.jpg",
-   "source": "../../../../tmp/n67/arcs-only-4138-4152.jpg",
-   "kind": "note",
-   "label": "MAIL 1385 question 2: the rings' own light (RC minus the same frame with rings off, times 4), 4138 to 4152: the orbit's rings leave by the top edge to 4142; the place's arcs come out from behind the limb inside the frame from 4143 at full weight and reach the top edge at 4147",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:06:01.490Z",
-   "file": "20261126040601490-note-am-4138-4176.jpg",
-   "source": "../../../../tmp/n67/am-4138-4176.jpg",
-   "kind": "note",
-   "label": "Control, not committed: surface sky aim (50, -15, 50) in place of (22.6, 20.4, -46.7), dive 4138 to 4176 every second frame at draft: no band in the dive; 4290 moves by at most 1 level; the cost is in the rise (the sky's own turn there 106.8 degrees against 5.0)",
    "stop": "uranus"
   }
  ]
