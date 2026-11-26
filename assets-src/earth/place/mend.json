@@ -629,6 +629,18 @@
   "growDeg": 0.1,
   "sigmaDeg": 0.3,
   "landDeg": 0.05,
-  "least": 0.02
+  "least": 0.02,
+  "rim": {
+   "how": "The outer limit of the calm zone. The zone ends where the plate's limit of deck.py ends it (field.density.ring.plate through the feather of the plates and field.density.ring.wipe): a square about the centre of the raster, four straight lines 23 px wide, which cut the plate's clouds, the drawn relief of its sea and its shadows where the rise looks at them from near. Here the weight of the zone is carried on past that line (its values carryDeg degrees inside the line are held outward) and ended anew: over open sea by a smooth step softDeg degrees to each side of the line, so the relief and the shadows come in with no border; near a cloud of the plate (the cloud of nearSea, widened by growDeg and smoothed by nearDeg degrees) by a step edgeDeg degrees to each side of a line that the cloud itself moves, by push degrees for one unit of its lumps (its brightness smoothed by the first of lumpDeg less the same smoothed by the second, in degrees), so a cloud ends on its own lumps and no cloud ends on a straight line. Nothing changes further from the line than softDeg, or than push times the largest lump plus edgeDeg where a cloud moves the line further (0.4 degrees is not reached on this plate).",
+   "carryDeg": 0.12,
+   "nearDeg": 0.1,
+   "lumpDeg": [
+    0.02,
+    0.12
+   ],
+   "push": 0.6,
+   "edgeDeg": 0.04,
+   "softDeg": 0.3
+  }
  }
 }

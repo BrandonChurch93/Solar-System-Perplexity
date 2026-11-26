@@ -3,6 +3,7 @@ import { FarPoint } from '../../bodies/farpoint'
 import { samplesFor } from '../../core/sampler'
 import type { SetContext, SetFactory, Shot, SkyPatch, ViewKind } from '../../core/types'
 import { diagUniform } from '../../diagnostics/diag'
+import { FILMIC_GLSL } from '../../post/chain'
 import { drift, mix, ramp, smooth, smoother } from '../../director/rig'
 import { Relief } from '../../terrain/relief'
 import { closeAhead, closeImage, closeRadius, closeUp as nearUp, wideImage } from './close'
@@ -48,15 +49,22 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
 
 const BORDER_HEAD = 'out vec4 outColor;'
 const BORDER_CUT = 'if (alpha < 0.004) discard;'
-const BORDER_UNIFORMS = '\nuniform vec4 uBorder;\nuniform vec3 uBorderCentre;\nuniform vec3 uBorderUp;'
+const BORDER_UNIFORMS = '\nuniform vec4 uBorder;\nuniform vec3 uBorderCentre;\nuniform vec3 uBorderUp;\nuniform vec4 uBorderGrey;\nuniform float uBorderSet;' + FILMIC_GLSL.replace('vec3 filmic(', 'vec3 borderFilmic(')
 const BORDER_GLSL = /* glsl */ `{
     vec3 bo = vEye - uBorderCentre;
     vec3 br = normalize(vLocal - vEye);
     float bb = dot(bo, br);
     float bd = bb * bb - dot(bo, bo) + uBorder.w * uBorder.w;
     vec3 bn = normalize(bo + br * (-bb - sqrt(max(bd, 0.0))));
-    float ba = mix(4.0, acos(clamp(dot(bn, uBorderUp), -1.0, 1.0)), step(0.0, bd) * step(bb, 0.0));
-    alpha *= 1.0 - uBorder.z * smoothstep(uBorder.x, uBorder.y, ba);
+    float bh = step(0.0, bd) * step(bb, 0.0);
+    float bw = uBorder.z * mix(1.0, smoothstep(uBorder.x, uBorder.y, acos(clamp(dot(bn, uBorderUp), -1.0, 1.0))), bh);
+    alpha *= mix(uBorderSet * (1.0 - bw), 1.0, bh);
+    if (bw > 0.0) {
+      vec3 bg = uBorderGrey.rgb * bh;
+      vec3 bp = vec3(1.0 / uBorderGrey.a);
+      vec3 bm = pow(mix(pow(clamp(texel.rgb, 0.0, 1.0), bp), pow(bg, bp), bw), vec3(uBorderGrey.a));
+      texel.rgb = borderFilmic(max((inverseFilmic(bm) - bw * inverseFilmic(bg)) / max(1.0 - bw, 1e-3), 0.0));
+    }
   }
   `
 
@@ -83,9 +91,9 @@ export const createSet: SetFactory = async (ctx) => {
   const divePlates = plateLevels.map((level) => patchTextures[level]!)
 
   const globeOf = (): Globe => new Globe({
-    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: wrap.height ? sizes.height[0] : 4096, light: look.light,
-    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place } : undefined,
-    fine: { texture: fineMap, period: fineJson.size[key][0]!, guardShare: fineJson.guardShare, top: fineJson.top, shift: look.fine.shift, edge: look.fine.edge, blur: look.fine.blur, shade: look.fine.shade },
+    map, mapWidth: (map.image as unknown as { width: number }).width, mapFull: wrap.sets.full.color[0], height: wrapHeight, heightWidth: wrap.height ? sizes.height[0] : 4096, light: look.light,
+    patches: patchTextures.length > 0 ? { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), full: patches.levels.map(() => wrap.sets.full.plates[0]), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, lean: patches.lean, fade: patches.fade, nearDeg: patches.nearDeg, place: patches.place } : undefined,
+    fine: { texture: fineMap, period: fineJson.size[key][0]!, full: fineJson.size.full[0]!, guardShare: fineJson.guardShare, top: fineJson.top, shift: look.fine.shift, edge: look.fine.edge, blur: look.fine.blur, shade: look.fine.shade },
   })
   const globe = globeOf()
   const shell = globeOf()
@@ -131,10 +139,11 @@ export const createSet: SetFactory = async (ctx) => {
   const skyRide = (anchor: THREE.Quaternion, shot: Shot, camera: { quaternion: THREE.Quaternion }, out: THREE.Quaternion): THREE.Quaternion => out.copy(camera.quaternion).multiply(skyBack.copy(shot.skyQuaternion).invert()).multiply(shot.skyTurn).multiply(anchor)
   const sunDisc = Math.atan(sunJson.disc * (sunJson.rect[2]! - sunJson.rect[0]!))
   const sunShown = new THREE.Vector3()
+  const sunSeen = new THREE.Vector3().fromArray(fit.sunInFrame!.directionFromCamera).normalize().applyQuaternion(film.frames[plans.findIndex((p) => p.id === plan.id)]!.rotation)
   const rimSun = new THREE.Vector3()
   const kick = new THREE.Vector3()
   const sunTurn = new THREE.Quaternion()
-  const lensAxis = new THREE.Vector3()
+  const sunRide = new THREE.Quaternion()
   const toCamera = new THREE.Quaternion()
   const plateBack = new THREE.Quaternion()
   const limbRay = new THREE.Vector3()
@@ -160,6 +169,8 @@ export const createSet: SetFactory = async (ctx) => {
   ground.presence(1)
   under.presence(1)
   const border = { value: new THREE.Vector4(THREE.MathUtils.degToRad(look.border.deg[0]), THREE.MathUtils.degToRad(look.border.deg[1]), 0, closeRadius) }
+  const borderGrey = { value: new THREE.Vector4(look.under.grey[0], look.under.grey[1], look.under.grey[2], look.under.gamma) }
+  const borderSet = { value: 1 }
   const airShare = { value: 1 }
   for (const r of [ground, under]) {
     r.group.traverse((o) => {
@@ -177,6 +188,8 @@ export const createSet: SetFactory = async (ctx) => {
       const local = new THREE.Matrix4().multiplyMatrices(toNear, o.matrixWorld).invert()
       m.fragmentShader = m.fragmentShader.replace(BORDER_HEAD, BORDER_HEAD + BORDER_UNIFORMS).replace(BORDER_CUT, BORDER_GLSL + BORDER_CUT)
       m.uniforms.uBorder = border
+      m.uniforms.uBorderGrey = borderGrey
+      m.uniforms.uBorderSet = borderSet
       m.uniforms.uBorderCentre = { value: nearUp.clone().multiplyScalar(-(closeRadius + 1)).applyMatrix4(local) }
       m.uniforms.uBorderUp = { value: nearUp.clone().transformDirection(local) }
       m.needsUpdate = true
@@ -235,10 +248,29 @@ export const createSet: SetFactory = async (ctx) => {
   }
   shell.mesh.scale.setScalar(closeRadius)
   shell.mesh.position.copy(nearUp).multiplyScalar(-(closeRadius + 1))
-  shell.mesh.renderOrder = -3
+  shell.mesh.renderOrder = 8
   const floor = Math.max(plan.low(plan.seg.terrain.start).position.dot(nearUp), plan.low(plan.seg.terrain.end).position.dot(nearUp))
+  const twin = (g: Globe): { cut: THREE.Vector4; mesh: THREE.Mesh } => {
+    const cut = new THREE.Vector4(0, 1, 1, 0)
+    const kept = new THREE.Vector4(THREE.MathUtils.degToRad(look.under.keep[0]), THREE.MathUtils.degToRad(look.under.keep[1]), 0, 2)
+    const mesh = new THREE.Mesh(g.mesh.geometry, g.material)
+    mesh.frustumCulled = g.mesh.frustumCulled
+    mesh.renderOrder = -3
+    mesh.visible = false
+    g.mesh.add(mesh)
+    g.mesh.onBeforeRender = () => g.hole(cut)
+    mesh.onBeforeRender = () => g.hole(kept)
+    return { cut, mesh }
+  }
+  const globeCut = twin(globe)
+  const shellCut = twin(shell)
+  shellCut.mesh.visible = true
+  const farShare = (height: number, kind: 'dive' | 'rise'): number => {
+    const end = Math.pow(floor / look.under.far.top[kind], look.under.far.power[kind])
+    return 1 - THREE.MathUtils.clamp((Math.pow(floor / Math.max(height, floor), look.under.far.power[kind]) - end) / (1 - end), 0, 1)
+  }
   const toLow = new THREE.Quaternion()
-  const paint = (g: Globe, time: number, diving: boolean, rising: boolean, distance: number, offAxis: number, sun: THREE.Vector3, glow: THREE.Vector3, far: THREE.Vector3, line: THREE.Vector3, spun: number, gain: number, weight: number, rim: number, vignette: number, aspect: number): void => {
+  const paint = (g: Globe, time: number, diving: boolean, rising: boolean, distance: number, offAxis: number, sun: THREE.Vector3, glow: THREE.Vector3, line: THREE.Vector3, spun: number, gain: number, weight: number, rim: number, vignette: number, aspect: number): void => {
     g.plates(plateLevels, rising ? risePlates : divePlates, rising)
     const close = 0
     const grade = diving ? by(look.carry.dive, time) : rising ? 1 - by(look.carry.rise, time) : 0
@@ -247,7 +279,6 @@ export const createSet: SetFactory = async (ctx) => {
     const capped = 0
     const way = rising ? 'rise' : 'dive'
     g.clear(close > 0 ? look.close.haze.amount * THREE.MathUtils.smoothstep(high, look.close.haze.height[0], look.close.haze.height[1]) : 0, look.close.haze.level[way], [mix(-0.85, look.close.lift.cap[0], capped), mix(1.6, look.close.lift.cap[1], capped)], [look.close.lift.knee[way][0], look.close.lift.knee[way][1] * capped], close > 0 ? THREE.MathUtils.smoothstep(high, look.close.haze.calmHeight[0], look.close.haze.calmHeight[1]) : 0)
-    g.far(diving || rising ? 1 - THREE.MathUtils.smoothstep(distance - 1, look.far.height[0], look.far.height[1]) : 0, look.far.under[way], far, look.far)
     g.wash(close > 0 ? look.close.haze.wash.amount * (1 - THREE.MathUtils.smoothstep(high, look.close.haze.wash.height[0], look.close.haze.wash.height[1])) : 0, look.close.haze.wash.cap)
     const reach = wideFar(high)
     g.reach(reach - look.close.wide.soft, reach, wideFeather(high), look.close.wide.over)
@@ -274,11 +305,13 @@ export const createSet: SetFactory = async (ctx) => {
       terrain.visible = !inOrbit
       const kind = state.segment.kind
       const mine = state.segment.stop === plan.id
-      const shows = !inOrbit ? 1 : mine && (kind === 'dive' || kind === 'rise') ? 1 - THREE.MathUtils.smoothstep(Math.log(1 + plan.low(state.time).position.dot(nearUp)), Math.log(look.under.height[0]), Math.log(look.under.height[1])) : 0
+      const shows = !inOrbit ? 1 : mine && (kind === 'dive' || kind === 'rise') ? 1 - THREE.MathUtils.smoothstep(Math.log(1 + plan.low(state.time).position.dot(nearUp)), Math.log(look.under.height[kind][0]), Math.log(look.under.height[kind][1])) : 0
       near.visible = shows > 0
-      border.value.z = inOrbit ? 1 : 0
-      ground.presence(shows)
-      under.presence(shows)
+      const past = mine && (kind === 'dive' || kind === 'rise') ? farShare(plan.low(state.time).position.dot(nearUp), kind) : inOrbit ? 1 : 0
+      border.value.z = past
+      borderSet.value = shows
+      globeCut.cut.set(border.value.x, border.value.y, past, inOrbit ? shows : 0)
+      globeCut.mesh.visible = inOrbit && shows > 0
       airShare.value = inOrbit ? 0 : 1
       if (inOrbit && shows > 0) {
         const turn = plan.drawn(state.time)
@@ -290,7 +323,7 @@ export const createSet: SetFactory = async (ctx) => {
         near.quaternion.identity()
         near.scale.setScalar(1)
       }
-      globe.mesh.renderOrder = inOrbit && shows > 0 ? -3 : 0
+      globe.mesh.renderOrder = inOrbit && shows > 0 ? 8 : 0
       const gain = 1 / shot.post.exposure
       lens.mesh.visible = false
       streak.mesh.visible = false
@@ -305,43 +338,41 @@ export const createSet: SetFactory = async (ctx) => {
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
         const halo = !mine || (kind !== 'dive' && kind !== 'rise') ? 1 : smoother(ramp(haloEnds[kind][0]!, haloEnds[kind][1]!, lifted(state.time)))
         limb.update(low.gain * shot.skyGlow * shot.skyExposure * halo, shot.post.vignette, aspect)
-        const shown = on && (kind === 'dive' || kind === 'rise') ? THREE.MathUtils.smoothstep(plan.low(state.time).position.dot(nearUp), floor, floor + look.under.span) : 0
+        const shown = on && (kind === 'dive' || kind === 'rise') ? 1 - Math.pow(1 - THREE.MathUtils.clamp(Math.log(plan.low(state.time).position.dot(nearUp) / floor) / Math.log(look.under.top[kind] / floor), 0, 1), look.under.power) : 0
         rim.update(gain * (1 - shown), shot.post.vignette, aspect)
         airShare.value = 1 - shown
-        shell.mesh.visible = shown > 0
-        border.value.z = shown
-        if (shown > 0) {
+        shell.mesh.visible = past > 0
+        if (past > 0) {
+          shellCut.cut.set(border.value.x, border.value.y, past, 1)
           const high = film.shotAt(shot.frame, state.time, 'orbit')
           const above = high.sets.find((s) => s.id === plan.id)!
           const eye = high.camera
           const diving = kind === 'dive'
           toLow.copy(eye.quaternion).invert().premultiply(view.camera.quaternion)
-          sunShown.copy(high.sun.dir).applyQuaternion(skyRide(diving ? skyDive : skyRise, high, eye, sunTurn))
-          glareSun.copy(carriedSun(above.rotation, high, eye))
+          sunShown.copy(sunSeen).applyQuaternion(skyRide(diving ? skyDive : skyRise, high, eye, sunTurn))
           light.copy(plan.lightDir).applyQuaternion(above.rotation)
           const distance = above.origin.distanceTo(eye.position)
           const offAxis = THREE.MathUtils.radToDeg(sunShown.angleTo(forward.set(0, 0, -1).applyQuaternion(eye.quaternion)))
           kick.fromArray(look.light.line.dir).applyQuaternion(above.rotation)
-          for (const v of [light, sunShown, glareSun, kick]) v.applyQuaternion(toLow)
-          shell.lens(lensAxis.set(0, 0, 1).applyQuaternion(toLow))
+          for (const v of [light, sunShown, kick]) v.applyQuaternion(toLow)
           const spun = spin(state.time)
           shell.mesh.quaternion.copy(shellBase).multiply(shellTurn.setFromAxisAngle(bodyAxis, -spun))
-          paint(shell, state.time, diving, !diving, distance, offAxis, light, sunShown, glareSun, kick, spun, gain, state.weight, Math.min(holdRadius * distance * tanHalf * 2, 1), shot.post.vignette, aspect)
-          shell.show(shown)
+          paint(shell, state.time, diving, !diving, distance, offAxis, light, sunShown, kick, spun, gain, state.weight, Math.min(holdRadius * distance * tanHalf * 2, 1), shot.post.vignette, aspect)
           shell.smear(view.camera, null, null, 0, 0, 0, view.samples)
         }
         return
       }
       const diving = mine && kind === 'dive'
       const rising = mine && kind === 'rise'
-      sunShown.copy(shot.sun.dir)
-      rimSun.copy(shot.sun.dir)
-      glareSun.copy(shot.sun.dir)
+      sunShown.copy(sunSeen)
+      rimSun.copy(sunSeen)
+      glareSun.copy(sunSeen)
       const shrink = 0
       let plate = 1
       let ghosts = 1
       if (diving || rising) {
-        sunShown.applyQuaternion(skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn))
+        skyRide(diving ? skyDive : skyRise, shot, view.camera, sunTurn)
+        sunShown.applyQuaternion(sunRide.identity().slerp(sunTurn, shot.skyShare ?? 0))
         rimSun.copy(sunShown)
         glareSun.copy(carriedSun(state.rotation, shot, view.camera))
         plate = 1 - (shot.skyShare ?? 0)
@@ -361,7 +392,7 @@ export const createSet: SetFactory = async (ctx) => {
         under.update(state.time - terrainMid, gain, shot.post.vignette, view)
         rim.update(0, shot.post.vignette, aspect)
       }
-      paint(globe, state.time, diving, rising, distance, offAxis, light, rimSun, glareSun, kick.fromArray(look.light.line.dir).applyQuaternion(state.rotation), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
+      paint(globe, state.time, diving, rising, distance, offAxis, light, rimSun, kick.fromArray(look.light.line.dir).applyQuaternion(state.rotation), spin(state.time), gain, state.weight, Math.min(holdRadius / Math.max(radiusPx / view.format.height, 1e-6), 1), shot.post.vignette, aspect)
       globe.mesh.visible = radiusPx > 0.6 && state.weight > 0
       const open = view.shutterSeconds ?? config.shutterFraction / config.fps
       const fast = view.samples > 1 && (diving || rising)

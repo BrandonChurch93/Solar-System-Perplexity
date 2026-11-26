@@ -1,0 +1,14 @@
+{
+ "critic": "R4",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 2167-2174, globe and upper-right moon",
+   "what": "the return has not settled; the moon still travels about 4% of the frame width and the globe is still changing scale, though about half as fast as between 2161 and 2167",
+   "fix": "finish the ease until globe scale and moon position hold still"
+  }
+ ]
+}

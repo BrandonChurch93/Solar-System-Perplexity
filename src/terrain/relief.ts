@@ -1,8 +1,10 @@
 import * as THREE from 'three'
 import type { RenderView, SetContext } from '../core/types'
+import { frameUniform } from '../core/frame'
 import { DIAG_GLSL, biasUniform, diagUniform, fineUniform, gradUniform } from '../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { MAX_MARK, reach, reachNeeded, uniformCells } from './shield'
+import { AIR_LAW_GLSL, AIR_LAW_KNOTS_GLSL, AIR_LAW_SCALE_HEIGHT, type AirKnots } from './air'
 
 export interface ReliefLayerDef {
   color: string
@@ -38,12 +40,20 @@ export interface ReliefAir {
   drift?: [number, number, number, number]
 }
 
+// The air law for a set (src/terrain/air.ts): the three numbers, the same as on the globe, and where the planet lies in the relief's
+// frame. radius is the radius of the datum and eyeHeight the height of the picture's eye over it, both in the relief's unit; up is the
+// relief's own (pitchDeg). scaleHeight is in radii, like on the globe. least: what the layers' texels hold of their air at the least
+// (airLawFactorSeen), 0 where it is left out. knots: the air's light by height, two or three [height over the datum in the relief's
+// unit, share of the light], rising; straight lines between them, held under the lowest and over the highest. Left out: one light at
+// every height.
+export interface ReliefAirLaw { light: [number, number, number]; density: number; scaleHeight: number; radius: number; eyeHeight: number; least?: number; knots?: [number, number][] }
+
 export interface ReliefValley { top: number; soft: number; strength: number; color: [number, number, number]; wind: [number, number]; speed: number; scale: number; stretch: number; churn: number; mask: [number, number]; cut: [number, number] }
 
 interface ReliefApron { padding: number; fullWidth: number; mips: boolean; baseAlphaNoMips: string[]; resolution: { full: number; web: number }; layers: { layer: string; atlas: string; depth: string; edges: number[]; bottomColorShear: number[]; rightColorShear: number[] }[] }
 interface ReliefRidge { layer: string; center: number[]; radius: number[]; core: number; slope: number; interval: number[]; taps: number[] }
 
-export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; valley?: ReliefValley; pitchDeg?: number; apron?: ReliefApron; ridge?: ReliefRidge }
+export interface ReliefMotion { mistSpeed: number; dustSpeed: number; dustDir: [number, number]; mesh: number; air?: ReliefAir; airLaw?: ReliefAirLaw; valley?: ReliefValley; pitchDeg?: number; apron?: ReliefApron; ridge?: ReliefRidge }
 
 export const NOISE_GLSL = /* glsl */ `
 float vhash(vec3 p) {
@@ -257,6 +267,115 @@ export function withPresence(source: string, lit: string): string {
   return source.replace(HEAD, HEAD + '\nuniform float uPresence;').replace(lit, lit + ' * uPresence')
 }
 
+// The relief with an edge (Relief.presenceEdge): the same shaders with their premultiplied output times a share that follows the place in
+// the WHOLE source picture, the layers' boxes taken together: 0 at a side of that picture and beyond it, where a layer's apron lies (the
+// apron is the picture's last texels drawn out), and 1 one feather inside the side, smooth between. Every layer reads the same coordinate
+// (vImage, the place in the whole picture, not in its own box), so all layers end along one line on the ground. The air reads it where the
+// ray of its pixel meets the sphere of the relief's farthest distance about the picture's eye, which is where its haze band belongs, so
+// the band ends with the ground under it. Built when a relief asks for the first time; a relief that never asks keeps the shaders above
+// to the letter.
+const IMAGE_IN = 'in vec2 vImage;'
+const THIN = 'if (alpha < 0.004) discard;'
+const AIR_DIR_IN = 'in vec3 vDir;'
+const AIR_DIR_OUT = 'out vec3 vDir;'
+const AIR_DIR = 'vDir = position;'
+
+export const EDGE_GLSL = /* glsl */ `
+uniform vec4 uEdgeSide;
+uniform vec4 uEdgeOver;
+float edgeSide(float inside, float over) {
+  return over > 0.0 ? smoothstep(0.0, 1.0, inside * over) : 1.0;
+}
+float edgeShare(vec2 im) {
+  return edgeSide(im.x - uEdgeSide.x, uEdgeOver.x) * edgeSide(uEdgeSide.y - im.x, uEdgeOver.y) * edgeSide(uEdgeSide.z - im.y, uEdgeOver.z) * edgeSide(im.y - uEdgeSide.w, uEdgeOver.w);
+}`
+
+export const EDGE_AIR_GLSL = /* glsl */ `
+uniform vec3 uEdgeFar;
+in vec3 vEdgeEye;
+vec2 edgeAirImage(vec3 d) {
+  float b = dot(vEdgeEye, d);
+  float c = dot(vEdgeEye, vEdgeEye) - uEdgeFar.x * uEdgeFar.x;
+  vec3 p = vEdgeEye + d * (sqrt(max(b * b - c, 0.0)) - b);
+  float ahead = -p.z;
+  if (ahead <= 1e-6 * uEdgeFar.x) return vec2(p.x < 0.0 ? -1e6 : 1e6, p.y < 0.0 ? 1e6 : -1e6);
+  return vec2(p.x / ahead * uEdgeFar.y, -p.y / ahead * uEdgeFar.z) * 0.5 + 0.5;
+}`
+
+export function withEdge(source: string, lit: string): string {
+  const air = lit === AIR_LIT
+  const head = air ? AIR_DIR_IN : IMAGE_IN
+  if (source.split(head).length !== 2 || source.split(lit).length !== 2 || (!air && source.split(THIN).length !== 2) || source.includes('uEdgeSide')) throw new Error('the relief shader has no single place for an edge')
+  if (air) return source.replace(head, head + EDGE_GLSL + EDGE_AIR_GLSL).replace(lit, lit + ' * edgeShare(edgeAirImage(d))')
+  return source.replace(head, head + EDGE_GLSL).replace(THIN, 'if (alpha < 0.004 || edgeShare(vImage) <= 0.0) discard;').replace(lit, lit + ' * edgeShare(vImage)')
+}
+
+// The lens in the air's own frame, for the edge: the air is drawn about the lens, so its vertex shader has no use for the place of the
+// lens until an edge asks where a ray meets the relief's far distance. The same line as the layers' eye, with the scale of the group.
+export function withEdgeEye(source: string): string {
+  if (source.split(AIR_DIR_OUT).length !== 2 || source.split(AIR_DIR).length !== 2 || source.includes('vEdgeEye')) throw new Error('the relief shader has no single place for the eye of its edge')
+  return source.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vEdgeEye;\nuniform float uEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vEdgeEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uEyeScale;')
+}
+
+// The relief with a law of the stop (Relief.presenceLaw): the same layer shader with its premultiplied output times a share the stop
+// writes itself, for a ground whose picture is true from one eye and gives way to what lies under it by place and by eye. The stop gives
+// GLSL that defines float lawShare(vec3 P, vec3 E, vec2 image): P the fragment in the relief's frame (the picture's eye at 0, the lens
+// along -z, the units of the distance files), E the present eye in the same frame, image the place in the whole picture (0 to 1, y
+// down). Its own uniforms are named uLaw... and come from the stop's own files; it may also read uUpL (up in the relief's frame) and
+// the two numbers below: the focal length of the present lens in pixels of the master, and the buffer pixels a pixel of the master
+// takes in this pass, for a law that counts on the screen. The law is read first in main, before any branch, so it may take
+// derivatives of what it is given; it must not leave the shader itself. The share is held to 0..1; at 0 the fragment is not drawn and
+// writes no depth. With the tone asked for the text also defines vec3 lawTone(vec3 P, vec3 E, vec2 image), of the same terms: a factor
+// on the linear colour of the layer where it is made, before the valley mist and before the share, held at or above 0, so the picture's
+// colour can go with the eye as the ground round it does. The mist's own colour and the air do not take it. Built when a relief asks;
+// a relief that never asks keeps the shaders above to the letter.
+const MAIN = 'void main() {'
+const VIG = 'vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);'
+export const LAW_GLSL = /* glsl */ `
+uniform float uLawFocal;
+uniform float uLawFrame;`
+
+const LAW_OWN = ['uLawFocal', 'uLawFrame']
+const LAW_SHARE = /\bfloat\s+lawShare\s*\(\s*vec3\s+\w+\s*,\s*vec3\s+\w+\s*,\s*vec2\s+\w+\s*\)\s*\{/g
+const LAW_TONE = /\bvec3\s+lawTone\s*\(\s*vec3\s+\w+\s*,\s*vec3\s+\w+\s*,\s*vec2\s+\w+\s*\)\s*\{/g
+const COL = 'vec3 col = inverseFilmic(texel.rgb) * uGain * vig;'
+const LAW_UNIFORM = /\buniform\s+(?:(?:lowp|mediump|highp)\s+)?\w+\s+(\w+)\s*(?:\[[^\]]*\])?\s*;/g
+
+// The uniforms a law declares, by name. Throws for a text that is no law, and for one whose tone does not go with what the set asked.
+export function lawUniforms(source: string, tone = false): string[] {
+  const text = source.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/\/\/[^\n]*/g, ' ')
+  if ((text.match(LAW_SHARE) ?? []).length !== 1) throw new Error('the law of a relief defines float lawShare(vec3 P, vec3 E, vec2 image) once')
+  const tones = (text.match(LAW_TONE) ?? []).length
+  if (tone && tones !== 1) throw new Error('the law of a relief with a tone defines vec3 lawTone(vec3 P, vec3 E, vec2 image) once')
+  if (!tone && (tones !== 0 || /\blawTone\b/.test(text))) throw new Error('the law of a relief has a lawTone and the set did not ask for the tone')
+  for (const word of ['void main', 'discard', 'outColor', 'gl_FragDepth']) if (text.includes(word)) throw new Error('the law of a relief gives a share and nothing else: it has no ' + word)
+  const names = [...text.matchAll(LAW_UNIFORM)].map((m) => m[1]!)
+  if ((text.match(/\buniform\b/g) ?? []).length !== names.length) throw new Error('the law of a relief declares each uniform on a line of its own kind: uniform type uLawName;')
+  for (const name of names) {
+    if (!/^uLaw[A-Z0-9]\w*$/.test(name) || LAW_OWN.includes(name)) throw new Error('a uniform of the law of a relief is named uLaw and a name of its own, not ' + name)
+    if (names.indexOf(name) !== names.lastIndexOf(name)) throw new Error('the law of a relief declares ' + name + ' twice')
+  }
+  return names
+}
+
+export function withLaw(source: string, text: string, tone = false): string {
+  if (source.split(MAIN).length !== 2 || source.split(VIG).length !== 2 || source.split(LIT).length !== 2 || (tone && source.split(COL).length !== 2) || source.includes('lawShare')) throw new Error('the relief shader has no single place for a law')
+  lawUniforms(text, tone)
+  const read = '\n  float reliefLaw = clamp(lawShare(vLocal, vEye, vImage), 0.0, 1.0);' + (tone ? '\n  vec3 reliefTone = max(lawTone(vLocal, vEye, vImage), vec3(0.0));' : '')
+  const made = source.replace(MAIN, LAW_GLSL.slice(1) + '\n' + text.trim() + '\n' + MAIN + read).replace(VIG, 'if (reliefLaw <= 0.0) discard;\n  ' + VIG).replace(LIT, LIT + ' * reliefLaw')
+  return tone ? made.replace(COL, COL.slice(0, -1) + ' * reliefTone;') : made
+}
+
+// The share of the edge at a place of the whole picture, as the shader reads it (for the shield and for tests).
+export function edgeShareAt(ix: number, iy: number, side: readonly number[], over: readonly number[]): number {
+  const one = (inside: number, k: number): number => {
+    if (!(k > 0)) return 1
+    const t = Math.min(Math.max(inside * k, 0), 1)
+    return t * t * (3 - 2 * t)
+  }
+  return one(ix - side[0]!, over[0]!) * one(side[1]! - ix, over[1]!) * one(side[2]! - iy, over[2]!) * one(iy - side[3]!, over[3]!)
+}
+
 // The eye of the layers under a scaled group. The layers take the eye out of the model view matrix as if the group had no scale; under a
 // scale s that is s squared times the eye, so the valley mist is seen from near the picture's own eye and not from the camera. A set that
 // stands the relief in another scene with a scale (the close view's ground in the globe's scene, through the twin) gets the same line
@@ -269,6 +388,118 @@ const EYE_PLAIN = 1e-9
 export function withEyeScale(source: string): string {
   if (source.split(EYE_OUT).length !== 2 || source.split(EYE).length !== 2 || source.includes('uEyeScale')) throw new Error('the relief shader has no single place for the scale of its eye')
   return source.replace(EYE_OUT, EYE_OUT + '\nuniform float uEyeScale;').replace(EYE, EYE.slice(0, -1) + ' * uEyeScale;')
+}
+
+// The relief under the air law (ReliefMotion.airLaw; the law and its chunk are src/terrain/air.ts). The planet's centre lies straight
+// under the picture's eye, which is the origin of the relief's frame, so a point p of that frame is (p - centre) / radius from the
+// centre in radii, and that is all the law is given. The eye's height is in the eye's place and nowhere else.
+// The layers: their texels hold the picture's far air, so a texel is read as its point seen through the law from the picture's eye and
+// drawn through the law from the present eye (airLawFactorSeen), after the valley's mist. From the picture's eye the factor is 1 at
+// every fragment, so the picture comes back for any numbers. Where the present eye is the nearer one the factor is over 1: the law's
+// floor at black holds, and nothing here cuts what leaves the range upward.
+// The air: with the law the dome draws the law and nothing else, premultiplied: the light times one minus the factor of the whole path
+// from the present eye along the sight line out of the shell, over everything behind it times that factor. A star in the pale band is
+// dim by the same factor. A sight line that enters the ball has the depth of its whole chord, so the band closes under the horizon
+// without a step. The dome's old terms (by the angle, by the clock) are not drawn. The sky's air is drawn once: a set that stands in a
+// scene whose globe draws its own shell under the law gives its own air the share 0 there (presence).
+// The light by height (ReliefAirLaw.knots): each stretch of air shines with the share of its own height, so a path gathers its light
+// stretch by stretch (airLawGather) and the layers take what the present path gathers less the factor times what the picture's path
+// gathered (airLawSeen, airLawHeld); the dome takes what the path out gathers. From the picture's eye the two paths are one path and
+// the picture comes back as before. Without knots no word of this is in a shader: the second chunk (AIR_LAW_KNOTS_GLSL) is not taken.
+// Not asked: the shaders above to the letter.
+export const AIR_LAW_UNIFORMS = /* glsl */ `
+uniform vec4 uAirCentre;
+uniform vec3 uAirLight;
+uniform vec3 uAirNumbers;`
+export const AIR_LAW_KNOT_UNIFORMS = /* glsl */ `
+uniform vec3 uAirHeights;
+uniform vec3 uAirShares;`
+const SOLID = 'if (uDiag >= 2 && alpha < 0.5) discard;'
+// The least step between two knots of the light by height, in radii.
+export const AIR_LAW_KNOT_LEAST = 1e-5
+export const AIR_LAW_LAYER = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  col = airLaw(col, uAirLight * uGain * vig, airLawFactorSeen(airLawDepth((vEye - uAirCentre.xyz) * uAirCentre.w, airPoint, uAirNumbers.y), airLawDepth(-uAirCentre.xyz * uAirCentre.w, airPoint, uAirNumbers.y), uAirNumbers.x, uAirNumbers.z));\n  '
+
+export const AIR_LAW_LAYER_KNOTS = 'vec3 airPoint = (vLocal - uAirCentre.xyz) * uAirCentre.w;\n  vec3 airEye = (vEye - uAirCentre.xyz) * uAirCentre.w;\n  vec3 airWas = -uAirCentre.xyz * uAirCentre.w;\n  float airSeen = airLawDepth(airWas, airPoint, uAirNumbers.y);\n  col = airLawSeen(col, uAirLight * uGain * vig, airLawFactorSeen(airLawDepth(airEye, airPoint, uAirNumbers.y), airSeen, uAirNumbers.x, uAirNumbers.z), airLawGather(airEye, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airLawHeld(airLawGather(airWas, airPoint, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares), airSeen, uAirNumbers.x, uAirNumbers.z));\n  '
+
+export function withAirLaw(source: string, knots = false): string {
+  if (source.split(MAIN).length !== 2 || source.split(SOLID).length !== 2 || source.includes('uAirCentre')) throw new Error('the relief shader has no single place for the air law')
+  return source.replace(MAIN, AIR_LAW_UNIFORMS.slice(1) + (knots ? AIR_LAW_KNOT_UNIFORMS : '') + AIR_LAW_GLSL + (knots ? AIR_LAW_KNOTS_GLSL : '') + '\n' + MAIN).replace(SOLID, (knots ? AIR_LAW_LAYER_KNOTS : AIR_LAW_LAYER) + SOLID)
+}
+
+export const AIR_LAW_VERT = AIR_VERT.replace(AIR_DIR_OUT, AIR_DIR_OUT + '\nout vec3 vAirEye;\nuniform float uAirEyeScale;').replace(AIR_DIR, AIR_DIR + '\n  vAirEye = -transpose(mat3(modelViewMatrix)) * modelViewMatrix[3].xyz * uAirEyeScale;')
+
+export const AIR_LAW_FRAG = /* glsl */ `
+precision highp float;${AIR_LAW_UNIFORMS}
+uniform float uGain;
+uniform float uVignette;
+uniform float uAspect;
+uniform int uDiag;
+in vec3 vDir;
+in vec3 vClip;
+in vec3 vAirEye;
+out vec4 outColor;${AIR_LAW_GLSL}
+void main() {
+  if (uDiag >= 2) discard;
+  vec3 d = normalize(vDir);
+  float cut = 1.0 - airLawFactor(airLawDepthOut((vAirEye - uAirCentre.xyz) * uAirCentre.w, d, uAirNumbers.y), uAirNumbers.x);
+  vec3 glow = uAirLight * cut;
+  vec2 q = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
+  float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
+  outColor = vec4(glow * uGain * vig, cut);
+}`
+
+// The dome with the light by height: the light times what the whole path out gathers; the cover is the same.
+const AIR_LAW_GLOW = 'vec3 glow = uAirLight * cut;'
+export const AIR_LAW_FRAG_KNOTS = AIR_LAW_FRAG.replace(AIR_LAW_UNIFORMS, AIR_LAW_UNIFORMS + AIR_LAW_KNOT_UNIFORMS).replace(AIR_LAW_GLSL, AIR_LAW_GLSL + AIR_LAW_KNOTS_GLSL).replace(AIR_LAW_GLOW, 'vec3 glow = uAirLight * airLawGatherOut((vAirEye - uAirCentre.xyz) * uAirCentre.w, d, uAirNumbers.y, uAirNumbers.x, uAirHeights, uAirShares);')
+
+// The knots of a relief's air law as the chunk takes them: three heights in radii over the datum and three shares. Two knots are given
+// a third one step higher with the upper share. null where the law has one light at every height.
+export function airLawKnots(law: ReliefAirLaw): { heights: AirKnots; shares: AirKnots } | null {
+  const knots = law.knots
+  if (knots === undefined) return null
+  const good = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
+  const bad = (): Error => new Error('the knots of the air law of a relief are two or three [height, share] with rising heights and shares of 0 or more, not ' + JSON.stringify(knots))
+  if (!(Array.isArray(knots) && (knots.length === 2 || knots.length === 3) && knots.every((k) => Array.isArray(k) && k.length === 2 && good(k[0]) && good(k[1]) && k[1] >= 0))) throw bad()
+  const h = knots.map((k) => k[0] / law.radius)
+  const v = knots.map((k) => k[1])
+  for (let i = 1; i < h.length; i++) if (!(h[i]! - h[i - 1]! >= AIR_LAW_KNOT_LEAST)) throw bad()
+  if (h.length === 2) {
+    h.push(h[1]! + (h[1]! - h[0]!))
+    v.push(v[1]!)
+  }
+  return { heights: [h[0]!, h[1]!, h[2]!], shares: [v[0]!, v[1]!, v[2]!] }
+}
+
+// The planet's centre in the relief's frame and one over its radius: what the shader's uAirCentre holds.
+export function airLawCentre(law: ReliefAirLaw, pitchDeg: number): [number, number, number, number] {
+  const far = -(law.radius + law.eyeHeight)
+  const pitch = THREE.MathUtils.degToRad(pitchDeg)
+  return [0, far * Math.cos(pitch), far * Math.sin(pitch), 1 / law.radius]
+}
+
+// A point of the relief's frame as the law takes it: from the planet's centre, in radii. The shader's own line, for the tests and for
+// whoever fits the law's numbers against a picture.
+export function airLawPoint(p: readonly [number, number, number], law: ReliefAirLaw, pitchDeg: number): [number, number, number] {
+  const c = airLawCentre(law, pitchDeg)
+  return [(p[0] - c[0]) * c[3], (p[1] - c[1]) * c[3], (p[2] - c[2]) * c[3]]
+}
+
+function airLawUniforms(law: ReliefAirLaw, pitchDeg: number): Record<string, THREE.IUniform> {
+  const good = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v)
+  if (!(Array.isArray(law.light) && law.light.length === 3 && law.light.every((v) => good(v) && v >= 0))) throw new Error('the light of the air law of a relief is three numbers of 0 or more, not ' + JSON.stringify(law.light))
+  if (!(good(law.density) && law.density >= 0)) throw new Error('the density of the air law of a relief is a number of 0 or more, not ' + law.density)
+  if (!(good(law.scaleHeight) && law.scaleHeight >= AIR_LAW_SCALE_HEIGHT[0] && law.scaleHeight <= AIR_LAW_SCALE_HEIGHT[1])) throw new Error('the scale height of the air law of a relief is ' + AIR_LAW_SCALE_HEIGHT[0] + ' to ' + AIR_LAW_SCALE_HEIGHT[1] + ' radii, not ' + law.scaleHeight)
+  if (!(good(law.radius) && law.radius > 0)) throw new Error('the radius of the air law of a relief is a length over 0 in the unit of the relief, not ' + law.radius)
+  if (!good(law.eyeHeight)) throw new Error('the eye height of the air law of a relief is a length in the unit of the relief, not ' + law.eyeHeight)
+  const least = law.least ?? 0
+  if (!(good(least) && least >= 0 && least <= 1)) throw new Error('the least of the air law of a relief is a share from 0 to 1, not ' + law.least)
+  const knots = airLawKnots(law)
+  return {
+    uAirCentre: { value: new THREE.Vector4().fromArray(airLawCentre(law, pitchDeg)) },
+    uAirLight: { value: new THREE.Vector3().fromArray(law.light) },
+    uAirNumbers: { value: new THREE.Vector3(law.density, law.scaleHeight, least) },
+    ...(knots ? { uAirHeights: { value: new THREE.Vector3().fromArray(knots.heights) }, uAirShares: { value: new THREE.Vector3().fromArray(knots.shares) } } : {}),
+  }
 }
 
 interface Grid {
@@ -294,6 +525,9 @@ interface Grid {
   solid: Uint8Array
   box: Int16Array
   kept: number
+  // With an edge (Relief.presenceEdge): 1 for a cell of the layer's own box whose four corners have the whole share. Null without one.
+  inside: Uint8Array | null
+  image: Float32Array
 }
 
 interface Layer { mesh: THREE.Mesh; material: THREE.ShaderMaterial; grid: Grid }
@@ -317,9 +551,20 @@ export class Relief {
   private readonly none = new THREE.MeshBasicMaterial({ visible: false })
   private state: 'new' | 'ready' | 'off' = 'new'
   private readonly share = { value: 1 }
+  private readonly airShare = { value: 1 }
   private fades = false
+  private lawed = false
+  private lawWhole: (() => boolean) | null = null
+  private readonly lawFocal = { value: 1 }
+  private readonly lawFrame = { value: 1 }
   private readonly eyeScale = { value: 1 }
   private scaled = false
+  private edged = false
+  private edgeAir = true
+  private readonly edgeSide = { value: new THREE.Vector4(0, 1, 1, 0) }
+  private readonly edgeOver = { value: new THREE.Vector4(0, 0, 0, 0) }
+  private readonly edgeFar = { value: new THREE.Vector3(1, 1, 1) }
+  private far = 0
 
   private constructor(def: ReliefDef, motion: ReliefMotion) {
     this.def = def
@@ -367,7 +612,7 @@ export class Relief {
   }
 
   screen(renderer: THREE.WebGLRenderer, camera: THREE.Camera, width: number, height: number, tile: number): boolean {
-    if (this.share.value < 1) return false
+    if (this.share.value < 1 || (this.lawed && !(this.lawWhole !== null && this.lawWhole() === true))) return false
     if (!this.ready(renderer)) return false
     this.group.updateWorldMatrix(true, true)
     const tc = Math.ceil(width / tile) - 1
@@ -421,7 +666,7 @@ export class Relief {
               if (one > 1 || zero > 1) {
                 const need = Math.max(reachNeeded(ax, ay, bx, by, cx, cy, g.du, g.dv), reachNeeded(dx, dy, cx, cy, bx, by, g.du, g.dv))
                 if (zero >= need) continue
-                if (one >= need) solid = 1
+                if (one >= need && (!g.inside || g.inside[base])) solid = 1
               }
             }
             x0 = Math.min(tc, Math.max(0, Math.floor(minX / tile)))
@@ -513,8 +758,13 @@ export class Relief {
   // is a new program: call it once where the set is built, so the program is compiled with the others. Under 1 the relief is no shield
   // (screen answers false), so nothing behind it is culled. The share is the set's to give from a height, a distance or an angle, never
   // from a frame number.
-  presence(share: number): void {
+  // The air apart: presence(share, { air }) gives the layers the share and the air a share of its own, for a set whose ground under the
+  // relief has an air of its own. The first call that names it gives the air its own number; until then one number serves both, and a
+  // later call without it sets both again. The shield follows the share of the layers alone.
+  presence(share: number, options: { air?: number } = {}): void {
     if (!(share >= 0 && share <= 1)) throw new Error('the presence of a relief is a share from 0 to 1, not ' + share)
+    const air = options.air
+    if (air !== undefined && !(air >= 0 && air <= 1)) throw new Error('the presence of the air of a relief is a share from 0 to 1, not ' + air)
     if (!this.fades) {
       this.fades = true
       const parts: [THREE.ShaderMaterial, string][] = this.layers.map((l) => [l.material, LIT])
@@ -525,7 +775,98 @@ export class Relief {
         material.needsUpdate = true
       }
     }
+    if (air !== undefined && this.air) this.air.material.uniforms.uPresence = this.airShare
     this.share.value = share
+    this.airShare.value = air ?? share
+  }
+
+  // Where the relief ends: a feather at each side of the whole source picture, [left, right, bottom, top] in pixels of that picture (the
+  // units of the layers' boxes), 0 for a side that does not fade. The sides are those of the layers' boxes taken together, margins and
+  // all. The premultiplied output of every layer and of the air is times a share by the place in the picture: 0 at the side and beyond
+  // it (so no apron of that side is drawn), 1 one feather inside, smooth between; the same for every layer, so they end along one line
+  // on the ground, and the air ends with the far ground under its haze. A share by place, never by the clock. It goes with a presence
+  // (the two shares multiply). Off until a set calls it: a relief that never does keeps its shaders to the letter and draws as before.
+  // The first call gives the materials the shader with the edge, which is a new program: call it once where the set is built. Inside
+  // the feather the relief is no shield, so what lies behind it there is drawn; one feather inside it is the shield it was.
+  // The air: it ends with the ground unless the set says { air: false }. Then the ground layers end at the sides and the air stays whole:
+  // it keeps its shaders to the letter and draws as it did before the edge, for a set whose picture behind the relief has no air of its
+  // own to show beyond the side. The choice belongs to the programs, so the first call makes it; a later call may leave it out, and one
+  // that names the other choice throws.
+  presenceEdge(feather: readonly [number, number, number, number], options: { air?: boolean } = {}): void {
+    if (feather.length !== 4 || !feather.every((f) => f >= 0 && Number.isFinite(f))) throw new Error('the edge of a relief is four feathers of 0 or more pixels (left, right, bottom, top), not ' + JSON.stringify(feather))
+    if (this.edged && options.air !== undefined && options.air !== this.edgeAir) throw new Error('the air of the edge of a relief is chosen by the first call, where the set is built: here it ' + (this.edgeAir ? 'ends with the ground' : 'stays whole'))
+    const [W, H] = this.def.imageSize
+    const boxes = this.def.layers.map((l) => l.box)
+    const x0 = Math.min(...boxes.map((b) => b[0]))
+    const x1 = Math.max(...boxes.map((b) => b[0] + b[2]))
+    const y0 = Math.min(...boxes.map((b) => b[1]))
+    const y1 = Math.max(...boxes.map((b) => b[1] + b[3]))
+    this.edgeSide.value.set(x0 / W, x1 / W, y1 / H, y0 / H)
+    this.edgeOver.value.set(feather[0] > 0 ? W / feather[0] : 0, feather[1] > 0 ? W / feather[1] : 0, feather[2] > 0 ? H / feather[2] : 0, feather[3] > 0 ? H / feather[3] : 0)
+    if (!this.edged) {
+      this.edged = true
+      this.edgeAir = options.air !== false
+      const th = Math.tan(rad(this.def.vfovDeg) / 2)
+      this.edgeFar.value.set(this.far, 1 / (th * W / H), 1 / th)
+      for (const l of this.layers) {
+        l.material.fragmentShader = withEdge(l.material.fragmentShader, LIT)
+        l.material.uniforms.uEdgeSide = this.edgeSide
+        l.material.uniforms.uEdgeOver = this.edgeOver
+        l.material.needsUpdate = true
+      }
+      if (this.air && this.edgeAir) {
+        const m = this.air.material
+        m.fragmentShader = withEdge(m.fragmentShader, AIR_LIT)
+        m.vertexShader = withEdgeEye(m.vertexShader)
+        m.uniforms.uEdgeSide = this.edgeSide
+        m.uniforms.uEdgeOver = this.edgeOver
+        m.uniforms.uEdgeFar = this.edgeFar
+        m.uniforms.uEyeScale = this.eyeScale
+        m.needsUpdate = true
+      }
+    }
+    const side = this.edgeSide.value.toArray()
+    const over = this.edgeOver.value.toArray()
+    for (const l of this.layers) {
+      const g = l.grid
+      const inside = g.inside ?? new Uint8Array(g.nx * g.ny)
+      for (let cj = 0; cj < g.ny; cj++) {
+        for (let bi = 0; bi < g.nx; bi++) {
+          const a = cj * g.cols + bi + g.left
+          let whole = 1
+          for (const n of [a, a + 1, a + g.cols, a + g.cols + 1]) if (edgeShareAt(g.image[n * 2]!, g.image[n * 2 + 1]!, side, over) < 1) whole = 0
+          inside[cj * g.nx + bi] = whole
+        }
+      }
+      g.inside = inside
+    }
+  }
+
+  // How much of the relief is there by a law of the stop: every layer times a share the stop's own GLSL gives for the fragment, from
+  // the ground point, the present eye and the place in the picture (LAW_GLSL above has the terms). uniforms are the law's own, under the
+  // names its text declares; the stop keeps the objects and sets their values from its own files. It goes with a presence and an edge
+  // (the shares multiply) and leaves the air alone. One call, where the set is built: the text is the program. A
+  // relief that never calls it keeps its shaders to the letter and draws as before. With a law the relief is no shield, so what lies
+  // behind it is drawn; a set whose law is 1 for every fragment over a span (a switch among its uniforms) may say so through whole,
+  // which is asked whenever the shield is: while it answers true the relief shields as one that never asked, and the set stands for
+  // it that the law gives exactly 1 then. With tone the text also gives the factor on the layers' colour (lawTone, LAW_GLSL above).
+  // The law answers by place and by eye; a value that follows a frame number is not a law.
+  presenceLaw(text: string, uniforms: Record<string, THREE.IUniform> = {}, options: { whole?: () => boolean; tone?: boolean } = {}): void {
+    if (this.lawed) throw new Error('the law of a relief is given once, where the set is built')
+    const tone = options.tone === true
+    const names = lawUniforms(text, tone)
+    const given = Object.keys(uniforms)
+    for (const name of names) if (!given.includes(name)) throw new Error('the law of a relief declares ' + name + ' and the set gives no such uniform')
+    for (const name of given) if (!names.includes(name)) throw new Error('the set gives the law of a relief ' + name + ', which its text does not declare')
+    this.lawed = true
+    this.lawWhole = options.whole ?? null
+    for (const l of this.layers) {
+      l.material.fragmentShader = withLaw(l.material.fragmentShader, text, tone)
+      for (const name of names) l.material.uniforms[name] = uniforms[name]!
+      l.material.uniforms.uLawFocal = this.lawFocal
+      l.material.uniforms.uLawFrame = this.lawFrame
+      l.material.needsUpdate = true
+    }
   }
 
   static async load(ctx: SetContext, base: string, def: ReliefDef, motion: ReliefMotion): Promise<Relief> {
@@ -534,7 +875,30 @@ export class Relief {
     const masks = await ctx.texture(base + def.masks, { srgb: false, mips: false })
     const th = Math.tan(THREE.MathUtils.degToRad(def.vfovDeg) / 2)
     const aspect = W / H
-    const a = motion.air
+    const law = motion.airLaw ? airLawUniforms(motion.airLaw, motion.pitchDeg ?? 0) : null
+    const a = law ? undefined : motion.air
+    if (law) {
+      const material = new THREE.ShaderMaterial({
+        glslVersion: THREE.GLSL3,
+        vertexShader: AIR_LAW_VERT,
+        fragmentShader: law.uAirHeights ? AIR_LAW_FRAG_KNOTS : AIR_LAW_FRAG,
+        uniforms: { ...law, uAirEyeScale: r.eyeScale, uGain: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uDiag: diagUniform },
+        transparent: true,
+        blending: THREE.CustomBlending,
+        blendSrc: THREE.OneFactor,
+        blendDst: THREE.OneMinusSrcAlphaFactor,
+        blendSrcAlpha: THREE.OneFactor,
+        blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
+        side: THREE.BackSide,
+        depthTest: false,
+        depthWrite: false,
+      })
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 48), material)
+      mesh.frustumCulled = false
+      mesh.renderOrder = -1
+      r.group.add(mesh)
+      r.air = { mesh, material }
+    }
     if (a) {
       const material = new THREE.ShaderMaterial({
         glslVersion: THREE.GLSL3,
@@ -650,6 +1014,7 @@ export class Relief {
           const iy = (y0 + fy * bh) / H
           const dir = new THREE.Vector3((2 * ix - 1) * th * aspect, (1 - 2 * iy) * th, -1).normalize()
           const dd = distance(fx, fy)
+          if (fx >= 0 && fx <= 1 && fy <= 1 && dd > r.far) r.far = dd
           position[n * 3] = dir.x * dd
           position[n * 3 + 1] = dir.y * dd
           position[n * 3 + 2] = dir.z * dd
@@ -682,8 +1047,9 @@ export class Relief {
         glslVersion: THREE.GLSL3,
         ...(apronTexture ? { defines: { RELIEF_APRON: 1 } } : {}),
         vertexShader: VERT,
-        fragmentShader: FRAG,
+        fragmentShader: law ? withAirLaw(FRAG, !!law.uAirHeights) : FRAG,
         uniforms: {
+          ...(law ?? {}),
           ...(apron && apronTexture && apronSize ? {
             uApron: { value: apronTexture }, uApronSize: { value: new THREE.Vector2(apronSize.width / apronResolution, apronSize.height / apronResolution) },
             uApronEdges: { value: new THREE.Vector4(left, right, bottom, pad) },
@@ -731,7 +1097,7 @@ export class Relief {
       const cellCount = (cols - 1) * (rows - 1)
       r.layers.push({ mesh, material, grid: {
         cols, rows, left: nl, nx, ny, position, index, alpha, one: new Uint8Array(0), zero: new Uint8Array(0), du: 1, dv: 1, full: geo, lean: part(), probe, veil,
-        sx: new Float64Array(cols * rows), sy: new Float64Array(cols * rows), cells: new Uint32Array(cellCount), solid: new Uint8Array(cellCount), box: new Int16Array(cellCount * 4), kept: 0,
+        sx: new Float64Array(cols * rows), sy: new Float64Array(cols * rows), cells: new Uint32Array(cellCount), solid: new Uint8Array(cellCount), box: new Int16Array(cellCount * 4), kept: 0, inside: null, image,
       } })
     }
     return r
@@ -753,10 +1119,16 @@ export class Relief {
       }
     }
     this.eyeScale.value = plain ? 1 : 1 / s2
+    if (this.lawed) {
+      // The lens' own angle, not the projection: in a place picture the projection is the padded field.
+      const pass = frameUniform.value * (view.placeScale ?? 1)
+      this.lawFrame.value = pass
+      this.lawFocal.value = view.format.height / (2 * pass * Math.tan(rad(view.camera.fov) / 2))
+    }
     if (this.air) {
       const u = this.air.material.uniforms
       const f = m.air?.drift
-      if (f) (u.uDrift!.value as THREE.Vector4).set(f[0], f[1], f[2] * dt + 40, f[3])
+      if (f && u.uDrift) (u.uDrift.value as THREE.Vector4).set(f[0], f[1], f[2] * dt + 40, f[3])
       u.uGain!.value = gain
       u.uVignette!.value = vignette
       u.uAspect!.value = view.format.width / view.format.height

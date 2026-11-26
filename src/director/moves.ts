@@ -20,6 +20,25 @@ export interface Fit {
   globe: { quaternion: number[]; scale: number[] }
 }
 
+// The plumb of a pose at the unit sphere of its body: the angle of the direction from the eye to the body's centre off the camera's upright
+// plane (the plane of its up and forward axes), in radians, positive where the centre lies to the right. 0 where the centre lies straight
+// under or over the camera or on its line of sight: a ball that hangs plumb in the picture, a limb that lies level.
+export function plumbOf(p: { position: THREE.Vector3; quaternion: THREE.Quaternion }): number {
+  const c = p.position.clone().negate().applyQuaternion(p.quaternion.clone().invert()).normalize()
+  return Math.asin(Math.min(Math.max(c.x, -1), 1))
+}
+
+// The least turn of a camera, in its own frame, that gives its plumb the wanted angle: a turn about the axis square to the camera's right
+// and to the centre's direction along the upright plane, so the centre moves straight to or from that plane and not along it. Near the
+// ground, where the centre lies under the camera, it is a roll; far out, where the centre lies near the line of sight, a pan. None where
+// the centre lies on the camera's right axis, where no such axis is.
+export function plumbTurn(position: THREE.Vector3, quaternion: THREE.Quaternion, want: number): THREE.Quaternion {
+  const c = position.clone().negate().applyQuaternion(quaternion.clone().invert()).normalize()
+  const flat = Math.hypot(c.y, c.z)
+  if (flat < 1e-9) return new THREE.Quaternion()
+  return new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, -c.z / flat, c.y / flat), want - Math.asin(Math.min(Math.max(c.x, -1), 1)))
+}
+
 export interface Surge { glide: number; rise: number; fall: number; swell?: [number, number, number] }
 
 export interface MoveParams {
@@ -220,6 +239,12 @@ export class StopPlan {
   turn(time: number): THREE.Quaternion {
     if (this.p.spot.on === 'rings') return new THREE.Quaternion()
     return new THREE.Quaternion().setFromAxisAngle(this.axis, THREE.MathUtils.degToRad(this.p.spinDegPerSecond) * (time - this.holdMid))
+  }
+
+  // The turn the stop draws its body by at a time. It is the plan's turn, unless a stop draws another one (a spin that comes to rest over
+  // the place) and says so here. The measure of a stop that handover.drawnMeasure names carries it in the state of the globe side.
+  drawn(time: number): THREE.Quaternion {
+    return this.turn(time)
   }
 
   spin(time: number): number {
@@ -473,10 +498,10 @@ export class StopPlan {
     return { position, quaternion: lookAt(position, new THREE.Vector3(0, 0, 0), t.ahead), vfov: pose.vfov }
   }
 
-  handoverPath(kind: 'dive' | 'rise'): { rise: number; fall: number; turnRise: number; turnFall: number; level: boolean; levelBy: number; sidestep?: Sidestep } {
+  handoverPath(kind: 'dive' | 'rise'): { rise: number; fall: number; turnRise: number; turnFall: number; level: boolean; levelBy: number; sidestep?: Sidestep; plumb?: true } {
     const base = kind === 'dive' ? config.raw.handover.descent : config.raw.handover.ascent
     const own = this.p.handover?.[kind]?.path
-    const out = { rise: own?.rise ?? base.rise, fall: own?.fall ?? base.fall, turnRise: own?.turnRise ?? base.turnRise, turnFall: own?.turnFall ?? base.turnFall, level: own?.level ?? base.level, levelBy: own?.levelBy ?? base.levelBy, sidestep: own?.sidestep }
+    const out = { rise: own?.rise ?? base.rise, fall: own?.fall ?? base.fall, turnRise: own?.turnRise ?? base.turnRise, turnFall: own?.turnFall ?? base.turnFall, level: own?.level ?? base.level, levelBy: own?.levelBy ?? base.levelBy, sidestep: own?.sidestep, plumb: own?.plumb === true ? (true as const) : undefined }
     if (!(out.rise >= 0) || !(out.fall > 0) || !(out.rise + out.fall <= 1) || !(out.turnRise >= 0) || !(out.turnFall > 0) || !(out.turnRise + out.turnFall <= 1) || !(out.levelBy > 0 && out.levelBy <= 1)) throw new Error('the handover path of ' + this.id + ' needs rise and turnRise of 0 or more, fall and turnFall above 0, each pair adding up to at most 1, and levelBy above 0 and at most 1')
     const s = out.sidestep
     if (s && (!Number.isFinite(s.right) || !Number.isFinite(s.up) || !(s.by > 0 && s.by <= 1))) throw new Error('the sidestep of ' + this.id + ' needs right and up in radii and by above 0 and at most 1')
@@ -526,6 +551,9 @@ export class StopPlan {
     const position = centre.clone().addScaledVector(out, range)
     const upright = one ? turn : path.level ? smooth(turn / path.levelBy) : turn
     const quaternion = lookAt(position, centre, ahead).multiply(a.rel.slerp(b.rel, upright))
+    // path.plumb: the centre's angle off the camera's upright plane is the mix of the two ends' own as they stand now; the least turn that
+    // makes it so. The swing below turns eye and camera together about the place's vertical and leaves that angle as it is.
+    if (path.plumb) quaternion.multiply(plumbTurn(position, quaternion, mix(plumbOf(far), plumbOf(low), upright)))
     if (swing) {
       const on = new THREE.Quaternion().setFromAxisAngle(centre, swing * (1 - upright))
       position.applyQuaternion(on)
@@ -631,7 +659,7 @@ export class StopPlan {
   // picture changes sides (T, handover.dive.at and handover.rise.at) moves nothing on the path.
   // It is the default of every stop that hands over. A stop named in handover.ownPath keeps the path of its own class until its builder
   // takes the name off the list. What a stop on the one move may still set: its two ends (hold, terrain, rise.distance and the like), its
-  // place (spot), at, path.sidestep, path.level and the flanks of the pace (handover.dive.pace, handover.rise.pace). What is not read on the
+  // place (spot), at, path.sidestep, path.level, path.plumb and the flanks of the pace (handover.dive.pace, handover.rise.pace). What is not read on the
   // one move: terrain.entry* and terrain.exit*, path.rise, fall, turnRise, turnFall, levelBy and fromDive, and a class's own divePose,
   // risePose, dive and rise.
   get engineMove(): boolean {
@@ -738,6 +766,17 @@ export class StopPlan {
     const unit = this.twin({ position: new THREE.Vector3(1, 0, 0), quaternion: new THREE.Quaternion(), vfov: globe.vfov }, time)
     const back = zero.quaternion.clone().invert()
     return { position: globe.position.clone().sub(zero.position).applyQuaternion(back).multiplyScalar(1 / unit.position.distanceTo(zero.position)), quaternion: back.multiply(globe.quaternion), vfov: globe.vfov }
+  }
+
+  // Where the unit sphere of the body lies in the surface set at a time, in the set's own frame and units: the twin undone for the centre
+  // of the body and for a point of its surface. The twin places the globe's picture and its air in the surface view at the handover, so
+  // this is the globe as the surface view has it, whatever the set draws on it. The measure of a stop that handover.drawnMeasure names
+  // reads it (SetState.ball). terrain.ground is not asked: beside the measure of a stop that is not named it feeds the twin of the engine
+  // (twinFrame), where it places the globe side of a dive and a rise, so it is no number to tune a measure with.
+  ballIn(time: number): { centre: THREE.Vector3; radius: number } {
+    const at = (x: number): THREE.Vector3 => this.untwin({ position: new THREE.Vector3(x, 0, 0), quaternion: new THREE.Quaternion(), vfov: this.p.terrain.vfov }, time).position
+    const centre = at(0)
+    return { centre, radius: at(1).distanceTo(centre) }
   }
 
   // The law of a dive or a rise on the one move, three things. pace: the flanks of the bell the height runs on. turn: the flanks of the
@@ -947,6 +986,15 @@ export class StopPlan {
 
   coverHidden(_seg: Segment, _time: number): number | undefined {
     return undefined
+  }
+
+  // The globe under the surface view (Shot.under, the one ground): true where a sample of the surface view of this stop is to draw the
+  // stop's set as the globe view first, by the twin of its lens, and the surface view over it. Asked for a sample of the surface view
+  // alone, in the dive, the surface segment and the rise. False by default: the surface view is drawn alone, as it was. A stop answers by
+  // the place of the eye (its height, what of the globe is in the frame); an answer that changes at a time changes the picture at that
+  // time, so the two sides of it have to be the same picture.
+  under(_seg: Segment, _time: number): boolean {
+    return false
   }
 
   // Three schedules of the sky on the globe side of a dive or rise that hands over run on the film's clock. A stop whose path runs at a pace of

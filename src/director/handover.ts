@@ -12,7 +12,16 @@ export interface Sidestep { right: number; up: number; by: number }
 // fromDive (the rise only): the close view of the rise leaves from the eye of the dive. From the start of the rise the stop's own close path is led
 // over to the pose the dive handed over at, by the share of the way to T raised to this power (1 or more: it starts from rest), so at T the camera
 // of the rise stands where the twin of the dive stood. Plates of the globe that are true from that one eye are then true in both handovers.
-export interface PathOptions { rise?: number; fall?: number; turnRise?: number; turnFall?: number; level?: boolean; levelBy?: number; sidestep?: Sidestep; fromDive?: number }
+// plumb (off unless the stop asks): the glide carries the plumb of the camera, the angle of the body's centre off the camera's upright plane
+// (the plane of its up and forward axes; plumbOf of moves.ts), from the far end's to the near end's by the share its attitude turns with: at
+// every time it is the mix of the two ends' own plumb as they stand at that time, and nothing swells between them. Without it the two
+// attitudes are turned into each other about the look at the place alone, and a far end that stands rolled against the vertical plane the
+// close view flies in leans the ball to one side in the middle of the move (the rise of the Sun: 4.4 degrees at frame 227 between ends of
+// 1.0 and 0.0). It turns the camera and nothing else: the eye's path, its height and the lens stay, so the
+// rate of the fall is the same and the turn and the speed of the picture are not; a stop that asks for it searches its law again
+// (tools/law.ts). It is read by the glide, so it holds on the one move and on the generic path of the class; a class that flies a path
+// of its own does not read it.
+export interface PathOptions { rise?: number; fall?: number; turnRise?: number; turnFall?: number; level?: boolean; levelBy?: number; sidestep?: Sidestep; fromDive?: number; plumb?: boolean }
 // pace: the flanks of the engine's one move (plan E) for this side, where the stop wants other than handover.pace: rise is the share of the
 // segment over which the rate comes up from the far end, fall the share over which it goes down to the surface view, corner the share of a
 // flank over which its slope comes in and goes out. turn: flanks of the same kind for the eye's direction from the place and the camera's
@@ -254,6 +263,12 @@ export function forceSide(view: ViewKind | null): void {
   forced = view
 }
 
+// The view the harness has forced, null on the film's own path: who names the view of a sample by any other rule than sideAt asks here
+// first and leaves the forced view alone.
+export function sideForced(): ViewKind | null {
+  return forced
+}
+
 // The top down view of the harness (E4, the check of S2): the globe camera of a dive or a rise is put straight above the place, at the height and
 // with the field it has on the film's path. Like forceSide it is for the harness only and must not be reachable from the film path.
 export function forceTop(on: boolean): void {
@@ -294,6 +309,22 @@ export function noSkyForced(): boolean {
 // What the harness has forced, as one word: whoever keeps a measure of the film's own path (the capped shutter) drops it when this changes.
 export function forcedWord(): string {
   return (forced ?? 'film') + (above ? '|top' : '') + (oneMove ? '|onemove' : '')
+}
+
+// The measure reads what the stop draws: handover.drawnMeasure names the stops. In the surface view of a named stop the measure takes its
+// points on the globe as the plan's twin places it in the set (SetState.ball, StopPlan.ballIn) in place of the plane y = -ground, and on
+// the globe side of its dive and its rise the state carries the turn the stop draws its body by (StopPlan.drawn) in place of the plan's
+// turn. Why: the plane lies across the set's own y axis at a height one number in a plan names, while the ground of a surface view is the
+// globe, tilted against that axis and curved, so the surface side of a handover read up to twice and down to half the motion the globe side
+// read for the same picture, and the count and the shutter of a frame stepped at the border between them. A stop that is not named is
+// measured as before.
+export function drawnMeasured(stop: string): boolean {
+  return (config.raw.handover.drawnMeasure as string[]).includes(stop)
+}
+
+// The stops the measure is named for, as one word: whoever keeps a measure of the film's own path drops it when this changes.
+export function drawnWord(): string {
+  return (config.raw.handover.drawnMeasure as string[]).join(',')
 }
 
 export function handoverFrame(h: Handover): number {

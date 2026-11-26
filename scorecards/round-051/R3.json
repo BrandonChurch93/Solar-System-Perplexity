@@ -1,0 +1,141 @@
+{
+ "critic": "R3",
+ "score": 4,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "ring plane right of and below the globe (crops E, G, I, Q)",
+      "what": "the gap between globe and inner ring is filled with a separate patch of bright starfield with red nebula knots that does not match the sky around it; it reads as a cut-out with a different background pasted in",
+      "fix": "fill the inner ring gap with the same sky layer as the rest of the frame, or with dark unlit ring material, so no patch edge shows"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "globe terminator (crop A, Q)",
+      "what": "the day/night boundary is a straight diagonal soft band across the sphere, like a flat gradient overlay, instead of a curve that follows the globe; also true of image-05 crop A/P",
+      "fix": "shade the globe with a true spherical light term so the terminator curves with the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "lower right limb of globe (crops E, P, Q)",
+      "what": "the night-side limb bulges and the silhouette is uneven where it meets the shadowed ring, giving a lumpy, non-spherical edge",
+      "fix": "keep the globe silhouette an exact oblate ellipse and composite the ring over it cleanly"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "right edge sky beside ring shadow (crops W, X)",
+      "what": "horizontal bluish streaks of light cross the sky with no source, like lens flare bands or a stray layer",
+      "fix": "remove the streaks or tie them to a visible light source"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "outer edge of the outer ring, lower left (crops F, O, S of image-05 too)",
+      "what": "a thin bright blue-white rim line runs along the outer ring edge, reading as a halo or chromatic fringe",
+      "fix": "drop the rim highlight or match its colour to the ring material"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "globe lower and mid bands (crops A, G, P)",
+      "what": "cloud bands are soft and airbrushed with little fine detail compared with the crisp storm filigree near the top; detail density is uneven",
+      "fix": "add fine band turbulence across the whole lit disc at consistent scale"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "upper left Milky Way (crops H, J)",
+      "what": "the nebula is blotchy and painterly, with smeared orange clumps that look brushed rather than resolved",
+      "fix": "use a sharper star/dust layer with point-like stars and finer dust structure"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "ring in shadow behind globe (crops E, R)",
+      "what": "the ring shadow has a hard straight edge while the shadowed ring texture fades to near-flat black, losing ring structure",
+      "fix": "keep faint ring structure visible inside the shadow and soften the penumbra slightly"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-09.png",
+      "where": "base of globe meeting inner rings (image-10.png crop A, image-11.png crops Q and R)",
+      "what": "the bottom of Saturn's globe curls inward with a shaded bevel like a solid puck resting on a glossy tabletop, casting a vertical mirror reflection onto the inner ring that terminates in a hard vertical patch seam against a bright ringlet",
+      "fix": "occlude the oblate globe cleanly behind the ring plane without a beveled lip, remove the specular tabletop reflection from the C-ring, and keep concentric ringlets continuous across the inner ring"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "Milky Way sky above north limb and across background (image-15.png crops J, K, R and image-14.png crops B, E, G, H)",
+      "what": "faint curved stock-watermark-like ghost shapes appear in the dust lane just above the sunlit north limb in crop K, and Milky Way stars throughout the background are soft, irregular multi-pixel blobs with muddy grain",
+      "fix": "replace the background sky with a clean, watermark-free starfield rendered with sharp, consistent point-spread star profiles"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "lower-left foreground outer A-ring (image-12.png crops T and U, image-10.png crop D)",
+      "what": "ringlets break down into coarse, jagged, bark-like stippled clumps and noisy chatter that clash with the smooth vector-like stripes of the adjacent B-ring in crops V and W",
+      "fix": "render the outer A-ring with clean radial optical-depth structure and fine, uniform azimuthal particle scattering matching the B-ring resolution"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "lower sunlit globe above the ring intersection (image-11.png crop Q, image-10.png crop A)",
+      "what": "the cloud deck dissolves into flat, blocky, canvas-like rectangular painterly dabs with no zonal cloud banding",
+      "fix": "replace the patchy stippled surface on the lower globe with continuous sheared zonal bands and fine atmospheric texture consistent with the upper globe"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower-left limb-ring crossing and bottom foreground rings (image-14.png crops D and I, image-16.png crops T, U, and V)",
+      "what": "the sunlit limb shifts color across a smeared semi-transparent seam behind the inner ring, stray bright star pixels sit directly on top of opaque foreground rings in crops D and I, and the bottom ring arc in crops T, U, and V is noticeably blurry compared to the upper-left rings",
+      "fix": "composite ring optical depth cleanly over the globe without ghosted seams, mask background stars behind opaque ring bands, and maintain uniform native sharpness around the full ring ellipse"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "upper-left outer ring edge against the Milky Way (image-15.png crop J)",
+      "what": "a faint, broken, pixelated ghost line runs parallel roughly 12 pixels outside the main ring edge across the background stars",
+      "fix": "remove the stray doubled halo edge, or if depicting the F-ring, render it as a continuous, properly anti-aliased thin concentric ringlet"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "small orange moon in upper center-right sky (image-15.png crop K)",
+      "what": "the moon exhibits visible stair-stepped pixels along its sunlit limb and a soft, featureless airbrushed interior at native crop scale",
+      "fix": "supersample the moon with clean sub-pixel limb anti-aliasing and a subtle, smooth atmospheric limb haze falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "north polar cap and upper-right nightside limb (image-14.png crop A, image-15.png crop K)",
+      "what": "the blue polar region is a smooth airbrushed gradient lacking fine polar vortex and concentric/hexagonal jet detail, and bright background star pixels clip unevenly along the dark limb silhouette",
+      "fix": "add subtle high-latitude concentric cloud bands and polar vortex detail, and anti-alias the dark planetary limb cleanly against the starfield"
+     }
+    ]
+   }
+  }
+ ]
+}

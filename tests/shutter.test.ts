@@ -1,8 +1,8 @@
 import { afterAll, describe, expect, it } from 'vitest'
 import { config } from '../src/config'
-import { blurAllowed, framePlan, rawMotion, samplesNeeded, seenShare, shutterScale, softness } from '../src/core/motion'
+import { blurAllowed, endsBy, framePlan, rawMotion, samplesNeeded, seenShare, shutterScale, softness, type EndsLaw } from '../src/core/motion'
 import { sampleCount, samplesFor, shutterMid, shutterOffset, shutterPosition } from '../src/core/sampler'
-import type { ViewKind } from '../src/core/types'
+import type { Shot, ViewKind } from '../src/core/types'
 import { FilmDirector } from '../src/director/film'
 import { dissolveWeight, forceSide, handoverOf, shutterThreshold, sideAt } from '../src/director/handover'
 import { plans } from '../src/director/plans'
@@ -30,6 +30,16 @@ plans.forEach((p) => { delete p.p.near })
 const SIDES: ViewKind[] = ['orbit', 'terrain']
 const moving = config.segments.filter((s) => (s.kind === 'dive' || s.kind === 'rise') && handoverOf(s.stop, s.kind) !== null)
 const hands = (frame: number): boolean => moving.includes(segmentAtFrame(frame))
+// The surface view of a stop that handover.drawnMeasure names: its state carries the globe, and its frames take no soft in any kind of
+// segment (surfaceDrawn of core/motion.ts).
+const ground = (mid: Shot): boolean => mid.sets.some((s) => s.weight > 0 && s.view !== 'orbit' && s.ball !== undefined)
+// The share of its time over which a frame outside a handover opens and closes the shutter: none, but where handover.shutterEnds names
+// the frame's stop with a law of the frame's motion {share, fromPx, toPx}. A hold, a surface view or a flight of such a stop that moves
+// by more than fromPx carries the share in its plan: the flight is the stop's it leaves, as its segment names it.
+const endsOf = (stop: string | undefined, seen: number): number => {
+  const own = stop === undefined ? undefined : (numbers.shutterEnds as unknown as Record<string, number | EndsLaw | undefined>)[stop]
+  return typeof own === 'object' ? endsBy(own, seen) : 0
+}
 // The motion of a frame between two times inside it, measured here as the film's plan of a frame measures it: on both sides in the frame that
 // swaps them, the larger one.
 const motionOf = (frame: number, from: number, to: number): number => {
@@ -123,10 +133,11 @@ describe('the share of the shutter a frame keeps', () => {
       const mid = at(shutterMid())
       const raw = rawMotion(at(0), mid, at(config.shutterFraction))
       const seen = raw * seenShare(mid)
+      const ends = endsOf(segmentAtFrame(f).stop, seen)
       for (const tier of ['draft', 'review', 'final']) {
         const base = sampleCount(tier, kind)
         const cap = config.tiers[tier]!.maxSamplesPerFrame
-        expect(framePlan(film, f, tier)).toEqual({ samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: softness(raw), split: false, shutter: 1 })
+        expect(framePlan(film, f, tier)).toEqual({ samples: cap <= base ? base : samplesNeeded(base, cap, seen), raw, seen, soft: ground(mid) ? 0 : softness(raw), split: false, shutter: 1, ...(ends > 0 ? { ends } : {}) })
       }
     }
   })
@@ -378,12 +389,22 @@ describe('the floor of the share (handover.minShutter)', () => {
 
 describe('the cap switched off (handover.maxBlurPx 0)', () => {
   const tiers = ['draft', 'review', 'final']
+  // The cover of a stop (handover.sharpCover) gives the plan of its frames a count for their lookups, the ends of its shutter
+  // (handover.shutterEnds) the share over which it opens and closes. Both came after the cap and are laws of their own (tests/sharp.test.ts,
+  // tests/shutter-ends.test.ts), so they are emptied here with the cap: the plan is read as it was before all three.
+  const covers = numbers as unknown as { sharpCover: Record<string, number>; shutterEnds: Record<string, number> }
+  const coverKept = covers.sharpCover
+  const endsKept = covers.shutterEnds
   const off = (run: () => void): void => {
     try {
       numbers.maxBlurPx = 0
+      covers.sharpCover = {}
+      covers.shutterEnds = {}
       run()
     } finally {
       Object.assign(numbers, inFile)
+      covers.sharpCover = coverKept
+      covers.shutterEnds = endsKept
     }
   }
   // The plan of a frame as it was before the capped shutter (framePlan of core/motion.ts on main fdf97b8), written out: the motion across the
@@ -398,7 +419,7 @@ describe('the cap switched off (handover.maxBlurPx 0)', () => {
     }
     const mid = at(shutterMid())
     const raw = rawMotion(at(0), mid, at(config.shutterFraction))
-    return { raw, seen: raw * seenShare(mid), soft: h ? 0 : softness(raw), split: false }
+    return { raw, seen: raw * seenShare(mid), soft: h || ground(mid) ? 0 : softness(raw), split: false }
   }
   it('gives every frame of the film its full shutter, whatever the floor and the ease are set to', () => {
     off(() => {

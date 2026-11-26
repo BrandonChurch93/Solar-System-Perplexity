@@ -5,8 +5,9 @@ import { INVERSE_FILMIC_GLSL } from '../post/chain'
 import { implicitUniform } from '../core/texel'
 import { EQUIRECT_GLSL } from '../space/sky'
 import { GROUND_AIR_GLSL, hazeGlsl, hazeUniforms, setHazeGlow, type HazeParams } from './haze'
-import { setHazeAir, type GlobeAir } from './air'
-import { ReliefCap, type CapOptions } from './cap'
+import { AIR_LAW_GLSL, AIR_LAW_KNOTS_GLSL } from '../terrain/air'
+import { airLawUniforms, setHazeAir, type AirLaw, type GlobeAir } from './air'
+import { ReliefCap, capDetail, type CapOptions } from './cap'
 import { LimbAir, type LimbAirParams } from './limb'
 
 export interface PlanetLight {
@@ -77,6 +78,7 @@ export interface PlanetOptions {
   cap?: CapOptions
   exactSpin?: boolean
   limbAir?: LimbAirParams
+  airLaw?: AirLaw
 }
 
 const VERT = /* glsl */ `
@@ -106,27 +108,42 @@ export function patchSlots(levels: number): number {
 
 const patchSamplers = (slots: number): string => Array.from({ length: slots }, (_, i) => 'uniform sampler2D uPatch' + i + ';').join('\n')
 
-export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean; turn?: boolean }
+export interface PatchShader { slots: number; own: boolean; gain: boolean; minor: boolean; glow: boolean; cut?: boolean; cap?: boolean; capLight?: boolean; centres?: boolean; turn?: boolean; detail?: string; law?: boolean; knots?: boolean }
 
 const patchRead = (i: number): string => `textureGrad(uPatch${i}, q + 0.5, gx * uPatchScale[${i}], gy * uPatchScale[${i}]).rgb`
 
-const patchLevels = (o: PatchShader): string => Array.from({ length: o.slots }, (_, i) => `    if (uPatchCount > ${i}.5) {
-      vec2 q = ${o.centres ? `(g - uPatchCentre[${i}])` : 'g'} * uPatchScale[${i}];
-      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, ${o.minor ? 'fine' : 'parent'}));
-      ${o.own ? `if (w > 0.0) {
-        vec3 t = ${patchRead(i)};
-        float o = uPatchOwn[${i}];
-        albedo = mix(albedo, t, w * (1.0 - o));
-        ownSum = ownSum * (1.0 - w) + t * (w * o);
-        own = own * (1.0 - w) + w * o;
-      }` : `if (w > 0.0) albedo = mix(albedo, ${patchRead(i)}, w);`}
-      parent = gd * uPatchScale[${i}] * uPatchSize[${i}];${o.minor ? `
+const patchWeight = (o: PatchShader, i: number): string => `vec2 q = ${o.centres ? `(g - uPatchCentre[${i}])` : 'g'} * uPatchScale[${i}];
+      float w = front * smoothstep(0.5, 0.5 - uFeather, max(abs(q.x), abs(q.y))) * (1.0 - smoothstep(uPatchFade.x, uPatchFade.y, ${o.minor ? 'fine' : 'parent'}));`
+
+const patchSeen = (o: PatchShader, i: number): string => `parent = gd * uPatchScale[${i}] * uPatchSize[${i}];${o.minor ? `
       float thin = ga * uPatchScale[${i}] * uPatchSize[${i}];
       float cap = gd / uPatchAniso[${i}] * uPatchScale[${i}] * uPatchSize[${i}];
       fine = max(thin, cap);
       drawn = mix(drawn, thin / max(cap, 1.0), step(0.5, w));` : ''}
-      texels = mix(texels, parent, step(0.5, w));
-      near = max(near, w * uPatchNear[${i}]);
+      texels = mix(texels, parent, step(0.5, w));${o.detail ? `
+      seen = mix(seen, gm * uPatchScale[${i}] * uPatchSize[${i}], step(0.5, w));` : ''}
+      near = max(near, w * uPatchNear[${i}]);`
+
+const patchLevels = (o: PatchShader): string => o.own ? `    float whole = -1.0;
+${Array.from({ length: o.slots }, (_, i) => `    float w${i} = 0.0;
+    if (uPatchCount > ${i}.5) {
+      ${patchWeight(o, i)}
+      w${i} = w;
+      if (w == 1.0) whole = ${i}.0;
+      ${patchSeen(o, i)}
+    }`).join('\n')}
+${Array.from({ length: o.slots }, (_, i) => `    if (w${i} > 0.0 && !(whole > ${i}.5 && w${i} * (1.0 - uPatchOwn[${i}]) == 0.0)) {
+      vec2 q = ${o.centres ? `(g - uPatchCentre[${i}])` : 'g'} * uPatchScale[${i}];
+      float w = w${i};
+      vec3 t = ${patchRead(i)};
+      float o = uPatchOwn[${i}];
+      albedo = mix(albedo, t, w * (1.0 - o));
+      ownSum = ownSum * (1.0 - w) + t * (w * o);
+      own = own * (1.0 - w) + w * o;
+    }`).join('\n')}` : Array.from({ length: o.slots }, (_, i) => `    if (uPatchCount > ${i}.5) {
+      ${patchWeight(o, i)}
+      if (w > 0.0) albedo = mix(albedo, ${patchRead(i)}, w);
+      ${patchSeen(o, i)}
     }`).join('\n')
 
 export const planetFrag = (o: PatchShader): string => /* glsl */ `
@@ -187,14 +204,20 @@ in vec3 vLocal;
 in vec3 vWorldN;
 in vec3 vPos;
 in vec3 vView;${o.cap ? `
-in float vCapH;` : ''}${o.capLight ? `
-in vec3 vCapN;
-uniform vec2 uCapLight;` : ''}
+in float vCapH;` : ''}${o.capLight || o.detail ? `
+in vec3 vCapN;` : ''}${o.capLight ? `
+uniform vec2 uCapLight;` : ''}${o.detail ? `
+uniform float uFrame;` : ''}
 out vec4 outColor;
 ${EQUIRECT_GLSL}
 ${INVERSE_FILMIC_GLSL}
 ${DIAG_GLSL}
-${hazeGlsl(o.glow)}${o.cap ? GROUND_AIR_GLSL : ''}
+${hazeGlsl(o.glow)}${o.cap ? GROUND_AIR_GLSL : ''}${o.law ? `
+uniform vec3 uAirLight;
+uniform vec4 uAirLaw;
+${AIR_LAW_GLSL}${o.knots ? `
+uniform vec3 uAirKnots;
+uniform vec3 uAirShares;${AIR_LAW_KNOTS_GLSL}` : ''}` : ''}
 ${o.turn ? `vec3 spinBy(vec3 d, vec2 t) {
   return vec3(t.x * d.x - t.y * d.z, d.y, t.y * d.x + t.x * d.z);
 }` : `vec3 spinY(vec3 d, float a) {
@@ -214,7 +237,7 @@ vec3 curveAt(float ndl) {
   float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
   int i = int(min(floor(x), 31.0));
   return mix(uCurve[i], uCurve[i + 1], x - float(i));
-}
+}${o.detail ? '\n' + o.detail : ''}
 void main() {
   vec3 d = ${o.turn ? 'spinBy(normalize(vLocal), uSpinTurn)' : 'spinY(normalize(vLocal), uSpin)'};
   vec3 dc = d;
@@ -235,7 +258,10 @@ void main() {
   vec3 albedo = equirectGrad(uMap, dc, uGrad * (1.0 + uGrazingDetail.z * detail)).rgb;
   float texels = diagTexelsDir(d, uMapWidth);
   float dn = dot(d, uSpotN);
-  float near = 0.0;${o.own ? `
+  float near = 0.0;${o.detail ? `
+  vec3 kx = dFdx(d);
+  vec3 ky = dFdy(d);
+  float seen = length(cross(kx, ky)) / max(sqrt(max(dot(kx, kx), dot(ky, ky))), 1e-20) * uMapWidth / (2.0 * PI);` : ''}${o.own ? `
   float own = 0.0;
   vec3 ownSum = vec3(0.0);` : ''}${o.minor ? `
   float drawn = 0.0;` : ''}
@@ -244,7 +270,8 @@ void main() {
     vec2 g = vec2(dot(d, uSpotE), dot(d, uSpotU)) * inv;
     vec2 gx = dFdx(g);
     vec2 gy = dFdy(g);
-    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));${o.minor ? `
+    float gd = sqrt(max(dot(gx, gx), dot(gy, gy)));${o.detail ? `
+    float gm = abs(gx.x * gy.y - gx.y * gy.x) / max(gd, 1e-20);` : ''}${o.minor ? `
     float ga = abs(gx.x * gy.y - gx.y * gy.x) / max(gd, 1e-20);
     vec3 wx = dFdx(d);
     vec3 wy = dFdy(d);
@@ -268,21 +295,36 @@ ${patchLevels(o)}
   float hN = heightAt(normalize(d + north * e)) - heightAt(normalize(d - north * e));
   vec3 slope = (east * hE + north * hN) / (2.0 * e);
   vec3 slopeW = uBodyToWorld * ${o.turn ? 'spinBy(slope, vec2(uSpinTurn.x, -uSpinTurn.y))' : 'spinY(slope, -uSpin)'};
-  float strength = mix(uRelief, uReliefNear, near) * (1.0 - detail);
-  vec3 np = normalize(n - slopeW * strength);${o.capLight ? `
+  float strength = mix(uRelief, uReliefNear, near) * (1.0 - detail);${o.detail ? `
+  vec3 nb = ${o.turn ? 'spinBy(transpose(uBodyToWorld) * normalize(vCapN), uSpinTurn)' : 'spinY(transpose(uBodyToWorld) * normalize(vCapN), uSpin)'};
+  float texelPx = 1.0 / max(seen * uFrame, 1e-20);
+  vec4 ground = groundDetail(d, vCapH, nb, texelPx);
+  float bx = groundDetail(normalize(d + kx), vCapH + dFdx(vCapH), normalize(nb + dFdx(nb)), texelPx).a - ground.a;
+  float by = groundDetail(normalize(d + ky), vCapH + dFdy(vCapH), normalize(nb + dFdy(nb)), texelPx).a - ground.a;
+  vec3 sp = d * (1.0 + vCapH);
+  vec3 sx = dFdx(sp);
+  vec3 sy = dFdy(sp);
+  vec3 r1 = cross(sy, nb);
+  vec3 r2 = cross(nb, sx);
+  float det = dot(sx, r1);
+  vec3 tilt = abs(det) > 0.0 ? (bx * r1 + by * r2) * (-sign(det) / abs(det)) : vec3(0.0);
+  vec3 nt = uBodyToWorld * ${o.turn ? 'spinBy(tilt, vec2(uSpinTurn.x, -uSpinTurn.y))' : 'spinY(tilt, -uSpin)'};` : ''}
+  vec3 np = normalize(n - slopeW * strength${o.detail && !o.capLight ? ' + nt' : ''});${o.capLight ? `
   vec3 nc = normalize(vCapN) - n;
-  np = normalize(np + nc * uCapLight.x);` : ''}
+  np = normalize(np + nc * uCapLight.x${o.detail ? ' + nt' : ''});` : ''}
   float ndl = dot(np, uSunW);
   float lift = clamp((ndl - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6);
   vec3 shade = max(curveAt(ndl0) - uNight, vec3(0.0)) * (1.0 + lift) * mix(1.0, pow(mu, 0.35), uLimb) + uNight;
-  vec3 lin = inverseFilmic(albedo);
+  vec3 lin = inverseFilmic(albedo);${o.detail ? `
+  lin *= ground.rgb;` : ''}
   if (uNightFlat.x > 0.0) {
     float dark = 1.0 - smoothstep(uNightFlat.y, uNightFlat.z, ndl0);
     float l = dot(lin, vec3(0.2126, 0.7152, 0.0722));
     lin *= mix(1.0, 2.0 / (1.0 + l / uNightFlat.x), dark);
   }
   vec3 col = lin * shade * uTint;${o.own ? `
-  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}${o.capLight ? ' * (1.0 + clamp((dot(normalize(n + nc * uCapLight.y), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))' : ''}, own);` : ''}${o.cap ? `
+  if (own > 0.0) col = mix(col, inverseFilmic(ownSum / own)${o.gain ? ' * uOwnGain' : ''}${o.detail ? ' * ground.rgb' : ''}${o.capLight ? ` * (1.0 + clamp((dot(normalize(n + nc * uCapLight.y${o.detail ? ' + nt' : ''}), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))` : o.detail ? ' * (nt == vec3(0.0) ? 1.0 : 1.0 + clamp((dot(normalize(n + nt), uSunW) - ndl0) / max(ndl0 + uWrap, 0.06), -0.85, 1.6))' : ''}, own);` : ''}${o.law ? `
+  ${o.knots ? `col = max(col * airLawFactor(airLawDepth(uCam, ${o.cap ? 'n * (1.0 + vCapH)' : 'n'}, uAirLaw.y), uAirLaw.x) + uAirLight * smoothstep(uAirLaw.z, uAirLaw.w, ndl0) * airLawGather(uCam, ${o.cap ? 'n * (1.0 + vCapH)' : 'n'}, uAirLaw.y, uAirLaw.x, uAirKnots, uAirShares), vec3(0.0));` : `col = airLaw(col, uAirLight * smoothstep(uAirLaw.z, uAirLaw.w, ndl0), airLawFactor(airLawDepth(uCam, ${o.cap ? 'n * (1.0 + vCapH)' : 'n'}, uAirLaw.y), uAirLaw.x));`}` : `${o.cap ? `
   float tau = airDepth(length(uCam) - 1.0, dot(dir, normalize(uCam)), vCapH, dot(dir, n), uHazeH, uHazeTau);` : `
   vec3 at;
   float tau = hazeDepth(dir, true, at);`}
@@ -294,7 +336,7 @@ ${patchLevels(o)}
     float highlight = smoothstep(uGrazingRange.x, uGrazingRange.y, dot(n, uGrazingSun));
     vec3 pale = mix(uGrazingDusk, uGrazingFill + uGrazingHighlight * highlight, grazingDay) * hazeForward(dir);
     col = mix(pale, col, transmit);
-  }
+  }`}
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   outColor = diagOut(vec4(col, 1.0), texels, 1.0, vec3(0.15, 0.45, 0.9), vec2(flow * 8.0, 0.0), length(vView));${o.minor ? `
@@ -355,13 +397,15 @@ export class Planet {
     const spot = p?.spot.clone().normalize() ?? new THREE.Vector3(0, 0, 1)
     const east = new THREE.Vector3(0, 1, 0).cross(spot).normalize()
     const north = spot.clone().cross(east)
-    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true, ...(centres ? { centres: true } : {}), ...(o.exactSpin ? { turn: true } : {}) }
+    if (o.airLaw && g) throw new Error('one air: a planet with the air law carries no grazing air')
+    const text: PatchShader = { slots, own, gain, minor, glow: o.haze.glow === true, ...(centres ? { centres: true } : {}), ...(o.exactSpin ? { turn: true } : {}), ...(o.airLaw ? { law: true } : {}), ...(o.airLaw?.knots ? { knots: true } : {}) }
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3,
       vertexShader: VERT,
       fragmentShader: planetFrag(o.cap ? { ...text, cut: true } : text),
       uniforms: {
         ...hazeUniforms(o.haze),
+        ...(o.airLaw ? airLawUniforms(o.airLaw) : {}),
         uGrazingShape: { value: new THREE.Vector4(g?.depth ?? 0, g?.width ?? 1, g?.duskWidth ?? 1, g?.power ?? 1) },
         uGrazingDay: { value: new THREE.Vector2(g?.dayFrom ?? 0, g?.dayTo ?? 1) },
         uGrazingFill: { value: new THREE.Vector3().fromArray(g?.fill ?? [0, 0, 0]) },
@@ -400,7 +444,8 @@ export class Planet {
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, seg, seg / 2), this.material)
     if (o.cap) {
       const { uCapCut: _, ...shared } = this.material.uniforms
-      this.cap = new ReliefCap(planetFrag({ ...text, cap: true, ...(o.cap.light ? { capLight: true } : {}) }), shared, o.cap)
+      this.cap = new ReliefCap(planetFrag({ ...text, cap: true, ...(o.cap.light ? { capLight: true } : {}), ...(o.cap.detail ? { detail: capDetail(o.cap.detail) } : {}) }), shared, o.cap)
+      if (this.cap.lens) this.mesh.add(this.cap.lens)
       this.mesh.add(this.cap.mesh)
     }
     if (o.limbAir) {
@@ -427,6 +472,8 @@ export class Planet {
       const dn = Math.max(d.dot(u.uSpotN!.value as THREE.Vector3), 0.05)
       this.foot.set(d.dot(u.uSpotE!.value as THREE.Vector3) / dn, d.dot(u.uSpotU!.value as THREE.Vector3) / dn)
       u.uCapCut!.value = this.cap.update(camera.length() / this.mesh.scale.x - 1, this.foot) ? this.cap.cut : 0
+      const f = this.cap.material.uniforms.uFrame
+      if (f) f.value = frame
     }
   }
 
