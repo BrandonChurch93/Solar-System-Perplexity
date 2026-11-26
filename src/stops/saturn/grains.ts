@@ -102,6 +102,8 @@ void main() {
   vec4 ink;
   vec3 tint;
   vec2 zone;
+  // the ringlets' amplitude by radius, as the sheet has it (grade.ts iceFine)
+  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) sheetFine = vec4(iceFine(r), uGradeFine);
   sheetAt(q, r, fp, fpl, tau, lum, thin, ink, tint, zone);
   float spokes = iceSpokes(r, atan(q.y, q.x) / 6.2831853);
   lum *= exp(spokes * uIceOrbit.z);
