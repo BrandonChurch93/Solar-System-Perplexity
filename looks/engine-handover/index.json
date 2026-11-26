@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T00:27:26.244Z",
+ "pushed": "2026-11-26T00:50:38.616Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "design (c), the crests: unit and browser tests green (34 of 34), the review proof of 2477, 2580, 2668, 2672 is rendering",
+ "note": "crests v8 at the review tier: 2668 and 2672 have no teeth (0 and 2 jumps against 5 and 4), 2580 holds; a dark red mark shows on the far ground beside crest A that the teeth covered, tracing it before any name",
  "looks": [
   {
-   "time": "2026-11-26T00:26:08.277Z",
-   "file": "20261126002608277-note-s-q7-2668low.jpg",
-   "source": "../../../../tmp/crest/s-q7-2668low.png",
+   "time": "2026-11-26T00:50:29.235Z",
+   "file": "20261126005029235-note-r8-2580.jpg",
+   "source": "../../../../tmp/crest/r8-2580.png",
    "kind": "note",
-   "label": "crests v8 draft, frame 2668, the lower part of crest A: base against the candidate"
+   "label": "crests, review tier, 2580, 6 to 1: base | crests (71 px over 8 steps, all on the border of A's upper piece)"
   },
   {
-   "time": "2026-11-26T00:26:07.650Z",
-   "file": "20261126002607650-note-s-q7-2580.jpg",
-   "source": "../../../../tmp/crest/s-q7-2580.png",
+   "time": "2026-11-26T00:50:28.648Z",
+   "file": "20261126005028648-note-r8-2477.jpg",
+   "source": "../../../../tmp/crest/r8-2477.png",
    "kind": "note",
-   "label": "crests v8 draft, frame 2580 (the picture's own eye): base against the candidate, the same to the eye"
+   "label": "crests, review tier, 2477, 5 to 1: base | crests"
   },
   {
-   "time": "2026-11-26T00:26:06.981Z",
-   "file": "20261126002606981-note-s-q7-2672.jpg",
-   "source": "../../../../tmp/crest/s-q7-2672.png",
+   "time": "2026-11-26T00:50:28.071Z",
+   "file": "20261126005028071-note-r8-2672-low.jpg",
+   "source": "../../../../tmp/crest/r8-2672-low.png",
    "kind": "note",
-   "label": "crests v8 draft, frame 2672: base against the candidate at the crest"
+   "label": "crests, review tier, 2672, lower A, 4 to 1: base | crests"
   },
   {
-   "time": "2026-11-26T00:26:06.310Z",
-   "file": "20261126002606310-note-s-q7-2477.jpg",
-   "source": "../../../../tmp/crest/s-q7-2477.png",
+   "time": "2026-11-26T00:50:27.507Z",
+   "file": "20261126005027507-note-r8-2672-up.jpg",
+   "source": "../../../../tmp/crest/r8-2672-up.png",
    "kind": "note",
-   "label": "crests v8 draft, frame 2477: base against the candidate at the crest"
+   "label": "crests, review tier, 2672, upper A and D, 4 to 1: base | crests; the same red mark"
   },
   {
-   "time": "2026-11-26T00:26:05.586Z",
-   "file": "20261126002605586-note-s-q7-c.jpg",
-   "source": "../../../../tmp/crest/s-q7-c.png",
+   "time": "2026-11-26T00:50:26.928Z",
+   "file": "20261126005026928-note-r8-2668-red.jpg",
+   "source": "../../../../tmp/crest/r8-2668-red.png",
    "kind": "note",
-   "label": "crests v8 draft, frame 2668, 10 to 1: base, the cut on the middle (an orange line of the painted border right of the crest), the cut out by 0.7 cell (no line)"
+   "label": "crests, review tier, 2668 at 12 to 1: a dark red mark on the far ground beside A that the teeth covered in the base; not traced yet"
   },
   {
-   "time": "2026-11-26T00:26:04.895Z",
-   "file": "20261126002604895-note-s-q7-b.jpg",
-   "source": "../../../../tmp/crest/s-q7-b.png",
+   "time": "2026-11-26T00:50:26.355Z",
+   "file": "20261126005026355-note-r8-2668-low.jpg",
+   "source": "../../../../tmp/crest/r8-2668-low.png",
    "kind": "note",
-   "label": "crests v8 draft, frame 2668, 4 to 1: base (left) against the candidate (Mars L1, crests A and D named, D ended by a box, out 0.7)"
+   "label": "crests, review tier, 2668, lower A, 4 to 1: base | crests"
   },
   {
-   "time": "2026-11-26T00:06:53.947Z",
-   "file": "20261126000653947-note-ov-D7.jpg",
-   "source": "../../../../tmp/crest/ov-D7.png",
+   "time": "2026-11-26T00:50:25.745Z",
+   "file": "20261126005025745-note-r8-2668-z.jpg",
+   "source": "../../../../tmp/crest/r8-2668-z.png",
    "kind": "note",
-   "label": "crests: Mars L1 map at D, 6 to 1: ramp near half green, far half red, the cut white, sheet cells yellow, far sheet under kept cells cyan. D's top hooks round the hollow's end 6 texels inside the layer's rim (the diagonal bright ridge is the rim, the striped tan beyond it is outside the matte)"
+   "label": "crests, review tier, 2668, the teeth at 10 to 1: base | crests"
   },
   {
-   "time": "2026-11-26T00:06:53.340Z",
-   "file": "20261126000653340-note-s-q7-a.jpg",
-   "source": "../../../../tmp/crest/s-q7-a.png",
+   "time": "2026-11-26T00:50:25.141Z",
+   "file": "20261126005025141-note-r8-2668-up.jpg",
+   "source": "../../../../tmp/crest/r8-2668-up.png",
    "kind": "note",
-   "label": "crests, draft, 2668 x600 y550 6 to 1: base, A and D whole (blob), A and D in a box that ends D under its hooked top (no blob): the known limit, a crest that runs up to the layer's rim is ended with a box"
+   "label": "crests, review tier, 2668, upper A and D, 4 to 1: base | crests (L1: step 0.002, walk 2, under 4, out 0.7, a box and two named crests)"
   }
  ]
 }
