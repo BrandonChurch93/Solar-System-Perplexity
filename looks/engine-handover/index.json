@@ -1,29 +1,71 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T02:51:43.237Z",
+ "pushed": "2026-11-26T03:12:48.573Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "crests design c: choosing the end rule of the crest field between two candidates that both cure the light line at one crest's end; draft strips at three places, nothing at review yet",
+ "note": "crests: the present end rule at the review tier on 2477, 2580, 2668, 2672; teeth gone, the line at the hooked crest's end gone, hold the same",
  "looks": [
   {
-   "time": "2026-11-26T02:51:42.640Z",
-   "file": "20261126025142640-note-s12-apex2.jpg",
-   "source": "../../../../tmp/crest/s12-apex2.png",
+   "time": "2026-11-26T03:12:43.051Z",
+   "file": "20261126031243051-note-crest-review-2477-full.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2477-full.png",
    "kind": "note",
-   "label": "crests design c, draft 2668 at the apex where a step runs out into a slope: the frozen relief, the end rule before, the end rule now"
+   "label": "crests, review tier, 2477 whole frame with the present rule (trial numbers, scratch)"
   },
   {
-   "time": "2026-11-26T02:51:42.045Z",
-   "file": "20261126025142045-note-st13-c.jpg",
-   "source": "../../../../tmp/crest/st13-c.png",
+   "time": "2026-11-26T03:12:42.340Z",
+   "file": "20261126031242340-note-crest-review-2668-full.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2668-full.png",
    "kind": "note",
-   "label": "crests design c, draft frames 2664 to 2672 at the end of crest D (screen 648..680 x 616..642 at 8 times): top the frozen relief, middle and bottom two candidate end rules"
+   "label": "crests, review tier, 2668 whole frame with the present rule (trial numbers, scratch)"
   },
   {
-   "time": "2026-11-26T02:51:41.435Z",
-   "file": "20261126025141435-note-st13-a.jpg",
-   "source": "../../../../tmp/crest/st13-a.png",
+   "time": "2026-11-26T03:12:41.651Z",
+   "file": "20261126031241651-note-crest-review-2668-notch.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2668-notch.png",
    "kind": "note",
-   "label": "crests design c, draft frames 2664 to 2672 at the notch of the crest (screen 754..786 x 716..742 at 8 times, the box goes with the ground): top the frozen relief, middle and bottom two candidate end rules of the crest field"
+   "label": "crests, review tier, 2668 the notch of the lit crest at 10 to 1: without, the rule before, the present rule"
+  },
+  {
+   "time": "2026-11-26T03:12:41.093Z",
+   "file": "20261126031241093-note-crest-review-2668-end.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2668-end.png",
+   "kind": "note",
+   "label": "crests, review tier, 2668 the end of the hooked crest at 10 to 1: without, the rule before (thin light line), the present rule (line gone)"
+  },
+  {
+   "time": "2026-11-26T03:12:40.470Z",
+   "file": "20261126031240470-note-crest-review-2580-hold.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2580-hold.png",
+   "kind": "note",
+   "label": "crests, review tier, 2580 (hold) at 8 to 1: without and with, the same by eye"
+  },
+  {
+   "time": "2026-11-26T03:12:39.819Z",
+   "file": "20261126031239819-note-crest-review-2477-lit.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2477-lit.png",
+   "kind": "note",
+   "label": "crests, review tier, 2477 (first frame of the ground) lit crest at 12 to 1: without (broken) and with"
+  },
+  {
+   "time": "2026-11-26T03:12:39.076Z",
+   "file": "20261126031239076-note-crest-review-2672-lit.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2672-lit.png",
+   "kind": "note",
+   "label": "crests, review tier, 2672 lit crest at 12 to 1: without and with"
+  },
+  {
+   "time": "2026-11-26T03:12:38.420Z",
+   "file": "20261126031238420-note-crest-review-2668-lit.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2668-lit.png",
+   "kind": "note",
+   "label": "crests, review tier, 2668 lit crest at 12 to 1: without (teeth) and with the present rule (one stroke)"
+  },
+  {
+   "time": "2026-11-26T03:12:37.618Z",
+   "file": "20261126031237618-note-crest-review-2668-three.jpg",
+   "source": "../../../../tmp/crest/r14/crest-review-2668-three.png",
+   "kind": "note",
+   "label": "crests, review tier, 2668 at 3 to 1: without, the rule before, the present end rule"
   }
  ]
 }
