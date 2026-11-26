@@ -151,6 +151,9 @@ uniform vec2 uHeightRange;
 uniform float uRadius;
 uniform vec2 uBodyShell;
 uniform vec4 uBodyMarch;
+uniform vec2 uShell;
+uniform vec4 uMarch;
+uniform vec2 uTallDeck;
 uniform float uPixel;
 uniform float uGrad;
 uniform float uFrame;
@@ -374,8 +377,19 @@ void main() {
   float bD = dot(D, E) + uRadius * D.z;
   float e2 = dot(E, E);
   float high = e2 + 2.0 * uRadius * E.z;
-  float cTop = high - 2.0 * uRadius * uBodyShell.y - uBodyShell.y * uBodyShell.y;
-  float cLow = high - 2.0 * uRadius * uBodyShell.x - uBodyShell.x * uBodyShell.x;
+  vec2 shell = uBodyShell;
+  vec4 march = uBodyMarch;
+  float away = 0.0;
+  for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
+    float tIn = max(-bD - sqrt(max(bD * bD - high + 2.0 * uRadius * uBodyShell.y + uBodyShell.y * uBodyShell.y, 0.0)), 0.0);
+    vec2 o = E.xy - uTall.xy;
+    float tNear = max(-dot(o, D.xy) / max(dot(D.xy, D.xy), 1e-9), tIn);
+    away = smoothstep(0.0, 1.0, (length(o + D.xy * tNear) - uTallDeck.x) * uTallDeck.y);
+    shell = mix(uBodyShell, uShell, away);
+    march = mix(uBodyMarch, uMarch, away);
+  }
+  float cTop = high - 2.0 * uRadius * shell.y - shell.y * shell.y;
+  float cLow = high - 2.0 * uRadius * shell.x - shell.x * shell.x;
   float dTop = bD * bD - cTop;
   float dLow = bD * bD - cLow;
   float tangent = bD < 0.0 ? sqrt(max(high + uRadius * uRadius - bD * bD, 0.0)) - uRadius : high / (sqrt(uRadius * uRadius + high) + uRadius);
@@ -392,20 +406,20 @@ void main() {
   vec2 cs = vec2(1.0, 0.0);
   vec3 w = vec3(0.0);
   int steps = 0;
-  for (int i = 0; i < (inside ? int(uBodyMarch.w) : 0); i++) {
+  for (int i = 0; i < (inside ? int(march.w) : 0); i++) {
     vec3 p = E + D * t;
     vec2 at = calm(p.xy, cs);
     w = levels(at);
     gap = above(p) - stored(at, w);
     steps = i;
-    if (gap < uBodyMarch.z * t * pix) { hit = true; break; }
+    if (gap < march.z * t * pix) { hit = true; break; }
     if (t > t1) { gone = true; break; }
     tPrev = t;
     gapPrev = gap;
     float fall = max(-(D.z + (D.x * p.x + D.y * p.y) / uRadius), 0.0);
-    t += max(gap / (fall + uBodyMarch.x * tall(at)), uBodyMarch.y * t * pix);
+    t += max(gap / (fall + march.x * tall(at)), march.y * t * pix);
   }
-  hit = hit || (inside && !gone);
+  hit = hit || (inside && !gone && away < 1.0);
   for (int i = 0; i < (hit ? 3 : 0); i++) {
     float tm = gapPrev > 0.0 && gap < gapPrev ? tPrev + (t - tPrev) * gapPrev / (gapPrev - gap) : 0.5 * (t + tPrev);
     vec3 p = E + D * tm;
@@ -705,6 +719,7 @@ export class ReliefDeck {
       uMarch: { value: new THREE.Vector4().fromArray(l.march) },
       uBodyShell: { value: new THREE.Vector2().fromArray(body.height.shell) },
       uBodyMarch: { value: new THREE.Vector4().fromArray(body.height.march) },
+      uTallDeck: { value: new THREE.Vector2(body.height.deckUnits[0]!, 1 / (body.height.deckUnits[1]! - body.height.deckUnits[0]!)) },
       uPixel: { value: 0.001 },
       uDetail: { value: new THREE.Vector4().fromArray(l.detail) },
       uDetailLook: { value: new THREE.Vector4().fromArray(l.detailLook) },
