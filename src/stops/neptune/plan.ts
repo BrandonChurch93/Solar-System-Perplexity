@@ -3,6 +3,7 @@ import { config } from '../../config'
 import type { Segment } from '../../config'
 import { airAt } from '../../core/air'
 import type { AirKnot, Pose, ViewKind } from '../../core/types'
+import type { SkyShares } from '../../director/handover'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { drift, lookAt } from '../../director/rig'
 import close from './close.json'
@@ -164,6 +165,14 @@ class NeptunePlan extends StopPlan {
   override skyTurnShare(seg: Segment, time: number): number | null {
     if (seg.kind !== 'dive') return super.skyTurnShare(seg, time)
     return smooth(airAt(lowSky, this.eyeHeight(time), this.id)!.share)
+  }
+
+  // No share of the engine's own schedule of the two skies in the dive and in the rise (a share of 0): the sky there is the stop's
+  // own pictures (sky.json), each drawn whole or not at all by its word (both: in either view of the dive, the surface view and the
+  // rise), fixed on the sky at the stop's turn. With a share over 0 the engine weighs the pictures against each other by the clock
+  // of its handover, which MAIL 1363 point 2 (b) and MAIL 1395 ruling 2 forbid for a picture that can be in view.
+  override skyShare(seg: Segment, time: number): SkyShares | null {
+    return seg.kind === 'dive' || seg.kind === 'rise' ? { low: 0 } : super.skyShare(seg, time)
   }
 
   // The sky's level has no law by the eye's height since 26 Nov, 05 h (MAIL 1363 point 2 (b), MAIL 1395 ruling 2): from 4690 to the end
