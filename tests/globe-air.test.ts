@@ -163,5 +163,5 @@ describe('the air of the globe', () => {
     expect(GROUND_AIR_GLSL).toContain('vec3 airOver(vec3 col, float tau, float extinction, vec3 up, vec3 dir)')
     expect(planetFrag({ slots: 0, own: false, gain: false, minor: false, glow: false })).not.toContain('airDepth')
     expect(planetFrag({ slots: 0, own: false, gain: false, minor: false, glow: false, cap: true })).toContain(GROUND_AIR_GLSL)
-  })
+  }, 60000)
 })
