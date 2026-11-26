@@ -12,7 +12,7 @@ import { captureFrames, captureRate, shutterSeconds, spanMid, wholeFrame } from 
 import { samplesFor, type Sample } from './sampler'
 import { SetLoader } from './sets'
 import type { PlaceState, RenderView, Shot, SkyFloor, SkyPatch, ViewKind } from './types'
-import { floorRing, sharedSkyWeight } from './skyfloor'
+import { floorRing, ownSkyWeight, sharedSkyWeight } from './skyfloor'
 import { Place, placeCamera, placeLayout, type PlaceMode, type PlacePicture } from './place'
 import { gradUniform, isRaw, setDiag, setFine, setSamples, setWay, type Way } from '../diagnostics/diag'
 import { applyProbe, parseProbe, type Probe } from '../diagnostics/probe'
@@ -369,7 +369,7 @@ export class Engine {
           } else {
             if (patch.view !== state.view) continue
             const arriving = kind === 'travel' && state.id !== shot.segment.stop
-            const base = shot.segment.stop === config.endingId ? 0 : kind === 'travel' ? (arriving ? shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8) : 0) : kind === 'rise' && state.view === 'orbit' ? 0 : 1
+            const base = ownSkyWeight(kind, state.view, arriving, shot.segment.stop === config.endingId, shot.skyPatch ?? THREE.MathUtils.smoothstep(shot.u, 0.2, 0.8), patch.arrive)
             weight = patch.weight ? base * patch.weight(shot.time, state.view) : base
           }
           if (weight <= 0) continue
