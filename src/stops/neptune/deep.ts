@@ -1264,7 +1264,11 @@ void main() {
     // The veil's own light (deep.json, fan.veil.own): the same for the sheet of ice haze. It lies on the deck by place, beyond the
     // storm and the bank, so the plain there is pale and the near deck, where no sheet lies, stays dark. Its share of the thing's
     // light takes its own gain, the rest the ground's. Own 0: the law till 25 Nov, 16 h, to the bit.
-    vec3 thingGain = uVeilOwn > 0.0 ? mix(gain, airGain(kc, thingAir, behind, vec3(uVeilOwn)), clamp(cloudClear * veilOnly / max(bare, vec3(1e-9)), 0.0, 1.0)) : gain;
+    // The share is ONE number for the three channels (the sums of the three). By channel it was near 1 in red and green on a
+    // dark blue deck and small in blue, so the sheet's gain lifted red and green alone: teal and green blotches on the deck
+    // where the sheet lies thin (the Builder's MAIL 1474, fault 1) and a pink edge where a cirrus thins over it.
+    float veilShare = clamp(cloudClear * dot(veilOnly, vec3(1.0)) / max(dot(bare, vec3(1.0)), 1e-9), 0.0, 1.0);
+    vec3 thingGain = uVeilOwn > 0.0 ? mix(gain, airGain(kc, thingAir, behind, vec3(uVeilOwn)), veilShare) : gain;
     col = uHazeLow.w > 0.0 ? (col - airCol) * thingGain + airCol * airGain(kc, thingAir, behind, vec3(uHazeLow.w)) : col * thingGain;
   }
   // On the globe the scene ends at a border on the ground: by the angle from the place of what the ray meets (or passes nearest).
