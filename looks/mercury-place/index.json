@@ -1,9 +1,17 @@
 {
  "folder": "mercury-place",
- "pushed": "2026-11-26T00:10:35.809Z",
+ "pushed": "2026-11-26T00:26:31.920Z",
  "head": "0a034c446bd940870e359b8cdc9cfe1081b464bc",
- "note": "00:11 chain tn done on 172e7bcd; main moved again to 3675234f (the far Sun's new law, the reader changed): merged, a sample of 23 master stills is being drawn on the merge to see which frames keep tn's bytes",
+ "note": "00:27 merged main 3675234f: 615 and 870 keep the bytes, 694 to 735 and 999 to 1031 are other pictures (the far Sun stands elsewhere); 115 master stills being drawn on the merge for the three rate 2 stretches and the turn",
  "looks": [
+  {
+   "time": "2026-11-26T00:26:31.256Z",
+   "file": "20261126002631256-note-merge-717-1016.jpg",
+   "source": "../../../../tmp/m/merge-717-1016.jpg",
+   "kind": "note",
+   "label": "717 and 1016 under the law, on main 172e7bcd (left) and on main 3675234f (right): main's batch 14 puts the far Sun elsewhere in dive and rise; the ground keeps its bytes left of x 960; 615 and 870 keep their bytes",
+   "stop": "mercury"
+  },
   {
    "time": "2026-11-26T00:08:44.774Z",
    "file": "20261126000844774-note-tn-hand-960.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/m/tn-rise-cr2.jpg",
    "kind": "note",
    "label": "rise 1007 to 1023 at rate 2, the crater at 2 times under the law: the thin ring is in place from 1007 and sharpens to 1015, no step",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-25T23:05:04.098Z",
-   "file": "20261125230504098-note-tn-rise-989.jpg",
-   "source": "../../../../tmp/m/tn-rise-989.jpg",
-   "kind": "note",
-   "label": "rise 989 to 998 at rate 2, whole master frames under the law: the crater keeps the set's light all the way; rate 2 rows 0.08 to 0.24 (the name 0.48 to 0.51 at 989 to 992)",
    "stop": "mercury"
   }
  ]
