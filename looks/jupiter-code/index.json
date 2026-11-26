@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T02:59:54.401Z",
- "head": "47948a6b2448f86cc0c1ab0138c1e7350e918403",
- "note": "02:59 UTC: u3 dropped (worse), curl warp pattern study, u2 stays the base while u4 draws (curl warp, orders by albedo, cumulus riding on the silk)",
+ "pushed": "2026-11-26T03:20:20.089Z",
+ "head": "a64c3d06a47f7ee3553e0f99fe5e73499ca1daac",
+ "note": "03:21 UTC: state t as it stands (a64c3d06), not better than state s; u4 dropped",
  "looks": [
+  {
+   "time": "2026-11-26T03:20:18.555Z",
+   "file": "20261126032018555-note-t-3150.jpg",
+   "source": "../work/r25/t/t-3150.png",
+   "kind": "note",
+   "label": "state t (a64c3d06) at 3150, master draft, scaffold off: line (i) 16.026 (main 3.539, state s 9.259 with scaffold), bands green; boulders, flat storm dish, right third too light",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T03:20:17.283Z",
+   "file": "20261126032017283-note-t-3239-960.jpg",
+   "source": "../work/r25/t/t-3239-960.png",
+   "kind": "note",
+   "label": "state t (a64c3d06) at 3239, preview draft, scaffold off: cells left of the storm drawn out into bars",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T03:20:15.917Z",
+   "file": "20261126032015917-note-t-3060-960.jpg",
+   "source": "../work/r25/t/t-3060-960.png",
+   "kind": "note",
+   "label": "state t (a64c3d06) at 3060, preview draft, scaffold off: boulders and slabs, same faults as 3150",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T03:20:14.490Z",
+   "file": "20261126032014490-note-u4-3150.jpg",
+   "source": "../work/r25/t/u4-3150.png",
+   "kind": "note",
+   "label": "dev u4 at 3150, preview draft: curl warp of the heights tears the relief into combed stripes, line (i) 28.205, dropped",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T02:59:53.746Z",
    "file": "20261126025953746-note-u2-3150.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r24/t/top-ends-s.jpg",
    "kind": "note",
    "label": "state s laid back on the ground chart (camera taken out), 3060 beside 3239, rings at 0.45, 0.9, 1.6 and 2.5 units: turn of the picture by ring 0.13 0.42 0.98 0.99 0.70 0.44 0.25 0.11 0.08 degrees a second, the flow law 0.41 0.83 1.15 1.15 0.82 0.46 0.23 0.13 0.10",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T00:13:06.568Z",
-   "file": "20261126001306568-note-ends-s.jpg",
-   "source": "../work/r24/t/ends-s.jpg",
-   "kind": "note",
-   "label": "state s, frames 3060, 3149.5 and 3239 at preview size, draft: the ground by code from three eye points",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:52:56.539Z",
-   "file": "20261125235256539-note-r-3150.jpg",
-   "source": "../work/r23/t/r-3150.png",
-   "kind": "note",
-   "label": "3150 master draft, state r: round tops and cast shadows (q6) after three solve rounds with the brightening capped. Low band 11.259 (main 3.539, state n 4.801), bands 1.11 1.05 0.96 0.90. Reads as a cumulus deck; the storm is lumpy and too dark, heads too big",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:46:37.571Z",
-   "file": "20261125234637571-note-q6-3150.jpg",
-   "source": "../work/r23/t/q6-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state q6: round tops on every age, softer cast shadows, no solve yet. First state that reads as cumulus",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-25T23:46:36.929Z",
-   "file": "20261125234636929-note-q4-3150.jpg",
-   "source": "../work/r23/t/q4-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state q4: taller tops with plateaus. Eroded rock, wrong; the cast shadows darken the lower left by the Sun alone",
    "stop": "jupiter"
   }
  ]
