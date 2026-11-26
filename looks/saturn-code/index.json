@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T07:36:02.586Z",
- "head": "d65bfcbc0f77ca551a025d1066de534e296d0526",
- "note": "state one (solved view, one shadow direction, tone by latitude laid again): drafts of dive and rise at every frame, arrival and flights rendering",
+ "pushed": "2026-11-26T08:18:32.744Z",
+ "head": "b28d29a882862711ad1033614fee83f5dd77cf55",
+ "note": "state two in work: ring's broad tone laid by radius and azimuth, thin shadowed ring on the picture's weight, moon behind the rings",
  "looks": [
+  {
+   "time": "2026-11-26T08:18:32.180Z",
+   "file": "20261126081832180-note-shadow_edge_3612.jpg",
+   "source": "../../../../tmp/v/rigid/SV/sh/shadow_edge_3612.jpg",
+   "kind": "note",
+   "label": "state one: the shadow's edge at 3612"
+  },
+  {
+   "time": "2026-11-26T08:18:31.620Z",
+   "file": "20261126081831620-note-flights.jpg",
+   "source": "../../../../tmp/v/rigid/SV/sh/flights.jpg",
+   "kind": "note",
+   "label": "state one: flights in and out, drafts"
+  },
+  {
+   "time": "2026-11-26T08:18:31.041Z",
+   "file": "20261126081831041-note-tone-screen.jpg",
+   "source": "../../../../tmp/v/rigid/S2/t5/tone-screen.jpg",
+   "kind": "note",
+   "label": "the ring's broad tone as it falls on the hold frame (first reading)"
+  },
+  {
+   "time": "2026-11-26T08:18:30.476Z",
+   "file": "20261126081830476-note-lr_thin_x4.jpg",
+   "source": "../../../../tmp/v/rigid/S2/lr_thin_x4.jpg",
+   "kind": "note",
+   "label": "3465 lower right lifted by 4: tone only, tone with the thin shadowed ring, approved"
+  },
+  {
+   "time": "2026-11-26T08:18:29.913Z",
+   "file": "20261126081829913-note-lr_thin.jpg",
+   "source": "../../../../tmp/v/rigid/S2/lr_thin.jpg",
+   "kind": "note",
+   "label": "3465 lower right: tone only, tone with the thin shadowed ring, approved"
+  },
+  {
+   "time": "2026-11-26T08:18:29.307Z",
+   "file": "20261126081829307-note-tri_B.jpg",
+   "source": "../../../../tmp/v/rigid/S2/tri_B.jpg",
+   "kind": "note",
+   "label": "3465 final at 1 to 1, lower part: state one, tone laid, approved"
+  },
+  {
+   "time": "2026-11-26T08:18:28.713Z",
+   "file": "20261126081828713-note-tri_L.jpg",
+   "source": "../../../../tmp/v/rigid/S2/tri_L.jpg",
+   "kind": "note",
+   "label": "3465 final at 1 to 1, left: state one, tone laid, approved"
+  },
   {
    "time": "2026-11-26T07:35:57.481Z",
    "file": "20261126073557481-note-lr4.jpg",
    "source": "../../../../tmp/v/rigid/SV/lr4.jpg",
    "kind": "note",
    "label": "lower right lifted 4: the shadowed ring against the sky"
-  },
-  {
-   "time": "2026-11-26T07:35:56.645Z",
-   "file": "20261126073556645-note-rimA.jpg",
-   "source": "../../../../tmp/v/rigid/SV/rimA.jpg",
-   "kind": "note",
-   "label": "outer edge at 1 to 1: approved, state one, main, K (the rim)"
-  },
-  {
-   "time": "2026-11-26T07:35:55.744Z",
-   "file": "20261126073555744-note-moonS_3608.jpg",
-   "source": "../../../../tmp/v/rigid/SV/sh/moonS_3608.jpg",
-   "kind": "note",
-   "label": "state one drafts, every frame: moonS_3608"
-  },
-  {
-   "time": "2026-11-26T07:35:54.535Z",
-   "file": "20261126073554535-note-rise_3865.jpg",
-   "source": "../../../../tmp/v/rigid/SV/sh/rise_3865.jpg",
-   "kind": "note",
-   "label": "state one drafts, every frame: rise_3865"
-  },
-  {
-   "time": "2026-11-26T07:35:53.750Z",
-   "file": "20261126073553750-note-rise_3841.jpg",
-   "source": "../../../../tmp/v/rigid/SV/sh/rise_3841.jpg",
-   "kind": "note",
-   "label": "state one drafts, every frame: rise_3841"
-  },
-  {
-   "time": "2026-11-26T07:35:52.767Z",
-   "file": "20261126073552767-note-rise_3805.jpg",
-   "source": "../../../../tmp/v/rigid/SV/sh/rise_3805.jpg",
-   "kind": "note",
-   "label": "state one drafts, every frame: rise_3805"
-  },
-  {
-   "time": "2026-11-26T07:35:51.596Z",
-   "file": "20261126073551596-note-dive_3624.jpg",
-   "source": "../../../../tmp/v/rigid/SV/sh/dive_3624.jpg",
-   "kind": "note",
-   "label": "state one drafts, every frame: dive_3624"
-  },
-  {
-   "time": "2026-11-26T07:35:50.713Z",
-   "file": "20261126073550713-note-dive_3588.jpg",
-   "source": "../../../../tmp/v/rigid/SV/sh/dive_3588.jpg",
-   "kind": "note",
-   "label": "state one drafts, every frame: dive_3588"
   }
  ]
 }
