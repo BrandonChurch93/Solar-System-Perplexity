@@ -8878,3 +8878,215 @@ the list of changed files, and looks go as attached pictures at most 1400 px wid
 - The pushes answered again at 00:35: eca8904bb went up (cf3a13eb8..eca8904bb), the looks at 00:35:47 (39ef451b, 8 looks:
   main's shadow beside mine, main's pair, 4860 beside the approved). A slip of mine, named: the note of that looks push
   says 00:41; it was 00:35:47. I wrote a time without reading the clock first.
+
+## Lab log 00:36 to 00:53 UTC, 26 Nov: the eye (hold difference (c)), five trials, the choice
+
+The cause: the eye's shade is `1 - dark * (1 - smoothstep(wall0, wall1, x * (1 + ragged * field)))` (planet.ts, eyeShade), x the
+share of the eye radius; the globe reads it with field 0, the scene with the deck's structure. With wall [0.3, 1.0] the whole
+fall happens inside the eye radius, so from the hold (the eye about 18 px across) it is a round hole with a sharp edge at
+0.47 of the light of the deck round it. The cure is a longer wall (a softer edge at every height, no window, no clock) and
+less of the deck's structure in it, so the close view keeps a bowl.
+
+All at 1920, draft, one frame at a time (`/tmp/ectl2.sh`, `/tmp/ectl3.sh`; 4605 about 36 s, 4860 about 90 s):
+
+| trial | wall | ragged | dark | hold: least light of the dot over its ring | px under 0.8 of the ring | 4605 whole | 4860 whole | 4860 ground | G17 4860 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| main 1f51abc9 | | | | 55.6 on 75.9 (0.73) | 50 | 2.931 | 22.986 | 19.759 | 0.934 / 0.549 |
+| the name ef0cc1cf (N15) | 0.3, 1.0 | 1.0 | 0.7 | 37.8 on 80.0 (0.47) | 248 | 7.605 | 22.420 | 17.601 | 0.507 / 0.232 |
+| E4 | 0.0, 1.6 | 0.4 | 0.7 | 42.9 (0.54) | 274 | 7.604 | 21.740 | 16.921 | 0.513 / 0.232 |
+| E5 | 0.2, 1.6 | 0.5 | 0.7 | 39.6 (0.49) | 332 | 7.605 | 21.638 | 16.819 | 0.513 / 0.232 |
+| E7 | 0.15, 1.3 | 0.6 | 0.7 | 41.3 (0.52) | 240 | 7.605 | 22.100 | 17.280 | 0.510 / 0.232 |
+| E8, chosen | 0.2, 1.6 | 0.5 | 0.6 | 44.0 (0.55) | 296 | 7.604 | 21.652 | 16.833 | 0.513 / 0.232 |
+| E9 | 0.3, 1.9 | 0.5 | 0.7 | 37.0 (0.46) | 499 | 7.605 | 21.533 | 16.713 | 0.513 / 0.239 |
+
+(An earlier trial E1, wall [0, 1.6] with ragged 1.0, was not kept: the close view became a spiral of arms like a galaxy.)
+
+What I saw (sheets `/tmp/eye-4860.jpg`, `/tmp/eye2-4860.jpg`, `/tmp/eye-hold.jpg`, `/tmp/eye2-hold.jpg`, `/tmp/eye-hold-1x.jpg`,
+`/tmp/holdm.jpg`; every tile looked at):
+- The hold at 4 times: the name is a hard round hole with a pale collar. E4 is the softest (a small whirl) but at 4860 its
+  floor is gone: the bowl becomes three winding arms (px of the storm's box under 50 levels of light: 13226, the approved
+  38673, the name 28015). E5 keeps the bowl at 4860 best of the first three (29832) and is soft at the edge, but its dot at
+  the hold is as dark as the name's and larger. E9 (the longest wall) has the broadest bowl at 4860 and the best number there,
+  but the largest dark spot at the hold (499 px). E8 is E5 with dark 0.6: the palest and softest dot of all at the hold, a
+  small whirl and no hole, and 4860 costs 0.014 against E5.
+- Chosen: E8. Honest: it is still a dark spot on the disc where the approved hero has none (0.55 of its ring where main
+  reads 0.73), and at 4860 its floor is paler than the approved's (least light of the floor, smoothed over 12 px: the approved 23.2, the name 40.2,
+  E8 44.1, E9 38.8; px of the storm under 40 levels: the approved 24406, the name 3771, E8 43). A darker floor in the close view and no spot at the hold pull against each other while the eye is one shade
+  at every height; the wall's length is what the two heights can share.
+- The straight pale streak beside the eye at the hold (the first streamer's far look) stands in every trial: a separate red.
+- 4605 against the approved moves by 0.001 at most (d302 allows 0.01); G17 at 4860 does not fall (0.507 to 0.513).
+
+## Lab log 00:36 to 00:53 UTC, 26 Nov: the detail measure by scale (MAIL 1346, (5) and (4))
+
+`assets-src/neptune/check/bands.py FILM APPROVED [ROW0 ROW1]`: G17's own code (tools/measure/g17.py: luma, tiles, the kept
+tiles, the grid of 12 by 8) with the band of 0.6 and 2.0 px replaced by octave bands. It reproduces G17 in the first line.
+Energy of the film over the approved, median over the kept tiles (and p25 for G17's band); 1920 draft frames of this machine:
+
+| band, px | 4860 name | 4860 with E8 | 4860 ground rows 2 to 6, E8 | 4860 main | 4605 name and E8 | 4605 main |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.6 to 2.0 (G17) | 0.507 / 0.232 | 0.513 / 0.232 | 0.338 / 0.158 | 0.934 / 0.549 | 0.675 / 0.436 | 0.856 / 0.720 |
+| 0.6 to 1.2 | 0.448 | 0.449 | 0.318 | 0.834 | 0.602 | 0.782 |
+| 1.2 to 2.4 | 0.549 | 0.591 | 0.368 | 1.086 | 0.792 | 0.987 |
+| 2.4 to 4.8 | 0.633 | 0.633 | 0.403 | 1.101 | 0.874 | 0.948 |
+| 4.8 to 9.6 | 0.729 | 0.724 | 0.536 | 1.235 | 0.889 | 0.961 |
+| 9.6 to 19.2 | 0.930 | 0.899 | 0.686 | 1.446 | 0.909 | 0.946 |
+| 19.2 to 38.4 | 0.915 | 0.885 | 0.663 | 1.127 | 0.927 | 0.967 |
+
+Read:
+- 4860: the ground (tile rows 2 to 6, 50 of the 75 kept tiles) is short at every size, not only at the finest: a third of the
+  approved's energy from 0.6 to 5 px, a half at 5 to 10 px, two thirds from 10 to 40 px. In levels (rms of G17's band on the
+  ground): mine 2.39, the approved 3.92. So the deck lacks contrast of structure over five octaves; the finest two alone
+  would not carry the measure to 0.8.
+- 4605: the gate reads 0.8 (`config/showcase.json`, minSharpnessRatio; final tier, grain off). On the tiles of the disc mine
+  equals main's tile for tile (0.63 to 0.86). The whole shortfall against main is in the sky's tiles: mine read 0.02 to 0.26
+  at the top left and 7 to 23 at the top right (the bare Sun), main's plate reads about 1.0 there. Under 0.8: mine 50 of 65
+  tiles, main 29 of 65. So the hold's measure rises only with the engine's sky (not mine to build, MAIL 1346 (6)) or by
+  every disc tile rising over 0.8; by code in my folders that means the globe's finest octave (0.6 to 1.2 px: 0.602).
+- An earlier control (G3, deck.gain 0.5 to 0.62): 4860 0.604 / 0.392, ground rows 0.495, ground part 17.400: the grain goes
+  through the relief's shading, and creases have to be cured there.
+
+## Lab log 00:53 to 01:18 UTC, 26 Nov: proofs of the tree with the softer wall (N16), not named
+
+The tree: `deep.json` storm.wall [0.2, 1.6], ragged 0.5, dark 0.6 (trial E8), not committed yet at this hour.
+- Judged four at 1920, draft (hashes of the frames: 4605 19a07dc2effd28b3, 4707 594e418193ad8f7e, 4860 f37b1b08ae2d6b63,
+  5006 e0fd7e4c515133a3; 4605 and 4860 equal E8's). 4860 by my proxy: whole 21.652, sky 3.203, band 1.616, ground 16.833.
+  G17: 4860 0.513 / 0.232 (ground rows 0.338), 4605 0.675 / 0.436.
+- Against the name (N15) the frames change only in the eye: 4707 inside x 946 to 1040, y 603 to 690; 5006 inside x 914 to
+  943, y 292 to 325.
+- Dive pairs by my proxy (STATED): 4753 to 4761: 0.23, 0.21, 0.20, 0.21, 0.20, 0.19, 0.17, 0.17, 0.16. 4744 0.39 at
+  (1196, 284). 4750 0.30, 4751 0.28, 4752 0.26.
+- NOT drawn: the start of the dive (17 of its frames were done) and the rise. I killed the render at 01:18 when MAIL 1359
+  came, because the softer wall alone is not the cure he rules for (the dot must not be seen at 4605).
+- 01:12: origin main fetched: bccee7628 (only kit/PROGRESS.md moved: status 347, d337 restates the ruling on G17, d339
+  lists this machine among those that could not push; my pushes went through at 00:54 and 01:18).
+- Looks: 00:54 (d9d5b373) and 01:18:07 (7c385e3e), both saying that the softer wall is not named.
+
+## MAIL 1357 from the Builder, 01:13 UTC, 26 Nov (read 01:13 by my clock; word for word)
+
+> MAIL 1357 from the Builder (/root), 01:13 UTC. Your name ef0cc1cf, the row dive 2 of 4 is in (nt1-02): pop 1.0933 at 4713 (main 1.0405 at 4718; both under the limit 1.2, no line by d318), pattern 0.4765 at 4706 (main 1.3008 at 4721; much better, still over the limit 0.45 by 0.03), level step 0.0363 (main 0.4864). No line worse than main's own row. So far in: dive 1 of 4 green, dive 2 of 4 as above, rise 2 of 2 green where main is red, units 1008 of 1008 and gate 10 PASS. Out: dive 3 and 4 of 4, rise 1 of 2, the finals 4605 and 4860. If you know what carries the 0.4765 at 4706, say it in your next mail; do not hold the name for it.
+
+Read: dive 2 of 4 is no worse than main's row; the pattern at 4706 is over the limit by 0.03 on his machine (my proxy
+reads 0.44 there). Say what carries it if I know; the name is not held for it.
+
+## MAIL 1359 from the Builder, 01:16 UTC, 26 Nov (read 01:16 by my clock; word for word)
+
+> MAIL 1359 from the Builder (/root), 01:16 UTC. Your name ef0cc1cf, the finals are in (nt1-08, both trees on one machine, final tier without grain) and I measured them against the approved images with bands.py (plain number, lower is closer). Frame 4860 (close): name 22.4179, main 22.9350: no worse, fine. Frame 4605 (hero): name 7.3727, main 2.6398; low band 16 px 5.7371 against 1.0172. RULED by d296 (2): the name does not go onto main as it stands, because its judged frame 4605 matches the approved image worse than main's. What carries it, seen in the attached pictures (approved, main, name, difference times 4): (a) the sky of the hold: main shows the approved sky (the band of the Milky Way at the upper left, the Sun with its glare at about x 1714, y 153 of 1920 by 1080); the name shows the true sky (a brown band at the upper right, the Sun as a small point at about x 1620, y 24, no glare); (b) a dark round dot on the globe below the storm at about x 1022, y 661, some 25 pixels across, with a faint streak beside it (second picture, main left, name right); the approved has no such dot. The globe is the same bytes as main's everywhere else. The rows that are in (dive 1 and 2 of 4, rise 2 of 2) are no worse than main's, so the seamless way in and out is worth keeping: the cure is to hold both. Your folders alone decide the hold's sky here (your name changes nothing outside Neptune's folders), so say in your next mail, by 02:00 as it stood: (1) why the hold's sky plate went and what popped with it on main, (2) how the approved sky and the Sun's glare come back at 4605 without a pop on the way in and out (for example the plate carried over the whole flight in and out at a pace the reader does not see, or the glare from the far Sun's own block with the sky's owner), (3) what the dot is and how it leaves the hold (it must not be seen at 4605; on the way down it may grow out of the storm's texture). If (2) needs the sky's owner, write to sky_builder yourself with the numbers and copy me. Dive 3 and 4 of 4 and rise 1 of 2 are still out; their rows come to you as they come in.
+> (attachments: nep4605.jpg, nep4605-globe.jpg, nt1-08-before-4605.png, nt1-08-after-4605.png)
+
+Read: the tenth name ef0cc1cf does not go onto main: 4605 matches the approved worse than main's (7.3727 against 2.6398 by
+his reader). Three questions, answers by 02:00: why the plate went and what popped, how the sky and the glare come back
+without a pop, what the dot is and how it leaves the hold. His pictures: nep4605.jpg, nep4605-globe.jpg, nt1-08-before-4605.png
+(main), nt1-08-after-4605.png (the name).
+
+## Lab log 01:18 to 01:31 UTC, 26 Nov: what the three questions rest on
+
+- The plate's history, read again in this notebook: lab log of 25 Nov 03:18 (control K2 against K1 at 4707: 41235 px of the
+  preview differ, 14281 by more than 8 levels), MAIL 772, 774 point 2, 878 (a), 1078 point 5, 1126 point 2, 1207.
+- What popped on main, read in the engine's lines (`src/core/engine.ts` 354 to 380, `src/core/skyfloor.ts` sharedSkyWeight):
+  the hold's patch weighs 1 at the hold, 1 minus the handover's sky share in the dive (a law of clock and eye height), 0 in
+  the rise, and fades in by smoothstep(u, 0.2, 0.8) in the flight in. A stop may give `patch.weight(time, view)`; the plan
+  may give `skyShare(seg, time)` returning low and high (`src/director/moves.ts`).
+- The Sun, MEASURED on his final (nt1-08) and on my draft: the engine's far Sun stands at (1716.9, 154.8) at 4605, the hero's
+  at (1716.3, 155.0). The point at (1620, 24) is a bright star of the engine's sky (8 px over 200 levels). Mean level in
+  rings round the centre, hero | name: 0 to 4 px 252 | 253; 4 to 8: 252 | 196; 8 to 16: 237 | 79; 16 to 32: 170 | 42; 32 to
+  64: 84 | 38; 64 to 128: 39 | 41. Box of 120 px, px over 200: 1177 | 124 (main 1163); over 60: 11940 | 1262 (main 12172).
+  The hero's glow stays over 120 levels out to 33 to 40 px in every direction, spikes a little further at about 75, 130,
+  165, 200, 260 and 310 degrees (read every 5 degrees; one outlier of 67 px at 345 degrees is a neighbour star or a spike,
+  not looked into).
+- The plate's reach on main's set.ts (line 144: wide = 1 + 2 * margin = 1.75): half extents atan(tan 15 deg * 1.75) = 25.1
+  degrees up and down, 39.8 sideways, corner 43.7; the feather begins at the hold's own frame edge (15 and 25.5 degrees).
+- COMPUTED 01:29 from the poses (`out/work/nep/weave/poses-*.json`; the aim from the hold's pose, the nadir and the limb from
+  each frame's position, all in the film's frame by `laid`; three sets of poses of 24 and 25 Nov agree to a few frames; no
+  picture drawn): the plate's aim stays 1 to 13 degrees from the nadir through the dive. The farthest point of the plate
+  stands beyond the limb by 29 degrees at 4605, 23 at 4696, 20 at 4700, 15 at 4706, 8 at 4714, 3 at 4720, minus 2 at 4726,
+  minus 14 at 4736, minus 25 at 4757. The part at full weight (the hold's frame) is behind the limb from about 4707. So the
+  whole plate is behind the globe from about 4722 to 4728 on, and what the dive shows of it between 4700 and 4725 is its
+  soft margin beside the engine's sky.
+- 4706: the worst point of the pair by my proxy (0.44) lies at (1508, 244) of 1920, on the globe's own map beside the upper
+  right limb; seen in the sheet, not controlled.
+- Bands by scale of the name at 4860, ground rows 2 to 6 (50 tiles), run again at 01:28: G17 band 0.343 / 0.195; 0.320,
+  0.378, 0.403, 0.582, 0.685, 0.709.
+- A slip, named: a first draft of the answer said the stars turned 78.7 degrees between the two views on main; I did not
+  find that number in this notebook, so the mail went without it.
+
+## 26 Nov, 01:26 UTC: to sky_builder, the far Sun's glare at Neptune (word for word; picture `/tmp/sun-main-name.jpg` attached)
+
+> From neptune_builder to sky_builder, 01:26 UTC, 26 Nov. Copy to the Builder, by his MAIL 1359 to me, point 2 ("the glare from the far Sun's own block with the sky's owner ... write to sky_builder yourself with the numbers and copy me"). No build in my folders (his MAIL 1346).
+>
+> THE FACT. Neptune's hold, frame 4605, 1920 by 1080, vfov 30. The engine's far Sun (batch 14, main 1f51abc9, drawn on my name ef0cc1cf) stands at (1716.9, 154.8). The approved hero's Sun stands at (1716.3, 155.0). So the place is right to 0.6 px and needs no plate. What the hero has and the far Sun has not is the glare.
+>
+> THE NUMBERS. Mean level (mean of R, G, B, 0 to 255) in rings round the centre, the approved hero | the far Sun on my name, draft tier:
+> 0 to 4 px: 252 | 253
+> 4 to 8 px: 252 | 196
+> 8 to 16 px: 237 | 79
+> 16 to 32 px: 170 | 42
+> 32 to 64 px: 84 | 38
+> 64 to 128 px: 39 | 41 (here the hero's sky and Neptune's glow, on my side the engine's Milky Way dust)
+> Pixels over 200 levels in a box of 120 px round it: 1177 | 124. Over 60 levels: 11940 | 1262.
+> The hero's glare is a round glow that stays over 120 levels out to 33 to 40 px in every direction, with thin spikes on it that reach a little further (38 to 42 px at about 75, 130, 165, 200, 260 and 310 degrees). Main shows it today only because main's hold has a sky plate (sky-hold.webp) with the hero's Sun painted in; the far Sun under it is covered.
+>
+> THE ASK. The far Sun at Neptune's distance with a glare of that profile and its spikes, as a property of the far Sun at every frame in which it stands in view (hold, dive, rise), never coming or fading with the clock or the height, so that the hold needs no plate for it and the Sun keeps its look when the camera turns. If the block already has values a stop may set (a glow radius, a spike count and length), tell me their names and where a stop gives them, and I set Neptune's. If it needs a law, it is yours; say by when it has a name, I draw on it then.
+>
+> Attached: the Sun at 4605 at the final tier (the Builder's nt1-08), main with its plate left, my name with the far Sun right, the upper right corner of the frame (x 1480 to 1920, y 0 to 248) enlarged 1.45 times.
+
+## 26 Nov, 01:31 UTC: the answer to MAIL 1359 and 1357, to the Builder (word for word; attached the Sun's pair and the eye at the hold)
+
+> neptune_builder to the Builder, 01:31 UTC, 26 Nov. ANSWER to MAIL 1359 (1), (2), (3) and to MAIL 1357 (4706). Not a name. MAIL 1352 to 1361 are read (1361: main fb40db96, merged at my next name).
+>
+> (1) WHY THE HOLD'S SKY PLATE WENT, AND WHAT POPPED WITH IT ON MAIN.
+> - What it is: sky-hold.webp, the hero's own sky from 1.07 radii out with the Sun's glare painted in; sky.json "orbit" (vfov 30, margin 0.375, gain 1.538); laid by the engine's sky patch at the hold's aim, fixed on the sky.
+> - It went on 25 Nov, 03:32 UTC (fdebc88a; the files with 277b45e5) by your MAIL 774 point 2 ("It stays only if no frame of 4680 to 4769 or 4950 to 5024, in either set, shows it exchanging with the engine's sky; if one does, it goes too and 4605 is shown beside the hero with the engine's sky") and MAIL 878 (a) ("one sky, one turn, read by both views"), after a control: at 4707 the plate's feathered edge stood in the frame beside the engine's Milky Way (with and without it 41235 px of the preview differed, 14281 by more than 8 levels). The commit named the cost (4605 with the engine's sky and the engine's Sun). MAIL 1078 point 5 ("No plate ... a plate is the picture that pops up"), MAIL 1126 point 2 ("NO PLATE AT THE HOLD, confirmed") and MAIL 1207 ("No plate comes back") ruled it since, so I laid nothing in when sky_builder sent the filled plate.
+> - What popped on main, read today from the engine's own lines (src/core/engine.ts 354 to 380, src/core/skyfloor.ts sharedSkyWeight): the hold plate weighs 1 at the hold; in the dive it weighs 1 minus the share of the close view's sky (skyWeight of the handover: a law of the clock and of the eye's height), so it dissolves while it stands in the frame; in the rise it weighs 0, so it never comes back there; in the flight in it fades in by smoothstep(u, 0.2, 0.8). The two skies it dissolves between differ in everything: the hero's has sparse blue grey stars and a faint band at the upper left, the engine's has dense warm stars and its Milky Way's core at the upper right. On main the terrain plate's own exchange and the turn of the stars between the two views (the carry, gone since 277b45e5) ran on top. Round 42's critics named it by frame (MAIL 772: 4933 to 4967 "the right edge of the surface view's sky picture slides about 85 px into the frame ... while it dissolves into a shifted star field"; 4747 to 4758 "two Milky Ways over each other"). Your rows of today read it as main's pattern 1.3008 at 4721 and level step 0.4864 in dive 2 of 4, where the name reads 0.4765 and 0.0363.
+>
+> (2) HOW THE APPROVED SKY AND THE GLARE COME BACK WITHOUT A POP. Two parts with two owners.
+> (2a) THE SUN. MEASURED today on your final (nt1-08) and on my draft: the engine's far Sun stands at (1716.9, 154.8) at 4605, the hero's Sun at (1716.3, 155.0): 0.6 px apart. The point at about (1620, 24) is a bright star of the engine's sky (8 px over 200 levels); the far Sun is the ball at the hero's own place. So the place is right, no plate is needed for the Sun, and only the glare is missing. It belongs to the far Sun at every frame it is in view, or it would be there at the hold and gone in the rise. Mean level in rings round the centre, hero | name: 0 to 4 px 252 | 253; 4 to 8 px 252 | 196; 8 to 16 px 237 | 79; 16 to 32 px 170 | 42; 32 to 64 px 84 | 38. I wrote to sky_builder at 01:26 with these numbers and the picture (attached here too; the mail stands word for word at the end) and asked for the glare as a property of the far Sun, or for the names of the values a stop may set. Nothing built in my folders.
+> (2b) THE SKY. One fact decides the way: the plate is fixed on the sky, and the dive itself carries it out of view behind the globe. COMPUTED at 01:29 from the camera's poses (three sets of poses, old and new, agree to a few frames; no picture drawn yet): the plate reaches 25 degrees up and down and 40 to the sides of the hold's aim and fades outward from the hold's own frame edge (15 and 25.5 degrees). Its aim stays 1 to 13 degrees from the nadir through the whole dive, and the limb stands 25 degrees from the nadir at 4700 (height 1.37 radii), 39 at 4714, 64 at 4736, 76 at 4757. So the globe grows over the plate from its middle: the part at full weight is behind the limb from about 4707 on, the last corner of the faded margin between 4722 and 4728, and from there to the change of view the whole plate lies behind the globe (at 4757 by 25 degrees). The sky in view passes from the hero's sky to the engine's through the plate's own soft margin, in space and not in time, between about 4700 and 4725. What made it a pop on main, by this reading, is the weight falling by clock and height while the plate stood in view, with the terrain plate and the carry beside it.
+> The way I propose, in my folders alone:
+> - the plate back under "orbit" (sky_builder's filled card), fixed on the sky at the stop's one turn (since 277b45e5 the stars have one turn from 4605 to 5030, carry 0);
+> - its weight 1 from the hold to the change of view, with no law by clock or height while it can be seen (plan.ts skyShare gives low 0, high 1 in the dive, so the engine's dissolve by the handover's share does not run); the flight in keeps the engine's own fade, as on main;
+> - it goes to 0 only where the globe hides all of it: at the change of view (4757 to 4758), 30 frames after its last corner went behind the limb; in the rise it stays 0 as on main, so the rise keeps the engine's sky and your green row;
+> - so nothing fades. The plate slides out with the stars, and what is left to see is its soft margin between the limb and the engine's sky from about 4700 to 4725: the hero's sparse sky at the limb, the engine's dense sky and band beyond.
+> NOT KNOWN, no control drawn yet: whether that border reads as a fault in a still (4707 is judged and has it in frame; it is what the control of 25 Nov showed) and what the motion reader says to it. So I build it as a trial, not a name: 4605 against the hero (expected: main's number less the dot), every frame 4690 to 4760 at 1920 looked at, the pairs by my proxy, sheet and numbers by 04:00 UTC. It reverses MAIL 1078 point 5, 1126 point 2 and 1207 for the hold alone; I build the trial unless you say no, and it is named only on your word.
+> If the border shows, the cure is in the picture and not in a law: the plate's margin on the side the dive leaves by is continued in the hero's own kind of sky (sparse blue grey stars by a recipe, no band), so that the border meets the engine's sky where the limb already covers it. Not built before the trial asks for it.
+> Red either way, named: the sky at 4860 (my proxy 3.203 against main's 1.619; I do not propose the terrain plate back, it is the picture that slid in at 4933) and the engine's sky in the rise.
+>
+> (3) THE DOT. It is the eye of the storm at the place the camera flies to: an object of the surface view, drawn on the globe by code at every height (planet.ts eyeShade, one shade read by the globe and by the scene; MAIL 772 "the same objects on the globe at 4605 and under the lens at 4860", MAIL 1112 point 1). At the hold it is 25 px across because the eye is 0.42 units wide and loses 0.7 of its light on the floor. The faint streak beside it is the place's first streamer seen from afar (cirrus by code).
+> - On my tree, not named: a longer and softer wall (storm.wall 0.2 to 1.6, ragged 0.5, dark 0.6). Hold: the dot's least light is 0.55 of the deck round it (name 0.47; main reads 0.73 there, the hero's own dark streak), soft, no hole. 4860 against the approved 21.652 by my proxy (name 22.420, main 22.986), G17 at 4860 0.513 (name 0.507). Looks of 00:54 and 01:17, second picture attached. By your "it must not be seen at 4605" this is not the cure, so I did not name it at 02:00 as I had promised; the softer wall stays as its first half.
+> - The cure I build now: the eye's dark and its collar are weighed by the eye's height over the deck, one law with two heights in deep.json, read by both shaders: nothing at the hold's height, all of it near the deck, by height alone, the same down and up, no clock. So 4605 shows the hero's own map at that place (what 5006 keeps of it comes with the name), and in the dive the eye grows out of the storm's whirl while it grows from about 40 px across to the width of the frame. This is a law by height: MAIL 774 point 3 forbade one ("never a law by height"), MAIL 1359 allows it for the dot; I take 1359 as the later ruling and say so in the file.
+> - The streak: if it must go from the hold too, it takes the same law in the streamers' far look; say so. Without your word it stays (a cloud the surface view has, d302).
+> - Named by 03:15 UTC with the judged four, the pairs of dive and rise, G17 and the detail by scale.
+>
+> (4) MAIL 1357, WHAT CARRIES 4706. By my proxy the worst point of that pair (0.44 on the name) lies at (1508, 244) of 1920: on the globe's own map beside the upper right limb (the hero's white streaks under the limb's glow), 480 px from anything the scene from code draws at that frame. SEEN in the pair's sheet, NOT CONTROLLED: no term switched off yet. The reader notes the map enlarged 1.1 to 1.9 times there, so my first suspect is the map's texels growing under the lens, which is the globe's shader and not my folders. I bisect it after the eye and write to globe_engineer with a copy to you if it is so.
+>
+> THE DETAIL BY SCALE (MAIL 1346), bands.py of my folder (G17's own tiles, octave bands), energy film over approved, median, the name at the draft tier: 4860 whole frame 0.6 to 1.2 px 0.448, to 2.4 px 0.549, to 4.8 px 0.633, to 9.6 px 0.729, to 19.2 px 0.930, to 38.4 px 0.915 (G17 0.507). Ground rows alone (50 of 75 tiles): 0.320, 0.378, 0.403, 0.582, 0.685, 0.709 (G17's band 0.343). So the deck is short at every size up to 40 px, not only at the finest. Where: the tiles of the storm and of the far deck behind it read 0.04 to 0.16; the approved has fine winding streaks and a sharp pale rim in the bowl, mine is smooth there (storm.rings 0.7 to 0.2 and arms.light 0.2 to 0.05 were taken down at the source for the hold with 656961a0, because they drew a spiral lane on the disc that the hero has not). That is the next cause after the eye. 4605: 0.602, 0.792, 0.874, 0.889, 0.909, 0.927 (G17 0.675; main 0.856); on the disc's tiles mine equals main's tile for tile, the whole shortfall is the sky's tiles, so it comes back with (2).
+>
+> Attached: the Sun at 4605, main left and name right; the eye at the hold at 4 times: main at the left (no dot, the hero's dark streak), the name second, then three trials of the softer wall (the one on my tree is among them; the pale streak under the dot is the first streamer).
+>
+> COPY, my mail to sky_builder, word for word:
+> From neptune_builder to sky_builder, 01:26 UTC, 26 Nov. Copy to the Builder, by his MAIL 1359 to me, point 2 ("the glare from the far Sun's own block with the sky's owner ... write to sky_builder yourself with the numbers and copy me"). No build in my folders (his MAIL 1346).
+>
+> THE FACT. Neptune's hold, frame 4605, 1920 by 1080, vfov 30. The engine's far Sun (batch 14, main 1f51abc9, drawn on my name ef0cc1cf) stands at (1716.9, 154.8). The approved hero's Sun stands at (1716.3, 155.0). So the place is right to 0.6 px and needs no plate. What the hero has and the far Sun has not is the glare.
+>
+> THE NUMBERS. Mean level (mean of R, G, B, 0 to 255) in rings round the centre, the approved hero | the far Sun on my name, draft tier:
+> 0 to 4 px: 252 | 253
+> 4 to 8 px: 252 | 196
+> 8 to 16 px: 237 | 79
+> 16 to 32 px: 170 | 42
+> 32 to 64 px: 84 | 38
+> 64 to 128 px: 39 | 41 (here the hero's sky and Neptune's glow, on my side the engine's Milky Way dust)
+> Pixels over 200 levels in a box of 120 px round it: 1177 | 124. Over 60 levels: 11940 | 1262.
+> The hero's glare is a round glow that stays over 120 levels out to 33 to 40 px in every direction, with thin spikes on it that reach a little further (38 to 42 px at about 75, 130, 165, 200, 260 and 310 degrees). Main shows it today only because main's hold has a sky plate (sky-hold.webp) with the hero's Sun painted in; the far Sun under it is covered.
+>
+> THE ASK. The far Sun at Neptune's distance with a glare of that profile and its spikes, as a property of the far Sun at every frame in which it stands in view (hold, dive, rise), never coming or fading with the clock or the height, so that the hold needs no plate for it and the Sun keeps its look when the camera turns. If the block already has values a stop may set (a glow radius, a spike count and length), tell me their names and where a stop gives them, and I set Neptune's. If it needs a law, it is yours; say by when it has a name, I draw on it then.
+>
+> Attached: the Sun at 4605 at the final tier (the Builder's nt1-08), main with its plate left, my name with the far Sun right, the upper right corner of the frame (x 1480 to 1920, y 0 to 248) enlarged 1.45 times.
+
+- Looks 01:31:26 (0f5eb295, 8 looks: 4860 beside the approved on my tree, the Sun's pair, the eye at the hold). A slip,
+  named: the note says 01:33; the push was at 01:31:26.
+
+## MAIL 1361 from the Builder, 01:29 UTC, 26 Nov (read 01:30 by my clock; word for word)
+
+> MAIL 1361 from the Builder (/root), 01:29 UTC. To every builder, for information: origin main is now fb40db962c77add634dabe98d9a6ac1519fbb59d. It holds batch 16 (take/ea6: the keel of the flight into Saturn and the way out of Mercury in src/space/travel/path.ts; the air's light along both paths in src/terrain/air.ts and src/terrain/relief.ts with two tests; the cue and shot sheets as the tool writes them) and batch 17 (take/sb1: the subtitle layer drawn by the page itself behind the switch subs=1, src/subs, src/main.ts, src/core/engine.ts, assets-src/subs, one test). With the switch off every judged frame is the same bytes as before. Batch 18 (Saturn's surface view by code, take/sr8 790989f6) follows when its four proofs are green. What this changes for you: nothing in your orders. If your standing order is to merge main before you name, merge this main at your next name; if it is to fetch nothing, keep to it and I cut your name onto main. The sheets cut/CUES.md and cut/SHOTS.md are no longer stale: after npm run cues and npm run shots your tree should show no change under cut/; if it does, say so with your name. Do not answer this mail.
+
+Read: main is fb40db962c77add634dabe98d9a6ac1519fbb59d (batches 16 and 17). I merge it before my next name (MAIL 1343) and
+say so in the name mail. After the merge `npm run cues` and `npm run shots` must leave no change under cut/. No answer.
