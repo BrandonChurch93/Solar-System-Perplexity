@@ -1,9 +1,25 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T19:34:08.636Z",
- "head": "5ccff1674ccb3ed7fab80c6f251aee1e8d989d53",
- "note": "19:34 trial Z112 not named, not pushed: strands add by their own light, thick and thin with pale cores; it leaves in the rise like the named state | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
+ "pushed": "2026-11-26T19:50:46.638Z",
+ "head": "2938704dd4ec69c66fe81f1a7c78bbde0628aeee",
+ "note": "19:50 candidate Z113 not named, not pushed: 115 arches, thick and thin with pale cores, strands add by their own light; the chain runs on it (finals 0, 90, units next) | sun-near frame 60 final of the named state: dark 0.246 body 0.609 pale 0.076 white 0.016 | half width 8.0 px, 481 shapes, fine 0.0278, mean 0.312 | distance 0.077",
  "looks": [
+  {
+   "time": "2026-11-26T19:50:45.251Z",
+   "file": "20261126195045251-note-m113-sheet.jpg",
+   "source": "../../../../tmp/v/m113-sheet.jpg",
+   "kind": "note",
+   "label": "candidate Z113 (not named, not pushed) drafts 0, 60, 90, 360 at half size; 360 is the named tree's file",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T19:50:44.619Z",
+   "file": "20261126195044619-note-z113-arch-named.jpg",
+   "source": "../../../../tmp/v/z113-arch-named.jpg",
+   "kind": "note",
+   "label": "draft 90 at 1 to 1: the approved, the named state 5ccff167, the candidate Z113 (2938704d local, not named, not pushed): 115 arches, strands add by their own light",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T19:34:08.029Z",
    "file": "20261126193408029-note-z112-arch3.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/v/z92f-arch3.jpg",
    "kind": "note",
    "label": "trial Z92 at final 90, not named: approved above, the named state in the middle, Z92 below",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T18:54:48.317Z",
-   "file": "20261126185448317-note-z98-arch3.jpg",
-   "source": "../../../../tmp/v/z98-arch3.jpg",
-   "kind": "note",
-   "label": "trial Z98, not named, not pushed: draft 90 at 1 to 1, approved above, Z97 in the middle, Z98 below (strands that cross, thinner, pale cores with cool flanks)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T18:23:10.809Z",
-   "file": "20261126182310809-note-z92-rf.jpg",
-   "source": "../../../../tmp/v/z92-rf.jpg",
-   "kind": "note",
-   "label": "trial Z92, not named, not pushed: right foot at 90 draft, approved, Z89, Z92",
    "stop": "sun"
   }
  ]
