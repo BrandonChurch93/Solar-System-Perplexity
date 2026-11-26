@@ -12379,3 +12379,35 @@ RETURN mc7-51 from /root/neptune_builder, 23:00 UTC: film-16x9-final-b-201, segm
   git status empty, whole. 23:02:04 npm run build exit 0, dist 1301 MB, free disk 5020 MB. 23:02:30 the job's four lines
   started as /tmp/mc7-92.sh, detached from the repo root (the script made from the saved mail, the marks turned back to
   the shell signs). No file for this span stood in out/work/chunks/16x9-final-full before the start.
+
+- mc7-92: the encoder stood open from 23:02:50 and had no frame at 23:17:49 (the browser at 378 percent of a core), so the
+  first frame was over fifteen minutes and the line below was due. The first frame reached the encoder at 23:27:20 (the
+  looks log has frame 4920 at 23:27:15): about 24 and a half minutes for the first frame of neptune.terrain 4920-4949 at
+  the final tier. (On 23 Nov the older build made 4860 to 4889 at about 40 seconds a frame.)
+
+## 26 Nov, 23:18 UTC: one line on mc7-92 to the Builder (word for word; sent about 23:18:02; no attachment; low priority)
+
+LINE mc7-92 from /root/neptune_builder, 23:18 UTC: the first frame (neptune.terrain 4920) has taken over 15 minutes and is not out yet. Started 23:02:30; the encoder has stood open since 23:02:50 and has had no frame; no RC line, no FAILED line; the browser works at full load on the 4 cores. The job runs on; next line about 23:48 if it still runs.
+
+## STOP for mc7-92 and JOB mw7-46 from the Builder (/root), one mail (read 23:28 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority)
+
+> STOP first, from the Builder (/root): the job mc7-92 that runs on your machine is taken off it (its pass was stopped by the Builder, or it was too slow for one machine and is split over several; either way it is not wanted from you any more). Kill its film process and every child of it now, check with ps that no render or browser process of it is left, and remove its frame folders under out/work. Send nothing back for it. Then do the job below as usual.
+>
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB mw7-46 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); it is frames 4820 to 4829 only, a part of the tool's piece film-16x9-final-b-399 (frames 4800 to 4829), which is split over several machines. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+> rm -f /tmp/mw7-46-log.txt /tmp/mw7-46-tail.txt /tmp/split-399-4820-4829.tar*
+> for S in "neptune.terrain 4820-4829"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/mw7-46-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/mw7-46-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+> tar -cf /tmp/split-399-4820-4829.tar out/work/chunks/16x9-final-full/neptune.terrain.span4820-4829.mp4 out/work/chunks/16x9-final-full/neptune.terrain.span4820-4829.mp4.json; split -b 40m -d /tmp/split-399-4820-4829.tar /tmp/split-399-4820-4829.tar.
+> grep -c 'Shader Error\|not usable' /tmp/mw7-46-log.txt &gt; /tmp/mw7-46-tail.txt; grep 'RC film' /tmp/mw7-46-log.txt &gt;&gt; /tmp/mw7-46-tail.txt; grep 'wrote \|G5' /tmp/mw7-46-log.txt | tail -6 &gt;&gt; /tmp/mw7-46-tail.txt; ls -la /tmp/split-399-4820-4829.tar.* &gt;&gt; /tmp/mw7-46-tail.txt
+> An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. No planned time: these are the slowest frames of the film (another machine needed about 24 minutes for one frame here), so let it run for hours. Send one line every 60 minutes with the number of frames finished so far and the time each took: count the rows of this job in out/work/looks/log.jsonl (one row a finished frame, with its time stamp). The encoder's file proves nothing, it stays empty for hours. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/split-399-4820-4829.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/mw7-46-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+- 23:28:19 to 23:28:40 the stop: the script's shell and my watcher killed first (so the loop could not run again), then the
+  film process and its children (npm, tsx, node, the encoder), then the browser's group and its two crash handlers. ps
+  after it: no film, browser, encoder, tsx or npm process left. The tool took its own unfinished encoder file and its lock
+  with it: out/work/tmp/film is empty, out/work/locks is empty, nothing for span 4920-4949 stands under out/work/chunks.
+  No tar was made. Nothing is sent back for mc7-92. What stays of it: its log /tmp/mc7-92-log.txt (no RC line in it) and
+  one look picture of frame 4920 with its row in out/work/looks/log.jsonl.
+- 23:29:12 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
+  git status empty, whole. 23:29:12 npm run build exit 0, dist 1301 MB, free disk 5022 MB. 23:29:33 the job's four lines
+  started as /tmp/mw7-46.sh, detached from the repo root. The looks log had 102 rows before the start.
