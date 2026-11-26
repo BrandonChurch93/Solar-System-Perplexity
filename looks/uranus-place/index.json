@@ -1,9 +1,33 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T08:42:41.656Z",
- "head": "f94de477e7dcca8a0707fb641dc9d4563df1d921",
- "note": "08:45 reader dive 1 of 2 on f94de477 (two aims): pop 1.10 green (main 1.5036), pattern 0.99 (main 1.1696); aim proof 4280 to 4299; clock control running",
+ "pushed": "2026-11-26T09:09:30.740Z",
+ "head": "832be54a25cbbe9cce0579d0a5d0b18adda5f58d",
+ "note": "09:10 turn law tie (pop 1.0961 main's law, 1.0973 mine, two aims): main's law stays; clock held through the rise committed 832be54a; reader dive 2 of 2 running",
  "looks": [
+  {
+   "time": "2026-11-26T09:09:30.018Z",
+   "file": "20261126090930018-note-clock-c.jpg",
+   "source": "../../../../tmp/n73/clock-c.png",
+   "kind": "note",
+   "label": "the vortex 1 to 1 at 4422, 4426, 4430: main's clock (top), clock held (bottom)",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T09:09:29.406Z",
+   "file": "20261126090929406-note-clock-b.jpg",
+   "source": "../../../../tmp/n73/clock-b.png",
+   "kind": "note",
+   "label": "the same four frames, head against clock held, difference times 6: the vortex slides against the ground round it under main's law (5.5 to 12.9 px by phase correlation), the ground itself does not move",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T09:09:28.730Z",
+   "file": "20261126090928730-note-clock-a.jpg",
+   "source": "../../../../tmp/n73/clock-a.png",
+   "kind": "note",
+   "label": "the clock's catch up, draft 4422, 4426, 4430, 4436: head f94de477 (top) and the clock held through the rise (bottom, now 832be54a)",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T08:42:39.759Z",
    "file": "20261126084239759-note-aim-4200x3.jpg",
@@ -218,30 +242,6 @@
    "source": "../../../../tmp/n68/co-panel.png",
    "kind": "note",
    "label": "rise 2 of 2 control co: rc the candidate, co cover off, mn main's stop tree; the back read's strip at the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T05:17:35.350Z",
-   "file": "20261126051735350-note-rc-panel.jpg",
-   "source": "../../../../tmp/n68/rc-panel.png",
-   "kind": "note",
-   "label": "rise 2 of 2 control rc: rc the candidate, co cover off, mn main's stop tree; the back read's strip at the left limb",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:56:55.730Z",
-   "file": "20261126045655730-note-final-4290-appr-main-rc.jpg",
-   "source": "../../../../tmp/n68/final-4290-appr-main-rc.jpg",
-   "kind": "note",
-   "label": "final 4290: approved, main (match 3.849), RC (3.226), frame and 1 to 1 crop of the horizon",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T04:56:54.115Z",
-   "file": "20261126045654115-note-uranus-dive-p1of2-changes.jpg",
-   "source": "../../../../tmp/n66/out/d1/uranus-dive-p1of2-changes.png",
-   "kind": "note",
-   "label": "RC dive part 1 of 2, the reader's changes sheet: pattern 0.78 from 4140 + 1/2 (main 1.17), at the left limb",
    "stop": "uranus"
   }
  ]
