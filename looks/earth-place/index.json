@@ -1,9 +1,33 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-26T14:24:05.301Z",
- "head": "6eb9a2fcbd1b74b66f0895f8cff014348be83d82",
- "note": "cure: rise row 2126 + 1/2 counted at 0.5017 (over 0.45), told to root; whole dive looked at frame by frame; rise line rendering",
+ "pushed": "2026-11-26T14:37:08.062Z",
+ "head": "345d510fde0df10f589b3f6fa0287d1db574e1e1",
+ "note": "MAIL 1504 (3): judged areas of the back reading on both trees at 2134 and a half, and the white flecks at 2126 and a half; proof chain on the rise line",
  "looks": [
+  {
+   "time": "2026-11-26T14:37:06.946Z",
+   "file": "20261126143706946-note-dots-marked-4253-win2.jpg",
+   "source": "../../../../tmp/gl/k24/A/dots-marked-4253-win2.jpg",
+   "kind": "note",
+   "label": "2126 and a half at 2 for 1: white flecks of the cure boxed, cure above, main below",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T14:37:05.877Z",
+   "file": "20261126143705877-note-judged-main-4269.jpg",
+   "source": "../../../../tmp/gl/k24/A/judged-main-4269.jpg",
+   "kind": "note",
+   "label": "main 2134 and a half: the same two areas on main's frame",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T14:37:04.721Z",
+   "file": "20261126143704721-note-judged-cure-4269.jpg",
+   "source": "../../../../tmp/gl/k24/A/judged-cure-4269.jpg",
+   "kind": "note",
+   "label": "cure 2134 and a half: judged ground of the back reading, yellow cure, magenta main",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-26T14:24:04.473Z",
    "file": "20261126142404473-note-cd-3750.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/gl/k24/A/col-3752-3756.jpg",
    "kind": "note",
    "label": "cure beside main 1876 to 1878 at the south shore, 1 to 1",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T14:13:09.049Z",
-   "file": "20261126141309049-note-border-mid-3746-3753.jpg",
-   "source": "../../../../tmp/gl/k24/A/border-mid-3746-3753.jpg",
-   "kind": "note",
-   "label": "cure, whole dive line, bottom border 1873 to 1876 + 1/2 at 1 to 1, frame by frame",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T14:00:20.556Z",
-   "file": "20261126140020556-note-dive-line-contact.jpg",
-   "source": "../../../../tmp/gl/k24/A/dive-line-contact.jpg",
-   "kind": "note",
-   "label": "Whole dive line of the cure (zone 13.5 to 22), draft frames 1830 to 1915, small",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-26T13:31:11.700Z",
-   "file": "20261126133111700-note-border-3758-3764.jpg",
-   "source": "../../../../tmp/gl/k24/A/border-3758-3764.jpg",
-   "kind": "note",
-   "label": "Bottom border x 640 to 1400, cure k3758 to 3764 at 1 to 1",
    "stop": "earth"
   }
  ]
