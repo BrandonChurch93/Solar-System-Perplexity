@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T11:02:35.082Z",
+ "pushed": "2026-11-26T11:24:10.306Z",
  "head": "54ae2b6d5f8050eb506f10757b9f18dd96cd796d",
- "note": "11:03 the four judged frames at the final tier on 54ae2b6d (the name's tree): 4035 match 3.737 (main 3.743), 4290 match 3.178 (main 3.849); ten rise drafts keep the bytes of the tree the rise 1 read was made on; G17, units and gate are running",
+ "note": "11:24 on 54ae2b6d: units 94 files 1096 tests pass, globe-cap alone 30 pass, gate G1 G11 G12 G15 pass, path green, cues and shots leave no change; G17 4035 median 1.178 p25 1.082, 4290 median 1.067 p25 0.958; main's finals and level frames are being drawn",
  "looks": [
+  {
+   "time": "2026-11-26T11:24:07.659Z",
+   "file": "20261126112407659-note-pop-4175-4176.jpg",
+   "source": "../../../../tmp/n78/pop-4175-4176.png",
+   "kind": "note",
+   "label": "54ae2b6d draft 4175 beside 4176, 1 to 1 at the upper right: the corner of the dive's largest pop (1.1228, main 1.1098): the Sun's glare, the ring arcs, the band's stars; no step",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T11:02:32.107Z",
    "file": "20261126110232107-note-head-4436-v.jpg",
@@ -240,14 +248,6 @@
    "source": "../../../../tmp/n73/d1-b.png",
    "kind": "note",
    "label": "head f94de477, two sky aims, dive drafts consecutive, sheet b of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T08:35:48.946Z",
-   "file": "20261126083548946-note-d1-a.jpg",
-   "source": "../../../../tmp/n73/d1-a.png",
-   "kind": "note",
-   "label": "head f94de477, two sky aims, dive drafts consecutive, sheet a of 4 (4126 to 4160): the star cloud band leaves by the lower right edge at 4137, dark sky from 4138",
    "stop": "uranus"
   }
  ]
