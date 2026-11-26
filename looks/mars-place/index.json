@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T02:45:19.774Z",
+ "pushed": "2026-11-26T03:07:17.718Z",
  "head": "749712666e01f152e8b073b465d095f807347546",
- "note": "dive slice at 2462 on the name's tree: 1.30 at the top edge, the chain parts from the map by 38 px; cure of the plate against the map as drawn is being measured",
+ "note": "03:08 UTC dive slice 2462, cause of the streaks (the take of 3.8 degrees), cure of the wash in work",
  "looks": [
+  {
+   "time": "2026-11-26T03:07:16.888Z",
+   "file": "20261126030716888-note-f2445.jpg",
+   "source": "../../../../tmp/pm/f2445.png",
+   "kind": "note",
+   "label": "frame 2445 lower right quarter at draft, state 74971266: the strands of the 3.8 degree take seen in the dive: bad",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:07:16.227Z",
+   "file": "20261126030716227-note-hist38se.jpg",
+   "source": "../../../../tmp/pm/hist38se.png",
+   "kind": "note",
+   "label": "cause of the streaks of MAIL 1379 point 2: land-3p8 south east of the place from above (800 texels) in main, 9cb92e38f (takes as one body), 5e92bb490 (picture's ground), 74dca6470 (wall rock): the parallel strands aimed at the place are in the take, before every later step: bad",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T03:07:15.563Z",
+   "file": "20261126030715563-note-top2462.jpg",
+   "source": "../../../../tmp/pm/top2462.png",
+   "kind": "note",
+   "label": "dive slice at 2462 and 2470, top right 600 by 300 at draft: main's Mars data above (veil on the far ground), state 74971266 below (veil out, far ground shows its pattern at the top edge): bad, tied to the open air item",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T02:45:18.014Z",
    "file": "20261126024518014-note-mars-dive-k4924-4924-changes.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/pm/tone-MN.png",
    "kind": "note",
    "label": "broad tone ratio land-8p5 over patch-19 at 60 texels: main, the name (rings 0.8, 2.8, 4.2 degrees)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T02:09:32.686Z",
-   "file": "20261126020932686-note-plates3.jpg",
-   "source": "../../../../tmp/pm/plates3.png",
-   "kind": "note",
-   "label": "land-8p5 times 3: main, the name, patch-19 (map); green box the row's area at 2708; the name's plate has a pale glare NW that the map lacks",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T01:46:23.002Z",
-   "file": "20261126014623002-note-M-row0016.jpg",
-   "source": "../../../../tmp/pm/M-row0016.png",
-   "kind": "note",
-   "label": "rise 2708 main's Mars data: frame, 2716 carried by the chain, pattern heat, difference",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T01:46:22.444Z",
-   "file": "20261126014622444-note-N-row0016.jpg",
-   "source": "../../../../tmp/pm/N-row0016.png",
-   "kind": "note",
-   "label": "rise 2708 name: frame, 2716 carried by the chain, pattern heat, difference; top 1 percent outlined",
    "stop": "mars"
   }
  ]
