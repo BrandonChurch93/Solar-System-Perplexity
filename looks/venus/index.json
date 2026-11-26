@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T00:45:28.930Z",
- "head": "727de90a2b58114b321985287127d4d32682eaf5",
- "note": "candidate dive at the reader's pixels, main beside it; the merge of main 1f51abc9 changes the sky alone",
+ "pushed": "2026-11-26T00:59:41.095Z",
+ "head": "f06121fd26f305fe715da95cf29972ca63fc1c93",
+ "note": "candidate on the merged tree: stills differ in the sky alone; main's Venus being read again by the merged reader; no name",
  "looks": [
+  {
+   "time": "2026-11-26T00:59:06.753Z",
+   "file": "20261126005906753-note-merge-diff-1547.jpg",
+   "source": "../../../../tmp/v/sh/merge-diff-1547.jpg",
+   "kind": "note",
+   "label": "still 1547 and its difference times 8 to the merged tree: the sky alone",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:59:06.097Z",
+   "file": "20261126005906097-note-mgR-changes.jpg",
+   "source": "../../../../tmp/v/sh/mgR-changes.jpg",
+   "kind": "note",
+   "label": "merged reader, rise slice 1540 to 1552: its picture of its largest row, 1545, pattern 0.70",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:59:05.212Z",
+   "file": "20261126005905212-note-m0-cand-d-R.jpg",
+   "source": "../../../../tmp/v/sh/m0-cand-d-R.jpg",
+   "kind": "note",
+   "label": "main left, candidate right, dive 1329, 1332, 1335 at the right edge",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:59:04.535Z",
+   "file": "20261126005904535-note-cand-d-B.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-B.jpg",
+   "kind": "note",
+   "label": "candidate dive 1309 to 1318 + 1/2, every half frame, the place",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T00:45:27.802Z",
    "file": "20261126004527802-note-merge-diff.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/sh/m0-cand-d-A.jpg",
    "kind": "note",
    "label": "candidate dive m0-cand-d-A",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:45:23.845Z",
-   "file": "20261126004523845-note-cand-d-E.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-E.jpg",
-   "kind": "note",
-   "label": "candidate dive cand-d-E",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:45:22.998Z",
-   "file": "20261126004522998-note-cand-d-D.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-D.jpg",
-   "kind": "note",
-   "label": "candidate dive cand-d-D",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:45:22.128Z",
-   "file": "20261126004522128-note-cand-d-C.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-C.jpg",
-   "kind": "note",
-   "label": "candidate dive cand-d-C",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:45:20.894Z",
-   "file": "20261126004520894-note-cand-d-A.jpg",
-   "source": "../../../../tmp/v/sh/cand-d-A.jpg",
-   "kind": "note",
-   "label": "candidate dive cand-d-A",
    "stop": "venus"
   }
  ]
