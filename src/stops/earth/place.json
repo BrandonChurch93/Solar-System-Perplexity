@@ -489,6 +489,13 @@
     "level": [
       0.85,
       0.15
-    ]
+    ],
+    "rise": [
+      0.85,
+      1.0,
+      0.15
+    ],
+    "behind": 1e-05,
+    "riseHow": "ONE PICTURE OF A TOWER AT A TIME (MAIL 1253 item 3). The level under the ground holds every tower as the lay back shows it: flat on the sea, where the close camera's ray through its texel meets the water. The standing tower is that same texel moved up its ray. So the tower's sheet is drawn lying on the sea, on its flat picture in the level, while the ground comes (level), and one body is seen, not two side by side; then it stands up along the close camera's rays as the eye comes on: its share of its full height is the eased step (round rise[2]) of the same way of the eye to the close camera's fineness at the point, from rise[0] to rise[1]. Under it the sea layer, which has no tower in it, is whole by then, so the flat picture is gone when the tower leaves its place. No height of the camera and no clock is read; at the change of view the way is 1 and the tower stands as the close view draws it. Lying down, the far side of a tower's body is held behind its near side by behind (a share of the depth range), so that two sheets in one place are drawn in one order."
   }
 }
