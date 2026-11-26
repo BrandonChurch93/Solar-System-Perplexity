@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T19:30:34.530Z",
+ "pushed": "2026-11-26T19:54:28.641Z",
  "head": "498513133f001112164442409cd35fd8a6395ff7",
- "note": "whole cure: its own rows on my machine give his 1.060 at K 5384 again; the control brings 5383 and 5384 to main's level; main's own rows on my machine run to tell the upper left",
+ "note": "19:51 the place on the 0.7 against the 1.6 plate, main and whole cure; reader slice K 5384 runs",
  "looks": [
+  {
+   "time": "2026-11-26T19:54:27.571Z",
+   "file": "20261126195427571-note-lv.jpg",
+   "source": "../../../../tmp/pm/B/lv.png",
+   "kind": "note",
+   "label": "lower right place of 2692 on the plates: top main, bottom whole cure; left the 1.6 plate, right the 0.7 plate reduced below the green line",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T19:03:33.558Z",
    "file": "20261126190333558-note-g-lr.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/pm/B/lr4.png",
    "kind": "note",
    "label": "the lower right place of the rise, frame 2691, x 1400 y 680 at native size: main, the whole cure (0d638c07), the difference times 4; below both with levels times 3. Main's half shade at the shade's border is full shade up to one line in the whole cure",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T17:25:12.211Z",
-   "file": "20261126172512211-note-x-2452.jpg",
-   "source": "../../../../tmp/pm/B/x-2452.png",
-   "kind": "note",
-   "label": "pair at native size, frame 2452 (dive): main left, the whole cure on main's plates (0d638c07) right; the west stretch (upper left) is a flat field with a hard border, named red",
    "stop": "mars"
   }
  ]
