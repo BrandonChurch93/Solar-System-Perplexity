@@ -478,9 +478,12 @@ export class Arcade {
         const g = mainArch(100 + n, m.heights)
         const wide = between(m.spread.wide, n / Math.max(m.bundles - 1, 1))
         const off = wide * m.spread.shape
+        // (main.low.spread: a low rope is looser than a high one, its strands so many times further apart in height
+        // and in lean at the lowest, so under the band stands a fan of single lines and not one more rope with an edge)
+        const loosen = 1 + m.low.spread * (1 - THREE.MathUtils.smoothstep(g.h / s.height, m.low.heights[0]!, m.low.heights[1]!))
         p = {
-          h: g.h * (1 + wide * m.spread.height * (2 * rnd(id, 8) - 1)),
-          lean: g.lean + deg(wide * m.spread.leanDeg) * (2 * rnd(id, 9) - 1),
+          h: g.h * (1 + wide * m.spread.height * loosen * (2 * rnd(id, 8) - 1)),
+          lean: g.lean + deg(wide * m.spread.leanDeg * loosen) * (2 * rnd(id, 9) - 1),
           a: foot(g.a, id, 10, [wide * m.spread.feet, wide * m.spread.feet]),
           b: foot(g.b, id, 12, [wide * m.spread.feet, wide * m.spread.feet]),
           shape: {
