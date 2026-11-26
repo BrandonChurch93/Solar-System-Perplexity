@@ -46,6 +46,9 @@ export interface GlobePlace {
   // times its factor, less so the nearer the line of sight is to the one of the camera at T. widthDeg: the width of the map; cos: the
   // cosines between which that nearness goes from 0 to 1; power: the curve of that ramp.
   tone: { cos: [number, number]; power: number; air: number; live: { sigmaDeg: number; contrast: number; colour: number; gain: number; most: number } }
+  // The far deck of T (plates.json, atT.far.clear): the width of its map in bearing to each side (degrees), the sines of the elevation at
+  // its far and its near edge, the octaves its channels hold to each side of 1. The map itself is given with each frame (uFar).
+  far: { azDeg: number; sine: [number, number]; octaves: number; law: number }
 }
 
 export interface GlobeFlow {
@@ -173,6 +176,12 @@ uniform float uPlaceOn;
 uniform vec3 uToneEye;
 uniform vec4 uToneLook;
 uniform float uTonePower;
+uniform sampler2D uFar;
+uniform vec4 uFarLook;
+uniform float uFarLow;
+uniform float uFarLaw;
+uniform vec3 uFarFwd;
+uniform vec3 uFarRight;
 uniform vec4 uDusk;
 uniform vec4 uPlaceDusk;
 uniform vec4 uLive;
@@ -478,6 +487,11 @@ ${TAP_LEVELS}
   vec2 pgx = dFdx(pg);
   vec2 pgy = dFdy(pg);
   float pgd = sqrt(max(dot(pgx, pgx), dot(pgy, pgy)));
+  // Where the ground point lies in the map of the far deck of T (plates.json, atT.far.clear): across, its bearing about the foot of the
+  // camera of T; down, the sine of the elevation of that camera over it (under 0 behind the horizon of T).
+  vec2 fq = vec2(atan(dot(dp, uFarRight), dot(dp, uFarFwd)) * uFarLook.z + 0.5, 1.0 - (dot(normalize(uToneEye - dp), dp) - uFarLow) * uFarLook.w);
+  vec2 fqx = dFdx(fq);
+  vec2 fqy = dFdy(fq);
   for (int pass = 0; pass < (uPlaceOn > 0.0 && pn > 0.3 ? 1 : 0); pass++) {
     // The wide ring (plates.json, wide): the forms of the place carried on round its widest plate, as light over that colour. Its
     // border follows its own cloud forms and eases out over uWideLook.y.
@@ -500,12 +514,21 @@ ${PLACE_GLSL}
     for (int k = 0; k < (cover > 0.0 ? 1 : 0); k++) {
       // From above the place has the tones of the globe about it. The tones of the close view (the far deck pale under its haze, the near
       // towers dark against the Sun) belong to the line of sight of the close view: they come in as the line of sight nears the one of T.
-      vec3 own = inverseFilmic(laid / cover);
+      // The far deck of T: the camera of T sees that ground at a low angle and through its air, as one pale deck. The plates hold it as
+      // it is from above; by the share uFarLook.x (1 at T, none from well above) they are drawn times the picture of T over the plates
+      // as the camera of T sees them, which the map holds in the frame of T. So from T the far deck is the picture of T, and it
+      // clears into the forms of the plates as the camera climbs, by height alone.
+      vec3 stored = laid / cover;
+      for (int deck = 0; deck < (uFarLook.x > 0.0 && dot(dp, uFarFwd) > 0.0 && min(fq.x, fq.y) > 0.0 && max(fq.x, fq.y) < 1.0 ? 1 : 0); deck++) {
+        vec3 held = (textureGrad(uFar, fq, fqx, fqy).rgb * 255.0 - 128.0) / 127.0;
+        stored *= exp2(sign(held) * pow(abs(held), vec3(uFarLaw)) * (uFarLook.y * uFarLook.x));
+      }
+      vec3 own = inverseFilmic(stored);
       vec3 light = own;
       // Drawn dimmer than they are held, the bright parts of the plates would turn red: in scene light a highlight that the film curve
       // pressed has far more colour than it shows. So by the share uPlaceDusk.w the colour is that of the display value, at the luminance
       // of the light. At the handover the share is 0 and the plates show as they are.
-      vec3 shown = laid / cover;
+      vec3 shown = stored;
       light = mix(light, shown * (dot(light, vec3(0.2126, 0.7152, 0.0722)) / max(dot(shown, vec3(0.2126, 0.7152, 0.0722)), 1e-5)), uPlaceDusk.w);
       // How far the camera sees a ground point as the camera at T does (same): by the angle between the two lines of sight, and by the air
       // on the line of sight, which goes with one over the sine of the camera's elevation above the ground point. The pale haze over the far
@@ -624,6 +647,8 @@ export class Globe {
         uToneEye: { value: new THREE.Vector3(0, 0, 5) },
         uToneLook: { value: new THREE.Vector4(o.place.tone.air, 1, o.place.tone.cos[0], o.place.tone.cos[1]) },
         uTonePower: { value: o.place.tone.power },
+        uFar: { value: o.map }, uFarLook: { value: new THREE.Vector4(0, o.place.far.octaves, 0.5 / THREE.MathUtils.degToRad(o.place.far.azDeg), 1 / (o.place.far.sine[1] - o.place.far.sine[0])) }, uFarLow: { value: o.place.far.sine[0] }, uFarLaw: { value: 1 / o.place.far.law },
+        uFarFwd: { value: new THREE.Vector3(0, 0, 1) }, uFarRight: { value: new THREE.Vector3(1, 0, 0) },
         uAirDeck: { value: o.air.deck }, uAirFwd: { value: new THREE.Vector3(0, 0, -1) }, uAirRight: { value: new THREE.Vector3(1, 0, 0) }, uAirHaze: { value: new THREE.Vector4(0, 0.05, 1, THREE.MathUtils.degToRad(o.air.deckSpanDeg)) }, uAirField: { value: new THREE.Vector3(1e3, 2e3, 1) },
         uDusk: { value: new THREE.Vector4(1, 1, 1, 1) }, uPlaceDusk: { value: new THREE.Vector4(1, 1, 1, 0) },
         uLive: { value: new THREE.Vector4(Math.log2(Math.max(THREE.MathUtils.degToRad(o.place.tone.live.sigmaDeg) * ((o.place.textures[0]?.image as unknown as { width: number } | undefined)?.width ?? 1) / (2 * Math.tan(THREE.MathUtils.degToRad(o.place.widthsDeg[0] ?? 90) / 2)), 1)), Math.log2(Math.max(o.place.tone.live.sigmaDeg * o.mapWidth / 360, 1)), o.place.tone.live.contrast, o.place.tone.live.colour) },
