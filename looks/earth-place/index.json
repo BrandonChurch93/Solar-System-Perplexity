@@ -1,71 +1,71 @@
 {
  "folder": "earth-place",
- "pushed": "2026-11-25T23:45:44.090Z",
+ "pushed": "2026-11-26T00:49:06.810Z",
  "head": "aca87ea3a82ad7f8041b4cc317032a0804d989b8",
- "note": "23:47 field outside the canvas by the canvas's own cover and light; the oval still reads at 1890 by tone and by kind; glint colour control running",
+ "note": "canvas held to its rim in the plate, field at full wanted cover: bake runs, strip follows",
  "looks": [
+  {
+   "time": "2026-11-26T00:49:06.133Z",
+   "file": "20261126004906133-note-torim-e.jpg",
+   "source": "../../../../tmp/gl/k20/torim-e.jpg",
+   "kind": "note",
+   "label": "00:42 12 degree plate at the near rim, before left, with the canvas to its rim right (before the skirt)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T00:49:05.576Z",
+   "file": "20261126004905576-note-torim-s.jpg",
+   "source": "../../../../tmp/gl/k20/torim-s.jpg",
+   "kind": "note",
+   "label": "00:42 12 degree plate at the south rim, before above, with the canvas to its rim below (before the skirt)",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T00:49:04.853Z",
+   "file": "20261126004904853-note-torim-map.jpg",
+   "source": "../../../../tmp/gl/k20/torim-map.jpg",
+   "kind": "note",
+   "label": "00:42 top view: green = plate and lay back are one picture, orange = canvas goes on to its rim (new), grey = canvas over the hold's ground, cyan = 5 degree window",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T00:21:36.676Z",
+   "file": "20261126002136676-note-now-1898.jpg",
+   "source": "../../../../tmp/gl/k20/S5/sheets/now-1898.jpg",
+   "kind": "note",
+   "label": "1898 whole frame now, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T00:21:36.099Z",
+   "file": "20261126002136099-note-now-1890.jpg",
+   "source": "../../../../tmp/gl/k20/S5/sheets/now-1890.jpg",
+   "kind": "note",
+   "label": "1890 whole frame now, draft",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T00:21:35.535Z",
+   "file": "20261126002135535-note-crop-1890.jpg",
+   "source": "../../../../tmp/gl/k20/S5/sheets/crop-1890.jpg",
+   "kind": "note",
+   "label": "1890 near rim at 1 to 1: 23:40 above, now below (field by kind of sea tone, curls out). The canvas's end still reads",
+   "stop": "earth"
+  },
+  {
+   "time": "2026-11-26T00:21:34.653Z",
+   "file": "20261126002134653-note-step-1878.jpg",
+   "source": "../../../../tmp/gl/k20/S5/sheets/step-1878.jpg",
+   "kind": "note",
+   "label": "1878 draft shutter closed: 23:40 state beside now (low picture thinned, violet patch and lavender gone; strong violet px 4010 to 1022)",
+   "stop": "earth"
+  },
   {
    "time": "2026-11-25T23:45:43.439Z",
    "file": "20261125234543439-note-step-1878.jpg",
    "source": "../../../../tmp/gl/k20/S4/sheets/step-1878.jpg",
    "kind": "note",
    "label": "1878 draft, dd5dd07a beside now (23:40); the violet at the glint's far end not yet cured",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T23:45:42.845Z",
-   "file": "20261125234542845-note-step-1898.jpg",
-   "source": "../../../../tmp/gl/k20/S4/sheets/step-1898.jpg",
-   "kind": "note",
-   "label": "1898 draft, dd5dd07a beside now (23:40)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T23:45:42.187Z",
-   "file": "20261125234542187-note-step-1890.jpg",
-   "source": "../../../../tmp/gl/k20/S4/sheets/step-1890.jpg",
-   "kind": "note",
-   "label": "1890 draft, dd5dd07a beside the field by the canvas's own cover and light (23:40)",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T23:17:39.787Z",
-   "file": "20261125231739787-note-c1898.jpg",
-   "source": "../../../../tmp/gl/k20/c1898.png",
-   "kind": "note",
-   "label": "state dd5dd07a at 1898, draft, 1 to 1: the bare dark band between the canvas's last tufts and the field's first",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T23:17:38.380Z",
-   "file": "20261125231738380-note-rim-x2-lift.jpg",
-   "source": "../../../../tmp/gl/k20/rim-x2-lift.png",
-   "kind": "note",
-   "label": "plate at the near rim at 2 for 1, lifted by a square root for reading only: outside the rim about 120 px of bare sea before the field's first bodies, flat sea against rippled sea",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:52:01.690Z",
-   "file": "20261125225201690-note-crop-1890.jpg",
-   "source": "../../../../tmp/gl/k19/S3/sheets/crop-1890.jpg",
-   "kind": "note",
-   "label": "1890 border at 1 to 1, second strip above, third below",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:52:00.941Z",
-   "file": "20261125225200941-note-now-1890.jpg",
-   "source": "../../../../tmp/gl/k19/S3/sheets/now-1890.jpg",
-   "kind": "note",
-   "label": "third strip (bake 22:39) frame 1890, draft, rate 8, shutter 0",
-   "stop": "earth"
-  },
-  {
-   "time": "2026-11-25T22:51:59.753Z",
-   "file": "20261125225159753-note-now-1886.jpg",
-   "source": "../../../../tmp/gl/k19/S3/sheets/now-1886.jpg",
-   "kind": "note",
-   "label": "third strip (bake 22:39) frame 1886, draft, rate 8, shutter 0",
    "stop": "earth"
   }
  ]
