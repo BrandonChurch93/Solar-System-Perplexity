@@ -2643,3 +2643,11 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   files, 2.92 GB); G2 is the units above; G3 (the engine's own determinism run), G5, G13, G17 by the gate's own
   tools not run here (G17 by tools/measure/g17.py at final: 90 median 1.509, 60 median 1.494). Commit of h45
   follows; then the path line on the commit, NAMED mail to /root, the commit to sun_builder.
+- 17:59 UTC. h45 committed and pushed: 045a88cb4dc9d7a5235c345552f671dab1d3e3b5 (6a0047e1..045a88cb, no force).
+  Path line on the commit: "smooth sun: green". NAMED mail to /root 17:58 (high, ten attachments: m-h44f,
+  m-h44f-60, levels-h44f, sheet-h44-s, half-h44f-s, size-h44, weave2-h44f, rise6-h45, lab-90-h44f.png,
+  film-h44.mp4), named as NOT whole: rise red (worse than main's), plain at 90 worse than main's by 1.07, curve
+  red, lit side +0.042, flicker law not met, lanes not valleys, lens off at 3840. Asked: 64 samples at uhd; a
+  ruling on the flicker law (steady cells only or all). sun_builder told 17:59 (the commit, twin, spot depth,
+  heights). NEXT: shoulder trials t234 (heat.lane[8] 1.2) and t235 (lane[8] 1.2, lane[9] 0.25) on
+  v/lab-h45.json by v/tb.sh. NEXT MAIL DUE 19:28 at the latest.
