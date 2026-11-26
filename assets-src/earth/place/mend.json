@@ -302,6 +302,63 @@
     "how": "The bodies stand on the specks of the map, and the cover is kept. deck.py reads the cover of the hold's own cloud layer (file, of the full set) on the field's raster and spreads it over deg degrees of arc (about the layer's own texel). Where that passes alpha[0] to alpha[1] the ground is speck; the spread cover itself is the cover wanted there. lay places the tiles as before but keeps a body by the cover still lacking: the cover wanted less the cover laid so far, both spread over nearDeg degrees, over the tile's own cover, is the chance that a body of the tile is kept (times the old shaping by size for the three sizes; after them the smallest size is laid fill times more with no shaping, to take up what is left), and a body is kept only if more than onBody of it stands on speck. So a speck of the map grows into bodies at the same coordinates, none is born on open sea, and the light of a patch (its cloud share times the cloud's light plus the rest times the sea's) is the hold's. rings are the bands, in degrees of arc from the point under the twin camera, deck.py prints the cover wanted and laid by. wedge: the cover the hold shows over the ground the close camera sees (place.json plates.wedge, the fourth value of its file) is laid over the layer's cover first, so the bodies of that ground stand on the specks the hold shows there.",
     "file": "wrap-cloud.webp",
     "wedge": true,
+    "sea": {
+     "how": "The sea the close camera looks across carries bodies as main's levels carry puffs there (MAIL 1537, ruling (i)). seacover.py reads the levels of levels degrees as commit ships them and as the hold's commit (place.json plates.holdCommit) ships them, the finer over the wider with the globe's feather, on size px over a square of widthDeg degrees on the plate's plane. Their cloud is where their level is brighter than the hold's on the darkest channel, through rise, so a whole body counts and not its brightest part alone; the hold's own cloud is the darkest channel through cloud and not warmer than warm (red less blue), the rule of the standing field. Each tree's levels are laid on the raster by their own windows first: the hold's commit ships plain windows about the spot, today's level of 24 degrees is a window of a wider raster with an offset, so the two do not match px for px as files. Kept is their cloud where the hold has no cloud of its own (own, after a blur of ownDeg degrees), over sea (sea on the hold's level: blue over red by sea[0] code values and no further under green than sea[1]; what is not sea, blurred over landDeg degrees, through land), from arcDeg degrees of arc from the point under the close camera outward, inside the turn the close camera's frame spans (sidePx px of that frame past each side, soft), and standDeg degrees inside the rim of the standing field (place.json plates.stand), so every body laid here stands. The file holds that cover and, as its second value, the sea (one less the step of land). deck.py lays the field as before and then, with a generator of its own (seed), lays bodies for this cover alone: a body is kept where more than onBody of it stands within roomDeg degrees of that cover (edge soft over softDeg), by the cover still lacking as in the fill, passes times for each size of scales; the cover wanted is amount times the kept cover, and a body with more than onLand of itself over what is not sea is dropped. So the rest of the field stays as it was to the texel and bodies stand there in about that amount; the hold's cloud layer does not carry it, so the hold reads as before and these bodies come with the levels alone. Order: seacover.py, deck.py, levels.py, band.py, above.py.",
+     "commit": "d75461fc80dc2988323a9e14c64e2ca8fe6b9dac",
+     "levels": [
+      48,
+      24
+     ],
+     "file": "sea-cover.png",
+     "size": 4096,
+     "widthDeg": 36,
+     "rise": [
+      0.2,
+      0.4
+     ],
+     "cloud": [
+      0.588,
+      0.824
+     ],
+     "warm": [
+      0.024,
+      0.086
+     ],
+     "own": [
+      0.1,
+      0.4
+     ],
+     "ownDeg": 0.1,
+     "sea": [
+      20,
+      30
+     ],
+     "land": [
+      0.2,
+      0.6
+     ],
+     "landDeg": 0.05,
+     "arcDeg": [
+      5.0,
+      6.4
+     ],
+     "sidePx": 300,
+     "standDeg": [
+      0.5,
+      1.5
+     ],
+     "roomDeg": 0.1,
+     "softDeg": 0.02,
+     "amount": 0.85,
+     "onLand": 0.02,
+     "seed": 23,
+     "scales": [
+      0.4,
+      0.7,
+      1.0
+     ],
+     "passes": 3
+    },
     "deg": 0.06,
     "alpha": [
      0.02,

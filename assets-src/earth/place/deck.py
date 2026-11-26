@@ -182,6 +182,20 @@ def specks(sp, deg, n):
     return held
 
 
+def sea_specks(sp, deg, n, open_):
+    import seacover
+    from levels import Win
+    se = sp['sea']
+    nn, e, u = g.frame_at(P)
+    tx, ty = Win(P, deg, n).tangent()
+    both = seacover.at(g.unit(nn + tx[None, :, None] * e - ty[:, None, None] * u)).astype(np.float32)
+    cover, dry = both[..., 0], 1 - both[..., 1]
+    per = n / deg
+    k = 2 * int(round(se['roomDeg'] * per)) + 1
+    room = cv2.GaussianBlur(cv2.dilate(cover, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (k, k))), (0, 0), se['softDeg'] * per)
+    return np.clip(room * open_, 0, 1).astype(np.float32), np.clip(se['amount'] * cv2.GaussianBlur(cover, (0, 0), sp['deg'] * per) * open_, 0, 1).astype(np.float32), dry
+
+
 def density(spec=SPEC):
     from farin import CANVAS, reach as from_nadir
     from layback import layback
@@ -220,10 +234,10 @@ def density(spec=SPEC):
     look = under * (1 - 0.85 * dens[..., None]) + 255 * 0.85 * dens[..., None]
     cv2.imwrite(str(WORK / 'field-density-look.jpg'), cv2.resize(np.clip(look, 0, 255).astype(np.uint8), (1024, 1024), interpolation=cv2.INTER_AREA), [cv2.IMWRITE_JPEG_QUALITY, 88])
     np.save(WORK / 'field-held.npy', held.astype(np.float16))
-    return dens, calm, goal
+    return dens, calm, goal, sea_specks(sp, deg, n, open_) if sp.get('sea') else None
 
 
-def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale, goal, fill=False):
+def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale, goal, fill=False, bar=None):
     n = alpha.shape[0]
     k = n / dens.shape[0]
     size = tiles[0][0].shape[0]
@@ -253,7 +267,8 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale, goal, 
         ax0, ay0, ax1, ay1 = max(ox, 0), max(oy, 0), min(ox + size, n), min(oy + size, n)
         if ax1 - ax0 < 8 or ay1 - ay0 < 8:
             continue
-        d = cv2.remap(dens, ((np.arange(ax0, ax1, dtype=np.float32) + 0.5) / k - 0.5)[None, :].repeat(ay1 - ay0, 0), ((np.arange(ay0, ay1, dtype=np.float32) + 0.5) / k - 0.5)[:, None].repeat(ax1 - ax0, 1), cv2.INTER_LINEAR)
+        mx, my = ((np.arange(ax0, ax1, dtype=np.float32) + 0.5) / k - 0.5)[None, :].repeat(ay1 - ay0, 0), ((np.arange(ay0, ay1, dtype=np.float32) + 0.5) / k - 0.5)[:, None].repeat(ax1 - ax0, 1)
+        d = cv2.remap(dens, mx, my, cv2.INTER_LINEAR)
         if d.max() < 0.02:
             continue
         raw = d
@@ -265,7 +280,7 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale, goal, 
         sl = (slice(ay0 - oy, ay1 - oy), slice(ax0 - ox, ax1 - ox))
         lab = wl[sl]
         sp = spec['density']['speck']
-        aim = cv2.remap(wide, ((np.arange(ax0, ax1, dtype=np.float32) + 0.5) / k - 0.5)[None, :].repeat(ay1 - ay0, 0), ((np.arange(ay0, ay1, dtype=np.float32) + 0.5) / k - 0.5)[:, None].repeat(ax1 - ax0, 1), cv2.INTER_LINEAR)
+        aim = cv2.remap(wide, mx, my, cv2.INTER_LINEAR)
         low = cv2.GaussianBlur(cv2.resize(alpha[ay0:ay1, ax0:ax1], (max((ax1 - ax0) // 8, 1), max((ay1 - ay0) // 8, 1)), interpolation=cv2.INTER_AREA), (0, 0), sig / 8)
         lack = np.clip((aim - cv2.resize(low, (ax1 - ax0, ay1 - ay0), interpolation=cv2.INTER_LINEAR)) / max(float(wa.mean()), 1e-3), 0, 1)
         d = lack * (1.0 if fill else share[0] + (share[1] - share[0]) * step(share[2], share[3], d))
@@ -275,6 +290,8 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale, goal, 
         stood = np.bincount(lab.ravel(), weights=raw.ravel(), minlength=count) / counts
         keep = ((sums / counts) > chance) & (stood > sp['onBody'])
         keep &= lit | (stood > spec['veil']['dense'])
+        if bar is not None:
+            keep &= np.bincount(lab.ravel(), weights=cv2.remap(bar, mx, my, cv2.INTER_LINEAR).ravel(), minlength=count) / counts <= sp['sea']['onLand']
         keep[0] = False
         if oy < 0:
             keep[lab[0, :]] = False
@@ -308,7 +325,7 @@ def lay(tiles, want, dens, share, alpha, colour, shade, rng, spec, scale, goal, 
 def main():
     spec = SPEC
     n = spec['raster']
-    dens, calm, goal = density(spec)
+    dens, calm, goal, sea = density(spec)
     cv2.imwrite(str(WORK / 'field-density.png'), (dens * 255).astype(np.uint8))
     cv2.imwrite(str(WORK / 'field-near.png'), (calm * 255 + 0.5).astype(np.uint8))
     rng = np.random.default_rng(spec['seed'])
@@ -325,6 +342,23 @@ def main():
     for _ in range(spec['density']['speck']['fill']):
         lay(small[0], small[1], dens, small[3], alpha, colour, shade, rng, spec, small[2], goal, True)
     del small
+    if sea is not None:
+        se = spec['density']['speck']['sea']
+        was = (alpha * 255 + 0.5).astype(np.uint8)
+        rng = np.random.default_rng(se['seed'])
+        for scale, share in spec['sizes']:
+            if scale not in se['scales']:
+                continue
+            tiles, want = variants(scale, spec)
+            for _ in range(se['passes']):
+                lay(tiles, want, sea[0], share, alpha, colour, shade, rng, spec, scale, sea[1], True, sea[2])
+            del tiles
+        m = sea[0].shape[0]
+        now = (alpha * 255 + 0.5).astype(np.uint8)
+        ys, xs = np.nonzero(now != was)
+        on = cv2.resize(sea[0], (n, n), interpolation=cv2.INTER_LINEAR) > 0.5
+        print('sea: cover wanted %.5f of the raster, laid %.5f; px of the cover that changed %d, of them on the sea\'s specks %d, box x %d to %d y %d to %d of %d' % (sea[1].mean(), (now.astype(np.float32) - was).mean() / 255, len(ys), int(on[ys, xs].sum()), xs.min() if len(xs) else -1, xs.max() if len(xs) else -1, ys.min() if len(ys) else -1, ys.max() if len(ys) else -1, n), flush=True)
+        del was, now, on
     from farin import reach as from_nadir
     m = dens.shape[0]
     laid = cv2.resize(alpha, (m, m), interpolation=cv2.INTER_AREA)
