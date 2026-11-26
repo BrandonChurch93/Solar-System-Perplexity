@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from lib import HERE, ROOT, WORK, hero_camera, load_json, normalize, pixel_grid, plane_hit, spheroid_hit  # noqa: E402
+from lib import HERE, ROOT, WORK, Camera, hero_camera, load_json, normalize, pixel_grid, plane_hit, spheroid_hit  # noqa: E402
 
 sys.path.insert(0, str(ROOT / "tools" / "assets"))
 from lightcurve import inverse_filmic, srgb_to_linear  # noqa: E402
@@ -36,6 +36,26 @@ def hero_mask():
     return hit & ~covered
 
 
+def hero_mask_two():
+    """The globe in the open in both pictures: the approved's (the picture's own fit, assets-src/saturn/fit.json)
+    and the film's at the hold (src/stops/saturn/fit.json), with neither ring in front. For a hold whose view is
+    not the picture's own fit: the ratio is taken only where both show the globe, the rest is filled from there."""
+    px, py = pixel_grid(W, H)
+    both = np.ones((H, W), bool)
+    for fit in (load_json(HERE / "fit.json"), load_json(ROOT / "src" / "stops" / "saturn" / "fit.json")):
+        size = fit.get("imageSize", [W, H])
+        cam = Camera(size[0], size[1], fit["vfovDeg"], fit["camera"]["position"], fit["camera"].get("quaternion", (0, 0, 0, 1)))
+        k = W / size[0]
+        dirs = cam.rays_world(px / k, py / k)
+        n = normalize(fit["rings"]["normal"])
+        t, P = plane_hit(cam.pos, dirs, n)
+        hit, ts = spheroid_hit(cam.pos, dirs, n)
+        r = np.linalg.norm(P, axis=-1)
+        covered = (t > 0) & (t < ts) & (r > fit["rings"]["inner"]) & (r < fit["rings"]["outer"])
+        both &= hit & ~covered
+    return both
+
+
 def layers_mask(path):
     lay = cv2.imread(path).astype(np.float32) / 255
     return (np.abs(lay[..., 0] - 0.9) < 0.08) & (np.abs(lay[..., 1] - 0.45) < 0.08) & (np.abs(lay[..., 2] - 0.15) < 0.08)
@@ -48,7 +68,7 @@ def main():
     lo, hi = float(args.get("lo", 0.2)), float(args.get("hi", 5))
     ref = cv2.resize(cv2.imread(str(ROOT / "references" / "approved" / REF[view])), (W, H), interpolation=cv2.INTER_AREA)
     img = cv2.imread(film)
-    mask = hero_mask() if view == "hero" else layers_mask(args["layers"])
+    mask = (hero_mask_two() if "two" in args else hero_mask()) if view == "hero" else layers_mask(args["layers"])
     g = lambda a: cv2.cvtColor(a, cv2.COLOR_BGR2GRAY).astype(np.float32)
     ys, xs = np.nonzero(mask)
     box = (slice(ys.min(), ys.max()), slice(xs.min(), xs.max()))
