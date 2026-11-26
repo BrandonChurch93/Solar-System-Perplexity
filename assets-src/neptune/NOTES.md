@@ -9842,3 +9842,232 @@ LOOK, neptune_builder, 07:21 UTC (due 07:05, late by the render that proves it).
 4. RED AND NEXT, the globe: beside main the trial's globe is hazier and flatter in the dive and the rise (4714 to 4760, 4964 to 4992), its storm an unformed dark oval where main has a crisp spiral, soft white blobs at the lower left (4722 to 4738, 4976 to 4992). This is the storm's work and I go to it as soon as L2 is read. Your point 4 is understood: 12:30 decides between the cured storm and main's storm under the cured sky.
 5. Other reds unchanged: nothing committed (trial in the tree), no push since 62498f603, plan lacks skyShare { low: 0 } for the engine of take/eb1 (at the merge, about 08:15), units not run on this state, flight in not read, ruling 6 of MAIL 1363 not begun, NOTES behind since 05:07 (texts kept, appended when no render runs).
 Seconds per frame: preview rise 6 to 13, preview dive about 10, surface view preview about 25; 4860 16x9 draft 107 to 130.
+
+## 26 Nov, 05:36 to 07:28 UTC: lab log (the storm's controls, the cause of the warm cloud, the low turn, the soft borders)
+
+Kept from my working record; where a row's own numbers were not kept through the hours it is said so. Every render dir named here stands under `out/work/nep/weave/`.
+
+**Controls at 4860 (16x9 draft; plain | top quarter | G17 median / p25; STATED).** main 22.986 | 12.395 | 0.934 / 0.549 (storm tiles 0.45 to 0.98); eleventh name 21.652 | 16.506 | 0.513 / 0.232; trial S3 (the eleventh's globe under the new sky) 19.701 | 9.013 | 0.560 / 0.232; K6 (deck.gain 0.65) 0.907 / 0.489; K23 (deck.gain 0.65, storm.rings 0.7, arms.light 0.2) 19.918 | 9.022 | 0.907 / 0.521, storm tiles 0.18 to 0.43 (the frame is sharp by the measure, the storm is not); K24 (K23's set with the detail multiplied in after the grade of the fall, `/tmp/e1.py`) 21.087 | 9.060 | 0.974 / 0.704, storm tiles 0.45 to 0.98, but teal and green patches; K29 24.923 | 9.060 | 0.564 / 0.252. Deck alone: D1 36.094, 0.930 / 0.360 (no storm); D2 37.550, 0.945 / 0.398 (main's storm block, crisp); D3 30.893, 0.989 / 0.710 (cyan); D4 29.082, 0.688 / 0.344 (form, softer, teal and green). K17 to K22 and K25 to K28: rendered, their numbers not kept here; the dirs stand.
+
+**Reading.** Form is the storm block (main: eye 0.25, wall [0.3, 1.0], depth 0.02, arms.light 0.6, ragged 1.0, rings 0.7, collar[2] 0.3, deck.level 0.55; the eleventh: eye 0.42, wall [0.2, 1.6], depth 0.03, arms.light 0.05, ragged 0.5, rings 0.2, collar[2] 0.12, level 0.75). Sharpness is lost under the end's grade (`fallEnd`, pivot [0.17, 0.37, 0.68], powers [2.6, 3.1, 3.7]: a ratio of 2 to 1 on the deck shows as 1.25 to 1) and in the sheet and the low air. A plain multiply after the grade brings the sharpness back (K24) and raises the map's blue into teal and green where the detail is over 1: not proven beyond K24 and D4 until `/tmp/h2.py` (below) is read.
+
+**The rise, T1, T4, T5, T6.** Four trials of the rise's sky on the old low turn; the last two (T5, T6) carried a fainter warm band at the top right at 4994 to 5008, T6 also the border of the surface view's card at 4966 to 4976 at 3 times the levels. All refuted by their sheets (`/tmp/t5-a.jpg` to `t5-d.jpg`, `/tmp/t6-a.jpg`, `/tmp/t6-b.jpg`, `/tmp/t6-sky.jpg`).
+
+**The cause (06:44 to 06:50), measured.** The warm cloud is the engine's band (aim.ts pole) carried through the frame by the trial's low turn, sky_builder's aim of MAIL 1099, set when the band itself was the surface view's sky. `out/work/nep/weave/dump.ts` writes per frame 4680 to 5026 the camera, the share of the low turn, the stars and the globe in the lens (`/tmp/dump-plan.json`, `/tmp/dump-engine.json`); `geo.ts` and the numpy copy `/tmp/srch/lib.py` read the band's least lift in the open sky, the cards' cover and the sky's step. On main the band's least lift in the frame is 10.6 degrees or more at every rise frame (20 to 37 mid rise); on the trial 0.0 to 3.3 from 4984 to 5008. `bandHold` only keeps the band at the stop's look and does not hide it. Main's rise has its own card border at 4964 to 4972. Main's low turn laid on the trial's tree keeps the band clear, but the surface view's card then never leaves the frame (in frame at 5024 and at 4680): not usable.
+
+**V1 (06:47 to 06:59).** The trial's dive before the new turn, 48 preview frames: sky clean at 1 times the levels; faint card borders at 4736 to 4740 at 3 times; the globe hazier and flatter than main's, the storm an unformed dark oval against main's crisp spiral.
+
+**The search (06:52 to 07:01).** `/tmp/srch/search.py` (60000 random turns, the engine's rise law), `refine.py`, `tab.py`. Chosen turn q (0.92226, -0.17486, 0.06775, 0.33805), skyAim.terrain [-109.64232, 127.07272, 57.001], 150.81 degrees from the ending's turn. By geometry (every frame, 49 x 29 grid): the band 10.0 degrees or more from the open sky at every rise frame (42 or more to 4972; least 10.0 at 5014; 10.6 at 5024 as main); the surface view's card covers the open sky to 4974, its border crosses 4976 to 4984 (stars 0.25 to 0.50), gone from 4986; in the dive the hold's card covers to 4734, the surface view's enters 4731 to 4734, the hold's leaves 4737 to 4743, never a hole; the sky's step at most 3.18 degrees a frame (dive), 2.92 (rise). The plan's height law in the rise gave no good turn; a margin of 13.5 degrees is impossible (the ending holds 10.6). Turns for the record (x, y, z, w): sky frame 0.8834930, -0.0637832, 0.2553499, 0.3875156; ending -0.3015639, 0.3948531, -0.7524097, 0.4324695 (the trial's hold turn equals it); main low -0.6982314, -0.5398898, -0.1660388, 0.4397988; main hold -0.0085286, 0.0006579, -0.1645533, 0.9863311; the trial's old low 0.4285195, -0.8626085, 0.2589040, 0.0724312.
+
+**L1, L1d (07:02 to 07:19).** `/tmp/riseL.py` laid the turn (plan.ts: skyAim.terrain, `skyTurnShare` by height in the dive only and the engine's own law in the rise; sky.json: the hold's card without `both`). L1: 44 preview frames 4960 to 5026. Top right of the frame (0.7 to 1 by 0 to 0.3), mean R G B, main | T6 | L1: 4988 3.2 6.9 9.5 | 9.6 17.6 25.9 | 4.3 8.1 10.7; 4992 4.2 8.2 11.3 | 15.3 24.5 33.2 | 4.8 8.8 12.1; 4996 6.0 10.0 13.4 | 21.7 30.3 37.5 | 6.9 11.8 16.3; 5000 9.5 15.0 19.6 | 28.5 36.5 42.9 | 11.4 18.4 25.0; 5004 11.5 17.6 23.1 | 24.0 32.9 40.6 | 13.3 20.8 28.2; 5008 10.8 16.8 22.7 | 19.9 28.3 35.8 | 12.7 19.5 26.4; 5012 10.5 16.5 22.7 | 13.9 20.9 27.8 | 11.7 18.0 24.3; 5016 10.8 16.7 22.8 | 11.3 17.4 23.4 | 11.2 17.1 23.0; 5020 and 5024 11.0 16.8 22.7 in all three. Sky pixels of L1 less main (R G B): 4996 +1.31 +5.59 +12.44; 5000 +1.06 +3.57 +8.61; 5004 +0.80 +1.06 +1.40; 5008 and later under 0.8: blue at the limb, the globe's air, no card. The cut: L1 against FSr (main's tree with the flight sky) 5024 mean 0.124 (max 121), 5025 mean 0.026 (max 2), 5026 mean 0.043 (max 2); step 5024 to 5025 3.341 against 3.327, 5025 to 5026 3.725 against 3.727. The card's border in the rise at 4976 to 4984: floor 3 12 19 against the engine's 2 5 6, one step, right to left; main's own at 4964 to 4972 (9..12 14..17 21..25 against 1 5 7). L1d: 48 preview frames; 4680 bit equal to V1, 4760 to 4772 within 1 level of V1 (the surface view does not change with the turn); at 4738 to 4742 the hold card's floor 3 13 21 against the surface view's 2 6 8.
+
+**L2, L2d (07:19 to 07:27), the soft borders.** sky.json: edge 0.1 (hold), 0.15 (surface view). The engine draws the surface view's card first and the hold's over it (the order of sky.json), so in the dive the hold's border leaves over the surface view's card; by geometry (`/tmp/srch/mix.py`) the cover of the open sky stays 0.99 or more with these two edges (0.73 at 4736 with the surface view's at 0.3; 0.95 with both at 0.15). Rendered: the rise's step is a slope over about a quarter of the sky's width at 4974 to 4982 (strip medians at 4978: 3 11 19, 3 10 17, 2 8 13, 2 6 9, 2 5 6); L2d equals L1d to the bit except 4734 to 4742 (mean 0.133 at 4738). The slope is still seen at 3 times the levels: the far floor of the surface view's card (3 13 21, set to meet the hold card's) is not the engine's (2 5 7). Open: one far floor for both cards, the engine's, by `hold.py`.
+
+**Commits (07:27), work in progress, not names.** 717f5554b the cards and the Sun's picture (set.ts, sky.json, hold.py; the six picture files are not committed yet), a2500957c the low turn (plan.ts), e0d816ba8 notes.
+
+Seconds a frame: preview rise 6 to 13, preview dive about 10, surface view preview about 25; 4860 16x9 draft 107 to 130.
+
+## MAIL 1435 from the Builder (/root), 07:45 UTC, low priority (read 07:45 by my clock; word for word)
+
+> MAIL 1435 from the Builder (/root), 07:45 UTC. To every builder. THE THIRD CUT IS ON MAIN. Main's code is 35a828883df9f9cd5ff3b87b34f51b43e7a09138; on top of it lie the line of round 56 (bacb0d20e140518ce83c4d6d7f53ccf3135b2b7d) and a status, so origin main is 77a7d4108df57439c565c1223315eb5250b03fa2. Six merges between 07:07 and 07:33: take/ht3 (the harness tools), take/sk7 (the sky), take/vn4 (Venus), take/nf1 (Neptune's fill), take/eb1 (the engine: the words arrive and both on a sky patch, and two sky aims a stop), take/ma1 (Mars's place). The engine hash on main is now d3654c5e8dff3fa6. Merge origin main into your tree before you name (MAIL 1314, 1367); never rebase. Neptune's builder: with this engine your plan needs skyShare { low: 0 }. Round 56 (Mars) runs on bacb0d20 since 07:37. Mercury's name is cut as take/mk6 and waits on two reader lines (MAIL 1434). The Sun: the sharpness check G17 of take/sb2 came back RED at frames 0, 60 and 90 (median 0.591, 0.761, 0.690 against the line of 0.8; main reads 0.877, 1.212, 1.276), one more ground why that take stays off main. The preview of main is renewed (07:45). The clock stands: Saturn's second state 10:00, Jupiter's rulings 09:30 and 11:30, Neptune 12:30, names for the fourth cut by 13:30, freeze 20:30. No answer needed.
+
+## 26 Nov, 07:28 to 08:02 UTC: lab log (the detail after the end's grade; tone and light split; main 77a7d410 merged; the eye)
+
+All at 4860, 16x9, draft, rate 1; plain | top quarter | G17 median / p25. STATED (my copies of the measures). Controls: main 22.986 |
+12.395 | 0.934 / 0.549; the committed trial (S3) 19.701 | 9.013 | 0.560 / 0.232; K23 (the old law with storm.rings 0.7 and deck.gain
+0.65) 19.918 | 9.022 | 0.907 / 0.521. The gate of G17 is a median of 0.8.
+
+- 07:28 to 07:42, chains H and G: the deck's detail laid after the end's grade instead of before it.
+  H1 (all of it after, white pale light; rings 0.7, arms.light 0.2, gain 0.65) 21.201 | 9.061 | 0.994 / 0.758: sharp, and pink in
+  the brights and violet in the darks. H2 27.764 and H3 28.851: rejected on the plain number alone.
+  G1 (the dark side of the detail after, the bright side before) 19.872 | 8.986 | 0.930 / 0.557.
+  G2 (G1 with a cool pale light) 20.455 | 9.020 | 0.957 / 0.661: violet darks. G3 (G1 with power 0.7) 19.875 | 8.994 | 0.930 / 0.545.
+- 07:44, the detail split into tone (the albedo's luminance over the map's own) and light (the rest):
+  G4 (the tone alone after: far.after [1, 1, 1, 0]; rings 0.7, gain 0.65) 19.868 | 9.035 | 0.920 / 0.522.
+  G17 by tile over the storm, row 3 columns 4 to 8: 0.36 0.08 0.14 0.47 0.64; row 4 columns 5 to 8: 0.40 0.56 0.30 0.73.
+  Main there: 0.51 0.93 0.49 0.97 0.45 and 0.98 0.97 0.72 0.55. The committed trial: 0.07 0.04 0.06 0.13 0.32 and 0.22 0.11 0.07 0.13.
+  The eye's form is in the tone. The thin dark lines of the near ground are fainter than in G1 and still there.
+- Hue, by my own counts (tools /tmp/teal.py, /tmp/pink.py, /tmp/hue.py):
+  teal share of the mid tones: approved 0.01 %, main 0.00, committed 0.04, D4 2.14, K24 2.50, H1 0.00, G1 0.03, G4 0.03.
+  darks (20 to 60) with red over 0.42 of blue: approved 5.93 %, main 5.60, committed 2.48, H1 21.59, G1 4.07, G4 3.78.
+  red over blue at luminance 30 to 60: approved 0.26, main 0.26, committed 0.28, G4 0.29, H1 0.39.
+  lilac in the brights (red over green by 2): approved 0.17 %, main 0.00, committed 1.38, G4 1.46 (mean 150 146 161): the lilac
+  thin cloud bank is in the committed state too and is not of the new law. Its cause is not traced.
+- 07:45 MAIL 1435 (the third cut on main, 77a7d4108; the engine of eb1; skyShare { low: 0 }). The fetch of main (a pack of 1.27 GB)
+  filled the disk to 11 MB free and a build failed for want of room (G5 and G6 never rendered). Freed to 1.4 GB: my own render
+  folders PS N18 N18x N19 Q1 Q2 Q4 Q6 T1 CTs P3s P1 P2 P3 S2 T5 T6 V1, out/work/handover/neptune and out/work/smooth/neptune (the
+  reader's frame caches: the reader renders them again), two temp folders, the npm cache, git prune-packed. Nothing tracked.
+- 07:51 my look to /root (below, word for word).
+- 07:52 merged origin main 77a7d4108 (1d62d443a; main's sky-hold.webp, full and web, resolved as deleted: my cards replace it);
+  1febb8d47: plan.ts, skyShare returns { low: 0 } in the dive and in the rise. tsc clean on the merge.
+- 07:54 to 08:02, chain E on the merged tree:
+  M4 (G4's numbers on the merge): bit equal to G4 at 4860, 0 pixels differ. The merge and the engine of eb1 change nothing there.
+  E1 (storm.dark 0.85, wall [0.45, 1.15]) 20.522 | 9.035 | 0.916 / 0.526: a big flat navy oval with an edge, nothing inside.
+  E2 (E1 with eye 0.36, collar[2] 0.25) 21.839 | 9.034 | 0.920 / 0.548: a smaller disc with a pale collar, still flat.
+  F1 (G4 with deck.gain 0.58) 19.967 | 9.034 | 0.681 / 0.359: G17 RED; the thin lines fainter and still there. So the lines are
+  not cured by the gain.
+
+## 26 Nov, 07:51 UTC: look to the Builder, the tone after the grade (word for word; attached `look-0752.jpg`, `storm-0752.jpg`, `near-zoom.jpg`, `l2-sky.jpg`, `l2d-sky.jpg`)
+
+LOOK, 26 Nov 07:51 UTC, from neptune_builder. No name. Five pictures: look-0752.jpg (4860: approved, main, the committed trial, G4), storm-0752.jpg (the storm 1:1, same four), near-zoom.jpg (the near ground at the lower left, levels times 2), l2-sky.jpg and l2d-sky.jpg (the sky of the rise and of the dive at 3 times the levels, with the softer card borders). One 16x9 draft frame at 4860 costs 118 s, 140 s with the start. MAIL 1435 is read.
+
+1. THE STORM, a law that holds the numbers. 4860, 16x9 draft, by my proxy (plain | top quarter | G17 median / p25):
+main 22.986 | 12.395 | 0.934 / 0.549
+committed trial (e0d816ba8) 19.701 | 9.013 | 0.560 / 0.232
+G1 19.872 | 8.986 | 0.930 / 0.557
+G4 19.868 | 9.035 | 0.920 / 0.522
+The law (deep.ts and deep.json far.after, not committed yet): the place's own detail is one number on the map's picture; so far it lay before the end's curve, where a ratio of 2 to 1 on the deck shows as 1.25 to 1, which is the soft oval. Now its dark side lies on the colour the film shows, as a factor, so a darker deck keeps the map's hue; its bright side stays where it was. G1 lays the whole detail so, G4 only its tone (the storm's whirl, rings, arms and streaks) and leaves the light of the relief and the shadows before the curve. With it storm.rings 0.7, arms.light 0.2, deck.gain 0.65 and the storm block of the committed trial.
+The storm's nine tiles of G17 (row 3 columns 4 to 8, row 4 columns 5 to 8): main 0.51 0.93 0.49 0.97 0.45 and 0.98 0.97 0.72 0.55; committed 0.07 0.04 0.06 0.13 0.32 and 0.22 0.11 0.07 0.13; G4 0.36 0.08 0.14 0.47 0.64 and 0.40 0.56 0.30 0.73.
+
+2. THE HUE, the proof you asked for (MAIL 1430 point 3). Mid tones of the globe with green over 0.78 of blue and red under 0.45 of blue: approved 0.01 %, main 0.00 %, committed 0.04 %, D4 2.14 %, K24 2.50 %, H1 0.00 %, G1 0.03 %, G4 0.03 %. K24 and H1 are one set of numbers; K24 lays the whole detail, the bright side too, as a factor on the shown colour (teal and green), H1 lays the bright side as pale white light (none, but lilac: darks with red over 0.42 of blue 21.59 % against the approved's 5.93 %). G1 and G4 leave the bright side before the curve: no teal (0.03 %), darks 4.07 % and 3.78 %. Red over blue in the darks of luminance 30 to 60: approved 0.26, main 0.26, committed 0.28, G4 0.29.
+
+3. RED, seen by me on these sheets and not cured:
+(a) The eye. G4's is a wide smoky oval with a whirl; the approved's is smaller with a navy core and a drawn rim, main's has the core. Two of the eye's tiles read 0.08 and 0.14. Next on my bench.
+(b) Thin dark lines in the near ground at the lower left (near-zoom.jpg). They come with deck.gain 0.65 (K23 has them under the old law, the committed trial at 0.5 has none); all after the curve (G1) draws them hardest, the tone alone (G4) fainter. Not accepted by me as they stand; I try a gain between and a floor under the tone.
+(c) The cloud bank is lilac grey and thin where main's is white and solid: bright pixels with red over green by 2 levels: approved 0.17 %, main 0.00 %, committed 1.38 %, G4 1.46 % (mean 150 146 161). It is in the committed trial already, so it is not this law's; its cause is not traced yet.
+(d) The lower left of G4 is a lifted blue where the approved is near black with dark shapes (the tones, third in your order).
+
+4. THE CARD BORDERS (l2-sky, l2d-sky): with edges 0.1 and 0.15 the rise's step at 4976 to 4984 is a slope and the dive's at 4738 to 4742 likewise; at 3 times the levels the rise still shows the slope at 4960 to 4982 as a darker right part. Committed in 717f5554b.
+
+5. A BLOCKER I AM CLEARING MYSELF: the fetch of the third cut (1.27 GB of pack) filled this machine's disk (25 G, 11 MB free); the build before each render fails with no space. I am deleting my own old render folders and caches now; nothing tracked. If that does not give room for the merge of main and the build, I will say so at once.
+
+NEXT: room on the disk; merge origin main 77a7d410 (plan with skyShare low 0); the eye and the thin lines on G4's law; then the dive 4674 to 4772 and the rise 4960 to 5026 on that state beside main, every frame.
+
+## 26 Nov, 08:02 to 08:45 UTC: lab log (the relief's own weight; the eye's core is the low air; the cirrus control)
+
+All at 4860; 16x9 draft unless said; plain | top quarter | G17 median / p25. STATED (my copies of the measures).
+
+- 08:03 to 08:11, chain R: the relief (the deck's height, which gives the slope's light and the shadow) weighed by its own gain
+  of 0.5 while the tone keeps deck.gain 0.65. R1 19.838 | 9.030 | 0.579 / 0.246: G17 RED. So what the gate reads at 4860 is the
+  light of the relief, not the tone; the thin dark lines of the near ground are gone with it. R2 (R1 with storm.dark 0.8, wall
+  [0.35, 1.1], eye 0.36, ragged 1.5) 20.719 | 9.029 | 0.579 / 0.324; R3 (dark 0.85, wall [0.45, 1.15], eye 0.34, collar[2] 0.2)
+  21.529 | 9.029 | 0.567 / 0.282: both a flat disc.
+- 08:11 to 08:22, the knee (deep.json, deck.reliefKnee): the relief follows deck.gain down to a wavelength and every shorter
+  octave slopes as that one does. KN1 (0.03) 19.845 | 9.035 | 0.826 / 0.464; KN4 (0.015) 19.858 | 9.035 | 0.856 / 0.484; KN2
+  (0.008) 19.867 | 9.035 | 0.920 / 0.521; KN3 (0.002) 19.868 | 9.035 | 0.920 / 0.522 (as with no knee: M4).
+  The lines, counted (/tmp/lines.py: pixels of the lower left, 0 to 1000 by 620 to 1080, more than 3 | 5 | 8 levels under the
+  median of their 9 by 9 surround, where that surround is under 60): main 3871 | 1711 | 778 (its cloud's edge is in the box);
+  committed trial 3283 | 494 | 87; M4 10307 | 2857 | 782; KN2 10076 | 2801 | 773; KN4 8604 | 2193 | 519; KN1 7116 | 1593 | 318;
+  R1 4112 | 515 | 53; F1 (gain 0.58 for both) 5231 | 940 | 118. The knee takes a quarter to a half and costs G17: no cure.
+- 08:17 to 08:20, C1: air.cirrus 1.0 in place of 0.85 on M4's numbers: 20.072 | 9.038 | 0.920 / 0.545. Bright pixels with red
+  over green by 2: M4 1.46 %, C1 0.52 % (approved 0.17 %, main 0.00 %); the mean of those left is 148 145 160. So two thirds of
+  the lilac count is the air's law on the cirrus; the rest is not traced, and the bank stays thin and dim.
+- 08:22 to 08:27, the eye's shade by colour (planet.ts eyeDark, deep.json storm.hue: a power for red, green and blue on the one
+  shade of both shaders; all 1 is the law before). HU1 (KN4 with dark 0.85, wall [0.35, 1.1], eye 0.36, ragged 1.5, hue 1.65,
+  1.1, 0.85) 20.718 | 9.034 | 0.908 / 0.533; HU2 (dark 0.8, wall [0.3, 1.2], eye 0.34, ragged 1.5, hue 2.0, 1.2, 0.8, collar[2]
+  0.2) 21.550 | 9.034 | 0.930 / 0.529. Both a flat disc with a brown rim (the wall's own light lies before the end's curve, where
+  a darker light keeps its red longest). The mean of the eye's middle (900 to 1100 by 470 to 510): approved 9.8 34.3 66.6; main
+  8.3 30.3 64.6; KN4 22.6 39.3 63.6; E2 (dark 0.85) 21.3 36.4 58.2; HU1 21.5 36.1 59.2. The shade does not reach the core.
+- 08:27 my look to /root (below, word for word).
+- 08:27 to 08:33 a chain of five controls died at once: I asked for a tier named preview. preview is a format (960 by 540), the
+  tiers are draft, review, final. Six minutes lost; /tmp/chain.sh takes FORMAT now.
+- 08:33 to 08:39, the controls at the preview format, draft tier (65 s a step with the start), on KN4's numbers. Eye's middle |
+  surround above (800 to 1300 by 340 to 380):
+  P0 (KN4 itself) 22.6 39.3 63.6 | 70.4 123.5 180.8: the preview format gives the 16x9 frame's means.
+  P1 (haze.low.depth 0) 1.5 8.4 22.7 | 49.3 109.8 177.0: THE CORE'S LIGHT IS THE LOW AIR'S.
+  P5 (haze.low.eye 1: the low air thinned over the eye by the eye's own shade) 3.6 12.5 28.3 | 70.4 123.5 180.8: nothing but
+  the eye moves, and it is a navy core with a drawn, ragged rim.
+  P3 (storm.dark 1.0) 22.8 36.8 57.6: no dark of the map reaches it under that air. P4 (the deck's own shadow off) 22.6 39.5 63.8.
+- 08:40 to 08:44, the eye set at the preview format: X2 (low.eye 0.75, dark 0.3, hue 3, 0.3, 0.1) 8.1 27.9 54.9; X3 (low.eye
+  0.7) 9.3 22.1 41.1; X4 (low.eye 1, dark 0.2) 4.8 19.4 41.6. X2 is the nearest to the approved's 9.8 34.3 66.6 and main's
+  8.3 30.3 64.6 and keeps the whirl inside the core. A pale dot stands at the eye's very middle in all of them, and in main.
+- 08:44 chain Y: Y1 (KN4 with X2's eye) at 4860, 16x9; then its dive 4674 to 4772 and its rise 4960 to 5026 at the preview format.
+
+## 26 Nov, 08:27 UTC: look to the Builder, the relief's knee, the eye and the lilac bank (word for word; attached `look-0827.jpg`, `hu1-crops.jpg`, `kn-zoom.jpg`)
+
+LOOK, 26 Nov 08:27 UTC, from neptune_builder. No name. Three pictures: look-0827.jpg (4860: approved, main 77a7d410, KN4, HU1), hu1-crops.jpg (the storm 1:1: approved, main, two eye trials), kn-zoom.jpg (the near ground at the lower left, 2 times, four states of the relief). One 16x9 draft frame at 4860 costs 110 to 118 s, 130 to 140 s with the start. The tree is merged with origin main 77a7d4108 (1d62d443a, then 1febb8d47: the plan gives skyShare { low: 0 } in the dive and in the rise); the same numbers on the merge are bit equal at 4860 to the frame before it (0 pixels differ).
+
+1. THE STATE I HOLD (KN4, not committed yet): the tone of the place's detail lies after the end's curve as a factor on the shown colour (far.after [1, 1, 1, 0]), storm.rings 0.7, arms.light 0.2, deck.gain 0.65, and the relief follows that gain only down to a wavelength of 0.015 and slopes alike below it. 4860, 16x9 draft, my proxy (plain | top quarter | G17 median / p25):
+main 22.986 | 12.395 | 0.934 / 0.549
+committed trial (e0d816ba8) 19.701 | 9.013 | 0.560 / 0.232
+M4 (no knee) 19.868 | 9.035 | 0.920 / 0.522
+KN4 (knee 0.015) 19.858 | 9.035 | 0.856 / 0.484
+KN1 (knee 0.03) 19.845 | 9.035 | 0.826 / 0.464
+R1 (the relief at gain 0.5 throughout) 19.838 | 9.030 | 0.579 / 0.246: RED. So the sharpness the gate reads is the relief's light, not the tone.
+Teal share of the mid tones: KN4 0.03 %, HU1 0.04 % (approved 0.01, main 0.00).
+
+2. THE THIN DARK LINES of the near ground (my red (b) of 07:51) are that same relief. Count of pixels of the lower left more than 5 levels under the median of their 9 by 9 surround: committed trial 494, M4 2857, KN4 2193, KN1 1593, R1 515. The knee takes a quarter to a half of them and costs G17 as shown; it does not cure them. STILL RED. Next control: the deck's own shadow off, to learn whether they are the shadow's edge or the slope's light.
+
+3. THE EYE, STILL RED. E1, E2, R2, R3 and HU1 (dark 0.8 to 0.85, a shorter wall, a smaller eye) all give a flat disc; in the overview the eye of KN4 (the committed storm block) keeps the whirl and reads nearest to the approved's form, but its core is grey navy: 23 39 64 as the mean of the middle (900 to 1100 by 470 to 510) where the approved has 10 34 67 and main 8 30 65. The shade does not reach it: storm.dark 0.85 in place of 0.6 gives 21 36 58 (E2), and HU1, which lays the shade by colour (a power for red, green and blue: storm.hue 1.65, 1.1, 0.85), gives 22 36 59. So what stands in the core is not the map's shade; I read it as a light laid over the eye, which is not proven. HU1 also draws a brown rim. HU1 is not my state. I am finding that light now with controls at the preview tier (25 s a frame): the low air off, the sheet off, the shade at 1.
+
+4. THE LILAC CLOUD BANK, STILL RED, one cause measured: with air.cirrus 1.0 in place of 0.85 (C1) the bright pixels with red over green by 2 fall from 1.46 % to 0.52 % (approved 0.17 %, main 0.00 %), plain 20.072, G17 0.920. The rest is not traced; the bank is also thin and dim beside the approved's and main's.
+
+5. NOT DONE YET, in your order of worth: the dive 4674 to 4772 and the rise 4960 to 5026 on the merged tree with the engine of eb1, every frame beside main. They come next after the eye's control chain, whatever the eye says, and by 10:30 at the latest; the storm's work ends there for the fourth cut. If the storm is not green and formed by 12:30 I name as MAIL 1430 point 4 says.
+
+## 26 Nov, 08:45 to 09:08 UTC: lab log (Y1 = KN4 with the eye's cure at 4860; its dive and its rise on the merged tree; the law committed)
+
+All at 4860, 16x9 draft, my proxy (plain | top quarter | G17 median / p25), STATED. The state Y1: far.after [1, 1, 1, 0], storm.rings 0.7,
+arms.light 0.2, deck.gain 0.65, deck.reliefKnee 0.015, haze.low.eye 0.75, storm.dark 0.3, storm.hue [3, 0.3, 0.1].
+
+- Y1: 19.935 | 9.035 | 0.856 / 0.502. Main 22.986 | 12.395 | 0.934 / 0.549. So G17 is not red and the plain number is under main's.
+- The eye's middle (900 to 1100 by 470 to 510), mean R G B: approved 9.8 34.3 66.6; main 8.3 30.3 64.6; KN4 22.6 39.3 63.6; Y1 8.1 28.0 54.9.
+  The band above it (380 to 420): approved 73.0 123.7 173.5; main 78.6 127.2 177.0; KN4 70.6 125.0 181.2; Y1 70.2 124.9 181.2.
+- What the eye's cure does not touch: lilac brights 1.45 % of the bright part (as KN4), teal 0.03 %, the thin dark lines 8604 | 2193 | 519
+  (as KN4). Cloud bank's brights (luminance over 200 below row 300): approved 2.49 % of the frame, main 1.65 %, S3 and Y1 0.78 %.
+- Box means R G B at 4860 (approved | main | S3 | Y1): lower left (100 to 700 by 800 to 1000) 3.4 16.2 34.1 | 2.8 13.9 35.1 | 5.0 19.8 46.4 |
+  5.2 20.1 46.7; left middle (0 to 400 by 560 to 760) 6.5 18.9 34.4 | 3.1 9.8 22.8 | 11.1 30.3 60.6 | 10.5 27.2 54.0; bottom middle (800 to
+  1300 by 900 to 1060) 7.2 27.1 52.4 | 7.0 20.2 44.6 | 9.5 25.2 53.0 | 8.9 23.9 51.0; right low (1400 to 1900 by 700 to 900) 50.7 93.5 138.2 |
+  61.3 104.2 154.7 | 60.0 95.2 144.3 | 58.5 92.7 140.6. So the lifted blue at the left is about 1.4 to 1.6 times the approved's blue.
+- By eye (y1-crops.jpg, look-0857.jpg): the core is navy now and ragged; the whirl KN4 had inside the dark is weaker; the dark halo round
+  the eye is wider than the approved's and no pale collar of cloud winds round it as in the approved and in main.
+
+- 08:46 to 09:03, chain Y at the preview format (960 by 540, draft tier; a frame of the hold 1 to 2 s, of the dive 7 to 24 s, of the
+  terrain 22 to 26 s): Y1d = 4674 to 4692 every frame and 4694 to 4772 every second; Y1r = 4960 to 4992 every second and 4994 to 5026
+  every frame. Every frame looked at, at 1 time and at 3 times the levels. The engine threw nothing.
+  - The dive's entry 4674 to 4692: no step. Mean difference of consecutive frames over the whole frame (new tool `/tmp/steps.py`):
+    2.59 in the hold (4674 to 4681), then 2.78, 3.21, 3.66, 4.20, 4.78, 5.27, 5.69, 6.08, 6.47, 6.85, 7.22 to 4692. At 3 times the
+    levels no border of a card and no cloud that the turn brings in; the sky at 4692 is the hold's own picture.
+  - The dive 4694 to 4772: the place's eye grows on the globe from about 4716 to 4718 as a small whirl below the map's great spot, the
+    cloud bank from about 4720 as a thin white line that is the bank by 4746. No step at the view's switch (the measure at every
+    second frame runs 10.9, 10.2, 9.5 across 4756 to 4762). The band of the Milky Way comes into the top right at 4742 to 4746 from
+    behind the limb with the turn (one bright star of it stands 80, 57, 44, 39 px under the crop's top at 4746, 4748, 4750, 4752).
+    RED as before: the map's cloud at the lower left stands as grey blurred patches and white blobs at 4722 to 4738.
+  - The rise 4960 to 5026: the same measure falls evenly from 7.15 (4994 to 4995) to 2.96 (5023 to 5024); 5024 to 5025 3.34 (the
+    engine's cut, as at 07:21), 5025 to 5026 3.73. The moon enters over the frame's right edge at 5003 to 5004. No warm cloud.
+    RED as before: white blobs and grey patches of the map's cloud at the lower left, 4976 to 4992.
+  - RED, seen at 3 times the levels and faintly at 1 time: at 4960 to 4972 the surface view's sky picture ends inside the frame in a
+    soft upright border. Medians of the sky (rows 5 to 60 of 540) by column block of 40 px at 4966, from x 380: 20/27/37 18/24/31
+    14/19/26 12/17/24 11/16/24 10/15/22 9/14/19 11/15/20 9/14/18 | 3/8/11 2/8/11 2/9/14 3/10/16 3/11/18 3/12/20. So the band's haze
+    (about 9 14 18) falls to the card's near floor (2 8 11) within 40 px and the sky beyond rises to the engine's floor (3 12 20).
+    The older main (MAINr, rendered 05:34 on the main before the third cut) has the same kind of border at 4960 to 4968: 9/13/22
+    7/11/19 | 3/7/10 1/5/7. Main 77a7d410 is not rendered there yet.
+- 08:57 my look to /root (below, word for word). 09:04 MAIL 1446 (below).
+- 09:06 the law committed as 7787416bc (deep.ts, planet.ts, set.ts, deep.json with the "how" sentences of far, deck, storm, haze).
+  New tools for the trials on this commit: `/tmp/ctl14.py PATH=VALUE...` (sets values of deep.json by text and checks by json that
+  only those changed), `/tmp/chain2.sh`.
+
+## 26 Nov, 08:57 UTC: look to the Builder, the eye's dark core and the dive on the merged tree (word for word; attached `look-0857.jpg`, `y1-crops.jpg`, `y1d-entry-1.jpg`, `y1d-entry-3.jpg`, `y1d-a-1.jpg`, `y1d-b-1.jpg`, `y1d-sky.jpg`)
+
+LOOK, 26 Nov 08:57 UTC, from neptune_builder. No name. Seven pictures: look-0857.jpg (4860: approved, main 77a7d410, KN4, Y1), y1-crops.jpg (the storm 1:1: approved, main, KN4, Y1), y1d-entry-1.jpg and y1d-entry-3.jpg (the dive's entry 4674 to 4692, every frame, at 1 time and 3 times the levels), y1d-a-1.jpg and y1d-b-1.jpg (the dive 4694 to 4756, every second frame), y1d-sky.jpg (the sky's corner 4730 to 4758 at 3 times the levels). One 16x9 draft frame at 4860 cost 110.9 s; at the preview format (960 by 540, draft tier) a frame of the hold costs 1 to 2 s, of the dive 7 to 24 s, of the terrain 22 to 26 s. All on the tree merged with origin main 77a7d4108, engine of eb1, plan with skyShare { low: 0 }.
+
+1. THE EYE HAS A DARK CORE NOW (Y1 = KN4 and three words). The light that stood in the core was the low air's: with haze.low off the middle of the eye falls from 22.6 39.3 63.6 to 1.5 8.4 22.7 (control at the preview format), and with the shade at 1 it does not move (22.8 36.8 57.6). The low air had no share of the eye's hole (haze.low.eye 0). Y1 gives it 0.75, storm.dark 0.3 and the shade by colour (storm.hue 3, 0.3, 0.1). 4860, 16x9 draft, my proxy (plain | top quarter | G17 median / p25):
+main 22.986 | 12.395 | 0.934 / 0.549
+KN4 19.858 | 9.035 | 0.856 / 0.484
+Y1 19.935 | 9.035 | 0.856 / 0.502
+Mean R G B of the eye's middle (900 to 1100 by 470 to 510): approved 9.8 34.3 66.6, main 8.3 30.3 64.6, KN4 22.6 39.3 63.6, Y1 8.1 28.0 54.9. Teal share of the mid tones 0.03 % (approved 0.01, main 0.00).
+STILL RED IN THE STORM, by my eye: the dark halo round the eye is wider than the approved's and no pale collar of cloud winds round it as in the approved and in main; the whirl inside the dark is weaker than KN4's; a pale dot stands at the very middle (main has it too).
+
+2. THE DIVE'S ENTRY 4674 to 4692, every frame, is read: no step. Mean difference of consecutive frames over the whole frame: 2.59 in the hold (4674 to 4681), then 2.78, 3.21, 3.66, 4.20, 4.78, 5.27, 5.69, 6.08, 6.47, 6.85, 7.22 to 4692, each larger than the last and none out of line. At 3 times the levels I see no border of a card and no cloud that the turn brings in; the sky at 4692 is the hold's own picture. Main's own entry on 77a7d410 is not rendered beside it yet (it needs a clean tree): owed.
+
+3. THE DIVE 4694 to 4756 on the merged tree: the place's eye grows on the globe from about 4716 to 4718 as a small whirl below the map's great spot, the cloud bank from about 4720 as a thin white line that becomes the bank by 4746; no plate, no dissolve, no step at the view's switch (the same measure runs 10.9, 10.2, 9.5 across 4756 to 4762). The band of the Milky Way comes into the corner at 4742 to 4746 from behind the limb as the view turns up (one bright star of it stands 80, 57, 44, 39 px under the crop's top at 4746, 4748, 4750, 4752: it moves with the turn and does not fade in). RED, as before: the map's cloud at the lower left stands as grey blurred patches and white blobs at 4722 to 4738; the globe is hazy there.
+
+4. STILL RED AT 4860 and not touched by the eye's cure: the thin dark lines of the near ground (count under by 5: main 1711, Y1 2193; under by 8: main 778, Y1 519); the lilac cloud bank (1.45 % of the brights with red over green; approved 0.17, main 0.00) and the bank thin and dim (brights 0.78 % of the frame; approved 2.49, main 1.65); the lifted blue at the left (left middle box 10.5 27.2 54.0; approved 6.5 18.9 34.4; main 3.1 9.8 22.8).
+
+5. NEXT: the rise 4960 to 5026 is rendering now (every frame from 4994); then I commit this law, render main's entry and main's rise end beside mine, and try the cloud bank's gain by its share of the light instead of by its cover (my reading of the lilac, not proven).
+
+## MAIL 1446 from the Builder (/root), 09:04 UTC, 26 Nov (read 09:05 by my clock; word for word)
+
+> MAIL 1446 from the Builder (/root), 09:04 UTC. To neptune_builder. Your look of 08:57 is read; go on as you plan. Three things for the state of 10:30.
+>
+> 1. MAIN'S OWN ROWS of the reader, so that you know what yours stand beside (draft tier, my machines, main's Neptune as it is on origin):
+>  - dive part 1: RED, pattern 1.3008 at 4721 (limit 0.45), level step 0.4864 at 4721, pop 1.0405 at 4718;
+>  - dive part 2: still on a machine;
+>  - rise part 1: RED, pattern 1.3434 at 4986 + 1/2 (27 frames over the limit, first 4974), pop 1.0816 at 4963, level step 0.1591 at 4979;
+>  - rise part 2: RED, pattern 1.4761 at 4993, pop 1.1301 at 5000, level step 0.0997 at 4987.
+>  These reds are the image that pops up entering and leaving, in Brandon's words. Your one field has to bring the pattern lines under 0.45 in all four parts, or as far under main's as it gets with the cause of the rest named. A take goes on only if no line is worse than main's row.
+>
+> 2. MY EYE ON Y1 AT 4860, beside the approved: the dark core is right and is the largest gain since KN4. What still reads wrong, in the order it strikes: (a) the cloud bank is a row of white lumps where the approved has one long torn filament with fine wisps along its lower side; (b) the dark halo round the eye is wide and round where the approved's storm is a flat long oval with thin spiral streaks; (c) the lilac of the bank; (d) the lifted blue at the left. Your own list has all four. Do (a) and (b) only where they do not move the dive and the rise that you show at 10:30.
+>
+> 3. THE PLANET VIEW ITSELF (4605): at final on main it matches the approved closely (plain 2.6398, low band 1.0179). Do not move it: the name must leave 4605 the same bytes as main's, or no worse by the same measure.
+>
+> Times stand: dive and rise beside main by 10:30, ruling 12:30, names by 13:30.
