@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T06:47:22.866Z",
+ "pushed": "2026-11-26T07:10:53.137Z",
  "head": "d65bfcbc0f77ca551a025d1066de534e296d0526",
- "note": "solved hold view (d356 7): first finals at 3465, the shadow's two angles, the globe's light being laid again through the solved view",
+ "note": "solved view at the hold, state one: one shadow direction, tone by latitude laid again at 3720 (plain 28.5167 against main 28.5419); drafts of dive, rise and arrival rendering",
  "looks": [
+  {
+   "time": "2026-11-26T07:10:51.950Z",
+   "file": "20261126071051950-note-globe3720-F.jpg",
+   "source": "../../../../tmp/v/rigid/SV/globe3720-F.jpg",
+   "kind": "note",
+   "label": "3720 final globe: approved, state one after the tone by latitude laid again, K, main"
+  },
+  {
+   "time": "2026-11-26T07:10:50.977Z",
+   "file": "20261126071050977-note-d3720-KE.jpg",
+   "source": "../../../../tmp/v/rigid/SV/d3720-KE.jpg",
+   "kind": "note",
+   "label": "3720 final: where the solved view moves K's bytes (stars, globe; ring the same)"
+  },
+  {
+   "time": "2026-11-26T07:10:50.069Z",
+   "file": "20261126071050069-note-near-D.jpg",
+   "source": "../../../../tmp/v/rigid/SV/near-D.jpg",
+   "kind": "note",
+   "label": "3465 final, state D beside the approved at 1 to 1"
+  },
+  {
+   "time": "2026-11-26T07:10:48.876Z",
+   "file": "20261126071048876-note-lowmap-D.jpg",
+   "source": "../../../../tmp/v/rigid/SV/lowmap-D.jpg",
+   "kind": "note",
+   "label": "3465 final, state D: low band 16 px, signed, against the approved (3.7568, limit 3.50)"
+  },
   {
    "time": "2026-11-26T06:47:22.252Z",
    "file": "20261126064722252-note-globe-ones.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/rigid/SV/lr-plain.jpg",
    "kind": "note",
    "label": "3465 lower right at 1 to 1: approved, K, solved view A (shadow as main), solved view B (one light)"
-  },
-  {
-   "time": "2026-11-26T06:17:13.995Z",
-   "file": "20261126061713995-note-shadow-lift.jpg",
-   "source": "../../../../tmp/v/rigid/VF/shadow-lift.jpg",
-   "kind": "note",
-   "label": "3465 lower right lifted: approved, main, K: the globe's shadow on the near ring"
-  },
-  {
-   "time": "2026-11-26T06:17:13.351Z",
-   "file": "20261126061713351-note-k4-all.jpg",
-   "source": "../../../../tmp/v/rigid/VF/k4-all.jpg",
-   "kind": "note",
-   "label": "3465 final, the approved's own shape as a rigid body (fourth kind), beside approved, main and K: not the ruled aim, shown for the record"
-  },
-  {
-   "time": "2026-11-26T05:50:03.537Z",
-   "file": "20261126055003537-note-one-r-b.jpg",
-   "source": "../../../../tmp/v/rigid/VF/one-r-b.jpg",
-   "kind": "note",
-   "label": "3465 right tip at 1 to 1: approved, the solved view laid from the approved, main real"
-  },
-  {
-   "time": "2026-11-26T05:50:02.884Z",
-   "file": "20261126055002884-note-one-r-a.jpg",
-   "source": "../../../../tmp/v/rigid/VF/one-r-a.jpg",
-   "kind": "note",
-   "label": "3465 right tip at 1 to 1: approved, K real, the third kind laid from the approved"
   }
  ]
 }
