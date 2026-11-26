@@ -1,9 +1,23 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T14:12:55.484Z",
+ "pushed": "2026-11-26T14:38:16.399Z",
  "head": "d13f80620a9cba3b45519b048fe2d95cbe14bd73",
- "note": "looking for why the reader reads the cure a little higher than main after 3858 and a half: the globe's lit left limb, the flows, not the picture",
+ "note": "the cause owed by mail 1498: the reader number on the lit ring tip is its own lag along the lanes, larger on the cure stills in the middle of the placements; the globe limb adds little",
  "looks": [
+  {
+   "time": "2026-11-26T14:38:11.058Z",
+   "file": "20261126143811058-note-tip_pair.jpg",
+   "source": "../../../../tmp/v/rigid/T1/t20/tip_pair.png",
+   "kind": "note",
+   "label": "the lit ring tip at the globe shadow, cure left, main right, 3858.5, 3862, 3866.5, full size crop"
+  },
+  {
+   "time": "2026-11-26T14:38:10.249Z",
+   "file": "20261126143810249-note-lag_chart.jpg",
+   "source": "../../../../tmp/v/rigid/T1/t20/lag_chart.png",
+   "kind": "note",
+   "label": "rise rows 3858.5 to 3862.5, cure against main over the placements: the reader number, its lag behind the ring plane true way along the lanes, the number against the lag"
+  },
   {
    "time": "2026-11-26T14:12:54.705Z",
    "file": "20261126141254705-note-pv_cure.jpg",
@@ -45,20 +59,6 @@
    "source": "../../../../tmp/v/rigid/T1/ringstack_0.png",
    "kind": "note",
    "label": "3850 to 3856 from the top, the cure left and main right, each frame redrawn in the ring's own coordinates round the same point (across: angle round the ring, light to the right; down: radius): what is fixed on the ring stands in one column"
-  },
-  {
-   "time": "2026-11-26T12:52:38.870Z",
-   "file": "20261126125238870-note-strip_2.jpg",
-   "source": "../../../../tmp/v/rigid/T1/strip_2.png",
-   "kind": "note",
-   "label": "the strip of the place: 3857 to 3862, the cure above and main below, same crops"
-  },
-  {
-   "time": "2026-11-26T12:52:38.331Z",
-   "file": "20261126125238331-note-strip_1.jpg",
-   "source": "../../../../tmp/v/rigid/T1/strip_1.png",
-   "kind": "note",
-   "label": "the strip of the place: 3856 to 3861, the cure above and main below, same crops"
   }
  ]
 }
