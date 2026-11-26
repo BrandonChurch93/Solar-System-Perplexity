@@ -1925,3 +1925,96 @@ Also in: the draft frames of e88f4f2b beside 84f2d1e1 (jx1-02): only 3044, 3048,
 - /tmp/replay/table.py mislabelled a row that is green on the name and red on the build as "green on both"; fixed at 15:00 (it now prints "green on name only, red on build" for row 3258 of B).
 - Chain 38 (/tmp/chain38.sh, log /tmp/chain38.log, from 14:57:13) on build C: twelve draft frames (set c2) with cmp against the name's, the reader slice `--frames 6498-6517`, copies to /tmp/cov-c-6498.{md,json}, /tmp/stills-c, the seven placements into /tmp/replay/shift-c-6498.log. No edit under src/stops/jupiter and no `git checkout HEAD` before "CHAIN 38 done".
 - Origin main is 6b6136fc at 14:58 ("Fourth cut: Saturn's rigid rings, Jupiter's ground from code, ..."). Against the local head it differs under src/core, src/director, tools/smooth/pose.ts and others (83 files). To merge after chain 38 ends, then cues, shots, build, audit, units, G15.
+
+### 15:55 UTC, build C read on the rows (commit ca38ff89, merged with main as 4fe62ed9, local only); the seven placements; where its higher rows sit; MAIL 1510
+
+- Build C is committed locally as ca38ff8929dbb8b938063fa2c8c4b7d974933ce2 on c99efb57 (stop hash 7f02c3953126ef0a). Origin main 686da341d69d21cb5a110271573c4c0ae39360a9 merged at 15:33 as 4fe62ed99fcc4d5ee9fb559561766f43b23a02de; against main the merged tree differs in NOTES.md, body.json, relief.ts, set.ts only (`git diff --stat origin/main HEAD`: 4 files). Not pushed: the branch is not released (MAIL 1499).
+- Chain 38 (/tmp/chain38.log), build C at draft against the name's frames, the same bytes at all twelve: 2895, 2997, 3048, 3060, 3100, 3150, 3200, 3239, 3240, 3244, 3246, 3296.
+- Build C's rows, reader slice `--kind rise --only pictures --frames 6498-6517` (/tmp/cov-c-6498.md): "VERDICT: red. 1 number over the limit or not measured." "Largest change of the pattern alone: 1.01 from frame 3253 to 8 film frames later, most at pixel 1935, 570". The name's largest on the same slice is 1.399 (row 3250).
+- Build C's seven placements (/tmp/replay/shift-c-6498.log by /tmp/replay/table.py):
+  - | row | as rendered | 0 right 1 down | 1 right 0 down | 0 right 2 down | 1 right 1 down | 0 right -1 down | 2 right 0 down | highest | three highest |
+  - |---|---|---|---|---|---|---|---|---|---|
+  - | 3249 | 0.456 | 0.524 | 0.505 | 0.562 | 0.574 | 0.571 | 0.403 | 0.574 | 0.574, 0.571, 0.562 |
+  - | 3249 + 1/2 | 0.570 | 0.652 | 0.743 | 0.549 | 0.582 | 0.545 | 0.598 | 0.743 | 0.743, 0.652, 0.598 |
+  - | 3250 | 0.788 | 0.769 | 0.717 | 0.540 | 0.768 | 0.768 | 0.666 | 0.788 | 0.788, 0.769, 0.768 |
+  - | 3250 + 1/2 | 0.839 | 0.710 | 0.723 | 0.650 | 0.763 | 0.780 | 0.920 | 0.920 | 0.920, 0.839, 0.780 |
+  - | 3251 | 0.694 | 0.787 | 0.902 | 0.621 | 0.777 | 0.875 | 0.788 | 0.902 | 0.902, 0.875, 0.788 |
+  - | 3251 + 1/2 | 0.894 | 0.829 | 0.840 | 0.950 | 0.868 | 0.823 | 0.792 | 0.950 | 0.950, 0.894, 0.868 |
+  - | 3252 | 0.787 | 1.011 | 0.905 | 0.842 | 0.931 | 0.921 | 0.896 | 1.011 | 1.011, 0.931, 0.921 |
+  - | 3252 + 1/2 | 0.966 | 0.914 | 1.031 | 0.965 | 0.951 | 1.038 | 0.918 | 1.038 | 1.038, 1.031, 0.966 |
+  - | 3253 | 1.013 | 0.884 | 0.868 | 1.078 | 1.152 | 0.836 | 1.152 | 1.152 | 1.152, 1.152, 1.078 |
+  - | 3253 + 1/2 | 0.938 | 0.526 | 0.753 | 0.632 | 0.760 | 0.931 | 0.731 | 0.938 | 0.938, 0.931, 0.760 |
+  - | 3254 | 0.544 | 0.714 | 0.449 | 0.671 | 0.623 | 0.400 | 0.534 | 0.714 | 0.714, 0.671, 0.623 |
+  - | 3254 + 1/2 | 0.400 | 0.690 | 0.386 | 0.438 | 0.600 | 0.382 | 0.359 | 0.690 | 0.690, 0.600, 0.438 |
+  - | 3255 | 0.506 | 0.593 | 0.538 | 0.639 | 0.508 | 0.633 | 0.416 | 0.639 | 0.639, 0.633, 0.593 |
+  - | 3255 + 1/2 | 0.361 | 0.396 | 0.639 | 0.380 | 0.378 | 0.379 | 0.356 | 0.639 | 0.639, 0.396, 0.380 |
+  - | 3256 | 0.443 | 0.667 | 0.640 | 0.441 | 0.436 | 0.744 | 0.465 | 0.744 | 0.744, 0.667, 0.640 |
+  - | 3256 + 1/2 | 0.730 | 0.639 | 0.888 | 0.796 | 1.112 | 0.771 | 0.952 | 1.112 | 1.112, 0.952, 0.888 |
+  - | 3257 | 0.807 | 1.056 | 0.701 | 0.838 | 0.795 | 0.743 | 0.770 | 1.056 | 1.056, 0.838, 0.807 |
+  - | 3257 + 1/2 | 0.849 | 0.670 | 0.502 | 0.715 | 0.936 | 0.971 | 0.963 | 0.971 | 0.971, 0.963, 0.936 |
+  - | 3258 | 0.855 | 0.355 | 0.587 | 0.741 | 0.386 | 0.372 | 0.354 | 0.855 | 0.855, 0.741, 0.587 |
+  - | 3258 + 1/2 | 0.496 | 0.490 | 0.439 | 0.430 | 0.412 | 0.534 | 0.506 | 0.534 | 0.534, 0.506, 0.496 |
+- Per placement, the largest of the rows, the name: 1.399, 1.218, 1.365, 1.362, 1.255, 1.310, 1.155, so worst 1.399, middle 1.310, least 1.155; mean of all 140 readings 0.903, over 0.45: 135.
+- Per placement, the largest of the rows, build C: 1.013, 1.056, 1.031, 1.078, 1.152, 1.038, 1.152, so worst 1.152, middle 1.056, least 1.013; mean of all 140 readings 0.692, over 0.45: 115.
+- Row by row as worst, middle, least of the seven (/tmp/replay/wml.py, /tmp/replay/wml-c.txt):
+  - | row | name worst | name middle | name least | build worst | build middle | build least | build against the name: worst, middle, least |
+  - |---|---|---|---|---|---|---|---|
+  - | 3249 | 1.094 | 1.023 | 0.570 | 0.574 | 0.524 | 0.403 | lower, lower, lower |
+  - | 3249 + 1/2 | 1.045 | 0.881 | 0.738 | 0.743 | 0.582 | 0.545 | lower, lower, lower |
+  - | 3250 | 1.399 | 0.817 | 0.636 | 0.788 | 0.768 | 0.540 | lower, lower, lower |
+  - | 3250 + 1/2 | 1.143 | 0.944 | 0.877 | 0.920 | 0.763 | 0.650 | lower, lower, lower |
+  - | 3251 | 1.165 | 1.064 | 1.020 | 0.902 | 0.787 | 0.621 | lower, lower, lower |
+  - | 3251 + 1/2 | 1.255 | 1.124 | 0.996 | 0.950 | 0.840 | 0.792 | lower, lower, lower |
+  - | 3252 | 1.139 | 1.058 | 1.011 | 1.011 | 0.905 | 0.787 | lower, lower, lower |
+  - | 3252 + 1/2 | 1.365 | 1.107 | 1.021 | 1.038 | 0.965 | 0.914 | lower, lower, lower |
+  - | 3253 | 1.362 | 1.125 | 1.019 | 1.152 | 1.013 | 0.836 | lower, lower, lower |
+  - | 3253 + 1/2 | 1.218 | 1.085 | 0.902 | 0.938 | 0.753 | 0.526 | lower, lower, lower |
+  - | 3254 | 1.310 | 0.963 | 0.917 | 0.714 | 0.544 | 0.400 | lower, lower, lower |
+  - | 3254 + 1/2 | 1.101 | 1.062 | 1.018 | 0.690 | 0.400 | 0.359 | lower, lower, lower |
+  - | 3255 | 1.006 | 0.839 | 0.808 | 0.639 | 0.538 | 0.416 | lower, lower, lower |
+  - | 3255 + 1/2 | 0.950 | 0.713 | 0.668 | 0.639 | 0.379 | 0.356 | lower, lower, lower |
+  - | 3256 | 0.776 | 0.635 | 0.575 | 0.744 | 0.465 | 0.436 | lower, lower, lower |
+  - | 3256 + 1/2 | 0.973 | 0.829 | 0.675 | 1.112 | 0.796 | 0.639 | higher, lower, lower |
+  - | 3257 | 0.798 | 0.735 | 0.696 | 1.056 | 0.795 | 0.701 | higher, higher, higher |
+  - | 3257 + 1/2 | 1.132 | 0.835 | 0.740 | 0.971 | 0.849 | 0.502 | lower, higher, lower |
+  - | 3258 | 0.707 | 0.426 | 0.399 | 0.855 | 0.386 | 0.354 | higher, lower, lower |
+  - | 3258 + 1/2 | 0.523 | 0.492 | 0.432 | 0.534 | 0.490 | 0.412 | higher, lower, lower |
+  - of 60 comparisons: build lower 53, higher 7, same 0
+  - rows where the build is higher on all three: 3257
+  - rows where the build is higher on any: 3256 + 1/2 (worst), 3257 (worst middle least), 3257 + 1/2 (middle), 3258 (worst), 3258 + 1/2 (worst)
+  - rows where the build is lower on all three: 3249, 3249 + 1/2, 3250, 3250 + 1/2, 3251, 3251 + 1/2, 3252, 3252 + 1/2, 3253, 3253 + 1/2, 3254, 3254 + 1/2, 3255, 3255 + 1/2, 3256
+- Where the rows that are higher in build C sit, by the reader's own places (/tmp/replay/shift-name-6498.log, /tmp/replay/shift-c-6498.log; a still is 1920 wide): on rows 3256 + 1/2, 3257 and 3257 + 1/2 the place has x from 2063 to 2165 in all seven placements of both trees. Row 3258, the name: 0.402 at [1923, 543], 0.707 at [2090, 600], 0.463 at [2089, 612], 0.473 at [1905, 535], 0.426 at [280, 1076], 0.399 at [276, 1076], 0.399 at [284, 1076]; build C: 0.855 at [2128, 622], 0.355 at [276, 1076], 0.587 at [2006, 576], 0.741 at [2061, 594], 0.386 at [1747, 447], 0.372 at [276, 1076], 0.354 at [280, 1076]. So on row 3258 every reading over 0.45 of either tree has x of 1905 or more, and the four placements of build C whose place is inside the frame read 0.354 to 0.386, under the name's three (0.399 to 0.426). Row 3258 + 1/2: both trees at the bottom edge, y 1076, x 368 to 432.
+- Why x passes 1920 (read in tools/img/smooth.py, not changed): the reading reports the settled place in the earlier frame; `finer` samples the earlier frame with BORDER_REPLICATE there; the inside test is made on the plain carry only. My replay with a spy on `readings` (/tmp/replay/map4.py, log /tmp/replay/map4-name-c.log), back reading and onward reading per row, the row being the larger of the two; "inside the frame" is my own figure, the p99 of the judged pixels whose settled place is inside the earlier frame:
+  - | row | name back | name top 1 percent off the frame | name back inside the frame | name onward | build back | build top 1 percent off the frame | build back inside the frame | build onward |
+  - |---|---|---|---|---|---|---|---|---|
+  - | 3249 | 1.094 | 0 of 53 | 1.094 | 0.382 | 0.456 | 77 of 77 | 0.374 | 0.263 |
+  - | 3249 + 1/2 | 0.775 | 0 of 55 | 0.775 | 0.483 | 0.570 | 78 of 79 | 0.453 | 0.284 |
+  - | 3250 | 1.399 | 0 of 56 | 1.399 | 0.550 | 0.788 | 80 of 80 | 0.482 | 0.443 |
+  - | 3250 + 1/2 | 0.915 | 0 of 57 | 0.915 | 0.519 | 0.839 | 70 of 79 | 0.592 | 0.313 |
+  - | 3251 | 1.111 | 0 of 56 | 1.112 | 0.504 | 0.694 | 78 of 79 | 0.490 | 0.297 |
+  - | 3251 + 1/2 | 1.188 | 0 of 53 | 1.189 | 0.492 | 0.894 | 69 of 75 | 0.689 | 0.344 |
+  - | 3252 | 1.139 | 0 of 51 | 1.139 | 0.500 | 0.787 | 67 of 71 | 0.644 | 0.320 |
+  - | 3252 + 1/2 | 1.083 | 0 of 53 | 1.083 | 0.530 | 0.966 | 68 of 68 | 0.611 | 0.329 |
+  - | 3253 | 1.125 | 0 of 55 | 1.130 | 0.534 | 1.013 | 32 of 68 | 0.907 | 0.302 |
+  - | 3253 + 1/2 | 1.094 | 15 of 55 | 1.074 | 0.568 | 0.938 | 0 of 67 | 0.939 | 0.278 |
+  - | 3254 | 0.917 | 1 of 60 | 0.918 | 0.622 | 0.544 | 0 of 70 | 0.544 | 0.288 |
+  - | 3254 + 1/2 | 1.079 | 0 of 66 | 1.080 | 0.604 | 0.400 | 0 of 73 | 0.400 | 0.266 |
+  - | 3255 | 0.837 | 0 of 68 | 0.839 | 0.715 | 0.506 | 49 of 73 | 0.449 | 0.267 |
+  - | 3255 + 1/2 | 0.689 | 0 of 69 | 0.690 | 0.713 | 0.361 | 59 of 71 | 0.333 | 0.266 |
+  - | 3256 | 0.520 | 14 of 68 | 0.518 | 0.601 | 0.443 | 67 of 67 | 0.308 | 0.280 |
+  - | 3256 + 1/2 | 0.939 | 64 of 64 | 0.578 | 0.602 | 0.730 | 60 of 60 | 0.518 | 0.476 |
+  - | 3257 | 0.735 | 57 of 57 | 0.454 | 0.661 | 0.807 | 51 of 51 | 0.560 | 0.480 |
+  - | 3257 + 1/2 | 0.808 | 51 of 51 | 0.507 | 0.468 | 0.849 | 45 of 45 | 0.518 | 0.407 |
+  - | 3258 | 0.402 | 32 of 45 | 0.374 | 0.400 | 0.855 | 40 of 40 | 0.634 | 0.352 |
+  - | 3258 + 1/2 | 0.452 | 0 of 40 | 0.452 | 0.493 | 0.490 | 0 of 38 | 0.490 | 0.496 |
+- From that table: the onward reading (86905 to 110332 judged pixels of the 129600 of a reader frame) is over 0.45 on 18 of the name's 20 rows, largest 0.715, and on 3 of build C's, largest 0.496; build C is lower on every row but 3258 + 1/2 (0.496 against 0.493). The back reading (3995 to 6887 judged pixels on the name, the far edge sliver) sets most rows. On the name's rows 3249 to 3256 its top lies inside the frame (at most 15 of 55 off it; the picture leaving the far strip, a fault of the picture); on build C's rows 3249 to 3252 + 1/2 and 3255 to 3258 most or all of its top lies off the earlier frame (3253: 32 of 68; 3253 + 1/2 to 3254 + 1/2 and 3258 + 1/2: none). With my inside figure build C is higher than the name on 3257 + 1/2 (0.518 against 0.507), 3258 (0.634 against 0.400, the larger of onward and back inside) and 3258 + 1/2 (0.496 against 0.493). The highest place inside the frame on row 3258 of build C is at the earlier frame's (1903, 532), 17 px from its right edge (/tmp/replay/map5.py, picture /tmp/map5-c.jpg in looks 15:46); round it the two trees differ by at most 7 levels at 3258 (box x 1783 to 1920, y 412 to 652) and by at most 1 level at 3266 (box x 1492 to 1732, y 180 to 420).
+- Not established: whether the plain carry or the settle is the right place for those pixels. By eye the far right of 3265 (dark brown band, speckled cream field) is not in frame 3257. /tmp/replay/geo.py (my pose reckoning) is not evidence: it fails on the storm. The look place-3257.jpg of 15:24 had a wrong label (its left crops are not the counterpart of its right crops); corrected in the looks of 15:46.
+- The level by fixed boxes (/tmp/level.py, mean luma in display values). Far right box x 1500 to 1920, y 330 to 560, name then build C: 3247 19.94, 19.94; 3248 19.67, 21.27; 3250 20.21, 27.82; 3252 24.18, 40.28; 3254 38.94, 61.79; 3256 72.87, 91.68; 3258 117.45, 125.91; 3260 151.61, 153.71; 3262 176.47, 176.66. Largest step of one frame: the name +22.85 (to 3257), build C +17.44 (to 3257). Far strip box x 1000 to 1720, y 230 to 470: 3250 61.09, 64.11; 3254 73.21, 88.16; 3258 109.92, 126.14; 3262 145.88, 153.69; largest step the name +11.45, build C +10.52 (both to 3257). Storm and near field box x 200 to 1000, y 300 to 800: within 0.23 of the name at every frame of 3244 to 3262. Whole frame: within 1.20 (at 3255).
+- Build C against the name, pixels of the stills: 3257 719856 differ, 250878 by more than 8 levels, largest 183 (an arc, the far band of the picture beyond the storm); 3258 705658, 242742, largest 164; 3265 315571, 91464, largest 126, inside x 512 to 1356, y 237 to 592 (round the storm); 3266 273138, 90505, largest 130, inside x 552 to 1322, y 261 to 590. The right edge column x 1919 has no pixel over 8 levels at any of the four.
+- By eye (looks 15:46: pairs at 3250 and 3258 and at 3252 and 3256, the far band at native pixels at 3258 and 3266, build C's frames 3252 to 3266 by twos): the far strip of build C brightens from 3248 on instead of holding dark and then swapping; at 3258 the rim towers beyond the storm are lit cream as both trees show them at 3266, where the name has them dark teal at 3258; the limb line is the name's; no band, speck or seam seen on build C at 3252 to 3266. Not looked at by eye in motion yet.
+- MAIL 1510 (15:16, the Builder): every name holds the lines of `npx tsx tools/smooth.ts --stop STOP --only path` on the named sha; green, or the red lines word for word; a red path line that main lacks holds the name. On 4fe62ed9: exit 0, "smooth jupiter: green. out/work/smooth/jupiter.md" (/tmp/path39.log).
+- Chains 39 and 39b on the merged tree 4fe62ed9 (/tmp/chain39.log, /tmp/chain39b.log): `npm run cues` exit 0, `npm run shots` exit 0, `git status --short cut/` 0 lines; `npm run build` exit 0; `python3 tools/shaderaudit.py` exit 0, 49 lines, 10 in src/stops/jupiter; draft frames 3150, 3239, 3246, 3296 the same bytes as before the merge (set c2, which equals the name's); stills k 6500 and k 6516 at rate 2 the same bytes as the slice's stills; `npx vitest run` exit 0, 95 files and 1106 tests passed; G15 exit 0, "PASS G15  at most 2 sets per frame; finished stops: jupiter/web 288 MB, jupiter/full 1206 MB". Stop hash 7f02c3953126ef0a as before the merge, engine hash e1ac861ce101f79f (was d3654c5e8dff3fa6).
+- A trap met in chain 39: `npm run build` copies public/ into dist/ without the hard links, so the disk fell to 2.4 GB and the frames tool refused ("refusing to start: 2.4 GB free, need 3"). `linkDist` of tools/lib/common.ts called by hand (/tmp/link.ts): "linked 459 free before 2.33 GB, after 3.72 GB". The frames were then drawn in chain 39b. Scratch deleted: /tmp/stills-b and the frame sets b1, a1s, a1, v0, ph, t76, sun30.
+- Not run on the build: the whole gate; reader rows after 3258 + 1/2; the dive slice (the dive side has share 0 and frames 2997, 3048, 3060 keep the name's bytes); final tier.
+- Chain 40 (/tmp/chain40.log) on 4fe62ed9, draft frames against the name's (set f2, stop hash c621a68ce25d7a8d): the same bytes at 3038, 3051, 3284, 3286, 3288, 3290, 3294. So the build changes pictures only between the ceiling (frame 3247.422) and some frame before 3284.
+- Chain 41 (/tmp/chain41.sh, log /tmp/chain41.log, from 15:55:07): the reader slice `--frames 6518-6537` (rows 3259 to 3268 + 1/2) on the merged tree; copies to /tmp/cov-m-6518.{md,json}, /tmp/stills-m; its stills k 6502 to 6534 compared with the stills of before the merge.
