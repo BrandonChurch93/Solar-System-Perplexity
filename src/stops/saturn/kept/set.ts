@@ -4,7 +4,7 @@ import { bufferFrame } from '../../../core/frame'
 import type { SetFactory } from '../../../core/types'
 import { smooth } from '../../../director/rig'
 import { Globe, Shell } from './globe'
-import { duskAt, dustAt, dustShadeAt, fineShare, gradeShare, hazeDayAt, latToneAt, leanAt, zoneShare } from '../grade'
+import { duskAt, dustAt, gradeShare, hazeDayAt, zoneShare } from '../grade'
 import { Ice } from './ice'
 import * as look from './look'
 import { plan } from './plan'
@@ -213,7 +213,7 @@ export const createKept: SetFactory = async (ctx) => {
       gu.uEdgePx!.value = THREE.MathUtils.lerp(look.globe.edgePx, look.skimLimb[0], skimW.value) * foot
       gu.uEdgeLin!.value = look.skimLimb[1] * skimW.value
       gu.uLimbW!.value = poseW.value * look.limbShow
-      ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - close.value) * fineShare(camL.y))
+      ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - close.value))
       gu.uNightBlur!.value = (look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * close.value) * foot
       su.uLimbW!.value = gu.uLimbW!.value
       gu.uInflate!.value = gu.uLimbW!.value > 0 ? look.globe.limbInflate : 1
@@ -227,12 +227,9 @@ export const createKept: SetFactory = async (ctx) => {
       gu.uWeight!.value = state.weight
       gu.uVignette!.value = shot.post.vignette
       gu.uAspect!.value = aspect
-      duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2, gu.uDuskTint!.value as THREE.Vector4)
-      leanAt(camL.y, gu.uLean!.value as THREE.Vector4)
-      dustAt(gu.uDust!.value as THREE.Vector4)
-      dustShadeAt(gu.uDustShade!.value as THREE.Vector4)
-      latToneAt(camL.y, gu.uLatFit!.value as THREE.Vector4)
-      dustAt(su.uDust!.value as THREE.Vector4)
+      duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2)
+      dustAt(camL.y, gu.uDust!.value as THREE.Vector4)
+      dustAt(camL.y, su.uDust!.value as THREE.Vector4)
       hazeDayAt(camL.y, hazeDayFar, su.uHazeEdge!.value as THREE.Vector2)
       ;(su.uCam!.value as THREE.Vector3).copy(camS)
       ;(su.uSunW!.value as THREE.Vector3).copy(sunS)

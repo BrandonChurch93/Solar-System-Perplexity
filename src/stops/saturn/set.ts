@@ -1,22 +1,21 @@
 import * as THREE from 'three'
-import { sampleOrder } from '../../core/sampler'
 import type { SetFactory } from '../../core/types'
 import { isRaw } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { nameSkyLook } from '../../space/sky'
 import fit from './fit.json'
 import { createKept } from './kept/set'
-import { createModel, thinOnly } from './model'
+import { createModel } from './model'
 import { plan } from './plan'
 import skimJson from './skim.json'
 import { Veil } from './veil'
 
-// One set of two scenes; a take draws one of them (and, of the model, the thin sheet inside the inner rim in
-// every take, below). The approach and the hold are the set of the kept build, so the hold is the kept picture.
-// The skim, the rise and the way out are the ring model (model.ts). In the dive the picture goes from the one
-// to the other by the height of the lens over the ring plane and by nothing else: between the two heights of
-// skim.json handover.kept.heights every take of a frame draws one of the two scenes from the same lens, and the
-// share of the model's takes rises from 0 at the upper to 1 at the lower. The kept set is not drawn after the dive.
+// One set of two scenes that are never drawn together. The approach and the hold are the set of the kept build,
+// so the hold is the kept picture. The skim, the rise and the way out are the ring model (model.ts). In the dive
+// the picture goes from the one to the other by the height of the lens over the ring plane and by nothing else:
+// between the two heights of skim.json handover.kept.heights every take of a frame draws one of the two whole
+// scenes from the same lens, and the share of the model's takes rises from 0 at the upper height to 1 at the
+// lower. The kept set is not drawn again after the dive.
 //
 // The air of the stop (veil.ts: the glow of the dust over the ring plane under the stars) belongs to neither
 // scene: it is drawn under whichever of the two is drawn, from the same lens, and how much of it shows follows
@@ -62,24 +61,15 @@ export const createSet: SetFactory = async (ctx) => {
       const share = state.time < dive.start ? 0 : state.time >= dive.end ? 1 : 1 - smooth((Math.log(height) - logLo) / (logHi - logLo))
       const count = Math.max(view.samples, 1)
       const stride = window.strides.find((s) => gcd(s, count) === 1) ?? 1
-      const order = view.weights ? sampleOrder(view.weights, view.sample, stride) : ((view.sample * stride) % count + 0.5) / count
+      const order = ((view.sample * stride) % count + 0.5) / count
       const alone: string = state.time >= plan.seg.hold.end ? window.alone : ''
       const drawn = (alone === 'model' || (alone !== 'kept' && order < share)) ? model : kept
       const idle = drawn === model ? kept : model
       drawn.world.position.copy(world.position)
       drawn.world.quaternion.copy(world.quaternion)
-      // The thin sheet of dust and ice inside the inner rim is one body at every height of the lens (skim.json
-      // inner): in a take of the kept build's set the model draws it from the same lens, and nothing else of
-      // itself (model.ts thinOnly), so that sheet is in every take of the stop by one law of cover
-      thinOnly.value = drawn === kept
-      if (thinOnly.value) {
-        idle.world.position.copy(world.position)
-        idle.world.quaternion.copy(world.quaternion)
-      }
       world.position.set(0, 0, 0)
       world.quaternion.identity()
-      if (thinOnly.value) idle.update(state, shot, view)
-      else idle.world.visible = false
+      idle.world.visible = false
       drawn.update(state, shot, view)
       // the lens and the Sun in the frame of the rings, as the scene that was just drawn stands
       if (inOrbit) centre.set(0, 0, 0)

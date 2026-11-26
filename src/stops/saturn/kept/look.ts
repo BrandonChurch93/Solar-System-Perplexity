@@ -14,10 +14,7 @@ export const globe: GlobeLook = {
   closeCurve: closeFitted.curve.map((c, i) => c.map((v, k) => v * closeGlobe.curveGain[i]![k]!)),
   limb: [0, 0.3],
   ringShadow: 0.94,
-  // the rings' shadow on the globe is the same at every pose of the lens: the Sun stands 15.8 degrees over the
-  // ring plane, and what the rings take of its light falls on the globe south of the plane, in the hold as
-  // in the skim (1: nothing of it is taken back at the pose of the hold)
-  ringShadowHero: 1,
+  ringShadowHero: 0.25,
   ringSoft: [0.003, 0.012],
   ringSlant: 1.7,
   nightFloor: 0.012,
@@ -93,9 +90,8 @@ export const rings: RingLook = {
   shadeTint: [0.97, 1, 0.94],
   shadeGrey: [0.3, 0.85],
   innerDark: [0.7, 1.45, 1.62, 0.5],
-  shadeSolid: [1, 0.116],
-  shadeRamp: [sheetLook.shadow.solid[0]!, sheetLook.shadow.solid[1]!, sheetLook.starCover],
-  graze: [sheetLook.graze[0]!, sheetLook.graze[1]!, globe.edgePx],
+  shadeSolid: [0.995, 0.116],
+  shadeRamp: [sheetLook.shadow.solid[0]!, sheetLook.shadow.solid[1]!],
   sparkle: 1.6,
   sparkleTint: [1, 0.9, 0.8],
   sparkleCell: 0.005,

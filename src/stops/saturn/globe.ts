@@ -4,7 +4,6 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import { EQUIRECT_GLSL } from '../../space/sky'
 import { RING_FIELD_GLSL } from './field'
-import { DUST_AIR_GLSL, DUST_SHADE_GLSL, LAT_TONE_GLSL, latToneUniforms } from './grade'
 import skim from './skim.json'
 
 export interface GlobeLook {
@@ -111,13 +110,10 @@ uniform float uBandWide;
 uniform vec3 uBandZone;
 uniform vec3 uBandRelief;
 uniform vec3 uTerm;
-uniform vec4 uLean;
 uniform sampler2D uTable;
 uniform float uNightFloor;
 uniform vec4 uDusk;
 uniform vec2 uDuskGrey;
-uniform vec4 uDuskTint;
-uniform vec2 uDuskSpan;
 uniform vec4 uDust;
 uniform vec3 uDustInk;
 uniform int uProbe;
@@ -140,9 +136,6 @@ ${HAZE_GLSL}
 ${RING_FIELD_GLSL}
 ${RING_SHADOW_GLSL}
 ${LIMB_GLSL}
-${DUST_SHADE_GLSL}
-${DUST_AIR_GLSL}
-${LAT_TONE_GLSL}
 vec3 shotLight(sampler2D tex, mat4 m, vec3 cam, float w, vec3 P, vec3 n) {
   vec4 c = m * vec4(P, 1.0);
   vec2 uv = c.xy / max(c.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
@@ -217,8 +210,6 @@ void main() {
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
   float ndl = dot(nL, uLightL) - uTerm.x * smoothstep(uTerm.y, uTerm.z, p.y);
-  // the lean of the boundary of day and night, by the one share of the globe's light (grade.ts leanAt)
-  for (int k = 0; k < (uLean.y > 0.0 ? 1 : 0); k++) ndl += uLean.x - uLean.y * smoothstep(uLean.z, uLean.w, p.y);
   float lat = asin(clamp(p.y, -1.0, 1.0));
   // the map is rigid on the globe and turns with it as one body; the slide along the bands by latitude (the
   // winds) moves the fine streaks from functions only, never the map
@@ -227,9 +218,6 @@ void main() {
   vec3 albedo = inverseFilmic(equirectGrad(uMap, d, uGrad).rgb);
   vec3 soft = inverseFilmic(equirectGrad(uMap, d, uNightBlur).rgb);
   float texels = diagTexelsDir(p, uMapWidth);
-  // the calming of the small features of the map: the map mixed with itself averaged over uLatFit.w of its
-  // texels, by the one share of the globe's light by the height of the lens (grade.ts bodyShare, latToneAt)
-  for (int k = 0; k < (uLatFit.z > 0.0 ? 1 : 0); k++) albedo = mix(albedo, inverseFilmic(equirectGrad(uMap, d, uLatFit.w / max(texels, 1e-3)).rgb), uLatFit.z);
   float mapTexels = texels;
   // near the lens the bands get their fine structure from functions: it comes with the nearness of the surface
   // to the lens, and where it is whole the texels view counts its finest cells, as the ring sheet does
@@ -254,12 +242,9 @@ void main() {
 
   vec3 P = vec3(p.x, p.y * uPolar, p.z);
   float shadow = 1.0 - uRingShadow * ringShadowAt(P, uSunL, uRingSoft, uGrad);
-  // the thin sheet inside the inner rim shades the globe behind the plane by its own depth, at every height
-  // of the lens (grade.ts dustShadeAt)
-  for (int k = 0; k < (max(uDustShade.x, uDustShade.y) > 0.0 ? 1 : 0); k++) shadow *= dustShade(P, uSunL);
   vec3 light = curveAt(ndl) * tableAt(uTable, ndl, lat);
   vec3 night = min(light, vec3(uNightFloor));
-  // the twilight zone is cut down by the dusk, by the one share of the globe's light (grade.ts duskAt)
+  // near the sheet the terminator is narrower: the twilight zone is cut down by the dusk (0 in the hold)
   vec3 lit = (light - night) * shadow * mix(1.0, pow(max(mu, 1e-3), uLimb.y), uLimb.x) * mix(1.0, smoothstep(uDusk.x, uDusk.y, ndl), uDusk.z) + night * uDusk.w;
   for (int k = 0; k < (uFine.w > 0.0 ? 1 : 0); k++) {
     // the neighbourhood the small features of the map are set off against keeps its size on the globe when the
@@ -272,13 +257,8 @@ void main() {
     albedo *= mix(1.0, min(pow(clamp(dot(albedo, lw) / lm, 0.5, 2.0), power - 1.0), uFineTop), uFine.w);
   }
   vec3 col = mix(soft, albedo, smoothstep(-0.25, 0.1, ndl)) * lit * uTint;
-  // the palette of the approved close image on the bands, by the one share of the globe's light (grade.ts
-  // bodyShare, latToneAt)
-  for (int k = 0; k < (uLatFit.x > 0.0 ? 1 : 0); k++) col *= latTone(lat);
-  // the grey of the night side, by the same share (grade.ts duskAt)
+  // near the sheet the night side is grey, not the colour of the clouds in the last red light (none in the hold)
   for (int k = 0; k < (uDuskGrey.x > 0.0 ? 1 : 0); k++) col = mix(col, vec3(dot(col, vec3(0.2126, 0.7152, 0.0722))), uDuskGrey.x * pow(1.0 - smoothstep(uDusk.x, uDusk.y, ndl), uDuskGrey.y));
-  // and the colour factor on the last light on the clouds, by the same share (grade.ts duskAt)
-  for (int k = 0; k < (uDuskTint.w > 0.0 ? 1 : 0); k++) col *= mix(vec3(1.0), uDuskTint.rgb, uDuskTint.w * (1.0 - smoothstep(uDuskSpan.x, uDuskSpan.y, ndl)));
   col += uRim.rgb * exp(-mu * mu / (uRim.w * uRim.w)) * pow(max(ndl, 0.0), uRimPower) * shadow;
   col += uRimNight.rgb * exp(-mu / uRimNight.w);
   vec3 at;
@@ -286,11 +266,10 @@ void main() {
   col = col * exp(-tau * uExtinction) + hazeLight(p, dirS) * (1.0 - exp(-tau)) * mix(1.0, shadow, uHazeShadow);
   // near the sheet the dust inside the inner rim of the rings stands in front of the foot of the globe: a layer
   // with a soft thickness on both sides of the plane that takes the light of the globe behind it and returns
-  // a little of the Sun's, which comes to it through the globe's air as it does to the dust of the sheet
-  // (grade.ts dustAt and dustAir; none in the hold)
+  // a little of the Sun's (grade.ts dustAt; none in the hold)
   for (int k = 0; k < (uDust.x > 0.0 ? 1 : 0); k++) {
     float through = exp(-uDust.x * (1.0 - smoothstep(uDust.y, uDust.z, abs(P.y))));
-    col = col * through + uDustInk * ((1.0 - through) * dustAir(p, normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z))));
+    col = col * through + uDustInk * ((1.0 - through) * smoothstep(uDusk.x, uDusk.y, ndl));
   }
   for (int k = 0; k < (uHoldW > 0.0 ? 1 : 0); k++) col *= shotLight(uHoldLight, uHoldM, uHoldCam, uHoldW, P, nL);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
@@ -321,7 +300,7 @@ export class Globe {
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
         ...hazeUniforms(haze), ...field,
-        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uDusk: { value: new THREE.Vector4(0, 1, 0, 1) }, uDuskGrey: { value: new THREE.Vector2(0, 1) }, uDuskTint: { value: new THREE.Vector4(skim.light.dusk.tint.colour[0], skim.light.dusk.tint.colour[1], skim.light.dusk.tint.colour[2], 0) }, uDuskSpan: { value: new THREE.Vector2(skim.light.dusk.tint.from, skim.light.dusk.tint.to) }, uDust: { value: new THREE.Vector4(0, 0, 1, 0) }, uDustShade: { value: new THREE.Vector4(0, 0, 1.2, 0.02) }, uDustInk: { value: new THREE.Vector3().fromArray(skim.inner.foot.ink) }, uDustAir: { value: new THREE.Vector2(skim.inner.air.depth, skim.inner.air.height) }, ...latToneUniforms(), uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
+        uMap: { value: map }, uTable: { value: table }, uNightFloor: { value: look.nightFloor }, uDusk: { value: new THREE.Vector4(0, 1, 0, 1) }, uDuskGrey: { value: new THREE.Vector2(0, 1) }, uDust: { value: new THREE.Vector4(0, 0, 1, 0) }, uDustInk: { value: new THREE.Vector3().fromArray(skim.inner.foot.ink) }, uMapWidth: { value: mapWidth }, uGrad: gradUniform, uDiag: diagUniform,
         uSpin: { value: 0 }, uDrift: { value: 0 }, uSunL: { value: new THREE.Vector3(1, 0, 0) }, uPolar: { value: polar },
         uCurve: { value: curveUniform(look.curve) }, uLightL: { value: new THREE.Vector3(1, 0, 0) }, uLimb: { value: new THREE.Vector2().fromArray(look.limb) },
         uGain: { value: 1 }, uWeight: { value: 1 }, uTint: { value: new THREE.Vector3(1, 1, 1) }, uExtinction: { value: haze.extinction },
@@ -332,7 +311,7 @@ export class Globe {
         uBandFine: { value: new THREE.Vector3(0, Math.log(skim.globeFine.reach[0]!), Math.log(skim.globeFine.reach[1]!)) }, uBandWide: { value: skim.globeFine.wide }, uBandZone: { value: new THREE.Vector3().fromArray(skim.globeFine.zone) }, uBandRelief: { value: new THREE.Vector3().fromArray(skim.globeFine.relief) },
         uBandFit: { value: new THREE.Vector4(skim.globeFine.cell, skim.globeFine.stretch, skim.globeFine.amount, skim.globeFine.bend) },
         uBandMore: { value: new THREE.Vector4(skim.globeFine.pixels[0]!, skim.globeFine.pixels[1]!, skim.globeFine.fall, skim.globeFine.seed) }, uBandTint: { value: new THREE.Vector3().fromArray(skim.globeFine.tint) },
-        uTerm: { value: new THREE.Vector3().fromArray(look.termShift) }, uLean: { value: new THREE.Vector4(0, 0, 0, 1) },
+        uTerm: { value: new THREE.Vector3().fromArray(look.termShift) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
         uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },

@@ -6,7 +6,7 @@ import type { SetFactory, SkyPatch, ViewKind } from '../../core/types'
 import { smooth } from '../../director/rig'
 import { ringField } from './field'
 import { Globe, Shell } from './globe'
-import { duskAt, dustAt, dustShadeAt, fineShare, gradeShare, hazeDayAt, latToneAt, leanAt, zoneShare } from './grade'
+import { duskAt, dustAt, gradeShare, hazeDayAt, innerShare, zoneShare } from './grade'
 import { Grains, type Lens } from './grains'
 import { iceField } from './ice'
 import * as look from './look'
@@ -22,12 +22,6 @@ import sheetJson from './sheet.json'
 import skimJson from './skim.json'
 import skyJson from './sky.json'
 import { Titan } from './titan'
-
-// The thin sheet of dust and ice inside the inner rim (skim.json inner, sheet.ts) is one body at every height of
-// the lens, so it is drawn in every take of the stop, by this scene alone. In a take in which the set of the kept
-// build draws the stop (set.ts), thinOnly is set and this scene draws that thin sheet and nothing else: no globe,
-// no ring, no grain, no moon, no far point. It is not a look by height: the same sheet, the same law of cover.
-export const thinOnly = { value: false }
 
 export const createModel: SetFactory = async (ctx) => {
   const base = 'saturn/' + ctx.assets + '/'
@@ -166,7 +160,7 @@ export const createModel: SetFactory = async (ctx) => {
       const su = shell.material.uniforms
       ;(gu.uCam!.value as THREE.Vector3).copy(camS)
       gu.uLimbW!.value = poseW.value * look.limbShow
-      ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - closeGlobe) * fineShare(camL.y))
+      ;(gu.uFine!.value as THREE.Vector4).set(look.globe.fine[0]! * foot, look.globe.fine[1]!, look.globe.fine[2]!, (1 - poseW.value) * (1 - closeGlobe))
       gu.uNightBlur!.value = (look.globe.nightBlurFar + (look.globe.nightBlur - look.globe.nightBlurFar) * closeGlobe) * foot
       gu.uEdgePx!.value = look.globe.edgePx * foot
       su.uLimbW!.value = gu.uLimbW!.value
@@ -189,12 +183,9 @@ export const createModel: SetFactory = async (ctx) => {
       ;(su.uSunL!.value as THREE.Vector3).copy(sunL)
       su.uGain!.value = globeGain * state.weight * THREE.MathUtils.lerp(tune.halo.gain[0]!, tune.halo.gain[1]!, closeGlobe)
       su.uHazeH!.value = look.shell.scaleHeight * THREE.MathUtils.lerp(tune.halo.height[0]!, tune.halo.height[1]!, closeGlobe)
-      duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2, gu.uDuskTint!.value as THREE.Vector4)
-      leanAt(camL.y, gu.uLean!.value as THREE.Vector4)
-      dustAt(gu.uDust!.value as THREE.Vector4)
-      dustShadeAt(gu.uDustShade!.value as THREE.Vector4)
-      latToneAt(camL.y, gu.uLatFit!.value as THREE.Vector4)
-      dustAt(su.uDust!.value as THREE.Vector4)
+      duskAt(camL.y, gu.uDusk!.value as THREE.Vector4, gu.uDuskGrey!.value as THREE.Vector2)
+      dustAt(camL.y, gu.uDust!.value as THREE.Vector4)
+      dustAt(camL.y, su.uDust!.value as THREE.Vector4)
       hazeDayAt(camL.y, hazeDayFar, su.uHazeEdge!.value as THREE.Vector2)
 
       const half = Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2)
@@ -219,8 +210,7 @@ export const createModel: SetFactory = async (ctx) => {
       ru.uSat!.value = THREE.MathUtils.lerp(tune.ringSaturation[0]!, tune.ringSaturation[1]!, close)
       field.set(close, foot)
       field.far(farW, Math.max(farW, 1 - closeGlobe))
-      sheet.set(close)
-      sheet.only(thinOnly.value)
+      sheet.set(close, innerShare(camL.y))
       sheet.far(shadowL.copy(sunL).applyQuaternion(shadowTurn).normalize(), 1 - poseW.value, 1, spinRate, elapsed, gradeShare(camL.y), zoneShare(camL.y))
       ;(ru.uFlatten!.value as THREE.Vector4).set(tune.flatten.pivot, THREE.MathUtils.lerp(tune.flatten.power[0]!, tune.flatten.power[1]!, close), tune.flatten.width, tune.flatten.reach)
       ;(ru.uEven!.value as THREE.Vector3).set(THREE.MathUtils.lerp(tune.flatten.bands[0]!, tune.flatten.bands[1]!, close), tune.flatten.bandReach, tune.flatten.band)
@@ -248,13 +238,6 @@ export const createModel: SetFactory = async (ctx) => {
       tilt.visible = visible
       titan.mesh.visible = visible
       far.update(radiusPx, view, plan.p.tint, gain)
-      globe.mesh.visible = thinOnly.value === false
-      shell.mesh.visible = thinOnly.value === false
-      if (thinOnly.value) {
-        grains.mesh.visible = false
-        titan.mesh.visible = false
-        far.points.visible = false
-      }
     },
     dispose: () => {
       globe.dispose()

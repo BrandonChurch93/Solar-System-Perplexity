@@ -3,8 +3,8 @@
   "first": 0.128,
   "ratio": 0.5,
   "octaves": 10,
-  "from": 2,
-  "fromNote": "the first octave that is worked out. In the hold the octaves from the widest down to 0.004 radii carry no strength: at those scales the sheet is the profile of the kept ring picture itself (ringfield.json), and the ladder adds only ringlets finer than that picture resolves; the two octaves before the first one with strength are still worked out there, because the bunches of an octave follow the octave two steps wider. Near the sheet the octaves from 0.032 radii on have strength (near.level, near.hue): the approved close image has wide soft lanes of grey beige, rose and blue grey in the foreground, and at the lens's height the kept profile has no structure of that width on screen. The first two octaves worked out have no wider octave to follow, so they stand at the low end of rough: in the dense rings they move the hue and hardly the brightness.",
+  "from": 4,
+  "fromNote": "the first octave that is worked out. The octaves from the widest down to 0.004 radii carry no strength: at those scales the sheet is the profile of the kept ring picture itself (ringfield.json), and the ladder adds only ringlets finer than that picture resolves. The two octaves before the first one with strength are still worked out, because the bunches of an octave follow the octave two steps wider. Near the sheet only the octaves after the first one worked out are drawn stronger when wide on screen (near.wide).",
   "note": "per octave, from the widest. level: how far a ringlet moves the logarithm of the brightness, in the dense rings and in the thin ones. slope: how bright the slope lines are when they face the Sun. tau is the share of the level that also moves the optical depth. rough and bunch: ringlets come in bunches, the strength of an octave runs between the two values of rough with a field that changes two octaves more slowly, over the two thresholds of bunch. edge is the half width of the edge of a ringlet in cells: the two widest octaves are soft zones of colour. filterFloor: the ladder is filtered with the pixel's footprint over the root of the samples of a frame, but never with less than this share of a pixel. even: from this octave on (too fine to see in the hold) the bunches are evener, the strength runs between these two values instead.",
   "level": {
     "dense": [
@@ -264,11 +264,11 @@
       "dense": [
         0,
         0,
-        0.3,
-        0.3,
-        0.25,
-        0.35,
-        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.4,
         0.4,
         0.3,
         0.3
@@ -319,58 +319,58 @@
         "warm": [
           0,
           0,
-          1.2,
-          1.0,
-          0.6,
-          0.8,
-          0.9,
-          0.6,
+          0,
+          0,
+          0,
+          0.35,
+          0.45,
           0.3,
-          0.2
+          0.15,
+          0.1
         ],
         "pink": [
           0,
           0,
-          1.2,
-          1.0,
-          0.7,
-          1.0,
-          1.0,
-          0.6,
+          0,
+          0,
+          0,
+          0.45,
+          0.5,
           0.3,
-          0.2
+          0.15,
+          0.1
         ]
       },
       "thin": {
         "warm": [
           0,
           0,
-          0.8,
-          0.6,
-          0.3,
+          0,
+          0,
+          0,
+          0.35,
           0.5,
-          0.7,
-          0.4,
           0.25,
-          0.15
+          0.15,
+          0.1
         ],
         "pink": [
           0,
           0,
-          0.8,
-          0.7,
-          0.4,
-          0.75,
-          1.1,
+          0,
+          0,
+          0,
           0.5,
-          0.3,
-          0.15
+          0.8,
+          0.35,
+          0.2,
+          0.1
         ]
       },
       "follow": {
         "dense": [
-          0.6,
-          0.5
+          0.2,
+          0.0
         ],
         "thin": [
           1.0,
@@ -415,16 +415,15 @@
     "footprints": 1.34,
     "filter": 1.2,
     "wide": {
-      "note": "near the sheet a ringlet of the octave first on that is wide on screen (from so many footprints, in full from to) is drawn stronger: level is added to its level and its edge is edge cells soft instead of the octave's own. One that is wider still (hueFrom to hueTo footprints) keeps one minus hue of its hue (0: it keeps all of it), and its bright side is taken down: dark is how far the logarithm of the brightness of its brightest ringlet falls (its darkest keeps its level), so the broad ringlets near the lens read as grooves in the ice and not as white bands. The octaves before first are left as they are however wide they stand on screen: they are the wide soft lanes of the approved close image. So the picture has crisp ringlets at every width on screen down to the bottom edge, lying in soft lanes of colour. None of it in the hold.",
+      "note": "near the sheet a ringlet of the third octave on that is wide on screen (from so many footprints, in full from to) is drawn stronger: level is added to its level and its edge is edge cells soft instead of the octave's own. One that is wider still (hueFrom to hueTo footprints) keeps one minus hue of its hue, and its bright side is taken down: dark is how far the logarithm of the brightness of its brightest ringlet falls (its darkest keeps its level), so the broad ringlets near the lens read as grooves in the ice and not as white bands. So the picture has crisp ringlets at every width on screen down to the bottom edge, and no broad bands of pastel colour near the lens. None of it in the hold.",
       "from": 2.5,
       "to": 7.5,
       "level": 0.4,
       "edge": 0.07,
-      "hue": 0.0,
+      "hue": 0.6,
       "hueFrom": 12,
       "hueTo": 36,
-      "dark": 0.1,
-      "first": 5
+      "dark": 0.1
     }
   }
 }

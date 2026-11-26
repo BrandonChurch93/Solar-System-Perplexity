@@ -87,5 +87,24 @@
       }
     ],
     "tintFollow": 1.0
+  },
+  "grazing": {
+    "note": "The far ground's veil of the close view on the globe side, by the angle of the sight line to the ground (the planet's veil at a grazing sight line, src/bodies/planet.ts: path = exp(-(mu / width) ^ power), the ground gives way to the colour fill by 1 - exp(-depth x near x path); mu is the cosine between the sight line and the vertical of the ground it meets). The close view's picture has its far ground in a pale haze that the globe's air by height cannot give without veiling the near ground too; with this veil the made ground of the place (the land plates) holds the ground itself and not the haze, so from above the far ground is ground. Used only below descent.low of look.ts, where the hold's own veil is out. light, lightRightDeg, lightFrom, lightTo: the veil is lit toward the low Sun of the close view, where the close view's far plateau stands pale: the colour light is added to fill by the place of the ground, none where the ground lies under lightFrom and whole over lightTo, counted as the sine of the ground's distance from the eye of the dive twin at T along the direction lightRightDeg to the right of its heading. The direction lies on the ground and turns with the body; no height and no time weighs it. Found by the side difference at T with the globe's ground alone: dive 11.15 to 10.2, rise 12.94 to 12.0. OUT since 25 November (depth 0; MAIL 1330, 1338): the veil is weighed by near, so it thinned as the eye climbed and the far ground changed its pattern in place with the height (control G, the state 47b75341 with depth 0 alone: the pattern of the rise from 2688 + 1/2 to 2700 + 1/2 fell from a mean of 1.03 to 0.50, main 0.64). The close set now holds the frame at T in both views, so the sides at T stand without it (draft, dive mean 0.003, largest 13; rise mean 0.002, largest 20; with the veil 0.008 and 0.005, the same largest). A veil of the far ground is the air law's to give, by the sight line at every height.",
+    "depth": 0,
+    "width": 0.08,
+    "power": 1.5,
+    "fill": [
+      0.3,
+      0.23,
+      0.17
+    ],
+    "light": [
+      0.5,
+      0.33,
+      0.2
+    ],
+    "lightRightDeg": 70,
+    "lightFrom": 0.003,
+    "lightTo": 0.02
   }
 }

@@ -3,6 +3,7 @@ import { HazeShell } from '../../bodies/haze'
 import { MoonBody } from '../../bodies/moonbody'
 import { Planet } from '../../bodies/planet'
 import type { SetContext, SetFactory, SkyPatch, TextureOptions, ViewKind } from '../../core/types'
+import { bufferFrame } from '../../core/frame'
 import { diagUniform } from '../../diagnostics/diag'
 import { smooth } from '../../director/rig'
 import { FarPoint } from '../../bodies/farpoint'
@@ -11,6 +12,8 @@ import { patches, relief as reliefDefs, wrap } from './assets'
 import * as look from './look'
 import phobos from './phobos.json'
 import { plan } from './plan'
+import { closeLaw } from './law'
+import reliefJson from './relief.json'
 import skyFrame from '../../space/skyframe.json'
 import skyJson from './sky.json'
 import nearJson from './near.json'
@@ -19,6 +22,8 @@ import { heightTexture } from '../../core/sets'
 import country from './country.json'
 import capJson from './cap.json'
 import closeJson from './close.json'
+import detailJson from './detail.json'
+import { groundDetailText, groundDetailUniforms } from './detail'
 
 function direction(lonDeg: number, latDeg: number): THREE.Vector3 {
   const lon = THREE.MathUtils.degToRad(lonDeg)
@@ -59,12 +64,13 @@ export const createSet: SetFactory = async (ctx) => {
   const capLevels = []
   for (const l of country.levels) {
     const size = l.size[key]
-    capLevels.push({ height: heightTexture(ctx, new Uint16Array(await ctx.buffer(base + l.height)), size), size, widthDeg: l.widthDeg, low: l.low, high: l.high })
+    capLevels.push({ height: heightTexture(ctx, new Uint16Array(await ctx.buffer(base + l.height)), size), size, count: l.size.full, widthDeg: l.widthDeg, low: l.low, high: l.high })
   }
   const planet = new Planet({
-    map, mapWidth: (map.image as unknown as { width: number }).width, height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
-    cap: { levels: capLevels, border: capJson.border as [number, number], from: capJson.from as [number, number], cells: capJson.cells, pixel: THREE.MathUtils.degToRad(60) / 1080, fine: capJson.fine, reachDeg: capJson.reachDeg, feather: patches.feather, fade: patches.fade, light: capJson.light },
-    patches: { textures: patchTextures, widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
+    map, mapWidth: wrap.sets.full.color[0], height: wrapHeight, heightWidth: sizes.height[0], light: look.light, haze: { ...look.haze, glow: true }, grazing: look.grazing,
+    cap: { levels: capLevels, border: capJson.border as [number, number], from: capJson.from as [number, number], cells: capJson.cells, pixel: THREE.MathUtils.degToRad(60) / 1080, fine: capJson.fine, reachDeg: capJson.reachDeg, feather: patches.feather, fade: patches.fade, light: capJson.light,
+      ...(detailJson.wired ? { detail: { text: groundDetailText, uniforms: groundDetailUniforms(direction(patches.spot.lon, patches.spot.lat)) } } : {}) },
+    patches: { textures: patchTextures, counts: patches.levels.map((l) => l.full), widthsDeg: patches.levels.map((l) => l.widthDeg), spot: direction(patches.spot.lon, patches.spot.lat), feather: patches.feather, fade: patches.fade, nearDeg: patches.nearDeg,
       ...(patches.levels.some((l) => l.own) ? { own: patches.levels.map((l) => l.own === true), ownGain: true } : {}), ...(patches.fadeMinor ? { fadeMinor: true } : {}) },
     storm: { mask: stormMask, axis: direction(wrap.storm.lon, wrap.storm.lat), radius: THREE.MathUtils.degToRad(wrap.storm.radiusDeg) },
   })
@@ -105,6 +111,30 @@ export const createSet: SetFactory = async (ctx) => {
   terrain.add(ground.group)
   // the share of the close view's ground is the set's to give (close.json): asked once here so its shader is built with the others
   ground.presence(1)
+  // The law of the stop (law.ts, close.json law): how much of the approved picture a ground point shows on the globe's own ground,
+  // by the size of the picture's texel on the present screen, by the air along the ray and by the picture's own field, and the tone
+  // the picture takes there. In the surface view the law is off (lawAir.z 0): share 1, tone 1, and the relief shields as before.
+  const lawTexel = { value: new THREE.Vector4(closeJson.law.texel[0]!, closeJson.law.texel[1]!, reliefJson.camera.focalPxFull, 1 / closeJson.law.farthest) }
+  const lawAir = { value: new THREE.Vector4(closeJson.law.air[0]!, closeJson.law.air[1]!, 0, 0) }
+  const lawEye = { value: new THREE.Vector3() }
+  const finest = patches.levels.filter((l) => l.own).reduce((a, b) => (b.widthDeg / b.full < a.widthDeg / a.full ? b : a))
+  const plateTexel = THREE.MathUtils.degToRad(finest.widthDeg) / finest.full
+  const lawTone = { value: new THREE.Vector3(1, 1, 1) }
+  const [imageW, imageH] = reliefJson.imageSize.full as [number, number]
+  const lawBoxes = Object.values(reliefJson.layers).map((l) => l.box)
+  const lawSide = { value: new THREE.Vector4(Math.min(...lawBoxes.map((b) => b.x)) / imageW, Math.max(...lawBoxes.map((b) => b.x + b.w)) / imageW, Math.max(...lawBoxes.map((b) => b.y + b.h)) / imageH, Math.min(...lawBoxes.map((b) => b.y)) / imageH) }
+  // a side of 0 does not end (law.ts reads 0 as no count)
+  const lawOver = { value: new THREE.Vector4(...(closeJson.law.edge.map((e, i) => (e > 0 ? (i < 2 ? imageW : imageH) / e : 0)) as [number, number, number]), 0) }
+  // what the picture's own eye saw (seenby.py): 255 x nearest / front where two layers stand at one place of the picture
+  const lawSeen = { value: await ctx.texture(base + closeJson.law.seen.file, { srgb: false, mips: false, anisotropy: 1, channels: 1 } as TextureOptions) }
+  const lawSight = { value: new THREE.Vector4(closeJson.law.seen.on ? 1 : 0, 1 / closeJson.law.seen.nearest, closeJson.law.seen.soft, 0) }
+  // the gap of the cap from the picture's ground along the picture's rays (the lower half of the same file), and the picture's size
+  const lawGap = { value: new THREE.Vector4(closeJson.law.gap.on ? 1 : 0, closeJson.law.gap.range, closeJson.law.gap.px[0]!, closeJson.law.gap.px[1]!) }
+  const lawPicture = { value: new THREE.Vector2(imageW, imageH) }
+  // the eye at which the surface view takes over, in the relief's own frame: the one move's eye at the time of the change of view
+  const takenDive = plan.closePose('dive', handoverOf(plan.id, 'dive')!.time).position.clone()
+  const takenRise = plan.closePose('rise', handoverOf(plan.id, 'rise')!.time).position.clone()
+  ground.presenceLaw(closeLaw, { uLawTexel: lawTexel, uLawAir: lawAir, uLawEye: lawEye, uLawSide: lawSide, uLawOver: lawOver, uLawTone: lawTone, uLawSight: lawSight, uLawGap: lawGap, uLawPicture: lawPicture, uLawSeen: lawSeen }, { whole: () => lawAir.value.z < 0.5, tone: true })
   // In the globe's scene the close ground stands in front of the globe's own ground of the same place (the cap), which holds a made
   // ground where the close view's eye saw none: the depth is cleared between the close view's air and its meshes, so the meshes are
   // tested against each other only and the air, tested against the globe, lies on the sky alone. The whole of it is drawn after the
@@ -131,10 +161,15 @@ export const createSet: SetFactory = async (ctx) => {
   const shellTwilightLow = new THREE.Vector3().fromArray(look.descent.shellTwilight)
   const edgeLow = new THREE.Vector2().fromArray(look.descent.edge)
   const edge = new THREE.Vector2()
+  // a range under every value of a cosine: the planet's veil at a grazing sight line then holds on every side and under every Sun
+  const everywhere = new THREE.Vector2(-3, -2)
   // the glow of the close view's low Sun, as a direction in the stop's frame: from the twin of the dive at T
   const glowGround = new THREE.Vector3(1, 0, 0)
   const glowShell = new THREE.Vector3(1, 0, 0)
   const glowWorld = new THREE.Vector3()
+  // the far ground's veil is lit where the ground lies toward the low Sun of the close view: a direction along the ground in the stop's frame
+  const veilLight = new THREE.Vector3(1, 0, 0)
+  let veilSpin = 0
   const ownGain: [number, number, number] = [1, 1, 1]
   const hasOwn = patches.levels.some((l) => l.own)
   const diveT = handoverOf(plan.id, 'dive')?.time
@@ -151,6 +186,8 @@ export const createSet: SetFactory = async (ctx) => {
     }
     aim(glowGround, nearJson.glow.ground)
     aim(glowShell, nearJson.glow.shell)
+    aim(veilLight, { rightDeg: nearJson.grazing.lightRightDeg, upDeg: 0 })
+    veilSpin = plan.spin(diveT)
   }
   const light = new THREE.Vector3()
   const glow = new THREE.Vector3()
@@ -159,6 +196,16 @@ export const createSet: SetFactory = async (ctx) => {
   const holdDirection = new THREE.Vector3()
   const grazingHome = new THREE.Vector3().fromArray(look.grazing.highlightDir).normalize().applyQuaternion(holdTurn)
   const grazingSide = new THREE.Vector3().fromArray(look.grazing.sideDir).normalize().applyQuaternion(holdTurn)
+  // the hold's own veil at a grazing sight line, as the planet was built with it: near.json grazing takes the same uniforms below
+  // the height where the descent has put that veil out, and these give them back above it
+  const grazingHold = {
+    shape: (planet.material.uniforms.uGrazingShape!.value as THREE.Vector4).clone(),
+    day: (planet.material.uniforms.uGrazingDay!.value as THREE.Vector2).clone(),
+    fill: (planet.material.uniforms.uGrazingFill!.value as THREE.Vector3).clone(),
+    highlight: (planet.material.uniforms.uGrazingHighlight!.value as THREE.Vector3).clone(),
+    sideRange: (planet.material.uniforms.uGrazingSideRange!.value as THREE.Vector2).clone(),
+    range: (planet.material.uniforms.uGrazingRange!.value as THREE.Vector2).clone(),
+  }
   const shellHome = new THREE.Vector3().fromArray(look.shellDir).normalize().applyQuaternion(holdTurn)
   const glowHome = new THREE.Vector3().fromArray(look.haloDir).normalize().applyQuaternion(holdTurn)
   const glintHome = new THREE.Vector3().fromArray(look.glintDir).normalize().applyQuaternion(holdTurn)
@@ -200,7 +247,8 @@ export const createSet: SetFactory = async (ctx) => {
         terrain.quaternion.identity()
         terrain.scale.setScalar(1)
         closeScene(false)
-        ground.presence(1)
+        lawAir.value.z = 0
+        ground.presence(1, { air: 1 })
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
         return
       }
@@ -247,6 +295,24 @@ export const createSet: SetFactory = async (ctx) => {
       su.uHazeTau!.value *= 1 + (n.shellDepth - 1) * near
       su.uHazeH!.value *= 1 + (n.shellScaleHeight - 1) * near
       pu.uHazeH!.value = look.haze.scaleHeight * (1 + (n.hazeScaleHeight - 1) * near)
+      // the far ground's veil of the close view, by the angle of the sight line to the ground (near.json grazing): the planet's veil at a
+      // grazing sight line is the hold's above descent.low and is out below it (depth times 1 - low), so from there down its uniforms
+      // carry the close view's far haze, by the weight near. No time is read.
+      const ng = n.grazing
+      const veil = near > 0 && low >= 1
+      const shape = pu.uGrazingShape!.value as THREE.Vector4
+      if (veil) shape.set(ng.depth * near, ng.width, ng.width, ng.power)
+      else shape.set(look.grazing.depth * (1 - low), grazingHold.shape.y, grazingHold.shape.z, grazingHold.shape.w)
+      ;(pu.uGrazingDay!.value as THREE.Vector2).copy(veil ? everywhere : grazingHold.day)
+      ;(pu.uGrazingSideRange!.value as THREE.Vector2).copy(veil ? everywhere : grazingHold.sideRange)
+      if (veil) (pu.uGrazingFill!.value as THREE.Vector3).fromArray(ng.fill)
+      else (pu.uGrazingFill!.value as THREE.Vector3).copy(grazingHold.fill)
+      if (veil) (pu.uGrazingHighlight!.value as THREE.Vector3).fromArray(ng.light)
+      else (pu.uGrazingHighlight!.value as THREE.Vector3).copy(grazingHold.highlight)
+      if (veil) (pu.uGrazingRange!.value as THREE.Vector2).set(ng.lightFrom, ng.lightTo)
+      else (pu.uGrazingRange!.value as THREE.Vector2).copy(grazingHold.range)
+      // the lit side of the veil lies on the ground: it turns with the body from where it stood at T of the dive
+      if (veil) (pu.uGrazingSun!.value as THREE.Vector3).copy(veilLight).applyAxisAngle(plan.axis, plan.spin(state.time) - veilSpin).applyQuaternion(state.rotation)
       const gg = n.glow.ground
       const gs = n.glow.shell
       planet.setGlow(glowWorld.copy(glowGround).applyQuaternion(state.rotation), [gg.colour[0]! * near, gg.colour[1]! * near, gg.colour[2]! * near], gg.power)
@@ -306,21 +372,27 @@ export const createSet: SetFactory = async (ctx) => {
       const moving = !ending && state.segment.stop === plan.id && (state.segment.kind === 'dive' || state.segment.kind === 'rise')
       const c = closeJson.presence
       const there = moving ? 1 - smooth((Math.log(Math.max(camera.length() - 1, 1e-5)) - Math.log(c.low)) / (Math.log(c.high) - Math.log(c.low))) : 0
-      terrain.visible = there > 0
+      terrain.visible = moving
       // the globe's own air leaves as the close view's air comes: one share by the height
       shell.material.uniforms.uGain!.value = gain * state.weight * (1 - there)
-      if (there > 0) {
+      if (moving) {
         const f = plan.twinFrame(state.time)
         terrain.position.copy(f.origin)
         terrain.quaternion.copy(f.rotation)
         terrain.scale.setScalar(f.scale)
         closeScene(true)
-        ground.presence(there)
+        lawAir.value.z = 1
+        // count 6 of the law: the texel of the finest own plate of the place, in the relief's units (the full set's count on both tiers)
+        lawAir.value.w = closeJson.law.need.on ? plateTexel / f.scale : 0
+        lawTone.value.fromArray(ownGain)
+        lawEye.value.copy(state.segment.kind === 'dive' ? takenDive : takenRise)
+        ground.presence(1, { air: there })
         ground.update(state.time - terrainMid, gain, shot.post.vignette, view)
       }
       const distance = world.position.length()
       const radiusPx = (1 / Math.max(distance, 1)) / Math.tan(THREE.MathUtils.degToRad(view.camera.fov) / 2) * (view.format.height / 2)
-      const visible = radiusPx > 0.6
+      // counted in pixels of the buffer, so through the engine's measure of the frame (src/core/frame.ts, decision d253)
+      const visible = radiusPx > 0.6 * bufferFrame()
       planet.mesh.visible = visible
       shell.mesh.visible = visible
       halo.mesh.visible = visible && low < 1

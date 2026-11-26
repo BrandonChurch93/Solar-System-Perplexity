@@ -611,5 +611,141 @@
     "floor": 0.0
    }
   }
+ },
+ "fit": {
+  "note": "fitheights.py: the cap's heights fitted to the approved picture, a step on the plates of country.py. levels: the levels fitted (the 8.5 degree level keeps its bytes). toDeg, goneDeg: a texel the picture's eye saw takes the picture's own height out to toDeg from the eye's foot (country.far.fromDeg: beyond it the cap carries the canyon on and calms the far ground), gone by goneDeg (country.canyon.east.takeToDeg). joinTexels: the made ground beside follows through a membrane over this many texels. eyes: the lenses whose sight is kept free, first frame, last frame and step for the dive and the rise: the frame at which the surface view takes over, where the film shows the picture whole and nothing made may stand in front of it (a lens far from the picture's eye sees a rim hide the floor behind it, and that is true ground). every: every so many samples of the picture's distance files; cellPx: cells of a lens's frame, pixels of 1920 by 1080; grid: texels a side of the grid the lowering is found on; stepKm, passes, clear: as country.stepKm, the passes and country.clear of ground.lower_under_sight.",
+  "levels": [
+   3.8,
+   1.6,
+   0.7,
+   0.3
+  ],
+  "toDeg": 0.7,
+  "goneDeg": 0.85,
+  "joinTexels": 8,
+  "eyes": {
+   "dive": [
+    2477,
+    2477,
+    1
+   ],
+   "rise": [
+    2681,
+    2681,
+    1
+   ]
+  },
+  "every": 4,
+  "cellPx": 4,
+  "grid": 512,
+  "stepKm": 0.05,
+  "passes": 200,
+  "clear": 1.01
+ },
+ "skirt": {
+  "note": "skirt.py: the made country beyond the close ground's footprint. insideDeg: the border is taken this far inside the laid footprint. openDeg: laid ground too narrow to hold a disc of this radius is not counted (blades). mirror: shares of the mirror at the nearest border point that are tried, first that falls on laid ground wins, else the border's own texel. holdDeg, reachDeg: the laid ground runs on to a line holdDeg + reachDeg x (1 + wander x field) from the border and ends over the last share soft of that way. toneDeg: the made country carries the broad tone of the laid ground at the border, which leaves over this far. wander: share by which the distances wander with the field. field: [cells across the 8.5 degree plate, weight] of the fixed field on the ground; seed. toneBlurDeg: the breadth the tone is measured over (laid texels only). gain: least and most of the tone's gain.",
+  "insideDeg": 0.003,
+  "mirror": [],
+  "holdDeg": 0.0,
+  "reachDeg": 0.006,
+  "toneDeg": 0.3,
+  "wander": 0.9,
+  "field": [
+   [
+    24,
+    0.5
+   ],
+   [
+    64,
+    0.3
+   ],
+   [
+    192,
+    0.2
+   ]
+  ],
+  "seed": 238,
+  "toneBlurDeg": 0.03,
+  "gain": [
+   0.2,
+   5.0
+  ],
+  "openDeg": 0.016,
+  "soft": 1.0
+ },
+ "tone": {
+  "note": "platetone.py: the laid ground's brightness (scene value, Rec 709 weights) above knee goes to knee x (value / knee) ^ power. The made country's plain has a median near 0.06 to 0.075 and its brightest dunes 0.11.",
+  "knee": 0.09,
+  "power": 0.3
+ },
+ "under": {
+  "note": "landunder.py: the land levels take the forms of the map (patch-19) outside the place. keepDeg, fullDeg: the weight by the distance from the spot; broadTexels, fineTexels: the band of forms taken, in texels of the map; share: of the map forms; gain: bounds of the factor; plateauDeg, depthKm, besideDeg: the made canyon and the trough keep their own picture (ground lower than depthKm under the highest ground within plateauDeg, widened by besideDeg); aboveDeg: the lit levels above take the forms of the place out to here (fading from the first to the second)",
+  "keepDeg": 0.35,
+  "fullDeg": 0.8,
+  "broadTexels": 60,
+  "fineTexels": 1.0,
+  "share": 1.0,
+  "gain": [
+   0.4,
+   2.5
+  ],
+  "plateauDeg": 0.6,
+  "depthKm": [
+   1.0,
+   2.5
+  ],
+  "besideDeg": 0.04,
+  "aboveDeg": [
+   2.4,
+   2.8
+  ]
+ },
+ "reach": {
+  "note": "countrytake.py: the lay of the close ground holds within fromDeg of the spot and is gone beyond toDeg (degrees on the ground), the border wandering by wanderDeg along a fixed field of the ground (field: [size in degrees, share])",
+  "fromDeg": 0.26,
+  "toDeg": 0.42,
+  "wanderDeg": 0.07,
+  "field": [
+   [
+    0.25,
+    0.6
+   ],
+   [
+    0.08,
+    0.4
+   ]
+  ],
+  "seed": 702
+ },
+ "takes": {
+  "note": "countrytake.py: the country round the place from takes seen from straight above. levels: width in degrees to the take (assets-src/mars/place/takes, enlarged two times where the name ends in -x2). lay: false since the one ground (MAIL 837, MAIL 849): the plates of the takes hold the take alone at its own tone and no copy of the close picture, which lies on the ground through its own relief by the law of the stop (src/stops/mars/law.ts). With lay true the laid ground is kept as before (softDeg, inside, toneDeg, toneFull, gain and the block reach). Since the cap commit of the one ground a take gives up its own painted light (take_light of countrytake.py: its luminance held to the region's colour by country.light darkest and brightest, the cast shadow of the cap's heights laid in), and under the approved picture, where the cap's heights are the picture's own (block fit), it takes the picture's broad tone from the laid ground: the mean over toneTexels texels of the plate, by toneFull and gain as before, no stroke of the laid picture being that wide. toneGain: the least and the most of that tone's factor (the picture's shadowed floor stands at 0.17 to 0.3 of its lit wall, country.light.fill; the limit only keeps a ratio of two means of black paint from running away). brightest: how far a take's bright side may stand over its region (log units, soft; country.light.brightest holds made ground). regionMost: how far a take's region may stand over the plateau's own colour (country.light.plateau; log units, soft). Both because a take is painted in full Sun and the cap lights it again. light: \"painted\" since MAIL 913 (1): none of that light pass is run; the plate is the take alone in its own painted light (the pass made flat dark polygons with straight sides and a pale polygon out of the takes of 0.3 and 0.7 degrees), the cap lights no own level (src/stops/mars/cap.json light.own 0), and tone brings the take to the light of the approved picture by ground distance from the spot.",
+  "levels": {
+   "0.3": "b03-take1.png",
+   "0.7": "b07-take1.png",
+   "1.6": "b16-take1.png",
+   "3.8": "b38-take1.png",
+   "8.5": "b85-take2.png"
+  },
+  "levelGain": {"0.3": [1.0, 1.0, 1.0], "0.7": [1.0, 1.0, 1.0], "1.6": [1.0, 1.0, 1.0], "3.8": [1.0, 1.0, 1.0], "8.5": [1.0, 1.0, 1.0]},
+  "leadGain": {"note": "bodylead.py --gain: the factor each level's earlier take (s03-take2, s07-take1, s16-take1, s38-take2) carries in the lead of its repaint, the levelGain of those takes as measured by taketone.py --nest", "0.3": [0.712, 0.856, 0.935], "0.7": [0.85, 0.904, 0.963], "1.6": [0.801, 0.84, 0.844], "3.8": [1.0, 1.0, 1.0]},
+  "softDeg": 0.004,
+  "inside": 0.5,
+  "toneDeg": 0.03,
+  "toneFull": 0.3,
+  "gain": [
+   0.5,
+   2.0
+  ],
+  "lay": false, "light": "painted", "body": {"note": "countrytake.py, bodylead.py: where the close set seen from straight above (heights.py, margins too) is at least as fine as the finest plate of the country, the plate is that ground itself. texels: whole at or under so many texels a picture pixel, none from the second on; texelDeg: the texel they are counted in, that of the plate of 0.3 degrees (0.3 / 2176), the same ground length at every level, so a coarser plate holds no more of the picture's far, hazed ground than the finest; softTexels: the inward feather at the border of the seen ground, texels of the plate.", "texels": [1, 2], "softTexels": 3, "airKm": [16, 25], "airNote": "measured on the set seen from above at 0.7 and 1.6 degrees: the darkest 2nd percentile of the linear light of its ground by distance from the picture's eye is 0.0006 at 10 to 13 km, 0.0011 at 13 to 16, 0.0028 at 16 to 20, 0.0055 at 20 to 25, 0.013 at 25 to 30 and 0.036 at 40 to 60, against 0.0054 for the median of the near floor itself (10 to 13 km): from 20 to 25 km on the picture's air is as bright as its shadowed ground, and a plate holds ground, not air. Whole at or under the first distance, none from the second on.", "texelDeg": 0.00013787}, "fitNote": "countrytake.py fit_take: a repainted take holds the broad tone of its lead (per colour, the lead's mean over fitPx px of the take, 1254 px, over the take's own) and adds only what is finer (MAIL 963 item 3). fit: level to lead file in takes/.", "fitPx": 12, "fit": {"0.3": "b03-lead1.png", "0.7": "b07-lead1.png", "1.6": "b16-lead1.png", "3.8": "b38-lead1.png", "8.5": "b85-lead1.png"}, "fitEnds": {"note": "countrytake.py fit_ends: the widest take's lead is known at two ends only, where the finer plate lies (bodylead.py --child, read from that ground alone) and in the rim band (the plate as it stood, which equals the map at the map's scale; MAIL 963 item 5). Between them the factor is the membrane between the two, solved on grid cells. rimPx: px of the take at 1254 (24 px are 9.6 km, three texels of the globe's map).", "8.5": {"childDeg": 3.8, "rimPx": 24, "grid": 256}}, "gamut": {"note": "taketone.py --gamut: by the red texel value, the least green over red and blue over red that the ground of the approved close picture holds (1st percentile of its lower 70 percent); a take is never redder than that. notAt: the levels it is not held at: the 8.5 degree take ends in the map (fitEnds), whose plains are redder than the ground of the close picture, and held to it its rim would not be the map and its plains turn grey in blotches (seen in chain k7, first run)", "notAt": [8.5], "red": [56, 72, 88, 104, 120, 136, 152, 168, 184, 200, 216, 232, 248], "green": [0.351, 0.348, 0.385, 0.423, 0.444, 0.465, 0.483, 0.5, 0.523, 0.551, 0.583, 0.609, 0.642], "blue": [0.102, 0.079, 0.114, 0.162, 0.183, 0.211, 0.236, 0.256, 0.278, 0.307, 0.345, 0.375, 0.422]},
+  "toneTexels": 12,
+  "toneGain": [
+   0.1,
+   4.0
+  ],
+  "brightest": 0.25,
+  "regionMost": 0.25,
+  "walls": {"note": "walls.py: the wall law of the plates (MAIL 1034, 1091 point 2, 1150 D; d291), after bodyfull.py and before pyramid.py. fromDeg: the widest level it is run on (the level above keeps the globe's map). wallSin: the sine of the slope at which wall starts and at which it is whole: where ground painted for a view from above is drawn out down the slope to 1.5 times and to twice its length (1 over the cosine; 48 and 60 degrees). restSin: loose rock lies no steeper than the angle of rest: the talus of detail.json goes out between these sines of the slope (30 and 40 degrees); between it and the wall the take's own paint stays. broadKm: coarser than this ground length the wall keeps the take's own tone and colour (the mean of the take over the wall within it), finer it is the law's rock; twice the texel of the level above fromDeg (8.5 degrees on 3686 px, 0.137 km), which keeps the take: what that level can show of a wall stays as it shows it, the law adds only what is finer (MAIL 963); broadClip: the greatest share the law's rock is raised or lowered by for it. bedsKm, bedShares: the thicknesses of the beds and their shares of country.light.rock.strata (the first two are country.light.rock.bandsKm and shares); bedTone: the beds' tone as a multiple of country.light.rock.strata; warp: how uneven the beds of one thickness are (shares of a bed the height is warped by); thinnest: the thinnest bed that warp leaves, as a share of the thickness; bedTexels: a thickness is drawn only where that thinnest bed is wider than so many texels of the level, whole from twice that; edge: the share of a bed its riser takes; toneEdge: the share of a bed over which its tone goes over to the next; ledge: the riser at the foot of a hard bed, as a share of its thickness; roughKm, roughShare: the edges are rough by a noise of this size (never under three texels), by this share of the thickness; lateralKm: the ground length over which a bed's hardness changes along the wall; bedShift: how far the gullies and flutes move the height the beds are read at (1 is their own depth). gullyCellKm: the grid of the flow on the coarsest level (never finer than two texels); flowNoiseKm, flowNoiseDepthKm: the seeded roughness the flow runs on, so that it gathers; gullyKm2: the gathered ground at which a gully starts and at which it is whole; gullyDepthKm: its depth; gullySoftCells: its softening in cells. fluteKm: the sizes of the flutes, octaves of the ground; fluteLen, fluteSteps, fluteGain: a flute is the ground's noise of its size drawn out along the fall line over fluteLen sizes each way in so many steps, times this gain; fluteDepth: its depth as a share of its size; fluteTone: the tone of the widest (log units of the scene value), fluteShare: the tone of each next octave as a share of the one before; fallKm: the fall line is read on the heights softened over this ground length, the same on every level. shadowKm, shadowSteps: beds, gullies and flutes cast their own shadow over this reach, read in so many steps on the level's own texels. fedKm2: the wall ground that must drain onto talus for a fan; fanShare: the fan's relief as a share of the wall's; fanTone: its tone along the flow (log units). openKm, openSteps, openGrid: the reach of the sky a texel sees, its steps and the largest grid it is read on; openRef: the light of the open sky on a wall in cast shadow (level open ground = 1), mean, measured by this tool (the line it prints). shadowWall: the shadowed wall over the lit north wall of references/approved/mars-close.jpg per colour (scene values, as measured for country.light.fill); the sky's part of a wall's light is twice this (the lit north wall is twice country.light.rock.wall) times the open sky over openRef. join: the power of the soft greater of the Sun's part and the sky's part. jointKm, jointCount, jointShift: joints break the beds: the ground's noise of this size drawn out along the fall line like a flute, cut into so many columns each way; every column reads its beds at a height of its own, moved by up to half this share of the bed's thickness, so that a bed steps from column to column and no bed runs on as a line along the height; drawn where a column is wider than grainTexels; jointSoftKm: the ground distance from a column's border over which the beds' step in the heights fades in, so that the heights stay whole across a joint (the tone keeps its offset). The heights are displaced only finer than broadKm (the displacement's mean over wall and talus within it is taken out). grainCells, grainShares, grainLen, grainSteps, grainIso, grainBedTexels, grainOf: on a wall the take's grain is not kept (MAIL 1247); the rock's own grain is the ground's noise in cells of so many texels in these shares, a share grainIso of it as it is and the rest drawn out along the fall line over grainLen cells each way in grainSteps steps and broken by beds of grainBedTexels cells of height, each of its own hardness; grainOf times the take's grain on the ground beside the wall (measured by the tool) is its strength. skyLeast: the least open sky a texel is given, the light the rock around throws into a slot (level open ground = 1). A flute wider than broadKm draws its tone and does not move the heights. grainTexels: off a wall the plate's own grain is kept under this size; the picture's own ground stays where a picture pixel is no wider; an octave of flutes is drawn from this width on. keepTexels: the picture's own ground is kept where the greater part of the ground within so many texels is as fine as the plate. fluteBeds, fluteEnd, fluteSoft (MAIL 1266 2c): the strands of a flute of one size are broken by beds fluteBeds sizes thick, read at the joints' heights; a bed's hardness (a hash of the bed) is the strength of its flutes, none under fluteEnd, whole fluteSoft above it, so flutes are of several widths and of lengths that end. The chutes (MAIL 1288, 1290; a sunlit face, spurs and gullies along the fall line, talus at the foot, nothing resting on the face): relKm: rim and foot of a wall are the highest and the lowest of the heights within this ground distance, and a texel's place between them runs from 0 at the rim to 1 at the foot; chuteKm, chuteShares, chuteLen, chuteSteps, chuteGain: the chutes are the ground's noise of these sizes in these shares, drawn out along the fall line over chuteLen sizes each way in chuteSteps steps, times chuteGain; chuteBias, chuteFrom, chuteSoft: a chute stands where that field and chuteBias times the place below chuteFrom pass zero, soft over chuteSoft: none at the rim, the whole wall at the foot, and between the chutes the rock stands as spurs; chuteFill: the share of the beds' and flutes' relief a chute fills; chuteAlbedo, dustKm: a chute's ground is the open ground's own colour beside the wall (its mean within dustKm) times chuteAlbedo under the light of the softened slope; chuteTone: the share of the flutes' tone it keeps along the fall line; chuteCalm: the share of the rock's grain a chute loses. handTexels, handRough, handSoft (MAIL 1266 2b): take and rock are not both drawn; the rock stands where the wall's weight passes a half, the line roughened by the ground's noise of handTexels texels by handRough of the weight and soft over handSoft of it.", "fromDeg": 3.8, "relKm": 1.5, "chuteKm": [0.24, 0.12, 0.06], "chuteShares": [1, 0.7, 0.5], "chuteLen": 5, "chuteSteps": 11, "chuteGain": 3.0, "chuteBias": 1.6, "chuteFrom": 0.45, "chuteSoft": 0.25, "chuteFill": 0.8, "chuteAlbedo": 0.85, "chuteTone": 0.3, "chuteCalm": 0.6, "dustKm": 1.5, "grainOf": 0.35, "wallSin": [0.745, 0.866], "restSin": [0.5, 0.64], "bedsKm": [0.45, 0.16, 0.08, 0.04], "bedShares": [0.65, 0.35, 0.3, 0.25], "bedTone": 1.0, "warp": 0.6, "thinnest": 0.53, "bedTexels": 1.5, "edge": 0.5, "toneEdge": 0.25, "ledge": 0.25, "roughKm": 0.05, "roughShare": 0.35, "lateralKm": 0.8, "bedShift": 1.0, "gullyCellKm": 0.04, "flowNoiseKm": 0.15, "flowNoiseDepthKm": 0.03, "gullyKm2": [0.03, 0.5], "gullyDepthKm": 0.07, "gullySoftCells": 1.5, "fluteKm": [1.6, 0.8, 0.4, 0.2, 0.1, 0.05, 0.025], "fluteLen": 4, "fluteSteps": 9, "fluteGain": 4.0, "fluteDepth": 0.3, "fluteTone": 0.4, "fluteShare": 0.8, "fallKm": 0.25, "shadowKm": 1.5, "shadowSteps": 24, "fedKm2": 0.01, "fanShare": 0.35, "fanTone": 0.25, "openKm": 6.0, "openSteps": 12, "openGrid": 3277, "openRef": 0.6, "shadowWall": [0.224, 0.318, 0.414], "join": 3, "broadKm": 0.27, "broadClip": 6.0, "jointKm": 0.5, "jointCount": 2, "jointShift": 1.0, "jointSoftKm": 0.06, "keepTexels": 8, "grainTexels": 2.5, "grainLen": 1.5, "grainSteps": 7, "skyLeast": 0.35, "fluteBeds": 5, "fluteEnd": 0.3, "fluteSoft": 0.25, "grainBedTexels": 5, "grainIso": 0.8, "handTexels": 6, "handRough": 0.25, "handSoft": 0.2, "grainCells": [1, 2, 4], "grainShares": [1, 0.8, 0.6]},
+  "plain": {"note": "walls.py, the plain (MAIL 1290 item 1; way 2 of the net of blocks, by code): off the walls and off the picture's own ground the plate's fine ground is by code at true scale, on the take's broad tone, read on the place's own east and north in km so that every level draws the same forms and a finer one only adds. levels: the plates whose take's fine ground gives way to the code's: the 0.3 degree plate, whose take carries the net of blocks (MAIL 1290 c, way 2). The other plates keep their take's ground, which carries none: there the limit broadPx would stand at 0.4 to 2.15 km and the code draws nothing that coarse (trial 17, seen from above: a flat felt). parent (MAIL 1056 ONE BODY, MAIL 1327): true, the ground under the code's is the parent plate's own, the next coarser level of the takes enlarged as pyramid.py enlarges it (centre crop, cubic), in scene values; every size of the code is weighed by one minus the parent's share of it, by the same law of the texel with the parent's texel, so the code adds only what is finer than the parent carries and the plate filtered is its parent. Trial 17 stood the code's ground on a blur of the take and read as smoke at 1 to 1 beside the parent's ring; with parent no border stands between the 0.3 plate and the 0.7 ring. broadPx: read only when parent is false: the take's tone then stands coarser than this many px of the take (of 1254 px, 170 m on the 0.3 plate). roughKm, roughSlope: octaves of the ground's noise, each of this slope. craterKm, craterShare, craterCell: small craters by size, the chance of one in a cell of craterCell sizes; craterDepth, craterRim, craterWorn, craterReach as country.craters. scarpM, scarpAt, scarpScale, scarpFieldKm, scarpFieldShares, scarpWideKm, scarpTone: each scarp is ONE line of the ground, the place where a field of the ground's noise of its own (sizes scarpFieldKm times its scarpScale, in shares scarpFieldShares) passes its level scarpAt; a low table stands on one side by scarpM metres, the riser scarpWideKm wide, its tone scarpTone (log units). No family of lines along a height, so nothing reads as contours. scarpHardKm, scarpHardFrom, scarpHardSoft: a scarp dies out along its line: its height goes with a field of the ground of scarpHardKm, none under scarpHardFrom, whole scarpHardSoft above it. rippleKm, rippleShares, rippleHeight: wavelengths, their shares and the height as a share of the wavelength; windBearingDeg: the wind the crests lie across; rippleWarp over rippleWarpKm: how far the crests bend, in wavelengths of the longest; ripplePatchKm, rippleFrom, rippleSoft: the field they gather by; rippleHollowKm, rippleHollowDepthKm: the hollows of the level's heights; rippleSin: the slope at which they end; rippleTone: their sand is lighter (log units); rippleEndAlong, rippleEndAcross, rippleEndFrom, rippleEndSoft: crests end: a crest stands only where a field of the ground (so many wavelengths long along and across the wind) passes rippleEndFrom, soft over rippleEndSoft. streakKm, streakShares, streakLong, streakTone: dust streaks along the wind. mottleKm, mottleShares, mottleSoft, mottleTone: darker sand and lighter dust in patches with an edge, a field of the ground in octaves, the edge soft over mottleSoft of the field, the tone in log units. hollowKm, hollowDepthKm, hollowTone: dust lies lighter in the hollows of the fine relief. shadeLift: the share of the slope light that stands in cast shadow. grain: the texel grain.", "broadPx": 12, "roughKm": [0.32, 0.16, 0.08, 0.04, 0.02], "roughSlope": 0.1, "craterKm": [0.3, 0.15, 0.075, 0.04], "craterShare": [0.08, 0.14, 0.2, 0.26], "craterCell": 3.0, "craterDepth": 0.11, "craterRim": 0.028, "craterWorn": 0.6, "craterReach": 2.2, "scarpAt": [0.12, -0.14, 0.05], "scarpScale": [1.0, 0.8, 0.55], "scarpWideKm": 0.06, "rippleEndAlong": 1.6, "rippleEndAcross": 7.0, "rippleEndFrom": 0.42, "rippleEndSoft": 0.2, "scarpHardKm": 0.45, "scarpHardFrom": 0.38, "scarpHardSoft": 0.25, "mottleKm": [0.5, 0.2, 0.08, 0.035], "mottleShares": [1.0, 0.6, 0.4, 0.25], "mottleSoft": 0.12, "mottleTone": 0.03, "scarpM": [10, 6, 4], "scarpFieldKm": [1.4, 0.5, 0.18], "scarpFieldShares": [1.0, 0.5, 0.22], "scarpTone": 0.06, "rippleKm": [0.09, 0.05], "rippleShares": [1.0, 0.6], "rippleHeight": 0.03, "windBearingDeg": 285, "rippleWarp": 2.5, "rippleWarpKm": 0.35, "ripplePatchKm": 1.1, "rippleFrom": 0.74, "rippleSoft": 0.1, "rippleHollowKm": 0.6, "rippleHollowDepthKm": 0.03, "rippleSin": [0.12, 0.3], "rippleTone": 0.12, "streakKm": [0.25, 0.09], "streakShares": [1.0, 0.6], "streakLong": 6.0, "streakTone": 0.14, "hollowKm": 0.06, "hollowDepthKm": 0.004, "hollowTone": 0.14, "shadeLift": 0.35, "grain": 0.05, "levels": [0.3], "parent": true},
+  "bodyFull": {"note": "bodyfull.py, ONE BODY (MAIL 1056): the approved picture seen from straight above (the picture alone: heights.py --picture-only, no margin and no apron) is the plates' ground over the picture's own field. airKm: within the first distance from the picture's eye the plate is the picture's ground itself, from the second on it holds the picture's forms on the take's broad tone (the limit of takes.body, measured). softTexels: the inward feather at the border of what the set shows. air: the picture's air by the distance from its eye, measured on the top view of measureDeg at measureSize texels in bins of binsKm as the darkest `percentile` of the ground's linear light; leastPass: the least share of ground light the picture is trusted to hold. forms: broadKm, the ground length over which the take's tone stands and under which the set's forms do; most: the most a form lifts or lowers the light. split: the take's grain is kept under sigmaPerReach times the ground one picture pixel covers (in texels, from `from` to `to` texels of sigma), over `octaves` blurs from leastSigma texels, the grain's ratio held in clip.", "airKm": [16, 25], "softTexels": 3, "air": {"measureDeg": 3.8, "measureSize": 4096, "binsKm": [6, 8, 10, 13, 16, 20, 25, 30, 40, 60, 90, 140], "percentile": 2, "farShare": 0.02, "leastPass": 0.3}, "forms": {"broadKm": 3.0, "most": 3.0}, "split": {"sigmaPerReach": 0.5, "from": 0.5, "to": 1.0, "leastSigma": 0.5, "octaves": 8, "clip": [0.6, 1.6]}}
  }
 }
