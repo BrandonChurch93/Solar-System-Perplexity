@@ -1,9 +1,31 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T00:39:10.078Z",
+ "pushed": "2026-11-26T01:01:45.644Z",
  "head": "9f153844d59c4954f0d4fe54a3403b65d09ea510",
- "note": "this machine still stands on main 9f153844 (main's own G17 and reader rows run). Finals on this machine against the approved, whole, top 30 percent, rest: 60 main 33.9556, 11.5380, 43.5632, candidate 38.8845, 14.5772, 49.3019; 90 main 30.0950, 7.1571, 39.9255, candidate 37.6628, 14.5903, 47.5510; 360 main 11.9772, candidate 11.9851. sun-near 60 final of the candidate: dark 0.140 body 0.589 pale 0.110 white 0.036 | half width 5.5 px, 1409 shapes, fine 0.0527, mean 0.409 | distance 0.154",
+ "note": "limb at 90 beside main and the approved; main's G17 and harness slice still running; candidate d377db96 not pushed yet",
  "looks": [
+  {
+   "time": "2026-11-26T01:01:00.703Z",
+   "file": "20261126010100703-job-frame-00090.jpg",
+   "source": "memory",
+   "kind": "job",
+   "label": "sun.terrain frame 90, final tier, nograin view, from the running measure job",
+   "stop": "sun",
+   "segment": "sun.terrain",
+   "frame": 90,
+   "tier": "final",
+   "format": "16x9",
+   "diag": "nograin",
+   "job": "measure"
+  },
+  {
+   "time": "2026-11-26T00:53:15.138Z",
+   "file": "20261126005315138-note-limb-trio90.jpg",
+   "source": "../../../../tmp/v/limb-trio90.jpg",
+   "kind": "note",
+   "label": "limb at 90 final, 1 to 1: approved | main 9f153844 | candidate d377db96",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T00:39:03.034Z",
    "file": "20261126003903034-note-top3.jpg",
@@ -50,22 +72,6 @@
    "source": "../../../../tmp/v/hand-222.jpg",
    "kind": "note",
    "label": "frame 222 at draft: main 9f153844 left, the candidate (tree 42958a00) right, both drawn on this machine",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T00:29:26.687Z",
-   "file": "20261126002926687-note-hand-221.jpg",
-   "source": "../../../../tmp/v/hand-221.jpg",
-   "kind": "note",
-   "label": "frame 221 at draft: main 9f153844 left, the candidate (tree 42958a00) right, both drawn on this machine",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T00:26:46.554Z",
-   "file": "20261126002646554-note-trio60.jpg",
-   "source": "../../../../tmp/v/trio60.jpg",
-   "kind": "note",
-   "label": "frame 60 at final: the approved, main 9f153844, the candidate (tree 42958a00)",
    "stop": "sun"
   }
  ]
