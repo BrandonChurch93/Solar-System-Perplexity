@@ -2762,3 +2762,22 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   Still to do before a name: hash of 90 with lane[16] 0 and no dull against h45's is NOT needed (h48 is a new
   state); units, gate six, path line on the sha; five hashes to /root and sun_builder; growth; RECIPE written.
   NEXT MAIL DUE 20:45.
+- 19:54 UTC. h48 at FINAL, frame 90, lens on (lab-90-h48f.png) MEASURED: percentiles 0.243 0.404 0.58 0.757
+  0.906 0.976 (approved 0.231 0.404 0.58 0.761 0.906 0.965); lower 70 percent low band 20.8555 (h45 18.7397,
+  standing 23.4775), plain 40.8876 (h45 40.0465); sky 7.0416; bands 1.101 1.007 1.013 1.034; whole low band
+  13.6752 (main 15.303; h45 12.1662), plain 31.1579 (main 29.558: worse by 1.60; h45 30.6237); rows 540 on low
+  band 27.7788 (main 27.289: worse by 0.49; h45 24.8087; h47 without dull 25.2605), plain 51.7021 (main 49.735;
+  h45 50.6027); G17 median 1.3165, p25 1.057, worst tile 0.5227 at [6, 6] (h45 1.509, worst 0.72; the cut of the
+  sparks took the median from 1.43 to 1.32); curve 0.712 0.708 0.7 0.687 0.668 0.636 0.587 0.524 0.443 0.37 0.332
+  (approved 0.667 0.662 0.657 0.647 0.619 0.586 0.547 0.496 0.433 0.369 0.324: largest gap 0.050 at the tenth
+  0.5); lane 6.44 px (7.08), depth 0.308 (0.234); twin full 1,569,474, web 467,999 bytes.
+  SEEN (v/c-h48f.jpg, v/lab-90-h48f.jpg): dull olive domes beside bright ones in soft dark valleys; the closest
+  to the approved so far.
+  FLICKER of h48 MEASURED (fixed discs, four lines, largest / share over a tenth): 0.214 / 21.4 percent, 0.275 /
+  35.9, 0.091 / 0.0, 0.119 / 7.1 (h45: 0.186 / 36.4, 0.277 / 39.4, 0.091 / 0.0, 0.163 / 18.2). By cell
+  (cellflk, 575 cells, 4 pairs): largest 0.247, median 0.024, 4.5 percent over a tenth (h45: 0.302, 0.032, 10.2
+  percent). Cells whose area holds within 0.9 to 1.11: largest 0.132, 1.2 percent over; cells whose area changed
+  by over a half: 11.8 percent over. So the middle anchor did not cost the flicker; what is over a tenth is
+  mostly a cell that is cut or joined between two captures (the label changes, not the light).
+  The law of MAIL 1218 (no cell over a tenth) is still not met: 4.5 percent.
+  Chain goes on: film, rise, five hashes, final 60, two finals.
