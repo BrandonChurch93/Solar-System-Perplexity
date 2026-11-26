@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T15:18:38.445Z",
- "head": "5ec094b822cca8cdc9e94fb0a5184376ad71da37",
- "note": "Z77 = commit 3d60aa0d merged with main 00b05b53 (5ec094b8), finals of 90 and 60 drawing. Feet: the pool lights the ground (cells kept) and the strands instead of a white blob. sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 544 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "pushed": "2026-11-26T15:43:22.289Z",
+ "head": "1b10c7e763e92846b920cc6c5ca89918bba1052c",
+ "note": "Z81 = 1b10c7e7 (on main 686da341), units running, finals next. The lean ends at 12 degrees on one side and a low rope is loose, so no second band with a hard edge under the arch. sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 544 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T15:43:21.493Z",
+   "file": "20261126154321493-note-look-z81-top.jpg",
+   "source": "../../../../tmp/v/look-z81-top.jpg",
+   "kind": "note",
+   "label": "Z81 draft 90, 91, 92 right shoulder at 1 to 1: strands stand, beads move",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T15:43:20.755Z",
+   "file": "20261126154320755-note-look-z81-60.jpg",
+   "source": "../../../../tmp/v/look-z81-60.jpg",
+   "kind": "note",
+   "label": "Z81 draft 60 whole",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T15:43:19.885Z",
+   "file": "20261126154319885-note-look-z81-90pair.jpg",
+   "source": "../../../../tmp/v/look-z81-90pair.jpg",
+   "kind": "note",
+   "label": "Z81 (1b10c7e7) draft 90: approved above, mine below; no second band under the arch",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T15:18:37.695Z",
    "file": "20261126151837695-note-look-z77-rise.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/look-z73-0.jpg",
    "kind": "note",
    "label": "Z73 draft 0 whole",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T14:47:50.850Z",
-   "file": "20261126144750850-note-look-z73-60.jpg",
-   "source": "../../../../tmp/v/look-z73-60.jpg",
-   "kind": "note",
-   "label": "Z73 draft 60 whole",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T14:47:49.535Z",
-   "file": "20261126144749535-note-look-z73-90pair.jpg",
-   "source": "../../../../tmp/v/look-z73-90pair.jpg",
-   "kind": "note",
-   "label": "Z73 draft 90: approved above, mine below (arcade strip)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T14:25:04.651Z",
-   "file": "20261126142504651-note-feet-Z64.jpg",
-   "source": "../../../../tmp/v/feet-Z64.jpg",
-   "kind": "note",
-   "label": "sun close 90 feet at 1 to 1, approved left, trial Z64 right (draft)",
    "stop": "sun"
   }
  ]
