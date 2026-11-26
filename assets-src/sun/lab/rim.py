@@ -31,7 +31,7 @@ while i < len(args):
 
 def read(path):
     im = Image.open(path).convert('RGB')
-    if im.size != (1920, 1080):
+    if not im.size == (1920, 1080):
         im = im.resize((1920, 1080), Image.LANCZOS)
     x, y, w, h = box
     return np.asarray(im.crop((x, y, x + w, y + h))).astype(float).max(axis=2) / 255

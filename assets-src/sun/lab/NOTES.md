@@ -1499,3 +1499,35 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   some tops, no mortar (v/trials-q.jpg, v/levels-q.jpg). t51 nearest to the approved's profile: mean 0.337 0.420
   0.468 0.508 0.545 0.572 0.616 0.650 0.679 0.708 0.725, far share 0.490; plain 31.0888 low64 8.0656 (no refit).
   v/lab-t51.json. Still lumps with smooth lights: the approved's tops are a small light with fibres to the edge.
+- 02:18 to 02:42 UTC. t52 to t54 (stronger fan and fine fibres on the tops): little to see at 3 to 1, low64 7.69
+  to 8.38 (v/trials-r.jpg). New lane[13]: the shoulder's start moves with the fan, so a top's light ends in
+  fingers along its fibres (t55 1.0, t56 2.5, t57 2.5 with shoulder 1.0, 0.18: v/trials-s.jpg, levels-s.jpg).
+  02:25 commit e285903a (ground.ts with pool, lane[12], lane[13], seam[3]; rim.py; RECIPE; lab.json still h32).
+  STATE h33 = t51 + lane[13] 2.5, curve refit (v/lab-h33.json): lane [0.19,0.08,0.8,0.0,0.0035,0.06,0.6,3.0,0.9,
+  0.28,10,0.1,0.35,2.5], seam [0.12,0.4,40,1.0], fibre [0.28,0.15,0.5,0.4], grain [0.45,1.5], thin 0, spark[0] 0.25,
+  blob [0.55,1.0,0.5,0.3,0.3,0.45,2], patch [0.7,0.3,0.3,0.8,0.3]. Chain v/chain-h33.sh 02:25 to 02:42.
+  MEASURED h33 draft: plain 30.8825, low64 7.908, bands [1.65 1.10 0.98 0.98 1.00 1.00 0.98], percentiles 0.227
+  0.4 0.58 0.757 0.906 0.965, curve [0.707 0.698 0.69 0.674 0.646 0.612 0.57 0.51 0.451 0.387 0.336], lane 5.67.
+  h33 final (335 s): plain 31.2165, low64 7.8419, bands [1.55 1.13 0.99 0.99 1.01 1.01 0.99], percentiles 0.231
+  0.404 0.584 0.761 0.91 0.969, curve [0.718 0.708 0.702 0.682 0.656 0.62 0.573 0.514 0.45 0.387 0.339] (gaps to
+  the approved's at the tenths 0.051 0.046 0.045 0.035 0.037 0.034 0.026 0.018 0.017 0.018 0.015: the first is
+  0.001 outside 0.05, the others inside), lane 5.61 px (approved 7.08; quartiles 3.89 and 7.56).
+  Three parts: h33 draft ground 52.7272 strip 51.4944 sky 8.5344; final 52.7347, 51.8319, 9.1536 (standing final
+  sky 9.0457: 0.108 over).
+  rim.py h33 final: mean 0.367 0.454 0.505 0.542 0.576 0.600 0.640 0.668 0.693 0.723 0.740 0.747 0.747 0.789, far
+  share over 10 px 0.470 (h32 0.420, approved 0.538), over 20 px 0.170 (h32 0.125, approved 0.196).
+  FLICKER h33 (as before: near box disc 26 / band disc 26 / ellipse 90 by 45 / ellipse 70 by 35): 0.183, 50.0 /
+  0.264, 36.4 / 0.068, 0 / 0.179, 3.8 (b7 0.211, 37.5 / 0.255, 34.2 / 0.080, 0 / 0.119, 4; h32 0.257, 56.2 /
+  0.257, 41.3 / 0.076, 0 / 0.159, 3.1). Not met on lines 2 and 4 (largest), line 1 share.
+  Sizes from the table at 3 s (radius of the ground, stage units, 1564 cells): 5 10 25 50 75 90 95 99 percent =
+  0.0065 0.0114 0.0215 0.0338 0.0530 0.0755 0.0856 0.1027; the largest quarter holds 0.666 of the ground. So the
+  table has a spread of over three to one side by side; the look of one size came from the even lane and shoulder.
+  Colour by level in the near box: approved mean [0.555 0.315 0.135], h33 draft [0.587 0.344 0.15]; ratios g/r
+  equal within 0.02 below 0.95; my top band 0.95 to 1 is whiter (g/r 0.931 against 0.851, share 0.021 against
+  0.011) and my darkest band 0.1 to 0.3 holds 0.109 of the pixels against 0.147.
+  SEEN (v/half-h33f.jpg, x3-h33f.jpg, levels-h33f.jpg, life-h33.jpg, motion-h33.jpg): lanes now swell into pools at
+  some crossings and nearly close between some tops; tops end in soft fingers, no outline, no bevel band. Still
+  wrong: the ground reads as paving of pale lumps from far (tops evenly light, in the approved the dark runs from
+  the crossings up the flanks as fibres and the tops carry one small light); lanes still a flat brown bed where
+  wide; in motion cells swell, shrink and close and the lights move outward, but the net is the same net over
+  2 s (few births in the near field in 60 frames).
