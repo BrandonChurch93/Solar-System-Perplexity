@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T12:36:35.306Z",
- "head": "4cfbc4acbbfe828414ac475822a5dd8d378f1cf1",
- "note": "trial Q1: the far deck as a picture; clean at the handover, the reader reads its clearing into the plates 1.21",
+ "pushed": "2026-11-26T12:57:13.582Z",
+ "head": "ee476f53034fe0630ad11ef220566696acb96a89",
+ "note": "Venus trial Q2: the far deck as a picture cleared slowly by height is a white patch from above; dropped, the name stays 35edb711",
  "looks": [
+  {
+   "time": "2026-11-26T12:57:12.985Z",
+   "file": "20261126125712985-note-Q2-m-1.jpg",
+   "source": "../../../../tmp/v/sh/Q2-m-1.jpg",
+   "kind": "note",
+   "label": "Venus rise, trial Q2 (not named): crops x 800 to 1400, y 100 to 400, every film frame 1554 to 1561, the named state over the trial; a white field without forms; dropped",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T12:57:12.325Z",
+   "file": "20261126125712325-note-Q2-whole-b.jpg",
+   "source": "../../../../tmp/v/sh/Q2-whole-b.jpg",
+   "kind": "note",
+   "label": "Venus rise, trial Q2 (not named): whole frames 1563 to 1578, the named state (main from 1572) over the trial; the white patch fades by 1569; dropped",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T12:57:11.692Z",
+   "file": "20261126125711692-note-Q2-whole-a.jpg",
+   "source": "../../../../tmp/v/sh/Q2-whole-a.jpg",
+   "kind": "note",
+   "label": "Venus rise, trial Q2 (not named): whole frames 1542 to 1560, the named state over the trial; the picture of the far deck stands as a white patch on the golden globe from 1554 on; dropped",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T12:36:34.544Z",
    "file": "20261126123634544-note-r1-mid.jpg",
@@ -49,30 +73,6 @@
    "format": "uhd",
    "diag": "nograin/side=orbit/t=51.333333333333336",
    "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T12:12:01.452Z",
-   "file": "20261126121201452-note-pic0-view.jpg",
-   "source": "../../../../tmp/v/sh/pic0-view.jpg",
-   "kind": "note",
-   "label": "trial, not named: the far deck of T as the surface view shows it at 1540, laid into the frame of T (bearing across, sine of elevation 0 at the top to 0.22 at the bottom), first run",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:12:00.836Z",
-   "file": "20261126121200836-note-F3-mid-b.jpg",
-   "source": "../../../../tmp/v/sh/F3-mid-b.jpg",
-   "kind": "note",
-   "label": "rise 1547 to 1552, x 660 to 1260: the named state beside the failed trial F3: the named state has the plates' mottled tan field, F3 stays pale with pink and green rippled patches; F3 is dropped",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:12:00.223Z",
-   "file": "20261126121200223-note-F3-mid-a.jpg",
-   "source": "../../../../tmp/v/sh/F3-mid-a.jpg",
-   "kind": "note",
-   "label": "rise 1540 to 1546, x 660 to 1260: the named state beside the failed trial F3 (ratio map fitted to the ground at 1540): nearly equal, thin white and greenish lines on the limb in F3 at 1545 and 1546",
-   "stop": "venus"
   }
  ]
 }
