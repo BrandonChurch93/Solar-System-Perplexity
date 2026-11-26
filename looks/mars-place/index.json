@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T01:46:40.301Z",
- "head": "5d74180adda79728a95af3ea14ca1fe28a7bb69f",
- "note": "rise 2708 pattern row: reads a tear of the flow chain on equal pictures, name and main",
+ "pushed": "2026-11-26T02:09:35.902Z",
+ "head": "e463865a080ce64c59f68cdff358011e9dc1b180",
+ "note": "cause hunt for the 0.12 of true carry at 2708: broad tone of land-8p5 against the map",
  "looks": [
+  {
+   "time": "2026-11-26T02:09:34.752Z",
+   "file": "20261126020934752-note-true-MN.jpg",
+   "source": "../../../../tmp/pm/true-MN.png",
+   "kind": "note",
+   "label": "true carry maps at 2708: main, the name",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T02:09:33.535Z",
+   "file": "20261126020933535-note-tone-MN.jpg",
+   "source": "../../../../tmp/pm/tone-MN.png",
+   "kind": "note",
+   "label": "broad tone ratio land-8p5 over patch-19 at 60 texels: main, the name (rings 0.8, 2.8, 4.2 degrees)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T02:09:32.686Z",
+   "file": "20261126020932686-note-plates3.jpg",
+   "source": "../../../../tmp/pm/plates3.png",
+   "kind": "note",
+   "label": "land-8p5 times 3: main, the name, patch-19 (map); green box the row's area at 2708; the name's plate has a pale glare NW that the map lacks",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T01:46:23.002Z",
    "file": "20261126014623002-note-M-row0016.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/paint7.png",
    "kind": "note",
    "label": "paint test: L2 under C2, rim magenta, rest green, feather blue at 2681, 2678, 2476",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T01:21:54.684Z",
-   "file": "20261126012154684-note-rim6.jpg",
-   "source": "../../../../tmp/rim6.png",
-   "kind": "note",
-   "label": "dot cure v3 (colour of the parent's rim), NOT kept: dot gone at 2476 and 2477, bright dash at 2681 and 2678",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T01:21:53.677Z",
-   "file": "20261126012153677-note-r1-2708-2716.jpg",
-   "source": "../../../../tmp/r1-2708-2716.png",
-   "kind": "note",
-   "label": "name 21b55bc5, draft, frames 2708 and 2716 at the place of the pattern row (x 250 to 700, y 120 to 470), 2 times: the pair the reader's row 2708 compares",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T00:51:42.879Z",
-   "file": "20261126005142879-note-speckfix.jpg",
-   "source": "../../../../tmp/speckfix.png",
-   "kind": "note",
-   "label": "speck cure, 6 times: left the name, right L0 with 17 blocks coded anew; top 2686, bottom 2684",
    "stop": "mars"
   }
  ]
