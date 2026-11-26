@@ -1,9 +1,37 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T11:06:45.552Z",
+ "pushed": "2026-11-26T12:20:45.342Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Mars 2468 at the review tier: the line of the weigh alone stands 22.8 levels over the ground beside on 284 px, with the outline in the masks 2.1; looking for which layer draws it",
+ "note": "The readers of the film's motion carry the sky over the step of a way in by its seen turn (units and both diffs measured, commit follows); proof frames of the step on Neptune at draft",
  "looks": [
+  {
+   "time": "2026-11-26T12:20:37.997Z",
+   "file": "20261126122037997-note-step-line.jpg",
+   "source": "../../../../tmp/arr/pics/step-line.png",
+   "kind": "note",
+   "label": "4529 and 4530, x 1240 to 1840, y 960 to 1080 at twice the size: a level tone edge across the planet near y 1033, also on main's Neptune, not chased"
+  },
+  {
+   "time": "2026-11-26T12:20:36.611Z",
+   "file": "20261126122036611-note-step-lower-right.jpg",
+   "source": "../../../../tmp/arr/pics/step-lower-right.png",
+   "kind": "note",
+   "label": "The same four frames, lower right at full size: limb and stars over 4529 and 4530"
+  },
+  {
+   "time": "2026-11-26T12:20:35.386Z",
+   "file": "20261126122035386-note-step-upper-left.jpg",
+   "source": "../../../../tmp/arr/pics/step-upper-left.png",
+   "kind": "note",
+   "label": "The same four frames, upper left of the picture at full size: stars and band keep their place over 4529 and 4530"
+  },
+  {
+   "time": "2026-11-26T12:20:33.751Z",
+   "file": "20261126122033751-note-step-whole.jpg",
+   "source": "../../../../tmp/arr/pics/step-whole.png",
+   "kind": "note",
+   "label": "Neptune with an aim for its way in, frames 4528 to 4531 at draft, half size: the stars step at 4530 under the stop's orbit picture"
+  },
   {
    "time": "2026-11-26T11:06:44.852Z",
    "file": "20261126110644852-note-near-2468-review.jpg",
@@ -17,34 +45,6 @@
    "source": "../../../../tmp/weigh/grow2-band-2470.png",
    "kind": "note",
    "label": "Mars 2470 at draft, the head of the band: the matte as sent and carried 2 px outward, the cost of the trial"
-  },
-  {
-   "time": "2026-11-26T10:39:26.157Z",
-   "file": "20261126103926157-note-grow2-near-2470.jpg",
-   "source": "../../../../tmp/weigh/grow2-near-2470.png",
-   "kind": "note",
-   "label": "Mars 2470 at draft, the near slope: the matte as sent and the matte carried 2 px outward (a trial, not taken)"
-  },
-  {
-   "time": "2026-11-26T10:39:25.250Z",
-   "file": "20261126103925250-note-near-2470-x3.jpg",
-   "source": "../../../../tmp/weigh/near-2470-x3.png",
-   "kind": "note",
-   "label": "Mars 2470 at draft, the near slope: as it stands, the weigh alone, the weigh with the matte"
-  },
-  {
-   "time": "2026-11-26T10:39:24.184Z",
-   "file": "20261126103924184-note-near-2468-a.jpg",
-   "source": "../../../../tmp/weigh/near-2468-a.png",
-   "kind": "note",
-   "label": "Mars 2468, the near slope three ways: the four texel weigh alone at draft, with the matte at draft, with the matte at the review tier"
-  },
-  {
-   "time": "2026-11-26T10:23:04.761Z",
-   "file": "20261126102304761-note-band-2472.jpg",
-   "source": "../../../../tmp/weigh/band-2472.png",
-   "kind": "note",
-   "label": "Mars 2472 at draft four times, the band's far edge: the matte with one read above, with the four texel weigh below; to my eye the same"
   }
  ]
 }
