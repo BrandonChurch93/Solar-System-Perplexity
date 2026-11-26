@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T09:25:03.787Z",
- "head": "b28d29a882862711ad1033614fee83f5dd77cf55",
- "note": "state two: moon behind the ring, shadow edge at 3612, the rise's pattern place; drafts of the flights run",
+ "pushed": "2026-11-26T09:41:24.856Z",
+ "head": "4da3d8c2ecfb23dcb5027a756b3da5fb87305a17",
+ "note": "state two pushed (4da3d8c2); named red: the rise's pattern at 3826; next the proof of its cause and the cure",
  "looks": [
+  {
+   "time": "2026-11-26T09:41:24.249Z",
+   "file": "20261126094124249-note-sh_in.jpg",
+   "source": "../../../../tmp/v/rigid/S2/sh_in.jpg",
+   "kind": "note",
+   "label": "state two 4da3d8c2, way in 3340 to 3400, drafts every fourth frame"
+  },
+  {
+   "time": "2026-11-26T09:41:23.655Z",
+   "file": "20261126094123655-note-sh_dive_start.jpg",
+   "source": "../../../../tmp/v/rigid/S2/sh_dive_start.jpg",
+   "kind": "note",
+   "label": "state two 4da3d8c2, dive 3540 to 3594, drafts every third frame"
+  },
+  {
+   "time": "2026-11-26T09:41:22.970Z",
+   "file": "20261126094122970-note-sh_rise_3836.jpg",
+   "source": "../../../../tmp/v/rigid/S2/sh_rise_3836.jpg",
+   "kind": "note",
+   "label": "state two 4da3d8c2, rise 3836 to 3858, drafts every second frame"
+  },
+  {
+   "time": "2026-11-26T09:41:22.402Z",
+   "file": "20261126094122402-note-sh_fl_out.jpg",
+   "source": "../../../../tmp/v/rigid/S2/sh_fl_out.jpg",
+   "kind": "note",
+   "label": "state two 4da3d8c2, flight out, drafts every fifth frame"
+  },
   {
    "time": "2026-11-26T09:25:03.172Z",
    "file": "20261126092503172-note-pat5.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/rigid/R2/s1pop_3870.jpg",
    "kind": "note",
    "label": "state one rise 3870 to 3881, lower right at full size: the shadowed ring leaves and uncovers the bright sky"
-  },
-  {
-   "time": "2026-11-26T08:56:12.629Z",
-   "file": "20261126085612629-note-lr5.jpg",
-   "source": "../../../../tmp/v/rigid/S2/lr5.jpg",
-   "kind": "note",
-   "label": "3465 lower right, plain above and lifted by 4 below: approved, state one, tone alone, thin 0.5, thin 0.85"
-  },
-  {
-   "time": "2026-11-26T08:56:11.036Z",
-   "file": "20261126085611036-note-u4_3465.jpg",
-   "source": "../../../../tmp/v/rigid/S2/u4_3465.png",
-   "kind": "note",
-   "label": "3465 final, state two as it stands: ring tone laid again, thin 0.5 on the weight of the picture, moon behind the rings, sky turn as on main"
-  },
-  {
-   "time": "2026-11-26T08:18:32.180Z",
-   "file": "20261126081832180-note-shadow_edge_3612.jpg",
-   "source": "../../../../tmp/v/rigid/SV/sh/shadow_edge_3612.jpg",
-   "kind": "note",
-   "label": "state one: the shadow's edge at 3612"
-  },
-  {
-   "time": "2026-11-26T08:18:31.620Z",
-   "file": "20261126081831620-note-flights.jpg",
-   "source": "../../../../tmp/v/rigid/SV/sh/flights.jpg",
-   "kind": "note",
-   "label": "state one: flights in and out, drafts"
   }
  ]
 }
