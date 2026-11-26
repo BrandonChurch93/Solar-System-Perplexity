@@ -1,9 +1,17 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T14:22:08.139Z",
- "head": "902785257fd7487a517634318aab515a0c1cffef",
- "note": "cubic ease read on the whole dive: rows 1327 to 1331 rise over the limit; a narrower ease is next, the base dive is drawing",
+ "pushed": "2026-11-26T14:54:22.326Z",
+ "head": "477369325b8e3a7414524f3fd1e7413e1d3f8518",
+ "note": "Venus: the ease of the air share kept for the rise only (47736932, in proofs); the dive pair that ruled it out of the dive",
  "looks": [
+  {
+   "time": "2026-11-26T14:54:20.944Z",
+   "file": "20261126145420944-note-S1dive-ll.jpg",
+   "source": "../../../../tmp/v/sh/S1dive-ll.jpg",
+   "kind": "note",
+   "label": "Dive 1326 to 1336, lower part, draft: the name 35edb711 above, the ease of the air share in the dive below (dropped for the dive: its pattern rows 1327 to 1331 read over main's). Same forms, the left third a little darker with the ease at 1326 and 1328.",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T14:22:06.906Z",
    "file": "20261126142206906-note-S1-1557-s.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/v/sh/Q2-whole-b.jpg",
    "kind": "note",
    "label": "Venus rise, trial Q2 (not named): whole frames 1563 to 1578, the named state (main from 1572) over the trial; the white patch fades by 1569; dropped",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T12:57:11.692Z",
-   "file": "20261126125711692-note-Q2-whole-a.jpg",
-   "source": "../../../../tmp/v/sh/Q2-whole-a.jpg",
-   "kind": "note",
-   "label": "Venus rise, trial Q2 (not named): whole frames 1542 to 1560, the named state over the trial; the picture of the far deck stands as a white patch on the golden globe from 1554 on; dropped",
    "stop": "venus"
   }
  ]
