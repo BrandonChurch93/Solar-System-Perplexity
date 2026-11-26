@@ -164,7 +164,9 @@ export class Plan extends StopPlan {
 
   override skyShare(seg: Segment, time: number): SkyShares | null {
     if (seg.stop !== this.id || (seg.kind !== 'dive' && seg.kind !== 'rise')) return null
-    return { low: 1 - smoother(ramp(Math.log(sky.height[0]), Math.log(sky.height[1]), Math.log(this.path(seg.kind, time).position.length() - 1))) }
+    const height = Math.log(this.path(seg.kind, time).position.length() - 1)
+    const low = 1 - smoother(ramp(Math.log(sky.height[0]), Math.log(sky.height[1]), height))
+    return seg.kind === 'dive' ? { low, high: smoother(ramp(Math.log(sky.leave[0]), Math.log(sky.leave[1]), height)) } : { low }
   }
 
   override skyCarryShare(seg: Segment, time: number): number | null {
