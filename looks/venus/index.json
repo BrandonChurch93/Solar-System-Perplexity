@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T01:55:04.154Z",
- "head": "d85938eda5c3cb3e82edade8b0b3f7000500f182",
- "note": "control: the far deck in the dive's plates lifts the left edge 0.51 to 0.60; state A f8c764b5 without it, whole runs under way; main fb40db96 merged; no name yet",
+ "pushed": "2026-11-26T02:50:07.673Z",
+ "head": "885e4de273e1398e29097a22f3b62295f6d8b29d",
+ "note": "state A's dive read whole: 22 red rows, largest 0.67 at 1311 (main 28, 0.62); 2 rows red that main has green, 10 red rows higher than main's; far deck and scale by scale are not the cause (controls); no name",
  "looks": [
+  {
+   "time": "2026-11-26T02:41:51.156Z",
+   "file": "20261126024151156-note-A-M1-1311-x4.jpg",
+   "source": "../../../../tmp/v/sh/A-M1-1311-x4.jpg",
+   "kind": "note",
+   "label": "state A left, main middle, difference times 6 right: 1311 and 1308, x 140 to 400, y 140 to 290 at 2.4 times, the place of the row 1311 (A 0.67, main 0.55)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T02:41:50.184Z",
+   "file": "20261126024150184-note-A-M1-diff-a.jpg",
+   "source": "../../../../tmp/v/sh/A-M1-diff-a.jpg",
+   "kind": "note",
+   "label": "state A left, main's Venus on the same tree middle, their difference times 8 right: 1275, 1305, 1311, 1320, 1332",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T02:41:48.708Z",
+   "file": "20261126024148708-note-d06.jpg",
+   "source": "../../../../tmp/v/sh/A/d06.jpg",
+   "kind": "note",
+   "label": "state A f8c764b5, the dive, every frame at rate 2 from 1310 to 1317 + 1/2, quarter size",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T01:55:03.038Z",
    "file": "20261126015503038-note-mgD-changes.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/cand-d-1322L.jpg",
    "kind": "note",
    "label": "candidate dive 1320 to 1331, every film frame, the left edge (x 0 to 400, y 280 to 620)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T01:26:31.594Z",
-   "file": "20261126012631594-note-m0-cand-d-L1322.jpg",
-   "source": "../../../../tmp/v/sh/m0-cand-d-L1322.jpg",
-   "kind": "note",
-   "label": "main left, candidate right, dive 1320, 1323, 1326, 1329 at the left edge (x 0 to 420, y 280 to 620)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:59:06.753Z",
-   "file": "20261126005906753-note-merge-diff-1547.jpg",
-   "source": "../../../../tmp/v/sh/merge-diff-1547.jpg",
-   "kind": "note",
-   "label": "still 1547 and its difference times 8 to the merged tree: the sky alone",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:59:06.097Z",
-   "file": "20261126005906097-note-mgR-changes.jpg",
-   "source": "../../../../tmp/v/sh/mgR-changes.jpg",
-   "kind": "note",
-   "label": "merged reader, rise slice 1540 to 1552: its picture of its largest row, 1545, pattern 0.70",
    "stop": "venus"
   }
  ]
