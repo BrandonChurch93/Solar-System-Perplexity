@@ -1,9 +1,17 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T18:31:22.508Z",
+ "pushed": "2026-11-26T19:03:34.761Z",
  "head": "498513133f001112164442409cd35fd8a6395ff7",
- "note": "whole cure: my plate crop of 18:09 was the wrong ground; the lower right place of 2692 proved by control on the 0.7 and 1.6 plates; reader control running",
+ "note": "whole cure: reader control done, the lower right place carried K 5384 only; a second place at the upper left stays over main; the whole cure's own rows run",
  "looks": [
+  {
+   "time": "2026-11-26T19:03:33.558Z",
+   "file": "20261126190333558-note-g-lr.jpg",
+   "source": "../../../../tmp/pm/B/g-lr.png",
+   "kind": "note",
+   "label": "drafts 2692 and 2693, lower right at 1 to 1: main, the whole cure, the draft of the line kept only where it agrees with the plate's border (not taken; it does not touch this place: 15,337 and 17,977 px over 8 levels from main against 15,378 and 19,181)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T18:31:21.506Z",
    "file": "20261126183121506-note-ag07.jpg",
@@ -58,14 +66,6 @@
    "source": "../../../../tmp/pm/B/x-2452.png",
    "kind": "note",
    "label": "pair at native size, frame 2452 (dive): main left, the whole cure on main's plates (0d638c07) right; the west stretch (upper left) is a flat field with a hard border, named red",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T17:25:11.469Z",
-   "file": "20261126172511469-note-x-2690.jpg",
-   "source": "../../../../tmp/pm/B/x-2690.png",
-   "kind": "note",
-   "label": "pair at native size, frame 2690 (rise): main left, the whole cure on main's plates (0d638c07) right; 41,502 px differ by more than 8 levels",
    "stop": "mars"
   }
  ]
