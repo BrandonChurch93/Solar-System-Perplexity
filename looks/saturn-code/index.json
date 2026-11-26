@@ -1,9 +1,37 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T03:28:25.838Z",
+ "pushed": "2026-11-26T04:06:37.192Z",
  "head": "b61cc026e2ba3b97f001c8ac51ef257ecb7210d2",
- "note": "K (rigid body) dive by the reader viewed frame by frame; five lone pixels left on the night limb, cause found, cure next",
+ "note": "lone pixel cures under test: the lip cull is proved, the globe edge cure trades one fault for another near the pole, still open",
  "looks": [
+  {
+   "time": "2026-11-26T04:06:36.622Z",
+   "file": "20261126040636622-note-z_b_3581.jpg",
+   "source": "../../../../tmp/v/rigid/CX/z_b_3581.jpg",
+   "kind": "note",
+   "label": "3581 north limb: the unit mesh has dark specks near the pole, the larger mesh none"
+  },
+  {
+   "time": "2026-11-26T04:06:36.062Z",
+   "file": "20261126040636062-note-z_a_3567.jpg",
+   "source": "../../../../tmp/v/rigid/CX/z_a_3567.jpg",
+   "kind": "note",
+   "label": "3567 north limb: the larger mesh brings dark specks near the pole, not accepted"
+  },
+  {
+   "time": "2026-11-26T04:06:35.504Z",
+   "file": "20261126040635504-note-z_night_3584.jpg",
+   "source": "../../../../tmp/v/rigid/CX/z_night_3584.jpg",
+   "kind": "note",
+   "label": "3584 night limb x4: lip cure only against larger mesh, the lone pixel is gone"
+  },
+  {
+   "time": "2026-11-26T04:06:34.934Z",
+   "file": "20261126040634934-note-z3584.jpg",
+   "source": "../../../../tmp/v/rigid/CT/z3584.jpg",
+   "kind": "note",
+   "label": "lone pixel at 3584 on the night limb, frames 3582 to 3586, before the cure"
+  },
   {
    "time": "2026-11-26T03:28:13.648Z",
    "file": "20261126032813648-note-spot_3589.jpg",
@@ -31,34 +59,6 @@
    "source": "../../../../tmp/v/rigid/PK/dive_sheet_3586.jpg",
    "kind": "note",
    "label": "K dive 3586 to 3597, every frame: the hero's ring pixels go out 3579 to 3600"
-  },
-  {
-   "time": "2026-11-26T03:28:10.055Z",
-   "file": "20261126032810055-note-dive_sheet_3562.jpg",
-   "source": "../../../../tmp/v/rigid/PK/dive_sheet_3562.jpg",
-   "kind": "note",
-   "label": "K dive 3562 to 3573, the reader's frames, every frame (rigid body, lens law b)"
-  },
-  {
-   "time": "2026-11-26T02:34:49.457Z",
-   "file": "20261126023449457-note-limb_in.jpg",
-   "source": "../../../../tmp/v/rigid/m66/limb_in.jpg",
-   "kind": "note",
-   "label": "K 3369, 3371, 3374: the limb at 3 times with the true spheroid dotted green (lower left behind the near ring, top against the far ring)"
-  },
-  {
-   "time": "2026-11-26T02:34:48.253Z",
-   "file": "20261126023448253-note-binner_3376.jpg",
-   "source": "../../../../tmp/v/rigid/m66/binner_3376.jpg",
-   "kind": "note",
-   "label": "K 3376 and 3390 at the left ansa, 3 times: true circles dashed (green 1.5237 B inner, yellow 1.2458, magenta 1.9545)"
-  },
-  {
-   "time": "2026-11-26T02:34:47.570Z",
-   "file": "20261126023447570-note-in_full_ra.jpg",
-   "source": "../../../../tmp/v/rigid/PK/in_full_ra.jpg",
-   "kind": "note",
-   "label": "K flight in 3373 to 3378 at full size, right ansa"
   }
  ]
 }
