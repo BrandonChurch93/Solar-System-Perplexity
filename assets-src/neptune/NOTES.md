@@ -11632,3 +11632,190 @@ LOOK, 17:04 UTC, from neptune_builder (low priority; not a name; the name 7a620a
 Nothing renders. Next: handover_engineer's word at 17:20 on 4956, 4953, 4952 at review goes into the notebook; if it or your machines show a fault of the entry that main lacks, I bring the same tree with main's line of config/showcase.json, merged on main's tip and tested, on your word.
 
 Pictures: 1 look-N24.jpg. 2 ctl-rise5-whole.jpg (4978, 4982, 4738: the name | the map's cloud cover 0 in the far look | that and its shadow 0). 3 ctl-rise5-crop.jpg (the lower part of 4978 and 4982 at 1 to 1, the same three). 4 ctl-4860-cover.jpg (4860 at 960: the name | cover 0). 5 ctl-ticks-crop.jpg (the ticks: the name | the map alone | cover 0 and shadow 0). 6 ctl-rise8-crop.jpg (the ticks: the name | far.on 2 | deck.wisp.light 0).
+
+## 26 Nov, 17:04 to 17:23 UTC: lab log (a cure of the soft patches tried after all: far.grain; the judged four on it)
+
+- 17:04:40 the notebook to 17:04 pushed (3b2b2ad19; the name's sha stays 7a620a39).
+- THE THOUGHT. The exact control (cover 0) says the patches and the blob are the map's cloud layer in the far look, seen from
+  nearer than its grain: one texel of the map covers several pixels of the master frame, so nothing in it has form. A cure by
+  the place and the view alone: where one texel, times the cosine of the view, covers more than a few master pixels, multiply
+  the cover by a field of mean 1 that is fixed on the body, with waves no finer than the master pixel resolves. No clock, no
+  canvas size (`pix = uFoot * uGrad` is the master frame's pixel), nothing at the hold (the texel is far under a pixel there).
+- 17:06 to 17:12 TRIAL D1, as a tool (`/tmp/ctl-d.sh`, deep.ts restored after it): from 1.0 to 3.0, wave 8, 6 octaves, fall
+  0.65, gain 4, no cut of the cover at 1. The first run failed in the shader: `'uMapWidth' : undeclared identifier` (in deep.ts
+  the globe's uniforms carry a G: `uGMapWidth`). D1 against the name at 960 preview, draft (mean, largest, share of pixels by
+  more than 8 levels): 4974 0.646, 91, 3.28 %; 4978 1.332, 83, 6.50 %; 4982 1.116, 84, 5.06 %; 4986 0.704, 94, 2.52 %;
+  4738 0.795, 97, 4.17 %; 4860 0.043, 17, 0.07 % (21847 px differ, y 36 to 528). By sight (ctl-D1-crop.jpg, ctl-D1-whole.jpg):
+  the soft patches break into small bodies with gaps; the white blob stays a blob with some mottle.
+- 17:13 to 17:15 TRIAL D2 (from 1.5 to 3.5, so the surface view is touched less): 4978 1.316, 83, 6.48 %; 4982 1.065, 84,
+  4.87 %; 4986 0.588, 94, 1.99 %; 4860 mean 0.014, largest 5, 0.00 % over 8 (13624 px differ, x 0 to 959, y 96 to 528; sha
+  5cb658b8da4ddb76). So 4860 does NOT keep its bytes: the far look's thin map cloud on the near ground is seen at more than
+  1.5 px a texel. Small, and said in the look.
+- 17:16 THE LAW INTO SOURCE (`/tmp/grain-apply.py 1.5 3.5 8 6 0.65 4`): deep.json `far.grain` (from [1.5, 3.5], wave 8,
+  octaves 6, fall 0.65, gain 4, with its how text); deep.ts: uniforms `uFarGrain`, `uFarGrainFall` and a block after the
+  slab line. It differs from D2 by `min(mapCloud, 1.0)` inside the block, so cover over 1 can break too; that form was not
+  drawn before the chain. Commit e130dbf04; then the merge of main e2890b873 ("Status 400 and decision d385": scorecards
+  and kit/PROGRESS.md only): 67ecef8665cb835056cb9ed53155ce8845c9b50b, not pushed.
+- KNOWN LIMITS of the law, by the code: between 0.9 and 0.15 radii the globe's own shader (planet.ts) also draws the map's
+  cloud without the field (the scene's share goes by the log of the height), so the cure is partial there; the map's cloud
+  shadow is not moved by the field, so a gap in the cover can stand over a shadow.
+- 17:16:40 `/tmp/chainG.sh`: the judged four at 1920 draft with the measures (N25), then the rise 4948 to 5004 (NGx) and the
+  dive 4700 to 4768 (NGw) at half steps, 960 preview.
+- 17:17 handover_engineer's mail read (below). `git push --dry-run` from my tree works (his fails since 17:15).
+- 17:19:54 THE JUDGED FOUR on 67ecef86 (N25; 22.4, 29.9, 93.1, 13.3 s a draft frame):
+  - 4605 21b475da05086981, 5006 f9d1bfe65547e1ee: the same bytes as the name's (N24).
+  - 4707 2bc804f9cb327ff5 (the name's e2607a46b14acafa): 540 px differ by 1 level (x 623 to 1118, y 707 to 1078); `litread.py`
+    reads N24 and N25 alike: lit 52.7, 139.1, 210.5, night 1.9, 8.7, 21.2, corner 8.2, 25.2, 38.9, plain 47.2576 (main
+    46.8820); `bands.py` against the hero: the band of G17 1.058 / 0.556 and the finest band 0.792 / 0.404, both alike.
+  - 4860 5f14f7188754a1ab (the name's 0024010e3f61eaa2): mean 0.0292, largest 5, 55734 px differ (x 0 to 1919, y 128 to 1069),
+    none by more than 8. G17 0.972 / 0.659, plain 21.145 (the name's 21.144; main's 0.934 / 0.549 and 22.986); ground rows
+    median 0.852; the bands as the name's to the digits printed. The dot at 4605: least 55.6 on a ring of 75.9, as main's.
+- A SLIP OF MINE IN THE NAME MAIL, found here: the name's plain at 4707 by my reader is 47.2576, not 47.2517. 47.2517 was the
+  state before the footprint went to 1.0 (the lab log of 12:55 to 13:32: "the sha 47.2517, 1.0 47.2576"); I copied the older line.
+  Corrected in the look of 17:22.
+- 17:22 the look sent (below), with the line "no second name on the patches" of 17:04 taken back.
+- handover_engineer's picture z56-hatch.png looked at 17:23: at 8 to 1 the draft 4956 shows a checker of single pixels in
+  the thin cirrus between the white body and the blue gap; the review 4956 shows the same place smooth but for a faint
+  trace. An open fault of the name (the cirrus' own grain at draft, taken down by 24 samples in a fast frame; a slow frame
+  is not drawn by anyone).
+
+## Mail from handover_engineer, 17:17 UTC (read 17:17 by my clock; word for word; low priority; its picture z56-hatch.png looked at 17:23)
+
+> handover_engineer to neptune_builder, 17:17 UTC, LOW, no answer needed. THE ENTRY AT REVIEW TIER, as promised for 17:20: the rise's split frame is seen, the onset not yet.
+>
+> Tree of every picture here: your OLD tip 2b9dbf28 with the cure's seven files and the entry (not your 823bb4cd: cirrus.px 1.0 is not in it). 1920 x 1080.
+>
+> 1. 4956, the rise's split frame: review, 24 samples, terrain and orbit by turns, ends 0.5, shutter 0.526 (sha256 75627695e2992f78861462132bcf4d64424397bf4b8fbacfe4c1a814c5aa628b, 2119 s). Looked at in six tiles at 1 to 1 and in six boxes at 3 to 1 and 8 to 1: limb, stars, the dark spot, the deck's streaks and every cloud edge are drawn once. NO DOUBLE EXPOSURE.
+> 2. It has no neighbour at review, so I drew 4955 (terrain alone), 4956 and 4957 (orbit alone) at draft in the same tree and laid them beside it. The small clouds at the right (x 1540..1900 y 560..740) carry a fainter lower lobe 8 to 12 px under each body: it is in the terrain view and in the orbit view alike, so it is the cloud's own shape and not a second copy. Measured, review 4956 against its own draft: the limb's row at nine columns x 100..1700 within 0.02 px (the limb moves up to 2.1 px a frame there); twelve bright stars within 0.03 px.
+> 3. Light across the split: clouds (luma over 110) 157.45, 157.49, 157.49 in the drafts of 4955, 4956, 4957 and 157.72 in the review 4956; deck (30 to 110) 69.11, 68.97, 68.66 and 69.09; dark 17.12, 17.31, 17.52 and 17.27. No step.
+> 4. YOURS TO KNOW, not the entry's and not the split's: the check pattern in thin cirrus that I named in the wisp of 4757. Measured as the luma times (-1)^(x+y), averaged over 8 x 8 px (grain gives an eighth of its deviation, a checker its amplitude): px where it is at least 1.5 of 255: draft 4955 (terrain alone) 4981, draft 4956 5600, draft 4957 (orbit alone) 5304, top 6.5 to 8.3 of 255: both views alike. Review 4956: 694 (top 3.4), review 4758: 445, review 4757: 316: 24 samples take most of it in these frames, which move 14 px a frame; whether it stays in a slow frame I have not drawn. Where: x 896..960 y 700..764 of 4956, x 1300..1364 y 940..1004 of 4955 and 4957. My counts of "alternating px" in the 16:08 mail were a blunt measure (they also count the deck's thin streaks); this one holds. I did not look for the source and I have not drawn your tip.
+> 5. STILL RED, NOT SEEN: the rise's onset. 4953 (22 samples, share 0.475) lands about 17:21, 4952 (16, share 0.105) about 17:45, 4954 (24, share 0.5) about 18:20, 4951 after; 88 s a sample here. I mail once more when the pair 4952, 4953 is seen. By the plan only, not a picture: the weighed spread of the samples in px through 4950 to 4954 is 0.58, 1.15, 2.17, 2.37, 2.53, rising with the px seen.
+>
+> Pictures: looks folder engine-handover, pushes of 16:44 and 16:53. The checker at 8 to 1 is attached (z56-hatch.png): my push fails since 17:15 ("could not read Username"), so it is not on the looks branch.
+
+## 26 Nov, 17:22 UTC: the look, the trial far.grain and a corrected number, to the Builder (word for word; sent 17:22:05; attached look-N25.jpg, ctl-D2-crop.jpg, ctl-D2-whole.jpg; low priority)
+
+LOOK, neptune_builder, 17:22 UTC (low; no answer needed). The name stands as sent: 7a620a3966314e7abeecc70b206990d2cc588499.
+
+1. I TAKE BACK ONE LINE OF MY LOOK OF 17:04: "no second name on the patches". A cure of MAIL 1513 point 1 is in trial after all and becomes a second name only if it is proven by 18:30; if not, the first name stands alone and the trial goes to the next round's list.
+- What it is (my stop only: deep.json far.grain, deep.ts): where the eye is so near that one texel of the cloud map, times the cosine of the view, covers more than 1.5 to 3.5 pixels of the master frame, the cover of the map's cloud in the far look is multiplied by a noise field of mean 1 that is fixed on the body (longest wave 8 texels, each next wave half as long, a wave counted only where the master pixel resolves it). By the place and the view alone: no clock, no canvas size. Under 1.5 the cover is the map's as it was.
+- Local sha 67ecef8665cb835056cb9ed53155ce8845c9b50b, NOT pushed, not a name: the name, one commit of my stop, and the merge of main e2890b873.
+- Picture 2 and 3 (960 preview, draft; the trial's law with from 1.5 to 3.5, drawn as a tool before it went into source): 4978, 4982, 4986 of the name above, the trial below. The soft patches break into small bodies with gaps of the size the frame shows. STILL RED IN IT: the white blob at the lower edge stays a blob (some mottle only); the bodies have no shade of their own; between 0.9 and 0.15 radii the globe's own shader also draws the map's cloud without the field, so the cure is partial there. Against the name: 4978 mean 1.316, largest 83, 6.48 percent of the pixels by more than 8 levels; 4982 1.065, 84, 4.87; 4986 0.588, 94, 1.99.
+
+2. THE JUDGED FOUR on 67ecef86 at 1920, draft (picture 1: 4860 beside the approved):
+- 4605 21b475da05086981 and 5006 f9d1bfe65547e1ee: the same bytes as the name's.
+- 4707 2bc804f9cb327ff5: differs from the name's in 540 pixels by 1 level (x 623 to 1118, y 707 to 1078); plain 47.2576 both, the band of G17 and the finest band the same to three places.
+- 4860 5f14f7188754a1ab: differs from the name's by mean 0.029, largest 5 levels, 55734 pixels (y 128 to 1069): the field on the far look's thin map cloud. G17 0.972 / 0.659 (the name's 0.972 / 0.659; main's 0.934 / 0.549), plain 21.145 (the name's 21.144; main's 22.986). By sight the same picture. This is a change of the surface view's far ground, small; I say it against MAIL 1475 (h) and it is yours to rule if the second name comes.
+
+3. A NUMBER OF MY NAME MAIL CORRECTED: the plain at 4707 of the name by my reader is 47.2576, not 47.2517 (47.2517 was the state before the footprint went to 1.0; I copied the older line). Main's 46.8820 stands. The name is over main's there by 0.3756, not 0.3697; read with reason by MAIL 1497 as before.
+
+4. Rendering now: the rise 4948 to 5004 and the dive 4700 to 4768 at half steps (960 preview) on 67ecef86, then the rows, every frame by eye, the units and the path lines. Seconds a draft frame at 1920: 22.4 (4605), 29.9 (4707), 93.1 (4860), 13.3 (5006).
+
+5. handover_engineer's mail of 17:17 is read (the split frame 4956 at review with the entry: no double exposure; a check pattern in thin cirrus at x 896 to 960, y 700 to 764 of 4956, 5600 pixels at draft with the top 6.5 to 8.3 of 255, and 694 at review with the top 3.4, on my older tip 2b9dbf28 with the entry; the rise's onset 4952 to 4954 not yet seen). I add the check pattern to the name's open faults as he states it; I have not looked at his picture yet.
+
+## 26 Nov, 17:23 to 18:00 UTC: lab log (the trial far.grain fails in motion; no second name; the trial taken out again)
+
+- THE CLOCK. chainG at half steps did not fit: by the first redraw's file times the rise 4948 to 5004 takes 28 minutes and
+  the dive 4700 to 4768 33 minutes at half steps (26 s a frame near the ground at 960, not the 6 s I had reckoned), and the
+  units need 15 minutes alone. 17:29:39 chainG killed after 21 frames of the rise (4948 to 4958 at half steps; all 21 open
+  whole); 17:29:56 `/tmp/chainH.sh`: the rest at WHOLE frames, the rise 4959 to 5004 (done 17:39:45; about 12 s a frame
+  with the build), then the dive 4700 to 4768 (done 17:57:03). Tree 67ecef86, 960 preview, draft.
+- THE PROXY AT WHOLE FRAMES ON THE NAME (so that the trial is read against the name the same way; `pic2.py ... 1` on NDx and
+  NDw, the first redraw): rise 1 (4948 to 4987) pattern 0.3863 at 4971, pop 1.1231 at 4967, level step 0.3211 at 4969;
+  rise 2 (4988 to 5029) pattern 0.3672 at 4991, pop 1.0482 at 5029, level step 0.1494 at 4999; dive 1 (4668 to 4724)
+  pattern 0.3118 at 4702, pop 1.1008 at 4713, level step 0.2734 at 4714; dive 2 (4725 to 4768) pattern 0.4091 at 4743, pop
+  1.0863 at 4747, level step 0.1691 at 4732. So the proxy's pop and level step depend on the step it is read at (the half
+  frame rows of the name mail: rise 1 pop 1.0771, level step 0.1080; dive 1 pop 1.0932, level step 0.1728; dive 2 pattern
+  0.4695). Said to the Builder at 17:46. Which step his reader reads at I have not looked up.
+- THE TRIAL'S RISE (composite NGXc: 4948 to 5004 of the trial, 5005 to 5037 of the name; whole frames). Bounds: 4998 to
+  5004 are the same bytes as the name's; 4948 to 4997 differ (50 frames). Rows: rise 1 pattern 0.5071 at 4975 at place
+  (388, 538) of 960 by 540, OVER the limit 0.45 (0.5057 at 4976 at (0, 538)); pop 1.1294 at 4967; level step 0.3214 at
+  4969. Rise 2 pattern 0.3682 at 4991, pop 1.0482 at 5029, level step 0.1494 at 4999. By frame, the pattern of the trial
+  against the name's: 4973 0.3463 | 0.2962; 4974 0.2883 | 0.2169; 4975 0.5071 | 0.1942; 4976 0.5057 | 0.2078; 4977 0.3791
+  | 0.1937; 4978 0.4071 | 0.1856; 4979 0.3678 | 0.2105; 4980 0.3166 | 0.2089; 4981 0.3023 | 0.2067; 4982 0.2792 | 0.2022;
+  from 4983 within 0.05 of each other.
+- THE TRIAL'S DIVE (composite NGWc: 4668 to 4699 of the name, 4700 to 4768 of the trial). Bounds: 4700 to 4706 the same
+  bytes as the name's; 4707 to 4768 differ (62 frames). Rows: dive 1 pattern 0.6156 at 4723 at (288, 474), OVER the limit
+  (the name 0.3118 at 4702); pop 1.0960 at 4713; level step 0.2729 at 4714. Dive 2 pattern 0.5391 at 4736 at (259, 487),
+  OVER the limit (the name 0.4091 at 4743); pop 1.0861 at 4747; level step 0.1608 at 4732. By frame, the trial against
+  the name: 4718 0.2768 | 0.1707; 4719 0.3381 | 0.1931; 4720 0.4306 | 0.1773; 4721 0.5143 | 0.1308; 4722 0.5541 | 0.1128;
+  4723 0.6156 | 0.1059; 4724 0.5986 | 0.1317; 4725 0.3666 | 0.1297; 4733 0.4180 | 0.2689; 4734 0.5187 | 0.2363; 4735
+  0.4744 | 0.2555; 4736 0.5391 | 0.2183; from 4737 within 0.013 of each other.
+- BY EYE (ngx-c2.jpg, ngx-c3.jpg: the lower half of 4973 to 4986, the name | the trial; ngx-11.jpg: the trial at 1 to 1,
+  4973 to 4981; ngw-c2.jpg: the dive's lower half 4722 to 4728). In stills the trial is the better cloud: the soft patches
+  break into small clumps with gaps, and the clumps ride with the globe. In motion it is not: at 1 to 1 the clumps change
+  shape from one frame to the next in the rise (4975 to 4978), and in the dive they form while in view at the lower left
+  (4720 to 4724, 4733 to 4736). The white blob stays a blob; the dark ticks stay. Sheets ngx-s1 to s4, ngx-c1, c4, c5,
+  ngw-s1 to s5 and ngw-c0, c1, c3 to c7 were made and NOT looked at: no name hangs on them.
+- THE CAUSE, by the law itself, no control: each wave of the field comes in by the pixel it covers (smoothstep 1.0 to 2.5
+  px) and the whole field by the texel's size on the screen (1.5 to 3.5 px), and the cover is cut at 0 with a gain of 4.
+  The eye's height changes by about a tenth a frame there, so the borders of the clumps move with the height. A change by
+  the place, not by the clock, but the eye and the reader see it change all the same. A field on the cover alone, brought in
+  by the distance, is not the cure. For the next round, untried: the layer's form made the same at every distance (a finer
+  cloud map of the far look's own, or the field as part of the map's layer at every height with planet.ts drawing the
+  same), with a gain small enough that the cut at 0 does not rule the borders.
+- NO SECOND NAME. 17:46 the look with it sent; 17:45 MAIL 1525 came (the Builder's rows of the name so far) and its point 2
+  answered 17:46 (the pop at 4713 + 1/2 by place, no control).
+- 17:57 the trial taken out by a plain revert of e130dbf04: 8b382aa5b. `git diff 7a620a39 -- src/stops/neptune
+  public/assets/neptune config` is empty: the stop's files are the name's. The trial is kept as
+  `assets-src/neptune/check/far-grain-trial.patch` (git format-patch of e130dbf04).
+- handover_engineer's mail of 17:54 read 17:55 (below); his sheet p52r-53r.png looked at 17:58: 4952 and 4953 at review
+  with the entry in four boxes at 4 to 1, every cloud edge drawn once in both; a faint check of single pixels shows in the
+  white cirrus of the second box at 4952.
+- Render folders of this hour: N25 (the judged four of the trial), NGx, NGw (the trial's rise and dive), NGXc, NGWc (the
+  composites by symlink), D1, D2 (the two tool trials). Proxy files: /tmp/pic-ng-rise.json, /tmp/pic-ng-dive.json,
+  /tmp/pic-nd-rise-w1.json, /tmp/pic-nd-dive-w1.json.
+
+## 26 Nov, 17:46 UTC: the look, NO SECOND NAME, to the Builder (word for word; sent about 17:45:50; attached look-N24.jpg, ngx-c2.jpg, ngx-11.jpg; low priority)
+
+LOOK, neptune_builder, 17:46 UTC (low; no answer needed). NO SECOND NAME. The name stands alone as sent 16:48: 7a620a3966314e7abeecc70b206990d2cc588499. Nothing of the trial is pushed.
+
+1. THE TRIAL OF 17:22 (far.grain: the map's cloud cover in the far look broken by a field fixed on the body where the eye is nearer than the map's grain) FAILS MY OWN PROOF in the rise, so I do not name it.
+- The rows, my proxy at 960, draft, WHOLE frames this time (the half frames did not fit the clock), the trial against the name read the same way: rise 1 (4948 to 4987) pattern 0.5071 at 4975 and 0.5057 at 4976, at the lower edge (388, 538 of 960 by 540), OVER the limit 0.45; the name read the same way gives 0.3863 at 4971, and 0.1942 and 0.2078 at 4975 and 4976. From 4973 to 4982 the trial reads 0.28 to 0.51 where the name reads 0.19 to 0.30. Pop 1.1294 at 4967 (the name 1.1231), level step 0.3214 at 4969 (the name 0.3211). Rise 2 as the name's (pattern 0.3682 at 4991 against 0.3672; pop 1.0482 at 5029 and level step 0.1494 at 4999 both). Main's row of rise 1 (pattern 1.3434) is not passed, but the name's own line goes from under the limit to over it, at the very place of the cure.
+- By eye (pictures 2 and 3): the soft patches do break into small clumps with gaps, and the clumps ride with the globe; but at 1 to 1 their shapes change from one frame to the next (4975 to 4978), which is what the pattern line reads. Cause by the law itself, no control: each wave of the field comes in by the pixel it covers, and the cover is cut at 0 with a gain of 4, so as the eye rises (the height grows by about a tenth a frame there) the borders of the clumps move. A change by the place, not the clock, but the eye sees it as boiling. The white blob stays a blob; the dark ticks stay.
+- It also moved two judged frames a little (my look of 17:22: 4707 in 540 pixels by 1 level, 4860 by at most 5 levels), against MAIL 1475 (h) for no proven gain.
+- A note on my proxy that this run shows: at whole frames it reads the NAME's rise 1 as pop 1.1231 at 4967 and level step 0.3211 at 4969, where at half frames I sent 1.0771 at 4968 and 0.1080 at 4968.5; the dive 1 as pop 1.1008 at 4713 and level step 0.2734 at 4714 (sent 1.0932 and 0.1728), dive 2 pattern 0.4091 at 4743 (sent 0.4695 at 4745). So the proxy's pop and level step depend on the step it is read at; the numbers of my name mail are the half frame ones, as that mail says. Your reader rules.
+
+2. So the open fault 1 of the name stands as listed (rise 4973 to 4990, dive 4736 to 4740), for Neptune's next round, with this trial and its numbers in the notebook. My reading, not a finding: a field on the cover alone is not the cure; the layer needs form that holds at every distance (a finer cloud map of its own, or the field made part of the map's layer at all heights with the globe's own shader drawing the same).
+
+3. The look (picture 1): 4860 of the name beside the approved, G17 0.972 / 0.659 (main 0.934 / 0.549), 92.0 s a draft frame at 1920; at 960 the rise's frames near the ground take 26 s each, and 4959 to 5004 about 12 s each on the mean with the build.
+
+4. Now: the dive of the trial finishes drawing (for the notebook only), then the tree goes back to the name's files of the stop by a plain commit that takes the trial out (no force, no rebase), with the trial kept as a patch file in assets-src/neptune, and the notebook is pushed. handover_engineer's last word on 4952 and 4953 at review goes into the notebook when it comes.
+
+Pictures: 1 look-N24.jpg (the approved | 4860 of the name). 2 ngx-c2.jpg (the lower half of 4973 to 4979, 960 wide: the name | the trial). 3 ngx-11.jpg (the trial at 1 to 1, x 100 to 566, y 340 to 540 of 960 by 540, 4973 to 4981).
+
+## MAIL 1525 from the Builder (/root), 17:45 UTC (read 17:46 by my clock; word for word; high priority)
+
+> MAIL 1525 from the Builder (/root), 17:45 UTC. NEPTUNE'S NAME 7a620a39: MY ROWS SO FAR.
+> 1. Rise part 2 (nr8-04): GREEN where main is red (pop 1.0496 against 1.1301, pattern 0.3862 against 1.4761, level step 0.0485 against 0.0997).
+> 2. Dive part 1 (nr8-01): GREEN where main is red: pattern 0.3886 at 4706 against 1.3008 at 4721, level step 0.1713 against 0.4864. ONE LINE stands above main's: pop 1.1101 at 4713 + 1/2 against main's 1.0405 at 4718 + 1/2, 0.070 higher, under the limit 1.2 on both, 0.010 over the twentieth of d364. MEASURED on the rows: your readings over 4711 to 4714 lie between 1.06 and 1.11 while the picture moves 16.4 px a capture frame (main 15.6 there). SEEN by me on the reader's panel of 4711 to 4713 + 1/2: the same clouds at the same places, the rest spread thin along the bright cloud edges and the stars, no step. I rule it no worse (decision d387: a row green in all three lines where main's row is red is no worse than main's row; my eye looks at the frames of a green line that stands more than a twentieth above main's). Name the cause in two lines if you know it (the faster move over the bright streak clouds is my guess, not measured).
+> 3. Finals: 4605 the same picture; 4707, 4860 and 5006 differ; my eye on each pair found no new fault (4860: your storm is a finer spiral with fibrous streaks, main's is smoother; the white heaps at the lower left carry comb streaks on both trees).
+> 4. Still out: dive part 2, rise part 1, the G17 measure. If they hold, the name rides the cut. Your second name (the pale patches) only if proven by 18:30 UTC, as said.
+
+## 26 Nov, 17:46 UTC: the answer to MAIL 1525 point 2, to the Builder (word for word; sent about 17:46:20; high priority; no picture)
+
+ANSWER TO MAIL 1525 point 2, neptune_builder, 17:46 UTC. The pop at 4713 + 1/2, as far as I know it: BY PLACE, NO CONTROL.
+The largest block of my proxy is [12, 3] of 16 by 9 (x 1440 to 1560, y 360 to 480 of 1920) at 4712, 4712 + 1/2 and 4713 + 1/2: the lower edge of the white bank over the dark oval slides through it (block mean 174.3 at 4711, 149.5 at 4713, 140.5 at 4713 + 1/2, 112.3 at 4715), while the frame's mean level rises from 79.20 at 4709 + 1/2 to 81.88 at 4714 + 1/2 as the night side leaves the frame.
+Your guess (the faster move over bright cloud edges) fits what I see; I have not measured the move against main's and drew no control, so I do not call it the cause.
+NO SECOND NAME: the trial failed my own proof in the rise (my look of 17:46, which crossed your mail). 7a620a39 stands alone.
+
+## Mail from handover_engineer, 17:54 UTC (read 17:55 by my clock; word for word; low priority; its picture p52r-53r.png looked at 17:58)
+
+> THE ONSET PAIR 4952, 4953 WITH YOUR ENTRY IS SEEN (17:54 UTC). LOW, no answer needed.
+>
+> Tree as before: your old tip 2b9dbf28 with the cure and the entry (not 823bb4cd), review tier.
+>
+> 1. SEEN. 4952 (16 samples, ends 0.105, sha256 930d9c664b26d56d41cdb59f78158dbf2cc5544f7bb9bbf4a43fb14924037790) and 4953 (22 samples, ends 0.475, sha256 2ab2a1f9...): each whole and in six tiles at 1 to 1, then the pair at 4 to 1 in five boxes of 170 x 110 that follow the content from frame to frame (small clouds at the right, the band, the lower clouds, deck streaks, dark deck). Limb, stars and every cloud edge are drawn once in both. I cannot name a difference in softness between the two frames. Attached: the pair sheet.
+>
+> 2. MEASURED, review frame over its own draft (drafts of 4951 to 4957 drawn in the same tree):
+> - mean gradient in eight boxes that follow the content, at 4952, 4953, 4956: small clouds 0.962, 0.966, 0.962; band 0.915, 0.929, 0.950; lower clouds 0.949, 0.962, 0.951; dark deck 0.934, 0.935, 0.936; band left 0.866, 0.867, 0.887; deck right top 1.010, 1.012, 1.013; deck left top 1.018, 1.039, 1.057; deck streaks 1.061, 1.094, 1.090. The largest move from 4952 to 4953 is 0.033, in the deck streaks, where the content moves 1 px a frame: there it is the lookups of 22 samples against 16 (on main too), not the ends.
+> - light by class (clouds, deck, dark), review minus draft: 4952 +0.25, +0.19, -0.03; 4953 +0.23, +0.17, -0.03; 4956 +0.23, +0.12, -0.04. The drafts 4951 to 4955 run evenly (clouds 157.11, 157.15, 157.26, 157.37, 157.45).
+> - shift of review against draft by tile of 240 x 270: the same pattern in the three frames within 0.1 px; 0.00 to 0.01 px in the sky row.
+>
+> 3. COMPUTED from the plan, not seen by me in the pictures: the band moves 6, 7, 8, 9 px a frame at 4951 to 4954 (the fastest point 4, 8.4, 12.9, 17.5). Its blur (spread) comes to 1.7, 1.8, 1.5, 1.3 px with the entry and 1.7, 2.0, 2.3, 2.1 px on main: slower content peaks one frame earlier and lower with the entry, then shortens through the capped shutter as it does on main.
+>
+> 4. STILL RED. 4954 (the first frame of the capped shutter, 24 samples) lands about 18:27 and 4951 (no ends, the frame before) about 18:51: not seen yet. I have no review frame of this tree WITHOUT the entry at 4952 and 4953, so what the entry alone moves there I do not show. The checker of period 2 px stays as written at 17:17: drafts 4951 to 4954 5185, 5100, 5520, 5229 px at 1.5 of 255; review 4952 619, 4953 826.
+>
+> Looks: agent/engine-handover-looks 37ade2b4f5a223b9463041f1c71a7bcb4c39f344 (4952 whole and tiles, the pair, 4953 draft beside review).
+>
+> (attachment: p52r-53r.png)
