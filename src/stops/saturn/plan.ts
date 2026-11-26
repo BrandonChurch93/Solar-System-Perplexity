@@ -13,14 +13,23 @@ export const params: MoveParams = {
   dive: { headingDeg: -35, altitude: 0.03, back: 0.1, ahead: 0.3, bow: -0.12, rollDeg: -4 },
   terrain: { vfov: skimJson.pose.vfov, forward: skimJson.path.forward, rise: -skimJson.pose.height * (Math.sqrt(skimJson.path.descent) - 1 / Math.sqrt(skimJson.path.descent)), side: skimJson.path.side, yawDeg: skimJson.path.yawDeg, pitchDeg: skimJson.path.pitchDeg, entryHeight: 0.72, entryBack: 1.1, entryPitchDeg: 3.6, exitHeight: 1.6, exitForward: 1.5, exitPitchDeg: 6, ground: 0 },
   rise: { azimuthDeg: -14, elevationDeg: 6, distance: 6.6, offset: [-0.28, -0.12], driftSpeed: 0.08, rollDeg: 0 },
-  travel: { turnDeg: 88, side: -1, turnEnd: 0.5 },
-  arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.25, 0.1] },
+  // The engine lays the next stop at the half degree step of its search that stands nearest this turn, counted from
+  // this stop's own way out. 87 (88 before the hold's view of the fit) is the number at which that step is the one
+  // it took before, so Uranus and Neptune keep their turn in the world (RECIPE.md, the sky's turn)
+  travel: { turnDeg: 87, side: -1, turnEnd: 0.5 },
+  // The offset is the one at which the way in points the same way in the world as before the hold's view of the
+  // fit ([-0.25, 0.1] then), so Jupiter's rise, which flies ahead along it, keeps its own camera at every frame
+  arrive: { swingDeg: -23.5, axis: [-0.866, 0.216, -0.027], power: 3, from: 0.35, offset: [-0.218592631, 0.081382357] },
   light: { exposure: 1, skyExposure: 0.55, sunRadiusDeg: 0.32, sunGlare: 0.7, flare: 0.1 },
   cover: [0.9, 0.82, 0.66],
   spinDegPerSecond: 1.4,
   moonDegPerSecond: 0.3,
   tint: [0.92, 0.82, 0.6],
-  skyAim: { orbit: [-14, 153, -7.3] },
+  // The whole sky's turn at this stop is laid from the camera at the judged hold frame and from this aim, and
+  // Jupiter's rise turns its sky to it from frame 3268 on. The hold's view of the fit turned that camera in the
+  // world, so the aim is the place of the sky that the turned camera sees with the turn left where it stood
+  // ([-14, 153, -7.3] before): no star moves in a frame before this stop's own (RECIPE.md, the sky's turn)
+  skyAim: { orbit: [-13.970238, 153.184663, -7.081804] },
   handover: {
     // skyFrames 0: the engine crosses no sky by the clock here (see heroSky)
     dive: { at: skimJson.handover.dive.at, picture: false, skyFrames: 0 },
@@ -115,6 +124,9 @@ export class SaturnPlan extends StopPlan {
 
   constructor(id: string, f: Fit, p: MoveParams) {
     super(id, f, p)
+    // The rise ends on the lens of the flights (skim.json, lens.out), not on the hold's lens of the fit: the flight
+    // out takes its lens from this pose and keeps it to the next hold
+    this.riseEnd.vfov = skimJson.lens.out
     const rad = THREE.MathUtils.degToRad
     const pose = skimJson.pose
     const n = this.normal.clone()

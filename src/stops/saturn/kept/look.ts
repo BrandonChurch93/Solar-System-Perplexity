@@ -80,7 +80,7 @@ export const rings: RingLook = {
   over: [0.03, 1.38, 0.985, 1.46],
   strand: [1.5, 2.0, 1.5],
   overTone: [0.4, 0.8, 1.12, 102],
-  shadowThin: [1.85, 2.08, 0.85],
+  shadowThin: [1.85, 2.08, 0.5],
   unlit: 0.12,
   lodBias: 1.2,
   lodBiasClose: 1.2,

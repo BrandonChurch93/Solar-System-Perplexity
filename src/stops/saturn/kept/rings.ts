@@ -562,7 +562,9 @@ void main() {
   float miss = length(vLocal - ss * along);
   float mw = 0.75 * length(vec2(dFdx(miss), dFdy(miss))) * uFoot.x;
   float lit = (disc && !lip) ? smoothstep(-0.3, 0.15, along) : (along > 0.0 ? 1.0 : smoothstep(uPenumbra.x - mw, uPenumbra.y + mw + uPenumbra.z * max(-along, 0.0) + uPenumbraFar.y * max(-along - uPenumbraFar.x, 0.0), miss));
-  float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * uPolarShape * (1.0 - uSolid.x) * (disc ? 0.0 : 1.0);
+  // the shadowed outer ring is thin in the hold's picture (the approved goes to black there, with the stars through
+  // it): part of that picture, so it stands on the picture's own weight (uPolarW) and goes out with it
+  float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * uPolarW * (1.0 - uSolid.x) * (disc ? 0.0 : 1.0);
   over *= lit;
   float through = sheetAt(rs, uSheetT) * (1.0 - uSheetFit.w * uPolarShape * smoothstep(uSheetFit.z, 1.0, bb));
   float bx = max(bb - uFillet.x, 0.0);

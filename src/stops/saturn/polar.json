@@ -29,5 +29,27 @@
   "level": 4,
   "quality": 92,
   "note": "the outer margin of the B ring in the hero's ring pixel map, laid again along the bands by assets-src/saturn/code/polar_margin.py. radius: the rows it takes in (in from the first to the second, out from the third to the fourth, planet radii); azimuth: the sector it takes in, degrees in the body frame (in from the first to the second, out from the third to the fourth); from: the clean sector the fine structure comes from, mirrored back and forth; low: the width in degrees of the blur along the azimuth that parts level from fine structure; level: the width in degrees at the clean sector's near end whose mean is the level of each row; quality: of the file written"
+ },
+ "tone": {
+  "frame": 3465,
+  "low": 16,
+  "strip": 8,
+  "rise": 8,
+  "shadow": 24,
+  "shadowRise": 12,
+  "gross": 0.7,
+  "grossPx": 6,
+  "limits": [0.75, 1.3],
+  "least": 0.2,
+  "along": 0,
+  "hueAlong": 4,
+  "zones": [[1.2458, 1.5237], [1.5237, 1.9545], [2.05, 2.3389]],
+  "span": [1.1, 2.48],
+  "size": [1440, 276],
+  "carry": [2, 6, 18, 60],
+  "carryRadius": 0.02,
+  "quality": 94,
+  "show": 4,
+  "note": "the ring's broad tone at the hold, laid again through the solved view of the hold by assets-src/saturn/code/hold_ring_tone.py: the approved over the film in scene light, by radius and azimuth of the ring's body, multiplied into polar-rings.jpg and polar-inner.jpg. frame: the judged frame of the hold the film's still is taken at; low: the width in px of the gaussian of the normalised sums (the low band of the reader); strip: px of the hold frame from every edge of a zone and from the limb inside which nothing is measured, and from every edge of a zone inside which nothing is laid; rise: px over which the weight rises beyond the strip; shadow: px of the hold frame from the fall of the globe's shadow inside which nothing is measured; shadowRise: px over which the weight rises from nothing at the fall; limits: the least and the most a factor may be; least: the least share of a gaussian that must lie on measured pixels; gross and grossPx: where one picture's luminance at grossPx px is under this share of the other's, the two do not show the same thing and nothing is measured within `shadow` px; along and hueAlong: degrees of azimuth by which the factor's light and its colour are made broader along the band; zones: the C, B and A ring in planet radii (the Cassini division between the last two is no zone, nothing is laid in it); span and size: radii and texels (azimuth, radius) of the factor's own table; carry: degrees of azimuth of the gaussians that carry the factor along the band into what the hold frame does not show; carryRadius: their width in radii; quality: of the files written; show: the gain of the check picture"
  }
 }
