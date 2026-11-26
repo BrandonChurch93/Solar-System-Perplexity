@@ -32,7 +32,7 @@ async function heights(ctx: SetContext, path: string, width: number, height: num
   return out
 }
 
-const hazeUnder = (h: number): number => Math.round((1 - Math.exp(-Math.pow(Math.max(h, 0) / look.place.air.scale, look.place.air.power))) * look.place.air.steps) / look.place.air.steps
+const hazeUnder = (h: number): number => Math.round((1 - Math.exp(-Math.max(h, 0) / look.place.air.scale)) * look.place.air.steps) / look.place.air.steps
 
 export const createSet: SetFactory = async (ctx) => {
   const holdBand = await bandHold(plan.id)
