@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T13:22:28.344Z",
+ "pushed": "2026-11-26T14:00:03.383Z",
  "head": "ac0ffdda4556604bab51364ff72fee4f837d8a0f",
- "note": "13:23 Z52 at draft: fountains end in the air as a spray, floor 0.9 so thin strands are lines with beads, pools yellower. Finals of Z46 stopped after 90 (whole plain 35.0962, main 29.6374); chain for Z52 runs. sun-near 60 of the name ac0ffdda (ground unchanged): dark 0.246 body 0.608 pale 0.076 white 0.016 | half width 8.0 px, 482 shapes, fine 0.0279, mean 0.312 | distance 0.077",
+ "note": "14:00 Z52 final 90: whole plain 35.0431 (main 29.6374), rows 0 to 324 14.0528, G17 by the quick reader 0.830 (main 1.283); finals 60, 0, 360 drawing. sun-near 60 at draft: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T14:00:02.756Z",
+   "file": "20261126140002756-note-r52-A.jpg",
+   "source": "../../../../tmp/v/r52-A.jpg",
+   "kind": "note",
+   "label": "14:00 state Z52 at draft, the rise 181 to 233: the arch leaves by its size, rigid sky",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T14:00:02.105Z",
+   "file": "20261126140002105-note-m52-A.jpg",
+   "source": "../../../../tmp/v/m52-A.jpg",
+   "kind": "note",
+   "label": "14:00 state Z52 at draft, the arch every tenth frame 60 to 150, half size: strands stand, beads move",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T14:00:01.478Z",
+   "file": "20261126140001478-note-a-Z52F-90.jpg",
+   "source": "../../../../tmp/v/a-Z52F-90.jpg",
+   "kind": "note",
+   "label": "14:00 state Z52 at final, frame 90: approved above, this state below",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T13:22:27.293Z",
    "file": "20261126132227293-note-foot-Z52.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/r46-A.jpg",
    "kind": "note",
    "label": "trial Z46 rise at draft: 181, 190, 200, 204 above, 205, 206, 210, 216 below; the arch leaves by its size, rigid sky",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T12:36:55.219Z",
-   "file": "20261126123655219-note-foot-Z41.jpg",
-   "source": "../../../../tmp/v/foot-Z41.jpg",
-   "kind": "note",
-   "label": "trial Z41 both feet at twice size beside the approved",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T12:36:54.606Z",
-   "file": "20261126123654606-note-m41-A.jpg",
-   "source": "../../../../tmp/v/m41-A.jpg",
-   "kind": "note",
-   "label": "trial Z41 the arch every tenth frame 60 to 150, draft, half size",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T12:36:53.943Z",
-   "file": "20261126123653943-note-a-Z41-90.jpg",
-   "source": "../../../../tmp/v/a-Z41-90.jpg",
-   "kind": "note",
-   "label": "trial Z41 draft 90 under the approved: thinner strands, ropes cross with dark gaps, fan and pool at each foot, rigid dark sky",
    "stop": "sun"
   }
  ]
