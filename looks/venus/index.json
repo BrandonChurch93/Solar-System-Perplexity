@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T09:46:47.407Z",
- "head": "fa880812ef68f870e44e91f588f3d11c5bdff529",
- "note": "control cR and the seam cure cE",
+ "pushed": "2026-11-26T10:30:30.809Z",
+ "head": "2f044d9c2ae71c40620ca615692a7b51d9c0d808",
+ "note": "seam cure seen, thin band strip, dive lower edge",
  "looks": [
+  {
+   "time": "2026-11-26T10:30:29.967Z",
+   "file": "20261126103029967-note-Ds-dive.jpg",
+   "source": "../../../../tmp/v/sh/Ds-dive.jpg",
+   "kind": "note",
+   "label": "dive 1324 to 1340, whole frame and lower strip: the near ground passes the lower edge, main's own",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T10:30:28.940Z",
+   "file": "20261126103028940-note-lt-test.jpg",
+   "source": "../../../../tmp/v/sh/lt-test.jpg",
+   "kind": "note",
+   "label": "rise 1542 to 1552, strip x 0 to 700 following the limb, the first name beside main: soft streaks to 1546, cells from 1547 at lower left, the first name's finer",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T10:30:27.825Z",
+   "file": "20261126103027825-note-P2e-seam.jpg",
+   "source": "../../../../tmp/v/sh/P2e-seam.jpg",
+   "kind": "note",
+   "label": "seam 1603 to 1606, main beside the candidate, frames and consecutive frame differences times 8: main's step at 1604 + 1/2 to 1605 shows a brighter ring at the limb, the candidate's is like its neighbours",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T09:46:46.604Z",
    "file": "20261126094646604-note-cE-end.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/Mn/z2.jpg",
    "kind": "note",
    "label": "the far middle enlarged, 1556 to 1564, P2c left, main right: P2c's cells carry a pale outline at their left and tints (red, named); main's field is soft",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T09:22:43.923Z",
-   "file": "20261126092243923-note-z1.jpg",
-   "source": "../../../../tmp/v/sh/Mn/z1.jpg",
-   "kind": "note",
-   "label": "the far middle enlarged, 1550 to 1556, P2c left, main right: the cells arrive in place by height",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T09:22:42.953Z",
-   "file": "20261126092242953-note-p3.jpg",
-   "source": "../../../../tmp/v/sh/Mn/p3.jpg",
-   "kind": "note",
-   "label": "P2c (left) beside main (right), 1556 to 1569: P2c the film's cells, tinted pink, orange and bluish white; main an out of focus patch between crisp towers; alike at 1566 and 1569",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T09:22:41.958Z",
-   "file": "20261126092241958-note-p2.jpg",
-   "source": "../../../../tmp/v/sh/Mn/p2.jpg",
-   "kind": "note",
-   "label": "P2c (left) beside main (right), 1549 to 1555: the film's cells come up in the far middle of P2c from 1550, main's far middle stays a smooth field",
    "stop": "venus"
   }
  ]
