@@ -129,8 +129,25 @@ float lawShare(vec3 P, vec3 E, vec2 image) {
   float row = clamp(at.y, lawHalfRow(), 1.0 - lawHalfRow());
   float seen = 1.0;
   if (uLawSight.x > 0.5) {
-    float front = inside ? textureLod(uLawSeen, vec2(at.x, 1.0 - row / lawHalves()), 0.0).r : 0.0;
-    seen = 1.0 - smoothstep(1.0, 1.0 + uLawSight.z, length(P) * front * uLawSight.y);
+    // the answer (was this point behind the front for the picture's eye) is taken at each of the four texels of the file round
+    // the place and the four answers are weighed by the place between them. Reading the file itself between its texels and
+    // answering once put the line where hidden ground begins at the centres of the file's texels for ground a little behind
+    // the front, and a texel beyond the outline for ground far behind it: a stair of 3 to 5 pixels along the far mesa's crest
+    // at 2460 to 2473 (26 November). The line now runs on the outline as the file holds it, whatever the distance behind.
+    vec2 seenSize = vec2(textureSize(uLawSeen, 0));
+    vec2 cell = vec2(at.x, 1.0 - row / lawHalves()) * seenSize - 0.5;
+    ivec2 corner = ivec2(floor(cell));
+    vec2 part = fract(cell);
+    float hidden = 0.0;
+    for (int j = 0; j < 2; j++) {
+      for (int i = 0; i < 2; i++) {
+        ivec2 fetch = clamp(corner + ivec2(i, j), ivec2(0), ivec2(seenSize) - 1);
+        float front = inside ? texelFetch(uLawSeen, fetch, 0).r : 0.0;
+        float weight = (i == 0 ? 1.0 - part.x : part.x) * (j == 0 ? 1.0 - part.y : part.y);
+        hidden += weight * smoothstep(1.0, 1.0 + uLawSight.z, length(P) * front * uLawSight.y);
+      }
+    }
+    seen = 1.0 - hidden;
     // the surface view shows that ground as far as its own eye looks past the front: by the angle between the picture's ray and
     // the sight, whole up to the angle of the eye at which the surface view takes over, as the count was before from twice it on
     seen = 1.0 - (1.0 - seen) * off;
