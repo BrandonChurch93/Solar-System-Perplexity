@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T00:59:50.949Z",
- "head": "f06121fd26f305fe715da95cf29972ca63fc1c93",
- "note": "candidate on the merged tree: stills differ in the sky alone; main's Venus being read again by the merged reader; no name",
+ "pushed": "2026-11-26T01:26:35.208Z",
+ "head": "7d73fd56e37b2aa7395329b57c3229c24a9838cc",
+ "note": "main's rise by the merged reader: 19 red rows, largest 0.83; the candidate lower on the far deck rows; main's dive being read; no name",
  "looks": [
+  {
+   "time": "2026-11-26T01:26:34.080Z",
+   "file": "20261126012634080-note-cand-d-1303L.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-1303L.jpg",
+   "kind": "note",
+   "label": "candidate dive 1300 to 1315, every film frame, the upper left (x 0 to 640, y 0 to 480)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T01:26:33.064Z",
+   "file": "20261126012633064-note-cand-d-1322L.jpg",
+   "source": "../../../../tmp/v/sh/cand-d-1322L.jpg",
+   "kind": "note",
+   "label": "candidate dive 1320 to 1331, every film frame, the left edge (x 0 to 400, y 280 to 620)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T01:26:31.594Z",
+   "file": "20261126012631594-note-m0-cand-d-L1322.jpg",
+   "source": "../../../../tmp/v/sh/m0-cand-d-L1322.jpg",
+   "kind": "note",
+   "label": "main left, candidate right, dive 1320, 1323, 1326, 1329 at the left edge (x 0 to 420, y 280 to 620)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T00:59:06.753Z",
    "file": "20261126005906753-note-merge-diff-1547.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/merge-diff.jpg",
    "kind": "note",
    "label": "candidate dive merge-diff",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:45:26.691Z",
-   "file": "20261126004526691-note-m0-cand-d-E.jpg",
-   "source": "../../../../tmp/v/sh/m0-cand-d-E.jpg",
-   "kind": "note",
-   "label": "candidate dive m0-cand-d-E",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:45:25.589Z",
-   "file": "20261126004525589-note-m0-cand-d-C.jpg",
-   "source": "../../../../tmp/v/sh/m0-cand-d-C.jpg",
-   "kind": "note",
-   "label": "candidate dive m0-cand-d-C",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T00:45:24.697Z",
-   "file": "20261126004524697-note-m0-cand-d-A.jpg",
-   "source": "../../../../tmp/v/sh/m0-cand-d-A.jpg",
-   "kind": "note",
-   "label": "candidate dive m0-cand-d-A",
    "stop": "venus"
   }
  ]
