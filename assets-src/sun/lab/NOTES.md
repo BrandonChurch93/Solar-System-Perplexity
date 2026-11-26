@@ -2741,3 +2741,24 @@ All stills are frame 90, draft. Pictures in /home/user/workspace/v (NAME-near.jp
   radius, only from 0.8 of the way to the border on): final 90 started 19:15 (v/go-h47f.log).
   THEN: the whole proof list (v/proof.sh) on the state that stands; the first thing to read is the flicker rows
   and cellflk (the middle anchor's cost in motion is UNKNOWN).
+- 19:40 UTC. h47f (final 90, sparks cut) SEEN: the rice grains are gone, small points stand in the lanes.
+  MEASURED h47f: curve 0.741 0.75 0.74 0.723 0.704 0.672 0.619 0.544 0.455 0.373 0.334 (gaps to the approved
+  0.074 0.088 0.083 0.076 0.085 0.086 0.072 0.048 0.022 0.004 0.010), lane 6.32 px, depth 0.291 (0.234), spread
+  inside a ring like the approved's (0.045 to 0.161 against 0.05 to 0.161); percentiles 0.227 0.396 0.565 0.749
+  0.906 0.965 (approved 0.231 0.404 0.58 0.761 0.906 0.965).
+  WHY THE CROWNS READ TOO LIGHT at equal percentiles, STATED from the approved at 1 to 1: there whole cells are
+  dull olive brown beside bright ones; in mine every cell was equally hot.
+  CODE (ground.ts): heat.dull [least, scale of a field of the place, share of the field against the cell's own
+  lot, from, to]: qDull multiplies the heat after the knee (warm) and the fans. Two orders tried first and
+  dropped: on `life` alone (t250, t251: nothing to see, the fans carry the light) and on life and fans (t252,
+  t253: little to see). t254 = h47 with dull [0.45, 5, 0.5, 0.3, 0.6]; t255 = dull [0.3, 3, 0.7, 0.3, 0.6].
+  t255 MEASURED (draft): curve 0.711 0.709 0.697 0.683 0.664 0.629 0.58 0.514 0.433 0.363 0.326: inside 0.05 of
+  the approved's at every tenth (largest 0.047), the first state that meets MAIL 1296 (b) on the curve; lane 6.39
+  px (within 1.5 of 7.08). Cost: cut low band 20.8956 (t248 draft 18.7478; standing 23.4775): the pools of dull
+  cells do not lie where the approved's do. Not tuned to it.
+  SEEN (v/c-t255.jpg): dull olive domes beside bright ones, as the approved has.
+  STATE h48 = t255 (v/lab-h48.json). PROOF CHAIN started 19:39 (v/proof.sh h48, log v/proof-h48.log; marks TWIN
+  DONE, FINAL90 DONE, A DONE, B DONE, RISE DONE, PURE DONE, FINAL60 DONE, TWICE DONE, CHAIN DONE; about 95 min).
+  Still to do before a name: hash of 90 with lane[16] 0 and no dull against h45's is NOT needed (h48 is a new
+  state); units, gate six, path line on the sha; five hashes to /root and sun_builder; growth; RECIPE written.
+  NEXT MAIL DUE 20:45.

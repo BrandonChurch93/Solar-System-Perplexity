@@ -277,3 +277,23 @@ One file is baked, in two sizes: the far twin of the ground for the globe (FAR-T
   reader.ts --dir; pure.ts --frame 90 --after "30" --format preview --tier review against the state before. Main's
   own number for a part of the rise: lab.json "ground": "standing", the same clip.ts and reader.ts, then the
   state's lab.json back.
+- State h48 (26 Nov, 19:39 UTC; v/lab-h48.json until committed) = h45 and:
+  heat.lane[16] (absent or 0: off, the fall of heat toward the border is the straight mix of lane[9] and 1 as
+  before) = 1.5: the fall is a ratio, heat times lane[9]^((1 - s)^lane[16]), s the smooth way in from the border
+  over lane[8] of the radius; with lane[8] 0.55, lane[9] 0.03, lane[13] 0 (the same all round) and heat.fan[13] 1
+  (the fans take the whole fall). Why: the display curve is steep at its dark end, so a straight fall of heat
+  stays gold to the border and then drops in one step; a ratio falls evenly through gold, brown, near black.
+  dome.anchor [0.0, 0.5]: the crown and the pattern of a cell stand in the middle of its ground (at the site
+  they lay against one border in frame 90 and every law from crown to border was squeezed to a step there).
+  dome.base[4], [5] = 2.0, 0.5: the body is the bell (1 - e^2)^2, no slope at the border; dome.height 0.45.
+  heat.graze[3] 0: the skin law by the eye is off; only the limb law of the ground (graze[0], [1]) knows the eye.
+  heat.spark [0.5, 0.02, 0.5, 6.0, 1.0, 0.0, 1.0, 1.2, 0.0, 0.8, 0.97, 0.0]: the small hot points are 1 to 2.2 px
+  in radius and stand only from 0.8 of the way to the border on (on the dark flank they were grains of rice).
+  heat.dull (absent: off) [the least share of heat, the scale of a field of the place, the share of that field
+  against the cell's own lot, from, to] = [0.3, 3, 0.7, 0.3, 0.6]: cells differ in heat; a slow field of the
+  place and each cell's own lot give a share between dull[0] and 1 that the cell's heat after the knee and its
+  fans are multiplied by. Why: in the approved whole cells are dull olive beside bright ones, and the mean curve
+  from middle to border lies 0.07 under a ground whose cells are all equally hot at the same percentiles.
+  heat.curve fitted again by curve.py on the draft of 90 (v/tb.sh: render, fit, render), LAB_TAIL 0.6.
+  The far twin baked again (bake.ts, level.py).
+  Trials that led here, drafts of 90 by v/tb.sh on v/lab-h45.json: t238 to t255 (NOTES, 18:41 to 19:40).
