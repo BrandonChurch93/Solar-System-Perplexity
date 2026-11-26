@@ -1,9 +1,41 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T18:35:55.790Z",
- "head": "e2ddf4c201921b949544e2969d93ebf47f4423a4",
- "note": "18:35 UTC: build E's rise looked at by eye beside main's at every half frame; S2 switches drawing",
+ "pushed": "2026-11-26T18:54:02.155Z",
+ "head": "aec270207ca65b9b9d51ba0a8cbc861f0c33e2ae",
+ "note": "18:54 UTC: S2 and M9 controls; M1 and M2 switches drawing",
  "looks": [
+  {
+   "time": "2026-11-26T18:54:00.767Z",
+   "file": "20261126185400767-note-m9-own-asis.jpg",
+   "source": "../../../../tmp/eye/m9-own-asis.jpg",
+   "kind": "note",
+   "label": "M9 control: 3010 at its own size beside 3019 shrunk 2.53 times onto it, shown three times enlarged",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:53:59.663Z",
+   "file": "20261126185359663-note-m9-rows.jpg",
+   "source": "../../../../tmp/eye/m9-rows.jpg",
+   "kind": "note",
+   "label": "M9 control: the vortex's upper left rim at 3010, 3013, 3016, 3019 laid onto 3019; as it is, fine function off, march off, placed ground off",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:40:39.254Z",
+   "file": "20261126184039254-note-s2-reader.jpg",
+   "source": "../../../../tmp/eye/s2-reader.jpg",
+   "kind": "note",
+   "label": "S2 control: the reader's own sheet for 3019 + 1/2 to 3027 + 1/2, as it is, share 0, share 1; last column the change of the pattern, white is 1",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:40:38.700Z",
+   "file": "20261126184038700-note-s2-place.jpg",
+   "source": "../../../../tmp/eye/s2-place.jpg",
+   "kind": "note",
+   "label": "S2 control: frames 3019 + 1/2 and 3027 + 1/2 as it is, with the relief's share held at 0 and at 1; the far zone toward the limb",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T18:35:55.032Z",
    "file": "20261126183555032-note-n2.jpg",
@@ -18,38 +50,6 @@
    "source": "../../../../tmp/eye/n1.jpg",
    "kind": "note",
    "label": "Rise 3252, 3253, 3254 at native pixels, corner x 1440 to 1920, y 400 to 620: main above, build E below",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:35:53.080Z",
-   "file": "20261126183553080-note-slit.jpg",
-   "source": "../../../../tmp/eye/slit.jpg",
-   "kind": "note",
-   "label": "Rise, frames 3247 to 3267 at every half frame: four picture rows through time (time runs down), main, build D, build E",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:35:51.896Z",
-   "file": "20261126183551896-note-e-corner-4rows.jpg",
-   "source": "../../../../tmp/e-corner-4rows.jpg",
-   "kind": "note",
-   "label": "Build E against main and build D: corner x 1440 to 1920, y 400 to 620 on four rows of the rise",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:02:21.202Z",
-   "file": "20261126180221202-note-main-far-4.jpg",
-   "source": "../../../../tmp/main-far-4.jpg",
-   "kind": "note",
-   "label": "Main's far strip at 3254 + 1/2, 3256 + 1/2, 3258 + 1/2, 3260 + 1/2: where the lift is going",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T18:02:19.272Z",
-   "file": "20261126180219272-note-sw3-6505-corner.jpg",
-   "source": "../../../../tmp/sw3-6505-corner.jpg",
-   "kind": "note",
-   "label": "Build D, the tint: main, build D, the grey switch and a tried law of the hue (not kept), 3252 + 1/2",
    "stop": "jupiter"
   },
   {
