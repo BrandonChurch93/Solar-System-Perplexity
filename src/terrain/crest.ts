@@ -24,8 +24,9 @@
 // ramp beside it names nothing. Left out: every ramp. Two ramps that lie nearer to one another than a few cells are not to be
 // named both: a texel between them goes with the nearer one, and the sheets of the other get its distances.
 // Where a ramp ends (the step falls under the least, a box ends, no point names what goes on) there is no other side beyond the
-// end: on along the crest's line both sheets have the ground's own distance, and the cut goes on along the height of the step's
-// middle as far as the ground has that height.
+// end: beyond a line square to the crest's own through the end, however far across, both sheets have the ground's own distance,
+// and the cut goes straight on from the end along the crest's own line, whatever the ground beyond the end does (a crest that
+// turns there, a hollow that closes, a slope). The rim of the map is no end, and a turn of a ramp that goes on is none.
 export interface CrestNumbers { step: number; walk: number; under: number; out?: number; boxes?: [number, number, number, number][]; at?: [number, number][] }
 
 // How many texels of the map the byte of the near side's share runs over, half to either side of the cut: the share is kept as the
@@ -39,6 +40,10 @@ export const CREST_REACH = 4
 // beside a ramp is the near side's, and its ground may still lie further than the far end of the ramp (a hollow, the ground
 // beyond a ramp's end): there the far sheet keeps a thousandth behind it, so it never lies before the ground it goes under.
 export const CREST_BEHIND = 1e-3
+// How far off a crest's own line a ramp may go on from one of its texels, as the cosine of the angle: two thirds of a right angle.
+// A texel of the ramp within that, no further than one cell of the mesh, is the same crest going on (it leans, it turns); a ramp
+// that has none there ends at that texel.
+export const CREST_TURN = 0.5
 
 export interface CrestField {
   width: number
@@ -47,10 +52,9 @@ export interface CrestField {
   ramp: Uint8Array
   // How many texels a texel that is no ramp lies from the nearest ramp, capped at 255; 0 on a ramp.
   away: Uint8Array
-  // 1 where the texel lies on the near side of the step's middle: on a ramp by its distance, in the band beside a ramp by the side
-  // of the ramp it lies beside (by place, whatever its own distance is), in the band past a ramp's end (on along the crest's line,
-  // no further across it than beyond the end) by its distance again, against the middle of the step at that end. 0 on the far
-  // side and outside the band.
+  // 1 where the texel lies on the near side of the step's middle: on a ramp by its distance, in the band round a ramp by the side
+  // of the middle's line it lies on, the line carried straight through its nearest ramp texel along the crest's own line there
+  // (by place, whatever its own distance is; beside a ramp and past a ramp's end alike). 0 on the far side and outside the band.
   side: Uint8Array
   // The distance of the near sheet and of the far sheet. Outside the band of a ramp and past a ramp's end both are the map's own,
   // to the bit; beside a ramp the side a texel lies on has the map's own and the other side has the distance of that side's end of
@@ -330,14 +334,57 @@ export function crestField(dist: Float32Array, width: number, height: number, ce
     if (d > band) from[j] = -1
     else away[j] = d
   }
-  // The side of a texel of the band. Beside a ramp (the way across its nearest ramp texel leads to it, to within half a right
-  // angle) it is the side of the ramp it lies on, by place, and the other side's sheet has the distance of that side's end there.
-  // Past a ramp's end (no way across leads to it: it lies on along the crest's line, where no step was found) there is no other
-  // side: both sheets keep the map's own distance, and the texel is the near side's where its own ground lies nearer than the
-  // middle of the step at the end, soft over one texel along its slope as on a ramp. So the cut goes on from a ramp's end along
-  // the height of the step's middle, as far as the ground has that height, and where it does not the cut ends with the ramp.
+  // The side of a texel of the band, and whether it lies beside a ramp or past a ramp's end: both by place, from its nearest
+  // ramp texel and the crest's line through that texel (square to the way across, which is evened over a cell).
+  // Its side is the side of the middle's line carried straight along the crest's line: as far across from the nearest ramp
+  // texel as that texel lies from the middle of its step along its slope. It is not the side of the nearest ramp texel itself:
+  // the edge of a ramp that leans is a stair of texels, and a texel in a corner of the stair lies along the line from its
+  // nearest ramp texel, a little to either side of it.
+  // It lies beside the ramp when it is no more than half a texel along the line from its nearest ramp texel, or when the ramp
+  // goes on from that texel to the hand the texel lies on (the ramp turns there, or the texel lies in a corner of the stair).
+  // The other side's sheet has the distance of that side's end of the ramp there: each sheet is rigid with its own side all
+  // along a ramp, however the ramp leans or turns, with no texel of the ground's own distance in it.
+  // Else the ramp ends at that texel and the texel lies past the end: the border between beside the ramp and past it lies
+  // square to the crest's line through the end, however far across. A texel beyond the end that still counted as beside the
+  // ramp would have the other side's distance for the other sheet, next to texels that have the ground's own: the near sheet
+  // would stand off the ground of the cells beyond the end and, sheared between the two, carry its paint across the cut.
+  // Past a ramp's end there is no other side: both sheets keep the map's own distance, and the near side's share of the texel
+  // is that of the middle's line, soft over one texel as on a ramp. By place and not by its distance: what the ground does
+  // beyond an end is not the crest's (the crest turns, a hollow closes behind it, the step runs out into a slope), and a texel
+  // that has the near side's height there is no part of the near side. So the cut goes straight on from a ramp's end as far
+  // as the band does.
   const side = new Uint8Array(n)
   const past = new Uint8Array(n)
+  // Whether a ramp goes on from one of its texels along the crest's line, to the one hand or the other: a texel of the ramp
+  // within one cell of it and no more than the angle of CREST_TURN off the line, or the rim of the map next to it (the map
+  // ends there, not the crest). 0 not asked yet, 1 it goes on, 2 it ends there.
+  const onward = new Uint8Array(2 * n)
+  const goesOn = (s: number, hand: number): boolean => {
+    const key = 2 * s + (hand > 0 ? 1 : 0)
+    if (onward[key]) return onward[key] === 1
+    const sx = s % width
+    const sy = (s - sx) / width
+    const m = Math.hypot(ux[s]!, uy[s]!)
+    const ex = (-hand * uy[s]!) / m
+    const ey = (hand * ux[s]!) / m
+    const nx = Math.round(sx + ex)
+    const ny = Math.round(sy + ey)
+    let found = nx < 0 || nx >= width || ny < 0 || ny >= height
+    for (let y = Math.max(0, sy - 2 * r); y <= Math.min(height - 1, sy + 2 * r) && !found; y++) {
+      for (let x = Math.max(0, sx - 2 * r); x <= Math.min(width - 1, sx + 2 * r); x++) {
+        if (!ramp[y * width + x]) continue
+        const tx = x - sx
+        const ty = y - sy
+        const t = Math.hypot(tx, ty)
+        if (t > 0 && t <= 2 * r && tx * ex + ty * ey > t * CREST_TURN + 1e-9) {
+          found = true
+          break
+        }
+      }
+    }
+    onward[key] = found ? 1 : 2
+    return found
+  }
   for (let j = 0; j < n; j++) {
     const s = from[j]!
     if (s < 0) {
@@ -354,17 +401,19 @@ export function crestField(dist: Float32Array, width: number, height: number, ce
     const vy = (j - x) / width - (s - sx) / width
     const m = Math.hypot(ux[s]!, uy[s]!)
     const across = m > 0 ? (vx * ux[s]! + vy * uy[s]!) / m : 0
-    const along = m > 0 ? Math.abs(vx * uy[s]! - vy * ux[s]!) / m : Math.hypot(vx, vy)
-    if (along <= Math.abs(across) + 0.5) {
-      side[j] = across >= 0 ? 1 : 0
+    const on = m > 0 ? (vy * ux[s]! - vx * uy[s]!) / m : 0
+    const along = m > 0 ? Math.abs(on) : Math.hypot(vx, vy)
+    const mid = (inv[endNear[s]!]! + inv[endFar[s]!]!) / 2
+    const g = Math.hypot(gx[s]!, gy[s]!)
+    const lies = g > 0 ? (inv[s]! - mid) / g : inv[s]! >= mid ? Infinity : -Infinity
+    if (along <= 0.5 || (m > 0 && goesOn(s, on > 0 ? 1 : -1))) {
+      side[j] = lies + across >= 0 ? 1 : 0
       if (side[j]) far[j] = Math.max(dist[endFar[s]!]!, dist[j]! * (1 + CREST_BEHIND))
       else near[j] = dist[endNear[s]!]!
       continue
     }
     past[j] = 1
-    const mid = (inv[endNear[s]!]! + inv[endFar[s]!]!) / 2
-    const g = Math.hypot(gx[j]!, gy[j]!)
-    middle[j] = g > 0 ? Math.min(1, Math.max(0, 0.5 + (inv[j]! - mid) / g)) : inv[j]! >= mid ? 1 : 0
+    middle[j] = Math.min(1, Math.max(0, 0.5 + lies + across))
     side[j] = middle[j]! >= 0.5 ? 1 : 0
   }
   // Where the far sheet goes on under the near side: from every texel of a ramp along its way to its near end and on in that line.

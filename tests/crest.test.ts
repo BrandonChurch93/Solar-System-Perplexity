@@ -554,11 +554,10 @@ describe('the finding of the crests', () => {
     }
   })
 
-  it('has no other side past a ramp end: on along the line of the crest both sheets keep the distance of the map', () => {
-    // The step of the rows 8 to 23 alone, the step itself going on below. A texel below the end, on along the crest's line (no
-    // further across it than beyond its end), is past the ramp: both sheets have its own distance to the bit, and it is the near
-    // side's where its own ground lies nearer than the middle of the step at the end. A texel beside the end, further across the
-    // line than beyond it, still lies beside the ramp and has the other side's distance for the other sheet.
+  it('has no other side past a ramp end: beyond the end both sheets keep the distance of the map, however far across the line', () => {
+    // The step of the rows 8 to 23 alone, the step itself going on below. A texel below the end is past the ramp: both sheets
+    // have its own distance to the bit, and it has the side of the middle's line it lies on, the line carried straight on from
+    // the end. The border between beside the ramp and past it lies square to the crest's line, through the end.
     const map = stepMap(30, 3)
     const f = crestField(map, W, H, 8, { ...NUMBERS, boxes: [[0, 8, W, 24]] })
     let past = 0
@@ -577,18 +576,169 @@ describe('the finding of the crests', () => {
     expect(past).toBeGreaterThan(3 * 12)
     // The cut goes on down the middle column as far as the band reaches: the byte of the row 28 is that of the row 16.
     for (let x = 28; x <= 34; x++) expect(Math.abs(f.share[28 * W + x]! - f.share[16 * W + x]!)).toBeLessThanOrEqual(2)
-    // Beside the end: 12 texels across the line and 5 beyond the end, on the near side and on the far side.
-    expect(f.side[28 * W + 48]).toBe(1)
-    expect(f.near[28 * W + 48]).toBe(map[28 * W + 48])
-    expect(Math.abs(f.far[28 * W + 48]! - FAR)).toBeLessThan(0.5)
-    expect(f.side[28 * W + 14]).toBe(0)
-    expect(f.far[28 * W + 14]).toBe(map[28 * W + 14])
-    expect(Math.abs(f.near[28 * W + 14]! - NEAR)).toBeLessThan(0.05)
-    // Above the box the same.
-    for (let x = 30; x <= 32; x++) {
-      expect(f.near[4 * W + x]).toBe(map[4 * W + x])
-      expect(f.far[4 * W + x]).toBe(map[4 * W + x])
+    // Far across the line and beyond the end: 12 texels across and 5 beyond, on the near side and on the far side. Such a texel
+    // is past the ramp as well. With the other side's distance for the other sheet (as beside a ramp), the sheets would stand
+    // off the ground of the cells beyond the end, next to a wall that has no cut: a vertex of the near sheet lifted there to
+    // the near side's distance pulls the cells round it across the cut.
+    for (const x of [48, 14]) {
+      const i = 28 * W + x
+      expect(f.away[i]).not.toBe(255)
+      expect(f.side[i]).toBe(x > 31 ? 1 : 0)
+      expect(f.near[i]).toBe(map[i])
+      expect(f.far[i]).toBe(map[i])
     }
+    // So for every texel of the band below the ramp's last row and above its first, whatever lies across.
+    let beyond = 0
+    for (let y = 0; y < H; y++) {
+      if (y >= 8 && y < 24) continue
+      for (let x = 0; x < W; x++) {
+        const i = y * W + x
+        expect(f.ramp[i]).toBe(0)
+        expect(f.near[i]).toBe(map[i])
+        expect(f.far[i]).toBe(map[i])
+        expect(f.beneath[i]).toBe(0)
+        if (f.away[i] !== 255) beyond++
+      }
+    }
+    expect(beyond).toBeGreaterThan(2 * 8 * 30)
+    // Beside the ramp's last row itself the other side's sheet has the other side's distance still, as far across as the band goes.
+    expect(f.side[23 * W + 48]).toBe(1)
+    expect(f.near[23 * W + 48]).toBe(map[23 * W + 48])
+    expect(Math.abs(f.far[23 * W + 48]! - FAR)).toBeLessThan(0.5)
+    expect(f.side[23 * W + 14]).toBe(0)
+    expect(f.far[23 * W + 14]).toBe(map[23 * W + 14])
+    expect(Math.abs(f.near[23 * W + 14]! - NEAR)).toBeLessThan(0.05)
+  })
+
+  it('takes a ramp that turns, or runs off the map, for no end: the texels in the turn lie beside it', () => {
+    // A crest that leans: the step runs down the column 31 to the row 20 and from there on a column to the right with every
+    // row, off the map's last row. At the turn and along the leaning part a texel beside the ramp has its nearest ramp texel
+    // off the way across the line; as long as the ramp goes on to that hand (a ramp texel within one cell, no more than two
+    // thirds of a right angle off the line, or the rim of the map) the texel lies beside the ramp and no end is made of it.
+    const lean = new Float32Array(W * H)
+    // An outer corner of the near side: the near ground is the quarter right of the column 31 and above the row 24.
+    const corner = new Float32Array(W * H)
+    // An inner corner of the near side: the near ground is all but the quarter left of the column 31 and below the row 24.
+    const notch = new Float32Array(W * H)
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        const t = Math.min(1, Math.max(0, (x - 29 - Math.max(0, y - 20)) / 4))
+        lean[y * W + x] = 1 / ((1 / FAR) * (1 - t) + (1 / NEAR) * t + y * 2e-5)
+        const tx = Math.min(1, Math.max(0, (x - 29) / 4))
+        const ty = Math.min(1, Math.max(0, (26 - y) / 4))
+        corner[y * W + x] = 1 / ((1 / FAR) * (1 - Math.min(tx, ty)) + (1 / NEAR) * Math.min(tx, ty) + y * 2e-5)
+        notch[y * W + x] = 1 / ((1 / FAR) * (1 - Math.max(tx, ty)) + (1 / NEAR) * Math.max(tx, ty) + y * 2e-5)
+      }
+    }
+    for (const map of [lean, corner, notch]) {
+      const f = crestField(map, W, H, 8, NUMBERS)
+      expect(f.ramps).toBeGreaterThan(400)
+      let beside = 0
+      let past = 0
+      for (let i = 0; i < W * H; i++) {
+        if (f.ramp[i] || f.away[i] === 255) continue
+        // Beside a ramp the other side's sheet stands off the ground; past an end neither does.
+        if (f.near[i] === map[i] && f.far[i] === map[i]) past++
+        else {
+          beside++
+          if (f.side[i]) {
+            expect(f.near[i]).toBe(map[i])
+            expect(f.far[i]!).toBeGreaterThan(map[i]! * 1.5)
+          } else {
+            expect(f.far[i]).toBe(map[i])
+            expect(f.near[i]!).toBeLessThan(map[i]! / 1.5)
+          }
+        }
+      }
+      expect(beside).toBeGreaterThan(1500)
+      // None of the three has an end, so no texel lies past one: not in the turn, not in a corner of the stair of a leaning edge.
+      expect(past).toBe(0)
+    }
+    // The leaning crest's last row, right of the ramp: the texels lie on along the line from the ramp's last texels, towards
+    // the rim, and the ramp goes on off the map. They are the near side's, with the far sheet under them.
+    const f = crestField(lean, W, H, 8, NUMBERS)
+    let last = 0
+    for (let x = 0; x < W; x++) {
+      const i = (H - 1) * W + x
+      if (f.ramp[i] || f.away[i] === 255 || !f.side[i]) continue
+      last++
+      expect(f.near[i]).toBe(lean[i])
+      expect(Math.abs(f.far[i]! - FAR)).toBeLessThan(0.5)
+    }
+    expect(last).toBeGreaterThanOrEqual(5)
+  })
+
+  it('finds no end along a ramp that leans, and has every texel beside it on the side it lies on', () => {
+    // A straight step through the middle of the map along the direction (dx, dy), the near side to its right, so many texels wide,
+    // off the map at both ends. The edge of such a ramp is a stair of texels, and a texel in a corner of the stair lies along the
+    // crest's line from its nearest ramp texel, not across it. It lies beside the ramp all the same: the other side's sheet has the
+    // other side's distance there (a single texel of the ground's own distance would dent the sheet at the very cut), and its side
+    // is the side of the line it lies on by place, not the side of its nearest ramp texel.
+    for (const [dx, dy, wide] of [[1, 1, 4], [1, 2, 4], [2, 1, 4], [1, 3, 4], [3, 1, 4], [3, 2, 4], [1, 4, 4], [2, 5, 4], [1, 3, 6], [2, 5, 6], [1, 2, 3], [-2, 1, 4], [-3, 2, 5]] as [number, number, number][]) {
+      const m = Math.hypot(dx, dy)
+      const map = new Float32Array(W * H)
+      const off = new Float32Array(W * H)
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          off[y * W + x] = ((x - 31) * dy - (y - 24) * dx) / m
+          const t = Math.min(1, Math.max(0, off[y * W + x]! / wide + 0.5))
+          map[y * W + x] = 1 / ((1 / FAR) * (1 - t) + (1 / NEAR) * t + y * 2e-5)
+        }
+      }
+      const f = crestField(map, W, H, 8, { step: 0.02, walk: 12, under: 12 })
+      expect(f.ramps).toBeGreaterThan(500)
+      let beside = 0
+      let past = 0
+      let wrong = 0
+      for (let i = 0; i < W * H; i++) {
+        if (f.ramp[i] || f.away[i] === 255) continue
+        if (f.near[i] === map[i] && f.far[i] === map[i]) past++
+        else beside++
+        // Half a texel to either side of the line itself is the line's.
+        if (Math.abs(off[i]!) > 0.5 && f.side[i] !== (off[i]! > 0 ? 1 : 0)) wrong++
+      }
+      expect(beside).toBeGreaterThan(1500)
+      expect([dx, dy, wide, past]).toEqual([dx, dy, wide, 0])
+      expect([dx, dy, wide, wrong]).toEqual([dx, dy, wide, 0])
+    }
+  })
+
+  it('carries the cut straight on past a ramp end, by place: ground that has the height of the near side beyond the end is no part of the near side', () => {
+    // The step of the rows 8 to 23 alone. The step itself goes on below the box to the row 33; over the rows 34 to 37 the far
+    // side's ground comes up to the near side's (a hollow that closes behind the crest's end), and from there on the whole row
+    // lies at the near side's distance. The texels below the end keep the side of the line they lie on: the cut goes straight on
+    // down the column 31, and the ground left of it stays the far side's, whatever its height. By its distance it would be the
+    // near side's, and the near sheet would reach across the closed hollow.
+    const map = stepMap(30, 3)
+    for (let y = 34; y < H; y++) {
+      const t = Math.min(1, (y - 33) / 4)
+      for (let x = 0; x < W; x++) map[y * W + x] = 1 / ((1 - t) / map[y * W + x]! + t * (1 / NEAR + y * 2e-5))
+    }
+    const f = crestField(map, W, H, 8, { ...NUMBERS, boxes: [[0, 8, W, 24]] })
+    // The ramp is the step inside the box alone: neither the step below the box nor the rise of the far side's ground is one.
+    for (let y = 0; y < H; y++) {
+      for (let x = 0; x < W; x++) {
+        if (f.ramp[y * W + x]) expect(y >= 8 && y < 24 && x >= 30 - 5 && x <= 32 + 5).toBe(true)
+      }
+    }
+    expect(f.ramps).toBeGreaterThanOrEqual(16 * 3)
+    let risen = 0
+    for (let y = 38; y < H; y++) {
+      for (let x = 27; x <= 35; x++) {
+        const i = y * W + x
+        expect(f.away[i]).not.toBe(255)
+        expect(f.near[i]).toBe(map[i])
+        expect(f.far[i]).toBe(map[i])
+        expect(Math.abs(1 / map[i]! - 1 / NEAR)).toBeLessThan(2e-3)
+        if (x === 31) continue
+        expect(f.side[i]).toBe(x > 31 ? 1 : 0)
+        if (x < 31) risen++
+      }
+    }
+    expect(risen).toBe((H - 38) * 4)
+    // The byte of the cut on a row below the closed hollow is that of a row of the ramp, to an eighth of a texel (the map leans
+    // a little down its rows, and the line carried on leans with it).
+    for (let x = 27; x <= 35; x++) expect(Math.abs(f.share[42 * W + x]! - f.share[16 * W + x]!)).toBeLessThanOrEqual(4)
   })
 
   it('names the vertices where the sheets end with a step left, and none beside a crest that runs on', () => {
@@ -823,14 +973,14 @@ describe('the sheets of a relief', () => {
     const grid = positions(meshes(plain)[1]!)
     // Three crests. The step down the whole map: its sheets and its ring end with the map, and nothing is shut. The same with the
     // far sheet 4 texels under the near side: the ring is the column 6 and comes up to the ground along the column of vertices 7.
-    // The step of the rows 8 to 23 alone: past its ends, on along its line, the field has the map's own distance for both sheets,
-    // so at the rows of vertices a cell beyond the box (0 and 4) the sheets have the mesh's vertex in the columns 3 to 5 (which lie
-    // no further across the crest's line than beyond its end) whatever ground lies round it. Its sheets end with a step left at
-    // the row 4, and the ring goes round that end, down to the row 5.
+    // The step of the rows 8 to 23 alone: past its ends the field has the map's own distance for both sheets, however far across
+    // the crest's line, so at the rows of vertices a cell beyond the box (0 and 4) the sheets have the mesh's vertex in every
+    // column, whatever ground lies round it, and on the box's own rows (1 and 3) they are half way there. Its sheets end with
+    // a step left at the row 4, and the ring goes round that end, down to the row 5.
     const crests: { texels: { under: number; boxes?: [number, number, number, number][] }; cells: { under: number; boxes?: [number, number, number, number][] }; beyond: number[]; edge: number[]; closed: number[]; gone: number[]; met: number; behind: number }[] = [
       { texels: { under: 12 }, cells: { under: 1.5 }, beyond: [], edge: [], closed: [0, 0, 0], gone: [0, 0, 0], met: 7, behind: 7 },
       { texels: { under: 4 }, cells: { under: 0.5 }, beyond: [], edge: [], closed: [7, 0, 0], gone: [0, 0, 0], met: 7, behind: 7 },
-      { texels: { under: 12, boxes: [[0, 8, W, 24]] }, cells: { under: 1.5, boxes: [[0, 8 / H, 1, 24 / H]] }, beyond: [0, 4], edge: [1, 3], closed: [1 + 5, 1, 2], gone: [2, 3, 2], met: 3, behind: 5 + 1 + 2 },
+      { texels: { under: 12, boxes: [[0, 8, W, 24]] }, cells: { under: 1.5, boxes: [[0, 8 / H, 1, 24 / H]] }, beyond: [0, 4], edge: [1, 3], closed: [1 + 5, 1, 2], gone: [8, 3, 2], met: 3, behind: 5 + 1 + 2 },
     ]
     for (const crest of crests) {
       const r = await Relief.load(ctx, '', def, { ...motion(false), crest: [{ layer: 'step', ...CELLS, ...crest.cells }] })
@@ -849,6 +999,7 @@ describe('the sheets of a relief', () => {
       const gone = [0, 0, 0]
       const reached = [0, 0]
       let half = 0
+      let under = 0
       for (let n = 0; n < sheet.length; n++) {
         const bi = Math.round(uv[n * 2]! * 8)
         const cj = Math.round((1 - uv[n * 2 + 1]!) * 6)
@@ -860,7 +1011,7 @@ describe('the sheets of a relief', () => {
         const mine = sheet[n] === 1 ? bi >= 5 : bi <= 3
         // Where the sheets end with the cut across the side both take the mesh's vertex, and the far sheet takes it on its rim.
         const shut = ends[cj * 9 + bi] === 1 || (sheet[n] !== 1 && rim[cj * 9 + bi] === 1)
-        const past = crest.beyond.includes(cj) && bi >= 3 && bi <= 5
+        const past = crest.beyond.includes(cj)
         if (sheet[n] === -1) {
           // Under a kept cell the far sheet lies a thousandth behind the mesh's own vertex at the least, and just that where it is
           // shut, the ground is its own or the crest has ended.
@@ -869,10 +1020,15 @@ describe('the sheets of a relief', () => {
             expect(Math.abs(a.length() / b.length() - (1 + CREST_BEHIND))).toBeLessThan(1e-6)
             if (!mine) (shut ? closed : gone)[0]!++
           } else if (bi >= 5) {
-            // Not shut, under the near ground: the far side's distance as far as the band of the ramp reaches, and beyond it
-            // the ground's own with the thousandth (the ring's last column, where it ends with the map).
+            // Not shut, under the near ground: the far side's distance as far as the band of the ramp reaches (on the box's own
+            // row half way from there up to the ground: two of the texels round the vertex lie past the end), and beyond the
+            // band the ground's own with the thousandth (the ring's last column, where it ends with the map).
             const round = [0, 1, 2, 3].map((q) => f.away[Math.min(H - 1, Math.max(0, cj * 8 - (q >> 1))) * W + Math.min(W - 1, Math.max(0, bi * 8 - (q & 1)))]! < 255)
-            if (round.every((v) => v)) expect(Math.abs(a.length() - FAR)).toBeLessThan(0.5)
+            if (round.every((v) => v) && crest.edge.includes(cj)) {
+              under++
+              expect(a.length()).toBeGreaterThan(b.length() + 0.5)
+              expect(a.length()).toBeLessThan(FAR - 0.5)
+            } else if (round.every((v) => v)) expect(Math.abs(a.length() - FAR)).toBeLessThan(0.5)
             if (round.every((v) => !v)) expect(Math.abs(a.length() / b.length() - (1 + CREST_BEHIND))).toBeLessThan(1e-6)
             reached[round.every((v) => v) ? 0 : 1]!++
           }
@@ -880,11 +1036,9 @@ describe('the sheets of a relief', () => {
           expect([a.x, a.y, a.z]).toEqual([b.x, b.y, b.z])
           same[sheet[n] === 1 ? 1 : 0]!++
           if (!mine) (shut ? closed : gone)[sheet[n] === 1 ? 2 : 1]!++
-        } else if (bi >= 5 || bi <= 3) {
-          expect(Math.abs(a.length() - (sheet[n] === 1 ? NEAR : FAR))).toBeLessThan(0.5)
         } else if (crest.edge.includes(cj)) {
-          // The vertex in the wall on the box's own row: two of the texels round it are the ramp's and two lie past its end, so
-          // each sheet is half way from its side to the wall.
+          // A vertex on the box's own row: two of the texels round it lie on the ramp or beside it and two lie past its end, so
+          // each sheet is half way from its side to the mesh.
           half++
           if (sheet[n] === 1) {
             expect(a.length()).toBeGreaterThan(NEAR + 0.5)
@@ -893,6 +1047,8 @@ describe('the sheets of a relief', () => {
             expect(a.length()).toBeGreaterThan(b.length() + 0.5)
             expect(a.length()).toBeLessThan(FAR - 0.5)
           }
+        } else if (bi >= 5 || bi <= 3) {
+          expect(Math.abs(a.length() - (sheet[n] === 1 ? NEAR : FAR))).toBeLessThan(0.5)
         }
       }
       expect(same[0]).toBeGreaterThan(0)
@@ -901,11 +1057,14 @@ describe('the sheets of a relief', () => {
       // row 5 from the column 4 to the column 8. The far sheet in place of a cell: at the end vertex of the column 4. The near
       // sheet: at those of the columns 3 and 4.
       expect(closed).toEqual(crest.closed)
-      // Past the end: the far sheet under a kept cell in the column 5 of both rows; the far sheet in place of a cell in the
+      // Past the end: the far sheet under a kept cell in the columns 5 to 8 of both rows; the far sheet in place of a cell in the
       // columns 4 and 5 above the box and in the column 5 below it (the column 4 is an end there); the near sheet in the columns
       // 3 and 4 above the box.
       expect(gone).toEqual(crest.gone)
-      expect(half).toBe(crest.edge.length * 2)
+      // On the box's own rows: the near sheet in the columns 3 and 4, the far sheet in place of a cell in the columns 4 and 5,
+      // the far sheet under a kept cell in the columns 5 to 7.
+      expect(half).toBe(crest.edge.length * 4)
+      expect(under).toBe(crest.edge.length * 3)
       expect(reached[0]).toBeGreaterThan(reached[1]!)
       // Where the far sheet in place of a cell meets the far sheet under a kept cell on the near side and neither is shut, the two
       // have the vertex at one place: no crack. On the far side, where they are shut and past the crest's end (where the one in
