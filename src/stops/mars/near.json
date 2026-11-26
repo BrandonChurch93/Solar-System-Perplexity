@@ -18,8 +18,8 @@
     "shellDepth": 0.0128
   },
   "sun": {
-    "note": "The light on the own ground. The globe's light stands and the body turns 0.9 degrees a second, so the cosine of the sun at the place falls through the stop (0.4708 at the hold 2325, 0.4178 at 2477, 0.3802 at 2580, 0.3421 at 2681, 0.3317 at 2708) and the lit map darkens with it by curve.json. The land plates and the close view's picture carry painted light; they are drawn times curve(cosine now) over curve(refCos), refCos being the cosine at the judged surface frame 2580, so the plates, the picture and the map stand in one light at every frame. MEASURED before it: the factor from plate to map read by the dive (2438 to 2445) and by the rise (2702 to 2710) on the same ground differed by 0.3402, 0.2025, 0.0772 (log, red green blue); the curve gives 0.344, 0.201, 0.073.",
-    "refCos": 0.3801849669009272
+    "note": "The light on the own ground. The globe's light stands and the body turns 0.9 degrees a second, so the cosine of the sun at the place falls through the stop (0.4708 at the hold 2325, 0.4178 at 2477, 0.3802 at 2580, 0.3421 at 2681, 0.3317 at 2708) and the lit map darkens with it by curve.json. The land plates and the close view's picture carry painted light; they are drawn times curve(cosine now) over curve(refCos), refCos being the cosine at the judged surface frame 2580 at the middle of its shutter at the film's rate (the tone is then 1 there and the frame keeps its picture), so the plates, the picture and the map stand in one light at every frame. MEASURED before it: the factor from plate to map read by the dive (2438 to 2445) and by the rise (2702 to 2710) on the same ground differed by 0.3402, 0.2025, 0.0772 (log, red green blue); the curve gives 0.344, 0.201, 0.073.",
+    "refCos": 0.38013854397642277
   },
   "glow": {
     "ground": {
