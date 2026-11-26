@@ -2229,3 +2229,12 @@ Also in: the draft frames of e88f4f2b beside 84f2d1e1 (jx1-02): only 3044, 3048,
 - assets-src/jupiter/deck/frames.ts takes `--diag NAME` (a tool of this folder; used for the layers view).
 - Looks: four pictures of S2's cause added 19:15; the tool's push failed three times on the git proxy ("could not read Username"), the same commit pushed by hand 19:17:24, head b0bc162365bf.
 - Disk: frames set d1 (build D, 205 MB) removed; 3339456512 bytes free at 19:19:55.
+
+### 19:31 UTC, S2's cure committed as a switch; what main's rows say about S2
+
+- The switch at 0 (body.json handover.farGlobe.dive 0, chain /tmp/chain-c0.sh, set s2c0): K 6039 and 6055 are build E's stills (s2asis) to the byte, K 6080 is the reader's still to the byte (the same file sha for all three).
+- The switch at 1 against the reader's stills of build E (set s2c1), px moved by more than 8 and the largest move: K 6046 10961, 50; K 6062 102764, 81; K 6070 110218, 130; K 6080 91230, 91; K 6090 6221, 81; K 6100 282, 21; K 6110 0, 1; K 6118 0, 0; K 6120 0, 0. So nothing moves at the view switch (3059.25).
+- Seen (/tmp/eye/c1-pair-6062.jpg, c1-nat-6070.jpg, c1-nat-6080.jpg, c1-limb-6070.png, c1-late-a.jpg, c1-late-b.jpg): the far strip keeps the globe's belts and streaks to the limb through 3035, then pales into the deck's cool far field by 3045 to 3050; no line at the strip's inner bound.
+- Main's rows of the dive (scorecards/round-059/smooth-jupiter.json, saved as /tmp/main-smooth.json): the 38 rows over 0.45 come in three groups: K 6034 to 6049 (largest 0.840 at K 6039, at [1600, 288]: the change of share on the far zone); K 6063 to 6077 (largest 0.732 at K 6068, at [1404, 388]: the far zone again, while the air comes in); K 6094 to 6103 (largest 0.612 at K 6098, at [351, 976], others at [1704, 1000], [266, 1003]: the bottom of the frame, not the far strip).
+- The cure as built hands the strip from the globe's pixels to the deck's far ground by the weight of the height (the law the stand in had). Whether the second group falls with it is not measured yet: the reader's slice K 6066 to 6070 runs first, then the rest of K 6034 to 6105.
+- A reading of the other way (the globe's pixel put through the deck's own law in the place of the deck's far ground, so that the deck's far picture never shows on the strip in the orbit view): it needs the strip to equal the surface view's at 3059.25, where no globe is drawn, and the far band there is the picture laid back from the fit camera with its own air; not built.

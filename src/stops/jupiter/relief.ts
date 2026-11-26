@@ -11,6 +11,7 @@ import { frameUniform } from '../../core/frame'
 import place from './place.json'
 
 const ABOVE_KNOTS = deck.above.gain.length
+const airKnots = deck.above.air.findIndex((v) => v.every((c) => c === 0))
 const FLASHES = deck.life.flash.sites.length
 
 const EDDIES = deck.life.eddies.length
@@ -176,6 +177,7 @@ uniform vec2 uAirFar;
 uniform vec3 uAboveGain[${ABOVE_KNOTS}];
 uniform vec3 uAboveAir[${ABOVE_KNOTS}];
 uniform vec2 uAboveMix;
+uniform vec3 uFarGlobe;
 uniform sampler2D uTone;
 uniform vec4 uToneBox;
 uniform vec3 uToneLift;
@@ -443,6 +445,7 @@ void main() {
   float vig = 1.0 / mix(1.0, 1.0 / pow(1.0 + dot(q, q) * 0.9, 2.0), uVignette);
   vec3 col = vec3(0.0);
   float alpha = 0.0;
+  float given = 0.0;
   float texels = 0.0;
   vec3 tint = vec3(float(steps) / uBodyMarch.w, 0.0, 0.0);
   for (int k = 0; k < (hit ? 1 : 0); k++) {
@@ -551,12 +554,14 @@ void main() {
       liftLow = inView * (max(picture + lit * throughNow + addedNow - was, uAirHeld.y * picture) - picture);
       liftClear = inView * (max(picture + lit - was, uAirHeld.y * picture) - picture);
     }
+    vec3 standIn = vec3(0.0);
     for (int i = 0; i < (thin > 0.0 ? 1 : 0); i++) {
       float knot = sqrt(clamp(sine, 0.0, 1.0)) * ${ABOVE_KNOTS - 1}.0;
       int low = int(min(floor(knot), ${ABOVE_KNOTS - 2}.0));
       float part = knot - float(low);
       vec3 byGain = mix(uAboveGain[low], uAboveGain[low + 1], part);
       vec3 byAir = mix(uAboveAir[low], uAboveAir[low + 1], part);
+      for (int j = 0; j < (uLayer.z > 0.5 && uFarGlobe.x > 0.0 ? 1 : 0); j++) standIn = (mix(ground * shade, seen.rgb * fine * shade, seen.a) + liftClear) * byGain + byAir;
       col = mix(col, col * byGain + byAir, thin);
       for (int j = 0; j < (thin < 1.0 && uAboveMix.x > 0.0 ? 1 : 0); j++) {
         vec3 shallow = mix(ground * shade * throughLow + addedLow, seen.rgb * fine * shade, seen.a) + liftLow;
@@ -600,12 +605,20 @@ void main() {
     }
     float kept = mix(major / sizePlate, countView, seen.a) / uGrad;
     texels = max(kept, on * 2.0 * span / (uGrad * 1.6 * least));
+    for (int i = 0; i < (uLayer.z > 0.5 && uFarGlobe.x > 0.0 && thin > 0.0 ? 1 : 0); i++) {
+      float far = uFarGlobe.x * thin * (1.0 - smoothstep(uFarGlobe.y, uFarGlobe.z, sine));
+      for (int j = 0; j < (far > 0.0 ? 1 : 0); j++) {
+        given = far * min(dot(col, vec3(0.2126, 0.7152, 0.0722)) / max(dot(standIn, vec3(0.2126, 0.7152, 0.0722)), 1e-6), 1.0);
+        col = max(col - given * standIn, vec3(0.0));
+      }
+    }
     col *= uExpose;
     alpha = 1.0;
     for (int i = 0; i < (uLayer.z > 0.5 ? 1 : 0); i++) {
       vec2 r = abs(there.xy - uFar.xy) * (2.0 * uFar.z);
       alpha = uLayer.x * (1.0 - smoothstep(uJoin.x, uJoin.y, max(r.x, r.y)));
       col *= alpha;
+      alpha *= 1.0 - given;
     }
     tint.b = seen.a;
     tint.g = on;
@@ -625,6 +638,7 @@ void main() {
   }
   outColor = diagOut(vec4(col * uGain * vig, alpha), texels, 1.0, tint, vec2(0.0), t);
   if (!hit && (uDiag >= 2 || alpha + col.r + col.g + col.b <= 0.0)) discard;
+  if (uDiag >= 2 && given > 0.5) discard;
 }`
 
 type Level = { centre: number[]; size: number; pixels: Record<string, number> }
@@ -778,6 +792,7 @@ export class ReliefDeck {
       uAboveGain: { value: deck.above.gain.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveAir: { value: deck.above.air.map((v) => new THREE.Vector3().fromArray(v)) },
       uAboveMix: { value: new THREE.Vector2(deck.above.even, deck.above.floor) },
+      uFarGlobe: { value: new THREE.Vector3(0, ((airKnots - 1) / (ABOVE_KNOTS - 1)) ** 2, (airKnots / (ABOVE_KNOTS - 1)) ** 2) },
       uTone: { value: ctx.floatTexture(tone, 2 * tn.pixels, 3 * tn.pixels) },
       uCalmBox: { value: new THREE.Vector4(cm.centre[0]!, cm.centre[1]!, 1 / cm.size, cm.scale) },
       uToneBox: { value: new THREE.Vector4(tn.centre[0]!, tn.centre[1]!, 1 / tn.size, tn.scale) },
@@ -863,6 +878,10 @@ export function liftNow(seconds: number): number[] {
 
 export function heldNow(seconds: number): number {
   return seconds < 0 ? 0 : 1
+}
+
+export function farGlobeNow(seconds: number): number {
+  return seconds < 0 ? body.handover.farGlobe.dive : body.handover.farGlobe.rise
 }
 
 export function tallNow(height: number): number {
