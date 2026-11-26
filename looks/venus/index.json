@@ -1,9 +1,33 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T07:24:40.209Z",
- "head": "1967a39154d6e10e0e3598b5189dafb1c69463a5",
- "note": "trial P2 at 1545 to 1556 and trial P3's map from above",
+ "pushed": "2026-11-26T07:57:33.101Z",
+ "head": "aef09351f694e1f6c476a6f390ab8db6f8d3a889",
+ "note": "P3c dropped, the grey blob of P2 at 1551, main's dive far deck",
  "looks": [
+  {
+   "time": "2026-11-26T07:57:32.013Z",
+   "file": "20261126075732013-note-M-dive-top.jpg",
+   "source": "../../../../tmp/v/sh/D/M-dive-top.jpg",
+   "kind": "note",
+   "label": "Main's dive 1326 to 1347 every third frame, left half, top: the far ground has small cells and a whitish patch at 1326, is smoother at 1329 and a pale smooth deck from 1332. The dive has no far map yet.",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:57:31.028Z",
+   "file": "20261126075731028-note-specks2.jpg",
+   "source": "../../../../tmp/v/sh/D/specks2.jpg",
+   "kind": "note",
+   "label": "Frame 1551, x 1530 to 1650, y 435 to 505 at 5 times: main before the third cut (top left), P2 (top right), main now (bottom left), P2 minus old main times 4 (bottom right). P2 shows a grey blob where the others show a lilac patch; open, to be seen again in P2c.",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T07:57:29.664Z",
+   "file": "20261126075729664-note-p0.jpg",
+   "source": "../../../../tmp/v/sh/P3c/p0.jpg",
+   "kind": "note",
+   "label": "Rise 1546 to 1556 every second frame, half size: left the trial P3c (map carried past the far end of the place), right P2 (map inside the place). P3c shows a pale band ending at a line under the limb from 1550; dropped.",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T07:24:39.559Z",
    "file": "20261126072439559-note-a4-arc.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/sh/pl/a4-ov.jpg",
    "kind": "note",
    "label": "level a of the rise from above: main's plate, the far deck plate, main's plate times the map of trial P3 (the map goes on past the far end of the far deck with the tone of that end)",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:12:30.614Z",
-   "file": "20261126071230614-note-z1.jpg",
-   "source": "../../../../tmp/v/sh/P2/z1.jpg",
-   "kind": "note",
-   "label": "trial P2 every frame 1549 to 1552 + 1/2, crop x 640 to 1600, y 110 to 510 at 1 to 1",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:12:29.938Z",
-   "file": "20261126071229938-note-t1.jpg",
-   "source": "../../../../tmp/v/sh/P2/t1.jpg",
-   "kind": "note",
-   "label": "the same three at 1557, 1560, 1563: P2 is main's ground by 1563, the name keeps the far deck's smooth field",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:12:28.922Z",
-   "file": "20261126071228922-note-t0.jpg",
-   "source": "../../../../tmp/v/sh/P2/t0.jpg",
-   "kind": "note",
-   "label": "trial P2 (main's plates times a map of the far deck of T, share by the eye's height), main, and the name 77874d64 at 1548, 1551, 1554, crop x 700 to 1340, y 130 to 450 at 1 to 1",
    "stop": "venus"
   }
  ]
