@@ -1,9 +1,33 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T15:14:51.586Z",
+ "pushed": "2026-11-26T15:49:08.458Z",
  "head": "04b82e67d37ec981f28da1c28204e67099179d95",
- "note": "15:16 speck state pairs 2466 and 2470 against main; state 04b82e67: gate PASS, finals 2325 and 2580 byte equal, units running",
+ "note": "15:49 the whole cure made a second time on main's plates (from above, three levels); the speck state's proof runs again on the merge with main 686da341",
  "looks": [
+  {
+   "time": "2026-11-26T15:49:07.591Z",
+   "file": "20261126154907591-note-a8-07.jpg",
+   "source": "../../../../tmp/pm/B/a8-07.png",
+   "kind": "note",
+   "label": "whole cure on main's plates, 0.7 deg plate from above, native crop: left main, right the cure; a pale band stands along the mound's border (the border's ground moved toward the lit ground): not good yet",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T15:49:06.790Z",
+   "file": "20261126154906790-note-a8-16.jpg",
+   "source": "../../../../tmp/pm/B/a8-16.png",
+   "kind": "note",
+   "label": "whole cure on main's plates, 1.6 deg plate from above, native crop: left main, right the cure with take 1 laid as form",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T15:49:05.672Z",
+   "file": "20261126154905672-note-a8-38.jpg",
+   "source": "../../../../tmp/pm/B/a8-38.png",
+   "kind": "note",
+   "label": "whole cure laid on MAIN's plates, 3.8 deg plate from above, native crop: left main's plate, right the plate with the canyon's inside from the heights (not in the film yet)",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T15:14:50.573Z",
    "file": "20261126151450573-note-pairB2470.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/pm/mail/far-rim-2470-main-above-state-below.png",
    "kind": "note",
    "label": "draft 2470, the far rim's head at 2 times: main above, the state 04b82e67 below (the black band stands in both)",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:59:41.499Z",
-   "file": "20261126145941499-note-pair-2456-step2-above-state-below.jpg",
-   "source": "../../../../tmp/pm/mail/pair-2456-step2-above-state-below.jpg",
-   "kind": "note",
-   "label": "draft 2456 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:59:40.681Z",
-   "file": "20261126145940681-note-pair-2452-step2-above-state-below.jpg",
-   "source": "../../../../tmp/pm/mail/pair-2452-step2-above-state-below.jpg",
-   "kind": "note",
-   "label": "draft 2452 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T14:59:39.863Z",
-   "file": "20261126145939863-note-pair-2448-step2-above-state-below.jpg",
-   "source": "../../../../tmp/pm/mail/pair-2448-step2-above-state-below.jpg",
-   "kind": "note",
-   "label": "draft 2448 at native size: step 2 (f73602f9) above, the state 04b82e67 below",
    "stop": "mars"
   }
  ]
