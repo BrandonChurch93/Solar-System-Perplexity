@@ -1,9 +1,16 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T10:39:41.887Z",
+ "pushed": "2026-11-26T11:06:45.552Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the Mars builder's four texel weigh drawn alone and with the matte on the near slope at 2468 and 2470; a trial of the matte carried outward and its cost",
+ "note": "Mars 2468 at the review tier: the line of the weigh alone stands 22.8 levels over the ground beside on 284 px, with the outline in the masks 2.1; looking for which layer draws it",
  "looks": [
+  {
+   "time": "2026-11-26T11:06:44.852Z",
+   "file": "20261126110644852-note-near-2468-review.jpg",
+   "source": "../../../../tmp/weigh/near-2468-review.png",
+   "kind": "note",
+   "label": "Mars 2468 near slope at three times: review tier with the four texel weigh alone (a whole light line), review tier with the outline in the masks (a hairline), draft tier as the stop stands (dots)"
+  },
   {
    "time": "2026-11-26T10:39:27.053Z",
    "file": "20261126103927053-note-grow2-band-2470.jpg",
@@ -38,27 +45,6 @@
    "source": "../../../../tmp/weigh/band-2472.png",
    "kind": "note",
    "label": "Mars 2472 at draft four times, the band's far edge: the matte with one read above, with the four texel weigh below; to my eye the same"
-  },
-  {
-   "time": "2026-11-26T10:23:03.911Z",
-   "file": "20261126102303911-note-p2474.jpg",
-   "source": "../../../../tmp/weigh/p2474.png",
-   "kind": "note",
-   "label": "Mars 2474 at draft ten times: as it stands, the matte with one read, the matte with the four texel weigh; the weigh takes the top off one small lit patch, the rest reads the same"
-  },
-  {
-   "time": "2026-11-26T10:23:03.081Z",
-   "file": "20261126102303081-note-rim-2470-x9.jpg",
-   "source": "../../../../tmp/weigh/rim-2470-x9.png",
-   "kind": "note",
-   "label": "Mars 2470 at draft, the far outline of the hidden side nine times: the matte with one read, the matte with the Mars builder's four texel weigh, and as it stands; scratch, the stop's files are its builder's"
-  },
-  {
-   "time": "2026-11-26T10:23:02.124Z",
-   "file": "20261126102302124-note-lm-tip-sheet.jpg",
-   "source": "../../../../tmp/law/lm-tip-sheet.png",
-   "kind": "note",
-   "label": "the contract's bit proof: six draft frames (Mars 2470, 2477, 2580, 2683, Mercury 759, 850) drawn with the contract's relief file, each the same bytes as with main's relief file"
   }
  ]
 }
