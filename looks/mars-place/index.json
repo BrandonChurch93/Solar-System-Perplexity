@@ -1,71 +1,71 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T04:14:53.278Z",
- "head": "749712666e01f152e8b073b465d095f807347546",
- "note": "air trials: grade 0.2448 at the pair 2708 and 2716 (state 0.9648); N1 judge; cause of the wash found: the sun curve on the map, not on the plates",
+ "pushed": "2026-11-26T04:41:37.360Z",
+ "head": "522708ba962227e5d09acb954ba9fa926fbf4dcf",
+ "note": "N5: one air, the hold's grade above 102 km, sun on the own ground; pair 2708/2716 reads 0.0726; rims and patch traced to the map",
  "looks": [
   {
-   "time": "2026-11-26T04:14:52.322Z",
-   "file": "20261126041452322-note-c1-2441.jpg",
-   "source": "../../../../tmp/pm/c1/c1-2441.jpg",
+   "time": "2026-11-26T04:41:36.709Z",
+   "file": "20261126044136709-note-n2-2477.jpg",
+   "source": "../../../../tmp/pm/n2-2477.jpg",
    "kind": "note",
-   "label": "C1 beside the state and main at 2441, 1400 px tiles",
+   "label": "2477 draft: state top, N2 bottom (sun tone)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:14:51.560Z",
-   "file": "20261126041451560-note-c1-2704.jpg",
-   "source": "../../../../tmp/pm/c1/c1-2704.jpg",
+   "time": "2026-11-26T04:41:36.083Z",
+   "file": "20261126044136083-note-n2-2681.jpg",
+   "source": "../../../../tmp/pm/n2-2681.jpg",
    "kind": "note",
-   "label": "C1 beside the state and main at 2704, 1400 px tiles",
+   "label": "2681 draft: state top, N2 bottom (sun tone)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:14:50.865Z",
-   "file": "20261126041450865-note-judge-N1-field.jpg",
-   "source": "../../../../tmp/pm/judge-N1-field.jpg",
+   "time": "2026-11-26T04:41:35.446Z",
+   "file": "20261126044135446-note-judge-N2.jpg",
+   "source": "../../../../tmp/pm/judge-N2.jpg",
    "kind": "note",
-   "label": "N1 (one field for both sides) judged against the tree without land-8p5: rise 2700 to 2710 left, dive 2437 to 2441 right; not a pass",
+   "label": "N2 judge sheet: with the land-8p5 row, without, difference x 8, eight frames",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:14:50.212Z",
-   "file": "20261126041450212-note-t-2462.jpg",
-   "source": "../../../../tmp/pm/t-2462.jpg",
+   "time": "2026-11-26T04:41:34.721Z",
+   "file": "20261126044134721-note-n3-2441-crop.jpg",
+   "source": "../../../../tmp/pm/n3-2441-crop.jpg",
    "kind": "note",
-   "label": "2462: state, trial grade, trial gradenear (near terms on the hold's air)",
+   "label": "2441 crop: N2 left, N3 right (N3 dropped: fails the judge)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T04:14:49.325Z",
-   "file": "20261126041449325-note-t-grade.jpg",
-   "source": "../../../../tmp/pm/t-grade.jpg",
+   "time": "2026-11-26T04:41:34.079Z",
+   "file": "20261126044134079-note-n2-2441-crop.jpg",
+   "source": "../../../../tmp/pm/n2-2441-crop.jpg",
    "kind": "note",
-   "label": "trial grade (one air, the hold's, tint on ground and air alike) beside the state: 2708, 2716, 2700, 2696, 2445, 2462, 2580, 2325",
+   "label": "2441 crop: state left, N2 right (hot rims)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T03:53:13.743Z",
-   "file": "20261126035313743-note-t-e0.jpg",
-   "source": "../../../../tmp/pm/t-e0.jpg",
+   "time": "2026-11-26T04:41:33.486Z",
+   "file": "20261126044133486-note-n5m-2704.jpg",
+   "source": "../../../../tmp/pm/n5m-2704.jpg",
    "kind": "note",
-   "label": "trials (scratch) at 2696, 2700, 2708: state 74971266 left; e0 = day edge of the air at the hold's value at every height, middle; et0 = edge and tint at the hold's value, right. True carry 2708 against 2716: state 0.9648, e0 0.3529, et0 0.2635",
+   "label": "2704 draft: the map alone top, N5 bottom (green tinge at the canyon's west rim is the map's)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T03:48:16.521Z",
-   "file": "20261126034816521-note-t-et0.jpg",
-   "source": "../../../../tmp/pm/t-et0.jpg",
+   "time": "2026-11-26T04:41:32.865Z",
+   "file": "20261126044132865-note-n5m-2441.jpg",
+   "source": "../../../../tmp/pm/n5m-2441.jpg",
    "kind": "note",
-   "label": "trial et0 (scratch): tint and day edge held at the hold's value at every height, right, beside state 74971266, left; frames 2477, 2681, 2580 keep their bytes, 2708 reads as the ground of 2716, 2696 goes pale where the near tint comes in",
+   "label": "2441 draft: the map alone top, N5 bottom (pale patch, hot rims are the map's)",
    "stop": "mars"
   },
   {
-   "time": "2026-11-26T03:46:04.066Z",
-   "file": "20261126034604066-note-v-2708.jpg",
-   "source": "../../../../tmp/pm/c1/v-2708.jpg",
+   "time": "2026-11-26T04:41:32.220Z",
+   "file": "20261126044132220-note-n5-2704.jpg",
+   "source": "../../../../tmp/pm/n5-2704.jpg",
    "kind": "note",
-   "label": "frame 2708 draft: C1 (tree without the land-8p5 row) on top, state 74971266 in the middle, main below. C1 shows the 3.8 plate's border, the state washes the map's forms flat",
+   "label": "2704 draft: N2 top, N5 bottom",
    "stop": "mars"
   }
  ]
