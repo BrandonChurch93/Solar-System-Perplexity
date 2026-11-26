@@ -157,24 +157,6 @@ export function flight(seconds: number, vfov: number): Pose {
   return { position, quaternion, vfov }
 }
 
-export function stormTurn(seconds: number): number {
-  const s = deck.life.storm
-  const bound = THREE.MathUtils.degToRad(s.boundDeg)
-  return bound * Math.tanh(THREE.MathUtils.degToRad(s.degPerSecond) * (seconds - config.shutterFraction / (2 * config.fps)) / bound)
-}
-
-export function eddyTurn(eddy: number, seconds: number): number {
-  const e = deck.life.eddies[eddy]!
-  const bound = THREE.MathUtils.degToRad(e.boundDeg)
-  return bound * Math.tanh(THREE.MathUtils.degToRad(e.degPerSecond) * (seconds - config.shutterFraction / (2 * config.fps)) / bound)
-}
-
-export function ringTurn(ring: number, seconds: number): number {
-  const r = deck.life.storm.rings[ring]!
-  const bound = THREE.MathUtils.degToRad(r.boundDeg)
-  return bound * Math.tanh(THREE.MathUtils.degToRad(r.degPerSecond) * (seconds - config.shutterFraction / (2 * config.fps)) / bound)
-}
-
 export function hazeDrift(band: number, seconds: number): number {
   return deck.life.haze.bands[band]!.unitsPerSecond * (seconds - config.shutterFraction / (2 * config.fps))
 }
