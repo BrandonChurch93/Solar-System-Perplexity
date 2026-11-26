@@ -21,6 +21,10 @@ PLANE_RIDGE = 1e-3
 SOFT_PX = 1.0
 SETTLE_PX = 8.0
 EDGE = 4
+GROUND_PX = 20
+GROUND_NEAR = 2
+GROUND_SHARE = 0.02
+GROUND_BLUR_PX = 20
 
 
 def grey(path):
@@ -126,9 +130,9 @@ def left(a, b, f=None, g=None, agree=True, pair=None):
     return d, float(np.hypot(f[..., 0], f[..., 1]).mean()), unsure
 
 
-def body(pose, shape, margin):
+def body(pose, shape, margin, ringed=True):
     """Where the frame shows the body: the pixels whose ray meets the unit sphere of the stop, or its rings in front of it when the pose names them
-    (rings: normal, inner, outer), less a margin at the edge. pose: p, q (x, y, z, w), vfov. When the pose names the globe (globe: quaternion,
+    (rings: normal, inner, outer), less a margin at the edge. Not ringed: the globe alone, less what the rings cover of it. pose: p, q (x, y, z, w), vfov. When the pose names the globe (globe: quaternion,
     scale) the body is the unit sphere scaled along the axes of the globe's own frame, as the stop draws it."""
     h, w = shape
     k = h / 2 / np.tan(np.radians(pose['vfov']) / 2)
@@ -167,7 +171,8 @@ def body(pose, shape, margin):
         with np.errstate(all='ignore'):
             far = -(p @ n) / slope
             radius = np.linalg.norm(p + ray * far[..., None], axis=-1)
-            hit |= np.isfinite(far) & (far > 0) & (radius >= rings['inner']) & (radius <= rings['outer']) & ~(hit & (front < far))
+            over = np.isfinite(far) & (far > 0) & (radius >= rings['inner']) & (radius <= rings['outer']) & ~(hit & (front < far))
+            hit = hit | over if ringed else hit & ~over
     size = 2 * int(round(margin)) + 1
     return cv2.erode(hit.astype(np.uint8), np.ones((size, size), np.uint8), borderType=cv2.BORDER_CONSTANT, borderValue=1) > 0
 
@@ -403,6 +408,50 @@ def around(values, i, window, first=0, total=None, lead=0, tail=0):
     return float(np.median(picked)) if picked else None
 
 
+def ground(pose, later, shape, scale, mx=None, my=None):
+    """The ground of a pair: the pixels at which the first frame shows the globe and the later frame shows it too where the way mx, my takes
+    them (without a way: at the same place), GROUND_PX px of the full size inside its edge in both, the rings and what they cover left out.
+    Without a pose record of both frames, the frame."""
+    if not pose or not later:
+        return np.ones(shape, dtype=bool)
+    there = body(later, shape, GROUND_PX * scale, False)
+    if mx is not None:
+        there = cv2.remap(there.astype(np.uint8), mx, my, cv2.INTER_NEAREST, borderMode=cv2.BORDER_CONSTANT, borderValue=0) > 0
+    return body(pose, shape, GROUND_PX * scale, False) & there
+
+
+def nearest(values, i, marks, n):
+    """The places of the GROUND_NEAR rows before i and the GROUND_NEAR after it that have a value and lie in the same run of frames as i."""
+    out = []
+    for way in (-1, 1):
+        for j in range(i + way, i + way * (GROUND_NEAR + 1), way):
+            if not 0 <= j < n or (j + 1) in marks:
+                break
+            if values[j] is not None:
+                out.append(j)
+    return sorted(out)
+
+
+def patch(field, rest, scale):
+    """Where a row has more left on its ground than the rows nearest to it, and how large that place is: the excess (the row less the
+    median of the others at each pixel) smoothed over GROUND_BLUR_PX px of the full size; its largest place in px of the full size, and the
+    width and height of the patch round it that stays over half of it."""
+    with np.errstate(all='ignore'), warnings.catch_warnings():
+        warnings.simplefilter('ignore', RuntimeWarning)
+        excess = field - np.nanmedian(np.stack(rest), axis=0)
+    on = np.isfinite(excess)
+    if not on.any():
+        return None, None
+    smooth = cv2.GaussianBlur(np.where(on, excess, 0).astype(np.float32), (0, 0), GROUND_BLUR_PX * scale)
+    smooth[~on] = -np.inf
+    y, x = np.unravel_index(int(np.argmax(smooth)), smooth.shape)
+    if not smooth[y, x] > 0:
+        return None, None
+    _, parts = cv2.connectedComponents((smooth >= smooth[y, x] / 2).astype(np.uint8))
+    ys, xs = np.nonzero(parts == parts[y, x])
+    return [int(round((x + 0.5) / scale)), int(round((y + 0.5) / scale))], [int(round((xs.max() - xs.min() + 1) / scale)), int(round((ys.max() - ys.min() + 1) / scale))]
+
+
 def pictures(job):
     paths = job['paths']
     scale = job.get('scale', 0.25)
@@ -438,49 +487,62 @@ def pictures(job):
             held[j] = soft(grey(paths[j]))
         return held[j]
 
-    pair = (lambda i, j: lambda mx, my: whole(fine(i), fine(j), mx, my, scale)) if job.get('carryFull') else (lambda i, j: None)
+    taken = lambda i, j: lambda mx, my: whole(fine(i), fine(j), mx, my, scale)
+    carries = [taken] if job.get('carryFull') else [None, taken] if job.get('both') else [None]
+    reads = [{key: [None] * n for key in ('residual', 'carried', 'moved', 'unsure', 'grids', 'sure', 'pop', 'base', 'plain', 'masked', 'block', 'where', 'shift', 'top', 'spot', 'judged', 'earth', 'field', 'part', 'floor', 'rise', 'place', 'size')} for _ in carries]
     fw = [None] * n
     bw = [None] * n
-    residual = [None] * n
-    carried = [None] * n
-    moved = [None] * n
-    unsure = [None] * n
-    grids = [None] * n
-    sure = [None] * n
+    settled = [0]
+
+    def settle(upto):
+        """The ground pop of the rows before upto, each once the rows after it are read; the fields no later row needs are let go."""
+        for i in range(settled[0], upto):
+            for pair, r in zip(carries, reads):
+                rest = nearest(r['earth'], i, marks, n) if pair and r['earth'][i] is not None and own[0] <= i + start < own[1] and inside(i + 1) else []
+                if len(rest) >= GROUND_NEAR:
+                    r['floor'][i] = float(np.median([r['earth'][j] for j in rest]))
+                    r['rise'][i] = r['earth'][i] / max(r['floor'][i], floor)
+                    r['place'][i], r['size'][i] = patch(r['field'][i], [r['field'][j] for j in rest], scale)
+                if i >= GROUND_NEAR:
+                    r['field'][i - GROUND_NEAR] = None
+        settled[0] = max(settled[0], upto)
+
     for i in range(n - 1):
+        settle(i - GROUND_NEAR)
         if (i + 1) in marks:
             continue
         fw[i] = motion(frames[i], frames[i + 1])
         bw[i] = motion(frames[i + 1], frames[i])
-        once = pair(i, i + 1)
-        if once:
-            both = once(*along(fw[i], bw[i], *places(frames[i].shape))[:2])
-            once = lambda mx, my: both
-        d, m, u = left(frames[i], frames[i + 1], fw[i], bw[i], False, once)
-        counted = np.isfinite(d)
-        if not counted.any():
-            continue
-        moved[i] = m / scale
-        residual[i] = float(np.nanmean(d))
-        grids[i] = blocks(d, cols, rows)
-        if agree:
-            d, _, u = left(frames[i], frames[i + 1], fw[i], bw[i], True, once)
-            carried[i] = float(np.nanmean(d))
-            unsure[i] = float(u.sum() / counted.sum())
-            d[u] = np.nan
-            sure[i] = blocks(d, cols, rows, BLOCK_SHARE)
+        for pair, r in zip(carries, reads):
+            once = None
+            if pair:
+                way = along(fw[i], bw[i], *places(frames[i].shape))[:2]
+                both = pair(i, i + 1)(*way)
+                once = lambda mx, my, both=both: both
+            d, m, u = left(frames[i], frames[i + 1], fw[i], bw[i], False, once)
+            counted = np.isfinite(d)
+            if not counted.any():
+                continue
+            r['moved'][i] = m / scale
+            r['residual'][i] = float(np.nanmean(d))
+            r['grids'][i] = blocks(d, cols, rows)
+            if pair:
+                on = counted & ground(poses[i], poses[i + 1], d.shape, scale, *way)
+                r['part'][i] = float(on.mean())
+                if r['part'][i] >= GROUND_SHARE:
+                    r['earth'][i] = float(d[on].mean())
+                    r['field'][i] = np.where(on, d, np.nan).astype(np.float32)
+            if agree:
+                d, _, u = left(frames[i], frames[i + 1], fw[i], bw[i], True, once)
+                r['carried'][i] = float(np.nanmean(d))
+                r['unsure'][i] = float(u.sum() / counted.sum())
+                d[u] = np.nan
+                r['sure'][i] = blocks(d, cols, rows, BLOCK_SHARE)
     step = [None] * n
     for i in range(1, n - 1):
         if i in marks or (i + 1) in marks or not (inside(i - 1) and inside(i + 1)):
             continue
         step[i] = abs(levels[i] - (levels[i - 1] + levels[i + 1]) / 2)
-    pop = [None] * n
-    base = [None] * n
-    plain = [None] * n
-    masked = [None] * n
-    block = [None] * n
-    where = [None] * n
-
     def ratio(stack, i):
         lo, hi = near(i, n, window, start, total, lead, tail)
         rest = [stack[j] for j in range(lo, hi + 1) if j != i and stack[j] is not None]
@@ -490,28 +552,27 @@ def pictures(job):
             warnings.simplefilter('ignore', RuntimeWarning)
             return stack[i] / np.maximum(np.nanmedian(np.stack(rest), axis=0), floor)
 
-    for i in range(n):
-        if residual[i] is None or not own[0] <= i + start < own[1] or not inside(i + 1):
-            continue
-        m = around(residual, i, window, start, total, lead, tail)
-        if m is None:
-            continue
-        base[i] = m
-        plain[i] = pop[i] = residual[i] / max(m, floor)
-        cells = ratio(grids, i)
-        if agree:
-            masked[i] = carried[i] / max(around(carried, i, window, start, total, lead, tail), floor)
-            pop[i] = min(plain[i], masked[i])
-            other = ratio(sure, i)
-            cells = None if cells is None or other is None else np.minimum(cells, other)
-        if cells is not None and np.isfinite(cells).any():
-            at = np.unravel_index(np.nanargmax(cells), cells.shape)
-            block[i] = float(cells[at])
-            where[i] = [int(at[1]), int(at[0])]
-    shift = [None] * n
-    top = [None] * n
-    spot = [None] * n
-    judged = [None] * n
+    for r in reads:
+        residual, carried = r['residual'], r['carried']
+        for i in range(n):
+            if residual[i] is None or not own[0] <= i + start < own[1] or not inside(i + 1):
+                continue
+            m = around(residual, i, window, start, total, lead, tail)
+            if m is None:
+                continue
+            r['base'][i] = m
+            r['plain'][i] = r['pop'][i] = residual[i] / max(m, floor)
+            cells = ratio(r['grids'], i)
+            if agree:
+                r['masked'][i] = carried[i] / max(around(carried, i, window, start, total, lead, tail), floor)
+                r['pop'][i] = min(r['plain'][i], r['masked'][i])
+                other = ratio(r['sure'], i)
+                cells = None if cells is None or other is None else np.minimum(cells, other)
+            if cells is not None and np.isfinite(cells).any():
+                at = np.unravel_index(np.nanargmax(cells), cells.shape)
+                r['block'][i] = float(cells[at])
+                r['where'][i] = [int(at[1]), int(at[0])]
+    settle(n)
     weave = [None] * n
     weaveAt = [None] * n
     weaveShare = [None] * n
@@ -529,26 +590,29 @@ def pictures(job):
                 swapped = list(frames)
                 swapped[i + reach] = made['small']
                 d, later, ok = change(swapped, fw, bw, i, reach, sigma, first, last, way)
-                shift[i], top[i], at, judged[i] = changed(d)
-                spot[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
+                for r in reads:
+                    r['shift'][i], r['top'][i], at, r['judged'][i] = changed(d)
+                    r['spot'][i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
                 weave[i], weaveAt[i], weaveShare[i], weaveBand[i] = reading(*readings(swapped, fw, bw, i, reach, scale, sigma, wide, low, first, last, lambda j, i=i, made=made: made['full'] if j == i + reach else grey(paths[j]), way, later), scale)
                 continue
             d, later, ok = change(frames, fw, bw, i, reach, sigma, first, last, way)
-            if pair(i, i + reach):
-                d = change(frames, fw, bw, i, reach, sigma, first, last, way, pair(i, i + reach))[0]
-            shift[i], top[i], at, judged[i] = changed(d)
-            spot[i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
+            for pair, r in zip(carries, reads):
+                r['shift'][i], r['top'][i], at, r['judged'][i] = changed(change(frames, fw, bw, i, reach, sigma, first, last, way, pair(i, i + reach))[0] if pair else d)
+                r['spot'][i] = [int(round(at[0] / scale)), int(round(at[1] / scale))] if at else None
             weave[i], weaveAt[i], weaveShare[i], weaveBand[i] = reading(*readings(frames, fw, bw, i, reach, scale, sigma, wide, low, first, last, full, way, later), scale)
-    for i in range(n):
-        if not inside(i + 1):
-            residual[i] = moved[i] = unsure[i] = None
+    for r in reads:
+        for i in range(n):
+            if not inside(i + 1):
+                r['residual'][i] = r['moved'][i] = r['unsure'][i] = r['earth'][i] = r['part'][i] = None
+    grounds = lambda r: {'groundLeft': r['earth'], 'groundBase': r['floor'], 'groundPop': r['rise'], 'groundShare': r['part'], 'groundAt': r['place'], 'groundSize': r['size']}
+    pops = lambda r: {'residual': r['residual'], 'base': r['base'], 'popAll': r['plain'], 'popCarried': r['masked'], 'pop': r['pop'], 'motionPx': r['moved'], 'unsure': r['unsure'], 'popBlock': r['block'], 'popBlockAt': r['where']}
+    changes = lambda r: {'change': r['shift'], 'changeTop': r['top'], 'changeAt': r['spot'], 'changeShare': r['judged']}
     more = mapped(job, paths, frames, poses, scale, sigma, wide, low, reach, fw, bw, [i for i in range(n - reach) if own[0] <= i + start < own[1] and inside(i + reach) and not any((j + 1) in marks for j in range(i, i + reach))], redraw) if reach > 0 and job.get('carry') else {}
     for i in range(n if more else 0):
         if more['patternBoth'][i] is None and weave[i] is not None:
             more['patternBoth'][i], more['patternBothBy'][i], more['patternBothMap'][i] = weave[i], 'flow', 0.0
-    return {**more, 'level': levels, 'levelStep': step, 'residual': residual, 'base': base, 'popAll': plain, 'popCarried': masked, 'pop': pop, 'motionPx': moved, 'unsure': unsure, 'popBlock': block, 'popBlockAt': where, 'grid': [cols, rows],
-            'change': shift, 'changeTop': top, 'changeAt': spot, 'changeShare': judged, 'changeFrames': reach,
-            'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare, 'patternBand': weaveBand}
+    return {**more, 'level': levels, 'levelStep': step, **pops(reads[0]), 'grid': [cols, rows], **changes(reads[0]), 'changeFrames': reach,
+            'pattern': weave, 'patternAt': weaveAt, 'patternShare': weaveShare, 'patternBand': weaveBand, **(grounds(reads[0]) if carries[0] else {}), **({'full': {**pops(reads[1]), **changes(reads[1]), **grounds(reads[1])}} if len(reads) > 1 else {})}
 
 
 def glow_px(pose, scale):

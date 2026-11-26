@@ -120,6 +120,8 @@ export class FarSun {
   readonly mesh: THREE.Mesh
   readonly carry = new THREE.Group()
   private arcade: FarSunGas['arcade'] | null = null
+  private eye: THREE.PerspectiveCamera | null = null
+  private away = 1
   private readonly own: THREE.Mesh
   private readonly scene = new THREE.Scene()
   private readonly m4 = new THREE.Matrix4()
@@ -326,7 +328,12 @@ export class FarSun {
       if (arcade.object.parent !== this.carry) this.carry.add(arcade.object)
       this.carry.updateMatrixWorld(true)
       arcade.draw({ time: view.time, camera: view.camera, gain: 1 / view.exposure, vignette: view.vignette, aspect: view.aspect, height: view.height, wear: worn })
-    } else if (arcade && arcade.object.parent === this.carry) this.carry.remove(arcade.object)
+      this.eye = view.camera
+      this.away = view.centre.length()
+    } else {
+      if (arcade && arcade.object.parent === this.carry) this.carry.remove(arcade.object)
+      this.eye = null
+    }
     u.uOpacity!.value = opacity
     u.uGain!.value = 1 / view.exposure
     ;(u.uLens!.value as THREE.Vector2).set(view.vignette, view.aspect)
@@ -397,6 +404,25 @@ export class FarSun {
     this.material.depthTest = false
     renderer.setRenderTarget(target)
     renderer.render(this.scene, flat)
+    const eye = this.eye
+    if (eye && this.arcade && this.arcade.object.parent === this.carry) {
+      const near = eye.near
+      const far = eye.far
+      const clear = renderer.autoClear
+      const gl = renderer.getContext()
+      const front = this.away - look.reach
+      eye.near = front > 0 ? front : near
+      eye.far = this.away + look.reach
+      eye.updateProjectionMatrix()
+      renderer.autoClear = false
+      gl.depthRange(0, 0)
+      renderer.render(this.carry, eye)
+      gl.depthRange(0, 1)
+      renderer.autoClear = clear
+      eye.near = near
+      eye.far = far
+      eye.updateProjectionMatrix()
+    }
   }
 
   dispose(): void {

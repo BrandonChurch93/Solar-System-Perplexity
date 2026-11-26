@@ -6,6 +6,7 @@ import azimuth from '../azimuth.json'
 import { RING_LAYOUT_GLSL, RING_PROFILE_GLSL } from './profile'
 import { ICE_GRADE_GLSL, gradeUniforms } from '../grade'
 import ringsJson from '../rings.json'
+import skimJson from '../skim.json'
 import { SHOT_GLSL } from '../shot'
 
 export interface RingLook {
@@ -42,7 +43,8 @@ export interface RingLook {
   shadeGrey: [number, number]
   innerDark: [number, number, number, number]
   shadeSolid: [number, number]
-  shadeRamp: [number, number]
+  shadeRamp: [number, number, number]
+  graze: [number, number, number]
   penumbraAway: [number, number, number]
   heroTone: [number, number, number]
   heroTurn: number
@@ -165,7 +167,9 @@ uniform vec3 uShadeTint;
 uniform vec2 uShadeGrey;
 uniform vec4 uInnerDark;
 uniform vec2 uSolid;
-uniform vec2 uShadeRamp;
+uniform vec3 uShadeRamp;
+uniform vec3 uGraze;
+uniform vec2 uView;
 uniform vec3 uHeroTone;
 uniform float uVignette;
 uniform float uAspect;
@@ -365,6 +369,10 @@ void main() {
   wS *= span ? 1.0 : uSkimNear;
   wF *= span ? 1.0 : uSkimNear;
   float wC = (far || disc) ? 0.0 : uPolarW * (1.0 - smoothstep(uPolarFit.x, uPolarFit.y, rp)) * smoothstep(uInnerSpan.x, uInnerSpan.x + 0.012, rs);
+  // a place that holds nothing of the ring is not drawn (gone), far out, under the globe, and inside the inner
+  // rim once the hold's pose has let go. bare: such a place inside the inner rim, which is still drawn where
+  // the shaded plane lies on it (the solid shade below), so that no star comes up there as the pose lets go
+  bool bare = !span && wS <= 0.0 && wC <= 0.0 && !far && !disc && uPolarShape * uPolarW <= 0.0;
   bool gone = !span && wS <= 0.0 && wC <= 0.0 && (far || disc || uPolarShape * uPolarW <= 0.0);
   vec3 toCam = uCamL - vLocal;
   float dist = length(toCam);
@@ -387,7 +395,8 @@ void main() {
   wS *= held;
   wF *= (hidden || disc) ? 0.0 : 1.0 - mix(1.0, smoothstep(uSkimUnder.x, uSkimUnder.y, rim), 1.0 - smoothstep(0.55, 0.95, km.g)) * mix(1.0 - behind, 1.0, km.r) * held;
   bool top = disc || hidden;
-  gone = gone || (uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top));
+  bool split = uPass < 0.5 ? (dist < nearest || top) : (dist >= nearest && !top);
+  gone = gone || split;
   float fr = length(vec2(dFdx(rq), dFdy(rq)));
   float frTrue = length(vec2(dFdx(r), dFdy(r)));
   float texels = ringTexels(fr);
@@ -416,9 +425,26 @@ void main() {
   float bb = sqrt(max(1.0 - od, 0.0));
   float bw = max(length(vec2(dFdx(bb), dFdy(bb))) * uFoot.x, 1e-5);
   bool fore = uClose < 1.0 && !disc && !far && -ob > oa;
-  float over = fore ? smoothstep(-0.05, 0.0, od) * (1.0 - uClose) * smoothstep(uEdge.x, uEdge.x + uOver.x, rq) : 0.0;
+  // what the globe behind the sheet adds to the hold's look of the ice in front of it (the strands over the
+  // globe, the thin sheet at the inner rim, its glow and the shine) holds while the view on the plane is steep:
+  // where the view grazes the plane the globe is hidden and the ice in front of it looks as it does beside it
+  // (uGraze, sheet.json graze, by the angle alone; the whole of it in the hold)
+  float steep = mix(1.0, smoothstep(uGraze.x, uGraze.y, mu), uSolid.x);
+  float over = fore ? smoothstep(-0.05, 0.0, od) * (1.0 - uClose) * smoothstep(uEdge.x, uEdge.x + uOver.x, rq) * steep : 0.0;
   float body = smoothstep(uEdge.x - 0.004, uEdge.x + 0.004, rq) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq));
-  float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body * mix(1.0, smoothstep(uFloorRamp.x, uFloorRamp.y, rq), 1.0 - uClose)), 0.999), clamp(mix(0.43, 0.25, uClose) / max(mu, 0.02), 1.0, 8.0));
+  // once the lens has left the hold no star shows through any part of the sheet that holds ice: where the view
+  // ray passes the globe the depth of the sheet counts uShadeRamp.z times (sheet.json starCover, as in the
+  // model near the sheet); the globe shows through by the true depth while the view on the plane is steep, and
+  // is hidden like the stars where the view grazes the plane (uGraze, sheet.json graze, by the angle alone)
+  // (a ray counts as passing the globe from where the globe's own soft edge begins, uGraze.z pixels inside its
+  // outline, so no star shows in that edge)
+  float past = max(smoothstep(1.0 - (uGraze.z + 1.0) * bw, 1.0 - uGraze.z * bw, bb), 1.0 - smoothstep(uGraze.x, uGraze.y, mu));
+  float cover = mix(1.0, uShadeRamp.z, uSolid.x * (1.0 - uClose) * body * past);
+  // the one law of cover (skim.json handover.kept): a view ray that crosses the plane is covered by
+  // 1 - exp(-depth / sine), the depth that which gives the ring's own opacity at the sine of the hold's eye
+  // (uView.x), the sine floored only against the division (uView.y). No height of the lens and no clock is in it
+  float rise = uView.x / max(mu, uView.y);
+  float alpha = 1.0 - pow(1.0 - min(max(s.a, uFloorA * body * mix(1.0, smoothstep(uFloorRamp.x, uFloorRamp.y, rq), 1.0 - uClose)), 0.999), rise * cover);
   float swept = (1.0 - smoothstep(uVeil.x, uVeil.y, uClose)) * uSweep;
   float lift = max(smoothstep(-uJunction, uJunction, layoutDist + 2.0 * uJunction - swept), wS * (1.0 - smoothstep(0.0, 1.0, swept)));
   alpha = top ? 0.999 : alpha;
@@ -486,7 +512,13 @@ void main() {
     texels = mix(texels, sqrt(max(dot(tx, tx), dot(ty, ty))), wIn);
   }
   // the grade of the rings by the height of the lens (grade.ts); nothing of it runs at the heights of the hold
-  for (int k = 0; k < (uGrade.x > 0.0 ? 1 : 0); k++) col = iceGrade(col, rq) * iceView(mu, rq) * iceZone(rq, mu);
+  for (int k = 0; k < (uGrade.x > 0.0 ? 1 : 0); k++) {
+    col = iceGrade(col, rq) * iceView(mu, rq) * iceZone(rq, mu);
+    // the ringlets' amplitude by radius (grade.ts iceFine): the light of the profile at the pixel over the
+    // light of its zone, the same in the far look of the model (sheet.ts)
+    float fine = iceFine(rq);
+    for (int j = 0; j < ((abs(fine) > 0.0 && span && !gone) ? 1 : 0); j++) col *= iceRinglets(dot(inverseFilmic(profAt(xo, lodP).rgb), vec3(0.2126, 0.7152, 0.0722)), dot(inverseFilmic(profAt(xo, max(lodP, 1.0) * uGradeFine.x).rgb), vec3(0.2126, 0.7152, 0.0722)), fine);
+  }
 
   float eo = uEdge.y + uOuterFit.w;
   float nearRim = smoothstep(uRimAz.x, uRimAz.y, azd) * (1.0 - smoothstep(uRimAz.z, uRimAz.w, azd));
@@ -531,14 +563,19 @@ void main() {
   float bulge = uLimbW > 0.0 ? max(limbAt(normalize(on), uPolar, uSunL), 0.0) : 0.0;
   float fw = max(uFillet.w, 1.5 * length(vec2(dFdx(rs - rin), dFdy(rs - rin))) * uFoot.x);
   float keep = max(smoothstep(uSheetFit.x, uSheetFit.y, rs), 1.0 - smoothstep(1.0 + bulge - bw, 1.0 + bulge + bw, bb));
-  float sheet = fore ? (1.0 - smoothstep(bout - bw, bout + bw, bb)) * (1.0 - uClose) * lit * smoothstep(rin - fw, rin + fw, rs) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) : 0.0;
-  alpha = max(alpha, (1.0 - through) * sheet) * thin;
-  alpha = max(alpha, uSolid.x * uSolid.y * (1.0 - lit) * (1.0 - uClose) * body * smoothstep(uShadeRamp.x, uShadeRamp.y, rq));
+  float sheet = fore ? steep * (1.0 - smoothstep(bout - bw, bout + bw, bb)) * (1.0 - uClose) * lit * smoothstep(rin - fw, rin + fw, rs) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) : 0.0;
+  alpha = max(alpha, (1.0 - pow(through, rise)) * sheet) * thin;
+  // and the shaded plane lets no sky through from the globe on (sheet.json shadow.solid, by the true radius): no
+  // star shows between the night side and the shaded rings. Where the view ray ends on the globe the true depth
+  // counts, so the night side is the body's own ellipse behind the empty space and behind thin ice, unless the
+  // view grazes the plane (uGraze)
+  float shade = uSolid.x * uSolid.y * (1.0 - lit) * (1.0 - uClose) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) * smoothstep(uShadeRamp.x, uShadeRamp.y, r) * past;
+  alpha = max(alpha, shade);
   float day = smoothstep(-0.05, 0.25, dot(normalize(vec3(on.x, on.y / uPolar, on.z)), normalize(uSunL)));
   vec3 wedge = mix(uSheetGlow.rgb, uWedge.rgb * uPolarShape, smoothstep(uWedgeIn.x, uWedgeIn.y, bb)) * sheetAt(rs, uWedgeG) * sheet * day;
   col *= 1.0 - uSheetGlow.w * sheet * uPolarShape * (1.0 - day);
   float hb = max(bb - 1.0, 0.0);
-  vec3 shine = (uShine.rgb * exp(-hb / uShine.w) + uShineWide.rgb * exp(-hb / uShineWide.w)) * (uPolarShape * day * (1.0 - uClose) * smoothstep(0.0, uShineBack, (1.0 + ob / oa) * sqrt(oa)));
+  vec3 shine = (uShine.rgb * exp(-hb / uShine.w) + uShineWide.rgb * exp(-hb / uShineWide.w)) * (steep * uPolarShape * day * (1.0 - uClose) * smoothstep(0.0, uShineBack, (1.0 + ob / oa) * sqrt(oa)));
   for (int k = 0; k < (over > 0.0 && !gone ? 1 : 0); k++) {
     float sx = ringRadius(uStrand.x + (rq - uEdge.x) * uStrand.y);
     float sl = texels * uFoot.x * uGrad * uStrand.y * 1.5;
@@ -586,7 +623,7 @@ void main() {
   }
   col = (col + (wedge + shine * alpha + halo * lit) * (1.0 - wS - wF)) * uGain * uWeight / vig;
   outColor = diagOut(vec4(col, alpha * uWeight) * cut, texels, 1.0, vec3(0.95, 0.7, 0.2), vec2(kepler * 8.0, 0.0), length(vView));
-  if (gone || (uDiag >= 2 && alpha * cut < 0.5)) discard;
+  if ((gone && !(bare && !split && shade > 0.0)) || (uDiag >= 2 && alpha * cut < 0.5)) discard;
 }`
 
 export class Rings {
@@ -641,7 +678,7 @@ export class Rings {
       uUnlit: { value: look.unlit }, uAzimuth: { value: new THREE.Vector4(look.spokes, look.clumps, look.grain, look.sparkle) },
       uSparkleTint: { value: new THREE.Vector3().fromArray(look.sparkleTint) }, uSparkleCell: { value: look.sparkleCell },
       uCloseTone: { value: new THREE.Vector3().fromArray(look.closeTone) }, uHeroTone: { value: new THREE.Vector3().fromArray(look.heroTone) },
-      uGrainCell: { value: new THREE.Vector2().fromArray(look.grainCell) }, uFloorRamp: { value: new THREE.Vector2().fromArray(look.floorRamp) }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uSweep: { value: look.sweep }, uJunction: { value: look.junction }, uShadeTint: { value: new THREE.Vector3().fromArray(look.shadeTint) }, uShadeGrey: { value: new THREE.Vector2().fromArray(look.shadeGrey) }, uInnerDark: { value: new THREE.Vector4().fromArray(look.innerDark) }, uSolid: { value: new THREE.Vector2(0, look.shadeSolid[0]) }, uShadeRamp: { value: new THREE.Vector2().fromArray(look.shadeRamp) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
+      uGrainCell: { value: new THREE.Vector2().fromArray(look.grainCell) }, uView: { value: new THREE.Vector2(skimJson.handover.kept.view, skimJson.handover.kept.floor) }, uFloorRamp: { value: new THREE.Vector2().fromArray(look.floorRamp) }, uGrain: { value: new THREE.Vector2(look.grainHero, look.grain) }, uVeil: { value: new THREE.Vector2().fromArray(look.veil) }, uSweep: { value: look.sweep }, uJunction: { value: look.junction }, uShadeTint: { value: new THREE.Vector3().fromArray(look.shadeTint) }, uShadeGrey: { value: new THREE.Vector2().fromArray(look.shadeGrey) }, uInnerDark: { value: new THREE.Vector4().fromArray(look.innerDark) }, uSolid: { value: new THREE.Vector2(0, look.shadeSolid[0]) }, uShadeRamp: { value: new THREE.Vector3().fromArray(look.shadeRamp) }, uGraze: { value: new THREE.Vector3().fromArray(look.graze) }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
     }
     for (const pass of [0, 1]) {
       const material = new THREE.ShaderMaterial({
