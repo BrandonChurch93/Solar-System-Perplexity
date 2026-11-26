@@ -1,9 +1,30 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T19:27:43.718Z",
+ "pushed": "2026-11-26T19:52:08.459Z",
  "head": "ed11ee09866f428568a3e91dcc8e0f08efb2ab22",
- "note": "pose W of MAIL 1535 at final with the old tones; ring and globe tones being refitted",
+ "note": "pose W with tones refitted beside the approved and main; the near ring at W is the open fault",
  "looks": [
+  {
+   "time": "2026-11-26T19:52:07.863Z",
+   "file": "20261126195207863-note-fore_main.jpg",
+   "source": "../../../../tmp/v/w/fore_main.jpg",
+   "kind": "note",
+   "label": "3720 lower left at one to one: main"
+  },
+  {
+   "time": "2026-11-26T19:52:07.256Z",
+   "file": "20261126195207256-note-fore_w1.jpg",
+   "source": "../../../../tmp/v/w/fore_w1.jpg",
+   "kind": "note",
+   "label": "3720 lower left at one to one: approved over pose W (near ring darker, coarser, smeared)"
+  },
+  {
+   "time": "2026-11-26T19:52:06.631Z",
+   "file": "20261126195206631-note-three_w1.jpg",
+   "source": "../../../../tmp/v/w/three_w1.jpg",
+   "kind": "note",
+   "label": "3720 at final: approved, pose W with the ring and globe tones refitted, main"
+  },
   {
    "time": "2026-11-26T19:27:20.498Z",
    "file": "20261126192720498-note-full_w0.jpg",
@@ -38,27 +59,6 @@
    "source": "../../../../tmp/v/p1521/foot_sheet2.jpg",
    "kind": "note",
    "label": "3720 at pose W, the foot: approved, no sheet, the thin sheet rising from 0 at the globe to 0.05, 0.10, 0.20 at the rim (drafts)"
-  },
-  {
-   "time": "2026-11-26T18:47:52.122Z",
-   "file": "20261126184752122-note-foot_sheet1.jpg",
-   "source": "../../../../tmp/v/p1521/foot_sheet1.jpg",
-   "kind": "note",
-   "label": "3720 at pose W, the foot: approved, no sheet, the thin sheet flat 0.05 and 0.10 with plateaus, flat 0.05 without (drafts)"
-  },
-  {
-   "time": "2026-11-26T18:21:49.094Z",
-   "file": "20261126182149094-note-fit3_free.jpg",
-   "source": "../../../../tmp/v/p1518/fit3_free.jpg",
-   "kind": "note",
-   "label": "pose_fit3 free fit (lens 62.06) drawn over the approved close"
-  },
-  {
-   "time": "2026-11-26T18:21:48.502Z",
-   "file": "20261126182148502-note-foot_pair.jpg",
-   "source": "../../../../tmp/v/p1518/foot_pair.jpg",
-   "kind": "note",
-   "label": "the contact line: approved close against main's 3720 draft, the same box x 860 to 1920, y 400 to 860"
   }
  ]
 }
