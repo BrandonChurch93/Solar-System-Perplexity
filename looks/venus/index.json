@@ -1,9 +1,41 @@
 {
  "folder": "venus",
- "pushed": "2026-11-25T23:40:25.613Z",
- "head": "6b9c2f8993774541e710bb577b616bfa6a6393c5",
- "note": "candidate on the rise: the far deck of T in the plates, scale by scale",
+ "pushed": "2026-11-26T00:00:55.175Z",
+ "head": "3230e0435a32e3b2ed84e96df994da968c4cee8a",
+ "note": "candidate's whole rise: rows 17 red (main 17), largest 0.66 (main 0.85); three rows worse than main's",
  "looks": [
+  {
+   "time": "2026-11-26T00:00:53.784Z",
+   "file": "20261126000053784-note-cand-m0-1575.jpg",
+   "source": "../../../../tmp/v/sh/cand-m0-1575.jpg",
+   "kind": "note",
+   "label": "rise 1575 and 1581: main (left), candidate (right)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:00:52.710Z",
+   "file": "20261126000052710-note-cand-r-w2.jpg",
+   "source": "../../../../tmp/v/sh/cand-r-w2.jpg",
+   "kind": "note",
+   "label": "candidate rise 1552 to 1563, every frame",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:00:51.659Z",
+   "file": "20261126000051659-note-cand-r-w1.jpg",
+   "source": "../../../../tmp/v/sh/cand-r-w1.jpg",
+   "kind": "note",
+   "label": "candidate rise 1540 to 1551, every frame",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T00:00:50.279Z",
+   "file": "20261126000050279-note-cand-m0-fardeck.jpg",
+   "source": "../../../../tmp/v/sh/cand-m0-fardeck.jpg",
+   "kind": "note",
+   "label": "rise far deck 1545 to 1557: main (left), candidate (right)",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-25T23:40:24.475Z",
    "file": "20261125234024475-note-cand-rise.jpg",
@@ -34,38 +66,6 @@
    "source": "../../../../tmp/v/sh/v1-crop-b.jpg",
    "kind": "note",
    "label": "dive 1312 and 1320 at 1 to 1: state before, hold's picture soft (control), scale by scale",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:31:42.748Z",
-   "file": "20261125233142748-note-v1-crop-a.jpg",
-   "source": "../../../../tmp/v/sh/v1-crop-a.jpg",
-   "kind": "note",
-   "label": "dive 1296 and 1304 at 1 to 1: state before, hold's picture soft (control), scale by scale",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:21:08.863Z",
-   "file": "20261125232108863-note-limb-1544-1550.jpg",
-   "source": "../../../../tmp/v/sh/limb-1544-1550.jpg",
-   "kind": "note",
-   "label": "far deck under the limb 1544 to 1550: Bc left, far deck trial plates right",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:21:08.082Z",
-   "file": "20261125232108082-note-line-bc-cmp.jpg",
-   "source": "../../../../tmp/v/sh/line-bc-cmp.jpg",
-   "kind": "note",
-   "label": "end of the ground 1329 to 1338, values times 2.2: Bc with the plates of trial g1 left, the same code with main's dive plates right",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-25T23:13:00.358Z",
-   "file": "20261125231300358-note-fd-Bc.jpg",
-   "source": "../../../../tmp/v/sh/fd-Bc.jpg",
-   "kind": "note",
-   "label": "far deck 1541 to 1552 Bc",
    "stop": "venus"
   }
  ]
