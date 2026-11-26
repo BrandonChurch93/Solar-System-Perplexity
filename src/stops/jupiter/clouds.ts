@@ -225,7 +225,7 @@ float fibreAt(vec3 y, float least) {
     float wave = uFibre.x * exp2(-float(k));
     float use = smoothstep(least, uCloudCell.w * least, wave * y.z);
     if (use <= 0.0) break;
-    sum += use * gnoise(vec2(y.x * uFibre.y, y.y) / wave + uCloudShift.zw * float(k), ${OCTAVES * AGES + 4} + k, uFlowTime * uLife.y);
+    sum += use * smoothstep(uShade.x * uBakeAt.z, uShade.y * uBakeAt.z, wave * y.z) * gnoise(vec2(y.x * uFibre.y, y.y) / wave + uCloudShift.zw * float(k), ${OCTAVES * AGES + 4} + k, uFlowTime * uLife.y);
   }
   return sum;
 }
@@ -247,8 +247,8 @@ float threadAt(vec3 y, float least) {
   }
   return mean - none;
 }
-vec2 sheetAt(vec3 y, float least, float wave, int seed, float turn) {
-  vec2 sum = vec2(0.0);
+vec3 sheetAt(vec3 y, float least, float wave, int seed, float turn) {
+  vec3 sum = vec3(0.0);
   float weight = 0.0;
   for (int k = 0; k < int(uSilk.z); k++) {
     float w = wave * exp2(-float(k));
@@ -256,10 +256,10 @@ vec2 sheetAt(vec3 y, float least, float wave, int seed, float turn) {
     if (use <= 0.0) break;
     float n = gnoise(y.xy / w + uCloudShift.xy * float(k) + uCloudShift.zw * float(seed), k + ${OCTAVES} * seed, turn);
     float part = use * exp2(-uSheetLook.x * float(k));
-    sum += n * vec2(use * w * exp2(-uSilkFall * float(k)), part);
+    sum += n * vec3(use * w * exp2(-uSilkFall * float(k)), part, part * smoothstep(uShade.x * uBakeAt.z, uShade.y * uBakeAt.z, w * y.z));
     weight += part * part;
   }
-  return vec2(y.z * sum.x, sum.y * inversesqrt(max(weight, uSheetLook.y)));
+  return vec3(y.z * sum.x, sum.yz * inversesqrt(max(weight, uSheetLook.y)));
 }
 `
 
@@ -406,6 +406,7 @@ uniform vec2 uCloudSoft;
 uniform vec4 uPass;
 uniform vec4 uSheet;
 uniform vec2 uSheetLook;
+uniform vec2 uShade;
 uniform vec4 uTall;
 uniform vec2 uCumField;
 uniform vec4 uThread;
@@ -455,9 +456,9 @@ const RELIEF_GLSL = /* glsl */ `vec4 reliefAt(vec2 g, float low, float least, fl
   float ridge = 0.0;
   float top = 0.0;
   for (int i = 0; i < (slack < uSilkWave[${AGES - 1}] ? 1 : 0); i++) {
-    vec2 s = sheetAt(aged, slack, uSilkWave[${AGES - 1}], ${AGES - 1}, uFlowTime * uLife.y);
+    vec3 s = sheetAt(aged, slack, uSilkWave[${AGES - 1}], ${AGES - 1}, uFlowTime * uLife.y);
     h += uSheet.x * mix(1.0, uTall.z, tall) * drawn * s.x;
-    pale += uCloudTint[${AGES - 1}] * s.y;
+    pale += uCloudTint[${AGES - 1}] * s.z;
     crest += uSheet.y * s.y;
     ridge = s.y;
   }
@@ -1208,6 +1209,7 @@ export class CloudDeck {
       uLife: { value: new THREE.Vector3(2 * Math.PI / cl.life.billowSeconds, 2 * Math.PI / cl.life.ridgeSeconds, 2 * Math.PI / cl.life.curdSeconds) },
       uSheet: { value: new THREE.Vector4(cl.sheet.aspect, cl.sheet.crest, cu.crest, cu.calm) },
       uSheetLook: { value: new THREE.Vector2(cl.sheet.tintFall, cl.sheet.tintLeast) },
+      uShade: { value: new THREE.Vector2(cl.shade.first, cl.shade.full) },
       uTall: { value: new THREE.Vector4(cl.tall.range[0]!, cl.tall.range[1]!, cl.tall.sheet, cl.tall.silk) },
       uCumField: { value: new THREE.Vector2(cu.field[0]!, cu.field[1]!) },
       uThread: { value: new THREE.Vector4(th.thin, th.mean, th.wide, th.octaves) },
