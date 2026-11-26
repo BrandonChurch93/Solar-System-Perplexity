@@ -1,64 +1,64 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T04:52:34.306Z",
- "head": "6f74b0fac496e8189318073d0efe90fbe827d691",
- "note": "rigid body with the baked light and the lone pixel cures (6f74b0fa): finals 3465 and 3720 beside main, the flight in frame by frame; proofs running for the name",
+ "pushed": "2026-11-26T05:15:25.877Z",
+ "head": "58113814f09ea169a28219ea49e031593a81298a",
+ "note": "candidate 58113814 (rigid body, baked light, lone pixel cures): the dive 3540 to 3640 frame by frame at draft; the rise renders next",
  "looks": [
   {
-   "time": "2026-11-26T04:52:33.441Z",
-   "file": "20261126045233441-note-in_full_3376.jpg",
-   "source": "../../../../tmp/v/rigid/PC/in_full_3376.jpg",
+   "time": "2026-11-26T05:15:24.750Z",
+   "file": "20261126051524750-note-dive1_sheet_3636.jpg",
+   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3636.jpg",
    "kind": "note",
-   "label": "6f74b0fa frame 3376 of the flight in, draft, whole"
+   "label": "58113814 dive 3636 to 3640, every film frame, draft"
   },
   {
-   "time": "2026-11-26T04:52:32.771Z",
-   "file": "20261126045232771-note-in_sheet_3388.jpg",
-   "source": "../../../../tmp/v/rigid/PC/in_sheet_3388.jpg",
+   "time": "2026-11-26T05:15:23.602Z",
+   "file": "20261126051523602-note-dive1_sheet_3624.jpg",
+   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3624.jpg",
    "kind": "note",
-   "label": "6f74b0fa flight in 3388 to 3399, every frame, draft"
+   "label": "58113814 dive 3624 to 3635, every film frame, draft"
   },
   {
-   "time": "2026-11-26T04:52:32.025Z",
-   "file": "20261126045232025-note-in_sheet_3376.jpg",
-   "source": "../../../../tmp/v/rigid/PC/in_sheet_3376.jpg",
+   "time": "2026-11-26T05:15:22.611Z",
+   "file": "20261126051522611-note-dive1_sheet_3612.jpg",
+   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3612.jpg",
    "kind": "note",
-   "label": "6f74b0fa flight in 3376 to 3387, every frame, draft"
+   "label": "58113814 dive 3612 to 3623, every film frame, draft"
   },
   {
-   "time": "2026-11-26T04:52:31.349Z",
-   "file": "20261126045231349-note-in_sheet_3364.jpg",
-   "source": "../../../../tmp/v/rigid/PC/in_sheet_3364.jpg",
+   "time": "2026-11-26T05:15:21.654Z",
+   "file": "20261126051521654-note-dive1_sheet_3600.jpg",
+   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3600.jpg",
    "kind": "note",
-   "label": "6f74b0fa flight in 3364 to 3375, every frame, draft"
+   "label": "58113814 dive 3600 to 3611, every film frame, draft"
   },
   {
-   "time": "2026-11-26T04:52:30.672Z",
-   "file": "20261126045230672-note-in_sheet_3352.jpg",
-   "source": "../../../../tmp/v/rigid/PC/in_sheet_3352.jpg",
+   "time": "2026-11-26T05:15:20.613Z",
+   "file": "20261126051520613-note-dive1_sheet_3588.jpg",
+   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3588.jpg",
    "kind": "note",
-   "label": "6f74b0fa flight in 3352 to 3363, every frame, draft"
+   "label": "58113814 dive 3588 to 3599, every film frame, draft"
   },
   {
-   "time": "2026-11-26T04:52:29.920Z",
-   "file": "20261126045229920-note-in_sheet_3340.jpg",
-   "source": "../../../../tmp/v/rigid/PC/in_sheet_3340.jpg",
+   "time": "2026-11-26T05:15:19.516Z",
+   "file": "20261126051519516-note-dive1_sheet_3576.jpg",
+   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3576.jpg",
    "kind": "note",
-   "label": "6f74b0fa flight in 3340 to 3351, every frame, draft"
+   "label": "58113814 dive 3576 to 3587, every film frame, draft"
   },
   {
-   "time": "2026-11-26T04:52:29.236Z",
-   "file": "20261126045229236-note-pair_3720.jpg",
-   "source": "../../../../tmp/v/rigid/PC/pair_3720.jpg",
+   "time": "2026-11-26T05:15:18.717Z",
+   "file": "20261126051518717-note-dive1_sheet_3564.jpg",
+   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3564.jpg",
    "kind": "note",
-   "label": "6f74b0fa final 3720 beside main and the approved close"
+   "label": "58113814 dive 3564 to 3575, every film frame, draft"
   },
   {
-   "time": "2026-11-26T04:52:28.426Z",
-   "file": "20261126045228426-note-pair_3465.jpg",
-   "source": "../../../../tmp/v/rigid/PC/pair_3465.jpg",
+   "time": "2026-11-26T05:15:17.869Z",
+   "file": "20261126051517869-note-dive1_sheet_3552.jpg",
+   "source": "../../../../tmp/v/rigid/PC/dive1_sheet_3552.jpg",
    "kind": "note",
-   "label": "6f74b0fa final 3465 beside main and the approved hero"
+   "label": "58113814 dive 3552 to 3563, every film frame, draft"
   }
  ]
 }
