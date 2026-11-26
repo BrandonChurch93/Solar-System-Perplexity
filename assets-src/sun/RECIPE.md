@@ -16,7 +16,6 @@ Every file under `public/assets/sun/`. The `web` file is always derived from the
 | `public/assets/sun/<set>/field.jpg` | Terrain view |
 | `public/assets/sun/<set>/loops.webp` | Terrain view |
 | `public/assets/sun/<set>/loops-glow.png` | Terrain view |
-| `public/assets/sun/<set>/sky-terrain.webp` | Terrain view |
 | `public/assets/sun/<set>/haze.png` | Terrain view |
 | `public/assets/sun/<set>/grade.png` | Grade |
 
@@ -235,8 +234,9 @@ Apron corner:
 - Take kept: run 2 (apron only). Run 1 (plate and apron) dropped as above.
 - Checks: `python3 tools/assets/mirrorcheck.py` clean on the tile and on draft frames 0, 60, 90, 150, 204, 208; texel view at draft, frames 0, 90, 179, 190, 200, 204, 207: no soft pixel (lowest 1.72 texels a pixel); frame 60 strip under the limb at 4 times beside round 24 (`i163-f60-limbstrip-old-new-x4.png`).
 
-### public/assets/sun/<set>/sky-terrain.webp
+### public/assets/sun/<set>/sky-terrain.webp (retired)
 
+- Retired with MAIL 1199 point 3 (b) and MAIL 1219 point 2: the close view has no card of its own, the film's own sky stands there, turned by `place.json` `onGlobe.skyAim` so that the close view and the hold look at one sky. The two files are removed; `sky.py` still writes `haze.png` and `src/stops/sun/haze.json`. What follows is how the card was made.
 - Output: 4096 x 2304 and 2048 x 1152, WebP 95 and 92.
 - Tool: `PYTHONPATH=assets-src/sun/terrain python3 assets-src/sun/terrain/sky.py` after `plate.py` (no model, no prompt). The same run writes `haze.png` and `src/stops/sun/haze.json`.
 - Rule: the card stands at infinity, so it carries only what is at infinity: the stars and a smooth background. What follows the limb (the glow and the smoky orange haze above it) is in `haze.png`, drawn by the limb fringe in limb coordinates.

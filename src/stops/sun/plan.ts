@@ -23,7 +23,7 @@ export const params: MoveParams = {
   spinDegPerSecond: 3.4,
   moonDegPerSecond: 0,
   tint: [1, 0.8, 0.4],
-  skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: [8.48669, -141.8932, 32.09218] },
+  skyAim: { orbit: [48.4075, -125.38185, -38.46336], terrain: place.onGlobe.skyAim as [number, number, number] },
 }
 
 export const climb = { ease: { over: 1.3, speed: 0.095 } }
@@ -206,6 +206,15 @@ export class SunPlan extends StopPlan {
     if (seg.kind !== 'rise') return null
     const [from, to] = place.onGlobe.heights.sky as [number, number]
     return { low: 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to)) }
+  }
+
+  // The sky's turn from the close view's frame to the hold's is read from the height of the lens as well (place.json
+  // onGlobe.heights.carry, a smooth step in the logarithm of the height), not from the clock (MAIL 1146 point 3):
+  // 1 is the close view's sky, 0 the hold's
+  override skyCarryShare(seg: Segment, time: number): number | null {
+    if (seg.kind !== 'rise') return null
+    const [from, to] = place.onGlobe.heights.carry as [number, number]
+    return 1 - THREE.MathUtils.smoothstep(Math.log(Math.max(this.eyeHeight(time), 1e-4)), Math.log(from), Math.log(to))
   }
 }
 

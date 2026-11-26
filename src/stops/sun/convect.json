@@ -420,9 +420,9 @@
    9.5
   ],
   "segments": 6,
-  "length": 0.16,
-  "width": 0.01,
-  "gain": 0.7,
+  "length": 0.2,
+  "width": 0.016,
+  "gain": 1.6,
   "period": [
    2.5,
    5
@@ -435,8 +435,8 @@
   "graze": -0.04,
   "hot": [
    1.0,
-   0.75,
-   0.35
+   0.7,
+   0.28
   ],
   "cool": [
    0.85,
@@ -447,24 +447,24 @@
    "note": "the jets by the place of their root: scale groups to a stage unit; gaps the share of the ground that holds none; tall how much taller than the rest the few tall ones are; spread how far one jet may turn off the lean of its group, in turns",
    "scale": 1.2,
    "gaps": 0.3,
-   "tall": 1.5,
+   "tall": 1.2,
    "spread": 0.2
   }
  },
  "glow": {
   "tight": [
-   0.35,
+   0.0,
    0.035
   ],
   "wide": [
-   0.07,
-   0.14
+   0.04,
+   0.2
   ],
   "turn": 0.22,
   "tint": [
    1.0,
-   0.5,
-   0.16
+   0.58,
+   0.26
   ]
  },
  "gas": {

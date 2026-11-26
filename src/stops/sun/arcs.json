@@ -1,0 +1,226 @@
+{
+  "note": "The arcade as bodies in space (MAIL 1010, MAIL 1029 point 2 and 3). Lengths are stage units (the ball's radius is terrain.json radius), angles degrees, speeds stage units a second along the strand. Every strand is a fixed line; what moves is the plasma along it, at one steady speed for each strand. least: the half width of a strand's tube, in pixels of the master's frame, under which it is no line any more. thin: over this range of a tube's true half width against least (0.45 down to 0.15) its light goes from the line of a tube to one soft bell over its whole band, with the same sum across in linear light. band: the least half width in pixels of the whole band a strand is drawn with, tube and sheath together; a band that would be narrower keeps that width and its light falls by the same share. The least belongs to the band and not to the tube, so a wider sheath does not widen what a far strand is drawn with. along: the pattern of the plasma along a strand goes to its own mean over this range of its steps under one pixel (0.25: four pixels to a step, 1: one), the sparks by their own finer steps, so a far strand gives the same light and does not glitter. light sheath: how many times the tube's width the thin sheath around it is wide, and its light against the most the tube's own gas gives there (never more than light most). light cool and hot: the colour of a faint and of a bright strand as the finished frame shows it, in linear light. leave under: where the ball is not in the depth buffer (the far Sun draws the arcade in a pass without depth) a strand behind a ball this far under the true radius, as the eye sees it, gives no light. main unlike: the ten bundles are of unlike size, a strand takes bundle floor(x to this power times 10) for x from 0 to 1. main spread wide: a bundle is as wide as spread times this, the largest bundle the first value, the smallest the second. main loose: a strand of no bundle has this share of the radius and of the light.",
+  "seed": 9173,
+  "least": 0.7, "band": 2.45, "thin": [0.15, 0.45], "along": [0.25, 1.0],
+  "shape": {
+    "height": 1.1,
+    "power": [
+      1.0,
+      1.3
+    ],
+    "bulge": [
+      0.04,
+      0.2
+    ],
+    "skew": [
+      -0.3,
+      0.3
+    ],
+    "wave": [
+      0.13,
+      0.05
+    ],
+    "sink": 0.02
+  },
+  "main": {
+    "count": 200,
+    "segments": 64,
+    "bundles": 10,
+    "inBundle": 0.6,
+    "leanDeg": [
+      -26,
+      20
+    ],
+    "heights": [
+      0.5,
+      1.0
+    ],
+    "shell": 0.5,
+    "feet": [
+      0.09,
+      0.07
+    ],
+    "unlike": 1.8,
+    "spread": {
+      "leanDeg": 6.0,
+      "height": 0.09,
+      "feet": 0.05,
+      "wide": [
+        1.5,
+        0.6
+      ]
+    },
+    "loose": {
+      "radius": 0.6,
+      "gain": 0.55
+    },
+    "radius": [
+      0.0016,
+      0.0075
+    ],
+    "gain": [
+      0.2,
+      1.0
+    ],
+    "speed": [
+      0.2,
+      0.42
+    ],
+    "back": 0.22,
+    "clump": [
+      0.05,
+      0.2
+    ]
+  },
+  "drips": {
+    "count": 40,
+    "segments": 22,
+    "from": [
+      0.22,
+      0.78
+    ],
+    "heights": [
+      0.55,
+      1.0
+    ],
+    "leanDeg": [
+      -34,
+      28
+    ],
+    "inward": 0.2,
+    "radius": [
+      0.0012,
+      0.003
+    ],
+    "gain": [
+      0.15,
+      0.5
+    ],
+    "speed": [
+      0.45,
+      0.8
+    ],
+    "clump": [
+      0.1,
+      0.24
+    ]
+  },
+  "fountains": [
+    {
+      "foot": 0,
+      "count": 130,
+      "segments": 26,
+      "reach": [
+        0.05,
+        0.5
+      ],
+      "tall": [
+        1.2,
+        2.6
+      ],
+      "most": 0.5,
+      "turnDeg": [
+        -115,
+        115
+      ],
+      "feet": 0.05,
+      "radius": [
+        0.0015,
+        0.006
+      ],
+      "gain": [
+        0.6,
+        1.4
+      ],
+      "speed": [
+        0.35,
+        0.7
+      ],
+      "clump": [
+        0.1,
+        0.26
+      ]
+    },
+    {
+      "foot": 1,
+      "count": 80,
+      "segments": 22,
+      "reach": [
+        0.06,
+        0.42
+      ],
+      "tall": [
+        1.1,
+        2.2
+      ],
+      "most": 0.45,
+      "turnDeg": [
+        -110,
+        110
+      ],
+      "feet": 0.05,
+      "radius": [
+        0.0015,
+        0.005
+      ],
+      "gain": [
+        0.4,
+        1.1
+      ],
+      "speed": [
+        0.35,
+        0.7
+      ],
+      "clump": [
+        0.1,
+        0.24
+      ]
+    }
+  ],
+  "light": {
+    "level": 0.75,
+    "floor": 0.05,
+    "blobs": [
+      2.2,
+      3.2
+    ],
+    "sparks": [
+      2.4,
+      9.0
+    ],
+    "fine": 7.0,
+    "foot": [
+      3.0,
+      0.14
+    ],
+    "ends": 0.18,
+    "cool": [
+      1.0,
+      0.25,
+      0.015
+    ],
+    "hot": [
+      1.0,
+      0.7,
+      0.28
+    ],
+    "knee": 8.0,
+    "most": 0.97,
+    "thick": 2.0,
+    "sheath": [
+      3.5,
+      0.08
+    ]
+  },
+  "ground": {
+    "beat": 0.0
+  },
+  "leave": {
+    "lines": 2160,
+    "px": [
+      1,
+      2
+    ],
+    "under": 0.04
+  }
+}
