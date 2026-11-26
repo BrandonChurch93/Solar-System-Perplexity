@@ -23,6 +23,8 @@ and the air is thin (countrytake.body_share, which stays the lead's rule):
 Not done by this tool: the set's margins and aprons still show drawn out ground where the plate holds the take (MAIL 1071
 point 4), and the plate's far ground keeps the take's tone where the picture holds its painted air (point 3).
 
+The result is held to the blue law (bluelaw.py, values takes.blueLaw): no texel bluer than the picture's ground.
+
 No take is made. Values: plates.json takes.bodyFull. The pyramid (pyramid.py) and landunder.py run after it as before.
 
   python3 assets-src/mars/place/bodyfull.py --dir STAGE_A --out OUT --top out/work/place/topp [--levels 0.3,0.7] [--look DIR]
@@ -37,6 +39,7 @@ from PIL import Image, JpegImagePlugin
 
 import geom
 import countrytake as ct
+import bluelaw
 
 Image.MAX_IMAGE_PIXELS = None
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -89,6 +92,7 @@ def main():
     country = json.load(open(a.json))
     only = [s for s in a.levels.split(',') if s]
     os.makedirs(a.out, exist_ok=True)
+    blue_most = bluelaw.picture_most('full')
     km, light, end = air_law(a.top, B)
     print('air by distance from the picture\'s eye (km: linear light R G B): ' + '; '.join('%.1f: %.4f %.4f %.4f' % (k, *l) for k, l in zip(km, light)))
     print('far air %.4f %.4f %.4f' % tuple(end))
@@ -149,6 +153,9 @@ def main():
         body = np.clip(near_body * near[..., None] + far_body * (1 - near[..., None]), 0, 255)
         share = ct.smooth((cv2.GaussianBlur(m, (0, 0), B['softTexels']) - 0.5) * 2) * m
         out = body * share[..., None] + take * (1 - share[..., None])
+        # the blue law (bluelaw.py): the air is taken out by channel, and where red and green were all air the blue that is left
+        # was raised alone; no texel leaves this tool bluer than the picture's ground itself
+        out = bluelaw.held(out, blue_most).astype(np.float32)
         was = np.abs(out - take).mean(axis=2)
         Image.fromarray(np.clip(out + 0.5, 0, 255).astype(np.uint8)).save(os.path.join(a.out, name), qtables=keep[0], subsampling=keep[1])
         print('%s %d: the set\'s ground on %.3f of it; a picture pixel in texels there: median %.2f, 90th %.2f; the set\'s ground itself on %.3f of it, its forms alone on %.3f; least pass %.2f on %.3f of the set\'s ground; against the plate read: mean %.2f on the set\'s ground' % (

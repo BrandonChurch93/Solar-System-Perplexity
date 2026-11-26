@@ -1,0 +1,19 @@
+Image 1 is a square, straight down (nadir) orbital photograph of canyon land on Mars in low evening light, north at the top, about 95 km across. A canyon 7 km deep and 10 to 18 km wide crosses it from the left edge below the middle to the right edge near the top. The Sun stands low in the upper left (north west). The north rim of the canyon (its upper side) casts a shadow with a crisp, ragged outline; the shadow fills the floor of the canyon and is nearly black. The south wall of the canyon (the pale band along the lower side of the shadow) faces the Sun and is lit. All the land outside the canyon is final. The outline of the shadow is final. The picture is rough only inside the canyon: the shadowed floor is a dark mass with little ground in it, and the lit south wall is a pale smeared band with faint streaks.
+
+Image 2 is an oblique aerial photograph taken low over this same canyon. It shows what its walls and its floor are made of: cliffs of layered rock in horizontal bands, spurs and buttresses, gullies, talus aprons at the foot, rubble and landslide tongues on the floor, warm orange where the low Sun strikes, dark umber in the shadow.
+
+Task: redraw image 1 as one seamless, sharp nadir orbital photograph with the same framing, the same scale and north at the top.
+
+1. Outside the canyon nothing changes. Every ridge, dune field, dark patch and slope stays where it is, with the same brightness and colour. The rough bright ground in the lower left, left of the middle, stays as it is too.
+
+2. The outline of the shadow stays exactly where it is: the ragged edge along the north rim and the edge where the shadow ends at the foot of the south wall. Both edges are hard and sharp, never soft, never a blurred band. The shadow stays as dark as it is in image 1. Do not brighten it.
+
+3. Inside the shadow the ground is just to be made out, in very dark brown: the north wall as stepped cliffs with spurs and gullies that run down from the rim, talus at its foot, then the floor with rubble, low hummocks and a few landslide tongues. The open floor is a little lighter than the wall and the foot of the wall, as in image 1.
+
+4. The sunlit south wall, the pale band, becomes a canyon wall seen from straight above: stepped cliffs of layered rock, the strata as thin bands of rust, tan and brown that follow the wall along its length, cut by spurs and gullies that run down from the south rim to the edge of the shadow, each spur with a sunlit flank and a shaded flank, talus aprons at the foot. Its colour is the warm orange and tan of the lit land in image 1, not grey and not white. Its brightness is that of the lit plateau beside it. The south rim above it is an irregular edge with alcoves and spurs, where the sketch has it.
+
+5. No seam and no change of sharpness or colour where the canyon meets the land beside it: one piece of land under one light.
+
+6. No smear, no blur, no streaks, no flat cells, no bright outlines, no etched look. No mist, no cloud, no smoke, no water. No new craters. No blue, no white.
+
+A photograph from orbit: no horizon, no sky, no text, no border, no vignette.
