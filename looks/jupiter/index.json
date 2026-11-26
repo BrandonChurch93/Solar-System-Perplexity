@@ -1,9 +1,25 @@
 {
  "folder": "jupiter",
- "pushed": "2026-11-26T12:41:33.584Z",
+ "pushed": "2026-11-26T13:00:24.070Z",
  "head": "ae869236c725501732e00bc507d51995ec0736b5",
- "note": "Dive: the bank at 3038 on both trees; rise: 3286 against main",
+ "note": "Dive on cure F: the bank's stepped edge on both trees, the crest at 3051",
  "looks": [
+  {
+   "time": "2026-11-26T13:00:23.500Z",
+   "file": "20261126130023500-note-crest_at_pixel_298_950_frames_3050_and_a_half_to_3052_line_B.jpg",
+   "source": "../../../../tmp/lk/crest at pixel 298 950 frames 3050 and a half to 3052 line B.jpg",
+   "kind": "note",
+   "label": "The ground pop's patch at 298, 950: a lit strip comes up over the crest of a near mound, 3050 + 1/2 to 3052, line B",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:00:22.882Z",
+   "file": "20261126130022882-note-cloud_bank_shelf_at_3038_draft_main_and_line_B.jpg",
+   "source": "../../../../tmp/lk/cloud bank shelf at 3038 draft main and line B.jpg",
+   "kind": "note",
+   "label": "The stepped lower edge of the bank's shelf at 3038, draft: on main and on line B alike",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T12:41:32.367Z",
    "file": "20261126124132367-note-frame_3286_main__line_B_and_their_difference.jpg",
@@ -47,22 +63,6 @@
    "format": "16x9",
    "diag": "beauty",
    "engine": "d3654c5e8dff3fa6"
-  },
-  {
-   "time": "2026-11-26T12:34:17.424Z",
-   "file": "20261126123417424-note-far_strip_3250_and_3258_main_and_line_B.jpg",
-   "source": "../../../../tmp/lk/far strip 3250 and 3258 main and line B.jpg",
-   "kind": "note",
-   "label": "Far strip at 3250 and 3258 on main and on line B (draft): the same hand back on both",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T12:34:16.138Z",
-   "file": "20261126123416138-note-far_strip_3250_and_3258_as_is__air_gone__tone_and_air_held__.jpg",
-   "source": "../../../../tmp/lk/far strip 3250 and 3258 as is, air gone, tone and air held, all held.jpg",
-   "kind": "note",
-   "label": "Far strip at 3250 and 3258: as is 1.399, air gone 0.39, tone and air held 0.162, all three held 0.127 (my replay of the reader's row)",
-   "stop": "jupiter"
   },
   {
    "time": "2026-11-26T11:09:47.781Z",
