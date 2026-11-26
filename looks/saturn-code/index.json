@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T09:41:24.856Z",
+ "pushed": "2026-11-26T10:52:21.236Z",
  "head": "4da3d8c2ecfb23dcb5027a756b3da5fb87305a17",
- "note": "state two pushed (4da3d8c2); named red: the rise's pattern at 3826; next the proof of its cause and the cure",
+ "note": "cure for the rise's pattern: the cut of the twilight slides with the share; slice of rise part 1 runs",
  "looks": [
+  {
+   "time": "2026-11-26T10:52:20.465Z",
+   "file": "20261126105220465-note-iso_cmp.jpg",
+   "source": "../../../../tmp/v/rigid/G1/iso_cmp.jpg",
+   "kind": "note",
+   "label": "3822 at the reader's spot: main, state two, map smoothed 3 degrees"
+  },
+  {
+   "time": "2026-11-26T10:52:19.767Z",
+   "file": "20261126105219767-note-sl2_tail.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sl2_tail.jpg",
+   "kind": "note",
+   "label": "rise 3848 to 3860 at the foot of the terminator: first slide (top) against state two (bottom)"
+  },
+  {
+   "time": "2026-11-26T10:52:19.027Z",
+   "file": "20261126105219027-note-sl2_whole.jpg",
+   "source": "../../../../tmp/v/rigid/G1/sl2_whole.jpg",
+   "kind": "note",
+   "label": "rise 3836 to 3852: cut sliding (top), state two (middle), difference times 4 (bottom)"
+  },
+  {
+   "time": "2026-11-26T10:01:54.210Z",
+   "file": "20261126100154210-note-cmp_a.jpg",
+   "source": "../../../../tmp/v/rigid/G1/cmp_a.jpg",
+   "kind": "note",
+   "label": "rise 3820 to 3834 at the reader spot: main, state two, difference times 4"
+  },
+  {
+   "time": "2026-11-26T10:01:53.638Z",
+   "file": "20261126100153638-note-iso3_changes.jpg",
+   "source": "../../../../tmp/v/rigid/G1/iso3_changes.jpg",
+   "kind": "note",
+   "label": "rise rows 7643 to 7645 with the light map smoothed 3 degrees: the pattern red stays, 0.49 at the globe foot"
+  },
   {
    "time": "2026-11-26T09:41:24.249Z",
    "file": "20261126094124249-note-sh_in.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/rigid/S2/sh_rise_3836.jpg",
    "kind": "note",
    "label": "state two 4da3d8c2, rise 3836 to 3858, drafts every second frame"
-  },
-  {
-   "time": "2026-11-26T09:41:22.402Z",
-   "file": "20261126094122402-note-sh_fl_out.jpg",
-   "source": "../../../../tmp/v/rigid/S2/sh_fl_out.jpg",
-   "kind": "note",
-   "label": "state two 4da3d8c2, flight out, drafts every fifth frame"
-  },
-  {
-   "time": "2026-11-26T09:25:03.172Z",
-   "file": "20261126092503172-note-pat5.jpg",
-   "source": "../../../../tmp/v/rigid/R2/pat5.jpg",
-   "kind": "note",
-   "label": "rise 3822 3826 3830 3834 at the place of the pattern reading, state two over main"
-  },
-  {
-   "time": "2026-11-26T09:25:02.530Z",
-   "file": "20261126092502530-note-shadow_3612.jpg",
-   "source": "../../../../tmp/v/rigid/S2/shadow_3612.jpg",
-   "kind": "note",
-   "label": "frame 3612, the shadow's edge: K, state one, state two"
-  },
-  {
-   "time": "2026-11-26T09:25:01.807Z",
-   "file": "20261126092501807-note-moon_3608_3630.jpg",
-   "source": "../../../../tmp/v/rigid/S2/moon_3608_3630.jpg",
-   "kind": "note",
-   "label": "state two, the moon and the ring's edge, frames 3608 to 3630, state one over state two"
-  },
-  {
-   "time": "2026-11-26T08:56:13.682Z",
-   "file": "20261126085613682-note-s1pop_3870.jpg",
-   "source": "../../../../tmp/v/rigid/R2/s1pop_3870.jpg",
-   "kind": "note",
-   "label": "state one rise 3870 to 3881, lower right at full size: the shadowed ring leaves and uncovers the bright sky"
   }
  ]
 }
