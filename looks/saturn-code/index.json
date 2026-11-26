@@ -1,9 +1,44 @@
 {
  "folder": "saturn-code",
- "pushed": "2026-11-26T12:42:41.090Z",
- "head": "9055081a19b6e807cd4fd954c050fba10831af67",
- "note": "3857 named: the reader's flows slip 6 quarter px along the ring's stripes at the tip in both trees, with the true way the place reads nothing",
+ "pushed": "2026-11-26T12:52:40.580Z",
+ "head": "87fa59188924336b7b6cf75df1d2a24a0b410fab",
+ "note": "the strip of the place 3850 to 3862 on both trees: the shadow's edge stays on the ring within 0.65 px (mine) and 0.70 px (main's)",
  "looks": [
+  {
+   "time": "2026-11-26T12:52:40.006Z",
+   "file": "20261126125240006-note-ringstack_1.jpg",
+   "source": "../../../../tmp/v/rigid/T1/ringstack_1.png",
+   "kind": "note",
+   "label": "3856 to 3862 from the top, the cure left and main right, in the ring's own coordinates, same points"
+  },
+  {
+   "time": "2026-11-26T12:52:39.426Z",
+   "file": "20261126125239426-note-ringstack_0.jpg",
+   "source": "../../../../tmp/v/rigid/T1/ringstack_0.png",
+   "kind": "note",
+   "label": "3850 to 3856 from the top, the cure left and main right, each frame redrawn in the ring's own coordinates round the same point (across: angle round the ring, light to the right; down: radius): what is fixed on the ring stands in one column"
+  },
+  {
+   "time": "2026-11-26T12:52:38.870Z",
+   "file": "20261126125238870-note-strip_2.jpg",
+   "source": "../../../../tmp/v/rigid/T1/strip_2.png",
+   "kind": "note",
+   "label": "the strip of the place: 3857 to 3862, the cure above and main below, same crops"
+  },
+  {
+   "time": "2026-11-26T12:52:38.331Z",
+   "file": "20261126125238331-note-strip_1.jpg",
+   "source": "../../../../tmp/v/rigid/T1/strip_1.png",
+   "kind": "note",
+   "label": "the strip of the place: 3856 to 3861, the cure above and main below, same crops"
+  },
+  {
+   "time": "2026-11-26T12:52:37.701Z",
+   "file": "20261126125237701-note-strip_0.jpg",
+   "source": "../../../../tmp/v/rigid/T1/strip_0.png",
+   "kind": "note",
+   "label": "the strip of the place, d372 (3): 3850 to 3855 at full size, the cure above and main below, each crop 256 by 200 px centred on one point of the ring plane carried by the poses (the place of the pattern line at 3857)"
+  },
   {
    "time": "2026-11-26T12:42:40.470Z",
    "file": "20261126124240470-note-ft24.jpg",
@@ -24,41 +59,6 @@
    "source": "../../../../tmp/v/rigid/G1/main_rise_k7620-7632-pops.png",
    "kind": "note",
    "label": "main's own tree, the reader's pops picture of rise rows 3810 to 3816"
-  },
-  {
-   "time": "2026-11-26T12:20:33.692Z",
-   "file": "20261126122033692-note-dusk3814_cure_ab.jpg",
-   "source": "../../../../tmp/v/rigid/G1/dusk3814_cure_ab.jpg",
-   "kind": "note",
-   "label": "the cure, the day's end by the ring's inner edge at 3814 and 3822, full size"
-  },
-  {
-   "time": "2026-11-26T12:20:33.163Z",
-   "file": "20261126122033163-note-night_ab.jpg",
-   "source": "../../../../tmp/v/rigid/T1/night_ab.jpg",
-   "kind": "note",
-   "label": "3866 night side, levels times 3: main (left), the cure at the same place (right)"
-  },
-  {
-   "time": "2026-11-26T12:20:32.542Z",
-   "file": "20261126122032542-note-lev3866_diff.jpg",
-   "source": "../../../../tmp/v/rigid/T1/lev3866_diff.png",
-   "kind": "note",
-   "label": "3866: main minus the cure at the same place, times 4 about mid grey, after a Gaussian of 8 px"
-  },
-  {
-   "time": "2026-11-26T12:20:31.998Z",
-   "file": "20261126122031998-note-lev3866_side.jpg",
-   "source": "../../../../tmp/v/rigid/T1/lev3866_side.jpg",
-   "kind": "note",
-   "label": "3866 draft: main (left) against the cure moved onto main's place, 25 px right and 6 px up (right)"
-  },
-  {
-   "time": "2026-11-26T11:56:21.598Z",
-   "file": "20261126115621598-note-reg3866_excess.jpg",
-   "source": "../../../../tmp/v/rigid/G1/reg3866_excess.png",
-   "kind": "note",
-   "label": "3866 registered to the hero, where the cure is further than main's"
   }
  ]
 }
