@@ -1,9 +1,17 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T04:16:03.516Z",
+ "pushed": "2026-11-26T05:23:13.697Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "the patch that arrives whole, named: consecutive draft frames 4496 to 4506 across the entering, without and with the word",
+ "note": "the word both on SkyPatch (asked by Neptune): built on the arrive name, units green, byte proofs and the frames across Neptune's change of view are rendering",
  "looks": [
+  {
+   "time": "2026-11-26T05:23:02.313Z",
+   "file": "20261126052302313-note-neptune-main-change-of-view.jpg",
+   "source": "../../../../tmp/both/sheets/neptune-main-change-of-view.png",
+   "kind": "note",
+   "label": "Neptune on main 738549c4 at its change of view, draft, half size: 4741 and 4757 in the globe view, 4758 the first frame of the surface view, 4707 the judged frame. The frames a new engine word (a sky patch drawn in both views) is proved against",
+   "stop": "neptune"
+  },
   {
    "time": "2026-11-26T04:16:02.809Z",
    "file": "20261126041602809-note-strip-on-upperleft.jpg",
@@ -31,6 +39,27 @@
    "source": "../../../../tmp/crest/arr/strip-off-4496-4506.png",
    "kind": "note",
    "label": "the flight in to Neptune, draft 4496 to 4506, consecutive, without the word (the tip's bytes are main's)"
+  },
+  {
+   "time": "2026-11-26T03:49:43.666Z",
+   "file": "20261126034943666-note-arrive-4505-smudge.jpg",
+   "source": "../../../../tmp/crest/arr/arrive-4505-smudge.png",
+   "kind": "note",
+   "label": "draft 4505 at five to one, x 1110 to 1230, y 40 to 140: with the word a faint blue disc of the hold's picture about 14 px wide"
+  },
+  {
+   "time": "2026-11-26T03:49:43.052Z",
+   "file": "20261126034943052-note-arrive-4505-edge.jpg",
+   "source": "../../../../tmp/crest/arr/arrive-4505-edge.png",
+   "kind": "note",
+   "label": "draft 4505 at full size, x 960 to 1680, y 0 to 560, without and with the word: where the patch's feathered edge crosses the frame; no straight edge seen"
+  },
+  {
+   "time": "2026-11-26T03:49:42.453Z",
+   "file": "20261126034942453-note-arrive-on-4505-4510.jpg",
+   "source": "../../../../tmp/crest/arr/arrive-on-4505-4510.png",
+   "kind": "note",
+   "label": "with the word (scratch copy), draft 4505 and 4510 at half size: the hold's sky picture is whole where it lies and enters from the upper left"
   }
  ]
 }
