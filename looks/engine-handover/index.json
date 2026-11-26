@@ -1,9 +1,105 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T07:52:57.039Z",
+ "pushed": "2026-11-26T08:11:43.307Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Idle work: a survey of all 17 changes of view on the third cut at draft, two frames each side; sun, mercury and venus so far",
+ "note": "survey of every change of view on main 35a82888 at draft, second half: Mars's rise to Neptune; no step at any of the 17",
  "looks": [
+  {
+   "time": "2026-11-26T08:11:42.677Z",
+   "file": "20261126081142677-note-svc-saturn-rise-880-200.jpg",
+   "source": "../../../../tmp/pair/sheets/svc-saturn-rise-880-200.png",
+   "kind": "note",
+   "label": "survey, saturn rise twice the size, x 880 to 1220, y 200 to 390, frames 3851 to 3854, the view changes between 3852 and 3853: the limb and the moon step evenly",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-26T08:11:42.095Z",
+   "file": "20261126081142095-note-svc-neptune-dive-1240-640.jpg",
+   "source": "../../../../tmp/pair/sheets/svc-neptune-dive-1240-640.png",
+   "kind": "note",
+   "label": "survey, neptune dive at full size, x 1240 to 1920, y 640 to 1020, frames 4756 to 4759, the view changes between 4757 and 4758",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T08:11:41.484Z",
+   "file": "20261126081141484-note-svc-mars-dive-0-620.jpg",
+   "source": "../../../../tmp/pair/sheets/svc-mars-dive-0-620.png",
+   "kind": "note",
+   "label": "survey, mars dive at full size, x 0 to 680, y 620 to 1000, frames 2475 to 2478, the view changes between 2476 and 2477: the block with the largest step across",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T08:11:40.809Z",
+   "file": "20261126081140809-note-sv-neptune-rise.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-neptune-rise.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: neptune rise, frames 4955 to 4958, the view changes between 4956 and 4957",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T08:11:40.136Z",
+   "file": "20261126081140136-note-sv-neptune-dive.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-neptune-dive.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: neptune dive, frames 4756 to 4759, the view changes between 4757 and 4758",
+   "stop": "neptune"
+  },
+  {
+   "time": "2026-11-26T08:03:08.715Z",
+   "file": "20261126080308715-note-sv-uranus-rise.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-uranus-rise.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: uranus rise, frames 4390 to 4393, the view changes between 4391 and 4392",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T08:03:07.401Z",
+   "file": "20261126080307401-note-sv-uranus-dive.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-uranus-dive.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: uranus dive, frames 4184 to 4187, the view changes between 4185 and 4186",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T08:03:06.108Z",
+   "file": "20261126080306108-note-sv-saturn-rise.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-saturn-rise.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: saturn rise, frames 3851 to 3854, the view changes between 3852 and 3853",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-26T08:03:04.758Z",
+   "file": "20261126080304758-note-sv-saturn-dive.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-saturn-dive.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: saturn dive, frames 3587 to 3590, the view changes between 3588 and 3589",
+   "stop": "saturn"
+  },
+  {
+   "time": "2026-11-26T08:03:03.439Z",
+   "file": "20261126080303439-note-sv-jupiter-rise.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-jupiter-rise.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: jupiter rise, frames 3239 to 3242, the view changes between 3240 and 3241",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:03:02.263Z",
+   "file": "20261126080302263-note-sv-jupiter-dive.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-jupiter-dive.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: jupiter dive, frames 3057 to 3060, the view changes between 3058 and 3059",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T08:03:00.857Z",
+   "file": "20261126080300857-note-sv-mars-rise.jpg",
+   "source": "../../../../tmp/pair/sheets/sv-mars-rise.png",
+   "kind": "note",
+   "label": "survey of the changes of view on main 35a82888 at draft: mars rise, frames 2680 to 2683, the view changes between 2681 and 2682",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T07:52:48.731Z",
    "file": "20261126075248731-note-mp-2468-name-ground.jpg",
@@ -18,52 +114,6 @@
    "kind": "note",
    "label": "Survey of every change of view on main 35a82888 at draft: venus-rise, four consecutive frames at half size, the change lies between the second and the third",
    "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:52:46.940Z",
-   "file": "20261126075246940-note-sv-venus-dive.jpg",
-   "source": "../../../../tmp/pair/sheets/sv-venus-dive.png",
-   "kind": "note",
-   "label": "Survey of every change of view on main 35a82888 at draft: venus-dive, four consecutive frames at half size, the change lies between the second and the third",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T07:52:46.010Z",
-   "file": "20261126075246010-note-sv-mercury-rise.jpg",
-   "source": "../../../../tmp/pair/sheets/sv-mercury-rise.png",
-   "kind": "note",
-   "label": "Survey of every change of view on main 35a82888 at draft: mercury-rise, four consecutive frames at half size, the change lies between the second and the third",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-26T07:52:45.177Z",
-   "file": "20261126075245177-note-sv-mercury-dive.jpg",
-   "source": "../../../../tmp/pair/sheets/sv-mercury-dive.png",
-   "kind": "note",
-   "label": "Survey of every change of view on main 35a82888 at draft: mercury-dive, four consecutive frames at half size, the change lies between the second and the third",
-   "stop": "mercury"
-  },
-  {
-   "time": "2026-11-26T07:52:43.918Z",
-   "file": "20261126075243918-note-sv-sun-rise.jpg",
-   "source": "../../../../tmp/pair/sheets/sv-sun-rise.png",
-   "kind": "note",
-   "label": "Survey of every change of view on main 35a82888 at draft: sun-rise, four consecutive frames at half size, the change lies between the second and the third",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T07:26:16.054Z",
-   "file": "20261126072616054-note-mp-lawFSN-2468-x3.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-lawFSN-2468-x3.png",
-   "kind": "note",
-   "label": "Mars dive 2468, the far crest twice enlarged, one count of the stop's law at a time: the field alone, what the eye saw alone, the need alone. Only the count of what the eye saw shows the band"
-  },
-  {
-   "time": "2026-11-26T07:26:15.408Z",
-   "file": "20261126072615408-note-mp-2468-seen-onoff.jpg",
-   "source": "../../../../tmp/pair/sheets/mp-2468-seen-onoff.png",
-   "kind": "note",
-   "label": "Mars dive 2468 whole at half size, on the Mars builder's name: as named beside the stop's law without its fourth count. Without it the band on the far crest is gone and a pale drawn out sheet stands beside the near mesa"
   }
  ]
 }
