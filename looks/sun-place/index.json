@@ -1,9 +1,33 @@
 {
  "folder": "sun-place",
- "pushed": "2026-11-26T06:56:24.504Z",
+ "pushed": "2026-11-26T07:44:44.951Z",
  "head": "6ada65b9074e177278cc9892bd418ab213843d64",
- "note": "working state on 6ada65b9, not committed: arch refit to the approved at 90 (rows 0 to 324 plain 11.9993, low band 5.1086), sky aim turned so the Milky Way runs behind the arch, fringe doubled in count. sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
+ "note": "trial X arch and sky aim, gas from 0.3 clears the veil at 221; sun-near 60: dark 0.249 body 0.609 pale 0.073 white 0.016 | half width 8.1 px, 542 shapes, fine 0.0287, mean 0.310 | distance 0.081",
  "looks": [
+  {
+   "time": "2026-11-26T07:44:43.940Z",
+   "file": "20261126074443940-note-r2-221.jpg",
+   "source": "../../../../tmp/v/r2-221.jpg",
+   "kind": "note",
+   "label": "221 draft with gas share from 0.3 beside main: veil gone, stars stand",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T07:44:42.983Z",
+   "file": "20261126074442983-note-E16-limb.jpg",
+   "source": "../../../../tmp/v/E16-limb.jpg",
+   "kind": "note",
+   "label": "trial X limb and fringe at 90, draft",
+   "stop": "sun"
+  },
+  {
+   "time": "2026-11-26T07:44:41.843Z",
+   "file": "20261126074441843-note-E16-pair.jpg",
+   "source": "../../../../tmp/v/E16-pair.jpg",
+   "kind": "note",
+   "label": "trial X draft 90 beside the approved, arch fitted round with crossing bundles, sky aim turned",
+   "stop": "sun"
+  },
   {
    "time": "2026-11-26T06:56:23.947Z",
    "file": "20261126065623947-note-E9-limb.jpg",
@@ -42,30 +66,6 @@
    "source": "../../../../tmp/v/viz-D.jpg",
    "kind": "note",
    "label": "arch trial D: the approved above, the trial's field lines projected at 90 below (not a render)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:12:50.075Z",
-   "file": "20261126061250075-note-skytop90.jpg",
-   "source": "../../../../tmp/v/skytop90.png",
-   "kind": "note",
-   "label": "top of frame 90 at gain 2.5: approved, main, candidate (the sky behind the arch)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:12:49.256Z",
-   "file": "20261126061249256-note-c2-arc-c.jpg",
-   "source": "../../../../tmp/v/c2-arc-c.jpg",
-   "kind": "note",
-   "label": "rise 207 to 234, the arcade leaving by its own size, at 2 to 1 (c2-arc-c.jpg)",
-   "stop": "sun"
-  },
-  {
-   "time": "2026-11-26T06:12:48.255Z",
-   "file": "20261126061248255-note-c2-arc-b.jpg",
-   "source": "../../../../tmp/v/c2-arc-b.jpg",
-   "kind": "note",
-   "label": "rise 207 to 234, the arcade leaving by its own size, at 2 to 1 (c2-arc-b.jpg)",
    "stop": "sun"
   }
  ]
