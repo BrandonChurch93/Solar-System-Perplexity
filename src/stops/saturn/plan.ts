@@ -269,7 +269,7 @@ export class SaturnPlan extends StopPlan {
   }
 
   // The pose at the share u of such a move; a and b are the poses of the two motions at the same time.
-  private move(law: Law, a: Pose, b: Pose, u: number): Pose {
+  private move(law: Law, a: Pose, b: Pose, u: number, lens: string): Pose {
     if (u <= 0) return a
     if (u >= 1) return b
     const far = 1 + Math.exp(law.reach0 + law.reach.at(u))
@@ -278,7 +278,39 @@ export class SaturnPlan extends StopPlan {
     const foot = Math.sqrt(Math.max(far * far - h * h, 0))
     const position = new THREE.Vector3().addScaledVector(law.e1, foot * Math.cos(phi)).addScaledVector(law.e2, foot * Math.sin(phi)).addScaledVector(this.ringNormal, h)
     const w = law.view.at(u)
-    return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: a.vfov * Math.pow(b.vfov / a.vfov, w) }
+    return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: lens === 'distance' ? this.lensAt(far) : a.vfov * Math.pow(b.vfov / a.vfov, w) }
+  }
+
+  // The lens as a function of the eye's distance from the planet's centre and of nothing else (skim.json lens):
+  // the hold's lens at the distance of the last frame of the hold and beyond, the skim's lens at the distance
+  // of the first frame of the skim and nearer, and between the two the tangent of half the field of view is a
+  // power of the distance. The exponent of that power rises from nothing over the first lens.ease[0] of the
+  // logarithm of the distance at the skim's end of the span and falls to nothing over the last lens.ease[1] at
+  // the hold's end. So the disc of the globe grows at every frame in which the eye comes nearer, and its
+  // growth has no step where the law begins or ends. Both distances and both lenses are read from the path.
+  private lensSpan: { near: number; far: number; wide: number; long: number } | null = null
+
+  private lensAt(distance: number): number {
+    const d = this.seg.dive!
+    if (this.lensSpan === null) {
+      const last = this.hold(d.start - this.seg.hold.start)
+      const first = this.skimAt(d.end)
+      this.lensSpan = { near: Math.log(first.position.length()), far: Math.log(last.position.length()), wide: first.vfov, long: last.vfov }
+    }
+    const { near, far, wide, long } = this.lensSpan
+    const x = Math.log(distance)
+    if (x <= near) return wide
+    if (x >= far) return long
+    const [rise, fall] = skimJson.lens.ease as [number, number]
+    // the way done by an exponent that rises over the length rise, stays, and falls over the length fall
+    const done = (at: number): number => {
+      const up = Math.min(at - near, rise)
+      const level = Math.max(Math.min(at, far - fall) - (near + rise), 0)
+      const down = Math.max(at - (far - fall), 0)
+      return (rise > 0 ? (up * up) / (2 * rise) : 0) + level + (fall > 0 ? down - (down * down) / (2 * fall) : 0)
+    }
+    const half = (deg: number) => Math.tan(THREE.MathUtils.degToRad(deg) / 2)
+    return 2 * THREE.MathUtils.radToDeg(Math.atan(half(wide) * Math.pow(half(long) / half(wide), done(x) / done(far))))
   }
 
   private diveLaw: Law | null = null
@@ -317,9 +349,9 @@ export class SaturnPlan extends StopPlan {
     const d = this.seg.dive!
     const r = this.seg.rise
     if (time < d.start) return this.hold(time - this.seg.hold.start)
-    if (time < d.end) return this.move(this.diving(), this.hold(time - this.seg.hold.start), this.skimAt(time), (time - d.start) / (d.end - d.start))
+    if (time < d.end) return this.move(this.diving(), this.hold(time - this.seg.hold.start), this.skimAt(time), (time - d.start) / (d.end - d.start), skimJson.lens.moves.dive)
     if (time < r.start) return this.skimAt(time)
-    return this.move(this.rising(), this.skimAt(time), this.after(time), (time - r.start) / (r.end - r.start))
+    return this.move(this.rising(), this.skimAt(time), this.after(time), (time - r.start) / (r.end - r.start), skimJson.lens.moves.rise)
   }
 
   // The two views of the handover show the same world from the same lens: the close view is the flight seen in

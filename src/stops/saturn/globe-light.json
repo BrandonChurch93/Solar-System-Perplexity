@@ -1,0 +1,42 @@
+{
+  "source": "assets-src/saturn/code/globe_light.py: hold-light.bin laid on the true spheroid through the hero lens, the unseen part by the mean at the same latitude and angle of the Sun",
+  "file": "globe-light.bin",
+  "width": 720,
+  "height": 360,
+  "axes": "u = (azimuth of the point about the axis - azimuth of the Sun) / 360 + 0.5, v = latitude / 180 + 0.5 (latitude on the unit sphere before the polar scale)",
+  "trust": [
+    0.25,
+    0.45
+  ],
+  "edge": 0.03,
+  "bins": [
+    24,
+    36
+  ],
+  "sure": [
+    0.35,
+    0.55
+  ],
+  "least": 0.02,
+  "trustNote": "the cosine of the angle of view at the hero lens over which a point takes what the hero saw (the numbers the shader had); edge: the same for the border of the hero frame; bins: the fill table, by the angle of the Sun and by latitude; sure: the cosine of the angle of view over which a point counts for the fill table; least: the least weight of a bin of the table as a share of the heaviest",
+  "hero": {
+    "eye": [
+      0.02326,
+      2.325769,
+      5.049852
+    ],
+    "q": [
+      -0.217178,
+      0.042706,
+      0.110714,
+      0.968892
+    ],
+    "vfov": 30
+  },
+  "sun": [
+    -0.909631,
+    0.271968,
+    -0.314013
+  ],
+  "share": 0.216
+}

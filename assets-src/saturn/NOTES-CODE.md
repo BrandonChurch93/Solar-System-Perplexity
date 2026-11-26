@@ -7724,3 +7724,348 @@ above. The hold outranks the skim if the two disagree (d296).
 src/space/travel/path.ts) is still under proof on the Builder's side: when it lands, the flight in (3340 to 3400)
 must be read again. Trial sH = sG with the old profile, drawn after sG by /tmp/v/rigid/seq14.sh (out
 /tmp/v/rigid/H), so that G against H is the profile alone.
+
+00:47 UTC. STATE AFTER THE NAME.
+
+NAMED at 00:24: 7be04230a268a05ef76e7cf38647c628297b52bd (the tree of 17aa7329 with mains 172e7bc, 1f51abc9 and
+3675234f merged in; the stop tree and the public assets are the bytes of 17aa7329; finals on 1f51abc9 have the
+same bytes as on ce8cb68: 3465 fdbf21adf8ff16d1, 3720 337d20b2a719e357, 3866 6d1683433f9faa3b).
+MAIL 1350 (00:29): the name is logged, its proofs run on the Builder's side as wy1-01 to 07. My order stands:
+the next name is the rigid body with the hero's ring pixels on it (the pixels going out by the lens's height
+stay a named red); rings by code alone come after, as lookdev (grain in the A ring, no record lines). Wanted
+with the next name beside the three stills at 01:30: which frames of the flight in, the hold and the dive it
+moves; the Builder then draws the flight in and the first second of the hold at 60 frames a second (capture
+frames 6630 to 6809). If the shape still changes while the camera comes in: where and by how many px.
+
+TRIAL G READ (finals on 1f51abc9): 3465 d296 12.3397, G17 1.1470 and 0.8410 (C 12.2529; 1.0310, 0.8170).
+3720: d296 28.6024 = band 3.3503 + sheet 3.3613 + rest 21.8908; G17 0.9648 and 0.5940, apart from the foot
+1.0080 and 0.6818 (tree 1.0022, 0.6638; 1.1537, 0.7684; main 0.9739, 0.5652; 1.0329, 0.6130). So G loses fine
+contrast at 3720 against the tree. Trial H (G with the old profile) says whether that is rings-h.bin.
+G AT THE HOLD, LOOKED AT: the window on the division makes the B ring's outer margin a white band and puts
+lines into the division at the left ansa and in the near part. Worse than C against the hero. The patch is
+gone in G, but the window is REJECTED. So is sheet.json solid [0.96, 0.985]: it changes nothing at the dot.
+
+THE PATCH, TRUE CAUSE (replaces the guess above): in polar-rings.jpg (row j is r = 2.48 - (j + 0.5) / h x 1.06,
+column i is azimuth ((i + 0.5) / w - 0.5) x 360) the B margin (r 1.897 to 1.9558) at azimuth -16 to +10 is a
+wedge of radial streaks: there the hero has the globe's shadow on the rings and the map was filled from further
+out. Left of -16 the fill is far lighter (229 at -37 against 126 to 166 at -12 to +60). On the rigid body the
+true shadow edge crosses the margin near azimuth -27 at the hold, so the strip between shows. Hold pixel
+(1620, 580) is r 1.879, azimuth -19.6.
+CURE: the map is repaired, not hidden. Tool /tmp/v/bake/polar_margin.py IN_DIR OUT_DIR [ROOT] (to be committed
+as assets-src/saturn/code/polar_margin.py): reads polar.json "margin" (radius [1.88, 1.892, 1.958, 1.966],
+azimuth [-52, -42, 6, 12], from [13, 33], low 3, level 4, quality 92) and rebuilds the margin inside the sector
+from the mean radial run of the clean columns at azimuth 13 to 33, keeping the sector's own low frequencies.
+Run done: full 2588227 bytes, web 673362; outside the sector the read back changes by at most 9 levels, mean
+0.045 (the JPEG's own). Trial sN = E + the repaired map (trial name polar-rings-m.jpg).
+
+THE BRIGHT PIXEL: attached to the body (it follows the limb, so no star and not Titan). Draft 3601 in E and G:
+(1575, 755) rgb [96, 89, 85], (1575, 756) 74, on the globe's edge column 4 to 8 px above the equator's end,
+where the other edge pixels read 16 to 22. Slice 3593 of C: (1544, 750) lift 82. The tree at 3601: (1556, 748)
+lift 110. 3593 is drawn by the kept set alone (the shared takes run 3599 to 3603), so the cause is in the kept
+set. Trials at 3593, draft, by /tmp/v/rigid/seq15.sh: P0 = E as is, P1 = polarShow 0, P2 = sparkle 0,
+P4 = inner map weight wC 0. If none kills it: the haze shell, the globe's rim terms, the edge cover.
+
+DECISIONS: candidate for the next name = E (rigid shapes, lens law b, heroLight 0, baked globe map uBodyLight
+in both sets) + the repaired polar map + the cure of the pixel. NOT in it: rings-h.bin (unless H says so), the
+division window, the solid change. Disk: 4.4 GB free after clearing old scratch (l0/png, c1/rise_jpg, the
+ray_38xx files, dark/sc_*).
+
+## 25 Nov, 00:47 to 01:20 UTC: the pixel is a star, the lip, the candidate frozen as K
+
+MAIL 1350 (00:29): the name 7be04230 is logged, proofs wy1-01 to 07 queued. The next name is the rigid body with
+the hero's ring pixels on it (the pixels going out by the lens's height stay a named red). Rings by code alone
+come after, as lookdev. With the next name: say which frames of the flight in, the hold and the dive it moves;
+the Builder then runs the flight in and the first second of the hold at 60 frames a second (capture frames 6630
+to 6809). MAIL 1358 (01:13): every proof of 7be04230 is in, it goes on main as batch 18 after 16 and 17 (about
+01:35), cut as take/sr8 790989f6. The next name is cut on 7be04230 or on take/sr8, Saturn's folders alone.
+LOGIN TEST (00:54): the dry run of a push printed a new branch line, so the login works; answered.
+
+H (E with rings-h.bin taken out again, the old profile): 3465 d296 12.2124, G17 1.1193, 0.8049; 3720 28.5689 =
+3.3503 + 3.3616 + 21.8571, G17 1.0022, 0.6642, apart from the foot 1.1537, 0.7663. G (with rings-h.bin) had
+0.9648, 0.5940 at 3720. So the loss of fine contrast at 3720 came from rings-h.bin: it stays out.
+
+N (E + the repaired polar map) at 3465: d296 12.0741, G17 1.0303, 0.8045. By part: globe day 4.651 (C 5.183,
+B 3.876), twilight and night 2.296 (C 3.565, B 2.136), rings before the globe 20.232, rings in the globe's
+shadow 4.671, 1.25 to 1.53: 25.867, 1.53 to 1.95: 28.834, 1.95 to 2.03: 27.804, 2.03 to 2.27: 16.108, 2.27 to
+2.45: 49.849, sky 2.975. Viewed at full size beside the hero and C: the mottled patch at the right ansa is gone,
+the margin is smooth like the hero's own. Final 3465 of N: dbb180046a12205c.
+
+THE BRIGHT PIXEL IS A STAR. P1 (polarShow 0), P2 (sparkle 0) and P4 (wC 0) leave it as it is. Q1 (the rings'
+group not drawn) shows a star at (1545 to 1546, 750 to 751), level 193, at 3593. With the rings the star is
+hidden at x 1545 and shows on the globe's edge column: (1544, 751) level 132.7, lift 116 over the median of its
+5 by 5. Cause: once the lens has left the hold the shaded plane is solid and hides the sky between the night
+side and the shaded rings, also under the globe's own soft edge (past). But a plane place inside the equator's
+circle (r under 1) was never drawn, so at the two ends of the equator the pixels of the globe's soft edge whose
+view ray meets the plane at r under 1 had the open sky behind them, and a star flashed for one frame as the
+outline passed over it: 3580 (lift 117), 3588, 3589, 3593, 3601 in C's dive, a different star each time. The
+model had the same hole (mine needs r over the inner end 1.0).
+
+CURE (sK, both sets): lip = a place inside the equator's circle whose view ray passes the globe within the
+globe's soft edge (uGraze.z pixels and one more). The shaded plane is drawn there too, black, by the same shade
+as its neighbours with the ramp by radius taken as full. No new number. First try: the near half in the pass
+in front of the globe: it ate up to 3 px of the globe's edge over 20 rows (outline at row 758: 1540.18 against
+1543.48). Second try, kept: the lip is drawn behind the globe in both halves (a place inside the equator's
+circle is inside the globe). Measured, drafts: 3593 the largest lift near the equator's end falls from 116 to
+16 (the 16 is a corner pixel of the outline, level 20), 3601 from 73 to 10; pixels changed against the same
+tree without the lip: 51 at 3593, 51 at 3601 (kept set), 37 at 3610 (model), all within 3 px of the outline
+over about 20 rows at the right end of the equator. What else goes: a bluish shelf of 2 px in the globe's soft
+edge at that place (the night limb's haze and the star's glow behind the edge; everywhere else along that limb
+the solid plane already stood behind the edge), so the outline is now one smooth curve there (rows 734 to 758
+at 3610: steps of 0.5 to 1.2 px per 3 rows; before: a bulge of 1 px at rows 740 to 752).
+Tool: /tmp/v/rigid/outline.py (the outline's x by row), dot.py (largest lift over the 5 by 5 median).
+
+POSE WEIGHTS STILL IN THE KEPT SET (to name with the next name):
+(a) polarW, the hero's ring pixels by the lens's height and distance: 1 to 3578, 0.81 at 3584, 0.54 at 3588,
+    0.28 at 3592, 0 from 3600. As main.
+(b) dove: uSolid.x = smooth(dove / 0.116) and the penumbra's way to penumbraAway: over the first 0.116 radii of
+    the dive (3541 to 3551: 0.001, 0.006, 0.020, 0.055, 0.123, 0.232, 0.384, 0.572, 0.770, 0.935, 1) the
+    shaded plane goes solid and the stars behind it go out. As main.
+(c) the grade by the lens's height (grade.ts bodyShare, zoneShare, gradeShare), ruled as d253.
+(d) dead at every frame the kept set draws: close (handover.kept.close 0), skimW (skimGrow, skimLimb).
+(e) the hero's ring pixels against the code's rings: named, not refitted.
+
+Lens table (trial): Saturn's disc is over 0.6 px from 3344 (1.1 px) to 3916 (112.7 px; 3917 is the next leg,
+0.3 px). 3350: 18.0 px, 3360: 110.2, 3370: 246.2, 3379: 339.6, 3390: 362.9, 3465: 368.5, 3539: 374.2.
+
+FROZEN 01:16: candidate K = sK = E (rigid shapes, lens law b, heroLight 0, baked globe map in both sets, old
+ring profile) + the repaired polar map + the lip. Running: finals of K at 3572, 3720, 3465 and main's 3572
+(/tmp/v/rigid/seq20.sh). Then: the stills to the Builder, the build into the repo on 7be04230 (or take/sr8 once
+it is on main), the full proof, the name.
+
+## 2026-11-26 01:20 to 02:00 UTC: K built into the repo, committed on main a4944f12, the proof started
+
+READ FIRST AFTER A COMPACTION. State at 02:00: the build is commit 50106e47 (on 535916b2), origin main a4944f12
+merged in as 5abf6762 (local, NOT pushed yet). The proof worktree (/home/user/workspace/mainref) is checked out
+at 5abf6762 itself, so the proven tree is the committed tree. Units run first (/tmp/v/rigid/units_k.log), then
+/tmp/v/rigid/proof_k.sh (log /tmp/v/rigid/PK.log, out /tmp/v/rigid/PK): finals 3465, 3720, 3572; the flight in
+3344 to 3400 at draft in one session (PK/in/draft_N.png, scratch tool out/scratch/many.ts); dive and rise with
+frames kept (PK/dive_jpg, PK/rise_jpg); g17, gate, parity, path, handover, place, g13; finals 3567, 3866. Ends
+with PROOF DONE, about 04:15.
+
+Mails since the last entry:
+- 1358 (01:13): the name 7be04230 has every proof in and goes onto main as batch 18 (take/sr8 790989f6) after
+  batches 16 and 17. The next name is cut on 7be04230 or take/sr8, Saturn's folders alone.
+- 1361 (01:29): main fb40db96 holds batch 16 (the keel of the flight into Saturn in src/space/travel/path.ts)
+  and batch 17 (the subtitle layer behind subs=1). After npm run cues and npm run shots the tree must show no
+  change under cut/; if it does, say so with the name.
+- 1366 (01:53), on my stills: K holds the look of the name at 3465 by the Builder's eye. To bring with the name
+  because d296 (2) will be ruled on it (12.0741 against 4.7669 by the plain number): (1) the same pair by band
+  against the approved hero (1, 2, 4, 8, 16, 32, 64 px; name and K); (2) the plain number with K's frame
+  registered to the hero by the best shift and scale of the whole frame, the shift and the scale stated; (3)
+  the parts of the plain number (lit ring, globe, shadow on the ring, sky), name and K; (4) where the 20 px
+  lie: at the right ansa alone or along the whole near ring.
+
+What went into the repo (commit 50106e47): sK's globe.ts, kept/globe.ts, kept/look.ts, kept/rings.ts,
+kept/set.ts, model.ts, plan.ts, sheet.ts, skim.json; polar.json (file polar-rings.jpg with the margin); the
+repaired polar-rings.jpg (full f87a85396faf9f5f, web 59378d987c2d52cf); globe-light.json and globe-light.bin
+(4,147,200 bytes, the same file in both sets, 7d39fb8bb2d89dd8); the tools globe_light.py and polar_margin.py.
+Against sK the repo's tree drops the lines tsc named unused (heroM, heroL, heroPose in kept/set.ts and model.ts,
+the shotMatrix import in model.ts) and names the ring map by its own name. So the finals of the proof must keep
+K's bytes: 3465 dbb180046a12205c, 3720 69f1499a74b9ea73, 3572 e931a135a682a90b.
+
+Stills sent 01:49 (name above, K below): 3465 (mean abs 10.173 between the two), 3572 (17.193), 3720 (0.391:
+left half of the frame 0.007, right half 0.775, largest 40 levels at the twilight; over 16 levels in 1422 px).
+Seen at full size: at 3465 K's right ansa and lit near ring lie about 20 px further out than the hero's; the
+bright rim at the left ansa and the veil of the C ring across the limb are out; the margin at the right ansa is
+clean. At 3720 the terminator is a little softer and warmer by the storm. At 3572 old main shows stars in the
+gap between the night limb and the C ring; the name and K do not (the name's final 3572: 27f315b1f761720f).
+
+Lens on main a4944f12 (lens_k_a4944_s0.25.json): batch 16 moves the eye over 3339 to 3375 and the turn over
+3336 to 3375; the disc's radius by frame is the same to 0.1 px. The name's pose weight on it: 0.221, 0.573,
+0.820, 0.943, 0.990 at 3374 to 3378, full 3379 to 3561, out to 3591, and up to 0.069 over 3859 to 3877 in the
+rise. K's lens differs from the name's over 3540 to 3629 alone (3572: disc 391.3 px at 33.20 degrees against
+402.1 px at 32.36).
+
+Dead in K, to name: heroLight, shapeShow and limbShow at 0 leave the streak, the limb fit, the bend (its map
+polar-warp.bin is still loaded and sampled by no frame) and the hero's light by the pose as paths that no frame
+takes. To clear in a commit of its own after the name, with the finals proved to keep their bytes.
+
+- 1367 (01:58): origin main is 8fb3bffe: batch 18, my name 7be04230, is on main (35 files, all Saturn's own).
+  So before the name: merge 8fb3bffe too and show that against 5abf6762 nothing that draws has moved.
+
+## 2026-11-26 02:00 to 02:40 UTC: K proved on 5abf6762 (running); mail 1366's four items; the flight in read
+
+State: local HEAD 5abf6762 (origin main a4944f12 merged into the build 50106e47), not pushed. The proof runs in
+the worktree mainref on that tree: /tmp/v/rigid/proof_k.sh, log /tmp/v/rigid/PK.log, out /tmp/v/rigid/PK/, ends
+with the line PROOF DONE. Order: finals 3465, 3720, 3572; the flight in 3344 to 3400 at draft; dive; rise; g17,
+gate, parity, path, handover, place, g13; finals 3567, 3866. Do not lay another stop into mainref before it ends.
+
+Done so far:
+- Units on 5abf6762: 88 files, 1017 of 1017 passed (/tmp/v/rigid/units_k.log).
+- npm run cues and npm run shots in the repo: no change under cut/ (mail 1361).
+- Finals of the committed tree: 3465 dbb180046a12205c, 3720 69f1499a74b9ea73, 3572 e931a135a682a90b. These are
+  K's bytes, so the tree that was committed is the tree that was looked at.
+- Origin main went on to 3797c265 (status 350 over batch 18 at 8fb3bffe). Against 5abf6762 only kit/PROGRESS.md
+  differs outside Saturn's folders, so the proof on 5abf6762 stands for the tree with that main merged.
+
+Mail 1366, measured. My reader lays the approved hero on 1920 by 1080 by Lanczos and reads 4.7669 for the name;
+the Builder's reader says 4.5694 for the same frame. No resize filter I tried gives his number, so his rows are
+his and mine are mine: I state mine and say so.
+(1) By band. The hero's own luminance, rms by band 0-1, 1-2, 2-4, 4-8, 8-16, 16-32, 32-64 px:
+    8.117 4.328 5.102 6.611 9.211 11.511 15.020.
+    Name: plain 4.7669; difference left after a low pass of 1, 2, 4, 8, 16, 32, 64 px:
+    3.1325 2.7396 2.4513 2.2238 2.0222 1.8298 1.6315; band energy as a share of the hero's:
+    1.071 0.994 0.963 0.970 0.977 0.984 1.000.
+    K: plain 12.0741; low pass 9.0264 7.7489 6.4431 5.3421 4.4828 3.7993 3.1153; shares
+    1.034 0.956 0.935 0.974 0.992 0.983 0.980.
+    Read: K holds the hero's detail at every scale (shares 0.935 to 1.034); what rose is where things lie.
+(2) Registered, whole frame, bilinear: K 11.2712 at a shift of 0.50 px left, 0.34 px up and a scale of 0.99981
+    (the same mask without the move: 12.0730; 0.14 percent of the frame left out). Name 4.4993 at 0.12 left,
+    0.12 up, 0.99978 (4.7637). A coarse grid at quarter size (shift to 32 px, scale 0.95 to 1.05) has its least
+    at no move (9.0739; 9.604 at 0.99, 10.346 at 1.01). So no shift and scale of the whole frame lays K on the
+    hero: the hero's rings are an oval and K's are circles.
+(3) Parts of the plain number (share of the mean, name then K): globe 0.3376, 0.5111 (day 0.1118, 0.2538;
+    twilight and night 0.2258, 0.2573); rings before the globe 0.3659, 0.4608; rings in the globe's shadow
+    0.3296, 0.3803; lit rings 2.6442, 9.5353 (by radius 1.25 to 1.53: 0.2405, 0.7073; 1.53 to 1.95: 0.8766,
+    3.1715; 1.95 to 2.03: 0.3391, 0.8130; 2.03 to 2.27: 0.5453, 1.5857; 2.27 to 2.45: 0.6427, 3.2578); sky
+    1.0897, 1.1867. Of the rise of 7.31, 6.89 is the lit rings.
+(4) Where the 20 px lie. The hero's outer edge against the true circle at 2.3389 radii, px outward, by place on
+    screen: far arc upper left -8.07 (213, 333), -12.08, -13.66 (374, 263), -12.01, -10.60, -9.49, -7.54
+    (773, 231); far arc right of the globe -0.31 (1395, 377), +0.18, +0.70 (1584, 471); right ansa -2.43
+    (1670, 527), -7.32 (1748, 589), -14.88 (1813, 656); near ring lower left +22.13 (663, 1013), +21.57
+    (466, 923), +19.40 (308, 822), +17.05 (196, 718), +15.38 (130, 619), +11.78, +6.24 (115, 451), -1.55
+    (153, 386). So not the right ansa alone: the whole near ring at the lower left lies 15 to 22 px outside the
+    circle in the hero, the far arc at the upper left 8 to 14 px inside, the right ansa 2 to 15 px inside. The
+    name follows the hero to about 1 px; K reads +0.04 to +1.67 at every place. B outer edge (1.9545): hero
+    +6.73 at the left to -19.28 at the right ansa (1689, 636), -11.35 to -3.97 along the bottom, +7.64 at +170;
+    K -2.59 to +1.03. By ring_edges at 3465 (shape off the middle profile, B inner, B outer, outer): K -1.32,
+    +1.32, -0.47; name +5.37, -10.68, +21.77; hero +6.15, -11.10, +23.01.
+    Pictures: /tmp/v/rigid/m66/circles_3465.jpg, circles_ll.jpg, circles_ra.jpg (in looks).
+
+The flight in on K, 3344 to 3400 at draft, every frame looked at on sheets and 3373 to 3378 at full size at the
+near ring and at the right ansa: nothing pops, no shape steps; the moon comes in over the top edge at 3371.
+- Ring edges (ring_edges, by frame, /tmp/v/rigid/PK/e4_in_K.txt): readable from 3355. Outer edge: shape within
+  0.67 px at every frame (size +0.25 growing to +1.19 with the disc: one radius read 0.003 out). B outer:
+  within 1.52 px (3358, disc 85 px), 1.2 px from 3374. B inner: within 2.4 px at every azimuth but one; at
+  azimuth -170 the reader lands on another ringlet at 3376, 3378, 3382, 3388 (+18 to +21 px, confidence 0.60,
+  at its gate; the frames beside read nothing there). Picture binner_3376.jpg: the ringlets run parallel to the
+  true circle at 3376 and at 3390. The second reader (ring_where.py, the steepest rise alone) is no better
+  there: in that zone it lands on a step 0.035 to 0.058 radii inside 1.5237 at most azimuths and on other
+  ringlets at -170 to -140. The zone holds several steps of like height, so a reader of one edge is the wrong
+  tool for it; ring_rigid.py (below) reads the whole profile and settles it.
+- SIZE of B inner in ring_edges steps between about -16 and -25 px from frame to frame (3376 to 3378, 3382,
+  3388, 3392): the middle profile has two steps of like steepness and the reader takes now one, now the other.
+  It is not a move of the body: ring_rigid.py reads 0.02 to 0.07 px between those frames.
+- ring_rigid.py (new, in assets-src/saturn/code): each sector's profile by radius laid on the SAME sector's
+  profile one frame before, each through its own lens, in the three zones. On K over 3357 to 3400
+  (/tmp/v/rigid/rg/in_K.txt): the middle of the absolute shift is 0.00 to 0.04 px at every frame and zone; the
+  largest at any sector is 0.38 px at 3358 (outer edge, azimuth -130, disc 85 px), under 0.2 px from 3359 and
+  under 0.1 px from 3368 on. In the hold (3390 to 3400, the camera all but still) the same reader gives up to
+  0.07 px: that is its error. So the rings keep their shape in their own plane from frame to frame while the
+  camera comes in, to the reading's error.
+- Limb (globe_edges, /tmp/v/rigid/PK/g4_in_K.txt): median -0.84 to +0.12 px off the true spheroid over 3356 to
+  3400, half of the rays within 0.7 px. One ray in ten reads 4 to 9 px off over 3359 to 3373: these are the
+  rays at 150 to 165 degrees, where the near ring crosses the limb, and at 240 to 291 degrees, where the limb
+  stands against the far ring until 3373 (picture limb_in.jpg: the true outline dotted on the limb at 3369,
+  3371, 3374). From 3374 nine rays in ten within 1.5 px.
+- Bands: the sector at 70 degrees from the lens reads -1.34 px (3363) growing to -3.86 px (3400): 0.009 to
+  0.010 of the disc's radius at every frame, so a wave of the body's own light map, not of the pose.
+
+Tools of this round, now in assets-src/saturn/code: hold_bands.py (items 1 and 2), hold_reg_grid.py (the
+coarse grid of item 2), ring_where.py (item 4, by azimuth; FRAME and ONLY in the environment), ring_circles.py
+(the pictures), lens_table.py (the lens by frame with the edge readings beside), ring_rigid.py (frame against
+the frame before). They read the lens from a JSON made by lens_by_frame.ts and find ring_edges.py beside them.
+
+## 2026-11-26 02:40 to 04:25 UTC: lone pixels in K's dive, three causes found, cured at the cause; main moved (1390, 1399)
+
+Where the lens stands in a frame (do not mix): the finals and the rate 1 frames of many.ts are taken at film
+frame f + 0.25, the reader's rate 2 frames (capture 2f) at f + 0.125. Lens files of lens_by_frame.ts carry the
+offset in their name (s0.25, s0.125).
+
+Measured on K before the cures (bytes of 5abf6762, main a4944f12):
+- Dive, ring_rigid (frame against the frame before, per sector): middle of the absolute shift at most 0.03 px
+  (B inner), 0.02 (B outer), 0.04 (outer) a frame; largest single sector +0.59 px at 3610, the reading's error.
+  The name 7be04230 on the same reading: middle up to 0.33, 0.31, 0.42, largest -1.38 px a frame (outer edge,
+  azimuth 110, 3578).
+- Dive, d312 through each state's own lens: K largest -1.27 levels a frame (latitude 26 to 40 north, 3601 to
+  3602), the name -1.25 (3607 to 3608). K's dive row of the reader was green.
+- The flight in read on a4944f12 is void: main cfabcc52 changes frames 3331 to 3389 (the roll back is out).
+
+03:30: the proof chain on K was stopped, because K's dive had lone pixels, each for one frame at one sample a
+frame (the draft tier shows them at full strength, the final tier thins them 16 times):
+
+1. Five at the right end of the equator (3563, 3568, 3575, 3589, 3598), plane radius 0.98 to 1.01. Cause: the
+   cull of the near half of the kept rings dropped a triangle of the lip only when all three corners lay beyond
+   the circle that splits near from far; a triangle with all three corners inside the globe's disc was kept and
+   one pixel of it came through the soft edge. Cure: kept/rings.ts, the cull drops a triangle whose three
+   corners lie inside the disc as well. Proof on 36 reader frames 3563 to 3598: the five are gone, and against
+   K only 2 to 18 px a frame move by over 4 levels, all at plane radius 0.984 to 1.013.
+2. One on the night limb at 3584 (x 1515, y 660; level 47 over 27). Not a star. Traced by painting the passes
+   one by one (debug renders, /tmp/v/rigid/dbg): the globe's soft edge is one minus the miss distance over its
+   change from pixel to pixel, and that change (dFdx, dFdy of a value interpolated over the mesh) was nearly
+   zero in that one pixel, so the pixel counted as wholly covered.
+3. Dark pixels 4 to 6 px inside the lit north limb, near the pole, in some frames (3581 on the mesh of the
+   globe's own size; 3567 and 3569 on a mesh 1.02 times larger, which I tried first as the cure of 2 and which
+   only moved the fault to other frames).
+
+2 and 3 are one fault. A value interpolated over a triangle is right at the pixel, but its change to the next
+pixel is taken along the plane of that one triangle; where triangles are slivers thinner than a pixel (the 384
+at each pole of the sphere, and every triangle at the outline, where it stands edge on) the change comes out
+wrong by any factor. On the mesh of the globe's own size (K, since the limb fit went out) the whole outline was
+such a place: about 880 px a frame in the edge band differ by over 6 levels between that mesh and the larger
+one.
+
+Cure at the cause (src/stops/saturn/ray.ts, used by kept/globe.ts and globe.ts): the ray of each pixel comes
+from the lens alone, a 3 by 3 matrix laid at each draw from the camera, the mesh's place and the viewport, times
+the pixel's place in the buffer. Its change from pixel to pixel is then the same on every triangle. The surface
+point is where that ray meets the globe; the mesh only says which pixels are shaded and is 1.02 times the globe
+at every frame (look limbInflate), with a discard outside the globe's outline. Proof on the same 36 frames
+(/tmp/v/rigid/CY): no lone pixel at 3584, no dark pixel near the pole in 3567, 3569, 3581, the limb an even
+soft edge; against the larger mesh the disc moves by at most 3 levels, outside the globe by at most 1.
+This changes the globe's edge in every frame of the stop, in both sets, so the finals of K change bytes.
+
+Mail 1390: main cfabcc52 (batch 19 a and b). Mail 1399: the clock; names by 06:45 for the third cut, main is
+5798676c. Disk was at 3.4 GB free at 04:13: cleared old frames of the stopped chain and old copies, 4.4 GB.
+
+## 2026-11-26 04:25 to 04:56 UTC: the candidate 6f74b0fa under proof, the gate's G11 red and its cure, mail 1406
+
+State under proof: agent/saturn-code 6f74b0fac496e8189318073d0efe90fbe827d691 = main 5798676c merged into
+b7ae9359 (K with the lone pixel cures). Outside Saturn's folders the tree is main's; 25 files differ, all in
+Saturn's folders; net +8.380 MB (83.835 against 75.456), nearly all of it globe-light.bin in the two tiers.
+
+Mails: 1400 (04:27) main is 834d5148 (take/hc1, crests of a relief, no stop gives crest), 1405 (04:39) main is
+23f1089b (take/sg2 the sky's field glare, take/hn1 the reader's tools): no picture of mine moves, merge before
+the name. 1406 (04:46): push the candidate as soon as it stands and send one line (sha, base, files), the
+Builder's machines start its proofs before the name; the tracked tree is at 2.93 GB of 3 GB, a name that adds
+more than 5 MB says so and says what it removes. Sent the line at 04:54 (high): 6f74b0fa, base 5798676c, the
+25 files, +8.380 MB, removes nothing, dead files with the next commit.
+
+The proof chain (/tmp/v/rigid/proof_c.sh, out /tmp/v/rigid/PC, the worktree mainref at 6f74b0fa, the stop
+frozen in /tmp/v/rigid/sC):
+- units: 89 files, 1020 of 1020 passed, 785 s (04:36).
+- finals: 3465 f99eb85dca531ebf (K's dbb180046a12205c), 3720 7edb622ded51eff9 (K's 69f1499a74b9ea73).
+  3465 against K's: 33,577 px differ; in the edge band (2 px outside to 5 inside the outline) 4,333, of them
+  879 over 2 levels, 187 over 6, 7 over 16, the largest 90 at (893, 210), where K's limb was hard and bright
+  (213, 200, 163) and is now a soft edge (152, 116, 73) like main's (140, 117, 88); the disc 28,173 px by at
+  most 4; elsewhere 1,071 px by 1. 3720 against K's: 30,916 px, the largest 8 (edge band 343 over 2, 5 over
+  6; disc at most 2; elsewhere at most 1). 3720 against main's: the disc 547,264 px, 159,888 over 2, 23,837
+  over 6, 1,416 over 16, the largest 40 at (1627, 197); elsewhere 35,932 px, 116 over 2, none over 6, the
+  largest 4. Both finals seen whole in four quarters: they read as K's.
+- the flight in 3340 to 3400 at draft, every frame (PC/in, sheets PC/in_sheet_N.jpg), seen frame by frame and
+  3376 whole: one body that grows, true ellipses, the globe's shadow on the rings from the first frame the
+  rings are wider than a few px (3346), Titan from 3351. Nothing swaps.
+- gate: G15 PASS (at most 2 sets per frame; saturn web 275 MB, full 747 MB). G11 FAIL: globe-light.bin of
+  the two tiers had no row in a RECIPE.md. MY FAULT, a file added without its recipe. Cure: a section for
+  public/assets/saturn/<set>/globe-light.bin in assets-src/saturn/RECIPE.md (what it is, the two tools, the
+  inputs, what it does, sha256 7d39fb8bb2d89dd8). G11 alone run again in the repo: PASS. No other byte moves.
+- running at 04:56: the rise (then G17, parity, path, handover, place, G13, finals 3567, 3866, 3572, the
+  dive last, about 07:15).
+
+Points read so far (reader frames, lens at f + 0.125; ring edges, shape, the most px and its azimuth; B
+inner, B outer, outer; then the limb: median px out, half within, nine in ten within):
+ 3562: -1.58 (150), +1.49 (-50), -0.35 (130); limb -0.41, 0.43, 1.47 (K's bytes before the cures, jpg)
+ 3572: -1.59 (150), +1.44 (-50), -0.53 (130); limb -0.37, 0.52, 2.47 (cured, png)
+ 3593: -0.27 (160), +0.35 (-50), -0.36 (120); limb -0.40, 0.39, 1.03 (cured, png)
+ 3601: -0.07 (-170), +0.29 (-140), +0.13 (-40); limb -0.20, 0.55, 6.90 (K's bytes before the cures, jpg)
+The bright pixel of mail 1323 at (1556, 748), 3601: the name on main reads 121 to 124 over a surround of 14,
+K reads 18 over 19.
+
+Size, for the name mail: the name adds 8.380 MB and removes nothing. Dead in this state and to clear in a
+commit of its own after the name: polar-warp.bin (2 x 0.131 MB), close-globe.jpg (0.534 + 0.147 MB),
+close-light.bin (2 x 0.048 MB), and hold-light.bin (2 x 3.686 MB), which is drawn at weight 0 at every frame
+but is the source of the bake (globe_light.py reads the full tier's file): one copy has to stay, in
+assets-src or where it is. Not done before the name: the loading of all four is woven through kept/set.ts
+and the shaders, and a clearing needs its own proof of the same bytes.
+
+Looks pushed 04:52 (pairs of the finals beside main and the approved, the five sheets of the flight in,
+3376 whole).
