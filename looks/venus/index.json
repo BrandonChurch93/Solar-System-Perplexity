@@ -1,9 +1,57 @@
 {
  "folder": "venus",
- "pushed": "2026-11-26T19:06:43.164Z",
- "head": "1367104f80e3b1a598c747802c75af30dd9272f5",
- "note": "round 58 faults (a) and (b) on main's code: what is seen and two controls; nothing cured yet",
+ "pushed": "2026-11-26T19:47:22.680Z",
+ "head": "0d69f4f4c948c7f294b609dadba401f87f6ef81b",
+ "note": "MAIL 1534 (a): cause by controls and the draft of the cure (ground flat at its end, dive plates of g1 back)",
  "looks": [
+  {
+   "time": "2026-11-26T19:47:21.596Z",
+   "file": "20261126194721596-note-g1only-1338-z.jpg",
+   "source": "../../../../tmp/v/sh/g1only-1338-z.jpg",
+   "kind": "note",
+   "label": "MAIL 1534 (a), control at 1338, x 1240 to 1920, y 930 to 1080, lifted, twice the size: main, the plates of g1 alone, the plates with A1. With the plates alone the end of the ground cuts the pale cumulus at the right along a level line",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:47:20.751Z",
+   "file": "20261126194720751-note-survey3.jpg",
+   "source": "../../../../tmp/v/sh/survey3.jpg",
+   "kind": "note",
+   "label": "MAIL 1534 (a), control: from the eye of T turned down 34 degrees, ground on, plates alone, and the picture past the end of the ground of trial g1. Under the end of the ground main's plates hold another picture",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:47:19.796Z",
+   "file": "20261126194719796-note-A1g-ll-k2668.jpg",
+   "source": "../../../../tmp/v/sh/A1g-ll-k2668.jpg",
+   "kind": "note",
+   "label": "MAIL 1534 (a), lower left 1334 and 1335: main above, A1 with the plates of g1 below. The dark straight strip under the cumulus is gone; the tower at the left stands softer (state A2 is that block)",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:47:18.618Z",
+   "file": "20261126194718618-note-A1g-full-b.jpg",
+   "source": "../../../../tmp/v/sh/A1g-full-b.jpg",
+   "kind": "note",
+   "label": "MAIL 1534 (a), whole frames 1333 and 1336 at 0.45: main above, A1 with the plates of g1 below",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:47:17.678Z",
+   "file": "20261126194717678-note-A1g-lr-k2662.jpg",
+   "source": "../../../../tmp/v/sh/A1g-lr-k2662.jpg",
+   "kind": "note",
+   "label": "MAIL 1534 (a), lower right 1331 and 1332: main, A1 alone, A1 with the plates of g1. Named red: the cumulus of the take under the end of the ground is paler and softer than the ground beside it",
+   "stop": "venus"
+  },
+  {
+   "time": "2026-11-26T19:47:16.594Z",
+   "file": "20261126194716594-note-A1g-lr-b.jpg",
+   "source": "../../../../tmp/v/sh/A1g-lr-b.jpg",
+   "kind": "note",
+   "label": "MAIL 1534 (a), lower right 1337 and 1338, draft rate 2: main above, A1 alone (ground laid flat at its end) in the middle, A1 with the ten dive plates of g1 below. The straight cut stays with A1 alone and is gone with the plates",
+   "stop": "venus"
+  },
   {
    "time": "2026-11-26T19:06:41.282Z",
    "file": "20261126190641282-note-b-g0-left.jpg",
@@ -18,60 +66,6 @@
    "source": "../../../../tmp/v/sh/b-band.jpg",
    "kind": "note",
    "label": "main's rise at draft tier, the Sun's glow 1539 to 1546: no band at 1539 and 1540, level bands left and right of the Sun from 1541 on",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:06:37.662Z",
-   "file": "20261126190637662-note-a-wall.jpg",
-   "source": "../../../../tmp/v/sh/a-wall.jpg",
-   "kind": "note",
-   "label": "main's dive and surface view at draft tier, left margin, frames 1340 to 1354 + 1/2, lifted in tone for sight: the block at the left edge stands before and after the handover at 1343",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:06:35.972Z",
-   "file": "20261126190635972-note-a-g0-lr.jpg",
-   "source": "../../../../tmp/v/sh/a-g0-lr.jpg",
-   "kind": "note",
-   "label": "control, lower right corner 1332 to 1340: M main, G0 the ground of the surface picture off on the globe side: with the ground off there is no cut, the plates run on",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:06:34.049Z",
-   "file": "20261126190634049-note-a-lr.jpg",
-   "source": "../../../../tmp/v/sh/a-lr.jpg",
-   "kind": "note",
-   "label": "main's dive at draft tier, lower right corner, frames 1332 to 1347: the cut moves down and leaves the frame after 1341",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T19:06:31.889Z",
-   "file": "20261126190631889-note-a-whole.jpg",
-   "source": "../../../../tmp/v/sh/a-whole.jpg",
-   "kind": "note",
-   "label": "main's dive at draft tier, frames 1332, 1336, 1340, 1343 whole: the straight cut under the dark cumulus at the lower right (1332 to 1340) and the block at the lower left; the cause of fault (a) of round 58 under study, nothing cured",
-   "stop": "venus"
-  },
-  {
-   "time": "2026-11-26T18:42:12.014Z",
-   "file": "20261126184212014-frame-f01339-review.jpg",
-   "source": "out/work/sheets/.frames-xnopiN/f01339-review.png",
-   "kind": "frame",
-   "label": "venus.dive frame 1339, review tier",
-   "stop": "venus",
-   "segment": "venus.dive",
-   "frame": 1339,
-   "tier": "review",
-   "format": "16x9",
-   "diag": "beauty",
-   "engine": "e1ac861ce101f79f"
-  },
-  {
-   "time": "2026-11-26T16:31:13.406Z",
-   "file": "20261126163113406-note-S2-Mn-right.jpg",
-   "source": "../../../../tmp/v/sh/S2-Mn-right.jpg",
-   "kind": "note",
-   "label": "rise 1544 to 1556 every second frame, right border x 1620 to 1920, y 330 to 580: main 301ced79 above, the dropped take with the ease below; the same forms on both, the haze under the limb clears over 1546 to 1554 on both; the take is not named, the tree is back at main's code",
    "stop": "venus"
   }
  ]
