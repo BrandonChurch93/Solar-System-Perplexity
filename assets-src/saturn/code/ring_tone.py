@@ -1,4 +1,4 @@
-"""ring_tone.py FILM OUT.json [EVERY] [REACH] [LAST]: the broad tone of the rings by radius against the approved close image.
+"""ring_tone.py FILM OUT.json [EVERY] [REACH] [LAST] [one]: the broad tone of the rings by radius against the approved close image.
 
 FILM is frame 3720 of the film at the final tier (1920 by 1080), drawn with the table that
 src/stops/saturn/skim.json light.grade.radial holds now. The script looks for the factor on that table which
@@ -15,6 +15,13 @@ inward of the inner rim (1.03 to 1.25, one factor) left as they are, the last kn
 (0.4 to 4.5, and 0.55 to 1.8 outward of radius 1.56 where the ice is dense). The values are found one at a time
 with the others held, in SWEEPS sweeps over a grid of factors.
 
+one (the word, after the other arguments): one free value for the three colours of a knot, so the table keeps
+the ratio of red to green to blue it holds at every radius. The colour of the ring by radius is the ring's own
+and was fitted at the first pose of the skim; at another pose the level by radius changes with the view and the
+colour does not, so a refit there moves the level alone. The bounds then hold the largest and the smallest of
+a knot's three numbers with their ratio kept. (Without the word each colour is clipped by itself, and a knot
+that reaches a bound in all three loses its colour: the ring turns white there.)
+
 ring_tone.py --write TABLE.json: puts the gain of TABLE.json into skim.json, the layout of the file kept (one
 number a line, put_table.py), nothing else touched.
 Run it from the repo's root. No pixel of the film is made here: this only measures."""
@@ -25,7 +32,8 @@ from PIL import Image
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
-ARGV = sys.argv[:]
+ONE = 'one' in sys.argv[3:]
+ARGV = [a for i, a in enumerate(sys.argv) if not (i >= 3 and a == 'one')]
 sys.argv = ['x']
 ROOT = HERE.parents[2]
 SKIM = ROOT / 'src/stops/saturn/skim.json'
@@ -112,7 +120,12 @@ def main():
     def bounded(x):
         g = old * np.exp(x)
         dense = knots >= DENSE
-        g = np.where(dense[:, None], np.clip(g, DENSE_LOW, DENSE_HIGH), np.clip(g, LOW, HIGH))
+        if ONE:
+            # the ratio of the three colours kept: the largest of the three under the upper bound, the smallest over the lower
+            g = g * np.minimum(1.0, np.where(dense, DENSE_HIGH, HIGH) / g.max(1))[:, None]
+            g = g * np.maximum(1.0, np.where(dense, DENSE_LOW, LOW) / g.min(1))[:, None]
+        else:
+            g = np.where(dense[:, None], np.clip(g, DENSE_LOW, DENSE_HIGH), np.clip(g, LOW, HIGH))
         g[:first_knot] = old[:first_knot]
         g[-1] = old[-1]
         return g
@@ -131,7 +144,7 @@ def main():
     print('the same from the scene light developed again (the error of the prediction is the difference): %.4f' % score(v))
     for sweep in range(SWEEPS):
         for j in range(len(free)):
-            for c in range(3):
+            for c in ([slice(None)] if ONE else range(3)):
                 errs = []
                 for g in GRID:
                     v[j, c] = g

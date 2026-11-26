@@ -112,7 +112,8 @@ export class Pace {
 
 interface PaceOf { peak: number | number[]; round: number | number[] }
 interface Paces { reach: PaceOf; climb: PaceOf; round: PaceOf; view: PaceOf }
-interface Law { e1: THREE.Vector3; e2: THREE.Vector3; reach0: number; reach: Pace; climb0: number; climb: Pace; round0: number; round: Pace; view: Pace }
+interface Even { way: number; first: number; last: number; r0: number; r1: number; mid: number; steps: number; rate: Float64Array; done: Float64Array }
+interface Law { e1: THREE.Vector3; e2: THREE.Vector3; reach0: number; reach: Pace; climb0: number; climb: Pace; round0: number; round: Pace; view: Pace; even: Even | null }
 
 export class SaturnPlan extends StopPlan {
   readonly ringNormal: THREE.Vector3
@@ -277,7 +278,7 @@ export class SaturnPlan extends StopPlan {
     const reach = pace((p) => Math.log(Math.max(p.length() - 1, 1e-6)), false, d.reach)
     const climb = pace((p) => Math.log(Math.max(p.dot(n), 1e-6)), false, d.climb)
     const round = pace((p) => Math.atan2(p.dot(e2), p.dot(e1)), true, d.round)
-    return { e1, e2, reach0: reach[0], reach: reach[1], climb0: climb[0], climb: climb[1], round0: round[0], round: round[1], view: new Pace(0, 0, 1, d.view.peak, d.view.round) }
+    return { e1, e2, reach0: reach[0], reach: reach[1], climb0: climb[0], climb: climb[1], round0: round[0], round: round[1], view: new Pace(0, 0, 1, d.view.peak, d.view.round), even: null }
   }
 
   // The pose at the share u of such a move; a and b are the poses of the two motions at the same time.
@@ -290,7 +291,91 @@ export class SaturnPlan extends StopPlan {
     const foot = Math.sqrt(Math.max(far * far - h * h, 0))
     const position = new THREE.Vector3().addScaledVector(law.e1, foot * Math.cos(phi)).addScaledVector(law.e2, foot * Math.sin(phi)).addScaledVector(this.ringNormal, h)
     const w = law.view.at(u)
-    return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov: lens === 'distance' ? this.lensAt(far) : a.vfov * Math.pow(b.vfov / a.vfov, w) }
+    const vfov = lens === 'even' ? this.lensEven(law, far, a.vfov, b.vfov) : lens === 'distance' ? this.lensAt(far) : a.vfov * Math.pow(b.vfov / a.vfov, w)
+    return { position, quaternion: a.quaternion.clone().slerp(b.quaternion, w), vfov }
+  }
+
+  // The lens of a move as a function of the eye's distance from the planet's centre and of nothing else
+  // (skim.json lens.moves 'even'; MAIL 1535 point 3). The disc of the globe has the radius of half the frame's
+  // height over the tangent of half the field of view and over the root of the distance squared less one. So
+  // with the lens standing the disc's rate is the rate of that root alone, the path's own rate: at the move's
+  // first distance that of the motion before the move, at its last that of the motion after it (the move
+  // meets both in speed, law()). Between the two distances the disc's rate goes from the one own rate to the
+  // other in one straight ramp over the share of the move and is level before the ramp or after it, and it is
+  // never more than the path's own rate at that share. The two poses fix how much the disc changes over the
+  // whole move, and that fixes the middle of the ramp; the ramp is as wide as fits about that middle inside
+  // the move, so it begins at the move's first distance or ends at its last. The lens is what is left: at
+  // each distance the field of view that gives the disc the size this rate has brought it to. So the disc
+  // never shrinks while the eye comes in and never grows while it goes out; the lens never closes while the
+  // eye comes in and never opens while it goes out; the disc's rate has no step where the law begins or ends,
+  // and the largest change of its rate is the slope of the ramp. The share of the move follows from the
+  // distance alone (the move's distance is its reach pace, which goes one way), so nothing here reads the
+  // time. Two poses that ask for a change of the disc which no such ramp gives are refused with the numbers.
+  private lensEven(law: Law, distance: number, from: number, to: number): number {
+    const half = (deg: number): number => Math.log(Math.tan(THREE.MathUtils.degToRad(deg) / 2))
+    const root = (d: number): number => 0.5 * Math.log(d * d - 1)
+    const far = (k: number): number => 1 + Math.exp(law.reach0 + law.reach.at(k))
+    const first = law.even === null ? far(0) : law.even.first
+    const way = law.even === null ? (far(1) < first ? 1 : -1) : law.even.way
+    const own = (k: number): number => {
+      const d = far(k)
+      return -way * (d / (d + 1)) * law.reach.rate(k)
+    }
+    const ramp = (k: number, mid: number, r0: number, r1: number): number => {
+      const reach = Math.min(mid, 1 - mid)
+      if (reach <= 0) return k < mid ? r0 : r1
+      return r0 + (r1 - r0) * Math.min(Math.max((k - (mid - reach)) / (2 * reach), 0), 1)
+    }
+    if (law.even === null) {
+      const last = far(1)
+      const r0 = own(0)
+      const r1 = own(1)
+      const whole = way * (root(first) - root(last) - (half(to) - half(from)))
+      const steps = skimJson.lens.even.steps
+      const path = new Float64Array(steps + 1)
+      let least = Infinity
+      for (let i = 0; i <= steps; i++) {
+        path[i] = own(i / steps)
+        least = Math.min(least, path[i])
+      }
+      const rate = new Float64Array(steps + 1)
+      const done = new Float64Array(steps + 1)
+      const fill = (mid: number): number => {
+        for (let i = 0; i <= steps; i++) {
+          rate[i] = Math.min(path[i], ramp(i / steps, mid, r0, r1))
+          done[i] = i === 0 ? 0 : done[i - 1] + (rate[i - 1] + rate[i]) / (2 * steps)
+        }
+        return done[steps]
+      }
+      const most = Math.max(fill(0), fill(1))
+      const fewest = Math.min(fill(0), fill(1))
+      if (!(least > 0) || !(whole <= most) || !(whole >= fewest)) throw new Error(this.id + ': no even lens for the move from the distance ' + first.toFixed(4) + ' (lens ' + from.toFixed(3) + ') to ' + last.toFixed(4) + ' (lens ' + to.toFixed(3) + '): the disc changes by ' + whole.toFixed(5) + ' in the logarithm over the move; a ramp between its own rates ' + r0.toFixed(5) + ' and ' + r1.toFixed(5) + ' gives from ' + fewest.toFixed(5) + ' to ' + most.toFixed(5) + '; the least own rate in the move is ' + least.toFixed(5))
+      let lo = 0
+      let hi = 1
+      for (let i = 0; i < 60; i++) {
+        const mid = (lo + hi) / 2
+        if ((fill(mid) - whole) * (r1 - r0) > 0) lo = mid
+        else hi = mid
+      }
+      const mid = (lo + hi) / 2
+      fill(mid)
+      law.even = { way, first, last, r0, r1, mid, steps, rate, done }
+    }
+    const e = law.even
+    if (e.way * (distance - e.first) >= 0) return from
+    if (e.way * (distance - e.last) <= 0) return to
+    let lo = 0
+    let hi = 1
+    for (let i = 0; i < 60; i++) {
+      const k = (lo + hi) / 2
+      if (e.way * (far(k) - distance) > 0) lo = k
+      else hi = k
+    }
+    const k = (lo + hi) / 2
+    const i = Math.min(Math.floor(k * e.steps), e.steps - 1)
+    // the sum of the disc's rate up to this share, and never more than the path's own change up to here, which is known exactly
+    const done = Math.min(e.done[i] + (k - i / e.steps) * (e.rate[i] + Math.min(own(k), ramp(k, e.mid, e.r0, e.r1))) / 2, e.way * (root(e.first) - root(distance)))
+    return 2 * THREE.MathUtils.radToDeg(Math.atan(Math.exp(half(from) + root(e.first) - root(distance) - e.way * done)))
   }
 
   // The lens as a function of the eye's distance from the planet's centre and of nothing else (skim.json lens):

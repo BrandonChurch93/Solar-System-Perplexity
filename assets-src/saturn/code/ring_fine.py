@@ -1,4 +1,4 @@
-"""ring_fine.py FILM OUT.json [CAP]: the ringlets' amplitude by radius against the approved close image.
+"""ring_fine.py FILM OUT.json [CAP] [FLOOR]: the ringlets' amplitude by radius against the approved close image.
 
 FILM is frame 3720 of the film at the final tier (1920 by 1080), drawn with the table that
 src/stops/saturn/skim.json light.grade.radial.fine.gain holds now. The amplitude is its own term of the one law
@@ -14,9 +14,12 @@ values), straight lines between them; each value reads the pixels of its own spa
 the knot of.
 
 The next value is the one now times the root of (approved energy over film energy): the energy goes as the
-square of the amplitude. It is held from 1 up to CAP (1.6 if not given): where the film has as much fine
-contrast as the approved image or more it is left as it is (crisp ringlets are not taken back), and no value
-asks for more than CAP. No free value inside the dark gap from 1.92 to 2.10 (as for the tone: its edges lie at
+square of the amplitude. It is held from FLOOR (1 if not given) up to CAP (1.6 if not given). With FLOOR at 1,
+where the film has as much fine contrast as the approved image or more it is left as it is (crisp ringlets are
+not taken back): that was the rule at the first pose of the skim, where the film had less than the approved
+image nearly everywhere. At a pose with the lens nearer the plane the same ringlets stand wider on screen and
+the film has two to four times the approved image's fine contrast in the dense ring; a FLOOR under 1 lets the
+table take that back, down to FLOOR and no further. No value asks for more than CAP. No free value inside the dark gap from 1.92 to 2.10 (as for the tone: its edges lie at
 other radii in the approved image than in the model, and where the gap is black there is nothing to amplify),
 the knots inward of the inner rim left at 1, the last knot left at 1. One run is one step: draw the frame with
 the table of OUT, run again, until the values stay (the script prints the largest change).
@@ -64,6 +67,7 @@ def main():
     count = len(old)
     knots = first + step * np.arange(count)
     cap = float(ARGV[3]) if len(ARGV) > 3 else CAP
+    floor = float(ARGV[4]) if len(ARGV) > 4 else 1.0
     p = np.array([pose['azimuthDeg'], pose['foot'], pose['height'], pose['yawDeg'], pose['tiltDeg'], pose['rollDeg'], pose['vfov']], float)
     pos, rot, sun, f = pf.camera(p)
     yy, xx = np.mgrid[0:H, 0:W]
@@ -118,11 +122,11 @@ def main():
             print('%.2f   too few pixels, left as it is' % knots[i])
             continue
         a, e = (ae * w).sum() / w.sum(), (fe * w).sum() / w.sum()
-        nxt[j] = float(np.clip(now[j] * np.sqrt(a / e), 1.0, cap))
+        nxt[j] = float(np.clip(now[j] * np.sqrt(a / e), floor, cap))
         print('%.2f  %7d  %10.2f  %8.2f  %8.3f           %.3f  %.3f' % (knots[i], int(w.sum()), a * 1e5, e * 1e5, e / a, now[j], nxt[j]))
     print('largest change of a value: %.4f' % np.abs(nxt - now).max())
     out = table(np.round(nxt, 4))
-    Path(ARGV[2]).write_text(json.dumps({'gain': [round(float(v), 4) for v in out], 'free': [round(float(knots[i]), 2) for i in free], 'cap': cap}))
+    Path(ARGV[2]).write_text(json.dumps({'gain': [round(float(v), 4) for v in out], 'free': [round(float(knots[i]), 2) for i in free], 'cap': cap, 'floor': floor}))
 
 
 if len(ARGV) > 2 and ARGV[1] == '--write':

@@ -96,238 +96,238 @@
         "gain": [
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
             2.97,
-            3.208,
+            3.2085,
             3.6
           ],
           [
-            0.621,
-            0.68,
-            0.669
+            4.5,
+            4.5,
+            4.237
           ],
           [
-            0.722,
-            0.766,
-            0.718
+            4.5,
+            4.5,
+            3.914
           ],
           [
-            0.839,
-            0.864,
-            0.848
+            4.5,
+            4.5,
+            3.978
           ],
           [
-            0.974,
-            0.974,
-            1.034
+            4.5,
+            4.5,
+            4.171
           ],
           [
-            0.89,
-            1.034,
-            1.146
+            4.5,
+            4.5,
+            4.226
           ],
           [
-            0.814,
-            1.056,
-            1.093
+            4.5,
+            4.325,
+            3.684
           ],
           [
-            0.661,
-            0.846,
-            0.953
+            3.998,
+            3.265,
+            2.936
           ],
           [
-            0.61,
-            0.829,
-            0.95
+            2.82,
+            2.514,
+            2.373
           ],
           [
-            0.701,
-            0.982,
-            1.111
+            2.47,
+            2.345,
+            2.248
           ],
           [
-            1.217,
-            1.63,
-            1.745
+            3.276,
+            3.061,
+            2.862
           ],
           [
-            1.487,
-            1.929,
-            2.096
+            3.293,
+            3.071,
+            2.872
           ],
           [
-            1.498,
-            1.914,
-            2.098
+            2.731,
+            2.584,
+            2.401
           ],
           [
-            1.804,
-            2.208,
-            2.387
+            2.705,
+            2.527,
+            2.282
           ],
           [
-            1.628,
-            1.946,
-            2.042
+            1.836,
+            1.726,
+            1.631
           ],
           [
-            1.278,
-            1.488,
-            1.533
+            1.084,
+            1.023,
+            1.023
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.218,
+            1.088,
+            1.072
           ],
           [
-            1.753,
-            1.8,
-            1.757
+            1.279,
+            1.165,
+            1.172
           ],
           [
-            1.337,
-            1.36,
-            1.404
+            1.117,
+            1.07,
+            1.121
           ],
           [
-            1.06,
-            1.0,
-            1.055
+            1.013,
+            0.956,
+            1.009
           ],
           [
-            1.461,
-            1.417,
-            1.084
+            1.05,
+            0.959,
+            0.976
           ],
           [
-            1.596,
-            1.621,
-            1.5
+            1.453,
+            1.305,
+            1.272
           ],
           [
-            1.503,
-            1.573,
-            1.77
+            1.598,
+            1.456,
+            1.413
           ],
           [
-            1.596,
-            1.645,
-            1.458
+            1.359,
+            1.264,
+            1.255
           ],
           [
-            1.653,
-            1.601,
-            1.206
+            1.188,
+            1.117,
+            1.119
           ],
           [
-            0.908,
+            0.868,
             0.843,
             0.889
           ],
           [
-            0.885,
-            0.807,
-            0.849
+            0.785,
+            0.76,
+            0.812
           ],
           [
-            1.186,
-            1.058,
-            1.05
+            0.976,
+            0.938,
+            0.96
           ],
           [
-            1.48,
-            1.262,
-            1.18
+            1.13,
+            1.054,
+            1.031
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.318,
+            1.162,
+            1.087
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.422,
+            1.256,
+            1.173
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.174,
+            1.043,
+            0.997
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.022,
+            0.893,
+            0.841
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.168,
+            1.013,
+            0.921
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.192,
+            1.052,
+            0.955
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.077,
+            0.969,
+            0.887
           ],
           [
             0.971,
@@ -355,48 +355,8 @@
             0.595
           ],
           [
-            0.876,
-            0.912,
-            0.863
-          ],
-          [
-            0.85,
-            0.863,
-            0.806
-          ],
-          [
-            0.825,
-            0.832,
-            0.766
-          ],
-          [
-            1.8,
-            1.8,
-            1.8
-          ],
-          [
-            1.8,
-            1.8,
-            1.8
-          ],
-          [
-            1.8,
-            1.8,
-            1.8
-          ],
-          [
-            1.8,
-            1.8,
-            1.8
-          ],
-          [
-            0.841,
-            0.777,
-            0.672
-          ],
-          [
             0.55,
-            0.55,
+            0.556,
             0.55
           ],
           [
@@ -406,38 +366,78 @@
           ],
           [
             0.55,
-            0.55,
-            0.55
+            0.555,
+            0.559
           ],
           [
-            0.688,
-            0.654,
-            0.606
+            0.795,
+            0.84,
+            0.843
           ],
           [
-            0.55,
-            0.557,
-            0.552
+            1.161,
+            1.152,
+            1.139
           ],
           [
-            0.55,
+            1.544,
+            1.471,
+            1.429
+          ],
+          [
+            1.464,
+            1.368,
+            1.289
+          ],
+          [
+            1.17,
+            1.081,
+            0.993
+          ],
+          [
+            0.975,
+            0.887,
+            0.794
+          ],
+          [
+            0.989,
+            0.905,
+            0.807
+          ],
+          [
+            1.047,
+            0.993,
+            0.893
+          ],
+          [
+            1.031,
+            1.026,
+            0.951
+          ],
+          [
+            0.67,
+            0.697,
+            0.691
+          ],
+          [
+            0.554,
             0.552,
             0.55
           ],
           [
-            0.897,
-            0.913,
-            0.882
+            0.749,
+            0.729,
+            0.704
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.38,
+            1.257,
+            1.084
           ],
           [
-            1.8,
-            1.8,
-            1.8
+            1.763,
+            1.541,
+            1.24
           ],
           [
             1.0,
@@ -462,63 +462,63 @@
             1.0,
             1.0,
             1.0,
+            1.325,
+            1.1897,
+            1.0543,
+            0.919,
+            0.9145,
+            0.9101,
+            0.9056,
+            0.9126,
+            0.9195,
+            0.9265,
+            0.9182,
+            0.9099,
+            0.9016,
+            0.8037,
+            0.7057,
+            0.6078,
+            0.5976,
+            0.5873,
+            0.5771,
+            0.5864,
+            0.5957,
+            0.605,
+            0.57,
+            0.535,
+            0.5,
+            0.5613,
+            0.6227,
+            0.684,
+            0.8617,
+            1.0394,
+            1.2171,
+            1.201,
+            1.1848,
+            1.1687,
+            1.1525,
+            1.1364,
+            1.1202,
+            1.1041,
+            1.088,
+            1.0718,
+            1.0557,
+            1.0395,
+            1.0234,
+            1.1187,
+            1.2141,
+            1.3094,
+            1.2277,
+            1.146,
+            1.0643,
+            0.9423,
+            0.8204,
+            0.6984,
+            0.6323,
+            0.5661,
+            0.5,
+            1.05,
             1.6,
-            1.4747,
-            1.3493,
-            1.224,
-            1.1493,
-            1.0747,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0,
-            1.0858,
-            1.1717,
-            1.2575,
-            1.236,
-            1.2146,
-            1.1931,
-            1.1717,
-            1.1502,
-            1.1288,
-            1.1073,
-            1.0858,
-            1.0644,
-            1.0429,
-            1.0215,
-            1.0,
-            1.0785,
-            1.157,
-            1.2355,
-            1.357,
-            1.4785,
-            1.6,
-            1.6,
-            1.6,
-            1.6,
-            1.4,
-            1.2,
-            1.0,
-            1.0,
-            1.0,
             1.0
           ]
         }
@@ -1163,7 +1163,7 @@
     }
   },
   "lens": {
-    "note": "the field of view in the dive and in the rise. moves: for each of the two moves, 'distance' or 'pace'. distance: the field of view is a function of the eye's distance from the planet's centre and of nothing else. It is the hold's lens at the distance of the last frame of the hold and beyond, the skim's lens (pose.vfov) at the distance of the first frame of the skim and nearer (the skim itself goes on inward with that lens, so its frames keep their picture), and between the two the tangent of half the field is a power of the distance. ease: the lengths, in the natural logarithm of the distance, over which the exponent of that power rises from nothing at the skim's end of the span and falls to nothing at the hold's end, so the growth of the globe's disc has no step where the law begins and where it ends (without the first the rate of the disc would jump at the first frame of the skim, where the eye is still coming in). The second is short (0.001 is the way of the first two and a half frames of the dive): the eye itself starts slowly out of the hold's drift, so an exponent that stands at its level from the start opens the lens in step with the eye, and the disc's rate rises at every frame up to 3569. A longer one costs the path: while the exponent still rises the lens gains on the eye's own way, which moves the picture at the place the path reader reads downward while the lens draws it to the middle of the screen, and the picture's speed there rises and falls back. Measured: on the level alone 0.004 let it fall by 0.047 of its mean from 3544 to 3551 (limit 0.03; the reader names only the largest fall, so the fall in the middle hid this one); with the swell 0.003 gives about 0.015, 0.008 about 0.06, 0.015 to 0.04 between 0.05 and 0.12. From 0.055 on the fall is gone again because the lens then waits for the eye, but the disc's rate overshoots (0.283 percent a frame at 3555, 0.212 at 3562) and changes by 0.032 a frame at 3544. swell: about the distance at (planet radii) the exponent stands higher by gain of its level, and the swell falls off to nothing over reach of the natural logarithm of the distance on either side as half a cosine (it must lie inside the span, the plan throws if not). Why (MAIL 1508): between 4.58 and 3.75 radii (frames 3568 to 3603) the eye's own way moves the picture on the screen least, because the turn of the dive passes its still point there (at the reader's place with the lens held: 2.9 px a frame at 3573, 0.7 at 3591, 3.9 at 3612). An exponent of one level opened the lens an even 0.13 degrees a frame through it, so the picture's speed at the place fell from 0.949 of its mean at 3575 to 0.726 at 3588 and surged to 1.915 at 3610, in steps of up to 0.085 a frame: four red lines of the path part. With the swell the lens opens up to 0.174 degrees a frame there (frame 3586) and covers what the eye's way leaves out: the speed falls by 0.014 of its mean at most (frame 3580; 0.015 at rate 2), and its largest step is 0.068 (frame 3623, the slowing into the skim, 0.073 before; 0.069 at rate 2; limits 0.03 and 0.08). The price, measured on the path: the disc's growth dips from 0.273 percent a frame at 3569 to 0.104 at 3586 and comes back to 0.281 at 3604, where the level alone gave an even 0.236. It grows at every frame of the dive, and its rate changes by 0.016 a frame at most (frame 3577; the level alone 0.022 at 3543). A smaller dip is not to be had while the eye and the turn stay: for each 0.01 degrees a frame the lens opens faster at 3588 the speed there gains about 0.12 px a frame and the disc's growth loses about 0.03 percent a frame. The eye, the turn and the way of the dive are untouched; the lens differs from the level's by 0.35 degrees at most (frame 3597, the disc 1.0 percent smaller) and by 0.21 at the judged 3567 (the disc 0.65 percent larger). So the disc grows at every frame the eye comes nearer. pace: the field of view goes from the lens of the motion before the move to the lens of the motion after it by the pace of the move's turn (handover view), a function of the time. The rise keeps the pace: its eye crosses the whole span of the law in 34 frames at its largest speed, so there the law would let the disc shrink fast, then slowly, then fast again, where by the pace it shrinks at every frame at a rate that changes evenly.",
+    "note": "the field of view in the dive and in the rise. moves: for each of the two moves, 'even', 'distance' or 'pace'. even (both moves since pose W, MAIL 1535 point 3): the field of view is a function of the eye's distance from the planet's centre and of nothing else, one function for each move. With the lens standing the disc of the globe changes at the rate of the root of the distance squared less one: that is the own rate of the motion before the move at the move's first distance and of the motion after it at its last. Between the two distances the disc's rate goes from the one own rate to the other in one straight ramp over the share of the move and is level before the ramp or after it, and it is never more than the path's own rate at that share; how much the disc changes over the whole move is fixed by the two poses, and that fixes the middle of the ramp; the ramp is as wide as fits about that middle. The lens is what is left: at each distance the field of view that gives the disc the size this rate has brought it to. So the disc never shrinks on the way in and never grows on the way out, the lens never closes on the way in and never opens on the way out, and the largest change of the disc's rate is the slope of the ramp. The law has no number of the look here: it reads the two poses and the reach pace of the move (handover). even.steps: into how many equal shares of the move the disc's rate is summed (a number of the arithmetic, not of the look: at 2048 a doubling moves the lens by less than a millionth of a degree). It asks for a skim that begins near enough: with the lens standing over the whole skim the disc at the skim's first frame must lie over the disc at the hold's last (path.forward and path.side set that). The two older laws are kept as switches; before pose W the dive went by 'distance' and the rise by 'pace'. distance: the field of view is a function of the eye's distance from the planet's centre and of nothing else. It is the hold's lens at the distance of the last frame of the hold and beyond, the skim's lens (pose.vfov) at the distance of the first frame of the skim and nearer (the skim itself goes on inward with that lens, so its frames keep their picture), and between the two the tangent of half the field is a power of the distance. ease: the lengths, in the natural logarithm of the distance, over which the exponent of that power rises from nothing at the skim's end of the span and falls to nothing at the hold's end, so the growth of the globe's disc has no step where the law begins and where it ends (without the first the rate of the disc would jump at the first frame of the skim, where the eye is still coming in). The second is short (0.001 is the way of the first two and a half frames of the dive): the eye itself starts slowly out of the hold's drift, so an exponent that stands at its level from the start opens the lens in step with the eye, and the disc's rate rises at every frame up to 3569. A longer one costs the path: while the exponent still rises the lens gains on the eye's own way, which moves the picture at the place the path reader reads downward while the lens draws it to the middle of the screen, and the picture's speed there rises and falls back. Measured: on the level alone 0.004 let it fall by 0.047 of its mean from 3544 to 3551 (limit 0.03; the reader names only the largest fall, so the fall in the middle hid this one); with the swell 0.003 gives about 0.015, 0.008 about 0.06, 0.015 to 0.04 between 0.05 and 0.12. From 0.055 on the fall is gone again because the lens then waits for the eye, but the disc's rate overshoots (0.283 percent a frame at 3555, 0.212 at 3562) and changes by 0.032 a frame at 3544. swell: about the distance at (planet radii) the exponent stands higher by gain of its level, and the swell falls off to nothing over reach of the natural logarithm of the distance on either side as half a cosine (it must lie inside the span, the plan throws if not). Why (MAIL 1508): between 4.58 and 3.75 radii (frames 3568 to 3603) the eye's own way moves the picture on the screen least, because the turn of the dive passes its still point there (at the reader's place with the lens held: 2.9 px a frame at 3573, 0.7 at 3591, 3.9 at 3612). An exponent of one level opened the lens an even 0.13 degrees a frame through it, so the picture's speed at the place fell from 0.949 of its mean at 3575 to 0.726 at 3588 and surged to 1.915 at 3610, in steps of up to 0.085 a frame: four red lines of the path part. With the swell the lens opens up to 0.174 degrees a frame there (frame 3586) and covers what the eye's way leaves out: the speed falls by 0.014 of its mean at most (frame 3580; 0.015 at rate 2), and its largest step is 0.068 (frame 3623, the slowing into the skim, 0.073 before; 0.069 at rate 2; limits 0.03 and 0.08). The price, measured on the path: the disc's growth dips from 0.273 percent a frame at 3569 to 0.104 at 3586 and comes back to 0.281 at 3604, where the level alone gave an even 0.236. It grows at every frame of the dive, and its rate changes by 0.016 a frame at most (frame 3577; the level alone 0.022 at 3543). A smaller dip is not to be had while the eye and the turn stay: for each 0.01 degrees a frame the lens opens faster at 3588 the speed there gains about 0.12 px a frame and the disc's growth loses about 0.03 percent a frame. The eye, the turn and the way of the dive are untouched; the lens differs from the level's by 0.35 degrees at most (frame 3597, the disc 1.0 percent smaller) and by 0.21 at the judged 3567 (the disc 0.65 percent larger). So the disc grows at every frame the eye comes nearer. pace: the field of view goes from the lens of the motion before the move to the lens of the motion after it by the pace of the move's turn (handover view), a function of the time. Before pose W the rise kept the pace: its eye crosses the whole span of the law in 34 frames at its largest speed, so there the law would let the disc shrink fast, then slowly, then fast again, where by the pace it shrinks at every frame at a rate that changes evenly.",
     "ease": [
       0.045,
       0.001
@@ -1174,8 +1174,11 @@
       "gain": 0.55
     },
     "moves": {
-      "dive": "distance",
-      "rise": "pace"
+      "dive": "even",
+      "rise": "even"
+    },
+    "even": {
+      "steps": 2048
     },
     "out": 30,
     "outNote": "the lens at the end of the rise, which the flight out takes over and keeps: the lens of the flights between the stops and of the next hold. The hold of this stop stands on the lens of the fit (fit.json, vfovDeg), wider than this; the rise goes from the skim's lens to this one by its pace, so the flight out begins on the lens it ends on and a Sun that passes its frame is met by the same half frame as in every other flight"
@@ -1186,50 +1189,50 @@
       "at": 0.55,
       "reach": {
         "peak": [
-          0.391,
-          0.808
+          0.36,
+          0.727
         ],
         "round": [
-          0.057,
-          0.365,
-          0.06,
-          0.062
+          0.03,
+          0.268,
+          0.094,
+          0.031
         ]
       },
       "climb": {
         "peak": [
-          0.721,
-          0.737
+          0.685,
+          0.704
         ],
         "round": [
-          0.03,
-          0.266,
-          0.393,
-          0.286
+          0.033,
+          0.306,
+          0.38,
+          0.337
         ]
       },
       "round": {
         "peak": [
-          0.61,
-          0.809
+          0.566,
+          0.704
         ],
         "round": [
-          0.239,
-          0.375,
-          0.088,
-          0.04
+          0.124,
+          0.325,
+          0.116,
+          0.099
         ]
       },
       "view": {
         "peak": [
-          0.507,
-          0.509
+          0.464,
+          0.468
         ],
         "round": [
-          0.159,
-          0.142,
-          0.075,
-          0.106
+          0.04,
+          0.112,
+          0.064,
+          0.201
         ]
       }
     },
@@ -1271,50 +1274,50 @@
       "carry": 2.2,
       "reach": {
         "peak": [
-          0.438,
-          0.605
+          0.634,
+          0.634
         ],
         "round": [
-          0.391,
           0.375,
-          0.232,
-          0
+          0.4,
+          0.363,
+          0.002
         ]
       },
       "climb": {
         "peak": [
-          0.331,
-          0.331
+          0.341,
+          0.344
         ],
         "round": [
-          0.343,
-          0.362,
-          0.076,
-          0.397
+          0.378,
+          0.366,
+          0.105,
+          0.085
         ]
       },
       "round": {
         "peak": [
-          0.4,
-          0.405
+          0.443,
+          0.543
         ],
         "round": [
-          0.237,
-          0.183,
-          0.131,
-          0.4
+          0.33,
+          0.039,
+          0.24,
+          0.194
         ]
       },
       "view": {
         "peak": [
-          0.421,
-          0.423
+          0.494,
+          0.505
         ],
         "round": [
-          0.03,
-          0.039,
-          0.105,
-          0.255
+          0.006,
+          0.043,
+          0.017,
+          0.014
         ]
       }
     },
