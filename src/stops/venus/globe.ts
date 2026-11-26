@@ -533,9 +533,11 @@ ${PLACE_GLSL}
       // How far the camera sees a ground point as the camera at T does (same): by the angle between the two lines of sight, and by the air
       // on the line of sight, which goes with one over the sine of the camera's elevation above the ground point. The pale haze over the far
       // deck of the close view belongs to the low line of sight of T; a camera that stands steeper over that deck sees less air there.
+      // The ratio of the sines is eased at both ends (thin): the share leaves 1 at no rate, as the surface view below T holds its tones.
       vec3 toEye = normalize(spinY(uCamObj, uSpin) - dp);
       vec3 toT = normalize(uToneEye - dp);
-      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * uToneLook.y * pow(clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0), uToneLook.x);
+      float thin = clamp(dot(toT, dp) / max(dot(toEye, dp), 1e-4), 0.0, 1.0);
+      float same = pow(clamp((dot(toEye, toT) - uToneLook.z) / (uToneLook.w - uToneLook.z), 0.0, 1.0), uTonePower) * uToneLook.y * pow(thin * thin * (3.0 - 2.0 * thin), uToneLook.x);
       vec3 seen = light * uPlaceDusk.xyz;
       for (int t = 0; t < (same < 1.0 ? 1 : 0); t++) {
         // From above the plates give the forms alone, over the globe's own colour (under): their light over their own light at the
