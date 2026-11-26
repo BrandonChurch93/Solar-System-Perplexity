@@ -1,9 +1,41 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T17:40:54.426Z",
- "head": "c9766f990a881dbfcb3e4ec184d21092bea5ae85",
- "note": "S1 control: 2997 at master, draft beside final: the globe is crisp with one sample and smeared by the open shutter (14 px kept at the fastest place)",
+ "pushed": "2026-11-26T18:04:34.827Z",
+ "head": "594567e7c85b2f0de0830952ad96b2318fcb1c87",
+ "note": "M4: the hold sky lossless (594567e7 on main 2f5b2eb3): 2895 final beside main's, the dark sky at 4 times size and 10 times exposure",
  "looks": [
+  {
+   "time": "2026-11-26T18:04:33.962Z",
+   "file": "20261126180433962-note-diff-2895-x40-half.jpg",
+   "source": "../work/r28/t/diff-2895-x40-half.png",
+   "kind": "note",
+   "label": "M4, 2895 final master: the change between the two times 40, half size: no pixel of the body changes, the sky changes by the lossy file's error (mean 0.33 of 255, largest 10)",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:04:33.120Z",
+   "file": "20261126180433120-note-pair-2895-small.jpg",
+   "source": "../work/r28/t/pair-2895-small.jpg",
+   "kind": "note",
+   "label": "M4, 2895 final master at half size: left main 2f5b2eb3, right the same tree with the lossless plate; plain match against the approved 3.919 and 3.862",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:04:32.275Z",
+   "file": "20261126180432275-note-dark1-old-new-x4-exp10.jpg",
+   "source": "../work/r28/t/dark1-old-new-x4-exp10.png",
+   "kind": "note",
+   "label": "M4, the same pair left of the planet (box x 0 y 540): the fine colour speckle of the lossy file is gone; the larger purple and green patches are the approved picture's own blocks (16 px of the hero, 10.9 film px) and stay",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T18:04:31.399Z",
+   "file": "20261126180431399-note-dark0-old-new-x4-exp10.jpg",
+   "source": "../work/r28/t/dark0-old-new-x4-exp10.png",
+   "kind": "note",
+   "label": "M4, 2895 final master without grain, lower left corner (box x 0 y 870, 240 x 150 px) at 4 times size and 10 times exposure: left main's lossy plate, right the lossless plate of 594567e7; the straight edged colour squares of about 5 px are gone, soft colour patches of the approved picture's own sky stay",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T17:40:53.187Z",
    "file": "20261126174053187-note-s1-2997-small.jpg",
@@ -162,38 +194,6 @@
    "source": "../work/r27/sh/c-3265.png",
    "kind": "note",
    "label": "3265 preview draft with the cure, whole frame",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:51:19.679Z",
-   "file": "20261126165119679-note-pair-3260.jpg",
-   "source": "../work/r27/t/pair-3260.jpg",
-   "kind": "note",
-   "label": "3260 preview draft whole frame: above 14af1ae7, below the cure",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:51:19.067Z",
-   "file": "20261126165119067-note-sh-c-3015.jpg",
-   "source": "../work/r27/t/sh-c-3015.jpg",
-   "kind": "note",
-   "label": "3015 enlarged, preview draft: left 14af1ae7 with the dotted rows of dark specks, right the cure",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:51:18.460Z",
-   "file": "20261126165118460-note-sh-c-3265.jpg",
-   "source": "../work/r27/t/sh-c-3265.jpg",
-   "kind": "note",
-   "label": "3265 enlarged, preview draft: left 14af1ae7 with the dashes, right the cure; the storm reads softer and its thin rings are gone",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T16:51:17.868Z",
-   "file": "20261126165117868-note-sh-c-3275.jpg",
-   "source": "../work/r27/t/sh-c-3275.jpg",
-   "kind": "note",
-   "label": "3275 enlarged, preview draft: left 14af1ae7 with the dashes, right the cure",
    "stop": "jupiter"
   }
  ]
