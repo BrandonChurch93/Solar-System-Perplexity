@@ -1,64 +1,64 @@
 {
  "folder": "engine-handover",
- "pushed": "2026-11-26T16:31:43.828Z",
+ "pushed": "2026-11-26T16:44:54.224Z",
  "head": "bdefa47220f67fe7607db0f4d04a21d41a8f76e7",
- "note": "Neptune with the entry of the shutter's ends: the wisp and the limb of the dive's split frame beside the frame before it; the rise's split frame 4956 renders (80 s a sample here)",
+ "note": "Neptune 4956, the rise's split frame at review tier with the entry on: whole, six tiles at 1 to 1, four zooms at 3 to 1; drafts of 4955 and 4957 next to tell the small clouds' lower lobe",
  "looks": [
   {
-   "time": "2026-11-26T16:31:42.670Z",
-   "file": "20261126163142670-note-p57-58-limb.jpg",
-   "source": "../../../../tmp/nep/see/p57-58-limb.png",
+   "time": "2026-11-26T16:44:48.257Z",
+   "file": "20261126164448257-note-z4956-band.jpg",
+   "source": "../../../../tmp/nep/see/z4956-band.png",
    "kind": "note",
-   "label": "The limb at 4 to 1 in 4757 and 4758 (review, with the entry), two places: one limb line in the split frame, the same bands of the haze"
+   "label": "4956 review, split frame of the rise, band at 3 to 1"
   },
   {
-   "time": "2026-11-26T16:31:41.554Z",
-   "file": "20261126163141554-note-z57-58-wisp.jpg",
-   "source": "../../../../tmp/nep/see/z57-58-wisp.png",
+   "time": "2026-11-26T16:44:47.673Z",
+   "file": "20261126164447673-note-z4956-wispsBR.jpg",
+   "source": "../../../../tmp/nep/see/z4956-wispsBR.png",
    "kind": "note",
-   "label": "The thin wisp at 12 to 1: 4757 (orbit alone) above, 4758 (split frame) below, review tier with the entry: the same check pattern from pixel to pixel in both, so it is the orbit view's own"
+   "label": "4956 review, split frame of the rise, wispsBR at 3 to 1"
   },
   {
-   "time": "2026-11-26T16:07:01.023Z",
-   "file": "20261126160701023-note-p57-58-b.jpg",
-   "source": "../../../../tmp/nep/see/p57-58-b.png",
+   "time": "2026-11-26T16:44:46.960Z",
+   "file": "20261126164446960-note-z4956-smallcl.jpg",
+   "source": "../../../../tmp/nep/see/z4956-smallcl.png",
    "kind": "note",
-   "label": "4757 beside 4758, review, x 1380..1620 y 760..960 at 2 to 1: no second copy of any edge in the split frame"
+   "label": "4956 review, split frame of the rise, smallcl at 3 to 1"
   },
   {
-   "time": "2026-11-26T16:07:00.074Z",
-   "file": "20261126160700074-note-p57-58-a.jpg",
-   "source": "../../../../tmp/nep/see/p57-58-a.png",
+   "time": "2026-11-26T16:44:46.299Z",
+   "file": "20261126164446299-note-z4956-deckR.jpg",
+   "source": "../../../../tmp/nep/see/z4956-deckR.png",
    "kind": "note",
-   "label": "4757 (orbit alone) beside 4758 (split frame, both views by turns), review, x 60..300 y 170..370 at 2 to 1: same shapes, blur and texture; the thin wisp with the check pattern is in both"
+   "label": "4956 review, split frame of the rise, deckR at 3 to 1"
   },
   {
-   "time": "2026-11-26T16:06:58.740Z",
-   "file": "20261126160658740-note-f04757.jpg",
-   "source": "../t-arr/out/work/blur/ne-on/f04757.png",
+   "time": "2026-11-26T16:44:45.720Z",
+   "file": "20261126164445720-note-s4956-12.jpg",
+   "source": "../../../../tmp/nep/see/s4956-12.png",
    "kind": "note",
-   "label": "Neptune 4757, the frame before the dive's split frame, review tier (24 samples, orbit alone, ends 0.5), with the entry: whole frame"
+   "label": "4956 review, split frame of the rise, tile 12 at 1 to 1"
   },
   {
-   "time": "2026-11-26T15:51:11.273Z",
-   "file": "20261126155111273-note-z4758-e.jpg",
-   "source": "../../../../tmp/nep/see/z4758-e.png",
+   "time": "2026-11-26T16:44:45.033Z",
+   "file": "20261126164445033-note-s4956-11.jpg",
+   "source": "../../../../tmp/nep/see/s4956-11.png",
    "kind": "note",
-   "label": "4758 review with the entry, x 156..216 y 232..268 at 12 to 1: a thin wisp whose luma alternates from pixel to pixel by about 8 of 255 (the two views drawn by turns differ there)"
+   "label": "4956 review, split frame of the rise, tile 11 at 1 to 1"
   },
   {
-   "time": "2026-11-26T15:51:10.010Z",
-   "file": "20261126155110010-note-s4758-12.jpg",
-   "source": "../../../../tmp/nep/see/s4758-12.png",
+   "time": "2026-11-26T16:44:44.435Z",
+   "file": "20261126164444435-note-s4956-10.jpg",
+   "source": "../../../../tmp/nep/see/s4956-10.png",
    "kind": "note",
-   "label": "4758 review with the entry, x 1280..1920 y 540..1080 at 1 to 1"
+   "label": "4956 review, split frame of the rise, tile 10 at 1 to 1"
   },
   {
-   "time": "2026-11-26T15:51:08.861Z",
-   "file": "20261126155108861-note-s4758-00.jpg",
-   "source": "../../../../tmp/nep/see/s4758-00.png",
+   "time": "2026-11-26T16:44:43.847Z",
+   "file": "20261126164443847-note-s4956-02.jpg",
+   "source": "../../../../tmp/nep/see/s4956-02.png",
    "kind": "note",
-   "label": "4758 review with the entry, x 0..640 y 0..540 at 1 to 1: limb and stars drawn once, the cirrus smeared along the motion"
+   "label": "4956 review, split frame of the rise, tile 02 at 1 to 1"
   }
  ]
 }
