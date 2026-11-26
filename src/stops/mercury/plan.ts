@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { config, type Segment } from '../../config'
 import type { SkyShares } from '../../director/handover'
-import { mix, ramp, slerpDir } from '../../director/rig'
+import { drift, mix, ramp, slerpDir, smooth } from '../../director/rig'
 import type { Pose, ViewKind } from '../../core/types'
 import { StopPlan, type Fit, type MoveParams } from '../../director/moves'
 import { anchor, closeAhead, closeRadius, closeUp, type Anchor } from './close'
@@ -134,6 +134,15 @@ export class Plan extends StopPlan {
       up += (k.a[1] + Math.sin(k.ta) * straight + k.arc * q[1] + Math.sin(k.te) * past - up) * w
     }
     return { position: closeAhead.clone().multiplyScalar(along + x.forward * b).addScaledVector(closeUp, up + x.height * b), quaternion: new THREE.Quaternion(), vfov: this.p.terrain.vfov }
+  }
+
+  override hold(tRel: number): Pose {
+    const pose = super.hold(tRel)
+    const half = (this.seg.hold.end - this.seg.hold.start) / 2
+    const w = smooth(1 - Math.abs(tRel / half - 1))
+    if (w <= 0) return pose
+    const q = pose.quaternion
+    return { ...pose, position: pose.position.clone().applyQuaternion(q.clone().multiply(new THREE.Quaternion().slerp(drift(this.holdMid), w)).multiply(q.clone().invert())) }
   }
 
   low(time: number): Pose {
