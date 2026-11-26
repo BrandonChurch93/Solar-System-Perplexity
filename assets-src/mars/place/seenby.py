@@ -7,8 +7,6 @@ channel over the layers' boxes taken together (left to right, top to bottom as t
 a texel. Where two layers stand at one place of the picture the value is 255 x nearest / (front x (1 + spare)), front the distance
 of the nearest of them from the picture's eye (the layers' own distance files) and nearest the value of --nearest; where one layer
 or none stands it is 0. A ground point of the relief at distance d is seen when d x value / 255 / nearest is at or under 1.
-With law.seen.carry the value of the nearest such place is carried on so many texels beyond the outline (the outline itself is
-then the blue of relief-masks.png, outline.py).
 The lower half of the file (the same field again, under the first) is how far the cap stands from the picture's ground along the
 picture's own ray: e = (c - front) / front, c the distance from the picture's eye at which that ray meets the cap (the height plates
 of the cap, country.json and the full set's bins, marched from the eye), front as above for every place where a layer stands. Stored
@@ -64,13 +62,6 @@ value = np.where(two, 255 * K['nearest'] / (front * (1 + K['spare'])), 0)
 if value.max() > 255:
     raise SystemExit('nearest %.3f is over the nearest front %.3f' % (K['nearest'], float(front[two].min())))
 out = np.clip(np.round(value), 0, 255).astype(np.uint8)
-# the front's value carried on beyond its outline (law.seen.carry texels): the outline of hidden ground is a value of its own, the
-# blue of the relief's masks at 2 pixels a texel (outline.py), and this file's own outline, at 8, stands clear of it
-if K.get('carry', 0) > 0:
-    from scipy import ndimage
-    away, at = ndimage.distance_transform_edt(out == 0, return_indices=True)
-    out = np.where((out > 0) | (away <= K['carry']), out[at[0], at[1]], 0).astype(np.uint8)
-    print('carried on %d texels beyond the outline: %d texels' % (K['carry'], int(((away <= K['carry']) & ~two).sum())))
 
 # the lower half: the cap along the picture's own rays
 GAP = LAW['gap']

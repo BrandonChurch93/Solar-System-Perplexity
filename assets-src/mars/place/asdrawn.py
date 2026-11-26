@@ -11,9 +11,7 @@ measure: three draws of the same reader frames (out/work/place/mystillsk.ts, dra
   in scene values of the frames (inverse of the film curve):  lit / own = 1 - (1 - gain) * LP(A - B) / LP(A - C).  The weight of the plate, the
   air and the film curve drop out. LP is a Gaussian of `mapTexels` texels of patch-19 on the ground, so that nothing finer than the map is taken
   and the finer ground of the plates stays.
-apply: every land plate is multiplied in scene values with the field at its ground, read from the grid of the measure, where it does
-  not keep its own picture (inside keepDeg to fullDeg of the spot, and on the made canyon with its sides: block canyon).
-maps: where a plate keeps its own picture the lit levels above the land are divided by the field: the map takes the plate's picture.
+apply: every land plate is multiplied in scene values with the field at its ground, read from the grid of the measure.
 
 Values: block `asdrawn` of plates.json.
 """
@@ -96,20 +94,8 @@ def measure(args):
             share = low.mean(axis=2) / np.maximum((1 - v['gain']) * soft(a, s).mean(axis=2), 1e-6)
             ratio = 1 - (1 - v['gain']) * top / np.maximum(low, 1e-6)
             ok = (share > v['least']) & (low.min(axis=2) > 1e-5)
-            if v.get('leastLevels'):
-                # dark ground under the air (the canyon's shade and its rim): the two draws differ there by a grey level or less in a
-                # channel and the ratio of that channel is the frame's rounding, which stood as a hue along the canyon. A channel counts
-                # alone when it differs by leastLevels levels; where one does not, the cell takes one factor for the three channels
-                # together (no hue), and where the three together do not differ by leastLevels the cell is not measured
-                a8, c8 = (cv2.cvtColor(cv2.imread(os.path.join(d, 'k%d.png' % k)), cv2.COLOR_BGR2RGB).astype(np.float32) for d in (args.a, args.c))
-                lev = soft(a8 - c8, s)
-                weak = lev.min(axis=2) < v['leastLevels']
-                grey = 1 - (1 - v['gain']) * top.mean(axis=2) / np.maximum(low.mean(axis=2), 1e-6)
-                ratio[weak] = grey[weak][:, None]
-                ok &= lev.sum(axis=2) >= v['leastLevels']
             ok = cv2.erode(ok.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
-            # since the set draws its own ground times that factor itself (set.ts sunAt, near.json sun), nothing is taken out: sun.drawn
-            sun = 0.0 if v['sun'].get('drawn') else np.log(lit(v['sun']['cos'][str(k)]) / lit(v['sun']['refCos']))
+            sun = np.log(lit(v['sun']['cos'][str(k)]) / lit(v['sun']['refCos']))
             lg = (np.log(np.clip(ratio, v['bounds'][0], v['bounds'][1])) - sun) * ok[..., None]
             wt = (np.clip(share, 0, 1) ** 2 * ok / px_km ** 2).astype(np.float32)
             # the ground of every frame pixel from the frame's own depth picture (diag range), so that the relief of the cap is in the place
@@ -151,14 +137,10 @@ def measure(args):
     # lit levels near the ground (look.ts descent.tint), printed here to be set there; the plates take what is left
     c = (np.arange(n, dtype=np.float64) + 0.5) / n
     x = np.degrees(np.arctan((2 * c - 1) * geom.half_tan(width)))
-    if v['matchDeg'] is None:
-        # nothing goes to a tint (MAIL 1383: no second tint): the field keeps its common part
-        match = np.zeros(3)
-    else:
-        near = any_ & (np.hypot(x[None, :], x[:, None]) < v['matchDeg'])
-        match = field[near].mean(axis=0)
-        field = field - match
-        print('common part within %.2f degrees: plate to map factor %s (log %s); the lit levels take 1 over it: tint times %s' % (v['matchDeg'], np.round(np.exp(match), 4), np.round(match, 4), np.round(np.exp(-match), 4)))
+    near = any_ & (np.hypot(x[None, :], x[:, None]) < v['matchDeg'])
+    match = field[near].mean(axis=0)
+    field = field - match
+    print('common part within %.2f degrees: plate to map factor %s (log %s); the lit levels take 1 over it: tint times %s' % (v['matchDeg'], np.round(np.exp(match), 4), np.round(match, 4), np.round(np.exp(-match), 4)))
     # ground no camera measures: the field of the measured ground carried outward, ever wider
     fill = field * any_[..., None]
     wsum = any_.astype(np.float32)
@@ -194,42 +176,9 @@ def field_at(field, width, plate_width, size):
     return cv2.remap(field, mx.astype(np.float32), my.astype(np.float32), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
 
 
-def canyon(v):
-    """The made canyon on the ground of land-8p5, 1 on it and 0 off it: ground lower than the middle of under.depthKm under the plateau
-    round it (as landunder.py), narrower than canyon.wideDeg (the main trough is wider: it is the globe's own and stays the map's), the
-    part joined to the place, widened by canyon.besideDeg and soft over canyon.softDeg. Read from the heights of the full set for both
-    sets. Returns the mask and the width of its ground in degrees."""
-    k = v['canyon']
-    with open(geom.PLATES) as f:
-        under = json.load(f)['under']
-    with open('src/stops/mars/country.json') as f:
-        c = json.load(f)['levels'][0]
-    size = c['size']['full']
-    hgt = np.fromfile(os.path.join('public/assets/mars/full', c['height']), np.uint16).reshape(size, size).astype(np.float32)
-    hgt = (c['low'] + hgt / 65535 * (c['high'] - c['low'])) * RADIUS_KM
-    cell = size / (2 * geom.half_tan(c['widthDeg']))
-
-    def disc(deg):
-        r = max(1, int(round(np.tan(np.radians(deg)) * cell)))
-        return cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1))
-    q = max(3, int(round(np.tan(np.radians(under['plateauDeg'])) * cell)) | 1)
-    plateau = cv2.GaussianBlur(cv2.dilate(hgt, np.ones((q, q), np.uint8)), (0, 0), q / 2)
-    deep = (plateau - hgt > 0.5 * (under['depthKm'][0] + under['depthKm'][1])).astype(np.uint8)
-    wide = cv2.dilate(cv2.erode(deep, disc(k['wideDeg'] / 2)), disc(k['wideDeg'] / 2 + k['softDeg']))
-    narrow = deep & (1 - wide)
-    _, lab = cv2.connectedComponents(narrow, connectivity=8)
-    ys, xs = np.nonzero(narrow)
-    i = int(np.argmin(np.hypot(xs - size / 2, ys - size / 2)))
-    own = (lab == lab[ys[i], xs[i]]).astype(np.uint8)
-    m = cv2.GaussianBlur(cv2.dilate(own, disc(k['besideDeg'])).astype(np.float32), (0, 0), float(np.tan(np.radians(k['softDeg'])) * cell))
-    print('the made canyon: %d of %d cells of the heights, %.4f of the ground with its sides' % (int(own.sum()), size * size, float(m.mean())))
-    return np.clip(m, 0, 1), c['widthDeg']
-
-
 def apply(args):
     v = values()
     wd = widths()
-    mask, mask_width = canyon(v) if v.get('canyon') else (None, None)
     z = np.load(args.field)
     field = z['field'].astype(np.float32) * v['share']
     if v['broad']:
@@ -251,10 +200,7 @@ def apply(args):
             c = (np.arange(size, dtype=np.float32) + 0.5) / size
             x = np.degrees(np.arctan((2 * c - 1) * geom.half_tan(wd[name])))
             dist = np.hypot(x[None, :], x[:, None])
-            keep = 1 - geom.smoothstep(v['keepDeg'], v['fullDeg'], dist)
-            if mask is not None:
-                keep = np.maximum(keep, np.clip(field_at(mask, mask_width, wd[name], size), 0, 1))
-            lf = lf * (1 - keep)[..., None]
+            lf = lf * geom.smoothstep(v['keepDeg'], v['fullDeg'], dist)[..., None]
         if float(np.abs(lf).max()) < 1e-6:
             shutil.copyfile(os.path.join(args.dir, name), os.path.join(args.out, name))
             print('%s: the field is 1 on all of it, the file is kept' % name)
@@ -265,61 +211,9 @@ def apply(args):
         print('%s: %d px, field mean %.3f, least %.3f, most %.3f, bytes %d to %d' % (name, size, g.mean(), g.min(), g.max(), os.path.getsize(os.path.join(args.dir, name)), os.path.getsize(os.path.join(args.out, name))))
 
 
-LIT = ['patch-19.jpg', 'patch-42.jpg', 'patch-wide.jpg']
-
-
-def maps(args):
-    """The other half of apply (MAIL 1425, MAIL 1056): where a plate keeps its own picture (inside keepDeg and by the same weight out
-    to fullDeg, and on the made canyon with its sides) the lit levels above the land take the plate's picture as drawn: the map is
-    divided by the field there, in scene values, by the weight the plate keeps. Plate and map then draw one ground at every scale
-    the field resolves, inside as outside. A level coarser than the field's cell takes field and weight filtered to its own texel.
-    Texels the weight does not reach keep their bytes before the file is written again."""
-    v = values()
-    wd = widths()
-    field = np.load(args.field)['field'].astype(np.float32) * v['share']
-    n = field.shape[0]
-    mask, mask_width = canyon(v) if v.get('canyon') else (None, None)
-    os.makedirs(args.out, exist_ok=True)
-    for name in LIT:
-        f = Image.open(os.path.join(args.dir, name))
-        q, sub = dict(f.quantization), JpegImagePlugin.get_sampling(f)
-        src = np.asarray(f.convert('RGB'))
-        size = src.shape[0]
-        per = size / (2 * geom.half_tan(wd[name]))
-        half = (int(np.floor(geom.half_tan(v['widthDeg']) * per)) - 1) if mask is not None else (int(np.ceil(np.tan(np.radians(v['fullDeg'])) * per)) + 2)
-        lo, hi = size // 2 - half, size // 2 + half
-        c = (np.arange(lo, hi, dtype=np.float32) + 0.5 - size / 2) / per
-        dist = np.degrees(np.arctan(np.hypot(c[None, :], c[:, None])))
-        texel_cells = (1 / per) / (2 * geom.half_tan(v['widthDeg']) / n)
-        fl = cv2.GaussianBlur(field, (0, 0), 0.5 * texel_cells, borderType=cv2.BORDER_REPLICATE) if texel_cells > 1 else field
-        u = (0.5 + c / (2 * geom.half_tan(v['widthDeg']))) * n - 0.5
-        mx, my = np.meshgrid(u, u)
-        lf = cv2.remap(fl, mx.astype(np.float32), my.astype(np.float32), cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
-        keep = 1 - geom.smoothstep(v['keepDeg'], v['fullDeg'], dist)
-        if mask is not None:
-            cells = (1 / per) / (2 * geom.half_tan(mask_width) / mask.shape[0])
-            ml = cv2.GaussianBlur(mask, (0, 0), 0.5 * cells, borderType=cv2.BORDER_REPLICATE) if cells > 1 else mask
-            um = (0.5 + c / (2 * geom.half_tan(mask_width))) * mask.shape[0] - 0.5
-            ax, ay = np.meshgrid(um, um)
-            keep = np.maximum(keep, np.clip(cv2.remap(ml, ax.astype(np.float32), ay.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=0), 0, 1))
-        lf = -lf * keep[..., None]
-        t = src[lo:hi, lo:hi].astype(np.float32) / 255.0
-        out = np.clip(geom.texel_of(geom.scene_of(t) * np.exp(lf)) * 255 + 0.5, 0, 255).astype(np.uint8)
-        out[keep < 1e-4] = src[lo:hi, lo:hi][keep < 1e-4]
-        o8 = src.copy()
-        o8[lo:hi, lo:hi] = out
-        Image.fromarray(o8).save(os.path.join(args.out, name), 'JPEG', qtables=q, subsampling=sub, optimize=True)
-        g = np.exp(lf)
-        inside = keep > 0.5
-        lum = out.astype(np.float32) @ np.array([0.2126, 0.7152, 0.0722], np.float32)
-        print('%s: %d of %d px across, texel %.2f cells of the field, factor mean %.3f, least %.3f, most %.3f; on the ground the plate keeps: luminance %.0f to %.0f, texels with a channel at 255: %d; bytes %d to %d' % (
-            name, hi - lo, size, texel_cells, g[inside].mean(), g.min(), g.max(), lum[inside].min(), lum[inside].max(), int((out.max(2) >= 255)[inside].sum()),
-            os.path.getsize(os.path.join(args.dir, name)), os.path.getsize(os.path.join(args.out, name))))
-
-
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('step', choices=['dim', 'measure', 'apply', 'maps'])
+    p.add_argument('step', choices=['dim', 'measure', 'apply'])
     p.add_argument('--dir')
     p.add_argument('--out')
     p.add_argument('--poses')
@@ -328,7 +222,7 @@ def main():
     p.add_argument('--c')
     p.add_argument('--field')
     args = p.parse_args()
-    {'dim': dim, 'measure': measure, 'apply': apply, 'maps': maps}[args.step](args)
+    {'dim': dim, 'measure': measure, 'apply': apply}[args.step](args)
 
 
 if __name__ == '__main__':

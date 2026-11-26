@@ -4,6 +4,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../../post/chain'
 import { EQUIRECT_GLSL } from '../../../space/sky'
 import { DUST_AIR_GLSL, DUST_SHADE_GLSL, LAT_TONE_GLSL, latToneUniforms } from '../grade'
+import { lensRay } from '../ray'
 import { RING_PROFILE_GLSL } from './profile'
 import skimJson from '../skim.json'
 
@@ -107,15 +108,13 @@ uniform vec4 uPatchBox;
 uniform vec2 uPatchSize;
 uniform float uVignette;
 uniform float uAspect;
-uniform sampler2D uHoldLight;
-uniform mat4 uHoldM;
-uniform vec3 uHoldCam;
-uniform float uHoldW;
+uniform sampler2D uBodyLight;
 uniform sampler2D uSkimLight;
 uniform mat4 uSkimM;
 uniform vec3 uSkimCam;
 uniform float uSkimW;
 uniform float uEdgePx;
+uniform mat3 uRay;
 uniform float uEdgeLin;
 in vec3 vLocal;
 in vec3 vView;
@@ -130,6 +129,13 @@ ${LIMB_GLSL}
 ${DUST_SHADE_GLSL}
 ${DUST_AIR_GLSL}
 ${LAT_TONE_GLSL}
+// the hold's light as a property of the body (globe-light.json): by latitude and by longitude from the Sun, the
+// same at every pose of the lens
+vec3 bodyLight(vec3 p) {
+  float u = (atan(p.z, p.x) - atan(uLightL.z, uLightL.x)) / 6.283185307 + 0.5;
+  float v = asin(clamp(p.y, -1.0, 1.0)) / 3.141592654 + 0.5;
+  return texture(uBodyLight, vec2(u, v)).rgb;
+}
 vec3 shotLight(sampler2D tex, mat4 m, vec3 cam, float w, vec3 P, vec3 n) {
   vec4 c = m * vec4(P, 1.0);
   vec2 uv = c.xy / max(c.w, 1e-4) * vec2(0.5, -0.5) + 0.5;
@@ -159,10 +165,16 @@ vec3 tableAt(sampler2D uTable, float ndl, float lat) {
   return mix(mix(texelFetch(uTable, i, 0).rgb, texelFetch(uTable, i + ivec2(1, 0), 0).rgb, f.x), mix(texelFetch(uTable, i + ivec2(0, 1), 0).rgb, texelFetch(uTable, i + ivec2(1, 1), 0).rgb, f.x), f.y);
 }
 void main() {
-  vec3 dirS = normalize(vLocal - uCam);
+  // the ray of this pixel comes from the lens alone (uRay, ray.ts), not from the triangle that covers the pixel:
+  // its change from pixel to pixel is then the same on every triangle, and the soft edge at the end, which is
+  // built on that change, no longer shows the slivers of the mesh at the poles and at the outline
+  vec3 dirS = normalize(uRay * vec3(gl_FragCoord.xy, 1.0));
   float along = -dot(uCam, dirS);
   float rt = sqrt(max(dot(uCam, uCam) - along * along, 0.0));
-  vec3 p = normalize(uLimbW > 0.0 ? uCam + dirS * (along - sqrt(max(1.0 - rt * rt, 0.0))) : vLocal);
+  // the surface point is where the ray meets the globe itself. The mesh only says which pixels are shaded: it is
+  // a little larger than the globe at every frame (uInflate, look limbInflate), so its outline never lies on
+  // the globe's outline, and outside the globe's outline nothing of it is drawn (the discard at the end)
+  vec3 p = normalize(uCam + dirS * (along - sqrt(max(1.0 - rt * rt, 0.0))));
   vec3 nL = normalize(vec3(p.x, p.y / uPolar, p.z));
   vec3 dirL = normalize(vec3(dirS.x, dirS.y * uPolar, dirS.z));
   float mu = clamp(dot(nL, -dirL), 0.0, 1.0);
@@ -232,7 +244,7 @@ void main() {
     col = col * through + uDustInk * ((1.0 - through) * dustAir(p, normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z))));
   }
   col *= mix(1.0, smoothstep(-0.03, 0.0, p.y), uClose);
-  for (int k = 0; k < (uHoldW > 0.0 ? 1 : 0); k++) col *= shotLight(uHoldLight, uHoldM, uHoldCam, uHoldW, P, nL);
+  col *= bodyLight(p);
   for (int k = 0; k < (uSkimW > 0.0 ? 1 : 0); k++) col *= shotLight(uSkimLight, uSkimM, uSkimCam, uSkimW, P, nL);
   vec2 vq = vClip.xy / vClip.z * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
@@ -244,8 +256,8 @@ void main() {
   }
   float dl = uLimbW > 0.0 ? limbAt((uCam + dirS * along) / max(rt, 1e-4), uPolar, uSunL) : 0.0;
   float cover = uDiag >= 2 ? 1.0 : clamp((1.0 + dl - rt) / (uEdgePx * length(vec2(dFdx(rt), dFdy(rt)))), 0.0, 1.0);
-  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView) * (uLimbW > 0.0 && rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vLocal - uCam) : 1.0));
-  if (uLimbW > 0.0 && rt >= 1.0 + dl) discard;
+  outColor = diagOut(vec4(col * cover * mix(cover, 1.0, uEdgeLin), cover), texels, 1.0, layer, vec2(0.0), length(vView) * (rt < 1.0 ? (along - sqrt(max(1.0 - rt * rt, 0.0))) / length(vLocal - uCam) : 1.0));
+  if (rt >= 1.0 + dl) discard;
 }`
 
 export function curveUniform(curve: number[][]): THREE.Vector3[] {
@@ -257,7 +269,7 @@ export class Globe {
   readonly mesh: THREE.Mesh
   readonly material: THREE.ShaderMaterial
 
-  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, patch: GlobePatch, lights: { hold: ShotLight; skim: ShotLight }, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
+  constructor(map: THREE.Texture, mapWidth: number, table: THREE.Texture, patch: GlobePatch, lights: { body: THREE.Texture; skim: ShotLight }, look: GlobeLook, haze: HazeParams, profile: Record<string, THREE.IUniform>, polar: number) {
     this.material = new THREE.ShaderMaterial({
       glslVersion: THREE.GLSL3, vertexShader: VERT, fragmentShader: FRAG,
       uniforms: {
@@ -272,15 +284,16 @@ export class Globe {
         uRimPower: { value: look.rimPower }, uNightBlur: { value: look.nightBlur }, uFine: { value: new THREE.Vector4(look.fine[0], look.fine[1], look.fine[2], 0) }, uFineTop: { value: look.fineTop }, uTerm: { value: new THREE.Vector3().fromArray(look.termShift) }, uLean: { value: new THREE.Vector4(0, 0, 0, 1) },
         uVignette: { value: 0 }, uAspect: { value: 16 / 9 }, uProbe: { value: look.probe },
         uPatch: { value: patch.texture }, uPatchBox: { value: patch.box }, uPatchSize: { value: patch.size },
-        uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 },
+        uEdgePx: { value: look.edgePx }, uEdgeLin: { value: 0 }, uRay: { value: new THREE.Matrix3() },
         uLimbFit: { value: look.limbFit }, uLimbLat: { value: new THREE.Vector2().fromArray(look.limbLat) }, uLimbW: { value: 0 }, uInflate: { value: 1 },
-        uHoldLight: { value: lights.hold.texture }, uHoldM: { value: lights.hold.matrix }, uHoldCam: { value: lights.hold.camera }, uHoldW: lights.hold.weight,
+        uBodyLight: { value: lights.body },
         uSkimLight: { value: lights.skim.texture }, uSkimM: { value: lights.skim.matrix }, uSkimCam: { value: lights.skim.camera }, uSkimW: lights.skim.weight,
       },
       transparent: true, premultipliedAlpha: true,
       blending: THREE.CustomBlending, blendEquation: THREE.AddEquation, blendSrc: THREE.OneFactor, blendDst: THREE.OneMinusSrcAlphaFactor, blendSrcAlpha: THREE.OneFactor, blendDstAlpha: THREE.OneMinusSrcAlphaFactor,
     })
     this.mesh = new THREE.Mesh(new THREE.SphereGeometry(1, 384, 192), this.material)
+    lensRay(this.mesh, this.material.uniforms.uRay!.value as THREE.Matrix3)
     this.mesh.scale.set(1, polar, 1)
     this.mesh.renderOrder = 3
   }
