@@ -92,7 +92,7 @@
       5.0,
       0.75,
       0.25,
-      400
+      1200
     ],
     "blend": [
       0.75,
@@ -121,7 +121,7 @@
         1.0,
         1.0
       ],
-      "lifeSeconds": 16,
+      "lifeSeconds": 32,
       "lifeWaveUnits": 0.1,
       "octaveTurn": 0.6,
       "octaveShift": [
@@ -169,7 +169,7 @@
         1.6
       ],
       "dome": {
-        "least": 0.5,
+        "least": 0.3,
         "bare": 0.25,
         "edge": 0.4,
         "profile": [
@@ -187,12 +187,12 @@
       "tint": [
         0.8,
         0.6,
-        0.8
+        2.0
       ],
       "rough": {
         "range": [
-          0.3,
-          0.8
+          0.05,
+          0.5
         ],
         "least": 0.15,
         "obey": [
@@ -202,20 +202,20 @@
         ],
         "soft": 0.3
       },
-      "saturate": 0.8,
+      "saturate": 0.4,
       "pale": 0.3,
       "pulse": 0.3,
       "silk": {
         "waveUnits": [
-          0.24,
+          0.36,
           0.0,
-          0.16
+          0.6
         ],
-        "aspect": 0.4,
+        "aspect": 0.3,
         "gain": 1.6,
-        "octaves": 6,
-        "crease": 0.08,
-        "fall": 0.4
+        "octaves": 7,
+        "crease": 0.3,
+        "fall": 0.3
       },
       "soft": {
         "units": 0.03,
@@ -228,9 +228,9 @@
         ],
         "reach": [
           0.45,
-          0.12
+          0.3
         ],
-        "guard": 1.0
+        "guard": 0.6
       },
       "fibre": {
         "waveUnits": 0.05,
@@ -244,7 +244,7 @@
           1.5,
           4.0
         ],
-        "billows": 0.2,
+        "billows": 0.6,
         "ridges": 0.7
       },
       "life": {
@@ -253,12 +253,12 @@
         "curdSeconds": 24.0
       },
       "cumulus": {
-        "waveUnits": 0.24,
-        "radius": 0.5,
-        "ratio": 0.45,
-        "sink": 0.3,
-        "squash": 1.0,
-        "buds": 7,
+        "waveUnits": 0.07,
+        "radius": 0.45,
+        "ratio": 0.5,
+        "sink": 0.6,
+        "squash": 0.85,
+        "buds": 6,
         "levels": 4,
         "polar": [
           0.15,
@@ -266,17 +266,55 @@
         ],
         "small": 0.6,
         "cover": [
-          0.6,
-          0.9
+          0.3,
+          0.7
         ],
         "soft": 0.3,
         "rootUnits": 0.05,
         "patch": {
           "share": 0.4,
-          "units": 0.9
+          "units": 0.5
         },
-        "pale": 0.6,
-        "paleUnits": 0.05
+        "pale": 0.9,
+        "paleUnits": 0.05,
+        "crest": 1.0,
+        "calm": 0.0,
+        "softShare": 0.25,
+        "cull": 0.1,
+        "stride": 3.0,
+        "field": [
+          0.05,
+          0.3
+        ],
+        "own": [
+          0.42,
+          0.33,
+          0.24
+        ],
+        "ownShare": 0.7
+      },
+      "sheet": {
+        "aspect": 0.25,
+        "crest": 1.0,
+        "tintFall": 0.3,
+        "tintLeast": 0.5
+      },
+      "tall": {
+        "range": [
+          0.7,
+          0.95
+        ],
+        "sheet": 1.0,
+        "silk": 1.0
+      },
+      "thread": {
+        "waveUnits": 0.64,
+        "octaves": 8,
+        "thin": 0.08,
+        "wide": 0.25,
+        "mostUnits": 0.012,
+        "tint": 1.2,
+        "lane": 0.3
       }
     },
     "sun": {
@@ -316,8 +354,8 @@
     "medium": {
       "skinUnits": 0.015,
       "freeUnits": 0.006,
-      "samples": 12,
-      "search": 48,
+      "samples": 16,
+      "search": 64,
       "stepDepth": 0.4,
       "stepShare": [
         0.1,
@@ -1333,10 +1371,10 @@
     },
     "relief": {
       "datum": 0.0,
-      "floorUnits": -0.18,
+      "floorUnits": -0.22,
       "floorEdge": [
         0.3,
-        1.5
+        1.0
       ],
       "crestUnits": 0.04,
       "crestAt": 1.75,
@@ -1345,7 +1383,7 @@
       "laneKnee": 0.4,
       "laneFloor": 0.05,
       "laneWideUnits": 0.6,
-      "basinUnits": 0.08,
+      "basinUnits": 0.0,
       "basinWideUnits": 0.3,
       "basinLight": 0.25,
       "basinRange": [
@@ -1362,7 +1400,7 @@
       "pixels": 1024,
       "rangeLog2": 4,
       "albedo": [
-        0.03,
+        0.04,
         0.7
       ],
       "share": 0.8,
@@ -1378,7 +1416,9 @@
       ],
       "hueShare": 0.5,
       "hueLog2": 0.5,
-      "upLog2": 0.5
+      "upLog2": 3.0,
+      "cutUnits": 0.02,
+      "leastTexels": 0.5
     },
     "rough": {
       "wideUnits": 0.2,

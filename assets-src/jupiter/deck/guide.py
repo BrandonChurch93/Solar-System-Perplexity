@@ -127,6 +127,9 @@ def main():
         coarse = np.round(np.clip(np.maximum(wild / rc['most'], dark), 0, 1)[::-1] * 65535).astype(np.uint16)
         for folder in (FULL, WEB):
             coarse.tofile(os.path.join(folder, 'guide-' + name + '-rough.bin'))
+        deep = np.round(np.clip(dark / rc['darkShare'], 0, 1)[::-1] * 65535).astype(np.uint16)
+        for folder in (FULL, WEB):
+            deep.tofile(os.path.join(folder, 'guide-' + name + '-dark.bin'))
         print("rough", name, "wild tenth", round(float(np.percentile(wild, 10)), 3), "median", round(float(np.median(wild)), 3), "ninetieth", round(float(np.percentile(wild, 90)), 3), "dark share over 0.25", round(float((dark > 0.25).mean()), 3))
         for folder, key in ((FULL, 'full'), (WEB, 'web')):
             m = level['pixels'][key]

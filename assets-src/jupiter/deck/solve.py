@@ -85,7 +85,7 @@ def main():
         out = filled(num2, den2, cfg['leastWeight'], cfg['fillPx'])
         hole = np.isnan(out[..., 0])
         out[hole] = 0
-        out = cv2.GaussianBlur(out, (0, 0), deck['guide']['cutUnits'] / step, borderType=cv2.BORDER_REPLICATE)
+        out = cv2.GaussianBlur(out, (0, 0), max(cfg['cutUnits'] / step, cfg['leastTexels']), borderType=cv2.BORDER_REPLICATE)
         before = stored(name)
         total = out if before is None else out + (before * 2 - 1) * cfg['rangeLog2']
         total = np.clip(total - np.maximum(total.mean(-1, keepdims=True) - cfg['upLog2'], 0), -cfg['rangeLog2'], cfg['rangeLog2'])

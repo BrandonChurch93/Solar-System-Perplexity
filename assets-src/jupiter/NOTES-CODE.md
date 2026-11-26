@@ -2964,3 +2964,160 @@ Variants after u2, both dropped:
 Cost at preview, draft, one frame in a kept session (u2): 45.4 s as it is; 34.9 s with one medium sample and no search; 41.5 s with one sky direction; 45.7 s with one Sun tap. So the first march and the height function cost about 35 s of the 45; the Sun taps cost nothing that shows.
 
 Lesson of the queue: a job file put into the queue starts at once when the queue is empty. Put it there only after the tree is ready (wound.py was still writing when the first try of the state t job started; it was killed and queued again).
+
+## 26 Nov, 03:24 to 03:50 UTC: MAILs 1387, 1388, 1390 (state t stays off main; the Sun stays; tops, storm, right third), item 1 measured, the causes, the design of w1
+
+### MAIL 1387 (03:24 UTC), word for word
+
+> MAIL 1387 from the Builder (/root), 03:24 UTC. To jupiter_coder.
+> State t (a64c3d06) is seen on my sheet, the approved close picture above your frame 3150. It is a state, as you say, and it stays off main. Rulings and direction, so the next state does not wait on me.
+> 1. THE NUMBER. Line (i) went from 9.259 at state s to 16.026 at state t; main stands at 3.539. Something between s and t moved the low band the wrong way. First of all: measure line (i) once for each change you made since s (each change alone on s) and say which one cost the most. Keep what lowers the line, take out what raises it. I expect the cost to lie in item 2.
+> 2. THE LIGHT, the largest fault by my eye. The approved is a low sun picture: light lies on the upper left third (the storm and the bands to its left), the lower left corner is in shade (dark tops with thin lit rims), and the whole right half falls to blue black. State t is lit all over: cream at the left, a mid grey blue across the right third, and a broad white band under the limb at the top left where the approved has a thin bright edge. The cause to cure is the sun's height over this ground and the shade the tops cast on each other. Put the sun low enough that the cast shade and the ground's own turn away from the sun give the approved's fall of light (lit upper left, dark lower left, dark right half), and keep the air's glow at the limb thin. No painted darkening over the frame: the law is the sun's direction and the shade, so it holds as the camera moves.
+> 3. THE TOPS. They read as boulders and slabs: flat lids with steep walls. A cloud top has no wall. The approved has rounded billows built of smaller billows, edges that thin out to nothing and pass light, and no flat lid. Direction: let the edge of a top be a fall of density and not a surface (a short march through the shell over the height field with gathered transmittance, the density falling toward the edge of each cell), and build the shape from several scales warped along the flow, so that no straight wall and no flat lid is left. The needles at x 310 to 440, y 210 to 250 are a fault in any case (a step of the march over a steep cell, I expect): take them out at the cause.
+> 4. THE STORM. In state t it is a flat orange dish with contour lines. The approved's storm is a wound spiral: long thin fibres of pale orange and rust drawn round a dark red brown eye that lies lower than its rim, each ring sheared against the next. The contour lines are a fault: say what draws them (steps of the height or of the normal) and take them out at the cause. The fibres are the storm's own texture, drawn out along the flow lines.
+> 5. THE RIGHT THIRD. Grey blue streaked relief in state t. The approved: a blue black deep, dark tops, and the small steady blue glow low and right of the storm. Your plan for it (dark matter and cast shade, the steady glow) is right; item 2 does most of it.
+> 6. Still open from MAIL 1362 point 2: say the rates as they are now (rim, fastest ring) in degrees a second.
+> 7. Order: item 1 (the measure), item 2, then 3 and 4, then the pair at V 0.051 with the three lines of d329 (4). Your 1400 px frames on the looks branch are welcome as they come. A name when line (i) is at or under main's 3.539 and line (ii) is green. Main is cd069015 (code 8fb3bffe); fetch nothing, I cut your name onto main.
+> Do not answer this mail before the next state.
+
+### MAIL 1388 (03:33 UTC), word for word (the ruling on my blocker of 03:31: the Sun stays the globe's)
+
+> MAIL 1388 from the Builder (/root), 03:33 UTC. To jupiter_coder. RULING on your question to MAIL 1387 item 2: (A). The Sun stays the globe's at the place, 33.3 degrees up, toward the far left. d253 and MAILS 725, 853, 972, 985 and 1021 stand as they are. My words about putting the sun low in MAIL 1387 item 2 were wrong against my own frame law and are withdrawn. (B) and (C) are refused: (B) makes a second light with a join in the dive and rise, (C) moves the hold at 2895 away from its approved picture.
+> 
+> What stays of item 2 is the aim, not the means: the approved's fall of light (lit upper left, dark lower left with thin lit rims, the right half down to blue black, a thin bright edge under the limb and no broad white band) under the globe's own Sun. Your means as you name them are right: low smooth ground in the upper left, tall tight tops in the lower left and the right half seen from their shaded side, dark matter in the lanes, the steady glow. Two things from item 3 serve it and cost no law: (1) self shade inside the tops along the Sun's ray (the march of item 3 with a few steps toward the Sun at each sample), so a tall top is dark on its far side and its thin edge passes light; (2) the cast shade of the tall tops on the ground behind them: at 33.3 degrees a top's shade is 1.5 times its height long, so tall tops at the storm's right rim and in the lower left darken the ground beyond them. The broad white band under the limb at the top left: say what draws it (the air's glow or the far ground's own light) and bring it to the approved's thin edge by the air's law, not by the exposure.
+> 
+> Item 1 is read: the scaffold going off is what moved the line between s and t; the clean measure with the next state is right. Item 6 is read (fastest ring 1.20, rim 0.30 degrees a second): inside the ruling of MAIL 1362.
+> 
+> No answer needed; the next state when it is there.
+
+MAIL 1390 (03:43, information, no answer): origin main is now `cfabcc52f6dbe1ac02ad4fec5bfe73c709c2e974` (batch 19 steps (a) and (b), five shared files). My order stays: fetch nothing, the Builder cuts my name onto main.
+
+My blocker of 03:31 (text in `work/r26/mail/blocker-sun.txt`): a low Sun breaks the frame law (the Sun is the globe's at the place, 33.3 degrees up, 40 degrees left of the view ahead). Asked (A) keep the Sun, (B) a second light, (C) move the place's light. Answer: (A).
+
+### Item 1 of MAIL 1387: line (i) for each change since state s, each alone on s (3150, preview, draft, nograin; `work/r26/measure.sh`, pictures `work/r26/m/`)
+
+| state | line (i), whole frame | inside the seven cells (mean) | outside (mean) |
+| --- | --- | --- | --- |
+| s as committed (scaffold on, floor 0.016) | 9.259 | | |
+| M1: s, scaffold off, floor 0.016 | 16.239 | 13.989 | 16.716 |
+| M2: s, scaffold off, floor 0.03 | 18.690 | 28.062 | 16.701 |
+| M3: M2 with the new flow numbers (scale 0.75, V 0.01378) | 19.183 | 27.246 | 17.472 |
+| t (no scaffold, floor 0.03, medium light, new relief) | 16.119 | 19.271 | 15.450 |
+| M4: t with its own solve, round 1 | 11.749 | 18.576 | 10.300 |
+| M4: round 2 | 11.078 | 18.463 | 9.511 |
+
+So: the scaffold going off costs 6.98; the floor from 0.016 to 0.03 costs 2.45 (all of it inside the seven cells, where the matter is now too bright); the flow numbers cost 0.49; the new relief and the medium light give 3.06 back. The scaffold is worth 5 at t as well. What costs the most is the scaffold going off.
+
+### Causes found by reading the code and 1 to 1 crops of state t (`work/r26/m/t-storm-crop.png`, `t-needles-crop.png`, `limb-pair.png`)
+
+- Needles and pillars (x 310 to 440, y 210 to 250): the cumulus balls were laid in wound coordinates (`young = warped(woundAt(g, 0).xy)`). In the storm's shear a round ball is squeezed across the flow while its height stays, so it becomes a thin tall wall. Cure: the balls are laid in ground coordinates, carried by the flow only.
+- Flat lids and steep walls: `capOf` was the envelope of spheres as a height field. A bud's cap jumps from nothing to its centre's height at its rim (a cliff); the density was a vertical skin of 0.015 units under that envelope, so every wall is hard and every lid is flat. Cure: the balls are bodies in space (distance to the nearest sphere), the density falls from each ball's middle to its rim, and the march goes through them.
+- Contour lines in the storm: the creases of the billow profile (`sqrt(n*n + c*c) - c`, crease 0.08) of the oldest age's silk. The creases are the zero lines of the noise; the storm's shear squeezes them to a few px apart, so they read as contour lines of a map. They are not steps of the height or of the normal. Cure: the oldest age is a signed smooth sheet with no crease (its zero lines carry no edge); drawn out by the shear its waves become fibres.
+- Flat dish: the old age's heights scale with the drawn out factor (small in the storm), the billows are damped by `order.billows` 0.2 and `calm` 0.35 in the funnel, and the stored funnel is only 0.18 deep with a gentle wall.
+- The cells' life in state t (period 16 to 32 s, rise 30 percent) breaks MAIL 1307 (a billow lives 10 s or more, nothing forms faster than the view lasts). `look.cloud.lifeSeconds` goes to 32 (period 32 to 64 s).
+
+### The design of w1 (builder `work/r26/mk/w1.py`, variant `work/r26/v/w1`, job `work/r26/devjob.sh NAME off|keep`)
+
+- `sheetAt`: signed gradient noise octaves with the same size guard as the silk; height and a tint that keeps its sign. Used for the oldest age.
+- `reliefAt` returns the sheet's height, its pale and the cumulus cover. The balls are no part of the height any more.
+- `ballsAt(q, least, cover)`: the nested balls as a union of spheres in the draped space q = (ground over cell, height over the sheet over cell and squash); returns the distance to the nearest sphere (cells) and the density share (depth inside over `softShare` of the radius). Subtrees are culled by their reach.
+- `matterAt(zeta, g, low, least)`: gap to the nearest matter, density share, pale. The first march, its refinement, the Sun's depth and the march through the medium all read it, so shade, edge and body are one thing. The matter's colour (the guide) is read at each sample.
+- Numbers of w1: `look.cloud.sheet` {aspect 0.3, crest 1.0}; silk waves [0.36, 0, 0.6], 7 octaves, crease 0.3; `order.billows` 0.6; cumulus cell 0.11, radius 0.45, ratio 0.5, squash 0.85, 6 buds, pale 0.8, crest 0.6, calm 0, softShare 0.5, cull 0.1, stride 3.0; medium samples 16, search 64; march steps 1200.
+
+## 26 Nov, 04:17 to 04:50 UTC: the clock (MAIL 1399), main moves (MAILs 1400, 1405), proofs before the name (MAIL 1406); the fine cut scaffold; tall relief refused
+
+READ FIRST AFTER A COMPACTION: nothing of the variants w1 to w8 is in the repo yet; they live in `/home/user/workspace/work/r26/v/NAME` (clouds.ts, deck.json, guide.py) and are built by `work/r26/mk/NAME.py`. The second tree `/home/user/workspace/dev` (no git) renders them: `bash work/r26/devjob.sh NAME off` (one still, scaffold off, line (i), bands) and `bash work/r26/solvejob.sh NAME 3` (the scaffold: range view, bare frame, three rounds). Jobs go into `work/r13/queue/NN-name.sh`; the runner is `/tmp/qrun.sh`; logs in `work/r13/qdone/`.
+
+### The clock (MAIL 1399, 04:17 UTC, word for word in `work/r26/mail/MAIL-1399.txt`)
+
+Third cut: names by 06:45, rounds 08:30. Fourth cut: names by 13:30, on main about 15:00, rounds 15:15. Freeze 20:30, last names 18:30. A name is my best state that is better than main to the eye and no worse than main by the laws in force; what is still wrong is named red in the mail. A stop without a name at a cut is judged on what main holds.
+
+MAIL 1400 (04:27) and MAIL 1405 (04:39): origin main is now `23f1089b3cde1279798527c697ef5efbdff9eebf` (crests of the engine, the sky's field glare, the reader's tools; no picture of mine moves). Merge origin main before the name (fetch with --depth 1 only).
+
+MAIL 1406 (04:46): as soon as a candidate state stands (own units green, the frames I care about seen), push it and send ONE LINE: full sha, its base on main, the files it changes. The Builder's machines then run the reader's rows, units, gate, the same bytes outside the stop and the judged frames at final with G17. The name mail then needs only my own numbers, the looks and the red list. The tracked tree stands at 2.93 GB of 3 GB: a name that adds more than 5 MB says so and says what it removes.
+
+### The scaffold at the fine cut (variant w4s = w4 with `guide.solve` cutUnits 0.02, leastTexels 0.5, upLog2 2.0, albedo [0.04, 0.7])
+
+`solve.py` now blurs each round's ratio on the ground with `max(solve.cutUnits / step, solve.leastTexels)` (was the guide's cut of 0.08 units, which is 21.6 px of the preview at 1.6 units from the eye, wider than the 8 px of line (i), so the foreground's low band could not close). This departs from the page's guide cut and has to be said in the state mail.
+
+| round | line (i), whole | inside the seven cells (mean) | outside (mean) |
+| --- | --- | --- | --- |
+| off (w4) | 15.297 | 12.834 | 15.819 |
+| 1 | 10.334 | 16.823 | 8.957 |
+| 2 | 8.721 | 16.536 | 7.063 |
+| 3 | 8.280 | 16.378 | 6.563 |
+
+By cell after round 3 (`work/r26/errmap.py`): row 0: 6.5 3.9 3.2 1.2 0.9 0.8 0.6 0.3; row 1: 6.2 7.7 6.1 7.1 2.8 1.6 1.2 1.1; row 2: 10.3 6.6 5.9 6.0 4.1 3.9 3.3 5.2; row 3: 9.5 11.6 11.4 11.8 8.9 7.5 7.0 16.3; row 4: 19.4 20.8 19.2 16.8 16.0 16.3 18.2 24.1. The bottom rows stay red although the signed means are small: the large lit and shaded faces of the tall relief are themselves a low band error. Relief features wider than about 16 px of the master cannot be closed by a solve of the matter's colour.
+
+### Tall relief is refused by my eye (w5, w6)
+
+- w5 (billows laid in the middle age, three times taller in the dark thirds): mountains. Line (i) 15.067 without scaffold.
+- w6 (towers of 0.16 units, aspect 1.2 in the dark thirds, funnel 0.3 deep): rubble and spires, the eye a black pit. 16.114.
+- At 1 to 1 the approved's dark thirds are a smooth dark deck with thin pale threads along the flow, folded and curled, and small clusters of rounded tops whose sunward rims are warm. No wall, no tower. Features there are small: lumps of 5 to 10 px of the preview, clusters of 25 to 50 px.
+
+### Where the time of a frame goes (w6, preview, draft, 98.3 s)
+
+Medium samples 2 and search 8 (w6a): 60.5 s. Sun taps 1 (w6b): 63.8 s. So the first march and the start cost about 60 s, the Sun's depth at the samples about 34 s, the rest of the medium about 4 s.
+
+### w7 (builder `work/r26/mk/w7.py`): low deck, threads, clusters with their own colour
+
+- `threadAt(y, least)`: thin pale lines where a noise stretched along the flow passes through nothing (`exp(-(n / thin)^2)`), octaves from `thread.waveUnits` down; an octave is drawn only while its line is at least as wide as the pixel allows and no wider than `thread.mostUnits`. Colour only (read by the medium, not by the first march or the Sun's depth): `matterAt(..., colour)`.
+- `matterAt` returns four numbers: gap, density, pale, share of a ball. A ball's matter has its own colour `cumulus.own` (share `ownShare`).
+- The clusters' patch field is read in the old age's coordinates, so clusters stand in streets along the flow.
+- Seen: line (i) 21.002 without scaffold (the lanes' tint darkens everything), bands red. The deck reads as dark silk, the clusters as white popcorn laid on it, the threads as wood grain. The cumulus form itself is right.
+
+## 26 Nov, 04:50 to 05:10 UTC: w8 with the scaffold (7.873), w9 and w10 refused, MAIL 1413 (state mail by 05:45), state w8 goes into the repo
+
+READ FIRST AFTER A COMPACTION: the repo's tree is now variant w8 with its three solve rounds (`work/r26/v/w8/`, solve pictures in `assets-src/jupiter/deck/solve-near.png` and `solve-mid.png`); the state mail of MAIL 1413 names its commit. It is a state and not a name: line (i) reads 7.873 against main's 3.539. The look work goes on in the second tree with variants w11 and later.
+
+### MAIL 1413 (05:04 UTC), word for word
+
+> MAIL 1413 from the Builder (/root), 05:04 UTC. Jupiter's surface by code: I have no state and no time from you since main's code moved to 23f1089b. The clock: third cut names in my hands by 06:45 (on main about 08:15), fourth cut names by 13:30 (on main about 15:00), freeze 20:30. Send by 05:45 one state mail: the sha of what you have (pushed, or a bundle if your push is blocked), the frames 3150 and two more of the ground at the final tier beside main's, what is MEASURED on it (the three lines of d329 (4): low band 16 px against main's 3.539, the luminance bands against the approved within 0.7 and 1.4, units), what is STATED and what is UNKNOWN, and the hour at which you can name it. The fourth review note stands as the aim: the storm must not spin as a picture on the surface view, and nothing may read as an image warped by a lens; it has to read as made of matter with depth. If the state is not ready for the third cut, say so in one line and aim at 13:30; a stop without a name is judged on what main holds.
+
+### w8 with the scaffold (three rounds at the fine cut, floor 0.04)
+
+| round | line (i), whole | inside the seven cells (mean) | outside (mean) |
+| --- | --- | --- | --- |
+| off | 18.635 | 14.676 | 19.475 |
+| 1 | 10.973 | 14.268 | 10.274 |
+| 2 | 8.536 | 14.021 | 7.373 |
+| 3 | 7.873 | 13.847 | 6.606 |
+
+By cell after round 3 (mean absolute difference of the low band; rows top to bottom): 7.5 4.0 3.1 1.2 0.9 0.8 0.6 0.3; 7.3 9.1 7.7 8.4 3.9 2.2 1.3 1.1; 9.7 6.3 4.2 4.5 3.8 3.8 3.7 5.2; 13.6 8.6 5.6 4.9 4.9 4.4 5.7 21.9; 26.5 27.3 21.6 19.5 10.8 10.3 12.5 16.2. Signed, bottom row: +24 +25 +20 +19 +5 +5 +12 +16; the right cell of the row above: +22. The bottom row holds 144.7 of the 315 that make the 7.873: nearly half. There the matter stands at the floor (0.04) and still reads 20 to 25 over the approved: level lit ground cannot be as dark as the approved's lower thirds. Only shade or darker matter closes it. The rest (rows 2 and 3, 4 to 9 a cell with signed means near nothing) is the place of my rings and folds against the approved's, wider than the 16 px of the measure.
+
+To reach 3.539 the 40 cells have to hold 140 together; the bottom row alone holds 145 now.
+
+### The dark field and the distances as the frame sees them (`work/r26/fieldview.py` on w8's range view)
+
+Dark (0 to 1) by cell, rows top to bottom: 0 all; 0.12 0.17 0.24 0.16 0.07 0.02 0 0; 0.51 0.55 0.66 0.76 0.68 0.68 0.54 0.22; 0.77 0.79 0.86 0.97 1 1 1 0.99; 0.98 to 1. Distance from the eye in units, bottom row 1.2 to 1.4 (right 2.7), the row above 1.5 to 1.6 (right 4.3), the middle row 2.2 to 9.5.
+
+### w9 and w10, refused by my eye
+
+- w9 (`mk/w9.py`): the clusters take the place's light (own hue times the guide's weight times `cumulus.lift`, between `least` and `most`), every order of scattering is tinted once more by the matter's own hue (`look.medium.orders.tint`), clusters also in the shear at half cover, lower silk and sheet. Seen: orange crumbs scattered on marble, the storm deep red. Line (i) 19.654 without scaffold.
+- w10 (`mk/w10.py`): the threads become relief too (thin sheets along the flow, `thread.aspect` 0.5, up to 0.02 units wide), lanes darker (`thread.lane` 0.8). Seen: folded cloth, wax. 21.388 without scaffold.
+- What the approved's lower left is at 1 to 1 (pair `work/r26/t/w9-pair-lowleft.png`): a dark turbulent mass of combed fibres in grey brown, swept into rolls of 40 to 50 px of the preview, with lumps of cumulus embedded along its bright ridges. Not separate balls on a smooth sheet.
+
+### Main's own frames for the pair
+
+`/home/user/workspace/mw` is a tree of main at ce8cb68 with main's Jupiter code; `work/r13/queue/10-main-ground.sh` draws 3100, 3150, 3200 there (preview, draft) to `work/r26/t/main-FRAME.png`. Main's final 3150 from my machine is `out/work/jupiter/final/p1-3150.png` (master).
+
+## 26 Nov, 05:04 to 05:45 UTC: MAIL 1413 (one state mail by 05:45), the state that is sent, what comes after
+
+> MAIL 1413 from the Builder (/root), 05:04 UTC, word for word: "Jupiter's surface by code: I have no state and no time from you since main's code moved to 23f1089b. The clock: third cut names in my hands by 06:45 (on main about 08:15), fourth cut names by 13:30 (on main about 15:00), freeze 20:30. Send by 05:45 one state mail: the sha of what you have (pushed, or a bundle if your push is blocked), the frames 3150 and two more of the ground at the final tier beside main's, what is MEASURED on it (the three lines of d329 (4): low band 16 px against main's 3.539, the luminance bands against the approved within 0.7 and 1.4, units), what is STATED and what is UNKNOWN, and the hour at which you can name it. The fourth review note stands as the aim: the storm must not spin as a picture on the surface view, and nothing may read as an image warped by a lens; it has to read as made of matter with depth. If the state is not ready for the third cut, say so in one line and aim at 13:30; a stop without a name is judged on what main holds."
+
+READ FIRST AFTER A COMPACTION: the tree now holds variant w8 with its three solve rounds as a commit (the state of this mail). It is NOT a name and it is worse than main to my eye. The work goes on in the second tree `/home/user/workspace/dev` through variants `work/r26/v/wN/` (builders `work/r26/mk/wN.py`, queue jobs `work/r13/queue/NN-dev-wN.sh` calling `bash /home/user/workspace/work/r26/devjob.sh wN off`; the scaffold with `bash /home/user/workspace/work/r26/solvejob.sh wN 3`). The clock of MAIL 1399: fourth cut names by 13:30 UTC, the last names by 18:30, the freeze 20:30.
+
+### What the state is
+
+- Code: `src/stops/jupiter/clouds.ts` and `deck.json` of w8; `assets-src/jupiter/deck/guide.py` of w8 (it writes the dark field `guide-{near,mid}-dark.bin`); `solve.py` as in the second tree; the solve's pictures `assets-src/jupiter/deck/solve-near.png` and `solve-mid.png` (3.5 MB together; to be made smaller before a name, the tracked tree stands at 2.93 of 3 GB by MAIL 1406). The guide files in the tree are byte for byte those of the second tree (`work/r26/t/w8-keep-dev.sha`).
+- Measured at 3150, preview, draft: line (i) 7.873 (outside the seven cells mean 6.606, inside 13.847). Main at the same tier on my machine (tree `/home/user/workspace/mw`, ce8cb68): 3.390; the Builder's number for main at final master is 3.539. Red by 4.5. Bands of this state against the approved: 1 to 2 px 0.970, 2 to 4 px 1.103, 4 to 8 px 1.152, 8 to 16 px 1.100 (under 1 px 1.055): green. Main's own bands at the same tier: 0.765, 0.924, 0.979, 0.998 (under 1 px 0.755).
+- Main's cells of line (i) at 3150 (rows top to bottom): 4.1 3.8 3.0 1.0 0.8 0.8 0.6 0.3; 1.8 2.8 7.4 18.3 12.6 1.3 1.1 1.1; 3.1 4.3 3.5 3.2 2.9 2.0 0.5 0.5; 3.3 12.7 4.1 1.4 1.8 0.9 1.0 0.3; 5.9 8.6 9.0 2.0 1.5 1.4 0.8 0.4. Main is a picture of the approved laid on the ground, so its low band matches nearly everywhere; its red sits where its storm stands a little off.
+- The same state at 3100 reads 13.559 against the approved; that number means nothing (the approved is the view of 3150), it only shows that the scaffold is laid in the ground and travels with it.
+- Seen by me at full size, beside main (sheets `work/r26/t/state-w8-3100.jpg`, `-3200.jpg`, `-3150.jpg`, on the looks branch): worse than main. Folds like cloth or poured wax, white popcorn clusters set on top, the storm as rings like contour lines round a pit, the right third blue cloth without a deep, no steady glow. What is better than main: nothing is a picture, the relief has depth and its own shade, and the flow is a flow (rates 1.20 and 0.30 degrees a second, V 0.01378; not drawn again on this state).
+
+### What comes after (order)
+
+1. w11 (`work/r26/mk/w11.py`, from w9): tall packed towers in the dark field (`cumulus.pack`: cover = max(cover, tall times share times a lane of the street noise)), `tall.range` [0.6, 0.9], squash 1.5, sink 0.3, the clusters take the place's light (lift 3, between 0.05 and 0.6), orders tinted 0.4. Aim: the dark thirds as relief in its own shade (MAIL 1340 (2), MAIL 1388), no popcorn.
+2. The storm: lower ring relief, fibres as tint drawn along the flow, the eye lower than its rim but not a pit.
+3. The steady blue glow low and right of the storm (the approved shows it at preview x 512 to 580, y 392 to 503), in the shader at the flash sites.
+4. Then the scaffold again, line (i), the pair at 60 a second, the slices, and a name in MAIL 508's order on top of a merge of origin main (fetch with depth 1 only).
