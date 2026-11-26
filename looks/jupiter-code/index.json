@@ -1,9 +1,33 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T05:21:14.448Z",
+ "pushed": "2026-11-26T05:36:46.485Z",
  "head": "8d5b7cbec865c5586cdc536c259ff47c95866f98",
- "note": "State for MAIL 1413 (8d5b7cbe, not a name): frames 3100, 3200 and 3150 at preview draft beside main and the approved; line (i) 7.873 against 3.390, red; bands green",
+ "note": "05:37 UTC: line A after MAIL 1422. w11 refused, w12 and w12b are round tops as the surface itself, wholly code, no scaffold yet. The fine colour map (w13) is drawing now.",
  "looks": [
+  {
+   "time": "2026-11-26T05:36:38.020Z",
+   "file": "20261126053638020-note-w12b-3150.jpg",
+   "source": "../work/r26/t/w12b-3150.png",
+   "kind": "note",
+   "label": "w12b at 3150, preview, draft, no scaffold: the same tops rounder and softer, less warp. Reads as a field of soft cloud pillows; storm rings and eye still wrong. Line (i) 17.275",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T05:36:37.380Z",
+   "file": "20261126053637380-note-w12-3150.jpg",
+   "source": "../work/r26/t/w12-3150.png",
+   "kind": "note",
+   "label": "w12 at 3150, preview, draft, no scaffold: round tops as the surface itself (one dome to a cell, octaves riding), no balls. Dark thirds dark by shade for the first time; reads as rock. Line (i) 17.964",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T05:36:36.726Z",
+   "file": "20261126053636726-note-w11-3150.jpg",
+   "source": "../work/r26/t/w11-3150.png",
+   "kind": "note",
+   "label": "w11 at 3150, preview, draft, no scaffold: packed dim balls in the dark field. Refused: nuggets strewn over wax. Line (i) 18.680",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T05:12:22.847Z",
    "file": "20261126051222847-note-state-w8-3150.jpg",
@@ -170,30 +194,6 @@
    "source": "../work/r25/lab2/pat1.png",
    "kind": "note",
    "label": "lab pattern study of the curl warp seen from above (numpy, not the film's shader): marbled folds at reach 0.5, 0.2, 0.06",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:59:52.426Z",
-   "file": "20261126025952426-note-u3-3150.jpg",
-   "source": "../work/r25/t/u3-3150.png",
-   "kind": "note",
-   "label": "dev u3 at 3150, preview draft: taller towers read as a mountain range again, line (i) 21.328, dropped",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:28:06.923Z",
-   "file": "20261126022806923-note-u2-3150.jpg",
-   "source": "../work/r25/t/u2-3150.png",
-   "kind": "note",
-   "label": "dev variant u2 at 3150, preview, draft, no solve: medium light levelled to flat ground; line (i) 16.119 (state s 9.259 with the solve, main 3.539); bands green; right third still too bright (61 against 21), cumulus cells read as slabs, no spiral bands round the eye yet",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T02:28:06.350Z",
-   "file": "20261126022806350-note-u1-3150.jpg",
-   "source": "../work/r25/t/u1-3150.png",
-   "kind": "note",
-   "label": "dev variant u1 at 3150, preview, draft: first film variant with the medium light; reads as cloud; every cell too bright; line (i) 27.548",
    "stop": "jupiter"
   }
  ]
