@@ -8749,3 +8749,51 @@ Chain `/tmp/proofs7.sh N14` on the tree with the one line (22:55:21 to 23:35:16,
 
 Read: main is merged again before the name, and the name mail says which main it holds. Batch 15 changes the reader
 (tools/smooth), so one of my pairs is read again by the new reader before I send numbers.
+
+## Lab log 23:57 to 00:11 UTC (26 Nov): the merge of main 1f51abc9a, the reader of batch 15, tests, the push
+
+- Merge ef0cc1cf4 of origin main 1f51abc9a (batch 15: tools/smooth, tools/img/smooth.py, tests/smooth.test.ts; no src file).
+- My proxy (W/chainr.py) imports tools/img/smooth.py, which batch 15 changed. Read again on N14's frames with the new file:
+  4760 0.17 at (1732, 512), 4753 0.24 at (1748, 436), 4706 0.44 at (1508, 244), 4702 0.41 at (356, 176): the same numbers
+  to the digit as before the merge. The pop it now writes is not read by my tool.
+- TESTS on ef0cc1cf4, alone, 23:57:33 to 00:10:22: tsc clean, my own test 5 of 5, G11 PASS, the whole run 87 files ok, 0 not
+  ok, exit 0 (81 files before batches 14 and 15 and the cuts since).
+- Pushed 00:10:36: badc407aa..ef0cc1cf4 on agent/neptune-place. Net of my folders 63.701 MB (main's 80.827).
+- Looks pushed 23:58:54 (90b7871f, 8 looks): 4860 beside the approved with G17, the shadow sheet, the pairs 4760, 4950, 4706.
+
+## 26 Nov, 00:10 UTC: the tenth NAMED mail to the Builder (word for word)
+
+> NAMED, the tenth, from neptune_builder, 00:10 UTC: agent/neptune-place ef0cc1cf430939c842dce4218d88a622373caaaf. It holds main 1f51abc9a151db2cffca8eb0cb1aec99eed1f7f7 (batches 14 and 15), by merge commit. Answers MAIL 1321, 1313 and 1295. Against the old name 27624e6f it changes two files of the picture, src/stops/neptune/deep.ts and deep.json, in three commits of one cause each: 985341693 (row 4753), 8fae85490 (the limb's band at 4860), 318ea1d30 (the knot at 4760). All my pair numbers are my proxy of the report's path on my 960 px draft frames, STATED; it has differed from your reader by up to 0.2 either way (4760: mine 0.78, yours 0.6171; 4950: mine 0.19, yours 0.3572). Pop and level step I do not read.
+>
+> 1. THE CAUSE AT 4760 (dive 4 of 4), by controls on the pair 4760 to 4768 (the tree before the cure 0.78): clock stopped, the knot is gone (0.05 in the knot); the cirrus's shadow off 0.09; the first streamer alone out 0.26, 0.06 in the knot; only that streamer's thick and thin parts set to their mean in the shadow 0.11. Not it: the fibres (0.76 without them), the life (0.60), the relief (0.93), the low haze (0.47). So: the first streamer rides the cirrus wind (0.12) and the deck under it the band's (0.05 plus the jet), so its shadow slides over the ground, about 10 px of 1920 in 8 frames. Its thick and thin parts are 0.09 long, one and a half of castWave (0.06); the law of the 4753 cure left them at half strength in the shadow, where they stood as a dark streak (12.55 levels) under the streamer's foot that slides over the deck: a pattern that changes in place. On the panel: looks 90b7871f (23:58), 1e8baef7 (23:16), efcc4ae6 (22:55): the shadow at 4759 to 4761 before and after, and the pair's own pictures.
+> NOT MEASURED: why main is green there. Main's deep.ts has no castWave law (the streamer's shadow whole). Main's own pair 4760 to 4768 with its cast off is my next work; what it shows comes by 01:15 UTC.
+>
+> 2. THE CURE (318ea1d30; one line of deep.ts, the law in words in deep.json castWave): in the shadow a streamer's thick and thin parts are read at twice castWave: at the mean under two waves, whole from four. The first streamer's lie at the mean; the second's (0.35) and the third's (0.6) stand whole as before. A law of the shadow at every height, no window, no clock.
+>
+> 3. ROWS, after (before):
+> - dive 4 of 4: every half step 4753 to 4761: 0.24 0.24 0.23 0.22 0.22 0.24 0.22 0.21 0.20 0.20 0.19 0.18 0.17 0.17 0.17 0.16 0.16 (before 0.25 to 0.78). Nothing left by my reader.
+> - dive 3 of 4: 4753 0.24 (yours 0.6703 on the old name; cured by 985341693, which the old name did not hold). Left: 4744 0.39 at (1196, 284) on the pale far plain, its layer not named by a control yet; 4750 0.30, 4751 0.29, 4752 0.26.
+> - dive 2 of 4: 4706 0.44 at (1508, 244) (before 0.43; yours 0.4653), where the limb leaves the frame and the carried picture loses the ground; 4702 0.41 at (356, 176). NOT cured; by your reader likely still red by 0.02 to 0.03.
+> - dive 1 of 4: 4690 to 4700: 0.11 to 0.21.
+> - rise: 4950 0.19, 4952 0.15, 4954 0.18, 4956 0.22, 4958 0.23, 4960 0.30 (0.25), 4962 0.28 (0.33), 4964 0.18, 4966 0.19, 4968 0.33 (0.35), 4970 0.25 (0.25). THE RISE DOES NOT KEEP ITS BYTES: the law holds at every height, so the same shadow changes in the rise's frames too (up to 24 levels at 960 px, in that shadow alone). By my proxy its largest pair falls from 0.35 to 0.33 and one pair goes from 0.25 to 0.30. Pairs starting after 4970 are not drawn by me; 5006 keeps its bytes.
+>
+> 4. JUDGED, draft at 1920: 4605, 4707 and 5006 keep the bytes they had before this cure. Drawn again on the merge of batch 14: no byte of the four changes, nor of eight single frames of the dive and the rise. Batch 15 touches tools and tests only; I did not draw again on it. 4860 changes in the first streamer's near shadow alone (mean 0.165 levels, most 14): its blots are now even where the approved has dark blots. A cost, named.
+>
+> 5. 4860 BY MY READER (MAIL 1295), whole | sky | band | ground: main 22.986 | 1.619 | 1.607 | 19.759; the old name 23.593 | 3.420 | 2.646 | 17.527; this name 22.420 | 3.203 | 1.616 | 17.601. Thirds now: top 22.3 24.3 10.7, middle 33.8 29.6 26.4, bottom 8.8 18.3 27.6.
+> - The band, cured by cause (8fae85490): the low haze stood opaque for about 12 px over the limb (scale height 0.028, now 0.010): 2.646 to 1.616, main's 1.607.
+> - The sky: at 4860 it is drawn by the film's one sky (src/space/sky.ts) at my plan's level (0.38 at the terrain, 0.65 from 2 radii up), with the air's own light over it on the rays that miss the deck. At the hold the eye is outside the air, so the hold's sky is the film's alone. Main's sky at 4860 is neither: it is the plate, painted after the approved. 3.203 against 1.619 is the film's neutral sky with its brown band against the approved's navy one. On the numbers alone it falls only by dimming the stars under a blue fog (2.365 at best), which loses the sky by kind. RED, named; no cure in my folders (MAIL 1078 point 5).
+> - G17 at 4860 by my draft reader: 0.507 / 0.232 (the old name 0.426 / 0.230; main with its plate 0.934 / 0.549). RED against main, named. 4605: MAD 7.605 against main's 2.931 (5.740 of mine is the sky), G17 0.675 / 0.436. RED against main, named.
+>
+> 6. THE HOLD, MAIL 1295 (a) to (d):
+> (a) the narrower lit globe: shown otherwise. The disc is main's to the level (rows 500, 700, 900 across the right limb). What reaches further in the approved and on main is the plate's navy sky beside the limb (blue px right of x 1667: approved 1494, main 881, mine 113; sheet in the looks of 21:00, 46f3961b). Not wanted as a plate. Owner: the sky's law. No cure in my folders, no date.
+> (b) the Sun small, without glow and spikes: a fault against the approved, agreed. Approved and main carry a painted Sun about 120 px across with glare and eight spikes; mine is the engine's far Sun, a ball 12 px across. No value of my folders gives it (light.sunGlare 0.6 to 2.0 makes the ball smaller; light.flare is the streak). Batch 14 changes no byte of my hold. I asked handover_engineer at 22:59; his answer at 23:03: the law is src/space's (sky_builder) with your word, the plumbing his on request, no date from him. Owner: you with sky_builder. Date: none I can give.
+> (c) the dark spot left of centre: the storm's eye of the place (storm.dark 0.7), a hard round hole about 18 px across with a pale collar. BAD, mine. Its cure (a softer wall, three trials ready) comes in its own commit and its own name by 02:00 UTC.
+> (d) the darker sky and thinner Milky Way: the film's one sky at my level 0.65. In the mean not darker (17.8, 28.7, 38.2 against the approved's 12.2, 26.4, 40.8) but laid out otherwise: the approved's band crosses the top left, the film's stands top right. Owner: the engine's sky. No date from me.
+>
+> 7. All reader parts of the dive and the rise change with these three cures; none may be taken from the old name.
+>
+> 8. TESTS on ef0cc1cf, alone, 23:57:33 to 00:10:22 UTC: the whole run 87 files ok, 0 not ok, exit 0; my own test 5 of 5; G11 PASS; tsc clean. Net of my folders 63.701 MB against main's 80.827; no file under public/assets/neptune changed since the old name. Draft frames: 4860 at 1920 90.0 s, 4605 35.7 s, preview frames about 26 s. Looks pushed 22:55, 23:16, 23:58. Every mail is in the notebook word for word.
+>
+> 9. REDS I know, besides those above: the teal blots at 4860 (15.7 and 7.5); the comb of the shadow's 48 taps, faint; 4744 at 0.39 with no layer named.
+
+Promised in it: main's own pair 4760 to 4768 by 01:15 UTC; the eye's cure (c) in its own commit and name by 02:00 UTC.
