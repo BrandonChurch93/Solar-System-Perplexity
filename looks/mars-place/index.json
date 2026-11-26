@@ -1,9 +1,25 @@
 {
  "folder": "mars-place",
- "pushed": "2026-11-26T05:49:07.065Z",
+ "pushed": "2026-11-26T06:09:35.176Z",
  "head": "91f10629062116a2fddd5dd73de93605481a6df5",
- "note": "MAIL 1425: the map levels held inside the globe's tones; glow gone at 2726 and 2427, pale rim and green tinge still there",
+ "note": "the name 91f10629: frames after the cure and the judge sheet (99th red at five of eight)",
  "looks": [
+  {
+   "time": "2026-11-26T06:00:05.190Z",
+   "file": "20261126060005190-note-judge-N6.jpg",
+   "source": "../../../../tmp/pm/judge-N6.jpg",
+   "kind": "note",
+   "label": "judge of d344 after the cure: eight pairs with and without the 8.5 plate, difference times 8; 99th over 9.8 at five of eight (red)",
+   "stop": "mars"
+  },
+  {
+   "time": "2026-11-26T06:00:03.444Z",
+   "file": "20261126060003444-note-n6-four.jpg",
+   "source": "../../../../tmp/pm/n6-four.jpg",
+   "kind": "note",
+   "label": "after the cure, drafts: 2441, 2700, 2704, 2726 whole frames at half size",
+   "stop": "mars"
+  },
   {
    "time": "2026-11-26T05:49:06.177Z",
    "file": "20261126054906177-note-maptop-19.jpg",
@@ -50,22 +66,6 @@
    "source": "../../../../tmp/pm/map-centre.jpg",
    "kind": "note",
    "label": "patch-19 middle 2.4 degrees beside land-0p3: the bright patch is the map's paint",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T05:28:55.205Z",
-   "file": "20261126052855205-note-gash-2427.jpg",
-   "source": "../../../../tmp/pm/gash-2427.png",
-   "kind": "note",
-   "label": "2427 box 2x: name beside the map alone, same gash and bright patch",
-   "stop": "mars"
-  },
-  {
-   "time": "2026-11-26T05:28:54.066Z",
-   "file": "20261126052854066-note-strip23.jpg",
-   "source": "../../../../tmp/pm/strip23.png",
-   "kind": "note",
-   "label": "N5 gash at 1 to 1, 2415 to 2450 every fifth frame, draft (MAIL 1417 a)",
    "stop": "mars"
   }
  ]
