@@ -1,9 +1,41 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T13:49:43.001Z",
- "head": "5c21aa69b6276474d126bca53c88234dcbaed917",
- "note": "13:50 the dark specks of 4403 to 4416 are the cover's small clouds over the tops' light (controls); cure D takes them to main's count with 4186 to 4350 at the name's bytes",
+ "pushed": "2026-11-26T14:17:19.539Z",
+ "head": "f5049e07e40be811665d7303ab9dd2b1df4747d2",
+ "note": "14:18 f5049e07 (not a name yet): the tops' gain stands over the cover's small clouds, the air as a layer over the tops; draft frames beside main and the name; reader rows being read",
  "looks": [
+  {
+   "time": "2026-11-26T14:17:18.798Z",
+   "file": "20261126141718798-note-dg-d.jpg",
+   "source": "../../../../tmp/n79/dg-d.jpg",
+   "kind": "note",
+   "label": "draft 4150, 4160, 4168, 4176: main, the name, both steps",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T14:17:18.174Z",
+   "file": "20261126141718174-note-dg-r2.jpg",
+   "source": "../../../../tmp/n79/dg-r2.jpg",
+   "kind": "note",
+   "label": "draft 4416, 4418, 4422, 4428: main, the name, both steps",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T14:17:17.521Z",
+   "file": "20261126141717521-note-dg-r.jpg",
+   "source": "../../../../tmp/n79/dg-r.jpg",
+   "kind": "note",
+   "label": "draft 4403, 4407, 4410, 4413: main, the name, both steps",
+   "stop": "uranus"
+  },
+  {
+   "time": "2026-11-26T14:17:16.782Z",
+   "file": "20261126141716782-note-dg-4407.jpg",
+   "source": "../../../../tmp/n79/dg-4407.jpg",
+   "kind": "note",
+   "label": "draft 4407 at 2 to 1: main, the name bcc9d174, both steps (the tops' gain over the cover, the air as a layer): specks gone, lanes deep",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T13:49:35.776Z",
    "file": "20261126134935776-note-sp-4407-ctl.jpg",
@@ -216,38 +248,6 @@
    "source": "../../../../tmp/n74/out/r2/uranus-rise-p2of2-changes.png",
    "kind": "note",
    "label": "the reader's panel, rise part 2 of 2 on 832be54a: pattern 0.8779 from 4422 + 1/2 (main 0.8765), worse by 0.0014",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:22:25.484Z",
-   "file": "20261126102225484-note-uranus-dive-p2of2-changes.jpg",
-   "source": "../../../../tmp/n74/out/d2/uranus-dive-p2of2-changes.png",
-   "kind": "note",
-   "label": "the reader's panel, dive part 2 of 2 on 832be54a: pattern 1.6031 from 4175 + 1/2 (main 1.6142)",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:22:24.816Z",
-   "file": "20261126102224816-note-r2-b.jpg",
-   "source": "../../../../tmp/n75/r2-b.png",
-   "kind": "note",
-   "label": "832be54a (with the clock cure) rise draft 4427 to 4435",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:22:24.121Z",
-   "file": "20261126102224121-note-r2-a.jpg",
-   "source": "../../../../tmp/n75/r2-a.png",
-   "kind": "note",
-   "label": "832be54a (with the clock cure) rise draft 4418 to 4426 from the reader's frames",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T10:22:23.413Z",
-   "file": "20261126102223413-note-d2-spot.jpg",
-   "source": "../../../../tmp/n75/d2-spot.png",
-   "kind": "note",
-   "label": "832be54a dive, the spot of the reader's largest pattern row (4175 + 1/2, pixel 970, 620) at 1 to 1: 4174 to 4177, 4183, 4184",
    "stop": "uranus"
   }
  ]
