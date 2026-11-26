@@ -1,9 +1,17 @@
 {
  "folder": "uranus-place",
- "pushed": "2026-11-26T13:01:01.712Z",
+ "pushed": "2026-11-26T13:31:23.676Z",
  "head": "5c21aa69b6276474d126bca53c88234dcbaed917",
- "note": "13:01 name bcc9d174 sent 12:43; open: 4407 specks and pale lanes, controls queued behind the rise 1 reread",
+ "note": "13:32 answer to MAIL 1490 sent (level step is the framing at the top edge); speck controls drawing: detail zero changes nothing",
  "looks": [
+  {
+   "time": "2026-11-26T13:31:23.017Z",
+   "file": "20261126133123017-note-lh-top.jpg",
+   "source": "../../../../tmp/n79/lh-top.jpg",
+   "kind": "note",
+   "label": "the name, draft 4413, 4414 + 1/2, 4416: the limb's bright band reaches the top edge at 4414 + 1/2 and leaves through it, the cause of the level's bend at 4415 on both trees",
+   "stop": "uranus"
+  },
   {
    "time": "2026-11-26T13:00:59.002Z",
    "file": "20261126130059002-note-d-dots-3.jpg",
@@ -240,14 +248,6 @@
    "source": "../../../../tmp/n75/d2-d.png",
    "kind": "note",
    "label": "832be54a dive draft 4181 to 4187",
-   "stop": "uranus"
-  },
-  {
-   "time": "2026-11-26T09:50:29.174Z",
-   "file": "20261126095029174-note-d2-c.jpg",
-   "source": "../../../../tmp/n75/d2-c.png",
-   "kind": "note",
-   "label": "832be54a dive draft 4172 to 4180 from the reader's frames",
    "stop": "uranus"
   }
  ]
