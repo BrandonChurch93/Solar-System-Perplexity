@@ -1,9 +1,57 @@
 {
  "folder": "jupiter-code",
- "pushed": "2026-11-26T12:54:37.117Z",
- "head": "23087fd30ea977015762d59c4bc5eda4f590a493",
- "note": "12:55 line A: first state with line i and the bands green at preview draft (2.268, bands green), 32 s a frame; master and final not measured yet",
+ "pushed": "2026-11-26T13:18:19.289Z",
+ "head": "6696b4afe40189fc3cee6d950ef07f34bf11da12",
+ "note": "13:19 UTC: both lines green at master draft on wg0 (1.658, bands green), dive and rise frames red with the baked code, cause under test",
  "looks": [
+  {
+   "time": "2026-11-26T13:18:18.646Z",
+   "file": "20261126131818646-note-wg0s-vs-appr.jpg",
+   "source": "../work/r26/t/wg0s-vs-appr.jpg",
+   "kind": "note",
+   "label": "wg0 beside the approved, 3150: line (i) 1.724 preview draft, 1.658 master draft; bands green; 49.5 s a frame at master draft; dive and rise frames red",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:18:18.027Z",
+   "file": "20261126131818027-note-wg1s-vs-appr.jpg",
+   "source": "../work/r26/t/wg1s-vs-appr.jpg",
+   "kind": "note",
+   "label": "wg1 beside the approved, 3150 preview draft: line (i) 1.058 whole frame, outside the seven cells 0.939; band 1 to 2 px 0.684 RED, other bands green",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:18:17.415Z",
+   "file": "20261126131817415-note-wh0-3239.jpg",
+   "source": "../work/r26/t/wh0-3239.png",
+   "kind": "note",
+   "label": "wh0 frame 3239 last terrain frame, preview draft, 33.5 s",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:18:16.747Z",
+   "file": "20261126131816747-note-wh0-3060.jpg",
+   "source": "../work/r26/t/wh0-3060.png",
+   "kind": "note",
+   "label": "wh0 frame 3060 first terrain frame, preview draft, 31.6 s",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:18:16.098Z",
+   "file": "20261126131816098-note-wh0-3296.jpg",
+   "source": "../work/r26/t/wh0-3296.png",
+   "kind": "note",
+   "label": "wh0 frame 3296 rise, preview draft: RED, dark crescent on the globe; same fault as 2997",
+   "stop": "jupiter"
+  },
+  {
+   "time": "2026-11-26T13:18:15.409Z",
+   "file": "20261126131815409-note-wh0-2997.jpg",
+   "source": "../work/r26/t/wh0-2997.png",
+   "kind": "note",
+   "label": "wh0 frame 2997 dive, preview draft: RED, a dark disc with a wedge cut out lies on the globe, speckles round its edge; cause not found yet",
+   "stop": "jupiter"
+  },
   {
    "time": "2026-11-26T12:54:36.424Z",
    "file": "20261126125436424-note-wd6s-3150.jpg",
@@ -146,54 +194,6 @@
    "source": "../work/r26/t/sheet-wa5r4-sizes.jpg",
    "kind": "note",
    "label": "RED at master: frame 3150 of line A at 9f297b47 at preview draft (line (i) 2.006) beside the same at master draft (3.851), and the master's lower half at 1 to 1. At master the thin pale lines along the flow cover the ground like wood grain; the lower left is 4 to 9 levels lighter.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:57:46.276Z",
-   "file": "20261126105746276-note-wa5-r4-3150.jpg",
-   "source": "../work/r26/t/wa5-r4-3150.png",
-   "kind": "note",
-   "label": "Frame 3150, state wa5 after four solve rounds in display values, preview, draft, 1 sample. Line (i) 2.006. Wrong: ripples at bottom centre, far right under the limb, pebbly heaps.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:57:45.505Z",
-   "file": "20261126105745505-note-sheet-wa5-3150.jpg",
-   "source": "../work/r26/t/sheet-wa5-3150.jpg",
-   "kind": "note",
-   "label": "Sheet for 11:15: frame 3150 of state wa5 after four solve rounds beside main and the approved, preview, draft. Line (i) 2.006 whole, 1.608 outside the seven cells; main at this tier 3.390 and 3.208.",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:48:32.823Z",
-   "file": "20261126104832823-note-wa4-glow.jpg",
-   "source": "../work/r26/t/wa4-glow.png",
-   "kind": "note",
-   "label": "3150 the glow at 1.5 to 1, the approved (left) beside state wa4 before its rounds (right): the steady light now falls on the matter in the march and is no longer added over the picture; dim patches, one green",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:48:31.649Z",
-   "file": "20261126104831649-note-wa4-far.jpg",
-   "source": "../work/r26/t/wa4-far.png",
-   "kind": "note",
-   "label": "3150 far right under the limb at 2 to 1, the approved (left) beside state wa4 before its rounds (right): a dotted limb, combed stripes and false colour where the solve stands at its limit; reds",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:32:13.083Z",
-   "file": "20261126103213083-note-wa1-r4-3150.jpg",
-   "source": "../work/r26/t/wa1-r4-3150.png",
-   "kind": "note",
-   "label": "3150 preview draft, state wa1 after four rounds: line (i) 3.434 whole (inside the seven cells 0.662, outside 2.772); main at this tier 3.390 (outside 3.208); bands green 0.720 0.864 0.928 0.929",
-   "stop": "jupiter"
-  },
-  {
-   "time": "2026-11-26T10:32:12.505Z",
-   "file": "20261126103212505-note-wa1-r2-seven.jpg",
-   "source": "../work/r26/t/wa1-r2-seven.png",
-   "kind": "note",
-   "label": "3150 the seven cells: the approved (top), state wa1 after two rounds (middle), signed error at sigma 8 px (bottom): the lamps stand at the approved's glints but as soft round lamps and too bright; a red",
    "stop": "jupiter"
   }
  ]
