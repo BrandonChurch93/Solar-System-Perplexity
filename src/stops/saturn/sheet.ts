@@ -405,6 +405,12 @@ void main() {
   float od = (ob * ob - oa * (dot(cs, cs) - 1.0)) / oa;
   float bb = sqrt(max(1.0 - od, 0.0));
   float bw = max(ringLookPixel(length(vec2(dFdx(bb), dFdy(bb)))), 1e-5);
+  // the shaded plane does not end at the globe's outline: it goes on under the globe's own soft edge (lip: a
+  // place inside the inner end of the plane whose view ray passes the globe within that edge, as keptEdge has
+  // it), in both sets alike (kept/rings.ts). Without it the sky had a window between the plane and the globe's
+  // outline at the two ends of the equator, and a star behind the plane flashed up as the outline passed it.
+  // Such a place lies inside the globe, so it is drawn behind the globe in both halves of the plane
+  bool lip = met && r < uBounds.x && uPass == 0 && bb > 1.0 - (uKGraze.z + 1.0) * bw;
   float kx = (r - uKSpan.x) * uKSpan.y;
   // one look from far to near: the sheet keeps the far look wherever it lies far from the lens, and the model's
   // own light, with all it adds, shows only on the part of the sheet the lens has come near (skim.json
@@ -502,11 +508,15 @@ void main() {
   alpha = inside.a + mix(alpha - inside.a, farLook.a, wfar);
   // the shaded plane lets no star through from the globe on, at every height of the lens
   for (int k = 0; k < ((mine && uOnly < 0.5) ? 1 : 0); k++) alpha = max(alpha, keptShade(r, kAlong, kMiss, kMw, keptEdge(bb, bw)));
+  for (int k = 0; k < ((lip && uOnly < 0.5) ? 1 : 0); k++) {
+    col = vec3(0.0);
+    alpha = keptShade(max(r, uKShadeRamp.y), kAlong, kMiss, kMw, keptEdge(bb, bw));
+  }
   vec2 vq = vNdc * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   alpha *= uWeight;
   outColor = diagOut(vec4(col, alpha), texels, 1.0, uLayer, vec2(0.0), length(vRayV) * depth);
-  if (mine == false || (uDiag >= 2 && alpha < 0.5)) discard;
+  if ((mine == false && (lip == false || alpha <= 0.0)) || (uDiag >= 2 && alpha < 0.5)) discard;
 }`
 
 // the brightness of a sheet too deep to see through, inside the rim, where the model was measured: the middle

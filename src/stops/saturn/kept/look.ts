@@ -191,14 +191,22 @@ export const streak: StreakLook = {
 
 export const closeRange: [number, number] = [0.35, 1.6]
 export const detailRange: [number, number] = [0.5, 1.1]
-export const heroRange: [number, number] = [0.6, 1.6]
 export const polarHeight: [number, number] = [1.0, 1.7]
 export const polarFar: [number, number] = [7, 9]
 export const polarEdge: [number, number] = [1.46, 1.54]
 export const polarDensity: [number, number] = [1.0, 1.3]
 export const polarOuter: [number, number] = [0.012, 0.002]
 export const polarShow = 1
-export const limbShow = 1
+// The rings are one rigid body, true circles about the axis, and the globe is one ellipsoid, at every pose of
+// the lens. The layout of the hero picture (the table polar-warp.bin, outerFit, arc, fillet, the cut and the
+// rim of the outer edge) and the hero's limb (globe.limbFit) are bends of the body toward one picture: the
+// share of each that is drawn is 0.
+export const shapeShow = 0
+export const limbShow = 0
+// The hero's light: what the hold's picture adds to the light of the body (the light map of the hold on the
+// globe, the hold's look of the ice in the polar map, the streak). It is not weighted by the pose of the lens:
+// the same share of it is drawn at every frame, all of it (1) or none (0).
+export const heroLight = 0
 export const patchShow = 1
 export const skimRange: [number, number] = [0.5, 1.1]
 export const skimAway: [number, number] = [0.01, 0.25]
