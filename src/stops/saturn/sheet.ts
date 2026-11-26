@@ -3,7 +3,7 @@ import { DIAG_GLSL, diagUniform, gradUniform } from '../../diagnostics/diag'
 import { INVERSE_FILMIC_GLSL } from '../../post/chain'
 import azimuth from './azimuth.json'
 import { RING_FIELD_GLSL, type RingField } from './field'
-import { ICE_GRADE_GLSL, gradeUniforms } from './grade'
+import { DUST_AIR_GLSL, ICE_GRADE_GLSL, gradeUniforms } from './grade'
 import { ICE_GLSL, type Ice } from './ice'
 import * as keptLook from './kept/look'
 import { HASH_GLSL } from './kept/rings'
@@ -45,31 +45,41 @@ uniform vec4 uOuterWaves;
 uniform vec4 uOuterGaps;
 // (away: how far past the rim, 0 to 1; gap: the share that is a gap there; least: the share of the depth a
 // gap keeps)
-float sheetBands(float r, float fp, float away, float gap, float least) {
-  float at = mix(-uOuterBands.z, gap, away);
+// (waves: the three widths of the sets and their seed; fit: the least softness of a plateau's edge in cells,
+// that softness in footprints, the strength of the thin lines at the edges, the softness of a gap's edge)
+float sheetBandsOf(float r, float fp, float away, float gap, float least, vec4 waves, vec4 fit) {
+  float at = mix(-fit.w, gap, away);
   float mean = least + (1.0 - least) * clamp(1.0 - at, 0.0, 1.0);
   float k = 1.0;
   for (int i = 0; i < 3; i++) {
-    float wave = i == 0 ? uOuterWaves.x : (i == 1 ? uOuterWaves.y : uOuterWaves.z);
+    float wave = i == 0 ? waves.x : (i == 1 ? waves.y : waves.z);
     float seen = clamp(wave / (fp * uRfFine.w) - 1.0, 0.0, 1.0);
     vec2 h;
     float b;
-    vec3 q = ringOctave(r / wave + uOuterGaps.w * float(i), uint(uOuterWaves.w) + uint(i), max(uOuterBands.y, uOuterGaps.z * fp / wave), 0.0, h, b);
-    float open = least + (1.0 - least) * smoothstep(at - uOuterBands.z, at + uOuterBands.z, q.x * 0.5 + 0.5);
-    k *= mix(mean, open * exp(uOuterGaps.y * q.z), seen);
+    vec3 q = ringOctave(r / wave + uOuterGaps.w * float(i), uint(waves.w) + uint(i), max(fit.x, fit.y * fp / wave), 0.0, h, b);
+    float open = least + (1.0 - least) * smoothstep(at - fit.w, at + fit.w, q.x * 0.5 + 0.5);
+    k *= mix(mean, open * exp(fit.z * q.z), seen);
   }
   return k;
+}
+float sheetBands(float r, float fp, float away, float gap, float least) {
+  return sheetBandsOf(r, fp, away, gap, least, uOuterWaves, vec4(uOuterBands.y, uOuterGaps.z, uOuterGaps.y, uOuterBands.z));
 }
 float sheetOuterBands(float r, float fp) {
   return sheetBands(r, fp, clamp((r - uOuter.x) / uOuterBands.w, 0.0, 1.0), uOuterBands.x, uOuterGaps.x);
 }
-// Near the sheet its inner rim (uInner.x) is no edge either: inside it dark dust goes on to the globe, with
-// the depth uInner.y at the rim and uInner.z at the globe, in ringlets of its own (the same plateaus as past
-// the outer rim), of the stuff of the thin inner ring (its brightness as a share of that of the ice at
-// uInnerBands.w: uInner2.x at the rim, uInnerBands.z by the globe, falling between the radii uInnerDark);
-// outward of the rim it dies away over uInner.w. None in the hold.
+// The inner rim (uInner.x) is no edge of the plane: inside it a thin sheet of dust and ice goes on toward the
+// globe, with the depth uInner.y at the rim falling to uInner.z at the cloud tops (skim.json inner.depth, the
+// depth straight through the plane), in ringlets of its own (the same plateaus as past the outer rim), of dark
+// ice of its own: where it is too deep to see through it returns uInner2.x (skim.json inner.ice) of what the
+// ice of the thin inner ring at uInnerBands.z returns there, the same at every radius. It is one body with the
+// ring: the same depth and the same ice at every height of the lens, covered by the one law of cover, so the
+// hold's steep view sees all but through it, with little light of its own against the black, and the skim's
+// flat view sees it as a grey veil that takes light from the globe behind it. It ends over the foot of the ring
+// (skim.json inner.join: from so far inward of the rim to so far outward of it), where the ring's own ice
+// rises from nothing to more than the sheet's, so the depth of the plane has neither a gap nor a ridge there.
 float sheetInner(float r) {
-  return mix(uInner.y, uInner.z, clamp((uInner.x - r) / (uInner.x - 1.0), 0.0, 1.0)) * exp(-max(r - uInner.x, 0.0) / uInner.w);
+  return mix(uInner.y, uInner.z, clamp((uInner.x - r) / (uInner.x - 1.0), 0.0, 1.0)) * (1.0 - smoothstep(uInner.x - ${skim.inner.join[0]!.toFixed(6)}, uInner.x + ${skim.inner.join[1]!.toFixed(6)}, r));
 }
 // the brightness that depth returns where the model was measured
 float sheetOuterLum(float depth) {
@@ -107,13 +117,28 @@ float sheetLaw(float thin, float mu, float mu0, float deg) {
 // of the zones (uFlatten.z). Needs RING_FIELD_GLSL and SHEET_OUTER_GLSL. The sheet and the grains near the
 // lens (grains.ts) both read the ice here, so a grain has the colour of the ringlet it lies in.
 export const SHEET_AT_GLSL = /* glsl */ `
+${DUST_AIR_GLSL}
 uniform vec3 uSunL;
 uniform vec4 uFlatten;
 uniform vec3 uEven;
-uniform vec4 uInnerBands;
-uniform vec2 uInnerDark;
+uniform vec3 uInnerBands;
+uniform vec4 uInnerRings;
+uniform vec4 uInnerWaves;
+uniform vec4 uInnerFit;
+// uOnly 1: the plane holds the thin sheet inside the inner rim alone (the set of the kept build draws the ring
+// itself, set.ts). sheetThin: the share of the thin inner sheet in the depth of the plane at the last point
+// sheetAt was asked for, and sheetGlow: the share of the thin inner sheet in the brightness there
+uniform float uOnly;
+float sheetThin = 0.0;
+float sheetGlow = 0.0;
+// sheetFine: what the caller sets before it asks for a point, for the ringlets' amplitude by radius (grade.ts
+// iceFine): the power less one, the width of a zone in footprints, the least and the most of the ratio that
+// counts. With the power 0 (the hold, and wherever the amplitude is 1) nothing of it runs
+vec4 sheetFine = vec4(0.0);
 void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum, out float thin, out vec4 ink, out vec3 tint, out vec2 wide) {
   vec2 knots = ringKnots(r, fp);
+  // the ringlets' amplitude by radius: the light of the model's own profile over the light of its zone
+  for (int k = 0; k < (abs(sheetFine.x) > 0.0 ? 1 : 0); k++) knots.y *= pow(clamp(knots.y / max(ringKnots(r, fp * sheetFine.y).y, 1e-6), sheetFine.z, sheetFine.w), sheetFine.x);
   wide = ringKnots(r, uFlatten.z);
   float rc = sheetInkRadius(r);
   ink = ringInk(rc);
@@ -126,16 +151,31 @@ void sheetAt(vec2 q, float r, float fp, float fpl, out float tau, out float lum,
   float more = sheetOuter(r);
   for (int k = 0; k < (more > 0.0 ? 1 : 0); k++) more *= sheetOuterBands(r, fp);
   knots += vec2(more, sheetOuterLum(more));
+  knots *= 1.0 - uOnly;
   float dust = sheetInner(r);
+  float glow = 0.0;
   for (int k = 0; k < (dust > 0.0 ? 1 : 0); k++) {
     dust *= sheetBands(r, fp, clamp((uInner.x - r) / uInner2.w, 0.0, 1.0), uInnerBands.x, uInnerBands.y);
-    // the stuff of the thin inner ring: what the ice at uInnerBands.w returns where it is too deep to see through
-    vec2 like = ringKnots(uInnerBands.w, uFlatten.z);
-    knots += vec2(dust, mix(uInnerBands.z, uInner2.x, smoothstep(uInnerDark.x, uInnerDark.y, r)) * like.y / max(ringSat(like.x * uRfLight.x), 1e-4) * ringSat(dust * uRfLight.x));
+    // the stuff of the thin inner ring: what the ice at uInnerBands.z returns where it is too deep to see through
+    vec2 like = ringKnots(uInnerBands.z, uFlatten.z);
+    // the dust lies in ringlets of its own, finer than the plateaus of its depth: darker and lighter ones about
+    // the same mean (uInnerRings: the share that is dark, the share of its light a dark one keeps, how far
+    // they show; uInnerWaves: their three widths and their seed; uInnerFit: their edges, as sheetBandsOf
+    // takes them)
+    float gapMean = uInnerRings.y + (1.0 - uInnerRings.y) * clamp(1.0 - uInnerRings.x, 0.0, 1.0);
+    float rings = mix(1.0, sheetBandsOf(r, fp, 1.0, uInnerRings.x, uInnerRings.y, uInnerWaves, uInnerFit) / (gapMean * gapMean * gapMean), uInnerRings.z);
+    // the dust by the globe lies in the long twilight of the globe, where the Sun's light comes through the
+    // globe's air (grade.ts dustAir, on the globe made round)
+    rings *= dustAir(vec3(q.x, 0.0, q.y), normalize(vec3(uSunL.x, uSunL.y / uPolar, uSunL.z)));
+    glow = uInner2.x * like.y / max(ringSat(like.x * uRfLight.x), 1e-4) * ringSat(dust * uRfLight.x) * rings;
+    knots += vec2(dust, glow);
   }
+  sheetThin = dust / max(knots.x, 1e-9);
+  sheetGlow = glow / max(knots.y, 1e-9);
   tau = knots.x;
   lum = knots.y;
-  ringFine(r, fp, fpl, ink.a, thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
+  // and the ringlets of the ladder by the same amplitude
+  ringFine(r, fp, fpl, ink.a * (1.0 + sheetFine.x), thin, dot(q / r, normalize(uSunL.xz)), tau, lum, tint);
 }`
 
 // The far look of the sheet: the sheet as the set of the kept build draws it once its picture of the hold has
@@ -157,6 +197,9 @@ uniform vec3 uKPenumbra;
 uniform vec2 uKPenumbraFar;
 uniform vec2 uKSolid;
 uniform vec2 uKShadeRamp;
+uniform vec3 uKGraze;
+uniform float uKSine;
+uniform float uKDeep;
 uniform vec4 uKOver;
 uniform vec4 uKStrand;
 uniform float uKSheetR[9];
@@ -182,6 +225,45 @@ float keptKnots(float r, float t[9]) {
   for (int k = 1; k < 8; k++) if (r >= uKSheetR[k]) i = k;
   return mix(t[i], t[i + 1], clamp((r - uKSheetR[i]) / (uKSheetR[i + 1] - uKSheetR[i]), 0.0, 1.0));
 }
+// how far the sheet of the far look is lit at the place along and beside the axis of the globe's shadow, mw the
+// pixel's width of miss
+float keptLit(float along, float miss, float mw) {
+  return along > 0.0 ? 1.0 : smoothstep(uKPenumbra.x - mw, uKPenumbra.y + mw + uKPenumbra.z * max(-along, 0.0) + uKPenumbraFar.y * max(-along - uKPenumbraFar.x, 0.0), miss);
+}
+// how far a view ray counts as passing the globe (1) and not ending on it (0): bb its nearest distance to the
+// globe's centre in the globe's own measure, bw the pixel's width of bb. A ray counts as passing from where the
+// globe's own soft edge begins (uKGraze.z pixels inside its outline), so no star shows in that edge
+float keptEdge(float bb, float bw) {
+  return smoothstep(1.0 - (uKGraze.z + 1.0) * bw, 1.0 - uKGraze.z * bw, bb);
+}
+// The one law of cover (skim.json handover.kept): the ring is one body at every height of the lens, so a view
+// ray that crosses its plane is covered by 1 - exp(-depth / sine), sine that of the angle between the ray and
+// the plane, floored only against the division (uKSine). The depth at a radius is the kept ring's own: what
+// gives the kept opacity at the sine of the hold's eye (uKFloorTone.w). keptRise: the power that law puts on
+// what the kept ring lets through, for a ray at the cosine mu to the normal of the plane
+float keptRise(float mu) {
+  return uKFloorTone.w / max(mu, uKSine);
+}
+// where the sheet lies in front of the lit globe (r: radius, lit: how far the ice there is out of the globe's
+// shadow, fore: in front of the globe, bb with its width bw: how the view ray passes the globe, fw: the width
+// of the inner rim), as the kept set has it (kept/rings.ts)
+float keptFront(float r, float lit, bool fore, float bb, float bw, float fw) {
+  float keep = max(smoothstep(uKSheetFit.x, uKSheetFit.y, r), 1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb));
+  return fore ? (1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb)) * lit * smoothstep(uKEdge.x - fw, uKEdge.x + fw, r) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) : 0.0;
+}
+// the cover of the sheet there: the kept ring lets uKSheetT of the lit globe through at the sine of the hold's
+// eye, and by the one law less where the view runs flatter over the plane and more where it runs steeper. The
+// far look and the model near the sheet both draw it, at every height of the lens
+float keptVeil(float r, float mu, float front) {
+  return (1.0 - pow(keptKnots(r, uKSheetT), keptRise(mu))) * front;
+}
+// the opacity of the shaded plane, which lets no sky through from the globe on (sheet.json shadow.solid, as the
+// set of the kept build has it, kept/rings.ts): no star shows between the night side and the shaded rings. past:
+// keptEdge of the view ray; where the ray ends on the globe the true depth counts, so the night side is the
+// body's own ellipse behind the empty space and behind thin ice
+float keptShade(float r, float along, float miss, float mw, float past) {
+  return uKSolid.x * uKSolid.y * (1.0 - keptLit(along, miss, mw)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) * smoothstep(uKShadeRamp.x, uKShadeRamp.y, r) * past;
+}
 // colour and opacity of the far look at radius r and azimuth phi. x: the place in the profile, texels: profile
 // texels a pixel, mu: cosine of the view to the normal, along and miss: the place along and beside the axis of
 // the globe's shadow with mw the pixel's width of miss, fore: in front of the globe, od and bb with its width
@@ -192,19 +274,30 @@ vec4 keptSheet(float r, float phi, float x, float texels, float mu, float along,
   vec4 s = keptProf(x, texels * grad * uKFit.w);
   float body = smoothstep(uKEdge.x - 0.004, uKEdge.x + 0.004, r) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r));
   float ramp = smoothstep(uKFit.y, uKFit.z, r);
-  float a = 1.0 - pow(1.0 - min(max(s.a, uKFit.x * body * ramp), 0.999), clamp(uKFloorTone.w / max(mu, 0.02), 1.0, 8.0));
+  // no star shows through any part of the sheet that holds ice: where the view ray passes the globe the depth
+  // of the sheet counts uViewFit.w times (sheet.json starCover); the globe shows through by the depth itself.
+  // The opacity goes by the one law of cover (keptRise): no height of the lens and no clock is in it
+  float cover = mix(1.0, uViewFit.w, uKSolid.x * body * keptEdge(bb, bw));
+  float a = 1.0 - pow(1.0 - min(max(s.a, uKFit.x * body * ramp), 0.999), keptRise(mu) * cover);
   vec3 c = inverseFilmic(s.rgb) * uKTone * keptAzGain(r, phi);
   float tu = (phi + uKMottle.z * pow(max(r, 1.0) / 1.86, -1.5) * uKMottle.w) / 6.283185307;
   float inB = smoothstep(1.5, 1.6, r) * (1.0 - smoothstep(1.88, 1.95, r));
   c *= 1.0 - uKMottle.x * inB * smoothstep(0.55, 0.9, vnoise(vec2(tu * 36.0, r * 3.0), 36)) + uKMottle.y * (vnoise(vec2(tu * 640.0, r * 70.0), 640) - 0.5);
   // the grade of the rings by the height of the lens (grade.ts); nothing of it runs at the heights of the hold
-  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) c = iceGrade(c, r) * iceView(mu, r) * iceZone(r, mu);
-  float lit = along > 0.0 ? 1.0 : smoothstep(uKPenumbra.x - mw, uKPenumbra.y + mw + uKPenumbra.z * max(-along, 0.0) + uKPenumbraFar.y * max(-along - uKPenumbraFar.x, 0.0), miss);
+  for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) {
+    c = iceGrade(c, r) * iceView(mu, r) * iceZone(r, mu);
+    // the ringlets' amplitude by radius (grade.ts iceFine): the light of the profile at the pixel over the
+    // light of its zone, the same in the kept set (kept/rings.ts)
+    float fine = iceFine(r);
+    for (int i = 0; i < (abs(fine) > 0.0 ? 1 : 0); i++) c *= iceRinglets(dot(inverseFilmic(s.rgb), luma), dot(inverseFilmic(keptProf(x, max(texels * grad * uKFit.w, 1.0) * uGradeFine.x).rgb), luma), fine);
+  }
+  float lit = keptLit(along, miss, mw);
+  // what the globe behind the sheet adds to the look of the ice in front of it (the strands over the globe, the
+  // sheet in front of the lit globe and its glow), as the kept set has it at every height of the lens
   float over = fore ? smoothstep(-0.05, 0.0, od) * smoothstep(uKEdge.x, uKEdge.x + uKOver.x, r) * lit : 0.0;
-  float keep = max(smoothstep(uKSheetFit.x, uKSheetFit.y, r), 1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb));
-  float sheet = fore ? (1.0 - smoothstep(1.0 - bw, 1.0 + bw, bb)) * lit * smoothstep(uKEdge.x - fw, uKEdge.x + fw, r) * mix(1.0, keep, smoothstep(1.0 - bw, 1.0 + bw, bb)) * (1.0 - smoothstep(uKEdge.y - 0.002, uKEdge.y + 0.002, r)) : 0.0;
-  a = max(a, (1.0 - keptKnots(r, uKSheetT)) * sheet);
-  a = max(a, uKSolid.x * uKSolid.y * (1.0 - lit) * body * smoothstep(uKShadeRamp.x, uKShadeRamp.y, r));
+  float sheet = keptFront(r, lit, fore, bb, bw, fw);
+  a = max(a, keptVeil(r, mu, sheet));
+  a = max(a, keptShade(r, along, miss, mw, keptEdge(bb, bw)));
   vec3 wedge = uKSheetGlow.rgb * (1.0 - smoothstep(uKSheetFit.z, uKSheetFit.w, bb)) * keptKnots(r, uKWedgeG) * sheet * day;
   for (int j = 0; j < (over > 0.0 ? 1 : 0); j++) {
     float sx = (uKStrand.x + (r - uKEdge.x) * uKStrand.y - uKSpan.x) * uKSpan.y;
@@ -258,6 +351,8 @@ uniform float uVignette;
 uniform float uAspect;
 uniform float uFinest;
 uniform float uSat;
+uniform vec4 uThinFar;
+uniform vec4 uThinFar2;
 uniform vec3 uTintDense;
 uniform vec3 uTintThin;
 uniform vec3 uFloor;
@@ -314,8 +409,10 @@ void main() {
   // one look from far to near: the sheet keeps the far look wherever it lies far from the lens, and the model's
   // own light, with all it adds, shows only on the part of the sheet the lens has come near (skim.json
   // handover.kept.reach, by the logarithm of the distance), so nothing changes with time alone
-  // (the dust inside the inner rim is no part of the far look: it shows by the nearness of the lens alone)
-  float wfar = max(uRfFar, smoothstep(uRfReach.x, uRfReach.y, log(max(length(ray), 1e-6))) * smoothstep(uInner.x - uInner.w, uInner.x, r));
+  // (the thin sheet inside the inner rim is no part of the far look: the model draws it at every height and
+  // every distance, below, so the far look by the distance begins at the rim. With uOnly the plane holds that
+  // thin sheet alone and no far look)
+  float wfar = max(uRfFar, smoothstep(uRfReach.x, uRfReach.y, log(max(length(ray), 1e-6))) * smoothstep(uInner.x, uInner.x + uInner.w, r)) * (1.0 - uOnly);
   vec4 farLook = vec4(0.0);
   for (int k = 0; k < ((mine && wfar > 0.0 && kx > 0.0 && kx < 1.0) ? 1 : 0); k++) {
     vec3 on = cs + ds * ((-ob - sqrt(max(od * oa, 0.0))) / oa);
@@ -324,14 +421,23 @@ void main() {
   }
   vec3 col = vec3(0.0);
   float alpha = 0.0;
-  for (int k = 0; k < ((mine && wfar < 1.0) ? 1 : 0); k++) {
+  // what of the model's own light is the thin sheet inside the inner rim: its colour and its cover
+  vec4 inside = vec4(0.0);
+  for (int k = 0; k < ((mine && (wfar < 1.0 || r < uInner.x + uInner.w)) ? 1 : 0); k++) {
     float tau;
     float lum;
     float thin;
     vec4 ink;
     vec3 tint;
     vec2 wide;
+    // the ringlets' amplitude by radius, as in the far look (grade.ts iceFine)
+    for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) sheetFine = vec4(iceFine(r), uGradeFine);
     sheetAt(q, r, fp, fpl, tau, lum, thin, ink, tint, wide);
+    // the light of the thin sheet inside the inner rim is kept apart from the ring's: nothing the near light of
+    // the ring gains or loses by the height of the lens (its gain, its tint, its saturation, the evening of its
+    // zones, the grade) touches it
+    float dustLum = lum * sheetGlow;
+    lum -= dustLum;
     float turn = atan(q.y, q.x) / 6.2831853;
     // the spokes show only near the sheet
     float spokes = 0.0;
@@ -341,6 +447,8 @@ void main() {
     lum *= pow(clamp(wide.y / uFlatten.x, 1.0 / uFlatten.w, uFlatten.w), uFlatten.y * (1.0 - thin));
     // the sand of the sheet and its sparks, as the sheet is seen from afar
     vec2 sand = iceSand(r, turn, 1.0 / max(pixel, 1e-9), length(toPixel * vec2(-q.y, q.x)) / r, thin, sweep);
+    // the thin sheet inside the inner rim is powder with no grain to see
+    for (int j = 0; j < (uInner.y > 0.0 ? 1 : 0); j++) sand *= smoothstep(uInner.x - uInner.w, uInner.x, r);
     lum *= exp(sand.x);
     tau *= exp(sand.x * uIceFit.z);
     float dist = length(ray);
@@ -357,21 +465,43 @@ void main() {
     float law = sheetLaw(thin, mu, mu0, deg);
     vec3 tone = mix(vec3(1.0), ink.rgb, uSat * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uTintDense, uTintThin, thin);
     vec3 lit = globeShadow(P, uSunL, uPolar);
-    // stars do not show through any part of the sheet that holds ice; the globe shows through by the true depth
+    // stars do not show through any part of the sheet that holds ice; the globe shows through by the depth
+    // itself, at every height of the lens
     float bn = dot(cs, ds) / length(ds);
     float behind = front ? 1.0 - smoothstep(uShadowFit.z, uShadowFit.w, sqrt(max(dot(cs, cs) - bn * bn, 0.0))) : 0.0;
-    alpha = 1.0 - exp(-left / mu * mix(uViewFit.w, 1.0, behind));
+    // at the inner rim the ice counts by its true depth against the sky too
+    float true1 = max(behind, 1.0 - smoothstep(uInner.x - uInner.w, uInner.x + uInner.w, r));
+    // the model's depth counts uKDeep times (skim.json handover.kept view / model): the depth of the one law of
+    // cover. The thin sheet inside the inner rim counts by its own depth alone against the sky and the globe
+    // alike (sheetThin: its share of the depth): its cover is 1 - exp(-depth / sine) with the depth of
+    // skim.json inner.depth, the depth that shades the globe too (grade.ts dustShade), and a star behind it is
+    // dimmed by the depth along its ray and no more
+    alpha = 1.0 - exp(-left / mu * mix(uKDeep * mix(uViewFit.w, 1.0, true1), 1.0, sheetThin));
+    inside.a = alpha * sheetThin;
+    // in front of the lit globe the sheet covers as the kept ring does there, by the one law of cover (keptVeil)
+    alpha = max(alpha, keptVeil(r, mu, keptFront(r, keptLit(kAlong, kMiss, kMw), front, bb, bw, max(uKFillet, 1.5 * ringLookPixel(pixel)))) * (1.0 - uOnly));
     vec3 under = mix(uFloor, vec3(1.0), lit) * uShade.z;
     // the sheet and the white sparks of its brightest grains
     col = lum * (seen * law) * (tone + mix(tone, vec3(1.0), uIceOrbit.w) * (sand.y * uIceFit.y));
     // the brightest ice under the ceiling of the grade and the thin zones by the view, as in the far look
     // (grade.ts)
     for (int j = 0; j < (uGrade.x > 0.0 ? 1 : 0); j++) col = iceHeld(col) * iceView(mu, r) * iceZone(r, mu);
-    col *= under;
+    // the thin sheet inside the inner rim: the light of its own ice by the angles of the Sun and of the view
+    // alone, with the colour, the saturation and the gain the ring has from afar (uThinFar: the far tint of the
+    // dense ice and the far saturation; uThinFar2: the far tint of the thin ice and the far gain), the same in
+    // every take of the stop and at every height of the lens
+    vec3 own = dustLum * (seen * law) * mix(vec3(1.0), ink.rgb, uThinFar.w * mix(1.0, min(law, 1.0), thin * uViewFit.z)) * tint * mix(uThinFar.rgb, uThinFar2.rgb, thin) * mix(uFloor, vec3(1.0), lit) * uThinFar2.w;
+    col = col * under + own;
+    inside.rgb = own;
   }
-  // the far look gives way to the model's own light where the lens has closed in
-  col = mix(col, farLook.rgb, wfar);
-  alpha = mix(alpha, farLook.a, wfar);
+  // the far look gives way to the model's own light where the lens has closed in. The thin sheet inside the
+  // inner rim is no part of that handover: it is the model's at every height of the lens and every distance,
+  // by the one law of cover alone, so it is taken out of the model's light before the two are weighed and put
+  // back whole after it (where the plane holds none of it this is the plain mix)
+  col = inside.rgb + mix(col - inside.rgb, farLook.rgb, wfar);
+  alpha = inside.a + mix(alpha - inside.a, farLook.a, wfar);
+  // the shaded plane lets no star through from the globe on, at every height of the lens
+  for (int k = 0; k < ((mine && uOnly < 0.5) ? 1 : 0); k++) alpha = max(alpha, keptShade(r, kAlong, kMiss, kMw, keptEdge(bb, bw)));
   vec2 vq = vNdc * 0.5 * vec2(uAspect, 1.0);
   col *= uGain * uWeight / mix(1.0, 1.0 / pow(1.0 + dot(vq, vq) * 0.9, 2.0), uVignette);
   alpha *= uWeight;
@@ -420,9 +550,13 @@ export class Sheet {
   private readonly geometry: THREE.BufferGeometry
   private readonly outer = new THREE.Vector4(model.outer, 0, skim.outer.length[0], 0)
   private readonly outerInk = new THREE.Vector2(model.outer - skim.outer.inset, 0)
-  private readonly inner = new THREE.Vector4(model.inner, 0, 0, skim.inner.fade)
-  private readonly inner2 = new THREE.Vector4(skim.inner.light[0]!, model.inner + skim.inner.inset, 0, skim.inner.bands.over)
-  private readonly bounds = new THREE.Vector2((model.span as [number, number])[0], Math.max((model.span as [number, number])[1], skim.outer.end[1]!))
+  // the thin sheet inside the inner rim: skim.json inner.depth is its depth straight through the plane at the rim
+  // and at the cloud tops. Its cover, its own light and the shade it casts on the globe all go by that depth
+  // itself (its share of the cover takes no uKDeep, main below; grade.ts dustShadeAt)
+  private readonly inner = new THREE.Vector4(model.inner, skim.inner.depth[0]!, skim.inner.depth[1]!, skim.inner.fade)
+  private readonly inner2 = new THREE.Vector4(skim.inner.ice, model.inner + skim.inner.inset, 1, skim.inner.bands.over)
+  private readonly reach = Math.max((model.span as [number, number])[1], skim.outer.end[1]!)
+  private readonly bounds = new THREE.Vector2((model.span as [number, number])[0], this.reach)
 
   private readonly farShadow = new THREE.Vector3(1, 0.2, 0)
   private readonly farPenumbra = new THREE.Vector3().fromArray(keptLook.rings.penumbra)
@@ -432,15 +566,16 @@ export class Sheet {
 
   constructor(field: RingField, ice: Ice, polar: number) {
     const kl = keptLook.rings
-    // one triangle over the whole picture (VERT); the plane holds ice from the inner end of the model to
-    // where the ice past the rim ends (bounds), and near the sheet from the globe on (set)
+    // one triangle over the whole picture (VERT); the plane is drawn from the globe (set) to where the ice
+    // past the rim ends (bounds)
     this.geometry = new THREE.BufferGeometry()
     this.geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array([-1, -1, 0, 3, -1, 0, -1, 3, 0]), 3))
     this.uniforms = {
       ...field.uniforms,
       ...ice.uniforms,
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
-      uBounds: { value: this.bounds },
+      uBounds: { value: this.bounds }, uOnly: { value: 0 }, uThinFar: { value: new THREE.Vector4(skim.light.tint.far.dense[0], skim.light.tint.far.dense[1], skim.light.tint.far.dense[2], skim.light.ringSaturation[0]) },
+      uThinFar2: { value: new THREE.Vector4(skim.light.tint.far.thin[0], skim.light.tint.far.thin[1], skim.light.tint.far.thin[2], look.gain[0]! * skim.light.rings[0]!) },
       uGrad: gradUniform, uDiag: diagUniform, uGain: { value: 1 }, uWeight: { value: 1 }, uVignette: { value: 0 }, uAspect: { value: 16 / 9 },
       uFinest: { value: field.finest },
       uShade: { value: new THREE.Vector4(look.view.dense, look.view.thin, look.gain[0], look.unlit) },
@@ -457,7 +592,11 @@ export class Sheet {
       uOuter: { value: this.outer },
       uOuter2: { value: new THREE.Vector4(skim.outer.length[1], skim.outer.end[0], skim.outer.end[1], rimLum()) },
       uOuterInk: { value: this.outerInk },
-      uInner: { value: this.inner }, uInner2: { value: this.inner2 }, uInnerBands: { value: new THREE.Vector4(skim.inner.bands.gap, skim.inner.bands.floor, skim.inner.light[1]!, skim.inner.like) }, uInnerDark: { value: new THREE.Vector2().fromArray(skim.inner.dark) },
+      uInner: { value: this.inner }, uInner2: { value: this.inner2 }, uInnerBands: { value: new THREE.Vector3(skim.inner.bands.gap, skim.inner.bands.floor, skim.inner.like) },
+      uInnerRings: { value: new THREE.Vector4(skim.inner.rings.gap, skim.inner.rings.floor, skim.inner.rings.amount, 0) },
+      uInnerWaves: { value: new THREE.Vector4(skim.inner.rings.waves[0], skim.inner.rings.waves[1], skim.inner.rings.waves[2], skim.inner.rings.seed) },
+      uInnerFit: { value: new THREE.Vector4(skim.inner.rings.soft, skim.inner.rings.filter, skim.inner.rings.lines, skim.inner.rings.width) },
+      uDustAir: { value: new THREE.Vector2(skim.inner.air.depth, skim.inner.air.height) },
       uOuterBands: { value: new THREE.Vector4(skim.outer.bands.gap, skim.outer.bands.soft, skim.outer.bands.width, skim.outer.bands.over) },
       uOuterWaves: { value: new THREE.Vector4(skim.outer.bands.waves[0], skim.outer.bands.waves[1], skim.outer.bands.waves[2], skim.outer.bands.seed) },
       uOuterGaps: { value: new THREE.Vector4(skim.outer.bands.floor, skim.outer.bands.lines, skim.outer.bands.filter, skim.outer.bands.shift) },
@@ -468,7 +607,7 @@ export class Sheet {
       uKFloorTone: { value: new THREE.Vector4(kl.floorTone[0], kl.floorTone[1], kl.unlit, skim.handover.kept.view) },
       uKAzGain: { value: azimuth.coeffs.flat() }, uKAzRadii: { value: azimuth.radii },
       uKShadowL: { value: this.farShadow }, uKPenumbra: { value: this.farPenumbra }, uKPenumbraFar: { value: new THREE.Vector2().fromArray(kl.penumbraFar) },
-      uKSolid: { value: this.farSolid }, uKShadeRamp: { value: new THREE.Vector2().fromArray(kl.shadeRamp) },
+      uKSolid: { value: this.farSolid }, uKShadeRamp: { value: new THREE.Vector2().fromArray(kl.shadeRamp) }, uKGraze: { value: new THREE.Vector3().fromArray(kl.graze) }, uKSine: { value: skim.handover.kept.floor }, uKDeep: { value: skim.handover.kept.view / skim.handover.kept.model },
       uKOver: { value: new THREE.Vector4().fromArray(kl.over) },
       uKStrand: { value: new THREE.Vector4(kl.strand[0], kl.strand[1], kl.strand[2], kl.overTone[2]) },
       uKSheetR: { value: kl.sheetRadii }, uKSheetT: { value: kl.sheetThrough }, uKWedgeG: { value: kl.wedgeGain },
@@ -494,9 +633,9 @@ export class Sheet {
   }
 
   // near: how near the lens is to the sheet (0 in the hold, 1 in the skim): the ice past the rim shows by it.
-  // inner: the share of its depth the dust inside the inner rim has at the height of the lens (grade.ts
-  // innerShare)
-  set(near: number, inner: number): void {
+  // The thin sheet inside the inner rim is the same at every height (skim.json inner.depth): nothing of it is set
+  // here, and its colour is that of the ice just outside the rim in every take (inner2.z is 1 from the start)
+  set(near: number): void {
     // the ice past the rim grows out of the rim: its depth and the lengths over which it thins out both come
     // with the nearness (skim.json outer.grow), so no band of it shows away from the rim before the rim has it
     const deep = Math.pow(near, skim.outer.grow.depth)
@@ -506,13 +645,7 @@ export class Sheet {
     this.outer.z = skim.outer.length[0]! * wide
     ;(this.uniforms.uOuter2!.value as THREE.Vector4).x = skim.outer.length[1]! * wide
     this.outerInk.y = Math.min(near * skim.outer.inkBy, 1)
-    // the dust inside the inner rim comes with the height of the lens (skim.json inner.by), and the plane holds
-    // ice from the globe on only where the lens is near (skim.json inner)
-    const dust = near > 0 ? inner : 0
-    this.inner.y = skim.inner.depth[0]! * dust
-    this.inner.z = skim.inner.depth[1]! * dust
-    this.inner2.z = Math.min(near * skim.outer.inkBy, 1)
-    this.bounds.x = near > 0 ? skim.inner.end : (model.span as [number, number])[0]
+    this.bounds.x = skim.inner.end
   }
 
   // The numbers the kept set gives its rings for this take, for the far look (SHEET_FAR_GLSL; its weight is
@@ -529,6 +662,13 @@ export class Sheet {
     this.farMottle.w = time
     this.farGrade.uGrade.value.x = grade
     this.farGrade.uGradeLow.value.w = zone
+  }
+
+  // thin: the plane holds the thin sheet inside the inner rim alone, for a take in which the set of the kept
+  // build draws the ring itself (set.ts): the same thin sheet, by the same law, in every take of the stop
+  only(thin: boolean): void {
+    this.uniforms.uOnly!.value = thin ? 1 : 0
+    this.bounds.y = thin ? model.inner : this.reach
   }
 
   dispose(): void {
