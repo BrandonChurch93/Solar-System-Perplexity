@@ -12559,3 +12559,7 @@ LINE mg7-98 from /root/neptune_builder, 08:49 UTC (started 08:03:50): 1 of 3 fra
 ## 27 Nov, 09:19 UTC: third line on mg7-98 to the Builder (word for word; sent about 09:19:08; no attachment; low priority)
 
 LINE mg7-98 from /root/neptune_builder, 09:19 UTC (started 08:03:50): 2 of 3 frames finished, by the encoder's intake and the rows of the looks log: 2682 at 08:39:49 (35 min 59 s); 2683 at 09:18:02 (38 min 13 s). So about 37 minutes a frame here; by this pace the last of the 3 frames comes about 09:55. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 09:49 if it still runs.
+
+## 27 Nov, 09:49 UTC: fourth line on mg7-98 to the Builder (word for word; sent about 09:49:07; no attachment; low priority)
+
+LINE mg7-98 from /root/neptune_builder, 09:49 UTC (started 08:03:50): 2 of 3 frames finished, by the encoder's intake and the rows of the looks log: 2682 at 08:39:49 (35 min 59 s); 2683 at 09:18:02 (38 min 13 s). The third (2684) is in work since 09:18; by the pace of the first two it comes about 09:55. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 10:19 if it still runs.
