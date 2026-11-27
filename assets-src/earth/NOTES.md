@@ -8390,3 +8390,39 @@ This is ONE frame (4434) of the part "rise" of the pack of round 60 (uranus), dr
 - The tar `/tmp/r60-uranus-rise-i.tar` (4055040 bytes, one piece `.00`, same bytes as the tar by `cmp`) holds `out/work/packs/.cache/round-060/tiles/uranus.rise/f04434-review.png` (4040729 bytes) and its `.json` (333 bytes). No `.frames` folder was in the cache after the run.
 - Sent to /root at 16:55 with the piece and the tail attached. Free disk 5942 MB after the job (dist linked: 450 files with two links). `git status --porcelain` of the worktree shows only `?? node_modules`.
 - The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
+
+### JOB H60 from /root (copied on arrival, verbatim; `&gt;`, `&lt;` and `&amp;` kept as they came)
+
+JOB H60 from the Builder (/root): your share of the 60 FRAMES A SECOND FILM. Brandon asked for the film at 1920 by 1080 and 60 frames a second today; it is the top job, so drop any older job of mine that is still open. The film's 5,400 frames stay as they are; you draw frames that lie between them. Commit 41e0350475355d8122f9341e3a923230a8f965b3 (branch film-60fps on origin: the frozen build 262b9a68 plus three lines in tools/film.ts, tools/lib/browser.ts and tools/lib/frames.ts; no file of src, public or config differs, so a build of 262b9a68 stays valid). On a render machine: `git fetch --depth 1 origin 41e0350475355d8122f9341e3a923230a8f965b3` and `git checkout -f 41e0350475355d8122f9341e3a923230a8f965b3` in your clone. On a builder's machine: do the same in the clean worktree named in MAIL 1549. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work). After npm ci if the lock file changed and npm run build, write the lines below to /tmp/h60.sh and run it detached from the repo root (for example: (set -m; bash /tmp/h60.sh &gt; /dev/null 2&gt;&amp;1 &amp;)). With GT_HALF=1 the film tool opens the page at rate 2 with a 360 degree shutter and draws capture frame 2f+1 where it would draw film frame f; its chunks go to out/work/chunks/16x9-final-full-half.
+cat &gt; /tmp/h60.sh &lt;&lt;'H60'
+export GT_HALF=1
+L=/tmp/h60-log.txt; D=out/work/chunks/16x9-final-full-half; rm -f $L /tmp/h60-earth_builder-b*
+run() { n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; $L 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; $L; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; }
+pack() { b=$1; shift; T=/tmp/h60-earth_builder-b$b; ( cd $D &amp;&amp; tar -cf $T.tar "$@" ) &gt; $T.txt 2&gt;&amp;1; { grep -c 'Shader Error\|not usable' $L; grep 'RC film' $L | tail -14; ls -la $T.tar; } &gt;&gt; $T.txt 2&gt;&amp;1; touch $T.done; }
+run earth.travel 2175-2177
+pack 0 earth.travel.span2175-2177.mp4 earth.travel.span2175-2177.mp4.json
+run uranus.travel 4523-4525
+run mars.rise 2685-2687
+run venus.travel 1610-1614
+run earth.dive 1875-1881
+pack 1 uranus.travel.span4523-4525.mp4 uranus.travel.span4523-4525.mp4.json mars.rise.span2685-2687.mp4 mars.rise.span2685-2687.mp4.json venus.travel.span1610-1614.mp4 venus.travel.span1610-1614.mp4.json earth.dive.span1875-1881.mp4 earth.dive.span1875-1881.mp4.json
+run neptune.dive 4680-4686
+run mars.hold 2310-2339
+run ending.lookback 5295-5324
+pack 2 neptune.dive.span4680-4686.mp4 neptune.dive.span4680-4686.mp4.json mars.hold.span2310-2339.mp4 mars.hold.span2310-2339.mp4.json ending.lookback.span5295-5324.mp4 ending.lookback.span5295-5324.mp4.json
+run uranus.terrain 4328-4353
+run jupiter.rise 3265-3269
+pack 3 uranus.terrain.span4328-4353.mp4 uranus.terrain.span4328-4353.mp4.json jupiter.rise.span3265-3269.mp4 jupiter.rise.span3265-3269.mp4.json
+H60
+The script makes four packs, one after the other, and goes on by itself. Each time a file /tmp/h60-earth_builder-bN.done appears (N = 0, 1, 2, 3), send /root at once one message with the text `H60 earth_builder bN` and the two files /tmp/h60-earth_builder-bN.tar and /tmp/h60-earth_builder-bN.txt attached, and nothing else in it; do not wait for an answer and do not stop the script. Pack 0 is one short span: it is my early proof, so send it the minute it is there. An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. Planned time for all of it about 294 minutes; the real time can be twice that. Do not change any file of the repo and do not lower the tier. If a line of the log shows `Shader Error`, an RC other than 0 that the loop does not cure, or no new frame for 30 minutes, send /root one line `H60 earth_builder TROUBLE` with the last 300 characters of /tmp/h60-log.txt and keep the script running if it runs. After pack 3 you are free.
+
+### 20:58 UTC, 27 Nov: job H60 runs (read this first if the thread is taken up again while it runs)
+
+- The mail came at about 20:54 UTC. It has no NOTE about the file cache, so none was cleared this time. No older job was open.
+- Worktree `/home/user/workspace/main-262b9a68` (the name stays, the commit changed): `git fetch --depth 1 origin 41e0350475355d8122f9341e3a923230a8f965b3` rc 0, `git checkout -f 41e0350475355d8122f9341e3a923230a8f965b3` rc 0, HEAD 41e0350475355d8122f9341e3a923230a8f965b3 (same sha as `refs/heads/film-60fps` on origin). `git diff --stat` from 262b9a68 shows three files, one line each: `tools/film.ts`, `tools/lib/browser.ts`, `tools/lib/frames.ts`; no path under src, public or config; lock file and package.json the same. `git status --porcelain` shows only `?? node_modules`.
+- Free disk 5941 MB before `npm run build` (rc 0 at 20:56:13), 4647 MB right after it, 5914 MB at 20:58:30 once the tool's own build had linked dist again.
+- `/tmp/h60.sh` holds the 18 lines of the mail (entities decoded; compared byte for byte with the lines as copied above, same). Started detached from the worktree root at 20:56:41 as `(set -m; bash /tmp/h60.sh > /dev/null 2>&1 &)`. Log `/tmp/h60-log.txt`. First line of the tool: "film: 1 units to render, 3 frames, 16x9 final full". The drawing process ran at 211 percent of a core at 20:58:30.
+- Order of the script: earth.travel 2175-2177, pack 0; uranus.travel 4523-4525, mars.rise 2685-2687, venus.travel 1610-1614, earth.dive 1875-1881, pack 1; neptune.dive 4680-4686, mars.hold 2310-2339, ending.lookback 5295-5324, pack 2; uranus.terrain 4328-4353, jupiter.rise 3265-3269, pack 3. Chunks go to `out/work/chunks/16x9-final-full-half`. The twelve spans under `out/work/chunks/16x9-final-full` stay.
+- What to send: each time `/tmp/h60-earth_builder-bN.done` appears, at once one message to /root with the text `H60 earth_builder bN` alone and the two files `/tmp/h60-earth_builder-bN.tar` and `.txt` attached. Do not stop the script. A sent pack is marked by a file `/tmp/h60-sent-bN`.
+- Trouble: a `Shader Error` line, an RC other than 0 that the loop does not cure, or no new frame for 30 minutes: one line to /root, `H60 earth_builder TROUBLE` with the last 300 characters of the log; keep the script running.
+- How I watch (read only): `bash /tmp/h60-wait.sh N` ends when the done file of pack N is there, when the script is gone, or on one of the trouble signs; it keeps the time of the last new frame in `/tmp/h60-clock.txt` (a new frame shows as growth of `out/work/tmp/film/*.mkv`, or a new "wrote" or "RC film" line). `bash /tmp/h60-check.sh` prints the state. After pack 3 the mail says I am free: then wait for /root.
