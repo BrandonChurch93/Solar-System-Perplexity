@@ -12763,3 +12763,30 @@ RETURN mi7-07 from /root/neptune_builder, 11:51 UTC: film-16x9-final-b-026, segm
 - 11:52:30 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 11:52:31 npm run build exit 0, dist 1301 MB, free disk 4963 MB. 11:52:44 the job's four
   lines started as /tmp/mc7-47.sh, detached from the repo root (the script made from the saved mail).
+
+- mc7-47: the first push of the piece before this one failed three times ("could not read Username for 'https://github.com'");
+  a plain push at about 12:08 went through (f36bd968..5206d3b1).
+- mc7-47, the encoder's intake as the watcher saw it: 31 lines, the opening (11:53:04 162902) and 30 steps, the first
+  11:53:50 4482739, the last 12:08:09 129512072 (time, bytes read). The looks log has two rows of the job: 2280 at 11:53:49, 2301 at
+  12:04:14. No frame took over 15 minutes; no line was sent.
+- 12:08:16 finished. The tail, whole:
+
+      0
+      RC film mars.hold 2280-2309 0
+      wrote mars.hold.part000.mp4 frames 2280-2309 render 909 s encode 5.2 s
+      -rw-r--r-- 1 user user 3031040 Nov 27 12:08 /tmp/film-16x9-final-b-181.tar.00
+
+  The piece holds mars.hold.span2280-2309.mp4 (3017913 bytes) and its .json (3590 bytes); sha256 of the piece 1191e19c02c7b0a18756
+  e8a6adcdd5f8608ed2635239a1024de11c9b3fd8c8e0. Tree still clean on 262b9a68. Free disk 6249 MB.
+
+## 27 Nov, 12:08 UTC: RETURN mc7-47 to the Builder (word for word; sent about 12:08:43; attached /tmp/film-16x9-final-b-181.tar.00 and /tmp/mc7-47-tail.txt; high priority)
+
+RETURN mc7-47 from /root/neptune_builder, 12:08 UTC: film-16x9-final-b-181, segment mars.hold, span 2280-2309, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 11:52:44, finished 12:08:16 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 11:52:30.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film mars.hold 2280-2309 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote mars.hold.part000.mp4 frames 2280-2309 render 909 s encode 5.2 s"
+5. Frame times, by the encoder's intake: 30 steps, the first at 11:53:50, the last at 12:08:09; so about half a minute a frame. No frame took over 15 minutes and no line was sent.
+6. Attached: /tmp/film-16x9-final-b-181.tar.00 (3031040 bytes, the only piece) and /tmp/mc7-47-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 11:52. Free disk 4963 MB before the start, 6249 MB now.
+8. The files of all ten finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
