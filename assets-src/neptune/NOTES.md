@@ -13097,3 +13097,30 @@ RETURN hj9-07 from /root/neptune_builder, 15:13 UTC: smooth, landing report of j
 8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). I wait for the next job.
 The VERDICT line of the .md file (its line 5), word for word:
 VERDICT: green. No number is over its limit.
+
+## JOB ht9-03 from the Builder (/root), with the same note before it (read 15:15 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority). The smooth tool again, this time a part that draws (pictures, part 1/2 of saturn's rise).
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB ht9-03 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+> rm -rf out/work/smooth
+> npm run smooth -- --stop saturn --kind rise --only pictures --part 1/2 &gt; /tmp/ht9-03.log 2&gt;&amp;1; echo "RC smooth $?" &gt;&gt; /tmp/ht9-03.log; tail -25 /tmp/ht9-03.log &gt; /tmp/ht9-03-tail.txt
+> This job renders part 1/2 of the draft frames of the rise of round 60's stop (saturn) at rate 2. The exit code of smooth may be 1 when the verdict is red; that is a result, not a failure. When it has finished send back out/work/smooth/saturn-rise-p1of2.md, out/work/smooth/saturn-rise-p1of2.json, /tmp/ht9-03-tail.txt and every .png the command wrote under out/work/smooth/ (at most 6; if there are more, the pops and changes panels first), as attachments in one message that starts with the usual line and ends with the VERDICT line of the .md file.
+
+- 15:15:06 first try of my start script: cache drop exit 0, tree clean on 262b9a68, but free disk 4912 MB, under the 5 GB
+  asked, so the script stopped before the build. The cause: the dist of my last npm run build (1301 MB, a full copy of
+  public) still stood, because the landing tool of hj9-07 runs no build of its own; the film and pack tools run one
+  (tools/lib/common.ts ensureBuild: vite build, then linkDist), after which dist costs next to nothing and 6.2 GB are
+  free. Before the earlier jobs I therefore saw 6.2 GB before my build and 4.9 GB after it.
+- Cleaning as the mail names it: no frame folder is left under /tmp or out/work. The tars of finished jobs under /tmp
+  are 42 files, 46858240 bytes in all; I removed the 21 unsplit tars, each byte for byte the twin of its one piece
+  (cmp), and kept the 21 pieces (for three pack jobs they are the only copy on this machine). Free after that 4934 MB.
+  The rest of out/work is notes and pictures of the lab (out/work/nep 475 MB), which stay. So 5 GB cannot be reached
+  before the tool's own build links dist. I went on, as on the four jobs before with the same number after the build,
+  and name it in the return. The copy of hj9-07's two files stands in /tmp/smooth-hj9-07.
+- 15:16:32 second run of the start script (bar set to 4 GB, rule 2 of mail 1549): cache drop again, sudo -n sh -c 'sync;
+  echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68, git status empty, whole. Free disk
+  before the build 4934 MB. 15:16:32 npm run build exit 0, dist 1301 MB. Free disk after the build, a sync and 8 s:
+  4934 MB.
+- 15:17:19 the job's two lines started as /tmp/ht9-03.sh, detached from the repo root. Its first line removes
+  out/work/smooth with hj9-07's two files (already sent back).
