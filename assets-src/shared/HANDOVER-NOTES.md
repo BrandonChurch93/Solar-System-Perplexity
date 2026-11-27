@@ -3570,6 +3570,322 @@ sys.exit(0 if ok else 1)
 - NEW HELPER `/tmp/jobs/packline.py NAME START_ISO [WINDOW_S]` (not needed yet, not in the notebook as text): the line for a slow pack job: the pictures finished so far with their times (it names no total, since the pack draws only some frames of the window) and whether the gpu process of the tool's browser is alive.
 - he9-06 arrived 15:07 (its words: `/tmp/jobs/he9-06-mail.txt`): A THIRD KIND OF JOB, a script of TWO lines: `rm -rf out/work/smooth`; `npm run smooth -- --stop earth --only counts` with the log `/tmp/he9-06.log`, "RC smooth N" and the tail `/tmp/he9-06-tail.txt`. "The counts part of the smooth report on the tree as it is committed: change no file and do not run npm run warm (about 60 minutes or more; it draws the stop's film frames in order on one page at the preview size). The exit code of smooth may be 1 when the verdict is red; that is a result, not a failure. Send a status line every 60 minutes with the last line of the log. When it has finished send back out/work/smooth/earth.md, out/work/smooth/earth.json and /tmp/he9-06-tail.txt, as attachments in one message that starts with the usual line and ends with the VERDICT line of earth.md." Before it: the cache dropped 15:07:56, tree clean, 11832 MB free, build exit 0. STARTED 15:08:09.
 
+## 16:14 UTC, 27 Nov: JOB he9-06 sent back (a smooth job: the counts of earth, exit 0, 65 minutes); JOB ia9-25 started 16:15:13 (a pack job, mars.dive frame 2449); the texts of the later helpers
+
+- he9-06 (arrived 15:07, started 15:08:09; its words `/tmp/jobs/he9-06-mail.txt`): `npm run smooth -- --stop earth --only counts` in the clean tree, the log `/tmp/he9-06.log`. The tool built first (its own build), then drew the film frames 1680 to 2249 of earth in order on one page (1140 pictures at rate 2, draft tier at the preview size) and logged a line every 15 film frames, 38 lines: "earth counts: frame N + 1/2 of 1680 to 2249, S s". About 36 s a line up to frame 1844, then 125 to 200 s a line from 1845 to 2144 (dive, terrain, rise), then 25 to 90 s a line in the travel. No line of the tool starting again on a fresh page.
+- STATUS LINE 1 (the mail asks one every 60 minutes with the last line of the log) sent 16:08:12, low, delivered: `/tmp/mail/he9-06-line1.txt` (the log then at "earth counts: frame 2129 + 1/2 of 1680 to 2249, 3469 s"; the gpu process alive, 74 s of processor time in 20 s).
+- FINISHED 16:13:30 (65 minutes; the tool's last counts line "earth counts: frame 2249 + 1/2 of 1680 to 2249, 3910 s"). The log ends: "smooth earth: green. out/work/smooth/earth.md", "RC smooth 0". Written: `out/work/smooth/earth.md` (1108 bytes, sha256 starts 67769a364edc2915) and `out/work/smooth/earth.json` (3996 bytes, sha256 starts 8d7fcc322e70413e; commit 262b9a68, pass true, 0 reasons, only counts). The VERDICT line of earth.md, word for word: "VERDICT: green. No number is over its limit." What the report's table says (read, not judged): work in 1 picture only, frame 1680 of earth.hold (21 programs, 213 texture uploads, 112 buffers, all of the warm start call, 5 warm draws); earth.dive, earth.terrain, earth.rise, earth.travel 0.
+- SENT BACK 16:13:59 (high, delivered; `/tmp/mail/he9-06-return.out`): the usual line, the three attachments (earth.md, earth.json, `/tmp/he9-06-tail.txt` of 25 lines), the exit code and the RC line, the cache line (15:07:56), the times, and as the LAST line the VERDICT line. `npm run warm` was not run. The tree after it: `git status` 0 lines, 11831 MB free, 13 chunks kept; `out/work/smooth` holds the two files.
+- ia9-25 arrived 16:15 (its words: `/tmp/jobs/ia9-25-mail.txt`): a pack job of ONE picture, the form of im9-42 (four script lines): `npm run pack -- --phase 6 --round 60 --stop mars --only mars.dive --place-window --frames 2449-2449`, the log `/tmp/ia9-25.log`, the piece `r60-mars-dive-g`. "This is ONE frame (2449) of the part "dive" of the pack of round 60 (mars), drawn alone because the whole part is too slow for one machine. It is one picture at the review tier and takes 15 to 60 minutes; the command draws that frame into the cache and ends without laying a sheet." No line is asked while it runs. The return: every piece `/tmp/r60-mars-dive-g.tar.NN` and `/tmp/ia9-25-tail.txt`, the usual line, the exit code of the pack and the name of the picture file the log printed; a code other than 0: the tail alone, and say so. Before it: the cache dropped with sudo 16:15:01, HEAD 262b9a68, `git status` 0 lines, 11831 MB free, build exit 0. STARTED 16:15:13.
+- THE LATER HELPERS, their texts as they stand in `/tmp/jobs/` (written again from here if /tmp is lost). `pre.sh` and `start.sh` replace the texts of the entry "THE JOB HELPERS" (a script of 2 to 8 lines, the mail file K+6 lines; a running film, pack, still, smooth or warmcheck tool counts as a render; 5000 MB free asked). `packline.py` makes the line of a slow pack job, `smoothline.py` the status line of a smooth job, `mksmoothreturn.py` the draft of the return of a smooth job.
+
+`pre.sh`:
+
+```
+# pre.sh NAME : the steps before a job, in order: no render running, the cache dropped with sudo, the clean tree checked
+# (HEAD, git status, the lock, free space), the script /tmp/jobs/NAME.sh checked for syntax and against the mailed lines
+# (lines 6 to 5+K of /tmp/jobs/NAME-mail.txt, K the count of the script's lines, 2 to 8; the mail file has K+6 lines), npm run build,
+# then the start. Stops at the first thing that is not as it must be. Free space asked: 5000 MB (film jobs ask 4 GB, pack jobs 5 GB).
+N=$1
+[ -f /tmp/jobs/$N.sh ] && [ -f /tmp/jobs/$N-mail.txt ] || { echo "STOP: script or mail file missing"; exit 1; }
+date -u
+[ "$(pgrep -f 'tools/(film|pack|still|smooth|warmcheck)\.ts' | wc -l)" = 0 ] || { echo "STOP: a render is running"; exit 1; }
+bash -n /tmp/jobs/$N.sh || { echo "STOP: syntax"; exit 1; }
+K=$(wc -l < /tmp/jobs/$N.sh)
+[ "$K" -ge 2 ] && [ "$K" -le 8 ] || { echo "STOP: the script has $K lines, not 2 to 8"; exit 1; }
+[ "$(wc -l < /tmp/jobs/$N-mail.txt)" = $((K+6)) ] || { echo "STOP: the mail file has not $((K+6)) lines"; exit 1; }
+diff <(sed -n "6,$((K+5))p" /tmp/jobs/$N-mail.txt) /tmp/jobs/$N.sh > /dev/null || { echo "STOP: the script differs from the mailed lines"; exit 1; }
+echo "script: syntax ok, $K lines, equals the mailed lines"
+if sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'; then echo "DROPPED with sudo at $(date -u +%H:%M:%S)" | tee /tmp/jobs/$N-cache.txt; else echo "NOT DROPPED: sudo does not work" | tee /tmp/jobs/$N-cache.txt; fi
+cd /home/user/workspace/master || exit 1
+H=$(git rev-parse HEAD); echo "HEAD $H"
+[ "$H" = 262b9a68df0a6bda8d77518539580de554bb0dc5 ] || { echo "STOP: HEAD is not 262b9a68"; exit 1; }
+[ "$(git status --porcelain | wc -l)" = 0 ] || { echo "STOP: git status shows a change"; git status --porcelain | head; exit 1; }
+git diff --quiet HEAD -- package-lock.json || { echo "STOP: the lock changed"; exit 1; }
+echo "git status 0 lines, lock unchanged"
+F=$(df -m / | awk 'NR==2{print $4}'); echo "free before the build: $F MB" | tee /tmp/jobs/$N-free.txt
+[ "$F" -ge 5000 ] || { echo "STOP: under 5 GB free"; exit 1; }
+npm run build > /tmp/jobs/$N-build.log 2>&1; B=$?; echo "build exit $B"
+[ $B = 0 ] || { echo "STOP: build failed"; tail -5 /tmp/jobs/$N-build.log; exit 1; }
+[ "$(git status --porcelain | wc -l)" = 0 ] || { echo "STOP: git status shows a change after the build"; exit 1; }
+bash /tmp/jobs/start.sh $N
+date -u
+```
+
+`start.sh`:
+
+```
+# start.sh NAME : runs /tmp/jobs/NAME.sh (the job's lines exactly as mailed) detached from the root of the clean tree, with a marker when it has finished.
+N=$1
+cd /home/user/workspace/master || exit 1
+[ -f /tmp/jobs/$N.sh ] || { echo "no script /tmp/jobs/$N.sh"; exit 1; }
+pgrep -f 'tools/(film|pack|still|smooth|warmcheck)\.ts' > /dev/null && { echo "a render is running, not started"; exit 2; }
+date -u +%T > /tmp/jobs/$N-start.txt
+date -u +%Y-%m-%dT%H:%M:%S > /tmp/jobs/$N-start-iso.txt
+rm -f /tmp/jobs/$N-run.log /tmp/jobs/$N-io.txt
+(set -m; (bash /tmp/jobs/$N.sh; echo "SCRIPT DONE $(date -u +%T)") > /tmp/jobs/$N-run.log 2>&1 &)
+(set -m; bash /tmp/jobs/iowatch2.sh $N > /dev/null 2>&1 &)
+echo "started $N at $(cat /tmp/jobs/$N-start.txt)"
+```
+
+`packline.py`:
+
+```
+# packline.py NAME START_ISO [WINDOW_S] : prints the line owed to /root while a PACK job of several frames runs and a frame takes
+# over 15 minutes: the pictures finished so far and the time each took (the pictures f?????-*.png under the round's cache folder of
+# the clean tree, by their time of writing), and whether the drawing process is alive (the gpu process of the tool's browser: its
+# processor time used in a window of WINDOW_S seconds, default 20). Reads /tmp/jobs/NAME.sh for the round and the frames.
+# The pack draws only SOME frames of its window (fm9-09: 3 of the window 2236 to 2249), so the line names no total.
+# Exit 1 when the state is not the plain one (the script finished, an RC line or an error line in the log, no gpu process).
+import sys, os, re, glob, subprocess, datetime, time
+name, start = sys.argv[1], sys.argv[2]
+win = int(sys.argv[3]) if len(sys.argv) > 3 else 20
+tree = '/home/user/workspace/master'
+script = open('/tmp/jobs/%s.sh' % name).read()
+rnd = int(re.search(r'--round (\d+)', script).group(1))
+fa, fb = [int(x) for x in re.search(r'--frames (\d+)-(\d+)', script).groups()]
+cache = 'out/work/packs/.cache/round-%03d' % rnd
+t0 = datetime.datetime.fromisoformat(start)
+
+def gpu():
+    out = subprocess.run(['ps', '-eo', 'pid,etimes,cputimes,args'], capture_output=True, text=True).stdout.split('\n')[1:]
+    res = []
+    for l in out:
+        p = l.split(None, 3)
+        if len(p) == 4 and '--type=gpu-process' in p[3] and 'ms-playwright' in p[3]:
+            res.append((int(p[0]), int(p[1]), int(p[2])))
+    return res
+
+g1 = gpu()
+time.sleep(win)
+g2 = gpu()
+now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+pics = {}
+for root, dirs, files in os.walk(os.path.join(tree, cache)):
+    for f in files:
+        m = re.match(r'f(\d{5})-.*\.png$', f)
+        if m and fa <= int(m.group(1)) <= fb:
+            t = datetime.datetime.utcfromtimestamp(os.path.getmtime(os.path.join(root, f)))
+            n = int(m.group(1))
+            if n not in pics or t < pics[n]:
+                pics[n] = t
+log = open('/tmp/%s.log' % name, encoding='utf-8', errors='replace').read()
+bad = len(re.findall(r'Shader Error|not usable|FAILED|lost', log))
+rc = len(re.findall(r'RC pack', log))
+try:
+    done = 'SCRIPT DONE' in open('/tmp/jobs/%s-run.log' % name).read()
+except Exception:
+    done = False
+total = fb - fa + 1
+items = sorted(pics.items(), key=lambda kv: kv[1])
+prev = t0
+parts = []
+for i, (f, t) in enumerate(items):
+    m = round((t - prev).total_seconds() / 60)
+    if i == 0:
+        parts.append('%d at %s (%d minutes from the start at %s, with the load)' % (f, t.strftime('%H:%M:%S'), m, t0.strftime('%H:%M:%S')))
+    else:
+        parts.append('%d at %s (%d minutes)' % (f, t.strftime('%H:%M:%S'), m))
+    prev = t
+since = int((now - prev).total_seconds() // 60)
+head = 'handover_engineer on JOB %s, %s UTC %s: ' % (name, now.strftime('%H:%M'), now.strftime('%d %b').lstrip('0'))
+if items:
+    body = '%d pictures finished so far (the pictures under %s of the tree, by their time of writing; the pack draws only some frames of its window %d to %d, I do not know how many): %s. Since the last one %d minutes have passed. ' % (len(items), cache, fa, fb, ', '.join(parts), since)
+else:
+    body = 'No picture finished yet, %d minutes after the start at %s (no picture under %s of the tree; the pack draws only some frames of its window %d to %d). ' % (since, t0.strftime('%H:%M:%S'), cache, fa, fb)
+plain = True
+if g2:
+    g = g2[0]
+    same = [p for p in g1 if p[0] == g[0]]
+    if same:
+        used = g[2] - same[0][2]
+        body += 'The drawing process is alive (the gpu process of the tool\'s browser, pid %d, %d minutes old, used %d s of processor time in the %d s before this line). ' % (g[0], g[1] // 60, used, win)
+        if used < win // 2:
+            plain = False
+    else:
+        body += 'The drawing process is a new one (the gpu process of the tool\'s browser, pid %d, started within the last %d s). ' % (g[0], win)
+        plain = False
+else:
+    body += 'NO drawing process is alive (no gpu process of the tool\'s browser). '
+    plain = False
+tail = 'No error line and no RC line in the log.' if not bad and not rc else '%d ERROR LINES and %d RC LINES in the log.' % (bad, rc)
+print(head + body + tail)
+if done or bad or rc or not plain:
+    sys.stderr.write('NOT PLAIN: done %s bad %d rc %d plain %s\n' % (done, bad, rc, plain))
+    sys.exit(1)
+```
+
+`smoothline.py`:
+
+```
+# smoothline.py NAME START_ISO [WINDOW_S] : prints the status line owed to /root every 60 minutes while a SMOOTH job runs
+# (npm run smooth, tools/smooth.ts): how long it has run, whether its drawing process is alive (the gpu process of the tool's
+# browser: its processor time used in a window of WINDOW_S seconds, default 20), and the last line of the log /tmp/NAME.log that
+# is not empty, word for word (color codes of the terminal removed). It also counts the lines "[smooth] ... The walk starts again
+# on a fresh page" (the tool's own second and third try) and the RC lines.
+# Exit 1 when the state is not the plain one (the script finished, an RC line in the log, no tool, no gpu process, a gpu process
+# that used under a quarter of the window): then write the line by hand. Each call adds a row to /tmp/jobs/NAME-alive.txt.
+import sys, re, subprocess, datetime, time
+name, start = sys.argv[1], sys.argv[2]
+win = int(sys.argv[3]) if len(sys.argv) > 3 else 20
+t0 = datetime.datetime.fromisoformat(start)
+
+def procs():
+    out = subprocess.run(['ps', '-eo', 'pid,etimes,cputimes,args'], capture_output=True, text=True).stdout.split('\n')[1:]
+    res = []
+    for l in out:
+        p = l.split(None, 3)
+        if len(p) == 4:
+            res.append((int(p[0]), int(p[1]), int(p[2]), p[3]))
+    tool = [p for p in res if 'tools/smooth.ts' in p[3] and 'preflight.cjs' in p[3]]
+    gpu = [p for p in res if '--type=gpu-process' in p[3] and 'ms-playwright' in p[3]]
+    return tool, gpu
+
+tool1, gpu1 = procs()
+time.sleep(win)
+tool2, gpu2 = procs()
+now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+ran = int((now - t0).total_seconds() // 60)
+log = open('/tmp/%s.log' % name, encoding='utf-8', errors='replace').read()
+log = re.sub(r'\x1b\[[0-9;]*m', '', log)
+lines = [l.rstrip() for l in log.split('\n') if l.strip()]
+last = lines[-1] if lines else '(the log is empty)'
+again = [l for l in lines if l.startswith('[smooth]')]
+rcs = [l for l in lines if l.startswith('RC smooth')]
+try:
+    done = 'SCRIPT DONE' in open('/tmp/jobs/%s-run.log' % name).read()
+except Exception:
+    done = False
+head = 'handover_engineer on JOB %s, %s UTC %s: ' % (name, now.strftime('%H:%M'), now.strftime('%d %b').lstrip('0'))
+plain = True
+if tool2 and gpu2:
+    g = gpu2[0]
+    same = [p for p in gpu1 if p[0] == g[0]]
+    used = g[2] - same[0][2] if same else None
+    body = 'status. The smooth tool runs, %d minutes since its start at %s; its drawing process is alive (the gpu process of its browser, pid %d, %d minutes old' % (ran, t0.strftime('%H:%M:%S'), g[0], g[1] // 60)
+    if used is None:
+        body += ', a new process, started within the last %d s). ' % win
+        plain = False
+    else:
+        body += ', used %d s of processor time in the %d s before this line). ' % (used, win)
+        if used < win // 4:
+            plain = False
+else:
+    body = 'status. The drawing process is NOT alive (smooth tool processes: %d, gpu processes of its browser: %d), %d minutes after the start at %s. ' % (len(tool2), len(gpu2), ran, t0.strftime('%H:%M:%S'))
+    plain = False
+if again:
+    body += 'The log holds %d line%s of the tool starting its walk again on a fresh page, the last: %s. ' % (len(again), '' if len(again) == 1 else 's', again[-1])
+body += 'The last line of the log, word for word: ' + last
+print(head + body)
+open('/tmp/jobs/%s-alive.txt' % name, 'a').write('%s tool %s gpu %s again %d rc %d last %s\n' % (now.strftime('%H:%M:%S'), [(p[0], p[1], p[2]) for p in tool2], [(p[0], p[1], p[2]) for p in gpu2], len(again), len(rcs), last[:120]))
+if done or rcs or not plain:
+    sys.stderr.write('NOT PLAIN: done %s rc %d plain %s\n' % (done, len(rcs), plain))
+    sys.exit(1)
+```
+
+`mksmoothreturn.py`:
+
+```
+# mksmoothreturn.py NAME STOP : for a finished SMOOTH job (npm run smooth -- --stop STOP --only counts, like he9-06): prints the
+# facts and writes the draft of the return to /tmp/mail/NAME-return.out. The return starts with the usual line and ENDS with the
+# VERDICT line of out/work/smooth/STOP.md, word for word, as the mail of the job asks. Attachments of the return: the .md, the
+# .json and /tmp/NAME-tail.txt. Reads /tmp/NAME.log (the RC line, the tool's lines), the start, cache, run and lines files of the
+# job. Exit 1 and "NOT PLAIN" when a file is missing, the code is neither 0 nor 1, or the verdict and the code do not agree.
+import sys, os, re, glob, subprocess, datetime, json, hashlib
+name, stop = sys.argv[1], sys.argv[2]
+tree = '/home/user/workspace/master'
+md = tree + '/out/work/smooth/%s.md' % stop
+js = tree + '/out/work/smooth/%s.json' % stop
+tail = '/tmp/%s-tail.txt' % name
+raw = open('/tmp/%s.log' % name, encoding='utf-8', errors='replace').read()
+log = [l.rstrip() for l in re.sub(r'\x1b\[[0-9;]*m', '', raw).split('\n')]
+rcs = [l for l in log if l.startswith('RC smooth')]
+counts = [l for l in log if l.startswith(stop + ' counts:')]
+again = [l for l in log if l.startswith('[smooth]')]
+said = [l for l in log if l.startswith('smooth ' + stop + ':')]
+start = open('/tmp/jobs/%s-start.txt' % name).read().strip()
+start_iso = open('/tmp/jobs/%s-start-iso.txt' % name).read().strip()
+cache = open('/tmp/jobs/%s-cache.txt' % name).read().strip()
+done = re.findall(r'SCRIPT DONE (\S+)', open('/tmp/jobs/%s-run.log' % name).read())
+try:
+    sent = [l.split()[0] for l in open('/tmp/jobs/%s-lines.txt' % name).read().split('\n') if l.strip()]
+except Exception:
+    sent = []
+def size(p):
+    return os.path.getsize(p) if os.path.exists(p) else None
+def sha(p):
+    return hashlib.sha256(open(p, 'rb').read()).hexdigest()[:16] if os.path.exists(p) else None
+verdicts = [l for l in open(md, encoding='utf-8').read().split('\n') if l.startswith('VERDICT')] if os.path.exists(md) else []
+info = {}
+if os.path.exists(js):
+    try:
+        j = json.load(open(js))
+        info = {'commit': j.get('commit'), 'pass': j.get('pass'), 'why': len(j.get('why', [])), 'only': j.get('only'), 'stop': j.get('stop')}
+    except Exception as e:
+        info = {'error': str(e)}
+free = subprocess.run("df -m / | awk 'NR==2{print $4}'", shell=True, capture_output=True, text=True).stdout.strip()
+status = subprocess.run('git status --porcelain | wc -l', shell=True, capture_output=True, text=True, cwd=tree).stdout.strip()
+head = subprocess.run('git rev-parse HEAD', shell=True, capture_output=True, text=True, cwd=tree).stdout.strip()
+chunks = len(glob.glob(tree + '/out/work/chunks/16x9-final-full/*.mp4'))
+tail_lines = open(tail, encoding='utf-8', errors='replace').read().count('\n') if os.path.exists(tail) else None
+running = subprocess.run("pgrep -f 'tools/(film|pack|still|smooth|warmcheck)' | wc -l", shell=True, capture_output=True, text=True).stdout.strip()
+print('--- log: %d lines; RC lines %s; counts lines %d (last: %s); tries again %s' % (len(log), rcs, len(counts), counts[-1] if counts else None, again))
+print('--- the tool said: %s' % said)
+print('--- md %s bytes sha %s; json %s bytes sha %s; tail %s lines' % (size(md), sha(md), size(js), sha(js), tail_lines))
+print('--- verdict lines of the md: %s' % verdicts)
+print('--- json: %s' % info)
+print('--- start %s, done %s, cache: %s, lines sent at %s' % (start, done, cache, sent))
+print('--- HEAD %s, git status lines %s, free %s MB, chunks kept %d, running %s' % (head, status, free, chunks, running))
+print('--- smooth folder: %s' % sorted(os.listdir(tree + '/out/work/smooth')) if os.path.isdir(tree + '/out/work/smooth') else '--- NO smooth folder')
+code = rcs[-1].split()[-1] if rcs else 'NONE'
+now = datetime.datetime.now(datetime.timezone.utc)
+m = re.match(r'DROPPED with sudo at (\S+)', cache)
+have = os.path.exists(md) and os.path.exists(js) and os.path.exists(tail)
+verdict = verdicts[0] if verdicts else None
+agree = verdict is not None and ((code == '0' and verdict.startswith('VERDICT: green')) or (code == '1' and verdict.startswith('VERDICT: red')))
+ok = have and len(rcs) == 1 and len(done) == 1 and agree and status == '0' and running == '0'
+L = []
+L.append('MAIL from handover_engineer to /root, %s UTC %s. JOB %s sent back (the counts part of the smooth report of %s, npm run smooth -- --stop %s --only counts, on 262b9a68df0a6bda8d77518539580de554bb0dc5 in my clean tree /home/user/workspace/master).' % (now.strftime('%H:%M'), now.strftime('%d %b').lstrip('0'), name, stop, stop))
+if have:
+    L.append('Attached: out/work/smooth/%s.md (%d bytes), out/work/smooth/%s.json (%d bytes) and /tmp/%s-tail.txt (%d lines).' % (stop, size(md), stop, size(js), name, tail_lines))
+else:
+    L.append('Attached: /tmp/%s-tail.txt ALONE: %s.' % (name, ', '.join('%s %s' % (p.replace(tree + '/', ''), 'is there' if os.path.exists(p) else 'IS NOT THERE') for p in (md, js))))
+if code == '0':
+    L.append('Exit code of smooth: 0. The log\'s line, word for word: %s' % ' / '.join(rcs))
+elif code == '1':
+    L.append('Exit code of smooth: 1 (the verdict is red: a result, as you wrote). The log\'s line, word for word: %s' % ' / '.join(rcs))
+else:
+    L.append('SMOOTH ENDED WITH THE CODE %s. The log\'s line, word for word: %s' % (code, ' / '.join(rcs) if rcs else 'no RC line'))
+if m:
+    L.append('The cache: yes, done. sync; echo 1 > /proc/sys/vm/drop_caches ran with sudo at %s, before the build and the job.' % m.group(1))
+else:
+    L.append('The cache: NOT done: ' + cache)
+t = 'Times: started %s, finished %s' % (start, done[-1] if done else 'NOT FINISHED')
+if done:
+    t0 = datetime.datetime.fromisoformat(start_iso)
+    t1 = datetime.datetime.fromisoformat(start_iso[:11] + done[-1])
+    if t1 < t0:
+        t1 += datetime.timedelta(days=1)
+    t += ' (%d minutes)' % round((t1 - t0).total_seconds() / 60)
+t += '. Status lines sent: %s. ' % ('none, the job took under 60 minutes' if not sent else '%d (%s)' % (len(sent), ', '.join(sent)))
+t += 'The tool\'s last counts line: %s. ' % (counts[-1] if counts else 'NONE')
+t += 'TIMES_NOTE'
+if again:
+    t += ' THE TOOL STARTED ITS WALK AGAIN %d TIME%s: %s' % (len(again), '' if len(again) == 1 else 'S', ' / '.join(again))
+L.append(t)
+L.append('npm run warm was not run and no file of the tree was changed: git status shows %s; the %d chunks under out/work/chunks/16x9-final-full are kept with their json files; %s MB free. I wait for the next job.' % ('no change' if status == '0' else status + ' CHANGED LINES', chunks, free))
+if verdict is not None:
+    L.append('The VERDICT line of %s.md, word for word:' % stop)
+    L.append(verdict)
+else:
+    L.append('THERE IS NO VERDICT LINE: out/work/smooth/%s.md %s.' % (stop, 'holds none' if os.path.exists(md) else 'was not written'))
+out = '\n'.join(L) + '\n'
+open('/tmp/mail/%s-return.out' % name, 'w').write(out)
+print('--- draft /tmp/mail/%s-return.out (%s)' % (name, 'plain' if ok else 'NOT PLAIN, READ IT'))
+print(out)
+sys.exit(0 if ok else 1)
+```
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
@@ -3713,13 +4029,13 @@ MAIL 351 (22:19 by /root's clock, 22:14 by mine), the work from here. In its wor
 
 ## Next
 
-NOW (rewritten 16:08 UTC, 27 Nov; everything below this block in "Next" is older and holds only where this block does not say otherwise):
+NOW (rewritten 16:15 UTC, 27 Nov; everything below this block in "Next" is older and holds only where this block does not say otherwise):
 0. THE FILM IS FROZEN (MAIL 1548, 1549). No cure, no trial, no proof run, no change to any file of the tree. My state is the section "STATE AT THE FREEZE" at the top of this file; my hand in is recorded by /root.
-1. THIS MACHINE IS A RENDER MACHINE FOR THE MASTER (1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5; the clean tree `/home/user/workspace/master`). JOBS SENT BACK, all exit 0 (16): ma7-24 (21:56:16 UTC 26 Nov), ma7-32 (22:48:03), mc7-82 (23:20:10), mw7-40 (02:56:35 UTC 27 Nov), mc7-53 (03:18:37), mg7-07 (09:44:39), mj7-05 (10:56:59), ma7-86 (11:21:25), mc7-25 (11:45:16), mi7-31 (12:09:10), mg7-80 (12:32:40), ml7-28 (13:29:40), mm9-21 (14:35:10), im9-23 (a pack job) (14:44:15), im9-42 (a pack job) (14:56:40), fm9-09 (a pack job) (15:07:20). JOB he9-06 IS RUNNING since 15:08:09 UTC 27 Nov (earth 0-0, 1 frames, tar base name NONE; its words `/tmp/jobs/he9-06-mail.txt`, its script `/tmp/jobs/he9-06.sh`; the cache was dropped with sudo at 15:07:56; build exit 0, tree clean, 11832 MB free before the build). A SMOOTH JOB (a third kind; a script of two lines; NOT a film job and NOT a pack job, no tar): `npm run smooth -- --stop earth --only counts`, the counts part of the smooth report on the tree as committed, about 60 minutes or more (it draws the stop's film frames in order on one page at the preview size); the log `/tmp/he9-06.log` (ends with "RC smooth N"; N may be 1 when the verdict is red, that is a result, not a failure), the tail `/tmp/he9-06-tail.txt`. DO NOT RUN npm run warm. Change no file. THE LINE RULE OF THIS JOB: A STATUS LINE TO /root EVERY 60 MINUTES WITH THE LAST LINE OF THE LOG (low): due 16:08:09, 17:08:09 and so on; form: "handover_engineer on JOB he9-06, HH:MM UTC 27 Nov: the smooth tool runs since 15:08:09, N minutes; the last line of the log, word for word: ..."; save as `/tmp/mail/he9-06-lineK.txt`, a row in `/tmp/jobs/he9-06-lines.txt`. THE RETURN (its mail): ONE message that starts with the usual line and ENDS WITH THE VERDICT LINE OF earth.md, attachments `/home/user/workspace/master/out/work/smooth/earth.md`, `/home/user/workspace/master/out/work/smooth/earth.json` and `/tmp/he9-06-tail.txt`; in it the line about the cache (done with sudo 15:07:56) and the RC line word for word. Ignore the mkline and post.sh calls named next, they are for film jobs. HELPERS (written for this job, texts not yet in the notebook): the line by `python3 /tmp/jobs/smoothline.py he9-06 2026-11-27T15:08:09 20 > /tmp/mail/he9-06-lineK.txt` (start it 20 s before the line is due; exit 0 when plain), the return by `python3 /tmp/jobs/mksmoothreturn.py he9-06 earth` after "SCRIPT DONE" (replace TIMES_NOTE in the draft, set the time; the VERDICT line stays the LAST line). THE TOOL LOGS a line every 15 film frames, "earth counts: frame N + 1/2 of 1680 to 2249, S s" (38 lines in all; 36 s a line at first, 150 to 200 s a line from frame 1860 on). LINES SENT SO FAR: line 1 at 16:08:12 (the log then at frame 2129 + 1/2, 3469 s); the next is due 17:08:09 if it still runs. THE LINE IS MADE BY `python3 /tmp/jobs/mkline.py he9-06 earth 0 0 2026-11-27T15:08:09` (the lines sent: `/tmp/jobs/he9-06-lines.txt`). Finished when `/tmp/jobs/he9-06-run.log` holds "SCRIPT DONE". WHEN DONE: `bash /tmp/jobs/post.sh he9-06 NONE earth 0 0` prints the facts and writes the draft `/tmp/mail/he9-06-return.out`; replace TIMES_NOTE in it, then one message to /root, high, attachments: every `/tmp/NONE.tar.NN` (at most 9 in one message) and `/tmp/he9-06-tail.txt`. Then wait for the next mail that starts with "JOB". THE DATE: read `date -u` and write "UTC D Mon" of that day in the mails. KEPT under `out/work/chunks/16x9-final-full` of the tree until /root says they can go: the chunk of every film job sent back, with its `.json` (13 at 14:44 UTC 27 Nov); `out/work/packs/.cache/round-060` holds the pictures of the last pack job only (each pack job removes it first, as its mail writes). THREE KINDS OF JOB SO FAR (a smooth job, he9-06: entry "JOB fm9-09 sent back"): film jobs (a piece or a split of a piece; `post.sh NAME PIECE SEGMENT FIRST LAST` fits) and pack jobs (im9-23, im9-42, fm9-09: pictures of a pack at the review tier; when finished `python3 /tmp/jobs/mkpackreturn.py NAME PIECE` writes the draft of the return, entries "JOB im9-23 sent back" and "JOB im9-42 sent back"; READ THE MAIL OF EACH JOB FOR WHAT THE RETURN MUST STATE AND FOR THE LINE RULE).
-2. A JOB, step by step: (a) write the four mailed lines EXACTLY AS MAILED (decode `&gt;` and `&amp;`) to `/tmp/jobs/NAME.sh` and the whole mail, decoded, to `/tmp/jobs/NAME-mail.txt` (line 1 a note of the arrival, line 2 blank, line 3 the NOTE, line 4 blank, line 5 the JOB text up to the colon before the script, lines 6 to 5+K the K lines of the script, K is 4 or 5 so far, the last line the rest; K+6 lines in all); (b) `bash /tmp/jobs/pre.sh NAME` does the rest in order and stops at the first thing that is not as it must be: no render running, the script equals the mailed lines, the cache dropped with sudo (`sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'`, the time in `NAME-cache.txt`), HEAD 262b9a68, `git status` 0 lines, the lock unchanged, at least 5000 MB free (if not: old frame folders, films and tars of FINISHED jobs under /tmp and out/work may go; NOTHING under `out/work/chunks/16x9-final-full`), `npm run build` exit 0, then the start (`start.sh`: detached, the log `NAME-run.log` ends with "SCRIPT DONE HH:MM:SS", the watcher writes `NAME-io.txt`, one step of about 4 MB for each frame the encoder took); (c) put the running job into `/tmp/jobs/state.json`, `python3 /tmp/jobs/now.py /tmp/law/e/NOWn.md`, splice, push; (d) wait with `T=$(date -u -d 'YYYY-MM-DD HH:MM:SS' +%s); until grep -q 'SCRIPT DONE' /tmp/jobs/NAME-run.log || [ $(date -u +%s) -ge $T ]; do sleep 10; done` and `poll_command` with waits of 240 s; (e) LINES WHILE IT RUNS: every 60 minutes when the mail says so; else every 30 minutes once a frame has taken over 15 minutes (measured by the steps of the io file and the rows of the job in `out/work/looks/log.jsonl`, never by the part file, which appears late); low priority; made by `mkline.py`; A THIRD RULE (ml7-28): when the mail asks for a line every 30 minutes from the start saying whether the drawing process is alive and how long it has run, the line is made by `alive.py NAME SEGMENT FIRST LAST START_ISO` (entry "JOB ml7-28 runs"; start it 35 s before the line is due); READ THE LINE RULE IN EACH MAIL, IT CHANGES; (f) WHEN FINISHED: `bash /tmp/jobs/post.sh NAME PIECE SEGMENT FIRST LAST`, replace TIMES_NOTE in the draft, ONE message to /root, high, starting with "MAIL from handover_engineer to /root, HH:MM UTC D Mon. JOB NAME sent back", attachments: every tar piece (at most 9 in one message, the rest in a second) and the tail file; in the text each RC line word for word, the count of the tail's first line, the cache line; (g) an entry in the notebook, the job into "sent" of state.json, NOW, push; then `wait_agent`. Do not judge the picture. Change no file of the tree. The texts of the helpers are in the entry "THE JOB HELPERS".
+1. THIS MACHINE IS A RENDER MACHINE FOR THE MASTER (1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5; the clean tree `/home/user/workspace/master`). JOBS SENT BACK, all exit 0 (17): ma7-24 (21:56:16 UTC 26 Nov), ma7-32 (22:48:03), mc7-82 (23:20:10), mw7-40 (02:56:35 UTC 27 Nov), mc7-53 (03:18:37), mg7-07 (09:44:39), mj7-05 (10:56:59), ma7-86 (11:21:25), mc7-25 (11:45:16), mi7-31 (12:09:10), mg7-80 (12:32:40), ml7-28 (13:29:40), mm9-21 (14:35:10), im9-23 (a pack job) (14:44:15), im9-42 (a pack job) (14:56:40), fm9-09 (a pack job) (15:07:20), he9-06 (a smooth job) (16:13:59). JOB ia9-25 IS RUNNING since 16:15:13 UTC 27 Nov (mars.dive 2449-2449, 1 frames, tar base name r60-mars-dive-g; its words `/tmp/jobs/ia9-25-mail.txt`, its script `/tmp/jobs/ia9-25.sh`; the cache was dropped with sudo at 16:15:01; build exit 0, tree clean, 11831 MB free before the build). A PACK JOB OF ONE PICTURE (the form of im9-42, four script lines): `npm run pack -- --phase 6 --round 60 --stop mars --only mars.dive --place-window --frames 2449-2449`, the log `/tmp/ia9-25.log` (ends with "RC pack N"), the tail `/tmp/ia9-25-tail.txt`; its mail: one picture at the review tier, 15 to 60 minutes; it draws that frame into the cache and ends without laying a sheet. NO LINE IS ASKED WHILE IT RUNS (its mail names none). THE RETURN (its mail): every piece `/tmp/r60-mars-dive-g.tar.NN` (names exactly as the split line writes them) and `/tmp/ia9-25-tail.txt`, in a message that starts with the usual line and states the exit code of the pack and the name of the picture file the log printed; if the pack ends with a code other than 0, the tail alone, and say so. WHEN DONE: `python3 /tmp/jobs/mkpackreturn.py ia9-25 r60-mars-dive-g` (NOT post.sh and NOT mkline.py, which the next sentences name for film jobs), set the time, chk.py, send high. THE LINE IS MADE BY `python3 /tmp/jobs/mkline.py ia9-25 mars.dive 2449 2449 2026-11-27T16:15:13` (the lines sent: `/tmp/jobs/ia9-25-lines.txt`). Finished when `/tmp/jobs/ia9-25-run.log` holds "SCRIPT DONE". WHEN DONE: `bash /tmp/jobs/post.sh ia9-25 r60-mars-dive-g mars.dive 2449 2449` prints the facts and writes the draft `/tmp/mail/ia9-25-return.out`; replace TIMES_NOTE in it, then one message to /root, high, attachments: every `/tmp/r60-mars-dive-g.tar.NN` (at most 9 in one message) and `/tmp/ia9-25-tail.txt`. Then wait for the next mail that starts with "JOB". THE DATE: read `date -u` and write "UTC D Mon" of that day in the mails. KEPT under `out/work/chunks/16x9-final-full` of the tree until /root says they can go: the chunk of every film job sent back, with its `.json` (13 at 14:44 UTC 27 Nov); `out/work/packs/.cache/round-060` holds the pictures of the last pack job only (each pack job removes it first, as its mail writes). THREE KINDS OF JOB SO FAR: smooth jobs (he9-06: `npm run smooth -- --stop STOP --only counts`, a script of two lines, no tar; a status line every 60 minutes by `python3 /tmp/jobs/smoothline.py NAME START_ISO 20`, the return by `python3 /tmp/jobs/mksmoothreturn.py NAME STOP`, attachments the .md, the .json and the tail, its LAST line the VERDICT line of the .md; entry "JOB he9-06 sent back"), film jobs (a piece or a split of a piece; `post.sh NAME PIECE SEGMENT FIRST LAST` fits) and pack jobs (im9-23, im9-42, fm9-09: pictures of a pack at the review tier; when finished `python3 /tmp/jobs/mkpackreturn.py NAME PIECE` writes the draft of the return, entries "JOB im9-23 sent back" and "JOB im9-42 sent back"; READ THE MAIL OF EACH JOB FOR WHAT THE RETURN MUST STATE AND FOR THE LINE RULE).
+2. A JOB, step by step: (a) write the mailed script lines EXACTLY AS MAILED (decode `&gt;` and `&amp;`) to `/tmp/jobs/NAME.sh` and the whole mail, decoded, to `/tmp/jobs/NAME-mail.txt` (line 1 a note of the arrival, line 2 blank, line 3 the NOTE, line 4 blank, line 5 the JOB text up to the colon before the script, lines 6 to 5+K the K lines of the script, K is 2, 4 or 5 so far, the last line the rest; K+6 lines in all); (b) `bash /tmp/jobs/pre.sh NAME` does the rest in order and stops at the first thing that is not as it must be: no render running, the script equals the mailed lines, the cache dropped with sudo (`sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'`, the time in `NAME-cache.txt`), HEAD 262b9a68, `git status` 0 lines, the lock unchanged, at least 5000 MB free (if not: old frame folders, films and tars of FINISHED jobs under /tmp and out/work may go; NOTHING under `out/work/chunks/16x9-final-full`), `npm run build` exit 0, then the start (`start.sh`: detached, the log `NAME-run.log` ends with "SCRIPT DONE HH:MM:SS", the watcher writes `NAME-io.txt`, one step of about 4 MB for each frame the encoder took); (c) put the running job into `/tmp/jobs/state.json`, `python3 /tmp/jobs/now.py /tmp/law/e/NOWn.md`, splice, push; (d) wait with `T=$(date -u -d 'YYYY-MM-DD HH:MM:SS' +%s); until grep -q 'SCRIPT DONE' /tmp/jobs/NAME-run.log || [ $(date -u +%s) -ge $T ]; do sleep 10; done` and `poll_command` with waits of 240 s; (e) LINES WHILE IT RUNS: every 60 minutes when the mail says so; else every 30 minutes once a frame has taken over 15 minutes (measured by the steps of the io file and the rows of the job in `out/work/looks/log.jsonl`, never by the part file, which appears late); low priority; made by `mkline.py`; A THIRD RULE (ml7-28): when the mail asks for a line every 30 minutes from the start saying whether the drawing process is alive and how long it has run, the line is made by `alive.py NAME SEGMENT FIRST LAST START_ISO` (entry "JOB ml7-28 runs"; start it 35 s before the line is due); READ THE LINE RULE IN EACH MAIL, IT CHANGES; (f) WHEN FINISHED: `bash /tmp/jobs/post.sh NAME PIECE SEGMENT FIRST LAST`, replace TIMES_NOTE in the draft, ONE message to /root, high, starting with "MAIL from handover_engineer to /root, HH:MM UTC D Mon. JOB NAME sent back", attachments: every tar piece (at most 9 in one message, the rest in a second) and the tail file; in the text each RC line word for word, the count of the tail's first line, the cache line; (g) an entry in the notebook, the job into "sent" of state.json, NOW, push; then `wait_agent`. Do not judge the picture. Change no file of the tree. The texts of the helpers are in the entry "THE JOB HELPERS"; the later ones (`pre.sh` and `start.sh` as they stand now, `packline.py`, `smoothline.py`, `mksmoothreturn.py`) in the entry "JOB he9-06 sent back".
 3. If the machine cannot render (no drawing context after three tries, or under 4 GB free after cleaning): one line to /root, then wait.
 4. One render process at a time. A leading sleep is blocked. `date -u` before every time written. Every mail: the text to a file, `python3 /tmp/mail/chk.py FILE` (no bad lines), then by exec `tools.bash` cat and `tools.message_agent`.
-5. MEASURED SPEEDS HERE (4 cores, final tier, master format): the pack pictures at the review tier: mercury.dive-cover 759 424 s, mercury.rise 1027 666 s, earth.travel 2236, 2242, 2249 together 490 s (the first 6.7 minutes with the load, then under a minute each); Mercury travel frame 1055 64 minutes; Venus hold 1140 to 1169 about 45 s a frame; Venus dive 1327 to 1334 about 5.4 minutes; Venus travel 1675 to 1679 about 261 s; Earth dive 1852 to 1859 5.6 to 8.5 minutes; Mars terrain 2550 to 2579 about 40 s; Neptune hold 4530 to 4559 about 61 s; Sun travel 450 to 456 about 187 s, frame 492 54 minutes; Neptune dive 4740 to 4746 51 to 60 minutes, 4751 71 minutes; Neptune rise 4973 to 4976 50 to 57 minutes; ending retreat 5057 to 5064 about 2.9 minutes.
+5. MEASURED SPEEDS HERE (4 cores, final tier, master format): the pack pictures at the review tier: mercury.dive-cover 759 424 s, mercury.rise 1027 666 s, earth.travel 2236, 2242, 2249 together 490 s (the first 6.7 minutes with the load, then under a minute each); the counts of smooth for earth (frames 1680 to 2249, 1140 pictures at rate 2, draft tier at the preview size) 3910 s; Mercury travel frame 1055 64 minutes; Venus hold 1140 to 1169 about 45 s a frame; Venus dive 1327 to 1334 about 5.4 minutes; Venus travel 1675 to 1679 about 261 s; Earth dive 1852 to 1859 5.6 to 8.5 minutes; Mars terrain 2550 to 2579 about 40 s; Neptune hold 4530 to 4559 about 61 s; Sun travel 450 to 456 about 187 s, frame 492 54 minutes; Neptune dive 4740 to 4746 51 to 60 minutes, 4751 71 minutes; Neptune rise 4973 to 4976 50 to 57 minutes; ending retreat 5057 to 5064 about 2.9 minutes.
 6. THE OLD CLONE IS GONE; what origin lacks is in `/tmp/keep/` (entry "20:53 to 21:02"). THE NOTEBOOK: edit `/tmp/law/notes-base.md` (`python3 /tmp/law/splice.py ENTRY.md NOW.md`, `-` for no entry), then `bash /tmp/law/pushnotes3.sh "subject"` (bare clone `/home/user/workspace/notes.git`; a failed push stays local and goes with the next).
 7. HOUSE RULES: never push to main, never force, never rebase; every commit ends with the trailer; no dashes, no exclamation points, no model names in any file or message; mail /root only what it asked for.
 
