@@ -12713,3 +12713,38 @@ RETURN ma7-90 from /root/neptune_builder, 11:24 UTC: film-16x9-final-b-423, segm
 - 11:24:53 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 11:24:54 npm run build exit 0, dist 1301 MB, free disk 4967 MB. 11:25:08 the job's four
   lines started as /tmp/mi7-07.sh, detached from the repo root (the script made from the saved mail).
+
+- mi7-07, the encoder's intake as the watcher saw it (time, bytes read; the first line is the opening):
+
+      11:25:28 162916
+      11:29:11 5042139
+      11:32:23 9893412
+      11:35:36 14713623
+      11:38:48 19500235
+      11:42:01 24256951
+      11:45:08 28983630
+      11:48:21 33680833
+
+  The looks log has two rows of the job: 457 at 11:29:08, 461 at 11:41:57. The eighth step of the intake was not caught
+  before the encoder closed. No frame took over 15 minutes; no line was sent.
+- 11:51:32 finished. The tail, whole:
+
+      0
+      RC film sun.travel 457-464 0
+      wrote sun.travel.part000.mp4 frames 457-464 render 1567 s encode 1.8 s
+      -rw-r--r-- 1 user user 563200 Nov 27 11:51 /tmp/film-16x9-final-b-026.tar.00
+
+  The piece holds sun.travel.span457-464.mp4 (554029 bytes) and its .json (2000 bytes); sha256 of the piece ffe13b07000ab573581c
+  7b549430783bd8feb9a9613b37f4e7129ab03102af4a. Tree still clean on 262b9a68. Free disk 6258 MB.
+
+## 27 Nov, 11:51 UTC: RETURN mi7-07 to the Builder (word for word; sent about 11:51:59; attached /tmp/film-16x9-final-b-026.tar.00 and /tmp/mi7-07-tail.txt; high priority)
+
+RETURN mi7-07 from /root/neptune_builder, 11:51 UTC: film-16x9-final-b-026, segment sun.travel, span 457-464, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 11:25:08, finished 11:51:32 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 11:24:53.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film sun.travel 457-464 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote sun.travel.part000.mp4 frames 457-464 render 1567 s encode 1.8 s"
+5. Frame times, by the encoder's intake (one step a frame): 11:29:11, 11:32:23, 11:35:36, 11:38:48, 11:42:01, 11:45:08, 11:48:21; the eighth step was not caught before the encoder closed. So a little over 3 minutes a frame; no frame took over 15 minutes and no line was sent.
+6. Attached: /tmp/film-16x9-final-b-026.tar.00 (563200 bytes, the only piece) and /tmp/mi7-07-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 11:24. Free disk 4967 MB before the start, 6258 MB now.
+8. The files of all nine finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
