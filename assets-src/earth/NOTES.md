@@ -8364,3 +8364,29 @@ This is ONE frame (3245) of the part "rise-cover" of the pack of round 60 (jupit
 - The tar `/tmp/r60-jupiter-rise-cover-k.tar` (4413440 bytes, one piece `.00`, same bytes as the tar by `cmp`) holds `out/work/packs/.cache/round-060/tiles/jupiter.rise-cover/f03245-review.png` (4403966 bytes) and its `.json` (334 bytes). No `.frames` folder was in the cache after the run.
 - Sent to /root at 16:50 with the piece and the tail attached. Free disk 5950 MB after the job (dist linked: 450 files with two links). `git status --porcelain` of the worktree shows only `?? node_modules`.
 - The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
+
+### JOB iu9-34 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB iu9-34 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+rm -rf out/work/packs/.cache/round-060 out/work/stills/*-final-full.png*
+npm run pack -- --phase 6 --round 60 --stop uranus --only uranus.rise --place-window --frames 4434-4434 &gt; /tmp/iu9-34.log 2&gt;&amp;1; echo "RC pack $?" &gt;&gt; /tmp/iu9-34.log; tail -25 /tmp/iu9-34.log &gt; /tmp/iu9-34-tail.txt
+tar -cf /tmp/r60-uranus-rise-i.tar --exclude='.frames*' out/work/packs/.cache/round-060
+split -b 40m -d /tmp/r60-uranus-rise-i.tar /tmp/r60-uranus-rise-i.tar.
+This is ONE frame (4434) of the part "rise" of the pack of round 60 (uranus), drawn alone because the whole part is too slow for one machine. It is one picture at the review tier and takes 15 to 60 minutes; the command draws that frame into the cache and ends without laying a sheet. Keep the names of the tar pieces exactly as the split line writes them (r60-uranus-rise-i.tar.00 and so on): the round tool reads them by name. When it has finished send back every piece /tmp/r60-uranus-rise-i.tar.NN and /tmp/iu9-34-tail.txt, in a message that starts with the usual line and states the exit code of the pack and the name of the picture file the log printed. If the pack ends with a code other than 0, send back the tail alone and say so.
+
+### 16:52 UTC, 27 Nov: job iu9-34 runs
+
+- NOTE done: `sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'` rc 0 at 16:52:07.
+- Worktree `/home/user/workspace/main-262b9a68`: HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, `git status --porcelain` shows only `?? node_modules`, lock file same as the commit, no render process running. Free disk 5950 MB before `npm run build` (rc 0 at 16:52:17), 4655 MB right after it.
+- Script `/tmp/iu9-34.sh` holds the four lines of the job (`&gt;` read as `>`, `&amp;` as `&`), started detached from the worktree root at 16:52:21 (`tools/pack.ts` under it).
+- A pack job ordered by /root: frame 4434 of uranus.rise for round 60, one picture at the review tier, said to take 15 to 60 minutes. No lines asked on the way. To send back: every piece `/tmp/r60-uranus-rise-i.tar.NN` and `/tmp/iu9-34-tail.txt`, with the exit code of the pack and the name of the picture file the log printed; the tail alone if the code is not 0.
+
+### 16:55 UTC, 27 Nov: job iu9-34 sent back
+
+- Started detached at 16:52:21; the tail file and the tar were written at 16:55:09.
+- The log's last three lines, word for word: "/home/user/workspace/main-262b9a68/out/work/packs/.cache/round-060/tiles/uranus.rise/f04434-review.png", "pack round-060 part uranus.rise: frames were rendered, 159.3 s", "RC pack 0". The tail file has 14 lines.
+- The tar `/tmp/r60-uranus-rise-i.tar` (4055040 bytes, one piece `.00`, same bytes as the tar by `cmp`) holds `out/work/packs/.cache/round-060/tiles/uranus.rise/f04434-review.png` (4040729 bytes) and its `.json` (333 bytes). No `.frames` folder was in the cache after the run.
+- Sent to /root at 16:55 with the piece and the tail attached. Free disk 5942 MB after the job (dist linked: 450 files with two links). `git status --porcelain` of the worktree shows only `?? node_modules`.
+- The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
