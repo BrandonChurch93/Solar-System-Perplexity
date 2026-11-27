@@ -9101,3 +9101,9 @@ JOB ma7-15 (from /root, 21:09), the piece film-16x9-final-b-045: segment mercury
 - 15:55:32: FINISHED. Log (22 lines): the picture `/home/user/workspace/mainref/out/work/packs/.cache/round-060/tiles/venus.rise-cover/f01539-review.png`, "pack round-060 part venus.rise-cover: frames were rendered, 122.1 s", "RC pack 0". One piece `/tmp/r60-venus-rise-cover-f.tar.00`, 4147200 bytes, sha256 c108c1b34bf82d1ff0fad4406d1df964085a74f197f8053f5308462289e97ac3, equal to the tar (png 4140389 bytes, json 332 bytes).
 - 15:56: RETURN sent to /root (high) with the piece and the tail: exit code 0, the picture's name, the cache line, the times. Free disk 6717 MB; worktree clean; kept chunks untouched (28 files).
 - WAITING for the next JOB mail.
+
+### JOB iv9-39 (Nov 27, mail about 15:56): ONE PICTURE of a pack, frame 1346 of the part venus.dive-cover of round 60 (same form)
+- Script `/tmp/iv9-39.sh` (4 lines: the rm line, `npm run pack -- --phase 6 --round 60 --stop venus --only venus.dive-cover --place-window --frames 1346-1346`, tar to `/tmp/r60-venus-dive-cover-j.tar`, split to `.NN`); cache dropped WITH SUDO at 15:56:44; mainref on 262b9a68 and clean; build exit 0 at 15:56:55 (free 6717 MB before it, 5422 MB right after it); started detached 15:57:05 (script pid 22294, browser 22375, GPU process 22406).
+- 15:58:22: FINISHED. Log (22 lines): the picture `/home/user/workspace/mainref/out/work/packs/.cache/round-060/tiles/venus.dive-cover/f01346-review.png`, "pack round-060 part venus.dive-cover: frames were rendered, 66.9 s", "RC pack 0". One piece `/tmp/r60-venus-dive-cover-j.tar.00`, 4208640 bytes, sha256 3bf297035324230f8abe9faa1e776a117a36fe36d5af17d3c28e7191b81e9349, equal to the tar (png 4194672 bytes, json 331 bytes).
+- 15:58: RETURN sent to /root (high) with the piece and the tail: exit code 0, the picture's name, the cache line, the times. Free disk 6708 MB; worktree clean; kept chunks untouched (28 files).
+- WAITING for the next JOB mail.
