@@ -13124,3 +13124,41 @@ VERDICT: green. No number is over its limit.
   4934 MB.
 - 15:17:19 the job's two lines started as /tmp/ht9-03.sh, detached from the repo root. Its first line removes
   out/work/smooth with hj9-07's two files (already sent back).
+
+- 15:18:12 free disk 6192 MB: the tool's own build had linked dist. First draft frame file 15:18:06, last 15:37:33.
+- 15:40:10 ht9-03 finished. The tail file has 21 lines; the first 11 are the npm header and the report of the build that the
+  tool runs itself (not copied here). The last ten, word for word:
+
+      saturn rise: 20 of 132 draft frames, 333 s
+      saturn rise: 40 of 132 draft frames, 597 s
+      saturn rise: 60 of 132 draft frames, 791 s
+      saturn rise: 80 of 132 draft frames, 908 s
+      saturn rise: 100 of 132 draft frames, 1020 s
+      saturn rise: 120 of 132 draft frames, 1130 s
+      smooth saturn: green. out/work/smooth/saturn-rise-p1of2.md
+      smooth saturn: beside it, with the carry at the full size: green
+      smooth saturn: ground pop, no limit: largest 1.159 from frame 3838 + 1/2 to the next, most at pixel 1238, 786, a patch of 164 by 220 px; 0 of 99 rows read over 1.3 (rise); 0 of 99 rows not read
+      RC smooth 0
+
+  Written under out/work/smooth: saturn-rise-p1of2.md (35724 bytes, sha256 eb7c9f21d008ca6ca1b7122bd2b2e28306b4cf05dcf54
+  a3935c56745dd0a21cc), saturn-rise-p1of2.json (229676 bytes, sha256 1b89cffb58a60496ecdab49b6ec6686f64d848f138c534faf918
+  c86fa61414d7), saturn-rise-p1of2-pops.png (2237379 bytes), saturn-rise-p1of2-pops-full.png (1955229 bytes),
+  saturn-rise-p1of2-changes.png (1119074 bytes), and 132 draft frames with stamps under saturn/frames (k007580 to
+  k007711, 542 MB). Line 5 of the .md: "VERDICT: green. No number is over its limit." Tree still clean on 262b9a68.
+  Free disk 5680 MB after. The mail asks for at most 6 .png, the panels first: I sent the three panels and three draft
+  frames by a plain rule (first, 66th, last), not by a look at them.
+
+## 27 Nov, 15:41 UTC: RETURN ht9-03 to the Builder (word for word; sent about 15:41:11; 9 attachments as its point 4 lists; high priority)
+
+RETURN ht9-03 from /root/neptune_builder, 15:41 UTC: smooth, pictures of saturn's rise, part 1/2, rate 2 (npm run smooth -- --stop saturn --kind rise --only pictures --part 1/2), commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 15:17:19, finished 15:40:10 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 15:15:06 and again at 15:16:32.
+2. The RC line, word for word: "RC smooth 0". The tool's three lines before it, word for word: "smooth saturn: green. out/work/smooth/saturn-rise-p1of2.md" / "smooth saturn: beside it, with the carry at the full size: green" / "smooth saturn: ground pop, no limit: largest 1.159 from frame 3838 + 1/2 to the next, most at pixel 1238, 786, a patch of 164 by 220 px; 0 of 99 rows read over 1.3 (rise); 0 of 99 rows not read".
+3. The command wrote under out/work/smooth: saturn-rise-p1of2.md (35724 bytes), saturn-rise-p1of2.json (229676 bytes), three panels (saturn-rise-p1of2-pops.png 2237379 bytes, saturn-rise-p1of2-pops-full.png 1955229 bytes, saturn-rise-p1of2-changes.png 1119074 bytes) and 132 draft frames with their stamps under saturn/frames (k007580-r2-draft.png to k007711-r2-draft.png, 542 MB). That is 135 .png, more than 6: I attach the three panels first and, to fill the 6, three draft frames by a plain rule (the first, the 66th and the last drawn: k007580, k007645, k007711). The other 129 frames stay where the tool wrote them.
+4. Attached (9): saturn-rise-p1of2.md, saturn-rise-p1of2.json, /tmp/ht9-03-tail.txt (21 lines), saturn-rise-p1of2-pops.png, saturn-rise-p1of2-pops-full.png, saturn-rise-p1of2-changes.png, saturn/frames/k007580-r2-draft.png, saturn/frames/k007645-r2-draft.png, saturn/frames/k007711-r2-draft.png. sha256 of the .json 1b89cffb58a60496ecdab49b6ec6686f64d848f138c534faf918c86fa61414d7, of the .md eb7c9f21d008ca6ca1b7122bd2b2e28306b4cf05dcf54a3935c56745dd0a21cc.
+5. Times: the tool's lines say 20 of 132 draft frames at 333 s, 40 at 597 s, 60 at 791 s, 80 at 908 s, 100 at 1020 s, 120 at 1130 s. First frame file 15:18:06, last 15:37:33, then the measuring to 15:40:10. No line was asked and none was sent.
+6. Disk, a red I name: 4912 MB free when the mail came, under the 5 GB asked. The cause is the dist of my own npm run build (1301 MB, a full copy) that still stood, because the landing tool of hj9-07 runs no build of its own. I removed the 21 unsplit tars of finished jobs under /tmp (each the byte twin of its one piece; the 21 pieces are kept): 4934 MB. No frame folder was left to remove; the rest of out/work is lab notes and pictures, which stay. So I started at 4934 MB (after npm run build as well). Once the tool's own build had linked dist: 6192 MB at 15:18:12. Now 5680 MB, with the 132 draft frames in place.
+7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 15:16:32; no npm ci, the lock file is the same.
+8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed hj9-07's two files from out/work/smooth; a copy stands in /tmp/smooth-hj9-07. I wait for the next job.
+Line 7 of the .md, word for word: "VERDICT BESIDE IT, the pictures read with the carry at the full size (the verdict above is the one that counts and makes the exit code): green. No number is over its limit."
+The VERDICT line of the .md file (its line 5), word for word:
+VERDICT: green. No number is over its limit.
