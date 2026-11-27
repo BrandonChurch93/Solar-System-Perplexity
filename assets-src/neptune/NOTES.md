@@ -13574,3 +13574,30 @@ RETURN ij9-40 from /root/neptune_builder, 16:48 UTC: pack of round 60, jupiter, 
   after the build, a sync and 8 s: 4867 MB (under 5 GB until the pack's own build links dist; named in the return).
 - 16:49:57 the job's 4 lines started as /tmp/iu9-21.sh, detached from the repo root. Its first line removes the cache
   of round 60 that ij9-40 left (already sent back; the piece stays in /tmp).
+
+- 16:50:58 free disk 6142 MB while the pack drew. 16:58:41 the browser's drawing process had stood 513 s at full load.
+- 17:01:48 iu9-21 finished. The tail file has 14 lines; all but the last three are the npm header and the report of the build
+  that the pack tool runs itself (not copied here). The last three, word for word:
+
+      /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/uranus.dive/f04150-review.png
+      pack round-060 part uranus.dive: frames were rendered, 700.9 s
+      RC pack 0
+
+  The piece /tmp/r60-uranus-dive-f.tar.00 (3532800 bytes) holds f04150-review.png (3528582 bytes) and its .json
+  (333 bytes) under out/work/packs/.cache/round-060/tiles/uranus.dive/; sha256 of the piece 107cf193db673d04e5c9801d6d95
+  922af28c85b8d09f640306627d60a0bd1e3e. Tree still clean on 262b9a68. Free disk 6154 MB after. After the return
+  I removed the unsplit tar under /tmp, the byte twin of its one piece (cmp); the 31 pieces stay. The push of the
+  start note (772a459d) failed three times at the start (the known pause of the remote); the next plain push, made
+  between 16:50:58 and 16:58:41, went through (1dd7f90e..772a459d). This time the whole log has 14 lines.
+
+## 27 Nov, 17:02 UTC: RETURN iu9-21 to the Builder (word for word; sent about 17:02:15; attached /tmp/r60-uranus-dive-f.tar.00 and /tmp/iu9-21-tail.txt; high priority)
+
+RETURN iu9-21 from /root/neptune_builder, 17:02 UTC: pack of round 60, uranus, part uranus.dive, frame 4150 alone (r60-uranus-dive-f), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 16:49:57, finished 17:01:48 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 16:49:35.
+2. Exit code of the pack: 0. The RC line, word for word: "RC pack 0".
+3. The picture file the log printed: /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/uranus.dive/f04150-review.png
+4. The tool's last line, word for word: "pack round-060 part uranus.dive: frames were rendered, 700.9 s".
+5. Attached: /tmp/r60-uranus-dive-f.tar.00 (3532800 bytes, the only piece, name as the split line wrote it; sha256 107cf193db673d04e5c9801d6d95922af28c85b8d09f640306627d60a0bd1e3e; it holds f04150-review.png, 3528582 bytes, and its .json, 333 bytes, under out/work/packs/.cache/round-060/tiles/uranus.dive/) and /tmp/iu9-21-tail.txt (14 lines).
+6. Disk: 6161 MB free before the build; 4867 MB right after npm run build and a sync, under the 5 GB asked, a red I name; 6142 MB at 16:50:58 while the pack drew; 6154 MB now.
+7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 16:49:35; no npm ci, the lock file is the same.
+8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of ij9-40 (sent back; its piece stays in /tmp). I wait for the next job.
