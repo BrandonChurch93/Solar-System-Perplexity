@@ -12492,3 +12492,7 @@ LINE mi7-26 from /root/neptune_builder, 05:19 UTC (started 03:32:24): 2 of 7 fra
 ## 27 Nov, 05:49 UTC: fifth line on mi7-26 to the Builder (word for word; sent about 05:49:19; no attachment; low priority)
 
 LINE mi7-26 from /root/neptune_builder, 05:49 UTC (started 03:32:24): 3 of 7 frames finished. New since the last line: 197 at 05:27:05 (38 min 12 s). The fourth is due about 06:05, the last about 08:00 by this pace. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 06:19.
+
+## 27 Nov, 06:19 UTC: sixth line on mi7-26 to the Builder (word for word; sent about 06:19:19; no attachment; low priority)
+
+LINE mi7-26 from /root/neptune_builder, 06:19 UTC (started 03:32:24): 4 of 7 frames finished. New since the last line: 198 at 06:05:40 (38 min 34 s). The fifth is due about 06:44, the last about 08:01 by this pace. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 06:49.
