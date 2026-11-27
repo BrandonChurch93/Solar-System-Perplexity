@@ -13047,3 +13047,20 @@ RETURN fm9-21 from /root/neptune_builder, 15:12 UTC: pack of round 60, part endi
 6. Disk: 6213 MB free before the build; 4919 MB right after npm run build and a sync (under the 5 GB asked, a red I name as on im9-15 and im9-38); 6207 MB at 15:01:57 while the pack drew; 6209 MB now.
 7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 15:01:05; no npm ci, the lock file is the same.
 8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). I wait for the next job.
+
+## JOB hj9-07 from the Builder (/root), with the same note before it (read 15:12 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority). A new kind of job: the smooth tool (landing report of jupiter), not a film and not a pack.
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB hj9-07 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+> rm -rf out/work/smooth
+> npm run smooth -- --stop jupiter --kind landing --calibrate &gt; /tmp/hj9-07.log 2&gt;&amp;1; echo "RC smooth $?" &gt;&gt; /tmp/hj9-07.log; tail -25 /tmp/hj9-07.log &gt; /tmp/hj9-07-tail.txt
+> This job is the landing report of round 60's stop (jupiter): the frames round the judged hold and terrain frames. The exit code of smooth may be 1 when the verdict is red; that is a result, not a failure. When it has finished send back out/work/smooth/jupiter-landing.md, out/work/smooth/jupiter-landing.json, /tmp/hj9-07-tail.txt and every .png the command wrote under out/work/smooth/ (at most 6), as attachments in one message that starts with the usual line and ends with the VERDICT line of the .md file.
+
+- Before the start I copied the 23 files of out/work/smooth (old lab reports of 24 and 26 Nov, 7 MB, among them three
+  pictures of Neptune) to /tmp/smooth-before-hj9-07, because the job's first line removes that folder and my pictures
+  are to stay. The copy stands outside the tree.
+- 15:12:50 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
+  git status empty, whole. Free disk before the build 6202 MB. 15:12:51 npm run build exit 0, dist 1301 MB. Free disk
+  after the build, a sync and 8 s: 4907 MB (under 5 GB, as on the pack jobs; named in the return).
+- 15:13:30 the job's two lines started as /tmp/hj9-07.sh, detached from the repo root.
