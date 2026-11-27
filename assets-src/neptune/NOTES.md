@@ -12983,3 +12983,25 @@ RETURN im9-15 from /root/neptune_builder, 14:41 UTC: frame 757 of the part dive-
   after the build, a sync and 8 s: 4928 MB (under 5 GB, as on im9-15; named in the return).
 - 14:42:45 the job's four lines started as /tmp/im9-38.sh, detached from the repo root. Its first line removes the cache
   of round 60 that im9-15 left (already sent back).
+
+- 14:59:38 im9-38 finished. The tail file has 14 lines; all but the last three are the report of the build that the
+  pack tool runs itself (not copied here). The last three, word for word:
+
+      /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/mercury.rise/f01021-review.png
+      pack round-060 part mercury.rise: frames were rendered, 1003.5 s
+      RC pack 0
+
+  The piece /tmp/r60-mercury-rise-j.tar.00 (4188160 bytes) holds f01021-review.png (4183532 bytes) and its .json (334
+  bytes) under out/work/packs/.cache/round-060/tiles/mercury.rise/; sha256 of the piece f3b28f38d958e860d15dd50475e3cf5a
+  a5236bc4a5cc7bbf1ad0b86047e02678. Tree still clean on 262b9a68. Free disk 6199 MB while the pack drew, 6214 MB after.
+
+## 27 Nov, 15:00 UTC: RETURN im9-38 to the Builder (word for word; sent about 15:00:04; attached /tmp/r60-mercury-rise-j.tar.00 and /tmp/im9-38-tail.txt; high priority)
+
+RETURN im9-38 from /root/neptune_builder, 15:00 UTC: frame 1021 of the part rise of the pack of round 60 (mercury), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 14:42:45, finished 14:59:38 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 14:42:16, before the build.
+2. The exit code of the pack: 0. The log's line, word for word: "RC pack 0"
+3. The name of the picture file the log printed: /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/mercury.rise/f01021-review.png
+4. The log's last line of the tool: "pack round-060 part mercury.rise: frames were rendered, 1003.5 s"
+5. Attached: /tmp/r60-mercury-rise-j.tar.00 (4188160 bytes, the only piece, the name as the split line wrote it) and /tmp/im9-38-tail.txt. The tar holds f01021-review.png (4183532 bytes) and f01021-review.png.json (334 bytes) under out/work/packs/.cache/round-060/tiles/mercury.rise/.
+6. The disk, as on im9-15: free before the build 6222 MB, over the 5 GB asked; after npm run build (exit 0, 14:42) 4928 MB, under 5 GB, and I started all the same. While the pack drew it stood at 6199 MB; now 6214 MB.
+7. The tree: this repo's own tree, detached on 262b9a68, whole, git status empty before and after. The job's first line removed the cache of round 60 that im9-15 had left (sent back before); the cache now holds this job's frame only. The files of the thirteen film jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
