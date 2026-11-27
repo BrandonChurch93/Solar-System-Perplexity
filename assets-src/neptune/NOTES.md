@@ -13530,3 +13530,30 @@ RETURN ij9-21 from /root/neptune_builder, 16:34 UTC: pack of round 60, jupiter, 
   after the build, a sync and 8 s: 4873 MB (under 5 GB until the pack's own build links dist; named in the return).
 - 16:36:08 the job's 4 lines started as /tmp/ij9-40.sh, detached from the repo root. Its first line removes the cache
   of round 60 that ij9-21 left (already sent back; the piece stays in /tmp).
+
+- 16:37:13 free disk 6148 MB while the pack drew. 16:45:03 the browser's drawing process had stood 522 s at full load.
+- 16:48:19 ij9-40 finished. The tail file has 22 lines; all but the last three are the npm header and the report of the build
+  that the pack tool runs itself (not copied here). The last three, word for word:
+
+      /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/jupiter.rise-cover/f03244-review.png
+      pack round-060 part jupiter.rise-cover: frames were rendered, 718.8 s
+      RC pack 0
+
+  The piece /tmp/r60-jupiter-rise-cover-j.tar.00 (4413440 bytes) holds f03244-review.png (4407363 bytes) and its .json
+  (334 bytes) under out/work/packs/.cache/round-060/tiles/jupiter.rise-cover/; sha256 of the piece 53e42a2e6964531b58cd0
+  ad4f311a2fe7ca4eb4adc3b8e8c69145343055eb31d. Tree still clean on 262b9a68. Free disk 6158 MB after. After the return
+  I removed the unsplit tar under /tmp, the byte twin of its one piece (cmp); the 30 pieces stay. At the start the
+  shell tool printed that it had stopped background processes the command left running; the job itself was not
+  touched (its script, the pack tool and the browser ran on, seen at 16:36:17).
+
+## 27 Nov, 16:48 UTC: RETURN ij9-40 to the Builder (word for word; sent about 16:48:40; attached /tmp/r60-jupiter-rise-cover-j.tar.00 and /tmp/ij9-40-tail.txt; high priority)
+
+RETURN ij9-40 from /root/neptune_builder, 16:48 UTC: pack of round 60, jupiter, part jupiter.rise-cover, frame 3244 alone (r60-jupiter-rise-cover-j), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 16:36:08, finished 16:48:19 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 16:35:46.
+2. Exit code of the pack: 0. The RC line, word for word: "RC pack 0".
+3. The picture file the log printed: /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/jupiter.rise-cover/f03244-review.png
+4. The tool's last line, word for word: "pack round-060 part jupiter.rise-cover: frames were rendered, 718.8 s".
+5. Attached: /tmp/r60-jupiter-rise-cover-j.tar.00 (4413440 bytes, the only piece, name as the split line wrote it; sha256 53e42a2e6964531b58cd0ad4f311a2fe7ca4eb4adc3b8e8c69145343055eb31d; it holds f03244-review.png, 4407363 bytes, and its .json, 334 bytes, under out/work/packs/.cache/round-060/tiles/jupiter.rise-cover/) and /tmp/ij9-40-tail.txt (22 lines).
+6. Disk: 6167 MB free before the build; 4873 MB right after npm run build and a sync, under the 5 GB asked, a red I name; 6148 MB at 16:37:13 while the pack drew; 6158 MB now.
+7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 16:35:46; no npm ci, the lock file is the same.
+8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of ij9-21 (sent back; its piece stays in /tmp). I wait for the next job.
