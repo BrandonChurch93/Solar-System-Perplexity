@@ -109,7 +109,7 @@ export async function openSource(opts: { format: string; assets: string; diag?: 
           const gl = (c.getContext('webgl2') ?? c.getContext('webgl')) as WebGLRenderingContext | null
           const lost = !gl || gl.isContextLost() || ((window as unknown as { __glLost?: number }).__glLost ?? 0) > 0
           return { b64, invalid, coverage, lost, r: (t1 - t0) / 1000, s: (t2 - t1) / 1000, g: (t3 - t2) / 1000 }
-        }, [frame, tier, grab, sanity] as const)
+        }, [process.env.GT_HALF === '1' ? 2 * frame + 1 : frame, tier, grab, sanity] as const)
       } catch (e) {
         throw new PageFailure((crashed || 'page call failed') + ' at frame ' + frame + ': ' + String(e).split('\n')[0]!.slice(0, 200))
       }

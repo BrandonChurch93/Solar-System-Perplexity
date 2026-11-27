@@ -26,7 +26,7 @@ export interface Job {
 }
 
 export function chunkDir(job: Pick<Job, 'format' | 'tier' | 'assets'>): string {
-  return join(WORK, 'chunks', job.format + '-' + job.tier + '-' + job.assets)
+  return join(WORK, 'chunks', job.format + '-' + job.tier + '-' + job.assets + (process.env.GT_HALF === '1' ? '-half' : ''))
 }
 
 export function unitDir(job: Job, u: Unit): string {

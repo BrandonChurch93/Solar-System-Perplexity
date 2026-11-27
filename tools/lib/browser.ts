@@ -80,7 +80,7 @@ export async function openCapture(opts: { dist: string; format: string; assets: 
     if (m.type() === 'error') console.error('[page console]', text)
     if (FAULT_TEXT.test(text)) faults.push(text.split('\n')[0]!.slice(0, 200))
   })
-  const q = '?mode=' + (opts.mode ?? 'capture') + '&format=' + opts.format + '&assets=' + opts.assets + (opts.diag ? '&diag=' + opts.diag : '') + (opts.query ?? '')
+  const q = '?mode=' + (opts.mode ?? 'capture') + '&format=' + opts.format + '&assets=' + opts.assets + (opts.diag ? '&diag=' + opts.diag : '') + (opts.query ?? '') + (process.env.GT_HALF === '1' ? '&rate=2&shutter=360' : '')
   await page.goto(url + q)
   await page.waitForFunction(() => 'showcase' in window, undefined, { timeout: 120000 })
   await page.evaluate(() => (window as unknown as { showcase: { ready: Promise<void> } }).showcase.ready)
