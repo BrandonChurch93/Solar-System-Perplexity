@@ -7793,3 +7793,45 @@ An exit code 3 means the drawing context was lost: the loop runs the same comman
 - The tail file reads, whole: "0", "RC film earth.dive 1897-1904 0", "wrote earth.dive.part000.mp4 frames 1897-1904 render 8292 s encode 1.7 s", and the one piece `/tmp/film-16x9-final-b-148.tar.00` of 481280 bytes. The tar holds `earth.dive.span1897-1904.mp4` (468229 bytes) and its `.json` (2010 bytes).
 - Sent to /root at 00:33 with the piece and the tail attached. Free disk 6090 MB after the job.
 - `out/work/chunks/16x9-final-full` of the render worktree holds three spans (venus.dive 1267-1274, venus.rise 1582-1589, earth.dive 1897-1904) and stays until /root says it can go. Nothing runs. Waiting for the next job.
+
+### JOB mw7-27 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB mw7-27 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); it is frames 4950 to 4952 only, a part of the tool's piece film-16x9-final-b-404 (frames 4950 to 4955), which is too slow for one machine and is split over several. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+rm -f /tmp/mw7-27-log.txt /tmp/mw7-27-tail.txt /tmp/split-404-4950-4952.tar*
+for S in "neptune.rise 4950-4952"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/mw7-27-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/mw7-27-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+tar -cf /tmp/split-404-4950-4952.tar out/work/chunks/16x9-final-full/neptune.rise.span4950-4952.mp4 out/work/chunks/16x9-final-full/neptune.rise.span4950-4952.mp4.json; split -b 40m -d /tmp/split-404-4950-4952.tar /tmp/split-404-4950-4952.tar.
+grep -c 'Shader Error\|not usable' /tmp/mw7-27-log.txt &gt; /tmp/mw7-27-tail.txt; grep 'RC film' /tmp/mw7-27-log.txt &gt;&gt; /tmp/mw7-27-tail.txt; grep 'wrote \|G5' /tmp/mw7-27-log.txt | tail -6 &gt;&gt; /tmp/mw7-27-tail.txt; ls -la /tmp/split-404-4950-4952.tar.* &gt;&gt; /tmp/mw7-27-tail.txt
+An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. No planned time: these are the slowest frames of the film (other machines needed 50 to over 110 minutes for one frame here), so let it run for hours. Send one line every 60 minutes, with the number of frames finished so far if you can see it (the bytes on the encoder's pipe or the tool's look pictures) and the time each took. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/split-404-4950-4952.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/mw7-27-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+### 00:35 UTC, 27 Nov: job mw7-27 runs
+
+- Notes commit c9cf59cb3e24003504402c444a651be78856a185 (notes only, on e8fd023514f2426698ffde6720a506c57ace0d55) was pushed at 00:34, read back equal from origin.
+- NOTE of the job: drop_caches, rc 0 at 00:34:17. Worktree as before (HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, status only `?? node_modules`, lock file same as the commit), `npm run build` rc 0 at 00:34:27, free disk 6089 MB.
+- Job mw7-27 (neptune.rise span 4950-4952, three frames, a part of film-16x9-final-b-404): lines in `/tmp/mw7-27.sh`, started detached from the worktree's root at 00:34 (exact second in the next entry). The job says: no planned time, 50 to over 110 minutes a frame on other machines; one line to /root every 60 minutes with the frames done and the time each took (seen in `out/work/looks/log.jsonl` of the worktree).
+
+### 01:35 UTC, 27 Nov: job mw7-27, first hourly line
+
+- Started detached at 00:34:42; the tool's first line at 00:34:52 ("film: 1 units to render, 3 frames, 16x9 final full").
+- At 01:35: no look picture of neptune.rise, the encoder (`/proc/<ffmpeg pid>/io`) had read 162916 bytes, no part file, no RC line: 0 of 3 frames after 60 minutes. Drawing process at 385 percent of a core, free disk 6062 MB. Line sent to /root at 01:35 (low priority). Next due 02:35, then every 60 minutes until `/tmp/mw7-27-tail.txt` is there.
+
+### 02:35 UTC, 27 Nov: job mw7-27, second hourly line
+
+- Looks log: neptune.rise 4950 done at 02:11:30, 96 min 38 s after the tool's first line (00:34:52). The encoder had read 4431114 bytes at 02:34:48. 1 of 3 frames; no RC line. Drawing process at 386 percent of a core, free disk 6053 MB.
+- Line sent to /root at 02:35 (low priority). At this pace the end is near 05:25. Next lines due 03:35, 04:35, 05:35.
+
+### 03:35 UTC, 27 Nov: job mw7-27, third hourly line
+
+- At 03:34:56: still 1 of 3 frames (4950 at 02:11:30); frame 4951 was 83 minutes in; the encoder's pipe stood at 4431114 bytes; no RC line; drawing process at 387 percent of a core, free disk 6053 MB. Line sent to /root at 03:35 (low priority). Next due 04:35.
+
+### 04:35 UTC, 27 Nov: job mw7-27, fourth hourly line
+
+- Looks log: neptune.rise 4951 done at 03:47:31, 96 min 0 s after 4950. At 04:34:53: 2 of 3 frames, the encoder's pipe at 8696741 bytes, no RC line, drawing process at 387 percent of a core, free disk 6044 MB. Line sent to /root at 04:35 (low priority). Frame 4952 should end near 05:24; next line due 05:35 if it is not done.
+
+### 05:24 UTC, 27 Nov: job mw7-27 sent back
+
+- Looks log: neptune.rise 4952 done at 05:23:34 (96 min 3 s after 4951).
+- The tail file reads, whole: "0", "RC film neptune.rise 4950-4952 0", "wrote neptune.rise.part000.mp4 frames 4950-4952 render 17315 s encode 1.0 s", and the one piece `/tmp/split-404-4950-4952.tar.00` of 194560 bytes. The tar holds `neptune.rise.span4950-4952.mp4` (186503 bytes) and its `.json` (1653 bytes).
+- Sent to /root at 05:24 with the piece and the tail attached. Free disk 6088 MB after the job.
+- `out/work/chunks/16x9-final-full` of the render worktree holds four spans (venus.dive 1267-1274, venus.rise 1582-1589, earth.dive 1897-1904, neptune.rise 4950-4952) and stays until /root says it can go. Nothing runs. Waiting for the next job.
