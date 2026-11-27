@@ -7904,3 +7904,45 @@ An exit code 3 means the drawing context was lost: the loop runs the same comman
 - The tail file reads, whole: "0", "RC film jupiter.rise 3240-3244 0", "wrote jupiter.rise.part000.mp4 frames 3240-3244 render 9166 s encode 1.3 s", and the one piece `/tmp/film-16x9-final-b-261.tar.00` of 317440 bytes. The tar holds `jupiter.rise.span3240-3244.mp4` (311610 bytes) and its `.json` (1797 bytes).
 - Sent to /root at 08:39 with the piece and the tail attached. Free disk 6083 MB after the job.
 - `out/work/chunks/16x9-final-full` of the render worktree holds six spans (venus.dive 1267-1274, venus.rise 1582-1589, earth.dive 1897-1904, neptune.rise 4950-4952, earth.rise 2160-2166, jupiter.rise 3240-3244) and stays until /root says it can go. Nothing runs. Waiting for the next job.
+
+### JOB mg7-91 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB mg7-91 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); the tool calls it film-16x9-final-b-195. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+rm -f /tmp/mg7-91-log.txt /tmp/mg7-91-tail.txt /tmp/film-16x9-final-b-195.tar*
+for S in "mars.dive 2453-2454" "mars.dive 2455-2456"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/mg7-91-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/mg7-91-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+tar -cf /tmp/film-16x9-final-b-195.tar out/work/chunks/16x9-final-full/mars.dive.span2453-2454.mp4 out/work/chunks/16x9-final-full/mars.dive.span2453-2454.mp4.json out/work/chunks/16x9-final-full/mars.dive.span2455-2456.mp4 out/work/chunks/16x9-final-full/mars.dive.span2455-2456.mp4.json; split -b 40m -d /tmp/film-16x9-final-b-195.tar /tmp/film-16x9-final-b-195.tar.
+grep -c 'Shader Error\|not usable' /tmp/mg7-91-log.txt &gt; /tmp/mg7-91-tail.txt; grep 'RC film' /tmp/mg7-91-log.txt &gt;&gt; /tmp/mg7-91-tail.txt; grep 'wrote \|G5' /tmp/mg7-91-log.txt | tail -6 &gt;&gt; /tmp/mg7-91-tail.txt; ls -la /tmp/film-16x9-final-b-195.tar.* &gt;&gt; /tmp/mg7-91-tail.txt
+An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. Planned time about 24 minutes; the real time can be twice that. If one frame takes over 15 minutes, send one line every 30 minutes. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/film-16x9-final-b-195.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/mg7-91-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+### 08:40 UTC, 27 Nov: job mg7-91 runs
+
+- Notes commit 5234adbf95f3849e85b4431e7e7605cf3ed2d18e (notes only, on 086212d31e4b369c76b0b993dac2b696142d44fb) was pushed at 08:39, read back equal from origin.
+- NOTE of the job: drop_caches, rc 0 at 08:39:26. Worktree as before (HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, status only `?? node_modules`, lock file same as the commit), `npm run build` rc 0 at 08:39:35, free disk 6082 MB.
+- Job mg7-91 (film-16x9-final-b-195, mars.dive in two spans, 2453-2454 then 2455-2456, the film tool runs twice): lines in `/tmp/mg7-91.sh`, started detached from the worktree's root (exact second in the next entry). Planned 24 minutes; a line every 30 minutes if a frame takes over 15 minutes.
+
+### 08:56 UTC, 27 Nov: job mg7-91, first line
+
+- Started detached at 08:39:51; the tool's first line at 08:40:01 ("film: 1 units to render, 2 frames, 16x9 final full", the first of the two spans).
+- At 08:56:23: no look picture of mars.dive, the encoder had read 162914 bytes, no RC line: 0 of 4 frames after 16 minutes. Drawing process at 386 percent of a core, free disk 6055 MB. Line sent to /root at 08:56 (low priority). Next due 09:26, then every 30 minutes until `/tmp/mg7-91-tail.txt` is there.
+
+### 09:26 UTC, 27 Nov: job mg7-91, second line
+
+- Looks log: mars.dive 2453 done at 09:08:48, 28 min 47 s after the tool's first line (08:40:01). At 09:25:55: 1 of 4 frames, the encoder's pipe at 4612348 bytes, no RC line yet, drawing process at 391 percent of a core, free disk 6046 MB. Line sent to /root at 09:26 (low priority). At this pace the two spans end near 10:36. Next lines due 09:56, 10:26, 10:56.
+
+### 09:56 UTC, 27 Nov: job mg7-91, third line
+
+- First span done: "wrote mars.dive.part000.mp4 frames 2453-2454 render 3443 s encode 0.8 s", "RC film mars.dive 2453-2454 0". Looks log: mars.dive 2454 at 09:37:31 (28 min 43 s after 2453). The second span 2455-2456 started at 09:37:36 (the tool's log). At 09:55:57: 2 of 4 frames, drawing process at 387 percent of a core, free disk 6054 MB. Line sent to /root at 09:56 (low priority). End expected near 10:35. Next lines due 10:26, 10:56.
+
+### 10:26 UTC, 27 Nov: job mg7-91, fourth line
+
+- Looks log: mars.dive 2455 done at 10:07:48, 30 min 12 s after the second span's start (09:37:36). At 10:25:53: 3 of 4 frames, the encoder's pipe at 4626925 bytes, drawing process at 391 percent of a core, free disk 6045 MB. Line sent to /root at 10:26 (low priority). The last frame should end near 10:38; next line due 10:56 if it is not done.
+
+### 10:38 UTC, 27 Nov: job mg7-91 sent back
+
+- Looks log: mars.dive 2456 done at 10:38:03 (30 min 15 s after 2455).
+- The tail file reads, whole: "0", "RC film mars.dive 2453-2454 0", "RC film mars.dive 2455-2456 0", "wrote mars.dive.part000.mp4 frames 2453-2454 render 3443 s encode 0.8 s", "wrote mars.dive.part000.mp4 frames 2455-2456 render 3621 s encode 0.8 s", and the one piece `/tmp/film-16x9-final-b-195.tar.00` of 307200 bytes. The tar holds `mars.dive.span2453-2454.mp4` (148813 bytes), `mars.dive.span2455-2456.mp4` (147813 bytes) and their `.json` files (1566 bytes each).
+- Sent to /root at 10:38 with the piece and the tail attached. Free disk 6081 MB after the job.
+- `out/work/chunks/16x9-final-full` of the render worktree holds eight spans in 16 files (venus.dive 1267-1274, venus.rise 1582-1589, earth.dive 1897-1904, neptune.rise 4950-4952, earth.rise 2160-2166, jupiter.rise 3240-3244, mars.dive 2453-2454, mars.dive 2455-2456) and stays until /root says it can go. Nothing runs. Waiting for the next job.
+- Time a frame on this machine (4 cores, software drawing), as seen: Venus about 3 min 40 s, Earth rise 2160 to 2166 about 5 min 30 s, Earth dive 1897 to 1904 about 17 min, Mars dive about 29 min, Jupiter rise about 31 min 30 s, Neptune rise 4950 to 4952 about 96 min.
