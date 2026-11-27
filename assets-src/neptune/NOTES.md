@@ -12610,3 +12610,39 @@ LINE me7-99 from /root/neptune_builder, 10:16 UTC: the first frame (uranus.rise 
 ## 27 Nov, 10:46 UTC: second line on me7-99 to the Builder (word for word; sent about 10:46:06; no attachment; low priority)
 
 LINE me7-99 from /root/neptune_builder, 10:46 UTC (started 10:00:17): 2 of 7 frames finished, by the encoder's intake and the rows of the looks log: 4425 at 10:20:42 (20 min 25 s); 4426 at 10:40:20 (19 min 38 s). So about 20 minutes a frame here, not 5; by this pace the last of the 7 frames comes about 12:20. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 11:16.
+
+- me7-99, the encoder's intake as the watcher saw it (time, bytes read; the first line is the opening):
+
+      10:00:37 162900
+      10:20:44 3796098
+      10:40:25 7467041
+      10:48:31 11178136
+      10:51:44 14931488
+      10:54:51 18741148
+      10:58:19 22614867
+
+  The looks log has three rows of the job: 4425 at 10:20:42, 4426 at 10:40:20, 4428 at 10:51:39. The seventh step of the
+  intake was not caught before the encoder closed.
+- 11:01:30 finished. The tail, whole:
+
+      0
+      RC film uranus.rise 4425-4431 0
+      wrote uranus.rise.part000.mp4 frames 4425-4431 render 3655 s encode 1.5 s
+      -rw-r--r-- 1 user user 378880 Nov 27 11:01 /tmp/film-16x9-final-b-363.tar.00
+
+  The piece holds uranus.rise.span4425-4431.mp4 (365254 bytes) and its .json (1937 bytes); sha256 of the piece 08744f533a315f4eea93
+  f7674883b88a499c99bcf8a56f3a7371296e6045e9b6. Tree still clean on 262b9a68. Free disk 6265 MB.
+- My second line (10:46) said the last frame would come about 12:20. It came about 11:01: the later frames went faster than
+  the first two. The return names it.
+
+## 27 Nov, 11:01 UTC: RETURN me7-99 to the Builder (word for word; sent about 11:01:56; attached /tmp/film-16x9-final-b-363.tar.00 and /tmp/me7-99-tail.txt; high priority)
+
+RETURN me7-99 from /root/neptune_builder, 11:01 UTC: film-16x9-final-b-363, segment uranus.rise, span 4425-4431, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 10:00:17, finished 11:01:30 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 10:00:03.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film uranus.rise 4425-4431 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote uranus.rise.part000.mp4 frames 4425-4431 render 3655 s encode 1.5 s"
+5. Frame times, by the encoder's intake (one step a frame): 10:20:44, 10:40:25, 10:48:31, 10:51:44, 10:54:51, 10:58:19; the seventh step was not caught before the encoder closed (the job finished 11:01:30). The looks log has three rows of this job: 4425 at 10:20:42, 4426 at 10:40:20, 4428 at 10:51:39. So the first two frames took about 20 minutes each and the later ones about 3 to 8 minutes. Two lines were sent, at 10:16 and 10:46; the second said the last frame would come about 12:20, which was wrong: the later frames went faster.
+6. Attached: /tmp/film-16x9-final-b-363.tar.00 (378880 bytes, the only piece) and /tmp/me7-99-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 10:00. Free disk 4974 MB before the start, 6265 MB now.
+8. The files of all seven finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
