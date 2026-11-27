@@ -12551,3 +12551,7 @@ RETURN mi7-26 from /root/neptune_builder, 08:03 UTC: film-16x9-final-b-009, segm
 ## 27 Nov, 08:19 UTC: first line on mg7-98 to the Builder (word for word; sent about 08:19:48; no attachment; low priority)
 
 LINE mg7-98 from /root/neptune_builder, 08:19 UTC: the first frame (mars.rise 2682) has taken over 15 minutes and is not out yet. Started 08:03:50; the encoder has stood open since 08:04:10 and has had no frame; no row in the looks log; no RC line, no FAILED line; the browser works at full load (383 percent of a core). The job runs on; next line about 08:49 if it still runs.
+
+## 27 Nov, 08:49 UTC: second line on mg7-98 to the Builder (word for word; sent about 08:49:09; no attachment; low priority)
+
+LINE mg7-98 from /root/neptune_builder, 08:49 UTC (started 08:03:50): 1 of 3 frames finished, by the encoder's intake and the rows of the looks log: 2682 at 08:39:49 (35 min 59 s), counted from the start. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 09:19 if it still runs.
