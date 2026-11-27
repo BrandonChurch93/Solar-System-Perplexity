@@ -13162,3 +13162,24 @@ RETURN ht9-03 from /root/neptune_builder, 15:41 UTC: smooth, pictures of saturn'
 Line 7 of the .md, word for word: "VERDICT BESIDE IT, the pictures read with the carry at the full size (the verdict above is the one that counts and makes the exit code): green. No number is over its limit."
 The VERDICT line of the .md file (its line 5), word for word:
 VERDICT: green. No number is over its limit.
+
+## JOB iv9-01 from the Builder (/root), with the same note before it (read 15:42 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority). A pack job of the form of im9-15 and im9-38: one frame (1260) of venus.dive.
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB iv9-01 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+> rm -rf out/work/packs/.cache/round-060 out/work/stills/*-final-full.png*
+> npm run pack -- --phase 6 --round 60 --stop venus --only venus.dive --place-window --frames 1260-1260 &gt; /tmp/iv9-01.log 2&gt;&amp;1; echo "RC pack $?" &gt;&gt; /tmp/iv9-01.log; tail -25 /tmp/iv9-01.log &gt; /tmp/iv9-01-tail.txt
+> tar -cf /tmp/r60-venus-dive-a.tar --exclude='.frames*' out/work/packs/.cache/round-060
+> split -b 40m -d /tmp/r60-venus-dive-a.tar /tmp/r60-venus-dive-a.tar.
+> This is ONE frame (1260) of the part "dive" of the pack of round 60 (venus), drawn alone because the whole part is too slow for one machine. It is one picture at the review tier and takes 15 to 60 minutes; the command draws that frame into the cache and ends without laying a sheet. Keep the names of the tar pieces exactly as the split line writes them (r60-venus-dive-a.tar.00 and so on): the round tool reads them by name. When it has finished send back every piece /tmp/r60-venus-dive-a.tar.NN and /tmp/iv9-01-tail.txt, in a message that starts with the usual line and states the exit code of the pack and the name of the picture file the log printed. If the pack ends with a code other than 0, send back the tail alone and say so.
+
+- A copy of ht9-03's five report files (md, json, three panels) stands in /tmp/smooth-ht9-03. The 132 draft frames of
+  ht9-03 (542 MB) stay under out/work/smooth/saturn/frames: 5 GB are free without removing them, and nobody has said
+  they can go.
+- 15:42:04 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
+  git status empty, whole. Free disk before the build 5674 MB. 15:42:05 npm run build exit 0, dist 1301 MB. Free disk
+  after the build, a sync and 8 s: 4380 MB (under 5 GB until the pack's own build links dist; over the 4 GB of mail
+  1549; named in the return).
+- 15:42:42 the job's four lines started as /tmp/iv9-01.sh, detached from the repo root. Its first line removes the cache
+  of round 60 that fm9-21 left (already sent back; the piece stays in /tmp).
