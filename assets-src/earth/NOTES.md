@@ -8138,3 +8138,28 @@ This is a part of the pack of round 60, the record round of the whole film (the 
 - The tar `/tmp/r60-film-motion05-a.tar` (12472320 bytes, one piece `.00`) holds those six files.
 - Sent to /root at 15:04 with the piece and the tail attached. Free disk 6008 MB after the job. `git status --porcelain` of the worktree shows only `?? node_modules`.
 - The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
+
+### JOB hv9-03 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB hv9-03 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+rm -rf out/work/smooth
+npm run smooth -- --stop venus --kind rise --only pictures --part 1/2 &gt; /tmp/hv9-03.log 2&gt;&amp;1; echo "RC smooth $?" &gt;&gt; /tmp/hv9-03.log; tail -25 /tmp/hv9-03.log &gt; /tmp/hv9-03-tail.txt
+This job renders part 1/2 of the draft frames of the rise of round 60's stop (venus) at rate 2. The exit code of smooth may be 1 when the verdict is red; that is a result, not a failure. When it has finished send back out/work/smooth/venus-rise-p1of2.md, out/work/smooth/venus-rise-p1of2.json, /tmp/hv9-03-tail.txt and every .png the command wrote under out/work/smooth/ (at most 6; if there are more, the pops and changes panels first), as attachments in one message that starts with the usual line and ends with the VERDICT line of the .md file.
+
+### 15:05 UTC, 27 Nov: job hv9-03 runs
+
+- NOTE done: `sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'` rc 0 at 15:05:27.
+- Worktree `/home/user/workspace/main-262b9a68`: HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, `git status --porcelain` shows only `?? node_modules`, lock file same as the commit, no render process running, free disk 6007 MB (the job asks for 5 GB), `npm run build` rc 0 at 15:05:37. `out/work/smooth` did not exist before the job.
+- Script `/tmp/hv9-03.sh` holds the two lines of the job (`&gt;` read as `>`, `&amp;` as `&`), started detached from the worktree root at 15:05:52 (script pid 2051, `tools/smooth.ts` under it); the drawing process (pid 2189) started 15:06:02.
+- A smooth job ordered by /root (not a cure or a proof of mine): part 1/2 of the draft frames of the rise of venus at rate 2, pictures only. Exit code 1 means a red verdict, which is a result. To send back: `out/work/smooth/venus-rise-p1of2.md`, `out/work/smooth/venus-rise-p1of2.json`, `/tmp/hv9-03-tail.txt` and every .png written under `out/work/smooth/` (at most 6; the pops and changes panels first), in one message that starts with the usual line and ends with the VERDICT line of the .md file.
+
+### 15:20 UTC, 27 Nov: job hv9-03 sent back
+
+- Started detached at 15:05:52; the drawing process at 15:06:02; the .md, the .json and the tail were written at 15:18:50. The log's last line: "RC smooth 1" (a red verdict, which the job calls a result).
+- The tool's lines, word for word: "smooth venus: red, 1 over the limit or not measured. out/work/smooth/venus-rise-p1of2.md"; "  rise: the pattern of the picture changes in place by 0.72 from frame 1544 to 8 film frames later, band 8 px, limit 0.45 (10 frames over it, first 1542 + 1/2)"; "smooth venus: beside it, with the carry at the full size: red, 2 over the limit or not measured"; "smooth venus: ground pop, no limit: largest 1.915 from frame 1539 + 1/2 to the next, most at pixel 62, 742, a patch of 328 by 448 px; 1 of 99 rows read over 1.3 (rise); 0 of 99 rows not read".
+- Line 5 of the .md: "VERDICT: red. 1 number over the limit or not measured." The mail ends with it.
+- The command wrote 135 .png under `out/work/smooth/` of the render worktree: three panels (pops 2539838 bytes, pops-full 2553869, changes 1443265) and 132 draft frames `venus/frames/k003020-r2-draft.png` to `k003151-r2-draft.png` (film frame is k over 2, as the .md says: capture frames 3036 to 3134 are the frames 1518 to 1567).
+- Sent to /root at 15:20, nine attachments: the .md (36139 bytes), the .json (229057 bytes), `/tmp/hv9-03-tail.txt`, the three panels, and the three draft frames the tool's red line names (k003085, k003088, k003104). The other 129 draft frames stay in `out/work/smooth` (546 MB) until /root says they can go, or until a later job needs the room.
+- Free disk 5461 MB after the job. `git status --porcelain` of the worktree shows only `?? node_modules`. The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
