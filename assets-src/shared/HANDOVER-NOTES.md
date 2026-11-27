@@ -3068,6 +3068,297 @@ Written 12:20 after a compaction: the first half of this entry is from the summa
 - SENT BACK 12:09 (high, delivered, `/tmp/mail/mi7-31-return.out`) with the piece and `/tmp/mi7-31-tail.txt`. The tree after it: `git status` 0 lines; free 11902 MB; 10 chunks kept under `out/work/chunks/16x9-final-full`.
 - NEW HELPERS since the entry "THE JOB HELPERS" (all in `/tmp/jobs/`, gone if /tmp is lost, then do the steps of NOW item 2 by hand): `pre.sh NAME` (the checks, the cache drop, the build and the start in one); `post.sh NAME PIECE SEGMENT FIRST LAST` (prints the facts of a finished job and writes the draft of the return through `mkreturn.py`, with the word TIMES_NOTE to be replaced by the speed words); `now.py OUT.md` (writes the NOW block from `state.json`: the jobs sent back and the running job); `state.json`.
 
+## 12:11 UTC, 27 Nov: THE JOB HELPERS (the texts of the eight helpers in `/tmp/jobs/`, to write them again if /tmp is lost)
+
+- Why: NOW points here. The helpers live only in `/tmp/jobs/`; if that folder is lost, write them again from the texts below (or do the steps of NOW item 2 by hand). The texts are the files as they stand at this time, but for one thing: this notebook holds no exclamation point, so the sign of "not equal" (an exclamation point and an equals sign) is written here as the word NOT_EQUAL_SIGN; put the sign back when writing a file again (5 signs on 3 lines: two in one line of `rows.py`, two in one line of `mkline.py`, one in `iowatch2.sh`).
+- Order of use for a job NAME: `pre.sh NAME` (which calls `start.sh NAME`, which starts `iowatch2.sh NAME`); while it runs `rows.py` and `mkline.py`; when finished `post.sh` (which calls `rows.py` and `mkreturn.py`); for the notebook `now.py` with `state.json` (the list of the jobs sent back and the running job, see the head of `now.py`).
+- The other tools are NOT here (they hold exclamation points in their first lines): `/tmp/law/splice.py` (puts an entry before the head "E as built (23:45)" and replaces the newest NOW block), `/tmp/law/pushnotes3.sh` (commits `/tmp/law/notes-base.md` as `assets-src/shared/HANDOVER-NOTES.md` on `agent/engine-handover` in the bare clone `/home/user/workspace/notes.git` with the trailer and pushes; see the entry "THE NOTEBOOK'S HOME NOW"), `/tmp/mail/chk.py` (prints the lines of a file that hold a long dash or an exclamation point, and the characters above 127).
+
+### `/tmp/jobs/pre.sh` (2079 bytes, 25 lines)
+
+```
+# pre.sh NAME : the steps before a job, in order: no render running, the cache dropped with sudo, the clean tree checked
+# (HEAD, git status, the lock, free space), the script /tmp/jobs/NAME.sh checked for syntax and against the mailed lines
+# (lines 6 to 9 of /tmp/jobs/NAME-mail.txt), npm run build, then the start. Stops at the first thing that is not as it must be.
+N=$1
+[ -f /tmp/jobs/$N.sh ] && [ -f /tmp/jobs/$N-mail.txt ] || { echo "STOP: script or mail file missing"; exit 1; }
+date -u
+[ "$(pgrep -f 'tools/film.ts' | wc -l)" = 0 ] || { echo "STOP: a render is running"; exit 1; }
+bash -n /tmp/jobs/$N.sh || { echo "STOP: syntax"; exit 1; }
+[ "$(wc -l < /tmp/jobs/$N.sh)" = 4 ] || { echo "STOP: the script has not 4 lines"; exit 1; }
+diff <(sed -n 6,9p /tmp/jobs/$N-mail.txt) /tmp/jobs/$N.sh > /dev/null || { echo "STOP: the script differs from the mailed lines"; exit 1; }
+echo "script: syntax ok, 4 lines, equals the mailed lines"
+if sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'; then echo "DROPPED with sudo at $(date -u +%H:%M:%S)" | tee /tmp/jobs/$N-cache.txt; else echo "NOT DROPPED: sudo does not work" | tee /tmp/jobs/$N-cache.txt; fi
+cd /home/user/workspace/master || exit 1
+H=$(git rev-parse HEAD); echo "HEAD $H"
+[ "$H" = 262b9a68df0a6bda8d77518539580de554bb0dc5 ] || { echo "STOP: HEAD is not 262b9a68"; exit 1; }
+[ "$(git status --porcelain | wc -l)" = 0 ] || { echo "STOP: git status shows a change"; git status --porcelain | head; exit 1; }
+git diff --quiet HEAD -- package-lock.json || { echo "STOP: the lock changed"; exit 1; }
+echo "git status 0 lines, lock unchanged"
+F=$(df -m / | awk 'NR==2{print $4}'); echo "free before the build: $F MB" | tee /tmp/jobs/$N-free.txt
+[ "$F" -ge 4000 ] || { echo "STOP: under 4 GB free"; exit 1; }
+npm run build > /tmp/jobs/$N-build.log 2>&1; B=$?; echo "build exit $B"
+[ $B = 0 ] || { echo "STOP: build failed"; tail -5 /tmp/jobs/$N-build.log; exit 1; }
+[ "$(git status --porcelain | wc -l)" = 0 ] || { echo "STOP: git status shows a change after the build"; exit 1; }
+bash /tmp/jobs/start.sh $N
+date -u
+```
+
+### `/tmp/jobs/start.sh` (714 bytes, 11 lines)
+
+```
+# start.sh NAME : runs /tmp/jobs/NAME.sh (the job's lines exactly as mailed) detached from the root of the clean tree, with a marker when it has finished.
+N=$1
+cd /home/user/workspace/master || exit 1
+[ -f /tmp/jobs/$N.sh ] || { echo "no script /tmp/jobs/$N.sh"; exit 1; }
+pgrep -f 'tools/film.ts' > /dev/null && { echo "a render is running, not started"; exit 2; }
+date -u +%T > /tmp/jobs/$N-start.txt
+date -u +%Y-%m-%dT%H:%M:%S > /tmp/jobs/$N-start-iso.txt
+rm -f /tmp/jobs/$N-run.log /tmp/jobs/$N-io.txt
+(set -m; (bash /tmp/jobs/$N.sh; echo "SCRIPT DONE $(date -u +%T)") > /tmp/jobs/$N-run.log 2>&1 &)
+(set -m; bash /tmp/jobs/iowatch2.sh $N > /dev/null 2>&1 &)
+echo "started $N at $(cat /tmp/jobs/$N-start.txt)"
+```
+
+### `/tmp/jobs/iowatch2.sh` (507 bytes, 12 lines, 1 sign replaced)
+
+```
+# iowatch2.sh NAME : logs the bytes read by the job's encoder (ffmpeg) to /tmp/jobs/NAME-io.txt; each step of about 4 MB is one frame delivered.
+N=$1
+last=-1
+while :; do
+  grep -q 'SCRIPT DONE' /tmp/jobs/$N-run.log 2>/dev/null && break
+  p=$(pgrep -f 'ffmpeg -hide_banner' | head -1)
+  if [ -n "$p" ]; then
+    r=$(awk '/^rchar/{print $2}' /proc/$p/io 2>/dev/null)
+    if [ -n "$r" ] && [ "$r" NOT_EQUAL_SIGN "$last" ]; then echo "$(date -u +%T) pid $p rchar $r" >> /tmp/jobs/$N-io.txt; last=$r; fi
+  fi
+  sleep 5
+done
+```
+
+### `/tmp/jobs/rows.py` (1205 bytes, 28 lines, 2 signs replaced)
+
+```
+# rows.py SEGMENT FIRST LAST START_ISO : the finished frames of a running job from out/work/looks/log.jsonl of the clean tree
+# (one row a finished frame when frames take over ten minutes), with the minutes each took. START_ISO like 2026-11-26T23:24:11
+import json, sys, datetime
+seg, first, last, start = sys.argv[1], int(sys.argv[2]), int(sys.argv[3]), sys.argv[4]
+t0 = datetime.datetime.fromisoformat(start)
+rows = []
+for l in open('/home/user/workspace/master/out/work/looks/log.jsonl'):
+    try:
+        r = json.loads(l)
+    except Exception:
+        continue
+    if r.get('segment') NOT_EQUAL_SIGN seg or r.get('job') NOT_EQUAL_SIGN 'film':
+        continue
+    f = r.get('frame')
+    if f is None or f < first or f > last:
+        continue
+    t = datetime.datetime.fromisoformat(r['time'][:19])
+    if t < t0:
+        continue
+    rows.append((t, f))
+rows.sort()
+prev = t0
+out = []
+for t, f in rows:
+    out.append('%d at %s (%.0f min)' % (f, t.strftime('%H:%M:%S'), (t - prev).total_seconds() / 60))
+    prev = t
+now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+print('%d finished: %s; since the last %.0f min' % (len(rows), ', '.join(out) if out else 'none', (now - prev).total_seconds() / 60))
+```
+
+### `/tmp/jobs/mkline.py` (2577 bytes, 53 lines, 2 signs replaced)
+
+```
+# mkline.py NAME SEGMENT FIRST LAST START_ISO : prints the line owed to /root while a slow job runs (the frames finished so far
+# and the time each took, from the rows of the job in out/work/looks/log.jsonl of the clean tree). Exit 1 when the state is not
+# the plain one (the script has finished, or the log holds an error line or an RC line): then write the line by hand.
+import json, sys, datetime, re
+name, seg, first, last, start = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5]
+t0 = datetime.datetime.fromisoformat(start)
+rows = {}
+for l in open('/home/user/workspace/master/out/work/looks/log.jsonl'):
+    try:
+        r = json.loads(l)
+    except Exception:
+        continue
+    if r.get('segment') NOT_EQUAL_SIGN seg or r.get('job') NOT_EQUAL_SIGN 'film':
+        continue
+    f = r.get('frame')
+    if f is None or f < first or f > last:
+        continue
+    t = datetime.datetime.fromisoformat(r['time'][:19])
+    if t < t0:
+        continue
+    rows.setdefault(f, t)
+log = open('/tmp/%s-log.txt' % name, encoding='utf-8', errors='replace').read()
+bad = len(re.findall(r'Shader Error|not usable|FAILED|lost', log))
+rc = len(re.findall(r'RC film', log))
+try:
+    done = 'SCRIPT DONE' in open('/tmp/jobs/%s-run.log' % name).read()
+except Exception:
+    done = False
+now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+total = last - first + 1
+items = sorted(rows.items(), key=lambda kv: kv[1])
+prev = t0
+parts = []
+for i, (f, t) in enumerate(items):
+    m = round((t - prev).total_seconds() / 60)
+    if i == 0:
+        parts.append('%d at %s (%d minutes from the start at %s, with the load)' % (f, t.strftime('%H:%M:%S'), m, t0.strftime('%H:%M:%S')))
+    else:
+        parts.append('%d at %s (%d minutes)' % (f, t.strftime('%H:%M:%S'), m))
+    prev = t
+since = int((now - prev).total_seconds() // 60)
+head = 'handover_engineer on JOB %s, %s UTC %s: ' % (name, now.strftime('%H:%M'), now.strftime('%d %b').lstrip('0'))
+if items:
+    body = '%d of %d frames finished (rows of this job in out/work/looks/log.jsonl): %s. ' % (len(items), total, ', '.join(parts))
+    if len(items) < total:
+        body += 'The next frame runs since then, %d minutes so far. ' % since
+else:
+    body = '0 of %d frames finished, %d minutes after the start at %s (no row of this job in out/work/looks/log.jsonl). ' % (total, since, t0.strftime('%H:%M:%S'))
+tail = 'The render runs on, no error line and no RC line in the log.'
+print(head + body + tail)
+if done or bad or rc:
+    sys.stderr.write('NOT PLAIN: done %s bad %d rc %d\n' % (done, bad, rc))
+    sys.exit(1)
+```
+
+### `/tmp/jobs/post.sh` (1633 bytes, 25 lines)
+
+```
+# post.sh NAME PIECE SEGMENT FIRST LAST : the facts for the return of a finished job (PIECE is the tar's base name under /tmp,
+# like film-16x9-final-b-087 or split-395-4751-4751). Prints them and writes a draft of the return to /tmp/mail/NAME-return.out.
+N=$1; P=$2; S=$3; A=$4; B=$5
+date -u
+grep -q 'SCRIPT DONE' /tmp/jobs/$N-run.log || { echo "STOP: the script has not finished"; exit 1; }
+echo "--- tail"; cat /tmp/$N-tail.txt
+echo "--- log lines"; grep -n 'film:\|wrote\|ready\|RC film\|frame ' /tmp/$N-log.txt | cut -c1-220
+echo "--- errs: $(grep -c 'Shader Error\|not usable\|FAILED\|lost' /tmp/$N-log.txt)"
+echo "--- pieces"; ls -la /tmp/$P.tar*
+echo "--- tar"; tar -tvf /tmp/$P.tar
+echo "--- sha"; sha256sum /tmp/$P.tar.* | cut -c1-90
+echo "--- run log"; tail -2 /tmp/jobs/$N-run.log; cat /tmp/jobs/$N-start.txt; cat /tmp/jobs/$N-cache.txt
+echo "--- io gaps"; awk '{print $1}' /tmp/jobs/$N-io.txt | python3 -c "
+import sys,datetime
+ts=[datetime.datetime.strptime(l.strip(),'%H:%M:%S') for l in sys.stdin if l.strip()]
+d=[(b-a).total_seconds() for a,b in zip(ts,ts[1:])]
+d=[x if x>=0 else x+86400 for x in d]
+print('steps',len(d),'gaps s',d if len(d)<12 else (d[:3],'...',d[-3:]),'max',max(d) if d else None,'min',min(d) if d else None)
+"
+echo "--- tree"; cd /home/user/workspace/master && git rev-parse HEAD && echo "status all: $(git status --porcelain | wc -l)"
+ls -la out/work/chunks/16x9-final-full/ | grep "$S.span$A-$B"
+df -m / | tail -1
+echo "running: $(pgrep -f 'tools/film.ts' | wc -l)"
+python3 /tmp/jobs/rows.py $S $A $B $(cat /tmp/jobs/$N-start-iso.txt) | cut -c1-600
+python3 /tmp/jobs/mkreturn.py $N $P $S $A $B
+```
+
+### `/tmp/jobs/mkreturn.py` (3163 bytes, 41 lines)
+
+```
+# mkreturn.py NAME PIECE SEGMENT FIRST LAST : writes the draft of the return mail of a finished job to /tmp/mail/NAME-return.out
+# from the files of the job (tail, log, start, cache, run log, tar pieces) and prints it. The line of times ends with the words
+# TIMES_NOTE, to be replaced by hand (the speed, slow frames); the list of kept chunks is read from the folder.
+import sys, os, re, glob, subprocess, datetime
+name, piece, seg, first, last = sys.argv[1:6]
+tail = open('/tmp/%s-tail.txt' % name).read().split('\n')
+log = open('/tmp/%s-log.txt' % name, encoding='utf-8', errors='replace').read()
+rcs = [l for l in log.split('\n') if l.startswith('RC film')]
+wrote = [l for l in log.split('\n') if l.startswith('wrote ')]
+start = open('/tmp/jobs/%s-start.txt' % name).read().strip()
+cache = open('/tmp/jobs/%s-cache.txt' % name).read().strip()
+done = re.findall(r'SCRIPT DONE (\S+)', open('/tmp/jobs/%s-run.log' % name).read())[-1]
+pieces = sorted(glob.glob('/tmp/%s.tar.[0-9]*' % piece))
+free = subprocess.run("df -m / | awk 'NR==2{print $4}'", shell=True, capture_output=True, text=True).stdout.strip()
+status = subprocess.run('git status --porcelain | wc -l', shell=True, capture_output=True, text=True, cwd='/home/user/workspace/master').stdout.strip()
+now = datetime.datetime.now(datetime.timezone.utc)
+m = re.match(r'DROPPED with sudo at (\S+)', cache)
+L = []
+whole = piece.startswith('film-')
+what = '%s, %s %s-%s' % (piece, seg, first, last) if whole else 'frames %s to %s of the piece film-16x9-final-b-%s, %s %s-%s' % (first, last, piece.split('-')[1], seg, first, last)
+L.append('MAIL from handover_engineer to /root, %s UTC %s. JOB %s sent back (%s, on 262b9a68df0a6bda8d77518539580de554bb0dc5 in my clean tree /home/user/workspace/master).' % (now.strftime('%H:%M'), now.strftime('%d %b').lstrip('0'), name, what))
+if len(pieces) == 1:
+    L.append('Attached: %s (the only piece, %d bytes) and /tmp/%s-tail.txt.' % (pieces[0], os.path.getsize(pieces[0]), name))
+else:
+    L.append('Attached: %s and /tmp/%s-tail.txt.' % (', '.join('%s (%d bytes)' % (p, os.path.getsize(p)) for p in pieces), name))
+if len(rcs) == 1:
+    L.append('RC line, word for word: ' + rcs[0])
+else:
+    L.append('RC lines, word for word, in order: ' + ' / '.join(rcs))
+L.append('Count of the first line of the tail: ' + tail[0])
+if m:
+    L.append('The cache: yes, done. sync; echo 1 > /proc/sys/vm/drop_caches ran with sudo at %s, before the build and the job.' % m.group(1))
+else:
+    L.append('The cache: NOT done: ' + cache)
+L.append('Times: started %s, finished %s. The tool\'s line: %s. TIMES_NOTE' % (start, done, ' / '.join(wrote) if wrote else 'none'))
+kept = sorted(glob.glob('/home/user/workspace/master/out/work/chunks/16x9-final-full/*.mp4'))
+L.append('The files under out/work/chunks/16x9-final-full are kept (%d chunks with their json files, this one among them); git status of the tree shows %s; %s MB free. I wait for the next job.' % (len(kept), 'no change' if status == '0' else status + ' CHANGED LINES', free))
+out = '\n'.join(L) + '\n'
+open('/tmp/mail/%s-return.out' % name, 'w').write(out)
+print('--- draft /tmp/mail/%s-return.out' % name)
+print(out)
+```
+
+### `/tmp/jobs/now.py` (6824 bytes, 50 lines)
+
+```
+# now.py OUT.md : writes the NOW block of the notebook from /tmp/jobs/state.json (the jobs sent back and the running job).
+# state.json: {"sent": [[NAME, TIME], ...], "running": null or {"name", "start" (HH:MM:SS UTC D Mon), "start_iso", "segment",
+# "first", "last", "piece" (the tar's base name), "cache" (HH:MM:SS), "free" (MB), "plan" (words), "lines" (words about the lines owed)}}
+import json, sys, datetime
+st = json.load(open('/tmp/jobs/state.json'))
+now = datetime.datetime.now(datetime.timezone.utc)
+stamp = '%s UTC, %s' % (now.strftime('%H:%M'), now.strftime('%d %b').lstrip('0'))
+sent = ', '.join('%s (%s)' % (n, t) for n, t in st['sent'])
+r = st.get('running')
+if r:
+    n = r['name']
+    run = ('JOB %s IS RUNNING since %s (%s %s-%s, %d frames, tar base name %s; its words `/tmp/jobs/%s-mail.txt`, its script `/tmp/jobs/%s.sh`; '
+           'the cache was dropped with sudo at %s; build exit 0, tree clean, %s MB free before the build). %s %s '
+           'THE LINE IS MADE BY `python3 /tmp/jobs/mkline.py %s %s %s %s %s` (the lines sent: `/tmp/jobs/%s-lines.txt`). '
+           'Finished when `/tmp/jobs/%s-run.log` holds "SCRIPT DONE". WHEN DONE: `bash /tmp/jobs/post.sh %s %s %s %s %s` prints the facts and writes the draft '
+           '`/tmp/mail/%s-return.out`; replace TIMES_NOTE in it, then one message to /root, high, attachments: every `/tmp/%s.tar.NN` (at most 9 in one message) and `/tmp/%s-tail.txt`. '
+           'Then wait for the next mail that starts with "JOB".') % (
+        n, r['start'], r['segment'], r['first'], r['last'], int(r['last']) - int(r['first']) + 1, r['piece'], n, n,
+        r['cache'], r['free'], r['plan'], r['lines'], n, r['segment'], r['first'], r['last'], r['start_iso'], n, n,
+        n, r['piece'], r['segment'], r['first'], r['last'], n, r['piece'], n)
+else:
+    run = 'NO JOB IS RUNNING. WAIT FOR THE NEXT MAIL THAT STARTS WITH "JOB".'
+L = []
+L.append('NOW (rewritten %s; everything below this block in "Next" is older and holds only where this block does not say otherwise):' % stamp)
+L.append('0. THE FILM IS FROZEN (MAIL 1548, 1549). No cure, no trial, no proof run, no change to any file of the tree. My state is the section "STATE AT THE FREEZE" at the top of this file; my hand in is recorded by /root.')
+L.append('1. THIS MACHINE IS A RENDER MACHINE FOR THE MASTER (1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5; the clean tree `/home/user/workspace/master`). '
+         'JOBS SENT BACK, all exit 0 (%d): %s. %s THE DATE: read `date -u` and write "UTC D Mon" of that day in the mails. '
+         'KEPT under `out/work/chunks/16x9-final-full` of the tree until /root says they can go: the chunk of every job sent back, with its `.json`.' % (len(st['sent']), sent, run))
+L.append('2. A JOB, step by step: (a) write the four mailed lines EXACTLY AS MAILED (decode `&gt;` and `&amp;`) to `/tmp/jobs/NAME.sh` and the whole mail, decoded, to `/tmp/jobs/NAME-mail.txt` '
+         '(line 1 a note of the arrival, line 2 blank, line 3 the NOTE, line 4 blank, line 5 the JOB text up to "run it detached from the repo root:", lines 6 to 9 the four lines, line 10 the rest); '
+         '(b) `bash /tmp/jobs/pre.sh NAME` does the rest in order and stops at the first thing that is not as it must be: no render running, the script equals the mailed lines, the cache dropped with sudo '
+         '(`sudo -n sh -c \'sync; echo 1 > /proc/sys/vm/drop_caches\'`, the time in `NAME-cache.txt`), HEAD 262b9a68, `git status` 0 lines, the lock unchanged, at least 4000 MB free '
+         '(if not: old frame folders, films and tars of FINISHED jobs under /tmp and out/work may go; NOTHING under `out/work/chunks/16x9-final-full`), `npm run build` exit 0, then the start '
+         '(`start.sh`: detached, the log `NAME-run.log` ends with "SCRIPT DONE HH:MM:SS", the watcher writes `NAME-io.txt`, one step of about 4 MB for each frame the encoder took); '
+         '(c) put the running job into `/tmp/jobs/state.json`, `python3 /tmp/jobs/now.py /tmp/law/e/NOWn.md`, splice, push; '
+         '(d) wait with `T=$(date -u -d \'YYYY-MM-DD HH:MM:SS\' +%s); until grep -q \'SCRIPT DONE\' /tmp/jobs/NAME-run.log || [ $(date -u +%s) -ge $T ]; do sleep 10; done` and `poll_command` with waits of 240 s; '
+         '(e) LINES WHILE IT RUNS: every 60 minutes when the mail says so; else every 30 minutes once a frame has taken over 15 minutes (measured by the steps of the io file and the rows of the job in `out/work/looks/log.jsonl`, '
+         'never by the part file, which appears late); low priority; made by `mkline.py`; (f) WHEN FINISHED: `bash /tmp/jobs/post.sh NAME PIECE SEGMENT FIRST LAST`, replace TIMES_NOTE in the draft, ONE message to /root, high, '
+         'starting with "MAIL from handover_engineer to /root, HH:MM UTC D Mon. JOB NAME sent back", attachments: every tar piece (at most 9 in one message, the rest in a second) and the tail file; '
+         'in the text each RC line word for word, the count of the tail\'s first line, the cache line; (g) an entry in the notebook, the job into "sent" of state.json, NOW, push; then `wait_agent`. '
+         'Do not judge the picture. Change no file of the tree. The texts of the helpers are in the entry "THE JOB HELPERS".')
+L.append('3. If the machine cannot render (no drawing context after three tries, or under 4 GB free after cleaning): one line to /root, then wait.')
+L.append('4. One render process at a time. A leading sleep is blocked. `date -u` before every time written. Every mail: the text to a file, `python3 /tmp/mail/chk.py FILE` (no bad lines), then by exec `tools.bash` cat and `tools.message_agent`.')
+L.append('5. MEASURED SPEEDS HERE (4 cores, final tier, master format): Venus hold 1140 to 1169 about 45 s a frame; Venus dive 1327 to 1334 about 5.4 minutes; Earth dive 1852 to 1859 5.6 to 8.5 minutes; '
+         'Mars terrain 2550 to 2579 about 40 s; Neptune hold 4530 to 4559 about 61 s; Sun travel 450 to 456 about 187 s; Neptune dive 4740 to 4746 51 to 60 minutes, 4751 71 minutes; Neptune rise 4973 to 4976 50 to 57 minutes; ending retreat 5057 to 5064 about 2.9 minutes.')
+L.append('6. THE OLD CLONE IS GONE; what origin lacks is in `/tmp/keep/` (entry "20:53 to 21:02"). THE NOTEBOOK: edit `/tmp/law/notes-base.md` (`python3 /tmp/law/splice.py ENTRY.md NOW.md`, `-` for no entry), '
+         'then `bash /tmp/law/pushnotes3.sh "subject"` (bare clone `/home/user/workspace/notes.git`; a failed push stays local and goes with the next).')
+L.append('7. HOUSE RULES: never push to main, never force, never rebase; every commit ends with the trailer; no dashes, no exclamation points, no model names in any file or message; mail /root only what it asked for.')
+open(sys.argv[1], 'w', encoding='utf-8').write('\n'.join(L) + '\n')
+print('wrote', sys.argv[1], len(L), 'lines')
+```
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
