@@ -1,7 +1,8 @@
 import { copyFileSync, existsSync, linkSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { basename, extname, join } from 'node:path'
-import { DIST, ROOT, ensureBuild, loadConfig } from './lib/common'
-import { encodeOnePass, rateFor, yuvScaleFilter } from './lib/encode'
+import { spawnSync } from 'node:child_process'
+import { DIST, ROOT, WORK, args, ensureBuild, loadConfig } from './lib/common'
+import { FFMPEG, encodeOnePass, rateFor, yuvScaleFilter } from './lib/encode'
 
 const cfg = loadConfig()
 if (process.argv.includes('--no-build') === false) ensureBuild()
@@ -54,6 +55,34 @@ for (const stop of cfg.stopIds) {
   }
   posts.push(item)
 }
+// The finished film, with its sound and its subtitles, leads the page. The file is larger than the repo allows, so it is
+// not in the repo: its path is given with --film or REVIEW_FILM. Without a path the page is built without it.
+const finals: Item[] = []
+const filmSrc = args().film ?? process.env.REVIEW_FILM
+if (filmSrc !== undefined && filmSrc !== '' && filmSrc !== 'true') {
+  if (!existsSync(filmSrc)) throw new Error('the film given with --film is not there: ' + filmSrc)
+  const st = statSync(filmSrc)
+  const mb = st.size / 1e6
+  const item: Item = { file: 'film-final.mp4', title: 'The film, with sound and subtitles', kind: 'video', time: st.mtimeMs, mb, left: false }
+  const copy = join(out, item.file)
+  if (mb > maxMb) {
+    const cache = join(WORK, 'site-cache')
+    mkdirSync(cache, { recursive: true })
+    const made = join(cache, 'film-final-' + st.size + '-' + Math.round(st.mtimeMs) + '.mp4')
+    if (!existsSync(made)) {
+      const tmp = made + '.tmp.mp4'
+      const r = spawnSync(FFMPEG, ['-y', '-v', 'error', '-i', filmSrc, '-vf', 'scale=1280:-2', '-c:v', 'libx264', '-preset', 'slow', '-crf', '24', '-maxrate', '2000k', '-bufsize', '4000k', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', tmp], { stdio: 'inherit' })
+      if (r.status !== 0) throw new Error('the smaller copy of the film could not be made')
+      spawnSync('mv', [tmp, made])
+    }
+    place(made, copy)
+    item.left = statSync(copy).size / 1e6 > maxMb
+    if (item.left) rmSync(copy)
+    else item.note = 'A smaller copy, 1280 wide, with its sound, because the host does not accept a file of ' + mb.toFixed(0) + ' MB. The film at full size is too large for the repo as well; it is delivered with the build.'
+  } else place(filmSrc, copy)
+  items.push(item)
+  finals.push(item)
+}
 add(join(ROOT, 'out/roughcut.mp4'), 'Rough cut, made from the approved stills')
 add(join(ROOT, 'out/preview.mp4'), 'Preview film')
 const seen = new Set<string>()
@@ -86,12 +115,12 @@ const named = (names: string[]): Item[] => names.map((n) => items.find((i) => i.
 const film = named(['preview.mp4'])
 const clips = named(cfg.stopIds.map((s) => s + '.mp4'))
 const compares = named(cfg.stopIds.flatMap((s) => ['compare-' + s + '-hold.jpg', 'compare-' + s + '-terrain.jpg']))
-const lead = [...posts, ...film, ...clips, ...compares]
+const lead = [...finals, ...posts, ...film, ...clips, ...compares]
 const ordered = [...lead, ...items.filter((i) => lead.includes(i) === false)]
-const groups = [posts.length ? 'the ' + posts.length + ' posts' : '', film.length ? 'the preview film' : '', clips.length ? 'the ' + clips.length + ' clips' : '', compares.length ? 'the comparison images (hold, then terrain)' : ''].filter((g) => g !== '')
+const groups = [finals.length ? 'the film with its sound and subtitles' : '', posts.length ? 'the ' + posts.length + ' posts' : '', film.length ? 'the preview film' : '', clips.length ? 'the ' + clips.length + ' clips' : '', compares.length ? 'the comparison images (hold, then terrain)' : ''].filter((g) => g !== '')
 const body = ordered
   .map((i) => {
-    if (i.left) return '<section><h2>' + esc(i.title) + '</h2><p class="note">Left out of this page because the host does not accept a file of ' + i.mb.toFixed(0) + ' MB. It is in the repo under ' + (posts.includes(i) ? 'out/posts' : 'out/clips') + '.</p></section>'
+    if (i.left) return '<section><h2>' + esc(i.title) + '</h2><p class="note">Left out of this page because the host does not accept a file of ' + i.mb.toFixed(0) + ' MB. ' + (finals.includes(i) ? 'It is delivered with the build' : 'It is in the repo under ' + (posts.includes(i) ? 'out/posts' : 'out/clips')) + '.</p></section>'
     const still = i.kind === 'video' ? items.find((x) => x.kind === 'image' && !x.left && new RegExp('^f\\d+-' + basename(i.file, '.mp4') + '\\.hold\\.jpg$').test(x.file)) : undefined
     const media = i.kind === 'video' ? '<video controls playsinline preload="metadata"' + (still ? ' poster="review/' + still.file + '"' : '') + ' src="review/' + i.file + '"></video>' : '<a href="review/' + i.file + '"><img loading="lazy" src="review/' + i.file + '" alt="' + esc(i.title) + '" /></a>'
     return '<section><h2>' + esc(i.title) + '</h2>' + media + (i.note ? '<p class="note">' + esc(i.note) + '</p>' : '') + '</section>'

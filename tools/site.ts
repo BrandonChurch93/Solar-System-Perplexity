@@ -7,6 +7,9 @@ import { DIST, WORK, args, loadConfig } from './lib/common'
 const cfg = loadConfig()
 const a = args()
 const limitMb = Number(a.limit ?? 480)
+// --leave-out a.mp4,b.mp4: films the hosted page does not carry (the page says so). --pictures N: web copies of the pictures, at most N wide.
+const leaveOut = (a['leave-out'] ?? '').split(',').filter((n) => n !== '' && n !== 'true')
+const pictureWidth = Number(a.pictures ?? 0)
 const site = join(WORK, 'site')
 const cache = join(WORK, 'site-cache')
 if (!existsSync(join(DIST, 'review.html'))) throw new Error('run npm run review first')
@@ -54,6 +57,8 @@ function ffmpeg(list: string[], name: string): void {
 
 function small(name: string): void {
   const src = join(DIST, 'review', name)
+  // The finished film was made at its hosted size by the review tool and keeps its sound.
+  if (name.startsWith('film-')) return put(src, join(site, 'review', name))
   const st = statSync(src)
   const base = name.replace('.mp4', '')
   const stopVideo = cfg.stopIds.includes(base.replace(/^post-/, ''))
@@ -88,7 +93,26 @@ function fit(c: Copy, bytes: number): void {
   c.made = made
 }
 
-for (const f of readdirSync(join(DIST, 'review')).sort()) if (f.endsWith('.mp4')) small(f)
+for (const f of readdirSync(join(DIST, 'review')).sort()) if (f.endsWith('.mp4') && leaveOut.includes(f) === false) small(f)
+
+// Web copies of the review pictures, when asked for: JPEG, at most pictureWidth wide. A copy is used where it saves 15 percent or more.
+let webCopies = 0
+if (pictureWidth > 0) {
+  for (const f of readdirSync(join(DIST, 'review')).sort()) {
+    if (!/\.jpe?g$/i.test(f)) continue
+    const src = join(DIST, 'review', f)
+    const st = statSync(src)
+    const made = join(cache, 'pic-' + f.replace(/\.jpe?g$/i, '') + '-' + st.size + '-w' + pictureWidth + '.jpg')
+    if (!existsSync(made)) {
+      ffmpeg(['-i', src, '-vf', "scale='min(" + pictureWidth + ",iw)':-2", '-frames:v', '1', '-update', '1', '-q:v', '4', '-pix_fmt', 'yuvj420p', made + '.tmp.jpg'], f)
+      spawnSync('mv', [made + '.tmp.jpg', made])
+    }
+    if (statSync(made).size <= st.size * 0.85) {
+      put(made, join(site, 'review', f))
+      webCopies++
+    }
+  }
+}
 
 function size(dir: string): number {
   let n = 0
@@ -118,9 +142,18 @@ for (const c of copies) {
   const note = '<p class="note">A smaller copy, ' + w + ' x ' + h + ', because the host limits the size of the site. The file at full size is in the repo under ' + where(c) + '.</p>'
   html = html.slice(0, at + tag.length) + note + html.slice(at + tag.length)
 }
+for (const n of leaveOut) {
+  const tag = 'src="review/' + n + '"></video>'
+  const end = html.indexOf(tag)
+  const start = end < 0 ? -1 : html.lastIndexOf('<video', end)
+  if (start < 0) continue
+  html = html.slice(0, start) + '<p class="note">Left out of this hosted page because the host limits the size of the site. It is in the repo under out/' + n + '.</p>' + html.slice(end + tag.length)
+}
+if (leaveOut.includes('preview.mp4')) html = html.replace(', then the preview film', '')
+if (webCopies > 0) html = html.replace('</header>', '<p>The pictures on this hosted page are web copies, at most ' + pictureWidth + ' wide, because the host limits the size of the site. The pictures at full size are in the repo under out/stills.</p>\n</header>')
 writeFileSync(page, html)
 
 const parts = readdirSync(site, { withFileTypes: true }).filter((e) => e.isDirectory()).map((e) => e.name + ' ' + (size(join(site, e.name)) / 1e6).toFixed(0))
 const total = size(site) / 1e6
-console.log('site: ' + site + ', ' + total.toFixed(0) + ' MB (' + parts.join(', ') + '), limit ' + limitMb + (fitted ? ', the posts, clips and rough cut encoded at ' + fitted.toFixed(2) + ' of their first size to fit' : '') + ', ' + copies.length + ' smaller copies noted on the page')
+console.log('site: ' + site + ', ' + total.toFixed(0) + ' MB (' + parts.join(', ') + '), limit ' + limitMb + (fitted ? ', the posts, clips and rough cut encoded at ' + fitted.toFixed(2) + ' of their first size to fit' : '') + ', ' + copies.length + ' smaller copies noted on the page' + (webCopies ? ', ' + webCopies + ' pictures as web copies' : '') + (leaveOut.length ? ', left out: ' + leaveOut.join(' ') : ''))
 if (total > limitMb) { console.error('the site folder is over the limit'); process.exit(1) }
