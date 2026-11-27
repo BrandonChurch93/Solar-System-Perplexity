@@ -12661,3 +12661,40 @@ RETURN me7-99 from /root/neptune_builder, 11:01 UTC: film-16x9-final-b-363, segm
 - 11:03:07 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 11:03:07 npm run build exit 0, dist 1301 MB, free disk 4970 MB. 11:03:23 the job's four
   lines started as /tmp/ma7-90.sh, detached from the repo root (the script made from the saved mail).
+
+- ma7-90: the first push of the piece before this one failed three times ("could not read Username for 'https://github.com'");
+  a plain push at about 11:21 went through (df27d04d..7b3c1a16).
+- ma7-90, the encoder's intake as the watcher saw it (time, bytes read; the first line is the opening):
+
+      11:03:43 162916
+      11:06:35 3910977
+      11:09:07 7662837
+      11:11:38 11420642
+      11:14:10 15183243
+      11:16:42 18947951
+      11:19:04 22715089
+      11:21:31 26484358
+
+  The looks log has two rows of the job: 5089 at 11:06:31, 5093 at 11:16:38. The eighth step of the intake was not caught
+  before the encoder closed. No frame took over 15 minutes; no line was sent.
+- 11:23:56 finished. The tail, whole:
+
+      0
+      RC film ending.retreat 5089-5096 0
+      wrote ending.retreat.part000.mp4 frames 5089-5096 render 1215 s encode 1.6 s
+      -rw-r--r-- 1 user user 399360 Nov 27 11:23 /tmp/film-16x9-final-b-423.tar.00
+
+  The piece holds ending.retreat.span5089-5096.mp4 (390336 bytes) and its .json (2015 bytes); sha256 of the piece ab8eace130abc5550e12
+  448eec130a8069100e7ca23c66930fa194b5755b2ff1. Tree still clean on 262b9a68. Free disk 6262 MB.
+
+## 27 Nov, 11:24 UTC: RETURN ma7-90 to the Builder (word for word; sent about 11:24:18; attached /tmp/film-16x9-final-b-423.tar.00 and /tmp/ma7-90-tail.txt; high priority)
+
+RETURN ma7-90 from /root/neptune_builder, 11:24 UTC: film-16x9-final-b-423, segment ending.retreat, span 5089-5096, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 11:03:23, finished 11:23:56 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 11:03:07.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film ending.retreat 5089-5096 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote ending.retreat.part000.mp4 frames 5089-5096 render 1215 s encode 1.6 s"
+5. Frame times, by the encoder's intake (one step a frame): 11:06:35, 11:09:07, 11:11:38, 11:14:10, 11:16:42, 11:19:04, 11:21:31; the eighth step was not caught before the encoder closed. So about 2.5 minutes a frame; no frame took over 15 minutes and no line was sent.
+6. Attached: /tmp/film-16x9-final-b-423.tar.00 (399360 bytes, the only piece) and /tmp/ma7-90-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 11:03. Free disk 4970 MB before the start, 6262 MB now.
+8. The files of all eight finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
