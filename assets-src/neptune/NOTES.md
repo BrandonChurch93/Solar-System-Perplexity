@@ -12508,3 +12508,27 @@ LINE mi7-26 from /root/neptune_builder, 07:19 UTC (started 03:32:24): 5 of 7 fra
 ## 27 Nov, 07:49 UTC: ninth line on mi7-26 to the Builder (word for word; sent about 07:49:23; no attachment; low priority)
 
 LINE mi7-26 from /root/neptune_builder, 07:49 UTC (started 03:32:24): 6 of 7 frames finished. New since the last line: 200 at 07:23:31 (39 min 04 s). The seventh and last is due about 08:02 by this pace; the return follows it. No RC line yet, no FAILED line; the browser works at full load.
+
+- mi7-26, all rows of the looks log: 195 at 04:10:53, 196 at 04:48:53, 197 at 05:27:05, 198 at 06:05:40, 199 at 06:44:26, 200
+  at 07:23:31, 201 at 08:02:43; each frame between 37 min 59 s and 39 min 11 s.
+- 08:02:45 finished. The tail, whole:
+
+      0
+      RC film sun.rise 195-201 0
+      wrote sun.rise.part000.mp4 frames 195-201 render 16203 s encode 1.6 s
+      -rw-r--r-- 1 user user 552960 Nov 27 08:02 /tmp/film-16x9-final-b-009.tar.00
+
+  The piece holds sun.rise.span195-201.mp4 (542357 bytes) and its .json (1927 bytes); sha256 of the piece ef1122289eaa871b643c
+  0ca7c7040386d7ea7932fb05f8024670fe24f38b194b. Tree still clean on 262b9a68. Free disk 6276 MB.
+
+## 27 Nov, 08:03 UTC: RETURN mi7-26 to the Builder (word for word; sent about 08:03:09; attached /tmp/film-16x9-final-b-009.tar.00 and /tmp/mi7-26-tail.txt; high priority)
+
+RETURN mi7-26 from /root/neptune_builder, 08:03 UTC: film-16x9-final-b-009, segment sun.rise, span 195-201, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 03:32:24, finished 08:02:45 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 03:32:09.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film sun.rise 195-201 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote sun.rise.part000.mp4 frames 195-201 render 16203 s encode 1.6 s"
+5. All 7 frames, by the rows of the looks log: 195 at 04:10:53, 196 at 04:48:53, 197 at 05:27:05, 198 at 06:05:40, 199 at 06:44:26, 200 at 07:23:31, 201 at 08:02:43; each between 37 min 59 s and 39 min 11 s (the plan said about 34 minutes for all seven).
+6. Attached: /tmp/film-16x9-final-b-009.tar.00 (552960 bytes, the only piece) and /tmp/mi7-26-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 03:32. Free disk 4992 MB before the start, 6276 MB now.
+8. The files of all five finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
