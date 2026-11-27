@@ -11,10 +11,14 @@ function walk(dir: string, out: string[]): void {
   }
 }
 
+// Paths are named with forward slashes and sorted by that name, so the hashes are the same on Windows as on Linux and macOS.
+const slash = (p: string): string => p.split('\\').join('/')
+
 function hashFiles(root: string, files: string[]): string {
   const h = createHash('sha256')
-  for (const f of files.sort()) {
-    h.update(relative(root, f).split('\\').join('/'))
+  const named = files.map((f) => [slash(relative(root, f)), f] as const).sort((x, y) => (x[0] < y[0] ? -1 : x[0] > y[0] ? 1 : 0))
+  for (const [name, f] of named) {
+    h.update(name)
     h.update('\0')
     h.update(readFileSync(f))
     h.update('\0')
@@ -29,8 +33,8 @@ export function computeHashes(root: string): Hashes {
   const engineFiles: string[] = []
   const src: string[] = []
   walk(join(root, 'src'), src)
-  const stopsDir = join(root, 'src/stops') + '/'
-  for (const f of src) if (!f.startsWith(stopsDir)) engineFiles.push(f)
+  const stopsDir = slash(join(root, 'src/stops')) + '/'
+  for (const f of src) if (!slash(f).startsWith(stopsDir)) engineFiles.push(f)
   walk(join(root, 'public/assets/shared'), engineFiles)
   walk(join(root, 'public/assets/third-party'), engineFiles)
   walk(join(root, 'config'), engineFiles)

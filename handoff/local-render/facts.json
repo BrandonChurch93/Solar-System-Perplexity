@@ -1,0 +1,432 @@
+{
+ "engineHash": "a455bc02904b0d42",
+ "assetsBranch": "handoff-test-assets",
+ "band": {
+  "file": "standin-band-uhd.webm",
+  "width": 3840,
+  "height": 802,
+  "y": 1358,
+  "frames": 120,
+  "fps": 60,
+  "probeSeconds": 1.0
+ },
+ "sound": {
+  "file": "film-sound.m4a"
+ },
+ "files": [
+  {
+   "path": "cost-table.json",
+   "bytes": 91291,
+   "sha256": "0be8063335c8ebb3a858428d7e76f2b36b74dc2666193730a0b68457e1e2fa4d"
+  },
+  {
+   "path": "film-sound.m4a",
+   "bytes": 5708450,
+   "sha256": "281b8be8ab6b576cbe5a0b7c69f0d38a5094cfc2c124d509890cda4edf73bb19"
+  },
+  {
+   "path": "reference/master-0090.png",
+   "bytes": 3413731,
+   "sha256": "cdbd2b3b09cb73dc11a629c7f5503192a0d88c5e5d625a46b8c934f7cdbc1bfb"
+  },
+  {
+   "path": "reference/master-0198.png",
+   "bytes": 3046072,
+   "sha256": "420f14597ef8dbe597fd04908322cc8e7350314ccbf51af693b7a254098e846c"
+  },
+  {
+   "path": "reference/master-0330.png",
+   "bytes": 3803550,
+   "sha256": "114c73515a9d622a471cb479bb5beb0be00820f213ff37e0613bdd00a08c702f"
+  },
+  {
+   "path": "reference/master-0555.png",
+   "bytes": 2839676,
+   "sha256": "ca125de0b767351063fa770569999ec5a6fe0b24936017020240c453c4f0ac42"
+  },
+  {
+   "path": "reference/master-0708.png",
+   "bytes": 1803372,
+   "sha256": "df9a49a5a625390ee31418a4d8e7ab9f18eda2139562b6c52c263bd4d45555af"
+  },
+  {
+   "path": "reference/master-0900.png",
+   "bytes": 3522054,
+   "sha256": "a2b3c3aba149ea40a12602dae1b3ffa1cf6c9c69659275783ff49c4e3cee0f8d"
+  },
+  {
+   "path": "reference/master-1125.png",
+   "bytes": 2945689,
+   "sha256": "8e6a4a4a1a7e54b2b3a29f437847228306765927dfbbd67e1ac6480e4e4e3228"
+  },
+  {
+   "path": "reference/master-1365.png",
+   "bytes": 2720397,
+   "sha256": "31a8b9e3ba47aa7b3ee8022f6efea93ed3c7f79d431cbe03b362c4d177e398d5"
+  },
+  {
+   "path": "reference/master-1740.png",
+   "bytes": 3385176,
+   "sha256": "7a49645aa67c54f7665c7312eb94cf02b3fca226bbdf3bfbc4fd2052b463bd94"
+  },
+  {
+   "path": "reference/master-1965.png",
+   "bytes": 3211638,
+   "sha256": "f2bf504c375d553f9b2f4fee07b501a876db7f69bad4a7ef385e161a61004062"
+  },
+  {
+   "path": "reference/master-2325.png",
+   "bytes": 2895076,
+   "sha256": "8004ca9bc730ca78143c0e80a6541283833473212cf3b7d2a7b583215c3bf726"
+  },
+  {
+   "path": "reference/master-2610.png",
+   "bytes": 3231975,
+   "sha256": "33e926ac95747f7348f61a4f6dc2890d1a1112a252475ae8d3b9a15c30443fbe"
+  },
+  {
+   "path": "reference/master-2835.png",
+   "bytes": 3082884,
+   "sha256": "34186648be52f2eb64a74371081200d89ecd39bb110c1a8026f86b542ec11ba6"
+  },
+  {
+   "path": "reference/master-3150.png",
+   "bytes": 3260370,
+   "sha256": "819013d095788c241bcfc98ef5eeacf1d2f5a21a9023f0a53f33094385582682"
+  },
+  {
+   "path": "reference/master-3257.png",
+   "bytes": 2240683,
+   "sha256": "1c893b6cc4ba62cf5ffa2b8a906ffd3ad4d147fd77109916a0f6581bb1c5a880"
+  },
+  {
+   "path": "reference/master-3465.png",
+   "bytes": 3092802,
+   "sha256": "71c2794f90a4e342d71335576a911d8ceec35cdeba51df99cda91223cdcba7c7"
+  },
+  {
+   "path": "reference/master-3720.png",
+   "bytes": 3158959,
+   "sha256": "14d4c9ad51d1408b22f748a41a8c8f02104b983039bf308aea3b9fbd0648ead2"
+  },
+  {
+   "path": "reference/master-3975.png",
+   "bytes": 2955301,
+   "sha256": "9edea2176853c0e1b2a01ced88dbae707c08a98874a276bb22f2bfbd90fed85b"
+  },
+  {
+   "path": "reference/master-4237.png",
+   "bytes": 2742016,
+   "sha256": "ed370c302ac63942f4a5124074251cee0904025e440cc126985da0bce2d79dbf"
+  },
+  {
+   "path": "reference/master-4545.png",
+   "bytes": 2755832,
+   "sha256": "c9123b5105abf2edf38d6033e067d800dbcaa4b2423ba8c48838e52c525146c5"
+  },
+  {
+   "path": "reference/master-4740.png",
+   "bytes": 2276661,
+   "sha256": "5e06934d80a2cda998d542665822c79d6a224fef3d22afb369474eb83d83558b"
+  },
+  {
+   "path": "reference/master-4860.png",
+   "bytes": 2448671,
+   "sha256": "21ec7e2a17870c21f0aaddb946a171a8d2aea0684d810f4d731fd6c8a995e8eb"
+  },
+  {
+   "path": "reference/master-4958.png",
+   "bytes": 2255825,
+   "sha256": "7c521c703fcd4d4e6ff436b17c64470955ba196847dbb86ad6df1becc2ddb8f1"
+  },
+  {
+   "path": "reference/master-5250.png",
+   "bytes": 3092434,
+   "sha256": "c8fb5463b82fdc116a48aa92a6c7d0e2b097ca1dba0a7428f0e4aa7d6c84c53b"
+  },
+  {
+   "path": "reference/preview-r2-002200.png",
+   "bytes": 1140945,
+   "sha256": "7cfab13d7ece65d5203deb4cef0662e369650c4f1c2b1e9799cd0ac2b5ec5035"
+  },
+  {
+   "path": "reference/preview-r2-002201.png",
+   "bytes": 1141077,
+   "sha256": "de9396b6a1e1f1c79136688ef7f7083e4e4a3b70a9540ba14af80706e94b1d3a"
+  },
+  {
+   "path": "reference/preview-r2-004880.png",
+   "bytes": 1131675,
+   "sha256": "6afafd88d0b520b00df73aa8bef1a023367d3fda9b6ecd7357b0e5cfa3ecf171"
+  },
+  {
+   "path": "reference/preview-r2-004881.png",
+   "bytes": 1136560,
+   "sha256": "f2768ac977715c2728310ea70775624653611639e07c5a48ab626a804a70e1b0"
+  },
+  {
+   "path": "reference/preview-r2-009400.png",
+   "bytes": 1109111,
+   "sha256": "b60792907897d087d5cc8873b7cd4dff360e161190d5661dbed285239a75d47d"
+  },
+  {
+   "path": "reference/preview-r2-009401.png",
+   "bytes": 1109819,
+   "sha256": "9b249a69859a71d78730ff310c2765552f5600f38701e363ce8faad4b822eb35"
+  },
+  {
+   "path": "standin-band-uhd.webm",
+   "bytes": 773027,
+   "sha256": "5d0e9aab2403f27c7f4010877eb0565c4306fae5c2559e5a2434574f0de139b3"
+  }
+ ],
+ "tests": [
+  {
+   "id": "preview",
+   "format": "preview",
+   "refWidth": 960,
+   "refHeight": 540,
+   "frames": [
+    {
+     "capture": 2200,
+     "ref": "reference/preview-r2-002200.png",
+     "what": "film frame 1100, a frame the 30 fps film has"
+    },
+    {
+     "capture": 2201,
+     "ref": "reference/preview-r2-002201.png",
+     "what": "the new frame between film frames 1100 and 1101"
+    },
+    {
+     "capture": 4880,
+     "ref": "reference/preview-r2-004880.png",
+     "what": "film frame 2440, Mars flight in"
+    },
+    {
+     "capture": 4881,
+     "ref": "reference/preview-r2-004881.png",
+     "what": "the new frame between film frames 2440 and 2441"
+    },
+    {
+     "capture": 9400,
+     "ref": "reference/preview-r2-009400.png",
+     "what": "film frame 4700, Neptune flight in"
+    },
+    {
+     "capture": 9401,
+     "ref": "reference/preview-r2-009401.png",
+     "what": "the new frame between film frames 4700 and 4701"
+    }
+   ]
+  },
+  {
+   "id": "master",
+   "format": "master",
+   "refWidth": 1920,
+   "refHeight": 1080,
+   "frames": [
+    {
+     "capture": 180,
+     "ref": "reference/master-0090.png",
+     "what": "Sun, surface view, film frame 90"
+    },
+    {
+     "capture": 660,
+     "ref": "reference/master-0330.png",
+     "what": "Sun, whole view, film frame 330"
+    },
+    {
+     "capture": 1110,
+     "ref": "reference/master-0555.png",
+     "what": "Mercury, whole view, film frame 555"
+    },
+    {
+     "capture": 1800,
+     "ref": "reference/master-0900.png",
+     "what": "Mercury, surface view, film frame 900"
+    },
+    {
+     "capture": 2250,
+     "ref": "reference/master-1125.png",
+     "what": "Venus, whole view, film frame 1125"
+    },
+    {
+     "capture": 2730,
+     "ref": "reference/master-1365.png",
+     "what": "Venus, surface view, film frame 1365"
+    },
+    {
+     "capture": 3480,
+     "ref": "reference/master-1740.png",
+     "what": "Earth, whole view, film frame 1740"
+    },
+    {
+     "capture": 3930,
+     "ref": "reference/master-1965.png",
+     "what": "Earth, surface view, film frame 1965"
+    },
+    {
+     "capture": 4650,
+     "ref": "reference/master-2325.png",
+     "what": "Mars, whole view, film frame 2325"
+    },
+    {
+     "capture": 5220,
+     "ref": "reference/master-2610.png",
+     "what": "Mars, surface view, film frame 2610"
+    },
+    {
+     "capture": 5670,
+     "ref": "reference/master-2835.png",
+     "what": "Jupiter, whole view, film frame 2835"
+    },
+    {
+     "capture": 6300,
+     "ref": "reference/master-3150.png",
+     "what": "Jupiter, surface view, film frame 3150"
+    },
+    {
+     "capture": 6930,
+     "ref": "reference/master-3465.png",
+     "what": "Saturn, whole view with the rings, film frame 3465"
+    },
+    {
+     "capture": 7440,
+     "ref": "reference/master-3720.png",
+     "what": "Saturn, surface view, film frame 3720"
+    },
+    {
+     "capture": 7950,
+     "ref": "reference/master-3975.png",
+     "what": "Uranus, whole view, film frame 3975"
+    },
+    {
+     "capture": 8474,
+     "ref": "reference/master-4237.png",
+     "what": "Uranus, surface view, film frame 4237"
+    },
+    {
+     "capture": 9090,
+     "ref": "reference/master-4545.png",
+     "what": "Neptune, whole view, film frame 4545"
+    },
+    {
+     "capture": 9720,
+     "ref": "reference/master-4860.png",
+     "what": "Neptune, surface view, film frame 4860"
+    },
+    {
+     "capture": 10500,
+     "ref": "reference/master-5250.png",
+     "what": "Ending, the look back with the stars, film frame 5250"
+    },
+    {
+     "capture": 396,
+     "ref": "reference/master-0198.png",
+     "what": "Sun, flight out (heavy frame), film frame 198"
+    },
+    {
+     "capture": 1416,
+     "ref": "reference/master-0708.png",
+     "what": "Mercury, flight in (heavy frame), film frame 708"
+    },
+    {
+     "capture": 6514,
+     "ref": "reference/master-3257.png",
+     "what": "Jupiter, flight out (heavy frame), film frame 3257"
+    },
+    {
+     "capture": 9480,
+     "ref": "reference/master-4740.png",
+     "what": "Neptune, flight in (heavy frame), film frame 4740"
+    },
+    {
+     "capture": 9916,
+     "ref": "reference/master-4958.png",
+     "what": "Neptune, flight out (heavy frame), film frame 4958"
+    }
+   ]
+  },
+  {
+   "id": "uhd",
+   "format": "uhd",
+   "refWidth": 1920,
+   "refHeight": 1080,
+   "frames": [
+    {
+     "capture": 3480,
+     "ref": "reference/master-1740.png",
+     "what": "Earth, whole view, film frame 1740"
+    },
+    {
+     "capture": 6930,
+     "ref": "reference/master-3465.png",
+     "what": "Saturn, whole view with the rings, film frame 3465"
+    },
+    {
+     "capture": 4650,
+     "ref": "reference/master-2325.png",
+     "what": "Mars, whole view, film frame 2325"
+    },
+    {
+     "capture": 10500,
+     "ref": "reference/master-5250.png",
+     "what": "Ending, the look back with the stars, film frame 5250"
+    },
+    {
+     "capture": 3930,
+     "ref": "reference/master-1965.png",
+     "what": "Earth, surface view, film frame 1965"
+    },
+    {
+     "capture": 5220,
+     "ref": "reference/master-2610.png",
+     "what": "Mars, surface view, film frame 2610"
+    },
+    {
+     "capture": 660,
+     "ref": "reference/master-0330.png",
+     "what": "Sun, whole view, film frame 330"
+    },
+    {
+     "capture": 6300,
+     "ref": "reference/master-3150.png",
+     "what": "Jupiter, surface view, film frame 3150"
+    },
+    {
+     "capture": 9916,
+     "ref": "reference/master-4958.png",
+     "what": "Neptune, flight out (heavy frame), film frame 4958"
+    },
+    {
+     "capture": 9480,
+     "ref": "reference/master-4740.png",
+     "what": "Neptune, flight in (heavy frame), film frame 4740"
+    },
+    {
+     "capture": 396,
+     "ref": "reference/master-0198.png",
+     "what": "Sun, flight out (heavy frame), film frame 198"
+    },
+    {
+     "capture": 1416,
+     "ref": "reference/master-0708.png",
+     "what": "Mercury, flight in (heavy frame), film frame 708"
+    },
+    {
+     "capture": 6514,
+     "ref": "reference/master-3257.png",
+     "what": "Jupiter, flight out (heavy frame), film frame 3257"
+    }
+   ]
+  }
+ ],
+ "costTable": "cost-table.json",
+ "thresholds": {
+  "stopPsnr": 22,
+  "lookPsnr": 34,
+  "lookSsim": 0.93,
+  "lookHours": 14,
+  "minGpuUtil": 5
+ }
+}

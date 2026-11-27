@@ -69,7 +69,8 @@ export function ensureBuild(force = false): Hashes {
   let current: (Hashes & { tree?: string }) | null = null
   if (existsSync(stamp)) current = JSON.parse(readFileSync(stamp, 'utf8')) as Hashes & { tree?: string }
   if (force || !current || current.tree !== h.tree || current.engine !== h.engine || JSON.stringify(current.stops) !== JSON.stringify(h.stops)) {
-    execFileSync('npx', ['vite', 'build', '--logLevel', 'warn'], { cwd: ROOT, stdio: 'inherit' })
+    // On Windows npx is a command file, which Node starts through the shell only.
+    execFileSync('npx', ['vite', 'build', '--logLevel', 'warn'], { cwd: ROOT, stdio: 'inherit', shell: process.platform === 'win32' })
     writeFileSync(stamp, JSON.stringify(h))
     linkDist()
   }

@@ -1,0 +1,5 @@
+# Fetched from the assets branch by tools/lib/handoff.ts
+*.webm
+*.m4a
+cost-table.json
+reference/
