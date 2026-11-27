@@ -13513,3 +13513,20 @@ RETURN ij9-21 from /root/neptune_builder, 16:34 UTC: pack of round 60, jupiter, 
 6. Disk: 6173 MB free before the build; 4879 MB right after npm run build and a sync, under the 5 GB asked, a red I name; 6153 MB at 16:29:54 while the pack drew; 6164 MB now.
 7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 16:28:21; no npm ci, the lock file is the same.
 8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of ia9-30 (sent back; its piece stays in /tmp). I wait for the next job.
+
+## JOB ij9-40 from the Builder (/root), with the same note before it (read 16:35 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority). The same form: one frame (3244) of jupiter.rise-cover.
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB ij9-40 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+> rm -rf out/work/packs/.cache/round-060 out/work/stills/*-final-full.png*
+> npm run pack -- --phase 6 --round 60 --stop jupiter --only jupiter.rise-cover --place-window --frames 3244-3244 &gt; /tmp/ij9-40.log 2&gt;&amp;1; echo "RC pack $?" &gt;&gt; /tmp/ij9-40.log; tail -25 /tmp/ij9-40.log &gt; /tmp/ij9-40-tail.txt
+> tar -cf /tmp/r60-jupiter-rise-cover-j.tar --exclude='.frames*' out/work/packs/.cache/round-060
+> split -b 40m -d /tmp/r60-jupiter-rise-cover-j.tar /tmp/r60-jupiter-rise-cover-j.tar.
+> This is ONE frame (3244) of the part "rise-cover" of the pack of round 60 (jupiter), drawn alone because the whole part is too slow for one machine. It is one picture at the review tier and takes 15 to 60 minutes; the command draws that frame into the cache and ends without laying a sheet. Keep the names of the tar pieces exactly as the split line writes them (r60-jupiter-rise-cover-j.tar.00 and so on): the round tool reads them by name. When it has finished send back every piece /tmp/r60-jupiter-rise-cover-j.tar.NN and /tmp/ij9-40-tail.txt, in a message that starts with the usual line and states the exit code of the pack and the name of the picture file the log printed. If the pack ends with a code other than 0, send back the tail alone and say so.
+
+- 16:35:46 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
+  git status empty, whole. Free disk before the build 6167 MB. 16:35:46 npm run build exit 0, dist 1301 MB. Free disk
+  after the build, a sync and 8 s: 4873 MB (under 5 GB until the pack's own build links dist; named in the return).
+- 16:36:08 the job's 4 lines started as /tmp/ij9-40.sh, detached from the repo root. Its first line removes the cache
+  of round 60 that ij9-21 left (already sent back; the piece stays in /tmp).
