@@ -13005,3 +13005,21 @@ RETURN im9-38 from /root/neptune_builder, 15:00 UTC: frame 1021 of the part rise
 5. Attached: /tmp/r60-mercury-rise-j.tar.00 (4188160 bytes, the only piece, the name as the split line wrote it) and /tmp/im9-38-tail.txt. The tar holds f01021-review.png (4183532 bytes) and f01021-review.png.json (334 bytes) under out/work/packs/.cache/round-060/tiles/mercury.rise/.
 6. The disk, as on im9-15: free before the build 6222 MB, over the 5 GB asked; after npm run build (exit 0, 14:42) 4928 MB, under 5 GB, and I started all the same. While the pack drew it stood at 6199 MB; now 6214 MB.
 7. The tree: this repo's own tree, detached on 262b9a68, whole, git status empty before and after. The job's first line removed the cache of round 60 that im9-15 had left (sent back before); the cache now holds this job's frame only. The files of the thirteen film jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
+
+## JOB fm9-21 from the Builder (/root), with the same note before it (read 15:00 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority). A pack job: a whole part (ending.retreat) of the pack of round 60, not one frame.
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB fm9-21 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+> rm -f /tmp/r60-film-motion09.tar*
+> rm -rf out/work/packs/.cache/round-060 out/work/stills/*-final-full.png*
+> npm run pack -- --phase 6 --round 60 --only ending.retreat --place-window &gt; /tmp/fm9-21.log 2&gt;&amp;1; echo "RC pack $?" &gt;&gt; /tmp/fm9-21.log; tail -25 /tmp/fm9-21.log &gt; /tmp/fm9-21-tail.txt
+> tar -cf /tmp/r60-film-motion09.tar --exclude='.frames*' out/work/packs/.cache/round-060
+> split -b 40m -d /tmp/r60-film-motion09.tar /tmp/r60-film-motion09.tar.
+> This is a part of the pack of round 60, the record round of the whole film (the tool calls it r60-film-motion09). Keep the names of the tar pieces exactly as the split line writes them (r60-film-motion09.tar.00 and so on): the round tool reads them by name. If one frame takes over 15 minutes, send one line every 30 minutes. When it has finished send back every piece /tmp/r60-film-motion09.tar.NN (at most 10 attachments a message; further pieces go in further messages) and /tmp/fm9-21-tail.txt, in a message that starts with the usual line and states the exit code of the pack. If it ends with a code other than 0, say so, send the tail, and send the pieces as well if the tar line found its files.
+
+- 15:01:04 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
+  git status empty, whole. Free disk before the build 6213 MB. 15:01:05 npm run build exit 0, dist 1301 MB. Free disk
+  after the build, a sync and 8 s: 4919 MB (under 5 GB, as on im9-15 and im9-38; named in the return).
+- 15:01:40 the job's five lines started as /tmp/fm9-21.sh, detached from the repo root. Its second line removes the cache
+  of round 60 that im9-38 left (already sent back).
