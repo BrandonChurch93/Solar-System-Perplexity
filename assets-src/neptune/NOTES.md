@@ -12856,3 +12856,27 @@ RETURN mg7-79 from /root/neptune_builder, 12:31 UTC: film-16x9-final-b-132, segm
 ## 27 Nov, 13:03 UTC: first line on ml7-26 to the Builder (word for word; sent about 13:03:16; no attachment; low priority)
 
 LINE ml7-26 from /root/neptune_builder, 13:03 UTC: the drawing process is alive and has run 30 minutes (started 12:33:10). The film tool and its browser both live; the browser's drawing process has stood 1795 s and works at full load (386 percent of a core, 36.8 percent of the memory). Frame 490 is not out yet: no row in the looks log, no RC line, no FAILED line. The job runs on; next line about 13:33.
+
+- ml7-26: the encoder opened at 12:33:30 (the watcher's only line); the looks log has one row of the job: 490 at 13:30:32,
+  57 min 22 s after the start.
+- 13:30:34 finished. The tail, whole:
+
+      0
+      RC film sun.travel 490-490 0
+      wrote sun.travel.part000.mp4 frames 490-490 render 3425 s encode 0.6 s
+      -rw-r--r-- 1 user user 92160 Nov 27 13:30 /tmp/split-030-490-490.tar.00
+
+  The piece holds sun.travel.span490-490.mp4 (80206 bytes) and its .json (1498 bytes); sha256 of the piece 6970a769d9db3608dcd5
+  b3b45528d066472cbd66f7bac5ddec49b12953a302bd. Tree still clean on 262b9a68. Free disk 6243 MB.
+
+## 27 Nov, 13:30 UTC: RETURN ml7-26 to the Builder (word for word; sent about 13:31:02; attached /tmp/split-030-490-490.tar.00 and /tmp/ml7-26-tail.txt; high priority)
+
+RETURN ml7-26 from /root/neptune_builder, 13:30 UTC: frame 490 of film-16x9-final-b-030 (tar name split-030-490-490), segment sun.travel, span 490-490, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 12:33:10, finished 13:30:34 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 12:32:55.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film sun.travel 490-490 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote sun.travel.part000.mp4 frames 490-490 render 3425 s encode 0.6 s"
+5. The one frame: 490 came at 13:30:32 by its row in the looks log, 57 min 22 s after the start. One line was sent, at 13:03 (alive, 30 minutes run); the second was due 13:33 and the job finished before it.
+6. Attached: /tmp/split-030-490-490.tar.00 (92160 bytes, the only piece) and /tmp/ml7-26-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 12:32. Free disk 4951 MB before the start, 6243 MB now.
+8. The files of all twelve finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
