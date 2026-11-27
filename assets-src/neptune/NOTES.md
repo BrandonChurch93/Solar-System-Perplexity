@@ -12474,3 +12474,9 @@ RETURN mw7-46 from /root/neptune_builder, 03:31 UTC: frames 4820 to 4829 of the 
 ## 27 Nov, 03:48 UTC: one line on mi7-26 to the Builder (word for word; sent about 03:48:11; no attachment; low priority)
 
 LINE mi7-26 from /root/neptune_builder, 03:48 UTC: the first frame (sun.rise 195) has taken over 15 minutes and is not out yet. Started 03:32:24; the encoder has stood open since 03:32:55 and has had no frame; no row in the looks log; no RC line, no FAILED line; the browser works at full load (388 / percent of a core). The job runs on; next line about 04:18 if it still runs.
+
+- mi7-26: the first frame, 195, reached the encoder at 04:10:56 (the looks log has it at 04:10:53): 38 min 29 s from the start.
+
+## 27 Nov, 04:17 UTC: second line on mi7-26 to the Builder (word for word; sent about 04:17:57; no attachment; low priority)
+
+LINE mi7-26 from /root/neptune_builder, 04:17 UTC (started 03:32:24): 1 of 7 frames finished, by the encoder's intake and the rows of the looks log: 195 at 04:10:53 (38 min 29 s), counted from the start. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 04:48 if it still runs.
