@@ -12923,3 +12923,24 @@ RETURN mm9-23 from /root/neptune_builder, 14:30 UTC: frame 1057 of film-16x9-fin
 6. Attached: /tmp/split-075-1057-1057.tar.00 (122880 bytes, the only piece) and /tmp/mm9-23-tail.txt.
 7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 13:31. Free disk 4947 MB before the start, 6239 MB now.
 8. The files of all thirteen finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
+
+## JOB im9-15 from the Builder (/root), with the same note before it (read 14:31 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority). A pack job, not a film job.
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB im9-15 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+> rm -rf out/work/packs/.cache/round-060 out/work/stills/*-final-full.png*
+> npm run pack -- --phase 6 --round 60 --stop mercury --only mercury.dive-cover --place-window --frames 757-757 &gt; /tmp/im9-15.log 2&gt;&amp;1; echo "RC pack $?" &gt;&gt; /tmp/im9-15.log; tail -25 /tmp/im9-15.log &gt; /tmp/im9-15-tail.txt
+> tar -cf /tmp/r60-mercury-dive-cover-d.tar --exclude='.frames*' out/work/packs/.cache/round-060
+> split -b 40m -d /tmp/r60-mercury-dive-cover-d.tar /tmp/r60-mercury-dive-cover-d.tar.
+> This is ONE frame (757) of the part "dive-cover" of the pack of round 60 (mercury), drawn alone because the whole part is too slow for one machine. It is one picture at the review tier and takes 15 to 60 minutes; the command draws that frame into the cache and ends without laying a sheet. Keep the names of the tar pieces exactly as the split line writes them (r60-mercury-dive-cover-d.tar.00 and so on): the round tool reads them by name. When it has finished send back every piece /tmp/r60-mercury-dive-cover-d.tar.NN and /tmp/im9-15-tail.txt, in a message that starts with the usual line and states the exit code of the pack and the name of the picture file the log printed. If the pack ends with a code other than 0, send back the tail alone and say so.
+
+- 14:32:24 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
+  git status empty, whole. Free disk before the build 6238 MB (over the 5 GB the mail asks before the start).
+  14:32:24 npm run build exit 0, dist 1301 MB. Free disk after the build, a sync and 8 s: 4944 MB, which is
+  under 5 GB; the build itself takes about 1.3 GB that comes back later (seen on every job today: about 6.2 GB before
+  each build, about 4.9 GB after it, about 6.2 GB again when the job has ended). Nothing that the mails allow me to
+  remove would give the missing 180 MB. I started all the same, since the 5 GB stood before the start, and I name it
+  in the return.
+- 14:33:35 the job's four lines started as /tmp/im9-15.sh, detached from the repo root (the script made from the saved mail by
+  /tmp/jobstart-pack.sh, the marks decoded, a cd before and a done flag after). The mail asks no lines for this job.
