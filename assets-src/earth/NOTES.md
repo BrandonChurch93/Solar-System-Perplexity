@@ -7835,3 +7835,27 @@ An exit code 3 means the drawing context was lost: the loop runs the same comman
 - The tail file reads, whole: "0", "RC film neptune.rise 4950-4952 0", "wrote neptune.rise.part000.mp4 frames 4950-4952 render 17315 s encode 1.0 s", and the one piece `/tmp/split-404-4950-4952.tar.00` of 194560 bytes. The tar holds `neptune.rise.span4950-4952.mp4` (186503 bytes) and its `.json` (1653 bytes).
 - Sent to /root at 05:24 with the piece and the tail attached. Free disk 6088 MB after the job.
 - `out/work/chunks/16x9-final-full` of the render worktree holds four spans (venus.dive 1267-1274, venus.rise 1582-1589, earth.dive 1897-1904, neptune.rise 4950-4952) and stays until /root says it can go. Nothing runs. Waiting for the next job.
+
+### JOB me7-50 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB me7-50 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); the tool calls it film-16x9-final-b-165. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+rm -f /tmp/me7-50-log.txt /tmp/me7-50-tail.txt /tmp/film-16x9-final-b-165.tar*
+for S in "earth.rise 2160-2166"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/me7-50-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/me7-50-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+tar -cf /tmp/film-16x9-final-b-165.tar out/work/chunks/16x9-final-full/earth.rise.span2160-2166.mp4 out/work/chunks/16x9-final-full/earth.rise.span2160-2166.mp4.json; split -b 40m -d /tmp/film-16x9-final-b-165.tar /tmp/film-16x9-final-b-165.tar.
+grep -c 'Shader Error\|not usable' /tmp/me7-50-log.txt &gt; /tmp/me7-50-tail.txt; grep 'RC film' /tmp/me7-50-log.txt &gt;&gt; /tmp/me7-50-tail.txt; grep 'wrote \|G5' /tmp/me7-50-log.txt | tail -6 &gt;&gt; /tmp/me7-50-tail.txt; ls -la /tmp/film-16x9-final-b-165.tar.* &gt;&gt; /tmp/me7-50-tail.txt
+An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. Planned time about 34 minutes; the real time can be twice that. If one frame takes over 15 minutes, send one line every 30 minutes. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/film-16x9-final-b-165.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/me7-50-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+### 05:25 UTC, 27 Nov: job me7-50 runs
+
+- Notes commit c19cbf25ebdfe1440dccfaf7547b45e8175f8c00 (notes only, on c9cf59cb3e24003504402c444a651be78856a185) was pushed at 05:24, read back equal from origin.
+- NOTE of the job: drop_caches, rc 0 at 05:24:46. Worktree as before (HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, status only `?? node_modules`, lock file same as the commit), `npm run build` rc 0 at 05:24:55, free disk 6087 MB.
+- Job me7-50 (film-16x9-final-b-165, earth.rise span 2160-2166, seven frames): lines in `/tmp/me7-50.sh`, started detached from the worktree's root at 05:25 (exact second in the next entry). Planned 34 minutes; a line every 30 minutes if a frame takes over 15 minutes.
+
+### 06:04 UTC, 27 Nov: job me7-50 sent back
+
+- Started detached at 05:25:10; the tool's first line at 05:25:20 ("film: 1 units to render, 7 frames, 16x9 final full"). Looks log: earth.rise 2160 at 05:31:24, 2162 at 05:42:18, 2164 at 05:53:00: about 5 min 30 s a frame, so no line was due on the way.
+- The tail file reads, whole: "0", "RC film earth.rise 2160-2166 0", "wrote earth.rise.part000.mp4 frames 2160-2166 render 2299 s encode 1.4 s", and the one piece `/tmp/film-16x9-final-b-165.tar.00` of 512000 bytes. The tar holds `earth.rise.span2160-2166.mp4` (502340 bytes) and its `.json` (1939 bytes).
+- Sent to /root at 06:04 with the piece and the tail attached. Free disk 6085 MB after the job.
+- `out/work/chunks/16x9-final-full` of the render worktree holds five spans (venus.dive 1267-1274, venus.rise 1582-1589, earth.dive 1897-1904, neptune.rise 4950-4952, earth.rise 2160-2166) and stays until /root says it can go. Nothing runs. Waiting for the next job.
