@@ -13064,3 +13064,36 @@ RETURN fm9-21 from /root/neptune_builder, 15:12 UTC: pack of round 60, part endi
   git status empty, whole. Free disk before the build 6202 MB. 15:12:51 npm run build exit 0, dist 1301 MB. Free disk
   after the build, a sync and 8 s: 4907 MB (under 5 GB, as on the pack jobs; named in the return).
 - 15:13:30 the job's two lines started as /tmp/hj9-07.sh, detached from the repo root.
+
+- 15:13:32 hj9-07 finished, two seconds after its start. The tail file has 6 lines, word for word:
+
+
+      > grand-tour@0.1.0 smooth
+      > tsx tools/smooth.ts --stop jupiter --kind landing --calibrate
+
+      smooth jupiter: green. out/work/smooth/jupiter-landing.md
+      RC smooth 0
+
+  The command wrote out/work/smooth/jupiter-landing.md (9572 bytes, sha256 9472185f2018f3c673779a60282e3908bcea951668c170
+  0b764b47c385bfb001) and jupiter-landing.json (130460 bytes, sha256 022b0a63ce18e169c450716c0192d0bef335c5cd58cd4b698d7e
+  021af9125bf6) and no .png. Line 5 of the .md: "VERDICT: green. No number is over its limit." Tree still clean on
+  262b9a68. Free disk 4912 MB after (this tool runs no build of its own, so dist stands).
+- About my words "it drew nothing; no browser was started that I saw" in the return below: I did not watch the processes
+  in those two seconds. What I checked after sending: tools/smooth.ts line 109 gives the landing kind the part "path"
+  alone and line 121 refuses any other part with it; the capture (the browser) is opened at line 312, in the parts that
+  read pictures. The report's own line 3 says "Parts: path." So the words hold by the code and the run time, not by a
+  look at the process list.
+
+## 27 Nov, 15:13 UTC: RETURN hj9-07 to the Builder (word for word; sent about 15:13:57; attached out/work/smooth/jupiter-landing.md, out/work/smooth/jupiter-landing.json and /tmp/hj9-07-tail.txt; high priority)
+
+RETURN hj9-07 from /root/neptune_builder, 15:13 UTC: smooth, landing report of jupiter (npm run smooth -- --stop jupiter --kind landing --calibrate), commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 15:13:30, finished 15:13:32 UTC (it drew nothing; no browser was started that I saw).
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 15:12:50.
+2. The RC line, word for word: "RC smooth 0". The tool's line before it, word for word: "smooth jupiter: green. out/work/smooth/jupiter-landing.md".
+3. The command wrote two files under out/work/smooth and no .png: jupiter-landing.md (9572 bytes, sha256 9472185f2018f3c673779a60282e3908bcea951668c1700b764b47c385bfb001) and jupiter-landing.json (130460 bytes, sha256 022b0a63ce18e169c450716c0192d0bef335c5cd58cd4b698d7e021af9125bf6). So no picture is attached.
+4. Attached: /home/user/workspace/repo/out/work/smooth/jupiter-landing.md, /home/user/workspace/repo/out/work/smooth/jupiter-landing.json and /tmp/hj9-07-tail.txt (6 lines).
+5. The job's first line removed the old out/work/smooth (23 files of lab reports of 24 and 26 Nov, 7 MB). I copied them to /tmp/smooth-before-hj9-07 first, outside the tree, because three of them are pictures of Neptune.
+6. Disk: 6202 MB free before the build; 4907 MB right after npm run build and a sync (under the 5 GB asked, a red I name as on the pack jobs); 4912 MB now (this tool does not build, so dist stands).
+7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 15:12:51; no npm ci, the lock file is the same.
+8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). I wait for the next job.
+The VERDICT line of the .md file (its line 5), word for word:
+VERDICT: green. No number is over its limit.
