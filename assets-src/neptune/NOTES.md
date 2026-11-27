@@ -12602,3 +12602,7 @@ RETURN mg7-98 from /root/neptune_builder, 09:59 UTC: film-16x9-final-b-209, segm
 - 10:00:03 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 10:00:04 npm run build exit 0, dist 1301 MB, free disk 4974 MB. 10:00:17 the job's four
   lines started as /tmp/me7-99.sh, detached from the repo root (the script made from the saved mail).
+
+## 27 Nov, 10:16 UTC: first line on me7-99 to the Builder (word for word; sent about 10:16:11; no attachment; low priority)
+
+LINE me7-99 from /root/neptune_builder, 10:16 UTC: the first frame (uranus.rise 4425) has taken over 15 minutes and is not out yet. Started 10:00:17; the encoder has stood open since 10:00:37 and has had no frame; no row in the looks log; no RC line, no FAILED line; the browser works at full load (384 percent of a core). The job runs on; next line about 10:46 if it still runs.
