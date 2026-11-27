@@ -12484,3 +12484,7 @@ LINE mi7-26 from /root/neptune_builder, 04:17 UTC (started 03:32:24): 1 of 7 fra
 ## 27 Nov, 04:49 UTC: third line on mi7-26 to the Builder (word for word; sent about 04:49:08; no attachment; low priority)
 
 LINE mi7-26 from /root/neptune_builder, 04:49 UTC (started 03:32:24): 2 of 7 frames finished, by the encoder's intake and the rows of the looks log: 195 at 04:10:53 (38 min 29 s); 196 at 04:48:53 (37 min 59 s). So about 38 minutes a frame here, not 5; by this pace the last of the 7 frames comes about 07:59. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 05:19.
+
+## 27 Nov, 05:19 UTC: fourth line on mi7-26 to the Builder (word for word; sent about 05:19:28; no attachment; low priority)
+
+LINE mi7-26 from /root/neptune_builder, 05:19 UTC (started 03:32:24): 2 of 7 frames finished (195 at 04:10:53, 196 at 04:48:53, as said); no new frame since the last line, the third has run since 04:48:53 and is due about 05:27 by the pace of 38 minutes. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 05:49.
