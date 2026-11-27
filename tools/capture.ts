@@ -164,8 +164,10 @@ async function openPage(url: string): Promise<Open> {
   }
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 })
   page.on('pageerror', (e) => console.error('[page error] ' + e.message))
-  await page.goto(url + '?mode=capture&format=' + format + '&assets=full' + (rate > 1 ? '&rate=' + rate : '') + shutterQuery)
-  await page.waitForFunction(() => 'showcase' in window, undefined, { timeout: 300000 })
+  // The first start can be slow (a busy machine, software drawing, or Direct3D building the drawing programs), so the page gets 15 minutes
+  // to load and to start instead of the browser's own 30 seconds. A page that is really dead still ends here with a clear error.
+  await page.goto(url + '?mode=capture&format=' + format + '&assets=full' + (rate > 1 ? '&rate=' + rate : '') + shutterQuery, { waitUntil: 'domcontentloaded', timeout: 900000 })
+  await page.waitForFunction(() => 'showcase' in window, undefined, { timeout: 900000 })
   await page.evaluate(() => (window as unknown as { showcase: { ready: Promise<void> } }).showcase.ready)
   const info = await page.evaluate(() => (window as unknown as { showcase: { info(): PageInfo } }).showcase.info())
   const limits = await page.evaluate((names) => {
