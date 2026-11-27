@@ -4525,6 +4525,103 @@ text(last);
 text('CELL ENDS after ' + n + ' looks: ' + why);
 ```
 
+## 23:05 UTC, 27 Nov: H60R pack p1 sent (p1 23:01:30)
+
+- PACK p1: its `.done` file appeared 23:01:26 UTC; SENT 23:01:30 UTC 27 Nov to /root, high, delivered: the whole text `H60 handover_engineer p1`, attached `/tmp/h60-handover_engineer-p1.tar` (368640 bytes) and `/tmp/h60-handover_engineer-p1.txt`. In the tar: mercury.travel.span1085-1089.mp4 (353955 bytes), mercury.travel.span1085-1089.mp4.json (1799 bytes), h60r-state.txt (65 bytes). The `.txt`, line by line: "0" / "PACK handover_engineer p1 23:01:26 chunks 1 left 11 failed 0 next: jupiter.rise 3295-3299 list: # handover_engineer v1" / "other tool:" / "start 22:18:32 root /home/user/workspace/master old loops left 0" / "11789M" / "-rw-r--r-- 1 user user 368640 Nov 27 23:01 /tmp/h60-handover_engineer-p1.tar". Marker `/tmp/jobs/h60-sent-p1`.
+- After p0 the tool of mercury.travel 1085-1089 (started by the old loop at 22:00:38) went on: frames at 22:15:02, 22:28:41, 22:42:12, 22:56:04, the chunk at 23:01:12 (no RC line for it, its loop was gone; the log has its wrote line). The new loop then took jupiter.rise 3295-3299 (the two mercury.travel lines of the list are covered by that chunk); its first frame came 23:04:15.
+- AFTER EACH PACK SENT: `echo "words about what happened since the last pack" | python3 /tmp/jobs/h60rpack.py pK` writes the entry and the NOW block (it prints their paths), then chk, splice, push. The helper as it stands:
+
+```
+# h60rpack.py X [X ...] : after packs of H60R were sent (X is p1, p2 ...; the marker /tmp/jobs/h60-sent-X holds the time of the
+# send), writes the notebook entry /tmp/law/e/ENTRYn.md for them, puts them into "PACKS SENT SO FAR" of the running text in
+# /tmp/jobs/state.json and writes /tmp/law/e/NOWn.md (n is the next free number). It prints the two paths; then:
+# python3 /tmp/mail/chk.py ENTRY NOW; python3 /tmp/law/splice.py ENTRY NOW; bash /tmp/law/pushnotes3.sh "subject".
+import sys, os, re, json, glob, subprocess, datetime
+names = sys.argv[1:]
+now = datetime.datetime.now(datetime.timezone.utc)
+day = now.strftime('%d %b').lstrip('0')
+nums = [int(m.group(1)) for m in (re.search(r'ENTRY(\d+)\.md$', f) for f in glob.glob('/tmp/law/e/ENTRY*.md')) if m]
+n = max(nums) + 1
+E = []
+heads = []
+for x in names:
+    base = '/tmp/h60-handover_engineer-' + x
+    sent = open('/tmp/jobs/h60-sent-' + x).read().strip()
+    tar = subprocess.run(['tar', '-tvf', base + '.tar'], capture_output=True, text=True).stdout.strip().split('\n')
+    files = []
+    for l in tar:
+        p = l.split()
+        if len(p) >= 6:
+            files.append('%s (%s bytes)' % (p[5], p[2]))
+    txt = open(base + '.txt', encoding='utf-8', errors='replace').read().rstrip('\n').split('\n')
+    chunks = [f.split(' ')[0] for f in files if f.split(' ')[0].endswith('.mp4')]
+    heads.append('%s %s' % (x, sent))
+    E.append('- PACK %s: its `.done` file appeared %s UTC; SENT %s UTC %s to /root, high, delivered: the whole text `H60 handover_engineer %s`, attached `%s.tar` (%d bytes) and `%s.txt`. In the tar: %s. The `.txt`, line by line: %s. Marker `/tmp/jobs/h60-sent-%s`.' % (
+        x, datetime.datetime.fromtimestamp(os.path.getmtime(base + '.done'), datetime.timezone.utc).strftime('%H:%M:%S'), sent, day, x, base, os.path.getsize(base + '.tar'), base,
+        ', '.join(files), ' / '.join('"%s"' % l.strip().replace('`', "'") for l in txt), x))
+st = json.load(open('/tmp/jobs/state.json'))
+t = st['running']['text']
+m = re.search(r'PACKS SENT SO FAR: (.*?) \(UTC', t)
+assert m, 'no PACKS SENT SO FAR in the running text'
+t = t[:m.end(1)] + ''.join(', %s' % h for h in heads) + t[m.end(1):]
+st['running']['text'] = t
+json.dump(st, open('/tmp/jobs/state.json', 'w'), indent=1)
+head = '## %s UTC, %s: H60R pack%s %s sent (%s)' % (now.strftime('%H:%M'), day, 's' if len(names) > 1 else '', ', '.join(names), '; '.join(heads))
+extra = [l for l in sys.stdin.read().split('\n') if l.strip()] if not sys.stdin.isatty() else []
+body = [head, ''] + E + ['- ' + l.lstrip('- ') for l in extra]
+ep = '/tmp/law/e/ENTRY%d.md' % n
+open(ep, 'w', encoding='utf-8').write('\n'.join(body) + '\n')
+np = '/tmp/law/e/NOW%d.md' % n
+subprocess.run(['python3', '/tmp/jobs/now.py', np], check=True)
+print(ep, np)
+```
+
+- The cell text got a shorter last print (only the lines of the state that matter when it ends with TIME); `/tmp/jobs/h60r-cell.js` as it stands now:
+
+```
+// h60r-cell.js : the text of the exec cell that watches JOB H60R for about 4 minutes (a mail of /root is seen only between two
+// cells, so no cell is longer). It looks by `python3 /tmp/jobs/h60rwatch.py 15`; on "EVENT PACK xN" it sends the pack AT ONCE
+// (the whole text "H60 handover_engineer xN", the .tar and the .txt attached, high), writes the marker /tmp/jobs/h60-sent-xN and
+// goes on; it ends with "CELL ENDS: TIME" (start the next cell) or with the event that needs my hand (DEAD, DISK, HOLE, a missing
+// file, FIRST LINE NOT 0). Paste the text below into exec with yield_time_ms 290000.
+const started = Date.now();
+const LIMIT = 235 * 1000;
+const raw = (r) => typeof r === 'string' ? r : JSON.stringify(r);
+const parse = (r) => { try { const o = typeof r === 'string' ? JSON.parse(r) : r; return (o && o.stdout) || ''; } catch (e) { return String(r); } };
+let last = '';
+let why = 'TIME';
+let n = 0;
+while (Date.now() - started < LIMIT) {
+  const r = await tools.bash({command: 'python3 /tmp/jobs/h60rwatch.py 15', yield_time_ms: 30000, max_output_tokens: 3000});
+  n += 1;
+  last = parse(r);
+  const m = last.match(/EVENT (.*)\s*$/);
+  const ev = m ? m[1].trim() : 'NONE';
+  if (ev === 'WAIT') continue;
+  const p = ev.match(/^PACK ([bp]\d+)$/);
+  if (p) {
+    const X = p[1];
+    const base = `/tmp/h60-handover_engineer-${X}`;
+    const chk = parse(await tools.bash({command: `ls -la ${base}.done ${base}.tar ${base}.txt 2>&1; echo ---; cat ${base}.txt; echo ---; tar -tvf ${base}.tar; date -u +%T`}));
+    text(chk);
+    if (chk.includes('No such file')) { why = 'MISSING FILE OF PACK ' + X; break; }
+    const s = await tools.message_agent({target: "/root", message: `H60 handover_engineer ${X}`, priority: "high", attachments: [`${base}.tar`, `${base}.txt`]});
+    text(raw(s));
+    if (raw(s).replace(/\s/g, '').includes('"delivered":true') === false) { why = 'PACK ' + X + ' NOT DELIVERED, no marker written'; break; }
+    const first = parse(await tools.bash({command: `date -u +%T > /tmp/jobs/h60-sent-${X}; echo sent marker ${X} $(cat /tmp/jobs/h60-sent-${X}) >&2; head -1 ${base}.txt`})).trim();
+    text('sent ' + X + '; first line of its txt: ' + first);
+    if ((first === '0') === false) { why = 'FIRST LINE NOT 0 in the txt of ' + X + ': ' + first; break; }
+    continue;
+  }
+  why = ev;
+  if (ev === 'NONE') text('RAW: ' + raw(r).slice(0, 600));
+  break;
+}
+const keep = why === 'TIME' ? last.split('\n').filter((l) => /^(---|the loop|chunks|packs:|free|FAILED)/.test(l)).join('\n') : last;
+text(keep + '\n');
+text('CELL ENDS after ' + n + ' looks: ' + why);
+```
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
@@ -4668,9 +4765,9 @@ MAIL 351 (22:19 by /root's clock, 22:14 by mine), the work from here. In its wor
 
 ## Next
 
-NOW (rewritten 22:21 UTC, 27 Nov; everything below this block in "Next" is older and holds only where this block does not say otherwise):
+NOW (rewritten 23:05 UTC, 27 Nov; everything below this block in "Next" is older and holds only where this block does not say otherwise):
 0. THE FILM IS FROZEN (MAIL 1548, 1549). No cure, no trial, no proof run, no change to any file of the tree. My state is the section "STATE AT THE FREEZE" at the top of this file; my hand in is recorded by /root.
-1. THIS MACHINE IS A RENDER MACHINE FOR THE MASTER (1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5; the clean tree `/home/user/workspace/master`). JOBS SENT BACK, all exit 0 (22): ma7-24 (21:56:16 UTC 26 Nov), ma7-32 (22:48:03), mc7-82 (23:20:10), mw7-40 (02:56:35 UTC 27 Nov), mc7-53 (03:18:37), mg7-07 (09:44:39), mj7-05 (10:56:59), ma7-86 (11:21:25), mc7-25 (11:45:16), mi7-31 (12:09:10), mg7-80 (12:32:40), ml7-28 (13:29:40), mm9-21 (14:35:10), im9-23 (a pack job) (14:44:15), im9-42 (a pack job) (14:56:40), fm9-09 (a pack job) (15:07:20), he9-06 (a smooth job) (16:13:59), ia9-25 (a pack job) (16:39:43), it9-13 (a pack job) (16:43:45), it9-36 (a pack job) (16:47:56), iu9-13 (a pack job) (16:51:18), iu9-35 (a pack job) (17:02:16). JOB H60R IS RUNNING since 22:18:32 UTC 27 Nov AND HAS NO END OF ITS OWN: I watch for packs until /root writes that I am free. (H60, started 20:57:48, is my share of the film at 60 frames a second; H60R is the Builder's new loop for it: `/tmp/h60r.sh` draws the lines of `/tmp/h60r-list.txt` from the top, leaves out what a chunk covers, and makes packs `/tmp/h60-handover_engineer-pK.tar` with a `.txt` and a `.done` by itself, K = 0, 1, 2 and so on; its words `/tmp/jobs/h60r-mail.txt`, the tool's log `/tmp/h60-log.txt`, its state `/tmp/h60r-state.txt`, what failed `/tmp/h60r-failed.txt`; READ THE ENTRY "JOB H60R started" FIRST.) THE CLEAN TREE STANDS ON 41e0350475355d8122f9341e3a923230a8f965b3 (branch film-60fps: 262b9a68 plus three lines of tools), NOT on 262b9a68: a later job on the frozen build needs `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` first, and only when no drawing runs (`pre.sh` stops unless HEAD is 262b9a68). WHAT IS OWED: (a) EACH TIME `/tmp/h60-handover_engineer-pK.done` appears send /root AT ONCE one message, high, whose whole text is `H60 handover_engineer pK`, attachments the `.tar` and the `.txt` of that pack, nothing else in it; every K once, in order, none left out; then the marker `/tmp/jobs/h60-sent-pK`; no answer is awaited; (b) a mail that starts with "LIST handover_engineer": run the lines in it (they write `/tmp/h60r-list.txt.new` and move it over the list); never edit the list in place, never restart the script for it; (c) write to /root ONLY if `/tmp/h60r.sh` is no longer running (then start it again with `(set -m; bash /tmp/h60r.sh > /tmp/h60r-out.txt 2>&1 &)` alone in its command, working folder the clone, and say so), if the disk has under 2 GB free, or if the first line of a pack's `.txt` is not 0; NO LINE FOR SLOW FRAMES (one frame of the heavy parts takes up to 100 minutes, that is expected); (d) change no file of the repo, do not lower the tier, do not stop or kill the drawing. THE WATCH: exec cells of about 4 minutes with the text of `/tmp/jobs/h60r-cell.js` (`yield_time_ms` 290000), one after the other; a cell sends new packs by itself; a mail is seen only between two cells. The io watcher `bash /tmp/jobs/iowatch4.sh h60r` must run beside it. PACKS SENT SO FAR: b0 21:44:06, p0 22:19:02 (UTC 27 Nov). LIST MAILS RUN SO FAR: none (the list is "# handover_engineer v1"). LINES WRITTEN TO /root SO FAR: none. THE DATE: read `date -u` and write "UTC D Mon" of that day in the mails. KEPT under `out/work/chunks/16x9-final-full` of the tree until /root says they can go: the chunk of every film job sent back, with its `.json` (13 at 14:44 UTC 27 Nov); `out/work/packs/.cache/round-060` holds the pictures of the last pack job only (each pack job removes it first, as its mail writes). THREE KINDS OF JOB SO FAR: smooth jobs (he9-06: `npm run smooth -- --stop STOP --only counts`, a script of two lines, no tar; a status line every 60 minutes by `python3 /tmp/jobs/smoothline.py NAME START_ISO 20`, the return by `python3 /tmp/jobs/mksmoothreturn.py NAME STOP`, attachments the .md, the .json and the tail, its LAST line the VERDICT line of the .md; entry "JOB he9-06 sent back"), film jobs (a piece or a split of a piece; `post.sh NAME PIECE SEGMENT FIRST LAST` fits) and pack jobs (im9-23, im9-42, fm9-09, ia9-25, it9-13, it9-36, iu9-13, iu9-35: pictures of a pack at the review tier; when finished `python3 /tmp/jobs/mkpackreturn.py NAME PIECE` writes the draft of the return, entries "JOB im9-23 sent back" and "JOB im9-42 sent back"; READ THE MAIL OF EACH JOB FOR WHAT THE RETURN MUST STATE AND FOR THE LINE RULE).
+1. THIS MACHINE IS A RENDER MACHINE FOR THE MASTER (1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5; the clean tree `/home/user/workspace/master`). JOBS SENT BACK, all exit 0 (22): ma7-24 (21:56:16 UTC 26 Nov), ma7-32 (22:48:03), mc7-82 (23:20:10), mw7-40 (02:56:35 UTC 27 Nov), mc7-53 (03:18:37), mg7-07 (09:44:39), mj7-05 (10:56:59), ma7-86 (11:21:25), mc7-25 (11:45:16), mi7-31 (12:09:10), mg7-80 (12:32:40), ml7-28 (13:29:40), mm9-21 (14:35:10), im9-23 (a pack job) (14:44:15), im9-42 (a pack job) (14:56:40), fm9-09 (a pack job) (15:07:20), he9-06 (a smooth job) (16:13:59), ia9-25 (a pack job) (16:39:43), it9-13 (a pack job) (16:43:45), it9-36 (a pack job) (16:47:56), iu9-13 (a pack job) (16:51:18), iu9-35 (a pack job) (17:02:16). JOB H60R IS RUNNING since 22:18:32 UTC 27 Nov AND HAS NO END OF ITS OWN: I watch for packs until /root writes that I am free. (H60, started 20:57:48, is my share of the film at 60 frames a second; H60R is the Builder's new loop for it: `/tmp/h60r.sh` draws the lines of `/tmp/h60r-list.txt` from the top, leaves out what a chunk covers, and makes packs `/tmp/h60-handover_engineer-pK.tar` with a `.txt` and a `.done` by itself, K = 0, 1, 2 and so on; its words `/tmp/jobs/h60r-mail.txt`, the tool's log `/tmp/h60-log.txt`, its state `/tmp/h60r-state.txt`, what failed `/tmp/h60r-failed.txt`; READ THE ENTRY "JOB H60R started" FIRST.) THE CLEAN TREE STANDS ON 41e0350475355d8122f9341e3a923230a8f965b3 (branch film-60fps: 262b9a68 plus three lines of tools), NOT on 262b9a68: a later job on the frozen build needs `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` first, and only when no drawing runs (`pre.sh` stops unless HEAD is 262b9a68). WHAT IS OWED: (a) EACH TIME `/tmp/h60-handover_engineer-pK.done` appears send /root AT ONCE one message, high, whose whole text is `H60 handover_engineer pK`, attachments the `.tar` and the `.txt` of that pack, nothing else in it; every K once, in order, none left out; then the marker `/tmp/jobs/h60-sent-pK`; no answer is awaited; (b) a mail that starts with "LIST handover_engineer": run the lines in it (they write `/tmp/h60r-list.txt.new` and move it over the list); never edit the list in place, never restart the script for it; (c) write to /root ONLY if `/tmp/h60r.sh` is no longer running (then start it again with `(set -m; bash /tmp/h60r.sh > /tmp/h60r-out.txt 2>&1 &)` alone in its command, working folder the clone, and say so), if the disk has under 2 GB free, or if the first line of a pack's `.txt` is not 0; NO LINE FOR SLOW FRAMES (one frame of the heavy parts takes up to 100 minutes, that is expected); (d) change no file of the repo, do not lower the tier, do not stop or kill the drawing. THE WATCH: exec cells of about 4 minutes with the text of `/tmp/jobs/h60r-cell.js` (`yield_time_ms` 290000), one after the other; a cell sends new packs by itself; a mail is seen only between two cells. The io watcher `bash /tmp/jobs/iowatch4.sh h60r` must run beside it. PACKS SENT SO FAR: b0 21:44:06, p0 22:19:02, p1 23:01:30 (UTC 27 Nov). LIST MAILS RUN SO FAR: none (the list is "# handover_engineer v1"). LINES WRITTEN TO /root SO FAR: none. THE DATE: read `date -u` and write "UTC D Mon" of that day in the mails. KEPT under `out/work/chunks/16x9-final-full` of the tree until /root says they can go: the chunk of every film job sent back, with its `.json` (13 at 14:44 UTC 27 Nov); `out/work/packs/.cache/round-060` holds the pictures of the last pack job only (each pack job removes it first, as its mail writes). THREE KINDS OF JOB SO FAR: smooth jobs (he9-06: `npm run smooth -- --stop STOP --only counts`, a script of two lines, no tar; a status line every 60 minutes by `python3 /tmp/jobs/smoothline.py NAME START_ISO 20`, the return by `python3 /tmp/jobs/mksmoothreturn.py NAME STOP`, attachments the .md, the .json and the tail, its LAST line the VERDICT line of the .md; entry "JOB he9-06 sent back"), film jobs (a piece or a split of a piece; `post.sh NAME PIECE SEGMENT FIRST LAST` fits) and pack jobs (im9-23, im9-42, fm9-09, ia9-25, it9-13, it9-36, iu9-13, iu9-35: pictures of a pack at the review tier; when finished `python3 /tmp/jobs/mkpackreturn.py NAME PIECE` writes the draft of the return, entries "JOB im9-23 sent back" and "JOB im9-42 sent back"; READ THE MAIL OF EACH JOB FOR WHAT THE RETURN MUST STATE AND FOR THE LINE RULE).
 2. A JOB, step by step: (a) write the mailed script lines EXACTLY AS MAILED (decode `&gt;` and `&amp;`) to `/tmp/jobs/NAME.sh` and the whole mail, decoded, to `/tmp/jobs/NAME-mail.txt` (line 1 a note of the arrival, line 2 blank, line 3 the NOTE, line 4 blank, line 5 the JOB text up to the colon before the script, lines 6 to 5+K the K lines of the script, K is 2, 4 or 5 so far, the last line the rest; K+6 lines in all); (b) `bash /tmp/jobs/pre.sh NAME` does the rest in order and stops at the first thing that is not as it must be: no render running, the script equals the mailed lines, the cache dropped with sudo (`sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'`, the time in `NAME-cache.txt`), HEAD 262b9a68, `git status` 0 lines, the lock unchanged, at least 5000 MB free (if not: old frame folders, films and tars of FINISHED jobs under /tmp and out/work may go; NOTHING under `out/work/chunks/16x9-final-full`), `npm run build` exit 0, then the start (`start.sh`: detached, the log `NAME-run.log` ends with "SCRIPT DONE HH:MM:SS", the watcher writes `NAME-io.txt`, one step of about 4 MB for each frame the encoder took); (c) put the running job into `/tmp/jobs/state.json`, `python3 /tmp/jobs/now.py /tmp/law/e/NOWn.md`, splice, push; (d) wait with `T=$(date -u -d 'YYYY-MM-DD HH:MM:SS' +%s); until grep -q 'SCRIPT DONE' /tmp/jobs/NAME-run.log || [ $(date -u +%s) -ge $T ]; do sleep 10; done` and `poll_command` with waits of 240 s; (e) LINES WHILE IT RUNS: every 60 minutes when the mail says so; else every 30 minutes once a frame has taken over 15 minutes (measured by the steps of the io file and the rows of the job in `out/work/looks/log.jsonl`, never by the part file, which appears late); low priority; made by `mkline.py`; A THIRD RULE (ml7-28): when the mail asks for a line every 30 minutes from the start saying whether the drawing process is alive and how long it has run, the line is made by `alive.py NAME SEGMENT FIRST LAST START_ISO` (entry "JOB ml7-28 runs"; start it 35 s before the line is due); READ THE LINE RULE IN EACH MAIL, IT CHANGES; (f) WHEN FINISHED: `bash /tmp/jobs/post.sh NAME PIECE SEGMENT FIRST LAST`, replace TIMES_NOTE in the draft, ONE message to /root, high, starting with "MAIL from handover_engineer to /root, HH:MM UTC D Mon. JOB NAME sent back", attachments: every tar piece (at most 9 in one message, the rest in a second) and the tail file; in the text each RC line word for word, the count of the tail's first line, the cache line; (g) an entry in the notebook, the job into "sent" of state.json, NOW, push; then `wait_agent`. Do not judge the picture. Change no file of the tree. The texts of the helpers are in the entry "THE JOB HELPERS"; the later ones (`pre.sh` and `start.sh` as they stand now, `packline.py`, `smoothline.py`, `mksmoothreturn.py`) in the entry "JOB he9-06 sent back".
 3. If the machine cannot render (no drawing context after three tries, or under 4 GB free after cleaning): one line to /root, then wait.
 4. One render process at a time. A leading sleep is blocked. `date -u` before every time written. Every mail: the text to a file, `python3 /tmp/mail/chk.py FILE` (no bad lines), then by exec `tools.bash` cat and `tools.message_agent`.
