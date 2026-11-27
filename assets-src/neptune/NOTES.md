@@ -12944,3 +12944,25 @@ RETURN mm9-23 from /root/neptune_builder, 14:30 UTC: frame 1057 of film-16x9-fin
   in the return.
 - 14:33:35 the job's four lines started as /tmp/im9-15.sh, detached from the repo root (the script made from the saved mail by
   /tmp/jobstart-pack.sh, the marks decoded, a cd before and a done flag after). The mail asks no lines for this job.
+
+- 14:41:04 im9-15 finished. The tail file has 22 lines; all but the last three are the report of the build that the
+  pack tool runs itself (not copied here). The last three, word for word:
+
+      /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/mercury.dive-cover/f00757-review.png
+      pack round-060 part mercury.dive-cover: frames were rendered, 438.6 s
+      RC pack 0
+
+  The piece /tmp/r60-mercury-dive-cover-d.tar.00 (5017600 bytes) holds f00757-review.png (5011837 bytes) and its .json
+  (332 bytes) under out/work/packs/.cache/round-060/tiles/mercury.dive-cover/; sha256 of the piece 7466e93ab9685a4a5c7d
+  255401af01ac0f266b96bf855683cbb0b167e2f81682. Tree still clean on 262b9a68. Free disk 6223 MB.
+
+## 27 Nov, 14:41 UTC: RETURN im9-15 to the Builder (word for word; sent about 14:41:36; attached /tmp/r60-mercury-dive-cover-d.tar.00 and /tmp/im9-15-tail.txt; high priority)
+
+RETURN im9-15 from /root/neptune_builder, 14:41 UTC: frame 757 of the part dive-cover of the pack of round 60 (mercury), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 14:33:35, finished 14:41:04 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 14:32:24, before the build.
+2. The exit code of the pack: 0. The log's line, word for word: "RC pack 0"
+3. The name of the picture file the log printed: /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/mercury.dive-cover/f00757-review.png
+4. The log's last line of the tool: "pack round-060 part mercury.dive-cover: frames were rendered, 438.6 s"
+5. Attached: /tmp/r60-mercury-dive-cover-d.tar.00 (5017600 bytes, the only piece, the name as the split line wrote it) and /tmp/im9-15-tail.txt. The tar holds f00757-review.png (5011837 bytes) and f00757-review.png.json (332 bytes) under out/work/packs/.cache/round-060/tiles/mercury.dive-cover/.
+6. A red I name: the disk. Free before the build 6238 MB, over the 5 GB asked. After npm run build (exit 0, 14:32) it stood at 4944 MB, under 5 GB, and nothing the mails let me remove would have given the missing 180 MB; I started all the same. The job ran through; free disk now 6223 MB.
+7. The tree: this repo's own tree, detached on 262b9a68, whole, git status empty before and after. The four lines ran as one detached script from the repo root. The files of the thirteen film jobs under out/work/chunks/16x9-final-full are kept; the cache under out/work/packs/.cache/round-060 is kept too. I wait for the next job.
