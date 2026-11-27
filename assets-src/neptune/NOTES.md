@@ -13601,3 +13601,45 @@ RETURN iu9-21 from /root/neptune_builder, 17:02 UTC: pack of round 60, uranus, p
 6. Disk: 6161 MB free before the build; 4867 MB right after npm run build and a sync, under the 5 GB asked, a red I name; 6142 MB at 16:50:58 while the pack drew; 6154 MB now.
 7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 16:49:35; no npm ci, the lock file is the same.
 8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of ij9-40 (sent back; its piece stays in /tmp). I wait for the next job.
+
+## JOB H60 from the Builder (/root) (read 20:55 by my clock, 27 Nov; word for word as delivered, the marks &gt;, &lt; and &amp; as they came; high priority). My share of the 60 frames a second film: ten spans (78 frames by the spans of the mail) between the film's frames, four packs. It came about four hours after the return of iu9-21; no job stood open.
+
+> JOB H60 from the Builder (/root): your share of the 60 FRAMES A SECOND FILM. Brandon asked for the film at 1920 by 1080 and 60 frames a second today; it is the top job, so drop any older job of mine that is still open. The film's 5,400 frames stay as they are; you draw frames that lie between them. Commit 41e0350475355d8122f9341e3a923230a8f965b3 (branch film-60fps on origin: the frozen build 262b9a68 plus three lines in tools/film.ts, tools/lib/browser.ts and tools/lib/frames.ts; no file of src, public or config differs, so a build of 262b9a68 stays valid). On a render machine: `git fetch --depth 1 origin 41e0350475355d8122f9341e3a923230a8f965b3` and `git checkout -f 41e0350475355d8122f9341e3a923230a8f965b3` in your clone. On a builder's machine: do the same in the clean worktree named in MAIL 1549. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work). After npm ci if the lock file changed and npm run build, write the lines below to /tmp/h60.sh and run it detached from the repo root (for example: (set -m; bash /tmp/h60.sh &gt; /dev/null 2&gt;&amp;1 &amp;)). With GT_HALF=1 the film tool opens the page at rate 2 with a 360 degree shutter and draws capture frame 2f+1 where it would draw film frame f; its chunks go to out/work/chunks/16x9-final-full-half.
+> cat &gt; /tmp/h60.sh &lt;&lt;'H60'
+> export GT_HALF=1
+> L=/tmp/h60-log.txt; D=out/work/chunks/16x9-final-full-half; rm -f $L /tmp/h60-neptune_builder-b*
+> run() { n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; $L 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; $L; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; }
+> pack() { b=$1; shift; T=/tmp/h60-neptune_builder-b$b; ( cd $D &amp;&amp; tar -cf $T.tar "$@" ) &gt; $T.txt 2&gt;&amp;1; { grep -c 'Shader Error\|not usable' $L; grep 'RC film' $L | tail -14; ls -la $T.tar; } &gt;&gt; $T.txt 2&gt;&amp;1; touch $T.done; }
+> run mars.dive 2485-2486
+> pack 0 mars.dive.span2485-2486.mp4 mars.dive.span2485-2486.mp4.json
+> run saturn.travel 3922-3924
+> run mercury.travel 1100-1104
+> run jupiter.rise 3310-3314
+> run earth.dive 1860-1866
+> pack 1 saturn.travel.span3922-3924.mp4 saturn.travel.span3922-3924.mp4.json mercury.travel.span1100-1104.mp4 mercury.travel.span1100-1104.mp4.json jupiter.rise.span3310-3314.mp4 jupiter.rise.span3310-3314.mp4.json earth.dive.span1860-1866.mp4 earth.dive.span1860-1866.mp4.json
+> run uranus.rise 4410-4416
+> run ending.lookback 5265-5294
+> run jupiter.dive 3025-3031
+> pack 2 uranus.rise.span4410-4416.mp4 uranus.rise.span4410-4416.mp4.json ending.lookback.span5265-5294.mp4 ending.lookback.span5265-5294.mp4.json jupiter.dive.span3025-3031.mp4 jupiter.dive.span3025-3031.mp4.json
+> run jupiter.travel 3328-3334
+> run venus.travel 1620-1624
+> pack 3 jupiter.travel.span3328-3334.mp4 jupiter.travel.span3328-3334.mp4.json venus.travel.span1620-1624.mp4 venus.travel.span1620-1624.mp4.json
+> H60
+> The script makes four packs, one after the other, and goes on by itself. Each time a file /tmp/h60-neptune_builder-bN.done appears (N = 0, 1, 2, 3), send /root at once one message with the text `H60 neptune_builder bN` and the two files /tmp/h60-neptune_builder-bN.tar and /tmp/h60-neptune_builder-bN.txt attached, and nothing else in it; do not wait for an answer and do not stop the script. Pack 0 is one short span: it is my early proof, so send it the minute it is there. An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. Planned time for all of it about 290 minutes; the real time can be twice that. Do not change any file of the repo and do not lower the tier. If a line of the log shows `Shader Error`, an RC other than 0 that the loop does not cure, or no new frame for 30 minutes, send /root one line `H60 neptune_builder TROUBLE` with the last 300 characters of /tmp/h60-log.txt and keep the script running if it runs. After pack 3 you are free.
+
+- This mail has no note before it and asks for no cache drop; I ran none.
+- 20:55:25 git fetch --depth 1 origin 41e0350475355d8122f9341e3a923230a8f965b3: exit 0 at the first try. The diff against
+  262b9a68 names three files (tools/film.ts, tools/lib/browser.ts, tools/lib/frames.ts; 3 insertions, 3 deletions), so the
+  lock file is the same: no npm ci. 20:55:31 git checkout -f 41e03504 in the render tree (the repo's own tree, whole):
+  head 41e0350475355d8122f9341e3a923230a8f965b3, git status empty, the old stash untouched (1 entry).
+- Free disk before the build 6157 MB. 20:55:42 npm run build exit 0 (ended 20:55:51), dist 1301 MB, git status empty.
+  Free disk after the build and a sync: 4862 MB (over the 4 GB asked).
+- The 18 lines between the two H60 marks went to /tmp/h60.sh with the marks turned back into the plain signs
+  (10 run lines, 4 pack lines; bash -n clean). 20:56:02 started detached from the repo root, in the form of the mail:
+  (set -m; bash /tmp/h60.sh > /dev/null 2>&1 &).
+- 20:57:48 a watch of mine started beside it (/tmp/h60-watch.sh): it reads the byte count of the encoder and the log
+  /tmp/h60-log.txt, writes only under /tmp, changes nothing in the repo. It names three signs of trouble as the mail
+  asks: a Shader Error line, an RC that the loop does not cure, 30 minutes with no new frame.
+- 20:57:49 the tool had printed "film: 1 units to render, 2 frames, 16x9 final full"; the encoder of mars.dive ran;
+  free disk 6129 MB. The files of the 13 finished film jobs under out/work/chunks/16x9-final-full stay (38 span files);
+  the new chunks go to out/work/chunks/16x9-final-full-half.
