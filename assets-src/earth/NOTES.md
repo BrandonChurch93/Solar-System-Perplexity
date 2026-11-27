@@ -8182,3 +8182,29 @@ This job is the landing report of round 60's stop (uranus): the frames round the
 - I ran that same function alone at 15:24 (`npx tsx /tmp/linkdist.mts` from the worktree root: "linked 450"): free disk 6006 MB, 450 files of dist have two links, `git status --porcelain` still only `?? node_modules`. Told /root in the return, with the word that the free room of the earlier jobs will have stood about 1300 MB lower between my build and the tool's own (not measured then).
 - FOR THE NEXT JOBS: the number "free before the job" is read before `npm run build`; the low point is about 1300 MB under it for some seconds. If a job's tool does not draw (path alone), run `/tmp/linkdist.mts` after it and say so.
 - The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
+
+### JOB pj9-03 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB pj9-03 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+rm -rf out/work/packs/.cache/round-060 out/work/stills/*-final-full.png*
+npm run pack -- --phase 6 --round 60 --stop jupiter --only jupiter.terrain --place-window &gt; /tmp/pj9-03.log 2&gt;&amp;1; echo "RC pack $?" &gt;&gt; /tmp/pj9-03.log; tail -25 /tmp/pj9-03.log &gt; /tmp/pj9-03-tail.txt
+tar -cf /tmp/r60-jupiter-terrain.tar out/work/packs/.cache/round-060
+split -b 40m -d /tmp/r60-jupiter-terrain.tar /tmp/r60-jupiter-terrain.tar.
+This is the sheet "terrain" of the part "views" of the pack of round 60 (jupiter). Keep the names of the tar pieces exactly as the split line writes them (r60-jupiter-terrain.tar.00 and so on): the round tool reads them by name. When it has finished send back every piece /tmp/r60-jupiter-terrain.tar.NN (at most 10 attachments a message; further pieces go in further messages) and /tmp/pj9-03-tail.txt, in a message that starts with the usual line and states the exit code of the pack. If the pack ends with a code other than 0, send back the tail alone and say so.
+
+### 15:26 UTC, 27 Nov: job pj9-03 runs
+
+- NOTE done: `sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'` rc 0 at 15:25:48.
+- Worktree `/home/user/workspace/main-262b9a68`: HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, `git status --porcelain` shows only `?? node_modules`, lock file same as the commit, no render process running. Free disk 6005 MB before `npm run build` (rc 0 at 15:25:57), 4711 MB right after it, 5995 MB at 15:26:27 when the tool's own build had linked dist again (450 files with two links).
+- Script `/tmp/pj9-03.sh` holds the four lines of the job (`&gt;` read as `>`, `&amp;` as `&`), started detached from the worktree root at 15:26:01 (script pid 6767, `tools/pack.ts` under it); the drawing process (pid 6901) started 15:26:10.
+- A pack job: the sheet "terrain" of the part "views" of round 60 (jupiter). No lines asked on the way. To send back: every piece `/tmp/r60-jupiter-terrain.tar.NN` and `/tmp/pj9-03-tail.txt`, with the exit code of the pack; the tail alone if the code is not 0.
+
+### 16:00 UTC, 27 Nov: job pj9-03 sent back
+
+- Started detached at 15:26:01; the drawing process at 15:26:10; the tail file was written at 15:59:14. On the way the cache showed the frames of the sheet under `round-060/.frames` (f03060 to f03223 seen by 15:55, one every 2 to 4 minutes); the tool removed them when the sheet was laid.
+- The log's last two lines, word for word: "pack round-060 part jupiter.terrain: frames were rendered, 1983.5 s", "RC pack 0". The tail file has 13 lines.
+- The tar `/tmp/r60-jupiter-terrain.tar` (2447360 bytes, one piece `.00`) holds `out/work/packs/.cache/round-060/motion-jupiter.terrain.png` (2439442 bytes) and its `.json` (1068 bytes).
+- Sent to /root at 16:00 with the piece and the tail attached. Free disk 6008 MB after the job (dist linked: 450 files with two links). `git status --porcelain` of the worktree shows only `?? node_modules`.
+- The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
