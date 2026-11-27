@@ -8438,3 +8438,78 @@ The script makes four packs, one after the other, and goes on by itself. Each ti
 - uranus.travel 4523-4525 ended at 21:22:40: "wrote uranus.travel.part000.mp4 frames 4523-4525 render 786 s encode 1.2 s", "RC film uranus.travel 4523-4525 0".
 - mars.rise 2685-2687 runs since 21:22:42. By 21:53:06 no frame of it was written; the drawing process was alive at 387 percent of a core. I sent /root the line `H60 earth_builder TROUBLE` with that and the last 300 characters of the log, as the mail asks. The script was not touched.
 - How a new frame is seen changed: the lossless part `out/work/tmp/film/*.mkv` does not show on disk while a short span is drawn, so the watch now reads the bytes the ffmpeg of that part has taken in (`rchar` in `/proc/PID/io`; 162916 before any frame). The watch is now `bash /tmp/h60-wait2.sh N`; the first one was stopped (it is my own read only watch, not the job). After a TROUBLE line the clock in `/tmp/h60-clock.txt` is set to the time of the line, so the next line goes only after 30 more minutes with no frame.
+
+### JOB H60R from /root (copied on arrival, verbatim; `&gt;`, `&lt;` and `&amp;` kept as they came)
+
+JOB H60R from the Builder (/root): a new loop for your 60 fps drawing. It does not change what you draw now. It brings me your finished frames every 40 minutes and lets me move open work from slow machines to free ones, because the heavy frames cost far more than planned. Do steps 1 to 4 now, in this order. Do NOT stop or kill the drawing that runs; the span in progress finishes by itself.
+1. Write your list with exactly these lines:
+cat &gt; /tmp/h60r-list.txt.new &lt;&lt;'LIST'
+# earth_builder v1
+uranus.travel 4523-4525
+mars.rise 2685-2685
+mars.rise 2686-2686
+mars.rise 2687-2687
+venus.travel 1610-1614
+earth.dive 1875-1877
+earth.dive 1878-1880
+earth.dive 1881-1881
+neptune.dive 4680-4686
+mars.hold 2310-2339
+ending.lookback 5295-5324
+uranus.terrain 4328-4341
+uranus.terrain 4342-4353
+jupiter.rise 3265-3266
+jupiter.rise 3267-3268
+jupiter.rise 3269-3269
+LIST
+mv /tmp/h60r-list.txt.new /tmp/h60r-list.txt
+2. Write the script with exactly these lines:
+cat &gt; /tmp/h60r.sh &lt;&lt;'H60R'
+export GT_HALF=1
+N=earth_builder; L=/tmp/h60-log.txt; D=out/work/chunks/16x9-final-full-half
+LIST=/tmp/h60r-list.txt; SENT=/tmp/h60r-sent.txt; FAIL=/tmp/h60r-failed.txt; ST=/tmp/h60r-state.txt
+exec 9&gt; /tmp/h60r.lock; flock -n 9 || { echo "second start refused $(date -u +%H:%M:%S)" &gt;&gt; $ST; exit 0; }
+R=; for p in $(pgrep -f '/tmp/h60[.]sh|tools/film[.]ts') self; do [ $p = self ] &amp;&amp; c=$PWD || c=$(readlink /proc/$p/cwd 2&gt; /dev/null); [ -n "$c" ] &amp;&amp; [ -d "$c/$D" ] &amp;&amp; { R=$c; break; }; done
+[ -n "$R" ] || { echo "NO ROOT $(date -u +%H:%M:%S): start me from the folder that holds $D" &gt;&gt; $ST; exit 1; }
+busy() { local p; BP=; for p in $(pgrep -f 'tools/film[.]ts|run -s film'); do case "$(readlink /proc/$p/exe 2&gt; /dev/null)" in */node) BP=$p; return 0;; esac; done; return 1; }
+cd "$R"; pkill -9 -f '/tmp/h60[.]sh'; sleep 5 9&gt;&amp;-
+echo "start $(date -u +%H:%M:%S) root $R old loops left $(pgrep -f '/tmp/h60[.]sh' | wc -l)" &gt;&gt; $ST
+touch $SENT $FAIL $L
+for t in /tmp/h60-$N-b*.tar; do [ -e "${t%.tar}.done" ] &amp;&amp; tar -tf "$t" 2&gt; /dev/null; done | grep '[.]mp4$' &gt;&gt; $SENT
+k=0; while [ -e /tmp/h60-$N-p$k.done ]; do k=$((k+1)); done
+told=0; item=; left=0; prev=
+run() { n=0; while :; do echo "T $(date +%s) start $1 $2" &gt;&gt; $L; npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; $L 2&gt;&amp;1 9&gt;&amp;-; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; $L; echo "T $(date +%s) end $1 $2 $rc" &gt;&gt; $L; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; return $rc; }
+covered() { local j q; for j in $D/$1.span*-*.mp4.json; do [ -e "$j" ] || continue; q=${j##*.span}; q=${q%.mp4.json}; [ "${q%-*}" -le "$2" ] &amp;&amp; [ "$3" -le "${q#*-}" ] &amp;&amp; return 0; done; return 1; }
+nextitem() { item=; left=0; while read -r s r x; do case "$s" in ''|'#'*) continue;; esac; [ -n "$r" ] || continue; grep -qxF "$s $r" $FAIL &amp;&amp; continue; covered $s ${r%-*} ${r#*-} &amp;&amp; continue; left=$((left+1)); [ -n "$item" ] || item="$s $r"; done &lt; $LIST; }
+pack() { new=$( (cd $D &amp;&amp; ls *.span*-*.mp4.json 2&gt; /dev/null) | sed 's/[.]json$//' | grep -vxFf $SENT)
+  if [ -z "$new" ]; then [ "$1" = idle ] &amp;&amp; [ $told = 0 ] || return 0; fi
+  T=/tmp/h60-$N-p$k
+  ( cd $D &amp;&amp; tar -cf $T.tar $(for f in $new; do echo $f $f.json; done) -C /tmp h60r-state.txt ) &gt; $T.err 2&gt;&amp;1 9&gt;&amp;-
+  { grep -c 'Shader Error\|not usable' $L; echo "PACK $N p$k $(date -u +%H:%M:%S) chunks $(echo "$new" | grep -c .) left $left failed $(grep -c . $FAIL) next: ${item:-LIST EMPTY} list: $(head -1 $LIST | cut -c1-40)"; echo "other tool: $(busy &amp;&amp; ps -o etimes=,args= -p $BP | cut -c1-150)"; cat $T.err; tail -3 $ST; grep '^T ' $L | tail -16; tail -4 $FAIL; df -BM --output=avail . | tail -1; ls -la $T.tar; } &gt; $T.txt 2&gt;&amp;1
+  [ -n "$new" ] &amp;&amp; echo "$new" &gt;&gt; $SENT; touch $T.done; k=$((k+1)); last=$(date +%s); }
+[ -e $LIST ] &amp;&amp; nextitem; pack idle
+while :; do
+  if busy; then busy=1; else busy=0; [ -e $LIST ] &amp;&amp; nextitem; fi
+  if [ $busy = 0 ] &amp;&amp; [ -z "$item" ]; then pack idle; told=1; sleep 30 9&gt;&amp;-; continue; fi
+  [ $(( $(date +%s) - last )) -ge 2400 ] &amp;&amp; pack
+  if [ $busy = 1 ]; then sleep 20 9&gt;&amp;-; continue; fi
+  told=0
+  if [ "$item" = "$prev" ]; then echo "$item" &gt;&gt; $FAIL; prev=; continue; fi; prev=$item
+  if run $item; then covered ${item% *} $(echo ${item#* } | tr '-' ' ') || echo "$item" &gt;&gt; $FAIL; else echo "$item" &gt;&gt; $FAIL; fi
+done
+H60R
+3. Start it with exactly this line, alone in its command: (set -m; bash /tmp/h60r.sh &gt; /tmp/h60r-out.txt 2&gt;&amp;1 &amp;)
+4. Twenty seconds later read /tmp/h60r-state.txt. Its last line must begin with the word start and name the folder of your clone. If it says NO ROOT, cd to the folder from which you once started /tmp/h60.sh and run the line of step 3 again from there.
+What the script does: it ends the old loop /tmp/h60.sh, waits until the span that is being drawn is finished, and then draws the lines of /tmp/h60r-list.txt from the top, skipping what you already have (your old order, with the heavy spans cut into short pieces so that a lost drawing context costs one piece and not hours). It makes its packs by itself: /tmp/h60-earth_builder-p0.tar, then p1, p2 and so on with no end, each with a .txt and, when it is complete, a .done file. p0 appears within a minute of the start, even when it holds no frame.
+Your part from now on: each time a file /tmp/h60-earth_builder-pK.done appears (K = 0, 1, 2 and so on), send /root at once one message with the text `H60 earth_builder pK` and the two files /tmp/h60-earth_builder-pK.tar and /tmp/h60-earth_builder-pK.txt attached, and nothing else in it. Send every K once, in order, and leave none out. If a file /tmp/h60-earth_builder-bN.done exists that you have not sent yet, send that old pack as before; no new b pack will appear. Do not wait for an answer.
+When I send you a message that starts with `LIST earth_builder`, run the lines in it (they write /tmp/h60r-list.txt.new and move it over /tmp/h60r-list.txt). Never edit the list in place and never restart the script for a new list; the script reads the list again before every piece.
+No more TROUBLE lines for slow frames: a single frame of the heavy parts takes up to 100 minutes and that is expected. Write to me only if /tmp/h60r.sh is no longer running (then start it again with the line of step 3 and tell me), if the disk has under 2 GB free, or if the first line of a pack's .txt is not 0. Do not change any file of the repo, do not lower the tier, and keep watching for packs until I write that you are free.
+
+### 22:13 UTC, 27 Nov: job H60R, the new loop runs and pack p0 is sent (read this first if the thread is taken up again while it runs)
+
+- Before the mail: the first frame of mars.rise 2685-2687 was written at 22:09:11 (the ffmpeg of the part had taken in 4252242 bytes), about 46 minutes after the span began at 21:22:42.
+- Steps 1 to 4 of the mail, in order. The list and the script were written by running the mail's own lines, taken from the copy above with the entities decoded (`/tmp/h60r-step1.sh`, `/tmp/h60r-step2.sh`): `/tmp/h60r-list.txt` has the line "# earth_builder v1" and 16 spans; `/tmp/h60r.sh` has 32 lines, `bash -n` rc 0. Step 3: `(set -m; bash /tmp/h60r.sh > /tmp/h60r-out.txt 2>&1 &)`, alone in its command, from the worktree root. Step 4: the state file's last line is "start 22:12:01 root /home/user/workspace/main-262b9a68 old loops left 0".
+- The old loop `/tmp/h60.sh` is gone (the new script ended it). The drawing of mars.rise 2685-2687 was not touched and goes on (pid 31942 and its browser).
+- Pack p0 appeared at 22:12:01: first line of its txt "0"; "PACK earth_builder p0 22:12:01 chunks 1 left 15 failed 0 next: mars.rise 2685-2685 list: # earth_builder v1"; the tar holds `uranus.travel.span4523-4525.mp4` (158526 bytes), its `.json` and `h60r-state.txt`. Sent to /root at 22:12:41 with the text `H60 earth_builder p0` alone and the tar and the txt attached. Pack b0 went at 21:09:12; no other b pack exists.
+- My part from now on: each time `/tmp/h60-earth_builder-pK.done` appears, at once one message `H60 earth_builder pK` with `/tmp/h60-earth_builder-pK.tar` and `.txt` attached and nothing else; every K once, in order. A sent pack is marked by a file `/tmp/h60r-sent-pK` (p0 is marked; the next to send is p1). A mail that starts with `LIST earth_builder`: run the lines in it. No TROUBLE lines for slow frames any more. Write to /root only if `/tmp/h60r.sh` no longer runs (start it again with the line of step 3 from the worktree root and say so), if the disk has under 2 GB free, or if the first line of a pack's txt is not 0. Keep watching until /root writes that I am free.
+- How I watch (read only): `bash /tmp/h60r-wait.sh K` ends when the done file of pK is there, when the loop is gone, or when the disk has under 2000 MB free; `bash /tmp/h60r-check.sh` prints the state.
