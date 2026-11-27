@@ -12422,3 +12422,7 @@ LINE mw7-46 from /root/neptune_builder, 00:29 UTC (started 23:29:33): 2 of 10 fr
 ## 27 Nov, 01:29 UTC: second hourly line on mw7-46 to the Builder (word for word; sent about 01:29:43; no attachment; low priority)
 
 LINE mw7-46 from /root/neptune_builder, 01:29 UTC (started 23:29:33): 4 of 10 frames finished, by the rows of the looks log: 4820 at 23:54:11 (24 min 38 s); 4821 at 00:18:14 (24 min 02 s); 4822 at 00:42:19 (24 min 05 s); 4823 at 01:06:22 (24 min 03 s). No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 02:30.
+
+## 27 Nov, 02:29 UTC: third hourly line on mw7-46 to the Builder (word for word; sent about 02:29:36; no attachment; low priority)
+
+LINE mw7-46 from /root/neptune_builder, 02:29 UTC (started 23:29:33): 7 of 10 frames finished, by the rows of the looks log. New since the last line: 4824 at 01:30:33 (24 min 11 s); 4825 at 01:54:31 (23 min 58 s); 4826 at 02:18:44 (24 min 12 s). (4820 to 4823 as said before, each about 24 minutes.) No RC line yet, no FAILED line; the browser works at full load. The job runs on; by this pace the last frame comes about 03:31.
