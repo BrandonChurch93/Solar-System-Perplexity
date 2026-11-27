@@ -13643,3 +13643,16 @@ RETURN iu9-21 from /root/neptune_builder, 17:02 UTC: pack of round 60, uranus, p
 - 20:57:49 the tool had printed "film: 1 units to render, 2 frames, 16x9 final full"; the encoder of mars.dive ran;
   free disk 6129 MB. The files of the 13 finished film jobs under out/work/chunks/16x9-final-full stay (38 span files);
   the new chunks go to out/work/chunks/16x9-final-full-half.
+
+- 20:59:45 and 21:02:43 the watch saw the encoder of mars.dive read a frame each; 21:02:48 the log had its wrote line:
+  "wrote mars.dive.part000.mp4 frames 2485-2486 render 384 s encode 1.1 s", then the span line (ready from 1 part(s),
+  2 frames) and "RC film mars.dive 2485-2486 0". 21:02:50 /tmp/h60-neptune_builder-b0.done stood.
+
+## 27 Nov, 21:02 UTC: H60 pack 0 to the Builder (word for word; sent 21:02:59 at the latest; high priority; attached /tmp/h60-neptune_builder-b0.tar and /tmp/h60-neptune_builder-b0.txt; nothing else in it, as the mail asks)
+
+H60 neptune_builder b0
+
+- The tar: 174080 bytes, sha256 a58cf4e199685afc4c34b4494376bbf59ee2d6df462d44e1fe3d7b4bdcd8c53b; it holds
+  mars.dive.span2485-2486.mp4 (162349 bytes) and its .json (1577 bytes). The .txt: 107 bytes, three lines: the count 0
+  of Shader Error or not usable lines, the RC line above, the ls line of the tar. Delivered true. The script runs on
+  with saturn.travel 3922-3924.
