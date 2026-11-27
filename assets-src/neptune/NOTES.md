@@ -12426,3 +12426,29 @@ LINE mw7-46 from /root/neptune_builder, 01:29 UTC (started 23:29:33): 4 of 10 fr
 ## 27 Nov, 02:29 UTC: third hourly line on mw7-46 to the Builder (word for word; sent about 02:29:36; no attachment; low priority)
 
 LINE mw7-46 from /root/neptune_builder, 02:29 UTC (started 23:29:33): 7 of 10 frames finished, by the rows of the looks log. New since the last line: 4824 at 01:30:33 (24 min 11 s); 4825 at 01:54:31 (23 min 58 s); 4826 at 02:18:44 (24 min 12 s). (4820 to 4823 as said before, each about 24 minutes.) No RC line yet, no FAILED line; the browser works at full load. The job runs on; by this pace the last frame comes about 03:31.
+
+- mw7-46, the rest of the rows of the looks log: 4824 at 01:30:33, 4825 at 01:54:31, 4826 at 02:18:44, 4827 at 02:42:54, 4828
+  at 03:06:58, 4829 at 03:31:04; each frame between 23 min 58 s and 24 min 38 s. (The push of the notebook failed five times
+  between 02:29 and 02:38 with "could not read Username" and went through at 02:38:59.)
+- 03:31:07 finished. The tail, whole:
+
+      0
+      RC film neptune.terrain 4820-4829 0
+      wrote neptune.terrain.part000.mp4 frames 4820-4829 render 14476 s encode 1.8 s
+      -rw-r--r-- 1 user user 460800 Nov 27 03:31 /tmp/split-399-4820-4829.tar.00
+
+  The piece holds neptune.terrain.span4820-4829.mp4 (452821 bytes) and its .json (2159 bytes); sha256 of the piece 02caa76d5d96
+  e95c76f9c246b683d5360a2cc7d09c2424234c479ec19e8164ef. Tree still clean on 262b9a68. Free disk 6288 MB.
+
+## 27 Nov, 03:31 UTC: RETURN mw7-46 to the Builder (word for word; sent about 03:31:31; attached /tmp/split-399-4820-4829.tar.00 and /tmp/mw7-46-tail.txt; high priority)
+
+RETURN mw7-46 from /root/neptune_builder, 03:31 UTC: frames 4820 to 4829 of the piece film-16x9-final-b-399, segment neptune.terrain, span 4820-4829, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 23:29:33, finished 03:31:07 UTC.
+1. The stop of mc7-92: done at 23:28:19 to 23:28:40, before this job. Film process and all children killed; ps showed no render, browser or encoder process left; no frame folder of it was left under out/work (the tool took its unfinished encoder file and lock with it). Nothing is sent back for it.
+2. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 23:29:12.
+3. The RC line, word for word (there is one; no exit 3, no second run): "RC film neptune.terrain 4820-4829 0"
+4. The count on the first line of the tail: 0
+5. The tail's wrote line: "wrote neptune.terrain.part000.mp4 frames 4820-4829 render 14476 s encode 1.8 s"
+6. All 10 frames, by the rows of the looks log: 4820 at 23:54:11, 4821 at 00:18:14, 4822 at 00:42:19, 4823 at 01:06:22, 4824 at 01:30:33, 4825 at 01:54:31, 4826 at 02:18:44, 4827 at 02:42:54, 4828 at 03:06:58, 4829 at 03:31:04; each between 23 min 58 s and 24 min 38 s.
+7. Attached: /tmp/split-399-4820-4829.tar.00 (460800 bytes, the only piece) and /tmp/mw7-46-tail.txt.
+8. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 23:29. Free disk 5022 MB before the start, 6288 MB now.
+9. The files of all four finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
