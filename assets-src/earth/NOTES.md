@@ -8110,3 +8110,31 @@ This is ONE frame (980) of the part "rise" of the pack of round 60 (mercury), dr
 - The tar `/tmp/r60-mercury-rise-d.tar` (4782080 bytes, one piece `.00`) holds `out/work/packs/.cache/round-060/tiles/mercury.rise/f00980-review.png` (4769765 bytes) and its `.json` (334 bytes).
 - Sent to /root at 14:56 with the piece and the tail attached. Free disk 6040 MB after the job. `git status --porcelain` of the worktree shows only `?? node_modules`.
 - The pack left `out/work/packs` (`round-060`, `keys`, `.cache/round-060`) in the render worktree; kept, since no word says it can go. The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
+
+### JOB fm9-10 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB fm9-10 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+rm -f /tmp/r60-film-motion05-a.tar*
+rm -rf out/work/packs/.cache/round-060 out/work/stills/*-final-full.png*
+npm run pack -- --phase 6 --round 60 --only mars.travel --place-window --frames 2745-2758 &gt; /tmp/fm9-10.log 2&gt;&amp;1; echo "RC pack $?" &gt;&gt; /tmp/fm9-10.log; tail -25 /tmp/fm9-10.log &gt; /tmp/fm9-10-tail.txt
+tar -cf /tmp/r60-film-motion05-a.tar --exclude='.frames*' out/work/packs/.cache/round-060
+split -b 40m -d /tmp/r60-film-motion05-a.tar /tmp/r60-film-motion05-a.tar.
+This is a part of the pack of round 60, the record round of the whole film (the tool calls it r60-film-motion05-a). Keep the names of the tar pieces exactly as the split line writes them (r60-film-motion05-a.tar.00 and so on): the round tool reads them by name. If one frame takes over 15 minutes, send one line every 30 minutes. When it has finished send back every piece /tmp/r60-film-motion05-a.tar.NN (at most 10 attachments a message; further pieces go in further messages) and /tmp/fm9-10-tail.txt, in a message that starts with the usual line and states the exit code of the pack. If it ends with a code other than 0, say so, send the tail, and send the pieces as well if the tar line found its files.
+
+### 14:57 UTC, 27 Nov: job fm9-10 runs
+
+- NOTE done: `sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'` rc 0 at 14:57:21.
+- Worktree `/home/user/workspace/main-262b9a68`: HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, `git status --porcelain` shows only `?? node_modules`, lock file same as the commit, no render process running, free disk 6039 MB (the job asks for 5 GB), `npm run build` rc 0 at 14:57:31.
+- Script `/tmp/fm9-10.sh` holds the five lines of the job (`&gt;` read as `>`, `&amp;` as `&`), started detached from the worktree root at 14:57:45 (script pid 32562, `tools/pack.ts` under it); the drawing process (pid 32691) started 14:57:54. Its second line removed the cache of round 60 that held the picture of im9-14 (already sent back).
+- A pack job: frames 2745-2758 of mars.travel for round 60 (14 frames; the tool calls it r60-film-motion05-a). If one frame takes over 15 minutes, one line every 30 minutes. To send back: every piece `/tmp/r60-film-motion05-a.tar.NN` and `/tmp/fm9-10-tail.txt`, with the exit code of the pack.
+
+### 15:04 UTC, 27 Nov: job fm9-10 sent back
+
+- Started detached at 14:57:45; the drawing process at 14:57:54; the tail file was written at 15:03:36. No frame took over 15 minutes, so no line was sent on the way.
+- The log's last five lines, word for word: the three picture paths `.../out/work/packs/.cache/round-060/tiles/mars.travel/f02745-review.png`, `.../f02752-review.png`, `.../f02758-review.png` (each with the worktree's full path in front), then "pack round-060 part mars.travel: frames were rendered, 341.9 s", "RC pack 0". The tail file has 16 lines.
+- The pictures were written at 14:59:02 (2745), 15:00:00 (2752) and 15:03:36 (2758): 4226180, 4168957 and 4064091 bytes, each with a `.json` of 363 or 364 bytes.
+- The tar `/tmp/r60-film-motion05-a.tar` (12472320 bytes, one piece `.00`) holds those six files.
+- Sent to /root at 15:04 with the piece and the tail attached. Free disk 6008 MB after the job. `git status --porcelain` of the worktree shows only `?? node_modules`.
+- The twelve film spans (24 files) under `out/work/chunks/16x9-final-full` are untouched. Nothing runs. Waiting for the next job.
