@@ -13656,3 +13656,98 @@ H60 neptune_builder b0
   mars.dive.span2485-2486.mp4 (162349 bytes) and its .json (1577 bytes). The .txt: 107 bytes, three lines: the count 0
   of Shader Error or not usable lines, the RC line above, the ls line of the tar. Delivered true. The script runs on
   with saturn.travel 3922-3924.
+
+- Until 22:16 the old loop ran with no trouble sign and I sent no TROUBLE line. Its wrote lines: saturn.travel
+  3922-3924 render 432 s (21:10:15), mercury.travel 1100-1104 render 1101 s (21:28:57), jupiter.rise 3310-3314 render
+  615 s (21:39:38), each with "RC film ... 0". Then earth.dive 1860-1866: my watch saw frames reach the encoder at
+  21:49:22, 21:58:19 and 22:07:27 (three of seven). Free disk 6108 MB at 21:58:21. No b1 pack stood yet.
+
+## JOB H60R from the Builder (/root) (read 22:16 by my clock, 27 Nov; word for word as delivered, the marks &gt;, &lt; and &amp; as they came; high priority). A new loop for the 60 fps drawing: a list, a script that packs by itself, p packs with no end.
+
+> JOB H60R from the Builder (/root): a new loop for your 60 fps drawing. It does not change what you draw now. It brings me your finished frames every 40 minutes and lets me move open work from slow machines to free ones, because the heavy frames cost far more than planned. Do steps 1 to 4 now, in this order. Do NOT stop or kill the drawing that runs; the span in progress finishes by itself.
+> 1. Write your list with exactly these lines:
+> cat &gt; /tmp/h60r-list.txt.new &lt;&lt;'LIST'
+> # neptune_builder v1
+> saturn.travel 3922-3924
+> mercury.travel 1100-1104
+> jupiter.rise 3310-3314
+> earth.dive 1860-1863
+> earth.dive 1864-1866
+> uranus.rise 4410-4411
+> uranus.rise 4412-4413
+> uranus.rise 4414-4415
+> uranus.rise 4416-4416
+> ending.lookback 5265-5294
+> jupiter.dive 3025-3026
+> jupiter.dive 3027-3028
+> jupiter.dive 3029-3030
+> jupiter.dive 3031-3031
+> jupiter.travel 3328-3334
+> venus.travel 1620-1624
+> LIST
+> mv /tmp/h60r-list.txt.new /tmp/h60r-list.txt
+> 2. Write the script with exactly these lines:
+> cat &gt; /tmp/h60r.sh &lt;&lt;'H60R'
+> export GT_HALF=1
+> N=neptune_builder; L=/tmp/h60-log.txt; D=out/work/chunks/16x9-final-full-half
+> LIST=/tmp/h60r-list.txt; SENT=/tmp/h60r-sent.txt; FAIL=/tmp/h60r-failed.txt; ST=/tmp/h60r-state.txt
+> exec 9&gt; /tmp/h60r.lock; flock -n 9 || { echo "second start refused $(date -u +%H:%M:%S)" &gt;&gt; $ST; exit 0; }
+> R=; for p in $(pgrep -f '/tmp/h60[.]sh|tools/film[.]ts') self; do [ $p = self ] &amp;&amp; c=$PWD || c=$(readlink /proc/$p/cwd 2&gt; /dev/null); [ -n "$c" ] &amp;&amp; [ -d "$c/$D" ] &amp;&amp; { R=$c; break; }; done
+> [ -n "$R" ] || { echo "NO ROOT $(date -u +%H:%M:%S): start me from the folder that holds $D" &gt;&gt; $ST; exit 1; }
+> busy() { local p; BP=; for p in $(pgrep -f 'tools/film[.]ts|run -s film'); do case "$(readlink /proc/$p/exe 2&gt; /dev/null)" in */node) BP=$p; return 0;; esac; done; return 1; }
+> cd "$R"; pkill -9 -f '/tmp/h60[.]sh'; sleep 5 9&gt;&amp;-
+> echo "start $(date -u +%H:%M:%S) root $R old loops left $(pgrep -f '/tmp/h60[.]sh' | wc -l)" &gt;&gt; $ST
+> touch $SENT $FAIL $L
+> for t in /tmp/h60-$N-b*.tar; do [ -e "${t%.tar}.done" ] &amp;&amp; tar -tf "$t" 2&gt; /dev/null; done | grep '[.]mp4$' &gt;&gt; $SENT
+> k=0; while [ -e /tmp/h60-$N-p$k.done ]; do k=$((k+1)); done
+> told=0; item=; left=0; prev=
+> run() { n=0; while :; do echo "T $(date +%s) start $1 $2" &gt;&gt; $L; npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; $L 2&gt;&amp;1 9&gt;&amp;-; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; $L; echo "T $(date +%s) end $1 $2 $rc" &gt;&gt; $L; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; return $rc; }
+> covered() { local j q; for j in $D/$1.span*-*.mp4.json; do [ -e "$j" ] || continue; q=${j##*.span}; q=${q%.mp4.json}; [ "${q%-*}" -le "$2" ] &amp;&amp; [ "$3" -le "${q#*-}" ] &amp;&amp; return 0; done; return 1; }
+> nextitem() { item=; left=0; while read -r s r x; do case "$s" in ''|'#'*) continue;; esac; [ -n "$r" ] || continue; grep -qxF "$s $r" $FAIL &amp;&amp; continue; covered $s ${r%-*} ${r#*-} &amp;&amp; continue; left=$((left+1)); [ -n "$item" ] || item="$s $r"; done &lt; $LIST; }
+> pack() { new=$( (cd $D &amp;&amp; ls *.span*-*.mp4.json 2&gt; /dev/null) | sed 's/[.]json$//' | grep -vxFf $SENT)
+>   if [ -z "$new" ]; then [ "$1" = idle ] &amp;&amp; [ $told = 0 ] || return 0; fi
+>   T=/tmp/h60-$N-p$k
+>   ( cd $D &amp;&amp; tar -cf $T.tar $(for f in $new; do echo $f $f.json; done) -C /tmp h60r-state.txt ) &gt; $T.err 2&gt;&amp;1 9&gt;&amp;-
+>   { grep -c 'Shader Error\|not usable' $L; echo "PACK $N p$k $(date -u +%H:%M:%S) chunks $(echo "$new" | grep -c .) left $left failed $(grep -c . $FAIL) next: ${item:-LIST EMPTY} list: $(head -1 $LIST | cut -c1-40)"; echo "other tool: $(busy &amp;&amp; ps -o etimes=,args= -p $BP | cut -c1-150)"; cat $T.err; tail -3 $ST; grep '^T ' $L | tail -16; tail -4 $FAIL; df -BM --output=avail . | tail -1; ls -la $T.tar; } &gt; $T.txt 2&gt;&amp;1
+>   [ -n "$new" ] &amp;&amp; echo "$new" &gt;&gt; $SENT; touch $T.done; k=$((k+1)); last=$(date +%s); }
+> [ -e $LIST ] &amp;&amp; nextitem; pack idle
+> while :; do
+>   if busy; then busy=1; else busy=0; [ -e $LIST ] &amp;&amp; nextitem; fi
+>   if [ $busy = 0 ] &amp;&amp; [ -z "$item" ]; then pack idle; told=1; sleep 30 9&gt;&amp;-; continue; fi
+>   [ $(( $(date +%s) - last )) -ge 2400 ] &amp;&amp; pack
+>   if [ $busy = 1 ]; then sleep 20 9&gt;&amp;-; continue; fi
+>   told=0
+>   if [ "$item" = "$prev" ]; then echo "$item" &gt;&gt; $FAIL; prev=; continue; fi; prev=$item
+>   if run $item; then covered ${item% *} $(echo ${item#* } | tr '-' ' ') || echo "$item" &gt;&gt; $FAIL; else echo "$item" &gt;&gt; $FAIL; fi
+> done
+> H60R
+> 3. Start it with exactly this line, alone in its command: (set -m; bash /tmp/h60r.sh &gt; /tmp/h60r-out.txt 2&gt;&amp;1 &amp;)
+> 4. Twenty seconds later read /tmp/h60r-state.txt. Its last line must begin with the word start and name the folder of your clone. If it says NO ROOT, cd to the folder from which you once started /tmp/h60.sh and run the line of step 3 again from there.
+> What the script does: it ends the old loop /tmp/h60.sh, waits until the span that is being drawn is finished, and then draws the lines of /tmp/h60r-list.txt from the top, skipping what you already have (your old order, with the heavy spans cut into short pieces so that a lost drawing context costs one piece and not hours). It makes its packs by itself: /tmp/h60-neptune_builder-p0.tar, then p1, p2 and so on with no end, each with a .txt and, when it is complete, a .done file. p0 appears within a minute of the start, even when it holds no frame.
+> Your part from now on: each time a file /tmp/h60-neptune_builder-pK.done appears (K = 0, 1, 2 and so on), send /root at once one message with the text `H60 neptune_builder pK` and the two files /tmp/h60-neptune_builder-pK.tar and /tmp/h60-neptune_builder-pK.txt attached, and nothing else in it. Send every K once, in order, and leave none out. If a file /tmp/h60-neptune_builder-bN.done exists that you have not sent yet, send that old pack as before; no new b pack will appear. Do not wait for an answer.
+> When I send you a message that starts with `LIST neptune_builder`, run the lines in it (they write /tmp/h60r-list.txt.new and move it over /tmp/h60r-list.txt). Never edit the list in place and never restart the script for a new list; the script reads the list again before every piece.
+> No more TROUBLE lines for slow frames: a single frame of the heavy parts takes up to 100 minutes and that is expected. Write to me only if /tmp/h60r.sh is no longer running (then start it again with the line of step 3 and tell me), if the disk has under 2 GB free, or if the first line of a pack's .txt is not 0. Do not change any file of the repo, do not lower the tier, and keep watching for packs until I write that you are free.
+
+- 22:16:2x before step 1 I stopped my own watch and my own wait (/tmp/h60-watch.sh, /tmp/h60-wait.sh): they looked for
+  the old loop by its name, and the new script counts processes of that name. The drawing was not touched.
+- Step 1: the 17 lines of the list (the head line and 16 pieces) written to /tmp/h60r-list.txt.new and moved over
+  /tmp/h60r-list.txt. Step 2: the 32 lines of the script written to /tmp/h60r.sh (3277 bytes, the marks turned back
+  into the plain signs, bash -n clean). Both done by 22:16:27.
+- Step 3: the line (set -m; bash /tmp/h60r.sh > /tmp/h60r-out.txt 2>&1 &) alone in its command, from the repo root,
+  between 22:16:27 and 22:16:35.
+- Step 4: /tmp/h60r-state.txt read at 22:16:41 and again at 22:16:50 (I read it sooner than the twenty seconds and
+  then once more): its one line is "start 22:16:36 root /home/user/workspace/repo old loops left 0". /tmp/h60r-out.txt
+  is empty. One process of /tmp/h60r.sh runs. The drawing of earth.dive 1860-1866 runs on (the pack's .txt names it as
+  the other tool, 2218 s old).
+
+## 27 Nov, 22:16 UTC: H60 pack p0 to the Builder (word for word; sent 22:16:50 at the latest; high priority; attached /tmp/h60-neptune_builder-p0.tar and /tmp/h60-neptune_builder-p0.txt; nothing else in it)
+
+H60 neptune_builder p0
+
+- The tar: 819200 bytes, sha256 e13d7f7a8a878a7929f6350d0e4aa364edbd55baf298806663c7a72c34df9f98; it holds the span
+  files and .json files of jupiter.rise 3310-3314 (218294 bytes), mercury.travel 1100-1104 (325840 bytes) and
+  saturn.travel 3922-3924 (260202 bytes), and h60r-state.txt. The first line of the .txt is 0; its PACK line:
+  "PACK neptune_builder p0 22:16:36 chunks 3 left 13 failed 0 next: earth.dive 1860-1863 list: # neptune_builder v1";
+  free disk in it 6107M. Delivered true.
+- From here on my wait (/tmp/h60r-wait.sh) looks every 5 s for the next pK.done, for the loop itself and for a disk
+  under 2 GB, the three things the mail names. It writes nothing and touches no process.
