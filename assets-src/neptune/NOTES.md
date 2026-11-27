@@ -13751,3 +13751,13 @@ H60 neptune_builder p0
   free disk in it 6107M. Delivered true.
 - From here on my wait (/tmp/h60r-wait.sh) looks every 5 s for the next pK.done, for the loop itself and for a disk
   under 2 GB, the three things the mail names. It writes nothing and touches no process.
+
+## 27 Nov, 23:22 UTC: H60 pack p1 to the Builder (word for word; sent 23:22:11 at the latest; high priority; attached /tmp/h60-neptune_builder-p1.tar and /tmp/h60-neptune_builder-p1.txt; nothing else in it)
+
+H60 neptune_builder p1
+
+- The tar: 552960 bytes, sha256 437528097ec459c102dd8953f77f6560f1aacffe93527d288c0f48cfb40dfba7; it holds
+  earth.dive.span1860-1866.mp4 (455673 bytes), uranus.rise.span4410-4411.mp4 (86679 bytes), each with its .json, and
+  h60r-state.txt. The first line of the .txt is 0; its PACK line: "PACK neptune_builder p1 23:21:58 chunks 2 left 10
+  failed 0 next: uranus.rise 4412-4413 list: # neptune_builder v1". The last wrote line of the log: "wrote
+  uranus.rise.part000.mp4 frames 4410-4411 render 2168 s encode 0.7 s". Delivered true.
