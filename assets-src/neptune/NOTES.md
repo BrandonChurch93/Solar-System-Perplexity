@@ -12467,3 +12467,10 @@ RETURN mw7-46 from /root/neptune_builder, 03:31 UTC: frames 4820 to 4829 of the 
 - 03:32:09 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 03:32:10 npm run build exit 0, dist 1301 MB, free disk 4992 MB. 03:32:24 the job's four
   lines started as /tmp/mi7-26.sh, detached from the repo root (the script made from the saved mail).
+
+- mi7-26: the encoder stood open from 03:32:55 and had no frame at 03:48:01; so the first frame was over fifteen minutes and
+  the line below was due. (A slip of mine in it: "388 / percent of a core" should read "388 percent of a core".)
+
+## 27 Nov, 03:48 UTC: one line on mi7-26 to the Builder (word for word; sent about 03:48:11; no attachment; low priority)
+
+LINE mi7-26 from /root/neptune_builder, 03:48 UTC: the first frame (sun.rise 195) has taken over 15 minutes and is not out yet. Started 03:32:24; the encoder has stood open since 03:32:55 and has had no frame; no row in the looks log; no RC line, no FAILED line; the browser works at full load (388 / percent of a core). The job runs on; next line about 04:18 if it still runs.
