@@ -12852,3 +12852,7 @@ RETURN mg7-79 from /root/neptune_builder, 12:31 UTC: film-16x9-final-b-132, segm
 - 12:32:55 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 12:32:56 npm run build exit 0, dist 1301 MB, free disk 4951 MB. 12:33:10 the job's four
   lines started as /tmp/ml7-26.sh, detached from the repo root (the script made from the saved mail).
+
+## 27 Nov, 13:03 UTC: first line on ml7-26 to the Builder (word for word; sent about 13:03:16; no attachment; low priority)
+
+LINE ml7-26 from /root/neptune_builder, 13:03 UTC: the drawing process is alive and has run 30 minutes (started 12:33:10). The film tool and its browser both live; the browser's drawing process has stood 1795 s and works at full load (386 percent of a core, 36.8 percent of the memory). Frame 490 is not out yet: no row in the looks log, no RC line, no FAILED line. The job runs on; next line about 13:33.
