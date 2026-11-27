@@ -3365,6 +3365,93 @@ print('wrote', sys.argv[1], len(L), 'lines')
 - FINISHED 12:32:13. The log: "wrote venus.travel.part000.mp4 frames 1675-1679 render 1303 s encode 1.4 s", "RC film venus.travel 1675-1679 0"; the tail's first line 0; one piece `/tmp/film-16x9-final-b-133.tar.00`, 368640 bytes (sha256 starts 8684ecebba31172c), holding the chunk (356763 bytes) and its `.json` (1797 bytes). About 261 s a frame (the steps of the io file 253 to 289 s apart). One run of the loop. No line was owed.
 - SENT BACK 12:32 (high, delivered, `/tmp/mail/mg7-80-return.out`) with the piece and `/tmp/mg7-80-tail.txt`. The tree after it: `git status` 0 lines; free 11900 MB; 11 chunks kept under `out/work/chunks/16x9-final-full`.
 
+## 13:05 UTC, 27 Nov: JOB ml7-28 runs (sun.travel 492, a split job, one frame); the helper `alive.py` for its lines
+
+- ml7-28 arrived 12:34 UTC 27 Nov (its words: `/tmp/jobs/ml7-28-mail.txt`): frame 492 only of the tool's piece film-16x9-final-b-030 (frames 487 to 494), split over several machines, one frame each; the tar base name `/tmp/split-030-492-492`. No planned time ("ten machines drew for 35 to 58 minutes on the first frame of their piece without finishing it"). ITS LINE RULE IS NEW: "Send one line every 30 minutes saying whether the drawing process is alive and how long it has run. The encoder's file proves nothing, it stays empty until the frame is drawn."
+- Before it (`pre.sh`): the cache dropped with sudo 12:34:25, HEAD 262b9a68, `git status` 0 lines, the lock unchanged, 11899 MB free, `npm run build` exit 0. STARTED 12:34:38.
+- The processes of a job (seen with `ps`): `bash /tmp/jobs/NAME.sh`, npm, `tsx tools/film.ts`, the node process of the tool (its args hold `preflight.cjs` and `tools/film.ts`), the browser of the tool (chrome under `ms-playwright`), its gpu process (`--type=gpu-process`, drawing in software, `--use-angle=swiftshader`; it uses close to all 4 cores: 118 s of processor time in 30 s), the page (`--type=renderer`), and the encoder (`ffmpeg -hide_banner`).
+- THE LINE of this rule is made by `python3 /tmp/jobs/alive.py NAME SEGMENT FIRST LAST START_ISO` (it measures for 30 s, so start it about 35 s before the line is due; exit 1 and a word on stderr when the state is not the plain one: then look and write the line by hand). Line 1 sent 13:04:50 (low, delivered): alive, 30 minutes, the gpu process 29 minutes old with 115 minutes of processor time, frame 492 not finished.
+
+### `/tmp/jobs/alive.py` (4484 bytes, 75 lines)
+
+```
+# alive.py NAME SEGMENT FIRST LAST START_ISO [WINDOW_S] : prints the line owed to /root while a job with very slow frames runs and
+# the mail asks to say whether the drawing process is alive and how long it has run. The drawing process is the gpu process of the
+# tool's browser (it draws in software). Measured: the pids (ps), the age of the gpu process, its processor time, and the processor
+# time it used in a window of WINDOW_S seconds (default 30) taken now; the rows of the job in out/work/looks/log.jsonl; the error
+# lines and RC lines of the tool's log. Exit 1 when the state is not the plain one (no gpu process, no tool, the script finished,
+# an error line): then write the line by hand. Each call adds a row to /tmp/jobs/NAME-alive.txt.
+import subprocess, sys, time, datetime, re, json
+name, seg, first, last, start = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4]), sys.argv[5]
+win = int(sys.argv[6]) if len(sys.argv) > 6 else 30
+t0 = datetime.datetime.fromisoformat(start)
+
+def procs():
+    out = subprocess.run(['ps', '-eo', 'pid,etimes,cputimes,args'], capture_output=True, text=True).stdout.split('\n')[1:]
+    res = []
+    for l in out:
+        p = l.split(None, 3)
+        if len(p) == 4:
+            res.append((int(p[0]), int(p[1]), int(p[2]), p[3]))
+    tool = [p for p in res if 'tools/film.ts' in p[3] and 'preflight.cjs' in p[3]]
+    gpu = [p for p in res if '--type=gpu-process' in p[3] and 'ms-playwright' in p[3]]
+    return tool, gpu
+
+tool1, gpu1 = procs()
+time.sleep(win)
+tool2, gpu2 = procs()
+now = datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)
+ran = int((now - t0).total_seconds() // 60)
+log = open('/tmp/%s-log.txt' % name, encoding='utf-8', errors='replace').read()
+bad = len(re.findall(r'Shader Error|not usable|FAILED|lost', log))
+rcs = [l for l in log.split('\n') if l.startswith('RC film')]
+try:
+    done = 'SCRIPT DONE' in open('/tmp/jobs/%s-run.log' % name).read()
+except Exception:
+    done = False
+rows = {}
+for l in open('/home/user/workspace/master/out/work/looks/log.jsonl'):
+    try:
+        r = json.loads(l)
+    except Exception:
+        continue
+    if r.get('segment') == seg and r.get('job') == 'film' and r.get('frame') is not None and first <= r['frame'] <= last:
+        t = datetime.datetime.fromisoformat(r['time'][:19])
+        if t >= t0:
+            rows.setdefault(r['frame'], t)
+total = last - first + 1
+head = 'handover_engineer on JOB %s, %s UTC %s: ' % (name, now.strftime('%H:%M'), now.strftime('%d %b').lstrip('0'))
+plain = True
+if gpu2 and tool2:
+    g = gpu2[0]
+    same = [p for p in gpu1 if p[0] == g[0]]
+    used = g[2] - same[0][2] if same else None
+    body = 'the drawing process is alive. The job has run %d minutes since its start at %s' % (ran, t0.strftime('%H:%M:%S'))
+    body += ' (%s)' % ('the first run of the loop, no RC line in the log' if not rcs else 'run %d of the loop, the RC lines so far: %s' % (len(rcs) + 1, ' / '.join(rcs)))
+    body += '. The film tool is pid %d; the drawing process (the gpu process of its browser, pid %d) is %d minutes old and has used %d minutes of processor time' % (tool2[0][0], g[0], g[1] // 60, g[2] // 60)
+    if used is None:
+        body += ' (it is a new process, started within the last %d s)' % win
+        plain = False
+    else:
+        body += ', %d s of it in the %d s before this line' % (used, win)
+        if used < win // 2:
+            plain = False
+    body += '. '
+else:
+    body = 'the drawing process is NOT alive (film tool processes: %d, gpu processes of its browser: %d), %d minutes after the start at %s. ' % (len(tool2), len(gpu2), ran, t0.strftime('%H:%M:%S'))
+    plain = False
+if total == 1:
+    body += ('Frame %d is not finished yet (no row of this job in out/work/looks/log.jsonl). ' % first) if not rows else ('Frame %d is finished (its row in out/work/looks/log.jsonl at %s). ' % (first, rows[first].strftime('%H:%M:%S')))
+else:
+    body += '%d of %d frames finished (rows of this job in out/work/looks/log.jsonl). ' % (len(rows), total)
+tail = 'No error line in the log.' if not bad else '%d ERROR LINES in the log.' % bad
+print(head + body + tail)
+open('/tmp/jobs/%s-alive.txt' % name, 'a').write('%s tool %s gpu %s rows %d rc %d bad %d\n' % (now.strftime('%H:%M:%S'), [(p[0], p[1], p[2]) for p in tool2], [(p[0], p[1], p[2]) for p in gpu2], len(rows), len(rcs), bad))
+if done or bad or not plain:
+    sys.stderr.write('NOT PLAIN: done %s bad %d plain %s\n' % (done, bad, plain))
+    sys.exit(1)
+```
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
