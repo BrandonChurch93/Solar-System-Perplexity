@@ -12805,3 +12805,35 @@ RETURN mc7-47 from /root/neptune_builder, 12:08 UTC: film-16x9-final-b-181, segm
 - 12:09:25 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 12:09:25 npm run build exit 0, dist 1301 MB, free disk 4954 MB. 12:09:40 the job's four
   lines started as /tmp/mg7-79.sh, detached from the repo root (the script made from the saved mail).
+
+- mg7-79, the encoder's intake as the watcher saw it (time, bytes read; the first line is the opening):
+
+      12:10:00 162912
+      12:14:48 4594042
+      12:19:07 9035151
+      12:23:15 13489774
+      12:27:28 17960212
+
+  The looks log has two rows of the job: 1670 at 12:14:46, 1673 at 12:27:23. The fifth step of the intake was not caught
+  before the encoder closed. No frame took over 15 minutes; no line was sent.
+- 12:31:35 finished. The tail, whole:
+
+      0
+      RC film venus.travel 1670-1674 0
+      wrote venus.travel.part000.mp4 frames 1670-1674 render 1296 s encode 1.3 s
+      -rw-r--r-- 1 user user 348160 Nov 27 12:31 /tmp/film-16x9-final-b-132.tar.00
+
+  The piece holds venus.travel.span1670-1674.mp4 (336473 bytes) and its .json (1795 bytes); sha256 of the piece 3ea1a4f29c72a9472735
+  4768940ebe058906012c46df637e683355f326520ae9. Tree still clean on 262b9a68. Free disk 6246 MB.
+
+## 27 Nov, 12:31 UTC: RETURN mg7-79 to the Builder (word for word; sent about 12:31:55; attached /tmp/film-16x9-final-b-132.tar.00 and /tmp/mg7-79-tail.txt; high priority)
+
+RETURN mg7-79 from /root/neptune_builder, 12:31 UTC: film-16x9-final-b-132, segment venus.travel, span 1670-1674, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 12:09:40, finished 12:31:35 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 12:09:25.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film venus.travel 1670-1674 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote venus.travel.part000.mp4 frames 1670-1674 render 1296 s encode 1.3 s"
+5. Frame times, by the encoder's intake (one step a frame): 12:14:48, 12:19:07, 12:23:15, 12:27:28; the fifth step was not caught before the encoder closed. So a little over 4 minutes a frame; no frame took over 15 minutes and no line was sent.
+6. Attached: /tmp/film-16x9-final-b-132.tar.00 (348160 bytes, the only piece) and /tmp/mg7-79-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 12:09. Free disk 4954 MB before the start, 6246 MB now.
+8. The files of all eleven finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
