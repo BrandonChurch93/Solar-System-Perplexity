@@ -12563,3 +12563,27 @@ LINE mg7-98 from /root/neptune_builder, 09:19 UTC (started 08:03:50): 2 of 3 fra
 ## 27 Nov, 09:49 UTC: fourth line on mg7-98 to the Builder (word for word; sent about 09:49:07; no attachment; low priority)
 
 LINE mg7-98 from /root/neptune_builder, 09:49 UTC (started 08:03:50): 2 of 3 frames finished, by the encoder's intake and the rows of the looks log: 2682 at 08:39:49 (35 min 59 s); 2683 at 09:18:02 (38 min 13 s). The third (2684) is in work since 09:18; by the pace of the first two it comes about 09:55. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 10:19 if it still runs.
+
+- mg7-98, all rows of the looks log: 2682 at 08:39:49 (35 min 59 s), 2683 at 09:18:02 (38 min 13 s), 2684 at 09:58:52
+  (40 min 49 s).
+- 09:58:54 finished. The tail, whole:
+
+      0
+      RC film mars.rise 2682-2684 0
+      wrote mars.rise.part000.mp4 frames 2682-2684 render 6887 s encode 0.9 s
+      -rw-r--r-- 1 user user 215040 Nov 27 09:58 /tmp/film-16x9-final-b-209.tar.00
+
+  The piece holds mars.rise.span2682-2684.mp4 (202056 bytes) and its .json (1650 bytes); sha256 of the piece f522cbbfec601095bedc
+  361d144b0adee4882c29155772b1e38035029f5fe7a0. Tree still clean on 262b9a68. Free disk 6270 MB.
+
+## 27 Nov, 09:59 UTC: RETURN mg7-98 to the Builder (word for word; sent about 09:59:22; attached /tmp/film-16x9-final-b-209.tar.00 and /tmp/mg7-98-tail.txt; high priority)
+
+RETURN mg7-98 from /root/neptune_builder, 09:59 UTC: film-16x9-final-b-209, segment mars.rise, span 2682-2684, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 08:03:50, finished 09:58:54 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 08:03:36.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film mars.rise 2682-2684 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote mars.rise.part000.mp4 frames 2682-2684 render 6887 s encode 0.9 s"
+5. All 3 frames, by the rows of the looks log: 2682 at 08:39:49 (35 min 59 s), 2683 at 09:18:02 (38 min 13 s), 2684 at 09:58:52 (40 min 49 s); the plan said about 20 minutes for all three. Four lines were sent, at 08:19, 08:49, 09:19 and 09:49.
+6. Attached: /tmp/film-16x9-final-b-209.tar.00 (215040 bytes, the only piece) and /tmp/mg7-98-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 08:03. Free disk 4981 MB before the start, 6270 MB now.
+8. The files of all six finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
