@@ -8426,3 +8426,9 @@ The script makes four packs, one after the other, and goes on by itself. Each ti
 - What to send: each time `/tmp/h60-earth_builder-bN.done` appears, at once one message to /root with the text `H60 earth_builder bN` alone and the two files `/tmp/h60-earth_builder-bN.tar` and `.txt` attached. Do not stop the script. A sent pack is marked by a file `/tmp/h60-sent-bN`.
 - Trouble: a `Shader Error` line, an RC other than 0 that the loop does not cure, or no new frame for 30 minutes: one line to /root, `H60 earth_builder TROUBLE` with the last 300 characters of the log; keep the script running.
 - How I watch (read only): `bash /tmp/h60-wait.sh N` ends when the done file of pack N is there, when the script is gone, or on one of the trouble signs; it keeps the time of the last new frame in `/tmp/h60-clock.txt` (a new frame shows as growth of `out/work/tmp/film/*.mkv`, or a new "wrote" or "RC film" line). `bash /tmp/h60-check.sh` prints the state. After pack 3 the mail says I am free: then wait for /root.
+
+### 21:09 UTC, 27 Nov: job H60, pack 0 sent
+
+- `/tmp/h60-earth_builder-b0.done` appeared at 21:09:02. The log's lines: "wrote earth.travel.part000.mp4 frames 2175-2177 render 716 s encode 1.7 s", "RC film earth.travel 2175-2177 0". The txt of the pack: "0" (lines with Shader Error or not usable), the RC line, and the tar's size, 276480 bytes. The tar holds `earth.travel.span2175-2177.mp4` (267555 bytes) and its `.json` (1653 bytes).
+- Sent to /root at 21:09:12 with the text `H60 earth_builder b0` alone and the tar and the txt attached. The script went on by itself with uranus.travel 4523-4525.
+- Measured here: three half frames of earth.travel in 716 s, about 4 minutes a frame.
