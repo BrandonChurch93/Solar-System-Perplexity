@@ -8432,3 +8432,9 @@ The script makes four packs, one after the other, and goes on by itself. Each ti
 - `/tmp/h60-earth_builder-b0.done` appeared at 21:09:02. The log's lines: "wrote earth.travel.part000.mp4 frames 2175-2177 render 716 s encode 1.7 s", "RC film earth.travel 2175-2177 0". The txt of the pack: "0" (lines with Shader Error or not usable), the RC line, and the tar's size, 276480 bytes. The tar holds `earth.travel.span2175-2177.mp4` (267555 bytes) and its `.json` (1653 bytes).
 - Sent to /root at 21:09:12 with the text `H60 earth_builder b0` alone and the tar and the txt attached. The script went on by itself with uranus.travel 4523-4525.
 - Measured here: three half frames of earth.travel in 716 s, about 4 minutes a frame.
+
+### 21:53 UTC, 27 Nov: job H60, first TROUBLE line sent (no new frame for 30 minutes, mars.rise)
+
+- uranus.travel 4523-4525 ended at 21:22:40: "wrote uranus.travel.part000.mp4 frames 4523-4525 render 786 s encode 1.2 s", "RC film uranus.travel 4523-4525 0".
+- mars.rise 2685-2687 runs since 21:22:42. By 21:53:06 no frame of it was written; the drawing process was alive at 387 percent of a core. I sent /root the line `H60 earth_builder TROUBLE` with that and the last 300 characters of the log, as the mail asks. The script was not touched.
+- How a new frame is seen changed: the lossless part `out/work/tmp/film/*.mkv` does not show on disk while a short span is drawn, so the watch now reads the bytes the ffmpeg of that part has taken in (`rchar` in `/proc/PID/io`; 162916 before any frame). The watch is now `bash /tmp/h60-wait2.sh N`; the first one was stopped (it is my own read only watch, not the job). After a TROUBLE line the clock in `/tmp/h60-clock.txt` is set to the time of the line, so the next line goes only after 30 more minutes with no frame.
