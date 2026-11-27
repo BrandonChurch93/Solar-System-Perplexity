@@ -13403,3 +13403,29 @@ RETURN iv9-41 from /root/neptune_builder, 16:00 UTC: pack of round 60, venus, pa
   after the build, a sync and 8 s: 4891 MB (under 5 GB until the pack's own build links dist; named in the return).
 - 16:01:34 the job's 4 lines started as /tmp/ie9-18.sh, detached from the repo root. Its first line removes the cache
   of round 60 that iv9-41 left (already sent back; the piece stays in /tmp).
+
+- 16:02:45 free disk 6166 MB while the pack drew. 16:11:05 the browser's drawing process had stood 560 s at full load.
+- 16:14:30 ie9-18 finished. The tail file has 14 lines; all but the last three are the npm header and the report of the build
+  that the pack tool runs itself (not copied here). The last three, word for word:
+
+      /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/earth.rise/f02127-review.png
+      pack round-060 part earth.rise: frames were rendered, 765.9 s
+      RC pack 0
+
+  The piece /tmp/r60-earth-rise-e.tar.00 (4495360 bytes) holds f02127-review.png (4482226 bytes) and its .json (332
+  bytes) under out/work/packs/.cache/round-060/tiles/earth.rise/; sha256 of the piece e9648ed5fabe6b3a731c11f3ca4f6ffdfe
+  546cd0d15560f3b31eff0576eafb9b. Tree still clean on 262b9a68. Free disk 6175 MB after. The push of the start note
+  failed four times (the known pause of the remote) and went through at about 16:11 on a plain push. After the return
+  I removed the unsplit tar under /tmp, the byte twin of its one piece (cmp); the 27 pieces stay.
+
+## 27 Nov, 16:14 UTC: RETURN ie9-18 to the Builder (word for word; sent about 16:14:47; attached /tmp/r60-earth-rise-e.tar.00 and /tmp/ie9-18-tail.txt; high priority)
+
+RETURN ie9-18 from /root/neptune_builder, 16:14 UTC: pack of round 60, earth, part earth.rise, frame 2127 alone (r60-earth-rise-e), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 16:01:34, finished 16:14:30 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 16:01:12.
+2. Exit code of the pack: 0. The RC line, word for word: "RC pack 0".
+3. The picture file the log printed: /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/earth.rise/f02127-review.png
+4. The tool's last line, word for word: "pack round-060 part earth.rise: frames were rendered, 765.9 s".
+5. Attached: /tmp/r60-earth-rise-e.tar.00 (4495360 bytes, the only piece, name as the split line wrote it; sha256 e9648ed5fabe6b3a731c11f3ca4f6ffdfe546cd0d15560f3b31eff0576eafb9b; it holds f02127-review.png, 4482226 bytes, and its .json, 332 bytes, under out/work/packs/.cache/round-060/tiles/earth.rise/) and /tmp/ie9-18-tail.txt (14 lines).
+6. Disk: 6185 MB free before the build; 4891 MB right after npm run build and a sync, under the 5 GB asked, a red I name; 6166 MB at 16:02:45 while the pack drew; 6175 MB now.
+7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 16:01:13; no npm ci, the lock file is the same.
+8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of iv9-41 (sent back; its piece stays in /tmp). I wait for the next job.
