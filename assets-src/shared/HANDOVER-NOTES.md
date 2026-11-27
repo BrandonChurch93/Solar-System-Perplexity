@@ -3903,6 +3903,100 @@ sys.exit(0 if ok else 1)
 - FINISHED 16:47:30. The log: the picture file `/home/user/workspace/master/out/work/packs/.cache/round-060/tiles/saturn.rise-cover/f03855-review.png` (4181365 bytes, with its json of 333 bytes), "pack round-060 part saturn.rise-cover: frames were rendered, 148.0 s", "RC pack 0". One piece `/tmp/r60-saturn-rise-cover-i.tar.00`, 4188160 bytes (sha256 starts 7130cdea931fc411).
 - SENT BACK 16:47:56 (high, delivered; `/tmp/mail/it9-36-return.out`, the draft of `mkpackreturn.py` as it came) with the piece and the tail `/tmp/it9-36-tail.txt` (14 lines). The tree after it: `git status` 0 lines, 11811 MB free, 13 chunks kept.
 
+## 16:51 UTC, 27 Nov: JOB iu9-13 sent back (a pack job: uranus.dive frame 4134, one picture, exit 0, 2 minutes)
+
+- iu9-13 arrived 16:49 (its words: `/tmp/jobs/iu9-13-mail.txt`): a pack job of ONE picture, the form of im9-42 (four script lines): `npm run pack -- --phase 6 --round 60 --stop uranus --only uranus.dive --place-window --frames 4134-4134`, the piece `r60-uranus-dive-d`; its mail asked no line while it runs. Before it: the cache dropped with sudo 16:49:02, HEAD 262b9a68, `git status` 0 lines, 11810 MB free, build exit 0. STARTED 16:49:16.
+- FINISHED 16:51:00. The log: the picture file `/home/user/workspace/master/out/work/packs/.cache/round-060/tiles/uranus.dive/f04134-review.png` (3628056 bytes, with its json of 332 bytes), "pack round-060 part uranus.dive: frames were rendered, 94.0 s", "RC pack 0". One piece `/tmp/r60-uranus-dive-d.tar.00`, 3635200 bytes (sha256 starts 40ff389487418dbf).
+- SENT BACK 16:51:18 (high, delivered; `/tmp/mail/iu9-13-return.out`, the draft of `mkpackreturn.py` as it came) with the piece and the tail `/tmp/iu9-13-tail.txt` (14 lines). The tree after it: `git status` 0 lines, 11803 MB free, 13 chunks kept.
+- TWO HELPERS MORE for pack jobs of one picture, their texts as they stand in `/tmp/jobs/` (bookkeeping only, they send nothing): `packstart.py NAME PIECE` after `pre.sh` puts the running job into `state.json`; `packdone.py NAME PIECE SENT_TIME N` after the return is sent writes the entry `ENTRYN.md`, puts the job into "sent" and its speed into "pack_speeds" of `state.json` (`now.py` reads the pack speeds and the names of the pack jobs from `state.json` since 16:48).
+
+`packstart.py`:
+
+```
+# packstart.py NAME PIECE : the bookkeeping after a PACK job of ONE picture (the form of im9-42, four script lines) has been
+# started by pre.sh: puts the running job into /tmp/jobs/state.json from the files of the job (the script, the mail file, the
+# start, cache and free files). After it: now.py, chk.py, splice.py with "-", pushnotes3.sh.
+import sys, re, json
+name, piece = sys.argv[1], sys.argv[2]
+script = open('/tmp/jobs/%s.sh' % name).read()
+cmd = re.search(r'(npm run pack -- [^>]*?) >', script).group(1)
+part = re.search(r'--only (\S+)', script).group(1)
+fa, fb = re.search(r'--frames (\d+)-(\d+)', script).groups()
+assert fa == fb and ('/tmp/%s.tar' % piece) in script, 'not a job of one picture with this piece'
+mail = open('/tmp/jobs/%s-mail.txt' % name).read()
+arrived, day = re.match(r'\(arrived (\S+) UTC (\d+ \w+)', mail).groups()
+start = open('/tmp/jobs/%s-start.txt' % name).read().strip()
+iso = open('/tmp/jobs/%s-start-iso.txt' % name).read().strip()
+cache = re.match(r'DROPPED with sudo at (\S+)', open('/tmp/jobs/%s-cache.txt' % name).read().strip()).group(1)
+free = re.search(r'(\d+) MB', open('/tmp/jobs/%s-free.txt' % name).read()).group(1)
+asked = 'NO LINE IS ASKED WHILE IT RUNS (its mail names none).' if 'send one line every' not in mail.lower() and 'status line' not in mail.lower() else 'THE MAIL ASKS A LINE WHILE IT RUNS: READ IT (`/tmp/jobs/%s-mail.txt`).' % name
+p = '/tmp/jobs/state.json'
+st = json.load(open(p))
+assert st.get('running') is None, 'state.json names a running job: ' + str(st['running'].get('name'))
+st['running'] = {"name": name, "start": "%s UTC %s" % (start, day), "start_iso": iso, "segment": part, "first": fa, "last": fb,
+                 "piece": piece, "cache": cache, "free": free,
+                 "plan": "A PACK JOB OF ONE PICTURE (the form of im9-42, four script lines; arrived %s): `%s`, the log `/tmp/%s.log` (ends with \"RC pack N\"), the tail `/tmp/%s-tail.txt`; its mail: one picture at the review tier, 15 to 60 minutes; it draws that frame into the cache and ends without laying a sheet." % (arrived, cmd, name, name),
+                 "lines": "%s THE RETURN (its mail): every piece `/tmp/%s.tar.NN` (names exactly as the split line writes them) and `/tmp/%s-tail.txt`, in a message that starts with the usual line and states the exit code of the pack and the name of the picture file the log printed; if the pack ends with a code other than 0, the tail alone, and say so. WHEN DONE: `python3 /tmp/jobs/mkpackreturn.py %s %s` (NOT post.sh and NOT mkline.py, which the next sentences name for film jobs), set the time, chk.py, send high; then `python3 /tmp/jobs/packdone.py %s %s SENT_TIME N` writes the entry and the state." % (asked, piece, name, name, piece, name, piece)}
+json.dump(st, open(p, 'w'), indent=1)
+print('state: running %s (%s frame %s, piece %s, start %s, cache %s, free %s MB); %s' % (name, part, fa, piece, start, cache, free, asked[:40]))
+```
+
+`packdone.py`:
+
+```
+# packdone.py NAME PIECE SENT_TIME N : the bookkeeping after a PACK job of ONE picture has been sent back (SENT_TIME is HH:MM:SS of
+# the message, N the number of the notebook drafts): writes the entry /tmp/law/e/ENTRYN.md from the files of the job (the mail
+# file, the start, cache, free and run files, the log, the tar piece), puts the job into "sent" of /tmp/jobs/state.json, sets
+# "running" to null and adds the speed to "pack_speeds". After it: now.py, chk.py, splice.py, pushnotes3.sh.
+import sys, os, re, glob, json, hashlib, subprocess, datetime
+name, piece, sent, n = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+tree = '/home/user/workspace/master'
+script = open('/tmp/jobs/%s.sh' % name).read()
+cmd = re.search(r'(npm run pack -- [^>]*?) >', script).group(1)
+part = re.search(r'--only (\S+)', script).group(1)
+fa, fb = re.search(r'--frames (\d+)-(\d+)', script).groups()
+assert fa == fb, 'a job of one picture only'
+arrived = re.match(r'\(arrived (\S+) UTC', open('/tmp/jobs/%s-mail.txt' % name).read()).group(1)
+start = open('/tmp/jobs/%s-start.txt' % name).read().strip()
+cache = re.match(r'DROPPED with sudo at (\S+)', open('/tmp/jobs/%s-cache.txt' % name).read().strip()).group(1)
+free0 = re.search(r'(\d+) MB', open('/tmp/jobs/%s-free.txt' % name).read()).group(1)
+done = re.findall(r'SCRIPT DONE (\S+)', open('/tmp/jobs/%s-run.log' % name).read())[-1]
+log = open('/tmp/%s.log' % name, encoding='utf-8', errors='replace').read().split('\n')
+rc = [l for l in log if l.startswith('RC pack')][-1]
+pic = [l.strip() for l in log if l.strip().startswith('/') and l.strip().endswith('.png')][-1]
+tool = [l for l in log if l.startswith('pack round')][-1]
+secs = float(re.search(r'([\d.]+) s$', tool).group(1))
+pieces = sorted(glob.glob('/tmp/%s.tar.[0-9]*' % piece))
+assert len(pieces) == 1 and rc == 'RC pack 0', (pieces, rc)
+size = os.path.getsize(pieces[0])
+sha = hashlib.sha256(open(pieces[0], 'rb').read()).hexdigest()[:16]
+psize = os.path.getsize(pic)
+jsize = os.path.getsize(pic + '.json')
+tail_lines = open('/tmp/%s-tail.txt' % name, encoding='utf-8', errors='replace').read().count('\n')
+free = subprocess.run("df -m / | awk 'NR==2{print $4}'", shell=True, capture_output=True, text=True).stdout.strip()
+status = subprocess.run('git status --porcelain | wc -l', shell=True, capture_output=True, text=True, cwd=tree).stdout.strip()
+chunks = len(glob.glob(tree + '/out/work/chunks/16x9-final-full/*.mp4'))
+now = datetime.datetime.now(datetime.timezone.utc)
+mins = max(1, round(secs / 60))
+L = []
+L.append('## %s UTC, %s: JOB %s sent back (a pack job: %s frame %s, one picture, exit 0, %d minute%s)' % (now.strftime('%H:%M'), now.strftime('%d %b').lstrip('0'), name, part, fa, mins, '' if mins == 1 else 's'))
+L.append('')
+L.append('- %s arrived %s (its words: `/tmp/jobs/%s-mail.txt`): a pack job of ONE picture, the form of im9-42 (four script lines): `%s`, the piece `%s`; its mail asked no line while it runs. Before it: the cache dropped with sudo %s, HEAD 262b9a68, `git status` 0 lines, %s MB free, build exit 0. STARTED %s.' % (name, arrived, name, cmd, piece, cache, free0, start))
+L.append('- FINISHED %s. The log: the picture file `%s` (%d bytes, with its json of %d bytes), "%s", "%s". One piece `%s`, %d bytes (sha256 starts %s).' % (done, pic, psize, jsize, tool, rc, pieces[0], size, sha))
+L.append('- SENT BACK %s (high, delivered; `/tmp/mail/%s-return.out`, the draft of `mkpackreturn.py` as it came) with the piece and the tail `/tmp/%s-tail.txt` (%d lines). The tree after it: `git status` %s lines, %s MB free, %d chunks kept.' % (sent, name, name, tail_lines, status, free, chunks))
+L.append('')
+open('/tmp/law/e/ENTRY%s.md' % n, 'w').write('\n'.join(L) + '\n')
+p = '/tmp/jobs/state.json'
+st = json.load(open(p))
+assert st['running'] and st['running']['name'] == name, 'state.json does not name this job as running'
+st['sent'].append(['%s (a pack job)' % name, sent])
+st['running'] = None
+st.setdefault('pack_speeds', []).append('%s %s %d s' % (part, fa, round(secs)))
+json.dump(st, open(p, 'w'), indent=1)
+print('wrote /tmp/law/e/ENTRY%s.md; state: %d sent, running null' % (n, len(st['sent'])))
+print('\n'.join(L))
+```
+
 ## E as built (23:45), the engine's one move
 
 - Switches: `handover.ownPath` (my config block): the stops that keep the path of their own class. Today all but mars. A builder takes its name off in its own commit. `--diag onemove` (probe.ts, `forceOneMove`) draws any stop on E without touching the config; the scene word carries `|onemove` so the caches do not mix.
@@ -4046,13 +4140,13 @@ MAIL 351 (22:19 by /root's clock, 22:14 by mine), the work from here. In its wor
 
 ## Next
 
-NOW (rewritten 16:49 UTC, 27 Nov; everything below this block in "Next" is older and holds only where this block does not say otherwise):
+NOW (rewritten 16:51 UTC, 27 Nov; everything below this block in "Next" is older and holds only where this block does not say otherwise):
 0. THE FILM IS FROZEN (MAIL 1548, 1549). No cure, no trial, no proof run, no change to any file of the tree. My state is the section "STATE AT THE FREEZE" at the top of this file; my hand in is recorded by /root.
-1. THIS MACHINE IS A RENDER MACHINE FOR THE MASTER (1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5; the clean tree `/home/user/workspace/master`). JOBS SENT BACK, all exit 0 (20): ma7-24 (21:56:16 UTC 26 Nov), ma7-32 (22:48:03), mc7-82 (23:20:10), mw7-40 (02:56:35 UTC 27 Nov), mc7-53 (03:18:37), mg7-07 (09:44:39), mj7-05 (10:56:59), ma7-86 (11:21:25), mc7-25 (11:45:16), mi7-31 (12:09:10), mg7-80 (12:32:40), ml7-28 (13:29:40), mm9-21 (14:35:10), im9-23 (a pack job) (14:44:15), im9-42 (a pack job) (14:56:40), fm9-09 (a pack job) (15:07:20), he9-06 (a smooth job) (16:13:59), ia9-25 (a pack job) (16:39:43), it9-13 (a pack job) (16:43:45), it9-36 (a pack job) (16:47:56). JOB iu9-13 IS RUNNING since 16:49:16 UTC 27 Nov (uranus.dive 4134-4134, 1 frames, tar base name r60-uranus-dive-d; its words `/tmp/jobs/iu9-13-mail.txt`, its script `/tmp/jobs/iu9-13.sh`; the cache was dropped with sudo at 16:49:02; build exit 0, tree clean, 11810 MB free before the build). A PACK JOB OF ONE PICTURE (the form of im9-42, four script lines; arrived 16:49): `npm run pack -- --phase 6 --round 60 --stop uranus --only uranus.dive --place-window --frames 4134-4134`, the log `/tmp/iu9-13.log` (ends with "RC pack N"), the tail `/tmp/iu9-13-tail.txt`; its mail: one picture at the review tier, 15 to 60 minutes; it draws that frame into the cache and ends without laying a sheet. NO LINE IS ASKED WHILE IT RUNS (its mail names none). THE RETURN (its mail): every piece `/tmp/r60-uranus-dive-d.tar.NN` (names exactly as the split line writes them) and `/tmp/iu9-13-tail.txt`, in a message that starts with the usual line and states the exit code of the pack and the name of the picture file the log printed; if the pack ends with a code other than 0, the tail alone, and say so. WHEN DONE: `python3 /tmp/jobs/mkpackreturn.py iu9-13 r60-uranus-dive-d` (NOT post.sh and NOT mkline.py, which the next sentences name for film jobs), set the time, chk.py, send high; then `python3 /tmp/jobs/packdone.py iu9-13 r60-uranus-dive-d SENT_TIME N` writes the entry and the state. THE LINE IS MADE BY `python3 /tmp/jobs/mkline.py iu9-13 uranus.dive 4134 4134 2026-11-27T16:49:16` (the lines sent: `/tmp/jobs/iu9-13-lines.txt`). Finished when `/tmp/jobs/iu9-13-run.log` holds "SCRIPT DONE". WHEN DONE: `bash /tmp/jobs/post.sh iu9-13 r60-uranus-dive-d uranus.dive 4134 4134` prints the facts and writes the draft `/tmp/mail/iu9-13-return.out`; replace TIMES_NOTE in it, then one message to /root, high, attachments: every `/tmp/r60-uranus-dive-d.tar.NN` (at most 9 in one message) and `/tmp/iu9-13-tail.txt`. Then wait for the next mail that starts with "JOB". THE DATE: read `date -u` and write "UTC D Mon" of that day in the mails. KEPT under `out/work/chunks/16x9-final-full` of the tree until /root says they can go: the chunk of every film job sent back, with its `.json` (13 at 14:44 UTC 27 Nov); `out/work/packs/.cache/round-060` holds the pictures of the last pack job only (each pack job removes it first, as its mail writes). THREE KINDS OF JOB SO FAR: smooth jobs (he9-06: `npm run smooth -- --stop STOP --only counts`, a script of two lines, no tar; a status line every 60 minutes by `python3 /tmp/jobs/smoothline.py NAME START_ISO 20`, the return by `python3 /tmp/jobs/mksmoothreturn.py NAME STOP`, attachments the .md, the .json and the tail, its LAST line the VERDICT line of the .md; entry "JOB he9-06 sent back"), film jobs (a piece or a split of a piece; `post.sh NAME PIECE SEGMENT FIRST LAST` fits) and pack jobs (im9-23, im9-42, fm9-09, ia9-25, it9-13, it9-36: pictures of a pack at the review tier; when finished `python3 /tmp/jobs/mkpackreturn.py NAME PIECE` writes the draft of the return, entries "JOB im9-23 sent back" and "JOB im9-42 sent back"; READ THE MAIL OF EACH JOB FOR WHAT THE RETURN MUST STATE AND FOR THE LINE RULE).
+1. THIS MACHINE IS A RENDER MACHINE FOR THE MASTER (1920 by 1080, final tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5; the clean tree `/home/user/workspace/master`). JOBS SENT BACK, all exit 0 (21): ma7-24 (21:56:16 UTC 26 Nov), ma7-32 (22:48:03), mc7-82 (23:20:10), mw7-40 (02:56:35 UTC 27 Nov), mc7-53 (03:18:37), mg7-07 (09:44:39), mj7-05 (10:56:59), ma7-86 (11:21:25), mc7-25 (11:45:16), mi7-31 (12:09:10), mg7-80 (12:32:40), ml7-28 (13:29:40), mm9-21 (14:35:10), im9-23 (a pack job) (14:44:15), im9-42 (a pack job) (14:56:40), fm9-09 (a pack job) (15:07:20), he9-06 (a smooth job) (16:13:59), ia9-25 (a pack job) (16:39:43), it9-13 (a pack job) (16:43:45), it9-36 (a pack job) (16:47:56), iu9-13 (a pack job) (16:51:18). NO JOB IS RUNNING. WAIT FOR THE NEXT MAIL THAT STARTS WITH "JOB". THE DATE: read `date -u` and write "UTC D Mon" of that day in the mails. KEPT under `out/work/chunks/16x9-final-full` of the tree until /root says they can go: the chunk of every film job sent back, with its `.json` (13 at 14:44 UTC 27 Nov); `out/work/packs/.cache/round-060` holds the pictures of the last pack job only (each pack job removes it first, as its mail writes). THREE KINDS OF JOB SO FAR: smooth jobs (he9-06: `npm run smooth -- --stop STOP --only counts`, a script of two lines, no tar; a status line every 60 minutes by `python3 /tmp/jobs/smoothline.py NAME START_ISO 20`, the return by `python3 /tmp/jobs/mksmoothreturn.py NAME STOP`, attachments the .md, the .json and the tail, its LAST line the VERDICT line of the .md; entry "JOB he9-06 sent back"), film jobs (a piece or a split of a piece; `post.sh NAME PIECE SEGMENT FIRST LAST` fits) and pack jobs (im9-23, im9-42, fm9-09, ia9-25, it9-13, it9-36, iu9-13: pictures of a pack at the review tier; when finished `python3 /tmp/jobs/mkpackreturn.py NAME PIECE` writes the draft of the return, entries "JOB im9-23 sent back" and "JOB im9-42 sent back"; READ THE MAIL OF EACH JOB FOR WHAT THE RETURN MUST STATE AND FOR THE LINE RULE).
 2. A JOB, step by step: (a) write the mailed script lines EXACTLY AS MAILED (decode `&gt;` and `&amp;`) to `/tmp/jobs/NAME.sh` and the whole mail, decoded, to `/tmp/jobs/NAME-mail.txt` (line 1 a note of the arrival, line 2 blank, line 3 the NOTE, line 4 blank, line 5 the JOB text up to the colon before the script, lines 6 to 5+K the K lines of the script, K is 2, 4 or 5 so far, the last line the rest; K+6 lines in all); (b) `bash /tmp/jobs/pre.sh NAME` does the rest in order and stops at the first thing that is not as it must be: no render running, the script equals the mailed lines, the cache dropped with sudo (`sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'`, the time in `NAME-cache.txt`), HEAD 262b9a68, `git status` 0 lines, the lock unchanged, at least 5000 MB free (if not: old frame folders, films and tars of FINISHED jobs under /tmp and out/work may go; NOTHING under `out/work/chunks/16x9-final-full`), `npm run build` exit 0, then the start (`start.sh`: detached, the log `NAME-run.log` ends with "SCRIPT DONE HH:MM:SS", the watcher writes `NAME-io.txt`, one step of about 4 MB for each frame the encoder took); (c) put the running job into `/tmp/jobs/state.json`, `python3 /tmp/jobs/now.py /tmp/law/e/NOWn.md`, splice, push; (d) wait with `T=$(date -u -d 'YYYY-MM-DD HH:MM:SS' +%s); until grep -q 'SCRIPT DONE' /tmp/jobs/NAME-run.log || [ $(date -u +%s) -ge $T ]; do sleep 10; done` and `poll_command` with waits of 240 s; (e) LINES WHILE IT RUNS: every 60 minutes when the mail says so; else every 30 minutes once a frame has taken over 15 minutes (measured by the steps of the io file and the rows of the job in `out/work/looks/log.jsonl`, never by the part file, which appears late); low priority; made by `mkline.py`; A THIRD RULE (ml7-28): when the mail asks for a line every 30 minutes from the start saying whether the drawing process is alive and how long it has run, the line is made by `alive.py NAME SEGMENT FIRST LAST START_ISO` (entry "JOB ml7-28 runs"; start it 35 s before the line is due); READ THE LINE RULE IN EACH MAIL, IT CHANGES; (f) WHEN FINISHED: `bash /tmp/jobs/post.sh NAME PIECE SEGMENT FIRST LAST`, replace TIMES_NOTE in the draft, ONE message to /root, high, starting with "MAIL from handover_engineer to /root, HH:MM UTC D Mon. JOB NAME sent back", attachments: every tar piece (at most 9 in one message, the rest in a second) and the tail file; in the text each RC line word for word, the count of the tail's first line, the cache line; (g) an entry in the notebook, the job into "sent" of state.json, NOW, push; then `wait_agent`. Do not judge the picture. Change no file of the tree. The texts of the helpers are in the entry "THE JOB HELPERS"; the later ones (`pre.sh` and `start.sh` as they stand now, `packline.py`, `smoothline.py`, `mksmoothreturn.py`) in the entry "JOB he9-06 sent back".
 3. If the machine cannot render (no drawing context after three tries, or under 4 GB free after cleaning): one line to /root, then wait.
 4. One render process at a time. A leading sleep is blocked. `date -u` before every time written. Every mail: the text to a file, `python3 /tmp/mail/chk.py FILE` (no bad lines), then by exec `tools.bash` cat and `tools.message_agent`.
-5. MEASURED SPEEDS HERE (4 cores, final tier, master format): the pack pictures at the review tier: mercury.dive-cover 759 424 s, mercury.rise 1027 666 s, earth.travel 2236, 2242, 2249 together 490 s (the first 6.7 minutes with the load, then under a minute each), mars.dive 2449 1431 s, saturn.dive 3564 159 s, saturn.rise-cover 3855 148 s; the counts of smooth for earth (frames 1680 to 2249, 1140 pictures at rate 2, draft tier at the preview size) 3910 s; Mercury travel frame 1055 64 minutes; Venus hold 1140 to 1169 about 45 s a frame; Venus dive 1327 to 1334 about 5.4 minutes; Venus travel 1675 to 1679 about 261 s; Earth dive 1852 to 1859 5.6 to 8.5 minutes; Mars terrain 2550 to 2579 about 40 s; Neptune hold 4530 to 4559 about 61 s; Sun travel 450 to 456 about 187 s, frame 492 54 minutes; Neptune dive 4740 to 4746 51 to 60 minutes, 4751 71 minutes; Neptune rise 4973 to 4976 50 to 57 minutes; ending retreat 5057 to 5064 about 2.9 minutes.
+5. MEASURED SPEEDS HERE (4 cores, final tier, master format): the pack pictures at the review tier: mercury.dive-cover 759 424 s, mercury.rise 1027 666 s, earth.travel 2236, 2242, 2249 together 490 s (the first 6.7 minutes with the load, then under a minute each), mars.dive 2449 1431 s, saturn.dive 3564 159 s, saturn.rise-cover 3855 148 s, uranus.dive 4134 94 s; the counts of smooth for earth (frames 1680 to 2249, 1140 pictures at rate 2, draft tier at the preview size) 3910 s; Mercury travel frame 1055 64 minutes; Venus hold 1140 to 1169 about 45 s a frame; Venus dive 1327 to 1334 about 5.4 minutes; Venus travel 1675 to 1679 about 261 s; Earth dive 1852 to 1859 5.6 to 8.5 minutes; Mars terrain 2550 to 2579 about 40 s; Neptune hold 4530 to 4559 about 61 s; Sun travel 450 to 456 about 187 s, frame 492 54 minutes; Neptune dive 4740 to 4746 51 to 60 minutes, 4751 71 minutes; Neptune rise 4973 to 4976 50 to 57 minutes; ending retreat 5057 to 5064 about 2.9 minutes.
 6. THE OLD CLONE IS GONE; what origin lacks is in `/tmp/keep/` (entry "20:53 to 21:02"). THE NOTEBOOK: edit `/tmp/law/notes-base.md` (`python3 /tmp/law/splice.py ENTRY.md NOW.md`, `-` for no entry), then `bash /tmp/law/pushnotes3.sh "subject"` (bare clone `/home/user/workspace/notes.git`; a failed push stays local and goes with the next).
 7. HOUSE RULES: never push to main, never force, never rebase; every commit ends with the trailer; no dashes, no exclamation points, no model names in any file or message; mail /root only what it asked for.
 
