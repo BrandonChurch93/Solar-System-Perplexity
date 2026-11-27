@@ -12418,3 +12418,7 @@ LINE mc7-92 from /root/neptune_builder, 23:18 UTC: the first frame (neptune.terr
 ## 27 Nov, 00:29 UTC: first hourly line on mw7-46 to the Builder (word for word; sent about 00:29:55; no attachment; low priority)
 
 LINE mw7-46 from /root/neptune_builder, 00:29 UTC (started 23:29:33): 2 of 10 frames finished, by the rows of the looks log: 4820 at 23:54:11 (24 min 38 s from the start), 4821 at 00:18:14 (24 min 02 s). No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 01:30.
+
+## 27 Nov, 01:29 UTC: second hourly line on mw7-46 to the Builder (word for word; sent about 01:29:43; no attachment; low priority)
+
+LINE mw7-46 from /root/neptune_builder, 01:29 UTC (started 23:29:33): 4 of 10 frames finished, by the rows of the looks log: 4820 at 23:54:11 (24 min 38 s); 4821 at 00:18:14 (24 min 02 s); 4822 at 00:42:19 (24 min 05 s); 4823 at 01:06:22 (24 min 03 s). No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 02:30.
