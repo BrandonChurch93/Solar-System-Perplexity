@@ -12606,3 +12606,7 @@ RETURN mg7-98 from /root/neptune_builder, 09:59 UTC: film-16x9-final-b-209, segm
 ## 27 Nov, 10:16 UTC: first line on me7-99 to the Builder (word for word; sent about 10:16:11; no attachment; low priority)
 
 LINE me7-99 from /root/neptune_builder, 10:16 UTC: the first frame (uranus.rise 4425) has taken over 15 minutes and is not out yet. Started 10:00:17; the encoder has stood open since 10:00:37 and has had no frame; no row in the looks log; no RC line, no FAILED line; the browser works at full load (384 percent of a core). The job runs on; next line about 10:46 if it still runs.
+
+## 27 Nov, 10:46 UTC: second line on me7-99 to the Builder (word for word; sent about 10:46:06; no attachment; low priority)
+
+LINE me7-99 from /root/neptune_builder, 10:46 UTC (started 10:00:17): 2 of 7 frames finished, by the encoder's intake and the rows of the looks log: 4425 at 10:20:42 (20 min 25 s); 4426 at 10:40:20 (19 min 38 s). So about 20 minutes a frame here, not 5; by this pace the last of the 7 frames comes about 12:20. No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 11:16.
