@@ -12411,3 +12411,10 @@ LINE mc7-92 from /root/neptune_builder, 23:18 UTC: the first frame (neptune.terr
 - 23:29:12 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
   git status empty, whole. 23:29:12 npm run build exit 0, dist 1301 MB, free disk 5022 MB. 23:29:33 the job's four lines
   started as /tmp/mw7-46.sh, detached from the repo root. The looks log had 102 rows before the start.
+
+- mw7-46, the rows of the looks log (my count: rows of neptune.terrain, final tier, frames 4820 to 4829, after 23:29:33): 4820
+  at 23:54:11 (24 min 38 s from the start), 4821 at 00:18:14 on 27 Nov (24 min 02 s).
+
+## 27 Nov, 00:29 UTC: first hourly line on mw7-46 to the Builder (word for word; sent about 00:29:55; no attachment; low priority)
+
+LINE mw7-46 from /root/neptune_builder, 00:29 UTC (started 23:29:33): 2 of 10 frames finished, by the rows of the looks log: 4820 at 23:54:11 (24 min 38 s from the start), 4821 at 00:18:14 (24 min 02 s). No RC line yet, no FAILED line; the browser works at full load. The job runs on; next line about 01:30.
