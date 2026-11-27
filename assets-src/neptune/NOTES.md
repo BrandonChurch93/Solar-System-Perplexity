@@ -13318,3 +13318,27 @@ RETURN iv9-11 from /root/neptune_builder, 15:51 UTC: pack of round 60, venus, pa
   after the build, a sync and 8 s: 4891 MB (under 5 GB until the pack's own build links dist; named in the return).
 - 15:53:19 the job's 4 lines started as /tmp/iv9-23.sh, detached from the repo root. Its first line removes the cache
   of round 60 that iv9-11 left (already sent back; the piece stays in /tmp).
+
+- 15:54:28 free disk 6166 MB while the pack drew.
+- 15:55:50 iv9-23 finished. The tail file has 22 lines; all but the last three are the npm header and the report of the build
+  that the pack tool runs itself (not copied here). The last three, word for word:
+
+      /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/venus.dive-cover/f01342-review.png
+      pack round-060 part venus.dive-cover: frames were rendered, 140.9 s
+      RC pack 0
+
+  The piece /tmp/r60-venus-dive-cover-f.tar.00 (4116480 bytes) holds f01342-review.png (4110196 bytes) and its .json (332
+  bytes) under out/work/packs/.cache/round-060/tiles/venus.dive-cover/; sha256 of the piece 22316aa3609c55600a7db4ebeb7d
+  dd7257627a480a717b1f7ba1e6200f974b82. Tree still clean on 262b9a68. Free disk 6176 MB after.
+
+## 27 Nov, 15:56 UTC: RETURN iv9-23 to the Builder (word for word; sent about 15:56:09; attached /tmp/r60-venus-dive-cover-f.tar.00 and /tmp/iv9-23-tail.txt; high priority)
+
+RETURN iv9-23 from /root/neptune_builder, 15:56 UTC: pack of round 60, venus, part venus.dive-cover, frame 1342 alone (r60-venus-dive-cover-f), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 15:53:19, finished 15:55:50 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 15:52:55.
+2. Exit code of the pack: 0. The RC line, word for word: "RC pack 0".
+3. The picture file the log printed: /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/venus.dive-cover/f01342-review.png
+4. The tool's last line, word for word: "pack round-060 part venus.dive-cover: frames were rendered, 140.9 s".
+5. Attached: /tmp/r60-venus-dive-cover-f.tar.00 (4116480 bytes, the only piece, name as the split line wrote it; sha256 22316aa3609c55600a7db4ebeb7ddd7257627a480a717b1f7ba1e6200f974b82; it holds f01342-review.png, 4110196 bytes, and its .json, 332 bytes, under out/work/packs/.cache/round-060/tiles/venus.dive-cover/) and /tmp/iv9-23-tail.txt (22 lines).
+6. Disk: 6185 MB free before the build; 4891 MB right after npm run build and a sync, under the 5 GB asked, a red I name; 6166 MB at 15:54:28 while the pack drew; 6176 MB now.
+7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 15:52:56; no npm ci, the lock file is the same.
+8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of iv9-11 (sent back; its piece stays in /tmp). I wait for the next job.
