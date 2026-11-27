@@ -13023,3 +13023,27 @@ RETURN im9-38 from /root/neptune_builder, 15:00 UTC: frame 1021 of the part rise
   after the build, a sync and 8 s: 4919 MB (under 5 GB, as on im9-15 and im9-38; named in the return).
 - 15:01:40 the job's five lines started as /tmp/fm9-21.sh, detached from the repo root. Its second line removes the cache
   of round 60 that im9-38 left (already sent back).
+
+- 15:11:29 fm9-21 finished. The tail file has 13 lines; all but the last three are the report of the build that the
+  pack tool runs itself (not copied here). The last three, word for word (the first of them is empty):
+
+      
+      pack round-060 part ending.retreat: frames were rendered, 578.7 s
+      RC pack 0
+
+  The piece /tmp/r60-film-motion09.tar.00 (2119680 bytes) holds motion-ending.retreat.png (2108372 bytes) and its .json
+  (1066 bytes) under out/work/packs/.cache/round-060/; sha256 of the piece 462e5b66abb04e2818de2bddc00fe25f29723d2c304ef1
+  0012002194dec2b30e. Seen while it drew: f05025-review.png in the .frames folder at 15:03:10; the folder was gone at the
+  end. Tree still clean on 262b9a68. Free disk 6207 MB at 15:01:57 while the pack drew, 6209 MB after.
+
+## 27 Nov, 15:12 UTC: RETURN fm9-21 to the Builder (word for word; sent about 15:12:06; attached /tmp/r60-film-motion09.tar.00 and /tmp/fm9-21-tail.txt; high priority)
+
+RETURN fm9-21 from /root/neptune_builder, 15:12 UTC: pack of round 60, part ending.retreat (the tool's r60-film-motion09), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 15:01:40, finished 15:11:29 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 15:01:04.
+2. Exit code of the pack: 0. The RC line, word for word: "RC pack 0".
+3. The tool's last line before it, word for word: "pack round-060 part ending.retreat: frames were rendered, 578.7 s". The log printed no picture file name this time. The cache holds, and the tar carries, out/work/packs/.cache/round-060/motion-ending.retreat.png (2108372 bytes) and its .json (1066 bytes); nothing else is under round-060.
+4. No frame took over 15 minutes (the whole pack took 578.7 s), so no line was sent. I saw the first frame's file (f05025-review.png) in the .frames folder at 15:03:10; the other frame times I did not catch, the tool removed the folder at its end.
+5. Attached: /tmp/r60-film-motion09.tar.00 (2119680 bytes, the only piece, name as the split line wrote it; sha256 462e5b66abb04e2818de2bddc00fe25f29723d2c304ef10012002194dec2b30e) and /tmp/fm9-21-tail.txt (13 lines).
+6. Disk: 6213 MB free before the build; 4919 MB right after npm run build and a sync (under the 5 GB asked, a red I name as on im9-15 and im9-38); 6207 MB at 15:01:57 while the pack drew; 6209 MB now.
+7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 15:01:05; no npm ci, the lock file is the same.
+8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). I wait for the next job.
