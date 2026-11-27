@@ -1,0 +1,70 @@
+{
+ "critic": "R1",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "foreground diagonal white cloud band (pair-04-b.png crops A, B, E, H)",
+   "what": "the continuous, finely filamentous cumuliform cloud ridge of -a is replaced by blurry cotton-like puffs with prominent parallel slicing/raymarch-stepping artifacts (crops A, B, H) and disconnected soft blobs in the lower right (crop E)",
+   "fix": "eliminate the volumetric slicing/stepping artifacts, reconnect the diagonal cloud bank into a cohesive ridge, and restore crisp high-frequency cirrus filaments, bright sunlit tops, and deep internal self-shadowing"
+  },
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "central Great Dark Spot vortex (pair-04-b.png crop A)",
+   "what": "the storm is too round/tall for the grazing perspective and renders as a 3D corrugated spiral whirlpool with lighter blue ridges into the center, instead of the flat-lying, strongly foreshortened, smooth deep-navy/black elliptical hole with bright cyan rim wisps in -a",
+   "fix": "compress the vortex vertically to match the shallow foreshortening of -a, darken and smooth the interior core to deep uniform navy-black, replace the sculpted spiral ridges with smooth laminar oval cloud bands, and add thin bright cyan-white wisps along the upper/outer rim"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "blue planetary cloud deck across mid-ground (pair-04-b.png crops A, B, D, E, G)",
+   "what": "the planet surface is covered in a uniform, small-scale choppy ocean-wave bump texture instead of smooth, stretched zonal gas-giant cloud bands and layered atmospheric haze",
+   "fix": "replace the isotropic water-wave bump noise with smooth, elongated zonal cloud streaks and subtle layered haze bands parallel to the horizon to restore planetary scale"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "mid-distance right-side white cloud street and cast shadow (pair-04-b.png crops G, I)",
+   "what": "the right-side white cloud band is broken into sparse, dark-undersided lumps and lacks the sharp, dark, elongated shadow cast onto the lower blue deck below it (reduced to a faint smudge in crop G and missing completely in crop I)",
+   "fix": "rebuild the right-side cloud street as a continuous, brightly top-lit white band and project a crisp, dark navy-black cast shadow offset onto the lower cloud deck across crops G and I"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "atmospheric limb and horizon curve (pair-04-b.png crops B, C, F, I)",
+   "what": "the horizon sits slightly lower from left to center and terminates in a hard, thin, detached cyan-white line over a flat grey-blue band, lacking the soft cobalt-to-azure Rayleigh scattering falloff and fine bright horizon cloud streaks of -a",
+   "fix": "raise the left-to-center horizon curve slightly to match -a, remove the hard outer rim line, widen and soften the deep blue atmospheric falloff into space, and restore thin white cloud streaks near the upper-right limb"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "lower-left foreground shadow region (pair-04-b.png crops D, H)",
+   "what": "foreground blacks are lifted to a flat mid-dark navy blue with repetitive diagonal surface ripples, losing the deep near-black shadow depth and subtle dark cloud modulation of -a",
+   "fix": "deepen the lower-left shadow grade to rich near-black indigo and suppress the repetitive ripple texture"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "lower-right illuminated limb inside outer atmospheric shell (pair-02-b.png crops E, I)",
+   "what": "a dark concentric band cuts between the planet limb and the outer cyan shell where the foreground ring crosses, darkening the bright cyan inner limb glow and hiding faint background stars visible in crop E of -a",
+   "fix": "reduce the dark ring-band occlusion along the lower-right limb so smooth bright cyan-blue atmospheric glow fills continuously toward the thin outer rim shell"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "foreground ring across lower-left dark hemisphere (pair-02-b.png crop D)",
+   "what": "the foreground ring band across the lower disk is wider and smoother and lacks the discrete brighter dusty ring clumps/arcs seen in crop D of -a",
+   "fix": "narrow and dim the ring sweep in front of the lower planet disk and break the lower-left arc into fainter, clumpy ring segments matching -a"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-left moon Triton and adjacent dark-side limb haze (pair-02-b.png crop B)",
+   "what": "the sunlit face of the moon has a slight blotchy cyan-green cast with softer terminator crater relief, and the faint teal airglow outside the planet's upper-left dark limb is dimmer than in -a",
+   "fix": "shift the moon's midtones from cyan-green to warm pale stone-pink with crisper crater relief near the terminator, and slightly boost the soft teal atmospheric haze along the upper-left dark limb"
+  }
+ ]
+}

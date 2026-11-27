@@ -1,0 +1,21 @@
+{
+ "critic": "R4",
+ "score": 8,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-05.png",
+   "where": "frames 4400–4420, horizon and foreground storm",
+   "what": "The rise briefly reads like a whip turn: the horizon banks steeply and the storm swells toward the viewer before the retreat becomes clear.",
+   "fix": "Spread the bank across more of the rise and begin pulling back sooner so the storm's change in scale supports the climbing move."
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "frames 3960–4109, bright cloud knots on the upper hemisphere",
+   "what": "The hold shows camera drift, but the bright cloud knots change very little relative to the surrounding bands, so independent atmospheric motion is hard to read.",
+   "fix": "Add a small, steady drift to the high cloud layer relative to the globe's bands while preserving the calm hold."
+  }
+ ]
+}

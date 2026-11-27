@@ -1,0 +1,49 @@
+{
+ "critic": "R4",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "frames 730-747 across the planet surface, limb and upper-right sky",
+   "what": "the dive cover visibly cross-dissolves between two mismatched renders: a dark warm bronze-ochre globe with orange limb glow, stretched coarse foreground relief and black sparse-star sky (730) shifts into a ~40% brighter monochrome grey terrain with sharp craters, no orange limb glow and a bright blue Milky Way cloud (747)",
+   "fix": "match surface color grading, exposure, limb falloff, foreground displacement detail and the background skybox between the globe and terrain renders so color, exposure and sky carry seamlessly across the cover"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-05.png",
+   "where": "frames 987-1000 across the planet surface, limb and upper-right sky",
+   "what": "the rise cover repeats the mismatched cross-dissolve in reverse: bright neutral-grey terrain and the blue Milky Way sky (987) ghost through a soft midpoint blend (994) into a much darker warm bronze globe with smeared low-res foreground relief, orange limb glow and a different white-dot starfield (1000-1007)",
+   "fix": "unify albedo palette, exposure, skybox stars and close-range globe relief across the terrain-to-globe transition on the rise"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "all tiles, frames 754-765",
+   "what": "the consecutive-frame dive cover sheet misses the actual globe-to-terrain cover window (which already completed across frames 730-747 in sheet-02.png) and shows only post-cover terrain frames",
+   "fix": "center the consecutive-frame dive cover contact sheet on the actual cover frame range (around frames 732-745) or align the render switch to the declared cover window"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-06.png",
+   "where": "all tiles, frames 972-983",
+   "what": "the consecutive-frame rise cover sheet misses the actual terrain-to-globe cover window (which occurs later across frames 987-1000 in sheet-05.png) and shows only pre-cover terrain frames",
+   "fix": "center the consecutive-frame rise cover contact sheet on the actual rise cover frames (around frames 988-999) or move the cover transition into frames 972-983"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "sunlit crater rims and left-side ejecta plain with outgassing specks, frames 780-959 (also visible in sheet-03.png and sheet-06.png)",
+   "what": "unfiltered sub-pixel normal/displacement ridges and 1-pixel white vent specks break into hundreds of isolated single-pixel white sparkles that crawl and shimmer as the camera glides forward",
+   "fix": "apply mipmap/roughness filtering (specular anti-aliasing) and supersampling or soft sub-pixel sprites on the surface vent particles to eliminate 1-pixel shimmer"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "upper-left sunlit crater rims in frames 714-722",
+   "what": "fast peripheral expansion during the globe dive (~20-25 px/frame) renders as crisp, unblurred 1-pixel crater rims before motion blur engages closer to the surface",
+   "fix": "enable continuous shutter motion blur throughout the globe dive so fast edge motion blurs smoothly from the start of the acceleration"
+  }
+ ]
+}

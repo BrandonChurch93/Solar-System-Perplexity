@@ -1,0 +1,134 @@
+{
+ "critic": "R3",
+ "score": 4.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 7,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "night side of the globe, terminator from the north cap down to the rings (crops A, Q)",
+      "what": "the terminator is an almost straight diagonal wedge with a smeared, airbrushed falloff instead of following the curve of the sphere, so the globe reads as a flat disc with a shadow painted on",
+      "fix": "light the globe as a true sphere so the terminator curves with the limb, and narrow the twilight band"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "night side of the globe and its lower limb over the near ring (crops A, P)",
+      "what": "the same straight, soft wedge terminator; the dark lower limb sits on top of the near ring with a faint rim instead of being cleanly crossed by it",
+      "fix": "curve the terminator with the sphere and check that the near ring is drawn in front of the lower globe"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png, image-05.png",
+      "where": "ring faces in every ring crop (image-02 D, F, G; image-06 D, F, G; image-04 U, V; image-08 T, U)",
+      "what": "the ring texture is a brushed, motion-blur streak with coloured RGB grain all through it; at native size it looks like a smudged noise filter rather than fine ringlets",
+      "fix": "build the rings from a sharp radial brightness profile with real ringlets and gaps, and cut the chroma noise"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "empty sky under the rings, lower left (image-04 crop T)",
+      "what": "a faint square grid shows in the black sky, like tile borders in the starfield",
+      "fix": "remove the tiling from the sky map or dither the black level"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png, image-05.png",
+      "where": "lit upper left limb (image-03 K, L; image-07 J, K)",
+      "what": "the warm atmosphere glow is a thin, even halo that floats just off the limb like an outline",
+      "fix": "make the glow fall off softly from the limb and fade it toward the terminator"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png, image-05.png",
+      "where": "planet shadow on the rings (image-04 W, image-08 V)",
+      "what": "the shadow edge across the rings is a ruler-straight hard line with a smudged inner fringe",
+      "fix": "project the shadow from the oblate globe and give it a slight, even penumbra"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "moon, upper right (image-03 M)",
+      "what": "the moon is a smooth, plain orange ball with no surface detail at native size",
+      "fix": "add a surface or haze texture and a soft terminator to the moon"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-14.png",
+      "where": "crop E center-right, crop H left edge, and image-16.png crop V (shadowed outer ring against Milky Way)",
+      "what": "In Saturn's shadow, the ring mesh turns into a solid opaque dark slab extending ~15 pixels outward past the lit A-ring edge in a stepped notch, blocking the Milky Way across empty ring gaps (including the Cassini Division) with a jagged stair-stepped silhouette and visible 8-bit banding",
+      "fix": "Drive shadowed ring occlusion purely from physical ring optical depth/alpha so empty divisions and the A-to-F gap transmit background stars and nebula, antialias the outer ring edge, and dither dark shadow gradients"
+     },
+     {
+      "severity": "severe",
+      "file": "image-14.png",
+      "where": "crop D middle-left and crop F lower-right (also image-13.png lower-left sunlit limb behind C-ring)",
+      "what": "A bright, jagged 1-to-2-pixel stair-stepped rim halo protrudes along Saturn's lower-left limb where the sunlit globe emerges from behind the translucent inner C-ring, bordered by an abrupt dark band",
+      "fix": "Fix alpha/depth compositing and atmospheric limb falloff where the translucent inner C-ring overlaps the globe so the planet edge transitions smoothly without a clipped bright seam"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crops B and G just outside the upper outer ring edge (also image-10.png crop B and image-11.png crops J, K)",
+      "what": "A semi-opaque dark fringe and a broken, shimmering 1-pixel F-ring line float parallel to the outer A-ring edge, cutting a dark groove across the brighter Milky Way behind it while the A-ring outer edge steps abruptly in 1-pixel increments",
+      "fix": "Eliminate dark premultiplied-alpha or UV-border texels in the outer ring gap so empty space never darkens the skybox, and supersample or radially filter the thin F-ring and A-ring outer boundary"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crops B, E, G, H, I and image-15.png crops J, N, Q (Milky Way background)",
+      "what": "At native crop scale the Milky Way skybox is visibly pixelated and blotchy, with coarse blocky dust texels and multi-pixel square/blob stars",
+      "fix": "Replace or render the skybox at native-or-higher angular resolution so galactic dust gradients remain smooth at 1:1 pixels and stars resolve as clean sub-pixel point sources"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crop C northern storm bands, image-14.png crop A, and image-15.png crops J and O (globe clouds, pole, and upper limb)",
+      "what": "Saturn's cloud bands and storm ovals are soft, blurry, and horizontally stretched at native resolution, the blue north-polar region in image-15.png crop J is an airbrushed gradient lacking polar vortex detail, and the bright planet limb exhibits 1-pixel stair-step aliasing beneath the haze",
+      "fix": "Increase planetary cloud-map resolution or add crisp multi-scale procedural band and polar-hexagon structure, and antialias the globe geometry edge under the atmospheric glow"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "crop A center and crop E ring-to-globe line (also image-11.png crop Q)",
+      "what": "Where the foreground rings cross Saturn's bright lower-left limb, the atmospheric limb glow stops at a hard clipped edge and the diagonal contact seam between the inner ring and globe is visibly stair-stepped",
+      "fix": "Antialias the inner ring silhouette against the globe and let atmospheric limb scattering fall off smoothly across the intersection"
+     },
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "crops T and U foreground outer rings (also image-10.png crops D, F and image-16.png crop T)",
+      "what": "Fine ringlets in image-12.png crops T and U break up into gritty salt-and-pepper stipple noise and moire shimmer, while inner ring bands in image-16.png crop T blur and smear tangentially near the bottom of the globe",
+      "fix": "Use clean anisotropic/radial mipmapping on the ring profile texture and remove high-frequency azimuthal stipple noise so ringlets stay smooth and continuous at all viewing angles"
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "crops J and K upper edge (orange moon)",
+      "what": "The moon renders as a smooth, featureless airbrushed ball with 1-pixel stair-stepped aliasing along both its sunlit limb and dark nightside edge",
+      "fix": "Antialias the moon silhouette and add subtle detached atmospheric haze falloff and gentle tonal variation"
+     }
+    ]
+   }
+  }
+ ]
+}

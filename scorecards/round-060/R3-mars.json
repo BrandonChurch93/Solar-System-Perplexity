@@ -1,0 +1,78 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "right half and far terrain toward the upper-right limb",
+      "what": "ridges and plains are dragged on a diagonal and lose micro-detail before the limb; the same smear is in the native crops on image-06.png, image-07.png, and image-08.png",
+      "fix": "remove the directional blur and rebuild far-terrain detail so haze only lowers contrast, without stretching the texture"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "lower foreground and southern plains",
+      "what": "the near ground is airbrushed and softer than the canyon behind it, with flat light and almost no regolith or crisp small craters; the same empty plains are in the native crops on image-06.png and image-08.png",
+      "fix": "sharpen the near field and add fine surface variation so the foreground is at least as resolved as the mid-canyon"
+     },
+     {
+      "severity": "minor",
+      "file": "image-05.png",
+      "where": "upper-center dust storm and the limb under it",
+      "what": "the vortex is a smooth paint smear, and the ground beneath the haze is fuzzy rather than sharper rock under a separate soft atmosphere",
+      "fix": "give the spiral internal structure and keep surface detail distinct from the haze falloff"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "crops S–U, lower hemisphere",
+      "what": "Crater rims and dark landforms smear into long diagonal streaks, losing much more detail than the globe above.",
+      "fix": "Correct the surface sampling or projection and retain crisp crater rims while letting the terrain soften gradually toward the limb."
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "crops U–V, bright white patch on the lower-right limb",
+      "what": "The white patch is nearly featureless at its brightest and breaks into fine parallel diagonal streaks with violet fringes. It looks pasted onto the surface.",
+      "fix": "Recover highlight detail, remove the directional streaking and color fringes, and blend the patch into the neighboring terrain with irregular edges."
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "crop O, ridges and pale traces just right of the main chasm",
+      "what": "Thin red and green fringes double several high-contrast terrain edges.",
+      "fix": "Align the color channels and reduce sharpening or chromatic aberration on the surface layer."
+     },
+     {
+      "severity": "minor",
+      "file": "image-12.png",
+      "where": "crop S, lower-left foreground rock",
+      "what": "The closest shadowed rock has noticeably softer, directionally smeared texture compared with the neighboring foreground slopes.",
+      "fix": "Restore fine rock texture in the shadows without lifting the black level or sharpening the whole frame."
+     }
+    ]
+   }
+  }
+ ]
+}

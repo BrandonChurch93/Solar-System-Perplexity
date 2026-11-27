@@ -1,0 +1,159 @@
+{
+ "critic": "R3",
+ "score": 5.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-04.png",
+      "where": "near granulation across the bottom strip, and the same crowns in image-01.png, image-05.png, and image-08.png",
+      "what": "granule domes carry combed parallel ridges and stretched displacement that read as raked procedural texture at native size",
+      "fix": "replace the directional displacement with isotropic multi-scale turbulence so cell tops are not raked"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "near and mid photosphere, repeated across image-05.png",
+      "what": "granules read as glossy plastic or airbrushed wax, with specular crowns and doughy flanks instead of self-luminous plasma",
+      "fix": "drop the specular sheen; emit from the cell centers and sharpen the lane edges without a varnished highlight"
+     },
+     {
+      "severity": "major",
+      "file": "image-01.png",
+      "where": "the full limb fringe, left to right, and the same edge in image-05.png",
+      "what": "spicules form a uniform fur or grass groom, with even height, spacing, and thickness",
+      "fix": "vary length, lean, brightness, and spacing, and soften the tips into the sky"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "grazing granulation just inside the limb",
+      "what": "lane contrast goes mushy before the limb, beyond ordinary foreshortening",
+      "fix": "hold lane contrast in the last few degrees and let only the finest scale fade"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 5,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-12.png",
+      "where": "foreground granulation, crops S through W",
+      "what": "The cells look like smooth, inflated metal cushions. Broad blurred highlights and repeated comb-like creases replace fine surface detail.",
+      "fix": "Break up the cell shapes and highlight widths, add finer emissive structure across their interiors, and reduce the uniform specular sheen."
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "central dark spot and its rim, crop A",
+      "what": "The spot is almost featureless black, and long glossy filaments all pinch into the same sharp contour, making it look like a texture pulled into a hole.",
+      "fix": "Keep faint structure in the dark core and break the rim into irregular, staggered filaments that blend into the surrounding granulation."
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "lower solar disk, crops U and V",
+      "what": "Bright and dark granules smear into aligned diagonal streaks, losing individual cell detail well before the limb.",
+      "fix": "Reduce directional blur on the disk and preserve finer granulation through the lower portion while keeping natural foreshortening near the limb."
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "upper and right limb, crops C, G and H",
+      "what": "A smooth bright outline sits in front of broad, soft radial spokes, so the corona reads as a separate glow layer rather than a continuous transition from the disk.",
+      "fix": "Vary the rim thickness and brightness, split the broad spokes into finer irregular structures, and blend their roots into the limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-11.png",
+      "where": "left and right arch footpoints, crops O and Q",
+      "what": "White cores wash out the contact with the surface, and tight bright-dark speckling just outside the cores makes the transition look cut out.",
+      "fix": "Roll off the core highlights, filter the finest filament samples, and retain granulation under the footpoint glow."
+     },
+     {
+      "severity": "minor",
+      "file": "image-15.png",
+      "where": "upper-right sky, crops M and N",
+      "what": "Several bright stars read as soft round blobs against the finer pinpoints.",
+      "fix": "Tighten the bright star cores while keeping the spread of apparent brightness."
+     }
+    ]
+   }
+  },
+  {
+   "part": 3,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "sunspots across the disc (crops A, F, G, P, Q)",
+      "what": "every sunspot is the same dark core with a radial starburst of bright fibrils; the motif repeats 8+ times at similar size and reads as a stamped pattern, not varied umbra/penumbra",
+      "fix": "vary sunspot size, shape and penumbra structure; cluster them into a few active-region groups instead of evenly scattering one motif"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "photosphere, whole disc (crops A, Q, K, L)",
+      "what": "surface is a uniform busy swirl of brushy flame strokes at one scale; no granulation cells, no limb darkening of texture detail, reads painterly and over-sharpened",
+      "fix": "replace with multi-scale granulation plus faculae, reduce local contrast and sharpening, add limb darkening so detail fades toward the edge"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "prominences at upper right and left limb (crops C, D, E, M, O)",
+      "what": "prominences are smeared painted flame strokes with smudgy red edges and no consistent loop structure or footpoints on the limb",
+      "fix": "model prominences as coherent plasma loops anchored to the limb with soft emissive falloff and fine filament threads"
+     },
+     {
+      "severity": "major",
+      "file": "image-17.png",
+      "where": "corona all round the disc (crops B, G, K, L, U, V, W)",
+      "what": "corona is evenly spaced white brush-stroke streaks radiating symmetrically like a starburst filter, too bright and too uniform; stroke texture visible at native size",
+      "fix": "use streamer/plume structure with uneven density, dimmer and softer falloff, and less regular radial striping"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "bottom limb (crops U, V)",
+      "what": "limb edge is crisp with a thin bright rim and small sparkle specks hanging below it, giving a cut-out look against the corona",
+      "fix": "soften the limb transition into the chromosphere and remove the stray specks"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "dark sky, lower left and right (crops J, T, X, W)",
+      "what": "faint blocky compression grid visible in the near-black sky at native size",
+      "fix": "add fine dither/grain to the background and export at higher quality to hide block artifacts"
+     },
+     {
+      "severity": "minor",
+      "file": "image-17.png",
+      "where": "Milky Way band behind the sun (crops H, I, O, R, S)",
+      "what": "Milky Way band runs straight through the sun on both sides at the same height, looks like a centered backdrop plate rather than a sky",
+      "fix": "tilt or offset the galactic band and dim it near the bright corona"
+     }
+    ]
+   }
+  }
+ ]
+}

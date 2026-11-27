@@ -1,0 +1,84 @@
+{
+ "critic": "R1",
+ "score": 6,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "terrain ring sweep, left turn through bottom edge (pair-04 crops D, F, G, I)",
+   "what": "The main black division turns sooner at left and sweeps much farther right at the bottom. The flatter candidate ellipse changes the perspective of the whole flyover and puts the bright ring bed in the wrong place.",
+   "fix": "Match the target's steeper ring-plane projection and larger turn radius; bring the gap and adjacent band boundaries substantially left at the bottom."
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "terrain globe/ring intersection and near-side upper ring band (pair-04 crops A, E, H)",
+   "what": "The foreground ring crosses the planet noticeably too low, exposing too much of the globe and a larger starry opening behind it. A bright, pale lip replaces the target's layered dark gray band over the globe base and along the right-hand rings.",
+   "fix": "Lift the front ring crossing, narrow the opening behind the globe, and restore the layered, dark ring-plane tones where the rings overlap the globe and continue into shadow."
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "terrain right hemisphere and terminator (pair-04 crops C, E, H)",
+   "what": "The terminator is farther left at the base and much softer and more oblique. The target holds a broader bright face with a steep, comparatively tight transition and a more neutral dark side.",
+   "fix": "Straighten and steepen the boundary, push its lower end right, tighten the light falloff, and remove the greenish cast from the shadow."
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "terrain sunlit hemisphere and upper-left arc (pair-04 crops A, C)",
+   "what": "The top of the globe sits slightly low, the limb glow is stronger and more orange on the left, and the mid-to-lower face has larger soft yellow swaths where the target has more resolved cream, ochre and blue-gray bands and small-scale turbulence.",
+   "fix": "Raise the upper arc slightly, soften and desaturate the golden bloom, and recover narrower cloud bands, pale blue-gray cap detail and fine storm texture without clipping the lit edge."
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "terrain foreground ring materials (pair-04 crops D, E, F, G, H, I)",
+   "what": "The candidate substitutes very regular dark/light filaments and conspicuous pink-brown stripes for the target's dustier stratification, grain and mixed gray-beige hues. It also loses the thin tracks inside the dark division and the localized shadow at the bottom of the target's gap.",
+   "fix": "Rebuild the fine streaks with varied thickness, particulate detail and lower microcontrast, neutralize the strongest pink stripes, and recover the fine subdivisions and localized shading inside the gap."
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "terrain sky above and behind the far rings (pair-04 crop B)",
+   "what": "The candidate has an almost evenly peppered field of tiny points and loses the target's uneven, smoky blue star-cloud concentration toward the middle-left. The rear ring crest also traces a more pronounced arc instead of lying flatter across this region.",
+   "fix": "Restore the uneven blue-gray haze and separated star brightnesses, reduce the uniform fine star texture, and flatten the far ring crest to the target path."
+  },
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "hold lower-right ring shadow and edge of lit foreground (pair-02 crop E)",
+   "what": "The ring shadow is wider and covers more of the bright lower-right arcs. Concentric lines are more conspicuous within it, and the reference's subtle horizontal blue flare near the right edge is missing.",
+   "fix": "Adjust the wedge to recover the target's bright ring extent, lower the contrast of ring traces in the shadow, and restore the faint blue horizontal flare."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "hold left and foreground ring gaps and the outside perimeter (pair-02 crops B, D, F, G, I)",
+   "what": "The broad gap reads warmer and browner, the detached outer line is thicker and more visible, and the bright ring bed looks more regularly striped and less dusty. The front arc and right tip sit slightly farther out than the target.",
+   "fix": "Deepen and cool the gap, dim and thin the detached line, restore fine particulate variation, and pull the front/right ring perimeter inward slightly."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "hold globe shape, banding, and lit lower-left ring contact (pair-02 crops A, G)",
+   "what": "The globe is slightly narrower on the right and its top sits slightly high. The lit face looks more uniformly golden and less delicately stratified, while the lower-left point where the rings meet the globe develops an orange rim.",
+   "fix": "Match the slightly larger globe silhouette and crown height, restore subtler pale cloud bands and small vortices, and remove the orange fringe at the ring contact."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "hold upper limb, blue cap, and far-right night limb (pair-02 crops A, C, H)",
+   "what": "The highlight has a thinner amber edge, the blue cap reads more cyan, and the right-side atmospheric rim is weaker and more neutral. The dark face reads flatter at the outer edge.",
+   "fix": "Use a broader soft cream-white highlight at the upper limb, mute the cap cyan slightly, and restore the dark blue gradation along the right edge."
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "hold sky and upper-right crescent moon (pair-02 crops B, C, H, I)",
+   "what": "The sky has more hard pinpoints and a busier, higher-contrast star cloud than the target. The crescent is close in size and position but has a more saturated orange shading.",
+   "fix": "Reduce the excess star pinpoints and soften the star-cloud contrast while keeping its mottled blue texture; slightly desaturate the crescent without moving it."
+  }
+ ]
+}

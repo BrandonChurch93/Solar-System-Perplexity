@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "upper-right sunlit globe and clouds (crop C, and image-07.png crops K, L, M)",
+      "what": "white cloud patches and cyan bands are soft, blurry, and diagonally smeared with visible interpolation ripples from an under-resolved texture",
+      "fix": "increase planet and cloud map resolution or add higher-frequency procedural detail that holds up at the close-up camera distance"
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "polar vortex center on the terminator (crop Q, image-06.png crop A, and image-03.png crop P)",
+      "what": "the eye of the polar storm flattens into blurry horizontal streaks inside an abrupt circular patch boundary, with bright cloud highlights baked into the night side",
+      "fix": "build or project the polar vortex in polar/3D space without UV stretching at the pole, soften the patch transition, and shade cloud relief dynamically across the terminator"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "sunlit planet limb (crop K, and image-06.png crops C and H)",
+      "what": "the globe silhouette shows jagged stair-stepped pixels and creates a distinct doubled rim line inside the softer outer atmospheric glow",
+      "fix": "increase sphere tessellation and multisample antialiasing along the limb and blend the inner atmosphere shell smoothly across the surface edge"
+     },
+     {
+      "severity": "major",
+      "file": "image-08.png",
+      "where": "Milky Way skybox near the right limb (crops W and X, image-06.png crop F, and image-03.png crop Q)",
+      "what": "galactic dust lanes look soft and blocky with visible upsampled skybox texels right behind sharp single-pixel stars",
+      "fix": "use a higher-resolution Milky Way environment texture or procedural nebula layer matched to native pixel density"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "both moons (crop B and image-03.png crop L)",
+      "what": "moon silhouettes and terminators have jagged stair-stepped pixels, with stray orange-red pixels on the dark lower edge of the right moon",
+      "fix": "supersample the moon geometry and shaders and remove the stray colored rim pixels on the unlit limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "planetary rings (crops B and G, image-03.png crops J and K, and image-06.png crop B)",
+      "what": "thin bright rings stair-step across shallow curves and break into noisy dots over the Milky Way, while close-up rings appear as faint straight streaks near the upper-left limb",
+      "fix": "filter and antialias thin ringlets in shader space to prevent pixel breakup and refine close-up ring scattering and falloff"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "sunlit cyan cloud bands on the wide globe (crop A)",
+      "what": "isolated single-pixel white speckles pepper the mid-latitude cloud bands like un-antialiased noise",
+      "fix": "clamp or pre-filter sub-pixel cloud noise so highlights resolve smoothly across multiple pixels"
+     },
+     {
+      "severity": "minor",
+      "file": "image-04.png",
+      "where": "lower-left starfield and bottom dark limb (crops S, T, U and image-02.png crop D)",
+      "what": "faint rainbow lens-flare ghosts appear as muddy colored smudges in dark space, and the unlit bottom limb ends in a hard thin teal line",
+      "fix": "remove or clean up the low-amplitude chromatic flare blotches and soften the dark-side atmospheric rim cutoff"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "panel A, lower right",
+      "what": "the white vortex crest breaks into frothy spray-like wisps that read as sea foam, not convective cloud; the same storm sits in the lower right of image-13.png",
+      "fix": "rebuild the crest as layered cloud with a dark eye, and remove the splash tendrils"
+     },
+     {
+      "severity": "major",
+      "file": "image-10.png",
+      "where": "panels E, H and I, cloud deck",
+      "what": "the cyan deck is a soft diagonal smear with no turbulent micro-detail, so the surface looks airbrushed at native size",
+      "fix": "break the uniform wind smear and add fine eddies that hold up in the crop"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "panels A and C, cyan deck",
+      "what": "the same airbrushed diagonal smear, flatter and softer than the first stop, with no filament structure",
+      "fix": "add scale-varying turbulence so the bands are not one painted streak"
+     },
+     {
+      "severity": "minor",
+      "file": "image-14.png",
+      "where": "panel B, upper middle",
+      "what": "the moon's lit face is a smooth gradient about 50 pixels across, with no resolved relief",
+      "fix": "sharpen the terminator and put a few crater rims on the lit side"
+     }
+    ]
+   }
+  }
+ ]
+}

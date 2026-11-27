@@ -1,0 +1,42 @@
+{
+ "critic": "R1",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "pair-01-b.png",
+   "where": "sunlit left and upper polar limb (crops B, D, H in pair-02-b.png)",
+   "what": "the Mars sphere ends in a hard, aliased circular cutoff inside the outer glow instead of rolling off softly across the limb, losing the distinct secondary blue haze band off the lower-left limb and adding dark grazing-angle stippling just inside the limb in crop D",
+   "fix": "anti-alias and feather the planet limb into an inner atmospheric scattering gradient so surface brightness blends continuously into the outer glow, restore the thin detached blue haze layer off the lower-left limb, and smooth the grazing-angle texture/bump noise near the edge"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "upper-right limb (crop C in pair-02-b.png)",
+   "what": "the thin cyan atmospheric rim cuts off early into a jagged stair-stepped brown edge with stars bleeding onto the limb and a stray fuzzy blue dot floating just outside the limb",
+   "fix": "extend and anti-alias the cyan atmospheric rim smoothly down the upper-right arc, occlude background stars cleanly behind the planet disc, and remove the stray blue spot off the limb"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-01-b.png",
+   "where": "nightside right limb and terminator shadow (crops E, I in pair-02-b.png)",
+   "what": "subtle bluish nightside cloud wisps near the right limb are darkened away, a slightly wider dark edge halo clips stars right along the dark limb, and terminator bump relief in upper-left crop E is slightly brighter than -a",
+   "fix": "restore the faint blue nightside cloud detail near the right limb, tighten the dark limb matte so adjacent Milky Way stars are not clipped, and dial down normal/bump shading in deep terminator shadow"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "mid-canyon floor and shadowed foreground cliff (crops A, D, E, G in pair-04-b.png)",
+   "what": "shadows are slightly lifted and warmer from added reddish-brown dust haze across the canyon floor, softening the deeper cool shadow blacks of -a",
+   "fix": "reduce the warm canyon-floor haze layer slightly and deepen/cool the shadow black point in the canyon trough and shadowed left cliff strata"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "high-contrast sunlit canyon rims (crops C, F in pair-04-b.png)",
+   "what": "displaced terrain crests show faint 1-pixel stair-stepping along sunlit plateau edges",
+   "fix": "apply stronger anti-aliasing or finer mesh tessellation along high-contrast canyon rim silhouettes"
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "critic": "R6",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "image-09.png",
+   "where": "full frame progression from image-01.png to image-09.png",
+   "what": "across the hook window the camera barely advances and the brief plasma pulse in image-04.png to image-07.png settles back to baseline by image-08.png and image-09.png, reading at phone width like a static loop rather than a developing event that rewards staying",
+   "fix": "commit to a decisive change within the hook window, such as a noticeably faster push-in toward the sunspot or a sustained, escalating magnetic eruption that transforms the frame"
+  },
+  {
+   "severity": "minor",
+   "file": "image-06.png",
+   "where": "upper center edge of frame (also in image-07.png)",
+   "what": "the highest expanding coronal strands clip against the top edge of the frame right at peak expansion",
+   "fix": "add upper headroom or tilt the camera slightly upward so the expanding magnetic arch remains fully visible at its peak"
+  },
+  {
+   "severity": "minor",
+   "file": "image-01.png",
+   "where": "lower half foreground granulation",
+   "what": "large, high-contrast convection bumps occupy nearly half the frame and read as noisy cobblestone or popcorn texture at phone width, reducing the visual weight of the hero sunspot and arch",
+   "fix": "crop or push closer to the sunspot and coronal loop and reduce dark-crack contrast in the near foreground so the subject reads instantaneously at small scale"
+  }
+ ]
+}

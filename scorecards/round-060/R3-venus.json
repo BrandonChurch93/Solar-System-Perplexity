@@ -1,0 +1,134 @@
+{
+ "critic": "R3",
+ "score": 3.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 3,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "whole lit hemisphere, left and centre (crops D, G, N, O, S)",
+      "what": "the cloud texture breaks down into blocky, smeared rectangular chunks with heavy directional streaking; the texture has been magnified far past its resolution and reads as stretched, low-resolution pixels rather than cloud",
+      "fix": "use a much higher-resolution or procedural cloud map for close views, or switch levels of detail by distance, and remove the directional smear filter"
+     },
+     {
+      "severity": "severe",
+      "file": "image-05.png",
+      "where": "lower band of the globe, bottom left to bottom centre (crops D, T, U, H)",
+      "what": "the surface is stretched into parallel horizontal streaks, like a texture smeared along one axis or a motion blur baked into the frame; no shape holds at native size",
+      "fix": "fix the UV mapping or projection at this latitude and drop any motion blur from a still judged frame"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "dark side and terminator, centre right (crops A, E, H, P, Q)",
+      "what": "the night side is a muddy grey-green, crusty noise that looks like a sharpening or upscaling artefact rather than cloud tops; it clashes with the gold palette of the day side",
+      "fix": "regenerate the night-side detail with the same cloud material, darkened smoothly, and cut the sharpening"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "right limb (crops E, Q, V)",
+      "what": "the limb is a soft, doubled band: the planet edge smears outward into a hazy streaked halo with no crisp rim and a ghost edge inside it",
+      "fix": "render the limb sharp, then add a smooth atmosphere falloff on its own layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "upper storm vortex, top centre (crops F, J, K)",
+      "what": "the spiral at the top looks like a swirl filter pasted onto the surface, with flat concentric rings and soft, plastic shading that does not match the clouds around it",
+      "fix": "build the vortex into the cloud texture with matching detail and lighting"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "lightning on the lower night side (crops I, Q)",
+      "what": "the violet lightning flashes are small, flat sprites with no glow lighting the nearby cloud",
+      "fix": "add a soft local glow that lights the surrounding cloud tops"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "upper left and left limb (crops B, D, K, P)",
+      "what": "the atmosphere glow is a uniform, airbrushed bloom that slightly washes out the limb cloud detail",
+      "fix": "tighten the bloom and let the glow fade with height above the limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-01.png",
+      "where": "swirl at the top of the globe (crop L)",
+      "what": "the spiral is very regular and sits slightly apart from the surrounding cloud flow, which hints at a stamped pattern",
+      "fix": "break up the symmetry of the spiral and blend its arms into the nearby bands"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "right-center vortex and surrounding bands (image-14.png crop A, image-15.png crop K)",
+      "what": "the spiral vortex stretches and blurs the surface texture into mushy concentric rings with stepped, comb-like pixel artifacts along the bright yellow streaks",
+      "fix": "replace the procedural swirl warp with high-resolution volumetric or multi-layered cloud maps that preserve crisp detail without UV stretching or pixel stepping"
+     },
+     {
+      "severity": "severe",
+      "file": "image-13.png",
+      "where": "central and upper-left illuminated globe surface (image-14.png crops B, F, I, image-15.png crops J, O)",
+      "what": "crunchy rock-like embossed bumpiness and parallel diagonal corduroy striping sit next to glossy, plastic-looking yellow specular blobs, giving away a displaced 3D heightmap and normal shader",
+      "fix": "use soft subsurface-scattering cloud shading instead of hard specular and normal-mapped relief, and eliminate high-frequency procedural displacement aliasing"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "planet limb, especially the dark lower and right edges (image-14.png crops D, H, I, image-15.png crops N, P, image-16.png crops S, T, U)",
+      "what": "a detached bright tan rim line with a darker inner trough outlines even the unlit hemisphere, creating a doubled edge around the sphere",
+      "fix": "remove the uniform Fresnel rim shell on the nightside and tie atmospheric limb scattering smoothly to the sun direction and terminator"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "atmospheric halo around the limb (image-14.png crops C, D, H, I, image-15.png crops K, N, P, image-16.png crops S, T, U)",
+      "what": "sharp background stars shine undimmed through the glowing atmospheric haze right up to the hard edge of the planet disc",
+      "fix": "attenuate and occlude background stars according to the optical depth and brightness of the atmosphere layer"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower dark hemisphere near the bottom limb (image-14.png crop D, image-16.png crop T)",
+      "what": "the dark surface texture becomes soft, smeared, and stretched parallel to the grazing limb",
+      "fix": "maintain even texel density at grazing angles and near the poles using seamless spherical or triplanar mapping"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "solar glare and upper-right horizon haze (image-10.png crop C, image-11.png crops K, L, M)",
+      "what": "pinpoint stars remain visible directly inside the bright solar bloom and sunlit atmospheric haze, and a horizontal flare streak forms a faint secondary band just above the limb",
+      "fix": "mask out stars where solar bloom and bright atmospheric scattering wash out the sky, and soften the horizontal flare streak near the horizon"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "bottom foreground clouds (image-10.png crops D, I, image-12.png crops T, V, W, X)",
+      "what": "the nearest cloud tops along the bottom margin are noticeably softer and directionally smeared compared with the crisp mid-ground cloud towers",
+      "fix": "preserve sharp cloud detail in the foreground to match the mid-ground resolution"
+     }
+    ]
+   }
+  }
+ ]
+}

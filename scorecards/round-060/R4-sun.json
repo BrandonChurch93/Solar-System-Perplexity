@@ -1,0 +1,42 @@
+{
+ "critic": "R4",
+ "score": 4,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "solar limb, surface, and corona across frames 212-245",
+   "what": "the cover breaks into two mismatched rigs instead of one continuous pullback: between frames 212 and 237 the solar limb jumps upward in frame and snaps to tighter curvature, a blotchy 2D globe texture double-exposes over the 3D granulation (starting at frame 196), the central 3D magnetic arch and sunspot shrink and vanish by frame 229 while unrelated red prominences fade in on the limbs, and large white radial coronal streamers plus upper-sky haze pop in across frames 220-237 before tightening in frame 245",
+   "fix": "match camera FOV, sphere radius, and limb screen position seamlessly at the terrain-to-globe handoff, align surface albedo, sunspot, and prominence placement across both rigs so features persist, and ramp coronal streamers smoothly with altitude instead of popping a wide halo mid-blend"
+  },
+  {
+   "severity": "severe",
+   "file": "sheet-02.png",
+   "where": "background sky and Milky Way across frames 212-253",
+   "what": "the starfield and galactic band swap completely across the cover: the diagonal Milky Way above the limb in frames 180-212 fades to black in frame 220, turns into a bluish-gray haze at top-right in frame 237, pops bright star clouds into the upper corners in frame 245, and settles into a horizontal Milky Way band flanking the Sun in frames 253-269",
+   "fix": "bind both the terrain view and full-disc globe view to a single shared world-space sky dome and constant background exposure so stars and the Milky Way move solely with continuous camera rotation"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "all panels (frames 200-211)",
+   "what": "the consecutive-frame cover sheet ends at frame 211 while the shot is still entirely on the terrain rig, missing the actual rig switch, limb jump, corona pop, and sky swap that occur across frames 212-245 in sheet-02.png",
+   "fix": "place the consecutive-frame cover sheet squarely across the active rig handoff window (frames 212-245, or retime the cover to match the sheet range) so every frame of the transition is inspected"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png",
+   "where": "central magnetic coronal arch in frames 0-65 (top two rows)",
+   "what": "an outer plasma arch balloons rapidly upward from frame 0 to nearly the top frame edge at frame 33, then breaks apart and snaps out in frame 49 leaving two thin detached bright streaks floating in mid-air before settling to a smaller constant arch height from frame 65 to 179",
+   "fix": "pre-warm and bound the coronal loop plasma simulation so filaments flow continuously along a stable arch without erupting to the frame border and vanishing mid-shot"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-04.png",
+   "where": "red limb prominences around the solar disc across frames 270-449",
+   "what": "while the camera orbits and photospheric spots visibly rotate left-to-right across frames 270-449, all four red limb prominences stay pinned at fixed screen-space clock angles around the silhouette instead of rotating in 3D with the globe",
+   "fix": "anchor prominences to 3D coordinates on the rotating solar sphere so they foreshorten and travel around the limb at the same angular rate as the surface"
+  }
+ ]
+}

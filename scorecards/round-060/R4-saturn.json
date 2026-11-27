@@ -1,0 +1,14 @@
+{
+ "critic": "R4",
+ "score": 9,
+ "pass": true,
+ "issues": [
+  {
+   "severity": "minor",
+   "file": "sheet-06.png",
+   "where": "ring edges and planet limb, all twelve consecutive frames",
+   "what": "the slew travels about five pixels a frame, but those edges stay nearly as sharp as the hold, so the fast pan reads as a crisp step rather than a smooth blur. No ghost copies.",
+   "fix": "add shutter-length blur along the pan so the limb and ring edges smear in the direction of travel"
+  }
+ ]
+}

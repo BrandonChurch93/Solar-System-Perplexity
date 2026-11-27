@@ -6,7 +6,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 
 - Current phase: 6 · Polish and deliver
 - Current stop: none. All nine stops are finished (Phase 4 gate, 00:52 UTC on 2026-11-22). Phase 5 is done: its three whole film rounds 30, 31 and 32 ran to the limit of three, round 32 closed at 11:55 UTC and its build is kept as the best of the three (main 4365a0f0, engine hash be043ade04a7ab6e: R5 7, R6 6, R7 6, R2 pass, R3 4, R4 6; 1 severe and 21 major, written under open items 79 to 100), and the Phase 5 gate held at 12:23 UTC with the preview film of that build in `out/preview.mp4`. Phase 6 step 1 runs: three polish rounds (33, 34, 35) on the open items, worst first, each judged only on the frames its batch touched. Round 33 closed at 15:26 UTC with 95 answers (13 severe, 97 major; motion better at Jupiter, Saturn, Mercury, Neptune and the Sun, so its build is the base of round 34). Round 34 closed at 17:40 UTC with 59 answers (10 severe, 80 major, written under open items 109 to 129; the opening at phone size passes with 9, compression 8, the whole film 6; motion at Mercury 3 and Earth 4, and the film's motion critic names two sky pops that are the camera's turn). Round 35, the last polish round, is cut at 18:30 UTC from take outs and small proven things, with at most one larger cure per stop as its own commit; then the best build of rounds 32 to 35 is frozen, and the record round, the sandbox master, the nine clips, the nine posts and the gauntlet follow
-- Current round: open: 60 (record round). The next round is 61. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
+- Current round: open: none. The next round is 61. Round numbers are global; rounds of different stops run at the same time, each written here when it starts
 - Next critic name: reviewer_2132
 - Blocked: no
 - Review notes in force: four, of 05:57 UTC and of about 21:50 UTC on 2026-11-23, of about 21:25 UTC on 2026-11-24 and of about 20:21 UTC on 2026-11-25. The second is the section "Second review note of 2026-11-23" (plans E to I), the third the section "Third review note of 2026-11-24" (plans J to N), the fourth the section "Fourth review note of 2026-11-25" (plans O to R); together they set the work from here
@@ -14,7 +14,7 @@ The Builder's memory. Read this first in every task. Update it before every comm
 - Mars review: approved
 
 "Mars review" is one of `not reached`, `waiting` or `approved`. `AGENTS.md` says what each means.
-- Last push: status 469
+- Last push: round 60 closed (record round), scorecards/round-060
 
 ## Review note of 2026-11-23
 
@@ -1638,7 +1638,7 @@ One entry per long job while it runs: the command, the frame range, the log file
 
 Work for the review note of 2026-11-23, started 06:40 UTC, each agent on its own VM. The spec is `cut/HANDOVER.md`; who owns what and its state is the table "State" in the section "Review note of 2026-11-23"; looks arrive on `agent/<branch folder>-looks`. Fresh agents: `handover_engineer`, `jupiter_coder`, `saturn_coder`. Builders taken up again: `sun_builder`, `mercury_builder`, `venus_builder`, `earth_builder`, `uranus_builder`, `neptune_builder`. If a task starts and one of these is not alive, start a fresh agent for its part with `cut/HANDOVER.md`, `assets-src/shared/STOP-AGENT.md` and the stop's notebook. The draft tier reference of the 47 judged frames on the Builder's own VM finished at 07:28 UTC and the engine's proof on render_01 to render_12 (JOB e1proof) came back at 08:00 UTC; nothing of the note runs on the Builder's VM or on a render machine at 08:02 UTC.
 
-Jobs out at 18:05 UTC, 2026-11-27, 40 machines busy, 0 jobs waiting (the critics of the record round). By check name, part and machine: fm9 01 on render_06, 02 on render_20; fs9 07 on render_08; gm9 04 on render_28; hm9 02 on render_01, 03 on render_07, 04 on render_23, 05 on render_12, 06 on render_26; im9 03 on render_04, 04 on render_39, 08 on render_34, 09 on render_05, 10 on render_15, 11 on render_32, 12 on render_19, 13 on render_14, 16 on render_35, 19 on render_25, 20 on render_10, 21 on render_17, 22 on render_21, 24 on render_09, 25 on render_22, 27 on render_02, 28 on render_33, 32 on render_11, 33 on render_36, 35 on render_16, 37 on render_31, 40 on render_13, 41 on render_03, 43 on render_24; nm60 01 on render_37, 02 on render_30, 03 on render_29, 04 on render_40; pm9 02 on render_27, 03 on render_38; ri60 47 on render_18.
+Jobs out at 18:19 UTC, 2026-11-27, 40 machines busy, 0 jobs waiting (none: the record round is closed, the final checks come next). By check name, part and machine: fm9 01 on render_06, 02 on render_20; fs9 07 on render_08; gm9 04 on render_28; hm9 02 on render_01, 03 on render_07, 04 on render_23, 05 on render_12, 06 on render_26; im9 03 on render_04, 04 on render_39, 08 on render_34, 09 on render_05, 10 on render_15, 11 on render_32, 12 on render_19, 13 on render_14, 16 on render_35, 19 on render_25, 20 on render_10, 21 on render_17, 22 on render_21, 24 on render_09, 25 on render_22, 27 on render_02, 28 on render_33, 32 on render_11, 33 on render_36, 35 on render_16, 37 on render_31, 40 on render_13, 41 on render_03, 43 on render_24; nm60 01 on render_37, 02 on render_30, 03 on render_29, 04 on render_40; pm9 02 on render_27, 03 on render_38; ri60 47 on render_18.
 
 
 
@@ -1738,60 +1738,76 @@ One line per round, written when the round starts: number, phase, stop. Scores a
 - Round 57, Phase 6, saturn, round 1 of 3 of the fourth note. Started 2026-11-26 14:58 UTC. Judged on main at 9f09a8a. Measures not green. R1 5, R2 pass, R3 7, R4 7, R8 pass. 6 severe, 9 major. Next: see the summary `scorecards/round-057/`.
 - Round 58, Phase 6, venus, round 3 of 3 of the second note. Started 2026-11-26 14:58 UTC. Judged on main at 9f09a8a. Measures not green. R1 8, R2 pass, R3 4, R4 4, R8 pass. 10 severe, 7 major. Next: see the summary `scorecards/round-058/`.
 - Round 59, Phase 6, jupiter, round 1 of 3 of the fourth note. Started 2026-11-26 14:58 UTC. Judged on main at 9f09a8a. Measures not green. R1 8, R2 pass, R3 4, R4 7, R8 pass. 3 severe, 9 major. Next: see the summary `scorecards/round-059/`.
-- Round 60, Phase 6, record round, run 2 of 2. Started 2026-11-26 21:27 UTC.
+- Round 60, Phase 6, record round, run 2 of 2. Started 2026-11-26 21:27 UTC. Judged on main at 3fb8fc7. A stop's pass bar holds for 0 of 9 stops. Whole film: R5 7, R6 7, R7 6, R2 pass, R3 4, R4 6; its pass bar does not hold. 37 severe, 124 major. The scores are under "Final scores". `scorecards/round-060/`.
 
 ## Final scores
 
-From the record round: round 36, run 1 of 2, on main at 567b3a5. `scorecards/round-036/`.
+From the record round: round 60, run 2 of 2, on main at 3fb8fc7. `scorecards/round-060/`.
 
 | Stop | G5 | G13 | G17 | R1 | R2 | R3 | R4 | R8 | Severe | Major | Pass bar |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| sun | pass | pass | pass | 9 | pass | 7 (part 1: 7, part 2: 7, part 3: 7) | 4 | pass | 2 | 7 | does not hold |
-| mercury | pass | pass | pass | 7 | pass | 6 (part 1: 7, part 2: 6) | 3 | pass | 3 | 10 | does not hold |
-| venus | pass | pass | pass | 9 | pass | 6 (part 1: 6, part 2: 6) | 5 | pass | 1 | 8 | does not hold |
-| earth | pass | pass | pass | 8 | pass | 5 (part 1: 5, part 2: 6) | 7 | pass | 0 | 11 | does not hold |
-| mars | pass | pass | pass | 7 | pass | 7 (part 1: 9, part 2: 7) | 5 | pass | 0 | 9 | does not hold |
-| jupiter | pass | pass | pass | 7 | pass | 4 (part 1: 7, part 2: 4) | 4 | pass | 3 | 9 | does not hold |
-| saturn | pass | pass | pass | 9 | fail | 5 (part 1: 5, part 2: 5) | 8 | pass | 2 | 8 | does not hold |
-| uranus | pass | pass | pass | 8 | pass | 3 (part 1: 3, part 2: 6) | 7 | pass | 2 | 8 | does not hold |
-| neptune | pass | pass | pass | 8 | pass | 7 (part 1: 8, part 2: 7) | 5 | pass | 1 | 6 | does not hold |
+| sun | pass | pass | pass | 5 | pass | 5 (part 1: 6, part 2: 5, part 3: 6) | 4 | pass | 3 | 16 | does not hold |
+| mercury | pass | pass | pass | 6 | pass | 6 (part 1: 6, part 2: 6) | 5 | pass | 4 | 13 | does not hold |
+| venus | pass | pass | pass | 9 | pass | 3 (part 1: 3, part 2: 4) | 8 | pass | 6 | 7 | does not hold |
+| earth | pass | pass | pass | 8 | pass | 4 (part 1: 4, part 2: 6) | 8 | pass | 2 | 7 | does not hold |
+| mars | pass | fail | pass | 7 | pass | 6 (part 1: 6, part 2: 6) | 5 | pass | 6 | 9 | does not hold |
+| jupiter | pass | pass | pass | 6 | pass | 6 (part 1: 6, part 2: 6) | 4 | pass | 4 | 14 | does not hold |
+| saturn | pass | pass | pass | 6 | pass | 4 (part 1: 7, part 2: 4) | 9 | pass | 3 | 14 | does not hold |
+| uranus | pass | fail | pass | 7 | pass | 6 (part 1: 6, part 2: 6) | 8 | pass | 2 | 8 | does not hold |
+| neptune | pass | fail | pass | 5 | fail | 6 (part 1: 6, part 2: 7) | 6 | pass | 5 | 13 | does not hold |
 
 A stop's pass bar asks R1, R3 and R4 for 9 with no severe or major issue open, R2 and R8 to pass, and the measures and machine checks green. It holds for no stop.
+
+### Smooth
+
+| Stop | Report | Landing | Red lines | First lines | From |
+| --- | --- | --- | --- | --- | --- |
+| sun | green | green | 0 |  | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+| mercury | red | green | 2 | dive: the pattern of the picture changes in place by 0.56 from frame 721 + 1/2 to 8 film frames later, band 8.6 px, limit 0.45 (7 frames over it, first 720); rise: the pattern of the picture changes in place by 0.64 from frame 1011 + 1/2 to 8 film frames later, band 8 px, limit 0.45 (10 frames over it, first 1009 + 1/2) | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+| venus | red | green | 2 | dive: the pattern of the picture changes in place by 0.62 from frame 1275 + 1/2 to 8 film frames later, band 8 px, limit 0.45 (28 frames over it, first 1274); rise: the pattern of the picture changes in place by 0.72 from frame 1544 to 8 film frames later, band 8 px, limit 0.45 (17 frames over it, first 1542 + 1/2) | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+| earth | green | green | 0 |  | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+| mars | red | green | 4 | dive: the level of frame 2412 + 1/2 lies 1.33 off the line through its two neighbours, limit 1.3; dive: the pattern of the picture changes in place by 1.24 from frame 2464 + 1/2 to 8 film frames later, band 8 px, limit 0.45 (41 frames over it, first 2400) (and 2 more) | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+| jupiter | red | green | 2 | dive: the pattern of the picture changes in place by 0.84 from frame 3019 + 1/2 to 8 film frames later, band 8 px, limit 0.45 (38 frames over it, first 3017); rise: the pattern of the picture changes in place by 1.40 from frame 3250 to 8 film frames later, band 8 px, limit 0.45 (29 frames over it, first 3244 + 1/2) | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+| saturn | green | green | 0 |  | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+| uranus | red | green | 2 | dive: the pattern of the picture changes in place by 1.60 from frame 4175 + 1/2 to 8 film frames later, band 8 px, limit 0.45 (93 frames over it, first 4139); rise: the pattern of the picture changes in place by 1.48 from frame 4411 to 8 film frames later, band 8 px, limit 0.45 (90 frames over it, first 4380 + 1/2) | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+| neptune | red | green | 3 | dive: the pattern of the picture changes in place by 0.46 from frame 4745 to 8 film frames later, band 8.3 px, limit 0.45; counts: neptune.dive makes 1 programs, 0 texture uploads and 10 buffers in 2 of its 180 pictures, first at frame 4696, most at frame 4696 (1, 0, 5), limit 0, 0, 0 a picture (and 1 more) | full report at 262b9a68 on space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz; landing at 5dd60616, measured at the close on this build |
+
+Each red line is one severe issue of its stop. A stop that is not measured does not hold its pass bar. The reports are the `smooth-*` files of this folder.
 
 ### Whole film
 
 | Critic | Score | Pass | Severe | Major | Minor |
 | --- | --- | --- | --- | --- | --- |
-| R5 | 6 | no | 0 | 4 | 4 |
-| R6 | 8 | no | 0 | 0 | 2 |
-| R7 | 6 (part 1: 10, part 2: 8, part 3: 6) | no | 0 | 1 | 5 |
+| R5 | 7 | no | 0 | 5 | 3 |
+| R6 | 7 | no | 0 | 1 | 2 |
+| R7 | 6 (part 1: 8, part 2: 6, part 3: 7) | no | 0 | 3 | 6 |
 | R2 | | yes | | | |
-| R3 | 5 (part 1: 6, part 2: 7, part 3: 7, part 4: 6, part 5: 5) | no | 0 | 10 | 15 |
-| R4 | 6 (part 1: 6, part 2: 9) | no | 1 | 1 | 2 |
+| R3 | 4 (part 1: 4, part 2: 7, part 3: 7, part 4: 6, part 5: 6) | no | 2 | 11 | 11 |
+| R4 | 6 (part 1: 6, part 2: 8) | no | 0 | 2 | 1 |
 
 The whole film pass bar asks R5, R6, R7, R3 and R4 for 9 with no severe or major issue open, R2 to pass on its whole film list, and the machine checks green. It does not hold.
 
-R2 votes on the whole film list (a = film or game cinematic). Controls: share 18 of 90. Judged: share 19 of 135. Pass: the judged share may be at most 0.2 under the control share.
+R2 votes on the whole film list (a = film or game cinematic). Controls: share 18 of 90. Judged: share 32 of 135. Pass: the judged share may be at most 0.2 under the control share.
 
 - Controls: earth hold b b d b b; earth terrain b a b b b; jupiter hold d d d d b; jupiter terrain a d d d d; mars hold b b d b b; mars terrain b a d d d; mercury hold b b a a b; mercury terrain b a d a b; neptune hold b b d a b; neptune terrain d a d d b; saturn hold b b e d b; saturn terrain a a e b b; sun hold b d d d d; sun terrain a b d a b; uranus hold b d e a b; uranus terrain b b d d b; venus hold a a d a d; venus terrain a d d d d.
 - Controls of the stops: earth hold b b d d b; earth terrain b a b a b; jupiter hold d d b b b; jupiter terrain a d d a d; mars hold b a d b d; mars terrain a a d a a; mercury hold a a a a a; mercury terrain b a d d a; neptune hold b b b a b; neptune terrain d a d a d; saturn hold b a e a b; saturn terrain a a e a b; sun hold b b d b d; sun terrain a a d d b; uranus hold b b e d b; uranus terrain b b d a d; venus hold a a d a d; venus terrain a a d d b.
-- Judged: earth.hold b b d b b; earth.terrain b a b b b; earth.travel e e e a b; ending.lookback b e e e b; jupiter.hold b b d b b; jupiter.terrain a d d a d; jupiter.travel e e e e e; mars.hold b b d a b; mars.terrain a a d a d; mars.travel b e e e b; mercury.hold b a b b a; mercury.terrain a a d a b; mercury.travel b e d e e; neptune.hold b b d b b; neptune.terrain d a d d d; saturn.hold b b e b b; saturn.terrain b b e b b; saturn.travel e b d b b; sun.hold b b d b b; sun.terrain b d d b a; sun.travel c b e e b; uranus.hold b b e d b; uranus.terrain b b d d b; uranus.travel e e e e b; venus.hold a a d d d; venus.terrain a d d d a; venus.travel e e b e b.
+- Judged: earth.hold b b d a b; earth.terrain b a b a d; earth.travel e e e e e; ending.lookback b e e e b; jupiter.hold b d d a d; jupiter.terrain a d d d d; jupiter.travel e e e e b; mars.hold b a d a b; mars.terrain a a a d d; mars.travel b e e b b; mercury.hold a b a b b; mercury.terrain b a d a a; mercury.travel a e e e b; neptune.hold b b d d b; neptune.terrain d e e d b; saturn.hold b a e a b; saturn.terrain b a e a b; saturn.travel b b b b b; sun.hold b b b b b; sun.terrain a e e a b; sun.travel b e e e b; uranus.hold b a e a b; uranus.terrain b b d b b; uranus.travel e e e e e; venus.hold a a d a d; venus.terrain a a d a a; venus.travel a e e d b.
 
 ### R2 and R8 by stop
 
 | Stop | R2 controls (a) | R2 judged (a) | R2 | R8 control named | R8 judged named | R8 |
 | --- | --- | --- | --- | --- | --- | --- |
-| sun | 2 of 10 | 1 of 10 | pass | 3 of 3 | 3 of 3 | pass |
+| sun | 2 of 10 | 2 of 10 | pass | 3 of 3 | 3 of 3 | pass |
 | mercury | 7 of 10 | 5 of 10 | pass | 3 of 3 | 3 of 3 | pass |
-| venus | 5 of 10 | 4 of 10 | pass | 3 of 3 | 3 of 3 | pass |
-| earth | 2 of 10 | 1 of 10 | pass | 3 of 3 | 3 of 3 | pass |
-| mars | 5 of 10 | 4 of 10 | pass | 1 of 3 | 1 of 3 | pass |
+| venus | 5 of 10 | 7 of 10 | pass | 3 of 3 | 3 of 3 | pass |
+| earth | 2 of 10 | 3 of 10 | pass | 3 of 3 | 3 of 3 | pass |
+| mars | 5 of 10 | 5 of 10 | pass | 1 of 3 | 1 of 3 | pass |
 | jupiter | 2 of 10 | 2 of 10 | pass | 3 of 3 | 3 of 3 | pass |
-| saturn | 5 of 10 | 0 of 10 | fail | 3 of 3 | 3 of 3 | pass |
-| uranus | 1 of 10 | 0 of 10 | pass | 3 of 3 | 3 of 3 | pass |
-| neptune | 3 of 10 | 1 of 10 | pass | 3 of 3 | 3 of 3 | pass |
+| saturn | 5 of 10 | 4 of 10 | pass | 3 of 3 | 3 of 3 | pass |
+| uranus | 1 of 10 | 2 of 10 | pass | 3 of 3 | 3 of 3 | pass |
+| neptune | 3 of 10 | 0 of 10 | fail | 3 of 3 | 3 of 3 | pass |
 
-Final scores: R1 mercury 7, R2 fail, R3 uranus 3, R4 mercury 3, R5 6, R6 8, R7 6, R8 pass
+Final scores: R1 sun 5, R2 fail, R3 venus 3, R4 sun 4, R5 7, R6 7, R7 6, R8 pass
 
 R1, R3 and R4 name the lowest stop; R3 and R4 count the whole film critics too. R2 is pass when the whole film list and every stop pass. R8 is pass when every stop passes.
 

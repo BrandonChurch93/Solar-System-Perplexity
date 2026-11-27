@@ -1,0 +1,64 @@
+{
+ "critic": "R5",
+ "score": 7,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "major",
+   "file": "sheet-01.png … sheet-04.png",
+   "where": "every planet stop (e.g. 1072→1185→1586→1642, 2212→2325→2726→2782, 3352→3465→3866→3922, 4492→4605→5085)",
+   "what": "every stop follows the same pattern: a tiny dot in black space, a push to a centred three-quarter disc, a surface or limb close-up, a pull-back to the same three-quarter view, then a dot again. By Saturn the rhythm is predictable and the stops feel interchangeable",
+   "fix": "break the pattern at two or three stops: a fly-through of Saturn's rings, an orbit around the night side of Jupiter, a moon-foreground reveal of Uranus, or a stop with no dot-to-disc approach"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-03.png",
+   "where": "Saturn frames 3465, 3567, 3866",
+   "what": "three nearly identical compositions with the same angle, same ring tilt and the same moon in the upper right. The hold reads as a freeze rather than a move",
+   "fix": "replace 3567 or 3866 with a different angle, such as edge-on to the rings, a view from below the ring plane, or the backlit night side"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "Neptune 5006, 5085, 5235, 5362",
+   "what": "Neptune has bold, Saturn-like ring systems. They read as a mistake and make it look like Uranus or Saturn again. Uranus (4035, 4290) also has rings brighter than real",
+   "fix": "make Neptune's rings faint, thin arcs that are barely visible, and keep Uranus's rings subtle so each ice giant reads distinctly"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-01.png … sheet-04.png",
+   "where": "Jupiter, Saturn and Uranus stops",
+   "what": "the Sun is only visible at Mercury (huge), Venus 1440, Earth 2010, Uranus 4290 and Neptune 4605. At Jupiter and Saturn there is no Sun reference, so the shrinking-Sun story has gaps. At Uranus 4290 the Sun flare looks about as bright and large as at Venus 1440",
+   "fix": "add a Sun-in-frame beat at Jupiter and Saturn, and step its disc and flare size down clearly stop by stop (Uranus smaller and dimmer than Venus or Earth)"
+  },
+  {
+   "severity": "major",
+   "file": "sheet-04.png",
+   "where": "ending 5235→5362",
+   "what": "the film ends on a dim Neptune drifting into the lower-left corner under the Milky Way band. It fades rather than lands, and there is no closing image that pays off the journey from the Sun",
+   "fix": "end on a look back toward a pinpoint Sun from beyond Neptune, or a final wide frame that holds the faint Sun and Neptune together; give the last frame a deliberate composition and hold"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "Venus 1185 vs 1287 vs 1586",
+   "what": "the light direction on Venus moves from nearly frontal (1185), to the left (1287), to the upper left with a dark right half (1586) within one stop, with no clear camera orbit to explain it",
+   "fix": "keep the Sun direction fixed within the stop, or make the camera orbit visibly motivate the terminator change"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-02.png",
+   "where": "Mars 2325",
+   "what": "the moon in the foreground (Phobos) is huge relative to Mars and looks pasted on",
+   "fix": "reduce the moon's size or push it into the background, and match its lighting and atmosphere softness to Mars"
+  },
+  {
+   "severity": "minor",
+   "file": "sheet-01.png",
+   "where": "Mercury 717/1016",
+   "what": "the Sun at Mercury is a blown-out white disc with no surface detail, while the Sun at 247/360 has rich granulation; the shift is abrupt",
+   "fix": "keep a hint of limb darkening or texture in the Sun at Mercury, or bridge the change with exposure"
+  }
+ ],
+ "strengths": "The grade, lens feel and starfield/Milky Way texture stay consistent from the Sun to Neptune, so it reads as one film. The hue journey (orange, grey, gold, blue, red, cream, cyan, deep blue) builds well. Lighting mostly comes from the left or the Sun side and is consistent within stops. The surface close-ups (870, 1440, 2010, 2580, 3150, 4860) are strong variety beats."
+}

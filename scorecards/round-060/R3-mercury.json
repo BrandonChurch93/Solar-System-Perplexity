@@ -1,0 +1,127 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "crop K, sunlit upper globe toward the right limb",
+      "what": "Fine crater rims and bright surface markings smear diagonally into elongated flecks, while the nearby midface retains much crisper relief.",
+      "fix": "Use higher-resolution surface maps and anisotropic sampling at grazing angles; reduce any directional blur that erases crater detail."
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops B and F, upper-left terminator",
+      "what": "Bright crater rims break into jagged white and orange hooks against soft, nearly featureless shadows, making the relief look embossed.",
+      "fix": "Soften the steepest micro-normal slopes, temper the rim highlights and supersample the subpixel ridges."
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "crops M and N, solar disc and adjacent corona",
+      "what": "Large white patches on the disc lose the granular detail, and the white limb reads as a hard cutout against the diffuse gold corona. The same loss is visible in image-07.png crop L.",
+      "fix": "Roll off solar highlights without clipping the surface texture, and let the inner corona blend continuously into the bright limb."
+     },
+     {
+      "severity": "minor",
+      "file": "image-06.png",
+      "where": "crop E, right-hand globe silhouette beneath the Sun",
+      "what": "A thin, nearly uniform pale line and a softer amber fringe trace the rocky edge separately, giving it a doubled outline.",
+      "fix": "Keep the lit terrain edge sharp and apply one exposure-driven bloom falloff rather than a second contour."
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop D, just beyond the dark lower-left limb",
+      "what": "An isolated cream-and-red blur reads as a stray object among the pinpoint stars, with faint flare ghosts extending onto the dark globe.",
+      "fix": "Reduce the flare ghost's opacity and color separation so it stays subordinate to the starfield and silhouette."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "inside the large shadowed crater, centre right (about x 750, y 410 and x 890, y 385; crops A and Q)",
+      "what": "two small bright pale shapes float in the black shadow of the crater. They look like stray objects or leftover debris from generation, not lit terrain",
+      "fix": "remove the specks or paint the shadowed floor as plain unlit regolith"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "east wall of the large crater, right half (crops E, F, R, W)",
+      "what": "the wall terraces are drawn as smooth swirling streaks of the same width, like brush strokes running round the bowl. They read as painted or airbrushed, not as slumped rock",
+      "fix": "break up the terraces with irregular slump blocks, scree and small impacts, and vary their spacing and width"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "solar disc, upper right (crops C, L, K)",
+      "what": "the Sun is a flat, blown-out cream disc with soft blotches and no granulation or limb darkening. At native size it looks smeared and plastic",
+      "fix": "add fine granulation and limb darkening, and pull the exposure down so the disc keeps some texture"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "corona below and right of the solar disc (crops M, Q, R)",
+      "what": "the corona streamers are smoky, smeared wisps that look like a soft brush pass, and they blur into a muddy brown haze over the stars",
+      "fix": "render the streamers as thin, sharp radial filaments that fade cleanly into black"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "bright ray crater, upper left centre (crop B, K)",
+      "what": "the ray splash looks like a starburst sprite pasted onto the surface. The rays are thin and the same length, with a hard white centre",
+      "fix": "make the rays different lengths, let them fade unevenly, and follow the shape of the ground they cross"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "middle and foreground plains (crops O, U, X)",
+      "what": "white and blue glints are scattered over the regolith like stars sitting on the ground, and some are coloured",
+      "fix": "drop the glints or keep them as faint neutral highlights on crater rims only"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "middle distance and near the horizon (crops B, J, K, I)",
+      "what": "the surface goes soft and smooth towards the horizon, which looks more like blur than haze from distance, so mid-scale crater detail is lost",
+      "fix": "keep crater detail sharper towards the limb, letting it shrink with distance instead of blurring"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "planet surface in the dim part next to the terminator (crops B, H)",
+      "what": "the craters go soft and slightly smeared where the light falls off, and the blue-white patches look painted on, not like real differences in the rock",
+      "fix": "keep the craters sharp through the falloff and tie the colour changes to crater rays and the shapes of the ground"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "night side of the globe (crops D, N, T)",
+      "what": "the dark hemisphere is a completely flat black with no gradient and no earthshine-style detail, so it looks like a cut-out",
+      "fix": "add a very faint gradient and a hint of the surface on the night side"
+     }
+    ]
+   }
+  }
+ ]
+}

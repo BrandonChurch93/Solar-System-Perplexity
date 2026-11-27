@@ -1,0 +1,50 @@
+{
+ "critic": "R4",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R4",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "sheet-02.png",
+      "where": "frames 1062 to 1069, full frame",
+      "what": "the Sun-and-Milky-Way view does not continue into the next sample: the Sun is gone, exposure drops, the starfield does not track, and a distant planet is already centered. That is a jump in position, direction, and exposure, not one eased move.",
+      "fix": "carry one camera move across the join so the Sun leaves along its travel vector, the same starfield and exposure hold, and the next body grows from that direction instead of replacing the shot"
+     },
+     {
+      "severity": "major",
+      "file": "sheet-02.png",
+      "where": "frames 1089 to 1096, background behind Venus",
+      "what": "Venus keeps approaching, but the Milky Way band pops on across the lower frame. The right side is dark space in 1089 and a bright galactic band in 1096, and that brighter sky then holds through 1109.",
+      "fix": "keep sky exposure and the galaxy continuous through the approach; slide or fade it with the camera instead of switching it on between samples"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R4",
+    "score": 8,
+    "pass": true,
+    "issues": [
+     {
+      "severity": "minor",
+      "file": "sheet-10.png",
+      "where": "frames 5145-5324, upper cloud bands on the blue globe",
+      "what": "The globe drifts gently in frame, but its most visible cloud feature barely moves relative to the limb, making the long hold read almost like a still.",
+      "fix": "Add a small, continuous drift to the cloud bands relative to the limb while keeping the camera and star field steady through the hold."
+     }
+    ]
+   }
+  }
+ ]
+}

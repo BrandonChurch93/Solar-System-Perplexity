@@ -1,0 +1,113 @@
+{
+ "critic": "R3",
+ "score": 6.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gpt_6_2_sol",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-05.png",
+      "where": "Close-up globe, especially the lower cloud belts and upper-right quadrant (image-06.png crops C and I; image-08.png crops U and V)",
+      "what": "Fine cloud detail smears into long directional streaks and soft patches, while the background stars stay much crisper.",
+      "fix": "Render the close-up with higher-resolution cloud detail and dial back directional blur until small eddies hold up across the disk."
+     },
+     {
+      "severity": "major",
+      "file": "image-07.png",
+      "where": "Crops K, L and P, in the cream and ochre belts above the Great Red Spot",
+      "what": "Bright ridges and dark outlines make the cloud bands look embossed and glossy, like solid relief rather than gas.",
+      "fix": "Reduce small-scale relief and harsh reflection; preserve the swirls with softer, layered cloud shading."
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "Crop H, yellow moon at the right of the close-up",
+      "what": "The moon's face and upper edge are visibly smeared, leaving little readable surface detail even though nearby stars are sharp.",
+      "fix": "Use a sharper moon texture and reduce object blur enough to retain the rim and surface markings."
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "Crop O, immediately to the right of the moon",
+      "what": "The long, near-black shadow appears attached to the moon and reads like a drop shadow pasted onto the cloud deck.",
+      "fix": "Compute the shadow separately on the curved cloud deck and use a finite light source for the penumbra rather than a uniform oval."
+     },
+     {
+      "severity": "minor",
+      "file": "image-07.png",
+      "where": "Crops J and O, sunlit left limb",
+      "what": "The broad glow washes several cloud bands into nearly featureless white just inside the limb.",
+      "fix": "Lower the bloom and roll off the brightest tones more gently so band structure remains visible up to the edge."
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "claude_opus_5_5",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "terminator across the right half of the globe (crops C, L, Q)",
+      "what": "the day-night falloff is a near-vertical screen-space gradient rather than a curve following the sphere, so the night side reads as a flat dark overlay and the globe looks flat",
+      "fix": "compute the terminator from a spherical lighting model so the shadow edge bends with the limb, with a narrow warm twilight band"
+     },
+     {
+      "severity": "major",
+      "file": "image-09.png",
+      "where": "lower third and lower right of the cloud deck (crops D, E, I, S-W)",
+      "what": "the cloud surface turns into smeared, brushstroke-like swirls with no fine structure at native size; it looks painted or airbrushed rather than like a cloud field",
+      "fix": "add high-frequency cloud detail and small convective cells in the shadowed region and lift the shadows slightly so the detail can be read"
+     },
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "moon (Io) at right centre (crop P/Q)",
+      "what": "the moon is a smooth, plastic-looking ball with a soft, painted texture and no crisp surface detail; its edge against the planet is slightly soft and haloed",
+      "fix": "use a higher-resolution moon texture with sharp volcanic surface detail and a hard, airless limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "below the planet's lower right limb (crops E, V)",
+      "what": "a blue-grey haze patch sits in the sky beneath the night side, like a stray cloud or a glow leaking past the planet's edge",
+      "fix": "remove the haze, or confine any background nebula so it does not hug the planet outline"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "blue glows in the lower centre (crops E, U)",
+      "what": "the blue lightning glows look like clumped glitter blobs with a hazy halo rather than lightning flashes lighting up the cloud",
+      "fix": "shape the glows as diffuse flashes inside the clouds, lighting nearby cloud tops, without sparkle points"
+     },
+     {
+      "severity": "minor",
+      "file": "image-13.png",
+      "where": "Great Red Spot and banded detail (crops A, P)",
+      "what": "band turbulence is soft and slightly painterly at native size; the GRS spiral looks like a brush swirl",
+      "fix": "sharpen the band texture and add fine filamentary eddies"
+     },
+     {
+      "severity": "minor",
+      "file": "image-09.png",
+      "where": "sunlit limb, upper left (crops B, J)",
+      "what": "the bright limb is blown out into a flat white glow with no detail",
+      "fix": "pull back the exposure and the bloom on the sunlit limb"
+     }
+    ]
+   }
+  }
+ ]
+}

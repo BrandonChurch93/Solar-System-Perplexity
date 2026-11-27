@@ -1,0 +1,99 @@
+{
+ "critic": "R3",
+ "score": 4.0,
+ "pass": false,
+ "parts": [
+  {
+   "part": 1,
+   "family": "gemini_4_carbon",
+   "answer": {
+    "critic": "R3",
+    "score": 4,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "severe",
+      "file": "image-08.png",
+      "where": "crops S, T, U, and V along the lower globe, Andes, Pacific clouds, and Brazilian night lights (also visible in image-05.png and image-06.png crops D and E)",
+      "what": "severe texture stretching, radial smearing, and blurry upsampling turn clouds, mountain relief, and city lights into soft diagonal streaks that expose a low-resolution plate reprojected onto a sphere",
+      "fix": "render the close-up from high-resolution full-globe surface, night-light, and cloud maps instead of zooming and reprojecting a single 2D plate"
+     },
+     {
+      "severity": "severe",
+      "file": "image-07.png",
+      "where": "crop L along the upper-right aurora limb (also visible in image-06.png crop I and image-05.png upper right)",
+      "what": "a doubled edge and projection seam run along the limb where green aurora baked onto the globe surface cuts off at a sharp rim line beneath a second outer aurora layer",
+      "fix": "remove all baked sky and aurora glow from the planet surface texture and render the aurora strictly as a separate 3D atmospheric volume above the limb"
+     },
+     {
+      "severity": "major",
+      "file": "image-06.png",
+      "where": "crops A, B, C, F, and G across Central America, the Caribbean, North America, and northern South America (also image-07.png crops J, K, O, P, and Q)",
+      "what": "land, coastlines, and clouds look soft, upsampled, and airbrushed at native crop scale, with flat painted relief and baked cloud shadows lacking crisp detail",
+      "fix": "increase planetary surface and cloud texel density (16K-32K or tiled textures) and separate cloud geometry from the terrain albedo"
+     },
+     {
+      "severity": "major",
+      "file": "image-03.png",
+      "where": "crop M around the Moon and surrounding dark sky (from image-01.png upper right)",
+      "what": "the Moon has a jagged stair-stepped lit limb, a dark seam along its night limb, and a circular dark halo patch that suppresses the surrounding sky glow amidst 8x8 compression blocks in the dark background",
+      "fix": "supersample and anti-alias the Moon limb cleanly without an oversized dark matte halo, and use an uncompressed 16-bit starfield skybox to eliminate dark-gradient macroblocking"
+     },
+     {
+      "severity": "minor",
+      "file": "image-02.png",
+      "where": "crop H near Patagonia and the bottom limb (also image-04.png crop V)",
+      "what": "clouds, ocean, and the southern tip of South America pinch and swirl tangentially along the extreme lower limb",
+      "fix": "use undistorted spherical UV mapping and full-globe polar coverage so textures do not swirl or pinch near the southern limb"
+     },
+     {
+      "severity": "minor",
+      "file": "image-03.png",
+      "where": "crop J in the upper-left Milky Way starfield (also image-06.png crop H)",
+      "what": "stars near the corner smear into soft, elongated blobs compared with sharper stars nearer frame center",
+      "fix": "render stars as sharp analytic point sources or sample a higher-resolution skybox without corner projection blur"
+     }
+    ]
+   }
+  },
+  {
+   "part": 2,
+   "family": "grok_4_7",
+   "answer": {
+    "critic": "R3",
+    "score": 6,
+    "pass": false,
+    "issues": [
+     {
+      "severity": "major",
+      "file": "image-13.png",
+      "where": "lower half, south Pacific clouds and night-side South America",
+      "what": "directional smear: clouds, terrain, and city lights streak, while the day side over North America stays sharp",
+      "fix": "remove the directional blur so southern clouds, terrain, and city lights match the sharp day side"
+     },
+     {
+      "severity": "major",
+      "file": "image-16.png",
+      "where": "crops T, U, and V: southern cloud field, Andes coast, and night coast",
+      "what": "native crops are streaked end to end; city lights are dashes rather than points, and the mountain texture is smeared",
+      "fix": "rebuild these crops from an unblurred frame so edges and lights stay crisp at native size"
+     },
+     {
+      "severity": "major",
+      "file": "image-14.png",
+      "where": "crop E, eastern South America into the night side, and the lower right of crop H",
+      "what": "crop E is motion-smeared across terrain, coastline, and city lights; crop H softens toward the Amazon",
+      "fix": "replace these crops with a sharp night-side pass and keep city lights as small points"
+     },
+     {
+      "severity": "major",
+      "file": "image-15.png",
+      "where": "crops P and Q, and the outer bands of the hurricane in crop O",
+      "what": "land, night clouds, and the storm's outer arms smear on one diagonal while the eye stays sharper",
+      "fix": "drop the smear on the South American crops and the outer storm bands so they match the sharper eye and northern day side"
+     }
+    ]
+   }
+  }
+ ]
+}

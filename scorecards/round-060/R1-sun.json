@@ -1,0 +1,42 @@
+{
+ "critic": "R1",
+ "score": 5,
+ "pass": false,
+ "issues": [
+  {
+   "severity": "severe",
+   "file": "pair-03-b.png",
+   "where": "photosphere granulation across the foreground and midground surface (pair-04-b tiles D, E, A, G, H, I)",
+   "what": "granules look like dark, bronze-brown, directionally shaded 3D pillow lumps with smooth interiors and blocky shapes instead of bright, self-luminous incandescent plasma cells with fine internal filigree, crisp dark intergranular lanes, and radial flow elongation toward the active regions",
+   "fix": "make the photosphere shader strongly self-emissive with brighter yellow-white granule cores, add high-frequency cellular filigree detail inside granules, sharpen the narrow dark intergranular lanes, reduce the exaggerated lumpy height shading, and elongate granules radially near the sunspot and loop footpoints"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "central sunspot penumbra and umbra (pair-04-b tile A)",
+   "what": "the penumbra is flattened into coarse, blurry radial streaks around a flat clipped-black oval, losing the sunken bowl-like Wilson depression and the dense, sharp, multi-layered fibrous filaments with bright glowing inner tips",
+   "fix": "deepen the concave penumbral rim, replace the blurry low-frequency radial streaks with tightly packed, crisp fibrous penumbral filaments with bright inner grain heads, and blend the outer penumbral edge organically into surrounding radially aligned granules"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "entire solar horizon and limb (pair-04-b tiles H, I, G, A)",
+   "what": "the bright golden-white incandescent limb glow and warm atmospheric horizon haze are missing, the small secondary magnetic arcades along the right limb and subtle horizontal flare streak at the left footpoint are absent, and fine soft chromospheric spicules are replaced by sparse, stiff, thick grass-blade spikes",
+   "fix": "add a continuous bright golden-white chromospheric glow and warm horizon haze along the entire limb, replace the sparse stiff spikes with dense, fine, soft-edged plasma spicules, and restore the faint background magnetic loops on the right limb and subtle horizontal flare at the left footpoint"
+  },
+  {
+   "severity": "major",
+   "file": "pair-03-b.png",
+   "where": "left and right coronal loop footpoints on the photosphere (pair-04-b tiles G, H)",
+   "what": "both loop bundles meet the surface with a visible circular stippled/grid blend seam and lack the broad, intense yellow-white facular glow that integrates the loop roots into the surrounding granulation",
+   "fix": "remove the hard circular texture/displacement transition around both footpoints and widen the bright yellow-white emissive facular bloom across the adjacent photosphere so the magnetic loops root seamlessly into the surface"
+  },
+  {
+   "severity": "minor",
+   "file": "pair-03-b.png",
+   "where": "lower background sky and Milky Way band above the horizon (pair-04-b tile B)",
+   "what": "faint Milky Way nebula midtones are slightly crushed and the soft warm coronal haze extending upward into the lower sky is dimmer and cuts off lower than in the target",
+   "fix": "slightly lift shadow midtones in the Milky Way dust lane and extend a softer, warmer coronal glow falloff higher above the solar limb"
+  }
+ ]
+}
