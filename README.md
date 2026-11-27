@@ -1,15 +1,42 @@
 # Grand Tour
 
-A three minute flight through the solar system, from the surface of the Sun to beyond Neptune, built as a web scene and delivered as a video.
+A three minute flight through the solar system, from the surface of the Sun to beyond Neptune, built as a web scene and delivered as a video. It has nine stops: the Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune. Every stop has a whole view and a surface view, and the camera flies from one to the next without a cut.
 
 ## Status
 
-The build is in progress. `kit/PROGRESS.md` says where it is.
+The build is complete. `kit/PROGRESS.md` is the record: every round, every decision, the final scores and the items that stayed open.
 
 - App URL: https://grand-tour-film.pplx.app
-- Review page, where the rough cut, the preview film, clips and comparison images play: https://grand-tour-film.pplx.app/review.html
+- Watch it live: https://grand-tour-film.pplx.app?mode=autopilot
+- Export page: https://grand-tour-film.pplx.app?mode=export
+- Review page, which opens on the finished film with its sound and its subtitles and then shows the nine posts, the nine clips and the comparison images: https://grand-tour-film.pplx.app/review.html. The rough cut and the preview film are in the repo as `out/roughcut.mp4` and `out/preview.mp4`. The film, the posts and the clips on that page are 1280 by 720 copies made to fit the host. The full size posts, clips and comparison images are in `out/posts/`, `out/clips/` and `out/stills/`, and the full size film with its sound is handed over with the build because it is larger than one file in this repo may be.
 - Progress: `kit/PROGRESS.md`
 - The 18 approved images: `references/approved/contact-sheet.jpg`
+
+## How to fly it
+
+Open the app URL. The page starts in free flight at the first stop.
+
+- Drag to look around. Scroll to move in and out.
+- Press M, or click the hint in the corner, to open the menu.
+- Stop: pick one of the nine stops. The two buttons beside it switch between the whole view and the surface view.
+- Timeline: drag the slider to any frame of the film.
+- Mode: Live is free flight, Autopilot plays the film on its clock, Export opens the export page.
+
+## How to export the film and a single clip
+
+In the browser, on the graphics card of your own machine:
+
+- The film: open `https://grand-tour-film.pplx.app?mode=export`, choose the format and the tier and start it. The page renders every frame on your machine, encodes it and saves one video file. Keep the tab in front until it finishes.
+- A single clip: open `https://grand-tour-film.pplx.app?mode=export&stop=mars`, or choose the stop in the range list of the export page. The stop ids are sun, mercury, venus, earth, mars, jupiter, saturn, uranus and neptune.
+
+From this repository, on a machine with or without a graphics card (without one every frame is drawn in software, which is slow):
+
+- The film: `npm run film -- --format master --tier final`. It draws the film in chunks under `out/work/chunks/` and joins them. A run that was stopped goes on with the chunks it has.
+- A single clip: `npm run clip -- --stop mars --tier final`.
+- A post, which is a stop's intro joined to its clip: `npm run post -- --stop mars`.
+
+For the film at 3840 by 2160 and 60 frames a second, see "Capture the film on your own machine" below.
 
 ## What is here
 
@@ -17,10 +44,21 @@ The build is in progress. `kit/PROGRESS.md` says where it is.
 | --- | --- |
 | `AGENTS.md` | Rules for the Builder |
 | `kit/` | The build kit. Start at `kit/00-README.md` |
+| `kit/PROGRESS.md` | The record of the build, with the final scores and the open items |
 | `config/showcase.json` | Every number, the stops and the timeline |
+| `src/` | The scene: the engine, the director and one folder for every stop |
+| `out/preview.mp4` | The preview film, 960 by 540, without sound |
+| `out/roughcut.mp4` | The rough cut of the whole film, without sound |
+| `out/clips/` | The nine single stop clips |
+| `out/posts/` | The nine posts, each a stop's intro joined to its clip, and the nine intros on their own |
+| `out/stills/` | The comparison images: every judged frame beside its approved image |
+| `scorecards/` | One folder for every round, with the critics' answers, the measures and a summary |
+| `cut/SHOTS.md`, `cut/CUES.md` | The shot list and the cue sheet, with every timing |
 | `references/approved/` | The two approved images for each stop |
 | `references/drafts/`, `references/style-pass/` | Every image from the reference run, with prompts |
 | `ASSETS.md` | The ledger of third-party files |
+
+The films in this repository have no sound. The film with the narration and the music is delivered as a file with the build.
 
 ## The live player
 
@@ -41,8 +79,8 @@ The machines that build this film have no graphics card, so they draw every fram
 
 What to install, once:
 
-1. Node 22 or newer, from https://nodejs.org
-2. Google Chrome
+1. Node, release 22 or newer, from https://nodejs.org
+2. Google Chrome, a current release
 3. ffmpeg, to join the frames to a video: `brew install ffmpeg`. Without it the frames are still saved as PNG files, and the command says so.
 4. This repository: `git clone https://github.com/BrandonChurch93/Solar-System-Perplexity.git`, then inside the folder `npm ci`
 
@@ -90,4 +128,4 @@ If the command says the browser draws without the graphics card: in Chrome open 
 
 ## Credits the post must carry
 
-None so far.
+None. No license of a file in this film asks for a credit line in a post. Every third-party file is in the public domain or under a license that asks for no credit; `ASSETS.md` lists each one with its source and with the credit its source would like to see where credits are given.

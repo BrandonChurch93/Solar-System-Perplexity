@@ -1,7 +1,7 @@
 {
- "engineHash": "247ebad7e038ce06",
+ "engineHash": "a455bc02904b0d42",
  "stopHashes": {
-  "uranus": "a5dd9ab65ef9c8db"
+  "uranus": "dcdc44002e7b1623"
  },
  "format": "16x9",
  "tier": "final",
@@ -11,7 +11,7 @@
  "machine": "space-sandbox 4x Intel(R) Xeon(R) Processor @ 2.90GHz",
  "frame": 4290,
  "extra": {
-  "signature": "[\"b8d858f3e89d7134829acd330fb53fa8fb0290f9262d77189e765be98f0526d9\",\"copy\"]",
+  "signature": "[\"883922a3819a99d37140c64b02bfdf4b6b2840de6033edb2b35df6ccd5b902fd\",\"copy\"]",
   "segment": "uranus.terrain",
   "rectangles": [
    [

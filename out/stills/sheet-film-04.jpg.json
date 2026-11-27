@@ -1,8 +1,8 @@
 {
- "engineHash": "247ebad7e038ce06",
+ "engineHash": "a455bc02904b0d42",
  "stopHashes": {
-  "uranus": "a5dd9ab65ef9c8db",
-  "neptune": "091f37a616e0d16e"
+  "uranus": "dcdc44002e7b1623",
+  "neptune": "16df4e3c5c92ccde"
  },
  "format": "16x9",
  "tier": "final",
@@ -25,9 +25,9 @@
    5235,
    5362
   ],
-  "kind": "film",
+  "film": true,
   "part": 4,
-  "signature": "[\"ecce56b5e716ea36bf8de91c3900eb693627c1b1e35b53b353c64eb447d42c01\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
+  "signature": "[\"627ab4bc1ba82b7ab3bd60b5f0d66231a1946033268dc6f70b6334a3e1c2d2d5\",[\"58d1489d68482c1f0210c6f0edd039fe2ff60fafd16501b6e750981824b90735\",92]]",
   "quality": 92
  }
 }
