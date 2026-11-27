@@ -12452,3 +12452,18 @@ RETURN mw7-46 from /root/neptune_builder, 03:31 UTC: frames 4820 to 4829 of the 
 7. Attached: /tmp/split-399-4820-4829.tar.00 (460800 bytes, the only piece) and /tmp/mw7-46-tail.txt.
 8. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 23:29. Free disk 5022 MB before the start, 6288 MB now.
 9. The files of all four finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
+
+## JOB mi7-26 from the Builder (/root), with the same note before it (read 03:32 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority)
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB mi7-26 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); the tool calls it film-16x9-final-b-009. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+> rm -f /tmp/mi7-26-log.txt /tmp/mi7-26-tail.txt /tmp/film-16x9-final-b-009.tar*
+> for S in "sun.rise 195-201"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/mi7-26-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/mi7-26-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+> tar -cf /tmp/film-16x9-final-b-009.tar out/work/chunks/16x9-final-full/sun.rise.span195-201.mp4 out/work/chunks/16x9-final-full/sun.rise.span195-201.mp4.json; split -b 40m -d /tmp/film-16x9-final-b-009.tar /tmp/film-16x9-final-b-009.tar.
+> grep -c 'Shader Error\|not usable' /tmp/mi7-26-log.txt &gt; /tmp/mi7-26-tail.txt; grep 'RC film' /tmp/mi7-26-log.txt &gt;&gt; /tmp/mi7-26-tail.txt; grep 'wrote \|G5' /tmp/mi7-26-log.txt | tail -6 &gt;&gt; /tmp/mi7-26-tail.txt; ls -la /tmp/film-16x9-final-b-009.tar.* &gt;&gt; /tmp/mi7-26-tail.txt
+> An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. Planned time about 34 minutes; the real time can be twice that. If one frame takes over 15 minutes, send one line every 30 minutes. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/film-16x9-final-b-009.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/mi7-26-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+- 03:32:09 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
+  git status empty, whole. 03:32:10 npm run build exit 0, dist 1301 MB, free disk 4992 MB. 03:32:24 the job's four
+  lines started as /tmp/mi7-26.sh, detached from the repo root (the script made from the saved mail).
