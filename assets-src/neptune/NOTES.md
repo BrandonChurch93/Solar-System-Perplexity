@@ -13235,3 +13235,28 @@ RETURN iv9-01 from /root/neptune_builder, 15:44 UTC: pack of round 60, venus, pa
   frame and says nothing without it); the empty folder stays. Kept: the five report files of ht9-03 under
   out/work/smooth (and their copy in /tmp/smooth-ht9-03), the 22 tar pieces under /tmp, the 38 span files under
   out/work/chunks/16x9-final-full. Free disk 5658 MB before, 6199 MB after. Tree clean. No answer was asked, none sent.
+
+- 15:46:27 free disk 6186 MB while the pack drew.
+- 15:47:04 iv9-05 finished. The tail file has 14 lines; all but the last three are the report of the build that the
+  pack tool runs itself (not copied here). The last three, word for word:
+
+      /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/venus.dive/f01268-review.png
+      pack round-060 part venus.dive: frames were rendered, 84.8 s
+      RC pack 0
+
+  The piece /tmp/r60-venus-dive-b.tar.00 (4198400 bytes) holds f01268-review.png (4185079 bytes) and its .json (331
+  bytes) under out/work/packs/.cache/round-060/tiles/venus.dive/; sha256 of the piece 224b4decaa5ecc3d7c1d53e740e7674e8b
+  8b0c0a047197341d5a80a7104b5379. Tree still clean on 262b9a68. Free disk 6196 MB after.
+
+## 27 Nov, 15:47 UTC: RETURN iv9-05 to the Builder (word for word; sent about 15:47:19; attached /tmp/r60-venus-dive-b.tar.00 and /tmp/iv9-05-tail.txt; high priority)
+
+RETURN iv9-05 from /root/neptune_builder, 15:47 UTC: pack of round 60, venus, part venus.dive, frame 1268 alone (r60-venus-dive-b), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 15:45:30, finished 15:47:04 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 15:45:08.
+2. Exit code of the pack: 0. The RC line, word for word: "RC pack 0".
+3. The picture file the log printed: /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/venus.dive/f01268-review.png
+4. The tool's last line, word for word: "pack round-060 part venus.dive: frames were rendered, 84.8 s".
+5. Attached: /tmp/r60-venus-dive-b.tar.00 (4198400 bytes, the only piece, name as the split line wrote it; sha256 224b4decaa5ecc3d7c1d53e740e7674e8b8b0c0a047197341d5a80a7104b5379; it holds f01268-review.png, 4185079 bytes, and its .json, 331 bytes, under out/work/packs/.cache/round-060/tiles/venus.dive/) and /tmp/iv9-05-tail.txt (14 lines).
+6. Disk: 5663 MB free before the build; 4369 MB right after npm run build and a sync, under the 5 GB asked and over the 4 GB of the machine rules, a red I name; 6186 MB at 15:46:27 while the pack drew; 6196 MB now.
+7. Your word on the draft frames came while this job ran and is done: the 132 draft frames of ht9-03 and their 132 stamps under out/work/smooth/saturn/frames are removed (542 MB); the five report files of ht9-03 and every tar piece are kept.
+8. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 15:45:09; no npm ci, the lock file is the same.
+9. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of iv9-01 (sent back; its piece stays in /tmp). I wait for the next job.
