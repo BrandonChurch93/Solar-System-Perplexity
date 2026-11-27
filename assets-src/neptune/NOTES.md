@@ -13446,3 +13446,28 @@ RETURN ie9-18 from /root/neptune_builder, 16:14 UTC: pack of round 60, earth, pa
   after the build, a sync and 8 s: 4885 MB (under 5 GB until the pack's own build links dist; named in the return).
 - 16:17:05 the job's 4 lines started as /tmp/ia9-30.sh, detached from the repo root. Its first line removes the cache
   of round 60 that ie9-18 left (already sent back; the piece stays in /tmp).
+
+- 16:18:16 free disk 6159 MB while the pack drew. 16:25:56 the browser's drawing process had stood 521 s at full load.
+- 16:27:35 ia9-30 finished. The tail file has 14 lines; all but the last three are the npm header and the report of the build
+  that the pack tool runs itself (not copied here). The last three, word for word:
+
+      /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/mars.rise/f02717-review.png
+      pack round-060 part mars.rise: frames were rendered, 620.7 s
+      RC pack 0
+
+  The piece /tmp/r60-mars-rise-h.tar.00 (4014080 bytes) holds f02717-review.png (4008987 bytes) and its .json (331
+  bytes) under out/work/packs/.cache/round-060/tiles/mars.rise/; sha256 of the piece 8533e4d699f7c953ea7a5f7953d26305efc
+  5675efb3194ed0b9032fa29b5ecae. Tree still clean on 262b9a68. Free disk 6171 MB after. After the return I removed the
+  unsplit tar under /tmp, the byte twin of its one piece (cmp); the 28 pieces stay.
+
+## 27 Nov, 16:27 UTC: RETURN ia9-30 to the Builder (word for word; sent about 16:27:52; attached /tmp/r60-mars-rise-h.tar.00 and /tmp/ia9-30-tail.txt; high priority)
+
+RETURN ia9-30 from /root/neptune_builder, 16:27 UTC: pack of round 60, mars, part mars.rise, frame 2717 alone (r60-mars-rise-h), review tier, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 16:17:05, finished 16:27:35 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 16:16:43.
+2. Exit code of the pack: 0. The RC line, word for word: "RC pack 0".
+3. The picture file the log printed: /home/user/workspace/repo/out/work/packs/.cache/round-060/tiles/mars.rise/f02717-review.png
+4. The tool's last line, word for word: "pack round-060 part mars.rise: frames were rendered, 620.7 s".
+5. Attached: /tmp/r60-mars-rise-h.tar.00 (4014080 bytes, the only piece, name as the split line wrote it; sha256 8533e4d699f7c953ea7a5f7953d26305efc5675efb3194ed0b9032fa29b5ecae; it holds f02717-review.png, 4008987 bytes, and its .json, 331 bytes, under out/work/packs/.cache/round-060/tiles/mars.rise/) and /tmp/ia9-30-tail.txt (14 lines).
+6. Disk: 6179 MB free before the build; 4885 MB right after npm run build and a sync, under the 5 GB asked, a red I name; 6159 MB at 16:18:16 while the pack drew; 6171 MB now.
+7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 16:16:43; no npm ci, the lock file is the same.
+8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of ie9-18 (sent back; its piece stays in /tmp). I wait for the next job.
