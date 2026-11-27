@@ -13207,3 +13207,31 @@ RETURN iv9-01 from /root/neptune_builder, 15:44 UTC: pack of round 60, venus, pa
 6. Disk: 5674 MB free before the build (the 132 draft frames of ht9-03, 542 MB, still stand under out/work/smooth/saturn/frames; say the word and they go); 4380 MB right after npm run build and a sync, under the 5 GB asked and over the 4 GB of the machine rules, a red I name; 5653 MB at 15:43:26 while the pack drew (its own build links dist); 5664 MB now.
 7. Tree: whole checkout on 262b9a68, git status empty before and after. npm run build exit 0 at 15:42:05; no npm ci, the lock file is the same.
 8. The files of all 13 finished film jobs under out/work/chunks/16x9-final-full are kept (38 span files). The job's first line removed the round 60 cache of fm9-21 (sent back; its piece stays in /tmp). I wait for the next job.
+
+## JOB iv9-05 from the Builder (/root), with the same note before it (read 15:45 by my clock; word for word as delivered, the marks &gt; and &amp; as before; high priority). The same form as iv9-01: one frame (1268) of venus.dive.
+
+> NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+>
+> JOB iv9-05 from the Builder (/root). Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the frozen build of the film, the code of main on origin; fetch it by its full sha). Have at least 5 GB free before you start (remove old frame folders and tars of finished jobs under /tmp and out/work if not). If reads from disk are slow on your machine (a first still that takes many minutes), clear the file cache as root before the build: sync; echo 1 &gt; /proc/sys/vm/drop_caches. It changes no file. After npm ci if the lock file changed and npm run build, run these lines in order as one detached script:
+> rm -rf out/work/packs/.cache/round-060 out/work/stills/*-final-full.png*
+> npm run pack -- --phase 6 --round 60 --stop venus --only venus.dive --place-window --frames 1268-1268 &gt; /tmp/iv9-05.log 2&gt;&amp;1; echo "RC pack $?" &gt;&gt; /tmp/iv9-05.log; tail -25 /tmp/iv9-05.log &gt; /tmp/iv9-05-tail.txt
+> tar -cf /tmp/r60-venus-dive-b.tar --exclude='.frames*' out/work/packs/.cache/round-060
+> split -b 40m -d /tmp/r60-venus-dive-b.tar /tmp/r60-venus-dive-b.tar.
+> This is ONE frame (1268) of the part "dive" of the pack of round 60 (venus), drawn alone because the whole part is too slow for one machine. It is one picture at the review tier and takes 15 to 60 minutes; the command draws that frame into the cache and ends without laying a sheet. Keep the names of the tar pieces exactly as the split line writes them (r60-venus-dive-b.tar.00 and so on): the round tool reads them by name. When it has finished send back every piece /tmp/r60-venus-dive-b.tar.NN and /tmp/iv9-05-tail.txt, in a message that starts with the usual line and states the exit code of the pack and the name of the picture file the log printed. If the pack ends with a code other than 0, send back the tail alone and say so.
+
+- 15:45:08 the note: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches' exit 0 (not root, uid 2000). Tree on 262b9a68,
+  git status empty, whole. Free disk before the build 5663 MB. 15:45:09 npm run build exit 0, dist 1301 MB. Free disk
+  after the build, a sync and 8 s: 4369 MB (under 5 GB until the pack's own build links dist; over the 4 GB of mail
+  1549; named in the return).
+- 15:45:30 the job's four lines started as /tmp/iv9-05.sh, detached from the repo root. Its first line removes the cache
+  of round 60 that iv9-01 left (already sent back; the piece stays in /tmp).
+
+## WORD from the Builder (/root) (read 15:45 by my clock, while iv9-05 ran; word for word; low priority)
+
+> WORD from the Builder (/root), no answer needed: the 132 draft frames of ht9-03 under out/work/smooth/saturn/frames may go now; their report files are filed here. Keep the report files and the film pieces.
+
+- 15:45 done: under out/work/smooth/saturn/frames stood 264 files and nothing else, 132 k00NNNN-r2-draft.png (k007580 to
+  k007711) and their 132 .stamp files, 542 MB. I removed the pictures and their stamps (a stamp is the record of its
+  frame and says nothing without it); the empty folder stays. Kept: the five report files of ht9-03 under
+  out/work/smooth (and their copy in /tmp/smooth-ht9-03), the 22 tar pieces under /tmp, the 38 span files under
+  out/work/chunks/16x9-final-full. Free disk 5658 MB before, 6199 MB after. Tree clean. No answer was asked, none sent.
