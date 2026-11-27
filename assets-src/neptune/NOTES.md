@@ -12899,3 +12899,27 @@ RETURN ml7-26 from /root/neptune_builder, 13:30 UTC: frame 490 of film-16x9-fina
 ## 27 Nov, 14:02 UTC: first line on mm9-23 to the Builder (word for word; sent about 14:02:02; no attachment; low priority)
 
 LINE mm9-23 from /root/neptune_builder, 14:02 UTC: the drawing process is alive and has run 30 minutes (started 13:31:47). The film tool and its browser both live; the browser's drawing process has stood 1804 s and works at full load (385 percent of a core, 43.6 percent of the memory). Frame 1057 is not out yet: no row in the looks log, no RC line, no FAILED line. The job runs on; next line about 14:32.
+
+- mm9-23: the encoder opened at 13:32:07 (the watcher's only line); the looks log has one row of the job: 1057 at 14:30:33,
+  58 min 46 s after the start.
+- 14:30:35 finished. The tail, whole:
+
+      0
+      RC film mercury.travel 1057-1057 0
+      wrote mercury.travel.part000.mp4 frames 1057-1057 render 3509 s encode 0.7 s
+      -rw-r--r-- 1 user user 122880 Nov 27 14:30 /tmp/split-075-1057-1057.tar.00
+
+  The piece holds mercury.travel.span1057-1057.mp4 (109129 bytes) and its .json (1511 bytes); sha256 of the piece ecc8726a2326ac369eaa
+  1a662cec06dfe91032a98b87b39355152dafa4e8eb94. Tree still clean on 262b9a68. Free disk 6239 MB.
+
+## 27 Nov, 14:30 UTC: RETURN mm9-23 to the Builder (word for word; sent about 14:31:00; attached /tmp/split-075-1057-1057.tar.00 and /tmp/mm9-23-tail.txt; high priority)
+
+RETURN mm9-23 from /root/neptune_builder, 14:30 UTC: frame 1057 of film-16x9-final-b-075 (tar name split-075-1057-1057), segment mercury.travel, span 1057-1057, final tier, master, commit 262b9a68df0a6bda8d77518539580de554bb0dc5. Started 13:31:47, finished 14:30:35 UTC.
+1. Cache drop: done. I am not root; sudo worked: sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches', exit 0, at 13:31:32.
+2. The RC line, word for word (there is one; no exit 3, no second run): "RC film mercury.travel 1057-1057 0"
+3. The count on the first line of the tail: 0
+4. The tail's wrote line: "wrote mercury.travel.part000.mp4 frames 1057-1057 render 3509 s encode 0.7 s"
+5. The one frame: 1057 came at 14:30:33 by its row in the looks log, 58 min 46 s after the start. One line was sent, at 14:02 (alive, 30 minutes run); the second was due 14:32 and the job finished before it.
+6. Attached: /tmp/split-075-1057-1057.tar.00 (122880 bytes, the only piece) and /tmp/mm9-23-tail.txt.
+7. The tree: as before (this repo's own tree, detached on 262b9a68, whole, git status empty before and after). npm run build exit 0 at 13:31. Free disk 4947 MB before the start, 6239 MB now.
+8. The files of all thirteen finished jobs under out/work/chunks/16x9-final-full are kept. I wait for the next job.
