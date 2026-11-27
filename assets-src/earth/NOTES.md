@@ -7996,3 +7996,64 @@ An exit code 3 means the drawing context was lost: the loop runs the same comman
 - Sent to /root at 11:45 with the piece and the tail attached. Free disk 6068 MB after the job.
 - `out/work/chunks/16x9-final-full` of the render worktree holds ten spans in 20 files (the nine before and jupiter.hold 2910-2939) and stays until /root says it can go. Nothing runs. Waiting for the next job.
 - Frame time seen here for the Jupiter hold: about 41 s (the Jupiter rise took about 31 min 30 s a frame).
+
+### JOB mi7-34 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB mi7-34 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); the tool calls it film-16x9-final-b-031. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+rm -f /tmp/mi7-34-log.txt /tmp/mi7-34-tail.txt /tmp/film-16x9-final-b-031.tar*
+for S in "sun.travel 495-501"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/mi7-34-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/mi7-34-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+tar -cf /tmp/film-16x9-final-b-031.tar out/work/chunks/16x9-final-full/sun.travel.span495-501.mp4 out/work/chunks/16x9-final-full/sun.travel.span495-501.mp4.json; split -b 40m -d /tmp/film-16x9-final-b-031.tar /tmp/film-16x9-final-b-031.tar.
+grep -c 'Shader Error\|not usable' /tmp/mi7-34-log.txt &gt; /tmp/mi7-34-tail.txt; grep 'RC film' /tmp/mi7-34-log.txt &gt;&gt; /tmp/mi7-34-tail.txt; grep 'wrote \|G5' /tmp/mi7-34-log.txt | tail -6 &gt;&gt; /tmp/mi7-34-tail.txt; ls -la /tmp/film-16x9-final-b-031.tar.* &gt;&gt; /tmp/mi7-34-tail.txt
+An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. Planned time about 34 minutes; the real time can be twice that. If one frame takes over 15 minutes, send one line every 30 minutes. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/film-16x9-final-b-031.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/mi7-34-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+### 11:46 UTC, 27 Nov: job mi7-34 runs
+
+- NOTE done: `sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'` rc 0 at 11:46:22.
+- Worktree `/home/user/workspace/main-262b9a68`: HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, `git status --porcelain` shows only `?? node_modules`, lock file same as the commit, no render process running, free disk 6068 MB, `npm run build` rc 0 at 11:46:32.
+- Script `/tmp/mi7-34.sh` holds the four lines of the job (`&gt;` read as `>`, `&amp;` as `&`), started detached from the worktree root at 11:46:45; the tool's first line at 11:46:55: "film: 1 units to render, 7 frames, 16x9 final full".
+- One span: sun.travel 495-501 (7 frames). The looks log of the worktree had 36 lines at the start.
+- At 12:03:14: no look picture of sun.travel, the encoder had read 162902 bytes, no RC line: 0 of 7 frames after 16 minutes. Drawing process at 382 percent of a core (1 h 02 min of cpu in 978 s), free disk 6040 MB. Line sent to /root at 12:03 (low priority). Next due 12:33, then every 30 minutes until `/tmp/mi7-34-tail.txt` is there.
+
+### QUESTION from /root about the running JOB mi7-34 (copied on arrival, verbatim)
+
+QUESTION from the Builder (/root) about your running JOB mi7-34 (film sun.travel 495-501). Do not stop, restart or change anything. Answer /root in one short message now: which frames of the span are finished so far and the UTC time each one finished (from the rows of out/work/looks/log.jsonl or from the tool's own log lines), plus the UTC time the tool started. If no frame is finished yet, say so and give the newest log line word for word. Then go on waiting for the job as before.
+
+- Answered at 12:21 (high priority): read at 12:21:06, no frame of sun.travel 495-501 finished; script started 11:46:45, drawing process started 11:46:54; newest log line "film: 1 units to render, 7 frames, 16x9 final full" (log last written 11:46:54); looks log 36 rows as at the start; encoder read 162902 bytes; no RC line; drawing process at 388 percent of a core (2 h 12 min of cpu in 2050 s). Nothing stopped or changed. Next line due 12:33.
+
+### STOP of mi7-34 and JOB ml7-08 from /root (copied on arrival, verbatim; `&gt;` and `&amp;` kept as they came)
+
+STOP first, from the Builder (/root): the job mi7-34 that runs on your machine is taken off it (its pass was stopped by the Builder, or it was too slow for one machine and is split over several; either way it is not wanted from you any more). Kill its film process and every child of it now, check with ps that no render or browser process of it is left, and remove its frame folders under out/work. Send nothing back for it. Then do the job below as usual.
+
+NOTE before the job: first, as root, run sync; echo 1 &gt; /proc/sys/vm/drop_caches (it changes no file; it clears a slow file cache left from the machine's last snapshot). If you are not root and sudo does not work, skip it and say so. Say in one line of your return whether you did.
+
+JOB ml7-08 from the Builder (/root). A piece of the FULL QUALITY FILM (the master of the frozen build, 1920 by 1080, final tier); it is frame 472 only, a part of the tool's piece film-16x9-final-b-028 (frames 472 to 479), which is split over several machines, one frame each. Commit 262b9a68df0a6bda8d77518539580de554bb0dc5 (the code of main on origin). On a render machine: fetch it with `git fetch --depth 1 origin 262b9a68df0a6bda8d77518539580de554bb0dc5` and `git checkout -f 262b9a68df0a6bda8d77518539580de554bb0dc5` in your clone. On a builder's machine: use the clean worktree named in MAIL 1549, which stands on that commit. Have at least 4 GB free before you start (remove old frame folders, films and tars of finished jobs under /tmp and out/work if not, but nothing under out/work/chunks/16x9-final-full). After npm ci if the lock file changed and npm run build, write these lines to a script and run it detached from the repo root:
+rm -f /tmp/ml7-08-log.txt /tmp/ml7-08-tail.txt /tmp/split-028-472-472.tar*
+for S in "sun.travel 472-472"; do set -- $S; n=0; while :; do npm run -s film -- --segment $1 --span $2 --tier final --format master &gt;&gt; /tmp/ml7-08-log.txt 2&gt;&amp;1; rc=$?; echo "RC film $1 $2 $rc" &gt;&gt; /tmp/ml7-08-log.txt; [ $rc = 3 ] &amp;&amp; [ $n -lt 30 ] || break; n=$((n+1)); done; done
+tar -cf /tmp/split-028-472-472.tar out/work/chunks/16x9-final-full/sun.travel.span472-472.mp4 out/work/chunks/16x9-final-full/sun.travel.span472-472.mp4.json; split -b 40m -d /tmp/split-028-472-472.tar /tmp/split-028-472-472.tar.
+grep -c 'Shader Error\|not usable' /tmp/ml7-08-log.txt &gt; /tmp/ml7-08-tail.txt; grep 'RC film' /tmp/ml7-08-log.txt &gt;&gt; /tmp/ml7-08-tail.txt; grep 'wrote \|G5' /tmp/ml7-08-log.txt | tail -6 &gt;&gt; /tmp/ml7-08-tail.txt; ls -la /tmp/split-028-472-472.tar.* &gt;&gt; /tmp/ml7-08-tail.txt
+An exit code 3 means the drawing context was lost: the loop runs the same command again and it goes on where it stopped. No planned time: these are slow frames of the film (ten machines drew for 35 to 58 minutes on the first frame of their piece without finishing it), so let it run; the one frame may take over an hour. Send one line every 30 minutes saying whether the drawing process is alive and how long it has run. The encoder's file proves nothing, it stays empty until the frame is drawn. When it has finished send back, as attachments in one message that starts with the usual line: every tar piece (/tmp/split-028-472-472.tar.00 and so on; at most 9 pieces in one message, the rest in a second) and /tmp/ml7-08-tail.txt. Say each RC line word for word and the count of the first line of the tail. Keep the files under out/work/chunks/16x9-final-full until I say they can go. Do not judge the picture.
+
+### 12:30 UTC, 27 Nov: job mi7-34 stopped on /root's word, nothing sent back for it
+
+- At 12:30:06 the job had run 2601 s with no frame finished (looks log still 36 rows, no RC line, no tail file).
+- Killed at 12:30:14: the script (`bash /tmp/mi7-34.sh`, pid 9434) first, so that it could not go on to its tar and tail lines, then its process group (npm, sh, tsx, node, ffmpeg), the browser's group (pid 9535 with its children, the drawing process 9575 among them) and the two crash handlers 9538 and 9541. `ps` after it shows no process of film.ts, chrome, ffmpeg, npm run, tsx or playwright.
+- Under out/work the job left one file: the lock `out/work/locks/render-9461` (removed). No file of sun.travel anywhere under out or /tmp, `out/work/tmp/film` is empty, no tar, no tail. The ten spans (20 files) under `out/work/chunks/16x9-final-full` are untouched. `git status --porcelain` of the worktree shows only `?? node_modules`. Free disk 6062 MB.
+
+### 12:31 UTC, 27 Nov: job ml7-08 runs
+
+- NOTE done: `sudo -n sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'` rc 0 at 12:30:49.
+- Worktree `/home/user/workspace/main-262b9a68`: HEAD 262b9a68df0a6bda8d77518539580de554bb0dc5, `git status --porcelain` shows only `?? node_modules`, lock file same as the commit, no render process running, free disk 6062 MB, `npm run build` rc 0 at 12:30:58.
+- Script `/tmp/ml7-08.sh` holds the four lines of the job (`&gt;` read as `>`, `&amp;` as `&`), started detached from the worktree root at 12:31:12 (script pid 14774); the tool's first line at 12:31:21: "film: 1 units to render, 1 frames, 16x9 final full"; the drawing process (pid 14902) started 12:31:21.
+- One span of one frame: sun.travel 472-472. The looks log of the worktree had 36 rows at the start. The job asks for one line every 30 minutes saying whether the drawing process is alive and how long it has run: due 13:01, 13:31 and so on.
+- At 13:00:51: the drawing process (pid 14902) alive at 386 percent of a core, 1769 s since its start (1 h 54 min of cpu), no look picture of sun.travel, no RC line, free disk 6034 MB. Line sent to /root at 13:01 (low priority), with the word that mi7-34 was killed at 12:30:14. Next due 13:31.
+- At 13:30:52: the drawing process alive at 389 percent of a core, 3570 s since its start (3 h 52 min of cpu), no look picture of sun.travel, no RC line, free disk 6034 MB. Line sent to /root at 13:31 (low priority). Next due 14:01.
+
+### 13:46 UTC, 27 Nov: job ml7-08 sent back
+
+- Started detached at 12:31:12; the tool's first line and the drawing process at 12:31:21. Looks log: sun.travel 472 at 13:45:49. The one frame took about 74 minutes (render 4462 s). Lines sent at 13:01 and 13:31.
+- The tail file (written 13:45:51) reads, whole: "0", "RC film sun.travel 472-472 0", "wrote sun.travel.part000.mp4 frames 472-472 render 4462 s encode 0.7 s", and the one piece `/tmp/split-028-472-472.tar.00` of 102400 bytes. The tar holds `sun.travel.span472-472.mp4` (95392 bytes) and its `.json` (1504 bytes).
+- Sent to /root at 13:46 with the piece and the tail attached, and with the word that the STOP of mi7-34 was done. Free disk 6061 MB after the job.
+- `out/work/chunks/16x9-final-full` of the render worktree holds eleven spans in 22 files (the ten before and sun.travel 472-472) and stays until /root says it can go. Nothing runs. Waiting for the next job.
+- Frame time seen here for the Sun's travel: about 74 minutes for frame 472; the span 495-501 had no frame after 43 minutes when it was stopped.
