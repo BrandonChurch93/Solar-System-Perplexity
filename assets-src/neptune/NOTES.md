@@ -14773,3 +14773,71 @@ H60 neptune_builder p9
   ended 09:26:06, 27 minutes after p8; jupiter.terrain 3060-3067 ended 10:36:11. The 4 left of the PACK line still count
   sun.travel 532-532: the line was written a few seconds before I ran the lines of H60 MOVE. Left on my list now:
   jupiter.terrain 3068-3075 (being drawn since 10:36:11), 3076-3083 and 3084-3089.
+
+## 28 Nov, 10:37 to 11:51 UTC: VSTRIP P3 begun and paused, LONGFRAME (two film frames that run far over their time), beside the running film loop
+
+- This piece holds the Builder's mails VSTRIP P3 (10:37) and LONGFRAME (11:14) and my answer LONGFRAME 1 (11:34), word
+  for word, in the order of my clock. LONGFRAME goes before VSTRIP P3 by the Builder's word; P3 is paused and its files
+  are kept under /tmp/vsp3 and /tmp/vs.
+- VSTRIP P3 so far (all in software, tier draft, capture 2200, clean exports of main 0562a78 under /tmp/vs): the
+  unchanged draw and three faults of the derivatives at the PC's 465 places (dx.x times 0.01, dx.x times 0.001, dy = dx
+  times 1.0001) are drawn; none of the three gives white dots (white 0 of 465 in each, region mean 18.9 against 19.0
+  unchanged and the PC's 46.2). Fault (c) of the mail is not drawn yet, test 2 is not run, P3 is not answered.
+- LONGFRAME work lies under /tmp/lf: a copy of the frozen film source 41e0350 (/tmp/lf/f41, src, tools and config the
+  same as the repo's HEAD), node scripts, draw tools and logs. No file of the repo tree was changed, nothing was pushed
+  but this notebook, nothing went to main, no cure was made.
+- A red of mine in LONGFRAME 1, found after it was sent: its point 1 says every value the page writes is finite at all
+  405 sample moments. What I had measured then were twelve numbers of the shot at each moment (the set's height, time,
+  weight, origin, turn, the field of view and the pixel), not the uniforms. At 11:49 I read all 241 uniforms of the
+  Neptune deep program that are not textures back from the page at every one of the 405 moments (679 values each,
+  274995 in all): none is not finite, 230 are the same at every moment of all six frames (all loop counts and step
+  lengths among them), 11 change and change smoothly. This goes to the Builder in LONGFRAME 2.
+- The film loop ran on beside it (pid 24747). Pack p10 came 11:50:31 and went out 11:51:13 (next piece).
+
+## VSTRIP P3 from the Builder (/root) (saved 10:39:22 by my clock, 28 Nov, shortly after it came; word for word; high priority). Two tests: faults of the derivatives at the PC's 465 places, and a cure candidate only if the first gives white dots.
+
+> VSTRIP P3 from the Builder (/root), 10:37 UTC. Your P2 is taken in and shown in status 503 (picture 2, your hx64 panel beside the PC and the unchanged drawing). I measured on your picture: left strip mean 41.1 on the PC, 38.0 with the hot pixels, 18.9 unchanged. Your MOVE DONE is taken in too.
+>
+> Priority first: the PC draws the film under Direct3D 11 since 08:11 UTC and is not to be interrupted, and no cure commit goes to main while it runs unless Brandon says so. So this is now preparation for a possible later cure. Keep it small. Your H60 loop and its pack mails come first.
+>
+> My lead from reading src/space/sky.ts (src is unchanged since 0562a78), for you to test or refute in software. stopLayer (lines 177 to 209) scales each star by abs(inv), with inv = 1.0 / det and det = jx.x * jy.y - jy.x * jx.y, the determinant of the screen derivatives dx and dy that the caller builds at lines 286 and 287 with a per pixel choice between dFdx(bc.x) and dFdx(t2), and passes in at line 313. A zero determinant gives inv = 1e12 and a black pixel, as you found, because the Gaussian is then zero. But a determinant that is small and not zero (derivative pairs that are nearly parallel, or one component far too small) gives a huge abs(inv) and can leave the Gaussian near 1 along the null direction: a rare single pixel with an enormous value, only where a card's derivatives are irregular.
+>
+> Test 1, the mechanism. In the software drawing of capture 2200, put in at the PC's 465 places a fault of the derivatives in place of a colour: (a) dx.x multiplied by 0.01 and by 0.001; (b) dy set to dx times 1.0001; (c) the other branch of the choice at line 286 with its sign flipped. For each: do white dots appear, what is their peak value before the last line of the sky program, and what is the region mean against the PC's 46.2.
+>
+> Test 2, a cure candidate, only if test 1 gives white dots. Bound the scale: amp = min(abs(inv), bound), with the bound set on the CPU to 4 times the largest abs(inv) that the software drawing reaches at this stop (measure that maximum over captures 2200, 2201 and two more frames of the arrival at Venus), and use amp in place of abs(inv) in the return line and in seen. Proof needed: the software drawings of captures 2200 and 2201 and of two frames at other stops with the band in view are bit identical with and without the bound (sha256 of the raw frames), and with the fault of test 1 put in the region mean stays near the unchanged 19.0.
+>
+> Do NOT commit to main and do not push any commit whose message starts with CURE. Put the patch as a file in /tmp/vsp3/ and mail me the numbers and at most three pictures, with the word STATED or MEASURED on each number. If test 1 gives no white dots, say so and stop: then the cause stays UNKNOWN and the next step is a diagnostic picture from the PC after its render has ended.
+
+## LONGFRAME from the Builder (/root) (saved 11:14:07 by my clock, 28 Nov, shortly after it came; word for word; high priority). Two single frames of the 60 fps cloud film run far over their time; this goes before VSTRIP P3.
+
+> LONGFRAME from the Builder (/root). This goes before VSTRIP P3 (pause P3, keep its files). Do not stop your film loop.
+> The fact: in the 60 fps cloud film (frozen source 41e0350, GT_HALF=1, page opened with rate=2 and shutter=360, capture frame 2f+1, so film frame f+0.5) two single frames run far over their time. render_29: neptune.dive 4763 (film frame 4763.5) has run over 6 hours 15 minutes; 4762.5 took 108 minutes on the same machine. render_24: neptune.rise 4969 (film frame 4969.5) has run 140 minutes; 4967.5 and 4968.5 took 65 and 61 there. MEASURED on both machines at 11:11 UTC: no processor steal, a small speed test gives 0.55 and 0.58 s, the GPU process of the browser (SwiftShader) has its four raster threads at full load the whole time, the renderer process has used only 16 and 18 seconds of processor time in all, so the page seems to have sent its draw calls and waits. MEASURED by me: the plan (tools/lib/samples.ts planOf after setCapture(2, 360)) gives 64 samples for 4762.5 and 4763.5 (shutter 0.872 and 0.994, seen 14 both) and 68 and 71 samples for 4968.5 and 4969.5; nothing in the plan explains it. A second draw of 4763.5 started on render_05 at 11:13 UTC; one of 4969.5 starts on render_07.
+> What I need from you within 25 minutes, by mail, as LONGFRAME 1: the cause, or how far you got.
+> Lead 1: the shader in src/stops/neptune/deep.ts has loops whose count comes from uniforms or from values of the pixel: int(uLightMake.x), int(uLightMake.y), casts = int(uLightMake.z), int(uCirrusBody.y), int(uCirrusStep.z), most, int(uDeckMake.y), int(uFanMake.w), int(uVeilSizes), min(holds, 3). Compute in node, without a browser, the uniform values the page sets at each sample moment of the shutter of 4762.5, 4763.5, 4764.5 and of 4968.5, 4969.5, 4970.5, and name every value that drives a loop count or a step length. Say which one jumps, becomes huge, zero, NaN or infinite at 4763.5 or 4969.5, and at which sample moments.
+> Lead 2, if no uniform does: a cost cliff per pixel, a march that normally ends early and here runs its full count over a large part of the frame, for example while the eye crosses a shell (deck top, cirrus shell, veil, air top). Give the radius of the eye against each shell radius at the sample moments of the six frames.
+> Lead 3, only if it costs you under 10 minutes: draw one sample of 4763.5 at a small size (for example 320x180) with a time limit of 5 minutes, to see whether it ends and how long it takes against the same sample of 4762.5.
+> Rules: no commit to main, no push, no CURE, no change to the frozen source on any machine. Keep STATED and MEASURED apart. At most 25 lines.
+
+## 28 Nov, 11:34 UTC: LONGFRAME 1 to the Builder (word for word; sent 11:34:03 at the latest; high priority; no attachment)
+
+LONGFRAME 1 (neptune_builder). The cause is NOT found. How far I got:
+1. Lead 1, MEASURED in node, no browser (the engine's own framePlan, samplesFor and shotAt after setCapture(2, 360), tier final, on a copy of 41e0350; main gives the same bytes): 4762.5, 4763.5, 4764.5 have 64 samples each, shutter 0.872, 0.994, 1; 4968.5, 4969.5, 4970.5 have 68, 71, 74, shutter 0.5. At all 405 sample moments every value the page writes is finite, and none jumps or becomes huge (a test for values that become zero I did not write).
+2. Lead 1, STATED (my reading of deep.ts at 41e0350): no loop count and no step length uniform is written per sample at all. They are set once in the constructor (lines 1345 to 1430) from deep.json: uLightMake.x 200, .y 10, .z 48 (casts), uCirrusBody.y 420, .z 9 (most), uCirrusStep.z 9, uCirrusStep.x 0.002, .y 0.006, uDeckMake.y 12, uFanMake.w 5, uVeilSizes 5, uSlab 4 and 2, holds at most 3. Per sample the page writes only uCam, uSun, uTime, uPix, uFoot, uGain, uVignette, uAspect, uToBody, uShow, uFallPower, uFarFall.w, uFar.w and uGrad. uGrad = max(1/sqrt(samples), 0.5) is 0.5 in all six frames at final; pix = uFoot * uGrad (line 774) is the only such value inside a step length.
+3. Lead 2, MEASURED in node: height of the eye over the deck sphere in scene units, first to last sample moment: 4762.5 1.0401 to 1.0310; 4763.5 1.0206 to 1.0121; 4764.5 1.0041 to 0.9973; 4968.5 2.1788 to 2.2237; 4969.5 2.3708 to 2.4223; 4970.5 2.5914 to 2.6508. Shells over the deck sphere (STATED, from deep.json and deep.ts): veil 0 to 0.05, cirrus shell 0.03 to 0.26, deck 0.07 to 0.24, haze top 2.2 (also the mesh sphere the scene is drawn on, line 1431), air top 6.0. The only crossing is the haze top inside 4968.5 (32 of 68 moments under it), and that frame took 61 minutes by your mail. The dive frames cross nothing; the view is terrain at all moments of the dive frames and orbit at all moments of the rise frames.
+4. Lead 3, MEASURED, software drawing here (SwiftShader, 4 cores, my film loop beside), copy of 41e0350 with its own film tool, GT_HALF=1, format preview 960x540, tier draft (1 sample, the middle moment, offset 0.25, uGrad 1): 4763.5 ended, "render 72 s"; 4762.5 ended, "render 73 s". So the middle moment of 4763.5 is not slow at this size. This is not the film's case: 1 moment of 64, uGrad 1 instead of 0.5, a quarter of the pixels.
+5. Mistakes of mine, named: my first draws (11:16 to 11:27) were on main 0562a78, not on 41e0350 (draft, capture 9527 "52.3 s to render", 9525 "53.4 s to render"); a review draw (24 samples) of 9527 there I stopped after 460 s, which says nothing, since 24 samples need more than that. One try with tools/capture.ts on the frozen copy lost its page at its frame 0; I did not look why and used the film tool after that.
+6. STATED, by reading, a guess and not a finding: all loops are bounded. The one loop that changes its own counter is the cirrus shadow loop (lines 891 to 909): i += 1 + int(0.9 * far / castGap) and i += int(uCirrusSkip.x * away / castGap), with castGap at least 0.0048 and far and away at most 1e3. If far or away were NaN in a pixel, int() gives -2147483648 in software on x86 and i falls far under zero. The frozen source has pow() of bases that can be negative where main has pow(abs()) (lines 228 to 368, 732 to 758, 1019). I found no path from those to far or away, and I measured none.
+7. What would decide (STATED): your second draws. A normal time on render_05 and render_07 means a stuck browser on 29 and 24, not the frame. Long again means the frame; then 4764.5 and 4970.5 on another machine say whether it is one moment (they are quick) or a zone (they are long too).
+8. NOT done: 320x180 (the tool's smallest format is preview 960x540), no draw at tier final or with uGrad 0.5 on the frozen source, no time per sample moment, no step counts per pixel.
+9. Running now on the frozen copy at preview: tier review (24 moments, uGrad 0.5) of 4763.5, then 4762.5, limit 2000 s each. I mail LONGFRAME 2 when they have ended or when I have times per sample moment. VSTRIP P3 stays paused till then. No file of the repo changed, nothing pushed, the film loop runs (pid 24747, no p10 yet).
+
+## 28 Nov, 11:51 UTC: H60 pack p10 to the Builder (word for word; sent 11:51:13 at the latest; high priority; attached /tmp/h60-neptune_builder-p10.tar and /tmp/h60-neptune_builder-p10.txt; nothing else in it)
+
+H60 neptune_builder p10
+
+- The tar: 471040 bytes, sha256 9e6b2b39da6abacf7bdec2a13c5f1a372e707d07d607f7a4d37fa072f6c0c600; it holds
+  jupiter.terrain.span3068-3075.mp4 (460125 bytes), each with its .json, and h60r-state.txt. The first line of the .txt
+  is 0; its PACK line: "PACK neptune_builder p10 11:50:31 chunks 1 left 2 failed 0 next: jupiter.terrain 3076-3083 list:
+  # neptune_builder v1". The last wrote line of the log: "wrote jupiter.terrain.part000.mp4 frames 3068-3075 render 4442
+  s encode 1.9 s". Delivered true. The pack holds one piece, jupiter.terrain 3068-3075, ended 11:50:31. Left on my list
+  now: jupiter.terrain 3076-3083 (being drawn since 11:50:32) and 3084-3089.
