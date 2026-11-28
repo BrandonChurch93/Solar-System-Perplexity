@@ -11,8 +11,9 @@ Another agent, the Builder, leads this project from a cloud chat and cannot see 
 ## Rules
 
 - Do not edit any file in this repo. Do not fix code or shader errors yourself. Copy the full error text into your report; the Builder fixes it at the source.
-- Do not commit and do not push. The only thing you upload is the release in step 9.
+- Do not commit and do not push. The only thing you upload is the release in step 3.
 - Run only the commands in this file, with the flags written here. Do not try other flags.
+- Make the clone exactly as written: the whole tree of the newest commit. No sparse checkout and no filter; the tools read files from many folders (for example `references/`) and stop when one is missing.
 - The whole film is drawn on one machine. Frames from this machine are never mixed with frames from another machine or from the cloud.
 - Step 2 (the render) starts only after step 1 (the test) has ended with the verdict PASS and Brandon has looked at the test pictures and said "go". With the verdict LOOK or STOP you stop, and Brandon takes the report to the Builder.
 - Nothing here changes the picture, the cut, the sound or the subtitles. They are approved. The tools only draw the approved film at more frames and more pixels.
@@ -150,7 +151,7 @@ Set sleep back to the old value (in minutes; the query above printed it in secon
 powershell -NoProfile -Command "powercfg /change standby-timeout-ac <old minutes>"
 ```
 
-### A6. Step 9: bring it back
+### A6. Step 3: bring it back
 
 The Builder picks the release up from a GitHub release of this repo (private, like the repo). In the repo folder:
 

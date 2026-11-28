@@ -1,14 +1,14 @@
 {
  "engineHash": "a455bc02904b0d42",
- "assetsBranch": "handoff-test-assets",
+ "assetsBranch": "handoff-local-render-assets",
  "band": {
-  "file": "standin-band-uhd.webm",
+  "file": "subtitle-band-uhd-60fps.webm",
   "width": 3840,
   "height": 802,
   "y": 1358,
-  "frames": 120,
+  "frames": 10800,
   "fps": 60,
-  "probeSeconds": 1.0
+  "probeSeconds": 57.0
  },
  "sound": {
   "file": "film-sound.m4a"
@@ -175,9 +175,9 @@
    "sha256": "9b249a69859a71d78730ff310c2765552f5600f38701e363ce8faad4b822eb35"
   },
   {
-   "path": "standin-band-uhd.webm",
-   "bytes": 773027,
-   "sha256": "5d0e9aab2403f27c7f4010877eb0565c4306fae5c2559e5a2434574f0de139b3"
+   "path": "subtitle-band-uhd-60fps.webm",
+   "bytes": 68830239,
+   "sha256": "19812a32cb2cf59f34fba6950a4c915fba841dc1381c231becf3bfe1bd23f693"
   }
  ],
  "tests": [
