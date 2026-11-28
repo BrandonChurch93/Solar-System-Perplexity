@@ -13771,3 +13771,13 @@ H60 neptune_builder p2
   h60r-state.txt. The first line of the .txt is 0; its PACK line: "PACK neptune_builder p2 00:41:52 chunks 2 left 8
   failed 0 next: uranus.rise 4416-4416 list: # neptune_builder v1". The last wrote line of the log: "wrote
   uranus.rise.part000.mp4 frames 4414-4415 render 2425 s encode 0.7 s". Delivered true.
+
+## 28 Nov, 01:26 UTC: H60 pack p3 to the Builder (word for word; sent 01:26:36 at the latest; high priority; attached /tmp/h60-neptune_builder-p3.tar and /tmp/h60-neptune_builder-p3.txt; nothing else in it)
+
+H60 neptune_builder p3
+
+- The tar: 3174400 bytes, sha256 4f09c6b230125c0d663c9ed2d6e26116edeea354e8a6bafd34a121f3e28a3718; it holds
+  ending.lookback.span5265-5294.mp4 (3112829 bytes), uranus.rise.span4416-4416.mp4 (46368 bytes), each with its .json,
+  and h60r-state.txt. The first line of the .txt is 0; its PACK line: "PACK neptune_builder p3 01:26:30 chunks 2 left 6
+  failed 0 next: jupiter.dive 3025-3026 list: # neptune_builder v1". The last wrote line of the log: "wrote
+  ending.lookback.part000.mp4 frames 5265-5294 render 1370 s encode 4.8 s". Delivered true.
