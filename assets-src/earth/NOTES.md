@@ -8519,3 +8519,13 @@ No more TROUBLE lines for slow frames: a single frame of the heavy parts takes u
 - mars.rise 2685-2687 ended by itself: "wrote mars.rise.part000.mp4 frames 2685-2687 render 8751 s encode 0.9 s" (three half frames, about 49 minutes a frame here). The new loop then began venus.travel 1610-1614.
 - Pack p1 appeared at 23:49:05: first line of its txt "0"; "PACK earth_builder p1 23:49:05 chunks 1 left 12 failed 0 next: venus.travel 1610-1614 list: # earth_builder v1"; the tar holds `mars.rise.span2685-2687.mp4` (188667 bytes), its `.json` and `h60r-state.txt`. Sent to /root at 23:49:15 with the text `H60 earth_builder p1` alone and the tar and the txt attached. Marked by `/tmp/h60r-sent-p1`; the next to send is p2.
 - Free disk 5936 MB. The loop `/tmp/h60r.sh` runs (pid 11008). My commits now use `git -c gc.auto=0` so that no clean up of the store starts beside the drawing.
+
+### 00:39 UTC, 28 Nov: job H60R, pack p2 sent
+
+- 23:50:20: the notes commit 4b0bdcc0 was pushed at the third try (plain `git push origin agent/earth-place`); the two tries before it had ended with "fatal: could not read Username for 'https://github.com'". Read back from the remote: 4b0bdcc014b0cdec49b48607af68a4e7cda39a81.
+- 00:01:38: venus.travel 1610-1614 done ("wrote venus.travel.part000.mp4 frames 1610-1614 render 723 s encode 1.2 s", RC film 0).
+- 00:39:03: earth.dive 1875-1877 done ("wrote earth.dive.part000.mp4 frames 1875-1877 render 2217 s encode 1.0 s", RC film 0).
+- 00:39:04: /tmp/h60-earth_builder-p2.done appeared. Sent to /root at 00:39:14 with the text `H60 earth_builder p2` and the two files attached (tar 460800 bytes: earth.dive.span1875-1877.mp4 and .json, venus.travel.span1610-1614.mp4 and .json, h60r-state.txt).
+- First line of p2.txt: 0. Second line: "PACK earth_builder p2 00:39:04 chunks 2 left 10 failed 0 next: earth.dive 1878-1880 list: # earth_builder v1".
+- Loop pid 11008 alive; drawing now earth.dive 1878-1880; free disk 5934 MB.
+- Sent so far: b0, p0, p1, p2. Next to send: p3 (waiter `bash /tmp/h60r-wait.sh 3`).
