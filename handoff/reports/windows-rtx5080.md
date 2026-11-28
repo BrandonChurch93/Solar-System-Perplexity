@@ -2,6 +2,24 @@
 
 Written by Claude Code on Brandon's Windows desktop on 2026-11-27 (MST). The branch `local-render-report` carries this file and the side-by-side pictures in `handoff/reports/windows-rtx5080/`. Nothing else in the repo was changed.
 
+## Request from Brandon, 2026-11-28 00:25 MST: open Vulkan in the next CURE
+
+Brandon asks the Builder to cure this machine's two Vulkan faults in the next CURE commit, together with the rest of the Neptune cure, and to open Vulkan for the gate and the render in the Windows section. The reason is time. The film stays at 4K 60 fps, at the same quality, but in about half the hours:
+
+| Backend | 4K mean | 4K slowest | Whole 4K film (the test's two estimates) |
+|---|---|---|---|
+| Direct3D 11 | 6.3 s | 37.6 s | 14.9 to 18.8 h |
+| Vulkan | 3.2 s | 11.3 s | **7.4 to 9.5 h** |
+
+The two Vulkan faults, both measured on this machine on 2026-11-27 under `--angle vulkan` with commit `852ebae` (pictures `vulkan-*.jpg` in `windows-rtx5080/`, full report in Update 2 below):
+
+1. **Venus, capture frame 2200 (and 2201): a strip of false stars at the left edge of the frame.** It is about the first tenth of the frame's width and filled with grey star-like speckles. PSNR 27.55 against 48.97 under Direct3D 11. OpenGL shows the same strip; Direct3D 11 does not. One difference between the backends: the largest point is 1024 px under Direct3D 11 and 2047 px under OpenGL and Vulkan. That may matter; it is a guess, and I have not read the sky code.
+2. **The Sun's fine grain further from the approved film**: master 180 at 29.66 dB, master 396 at 28.65, uhd 396 at 28.72 (under the Sun frames' own limit of 30.5 they would fail), and master 660 at 33.08 and uhd 660 at 32.72. To my eye 660 is the same picture with slightly lower contrast in the corona and the surface.
+
+Neptune under Vulkan: the banded terminator was never there, and the blobs had the same cause as under Direct3D 11. So the first cure should have cleared them under Vulkan too. That is not tested, because W4 runs under Direct3D 11 only. If the next CURE opens Vulkan, I will run its gate as the Windows section then says, and render with the flags of the test that passes.
+
+Also on this machine since 00:20 MST: on Brandon's word I closed the other programs that were drawing on the graphics card (Wallpaper Engine, Steam, Discord, BlueStacks Services, Adobe Creative Cloud), so the card is free for the render. The NVIDIA overlay restarts by itself and stays idle. Fan and cooling control (NZXT CAM, Armoury Crate) stays on.
+
 ## Test of CURE commit c980c36, 2026-11-28 00:01 to 00:09 MST (07:01 to 07:09 UTC): VERDICT LOOK, no render
 
 - Commit tested: `c980c36861ff2f39ebfaa1bb59b34f99846312d5` ("CURE Neptune haze ripples under Direct3D: the slab loop of the cloud shader without its early end, failed frames at full size in the report"). Brought in by W3 from `9365ac1`, with 0 changed tracked files; `package-lock.json` unchanged.
