@@ -14509,3 +14509,13 @@ H60 neptune_builder p7
   encode 1.1 s". Delivered true. In this pack: venus.travel 1620-1624, drawn 04:19:15 to 04:33:23 before the loop rested
   for the three jobs of the piece above, and sent once the loop ran again. Next piece: mercury.hold 564-567, started
   anew 08:01:01.
+
+## 28 Nov, 09:00 UTC: H60 pack p8 to the Builder (word for word; sent 09:00:38 at the latest; high priority; attached /tmp/h60-neptune_builder-p8.tar and /tmp/h60-neptune_builder-p8.txt; nothing else in it)
+
+H60 neptune_builder p8
+
+- The tar: 266240 bytes, sha256 32eaf2f1beb414be6d80487f2000f1bd6bed5cb7a07475d0093faffc710ad6fa; it holds
+  mercury.hold.span564-567.mp4 (259621 bytes), each with its .json, and h60r-state.txt. The first line of the .txt is 0;
+  its PACK line: "PACK neptune_builder p8 08:59:23 chunks 1 left 6 failed 0 next: mercury.hold 568-569 list: #
+  neptune_builder v1". The last wrote line of the log: "wrote mercury.hold.part000.mp4 frames 568-569 render 1589 s
+  encode 0.8 s". Delivered true. The loop ran beside the VSTRIP draws (pid 24747); disk 4.8 GB free.
