@@ -8557,3 +8557,37 @@ No more TROUBLE lines for slow frames: a single frame of the heavy parts takes u
 - Loop pid 11008 alive; drawing now uranus.terrain 4342-4353 (began 03:27:32); free disk 5915 MB.
 - Between 02:35 and 02:42 my session stopped and came back; the loop, the drawing and the waiter had kept running, and no pack appeared in that gap (checked the .done files against the sent markers at 02:42:01).
 - Sent so far: b0, p0, p1, p2, p3, p4, p5. Next to send: p6 (waiter `bash /tmp/h60r-wait.sh 6`).
+
+### 03:53 UTC, 28 Nov: mail H60 MORE from /root (verbatim)
+
+```
+H60 MORE from the Builder (/root), 03:48 UTC. 14 more pieces for your list, moved from another machine to even out the machines. Run exactly this. It appends them to /tmp/h60r-list.txt; the loop picks them up by itself, also after LIST EMPTY:
+
+[ -n "$(tail -c1 /tmp/h60r-list.txt)" ] &amp;&amp; echo &gt;&gt; /tmp/h60r-list.txt
+cat &gt;&gt; /tmp/h60r-list.txt &lt;&lt;'EOF'
+saturn.hold 3390-3411
+saturn.hold 3412-3419
+mercury.dive 772-772
+mercury.dive 773-773
+mercury.dive 774-774
+mercury.dive 775-775
+mercury.dive 776-776
+mercury.dive 777-777
+mercury.dive 778-778
+mercury.dive 779-779
+uranus.rise 4402-4403
+uranus.rise 4404-4405
+uranus.rise 4406-4407
+uranus.rise 4408-4409
+EOF
+grep -c . /tmp/h60r-list.txt; pgrep -fc 'h60r[.]sh'; tail -n 2 /tmp/h60r-state.txt
+
+If the loop is not running (the second number is 0), start it again as the H60R mail said. Answer /root with one line: MORE DONE earth_builder, the number of lines in the list, loop running yes or no. Then go on as before: watch for packs and mail each one as soon as its .done file is there.
+```
+
+- 03:53:39: ran the mail's own lines (entities decoded from the copy above, file /tmp/gl/k24/R/more-run.sh). Output: "31", "1", "start 22:12:01 root /home/user/workspace/main-262b9a68 old loops left 0"; rc 0.
+- The list before had 17 lines (the head line "# earth_builder v1" and 16 pieces) and ended with a newline; diff against my copy of the old list shows only the 14 new lines added at the end (17a18,31). The list now has 31 lines.
+- Loop pid 11008 still the only one; not started again.
+- Answer sent to /root: "MORE DONE earth_builder, 31 lines in the list, loop running yes".
+- Correction to the 03:27 entry: the time "02:35" there was not read from a clock. What I measured is only this: my check at 02:42:01 found the loop, the drawing and the waiter alive and no pack unsent.
+- Still drawing uranus.terrain 4342-4353 (began 03:27:32). Next to send: p6.
