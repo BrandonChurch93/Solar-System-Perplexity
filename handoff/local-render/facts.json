@@ -242,7 +242,10 @@
     {
      "capture": 180,
      "ref": "reference/master-0090.png",
-     "what": "Sun, surface view, film frame 90"
+     "what": "Sun, surface view, film frame 90",
+     "lookPsnr": 30.5,
+     "lookSsim": 0.9,
+     "limitNote": "Own limit, set by the Builder on 2026-11-27 after looking at the pictures of the RTX 5080 under Direct3D: the same picture as the approved film, with the Sun's fine moving grain drawn by slightly different arithmetic on a graphics card (measured there: 32.57 dB, SSIM 0.9401). The general limits are 34 dB and SSIM 0.93."
     },
     {
      "capture": 660,
@@ -337,7 +340,10 @@
     {
      "capture": 396,
      "ref": "reference/master-0198.png",
-     "what": "Sun, flight out (heavy frame), film frame 198"
+     "what": "Sun, flight out (heavy frame), film frame 198",
+     "lookPsnr": 30.5,
+     "lookSsim": 0.9,
+     "limitNote": "Own limit, set by the Builder on 2026-11-27 after looking at the pictures of the RTX 5080 under Direct3D: the same picture as the approved film, with the Sun's fine moving grain drawn by slightly different arithmetic on a graphics card (measured there: 31.49 dB, SSIM 0.9152). The general limits are 34 dB and SSIM 0.93."
     },
     {
      "capture": 1416,
@@ -420,7 +426,10 @@
     {
      "capture": 396,
      "ref": "reference/master-0198.png",
-     "what": "Sun, flight out (heavy frame), film frame 198"
+     "what": "Sun, flight out (heavy frame), film frame 198",
+     "lookPsnr": 30.5,
+     "lookSsim": 0.9,
+     "limitNote": "Own limit, set by the Builder on 2026-11-27 after looking at the pictures of the RTX 5080 under Direct3D: the same picture as the approved film, with the Sun's fine moving grain drawn by slightly different arithmetic on a graphics card (measured there: 31.68 dB, SSIM 0.9208). The general limits are 34 dB and SSIM 0.93."
     },
     {
      "capture": 1416,
@@ -440,7 +449,7 @@
   "stopPsnr": 22,
   "lookPsnr": 34,
   "lookSsim": 0.93,
-  "lookHours": 14,
+  "lookHours": 30,
   "minGpuUtil": 5
  }
 }

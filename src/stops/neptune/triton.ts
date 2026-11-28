@@ -66,7 +66,7 @@ void main() {
   float ndl = (dot(n, uLightW) + uWrap.x) / (1.0 + uWrap.x);
   float lit = smoothstep(uShape.x, uShape.y, ndl) * pow(max(ndl, 0.0), uShape.z) * uWrap.y;
   float mu = max(dot(normalize(vViewN), normalize(-vView)), 0.0);
-  lit *= 1.0 + uRim * pow(1.0 - mu, 3.0);
+  lit *= 1.0 + uRim * pow(abs(1.0 - mu), 3.0);
   vec3 col = albedo * (uSun * lit + uAmbient) * uGain;
   outColor = diagOut(vec4(col, 1.0), diagTexelsDir(d, uMapWidth), 1.0, vec3(0.9, 0.6, 0.15), vec2(0.0), length(vView));
 }`

@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { FarPoint } from '../../../bodies/farpoint'
-import { bufferFrame } from '../../../core/frame'
+import { bufferFrame, frameUniform } from '../../../core/frame'
 import type { SetFactory } from '../../../core/types'
 import { smooth } from '../../../director/rig'
 import { Globe, Shell } from './globe'
@@ -263,6 +263,9 @@ export const createKept: SetFactory = async (ctx) => {
       ru.uSpinRate!.value = spinRate
       ru.uVignette!.value = shot.post.vignette
       ru.uAspect!.value = aspect
+      // The floor under the evened ring light (rings.ts, evenInverse): only in frames larger than the 1080p master, where single
+      // ring strands came out teal. At 1080p and below it is 0 and the approved picture is drawn as before.
+      ru.uEvenFloor!.value = frameUniform.value > 1 ? 0.75 : 0
       ;(ru.uSkimFit!.value as THREE.Vector4).w = Math.max(ru.uGrad!.value as number, look.rings.skimFoot)
       const hazeW = (1 - smooth((away - look.shellRange[0]) / (look.shellRange[1] - look.shellRange[0]))) * near
       ;(su.uHazeTwilight!.value as THREE.Vector3).fromArray(look.shell.twilight).multiplyScalar(1 - hazeW)

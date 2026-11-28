@@ -113,7 +113,7 @@ vec3 deckAt(vec2 xy, vec2 gx, vec2 gy) {
   vec3 deck = mix(textureGrad(uDeckWide, wideUv(xy), gx / span, gy / span).rgb, textureGrad(uDeck, uc, gx / (2.0 * uTan), gy / (2.0 * uTan)).rgb, w);
   for (int j = 0; j < (w > 0.0 && uFine.x + uFine.y > 0.0 ? 1 : 0); j++) {
     vec2 fine = textureGrad(uFineMap, uc, gx / (2.0 * uTan), gy / (2.0 * uTan)).rg * (255.0 / 127.0);
-    deck *= pow(mix(1.0, fine.x, w * uFine.x) * mix(1.0, fine.y, w * uFine.y), 2.2);
+    deck *= pow(abs(mix(1.0, fine.x, w * uFine.x) * mix(1.0, fine.y, w * uFine.y)), 2.2);
   }
   return deck;
 }
@@ -166,7 +166,7 @@ void main() {
     vec3 deck = mix(textureGrad(uDeckWide, wideUv(xy), wgx, wgy).rgb, textureGrad(uDeck, uc, cgx, cgy).rgb, w);
     for (int j = 0; j < (w > 0.0 && uFine.x + uFine.y > 0.0 ? 1 : 0); j++) {
       vec2 fine = textureGrad(uFineMap, uc, cgx, cgy).rg * (255.0 / 127.0);
-      deck *= pow(mix(1.0, fine.x, w * uFine.x) * mix(1.0, fine.y, w * uFine.y), 2.2);
+      deck *= pow(abs(mix(1.0, fine.x, w * uFine.x) * mix(1.0, fine.y, w * uFine.y)), 2.2);
     }
     float shade = textureGrad(uHeight, wideUv(planeOf(cloudSource(q))), wgx, wgy).g;
     col = deck * shade;

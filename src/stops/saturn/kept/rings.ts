@@ -230,6 +230,7 @@ uniform vec4 uSheetGlow;
 uniform vec4 uSheetFit;
 uniform vec4 uShine;
 uniform float uEven;
+uniform float uEvenFloor;
 uniform vec4 uPolarHigh;
 uniform vec4 uRimNear;
 uniform vec4 uRimEdge;
@@ -254,7 +255,13 @@ float azRow(int i, vec4 h) {
 vec3 evenInverse(vec3 fine, vec3 wide) {
   vec3 hi = min(wide + 0.004, 0.985);
   vec3 lo = max(wide - 0.004, 0.0);
-  return max(inverseFilmic(wide) + (inverseFilmic(hi) - inverseFilmic(lo)) / max(hi - lo, 1e-4) * (min(fine, 0.985) - min(wide, 0.985)), 0.0);
+  vec3 even = max(inverseFilmic(wide) + (inverseFilmic(hi) - inverseFilmic(lo)) / max(hi - lo, 1e-4) * (min(fine, 0.985) - min(wide, 0.985)), 0.0);
+  // The line above follows the tone curve along its slope at the wide sample. Where the fine sample is far darker than the
+  // wide one (single ring strands in a frame larger than 1080p) the line runs under zero in red and blue before it does in
+  // green, and the pixel came out teal: 630 such pixels in one part of a 4K frame, none with this floor (measured). The floor
+  // is a share of the true light of the fine sample. uEvenFloor is 0 at 1080p and below, so that picture is drawn as before.
+  for (int j = 0; j < (uEvenFloor > 0.0 ? 1 : 0); j++) even = max(even, uEvenFloor * inverseFilmic(min(fine, 0.985)));
+  return even;
 }
 vec3 skimFill(vec2 uv, vec2 gx, vec2 gy) {
   vec3 fine = textureGrad(uSkimMap, uv, gx * uSkimFit.w, gy * uSkimFit.w).rgb;
@@ -275,10 +282,17 @@ float azGain(float r, float phi) {
   vec4 h = vec4(cos(phi), sin(phi), cos(2.0 * phi), sin(2.0 * phi));
   return clamp(mix(azRow(i, h), azRow(i + 1, h), t), 0.4, 1.7);
 }
-float sheetAt(float r, float t[9]) {
+// Each of the two reads its own uniform array where it lives. An array handed to a function as a parameter is drawn wrong by
+// Direct3D (Chrome on Windows) in Neptune's light curve (src/stops/neptune/planet.ts, knotDeck); the sums are as before.
+float sheetThrough(float r) {
   int i = 0;
   for (int k = 1; k < 8; k++) if (r >= uSheetR[k]) i = k;
-  return mix(t[i], t[i + 1], clamp((r - uSheetR[i]) / (uSheetR[i + 1] - uSheetR[i]), 0.0, 1.0));
+  return mix(uSheetT[i], uSheetT[i + 1], clamp((r - uSheetR[i]) / (uSheetR[i + 1] - uSheetR[i]), 0.0, 1.0));
+}
+float sheetWedge(float r) {
+  int i = 0;
+  for (int k = 1; k < 8; k++) if (r >= uSheetR[k]) i = k;
+  return mix(uWedgeG[i], uWedgeG[i + 1], clamp((r - uSheetR[i]) / (uSheetR[i + 1] - uSheetR[i]), 0.0, 1.0));
 }
 float rowNoise(float phi, int row, float cellA, float cellR) {
   float rr = (float(row) + 0.5) * cellR;
@@ -566,7 +580,7 @@ void main() {
   // it): part of that picture, so it stands on the picture's own weight (uPolarW) and goes out with it
   float thin = 1.0 - uShadowThin.z * smoothstep(uShadowThin.x, uShadowThin.y, rq) * (1.0 - lit) * (1.0 - uClose) * uPolarW * (1.0 - uSolid.x) * (disc ? 0.0 : 1.0);
   over *= lit;
-  float through = sheetAt(rs, uSheetT) * (1.0 - uSheetFit.w * uPolarShape * smoothstep(uSheetFit.z, 1.0, bb));
+  float through = sheetThrough(rs) * (1.0 - uSheetFit.w * uPolarShape * smoothstep(uSheetFit.z, 1.0, bb));
   float bx = max(bb - uFillet.x, 0.0);
   float rin = uEdge.x - uPolarBend * (uFillet.y * bx + uFillet.z * bx * bx * bx * bx);
   float bout = mix(1.0, uWedge.w, uPolarShape);
@@ -583,7 +597,7 @@ void main() {
   float shade = uSolid.x * uSolid.y * (1.0 - lit) * (1.0 - uClose) * (1.0 - smoothstep(uEdge.y - 0.002, uEdge.y + 0.002, rq)) * (lip ? 1.0 : smoothstep(uShadeRamp.x, uShadeRamp.y, r)) * past;
   alpha = max(alpha, shade);
   float day = smoothstep(-0.05, 0.25, dot(normalize(vec3(on.x, on.y / uPolar, on.z)), normalize(uSunL)));
-  vec3 wedge = mix(uSheetGlow.rgb, uWedge.rgb * uPolarShape, smoothstep(uWedgeIn.x, uWedgeIn.y, bb)) * sheetAt(rs, uWedgeG) * sheet * day;
+  vec3 wedge = mix(uSheetGlow.rgb, uWedge.rgb * uPolarShape, smoothstep(uWedgeIn.x, uWedgeIn.y, bb)) * sheetWedge(rs) * sheet * day;
   col *= 1.0 - uSheetGlow.w * sheet * uPolarShape * (1.0 - day);
   float hb = max(bb - 1.0, 0.0);
   vec3 shine = (uShine.rgb * exp(-hb / uShine.w) + uShineWide.rgb * exp(-hb / uShineWide.w)) * (steep * uPolarShape * day * (1.0 - uClose) * smoothstep(0.0, uShineBack, (1.0 + ob / oa) * sqrt(oa)));
@@ -679,7 +693,7 @@ export class Rings {
       ...layout,
       ...shots,
       uHeroTurn: { value: look.heroTurn }, uShapeFit: { value: new THREE.Vector2().fromArray(look.shapeFit) }, uOuterFit: { value: new THREE.Vector4().fromArray(look.outerFit) }, uGapFit: { value: new THREE.Vector2().fromArray(look.gapFit) }, uArc: { value: new THREE.Vector4().fromArray(look.arc) }, uArcAz: { value: new THREE.Vector4().fromArray(look.arcAz) }, uSkimFit: { value: new THREE.Vector4(look.skimEdge[0], look.skimDensity[0], look.skimDensity[1], 0) }, uReach: { value: ringsJson.span[1] }, uSkimNear: { value: 1 }, uSkimPart: { value: 0 }, uSkimUnder: { value: new THREE.Vector4(-0.005, -0.002, 0.009, 0.015) }, uSkimGap: { value: 0 }, uSkimFill: { value: new THREE.Vector3(-0.009, 0, 0.001) }, uGlobe: { value: new THREE.Vector2(1, polar) }, uSkimCam: { value: new THREE.Vector3() },
-      uSheetR: { value: look.sheetRadii }, uSheetT: { value: look.sheetThrough }, uWedgeG: { value: look.wedgeGain }, uWedge: { value: new THREE.Vector4().fromArray(look.wedge) }, uWedgeIn: { value: new THREE.Vector2().fromArray(look.wedgeIn) }, uSheetGlow: { value: new THREE.Vector4().fromArray(look.sheetGlow) }, uSheetFit: { value: new THREE.Vector4().fromArray(look.sheetFit) }, uShine: { value: new THREE.Vector4().fromArray(look.shine) }, uShineWide: { value: new THREE.Vector4().fromArray(look.shineWide) }, uShineBack: { value: look.shineBack }, uEven: { value: look.even }, uPolarHigh: { value: new THREE.Vector4().fromArray(look.polarHigh) }, uRimNear: { value: new THREE.Vector4().fromArray(look.rimNear) }, uRimEdge: { value: new THREE.Vector4().fromArray(look.rimEdge) }, uRimFar: { value: new THREE.Vector3().fromArray(look.rimFar) }, uRimHalo: { value: new THREE.Vector4().fromArray(look.rimHalo) }, uRimAz: { value: new THREE.Vector4().fromArray(look.rimAz) }, uFillet: { value: new THREE.Vector4().fromArray(look.fillet) },
+      uSheetR: { value: look.sheetRadii }, uSheetT: { value: look.sheetThrough }, uWedgeG: { value: look.wedgeGain }, uWedge: { value: new THREE.Vector4().fromArray(look.wedge) }, uWedgeIn: { value: new THREE.Vector2().fromArray(look.wedgeIn) }, uSheetGlow: { value: new THREE.Vector4().fromArray(look.sheetGlow) }, uSheetFit: { value: new THREE.Vector4().fromArray(look.sheetFit) }, uShine: { value: new THREE.Vector4().fromArray(look.shine) }, uShineWide: { value: new THREE.Vector4().fromArray(look.shineWide) }, uShineBack: { value: look.shineBack }, uEven: { value: look.even }, uEvenFloor: { value: 0 }, uPolarHigh: { value: new THREE.Vector4().fromArray(look.polarHigh) }, uRimNear: { value: new THREE.Vector4().fromArray(look.rimNear) }, uRimEdge: { value: new THREE.Vector4().fromArray(look.rimEdge) }, uRimFar: { value: new THREE.Vector3().fromArray(look.rimFar) }, uRimHalo: { value: new THREE.Vector4().fromArray(look.rimHalo) }, uRimAz: { value: new THREE.Vector4().fromArray(look.rimAz) }, uFillet: { value: new THREE.Vector4().fromArray(look.fillet) },
       uCamL: { value: new THREE.Vector3(0, 1, 3) }, uSunL: { value: new THREE.Vector3(1, 0.2, 0) }, uShadowL: { value: new THREE.Vector3(1, 0.2, 0) }, uPolar: { value: polar },
       uFloorA: { value: look.floorAlpha }, uEdge: { value: new THREE.Vector2(ringsJson.inner, ringsJson.outer) },
       ...gradeUniforms(),

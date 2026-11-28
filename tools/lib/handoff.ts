@@ -12,7 +12,7 @@ export const HAND = join(ROOT, 'handoff', 'local-render')
 
 export interface FileFact { path: string; bytes: number; sha256: string }
 export interface BandFact { file: string; width: number; height: number; y: number; frames: number; fps: number; probeSeconds: number }
-export interface FrameFact { capture: number; ref: string | null; what: string }
+export interface FrameFact { capture: number; ref: string | null; what: string; lookPsnr?: number; lookSsim?: number; limitNote?: string }
 export interface TestFact { id: string; format: string; refWidth: number; refHeight: number; frames: FrameFact[] }
 export interface Facts {
   engineHash: string

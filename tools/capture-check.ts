@@ -7,6 +7,7 @@
 //   --limit N            only the first N frames of each draw test
 //   --out DIR            where the test writes (default out/work/capture-check)
 //   --browser, --headless, --angle, --allow-software, --ignore-limits, --frame-timeout   handed on to tools/capture.ts
+//   --keep-frames   uses frames an earlier run left in the test folders again; for trying out this tool only, the verdict then cannot be PASS
 //
 // What it does, in order:
 //   1. reads the machine (system, processor, memory, free disk, Node, git commit) and stops inside WSL;
@@ -21,7 +22,7 @@
 // Exit code: 0 for PASS and LOOK, 1 for STOP.
 
 import { execFile, spawn, spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { arch, cpus, hostname, platform, release, totalmem } from 'node:os'
 import { join, resolve } from 'node:path'
 import { ROOT, WORK, args, formatId, freeGb, loadConfig } from './lib/common'
@@ -40,6 +41,8 @@ const SIDE = join(OUT, 'side')
 const TSX = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs')
 const stops: string[] = []
 const looks: string[] = []
+const keepFrames = a['keep-frames'] === 'true'
+if (keepFrames) looks.push('--keep-frames was given: frames of an earlier run may have been used again, so this run does not count as the test of this machine.')
 const lines: string[] = []
 const say = (t = ''): void => {
   lines.push(t)
@@ -292,6 +295,18 @@ for (const id of wantTests) {
   say('## Draw test ' + id + ': ' + frames.length + ' frames at ' + size.width + ' by ' + size.height)
   say()
   console.log('capture-check: drawing ' + frames.length + ' frames at ' + size.width + ' by ' + size.height + ' through tools/capture.ts ...')
+  // A test stands for this machine and this state of the film: frames an earlier run left in the folder (drawn on another backend, or before a cure) are removed first.
+  if (keepFrames) {
+    say('- NOTE: --keep-frames was given, so frames that were already in ' + dir + ' were used again.')
+    say()
+  } else {
+    try {
+      rmSync(dir, { recursive: true, force: true, maxRetries: 8, retryDelay: 500 })
+    } catch (e) {
+      stops.push('the folder ' + dir + ' of the draw test ' + id + ' could not be emptied (' + String((e as Error).message ?? e) + '). Close what holds files in it, or remove it by hand, and run the test again.')
+      break
+    }
+  }
   const before = hasNv ? await sampleGpu() : null
   const res = await draw([TSX, 'tools/capture.ts', '--format', t.format, '--rate', '2', '--tier', 'final', '--frames', frames.map((f) => f.capture).join(','), '--out', dir, ...pass])
   gpuNotes[id] = res.gpu
@@ -343,12 +358,13 @@ for (const id of wantTests) {
       if (sideBySide(local, ref, side, size.width > t.refWidth)) row.side = side
       if (m.psnr === null || m.ssim === null) stops.push('draw test ' + id + ': frame ' + f.capture + ' could not be compared with ' + f.ref + '.')
       else if (m.psnr < facts.thresholds.stopPsnr) stops.push('draw test ' + id + ': frame ' + f.capture + ' (' + f.what + ') is another picture than the approved one: PSNR ' + m.psnr.toFixed(2) + ' dB, SSIM ' + m.ssim.toFixed(4) + '. Look at ' + side + '.')
-      else if (m.psnr < facts.thresholds.lookPsnr || m.ssim < facts.thresholds.lookSsim) looks.push('draw test ' + id + ': frame ' + f.capture + ' (' + f.what + ') differs from the approved picture more than an encode explains: PSNR ' + m.psnr.toFixed(2) + ' dB, SSIM ' + m.ssim.toFixed(4) + '. Look at ' + side + '.')
+      else if (m.psnr < (f.lookPsnr ?? facts.thresholds.lookPsnr) || m.ssim < (f.lookSsim ?? facts.thresholds.lookSsim)) looks.push('draw test ' + id + ': frame ' + f.capture + ' (' + f.what + ') differs from the approved picture more than an encode explains: PSNR ' + m.psnr.toFixed(2) + ' dB, SSIM ' + m.ssim.toFixed(4) + '. Look at ' + side + '.')
     }
     if (size.width >= 3840) row.detail = fineDetail(local)
     rows.push(row)
+    const own = f.lookPsnr !== undefined || f.lookSsim !== undefined ? ' (this frame has its own limit: ' + (f.lookPsnr ?? facts.thresholds.lookPsnr) + ' dB, SSIM ' + (f.lookSsim ?? facts.thresholds.lookSsim) + ')' : ''
     const num = (v: number | null, d: number): string => (v === null ? 'n/a' : v === Infinity ? 'equal' : v.toFixed(d))
-    say('| ' + f.capture + ' | ' + row.film + (row.odd ? ' and a half' : '') + ' | ' + f.what + ' | ' + num(row.psnr, 2) + ' | ' + num(row.ssim, 4) + ' | ' + num(row.seconds, 1) + ' | ' + num(row.render, 1) + ' | ' + num(row.bytes === null ? null : row.bytes / 1e6, 1) + ' | ' + num(row.detail, 2) + ' |')
+    say('| ' + f.capture + ' | ' + row.film + (row.odd ? ' and a half' : '') + ' | ' + f.what + own + ' | ' + num(row.psnr, 2) + ' | ' + num(row.ssim, 4) + ' | ' + num(row.seconds, 1) + ' | ' + num(row.render, 1) + ' | ' + num(row.bytes === null ? null : row.bytes / 1e6, 1) + ' | ' + num(row.detail, 2) + ' |')
   }
   if (res.gpu && res.gpu.samples >= 3 && res.gpu.maxUtil < facts.thresholds.minGpuUtil) {
     looks.push('draw test ' + id + ': the NVIDIA card was never busier than ' + res.gpu.maxUtil + ' percent while the frames were drawn, although the browser names it. Check in the Task Manager (Performance, GPU) that the card works while a frame is drawn.')

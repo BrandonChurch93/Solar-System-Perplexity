@@ -1,4 +1,5 @@
 import { spawnSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { createReadStream, createWriteStream, existsSync, mkdirSync, readFileSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs'
 import { createServer, type Server } from 'node:http'
 import { extname, join, normalize, resolve } from 'node:path'
@@ -97,7 +98,7 @@ interface ShotNote { frame: number; seconds: number; render: number; bytes: numb
 interface Manifest {
   shutterDegrees: number; expectGpu: string | null; shots?: ShotNote[]
   film: string | null; complete: boolean; frames: number; from: number; to: number; format: string; width: number; height: number; fps: number; filmFps: number; rate: number; tier: string
-  commit: string; engineHash: string; browser: string; graphics: string; machineLimits: Limits | null; filmNeeds: typeof wanted; underNeeds: string[]; machine: string; secondsPerFrame: number | null; renderSecondsPerFrame: number | null; bytesPerFrame: number | null
+  commit: string; engineHash: string; stopsHash?: string; browser: string; graphics: string; machineLimits: Limits | null; filmNeeds: typeof wanted; underNeeds: string[]; machine: string; secondsPerFrame: number | null; renderSecondsPerFrame: number | null; bytesPerFrame: number | null
   framesRendered: number; warmStart: boolean | null; warmDraws: number; framesKept: boolean; crf: number; chunk: number; parts: PartNote[]; started: string; updated: string; note?: string
 }
 
@@ -257,6 +258,10 @@ async function main(): Promise<void> {
   const hashes = ensureBuild()
   const old: Partial<Manifest> = existsSync(manifestFile) ? (JSON.parse(readFileSync(manifestFile, 'utf8')) as Partial<Manifest>) : {}
   if (old.format && (old.format !== format || old.rate !== rate || old.tier !== tier) && a.mixed !== 'true') fail('the folder ' + out + ' holds a capture of format ' + old.format + ', rate ' + old.rate + ', tier ' + old.tier + '. Name another folder with --out.')
+  // The engine hash leaves the code of the nine stops out, so a cure inside a stop needs its own check: frames drawn before it are another picture.
+  const stopsHash = createHash('sha256').update(JSON.stringify(Object.entries(hashes.stops).sort())).digest('hex').slice(0, 16)
+  const oldDrawn = (old.framesRendered ?? 0) > 0 || (old.parts ?? []).length > 0
+  if (oldDrawn && old.stopsHash !== stopsHash && a.mixed !== 'true') fail('the folder ' + out + ' holds frames drawn before a change to the code of a stop (stops ' + (old.stopsHash ?? 'not recorded, so drawn by an older tool') + ', now ' + stopsHash + '). Name another folder with --out, or remove the folder, or pass --mixed if the Builder wrote that the frames that are there stay good.')
   if (old.complete && old.film && old.from === range.from && old.to === range.to && old.engineHash === hashes.engine && existsSync(old.film)) {
     console.log('capture: the film is already there: ' + old.film + '. Remove the folder ' + out + ' to capture it again.')
     return
@@ -265,7 +270,7 @@ async function main(): Promise<void> {
   if (oldShutter !== undefined && oldShutter !== shutter && a.mixed !== 'true') fail('the folder ' + out + ' holds frames drawn with the shutter open for ' + oldShutter + ' degrees of a capture frame, this run asks for ' + shutter + '. Name another folder with --out, or remove that one.')
   if (old.engineHash && old.engineHash !== hashes.engine && a.mixed !== 'true') fail('the folder ' + out + ' holds frames of another state of the film (engine ' + old.engineHash + ', now ' + hashes.engine + '). Name another folder with --out, or remove this one, or pass --mixed to go on in it.')
   const m: Manifest = {
-    shutterDegrees: shutter, expectGpu: a['expect-gpu'] !== undefined && a['expect-gpu'] !== 'true' ? a['expect-gpu'] : null, ...(only ? { shots: (old.shots ?? []).filter((t) => only.has(t.frame)) } : {}),
+    stopsHash, shutterDegrees: shutter, expectGpu: a['expect-gpu'] !== undefined && a['expect-gpu'] !== 'true' ? a['expect-gpu'] : null, ...(only ? { shots: (old.shots ?? []).filter((t) => only.has(t.frame)) } : {}),
     film: null, complete: false, frames: total, from: range.from, to: range.to, format, width: size.width, height: size.height, fps, filmFps: cfg.fps, rate, tier, commit: commit(), engineHash: hashes.engine,
     browser: old.browser ?? '', graphics: old.graphics ?? '', machineLimits: old.machineLimits ?? null, filmNeeds: wanted, underNeeds: [], machine: machineId(), secondsPerFrame: old.secondsPerFrame ?? null, renderSecondsPerFrame: old.renderSecondsPerFrame ?? null, bytesPerFrame: old.bytesPerFrame ?? null,
     framesRendered: old.framesRendered ?? 0, warmStart: old.warmStart ?? null, warmDraws: old.warmDraws ?? 0, framesKept: keepFrames || !chunking, crf, chunk: chunking ? chunkSize : 0, parts: (old.parts ?? []).filter((p) => chunks.some((c) => c.name === p.name)), started: old.started ?? new Date().toISOString(), updated: new Date().toISOString(),
@@ -335,6 +340,11 @@ async function main(): Promise<void> {
       fail('the page counts ' + (o.info.captureFrames ?? o.info.frameCount) + ' frames, the tool ' + captureFrames)
     }
     const g = o.limits
+    // The same film comes out differently under Direct3D, OpenGL and Vulkan (report of the RTX 5080, 2026-11-27), so frames of two do not go into one film without a word.
+    if (old.graphics && old.graphics !== g.renderer && (total - left > 0 || m.parts.length > 0) && a.mixed !== 'true') {
+      await close()
+      fail('the folder ' + out + ' holds frames drawn on "' + old.graphics + '", and this run draws on "' + g.renderer + '". Frames of two graphics do not go into one film. Name another folder with --out, or remove the folder, or pass --mixed if both are meant to be joined.')
+    }
     if (m.graphics !== g.renderer || m.browser !== o.version) {
       console.log('capture: browser ' + o.version)
       console.log('capture: this machine: ' + g.renderer + '; largest texture ' + g.maxTextureSize + ', largest render buffer ' + g.maxRenderbufferSize + ', largest viewport ' + g.maxViewportDims.join(' by ') + ', point sizes ' + g.aliasedPointSizeRange.join(' to ') + ', ' + g.maxSamples + ' samples.')
