@@ -50,6 +50,82 @@ Left half of each picture is the approved film, right half this machine; 4K pict
 - Whole 4K film estimate from the test: 15 to 18.9 hours.
 - GPU while drawing: up to 100 percent busy, at most about 8.1 GB in use.
 
+## Update 2: the two other backends, and a diagnosis (2026-11-27, 21:05 to 21:45 MST)
+
+**Neither `--angle gl` nor `--angle vulkan` passes.** Both clear Neptune's banded terminator, but both keep Neptune's black specks, and both add a new fault on Venus that D3D11 does not have. Per Brandon's order no render was started, and `src/` was not touched.
+
+### Commands
+
+```
+node node_modules/tsx/dist/cli.mjs tools/capture-check.ts --expect-gpu "RTX 5080" --angle gl >> capture-check-gl.log 2>&1
+node node_modules/tsx/dist/cli.mjs tools/capture-check.ts --expect-gpu "RTX 5080" --angle vulkan >> capture-check-vulkan.log 2>&1
+```
+
+- GL: `ANGLE (NVIDIA Corporation, NVIDIA GeForce RTX 5080/PCIe/SSE2, OpenGL 4.5.0)`. Ran 21:05 to 21:35. **Stopped by me after its 1080p set** (preview and master complete; the 4K set was not drawn), because the verdict could no longer be PASS and the 1080p Neptune frames had answered the question. The PC went to sleep once during this run (the Mars frame 4650 shows 1658 s), because I had restored Brandon's sleep timer after the first give-up. No frame was affected.
+- Vulkan: `ANGLE (NVIDIA, Vulkan 1.4.351 (NVIDIA NVIDIA GeForce RTX 5080 (0x00002C02)), NVIDIA)`. Ran 21:35:44 to 21:39:58, complete, exit 0, **VERDICT: LOOK**.
+
+### The frames that matter, PSNR dB against the approved picture
+
+| Frame | What | D3D11 | GL | Vulkan | Look (my judgement of the pictures) |
+|---|---|---|---|---|---|
+| preview 9400 | Neptune flight in, whole disc | 31.39 | **48.25** | **48.42** | D3D11 banded; GL and Vulkan clean, the same picture |
+| master 9090 | Neptune whole view | 33.09 | **40.70** | **40.71** | D3D11 banded; GL and Vulkan clean |
+| master 9720 | Neptune surface view | 32.32 | 34.80 | 34.79 | **black specks on all three** |
+| master 9480 | Neptune flight in (heavy) | 30.61 | 31.82 | 31.80 | **black blobs on all three, same places** |
+| master 9916 | Neptune flight out (heavy) | 31.99 | 33.07 | 33.05 | **black specks on all three** |
+| uhd 9480 | Neptune flight in, 4K | 31.16 | not drawn | 32.30 | **black blobs on both** |
+| uhd 9916 | Neptune flight out, 4K | 32.51 | not drawn | 33.63 | **black specks on both** |
+| preview 2200 | Venus whole view (film frame 1100) | 48.97 | **27.59** | **27.55** | **new fault on GL and Vulkan**: a vertical strip down the left edge of the frame (about the first tenth of its width) filled with grey star-like speckles; fine on D3D11 |
+| master 660 | Sun whole view | 38.66 | 38.31 | 33.08 | Vulkan: the same picture, slightly lower contrast in the corona and the surface |
+| master 180, 396 | Sun surface, flight out | 32.57, 31.49 | 31.04, 29.55 | 29.66, 28.65 | the same picture on all three (fine strand detail only) |
+
+Pictures, left the approved film and right this machine: `gl-*.jpg` and `vulkan-*.jpg` beside the `d3d11-*.jpg` in `handoff/reports/windows-rtx5080/`.
+
+### Time per frame
+
+| Backend | 4K mean | 4K slowest | Whole 4K film (test's two estimates) |
+|---|---|---|---|
+| D3D11 | 6.3 s | 37.2 s | 15 to 18.9 h |
+| Vulkan | 3.2 s | 11.3 s | **7.4 to 9.5 h** |
+| GL | not measured (4K set not drawn) | | 1080p frames took 0.1 to 4.6 s of render time, like the others |
+
+### Diagnosis (read only; nothing in `src/` was changed)
+
+There are **two separate Neptune faults**, told apart by which backends show them.
+
+**1. Banded terminator in the whole views: Direct3D11 only.** It is gone on GL and Vulkan. The prime suspect is `knot()` in `src/stops/neptune/planet.ts:187-191`:
+
+```glsl
+vec3 knot(vec3 k[33], float ndl) {
+  float x = clamp(ndl * 0.5 + 0.5, 0.0, 1.0) * 32.0;
+  int i = int(min(floor(x), 31.0));
+  return mix(k[i], k[i + 1], x - float(i));
+}
+```
+
+It is called with uniform arrays (`uDeck`, `uCloud`, and in `deep.ts` `uGDeck`, `uGCloud`) passed **by value as a function argument** and indexed with a **dynamic index**. ANGLE's HLSL output copies such an array into a local array, which FXC compiles into indexable temp registers, a path known for miscompiles. The fault looks exactly like what would happen if the interpolation between knot `i` and `i + 1` were lost: shading constant within each of the 32 steps of `ndl`, which on a sphere shows as evenly spaced bands parallel to the terminator. That is what frames 9090 and 9400 show. Not proven: I did not build a test page for it. A low-risk cure that should leave the software picture bit for bit the same: read the uniform arrays directly instead of passing them as a parameter (one `knotDeck`, `knotCloud` and so on per array, or a macro), or store the curve in a 33 by 1 float texture with linear filtering.
+
+**2. Black blobs and specks in the surface and flight views: every real GPU (D3D11, GL and Vulkan alike), in the same places.** So this is not a Direct3D translation fault. It is the scene's own arithmetic coming out differently on GPU hardware than in SwiftShader, where the film was approved. It sits in the deep scene, `src/stops/neptune/deep.ts`. The places where a small float difference flips a hard decision, in the order I would check them:
+
+- The **self-shadow march**, `deep.ts:874-885` (`shade = min(shade, clamp(0.5 + clear / (...), 0.0, 1.0))`, then `shade = 1.0 - uShade.x * (1.0 - shade)`). The comment at `deep.ts:871-873` records that this same term once made "the navy chunks with stepped edges at 4705 to 4713" (MAIL 840 point 1). The blobs here look like that fault again: dark navy-to-black chunks with smooth edges, of many sizes, on the lit deck.
+- The **deck march hit test**, `deep.ts:818-831` (`if (f < 0.5 * td * pix)` and `deckHit = deckHit || (td <= tEnd && f < 0.03)`): a ray that misses on the GPU and hits in software, or the reverse, changes `tDeck` and everything lit from it.
+- The cirrus shadow hop loop, `deep.ts:891-909`, which changes its own loop counter (`i += 1 + int(0.9 * far / castGap)`): a threshold on `far` changes how many taps are skipped.
+- Less likely: `hash3` (`deep.ts:155`) is integer-exact on every backend, so the noise itself should match. `endHash` in `planet.ts:211` converts a float to `uvec2`, which is undefined for negative values in GLSL ES and may differ by backend.
+
+The quickest way to find it is the Builder's own method of MAIL 840: switch the terms off one at a time on a frame like 4740 and compare. But it has to be done on a GPU, because SwiftShader does not show the fault. The Windows test takes about 4 minutes on Vulkan.
+
+**3. Venus strip on GL and Vulkan (not D3D11):** a column of grey speckles over the sky at the left edge of capture frame 2200. One difference between the backends is the point size limit: 1024 on D3D11 against 2047 on GL and Vulkan. A star or far point drawn larger than 1024 px would be clamped on D3D11 and drawn whole on the others. That is a guess. I did not read the sky code for it.
+
+### Note on the test tool
+
+`tools/capture-check.ts` (through `tools/capture.ts`) **reuses frames already on disk even when they were drawn with another backend.** My first `--angle gl` run finished in 31 s by reusing all 43 D3D11 frames, and reported the D3D11 graphics name and verdict as if they were its own. I cleared `out/work/capture-check/` before each later run. The tool could key its frame folder by the graphics name, or refuse reused frames whose manifest names other graphics.
+
+### Where things stand
+
+- No render. No release. `src/`, `config/`, `tools/` and `main` are untouched. Only this branch was pushed.
+- Kept on the PC: `C:\Users\Brandon\Desktop\Space-Fkythrough\capture-check-d3d11\`, `capture-check-gl\` and `capture-check-vulkan\` (full reports, frames and logs).
+- When the cure is on `main`, the PC test is the proof: about 4 minutes on Vulkan, 8 on D3D11. If one fix covers both faults, **Vulkan is the faster backend for the release (7.4 to 9.5 h)**, provided the Venus strip is cured as well. Otherwise D3D11, which has no Venus fault (15 to 18.9 h).
+
 ## Full REPORT.md of the D3D11 test
 
 ````markdown
