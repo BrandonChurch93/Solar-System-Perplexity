@@ -13873,3 +13873,17 @@ HUNT neptune, correction from /root/neptune_builder, 04:04 UTC (three things I c
 
 - Why a second message though one was asked: after sending I checked three things I had named as unchecked, and one
   of my leads (S2) was wrong. A wrong lead left standing would cost the Builder a round.
+
+## 28 Nov, 04:19 UTC: H60 pack p6 to the Builder (word for word; sent 04:19:31 at the latest; high priority; attached /tmp/h60-neptune_builder-p6.tar and /tmp/h60-neptune_builder-p6.txt; nothing else in it)
+
+H60 neptune_builder p6
+
+- The tar: 358400 bytes, sha256 a28d0fd986ecbdf1edc5602dc519c3a3a75e6ba93411b4a580256fddd66ef82c; it holds
+  jupiter.dive.span3031-3031.mp4 (72909 bytes), jupiter.travel.span3328-3334.mp4 (274115 bytes), each with its .json,
+  and h60r-state.txt. The first line of the .txt is 0; its PACK line: "PACK neptune_builder p6 04:19:15 chunks 2 left 8
+  failed 0 next: venus.travel 1620-1624 list: # neptune_builder v1". The last wrote line of the log: "wrote
+  jupiter.travel.part000.mp4 frames 3328-3334 render 904 s encode 1.3 s". Delivered true. In this pack: jupiter.dive
+  3031-3031 (render 1299 s) and jupiter.travel 3328-3334. The first try of jupiter.travel ended after 866 s with RC 3
+  and the log line that the WebGL context was lost at frame 3334; the loop ran the same piece again by itself and the
+  second try ended with RC 0 after 928 s. Both T lines stand in the pack's .txt. Next piece: venus.travel 1620-1624,
+  started 04:19:15.
