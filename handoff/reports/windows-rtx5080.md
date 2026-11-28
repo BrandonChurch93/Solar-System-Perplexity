@@ -2,6 +2,45 @@
 
 Written by Claude Code on Brandon's Windows desktop on 2026-11-27 (MST). The branch `local-render-report` carries this file and the side-by-side pictures in `handoff/reports/windows-rtx5080/`. Nothing else in the repo was changed.
 
+## Test of CURE commit c980c36, 2026-11-28 00:01 to 00:09 MST (07:01 to 07:09 UTC): VERDICT LOOK, no render
+
+- Commit tested: `c980c36861ff2f39ebfaa1bb59b34f99846312d5` ("CURE Neptune haze ripples under Direct3D: the slab loop of the cloud shader without its early end, failed frames at full size in the report"). Brought in by W3 from `9365ac1`, with 0 changed tracked files; `package-lock.json` unchanged.
+- Command (W4, no `--angle`): `node node_modules/tsx/dist/cli.mjs tools/capture-check.ts --expect-gpu "RTX 5080" >> capture-check.log 2>&1`, exit 0.
+- Graphics: `ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 (0x00002C02) Direct3D11 vs_5_0 ps_5_0, D3D11)`, Chrome 158.0.8127.37. Engine hash `a455bc02904b0d42`.
+- Time per 4K frame: mean 6.3 s, slowest 37.6 s; the whole 4K film 14.9 to 18.8 h by the test.
+- **No render was started** (W5). `src/` untouched. The watch of `main` goes on.
+
+### What the second cure did
+
+- **The haze ripples are cured.** The bright limb haze of 9480 is smooth now, as in the approved frame, at 1080p and at 4K. master 9480: 34.61 dB / SSIM 0.8948 before, **38.18 / 0.9306** now; uhd 9480: 35.33 / 0.9091 before, **38.91 / 0.9424** now. **Both 9480 lines pass.** The Builder's reading of the Direct3D translation holds.
+- Everything the first cure fixed stays fixed (preview 9400: 48.30, 9401: 48.17, master 9090: 40.70; no blobs anywhere). The Sun frames pass under their own limit.
+
+### What still fails: three lines, all on SSIM
+
+| Frame | What | After cure 1 (PSNR / SSIM) | Now (PSNR / SSIM) | What I see (left the approved film, right this machine) |
+|---|---|---|---|---|
+| master 9720 | Neptune surface view | 34.68 / 0.9209 | 34.93 / **0.9262** | The same picture: storm, cloud streaks, limb and sky in place. The white cirrus holds less of its crisp, fine filament detail and reads softer. The deck's fine wave texture is a little flatter. No ripples, no blobs. |
+| master 9916 | Neptune flight out (heavy) | 34.62 / 0.8977 | 34.96 / **0.9051** | The same picture. The cirrus band is softer, with less fine detail in its edges, and the deck's fine streaks differ in detail. |
+| uhd 9916 | Neptune flight out, 4K | 35.15 / 0.9137 | 35.49 / **0.9206** | The same picture. At full size (bottom row) the storm's eye and the fine bright wave streaks of the deck are all there, slightly flatter and less contrasty than the approved ones; the cirrus at the lower left is softer. |
+
+This is what the Builder expected: the ripples were a small part of these three distances, and the rest is the softer cirrus and slightly flatter deck. The full-size frames for judging that are in `full/`.
+
+Files on the branch:
+- `c980c36-REPORT.md` and `c980c36-report.json`
+- `c980c36-d3d11-*.jpg`: side by side pictures of every Neptune and Sun frame W5 names
+- `full/c980c36-master-009480.png`, `-009720.png` and `-009916.png` (1920 by 1080, 4.1 to 4.2 MB each), and `full/c980c36-uhd-009480.png` and `-009916.png` (3840 by 2160, 14.9 and 15.3 MB): the test's frames as drawn, copied unchanged
+
+### The full text under "Verdict"
+
+```
+LOOK. Nothing forbids the run, but a person reads these first:
+- draw test master: frame 9720 (Neptune, surface view, film frame 4860) differs from the approved picture more than an encode explains: PSNR 34.93 dB, SSIM 0.9262. Look at C:\Users\Brandon\Desktop\Space-Fkythrough\Solar-System-Perplexity\out\work\capture-check\side\master-009720.jpg.
+- draw test master: frame 9916 (Neptune, flight out (heavy frame), film frame 4958) differs from the approved picture more than an encode explains: PSNR 34.96 dB, SSIM 0.9051. Look at C:\Users\Brandon\Desktop\Space-Fkythrough\Solar-System-Perplexity\out\work\capture-check\side\master-009916.jpg.
+- draw test uhd: frame 9916 (Neptune, flight out (heavy frame), film frame 4958) differs from the approved picture more than an encode explains: PSNR 35.49 dB, SSIM 0.9206. Look at C:\Users\Brandon\Desktop\Space-Fkythrough\Solar-System-Perplexity\out\work\capture-check\side\uhd-009916.jpg.
+
+VERDICT: LOOK
+```
+
 ## Test of CURE commit 9365ac1, 2026-11-27 22:42 to 22:50 MST (2026-11-28 05:42 to 05:50 UTC): VERDICT LOOK, no render
 
 - Commit tested: `9365ac1c16e0db936af82201a582ba9080453464` ("CURE Neptune bands and blobs, Saturn ring pixels at 4K, Windows section, test limits and tool guards"). The clone was brought to it by W3 (`git checkout -B main origin/main`), with 0 changed tracked files; `package-lock.json` unchanged, so no `npm ci`.
