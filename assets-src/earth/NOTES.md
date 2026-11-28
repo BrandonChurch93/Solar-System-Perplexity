@@ -8538,3 +8538,12 @@ No more TROUBLE lines for slow frames: a single frame of the heavy parts takes u
 - First line of p3.txt: 0. Second line: "PACK earth_builder p3 01:33:09 chunks 2 left 8 failed 0 next: neptune.dive 4680-4686 list: # earth_builder v1".
 - Loop pid 11008 alive; drawing now neptune.dive 4680-4686 (began 01:33:09); free disk 5932 MB.
 - Sent so far: b0, p0, p1, p2, p3. Next to send: p4 (waiter `bash /tmp/h60r-wait.sh 4`).
+
+### 02:18 UTC, 28 Nov: job H60R, pack p4 sent
+
+- 02:03:02: neptune.dive 4680-4686 done ("wrote neptune.dive.part000.mp4 frames 4680-4686 render 1767 s encode 1.5 s", RC film 0).
+- 02:18:33: mars.hold 2310-2339 done ("wrote mars.hold.part000.mp4 frames 2310-2339 render 901 s encode 5.2 s", RC film 0).
+- 02:18:34: /tmp/h60-earth_builder-p4.done appeared. Sent to /root at 02:18:47 with the text `H60 earth_builder p4` and the two files attached (tar 3368960 bytes: mars.hold.span2310-2339.mp4 and .json, neptune.dive.span4680-4686.mp4 and .json, h60r-state.txt).
+- First line of p4.txt: 0. Second line: "PACK earth_builder p4 02:18:34 chunks 2 left 6 failed 0 next: ending.lookback 5295-5324 list: # earth_builder v1".
+- Loop pid 11008 alive; drawing now ending.lookback 5295-5324 (began 02:18:34); free disk 5924 MB.
+- Sent so far: b0, p0, p1, p2, p3, p4. Next to send: p5 (waiter `bash /tmp/h60r-wait.sh 5`).
