@@ -8617,3 +8617,12 @@ If the loop is not running (the second number is 0), start it again as the H60R 
 - First line of p8.txt: 0. Second line: "PACK earth_builder p8 07:15:15 chunks 2 left 13 failed 0 next: saturn.hold 3412-3419 list: # earth_builder v1".
 - Loop pid 11008 alive; drawing now saturn.hold 3412-3419 (began 07:15:15); free disk 5905 MB.
 - Sent so far: b0, p0, p1, p2, p3, p4, p5, p6, p7, p8. Next to send: p9 (waiter `bash /tmp/h60r-wait.sh 9`).
+
+### 08:00 UTC, 28 Nov: job H60R, pack p9 sent
+
+- 07:32:33: saturn.hold 3412-3419 done ("wrote saturn.hold.part000.mp4 frames 3412-3419 render 1014 s encode 1.7 s", RC film 0).
+- 08:00:00: mercury.dive 772-772 done ("wrote mercury.dive.part000.mp4 frames 772-772 render 1626 s encode 0.7 s", RC film 0).
+- 08:00:01: /tmp/h60-earth_builder-p9.done appeared. Sent to /root at 08:00:20 with the text `H60 earth_builder p9` and the two files attached (tar 542720 bytes: mercury.dive.span772-772.mp4 and .json, saturn.hold.span3412-3419.mp4 and .json, h60r-state.txt).
+- First line of p9.txt: 0. Second line: "PACK earth_builder p9 08:00:01 chunks 2 left 11 failed 0 next: mercury.dive 773-773 list: # earth_builder v1".
+- Loop pid 11008 alive; drawing now mercury.dive 773-773 (began 08:00:01); free disk 5903 MB.
+- Sent so far: b0, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9. Next to send: p10 (waiter `bash /tmp/h60r-wait.sh 10`).
