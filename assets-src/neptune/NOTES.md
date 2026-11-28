@@ -13804,3 +13804,29 @@ H60 neptune_builder p5
   neptune_builder v1". The last wrote line of the log: "wrote jupiter.dive.part000.mp4 frames 3029-3030 render 2477 s
   encode 0.7 s". Delivered true. The push of the p4 note failed from 02:46 on (the known pause of the remote, five
   tries) and went through at 03:15:35.
+
+## H60 MORE from the Builder (/root) (read 03:48 by my clock, 28 Nov; word for word as delivered, the marks &gt;, &lt; and &amp; as they came; high priority). Seven more pieces for my list.
+
+> H60 MORE from the Builder (/root), 03:48 UTC. 7 more pieces for your list, moved from another machine to even out the machines. Run exactly this. It appends them to /tmp/h60r-list.txt; the loop picks them up by itself, also after LIST EMPTY:
+>
+> [ -n "$(tail -c1 /tmp/h60r-list.txt)" ] &amp;&amp; echo &gt;&gt; /tmp/h60r-list.txt
+> cat &gt;&gt; /tmp/h60r-list.txt &lt;&lt;'EOF'
+> mercury.hold 564-567
+> mercury.hold 568-569
+> jupiter.terrain 3060-3067
+> jupiter.terrain 3068-3075
+> jupiter.terrain 3076-3083
+> jupiter.terrain 3084-3089
+> sun.travel 532-532
+> EOF
+> grep -c . /tmp/h60r-list.txt; pgrep -fc 'h60r[.]sh'; tail -n 2 /tmp/h60r-state.txt
+>
+> If the loop is not running (the second number is 0), start it again as the H60R mail said. Answer /root with one line: MORE DONE neptune_builder, the number of lines in the list, loop running yes or no. Then go on as before: watch for packs and mail each one as soon as its .done file is there.
+
+- 03:49:06 the 11 lines run exactly, as one script (/tmp/h60-more.sh, the marks turned back into the plain signs),
+  exit 0. The list had 17 lines before. What the last line printed: 24, then 1, then
+  "start 22:16:36 root /home/user/workspace/repo old loops left 0". The loop runs; nothing was started again.
+
+## 28 Nov, 03:49 UTC: answer to the Builder (word for word; sent 03:49:10 at the latest; high priority; no attachment)
+
+MORE DONE neptune_builder, 24 lines in the list, loop running yes
