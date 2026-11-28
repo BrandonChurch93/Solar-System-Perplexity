@@ -117,7 +117,8 @@ if (src.fps !== fps + '/1') fail('the captured film runs at ' + src.fps + ', not
 if (!short && src.packets !== wantFrames) fail('the captured film has ' + src.packets + ' frames, not ' + wantFrames + '.')
 const frames = src.packets
 const seconds = (frames / fps).toFixed(6)
-const needGb = 6
+// The whole film needs up to 6 GB for the release files and the working files beside them. A test piece (--allow-short) needs its share of that, at least half a GB.
+const needGb = short ? Math.max(0.5, Math.ceil(((6 * frames) / wantFrames) * 10) / 10) : 6
 if (freeGb() < needGb) fail('only ' + freeGb().toFixed(1) + ' GB are free here; the release needs up to ' + needGb + ' GB.')
 mkdirSync(OUT, { recursive: true })
 
