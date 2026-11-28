@@ -5592,3 +5592,24 @@ If you have no work in hand, skip (a) and (b) and answer point 5 alone.
 - 06:56:27 H60R p10 appeared (first line of its txt 0; "chunks 1 left 15 failed 0 next: neptune.rise 4981-4981"): neptune.rise 4980-4980 (06:10:10 to 06:56:27, 2777 s), RC 0. SENT 06:56:27 to /root (high): the text `H60 mercury_builder p10` and nothing else, with the tar (61440 bytes) and the txt (965 bytes). Mark `/tmp/m/jobs/H60R-sent-p10`. 5100 MB free; 0 lines with Shader Error or not usable. The script runs; neptune.rise 4981-4981 is being drawn since 06:56:27. Left: 15 pieces.
 28 Nov 07:41:58 UTC: pack p11 sent to /root (text 'H60 mercury_builder p11', tar and txt attached, nothing else). First line of its txt 0. Pack line: chunks 1 left 14 failed 0 next: neptune.rise 4982-4982. Piece neptune.rise 4981-4981 took 2726 s (T start 1795848987, T end 1795851713, rc 0). Tar 61440 bytes holding neptune.rise.span4981-4981.mp4. Free 5091 MB. Loop /tmp/h60r.sh running, neptune.rise 4982-4982 in work since 07:41:53.
 28 Nov 08:25:35 UTC: pack p12 sent to /root (text 'H60 mercury_builder p12', tar and txt attached, nothing else). First line of its txt 0. Pack line: chunks 1 left 13 failed 0 next: neptune.rise 4983-4983. Piece neptune.rise 4982-4982 took 2620 s (T start 1795851713, T end 1795854333, rc 0). Tar 61440 bytes holding neptune.rise.span4982-4982.mp4. Free 5098 MB. Loop /tmp/h60r.sh running, neptune.rise 4983-4983 in work since 08:25:33.
+28 Nov 08:50:50 UTC: second H60 MOVE (mail of 08:43 UTC from /root) done. Mail verbatim (copy in /tmp/m/jobs/H60MOVE2-mail.txt):
+
+```
+H60 MOVE from the Builder (/root), 08:43 UTC. To even out the machines, 8 pieces at the end of your list go to another machine. Run exactly this. It removes these lines from /tmp/h60r-list.txt; the loop reads the list anew before each piece, so nothing else is needed and the piece you are drawing now is not touched:
+
+cat > /tmp/h60r-drop.txt <<'EOF'
+sun.rise 189-189
+sun.rise 190-190
+sun.rise 187-187
+sun.rise 188-188
+sun.terrain 50-53
+sun.terrain 54-57
+sun.terrain 58-59
+mars.terrain 2490-2519
+EOF
+grep -vxFf /tmp/h60r-drop.txt /tmp/h60r-list.txt > /tmp/h60r-list.new && mv /tmp/h60r-list.new /tmp/h60r-list.txt; grep -c . /tmp/h60r-list.txt; grep -cxFf /tmp/h60r-drop.txt /tmp/h60r-list.txt; tail -n 1 /tmp/h60r-state.txt
+
+The second number must be 0. If one of these pieces is being drawn right now or is already done on your disk, leave that as it is and name it in your answer, so that the other machine can be told. Answer /root with one line: MOVE DONE mercury_builder, the two numbers and the last line of the state file. Then go on as before: watch for packs and mail each one.
+```
+
+Done: list backup /tmp/m/jobs/h60r-list-before-move2.txt, the lines run as they stand (rc 0), output 28, 0, start 22:18:29 root /home/user/workspace/main-apart old loops left 0. List went from 36 to 28 lines (the eight lines 29 to 36 gone, nothing else changed). None of the eight was drawn or in work here (in work: neptune.rise 4983-4983 since T 1795854333). Answer sent 08:50:59: 'MOVE DONE mercury_builder, 28, 0, start 22:18:29 root /home/user/workspace/main-apart old loops left 0 (none of the eight is drawn or being drawn here)'. List from here: neptune.rise 4983 (in work), sun.terrain 34-37, 38-41, 42-45, 46-49 (5 pieces). Packs p0 to p12 sent. Wait tool runs on. Then as before: watch for packs and mail each one.
