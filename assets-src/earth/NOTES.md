@@ -8626,3 +8626,13 @@ If the loop is not running (the second number is 0), start it again as the H60R 
 - First line of p9.txt: 0. Second line: "PACK earth_builder p9 08:00:01 chunks 2 left 11 failed 0 next: mercury.dive 773-773 list: # earth_builder v1".
 - Loop pid 11008 alive; drawing now mercury.dive 773-773 (began 08:00:01); free disk 5903 MB.
 - Sent so far: b0, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9. Next to send: p10 (waiter `bash /tmp/h60r-wait.sh 10`).
+
+### 08:55 UTC, 28 Nov: job H60R, pack p10 sent
+
+- 08:27:27: mercury.dive 773-773 done ("wrote mercury.dive.part000.mp4 frames 773-773 render 1625 s encode 0.8 s", RC film 0).
+- 08:54:46: mercury.dive 774-774 done ("wrote mercury.dive.part000.mp4 frames 774-774 render 1618 s encode 0.7 s", RC film 0).
+- 08:54:46: /tmp/h60-earth_builder-p10.done appeared. Sent to /root at 08:55:06 with the text `H60 earth_builder p10` and the two files attached (tar 256000 bytes: mercury.dive.span773-773.mp4 and .json, mercury.dive.span774-774.mp4 and .json, h60r-state.txt).
+- First line of p10.txt: 0. Second line: "PACK earth_builder p10 08:54:46 chunks 2 left 9 failed 0 next: mercury.dive 775-775 list: # earth_builder v1".
+- Loop pid 11008 alive; drawing now mercury.dive 775-775 (began 08:54:46); free disk 5902 MB.
+- Note for the watch: my check script lists only the last four .done files in name order, so from p10 on they sort before p2 and do not show in that list; I read the .done, .tar and .txt of each pack by name before sending.
+- Sent so far: b0, p0 to p10. Next to send: p11 (waiter `bash /tmp/h60r-wait.sh 11`).
