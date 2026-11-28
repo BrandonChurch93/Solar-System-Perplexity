@@ -4,21 +4,140 @@ This file is for Claude Code on Brandon's own machine. It holds everything in or
 
 The release of this film is the 4K film at 60 frames a second, drawn on Brandon's own graphics card. The cloud machines of this project draw in software and need days for it; a graphics card needs hours. The 1080p film at 60 frames a second is the second run, or the fallback when 4K does not work.
 
+## Tonight's run: the MacBook Pro first, the whole film, nobody waiting
+
+This section is the order for the run that starts on the evening of 2026-11-27 (Mountain Time). Where it differs from a line further down, this section holds.
+
+Brandon's own words for this run: he is on his MacBook Pro, not the Windows desktop, and he is away for many hours. "Do not stop after the short test and do not wait for me: this message is my go for the full 4K 60 fps render. If a check fails, fix it yourself and keep going, and only give up if the frames come out wrong. Keep the Mac awake until it is done. When it finishes, publish the result the way the file says and write a short log of what you did and how long it took."
+
+What that means in this file:
+
+- The machine is the MacBook Pro with the M4 Pro. Do Part B. Part B names only the differences, so read Part A with it.
+- The go for the full render is given. No step waits for a person: no "go", no look by Brandon at the test pictures, no question to him. Every line further down that says "stop and wait", "ask Brandon", "tell Brandon" or "only after go" is replaced by the rules of this section. You look at the test pictures yourself.
+- The short test still runs first. It takes minutes, and it is the one check that keeps a wrong film from being drawn for hours.
+- Fix what fails yourself and go on; the rules for that are below. Give up only when the frames come out wrong or cannot be drawn on the Mac's graphics chip.
+- The Mac stays awake from the first command to the end of the upload.
+- At the end: the release `local-render-4k60-mac` and a short log.
+
+### The commands of this run, in order
+
+Tools and clone first, as Part B and A2 say (the repo is public, the clone needs no sign in), then `npm ci`. All commands run in the clone. Each long command is a background task with its own log, as the Rules say. Wait for each to end before you start the next.
+
+Before the first long command, keep the Mac awake between the commands too. Start this as a background task of its own and end it with `killall caffeinate` after the log is written:
+
+```
+caffeinate -dis -t 259200
+```
+
+The Mac must be on power with its lid open. `pmset -g batt` shows whether it is on power; write the answer into the log. If it is on battery, go on all the same and say so in the log.
+
+1. The test (minutes):
+
+```
+caffeinate -dis node node_modules/tsx/dist/cli.mjs tools/capture-check.ts --expect-gpu "Apple" --ignore-limits >> capture-check.log 2>&1
+```
+
+2. Read the verdict by the rules below and go straight on. The render (hours), then the finish:
+
+```
+caffeinate -dis node node_modules/tsx/dist/cli.mjs tools/capture.ts --format uhd --rate 2 --tier final --expect-gpu "Apple" --ignore-limits >> render-uhd.log 2>&1
+caffeinate -dis node node_modules/tsx/dist/cli.mjs tools/capture-finish.ts >> finish.log 2>&1
+```
+
+The last line of `finish.log` must be `FINISH: PASS`.
+
+3. The upload:
+
+```
+caffeinate -dis gh release create local-render-4k60-mac --title "Local render 4K 60 fps (MacBook Pro)" --notes "Drawn on Brandon's MacBook Pro. See finish-report.json." "out/release/Solar System Fly-Through - Without Prompt 4K 60 fps - 3840x2160.mp4" "out/release/Solar System Fly-Through - Without Prompt 60 fps from the 4K picture - 1920x1080.mp4" out/release/finish-report.json out/work/capture/uhd-r2-final/manifest.json out/work/capture-check/REPORT.md out/work/capture-check/report.json >> upload.log 2>&1
+```
+
+4. The log (below).
+
+### Why `--ignore-limits` is in these commands, and its one condition
+
+The capture tool compares the graphics limits of the machine with a list of needs and stops when one is too small. One need is a point size of 1,000 pixels (`config/showcase.json`, `smooth.machine.pointSize`), and Apple graphics is stated at 511. That need is a stated safety number, not a measured one. The points this film draws are the stars, at most 16 reference pixels, and the far bodies, 30 reference pixels, each times the size factor of the frame: about 60 pixels at 4K (read in `src/space/sky.ts`, `src/bodies/farpoint.ts` and `src/bodies/standin.ts`). So the Builder allows `--ignore-limits` on the Mac, for this one line only:
+
+```
+its largest point is N pixels and the film needs 1000
+```
+
+The condition: after the test, `out/work/capture-check/REPORT.md` holds a line with the words "the machine is under the film's needs and --ignore-limits let it pass", followed by the needs that are not met.
+
+- The point line is the only need named there: go on. This line makes the verdict LOOK, so LOOK is the expected verdict on the Mac.
+- Another need stands there as well (texture, render buffer, viewport, samples, texture units, vertex attributes, a lacking extension): give up. Such a machine draws another film.
+- The line is not there at all: the Mac meets every need. Go on; the flag does nothing then.
+
+### The verdict, without a person
+
+`VERDICT: PASS`: go on.
+
+`VERDICT: LOOK`: read every line under "Verdict" in the report. Go on when each of them is one of these:
+
+- The `--ignore-limits` line with the point size only (above).
+- A frame "differs from the approved picture more than an encode explains". Open the side by side picture of that frame in `out/work/capture-check/side` and judge it yourself. Go on when it is the same picture: the same body at the same place and size, the same sky, the same rings, the same colours, with differences only in fine grain, in the brightness of single stars or in the smoothness of edges. Give up when a body, the sky or the rings are missing, shifted, black or garbled, or the colours are plainly other.
+- The hours of the full run are above the mark. Go on: Brandon has said the hours cost him nothing.
+- The disk has less free than the report wants. Go on when `df -h ~` shows 60 GB free or more (the peak of the 4K run is stated at 25 to 50 GB). With less, free space first, but only by removing what this run or its tools made (`brew cleanup`, `npm cache clean --force`, older `out/work` folders of an older clone of this repo). Never delete a file of Brandon's. With under 60 GB free after that, give up.
+- Any other LOOK line: read it, and go on unless it says that frames are wrong.
+
+`VERDICT: STOP`: read the lines, fix what is the machine's, and run the test again, as often as it takes:
+
+- Node older than 20, ffmpeg missing or without libx264 or libvpx-vp9, Chrome missing: install them (`brew install node ffmpeg`, `brew install --cask google-chrome`), open a new shell, test again.
+- Tracked files differ, the engine hash differs, a handoff file is missing or has another sha256: make a fresh clone in a new folder with the clone command of A2, `npm ci`, and test again there.
+- The capture tool stopped in a draw test: its own last lines say why. A browser that did not start, a timeout or a network error: start the test again. After three tries with the same error see "Fixing a tool" below.
+
+Give up, without a render, when one of these still stands after your fixes:
+
+- The graphics name does not hold "Apple", or it names a software renderer. The film would then be drawn without the graphics chip, for weeks, and would differ.
+- A frame "is another picture than the approved one" and your own look at the side by side picture agrees.
+- A frame cannot be compared or is not written, three tries in a row.
+
+"Give up" means: start no render, write the log with the full report and your reasons, leave everything on the disk, and end. Do not wait for an answer.
+
+### Without brew, without a password
+
+Nothing in this run may wait for Brandon's password. If `brew` is missing or an install asks for a password:
+
+- Node: the official tar file from https://nodejs.org unpacked in the home folder, with its `bin` folder put first in the PATH of your shell.
+- ffmpeg and ffprobe: a full static build for the Mac unpacked in a folder of your own and put in the PATH. The test proves that it has libx264 and libvpx-vp9.
+- Chrome: `npx @puppeteer/browsers install chrome@stable`, then pass `--browser "<full path of the Chrome program>"` to the test and to the render. This flag is allowed for that.
+- `gh`: not needed before the upload. Without it, see "The upload and the log".
+
+### Fixing a tool
+
+If a tool of this repo fails on the Mac for a reason of the machine (a path, a program name, a permission, a browser flag) and nothing outside the repo cures it, you may change files in `tools/` only, as little as possible. Then commit the change in the clone (`git -c user.name=local -c user.email=local@local commit -am "local tool fix"`, no push) so that the clean clone check of the test passes, run the test again, and copy the diff into the log.
+
+Never change `src/`, `public/`, `config/`, `index.html`, `vite.config.ts` or `handoff/`. These are the film and its proof; the tools check them by hash, and a changed film is a wrong film. Never change the frame size, the rate, the tier, the samples or the frame numbers of the run.
+
+### During the render
+
+- A stopped render continues where it stopped when the same command is started again. If the task ends before the film is whole (the browser crashed, the shell was lost, the disk was full), start the same command again. Do not start from zero and do not change a flag.
+- Every hour: `df -h ~` and the last lines of `render-uhd.log`. Under 15 GB free: end the task, free space as written above, start the same command again.
+- If `finish.log` does not end with `FINISH: PASS`: read what it names, cure it (a missing part: start the render command again, it draws only what is missing; a missing tool: install it), and run the finish again. Give up on it only when it names wrong frames.
+
+### The upload and the log
+
+- If `gh` is missing or not signed in, do not wait. Leave the files where they are and write their full paths into the log; Brandon uploads when he is back.
+- If `gh` answers that the release or the tag exists already: put `-2` behind `local-render-4k60-mac` and start the upload again.
+- The log is the file `out/release/local-render-log.md` in the clone. It holds: the machine (`sw_vers`, the chip, the memory, the graphics name from the report, power or battery); the start and end time of the test, the render, the finish and the upload, and the hours in all; the verdict of the test with every LOOK and STOP line and what you did about each; every fix, with the diff for a tool fix; the seconds per frame; the last line of `finish.log`; and the address of the release or, without an upload, the full paths of the files.
+- When the upload worked, add the log to the release: `gh release upload local-render-4k60-mac out/release/local-render-log.md`. Then end the keep awake task with `killall caffeinate`.
+- Your last message to Brandon is the log, in short.
+
 ## Who you are working with
 
-Another agent, the Builder, leads this project from a cloud chat and cannot see this machine. Brandon sits at this machine. Work on your own and ask Brandon only for a password, a sign in, a system permission prompt, the word "go" where this file says so, or another thing that this file names as his to do.
+Another agent, the Builder, leads this project from a cloud chat and cannot see this machine. Brandon sits at this machine, except on the run of the first section, where he is away and nothing waits for him. Work on your own and ask Brandon only for a password, a sign in, a system permission prompt, the word "go" where this file says so, or another thing that this file names as his to do.
 
 ## Rules
 
 - Do not edit any file in this repo. Do not fix code or shader errors yourself. Copy the full error text into your report; the Builder fixes it at the source.
 - Do not commit and do not push. The only thing you upload is the release in step 3.
-- Run only the commands in this file, with the flags written here. Do not try other flags.
+- Run only the commands in this file, with the flags written here. Do not try other flags. On the run of the first section the fixes named there are allowed as well.
 - Some commands here run longer than a shell tool waits: the test (minutes), the render (hours), the finish and the upload (up to an hour each). Start each of them as a background task of your shell tool (in Claude Code: the Bash tool with `run_in_background`). On Windows start them in Git Bash (the Bash tool), not in PowerShell: Windows PowerShell writes such a log in another encoding, and the reads of its last line then go wrong. Each of these commands writes its output to a log file in the repo folder. Read the last lines of that log every few minutes: `tail -n 5 render-uhd.log` (in PowerShell `Get-Content render-uhd.log -Tail 5`). Between two reads wait with `sleep 300` as a foreground command; set the time limit of that one command to ten minutes, and if your tool cannot do that, use `sleep 100`. Never wait on a long command itself in the foreground, and never end one because it is quiet. Do not end your turn while a background task runs: go on reading until it has ended. If you are started again later, read the logs first and ask your shell tool which tasks still run.
 - The clone must hold the whole tree of the newest commit of `main`. No sparse checkout and no filter; the tools read files from many folders (for example `references/`) and stop when one is missing. A plain `git clone --depth 1` of the repo is right: the repo's `.gitattributes` switches line ending changes off.
 - The whole film is drawn on one machine. Frames from this machine are never mixed with frames from another machine or from the cloud.
-- Step 2 (the render) starts only after step 1 (the test) has ended with the verdict PASS and Brandon has looked at the test pictures and said "go". With the verdict LOOK or STOP you stop, and Brandon takes the report to the Builder. This holds for every render in this file; the one exception is written in A9. A stop in the 4K test is not by itself a go for the 1080p run.
+- Step 2 (the render) starts only after step 1 (the test) has ended with the verdict PASS and Brandon has looked at the test pictures and said "go". With the verdict LOOK or STOP you stop, and Brandon takes the report to the Builder. This holds for every render in this file; the one exception is written in A9. A stop in the 4K test is not by itself a go for the 1080p run. On the run of the first section the go is given in advance, and the verdict is handled by the rules written there.
 - Nothing here changes the picture, the cut, the sound or the subtitles. They are approved. The tools only draw the approved film at more frames and more pixels.
-- On the Windows desktop do Part A. On the MacBook do Part B. Brandon starts with the Windows desktop and uses the MacBook second; do not wait for the other machine and do not ask about it.
+- On the Windows desktop do Part A. On the MacBook do Part B. Brandon starts with the MacBook Pro (the first section). The Windows desktop is a later run, only when he asks for it; do not wait for the other machine and do not ask about it.
 
 ## What the run makes
 
@@ -30,7 +149,7 @@ Step 2 leaves these files in `out/release/`:
 | `Solar System Fly-Through - Without Prompt 60 fps from the 4K picture - 1920x1080.mp4` | The same film made smaller, for the review page |
 | `finish-report.json` | The measured values of both films |
 
-## Part A: the Windows desktop with the RTX 5080 (the main path)
+## Part A: the Windows desktop with the RTX 5080 (every step in full; the Windows run itself is a later one)
 
 Use a native Windows shell: PowerShell, or the Git Bash that Claude Code uses on Windows. Do not use WSL. Inside WSL the browser is a Linux browser that does not draw on the card the way the film needs, and the test stops there.
 
@@ -79,7 +198,7 @@ npm ci
 
 In PowerShell `npm ci` can answer that running scripts is disabled on this system. Then run `npm.cmd ci`. It is the same program, and no system setting has to change.
 
-The repo is private. If git asks for a sign in, a browser window opens and Brandon signs in there. Do not run `gh auth login` yourself: it asks questions on the keyboard, which your shell cannot answer. When it is needed, ask Brandon to run `gh auth login` and then `gh auth setup-git` in a terminal window of his own.
+The repo is public, so the clone needs no sign in. Only the upload of A6 needs `gh` to be signed in. Do not run `gh auth login` yourself: it asks questions on the keyboard, which your shell cannot answer. When it is needed, ask Brandon to run `gh auth login` and then `gh auth setup-git` in a terminal window of his own.
 
 ### A3. Step 1: the test (draws test frames only, no film)
 
@@ -163,7 +282,7 @@ Sleep and the display timer stay off until the upload of A6 has ended. They are 
 
 ### A6. Step 3: bring it back
 
-The Builder picks the release up from a GitHub release of this repo (private, like the repo). The 4K film is close to 2 GB, so the upload can take from minutes to an hour. Start it as a background task (see Rules), in the repo folder:
+The Builder picks the release up from a GitHub release of this repo (public, like the repo, until the build is complete). The 4K film is close to 2 GB, so the upload can take from minutes to an hour. Start it as a background task (see Rules), in the repo folder:
 
 ```
 gh release create local-render-4k60 --title "Local render 4K 60 fps" --notes "Drawn on Brandon's machine. See finish-report.json." "out/release/Solar System Fly-Through - Without Prompt 4K 60 fps - 3840x2160.mp4" "out/release/Solar System Fly-Through - Without Prompt 60 fps from the 4K picture - 1920x1080.mp4" out/release/finish-report.json out/work/capture/uhd-r2-final/manifest.json out/work/capture-check/REPORT.md out/work/capture-check/report.json >> upload.log 2>&1
@@ -171,7 +290,7 @@ gh release create local-render-4k60 --title "Local render 4K 60 fps" --notes "Dr
 
 It has ended well when `upload.log` ends with the address of the release.
 
-- If `gh` is not signed in: ask Brandon to run `gh auth login` in a terminal window of his own (see A2), then start the upload again.
+- If `gh` is not signed in: ask Brandon to run `gh auth login` in a terminal window of his own (see A2), then start the upload again. On the run of the first section do not wait for him: leave the files where they are and write their full paths into the log.
 - If `gh` answers that the release or the tag exists already: put `-2` behind `local-render-4k60` and start it again.
 - If the upload fails for another reason, do not try another way. Leave the files where they are and give Brandon the full paths of the six files in the command. He can then bring the 1920 by 1080 film and the four small files to the Builder chat. The 4K film stays on the machine until the Builder says how to send it.
 
@@ -205,11 +324,11 @@ It writes `out/release/Solar System Fly-Through - Without Prompt 60 fps - 1920x1
 gh release create local-render-1080p60 --title "Local render 1080p 60 fps" --notes "Drawn on Brandon's machine. See finish-report.json." "out/release/Solar System Fly-Through - Without Prompt 60 fps - 1920x1080.mp4" out/release/finish-report.json out/work/capture/16x9-r2-final/manifest.json out/work/capture-check/REPORT.md out/work/capture-check/report.json >> upload-1080p.log 2>&1
 ```
 
-## Part B: the MacBook Pro with the M4 Pro (second)
+## Part B: the MacBook Pro with the M4 Pro (the first run, see the first section)
 
 Same steps and the same rules as Part A, with these differences.
 
-- Tools: `brew install node ffmpeg gh` for what is missing; Google Chrome must be installed. If `brew` itself is missing, stop and tell Brandon: its installer asks for his password, so he installs it himself (https://brew.sh). Record `sw_vers`, `sysctl -n machdep.cpu.brand_string`, `node -v`, `ffmpeg -version`, `df -h ~`.
+- Tools: `brew install node ffmpeg gh` for what is missing; Google Chrome must be installed. If `brew` itself is missing, stop and tell Brandon: its installer asks for his password, so he installs it himself (https://brew.sh). On the run of the first section do not wait for him: see "Without brew, without a password" there. Record `sw_vers`, `sysctl -n machdep.cpu.brand_string`, `node -v`, `ffmpeg -version`, `df -h ~`.
 - The clone: as in A2. If Brandon's first instruction has already made it, use it where it lies. If not, clone into the home folder with the clone command of A2, then `npm ci`.
 - Keep the Mac on power with its lid open. The long commands are background tasks with a log, as in Part A. `caffeinate -dis` in front keeps the Mac and its display awake while a command runs; no `screen` and no `tmux` is needed. The `powercfg` lines of A5 and A6 are for Windows only; leave them out on the Mac.
 - The name of the graphics is Apple's, so the words are "Apple":
@@ -218,7 +337,7 @@ Same steps and the same rules as Part A, with these differences.
 caffeinate -dis node node_modules/tsx/dist/cli.mjs tools/capture-check.ts --expect-gpu "Apple" >> capture-check.log 2>&1
 ```
 
-- Step 2 on the Mac, only after PASS and "go":
+- Step 2 on the Mac, only after PASS and "go" (on the run of the first section the go is given and `--ignore-limits` is added, as written there):
 
 ```
 caffeinate -dis node node_modules/tsx/dist/cli.mjs tools/capture.ts --format uhd --rate 2 --tier final --expect-gpu "Apple" >> render-uhd.log 2>&1
@@ -228,7 +347,7 @@ caffeinate -dis node node_modules/tsx/dist/cli.mjs tools/capture-finish.ts >> fi
 - Open the pictures with `open out/work/capture-check/side`.
 - Step 3 on the Mac: the upload command of A6 with the name `local-render-4k60-mac` in place of `local-render-4k60`, and `caffeinate -dis` in front of it.
 - Disk: see "Disk" below. Run `df -h ~` before the run and after every hour. Under 15 GB free, end the run and report.
-- Expect the capture tool to stop at its machine check on the Mac: see item 11 of the unknowns below.
+- Without `--ignore-limits` the capture tool is expected to stop at its machine check on the Mac, for the point size. The first section says why the flag is allowed on the Mac and on what condition; see also item 11 of the unknowns below.
 
 ## Disk
 
@@ -246,7 +365,7 @@ The sizes marked STATED are worked out, not measured. Step 1 measures the size o
 | In all at the peak | 25 to 50 GB at 4K (STATED) |
 
 - Windows desktop: Brandon says it has terabytes free. Clone onto that disk. Nothing else is needed.
-- MacBook Pro: Brandon says about 100 GB are free and that he can make it 150 GB. By the table the 4K run fits in 100 GB (STATED). Step 1 settles it: if its report asks for more than the disk has, the verdict is LOOK and you stop.
+- MacBook Pro: Brandon says about 100 GB are free and that he can make it 150 GB. By the table the 4K run fits in 100 GB (STATED). Step 1 settles it: if its report asks for more than the disk has, the verdict is LOOK and you stop. On the run of the first section the disk rule written there holds instead.
 - The capture tool stops by itself when less than 1 GB is free, and a stopped run continues where it stopped when you start the same command again.
 - A 1920 by 1080 run needs about a quarter of the frame, part and film sizes above.
 
@@ -274,7 +393,7 @@ STATED:
 UNKNOWN, with the check that settles each:
 
 1. Nothing in this file has run on Windows or on a Mac. Check: step 1. It is made to stop early and say why.
-2. Whether git on the machine can read the private repo. Check: the clone in A2 or B. If it asks for a sign in, Brandon signs in: in the browser window that opens, or with `gh auth login` in a terminal window of his own.
+2. Whether `gh` on the machine is signed in for the upload. The clone itself needs no sign in: the repo is public since 02:37 UTC on 2026-11-28 and stays so until the build is complete (MEASURED from a machine without an account: the page, this file and a git read all answered). Check: `gh auth status`. If it is not signed in, Brandon runs `gh auth login` in a terminal window of his own when he is at the machine.
 3. Whether Chrome draws on the RTX 5080 and not on the processor's own graphics or in software. Check: step 1 prints the graphics name that the film's page reports and stops before the first frame if the words "RTX 5080" are not in it; it also reads the card's load with `nvidia-smi` while frames are drawn. After each draw test the test tool reads the name again from the test's own record and stops when the words are not in it (that second check is MEASURED on a made record: an empty name stopped it, a name with the words went through).
 4. Whether the card draws the same picture as the approved film, which was drawn in software. Drivers round differently. Check: step 1 compares 24 frames at 1920 by 1080 and 13 frames at 4K with the approved film and ends with PASS, LOOK or STOP.
 5. Whether anything is soft at 4K (maps, stars, rings). Check: the 13 side by side pictures of the 4K test carry a second row at full size. Show them to Brandon before step 2.
@@ -283,7 +402,7 @@ UNKNOWN, with the check that settles each:
 8. Whether Windows resets the graphics driver on the heaviest frames (its two second limit for one drawing call). Sign: the capture tool reports a lost graphics context and stops. Check: start the same command again; it continues where it stopped. If it stops at the same frame three times, stop and report. Do not change the registry (TdrDelay) without Brandon's word.
 9. Whether a locked screen or a display that is off slows Chrome on Windows. Check: the capture prints its pace; compare before and after. Safest: leave the screen on and unlocked.
 10. Whether the 4K buffers fit in the graphics memory (16 GB on the RTX 5080; shared memory on the Mac). Check: the 4K frames of step 1.
-11. Mac only: the film asks for points up to 1,000 pixels and Apple graphics is stated at 511. Check: the capture tool reads the limit at its start and stops if it is too small. Do not pass `--ignore-limits` unless the Builder says so; report the line instead.
+11. Mac only: the film's list of needs asks for points up to 1,000 pixels and Apple graphics is stated at 511. The need is a stated safety number: the largest points the film draws are about 60 pixels at 4K (read in the source, see the first section). The Builder therefore allows `--ignore-limits` on the Mac for that one line and for no other. Not known until the test has run on the Mac: the real limit there, and whether Apple graphics draws the star points like the approved film. Check: the report of the test names the limit, and its side by side pictures show the stars.
 12. Mac only: whether the 4K run fits the free disk. Check: the disk line of step 1.
 13. Whether your shell tool keeps a background task alive for hours. Check: ask your shell tool for the state of the task. If the task is gone and its log does not show a good end, start the same command again; it goes on where it stopped. Never start a second one beside a task that still runs.
 14. Whether `gh` uploads a film of nearly 2 GB in one go on Brandon's line. Check: `upload.log` ends with the address of the release. If it does not, the films stay in `out/release/` and Brandon tells the Builder.
