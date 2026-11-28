@@ -8591,3 +8591,12 @@ If the loop is not running (the second number is 0), start it again as the H60R 
 - Answer sent to /root: "MORE DONE earth_builder, 31 lines in the list, loop running yes".
 - Correction to the 03:27 entry: the time "02:35" there was not read from a clock. What I measured is only this: my check at 02:42:01 found the loop, the drawing and the waiter alive and no pack unsent.
 - Still drawing uranus.terrain 4342-4353 (began 03:27:32). Next to send: p6.
+
+### 05:08 UTC, 28 Nov: job H60R, pack p6 sent
+
+- 04:06:29: uranus.terrain 4342-4353 done ("wrote uranus.terrain.part000.mp4 frames 4342-4353 render 2312 s encode 2.3 s", RC film 0).
+- 05:08:13: jupiter.rise 3265-3266 done ("wrote jupiter.rise.part000.mp4 frames 3265-3266 render 3679 s encode 0.8 s", RC film 0).
+- 05:08:13: /tmp/h60-earth_builder-p6.done appeared. Sent to /root at 05:08:32 with the text `H60 earth_builder p6` and the two files attached (tar 716800 bytes: jupiter.rise.span3265-3266.mp4 and .json, uranus.terrain.span4342-4353.mp4 and .json, h60r-state.txt).
+- First line of p6.txt: 0. Second line: "PACK earth_builder p6 05:08:13 chunks 2 left 16 failed 0 next: jupiter.rise 3267-3268 list: # earth_builder v1". The 14 pieces added at 03:53 are counted in "left 16".
+- Loop pid 11008 alive; drawing now jupiter.rise 3267-3268 (began 05:08:13); free disk 5912 MB.
+- Sent so far: b0, p0, p1, p2, p3, p4, p5, p6. Next to send: p7 (waiter `bash /tmp/h60r-wait.sh 7`).
