@@ -5616,3 +5616,18 @@ Done: list backup /tmp/m/jobs/h60r-list-before-move2.txt, the lines run as they 
 28 Nov 09:07:26 UTC: pack p13 sent to /root (text 'H60 mercury_builder p13', tar and txt attached, nothing else). First line of its txt 0. Pack line: chunks 1 left 4 failed 0 next: sun.terrain 34-37. Piece neptune.rise 4983-4983 took 2507 s (T start 1795854333, T end 1795856840, rc 0). Tar 61440 bytes holding neptune.rise.span4983-4983.mp4. Free 5087 MB. Loop /tmp/h60r.sh running, sun.terrain 34-37 in work since 09:07:20. Left on the list: sun.terrain 34-37, 38-41, 42-45, 46-49.
 28 Nov 09:51:43 UTC: pack p14 sent to /root (text 'H60 mercury_builder p14', tar and txt attached, nothing else). First line of its txt 0. Pack line: chunks 1 left 3 failed 0 next: sun.terrain 38-41. Piece sun.terrain 34-37 took 2659 s (T start 1795856840, T end 1795859499, rc 0; about 665 s a frame of the four). Tar 378880 bytes holding sun.terrain.span34-37.mp4. Free 5094 MB. Loop /tmp/h60r.sh running, sun.terrain 38-41 in work since 09:51:39. Left on the list: sun.terrain 38-41, 42-45, 46-49.
 28 Nov 10:35:54 UTC: pack p15 sent to /root (text 'H60 mercury_builder p15', tar and txt attached, nothing else). First line of its txt 0. Pack line: chunks 1 left 2 failed 0 next: sun.terrain 42-45. Piece sun.terrain 38-41 took 2650 s (T start 1795859499, T end 1795862149, rc 0). Tar 378880 bytes holding sun.terrain.span38-41.mp4. Free 5082 MB. Loop /tmp/h60r.sh running, sun.terrain 42-45 in work since 10:35:49. Left on the list: sun.terrain 42-45, 46-49.
+28 Nov 11:09:03 UTC: second H60 MORE (mail of 11:00 UTC from /root) done. Mail verbatim (copy in /tmp/m/jobs/H60MORE2-mail.txt):
+
+```
+H60 MORE from the Builder (/root), 11:00 UTC. 1 more pieces for your list, moved from another machine to even out the machines. Run exactly this. It appends them to /tmp/h60r-list.txt; the loop picks them up by itself, also after LIST EMPTY:
+
+[ -n "$(tail -c1 /tmp/h60r-list.txt)" ] && echo >> /tmp/h60r-list.txt
+cat >> /tmp/h60r-list.txt <<'EOF'
+neptune.dive 4764-4764
+EOF
+grep -c . /tmp/h60r-list.txt; pgrep -fc 'h60r[.]sh'; tail -n 2 /tmp/h60r-state.txt
+
+If the loop is not running (the second number is 0), start it again as the H60R mail said. Answer /root with one line: MORE DONE mercury_builder, the number of lines in the list, loop running yes or no. Then go on as before: watch for packs and mail each one as soon as its .done file is there. Note: several of these single frames are heavy, about one to two hours each on your machine; that is expected, leave the film tool alone while it draws.
+```
+
+Done: list backup /tmp/m/jobs/h60r-list-before-more2.txt, the lines run as they stand (rc 0), output 29, 1, start 22:18:29 root /home/user/workspace/main-apart old loops left 0. List went from 28 to 29 lines (one line added at the end: neptune.dive 4764-4764). Answer sent 11:09:10: 'MORE DONE mercury_builder, 29 lines in the list, loop running yes'. In work: sun.terrain 42-45 since T 1795862149. List from here: sun.terrain 42-45 (in work), sun.terrain 46-49, neptune.dive 4764-4764 (heavy, one to two hours expected, leave the film tool alone while it draws). Packs p0 to p15 sent. Wait tool runs on. Then as before: watch for packs and mail each one.
