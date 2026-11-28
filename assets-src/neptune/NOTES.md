@@ -13887,3 +13887,625 @@ H60 neptune_builder p6
   and the log line that the WebGL context was lost at frame 3334; the loop ran the same piece again by itself and the
   second try ended with RC 0 after 928 s. Both T lines stand in the pack's .txt. Next piece: venus.travel 1620-1624,
   started 04:19:15.
+
+## 28 Nov, 04:57 to 08:01 UTC: the film loop rested for three jobs of the Builder (NANSIM, RIPPLE, CURE 3 with its plan b)
+
+- This piece holds the nine mails of the Builder and my twenty one answers, word for word, in the order of my clock: the
+  saved time of each mail of the Builder, the sent time of each answer of mine. During the jobs nothing was committed or
+  pushed and the pieces were held under /tmp, as the mails asked.
+- The loop: venus.travel 1620-1624 ended 04:33:23 with RC 0. mercury.hold 564-567 had started 04:33:23 and was cut when I
+  stopped the loop for NANSIM (loop stopped 04:57:26, its film run 04:57:34; no end line in the log, no chunk kept). The
+  loop was started again 08:01:01 with the start line of JOB H60R; the last line of the state file begins with start and
+  names /home/user/workspace/repo. Pack p7 (venus.travel 1620-1624) stood at once and went out 08:01:28.
+- The repo: tools/capture.ts of the film checkout carried the one line of the NANSIM mail from that job on until I set
+  it back 07:32:34; git status is empty, HEAD 41e0350. RIPPLE and CURE 3 drew in copies under /tmp/rp. Nothing went to
+  main, the cure is the Builder's to bring in.
+- Named to the Builder on the way and kept here: exporting main whole filled the disk to 565 MB free for about a minute at
+  07:13 (surplus removed at once, no draw ran then); my picture c1 of 9720 was drawn before a comment in trig.ts changed
+  (settled by plan b: the forced draw gives the same bytes); the first form of texts.py took two Uranus texts for
+  Neptune's (set right before the P4 mail).
+
+## NANSIM EXPERIMENT from the Builder (/root) (saved 04:59:10 by my clock, 28 Nov, shortly after it came; word for word; high priority). In its code line one TypeScript mark after NANSIM_FILE (the exclamation point) is written here as [mark], since this notebook holds none. Stop the film loop and draw test frames with the four fragile functions made to answer as a graphics card may.
+
+> NANSIM EXPERIMENT from the Builder (/root). Urgent, it goes before your film loop: stop the loop now (the open frame goes back on your list, say its number in your first reply) and do only this until it is done. Change nothing in src/ of your film checkout and commit or push nothing.
+>
+> Why: a Windows PC with an RTX 5080 draws Neptune with black blobs (smooth edged ovals of many sizes, the same places under Direct3D, OpenGL and Vulkan) at capture frames 9480 (film 4740, the dive) and 9720 (film 4860, the terrain). Our software drawing never shows them. My theory: pow() of a base under zero, which a graphics card answers with "not a number" and the software drawing answers with a normal number. The attached nansim-init.js makes the software drawing answer as a card does. You test whether the blobs then appear.
+>
+> Setup (once):
+> 1. Save the two attachments as /tmp/ns/nansim-init.js and /tmp/ns/cure-v1.patch.
+> 2. In tools/capture.ts of your checkout add ONE line directly after the line that contains "const page = await browser.newPage(":
+>    if (process.env.NANSIM) await page.addInitScript({ content: 'window.__NANSIM = ' + JSON.stringify(process.env.NANSIM) + ';\n' + readFileSync(process.env.NANSIM_FILE[mark], 'utf8') })
+>    (readFileSync is already imported there. With NANSIM unset the tool is unchanged. Do not commit it.)
+>
+> Draws. Each is one run of the capture tool with --frames, on the frozen build you already have (dist of the film checkout), for example:
+>    NANSIM=&lt;mode&gt; NANSIM_FILE=/tmp/ns/nansim-init.js npx tsx tools/capture.ts --frames 9480,9720 --format preview --rate 2 --tier draft --allow-software --headless --ignore-limits --browser &lt;your chromium path&gt; --out /tmp/ns/&lt;name&gt;
+>    (leave NANSIM away for the plain draw; add --mixed if the tool stops on the engine hash; if tier draft fails use review; if a flag is refused, read the head of tools/capture.ts and adapt, and tell me what you changed.)
+>    A. plain (no NANSIM)              -&gt; /tmp/ns/A
+>    B. NANSIM=pow                     -&gt; /tmp/ns/B
+>    C. NANSIM=pow,log,sqrt,acos       -&gt; /tmp/ns/C
+> Mail me after A and B exist (do not wait for C): attach the PNG files of both frames from A and B, renamed A-9480.png, A-9720.png, B-9480.png, B-9720.png, and say in one line each: seconds per draw, and whether you see black blobs in B that A does not have (where: percent across and down). Then C the same way (C-9480.png, C-9720.png).
+>
+> Then the cured source: make a scratch copy of the checkout WITHOUT dist and node_modules (link node_modules; the build makes its own dist; if the disk is short, say so first), run "git apply /tmp/ns/cure-v1.patch" in the copy, "npm run build" there, add the same one line to its tools/capture.ts, and draw:
+>    D. cured source, NANSIM=pow                 -&gt; /tmp/ns/D (add --mixed)
+>    E. cured source, NANSIM=pow,log,sqrt,acos   -&gt; /tmp/ns/E (add --mixed)
+>    F. cured source, plain                      -&gt; /tmp/ns/F (add --mixed)
+> Mail me D, E, F the same way (D-9480.png and so on).
+>
+> If B shows no blob at all: say so at once, then run C; if C shows blobs, run the four modes one at a time (pow / log / sqrt / acos) on frame 9480 only and tell me which one makes them.
+> If B shows blobs: also tell me, from reading the Neptune shaders (src/stops/neptune), which pow call it is if you can find it quickly by setting single calls back (in the scratch copy only), but only after D, E and F are sent.
+>
+> Rules: every reply by message to /root with the files attached; MEASURED apart from guessed; no em dashes; do not touch the repo on GitHub; do not trust me on flags, check them in the tool. When all is sent, end with the line NANSIM DONE and go back to your film loop.
+
+## 28 Nov, 05:05 UTC: NANSIM answer 1 to the Builder (word for word; sent 05:05:22 at the latest; high priority; attachments as its text names them)
+
+NANSIM neptune_builder 1 of 3: A and B. B SHOWS BLACK BLOBS in both frames, A has none. Four PNG attached.
+LOOP: stopped 04:57:26 UTC, its film run 04:57:34. Open piece mercury.hold 564-567: frames 564 and 565 were drawn (their look files are there), frame 566 was open. The piece is not in the failed file, so it stays on the list; no chunk of it was kept.
+CHANGED (measured in the tool): tools/capture.ts of 41e03504 has no --frames. I use --from K --to K, one run for each frame (each frame in its own fresh page), with --chunk 0 --no-join so the PNG stays. All other flags as you wrote, tier draft, no --mixed needed. The one line is in tools/capture.ts, dist was not rebuilt (engine a455bc02904b0d42). Renderer: ANGLE Vulkan SwiftShader, Chromium 147.0.7727.15.
+SECONDS (measured, whole run with page load): A 9480 56 s, A 9720 67 s, B 9480 56 s, B 9720 69 s. The tool's own line: first frame 34.2 s (18.2 s to render) for 9480, 45.4 s (29.3 s) for 9720.
+B 9480 (measured against A, pixel by pixel; "far darker" = largest channel under 45 percent of A's): 5973 pixels far darker = 1.15 percent of the frame, none far brighter. Ovals: 961 pixels at 30 percent across 60 down (48 by 30), 307 pixels at 64 across 71 down, 177 pixels at 15 across 41 down; 16 groups of 10 to 99 pixels (among them 38 across 58 down, 61 across 69 down, 63 across 83 down, 70 across 94 down); and about 3000 specks and short dashes of 1 to 9 pixels over the whole deck. Their colour: median 4 12 31, so dark navy, only 5 percent of them under level 13.
+B 9720 (measured the same way): 7112 pixels far darker = 1.37 percent. Ovals: 910 pixels at 43 across 98 down (56 by 32), 528 at 64 across 95 down, 204 at 13 across 90 down, 194 at 27 across 91 down, 176 at 37 across 78 down, 103 at 6 across 88 down; 50 groups of 10 to 99 pixels; about 2400 specks. Colour: median 3 5 12, half of them under level 13.
+BY EYE (not measured): the ovals have smooth edges and lie on the deck only; the white clouds, the limb, the air and the sky look the same in A and B. Whether they are the PC's places I cannot say, I have not seen the PC's frames.
+ALSO MEASURED, not explained: in 9480 another 64797 pixels (12 percent) differ between A and B by 1 level, 4590 by 2 and 20859 by 3 to 8 (9720: 62538, 15323, 8965). Whether a plain draw repeats to the bit is not measured yet; I measure it with one more plain draw of 9480 unless you say no.
+C is drawing now, then the scratch copy with the cure and D, E, F.
+
+## NANSIM, second mail from the Builder (/root) (saved 05:13:08 by my clock, 28 Nov, shortly after it came; word for word; high priority). Mail 1 of 3 received and checked; what comes next.
+
+> From the Builder (/root). NANSIM 1 of 3 received and checked. MEASURED by me against the PC's own pictures: 95 and 96 percent of the PC's far darker pixels lie inside B's far darker pixels in 9480 and 9720, so B reproduces the PC's blobs at the PC's places. Carry on with C, then D, E, F as planned. Yes to one extra plain draw of 9480 (name it A2-9480.png and say whether it equals A-9480.png bit for bit). Send D, E and F in a mail of their own as soon as they are drawn, with for each: the count of pixels far darker than A (your measure), and for F whether the file equals A bit for bit (sha256 of both and the count of differing pixels). Do not wait for anything else before that mail. After it, add step G: plain draws without NANSIM of the frozen copy and of the cured copy at capture frames 9090, 9400, 9916, 6930, 7160 and 7440, same size and tier as before, files G-frozen-FRAME.png and G-cured-FRAME.png. For each pair: sha256 of both, count of differing pixels, both files attached. End that mail with NANSIM DONE, then go back to your film loop. Keep MEASURED apart from what you think.
+
+## 28 Nov, 05:19 UTC: NANSIM answer 2 to the Builder (word for word; sent 05:19:51 at the latest; high priority; attachments as its text names them)
+
+NANSIM neptune_builder 2: D, F and A2 are drawn. THE CURE HOLDS UNDER pow AND CHANGES NOTHING: D and F equal A bit for bit in both frames. E and C with four modes at once cannot be drawn on this machine (memory, see below). Five PNG attached.
+D (cured source, NANSIM=pow), MEASURED: 0 pixels far darker than A in 9480 and 0 in 9720; 0 differing pixels in both; the files have A's sha256.
+F (cured source, plain), MEASURED: equals A bit for bit in both frames, 0 differing pixels.
+sha256: A-9480 = D-9480 = F-9480 = A2-9480 = 9e97422c68053b3b38dda4b25ca96f526321b1d63d18e841327cd63e36c357cd. A-9720 = D-9720 = F-9720 = 95fe3a60d53c0a2c2045134b25ecfb13a2ebb7e9ffaedb32257d3365ea887d3a.
+A2 (second plain draw of 9480 on the frozen copy), MEASURED: equals A-9480 bit for bit (cmp finds the same bytes). So a plain draw repeats, and the pixels of B that differ from A by 1 to 8 levels come with NANSIM=pow; under the cure they are gone too (D = A). I THINK they are the not-a-number values spread thin by a later pass; not measured.
+PROOF THAT THE CURED BUILD WAS DRAWN, MEASURED: git apply of cure-v1.patch clean in /tmp/ns/scratch (8 files of src differ from the checkout, the checkout's src is untouched), npm run build rc 0. Its build stamp: neptune e32650e683072327 (frozen 16df4e3c5c92ccde), saturn f8bb8b6a119d5f02 (frozen c901fffb177a3ead), engine a455bc02904b0d42 and the other seven stops as frozen. Its bundle holds knotDeck 7 times and "pow(abs(" 26 times, the frozen one 0 and 2.
+SECONDS, MEASURED (whole run): D 9480 51 s (with the tool's own vite build before it), D 9720 56 s, F 9480 45 s, F 9720 55 s, A2 45 s.
+C, MEASURED: frozen copy, NANSIM=pow,log,sqrt,acos, frame 9480: the browser's gpu process held 5586 MB after 255 s, 6791 MB at 05:10:28 with 35 MB left free (the machine has 7957 MB), at 97 percent of one core, no frame yet. The machine stopped answering and I killed the run at 05:12, 510 s after its start (plain and pow take 56 s). There is no C picture.
+E: not started with four modes at once. I THINK it would end the same way, the cured shaders are of the same size.
+WHAT I DO NOW instead of C and E: the modes one at a time (log, sqrt, acos; pow alone is B and D), frame 9480, each run under a guard that kills it above 5800 MB or 600 s, on the frozen copy (C-log, C-sqrt, C-acos) and on the cured copy (E-log, E-sqrt, E-acos). Then G.
+C-log IS DRAWN ALREADY, MEASURED: frozen copy, NANSIM=log, frame 9480: 48 s, gpu process 2067 MB at its largest, and the file equals A-9480 bit for bit (same sha256, 0 differing pixels). So log and log2 of a number under zero make no blob in 9480. C-sqrt runs now.
+
+## NANSIM step H from the Builder (/root) (saved 05:24:47 by my clock, 28 Nov, shortly after it came; word for word; high priority). The mode pow drawn apart.
+
+> NANSIM step H from the Builder (/root). MEASURED here: your D-9480, F-9480, A2-9480 have A-9480's sha256 and D-9720, F-9720 have A-9720's. Thank you. Now, BEFORE C-acos, the E modes and G, a sweep that tells whether any pow of a number under zero is left anywhere on Neptune with the cure. A pass of the test on the PC starts a render of 15 to 19 hours at once, and that test samples only five Neptune frames.
+> On the CURED copy, format preview, tier draft as before: draw these capture frames twice, plain into /tmp/ns/Hp and with NANSIM=pow into /tmp/ns/Hn (several frames per run if the tool takes a list, under your memory guard):
+> first 9300, 9360, 9420, 9540, 9600, 9660, 9780, 9840, 9900, 9960, 10020 (the close views), then 8940, 9000, 9060, 9120, 9180, 9240, 10080, 10140, 10200, 10260.
+> Compare each pair yourself: number of differing pixels, largest difference in levels, and the number of pixels whose brightest channel in the NANSIM picture is under 45 percent of the plain one's. Mail me as soon as the first six frames are compared, do not wait for the rest: one line per frame with the three numbers, and for every frame with ANY difference attach both PNG files (Hp-&lt;frame&gt;.png, Hn-&lt;frame&gt;.png). Then the rest the same way, ending with "NANSIM H DONE". After that G, then the single modes.
+
+## 28 Nov, 05:35 UTC: NANSIM answer 3 to the Builder (word for word; sent 05:35:32 at the latest; high priority; attachments as its text names them)
+
+NANSIM neptune_builder H, first six frames: NO DIFFERENCE AT ALL. Cured copy, preview, tier draft, plain (Hp) against NANSIM=pow (Hn), all MEASURED. No file attached because no pair differs.
+H 9300: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 0001e9e13ccbf422...)
+H 9360: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 5541ca4dcd8a63b4...)
+H 9420: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 d75fcb249fcb8999...)
+H 9540: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 1b78c5f018fd991d...)
+H 9600: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 3ac67aa8ff58be2f...)
+H 9660: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 21590a4dcb519c51...)
+HOW: the tool takes no list, so every draw is its own run (fresh page), frame by frame: plain, then pow, then the comparison. All 12 runs rc 0, no page error line, 30 to 58 s a run, gpu process at most 2301 MB. The pictures are real (mean colour between 27 55 84 and 44 65 93). The other 15 frames follow at about 2 minutes a frame.
+THE CHECK HAS ONE GAP that I name: on the cured copy nothing in a picture shows that the wrapper was in the shaders. What is measured: its tools/capture.ts is byte for byte the checkout's, where the same call drew B's blobs. I close the gap after the last H frame with one control draw of 9480 on the cured copy (about 1 minute): a copy of nansim-init.js in /tmp/ns whose test is changed so that every pow gives not a number. The picture must then break; if it does not, the wrapper was not in. Say no if you do not want it.
+SINGLE MODES drawn before your step H mail arrived, frame 9480, MEASURED: C-sqrt (frozen, NANSIM=sqrt) was killed by my guard at 5930 MB after 226 s, so sqrt is the mode that does not fit this machine. C-acos (frozen, NANSIM=acos): 48 s, equals A bit for bit. E-log (cured, NANSIM=log): 46 s, equals A bit for bit. E-sqrt had just begun and I stopped it for step H. E-acos is not drawn yet.
+
+## 28 Nov, 05:46 UTC: NANSIM answer 4 to the Builder (word for word; sent 05:46:21 at the latest; high priority; attachments as its text names them)
+
+NANSIM neptune_builder H, frames 7 to 11: THREE FRAMES DIFFER ON THE CURED COPY, 9900, 9960 and 10020. Not the blobs: the whole SKY is black. Six PNG attached. All numbers MEASURED, cured copy, plain (Hp) against NANSIM=pow (Hn).
+H 9780: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes)
+H 9840: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes)
+H 9900: differing pixels 165584, largest difference 255, under 45 percent 139316
+H 9960: differing pixels 139918, largest difference 255, under 45 percent 124662
+H 10020: differing pixels 279925, largest difference 255, under 45 percent 253293
+MEASURED MORE: of the differing pixels, 93636 (9900), 83844 (9960) and 169608 (10020) are pure black 0 0 0 in the pow picture. Of the others, by the brightest channel, 56578, 44022 and 93343 are darker than plain and 959, 892 and 1030 brighter.
+BY EYE (not measured): in the pow pictures the star sky and the galaxy band are gone to black everywhere, the glow of the air along the limb is gone, and in 10020 the part of the ring that lies before the sky is gone while the part before the globe stands. The deck of the globe, the white clouds and Triton look as in plain. I see no oval blob on the deck in these three.
+WHAT I THINK (read, not tested): this is the sky's own shader, not Neptune's. src/space/sky.ts line 395 has exp(-pow(asin(clamp((uGal * sd).z, -1.0, 1.0)) / uFlightBandWidth, 2.0)) and line 398 the same form with uFlightWarm.w. The base is under zero on one side of the galaxy's plane; both stand under "if (uFlightGlow.w > 0.0)", which would explain why it begins between 9840 and 9900. cure-v1.patch does not touch that file. The same form stands in src/bodies/standin.ts line 103.
+WHAT I CANNOT SAY: whether a graphics card answers pow(x, 2.0) with a fixed 2.0 as not a number. Many compilers turn it into x times x, and then the PC's sky is fine where NANSIM blackens it. Your PC picture of 9916 decides it: is its sky black or starry. The wrapper is stricter than a card there, if the PC's sky is starry.
+ALSO NOT MEASURED: the frozen copy at these three frames under NANSIM=pow. I expect the same black sky there (same sky file).
+The other ten H frames are drawing now, then the control draw, G, the single modes. Say so if you want something else first, for example the three frames again with sky.ts lines 395 and 398 written as a product in a second scratch copy, to prove the place.
+
+## NANSIM H, answer from the Builder (/root) (saved 05:51:41 by my clock, 28 Nov, shortly after it came; word for word; high priority). What the Builder measured on the PC pictures of capture 9916.
+
+> NANSIM H, answer (from /root, 05:51 UTC). MEASURED by me on the PC's own pictures of capture 9916 (reference beside PC, under Direct3D 11, OpenGL and Vulkan): the star sky and the galaxy band stand in all three, level by level like the reference; only the deck blobs differ. So at pow(x, 2.0) with a written 2.0 the wrapper is stricter than the card, and no cure follows from it for the PC. Your three pairs measure 21.7, 24.3 and 21.3 dB (my count), so the PC's test would have shown a black sky as a fault.
+> Your proposal is right, do it now: a second scratch copy of the CURED copy in which the squares in src/space/sky.ts (the two exp(-pow(..., 2.0)) forms, about lines 395 and 398) and in src/bodies/standin.ts (about line 103) are written as products, for example { float q = ...; exp(-(q * q)) }, nothing else changed. On that copy, in this order: (1) 9900, 9960 and 10020, plain and pow: I expect same bytes, which proves the place; (2) every remaining H frame from 9900 on, plain and pow; (3) the control draw; (4) G. H frames below 9900 stay as drawn. Send me the three changed lines word for word with the first result, and attach both pictures of any frame that is not same bytes.
+
+## 28 Nov, 05:59 UTC: NANSIM answer 5 to the Builder (word for word; sent 05:59:24 at the latest; high priority; attachments as its text names them)
+
+NANSIM neptune_builder H2, step (1): SAME BYTES in all three frames, plain against pow, on the second copy. Four PNG attached; they belong to the news at the end (8940 and 9000 on the first cured copy).
+THE SECOND COPY, MEASURED: /tmp/ns/scratch2 is a copy of the cured copy with three lines changed. diff -r of its src against the cured copy's src shows these three lines and nothing else; its tools folder is equal. Build stamp: engine 86268b4c17370d41 (cured and frozen copy: a455bc02904b0d42), all nine stops as in the cured copy (neptune e32650e683072327, saturn f8bb8b6a119d5f02).
+THE THREE CHANGED LINES, word for word as they stand now:
+src/space/sky.ts line 395:
+    float sq0 = asin(clamp((uGal * sd).z, -1.0, 1.0)) / uFlightBandWidth; col += uFlightHaze.rgb * (uFlightGlow.w * (uFlightHaze.w + (1.0 - uFlightHaze.w) * exp(-(sq0 * sq0)))) + uFlightGlow.rgb * (uFlightGlow.w * fm.r);
+src/space/sky.ts line 398:
+      float sq1 = asin(clamp(gq.z, -1.0, 1.0)) / uFlightWarm.w; float fall = exp(-(sq1 * sq1));
+src/bodies/standin.ts line 103:
+    float sq = (t - c) / w; lines += exp(-(sq * sq)) * (0.6 + 0.4 * sin(float(k) * 1.7 + 0.5));
+STEP (1), MEASURED, second copy, plain (H2p) against NANSIM=pow (H2n):
+H2 9900: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 begins ffe9680020b59528)
+H2 9960: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 begins 86001a6d9649f589)
+H2 10020: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes, sha256 begins c23351c5ebaf3bef)
+ALSO MEASURED: the plain picture of the second copy has the same bytes as the plain picture of the first cured copy in all three frames. So the products change no pixel in plain here, and with them the black sky under pow is gone. All six runs rc 0.
+NOT TOLD APART: which of the three lines carried it. They were changed together. I think the two sky lines; I do not know whether standin.ts line 103 is drawn in these frames at all.
+NEWS, MEASURED, the H frames below 9900 on the FIRST cured copy (drawn before your answer came), plain (Hp) against pow (Hn):
+H 8940: differing pixels 518394, largest difference 255, under 45 percent 518390
+H 9000: differing pixels 213266, largest difference 255, under 45 percent 189583
+H 9060: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes)
+H 9120: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes)
+H 9180: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes)
+H 9240: differing pixels 0, largest difference 0, under 45 percent 0 (same bytes)
+MEASURED MORE: of the differing pixels, 347748 (8940) and 127094 (9000) are pure black 0 0 0 in the pow picture. In 9000 every differing pixel lies between x 338 and x 959, and the first pure black differing pixel of a row stands at x 751 in the top row, x 675 in row 135, x 600 in row 270, x 565 in row 405 and x 449 in the bottom row.
+BY EYE (not measured): 8940 in plain is star sky only, no globe; under pow the whole picture is black. 9000 under pow is black on the right of one straight slanted line that runs along the middle of the galaxy band, and looks as plain on the left of it; the line seems to cut a thin slice off the right limb of the globe.
+WHAT I THINK (not tested yet): that straight line is the plane of the galaxy, where the number in the two sky lines changes its sign. So 8940 and 9000 are the same sky lines, not a pow on Neptune. To measure it and not guess, I draw 8940 and 9000 once more on the second copy, plain and pow, directly after the four frames of your step (2) and before the control draw. It costs about five minutes. Write if you do not want it.
+The frames 10080, 10140, 10200 and 10260 were not drawn on the first cured copy; I stopped that chain after 9240 when your answer came. They are being drawn on the second copy now, as step (2). Then 8940 and 9000, then (3) the control draw at 9480 on the second copy, then (4) G, frozen copy against the second copy.
+
+## RIPPLE JOB from the Builder (/root) (saved 06:07:56 by my clock, 28 Nov, shortly after it came; word for word; high priority). Goes before everything else: find what draws the ripple of the PC pictures.
+
+> RIPPLE JOB from the Builder (/root), 06:07 UTC. This goes BEFORE everything else you have open (NANSIM step 2, 8940 and 9000, control draw, G wait; your finding on the sky lines is taken as read, thank you, the picture of 9000 with the straight line settles it for me). Stop the running chain now.
+>
+> WHAT THE PC SHOWS (MEASURED by me on its pictures): the Windows PC tested main at 9365ac1 under Direct3D 11. Steps and black blobs are gone. What remains: at capture 9480 (film 4740, 1920x1080) the bright cirrus haze along the upper limb carries many fine parallel stripes (ripples); the approved picture is smooth there. In the PC's OpenGL picture of the first test the same place is smooth. Attached: the PC's side by side picture (left approved, right PC, both at half size) and my crop (approved above, PC below). In half size coordinates the ripple band runs from about x 240 to 480 at y 0 to 90, over x 480 to 720 at y 90 to 180, to x 720 to 960 at y 180 to 360. The thin limb line in 9720 and 9916 differs the same way.
+>
+> MY THEORY (not proven): the browser's translator to Direct3D (ANGLE) replaces dFdx, dFdy and fwidth by zero inside any loop that holds a break or continue of its own (or a return or discard at any depth), and calls made from such a loop go to a copy of the callee in which they are zero and implicit texture reads take level 0. In src/stops/neptune/deep.ts the slab loop (about lines 997 to 1000) is such a loop: "if (float(j) &gt;= uSlab.x) break;" and then layerAt(...), which takes screen derivatives (also through diagTexelsDir). Zero derivatives mean the finest level of the map: aliasing where the run is long, at the limb. My scan of the sources found no second such place in Neptune; you know the code better.
+>
+> DO, in this order, each in its own scratch copy of the cured copy (9365ac1; leave your other copies as they are):
+> R1 SIM, the picture of the theory: a copy of layerAt and of every function under it that takes a screen derivative, in which every dFdx, dFdy and fwidth gives zero (and any implicit texture( read becomes textureLod(..., 0.0)); call this copy ONLY inside the slab loop. Draw capture 9480 at 1920x1080 in a window on the upper limb where the ripples stand (full size about x 960 to 1680, y 180 to 540; smaller if that is much faster, and fewer samples if the tool allows it, but then the same for every picture of this job). Draw the same window unchanged. Send both PNG. If the SIM picture shows the PC's ripples, the theory holds.
+> R2 CURE: the slab loop without the break, same sums in the same order, for example: for (int j = 0; j &lt; 8; j++) { if (float(j) &lt; uSlab.x) { slabSum += layerAt(...same arguments...); } }. Nothing else changed. If you see a better form that keeps software drawing bit for bit, take it and say why.
+> R3 PROOF: the R2 copy against the unchanged cured copy, bit for bit (sha256 of the PNG) in the same window at 9480 and in one window on the limb line at 9720 and at 9916. Any differing pixel: say how many and where.
+> R4 SECOND PLACES: dump the final fragment shader texts of the Neptune programs as the page hands them to WebGL (all of them: far globe, closeup, deep, air, ring, Triton, sky, stand in) and search them for a derivative, an implicit texture( read or a call to a function holding one, inside a loop with its own break or continue or with a return or discard anywhere inside. List every hit with file and line, also when you think it harmless.
+>
+> SEND: a first mail as soon as R1 is drawn (both PNG attached, the diff of the SIM copy), then R2 as a patch file made with git diff against 9365ac1 together with R3. Start every mail with RIPPLE and end the last one with RIPPLE DONE. Say MEASURED, STATED or UNKNOWN for each claim. The three sky product lines of your second copy: send them too as their own patch file (git diff against 9365ac1), I will decide about them separately.
+
+## 28 Nov, 06:18 UTC: RIPPLE answer 1 to the Builder (word for word; sent 06:18:16 at the latest; high priority; attachments as its text names them)
+
+RIPPLE neptune_builder R1: THE SIM SHOWS THE PC'S RIPPLES, at the PC's places and at the PC's strength. Attached: w-base-9480.png (unchanged), w-sim-9480.png (SIM), the same pair wider (wide-base-9480.png, wide-sim-9480.png), and r1-sim.patch (git diff against 9365ac1).
+THE COPIES, MEASURED: made from git archive of 9365ac1 (src, tools, tests, config, cut, kit, handoff, top files), with hard links to public, audio, assets-src and references of my checkout (git diff --stat between my film commit and 9365ac1 is empty for these four). The src of 9365ac1 is equal, file by file, to the src of my cured NANSIM copy. /tmp/rp/base is unchanged, /tmp/rp/r1 is the SIM, /tmp/rp/r2 the cure. Build stamp of base: engine a455bc02904b0d42, neptune e32650e683072327. My film checkout is untouched (still 41e03504 with the one NANSIM tool line).
+THE FLAGS, MEASURED in tools/capture.ts of 9365ac1: it has no window and no sample count of its own, only --tier. So every picture of this job is the WHOLE frame, drawn by the copy's own tool with --frames K --format 16x9 --rate 2 --tier draft --allow-software --headless --ignore-limits --mixed, one run and a fresh page for each frame: 1920 by 1080, tier draft (config/showcase.json: 1 sample a frame), software drawing (ANGLE Vulkan SwiftShader, Chromium 147.0.7727.15). The window is cut from the PNG. A frame takes 89 to 91 s here, rc 0.
+THE WINDOWS: w- is full size x 960 to 1680, y 180 to 540, as you named it. wide- is x 480 to 1920, y 0 to 720, your whole ripple band.
+THE SIM, what is changed (the patch, deep.ts only): a function layerAt0, made from the very text of layerAt, in which every dFdx( and dFdy( is a function that gives zero, and which calls diagTexelsDir0, a copy of diagTexelsDir with the same zeros. The slab loop calls layerAt0. All other calls of layerAt stand as they were. MEASURED by reading the source text (planet.ts, the two made parts of layerAt counted once): layerAt holds 6 dFdx, 6 dFdy, 5 textureGrad, no fwidth and no texture( read without a level; the only own function it calls is diagTexelsDir.
+MEASURED, SIM against unchanged at 9480: whole frame 421007 differing pixels, largest difference 93 levels, 103613 pixels over 8 levels, 10579 over 32. In the window: 119970 of 259200 pixels differ, 47858 over 8 levels, 5891 over 32. sha256 of the whole frames: unchanged a59efaaf0ac5885b, SIM 67da0c6c1f177ad5.
+BY EYE: the SIM carries many fine parallel stripes along the bright cirrus haze of the upper limb, the unchanged picture is smooth there. It looks like the lower half of your crop.
+MEASURED AGAINST THE PC'S PICTURE (your master-009480.jpg, 1920 by 540, left approved, right PC; my two frames reduced to 960 by 540; luminance 0.3 0.5 0.2): the correlation of (PC minus approved) with (SIM minus unchanged), and the rms of each, in your three boxes in half size coordinates:
+x 240 to 480, y 0 to 90: correlation 0.838, rms PC 5.95 levels, SIM 5.87
+x 480 to 720, y 90 to 180: correlation 0.890, rms PC 7.86, SIM 8.12
+x 720 to 960, y 180 to 360: correlation 0.830, rms PC 6.87, SIM 7.47
+control box without ripples, x 100 to 400, y 300 to 500: correlation 0.247, rms PC 2.01, SIM 0.63
+whole picture: correlation 0.706. Pixels over 6 levels: PC 33698, SIM 24045, in both 17210.
+So the SIM does not only look like the PC, it is the PC's pattern stripe for stripe. Limits of that measure: the PC's picture is a JPEG at half size, and UNKNOWN to me is the tier the PC drew; mine is draft.
+WHAT THIS PROVES AND WHAT NOT: MEASURED is that zero derivatives in the layerAt of the slab loop, and nothing else, give the PC's ripples. STATED from my memory of the translator's source, not checked here (no Direct3D on this machine): it writes dFdx, dFdy and fwidth as zero inside a loop it marks as discontinuous (a break or continue of its own, or a return or discard inside) and in the level 0 copies of the functions called from such a loop. That agrees with your theory.
+NEXT, running now: unchanged at 9720 and 9916, then the R2 copy at 9480, 9720 and 9916 (R3), then R4. R2 is your example form; its patch comes with R3.
+
+## RIPPLE ADD from the Builder (/root) (saved 06:24:45 by my clock, 28 Nov, shortly after it came; word for word; high priority). R1 verified; more to draw.
+
+> RIPPLE ADD from the Builder (/root). R1 is verified by me on your files: correlation 0.838, 0.890, 0.830 with the PC's pattern in the three boxes. Good work. One more pair of pictures, to run right after the frames you are drawing now and before R4 (do not delay R2 and R3 for it):
+> 1. Draw the SIM copy (/tmp/rp/r1) at capture 9720 and at 9916 as whole frames with the same flags as R1.
+> 2. Send me four whole frames as PNG, untouched: unchanged 9720, SIM 9720, unchanged 9916, SIM 9916 (names base-9720.png, sim-9720.png, base-9916.png, sim-9916.png), with the sha256 of each.
+> 3. Tell me in two lines, read from the source and not guessed: at 9720 and at 9916, does the slab loop run (what is uSlab.x there, how many passes), and which part of the picture takes slabSum (limb haze only, or also the cirrus streamers and the deck)?
+> Why: the PC's frames 9720 and 9916 failed the SSIM limit without ripples (its words: softer cirrus, flatter and grainier deck). I will measure whether (PC minus approved) follows (SIM minus unchanged) there too. If it does, the one cure covers all five failed frames.
+> Your mail starts RIPPLE ADD. Then go on with R4.
+
+## 28 Nov, 06:29 UTC: RIPPLE answer 2 to the Builder (word for word; sent 06:29:49 at the latest; high priority; attachments as its text names them)
+
+RIPPLE 2 from neptune_builder: R2 CURE, R3 PROOF, the sky patch. Times UTC. Written 06:30.
+
+R2 CURE. Attached r2-cure.patch (git diff against 9365ac1, sha256 feaaa2bd9769e77951c2ce2245563de9a4ec2a361e2fdc089ac49a53102493ca; MEASURED: git apply takes it on a clean export of 9365ac1, tsc rc 0). It is your form and nothing else, src/stops/neptune/deep.ts lines 997 to 1000:
+    for (int j = 0; j < 8; j++) {
+      if (float(j) < uSlab.x) {
+        slabSum += layerAt(...the same arguments...).a;
+      }
+    }
+The break line is gone. j only rises and uSlab.x does not change inside a pixel, so the same passes give the same sums in the same order (STATED from the text; R3 measures it).
+
+R3 PROOF. MEASURED. The R2 copy against the unchanged copy of 9365ac1, whole frames 1920 by 1080, tier draft, flags as in R1, software drawing (ANGLE Vulkan SwiftShader):
+9480: both PNG sha256 a59efaaf0ac5885b8910369eea21cae2d8ec88e402a8928b992ab04721694099. SAME BYTES. Differing pixels 0 of 2073600. Window x 960 to 1680, y 180 to 540: 0 of 259200.
+9720: both PNG sha256 0024010e3f61eaa20473192b82b25e29d5bcabdcd212b7ec40e51fa72d27e49d. SAME BYTES. Differing pixels 0 of 2073600. Window on the limb line x 960 to 1680, y 180 to 480: 0 of 216000.
+9916: both PNG sha256 46c8d1011b76a9fa53da433af3858ee1734574a7e40ab88628d09ba1349a5751. SAME BYTES. Differing pixels 0 of 2073600. Window on the limb line x 960 to 1680, y 180 to 480: 0 of 216000.
+MEASURED that the R2 page really held the changed text: the built chunk of the R2 copy holds the if form once and the break form 0 times, the unchanged copy holds the break form once; build stamp of the stop neptune b4d712ef66fbbe5c (R2) against e32650e683072327 (unchanged), engine a455bc02904b0d42 and saturn f8bb8b6a119d5f02 the same in both.
+Attached: r3-results.txt (every sha256, also of the windows) and the three windows of the R2 copy (same bytes as the unchanged ones, so one of each).
+
+What R2 does under Direct3D: UNKNOWN here, this machine has no Direct3D. What I can give is the rule itself, READ today in ANGLE's source on GitHub, main branch (src/compiler/translator/hlsl/ASTMetadataHLSL.cpp and OutputHLSL.cpp; UNKNOWN whether the PC's browser carries the same text):
+a. A loop is marked discontinuous by a break or continue of its own that does not stand directly in the loop's body block (one under an if counts, a bare one in the body does not), and by a return or discard at any depth inside it (every enclosing loop is marked).
+b. Inside a marked loop, and in every loop nested in it, dFdx, dFdy and fwidth are written as 0.0, and a call goes to a second copy of the callee (named with Lod0) when that callee has a derivative or an implicit texture read anywhere under it. The mark is pushed down to every callee of such a callee. In the Lod0 copy the same zeros stand, and an implicit texture read takes level 0 (this last half STATED from memory, the rest read). Other calls of the same function keep the normal copy.
+c. The old slab loop has its break under an if, so it is marked, and layerAt in it is the Lod0 copy: its dFdx and dFdy are 0, diagTexelsDir is 0, every textureGrad gets zero gradients and reads the finest level unfiltered. That is exactly what my SIM copy does. Your theory matches the text.
+d. The R2 loop has no break, continue, return or discard, so by rule a it is not marked and layerAt is the normal copy (STATED from the text, not run). ANGLE writes the word LOOP before a loop that holds a derivative and FLATTEN before an if that holds such a loop; both are empty unless the compile is tried again with ANGLE_ENABLE_LOOP_FLATTEN. How the Direct3D compiler itself then treats a derivative under "if (float(j) < uSlab.x)" inside a loop of a fixed count 8: UNKNOWN. STATED from memory only: it flattens such an if with a warning and keeps the derivative.
+e. If the PC still ripples with R2, the form that leaves the Direct3D compiler nothing to decide is a loop whose count is written into the shader text when the page builds it (deep.json far.slab[0] is 4 and nothing changes it at run time, deep.ts line 1425 sets uSlab once), with no if in it: for (int j = 0; j < 4; j++) { slabSum += layerAt(...).a; }. Not drawn, not taken: it changes more than the loop. Say the word and I draw it and prove it bit for bit.
+
+THE SKY LINES. Attached sky-products.patch (git diff against 9365ac1, sha256 a2c3186125ac93802e55b0178165b9a7573f7810dd404a295bfcfc518eb061d2; MEASURED: git apply takes it on a clean export of 9365ac1). Three lines: src/bodies/standin.ts 103, src/space/sky.ts 395 and 398, each pow(x, 2.0) written as a product.
+MEASURED on the copy with these three lines (preview size, tier draft, as in step H): plain against the pow simulation is SAME BYTES at all nine frames 9900, 9960, 10020, 10080, 10140, 10200, 10260, 8940, 9000 (on the copy without them 9900, 9960, 10020, 8940 and 9000 broke).
+MEASURED, plain of this copy against plain of the copy without the three lines: same bytes at 9900, 9960, 10020 and 9000; at 8940 ONE pixel differs by 1 level. So in software drawing the product is not bit for bit pow(x, 2.0) at every frame; the patch moves a hash. No comparison at 10080 to 10260 (the copy without the lines was not drawn there).
+These are also the step (2) results of NANSIM mail 4, sent here because RIPPLE came first.
+
+STILL TO COME: RIPPLE ADD in the next mail (SIM 9720 and SIM 9916 are drawn), then R4 with RIPPLE DONE.
+
+## 28 Nov, 06:31 UTC: RIPPLE answer 3 to the Builder (word for word; sent 06:31:04 at the latest; high priority; attachments as its text names them)
+
+RIPPLE ADD from neptune_builder. Times UTC.
+
+1 and 2. MEASURED. The SIM copy (/tmp/rp/r1) drawn at capture 9720 and 9916, whole frames 1920 by 1080, tier draft, the flags of R1. The four frames are attached untouched (copied bytes of the tool's PNG):
+base-9720.png sha256 0024010e3f61eaa20473192b82b25e29d5bcabdcd212b7ec40e51fa72d27e49d
+sim-9720.png sha256 ea914893a12e1c5c3ff77034c7456f514aa710e2f12fdd5870a0ceca3e3f0158
+base-9916.png sha256 46c8d1011b76a9fa53da433af3858ee1734574a7e40ab88628d09ba1349a5751
+sim-9916.png sha256 6a84e9a3aa805d9c45ef8ee986e9fd02da0b3422b65965ade78557aeafe71cdb
+MEASURED, SIM against unchanged, largest of the three channels per pixel:
+9480: 421007 of 2073600 pixels differ, largest 93, over 8 levels 103613, over 32 levels 10579, mean over the frame 1.327.
+9720: 156629 differ, largest 47, over 8 levels 18220, over 32 levels 188, mean 0.253.
+9916: 198007 differ, largest 76, over 8 levels 24555, over 32 levels 214, mean 0.342.
+Share of pixels over 8 levels in a grid of 4 columns by 3 rows (percent, left to right, top row first):
+9480: 1.8 12.8 20.6 1.9 / 0.2 0.2 1.0 20.3 / 0.7 0.1 0.3 0.0
+9720: 0.0 0.5 4.8 0.1 / 0.4 0.0 0.3 4.2 / 0.0 0.0 0.0 0.1
+9916: 0.2 1.6 3.6 0.0 / 0.0 0.0 2.9 5.0 / 0.6 0.0 0.0 0.3
+So at 9720 and 9916 the SIM of the slab loop changes about a fifth as much as at 9480, and nearly all of it lies in the band along the limb (upper middle to mid right). Little of it lies on the near deck or on the streamers. If the PC is softer and grainier over the whole deck and the streamers there, the slab loop alone does not carry it (STATED from these numbers; you measure it). R4 looks for the other places; the deck's march and the streamers' march both have a break under an if, which by ANGLE's rule marks them.
+
+3. READ from the source (deep.ts of 9365ac1):
+uSlab is written once, from deep.json far.slab [4, 2] (deep.ts line 1425), and no other line of src writes it; the slab block (lines 954 to 1020) stands at the top level of main under no condition and main holds no return and no discard. So at 9720 and at 9916, as at 9480, uSlab.x is 4 and the loop makes 4 passes in every pixel the deep program draws.
+slabSum goes into mapCloud alone (line 1001), and only where slabShare is over 0, that is where the ray's run through the map's cloud layer is longer than uSlab.y = 2 footprints of one read (slanted looks, so toward the limb). mapCloud is the cover of the globe map's own cloud layer; from it come farCover and farLook (lines 1010 to 1012), and from these the deck's colour deckLight (line 1039, only where the ray meets the deck) and one factor of the veil's light (line 1200). So it is the map's pale cloud layer and its shadow as they lie on the deck's colour, strongest at the limb. The deck's own map read (line 981) and the two shadow reads (line 1002) are calls of layerAt outside the loop and keep their derivatives. The streamers' march (lines 1058 to 1140) and the air (lines 1152 to 1191) read nothing of it; the streamers' flat far level is laid over mapCloud after the slab (line 1008).
+
+A correction to RIPPLE 2: its head says written 06:30, it went out 06:29:49.
+R4 is running now (the shader texts are being taken from the page). Next mail: R4 with RIPPLE DONE.
+
+## 28 Nov, 06:38 UTC: RIPPLE answer 4 to the Builder (word for word; sent 06:38:01 at the latest; high priority; attachments as its text names them)
+
+RIPPLE 4 from neptune_builder: R4 SECOND PLACES. Times UTC.
+
+RESULT. MEASURED: in every fragment text the page of 9365ac1 hands to WebGL across the Neptune stop there is ONE hit, the slab loop of deep.ts (lines 997 to 1000). No other program holds a derivative, a texture read without a level, or a call of a function holding one, inside a loop with a break or continue of its own or with a return or discard inside. In the deep text of the R2 cure there is no hit left.
+
+HOW. A scratch copy of 9365ac1 with one added line in tools/capture.ts (after browser.newPage: an init script named by DUMP_FILE). The script wraps shaderSource of both WebGL context types and posts every text, word for word, to a receiver on this machine. MEASURED: frame 9480 drawn with the script in is the same bytes as without (sha256 a59efaaf0ac5885b...). The search is scan.py (in the tar): it finds the functions, the loops, the breaks and continues that belong to each loop, returns and discards inside, and follows calls through every depth. Each line is mapped back to file and line of the source. MEASURED apart from it, by a plain word count: the words break and continue stand in the deep text only, in no other text of the page.
+
+THE RUNS. MEASURED.
+run all: one page, preview size, tier draft, frames 8940, 9000, 9120, 9300, 9480, 9720, 9916, 10020, 10140, 10260: 24 fragment texts, 22 vertex texts.
+run base1080: 1920 by 1080, frame 9480: 10 fragment texts, each the same bytes as one of run all. So the texts do not depend on the frame size.
+run cure1080: the R2 copy, 1920 by 1080, frame 9480: 10 fragment texts, 9 the same bytes as unchanged; the deep text is the other one (1679 lines against 1678).
+At 9480 alone the far globe and Triton are not compiled; of Neptune's own programs only deep, air and ring are (and the sky).
+
+THE NEPTUNE PROGRAMS (named by the source lines each text is made of):
+far globe (planet.ts with air.ts and haze.ts), frag-037, 802 lines: 28 loops, none marked, 0 hits.
+Triton (triton.ts), frag-039, 163 lines: 2 loops, none marked, 0 hits.
+ring (ring.ts), frag-041, 133 lines: 4 loops, none marked, 0 hits. Its discard stands at the end of main, outside every loop.
+air (air.ts with haze.ts), frag-043, 211 lines: 4 loops, none marked, 0 hits. It holds no derivative and no read without a level at all. Its discard stands at the end of main, outside every loop.
+deep (deep.ts with planet.ts), frag-045, 1678 lines: 42 loops, 18 marked, 1 HIT.
+sky (space/sky.ts), frag-004, 537 lines: 26 loops, none marked, 0 hits; and frag-006 (the small sky text, 78 lines): 1 loop, not marked, 0 hits.
+closeup (closeup.ts): NOT handed to WebGL. READ: set.ts line 108 adds deepView.mesh when deep.json on is true, so the closeup mesh is built and never drawn. Searched in the text of the source instead (template FRAG with its parts filled in): 13 loops, none marked, 0 hits.
+stand in (src/bodies/standin.ts): NOT handed to WebGL. MEASURED by search: no file of src, tools or tests names createStandinSet or imports the file. Searched in the source text of its five fragment templates: no marked loop, 0 hits. Harmless by the rule but named as you asked: RING has fwidth at line 102 inside a loop of 6 without break, and a discard at line 107 after that loop, outside it.
+The other texts of the page (Uranus globe, moons, veil, rings, halo, deck; dust; far point; accumulator; post chain): 0 marked loops, 0 hits; their discards stand outside loops.
+
+THE ONE HIT, with file and line:
+loop: src/stops/neptune/deep.ts line 997, for (int j = 0; j < 8; j++), marked by the break under the if at line 998.
+call inside: deep.ts line 999, layerAt (src/stops/neptune/planet.ts line 262).
+what ANGLE's rule sets to zero in the second copy of layerAt: planet.ts line 266 (dFdx, five times), line 267 (dFdy, five times), line 271 (dFdx), line 272 (dFdy); and in the second copy of diagTexelsDir (src/diagnostics/diag.ts line 100), which layerAt calls at planet.ts lines 268 and 277: diag.ts line 101 (dFdx) and line 102 (dFdy). MEASURED in the text: layerAt reads by textureGrad only (11 reads), so no read without a level is under it; with zero gradients each read takes the finest level (STATED).
+
+THE 17 MARKED LOOPS WITHOUT A HIT in the deep text (no derivative, no read without a level and no call of a function holding one inside them; the report names the calls in each): deep.ts line 242 (veilDepth), 324 and 355 (deckField), 423 (cirrusBody), 505 (cirrusFar), 530 (cirrusBend), 547 (cirrusNoise), 598 (cirrusFlat), and in main 818 (the deck's march), 891 and 894 (in the deck's block; they call cirrusFar and cirrusInside), 1058, 1070, 1080, 1083 and 1110 (the streamers' march) and 1152 (the air).
+Derivatives of the deep text that stand outside every marked loop (not hits): main lines 969 and 970 (dFdx, dFdy of the far cirrus map's place), lines 1299 and 1300 (fwidth of the grid, under an if, no loop), runFeet called at line 994 (planet.ts lines 236, 237), and the calls of layerAt at lines 981, 984 and 1002.
+
+WHAT FOLLOWS. STATED: by this search the slab loop is the only place of this kind in the stop, and R2 removes it. If your measurement shows that the PC at 9720 and 9916 does not follow the SIM, the cause there is of another kind: UNKNOWN to me.
+
+Attached: r4-report.txt (244 lines: the runs, every text with its loops, the hit, the marked loops without a hit, the cured text, the two programs from source) and r4-texts.tar (every text of the three runs, the source texts of closeup and stand in, scan.py and the other scripts, the one tool line).
+
+Open after this, in this order unless you say otherwise: NANSIM (3) the control draw, (4) G, the single modes and NANSIM DONE; then the film loop. The scratch copies under /tmp/rp stay as they are.
+
+RIPPLE DONE
+
+## RIPPLE 3 from the Builder (/root) (saved 06:38:45 by my clock, 28 Nov, shortly after it came; word for word; high priority). R2 is applied on the main copy; the next questions.
+
+> RIPPLE 3 from the Builder (/root), 06:38 UTC. Thank you: R2 is applied on my main copy (patch sha256 feaaa2bd checked by me, tsc rc 0 here), not committed yet. Three things, in this order, each as its own mail as soon as it is ready:
+>
+> A. NOW, one mail: attach the whole frames untouched: base-9480.png (unchanged copy) and r2-9480.png, r2-9720.png, r2-9916.png (the R2 copy), so that I hash them myself against the base frames I hold (base-9720 0024010e..., base-9916 46c8d101... are here). Also sim-9480.png whole.
+>
+> B. MEASURED by me on your RIPPLE ADD frames, for your R4: (1) Where the simulated fault is strong (over 4 levels at half size) the PC's difference follows it: correlation 0.937 at 9720 and 0.928 at 9916, slope 0.86 and 0.88. So the slab fault is on the PC in those frames too. (2) It holds only 13.5 and 15.6 percent of the PC's SSIM deficit there. The rest lies on the deck and streamers (middle row and lower right of the frame, rms 5 to 6 levels at half size) where the slab changes nothing. (3) By the test's own measure (ffmpeg psnr and ssim against reference/master-4860.png and master-4958.png of the branch handoff-local-render-assets): your unchanged draft draw 9720 37.90 dB and 0.9430, SIM 37.36 and 0.9371, the PC (final tier) 34.68 and 0.9209; 9916 unchanged draft 35.36 and 0.9035, SIM 34.94 and 0.8953, the PC 34.62 and 0.8977. So the slab costs about 0.006 to 0.008 SSIM there, and the PC is 2.7 dB further from the approved frame at 9720 than a draft software draw.
+>
+> C. R4, widened. The question is what else in the deep program can differ on a graphics card under Direct3D 11 at 9720 and 9916 (deck and streamers, "softer cirrus, flatter and grainier deck"), given that preview 9400 and 9401 match at 48 dB and the whole view at 40.7 dB. List, ranked, with file and line, each MEASURED from the final shader text or STATED: (1) every loop that ANGLE's rule marks (break or continue under an if, return, discard) and everything in it or under it that takes a derivative or an implicit read, also through calls (my scan of the dumped text found only the slab loop; confirm or refute); (2) every read in the deck's march and the streamers' march whose level or gradients come from dFdx, dFdy or fwidth computed anywhere, and where; (3) hash or noise functions built on sin, fract of large numbers, or float precision near its end, that feed the deck's grain or the streamers; (4) anything that depends on mediump or on the order of float operations. For the top two candidates say how to simulate the card's behaviour in software (as SIM did for the slab), and draw the simulation at 9720 whole frame, draft tier, if it takes under 10 minutes. Do not change the cure; nothing goes to main from you.
+>
+> Form e (count written into the text) stays in reserve: do not draw it yet.
+
+## 28 Nov, 06:39 UTC: RIPPLE answer 5 to the Builder (word for word; sent 06:39:02 at the latest; high priority; attachments as its text names them)
+
+RIPPLE 3 A from neptune_builder. Times UTC.
+
+The five whole frames, untouched (copied bytes of the tool's PNG), 1920 by 1080, tier draft. MEASURED, sha256:
+base-9480.png a59efaaf0ac5885b8910369eea21cae2d8ec88e402a8928b992ab04721694099 (unchanged copy of 9365ac1)
+r2-9480.png a59efaaf0ac5885b8910369eea21cae2d8ec88e402a8928b992ab04721694099 (R2 copy)
+r2-9720.png 0024010e3f61eaa20473192b82b25e29d5bcabdcd212b7ec40e51fa72d27e49d (R2 copy)
+r2-9916.png 46c8d1011b76a9fa53da433af3858ee1734574a7e40ab88628d09ba1349a5751 (R2 copy)
+sim-9480.png 67da0c6c1f177ad581503b636ac6a1d2ce1538598dcc16a60fc4ef71e6e9ad73 (SIM copy)
+
+C is in work (reading the final deep text first; the draw of a simulation follows if one is found). The NANSIM control draw and G run meanwhile and are stopped the moment C needs the renderer.
+
+## 28 Nov, 07:04 UTC: RIPPLE answer 6 to the Builder (word for word; sent 07:04:14 at the latest; high priority; attachments as its text names them)
+
+RIPPLE 3 C from neptune_builder, written 07:03:51 UTC. One finding first, then your list; all of it in full in c-report.txt (attached).
+
+FINDING, candidate 1 (TRIG): asin and atan as the Direct3D compiler writes them out.
+- STATED (my memory of the compiler's listings, plus two pages found by search for atan2 and the Cg reference text for asin and acos; not checked on a Windows machine): Direct3D 11 byte code has no asin, acos, atan; the compiler writes short polynomials. asin(x) = 1.57079637 - sqrt(1 - |x|) * (((|x| * -0.0187293 + 0.0742610) * |x| - 0.2121144) * |x| + 1.5707288), mirrored for x under 0.
+- MEASURED from that form in 32 bit floats: its error is largest at 0: asin(0+) = +6.76e-05 rad, asin(0-) = -6.76e-05, a step of 1.35e-04 rad at 0. atan(y, x): largest error 1.17e-05 rad.
+- MEASURED in the final deep text: bandOf (deep.ts 191) makes every place of the deck, the veil and the streamers as v = uRadius * asin(...), u = uRadius * atan(...), uRadius = 41.806 units (close.json). So v is wrong by +0.00282 units just north of v = 0 and -0.00282 just south: the pattern is torn along the middle line of the band and pulled apart by 0.0056 units; at 1 unit from the eye a pixel is 0.000496 units (30 degree view, 1080 lines), so 5.7 pixels each way. v = 0 is the band the first streamer lies on (band.ts lines 6 to 8), the line through the middle row and lower right of 9720.
+- MEASURED, simulation in software (copy of the R2 copy; only deep.ts, 27 lines at the head of the deep text: the three forms and #define asin, acos, atan to them; patch sim-trig.diff): 9720 whole frame, draft tier, 536 s, trig-9720.png sha256 064b30e06dbe3e81629e4d8ee6d093b5c7e37d3f60ab4a18e340060c3dd0e688. Against the unchanged draw (base-9720.png, 0024010e...): 975818 pixels differ (47.1 percent), largest 152 levels, over 8 levels 122283; rms at half size 3.73 levels (the slab SIM: 1.06); 3 by 3 grid of that rms, rows top to bottom: 3.03 0.11 0.04 / 5.87 4.79 0.99 / 0.25 3.86 6.52.
+- MEASURED by your measure (ffmpeg psnr and ssim against master-4860.png; I get your numbers to the last digit for the unchanged draw, 37.90 and 0.9430, and for SIM, 37.36 and 0.9371): TRIG 34.22 dB and 0.9194. Your PC: 34.68 and 0.9209. Your words for the PC's rest: middle row and lower right, rms 5 to 6 levels at half size.
+- UNKNOWN: the PC frame itself (I do not hold it), and my draw is draft tier where the PC's is final. So: the simulation fits the PC in place and in size; that the PC's compiler does this is STATED until one of these checks: (a) correlate (PC minus unchanged) with (trig-9720.png minus unchanged) as you did for SIM; (b) python3 shift.py unchanged.png PC.png 120 10 (attached; my table for TRIG in shift-trig-9720.txt: 30 of 144 blocks shifted by one pixel, one of them by two, all on or beside the first streamer, opposite sign on its two sides); (c) one frame on the PC with the browser on another ANGLE back end than Direct3D 11 (Chromium switch --use-angle=gl or --use-angle=vulkan: STATED, check it in the tool).
+- No cure written or drawn; R2 untouched; nothing to main. STATED: the two angles of bandOf can be worked by lines of our own, exact to a float on every machine. Say if you want it.
+
+YOUR LIST (each with file and line in c-report.txt)
+(1) CONFIRMED, MEASURED: 18 marked loops in the unchanged text, one hit, the slab loop (deep.ts 997). Derivatives stand only in diagTexels (never called), diagTexelsDir, runFeet, layerAt and main (deep.ts 969, 970; the grid at 1299 is under an if and off). No read with an implicit level and no textureLod: all 13 reads are textureGrad (11 in layerAt, 2 in main at deep.ts 972, 977). The calls to layerAt and runFeet stand in main in a plain block, in no loop, but for the slab loop. The 17 other marked loops and all they call take no derivative and read no texture. Cured text: 17 marked, 0 hits.
+(2) MEASURED: NO read at all in the deck's march or the streamers' march; both are functions only, and their footprints are uniforms (pix = uFoot * uGrad, deep.ts 774; fp at 846; least at 1097). Reads with derivative born gradients are outside the marches: uGMap, uGHoldMap, uGMendMap (planet.ts 266, 267), uGPatch0 to 7 (planet.ts 271, 272), uGFarMap (deep.ts 969, 970), the slab's softness (deep.ts 994). All these maps have anisotropy 16 (set.ts 49 to 55).
+(3) MEASURED: hash3 (deep.ts 155 to 163) is whole number work on uint; no sin based hash, no fract of large numbers in deck or streamers. STATED: noise arguments reach about 4e4, one float step there is 0.004 of a cell: no grain from that. sin and cos (wind, deep.ts 194; winding, 298, 299) are the card's own on Direct3D: exactness on the PC UNKNOWN; at an error of 1e-6 nothing shows.
+(4) MEASURED: no mediump, no lowp; every precision line is highp. Order inside one statement, scan of all 1074 statements: 2 statements where two calls write the same variable (deep.ts 913, 1002), both without effect. Refuted.
+
+RANK: 1 TRIG (simulated, above). 2 the card's reads of the maps: simulated as a bracket, anisotropy 1 in place of 16 on the deep program's maps (the filter taken away altogether, more than a card can differ; patch sim-aniso1.diff), MEASURED at 9720, 122 s: aniso1-9720.png sha256 d3cdbad3acc1323d2e68b62c09dcebf86513d0ec5dd31127add4e8e7b3a2599c, 286440 pixels differ, largest 15 levels, rms at half size 0.68, grid 0.35 1.20 1.00 / 0.19 0.12 1.26 / 0.03 0.03 0.13, against the master 37.73 dB and 0.9424: small and under the limb, it cannot hold the rest. 3 the card's sin and cos (UNKNOWN, not simulated). 4 one float step in noise arguments (bounded, STATED). 5 order and mediump (refuted).
+
+Attached: c-report.txt, trig-9720.png and aniso1-9720.png (whole frames, untouched), diff4-trig-9720.png (127 plus 4 times the difference, a picture for the eye only), sim-trig.diff, sim-aniso1.diff, shift.py, shift-trig-9720.txt. Form e not drawn. Not drawn either: TRIG at 9916 (about 9 minutes; say if you want it).
+Next from me: the NANSIM rest (control draw and G are drawn, the mail follows), then the film loop.
+
+## 28 Nov, 07:06 UTC: NANSIM, the rest, mail 1 of 2 to the Builder (word for word; sent 07:06:31 at the latest; high priority; attachments as its text names them)
+
+NANSIM neptune_builder, the rest, mail 1 of 2 (written 07:06:15 UTC): (3) the control draw, and (4) G for 9090, 9400 and 9916. Eight PNG attached.
+
+(3) CONTROL, MEASURED, second copy, frame 9480, preview, draft:
+- plain (H2p-9480.png, 45 s): sha256 9e97422c68053b3b38dda4b25ca96f526321b1d63d18e841327cd63e36c357cd, the same bytes as A-9480.png of the frozen copy.
+- control (H2ctl-9480.png, 46 s): NANSIM=pow with /tmp/ns/nansim-control.js, which is nansim-init.js with one line changed (diff shows line 19 only): the test "x < 0.0" reads "x < 3.0e38", so every pow gives not a number. sha256 4c1f1e344deb2c92dffcd184eac88f2545ae48784e8d7cc1250a91771d115c35. Against the plain one: 518400 of 518400 pixels differ, largest difference 241 levels, 346943 pixels are pure black (plain: none), and in all 518400 the brightest channel is under 45 percent of the plain one's.
+- So the picture breaks, as it must: the wrapper is in the shaders of the second copy, and "same bytes" in the H2 frames is a result and not an empty run. The gap I named is closed for the second copy. NOT drawn: the same control on the first cured copy (its tools/capture.ts is byte for byte the same, MEASURED earlier).
+- 8940 and 9000 on the second copy, plain against pow: same bytes in both (MEASURED, told in my RIPPLE 2 mail together with 10080 to 10260). So the black sky of the first cured copy at 8940 and 9000 was the same three lines. With that every H frame is drawn: 9300 to 9840 same bytes on the first cured copy, 8940, 9000 and 9900 to 10260 same bytes on the second copy, 9060 to 9240 same bytes on the first cured copy.
+NANSIM H DONE
+
+(4) G, MEASURED. Plain draws, no NANSIM, preview, rate 2, draft, one frame per run. G-frozen = my film checkout as built (commit 41e0350). G-cured = the second copy (cure-v1.patch and the three product lines, drawn with --mixed).
+G 9090: frozen 555b20fd589342ec8dfd1ab694e3efff566c69a0cc766b389d54b92ac90090df, cured 555b20fd589342ec8dfd1ab694e3efff566c69a0cc766b389d54b92ac90090df, differing pixels 0 (same bytes; 30 s and 30 s)
+G 9400: frozen a28c25e0d58ed4f8236a421ecdf7adc1511c18bd447f13337708701f90f4320a, cured a28c25e0d58ed4f8236a421ecdf7adc1511c18bd447f13337708701f90f4320a, differing pixels 0 (same bytes; 39 s and 39 s)
+G 9916: frozen 6a64dbe51a3fde7ea928167caa1b3874db4f0990f9f94b8ab917cae359ea028c, cured 6a64dbe51a3fde7ea928167caa1b3874db4f0990f9f94b8ab917cae359ea028c, differing pixels 0 (same bytes; 58 s and 58 s)
+All twelve G runs ended with rc 0. The other three pairs (6930, 7160, 7440) come in mail 2, with the last single modes (cured copy, acos and sqrt, drawing now) and the closing line.
+
+## CURE 3 TRIG from the Builder (/root) (saved 07:07:55 by my clock, 28 Nov, shortly after it came; word for word; high priority). My finding is the lead candidate: write asin, acos and atan out, prove them, draw them (parts A to E).
+
+> CURE 3 TRIG from the Builder (/root), 07:06 UTC. Your finding is taken as the lead candidate. Main now holds the second cure: commit c980c36861ff2f39ebfaa1bb59b34f99846312d5 (your R2 change, the same deep.ts). Do this at once, before the NANSIM rest and before the film loop, and mail each part when it is done (do not wait for the whole).
+>
+> A. THE CURE, as a patch against main c980c36 (git diff, file name cure3-trig.patch): our own asin and our own atan with two arguments (and acos if the stop uses it), built from + - * / sqrt abs sign and comparisons only, with no library asin, acos or atan anywhere inside. Accurate to a few float steps over the whole range, including x = 0, x = +1, x = -1, both signs, and atan(y, x) in all four quadrants, on the axes and at the seam where the angle jumps from +pi to -pi. Suggested: the float kernels of fdlibm (e_asinf.c, s_atanf.c, e_atan2f.c) written out, constants as decimal floats. One definition in one place of the Neptune stop's shader text, and EVERY call of asin, acos and atan in every program of the Neptune stop goes to it. List the calls you changed with file and line; if a call must stay, say why. Nothing else changes. No #define of the built in names in the cure itself.
+>
+> B. PROOF 1, numbers only (minutes): the same lines in 32 bit floats (numpy float32, the operations in the order the shader text gives them) against exact asin and atan2 in 64 bit. At least a million points each, dense near 0, near +1 and near -1, on the axes and near the seam. Give the largest error in radians and in float steps, and where it lies. State the largest error of v and u in units (times uRadius 41.806) and in pixels at 1 unit from the eye at 1080 lines and at 2160 lines.
+>
+> C. PROOF 2, draws in software, draft tier, whole frames 1920x1080, capture 9720 first, then 9916, then 9480. (c1) main c980c36 plus the cure. (c2) main plus the cure plus your sim-trig defines at the head of the text, so that every library call that is left, if any, takes Direct3D's form; if no library call is left c2 must equal c1: say so and skip it. For each draw: sha256, the count of pixels that differ from your unchanged draw (base), the largest difference in levels, the count over 2 levels and over 8 levels, rms at half size, and psnr and ssim by ffmpeg against the unchanged draw (same command form as before, rgb24, full size). Send the PNGs untouched (c1-9720.png and so on).
+>
+> D. TRIG at 9916 as you offered (unchanged plus sim-trig, no cure): trig-9916.png with the same numbers, after C for 9720 is out.
+>
+> E. One line each, read from the text, no draws: where else in the Neptune stop an angle from asin, acos or atan is multiplied up (the factor and what it places), and whether the step of Direct3D's asin at 0 can reach a screen derivative (deep.ts 969 and 970 cq, diagTexelsDir, layerAt): yes or no, with the line.
+>
+> Rules as before: nothing to main, nothing pushed, your R2 copy untouched (work in a new copy), MEASURED, STATED and UNKNOWN kept apart, no dashes and no exclamation points in what you write. The cure goes to main only by me, after I have hashed and measured your files myself.
+
+## 28 Nov, 07:24 UTC: CURE 3 answer, parts A and B, to the Builder (word for word; sent 07:24:57 at the latest; high priority; attachments as its text names them)
+
+CURE 3 A and B from neptune_builder, written 07:23:38 UTC. Attached: cure3-trig.patch, proof1.py, nep32.py, proof1-out.txt. The draws of C run now; c1 at 9720 is drawn (129 s, peak 2335 MB; base took 128 s), its numbers follow in the next mail.
+
+A. THE CURE. cure3-trig.patch: git diff against main c980c36861ff2f39ebfaa1bb59b34f99846312d5, sha256 9ba052e02e65e27ecea2b63e59d70d5a93497857d9c8d64eb4724419bfd12727, 346 lines, 6 files of src/stops/neptune, 104 lines added, 27 taken out.
+MEASURED: git apply takes it on a clean export of c980c36 and the result equals my copy (/tmp/rp/c3, a new copy; its src, tools and config equal c980c36 before the patch; R2 copy untouched). npm run build passes (tsc and vite). One preview draw of 9720 on it: rc 0, 67 s, peak 2290 MB; the plain preview of 9720 took 67 s this morning. So the cure costs no time in software drawing. (sim-trig took 536 s at whole size; I think because of its if and its && inside the marches; not tested.)
+What it holds:
+1. New file src/stops/neptune/trig.ts, the one place: TRIG_GLSL with nepAsin(x), nepAcos(x), nepAtan(y, x) and their helper nepAsinRatio. Inside: + - * / sqrt abs min max clamp, comparisons, and mix(a, b, comparison) as the choice. No library asin, acos, atan; no if, no loop, no #define.
+2. The kernels are fdlibm's: e_asinf.c and e_acosf.c (the ratio of 6 over 4 terms; under 0.5 direct, above through sqrt((1 - |x|) / 2)), s_atanf.c (11 terms, the cuts at 7/16 and 11/16 with their head and tail constants), e_atan2f.c (the quadrants, pi in two parts). Where I left fdlibm, named: (a) no bit work, so the head and tail split of the square root between 0.5 and 0.975 is left out and the form fdlibm uses above 0.975 serves from 0.5 on; (b) atan(y, x) works min(|x|, |y|) / max(|x|, |y|), 0 to 1, and takes half pi minus that where |y| is the larger: no division can overflow, and 0 / 0 cannot arise (the divisor is 1 when both are 0); (c) outside -1 to 1 asin and acos answer as at the nearer end, never not a number; (d) there is no minus zero: atan(0, x under 0) is plus pi, atan(0, 0) is 0.
+3. Constants: decimal floats of 9 digits. STATED: I wrote fdlibm's numbers from memory, no file fetched. MEASURED: each reads back as the 32 bit float of fdlibm's hex word and equals the double coefficient rounded, with one exception: aT[0] of atan, where the hex word I remember (0x3eaaaaaa) is one step under the rounded double; I took the rounded double, 0.333333343. The head and tail pairs sum to half pi, atan(0.5), atan(1) and pi within 6e-15. Proof B does not rest on my memory: it measures the lines as they stand.
+4. EVERY shader call in src/stops/neptune goes to it. Changed, lines of c980c36: deep.ts 191 (atan and asin, bandOf), 227 (atan, the veil's arms), 311 (atan, deckField), 402 (atan, the storm's arms), 967 (atan and asin, cq of the far map); planet.ts 201 (acos, stormTurn), 209 (asin, cloudDir), 233 and 234 (atan, asin, runFeet), 263 and 264 (atan, asin, layerAt), 505, 527, 536, 542 (atan and asin each), 582 (asin twice), 634 (acos); closeup.ts 82 (acos), 183 (atan); ring.ts 67 (atan). 27 calls in 20 lines. planet.ts 201 to 264 lie in mapGlsl, which the deep program takes in too.
+5. TRIG_GLSL enters each program once, with one import line each: deep.ts FRAG before DIAG_GLSL, planet.ts frag, closeup.ts FRAG before INVERSE_FILMIC_GLSL, ring.ts FRAG before main, triton.ts FRAG.
+6. ONE THING MORE THAN A RENAMING, your call: equirectGrad. Triton's program calls it three times (triton.ts 56, 62, 63) and the globe's program holds it without calling it; it is text of src/space/sky.ts (EQUIRECT_GLSL, lines 14 to 24: one atan, one asin), not my folder. So trig.ts also holds NEP_EQUIRECT_GLSL, the same lines with the two calls changed, and planet.ts and triton.ts take that in place of EQUIRECT_GLSL (import line and one line of text each). Cost I name: the copy does not follow if sky.ts changes its equirectGrad. If you want the shared one kept: those 4 lines back and the chunk out of trig.ts; then Triton keeps one library atan and one asin (three calls of the function).
+7. Calls that stay, and why: (a) Math.asin, Math.acos, Math.atan, Math.atan2 in JavaScript on the processor (closeup.ts 342, 352 and 375, plan.ts 84 and 93, set.ts 353): not shader text. (b) MEASURED by search on the patched source: no shader call of asin, acos or atan is left in src/stops/neptune. On the FINAL text of the deep program as the browser got it at 9720 (dumped, 1726 lines): 0 library calls, 14 lines with the stop's own names. So c2 must equal c1 and I skip it. At 9720 only the deep program of the stop is compiled; the globe's, the ring's, Triton's and the closeup's programs I compile and dump at other frames after the C draws, and tell you. (c) Programs drawn at Neptune that are not the stop's keep theirs, above all the sky (src/space/sky.ts 37, 38, 317, 328, 329, 372, 394, 395, 398, 425, 479, 530, 631). There no radius multiplies the angle: Direct3D's asin error of 6.76e-05 rad is 0.14 pixels at a view of 30 degrees and 1080 lines (MEASURED by arithmetic, 4.85e-04 rad a pixel). Not touched.
+
+B. PROOF 1, MEASURED (proof1.py, numpy float32, every operation in the order of the shader text; nep32.py holds the lines, with the same constant strings as trig.ts, checked by script; exact = numpy asin, acos, arctan2 in 64 bit of the same 32 bit input; one float step = the gap of 32 bit floats at the exact answer). Whole output in proof1-out.txt.
+asin, 3614013 points (2 million even over -1 to 1; 800000 from 1e-45 to 0.1 both signs; 800000 within 1e-8 to 0.5 of the ends; the 5000 floats next to 1 and to -1; 1000 each side of 0.5 and -0.5; 0, the smallest float, 1, -1): largest error 1.366e-07 rad = 2.29 float steps, at x = 0.511006236. For |x| under 0.001: 5.0e-11 rad at most. asin(0) = 0; the step across 0 is 2.8e-45 rad (Direct3D's form: 1.35e-04). asin(1) and asin(-1) are half pi rounded, to the bit. 90.08 percent of the points give the exact answer rounded, 9.63 percent its neighbour, 0.29 percent two steps.
+acos, the same points: largest error 2.110e-07 rad = 0.88 float steps at x = -0.517220795; largest in float steps 1.12. acos(1) = 0, acos(-1) = pi rounded, to the bit.
+atan(y, x), 4800011 points (2 million with even angle and lengths from 1e-18 to 1e18; 1 million on the unit circle; 400000 on the four half axes from 1e-37 to 1e37; 800000 at the seam, x under 0: 400000 with y from 1e-38 of |x| to a tenth of |x|, 400000 with |y| at most 1e-38, both signs; 200000 at the diagonals; 400000 at the two cuts): largest error 2.616e-07 rad = 1.10 float steps at y = 4.26541875e-12, x = -2.17853578e-12; largest in float steps 1.45. Axes and corners to the bit: atan(0,1) = 0, atan(1,0) = half pi, atan(0,-1) = pi, atan(-1,0) = minus half pi, the four diagonals. Seam: atan(1e-45, -1) = pi rounded, atan(-1e-45, -1) = minus pi rounded. 86.60 percent exact rounded, 13.40 percent the neighbour, none further.
+In bandOf, times uRadius 41.806 (one pixel at 1 unit from the eye: 0.000496 units at 1080 lines and a view of 30 degrees, 0.000248 at 2160): v largest error 5.711e-06 units = 0.0115 pixels at 1080 lines, 0.0230 at 2160; u 1.094e-05 units = 0.0220 pixels at 1080, 0.0441 at 2160. Direct3D's form gave v 0.00282 units = 5.7 pixels with the tear; this is about 500 times less and has no tear.
+NOT COVERED, UNKNOWN: how the card rounds its own division and square root, and whether its compiler joins a * b + c into one step. STATED from memory of Direct3D 11's rules: + - * within half a float step, division and square root within one. So on the card I expect a few float steps more, still far under a tenth of a pixel; not measured.
+
+One slip of mine, named: exporting main whole filled the disk to 565 MB free for about a minute at 07:13; I removed the surplus at once, 5.2 GB are free, nothing was lost and no draw ran then.
+NANSIM: mail 1 of 2 went out at 07:06:31, before I read CURE 3. Mail 2 (G 6930, 7160, 7440 and the last single modes) waits until CURE 3 is done.
+
+## 28 Nov, 07:26 UTC: CURE 3 answer, part C at 9720 and 9916, to the Builder (word for word; sent 07:26:47 at the latest; high priority; attachments as its text names them)
+
+CURE 3 C for 9720 and 9916 from neptune_builder, written 07:26:25 UTC. Attached: c1-9720.png, c1-9916.png (untouched), cmp3.py and q3.sh (the measuring lines). 9480 is drawing; D follows it.
+
+All MEASURED unless marked. Draft tier, whole frames 1920x1080, software (SwiftShader), copy /tmp/rp/c3 = main c980c36 plus cure3-trig.patch. "base" is my unchanged draw of this morning. MEASURED on the way: my draws of main's R2 state (the same deep.ts as c980c36) have the same bytes as base at all three captures (9480 a59efaaf, 9720 0024010e, 9916 46c8d101), so "against base" is also "against main c980c36 without the cure".
+
+c1 at 9720: sha256 ea7f8b5c2c1a67e19a1e29a45317115d171a6e508b98bba7473b64d2bda5a635. Draw 129 s, peak 2335 MB (base 128 s).
+  pixels that differ from base: 10621 of 2073600 (0.51 percent); largest difference 2 levels (one pixel, x 478 y 388; the other 10620 differ by 1 level); over 2 levels: 0; over 8 levels: 0.
+  rms at half size: 0.0208 levels (full size 0.0415). ffmpeg against base, rgb24, full size: psnr 75.78 dB, ssim 0.999981.
+  against master-4860 (as in RIPPLE 3 C): c1 37.9004 dB and 0.942961; base 37.9003 dB and 0.942958. For memory: the PC frame 34.68 and 0.9209, my sim-trig draw 34.22 and 0.9194.
+
+c1 at 9916: sha256 ff5f377e13b8754ec9c9783415bb7f3c1aa5dec881fa4f26eca2d12d5ad2dbed. Draw 125 s, peak 2401 MB (base 117 s).
+  pixels that differ from base: 13766 of 2073600 (0.66 percent); largest difference 1 level; over 2 levels: 0; over 8 levels: 0.
+  rms at half size: 0.0236 levels (full size 0.0472). ffmpeg against base: psnr 74.65 dB, ssim 0.999977.
+  against master-4958: c1 35.3608 dB and 0.903545; base 35.3607 dB and 0.903543.
+
+c2 SKIPPED, with the reason you asked for: the final text of the deep program as the browser got it in the c1 build at 9720 (dumped; 1726 lines, sha256 9640772b7eb82d05e12a84851fe5cfe25a808ada652ae1a48cd30a918e5296d0) holds 0 calls of library asin, acos or atan and 14 lines with nepAsin, nepAcos or nepAtan. My sim-trig defines sit at the head of that one text (deep.ts) and rename only library calls, so with none left c2 equals c1 by construction. The other 11 program texts of that frame: 9 with no such call, and two of the sky (src/space/sky.ts, not the stop's: the dome's fragment text with 12 lines of library calls and the star points' vertex text with 3), which the defines never reached in any of my draws.
+
+What these draws show and what they do not:
+1. In software the cure moves the picture by one level in under 1 percent of the pixels: the software library asin and atan are already right to about a float step, so replacing them by lines equally right changes almost nothing. That is the expected sign that the cure is the same function, not a new look.
+2. They do not show the cure working on the card: that needs the card. What I can set beside it: the Direct3D form simulated here moved 975818 pixels by up to 152 levels at 9720 (RIPPLE 3 C), and with the cure in place that form has no call left to act on.
+3. UNKNOWN until drawn on the card: whether the tear is gone there. If it is not, TRIG was not the whole cause, and the next suspects are the ones of my list in RIPPLE 3 C.
+
+## 28 Nov, 07:27 UTC: CURE 3 answer, part C at 9480, to the Builder (word for word; sent 07:27:36 at the latest; high priority; attachments as its text names them)
+
+CURE 3 C for 9480 from neptune_builder, written 07:27:30 UTC. Attached: c1-9480.png (untouched). Measured with cmp3.py and q3.sh of my last mail. With this C is whole; D (sim-trig at 9916, no cure) is drawing since 07:27:08 and takes about 9 minutes; E follows.
+
+MEASURED. c1 at 9480 (main c980c36 plus the cure, draft, 1920x1080, software): sha256 34d7b49c67a035220454bb0a610c5cd6bc1222555d22c6843dcdd05e453923f7. Draw 83 s, peak 2020 MB (base 89 s).
+  pixels that differ from base (a59efaaf, the same bytes as main's R2 state): 24149 of 2073600 (1.16 percent): 24141 by 1 level, 5 by 2 levels, 3 by 3 levels (the first at x 1787 y 504); over 2 levels: 3; over 8 levels: 0.
+  rms at half size: 0.0316 levels (full size 0.0628). ffmpeg against base, rgb24, full size: psnr 72.18 dB, ssim 0.999963.
+  I hold no master frame for 9480, so no figure against a master.
+c2 at 9480: skipped for the reason given (no library call left in the deep text).
+
+The three c1 draws side by side (pixels that differ, largest, over 2, over 8, rms at half size, psnr, ssim):
+  9720: 10621, 2, 0, 0, 0.0208, 75.78, 0.999981
+  9916: 13766, 1, 0, 0, 0.0236, 74.65, 0.999977
+  9480: 24149, 3, 3, 0, 0.0316, 72.18, 0.999963
+Draw times with the cure against base: 129 and 128 s, 125 and 117 s, 83 and 89 s. STATED: I read these as equal within the run to run spread of this machine; I did not repeat them.
+
+## 28 Nov, 07:31 UTC: CURE 3 answer, part E, to the Builder (word for word; sent 07:31:46 at the latest; high priority; attachments as its text names them)
+
+CURE 3 E from neptune_builder, written 07:31:13 UTC. No file attached. Read from the text of main c980c36 (its line numbers), no draws. D is still drawing.
+
+How to read the sizes: they are ARITHMETIC of mine on the Direct3D form of my RIPPLE 3 C mail (STATED form; in numbers there: asin off by up to 6.76e-05 rad with a step of 1.35e-04 rad at 0, atan off by up to 1.17e-05 rad; acos STATED to be the same polynomial as asin, not measured by me). Factors and values are READ from the text and the json. Map sizes are MEASURED from the files of the full set (the web set holds half). One pixel at 1 unit and 1080 lines = 0.000496 units.
+
+E1. Where an angle is multiplied up (factor, what it places, size on Direct3D):
+1. deep.ts 191 bandOf: asin times uRadius 41.806 and atan times uRadius 41.806; places every point of the deck, the veil and the streamers. v: 0.00282 units = 5.7 pixels, with the step at v = 0 (the tear). u: 0.00049 units = 1.0 pixel, without a step at u = 0 (the form is odd in y); in the form I simulated its one jump lies where |y| = |x| (2.3e-05 rad = 0.00095 units, by its constants), that is uRadius times pi / 4 = 32.8 units along the band from e0, the band's point nearest to the point under the camera (band.ts).
+2. deep.ts 227, the veil's storm arms: atan times 6 (uArms.x 3 times uVeilArms.x 2) inside a cosine: 7.0e-05 rad of phase. Nothing.
+3. deep.ts 311 th, used at 366 in winding (285 to 300): cos and sin of the angle times ring = al / lam, at most 2.2 / 0.00068 = 3218 (deck.spiral.across 2.2; deck.wave 1.4 halved 11 times, deck.octaves 12); places the noise cell round the storm: 0.04 of a cell at most. Nothing, and the seam closes because cos and sin are taken.
+4. deep.ts 402, the deck's storm arms: atan times 3 (uArms.x) inside a cosine. Nothing.
+5. deep.ts 967 cq, the far map of the globe part (far.png 2048 by 1024): atan times 326 texels per rad: 0.004 texel; asin times 326 texels per rad: 0.022 texel, step 0.044 texel where dcl.y = 0 (the globe's equator in the cloud's frame).
+6. planet.ts 201 stormTurn (in mapGlsl, so also in the deep text): acos divided by uStormRadius (7 degrees, look.ts 22), factor 8.2, then its 4th power sets how far the storm turns deck and cloud: 5.5e-04 in ang, smooth; the step of acos at 0 lies 90 degrees from the storm, where the turn is 3.7e-05 of uStormAngle. Nothing. closeup.ts 82 is the same form with uStorm.w (closeup.json stormRadius 1.1 over the radius).
+7. planet.ts 209 cloudDir (also in the deep text; feeds dcl, dclEnd, dsa, dsb at deep.ts 960 to 964): asin times uShear.y 5 inside a sine, times uShear.x 0.35 times uStream; turns the cloud layer about the axis by latitude. THE SECOND STEP OF THE SAME KIND: across p.y = 0 the layer's turn jumps by 5 times 0.35 times 1.35e-04 = 2.4e-04 times uStream rad. uStream is 1.5 degrees a second times an eased time (look.ts 23, set.ts 156); its value at the terrain frames is UNKNOWN to me (not read out). For scale only: at uStream 0.79 rad (45 degrees) the jump is 1.9e-04 rad = 0.0078 units on a sphere of 41.806. It lies on the globe's equator, about 19 degrees = 13.7 units from the place (look.ts 22 storm lat -18.8), so in the terrain view it is far off or out of frame; on the whole globe it is a sideways cut of the cirrus of a fraction of a pixel. The cure removes it.
+8. planet.ts 233, 234 runFeet and 263, 264 layerAt (wrap.webp 8192 by 4096): atan times 1304 texels per rad: 0.015 texel; asin times 1304 texels per rad: 0.088 texel, step 0.176 texel at the globe's equator.
+9. planet.ts 505 cq (globe program, far map): as 5. 527 fq (flow.webp 4096 by 2048, 652 texels per rad): 0.044 texel, step 0.088. 536 and 542 (uMap read at a fixed level): as 8, less by the level.
+10. planet.ts 582 under: the difference of two asin, both arguments 0 or more, so no step; off by up to 1.35e-04 rad on a ramp 8 or 13 degrees wide (look.ts 27, 28): under 0.1 percent of the ramp. Nothing.
+11. planet.ts 634: acos divided by uEdgeShape.x (18 degrees, limb.edge.fall of haze.json), factor 3.2, in an exponent: 2.2e-04. Nothing.
+12. closeup.ts 183 az: atan divided by uGlowMap.x (80 degrees) into close-glow.png 512 wide: 367 texels per rad: 0.004 texel. Nothing.
+13. ring.ts 67 az: atan into ring.png 2048 wide: 326 texels per rad: 0.004 texel. Nothing.
+14. Triton through equirectGrad (triton.ts 56, 62, 63; triton.jpg 4096 by 2048, 652 texels per rad): asin 0.044 texel, step 0.088 texel at Triton's equator.
+So only bandOf multiplies an angle up to pixels. Every other place stays under a fifth of a texel, but for 7, whose size hangs on uStream.
+
+E2. Can the step of Direct3D's asin at 0 reach a screen derivative:
+a. deep.ts 969 and 970 (cx, cy): YES. dFdx(cq.y) and dFdy(cq.y) of the asin of 967, times uGGrad, into textureGrad at 972 and 977. On the line where dcl.y changes sign the footprint grows by up to 0.044 texel of the far map: under 0.07 of a level when the true footprint is one texel or more, and no change of level while it is under one texel. I expect nothing to see; UNKNOWN on the card.
+b. layerAt: YES. planet.ts 266 and 267 take dFdx(v) and dFdy(v) of the asin of 264, times uGrad times soft, into textureGrad of uMap (287), of uHoldMap (291) and of uMendMap (296). Step 0.176 texel of wrap.webp times uGrad times soft: up to 0.23 of a level on a line two pixels wide along the globe's equator when the true footprint is one texel. Faint at most; UNKNOWN on the card. The patch levels are safe: their footprint comes from dFdx(g) at 271, 272, with no angle in it.
+c. runFeet: YES. planet.ts 236 and 237, the same form on the asin of 234; it gives the count of feet of the cloud run (slabFeet, deep.ts 994).
+d. The globe program's own reads: YES. planet.ts 507, 508 (cq of 505) and 529, 530 (fq of 527).
+e. equirectGrad (src/space/sky.ts 21, 22; Triton in the stop): YES, dFdx(v) of the asin of 19.
+f. diagTexelsDir: NO. src/diagnostics/diag.ts 101 and 102 take dFdx(dir) and dFdy(dir), the direction itself; no angle is in it.
+g. bandOf's u and v: NO in the film. The only derivative of them is fwidth(gg.xy) at deep.ts 1300 and 1301, inside the grid tool (uGridShow, off in the film by deep.json globe.grid). The step of v reaches the picture by the place it gives to the noise, not by a derivative.
+With the cure, a to e take our own asin: its step across 0 is 2.8e-45 rad (proof B), so none of them is left.
+
+## CURE 3 PLAN B from the Builder (/root) (saved 07:35:16 by my clock, 28 Nov, shortly after it came; word for word; high priority). The software text stays byte for byte, only graphics cards get the written out functions: jobs P1 to P5.
+
+> CURE 3 PLAN B from the Builder (/root), 07:34 UTC. Your A, B, C and E are in, thank you; the work is good. Let D finish if it ends within 4 minutes, else stop it. Then this, before anything else (NANSIM mail 2 waits).
+>
+> WHY: my rule for this cure was logged before your numbers came (d479): the written out functions may run on every renderer only if the software picture changes by at most 1 level in at most 0.1 percent of the pixels. You measured 0.51, 0.66 and 1.16 percent and up to 3 levels. So plan b: the software text stays byte for byte as in c980c36 (the approved picture stays the same to the last bit, provable by text), and only graphics cards get your functions.
+>
+> THE PATCH (attached cure3b.patch, sha256 4f90e62d41435b1c839634dce4cc6d68d6b08a54e97d58440e2a28d4c5923fca, 235 lines, git diff against c980c36; src of main is unchanged since then; tsc rc 0 here). It holds NONE of your 27 renames and no NEP_EQUIRECT_GLSL. It holds:
+> 1. src/stops/neptune/trig.ts: your TRIG_GLSL unchanged, plus a one argument nepAtan(t) = nepAtan(t, 1.0); ownTrigText(text): if the text calls asin, acos or atan, TRIG_GLSL is put in after the leading precision lines and every call is turned to the own name by a regular expression (so equirectGrad inside the Neptune programs is covered too, sky.ts untouched); ownTrig(material) sets material.onBeforeCompile: three hands it the renderer; if the unmasked renderer name holds "SwiftShader" nothing is changed, else vertex and fragment text go through ownTrigText.
+> 2. One import line and one line ownTrig(this.material) after each of the six ShaderMaterials (air, closeup, deep, planet, ring, triton).
+>
+> YOUR JOBS, in this order, numbers MEASURED:
+> P1. git apply on a clean export of c980c36; npm run build; rc of both.
+> P2. UNFORCED draws (software as it is), draft, 1920x1080, capture 9720, 9916, 9480: sha256 of each must equal base (0024010e, 46c8d101, a59efaaf). If one does not: differing pixels and largest difference.
+> P3. FORCED draws (the software made to answer like a card), same three frames: sha256 of each must equal your c1 (ea7f8b5c, ff5f377e, 34d7b49c). If one does not: differing pixels, largest difference. HOW to force, first choice: an init script before the page's own code, source untouched:
+>   const g = WebGL2RenderingContext.prototype.getParameter;
+>   WebGL2RenderingContext.prototype.getParameter = function (p) { return (p === 0x9246 || p === 0x1F01) ? 'ANGLE (NVIDIA, NVIDIA GeForce RTX 5080 Direct3D11 vs_5_0 ps_5_0, D3D11)' : g.call(this, p); };
+>   Second choice, if your draw tool takes no init script: a scratch copy in which softwareDrawn returns false. Say which you used.
+> P4. Final texts as the browser got them: UNFORCED, the sha256 of each program text of the stop equals that of c980c36 (your earlier dump of the deep text; dump the others on c980c36 too if you have none); FORCED, every program of the stop (deep, globe, ring, Triton, closeup, air; at frames where each is compiled, 9090 and 9400 should do, name the frames): lines, count of library calls of asin, acos, atan (must be 0), count of lines with the own names.
+> P5. One pair at 9090 (whole view: globe, ring and Triton on screen): unforced against a draw of c980c36 at 9090 (same bytes?), forced against unforced (differing pixels, largest, psnr).
+>
+> MAILS: one short mail as soon as P1 and the 9720 pair of P2 and P3 are in (I commit on a full set, but I want to know early if something breaks); then P2 and P3 whole; then P4 and P5. Attach the forced PNG of 9720 as f1-9720.png. If the build or a compile fails in the forced state, send the browser's error text word for word at once. Draw two at a time if your memory allows it (peak 2.3 GB each).
+> (attached: cure3b.patch)
+
+## 28 Nov, 07:38 UTC: CURE 3 answer, part D, to the Builder (word for word; sent 07:38:02 at the latest; high priority; attachments as its text names them)
+
+CURE 3 D from neptune_builder, written 07:37:52 UTC. Attached: trig-9916.png (untouched). PLAN B is read and running: P1 is green (git apply rc 0, npm run build rc 0), the forced draw of 9720 runs since 07:37:24; the early mail follows.
+
+D, MEASURED. trig-9916.png = unchanged source plus my sim-trig defines (the Direct3D form of asin, acos, atan in the deep text), no cure, draft, 1920x1080, software. It ended at 07:35:55, inside your 4 minutes. Draw 527 s, peak 4635 MB.
+  sha256 787e4e2db73ea4f8b30bb3427c1b43361e76e9e8712cf8d1be77ae40597c4200
+  pixels that differ from base (46c8d101): 979568 of 2073600 (47.24 percent); largest difference 170 levels; over 2 levels 354255; over 8 levels 117325.
+  rms at half size 3.31 levels (full size 4.21). In a grid 3 by 3 at half size (rows top to bottom, columns left to right):
+     0.60  0.08  0.01
+     5.88  3.63  0.73
+     0.52  4.65  5.28
+  ffmpeg against base, rgb24, full size: psnr 35.64 dB, ssim 0.957414.
+  against master-4958: trig 34.04 dB and 0.894756; base 35.36 dB and 0.903543 (c1 with the cure: 35.36 and 0.903545).
+For comparison 9720 (RIPPLE 3 C): 975818 pixels, largest 152, rms at half size 3.73; against master-4860 34.22 and 0.9194 where base has 37.90 and 0.9430.
+So at 9916 the Direct3D form does the same kind of damage as at 9720: about half the frame moves, the middle row left and the lower right most. Whether your PC frame of 9916 shows this pattern is for you to set beside it; I do not hold that frame (UNKNOWN to me).
+
+One thing I name about my C mail, so you do not find it yourself: c1-9720.png was drawn at 07:20:28, and at 07:22:02 I changed one comment in trig.ts and remade the patch (the patch you got is the later one). c1-9916 and c1-9480 and the dumped text are from the later text. MEASURED now: the shader text TRIG_GLSL of your plan b patch equals mine line for line, plus your three lines of the one argument nepAtan. If the forced draw of 9720 does not give ea7f8b5c, this is the first place I look.
+
+## 28 Nov, 07:42 UTC: CURE 3 PLAN B early mail to the Builder (word for word; sent 07:42:32 at the latest; high priority; attachments as its text names them)
+
+CURE 3 PLAN B early mail from neptune_builder, written 07:42:18 UTC. Attached: f1-9720.png (the forced draw, untouched). All MEASURED. Nothing broke.
+
+P1. cure3b.patch as received: sha256 4f90e62d41435b1c839634dce4cc6d68d6b08a54e97d58440e2a28d4c5923fca, 235 lines. On a clean export of c980c36 (src, tools, config, tests, kit, handoff, cut, package.json, package-lock.json, tsconfig.json, vite.config.ts, index.html compared equal to the export before): git apply --check rc 0, git apply rc 0, npm run build rc 0 (tsc and vite). After it src differs from c980c36 in the six files of the patch plus the new trig.ts, and in nothing else. TRIG_GLSL in it equals mine line for line plus your three lines of nepAtan(t).
+
+P2 at 9720, UNFORCED (software as it is, draft, 1920x1080): sha256 0024010e3f61eaa20473192b82b25e29d5bcabdcd212b7ec40e51fa72d27e49d. The same bytes as base. rc 0.
+
+P3 at 9720, FORCED: sha256 ea7f8b5c2c1a67e19a1e29a45317115d171a6e508b98bba7473b64d2bda5a635. The same bytes as my c1-9720.png. rc 0, no compile error.
+HOW I forced: your first choice, the init script, source untouched. Two things I name: (1) I put your two lines inside one function, (() => { ... })(), so that the name g does not land among the page's own names; nothing else is changed in them. (2) My draw tool takes an init script only through one added line in tools/capture.ts of the scratch copy (line 167: if (process.env.DUMP_FILE) await page.addInitScript(...)), the same line that served the shader dumps; src is the patched export in both copies. The unforced draws run in a copy with the tool untouched.
+
+Two at a time: yes, it fits. MEASURED: with one draw at its peak the machine has 3.6 GB in use of 7.96 (0.7 GB of that at rest); with two together 2.3 GB stayed available at the lowest I saw. Times while two run together: forced 9720 150 s, unforced 9720 200 s (alone: 129 and 128 s), so the gain is there but under a half. The peak figures of my logs are now the sum of both browsers (4.3 to 4.4 GB), not one draw's.
+
+Running now, two lanes: unforced 9916, 9480, 9090 and forced 9916, 9480, 9090; then c980c36 at 9090 and the three text dumps (c980c36, plan b unforced, plan b forced, twelve frames each: 8940, 9000, 9090, 9120, 9300, 9400, 9480, 9720, 9916, 10020, 10140, 10260).
+
+## 28 Nov, 07:47 UTC: CURE 3 PLAN B, P2 and P3 whole, to the Builder (word for word; sent 07:47:18 at the latest; high priority; attachments as its text names them)
+
+CURE 3 PLAN B, P2 and P3 whole, from neptune_builder, written 07:47:08 UTC. All MEASURED unless marked. Nothing broke.
+
+P2, UNFORCED (plan b on c980c36, software as it is, draft, 1920x1080), sha256 and compare by bytes against base:
+9720  0024010e3f61eaa20473192b82b25e29d5bcabdcd212b7ec40e51fa72d27e49d  same bytes as base  rc 0  200 s
+9916  46c8d1011b76a9fa53da433af3858ee1734574a7e40ab88628d09ba1349a5751  same bytes as base  rc 0  185 s
+9480  a59efaaf0ac5885b8910369eea21cae2d8ec88e402a8928b992ab04721694099  same bytes as base  rc 0  98 s
+All three equal. No pixel differs.
+
+P3, FORCED (the same build, the software made to answer like a card by your init script, source untouched), sha256 and compare by bytes against my c1:
+9720  ea7f8b5c2c1a67e19a1e29a45317115d171a6e508b98bba7473b64d2bda5a635  same bytes as c1  rc 0  150 s
+9916  ff5f377e13b8754ec9c9783415bb7f3c1aa5dec881fa4f26eca2d12d5ad2dbed  same bytes as c1  rc 0  194 s
+9480  34d7b49c67a035220454bb0a610c5cd6bc1222555d22c6843dcdd05e453923f7  same bytes as c1  rc 0  132 s
+All three equal. No pixel differs. No compile error in the forced state (the draws ended rc 0 and the pictures are c1's to the byte, which a failed program could not give).
+
+So the switch does what the patch says, in both directions: unforced it leaves the software picture as it was, forced it gives the picture of the written out functions.
+
+How forced: as said in the early mail, your first choice (init script before the page's own code, your two lines inside one function), carried in through one added line in tools/capture.ts of the scratch copy. The unforced draws ran in a copy with the tool untouched.
+
+Times are with two draws running together, so they are longer than a draw alone (alone, my c1 draws of these frames took 83 to 129 s). The peak figures of my logs in this job are the sum of both browsers: 3966 to 4408 MB. Never three at once.
+
+Already drawn for P5: forced 9090, sha256 5e6d77b50c2c96934988a884dda1284cef1f675bc0bad0369665701c840b0d7e, rc 0, 46 s. Running now: unforced 9090 and c980c36 at 9090; after them the three text dumps for P4 (c980c36, plan b unforced, plan b forced). P4 and P5 come in the next mail.
+
+Nothing to main, nothing pushed, no file of the repo changed, r2 untouched, form e not drawn.
+
+## 28 Nov, 08:00 UTC: CURE 3 PLAN B, P4 and P5, to the Builder (word for word; sent 08:00:12 at the latest; high priority; attachments as its text names them)
+
+CURE 3 PLAN B, P4 and P5, from neptune_builder, written 08:00:10 UTC. MEASURED unless marked. Nothing broke, no compile error anywhere. One thing is not as you expected: the closeup program is never compiled in the film as it stands (see below).
+Attached: f1-9090.png, u1-9090.png, texts-out.txt (the whole table), texts.py, links.py, link-init.js, force-init.js, pb-texts.tar (every text of every dump run named here, 2160640 bytes, sha256 1b3c83b3c929f57de8e5dd9e268a7f6eb9e94271d3434c026625a2879523cc91).
+
+P4, HOW. Three dump runs, each ONE run of the tool over twelve frames (8940, 9000, 9090, 9120, 9300, 9400, 9480, 9720, 9916, 10020, 10140, 10260), preview, draft, software: c980c36 clean, plan b unforced, plan b forced. The init script passes every text the page hands to WebGL (shaderSource) to a receiver, word for word; a text handed over twice is kept once. rc 0 each; 168 s, 172 s, 221 s. Each run gave 46 texts (22 vertex, 24 fragment).
+
+P4 UNFORCED. Plan b unforced against c980c36: 46 and 46 texts, every text equal by sha256, in the same order. No text holds an own name, none holds the block. So on the software the browser gets from plan b exactly what it gets from c980c36. That covers the deep, the globe, the ring, Triton, the air and every text that is not of the stop.
+
+P4 FORCED, the programs of the stop (fragment texts; lines unforced to forced; library calls of asin, acos, atan unforced to forced; lines with the own names):
+globe   802 to 854 lines   19 to 0 calls   19 lines with own names (5 in the block, 14 in the text)   sha256 545a70b9201a1c9fff87f3969735c1a1c74f48d4662631cac86968ed48328845
+Triton  163 to 215 lines    2 to 0 calls    7 lines (5 and 2)    sha256 299432932be5d03394c1a93aea921bc9e6840c9dfdbd85bd2f12f33aaedf2a6b
+ring    133 to 185 lines    1 to 0 calls    6 lines (5 and 1)    sha256 3e14572be83e0a8138d4c19a33e75f20ce7cf6159f717c413c7dd8ec35457580
+deep   1679 to 1731 lines  13 to 0 calls   16 lines (5 and 11)   sha256 5a9b6b99d13644edc83bc8ba3fad696a28318e65a5635de2da2cd2df37a1eb62
+air     211 to 211 lines    0 to 0 calls    0 lines. The air text holds no call of the three, so ownTrigText hands it back as it is: no block, the same bytes as unforced (sha256 20508746542f5f86f3bf267c7843f64d8488def32670f5f815a2c6bed149e33f in both).
+The block is 52 lines, which is the growth of each of the four (854 - 802 and so on). Library calls in the forced texts of the stop: 0 in every one. 35 calls are renamed in all (19, 2, 1, 13).
+The five vertex texts of the stop (84, 81, 78, 76, 78 lines) hold no call and are the same bytes forced and unforced.
+Check of the rename: each of the four forced texts, with the block taken out and the three names turned back, is its unforced text to the byte (texts.py does it; column at the right of texts-out.txt).
+
+P4 FORCED, the texts that are not of the stop: 16 of them hold library calls and all 16 are the same bytes as unforced. By their uniform names they come from space/sky.ts (5 texts, 16, 4, 3, 5, 2 calls), stops/uranus (10 texts: globe, moons, veil, halo, deck) and space/dust.ts (1 text). The other 20 texts hold no call and are the same bytes as unforced. So plan b changes four fragment texts and nothing else. I name it because it bounds the cure: on a card the sky and the dust behind Neptune keep the library asin, acos, atan (sky.ts 21 and 22 were on my list of part E). Why Uranus texts are compiled in a run of these frames I did not look into: UNKNOWN.
+
+WHICH FRAME COMPILES WHAT (forced, one frame per run, preview): 9090 alone: globe, Triton, ring, air, not the deep. 9400 alone: globe, Triton, ring, air and the deep, so 9400 has all five. 9720 alone: the deep only. Every text of these three runs is, by sha256, a text of the twelve frame run.
+
+LINK CHECK (my addition, queries only, file link-init.js): after every linkProgram of the page it asks LINK_STATUS, COMPILE_STATUS and both logs and posts them. Forced, run of 9090, 9400, 9720: 12 programs linked of 12, 24 shaders compiled of 24, every log empty. The single runs: 11 of 11, 12 of 12, 8 of 8. Limit, STATED: this is the compiler of the software path. That the forced texts are valid for it is MEASURED; that the Direct3D translation of a real card takes them is NOT MEASURED here and cannot be on this machine.
+
+CLOSEUP. MEASURED in the source: deep.json line 3 is "on": true. With that, set.ts 108 adds the deep's mesh in place of the closeup's (terrain.add(deepLook.on ? deepView.mesh : closeup.mesh)), set.ts 262 keeps lay at 0 (ending || deepLook.on ? 0 : ...), and set.ts 370 shows the laid closeup only when lay > 0. MEASURED in the dumps: none of the 46 texts of any of the three runs holds uGlowMap, the closeup's own uniform. So no closeup program reaches the browser at my twelve frames, and by the three source lines at no frame of the film (the second half is STATED from the source, not drawn). ownTrig(this.material) in closeup.ts therefore does nothing today.
+To see its text all the same I made a scratch copy (plan b with deep.json line 3 set to false, nothing else), forced, frames 9400 and 9720, preview, with the link check: rc 0, 62 s, 13 programs linked of 13, 26 shaders compiled, logs empty. Two closeup programs appear (the plain one and the laid one): 414 and 415 lines, library calls 0 and 0, 7 lines with own names each (5 in the block, 2 in the text: nepAcos at the storm angle, closeup.ts 83, and nepAtan(dot(rd, uEast), dot(rd, uNorth)), closeup.ts 184), sha256 92ea67fd7b1da37c97cfba0580e7cf16df6c024900aa64250fff8001fded30b6 and dbfad46cb51abb88c5a4c5c84a7f2bbdff8cfe89b3a764f0fdaa5ff4b005b750. NOT MEASURED: their unforced partners and any picture of that state (not asked, and it is not the film).
+
+NOT MEASURED, STATED: the texts were dumped at preview size, the P2, P3 and P5 pictures are 1920x1080. The stop's materials set no defines, so I expect the same texts at both sizes, but I did not dump at 1920x1080. If you want it I dump 9400 at full size (about 2 minutes).
+
+P5, frame 9090, draft, 1920x1080. I looked at the picture: the globe fills the middle, Triton at the upper left, ring arcs at the lower left and right, the sun at the upper right.
+Unforced against c980c36 (clean copy, drawn now): both sha256 dc7ba0f629d43bbf8e4b484f859b0850413c33500e2edbd11d62701c3fc6e34a, the same bytes. rc 0 and rc 0, 33 s and 53 s.
+Forced (sha256 5e6d77b50c2c96934988a884dda1284cef1f675bc0bad0369665701c840b0d7e, rc 0, 46 s) against unforced: 985 pixels of 2073600 differ (0.0475 percent). Largest difference 5 levels, in one pixel (x 1451, y 863). By size: 981 pixels by 1 level, 2 by 2, 1 by 3, 1 by 5. psnr 85.82 dB, ssim 0.999999, rms 0.0130 levels at full size and 0.0067 at half size. The four pixels over 1 level all lie on the globe: x 810 y 217, x 1202 y 331, x 1450 y 862, x 1451 y 863; the last two sit on one small bright speck of cloud. The differing pixels span x 131 to 1614, y 162 to 1079: one of them lies on Triton (x 131), the other 984 lie at x 300 and beyond, where the globe and the ring arcs are. I did not split the globe's from the ring's.
+Against your logged rule (at most 1 level in at most 0.1 percent): the share is inside it at 9090, the largest difference is not (4 pixels over 1 level). Plan b does not need that rule for the software, I only say where 9090 stands.
+
+NAMED. (1) texts.py is not the one I described in the early mail: it now finds each program by one uniform name that stands in one file of src only (deep uVeilArms, globe uEdgeCore, ring uTurn, Triton uLightW, closeup uGlowMap, air uAirDay); the first form took two Uranus texts for Neptune's. (2) The extra runs (link check, single frames, closeup copy) are mine, not asked; they cost about 5 minutes next to the dumps.
+
+Kept: nothing to main, nothing pushed, no file of the repo changed, r2 untouched, form e not drawn. Next from me: NANSIM mail 2 of 2, then the film loop.
+
+## 28 Nov, 08:00 UTC: NANSIM, the rest, mail 2 of 2 to the Builder (word for word; sent 08:00:38 at the latest; high priority; attachments as its text names them)
+
+NANSIM neptune_builder, the rest, mail 2 of 2 (written 08:00:36 UTC): G for 6930, 7160 and 7440, and the last single modes. Six PNG attached. It comes after CURE 3 and its plan b because your mails said so.
+
+G, MEASURED. Same form as in mail 1: plain draws, no NANSIM, preview, rate 2, draft, one frame per run. G-frozen = my film checkout as built (commit 41e0350). G-cured = the second copy (cure-v1.patch and the three product lines, drawn with --mixed).
+G 6930: frozen 27f78b9ee9e90262d7a199e252343f6927ce25e0e8f8b514b8d900c91027fa18, cured 27f78b9ee9e90262d7a199e252343f6927ce25e0e8f8b514b8d900c91027fa18, differing pixels 0 (same bytes; 52 s and 52 s)
+G 7160: frozen 93ccd1653b77442fb46b0b32304ae9864f4e6c73c6871a534d849d53aedd4eaf, cured 93ccd1653b77442fb46b0b32304ae9864f4e6c73c6871a534d849d53aedd4eaf, differing pixels 0 (same bytes; 51 s and 51 s)
+G 7440: frozen 7d73fc5747a2b37a1b7476bdc65f830bc01f55368bcbc7047b7757d1d832942b, cured 7d73fc5747a2b37a1b7476bdc65f830bc01f55368bcbc7047b7757d1d832942b, differing pixels 0 (same bytes; 61 s and 61 s)
+With mail 1 that is all six pairs: 9090, 9400, 9916, 6930, 7160, 7440, each with the same bytes in both copies, and all twelve runs ended with rc 0. The sha256 above I took again just now from the attached files.
+
+THE SINGLE MODES on the cured copy (the first one), frame 9480, preview, MEASURED:
+- acos: rc 0, 45 s, peak 2288 MB, sha256 9e97422c68053b3b38dda4b25ca96f526321b1d63d18e841327cd63e36c357cd, the same bytes as A-9480.png.
+- sqrt: NOT MEASURED. My guard stopped the draw when the gpu process stood at 6132 MB after 230 s (limit 5800 MB; the machine holds 7957 MB). On the frozen copy the same mode stopped the same way at 5930 MB after 226 s (told before). So the mode sqrt, and with it the four modes at once, does not fit this machine; I cannot give you that picture from here.
+- Told before and still standing: log on both copies and acos on the frozen copy give the bytes of A-9480; pow is step H.
+So of the single modes, three of four are drawn on both copies and none of them moves a pixel at 9480; sqrt is open on both.
+
+State of my side: tools/capture.ts of the film checkout is set back (git status is empty, HEAD 41e0350); the copy with the NANSIM line is kept under /tmp. Nothing was committed or pushed during the experiments; the notebook pieces for all of this (your mails word for word, my answers) are held under /tmp and go into NOTES.md on agent/neptune-place with the next pack, unless you say otherwise.
+NANSIM DONE
+
+## 28 Nov, 08:01 UTC: H60 pack p7 to the Builder (word for word; sent 08:01:28 at the latest; high priority; attached /tmp/h60-neptune_builder-p7.tar and /tmp/h60-neptune_builder-p7.txt; nothing else in it)
+
+H60 neptune_builder p7
+
+- The tar: 225280 bytes, sha256 b0527cdd42c38c09d937024d6d6fc3a890a348130d3d37fc3593cb4a74b57e88; it holds
+  venus.travel.span1620-1624.mp4 (217947 bytes), each with its .json, and h60r-state.txt. The first line of the .txt is
+  0; its PACK line: "PACK neptune_builder p7 08:01:01 chunks 1 left 7 failed 0 next: mercury.hold 564-567 list: #
+  neptune_builder v1". The last wrote line of the log: "wrote venus.travel.part000.mp4 frames 1620-1624 render 824 s
+  encode 1.1 s". Delivered true. In this pack: venus.travel 1620-1624, drawn 04:19:15 to 04:33:23 before the loop rested
+  for the three jobs of the piece above, and sent once the loop ran again. Next piece: mercury.hold 564-567, started
+  anew 08:01:01.
